@@ -23,12 +23,18 @@ importers:
       '@modern-js/tsconfig':
         specifier: 2.29.0
         version: 2.29.0
+      '@playwright/test':
+        specifier: 1.33.0
+        version: 1.33.0
       husky:
         specifier: ^8.0.0
         version: 8.0.1
       lint-staged:
         specifier: ~13.1.0
         version: 13.1.0
+      playwright:
+        specifier: 1.33.0
+        version: 1.33.0
       prettier:
         specifier: ^2.6.2
         version: 2.8.1
@@ -37,7 +43,7 @@ importers:
         version: 1.10.12
       vitest:
         specifier: ^0.34.1
-        version: 0.34.1
+        version: 0.34.1(playwright@1.33.0)
 
   packages/cli:
     dependencies:
@@ -2699,6 +2705,17 @@ packages:
     dependencies:
       '@nodelib/fs.scandir': 2.1.5
       fastq: 1.15.0
+    dev: true
+
+  /@playwright/test@1.33.0:
+    resolution: {integrity: sha512-YunBa2mE7Hq4CfPkGzQRK916a4tuZoVx/EpLjeWlTVOnD4S2+fdaQZE0LJkbfhN5FTSKNLdcl7MoT5XB37bTkg==}
+    engines: {node: '>=14'}
+    hasBin: true
+    dependencies:
+      '@types/node': 16.11.7
+      playwright-core: 1.33.0
+    optionalDependencies:
+      fsevents: 2.3.2
     dev: true
 
   /@remix-run/router@1.6.1:
@@ -6091,6 +6108,21 @@ packages:
       pathe: 1.1.1
     dev: true
 
+  /playwright-core@1.33.0:
+    resolution: {integrity: sha512-aizyPE1Cj62vAECdph1iaMILpT0WUDCq3E6rW6I+dleSbBoGbktvJtzS6VHkZ4DKNEOG9qJpiom/ZxO+S15LAw==}
+    engines: {node: '>=14'}
+    hasBin: true
+    dev: true
+
+  /playwright@1.33.0:
+    resolution: {integrity: sha512-+zzU3V2TslRX2ETBRgQKsKytYBkJeLZ2xzUj4JohnZnxQnivoUvOvNbRBYWSYykQTO0Y4zb8NwZTYFUO+EpPBQ==}
+    engines: {node: '>=14'}
+    hasBin: true
+    requiresBuild: true
+    dependencies:
+      playwright-core: 1.33.0
+    dev: true
+
   /postcss@8.4.27:
     resolution: {integrity: sha512-gY/ACJtJPSmUFPDCHtX78+01fHa64FaU4zaaWfuh1MhGJISufJAH4cun6k/8fwsHYeK4UQmENQK+tRLCFJE8JQ==}
     engines: {node: ^10 || ^12 || >=14}
@@ -7243,7 +7275,7 @@ packages:
       fsevents: 2.3.2
     dev: true
 
-  /vitest@0.34.1:
+  /vitest@0.34.1(playwright@1.33.0):
     resolution: {integrity: sha512-G1PzuBEq9A75XSU88yO5G4vPT20UovbC/2osB2KEuV/FisSIIsw7m5y2xMdB7RsAGHAfg2lPmp2qKr3KWliVlQ==}
     engines: {node: '>=v14.18.0'}
     hasBin: true
@@ -7291,6 +7323,7 @@ packages:
       magic-string: 0.30.2
       pathe: 1.1.1
       picocolors: 1.0.0
+      playwright: 1.33.0
       std-env: 3.3.3
       strip-literal: 1.3.0
       tinybench: 2.5.0

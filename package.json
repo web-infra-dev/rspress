@@ -43,13 +43,15 @@
     ]
   },
   "devDependencies": {
-    "@modern-js/module-tools": "2.29.0",
     "@modern-js-app/eslint-config": "2.29.0",
     "@modern-js/eslint-config": "2.29.0",
+    "@modern-js/module-tools": "2.29.0",
     "@modern-js/monorepo-tools": "2.29.0",
     "@modern-js/tsconfig": "2.29.0",
+    "@playwright/test": "1.33.0",
     "husky": "^8.0.0",
     "lint-staged": "~13.1.0",
+    "playwright": "1.33.0",
     "prettier": "^2.6.2",
     "turbo": "^1.10.12",
     "vitest": "^0.34.1"
