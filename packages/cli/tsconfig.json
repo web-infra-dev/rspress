@@ -2,6 +2,7 @@
   "extends": "@modern-js/tsconfig/base",
   "declaration": true,
   "compilerOptions": {
+    "module": "ESNext",
     "baseUrl": "./",
     "paths": {
       "@/*": ["./src/*"]

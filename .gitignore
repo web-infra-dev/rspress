@@ -24,14 +24,11 @@ node_modules/
 .sonarlint
 
 dist/
-!**/compiled/**/dist
 coverage/
 release/
-examples/
-
-# git ignore for local test projects
-local-test-project/*/
-local-test-project/*
+output/
+output_resource/
+log/
 
 .vscode/**/*
 !.vscode/settings.json
@@ -39,22 +36,13 @@ local-test-project/*
 .idea/
 
 **/*/typings/auto-generated
-.pnpm-store/
-
-.storybook/
-
-**/*/tsconfig.temp.json
 
 .changeset/pre.json
-# Dynamically generated
-.runtime-exports/
 
-# website
-.docusaurus
-website/main/build
-website/**/.temp
+.pnpm-store/
 
-.wireit/
-.turbo/
-playground/
+modern.config.local.ts
+modern.config.local.js
+modern.config.local.mjs
+
 doc_build/

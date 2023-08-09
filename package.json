@@ -1,12 +1,55 @@
 {
-  "name": "rspress",
-  "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
+  "private": true,
+  "name": "monorepo",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "new": "modern new",
+    "reset": "modern clear",
+    "change": "modern change",
+    "bump": "modern bump",
+    "pre": "modern pre",
+    "prepare": "husky install",
+    "change-status": "modern change-status",
+    "gen-release-note": "modern gen-release-note",
+    "release": "modern release",
+    "deploy": "modern deploy",
+    "lint": "modern lint",
+    "upgrade": "modern upgrade"
   },
-  "keywords": [],
-  "author": "",
-  "license": "MIT"
+  "engines": {
+    "node": ">=16.18.1"
+  },
+  "lint-staged": {
+    "*.{ts,tsx}": [
+      "node --max_old_space_size=8192 ./node_modules/eslint/bin/eslint.js --fix --color --cache --quiet"
+    ],
+    "*.{js,jsx,mjs,mjsx,cjs,cjsx}": [
+      "node --max_old_space_size=8192 ./node_modules/eslint/bin/eslint.js --fix --color --cache --quiet"
+    ]
+  },
+  "eslintIgnore": [
+    "node_modules/",
+    "dist/",
+    ".rpt2_cache/"
+  ],
+  "workspaces": {
+    "packages": [
+      "apps/*",
+      "examples/*",
+      "features/*",
+      "packages/*"
+    ]
+  },
+  "devDependencies": {
+    "@modern-js/monorepo-tools": "2.29.0",
+    "@modern-js/eslint-config": "2.29.0",
+    "@modern-js/tsconfig":"2.29.0",
+    "@modern-js-app/eslint-config": "2.29.0",
+    "lint-staged": "~13.1.0",
+    "prettier": "^2.6.2",
+    "husky": "^8.0.0"
+  },
+  "publishConfig": {
+    "access": "public",
+    "registry": "https://registry.npmjs.org/"
+  }
 }
