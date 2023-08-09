@@ -20,7 +20,6 @@
     "cac": "^6.7.14"
   },
   "devDependencies": {
-    "@modern-js/module-tools": "2.29.0",
     "@types/jest": "~29.2.4",
     "@types/node": "~16.11.7",
     "@types/react": "~18.0.26",

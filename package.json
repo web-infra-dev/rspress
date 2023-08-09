@@ -43,6 +43,7 @@
     ]
   },
   "devDependencies": {
+    "@modern-js/module-tools": "2.29.0",
     "@modern-js-app/eslint-config": "2.29.0",
     "@modern-js/eslint-config": "2.29.0",
     "@modern-js/monorepo-tools": "2.29.0",
