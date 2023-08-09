@@ -9,5 +9,5 @@
     "isolatedModules": true,
     "paths": {}
   },
-  "include": ["vitest.config.ts"]
+  "include": ["vitest.config.ts", "playwright.config.ts"]
 }

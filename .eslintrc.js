@@ -4,6 +4,7 @@ module.exports = {
   ignorePatterns: [
     'packages/cli/bin/rspress.js',
     'vitest.config.ts',
+    'playwright.config.ts',
     '**/*.test.ts',
   ],
 };

@@ -11,6 +11,7 @@
     "dev": "turbo run dev --filter {packages/**} --cache-dir=.turbo --no-daemon",
     "build": "turbo run build --filter {packages/**} --cache-dir=.turbo --no-daemon",
     "test:unit": "vitest run",
+    "test:e2e": "playwright test",
     "change-status": "modern change-status",
     "gen-release-note": "modern gen-release-note",
     "release": "modern release",

@@ -4,6 +4,6 @@ export default defineConfig({
   test: {
     root: __dirname,
     environment: 'node',
-    exclude: ['./e2e/**/*'],
+    exclude: ['./e2e/**/*', '**/node_modules/**/*'],
   },
 });
