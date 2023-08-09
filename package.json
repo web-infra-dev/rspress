@@ -40,13 +40,15 @@
     ]
   },
   "devDependencies": {
-    "@modern-js/monorepo-tools": "2.29.0",
-    "@modern-js/eslint-config": "2.29.0",
-    "@modern-js/tsconfig":"2.29.0",
     "@modern-js-app/eslint-config": "2.29.0",
+    "@modern-js/eslint-config": "2.29.0",
+    "@modern-js/monorepo-tools": "2.29.0",
+    "@modern-js/tsconfig": "2.29.0",
+    "husky": "^8.0.0",
     "lint-staged": "~13.1.0",
     "prettier": "^2.6.2",
-    "husky": "^8.0.0"
+    "turbo": "^1.10.12",
+    "vitest": "^0.34.1"
   },
   "publishConfig": {
     "access": "public",
