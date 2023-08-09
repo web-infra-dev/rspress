@@ -3,6 +3,7 @@
   "declaration": true,
   "compilerOptions": {
     "module": "ESNext",
+    "target": "ESNext",
     "baseUrl": "./",
     "paths": {
       "@/*": ["./src/*"]

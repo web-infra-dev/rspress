@@ -9,7 +9,6 @@
     "rspress": "./bin/rspress.js"
   },
   "scripts": {
-    "prepare": "modern build",
     "dev": "modern dev",
     "build": "modern build",
     "build:watch": "modern build -w",
