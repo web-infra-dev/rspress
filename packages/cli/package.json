@@ -1,10 +1,13 @@
 {
-  "name": "module-tools-demo",
+  "name": "rspress",
   "version": "0.1.0",
   "type": "module",
   "types": "./dist/types/index.d.ts",
   "main": "./dist/lib/index.js",
   "module": "./dist/es/index.js",
+  "bin": {
+    "rspress": "./bin/rspress.js"
+  },
   "scripts": {
     "prepare": "modern build",
     "dev": "modern dev",

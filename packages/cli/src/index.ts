@@ -10,6 +10,7 @@ const cli = cac('rspress').version(packageJson.version).help();
 
 cli.option('--config [config]', 'Specify the path to the config file');
 
+// TODO: load config file
 cli
   .command('[root]', 'start dev server') // default command
   .alias('dev')
