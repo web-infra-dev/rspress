@@ -10,6 +10,7 @@
     "prepare": "npm run build && husky install",
     "dev": "turbo run dev --filter {packages/**} --cache-dir=.turbo --no-daemon",
     "build": "turbo run build --filter {packages/**} --cache-dir=.turbo --no-daemon",
+    "test": "vitest run",
     "change-status": "modern change-status",
     "gen-release-note": "modern gen-release-note",
     "release": "modern release",
