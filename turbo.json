@@ -5,6 +5,15 @@
       "dependsOn": ["^build"],
       "outputs": ["dist/**/*", "!dist/node/main.js"],
       "inputs": ["src/**/*", "tsconfig.json", "package.json", "modern.config.*"]
+    },
+    "dev": {
+      "dependsOn": ["^build"],
+      "outputs": ["dist/**/*", "!dist/node/main.js"],
+      "inputs": ["src/**/*", "tsconfig.json", "package.json", "modern.config.*"]
+    },
+    "test": {
+      "outputs": ["dist/**/*", "!dist/node/main.js"],
+      "inputs": ["src/**/*", "tsconfig.json", "package.json", "modern.config.*"]
     }
   }
 }
