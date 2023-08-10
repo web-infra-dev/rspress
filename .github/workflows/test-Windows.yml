@@ -63,4 +63,4 @@ jobs:
 
       - name: E2E Test
         if: ${{steps.docs-change.outputs.DOCS_CHANGE != 'docs only change'}}
-        run: pnpm run test:e2e
+        run: npx playwright install && pnpm run test:e2e

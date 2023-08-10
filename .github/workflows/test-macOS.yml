@@ -58,13 +58,4 @@ jobs:
 
       - name: E2E Test
         if: ${{steps.docs-change.outputs.DOCS_CHANGE != 'docs only change'}}
-        run: pnpm run test:e2e
-
-      - name: Collect coverage
-        if: ${{steps.docs-change.outputs.DOCS_CHANGE != 'docs only change'}}
-        uses: codecov/codecov-action@v3.1.1
-        with:
-          token: ${{ secrets.CODECOV_TOKEN }}
-          directory: ./coverage
-          fail_ci_if_error: true
-          override_branch: main
+        run: npx playwright install && pnpm run test:e2e
