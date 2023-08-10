@@ -15,8 +15,8 @@
     "upgrade": "modern upgrade"
   },
   "dependencies": {
-    "@modern-js/builder": "^2.30.0",
-    "@modern-js/builder-rspack-provider": "^2.30.0",
+    "@modern-js/builder": "2.30.0",
+    "@modern-js/builder-rspack-provider": "2.30.0",
     "cac": "^6.7.14",
     "interpret": "^3.1.1",
     "lodash": "^4.17.21",

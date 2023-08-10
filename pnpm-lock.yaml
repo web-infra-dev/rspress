@@ -82,15 +82,13 @@ importers:
         specifier: ~5.0.4
         version: 5.0.4
 
-  packages/cli/tests/config/esm: {}
-
   packages/shared:
     dependencies:
       '@modern-js/builder':
-        specifier: ^2.30.0
+        specifier: 2.30.0
         version: 2.30.0(react-dom@18.2.0)(react@18.2.0)(ts-node@10.9.1)(typescript@5.0.4)
       '@modern-js/builder-rspack-provider':
-        specifier: ^2.30.0
+        specifier: 2.30.0
         version: 2.30.0(react-dom@18.2.0)(react@18.2.0)(ts-node@10.9.1)(typescript@5.0.4)
       cac:
         specifier: ^6.7.14
@@ -2487,7 +2485,7 @@ packages:
       '@formily/json-schema': 2.2.29(typescript@5.0.4)
       '@formily/validator': 2.2.29
       '@modern-js/codesmith': 2.2.5(react-dom@18.2.0)(react@18.2.0)
-      '@modern-js/utils': 2.29.0(react-dom@18.2.0)(react@18.2.0)
+      '@modern-js/utils': 2.30.0(react-dom@18.2.0)(react@18.2.0)
       inquirer: 8.2.6
     transitivePeerDependencies:
       - react
@@ -2499,7 +2497,7 @@ packages:
     resolution: {integrity: sha512-crlaJqKT8iSLRTLOgTU7PCVWtXJ66ezM5CmKTRGdQYIEWx85Pmuj3lmupyXM3ecv4lhVzoonVs/nh3bS5ubeOQ==}
     dependencies:
       '@babel/runtime': 7.22.10
-      '@modern-js/utils': 2.29.0(react-dom@18.2.0)(react@18.2.0)
+      '@modern-js/utils': 2.30.0(react-dom@18.2.0)(react@18.2.0)
       axios: 0.21.4
       tar: 6.1.15
     transitivePeerDependencies:
@@ -3002,7 +3000,6 @@ packages:
       react-dom: 18.2.0(react@18.2.0)
       react-router-dom: 6.11.1(react-dom@18.2.0)(react@18.2.0)
       serialize-javascript: 6.0.1
-    dev: false
 
   /@nicolo-ribaudo/eslint-scope-5-internals@5.1.1-v1:
     resolution: {integrity: sha512-54/JRvkLIzzDWshCWfuhadfrfZVPiElY8Fcgmg1HroEly/EDSszzhBAsarCux+D/kOslTRquNzuyGSmUSTTHGg==}
@@ -6007,7 +6004,7 @@ packages:
       entities: 4.5.0
       param-case: 3.0.4
       relateurl: 0.2.7
-      terser: 5.15.0
+      terser: 5.19.2
     dev: false
 
   /htmlparser2@9.0.0:
@@ -8706,6 +8703,7 @@ packages:
       acorn: 8.10.0
       commander: 2.20.3
       source-map-support: 0.5.20
+    dev: true
 
   /terser@5.19.2:
     resolution: {integrity: sha512-qC5+dmecKJA4cpYxRa5aVkKehYsQKc+AHeKl0Oe62aYjBL8ZA33tTljktDHJSaxxMnbI5ZYw+o/S2DxxLu8OfA==}
