@@ -4,7 +4,7 @@ import { cac } from 'cac';
 const require = createRequire(import.meta.url);
 
 // eslint-disable-next-line import/no-commonjs
-const packageJson = require('../../package.json');
+const packageJson = require('../package.json');
 
 const cli = cac('rspress').version(packageJson.version).help();
 
