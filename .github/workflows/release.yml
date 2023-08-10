@@ -79,11 +79,10 @@ jobs:
     if: ${{ github.event_name == 'workflow_dispatch' }}
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout Repo
+      - name: Checkout
         uses: actions/checkout@v3
         with:
-          # This makes Actions fetch only one branch to release
-          fetch-depth: 1
+          fetch-depth: 25
 
       - name: Install Pnpm
         run: corepack enable

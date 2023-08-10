@@ -1,4 +1,4 @@
-name: Test (vitest - macOS)
+name: Test (vitest & playwright - macOS)
 
 concurrency:
   group: macos-test-${{ github.head_ref }}
