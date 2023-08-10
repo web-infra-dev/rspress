@@ -1,4 +1,4 @@
-name: Unit Test (vitest - Windows)
+name: Test (vitest - Windows)
 
 concurrency:
   group: windows-test-${{ github.head_ref }}
