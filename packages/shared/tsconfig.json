@@ -10,11 +10,6 @@
     },
     "isolatedModules": true
   },
-  "include": [
-    "src",
-    "vitest.config.ts",
-    "modern.config.ts",
-    "../shared/src/types/global.d.ts"
-  ],
+  "include": ["src", "vitest.config.ts", "modern.config.ts"],
   "exclude": ["**/node_modules"]
 }
