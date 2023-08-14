@@ -2,14 +2,14 @@
   "name": "@rspress/cli",
   "version": "0.1.0",
   "type": "module",
-  "types": "./dist/types/index.d.ts",
-  "main": "./dist/lib/index.js",
-  "module": "./dist/es/index.js",
+  "types": "./dist/index.d.ts",
+  "main": "./dist/index.js",
+  "module": "./dist/index.js",
   "bin": {
     "rspress": "./bin/rspress.js"
   },
   "scripts": {
-    "dev": "modern dev",
+    "dev": "modern build -w",
     "build": "modern build",
     "build:watch": "modern build -w",
     "test": "vitest run",
@@ -20,7 +20,8 @@
   "dependencies": {
     "cac": "^6.7.14",
     "interpret": "^3.1.1",
-    "rechoir": "^0.8.0"
+    "rechoir": "^0.8.0",
+    "@rspress/core": "workspace:*"
   },
   "devDependencies": {
     "@types/interpret": "^1.1.1",

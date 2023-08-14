@@ -1,3 +1,6 @@
+import { castArray, isArray, isUndefined, mergeWith } from 'lodash-es';
+import { UserConfig } from '@/types';
+
 export const QUERY_REGEXP = /\?.*$/s;
 export const HASH_REGEXP = /#.*$/s;
 export const MDX_REGEXP = /\.mdx?$/;
@@ -143,3 +146,17 @@ export function removeBase(url: string, base: string) {
 export function withoutHash(url: string) {
   return url.split('#')[0];
 }
+
+export const mergeDocConfig = (...configs: UserConfig[]): UserConfig =>
+  mergeWith({}, ...configs, (target: UserConfig, source: UserConfig) => {
+    const pair = [target, source];
+    if (pair.some(isUndefined)) {
+      // fallback to lodash default merge behavior
+      return undefined;
+    }
+    if (pair.some(isArray)) {
+      return [...castArray(target), ...castArray(source)];
+    }
+    // fallback to lodash default merge behavior
+    return undefined;
+  });

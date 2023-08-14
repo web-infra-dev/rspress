@@ -5,5 +5,6 @@ export default defineConfig({
   buildConfig: {
     target: 'esnext',
     format: 'esm',
+    buildType: 'bundle',
   },
 });

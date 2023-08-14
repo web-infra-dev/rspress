@@ -1,0 +1,16 @@
+{
+  "name": "rspress-basic-exmaple",
+  "scripts": {
+    "dev": "rspress dev",
+    "build": "rspress build",
+    "preview": "rspress preview"
+  },
+  "dependencies": {
+    "@rspress/cli": "workspace:*"
+  },
+  "devDependencies": {
+    "@types/node": "^14.14.31",
+    "typescript": "~5.0.4",
+    "ts-node": "10.9.1"
+  }
+}
