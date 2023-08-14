@@ -4,4 +4,5 @@ packages:
   - 'services/**'
   - 'features/**'
   - 'packages/**'
+  - 'e2e/**'
   - '!**/tests/**'

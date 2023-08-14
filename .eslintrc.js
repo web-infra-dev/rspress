@@ -6,5 +6,6 @@ module.exports = {
     'vitest.config.ts',
     'playwright.config.ts',
     '**/*.test.ts',
+    'e2e/**',
   ],
 };
