@@ -26,15 +26,17 @@ export async function createMDXOptions(
     rehypePlugins: rehypePluginsFromConfig = [],
     globalComponents: globalComponentsFromConfig = [],
   } = config?.markdown || {};
-  const docPlugins = config?.plugins || [];
-  const remarkPluginsFromPlugins = docPlugins.flatMap(
+  const rspressPlugins = config?.plugins || [];
+  const remarkPluginsFromPlugins = rspressPlugins.flatMap(
     plugin => plugin.markdown?.remarkPlugins || [],
   ) as PluggableList;
-  const rehypePluginsFromPlugins = docPlugins.flatMap(
+  const rehypePluginsFromPlugins = rspressPlugins.flatMap(
     plugin => plugin.markdown?.rehypePlugins || [],
   ) as PluggableList;
   const globalComponents = [
-    ...docPlugins.flatMap(plugin => plugin.markdown?.globalComponents || []),
+    ...rspressPlugins.flatMap(
+      plugin => plugin.markdown?.globalComponents || [],
+    ),
     ...globalComponentsFromConfig,
   ];
   const defaultLang = config?.lang || '';

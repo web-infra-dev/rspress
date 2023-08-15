@@ -1,7 +1,7 @@
 import {
   UserConfig,
   PageIndexInfo,
-  DocPlugin,
+  RspressPlugin,
   RouteMeta,
 } from '@rspress/shared';
 import { pluginAutoNavSidebar } from './plugins/autoNavAndSidebar';
@@ -9,7 +9,7 @@ import { pluginAutoNavSidebar } from './plugins/autoNavAndSidebar';
 export class PluginDriver {
   #config: UserConfig;
 
-  #plugins: DocPlugin[];
+  #plugins: RspressPlugin[];
 
   #isProd: boolean;
 
@@ -20,7 +20,7 @@ export class PluginDriver {
 
   // The init function is used to initialize the doc plugins and will execute before the build process.
   async init() {
-    // Clear docPlugins first, for the watch mode
+    // Clear RspressPlugins first, for the watch mode
     this.clearPlugins();
     const config = this.#config;
     const themeConfig = config?.themeConfig || {};
@@ -34,13 +34,13 @@ export class PluginDriver {
       themeConfig.locales?.[0].nav ||
       themeConfig.locales?.[0].sidebar;
     if (enableLastUpdated) {
-      const { pluginLastUpdated } = await import('./plugins/lastUpdated');
+      const { pluginLastUpdated } = await import(
+        '@rspress/plugin-last-updated'
+      );
       this.addPlugin(pluginLastUpdated());
     }
     if (mediumZoomConfig) {
-      const { pluginMediumZoom } = await import(
-        '@modern-js/doc-plugin-medium-zoom'
-      );
+      const { pluginMediumZoom } = await import('@rspress/plugin-medium-zoom');
       this.addPlugin(
         pluginMediumZoom(
           typeof mediumZoomConfig === 'object' ? mediumZoomConfig : undefined,
@@ -56,7 +56,7 @@ export class PluginDriver {
     });
   }
 
-  addPlugin(plugin: DocPlugin) {
+  addPlugin(plugin: RspressPlugin) {
     const exsitedIndex = this.#plugins.findIndex(
       item => item.name === plugin.name,
     );

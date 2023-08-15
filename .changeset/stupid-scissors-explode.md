@@ -1,5 +1,5 @@
 ---
-'@rspress/cli': patch
+'rspress': patch
 ---
 
 feat: init cli

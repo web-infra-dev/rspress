@@ -1,6 +1,11 @@
 import path from 'path';
 import fs from '@modern-js/utils/fs-extra';
-import { DocPlugin, Sidebar, SidebarGroup, SidebarItem } from '@rspress/shared';
+import {
+  RspressPlugin,
+  Sidebar,
+  SidebarGroup,
+  SidebarItem,
+} from '@rspress/shared';
 import { NavMeta, SideMeta } from './type';
 
 // Scan all the directories and files in the work directory(such as `docs`), and then generate the nav and sidebar configuration according to the directory structure.
@@ -277,7 +282,7 @@ export async function walk(workDir: string) {
   };
 }
 
-export function pluginAutoNavSidebar(): DocPlugin {
+export function pluginAutoNavSidebar(): RspressPlugin {
   return {
     name: 'auto-nav-sidebar',
     async config(config) {

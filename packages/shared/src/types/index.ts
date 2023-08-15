@@ -5,12 +5,12 @@ import type {
   Config as DefaultThemeConfig,
   NormalizedConfig as NormalizedDefaultThemeConfig,
 } from './defaultTheme';
-import type { DocPlugin, AdditionalPage } from './Plugin';
+import type { RspressPlugin, AdditionalPage } from './Plugin';
 
 export type { DefaultThemeConfig, NormalizedDefaultThemeConfig };
 export * from './defaultTheme';
 
-export type { DocPlugin, AdditionalPage };
+export type { RspressPlugin, AdditionalPage };
 
 export interface Route {
   path: string;
@@ -108,7 +108,7 @@ export interface UserConfig<ThemeConfig = DefaultThemeConfig> {
   /**
    * Doc plugins
    */
-  plugins?: DocPlugin[];
+  plugins?: RspressPlugin[];
   /**
    * Replace rule, will replace the content of the page.
    */

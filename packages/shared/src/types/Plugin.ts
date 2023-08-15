@@ -13,7 +13,7 @@ export interface AdditionalPage {
   filepath?: string;
 }
 
-export interface DocPlugin {
+export interface RspressPlugin {
   /**
    * Name of the plugin.
    */
@@ -53,7 +53,11 @@ export interface DocPlugin {
   /**
    * Extend every page's data
    */
-  extendPageData?: (pageData: PageIndexInfo) => void | Promise<void>;
+  extendPageData?: (
+    pageData: PageIndexInfo & {
+      [key: string]: unknown;
+    },
+  ) => void | Promise<void>;
   /**
    * Add custom route
    */
