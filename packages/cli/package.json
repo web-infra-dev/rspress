@@ -46,6 +46,8 @@
   },
   "files": [
     "bin",
-    "dist"
+    "dist",
+    "runtime.ts",
+    "theme.ts"
   ]
 }
