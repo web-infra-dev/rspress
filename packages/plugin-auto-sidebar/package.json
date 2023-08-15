@@ -1,12 +1,12 @@
 {
-  "name": "@rspress/plugin-last-updated",
+  "name": "@rspress/plugin-auto-sidebar",
   "version": "1.0.0",
-  "description": "A plugin for rspress to record the last updated time of the doc.",
+  "description": "A plugin for rspress to generate navbar and sidebar config automatically.",
   "bugs": "https://github.com/web-infra-dev/rspress/issues",
   "repository": {
     "type": "git",
     "url": "https://github.com/web-infra-dev/rspress",
-    "directory": "packages/plugin-last-updated"
+    "directory": "packages/plugin-auto-sidebar"
   },
   "license": "MIT",
   "type": "module",
