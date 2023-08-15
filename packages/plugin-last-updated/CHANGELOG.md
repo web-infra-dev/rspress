@@ -1,1 +1,1 @@
-# @rspress/plugin-medium-zoom
+# @rspress/plugin-last-updated

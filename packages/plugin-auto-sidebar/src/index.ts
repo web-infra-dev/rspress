@@ -157,7 +157,7 @@ import { NavMeta, SideMeta } from './type';
 export async function detectFilePath(rawPath: string) {
   const extensions = ['.mdx', '.md', '.tsx', '.jsx', '.ts', '.js'];
   // The params doesn't have extension name, so we need to try to find the file with the extension name.
-  let realPath = rawPath;
+  let realPath: string | undefined = rawPath;
   const filename = path.basename(rawPath);
   if (filename.indexOf('.') === -1) {
     const pathWithExtension = extensions.map(ext => `${rawPath}${ext}`);
@@ -167,12 +167,17 @@ export async function detectFilePath(rawPath: string) {
     realPath = pathWithExtension.find((_, i) => pathExistInfo[i]);
   }
 
+  if (!realPath) {
+    // Throw an error and it will be caught by the `extractH1Title`.
+    throw new Error();
+  }
+
   return realPath;
 }
 
 export async function extractH1Title(filePath: string): Promise<string> {
-  const realPath = await detectFilePath(filePath);
   try {
+    const realPath = await detectFilePath(filePath);
     const content = await fs.readFile(realPath, 'utf-8');
     const h1RegExp = /^#\s+(.*)$/m;
     const match = content.match(h1RegExp);
@@ -233,7 +238,7 @@ export async function scanSideMeta(workDir: string, rootDir: string) {
         const realpath = await detectFilePath(subDir);
         const isExsit = await fs.pathExists(realpath);
         return {
-          text: label,
+          text: label!,
           collapsible,
           collapsed,
           items: subSidebar,
@@ -242,10 +247,10 @@ export async function scanSideMeta(workDir: string, rootDir: string) {
         };
       } else {
         return {
-          text: label,
+          text: label!,
           link,
           tag,
-        };
+        } as SidebarItem;
       }
     }),
   );
@@ -295,17 +300,17 @@ export function pluginAutoNavSidebar(): RspressPlugin {
       const hasLocales = langs.length > 0;
       if (hasLocales) {
         config.themeConfig.locales = await Promise.all(
-          config.themeConfig.locales.map(async locale => {
+          config.themeConfig.locales!.map(async locale => {
             return {
               ...locale,
-              ...(await walk(path.join(config.root, locale.lang))),
+              ...(await walk(path.join(config.root!, locale.lang))),
             };
           }),
         );
       } else {
         config.themeConfig = {
           ...config.themeConfig,
-          ...(await walk(config.root)),
+          ...(await walk(config.root!)),
         };
       }
       return config;

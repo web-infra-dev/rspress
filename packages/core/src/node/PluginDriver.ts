@@ -4,7 +4,6 @@ import {
   RspressPlugin,
   RouteMeta,
 } from '@rspress/shared';
-import { pluginAutoNavSidebar } from './plugins/autoNavAndSidebar';
 
 export class PluginDriver {
   #config: UserConfig;
@@ -41,13 +40,12 @@ export class PluginDriver {
     }
     if (mediumZoomConfig) {
       const { pluginMediumZoom } = await import('@rspress/plugin-medium-zoom');
-      this.addPlugin(
-        pluginMediumZoom(
-          typeof mediumZoomConfig === 'object' ? mediumZoomConfig : undefined,
-        ),
-      );
+      this.addPlugin(pluginMediumZoom());
     }
     if (!haveNavSidebarConfig) {
+      const { pluginAutoNavSidebar } = await import(
+        '@rspress/plugin-auto-sidebar'
+      );
       this.addPlugin(pluginAutoNavSidebar());
     }
 
