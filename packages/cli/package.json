@@ -8,6 +8,11 @@
   "bin": {
     "rspress": "./bin/rspress.js"
   },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/web-infra-dev/rspress",
+    "directory": "packages/cli"
+  },
   "scripts": {
     "dev": "modern build -w",
     "build": "modern build",
