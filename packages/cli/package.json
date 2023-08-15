@@ -13,6 +13,20 @@
     "url": "https://github.com/web-infra-dev/rspress",
     "directory": "packages/cli"
   },
+  "exports": {
+    ".": {
+      "default": "./dist/index.js"
+    },
+    "./runtime": {
+      "default": "./runtime.ts"
+    },
+    "./theme": {
+      "default": "./theme.ts"
+    },
+    "./config": {
+      "default": "./config.ts"
+    }
+  },
   "scripts": {
     "dev": "modern build -w",
     "build": "modern build",
@@ -24,16 +38,13 @@
   },
   "dependencies": {
     "cac": "^6.7.14",
-    "interpret": "^3.1.1",
-    "rechoir": "^0.8.0",
-    "@rspress/core": "workspace:*"
+    "@rspress/core": "workspace:*",
+    "@modern-js/node-bundle-require": "2.30.0"
   },
   "devDependencies": {
-    "@types/interpret": "^1.1.1",
     "@types/jest": "~29.2.4",
     "@types/node": "~16.11.7",
     "@types/react": "~18.0.26",
-    "@types/rechoir": "^0.6.1",
     "rimraf": "~3.0.2",
     "ts-node": "^10.9.1",
     "typescript": "~5.0.4"
@@ -48,6 +59,7 @@
     "bin",
     "dist",
     "runtime.ts",
-    "theme.ts"
+    "theme.ts",
+    "config.ts"
   ]
 }

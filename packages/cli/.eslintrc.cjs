@@ -7,6 +7,7 @@ module.exports = {
     'vitest.config.ts',
     'runtime.ts',
     'theme.ts',
+    'config.ts',
   ],
   parserOptions: {
     tsconfigRootDir: __dirname,

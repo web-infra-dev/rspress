@@ -1,7 +1,7 @@
 import { createRequire } from 'module';
 import path from 'path';
 import { cac } from 'cac';
-import { UserConfig, build, dev, serve } from '@rspress/core';
+import { build, dev, serve } from '@rspress/core';
 import { loadConfigFile } from './config/loadConfigFile';
 
 const require = createRequire(import.meta.url);
@@ -59,7 +59,3 @@ cli
   );
 
 cli.parse();
-
-export function defineConfig(config: UserConfig): UserConfig {
-  return config;
-}
