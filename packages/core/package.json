@@ -59,7 +59,8 @@
     "@mdx-js/react": "2.2.1",
     "@modern-js/builder": "2.30.0",
     "@modern-js/builder-rspack-provider": "2.30.0",
-    "@modern-js/doc-plugin-medium-zoom": "2.30.0",
+    "@rspress/plugin-medium-zoom": "workspace:*",
+    "@rspress/plugin-last-updated": "workspace:*",
     "@modern-js/mdx-rs-binding": "0.2.4",
     "@modern-js/remark-container": "2.30.0",
     "@modern-js/utils": "2.30.0",
@@ -158,7 +159,6 @@
     "index.html",
     "runtime.ts",
     "theme.ts",
-    "shiki-theme.json",
     "loader.cjs"
   ],
   "publishConfig": {

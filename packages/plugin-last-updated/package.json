@@ -1,0 +1,70 @@
+{
+  "name": "@rspress/plugin-last-updated",
+  "version": "1.0.0",
+  "description": "A plugin for rspress to record the last updated time of the doc.",
+  "bugs": "https://github.com/web-infra-dev/rspress/issues",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/web-infra-dev/rspress",
+    "directory": "packages/plugin-medium-zoom"
+  },
+  "license": "MIT",
+  "type": "module",
+  "jsnext:source": "./src/index.ts",
+  "types": "./dist/index.d.ts",
+  "main": "./dist/index.js",
+  "module": "./dist/node/index.js",
+  "scripts": {
+    "dev": "modern dev",
+    "build": "modern build",
+    "reset": "rimraf ./**/node_modules",
+    "lint": "modern lint",
+    "change": "modern change",
+    "bump": "modern bump",
+    "pre": "modern pre",
+    "change-status": "modern change-status",
+    "gen-release-note": "modern gen-release-note",
+    "release": "modern release",
+    "new": "modern new",
+    "test": "vitest run --passWithNoTests",
+    "upgrade": "modern upgrade"
+  },
+  "engines": {
+    "node": ">=14.17.6"
+  },
+  "eslintIgnore": [
+    "node_modules/",
+    "dist/"
+  ],
+  "devDependencies": {
+    "@modern-js/tsconfig": "2.30.0",
+    "@types/node": "^18.11.17",
+    "@types/react": "^18",
+    "@types/react-dom": "^18",
+    "typescript": "^5",
+    "vitest": "0.33.0",
+    "react": "^17",
+    "@rspress/shared": "workspace:*"
+  },
+  "peerDependencies": {
+    "rspress": "*"
+  },
+  "sideEffects": [
+    "*.css",
+    "*.less",
+    "*.sass",
+    "*.scss"
+  ],
+  "files": [
+    "dist",
+    "src"
+  ],
+  "publishConfig": {
+    "access": "public",
+    "provenance": true,
+    "registry": "https://registry.npmjs.org/"
+  },
+  "dependencies": {
+    "@modern-js/utils": "2.30.0"
+  }
+}

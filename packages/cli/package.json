@@ -1,5 +1,5 @@
 {
-  "name": "@rspress/cli",
+  "name": "rspress",
   "version": "1.0.0",
   "type": "module",
   "types": "./dist/index.d.ts",

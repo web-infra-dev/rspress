@@ -1,2 +1,1 @@
-# @rspress/cli
-
+# rspress

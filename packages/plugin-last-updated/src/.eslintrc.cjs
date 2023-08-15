@@ -2,14 +2,9 @@
 module.exports = {
   root: true,
   extends: ['@modern-js-app'],
-  ignorePatterns: [
-    '**/tests/**/*',
-    'vitest.config.ts',
-    'runtime.ts',
-    'theme.ts',
-  ],
+  ignorePatterns: ['components/MediumZoom.tsx'],
   parserOptions: {
     tsconfigRootDir: __dirname,
-    project: ['./tsconfig.json'],
+    project: ['../tsconfig.json'],
   },
 };

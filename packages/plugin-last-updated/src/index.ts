@@ -1,3 +1,4 @@
+import type { RspressPlugin } from '@rspress/shared';
 import execa from '@modern-js/utils/execa';
 
 function transform(timestamp: number, lang: string) {
@@ -20,10 +21,13 @@ async function getGitLastUpdatedTimeStamp(filePath: string) {
   return lastUpdated;
 }
 
-export function pluginLastUpdated() {
+/**
+ * The plugin is used to add the last updated time to the page.
+ */
+export function pluginLastUpdated(): RspressPlugin {
   return {
-    name: 'last-updated',
-    async extendPageData(pageData: any) {
+    name: '@rspress/plugin-last-updated',
+    async extendPageData(pageData) {
       const { _filepath, lang } = pageData;
       const lastUpdated = await getGitLastUpdatedTimeStamp(_filepath);
       if (lastUpdated) {
