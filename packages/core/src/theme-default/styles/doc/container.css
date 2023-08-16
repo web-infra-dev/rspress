@@ -1,6 +1,5 @@
 /*
   * Container Style, the dom structure is Related to `@modern-js/remark-container`.
-  * TDOO: move to @modern-js/doc-plugin-conatiner.
  */
 :root {
   --modern-container-info-border: rgba(7, 156, 112, 0.3);
