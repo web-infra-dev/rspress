@@ -19,10 +19,6 @@ module.exports = async function () {
         })
         .join(',')}];
     `;
-    // Avoid infinite loop compilation
-    // meta.forEach(item => {
-    // this.addDependency(item.virtualModulePath);
-    // });
     callback(null, result);
   } catch (err) {
     callback(err);
