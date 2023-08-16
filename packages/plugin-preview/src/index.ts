@@ -1,6 +1,6 @@
 import path, { join } from 'path';
 import { RspackVirtualModulePlugin } from 'rspack-plugin-virtual-module';
-import type { RspressPlugin, RouteMeta } from '@rspress/core';
+import type { RspressPlugin, RouteMeta } from '@rspress/shared';
 import { remarkCodeToDemo } from './codeToDemo';
 import { injectDemoBlockImport, toValidVarName } from './utils';
 import {

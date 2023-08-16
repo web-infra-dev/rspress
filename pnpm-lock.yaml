@@ -47,6 +47,9 @@ importers:
 
   e2e/example:
     dependencies:
+      '@rspress/plugin-preview':
+        specifier: workspace:*
+        version: link:../../packages/plugin-preview
       rspress:
         specifier: workspace:*
         version: link:../../packages/cli
