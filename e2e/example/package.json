@@ -7,7 +7,8 @@
     "preview": "rspress preview"
   },
   "dependencies": {
-    "rspress": "workspace:*"
+    "rspress": "workspace:*",
+    "@rspress/plugin-preview": "workspace:*"
   },
   "devDependencies": {
     "@types/node": "^14.14.31",

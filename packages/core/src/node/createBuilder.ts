@@ -107,7 +107,7 @@ async function createInternalBuildConfig(
         '@': path.join(PACKAGE_ROOT, 'src'),
         '@/runtime': path.join(PACKAGE_ROOT, 'src', 'runtime', 'index.ts'),
         '@theme': themeDir,
-        '@modern-js/doc-core': PACKAGE_ROOT,
+        '@rspress/core': PACKAGE_ROOT,
         'react-lazy-with-preload': require.resolve('react-lazy-with-preload'),
         ...runtimeModuleIDs.reduce((acc, cur) => {
           acc[cur] = path.join(runtimeTempDir, cur);

@@ -43,7 +43,7 @@
     "@types/react-dom": "^18",
     "typescript": "^5",
     "vitest": "0.33.0",
-    "react": "^17",
+    "react": "^18.2.0",
     "@rspress/shared": "workspace:*"
   },
   "peerDependencies": {
