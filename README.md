@@ -1,4 +1,4 @@
-# Rspress(beta)
+# Rspress(beta) 🦀💨
 
 A fast Rspack-based static site generator.
 
