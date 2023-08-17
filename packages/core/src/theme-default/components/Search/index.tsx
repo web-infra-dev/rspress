@@ -85,17 +85,21 @@ export function Search() {
           }
           break;
         case KEY_CODE.ARROW_DOWN:
-          e.preventDefault();
-          setCurrentSuggestionIndex(
-            (currentSuggestionIndex + 1) % suggestions.length,
-          );
+          if (focused) {
+            e.preventDefault();
+            setCurrentSuggestionIndex(
+              (currentSuggestionIndex + 1) % suggestions.length,
+            );
+          }
           break;
         case KEY_CODE.ARROW_UP:
-          e.preventDefault();
-          setCurrentSuggestionIndex(
-            (currentSuggestionIndex - 1 + suggestions.length) %
-              suggestions.length,
-          );
+          if (focused) {
+            e.preventDefault();
+            setCurrentSuggestionIndex(
+              (currentSuggestionIndex - 1 + suggestions.length) %
+                suggestions.length,
+            );
+          }
           break;
         case KEY_CODE.ENTER:
           if (currentSuggestionIndex >= 0) {
