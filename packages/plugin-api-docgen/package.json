@@ -1,12 +1,12 @@
 {
-  "name": "@rspress/plugin-preview",
+  "name": "@rspress/plugin-api-docgen",
   "version": "0.1.0",
-  "description": "A plugin for rspress to preview the code block in markdown/mdx file.",
+  "description": "A plugin for rspress to generate api doc.",
   "bugs": "https://github.com/web-infra-dev/rspress/issues",
   "repository": {
     "type": "git",
     "url": "https://github.com/web-infra-dev/rspress",
-    "directory": "packages/plugin-preview"
+    "directory": "packages/plugin-api-docgen"
   },
   "license": "MIT",
   "jsnext:source": "./src/index.ts",
@@ -35,13 +35,14 @@
     "dist/"
   ],
   "dependencies": {
-    "@mdx-js/mdx": "2.2.1",
-    "@rspress/shared": "workspace:*",
     "@modern-js/utils": "2.30.0",
-    "qrcode.react": "^3.1.0",
+    "react-markdown": "8.0.7",
+    "react-docgen-typescript": "2.2.2",
+    "documentation": "14.0.2",
     "remark-gfm": "3.0.1"
   },
   "devDependencies": {
+    "@rspress/shared": "workspace:*",
     "@types/mdast": "^3.0.10",
     "@types/node": "^18.11.17",
     "@types/react": "^18",
@@ -51,7 +52,7 @@
     "react": "^18",
     "react-dom": "^18",
     "react-router-dom": "^6.8.1",
-    "rspack-plugin-virtual-module": "0.1.10",
+    "rspack-plugin-virtual-module": "0.1.8",
     "typescript": "^5",
     "unified": "^10.1.2",
     "unist-util-visit": "^4.1.1"

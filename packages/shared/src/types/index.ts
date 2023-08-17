@@ -241,6 +241,7 @@ export interface PageData {
     description?: string;
     pageType: PageType;
     _relativePath: string;
+    [key: string]: unknown;
   };
 }
 

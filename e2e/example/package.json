@@ -8,7 +8,9 @@
   },
   "dependencies": {
     "rspress": "workspace:*",
-    "@rspress/plugin-preview": "workspace:*"
+    "@rspress/plugin-preview": "workspace:*",
+    "@rspress/plugin-api-docgen": "workspace:*",
+    "react": "18.2.0"
   },
   "devDependencies": {
     "@types/node": "^14.14.31",
