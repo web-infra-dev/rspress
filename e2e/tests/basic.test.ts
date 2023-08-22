@@ -20,9 +20,7 @@ test.describe('basic test', async () => {
   });
 
   test('Index page', async ({ page }) => {
-    await page.goto(`http://localhost:${appPort}`, {
-      waitUntil: 'networkidle',
-    });
+    await page.goto(`http://localhost:${appPort}`);
     const documentText = await page.evaluate(() => document.body.textContent);
     console.log('documentText', documentText);
     const h1 = await page.$('h1');
@@ -38,9 +36,7 @@ test.describe('basic test', async () => {
   });
 
   test('Guide page', async ({ page }) => {
-    await page.goto(`http://localhost:${appPort}/guide`, {
-      waitUntil: 'networkidle',
-    });
+    await page.goto(`http://localhost:${appPort}/guide`);
     const documentText = await page.evaluate(() => document.body.textContent);
     console.log('documentText', documentText);
     const h1 = await page.$('h1');

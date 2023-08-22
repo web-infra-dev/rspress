@@ -5,4 +5,8 @@ export default defineConfig({
   testDir: './e2e',
   fullyParallel: false,
   globalTimeout: 60 * 60 * 1000,
+  timeout: 60 * 1000,
+  quiet: true,
+  workers: 4,
+  reporter: process.env.CI ? 'github' : 'list',
 });
