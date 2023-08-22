@@ -73,4 +73,4 @@ jobs:
 
       - name: E2E Test
         if: ${{steps.skip-ci.outputs.RESULT != 'true'}}
-        run: npx playwright install && pnpm run test:e2e
+        run: npx playwright install --with-deps && pnpm run test:e2e

@@ -48,7 +48,6 @@ export async function runCommand(
       if (bootupMarkers[commandName].test(message)) {
         if (!didResolve) {
           didResolve = true;
-          await sleep(3000);
           resolve(instance);
         }
       }
