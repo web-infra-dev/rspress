@@ -83,6 +83,9 @@ async function createInternalBuildConfig(
   };
 
   return {
+    dev: {
+      port: process.env.PORT ? Number(process.env.PORT) : undefined,
+    },
     html: {
       favicon: config?.icon,
       template: path.join(PACKAGE_ROOT, 'index.html'),
@@ -120,6 +123,7 @@ async function createInternalBuildConfig(
         __ASSET_PREFIX__: JSON.stringify(assetPrefix),
         'process.env.__SSR__': JSON.stringify(isSSR),
         'process.env.__IS_REACT_18__': JSON.stringify(reactVersion === 18),
+        'process.env.TEST': JSON.stringify(process.env.TEST),
       },
     },
     tools: {
