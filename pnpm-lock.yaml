@@ -178,6 +178,9 @@ importers:
       '@types/node':
         specifier: ^14
         version: 14.18.54
+      rspress:
+        specifier: workspace:*
+        version: link:../../../packages/cli
 
   packages/cli:
     dependencies:

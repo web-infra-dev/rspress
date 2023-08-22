@@ -63,6 +63,10 @@ jobs:
         if: ${{steps.skip-ci.outputs.RESULT != 'true'}}
         run: pnpm install --ignore-scripts
 
+      - name: Build Packages
+        if: ${{steps.skip-ci.outputs.RESULT != 'true'}}
+        run: pnpm run build
+
       - name: Unit Test
         if: ${{steps.skip-ci.outputs.RESULT != 'true'}}
         run: pnpm run test:unit
