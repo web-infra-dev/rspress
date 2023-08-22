@@ -168,10 +168,6 @@ importers:
         version: 14.18.54
 
   e2e/fixtures/with-base:
-    dependencies:
-      rspress:
-        specifier: workspace:*
-        version: link:../../../packages/cli
     devDependencies:
       '@modern-js/tsconfig':
         specifier: 2.30.0
