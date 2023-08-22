@@ -11,6 +11,10 @@ export interface CommandOptions {
 
 export type Command = 'dev' | 'build' | 'preview';
 
+export function sleep(ms: number) {
+  return new Promise(resolve => setTimeout(resolve, ms));
+}
+
 export async function runCommand(
   commandName: Command,
   options: CommandOptions,
@@ -33,7 +37,7 @@ export async function runCommand(
 
     let didResolve = false;
 
-    function handleStdout(data) {
+    async function handleStdout(data) {
       const message = data.toString();
       const bootupMarkers = {
         dev: /(Dev server|Preview server) running at/i,
@@ -44,6 +48,7 @@ export async function runCommand(
       if (bootupMarkers[commandName].test(message)) {
         if (!didResolve) {
           didResolve = true;
+          await sleep(3000);
           resolve(instance);
         }
       }
