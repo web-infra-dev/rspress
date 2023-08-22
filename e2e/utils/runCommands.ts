@@ -47,6 +47,7 @@ export async function runCommand(
           resolve(instance);
         }
       }
+      process.stdout.write(message);
     }
 
     instance.stdout!.on('data', handleStdout);
