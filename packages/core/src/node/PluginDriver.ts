@@ -44,7 +44,7 @@ export class PluginDriver {
     }
     if (!haveNavSidebarConfig) {
       const { pluginAutoNavSidebar } = await import(
-        '@rspress/plugin-auto-sidebar'
+        '@rspress/plugin-auto-nav-sidebar'
       );
       this.addPlugin(pluginAutoNavSidebar());
     }

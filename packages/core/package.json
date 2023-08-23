@@ -61,7 +61,7 @@
     "@modern-js/builder-rspack-provider": "2.30.0",
     "@rspress/plugin-medium-zoom": "workspace:*",
     "@rspress/plugin-last-updated": "workspace:*",
-    "@rspress/plugin-auto-sidebar": "workspace:*",
+    "@rspress/plugin-auto-nav-sidebar": "workspace:*",
     "@modern-js/mdx-rs-binding": "0.2.4",
     "@modern-js/remark-container": "2.30.0",
     "@modern-js/utils": "2.30.0",
