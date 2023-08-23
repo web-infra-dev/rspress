@@ -1,6 +1,5 @@
 {
   "compilerOptions": {
     "esModuleInterop": true
-  },
-  "include": ["rspress.config.ts"]
+  }
 }

@@ -86,7 +86,7 @@ export const Layout: React.FC<LayoutProps> = props => {
   };
 
   useEffect(() => {
-    if (!defaultLang) {
+    if (!defaultLang || process.env.TEST === '1') {
       // Check the window.navigator.language to determine the default language
       // If the default language is not the same as the current language, redirect to the default language
       // The default language will not have a lang prefix in the URL

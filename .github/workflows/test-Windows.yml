@@ -69,10 +69,22 @@ jobs:
         if: ${{steps.skip-ci.outputs.RESULT != 'true'}}
         run: pnpm install --ignore-scripts
 
+      - name: Build Packages
+        if: ${{steps.skip-ci.outputs.RESULT != 'true'}}
+        run: pnpm run build
+
       - name: Unit Test
         if: ${{steps.skip-ci.outputs.RESULT != 'true'}}
         run: pnpm run test:unit
 
       - name: E2E Test
         if: ${{steps.skip-ci.outputs.RESULT != 'true'}}
-        run: npx playwright install && pnpm run test:e2e
+        run: npx playwright install --with-deps && pnpm run test:e2e
+
+      - name: Upload Playwright Report
+        uses: actions/upload-artifact@v3
+        if: always()
+        with:
+          name: playwright-report
+          path: playwright-report/
+          retention-days: 14

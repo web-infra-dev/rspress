@@ -47,3 +47,7 @@ modern.config.local.mjs
 
 doc_build/
 .turbo
+
+test-results/
+
+playwright-report/
