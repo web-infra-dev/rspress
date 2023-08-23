@@ -1,5 +1,5 @@
 {
-  "name": "@rspress/plugin-auto-sidebar",
+  "name": "@rspress/plugin-auto-nav-sidebar",
   "version": "0.1.0",
   "description": "A plugin for rspress to generate navbar and sidebar config automatically.",
   "bugs": "https://github.com/web-infra-dev/rspress/issues",
@@ -15,7 +15,7 @@
   "main": "./dist/index.js",
   "module": "./dist/index.js",
   "scripts": {
-    "dev": "modern dev",
+    "dev": "modern build -w",
     "build": "modern build",
     "reset": "rimraf ./**/node_modules",
     "lint": "modern lint",

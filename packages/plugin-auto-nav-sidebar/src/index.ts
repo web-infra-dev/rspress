@@ -235,14 +235,18 @@ export async function scanSideMeta(workDir: string, rootDir: string) {
       } else if (type === 'dir') {
         const subDir = path.resolve(workDir, name);
         const subSidebar = await scanSideMeta(subDir, rootDir);
-        const realpath = await detectFilePath(subDir);
-        const isExsit = await fs.pathExists(realpath);
+        let realPath = '';
+        try {
+          realPath = await detectFilePath(subDir);
+        } catch (e) {
+          // ignore
+        }
         return {
           text: label!,
           collapsible,
           collapsed,
           items: subSidebar,
-          link: isExsit ? `/${relativePath}/${name}` : undefined,
+          link: realPath ? `/${relativePath}/${name}` : undefined,
           tag,
         };
       } else {
@@ -268,7 +272,6 @@ export async function walk(workDir: string) {
   } catch (e) {
     navConfig = [];
   }
-
   // find the `_meta.json` file in the subdirectory
   const subDirs = (await fs.readdir(workDir)).filter(v =>
     fs.statSync(path.join(workDir, v)).isDirectory(),
