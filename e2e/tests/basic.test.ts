@@ -67,10 +67,14 @@ test.describe('basic test', async () => {
     await darkModeButton?.click();
     // check the class in html
     htmlClass = await page.evaluate(html => html?.getAttribute('class'), html);
-    expect(htmlClass?.includes('dark')).toBe(defaultMode !== 'dark');
+    expect(htmlClass?.includes('dark') ? true : false).toBe(
+      defaultMode !== 'dark',
+    );
     // click the button again, check the class in html
     await darkModeButton?.click();
     htmlClass = await page.evaluate(html => html?.getAttribute('class'), html);
-    expect(htmlClass?.includes('dark')).toBe(defaultMode === 'dark');
+    expect(htmlClass?.includes('dark') ? true : false).toBe(
+      defaultMode === 'dark',
+    );
   });
 });
