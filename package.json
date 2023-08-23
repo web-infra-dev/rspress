@@ -18,7 +18,10 @@
     "release": "modern release",
     "deploy": "modern deploy",
     "lint": "modern lint",
-    "upgrade": "modern upgrade"
+    "upgrade": "modern upgrade",
+    "dev:website": "turbo run dev --filter {apps/website} --cache-dir=.turbo --no-daemon",
+    "build:website": "turbo run build --filter {apps/website} --cache-dir=.turbo --no-daemon",
+    "preview:website": "cd apps/website && npm run preview"
   },
   "engines": {
     "node": ">=16.18.1"
