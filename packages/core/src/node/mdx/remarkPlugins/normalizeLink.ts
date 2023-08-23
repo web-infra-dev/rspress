@@ -100,9 +100,9 @@ export const remarkPluginNormalizeLink: Plugin<
     );
 
     const normalizeImageUrl = (imageUrl: string): string => {
-      // if (isExternalUrl(imageUrl)) {
-      //   return '';
-      // }
+      if (isExternalUrl(imageUrl)) {
+        return '';
+      }
       if (imageUrl.startsWith('/')) {
         const publicDir = path.join(root, PUBLIC_DIR);
         const imagePath = path.join(publicDir, imageUrl);
