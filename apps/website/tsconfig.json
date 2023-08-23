@@ -1,0 +1,10 @@
+{
+  "extends": "@modern-js/tsconfig/base",
+  "compilerOptions": {
+    "jsx": "preserve",
+    "paths": {
+      "i18n": ["./i18n.json"]
+    }
+  },
+  "include": ["./rspress.config.ts", "docs/**/*", "src/**/*"]
+}
