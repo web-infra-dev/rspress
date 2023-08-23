@@ -3,12 +3,11 @@ import { defineConfig } from 'rspress/config';
 
 export default defineConfig({
   markdown: {
-    experimentalMdxRs: true,
     checkDeadLinks: true,
   },
   root: path.join(__dirname, 'docs'),
   title: 'Rspress Website',
-  description: 'A modern static site generator based on Rspack',
+  description: 'Modern static site generator based on Rspack',
   lang: 'en',
   icon: 'https://lf3-static.bytednsdoc.com/obj/eden-cn/zq-uylkvT/ljhwZthlaukjlkulzlp/logo-1x-0104.png',
   builderConfig: {

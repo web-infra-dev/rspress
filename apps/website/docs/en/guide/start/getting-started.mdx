@@ -1,0 +1,120 @@
+# Quick Start
+
+## 1. Initialize the project
+
+### Method 1: Create via CLI
+
+You can create a Rspress project using the Modern.js scaffold command:
+
+```bash
+# `modern-doc-app` is the project name
+npx @modern-js/create@latest rspress-app
+```
+
+Select `Doc Site` type and then select the package manager to complete the project creation.
+
+### Method 2: Manual Creation
+
+First, you can create a new directory with the following command:
+
+```bash
+mkdir rspress-app && cd rspress-app
+```
+
+Execute `npm init -y` to initialize a project. You can install Rspress using npm, yarn or pnpm:
+
+import { Tabs, Tab } from '@theme';
+
+<Tabs values={[{ label: 'npm' }, { label: 'yarn' }, { label: 'pnpm' }]}>
+  <Tab>
+
+```sh
+npm install rspress typescript ts-node -D
+```
+
+  </Tab>
+
+<Tab>
+
+```sh
+yarn add rspress typescript ts-node -D
+```
+
+</Tab>
+
+<Tab>
+
+```sh
+pnpm install rspress typescript ts-node -D
+```
+
+</Tab>
+
+</Tabs>
+
+Then create the file with the following command
+
+```bash
+mkdir docs && echo '# Hello World' > docs/index.md
+```
+
+Add the following script to `package.json`:
+
+```json
+{
+  "scripts": {
+    "dev": "rspress dev",
+    "build": "rspress build",
+    "preview": "rspress preview"
+  }
+}
+```
+
+Then initialize a configuration file `rspress.config.ts`:
+
+```ts title="rspress.config.ts"
+import { defineConfig } from 'rspress/config';
+import path from 'path';
+
+export default defineConfig({
+  root: path.join(__dirname, 'docs'),
+});
+```
+
+And then create `tsconfig.json`, add the following config:
+
+```ts
+{
+  "compilerOptions": {
+    "esModuleInterop": true,
+    "jsx": "react-jsx"
+  }
+}
+```
+
+## 2. Start Dev Server
+
+Start the local development service with the following command:
+
+```bash
+npm run dev
+```
+
+## 3. Build in Production
+
+Build the production bundle with the following command
+:
+
+```bash
+npm run build
+```
+
+By default, Rspress will set `doc_build` as the output directory.
+
+## 4. Preview in local environment
+
+Start the local preview service with the following command:
+
+```bash
+npm run preview
+```

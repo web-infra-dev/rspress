@@ -1,0 +1,41 @@
+# Commands
+
+Through this chapter, you can learn about the built-in commands of Rspress and how to use them.
+
+## rspress dev
+
+The `rspress dev` command is used to start a local development server, providing a development environment for document preview and debugging.
+
+```bash
+Usage: rspress dev [options]
+
+Options:
+   -c --config <config> specify config file path, which can be a relative path or an absolute path
+   -h, --help show command help
+```
+
+## rspress build
+
+The `rspress build` command is used to build documentation site for production.
+
+```bash
+Usage: rspress build [options]
+
+Options:
+   -c --config <config> specify config file path, which can be a relative path or an absolute path
+   -h, --help show command help
+```
+
+## rspress preview
+
+The `rspress preview` command is used to preview the output files of the `rspress build` command locally.
+
+```bash
+Usage: rspress preview [options]
+
+Options:
+   -c --config <config> specify config file path, which can be a relative path or an absolute path
+   --port <port> specify port number
+   --host <host> specify host
+   -h, --help show command help
+```
