@@ -196,6 +196,12 @@ importers:
       cac:
         specifier: ^6.7.14
         version: 6.7.14
+      chalk:
+        specifier: 5.3.0
+        version: 5.3.0
+      chokidar:
+        specifier: ^3.5.3
+        version: 3.5.3
     devDependencies:
       '@types/jest':
         specifier: ~29.2.4

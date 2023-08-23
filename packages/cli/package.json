@@ -37,9 +37,11 @@
     "upgrade": "modern upgrade"
   },
   "dependencies": {
-    "cac": "^6.7.14",
+    "@modern-js/node-bundle-require": "2.30.0",
     "@rspress/core": "workspace:*",
-    "@modern-js/node-bundle-require": "2.30.0"
+    "cac": "^6.7.14",
+    "chokidar": "^3.5.3",
+    "chalk": "5.3.0"
   },
   "devDependencies": {
     "@types/jest": "~29.2.4",
