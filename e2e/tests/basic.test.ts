@@ -36,7 +36,9 @@ test.describe('basic test', async () => {
   });
 
   test('Guide page', async ({ page }) => {
-    await page.goto(`http://localhost:${appPort}/guide`);
+    await page.goto(`http://localhost:${appPort}/guide`, {
+      waitUntil: 'networkidle',
+    });
     const documentText = await page.evaluate(() => document.body.textContent);
     console.log('documentText', documentText);
     const h1 = await page.$('h1');

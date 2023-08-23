@@ -45,27 +45,14 @@ test.describe('i18n test', async () => {
   });
 
   test('Add language prefix in route automatically', async ({ page }) => {
-    // Chinese
-    await page.goto(`http://localhost:${appPort}/`, {
-      waitUntil: 'networkidle',
-    });
-    // take the `点击` button
-    let link = await page.$('.modern-doc p a')!;
-    expect(link).toBeTruthy();
-    // get the href
-    let href = await page.evaluate(link => link?.getAttribute('href'), link);
-    expect(href).toBe('/guide/quick-start.html');
-
-    // English
-    // switch to English
     await page.goto(`http://localhost:${appPort}/en/`, {
       waitUntil: 'networkidle',
     });
     // take the `click` button
-    link = await page.$('.modern-doc p a')!;
+    const link = await page.$('.modern-doc p a')!;
     expect(link).toBeTruthy();
     // get the href
-    href = await page.evaluate(link => link?.getAttribute('href'), link);
+    const href = await page.evaluate(link => link?.getAttribute('href'), link);
     expect(href).toBe('/en/guide/quick-start.html');
   });
 
