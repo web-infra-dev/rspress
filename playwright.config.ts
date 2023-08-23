@@ -11,6 +11,7 @@ export default defineConfig({
   quiet: true,
   workers: 4,
   retries: 1,
+  // It is very important to upload artifacts so that we can trace the test failure
   reporter: [['html', { open: 'never' }]],
   use: {
     trace: 'on',
