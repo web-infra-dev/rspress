@@ -1,0 +1,48 @@
+{
+  "name": "create-rspress",
+  "version": "0.1.0",
+  "types": "./dist/index.d.ts",
+  "main": "./dist/index.js",
+  "module": "./dist/index.js",
+  "bin": {
+    "create-rspress": "./dist/index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/web-infra-dev/rspress",
+    "directory": "packages/create-rspress"
+  },
+  "scripts": {
+    "dev": "modern build -w",
+    "build": "modern build",
+    "build:watch": "modern build -w",
+    "test": "vitest run",
+    "reset": "rimraf ./**/node_modules",
+    "new": "modern new",
+    "upgrade": "modern upgrade"
+  },
+  "devDependencies": {
+    "@types/jest": "~29.2.4",
+    "@types/node": "~16.11.7",
+    "@types/prompts": "^2.4.4",
+    "@types/react": "~18.0.26",
+    "@types/fs-extra": "11.0.1",
+    "rimraf": "~3.0.2",
+    "ts-node": "^10.9.1",
+    "typescript": "~5.0.4",
+    "cac": "6.7.14",
+    "chalk": "5.3.0",
+    "fs-extra": "11.1.1",
+    "prompts": "2.4.1"
+  },
+  "sideEffects": [],
+  "publishConfig": {
+    "access": "public",
+    "provenance": true,
+    "registry": "https://registry.npmjs.org/"
+  },
+  "files": [
+    "dist",
+    "template"
+  ]
+}

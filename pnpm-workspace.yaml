@@ -6,3 +6,4 @@ packages:
   - 'packages/**'
   - 'e2e/**'
   - '!**/tests/**'
+  - '!packages/create-rspress/template'

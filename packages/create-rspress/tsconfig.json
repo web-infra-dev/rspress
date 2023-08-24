@@ -1,0 +1,15 @@
+{
+  "extends": "@modern-js/tsconfig/base",
+  "declaration": true,
+  "compilerOptions": {
+    "module": "ESNext",
+    "target": "ESNext",
+    "baseUrl": "./",
+    "paths": {
+      "@/*": ["./src/*"]
+    },
+    "isolatedModules": true
+  },
+  "include": ["src", "./modern.config.ts"],
+  "exclude": ["**/node_modules", "**/template/**"]
+}

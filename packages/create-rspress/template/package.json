@@ -8,7 +8,7 @@
     "preview": "rspress preview"
   },
   "dependencies": {
-    "rspress": "workspace:*"
+    "rspress": "latest"
   },
   "devDependencies": {
     "@modern-js/tsconfig": "2.30.0",
