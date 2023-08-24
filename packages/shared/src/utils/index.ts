@@ -17,6 +17,10 @@ export const isDebugMode = () => Boolean(process.env.DOC_DEBUG);
 export const cleanUrl = (url: string): string =>
   url.replace(HASH_REGEXP, '').replace(QUERY_REGEXP, '');
 
+export function normalizePosixPath(str: string) {
+  return str.replace(/\\/g, '/');
+}
+
 export const inBrowser = () => !process.env.__SSR__;
 
 export function addLeadingSlash(url: string) {
@@ -131,7 +135,7 @@ export function withoutBase(path: string, base = '') {
 }
 
 export function withBase(url = '/', base = ''): string {
-  const normalizedUrl = addLeadingSlash(url);
+  const normalizedUrl = addLeadingSlash(normalizePosixPath(url));
   const normalizedBase = normalizeSlash(base);
   // Avoid adding base path repeatly
   return normalizedUrl.startsWith(normalizedBase)

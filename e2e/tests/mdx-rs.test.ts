@@ -31,14 +31,14 @@ test.describe('i18n test', async () => {
     });
     expect(link).toBeTruthy();
     // check the compile result of absolute link in doc content
-    expect(await link.getAttribute('href')).toBe('/en/guide/quick-start.html');
+    expect(await link.getAttribute('href')).toBe('/en/guide/quick-start');
     link = await page.getByRole('link', {
       name: /relative/,
     });
 
     // check the compile result of relative link in doc content
     expect(link).toBeTruthy();
-    expect(await link.getAttribute('href')).toBe('/en/guide/quick-start.html');
+    expect(await link.getAttribute('href')).toBe('/en/guide/quick-start');
   });
 
   test('Should not add language prefix when current language is default language', async ({
@@ -52,12 +52,12 @@ test.describe('i18n test', async () => {
       name: /绝对路径/,
     });
     expect(link).toBeTruthy();
-    expect(await link.getAttribute('href')).toBe('/guide/quick-start.html');
+    expect(await link.getAttribute('href')).toBe('/guide/quick-start');
     // check the compile result of relative link in doc content
     link = await page.getByRole('link', {
       name: /相对路径/,
     });
     expect(link).toBeTruthy();
-    expect(await link.getAttribute('href')).toBe('/guide/quick-start.html');
+    expect(await link.getAttribute('href')).toBe('/guide/quick-start');
   });
 });
