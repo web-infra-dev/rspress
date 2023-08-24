@@ -8,6 +8,7 @@
 'rspress': patch
 '@rspress/shared': patch
 'create-rspress': patch
+'@rspress/plugin-typedoc': patch
 ---
 
 feat: add plugins

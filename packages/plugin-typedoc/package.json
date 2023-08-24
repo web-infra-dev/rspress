@@ -1,21 +1,20 @@
 {
-  "name": "@rspress/plugin-auto-nav-sidebar",
+  "name": "@rspress/plugin-typedoc",
   "version": "0.0.0",
-  "description": "A plugin for rspress to generate navbar and sidebar config automatically.",
+  "description": "A plugin for rspress to integrate typedoc",
   "bugs": "https://github.com/web-infra-dev/rspress/issues",
   "repository": {
     "type": "git",
     "url": "https://github.com/web-infra-dev/rspress",
-    "directory": "packages/plugin-auto-sidebar"
+    "directory": "packages/plugin-typedoc"
   },
   "license": "MIT",
-  "type": "module",
   "jsnext:source": "./src/index.ts",
   "types": "./dist/index.d.ts",
   "main": "./dist/index.js",
-  "module": "./dist/index.js",
+  "module": "./dist/node/index.js",
   "scripts": {
-    "dev": "modern build -w",
+    "dev": "modern dev",
     "build": "modern build",
     "reset": "rimraf ./**/node_modules",
     "lint": "modern lint",
@@ -43,7 +42,7 @@
     "@types/react-dom": "^18",
     "typescript": "^5",
     "vitest": "0.33.0",
-    "react": "^18.2.0",
+    "react": "^17",
     "@rspress/shared": "workspace:*"
   },
   "peerDependencies": {
@@ -65,6 +64,8 @@
     "registry": "https://registry.npmjs.org/"
   },
   "dependencies": {
-    "@modern-js/utils": "2.30.0"
+    "@modern-js/utils": "2.30.0",
+    "typedoc": "0.24.8",
+    "typedoc-plugin-markdown": "3.15.3"
   }
 }

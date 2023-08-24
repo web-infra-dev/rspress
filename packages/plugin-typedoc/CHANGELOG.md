@@ -1,0 +1,1 @@
+# @rspress/plugin-typedoc
