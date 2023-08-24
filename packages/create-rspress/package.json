@@ -16,7 +16,6 @@
     "dev": "modern build -w",
     "build": "modern build",
     "build:watch": "modern build -w",
-    "test": "vitest run",
     "reset": "rimraf ./**/node_modules",
     "new": "modern new",
     "upgrade": "modern upgrade"
