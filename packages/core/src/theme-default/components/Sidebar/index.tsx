@@ -21,12 +21,6 @@ const highlightTitleStyle = {
   fontSize: '14px',
 };
 
-const textEllipsisStyle = {
-  whiteSpace: 'nowrap',
-  overflow: 'hidden',
-  textOverflow: 'ellipsis',
-} as const;
-
 interface SidebarItemProps {
   id: string;
   item: SidebarItem | NormalizedSidebarGroup;
@@ -77,7 +71,6 @@ export function SidebarItemComp(props: SidebarItemProps) {
             active ? styles.menuItemActive : styles.menuItem
           } mt-1 py-1.5 px-2 rounded-xl font-medium flex`}
           style={{
-            ...textEllipsisStyle,
             // The first level menu item will have the same font size as the sidebar group
             fontSize: depth === 0 ? '14px' : '13px',
             marginLeft: depth === 0 ? 0 : '20px',
@@ -210,7 +203,6 @@ export function SidebarGroupComp(props: SidebarItemProps) {
         <h2
           className="py-1 px-2 text-sm font-medium flex"
           style={{
-            ...textEllipsisStyle,
             ...(depth === 0 ? highlightTitleStyle : {}),
           }}
         >
