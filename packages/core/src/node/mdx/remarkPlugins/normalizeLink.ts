@@ -86,7 +86,7 @@ export const remarkPluginNormalizeLink: Plugin<
 
         const relativePath = path.relative(root, file.path);
         if (url.startsWith('.')) {
-          url = path.join(path.dirname(relativePath), url);
+          url = path.posix.join(path.dirname(relativePath), url);
         }
 
         const lang = extractLangFromFilePath(relativePath);

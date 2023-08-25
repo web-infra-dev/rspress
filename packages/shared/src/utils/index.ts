@@ -17,6 +17,45 @@ export const isDebugMode = () => Boolean(process.env.DOC_DEBUG);
 export const cleanUrl = (url: string): string =>
   url.replace(HASH_REGEXP, '').replace(QUERY_REGEXP, '');
 
+export function slash(str: string) {
+  return str.replace(/\\/g, '/');
+}
+
+export function normalizePosixPath(id: string): string {
+  const path = slash(id);
+  const isAbsolutePath = path.startsWith('/');
+  const parts = path.split('/');
+
+  const normalizedParts = [];
+  for (const part of parts) {
+    if (part === '.' || part === '') {
+      // Ignore "." and empty parts
+      continue;
+    } else if (part === '..') {
+      // Go up one level for ".." part
+      if (
+        normalizedParts.length > 0 &&
+        normalizedParts[normalizedParts.length - 1] !== '..'
+      ) {
+        normalizedParts.pop();
+      } else if (isAbsolutePath) {
+        // Preserve leading ".." in absolute paths
+        normalizedParts.push('..');
+      }
+    } else {
+      // Add other parts
+      normalizedParts.push(part);
+    }
+  }
+
+  let normalizedPath = normalizedParts.join('/');
+  if (isAbsolutePath) {
+    normalizedPath = `/${normalizedPath}`;
+  }
+
+  return normalizedPath;
+}
+
 export const inBrowser = () => !process.env.__SSR__;
 
 export function addLeadingSlash(url: string) {
@@ -32,7 +71,7 @@ export function removeTrailingSlash(url: string) {
 }
 
 export function normalizeSlash(url: string) {
-  return removeTrailingSlash(addLeadingSlash(url));
+  return removeTrailingSlash(addLeadingSlash(normalizePosixPath(url)));
 }
 
 export function isExternalUrl(url: string) {
@@ -103,7 +142,7 @@ export function normalizeHref(url?: string) {
   }
 
   // eslint-disable-next-line prefer-const
-  let { url: cleanUrl, hash } = parseUrl(url);
+  let { url: cleanUrl, hash } = parseUrl(decodeURIComponent(url));
 
   // Ignore email and telephone links
   if (url.startsWith('mailto:') || url.startsWith('tel:')) {

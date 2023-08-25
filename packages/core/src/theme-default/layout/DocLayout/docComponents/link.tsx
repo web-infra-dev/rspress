@@ -1,5 +1,5 @@
 import { ComponentProps } from 'react';
-import { isExternalUrl, normalizeHref, normalizeSlash } from '@rspress/shared';
+import { isExternalUrl, normalizeSlash } from '@rspress/shared';
 import styles from './index.module.scss';
 import { withBase, useLang, usePageData, removeBase } from '@/runtime';
 
@@ -8,10 +8,10 @@ export const A = (props: ComponentProps<'a'>) => {
   const lang = useLang();
   const pageData = usePageData();
   const defaultLang = pageData.siteData.lang;
-  const startWithLang = removeBase(href).startsWith(`/${lang}`);
 
   if (defaultLang && !isExternalUrl(href) && !href.startsWith('#')) {
     href = normalizeSlash(href);
+    const startWithLang = removeBase(href).startsWith(`/${lang}`);
     // Add lang prefix if not default lang
     if (lang !== defaultLang && !startWithLang) {
       href = `/${lang}${href}`;
@@ -21,7 +21,7 @@ export const A = (props: ComponentProps<'a'>) => {
       href = removeBase(href).replace(`/${lang}`, '');
     }
 
-    href = normalizeHref(withBase(href || ''));
+    href = withBase(href || '');
   }
 
   return (
