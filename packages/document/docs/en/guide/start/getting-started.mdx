@@ -4,14 +4,35 @@
 
 ### Method 1: Create via CLI
 
-You can create a Rspress project using the Modern.js scaffold command:
+You can create a Rspress project using the `create-rspress` cli:
 
-```bash
-# `modern-doc-app` is the project name
-npx @modern-js/create@latest rspress-app
+<Tabs values={[{ label: 'npm' }, { label: 'yarn' }, { label: 'pnpm' }]}>
+  <Tab>
+
+```sh
+npm create rspress@latest
 ```
 
-Select `Doc Site` type and then select the package manager to complete the project creation.
+  </Tab>
+
+  <Tab>
+
+```sh
+yarn create rspress
+```
+
+  </Tab>
+
+  <Tab>
+
+```sh
+pnpm create rspress@latest
+```
+
+  </Tab>
+</Tabs>
+
+Input the project directory name, and then the cli will create the project for you.
 
 ### Method 2: Manual Creation
 

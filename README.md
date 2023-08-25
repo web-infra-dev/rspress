@@ -16,9 +16,9 @@ A fast Rspack-based static site generator.
 
 ## Contribution
 
-> **This project is new and under active development. Although Rspack can already successfully bundle real world projects, its APIs are not yet stable, and many Webpack plugin hooks have not been implemented yet. If you have feedback, questions, or bug reports, please create a GitHub issue. Any contributions are greatly appreciated!**
+> **This project is new and under active development. Although Rspress can already successfully bundle real world projects, its APIs are not yet stable.If you have feedback, questions, or bug reports, please create a GitHub issue. Any contributions are greatly appreciated!**
 
-Please read the [contributing guide](./CONTRIBUTING.md) and let's build Rspack together.
+Please read the [contributing guide](./CONTRIBUTING.md) and let's build Rspress together.
 
 ### Code of Conduct
 

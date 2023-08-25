@@ -1,17 +1,40 @@
 # 快速开始
 
+import { Tabs, Tab } from '@theme';
+
 ## 1. 初始化项目
 
 ### 方式一：通过脚手架创建
 
-你可以通过 Modern.js 脚手架命令来创建一个 Rspress 项目:
+你可以通过 Rspress 脚手架命令来创建项目:
 
-```bash
-# `modern-doc-app` 为项目名称
-npx @modern-js/create@latest rspress-app
+<Tabs values={[{ label: 'npm' }, { label: 'yarn' }, { label: 'pnpm' }]}>
+  <Tab>
+
+```sh
+npm create rspress@latest
 ```
 
-选择 `文档站` 类型，然后选择包管理工具即可完成项目创建。
+  </Tab>
+
+  <Tab>
+
+```sh
+yarn create rspress
+```
+
+  </Tab>
+
+  <Tab>
+
+```sh
+pnpm create rspress@latest
+```
+
+  </Tab>
+</Tabs>
+
+然后按照提示输入项目名称，即可创建一个 Rspress 项目。
 
 ### 方式二：手动创建
 
@@ -22,8 +45,6 @@ mkdir rspress-app && cd rspress-app
 ```
 
 执行 `npm init -y` 来初始化一个项目。你可以使用 npm、yarn 或 pnpm 安装 Rspress:
-
-import { Tabs, Tab } from '@theme';
 
 <Tabs values={[{ label: 'npm' }, { label: 'yarn' }, { label: 'pnpm' }]}>
   <Tab>

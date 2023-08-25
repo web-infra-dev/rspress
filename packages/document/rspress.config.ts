@@ -6,7 +6,7 @@ export default defineConfig({
     checkDeadLinks: true,
   },
   root: path.join(__dirname, 'docs'),
-  title: 'Rspress Website',
+  title: 'Rspress',
   description: 'Modern static site generator based on Rspack',
   lang: 'en',
   icon: 'https://lf3-static.bytednsdoc.com/obj/eden-cn/zq-uylkvT/ljhwZthlaukjlkulzlp/logo-1x-0104.png',
