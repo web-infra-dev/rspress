@@ -1,12 +1,17 @@
 {
   "name": "@rspress/docs",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "",
   "main": "index.js",
   "scripts": {
     "dev": "rspress dev",
     "build": "rspress build",
     "start": "rspress start"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/web-infra-dev/rspress",
+    "directory": "packages/document"
   },
   "keywords": [],
   "author": "",
