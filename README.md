@@ -12,7 +12,7 @@ A fast Rspack-based static site generator.
 
 ## Getting Started
 
-🚧 Under construction...
+Go to the [Quick Start](https://rspress.dev/guide/start/getting-started.html) to get started.
 
 ## Contribution
 
