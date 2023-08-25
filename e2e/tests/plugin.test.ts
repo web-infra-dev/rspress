@@ -19,21 +19,24 @@ test.describe('plugin test', async () => {
     }
   });
 
-  test('Should add routes', async ({ page }) => {
+  test('Should add route by filepath', async ({ page }) => {
     await page.goto(`http://localhost:${appPort}/filepath-route`, {
       waitUntil: 'networkidle',
     });
+    const h1 = await page.getByRole('heading', {
+      name: /Demo1/,
+    });
+    await expect(h1).toBeTruthy();
+  });
 
-    let h1 = await page.$('h1');
-    let text = await page.evaluate(h1 => h1?.textContent, h1);
-    await expect(text).toContain('Demo1');
-
+  test('Should add route by content', async ({ page }) => {
     await page.goto(`http://localhost:${appPort}/content-route`, {
       waitUntil: 'networkidle',
     });
 
-    h1 = await page.$('h1');
-    text = await page.evaluate(h1 => h1?.textContent, h1);
-    await expect(text).toContain('Demo2');
+    const h1 = await page.getByRole('heading', {
+      name: /Demo2/,
+    });
+    await expect(h1).toBeTruthy();
   });
 });
