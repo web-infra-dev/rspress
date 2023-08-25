@@ -6,6 +6,7 @@ import {
   normalizeHref,
   replaceLang,
   parseUrl,
+  normalizePosixPath,
 } from '.';
 
 describe('test shared utils', () => {
@@ -31,6 +32,16 @@ describe('test shared utils', () => {
     expect(withoutBase('/zh/guide/', '/zh/')).toBe('/guide/');
     expect(withoutBase('/guide/', '/')).toBe('/guide/');
     expect(withoutBase('/guide/', '')).toBe('/guide/');
+  });
+
+  test('normalizePosix', () => {
+    expect(normalizePosixPath('/guide\\\\start')).toBe('/guide/start');
+    expect(normalizePosixPath('/guide//start')).toBe('/guide/start');
+    expect(normalizePosixPath('/usr/local/../bin')).toBe('/usr/bin');
+    expect(normalizePosixPath('/usr/local/./bin')).toBe('/usr/local/bin');
+    expect(normalizePosixPath('/usr/./local/../../bin')).toBe('/bin');
+    expect(normalizePosixPath('/')).toBe('/');
+    expect(normalizePosixPath('')).toBe('');
   });
 
   test('normalizeHref', () => {
