@@ -69,7 +69,7 @@ test.describe('i18n test', async () => {
   test('Should not add language prefix when current language is default language', async ({
     page,
   }) => {
-    await page.goto(`http://localhost:${appPort}/`, {
+    await page.goto(`http://localhost:${appPort}/guide/quick-start`, {
       waitUntil: 'networkidle',
     });
     // check the compile result of absolute link in doc content

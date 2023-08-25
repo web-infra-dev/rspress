@@ -8,9 +8,8 @@ export default defineConfig({
   globalTimeout: 60 * 60 * 1000,
   // 3 min for each test
   timeout: 60 * 3 * 1000,
-  quiet: false,
-  workers: 4,
-  retries: 1,
+  quiet: true,
+  workers: '50%',
   // It is very important to upload artifacts so that we can trace the test failure
   reporter: [['html', { open: 'never' }]],
   use: {
