@@ -22,7 +22,7 @@ test.describe('i18n test', async () => {
   test('Add language prefix in route automatically when current language is not default language', async ({
     page,
   }) => {
-    await page.goto(`http://localhost:${appPort}/en/`, {
+    await page.goto(`http://localhost:${appPort}/en/guide/quick-start`, {
       waitUntil: 'networkidle',
     });
     // take the `click` button
@@ -31,20 +31,20 @@ test.describe('i18n test', async () => {
     });
     expect(link).toBeTruthy();
     // check the compile result of absolute link in doc content
-    expect(await link.getAttribute('href')).toBe('/en/guide/quick-start');
+    expect(await link.getAttribute('href')).toBe('/en/guide/install.html');
     link = await page.getByRole('link', {
       name: /relative/,
     });
 
     // check the compile result of relative link in doc content
     expect(link).toBeTruthy();
-    expect(await link.getAttribute('href')).toBe('/en/guide/quick-start');
+    expect(await link.getAttribute('href')).toBe('/en/guide/install.html');
   });
 
   test('Should not add language prefix when current language is default language', async ({
     page,
   }) => {
-    await page.goto(`http://localhost:${appPort}/`, {
+    await page.goto(`http://localhost:${appPort}/guide/quick-start`, {
       waitUntil: 'networkidle',
     });
     // check the compile result of absolute link in doc content
@@ -52,12 +52,12 @@ test.describe('i18n test', async () => {
       name: /绝对路径/,
     });
     expect(link).toBeTruthy();
-    expect(await link.getAttribute('href')).toBe('/guide/quick-start');
+    expect(await link.getAttribute('href')).toBe('/guide/install.html');
     // check the compile result of relative link in doc content
     link = await page.getByRole('link', {
       name: /相对路径/,
     });
     expect(link).toBeTruthy();
-    expect(await link.getAttribute('href')).toBe('/guide/quick-start');
+    expect(await link.getAttribute('href')).toBe('/guide/install.html');
   });
 });
