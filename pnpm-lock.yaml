@@ -60,18 +60,6 @@ importers:
         specifier: ^0.34.1
         version: 0.34.1(playwright@1.33.0)
 
-  apps/website:
-    devDependencies:
-      rspress:
-        specifier: workspace:*
-        version: link:../../packages/cli
-      ts-node:
-        specifier: ^10.9.1
-        version: 10.9.1(@types/node@18.11.17)(typescript@5.0.4)
-      typescript:
-        specifier: ^5
-        version: 5.0.4
-
   e2e/fixtures/basic:
     dependencies:
       rspress:
@@ -518,6 +506,18 @@ importers:
         version: 10.9.1(@types/node@16.11.7)(typescript@5.0.4)
       typescript:
         specifier: ~5.0.4
+        version: 5.0.4
+
+  packages/document:
+    devDependencies:
+      rspress:
+        specifier: workspace:*
+        version: link:../cli
+      ts-node:
+        specifier: ^10.9.1
+        version: 10.9.1(@types/node@18.11.17)(typescript@5.0.4)
+      typescript:
+        specifier: ^5
         version: 5.0.4
 
   packages/plugin-api-docgen:
