@@ -9,6 +9,7 @@ import {
   normalizeHref,
   parseUrl,
   isExternalUrl,
+  slash,
 } from '@rspress/shared';
 import { PUBLIC_DIR } from '@/node/constants';
 import { getASTNodeImport } from '@/node/utils/getASTNodeImport';
@@ -86,7 +87,7 @@ export const remarkPluginNormalizeLink: Plugin<
 
         const relativePath = path.relative(root, file.path);
         if (url.startsWith('.')) {
-          url = path.posix.join(path.dirname(relativePath), url);
+          url = path.posix.join(slash(path.dirname(relativePath)), url);
         }
 
         const lang = extractLangFromFilePath(relativePath);
