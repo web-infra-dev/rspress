@@ -84,13 +84,13 @@ export default (props: {
   }, [showQRCode]);
 
   return (
-    <div className={`modern-preview-operations mobile ${className}`}>
+    <div className={`rspress-preview-operations mobile ${className}`}>
       <button onClick={refresh} aria-label={t.refresh}>
         <IconRefresh />
       </button>
       <div className="relative" ref={triggerRef}>
         {showQRCode && (
-          <div className="modern-preview-qrcode">
+          <div className="rspress-preview-qrcode">
             <QRCodeSVG value={getPageUrl()} size={96} />
           </div>
         )}

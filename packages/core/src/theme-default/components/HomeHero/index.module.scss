@@ -1,15 +1,15 @@
 .clip {
-  background: var(--modern-home-hero-name-background);
+  background: var(--rp-home-hero-name-background);
   -webkit-background-clip: text;
   background-clip: text;
-  -webkit-text-fill-color: var(--modern-home-hero-name-color);
+  -webkit-text-fill-color: var(--rp-home-hero-name-color);
 }
 
 .mask {
   position: absolute;
   background-image: conic-gradient(
     from 180deg at 50% 50%,
-    var(--modern-c-brand) 0deg,
+    var(--rp-c-brand) 0deg,
     180deg,
     #42d392 1turn
   );

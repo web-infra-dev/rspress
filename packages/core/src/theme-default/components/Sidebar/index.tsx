@@ -17,7 +17,7 @@ interface Props {
 }
 
 const highlightTitleStyle = {
-  color: 'var(--modern-c-text-1)',
+  color: 'var(--rp-c-text-1)',
   fontSize: '14px',
 };
 
@@ -228,7 +228,7 @@ export function SidebarGroupComp(props: SidebarItemProps) {
       >
         <div
           ref={innerRef}
-          className="modern-sidebar-group transition-opacity duration-500 ease-in-out"
+          className="rspress-sidebar-group transition-opacity duration-500 ease-in-out"
           style={{
             opacity: initialState.current ? 0 : 1,
           }}
@@ -324,7 +324,7 @@ export function SideBar(props: Props) {
   };
   return (
     <aside
-      className={`${styles.sidebar} modern-sidebar ${
+      className={`${styles.sidebar} rspress-sidebar ${
         isSidebarOpen ? styles.open : ''
       }`}
       style={{
@@ -333,9 +333,9 @@ export function SideBar(props: Props) {
     >
       <div className={`mt-1 ${styles.sidebarContent}`}>
         <div
-          className="modern-scrollbar"
+          className="rspress-scrollbar"
           style={{
-            maxHeight: 'calc(100vh - var(--modern-nav-height) - 8px)',
+            maxHeight: 'calc(100vh - var(--rp-nav-height) - 8px)',
             overflow: 'scroll',
           }}
         >

@@ -37,7 +37,7 @@ const NavBarTitle = ({ title, langRoutePrefix, logo }: NavBarTitleProps) => {
             src={logo}
             alt="logo"
             id="logo"
-            className="w-24 mr-4 modern-doc-logo"
+            className="w-24 mr-4 rspress-logo"
           />
         ) : (
           <span>{title}</span>
@@ -174,12 +174,12 @@ export function Nav(props: NavProps) {
     <header
       className={`top-0 left-0 md:fixed w-full`}
       style={{
-        zIndex: 'var(--modern-z-index-nav)',
-        background: 'var(--modern-c-bg)',
+        zIndex: 'var(--rp-z-index-nav)',
+        background: 'var(--rp-c-bg)',
       }}
     >
       {beforeNav}
-      <div className={`${styles.navContainer} modern-doc-nav px-6`}>
+      <div className={`${styles.navContainer} rspress-nav px-6`}>
         <div
           className={`${styles.container} flex justify-between items-center h-full`}
         >

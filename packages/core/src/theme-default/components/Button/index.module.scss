@@ -29,31 +29,31 @@
 .button.brand:hover,
 .button.brand:active {
   opacity: 1;
-  border-color: var(--modern-c-brand-light);
+  border-color: var(--rp-c-brand-light);
   color: rgba(255, 255, 255, 0.87);
-  background-color: var(--modern-c-brand);
+  background-color: var(--rp-c-brand);
 }
 
 .button.brand:hover {
-  background-color: var(--modern-c-brand-light);
+  background-color: var(--rp-c-brand-light);
 }
 
 .button.alt,
 .button.alt:hover,
 .button.alt:active {
-  border-color: var(--modern-c-gray-light-3);
-  color: var(--modern-c-text-1);
-  background-color: var(--modern-c-gray-light-5);
+  border-color: var(--rp-c-gray-light-3);
+  color: var(--rp-c-text-1);
+  background-color: var(--rp-c-gray-light-5);
 }
 
 :global(.dark) .button.alt {
-  background-color: var(--modern-c-bg-mute);
+  background-color: var(--rp-c-bg-mute);
   border-color: #484848;
-  color: var(--modern-c-text-1);
+  color: var(--rp-c-text-1);
 }
 
 .button.alt:hover {
-  background-color: var(--modern-c-gray-light-4);
+  background-color: var(--rp-c-gray-light-4);
 }
 
 :global(.dark) .button.alt:hover {

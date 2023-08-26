@@ -29,7 +29,7 @@ export function HomeFeature({ frontmatter }: { frontmatter: FrontMatterMeta }) {
             key={title}
             className={`${
               gridClass ? styles[gridClass] : 'w-full'
-            } rounded hover:var(--modern-c-brand)`}
+            } rounded hover:var(--rp-c-brand)`}
           >
             <div className="h-full p-2">
               <article
@@ -45,14 +45,14 @@ export function HomeFeature({ frontmatter }: { frontmatter: FrontMatterMeta }) {
                 }}
               >
                 <div className="flex-center">
-                  <div className="modern-doc-home-feature-icon w-12 h-12 text-3xl text-center">
+                  <div className="rspress-home-feature-icon w-12 h-12 text-3xl text-center">
                     {icon}
                   </div>
                 </div>
-                <h2 className="modern-doc-home-feature-title font-bold text-center">
+                <h2 className="rspress-home-feature-title font-bold text-center">
                   {title}
                 </h2>
-                <p className="modern-doc-home-feature-detail leading-6 pt-2 text-sm text-text-2 font-medium">
+                <p className="rspress-home-feature-detail leading-6 pt-2 text-sm text-text-2 font-medium">
                   {details}
                 </p>
               </article>

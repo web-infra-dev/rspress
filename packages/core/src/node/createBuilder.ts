@@ -1,6 +1,7 @@
 import path from 'path';
 import { createRequire } from 'module';
-import { UserConfig, isDebugMode, removeTrailingSlash } from '@rspress/shared';
+import type { UserConfig } from '@rspress/shared';
+import { isDebugMode, removeTrailingSlash } from '@rspress/shared';
 import type { BuilderInstance } from '@modern-js/builder';
 import type {
   BuilderConfig,

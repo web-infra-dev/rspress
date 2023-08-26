@@ -55,7 +55,7 @@ test.describe('basic test', async () => {
     await page.goto(`http://localhost:${appPort}`, {
       waitUntil: 'networkidle',
     });
-    const darkModeButton = await page.$('.modern-nav-appearance');
+    const darkModeButton = await page.$('.rspress-nav-appearance');
     const html = await page.$('html');
     let htmlClass = await page.evaluate(
       html => html?.getAttribute('class'),

@@ -26,7 +26,7 @@
   :global(p) {
     margin: 0;
     font-size: 16px;
-    color: var(--modern-c-text-2);
+    color: var(--rp-c-text-2);
   }
 }
 
@@ -35,21 +35,21 @@
 :global(summary a) {
   &:not(:global(.header-anchor)) {
     font-weight: 500;
-    border-bottom: 1px dashed var(--modern-c-brand);
+    border-bottom: 1px dashed var(--rp-c-brand);
     transition: color 0.25s;
   }
 
   &:global(.header-anchor) {
-    color: var(--modern-c-brand);
+    color: var(--rp-c-brand);
   }
 
   &:hover {
-    color: var(--modern-c-brand-dark);
+    color: var(--rp-c-brand-dark);
     border-style: solid;
   }
 }
 
-:global(.modern-doc details) {
+:global(.rspress-doc details) {
   margin: 16px 0;
   padding: 8px;
   font-size: normal;
@@ -60,6 +60,6 @@
   }
 }
 
-:global(.modern-doc details:hover) {
-  background-color: var(--modern-c-bg-mute);
+:global(.rspress-doc details:hover) {
+  background-color: var(--rp-c-bg-mute);
 }

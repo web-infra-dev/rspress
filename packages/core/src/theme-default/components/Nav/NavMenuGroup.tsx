@@ -127,11 +127,11 @@ export function NavMenuGroup(item: NavMenuGroupItem) {
         <div
           className="p-3 pr-2 w-full h-full max-h-100vh whitespace-nowrap"
           style={{
-            boxShadow: 'var(--modern-shadow-3)',
+            boxShadow: 'var(--rp-shadow-3)',
             zIndex: 100,
-            border: '1px solid var(--modern-c-divider-light)',
+            border: '1px solid var(--rp-c-divider-light)',
             borderRadius: '2rem',
-            background: 'var(--modern-c-bg)',
+            background: 'var(--rp-c-bg)',
           }}
         >
           {/* The item could be a link or a sub group */}

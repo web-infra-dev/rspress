@@ -77,13 +77,13 @@ export function DocLayout(props: DocLayoutProps) {
         />
       ) : null}
       <div
-        className={`${styles.content} modern-doc-container flex flex-shrink-0`}
+        className={`${styles.content} rspress-doc-container flex flex-shrink-0`}
       >
         <div className="w-full">
           {isOverviewPage ? (
             <Overview />
           ) : (
-            <div className="modern-doc">
+            <div className="rspress-doc">
               <TabDataContext.Provider value={{ tabData, setTabData }}>
                 <MDXProvider components={getCustomMDXComponent()}>
                   <Content />
@@ -101,7 +101,7 @@ export function DocLayout(props: DocLayoutProps) {
           <div
             className={styles.asideContainer}
             style={{
-              maxHeight: 'calc(100vh - (var(--modern-nav-height) + 32px))',
+              maxHeight: 'calc(100vh - (var(--rp-nav-height) + 32px))',
               overflow: 'scroll',
               ...(hideNavbar
                 ? {

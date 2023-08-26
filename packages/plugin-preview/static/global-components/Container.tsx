@@ -36,18 +36,18 @@ const Container: React.FC<ContainerProps> = props => {
 
   return (
     <NoSSR>
-      <div className="modern-preview">
+      <div className="rspress-preview">
         {isMobile === 'true' ? (
-          <div className="modern-preview-wrapper flex">
-            <div className="modern-preview-code">{children?.[0]}</div>
-            <div className="modern-preview-device">
+          <div className="rspress-preview-wrapper flex">
+            <div className="rspress-preview-code">{children?.[0]}</div>
+            <div className="rspress-preview-device">
               <iframe src={getPageUrl()} key={iframeKey}></iframe>
               <MobileOperation url={url} refresh={refresh} />
             </div>
           </div>
         ) : (
           <div>
-            <div className="modern-preview-card">
+            <div className="rspress-preview-card">
               <div
                 style={{
                   overflow: 'auto',
@@ -56,7 +56,7 @@ const Container: React.FC<ContainerProps> = props => {
               >
                 {children?.[1]}
               </div>
-              <div className="modern-preview-operations web">
+              <div className="rspress-preview-operations web">
                 <button
                   onClick={toggleCode}
                   aria-label={lang === 'zh' ? '收起代码' : ''}
@@ -69,8 +69,8 @@ const Container: React.FC<ContainerProps> = props => {
             <div
               className={`${
                 showCode
-                  ? 'modern-preview-code-show'
-                  : 'modern-preview-code-hide'
+                  ? 'rspress-preview-code-show'
+                  : 'rspress-preview-code-hide'
               }`}
             >
               {children?.[0]}

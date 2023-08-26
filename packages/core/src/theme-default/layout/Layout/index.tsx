@@ -96,7 +96,7 @@ export const Layout: React.FC<LayoutProps> = props => {
     const { pathname } = window.location;
     const cleanPathname = removeBase(pathname);
     // Check if the user is visiting the site for the first time
-    const FIRST_VISIT_KEY = 'modern-doc-visited';
+    const FIRST_VISIT_KEY = 'rspress-visited';
     const visited = localStorage.getItem(FIRST_VISIT_KEY);
     if (visited) {
       return;

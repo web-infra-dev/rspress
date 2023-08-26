@@ -58,7 +58,7 @@ export function HomeHero({ frontmatter }: { frontmatter: FrontMatterMeta }) {
         </div>
 
         {hasImage ? (
-          <div className="modern-doc-home-hero-image sm:max-w-60 sm:max-h-60 md:flex-center m-auto order-1 md:order-2 sm:flex md:none lg:flex">
+          <div className="rspress-home-hero-image sm:max-w-60 sm:max-h-60 md:flex-center m-auto order-1 md:order-2 sm:flex md:none lg:flex">
             <img src={hero.image?.src} alt={hero.image?.alt} />
           </div>
         ) : null}

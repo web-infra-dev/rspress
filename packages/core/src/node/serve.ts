@@ -1,7 +1,7 @@
 import sirv from 'sirv';
 import compression from 'compression';
 import polka from 'polka';
-import { UserConfig } from '@rspress/shared';
+import type { UserConfig } from '@rspress/shared';
 import { OUTPUT_DIR } from './constants';
 
 export interface CLIServeOption {

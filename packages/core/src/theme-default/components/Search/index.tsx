@@ -331,7 +331,7 @@ export function Search() {
               </div>
 
               {query ? (
-                <div className={`${styles.searchHits}  modern-scrollbar`}>
+                <div className={`${styles.searchHits}  rspress-scrollbar`}>
                   {renderSearchResult(searchResult, search)}
                 </div>
               ) : null}
