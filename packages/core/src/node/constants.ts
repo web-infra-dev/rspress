@@ -1,5 +1,6 @@
 import path from 'path';
 import { fileURLToPath } from 'url';
+import { RSPRESS_TEMP_DIR } from '@rspress/shared';
 
 export const isProduction = () => process.env.NODE_ENV === 'production';
 
@@ -32,4 +33,8 @@ export const HTML_START_TAG = '<html';
 export const BODY_START_TAG = '<body';
 
 export const PUBLIC_DIR = 'public';
-export const TEMP_DIR = path.join(process.cwd(), 'node_modules', '.modern-doc');
+export const TEMP_DIR = path.join(
+  process.cwd(),
+  'node_modules',
+  RSPRESS_TEMP_DIR,
+);

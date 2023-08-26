@@ -1,5 +1,5 @@
 .tab {
-  color: var(--modern-c-text-2);
+  color: var(--rp-c-text-2);
   border-bottom: 2px solid transparent;
   box-sizing: border-box;
   margin-right: 10px;
@@ -15,12 +15,12 @@
 }
 
 .not-selected:hover {
-  color: var(--modern-c-text-1);
-  border-color: var(--modern-c-gray-light-2);
+  color: var(--rp-c-text-1);
+  border-color: var(--rp-c-gray-light-2);
   border-radius: 2px;
 }
 
 .selected {
-  color: var(--modern-c-brand-dark);
-  border-color: var(--modern-c-brand-dark);
+  color: var(--rp-c-brand-dark);
+  border-color: var(--rp-c-brand-dark);
 }

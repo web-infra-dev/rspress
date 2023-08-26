@@ -11,9 +11,9 @@ export const HiddenLinks = (props: IHiddenLinksProps) => {
   return (
     <div
       style={{
-        boxShadow: 'var(--modern-shadow-3)',
+        boxShadow: 'var(--rp-shadow-3)',
         marginRight: '-2px',
-        border: '1px solid var(--modern-c-divider-light)',
+        border: '1px solid var(--rp-c-divider-light)',
       }}
       className="absolute top-13 right-0 z-1 p-3 w-32 rounded-xl bg-white flex flex-wrap gap-4"
     >

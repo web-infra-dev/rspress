@@ -2,8 +2,8 @@
   position: sticky;
   display: none;
   top: 0;
-  margin-top: calc(var(--modern-nav-height) * -1 - 32px);
-  padding-top: calc(var(--modern-nav-height) + 32px);
+  margin-top: calc(var(--rp-nav-height) * -1 - 32px);
+  padding-top: calc(var(--rp-nav-height) + 32px);
   overflow-x: hidden;
   overflow-y: auto;
   scrollbar-width: none;
@@ -26,21 +26,21 @@
 @media (min-width: 960px) {
   .docLayout {
     width: 100%;
-    margin-top: var(--modern-nav-height);
+    margin-top: var(--rp-nav-height);
   }
 
   .content {
-    margin-left: var(--modern-sidebar-width);
-    width: calc(100% - var(--modern-sidebar-width));
+    margin-left: var(--rp-sidebar-width);
+    width: calc(100% - var(--rp-sidebar-width));
     padding: 48px 48px 72px 48px;
 
-    :global(.modern-doc) {
+    :global(.rspress-doc) {
       width: 100%;
     }
   }
 
   .aside-container {
-    width: var(--modern-aside-width);
+    width: var(--rp-aside-width);
   }
 }
 
@@ -52,18 +52,16 @@
 
   .aside-container {
     display: block;
-    width: var(--modern-aside-width);
+    width: var(--rp-aside-width);
   }
 
   .content {
-    margin-left: var(--modern-sidebar-width);
-    width: calc(100% - var(--modern-sidebar-width));
+    margin-left: var(--rp-sidebar-width);
+    width: calc(100% - var(--rp-sidebar-width));
     padding: 48px 0 72px 0;
 
-    :global(.modern-doc) {
-      width: calc(
-        1280px - var(--modern-sidebar-width) - var(--modern-aside-width)
-      );
+    :global(.rspress-doc) {
+      width: calc(1280px - var(--rp-sidebar-width) - var(--rp-aside-width));
     }
   }
 }
@@ -77,10 +75,10 @@
   .content {
     padding: 48px 0 72px 64px;
 
-    :global(.modern-doc) {
+    :global(.rspress-doc) {
       padding-right: 64px;
       width: calc(
-        1440px - var(--modern-sidebar-width) - var(--modern-aside-width) - 64px
+        1440px - var(--rp-sidebar-width) - var(--rp-aside-width) - 64px
       );
     }
   }

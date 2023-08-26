@@ -4,9 +4,9 @@ import { UserConfig } from '@/types';
 export const QUERY_REGEXP = /\?.*$/s;
 export const HASH_REGEXP = /#.*$/s;
 export const MDX_REGEXP = /\.mdx?$/;
-export const APPEARANCE_KEY = 'modern-theme-appearance';
-
+export const APPEARANCE_KEY = 'rspress-theme-appearance';
 export const SEARCH_INDEX_NAME = 'search_index';
+export const RSPRESS_TEMP_DIR = '.rspress';
 
 export const isSCM = () => Boolean(process.env.BUILD_VERSION);
 

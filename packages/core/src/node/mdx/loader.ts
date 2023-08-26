@@ -2,7 +2,7 @@ import path from 'path';
 import type { Rspack } from '@modern-js/builder-rspack-provider';
 import { createProcessor } from '@mdx-js/mdx';
 import grayMatter from 'gray-matter';
-import { Header, UserConfig } from '@rspress/shared';
+import type { Header, UserConfig } from '@rspress/shared';
 import type { RouteService } from '../route/RouteService';
 import { normalizePath } from '../utils';
 import { createMDXOptions } from './options';

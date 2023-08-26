@@ -20,7 +20,7 @@ export function HomeLayout(props: HomeLayoutProps) {
     <div
       className="relative"
       style={{
-        minHeight: 'calc(100vh - var(--modern-nav-height))',
+        minHeight: 'calc(100vh - var(--rp-nav-height))',
         paddingBottom: '80px',
       }}
     >

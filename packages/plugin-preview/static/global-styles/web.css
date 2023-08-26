@@ -1,11 +1,11 @@
 :root {
-  --modern-sidebar-width: 210px;
-  --modern-aside-width: 192px;
-  --modern-preview-padding: 32px
+  --rp-sidebar-width: 210px;
+  --rp-aside-width: 192px;
+  --rp-preview-padding: 32px;
 }
 
 :root .preview-code div[class*='language-'] {
   margin: 0;
   border-radius: 0;
-  height: 100%
+  height: 100%;
 }

@@ -30,8 +30,8 @@ export function Pre({
   const codeTitle = parseTitleFromMeta(meta);
   return (
     <div className={className || DEFAULT_LANGUAGE_CLASS}>
-      {codeTitle && <div className="modern-code-title">{codeTitle}</div>}
-      <div className="modern-code-content">{children}</div>
+      {codeTitle && <div className="rspress-code-title">{codeTitle}</div>}
+      <div className="rspress-code-content">{children}</div>
     </div>
   );
 }

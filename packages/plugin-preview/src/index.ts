@@ -1,6 +1,10 @@
 import path, { join } from 'path';
 import { RspackVirtualModulePlugin } from 'rspack-plugin-virtual-module';
-import type { RspressPlugin, RouteMeta } from '@rspress/shared';
+import {
+  type RspressPlugin,
+  type RouteMeta,
+  RSPRESS_TEMP_DIR,
+} from '@rspress/shared';
 import { remarkCodeToDemo } from './codeToDemo';
 import { injectDemoBlockImport, toValidVarName } from './utils';
 import {
@@ -172,7 +176,7 @@ import Demo from ${JSON.stringify(demoComponentPath)}
                 const demoDir = join(
                   process.cwd(),
                   'node_modules',
-                  '.modern-doc',
+                  RSPRESS_TEMP_DIR,
                   `virtual-demo`,
                 );
 

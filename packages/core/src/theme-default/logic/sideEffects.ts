@@ -85,7 +85,7 @@ export function bindingAsideScroll() {
   const marker = document.getElementById('aside-marker');
   const aside = document.getElementById('aside-container');
   const links = Array.from(
-    document.querySelectorAll<HTMLAnchorElement>('.modern-doc .header-anchor'),
+    document.querySelectorAll<HTMLAnchorElement>('.rspress-doc .header-anchor'),
   ).filter(item => item.parentElement?.tagName !== 'H1');
 
   if (!aside || !links.length) {

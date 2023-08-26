@@ -1,7 +1,7 @@
 import { join } from 'path';
 import { visit } from 'unist-util-visit';
 import fs from '@modern-js/utils/fs-extra';
-import type { RouteMeta } from '@rspress/shared';
+import { RSPRESS_TEMP_DIR, type RouteMeta } from '@rspress/shared';
 import type { Plugin } from 'unified';
 import type { Root } from 'mdast';
 import type { MdxjsEsm } from 'mdast-util-mdxjs-esm';
@@ -146,7 +146,7 @@ export const remarkCodeToDemo: Plugin<
         const demoDir = join(
           process.cwd(),
           'node_modules',
-          '.modern-doc',
+          RSPRESS_TEMP_DIR,
           `virtual-demo`,
         );
         const id = `${toValidVarName(pageName)}_${index++}`;

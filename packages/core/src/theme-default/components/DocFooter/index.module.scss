@@ -21,7 +21,7 @@
 
 .pager-link {
   display: block;
-  border: 1px solid var(--modern-c-divider-light) !important;
+  border: 1px solid var(--rp-c-divider-light) !important;
   border-radius: 24px;
   padding: 16px 20px;
   width: 100%;
@@ -30,11 +30,11 @@
 }
 
 .pager-link:hover {
-  border-color: var(--modern-c-brand) !important;
+  border-color: var(--rp-c-brand) !important;
 }
 
 .pager-link:hover .title {
-  color: var(--modern-c-brand-dark);
+  color: var(--rp-c-brand-dark);
 }
 
 .pager-link.next {
@@ -47,7 +47,7 @@
   line-height: 20px;
   font-size: 12px;
   font-weight: 500;
-  color: var(--modern-c-text-2);
+  color: var(--rp-c-text-2);
 }
 
 .title {
@@ -55,6 +55,6 @@
   line-height: 24px;
   font-size: 14px;
   font-weight: 500;
-  color: var(--modern-c-brand);
+  color: var(--rp-c-brand);
   transition: color 0.25s;
 }

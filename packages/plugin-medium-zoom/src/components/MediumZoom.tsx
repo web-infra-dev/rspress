@@ -9,7 +9,7 @@ interface Props {
 
 export default function MediumZoom(props: Props) {
   const { pathname } = useLocation();
-  const { selector = '.modern-doc img' } = props;
+  const { selector = '.rspress-doc img' } = props;
 
   useEffect(() => {
     const images = document.querySelectorAll(selector);

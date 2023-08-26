@@ -1,4 +1,4 @@
-.modern-scrollbar {
+.rspress-scrollbar {
   scrollbar-gutter: stable;
   /* The size of scroll bar */
   &::-webkit-scrollbar {
@@ -18,7 +18,7 @@
 
   &:hover::-webkit-scrollbar-thumb {
     border: 3px solid transparent;
-    background-color: var(--modern-c-text-4);
+    background-color: var(--rp-c-text-4);
     background-clip: content-box;
   }
 

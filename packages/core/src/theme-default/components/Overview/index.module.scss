@@ -17,17 +17,17 @@
 
   h2 {
     font-size: 24px;
-    color: var(--modern-c-text-1);
+    color: var(--rp-c-text-1);
     margin: 36px 0;
     transition: color 0.5s;
     padding-top: 36px;
-    border-top: 1px solid var(--modern-c-divider-light);
+    border-top: 1px solid var(--rp-c-divider-light);
   }
 
   h3,
   h3 > a {
     letter-spacing: -0.01em;
-    color: var(--modern-c-brand);
+    color: var(--rp-c-brand);
     font-size: 18px;
     margin-bottom: 1em;
     transition: color 0.5s;
@@ -41,7 +41,7 @@
 
   h3 > a:hover {
     transition: color 0.5s;
-    color: var(--modern-c-brand-dark);
+    color: var(--rp-c-brand-dark);
   }
 
   h3:before {
@@ -71,7 +71,7 @@
     font-size: 0.85em;
     opacity: 0;
     font-weight: 500;
-    color: var(--modern-c-brand);
+    color: var(--rp-c-brand);
     transition: color 0.25s;
     text-decoration-style: dotted;
   }
@@ -87,7 +87,7 @@
   font-weight: 500;
   line-height: 1.6;
   margin-top: 8px;
-  color: var(--modern-c-text-code);
+  color: var(--rp-c-text-code);
   transition: color 0.5s;
   word-break: break-all;
 }
@@ -111,7 +111,7 @@
 .overview-group {
   break-inside: avoid;
   margin-bottom: 28px;
-  background-color: var(--modern-c-bg-soft);
+  background-color: var(--rp-c-bg-soft);
   border-radius: 12px;
   padding: 28px 32px;
   transition: background-color 0.5s;

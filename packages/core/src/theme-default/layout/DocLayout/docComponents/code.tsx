@@ -119,7 +119,7 @@ export function Code(props: CodeProps) {
             className: isHighlighted ? 'line highlighted' : '',
             style: {
               backgroundColor: isHighlighted
-                ? 'var(--modern-code-line-highlight-color)'
+                ? 'var(--rp-code-line-highlight-color)'
                 : '',
               display: 'block',
               padding: '0 1.25rem',

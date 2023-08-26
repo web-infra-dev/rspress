@@ -38,9 +38,8 @@ export default () => {
   useEffect(() => {
     const root = document.querySelector(':root');
     if (root) {
-      const defaultAsideWidth = getComputedStyle(root).getPropertyValue(
-        '--modern-aside-width',
-      );
+      const defaultAsideWidth =
+        getComputedStyle(root).getPropertyValue('--rp-aside-width');
       setAsideWidth(defaultAsideWidth);
     }
     const handleResize = () => {
@@ -51,28 +50,28 @@ export default () => {
   }, []);
 
   useEffect(() => {
-    const node = document.querySelector('.modern-doc-container');
+    const node = document.querySelector('.rspress-doc-container');
     const { style } = document.documentElement;
     if (haveDemos) {
       if (innerWidth > 1280) {
         node?.setAttribute(
           'style',
-          'padding-right: calc(var(--modern-device-width) + var(--modern-preview-padding) * 2)',
+          'padding-right: calc(var(--rp-device-width) + var(--rp-preview-padding) * 2)',
         );
       } else if (innerWidth > 960) {
         node?.setAttribute(
           'style',
           `padding-right: calc(${
             innerWidth - 1280
-          }px + var(--modern-device-width) + var(--modern-preview-padding) * 2)`,
+          }px + var(--rp-device-width) + var(--rp-preview-padding) * 2)`,
         );
       } else {
         node?.removeAttribute('style');
       }
-      style.setProperty('--modern-aside-width', '0');
+      style.setProperty('--rp-aside-width', '0');
     } else {
       node?.removeAttribute('style');
-      style.setProperty('--modern-aside-width', asideWidth);
+      style.setProperty('--rp-aside-width', asideWidth);
     }
   }, [haveDemos, asideWidth, innerWidth]);
 

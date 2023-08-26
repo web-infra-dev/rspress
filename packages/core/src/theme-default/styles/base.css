@@ -22,11 +22,11 @@ body {
   margin: 0;
   width: 100%;
   min-width: 320px;
-  font-family: var(--modern-font-family-base);
+  font-family: var(--rp-font-family-base);
   font-size: 16px;
   font-weight: 400;
-  color: var(--modern-c-text-1);
-  background-color: var(--modern-c-bg);
+  color: var(--rp-c-text-1);
+  background-color: var(--rp-c-bg);
   direction: ltr;
   font-synthesis: none;
   text-rendering: optimizeLegibility;
@@ -52,7 +52,7 @@ button:focus-visible {
 }
 
 #nprogress .bar {
-  background: var(--modern-c-brand);
+  background: var(--rp-c-brand);
   position: fixed;
   top: 0;
   left: 0;
@@ -95,8 +95,8 @@ button:focus-visible {
   * Custom font family
 */
 :root {
-  --modern-font-family-base: 'Inter var experimental', 'Inter var',
-    -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu,
-    Cantarell, 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif;
-  --modern-font-family-mono: Menlo, Monaco, Consolas, 'Courier New', monospace;
+  --rp-font-family-base: 'Inter var experimental', 'Inter var', -apple-system,
+    BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell,
+    'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif;
+  --rp-font-family-mono: Menlo, Monaco, Consolas, 'Courier New', monospace;
 }

@@ -10,7 +10,7 @@
 
 .modal {
   position: relative;
-  background-color: var(--modern-c-bg-soft);
+  background-color: var(--rp-c-bg-soft);
   border-radius: 16px;
   margin: 80px auto auto;
   max-width: 560px;
@@ -25,8 +25,8 @@
   display: flex;
   align-items: center;
   padding: 0 12px;
-  background-color: var(--modern-c-bg);
-  border: 1px solid var(--modern-c-brand);
+  background-color: var(--rp-c-bg);
+  border: 1px solid var(--rp-c-brand);
   border-radius: 12px;
 
   .input {
@@ -35,18 +35,18 @@
     height: 100%;
     width: 80%;
     outline: none;
-    background-color: var(--modern-c-bg);
+    background-color: var(--rp-c-bg);
     font-weight: 500;
     font-size: 20px;
     :global(.dark) & {
-      color: var(--modern-c-text);
+      color: var(--rp-c-text);
     }
   }
 }
 
 .close:hover {
   cursor: pointer;
-  color: var(--modern-c-brand);
+  color: var(--rp-c-brand);
   transition: color 0.3s;
 }
 
@@ -58,10 +58,10 @@
     position: sticky;
     top: 0;
     left: 0;
-    background-color: var(--modern-c-bg-soft);
+    background-color: var(--rp-c-bg-soft);
     font-size: 13px;
     font-weight: 600;
-    color: var(--modern-c-brand-dark);
+    color: var(--rp-c-brand-dark);
     padding-top: 6px;
     padding-bottom: 6px;
     padding-left: 2px;
@@ -75,7 +75,7 @@
   padding: 0 10px;
   height: 40px;
   width: 100%;
-  background-color: var(--modern-c-bg-mute);
+  background-color: var(--rp-c-bg-mute);
   transition: border-color 0.3s;
   border: 1px solid transparent;
 
@@ -90,15 +90,15 @@
       margin-left: 5px;
       margin-right: 40px;
       font-weight: 500;
-      color: var(--modern-c-text-2);
+      color: var(--rp-c-text-2);
       transition: all 0.3s;
     }
 
     > div {
       border-radius: 4px;
-      color: var(--modern-c-gray);
+      color: var(--rp-c-gray);
       font-weight: 500;
-      background-color: var(--modern-c-bg);
+      background-color: var(--rp-c-bg);
       > span {
         margin-left: 5px;
         + span {
@@ -109,10 +109,10 @@
   }
 
   &:hover {
-    border: 1px solid var(--modern-c-brand);
+    border: 1px solid var(--rp-c-brand);
     > button {
       .searchWord {
-        color: var(--modern-c-text-1);
+        color: var(--rp-c-text-1);
       }
     }
   }
@@ -130,10 +130,10 @@
   }
 
   & > a {
-    background-color: var(--modern-c-bg);
+    background-color: var(--rp-c-bg);
     border-radius: 12px;
     padding-left: 12px;
-    color: var(--modern-c-black-soft);
+    color: var(--rp-c-black-soft);
     display: flex;
     width: 100%;
     box-shadow: 0 1px 3px 0 #d4d9e1;
@@ -151,16 +151,16 @@
         line-height: 1.5;
         width: 100%;
         .mark {
-          color: var(--modern-c-brand);
+          color: var(--rp-c-brand);
         }
         .titleForContent {
           font-size: 12px;
           font-weight: 600;
-          color: var(--modern-c-gray-light-1);
+          color: var(--rp-c-gray-light-1);
         }
       }
       svg {
-        color: var(--modern-c-gray-light-1);
+        color: var(--rp-c-gray-light-1);
       }
       .actionIcon {
         opacity: 0;
@@ -171,7 +171,7 @@
   &:hover,
   &.current {
     > a {
-      background-color: var(--modern-c-brand);
+      background-color: var(--rp-c-brand);
       cursor: pointer;
       color: #ffffff;
     }
@@ -199,7 +199,7 @@
 .tabClassName {
   position: sticky;
   top: 36px;
-  background-color: var(--modern-c-bg-soft);
+  background-color: var(--rp-c-bg-soft);
   padding-bottom: 6px;
 }
 

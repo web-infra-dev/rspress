@@ -2,6 +2,7 @@ import path from 'path';
 import type { ComponentDoc, PropItem } from 'react-docgen-typescript';
 import { logger, chokidar, fs } from '@modern-js/utils';
 import { parse } from 'react-docgen-typescript';
+import { RSPRESS_TEMP_DIR } from '@rspress/shared';
 import { apiDocMap } from './constants';
 import { locales } from './locales';
 import type {
@@ -129,7 +130,7 @@ export const docgen = async ({
           const siteDataPath = path.join(
             process.cwd(),
             'node_modules',
-            '.modern-doc',
+            RSPRESS_TEMP_DIR,
             'runtime',
             'virtual-site-data.mjs',
           );

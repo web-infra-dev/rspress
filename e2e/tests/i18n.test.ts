@@ -92,7 +92,7 @@ test.describe('i18n test', async () => {
     });
     // take the sidebar
     const sidebar = await page.$$(
-      '.modern-sidebar .modern-scrollbar > nav > section',
+      '.rspress-sidebar .rspress-scrollbar > nav > section',
     );
     expect(sidebar?.length).toBe(1);
   });
@@ -102,7 +102,7 @@ test.describe('i18n test', async () => {
       waitUntil: 'networkidle',
     });
     // take the appearance switch button
-    const button = await page.$('.modern-nav-appearance');
+    const button = await page.$('.rspress-nav-appearance');
     expect(button).toBeFalsy();
   });
 

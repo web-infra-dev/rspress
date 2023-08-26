@@ -1,10 +1,9 @@
 {
   "name": "@rspress/shared",
   "version": "0.0.2",
-  "type": "module",
   "types": "./dist/index.d.ts",
   "main": "./dist/index.js",
-  "module": "./dist/index.js",
+  "module": "./dist/index.mjs",
   "repository": {
     "type": "git",
     "url": "https://github.com/web-infra-dev/rspress",
@@ -22,7 +21,7 @@
   "dependencies": {
     "@modern-js/builder": "2.30.0",
     "@modern-js/builder-rspack-provider": "2.30.0",
-    "unified": "^10.1.2"
+    "unified": "10.1.2"
   },
   "devDependencies": {
     "lodash-es": "^4.17.21",
