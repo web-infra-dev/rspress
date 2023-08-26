@@ -802,7 +802,7 @@ importers:
         specifier: 2.30.0
         version: 2.30.0(react-dom@18.2.0)(react@18.2.0)(ts-node@10.9.1)(typescript@5.0.4)
       unified:
-        specifier: ^10.1.2
+        specifier: 10.1.2
         version: 10.1.2
     devDependencies:
       '@types/interpret':
