@@ -14,7 +14,7 @@
   "main": "./dist/index.js",
   "module": "./dist/node/index.js",
   "scripts": {
-    "dev": "modern dev",
+    "dev": "modern build -w",
     "build": "modern build",
     "reset": "rimraf ./**/node_modules",
     "lint": "modern lint",

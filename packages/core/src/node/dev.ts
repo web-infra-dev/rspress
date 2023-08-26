@@ -9,10 +9,20 @@ interface ServerInstance {
   close: () => Promise<void>;
 }
 
+export interface Logger {
+  info: (msg: string) => void;
+  error: (msg: string) => void;
+  warn: (msg: string) => void;
+  success: (msg: string) => void;
+  debug: (msg: string) => void;
+  log: (msg: string) => void;
+}
+
 interface DevOptions {
   appDirectory: string;
   docDirectory: string;
   config: UserConfig;
+  logger: Logger;
 }
 
 export async function dev(options: DevOptions): Promise<ServerInstance> {
@@ -41,6 +51,10 @@ export async function dev(options: DevOptions): Promise<ServerInstance> {
           url: `${url}/${removeLeadingSlash(base)}`,
         }));
       },
+      // We will support the following options in the future
+      // @ts-expect-error
+      getPortSilently: true,
+      logger: options.logger,
     });
 
     await pluginDriver.afterBuild();
