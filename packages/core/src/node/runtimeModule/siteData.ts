@@ -23,7 +23,7 @@ import fs from '@modern-js/utils/fs-extra';
 import { compile } from '@modern-js/mdx-rs-binding';
 import { importStatementRegex, TEMP_DIR } from '../constants';
 import { applyReplaceRules } from '../utils/applyReplaceRules';
-import { logger, createHash } from '../utils';
+import { createHash } from '../utils';
 import { flattenMdxContent } from '../utils/flattenMdxContent';
 import { RouteService } from '../route/RouteService';
 import RuntimeModulesPlugin from './RuntimeModulePlugin';
@@ -339,7 +339,6 @@ export async function siteDataVMPlugin(context: FactoryContext) {
   const {
     runtimeTempDir,
     config,
-    isSSR,
     alias,
     userRoot,
 
@@ -355,9 +354,6 @@ export async function siteDataVMPlugin(context: FactoryContext) {
   const replaceRules = userConfig?.replaceRules || [];
   if (!pages) {
     // If the dev server restart when config file, we will reuse the siteData instead of extracting the siteData from source files again.
-    if (!isSSR) {
-      logger.info('Extracting site data...');
-    }
     const domain =
       userConfig?.search && userConfig?.search?.mode === 'remote'
         ? userConfig?.search.domain ?? ''

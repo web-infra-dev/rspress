@@ -5,15 +5,22 @@ import { build, dev, serve } from '@rspress/core';
 import chokidar from 'chokidar';
 import chalk from 'chalk';
 import { loadConfigFile } from './config/loadConfigFile';
-
-const require = createRequire(import.meta.url);
+import { logger } from './logger';
 
 const CONFIG_FILES = ['rspress.config.ts', 'rspress.config.js', '_meta.json'];
+
+const require = createRequire(import.meta.url);
+// eslint-disable-next-line import/no-commonjs
+const gradient = require('gradient-string');
 
 // eslint-disable-next-line import/no-commonjs
 const packageJson = require('../package.json');
 
 const cli = cac('rspress').version(packageJson.version).help();
+
+const landingMessage = `>>> Rspress v${packageJson.version}\n`;
+const rainbowMessage = gradient(['cyan', 'magenta'])(landingMessage);
+console.log(chalk.bold(rainbowMessage));
 
 cli.option('--config [config]', 'Specify the path to the config file');
 
@@ -29,6 +36,7 @@ cli
         appDirectory: cwd,
         docDirectory: config.root || path.join(cwd, root ?? 'docs'),
         config,
+        logger,
       });
     };
     let devServer = await startDevServer();

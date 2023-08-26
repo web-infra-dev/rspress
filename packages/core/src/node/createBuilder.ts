@@ -85,6 +85,7 @@ async function createInternalBuildConfig(
   return {
     dev: {
       port: process.env.PORT ? Number(process.env.PORT) : undefined,
+      progressBar: false,
     },
     html: {
       favicon: config?.icon,
@@ -228,6 +229,7 @@ export async function createModernBuilder(
     entry: {
       main: isSSR ? SSR_ENTRY : CLIENT_ENTRY,
     },
+    framework: 'Rspress',
   });
 
   builder.addPlugins([
