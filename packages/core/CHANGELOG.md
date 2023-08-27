@@ -1,5 +1,22 @@
 # @rspress/core
 
+## 0.0.4
+
+### Patch Changes
+
+- e097820: feat: bump mdx-rs version
+- 0ab0f9f: feat: add @rspress/remark-container
+
+  feat: 添加 @rspress/remark-container
+
+- Updated dependencies [e097820]
+- Updated dependencies [0ab0f9f]
+  - @rspress/plugin-auto-nav-sidebar@0.0.4
+  - @rspress/plugin-last-updated@0.0.4
+  - @rspress/plugin-medium-zoom@0.0.4
+  - @rspress/remark-container@0.0.3
+  - @rspress/shared@0.0.4
+
 ## 0.0.3
 
 ### Patch Changes
