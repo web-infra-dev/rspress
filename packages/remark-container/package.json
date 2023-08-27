@@ -1,18 +1,18 @@
 {
-  "name": "@rspress/plugin-typedoc",
-  "version": "0.0.3",
-  "description": "A plugin for rspress to integrate typedoc",
+  "name": "@rspress/remark-container",
+  "version": "0.0.2",
+  "description": "A remark plugin to support container syntax",
   "bugs": "https://github.com/web-infra-dev/rspress/issues",
   "repository": {
     "type": "git",
     "url": "https://github.com/web-infra-dev/rspress",
-    "directory": "packages/plugin-typedoc"
+    "directory": "packages/remark-container"
   },
   "license": "MIT",
   "jsnext:source": "./src/index.ts",
   "types": "./dist/index.d.ts",
   "main": "./dist/index.js",
-  "module": "./dist/node/index.js",
+  "module": "./dist/index.mjs",
   "scripts": {
     "dev": "modern build -w",
     "build": "modern build",
@@ -35,16 +35,6 @@
     "node_modules/",
     "dist/"
   ],
-  "devDependencies": {
-    "@modern-js/tsconfig": "2.30.0",
-    "@types/node": "^18.11.17",
-    "@types/react": "^18",
-    "@types/react-dom": "^18",
-    "typescript": "^5",
-    "vitest": "0.33.0",
-    "react": "^18",
-    "@rspress/shared": "workspace:*"
-  },
   "peerDependencies": {
     "rspress": "*"
   },
@@ -63,9 +53,11 @@
     "provenance": true,
     "registry": "https://registry.npmjs.org/"
   },
-  "dependencies": {
-    "@modern-js/utils": "2.30.0",
-    "typedoc": "0.24.8",
-    "typedoc-plugin-markdown": "3.15.3"
+  "devDependencies": {
+    "@types/mdast": "^3.0.10",
+    "rehype-stringify": "^9.0.3",
+    "remark-parse": "^10.0.1",
+    "remark-rehype": "^10.1.0",
+    "unified": "^10.1.2"
   }
 }

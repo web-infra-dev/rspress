@@ -6,7 +6,7 @@ import { Options } from '@mdx-js/loader';
 import { UserConfig } from '@rspress/shared';
 import { PluggableList } from 'unified';
 import rehypePluginExternalLinks from 'rehype-external-links';
-import { remarkPluginContainer } from '@modern-js/remark-container';
+import { remarkPluginContainer } from '@rspress/remark-container';
 import type { RouteService } from '../route/RouteService';
 import { remarkPluginToc } from './remarkPlugins/toc';
 import { rehypePluginCodeMeta } from './rehypePlugins/codeMeta';
