@@ -14,9 +14,6 @@ on:
           - alpha
           - latest
 
-  schedule:
-    # 00:00 AM Beijing Time on every Thursday
-    - cron: '0 16 * * 3'
 jobs:
   release:
     name: Create Release Pull Request
@@ -31,10 +28,10 @@ jobs:
       - name: Install Pnpm
         run: corepack enable
 
-      - name: Setup Node.js 16
+      - name: Setup Node.js 18
         uses: actions/setup-node@v3
         with:
-          node-version: '16'
+          node-version: '18'
           cache: 'pnpm'
 
       - name: Turbo Cache
