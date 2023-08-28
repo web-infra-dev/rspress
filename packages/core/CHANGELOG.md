@@ -1,5 +1,20 @@
 # @rspress/core
 
+## 0.0.6
+
+### Patch Changes
+
+- beb23d6: fix: landing message in cli
+
+  fix: 更新 cli 的开场信息
+
+- Updated dependencies [beb23d6]
+  - @rspress/plugin-auto-nav-sidebar@0.0.6
+  - @rspress/plugin-last-updated@0.0.6
+  - @rspress/plugin-medium-zoom@0.0.6
+  - @rspress/remark-container@0.0.5
+  - @rspress/shared@0.0.6
+
 ## 0.0.5
 
 ### Patch Changes

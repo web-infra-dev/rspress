@@ -1,6 +1,6 @@
 {
   "name": "@rspress/plugin-auto-nav-sidebar",
-  "version": "0.0.5",
+  "version": "0.0.6",
   "description": "A plugin for rspress to generate navbar and sidebar config automatically.",
   "bugs": "https://github.com/web-infra-dev/rspress/issues",
   "repository": {
