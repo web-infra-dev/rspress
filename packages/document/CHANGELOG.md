@@ -1,5 +1,13 @@
 # @rspress/docs
 
+## 0.0.6
+
+### Patch Changes
+
+- beb23d6: fix: landing message in cli
+
+  fix: 更新 cli 的开场信息
+
 ## 0.0.5
 
 ### Patch Changes
