@@ -22,7 +22,7 @@ interface DevOptions {
   appDirectory: string;
   docDirectory: string;
   config: UserConfig;
-  logger: Logger;
+  logger?: Logger;
 }
 
 export async function dev(options: DevOptions): Promise<ServerInstance> {
