@@ -18,8 +18,8 @@ const packageJson = require('../package.json');
 
 const cli = cac('rspress').version(packageJson.version).help();
 
-const landingMessage = `>>> Rspress v${packageJson.version}\n`;
-const rainbowMessage = gradient(['cyan', 'magenta'])(landingMessage);
+const landingMessage = `🔥 Rspress v${packageJson.version}\n`;
+const rainbowMessage = gradient.cristal(landingMessage);
 console.log(chalk.bold(rainbowMessage));
 
 cli.option('--config [config]', 'Specify the path to the config file');
