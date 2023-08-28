@@ -578,8 +578,8 @@ importers:
         specifier: ^6.8.1
         version: 6.11.1(react-dom@18.2.0)(react@18.2.0)
       rspack-plugin-virtual-module:
-        specifier: 0.1.8
-        version: 0.1.8
+        specifier: 0.1.11
+        version: 0.1.11
       typescript:
         specifier: ^5
         version: 5.0.4
@@ -741,8 +741,8 @@ importers:
         specifier: ^6.8.1
         version: 6.11.1(react-dom@18.2.0)(react@18.2.0)
       rspack-plugin-virtual-module:
-        specifier: 0.1.10
-        version: 0.1.10
+        specifier: 0.1.11
+        version: 0.1.11
       typescript:
         specifier: ^5
         version: 5.0.4
@@ -12420,14 +12420,8 @@ packages:
       fs-extra: 11.1.1
     dev: false
 
-  /rspack-plugin-virtual-module@0.1.10:
-    resolution: {integrity: sha512-F8B9Uo263oIQBy54vMQFy8saPC7bngIZK+n8XPcQ5wxSrB7VOtGWrmwmt+cYY/n1BpXupJz7XlLjitM0n/SoeA==}
-    dependencies:
-      fs-extra: 11.1.1
-    dev: true
-
-  /rspack-plugin-virtual-module@0.1.8:
-    resolution: {integrity: sha512-INX6vF4POzk4cGb17z787gTX6cuNEEjLXxKVzDsLLwZbfDCsCtfA7Ik05MvbJcTFpCtz9iiWhoGjrkRlm1PkVg==}
+  /rspack-plugin-virtual-module@0.1.11:
+    resolution: {integrity: sha512-dD7vo8PY3sG7nM1JAuytJ4XTXqALKUDjISFaxFyIHcSvUBKu8nmJf9TaRq1htS+bsXujqkKhKR859k0/zTHwxQ==}
     dependencies:
       fs-extra: 11.1.1
     dev: true
