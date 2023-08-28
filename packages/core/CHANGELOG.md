@@ -1,5 +1,20 @@
 # @rspress/core
 
+## 0.0.5
+
+### Patch Changes
+
+- 1171bc9: fix: logger params optional
+
+  fix: logger 参数变为可选
+
+- Updated dependencies [1171bc9]
+  - @rspress/plugin-auto-nav-sidebar@0.0.5
+  - @rspress/plugin-last-updated@0.0.5
+  - @rspress/plugin-medium-zoom@0.0.5
+  - @rspress/remark-container@0.0.4
+  - @rspress/shared@0.0.5
+
 ## 0.0.4
 
 ### Patch Changes

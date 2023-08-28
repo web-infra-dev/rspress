@@ -1,5 +1,13 @@
 # create-rspress
 
+## 0.0.5
+
+### Patch Changes
+
+- 1171bc9: fix: logger params optional
+
+  fix: logger 参数变为可选
+
 ## 0.0.4
 
 ### Patch Changes

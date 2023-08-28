@@ -1,5 +1,16 @@
 # @rspress/plugin-api-docgen
 
+## 0.0.5
+
+### Patch Changes
+
+- 1171bc9: fix: logger params optional
+
+  fix: logger 参数变为可选
+
+- Updated dependencies [1171bc9]
+  - @rspress/core@0.0.5
+
 ## 0.0.4
 
 ### Patch Changes
