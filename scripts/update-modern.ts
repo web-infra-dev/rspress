@@ -6,22 +6,9 @@ import { getPackageVersion } from '@modern-js/generator-utils';
 async function run() {
   const modernVersion = process.env.MODERN_VERSION || 'latest';
   const cwd = process.cwd();
-  const pkgPath = path.join(cwd, '../../', 'package.json');
+  const pkgPath = path.join(cwd, 'package.json');
   const pkgObj = fs.readJSONSync(pkgPath, 'utf-8');
 
-  if (modernVersion !== 'next') {
-    const { overrides } = pkgObj.pnpm;
-    if (!overrides || Object.keys(overrides).length === 0) {
-      return;
-    }
-    const result: Record<string, string> = {};
-    Object.keys(overrides).forEach(dep => {
-      if (!dep.startsWith('@modern-js')) {
-        result[dep] = overrides[dep];
-      }
-    });
-    pkgObj.pnpm.overrides = result;
-  }
   pkgObj.devDependencies = await updateModernVersion(
     pkgObj.devDependencies,
     modernVersion,
