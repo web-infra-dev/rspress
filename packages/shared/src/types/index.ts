@@ -10,7 +10,7 @@ import type { RspressPlugin, AdditionalPage } from './Plugin';
 export type { DefaultThemeConfig, NormalizedDefaultThemeConfig };
 export * from './defaultTheme';
 
-export type { RspressPlugin, AdditionalPage };
+export type { RspressPlugin, AdditionalPage, RspressPlugin as Plugin };
 
 export interface Route {
   path: string;
