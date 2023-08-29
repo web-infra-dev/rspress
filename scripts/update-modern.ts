@@ -1,3 +1,6 @@
+/**
+ * In this script, we will find all the Modern.js dependencies and update the version.
+ */
 import path from 'path';
 import fs from 'fs-extra';
 import { getPackages } from '@manypkg/get-packages';
@@ -48,7 +51,7 @@ const updateModernVersion = async (
     return dependencies;
   }
   for (const dep of Object.keys(dependencies)) {
-    if (dep.startsWith('@modern-js')) {
+    if (dep.startsWith('@modern-js') && dep !== '@modern-js/mdx-rs-binding') {
       if (versionMap.get(dep)) {
         dependencies[dep] = versionMap.get(dep);
       } else {
