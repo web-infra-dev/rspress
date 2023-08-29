@@ -22,9 +22,6 @@ export async function globalStylesVMPlugin(context: FactoryContext) {
             .replace(/\.modern-/g, '.rspress-');
 
           await fs.writeFile(source, patchedStyleContent, 'utf-8');
-
-          console.log(`[globalStylesVMPlugin] patched ${source}`);
-
           return `import ${JSON.stringify(source)};`;
         }),
     )
