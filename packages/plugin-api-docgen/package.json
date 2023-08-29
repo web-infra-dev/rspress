@@ -35,7 +35,7 @@
     "dist/"
   ],
   "dependencies": {
-    "@modern-js/utils": "2.30.0",
+    "@modern-js/utils": "0.0.0-next-1693281968009",
     "react-markdown": "8.0.7",
     "react-docgen-typescript": "2.2.2",
     "documentation": "14.0.2",

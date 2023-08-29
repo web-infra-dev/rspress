@@ -52,7 +52,6 @@ export async function dev(options: DevOptions): Promise<ServerInstance> {
         }));
       },
       // We will support the following options in the future
-      // @ts-expect-error
       getPortSilently: true,
       logger: options.logger,
     });
