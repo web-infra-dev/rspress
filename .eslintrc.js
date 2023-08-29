@@ -7,5 +7,6 @@ module.exports = {
     'playwright.config.ts',
     '**/*.test.ts',
     'e2e/**',
+    './scripts/**',
   ],
 };
