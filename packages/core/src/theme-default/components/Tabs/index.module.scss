@@ -37,10 +37,13 @@
 
 .not-selected:hover {
   color: var(--rp-c-text-1);
-  border-color: var(--rp-c-gray-light-2);
+  border-color: var(--rp-c-gray);
   border-top-left-radius: 10px;
   border-top-right-radius: 10px;
   background-color: var(--rp-c-gray-light-5);
+  :global(.dark) & {
+    background-color: var(--rp-c-dark-light-3);
+  }
 }
 
 .selected {
