@@ -1,4 +1,4 @@
-name: Release Pull Request
+name: Release Pull Request Without Modern.js Bump
 
 on:
   workflow_dispatch:
