@@ -1,3 +1,15 @@
+.tab-list {
+  margin-top: 10px;
+  display: flex;
+  min-width: 100%;
+  border-bottom-width: 1px;
+  border-color: var(--rp-c-gray-light-4);
+}
+
+:global(.dark) .tab-list {
+  border-color: var(--rp-c-divider);
+}
+
 .tab {
   color: var(--rp-c-text-2);
   border-bottom: 2px solid transparent;

@@ -81,7 +81,7 @@ export function Tabs(props: TabsProps): ReactElement {
     >
       <div className={tabContainerClassName || ''}>
         {tabValues.length ? (
-          <HeadlessTab.List className="mt-4 flex w-max min-w-full border-b border-gray-200 dark:border-dark-200">
+          <HeadlessTab.List className={styles.tabList}>
             {tabValues.map((item, index) => {
               const disabled = Boolean(
                 item &&
@@ -117,7 +117,7 @@ export function Tab({
   ...props
 }: ComponentPropsWithRef<'div'>): ReactElement {
   return (
-    <HeadlessTab.Panel {...props} className="rounded pt-4">
+    <HeadlessTab.Panel {...props} className="rounded">
       {children}
     </HeadlessTab.Panel>
   );
