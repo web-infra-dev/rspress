@@ -108,3 +108,9 @@
     background-color: var(--rp-c-gray-light-4);
   }
 }
+
+:global(.dark .rspress-sidebar-group) {
+  &::before {
+    background-color: var(--rp-c-bg-mute);
+  }
+}
