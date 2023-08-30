@@ -1,12 +1,12 @@
 {
   "name": "@modern-js/plugin-rspress",
-  "description": "A modern plugin with rspress",
+  "description": "A Modern.js plugin to integrate rspress",
   "homepage": "https://modernjs.dev",
   "bugs": "https://github.com/web-infra-dev/rspress/issues",
   "repository": {
     "type": "git",
     "url": "https://github.com/web-infra-dev/rspress",
-    "directory": "packages/plugin-api-docgen"
+    "directory": "packages/modern-plugin-rspress"
   },
   "license": "MIT",
   "keywords": [
