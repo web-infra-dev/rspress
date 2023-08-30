@@ -15,14 +15,14 @@ export function HomeHero({ frontmatter }: { frontmatter: FrontMatterMeta }) {
   const hero = frontmatter?.hero || DEFAULT_HERO;
   const hasImage = hero.image !== undefined;
   return (
-    <div className="m-auto pt-0 px-6 pb-12 sm:pt-10 sm:px-16 md:pt-20 md:px-16 md:pb-16">
+    <div className="m-auto pt-0 px-6 pb-12 sm:pt-10 sm:px-16 md:pt-20 md:px-16 md:pb-20">
       <div
         className={styles.mask}
         style={{
           left: hasImage ? '75%' : '50%',
         }}
       ></div>
-      <div className="m-auto flex flex-col md:flex-row max-w-6xl">
+      <div className="m-auto flex flex-col md:flex-row max-w-6xl min-h-[50vh]">
         <div className="flex flex-col justify-center text-center max-w-xl sm:max-w-4xl m-auto order-2 md:order-1">
           <h1 className="font-bold text-3xl sm:text-6xl md:text-7xl m-auto sm:m-4 md:m-0 md:pb-3 lg:pb-5 leading-tight z-10">
             <span className={styles.clip} style={{ lineHeight: '1.15' }}>
