@@ -15,7 +15,7 @@ export function HomeHero({ frontmatter }: { frontmatter: FrontMatterMeta }) {
   const hero = frontmatter?.hero || DEFAULT_HERO;
   const hasImage = hero.image !== undefined;
   return (
-    <div className="m-auto pt-0 px-6 pb-12 sm:pt-10 sm:px-16 md:pt-20 md:px-16 md:pb-20">
+    <div className="m-auto pt-0 px-6 pb-12 sm:pt-10 sm:px-16 md:pt-16 md:px-16 md:pb-16">
       <div
         className={styles.mask}
         style={{
