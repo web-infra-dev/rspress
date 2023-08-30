@@ -1,4 +1,4 @@
-name: Release Pull Request
+name: (With Modern.js)Release Pull Request
 
 on:
   workflow_dispatch:
