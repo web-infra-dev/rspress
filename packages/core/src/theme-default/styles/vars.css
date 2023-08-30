@@ -36,6 +36,13 @@
   --rp-c-gray-light-3: #d1d1d1;
   --rp-c-gray-light-4: #e5e5e5;
   --rp-c-gray-light-5: #f2f2f2;
+
+  --rp-c-dark: #000000;
+  --rp-c-dark-light-1: #2f2f2f;
+  --rp-c-dark-light-2: #3a3a3a;
+  --rp-c-dark-light-3: #4a4a4a;
+  --rp-c-dark-light-4: #5c5c5c;
+  --rp-c-dark-light-5: #6b6b6b;
 }
 
 .dark {

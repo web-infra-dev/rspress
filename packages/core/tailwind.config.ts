@@ -54,6 +54,15 @@ export const tailwindConfig: Config = {
             5: 'var(--rp-c-gray-light-5)',
           },
         },
+        dark: {
+          light: {
+            1: 'var(--rp-c-dark-light-1)',
+            2: 'var(--rp-c-dark-light-2)',
+            3: 'var(--rp-c-dark-light-3)',
+            4: 'var(--rp-c-dark-light-4)',
+            5: 'var(--rp-c-dark-light-5)',
+          },
+        },
       },
     },
   },
