@@ -1,9 +1,19 @@
+.container {
+  border: 1px solid var(--rp-c-gray-light-3);
+  border-radius: 8px;
+}
+
+:global(.dark) .container {
+  border-color: var(--rp-c-dark-light-1);
+}
+
 .tab-list {
-  margin-top: 10px;
+  padding-left: 8px;
+  padding-top: 4px;
   display: flex;
   min-width: 100%;
   border-bottom-width: 1px;
-  border-color: var(--rp-c-gray-light-4);
+  border-color: var(--rp-c-gray-light-3);
 }
 
 :global(.dark) .tab-list {
@@ -12,14 +22,13 @@
 
 .tab {
   color: var(--rp-c-text-2);
-  border-bottom: 2px solid transparent;
+  border-bottom: 1px solid transparent;
   box-sizing: border-box;
   margin-right: 10px;
-  padding: 4px;
-  transition: colors 0.2s;
+  padding: 6px 8px;
   margin-bottom: -1px;
   user-select: none;
-  transition: all 0.25s ease-in-out;
+  transition: all 0.2s ease-in-out;
 }
 
 .tab:last-child {
@@ -29,7 +38,9 @@
 .not-selected:hover {
   color: var(--rp-c-text-1);
   border-color: var(--rp-c-gray-light-2);
-  border-radius: 2px;
+  border-top-left-radius: 10px;
+  border-top-right-radius: 10px;
+  background-color: var(--rp-c-gray-light-5);
 }
 
 .selected {

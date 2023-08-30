@@ -70,45 +70,47 @@ export function Tabs(props: TabsProps): ReactElement {
   }
 
   return (
-    <HeadlessTab.Group
-      onChange={index => {
-        onChange?.(index);
-        if (groupId) {
-          setTabData({ ...tabData, [groupId]: index });
-        }
-      }}
-      {...(needSync ? { selectedIndex: defaultIndex } : { defaultIndex })}
-    >
-      <div className={tabContainerClassName || ''}>
-        {tabValues.length ? (
-          <HeadlessTab.List className={styles.tabList}>
-            {tabValues.map((item, index) => {
-              const disabled = Boolean(
-                item &&
-                  typeof item === 'object' &&
-                  'disabled' in item &&
-                  item.disabled,
-              );
+    <div className={styles.container}>
+      <HeadlessTab.Group
+        onChange={index => {
+          onChange?.(index);
+          if (groupId) {
+            setTabData({ ...tabData, [groupId]: index });
+          }
+        }}
+        {...(needSync ? { selectedIndex: defaultIndex } : { defaultIndex })}
+      >
+        <div className={tabContainerClassName}>
+          {tabValues.length ? (
+            <HeadlessTab.List className={styles.tabList}>
+              {tabValues.map((item, index) => {
+                const disabled = Boolean(
+                  item &&
+                    typeof item === 'object' &&
+                    'disabled' in item &&
+                    item.disabled,
+                );
 
-              return (
-                <HeadlessTab
-                  key={index}
-                  disabled={disabled}
-                  className={({ selected }) =>
-                    `${styles.tab} ${
-                      selected ? styles.selected : styles.notSelected
-                    }`
-                  }
-                >
-                  {renderTab(item)}
-                </HeadlessTab>
-              );
-            })}
-          </HeadlessTab.List>
-        ) : null}
-      </div>
-      <HeadlessTab.Panels>{children}</HeadlessTab.Panels>
-    </HeadlessTab.Group>
+                return (
+                  <HeadlessTab
+                    key={index}
+                    disabled={disabled}
+                    className={({ selected }) =>
+                      `${styles.tab} ${
+                        selected ? styles.selected : styles.notSelected
+                      }`
+                    }
+                  >
+                    {renderTab(item)}
+                  </HeadlessTab>
+                );
+              })}
+            </HeadlessTab.List>
+          ) : null}
+        </div>
+        <HeadlessTab.Panels>{children}</HeadlessTab.Panels>
+      </HeadlessTab.Group>
+    </div>
   );
 }
 
@@ -117,7 +119,7 @@ export function Tab({
   ...props
 }: ComponentPropsWithRef<'div'>): ReactElement {
   return (
-    <HeadlessTab.Panel {...props} className="rounded">
+    <HeadlessTab.Panel {...props} className="rounded px-2">
       {children}
     </HeadlessTab.Panel>
   );
