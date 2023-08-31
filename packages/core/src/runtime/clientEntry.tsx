@@ -1,10 +1,12 @@
-import Theme from '@theme';
 import { useState } from 'react';
 import { BrowserRouter } from 'react-router-dom';
 import { isProduction } from '@rspress/shared';
 import { App, initPageData } from './App';
 import { DataContext, ThemeContext } from './hooks';
 import { normalizeRoutePath } from './utils';
+
+// eslint-disable-next-line import/no-commonjs
+const { default: Theme } = require('@theme');
 
 export async function renderInBrowser() {
   const container = document.getElementById('root')!;

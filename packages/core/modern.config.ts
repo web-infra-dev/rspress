@@ -38,6 +38,15 @@ export default defineConfig({
       },
     },
     {
+      input: ['./src/runtime'],
+      buildType: 'bundleless',
+      target: 'es2020',
+      format: 'esm',
+      outDir: 'dist',
+      dts: false,
+      externals: ['@theme'],
+    },
+    {
       input: {
         bundle: './src/theme-default/index.ts',
       },
