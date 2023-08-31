@@ -1,5 +1,13 @@
 # @rspress/shared
 
+## 0.0.7
+
+### Patch Changes
+
+- 24450c2: feat: export `Plugin` type in @rspress/shared
+
+  feat: 在 @rspress/shared 中导出 `Plugin` 类型
+
 ## 0.0.6
 
 ### Patch Changes

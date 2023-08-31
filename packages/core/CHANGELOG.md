@@ -1,5 +1,20 @@
 # @rspress/core
 
+## 0.0.7
+
+### Patch Changes
+
+- 24450c2: feat: export `Plugin` type in @rspress/shared
+
+  feat: 在 @rspress/shared 中导出 `Plugin` 类型
+
+- Updated dependencies [24450c2]
+  - @rspress/shared@0.0.7
+  - @rspress/plugin-auto-nav-sidebar@0.0.7
+  - @rspress/plugin-last-updated@0.0.7
+  - @rspress/plugin-medium-zoom@0.0.7
+  - @rspress/remark-container@0.0.6
+
 ## 0.0.6
 
 ### Patch Changes
