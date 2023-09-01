@@ -1,5 +1,16 @@
 # @rspress/remark-container
 
+## 0.0.8
+
+### Patch Changes
+
+- b46cdfd: fix: runtime exports problem
+
+  fix: runtime 文件导出问题
+
+- Updated dependencies [b46cdfd]
+  - rspress@0.0.9
+
 ## 0.0.7
 
 ### Patch Changes

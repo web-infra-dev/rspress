@@ -1,5 +1,19 @@
 # @modern-js/plugin-rspress
 
+## 0.0.9
+
+### Patch Changes
+
+- b46cdfd: fix: runtime exports problem
+
+  fix: runtime 文件导出问题
+
+- cdd2f91: fix: adjust incorrect types fields
+- Updated dependencies [b46cdfd]
+  - @rspress/core@0.0.9
+  - @rspress/plugin-api-docgen@0.0.9
+  - @rspress/plugin-preview@0.0.9
+
 ## 0.0.8
 
 ### Patch Changes

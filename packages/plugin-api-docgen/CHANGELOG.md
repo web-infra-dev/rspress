@@ -1,5 +1,16 @@
 # @rspress/plugin-api-docgen
 
+## 0.0.9
+
+### Patch Changes
+
+- b46cdfd: fix: runtime exports problem
+
+  fix: runtime 文件导出问题
+
+- Updated dependencies [b46cdfd]
+  - @rspress/core@0.0.9
+
 ## 0.0.8
 
 ### Patch Changes
