@@ -1,5 +1,20 @@
 # @rspress/core
 
+## 0.0.9
+
+### Patch Changes
+
+- b46cdfd: fix: runtime exports problem
+
+  fix: runtime 文件导出问题
+
+- Updated dependencies [b46cdfd]
+  - @rspress/plugin-auto-nav-sidebar@0.0.9
+  - @rspress/plugin-last-updated@0.0.9
+  - @rspress/plugin-medium-zoom@0.0.9
+  - @rspress/remark-container@0.0.8
+  - @rspress/shared@0.0.9
+
 ## 0.0.8
 
 ### Patch Changes

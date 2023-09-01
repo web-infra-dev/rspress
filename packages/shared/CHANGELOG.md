@@ -1,5 +1,13 @@
 # @rspress/shared
 
+## 0.0.9
+
+### Patch Changes
+
+- b46cdfd: fix: runtime exports problem
+
+  fix: runtime 文件导出问题
+
 ## 0.0.8
 
 ### Patch Changes
