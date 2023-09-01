@@ -1,6 +1,10 @@
 # Rspress(beta) 🦀💨
 
-A fast Rspack-based static site generator.
+<picture>
+  <img alt="Rspress Banner" src="https://github.com/web-infra-dev/rspress/assets/39261479/4a4c3463-877d-44fc-875d-fd2b0e84c5a4">
+</picture>
+
+<h2 align="center">A fast Rspack-based static site generator.</h2>
 
 ## Features
 

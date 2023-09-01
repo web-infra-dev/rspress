@@ -13,8 +13,7 @@
     "skipLibCheck": true,
     "paths": {
       "@/*": ["./*"],
-      "@style/*": ["./styles/*"],
-      "@theme": ["./theme-default/index.ts"]
+      "@theme": ["./theme-default"]
     }
   },
   "include": [

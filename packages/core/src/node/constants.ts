@@ -13,16 +13,16 @@ export const PACKAGE_ROOT = path.join(dirname, '..');
 
 export const CLIENT_ENTRY = path.join(
   PACKAGE_ROOT,
-  'src',
+  'dist',
   'runtime',
-  'clientEntry.tsx',
+  'clientEntry.js',
 );
 
 export const SSR_ENTRY = path.join(
   PACKAGE_ROOT,
-  'src',
+  'dist',
   'runtime',
-  'ssrEntry.tsx',
+  'ssrEntry.js',
 );
 
 export const OUTPUT_DIR = 'doc_build';
