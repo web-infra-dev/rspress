@@ -1,1 +1,1 @@
-export * from './src/runtime';
+export * from './dist/runtime';
