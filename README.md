@@ -1,7 +1,7 @@
-# Rspress(beta) 
+# Rspress(beta)
 
 <picture>
-  <img alt="Rspress Banner" src="https://lf3-static.bytednsdoc.com/obj/eden-cn/zq-uylkvT/ljhwZthlaukjlkulzlp/banner/Rspress-0901.png">
+  <img alt="Rspress Banner" src="https://github.com/web-infra-dev/rspress/assets/39261479/999e7946-45ff-45d5-b9cd-594e634e0e5a">
 </picture>
 
 <h2 align="center">A fast Rspack-based static site generator.</h2>
