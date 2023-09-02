@@ -6,7 +6,7 @@
   "scripts": {
     "dev": "rspress dev",
     "build": "rspress build",
-    "start": "rspress start"
+    "preview": "rspress preview"
   },
   "repository": {
     "type": "git",

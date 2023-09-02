@@ -1,12 +1,15 @@
 # Quick Start
 
+import { PackageManagerTabs, Tab } from '@/components/PackageManagerTabs';
+
 ## 1. Initialize the project
 
 ### Method 1: Create via CLI
 
 You can create a Rspress project using the `create-rspress` cli:
 
-<Tabs values={[{ label: 'npm' }, { label: 'yarn' }, { label: 'pnpm' }]}>
+<PackageManagerTabs>
+
   <Tab>
 
 ```sh
@@ -30,7 +33,8 @@ pnpm create rspress@latest
 ```
 
   </Tab>
-</Tabs>
+
+</PackageManagerTabs>
 
 Input the project directory name, and then the cli will create the project for you.
 
@@ -44,9 +48,8 @@ mkdir rspress-app && cd rspress-app
 
 Execute `npm init -y` to initialize a project. You can install Rspress using npm, yarn or pnpm:
 
-import { Tabs, Tab } from '@theme';
+<PackageManagerTabs>
 
-<Tabs values={[{ label: 'npm' }, { label: 'yarn' }, { label: 'pnpm' }]}>
   <Tab>
 
 ```sh
@@ -71,7 +74,7 @@ pnpm install rspress typescript ts-node -D
 
 </Tab>
 
-</Tabs>
+</PackageManagerTabs>
 
 Then create the file with the following command
 

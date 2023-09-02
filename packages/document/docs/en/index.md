@@ -3,8 +3,8 @@ pageType: home
 
 hero:
   name: Rspress
-  text: Modern Static Site Generator
-  tagline: Built on Rspack, simple, efficient and easy to extend.
+  text: Rspack-based Static Site Generator
+  tagline: Simple, efficient and easy to extend.
   actions:
     - theme: brand
       text: Introduction
@@ -12,7 +12,9 @@ hero:
     - theme: alt
       text: Quick Start
       link: /guide/start/getting-started
-
+  image:
+    src: https://lf3-static.bytednsdoc.com/obj/eden-cn/uhbfnupenuhf/rspress/rspress-logo.png
+    alt: Rspress Logo
 features:
   - title: Blazing fast build speed
     details: The core compilation module is based on the Rust front-end toolchain, providing a more ultimate development experience.
