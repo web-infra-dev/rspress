@@ -63,7 +63,7 @@
     "@rspress/plugin-last-updated": "workspace:*",
     "@rspress/plugin-auto-nav-sidebar": "workspace:*",
     "@modern-js/mdx-rs-binding": "0.2.5",
-    "@rspress/remark-container": "workspace:*",
+    "@rspress/plugin-container-syntax": "workspace:*",
     "@modern-js/utils": "2.33.0",
     "@types/compression": "^1.7.2",
     "@types/polka": "^0.5.4",
