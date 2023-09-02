@@ -6,7 +6,6 @@ import { Options } from '@mdx-js/loader';
 import { UserConfig } from '@rspress/shared';
 import { PluggableList } from 'unified';
 import rehypePluginExternalLinks from 'rehype-external-links';
-import { remarkPluginContainer } from '@rspress/remark-container';
 import type { RouteService } from '../route/RouteService';
 import { remarkPluginToc } from './remarkPlugins/toc';
 import { rehypePluginCodeMeta } from './rehypePlugins/codeMeta';
@@ -44,7 +43,6 @@ export async function createMDXOptions(
     providerImportSource: '@mdx-js/react',
     format: path.extname(filepath).slice(1) as 'mdx' | 'md',
     remarkPlugins: [
-      remarkPluginContainer,
       remarkGFM,
       remarkPluginToc,
       [

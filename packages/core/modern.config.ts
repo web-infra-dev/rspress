@@ -18,7 +18,11 @@ export default defineConfig({
       target: 'es2020',
       outDir: 'dist',
       sourceMap: true,
-      externals: ['@modern-js/mdx-rs-binding', 'jsdom'],
+      externals: [
+        '@modern-js/mdx-rs-binding',
+        'jsdom',
+        '@rspress/plugin-container-syntax',
+      ],
     },
     {
       input: {

@@ -4,6 +4,7 @@ import type {
   RspressPlugin,
   RouteMeta,
 } from '@rspress/shared';
+import { pluginContainerSyntax } from '@rspress/plugin-container-syntax';
 
 export class PluginDriver {
   #config: UserConfig;
@@ -48,6 +49,9 @@ export class PluginDriver {
       );
       this.addPlugin(pluginAutoNavSidebar());
     }
+
+    // Support the container syntax in markdown/mdx, such as :::tip
+    this.addPlugin(pluginContainerSyntax());
 
     (config.plugins || []).forEach(plugin => {
       this.addPlugin(plugin);

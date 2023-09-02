@@ -1,13 +1,14 @@
 {
-  "name": "@rspress/remark-container",
+  "name": "@rspress/plugin-container-syntax",
   "version": "0.0.8",
   "description": "A remark plugin to support container syntax",
   "bugs": "https://github.com/web-infra-dev/rspress/issues",
   "repository": {
     "type": "git",
     "url": "https://github.com/web-infra-dev/rspress",
-    "directory": "packages/remark-container"
+    "directory": "packages/plugin-container-syntax"
   },
+  "type": "module",
   "license": "MIT",
   "jsnext:source": "./src/index.ts",
   "types": "./dist/index.d.ts",
@@ -46,7 +47,7 @@
   ],
   "files": [
     "dist",
-    "src"
+    "container.css"
   ],
   "publishConfig": {
     "access": "public",
@@ -58,6 +59,7 @@
     "rehype-stringify": "^9.0.3",
     "remark-parse": "^10.0.1",
     "remark-rehype": "^10.1.0",
-    "unified": "^10.1.2"
+    "unified": "^10.1.2",
+    "@rspress/shared": "workspace:*"
   }
 }

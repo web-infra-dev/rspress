@@ -7,21 +7,26 @@ export async function globalStylesVMPlugin(context: FactoryContext) {
   const { runtimeTempDir, config, pluginDriver } = context;
   const modulePath = join(runtimeTempDir, `${RuntimeModuleID.GlobalStyles}.js`);
   const globalStylesByPlugins = pluginDriver.globalStyles();
-  // Patch --modern-xxx, .modern-xxx global name
+
+  if (config.globalStyles) {
+    // Only patch user config global styles
+    const source = config.globalStyles;
+    const styleContent = await fs.readFile(source, 'utf-8');
+
+    // Patch --modern-xxx, .modern-xxx global name
+    const patchedStyleContent = styleContent
+      .replace(/--modern-/g, '--rp-')
+      .replace(/\.modern-doc/g, '.rspress')
+      .replace(/\.modern-/g, '.rspress-');
+
+    await fs.writeFile(source, patchedStyleContent, 'utf-8');
+  }
+
   const moduleContent = (
     await Promise.all(
       [config?.globalStyles || '', ...globalStylesByPlugins]
         .filter(source => source.length > 0)
         .map(async source => {
-          const styleContent = await fs.readFile(source, 'utf-8');
-
-          // Patch --modern-xxx, .modern-xxx global name
-          const patchedStyleContent = styleContent
-            .replace(/--modern-/g, '--rp-')
-            .replace(/\.modern-doc/g, '.rspress')
-            .replace(/\.modern-/g, '.rspress-');
-
-          await fs.writeFile(source, patchedStyleContent, 'utf-8');
           return `import ${JSON.stringify(source)};`;
         }),
     )
