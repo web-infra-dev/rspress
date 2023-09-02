@@ -1,6 +1,6 @@
 # 快速开始
 
-import { Tabs, Tab } from '@theme';
+import { PackageManagerTabs, Tab } from '@/components/PackageManagerTabs';
 
 ## 1. 初始化项目
 
@@ -8,7 +8,7 @@ import { Tabs, Tab } from '@theme';
 
 你可以通过 Rspress 脚手架命令来创建项目:
 
-<Tabs values={[{ label: 'npm' }, { label: 'yarn' }, { label: 'pnpm' }]}>
+<PackageManagerTabs>
   <Tab>
 
 ```sh
@@ -32,7 +32,7 @@ pnpm create rspress@latest
 ```
 
   </Tab>
-</Tabs>
+</PackageManagerTabs>
 
 然后按照提示输入项目名称，即可创建一个 Rspress 项目。
 
@@ -46,7 +46,7 @@ mkdir rspress-app && cd rspress-app
 
 执行 `npm init -y` 来初始化一个项目。你可以使用 npm、yarn 或 pnpm 安装 Rspress:
 
-<Tabs values={[{ label: 'npm' }, { label: 'yarn' }, { label: 'pnpm' }]}>
+<PackageManagerTabs values={[{ label: 'npm' }, { label: 'yarn' }, { label: 'pnpm' }]}>
   <Tab>
 
 ```sh
@@ -71,7 +71,7 @@ pnpm install rspress typescript ts-node -D
 
 </Tab>
 
-</Tabs>
+</PackageManagerTabs>
 
 然后通过如下命令创建文件:
 
