@@ -1,8 +1,11 @@
 import path from 'path';
-import type { RspressPlugin } from '@rspress/shared';
+import { fileURLToPath } from 'url';
+import { normalizePosixPath, type RspressPlugin } from '@rspress/shared';
 import { remarkPluginContainer } from './remarkPlugin';
 
-const __dirname = path.dirname(new URL(import.meta.url).pathname);
+const __dirname = normalizePosixPath(
+  path.dirname(fileURLToPath(import.meta.url)),
+);
 
 export function pluginContainerSyntax(): RspressPlugin {
   return {
@@ -10,6 +13,6 @@ export function pluginContainerSyntax(): RspressPlugin {
     markdown: {
       remarkPlugins: [remarkPluginContainer],
     },
-    globalStyles: path.join(__dirname, '../container.css'),
+    globalStyles: path.posix.join(__dirname, '../container.css'),
   };
 }
