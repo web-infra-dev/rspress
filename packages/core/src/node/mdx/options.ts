@@ -43,8 +43,6 @@ export async function createMDXOptions(
     providerImportSource: '@mdx-js/react',
     format: path.extname(filepath).slice(1) as 'mdx' | 'md',
     remarkPlugins: [
-      ...remarkPluginsFromConfig,
-      ...remarkPluginsFromPlugins,
       remarkGFM,
       remarkPluginToc,
       [
@@ -69,6 +67,8 @@ export async function createMDXOptions(
           globalComponents,
         },
       ],
+      ...remarkPluginsFromConfig,
+      ...remarkPluginsFromPlugins,
     ].filter(Boolean) as PluggableList,
     rehypePlugins: [
       rehypeSlug,
