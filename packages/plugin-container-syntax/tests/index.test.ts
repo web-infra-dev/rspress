@@ -3,7 +3,7 @@ import { describe, test, expect } from 'vitest';
 import remarkParse from 'remark-parse';
 import remarkRehype from 'remark-rehype';
 import rehypeStringify from 'rehype-stringify';
-import { remarkPluginContainer } from '../src';
+import { remarkPluginContainer } from '../src/remarkPlugin';
 
 describe('remark-container', () => {
   const processor = unified()
