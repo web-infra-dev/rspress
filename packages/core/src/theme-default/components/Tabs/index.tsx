@@ -10,7 +10,7 @@ import styles from './index.module.scss';
 
 type TabItem = {
   value?: string;
-  label?: string;
+  label?: string | ReactNode;
   disabled?: boolean;
 };
 
