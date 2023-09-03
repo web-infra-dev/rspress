@@ -1,7 +1,7 @@
 import { join } from 'path';
 import { createRequire } from 'module';
 import { UserConfig } from '@rspress/shared';
-import RuntimeModulesPlugin from './RuntimeModulePlugin';
+import { RspackVirtualModulePlugin } from 'rspack-plugin-virtual-module';
 import { FactoryContext, RuntimeModuleID } from '.';
 
 const require = createRequire(import.meta.url);
@@ -20,10 +20,9 @@ export function getI18nData(docConfig: UserConfig) {
 }
 
 export function i18nVMPlugin(context: FactoryContext) {
-  const { config, runtimeTempDir } = context;
+  const { config } = context;
   const i18nData = getI18nData(config);
-  const modulePath = join(runtimeTempDir, `${RuntimeModuleID.I18nText}.js`);
-  return new RuntimeModulesPlugin({
-    [modulePath]: `export default ${JSON.stringify(i18nData)}`,
+  return new RspackVirtualModulePlugin({
+    [RuntimeModuleID.I18nText]: `export default ${JSON.stringify(i18nData)}`,
   });
 }

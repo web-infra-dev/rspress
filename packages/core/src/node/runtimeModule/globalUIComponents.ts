@@ -1,14 +1,10 @@
-import { join } from 'path';
-import RuntimeModulesPlugin from './RuntimeModulePlugin';
+import { RspackVirtualModulePlugin } from 'rspack-plugin-virtual-module';
 import { FactoryContext, RuntimeModuleID } from '.';
 
 export async function globalUIComponentsVMPlugin(context: FactoryContext) {
-  const { runtimeTempDir, config, pluginDriver } = context;
+  const { config, pluginDriver } = context;
   let index = 0;
-  const modulePath = join(
-    runtimeTempDir,
-    `${RuntimeModuleID.GlobalComponents}.js`,
-  );
+
   const globalUIComponentsByPlugins = pluginDriver.globalUIComponents();
   const moduleContent = [
     ...(config?.globalUIComponents || []),
@@ -23,7 +19,7 @@ export async function globalUIComponentsVMPlugin(context: FactoryContext) {
     )
     .join('');
 
-  return new RuntimeModulesPlugin({
-    [modulePath]: moduleContent,
+  return new RspackVirtualModulePlugin({
+    [RuntimeModuleID.GlobalComponents]: moduleContent,
   });
 }

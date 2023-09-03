@@ -18,7 +18,7 @@ import {
   isProduction,
   TEMP_DIR,
 } from './constants';
-import { builderDocVMPlugin, runtimeModuleIDs } from './runtimeModule';
+import { builderDocVMPlugin } from './runtimeModule';
 import { serveSearchIndexMiddleware } from './searchIndex';
 import { detectReactVersion, resolveReactAlias } from './utils';
 import { initRouteService } from './route/init';
@@ -113,10 +113,6 @@ async function createInternalBuildConfig(
         '@theme': themeDir,
         '@rspress/core': PACKAGE_ROOT,
         'react-lazy-with-preload': require.resolve('react-lazy-with-preload'),
-        ...runtimeModuleIDs.reduce((acc, cur) => {
-          acc[cur] = path.join(runtimeTempDir, cur);
-          return acc;
-        }, {} as Record<string, string>),
         ...(await resolveReactAlias(reactVersion)),
       },
       include: [PACKAGE_ROOT],

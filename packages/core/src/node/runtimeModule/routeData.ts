@@ -1,6 +1,5 @@
-import { join } from 'path';
 import { addLeadingSlash } from '@rspress/shared';
-import RuntimeModulesPlugin from './RuntimeModulePlugin';
+import { RspackVirtualModulePlugin } from 'rspack-plugin-virtual-module';
 import { FactoryContext, RuntimeModuleID } from '.';
 
 export const normalizeRoutePath = (routePath: string) => {
@@ -9,19 +8,11 @@ export const normalizeRoutePath = (routePath: string) => {
 };
 
 export async function routeVMPlugin(context: FactoryContext) {
-  const { runtimeTempDir, routeService } = context;
+  const { routeService } = context;
   // client: The components of route is lazy loaded
-  const routeModulePathForClient = join(
-    runtimeTempDir,
-    `${RuntimeModuleID.RouteForClient}.js`,
-  );
-  const routeModulePathForSSR = join(
-    runtimeTempDir,
-    `${RuntimeModuleID.RouteForSSR}.js`,
-  );
-  const plugin = new RuntimeModulesPlugin({
-    [routeModulePathForClient]: routeService.generateRoutesCode(false),
-    [routeModulePathForSSR]: routeService.generateRoutesCode(true),
+  const plugin = new RspackVirtualModulePlugin({
+    [RuntimeModuleID.RouteForClient]: routeService.generateRoutesCode(false),
+    [RuntimeModuleID.RouteForSSR]: routeService.generateRoutesCode(true),
   });
   return plugin;
 }

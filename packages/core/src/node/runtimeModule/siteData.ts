@@ -1,4 +1,4 @@
-import path, { join } from 'path';
+import path from 'path';
 import {
   UserConfig,
   DefaultThemeConfig,
@@ -21,12 +21,12 @@ import yamlFrontMatter from 'yaml-front-matter';
 import { htmlToText } from 'html-to-text';
 import fs from '@modern-js/utils/fs-extra';
 import { compile } from '@modern-js/mdx-rs-binding';
+import { RspackVirtualModulePlugin } from 'rspack-plugin-virtual-module';
 import { importStatementRegex, TEMP_DIR } from '../constants';
 import { applyReplaceRules } from '../utils/applyReplaceRules';
 import { createHash } from '../utils';
 import { flattenMdxContent } from '../utils/flattenMdxContent';
 import { RouteService } from '../route/RouteService';
-import RuntimeModulesPlugin from './RuntimeModulePlugin';
 import { getI18nData } from './i18n';
 import { FactoryContext, RuntimeModuleID } from '.';
 
@@ -336,20 +336,7 @@ async function extractPageData(
 }
 
 export async function siteDataVMPlugin(context: FactoryContext) {
-  const {
-    runtimeTempDir,
-    config,
-    alias,
-    userRoot,
-
-    routeService,
-    pluginDriver,
-  } = context;
-  const entryPath = join(runtimeTempDir, `${RuntimeModuleID.SiteData}.mjs`);
-  const searchIndexHashPath = join(
-    runtimeTempDir,
-    `${RuntimeModuleID.SearchIndexHash}.js`,
-  );
+  const { config, alias, userRoot, routeService, pluginDriver } = context;
   const userConfig = config;
   const replaceRules = userConfig?.replaceRules || [];
   if (!pages) {
@@ -419,9 +406,13 @@ export async function siteDataVMPlugin(context: FactoryContext) {
     },
   };
 
-  const plugin = new RuntimeModulesPlugin({
-    [entryPath]: `export default ${JSON.stringify(siteData)}`,
-    [searchIndexHashPath]: `export default ${JSON.stringify(indexHashByLang)}`,
+  const plugin = new RspackVirtualModulePlugin({
+    [`${RuntimeModuleID.SiteData}.mjs`]: `export default ${JSON.stringify(
+      siteData,
+    )}`,
+    [RuntimeModuleID.SearchIndexHash]: `export default ${JSON.stringify(
+      indexHashByLang,
+    )}`,
   });
 
   return plugin;
