@@ -1,3 +1,4 @@
+import { useLocaleSiteData } from './useLocaleSiteData';
 import { usePageData } from '@/runtime';
 
 interface EditLink {
@@ -6,9 +7,11 @@ interface EditLink {
 }
 
 export function useEditLink() {
-  const pageData = usePageData();
+  const { siteData, page } = usePageData();
+  const locales = useLocaleSiteData();
 
-  const editLink: EditLink = pageData.siteData.themeConfig?.editLink ?? {};
+  const editLink: EditLink =
+    locales.editLink ?? siteData.themeConfig?.editLink ?? {};
 
   if (!editLink.docRepoBaseUrl || !editLink.text) {
     return null;
@@ -20,7 +23,7 @@ export function useEditLink() {
     docRepoBaseUrl += '/';
   }
 
-  const relativePagePath = pageData.page._relativePath.replace(/\\/g, '/');
+  const relativePagePath = page._relativePath.replace(/\\/g, '/');
   const link = `${docRepoBaseUrl}${relativePagePath}`;
 
   return {

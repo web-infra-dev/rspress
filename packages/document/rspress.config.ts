@@ -34,16 +34,22 @@ export default defineConfig({
       {
         lang: 'zh',
         label: '简体中文',
+        editLink: {
+          docRepoBaseUrl:
+            'https://github.com/web-infra-dev/rspress/tree/main/packages/document/docs',
+          text: '📝 在 GitHub 上编辑此页',
+        },
       },
       {
         lang: 'en',
         label: 'English',
+
+        editLink: {
+          docRepoBaseUrl:
+            'https://github.com/web-infra-dev/rspress/tree/main/packages/document/docs',
+          text: '📝 Edit this page on GitHub',
+        },
       },
     ],
-    editLink: {
-      docRepoBaseUrl:
-        'https://github.com/web-infra-dev/rspress/tree/main/packages/apps/website',
-      text: 'Edit this page on GitHub',
-    },
   },
 });

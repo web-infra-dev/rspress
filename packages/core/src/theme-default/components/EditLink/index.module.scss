@@ -1,11 +1,11 @@
 .editLink {
   color: var(--rp-c-brand);
   text-decoration: none;
-  font-size: 14px;
+  font-size: 15px;
   font-weight: 500;
   margin: 20px 0;
-
+  transition: all 0.2s ease-in-out;
   &:hover {
-    text-decoration: underline;
+    color: var(--rp-c-brand-dark);
   }
 }
