@@ -1,7 +1,15 @@
 import chalk from 'chalk';
-import type { Logger } from '@rspress/core';
 
 export const rspressMark = chalk.cyan('[Rspress]');
+
+export interface Logger {
+  info: (msg: string) => void;
+  error: (msg: string) => void;
+  warn: (msg: string) => void;
+  success: (msg: string) => void;
+  debug: (msg: string) => void;
+  log: (msg: string) => void;
+}
 
 export const logger: Logger = {
   info(msg: string) {

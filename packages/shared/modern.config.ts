@@ -18,5 +18,26 @@ export default defineConfig({
       format: 'cjs',
       buildType: 'bundle',
     },
+    {
+      input: {
+        logger: './src/logger.ts',
+      },
+      target: 'esnext',
+      format: 'esm',
+      buildType: 'bundle',
+      esbuildOptions(options) {
+        delete options.outdir;
+        options.outfile = 'dist/logger.mjs';
+        return options;
+      },
+    },
+    {
+      input: {
+        logger: './src/logger.ts',
+      },
+      target: 'esnext',
+      format: 'cjs',
+      buildType: 'bundle',
+    },
   ],
 });

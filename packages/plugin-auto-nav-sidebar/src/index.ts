@@ -6,6 +6,7 @@ import {
   SidebarGroup,
   SidebarItem,
 } from '@rspress/shared';
+import { logger } from '@rspress/shared/logger';
 import { NavMeta, SideMeta } from './type';
 
 // Scan all the directories and files in the work directory(such as `docs`), and then generate the nav and sidebar configuration according to the directory structure.
@@ -183,12 +184,13 @@ export async function extractH1Title(filePath: string): Promise<string> {
     const match = content.match(h1RegExp);
     return match ? match[1] : '';
   } catch (e) {
-    throw new Error(
+    logger.warn(
       `Can't find the file: ${filePath}, please check it in "${path.join(
         path.dirname(filePath),
         '_meta.json',
       )}".`,
     );
+    return '';
   }
 }
 

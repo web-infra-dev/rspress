@@ -2,7 +2,7 @@
 module.exports = {
   root: true,
   extends: ['@modern-js-app'],
-  ignorePatterns: ['**/tests/**/*', 'vitest.config.ts'],
+  ignorePatterns: ['**/tests/**/*', 'vitest.config.ts', 'logger.d.ts'],
   parserOptions: {
     tsconfigRootDir: __dirname,
     project: ['./tsconfig.json'],

@@ -9,6 +9,18 @@
     "url": "https://github.com/web-infra-dev/rspress",
     "directory": "packages/shared"
   },
+  "exports": {
+    ".": {
+      "import": "./dist/index.mjs",
+      "require": "./dist/index.js",
+      "types": "./dist/index.d.ts"
+    },
+    "./logger": {
+      "import": "./dist/logger.mjs",
+      "require": "./dist/logger.js",
+      "types": "./dist/logger.d.ts"
+    }
+  },
   "scripts": {
     "dev": "modern build -w",
     "build": "modern build",
@@ -21,7 +33,8 @@
   "dependencies": {
     "@modern-js/builder": "2.33.0",
     "@modern-js/builder-rspack-provider": "2.33.0",
-    "unified": "10.1.2"
+    "unified": "10.1.2",
+    "chalk": "4.1.2"
   },
   "devDependencies": {
     "lodash-es": "^4.17.21",
