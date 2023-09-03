@@ -1,7 +1,10 @@
 import path from 'path';
 import fs from '@modern-js/utils/fs-extra';
+import { logger } from '@rspress/shared/logger';
+import enhancedResolve from 'enhanced-resolve';
 import { PACKAGE_ROOT } from '../constants';
-import { resolveDepPath } from './flattenMdxContent';
+
+const { CachedInputFileSystem, ResolverFactory } = enhancedResolve;
 
 const DEFAULT_REACT_VERSION = 18;
 
@@ -34,12 +37,31 @@ export async function resolveReactAlias(reactVersion: number) {
     libPaths.push('react-dom/client');
   }
   const alias: Record<string, string> = {};
+  const resolver = ResolverFactory.createResolver({
+    fileSystem: new CachedInputFileSystem(fs),
+    extensions: ['.js'],
+    alias,
+  });
   await Promise.all(
     libPaths.map(async lib => {
       try {
-        alias[lib] = await resolveDepPath(lib, basedir, {});
+        alias[lib] = await new Promise<string>((resolve, reject) => {
+          resolver.resolve(
+            { importer: basedir },
+            basedir,
+            lib,
+            {},
+            (err, filePath) => {
+              if (err || filePath === false) {
+                return reject(err);
+              }
+              return resolve(filePath);
+            },
+          );
+        });
       } catch (e) {
-        console.log(`warning: ${lib} not found`);
+        console.log(e);
+        logger.warn(`${lib} not found`);
       }
     }),
   );

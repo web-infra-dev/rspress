@@ -5,7 +5,6 @@ import { build, dev, serve } from '@rspress/core';
 import chokidar from 'chokidar';
 import chalk from 'chalk';
 import { loadConfigFile } from './config/loadConfigFile';
-import { logger } from './logger';
 
 const CONFIG_FILES = ['rspress.config.ts', 'rspress.config.js', '_meta.json'];
 
@@ -29,37 +28,49 @@ cli
   .alias('dev')
   .action(async (root, options) => {
     const cwd = process.cwd();
+    let docDirectory: string;
+    let cliWatcher: chokidar.FSWatcher;
+    let devServer: Awaited<ReturnType<typeof dev>>;
     const startDevServer = async () => {
       const config = await loadConfigFile(options.config);
-
-      return dev({
+      docDirectory = config.root || path.join(cwd, root ?? 'docs');
+      devServer = await dev({
         appDirectory: cwd,
-        docDirectory: config.root || path.join(cwd, root ?? 'docs'),
+        docDirectory,
         config,
-        logger,
+      });
+      cliWatcher = chokidar.watch(
+        [`${cwd}/**/{${CONFIG_FILES.join(',')}}`, docDirectory!],
+        {
+          ignoreInitial: true,
+          ignored: ['**/node_modules/**', '**/.git/**', '**/.DS_Store/**'],
+        },
+      );
+      cliWatcher.on('all', async (eventName, filepath) => {
+        if (
+          eventName === 'add' ||
+          eventName === 'unlink' ||
+          (eventName === 'change' &&
+            CONFIG_FILES.includes(path.basename(filepath)))
+        ) {
+          console.log(
+            `\n✨ ${eventName} ${chalk.green(
+              path.relative(cwd, filepath),
+            )}, dev server will restart...\n`,
+          );
+          await devServer.close();
+          await cliWatcher.close();
+          await startDevServer();
+        }
       });
     };
-    let devServer = await startDevServer();
-    const cliWatcher = chokidar.watch(`${cwd}/**/{${CONFIG_FILES.join(',')}}`, {
-      ignoreInitial: true,
-      ignored: ['**/node_modules/**', '**/.git/**', '**/.DS_Store/**'],
-    });
 
-    cliWatcher.on('all', async (_eventName, filepath) => {
-      await devServer.close();
-      console.log(
-        `${chalk.green(
-          path.relative(cwd, filepath),
-        )} has changed, dev server will restart...\n`,
-      );
-      devServer = await startDevServer();
-    });
+    await startDevServer();
 
     const exitProcess = async () => {
       await cliWatcher.close();
       await devServer.close();
     };
-
     process.on('SIGINT', exitProcess);
     process.on('SIGTERM', exitProcess);
   });

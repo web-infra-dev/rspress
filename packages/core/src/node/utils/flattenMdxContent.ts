@@ -19,7 +19,7 @@ export async function resolveDepPath(
   if (!resolver) {
     resolver = ResolverFactory.createResolver({
       fileSystem: new CachedInputFileSystem(fs),
-      extensions: ['.mdx', '.md', '.js'],
+      extensions: ['.mdx', '.md'],
       alias,
     });
   }
