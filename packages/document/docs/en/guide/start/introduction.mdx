@@ -2,31 +2,51 @@
 
 ## Position
 
-Rspress is a front-end framework for **document site scenarios**, and its goal is to provide developers with a simple, efficient, and scalable document site solution.
+Rspress is a static site generator based on [Rspack](https://rspack.dev/), with a built-in default documentation theme. You can quickly build a documentation site with Rspress, and also customize the theme to meet your personalized static site needs, such as blog sites, product homepages, etc.
 
-At the same time, the framework is based on [Rspack](https://rspack.dev) which is a Rust-based build tool.So it has a very fast build speed, and take you only a few seconds to build a document site.
+The design goals of Rspress are: **first-class compilation performance**, **out-of-the-box theme functionality**, and **sufficiently flexible extensibility**.
 
 ## Features
 
-### Support MDX
+### High-performance Rust Toolchain
 
-Rspress is based on [MDX](https://mdxjs.com/) to extend the Markdown syntax.It supports the use of React components in Markdown, and supports the use of JSX syntax in Markdown, which is more flexible in syntax.
+In Rspress, in order to break through the compilation performance bottleneck of traditional front-end tools, we have made a lot of efforts on the Rust toolchain.
 
-Please refer to the syntax details in [Use MDX](/guide/basic/use-mdx)
+Firstly, Rspress is built on [Rspack](https://rspack.dev/), a high-performance front-end packaging tool based on Rust, which has built-in various optimization methods, such as multi-threaded parallel compilation, incremental compilation, etc. Compared with traditional packaging tools like Webpack, Rollup, etc., Rspack's compilation speed has increased by 5 ~ 10 times.
 
-### Support Full-Text Search
+In addition to the bundler itself, for another major compilation performance bottleneck in the SSG framework, i.e., `Markdown Compilation`, we have also rustified this process to further speed up. Based on the open-source [mdxjs-rs](https://github.com/wooorm/mdxjs-rs) library, we extended a series of plugins, and further exposed the Node.js call interface through [napi-rs](https://napi.rs/), thus customizing the Rspress Mdarkown compiler (tentatively called `mdx-rs`). This compiler has more than 5 times the performance improvement compared to the traditional JS version of the compiler:
 
-Based on the [FlexSearch](https://github.com/nextapps-de/flexsearch) search engine, it provides out-of-the-box document search capabilities.
+![mdx-benchmark](https://lf3-static.bytednsdoc.com/obj/eden-cn/uhbfnupenuhf/rspress/mdx-benchmark.png)
 
-<img src="https://lf3-static.bytednsdoc.com/obj/eden-cn/uhbfnupenuhf/edenx-doc/Xnip2023-02-16_21-17-46.jpg" />
+### Support for MDX Rendering
 
-### Support I18n
+Rspress uses [MDX](https://mdxjs.com/) to extend Markdown syntax, supports using React components in Markdown, and also supports using JSX syntax in Markdown, making the syntax more flexible:
 
-Built-in i18n support, supports multi-language switching, and supports multi-language content search.You can refer to [I18n](/guide/default-theme/i18n) for details.
+![mdx-intro](https://lf3-static.bytednsdoc.com/obj/eden-cn/uhbfnupenuhf/rspress/mdx-intro.png)
 
-### Code Block Syntax Highlighting
+Embedding React components in pages can make your documents richer, such as:
 
-Based on [PrismJS](https://github.com/PrismJS/prism) for runtime code coloring, it supports multiple code language highlighting. For example:
+![rspress-mdx](https://lf3-static.bytednsdoc.com/obj/eden-cn/uhbfnupenuhf/rspress/rspress-mdx-en.jpeg)
+
+> Case source: https://modernjs.dev/community/showcase.html
+
+For syntax details, please refer to the [Using MDX](/guide/basic/use-mdx) section.
+
+### Theme Functionality
+
+#### Full-text Search Support
+
+Based on the open-source FlexSearch search engine, it provides out-of-the-box document search capabilities, which means you can use the search function directly without any configuration. The effect is as follows:
+
+![rspress-search](https://lf3-static.bytednsdoc.com/obj/eden-cn/uhbfnupenuhf/rspress/rspress-search-en.jpeg)
+
+#### I18n Support
+
+Built-in support for internationalization, supports switching between multiple languages, and supports searching for content in multiple languages. Details can be seen in [I18n](/guide/default-theme/i18n).
+
+#### Code Block Highlighting
+
+Based on [PrismJS](https://github.com/PrismJS/prism) for runtime code coloring, it supports highlighting of multiple code languages. For example:
 
 ```ts title="rspress.config.ts"
 import { defineConfig } from 'rspress/config';
@@ -37,16 +57,20 @@ export default defineConfig({
 });
 ```
 
-### Auto Layout Generation
+#### Automatic Layout Generation
 
-There are multiple built-in layout components, such as `Top Navigation Bar` and `Left Sidebar`, that can be automatically generated through config files. For details, please refer to [Auto Nav/Sidebar](/guide/basic/auto-nav-sidebar).
+It has built-in various layout components, such as `top navigation`, `left sidebar`, etc. You can generate them automatically through the configuration file. For details, please refer to [Automated Navigation Bar/Sidebar](/guide/basic/auto-nav-sidebar).
 
-At the same time, you can also customize the layout type by configuring `pageType`. For more information, please refer to [pageType](/api/config/config-frontmatter.html#pagetype).
+At the same time, you can also customize the layout type by configuring pageType. For details, please refer to [pageType](/api/config/config-frontmatter.html#pagetype).
 
-### Support Custom Theme
+#### Custom Theme Support
 
-Supports custom themes, which can be customized through configuration files, please refer to [Theme Customization](/guide/advanced/custom-theme) for details.
+Supports custom themes, you can customize the theme through the configuration file. For details, please refer to [Custom Themes](/guide/advanced/custom-theme).
 
-### Support Plugin System
+### Plugin Mechanism
 
-You can extend the abilities of Rspress through custom plugins. For details, please refer to [Plugin System](/plugin/system/introduction).
+An internal plugin system is designed to ensure strong extensibility. You can extend various functions of Rspress by customizing plugins. For details, please refer to [Plugin Mechanism](/plugin/system/introduction).
+
+## Try Rspress
+
+Go to [Quick Start](/guide/start/getting-started) to learn how to use Rspress to quickly build a documentation site.

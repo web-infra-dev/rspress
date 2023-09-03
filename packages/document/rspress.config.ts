@@ -8,9 +8,9 @@ export default defineConfig({
   },
   root: path.join(__dirname, 'docs'),
   title: 'Rspress',
-  description: 'Modern static site generator based on Rspack',
+  description: 'Rspack based static site generator',
   lang: 'en',
-  icon: 'https://lf3-static.bytednsdoc.com/obj/eden-cn/zq-uylkvT/ljhwZthlaukjlkulzlp/logo-1x-0104.png',
+  icon: 'https://lf3-static.bytednsdoc.com/obj/eden-cn/uhbfnupenuhf/rspress/rspress-logo.png',
   builderConfig: {
     dev: {
       startUrl: false,
