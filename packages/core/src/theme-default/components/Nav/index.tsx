@@ -100,7 +100,7 @@ export function Nav(props: NavProps) {
 
   const NavMenu = ({ menuItems }: { menuItems: NavItem[] }) => {
     return (
-      <div className="menu h-14">
+      <div className="rspress-nav-menu menu h-14">
         {menuItems.map(item => {
           return 'items' in item || Array.isArray(item) ? (
             <div key={item.text} className="mx-3 last:mr-0">
@@ -140,11 +140,11 @@ export function Nav(props: NavProps) {
   const hasAppearanceSwitch = siteData.themeConfig.darkMode !== false;
 
   const leftNav = () => {
-    return (
+    return leftMenuItems.length > 0 ? (
       <div className={styles.leftNav}>
         <NavMenu menuItems={leftMenuItems} />
       </div>
-    );
+    ) : null;
   };
 
   const rightNav = () => {
