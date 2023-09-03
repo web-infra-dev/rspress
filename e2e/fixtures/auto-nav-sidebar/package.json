@@ -1,0 +1,18 @@
+{
+  "name": "rspress-auto-nav-sidebar",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "dev": "rspress dev",
+    "build": "rspress build",
+    "preview": "rspress preview"
+  },
+  "dependencies": {
+    "rspress": "workspace:*"
+  },
+  "devDependencies": {
+    "@modern-js/tsconfig": "2.30.0",
+    "@types/jest": "^29",
+    "@types/node": "^14"
+  }
+}

@@ -75,6 +75,22 @@ importers:
         specifier: 0.34.1
         version: 0.34.1(playwright@1.33.0)
 
+  e2e/fixtures/auto-nav-sidebar:
+    dependencies:
+      rspress:
+        specifier: workspace:*
+        version: link:../../../packages/cli
+    devDependencies:
+      '@modern-js/tsconfig':
+        specifier: 2.30.0
+        version: 2.30.0
+      '@types/jest':
+        specifier: ^29
+        version: 29.2.4
+      '@types/node':
+        specifier: ^14
+        version: 14.0.0
+
   e2e/fixtures/basic:
     dependencies:
       rspress:
