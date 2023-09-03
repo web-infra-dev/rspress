@@ -1,8 +1,8 @@
 import type { UserConfig } from '@rspress/shared';
 import type { BuilderPlugin } from '@modern-js/builder';
+import RuntimeModulesPlugin from 'rspack-plugin-virtual-module';
 import { RouteService } from '../route/RouteService';
 import { PluginDriver } from '../PluginDriver';
-import RuntimeModulesPlugin from './RuntimeModulePlugin';
 import { routeVMPlugin } from './routeData';
 import { siteDataVMPlugin } from './siteData';
 import { i18nVMPlugin } from './i18n';

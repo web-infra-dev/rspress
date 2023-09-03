@@ -405,6 +405,9 @@ importers:
       remark-rehype:
         specifier: ^10.1.0
         version: 10.1.0
+      rspack-plugin-virtual-module:
+        specifier: 0.1.11
+        version: 0.1.11
       sirv:
         specifier: ^2.0.2
         version: 2.0.2
@@ -4084,7 +4087,7 @@ packages:
       http-compression: 1.0.6
       minimatch: 3.1.2
       path-to-regexp: 6.2.1
-      ts-node: 10.9.1(@types/node@16.11.7)(typescript@5.0.4)
+      ts-node: 10.9.1(@types/node@18.11.17)(typescript@5.0.4)
       ws: 8.13.0
     transitivePeerDependencies:
       - '@babel/traverse'
@@ -5017,6 +5020,7 @@ packages:
 
   /@types/node@16.11.7:
     resolution: {integrity: sha512-QB5D2sqfSjCmTuWcBWyJ+/44bcjO7VbjSbOE0ucoVbAsSNQc4Lt6QkgkVXkTDwkL4z/beecZNDvVX15D4P8Jbw==}
+    dev: true
 
   /@types/node@18.11.17:
     resolution: {integrity: sha512-HJSUJmni4BeDHhfzn6nF0sVmd1SMezP7/4F0Lq+aXzmp2xm9O7WXrUtHW/CHlYVtZUbByEvWidHqRtcJXGF2Ng==}
@@ -12321,7 +12325,6 @@ packages:
     resolution: {integrity: sha512-dD7vo8PY3sG7nM1JAuytJ4XTXqALKUDjISFaxFyIHcSvUBKu8nmJf9TaRq1htS+bsXujqkKhKR859k0/zTHwxQ==}
     dependencies:
       fs-extra: 11.1.1
-    dev: true
 
   /rspack-plugin-virtual-module@0.1.7:
     resolution: {integrity: sha512-8LFxQ+YI0KeveA5Vl7SWMB9LRq8pBnrtmzF6klOU3pNfWFWsaRf+D8OnDRHHlrYUq6l+1Q8yTlZB/HgqksRD9Q==}
@@ -13245,6 +13248,7 @@ packages:
       typescript: 5.0.4
       v8-compile-cache-lib: 3.0.1
       yn: 3.1.1
+    dev: true
 
   /ts-node@10.9.1(@types/node@18.11.17)(typescript@5.0.4):
     resolution: {integrity: sha512-NtVysVPkxxrwFGUUxGYhfux8k78pQB3JqYBXlLRZgdGUqTO5wU/UyHop5p70iEbGhB7q5KmiZiU0Y3KlJrScEw==}

@@ -1,6 +1,5 @@
-import { join } from 'path';
 import fs from '@modern-js/utils/fs-extra';
-import RuntimeModulesPlugin from './RuntimeModulePlugin';
+import { RspackVirtualModulePlugin } from 'rspack-plugin-virtual-module';
 import { FactoryContext, RuntimeModuleID } from '.';
 
 export async function searchHookVMPlugin(context: FactoryContext) {
@@ -12,12 +11,8 @@ export async function searchHookVMPlugin(context: FactoryContext) {
   ) {
     content = await fs.readFile(config.search.searchHooks, 'utf-8');
   }
-  const modulePath = join(
-    context.runtimeTempDir,
-    `${RuntimeModuleID.SearchHooks}.ts`,
-  );
 
-  return new RuntimeModulesPlugin({
-    [modulePath]: content,
+  return new RspackVirtualModulePlugin({
+    [`${RuntimeModuleID.SearchHooks}.ts`]: content,
   });
 }

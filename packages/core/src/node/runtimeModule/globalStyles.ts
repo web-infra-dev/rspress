@@ -1,11 +1,9 @@
-import { join } from 'path';
 import fs from '@modern-js/utils/fs-extra';
-import RuntimeModulesPlugin from './RuntimeModulePlugin';
+import { RspackVirtualModulePlugin } from 'rspack-plugin-virtual-module';
 import { FactoryContext, RuntimeModuleID } from '.';
 
 export async function globalStylesVMPlugin(context: FactoryContext) {
-  const { runtimeTempDir, config, pluginDriver } = context;
-  const modulePath = join(runtimeTempDir, `${RuntimeModuleID.GlobalStyles}.js`);
+  const { config, pluginDriver } = context;
   const globalStylesByPlugins = pluginDriver.globalStyles();
 
   if (config.globalStyles) {
@@ -32,7 +30,7 @@ export async function globalStylesVMPlugin(context: FactoryContext) {
     )
   ).join('');
 
-  return new RuntimeModulesPlugin({
-    [modulePath]: moduleContent,
+  return new RspackVirtualModulePlugin({
+    [RuntimeModuleID.GlobalStyles]: moduleContent,
   });
 }
