@@ -111,6 +111,7 @@ async function createInternalBuildConfig(
         '@mdx-js/react': require.resolve('@mdx-js/react'),
         '@/runtime': path.join(PACKAGE_ROOT, 'dist', 'runtime'),
         '@theme': themeDir,
+        '@/theme-default': DEFAULT_THEME_DIR,
         '@rspress/core': PACKAGE_ROOT,
         'react-lazy-with-preload': require.resolve('react-lazy-with-preload'),
         ...(await resolveReactAlias(reactVersion)),

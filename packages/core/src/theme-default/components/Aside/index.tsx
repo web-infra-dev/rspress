@@ -47,8 +47,7 @@ export function Aside(props: { headers: Header[]; outlineTitle: string }) {
             whiteSpace: 'nowrap',
             overflow: 'hidden',
             textOverflow: 'ellipsis',
-            fontWeight:
-              header.depth === baseHeaderLevel ? 'semibold' : 'normal',
+            fontWeight: 'semibold',
           }}
           onClick={e => {
             e.preventDefault();

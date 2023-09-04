@@ -69,7 +69,7 @@ export function SidebarItemComp(props: SidebarItemProps) {
           onMouseEnter={() => props.preloadLink(item.link)}
           className={`${
             active ? styles.menuItemActive : styles.menuItem
-          } mt-1 py-1.5 px-2 rounded-xl font-medium flex`}
+          } mt-1 py-2 px-2 rounded-xl font-medium flex`}
           style={{
             // The first level menu item will have the same font size as the sidebar group
             fontSize: depth === 0 ? '14px' : '13px',
@@ -201,7 +201,7 @@ export function SidebarGroupComp(props: SidebarItemProps) {
         }}
       >
         <h2
-          className="py-1 px-2 text-sm font-medium flex"
+          className="py-2 px-2 text-sm font-medium flex"
           style={{
             ...(depth === 0 ? highlightTitleStyle : {}),
           }}
