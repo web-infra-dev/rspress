@@ -10,6 +10,11 @@ export default defineConfig({
   title: 'Rspress',
   description: 'Rspack based static site generator',
   lang: 'en',
+  logo: {
+    light:
+      'https://lf3-static.bytednsdoc.com/obj/eden-cn/rjhwzy/ljhwZthlaukjlkulzlp/rspress/rspress-navbar-logo-0904.png',
+    dark: 'https://lf3-static.bytednsdoc.com/obj/eden-cn/rjhwzy/ljhwZthlaukjlkulzlp/rspress/rspress-navbar-logo-dark-0904.png',
+  },
   icon: 'https://lf3-static.bytednsdoc.com/obj/eden-cn/uhbfnupenuhf/rspress/rspress-logo.png',
   builderConfig: {
     dev: {
