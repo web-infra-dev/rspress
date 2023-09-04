@@ -33,20 +33,15 @@ export function Aside(props: { headers: Header[]; outlineTitle: string }) {
     };
   }, [headers]);
 
-  // const handleHeaderClick = e => {};
-
   const renderHeader = (header: Header) => {
     return (
       <li key={header.id}>
         <a
           href={`#${header.id}`}
-          className="leading-7 transition-all duration-300 hover:text-text-1 text-text-2 block"
+          className="leading-7 transition-all duration-300 hover:text-text-1 text-text-2 block py-0.5"
           style={{
-            fontSize: '13px',
+            fontSize: '14px',
             paddingLeft: (header.depth - baseHeaderLevel) * 12,
-            whiteSpace: 'nowrap',
-            overflow: 'hidden',
-            textOverflow: 'ellipsis',
             fontWeight: 'semibold',
           }}
           onClick={e => {
@@ -58,7 +53,16 @@ export function Aside(props: { headers: Header[]; outlineTitle: string }) {
             }
           }}
         >
-          {header.text}
+          <span
+            className="block pl-4 pr-4 py-1"
+            style={{
+              whiteSpace: 'nowrap',
+              overflow: 'hidden',
+              textOverflow: 'ellipsis',
+            }}
+          >
+            {header.text}
+          </span>
         </a>
       </li>
     );
@@ -68,7 +72,7 @@ export function Aside(props: { headers: Header[]; outlineTitle: string }) {
     <div className="flex flex-col">
       <div className={hasOutline ? `<lg:hidden` : 'hidden'}>
         <div id="aside-container" className="relative text-sm font-medium">
-          <div className="leading-7 block text-sm font-semibold">
+          <div className="leading-7 block text-sm font-semibold pl-3">
             {props.outlineTitle}
           </div>
           <nav className="mt-1">

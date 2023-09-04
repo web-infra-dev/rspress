@@ -68,18 +68,25 @@
 
 @media (min-width: 1440px) {
   .docLayout {
-    width: calc(100% - 100vw + 100%);
+    width: 100%;
     margin-left: 0;
   }
 
   .content {
-    padding: 48px 0 72px 64px;
+    padding: 48px 0 72px 0;
 
     :global(.rspress-doc) {
-      padding-right: 64px;
-      width: calc(
-        100vw - var(--rp-sidebar-width) - var(--rp-aside-width) - 64px
-      );
+      box-sizing: content-box;
+      width: calc(100vw - var(--rp-sidebar-width) - var(--rp-aside-width));
+      padding: 0
+        max(
+          48px,
+          calc(
+            (100vw - var(--rp-sidebar-width) - var(--rp-aside-width) - 960px) /
+              2
+          )
+        );
+      max-width: 960px;
     }
   }
 }

@@ -4,8 +4,8 @@
 :root {
   --rp-layout-max-width: 1440px;
   --rp-nav-height: 72px;
-  --rp-sidebar-width: 280px;
-  --rp-aside-width: 256px;
+  --rp-sidebar-width: 320px;
+  --rp-aside-width: 368px;
 }
 
 :root {
