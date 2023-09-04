@@ -19,7 +19,12 @@ interface Props {
 const highlightTitleStyle = {
   color: 'var(--rp-c-text-1)',
   fontSize: '14px',
+  paddingLeft: '24px',
+  fontWeight: 'bold',
 };
+
+let matchCache: WeakMap<NormalizedSidebarGroup | SidebarItem, boolean> =
+  new WeakMap();
 
 interface SidebarItemProps {
   id: string;
@@ -73,7 +78,7 @@ export function SidebarItemComp(props: SidebarItemProps) {
           style={{
             // The first level menu item will have the same font size as the sidebar group
             fontSize: depth === 0 ? '14px' : '13px',
-            marginLeft: depth === 0 ? 0 : '20px',
+            marginLeft: depth === 0 ? 0 : '18px',
             ...(depth === 0 ? highlightTitleStyle : {}),
           }}
         >
@@ -88,6 +93,7 @@ export function SidebarItemComp(props: SidebarItemProps) {
 export function SidebarGroupComp(props: SidebarItemProps) {
   const { item, depth = 0, activeMatcher, id, setSidebarData } = props;
   const navigate = useNavigate();
+  const isGroupMatched = matchCache.get(item);
   const containerRef = useRef<HTMLDivElement>(null);
   const transitionRef = useRef<any>(null);
   const innerRef = useRef<HTMLDivElement>(null);
@@ -179,10 +185,9 @@ export function SidebarGroupComp(props: SidebarItemProps) {
       }}
     >
       <div
-        style={{
-          cursor: collapsible || item.link ? 'pointer' : 'normal',
-        }}
         className={`flex justify-between items-center rounded-xl ${
+          isGroupMatched ? styles.menuItemActive : ''
+        } ${
           // eslint-disable-next-line no-nested-ternary
           active
             ? styles.menuItemActive
@@ -199,11 +204,20 @@ export function SidebarGroupComp(props: SidebarItemProps) {
             collapsible && toggleCollapse(e);
           }
         }}
+        style={{
+          borderRadius: depth === 0 ? '0 1rem 1rem 0' : undefined,
+          cursor: collapsible || item.link ? 'pointer' : 'normal',
+        }}
       >
         <h2
           className="py-2 px-2 text-sm font-medium flex"
           style={{
             ...(depth === 0 ? highlightTitleStyle : {}),
+            ...(depth === 0 && isGroupMatched
+              ? {
+                  color: 'var(--rp-c-brand)',
+                }
+              : {}),
           }}
         >
           <Tag tag={item.tag} />
@@ -231,6 +245,7 @@ export function SidebarGroupComp(props: SidebarItemProps) {
           className="rspress-sidebar-group transition-opacity duration-500 ease-in-out"
           style={{
             opacity: initialState.current ? 0 : 1,
+            marginLeft: depth === 0 ? '14px' : 0,
           }}
         >
           {(item as NormalizedSidebarGroup)?.items?.map((item, index) => (
@@ -272,10 +287,7 @@ export function SideBar(props: Props) {
     // 1. Update sidebarData when pathname changes
     // 2. For current active item, expand its parent group
     // Cache, Avoid redundant calculation
-    const matchCache = new WeakMap<
-      NormalizedSidebarGroup | SidebarItem,
-      boolean
-    >();
+    matchCache = new WeakMap<NormalizedSidebarGroup | SidebarItem, boolean>();
     const match = (item: NormalizedSidebarGroup | SidebarItem) => {
       if (matchCache.has(item)) {
         return matchCache.get(item);

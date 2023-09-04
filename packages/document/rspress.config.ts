@@ -44,11 +44,13 @@ export default defineConfig({
             'https://github.com/web-infra-dev/rspress/tree/main/packages/document/docs',
           text: '📝 在 GitHub 上编辑此页',
         },
+        prevPageText: '上一篇',
+        nextPageText: '下一篇',
+        outlineTitle: '目录',
       },
       {
         lang: 'en',
         label: 'English',
-
         editLink: {
           docRepoBaseUrl:
             'https://github.com/web-infra-dev/rspress/tree/main/packages/document/docs',

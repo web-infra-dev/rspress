@@ -68,8 +68,8 @@
 
 @media (min-width: 1440px) {
   .docLayout {
-    width: calc(1440px - 100vw + 100%);
-    margin-left: calc((100vw - 1440px) / 2);
+    width: calc(100% - 100vw + 100%);
+    margin-left: 0;
   }
 
   .content {
@@ -78,7 +78,7 @@
     :global(.rspress-doc) {
       padding-right: 64px;
       width: calc(
-        1440px - var(--rp-sidebar-width) - var(--rp-aside-width) - 64px
+        100vw - var(--rp-sidebar-width) - var(--rp-aside-width) - 64px
       );
     }
   }
