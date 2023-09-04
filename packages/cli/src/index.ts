@@ -21,16 +21,23 @@ const landingMessage = `🔥 Rspress v${packageJson.version}\n`;
 const rainbowMessage = gradient.cristal(landingMessage);
 console.log(chalk.bold(rainbowMessage));
 
+const setNodeEnv = (env: 'development' | 'production') => {
+  process.env.NODE_ENV = env;
+};
+
 cli.option('--config [config]', 'Specify the path to the config file');
 
 cli
   .command('[root]', 'start dev server') // default command
   .alias('dev')
   .action(async (root, options) => {
+    setNodeEnv('development');
+
     const cwd = process.cwd();
     let docDirectory: string;
     let cliWatcher: chokidar.FSWatcher;
     let devServer: Awaited<ReturnType<typeof dev>>;
+
     const startDevServer = async () => {
       const config = await loadConfigFile(options.config);
       docDirectory = config.root || path.join(cwd, root ?? 'docs');
@@ -79,6 +86,8 @@ cli
   .command('build [root]')
   .option('-c --config <config>', 'specify config file')
   .action(async (root, options) => {
+    setNodeEnv('production');
+
     const cwd = process.cwd();
     const config = await loadConfigFile(options.config);
     await build({
@@ -96,6 +105,8 @@ cli
   .option('--host [host]', 'hostname')
   .action(
     async (options?: { port?: number; host?: string; config?: string }) => {
+      setNodeEnv('production');
+
       const { port, host } = options || {};
       const config = await loadConfigFile(options?.config);
 
