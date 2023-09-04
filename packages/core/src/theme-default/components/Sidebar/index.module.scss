@@ -4,7 +4,7 @@
   bottom: 0;
   left: 0;
   z-index: var(--rp-z-index-sidebar);
-  padding: 12px 12px 96px 16px;
+  padding: 12px 12px 96px 0;
   width: calc(100vw - 64px);
   max-width: 320px;
   background-color: var(--rp-c-bg);
@@ -46,9 +46,8 @@
 
 @media (min-width: 1440px) {
   .sidebar {
-    padding-left: 16px;
+    padding-left: 0;
     width: var(--rp-sidebar-width);
-    margin-left: calc((100vw - 1440px) / 2);
   }
 }
 
@@ -87,7 +86,8 @@
 .menuItem,
 .menuItemStatic {
   color: var(--rp-c-text-2);
-  transition: all 0.2s;
+  transition: color 0.2s;
+  font-weight: 500;
 }
 
 .menuItemActive {

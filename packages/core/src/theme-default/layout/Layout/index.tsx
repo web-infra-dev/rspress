@@ -50,7 +50,6 @@ export const Layout: React.FC<LayoutProps> = props => {
   const defaultLang = siteData.lang || '';
   const hideNavbar =
     frontmatter?.hideNavbar ?? themeConfig?.hideNavbar ?? false;
-
   // Priority: front matter title > h1 title
   let title = (frontmatter?.title as string) ?? articleTitle;
   const mainTitle = siteData.title || localesData.title;
