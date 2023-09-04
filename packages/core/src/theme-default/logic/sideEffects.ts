@@ -104,7 +104,9 @@ export function bindingAsideScroll() {
   const activate = (links: HTMLAnchorElement[], index: number) => {
     if (links[index]) {
       const id = links[index].getAttribute('href');
-      const currentLink = aside?.querySelector(`a[href="#${id?.slice(1)}"]`);
+      const currentLink = aside?.querySelector(
+        `a[href="#${id?.slice(1)}"] > span`,
+      );
       if (currentLink) {
         if (prevActiveLink) {
           prevActiveLink.classList.remove('aside-active');
