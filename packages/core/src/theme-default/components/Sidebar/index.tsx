@@ -80,6 +80,9 @@ export function SidebarItemComp(props: SidebarItemProps) {
             fontSize: depth === 0 ? '14px' : '13px',
             marginLeft: depth === 0 ? 0 : '18px',
             ...(depth === 0 ? highlightTitleStyle : {}),
+            ...(depth === 0 && active
+              ? { color: 'var(--rp-c-brand)', borderRadius: '0 1rem 1rem 0' }
+              : {}),
           }}
         >
           <Tag tag={item.tag} />
@@ -93,6 +96,7 @@ export function SidebarItemComp(props: SidebarItemProps) {
 export function SidebarGroupComp(props: SidebarItemProps) {
   const { item, depth = 0, activeMatcher, id, setSidebarData } = props;
   const navigate = useNavigate();
+  console.log(matchCache);
   const isGroupMatched = matchCache.get(item);
   const containerRef = useRef<HTMLDivElement>(null);
   const transitionRef = useRef<any>(null);
@@ -210,7 +214,7 @@ export function SidebarGroupComp(props: SidebarItemProps) {
         }}
       >
         <h2
-          className="py-2 px-2 text-sm font-medium flex"
+          className="py-2.5 px-2 text-sm font-medium flex"
           style={{
             ...(depth === 0 ? highlightTitleStyle : {}),
             ...(depth === 0 && isGroupMatched
@@ -284,6 +288,9 @@ export function SideBar(props: Props) {
   >(rawSidebarData.filter(Boolean).flat());
   const pathname = decodeURIComponent(rawPathname);
   useEffect(() => {
+    if (props.sidebarData === sidebarData) {
+      return;
+    }
     // 1. Update sidebarData when pathname changes
     // 2. For current active item, expand its parent group
     // Cache, Avoid redundant calculation
@@ -314,8 +321,9 @@ export function SideBar(props: Props) {
         }
       }
     };
-    sidebarData.forEach(traverse);
-    setSidebarData(rawSidebarData.filter(Boolean).flat());
+    const newSidebarData = props.sidebarData.filter(Boolean).flat();
+    newSidebarData.forEach(traverse);
+    setSidebarData(newSidebarData);
   }, [props.sidebarData, pathname]);
 
   const removeLangPrefix = (path: string) => {
@@ -351,7 +359,7 @@ export function SideBar(props: Props) {
             overflow: 'scroll',
           }}
         >
-          <nav className="pb-6">
+          <nav className="pb-2">
             {sidebarData.map(
               (item: NormalizedSidebarGroup | SidebarItem, index: number) => (
                 <SidebarItemComp
