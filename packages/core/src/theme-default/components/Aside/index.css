@@ -1,0 +1,17 @@
+.aside-item {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  transition: all 0.2s ease-in-out;
+  border-radius: 1rem 0 0 1rem;
+}
+
+.aside-item:hover {
+  background-color: var(--rp-c-bg-mute);
+}
+
+.aside-active,
+.aside-active:hover {
+  color: var(--rp-c-brand-dark) !important;
+  background-color: var(--rp-c-brand-tint);
+}

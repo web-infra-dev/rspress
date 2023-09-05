@@ -96,7 +96,6 @@ export function SidebarItemComp(props: SidebarItemProps) {
 export function SidebarGroupComp(props: SidebarItemProps) {
   const { item, depth = 0, activeMatcher, id, setSidebarData } = props;
   const navigate = useNavigate();
-  console.log(matchCache);
   const isGroupMatched = matchCache.get(item);
   const containerRef = useRef<HTMLDivElement>(null);
   const transitionRef = useRef<any>(null);

@@ -1,7 +1,0 @@
-.aside-active,
-.aside-active:hover {
-  color: var(--rp-c-brand-dark) !important;
-  background-color: var(--rp-c-brand-tint);
-  border-radius: 1rem 0 0 1rem;
-  font-weight: bold;
-}

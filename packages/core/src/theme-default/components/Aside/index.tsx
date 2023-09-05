@@ -1,6 +1,7 @@
 import { useRef, useEffect } from 'react';
-import { Header } from '@rspress/shared/index';
+import { Header } from '@rspress/shared';
 import { bindingAsideScroll, scrollToTarget } from '../../logic';
+import './index.css';
 
 export function Aside(props: { headers: Header[]; outlineTitle: string }) {
   const { headers } = props;
@@ -53,14 +54,7 @@ export function Aside(props: { headers: Header[]; outlineTitle: string }) {
             }
           }}
         >
-          <span
-            className="block pl-4 pr-4 py-1"
-            style={{
-              whiteSpace: 'nowrap',
-              overflow: 'hidden',
-              textOverflow: 'ellipsis',
-            }}
-          >
+          <span className="aside-item block pl-4 pr-4 py-1" style={{}}>
             {header.text}
           </span>
         </a>
@@ -72,7 +66,7 @@ export function Aside(props: { headers: Header[]; outlineTitle: string }) {
     <div className="flex flex-col">
       <div className={hasOutline ? `<lg:hidden` : 'hidden'}>
         <div id="aside-container" className="relative text-sm font-medium">
-          <div className="leading-7 block text-sm font-semibold pl-3">
+          <div className="leading-7 block text-sm font-semibold pl-4">
             {props.outlineTitle}
           </div>
           <nav className="mt-1">
