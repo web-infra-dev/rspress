@@ -74,15 +74,14 @@ export function SidebarItemComp(props: SidebarItemProps) {
           onMouseEnter={() => props.preloadLink(item.link)}
           className={`${
             active ? styles.menuItemActive : styles.menuItem
-          } mt-1 py-2 px-2 rounded-xl font-medium flex`}
+          } mt-1 py-2 px-3 font-medium flex`}
           style={{
             // The first level menu item will have the same font size as the sidebar group
             fontSize: depth === 0 ? '14px' : '13px',
-            marginLeft: depth === 0 ? 0 : '18px',
+            marginLeft: depth === 0 ? 0 : '12px',
+            borderRadius: '0 1rem 1rem 0',
             ...(depth === 0 ? highlightTitleStyle : {}),
-            ...(depth === 0 && active
-              ? { color: 'var(--rp-c-brand)', borderRadius: '0 1rem 1rem 0' }
-              : {}),
+            ...(depth === 0 && active ? { color: 'var(--rp-c-brand)' } : {}),
           }}
         >
           <Tag tag={item.tag} />
