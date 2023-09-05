@@ -14,7 +14,7 @@ Rspress 的设计目标是：**一流的编译性能**、**开箱即用的主题
 
 首先，Rspress 基于 [Rspack](https://rspack.dev/) 构建，Rspack 是一个基于 Rust 的高性能前端打包工具，内置了多种优化手段，如：多线程并行编译、增量编译等，相比传统的 Webpack、Rollup 等打包工具，Rspack 的编译速度有着 5 ~ 10 倍的提升。
 
-除了打包工具本身，对于文档框架中另一大编译性能瓶颈，即`Markdown 编译`，我们也将这一流程 Rust 化以进一步提速，基于开源的 [mdxjs-rs](https://github.com/wooorm/mdxjs-rs) 库扩展一系列插件，并通过 [napi-rs](https://napi.rs/) 进一步封装出 Node.js 的调用接口，从而定制出 Rspress 的 Mdarkown 编译器（暂且称之为 `mdx-rs`）。这款编译器相比传统的 JS 版本的编译器，有 5 倍以上的性能提升：
+除了打包工具本身，对于文档框架中另一大编译性能瓶颈，即`Markdown 编译`，我们也将这一流程 Rust 化以进一步提速，基于开源的 [mdxjs-rs](https://github.com/wooorm/mdxjs-rs) 库扩展一系列插件，并通过 [napi-rs](https://napi.rs/) 进一步封装出 Node.js 的调用接口，从而定制出 Rspress 的 Markdown 编译器（暂且称之为 `mdx-rs`）。这款编译器相比传统的 JS 版本的编译器，有 5 倍以上的性能提升：
 
 <img src="https://lf3-static.bytednsdoc.com/obj/eden-cn/uhbfnupenuhf/rspress/mdx-benchmark.png" />
 
