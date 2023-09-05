@@ -1,10 +1,11 @@
 .container {
-  border: 1px solid var(--rp-c-gray-light-3);
-  border-radius: 8px;
-}
+  background-color: var(--rp-code-block-bg);
+  contain: content;
+  border-radius: 16px;
 
-:global(.dark) .container {
-  border-color: var(--rp-c-dark-light-1);
+  :global(div[class*='language-']) {
+    margin: 6px 0;
+  }
 }
 
 .tab-list {
@@ -12,12 +13,7 @@
   padding-top: 4px;
   display: flex;
   min-width: 100%;
-  border-bottom-width: 1px;
-  border-color: var(--rp-c-gray-light-3);
-}
-
-:global(.dark) .tab-list {
-  border-color: var(--rp-c-dark-light-1);
+  background-color: var(--rp-code-title-bg);
 }
 
 .tab {
@@ -38,12 +34,6 @@
 .not-selected:hover {
   color: var(--rp-c-text-1);
   border-color: var(--rp-c-gray);
-  border-top-left-radius: 10px;
-  border-top-right-radius: 10px;
-  background-color: var(--rp-c-gray-light-5);
-  :global(.dark) & {
-    background-color: var(--rp-c-dark-light-3);
-  }
 }
 
 .selected {

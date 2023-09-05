@@ -57,7 +57,7 @@
   margin: 16px 0;
   background-color: var(--rp-code-block-bg);
   overflow-x: auto;
-  transition: background-color 0.5s;
+  transition: none;
 }
 
 .rspress-doc .rspress-code-title {
