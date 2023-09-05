@@ -32,7 +32,7 @@
   .content {
     margin-left: var(--rp-sidebar-width);
     width: calc(100% - var(--rp-sidebar-width));
-    padding: 48px 48px 72px 48px;
+    padding: 48px 48px 72px 0;
 
     :global(.rspress-doc) {
       width: 100%;
@@ -45,23 +45,17 @@
 }
 
 @media (min-width: 1280px) {
-  .docLayout {
-    width: calc(1280px - 100vw + 100%);
-    margin-left: calc((100vw - 1280px) / 2);
-  }
-
   .aside-container {
     display: block;
     width: var(--rp-aside-width);
   }
 
   .content {
-    margin-left: var(--rp-sidebar-width);
-    width: calc(100% - var(--rp-sidebar-width));
     padding: 48px 0 72px 0;
-
     :global(.rspress-doc) {
-      width: calc(1280px - var(--rp-sidebar-width) - var(--rp-aside-width));
+      padding: 0 48px;
+      box-sizing: content-box;
+      width: calc(100vw - var(--rp-aside-width) - var(--rp-sidebar-width));
     }
   }
 }
@@ -73,8 +67,6 @@
   }
 
   .content {
-    padding: 48px 0 72px 0;
-
     :global(.rspress-doc) {
       box-sizing: content-box;
       width: calc(100vw - var(--rp-sidebar-width) - var(--rp-aside-width));

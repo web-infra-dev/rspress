@@ -39,9 +39,8 @@ export function Aside(props: { headers: Header[]; outlineTitle: string }) {
       <li key={header.id}>
         <a
           href={`#${header.id}`}
-          className="leading-7 transition-all duration-300 hover:text-text-1 text-text-2 block py-0.5"
+          className="aside-link transition-all duration-300 hover:text-text-1 text-text-2 block"
           style={{
-            fontSize: '14px',
             paddingLeft: (header.depth - baseHeaderLevel) * 12,
             fontWeight: 'semibold',
           }}
@@ -54,9 +53,7 @@ export function Aside(props: { headers: Header[]; outlineTitle: string }) {
             }
           }}
         >
-          <span className="aside-item block pl-4 pr-4 py-1" style={{}}>
-            {header.text}
-          </span>
+          <span className="aside-link-text block">{header.text}</span>
         </a>
       </li>
     );
