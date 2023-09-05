@@ -45,3 +45,8 @@ This is a tip</p></div></div>"
 `;
 
 exports[`remark-container > With new line in all case 1`] = `"<div class=\\"modern-directive tip\\"><div class=\\"modern-directive-title\\">TIP</div><div class=\\"modern-directive-content\\"><p>This is a tip</p></div></div>"`;
+
+exports[`remark-container > details 1`] = `
+"<details class=\\"modern-directive details\\"><summary class=\\"modern-directive-title\\">DETAILS</summary><div class=\\"modern-directive-content\\"><p>
+This is a details block.</p></div></details>"
+`;

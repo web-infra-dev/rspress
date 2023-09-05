@@ -16,6 +16,11 @@
   --rp-container-danger-text: #ab2131;
   --rp-container-danger-bg: rgba(237, 60, 80, 0.02);
   --rp-container-danger-code-bg: rgba(237, 60, 80, 0.1);
+
+  --rp-container-details-border: rgba(128, 128, 128, 0.3);
+  --rp-container-details-text: #666666;
+  --rp-container-details-bg: rgba(128, 128, 128, 0.02);
+  --rp-container-details-code-bg: rgba(128, 128, 128, 0.1);
 }
 
 .dark {
@@ -100,4 +105,14 @@
 .rspress-doc .modern-directive.caution code,
 .rspress-doc .modern-directive.danger code {
   background-color: var(--rp-container-danger-code-bg);
+}
+
+.rspress-doc .modern-directive.details {
+  border-color: var(--rp-container-details-border);
+  color: var(--rp-container-details-text);
+  background-color: var(--rp-container-details-bg);
+}
+
+.rspress-doc .modern-directive.details code {
+  background-color: var(--rp-container-details-code-bg);
 }
