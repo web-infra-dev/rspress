@@ -23,18 +23,21 @@ import {
   Literal,
 } from 'mdast';
 
-export const DIRECTIVE_TYPES: string[] = [
+export const DIRECTIVE_TYPES = [
   'tip',
   'note',
   'warning',
   'caution',
   'danger',
   'info',
-];
+  'details',
+] as const;
 export const REGEX_BEGIN = /^\s*:::\s*(\w+)\s*(.*)?/;
 export const REGEX_END = /\s*:::$/;
 export const TITLE_REGEX_IN_MD = /{\s*title=["']?(.+)}\s*/;
 export const TITLE_REGEX_IN_MDX = /\s*title=["']?(.+)\s*/;
+
+export type DirectiveType = typeof DIRECTIVE_TYPES[number];
 
 const trimTailingQuote = (str: string) => str.replace(/['"]$/g, '');
 
@@ -64,38 +67,45 @@ const parseTitle = (rawTitle = '', isMDX = false) => {
  *
  */
 const createContainer = (
-  type: string,
+  type: DirectiveType | string,
   title: string | undefined,
   children: BlockContent[],
-): Parent => ({
-  type: 'containerDirective',
-  data: {
-    hName: 'div',
-    hProperties: {
-      class: `modern-directive ${type}`,
+): Parent => {
+  const isDetails = type === 'details';
+
+  const rootHName = isDetails ? 'details' : 'div';
+  const titleHName = isDetails ? 'summary' : 'div';
+
+  return {
+    type: 'containerDirective',
+    data: {
+      hName: rootHName,
+      hProperties: {
+        class: `modern-directive ${type}`,
+      },
     },
-  },
-  children: [
-    {
-      type: 'paragraph',
-      data: {
-        hName: 'div',
-        hProperties: {
-          class: 'modern-directive-title',
+    children: [
+      {
+        type: 'paragraph',
+        data: {
+          hName: titleHName,
+          hProperties: {
+            class: 'modern-directive-title',
+          },
         },
+        children: [{ type: 'text', value: title || type.toUpperCase() }],
       },
-      children: [{ type: 'text', value: title || type.toUpperCase() }],
-    },
-    {
-      type: 'paragraph',
-      data: {
-        hName: 'div',
-        hProperties: { class: 'modern-directive-content' },
+      {
+        type: 'paragraph',
+        data: {
+          hName: 'div',
+          hProperties: { class: 'modern-directive-content' },
+        },
+        children: children as PhrasingContent[],
       },
-      children: children as PhrasingContent[],
-    },
-  ],
-});
+    ],
+  };
+};
 
 /**
  * How the transformer works:
@@ -142,7 +152,7 @@ function transformer(tree: Root) {
         // {title="xxx"} is not a part of the content, So we need to remove it
         node.children.splice(1, 1);
       }
-      if (!DIRECTIVE_TYPES.includes(type)) {
+      if (!DIRECTIVE_TYPES.includes(type as DirectiveType)) {
         i++;
         continue;
       }

@@ -138,4 +138,12 @@ sss
   :::`);
     expect(result.value).toMatchSnapshot();
   });
+
+  test('details', () => {
+    const result = processor.processSync(`::: details
+This is a details block.
+:::`);
+
+    expect(result.value).toMatchSnapshot();
+  });
 });
