@@ -2,12 +2,12 @@
   padding-bottom: 1px;
 }
 .aside-link-text {
-  padding: 0px 16px;
+  padding: 0px 12px;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
   transition: all 0.2s ease-in-out;
-  border-radius: 1rem 0 0 1rem;
+  border-radius: 10px 0 0 10px;
   font-size: 13px;
   line-height: 1.75rem;
 }

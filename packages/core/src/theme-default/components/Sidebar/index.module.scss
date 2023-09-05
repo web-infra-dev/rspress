@@ -94,6 +94,18 @@
   background-color: var(--rp-c-brand-tint);
   color: var(--rp-c-brand);
   font-weight: bolder;
+  position: relative;
+}
+
+.menuItemActive::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 1px;
+  height: 100%;
+  background-color: var(--rp-c-brand);
+  transition: all 0.2s ease;
 }
 
 :global(.rspress-sidebar-group) {
