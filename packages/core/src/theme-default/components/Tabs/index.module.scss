@@ -5,6 +5,9 @@
 
   :global(div[class*='language-']) {
     margin: 6px 0;
+    code {
+      background-color: var(--rp-c-bg);
+    }
   }
 }
 
@@ -21,7 +24,7 @@
   border-bottom: 1px solid transparent;
   box-sizing: border-box;
   margin-right: 10px;
-  padding: 6px 8px;
+  padding: 6px 12px;
   margin-bottom: -1px;
   user-select: none;
   transition: all 0.2s ease-in-out;
