@@ -1,4 +1,4 @@
-lockfileVersion: '6.1'
+lockfileVersion: '6.0'
 
 settings:
   autoInstallPeers: true
@@ -848,6 +848,45 @@ importers:
       unist-util-visit:
         specifier: ^4.1.1
         version: 4.1.1
+
+  packages/plugin-toc-syntax:
+    devDependencies:
+      '@modern-js-app/eslint-config':
+        specifier: 2.33.1
+        version: 2.33.1(react-dom@18.2.0)(react@18.2.0)(typescript@5.0.4)
+      '@modern-js/eslint-config':
+        specifier: 2.33.1
+        version: 2.33.1(react-dom@18.2.0)(react@18.2.0)(typescript@5.0.4)
+      '@modern-js/module-tools':
+        specifier: 2.33.1
+        version: 2.33.1(react-dom@18.2.0)(react@18.2.0)(typescript@5.0.4)
+      '@modern-js/tsconfig':
+        specifier: 2.33.1
+        version: 2.33.1
+      '@types/jest':
+        specifier: ~29.2.4
+        version: 29.2.4
+      '@types/node':
+        specifier: ~16.11.7
+        version: 16.11.7
+      '@types/react':
+        specifier: ~18.0.26
+        version: 18.0.26
+      husky:
+        specifier: ~8.0.1
+        version: 8.0.1
+      lint-staged:
+        specifier: ~13.1.0
+        version: 13.1.0
+      prettier:
+        specifier: ~2.8.1
+        version: 2.8.1
+      rimraf:
+        specifier: ~3.0.2
+        version: 3.0.2
+      typescript:
+        specifier: ~5.0.4
+        version: 5.0.4
 
   packages/plugin-typedoc:
     dependencies:
@@ -3371,6 +3410,38 @@ packages:
       - supports-color
     dev: true
 
+  /@modern-js-app/eslint-config@2.33.1(react-dom@18.2.0)(react@18.2.0)(typescript@5.0.4):
+    resolution: {integrity: sha512-2AJNwBvVLNNsVLPpMTRTNZvyQXNywAtedJpYDMZNhANTxKL28hj4/+sGhPhsSbSjAiITIG6d7IuhFK3cbV8yCw==}
+    peerDependencies:
+      typescript: ^4 || ^5
+    dependencies:
+      '@babel/core': 7.22.10
+      '@babel/eslint-parser': 7.22.10(@babel/core@7.22.10)(eslint@8.46.0)
+      '@babel/eslint-plugin': 7.22.10(@babel/eslint-parser@7.22.10)(eslint@8.46.0)
+      '@modern-js/babel-preset-app': 2.33.1(react-dom@18.2.0)(react@18.2.0)
+      '@typescript-eslint/eslint-plugin': 5.62.0(@typescript-eslint/parser@5.62.0)(eslint@8.46.0)(typescript@5.0.4)
+      '@typescript-eslint/parser': 5.62.0(eslint@8.46.0)(typescript@5.0.4)
+      eslint: 8.46.0
+      eslint-config-prettier: 8.10.0(eslint@8.46.0)
+      eslint-plugin-eslint-comments: 3.2.0(eslint@8.46.0)
+      eslint-plugin-filenames: 1.3.2(eslint@8.46.0)
+      eslint-plugin-import: 2.28.0(@typescript-eslint/parser@5.62.0)(eslint@8.46.0)
+      eslint-plugin-markdown: 3.0.1(eslint@8.46.0)
+      eslint-plugin-node: 11.1.0(eslint@8.46.0)
+      eslint-plugin-prettier: 4.2.1(eslint-config-prettier@8.10.0)(eslint@8.46.0)(prettier@2.8.1)
+      eslint-plugin-promise: 6.1.1(eslint@8.46.0)
+      eslint-plugin-react: 7.33.1(eslint@8.46.0)
+      eslint-plugin-react-hooks: 4.6.0(eslint@8.46.0)
+      prettier: 2.8.1
+      typescript: 5.0.4
+    transitivePeerDependencies:
+      - eslint-import-resolver-typescript
+      - eslint-import-resolver-webpack
+      - react
+      - react-dom
+      - supports-color
+    dev: true
+
   /@modern-js-reduck/plugin-auto-actions@1.1.10(@modern-js-reduck/store@1.1.10):
     resolution: {integrity: sha512-oD2+EERoNA81RgrAtYSmaGTaYSOMjAvY33xWcQ132g/1iZ1wx0/gBcWZ+mRAAIM8ps1MAQ+D/tgea8W99Lh8hQ==}
     peerDependencies:
@@ -3445,6 +3516,22 @@ packages:
       - supports-color
     dev: true
 
+  /@modern-js/babel-preset-app@2.33.1(react-dom@18.2.0)(react@18.2.0):
+    resolution: {integrity: sha512-6Xm6gsiv98vMWuk/YW8cpEvqrDDYdJyOQE8x3P24QWHTLJqJ5QCTBKBwvw+NIRx75pi1c1zqDBK+rW2oy01iIw==}
+    dependencies:
+      '@babel/core': 7.22.10
+      '@babel/runtime': 7.22.10
+      '@babel/types': 7.22.10
+      '@modern-js/babel-preset-base': 2.33.1(react-dom@18.2.0)(react@18.2.0)
+      '@modern-js/utils': 2.33.1(react-dom@18.2.0)(react@18.2.0)
+      '@swc/helpers': 0.5.1
+      core-js: 3.32.1
+    transitivePeerDependencies:
+      - react
+      - react-dom
+      - supports-color
+    dev: true
+
   /@modern-js/babel-preset-base@2.33.0(react-dom@18.2.0)(react@18.2.0):
     resolution: {integrity: sha512-MEog3o6RUI+ezySUMPhJ4t89xDOCf/4VNw5jStVIfW6tL+oLyWc7AaFq41Qz7LYFxHKngrEgn31zVCHMp1ualQ==}
     dependencies:
@@ -3467,6 +3554,30 @@ packages:
       - react
       - react-dom
       - supports-color
+
+  /@modern-js/babel-preset-base@2.33.1(react-dom@18.2.0)(react@18.2.0):
+    resolution: {integrity: sha512-nXQsy2XLndmUKFFBNPglmwRgCsgDMlanBM2lrJ5ad87jcnD1mUW73CQQ+0eqQr85BRPCMsGIgv+M/TQurG9naA==}
+    dependencies:
+      '@babel/core': 7.22.10
+      '@babel/parser': 7.22.10
+      '@babel/plugin-transform-runtime': 7.22.10(@babel/core@7.22.10)
+      '@babel/plugin-transform-typescript': 7.22.10(@babel/core@7.22.10)
+      '@babel/preset-env': 7.22.10(@babel/core@7.22.10)
+      '@babel/preset-react': 7.22.5(@babel/core@7.22.10)
+      '@babel/preset-typescript': 7.22.5(@babel/core@7.22.10)
+      '@babel/runtime': 7.22.10
+      '@babel/template': 7.22.5
+      '@babel/traverse': 7.22.10
+      '@babel/types': 7.22.10
+      '@modern-js/utils': 2.33.1(react-dom@18.2.0)(react@18.2.0)
+      '@swc/helpers': 0.5.1
+      '@types/babel__core': 7.20.1
+      lodash: 4.17.21
+    transitivePeerDependencies:
+      - react
+      - react-dom
+      - supports-color
+    dev: true
 
   /@modern-js/builder-rspack-provider@2.33.0(react-dom@18.2.0)(react@18.2.0)(ts-node@10.9.1)(typescript@5.0.4):
     resolution: {integrity: sha512-np5YT1p+GMuAPfAHPwhxdcex8eocldp/uo/shomtV5um1CRYf5+/GuT/s2MRK2+qytuZk8cG6oB2jDJk9Vg0FA==}
@@ -3625,10 +3736,35 @@ packages:
       - react
       - react-dom
 
+  /@modern-js/core@2.33.1(react-dom@18.2.0)(react@18.2.0):
+    resolution: {integrity: sha512-xX41pRqMEyH3EQCptQAv3QG9Gz8c7x8bRug0j7eoTfVuadQtt5dXc27ntGDj4nOKJwQnQ/dBBewKHMEV+HSl7g==}
+    dependencies:
+      '@modern-js/node-bundle-require': 2.33.1(react-dom@18.2.0)(react@18.2.0)
+      '@modern-js/plugin': 2.33.1(react-dom@18.2.0)(react@18.2.0)
+      '@modern-js/utils': 2.33.1(react-dom@18.2.0)(react@18.2.0)
+      '@swc/helpers': 0.5.1
+    transitivePeerDependencies:
+      - react
+      - react-dom
+    dev: true
+
   /@modern-js/eslint-config@2.33.0(react-dom@18.2.0)(react@18.2.0)(typescript@5.0.4):
     resolution: {integrity: sha512-JMX+rw1BRX+iOobcRmvyNzhH+4E5UZa89NGyv0J4mGbfHm0d4ZT16jrZxGwiVRH5LGUM+CuhxKbqwcx4OAyYwA==}
     dependencies:
       '@modern-js-app/eslint-config': 2.33.0(react-dom@18.2.0)(react@18.2.0)(typescript@5.0.4)
+    transitivePeerDependencies:
+      - eslint-import-resolver-typescript
+      - eslint-import-resolver-webpack
+      - react
+      - react-dom
+      - supports-color
+      - typescript
+    dev: true
+
+  /@modern-js/eslint-config@2.33.1(react-dom@18.2.0)(react@18.2.0)(typescript@5.0.4):
+    resolution: {integrity: sha512-ErESWu/EICLg4rNujj+LLYxf8CN3YPUakmEKhDiBYLEGZ/vzBW7y635y1Rb3ZOoHlrjVvNfFCW1DrmabTQi7jQ==}
+    dependencies:
+      '@modern-js-app/eslint-config': 2.33.1(react-dom@18.2.0)(react@18.2.0)(typescript@5.0.4)
     transitivePeerDependencies:
       - eslint-import-resolver-typescript
       - eslint-import-resolver-webpack
@@ -3650,6 +3786,19 @@ packages:
       - react-dom
       - typescript
 
+  /@modern-js/generator-common@3.1.39(@modern-js/codesmith@2.2.5)(react-dom@18.2.0)(react@18.2.0)(typescript@5.0.4):
+    resolution: {integrity: sha512-iZgWCLHCZ+UzX2cJcRe5ydd2CsSpFkMMkyl7595M/vAdieVzHpAqB/H/nIdHfy2bDFvAUWrjEaL8ympbyIsZIw==}
+    dependencies:
+      '@modern-js/codesmith-formily': 2.2.5(@modern-js/codesmith@2.2.5)(react-dom@18.2.0)(react@18.2.0)(typescript@5.0.4)
+      '@modern-js/plugin-i18n': 2.33.1(react-dom@18.2.0)(react@18.2.0)
+      '@swc/helpers': 0.5.1
+    transitivePeerDependencies:
+      - '@modern-js/codesmith'
+      - react
+      - react-dom
+      - typescript
+    dev: true
+
   /@modern-js/generator-utils@3.1.38(@modern-js/codesmith@2.2.5)(react-dom@18.2.0)(react@18.2.0)(typescript@5.0.4):
     resolution: {integrity: sha512-qXf3Rsu+oJ8YTGmW5WlgNmDC50tHCQO1JsOg5Wm41ceiH3vU/BWPbH6YJ52C/6eYE8YA+UA6/r6ePZ9WTgarSQ==}
     dependencies:
@@ -3663,6 +3812,20 @@ packages:
       - react-dom
       - typescript
 
+  /@modern-js/generator-utils@3.1.39(@modern-js/codesmith@2.2.5)(react-dom@18.2.0)(react@18.2.0)(typescript@5.0.4):
+    resolution: {integrity: sha512-BM26r2zj9tUIY4jRcyUCtAb5xXbN0+Hkxl6190ihVZWHJRl2PlxZrBU0LjPIpNHM+ZCSvCrDG22TGj4VrBXExA==}
+    dependencies:
+      '@modern-js/generator-common': 3.1.39(@modern-js/codesmith@2.2.5)(react-dom@18.2.0)(react@18.2.0)(typescript@5.0.4)
+      '@modern-js/plugin-i18n': 2.33.1(react-dom@18.2.0)(react@18.2.0)
+      '@modern-js/utils': 2.33.1(react-dom@18.2.0)(react@18.2.0)
+      '@swc/helpers': 0.5.1
+    transitivePeerDependencies:
+      - '@modern-js/codesmith'
+      - react
+      - react-dom
+      - typescript
+    dev: true
+
   /@modern-js/libuild-plugin-svgr@2.33.0:
     resolution: {integrity: sha512-cYPY/a7iqxnfaFxMhFJRWDh7pf9wFDeTbuFeBuawcJFWcTdWAKJv/9EvFFHth1cN10X58fnOf3U16VjwSI5XuA==}
     dependencies:
@@ -3674,6 +3837,18 @@ packages:
     transitivePeerDependencies:
       - supports-color
 
+  /@modern-js/libuild-plugin-svgr@2.33.1:
+    resolution: {integrity: sha512-fTJVkuwFoUNpqMKca4cW2op4HNjb9Go+Jng28F1fCPfjAZOUA4qB3tE+G8tzzEUTC9Sn00epkBsqCSeIQv2hOw==}
+    dependencies:
+      '@svgr/core': 8.0.0
+      '@svgr/plugin-jsx': 8.0.1(@svgr/core@8.0.0)
+      '@svgr/plugin-svgo': 8.0.1(@svgr/core@8.0.0)
+      '@swc/helpers': 0.5.1
+      rollup-pluginutils: 2.8.2
+    transitivePeerDependencies:
+      - supports-color
+    dev: true
+
   /@modern-js/libuild-plugin-swc@2.33.0(@swc/helpers@0.5.1):
     resolution: {integrity: sha512-szf+AS9z9RZlpXAlpU2lW0uCvVmJJW/6TeNzw9RjqG/xjfW3fdJ+EdhdLoRaJdKIvjzI6b6zmTXAXA9h5IHVMw==}
     dependencies:
@@ -3681,6 +3856,15 @@ packages:
       chalk: 4.1.0
     transitivePeerDependencies:
       - '@swc/helpers'
+
+  /@modern-js/libuild-plugin-swc@2.33.1(@swc/helpers@0.5.1):
+    resolution: {integrity: sha512-4ZjuU4UbP/TPIGOdnACekHDuUH8htaF43U7b3ZooAk1y7V7hxwG/QffRDYthD0NKCxdPdQw9G9hH1BOelGzzeQ==}
+    dependencies:
+      '@modern-js/swc-plugins': 0.6.0(@swc/helpers@0.5.1)
+      chalk: 4.1.0
+    transitivePeerDependencies:
+      - '@swc/helpers'
+    dev: true
 
   /@modern-js/libuild@2.33.0:
     resolution: {integrity: sha512-VoY1LftY8iHlBWTcyUjosR4fS866A+vvuuncK7ZTnJGBF8OGYmhEwjvIU71qMyM3XqNURr7tUjnBoonvOhAHJw==}
@@ -3693,6 +3877,19 @@ packages:
       style-inject: 0.3.0
       sucrase: 3.29.0
       terser: 5.19.2
+
+  /@modern-js/libuild@2.33.1:
+    resolution: {integrity: sha512-OdcFIHmtCGH46gianX1kSm/obCbDtv9o1/PxBIAn0MViRETI2F5gDis5lrUUbNT289qNmI6dVOaLj6mTB7Eoow==}
+    dependencies:
+      '@ast-grep/napi': 0.1.13
+      esbuild: 0.17.19
+      postcss: 8.4.27
+      source-map: 0.7.4
+      source-map-support: 0.5.20
+      style-inject: 0.3.0
+      sucrase: 3.29.0
+      terser: 5.19.2
+    dev: true
 
   /@modern-js/mdx-rs-binding-darwin-arm64@0.2.5:
     resolution: {integrity: sha512-lqoksSJE2xjAnxftQ/LRc6FMuS+ohcn+TvRz7mBYINrcGdDvPnnDEQ4x5eQcecCUY5ERHf0tZ0R1ovxLC1tE9g==}
@@ -3825,6 +4022,42 @@ packages:
       - react-dom
       - supports-color
 
+  /@modern-js/module-tools@2.33.1(react-dom@18.2.0)(react@18.2.0)(typescript@5.0.4):
+    resolution: {integrity: sha512-hJplHk4ndEqFKg4vHSExIgBrJWRsYD4yTZNszpDU/pMYhyUmvg4I++NCUl7tvxF6J/otdiSiUI/hOsqefnFlLw==}
+    engines: {node: '>=14.0.0'}
+    hasBin: true
+    peerDependencies:
+      typescript: ^4 || ^5
+    peerDependenciesMeta:
+      typescript:
+        optional: true
+    dependencies:
+      '@babel/generator': 7.22.10
+      '@babel/parser': 7.22.10
+      '@babel/traverse': 7.22.10
+      '@babel/types': 7.22.10
+      '@modern-js/core': 2.33.1(react-dom@18.2.0)(react@18.2.0)
+      '@modern-js/libuild': 2.33.1
+      '@modern-js/libuild-plugin-svgr': 2.33.1
+      '@modern-js/libuild-plugin-swc': 2.33.1(@swc/helpers@0.5.1)
+      '@modern-js/new-action': 2.33.1(react-dom@18.2.0)(react@18.2.0)(typescript@5.0.4)
+      '@modern-js/plugin': 2.33.1(react-dom@18.2.0)(react@18.2.0)
+      '@modern-js/plugin-changeset': 2.33.1(react-dom@18.2.0)(react@18.2.0)
+      '@modern-js/plugin-i18n': 2.33.1(react-dom@18.2.0)(react@18.2.0)
+      '@modern-js/plugin-lint': 2.33.1(react-dom@18.2.0)(react@18.2.0)
+      '@modern-js/types': 2.33.1
+      '@modern-js/upgrade': 2.33.1(react-dom@18.2.0)(react@18.2.0)
+      '@modern-js/utils': 2.33.1(react-dom@18.2.0)(react@18.2.0)
+      '@swc/helpers': 0.5.1
+      postcss: 8.4.27
+      typescript: 5.0.4
+    transitivePeerDependencies:
+      - debug
+      - react
+      - react-dom
+      - supports-color
+    dev: true
+
   /@modern-js/monorepo-tools@2.33.0(@types/node@18.11.17)(react-dom@18.2.0)(react@18.2.0)(typescript@5.0.4):
     resolution: {integrity: sha512-9iKxIa8AOPcXOkgxkLs9L9UM1SoH5TmdeyVsSzLmS7KppahhJnzyKJrgkaA+RLeoaxyp1neSSg/mc1bWqYl90g==}
     hasBin: true
@@ -3878,6 +4111,22 @@ packages:
       - react-dom
       - typescript
 
+  /@modern-js/new-action@2.33.1(react-dom@18.2.0)(react@18.2.0)(typescript@5.0.4):
+    resolution: {integrity: sha512-uMC+TzhGdSA0vSxtQICFq/CR0azQUMQpgBDoxAFQNsFaJ7XyzG41LdNp+P0gOCkFN4jPGC3hm2vZ63JI905n4Q==}
+    dependencies:
+      '@modern-js/codesmith': 2.2.5(react-dom@18.2.0)(react@18.2.0)
+      '@modern-js/codesmith-formily': 2.2.5(@modern-js/codesmith@2.2.5)(react-dom@18.2.0)(react@18.2.0)(typescript@5.0.4)
+      '@modern-js/generator-common': 3.1.39(@modern-js/codesmith@2.2.5)(react-dom@18.2.0)(react@18.2.0)(typescript@5.0.4)
+      '@modern-js/generator-utils': 3.1.39(@modern-js/codesmith@2.2.5)(react-dom@18.2.0)(react@18.2.0)(typescript@5.0.4)
+      '@modern-js/utils': 2.33.1(react-dom@18.2.0)(react@18.2.0)
+      '@swc/helpers': 0.5.1
+    transitivePeerDependencies:
+      - debug
+      - react
+      - react-dom
+      - typescript
+    dev: true
+
   /@modern-js/node-bundle-require@2.33.0(react-dom@18.2.0)(react@18.2.0):
     resolution: {integrity: sha512-07M6st4NjRgPq/RtQJiZMku0ZM5ae2gQ2GDsJSABhcTxltsWrEIxyaLhfCsIacV7c0K4/Z/db0vdC47WDTRgsQ==}
     dependencies:
@@ -3887,6 +4136,17 @@ packages:
     transitivePeerDependencies:
       - react
       - react-dom
+
+  /@modern-js/node-bundle-require@2.33.1(react-dom@18.2.0)(react@18.2.0):
+    resolution: {integrity: sha512-WjsGyFiYU8z/nxDsGtKpp4BDo14KAZ4OVwVFF1HyFD0SOb34F/WcHEfK19iLTb2HQIijLFup45WAceULEHh4tQ==}
+    dependencies:
+      '@modern-js/utils': 2.33.1(react-dom@18.2.0)(react@18.2.0)
+      '@swc/helpers': 0.5.1
+      esbuild: 0.17.19
+    transitivePeerDependencies:
+      - react
+      - react-dom
+    dev: true
 
   /@modern-js/plugin-changeset@2.33.0(react-dom@18.2.0)(react@18.2.0):
     resolution: {integrity: sha512-Mv40vAyvD9xws7UJkwZCroDtmgZtdLO/TNiLoPUmdpF1pShv2NXK7gu+Cusy5in80Qkwt4ATjslB0v79twoUJw==}
@@ -3904,6 +4164,23 @@ packages:
       - react
       - react-dom
 
+  /@modern-js/plugin-changeset@2.33.1(react-dom@18.2.0)(react@18.2.0):
+    resolution: {integrity: sha512-YjSE/4JLMvoVXM65RSzCBsW7myLIrIxLAmbuPLNtPL6opVK/KEIWA3bsg0lSXmKDVJfYc1YLe6ld37QkZ3rEmA==}
+    dependencies:
+      '@changesets/cli': 2.26.2
+      '@changesets/git': 2.0.0
+      '@changesets/read': 0.5.9
+      '@modern-js/plugin-i18n': 2.33.1(react-dom@18.2.0)(react@18.2.0)
+      '@modern-js/utils': 2.33.1(react-dom@18.2.0)(react@18.2.0)
+      '@swc/helpers': 0.5.1
+      axios: 1.4.0
+      resolve-from: 5.0.0
+    transitivePeerDependencies:
+      - debug
+      - react
+      - react-dom
+    dev: true
+
   /@modern-js/plugin-i18n@2.33.0(react-dom@18.2.0)(react@18.2.0):
     resolution: {integrity: sha512-kr8gDMqPHCQklfMTFFw/5bIR8dFzLE8WJReGRT/0r6zi7K8TaE+EsqFOGgOMuzC2WMbsEaJBS5v2klzh22sXag==}
     dependencies:
@@ -3912,6 +4189,16 @@ packages:
     transitivePeerDependencies:
       - react
       - react-dom
+
+  /@modern-js/plugin-i18n@2.33.1(react-dom@18.2.0)(react@18.2.0):
+    resolution: {integrity: sha512-du/L/XyyrXzJ3QpLS5m/QmZRHwcZhiw/VXhOdEeNa+XD1o/Npx0ySsQiPAHiRm1nQwmJGKTvaFG55j5sK60X0A==}
+    dependencies:
+      '@modern-js/utils': 2.33.1(react-dom@18.2.0)(react@18.2.0)
+      '@swc/helpers': 0.5.1
+    transitivePeerDependencies:
+      - react
+      - react-dom
+    dev: true
 
   /@modern-js/plugin-lint@2.33.0(react-dom@18.2.0)(react@18.2.0):
     resolution: {integrity: sha512-55e6cfHPDH13w3tMdENQ4MZ4DrOa+/SJhN5Sz8zn0ZNvs1vPOfXXjCKpwpgoV4meUKb6SACj0Cr9WBpH0YOA/w==}
@@ -3926,6 +4213,21 @@ packages:
       - react
       - react-dom
       - supports-color
+
+  /@modern-js/plugin-lint@2.33.1(react-dom@18.2.0)(react@18.2.0):
+    resolution: {integrity: sha512-I0t/xP1h5HadztRTiGbgPAi6XGXd8cdh8bxKGCeA7PcTAvCR+ajn6HDWXm/HcBAtROJLx+t+EGwqWu5T/IaUiA==}
+    dependencies:
+      '@modern-js/tsconfig': 2.33.1
+      '@modern-js/utils': 2.33.1(react-dom@18.2.0)(react@18.2.0)
+      '@swc/helpers': 0.5.1
+      cross-spawn: 7.0.3
+      eslint: 8.46.0
+      husky: 8.0.1
+    transitivePeerDependencies:
+      - react
+      - react-dom
+      - supports-color
+    dev: true
 
   /@modern-js/plugin-tailwindcss@2.33.0(react-dom@18.2.0)(react@18.2.0)(tailwindcss@3.2.7):
     resolution: {integrity: sha512-cIpZlQy8NBQ0IVRk4I1oaDLOew7UMqN3yi9h2mlIH7p8LLPHr7iBnIKqd8jUG/yeWDm+qil139/TgqBuhnG2yg==}
@@ -4009,6 +4311,16 @@ packages:
       - react
       - react-dom
 
+  /@modern-js/plugin@2.33.1(react-dom@18.2.0)(react@18.2.0):
+    resolution: {integrity: sha512-GlLgFBJuNHgwsHLxsE/8ps3YusSmU5/Af90+smmEO/NbVhoTKiBhDRJks5sneO0nLA45WY3mNMF7t4vcFMVv7Q==}
+    dependencies:
+      '@modern-js/utils': 2.33.1(react-dom@18.2.0)(react@18.2.0)
+      '@swc/helpers': 0.5.1
+    transitivePeerDependencies:
+      - react
+      - react-dom
+    dev: true
+
   /@modern-js/prod-server@2.33.0(react-dom@18.2.0)(react@18.2.0):
     resolution: {integrity: sha512-fHZ8Ft0gJK/x62tTfxT4XlMUcyWeAdfkOnsiwBO7HZ77uePS0mOkvWQFKpTTOt9NMH4hTcZVdLuQj12v4LD/fg==}
     dependencies:
@@ -4090,7 +4402,7 @@ packages:
       http-compression: 1.0.6
       minimatch: 3.1.2
       path-to-regexp: 6.2.1
-      ts-node: 10.9.1(@types/node@18.11.17)(typescript@5.0.4)
+      ts-node: 10.9.1(@types/node@16.11.7)(typescript@5.0.4)
       ws: 8.13.0
     transitivePeerDependencies:
       - '@babel/traverse'
@@ -4191,8 +4503,16 @@ packages:
   /@modern-js/tsconfig@2.33.0:
     resolution: {integrity: sha512-uq30B1DwGthCYpgS5XE1oetN/RrUcXIE18xE2uvLs6JzTdRlGZ4YBIa3U1Zcnl1dAoC27m083O5TKQOqo7ZFfA==}
 
+  /@modern-js/tsconfig@2.33.1:
+    resolution: {integrity: sha512-hMXPSeGWCwpU4OHaTMz3zkbI3ZNpHc+1npQ/FTDcvNecw2af+QPRUH23fA10QjHOGHxn8v4Fg7sE1TzPzE8TPA==}
+    dev: true
+
   /@modern-js/types@2.33.0:
     resolution: {integrity: sha512-xOd/J1rriSpaejOPZcG6wDo8Vjzx2qmreRNXniL3mlT4ZWWoRFwsn0HNkIjuPfF1Jvtp5J8Olwj0RavarfYvww==}
+
+  /@modern-js/types@2.33.1:
+    resolution: {integrity: sha512-17O/3N/Wg7XQKrvIxf7r4hl10vf4mOps4s0ZHvuik05LGfL+7zUeaTT2w9L8hZN/WGEHppyeU1UgbGKsMa1PLw==}
+    dev: true
 
   /@modern-js/upgrade@2.33.0(react-dom@18.2.0)(react@18.2.0):
     resolution: {integrity: sha512-YJAbPXWfbv5uhGOgn0Q0q9MF4ef6V8JdKkc/HJNzX+0kTtyQ2r8nVZOTgZQuTyk+1boZJAGTo2VcljFA7kKN4w==}
@@ -4206,6 +4526,20 @@ packages:
       - debug
       - react
       - react-dom
+
+  /@modern-js/upgrade@2.33.1(react-dom@18.2.0)(react@18.2.0):
+    resolution: {integrity: sha512-wLGt7skpqkD2IPjPSsbn+61RHjRrKrepG9vR12szVsH1C8GJZoIan7dRTRdhXavcaKWjHVWVOEUFkXlLNpVixg==}
+    hasBin: true
+    dependencies:
+      '@modern-js/codesmith': 2.2.5(react-dom@18.2.0)(react@18.2.0)
+      '@modern-js/plugin-i18n': 2.33.1(react-dom@18.2.0)(react@18.2.0)
+      '@modern-js/utils': 2.33.1(react-dom@18.2.0)(react@18.2.0)
+      '@swc/helpers': 0.5.1
+    transitivePeerDependencies:
+      - debug
+      - react
+      - react-dom
+    dev: true
 
   /@modern-js/utils@2.33.0(react-dom@18.2.0)(react@18.2.0):
     resolution: {integrity: sha512-C+RE6eT6as6xsQMQ9DI2btwSfiVHEGTOHzAEi+a5JFcboWHM+TP4zOOpZVSmlqGXHjrDKwJreKst1ldDH+PzmQ==}
@@ -4226,6 +4560,27 @@ packages:
       react-dom: 18.2.0(react@18.2.0)
       react-router-dom: 6.11.1(react-dom@18.2.0)(react@18.2.0)
       serialize-javascript: 6.0.1
+
+  /@modern-js/utils@2.33.1(react-dom@18.2.0)(react@18.2.0):
+    resolution: {integrity: sha512-lgo7IgMeN/usDpi+t82kccOvFb33NnOZIv+kTraxsK+mOz1vBSeVleGR7E9m3FM9e4lnwTfRI4H4GYLjox4Mdg==}
+    peerDependencies:
+      react: '>=17.0.0'
+      react-dom: '>=17.0.0'
+    peerDependenciesMeta:
+      react:
+        optional: true
+      react-dom:
+        optional: true
+    dependencies:
+      '@remix-run/router': 1.6.1
+      '@swc/helpers': 0.5.1
+      caniuse-lite: 1.0.30001524
+      lodash: 4.17.21
+      react: 18.2.0
+      react-dom: 18.2.0(react@18.2.0)
+      react-router-dom: 6.11.1(react-dom@18.2.0)(react@18.2.0)
+      serialize-javascript: 6.0.1
+    dev: true
 
   /@nicolo-ribaudo/eslint-scope-5-internals@5.1.1-v1:
     resolution: {integrity: sha512-54/JRvkLIzzDWshCWfuhadfrfZVPiElY8Fcgmg1HroEly/EDSszzhBAsarCux+D/kOslTRquNzuyGSmUSTTHGg==}
@@ -5023,7 +5378,6 @@ packages:
 
   /@types/node@16.11.7:
     resolution: {integrity: sha512-QB5D2sqfSjCmTuWcBWyJ+/44bcjO7VbjSbOE0ucoVbAsSNQc4Lt6QkgkVXkTDwkL4z/beecZNDvVX15D4P8Jbw==}
-    dev: true
 
   /@types/node@18.11.17:
     resolution: {integrity: sha512-HJSUJmni4BeDHhfzn6nF0sVmd1SMezP7/4F0Lq+aXzmp2xm9O7WXrUtHW/CHlYVtZUbByEvWidHqRtcJXGF2Ng==}
@@ -5367,6 +5721,7 @@ packages:
 
   /@vue/compiler-core@3.3.4:
     resolution: {integrity: sha512-cquyDNvZ6jTbf/+x+AgM2Arrp6G4Dzbb0R64jiG804HRMfRiFXWI6kqUVqZ6ZR0bQhIoQjB4+2bhNtVwndW15g==}
+    requiresBuild: true
     dependencies:
       '@babel/parser': 7.22.10
       '@vue/shared': 3.3.4
@@ -5377,6 +5732,7 @@ packages:
 
   /@vue/compiler-dom@3.3.4:
     resolution: {integrity: sha512-wyM+OjOVpuUukIq6p5+nwHYtj9cFroz9cwkfmP9O1nzH68BenTTv0u7/ndggT8cIQlnBeOo6sUT/gvHcIkLA5w==}
+    requiresBuild: true
     dependencies:
       '@vue/compiler-core': 3.3.4
       '@vue/shared': 3.3.4
@@ -5402,6 +5758,7 @@ packages:
 
   /@vue/compiler-ssr@3.3.4:
     resolution: {integrity: sha512-m0v6oKpup2nMSehwA6Uuu+j+wEwcy7QmwMkVNVfrV9P2qE5KshC6RwOCq8fjGS/Eak/uNb8AaWekfiXxbBB6gQ==}
+    requiresBuild: true
     dependencies:
       '@vue/compiler-dom': 3.3.4
       '@vue/shared': 3.3.4
@@ -5410,6 +5767,7 @@ packages:
 
   /@vue/reactivity-transform@3.3.4:
     resolution: {integrity: sha512-MXgwjako4nu5WFLAjpBnCj/ieqcjE2aJBINUNQzkZQfzIZA4xn+0fV1tIYBJvvva3N3OvKGofRLvQIwEQPpaXw==}
+    requiresBuild: true
     dependencies:
       '@babel/parser': 7.22.10
       '@vue/compiler-core': 3.3.4
@@ -5421,6 +5779,7 @@ packages:
 
   /@vue/shared@3.3.4:
     resolution: {integrity: sha512-7OjdcV8vQ74eiz1TZLzZP4JwqM5fA94K6yntPS5Z25r9HDuGNzaGdgvwKYq6S+MxwF0TFRwe50fIR/MYnakdkQ==}
+    requiresBuild: true
     dev: false
     optional: true
 
@@ -6493,6 +6852,11 @@ packages:
     resolution: {integrity: sha512-uBJiDmwqsbJCWHAwjrx3cvjbMXP7xD72Dmsn5LOJpiRmE3WbBbN5rCqQ2Qh6Ek6/eOrjlWngEynBWo4VxerQhg==}
     requiresBuild: true
 
+  /core-js@3.32.1:
+    resolution: {integrity: sha512-lqufgNn9NLnESg5mQeYsxQP5w7wrViSj0jr/kv6ECQiByzQkrn1MKvV0L3acttpDqfQrHLwr2KCMgX5b8X+lyQ==}
+    requiresBuild: true
+    dev: true
+
   /cosmiconfig@7.1.0:
     resolution: {integrity: sha512-AdmX6xUzdNASswsFtmwSt7Vj8po9IuqXm0UXz7QKPuEUmPB4XyjGfaAr2PSuELMwkRMVH1EpIkX5bTZGRB3eCA==}
     engines: {node: '>=10'}
@@ -6691,6 +7055,7 @@ packages:
 
   /de-indent@1.0.2:
     resolution: {integrity: sha512-e/1zu3xH5MQryN2zdVaF0OrdNLUbvWxzMbi+iNA6Bky7l1RoP8a2fIbRocyHclXt/arDrrR6lL3TqFD9pMQTsg==}
+    requiresBuild: true
     dev: false
     optional: true
 
@@ -7598,6 +7963,7 @@ packages:
 
   /estree-walker@2.0.2:
     resolution: {integrity: sha512-Rfkk/Mp/DL7JVje3u18FxFujQlTNR2q6QfMSMB7AvCBx91NGj/ba3kCfza0f6dVDbw7YlRf/nDrn7pQrCCyQ/w==}
+    requiresBuild: true
     dev: false
     optional: true
 
@@ -13251,7 +13617,6 @@ packages:
       typescript: 5.0.4
       v8-compile-cache-lib: 3.0.1
       yn: 3.1.1
-    dev: true
 
   /ts-node@10.9.1(@types/node@18.11.17)(typescript@5.0.4):
     resolution: {integrity: sha512-NtVysVPkxxrwFGUUxGYhfux8k78pQB3JqYBXlLRZgdGUqTO5wU/UyHop5p70iEbGhB7q5KmiZiU0Y3KlJrScEw==}
