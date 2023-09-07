@@ -4,4 +4,4 @@
 
 perf: enable deterministic chunkIds of Rspack
 
-perf:  开启 Rspack 的 deterministic chunkIds
+perf: 开启 Rspack 的 deterministic chunkIds
