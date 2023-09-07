@@ -4,5 +4,6 @@
   "use-mdx",
   "static-assets",
   "global-styles",
-  "ssg"
+  "ssg",
+  "deploy"
 ]

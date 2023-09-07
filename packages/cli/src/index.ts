@@ -87,7 +87,6 @@ cli
   .option('-c --config <config>', 'specify config file')
   .action(async (root, options) => {
     setNodeEnv('production');
-
     const cwd = process.cwd();
     const config = await loadConfigFile(options.config);
     await build({
@@ -98,7 +97,7 @@ cli
   });
 
 cli
-  .command('preview [root]')
+  .command('preview')
   .alias('serve')
   .option('-c --config <config>', 'specify config file')
   .option('--port [port]', 'port number')
@@ -106,7 +105,6 @@ cli
   .action(
     async (options?: { port?: number; host?: string; config?: string }) => {
       setNodeEnv('production');
-
       const { port, host } = options || {};
       const config = await loadConfigFile(options?.config);
 
