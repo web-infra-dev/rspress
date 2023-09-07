@@ -3,7 +3,7 @@ import enhancedResolve from 'enhanced-resolve';
 import type { Resolver } from 'enhanced-resolve';
 import fs from '@modern-js/utils/fs-extra';
 import { createProcessor } from '@mdx-js/mdx';
-import { Root } from 'hast';
+import type { Root } from 'hast';
 import { MDX_REGEXP } from '@rspress/shared';
 
 const { CachedInputFileSystem, ResolverFactory } = enhancedResolve;

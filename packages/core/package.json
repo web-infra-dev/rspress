@@ -77,7 +77,6 @@
     "fs-extra": "10.1.0",
     "github-slugger": "^2.0.0",
     "globby": "11.1.0",
-    "hast": "^1.0.0",
     "hast-util-from-html": "^1.0.0",
     "html-to-text": "^9.0.3",
     "jsdom": "20.0.3",
