@@ -3,5 +3,6 @@
   "auto-nav-sidebar",
   "use-mdx",
   "static-assets",
-  "global-styles"
+  "global-styles",
+  "ssg"
 ]
