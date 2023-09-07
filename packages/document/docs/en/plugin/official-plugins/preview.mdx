@@ -1,0 +1,98 @@
+# @rspress/plugin-preview
+
+Used to preview components in the code block of md(x) files.
+
+## Installation
+
+```bash
+# npm
+npm install @rspress/plugin-preview -D
+# yarn
+yarn add @rspress/plugin-preview -D
+# pnpm
+pnpm install @rspress/plugin-preview -D
+```
+
+## Usage
+
+### Register
+
+First, write the following config in the config file:
+
+```ts title="rspress.config.ts"
+import { defineConfig } from 'rspress/config';
+import { pluginPreview } from '@rspress/plugin-preview';
+
+export default defineConfig({
+  plugins: [pluginPreview()],
+});
+```
+
+:::warning Note
+
+After adding this plugin, please do not enable the `markdown.experimentalMdxRs` config, otherwise it will cause the plugin to fail.
+
+:::
+
+### Internal Components
+
+The component code of internal components is declared in the mdx file. You can declare the following code block in the mdx file:
+
+````md
+```tsx
+function App() {
+  return <div>Hello World</div>;
+}
+
+export default App;
+```
+````
+
+It's worth noting that you need to export the component as default, and Rspress will automatically render this component.
+
+But if you want to keep the style of the code block instead of rendering it as a component, you can add the `pure` identifier to specify, the usage is as follows:
+
+````md pure
+```tsx pure
+function App() {
+  return <div>Hello World</div>;
+}
+export default App;
+```
+````
+
+:::tip Tip
+Make sure the document ends with `.mdx`.
+:::
+
+In this way, the code block will not be rendered as a component, but will be kept as it is.
+
+### External Components
+
+In addition to writing the component code in the code block of the mdx file, you can also write the component code in an external file, and then import it in the mdx file through the code tag. For example
+
+```md title="example.mdx"
+<code src="./Demo.tsx" />
+```
+
+```tsx title="Demo.tsx"
+export default function App() {
+  return <div>Hello World</div>;
+}
+```
+
+External components also need to export the component as default. Through the src attribute of the code tag, you can specify the path of the external component. This plugin supports both relative paths and alias paths(alias).
+
+For some more complex components, this way of using external components will be more convenient.
+
+## Configuration
+
+This plugin accepts an object parameter, the type is as follows:
+
+```ts
+interface PreviewOptions {
+  isMobile: boolean;
+}
+```
+
+You can use the `isMobile` parameter to decide the preview mode for mobile/PC.
