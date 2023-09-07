@@ -403,8 +403,8 @@ importers:
         specifier: ^10.1.0
         version: 10.1.0
       rspack-plugin-virtual-module:
-        specifier: 0.1.11
-        version: 0.1.11
+        specifier: 0.1.12
+        version: 0.1.12
       sirv:
         specifier: ^2.0.2
         version: 2.0.2
@@ -12524,6 +12524,13 @@ packages:
     resolution: {integrity: sha512-dD7vo8PY3sG7nM1JAuytJ4XTXqALKUDjISFaxFyIHcSvUBKu8nmJf9TaRq1htS+bsXujqkKhKR859k0/zTHwxQ==}
     dependencies:
       fs-extra: 11.1.1
+    dev: true
+
+  /rspack-plugin-virtual-module@0.1.12:
+    resolution: {integrity: sha512-qyBM9XsP7oxBQSms2cr715XOeoDi6p5hUYXtlNDfst0jha8vfWVPNeC7j5+j5dG+yt//1OCmLaOY2rWqPSVXDg==}
+    dependencies:
+      fs-extra: 11.1.1
+    dev: false
 
   /rspack-plugin-virtual-module@0.1.7:
     resolution: {integrity: sha512-8LFxQ+YI0KeveA5Vl7SWMB9LRq8pBnrtmzF6klOU3pNfWFWsaRf+D8OnDRHHlrYUq6l+1Q8yTlZB/HgqksRD9Q==}

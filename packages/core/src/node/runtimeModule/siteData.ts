@@ -21,7 +21,6 @@ import yamlFrontMatter from 'yaml-front-matter';
 import { htmlToText } from 'html-to-text';
 import fs from '@modern-js/utils/fs-extra';
 import { compile } from '@modern-js/mdx-rs-binding';
-import { RspackVirtualModulePlugin } from 'rspack-plugin-virtual-module';
 import { importStatementRegex, TEMP_DIR } from '../constants';
 import { applyReplaceRules } from '../utils/applyReplaceRules';
 import { createHash } from '../utils';
@@ -32,8 +31,6 @@ import { FactoryContext, RuntimeModuleID } from '.';
 
 // eslint-disable-next-line import/no-named-as-default-member
 const { loadFront } = yamlFrontMatter;
-
-let pages: PageIndexInfo[] | undefined;
 
 // How can we let the client runtime access the `indexHash`?
 // We can only do something after the Rspack build process becuase the index hash is generated within Rspack build process.There are two ways to do this:
@@ -339,18 +336,16 @@ export async function siteDataVMPlugin(context: FactoryContext) {
   const { config, alias, userRoot, routeService, pluginDriver } = context;
   const userConfig = config;
   const replaceRules = userConfig?.replaceRules || [];
-  if (!pages) {
-    // If the dev server restart when config file, we will reuse the siteData instead of extracting the siteData from source files again.
-    const domain =
-      userConfig?.search && userConfig?.search?.mode === 'remote'
-        ? userConfig?.search.domain ?? ''
-        : '';
-    pages = (
-      await extractPageData(replaceRules, alias, domain, userRoot, routeService)
-    ).filter(Boolean);
-    // modify page index by plugins
-    await pluginDriver.modifySearchIndexData(pages);
-  }
+  // If the dev server restart when config file, we will reuse the siteData instead of extracting the siteData from source files again.
+  const domain =
+    userConfig?.search && userConfig?.search?.mode === 'remote'
+      ? userConfig?.search.domain ?? ''
+      : '';
+  const pages = (
+    await extractPageData(replaceRules, alias, domain, userRoot, routeService)
+  ).filter(Boolean);
+  // modify page index by plugins
+  await pluginDriver.modifySearchIndexData(pages);
 
   // Categorize pages, sorted by language, and write search index to file
   const pagesByLang = pages.reduce((acc, page) => {
@@ -406,14 +401,12 @@ export async function siteDataVMPlugin(context: FactoryContext) {
     },
   };
 
-  const plugin = new RspackVirtualModulePlugin({
+  return {
     [`${RuntimeModuleID.SiteData}.mjs`]: `export default ${JSON.stringify(
       siteData,
     )}`,
     [RuntimeModuleID.SearchIndexHash]: `export default ${JSON.stringify(
       indexHashByLang,
     )}`,
-  });
-
-  return plugin;
+  };
 }

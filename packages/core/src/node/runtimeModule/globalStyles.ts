@@ -1,5 +1,4 @@
 import fs from '@modern-js/utils/fs-extra';
-import { RspackVirtualModulePlugin } from 'rspack-plugin-virtual-module';
 import { FactoryContext, RuntimeModuleID } from '.';
 
 export async function globalStylesVMPlugin(context: FactoryContext) {
@@ -30,7 +29,7 @@ export async function globalStylesVMPlugin(context: FactoryContext) {
     )
   ).join('');
 
-  return new RspackVirtualModulePlugin({
+  return {
     [RuntimeModuleID.GlobalStyles]: moduleContent,
-  });
+  };
 }

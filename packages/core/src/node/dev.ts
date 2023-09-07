@@ -1,10 +1,8 @@
 import { UserConfig, removeLeadingSlash } from '@rspress/shared';
-import fs from '@modern-js/utils/fs-extra';
 import { logger } from '@rspress/shared/logger';
 import { createModernBuilder } from './createBuilder';
 import { writeSearchIndex } from './searchIndex';
 import { PluginDriver } from './PluginDriver';
-import { TEMP_DIR } from './constants';
 
 interface ServerInstance {
   close: () => Promise<void>;
@@ -27,7 +25,7 @@ export async function dev(options: DevOptions): Promise<ServerInstance> {
     const modifiedConfig = await pluginDriver.modifyConfig();
     await pluginDriver.beforeBuild();
     // empty temp dir before build
-    await fs.emptyDir(TEMP_DIR);
+    // await fs.emptyDir( TEMP_DIR);
     const builder = await createModernBuilder(
       docDirectory,
       modifiedConfig,

@@ -9,7 +9,6 @@ export function useLocaleSiteData(): NormalizedLocales {
   const themeConfig = pageData?.siteData?.themeConfig ?? {};
   const defaultLang = pageData.siteData.lang ?? '';
   const locales = themeConfig?.locales;
-
   if (!locales || locales.length === 0) {
     return {
       nav: themeConfig.nav,
@@ -19,6 +18,7 @@ export function useLocaleSiteData(): NormalizedLocales {
     } as NormalizedLocales;
   }
   const localeInfo = locales.find(locale => locale.lang === lang)!;
+
   return {
     ...localeInfo,
     langRoutePrefix: lang === defaultLang ? '/' : lang,

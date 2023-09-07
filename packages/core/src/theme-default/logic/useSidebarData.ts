@@ -67,7 +67,7 @@ export function useSidebarData(): SidebarData {
   useEffect(() => {
     const newSidebarData = getSidebarGroupData(sidebar, pathname);
     setSidebarData(newSidebarData);
-  }, [pathname, sidebar]);
+  }, [pathname]);
 
   return sidebarData;
 }
