@@ -47,7 +47,8 @@
     "@types/rechoir": "^0.6.1",
     "rimraf": "~3.0.2",
     "ts-node": "^10.9.1",
-    "typescript": "~5.0.4"
+    "typescript": "~5.0.4",
+    "medium-zoom": "1.0.8"
   },
   "sideEffects": [],
   "publishConfig": {

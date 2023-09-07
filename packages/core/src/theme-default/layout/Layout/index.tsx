@@ -140,11 +140,22 @@ export const Layout: React.FC<LayoutProps> = props => {
       {bottom}
       {
         // Global UI
-        globalComponents.map((Component, index) => (
-          // The component order is stable
-          // eslint-disable-next-line react/no-array-index-key
-          <Component key={index} />
-        ))
+        globalComponents.map((componentInfo, index) => {
+          if (Array.isArray(componentInfo)) {
+            const [component, props] = componentInfo;
+            return React.createElement(component, {
+              // The component order is stable
+              // eslint-disable-next-line react/no-array-index-key
+              key: index,
+              ...props,
+            });
+          } else {
+            return React.createElement(componentInfo, {
+              // eslint-disable-next-line react/no-array-index-key
+              key: index,
+            });
+          }
+        })
       }
     </div>
   );

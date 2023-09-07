@@ -1,6 +1,7 @@
 import type { BuilderConfig } from '@modern-js/builder-rspack-provider';
 import type { PluggableList } from 'unified';
 import type { BuilderPlugin } from '@modern-js/builder';
+import type { ZoomOptions } from 'medium-zoom';
 import type {
   Config as DefaultThemeConfig,
   NormalizedConfig as NormalizedDefaultThemeConfig,
@@ -124,7 +125,7 @@ export interface UserConfig<ThemeConfig = DefaultThemeConfig> {
   /**
    * Global components
    */
-  globalUIComponents?: string[];
+  globalUIComponents?: (string | [string, object])[];
   /**
    * Global styles, is a Absolute path
    */
@@ -140,6 +141,7 @@ export interface UserConfig<ThemeConfig = DefaultThemeConfig> {
     | boolean
     | {
         selector?: string;
+        options?: ZoomOptions;
       };
   /**
    * Add some extra builder plugins

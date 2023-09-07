@@ -6,16 +6,29 @@ export async function globalUIComponentsVMPlugin(context: FactoryContext) {
   let index = 0;
 
   const globalUIComponentsByPlugins = pluginDriver.globalUIComponents();
-  const moduleContent = [
+  const globalComponents = [
     ...(config?.globalUIComponents || []),
     ...globalUIComponentsByPlugins,
-  ]
-    .map(source => `import Comp_${index++} from ${JSON.stringify(source)};`)
+  ];
+  const moduleContent = globalComponents
+    .map(source => {
+      const name = `Comp_${index}`;
+      if (Array.isArray(source)) {
+        return `import ${name} from '${source[0]}';
+const Props_${index++} = ${JSON.stringify(source[1])};\n`;
+      } else {
+        index++;
+        return `import ${name} from '${source}';\n`;
+      }
+    })
     .concat(
-      `export default [${Array.from(
-        { length: index },
-        (_, i) => `Comp_${i}`,
-      ).join(', ')}];`,
+      `export default [${Array.from({ length: index }, (_, i) => {
+        if (Array.isArray(globalComponents[i])) {
+          return `[${`Comp_${i}`}, Props_${i}]`;
+        } else {
+          return `Comp_${i}`;
+        }
+      }).join(', ')}];`,
     )
     .join('');
 
