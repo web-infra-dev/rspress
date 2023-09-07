@@ -118,7 +118,7 @@ async function createInternalBuildConfig(
       },
       include: [PACKAGE_ROOT],
       define: {
-        __ASSET_PREFIX__: JSON.stringify(assetPrefix),
+        'process.env.__ASSET_PREFIX__': JSON.stringify(assetPrefix),
         'process.env.__SSR__': JSON.stringify(isSSR),
         'process.env.__IS_REACT_18__': JSON.stringify(reactVersion === 18),
         'process.env.TEST': JSON.stringify(process.env.TEST),
