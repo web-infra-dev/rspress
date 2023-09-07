@@ -1,5 +1,37 @@
 # create-rspress
 
+## 0.0.10
+
+### Patch Changes
+
+- 82d85e2: feat: integrate rspack-plugin-virtual-module
+
+  feat: 集成 rspack-plugin-virtual-module
+
+- 0a4dbc6: feat: optimize default theme layout
+
+  feat: 优化默认主题布局
+
+- 259c2e6: fix: avoid error when \_meta.json is not correct
+
+  fix: 修复 \_meta.json 内容不正确时报错
+
+- f6f9ddb: feat: specify limit version for create-rspress template
+
+  feat: 为 create-rspress 模板指定限制 rspress 版本
+
+- 51211bc: fix: asset prefix not work for search index url
+
+  fix: asset prefix 配置在搜索索引中不生效
+
+- 587d299: feat: support container syntax by plugin
+
+  feat: 以插件的方式支持 container 语法
+
+- f21526b: fix: avoid `@theme` resolve error in pure js project
+
+  fix: 纯 js 项目中避免 `@theme` 解析错误
+
 ## 0.0.9
 
 ### Patch Changes
