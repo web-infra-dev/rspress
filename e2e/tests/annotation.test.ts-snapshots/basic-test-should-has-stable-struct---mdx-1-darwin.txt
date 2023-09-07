@@ -1,0 +1,1 @@
+<div contenteditable="false" translate="no" class="ProseMirror"><button contenteditable="false">btn1</button><p class="my-4 leading-7">aaaa <button contenteditable="false">btn2</button> in a paragraph</p></div>

@@ -1,0 +1,1 @@
+<div contenteditable="false" translate="no" class="ProseMirror"><blockquote class="border-l-2 border-solid border-divider pl-4 my-6 transition-colors duration-500 blockquote_c6d79"><p class="my-4 leading-7">quote</p></blockquote></div>
