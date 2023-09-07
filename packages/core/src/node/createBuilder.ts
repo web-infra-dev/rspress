@@ -148,6 +148,13 @@ async function createInternalBuildConfig(
           );
         }
       },
+      rspack: {
+        // This config can be removed after upgrading Rspack v0.4
+        // https://github.com/web-infra-dev/rspack/issues/3096
+        optimization: {
+          chunkIds: 'deterministic',
+        },
+      },
       bundlerChain(chain) {
         chain.module
           .rule('MDX')
