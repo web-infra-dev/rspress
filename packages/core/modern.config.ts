@@ -57,8 +57,8 @@ export default defineConfig({
       copy: {
         patterns: [
           {
-            from: './.theme-entry.ts',
-            to: './index.ts',
+            from: './.theme-entry.js',
+            to: './index.js',
             context: __dirname,
           },
         ],
