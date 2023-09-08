@@ -1,0 +1,33 @@
+# @rspress/plugin-medium-zoom
+
+> [Source Code](https://github.com/web-infra-dev/rspress/tree/main/packages/plugin-medium-zoom)
+
+Default built-in plugin for supporting image zooming.
+
+## Config
+
+Since this plugin is a built-in plugin, there's no need to manually register it in the config file. You just need to configure it in the `mediumZoom` field. For example:
+
+```ts title="rspress.config.ts"
+import { defineConfig } from 'rspress/config';
+
+export default defineConfig({
+  mediumZoom: {
+    selector: '.rspress-doc img',
+  },
+});
+```
+
+### selector
+
+- Type: `string`
+- Default value: `.rspress-doc img`
+
+Customize the image selector.
+
+### options
+
+- Type: `ZoomOptions`
+- Default value: `{}`
+
+Config items for [medium-zoom](https://github.com/francoischalifour/medium-zoom). Click [here](https://github.com/francoischalifour/medium-zoom#options) for more details on the configuration.

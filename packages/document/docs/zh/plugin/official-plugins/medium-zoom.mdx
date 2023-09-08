@@ -1,0 +1,33 @@
+# @rspress/plugin-medium-zoom
+
+> [源码地址](https://github.com/web-infra-dev/rspress/tree/main/packages/plugin-medium-zoom)
+
+默认内置插件，用于支持图片放大。
+
+## 配置
+
+由于该插件是内置插件，所以不需要在配置文件手动注册，只需要在 `mediumZoom` 字段中配置即可。比如：
+
+```ts title="rspress.config.ts"
+import { defineConfig } from 'rspress/config';
+
+export default defineConfig({
+  mediumZoom: {
+    selector: '.rspress-doc img',
+  },
+});
+```
+
+### selector
+
+- 类型: `string`
+- 默认值: `.rspress-doc img`
+
+自定义图片选择器。
+
+### options
+
+- 类型: `ZoomOptions`
+- 默认值: `{}`
+
+[medium-zoom](https://github.com/francoischalifour/medium-zoom) 的配置项，[点击进入配置详情](https://github.com/francoischalifour/medium-zoom#options)。

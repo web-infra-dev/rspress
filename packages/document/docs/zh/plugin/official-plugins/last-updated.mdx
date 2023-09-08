@@ -1,0 +1,50 @@
+# @rspress/plugin-last-updated
+
+> [源码地址](https://github.com/web-infra-dev/rspress/tree/main/packages/plugin-last-updated)
+
+## 介绍
+
+`@rspress/plugin-last-updated` 是一个用于在文章中显示最后更新时间的插件。
+
+:::tip 提示
+
+当你在默认主题中配置了 `lastUpdated: true` 时，该插件会自动生效。
+
+:::
+
+## 安装
+
+```bash
+# npm
+npm install @rspress/plugin-last-updated
+# yarn
+yarn add @rspress/plugin-last-updated
+# pnpm
+pnpm install @rspress/plugin-last-updated
+```
+
+## 使用
+
+### 1. 注册插件
+
+```ts title="rspress.config.ts"
+import { lastUpdated } from '@rspress/plugin-last-updated';
+import { defineConfig } from 'rspress/config';
+
+export default defineConfig({
+  plugins: [lastUpdated()],
+});
+```
+
+### 2. 运行时访问
+
+注册插件后，你就可以在运行时拿到文章的最后更新时间戳了。示例如下：
+
+```ts
+import { usePageData } from 'rspress/runtime';
+
+function MyComponent() {
+  const pageData = usePageData();
+  return <div>{pageData.page.lastUpdatedTime}</div>;
+}
+```
