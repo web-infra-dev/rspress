@@ -42,7 +42,7 @@ export function pluginForDoc(): RspressPlugin {
 
 ### globalUIComponents
 
-- **类型**：`string[]`
+- **类型**：`(string | [string, object])[]`
 
 用于添加全局组件，传入一个数组，数组中的每一项都是一个组件的绝对路径，使用方式如下：
 
@@ -57,6 +57,30 @@ export function pluginForDoc(): RspressPlugin {
     name: 'plugin-comp',
     // 全局组件的路径
     globalUIComponents: [componentPath],
+  };
+}
+```
+
+`globalUIComponents` 的每一项可以是一个字符串，代表组件的文件路径；也可以是一个数组，第一项为组件的文件路径，第二项为组件的 props 对象，比如：
+
+```ts title="rspress.config.ts"
+import { defineConfig } from 'rspress/config';
+import { RspressPlugin } from '@rspress/shared';
+
+export function pluginForDoc(): RspressPlugin {
+  // component path
+  const componentPath = path.join(__dirname, 'xxx.tsx');
+  return {
+    // plugin name
+    name: 'plugin-comp',
+    globalUIComponents: [
+      [
+        path.join(__dirname, 'components', 'MyComponent.tsx'),
+        {
+          foo: 'bar',
+        },
+      ],
+    ],
   };
 }
 ```
