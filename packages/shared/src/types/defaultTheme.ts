@@ -109,7 +109,7 @@ export interface LocaleConfig {
 }
 // nav -----------------------------------------------------------------------
 
-// TODO combine NavItemWithLink and NavItemWithChildren
+// TODO combine below nav item types into one
 export type NavItem =
   | NavItemWithLink
   | NavItemWithChildren
