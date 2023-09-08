@@ -39,11 +39,9 @@ pageType: home
 
 各个`pageType`配置的含义如下：
 
-- `home`: **首页**，包含顶部导航栏和首页的布局内容。
-- `doc`: **文档页**，包含顶部导航栏、左边侧边栏、正文内容和右侧的大纲栏。
-- `custom`: **自定义页面**，包含顶部导航栏和自定义的内容。
-- `blank`: 也属于**自定义页面**，但是不包含`顶部导航栏`。
-- `404`: **404 页面**。
+import PageType from '@zh/fragments/page-type';
+
+<PageType />
 
 ## hero
 
@@ -156,12 +154,12 @@ footer: false
 ---
 ```
 
-## hideNavbar
+## navbar
 
-是否隐藏顶部导航栏。默认情况下，所有页面都会展示顶部导航栏。但是如果你想隐藏顶部导航栏，你可以使用以下 Front Matter 来配置：
+是否展示顶部导航栏。默认情况下，所有页面都会展示顶部导航栏。但是如果你想隐藏顶部导航栏，你可以使用以下 Front Matter 来配置：
 
 ```yaml
 ---
-hideNavbar: true
+navbar: false
 ---
 ```

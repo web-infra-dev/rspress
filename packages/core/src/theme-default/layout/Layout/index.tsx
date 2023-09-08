@@ -48,8 +48,10 @@ export const Layout: React.FC<LayoutProps> = props => {
   } = page;
   const localesData = useLocaleSiteData();
   const defaultLang = siteData.lang || '';
+  // Priority: frontmatter.navbar > themeConfig.hideNavbar
+  // Always show sidebar by default
   const hideNavbar =
-    frontmatter?.hideNavbar ?? themeConfig?.hideNavbar ?? false;
+    !(frontmatter?.navbar ?? true) || (themeConfig?.hideNavbar ?? false);
   // Priority: front matter title > h1 title
   let title = (frontmatter?.title as string) ?? articleTitle;
   const mainTitle = siteData.title || localesData.title;

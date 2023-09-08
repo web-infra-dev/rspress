@@ -1,0 +1,147 @@
+# Customizing Page
+
+Rspress provides several ways for you to customize the content of your pages, including:
+
+- Adding custom global components.
+- Adding custom global styles.
+- Customizing page layout structure.
+
+## Custom Global Components
+
+In some scenarios, you may need to add some custom global components to the page. The framework provides a config item `globalUIComponents` to achieve this function.
+
+### How to Use
+
+Add the following config in `rspress.config.ts`:
+
+```ts title="rspress.config.ts"
+import { defineConfig } from 'rspress/config';
+import path from 'path';
+
+export default defineConfig({
+  globalUIComponents: [path.join(__dirname, 'components', 'MyComponent.tsx')],
+});
+```
+
+Each item of `globalUIComponents` can be a string, representing the file path of the component; or it can be an array, the first item is the file path of the component, and the second item is the props object of the component, such as:
+
+```ts title="rspress.config.ts"
+import { defineConfig } from 'rspress/config';
+
+export default defineConfig({
+  globalUIComponents: [
+    [
+      path.join(__dirname, 'components', 'MyComponent.tsx'),
+      {
+        foo: 'bar',
+      },
+    ],
+  ],
+});
+```
+
+import GlobalUIComponents from '@en/fragments/global-ui-components';
+
+<GlobalUIComponents />
+
+## Custom Styles
+
+In some scenarios, you may need to add some global styles on top of the theme UI. The framework provides a configuration item `globalStyles` to achieve this function.
+
+### How to Use
+
+Add the following configuration in `rspress.config.ts`:
+
+```ts title="rspress.config.ts"
+import { defineConfig } from 'rspress/config';
+import path from 'path';
+
+export default defineConfig({
+  globalStyles: path.join(__dirname, 'styles/index.css'),
+});
+```
+
+Then you can add the following code:
+
+```css
+/* styles/index.css */
+:root {
+  --rp-c-brand: #f00;
+}
+```
+
+In this way, the framework will automatically collect all global styles and merge them into the final style file.
+
+Here are some commonly used global styles:
+
+```css
+/* styles/index.css */
+
+:root {
+  /* Modify theme color */
+  --rp-c-brand: #f00;
+  --rp-c-brand-dark: #ffa500;
+  --rp-c-brand-darker: #c26c1d;
+  --rp-c-brand-light: #f2a65a;
+  --rp-c-brand-lighter: #f2a65a;
+  /* Modify the width of the left sidebar */
+  --rp-sidebar-width: 280px;
+  /* Modify the width of the right outline column */
+  --rp-aside-width: 256px;
+  /* Modify the background of the code block title */
+  --rp-code-title-bg: rgba(250, 192, 61, 0.15);
+  /* Modify the background of the code block content */
+  --rp-code-block-bg: rgba(214, 188, 70, 0.05);
+}
+```
+
+> If you want to know more about the internal global styles, you can check [vars.css](https://github.com/web-infra-dev/rspress/blob/main/packages/core/src/theme-default/styles/vars.css)
+
+## Custom Layout Structure
+
+### Using pageType
+
+Rspress provides a pageType configuration for you to customize the layout structure of the page.
+
+Rspress's convention-based routing supports two types of routes, one is document routing, that is, pages written with md(x) files, and the other is component routing, that is, pages written with `.jsx/.tsx` files.
+
+For the former, you can add the `pageType` field in the frontmatter to specify the layout structure of the page, such as:
+
+```mdx title="foo.mdx"
+---
+pageType: custom
+---
+```
+
+For the latter, you can add the following export to specify `pageType`:
+
+```tsx title="foo.tsx"
+export const frontmatter = {
+  // Declare layout type
+  pageType: 'custom',
+};
+```
+
+pageType can be configured as the following values:
+
+import PageType from '@en/fragments/page-type';
+
+<PageType />
+
+### Using Fine-grained Switches
+
+In addition to the `pageType` page layout level configuration, Rspress also provides more fine-grained switches. You can configure other fields in the frontmatter. These fields and their meanings are as follows:
+
+- `navbar`: Whether to display the sidebar. When you want to hide the top navigation bar, you can set it to `false`.
+- `sidebar`: Whether to display the sidebar. When you want to hide the sidebar, you can set it to `false`.
+- `outline`: Whether to display the outline column. When you want to hide the outline column, you can set it to `false`.
+
+Example:
+
+```mdx title="foo.mdx"
+---
+navbar: false
+sidebar: false
+outline: false
+---
+```
