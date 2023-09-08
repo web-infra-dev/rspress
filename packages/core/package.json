@@ -110,7 +110,7 @@
     "unist-util-visit": "^4.1.1",
     "unist-util-visit-children": "^2.0.1",
     "yaml-front-matter": "^4.1.1",
-    "rspack-plugin-virtual-module": "0.1.11"
+    "rspack-plugin-virtual-module": "0.1.12"
   },
   "peerDependencies": {
     "react": ">=17"

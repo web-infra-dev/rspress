@@ -1,4 +1,3 @@
-import { RspackVirtualModulePlugin } from 'rspack-plugin-virtual-module';
 import { FactoryContext, RuntimeModuleID } from '.';
 
 export async function globalUIComponentsVMPlugin(context: FactoryContext) {
@@ -32,7 +31,7 @@ const Props_${index++} = ${JSON.stringify(source[1])};\n`;
     )
     .join('');
 
-  return new RspackVirtualModulePlugin({
+  return {
     [RuntimeModuleID.GlobalComponents]: moduleContent,
-  });
+  };
 }
