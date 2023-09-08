@@ -41,7 +41,7 @@ For example, if you want to modify the theme color, you can do so by adding a gl
 
 ### globalUIComponents
 
-- **Type**：`string[]`
+- **Type**：`(string | [string, object])[]`
 
 It is used to add global components, passing in an array, each item in the array is the absolute path of a component, the usage is as follows:
 
@@ -56,6 +56,30 @@ export function pluginForDoc(): RspressPlugin {
     name: 'plugin-comp',
     // Path to global components
     globalUIComponents: [componentPath],
+  };
+}
+```
+
+The item of `globalUIComponents` can be a string, which is the path of the component file, or an array, the first item is the path of the component file, and the second item is the component props, for example:
+
+```ts title="rspress.config.ts"
+import { defineConfig } from 'rspress/config';
+import { RspressPlugin } from '@rspress/shared';
+
+export function pluginForDoc(): RspressPlugin {
+  // component path
+  const componentPath = path.join(__dirname, 'xxx.tsx');
+  return {
+    // plugin name
+    name: 'plugin-comp',
+    globalUIComponents: [
+      [
+        path.join(__dirname, 'components', 'MyComponent.tsx'),
+        {
+          foo: 'bar',
+        },
+      ],
+    ],
   };
 }
 ```

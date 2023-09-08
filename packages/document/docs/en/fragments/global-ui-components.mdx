@@ -6,7 +6,8 @@ Through global components, you can complete many custom functions, such as:
 import React from 'react';
 
 // Need a default export
-export default function PluginUI() {
+// The props comes from your config
+export default function PluginUI(props?: { foo: string }) {
   return <div>This is a global layout component</div>;
 }
 ```
