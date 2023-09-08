@@ -1,6 +1,7 @@
 import path from 'path';
 import { createRequire } from 'module';
 import type { UserConfig } from '@rspress/shared';
+import fs from '@modern-js/utils/fs-extra';
 import {
   RSPRESS_TEMP_DIR,
   isDebugMode,
@@ -40,7 +41,6 @@ async function createInternalBuildConfig(
   userRoot: string,
   config: UserConfig,
   isSSR: boolean,
-  runtimeTempDir: string,
   routeService: RouteService,
 ): Promise<BuilderConfig> {
   const cwd = process.cwd();
@@ -198,11 +198,12 @@ export async function createModernBuilder(
   // We use a temp dir to store runtime files, so we can separate client and server build
   // and we should empty temp dir before build
   const runtimeTempDir = path.join(RSPRESS_TEMP_DIR, 'runtime');
-  // await fs.emptyDir(path.join(cwd, 'node_modules', RSPRESS_TEMP_DIR));
+  const runtimeAbsTempDir = path.join(cwd, 'node_modules', runtimeTempDir);
+  await fs.ensureDir(runtimeAbsTempDir);
 
   const routeService = await initRouteService({
     config,
-    runtimeTempDir,
+    runtimeTempDir: runtimeAbsTempDir,
     scanDir: userRoot,
     pluginDriver,
   });
@@ -217,7 +218,6 @@ export async function createModernBuilder(
     userRoot,
     config,
     isSSR,
-    runtimeTempDir,
     routeService,
   );
 
