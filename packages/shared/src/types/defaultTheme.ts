@@ -109,7 +109,11 @@ export interface LocaleConfig {
 }
 // nav -----------------------------------------------------------------------
 
-export type NavItem = NavItemWithLink | NavItemWithChildren;
+// TODO combine NavItemWithLink and NavItemWithChildren
+export type NavItem =
+  | NavItemWithLink
+  | NavItemWithChildren
+  | NavItemWithLinkAndChildren;
 
 export type NavItemWithLink = {
   text: string;
@@ -122,7 +126,16 @@ export type NavItemWithLink = {
 export interface NavItemWithChildren {
   text?: string;
   tag?: string;
-  items: (NavItemWithChildren | NavItemWithLink)[];
+  items: NavItem[];
+  position?: 'left' | 'right';
+}
+
+export interface NavItemWithLinkAndChildren {
+  text: string;
+  link: string;
+  items: NavItem[];
+  tag?: string;
+  activeMatch?: string;
   position?: 'left' | 'right';
 }
 
