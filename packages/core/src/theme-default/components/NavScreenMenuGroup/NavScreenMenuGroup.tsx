@@ -1,4 +1,9 @@
-import { NavItemWithChildren, NavItemWithLink } from '@rspress/shared';
+import {
+  NavItem,
+  NavItemWithChildren,
+  NavItemWithLink,
+  NavItemWithLinkAndChildren,
+} from '@rspress/shared';
 import { useState } from 'react';
 import Down from '../../assets/down.svg';
 import { Link } from '../Link';
@@ -6,7 +11,7 @@ import styles from './index.module.scss';
 
 export interface NavScreenMenuGroupItem {
   text?: string | React.ReactElement;
-  items: (NavItemWithLink | NavItemWithChildren)[];
+  items: NavItem[];
   activeValue?: string;
 }
 
@@ -42,12 +47,18 @@ export function NavScreenMenuGroup(item: NavScreenMenuGroupItem) {
     }
     return <NormalGroupItem key={item.link} item={item} />;
   };
-  const renderGroup = (item: NavItemWithChildren) => {
+  const renderGroup = (
+    item: NavItemWithChildren | NavItemWithLinkAndChildren,
+  ) => {
     return (
       <div>
-        <p className="font-bold text-gray-400 my-1 not:first:border">
-          {item.text}
-        </p>
+        {'link' in item ? (
+          renderLinkItem(item as NavItemWithLink)
+        ) : (
+          <p className="font-bold text-gray-400 my-1 not:first:border">
+            {item.text}
+          </p>
+        )}
         {(item.items as NavItemWithLink[]).map(renderLinkItem)}
       </div>
     );
@@ -73,7 +84,7 @@ export function NavScreenMenuGroup(item: NavScreenMenuGroupItem) {
           {item.items.map(item => {
             return (
               <div key={item.text}>
-                {'link' in item ? renderLinkItem(item) : renderGroup(item)}
+                {'items' in item ? renderGroup(item) : renderLinkItem(item)}
               </div>
             );
           })}

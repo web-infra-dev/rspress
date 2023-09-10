@@ -1,17 +1,21 @@
 import { useState } from 'react';
 import {
+  NavItem,
   NavItemWithChildren,
   NavItemWithLink,
+  NavItemWithLinkAndChildren,
   withoutBase,
 } from '@rspress/shared';
 import { Link } from '../Link';
 import Translator from '../../assets/translator.svg';
 import Down from '../../assets/down.svg';
 import { Tag } from '../Tag';
+import { NavMenuSingleItem } from './NavMenuSingleItem';
 
 export interface NavMenuGroupItem {
   text?: string | React.ReactElement;
-  items: (NavItemWithLink | NavItemWithChildren)[];
+  link?: string;
+  items: NavItem[];
   tag?: string;
   // Design for i18n highlight.
   activeValue?: string;
@@ -19,6 +23,8 @@ export interface NavMenuGroupItem {
   pathname?: string;
   // Base path.
   base?: string;
+  // Locales
+  langs?: string[];
   // When the item is transition, we need to give a react element instead of a string.
   isTranslation?: boolean;
 }
@@ -64,6 +70,7 @@ export function NavMenuGroup(item: NavMenuGroupItem) {
     isTranslation,
     items: groupItems,
     base = '',
+    link = '',
     pathname = '',
   } = item;
   const [isOpen, setIsOpen] = useState(false);
@@ -76,12 +83,18 @@ export function NavMenuGroup(item: NavMenuGroupItem) {
     }
     return <NormalGroupItem key={item.link} item={item} />;
   };
-  const renderGroup = (item: NavItemWithChildren) => {
+  const renderGroup = (
+    item: NavItemWithChildren | NavItemWithLinkAndChildren,
+  ) => {
     return (
       <div>
-        <p className="font-bold text-gray-400 my-1 not:first:border">
-          {item.text}
-        </p>
+        {'link' in item ? (
+          renderLinkItem(item as NavItemWithLink)
+        ) : (
+          <p className="font-bold text-gray-400 my-1 not:first:border">
+            {item.text}
+          </p>
+        )}
         {(item.items as NavItemWithLink[]).map(renderLinkItem)}
       </div>
     );
@@ -95,25 +108,32 @@ export function NavMenuGroup(item: NavMenuGroupItem) {
         onMouseEnter={() => setIsOpen(true)}
         className="nav-menu-group-button flex-center items-center font-medium text-sm text-text-1 hover:text-text-2 transition-colors duration-200"
       >
-        <span
-          className="text-sm font-medium flex"
-          style={{
-            marginRight: '2px',
-          }}
-        >
-          <Tag tag={item.tag} />
-          {isTranslation ? (
-            <Translator
+        {link ? (
+          // @ts-expect-error item.text may be ReactElement
+          <NavMenuSingleItem {...item} rightIcon={<Down />} />
+        ) : (
+          <>
+            <span
+              className="text-sm font-medium flex"
               style={{
-                with: '18px',
-                height: '18px',
+                marginRight: '2px',
               }}
-            />
-          ) : (
-            item.text
-          )}
-        </span>
-        <Down />
+            >
+              <Tag tag={item.tag} />
+              {isTranslation ? (
+                <Translator
+                  style={{
+                    with: '18px',
+                    height: '18px',
+                  }}
+                />
+              ) : (
+                item.text
+              )}
+            </span>
+            <Down />
+          </>
+        )}
       </button>
       <div
         className="nav-menu-group-content absolute mx-0.8 transition-opacity duration-300"
@@ -138,7 +158,7 @@ export function NavMenuGroup(item: NavMenuGroupItem) {
           {groupItems.map(item => {
             return (
               <div key={item.text}>
-                {'link' in item ? renderLinkItem(item) : renderGroup(item)}
+                {'items' in item ? renderGroup(item) : renderLinkItem(item)}
               </div>
             );
           })}
