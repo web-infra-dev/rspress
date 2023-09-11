@@ -1,5 +1,16 @@
 # @rspress/core
 
+## 0.0.12
+
+### Patch Changes
+
+- Updated dependencies [370b348]
+  - @rspress/plugin-auto-nav-sidebar@0.0.12
+  - @rspress/plugin-container-syntax@0.0.12
+  - @rspress/plugin-last-updated@0.0.12
+  - @rspress/plugin-medium-zoom@0.0.12
+  - @rspress/shared@0.0.12
+
 ## 0.0.11
 
 ### Patch Changes

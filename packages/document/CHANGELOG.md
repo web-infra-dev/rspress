@@ -1,5 +1,7 @@
 # @rspress/docs
 
+## 0.0.12
+
 ## 0.0.11
 
 ### Patch Changes
