@@ -1,5 +1,21 @@
 # @rspress/plugin-medium-zoom
 
+## 0.0.11
+
+### Patch Changes
+
+- 0896e86: fix: hmr invalid for adding file case
+
+  fix: 增加文件后，热更新失效
+
+- 0943989: feat: support props for globalUIComponents config
+
+  feat: 支持 `globalUIComponents` 的 props 配置
+
+- Updated dependencies [47c2e53]
+- Updated dependencies [0896e86]
+  - rspress@0.0.11
+
 ## 0.0.10
 
 ### Patch Changes
