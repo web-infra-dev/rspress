@@ -30,11 +30,15 @@ test.describe('Nav should functions well', async () => {
     navMenuItems = await page.locator('.rspress-nav-menu > *').all();
 
     onlyItemsButton = navMenuItems[1].locator('.nav-menu-group-button');
-    onlyItemsChildren = await navMenuItems[1].locator('.nav-menu-group-content a').all();
+    onlyItemsChildren = await navMenuItems[1]
+      .locator('.nav-menu-group-content a')
+      .all();
     onlyItemsContainer = navMenuItems[1].locator('.nav-menu-group-content');
 
     itemsAndLinkButton = navMenuItems[2].locator('.nav-menu-group-button');
-    itemsAndLinkChildren = await navMenuItems[2].locator('.nav-menu-group-content a').all();
+    itemsAndLinkChildren = await navMenuItems[2]
+      .locator('.nav-menu-group-content a')
+      .all();
     itemsAndLinkContainer = navMenuItems[2].locator('.nav-menu-group-content');
   };
 
@@ -55,7 +59,7 @@ test.describe('Nav should functions well', async () => {
   test('it should render correct visibility', async ({ page }) => {
     await init(page);
 
-    expect(await navMenu.isVisible()).toBe(true)
+    expect(await navMenu.isVisible()).toBe(true);
     expect(await navMenuItems[0].isVisible()).toBe(true);
     expect(await onlyItemsButton.isVisible()).toBe(true);
     expect(await onlyItemsContainer.isVisible()).toBe(false);
@@ -63,16 +67,15 @@ test.describe('Nav should functions well', async () => {
     expect(await itemsAndLinkContainer.isVisible()).toBe(false);
   });
 
-
   test('items should be visible when button is hovered', async ({ page }) => {
     await init(page);
 
     expect(await onlyItemsContainer.isVisible()).toBe(false);
-    await onlyItemsButton.hover()
+    await onlyItemsButton.hover();
     expect(await onlyItemsContainer.isVisible()).toBe(true);
 
     expect(await itemsAndLinkContainer.isVisible()).toBe(false);
-    await itemsAndLinkButton.hover()
+    await itemsAndLinkButton.hover();
     expect(await itemsAndLinkContainer.isVisible()).toBe(true);
   });
 
@@ -108,15 +111,15 @@ test.describe('Nav should functions well', async () => {
     expect(page.url()).toBe(gotoPage('/items-and-link/index.html'));
 
     await page.goto(gotoPage('/'), {
-      waitUntil: 'networkidle'
-    })
+      waitUntil: 'networkidle',
+    });
     await itemsAndLinkButton.hover();
     await itemsAndLinkChildren[0].click({ force: true, timeout: 1000 });
     expect(page.url()).toBe(gotoPage('/items-and-link/child-1.html'));
 
     await page.goto(gotoPage('/'), {
-      waitUntil: 'networkidle'
-    })
+      waitUntil: 'networkidle',
+    });
     await itemsAndLinkButton.hover();
     await itemsAndLinkChildren[1].click({ force: true, timeout: 1000 });
     expect(page.url()).toBe(gotoPage('/items-and-link/child-2.html'));
@@ -130,8 +133,10 @@ test.describe('Nav should functions well', async () => {
     const onlyItemsChildrenText = await onlyItemsChildren[0].textContent();
 
     const itemsAndLinkButtonText = await itemsAndLinkButton.textContent();
-    const itemsAndLinkChildrenText1 = await itemsAndLinkChildren[0].textContent();
-    const itemsAndLinkChildrenText2 = await itemsAndLinkChildren[1].textContent();
+    const itemsAndLinkChildrenText1 =
+      await itemsAndLinkChildren[0].textContent();
+    const itemsAndLinkChildrenText2 =
+      await itemsAndLinkChildren[1].textContent();
 
     expect(onlyLinkText).toBe('OnlyLink');
     expect(onlyItemsButtonText).toBe('OnlyItems');
@@ -139,14 +144,5 @@ test.describe('Nav should functions well', async () => {
     expect(itemsAndLinkButtonText).toBe('ItemsAndLink');
     expect(itemsAndLinkChildrenText1).toBe('Child1');
     expect(itemsAndLinkChildrenText2).toBe('Child2');
-  });
-
-  test('it should be able to redirect when received both `items` and `link`', async ({
-    page,
-  }) => {
-    await init(page);
-
-    await navMenuItems[0].click();
-    expect(page.url()).toBe(`http://localhost:${appPort}/only-link/index.html`);
   });
 });
