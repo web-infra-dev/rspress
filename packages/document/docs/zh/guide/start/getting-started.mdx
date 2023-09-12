@@ -1,6 +1,8 @@
 # 快速开始
 
-import { PackageManagerTabs, Tab } from '@/components/PackageManagerTabs';
+import { PackageManagerTabs } from '@/components/PackageManagerTabs';
+
+import { Tab } from '@theme';
 
 ## 1. 初始化项目
 
@@ -46,7 +48,7 @@ mkdir rspress-app && cd rspress-app
 
 执行 `npm init -y` 来初始化一个项目。你可以使用 npm、yarn 或 pnpm 安装 Rspress:
 
-<PackageManagerTabs values={[{ label: 'npm' }, { label: 'yarn' }, { label: 'pnpm' }]}>
+<PackageManagerTabs>
   <Tab>
 
 ```sh

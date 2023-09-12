@@ -1,4 +1,4 @@
-import { Tabs } from 'rspress/theme';
+import { Tabs } from '@theme';
 import { Npm } from './icons/Npm';
 import { Yarn } from './icons/Yarn';
 import { Pnpm } from './icons/Pnpm';
@@ -34,4 +34,4 @@ export function PackageManagerTabs({
   );
 }
 
-export { Tab } from 'rspress/theme';
+export { Tab } from '@theme';
