@@ -265,9 +265,6 @@ importers:
 
   packages/core:
     dependencies:
-      '@headlessui/react':
-        specifier: ^1.7.7
-        version: 1.7.7(react-dom@18.2.0)(react@18.2.0)
       '@loadable/component':
         specifier: 5.15.2
         version: 5.15.2(react@18.2.0)
@@ -313,9 +310,6 @@ importers:
       '@types/polka':
         specifier: ^0.5.4
         version: 0.5.4
-      acorn:
-        specifier: ^8.8.1
-        version: 8.10.0
       autoprefixer:
         specifier: 10.4.13
         version: 10.4.13(postcss@8.4.21)
@@ -563,6 +557,9 @@ importers:
 
   packages/document:
     devDependencies:
+      '@types/react':
+        specifier: 18.2.0
+        version: 18.2.0
       rspress:
         specifier: workspace:*
         version: link:../cli
@@ -3125,18 +3122,6 @@ packages:
     dependencies:
       '@formily/shared': 2.2.29
 
-  /@headlessui/react@1.7.7(react-dom@18.2.0)(react@18.2.0):
-    resolution: {integrity: sha512-BqDOd/tB9u2tA0T3Z0fn18ktw+KbVwMnkxxsGPIH2hzssrQhKB5n/6StZOyvLYP/FsYtvuXfi9I0YowKPv2c1w==}
-    engines: {node: '>=10'}
-    peerDependencies:
-      react: ^16 || ^17 || ^18
-      react-dom: ^16 || ^17 || ^18
-    dependencies:
-      client-only: 0.0.1
-      react: 18.2.0
-      react-dom: 18.2.0(react@18.2.0)
-    dev: false
-
   /@humanwhocodes/config-array@0.11.10:
     resolution: {integrity: sha512-KVVjQmNUepDVGXNuoRRdmmEjruj0KfiGSbS8LVc12LMsWDQzRXJ0qdhN8L8uUigKpfEHRhlaQFY0ib1tnUbNeQ==}
     engines: {node: '>=10.10.0'}
@@ -5280,6 +5265,14 @@ packages:
       '@types/scheduler': 0.16.3
       csstype: 3.1.2
 
+  /@types/react@18.2.0:
+    resolution: {integrity: sha512-0FLj93y5USLHdnhIhABk83rm8XEGA7kH3cr+YUlvxoUGp1xNt/DINUMvqPxLyOQMzLmZe8i4RTHbvb8MC7NmrA==}
+    dependencies:
+      '@types/prop-types': 15.7.5
+      '@types/scheduler': 0.16.3
+      csstype: 3.1.2
+    dev: true
+
   /@types/rechoir@0.6.1:
     resolution: {integrity: sha512-HbMQqyZC8W9NxE3R89rW+hFwFXeIdmCT7x91NQjzB4+0CI42K/CJfRak5/jAQ7L5qi1cGcQQdo+GI9pqqUhbKQ==}
     dependencies:
@@ -6496,10 +6489,6 @@ packages:
   /cli-width@3.0.0:
     resolution: {integrity: sha512-FxqpkPPwu1HjuN93Omfm4h8uIanXofW0RxVEW3k5RKx+mJJYSthzNhp32Kzxxy3YAEZ/Dc/EWN1vZRY0+kOhbw==}
     engines: {node: '>= 10'}
-
-  /client-only@0.0.1:
-    resolution: {integrity: sha512-IV3Ou0jSMzZrd3pZ48nLkT9DA7Ag1pnPzaiQhpW7c3RbcqqzvzzVu+L8gfqMp/8IM2MQtSiqaCxrrcfu8I8rMA==}
-    dev: false
 
   /cliui@6.0.0:
     resolution: {integrity: sha512-t6wbgtoCXvAzst7QgXxJYqPt0usEfbgQdftEPbLL/cvv6HPE5VgvqCuAIDR0NgU52ds6rFwqrgakNLrHEjCbrQ==}
