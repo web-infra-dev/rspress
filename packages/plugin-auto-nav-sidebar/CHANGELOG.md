@@ -1,5 +1,16 @@
 # @rspress/plugin-auto-sidebar
 
+## 0.0.12
+
+### Patch Changes
+
+- 370b348: fix: sidebar disappear in windows
+
+  fix: windows 系统下侧边栏消失
+
+  - rspress@0.0.12
+  - @rspress/shared@0.0.12
+
 ## 0.0.11
 
 ### Patch Changes
