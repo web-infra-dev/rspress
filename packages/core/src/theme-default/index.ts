@@ -8,8 +8,9 @@ import { Tab, Tabs } from './components/Tabs';
 import { Button } from './components/Button';
 import { Link } from './components/Link';
 import { HomeFooter } from './components/HomeFooter';
+import { PackageManagerTabs } from './components/PackageManagerTabs';
 
-export { Nav, Search, Tab, Tabs, Button, Link, HomeFooter };
+export { Nav, Search, Tab, Tabs, Button, Link, HomeFooter, PackageManagerTabs };
 
 export default {
   Layout,

@@ -1,4 +1,4 @@
-import React, { ComponentProps } from 'react';
+import { ComponentProps } from 'react';
 
 export function Npm(props: ComponentProps<'svg'>) {
   return (
