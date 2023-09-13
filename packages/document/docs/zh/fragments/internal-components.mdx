@@ -73,6 +73,55 @@ interface TabProps {
 
 其中的 `value` 字段用于标识当前 tab，如果不传则默认使用 label。
 
+## PackageManagerTabs
+
+PackageManagerTabs 组件用于在文档中展示不同包管理器的命令。使用方法如下：
+
+```tsx title="index.mdx"
+import { PackageManagerTabs } from '@theme';
+
+function App() {
+  return <PackageManagerTabs command="install rspress -D" />;
+}
+```
+
+效果如下：
+
+import { PackageManagerTabs } from '@theme';
+
+<PackageManagerTabs command="install rspress -D" />
+
+其中包含的 props 类型如下：
+
+```ts
+interface PackageManagerTabsProps {
+  command:
+    | string
+    | {
+        // 用于设置不同包管理器的命令
+        npm?: string;
+        yarn?: string;
+        pnpm?: string;
+        bun?: string;
+      };
+  // 用于设置额外的 tab
+  additionalTabs: {
+    // 用于设置额外的包管理器
+    tool: string;
+    // 用于设置包管理器的 icon
+    icon?: React.ReactNode;
+  }[];
+}
+```
+
+当 `command` 设置为字符串时，会默认展示 npm、yarn、pnpm、bun 四个 tab，并且组件内部为自动在 command 前面添加对应的包管理器命令。如果你需要展示额外的 tab，可以通过 `additionalTabs` 来实现。
+
+:::tip
+
+在 install 命令中，对 yarn 和 bun 做了特殊处理，如果你的命令是`install some-packages`，在 yarn 和 bun 的 tab 中会自动将 install 替换为 add。
+
+:::
+
 ## Table of Contents
 
 渲染当前页面的 TOC

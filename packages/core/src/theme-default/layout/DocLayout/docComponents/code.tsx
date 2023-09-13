@@ -22,7 +22,7 @@ const timeoutIdMap: Map<HTMLElement, NodeJS.Timeout> = new Map();
 
 export interface CodeProps {
   children: string;
-  className: string;
+  className?: string;
   meta?: string;
 }
 

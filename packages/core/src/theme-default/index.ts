@@ -10,6 +10,7 @@ export { Button } from './components/Button';
 export { Link } from './components/Link';
 export { HomeFooter } from './components/HomeFooter';
 export { Toc } from './components/Toc';
+export { PackageManagerTabs } from './components/PackageManagerTabs';
 
 export default {
   Layout,
