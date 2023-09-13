@@ -39,11 +39,9 @@ pageType: home
 
 The meaning of each `pageType` config is as follows:
 
-- `home`: **Home page**, including the layout content of the top navigation bar and home page.
-- `doc`: **Doc page**, including top navigation bar, left sidebar, body content, and outline bar on the right.
-- `custom`: **Custom page**, including top navigation bar and custom content.
-- `blank`: Also belongs to **custom page**, but does not include `Top Navigation Bar`.
-- `404`: **Not found page**.
+import PageType from '@en/fragments/page-type';
+
+<PageType />
 
 ## hero
 
@@ -156,12 +154,12 @@ footer: false
 ---
 ```
 
-## hideNavbar
+## navbar
 
 Whether to hide the top navigation bar. You can hide the top nav bar with the following config:
 
 ```yaml
 ---
-hideNavbar: true
+navbar: true
 ---
 ```

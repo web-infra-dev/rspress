@@ -3,5 +3,7 @@
   "auto-nav-sidebar",
   "use-mdx",
   "static-assets",
-  "global-styles"
+  "custom-page",
+  "ssg",
+  "deploy"
 ]

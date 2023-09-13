@@ -3,8 +3,8 @@ import {
   ReactElement,
   ReactNode,
   useContext,
+  useState,
 } from 'react';
-import { Tab as HeadlessTab } from '@headlessui/react';
 import { TabDataContext } from '../../logic/TabDataContext';
 import styles from './index.module.scss';
 
@@ -68,48 +68,37 @@ export function Tabs(props: TabsProps): ReactElement {
       return false;
     });
   }
+  const [activeIndex, setActiveIndex] = useState(defaultIndex);
 
   return (
     <div className={styles.container}>
-      <HeadlessTab.Group
-        onChange={index => {
-          onChange?.(index);
-          if (groupId) {
-            setTabData({ ...tabData, [groupId]: index });
-          }
-        }}
-        {...(needSync ? { selectedIndex: defaultIndex } : { defaultIndex })}
-      >
-        <div className={tabContainerClassName}>
-          {tabValues.length ? (
-            <HeadlessTab.List className={styles.tabList}>
-              {tabValues.map((item, index) => {
-                const disabled = Boolean(
-                  item &&
-                    typeof item === 'object' &&
-                    'disabled' in item &&
-                    item.disabled,
-                );
-
-                return (
-                  <HeadlessTab
-                    key={index}
-                    disabled={disabled}
-                    className={({ selected }) =>
-                      `${styles.tab} ${
-                        selected ? styles.selected : styles.notSelected
-                      }`
+      <div className={tabContainerClassName}>
+        {tabValues.length ? (
+          <div className={styles.tabList}>
+            {tabValues.map((item, index) => {
+              return (
+                <div
+                  // eslint-disable-next-line react/no-array-index-key
+                  key={index}
+                  className={`${styles.tab} ${
+                    activeIndex === index ? styles.selected : styles.notSelected
+                  }`}
+                  onClick={() => {
+                    onChange?.(index);
+                    setActiveIndex(index);
+                    if (groupId) {
+                      setTabData({ ...tabData, [groupId]: index });
                     }
-                  >
-                    {renderTab(item)}
-                  </HeadlessTab>
-                );
-              })}
-            </HeadlessTab.List>
-          ) : null}
-        </div>
-        <HeadlessTab.Panels>{children}</HeadlessTab.Panels>
-      </HeadlessTab.Group>
+                  }}
+                >
+                  {renderTab(item)}
+                </div>
+              );
+            })}
+          </div>
+        ) : null}
+      </div>
+      <div>{children[activeIndex]}</div>
     </div>
   );
 }
@@ -119,8 +108,8 @@ export function Tab({
   ...props
 }: ComponentPropsWithRef<'div'>): ReactElement {
   return (
-    <HeadlessTab.Panel {...props} className="rounded px-2">
+    <div {...props} className="rounded px-2">
       {children}
-    </HeadlessTab.Panel>
+    </div>
   );
 }

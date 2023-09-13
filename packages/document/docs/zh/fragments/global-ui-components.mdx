@@ -6,8 +6,9 @@
 import React from 'react';
 
 // 需要默认导出一个组件
-export default function PluginUI() {
-  return <div>这是一个全局的布局组件</div>;
+// 通过 props 来拿到配置中传入的 props 数据
+export default function PluginUI(props?: { foo: string }) {
+  return <div>This is a global layout component</div>;
 }
 ```
 

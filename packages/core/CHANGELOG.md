@@ -1,5 +1,94 @@
 # @rspress/core
 
+## 0.0.12
+
+### Patch Changes
+
+- Updated dependencies [370b348]
+  - @rspress/plugin-auto-nav-sidebar@0.0.12
+  - @rspress/plugin-container-syntax@0.0.12
+  - @rspress/plugin-last-updated@0.0.12
+  - @rspress/plugin-medium-zoom@0.0.12
+  - @rspress/shared@0.0.12
+
+## 0.0.11
+
+### Patch Changes
+
+- 47c2e53: fix: remove deprecated npm package
+
+  fix: 移除废弃的 npm 包
+
+- 0896e86: fix: hmr invalid for adding file case
+
+  fix: 增加文件后，热更新失效
+
+- 4e7ca8c: perf: enable deterministic chunkIds of Rspack
+
+  perf: 开启 Rspack 的 deterministic chunkIds
+
+- 5fcc813: fix(mdx-rs): avoid panic when parsing mdx ast
+- 0943989: feat: support props for globalUIComponents config
+
+  feat: 支持 `globalUIComponents` 的 props 配置
+
+- Updated dependencies [0896e86]
+- Updated dependencies [0943989]
+  - @rspress/plugin-auto-nav-sidebar@0.0.11
+  - @rspress/plugin-container-syntax@0.0.11
+  - @rspress/plugin-last-updated@0.0.11
+  - @rspress/plugin-medium-zoom@0.0.11
+  - @rspress/shared@0.0.11
+
+## 0.0.10
+
+### Patch Changes
+
+- 82d85e2: feat: integrate rspack-plugin-virtual-module
+
+  feat: 集成 rspack-plugin-virtual-module
+
+- 4ecf59c: chore: update tabs default theme style
+
+  chore: 更新 tabs 默认主题样式
+
+- 0a4dbc6: feat: optimize default theme layout
+
+  feat: 优化默认主题布局
+
+- 259c2e6: fix: avoid error when \_meta.json is not correct
+
+  fix: 修复 \_meta.json 内容不正确时报错
+
+- f6f9ddb: feat: specify limit version for create-rspress template
+
+  feat: 为 create-rspress 模板指定限制 rspress 版本
+
+- 51211bc: fix: asset prefix not work for search index url
+
+  fix: asset prefix 配置在搜索索引中不生效
+
+- 587d299: feat: support container syntax by plugin
+
+  feat: 以插件的方式支持 container 语法
+
+- f21526b: fix: avoid `@theme` resolve error in pure js project
+
+  fix: 纯 js 项目中避免 `@theme` 解析错误
+
+- Updated dependencies [82d85e2]
+- Updated dependencies [0a4dbc6]
+- Updated dependencies [259c2e6]
+- Updated dependencies [f6f9ddb]
+- Updated dependencies [51211bc]
+- Updated dependencies [587d299]
+- Updated dependencies [f21526b]
+  - @rspress/plugin-auto-nav-sidebar@0.0.10
+  - @rspress/plugin-container-syntax@0.0.10
+  - @rspress/plugin-last-updated@0.0.10
+  - @rspress/plugin-medium-zoom@0.0.10
+  - @rspress/shared@0.0.10
+
 ## 0.0.9
 
 ### Patch Changes

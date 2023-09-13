@@ -5,6 +5,7 @@ import {
   Sidebar,
   SidebarGroup,
   SidebarItem,
+  slash,
 } from '@rspress/shared';
 import { logger } from '@rspress/shared/logger';
 import { NavMeta, SideMeta } from './type';
@@ -197,7 +198,8 @@ export async function extractH1Title(filePath: string): Promise<string> {
 export async function scanSideMeta(workDir: string, rootDir: string) {
   // find the `_meta.json` file
   const metaFile = path.resolve(workDir, '_meta.json');
-  const relativePath = path.relative(rootDir, workDir);
+  // Fix the windows path
+  const relativePath = slash(path.relative(rootDir, workDir));
   let sideMeta: SideMeta | undefined;
   // Get the sidebar config from the `_meta.json` file
   try {

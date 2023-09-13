@@ -5,7 +5,7 @@
 - Type: `string`
 - Default: `/`
 
-部署基准路径。比如，如果你计划将你的站点部署到 `https://foo.github.io/bar/`，那么你应该将 `base` 设置为 `"/bar/"`：
+部署基路径。比如，如果你计划将你的站点部署到 `https://foo.github.io/bar/`，那么你应该将 `base` 设置为 `"/bar/"`：
 
 ```ts title="rspress.config.ts"
 import { defineConfig } from 'rspress/config';
@@ -196,7 +196,7 @@ export async function onSearch(query: string) {
 
 ## globalUIComponents
 
-- Type: `string[]`
+- Type: `(string | object)[]`
 - Default: `[]`
 
 你可以通过 `globalUIComponents` 参数来增加全局 UI 组件，比如：
@@ -207,6 +207,23 @@ import path from 'path';
 
 export default defineConfig({
   globalUIComponents: [path.join(__dirname, 'components', 'MyComponent.tsx')],
+});
+```
+
+`globalUIComponents` 的每一项可以是一个字符串，代表组件的文件路径；也可以是一个数组，第一项为组件的文件路径，第二项为组件的 props 对象，比如：
+
+```ts title="rspress.config.ts"
+import { defineConfig } from 'rspress/config';
+
+export default defineConfig({
+  globalUIComponents: [
+    [
+      path.join(__dirname, 'components', 'MyComponent.tsx'),
+      {
+        foo: 'bar',
+      },
+    ],
+  ],
 });
 ```
 

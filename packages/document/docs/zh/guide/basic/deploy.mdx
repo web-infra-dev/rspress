@@ -1,0 +1,162 @@
+# 项目部署
+
+这一节我们将来讲解项目的部署环节，我们假定你已经完成了项目的开发，现在需要将项目部署到线上。你需要考虑如下的方面：
+
+- 项目生产环境构建和预览；
+- 静态资源前缀配置；
+- 项目基路径配置；
+- 选择部署平台进行部署。
+
+## 项目生产环境构建和预览
+
+在部署之前，我们需要先对项目进行生产环境的构建，并在本地进行预览，以确保项目能够正常运行。在 Rspress 项目中，我们可以通过下面的 `scripts` 命令来进行构建和预览：
+
+```json
+{
+  "scripts": {
+    "build": "rspress build",
+    "preview": "rspress preview"
+  }
+}
+```
+
+:::tip 提示
+
+对于 preview 命令，你可以通过 `--port` 参数来指定预览的端口号，例如 `rspress preview --port 8080`。
+
+:::
+
+值得关注的是，最后的产物会被输出到项目根目录的 `doc_build` 目录下，这个目录下的内容就是我们需要部署的内容。
+
+## 静态资源前缀配置
+
+我们可以把部署产物分为两部分：**HTML 文件**和**静态资源**。HTML 文件指的是产物目录中的 HTML 文件，这些文件是我们最终部署到服务器上的文件。
+
+而所谓的静态资源，指的是产物目录中的 `static` 目录，里面包含了项目所需要的 JavaScript、CSS、图片等静态资源。在部署的时候，如果你想要将这些静态资源放到 CDN 上，以保证更好的访问性能，而不是像 HTML 一样直接放到服务器上，那么你就需要配置静态资源的前缀，这样才能够让项目正确的引用到这些静态资源，你可以通过 `builderConfig.output.assetPrefix` 来完成：
+
+```ts title="rspress.config.ts"
+import { defineConfig } from 'rspress/config';
+
+export default defineConfig({
+  builderConfig: {
+    output: {
+      assetPrefix: 'https://cdn.com/',
+    },
+  },
+});
+```
+
+这样，在 HTML 中引用静态资源的时候，就会自动加上前缀，例如：
+
+```html
+<script src="https://cdn.com/static/js/app.123.js"></script>
+```
+
+## 项目基路径配置
+
+在部署的时候，我们可能需要将项目部署到一个子路径下，比如，如果你计划将你的站点部署到 `https://foo.github.io/bar/`，那么你应该将 `base` 参数设置为 `"/bar/"`：
+
+```ts title="rspress.config.ts"
+import { defineConfig } from 'rspress/config';
+
+export default defineConfig({
+  base: '/bar/',
+});
+```
+
+## 选择部署平台进行部署
+
+在完成了上面的配置之后，我们就可以将产物部署到服务器上了。你有很多种选择，比如 `GitHub Pages`、`Netlify`、`Vercel` 等等。这里我们以 `GitHub Pages` 和 `Netlify` 为例，来讲解如何部署。
+
+### 通过 GitHub Actions 部署
+
+如果你的项目是托管在 `GitHub` 上的，那么你可以通过 `GitHub Pages` 来进行部署。`GitHub Pages` 是 `GitHub` 提供的一个静态网站托管服务，它可以让你直接将你的项目部署到 `GitHub` 上，而不需要你自己搭建服务器。
+
+#### 1. 创建 Workflow 文件
+
+首先，你需要你需要在项目根目录下创建一个名为 `.github/workflows/deploy.yml` 的文件，内容如下：
+
+```yml
+name: Deploy Rspress site to Pages
+
+on:
+  push:
+    branches: [main]
+
+  workflow_dispatch:
+
+permissions:
+  id-token: write
+
+concurrency:
+  cancel-in-progress: false
+
+jobs:
+  # Build job
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 0 # Not needed if lastUpdated is not enabled
+      - uses: pnpm/action-setup@v2 # pnpm is optional but recommended, you can also use npm / yarn
+        with:
+          version: 6
+          cache: pnpm
+      - name: Setup Node
+        uses: actions/setup-node@v3
+        with:
+          node-version: 18
+          cache: pnpm
+      - name: Setup Pages
+        uses: actions/configure-pages@v3
+      - name: Install dependencies
+        run: pnpm install
+      - name: Build with Rspress
+        run: |
+          pnpm run build
+          touch doc_build/.nojekyll
+      - name: Upload artifact
+        uses: actions/upload-pages-artifact@v2
+        with:
+          path: doc_build
+
+  # Deployment job
+  deploy:
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    needs: build
+    runs-on: ubuntu-latest
+    name: Deploy
+    steps:
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v2
+```
+
+#### 2. 配置 GitHub Actions
+
+在仓库 `Settings` 界面中的 `Pages` 栏目中，你可以选择 `GitHub Actions` 作为部署源。
+
+#### 3. 推送代码到 main 分支
+
+当你将代码推送到 `main` 分支的时候，`GitHub Actions` 就会自动执行部署流程，你可以在 `Actions` 栏目中查看部署的进度。当部署完成之后，你就可以通过 `https://<username>.github.io/<repository>/` 来访问你的站点了。
+
+### 通过 Netlify 部署
+
+`Netlify` 是一个 Web 应用部署平台，它可以让你直接将你的项目部署到 `Netlify` 上，而不需要你自己搭建服务器。
+
+#### 完成基础配置
+
+在 `Netlify` 上部署项目非常简单，你只需要引入你的 Github 仓库，然后配置一些基础信息就可以部署了，主要配置下面两个字段即可：
+
+- `Build command`：构建命令，这里我们填写项目中的 build 命令即可，如 `npm run build`。
+- `Publish directory`：产物目录，这里我们填写项目中的产物目录 `doc_build`。
+
+然后点击 `Deploy site` 按钮，就可以完成部署了。
+
+#### 配置自定义域名
+
+如果你想要将你的站点绑定到自己的域名上，那么你可以在 `Netlify` 的 `Domain management` 栏目中进行配置，具体的配置方法可以参考 [Netlify 官方文档](https://docs.netlify.com/domains-https/custom-domains/)。

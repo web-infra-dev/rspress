@@ -1,0 +1,98 @@
+# @rspress/plugin-preview
+
+> [源码地址](https://github.com/web-infra-dev/rspress/tree/main/packages/plugin-preview)
+
+用于预览 md(x) 文件代码块中的组件。
+
+## 安装
+
+```bash
+# npm
+npm install @rspress/plugin-preview -D
+# yarn
+yarn add @rspress/plugin-preview -D
+# pnpm
+pnpm install @rspress/plugin-preview -D
+```
+
+## 使用
+
+### 引入插件
+
+首先在配置文件中写入以下的配置：
+
+```ts title="rspress.config.ts"
+import { defineConfig } from 'rspress/config';
+import { pluginPreview } from '@rspress/plugin-preview';
+
+export default defineConfig({
+  plugins: [pluginPreview()],
+});
+```
+
+:::warning 注意
+在加入该插件后，请勿开启 `markdown.experimentalMdxRs`配置，否则会导致插件失效。
+:::
+
+### 内部组件
+
+内部组件的组件代码声明在 mdx 文件内。你可以在 mdx 文件中声明如下的代码块：
+
+````md
+```tsx
+function App() {
+  return <div>Hello World</div>;
+}
+
+export default App;
+```
+````
+
+值得注意的是，你需要将组件作为 default 导出，Rspress 会自动渲染这个组件。
+
+但是如果你想保留代码块的样式，而不是将其作为组件渲染，你可以添加 `pure` 标识符来指定，使用方式如下：
+
+````md pure
+```tsx pure
+function App() {
+  return <div>Hello World</div>;
+}
+export default App;
+```
+````
+
+:::tip 提示
+需要保证文档为 `.mdx` 结尾的文件。
+:::
+
+这样，代码块就不会被作为组件渲染，而是保留原样。
+
+### 外部组件
+
+除了将组件代码写在 mdx 文件的代码块中，你还可以将组件代码写在外部文件中，然后在 mdx 文件中通过 code 标签引入。比如
+
+```md title="example.mdx"
+<code src="./Demo.tsx" />
+```
+
+```tsx title="Demo.tsx"
+export default function App() {
+  return <div>Hello World</div>;
+}
+```
+
+外部组件中同样需要将组件作为 default 导出。而通过 code 标签的 src 属性，你可以指定外部组件的路径，该插件同时支持相对路径以及别名路径(alias)。
+
+对于某些比较复杂的组件，这种外部组件的使用方式会更加方便。
+
+## 配置
+
+这个插件接受一个对象参数，类型如下:
+
+```ts
+interface PreviewOptions {
+  isMobile: boolean;
+}
+```
+
+你可以通过 `isMobile` 参数来决定移动端/PC 端的预览模式。

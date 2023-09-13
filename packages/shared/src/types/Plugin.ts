@@ -37,7 +37,7 @@ export interface RspressPlugin {
   /**
    * Inject global components.
    */
-  globalUIComponents?: string[];
+  globalUIComponents?: (string | [string, object])[];
   /**
    * Modify doc config.
    */

@@ -1,6 +1,6 @@
 {
   "name": "@rspress/docs",
-  "version": "0.0.9",
+  "version": "0.0.12",
   "description": "",
   "main": "index.js",
   "scripts": {
@@ -19,7 +19,8 @@
   "devDependencies": {
     "rspress": "workspace:*",
     "ts-node": "^10.9.1",
-    "typescript": "^5"
+    "typescript": "^5",
+    "@types/react": "18.2.0"
   },
   "publishConfig": {
     "access": "public",

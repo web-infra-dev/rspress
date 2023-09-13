@@ -1,6 +1,6 @@
 {
   "name": "@rspress/shared",
-  "version": "0.0.9",
+  "version": "0.0.12",
   "types": "./dist/index.d.ts",
   "main": "./dist/index.js",
   "module": "./dist/index.mjs",
@@ -31,8 +31,8 @@
     "upgrade": "modern upgrade"
   },
   "dependencies": {
-    "@modern-js/builder": "2.33.0",
-    "@modern-js/builder-rspack-provider": "2.33.0",
+    "@modern-js/builder": "2.34.0",
+    "@modern-js/builder-rspack-provider": "2.34.0",
     "unified": "10.1.2",
     "chalk": "4.1.2"
   },
@@ -47,7 +47,8 @@
     "@types/rechoir": "^0.6.1",
     "rimraf": "~3.0.2",
     "ts-node": "^10.9.1",
-    "typescript": "~5.0.4"
+    "typescript": "~5.0.4",
+    "medium-zoom": "1.0.8"
   },
   "sideEffects": [],
   "publishConfig": {

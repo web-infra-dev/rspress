@@ -1,6 +1,6 @@
 import type { UserConfig } from '@rspress/shared';
 import type { BuilderPlugin } from '@modern-js/builder';
-import RuntimeModulesPlugin from 'rspack-plugin-virtual-module';
+import { RspackVirtualModulePlugin } from 'rspack-plugin-virtual-module';
 import { RouteService } from '../route/RouteService';
 import { PluginDriver } from '../PluginDriver';
 import { routeVMPlugin } from './routeData';
@@ -22,7 +22,7 @@ export interface FactoryContext {
 
 type RuntimeModuleFactory = (
   context: FactoryContext,
-) => RuntimeModulesPlugin | Promise<RuntimeModulesPlugin>;
+) => Record<string, string> | Promise<Record<string, string>>;
 
 export const runtimeModuleFactory: RuntimeModuleFactory[] = [
   /**
@@ -62,15 +62,22 @@ export function builderDocVMPlugin(
       api.modifyBundlerChain(async bundlerChain => {
         // The order should be sync
         const alias = bundlerChain.resolve.alias.entries();
-        let index = 0;
+        const runtimeModule: Record<string, string> = {};
         for (const factory of runtimeModuleFactory) {
-          bundlerChain.plugin(`runtime-module-${index++}`).use(
-            await factory({
-              ...factoryContext,
-              alias,
-            }),
-          );
+          const moduleResult = await factory({
+            ...factoryContext,
+            alias,
+          });
+          Object.assign(runtimeModule, moduleResult);
         }
+        bundlerChain
+          .plugin(`rspress-runtime-module`)
+          .use(
+            new RspackVirtualModulePlugin(
+              runtimeModule,
+              factoryContext.runtimeTempDir,
+            ),
+          );
       });
     },
   };

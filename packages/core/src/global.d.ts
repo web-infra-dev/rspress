@@ -26,7 +26,7 @@ declare module 'virtual-search-index-hash' {
 declare module 'virtual-global-components' {
   import { ComponentType } from 'react';
 
-  const components: ComponentType[];
+  const components: (ComponentType | [ComponentType, any])[];
   export default components;
 }
 

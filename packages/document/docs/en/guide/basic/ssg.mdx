@@ -1,0 +1,71 @@
+# Static Site Generation
+
+## Introduction
+
+In the production build, Rspress will automatically generate a static site for you, that is, generate the HTML content of each page. After the build is completed, the HTML will appear in the default product directory, such as:
+
+```bash
+doc_build
+├── static # Static resources
+│   ├── main.js
+│   └── ...
+├── index.html # Home page
+├── about.html # About page
+├── posts
+│   ├── hello-world.html # Article page
+│   └── ...
+```
+
+You can deploy the contents of this product directory to any static site hosting service, such as Github Pages, Netlify, Vercel, etc.
+
+## Advantages of SSG
+
+The essence of static site generation is to pre-render components at the build stage, render the components into HTML strings, and then write them into HTML files. This has many benefits, such as:
+
+- Faster FCP, because there is no need to wait for JS to load before rendering.
+- More conducive to SEO, because search engine spiders can directly crawl the complete HTML content.
+
+Considering the cost of static site generation, Rspress only pre-renders during production environment builds. In the development environment, it still uses the traditional SPA rendering mode without pre-rendering.
+
+## Adding Custom Site Content
+
+Through `builderConfig.html.tags`, you can customize the site HTML content, such as adding statistical code, adding scripts and styles, etc.
+
+```js title="rspress.config.ts"
+import { defineConfig } from 'rspress/config';
+
+export default defineConfig({
+  // ...
+  builderConfig: {
+    html: {
+      tags: [
+        {
+          tag: 'script',
+          attrs: {
+            src: 'https://cdn.example.com/your-script.js',
+          },
+        },
+        {
+          tag: 'link',
+          attrs: {
+            rel: 'stylesheet',
+            href: 'https://cdn.example.com/your-style.css',
+          },
+        },
+      ],
+    },
+  },
+});
+```
+
+For more detailed config of `builderConfig.html.tags`, please refer to the [documentation](https://modernjs.dev/builder/en/api/config-html.html#htmltags).
+
+## Preview
+
+After the production build is complete, you can preview the output by using the `rspress preview` command. This command will start a local static site service, and you can access this service in your browser to preview the output.
+
+```shell
+> rspress preview
+
+Preview server running at http://localhost:4173/
+```

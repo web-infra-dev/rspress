@@ -108,6 +108,7 @@ export function Nav(props: NavProps) {
                 {...item}
                 base={base}
                 pathname={pathname}
+                langs={langs}
                 items={'items' in item ? item.items : item}
               />
             </div>

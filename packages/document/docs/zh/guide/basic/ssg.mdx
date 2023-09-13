@@ -1,0 +1,71 @@
+# 静态站点生成（SSG）
+
+## 功能介绍
+
+在生产环境的构建中，Rspress 会自动帮你生成静态站点，即生成各个页面的 HTML 内容，在构建完成之后，HTML 会出现在默认的产物目录中，比如：
+
+```bash
+doc_build
+├── static # 静态资源
+│   ├── main.js
+│   └── ...
+├── index.html # 首页
+├── about.html # 关于页
+├── posts
+│   ├── hello-world.html # 文章页
+│   └── ...
+```
+
+你可以将这个产物目录的内容部署到任何静态站点托管服务上，比如 Github Pages、Netlify、Vercel 等。
+
+## SSG 的优势
+
+静态站点生成的本质是在构建阶段进行组件的预渲染，将组件渲染成 HTML 字符串，然后写入到 HTML 文件中，这样做有诸多的好处，比如：
+
+- 首屏渲染速度更快，因为不需要等待 JS 加载完成之后再进行渲染。
+- 更利于 SEO，因为搜索引擎爬虫可以直接抓取到完整的 HTML 内容。
+
+而考虑到静态站点生成的成本，Rspress 只有在生产环境构建时才会进行预渲染，而在开发环境下，仍然是采用传统的 SPA 渲染模式，没有进行预渲染。
+
+## 添加自定义站点内容
+
+通过 `builderConfig.html.tags`，你可以自定义站点 HTML 内容，比如添加统计代码、添加脚本和样式等。
+
+```js title="rspress.config.ts"
+import { defineConfig } from 'rspress/config';
+
+export default defineConfig({
+  // ...
+  builderConfig: {
+    html: {
+      tags: [
+        {
+          tag: 'script',
+          attrs: {
+            src: 'https://cdn.example.com/your-script.js',
+          },
+        },
+        {
+          tag: 'link',
+          attrs: {
+            rel: 'stylesheet',
+            href: 'https://cdn.example.com/your-style.css',
+          },
+        },
+      ],
+    },
+  },
+});
+```
+
+关于 `builderConfig.html.tags` 更详细的配置，请参考 [文档](https://modernjs.dev/builder/api/config-html.html#htmltags)。
+
+## 预览产物
+
+在生产环境构建完成之后，你可以通过 `rspress preview` 命令来预览产物，这个命令会启动一个本地的静态站点服务，你可以在浏览器中访问这个服务来预览产物。
+
+```shell
+> rspress preview
+
+Preview server running at http://localhost:4173/
+```

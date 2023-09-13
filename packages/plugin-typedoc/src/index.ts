@@ -25,7 +25,7 @@ export function pluginTypeDoc(options: PluginTypeDocOptions): RspressPlugin {
   let docRoot: string | undefined;
   const { entryPoints = [], outDir = API_DIR } = options;
   return {
-    name: 'doc-plugin-typedoc',
+    name: '@rspress/plugin-typedoc',
     async addPages() {
       return [
         {

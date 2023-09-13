@@ -1,0 +1,162 @@
+# Deployment
+
+In this section, we will discuss the deployment of the project. We assume that you have completed the development of the project and now need to deploy the project online. You need to consider the following aspects:
+
+- Production build and preview of the project.
+- Static resource prefix configuration.
+- Project base path configuration.
+- Choose deployment platform for deployment.
+
+## Build and Preview
+
+Before deployment, we need to first build the project in the production environment and preview it locally to ensure that the project can run normally. In Rspress projects, we can use the following `scripts` commands to build and preview:
+
+```json
+{
+  "scripts": {
+    "build": "rspress build",
+    "preview": "rspress preview"
+  }
+}
+```
+
+:::tip Tip
+
+For the preview command, you can specify the preview port number through the `--port` parameter, such as `rspress preview --port 8080`.
+
+:::
+
+It is worth noting that the final output will be output to the `doc_build` directory under the project root directory. The content in this directory is what we need to deploy.
+
+## Static Resource Prefix Configuration
+
+We can divide the deployment output into two parts: HTML files and static resources. HTML files refer to the HTML files in the output directory. These files are the files we finally deploy to the server.
+
+The so-called static resources refer to the `static` directory in the output directory, which contains the JavaScript, CSS, images and other static resources required by the project. When deploying, if you want to put these static resources on the CDN to ensure better access performance, instead of directly putting them on the server like HTML, then you need to configure the prefix of the static resources so that the project can correctly reference these static resources. You can complete it through `builderConfig.output.assetPrefix`:
+
+```ts title="rspress.config.ts"
+import { defineConfig } from 'rspress/config';
+
+export default defineConfig({
+  builderConfig: {
+    output: {
+      assetPrefix: 'https://cdn.com/',
+    },
+  },
+});
+```
+
+In this way, when referencing static resources in HTML, the prefix will be automatically added, for example:
+
+```html
+<script src="https://cdn.com/static/js/app.123.js"></script>
+```
+
+## Project Base Path Configuration
+
+When deploying, we may need to deploy the project to a subpath. For example, if you plan to deploy your site to `https://foo.github.io/bar/`, then you should set the `base` parameter to `"/bar/"`:
+
+```ts title="rspress.config.ts"
+import { defineConfig } from 'rspress/config';
+
+export default defineConfig({
+  base: '/bar/',
+});
+```
+
+## Deployment in Platform
+
+After completing the above configuration, we can deploy the output to the server. You have many choices, such as `GitHub Pages`, `Netlify`, `Vercel`, etc. Here we take `GitHub Pages` and `Netlify` as examples to explain how to deploy.
+
+### Deploy via GitHub Actions
+
+If your project is hosted on `GitHub`, then you can deploy via `GitHub Pages`. `GitHub Pages` is a static website hosting service provided by `GitHub`, which allows you to directly deploy your project to `GitHub` without having to build your own server.
+
+#### 1. Create Workflow File
+
+First, you need to create a file named `.github/workflows/deploy.yml` in the project root directory, with the following content:
+
+```yml
+name: Deploy Rspress site to Pages
+
+on:
+  push:
+    branches: [main]
+
+  workflow_dispatch:
+
+permissions:
+  id-token: write
+
+concurrency:
+  cancel-in-progress: false
+
+jobs:
+  # Build job
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 0 # Not needed if lastUpdated is not enabled
+      - uses: pnpm/action-setup@v2 # pnpm is optional but recommended, you can also use npm / yarn
+        with:
+          version: 6
+          cache: pnpm
+      - name: Setup Node
+        uses: actions/setup-node@v3
+        with:
+          node-version: 18
+          cache: pnpm
+      - name: Setup Pages
+        uses: actions/configure-pages@v3
+      - name: Install dependencies
+        run: pnpm install
+      - name: Build with Rspress
+        run: |
+          pnpm run build
+          touch doc_build/.nojekyll
+      - name: Upload artifact
+        uses: actions/upload-pages-artifact@v2
+        with:
+          path: doc_build
+
+  # Deployment job
+  deploy:
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    needs: build
+    runs-on: ubuntu-latest
+    name: Deploy
+    steps:
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v2
+```
+
+#### 2. Configure GitHub Actions
+
+In the `Pages` column of the repository `Settings` interface, you can choose `GitHub Actions` as the deployment source.
+
+#### 3. Push Code to Main Branch
+
+When you push the code to the `main` branch, `GitHub Actions` will automatically execute the deployment process. You can view the progress of the deployment in the `Actions` column. After the deployment is complete, you can access your site through `https://<username>.github.io/<repository>/`.
+
+### Deploy via Netlify
+
+`Netlify` is a Web application deployment platform, which allows you to directly deploy your project to `Netlify` without having to build your own server.
+
+#### Basic Configuration
+
+Deploying a project on `Netlify` is very simple. You only need to import your Github repository, and then configure some basic information to deploy. Just configure the following two fields:
+
+- `Build command`: Build command, here we fill in the build command in the project, such as `npm run build`.
+- `Publish directory`: Output directory, here we fill in the output directory `doc_build` in the project.
+
+Then click the `Deploy site` button to complete the deployment.
+
+#### Configure Custom Domain
+
+If you want to bind your site to your own domain, you can configure it in the `Domain management` column of `Netlify`. The specific configuration method can refer to the [Netlify official documentation](https://docs.netlify.com/domains-https/custom-domains/).

@@ -1,4 +1,6 @@
-# @rspress/doc-plugin-typedoc
+# @rspress/plugin-typedoc
+
+> [源码地址](https://github.com/web-infra-dev/rspress/tree/main/packages/plugin-typedoc)
 
 集成 [TypeDoc](https://github.com/TypeStrong/typedoc) 的 Rspress 插件，用于自动生成 TS 模块的 API 文档。
 
@@ -6,18 +8,18 @@
 
 ```bash
 # npm
-npm install @rspress/doc-plugin-typedoc
+npm install @rspress/plugin-typedoc
 # yarn
-yarn add @rspress/doc-plugin-typedoc
+yarn add @rspress/plugin-typedoc
 # pnpm
-pnpm install @rspress/doc-plugin-typedoc
+pnpm install @rspress/plugin-typedoc
 ```
 
 ## 使用
 
 ```ts
 import { defineConfig } from 'rspress/config';
-import { pluginTypeDoc } from '@rspress/doc-plugin-typedoc';
+import { pluginTypeDoc } from '@rspress/plugin-typedoc';
 import path from 'path';
 
 export default defineConfig({

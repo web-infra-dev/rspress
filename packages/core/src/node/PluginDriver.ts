@@ -41,7 +41,11 @@ export class PluginDriver {
     }
     if (mediumZoomConfig) {
       const { pluginMediumZoom } = await import('@rspress/plugin-medium-zoom');
-      this.addPlugin(pluginMediumZoom());
+      this.addPlugin(
+        pluginMediumZoom(
+          typeof mediumZoomConfig === 'object' ? mediumZoomConfig : undefined,
+        ),
+      );
     }
     if (!haveNavSidebarConfig) {
       const { pluginAutoNavSidebar } = await import(
@@ -136,7 +140,7 @@ export class PluginDriver {
     return result.flat();
   }
 
-  globalUIComponents(): string[] {
+  globalUIComponents(): (string | [string, object])[] {
     const result = this.#plugins.map(plugin => {
       return plugin.globalUIComponents || [];
     });

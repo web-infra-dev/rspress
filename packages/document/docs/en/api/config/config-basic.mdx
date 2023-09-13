@@ -196,7 +196,7 @@ export async function onSearch(query: string) {
 
 ## globalUIComponents
 
-- Type: `string[]`
+- Type: `(string | [string, object])[]`
 - Default: `[]`
 
 You can register global UI components through the `globalUIComponents` parameter, for example:
@@ -207,6 +207,23 @@ import path from 'path';
 
 export default defineConfig({
   globalUIComponents: [path.join(__dirname, 'components', 'MyComponent.tsx')],
+});
+```
+
+The item of `globalUIComponents` can be a string, which is the path of the component file, or an array, the first item is the path of the component file, and the second item is the component props, for example:
+
+```ts title="rspress.config.ts"
+import { defineConfig } from 'rspress/config';
+
+export default defineConfig({
+  globalUIComponents: [
+    [
+      path.join(__dirname, 'components', 'MyComponent.tsx'),
+      {
+        foo: 'bar',
+      },
+    ],
+  ],
 });
 ```
 

@@ -55,3 +55,9 @@ export default defineConfig({
   },
 });
 ```
+
+:::warning
+
+Only the JS version of the MDX compiler supports compilation plugins. This means that if you have enabled the mdx-rs compiler, you need to remove the `markdown.experimenalMdxRs: true` configuration item in rspress config file.
+
+:::

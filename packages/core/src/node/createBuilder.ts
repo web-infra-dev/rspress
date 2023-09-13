@@ -1,14 +1,18 @@
 import path from 'path';
 import { createRequire } from 'module';
 import type { UserConfig } from '@rspress/shared';
-import { isDebugMode, removeTrailingSlash } from '@rspress/shared';
+import fs from '@modern-js/utils/fs-extra';
+import {
+  RSPRESS_TEMP_DIR,
+  isDebugMode,
+  removeTrailingSlash,
+} from '@rspress/shared';
 import type { BuilderInstance } from '@modern-js/builder';
 import type {
   BuilderConfig,
   BuilderRspackProvider,
 } from '@modern-js/builder-rspack-provider';
 import sirv from 'sirv';
-import fs from '@modern-js/utils/fs-extra';
 import { tailwindConfig } from '../../tailwind.config';
 import {
   CLIENT_ENTRY,
@@ -16,7 +20,6 @@ import {
   PACKAGE_ROOT,
   OUTPUT_DIR,
   isProduction,
-  TEMP_DIR,
 } from './constants';
 import { builderDocVMPlugin } from './runtimeModule';
 import { serveSearchIndexMiddleware } from './searchIndex';
@@ -38,7 +41,6 @@ async function createInternalBuildConfig(
   userRoot: string,
   config: UserConfig,
   isSSR: boolean,
-  runtimeTempDir: string,
   routeService: RouteService,
 ): Promise<BuilderConfig> {
   const cwd = process.cwd();
@@ -118,7 +120,7 @@ async function createInternalBuildConfig(
       },
       include: [PACKAGE_ROOT],
       define: {
-        __ASSET_PREFIX__: JSON.stringify(assetPrefix),
+        'process.env.__ASSET_PREFIX__': JSON.stringify(assetPrefix),
         'process.env.__SSR__': JSON.stringify(isSSR),
         'process.env.__IS_REACT_18__': JSON.stringify(reactVersion === 18),
         'process.env.TEST': JSON.stringify(process.env.TEST),
@@ -147,6 +149,13 @@ async function createInternalBuildConfig(
             }),
           );
         }
+      },
+      rspack: {
+        // This config can be removed after upgrading Rspack v0.4
+        // https://github.com/web-infra-dev/rspack/issues/3096
+        optimization: {
+          chunkIds: 'deterministic',
+        },
       },
       bundlerChain(chain) {
         chain.module
@@ -188,12 +197,13 @@ export async function createModernBuilder(
   const builderPlugins = config?.builderPlugins ?? [];
   // We use a temp dir to store runtime files, so we can separate client and server build
   // and we should empty temp dir before build
-  // await fs.emptyDir(TEMP_DIR);
-  const runtimeTempDir = path.join(TEMP_DIR, 'runtime');
-  await fs.ensureDir(runtimeTempDir);
+  const runtimeTempDir = path.join(RSPRESS_TEMP_DIR, 'runtime');
+  const runtimeAbsTempDir = path.join(cwd, 'node_modules', runtimeTempDir);
+  await fs.ensureDir(runtimeAbsTempDir);
+
   const routeService = await initRouteService({
     config,
-    runtimeTempDir,
+    runtimeTempDir: runtimeAbsTempDir,
     scanDir: userRoot,
     pluginDriver,
   });
@@ -208,7 +218,6 @@ export async function createModernBuilder(
     userRoot,
     config,
     isSSR,
-    runtimeTempDir,
     routeService,
   );
 
