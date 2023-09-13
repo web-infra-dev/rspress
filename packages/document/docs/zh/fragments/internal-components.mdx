@@ -102,6 +102,7 @@ interface PackageManagerTabsProps {
         npm?: string;
         yarn?: string;
         pnpm?: string;
+        bun?: string;
       };
   // 用于设置额外的 tab
   additionalTabs: {
@@ -113,10 +114,10 @@ interface PackageManagerTabsProps {
 }
 ```
 
-当 `command` 设置为字符串时，会默认展示 npm、yarn、pnpm 三个 tab，并且组件内部为自动在 command 前面添加对应的包管理器命令。如果你需要展示额外的 tab，可以通过 `additionalTabs` 来实现。
+当 `command` 设置为字符串时，会默认展示 npm、yarn、pnpm、bun 四个 tab，并且组件内部为自动在 command 前面添加对应的包管理器命令。如果你需要展示额外的 tab，可以通过 `additionalTabs` 来实现。
 
 :::tip
 
-在 install 命令中，对 yarn 做了特殊处理，如果你的命令是`install some-packages`，在 yarn 的 tab 中会自动将 install 替换为 add。
+在 install 命令中，对 yarn 和 bun 做了特殊处理，如果你的命令是`install some-packages`，在 yarn 和 bun 的 tab 中会自动将 install 替换为 add。
 
 :::

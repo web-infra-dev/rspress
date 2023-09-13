@@ -102,6 +102,7 @@ interface PackageManagerTabsProps {
         npm?: string;
         yarn?: string;
         pnpm?: string;
+        bun?: string;
       };
   // Used to set additional tabs
   additionalTabs: {
@@ -113,10 +114,10 @@ interface PackageManagerTabsProps {
 }
 ```
 
-When `command` is set to a string, it will default to displaying three tabs: npm, yarn, and pnpm, and the component will automatically add the corresponding package manager command before the command. If you need to display additional tabs, you can achieve this through `additionalTabs`.
+When `command` is set to a string, it will default to displaying three tabs: npm, yarn, pnpm and bun, and the component will automatically add the corresponding package manager command before the command. If you need to display additional tabs, you can achieve this through `additionalTabs`.
 
 :::tip
 
-In the install command, special processing has been done for yarn. If your command is `install some-packages`, the install will be automatically replaced with add in the yarn tab.
+In the install command, special processing has been done for yarn and bun. If your command is `install some-packages`, the install will be automatically replaced with add in the yarn/bun tab.
 
 :::
