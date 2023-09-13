@@ -71,6 +71,8 @@ export default async function mdxLoader(
       } as PageMeta;
     } else {
       const { compile } = require('@modern-js/mdx-rs-binding');
+
+      // TODO: Cannot get correct toc from mdx which has internal components
       const { toc, links, title, code } = await compile({
         value: content,
         filepath,
