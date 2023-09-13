@@ -121,3 +121,21 @@ interface PackageManagerTabsProps {
 在 install 命令中，对 yarn 和 bun 做了特殊处理，如果你的命令是`install some-packages`，在 yarn 和 bun 的 tab 中会自动将 install 替换为 add。
 
 :::
+
+## Table of Contents
+
+渲染当前页面的 TOC
+
+```tsx title="index.mdx"
+import { Toc } from '@theme';
+
+function App() {
+  return (
+    <Toc />
+  );
+}
+```
+
+import { Toc } from '@theme'
+
+<Toc />

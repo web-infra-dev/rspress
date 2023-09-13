@@ -121,3 +121,21 @@ When `command` is set to a string, it will default to displaying three tabs: npm
 In the install command, special processing has been done for yarn and bun. If your command is `install some-packages`, the install will be automatically replaced with add in the yarn/bun tab.
 
 :::
+
+## Table of Contents
+
+Render TOC of current page
+
+```tsx title="index.mdx"
+import { Toc } from '@theme';
+
+function App() {
+  return (
+    <Toc />
+  );
+}
+```
+
+import { Toc } from '@theme'
+
+<Toc />
