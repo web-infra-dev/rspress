@@ -4,6 +4,7 @@ import { Code } from '../../layout/DocLayout/docComponents/code';
 import { Npm } from './icons/Npm';
 import { Yarn } from './icons/Yarn';
 import { Pnpm } from './icons/Pnpm';
+import { Bun } from './icons/Bun';
 import './index.scss';
 
 export interface PackageManagerTabProps {
@@ -13,6 +14,7 @@ export interface PackageManagerTabProps {
         npm: string;
         yarn: string;
         pnpm: string;
+        bun: string;
       };
   additionalTabs?: {
     tool: string;
@@ -20,7 +22,7 @@ export interface PackageManagerTabProps {
   }[];
 }
 
-function normalizeYarnCommand(command: string): string {
+function normalizeCommand(command: string): string {
   if (!command.includes('install')) {
     return command;
   }
@@ -29,7 +31,7 @@ function normalizeYarnCommand(command: string): string {
     .split(' ')
     .filter(item => !item.startsWith('-') && !item.startsWith('--'))
     .join(' ');
-  if (pureCommand === 'yarn install') {
+  if (pureCommand === 'yarn install' || pureCommand === 'bun install') {
     return command;
   } else {
     return command.replace('install', 'add');
@@ -44,6 +46,7 @@ export function PackageManagerTabs({
     npm: string;
     yarn: string;
     pnpm: string;
+    bun: string;
     [key: string]: string;
   };
 
@@ -52,6 +55,7 @@ export function PackageManagerTabs({
     npm: <Npm />,
     yarn: <Yarn />,
     pnpm: <Pnpm />,
+    bun: <Bun />,
   };
   additionalTabs.forEach(tab => {
     packageMangerToIcon[tab.tool] = tab.icon;
@@ -63,6 +67,7 @@ export function PackageManagerTabs({
       npm: `npm ${command}`,
       yarn: `yarn ${command}`,
       pnpm: `pnpm ${command}`,
+      bun: `bun ${command}`,
     };
     additionalTabs.forEach(tab => {
       commandInfo[tab.tool] = `${tab.tool} ${command}`;
@@ -71,8 +76,9 @@ export function PackageManagerTabs({
     commandInfo = command;
   }
 
-  // Normalize yarn command
-  commandInfo.yarn = normalizeYarnCommand(commandInfo.yarn);
+  // Normalize yarn/bun command
+  commandInfo.yarn = normalizeCommand(commandInfo.yarn);
+  commandInfo.bun = normalizeCommand(commandInfo.bun);
 
   return (
     <Tabs
@@ -86,7 +92,7 @@ export function PackageManagerTabs({
           }}
         >
           {packageMangerToIcon[key]}
-          <span style={{ marginLeft: 6, marginBottom: 4 }}>{key}</span>
+          <span style={{ marginLeft: 6, marginBottom: 2 }}>{key}</span>
         </div>
       ))}
     >
