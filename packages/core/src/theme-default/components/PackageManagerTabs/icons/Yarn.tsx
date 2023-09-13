@@ -1,4 +1,4 @@
-import React, { ComponentProps } from 'react';
+import { ComponentProps } from 'react';
 
 export function Yarn(props: ComponentProps<'svg'>) {
   return (

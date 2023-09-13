@@ -72,3 +72,52 @@ interface TabProps {
 ```
 
 The `value` field is used to identify the current tab, if not passed, the default label will be used.
+
+## PackageManagerTabs
+
+The PackageManagerTabs component is used to display commands for different package managers in the documentation. The usage is as follows:
+
+```tsx title="index.mdx"
+import { PackageManagerTabs } from '@theme';
+
+function App() {
+  return <PackageManagerTabs command="install rspress -D" />;
+}
+```
+
+The effect is as follows:
+
+import { PackageManagerTabs } from '@theme';
+
+<PackageManagerTabs command="install rspress -D" />
+
+The types of props included are as follows:
+
+```ts
+interface PackageManagerTabsProps {
+  command:
+    | string
+    | {
+        // Used to set commands for different package managers
+        npm?: string;
+        yarn?: string;
+        pnpm?: string;
+        bun?: string;
+      };
+  // Used to set additional tabs
+  additionalTabs: {
+    // Used to set additional package managers
+    tool: string;
+    // Used to set the icon of the additional package manager
+    icon?: React.ReactNode;
+  }[];
+}
+```
+
+When `command` is set to a string, it will default to displaying three tabs: npm, yarn, pnpm and bun, and the component will automatically add the corresponding package manager command before the command. If you need to display additional tabs, you can achieve this through `additionalTabs`.
+
+:::tip
+
+In the install command, special processing has been done for yarn and bun. If your command is `install some-packages`, the install will be automatically replaced with add in the yarn/bun tab.
+
+:::
