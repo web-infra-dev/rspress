@@ -1,13 +1,16 @@
 import { Header } from '@rspress/shared';
 import { usePageData } from '@/runtime';
 import { scrollToTarget } from '@/theme-default';
+import './index.css';
 
 const TocItem = (header: Header) => {
   return (
     <li key={header.id} className={'py-1'}>
       <a
         href={`#${header.id}`}
-        className={'toc-text p-2 rounded-lg hover:cursor-pointer'}
+        className={
+          'toc-link transition-all duration-300 hover:text-text-1 text-text-2 block underline underline-offset-2'
+        }
         style={{
           marginLeft: header.depth * 12,
         }}
@@ -20,13 +23,7 @@ const TocItem = (header: Header) => {
           }
         }}
       >
-        <span
-          className={
-            'text-lg hover:text-text-1 text-text-2 transition-all duration-300 underline underline-offset-1'
-          }
-        >
-          {header.text}
-        </span>
+        <span className={'toc-link-text block'}>{header.text}</span>
       </a>
     </li>
   );
