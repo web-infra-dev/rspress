@@ -1,4 +1,4 @@
-lockfileVersion: '6.0'
+lockfileVersion: '6.1'
 
 settings:
   autoInstallPeers: true
@@ -858,45 +858,6 @@ importers:
       unist-util-visit:
         specifier: ^4.1.1
         version: 4.1.1
-
-  packages/plugin-toc-syntax:
-    devDependencies:
-      '@modern-js-app/eslint-config':
-        specifier: 2.33.1
-        version: 2.33.1(react-dom@18.2.0)(react@18.2.0)(typescript@5.0.4)
-      '@modern-js/eslint-config':
-        specifier: 2.33.1
-        version: 2.33.1(react-dom@18.2.0)(react@18.2.0)(typescript@5.0.4)
-      '@modern-js/module-tools':
-        specifier: 2.33.1
-        version: 2.33.1(react-dom@18.2.0)(react@18.2.0)(typescript@5.0.4)
-      '@modern-js/tsconfig':
-        specifier: 2.33.1
-        version: 2.33.1
-      '@types/jest':
-        specifier: ~29.2.4
-        version: 29.2.4
-      '@types/node':
-        specifier: ~16.11.7
-        version: 16.11.7
-      '@types/react':
-        specifier: ~18.0.26
-        version: 18.0.26
-      husky:
-        specifier: ~8.0.1
-        version: 8.0.1
-      lint-staged:
-        specifier: ~13.1.0
-        version: 13.1.0
-      prettier:
-        specifier: ~2.8.1
-        version: 2.8.1
-      rimraf:
-        specifier: ~3.0.2
-        version: 3.0.2
-      typescript:
-        specifier: ~5.0.4
-        version: 5.0.4
 
   packages/plugin-typedoc:
     dependencies:
