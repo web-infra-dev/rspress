@@ -15,6 +15,7 @@ export default defineConfig({
   use: {
     trace: 'on',
     video: 'on',
+    permissions: ["clipboard-read"],
   },
   retries: 1,
 });

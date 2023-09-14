@@ -83,12 +83,14 @@ export function DocLayout(props: DocLayoutProps) {
           {isOverviewPage ? (
             <Overview />
           ) : (
-            <div className="rspress-doc">
-              <TabDataContext.Provider value={{ tabData, setTabData }}>
-                <MDXProvider components={getCustomMDXComponent()}>
-                  <Content />
-                </MDXProvider>
-              </TabDataContext.Provider>
+            <div>
+              <div className="rspress-doc">
+                <TabDataContext.Provider value={{ tabData, setTabData }}>
+                  <MDXProvider components={getCustomMDXComponent()}>
+                    <Content />
+                  </MDXProvider>
+                </TabDataContext.Provider>
+              </div>
               <div>
                 {beforeDocFooter}
                 {hasFooter && <DocFooter />}
