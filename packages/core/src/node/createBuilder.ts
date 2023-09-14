@@ -126,6 +126,10 @@ async function createInternalBuildConfig(
         'process.env.TEST': JSON.stringify(process.env.TEST),
       },
     },
+    performance: {
+      // No need to print the server bundles size
+      printFileSize: !isSSR,
+    },
     tools: {
       devServer: {
         // Serve static files
