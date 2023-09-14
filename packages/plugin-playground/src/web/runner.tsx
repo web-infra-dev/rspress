@@ -97,7 +97,7 @@ export function Runner(props: RunnerProps) {
                       );
                     }
                   }
-                  console.log('replace with', code);
+                  // console.log('replace with', code);
                   path.replaceWithMultiple(code);
                 },
               },
@@ -105,10 +105,10 @@ export function Runner(props: RunnerProps) {
           ],
         });
 
-        console.log(result);
+        // console.log(result);
 
         // Code has been updated
-        if (code !== currentCode.current || !result || !result.code) {
+        if (targetCode !== currentCode.current || !result || !result.code) {
           return;
         }
 
@@ -116,8 +116,8 @@ export function Runner(props: RunnerProps) {
         const runExports: any = {};
         // eslint-disable-next-line @typescript-eslint/no-implied-eval, no-new-func
         const func = new Function('__imports', 'exports', result.code);
-        // console.log(importsObj);
         func(importsObj, runExports);
+        // console.log(importsObj);
 
         if (runExports.default) {
           setComp(React.createElement(runExports.default));
