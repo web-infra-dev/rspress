@@ -1,5 +1,27 @@
 # @rspress/core
 
+## 0.0.13
+
+### Patch Changes
+
+- 80a49c1: feat: remove @headlessui/react dep
+
+  feat: 移除 @headlessui/react 依赖
+
+- 1d42f2a: feat: support PackageManagerTabs export
+
+  feat: 支持 PackageManagerTabs 组件导出
+
+- 038c371: fix: dispaly error log in ssg phase
+
+  fix: ssg 阶段显示错误日志
+
+  - @rspress/plugin-auto-nav-sidebar@0.0.13
+  - @rspress/plugin-container-syntax@0.0.13
+  - @rspress/plugin-last-updated@0.0.13
+  - @rspress/plugin-medium-zoom@0.0.13
+  - @rspress/shared@0.0.13
+
 ## 0.0.12
 
 ### Patch Changes
