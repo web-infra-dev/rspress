@@ -1,6 +1,6 @@
 import type {
+  CallExpression,
   Expression,
-  MemberExpression,
   ObjectPattern,
   VariableDeclaration,
 } from '@babel/types';
@@ -28,33 +28,6 @@ export function createVariableDeclaration(
   };
 }
 
-export function createMemberExpression(
-  obj: any,
-  property: number | string,
-): MemberExpression {
-  return {
-    type: 'MemberExpression',
-    object:
-      typeof obj === 'string'
-        ? {
-            type: 'Identifier',
-            name: obj,
-          }
-        : obj,
-    computed: true,
-    property:
-      typeof property === 'number'
-        ? {
-            type: 'NumericLiteral',
-            value: property,
-          }
-        : {
-            type: 'StringLiteral',
-            value: property,
-          },
-  };
-}
-
 export function createObjectPattern(names: string[]): ObjectPattern {
   return {
     type: 'ObjectPattern',
@@ -72,5 +45,28 @@ export function createObjectPattern(names: string[]): ObjectPattern {
         name,
       },
     })),
+  };
+}
+
+export function createGetImport(
+  name: string,
+  getDefault?: boolean,
+): CallExpression {
+  return {
+    type: 'CallExpression',
+    callee: {
+      type: 'Identifier',
+      name: '__get_import',
+    },
+    arguments: [
+      {
+        type: 'StringLiteral',
+        value: name,
+      },
+      {
+        type: 'BooleanLiteral',
+        value: Boolean(getDefault),
+      },
+    ],
   };
 }

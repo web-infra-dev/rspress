@@ -1,6 +1,6 @@
 /// <reference types='@modern-js/module-tools/types' />
 
 declare module 'playground-imports' {
-  const imports: Map<string, any>;
-  export default imports;
+  const getImport: (name: string, getDefault?: boolean) => void;
+  export default getImport;
 }

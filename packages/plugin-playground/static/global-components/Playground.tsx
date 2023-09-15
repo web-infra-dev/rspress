@@ -1,5 +1,5 @@
 import React, { HTMLAttributes, useCallback, useState } from 'react';
-import imports from 'playground-imports';
+import getImport from 'playground-imports';
 import { Editor, Runner } from '../../src/web';
 
 interface PlaygroundProps extends HTMLAttributes<HTMLDivElement> {
@@ -31,7 +31,7 @@ export default function Playground(props: PlaygroundProps) {
       className={`rspress-playground rspress-playground-${direction} ${className}`}
       {...rest}
     >
-      <Runner language={language} code={code} imports={imports} />
+      <Runner language={language} code={code} getImport={getImport} />
       <Editor
         value={code}
         onChange={handleCodeChange}

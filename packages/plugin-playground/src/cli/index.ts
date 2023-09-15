@@ -107,9 +107,20 @@ export function pluginPlayground(
 
       const code = [
         ...imports.map((x, index) => `import * as i_${index} from '${x}';`),
-        'const importMap = new Map();',
-        ...imports.map((x, index) => `importMap.set('${x}', i_${index});`),
-        'export default importMap;',
+        'const imports = new Map();',
+        ...imports.map((x, index) => `imports.set('${x}', i_${index});`),
+        'function getImport(name, getDefault) {',
+        '  if (!imports.has(name)) {',
+        '    throw new Error("Module " + name + " not found");',
+        '  }',
+        '  const result = imports.get(name);',
+        '  if (getDefault && typeof result === "object") {',
+        '    return result.default || result;',
+        '  }',
+        '  return result;',
+        '}',
+        'export { imports };',
+        'export default getImport;',
       ].join('\n');
 
       // console.log('playground-imports', code);

@@ -1,14 +1,8 @@
 import * as babel from '@babel/standalone';
 import type { Node } from '@babel/types';
-import React, {
-  HTMLAttributes,
-  useCallback,
-  useEffect,
-  useRef,
-  useState,
-} from 'react';
+import React, { Component, HTMLAttributes } from 'react';
 import {
-  createMemberExpression,
+  createGetImport,
   createObjectPattern,
   createVariableDeclaration,
 } from './ast';
@@ -16,149 +10,182 @@ import {
 interface RunnerProps extends HTMLAttributes<HTMLDivElement> {
   code: string;
   language: string;
-  imports: Map<string, any>;
+  getImport: (name: string, getDefault?: boolean) => void;
 }
 
-export function Runner(props: RunnerProps) {
-  const { code, language, imports, className = '', ...rest } = props;
+interface RunnerState {
+  error?: Error;
+  comp: any;
+}
 
-  const currentCode = useRef(code);
-  currentCode.current = code;
+class Runner extends Component<RunnerProps, RunnerState> {
+  static getDerivedStateFromError(error: Error) {
+    return {
+      error,
+      comp: null,
+    };
+  }
 
-  const [comp, setComp] = useState<any>(null);
+  timer: any;
 
-  const doCompile = useCallback(
-    (targetCode: string) => {
-      const useImports: string[] = [];
-      try {
-        // console.log(babel);
-        const presets = [
-          [babel.availablePresets.react],
-          [babel.availablePresets.env, { modules: 'commonjs' }],
-        ];
-        if (language === 'tsx' || language === 'ts') {
-          presets.unshift([
-            babel.availablePresets.typescript,
-            {
-              allExtensions: true,
-              isTSX: language === 'tsx',
-            },
-          ]);
-        }
-        const result = babel.transform(targetCode, {
-          sourceType: 'module',
-          presets,
-          plugins: [
-            {
-              visitor: {
-                ImportDeclaration(path) {
-                  const pkg = path.node.source.value;
-                  let pkgIndex = useImports.indexOf(pkg);
-                  if (pkgIndex === -1) {
-                    useImports.push(pkg);
-                    pkgIndex = useImports.length - 1;
+  constructor(props: RunnerProps) {
+    super(props);
+
+    this.state = {
+      error: undefined,
+      comp: null,
+    };
+
+    this.doCompile = this.doCompile.bind(this);
+    this.waitCompile = this.waitCompile.bind(this);
+  }
+
+  waitCompile(targetCode: string) {
+    if (this.timer) {
+      clearTimeout(this.timer);
+    }
+    this.timer = setTimeout(() => {
+      this.timer = null;
+      this.doCompile(targetCode);
+    }, 600);
+  }
+
+  doCompile(targetCode: string) {
+    const { language, getImport } = this.props;
+    try {
+      // console.log(babel);
+      const presets = [
+        [babel.availablePresets.react],
+        [babel.availablePresets.env, { modules: 'commonjs' }],
+      ];
+      if (language === 'tsx' || language === 'ts') {
+        presets.unshift([
+          babel.availablePresets.typescript,
+          {
+            allExtensions: true,
+            isTSX: language === 'tsx',
+          },
+        ]);
+      }
+      const result = babel.transform(targetCode, {
+        sourceType: 'module',
+        presets,
+        plugins: [
+          {
+            visitor: {
+              ImportDeclaration(path) {
+                const pkg = path.node.source.value;
+                const code: Node[] = [];
+                for (const specifier of path.node.specifiers) {
+                  // import X from 'xxx'
+                  if (specifier.type === 'ImportDefaultSpecifier') {
+                    // const ${specifier.local.name} = __get_import()
+                    code.push(
+                      createVariableDeclaration(
+                        specifier.local.name,
+                        createGetImport(pkg, true),
+                      ),
+                    );
                   }
-                  const code: Node[] = [];
-                  const pkgImport = createMemberExpression(
-                    '__imports',
-                    pkgIndex,
-                  );
-                  for (const specifier of path.node.specifiers) {
-                    // import X from 'xxx'
-                    if (specifier.type === 'ImportDefaultSpecifier') {
-                      // const ${specifier.local.name} = __imports[${pkgIndex}].default;
-                      code.push(
-                        createVariableDeclaration(specifier.local.name, {
-                          type: 'LogicalExpression',
-                          operator: '||',
-                          left: createMemberExpression(pkgImport, 'default'),
-                          right: pkgImport,
-                        }),
-                      );
-                    }
-                    // import * as X from 'xxx'
-                    if (specifier.type === 'ImportNamespaceSpecifier') {
-                      // const ${specifier.local.name} = __imports[${pkgIndex}];
-                      code.push(
-                        createVariableDeclaration(
-                          specifier.local.name,
-                          pkgImport,
-                        ),
-                      );
-                    }
-                    // import { a, b, c } from 'xxx'
-                    if (specifier.type === 'ImportSpecifier') {
-                      // const {${specifier.local.name}} = __imports[${pkgIndex}];
-                      code.push(
-                        createVariableDeclaration(
-                          createObjectPattern([specifier.local.name]),
-                          pkgImport,
-                        ),
-                      );
-                    }
+                  // import * as X from 'xxx'
+                  if (specifier.type === 'ImportNamespaceSpecifier') {
+                    // const ${specifier.local.name} = __get_import()
+                    code.push(
+                      createVariableDeclaration(
+                        specifier.local.name,
+                        createGetImport(pkg),
+                      ),
+                    );
                   }
-                  // console.log('replace with', code);
-                  path.replaceWithMultiple(code);
-                },
+                  // import { a, b, c } from 'xxx'
+                  if (specifier.type === 'ImportSpecifier') {
+                    // const {${specifier.local.name}} = __get_import()
+                    code.push(
+                      createVariableDeclaration(
+                        createObjectPattern([specifier.local.name]),
+                        createGetImport(pkg),
+                      ),
+                    );
+                  }
+                }
+                // console.log('replace with', code);
+                path.replaceWithMultiple(code);
               },
             },
-          ],
-        });
+          },
+        ],
+      });
 
-        // console.log(result);
+      // console.log(result);
 
-        // Code has been updated
-        if (targetCode !== currentCode.current || !result || !result.code) {
-          return;
-        }
-
-        const importsObj = useImports.map(x => imports?.get(x));
-        const runExports: any = {};
-        // eslint-disable-next-line @typescript-eslint/no-implied-eval, no-new-func
-        const func = new Function('__imports', 'exports', result.code);
-        func(importsObj, runExports);
-        // console.log(importsObj);
-
-        if (runExports.default) {
-          setComp(React.createElement(runExports.default));
-        } else {
-          setComp(
-            React.createElement(
-              'span',
-              { style: { color: 'red' } },
-              'No default export',
-            ),
-          );
-        }
-      } catch (e) {
-        // Code has been updated
-        if (code !== currentCode.current) {
-          return;
-        }
-        console.error(e);
-        setComp(
-          React.createElement(
-            'span',
-            { style: { color: 'red' } },
-            (e as Error).message,
-          ),
-        );
+      // Code has been updated
+      if (targetCode !== this.props.code || !result || !result.code) {
+        return;
       }
-    },
-    [language, imports],
-  );
 
-  const changeTimer = useRef<any>(null);
-  useEffect(() => {
-    if (changeTimer.current) {
-      clearTimeout(changeTimer.current);
+      const runExports: any = {};
+      // eslint-disable-next-line @typescript-eslint/no-implied-eval, no-new-func
+      const func = new Function('__get_import', 'exports', result.code);
+      func(getImport, runExports);
+
+      if (runExports.default) {
+        this.setState({
+          error: undefined,
+          comp: React.createElement(runExports.default),
+        });
+        return;
+      }
+
+      this.setState({
+        error: new Error('No default export'),
+        comp: null,
+      });
+    } catch (e) {
+      // Code has been updated
+      if (targetCode !== this.props.code) {
+        return;
+      }
+      console.error(e);
+      this.setState({
+        error: e as Error,
+        comp: null,
+      });
     }
-    changeTimer.current = setTimeout(() => doCompile(code), 600);
-  }, [code]);
+  }
 
-  return (
-    <div className={`rspress-playground-runner ${className}`} {...rest}>
-      {comp}
-    </div>
-  );
+  componentDidCatch(error: Error, errorInfo: React.ErrorInfo) {
+    console.error(error);
+    console.error(errorInfo);
+  }
+
+  componentDidMount() {
+    this.doCompile(this.props.code);
+  }
+
+  componentDidUpdate(prevProps: RunnerProps) {
+    if (prevProps.code !== this.props.code) {
+      this.waitCompile(this.props.code);
+    }
+  }
+
+  render() {
+    const { className = '', code, language, getImport, ...rest } = this.props;
+    const { error, comp } = this.state;
+
+    if (error) {
+      return (
+        <div className={`rspress-playground-runner ${className}`} {...rest}>
+          <span style={{ color: 'red' }}>{error.message}</span>
+        </div>
+      );
+    }
+
+    return (
+      <div className={`rspress-playground-runner ${className}`} {...rest}>
+        {comp}
+      </div>
+    );
+  }
 }
+
+export { Runner };
