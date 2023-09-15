@@ -1,9 +1,9 @@
 import { useCallback, useEffect, useRef, useState } from 'react';
 import { QRCodeSVG } from 'qrcode.react';
 import { withBase, useLang } from '@rspress/core/runtime';
-import IconLaunch from '../svg/launch.svg';
-import IconQrcode from '../svg/qrcode.svg';
-import IconRefresh from '../svg/refresh.svg';
+import IconLaunch from '../icons/Launch';
+import IconQrcode from '../icons/Qrcode';
+import IconRefresh from '../icons/Refresh';
 
 const locales = {
   zh: {
