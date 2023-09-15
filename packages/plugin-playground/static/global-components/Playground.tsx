@@ -5,10 +5,17 @@ import { Editor, Runner } from '../../src/web';
 interface PlaygroundProps extends HTMLAttributes<HTMLDivElement> {
   code: string;
   language: string;
+  direction?: 'horizontal' | 'vertical';
 }
 
 export default function Playground(props: PlaygroundProps) {
-  const { code: codeProp, language, className = '', ...rest } = props;
+  const {
+    code: codeProp,
+    language,
+    className = '',
+    direction = 'horizontal',
+    ...rest
+  } = props;
 
   const [code, setCode] = useState(codeProp);
 
@@ -20,7 +27,10 @@ export default function Playground(props: PlaygroundProps) {
     language === 'tsx' || language === 'ts' ? 'typescript' : 'javascript';
 
   return (
-    <div className={`rspress-playground ${className}`} {...rest}>
+    <div
+      className={`rspress-playground rspress-playground-${direction} ${className}`}
+      {...rest}
+    >
       <Runner language={language} code={code} imports={imports} />
       <Editor
         value={code}

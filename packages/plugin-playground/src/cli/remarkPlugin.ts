@@ -1,26 +1,23 @@
-import { join } from 'path';
+import path, { join } from 'path';
 import { visit } from 'unist-util-visit';
 import fs from '@modern-js/utils/fs-extra';
 import type { RouteMeta } from '@rspress/shared';
 import type { Plugin } from 'unified';
 import type { Root } from 'mdast';
+import { getNodeAttribute, getNodeMeta } from './utils';
 
-function createPlaygroundNode(currentNode: any, code: string, lang: string) {
+function createPlaygroundNode(
+  currentNode: any,
+  attrs: Array<[string, string]>,
+) {
   Object.assign(currentNode, {
     type: 'mdxJsxFlowElement',
     name: 'Playground',
-    attributes: [
-      {
-        type: 'mdxJsxAttribute',
-        name: 'language',
-        value: lang,
-      },
-      {
-        type: 'mdxJsxAttribute',
-        name: 'code',
-        value: code,
-      },
-    ],
+    attributes: attrs.map(it => ({
+      type: 'mdxJsxAttribute',
+      name: it[0],
+      value: it[1],
+    })),
   });
 }
 
@@ -48,35 +45,44 @@ export const remarkPlugin: Plugin<
     // 1. External demo , use <code src="xxx" /> to declare demo
     tree.children.forEach((node: any) => {
       if (node.type === 'mdxJsxFlowElement' && node.name === 'code') {
-        const src: string = node.attributes.find(
-          (attr: { name: string; value: string }) => attr.name === 'src',
-        )?.value;
+        const src = getNodeAttribute(node, 'src');
         if (!src) {
           return;
         }
-        const demoPath = join(route.absolutePath, src);
+        const demoPath = join(path.dirname(route.absolutePath), src);
         if (!fs.existsSync(demoPath)) {
           return;
         }
+        const direction = getNodeAttribute(node, 'direction') || 'horizontal';
         const code = fs.readFileSync(demoPath, {
           encoding: 'utf8',
         });
-        const lang = src.substr(src.lastIndexOf('.') + 1);
-        createPlaygroundNode(node, code, lang);
+        const language = src.substr(src.lastIndexOf('.') + 1);
+        createPlaygroundNode(node, [
+          ['code', code],
+          ['language', language],
+          ['direction', direction],
+        ]);
       }
     });
 
     // 2. Internal demo, use ```j/tsx to declare demo
     visit(tree, 'code', node => {
       if (node.lang === 'jsx' || node.lang === 'tsx') {
-        const isPure = node?.meta?.includes('pure');
+        const isPure = getNodeMeta(node, 'pure') === 'pure';
 
         // do nothing for pure mode
         if (isPure) {
           return;
         }
 
-        createPlaygroundNode(node, node.value, node.lang);
+        const direction = getNodeMeta(node, 'direction') || 'horizontal';
+
+        createPlaygroundNode(node, [
+          ['code', node.value],
+          ['language', node.lang],
+          ['direction', direction],
+        ]);
       }
     });
   };

@@ -2,7 +2,7 @@ import path, { join } from 'path';
 import { type RouteMeta, type RspressPlugin } from '@rspress/shared';
 import { RspackVirtualModulePlugin } from 'rspack-plugin-virtual-module';
 import { staticPath } from '../constant';
-import { parseImports } from './utils';
+import { getNodeAttribute, parseImports } from './utils';
 import { remarkPlugin } from './remarkPlugin';
 
 interface PlaygroundOptions {
@@ -62,14 +62,11 @@ export function pluginPlayground(
 
             visit(ast, 'mdxJsxFlowElement', (node: any) => {
               if (node.name === 'code') {
-                const src = node.attributes.find(
-                  (attr: { name: string; value: string }) =>
-                    attr.name === 'src',
-                )?.value;
+                const src = getNodeAttribute(node, 'src');
                 if (!src) {
                   return;
                 }
-                const demoPath = join(filepath, src);
+                const demoPath = join(path.dirname(filepath), src);
                 if (!fs.existsSync(demoPath)) {
                   return;
                 }
