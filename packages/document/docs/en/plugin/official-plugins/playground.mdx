@@ -2,7 +2,7 @@
 
 > [Source Code](https://github.com/web-infra-dev/rspress/tree/main/packages/plugin-playground)
 
-Used to preview components in the code block of md(x) files, and provide a real-time Playground.
+Used to preview components in the code block of md(x) files, and provide a real-time playground.
 
 ## Installation
 
@@ -31,9 +31,8 @@ export default defineConfig({
 ```
 
 :::warning Note
-
-After adding this plugin, please do not enable the `markdown.experimentalMdxRs` config, otherwise it will cause the plugin to fail.
-
+1. After adding this plugin, please do not enable the `markdown.experimentalMdxRs` config, otherwise it will cause the plugin to fail.
+2. Please do not use this plugin with the preview plugin at the same time.
 :::
 
 ### Internal Components
@@ -103,7 +102,7 @@ export default function App() {
 }
 ```
 
-Same as internal components, external components aslo support `direction` attribute:
+Same as internal components, external components also support `direction` attribute:
 
 ```md title="example.mdx"
 <code src="./Demo.tsx" direction="vertical" />
@@ -133,7 +132,7 @@ pluginPlayground({
 });
 ```
 
-In a custom playground, you can directly import the original editor and renderer, and import pre-packaged dependencies through `playground-imports`:
+In the custom playground, you can directly import the original editor and renderer, and import pre-packaged dependencies through `playground-imports`:
 ```ts
 import getImport from 'playground-imports';
 import { Render, Editor } from '@rspress/plugin-playground/web';
@@ -142,7 +141,7 @@ import { Render, Editor } from '@rspress/plugin-playground/web';
 You can refer to the built-in [Playground.tsx](https://github.com/web-infra-dev/rspress/tree/main/packages/plugin-playground/static/global-components/Playground.tsx)
 
 ### include
-By default, the plug-in will automatically scan all import statements in the demos, the packages not used in the demos cannot be used in the playground. If you want to add other packages to the playground, you can use the `include` parameter:
+By default, this plugin will automatically scan all import statements in the demos, the packages not used in the demos cannot be used in the playground. If you want to add other packages to the playground, you can use the `include` parameter:
 
 ```ts
 pluginPlayground({
