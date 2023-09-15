@@ -75,7 +75,7 @@ export function pluginPlayground(
                   encoding: 'utf8',
                 });
 
-                const thisImports = parseImports(code);
+                const thisImports = parseImports(code, path.extname(demoPath));
                 thisImports.forEach(x => {
                   if (typeof imports[x] === 'undefined') {
                     imports[x] = x;
@@ -94,7 +94,7 @@ export function pluginPlayground(
                   return;
                 }
 
-                const thisImports = parseImports(value);
+                const thisImports = parseImports(value, node.lang);
                 thisImports.forEach(x => {
                   if (typeof imports[x] === 'undefined') {
                     imports[x] = x;

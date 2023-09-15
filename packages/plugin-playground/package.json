@@ -47,15 +47,12 @@
     "dist/"
   ],
   "dependencies": {
-    "@babel/parser": "^7.22.16",
-    "@babel/plugin-syntax-jsx": "^7.22.5",
-    "@babel/plugin-syntax-typescript": "^7.22.5",
     "@babel/standalone": "^7.22.17",
-    "@babel/traverse": "^7.22.17",
     "@mdx-js/mdx": "2.2.1",
     "@modern-js/utils": "2.34.0",
-    "@rspress/shared": "workspace:*",
     "@monaco-editor/react": "~4.4.6",
+    "@oxidation-compiler/napi": "^0.1.0",
+    "@rspress/shared": "workspace:*",
     "remark-gfm": "3.0.1"
   },
   "devDependencies": {

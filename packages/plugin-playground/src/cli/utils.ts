@@ -1,22 +1,22 @@
 /* eslint-disable consistent-return */
-import * as babelParser from '@babel/parser';
-import traverse from '@babel/traverse';
+import type { Program } from '@babel/types';
+import oxc from '@oxidation-compiler/napi';
 
-export const parseImports = (code: string) => {
-  const ast = babelParser.parse(code, {
+export const parseImports = (code: string, sourceExt: string) => {
+  const parsed = oxc.parseSync(code, {
     sourceType: 'module',
-    plugins: ['typescript', 'jsx'],
+    sourceFilename: `index.${sourceExt}`,
   });
+
+  const ast = JSON.parse(parsed.program) as Program;
 
   const result: string[] = [];
 
-  traverse(ast, {
-    ImportDeclaration(path) {
-      const pkg = path.node.source.value;
-      if (!result.includes(pkg)) {
-        result.push(pkg);
-      }
-    },
+  // oxc 缺少 traverse，因此目前只扫描第一层的 import 语句（一般 demo 也不会太复杂吧？）
+  ast.body.forEach(statement => {
+    if (statement.type === 'ImportDeclaration') {
+      result.push(statement.source.value);
+    }
   });
 
   return result;
