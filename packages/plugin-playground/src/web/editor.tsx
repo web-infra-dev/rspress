@@ -5,7 +5,7 @@ import MonacoEditor, {
 } from '@monaco-editor/react';
 
 loader.config({
-  paths: { vs: 'https://unpkg.com/monaco-editor@0.30.1/min/vs' },
+  paths: { vs: 'https://unpkg.com/monaco-editor@0.43.1/min/vs' },
 });
 
 export type EditorProps = Partial<MonacoEditorProps>;
