@@ -24,8 +24,8 @@ export function Editor(props: EditorProps) {
           lineNumbersMinChars: 7,
           scrollBeyondLastLine: false,
           automaticLayout: true,
-          wordBasedSuggestions: false,
-          quickSuggestions: false,
+          wordBasedSuggestions: true,
+          quickSuggestions: true,
           ...options,
         }}
       />
