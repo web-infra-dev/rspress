@@ -1,7 +1,7 @@
 import path, { join } from 'path';
 import { type RouteMeta, type RspressPlugin } from '@rspress/shared';
 import { RspackVirtualModulePlugin } from 'rspack-plugin-virtual-module';
-import { staticPath } from '../constant';
+import { staticPath } from './constant';
 import { getNodeAttribute, parseImports } from './utils';
 import { remarkPlugin } from './remarkPlugin';
 
