@@ -19,7 +19,6 @@ const setClass = (dark: boolean): void => {
 const updateAppearance = (): void => {
   const disableDarkMode = siteData.themeConfig.darkMode === false;
   if (disableDarkMode) {
-    setClass(false);
     return;
   }
   // We set the MODERN_THEME as a global variable to determine whether the theme is dark or light.

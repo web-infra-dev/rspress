@@ -1,6 +1,6 @@
 {
   "name": "rspress",
-  "version": "0.0.12",
+  "version": "0.0.13",
   "type": "module",
   "types": "./dist/index.d.ts",
   "main": "./dist/index.js",
@@ -37,7 +37,7 @@
     "upgrade": "modern upgrade"
   },
   "dependencies": {
-    "@modern-js/node-bundle-require": "2.34.0",
+    "@modern-js/node-bundle-require": "2.35.0",
     "@rspress/core": "workspace:*",
     "cac": "^6.7.14",
     "chokidar": "^3.5.3",
