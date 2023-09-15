@@ -5,7 +5,7 @@ import MonacoEditor, {
 } from '@monaco-editor/react';
 
 loader.config({
-  paths: { vs: 'https://unpkg.com/monaco-editor@0.43.1/min/vs' },
+  paths: { vs: 'https://unpkg.com/monaco-editor@0.43.0/min/vs' },
 });
 
 export type EditorProps = Partial<MonacoEditorProps>;
@@ -17,7 +17,7 @@ export function Editor(props: EditorProps) {
     <div className={`rspress-playground-editor ${className}`}>
       <MonacoEditor
         {...rest}
-        theme="vs"
+        theme="light"
         options={{
           minimap: { enabled: false },
           fontSize: 14,

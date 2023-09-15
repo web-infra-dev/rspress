@@ -42,8 +42,7 @@ export function pluginPlayground(
 
       const imports: Record<string, string> = {};
 
-      // Write the demo code ahead of time
-      // Fix: rspack build error because demo file is not exist, probably the demo file was written in rspack build process?
+      // scan all demos, and generate imports
       await Promise.all(
         files.map(async (filepath, _index) => {
           const isMdxFile = /\.mdx?$/.test(filepath);
