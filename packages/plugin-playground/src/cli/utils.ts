@@ -12,7 +12,8 @@ export const parseImports = (code: string, sourceExt: string) => {
 
   const result: string[] = [];
 
-  // oxc 缺少 traverse，因此目前只扫描第一层的 import 语句（一般 demo 也不会太复杂吧？）
+  // oxc didn't have "traverse", so it currently only scans the first level
+  // (generally, demos are not too complicated, right?)
   ast.body.forEach(statement => {
     if (statement.type === 'ImportDeclaration') {
       result.push(statement.source.value);
