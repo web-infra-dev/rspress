@@ -1,1 +1,1 @@
-# @rspress/plugin-preview
+# @rspress/plugin-playground
