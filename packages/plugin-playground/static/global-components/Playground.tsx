@@ -1,6 +1,6 @@
 import React, { HTMLAttributes, useCallback, useState } from 'react';
 import getImport from 'playground-imports';
-import { Editor, Runner } from '../../src/web';
+import { Editor, Runner } from '../../dist/web/esm';
 
 interface PlaygroundProps extends HTMLAttributes<HTMLDivElement> {
   code: string;

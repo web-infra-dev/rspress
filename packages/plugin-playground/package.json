@@ -84,7 +84,6 @@
   },
   "files": [
     "dist",
-    "src",
     "static"
   ],
   "publishConfig": {
