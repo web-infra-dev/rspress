@@ -9,9 +9,6 @@
     "directory": "packages/plugin-preview"
   },
   "license": "MIT",
-  "jsnext:source": "./src/index.ts",
-  "types": "./dist/index.d.ts",
-  "main": "./dist/index.js",
   "scripts": {
     "dev": "modern build -w",
     "build": "modern build",
@@ -26,6 +23,21 @@
     "new": "modern new",
     "test": "vitest run --passWithNoTests",
     "upgrade": "modern upgrade"
+  },
+  "types": "./dist/cli/esm/index.d.ts",
+  "main": "./dist/cli/cjs/index.js",
+  "module": "./dist/cli/esm/index.js",
+  "exports": {
+    ".": {
+      "types": "./dist/cli/esm/index.d.ts",
+      "import": "./dist/cli/esm/index.js",
+      "default": "./dist/cli/cjs/index.js"
+    },
+    "./web": {
+      "types": "./dist/web/esm/index.d.ts",
+      "import": "./dist/web/esm/index.js",
+      "default": "./dist/web/cjs/index.js"
+    }
   },
   "engines": {
     "node": ">=14.17.6"
