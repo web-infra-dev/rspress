@@ -7,6 +7,7 @@ import { remarkPlugin } from './remarkPlugin';
 
 interface PlaygroundOptions {
   render: string;
+  include: Array<string | [string, string]>;
 }
 
 // eslint-disable-next-line import/no-mutable-exports
@@ -18,7 +19,7 @@ export let routeMeta: RouteMeta[];
 export function pluginPlayground(
   options?: Partial<PlaygroundOptions>,
 ): RspressPlugin {
-  const { render = '' } = options || {};
+  const { render = '', include } = options || {};
 
   const importsVirtualModule = new RspackVirtualModulePlugin({});
   const getRouteMeta = () => routeMeta;
@@ -39,7 +40,7 @@ export function pluginPlayground(
 
       const files = routes.map(route => route.absolutePath);
 
-      const imports: string[] = [];
+      const imports: Record<string, string> = {};
 
       // Write the demo code ahead of time
       // Fix: rspack build error because demo file is not exist, probably the demo file was written in rspack build process?
@@ -76,9 +77,11 @@ export function pluginPlayground(
                 });
 
                 const thisImports = parseImports(code);
-                thisImports.forEach(
-                  x => !imports.includes(x) && imports.push(x),
-                );
+                thisImports.forEach(x => {
+                  if (typeof imports[x] === 'undefined') {
+                    imports[x] = x;
+                  }
+                });
               }
             });
 
@@ -93,9 +96,11 @@ export function pluginPlayground(
                 }
 
                 const thisImports = parseImports(value);
-                thisImports.forEach(
-                  x => !imports.includes(x) && imports.push(x),
-                );
+                thisImports.forEach(x => {
+                  if (typeof imports[x] === 'undefined') {
+                    imports[x] = x;
+                  }
+                });
               }
             });
           } catch (e) {
@@ -105,10 +110,23 @@ export function pluginPlayground(
         }),
       );
 
+      if (include) {
+        include.forEach(item => {
+          if (typeof item === 'string') {
+            imports[item] = item;
+          } else {
+            imports[item[0]] = item[1];
+          }
+        });
+      }
+
+      const importKeys = Object.keys(imports);
       const code = [
-        ...imports.map((x, index) => `import * as i_${index} from '${x}';`),
+        ...importKeys.map(
+          (x, index) => `import * as i_${index} from '${imports[x]}';`,
+        ),
         'const imports = new Map();',
-        ...imports.map((x, index) => `imports.set('${x}', i_${index});`),
+        ...importKeys.map((x, index) => `imports.set('${x}', i_${index});`),
         'function getImport(name, getDefault) {',
         '  if (!imports.has(name)) {',
         '    throw new Error("Module " + name + " not found");',
