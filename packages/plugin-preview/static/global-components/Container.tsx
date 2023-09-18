@@ -1,7 +1,7 @@
 import { useCallback, useState } from 'react';
 import { withBase, useLang, NoSSR } from '@rspress/core/runtime';
 import MobileOperation from './common/mobile-operation';
-import IconCode from './svg/code.svg';
+import IconCode from './icons/Code';
 import './Container.scss';
 
 type ContainerProps = {

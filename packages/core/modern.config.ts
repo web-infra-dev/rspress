@@ -5,6 +5,20 @@ import { tailwindConfig } from './tailwind.config';
 const require = createRequire(import.meta.url);
 const tailwindPlugin = require('@modern-js/plugin-tailwindcss').default;
 
+const COMMON_EXTERNALS = [
+  'virtual-routes-ssr',
+  'virtual-routes',
+  '@theme',
+  'virtual-search-index-hash',
+  'virtual-site-data',
+  'virtual-global-styles',
+  'virtual-global-components',
+  'virtual-search-hooks',
+  '@/runtime',
+  '@runtime',
+  'virtual-i18n-text',
+];
+
 export default defineConfig({
   plugins: [tailwindPlugin(), moduleTools()],
   testing: {
@@ -42,13 +56,17 @@ export default defineConfig({
       },
     },
     {
-      input: ['./src/runtime'],
+      input: ['src/runtime'],
+      sourceDir: 'src/runtime',
       buildType: 'bundleless',
       target: 'es2020',
       format: 'esm',
-      outDir: 'dist',
-      dts: false,
-      externals: ['@theme'],
+      outDir: 'dist/runtime',
+      dts: {
+        tsconfigPath: './src/runtime/tsconfig.json',
+        respectExternal: true,
+      },
+      externals: COMMON_EXTERNALS,
     },
     {
       input: {
@@ -66,18 +84,7 @@ export default defineConfig({
       outDir: 'dist/theme',
       sourceMap: true,
       format: 'esm',
-      externals: [
-        'virtual-routes-ssr',
-        'virtual-routes',
-        '@theme',
-        'virtual-search-index-hash',
-        'virtual-site-data',
-        'virtual-global-styles',
-        'virtual-global-components',
-        'virtual-search-hooks',
-        '@/runtime',
-        '@runtime',
-      ],
+      externals: COMMON_EXTERNALS,
       asset: {
         svgr: true,
       },
