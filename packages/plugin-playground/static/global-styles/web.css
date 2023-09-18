@@ -11,6 +11,10 @@
   height: 300px;
 }
 
+.rspress-playground-horizontal.rspress-playground-reverse-y {
+  flex-direction: row-reverse;
+}
+
 .rspress-playground-vertical {
   flex-direction: column;
 }

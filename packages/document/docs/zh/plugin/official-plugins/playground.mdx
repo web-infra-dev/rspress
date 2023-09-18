@@ -127,6 +127,10 @@ export default function App() {
 interface PlaygroundOptions {
   render: string;
   include: Array<string | [string, string]>;
+  // 定义默认的 playground 布局（横向/纵向）
+  defaultDirection: 'horizontal' | 'vertical';
+  // 定义横向布局下，编辑器所处的位置（左侧/右侧）
+  editorPosition: 'left' | 'right';
 }
 ```
 

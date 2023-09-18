@@ -21,17 +21,20 @@ function createPlaygroundNode(
   });
 }
 
+interface RemarkPluginProps {
+  getRouteMeta: () => RouteMeta[];
+  defaultDirection: 'horizontal' | 'vertical';
+  editorPosition: 'left' | 'right';
+}
+
 /**
  * remark plugin to transform code to demo
  */
-export const remarkPlugin: Plugin<
-  [
-    {
-      getRouteMeta: () => RouteMeta[];
-    },
-  ],
-  Root
-> = ({ getRouteMeta }) => {
+export const remarkPlugin: Plugin<[RemarkPluginProps], Root> = ({
+  getRouteMeta,
+  defaultDirection,
+  editorPosition,
+}) => {
   const routeMeta = getRouteMeta();
 
   return (tree, vfile) => {
@@ -53,7 +56,8 @@ export const remarkPlugin: Plugin<
         if (!fs.existsSync(demoPath)) {
           return;
         }
-        const direction = getNodeAttribute(node, 'direction') || 'horizontal';
+        const direction =
+          getNodeAttribute(node, 'direction') || defaultDirection;
         const code = fs.readFileSync(demoPath, {
           encoding: 'utf8',
         });
@@ -62,6 +66,7 @@ export const remarkPlugin: Plugin<
           ['code', code],
           ['language', language],
           ['direction', direction],
+          ['editorPosition', editorPosition],
         ]);
       }
     });
@@ -76,12 +81,13 @@ export const remarkPlugin: Plugin<
           return;
         }
 
-        const direction = getNodeMeta(node, 'direction') || 'horizontal';
+        const direction = getNodeMeta(node, 'direction') || defaultDirection;
 
         createPlaygroundNode(node, [
           ['code', node.value],
           ['language', node.lang],
           ['direction', direction],
+          ['editorPosition', editorPosition],
         ]);
       }
     });

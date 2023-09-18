@@ -8,6 +8,9 @@ import { remarkPlugin } from './remarkPlugin';
 interface PlaygroundOptions {
   render: string;
   include: Array<string | [string, string]>;
+
+  defaultDirection: 'horizontal' | 'vertical';
+  editorPosition: 'left' | 'right';
 }
 
 // eslint-disable-next-line import/no-mutable-exports
@@ -19,7 +22,12 @@ export let routeMeta: RouteMeta[];
 export function pluginPlayground(
   options?: Partial<PlaygroundOptions>,
 ): RspressPlugin {
-  const { render = '', include } = options || {};
+  const {
+    render = '',
+    include,
+    defaultDirection = 'horizontal',
+    editorPosition = 'left',
+  } = options || {};
 
   const importsVirtualModule = new RspackVirtualModulePlugin({});
   const getRouteMeta = () => routeMeta;
@@ -154,7 +162,9 @@ export function pluginPlayground(
       },
     },
     markdown: {
-      remarkPlugins: [[remarkPlugin, { getRouteMeta }]],
+      remarkPlugins: [
+        [remarkPlugin, { getRouteMeta, defaultDirection, editorPosition }],
+      ],
       globalComponents: [
         render
           ? render

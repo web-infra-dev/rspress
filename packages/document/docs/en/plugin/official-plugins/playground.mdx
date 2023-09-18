@@ -126,6 +126,10 @@ This plugin accepts an object parameter, the type is as follows:
 interface PlaygroundOptions {
   render: string;
   include: Array<string | [string, string]>;
+  // Define the default playground layout (horizontal/vertical)
+  defaultDirection: 'horizontal' | 'vertical';
+  // Define the position of the editor in horizontal layout (left/right)
+  editorPosition: 'left' | 'right';
 }
 ```
 

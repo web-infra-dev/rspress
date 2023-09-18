@@ -6,6 +6,7 @@ interface PlaygroundProps extends HTMLAttributes<HTMLDivElement> {
   code: string;
   language: string;
   direction?: 'horizontal' | 'vertical';
+  editorPosition?: 'left' | 'right';
 }
 
 export default function Playground(props: PlaygroundProps) {
@@ -14,6 +15,7 @@ export default function Playground(props: PlaygroundProps) {
     language,
     className = '',
     direction = 'horizontal',
+    editorPosition,
     ...rest
   } = props;
 
@@ -23,20 +25,27 @@ export default function Playground(props: PlaygroundProps) {
     setCode(e || '');
   }, []);
 
+  const useReverseLayout =
+    direction === 'horizontal' && editorPosition === 'right';
+
   const monacoLanguage =
     language === 'tsx' || language === 'ts' ? 'typescript' : 'javascript';
 
+  const classNames = [
+    'rspress-playground',
+    `rspress-playground-${direction}`,
+    `rspress-playground-reverse-${useReverseLayout ? 'y' : 'n'}`,
+    className,
+  ].join(' ');
+
   return (
-    <div
-      className={`rspress-playground rspress-playground-${direction} ${className}`}
-      {...rest}
-    >
-      <Runner language={language} code={code} getImport={getImport} />
+    <div className={classNames} {...rest}>
       <Editor
         value={code}
         onChange={handleCodeChange}
         language={monacoLanguage}
       />
+      <Runner language={language} code={code} getImport={getImport} />
     </div>
   );
 }
