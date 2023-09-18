@@ -1,6 +1,10 @@
 import path, { join } from 'path';
 import { type RouteMeta, type RspressPlugin } from '@rspress/shared';
 import { RspackVirtualModulePlugin } from 'rspack-plugin-virtual-module';
+import type {
+  loader,
+  EditorProps as MonacoEditorProps,
+} from '@monaco-editor/react';
 import { staticPath } from './constant';
 import { getNodeAttribute, parseImports } from './utils';
 import { remarkPlugin } from './remarkPlugin';
@@ -11,6 +15,9 @@ interface PlaygroundOptions {
 
   defaultDirection: 'horizontal' | 'vertical';
   editorPosition: 'left' | 'right';
+
+  monacoLoader: Parameters<typeof loader.config>[0];
+  monacoOptions: MonacoEditorProps['options'];
 }
 
 // eslint-disable-next-line import/no-mutable-exports
@@ -27,9 +34,11 @@ export function pluginPlayground(
     include,
     defaultDirection = 'horizontal',
     editorPosition = 'left',
+    monacoLoader = {},
+    monacoOptions = {},
   } = options || {};
 
-  const importsVirtualModule = new RspackVirtualModulePlugin({});
+  const playgroundVirtualModule = new RspackVirtualModulePlugin({});
   const getRouteMeta = () => routeMeta;
 
   if (render && !/Playground\.(jsx?|tsx?)$/.test(render)) {
@@ -150,14 +159,20 @@ export function pluginPlayground(
 
       // console.log('playground-imports', code);
 
-      importsVirtualModule.writeModule('playground-imports', code);
+      playgroundVirtualModule.writeModule('playground-imports', code);
     },
     builderConfig: {
+      source: {
+        define: {
+          __PLAYGROUND_MONACO_LOADER__: JSON.stringify(monacoLoader),
+          __PLAYGROUND_MONACO_OPTIONS__: JSON.stringify(monacoOptions),
+        },
+      },
       tools: {
         // eslint-disable-next-line @typescript-eslint/ban-ts-comment, @typescript-eslint/prefer-ts-expect-error
         // @ts-ignore
         rspack: {
-          plugins: [importsVirtualModule],
+          plugins: [playgroundVirtualModule],
         },
       },
     },

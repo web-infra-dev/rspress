@@ -4,9 +4,40 @@ import MonacoEditor, {
   EditorProps as MonacoEditorProps,
 } from '@monaco-editor/react';
 
-loader.config({
-  paths: { vs: 'https://unpkg.com/monaco-editor@0.43.0/min/vs' },
-});
+// inject by builder in cli/index.ts
+// see: https://modernjs.dev/builder/api/config-source.html#sourcedefine
+declare global {
+  const __PLAYGROUND_MONACO_LOADER__: any;
+  const __PLAYGROUND_MONACO_OPTIONS__: any;
+}
+
+function initLoader() {
+  let loaderConfig = {
+    paths: { vs: 'https://unpkg.com/monaco-editor@0.43.0/min/vs' },
+  };
+
+  try {
+    const keys = Object.keys(__PLAYGROUND_MONACO_LOADER__);
+
+    if (keys.length > 0) {
+      loaderConfig = __PLAYGROUND_MONACO_LOADER__;
+    }
+  } catch (e) {
+    // ignore
+  }
+
+  loader.config(loaderConfig);
+}
+initLoader();
+
+function getMonacoOptions() {
+  try {
+    return __PLAYGROUND_MONACO_OPTIONS__;
+  } catch (e) {
+    // ignore
+  }
+  return {};
+}
 
 export type EditorProps = Partial<MonacoEditorProps>;
 
@@ -33,6 +64,7 @@ export function Editor(props: EditorProps) {
             verticalScrollbarSize: 8,
             horizontalScrollbarSize: 8,
           },
+          ...getMonacoOptions(),
           ...options,
         }}
       />

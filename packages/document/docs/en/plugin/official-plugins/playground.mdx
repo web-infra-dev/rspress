@@ -130,8 +130,17 @@ interface PlaygroundOptions {
   defaultDirection: 'horizontal' | 'vertical';
   // Define the position of the editor in horizontal layout (left/right)
   editorPosition: 'left' | 'right';
+  // Default editor (monaco) partial configuration
+  monacoLoader: Parameters<typeof loader.config>[0];
+  monacoOptions: MonacoEditorProps['options'];
 }
 ```
+
+:::warning Note
+
+`monacoLoader` and `monacoOptions` will be serialized to JSON, so some data types, such as functions and circularly referenced objects, are not supported.
+
+:::
 
 ### render
 
@@ -163,4 +172,10 @@ pluginPlayground({
   ]
 });
 ```
+### monacoLoader
 
+Configure monaco-loader behaviors. The complete document can be found at [suren-atoyan/monaco-loader](https://github.com/suren-atoyan/monaco-loader#config)
+
+### monacoOptions
+
+Configure monaco editor, corresponding to [IStandaloneEditorConstructionOptions](https://microsoft.github.io/monaco-editor/typedoc/interfaces/editor.IStandaloneEditorConstructionOptions.html)

@@ -131,8 +131,17 @@ interface PlaygroundOptions {
   defaultDirection: 'horizontal' | 'vertical';
   // 定义横向布局下，编辑器所处的位置（左侧/右侧）
   editorPosition: 'left' | 'right';
+  // 默认编辑器（monaco）部分配置
+  monacoLoader: Parameters<typeof loader.config>[0];
+  monacoOptions: MonacoEditorProps['options'];
 }
 ```
+
+:::warning 注意
+
+`monacoLoader` 及 `monacoOptions` 内部会被序列化为 JSON，因此不支持部分数据类型，如函数、循环引用的对象。
+
+:::
 
 ### render
 你可以自定义 render 文件，用于渲染 Playground；请注意，文件名必须为 `Playground.(jsx?|tsx?)`
@@ -164,3 +173,10 @@ pluginPlayground({
 });
 ```
 
+### monacoLoader
+
+配置 monaco-loader 相关行为，完整文档可见[suren-atoyan/monaco-loader](https://github.com/suren-atoyan/monaco-loader#config)
+
+### monacoOptions
+
+配置 monaco editor，对应[IStandaloneEditorConstructionOptions](https://microsoft.github.io/monaco-editor/typedoc/interfaces/editor.IStandaloneEditorConstructionOptions.html)
