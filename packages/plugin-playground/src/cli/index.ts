@@ -159,7 +159,7 @@ export function pluginPlayground(
 
       // console.log('playground-imports', code);
 
-      playgroundVirtualModule.writeModule('playground-imports', code);
+      playgroundVirtualModule.writeModule('_rspress_playground_imports', code);
     },
     builderConfig: {
       source: {

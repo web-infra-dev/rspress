@@ -151,9 +151,9 @@ pluginPlayground({
 });
 ```
 
-在自定义 Playground 中，你可以直接引用原始的编辑器和渲染器，以及通过 `playground-imports` 引用提前打包好的依赖：
+在自定义 Playground 中，你可以直接引用原始的编辑器和渲染器，以及通过 `_rspress_playground_imports` 引用提前打包好的依赖：
 ```ts
-import getImport from 'playground-imports';
+import getImport from '_rspress_playground_imports';
 import { Render, Editor } from '@rspress/plugin-playground/web';
 ```
 

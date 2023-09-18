@@ -151,9 +151,9 @@ pluginPlayground({
 });
 ```
 
-In the custom playground, you can directly import the original editor and renderer, and import pre-packaged dependencies through `playground-imports`:
+In the custom playground, you can directly import the original editor and renderer, and import pre-packaged dependencies through `_rspress_playground_imports`:
 ```ts
-import getImport from 'playground-imports';
+import getImport from '_rspress_playground_imports';
 import { Render, Editor } from '@rspress/plugin-playground/web';
 ```
 
