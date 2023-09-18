@@ -17,6 +17,7 @@
 
 .rspress-playground > .rspress-playground-runner {
   padding: 20px;
+  overflow: auto;
 }
 
 .rspress-playground-horizontal > .rspress-playground-runner {
