@@ -28,20 +28,24 @@
   width: 40%;
 }
 
-.rspress-playground > .rspress-playground-editor {
-  background-color: rgb(249, 249, 249);
-}
-
 .rspress-playground-horizontal > .rspress-playground-editor {
   width: 60%;
+}
+
+.rspress-playground-horizontal.rspress-playground-reverse-y
+  > .rspress-playground-editor {
+  border-right: 1px solid rgba(28, 31, 35, 0.08);
+}
+
+.rspress-playground-horizontal.rspress-playground-reverse-n
+  > .rspress-playground-editor {
+  border-left: 1px solid rgba(28, 31, 35, 0.08);
 }
 
 .rspress-playground-vertical > .rspress-playground-editor {
   height: 300px;
 }
 
-.rspress-playground > .rspress-playground-editor .monaco-editor,
-.rspress-playground > .rspress-playground-editor .monaco-editor-background,
-.rspress-playground > .rspress-playground-editor .monaco-editor .margin {
-  background-color: rgb(249, 249, 249);
+.rspress-playground-vertical > .rspress-playground-editor {
+  border-top: 1px solid rgba(28, 31, 35, 0.08);
 }

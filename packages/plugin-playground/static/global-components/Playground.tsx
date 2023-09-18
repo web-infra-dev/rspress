@@ -26,7 +26,7 @@ export default function Playground(props: PlaygroundProps) {
   }, []);
 
   const useReverseLayout =
-    direction === 'horizontal' && editorPosition === 'right';
+    direction === 'horizontal' && editorPosition === 'left';
 
   const monacoLanguage =
     language === 'tsx' || language === 'ts' ? 'typescript' : 'javascript';
@@ -40,12 +40,12 @@ export default function Playground(props: PlaygroundProps) {
 
   return (
     <div className={classNames} {...rest}>
+      <Runner language={language} code={code} getImport={getImport} />
       <Editor
         value={code}
         onChange={handleCodeChange}
         language={monacoLanguage}
       />
-      <Runner language={language} code={code} getImport={getImport} />
     </div>
   );
 }

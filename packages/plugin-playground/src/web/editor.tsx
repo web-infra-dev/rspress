@@ -19,13 +19,20 @@ export function Editor(props: EditorProps) {
         {...rest}
         theme="light"
         options={{
-          minimap: { enabled: false },
+          minimap: {
+            enabled: true,
+            autohide: true,
+          },
           fontSize: 14,
           lineNumbersMinChars: 7,
           scrollBeyondLastLine: false,
           automaticLayout: true,
           wordBasedSuggestions: true,
           quickSuggestions: true,
+          scrollbar: {
+            verticalScrollbarSize: 8,
+            horizontalScrollbarSize: 8,
+          },
           ...options,
         }}
       />
