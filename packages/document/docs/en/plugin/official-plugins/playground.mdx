@@ -39,9 +39,13 @@ export default defineConfig({
 
 ### Internal Components
 
+:::tip Note
+It is recommended to use js or jsx to write sample code to avoid ts type errors in the editor.
+:::
+
 The component code of internal components is declared in the mdx file. This plugin supports jsx and tsx. You can declare the following code block in the mdx file:
 ````md
-```tsx
+```jsx
 import React from 'react';
 
 function App() {
@@ -93,10 +97,10 @@ In this way, the code block will not be rendered as a component, but will be kep
 In addition to writing the component code in the code block of the mdx file, you can also write the component code in an external file, and then import it in the mdx file through the code tag. For example
 
 ```md title="example.mdx"
-<code src="./Demo.tsx" />
+<code src="./Demo.jsx" />
 ```
 
-```tsx title="Demo.tsx"
+```jsx title="Demo.jsx"
 import React from 'react';
 
 export default function App() {
@@ -107,7 +111,7 @@ export default function App() {
 Same as internal components, external components also support `direction` attribute:
 
 ```md title="example.mdx"
-<code src="./Demo.tsx" direction="vertical" />
+<code src="./Demo.jsx" direction="vertical" />
 ```
 
 External components also need to export the component as default. Through the src attribute of the code tag, you can specify the path of the external component. This plugin supports both relative paths and alias paths(alias).

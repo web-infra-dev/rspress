@@ -39,10 +39,14 @@ export default defineConfig({
 
 ### 内部组件
 
+:::tip 提示
+建议使用 js 或 jsx 编写示例代码，避免编辑器中出现 ts 类型报错问题。
+:::
+
 内部组件的组件代码声明在 mdx 文件内。支持 jsx 或 tsx。你可以在 mdx 文件中声明如下的代码块：
 
 ````md
-```tsx
+```jsx
 import React from 'react';
 
 function App() {
@@ -94,10 +98,10 @@ export default App;
 除了将组件代码写在 mdx 文件的代码块中，你还可以将组件代码写在外部文件中，然后在 mdx 文件中通过 code 标签引入。比如
 
 ```md title="example.mdx"
-<code src="./Demo.tsx" />
+<code src="./Demo.jsx" />
 ```
 
-```tsx title="Demo.tsx"
+```jsx title="Demo.jsx"
 import React from 'react';
 
 export default function App() {
@@ -108,7 +112,7 @@ export default function App() {
 同样的，外部组件也支持 `direction` 属性：
 
 ```md title="example.mdx"
-<code src="./Demo.tsx" direction="vertical" />
+<code src="./Demo.jsx" direction="vertical" />
 ```
 
 外部组件中同样需要将组件作为 default 导出。而通过 code 标签的 src 属性，你可以指定外部组件的路径，该插件同时支持相对路径以及别名路径(alias)。
