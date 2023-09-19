@@ -4,7 +4,7 @@ import { HomeLayout } from './layout/HomeLayout';
 import { setup } from './logic';
 
 export { Nav } from './components/Nav';
-export { Search } from './components/Search';
+export { Search, SearchPanel } from './components/Search';
 export { Tab, Tabs } from './components/Tabs';
 export { Button } from './components/Button';
 export { Link } from './components/Link';

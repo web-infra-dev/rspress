@@ -224,3 +224,43 @@ function Layout() {
   return <div>Current location: {location.pathname}</div>;
 }
 ```
+
+### 3. Reusing Search Functionality
+
+The default theme comes with built-in search functionality, which we can break down into two components:
+
+1. The search box, i.e., the entry point to invoke the search.
+2. The search panel that pops up after clicking on the search box.
+
+#### Full Reuse
+
+If you want to fully reuse the search functionality, you can directly import the `Search` component, like so:
+
+```tsx
+import { Search } from 'rspress/theme';
+
+function MySearch() {
+  return <Search />;
+}
+```
+
+#### Reusing the Search Panel
+
+If you only want to reuse the search panel and customize the search box part, then you need to import the `SearchPanel` component in your theme component, like so:
+
+```tsx
+import { useState } from 'react';
+import { SearchPanel } from 'rspress/theme';
+
+function MySearch() {
+  const [focused, setFocused] = useState(false);
+  return (
+    <div>
+      <button onClick={() => setFocused(true)}>Toggle Search</button>
+      <SearchPanel focused={focused} setFocused={setFocused} />
+    </div>
+  );
+}
+```
+
+In this case, you need to maintain the `focused` state and `setFocused` method yourself, and pass them as props to the `SearchPanel` component for controlling the display and hiding of the search panel.
