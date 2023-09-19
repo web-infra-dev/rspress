@@ -7,6 +7,7 @@ import { UserConfig } from '@rspress/shared';
 import { PluggableList } from 'unified';
 import rehypePluginExternalLinks from 'rehype-external-links';
 import type { RouteService } from '../route/RouteService';
+import type { PluginDriver } from '../PluginDriver';
 import { remarkPluginToc } from './remarkPlugins/toc';
 import { rehypePluginCodeMeta } from './rehypePlugins/codeMeta';
 import { remarkPluginNormalizeLink } from './remarkPlugins/normalizeLink';
@@ -19,13 +20,14 @@ export async function createMDXOptions(
   checkDeadLinks: boolean,
   routeService: RouteService,
   filepath: string,
+  pluginDriver: PluginDriver,
 ): Promise<Options> {
   const {
     remarkPlugins: remarkPluginsFromConfig = [],
     rehypePlugins: rehypePluginsFromConfig = [],
     globalComponents: globalComponentsFromConfig = [],
   } = config?.markdown || {};
-  const rspressPlugins = config?.plugins || [];
+  const rspressPlugins = pluginDriver.getPlugins();
   const remarkPluginsFromPlugins = rspressPlugins.flatMap(
     plugin => plugin.markdown?.remarkPlugins || [],
   ) as PluggableList;

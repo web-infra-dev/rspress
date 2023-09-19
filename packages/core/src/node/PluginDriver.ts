@@ -74,6 +74,10 @@ export class PluginDriver {
     }
   }
 
+  getPlugins() {
+    return this.#plugins;
+  }
+
   clearPlugins() {
     this.#plugins = [];
   }
