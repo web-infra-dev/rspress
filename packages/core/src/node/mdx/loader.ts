@@ -5,6 +5,7 @@ import grayMatter from 'gray-matter';
 import type { Header, UserConfig } from '@rspress/shared';
 import type { RouteService } from '../route/RouteService';
 import { normalizePath } from '../utils';
+import { PluginDriver } from '../PluginDriver';
 import { createMDXOptions } from './options';
 import { TocItem } from './remarkPlugins/toc';
 import { checkLinks } from './remarkPlugins/checkDeadLink';
@@ -15,6 +16,7 @@ interface LoaderOptions {
   checkDeadLinks: boolean;
   enableMdxRs: boolean;
   routeService: RouteService;
+  pluginDriver: PluginDriver;
 }
 
 export interface PageMeta {
@@ -38,8 +40,14 @@ export default async function mdxLoader(
     frontmatter: {},
   } as PageMeta;
 
-  const { config, docDirectory, checkDeadLinks, routeService, enableMdxRs } =
-    options;
+  const {
+    config,
+    docDirectory,
+    checkDeadLinks,
+    routeService,
+    enableMdxRs,
+    pluginDriver,
+  } = options;
 
   const { data: frontmatter, content } = grayMatter(source);
 
@@ -52,6 +60,7 @@ export default async function mdxLoader(
         checkDeadLinks,
         routeService,
         filepath,
+        pluginDriver,
       );
       const compiler = createProcessor(mdxOptions);
 

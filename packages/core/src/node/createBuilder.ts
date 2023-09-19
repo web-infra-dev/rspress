@@ -42,6 +42,7 @@ async function createInternalBuildConfig(
   config: UserConfig,
   isSSR: boolean,
   routeService: RouteService,
+  pluginDriver: PluginDriver,
 ): Promise<BuilderConfig> {
   const cwd = process.cwd();
   const { default: fs } = await import('@modern-js/utils/fs-extra');
@@ -175,6 +176,7 @@ async function createInternalBuildConfig(
             checkDeadLinks,
             enableMdxRs,
             routeService,
+            pluginDriver,
           })
           .end()
           .use('string-replace-loader')
@@ -223,6 +225,7 @@ export async function createModernBuilder(
     config,
     isSSR,
     routeService,
+    pluginDriver,
   );
 
   const builderProvider = builderRspackProvider({
