@@ -4,7 +4,7 @@
 
 Rspress 内置一套预览页，效果如下:
 
-<img src="https://lf3-static.bytednsdoc.com/obj/eden-cn/uhbfnupenuhf/edenx-doc/Xnip2023-02-17_16-55-07.jpg" />
+<img src="https://lf3-static.bytednsdoc.com/obj/eden-cn/uhbfnupenuhf/rspress/rspress-api-overview.png" />
 
 ## 如何开启？
 
@@ -19,8 +19,9 @@ Rspress 内置一套预览页，效果如下:
 │   ├── index.md
 │   ├── api
 │   │   ├── index.md
-│   │   ├── preview1.md
-│   │   └── preview2.md
+│   │   ├── theme
+│   │   │  ├── component.mdx
+│   │   │  ├── utils.mdx
 // ...
 ```
 
@@ -32,33 +33,26 @@ overview: true
 ---
 ```
 
-### 2. 配置 `sidebar`
+### 2. 配置 `_meta.json`
 
-配置预览页面的结构会基于 sidebar 的配置来生成，比如我们添加如下的 sidebar 配置:
+预览页面的内容结构会根据 `_meta.json` 及其对应文章的 h1、h2 标题自动生成。比如 `api/_meta.json` 的配置如下：
 
-```ts title="rspress.config.ts"
-import { defineConfig } from 'rspress/config';
-
-export default defineConfig({
-  themeConfig: {
-    sidebar: {
-      '/api/': [
-        {
-          text: 'Group1',
-          items: [
-            // 注意: 需要提前创建好文档
-            '/api/foo',
-            '/api/bar',
-          ],
-        },
-        {
-          text: 'Group2',
-          items: ['/api/xxx', '/api/yyy'],
-        },
-      ],
-    },
-  },
-});
+```json
+[
+  {
+    "type": "dir",
+    "name": "theme",
+    "label": "Theme"
+  }
+]
 ```
 
-框架会摘取所有 api 目录下的文件以及其中的 h1、h2 标题，并根据 sidebar 配置中的分组信息生成预览页。
+同时，`api/theme/_meta.json` 的文件，内容如下：
+
+```json
+["component", "utils"]
+```
+
+> `_meta.json` 的详细配置用法可以参考[自动化导航栏/侧边栏](/guide/basic/auto-nav-sidebar)。
+
+在如上的配置中，最后预览页会生成一个 `Theme` 的分组，这个分组里面包含 `component.md(x)` 和 `utils.md(x)` 两篇文章的 h1、h2 标题。当然，你也可以参考 `Theme` 分组的配置，添加更多的分组。

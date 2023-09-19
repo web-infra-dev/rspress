@@ -4,7 +4,7 @@
 
 Rspress has a built-in preview page, the effect is as follows:
 
-<img src="https://lf3-static.bytednsdoc.com/obj/eden-cn/uhbfnupenuhf/edenx-doc/Xnip2023-02-17_16-55-07.jpg" />
+<img src="https://lf3-static.bytednsdoc.com/obj/eden-cn/uhbfnupenuhf/rspress/rspress-api-overview.png" />
 
 ## How to use
 
@@ -19,8 +19,9 @@ For example, create the following directories and files
 │   ├── index.md
 │   ├── api
 │   │   ├── index.md
-│   │   ├── preview1.md
-│   │   └── preview2.md
+│   │   ├── theme
+│   │   │  ├── component.mdx
+│   │   │  ├── utils.mdx
 // ...
 ```
 
@@ -32,33 +33,26 @@ overview: true
 ---
 ```
 
-### 2. Configure `sidebar`
+### 2. Configuring `_meta.json`
 
-The structure of the overview page will be generated based on the config of the sidebar. For example, we add the following sidebar config:
+The content structure of the preview page will be automatically generated according to `_meta.json` and the corresponding h1, h2 titles of the article. For example, the configuration of `api/_meta.json` is as follows:
 
-```ts title="rspress.config.ts"
-import { defineConfig } from 'rspress/config';
-
-export default defineConfig({
-  themeConfig: {
-    sidebar: {
-      '/api/': [
-        {
-          text: 'Group1',
-          items: [
-            // Note: Documents need to be created in advance
-            '/api/foo',
-            '/api/bar',
-          ],
-        },
-        {
-          text: 'Group2',
-          items: ['/api/xxx', '/api/yyy'],
-        },
-      ],
-    },
-  },
-});
+```json
+[
+  {
+    "type": "dir",
+    "name": "theme",
+    "label": "Theme"
+  }
+]
 ```
 
-The framework will extract all the files under the api directory and the h1 and h2 titles in them, and generate a overview page according to the group info in the sidebar config.
+At the same time, the file `api/theme/_meta.json` has the following content:
+
+```json
+["component", "utils"]
+```
+
+> The detailed configuration usage of `_meta.json` can be referred to [Auto Nav/Sidebar](/guide/basic/auto-nav-sidebar).
+
+In the above configuration, the final preview page will generate a group called `Theme`, which contains the h1, h2 titles of two articles: `component.md(x)` and `utils.md(x)`. Of course, you can also refer to the config of the `Theme` group to add more groups.
