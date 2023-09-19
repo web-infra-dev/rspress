@@ -91,7 +91,7 @@ export function DocLayout(props: DocLayoutProps) {
                   </MDXProvider>
                 </TabDataContext.Provider>
               </div>
-              <div>
+              <div className="rspress-doc-footer">
                 {beforeDocFooter}
                 {hasFooter && <DocFooter />}
               </div>
