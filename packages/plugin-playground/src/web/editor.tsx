@@ -13,7 +13,9 @@ declare global {
 
 function initLoader() {
   let loaderConfig = {
-    paths: { vs: 'https://unpkg.com/monaco-editor@0.43.0/min/vs' },
+    paths: {
+      vs: 'https://cdnjs.cloudflare.com/ajax/libs/monaco-editor/0.43.0/min/vs',
+    },
   };
 
   try {

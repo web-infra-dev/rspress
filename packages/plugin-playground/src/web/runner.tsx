@@ -1,4 +1,3 @@
-import * as babel from '@babel/standalone';
 import type { Node } from '@babel/types';
 import React, { Component, HTMLAttributes } from 'react';
 import {
@@ -6,6 +5,7 @@ import {
   createObjectPattern,
   createVariableDeclaration,
 } from './ast';
+import { getBabel } from './babel';
 
 interface RunnerProps extends HTMLAttributes<HTMLDivElement> {
   code: string;
@@ -50,8 +50,9 @@ class Runner extends Component<RunnerProps, RunnerState> {
     }, 600);
   }
 
-  doCompile(targetCode: string) {
+  async doCompile(targetCode: string) {
     const { language, getImport } = this.props;
+    const babel = await getBabel();
     try {
       const presets = [
         [babel.availablePresets.react],

@@ -16,6 +16,8 @@ interface PlaygroundOptions {
   defaultDirection: 'horizontal' | 'vertical';
   editorPosition: 'left' | 'right';
 
+  babelUrl: string;
+
   monacoLoader: Parameters<typeof loader.config>[0];
   monacoOptions: MonacoEditorProps['options'];
 }
@@ -34,6 +36,7 @@ export function pluginPlayground(
     include,
     defaultDirection = 'horizontal',
     editorPosition = 'left',
+    babelUrl = '',
     monacoLoader = {},
     monacoOptions = {},
   } = options || {};
@@ -164,6 +167,7 @@ export function pluginPlayground(
     builderConfig: {
       source: {
         define: {
+          __PLAYGROUND_BABEL_URL__: JSON.stringify(babelUrl),
           __PLAYGROUND_MONACO_LOADER__: JSON.stringify(monacoLoader),
           __PLAYGROUND_MONACO_OPTIONS__: JSON.stringify(monacoOptions),
         },
