@@ -223,3 +223,43 @@ function Layout() {
   return <div>Current location: {location.pathname}</div>;
 }
 ```
+
+### 3. 搜索功能复用
+
+默认主题内置了搜索功能，我们可以将搜索组件拆分为两部分：
+
+1. 搜索框，即唤起搜索的入口。
+2. 点击搜索框后弹出的搜索面板。
+
+#### 完整复用
+
+如果你想完整复用搜索功能，你可以直接引入 `Search` 组件，比如:
+
+```tsx
+import { Search } from 'rspress/theme';
+
+function MySearch() {
+  return <Search />;
+}
+```
+
+#### 复用搜索面板
+
+如果你仅仅想复用搜索面板，想要自定义搜索框部分，那么你需要在你的主题组件中引入 `SearchPanel` 组件，比如:
+
+```tsx
+import { useState } from 'react';
+import { SearchPanel } from 'rspress/theme';
+
+function MySearch() {
+  const [focused, setFocused] = useState(false);
+  return (
+    <div>
+      <button onClick={() => setFocused(true)}>Toggle Search</button>
+      <SearchPanel focused={focused} setFocused={setFocused} />
+    </div>
+  );
+}
+```
+
+其中，你需要自己维护 `focused` 状态和 `setFocused` 方法，并且作为 props 传给 `SearchPanel` 组件，用于控制搜索面板的显示和隐藏。
