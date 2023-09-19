@@ -53,7 +53,6 @@ class Runner extends Component<RunnerProps, RunnerState> {
   doCompile(targetCode: string) {
     const { language, getImport } = this.props;
     try {
-      // console.log(babel);
       const presets = [
         [babel.availablePresets.react],
         [babel.availablePresets.env, { modules: 'commonjs' }],
@@ -108,15 +107,12 @@ class Runner extends Component<RunnerProps, RunnerState> {
                     );
                   }
                 }
-                // console.log('replace with', code);
                 path.replaceWithMultiple(code);
               },
             },
           },
         ],
       });
-
-      // console.log(result);
 
       // Code has been updated
       if (targetCode !== this.props.code || !result || !result.code) {

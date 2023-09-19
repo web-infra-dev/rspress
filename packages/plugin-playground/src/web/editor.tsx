@@ -64,6 +64,7 @@ export function Editor(props: EditorProps) {
             verticalScrollbarSize: 8,
             horizontalScrollbarSize: 8,
           },
+          scrollPredominantAxis: false,
           ...getMonacoOptions(),
           ...options,
         }}
