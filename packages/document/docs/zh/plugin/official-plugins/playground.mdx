@@ -1,0 +1,182 @@
+# @rspress/plugin-playground
+
+> [源码地址](https://github.com/web-infra-dev/rspress/tree/main/packages/plugin-playground)
+
+提供一个可实时编辑的 Playground 以预览 md(x) 文件代码块中的组件。
+
+## 安装
+
+```bash
+# npm
+npm install @rspress/plugin-playground -D
+# yarn
+yarn add @rspress/plugin-playground -D
+# pnpm
+pnpm install @rspress/plugin-playground -D
+```
+
+## 使用
+
+### 引入插件
+
+首先在配置文件中写入以下的配置：
+
+```ts title="rspress.config.ts"
+import { defineConfig } from 'rspress/config';
+import { pluginPlayground } from '@rspress/plugin-playground';
+
+export default defineConfig({
+  plugins: [pluginPlayground()],
+});
+```
+
+:::warning 注意
+
+1. 在加入该插件后，请勿开启 `markdown.experimentalMdxRs`配置，否则会导致插件失效。
+2. 请不要同时使用该插件与 preview 插件。
+
+:::
+
+### 内部组件
+
+:::tip 提示
+建议使用 js 或 jsx 编写示例代码，避免编辑器中出现 ts 类型报错问题。
+:::
+
+内部组件的组件代码声明在 mdx 文件内。支持 jsx 或 tsx。你可以在 mdx 文件中声明如下的代码块：
+
+````md
+```jsx
+import React from 'react';
+
+function App() {
+  return <div>Hello World</div>;
+}
+
+export default App;
+```
+````
+
+另外，你可以通过 `direction` 参数，指定编辑器与预览区域的布局；支持 `horizontal` 或 `vertical`：
+
+````md
+```jsx direction=vertical
+import React from 'react';
+
+function App() {
+  return <div>Hello World</div>;
+}
+
+export default App;
+```
+````
+
+值得注意的是，你需要将组件作为 default 导出，Rspress 会自动渲染这个组件。
+
+但是如果你想保留代码块的样式，而不是将其作为组件渲染，你可以添加 `pure` 标识符来指定，使用方式如下：
+
+````md pure
+```tsx pure
+import React from 'react';
+
+function App() {
+  return <div>Hello World</div>;
+}
+
+export default App;
+```
+````
+
+:::tip 提示
+需要保证文档为 `.mdx` 结尾的文件。
+:::
+
+这样，代码块就不会被作为组件渲染，而是保留原样。
+
+### 外部组件
+
+除了将组件代码写在 mdx 文件的代码块中，你还可以将组件代码写在外部文件中，然后在 mdx 文件中通过 code 标签引入。比如
+
+```md title="example.mdx"
+<code src="./Demo.jsx" />
+```
+
+```jsx title="Demo.jsx"
+import React from 'react';
+
+export default function App() {
+  return <div>Hello World</div>;
+}
+```
+
+同样的，外部组件也支持 `direction` 属性：
+
+```md title="example.mdx"
+<code src="./Demo.jsx" direction="vertical" />
+```
+
+外部组件中同样需要将组件作为 default 导出。而通过 code 标签的 src 属性，你可以指定外部组件的路径，该插件同时支持相对路径以及别名路径(alias)。
+
+对于某些比较复杂的组件，这种外部组件的使用方式会更加方便。
+
+## 配置
+
+这个插件接受一个对象参数，类型如下:
+
+```ts
+interface PlaygroundOptions {
+  render: string;
+  include: Array<string | [string, string]>;
+  // 定义默认的 playground 布局（横向/纵向）
+  defaultDirection: 'horizontal' | 'vertical';
+  // 定义横向布局下，编辑器所处的位置（左侧/右侧）
+  editorPosition: 'left' | 'right';
+  // 默认编辑器（monaco）部分配置
+  monacoLoader: Parameters<typeof loader.config>[0];
+  monacoOptions: MonacoEditorProps['options'];
+}
+```
+
+:::warning 注意
+
+`monacoLoader` 及 `monacoOptions` 内部会被序列化为 JSON，因此不支持部分数据类型，如函数、循环引用的对象。
+
+:::
+
+### render
+你可以自定义 render 文件，用于渲染 Playground；请注意，文件名必须为 `Playground.(jsx?|tsx?)`
+```ts
+pluginPlayground({
+  render: '/path/to/render/Playground.tsx',
+});
+```
+
+在自定义 Playground 中，你可以直接引用原始的编辑器和渲染器，以及通过 `_rspress_playground_imports` 引用提前打包好的依赖：
+```ts
+import getImport from '_rspress_playground_imports';
+import { Render, Editor } from '@rspress/plugin-playground/web';
+```
+
+可以参考自带的 [Playground.tsx](https://github.com/web-infra-dev/rspress/tree/main/packages/plugin-playground/static/global-components/Playground.tsx) 进行自定义；
+
+### include
+默认情况下，该插件会自动扫描所有 demo 中的 import 语句；demo 中没有使用到的依赖，在 Playground 中也无法使用；如果希望将其他依赖加入到 Playground 中，可以使用 `include` 参数：
+
+```ts
+pluginPlayground({
+  include: [
+    // 增加 dayjs 依赖
+    'dayjs',
+    // 增加包名为“my-package”，实际指向“/path/to/package/index.js”的依赖
+    ['my-package', '/path/to/package/index.js'],
+  ]
+});
+```
+
+### monacoLoader
+
+配置 monaco-loader 相关行为，完整文档可见 [suren-atoyan/monaco-loader](https://github.com/suren-atoyan/monaco-loader#config)
+
+### monacoOptions
+
+配置 monaco editor，对应 [IStandaloneEditorConstructionOptions](https://microsoft.github.io/monaco-editor/typedoc/interfaces/editor.IStandaloneEditorConstructionOptions.html)

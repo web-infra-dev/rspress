@@ -1,0 +1,91 @@
+{
+  "name": "@rspress/plugin-playground",
+  "version": "0.0.11",
+  "description": "A plugin for rspress to preview the code block in markdown/mdx file.",
+  "bugs": "https://github.com/web-infra-dev/rspress/issues",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/web-infra-dev/rspress",
+    "directory": "packages/plugin-preview"
+  },
+  "license": "MIT",
+  "scripts": {
+    "dev": "modern build -w",
+    "build": "modern build",
+    "reset": "rimraf ./**/node_modules",
+    "lint": "modern lint",
+    "change": "modern change",
+    "bump": "modern bump",
+    "pre": "modern pre",
+    "change-status": "modern change-status",
+    "gen-release-note": "modern gen-release-note",
+    "release": "modern release",
+    "new": "modern new",
+    "test": "vitest run --passWithNoTests",
+    "upgrade": "modern upgrade"
+  },
+  "types": "./dist/cli/esm/index.d.ts",
+  "main": "./dist/cli/cjs/index.js",
+  "module": "./dist/cli/esm/index.js",
+  "exports": {
+    ".": {
+      "types": "./dist/cli/esm/index.d.ts",
+      "import": "./dist/cli/esm/index.js",
+      "default": "./dist/cli/cjs/index.js"
+    },
+    "./web": {
+      "types": "./dist/web/esm/index.d.ts",
+      "import": "./dist/web/esm/index.js",
+      "default": "./dist/web/cjs/index.js"
+    }
+  },
+  "engines": {
+    "node": ">=14.17.6"
+  },
+  "eslintIgnore": [
+    "node_modules/",
+    "dist/"
+  ],
+  "dependencies": {
+    "@babel/standalone": "^7.22.17",
+    "@mdx-js/mdx": "2.2.1",
+    "@modern-js/utils": "2.34.0",
+    "@monaco-editor/react": "~4.4.6",
+    "@oxidation-compiler/napi": "^0.1.0",
+    "@rspress/shared": "workspace:*",
+    "remark-gfm": "3.0.1"
+  },
+  "devDependencies": {
+    "@babel/types": "^7.22.17",
+    "@types/babel__core": "^7.20.1",
+    "@types/babel__standalone": "^7.1.4",
+    "@types/babel__traverse": "^7.20.1",
+    "@types/mdast": "^3.0.10",
+    "@types/node": "^18.11.17",
+    "@types/react": "^18",
+    "@types/react-dom": "^18",
+    "mdast-util-mdxjs-esm": "^1.3.0",
+    "prettier": "^2.6.2",
+    "react": "^18",
+    "react-dom": "^18",
+    "react-router-dom": "^6.8.1",
+    "rspack-plugin-virtual-module": "0.1.11",
+    "typescript": "^5",
+    "unified": "^10.1.2",
+    "unist-util-visit": "^4.1.1"
+  },
+  "peerDependencies": {
+    "@rspress/core": "*",
+    "react": ">=17",
+    "react-router-dom": "^6.8.1"
+  },
+  "files": [
+    "dist",
+    "static"
+  ],
+  "publishConfig": {
+    "access": "public",
+    "provenance": true,
+    "registry": "https://registry.npmjs.org/"
+  }
+}
