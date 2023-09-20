@@ -1,4 +1,6 @@
 import type babel from '@babel/standalone';
+import { DEFAULT_BABEL_URL } from './constant';
+import { loadScript } from './utils';
 
 declare global {
   // inject by builder in cli/index.ts
@@ -9,19 +11,9 @@ declare global {
   }
 }
 
-function loadScript(url: string): Promise<void> {
-  return new Promise(resolve => {
-    const e = document.createElement('script');
-    e.src = url;
-    e.onload = () => resolve();
-    document.body.appendChild(e);
-  });
-}
-
 async function getBabel() {
   if (!window.Babel) {
-    let babelUrl =
-      'https://cdnjs.cloudflare.com/ajax/libs/babel-standalone/7.22.20/babel.min.js';
+    let babelUrl = DEFAULT_BABEL_URL;
     try {
       const u = __PLAYGROUND_BABEL_URL__;
       if (u) {

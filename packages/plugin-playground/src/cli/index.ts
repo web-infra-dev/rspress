@@ -8,6 +8,8 @@ import type {
 import { staticPath } from './constant';
 import { getNodeAttribute, parseImports } from './utils';
 import { remarkPlugin } from './remarkPlugin';
+import { DEFAULT_BABEL_URL, DEFAULT_MONACO_URL } from '@/web/constant';
+import { normalizeUrl } from '@/web/utils';
 
 interface PlaygroundOptions {
   render: string;
@@ -49,6 +51,12 @@ export function pluginPlayground(
       '[Playground]: render should ends with Playground.(jsx?|tsx?)',
     );
   }
+
+  const preloads: string[] = [];
+  preloads.push(babelUrl || DEFAULT_BABEL_URL);
+  const monacoPrefix = monacoLoader.paths?.vs || DEFAULT_MONACO_URL;
+  preloads.push(normalizeUrl(`${monacoPrefix}/loader.js`));
+  preloads.push(normalizeUrl(`${monacoPrefix}/editor/editor.main.js`));
 
   return {
     name: '@rspress/plugin-playground',
@@ -171,6 +179,17 @@ export function pluginPlayground(
           __PLAYGROUND_MONACO_LOADER__: JSON.stringify(monacoLoader),
           __PLAYGROUND_MONACO_OPTIONS__: JSON.stringify(monacoOptions),
         },
+      },
+      html: {
+        tags: preloads.map(url => ({
+          tag: 'link',
+          head: true,
+          attrs: {
+            rel: 'preload',
+            href: url,
+            as: 'script',
+          },
+        })),
       },
       tools: {
         // eslint-disable-next-line @typescript-eslint/ban-ts-comment, @typescript-eslint/prefer-ts-expect-error
