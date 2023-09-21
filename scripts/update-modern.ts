@@ -51,7 +51,7 @@ const updateModernVersion = async (
     return dependencies;
   }
   for (const dep of Object.keys(dependencies)) {
-    if (dep.startsWith('@modern-js') && dep !== '@modern-js/mdx-rs-binding') {
+    if (dep.startsWith('@modern-js') && dep !== '@rspress/mdx-rs') {
       if (versionMap.get(dep)) {
         dependencies[dep] = versionMap.get(dep);
       } else {

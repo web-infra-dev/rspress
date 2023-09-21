@@ -33,7 +33,7 @@ export default defineConfig({
       outDir: 'dist',
       sourceMap: true,
       externals: [
-        '@modern-js/mdx-rs-binding',
+        '@rspress/mdx-rs',
         'jsdom',
         '@rspress/plugin-container-syntax',
       ],
@@ -47,7 +47,7 @@ export default defineConfig({
       target: 'es2020',
       outDir: 'dist',
       sourceMap: true,
-      externals: ['@modern-js/mdx-rs-binding'],
+      externals: ['@rspress/mdx-rs'],
       esbuildOptions: options => {
         options.banner = {
           js: 'import { createRequire } from "module";\nconst { url } = import.meta;\nconst require = createRequire(url);',
