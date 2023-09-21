@@ -8,11 +8,9 @@
     "preview": "rspress preview"
   },
   "dependencies": {
-    "rspress": "^0.0.10"
+    "rspress": "^0.1.0"
   },
   "devDependencies": {
-    "@modern-js/tsconfig": "2.30.0",
-    "@types/jest": "^29",
     "@types/node": "^14"
   }
 }
