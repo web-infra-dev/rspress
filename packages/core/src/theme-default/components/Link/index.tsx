@@ -4,6 +4,7 @@ import nprogress from 'nprogress';
 import { routes } from 'virtual-routes';
 import styles from './index.module.scss';
 import { normalizeHref, normalizeRoutePath, withBase } from '@/runtime';
+import { useNavigateWithTransition } from '@/theme-default/logic';
 
 export interface LinkProps {
   href?: string;
@@ -22,7 +23,7 @@ export function Link(props: LinkProps) {
   const target = isExternal ? '_blank' : '';
   const rel = isExternal ? 'noopener noreferrer' : undefined;
   const withBaseUrl = isExternal ? href : withBase(normalizeHref(href));
-  const navigate = useNavigate();
+  const navigate = useNavigateWithTransition();
   const handleNavigate = async (
     e: React.MouseEvent<HTMLAnchorElement, MouseEvent>,
   ) => {
