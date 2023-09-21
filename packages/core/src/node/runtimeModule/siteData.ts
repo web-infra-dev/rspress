@@ -333,7 +333,7 @@ async function extractPageData(
 }
 
 export async function siteDataVMPlugin(context: FactoryContext) {
-  const { config, alias, userRoot, routeService, pluginDriver } = context;
+  const { config, alias, userDocRoot, routeService, pluginDriver } = context;
   const userConfig = config;
   const replaceRules = userConfig?.replaceRules || [];
   // If the dev server restart when config file, we will reuse the siteData instead of extracting the siteData from source files again.
@@ -342,7 +342,13 @@ export async function siteDataVMPlugin(context: FactoryContext) {
       ? userConfig?.search.domain ?? ''
       : '';
   const pages = (
-    await extractPageData(replaceRules, alias, domain, userRoot, routeService)
+    await extractPageData(
+      replaceRules,
+      alias,
+      domain,
+      userDocRoot,
+      routeService,
+    )
   ).filter(Boolean);
   // modify page index by plugins
   await pluginDriver.modifySearchIndexData(pages);

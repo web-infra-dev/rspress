@@ -20,6 +20,7 @@ import {
   PACKAGE_ROOT,
   OUTPUT_DIR,
   isProduction,
+  PUBLIC_DIR,
 } from './constants';
 import { builderDocVMPlugin } from './runtimeModule';
 import { serveSearchIndexMiddleware } from './searchIndex';
@@ -38,7 +39,7 @@ export interface MdxRsLoaderCallbackContext {
 }
 
 async function createInternalBuildConfig(
-  userRoot: string,
+  userDocRoot: string,
   config: UserConfig,
   isSSR: boolean,
   routeService: RouteService,
@@ -59,7 +60,7 @@ async function createInternalBuildConfig(
   const checkDeadLinks = (config?.markdown?.checkDeadLinks && !isSSR) ?? false;
   const base = config?.base ?? '';
 
-  const publicDir = path.join(userRoot, 'public');
+  const publicDir = path.join(userDocRoot, 'public');
   const isPublicDirExist = await fs.pathExists(publicDir);
   // In production, we need to add assetPrefix in asset path
   const assetPrefix = isProduction()
@@ -67,6 +68,17 @@ async function createInternalBuildConfig(
     : '';
   const enableMdxRs = config?.markdown?.experimentalMdxRs ?? false;
   const reactVersion = await detectReactVersion();
+  const normalizeIcon = (icon: string | undefined) => {
+    if (!icon) {
+      return undefined;
+    }
+
+    if (path.isAbsolute(icon)) {
+      return path.join(userDocRoot, PUBLIC_DIR, icon);
+    }
+
+    return icon;
+  };
 
   // Using latest browserslist in development to improve build performance
   const browserslist = {
@@ -92,7 +104,7 @@ async function createInternalBuildConfig(
       progressBar: false,
     },
     html: {
-      favicon: config?.icon,
+      favicon: normalizeIcon(config?.icon),
       template: path.join(PACKAGE_ROOT, 'index.html'),
     },
     output: {
@@ -172,7 +184,7 @@ async function createInternalBuildConfig(
           .loader(require.resolve('../loader.cjs'))
           .options({
             config,
-            docDirectory: userRoot,
+            docDirectory: userDocRoot,
             checkDeadLinks,
             enableMdxRs,
             routeService,
@@ -199,7 +211,7 @@ export async function createModernBuilder(
   extraBuilderConfig?: BuilderConfig,
 ): Promise<BuilderInstance<BuilderRspackProvider>> {
   const cwd = process.cwd();
-  const userRoot = path.resolve(rootDir || config?.root || cwd);
+  const userDocRoot = path.resolve(rootDir || config?.root || cwd);
   const builderPlugins = config?.builderPlugins ?? [];
   // We use a temp dir to store runtime files, so we can separate client and server build
   // and we should empty temp dir before build
@@ -210,7 +222,7 @@ export async function createModernBuilder(
   const routeService = await initRouteService({
     config,
     runtimeTempDir: runtimeAbsTempDir,
-    scanDir: userRoot,
+    scanDir: userDocRoot,
     pluginDriver,
   });
   const {
@@ -221,7 +233,7 @@ export async function createModernBuilder(
   } = await import('@modern-js/builder-rspack-provider');
 
   const internalBuilderConfig = await createInternalBuildConfig(
-    userRoot,
+    userDocRoot,
     config,
     isSSR,
     routeService,
@@ -247,7 +259,7 @@ export async function createModernBuilder(
 
   builder.addPlugins([
     builderDocVMPlugin({
-      userRoot,
+      userDocRoot,
       config,
       isSSR,
       runtimeTempDir,

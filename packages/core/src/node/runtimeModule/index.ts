@@ -11,7 +11,7 @@ import { globalStylesVMPlugin } from './globalStyles';
 import { searchHookVMPlugin } from './searchHooks';
 
 export interface FactoryContext {
-  userRoot: string;
+  userDocRoot: string;
   config: UserConfig;
   isSSR: boolean;
   runtimeTempDir: string;
