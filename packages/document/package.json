@@ -1,6 +1,6 @@
 {
   "name": "@rspress/docs",
-  "version": "0.0.13",
+  "version": "1.0.0",
   "description": "",
   "main": "index.js",
   "scripts": {

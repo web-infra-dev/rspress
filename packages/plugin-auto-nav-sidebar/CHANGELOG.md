@@ -1,5 +1,12 @@
 # @rspress/plugin-auto-sidebar
 
+## 1.0.0
+
+### Patch Changes
+
+- rspress@1.0.0
+- @rspress/shared@1.0.0
+
 ## 0.0.13
 
 ### Patch Changes

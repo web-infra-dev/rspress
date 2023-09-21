@@ -1,5 +1,13 @@
 # create-rspress
 
+## 1.0.0
+
+### Patch Changes
+
+- ae2f53c: feat: update icon path in create-rspress
+
+  feat: 更新 create-rspress 中的图标路径
+
 ## 0.0.13
 
 ## 0.0.12
