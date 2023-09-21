@@ -66,7 +66,9 @@ export async function bundle(
     await Promise.all([clientBuilder.build(), ssrBuilder.build()]);
     // Copy public dir to output folder
     const publicDir = join(docDirectory, PUBLIC_DIR);
-    await fs.copy(publicDir, outputDir);
+    if (await fs.pathExists(publicDir)) {
+      await fs.copy(publicDir, outputDir);
+    }
   } finally {
     await writeSearchIndex(config);
   }
