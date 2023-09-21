@@ -1,5 +1,13 @@
 # create-rspress
 
+## 0.1.1
+
+### Patch Changes
+
+- 965ad94: fix: update template
+
+  fix: 更新模板
+
 ## 0.1.0
 
 ### Minor Changes
