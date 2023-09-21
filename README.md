@@ -1,4 +1,4 @@
-# Rspress(beta)
+# Rspress
 
 <picture>
   <img alt="Rspress Banner" src="https://github.com/web-infra-dev/rspress/assets/39261479/999e7946-45ff-45d5-b9cd-594e634e0e5a">
@@ -27,3 +27,13 @@ Please read the [contributing guide](./CONTRIBUTING.md) and let's build Rspress 
 ### Code of Conduct
 
 This repo has adopted the ByteDance Open Source Code of Conduct. Please check [Code of Conduct](./CODE_OF_CONDUCT.md) for more details.
+
+### Links
+
+| Name                                                       | Description                    |
+| ---------------------------------------------------------- | ------------------------------ |
+| [@rspress/mdx-rs](https://github.com/web-infra-dev/mdx-rs) | Rust MDX compiler for Rspress. |
+
+### License
+
+Rspress is licensed under the [MIT License](./LICENSE).

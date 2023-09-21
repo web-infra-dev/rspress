@@ -31,7 +31,7 @@
   --rp-container-danger-text: #f54e82;
 }
 
-.rspress-doc .modern-directive {
+.rspress-doc .rspress-directive {
   border: 1px solid transparent;
   border-radius: 16px;
   padding: 20px 24px 12px;
@@ -41,78 +41,78 @@
   margin: 24px 0;
 }
 
-.rspress-doc .modern-directive .modern-directive-title {
+.rspress-doc .rspress-directive .rspress-directive-title {
   margin-bottom: 8px;
   font-weight: 600;
   font-size: 16px;
 }
 
-.rspress-doc .modern-directive .modern-directive-content p {
+.rspress-doc .rspress-directive .rspress-directive-content p {
   margin: 8px 0;
 }
 
-.rspress-doc .modern-directive .modern-directive-icon {
+.rspress-doc .rspress-directive .rspress-directive-icon {
   display: inline-block;
   width: 20px;
   height: 20px;
   margin-right: 3px;
 }
 
-.rspress-doc .modern-directive p {
+.rspress-doc .rspress-directive p {
   margin: 8px 0;
 }
 
-.rspress-doc .modern-directive code {
+.rspress-doc .rspress-directive code {
   color: inherit;
   font-weight: bold;
   font-size: 13px;
 }
 
-.rspress-doc .modern-directive.tip,
-.rspress-doc .modern-directive.note,
-.rspress-doc .modern-directive.info {
+.rspress-doc .rspress-directive.tip,
+.rspress-doc .rspress-directive.note,
+.rspress-doc .rspress-directive.info {
   border-color: var(--rp-container-info-border);
   color: var(--rp-container-info-text);
   background-color: var(--rp-container-info-bg);
 }
 
-.rspress-doc .modern-directive.tip code,
-.rspress-doc .modern-directive.note code {
+.rspress-doc .rspress-directive.tip code,
+.rspress-doc .rspress-directive.note code {
   background-color: var(--rp-container-info-code-bg);
 }
 
-.rspress-doc .modern-directive.info code {
+.rspress-doc .rspress-directive.info code {
   background-color: var(--rp-container-info-code-bg);
 }
 
-.rspress-doc .modern-directive.warning {
+.rspress-doc .rspress-directive.warning {
   border-color: var(--rp-container-warning-border);
   color: var(--rp-container-warning-text);
   background-color: var(--rp-container-warning-bg);
 }
 
-.rspress-doc .modern-directive.warning code {
+.rspress-doc .rspress-directive.warning code {
   background-color: var(--rp-container-warning-code-bg);
 }
 
-.rspress-doc .modern-directive.caution,
-.rspress-doc .modern-directive.danger {
+.rspress-doc .rspress-directive.caution,
+.rspress-doc .rspress-directive.danger {
   border-color: var(--rp-container-danger-border);
   color: var(--rp-container-danger-text);
   background-color: var(--rp-container-danger-bg);
 }
 
-.rspress-doc .modern-directive.caution code,
-.rspress-doc .modern-directive.danger code {
+.rspress-doc .rspress-directive.caution code,
+.rspress-doc .rspress-directive.danger code {
   background-color: var(--rp-container-danger-code-bg);
 }
 
-.rspress-doc .modern-directive.details {
+.rspress-doc .rspress-directive.details {
   border-color: var(--rp-container-details-border);
   color: var(--rp-container-details-text);
   background-color: var(--rp-container-details-bg);
 }
 
-.rspress-doc .modern-directive.details code {
+.rspress-doc .rspress-directive.details code {
   background-color: var(--rp-container-details-code-bg);
 }
