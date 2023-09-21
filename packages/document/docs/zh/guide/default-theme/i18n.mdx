@@ -140,53 +140,41 @@ docs
 
 可以看到，我们把不同语言的文档放在了 `docs` 目录下的 `en` 和 `zh` 目录中，这样就可以方便地区分不同语言的文档了。
 
-## 配置侧边栏和导航栏
+## 配置 \_meta.json
 
-> 如果你使用了[自动化导航栏/侧边栏](/guide/basic/auto-nav-sidebar)写法，可以跳过这个部分。
+通过 \_meta.json 文件，我们可以配置导航栏和侧边栏的内容，具体可以参考[自动化导航栏/侧边栏](/guide/basic/auto-nav-sidebar)。
 
-我们在[约定式路由](/guide/basic/conventional-route)中提到过，针对不同的文件路径，我们会自动生成对应的路由。那么，在国际化文档的场景中，每份文档的路由是不一样的，那么针对 N 种语言的文档，我们需要写 N 份侧边栏和导航栏的配置吗？
+### 导航栏级别
 
-答案是**不用**。在 Rspress 框架中，你只需要写一份配置即可。如何完成呢？
+在导航栏级别的 \_meta.json 配置中，你可以将 `text` 指定为 i18n key，比如:
 
-我们来这样配置侧边栏和导航栏:
-
-```ts title="rspress.config.ts"
-import { defineConfig } from 'rspress/config';
-
-// 工具函数，用于获取类型提示
-const getI18nKey = (key: keyof typeof import('./i18n.json')) => key;
-
-export default defineConfig({
-  // 前面的配置省略
-  themeConfig: {
-    nav: [
-      {
-        text: getI18nKey('guide'),
-        link: '/guide/',
-      },
-    ],
-    sidebar: {
-      '/guide/': [
-        {
-          text: getI18nKey('getting-started'),
-          link: '/guide/getting-started',
-        },
-        {
-          text: getI18nKey('features'),
-          link: '/guide/features',
-        },
-      ],
-    },
-  },
-});
+```json title="_meta.json"
+[
+  {
+    "text": "guide",
+    "link": "/guide/start/getting-started",
+    "activeMatch": "/guide/"
+  }
+]
 ```
 
-可以看到，在 nav 和 sidebar 的配置中，我们主要涉及到两种元素的配置:
+其中，`text` 为 `guide`，这个值会被自动翻译为 `指南` 或者 `Guide`，具体取决于当前语言。
 
-- `文本`。在国际化场景中，你只需要传入 `i18n.json` 中的文案 key 即可，框架会自动根据当前语言来获取对应的文本。
-- `链接`。你无需添加语言前缀，框架会自动根据当前语言来添加对应的语言前缀。比如默认语言为中文的情况下，在英文文档中 `/guide/features` 会被转换为 `/en/guide/features`。
+### 侧边栏级别
 
-最后你只需要写一份 `nav` 和 `sidebar` 的配置，框架会自动根据当前语言来获取对应的文本和链接。
+在侧边栏级别的 \_meta.json 配置中，你可以将 `label` 指定为 i18n key，比如:
+
+```json title="_meta.json"
+[
+  {
+    "type": "dir",
+    "name": "start",
+    "label": "getting-started"
+  }
+]
+```
+
+其中，`label` 为 `getting-started`，这个值会被自动翻译为 `开始` 或者 `Getting Started`，具体取决于当前语言。
 
 ## 自定义组件中使用 `useI18n`
 

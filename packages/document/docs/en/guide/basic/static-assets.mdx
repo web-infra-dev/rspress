@@ -40,7 +40,7 @@ export default defineConfig({
 
 The logo field supports both string and object configurations.
 
-When the logo is a string, there are the following configuration situations:
+When the logo is a string, there are the following config situations:
 
 - Configured as an **external link**, like the above example.
 - Configured as an **absolute path**, such as `/rspress-logo.png`. In this case, Rspress will automatically find the `rspress-logo.png` image in the `public directory` of your **document root directory** and display it.
@@ -63,17 +63,17 @@ Here, `light` represents the logo address in light mode, and `dark` represents t
 
 ## Favicon
 
-In Rspress, you can specify the site's favicon icon through the `favicon` field. For example:
+In Rspress, you can specify the site's favicon icon through the `icon` field. For example:
 
 ```ts title="rspress.config.ts"
 import { defineConfig } from 'rspress/config';
 
 export default defineConfig({
-  favicon: 'https://avatars.githubusercontent.com/u/56892468?s=200&v=4',
+  icon: 'https://avatars.githubusercontent.com/u/56892468?s=200&v=4',
 });
 ```
 
-The favicon field supports string configuration, with the following specific configuration methods:
+The icon field supports string config, with the following specific ways:
 
 - Configured as an **external link**, like the above example.
 - Configured as an **absolute path**, such as `/favicon.ico`. In this case, Rspress will automatically find the `favicon.ico` icon in the `public directory` of your **document root directory** and display it.

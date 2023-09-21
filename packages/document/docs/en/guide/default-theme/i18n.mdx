@@ -139,53 +139,41 @@ docs
 
 As you can see, we put documents in different languages ​​in the `en` and `zh` directories under the `docs` directory, so that we can easily distinguish documents in different languages.
 
-## Configure sidebar and navbar
+## Configuring \_meta.json
 
-> If you use the [Auto Nav/Sidebar](/guide/basic/auto-nav-sidebar) method, you can skip this part.
+Through the \_meta.json file, we can configure the content of the nav bar and sidebar. For details, please refer to [Auto Nav/Sidebar](/guide/basic/auto-nav-sidebar).
 
-As we mentioned in [Conventional Routing](/guide/basic/conventional-route), we will automatically generate corresponding routes for different file paths. Then, in the scenario of internationalized documents, the routing of each document is different, so for documents in N languages, do we need to write N copies of sidebar and nav bar config?
+### Navigation Bar Level
 
-The answer is **no**. In the Rspress framework, you only need to write a configuration. How to do it?
+In the \_meta.json configuration at the navigation bar level, you can specify `text` as an i18n key, for example:
 
-Let's configure the sidebar and navbar like this:
-
-```ts title="rspress.config.ts"
-import { defineConfig } from 'rspress/config';
-
-// Utility function for getting type hints
-const getI18nKey = (key: keyof typeof import('./i18n.json')) => key;
-
-export default defineConfig({
-  // The previous config is omitted
-  themeConfig: {
-    nav: [
-      {
-        text: getI18nKey('guide'),
-        link: '/guide/',
-      },
-    ],
-    sidebar: {
-      '/guide/': [
-        {
-          text: getI18nKey('getting-started'),
-          link: '/guide/getting-started',
-        },
-        {
-          text: getI18nKey('features'),
-          link: '/guide/features',
-        },
-      ],
-    },
-  },
-});
+```json title="_meta.json"
+[
+  {
+    "text": "guide",
+    "link": "/guide/start/getting-started",
+    "activeMatch": "/guide/"
+  }
+]
 ```
 
-It can be seen that in the config of nav and sidebar, we mainly involve the two elements:
+Here, `text` is `guide`, this value will be automatically translated into `指南` or `Guide`, depending on the current language.
 
-- `text`. In the internationalization scenario, you only need to pass in the key in `i18n.json`, and the framework will automatically obtain the corresponding text according to the current language.
-- `link`. You don't need to add a language prefix, the framework will automatically add the corresponding language prefix according to the current language. For example, if the default language is Chinese, `/guide/features` will be converted to `/en/guide/features` in the English document.
+### Sidebar Level
 
-Finally, you only need to write a `nav` and `sidebar` config, and the framework will automatically obtain the corresponding text and links according to the current language.
+In the \_meta.json configuration at the sidebar level, you can specify `label` as an i18n key, for example:
+
+```json title="_meta.json"
+[
+  {
+    "type": "dir",
+    "name": "start",
+    "label": "getting-started"
+  }
+]
+```
+
+Here, `label` is `getting-started`, this value will be automatically translated into `开始` or `Getting Started`, depending on the current language.
 
 ## Use `useI18n` in custom components
 

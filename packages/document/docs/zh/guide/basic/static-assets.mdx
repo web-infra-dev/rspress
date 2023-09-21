@@ -61,19 +61,19 @@ export default defineConfig({
 
 其中，`light` 代表浅色模式下的 logo 地址，而 `dark` 代表暗黑模式下的 logo 地址，各自的配置方式和上面的字符串配置一致。
 
-## favicon
+## favicon 图标
 
-在 Rspress 中，你可以通过 `favicon` 字段来指定站点的 favicon 图标。例如：
+在 Rspress 中，你可以通过 `icon` 字段来指定站点的 favicon 图标。例如：
 
 ```ts title="rspress.config.ts"
 import { defineConfig } from 'rspress/config';
 
 export default defineConfig({
-  favicon: 'https://avatars.githubusercontent.com/u/56892468?s=200&v=4',
+  icon: 'https://avatars.githubusercontent.com/u/56892468?s=200&v=4',
 });
 ```
 
-favicon 字段支持字符串配置，具体配置方式如下：
+icon 字段支持字符串配置，具体配置方式如下：
 
 - 配置为**外链**，如上面的例子。
 - 配置为**绝对路径**，如 `/favicon.ico`，这样 Rspress 在框架内部会自动在你的**文档根目录**的 `public 目录`中找到 `favicon.ico` 图标并进行展示。
