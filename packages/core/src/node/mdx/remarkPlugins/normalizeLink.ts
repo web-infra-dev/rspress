@@ -1,7 +1,6 @@
 import path from 'path';
 import type { Plugin } from 'unified';
 import { visit } from 'unist-util-visit';
-import fs from '@modern-js/utils/fs-extra';
 import type { Root } from 'mdast';
 import type { MdxjsEsm } from 'mdast-util-mdxjs-esm';
 import {
@@ -11,7 +10,6 @@ import {
   isExternalUrl,
   slash,
 } from '@rspress/shared';
-import { PUBLIC_DIR } from '@/node/constants';
 import { getASTNodeImport } from '@/node/utils/getASTNodeImport';
 
 interface LinkNode {
@@ -101,20 +99,11 @@ export const remarkPluginNormalizeLink: Plugin<
     );
 
     const normalizeImageUrl = (imageUrl: string): string => {
-      if (isExternalUrl(imageUrl)) {
+      if (isExternalUrl(imageUrl) || imageUrl.startsWith('/')) {
         return '';
       }
-      if (imageUrl.startsWith('/')) {
-        const publicDir = path.join(root, PUBLIC_DIR);
-        const imagePath = path.join(publicDir, imageUrl);
-        if (!fs.existsSync(imagePath)) {
-          console.error(`Image not found: ${imagePath}`);
-          return '';
-        }
-        return imagePath;
-      } else {
-        return imageUrl;
-      }
+
+      return imageUrl;
     };
 
     const getMdxSrcAttrbute = (tempVar: string) => {
@@ -146,9 +135,6 @@ export const remarkPluginNormalizeLink: Plugin<
     visit(tree, 'image', node => {
       const { url } = node;
       if (!url) {
-        return;
-      }
-      if (isExternalUrl(url)) {
         return;
       }
 

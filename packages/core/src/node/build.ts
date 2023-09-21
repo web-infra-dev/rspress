@@ -1,4 +1,4 @@
-import { dirname, isAbsolute, join } from 'path';
+import { dirname, join } from 'path';
 import { pathToFileURL } from 'url';
 import { HelmetData } from 'react-helmet-async';
 import chalk from '@modern-js/utils/chalk';
@@ -64,29 +64,11 @@ export async function bundle(
       }),
     ]);
     await Promise.all([clientBuilder.build(), ssrBuilder.build()]);
-    // Handle logo path
-    const logoPaths = [];
-    const { logo } = config;
-    if (typeof logo === 'string') {
-      logoPaths.push(logo);
-    } else if (typeof logo === 'object') {
-      logoPaths.push(logo.light);
-      logoPaths.push(logo.dark);
+    // Copy public dir to output folder
+    const publicDir = join(docDirectory, PUBLIC_DIR);
+    if (await fs.pathExists(publicDir)) {
+      await fs.copy(publicDir, outputDir);
     }
-    logoPaths
-      .filter(p => p.startsWith('/'))
-      .forEach(p => {
-        const normalize = (rawPath: string) =>
-          isAbsolute(rawPath) ? rawPath : join(appDirectory, rawPath);
-        // move logo to output folder
-        const logoPath = join(
-          normalize(docDirectory || config.root),
-          PUBLIC_DIR,
-          p,
-        );
-        const outputLogoPath = join(normalize(outputDir), p);
-        fs.copyFileSync(logoPath, outputLogoPath);
-      });
   } finally {
     await writeSearchIndex(config);
   }
