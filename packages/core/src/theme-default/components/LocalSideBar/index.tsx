@@ -2,7 +2,7 @@ import { Fragment, useEffect, useState } from 'react';
 import { NormalizedSidebarGroup, SidebarItem } from '@rspress/shared';
 import { SideBar } from '../Sidebar';
 import MenuIcon from '../../assets/menu.svg';
-import styles from './index.module.scss';
+import './index.scss';
 
 interface Props {
   pathname: string;
@@ -27,8 +27,8 @@ export function SideMenu(props: Props) {
 
   return (
     <Fragment>
-      <div className={styles.localNav}>
-        <button onClick={openSidebar} className={`${styles.menu} flex-center`}>
+      <div className="rspress-sidebar-menu">
+        <button onClick={openSidebar} className="flex-center">
           <div className="text-md mr-2">
             <MenuIcon />
           </div>
@@ -42,7 +42,7 @@ export function SideMenu(props: Props) {
         isSidebarOpen={isSidebarOpen}
       />
       {isSidebarOpen ? (
-        <div onClick={closeSidebar} className={styles.backDrop} />
+        <div onClick={closeSidebar} className="rspress-sidebar-back-drop" />
       ) : null}
     </Fragment>
   );

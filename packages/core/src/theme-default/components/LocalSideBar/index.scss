@@ -1,4 +1,5 @@
-.localNav {
+// Only appear on mobile
+.rspress-sidebar-menu {
   position: sticky;
   top: 0;
   left: 0;
@@ -11,7 +12,7 @@
   color: var(--rp-c-text-1);
   background-color: var(--rp-c-bg);
   padding-left: 10px;
-  .menu {
+  > button {
     padding: 12px;
     transition: color 0.5s;
     &:hover {
@@ -20,15 +21,15 @@
   }
 }
 @media (min-width: 960px) {
-  .localNav {
+  .rspress-sidebar-menu {
     display: none;
   }
-  .backDrop {
+  .rspress-sidebar-back-drop {
     display: none;
   }
 }
 
-.backDrop {
+.rspress-sidebar-back-drop {
   position: fixed;
   top: 0;
   right: 0;
