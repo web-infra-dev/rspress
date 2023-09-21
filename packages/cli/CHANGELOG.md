@@ -1,5 +1,23 @@
 # rspress
 
+## 0.1.0
+
+### Minor Changes
+
+- 6132722: feat: integrate @rspress/mdx-rs
+
+  feat: 集成 @rspress/mdx-rs
+
+### Patch Changes
+
+- Updated dependencies [1b3c4a1]
+- Updated dependencies [05e1b13]
+- Updated dependencies [e076e31]
+- Updated dependencies [f155ee3]
+- Updated dependencies [db250f2]
+- Updated dependencies [6132722]
+  - @rspress/core@0.1.0
+
 ## 0.0.13
 
 ### Patch Changes

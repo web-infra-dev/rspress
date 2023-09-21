@@ -1,5 +1,18 @@
 # @rspress/plugin-auto-sidebar
 
+## 0.1.0
+
+### Minor Changes
+
+- 6132722: feat: integrate @rspress/mdx-rs
+
+  feat: 集成 @rspress/mdx-rs
+
+### Patch Changes
+
+- Updated dependencies [6132722]
+  - @rspress/shared@0.1.0
+
 ## 0.0.13
 
 ### Patch Changes
