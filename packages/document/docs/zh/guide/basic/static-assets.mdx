@@ -1,6 +1,107 @@
 # 静态资源处理
 
+## 介绍
+
+在 Rspress 中，你将有可能使用到如下的静态资源：
+
+- 站点左上角 logo 图片
+- 站点 favicon 图标
+- 主页 logo 图片
+- .md(x) 文件中使用的图片、视频等静态资源
+- 其它静态资源
+
+接下来我们将逐个介绍如何使用这些静态资源。
+
+:::tip 提示
+
+下文提到的 `文档根目录` 指的是 `rspress.config.ts` 中的 `root` 字段指定的目录：
+
+```ts title="rspress.config.ts"
+import { defineConfig } from 'rspress/config';
+import path from 'path';
+export default defineConfig({
+  root: path.join(__dirname, 'docs'),
+});
+```
+
+:::
+
+## 左上角 logo
+
+在 Rspress 中，你可以通过 `logo` 字段来指定左上角的 logo 图片。例如：
+
+```ts title="rspress.config.ts"
+import { defineConfig } from 'rspress/config';
+
+export default defineConfig({
+  logo: 'https://avatars.githubusercontent.com/u/56892468?s=200&v=4',
+});
+```
+
+logo 字段支持字符串和对象两种配置方式。
+
+当 logo 是一个字符串时，有如下的配置情况：
+
+- 配置为**外链**，如上面的例子。
+- 配置为**绝对路径**，如 `/rspress-logo.png`，这样 Rspress 在框架内部会自动在你的**文档根目录**的 `public 目录`中找到 `rspress-logo.png` 图片并进行展示。
+- 配置为**相对路径**，如 `./docs/public/rspress-logo.png`，这样 Rspress 基于项目根目录寻找到 `rspress-logo.png` 图片并进行展示。
+
+如果你的网站需要适配暗黑模式，那么也可以使用 logo 的对象配置，如：
+
+```ts title="rspress.config.ts"
+import { defineConfig } from 'rspress/config';
+
+export default defineConfig({
+  logo: {
+    light: 'https://avatars.githubusercontent.com/u/56892468?s=200&v=4',
+    dark: 'https://avatars.githubusercontent.com/u/56892468?s=200&v=4',
+  },
+});
+```
+
+其中，`light` 代表浅色模式下的 logo 地址，而 `dark` 代表暗黑模式下的 logo 地址，各自的配置方式和上面的字符串配置一致。
+
+## favicon
+
+在 Rspress 中，你可以通过 `favicon` 字段来指定站点的 favicon 图标。例如：
+
+```ts title="rspress.config.ts"
+import { defineConfig } from 'rspress/config';
+
+export default defineConfig({
+  favicon: 'https://avatars.githubusercontent.com/u/56892468?s=200&v=4',
+});
+```
+
+favicon 字段支持字符串配置，具体配置方式如下：
+
+- 配置为**外链**，如上面的例子。
+- 配置为**绝对路径**，如 `/favicon.ico`，这样 Rspress 在框架内部会自动在你的**文档根目录**的 `public 目录`中找到 `favicon.ico` 图标并进行展示。
+- 配置为**相对路径**，如 `./docs/public/favicon.ico`，这样 Rspress 基于项目根目录寻找到 `favicon.ico` 图标并进行展示。
+
+## 主页 logo
+
+在主页的 [frontmatter 配置](/api/config/config-frontmatter.html#hero)中，你可以通过 `hero.image.src` 字段来指定主页的 logo 图片。例如：
+
+```mdx title="index.mdx"
+---
+pageType: home
+
+hero:
+  image:
+    src: https://avatars.githubusercontent.com/u/56892468?s=200&v=4
+    alt: Rspress
+---
+```
+
+其中，src 为一个字符串，支持如下的配置方式：
+
+- 配置为**外链**，如上面的例子。
+- 配置为**绝对路径**，如 `/rspress-logo.png`，这样 Rspress 在框架内部会自动在你的**文档根目录**的 `public 目录`中找到 `rspress-logo.png` 图片并进行展示。
+
 你可以在 `markdown`（或 `mdx`）文件中导入静态资源。相对路径和绝对路径都是支持的，例如，如果在 markdown 同级目录有一张图片，你可以像这样引用它：
+
+## `.md(x)` 中使用的静态资源
 
 ```mdx
 ![](./demo.png)
@@ -14,17 +115,7 @@
 
 Rspress 将会根据 `.mdx` 文件路径和图片路径，自动找到图片并响应给浏览器。
 
-另一方面，也可以使用绝对路径导入静态资源。这样，Rspress 将会在`项目根目录`下的 `public` 文件夹中寻找资源。
-
-> 项目根目录，即 rspress.config.ts 中 `root` 字段指定的目录。
-
-```ts title="rspress.config.ts"
-import { defineConfig } from 'rspack/config';
-import path from 'path';
-export default defineConfig({
-  root: path.join(__dirname, 'docs'),
-});
-```
+另一方面，也可以使用绝对路径导入静态资源。这样，Rspress 将会在`文档根目录`下的 `public` 文件夹中寻找资源。
 
 例如，如果根目录是 `docs` 并且目录结构如下
 
@@ -46,3 +137,11 @@ docs
 ```mdx
 ![](/demo.png)
 ```
+
+不光是图片，你也可以在 markdown 文件中引入视频、音频等静态资源。
+
+## 其它静态资源
+
+部分场景下，你可能需要将某些特定的静态资源进行部署，比如添加 `Netlify` 的部署配置文件 `_headers` 指定自定义 HTTP 响应头。
+
+那么，你可以直接将这些静态资源放在文档根目录(如 `docs`)的 `public` 目录中，Rspress 在项目构建过程中会自动将 public 目录的所有资源**拷贝到产物目录**。这样，public 下的资源就可以被部署到服务器上了。
