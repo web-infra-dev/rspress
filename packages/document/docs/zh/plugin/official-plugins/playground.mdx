@@ -131,6 +131,8 @@ interface PlaygroundOptions {
   defaultDirection: 'horizontal' | 'vertical';
   // 定义横向布局下，编辑器所处的位置（左侧/右侧）
   editorPosition: 'left' | 'right';
+  // @babel/standalone 的 CDN 地址
+  babelUrl: string;
   // 默认编辑器（monaco）部分配置
   monacoLoader: Parameters<typeof loader.config>[0];
   monacoOptions: MonacoEditorProps['options'];
@@ -173,9 +175,19 @@ pluginPlayground({
 });
 ```
 
+### babelUrl
+
+Playground 使用 `@babel/standalone` 对演示代码进行编译，默认从 [cdnjs.com](https://cdnjs.cloudflare.com/ajax/libs/babel-standalone/7.22.20/babel.min.js) 加载。
+
+你可以修改为其他 CDN 提供的 URL，例如 unpkg、jsdelivr 等。
+
 ### monacoLoader
 
-配置 monaco-loader 相关行为，完整文档可见 [suren-atoyan/monaco-loader](https://github.com/suren-atoyan/monaco-loader#config)
+配置 monaco-loader 相关行为。默认从 [cdnjs.com](https://cdnjs.com/libraries/monaco-editor) 加载。
+
+你可以修改为其他 CDN 提供的 URL，例如 unpkg、jsdelivr 等。
+
+完整文档可见 [suren-atoyan/monaco-loader](https://github.com/suren-atoyan/monaco-loader#config)
 
 ### monacoOptions
 

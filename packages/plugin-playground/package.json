@@ -47,7 +47,6 @@
     "dist/"
   ],
   "dependencies": {
-    "@babel/standalone": "^7.22.17",
     "@mdx-js/mdx": "2.2.1",
     "@modern-js/utils": "2.34.0",
     "@monaco-editor/react": "~4.4.6",

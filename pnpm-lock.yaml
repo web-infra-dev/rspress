@@ -1,4 +1,4 @@
-lockfileVersion: '6.1'
+lockfileVersion: '6.0'
 
 settings:
   autoInstallPeers: true
@@ -800,9 +800,6 @@ importers:
 
   packages/plugin-playground:
     dependencies:
-      '@babel/standalone':
-        specifier: ^7.22.17
-        version: 7.22.17
       '@mdx-js/mdx':
         specifier: 2.2.1
         version: 2.2.1
@@ -2402,11 +2399,6 @@ packages:
     engines: {node: '>=6.9.0'}
     dependencies:
       regenerator-runtime: 0.14.0
-
-  /@babel/standalone@7.22.17:
-    resolution: {integrity: sha512-Gr713KRqDclP4r4Ds20c/+tFxeHFe8WDHGhc3Q8tVPaJKkLSjDkZjXqcBZ9jPFf5+qXvaKy2mDuAa57tMPDSPA==}
-    engines: {node: '>=6.9.0'}
-    dev: false
 
   /@babel/template@7.22.15:
     resolution: {integrity: sha512-QPErUVm4uyJa60rkI73qneDacvdvzxshT3kksGqlGWYdOTIUOwJ7RDUL8sGqslY1uXWSL6xMFKEXDS3ox2uF0w==}

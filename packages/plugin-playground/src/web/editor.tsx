@@ -3,6 +3,7 @@ import MonacoEditor, {
   loader,
   EditorProps as MonacoEditorProps,
 } from '@monaco-editor/react';
+import { DEFAULT_MONACO_URL } from './constant';
 
 // inject by builder in cli/index.ts
 // see: https://modernjs.dev/builder/api/config-source.html#sourcedefine
@@ -13,7 +14,9 @@ declare global {
 
 function initLoader() {
   let loaderConfig = {
-    paths: { vs: 'https://unpkg.com/monaco-editor@0.43.0/min/vs' },
+    paths: {
+      vs: DEFAULT_MONACO_URL,
+    },
   };
 
   try {
