@@ -79,7 +79,7 @@ export default async function mdxLoader(
         frontmatter,
       } as PageMeta;
     } else {
-      const { compile } = require('@modern-js/mdx-rs-binding');
+      const { compile } = require('@rspress/mdx-rs');
 
       // TODO: Cannot get correct toc from mdx which has internal components
       const { toc, links, title, code } = await compile({

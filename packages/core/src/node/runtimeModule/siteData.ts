@@ -20,7 +20,7 @@ import {
 import yamlFrontMatter from 'yaml-front-matter';
 import { htmlToText } from 'html-to-text';
 import fs from '@modern-js/utils/fs-extra';
-import { compile } from '@modern-js/mdx-rs-binding';
+import { compile } from '@rspress/mdx-rs';
 import { importStatementRegex, TEMP_DIR } from '../constants';
 import { applyReplaceRules } from '../utils/applyReplaceRules';
 import { createHash } from '../utils';

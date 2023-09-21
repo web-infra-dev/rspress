@@ -58,9 +58,9 @@ const parseTitle = (rawTitle = '', isMDX = false) => {
  *
  * will be transformed to:
  *
- * <div class="modern-directive tip">
- *   <div class="modern-directive-title">TIP</div>
- *   <div class="modern-directive-content">
+ * <div class="rspress-directive tip">
+ *   <div class="rspress-directive-title">TIP</div>
+ *   <div class="rspress-directive-content">
  *     <p>This is a tip</p>
  *   </div>
  * </div>
@@ -81,7 +81,7 @@ const createContainer = (
     data: {
       hName: rootHName,
       hProperties: {
-        class: `modern-directive ${type}`,
+        class: `rspress-directive ${type}`,
       },
     },
     children: [
@@ -90,7 +90,7 @@ const createContainer = (
         data: {
           hName: titleHName,
           hProperties: {
-            class: 'modern-directive-title',
+            class: 'rspress-directive-title',
           },
         },
         children: [{ type: 'text', value: title || type.toUpperCase() }],
@@ -99,7 +99,7 @@ const createContainer = (
         type: 'paragraph',
         data: {
           hName: 'div',
-          hProperties: { class: 'modern-directive-content' },
+          hProperties: { class: 'rspress-directive-content' },
         },
         children: children as PhrasingContent[],
       },
