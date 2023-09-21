@@ -1,5 +1,19 @@
 # create-rspress
 
+## 0.1.0
+
+### Minor Changes
+
+- 6132722: feat: integrate @rspress/mdx-rs
+
+  feat: 集成 @rspress/mdx-rs
+
+### Patch Changes
+
+- ae2f53c: feat: update icon path in create-rspress
+
+  feat: 更新 create-rspress 中的图标路径
+
 ## 0.0.13
 
 ## 0.0.12

@@ -1,5 +1,22 @@
 # @rspress/plugin-preview
 
+## 0.1.0
+
+### Minor Changes
+
+- 6132722: feat: integrate @rspress/mdx-rs
+
+  feat: 集成 @rspress/mdx-rs
+
+### Patch Changes
+
+- bc31f78: perf: preview plugin svgr
+
+  perf: preview 插件 svgr 编译优化
+
+- Updated dependencies [6132722]
+  - @rspress/shared@0.1.0
+
 ## 0.0.13
 
 ### Patch Changes
