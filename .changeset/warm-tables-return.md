@@ -1,5 +1,5 @@
 ---
-'@rspress/core': patch
+'@rspress/core': minor
 ---
 
 feat: integrate @rspress/mdx-rs
