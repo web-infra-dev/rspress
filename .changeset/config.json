@@ -8,6 +8,10 @@
   "fixed": [
     ["@rspress/*", "rspress", "create-rspress", "@modern-js/plugin-rspress"]
   ],
+  "___experimentalUnsafeOptions_WILL_CHANGE_IN_PATCH": {
+    "onlyUpdatePeerDependentsWhenOutOfRange": true,
+    "updateInternalDependents": "always"
+  },
   "updateInternalDependencies": "patch",
   "ignore": []
 }
