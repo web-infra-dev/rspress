@@ -1,6 +1,6 @@
 {
   "name": "@rspress/plugin-last-updated",
-  "version": "0.0.13",
+  "version": "0.0.14",
   "description": "A plugin for rspress to record the last updated time of the doc.",
   "bugs": "https://github.com/web-infra-dev/rspress/issues",
   "repository": {
@@ -37,7 +37,7 @@
     "dist/"
   ],
   "devDependencies": {
-    "@modern-js/tsconfig": "2.35.0",
+    "@modern-js/tsconfig": "2.35.1",
     "@types/node": "^18.11.17",
     "@types/react": "^18",
     "@types/react-dom": "^18",
@@ -65,6 +65,6 @@
     "registry": "https://registry.npmjs.org/"
   },
   "dependencies": {
-    "@modern-js/utils": "2.35.0"
+    "@modern-js/utils": "2.35.1"
   }
 }

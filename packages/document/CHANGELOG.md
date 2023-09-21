@@ -1,5 +1,12 @@
 # @rspress/docs
 
+## 0.0.14
+
+### Patch Changes
+
+- 3faf373: feat: load babel from cdn
+- f50db3c: feat: add playground plugin
+
 ## 0.0.13
 
 ## 0.0.12

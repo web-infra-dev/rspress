@@ -1,5 +1,39 @@
 # @rspress/core
 
+## 0.0.14
+
+### Patch Changes
+
+- 1b3c4a1: feat: support SearchPanel component export
+
+  feat: 支持 SearchPanel 组件导出
+
+- 05e1b13: fix: runtime type missed
+
+  fix: runtime 目录类型丢失
+
+- e076e31: chore: no need to print the server bundles size
+
+  chore: 无须输出 server bundles 的体积
+
+- f155ee3: fix: container syntax not work
+
+  fix: 容器语法不生效
+
+- db250f2: feat: support icon absolute path
+
+  feat: 支持 icon 配置绝对路径
+
+- 6132722: feat: integrate @rspress/mdx-rs
+
+  feat: 集成 @rspress/mdx-rs
+
+  - @rspress/plugin-auto-nav-sidebar@0.0.14
+  - @rspress/plugin-container-syntax@0.0.14
+  - @rspress/plugin-last-updated@0.0.14
+  - @rspress/plugin-medium-zoom@0.0.14
+  - @rspress/shared@0.0.14
+
 ## 0.0.13
 
 ### Patch Changes
