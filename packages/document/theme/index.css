@@ -1,0 +1,9 @@
+/* Fix the @documate/react stack context style problem */
+.dialog {
+  position: fixed !important;
+  z-index: 100 !important;
+}
+
+.documate-button {
+  border-radius: 2rem !important;
+}
