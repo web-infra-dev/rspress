@@ -4,10 +4,9 @@ export default defineConfig({
   testing: {
     transformer: 'ts-jest',
   },
+  buildPreset: 'npm-library',
   buildConfig: {
-    format: 'esm',
     sourceMap: true,
-    buildType: 'bundle',
     dts: {
       respectExternal: false,
     },
