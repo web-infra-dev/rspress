@@ -14,6 +14,10 @@
   display: none;
 }
 
+:global(.rspress-doc) {
+  min-height: 60vh;
+}
+
 @media (max-width: 960px) {
   .docLayout {
     position: relative;
