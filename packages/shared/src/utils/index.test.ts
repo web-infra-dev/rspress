@@ -1,4 +1,4 @@
-import { test, expect, describe } from 'vitest';
+import { test, expect, describe, it } from 'vitest';
 import {
   withoutLang,
   withBase,
@@ -59,14 +59,41 @@ describe('test shared utils', () => {
   });
 
   test('replaceLang', () => {
-    const langs = ['zh', 'en'];
-    expect(replaceLang('/en/guide/', 'zh', 'zh', langs)).toBe('/guide/');
-    expect(replaceLang('/en/guide/', 'en', 'zh', langs)).toBe('/en/guide/');
-    expect(replaceLang('/guide/', 'zh', 'zh', langs)).toBe('/guide/');
-    expect(replaceLang('/guide/', 'en', 'zh', langs)).toBe('/en/guide/');
-    expect(replaceLang('/builder', 'en', 'zh', langs, '/builder')).toBe(
-      '/builder/en/index.html',
-    );
+    it('should correctly replace language and version in the URL', () => {
+      const rawUrl = '/v1/index.html';
+      const lang = {
+        current: 'zh',
+        target: 'en',
+        default: 'zh',
+      };
+      const version = {
+        current: 'v1',
+        default: 'v1',
+      };
+      const base = '';
+
+      const result = replaceLang(rawUrl, lang, version, base);
+
+      expect(result).toEqual('/v1/en/index.html');
+    });
+
+    it('should correctly handle when no version is provided', () => {
+      const rawUrl = '/zh/index.html';
+      const lang = {
+        current: 'zh',
+        target: 'en',
+        default: 'zh',
+      };
+      const version = {
+        current: 'v1',
+        default: 'v1',
+      };
+      const base = '';
+
+      const result = replaceLang(rawUrl, lang, version, base);
+
+      expect(result).toEqual('/en/index.html');
+    });
   });
 
   test('parseUrl', () => {

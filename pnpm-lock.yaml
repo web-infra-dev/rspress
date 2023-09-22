@@ -81,12 +81,6 @@ importers:
         specifier: workspace:*
         version: link:../../../packages/cli
     devDependencies:
-      '@modern-js/tsconfig':
-        specifier: 2.30.0
-        version: 2.30.0
-      '@types/jest':
-        specifier: ^29
-        version: 29.2.4
       '@types/node':
         specifier: ^14
         version: 14.0.0
@@ -97,12 +91,6 @@ importers:
         specifier: workspace:*
         version: link:../../../packages/cli
     devDependencies:
-      '@modern-js/tsconfig':
-        specifier: 2.30.0
-        version: 2.30.0
-      '@types/jest':
-        specifier: ^29
-        version: 29.2.4
       '@types/node':
         specifier: ^14
         version: 14.18.54
@@ -113,12 +101,6 @@ importers:
         specifier: workspace:*
         version: link:../../../packages/cli
     devDependencies:
-      '@modern-js/tsconfig':
-        specifier: 2.30.0
-        version: 2.30.0
-      '@types/jest':
-        specifier: ^29
-        version: 29.2.4
       '@types/node':
         specifier: ^14
         version: 14.18.54
@@ -129,12 +111,16 @@ importers:
         specifier: workspace:*
         version: link:../../../packages/cli
     devDependencies:
-      '@modern-js/tsconfig':
-        specifier: 2.30.0
-        version: 2.30.0
-      '@types/jest':
-        specifier: ^29
-        version: 29.2.4
+      '@types/node':
+        specifier: ^14
+        version: 14.0.0
+
+  e2e/fixtures/multi-version:
+    dependencies:
+      rspress:
+        specifier: workspace:*
+        version: link:../../../packages/cli
+    devDependencies:
       '@types/node':
         specifier: ^14
         version: 14.0.0
@@ -145,12 +131,6 @@ importers:
         specifier: workspace:*
         version: link:../../../packages/cli
     devDependencies:
-      '@modern-js/tsconfig':
-        specifier: 2.30.0
-        version: 2.30.0
-      '@types/jest':
-        specifier: ^29
-        version: 29.2.4
       '@types/node':
         specifier: ^14
         version: 14.0.0
@@ -176,15 +156,9 @@ importers:
         specifier: workspace:*
         version: link:../../../packages/cli
     devDependencies:
-      '@modern-js/tsconfig':
-        specifier: 2.30.0
-        version: 2.30.0
       '@rspress/plugin-preview':
         specifier: workspace:*
         version: link:../../../packages/plugin-preview
-      '@types/jest':
-        specifier: ^29
-        version: 29.2.4
       '@types/node':
         specifier: ^14
         version: 14.18.54
@@ -195,24 +169,12 @@ importers:
         specifier: workspace:*
         version: link:../../../packages/cli
     devDependencies:
-      '@modern-js/tsconfig':
-        specifier: 2.30.0
-        version: 2.30.0
-      '@types/jest':
-        specifier: ^29
-        version: 29.2.4
       '@types/node':
         specifier: ^14
         version: 14.18.54
 
   e2e/fixtures/with-base:
     devDependencies:
-      '@modern-js/tsconfig':
-        specifier: 2.30.0
-        version: 2.30.0
-      '@types/jest':
-        specifier: ^29
-        version: 29.2.4
       '@types/node':
         specifier: ^14
         version: 14.18.54
@@ -4246,10 +4208,6 @@ packages:
       '@modern-js/swc-plugins-linux-x64-musl': 0.6.4
       '@modern-js/swc-plugins-win32-arm64-msvc': 0.6.4
       '@modern-js/swc-plugins-win32-x64-msvc': 0.6.4
-
-  /@modern-js/tsconfig@2.30.0:
-    resolution: {integrity: sha512-NMRppQzK1i/H4tw8hapolZ61KNOCqz3kTCTa7FNJpbAWBDtJhAqXsEJ9UyIscSlqZmLdkvZdXcKZ2Fvy1/vXQA==}
-    dev: true
 
   /@modern-js/tsconfig@2.35.1:
     resolution: {integrity: sha512-728Zc4RkWn4JntNBYhBo88/wCFDXj4dkWAUzntgVrU/olq+PD2TBT0hNhyKtht2lvP/2ix9jnLGHCzuyw6WK8Q==}

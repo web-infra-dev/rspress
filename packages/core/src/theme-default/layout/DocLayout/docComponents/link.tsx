@@ -1,27 +1,53 @@
 import { ComponentProps } from 'react';
-import { isExternalUrl, normalizeHref, normalizeSlash } from '@rspress/shared';
+import { isExternalUrl, normalizeHref } from '@rspress/shared';
 import styles from './index.module.scss';
-import { withBase, useLang, usePageData, removeBase } from '@/runtime';
+import { withBase, useLang, usePageData, useVersion } from '@/runtime';
 
 export const A = (props: ComponentProps<'a'>) => {
   let { href = '' } = props;
-  const lang = useLang();
+  const currentLang = useLang();
+  const currentVersion = useVersion();
   const pageData = usePageData();
   const defaultLang = pageData.siteData.lang;
+  const defaultVersion = pageData.siteData.multiVersion.default;
+  if (
+    (defaultLang || defaultVersion) &&
+    !isExternalUrl(href) &&
+    !href.startsWith('#')
+  ) {
+    const linkParts = href.split('/').filter(Boolean);
+    let versionPart = '';
+    let langPart = '';
+    let purePathPart = '';
 
-  if (defaultLang && !isExternalUrl(href) && !href.startsWith('#')) {
-    href = normalizeSlash(href);
-    const startWithLang = removeBase(href).startsWith(`/${lang}`);
-    // Add lang prefix if not default lang
-    if (lang !== defaultLang && !startWithLang) {
-      href = `/${lang}${href}`;
+    // When add the version prefix, the situation is as follows:
+    // - current version is not default version
+    // - current link does not start with currrent version
+    if (
+      defaultVersion &&
+      currentVersion !== defaultVersion &&
+      linkParts[0] !== defaultVersion
+    ) {
+      versionPart = linkParts[0];
+      linkParts.shift();
     }
 
-    if (lang === defaultLang && startWithLang) {
-      href = removeBase(href).replace(`/${lang}`, '');
+    if (defaultLang) {
+      if (currentLang !== defaultLang && linkParts[0] !== currentLang) {
+        langPart = linkParts[0];
+        linkParts.shift();
+      }
+
+      if (currentLang === defaultLang && linkParts[0] === defaultLang) {
+        linkParts.shift();
+      }
     }
 
-    href = normalizeHref(withBase(href || ''));
+    purePathPart = linkParts.join('/');
+
+    href = normalizeHref(
+      withBase([versionPart, langPart, purePathPart].filter(Boolean).join('/')),
+    );
   }
 
   return (

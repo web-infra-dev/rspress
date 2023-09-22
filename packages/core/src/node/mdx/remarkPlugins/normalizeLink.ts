@@ -3,13 +3,7 @@ import type { Plugin } from 'unified';
 import { visit } from 'unist-util-visit';
 import type { Root } from 'mdast';
 import type { MdxjsEsm } from 'mdast-util-mdxjs-esm';
-import {
-  addLeadingSlash,
-  normalizeHref,
-  parseUrl,
-  isExternalUrl,
-  slash,
-} from '@rspress/shared';
+import { normalizeHref, parseUrl, isExternalUrl, slash } from '@rspress/shared';
 import { getASTNodeImport } from '@/node/utils/getASTNodeImport';
 
 interface LinkNode {
@@ -17,44 +11,14 @@ interface LinkNode {
   url?: string;
 }
 
-export function extractLangFromFilePath(filePath: string) {
-  const [lang] = filePath.split(path.sep);
-  return lang;
-}
-
-export function normalizeLangPrefix(
-  rawUrl: string,
-  lang: string,
-  defaultLang: string,
-) {
-  // If the doc needs i18n, then the defaultLang must be not empty
-  // So if the defaultLang is empty, we can ignore the lang prefix
-  if (!defaultLang) {
-    return rawUrl;
-  }
-  const url = addLeadingSlash(rawUrl);
-  const hasLangPrefix = url.startsWith(`/${lang}/`);
-
-  // If the url has a default lang prefix, then remove the lang prefix
-  if (hasLangPrefix && lang === defaultLang) {
-    return url.replace(`/${lang}`, '');
-  }
-
-  if (hasLangPrefix || lang === defaultLang) {
-    return url;
-  }
-
-  return `/${lang}${url}`;
-}
-
 /**
  * Remark plugin to normalize a link href
  */
 export const remarkPluginNormalizeLink: Plugin<
-  [{ base: string; defaultLang: string; root: string }],
+  [{ base: string; root: string }],
   Root
 > =
-  ({ base, defaultLang, root }) =>
+  ({ base, root }) =>
   (tree, file) => {
     const images: MdxjsEsm[] = [];
     visit(
@@ -88,8 +52,7 @@ export const remarkPluginNormalizeLink: Plugin<
           url = path.posix.join(slash(path.dirname(relativePath)), url);
         }
 
-        const lang = extractLangFromFilePath(relativePath);
-        url = normalizeLangPrefix(normalizeHref(url), lang, defaultLang);
+        url = normalizeHref(url);
 
         if (hash) {
           url += `#${hash}`;

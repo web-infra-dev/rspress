@@ -9,8 +9,6 @@
   },
   "devDependencies": {
     "rspress": "workspace:*",
-    "@modern-js/tsconfig": "2.30.0",
-    "@types/jest": "^29",
     "@types/node": "^14"
   }
 }

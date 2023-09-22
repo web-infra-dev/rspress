@@ -325,6 +325,7 @@ async function extractPageData(
             ...frontmatter,
             __content: undefined,
           },
+          version: route.version,
           _filepath: route.absolutePath,
           _relativePath: path.relative(root, route.absolutePath),
         };
@@ -397,6 +398,10 @@ export async function siteDataVMPlugin(context: FactoryContext) {
     base: userConfig?.base || '/',
     lang: userConfig?.lang || '',
     logo: userConfig?.logo || '',
+    multiVersion: {
+      default: userConfig.multiVersion.default || '',
+      versions: userConfig.multiVersion.versions || [],
+    },
     search: userConfig?.search ?? { mode: 'local' },
     pages: pages.map(page => {
       const { content, id, domain, _filepath, ...rest } = page;

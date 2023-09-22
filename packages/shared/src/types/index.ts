@@ -27,6 +27,7 @@ export interface RouteMeta {
   relativePath: string;
   pageName: string;
   lang: string;
+  version: string;
 }
 
 export interface ReplaceRule {
@@ -147,6 +148,19 @@ export interface UserConfig<ThemeConfig = DefaultThemeConfig> {
    * Add some extra builder plugins
    */
   builderPlugins?: BuilderPlugin[];
+  /**
+   * Multi version config
+   */
+  multiVersion?: {
+    /**
+     * The default version
+     */
+    default?: string;
+    /**
+     * The version list, such as ['v1', 'v2']
+     */
+    versions: string[];
+  };
 }
 
 export type BaseRuntimePageInfo = Omit<
@@ -168,6 +182,10 @@ export interface SiteData<ThemeConfig = NormalizedDefaultThemeConfig> {
   markdown: {
     showLineNumbers: boolean;
   };
+  multiVersion: {
+    default: string;
+    versions: string[];
+  };
 }
 
 export type PageIndexInfo = {
@@ -178,6 +196,7 @@ export type PageIndexInfo = {
   content: string;
   frontmatter: Record<string, unknown>;
   lang: string;
+  version: string;
   domain: string;
   _filepath: string;
   _relativePath: string;
