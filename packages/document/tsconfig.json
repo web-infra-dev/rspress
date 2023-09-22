@@ -10,5 +10,11 @@
       "@en/*": ["./docs/en/*"]
     }
   },
-  "include": ["./rspress.config.ts", "docs/**/*", "src/**/*", "components/**/*"]
+  "include": [
+    "./rspress.config.ts",
+    "docs/**/*",
+    "src/**/*",
+    "components/**/*",
+    "theme/**/*"
+  ]
 }

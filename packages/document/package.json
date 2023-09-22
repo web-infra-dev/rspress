@@ -6,7 +6,8 @@
   "scripts": {
     "dev": "rspress dev",
     "build": "rspress build",
-    "preview": "rspress preview"
+    "preview": "rspress preview",
+    "documate:upload": "documate upload"
   },
   "repository": {
     "type": "git",
@@ -20,7 +21,9 @@
     "rspress": "workspace:*",
     "ts-node": "^10.9.1",
     "typescript": "^5",
-    "@types/react": "18.2.0"
+    "@types/react": "18.2.0",
+    "@documate/documate": "^0.1.0",
+    "@documate/react": "^0.1.0"
   },
   "publishConfig": {
     "access": "public",
