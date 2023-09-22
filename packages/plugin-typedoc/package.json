@@ -10,9 +10,9 @@
   },
   "license": "MIT",
   "jsnext:source": "./src/index.ts",
-  "types": "./dist/index.d.ts",
-  "main": "./dist/index.js",
-  "module": "./dist/node/index.js",
+  "types": "./dist/types/index.d.ts",
+  "main": "./dist/lib/index.js",
+  "module": "./dist/es/index.js",
   "scripts": {
     "dev": "modern build -w",
     "build": "modern build",
