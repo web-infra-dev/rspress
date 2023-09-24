@@ -219,11 +219,18 @@ export class RouteService {
     return this.routeData.size === 0;
   }
 
-  generateRoutesCode(isStaticImport?: boolean) {
+  generateRoutesCode(isStaticImport = false) {
+    return this.generateRoutesCodeByRouteMeta(this.getRoutes(), isStaticImport);
+  }
+
+  generateRoutesCodeByRouteMeta(
+    routeMeta: RouteMeta[],
+    isStaticImport: boolean,
+  ) {
     return `
 import React from 'react';
 import { lazyWithPreload } from "react-lazy-with-preload";
-${this.getRoutes()
+${routeMeta
   .map((route, index) => {
     return isStaticImport
       ? `import * as Route${index} from '${route.absolutePath}';`
@@ -231,7 +238,7 @@ ${this.getRoutes()
   })
   .join('\n')}
 export const routes = [
-${this.getRoutes()
+${routeMeta
   .map((route, index) => {
     // In ssr, we don't need to import component dynamically.
     const preload = isStaticImport

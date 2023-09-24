@@ -397,10 +397,11 @@ export async function siteDataVMPlugin(context: FactoryContext) {
     themeConfig: normalizeThemeConfig(userConfig, pages),
     base: userConfig?.base || '/',
     lang: userConfig?.lang || '',
+    locales: userConfig?.locales || userConfig.themeConfig?.locales || [],
     logo: userConfig?.logo || '',
     multiVersion: {
-      default: userConfig.multiVersion.default || '',
-      versions: userConfig.multiVersion.versions || [],
+      default: userConfig?.multiVersion?.default || '',
+      versions: userConfig?.multiVersion?.versions || [],
     },
     search: userConfig?.search ?? { mode: 'local' },
     pages: pages.map(page => {

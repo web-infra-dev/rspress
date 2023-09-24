@@ -172,6 +172,7 @@ export interface SiteData<ThemeConfig = NormalizedDefaultThemeConfig> {
   root: string;
   base: string;
   lang: string;
+  locales: { lang: string; label: string }[];
   title: string;
   description: string;
   icon: string;
