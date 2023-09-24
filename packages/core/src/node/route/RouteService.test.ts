@@ -1,10 +1,11 @@
 import path from 'path';
 import { expect, describe, test } from 'vitest';
 import { PluginDriver } from '../PluginDriver';
+import { normalizePath } from '../utils';
 import { RouteService, normalizeRoutePath } from './RouteService';
 
 describe('RouteService', async () => {
-  const testDir = path.join(__dirname, 'fixtures');
+  const testDir = normalizePath(path.join(__dirname, 'fixtures'));
   const routeService = new RouteService(
     testDir,
     {},
@@ -14,7 +15,7 @@ describe('RouteService', async () => {
   await routeService.init();
   const routeMeta = routeService.getRoutes().map(item => ({
     ...item,
-    absolutePath: item.absolutePath.replace(testDir, '').replace(/\\/g, '/'),
+    absolutePath: item.absolutePath.replace(testDir, ''),
   }));
   test('normalizeRoutePath', () => {
     expect(normalizeRoutePath('/v1/en/foo/bar', 'en', '/', 'v1')).toEqual({
