@@ -1,4 +1,4 @@
-# v2 Hello World
+# v2 中文
 
 :::tip 提示
 

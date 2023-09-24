@@ -1,4 +1,4 @@
-# v2 Hello World
+# v2
 
 :::tip TIP
 
