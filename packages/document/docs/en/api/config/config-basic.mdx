@@ -230,3 +230,22 @@ export default defineConfig({
 import GlobalUIComponents from '../../fragments/global-ui-components.mdx';
 
 <GlobalUIComponents />
+
+## multiVersion
+
+- Type: `{ default: string; versions: string[] }`
+
+You can enable multi-version support through the `multiVersion` parameter, for example:
+
+```ts title="rspress.config.ts"
+import { defineConfig } from 'rspress/config';
+
+export default defineConfig({
+  multiVersion: {
+    default: 'v1',
+    versions: ['v1', 'v2'],
+  },
+});
+```
+
+The `default` parameter is the default version, and the `versions` parameter is the version list.

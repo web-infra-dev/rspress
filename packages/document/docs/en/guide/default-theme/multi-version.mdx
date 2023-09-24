@@ -1,0 +1,57 @@
+# Multi Version
+
+Rspress's default theme supports multi-version document management. Next, we will introduce how to access multi-version documents.
+
+## `multiVersion` config
+
+Configure the version list and default version through `multiVersion`, for example:
+
+```ts title="rspress.config.ts"
+import { defineConfig } from 'rspress/config';
+
+export default defineConfig({
+  multiVersion: {
+    default: 'v1',
+    versions: ['v1', 'v2'],
+  },
+});
+```
+
+Here, `default` is the default version, and `versions` is the version list.
+
+## Adding Multi-Version Documents
+
+According to the version list you configured, add multi-version documents under the `docs` directory, for example:
+
+```bash
+docs
+├── v1
+│   ├── README.md
+│   └── guide
+│       └── README.md
+└── v2
+    ├── README.md
+    └── guide
+        └── README.md
+```
+
+In Rspress's conventional routing, for the default version, the version path prefix will be automatically omitted. For example, `v1/README.md` will be rendered as the `/README` route, while `v2/README.md` will be rendered as the `/v2/README` route.
+
+:::tip Tip
+
+For links in the document, you do not need to manually add the version prefix. Rspress will automatically add the corresponding version prefix according to the version of the current document. For example, the link `/guide/README` in `v2/README.md` will be rendered as `/v2/guide/README`.
+
+:::
+
+## Get the Current Version in Components
+
+In components, you can get the current version through `useVersion`, for example:
+
+```tsx
+import { useVersion } from 'rspress/runtime';
+
+export default () => {
+  const version = useVersion();
+  return <div>Current version: {version}</div>;
+};
+```
