@@ -1,0 +1,57 @@
+# 多版本文档
+
+Rspress 的默认主题中支持多版本文档管理，接下来，我们将介绍如何接入多版本文档。
+
+## `multiVersion` 配置
+
+通过 `multiVersion` 配置版本列表和默认版本，比如：
+
+```ts title="rspress.config.ts"
+import { defineConfig } from 'rspress/config';
+
+export default defineConfig({
+  multiVersion: {
+    default: 'v1',
+    versions: ['v1', 'v2'],
+  },
+});
+```
+
+其中，`default` 为默认版本，`versions` 为版本列表。
+
+## 添加多版本文档
+
+根据你配置的版本列表，在 `docs` 目录下，添加多版本文档，比如：
+
+```bash
+docs
+├── v1
+│   ├── README.md
+│   └── guide
+│       └── README.md
+└── v2
+    ├── README.md
+    └── guide
+        └── README.md
+```
+
+在 Rspress 的约定式路由中，对于默认版本，会自动省略掉版本的路径前缀。如 `v1/README.md` 会被渲染为 `/README` 路由，而 `v2/README.md` 会被渲染为 `/v2/README` 路由。
+
+:::tip 提示
+
+对于文档中的链接，你不需要手动添加版本前缀，Rspress 会自动根据当前文档的版本，添加对应的版本前缀。如 `v2/README.md` 中的链接 `/guide/README` 会被渲染为 `/v2/guide/README`。
+
+:::
+
+## 组件中获取当前版本
+
+在组件中，你可以通过 `useVersion` 获取当前版本，比如：
+
+```tsx
+import { useVersion } from 'rspress/runtime';
+
+export default () => {
+  const version = useVersion();
+  return <div>当前版本：{version}</div>;
+};
+```

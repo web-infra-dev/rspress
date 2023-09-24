@@ -16,6 +16,7 @@ export class PluginDriver {
   constructor(config: UserConfig, isProd: boolean) {
     this.#config = config;
     this.#isProd = isProd;
+    this.#plugins = [];
   }
 
   // The init function is used to initialize the doc plugins and will execute before the build process.

@@ -230,3 +230,22 @@ export default defineConfig({
 import GlobalUIComponents from '../../fragments/global-ui-components.mdx';
 
 <GlobalUIComponents />
+
+## multiVersion
+
+- Type: `{ default: string; versions: string[] }`
+
+你可以通过 `multiVersion` 参数来增加多版本文档支持，比如：
+
+```ts title="rspress.config.ts"
+import { defineConfig } from 'rspress/config';
+
+export default defineConfig({
+  multiVersion: {
+    default: 'v1',
+    versions: ['v1', 'v2'],
+  },
+});
+```
+
+其中，`default` 为默认版本，`versions` 为所有版本列表。

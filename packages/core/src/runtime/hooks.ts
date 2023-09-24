@@ -32,6 +32,11 @@ export function useLang(): string {
   return ctx.data.page.lang || '';
 }
 
+export function useVersion(): string {
+  const ctx = useContext(DataContext);
+  return ctx.data.page.version || '';
+}
+
 export function useDark() {
   const ctx = useContext(ThemeContext);
   return ctx.theme === 'dark';

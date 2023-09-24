@@ -29,6 +29,19 @@ function MyComponent() {
 }
 ```
 
+## useVersion
+
+Get the current version, the return value is a string, which is the current version.
+
+```tsx
+import { useVersion } from 'rspress/runtime';
+
+export default () => {
+  const version = useVersion();
+  return <div>Current version: {version}</div>;
+};
+```
+
 ## useDark
 
 Whether it is dark mode currently, the return value is a boolean value.

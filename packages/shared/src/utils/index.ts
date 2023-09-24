@@ -85,9 +85,15 @@ export function isExternalUrl(url: string) {
 
 export function replaceLang(
   rawUrl: string,
-  targetLang: string,
-  defaultLang: string,
-  langs: string[],
+  lang: {
+    current: string;
+    target: string;
+    default: string;
+  },
+  version: {
+    current: string;
+    default: string;
+  },
   base = '',
 ) {
   let url = removeBase(rawUrl, base);
@@ -95,21 +101,39 @@ export function replaceLang(
   if (!url) {
     url = '/index.html';
   }
-  const originalLang = url.split('/')[1];
-  const inDefaultLang = !langs.includes(originalLang);
-  let result: string;
-  if (inDefaultLang) {
-    if (targetLang === defaultLang) {
-      result = url;
-    } else {
-      result = addLeadingSlash(`${targetLang}${url}`);
-    }
-  } else if (targetLang === defaultLang) {
-    result = url.replace(`/${originalLang}`, '');
-  } else {
-    result = url.replace(originalLang, targetLang);
+  let versionPart = '';
+  let langPart = '';
+  let purePathPart = '';
+
+  const parts = url.split('/').filter(Boolean);
+
+  if (version.current && version.current !== version.default) {
+    versionPart = parts.shift() || '';
   }
-  return withBase(result, base);
+
+  // Should we remove the lang part?
+  // The answer is as follows:
+  if (lang.target !== lang.default) {
+    langPart = lang.target;
+    if (lang.current !== lang.default) {
+      parts.shift();
+    }
+  } else {
+    parts.shift();
+  }
+
+  purePathPart = parts.join('/') || '';
+
+  if ((versionPart || langPart) && !purePathPart) {
+    purePathPart = 'index.html';
+  }
+
+  return withBase(
+    addLeadingSlash(
+      [versionPart, langPart, purePathPart].filter(Boolean).join('/'),
+    ),
+    base,
+  );
 }
 
 export const omit = (obj: Record<string, unknown>, keys: string[]) => {
