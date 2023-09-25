@@ -7,11 +7,10 @@ import styles from './index.module.scss';
 import { SidebarItem } from './SidebarItem';
 import { highlightTitleStyle, matchCache, type SidebarItemProps } from '.';
 import { normalizeHref, withBase } from '@/runtime';
-import { useNavigateWithTransition } from '@/theme-default/logic';
 
 export function SidebarGroup(props: SidebarItemProps) {
   const { item, depth = 0, activeMatcher, id, setSidebarData } = props;
-  const navigate = useNavigateWithTransition();
+  const navigate = useNavigate();
   const isGroupMatched = matchCache.get(item);
   const containerRef = useRef<HTMLDivElement>(null);
   const transitionRef = useRef<any>(null);

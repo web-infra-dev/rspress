@@ -1,6 +1,7 @@
-import { createContext, useContext } from 'react';
+import { createContext, useContext, useLayoutEffect, useState } from 'react';
 import { PageData } from '@rspress/shared';
 import i18nTextData from 'virtual-i18n-text';
+import { flushSync } from 'react-dom';
 
 // Type shim for window.__EDEN_PAGE_DATA__
 declare global {
@@ -46,4 +47,26 @@ export function useI18n<T = Record<string, Record<string, string>>>() {
   const lang = useLang();
 
   return (key: keyof T) => i18nTextData[key][lang];
+}
+
+declare global {
+  interface Document {
+    startViewTransition: (callback: () => void) => void;
+  }
+}
+
+export function useViewTransition(dom) {
+  const [element, setElement] = useState(dom);
+  useLayoutEffect(() => {
+    if (document.startViewTransition) {
+      document.startViewTransition(() => {
+        flushSync(() => {
+          setElement(dom);
+        });
+      });
+    } else {
+      setElement(dom);
+    }
+  }, [dom]);
+  return element;
 }
