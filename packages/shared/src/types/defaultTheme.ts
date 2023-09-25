@@ -81,6 +81,10 @@ export interface Config {
    * Whether to hide the navbar
    */
   hideNavbar?: boolean;
+  /**
+   * Whether to enable the animation for translation pages
+   */
+  enableContentAnimation?: boolean;
 }
 
 /**
