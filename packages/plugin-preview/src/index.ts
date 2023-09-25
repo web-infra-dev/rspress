@@ -4,6 +4,7 @@ import {
   type RspressPlugin,
   type RouteMeta,
   RSPRESS_TEMP_DIR,
+  normalizePosixPath,
 } from '@rspress/shared';
 import { remarkCodeToDemo } from './codeToDemo';
 import { injectDemoBlockImport, toValidVarName } from './utils';
@@ -103,7 +104,9 @@ import Demo from ${JSON.stringify(demoComponentPath)}
             const ast = processor.parse(source);
             let index = 1;
             const { pageName } = routeMeta.find(
-              meta => meta.absolutePath === filepath,
+              meta =>
+                normalizePosixPath(meta.absolutePath) ===
+                normalizePosixPath(filepath),
             )!;
 
             const registerDemo = (
@@ -169,7 +172,9 @@ import Demo from ${JSON.stringify(demoComponentPath)}
                   (!node?.meta?.includes('web') && isMobile);
 
                 const { pageName } = routeMeta.find(
-                  meta => meta.absolutePath === filepath,
+                  meta =>
+                    normalizePosixPath(meta.absolutePath) ===
+                    normalizePosixPath(filepath),
                 )!;
                 const id = `${toValidVarName(pageName)}_${index++}`;
 
