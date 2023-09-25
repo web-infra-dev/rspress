@@ -37,6 +37,11 @@ test.describe('basic test', async () => {
       resolve();
     });
     await page.goto(`http://localhost:${appPort}/start`);
+    setTimeout(() => {
+      // If the animation is not triggered in 10 seconds, the test will fail
+      expect(true).toBe(false);
+      resolve();
+    }, 10000);
     await end;
   });
 });
