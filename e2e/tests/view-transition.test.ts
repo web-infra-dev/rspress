@@ -27,7 +27,7 @@ test.describe('basic test', async () => {
     }
   });
 
-  test.only('Navigation with animation', async ({ page }) => {
+  test('Navigation with animation', async ({ page }) => {
     await page.goto(`http://localhost:${appPort}/guide`);
     const session = await page.context().newCDPSession(page);
     await session.send('Animation.enable');
