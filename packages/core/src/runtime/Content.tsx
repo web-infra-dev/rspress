@@ -1,7 +1,7 @@
 import { ReactNode, Suspense } from 'react';
 import { matchRoutes, useLocation } from 'react-router-dom';
 import { normalizeRoutePath } from './utils';
-import { useViewTransition } from './hooks';
+import { usePageData, useViewTransition } from './hooks';
 
 const { routes } = process.env.__SSR__
   ? (require('virtual-routes-ssr') as typeof import('virtual-routes-ssr'))
@@ -17,7 +17,10 @@ export const Content = ({ fallback = <></> }: { fallback?: ReactNode }) => {
   /**
    * useLayoutEffect to flush elements animation
    */
-  const element = useViewTransition(routesElement);
+  let element = routesElement;
+  if (usePageData().siteData.themeConfig.enableContentAnimation) {
+    element = useViewTransition(routesElement);
+  }
 
   // React 17 Suspense SSR is not supported
   if (!process.env.__IS_REACT_18__ && process.env.__SSR__) {
