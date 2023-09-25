@@ -1,11 +1,9 @@
 import { demos } from 'virtual-meta';
 import { createElement } from 'react';
 import { NoSSR, useLocation } from '@rspress/core/runtime';
-import Theme from '@rspress/core/theme';
+import { NotFoundLayout } from '@rspress/core/theme';
 import { normalizeId } from './utils';
 import './virtual-demo.scss';
-
-const { NotFoundLayout } = Theme;
 
 export default function Demo(props: { iframePosition: string }) {
   // get the id from the pathname
