@@ -1,5 +1,21 @@
 # @rspress/plugin-auto-sidebar
 
+## 0.2.0
+
+### Minor Changes
+
+- 178ba42: feat: support multi version docs
+
+  feat: 支持文档多版本
+
+- da74868: using view transition to present animation when page navigate
+
+### Patch Changes
+
+- Updated dependencies [178ba42]
+- Updated dependencies [da74868]
+  - @rspress/shared@0.2.0
+
 ## 0.1.1
 
 ### Patch Changes

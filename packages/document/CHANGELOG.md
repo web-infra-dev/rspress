@@ -1,5 +1,11 @@
 # @rspress/docs
 
+## 0.2.0
+
+### Minor Changes
+
+- da74868: using view transition to present animation when page navigate
+
 ## 0.1.1
 
 ## 0.1.0
