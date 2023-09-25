@@ -56,17 +56,35 @@ declare global {
 }
 
 export function useViewTransition(dom) {
+  /**
+   * use a pesudo element to hold the actual JSX element so we can schedule the
+   * update later in sync
+   */
   const [element, setElement] = useState(dom);
+
   useLayoutEffect(() => {
     if (document.startViewTransition) {
+      /**
+       * the browser will take a screenshot here
+       */
       document.startViewTransition(() => {
+        /**
+         * react will batch all the updates in callback and flush it sync
+         */
         flushSync(() => {
           setElement(dom);
         });
+        /**
+         * react flushed the dom to browser
+         * and the browser will start the animation
+         */
       });
     } else {
       setElement(dom);
     }
   }, [dom]);
+  /**
+   * take this element to the actual VDOM tree
+   */
   return element;
 }
