@@ -3,7 +3,7 @@ import { Header, NormalizedSidebarGroup, SidebarItem } from '@rspress/shared';
 import { useSidebarData } from '../../logic';
 import { Link } from '../Link';
 import styles from './index.module.scss';
-import { usePageData, normalizeHref, withBase, isEqualPath } from '@/runtime';
+import { usePageData, useNormalizeHrefInRuntime as normalizeHref, withBase, isEqualPath } from '@/runtime';
 
 interface GroupItem {
   text?: string;
@@ -26,6 +26,7 @@ export function Overview() {
     siteData,
     page: { routePath },
   } = usePageData();
+  const cleanUrls = !!usePageData()?.siteData?.route?.cleanUrls;
   const { pages } = siteData;
   const overviewModules = pages.filter(
     page =>
@@ -37,7 +38,7 @@ export function Overview() {
   };
   function normalizeSidebarItem(item: NormalizedSidebarGroup | SidebarItem) {
     const pageModule = overviewModules.find(m =>
-      isEqualPath(m.routePath, withBase(item.link || '')),
+      isEqualPath(m.routePath, withBase(item.link || ''), cleanUrls),
     );
     const getChildLink = (
       traverseItem: SidebarItem | NormalizedSidebarGroup,
@@ -67,7 +68,7 @@ export function Overview() {
           .filter(Boolean),
       })) as Group[];
     const singleLinks = overviewSidebarGroups.filter(
-      item => !('items' in item) && !isEqualPath(item.link || '', routePath),
+      item => !('items' in item) && !isEqualPath(item.link || '', routePath, cleanUrls),
     );
     return [
       ...group,

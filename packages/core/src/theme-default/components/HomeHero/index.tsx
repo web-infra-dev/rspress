@@ -1,7 +1,7 @@
 import { FrontMatterMeta } from '@rspress/shared';
 import { Button } from '../Button';
 import styles from './index.module.scss';
-import { normalizeHref } from '@/runtime';
+import { useNormalizeHrefInRuntime as normalizeHref } from '@/runtime';
 
 const DEFAULT_HERO = {
   name: 'modern',

@@ -1,7 +1,7 @@
 export * from './hooks';
 export * from './Content';
 export {
-  normalizeHref,
+  useNormalizeHrefInRuntime,
   withBase,
   removeBase,
   addLeadingSlash,

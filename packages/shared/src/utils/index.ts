@@ -157,7 +157,7 @@ export const parseUrl = (
   };
 };
 
-export function normalizeHref(url?: string) {
+export function normalizeHref(url?: string, cleanUrls: boolean = false) {
   if (!url) {
     return '/';
   }
@@ -173,7 +173,7 @@ export function normalizeHref(url?: string) {
     return url;
   }
 
-  if (!cleanUrl.endsWith('.html')) {
+  if (!cleanUrls && !cleanUrl.endsWith('.html')) {
     if (cleanUrl.endsWith('/')) {
       cleanUrl += 'index.html';
     } else {

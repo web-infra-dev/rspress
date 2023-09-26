@@ -172,6 +172,7 @@ export interface SiteData<ThemeConfig = NormalizedDefaultThemeConfig> {
   root: string;
   base: string;
   lang: string;
+  route: RouteOptions;
   locales: { lang: string; label: string }[];
   title: string;
   description: string;
@@ -281,6 +282,10 @@ export interface RouteOptions {
    * Exclude files from being converted to routes
    */
   exclude?: string[];
+  /**
+   * use links without .html files
+   */
+  cleanUrls?: boolean;
 }
 
 export interface SearchHooks {

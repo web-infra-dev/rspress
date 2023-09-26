@@ -8,6 +8,7 @@ import {
   withBase as rawWithBase,
   removeBase as rawRemoveBase,
 } from '@rspress/shared';
+import { usePageData } from './hooks';
 
 export function normalizeRoutePath(routePath: string) {
   return decodeURIComponent(routePath)
@@ -23,8 +24,13 @@ export function removeBase(url: string): string {
   return rawRemoveBase(url, siteData.base);
 }
 
-export function isEqualPath(a: string, b: string) {
-  return withBase(normalizeHref(a)) === withBase(normalizeHref(b));
+export function isEqualPath(a: string, b: string, cleanUrls: boolean) {
+  return withBase(normalizeHref(a, cleanUrls)) === withBase(normalizeHref(b, cleanUrls));
+}
+
+export function useNormalizeHrefInRuntime(a: string){
+  const cleanUrls = !!usePageData()?.siteData?.route?.cleanUrls;
+  return normalizeHref(a, cleanUrls);
 }
 
 export {
@@ -32,5 +38,4 @@ export {
   removeTrailingSlash,
   normalizeSlash,
   isProduction,
-  normalizeHref,
 };
