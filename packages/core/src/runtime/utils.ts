@@ -23,8 +23,8 @@ export function removeBase(url: string): string {
   return rawRemoveBase(url, siteData.base);
 }
 
-export function isEqualPath(a: string, b: string, cleanUrls: boolean) {
-  return withBase(normalizeHref(a, cleanUrls)) === withBase(normalizeHref(b, cleanUrls));
+export function isEqualPath(a: string, b: string) {
+  return withBase(useNormalizeHrefInRuntime(a)) === withBase(useNormalizeHrefInRuntime(b));
 }
 
 export function useNormalizeHrefInRuntime(a: string){
