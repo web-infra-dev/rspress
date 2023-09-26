@@ -218,9 +218,9 @@ import Demo from ${JSON.stringify(demoComponentPath)}
     },
     builderConfig: {
       tools: {
-        // eslint-disable-next-line @typescript-eslint/ban-ts-comment, @typescript-eslint/prefer-ts-expect-error
-        // @ts-ignore
         rspack: {
+          // eslint-disable-next-line @typescript-eslint/ban-ts-comment, @typescript-eslint/prefer-ts-expect-error
+          // @ts-ignore
           plugins: [demoRuntimeModule],
         },
         bundlerChain(chain) {

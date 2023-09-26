@@ -167,19 +167,31 @@ async function createInternalBuildConfig(
           );
         }
       },
-      rspack: {
-        // This config can be removed after upgrading Rspack v0.4
-        // https://github.com/web-infra-dev/rspack/issues/3096
-        optimization: {
-          chunkIds: 'deterministic',
-        },
-      },
-      bundlerChain(chain) {
+      rspack: {},
+      bundlerChain(chain, { CHAIN_ID }) {
+        // TODO: default in rspack-provider
+        chain.module
+          .rule(CHAIN_ID.RULE.JS)
+          .use(CHAIN_ID.USE.SWC)
+          .tap(options => {
+            options.jsc.transform.react.runtime = 'automatic';
+            return options;
+          });
+
+        const swcLoaderOptions = chain.module
+          .rule(CHAIN_ID.RULE.JS)
+          .use(CHAIN_ID.USE.SWC)
+          .get('options');
+
         chain.module
           .rule('MDX')
-          .type('jsx')
+          .type('javascript/auto')
           .test(/\.mdx?$/)
           .oneOf('MDXCompile')
+          .use(CHAIN_ID.USE.SWC)
+          .loader('builtin:swc-loader')
+          .options(swcLoaderOptions)
+          .end()
           .use('mdx-loader')
           .loader(require.resolve('../loader.cjs'))
           .options({
@@ -196,6 +208,13 @@ async function createInternalBuildConfig(
           .options({
             multiple: config?.replaceRules || [],
           });
+
+        if (chain.plugins.has(CHAIN_ID.PLUGIN.REACT_FAST_REFRESH)) {
+          chain.plugin(CHAIN_ID.PLUGIN.REACT_FAST_REFRESH).tap(options => {
+            options[0].include = [/\.([cm]js|[jt]sx?|flow)$/i, /\.mdx?$/i];
+            return options;
+          });
+        }
 
         chain.resolve.extensions.prepend('.md').prepend('.mdx').prepend('.mjs');
       },
