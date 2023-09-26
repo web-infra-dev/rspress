@@ -394,6 +394,7 @@ export async function siteDataVMPlugin(context: FactoryContext) {
     title: userConfig?.title || '',
     description: userConfig?.description || '',
     icon: userConfig?.icon || '',
+    route: userConfig?.route,
     themeConfig: normalizeThemeConfig(userConfig, pages),
     base: userConfig?.base || '/',
     lang: userConfig?.lang || '',
