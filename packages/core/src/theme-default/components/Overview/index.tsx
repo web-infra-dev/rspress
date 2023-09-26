@@ -26,7 +26,6 @@ export function Overview() {
     siteData,
     page: { routePath },
   } = usePageData();
-  const cleanUrls = Boolean(siteData?.route?.cleanUrls);
   const { pages } = siteData;
   const overviewModules = pages.filter(
     page =>
@@ -38,7 +37,7 @@ export function Overview() {
   };
   function normalizeSidebarItem(item: NormalizedSidebarGroup | SidebarItem) {
     const pageModule = overviewModules.find(m =>
-      isEqualPath(m.routePath, withBase(item.link || ''), cleanUrls),
+      isEqualPath(m.routePath, withBase(item.link || '')),
     );
     const getChildLink = (
       traverseItem: SidebarItem | NormalizedSidebarGroup,
@@ -68,7 +67,7 @@ export function Overview() {
           .filter(Boolean),
       })) as Group[];
     const singleLinks = overviewSidebarGroups.filter(
-      item => !('items' in item) && !isEqualPath(item.link || '', routePath, cleanUrls),
+      item => !('items' in item) && !isEqualPath(item.link || '', routePath),
     );
     return [
       ...group,
