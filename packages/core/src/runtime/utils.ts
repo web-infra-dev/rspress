@@ -8,7 +8,6 @@ import {
   withBase as rawWithBase,
   removeBase as rawRemoveBase,
 } from '@rspress/shared';
-import { usePageData } from './hooks';
 
 export function normalizeRoutePath(routePath: string) {
   return decodeURIComponent(routePath)
@@ -29,7 +28,7 @@ export function isEqualPath(a: string, b: string, cleanUrls: boolean) {
 }
 
 export function useNormalizeHrefInRuntime(a: string){
-  const cleanUrls = !!usePageData()?.siteData?.route?.cleanUrls;
+  const cleanUrls = Boolean(siteData?.route?.cleanUrls);
   return normalizeHref(a, cleanUrls);
 }
 

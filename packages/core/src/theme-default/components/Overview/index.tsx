@@ -26,7 +26,7 @@ export function Overview() {
     siteData,
     page: { routePath },
   } = usePageData();
-  const cleanUrls = !!usePageData()?.siteData?.route?.cleanUrls;
+  const cleanUrls = Boolean(siteData?.route?.cleanUrls);
   const { pages } = siteData;
   const overviewModules = pages.filter(
     page =>
