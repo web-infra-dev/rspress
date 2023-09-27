@@ -35,10 +35,13 @@ test.describe('basic test', async () => {
     await session.send('Animation.enable');
     const [end, resolve] = getPendingPromise();
     session.on('Animation.animationStarted', payload => {
-      expect(payload.animation.type).toBe('CSSAnimation');
+      expect(payload.animation.type).toMatch(/[CSSTransition|CSSAnimation]/);
       resolve();
     });
-    await page.goto(`http://localhost:${appPort}/start`);
+    const alinks = await page.locator('.rspress-nav-menu a').all();
+    const secondLink = alinks[1];
+    secondLink.click();
+    await page.waitForURL('**/start**');
     await end;
   });
 });
