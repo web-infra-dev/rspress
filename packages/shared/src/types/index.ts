@@ -269,14 +269,6 @@ export interface PageData {
 
 export interface RouteOptions {
   /**
-   * The directory to search for pages
-   */
-  root?: string;
-  /**
-   * The basename of the site
-   */
-  prefix?: string;
-  /**
    * The extension name of the filepath that will be converted to a route
    * @default ['js','jsx','ts','tsx','md','mdx']
    */
