@@ -310,3 +310,20 @@ export default defineConfig({
   },
 });
 ```
+
+### route.cleanUrls
+
+- Type: `Boolean`
+- Default: `false`
+
+开启后可以生成无 `.html` 后缀的链接，URL 可以更加简洁
+
+```js
+import { defineConfig } from 'rspress/config';
+
+export default defineConfig({
+  route: {
+    cleanUrls: true
+  },
+});
+```
