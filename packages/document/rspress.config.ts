@@ -23,7 +23,6 @@ export default defineConfig({
   },
   route: {
     exclude: ['**/fragments/**'],
-    cleanUrls: true,
   },
   themeConfig: {
     enableContentAnimation: true,
