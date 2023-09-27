@@ -24,10 +24,10 @@ export function removeBase(url: string): string {
 }
 
 export function isEqualPath(a: string, b: string) {
-  return withBase(useNormalizeHrefInRuntime(a)) === withBase(useNormalizeHrefInRuntime(b));
+  return withBase(normalizeHrefInRuntime(a)) === withBase(normalizeHrefInRuntime(b));
 }
 
-export function useNormalizeHrefInRuntime(a: string){
+export function normalizeHrefInRuntime(a: string){
   const cleanUrls = Boolean(siteData?.route?.cleanUrls);
   return normalizeHref(a, cleanUrls);
 }

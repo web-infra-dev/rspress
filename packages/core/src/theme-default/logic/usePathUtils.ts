@@ -3,7 +3,7 @@ import {
   removeBase,
   useLang,
   usePageData,
-  useNormalizeHrefInRuntime as normalizeHref,
+  normalizeHrefInRuntime as normalizeHref,
   useVersion,
   withBase,
 } from '@/runtime';
