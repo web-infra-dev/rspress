@@ -6,7 +6,7 @@ import {
 import { Link } from '../Link';
 import { Tag } from '../Tag';
 import styles from './index.module.scss';
-import { useNormalizeHrefInRuntime as normalizeHref } from '@/runtime';
+import { normalizeHrefInRuntime as normalizeHref } from '@/runtime';
 
 interface Props {
   pathname: string;

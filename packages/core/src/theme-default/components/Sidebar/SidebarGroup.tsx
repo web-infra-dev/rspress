@@ -6,7 +6,7 @@ import { Tag } from '../Tag';
 import styles from './index.module.scss';
 import { SidebarItem } from './SidebarItem';
 import { highlightTitleStyle, matchCache, type SidebarItemProps } from '.';
-import { useNormalizeHrefInRuntime as normalizeHref, withBase } from '@/runtime';
+import { normalizeHrefInRuntime as normalizeHref, withBase } from '@/runtime';
 
 export function SidebarGroup(props: SidebarItemProps) {
   const { item, depth = 0, activeMatcher, id, setSidebarData } = props;
