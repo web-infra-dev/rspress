@@ -14,6 +14,52 @@
   display: none;
 }
 
+:global(.rspress-doc) {
+  min-height: 60vh;
+  view-transition-name: flip;
+}
+
+:global(*) {
+  view-transition-name: none;
+}
+
+
+@keyframes fade-out {
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+}
+
+@keyframes fade-in {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+::view-transition-old(flip),
+::view-transition-new(flip) {
+  animation-time: 250ms;
+}
+
+::view-transition-old(flip) {
+  animation-name: fade-out;
+  transition-timing-function: cubic-bezier(0, 0, 0.58, 1);
+}
+
+::view-transition-new(flip) {
+  animation-name: fade-in;
+  animation-delay: 180ms;
+  transition-timing-function: cubic-bezier(0.42, 0, 1, 1);
+}
+
 @media (max-width: 960px) {
   .docLayout {
     position: relative;

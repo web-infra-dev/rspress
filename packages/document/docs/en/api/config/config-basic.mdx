@@ -230,3 +230,83 @@ export default defineConfig({
 import GlobalUIComponents from '../../fragments/global-ui-components.mdx';
 
 <GlobalUIComponents />
+
+## multiVersion
+
+- Type: `{ default: string; versions: string[] }`
+
+You can enable multi-version support through the `multiVersion` parameter, for example:
+
+```ts title="rspress.config.ts"
+import { defineConfig } from 'rspress/config';
+
+export default defineConfig({
+  multiVersion: {
+    default: 'v1',
+    versions: ['v1', 'v2'],
+  },
+});
+```
+
+The `default` parameter is the default version, and the `versions` parameter is the version list.
+
+## route
+
+- Type: `Object`
+
+Custom route config.
+
+### route.include
+
+- Type: `string[]`
+- Default: `[]`
+
+Add some extra files in the route. By default, only the files in the document root directory will be included in the route. If you want to add some extra files to the route, you can use this option. For example:
+
+```js
+import { defineConfig } from 'rspress/config';
+
+export default defineConfig({
+  route: {
+    include: ['other-dir/**/*'],
+  },
+});
+```
+
+> Note: The strings in the array support glob patterns.
+
+### route.exclude
+
+- Type: `string[]`
+- Default: `[]`
+
+Exclude some files from the route. For example:
+
+```js
+import { defineConfig } from 'rspress/config';
+
+export default defineConfig({
+  route: {
+    exclude: ['custom.tsx', 'component/**/*'],
+  },
+});
+```
+
+> Note: The strings in the array support glob patterns.
+
+### route.extensions
+
+- Type: `string[]`
+- Default: `[]`
+
+The extensions of the files that will be included in the route. By default, Rspress will include all `'js'`, `'jsx'`, `'ts'`, `'tsx'`, `'md'`, `'mdx'` files in the route. If you want to customize the extensions, you can use this option. For example:
+
+```js
+import { defineConfig } from 'rspress/config';
+
+export default defineConfig({
+  route: {
+    extensions: ['.jsx', '.md', '.mdx'],
+  },
+});
+```

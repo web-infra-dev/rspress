@@ -1,5 +1,21 @@
 # @rspress/plugin-preview
 
+## 0.2.0
+
+### Minor Changes
+
+- da74868: using view transition to present animation when page navigate
+
+### Patch Changes
+
+- 100e0f6: fix: preview plugin build failed
+
+  fix: 预览插件构建崩溃
+
+- Updated dependencies [178ba42]
+- Updated dependencies [da74868]
+  - @rspress/shared@0.2.0
+
 ## 0.1.1
 
 ### Patch Changes

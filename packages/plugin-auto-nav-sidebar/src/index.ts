@@ -1,6 +1,7 @@
 import path from 'path';
 import fs from '@modern-js/utils/fs-extra';
 import {
+  LocaleConfig,
   RspressPlugin,
   Sidebar,
   SidebarGroup,
@@ -294,32 +295,72 @@ export async function walk(workDir: string) {
   };
 }
 
+function processLocales(
+  locales: LocaleConfig[],
+  versions: string[],
+  root: string,
+) {
+  return Promise.all(
+    locales.map(async locale => {
+      const walks = versions.length
+        ? await Promise.all(
+            versions.map(version =>
+              walk(path.join(root, version, locale.lang)),
+            ),
+          )
+        : [await walk(path.join(root, locale.lang))];
+
+      const combined = walks.reduce(
+        (acc, cur) => ({
+          nav: [...(acc.nav || []), ...(cur.nav || [])],
+          sidebar: { ...acc.sidebar, ...cur.sidebar },
+        }),
+        {} as Omit<LocaleConfig, 'lang' | 'label'>,
+      );
+
+      return { ...locale, ...combined };
+    }),
+  );
+}
+
 export function pluginAutoNavSidebar(): RspressPlugin {
   return {
     name: 'auto-nav-sidebar',
     async config(config) {
       config.themeConfig = config.themeConfig || {};
+      config.themeConfig.locales = config.themeConfig.locales || [];
       const langs =
         config.locales?.map(locale => locale.lang) ||
         config.themeConfig?.locales?.map(locale => locale.lang) ||
         [];
 
       const hasLocales = langs.length > 0;
+      const versions = config.multiVersion?.versions || [];
+
       if (hasLocales) {
-        config.themeConfig.locales = await Promise.all(
-          config.themeConfig.locales!.map(async locale => {
-            return {
-              ...locale,
-              ...(await walk(path.join(config.root!, locale.lang))),
-            };
-          }),
+        config.themeConfig.locales = await processLocales(
+          config.themeConfig.locales,
+          versions,
+          config.root!,
         );
       } else {
-        config.themeConfig = {
-          ...config.themeConfig,
-          ...(await walk(config.root!)),
-        };
+        const walks = versions.length
+          ? await Promise.all(
+              versions.map(version => walk(path.join(config.root!, version))),
+            )
+          : [await walk(config.root!)];
+
+        const combined = walks.reduce(
+          (acc, cur) => ({
+            nav: [...(acc.nav || []), ...(cur.nav || [])],
+            sidebar: { ...acc.sidebar, ...cur.sidebar },
+          }),
+          {} as Omit<LocaleConfig, 'lang' | 'label'>,
+        );
+
+        config.themeConfig = { ...config.themeConfig, ...combined };
       }
+
       return config;
     },
   };

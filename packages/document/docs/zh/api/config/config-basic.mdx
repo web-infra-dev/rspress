@@ -230,3 +230,83 @@ export default defineConfig({
 import GlobalUIComponents from '../../fragments/global-ui-components.mdx';
 
 <GlobalUIComponents />
+
+## multiVersion
+
+- Type: `{ default: string; versions: string[] }`
+
+你可以通过 `multiVersion` 参数来增加多版本文档支持，比如：
+
+```ts title="rspress.config.ts"
+import { defineConfig } from 'rspress/config';
+
+export default defineConfig({
+  multiVersion: {
+    default: 'v1',
+    versions: ['v1', 'v2'],
+  },
+});
+```
+
+其中，`default` 为默认版本，`versions` 为所有版本列表。
+
+## route
+
+- Type: `Object`
+
+自定义路由配置。
+
+### route.include
+
+- Type: `string[]`
+- Default: `[]`
+
+在路由中添加一些额外的文件。默认情况下，只有文档根目录中的文件才会包含在路由中。如果你想在路由中添加一些额外的文件，你可以使用这个选项。例如：
+
+```js
+import { defineConfig } from 'rspress/config';
+
+export default defineConfig({
+  route: {
+    include: ['other-dir/**/*'],
+  },
+});
+```
+
+> 注意：数组中的字符串支持 glob 模式。
+
+### route.exclude
+
+- Type: `string[]`
+- Default: `[]`
+
+从路由中排除一些文件。例如：
+
+```js
+import { defineConfig } from 'rspress/config';
+
+export default defineConfig({
+  route: {
+    exclude: ['custom.tsx', 'component/**/*'],
+  },
+});
+```
+
+> 注意：数组中的字符串支持 glob 模式。
+
+### route.extensions
+
+- Type: `string[]`
+- Default: `[]`
+
+将包含在路由中的文件的扩展名。默认情况下，Rspress 会在路由中包含所有 `'js'、'jsx'、'ts'、'tsx'、'md'、'mdx' 文件。如果你想自定义扩展名，你可以使用这个选项。例如：
+
+```js
+import { defineConfig } from 'rspress/config';
+
+export default defineConfig({
+  route: {
+    extensions: ['.jsx', '.md', '.mdx'],
+  },
+});
+```

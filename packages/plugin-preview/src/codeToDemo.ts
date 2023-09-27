@@ -1,7 +1,11 @@
 import { join } from 'path';
 import { visit } from 'unist-util-visit';
 import fs from '@modern-js/utils/fs-extra';
-import { RSPRESS_TEMP_DIR, type RouteMeta } from '@rspress/shared';
+import {
+  RSPRESS_TEMP_DIR,
+  normalizePosixPath,
+  type RouteMeta,
+} from '@rspress/shared';
 import type { Plugin } from 'unified';
 import type { Root } from 'mdast';
 import type { MdxjsEsm } from 'mdast-util-mdxjs-esm';
@@ -27,7 +31,9 @@ export const remarkCodeToDemo: Plugin<
   return (tree, vfile) => {
     const demos: MdxjsEsm[] = [];
     const route = routeMeta.find(
-      meta => meta.absolutePath === (vfile.path || vfile.history[0]),
+      meta =>
+        normalizePosixPath(meta.absolutePath) ===
+        normalizePosixPath(vfile.path || vfile.history[0]),
     );
     if (!route) {
       return;

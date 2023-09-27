@@ -1,19 +1,14 @@
 # @rspress/plugin-playground
 
+import { PackageManagerTabs } from '@theme';
+
 > [Source Code](https://github.com/web-infra-dev/rspress/tree/main/packages/plugin-playground)
 
 Provide a real-time playground to preview the code blocks in Markdown/MDX files.
 
 ## Installation
 
-```bash
-# npm
-npm install @rspress/plugin-playground -D
-# yarn
-yarn add @rspress/plugin-playground -D
-# pnpm
-pnpm install @rspress/plugin-playground -D
-```
+<PackageManagerTabs command="add @rspress/plugin-playground -D" />
 
 ## Usage
 
@@ -44,6 +39,7 @@ It is recommended to use js or jsx to write sample code to avoid ts type errors 
 :::
 
 The component code of internal components is declared in the mdx file. This plugin supports jsx and tsx. You can declare the following code block in the mdx file:
+
 ````md
 ```jsx
 import React from 'react';
@@ -145,6 +141,7 @@ interface PlaygroundOptions {
 ### render
 
 You can customize the render file for rendering Playground. Please note that the file name must be `Playground.(jsx?|tsx?)`
+
 ```ts
 pluginPlayground({
   render: '/path/to/render/Playground.tsx',
@@ -152,6 +149,7 @@ pluginPlayground({
 ```
 
 In the custom playground, you can directly import the original editor and renderer, and import pre-packaged dependencies through `_rspress_playground_imports`:
+
 ```ts
 import getImport from '_rspress_playground_imports';
 import { Render, Editor } from '@rspress/plugin-playground/web';
@@ -160,6 +158,7 @@ import { Render, Editor } from '@rspress/plugin-playground/web';
 You can refer to the built-in [Playground.tsx](https://github.com/web-infra-dev/rspress/tree/main/packages/plugin-playground/static/global-components/Playground.tsx).
 
 ### include
+
 By default, this plugin will automatically scan all import statements in the demos, the packages not used in the demos cannot be used in the playground. If you want to add other packages to the playground, you can use the `include` parameter:
 
 ```ts
@@ -169,13 +168,13 @@ pluginPlayground({
     'dayjs',
     // Add a package named "my-package", and it actual reference to "/path/to/package/index.js"
     ['my-package', '/path/to/package/index.js'],
-  ]
+  ],
 });
 ```
 
 ### babelUrl
 
-Playground uses `@babel/standalone` to compile the demo code, loaded from  [cdnjs.com](https://cdnjs.cloudflare.com/ajax/libs/babel-standalone/7.22.20/babel.min.js) by default.
+Playground uses `@babel/standalone` to compile the demo code, loaded from [cdnjs.com](https://cdnjs.cloudflare.com/ajax/libs/babel-standalone/7.22.20/babel.min.js) by default.
 
 You can modify the URL served to other CDNs, such as unpkg, jsdelivr, etc.
 

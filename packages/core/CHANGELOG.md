@@ -1,5 +1,33 @@
 # @rspress/core
 
+## 0.2.0
+
+### Minor Changes
+
+- 178ba42: feat: support multi version docs
+
+  feat: 支持文档多版本
+
+- da74868: using view transition to present animation when page navigate
+
+### Patch Changes
+
+- 100e0f6: fix: preview plugin build failed
+
+  fix: 预览插件构建崩溃
+
+- b56c083: feat: add min-height in .rspress-doc
+
+  feat: 给 .rspress-doc 添加 min-height 样式
+
+- Updated dependencies [178ba42]
+- Updated dependencies [da74868]
+  - @rspress/plugin-auto-nav-sidebar@0.2.0
+  - @rspress/shared@0.2.0
+  - @rspress/plugin-container-syntax@0.2.0
+  - @rspress/plugin-last-updated@0.2.0
+  - @rspress/plugin-medium-zoom@0.2.0
+
 ## 0.1.1
 
 ### Patch Changes

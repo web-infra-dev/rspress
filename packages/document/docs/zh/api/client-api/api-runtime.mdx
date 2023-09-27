@@ -29,6 +29,19 @@ function MyComponent() {
 }
 ```
 
+## useVersion
+
+在多版本文档的场景下，获取当前文档版本，返回值为一个字符串，即当前版本。
+
+```tsx
+import { useVersion } from 'rspress/runtime';
+
+export default () => {
+  const version = useVersion();
+  return <div>当前版本：{version}</div>;
+};
+```
+
 ## useDark
 
 当前主题是否为暗黑模式，返回值为一个布尔值。

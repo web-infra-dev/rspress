@@ -1,19 +1,14 @@
 # @rspress/plugin-playground
 
+import { PackageManagerTabs } from '@theme';
+
 > [源码地址](https://github.com/web-infra-dev/rspress/tree/main/packages/plugin-playground)
 
 提供一个可实时编辑的 Playground 以预览 md(x) 文件代码块中的组件。
 
 ## 安装
 
-```bash
-# npm
-npm install @rspress/plugin-playground -D
-# yarn
-yarn add @rspress/plugin-playground -D
-# pnpm
-pnpm install @rspress/plugin-playground -D
-```
+<PackageManagerTabs command="add @rspress/plugin-playground -D" />
 
 ## 使用
 
@@ -146,7 +141,9 @@ interface PlaygroundOptions {
 :::
 
 ### render
+
 你可以自定义 render 文件，用于渲染 Playground；请注意，文件名必须为 `Playground.(jsx?|tsx?)`
+
 ```ts
 pluginPlayground({
   render: '/path/to/render/Playground.tsx',
@@ -154,6 +151,7 @@ pluginPlayground({
 ```
 
 在自定义 Playground 中，你可以直接引用原始的编辑器和渲染器，以及通过 `_rspress_playground_imports` 引用提前打包好的依赖：
+
 ```ts
 import getImport from '_rspress_playground_imports';
 import { Render, Editor } from '@rspress/plugin-playground/web';
@@ -162,6 +160,7 @@ import { Render, Editor } from '@rspress/plugin-playground/web';
 可以参考自带的 [Playground.tsx](https://github.com/web-infra-dev/rspress/tree/main/packages/plugin-playground/static/global-components/Playground.tsx) 进行自定义；
 
 ### include
+
 默认情况下，该插件会自动扫描所有 demo 中的 import 语句；demo 中没有使用到的依赖，在 Playground 中也无法使用；如果希望将其他依赖加入到 Playground 中，可以使用 `include` 参数：
 
 ```ts
@@ -171,7 +170,7 @@ pluginPlayground({
     'dayjs',
     // 增加包名为“my-package”，实际指向“/path/to/package/index.js”的依赖
     ['my-package', '/path/to/package/index.js'],
-  ]
+  ],
 });
 ```
 

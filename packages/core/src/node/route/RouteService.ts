@@ -29,21 +29,40 @@ export const normalizeRoutePath = (
   routePath: string,
   lang: string,
   base: string,
-): string => {
-  let normalizedRoutePath = routePath
-    // remove leading slash
-    .replace(/^\//, '')
-    // extract lang prefix
-    .replace(new RegExp(`^${lang}`), '')
+  version: string,
+): { routePath: string; lang: string; version: string } => {
+  let versionPart = '';
+  let langPart = '';
+  let purePathPart = '';
+  const parts: string[] = routePath.split('/').filter(Boolean);
+
+  if (version) {
+    const versionToMatch = parts.shift();
+    if (versionToMatch !== version) {
+      versionPart = versionToMatch;
+    }
+  }
+
+  if (lang) {
+    const langToMatch = parts.shift();
+    if (langToMatch !== lang) {
+      langPart = langToMatch;
+    }
+  }
+  purePathPart = parts.join('/');
+
+  const normalizedRoutePath = addLeadingSlash(
+    [versionPart, langPart, purePathPart].filter(Boolean).join('/'),
+  )
     // remove the extension
-    .replace(/\.[^.]+$/, '');
+    .replace(/\.[^.]+$/, '')
+    .replace(/\/index$/, '/');
 
-  normalizedRoutePath = addLeadingSlash(normalizedRoutePath).replace(
-    /\/index$/,
-    '/',
-  );
-
-  return withBase(normalizedRoutePath, base);
+  return {
+    routePath: withBase(normalizedRoutePath, base),
+    lang: langPart || lang,
+    version: versionPart || version,
+  };
 };
 
 export class RouteService {
@@ -53,7 +72,7 @@ export class RouteService {
 
   #defaultLang: string;
 
-  #langs: string[];
+  #defaultVersion: string = '';
 
   #extensions: string[] = [];
 
@@ -79,11 +98,13 @@ export class RouteService {
     this.#include = routeOptions.include || [];
     this.#exclude = routeOptions.exclude || [];
     this.#defaultLang = userConfig?.lang || '';
-    this.#langs =
-      userConfig?.themeConfig?.locales?.map(locale => locale.lang) || [];
     this.#base = userConfig?.base || '';
     this.#tempDir = tempDir;
     this.#pluginDriver = pluginDriver;
+
+    if (userConfig.multiVersion) {
+      this.#defaultVersion = userConfig.multiVersion.default || '';
+    }
   }
 
   async init() {
@@ -105,11 +126,11 @@ export class RouteService {
       const fileRelativePath = normalizePath(
         path.relative(this.#scanDir, filePath),
       );
-      const lang = this.#getLang(fileRelativePath);
-      const routePath = normalizeRoutePath(
+      const { routePath, lang, version } = normalizeRoutePath(
         fileRelativePath,
         this.#defaultLang,
         this.#base,
+        this.#defaultVersion,
       );
       const absolutePath = path.join(this.#scanDir, fileRelativePath);
 
@@ -119,6 +140,7 @@ export class RouteService {
         relativePath: fileRelativePath,
         pageName: getPageKey(fileRelativePath),
         lang,
+        version,
       };
       this.addRoute(routeInfo);
     });
@@ -170,10 +192,11 @@ export class RouteService {
 
   removeRoute(filePath: string) {
     const fileRelativePath = path.relative(this.#scanDir, filePath);
-    const routePath = normalizeRoutePath(
+    const { routePath } = normalizeRoutePath(
       fileRelativePath,
       this.#defaultLang,
       this.#base,
+      this.#defaultVersion,
     );
     this.routeData.delete(routePath);
   }
@@ -183,10 +206,11 @@ export class RouteService {
   }
 
   isExistRoute(routePath: string) {
-    const normalizedRoute = normalizeRoutePath(
+    const { routePath: normalizedRoute } = normalizeRoutePath(
       routePath,
       this.#defaultLang,
       this.#base,
+      this.#defaultVersion,
     );
     return this.routeData.get(normalizedRoute);
   }
@@ -195,11 +219,18 @@ export class RouteService {
     return this.routeData.size === 0;
   }
 
-  generateRoutesCode(isStaticImport?: boolean) {
+  generateRoutesCode(isStaticImport = false) {
+    return this.generateRoutesCodeByRouteMeta(this.getRoutes(), isStaticImport);
+  }
+
+  generateRoutesCodeByRouteMeta(
+    routeMeta: RouteMeta[],
+    isStaticImport: boolean,
+  ) {
     return `
 import React from 'react';
 import { lazyWithPreload } from "react-lazy-with-preload";
-${this.getRoutes()
+${routeMeta
   .map((route, index) => {
     return isStaticImport
       ? `import * as Route${index} from '${route.absolutePath}';`
@@ -207,7 +238,7 @@ ${this.getRoutes()
   })
   .join('\n')}
 export const routes = [
-${this.getRoutes()
+${routeMeta
   .map((route, index) => {
     // In ssr, we don't need to import component dynamically.
     const preload = isStaticImport
@@ -236,7 +267,7 @@ ${this.getRoutes()
      *   filePath: '/Users/xxx/xxx/index.md'
      * }
      */
-    return `{ path: '${route.routePath}', element: React.createElement(${component}), filePath: '${route.relativePath}', preload: ${preload}, lang: '${route.lang}' }`;
+    return `{ path: '${route.routePath}', element: React.createElement(${component}), filePath: '${route.relativePath}', preload: ${preload}, lang: '${route.lang}', version: '${route.version}' }`;
   })
   .join(',\n')}
 ];
@@ -249,19 +280,24 @@ ${this.getRoutes()
     return tempFilePath;
   }
 
-  #getLang(filepath: string) {
-    return (
-      this.#langs.find(lang => filepath.startsWith(lang)) || this.#defaultLang
-    );
-  }
-
   #generateRouteInfo(routePath: string, filepath: string): RouteMeta {
+    const {
+      routePath: normalizedPath,
+      lang,
+      version,
+    } = normalizeRoutePath(
+      routePath,
+      this.#defaultLang,
+      this.#base,
+      this.#defaultVersion,
+    );
     return {
-      routePath: normalizeRoutePath(routePath, this.#defaultLang, this.#base),
+      routePath: normalizedPath,
       absolutePath: normalizePath(filepath),
       relativePath: normalizePath(path.relative(this.#scanDir, filepath)),
       pageName: getPageKey(routePath),
-      lang: this.#getLang(filepath),
+      lang,
+      version,
     };
   }
 }

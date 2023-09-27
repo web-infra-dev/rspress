@@ -1,5 +1,15 @@
 # @rspress/shared
 
+## 0.2.0
+
+### Minor Changes
+
+- 178ba42: feat: support multi version docs
+
+  feat: 支持文档多版本
+
+- da74868: using view transition to present animation when page navigate
+
 ## 0.1.1
 
 ## 0.1.0

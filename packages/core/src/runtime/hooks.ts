@@ -1,6 +1,7 @@
-import { createContext, useContext } from 'react';
+import { createContext, useContext, useLayoutEffect, useState } from 'react';
 import { PageData } from '@rspress/shared';
 import i18nTextData from 'virtual-i18n-text';
+import { flushSync } from 'react-dom';
 
 // Type shim for window.__EDEN_PAGE_DATA__
 declare global {
@@ -32,6 +33,11 @@ export function useLang(): string {
   return ctx.data.page.lang || '';
 }
 
+export function useVersion(): string {
+  const ctx = useContext(DataContext);
+  return ctx.data.page.version || '';
+}
+
 export function useDark() {
   const ctx = useContext(ThemeContext);
   return ctx.theme === 'dark';
@@ -41,4 +47,44 @@ export function useI18n<T = Record<string, Record<string, string>>>() {
   const lang = useLang();
 
   return (key: keyof T) => i18nTextData[key][lang];
+}
+
+declare global {
+  interface Document {
+    startViewTransition: (callback: () => void) => void;
+  }
+}
+
+export function useViewTransition(dom) {
+  /**
+   * use a pesudo element to hold the actual JSX element so we can schedule the
+   * update later in sync
+   */
+  const [element, setElement] = useState(dom);
+
+  useLayoutEffect(() => {
+    if (document.startViewTransition) {
+      /**
+       * the browser will take a screenshot here
+       */
+      document.startViewTransition(() => {
+        /**
+         * react will batch all the updates in callback and flush it sync
+         */
+        flushSync(() => {
+          setElement(dom);
+        });
+        /**
+         * react flushed the dom to browser
+         * and the browser will start the animation
+         */
+      });
+    } else {
+      setElement(dom);
+    }
+  }, [dom]);
+  /**
+   * take this element to the actual VDOM tree
+   */
+  return element;
 }

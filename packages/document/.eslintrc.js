@@ -4,7 +4,7 @@ module.exports = {
   parserOptions: {
     tsconfigRootDir: __dirname,
     project: ['./tsconfig.json'],
-    ignorePatterns: ['./rspress.config.ts'],
+    ignorePatterns: ['./rspress.config.ts', './theme/**/*'],
   },
   rules: {
     'babel/no-unused-expressions': 0,

@@ -9,7 +9,7 @@ import { SwitchAppearance } from '../SwitchAppearance';
 import { NavMenuGroup, NavMenuGroupItem } from './NavMenuGroup';
 import { NavMenuSingleItem } from './NavMenuSingleItem';
 import styles from './index.module.scss';
-import { ThemeContext, usePageData, withBase } from '@/runtime';
+import { ThemeContext, usePageData, useVersion, withBase } from '@/runtime';
 
 export interface NavProps {
   beforeNav?: React.ReactNode;
@@ -70,21 +70,35 @@ export function Nav(props: NavProps) {
   const { pathname } = useLocation();
   const { theme } = useContext(ThemeContext);
   const localeData = useLocaleSiteData();
+  const currentVersion = useVersion();
   const [isMobile, setIsMobile] = useState(false);
   const localeLanguages = Object.values(siteData.themeConfig.locales || {});
   const hasMultiLanguage = localeLanguages.length > 1;
   const socialLinks = siteData.themeConfig.socialLinks || [];
   const hasSocialLinks = socialLinks.length > 0;
-  const defaultLang = siteData.lang || 'zh';
+  const defaultLang = siteData.lang || '';
+  const defaultVersion = siteData.multiVersion.default || '';
   const { lang } = page;
-  const langs = localeLanguages.map(item => item.lang || 'zh') || [];
+  const langs = localeLanguages.map(item => item.lang || '') || [];
   const [logo, setLogo] = useState(getLogoUrl(rawLogo, theme));
 
   const translationMenuData = hasMultiLanguage
     ? {
         items: localeLanguages.map(item => ({
           text: item?.label,
-          link: replaceLang(pathname, item.lang, defaultLang, langs, base),
+          link: replaceLang(
+            pathname,
+            {
+              current: lang,
+              target: item.lang,
+              default: defaultLang,
+            },
+            {
+              current: currentVersion,
+              default: defaultVersion,
+            },
+            base,
+          ),
         })),
         activeValue: localeLanguages.find(item => lang === item.lang)?.label,
       }
@@ -173,7 +187,7 @@ export function Nav(props: NavProps) {
   };
   return (
     <header
-      className={`top-0 left-0 md:fixed w-full`}
+      className="top-0 left-0 md:fixed w-full"
       style={{
         zIndex: 'var(--rp-z-index-nav)',
         background: 'var(--rp-c-bg)',

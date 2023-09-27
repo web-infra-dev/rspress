@@ -1,5 +1,17 @@
 # @rspress/plugin-typedoc
 
+## 0.2.0
+
+### Minor Changes
+
+- da74868: using view transition to present animation when page navigate
+
+### Patch Changes
+
+- e9886fa: fix: add cjs output in typedoc plugin
+
+  fix: typedoc plugin 添加 cjs 输出
+
 ## 0.1.1
 
 ## 0.1.0
