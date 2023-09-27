@@ -31,8 +31,8 @@
     "upgrade": "modern upgrade"
   },
   "dependencies": {
-    "@modern-js/builder": "0.0.0-next-20230925115155",
-    "@modern-js/builder-rspack-provider": "0.0.0-next-20230925115155",
+    "@modern-js/builder": "0.0.0-next-20230927061927",
+    "@modern-js/builder-rspack-provider": "0.0.0-next-20230927061927",
     "unified": "10.1.2",
     "chalk": "4.1.2"
   },

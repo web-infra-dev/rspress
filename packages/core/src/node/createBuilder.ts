@@ -6,6 +6,7 @@ import {
   RSPRESS_TEMP_DIR,
   isDebugMode,
   removeTrailingSlash,
+  MDX_REGEXP,
 } from '@rspress/shared';
 import type { BuilderInstance } from '@modern-js/builder';
 import type {
@@ -169,15 +170,6 @@ async function createInternalBuildConfig(
       },
       rspack: {},
       bundlerChain(chain, { CHAIN_ID }) {
-        // TODO: default in rspack-provider
-        chain.module
-          .rule(CHAIN_ID.RULE.JS)
-          .use(CHAIN_ID.USE.SWC)
-          .tap(options => {
-            options.jsc.transform.react.runtime = 'automatic';
-            return options;
-          });
-
         const swcLoaderOptions = chain.module
           .rule(CHAIN_ID.RULE.JS)
           .use(CHAIN_ID.USE.SWC)
@@ -186,7 +178,7 @@ async function createInternalBuildConfig(
         chain.module
           .rule('MDX')
           .type('javascript/auto')
-          .test(/\.mdx?$/)
+          .test(MDX_REGEXP)
           .oneOf('MDXCompile')
           .use(CHAIN_ID.USE.SWC)
           .loader('builtin:swc-loader')
@@ -211,7 +203,7 @@ async function createInternalBuildConfig(
 
         if (chain.plugins.has(CHAIN_ID.PLUGIN.REACT_FAST_REFRESH)) {
           chain.plugin(CHAIN_ID.PLUGIN.REACT_FAST_REFRESH).tap(options => {
-            options[0].include = [/\.([cm]js|[jt]sx?|flow)$/i, /\.mdx?$/i];
+            options[0].include = [/\.([cm]js|[jt]sx?|flow)$/i, MDX_REGEXP];
             return options;
           });
         }
