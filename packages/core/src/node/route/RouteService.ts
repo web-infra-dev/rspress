@@ -240,7 +240,7 @@ ${routeMeta
   .map((route, index) => {
     return isStaticImport
       ? `import * as Route${index} from '${route.absolutePath}';`
-      : `const Route${index} = lazyWithPreload(() => import(/* webpackChunkName: "${route.pageName}" */'${route.absolutePath}')); Route${index}.displayName=${JSON.stringify(route.pageName)};`;
+      : `const Route${index} = lazyWithPreload(() => import(/* webpackChunkName: "${route.pageName}" */'${route.absolutePath}'));`;
   })
   .join('\n')}
 export const routes = [
