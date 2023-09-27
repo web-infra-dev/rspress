@@ -4,6 +4,8 @@ import siteData from 'virtual-site-data';
 import { normalizeRoutePath } from './utils';
 import { useViewTransition } from './hooks';
 
+(window as any).eles = [];
+
 const { routes } = process.env.__SSR__
   ? (require('virtual-routes-ssr') as typeof import('virtual-routes-ssr'))
   : (require('virtual-routes') as typeof import('virtual-routes'));
@@ -15,9 +17,8 @@ export const Content = ({ fallback = <></> }: { fallback?: ReactNode }) => {
     return <div></div>;
   }
   const routesElement = matched[0].route.element;
-  /**
-   * useLayoutEffect to flush elements animation
-   */
+  (window as any).eles.push(routesElement);
+
   let element = routesElement;
   if (siteData.themeConfig.enableContentAnimation) {
     // eslint-disable-next-line react-hooks/rules-of-hooks

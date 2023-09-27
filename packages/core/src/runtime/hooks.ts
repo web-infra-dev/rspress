@@ -63,7 +63,9 @@ export function useViewTransition(dom) {
   const [element, setElement] = useState(dom);
 
   useLayoutEffect(() => {
-    if (document.startViewTransition) {
+    const oldName = element?.type?.displayName;
+    const newName = dom?.type?.displayName;
+    if (document.startViewTransition && oldName !== newName) {
       /**
        * the browser will take a screenshot here
        */
