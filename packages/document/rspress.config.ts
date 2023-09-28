@@ -22,7 +22,6 @@ export default defineConfig({
     },
   },
   route: {
-    cleanUrls: true,
     exclude: ['**/fragments/**'],
   },
   themeConfig: {
