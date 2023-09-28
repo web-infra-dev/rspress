@@ -3,7 +3,11 @@ import { matchRoutes, useNavigate } from 'react-router-dom';
 import nprogress from 'nprogress';
 import { routes } from 'virtual-routes';
 import styles from './index.module.scss';
-import { normalizeHrefInRuntime as normalizeHref, normalizeRoutePath, withBase } from '@/runtime';
+import {
+  normalizeHrefInRuntime as normalizeHref,
+  normalizeRoutePath,
+  withBase,
+} from '@/runtime';
 
 export interface LinkProps {
   href?: string;
