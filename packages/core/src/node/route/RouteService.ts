@@ -31,6 +31,7 @@ export const normalizeRoutePath = (
   base: string,
   version: string,
 ): { routePath: string; lang: string; version: string } => {
+  const hasTrailSlash = routePath.endsWith('/');
   let versionPart = '';
   let langPart = '';
   let purePathPart = '';
@@ -51,12 +52,17 @@ export const normalizeRoutePath = (
   }
   purePathPart = parts.join('/');
 
-  const normalizedRoutePath = addLeadingSlash(
+  let normalizedRoutePath = addLeadingSlash(
     [versionPart, langPart, purePathPart].filter(Boolean).join('/'),
   )
     // remove the extension
     .replace(/\.[^.]+$/, '')
     .replace(/\/index$/, '/');
+
+  // restore the trail slash
+  if (hasTrailSlash && !normalizedRoutePath.endsWith('/')) {
+    normalizedRoutePath = `${normalizedRoutePath}/`;
+  }
 
   return {
     routePath: withBase(normalizedRoutePath, base),
