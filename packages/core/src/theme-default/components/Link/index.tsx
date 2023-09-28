@@ -33,10 +33,10 @@ export function Link(props: LinkProps) {
   const handleNavigate = async (
     e: React.MouseEvent<HTMLAnchorElement, MouseEvent>,
   ) => {
+    e.preventDefault();
     // handle hash link in current page
     const hash = withBaseUrl.split('#')[1];
     if (!isExternal && inCurrentPage && hash) {
-      e.preventDefault();
       const el = document.getElementById(hash);
       console.log(hash, el);
       if (el) {
@@ -44,8 +44,8 @@ export function Link(props: LinkProps) {
       }
       return;
     }
+
     // handle normal link
-    e.preventDefault();
     if (!process.env.__SSR__) {
       const matchedRoutes = matchRoutes(
         routes,
