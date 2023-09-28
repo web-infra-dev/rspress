@@ -11,6 +11,7 @@ const { routes } = process.env.__SSR__
 function TransitionContentImpl(props: { el: ReactElement }) {
   let element = props.el;
   if (siteData?.themeConfig?.enableContentAnimation) {
+    // eslint-disable-next-line react-hooks/rules-of-hooks
     element = useViewTransition(props.el);
   }
   return element;
@@ -18,10 +19,7 @@ function TransitionContentImpl(props: { el: ReactElement }) {
 
 const TransitionContent = memo(
   TransitionContentImpl,
-  (prevProps, nextProps) => {
-    let res = prevProps.el === nextProps.el;
-    return res;
-  },
+  (prevProps, nextProps) => prevProps.el === nextProps.el,
 );
 
 export const Content = ({ fallback = <></> }: { fallback?: ReactNode }) => {
@@ -39,7 +37,7 @@ export const Content = ({ fallback = <></> }: { fallback?: ReactNode }) => {
 
   return (
     <Suspense fallback={fallback}>
-      <TransitionContent el={routesElement}></TransitionContent>
+      <TransitionContent el={routesElement} />
     </Suspense>
   );
 };
