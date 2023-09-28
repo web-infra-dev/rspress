@@ -24,17 +24,14 @@ export function removeBase(url: string): string {
 }
 
 export function isEqualPath(a: string, b: string) {
-  return withBase(normalizeHrefInRuntime(a)) === withBase(normalizeHrefInRuntime(b));
+  return (
+    withBase(normalizeHrefInRuntime(a)) === withBase(normalizeHrefInRuntime(b))
+  );
 }
 
-export function normalizeHrefInRuntime(a: string){
+export function normalizeHrefInRuntime(a: string) {
   const cleanUrls = Boolean(siteData?.route?.cleanUrls);
   return normalizeHref(a, cleanUrls);
 }
 
-export {
-  addLeadingSlash,
-  removeTrailingSlash,
-  normalizeSlash,
-  isProduction,
-};
+export { addLeadingSlash, removeTrailingSlash, normalizeSlash, isProduction };

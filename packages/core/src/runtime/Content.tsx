@@ -1,7 +1,8 @@
 import { ReactNode, Suspense } from 'react';
 import { matchRoutes, useLocation } from 'react-router-dom';
+import siteData from 'virtual-site-data';
 import { normalizeRoutePath } from './utils';
-import { usePageData, useViewTransition } from './hooks';
+import { useViewTransition } from './hooks';
 
 const { routes } = process.env.__SSR__
   ? (require('virtual-routes-ssr') as typeof import('virtual-routes-ssr'))
@@ -18,7 +19,8 @@ export const Content = ({ fallback = <></> }: { fallback?: ReactNode }) => {
    * useLayoutEffect to flush elements animation
    */
   let element = routesElement;
-  if (usePageData().siteData.themeConfig.enableContentAnimation) {
+  if (siteData.themeConfig.enableContentAnimation) {
+    // eslint-disable-next-line react-hooks/rules-of-hooks
     element = useViewTransition(routesElement);
   }
 
