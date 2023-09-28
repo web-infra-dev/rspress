@@ -13,6 +13,10 @@ export const toValidVarName = (str: string): string => {
   }
 };
 
+export const generateId = (pageName: string, index: number) => {
+  return `_${toValidVarName(pageName)}_${index}`;
+};
+
 /**
  * remove .html extension and validate
  * @param routePath id from pathname

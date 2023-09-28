@@ -1,9 +1,3 @@
-:root {
-  --rp-sidebar-width: 210px;
-  --rp-aside-width: 192px;
-  --rp-preview-padding: 32px;
-}
-
 :root .preview-code div[class*='language-'] {
   margin: 0;
   border-radius: 0;
