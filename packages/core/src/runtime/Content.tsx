@@ -1,4 +1,11 @@
-import { ReactNode, Suspense, memo, ReactElement } from 'react';
+import {
+  ReactNode,
+  Suspense,
+  memo,
+  ReactElement,
+  useEffect,
+  useLayoutEffect,
+} from 'react';
 import { matchRoutes, useLocation } from 'react-router-dom';
 import siteData from 'virtual-site-data';
 import { normalizeRoutePath } from './utils';
