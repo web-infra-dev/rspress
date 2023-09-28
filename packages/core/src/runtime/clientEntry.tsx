@@ -1,5 +1,5 @@
-import { useState } from 'react';
-import { BrowserRouter } from 'react-router-dom';
+import { useEffect, useLayoutEffect, useState } from 'react';
+import { BrowserRouter, ScrollRestoration } from 'react-router-dom';
 import { isProduction } from '@rspress/shared';
 import { App, initPageData } from './App';
 import { DataContext, ThemeContext } from './hooks';

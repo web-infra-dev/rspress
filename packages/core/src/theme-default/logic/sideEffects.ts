@@ -63,6 +63,13 @@ function bindingWindowScroll() {
             scrollTo(link, hash, true);
             // still emit the event so we can listen to it in themes
             window.dispatchEvent(new Event('hashchange'));
+          } else {
+            if (location.hash.length > 1) {
+              window.addEventListener('RspressReloadContent', () => {
+                const ele = document.getElementById(location.hash.slice(1));
+                scrollToTarget(ele, false);
+              });
+            }
           }
         }
       }
