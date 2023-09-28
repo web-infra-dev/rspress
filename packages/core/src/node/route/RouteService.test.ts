@@ -38,6 +38,11 @@ describe('RouteService', async () => {
       version: 'v2',
       routePath: '/v2/zh/foo/bar',
     });
+    expect(normalizeRoutePath('/v2/en/api/', 'en', '/', 'v1')).toEqual({
+      lang: 'en',
+      version: 'v2',
+      routePath: '/v2/api/',
+    });
   });
 
   test('Conventional route by file structure', async () => {
