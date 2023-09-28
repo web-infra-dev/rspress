@@ -38,7 +38,6 @@ export function Link(props: LinkProps) {
     const hash = withBaseUrl.split('#')[1];
     if (!isExternal && inCurrentPage && hash) {
       const el = document.getElementById(hash);
-      console.log(hash, el);
       if (el) {
         scrollToTarget(el, true);
       }
