@@ -14,7 +14,7 @@ export default function Demo(props: { iframePosition: string }) {
   if (props.iframePosition === 'fixed') {
     const renderDemos = demos
       .flat()
-      .filter(item => new RegExp(`${normalizedId}_\\d+`).test(item.id));
+      .filter(item => new RegExp(`_${normalizedId}_\\d+`).test(item.id));
     return renderDemos.length > 0 ? (
       <NoSSR>
         <div className="preview-container">

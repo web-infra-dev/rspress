@@ -7,7 +7,7 @@ import {
   normalizePosixPath,
 } from '@rspress/shared';
 import { remarkCodeToDemo } from './codeToDemo';
-import { injectDemoBlockImport, toValidVarName } from './utils';
+import { generateId, injectDemoBlockImport } from './utils';
 import {
   demoBlockComponentPath,
   demoComponentPath,
@@ -151,7 +151,7 @@ import Demo from ${JSON.stringify(demoComponentPath)}
                 if (!src) {
                   return;
                 }
-                const id = `${toValidVarName(pageName)}_${index++}`;
+                const id = generateId(pageName, index++);
                 registerDemo(id, src, isMobileMode);
               }
             });
@@ -176,7 +176,7 @@ import Demo from ${JSON.stringify(demoComponentPath)}
                     normalizePosixPath(meta.absolutePath) ===
                     normalizePosixPath(filepath),
                 )!;
-                const id = `${toValidVarName(pageName)}_${index++}`;
+                const id = generateId(pageName, index++);
 
                 const demoDir = join(
                   process.cwd(),
