@@ -3,4 +3,4 @@
 '@rspress/core': minor
 ---
 
-support cleanUrls to generate url without suffix
+feat: support cleanUrls to generate url without suffix
