@@ -15,7 +15,6 @@ type RspressPageMeta = Record<
   {
     title: string;
     toc: Header[];
-    frontmatter: Record<string, any>;
   }
 >;
 
@@ -44,12 +43,11 @@ export async function initPageData(routePath: string): Promise<PageData> {
       toc = [],
       // eslint-disable-next-line prefer-const
       title = '',
-      frontmatter,
-    } = (globalThis.__RSPRESS_PAGE_META as RspressPageMeta)?.[
-      encodedPagePath
-    ] || {};
+    } =
+      (mod.default.__RSPRESS_PAGE_META as RspressPageMeta)?.[encodedPagePath] ||
+      {};
 
-    frontmatter = frontmatter || mod.frontmatter || {};
+    const frontmatter = mod.frontmatter || {};
 
     return {
       siteData,
