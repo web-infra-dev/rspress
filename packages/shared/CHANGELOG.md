@@ -1,5 +1,11 @@
 # @rspress/shared
 
+## 1.0.0-beta.0
+
+### Minor Changes
+
+- d1098cf: feat: support cleanUrls to generate url without suffix
+
 ## 0.2.0
 
 ### Minor Changes

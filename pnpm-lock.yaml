@@ -607,7 +607,7 @@ importers:
         specifier: 2.35.1
         version: 2.35.1
       '@rspress/core':
-        specifier: '*'
+        specifier: 1.0.0-beta.0
         version: link:../core
       documentation:
         specifier: 14.0.2
@@ -674,7 +674,7 @@ importers:
         specifier: workspace:*
         version: link:../shared
       rspress:
-        specifier: '*'
+        specifier: 1.0.0-beta.0
         version: link:../cli
     devDependencies:
       '@modern-js/tsconfig':
@@ -702,7 +702,7 @@ importers:
   packages/plugin-container-syntax:
     dependencies:
       rspress:
-        specifier: '*'
+        specifier: 1.0.0-beta.0
         version: link:../cli
     devDependencies:
       '@rspress/shared':
@@ -730,7 +730,7 @@ importers:
         specifier: 2.35.1
         version: 2.35.1
       rspress:
-        specifier: '*'
+        specifier: 1.0.0-beta.0
         version: link:../cli
     devDependencies:
       '@modern-js/tsconfig':
@@ -764,7 +764,7 @@ importers:
         specifier: 1.0.8
         version: 1.0.8
       rspress:
-        specifier: '*'
+        specifier: 1.0.0-beta.0
         version: link:../cli
     devDependencies:
       '@modern-js/tsconfig':
@@ -807,7 +807,7 @@ importers:
         specifier: ^0.1.0
         version: 0.1.0
       '@rspress/core':
-        specifier: '*'
+        specifier: 1.0.0-beta.0
         version: link:../core
       '@rspress/shared':
         specifier: workspace:*
@@ -877,7 +877,7 @@ importers:
         specifier: 2.35.1
         version: 2.35.1
       '@rspress/core':
-        specifier: '*'
+        specifier: 1.0.0-beta.0
         version: link:../core
       '@rspress/shared':
         specifier: workspace:*
@@ -935,7 +935,7 @@ importers:
         specifier: 2.35.1
         version: 2.35.1
       rspress:
-        specifier: '*'
+        specifier: 1.0.0-beta.0
         version: link:../cli
       typedoc:
         specifier: 0.24.8
