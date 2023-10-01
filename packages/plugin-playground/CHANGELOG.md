@@ -1,5 +1,16 @@
 # @rspress/plugin-playground
 
+## 1.0.0-beta.0
+
+### Patch Changes
+
+- Updated dependencies [213c9e3]
+- Updated dependencies [599291c]
+- Updated dependencies [d1098cf]
+- Updated dependencies [485d873]
+  - @rspress/core@1.0.0-beta.0
+  - @rspress/shared@1.0.0-beta.0
+
 ## 0.2.0
 
 ### Minor Changes
