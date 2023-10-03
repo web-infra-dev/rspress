@@ -216,6 +216,9 @@ importers:
       '@rspress/core':
         specifier: workspace:*
         version: link:../core
+      '@rspress/shared':
+        specifier: workspace:*
+        version: link:../shared
       cac:
         specifier: ^6.7.14
         version: 6.7.14
@@ -225,13 +228,7 @@ importers:
       chokidar:
         specifier: ^3.5.3
         version: 3.5.3
-      gradient-string:
-        specifier: 2.0.2
-        version: 2.0.2
     devDependencies:
-      '@types/gradient-string':
-        specifier: 1.1.2
-        version: 1.1.2
       '@types/jest':
         specifier: ~29.2.4
         version: 29.2.4
@@ -980,6 +977,9 @@ importers:
       chalk:
         specifier: 4.1.2
         version: 4.1.2
+      rslog:
+        specifier: ^1.0.0
+        version: 1.0.0
       unified:
         specifier: 10.1.2
         version: 10.1.2
@@ -5116,12 +5116,6 @@ packages:
       '@types/node': 18.11.17
     dev: true
 
-  /@types/gradient-string@1.1.2:
-    resolution: {integrity: sha512-zIet2KvHr2dkOCPI5ggQQ+WJVyfBSFaqK9sNelhgDjlE2K3Fu2muuPJwu5aKM3xoWuc3WXudVEMUwI1QWhykEQ==}
-    dependencies:
-      '@types/tinycolor2': 1.4.3
-    dev: true
-
   /@types/hast@2.3.4:
     resolution: {integrity: sha512-wLEm0QvaoawEDoTRwzTXp4b4jpwiJDvR5KMnFnVodm3scufTlBOWRD6N1OBf9TZMhjlNsSfcO5V+7AF4+Vy+9g==}
     dependencies:
@@ -5370,9 +5364,6 @@ packages:
     dependencies:
       '@types/jest': 29.2.4
     dev: true
-
-  /@types/tinycolor2@1.4.3:
-    resolution: {integrity: sha512-Kf1w9NE5HEgGxCRyIcRXR/ZYtDv0V8FVPtYHwLxl0O+maGX0erE77pQlD0gpP+/KByMZ87mOA79SjifhSB3PjQ==}
 
   /@types/tough-cookie@4.0.2:
     resolution: {integrity: sha512-Q5vtl1W5ue16D+nIaW8JWebSSraJVlK+EthKn7e7UcD4KWsaSJ8BqGPXNaPghgtcn/fhvrN17Tv8ksUsQpiplw==}
@@ -8476,14 +8467,6 @@ packages:
 
   /graceful-fs@4.2.11:
     resolution: {integrity: sha512-RbJ5/jmFcNNCcDV5o9eTnBLJ/HszWV0P73bc+Ff4nS/rJj+YaS6IGyiOL0VoBYX+l1Wrl3k63h/KrH+nhJ0XvQ==}
-
-  /gradient-string@2.0.2:
-    resolution: {integrity: sha512-rEDCuqUQ4tbD78TpzsMtt5OIf0cBCSDWSJtUDaF6JsAh+k0v9r++NzxNEG87oDZx9ZwGhD8DaezR2L/yrw0Jdw==}
-    engines: {node: '>=10'}
-    dependencies:
-      chalk: 4.1.2
-      tinygradient: 1.1.5
-    dev: false
 
   /grapheme-splitter@1.0.4:
     resolution: {integrity: sha512-bzh50DW9kTPM00T8y4o8vQg89Di9oLJVLW/KaOGIXJWP/iqCN6WKYkbNOF04vFLJhwcpYUh9ydh/+5vpOqV4YQ==}
@@ -12686,6 +12669,11 @@ packages:
       fsevents: 2.3.2
     dev: true
 
+  /rslog@1.0.0:
+    resolution: {integrity: sha512-yTulfJJIYHBftErlZZXHdZuFA8275spDcTrCs8JIXIh+wRIRgi6RGoT8MAnB8H6NIEvJbMUP14Mo1t7hCw4k1g==}
+    engines: {node: '>=14.17.6'}
+    dev: false
+
   /rspack-manifest-plugin@5.0.0-alpha0(webpack@5.88.2):
     resolution: {integrity: sha512-a84H6P/lK0x3kb0I8Qdiwxrnjt1oNW0j+7kwPMWcODJu8eYFBrTXa1t+14n18Jvg9RKIR6llCH16mYxf2d0s8A==}
     engines: {node: '>=14'}
@@ -13495,17 +13483,6 @@ packages:
   /tinybench@2.5.0:
     resolution: {integrity: sha512-kRwSG8Zx4tjF9ZiyH4bhaebu+EDz1BOx9hOigYHlUW4xxI/wKIUQUqo018UlU4ar6ATPBsaMrdbKZ+tmPdohFA==}
     dev: true
-
-  /tinycolor2@1.6.0:
-    resolution: {integrity: sha512-XPaBkWQJdsf3pLKJV9p4qN/S+fm2Oj8AIPo1BTUhg5oxkvm9+SVEGFdhyOz7tTdUTfvxMiAs4sp6/eZO2Ew+pw==}
-    dev: false
-
-  /tinygradient@1.1.5:
-    resolution: {integrity: sha512-8nIfc2vgQ4TeLnk2lFj4tRLvvJwEfQuabdsmvDdQPT0xlk9TaNtpGd6nNRxXoK6vQhN6RSzj+Cnp5tTQmpxmbw==}
-    dependencies:
-      '@types/tinycolor2': 1.4.3
-      tinycolor2: 1.6.0
-    dev: false
 
   /tinypool@0.6.0:
     resolution: {integrity: sha512-FdswUUo5SxRizcBc6b1GSuLpLjisa8N8qMyYoP3rl+bym+QauhtJP5bvZY1ytt8krKGmMLYIRl36HBZfeAoqhQ==}

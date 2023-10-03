@@ -39,10 +39,10 @@
   "dependencies": {
     "@modern-js/node-bundle-require": "2.35.1",
     "@rspress/core": "workspace:*",
+    "@rspress/shared": "workspace:*",
     "cac": "^6.7.14",
     "chokidar": "^3.5.3",
-    "chalk": "5.3.0",
-    "gradient-string": "2.0.2"
+    "chalk": "5.3.0"
   },
   "devDependencies": {
     "@types/jest": "~29.2.4",
@@ -50,8 +50,7 @@
     "@types/react": "~18.0.26",
     "rimraf": "~3.0.2",
     "ts-node": "^10.9.1",
-    "typescript": "~5.0.4",
-    "@types/gradient-string": "1.1.2"
+    "typescript": "~5.0.4"
   },
   "sideEffects": [],
   "publishConfig": {

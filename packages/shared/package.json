@@ -34,7 +34,8 @@
     "@modern-js/builder": "2.35.1",
     "@modern-js/builder-rspack-provider": "2.35.1",
     "unified": "10.1.2",
-    "chalk": "4.1.2"
+    "chalk": "4.1.2",
+    "rslog": "^1.0.0"
   },
   "devDependencies": {
     "lodash-es": "^4.17.21",

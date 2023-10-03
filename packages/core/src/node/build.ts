@@ -10,6 +10,7 @@ import {
   normalizeSlash,
   withBase,
 } from '@rspress/shared';
+import { logger } from '@rspress/shared/logger';
 import {
   OUTPUT_DIR,
   APP_HTML_MARKER,
@@ -21,7 +22,6 @@ import {
 } from './constants';
 import { createModernBuilder } from './createBuilder';
 import { writeSearchIndex } from './searchIndex';
-import { logger } from './utils';
 import { PluginDriver } from './PluginDriver';
 import type { Route } from '@/node/route/RouteService';
 import { routeService } from '@/node/route/init';
