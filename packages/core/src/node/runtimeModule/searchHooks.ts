@@ -12,6 +12,6 @@ export async function searchHookVMPlugin(context: FactoryContext) {
   }
 
   return {
-    [`${RuntimeModuleID.SearchHooks}.ts`]: content,
+    [RuntimeModuleID.SearchHooks]: content,
   };
 }
