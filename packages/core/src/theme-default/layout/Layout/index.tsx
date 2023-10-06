@@ -29,6 +29,10 @@ export const Layout: React.FC<LayoutProps> = props => {
     beforeNavTitle,
     afterNavTitle,
     beforeNav,
+    beforeHero,
+    afterHero,
+    beforeFeatures,
+    afterFeatures,
   } = props;
   const docProps: DocLayoutProps = {
     beforeDocFooter,
@@ -36,6 +40,12 @@ export const Layout: React.FC<LayoutProps> = props => {
     afterDoc,
     beforeOutline,
     afterOutline,
+  };
+  const homeProps: HomeLayoutProps = {
+    beforeHero,
+    afterHero,
+    beforeFeatures,
+    afterFeatures,
   };
   const { siteData, page } = usePageData();
   const { themeConfig } = siteData;
@@ -72,7 +82,7 @@ export const Layout: React.FC<LayoutProps> = props => {
   const getContentLayout = () => {
     switch (pageType) {
       case 'home':
-        return <Theme.HomeLayout />;
+        return <Theme.HomeLayout {...homeProps} />;
       case 'doc':
         return <DocLayout {...docProps} />;
       case '404':

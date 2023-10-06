@@ -23,7 +23,8 @@
     "typescript": "^5",
     "@types/react": "18.2.0",
     "@documate/documate": "^0.1.0",
-    "@documate/react": "0.2.1"
+    "@documate/react": "0.2.1",
+    "framer-motion": "10.16.4"
   },
   "publishConfig": {
     "access": "public",
