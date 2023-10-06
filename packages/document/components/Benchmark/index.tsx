@@ -84,6 +84,7 @@ export function Benchmark() {
                 onChange={index =>
                   setActiveScene(SCENE[index] as keyof typeof BENCHMARK_DATA)
                 }
+                tabPosition="center"
               >
                 {SCENE.map(scene => (
                   <Tab key={scene}>
