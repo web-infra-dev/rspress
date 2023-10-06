@@ -50,5 +50,17 @@
   "plugin-list": {
     "zh": "官方插件列表",
     "en": "Official Plugins"
+  },
+  "start": {
+    "zh": "Start",
+    "en": "Start"
+  },
+  "hmr": {
+    "zh": "HMR",
+    "en": "HMR"
+  },
+  "build": {
+    "zh": "Build",
+    "en": "Build"
   }
 }

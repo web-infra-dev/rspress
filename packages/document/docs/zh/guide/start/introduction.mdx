@@ -10,7 +10,11 @@ Rspress 的设计目标是：**一流的编译性能**、**开箱即用的主题
 
 ### Rust 高性能工具链
 
-在 Rspress 中，为了突破传统前端工具的编译性能瓶颈，我们在 Rust 工具链上做了很多的努力。
+在 Rspress 中，为了突破传统前端工具的编译性能瓶颈，我们在 Rust 工具链上做了很多的努力，相比与现有的 SSG 框架有明显的性能优势，具体测试数据如下：
+
+import { Benchmark } from '@/components/BenchMark';
+
+<Benchmark />
 
 首先，Rspress 基于 [Rspack](https://rspack.dev/) 构建，Rspack 是一个基于 Rust 的高性能前端打包工具，内置了多种优化手段，如：多线程并行编译、增量编译等，相比传统的 Webpack、Rollup 等打包工具，Rspack 的编译速度有着 5 ~ 10 倍的提升。
 
