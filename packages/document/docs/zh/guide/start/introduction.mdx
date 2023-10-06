@@ -10,7 +10,7 @@ Rspress 的设计目标是：**一流的编译性能**、**开箱即用的主题
 
 ### Rust 高性能工具链
 
-在 Rspress 中，为了突破传统前端工具的编译性能瓶颈，我们在 Rust 工具链上做了很多的努力，相比与现有的 SSG 框架有明显的性能优势，具体测试数据如下：
+为了突破传统前端工具的编译性能瓶颈，Rspress 在 Rust 工具链上做了很多的努力，相比与现有的 SSG 框架有明显的性能优势，具体测试数据如下：
 
 import { Benchmark } from '@/components/Benchmark';
 
@@ -18,7 +18,7 @@ import { Benchmark } from '@/components/Benchmark';
 
 首先，Rspress 基于 [Rspack](https://rspack.dev/) 构建，Rspack 是一个基于 Rust 的高性能前端打包工具，内置了多种优化手段，如：多线程并行编译、增量编译等，相比传统的 Webpack、Rollup 等打包工具，Rspack 的编译速度有着 5 ~ 10 倍的提升。
 
-除了打包工具本身，对于文档框架中另一大编译性能瓶颈，即`Markdown 编译`，我们也将这一流程 Rust 化以进一步提速，基于开源的 [mdxjs-rs](https://github.com/wooorm/mdxjs-rs) 库扩展一系列插件，并通过 [napi-rs](https://napi.rs/) 进一步封装出 Node.js 的调用接口，从而定制出 Rspress 的 Markdown 编译器（即`@rspress/mdx-rs`）。这款编译器相比传统的 JS 版本的编译器，有 10 倍以上的性能提升：
+除了打包工具本身，对于文档框架中另一大编译性能瓶颈，即`Markdown 编译`，我们也将这一流程 Rust 化以进一步提速，基于开源的 [mdxjs-rs](https://github.com/wooorm/mdxjs-rs) 库扩展一系列插件，并通过 [napi-rs](https://napi.rs/) 进一步封装出 Node.js 的调用接口，从而定制出 Rspress 的 Markdown 编译器（即[`@rspress/mdx-rs`](https://github.com/web-infra-dev/mdx-rs)）。这款编译器相比传统的 JS 版本的编译器，有 10 倍以上的性能提升：
 
 <img src="https://lf3-static.bytednsdoc.com/obj/eden-cn/uhbfnupenuhf/rspress/mdx-rs-benchmark.png" />
 
