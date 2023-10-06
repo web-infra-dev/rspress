@@ -8,7 +8,7 @@ const BENCHMARK_DATA = {
   start: [
     {
       name: 'Rspress',
-      // 单位为 s
+      // The unit is seconds
       time: 0.786,
     },
     {
