@@ -38,6 +38,17 @@ cli
 
     const startDevServer = async () => {
       const config = await loadConfigFile(options.config);
+
+      // Support root relative to cwd
+      if (config.root && !path.isAbsolute(config.root)) {
+        config.root = path.join(cwd, config.root);
+      }
+
+      // Support root in command, override config file
+      if (root) {
+        config.root = path.join(cwd, root);
+      }
+
       docDirectory = config.root || path.join(cwd, root ?? 'docs');
       devServer = await dev({
         appDirectory: cwd,
@@ -87,6 +98,9 @@ cli
     setNodeEnv('production');
     const cwd = process.cwd();
     const config = await loadConfigFile(options.config);
+    if (root) {
+      config.root = path.join(cwd, root);
+    }
     await build({
       appDirectory: cwd,
       docDirectory: config.root || path.join(cwd, root ?? 'docs'),
