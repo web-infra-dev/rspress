@@ -8,7 +8,7 @@ const Layout = () => (
   <Theme.Layout
     afterNavTitle={
       <NoSSR>
-        <Documate endpoint="https://vhewg5xn8z.us.aircode.run/ask" />
+        <Documate endpoint={`${process.env.DOCUMATE_BACKEND_URL}/ask`} />
       </NoSSR>
     }
   />

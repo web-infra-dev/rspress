@@ -2,5 +2,5 @@
   "root": ".",
   "include": ["**/*.md", "**/*.mdx"],
   "exclude": ["**/node_modules/**", "**/.turbo/**"],
-  "backend": "https://vhewg5xn8z.us.aircode.run/upload"
+  "backend": ""
 }
