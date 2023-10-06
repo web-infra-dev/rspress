@@ -1,5 +1,29 @@
 # Basic Config
 
+## root
+
+- Type: `string`
+- Default: `docs`
+
+Specifies the document root directory. For example:
+
+```ts title="rspress.config.ts"
+import { defineConfig } from 'rspress/config';
+
+export default defineConfig({
+  root: 'docs',
+});
+```
+
+This config supports both relative and absolute paths, with relative paths being relative to the current working directory(cwd).
+
+Of course, in addition to specifying the document root directory through the config file, you can also specify it through command line parameters, such as:
+
+```bash
+rspress dev docs
+rspress build docs
+```
+
 ## base
 
 - Type: `string`

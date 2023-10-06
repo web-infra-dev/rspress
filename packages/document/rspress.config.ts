@@ -1,4 +1,3 @@
-import path from 'path';
 import { defineConfig } from 'rspress/config';
 
 export default defineConfig({
@@ -6,7 +5,7 @@ export default defineConfig({
     experimentalMdxRs: true,
     checkDeadLinks: true,
   },
-  root: path.join(__dirname, 'docs'),
+  root: 'docs',
   title: 'Rspress',
   description: 'Rspack based static site generator',
   lang: 'en',

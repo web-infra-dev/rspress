@@ -1,5 +1,29 @@
 # 基础配置
 
+## root
+
+- Type: `string`
+- Default: `docs`
+
+指定文档根目录。比如：
+
+```ts title="rspress.config.ts"
+import { defineConfig } from 'rspress/config';
+
+export default defineConfig({
+  root: 'docs',
+});
+```
+
+该配置同时支持相对路径和绝对路径，相对路径相对于当前工作目录。
+
+当然，除了通过配置文件来指定文档根目录，你也可以通过命令行参数来指定，比如：
+
+```bash
+rspress dev docs
+rspress build docs
+```
+
 ## base
 
 - Type: `string`
@@ -323,7 +347,7 @@ import { defineConfig } from 'rspress/config';
 
 export default defineConfig({
   route: {
-    cleanUrls: true
+    cleanUrls: true,
   },
 });
 ```
