@@ -24,7 +24,6 @@
     "@types/react": "18.2.0",
     "@documate/documate": "^0.1.0",
     "@documate/react": "0.2.1",
-    "react-intersection-observer": "9.5.2",
     "framer-motion": "10.16.4"
   },
   "publishConfig": {

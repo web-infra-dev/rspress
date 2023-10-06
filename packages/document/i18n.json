@@ -52,15 +52,15 @@
     "en": "Official Plugins"
   },
   "start": {
-    "zh": "Start",
-    "en": "Start"
+    "zh": "冷启动(Start)",
+    "en": "Code Start"
   },
   "hmr": {
-    "zh": "HMR",
+    "zh": "热更新",
     "en": "HMR"
   },
   "build": {
-    "zh": "Build",
-    "en": "Build"
+    "zh": "冷构建(Build)",
+    "en": "Code Build"
   }
 }
