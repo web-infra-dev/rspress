@@ -20,6 +20,13 @@ export default defineConfig({
     dev: {
       startUrl: false,
     },
+    source: {
+      define: {
+        'process.env.DOCUMATE_BACKEND_URL': JSON.stringify(
+          process.env.DOCUMATE_BACKEND_URL,
+        ),
+      },
+    },
   },
   route: {
     exclude: ['**/fragments/**'],
