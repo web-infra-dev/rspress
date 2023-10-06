@@ -546,8 +546,8 @@ importers:
         specifier: ^0.1.0
         version: 0.1.0
       '@documate/react':
-        specifier: ^0.1.0
-        version: 0.1.0(react-dom@18.2.0)(react@18.2.0)
+        specifier: 0.2.1
+        version: 0.2.1(react-dom@18.2.0)(react@18.2.0)
       '@types/react':
         specifier: 18.2.0
         version: 18.2.0
@@ -2618,8 +2618,8 @@ packages:
       - debug
     dev: true
 
-  /@documate/react@0.1.0(react-dom@18.2.0)(react@18.2.0):
-    resolution: {integrity: sha512-1JDM//Ax7zE5mn57OhgMN9QLeDnAFQUZYwUYy0XRsBAiXf9o4l1URW+Kmqzy5vdEYOi9iGEvWLG1d8KuBFr+/g==}
+  /@documate/react@0.2.1(react-dom@18.2.0)(react@18.2.0):
+    resolution: {integrity: sha512-DgMxOZVxLIlAbkbU64/m+r0mx2/VgwgrXjcdMf5B0lqajlDnNx9b6zA4ITg3/TdJSmKei3dEz3uii55aI2cpZw==}
     peerDependencies:
       react: ^18
       react-dom: ^18
