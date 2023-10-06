@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { motion } from 'framer-motion';
 import { Tabs, Tab } from 'rspress/theme';
-import { useI18n } from 'rspress/runtime';
+import { NoSSR, useI18n } from 'rspress/runtime';
 import { ProgressBar } from './ProgressBar';
 
 const BENCHMARK_DATA = {
@@ -61,63 +61,65 @@ export function Benchmark() {
   };
   const performanceInfoList = BENCHMARK_DATA[activeScene];
   return (
-    <motion.div
-      initial={{ opacity: 0, y: 50 }}
-      animate={'animate'}
-      variants={variants}
-      transition={{ duration: 1 }}
-      className="relative flex flex-col justify-center py-10 mt-15 h-auto"
-    >
-      {
-        <>
-          <div
-            className="flex flex-col items-center z-1"
-            style={{
-              padding: '16px 0',
-            }}
-          >
-            <Tabs
-              values={SCENE.map(item => ({
-                label: t(item as keyof typeof BENCHMARK_DATA),
-              }))}
-              onChange={index =>
-                setActiveScene(SCENE[index] as keyof typeof BENCHMARK_DATA)
-              }
+    <NoSSR>
+      <motion.div
+        initial={{ opacity: 0, y: 50 }}
+        animate={'animate'}
+        variants={variants}
+        transition={{ duration: 1 }}
+        className="relative flex flex-col justify-center py-10 mt-15 h-auto"
+      >
+        {
+          <>
+            <div
+              className="flex flex-col items-center z-1"
+              style={{
+                padding: '16px 0',
+              }}
             >
-              {SCENE.map(scene => (
-                <Tab key={scene}>
-                  {performanceInfoList.map(info => (
-                    <div
-                      key={info.name}
-                      className="flex flex-center justify-start flex-col sm:flex-row"
-                      style={{
-                        margin: '16px 16px 16px 0',
-                      }}
-                    >
-                      {
-                        <>
-                          <p
-                            className="mr-2 mb-2 w-20 text-center text-gray-500 dark:text-light-500"
-                            style={{ minWidth: '180px' }}
-                          >
-                            {info.name}
-                          </p>
-                          <ProgressBar
-                            value={info.time}
-                            max={Math.max(
-                              ...performanceInfoList.map(info => info.time),
-                            )}
-                          />
-                        </>
-                      }
-                    </div>
-                  ))}
-                </Tab>
-              ))}
-            </Tabs>
-          </div>
-        </>
-      }
-    </motion.div>
+              <Tabs
+                values={SCENE.map(item => ({
+                  label: t(item as keyof typeof BENCHMARK_DATA),
+                }))}
+                onChange={index =>
+                  setActiveScene(SCENE[index] as keyof typeof BENCHMARK_DATA)
+                }
+              >
+                {SCENE.map(scene => (
+                  <Tab key={scene}>
+                    {performanceInfoList.map(info => (
+                      <div
+                        key={info.name}
+                        className="flex flex-center justify-start flex-col sm:flex-row"
+                        style={{
+                          margin: '16px 16px 16px 0',
+                        }}
+                      >
+                        {
+                          <>
+                            <p
+                              className="mr-2 mb-2 w-20 text-center text-gray-500 dark:text-light-500"
+                              style={{ minWidth: '180px' }}
+                            >
+                              {info.name}
+                            </p>
+                            <ProgressBar
+                              value={info.time}
+                              max={Math.max(
+                                ...performanceInfoList.map(info => info.time),
+                              )}
+                            />
+                          </>
+                        }
+                      </div>
+                    ))}
+                  </Tab>
+                ))}
+              </Tabs>
+            </div>
+          </>
+        }
+      </motion.div>
+    </NoSSR>
   );
 }
