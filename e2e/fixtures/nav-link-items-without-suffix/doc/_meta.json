@@ -1,0 +1,18 @@
+[
+  {
+    "text": "OnlyLink",
+    "link": "/only-link/"
+  },
+  {
+    "text": "OnlyItems",
+    "items": [{ "text": "Item", "link": "/only-items/item" }]
+  },
+  {
+    "text": "ItemsAndLink",
+    "link": "/items-and-link/",
+    "items": [
+      { "text": "Child1", "link": "/items-and-link/child-1" },
+      { "text": "Child2", "link": "/items-and-link/child-2" }
+    ]
+  }
+]

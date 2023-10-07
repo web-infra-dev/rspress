@@ -172,6 +172,7 @@ export interface SiteData<ThemeConfig = NormalizedDefaultThemeConfig> {
   root: string;
   base: string;
   lang: string;
+  route: RouteOptions;
   locales: { lang: string; label: string }[];
   title: string;
   description: string;
@@ -269,14 +270,6 @@ export interface PageData {
 
 export interface RouteOptions {
   /**
-   * The directory to search for pages
-   */
-  root?: string;
-  /**
-   * The basename of the site
-   */
-  prefix?: string;
-  /**
    * The extension name of the filepath that will be converted to a route
    * @default ['js','jsx','ts','tsx','md','mdx']
    */
@@ -289,6 +282,10 @@ export interface RouteOptions {
    * Exclude files from being converted to routes
    */
   exclude?: string[];
+  /**
+   * use links without .html files
+   */
+  cleanUrls?: boolean;
 }
 
 export interface SearchHooks {

@@ -16,6 +16,7 @@ export function HomeLayout(props: HomeLayoutProps) {
   const {
     page: { frontmatter },
   } = usePageData();
+
   return (
     <div
       className="relative"

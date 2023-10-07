@@ -50,5 +50,17 @@
   "plugin-list": {
     "zh": "官方插件列表",
     "en": "Official Plugins"
+  },
+  "start": {
+    "zh": "冷启动(Start)",
+    "en": "Code Start"
+  },
+  "hmr": {
+    "zh": "热更新",
+    "en": "HMR"
+  },
+  "build": {
+    "zh": "冷构建(Build)",
+    "en": "Code Build"
   }
 }

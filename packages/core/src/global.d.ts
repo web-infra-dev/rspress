@@ -11,10 +11,10 @@ declare module 'virtual-routes-ssr' {
 }
 
 declare module 'virtual-site-data' {
-  import { SiteData } from 'shared/types';
-  import ThemeConfig from 'shared/types/defaultTheme';
+  import { SiteData } from '@rspress/shared';
+  import { DefaultThemeConfig } from '@rspress/shared';
 
-  const data: SiteData<ThemeConfig>;
+  const data: SiteData<DefaultThemeConfig>;
   export default data;
 }
 

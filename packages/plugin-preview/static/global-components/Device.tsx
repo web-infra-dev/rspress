@@ -21,7 +21,7 @@ export default () => {
     return cleanRoute.replace(/\//g, '_').replace(/\.[^.]+$/, '') || 'index';
   };
   const { page } = usePageData();
-  const pageName = getPageKey(page._relativePath);
+  const pageName = getPageKey(page.pagePath);
   const url = `~demo/${pageName}`;
   const haveDemos =
     demos.flat().filter(item => new RegExp(`${pageName}_\\d+`).test(item.id))

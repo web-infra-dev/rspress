@@ -22,6 +22,7 @@ export async function createMDXOptions(
   filepath: string,
   pluginDriver: PluginDriver,
 ): Promise<Options> {
+  const cleanUrls = Boolean(config?.route?.cleanUrls);
   const {
     remarkPlugins: remarkPluginsFromConfig = [],
     rehypePlugins: rehypePluginsFromConfig = [],
@@ -51,6 +52,7 @@ export async function createMDXOptions(
         remarkPluginNormalizeLink,
         {
           base: config?.base || '',
+          cleanUrls,
           defaultLang,
           root: docDirectory,
         },

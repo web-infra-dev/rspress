@@ -1,5 +1,29 @@
 # Basic Config
 
+## root
+
+- Type: `string`
+- Default: `docs`
+
+Specifies the document root directory. For example:
+
+```ts title="rspress.config.ts"
+import { defineConfig } from 'rspress/config';
+
+export default defineConfig({
+  root: 'docs',
+});
+```
+
+This config supports both relative and absolute paths, with relative paths being relative to the current working directory(cwd).
+
+Of course, in addition to specifying the document root directory through the config file, you can also specify it through command line parameters, such as:
+
+```bash
+rspress dev docs
+rspress build docs
+```
+
 ## base
 
 - Type: `string`
@@ -249,3 +273,81 @@ export default defineConfig({
 ```
 
 The `default` parameter is the default version, and the `versions` parameter is the version list.
+
+## route
+
+- Type: `Object`
+
+Custom route config.
+
+### route.include
+
+- Type: `string[]`
+- Default: `[]`
+
+Add some extra files in the route. By default, only the files in the document root directory will be included in the route. If you want to add some extra files to the route, you can use this option. For example:
+
+```js
+import { defineConfig } from 'rspress/config';
+
+export default defineConfig({
+  route: {
+    include: ['other-dir/**/*'],
+  },
+});
+```
+
+> Note: The strings in the array support glob patterns.
+
+### route.exclude
+
+- Type: `string[]`
+- Default: `[]`
+
+Exclude some files from the route. For example:
+
+```js
+import { defineConfig } from 'rspress/config';
+
+export default defineConfig({
+  route: {
+    exclude: ['custom.tsx', 'component/**/*'],
+  },
+});
+```
+
+> Note: The strings in the array support glob patterns.
+
+### route.extensions
+
+- Type: `string[]`
+- Default: `[]`
+
+The extensions of the files that will be included in the route. By default, Rspress will include all `'js'`, `'jsx'`, `'ts'`, `'tsx'`, `'md'`, `'mdx'` files in the route. If you want to customize the extensions, you can use this option. For example:
+
+```js
+import { defineConfig } from 'rspress/config';
+
+export default defineConfig({
+  route: {
+    extensions: ['.jsx', '.md', '.mdx'],
+  },
+});
+```
+
+### route.cleanUrls
+
+- Type: `Boolean`
+- Default: `false`
+
+Generate url without suffix when `cleanUrls` is `true` for shorter url link.
+
+```js
+import { defineConfig } from 'rspress/config';
+
+export default defineConfig({
+  route: {
+    cleanUrls: true,
+  },
+});
+```

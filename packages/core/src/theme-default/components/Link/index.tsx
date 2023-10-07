@@ -1,9 +1,14 @@
 import React from 'react';
-import { matchRoutes, useNavigate } from 'react-router-dom';
+import { matchRoutes, useLocation, useNavigate } from 'react-router-dom';
 import nprogress from 'nprogress';
 import { routes } from 'virtual-routes';
 import styles from './index.module.scss';
-import { normalizeHref, normalizeRoutePath, withBase } from '@/runtime';
+import {
+  normalizeHrefInRuntime as normalizeHref,
+  normalizeRoutePath,
+  withBase,
+} from '@/runtime';
+import { scrollToTarget } from '@/theme-default/logic';
 
 export interface LinkProps {
   href?: string;
@@ -23,10 +28,23 @@ export function Link(props: LinkProps) {
   const rel = isExternal ? 'noopener noreferrer' : undefined;
   const withBaseUrl = isExternal ? href : withBase(normalizeHref(href));
   const navigate = useNavigate();
+  const { pathname } = useLocation();
+  const inCurrentPage = withBaseUrl.startsWith(pathname);
   const handleNavigate = async (
     e: React.MouseEvent<HTMLAnchorElement, MouseEvent>,
   ) => {
     e.preventDefault();
+    // handle hash link in current page
+    const hash = withBaseUrl.split('#')[1];
+    if (!isExternal && inCurrentPage && hash) {
+      const el = document.getElementById(hash);
+      if (el) {
+        scrollToTarget(el, true);
+      }
+      return;
+    }
+
+    // handle normal link
     if (!process.env.__SSR__) {
       const matchedRoutes = matchRoutes(
         routes,
@@ -44,6 +62,7 @@ export function Link(props: LinkProps) {
       navigate(withBaseUrl, { replace: false });
     }
   };
+
   if (!isExternal) {
     return (
       <a

@@ -1,5 +1,38 @@
 # @rspress/plugin-preview
 
+## 1.0.0-beta.1
+
+### Major Changes
+
+- 61365e4: fix: render error
+
+### Patch Changes
+
+- Updated dependencies [213c9e3]
+- Updated dependencies [599291c]
+- Updated dependencies [34ac6ed]
+- Updated dependencies [d1098cf]
+- Updated dependencies [3b89c1d]
+- Updated dependencies [a9271e9]
+- Updated dependencies [485d873]
+  - @rspress/core@1.0.0-beta.1
+  - @rspress/shared@1.0.0-beta.1
+
+## 1.0.0-beta.0
+
+### Major Changes
+
+- 61365e4: fix: render error
+
+### Patch Changes
+
+- Updated dependencies [213c9e3]
+- Updated dependencies [599291c]
+- Updated dependencies [d1098cf]
+- Updated dependencies [485d873]
+  - @rspress/core@1.0.0-beta.0
+  - @rspress/shared@1.0.0-beta.0
+
 ## 0.2.0
 
 ### Minor Changes

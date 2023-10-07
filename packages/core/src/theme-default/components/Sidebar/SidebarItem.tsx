@@ -4,7 +4,7 @@ import { Tag } from '../Tag';
 import styles from './index.module.scss';
 import { SidebarGroup } from './SidebarGroup';
 import { SidebarItemProps, highlightTitleStyle } from '.';
-import { normalizeHref } from '@/runtime';
+import { normalizeHrefInRuntime as normalizeHref } from '@/runtime';
 
 export function SidebarItem(props: SidebarItemProps) {
   const { item, depth = 0, activeMatcher, id, setSidebarData } = props;

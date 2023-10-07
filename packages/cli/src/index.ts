@@ -2,6 +2,7 @@ import { createRequire } from 'module';
 import path from 'path';
 import { cac } from 'cac';
 import { build, dev, serve } from '@rspress/core';
+import { logger } from '@rspress/shared/logger';
 import chokidar from 'chokidar';
 import chalk from 'chalk';
 import { loadConfigFile } from './config/loadConfigFile';
@@ -9,8 +10,6 @@ import { loadConfigFile } from './config/loadConfigFile';
 const CONFIG_FILES = ['rspress.config.ts', 'rspress.config.js', '_meta.json'];
 
 const require = createRequire(import.meta.url);
-// eslint-disable-next-line import/no-commonjs
-const gradient = require('gradient-string');
 
 // eslint-disable-next-line import/no-commonjs
 const packageJson = require('../package.json');
@@ -18,8 +17,7 @@ const packageJson = require('../package.json');
 const cli = cac('rspress').version(packageJson.version).help();
 
 const landingMessage = `🔥 Rspress v${packageJson.version}\n`;
-const rainbowMessage = gradient.cristal(landingMessage);
-console.log(chalk.bold(rainbowMessage));
+logger.greet(landingMessage);
 
 const setNodeEnv = (env: 'development' | 'production') => {
   process.env.NODE_ENV = env;
@@ -40,6 +38,17 @@ cli
 
     const startDevServer = async () => {
       const config = await loadConfigFile(options.config);
+
+      // Support root relative to cwd
+      if (config.root && !path.isAbsolute(config.root)) {
+        config.root = path.join(cwd, config.root);
+      }
+
+      // Support root in command, override config file
+      if (root) {
+        config.root = path.join(cwd, root);
+      }
+
       docDirectory = config.root || path.join(cwd, root ?? 'docs');
       devServer = await dev({
         appDirectory: cwd,
@@ -89,6 +98,9 @@ cli
     setNodeEnv('production');
     const cwd = process.cwd();
     const config = await loadConfigFile(options.config);
+    if (root) {
+      config.root = path.join(cwd, root);
+    }
     await build({
       appDirectory: cwd,
       docDirectory: config.root || path.join(cwd, root ?? 'docs'),

@@ -9,7 +9,7 @@ import {
 import type { Plugin } from 'unified';
 import type { Root } from 'mdast';
 import type { MdxjsEsm } from 'mdast-util-mdxjs-esm';
-import { injectDemoBlockImport, toValidVarName } from './utils';
+import { injectDemoBlockImport, generateId } from './utils';
 import { demoBlockComponentPath } from './constant';
 import { demoRoutes } from '.';
 
@@ -122,7 +122,7 @@ export const remarkCodeToDemo: Plugin<
         if (!src) {
           return;
         }
-        const id = `${toValidVarName(pageName)}_${index++}`;
+        const id = generateId(pageName, index++);
         constructDemoNode(id, src, node, isMobileMode, externalDemoIndex++);
       }
     });
@@ -155,7 +155,7 @@ export const remarkCodeToDemo: Plugin<
           RSPRESS_TEMP_DIR,
           `virtual-demo`,
         );
-        const id = `${toValidVarName(pageName)}_${index++}`;
+        const id = generateId(pageName, index++);
         const virtualModulePath = join(demoDir, `${id}.tsx`);
         fs.ensureDirSync(join(demoDir));
         // Only when the content of the file changes, the file will be written

@@ -22,7 +22,6 @@ interface LoaderOptions {
 export interface PageMeta {
   toc: TocItem[];
   title: string;
-  frontmatter: Record<string, any>;
 }
 
 export default async function mdxLoader(
@@ -37,7 +36,6 @@ export default async function mdxLoader(
   let pageMeta = {
     title: '',
     toc: [],
-    frontmatter: {},
   } as PageMeta;
 
   const {
@@ -50,6 +48,7 @@ export default async function mdxLoader(
   } = options;
 
   const { data: frontmatter, content } = grayMatter(source);
+  const hasFrontMatter = Object.keys(frontmatter).length > 0;
 
   try {
     let compileResult: string;
@@ -76,7 +75,6 @@ export default async function mdxLoader(
       compileResult = String(vFile);
       pageMeta = {
         ...(compiler.data('pageMeta') as { toc: Header[]; title: string }),
-        frontmatter,
       } as PageMeta;
     } else {
       const { compile } = require('@rspress/mdx-rs');
@@ -93,7 +91,6 @@ export default async function mdxLoader(
       pageMeta = {
         toc,
         title,
-        frontmatter,
       };
       // We should check dead links in mdx-rs mode
       if (checkDeadLinks) {
@@ -102,11 +99,18 @@ export default async function mdxLoader(
     }
 
     // encode filename to be compatible with Windows
-    const result = `globalThis.__RSPRESS_PAGE_META ||= {};
-globalThis.__RSPRESS_PAGE_META["${encodeURIComponent(
+    const result = `${compileResult}
+MDXContent.__RSPRESS_PAGE_META = {};
+MDXContent.__RSPRESS_PAGE_META["${encodeURIComponent(
       normalizePath(path.relative(docDirectory, filepath)),
     )}"] = ${JSON.stringify(pageMeta)};
-${compileResult}`;
+${
+  hasFrontMatter
+    ? `export const frontmatter = ${JSON.stringify(frontmatter)};`
+    : ''
+}
+
+`;
     callback(null, result);
   } catch (e) {
     console.error(`MDX compile error: ${e.message} in ${filepath}`);

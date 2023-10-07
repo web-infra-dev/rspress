@@ -10,11 +10,15 @@ The design goals of Rspress are: **first-class compilation performance**, **out-
 
 ### High-performance Rust Toolchain
 
-In Rspress, in order to break through the compilation performance bottleneck of traditional front-end tools, we have made a lot of efforts on the Rust toolchain.
+In Rspress, in order to break through the compilation performance bottleneck of traditional front-end tools, we have made a lot of efforts on the Rust toolchain and Rspress has obvious advantages in compilation performance compared to other SSG frameworks, the following is benchmark comparison:
+
+import { Benchmark } from '@/components/Benchmark';
+
+<Benchmark />
 
 Firstly, Rspress is built on [Rspack](https://rspack.dev/), a high-performance front-end packaging tool based on Rust, which has built-in various optimization methods, such as multi-threaded parallel compilation, incremental compilation, etc. Compared with traditional packaging tools like Webpack, Rollup, etc., Rspack's compilation speed has increased by 5 ~ 10 times.
 
-In addition to the bundler itself, for another major compilation performance bottleneck in the SSG framework, i.e., `Markdown Compilation`, we have also rustified this process to further speed up. Based on the open-source [mdxjs-rs](https://github.com/wooorm/mdxjs-rs) library, we extended a series of plugins, and further exposed the Node.js call interface through [napi-rs](https://napi.rs/), thus customizing the Rspress Markdown compiler (called `@rspress/mdx-rs`). This compiler has more than 10 times the performance improvement compared to the traditional JS version of the compiler:
+In addition to the bundler itself, for another major compilation performance bottleneck in the SSG framework, i.e., `Markdown Compilation`, we have also rustified this process to further speed up. Based on the open-source [mdxjs-rs](https://github.com/wooorm/mdxjs-rs) library, we extended a series of plugins, and further exposed the Node.js call interface through [napi-rs](https://napi.rs/), thus customizing the Rspress Markdown compiler (called [`@rspress/mdx-rs`](https://github.com/web-infra-dev/mdx-rs)). This compiler has more than 10 times the performance improvement compared to the traditional JS version of the compiler:
 
 ![mdx-benchmark](https://lf3-static.bytednsdoc.com/obj/eden-cn/uhbfnupenuhf/rspress/mdx-rs-benchmark.png)
 
@@ -50,10 +54,9 @@ Based on [PrismJS](https://github.com/PrismJS/prism) for runtime code coloring, 
 
 ```ts title="rspress.config.ts"
 import { defineConfig } from 'rspress/config';
-import path from 'path';
 
 export default defineConfig({
-  root: path.join(__dirname, 'docs'),
+  root: 'docs',
 });
 ```
 
