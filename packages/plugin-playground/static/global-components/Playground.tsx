@@ -1,4 +1,4 @@
-import React, { HTMLAttributes, useCallback, useState } from 'react';
+import React, { HTMLAttributes, ReactNode, useCallback, useState } from 'react';
 import getImport from '_rspress_playground_imports';
 import { usePageData } from '@rspress/core/runtime';
 import { Editor, Runner } from '../../dist/web/esm';
@@ -8,14 +8,21 @@ declare global {
   const __PLAYGROUND_DIRECTION__: any;
 }
 
-interface PlaygroundProps extends HTMLAttributes<HTMLDivElement> {
+type Direction = 'horizontal' | 'vertical';
+
+export interface PlaygroundProps extends HTMLAttributes<HTMLDivElement> {
   code: string;
   language: string;
-  direction?: 'horizontal' | 'vertical';
+  direction?: Direction;
   editorPosition?: 'left' | 'right';
+  renderChildren?: (
+    props: PlaygroundProps,
+    code: string,
+    direction: Direction,
+  ) => ReactNode;
 }
 
-function useDirection(props: PlaygroundProps) {
+function useDirection(props: PlaygroundProps): Direction {
   const { page = {} } = usePageData();
   const { frontmatter = {} } = page as any;
   const { playgroundDirection } = frontmatter;
@@ -47,6 +54,7 @@ export default function Playground(props: PlaygroundProps) {
     className = '',
     direction: directionProp,
     editorPosition,
+    renderChildren,
     ...rest
   } = props;
 
@@ -79,6 +87,7 @@ export default function Playground(props: PlaygroundProps) {
         onChange={handleCodeChange}
         language={monacoLanguage}
       />
+      {renderChildren?.(props, code, direction)}
     </div>
   );
 }
