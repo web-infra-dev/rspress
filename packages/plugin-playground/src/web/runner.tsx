@@ -69,6 +69,7 @@ class Runner extends Component<RunnerProps, RunnerState> {
       }
       const result = babel.transform(targetCode, {
         sourceType: 'module',
+        sourceMaps: 'inline',
         presets,
         plugins: [
           {
