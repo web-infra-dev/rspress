@@ -53,12 +53,15 @@ interface TabsProps {
   children: React.ReactNode;
   defaultValue?: string;
   groupId?: string;
+  tabPosition?: 'left' | 'center';
 }
 ```
 
 defaultValue 用于设置默认选中的 tab 项，这个值会和 Tab 组件的 value 字段做比较，如果相等则选中该 tab。
 
 groupId 用于设置 tab 项的分组，当你需要多个 Tabs 组件进行联动的时候，可以通过 groupId 来实现。groupId 相同的 Tabs 组件会进行联动。
+
+tabPosition 用于设置 tab 列表的排列位置，目前支持 left 和 center 两个值，分为表示靠左和居中，默认为 left。
 
 Tab 组件的 props 类型如下:
 
@@ -130,12 +133,10 @@ interface PackageManagerTabsProps {
 import { Toc } from '@theme';
 
 function App() {
-  return (
-    <Toc />
-  );
+  return <Toc />;
 }
 ```
 
-import { Toc } from '@theme'
+import { Toc } from '@theme';
 
 <Toc />
