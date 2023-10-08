@@ -157,7 +157,7 @@ export const parseUrl = (
   };
 };
 
-export function normalizeHref(url?: string, cleanUrls: boolean = false) {
+export function normalizeHref(url?: string, cleanUrls = false) {
   if (!url) {
     return '/';
   }

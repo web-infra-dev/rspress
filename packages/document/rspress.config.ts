@@ -1,3 +1,4 @@
+import path from 'path';
 import { defineConfig } from 'rspress/config';
 
 export default defineConfig({
@@ -24,6 +25,11 @@ export default defineConfig({
         'process.env.DOCUMATE_BACKEND_URL': JSON.stringify(
           process.env.DOCUMATE_BACKEND_URL,
         ),
+      },
+      alias: {
+        'rspress/theme': process.env.DOC_DEBUG
+          ? path.join(__dirname, '../core/src/theme-default')
+          : 'rspress/theme',
       },
     },
   },
