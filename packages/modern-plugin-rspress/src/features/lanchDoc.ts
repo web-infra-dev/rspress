@@ -133,6 +133,14 @@ export async function launchDoc({
           join(__dirname, '..', 'static', 'global-components', 'Overview.tsx'),
         ],
       },
+      builderConfig: {
+        source: {
+          alias: {
+            'rspress/runtime': '@rspress/core/runtime',
+            'rspress/theme': '@rspress/core/theme',
+          },
+        },
+      },
       head: [
         `
           <script>
