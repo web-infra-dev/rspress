@@ -52,7 +52,8 @@
     "@monaco-editor/react": "~4.4.6",
     "@oxidation-compiler/napi": "^0.1.0",
     "@rspress/shared": "workspace:*",
-    "remark-gfm": "3.0.1"
+    "remark-gfm": "3.0.1",
+    "rspack-plugin-virtual-module": "0.1.12"
   },
   "devDependencies": {
     "@babel/types": "^7.22.17",
@@ -68,7 +69,6 @@
     "react": "^18",
     "react-dom": "^18",
     "react-router-dom": "^6.8.1",
-    "rspack-plugin-virtual-module": "0.1.11",
     "typescript": "^5",
     "unified": "^10.1.2",
     "unist-util-visit": "^4.1.1"

@@ -695,9 +695,6 @@ importers:
       react-router-dom:
         specifier: ^6.8.1
         version: 6.11.1(react-dom@18.2.0)(react@18.2.0)
-      rspack-plugin-virtual-module:
-        specifier: 0.1.11
-        version: 0.1.11
       typescript:
         specifier: ^5
         version: 5.0.4
@@ -858,6 +855,9 @@ importers:
       remark-gfm:
         specifier: 3.0.1
         version: 3.0.1
+      rspack-plugin-virtual-module:
+        specifier: 0.1.12
+        version: 0.1.12
     devDependencies:
       '@babel/types':
         specifier: ^7.22.17
@@ -898,9 +898,6 @@ importers:
       react-router-dom:
         specifier: ^6.8.1
         version: 6.15.0(react-dom@18.2.0)(react@18.2.0)
-      rspack-plugin-virtual-module:
-        specifier: 0.1.11
-        version: 0.1.11
       typescript:
         specifier: ^5
         version: 5.0.4
@@ -931,6 +928,9 @@ importers:
       remark-gfm:
         specifier: 3.0.1
         version: 3.0.1
+      rspack-plugin-virtual-module:
+        specifier: 0.1.12
+        version: 0.1.12
     devDependencies:
       '@types/mdast':
         specifier: ^3.0.10
@@ -959,9 +959,6 @@ importers:
       react-router-dom:
         specifier: ^6.8.1
         version: 6.11.1(react-dom@18.2.0)(react@18.2.0)
-      rspack-plugin-virtual-module:
-        specifier: 0.1.11
-        version: 0.1.11
       typescript:
         specifier: ^5
         version: 5.0.4
@@ -4274,7 +4271,7 @@ packages:
       http-compression: 1.0.6
       minimatch: 3.1.2
       path-to-regexp: 6.2.1
-      ts-node: 10.9.1(@types/node@18.11.17)(typescript@5.0.4)
+      ts-node: 10.9.1(@types/node@16.11.7)(typescript@5.0.4)
       ws: 8.13.0
     transitivePeerDependencies:
       - '@babel/traverse'
@@ -5472,7 +5469,6 @@ packages:
 
   /@types/node@16.11.7:
     resolution: {integrity: sha512-QB5D2sqfSjCmTuWcBWyJ+/44bcjO7VbjSbOE0ucoVbAsSNQc4Lt6QkgkVXkTDwkL4z/beecZNDvVX15D4P8Jbw==}
-    dev: true
 
   /@types/node@18.11.17:
     resolution: {integrity: sha512-HJSUJmni4BeDHhfzn6nF0sVmd1SMezP7/4F0Lq+aXzmp2xm9O7WXrUtHW/CHlYVtZUbByEvWidHqRtcJXGF2Ng==}
@@ -13598,12 +13594,6 @@ packages:
       webpack-sources: 2.3.1
     dev: false
 
-  /rspack-plugin-virtual-module@0.1.11:
-    resolution: {integrity: sha512-dD7vo8PY3sG7nM1JAuytJ4XTXqALKUDjISFaxFyIHcSvUBKu8nmJf9TaRq1htS+bsXujqkKhKR859k0/zTHwxQ==}
-    dependencies:
-      fs-extra: 11.1.1
-    dev: true
-
   /rspack-plugin-virtual-module@0.1.12:
     resolution: {integrity: sha512-qyBM9XsP7oxBQSms2cr715XOeoDi6p5hUYXtlNDfst0jha8vfWVPNeC7j5+j5dG+yt//1OCmLaOY2rWqPSVXDg==}
     dependencies:
@@ -14580,7 +14570,6 @@ packages:
       typescript: 5.0.4
       v8-compile-cache-lib: 3.0.1
       yn: 3.1.1
-    dev: true
 
   /ts-node@10.9.1(@types/node@18.11.17)(typescript@5.0.4):
     resolution: {integrity: sha512-NtVysVPkxxrwFGUUxGYhfux8k78pQB3JqYBXlLRZgdGUqTO5wU/UyHop5p70iEbGhB7q5KmiZiU0Y3KlJrScEw==}
