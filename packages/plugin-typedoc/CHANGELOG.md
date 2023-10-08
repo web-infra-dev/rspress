@@ -1,5 +1,11 @@
 # @rspress/plugin-typedoc
 
+## 1.0.0-beta.2
+
+### Patch Changes
+
+- rspress@1.0.0-beta.2
+
 ## 1.0.0-beta.1
 
 ### Patch Changes

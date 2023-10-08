@@ -1,5 +1,37 @@
 # @rspress/core
 
+## 1.0.0-beta.2
+
+### Minor Changes
+
+- 213c9e3: fix: tuning the animation for `first entry` and `navigate with hash`
+- d1098cf: feat: support cleanUrls to generate url without suffix
+
+### Patch Changes
+
+- 599291c: fix: dead link invalid when having a trailing slash
+
+  fix: 路径包含尾部斜杠时，死链检测失效
+
+- 4a133ab: feat: support tabPosition in Tabs
+- 34ac6ed: chore: modify search hooks default extension
+- 3b89c1d: feat: more flexible root config
+- a9271e9: feat: using rslog as logger
+
+  feat: 使用 rslog 作为 logger
+
+- 485d873: fix: home page hmr invalid
+
+  fix: home 页面热更新失效
+
+- Updated dependencies [d1098cf]
+- Updated dependencies [a9271e9]
+  - @rspress/shared@1.0.0-beta.2
+  - @rspress/plugin-auto-nav-sidebar@1.0.0-beta.2
+  - @rspress/plugin-container-syntax@1.0.0-beta.2
+  - @rspress/plugin-last-updated@1.0.0-beta.2
+  - @rspress/plugin-medium-zoom@1.0.0-beta.2
+
 ## 1.0.0-beta.1
 
 ### Minor Changes
