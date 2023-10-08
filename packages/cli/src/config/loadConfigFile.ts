@@ -28,7 +28,10 @@ export async function loadConfigFile(
   }
 
   const jiti = await import('jiti');
-  const loadConfig = jiti.default(baseDir, { interopDefault: true });
+  const loadConfig = jiti.default(baseDir, {
+    interopDefault: true,
+    esmResolve: true,
+  });
 
   return loadConfig(configFilePath);
 }
