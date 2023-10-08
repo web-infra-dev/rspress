@@ -110,9 +110,6 @@
     "yaml-front-matter": "^4.1.1",
     "rspack-plugin-virtual-module": "0.1.12"
   },
-  "peerDependencies": {
-    "react": ">=17"
-  },
   "devDependencies": {
     "@modern-js/plugin-tailwindcss": "2.35.1",
     "@modern-js/plugin-testing": "2.35.1",
