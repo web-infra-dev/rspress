@@ -47,11 +47,6 @@
     "typescript": "^5",
     "vitest": "0.33.0"
   },
-  "peerDependencies": {
-    "@modern-js/module-tools": "2.35.1",
-    "react": "^18.2.0",
-    "react-dom": "^18.2.0"
-  },
   "sideEffects": [
     "**/*.scss"
   ],
