@@ -168,7 +168,7 @@ async function createInternalBuildConfig(
         // This config can be removed after upgrading Rspack v0.4
         // https://github.com/web-infra-dev/rspack/issues/3096
         optimization: {
-          chunkIds: 'deterministic',
+          chunkIds: isProduction() ? 'deterministic' : 'named',
         },
       },
       bundlerChain(chain) {

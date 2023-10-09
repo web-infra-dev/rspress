@@ -2,78 +2,310 @@
 
 ## 定位
 
-Rspress 是一个基于 [Rspack](https://rspack.dev/) 的静态站点生成器，内置了一套默认的文档主题，你可以通过 Rspress 来快速搭建一个文档站点，同时也可以自定义主题，来满足你的个性化静态站需求，比如博客站、产品主页等。
+Rspress 是一个基于 [Rspack](https://rspack.dev/) 的静态站点生成器，基于 React 框架进行渲染，内置了一套默认的文档主题，你可以通过 Rspress 来快速搭建一个文档站点，同时也可以自定义主题，来满足你的个性化静态站需求，比如博客站、产品主页等。当然，你也可以接入官方提供的相应插件来方便地搭建组件库文档。
 
-Rspress 的设计目标是：**一流的编译性能**、**开箱即用的主题功能**和**足够灵活的扩展能力**。
+## 项目背景
 
-## 功能特性
+Rspress 主要以如下的几个方向来进行建设：
 
-### Rust 高性能工具链
+- **构建性能**。保证足够快的启动速度，带来良好的开发体验。
+- **MDX 支持**。通过 MDX，我们可以方便地复用文档片段，以及在文档中渲染自定义的 React 组件。
+- **文档站基础能力**。包括国际化、多版本支持、全文搜索、组件库文档等。
+- **可扩展性**。内置插件系统，支持通过插件 API 来扩展框架功能。
 
-为了突破传统前端工具的编译性能瓶颈，Rspress 在 Rust 工具链上做了很多的努力，相比与现有的 SSG 框架有明显的性能优势，具体测试数据如下：
+这些也代表了 SSG 站点开发的一些核心需求。接下来将会根据这几个方面分别进行介绍。
+
+### 构建性能
+
+当项目越来越庞大，团队成员时常苦恼于冗长的项目启动时间，开发体验因此受到了一些负面影响，并且项目开发的时间越长，这种体验的劣化就越为明显。
+
+我们不禁开始思考，是否能跳出目前社区工具链的限制，突破现有 SSG 框架的性能瓶颈，实现绝大多数场景的项目秒启效果？
+
+接着，我们在这个方向上持续地探索，最终在 Rspress 上实现了这样的效果。以 Rspress 官网文档的内容为例，Rspress、Docusaurus 和 Nextra 三者的性能对比情况如下：
 
 import { Benchmark } from '@/components/Benchmark';
 
 <Benchmark />
 
-首先，Rspress 基于 [Rspack](https://rspack.dev/) 构建，Rspack 是一个基于 Rust 的高性能前端打包工具，内置了多种优化手段，如：多线程并行编译、增量编译等，相比传统的 Webpack、Rollup 等打包工具，Rspack 的编译速度有着 5 ~ 10 倍的提升。
+如果只说一种最核心的优化手段，那无疑是 `Rust 前端工具链`。 我们主要在两个性能敏感部分使用了 Rust 工具链：
 
-除了打包工具本身，对于文档框架中另一大编译性能瓶颈，即`Markdown 编译`，我们也将这一流程 Rust 化以进一步提速，基于开源的 [mdxjs-rs](https://github.com/wooorm/mdxjs-rs) 库扩展一系列插件，并通过 [napi-rs](https://napi.rs/) 进一步封装出 Node.js 的调用接口，从而定制出 Rspress 的 Markdown 编译器（即[`@rspress/mdx-rs`](https://github.com/web-infra-dev/mdx-rs)）。这款编译器相比传统的 JS 版本的编译器，有 10 倍以上的性能提升：
+- 前端 Bundler。传统的 Bundler 包括 webpack、Rollup 等等，对于一个前端工程而言，bundler 是各个编译工具链的集成枢纽，是一个非常关键的工程能力，对项目构建性能影响巨大。而 Rspress 使用了团队内部自研的 Rspack，Rspack 是一个基于 Rust 的 Bundler，内置多种性能优化手段，比如多线程并行编译、增量编译等等，相比社区传统的打包工具，有 5 ～ 10 倍的性能提升。
+- Markdown 编译器。对于 SSG 框架中另一大编译性能瓶颈，即`Markdown 编译`，我们也将这一流程 Rust 化以进一步提速，定制出 Rspress 的 Markdown 编译器（即`@rspress/mdx-rs`）。这款编译器相比社区的 JS 版本的编译器，有近 20 倍的性能提升：
 
 <img src="https://lf3-static.bytednsdoc.com/obj/eden-cn/uhbfnupenuhf/rspress/mdx-rs-benchmark.png" />
 
-### 支持 MDX 渲染
+与此同时，Rspress 内部也应用了其它的诸多构建优化手段，比如`主题包预打包`、`样式预生成` 等等。这些额外的优化手段，配合强有力的 Rust 工具链，将 SSG 框架的编译性能推向了一个崭新的高度。
 
-Rspress 基于 [MDX](https://mdxjs.com/) 来进行 Markdown 语法的扩展，支持在 Markdown 中使用 React 组件，同时支持在 Markdown 中使用 JSX 语法，语法上更加灵活：
+### MDX 支持
+
+为了保证内容开发的灵活性，Rspress 选择支持 MDX 这种内容格式。
+
+因为 MDX 的背后实际代表了一种组件化的内容组织方式，一方面文档即组件，那么我们可以在不同文档间复用文档片段，另一方面在文档中可以引入任何自定义 React 组件，大大释放了文档开发的想象力。
+
+### 文档站基础能力
+
+当然，Rspress 在文档站基础能力的打磨上也做了相当多的工作，支持了如下的功能特性：
+
+- 自动生成布局，包括导航栏、左侧侧边栏等等；
+- 静态站点生成，项目构建后直出 HTML；
+- 国际化，支持多语言文档；
+- 全文搜索，提供开箱即用的搜索功能；
+- 多版本文档管理；
+- 自定义文档主题；
+- 自动生成组件 Demo 预览及 Playground；
+
+在后文，我们将会对这些功能特性进行详细的介绍。
+
+### 扩展机制
+
+Rspress 内部设计了多种扩展机制，保证足够强的定制能力，包括：
+
+- 支持自定义全局组件、全局样式、页面布局结构，详情请参考[自定义页面](/guide/basic/custom-page)。
+- 支持**构建能力扩展**，包括 Rspack 配置、增加 MDX 编译插件等等，详情请参考[构建能力扩展](/guide/advanced/extend-build)。
+- 支持**自定义主题**，详情请参考[自定义主题](/guide/advanced/custom-theme)。
+- 内置**插件机制**，支持自定义插件，详情请参考[插件机制](/plugin/system/introduction)。
+
+## 功能特性
+
+接下来我们来介绍 Rspress 的主要功能特性。
+
+### 自动生成布局
+
+对于一个文档站的搭建而言，除了显示正文内容之外，我们一般还需要以下的几个布局模块：
+
+- 导航栏，用于提供全局性的导航入口；
+- 侧边栏，用于展示当前导航下的文章目录；
+- 文章大纲栏，用于展示当前页面的大纲结构。
+
+对于文档大纲，Rspress 会自动提取文档中的各级标题，生成大纲信息，并默认展示在文章页右侧，你无需其它操作。
+
+而对于导航栏和侧边栏，我们提供了两种配置方式，你可以选择其中一种进行配置：
+
+- **声明式配置**。通过在目录中声明 `_meta.json` 来配置对应的数据，比如：
+
+```json title="_meta.json"
+["introduction", "install", "start"]
+```
+
+配置详情你可以阅读[「自动化导航栏/侧边栏」文档](/guide/basic/auto-nav-sidebar.html '「自动化导航栏/侧边栏」文档')。
+
+- **编程式配置**。通过在 Rspress 配置中指定 [nav](/api/config/config-theme.html#nav) 和 [sidebar](/api/config/config-theme.html#sidebar) 配置项来实现。
+
+我们推荐在一般情况下使用`声明式配置`，这样有诸多的好处：
+
+1.  配置文件更加简洁和清晰。
+1.  `文件目录结构`和`侧边栏目录结构`的对应关系更加直观。
+1.  增加或者删减侧边栏目录时，直接在当前目录中操作，而不用前往 `rspress.config.ts` 配置文件中定位到相应的位置然后添加/删减配置，从而减少了开发上下文切换的成本。
+
+而`编程式配置`则在某些需要动态生成配置的场景中非常有用，比如 Rspress 官方的 [TypeDoc 插件](https://rspress.dev/plugin/official-plugins/typedoc.html 'TypeDoc 插件') 会根据 TypeDoc 提供的一份 json 数据自动转换为 `nav` 和 `sidebar` 的配置。
+
+### MDX 支持
+
+MDX 是一种功能强大的内容开发方式。你不仅仅可以像往常一样编写 Markdown 文件，而且可以在 Markdown 的内容中使用 React 组件：
 
 <img src="https://lf3-static.bytednsdoc.com/obj/eden-cn/uhbfnupenuhf/rspress/mdx-intro.png" />
 
-在页面中嵌入 React 组件，可以让你的文档更加丰富多彩，如：
+除此之外，Rspress 还支持了一些特定的语法，如：
 
-<img src="https://lf3-static.bytednsdoc.com/obj/eden-cn/uhbfnupenuhf/rspress/rspress-mdx.png" />
+- 自定义容器语法。
+- FrontMatter 元数据定义。
+- 代码行高亮语法。
 
-> 案例来源: https://modernjs.dev/community/showcase.html
+详情可以查看[「使用 MDX」 文档](/guide/basic/use-mdx.html '「使用 MDX」 文档')。
 
-语法详情请参考 [使用 MDX](/guide/basic/use-mdx) 小节。
+### SSG
 
-### 主题功能
+Rspress 是一个标准的 SSG 框架，在生产环境的构建中，它会自动帮你生成静态站点，即生成各个页面的 HTML 内容，在构建完成之后，HTML 会出现在默认的产物目录中。
 
-#### 支持全文搜索
+随后，你可以将这个产物目录的内容部署到任何静态站点托管服务上，比如 Github Pages、Netlify、Vercel 等等。
 
-基于开源 FlexSearch 搜索引擎，提供开箱即用的文档搜索能力，也就是说，你不需要任何配置，就可以直接使用搜索功能，效果如下：
+同时，我们也提供了配置让你能够很方便地自定义 SSG 生成的 HTML 内容，详情可以参考[「静态站点生成」文档](/guide/basic/ssg.html '「静态站点生成」文档')。
 
-<img src="https://lf3-static.bytednsdoc.com/obj/eden-cn/uhbfnupenuhf/rspress/rspress-search.png" />
+### 国际化（i18n）
 
-#### 支持国际化(I18n)
+国际化在一个文档类型的站点中是一个很常见的需求，而 Rspress 将国际化的能力封装得足够简单易用，在框架中我们将国际化抽象为如下的需求：
 
-内置国际化支持，支持多语言切换，且支持多语言内容搜索。详情可见 [国际化](/guide/default-theme/i18n)。
+- 如何定义 I18n 数据源？
+- 如何进行不同语言下的站点配置？
+- 如何组织不同语言版本的文档目录？
+- 如何自定义组件中使用 I18n 数据源？
 
-#### 代码块高亮
+框架已经为你支持了这些需求场景，你可以根据 [I18n 教程](/guide/default-theme/i18n.html 'I18n 教程') 来一步步为你的站点实现国际化。
 
-基于 [PrismJS](https://github.com/PrismJS/prism) 来进行运行时代码着色，支持多种代码语言高亮。如:
+### 多版本文档
 
-```ts title="rspress.config.ts"
+在某些场景中，我们需要进行多版本文档管理，而 Rspress 已经内置了多版本文档的支持，一方面你可以通过简单的配置来开启这个能力，另一方面你只需要按照往常的写法来组织目录即可，不引入非必要的目录和概念，将心智负担降到最低：
+
+```ts
+// 配置文件
 import { defineConfig } from 'rspress/config';
 
 export default defineConfig({
-  // 文档根目录
-  root: 'docs',
+  multiVersion: {
+    default: 'v1',
+    versions: ['v1', 'v2'],
+  },
 });
 ```
 
-#### 自动生成布局
+```
+// 目录结构
+docs
+├── v1
+│   ├── README.md
+│   └── guide
+│       └── README.md
+└── v2
+    ├── README.md
+    └── guide
+        └── README.md
+```
 
-内置了多种布局组件，如：`顶部导航`、`左侧侧边栏`等，你可以通过配置文件来进行自动生成，详情可参考[自动化导航栏/侧边栏](/guide/basic/auto-nav-sidebar)。
+### 全文搜索
 
-同时，你也可以通过配置 pageType 来自定义布局类型，详情可参考 [pageType](/api/config/config-frontmatter.html#pagetype)。
+Rspress 中提供开箱即用的全文搜索能力，你无需任何配置即可接入，底层基于开源的 FlexSearch 引擎实现，效果如下：
 
-#### 支持自定义主题
+<img src="https://lf3-static.bytednsdoc.com/obj/eden-cn/uhbfnupenuhf/rspress/rspress-search.png" />
 
-支持自定义主题，可以通过配置文件来进行主题的定制，详情请参考 [自定义主题](/guide/advanced/custom-theme)。
+### 自定义主题
+
+Rspress 支持两种自定义主题的方式：
+
+1.  基于默认主题扩展。在默认主题的各个组件中，提供了许多插槽让你能添加自定义的布局内容，比如接入 `documate` 提供的 AI 问答组件：
+
+```ts
+// theme/index.tsx
+import Theme from 'rspress/theme';
+import { NoSSR } from 'rspress/runtime';
+import { Documate } from '@documate/react';
+import '@documate/react/dist/style.css';
+
+const Layout = () => (
+  <Theme.Layout
+    afterNavTitle={
+      <NoSSR>
+        <Documate endpoint="" />
+      </NoSSR>
+    }
+  />
+);
+
+export default {
+  ...Theme,
+  Layout,
+};
+
+export * from 'rspress/theme';
+```
+
+效果如下：
+
+![](https://lf3-static.bytednsdoc.com/obj/eden-cn/uhbfnupenuhf/rspress/rspress-ai-search.jpeg)
+
+> Rspress 中接入 AI 问答: https://documate.site/integration/rspress
+
+2.  完全自定义主题。如果你想从头开发一套自定义主题，可以重新自定义 Layout 的内容，并借助 Rspress 提供的各个 Runtime API （如 `usePageData`）来获取编译时数据、路由等信息。
+
+关于自定义主题的详情，你可以参考[「自定义主题」文档](/guide/advanced/custom-theme.html '「自定义主题」文档')。
 
 ### 插件机制
 
-内部设计了插件系统，保证足够强的扩展性，你可以通过自定义插件来扩展 Rspress 各种各样的功能，详情请参考[插件机制](/plugin/system/introduction)。
+插件机制是 Rspress 至关重要的部分，它可以让你在搭建站点的过程中，方便地扩展框架的功能。详情可以查看[插件介绍文档](/plugin/system/introduction.html '介绍文档')。
+
+### 组件文档
+
+#### Demo 预览
+
+Rspress 提供了 [preview 插件](/plugin/official-plugins/preview 'preview 插件')，可以自动为你生成组件预览。当你注册 preview 插件后，在 mdx 文件中声明如下的代码块：
+
+```tsx
+import React from 'react';
+import { Tag, Space } from '@arco-design/web-react';
+import '@arco-design/web-react/dist/css/arco.css';
+const COLORS = [
+  'red',
+  'orangered',
+  'orange',
+  'gold',
+  'lime',
+  'green',
+  'cyan',
+  'blue',
+  'arcoblue',
+  'purple',
+  'pinkpurple',
+  'magenta',
+  'gray',
+];
+
+export default () => {
+  return (
+    <Space>
+      {COLORS.map((color, i) => (
+        <Tag key={i} color={color}>
+          {color}
+        </Tag>
+      ))}
+    </Space>
+  );
+};
+```
+
+那么你可以看到如下的预览效果：
+
+![](https://lf3-static.bytednsdoc.com/obj/eden-cn/uhbfnupenuhf/rspress/demo-preview.png)
+
+当然，插件同时也支持移动端预览模式，你可以通过插件配置开启：
+
+![](https://lf3-static.bytednsdoc.com/obj/eden-cn/uhbfnupenuhf/rspress/demo-preview-mobile.png)
+
+#### Demo 实时 Playground
+
+对于组件文档，如果能提供组件的实时编辑的能力，将能大大提高文档的交互体验。
+
+为了实现这个功能，你只需要注册官方的 [playground 插件](/plugin/official-plugins/playground.html 'playground 插件')，然后在 .mdx 文件中声明你的代码块。（这里以上面的代码块为例）
+
+接着，你将会在文档中看到下面的 playground 效果：
+
+![](https://lf3-static.bytednsdoc.com/obj/eden-cn/uhbfnupenuhf/rspress/demo-playground.gif)
+
+### 内置流畅的转场动画
+
+[View Transition API](https://developer.mozilla.org/zh-CN/docs/Web/API/View_Transitions_API 'View Transition API') 是现代浏览器原生提供的一组 API，用于实现页面跳转过程中的过渡效果。在 Rspress 中我们也跟进了这个特性，基于 View Transition 实现了文档的过渡动画，而未使用任何第三方 SPA 的动画方案。在未来，我们也会探索出更多的动画效果，进一步提升体验。
+
+```ts
+export default defineConfig({
+  themeConfig: {
+    // 开启 View Transition 过渡
+    enableContentAnimation: true,
+  },
+});
+```
+
+## 与其它 SSG 框架的区别
+
+### 与 Docusaurus 的区别
+
+[Docusaurus](https://docusaurus.io/ 'Docusaurus') 是 Meta 开源的一款 SSG 框架，它和 Rspress 一样使用 React 作为渲染框架，且支持 MDX，但 Rspress 与 Docusaurus 的区别主要在于：
+
+1. Rspress 的构建性能更好。Rspress 基于 Rust 前端工具链，项目启动/构建速度快于 Docusaurus 5 ~ 10 倍，详情可以参考[构建性能](#构建性能)。
+2. Rspress 的配置更简单，上手成本更低。Rspress 的配置更加简单，不引入过多的概念，尽可能降低心智负担，比如提供开箱即用的搜索功能、符合直觉的多版本文档管理方式等等。
+3. Rspress 架构上对 Bundler 提供了更上层的抽象。对于 webpack、Rspack 这类底层的 Bundler，其配置项繁琐且不易上手。Dockusaurus 选择直接暴露底层 Bundler 的配置项，而 Rspress 则对 Bundler 进行了更上层的抽象，提供了更加简单易用的配置项，比如你可以通过 `builderConfig.html.tags` 轻松添加 `<head>` 中的标签，而不用通过 Bundler 来注册 `html-webpack-plugin` 相关插件。
+
+### 与 Nextra 的区别
+
+[Nextra](https://nextra.vercel.app/ 'Nextra') 是 Vercel 开源的一款 SSG 框架，它也和 Rspress 一样使用 React 作为渲染框架，且支持 MDX。Rspress 与 Nextra 的区别主要在于：
+
+1. Rspress 的构建性能更好。这一点可参考「与 Docusaurus 的区别」。
+2. Rspress 整体更加轻量。Nextra 需要依赖 Next.js，其 SSG 流程也是基于 Next.js 的，因此 SSG 产物中并非纯粹的 HTML 文件，而是额外包含了一些 Next.js 的运行时代码，一方面导致了 Nextra 的产物体积更大，另一方面需要在部署时以应用的方式部署(使用 `next start` 命令)，而不能以纯静态站点的方式部署。但 Rspress 没有和任何应用框架绑定，因此产物更加轻量，可以很方便地以纯静态站点的方式部署。
+
+### 与 VitePress 的区别
+
+[VitePress](https://vitepress.dev/ 'VitePress') 是一款基于 Vite 静态站点生成器，它的特点是使用 Vue 作为渲染框架，且性能非常优秀。Rspress 与 VitePress 的区别主要在于：
+
+1. Rspress 使用 React 作为渲染框架，而 VitePress 使用 Vue 作为渲染框架。
+2. Rspress 使用 MDX 作为内容开发方式，而 VitePress 使用 Markdown 作为内容开发方式，并在 Markdown 中支持 Vue 组件，这同时也导致了底层编译工具链实现上的差异。
+3. 构建性能上，在开发阶段，Rspress 和 VitePress 都能很快地启动一个项目，而在生产环境下，VitePress 需要基于 Rollup 打包项目，因此会面临其他基于 JavaScript 的工具链类似的性能问题，此时 Rspress 会有更快的构建速度。
 
 ## 尝试 Rspress
 

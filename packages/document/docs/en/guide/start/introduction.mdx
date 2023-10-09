@@ -1,78 +1,312 @@
 # Introduction
 
-## Position
+## Positioning
 
-Rspress is a static site generator based on [Rspack](https://rspack.dev/), with a built-in default documentation theme. You can quickly build a documentation site with Rspress, and also customize the theme to meet your personalized static site needs, such as blog sites, product homepages, etc.
+Rspress is a static site generator based on [Rspack](https://rspack.dev/), rendered with the React framework. It comes with a default documentation theme, and you can quickly build a documentation site with Rspress. You can also customize the theme to meet your personalized static site needs, such as blog sites, product homepages, etc. Of course, you can also integrate the corresponding plugins provided by the official to easily build component library documentation.
 
-The design goals of Rspress are: **first-class compilation performance**, **out-of-the-box theme functionality**, and **sufficiently flexible extensibility**.
+## Project Background
 
-## Features
+Rspress is mainly built in the following directions:
 
-### High-performance Rust Toolchain
+- **Build Performance**. Ensuring a fast enough startup speed brings a good development experience.
+- **MDX Support**. Through MDX, we can conveniently reuse document fragments and render custom React components in documents.
+- **Basic Capabilities of Documentation Site**. Including internationalization, multi-version support, full-text search, component library documentation, etc.
+- **Extensibility**. Such as Built-in plugin system, supports extending framework functions through plugin API.
 
-In Rspress, in order to break through the compilation performance bottleneck of traditional front-end tools, we have made a lot of efforts on the Rust toolchain and Rspress has obvious advantages in compilation performance compared to other SSG frameworks, the following is benchmark comparison:
+These also represent some core requirements for SSG site development. The following will introduce these aspects separately.
+
+### Build Performance
+
+As the project becomes larger and larger, team members often worry about the lengthy project startup time, which negatively affects the development experience. The longer the project development time, the more obvious this deterioration of experience.
+
+We couldn't help but start thinking, can we break the limitations of the current community tool chain, break through the performance bottleneck of the existing SSG framework, and achieve the effect of instant startup for most project scenarios?
+
+Then, we continued to explore in this direction and finally achieved this effect on Rspress. Taking the content of Rspress's official website documentation as an example, the performance comparison between Rspress, Docusaurus, and Nextra is as follows:
 
 import { Benchmark } from '@/components/Benchmark';
 
 <Benchmark />
 
-Firstly, Rspress is built on [Rspack](https://rspack.dev/), a high-performance front-end packaging tool based on Rust, which has built-in various optimization methods, such as multi-threaded parallel compilation, incremental compilation, etc. Compared with traditional packaging tools like Webpack, Rollup, etc., Rspack's compilation speed has increased by 5 ~ 10 times.
+If there is only one most core optimization method, it is undoubtedly the `Rust Frontend Toolchain`. We mainly use the Rust toolchain in two performance-sensitive parts:
 
-In addition to the bundler itself, for another major compilation performance bottleneck in the SSG framework, i.e., `Markdown Compilation`, we have also rustified this process to further speed up. Based on the open-source [mdxjs-rs](https://github.com/wooorm/mdxjs-rs) library, we extended a series of plugins, and further exposed the Node.js call interface through [napi-rs](https://napi.rs/), thus customizing the Rspress Markdown compiler (called [`@rspress/mdx-rs`](https://github.com/web-infra-dev/mdx-rs)). This compiler has more than 10 times the performance improvement compared to the traditional JS version of the compiler:
+- Front-end Bundler. Traditional Bundlers include webpack, Rollup, etc. For a front-end project, the bundler is the integration hub of various compilation tool chains. It is a very critical engineering capability and has a huge impact on project construction performance. Rspress uses Rspack developed by the team. Rspack is a Bundler based on Rust, with built-in multiple performance optimization methods, such as multi-threaded parallel compilation, incremental compilation, etc., which are 5 to 10 times more efficient than traditional packaging tools in the community.
+- Markdown compiler. For another major compilation performance bottleneck in the SSG framework, namely `Markdown Compilation`, we also Rust this process to further speed up and customize Rspress's Markdown compiler (ie `@rspress/mdx-rs`). This compiler is nearly 20 times more efficient than the JS version of the compiler in the community:
 
-![mdx-benchmark](https://lf3-static.bytednsdoc.com/obj/eden-cn/uhbfnupenuhf/rspress/mdx-rs-benchmark.png)
+<img src="https://lf3-static.bytednsdoc.com/obj/eden-cn/uhbfnupenuhf/rspress/mdx-rs-benchmark.png" />
 
-### Support for MDX Rendering
+At the same time, Rspress internally also applies many other build optimization methods, such as `pre-bundle of theme`, etc. These additional optimization methods, combined with the powerful Rust front-end toolchain, push the compilation performance of the SSG framework to a new height.
 
-Rspress uses [MDX](https://mdxjs.com/) to extend Markdown syntax, supports using React components in Markdown, and also supports using JSX syntax in Markdown, making the syntax more flexible:
+### MDX Support
 
-![mdx-intro](https://lf3-static.bytednsdoc.com/obj/eden-cn/uhbfnupenuhf/rspress/mdx-intro.png)
+In order to ensure the flexibility of content development, Rspress chooses to support the MDX content format.
 
-Embedding React components in pages can make your documents richer, such as:
+Because MDX actually represents a componentized content organization method behind it. On the one hand, documents are components, so we can reuse document fragments between different documents. On the other hand, any custom React components can be introduced in the document, greatly releasing the imagination of document development.
 
-![rspress-mdx](https://lf3-static.bytednsdoc.com/obj/eden-cn/uhbfnupenuhf/rspress/rspress-mdx-en.jpeg)
+### Basic Capabilities of Documentation Site
 
-> Case source: https://modernjs.dev/community/showcase.html
+Of course, Rspress has also done a lot of work on the polishing of the basic capabilities of the documentation site, supporting the following functional features:
 
-For syntax details, please refer to the [Using MDX](/guide/basic/use-mdx) section.
+- Automatically generate layouts, including navigation bars, left sidebars, etc.
+- Static site generation, HTML is directly output after production build.
+- Internationalization, support for multi-language documents.
+- Full-text search, provide out-of-the-box search function.
+- Multi-version document management.
+- Custom document theme.
+- Automatically generate component Demo preview and playground.
 
-### Theme Functionality
+In the following text, we will introduce these functional features in detail.
 
-#### Full-text Search Support
+### Extension Mechanism
 
-Based on the open-source FlexSearch search engine, it provides out-of-the-box document search capabilities, which means you can use the search function directly without any configuration. The effect is as follows:
+Rspress internally designed various extension mechanisms to ensure sufficient customization capabilities, including:
 
-![rspress-search](https://lf3-static.bytednsdoc.com/obj/eden-cn/uhbfnupenuhf/rspress/rspress-search-en.jpeg)
+- Support for custom global components, global styles, page layout structure, please refer to [Custom Page](/guide/basic/custom-page).
+- Support **build extension**, including custom Rspack config, adding MDX compilation plugins, etc., please refer to [Build Extension](/guide/advanced/extend-build).
+- Support **custom theme**, please refer to [Custom Theme](/guide/advanced/custom-theme).
+- Built-in **plugin system**, support for custom plugins, please refer to [Plugin System](/plugin/system/introduction).
 
-#### I18n Support
+## Features
 
-Built-in support for internationalization, supports switching between multiple languages, and supports searching for content in multiple languages. Details can be seen in [I18n](/guide/default-theme/i18n).
+Next, let's introduce the main functional features of Rspress.
 
-#### Code Block Highlighting
+### Automatic Layout Generation
 
-Based on [PrismJS](https://github.com/PrismJS/prism) for runtime code coloring, it supports highlighting of multiple code languages. For example:
+For the construction of a documentation site, in addition to displaying the main content, we generally need the following layout modules:
 
-```ts title="rspress.config.ts"
+- Navigation bar, used to provide global navigation entrance.
+- Sidebar, used to display the article directory under the current navigation.
+- Article outline column, used to display the outline structure of the current page.
+
+For the document outline, Rspress will automatically extract the various titles in the document, generate outline information, and display it on the right side of the article page by default, without any other operations.
+
+For the navigation bar and sidebar, we provide two config methods, you can choose one of them:
+
+- **Declarative config**. Configure the corresponding data by declaring `_meta.json` in the directory, such as:
+
+```json title="_meta.json"
+["introduction", "install", "start"]
+```
+
+You can read the [Auto Nav/Sidebar](/guide/basic/auto-nav-sidebar) for config details.
+
+- **Programming config**. Implement it by specifying the [nav](/api/config/config-theme.html#nav) and [sidebar](/api/config/config-theme.html#sidebar) config items in the Rspress config.
+
+We recommend using `declarative config` under normal scenes, which has many benefits:
+
+1. Make config file is more concise and clear.
+2. The correspondence between the `file directory structure` and the `sidebar directory structure` is more intuitive.
+3. When adding or deleting a sidebar directory, operate directly in the current directory, instead of going to the `rspress.config.ts` config file to locate the corresponding position and then add/delete the config, thereby reducing the cost of switching development context.
+
+The `programming config` is very useful in some scenarios where dynamic config generation is needed. For example, the official Rspress [TypeDoc plugin](https://rspress.dev/plugin/official-plugins/typedoc.html 'TypeDoc plugin') will automatically convert a json data provided by TypeDoc into `nav` and `sidebar` configs.
+
+### MDX Support
+
+MDX is a powerful content development format. You can not only write Markdown files as usual, but also use React components in the content of Markdown:
+
+<img src="https://lf3-static.bytednsdoc.com/obj/eden-cn/uhbfnupenuhf/rspress/mdx-intro.png" />
+
+In addition, Rspress also supports some specific syntax, such as:
+
+- Custom container syntax.
+- FrontMatter metadata definition.
+- Code line highlighting syntax.
+
+Details can be found in the [Use MDX Document](/guide/basic/use-mdx.html 'Use MDX s').
+
+### SSG
+
+Rspress is a SSG framework. In the build process in the production environment, it will automatically help you generate static sites, that is, generate HTML content for each page. After the build process is completed, HTML will appear in the default output directory.
+
+Then, you can deploy the contents of this product directory to any static site hosting service, such as Github Pages, Netlify, Vercel, etc.
+
+At the same time, we also provide config to easily customize the HTML content generated by SSG. For details, please refer to the [Static Site Generation Document](/guide/basic/ssg.html 'Static Site Generation Document').
+
+### Internationalization (I18n)
+
+Internationalization is a common requirement in a document-type site, and Rspress encapsulates the ability of internationalization to be simple and easy to use. In the framework, we abstract internationalization into the following requirements:
+
+- How to define I18n data source?
+- How to configure the site under different languages?
+- How to organize the document directory of different language versions?
+- How to use I18n data source in custom components?
+
+The framework has already supported these demand scenarios for you. You can follow the [I18n Tutorial](/guide/default-theme/i18n.html 'I18n Tutorial') to step by step to implement internationalization for your site.
+
+### Multi-version Documents
+
+In some scenarios, we need to manage multi-version documents, and Rspress has built-in support for multi-version documents. On the one hand, you can enable this capability through simple config. On the other hand, you only need to organize the directory as usual, without introducing unnecessary directories and concepts, minimizing the mental burden:
+
+```ts
+// config file
 import { defineConfig } from 'rspress/config';
 
 export default defineConfig({
-  root: 'docs',
+  multiVersion: {
+    default: 'v1',
+    versions: ['v1', 'v2'],
+  },
 });
 ```
 
-#### Automatic Layout Generation
+```
+// Directory structure
+docs
+├── v1
+│   ├── README.md
+│   └── guide
+│       └── README.md
+└── v2
+    ├── README.md
+    └── guide
+```
 
-It has built-in various layout components, such as `top navigation`, `left sidebar`, etc. You can generate them automatically through the configuration file. For details, please refer to [Automated Navigation Bar/Sidebar](/guide/basic/auto-nav-sidebar).
+### Full Text Search
 
-At the same time, you can also customize the layout type by configuring pageType. For details, please refer to [pageType](/api/config/config-frontmatter.html#pagetype).
+Rspress provides out-of-the-box full-text search capabilities, which you can access without any config. It is based on the open-source FlexSearch engine, with the following effect:
 
-#### Custom Theme Support
+<img src="https://lf3-static.bytednsdoc.com/obj/eden-cn/uhbfnupenuhf/rspress/rspress-search.png" />
 
-Supports custom themes, you can customize the theme through the configuration file. For details, please refer to [Custom Themes](/guide/advanced/custom-theme).
+### Custom Theme
 
-### Plugin Mechanism
+Rspress supports two ways to customize themes:
 
-An internal plugin system is designed to ensure strong extensibility. You can extend various functions of Rspress by customizing plugins. For details, please refer to [Plugin Mechanism](/plugin/system/introduction).
+1. Extend from the default theme. In each component of the default theme, many slots are provided for you to add custom layout content, such as integrating the AI Q&A component provided by [`documate`](https://documate.site):
+
+```ts
+// theme/index.tsx
+import Theme from 'rspress/theme';
+import { NoSSR } from 'rspress/runtime';
+import { Documate } from '@documate/react';
+import '@documate/react/dist/style.css';
+
+const Layout = () => (
+  <Theme.Layout
+    afterNavTitle={
+      <NoSSR>
+        <Documate endpoint="" />
+      </NoSSR>
+    }
+  />
+);
+
+export default {
+  ...Theme,
+  Layout,
+};
+
+export * from 'rspress/theme';
+```
+
+The effect is as follows:
+
+![](https://lf3-static.bytednsdoc.com/obj/eden-cn/uhbfnupenuhf/rspress/rspress-ai-search.jpeg)
+
+> Integrating AI Q&A in Rspress: https://documate.site/integration/rspress
+
+2.  Fully customized theme. If you want to develop a custom theme from scratch, you can customize the content of Layout and use various Runtime APIs provided by Rspress (such as `usePageData`) to obtain compile-time data, routing information, etc.
+
+For details about custom themes, you can refer to the [Custom Theme Documentation](/guide/advanced/custom-theme.html 'Custom Theme Documentation').
+
+### Plugin System
+
+The plugin system is a crucial part of Rspress, which can help you conveniently extend the framework's functionality during site construction. Details can be found in the [Plugin Introduction Documentation](/plugin/system/introduction.html 'Introduction Documentation').
+
+### Component Documentation
+
+#### Demo Preview
+
+Rspress provides a [preview plugin](/plugin/official-plugins/preview 'preview plugin'), which can automatically generate component previews for you. After you register the preview plugin, declare the following code block in the mdx file:
+
+```tsx
+import React from 'react';
+import { Tag, Space } from '@arco-design/web-react';
+import '@arco-design/web-react/dist/css/arco.css';
+const COLORS = [
+  'red',
+  'orangered',
+  'orange',
+  'gold',
+  'lime',
+  'green',
+  'cyan',
+  'blue',
+  'arcoblue',
+  'purple',
+  'pinkpurple',
+  'magenta',
+  'gray',
+];
+
+export default () => {
+  return (
+    <Space>
+      {COLORS.map((color, i) => (
+        <Tag key={i} color={color}>
+          {color}
+        </Tag>
+      ))}
+    </Space>
+  );
+};
+```
+
+Then you can see the following preview effect:
+
+![](https://lf3-static.bytednsdoc.com/obj/eden-cn/uhbfnupenuhf/rspress/demo-preview.png)
+
+Of course, the plugin also supports mobile preview mode, which you can enable through plugin config:
+
+![](https://lf3-static.bytednsdoc.com/obj/eden-cn/uhbfnupenuhf/rspress/demo-preview-mobile.png)
+
+#### Demo Real-time Playground
+
+For component documentation, if real-time editing capabilities can be provided for components, it will greatly enhance the interactive experience of the documentation.
+
+To achieve this feature, you only need to register the official [playground plugin](/plugin/official-plugins/playground.html 'playground plugin'), and then declare your code block in the .mdx file. (Take the above code block as an example)
+
+Next, you will see the following playground effect in the documentation:
+
+![](https://lf3-static.bytednsdoc.com/obj/eden-cn/uhbfnupenuhf/rspress/demo-playground.gif)
+
+### Built-in Smooth Transition Animation
+
+[View Transition API](https://developer.mozilla.org/zh-CN/docs/Web/API/View_Transitions_API 'View Transition API') is a set of APIs natively provided by modern browsers for implementing transition effects during page jumps. In Rspress, we also followed up on this feature, implemented document transition animations based on View Transition, and did not use any third-party SPA animation schemes. In the future, we will explore more animation effects to further enhance the experience.
+
+```ts
+export default defineConfig({
+  themeConfig: {
+    // Enable View Transition transition
+    enableContentAnimation: true,
+  },
+});
+```
+
+## Differences from Other SSG Frameworks
+
+### Differences from Docusaurus
+
+[Docusaurus](https://docusaurus.io/ 'Docusaurus') is an open-source SSG framework by Meta. Like Rspress, it uses React as the rendering framework and supports MDX. However, the main differences between Rspress and Docusaurus are:
+
+1. Rspress has better build performance. Based on the Rust front-end toolchain, Rspress's project startup/build speed is 5 ~ 10 times faster than Docusaurus. For details, refer to [Build Performance](#build-performance).
+
+2. Rspress has simpler config and lower learning curve. Rspress's config is simpler, does not introduce too many concepts, and reduces cognitive load as much as possible. For example, it provides out-of-the-box search functionality, intuitive multi-version document management, etc.
+
+3. Rspress provides a higher level of abstraction for Bundler in its architecture. For low-level Bundlers like webpack and Rspack, their config items are complex and not easy to get started with. Dockusaurus chooses to directly expose the config items of the underlying Bundler, while Rspress provides a higher level of abstraction for Bundler, offering simpler and more user-friendly config items. For instance, you can easily add tags in `<head>` through `builderConfig.html.tags`, without having to register related plugins via Bundler like `html-webpack-plugin`.
+
+### Differences from Nextra
+
+[Nextra](https://nextra.vercel.app/ 'Nextra') is an open-source SSG framework by Vercel. Like Rspress, it also uses React as the rendering framework and supports MDX. The main differences between Rspress and Nextra are:
+
+1. Rspress has better build performance. This point can be referred to "Differences from Docusaurus".
+2. Rspress is overall lighter. Nextra relies on Next.js, and its SSG process is also based on Next.js. Therefore, the SSG output is not purely HTML files, but includes some runtime code from Next.js. On one hand, this leads to a larger size of Nextra's output. On the other hand, it needs to be deployed as an application (using the `next start` command) rather than being deployed as a pure static site. But Rspress is not bound to any application framework, so its output is lighter and can be conveniently deployed as a pure static site.
+
+### Differences from VitePress
+
+[VitePress](https://vitepress.dev/ 'VitePress') is a static site generator based on Vite. It is characterized by using Vue as the rendering framework and has excellent performance. The main differences between Rspress and VitePress are:
+
+1. Rspress uses React as the rendering framework, while VitePress uses Vue.
+2. Rspress uses MDX for content development, while VitePress uses Markdown and supports Vue components in Markdown, which also leads to differences in the implementation of the underlying compilation toolchain.
+3. In terms of build performance, during the development phase, both Rspress and VitePress can quickly start a project. However, in the production environment, VitePress needs to bundle the project based on Rollup, so it will face similar performance issues with other JavaScript-based toolchains. At this time, Rspress will have faster build speed.
 
 ## Try Rspress
 
