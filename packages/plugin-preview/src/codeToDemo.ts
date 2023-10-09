@@ -1,4 +1,4 @@
-import { join } from 'path';
+import { join, resolve } from 'path';
 import { visit } from 'unist-util-visit';
 import fs from '@modern-js/utils/fs-extra';
 import {
@@ -13,6 +13,11 @@ import { injectDemoBlockImport, generateId } from './utils';
 import { demoBlockComponentPath } from './constant';
 import { demoRoutes } from '.';
 
+// FIXME: remove it
+const json = JSON.parse(
+  fs.readFileSync(resolve(process.cwd(), './package.json'), 'utf8'),
+);
+
 /**
  * remark plugin to transform code to demo
  */
@@ -22,10 +27,11 @@ export const remarkCodeToDemo: Plugin<
       isMobile: boolean;
       getRouteMeta: () => RouteMeta[];
       iframePosition: 'fixed' | 'follow';
+      enableCodesandbox: boolean;
     },
   ],
   Root
-> = ({ isMobile, getRouteMeta, iframePosition }) => {
+> = ({ isMobile, getRouteMeta, iframePosition, enableCodesandbox }) => {
   const routeMeta = getRouteMeta();
 
   return (tree, vfile) => {
@@ -85,6 +91,21 @@ export const remarkCodeToDemo: Plugin<
               type: 'mdxJsxAttribute',
               name: 'url',
               value: demoRoute,
+            },
+            {
+              type: 'mdxJsxAttribute',
+              name: 'content',
+              value: currentNode.value,
+            },
+            {
+              type: 'mdxJsxAttribute',
+              name: 'packageName',
+              value: json.name,
+            },
+            {
+              type: 'mdxJsxAttribute',
+              name: 'enableCodesandbox',
+              value: enableCodesandbox,
             },
           ],
           children: [
