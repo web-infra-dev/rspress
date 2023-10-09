@@ -49,6 +49,12 @@ export async function resolveDepPath(
   return resolveResult;
 }
 
+interface ImportNode {
+  type: 'ImportDeclaration';
+  specifiers: { local: { name: string } }[];
+  source: { value: string };
+}
+
 export async function flattenMdxContent(
   content: string,
   basePath: string,
@@ -76,7 +82,7 @@ export async function flattenMdxContent(
     .filter(node => node.type === 'mdxjsEsm')
     .map(node => {
       result = result.replace((node as { value: string }).value, '');
-      return node.data?.estree?.body || [];
+      return (node.data?.estree as { body: ImportNode[] })?.body || [];
     })
     .flat()
     .filter(node => node.type === 'ImportDeclaration');
