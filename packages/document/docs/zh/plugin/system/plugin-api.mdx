@@ -190,6 +190,8 @@ export function pluginForDoc(): RspressPlugin {
     name: 'plugin-name',
     // 扩展 Markdown/MDX 编译能力
     markdown: {
+      // 启用 JS 版本的编译器以支持外部插件
+      mdxRs: false,
       remarkPlugins: [
         // 添加自定义的 remark 插件
       ],
@@ -203,10 +205,6 @@ export function pluginForDoc(): RspressPlugin {
   };
 }
 ```
-
-:::warning 注意
-在开启 mdx-rs 编译的情况下(即配置文件中 `markdown.experimentalMdxRs` 为 `true`)，添加的 remark/rehype 插件会被忽略。
-:::
 
 ### extendPageData
 

@@ -319,10 +319,23 @@ export type SearchOptions = LocalSearchOptions | RemoteSearchOptions | false;
 export interface MarkdownOptions {
   remarkPlugins?: PluggableList;
   rehypePlugins?: PluggableList;
+  /**
+   * Whether to enable check dead links, default is false
+   */
   checkDeadLinks?: boolean;
-  experimentalMdxRs?: boolean;
   showLineNumbers?: boolean;
+  /**
+   * Register global components in mdx files
+   */
   globalComponents?: string[];
+  /**
+   * Whether to enable mdx-rs, default is true
+   */
+  mdxRs?: boolean;
+  /**
+   * @deprecated, use `mdxRs` instead
+   */
+  experimentalMdxRs?: boolean;
 }
 
 export type Config =

@@ -63,7 +63,7 @@ async function createInternalBuildConfig(
   const assetPrefix = isProduction()
     ? removeTrailingSlash(config?.builderConfig?.output?.assetPrefix ?? base)
     : '';
-  const enableMdxRs = config?.markdown?.experimentalMdxRs ?? false;
+  const enableMdxRs = config?.markdown?.mdxRs ?? true;
   const reactVersion = await detectReactVersion();
   const normalizeIcon = (icon: string | undefined) => {
     if (!icon) {

@@ -3,7 +3,6 @@ import { defineConfig } from 'rspress/config';
 
 export default defineConfig({
   markdown: {
-    experimentalMdxRs: true,
     checkDeadLinks: true,
   },
   root: 'docs',
