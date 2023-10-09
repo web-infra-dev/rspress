@@ -4,6 +4,9 @@ import { defineConfig } from 'rspress/config';
 export default defineConfig({
   root: path.join(__dirname, 'doc'),
   lang: 'zh',
+  markdown: {
+    mdxRs: false,
+  },
   themeConfig: {
     darkMode: false,
     locales: [
