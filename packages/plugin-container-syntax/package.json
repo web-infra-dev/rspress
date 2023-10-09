@@ -54,12 +54,14 @@
     "provenance": true,
     "registry": "https://registry.npmjs.org/"
   },
+  "dependencies": {
+    "@rspress/shared": "workspace:*"
+  },
   "devDependencies": {
     "@types/mdast": "^3.0.10",
     "rehype-stringify": "^9.0.3",
     "remark-parse": "^10.0.1",
     "remark-rehype": "^10.1.0",
-    "unified": "^10.1.2",
-    "@rspress/shared": "workspace:*"
+    "unified": "^10.1.2"
   }
 }

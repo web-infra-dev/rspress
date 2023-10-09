@@ -1,5 +1,4 @@
 import path from 'path';
-import { createRequire } from 'module';
 import type { UserConfig } from '@rspress/shared';
 import fs from '@modern-js/utils/fs-extra';
 import {
@@ -28,8 +27,6 @@ import { detectReactVersion, resolveReactAlias } from './utils';
 import { initRouteService } from './route/init';
 import { PluginDriver } from './PluginDriver';
 import { RouteService } from './route/RouteService';
-
-const require = createRequire(import.meta.url);
 
 export interface MdxRsLoaderCallbackContext {
   resourcePath: string;

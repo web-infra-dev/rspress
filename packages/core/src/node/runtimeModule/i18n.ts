@@ -1,9 +1,6 @@
 import { join } from 'path';
-import { createRequire } from 'module';
 import { UserConfig } from '@rspress/shared';
 import { FactoryContext, RuntimeModuleID } from '.';
-
-const require = createRequire(import.meta.url);
 
 const DEFAULT_I18N_SOURCE = join(process.cwd(), 'i18n.json');
 
