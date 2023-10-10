@@ -1,6 +1,11 @@
 import { useEffect, useRef } from 'react';
 import { disableBodyScroll, clearAllBodyScrollLocks } from 'body-scroll-lock';
-import { LocaleConfig, NavItem, DefaultThemeConfig } from '@rspress/shared';
+import {
+  LocaleConfig,
+  NavItem,
+  DefaultThemeConfig,
+  replaceLang,
+} from '@rspress/shared';
 import type { SiteData } from '@rspress/shared';
 import {
   NavScreenMenuGroup,
@@ -11,7 +16,7 @@ import { SwitchAppearance } from '../SwitchAppearance';
 import Translator from '../../assets/translator.svg';
 import { SocialLinks } from '../SocialLinks';
 import styles from './index.module.scss';
-import { NoSSR } from '@/runtime';
+import { NoSSR, useLang, useVersion } from '@/runtime';
 
 interface Props {
   isScreenOpen: boolean;
@@ -38,6 +43,8 @@ const NavScreenTranslations = ({
 
 export function NavScreen(props: Props) {
   const { isScreenOpen, localeData, siteData, pathname } = props;
+  const currentVersion = useVersion();
+  const currentLang = useLang();
   const screen = useRef<HTMLDivElement | null>(null);
   const localesData = siteData.themeConfig.locales || [];
   const hasMultiLanguage = localesData.length > 1;
@@ -46,7 +53,8 @@ export function NavScreen(props: Props) {
   const socialLinks = siteData?.themeConfig?.socialLinks || [];
   const hasSocialLinks = socialLinks.length > 0;
   const langs = localesData.map(item => item.lang || 'zh') || [];
-  const { base } = siteData;
+  const { base, lang: defaultLang, multiVersion } = siteData;
+  const { default: defaultVersion } = multiVersion;
   const translationMenuData = hasMultiLanguage
     ? {
         text: (
@@ -59,7 +67,19 @@ export function NavScreen(props: Props) {
         ),
         items: localesData.map(item => ({
           text: item?.label,
-          link: `/${item.lang}`,
+          link: replaceLang(
+            pathname,
+            {
+              current: currentLang,
+              target: item.lang,
+              default: defaultLang,
+            },
+            {
+              current: currentVersion,
+              default: defaultVersion,
+            },
+            base,
+          ),
         })),
         activeValue: localesData.find(item => item.lang === localeData.lang)
           ?.label,

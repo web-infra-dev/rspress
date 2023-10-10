@@ -66,6 +66,10 @@
   .content {
     padding: 36px 24px 72px 24px;
   }
+
+  :global(.rspress-doc) {
+    view-transition-name: none;
+  }
 }
 
 @media (min-width: 960px) {
