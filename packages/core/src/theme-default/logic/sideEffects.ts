@@ -1,10 +1,12 @@
 import { throttle } from 'lodash-es';
 import { inBrowser } from '@rspress/shared';
 
+export const DEFAULT_NAV_HEIGHT = 72;
+
 export function scrollToTarget(
   target: HTMLElement,
   isSmooth: boolean,
-  fallbackHeight = 0,
+  fallbackHeight = DEFAULT_NAV_HEIGHT,
 ) {
   const targetPadding = parseInt(
     window.getComputedStyle(target).paddingTop,

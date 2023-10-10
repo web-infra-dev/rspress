@@ -1,9 +1,8 @@
 import { useRef, useEffect } from 'react';
 import { Header } from '@rspress/shared';
 import { bindingAsideScroll, scrollToTarget, useHiddenNav } from '../../logic';
+import { DEFAULT_NAV_HEIGHT } from '@/theme-default/logic/sideEffects';
 import './index.css';
-
-const DEFAULT_NAV_HEIGHT = 72;
 
 export function Aside(props: { headers: Header[]; outlineTitle: string }) {
   const { headers } = props;
