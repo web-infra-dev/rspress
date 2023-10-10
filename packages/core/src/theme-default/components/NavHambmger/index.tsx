@@ -13,11 +13,10 @@ interface Props {
   localeData: LocaleConfig;
   siteData: SiteData<DefaultThemeConfig>;
   pathname: string;
-  setLogo: (logo: string) => void;
 }
 
 export function NavHamburger(props: Props) {
-  const { localeData, siteData, pathname, setLogo } = props;
+  const { localeData, siteData, pathname } = props;
   const { isScreenOpen, toggleScreen } = useNav();
   return (
     <Fragment>
@@ -26,7 +25,6 @@ export function NavHamburger(props: Props) {
         localeData={localeData}
         siteData={siteData}
         pathname={pathname}
-        setLogo={setLogo}
       />
       <button
         onClick={toggleScreen}

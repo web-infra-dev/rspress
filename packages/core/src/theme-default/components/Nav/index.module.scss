@@ -1,5 +1,20 @@
+.hidden {
+  transform: translate3d(0, calc(-100%), 0);
+  background: transparent;
+  opacity: 0;
+}
+
 .container {
   margin: auto;
+}
+
+.navContainer {
+  top: 0;
+  left: 0;
+  transition: all 0.3s ease;
+  background: var(--rp-c-bg);
+  height: var(--rp-nav-height);
+  z-index: var(--rp-z-index-nav);
 }
 
 .leftNav {
@@ -16,10 +31,6 @@
   cursor: pointer;
   color: var(--rp-c-brand-dark);
   border-radius: 12px;
-}
-
-.navContainer {
-  height: var(--rp-nav-height);
 }
 
 .navContainer :deep(*) {

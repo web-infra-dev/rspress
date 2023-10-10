@@ -23,7 +23,6 @@
   view-transition-name: none;
 }
 
-
 @keyframes fade-out {
   from {
     opacity: 1;
@@ -67,16 +66,19 @@
   .content {
     padding: 36px 24px 72px 24px;
   }
+
+  :global(.rspress-doc) {
+    view-transition-name: none;
+  }
 }
 
 @media (min-width: 960px) {
   .docLayout {
     width: 100%;
-    margin-top: var(--rp-nav-height);
+    display: flex;
   }
 
   .content {
-    margin-left: var(--rp-sidebar-width);
     width: calc(100% - var(--rp-sidebar-width));
     padding: 48px 48px 72px 0;
 

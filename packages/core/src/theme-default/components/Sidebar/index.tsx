@@ -6,6 +6,7 @@ import {
 import { matchRoutes } from 'react-router-dom';
 import { routes } from 'virtual-routes';
 import { isActive } from '../../logic';
+import { NavBarTitle } from '../Nav/NavBarTitle';
 import styles from './index.module.scss';
 import { SidebarItem } from './SidebarItem';
 import { removeBase, usePageData } from '@/runtime';
@@ -122,6 +123,9 @@ export function SideBar(props: Props) {
         ...(hideNavbar ? { marginTop: 0 } : {}),
       }}
     >
+      <div className={styles.navTitleMask}>
+        <NavBarTitle />
+      </div>
       <div className={`mt-1 ${styles.sidebarContent}`}>
         <div
           className="rspress-scrollbar"
@@ -150,20 +154,6 @@ export function SideBar(props: Props) {
           </nav>
         </div>
       </div>
-      {/* SwitchAppearance at the bottom of sidebar */}
-      {/* <div
-        className="border-t border-solid border-gray-200 dark:border-gray-500 absolute"
-        style={{
-          left: '1.8rem',
-          width: 'calc(100% - 3.6rem)',
-        }}
-      >
-        <div className="mt-2 flex-center">
-          <NoSSR>
-            <SwitchAppearance />
-          </NoSSR>
-        </div>
-      </div> */}
     </aside>
   );
 }
