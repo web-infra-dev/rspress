@@ -192,9 +192,11 @@ const b = 2;
 console.log(b);
 ```
 
-## Rustify MDX compiler
+## Disabling the Rust Version Compiler
 
-You can enable Rustify MDX compiler by following config:
+In default mode, Rspress uses the Rust version of the MDX compiler, which is faster than the JavaScript version. However, the Rust version of the compiler does not support custom plugins.
+
+If you need to add a custom MDX compiler plugin, you can disable the Rust version of the MDX compiler through the following config and switch to the JavaScript version of the compiler:
 
 import MdxRs from '../../fragments/mdx-rs';
 
