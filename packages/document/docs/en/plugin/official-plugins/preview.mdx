@@ -82,14 +82,31 @@ External components also need to export the component as default. Through the sr
 
 For some more complex components, this way of using external components will be more convenient.
 
-## Configuration
+## Options
 
-This plugin accepts an object parameter, the type is as follows:
+This plugin accepts an object parameter of the following type:
 
 ```ts
 interface PreviewOptions {
   isMobile: boolean;
+  iframePosition: 'follow' | 'fixed';
 }
 ```
 
-You can use the `isMobile` parameter to decide the preview mode for mobile/PC.
+### isMobile
+
+The `isMobile` parameter is used to specify whether the preview mode is mobile mode, defaulting to `false`. The default PC mode display effect is as follows:
+
+![](https://lf3-static.bytednsdoc.com/obj/eden-cn/uhbfnupenuhf/rspress/demo-preview-pc.jpeg)
+
+### iframePosition
+
+In mobile preview mode, you can use the `iframePosition` parameter to determine the position of the preview area iframe, whether it follows page scrolling (`follow` mode) or is fixed on the page (`fixed` mode), defaulting to `follow`.
+
+The effect of `follow` mode is as follows:
+
+![](https://lf3-static.bytednsdoc.com/obj/eden-cn/uhbfnupenuhf/rspress/demo-preview-mobile-follow.png)
+
+The effect of `fixed` mode is as follows:
+
+![](https://lf3-static.bytednsdoc.com/obj/eden-cn/uhbfnupenuhf/rspress/demo-preview-mobile-fixed.png)
