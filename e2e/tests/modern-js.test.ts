@@ -26,6 +26,6 @@ test.describe('plugin test', async () => {
     const h1 = await page.getByRole('heading', {
       name: /Button/,
     });
-    await expect(h1).toBeTruthy();
+    expect(h1).toBeTruthy();
   });
 });
