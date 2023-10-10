@@ -69,11 +69,7 @@ export function NavScreen(props: Props) {
     return (
       <div className={`mt-2 ${styles.navAppearance} flex justify-center`}>
         <NoSSR>
-          <SwitchAppearance
-            onClick={() => {
-              // setLogo(getLogoUrl(logo, theme === 'dark' ? 'light' : 'dark'));
-            }}
-          />
+          <SwitchAppearance />
         </NoSSR>
       </div>
     );
