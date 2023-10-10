@@ -110,3 +110,12 @@ The effect of `follow` mode is as follows:
 The effect of `fixed` mode is as follows:
 
 ![](https://lf3-static.bytednsdoc.com/obj/eden-cn/uhbfnupenuhf/rspress/demo-preview-mobile-fixed.png)
+
+### enableCodesandbox
+
+**experimental feature** that enables opening demos in Codesandbox. Currently not supported when `iframePosition` is set to `fixed`.
+
+There are still some limitations with this feature:
+- You cannot customize sandbox dependencies: Default dependencies will be only `react`, `react-dom`, and `self`. This means you cannot import other dependencies in your demo,
+and you need to ensure that `self` is published to npm, which is suitable for projects that are modular in nature.
+- You cannot customize files: This means you cannot import other files in your demo.
