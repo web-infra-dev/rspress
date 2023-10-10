@@ -170,7 +170,7 @@ export function Nav(props: NavProps) {
     <>
       {beforeNav}
       <div
-        className={`${styles.navContainer} md:sticky rspress-nav px-6 ${
+        className={`${styles.navContainer} sticky rspress-nav px-6 ${
           hiddenNav ? styles.hidden : ''
         }`}
       >
