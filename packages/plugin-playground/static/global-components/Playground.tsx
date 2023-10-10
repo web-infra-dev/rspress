@@ -23,8 +23,8 @@ export interface PlaygroundProps extends HTMLAttributes<HTMLDivElement> {
 }
 
 function useDirection(props: PlaygroundProps): Direction {
-  const { page = {} } = usePageData();
-  const { frontmatter = {} } = page as any;
+  const { page } = usePageData();
+  const { frontmatter = {} } = page;
   const { playgroundDirection } = frontmatter;
 
   // from props
@@ -34,7 +34,7 @@ function useDirection(props: PlaygroundProps): Direction {
 
   // from page frontmatter
   if (playgroundDirection) {
-    return playgroundDirection;
+    return playgroundDirection as Direction;
   }
 
   // inject by config
