@@ -1,13 +1,19 @@
+.navTitleMask {
+  padding-left: 1.5rem;
+  height: var(--rp-nav-height);
+  display: flex;
+  align-items: center;
+}
+
 .sidebar {
   position: fixed;
   top: 0;
   bottom: 0;
   left: 0;
   z-index: var(--rp-z-index-sidebar);
-  padding: 12px 12px 96px 0;
+  padding: 0 12px 96px 0;
   width: calc(100vw - 64px);
   max-width: 320px;
-  background-color: var(--rp-c-bg);
   opacity: 0;
   transform: translateX(-100%);
   transition: opacity 0.5s, transform 0.25s ease;
@@ -31,7 +37,6 @@
 @media (min-width: 960px) {
   .sidebar {
     z-index: 0;
-    margin-top: calc(var(--rp-nav-height));
     padding-bottom: 128px;
     opacity: 1;
     visibility: visible;

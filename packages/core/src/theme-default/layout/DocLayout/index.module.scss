@@ -23,7 +23,6 @@
   view-transition-name: none;
 }
 
-
 @keyframes fade-out {
   from {
     opacity: 1;
@@ -72,7 +71,6 @@
 @media (min-width: 960px) {
   .docLayout {
     width: 100%;
-    margin-top: var(--rp-nav-height);
   }
 
   .content {

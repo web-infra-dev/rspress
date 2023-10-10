@@ -1,4 +1,4 @@
-import { useContext, useEffect, useRef } from 'react';
+import { useEffect, useRef } from 'react';
 import { disableBodyScroll, clearAllBodyScrollLocks } from 'body-scroll-lock';
 import { LocaleConfig, NavItem, DefaultThemeConfig } from '@rspress/shared';
 import type { SiteData } from '@rspress/shared';
@@ -10,16 +10,14 @@ import { NavMenuSingleItem } from '../Nav/NavMenuSingleItem';
 import { SwitchAppearance } from '../SwitchAppearance';
 import Translator from '../../assets/translator.svg';
 import { SocialLinks } from '../SocialLinks';
-import { getLogoUrl } from '../../logic/utils';
 import styles from './index.module.scss';
-import { NoSSR, ThemeContext } from '@/runtime';
+import { NoSSR } from '@/runtime';
 
 interface Props {
   isScreenOpen: boolean;
   localeData: LocaleConfig;
   siteData: SiteData<DefaultThemeConfig>;
   pathname: string;
-  setLogo: (logo: string) => void;
 }
 
 const NavScreenTranslations = ({
@@ -39,9 +37,8 @@ const NavScreenTranslations = ({
 };
 
 export function NavScreen(props: Props) {
-  const { isScreenOpen, localeData, siteData, pathname, setLogo } = props;
+  const { isScreenOpen, localeData, siteData, pathname } = props;
   const screen = useRef<HTMLDivElement | null>(null);
-  const { theme } = useContext(ThemeContext);
   const localesData = siteData.themeConfig.locales || [];
   const hasMultiLanguage = localesData.length > 1;
   const menuItems = localeData.nav || [];
@@ -49,7 +46,7 @@ export function NavScreen(props: Props) {
   const socialLinks = siteData?.themeConfig?.socialLinks || [];
   const hasSocialLinks = socialLinks.length > 0;
   const langs = localesData.map(item => item.lang || 'zh') || [];
-  const { base, logo } = siteData;
+  const { base } = siteData;
   const translationMenuData = hasMultiLanguage
     ? {
         text: (
@@ -74,7 +71,7 @@ export function NavScreen(props: Props) {
         <NoSSR>
           <SwitchAppearance
             onClick={() => {
-              setLogo(getLogoUrl(logo, theme === 'dark' ? 'light' : 'dark'));
+              // setLogo(getLogoUrl(logo, theme === 'dark' ? 'light' : 'dark'));
             }}
           />
         </NoSSR>

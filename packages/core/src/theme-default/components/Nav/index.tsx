@@ -1,15 +1,17 @@
 import { NavItem, replaceLang } from '@rspress/shared';
 import { useLocation } from 'react-router-dom';
 import { Search } from '@theme';
-import { useContext, useEffect, useState } from 'react';
-import { getLogoUrl, isMobileDevice, useLocaleSiteData } from '../../logic';
+import { useEffect, useState } from 'react';
+import { throttle } from 'lodash-es';
+import { isMobileDevice, useLocaleSiteData } from '../../logic';
 import { NavHamburger } from '../NavHambmger';
 import { SocialLinks } from '../SocialLinks';
 import { SwitchAppearance } from '../SwitchAppearance';
 import { NavMenuGroup, NavMenuGroupItem } from './NavMenuGroup';
 import { NavMenuSingleItem } from './NavMenuSingleItem';
 import styles from './index.module.scss';
-import { ThemeContext, usePageData, useVersion, withBase } from '@/runtime';
+import { NavBarTitle } from './NavBarTitle';
+import { usePageData, useVersion } from '@/runtime';
 
 export interface NavProps {
   beforeNav?: React.ReactNode;
@@ -18,34 +20,6 @@ export interface NavProps {
 }
 
 const DEFAULT_NAV_POSTION = 'right';
-
-interface NavBarTitleProps {
-  title: string;
-  langRoutePrefix: string;
-  logo?: string;
-}
-
-const NavBarTitle = ({ title, langRoutePrefix, logo }: NavBarTitleProps) => {
-  return (
-    <div className={`${styles.navBarTitle}`}>
-      <a
-        href={withBase(langRoutePrefix)}
-        className="flex items-center w-full h-full text-base font-semibold transition-opacity duration-300 hover:opacity-60"
-      >
-        {logo ? (
-          <img
-            src={logo}
-            alt="logo"
-            id="logo"
-            className="w-24 mr-4 rspress-logo"
-          />
-        ) : (
-          <span>{title}</span>
-        )}
-      </a>
-    </div>
-  );
-};
 
 const NavTranslations = ({
   translationMenuData,
@@ -66,12 +40,12 @@ const NavTranslations = ({
 export function Nav(props: NavProps) {
   const { beforeNavTitle, afterNavTitle, beforeNav } = props;
   const { siteData, page } = usePageData();
-  const { logo: rawLogo, base } = siteData;
+  const { base } = siteData;
   const { pathname } = useLocation();
-  const { theme } = useContext(ThemeContext);
   const localeData = useLocaleSiteData();
   const currentVersion = useVersion();
   const [isMobile, setIsMobile] = useState(false);
+  const [hiddenNav, setHiddenNav] = useState(false);
   const localeLanguages = Object.values(siteData.themeConfig.locales || {});
   const hasMultiLanguage = localeLanguages.length > 1;
   const socialLinks = siteData.themeConfig.socialLinks || [];
@@ -80,7 +54,6 @@ export function Nav(props: NavProps) {
   const defaultVersion = siteData.multiVersion.default || '';
   const { lang } = page;
   const langs = localeLanguages.map(item => item.lang || '') || [];
-  const [logo, setLogo] = useState(getLogoUrl(rawLogo, theme));
 
   const translationMenuData = hasMultiLanguage
     ? {
@@ -105,11 +78,20 @@ export function Nav(props: NavProps) {
     : null;
 
   useEffect(() => {
-    setLogo(getLogoUrl(rawLogo, theme));
-  }, [theme]);
-
-  useEffect(() => {
     setIsMobile(isMobileDevice());
+    let lastScrollTop = 0;
+    const onScrollListen = throttle(() => {
+      const { scrollTop } = document.documentElement;
+      const downScroll =
+        scrollTop > 100 && lastScrollTop > 0 && scrollTop > lastScrollTop;
+      setHiddenNav(downScroll);
+      lastScrollTop = scrollTop <= 0 ? 0 : scrollTop; // 更新上一次滚动位置
+    }, 100);
+    window.addEventListener('scroll', onScrollListen);
+
+    return () => {
+      window.removeEventListener('scroll', onScrollListen);
+    };
   }, []);
 
   const NavMenu = ({ menuItems }: { menuItems: NavItem[] }) => {
@@ -151,7 +133,6 @@ export function Nav(props: NavProps) {
 
   const hasSearch = siteData?.themeConfig?.search !== false;
 
-  const title = localeData.title ?? siteData.title;
   const hasAppearanceSwitch = siteData.themeConfig.darkMode !== false;
 
   const leftNav = () => {
@@ -186,24 +167,18 @@ export function Nav(props: NavProps) {
     );
   };
   return (
-    <header
-      className="top-0 left-0 md:fixed w-full"
-      style={{
-        zIndex: 'var(--rp-z-index-nav)',
-        background: 'var(--rp-c-bg)',
-      }}
-    >
+    <>
       {beforeNav}
-      <div className={`${styles.navContainer} rspress-nav px-6`}>
+      <div
+        className={`${styles.navContainer} md:sticky rspress-nav px-6 ${
+          hiddenNav ? styles.hidden : ''
+        }`}
+      >
         <div
           className={`${styles.container} flex justify-between items-center h-full`}
         >
           {beforeNavTitle}
-          <NavBarTitle
-            title={title}
-            langRoutePrefix={localeData.langRoutePrefix || '/'}
-            logo={logo}
-          />
+          <NavBarTitle />
           {afterNavTitle}
           <div
             className={`${styles.content} flex flex-1 justify-end items-center`}
@@ -217,12 +192,11 @@ export function Nav(props: NavProps) {
                 localeData={localeData}
                 siteData={siteData}
                 pathname={pathname}
-                setLogo={setLogo}
               />
             </div>
           </div>
         </div>
       </div>
-    </header>
+    </>
   );
 }

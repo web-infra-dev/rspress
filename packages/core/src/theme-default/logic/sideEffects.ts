@@ -1,9 +1,6 @@
 import { throttle } from 'lodash-es';
 import { inBrowser } from '@rspress/shared';
 
-// The nav height and the height of nav mask
-const DEFAULT_NAV_HEIGHT = 72;
-
 export function scrollToTarget(target: HTMLElement, isSmooth: boolean) {
   const targetPadding = parseInt(
     window.getComputedStyle(target).paddingTop,
@@ -11,10 +8,7 @@ export function scrollToTarget(target: HTMLElement, isSmooth: boolean) {
   );
 
   const targetTop =
-    window.scrollY +
-    target.getBoundingClientRect().top -
-    DEFAULT_NAV_HEIGHT +
-    targetPadding;
+    window.scrollY + target.getBoundingClientRect().top - targetPadding;
   // Only scroll smoothly in page header anchor
   window.scrollTo({
     left: 0,
@@ -132,8 +126,7 @@ export function bindingAsideScroll() {
         const currentAnchor = links[i];
         const nextAnchor = links[i + 1];
         const scrollTop = Math.ceil(window.scrollY);
-        const currentAnchorTop =
-          currentAnchor.parentElement.offsetTop - DEFAULT_NAV_HEIGHT;
+        const currentAnchorTop = currentAnchor.parentElement.offsetTop;
         if ((i === 0 && scrollTop < currentAnchorTop) || scrollTop === 0) {
           activate(links, 0);
           break;
@@ -144,8 +137,7 @@ export function bindingAsideScroll() {
           break;
         }
 
-        const nextAnchorTop =
-          nextAnchor.parentElement.offsetTop - DEFAULT_NAV_HEIGHT;
+        const nextAnchorTop = nextAnchor.parentElement.offsetTop;
 
         if (scrollTop >= currentAnchorTop && scrollTop < nextAnchorTop) {
           activate(links, i);
