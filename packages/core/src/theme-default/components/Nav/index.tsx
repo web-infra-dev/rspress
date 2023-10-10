@@ -85,7 +85,7 @@ export function Nav(props: NavProps) {
       const downScroll =
         scrollTop > 100 && lastScrollTop > 0 && scrollTop > lastScrollTop;
       setHiddenNav(downScroll);
-      lastScrollTop = scrollTop <= 0 ? 0 : scrollTop; // 更新上一次滚动位置
+      lastScrollTop = scrollTop <= 0 ? 0 : scrollTop;
     }, 100);
     window.addEventListener('scroll', onScrollListen);
 
