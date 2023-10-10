@@ -17,6 +17,7 @@
   opacity: 0;
   transform: translateX(-100%);
   transition: opacity 0.5s, transform 0.25s ease;
+  background: var(--rp-c-bg);
 }
 
 .sidebarContent {
@@ -36,10 +37,13 @@
 
 @media (min-width: 960px) {
   .sidebar {
-    z-index: 0;
-    padding-bottom: 128px;
+    // Lower than z-index of nav
+    z-index: 5;
     opacity: 1;
     visibility: visible;
+    position: sticky;
+    margin-top: calc(var(--rp-nav-height) * -1);
+    height: 100vh;
     width: var(--rp-sidebar-width);
     transform: translateX(0);
     box-shadow: var(--rp-c-shadow-3);
