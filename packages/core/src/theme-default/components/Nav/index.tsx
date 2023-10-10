@@ -2,8 +2,7 @@ import { NavItem, replaceLang } from '@rspress/shared';
 import { useLocation } from 'react-router-dom';
 import { Search } from '@theme';
 import { useEffect, useState } from 'react';
-import { throttle } from 'lodash-es';
-import { isMobileDevice, useLocaleSiteData } from '../../logic';
+import { isMobileDevice, useHiddenNav, useLocaleSiteData } from '../../logic';
 import { NavHamburger } from '../NavHambmger';
 import { SocialLinks } from '../SocialLinks';
 import { SwitchAppearance } from '../SwitchAppearance';
@@ -45,7 +44,7 @@ export function Nav(props: NavProps) {
   const localeData = useLocaleSiteData();
   const currentVersion = useVersion();
   const [isMobile, setIsMobile] = useState(false);
-  const [hiddenNav, setHiddenNav] = useState(false);
+  const hiddenNav = useHiddenNav();
   const localeLanguages = Object.values(siteData.themeConfig.locales || {});
   const hasMultiLanguage = localeLanguages.length > 1;
   const socialLinks = siteData.themeConfig.socialLinks || [];
@@ -79,19 +78,6 @@ export function Nav(props: NavProps) {
 
   useEffect(() => {
     setIsMobile(isMobileDevice());
-    let lastScrollTop = 0;
-    const onScrollListen = throttle(() => {
-      const { scrollTop } = document.documentElement;
-      const downScroll =
-        scrollTop > 100 && lastScrollTop > 0 && scrollTop > lastScrollTop;
-      setHiddenNav(downScroll);
-      lastScrollTop = scrollTop <= 0 ? 0 : scrollTop;
-    }, 100);
-    window.addEventListener('scroll', onScrollListen);
-
-    return () => {
-      window.removeEventListener('scroll', onScrollListen);
-    };
   }, []);
 
   const NavMenu = ({ menuItems }: { menuItems: NavItem[] }) => {

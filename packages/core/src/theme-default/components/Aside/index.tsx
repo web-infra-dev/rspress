@@ -1,7 +1,9 @@
 import { useRef, useEffect } from 'react';
 import { Header } from '@rspress/shared';
-import { bindingAsideScroll, scrollToTarget } from '../../logic';
+import { bindingAsideScroll, scrollToTarget, useHiddenNav } from '../../logic';
 import './index.css';
+
+const DEFAULT_NAV_HEIGHT = 72;
 
 export function Aside(props: { headers: Header[]; outlineTitle: string }) {
   const { headers } = props;
@@ -9,6 +11,7 @@ export function Aside(props: { headers: Header[]; outlineTitle: string }) {
   // For outline text highlight
   const markerRef = useRef<HTMLDivElement>(null);
   const baseHeaderLevel = headers[0]?.depth || 2;
+  const hiddenNav = useHiddenNav();
 
   useEffect(() => {
     let unbinding: (() => void) | undefined;
@@ -24,7 +27,7 @@ export function Aside(props: { headers: Header[]; outlineTitle: string }) {
     } else {
       const target = document.getElementById(hash.slice(1));
       if (target) {
-        scrollToTarget(target, false);
+        scrollToTarget(target, false, hiddenNav ? 0 : DEFAULT_NAV_HEIGHT);
       }
     }
     return () => {
@@ -49,7 +52,7 @@ export function Aside(props: { headers: Header[]; outlineTitle: string }) {
             window.location.hash = header.id;
             const target = document.getElementById(header.id);
             if (target) {
-              scrollToTarget(target, false);
+              scrollToTarget(target, false, hiddenNav ? 0 : DEFAULT_NAV_HEIGHT);
             }
           }}
         >

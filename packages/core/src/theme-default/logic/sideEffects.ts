@@ -1,14 +1,21 @@
 import { throttle } from 'lodash-es';
 import { inBrowser } from '@rspress/shared';
 
-export function scrollToTarget(target: HTMLElement, isSmooth: boolean) {
+export function scrollToTarget(
+  target: HTMLElement,
+  isSmooth: boolean,
+  fallbackHeight = 0,
+) {
   const targetPadding = parseInt(
     window.getComputedStyle(target).paddingTop,
     10,
   );
 
   const targetTop =
-    window.scrollY + target.getBoundingClientRect().top - targetPadding;
+    window.scrollY +
+    target.getBoundingClientRect().top -
+    fallbackHeight -
+    targetPadding;
   // Only scroll smoothly in page header anchor
   window.scrollTo({
     left: 0,
