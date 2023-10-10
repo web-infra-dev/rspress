@@ -4,7 +4,7 @@ import chalk from '@modern-js/utils/chalk';
 import { RequestHandler } from '@modern-js/types';
 import fetch from 'node-fetch';
 import { UserConfig, isSCM, SEARCH_INDEX_NAME } from '@rspress/shared';
-import { logger } from './utils';
+import { logger } from '@rspress/shared/logger';
 import { isProduction, OUTPUT_DIR, TEMP_DIR } from './constants';
 
 export function getSearchIndexFilename(indexHash: string) {

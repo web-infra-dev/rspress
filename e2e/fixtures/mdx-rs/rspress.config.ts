@@ -5,7 +5,7 @@ export default defineConfig({
   root: path.join(__dirname, 'doc'),
   lang: 'zh',
   markdown: {
-    experimentalMdxRs: true,
+    mdxRs: true,
   },
   themeConfig: {
     darkMode: false,

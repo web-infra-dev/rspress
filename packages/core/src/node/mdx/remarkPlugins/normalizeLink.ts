@@ -15,10 +15,10 @@ interface LinkNode {
  * Remark plugin to normalize a link href
  */
 export const remarkPluginNormalizeLink: Plugin<
-  [{ base: string; root: string }],
+  [{ base: string; root: string; cleanUrls: boolean }],
   Root
 > =
-  ({ base, root }) =>
+  ({ base, root, cleanUrls }) =>
   (tree, file) => {
     const images: MdxjsEsm[] = [];
     visit(
@@ -52,7 +52,7 @@ export const remarkPluginNormalizeLink: Plugin<
           url = path.posix.join(slash(path.dirname(relativePath)), url);
         }
 
-        url = normalizeHref(url);
+        url = normalizeHref(url, cleanUrls);
 
         if (hash) {
           url += `#${hash}`;

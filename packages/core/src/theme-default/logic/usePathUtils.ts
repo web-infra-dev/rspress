@@ -1,8 +1,9 @@
-import { isExternalUrl, normalizeHref } from '@rspress/shared';
+import { isExternalUrl } from '@rspress/shared';
 import {
   removeBase,
   useLang,
   usePageData,
+  normalizeHrefInRuntime as normalizeHref,
   useVersion,
   withBase,
 } from '@/runtime';

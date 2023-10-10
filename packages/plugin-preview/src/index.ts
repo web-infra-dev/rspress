@@ -1,4 +1,4 @@
-import path, { join } from 'path';
+import { join, parse, extname } from 'path';
 import { RspackVirtualModulePlugin } from 'rspack-plugin-virtual-module';
 import {
   type RspressPlugin,
@@ -7,7 +7,7 @@ import {
   normalizePosixPath,
 } from '@rspress/shared';
 import { remarkCodeToDemo } from './codeToDemo';
-import { injectDemoBlockImport, toValidVarName } from './utils';
+import { generateId, injectDemoBlockImport } from './utils';
 import {
   demoBlockComponentPath,
   demoComponentPath,
@@ -26,6 +26,12 @@ export type Options = {
    * @default 'follow'
    */
   iframePosition: 'fixed' | 'follow';
+  /**
+   * whether the demo can open in codesandbox
+   * @default false
+   * @experimental
+   */
+  enableCodesandbox: boolean;
 };
 
 interface Heading {
@@ -54,10 +60,11 @@ export const demoMeta: Record<
 export function pluginPreview(options?: Options): RspressPlugin {
   const isMobile = options?.isMobile ?? false;
   const iframePosition = options?.iframePosition ?? 'follow';
+  const enableCodesandbox = options?.enableCodesandbox ?? false;
   const demoRuntimeModule = new RspackVirtualModulePlugin({});
   const globalUIComponents =
     iframePosition === 'fixed'
-      ? [path.join(staticPath, 'global-components', 'Device.tsx')]
+      ? [join(staticPath, 'global-components', 'Device.tsx')]
       : [];
   const getRouteMeta = () => routeMeta;
   return {
@@ -94,10 +101,10 @@ import Demo from ${JSON.stringify(demoComponentPath)}
           const { visit } = await import('unist-util-visit');
           const { default: fs } = await import('@modern-js/utils/fs-extra');
           const { default: remarkGFM } = await import('remark-gfm');
-          let title = path.parse(filepath).name;
+          let title = parse(filepath).name;
           try {
             const processor = createProcessor({
-              format: path.extname(filepath).slice(1) as 'mdx' | 'md',
+              format: extname(filepath).slice(1) as 'mdx' | 'md',
               remarkPlugins: [remarkGFM],
             });
             const source = await fs.readFile(filepath, 'utf-8');
@@ -151,7 +158,7 @@ import Demo from ${JSON.stringify(demoComponentPath)}
                 if (!src) {
                   return;
                 }
-                const id = `${toValidVarName(pageName)}_${index++}`;
+                const id = generateId(pageName, index++);
                 registerDemo(id, src, isMobileMode);
               }
             });
@@ -176,7 +183,7 @@ import Demo from ${JSON.stringify(demoComponentPath)}
                     normalizePosixPath(meta.absolutePath) ===
                     normalizePosixPath(filepath),
                 )!;
-                const id = `${toValidVarName(pageName)}_${index++}`;
+                const id = generateId(pageName, index++);
 
                 const demoDir = join(
                   process.cwd(),
@@ -239,7 +246,7 @@ import Demo from ${JSON.stringify(demoComponentPath)}
             .before('MDXCompile')
             .resourceQuery(/meta/)
             .use('mdx-meta-loader')
-            .loader(path.join(__dirname, '../mdx-meta-loader.cjs'))
+            .loader(join(__dirname, '../mdx-meta-loader.cjs'))
             .end();
 
           chain.resolve.extensions.prepend('.md').prepend('.mdx');
@@ -248,14 +255,17 @@ import Demo from ${JSON.stringify(demoComponentPath)}
     },
     markdown: {
       remarkPlugins: [
-        [remarkCodeToDemo, { isMobile, getRouteMeta, iframePosition }],
+        [
+          remarkCodeToDemo,
+          { isMobile, getRouteMeta, iframePosition, enableCodesandbox },
+        ],
       ],
       globalComponents: [
-        path.join(staticPath, 'global-components', 'Container.tsx'),
+        join(staticPath, 'global-components', 'Container.tsx'),
       ],
     },
     globalUIComponents,
-    globalStyles: path.join(
+    globalStyles: join(
       staticPath,
       'global-styles',
       `${isMobile ? 'mobile' : 'web'}.css`,

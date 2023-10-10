@@ -1,4 +1,4 @@
-import { join } from 'path';
+import { join, resolve } from 'path';
 import { visit } from 'unist-util-visit';
 import fs from '@modern-js/utils/fs-extra';
 import {
@@ -9,9 +9,14 @@ import {
 import type { Plugin } from 'unified';
 import type { Root } from 'mdast';
 import type { MdxjsEsm } from 'mdast-util-mdxjs-esm';
-import { injectDemoBlockImport, toValidVarName } from './utils';
+import { injectDemoBlockImport, generateId } from './utils';
 import { demoBlockComponentPath } from './constant';
 import { demoRoutes } from '.';
+
+// FIXME: remove it
+const json = JSON.parse(
+  fs.readFileSync(resolve(process.cwd(), './package.json'), 'utf8'),
+);
 
 /**
  * remark plugin to transform code to demo
@@ -22,10 +27,11 @@ export const remarkCodeToDemo: Plugin<
       isMobile: boolean;
       getRouteMeta: () => RouteMeta[];
       iframePosition: 'fixed' | 'follow';
+      enableCodesandbox: boolean;
     },
   ],
   Root
-> = ({ isMobile, getRouteMeta, iframePosition }) => {
+> = ({ isMobile, getRouteMeta, iframePosition, enableCodesandbox }) => {
   const routeMeta = getRouteMeta();
 
   return (tree, vfile) => {
@@ -86,6 +92,21 @@ export const remarkCodeToDemo: Plugin<
               name: 'url',
               value: demoRoute,
             },
+            {
+              type: 'mdxJsxAttribute',
+              name: 'content',
+              value: currentNode.value,
+            },
+            {
+              type: 'mdxJsxAttribute',
+              name: 'packageName',
+              value: json.name,
+            },
+            {
+              type: 'mdxJsxAttribute',
+              name: 'enableCodesandbox',
+              value: enableCodesandbox,
+            },
           ],
           children: [
             externalDemoIndex === undefined
@@ -122,7 +143,7 @@ export const remarkCodeToDemo: Plugin<
         if (!src) {
           return;
         }
-        const id = `${toValidVarName(pageName)}_${index++}`;
+        const id = generateId(pageName, index++);
         constructDemoNode(id, src, node, isMobileMode, externalDemoIndex++);
       }
     });
@@ -155,7 +176,7 @@ export const remarkCodeToDemo: Plugin<
           RSPRESS_TEMP_DIR,
           `virtual-demo`,
         );
-        const id = `${toValidVarName(pageName)}_${index++}`;
+        const id = generateId(pageName, index++);
         const virtualModulePath = join(demoDir, `${id}.tsx`);
         fs.ensureDirSync(join(demoDir));
         // Only when the content of the file changes, the file will be written

@@ -37,6 +37,12 @@ export default defineConfig({
         'jsdom',
         '@rspress/plugin-container-syntax',
       ],
+      esbuildOptions: options => {
+        options.banner = {
+          js: 'import { createRequire } from "module";\nconst { url } = import.meta;\nconst require = createRequire(url);',
+        };
+        return options;
+      },
     },
     {
       input: {
@@ -66,6 +72,7 @@ export default defineConfig({
         tsconfigPath: './src/runtime/tsconfig.json',
         respectExternal: true,
       },
+      tsconfig: './src/runtime/tsconfig.json',
       externals: COMMON_EXTERNALS,
     },
     {

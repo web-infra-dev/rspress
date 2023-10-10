@@ -55,6 +55,16 @@ declare global {
   }
 }
 
+/**
+ * There is a pitfall.
+ * I was working on the navigation between pages with hash. eg. from `guide/start` -> `config/repress#nav`
+ *    I need a time to dispatch an event so that the sideEffect.ts would know that
+ *    the dom is attached to the browser. Otherwise the scroll position and the
+ *    animation would be incorrect. You can search for `RspressReloadContent` in this codebase
+ *    to findout the logic that are consuming the event.
+ * The reason I didn't write it here is that I hope the logic of handling scroll and position
+ *    could be in one place so that people wouldn't be confused.
+ */
 export function useViewTransition(dom) {
   /**
    * use a pesudo element to hold the actual JSX element so we can schedule the
@@ -63,7 +73,7 @@ export function useViewTransition(dom) {
   const [element, setElement] = useState(dom);
 
   useLayoutEffect(() => {
-    if (document.startViewTransition) {
+    if (document.startViewTransition && element !== dom) {
       /**
        * the browser will take a screenshot here
        */
@@ -78,9 +88,19 @@ export function useViewTransition(dom) {
          * react flushed the dom to browser
          * and the browser will start the animation
          */
+        /**
+         * dispatchEvent for several logic
+         */
+        window.dispatchEvent(new Event('RspressReloadContent'));
       });
     } else {
-      setElement(dom);
+      flushSync(() => {
+        setElement(dom);
+      });
+      /**
+       * dispatchEvent for several logic
+       */
+      window.dispatchEvent(new Event('RspressReloadContent'));
     }
   }, [dom]);
   /**

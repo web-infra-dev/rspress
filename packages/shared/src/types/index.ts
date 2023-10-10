@@ -172,6 +172,7 @@ export interface SiteData<ThemeConfig = NormalizedDefaultThemeConfig> {
   root: string;
   base: string;
   lang: string;
+  route: RouteOptions;
   locales: { lang: string; label: string }[];
   title: string;
   description: string;
@@ -281,6 +282,10 @@ export interface RouteOptions {
    * Exclude files from being converted to routes
    */
   exclude?: string[];
+  /**
+   * use links without .html files
+   */
+  cleanUrls?: boolean;
 }
 
 export interface SearchHooks {
@@ -314,10 +319,23 @@ export type SearchOptions = LocalSearchOptions | RemoteSearchOptions | false;
 export interface MarkdownOptions {
   remarkPlugins?: PluggableList;
   rehypePlugins?: PluggableList;
+  /**
+   * Whether to enable check dead links, default is false
+   */
   checkDeadLinks?: boolean;
-  experimentalMdxRs?: boolean;
   showLineNumbers?: boolean;
+  /**
+   * Register global components in mdx files
+   */
   globalComponents?: string[];
+  /**
+   * Whether to enable mdx-rs, default is true
+   */
+  mdxRs?: boolean;
+  /**
+   * @deprecated, use `mdxRs` instead
+   */
+  experimentalMdxRs?: boolean;
 }
 
 export type Config =

@@ -1,20 +1,19 @@
 declare module 'virtual-routes' {
-  export { Route } from 'node/route/RouteService';
+  export { Route } from '@rspress/shared';
 
   export const routes: Route[];
 }
 
 declare module 'virtual-routes-ssr' {
-  export { Route } from 'node/route/RouteService';
+  export { Route } from '@rspress/shared';
 
   export const routes: Route[];
 }
 
 declare module 'virtual-site-data' {
-  import { SiteData } from 'shared/types';
-  import ThemeConfig from 'shared/types/defaultTheme';
+  import { SiteData, DefaultThemeConfig } from '@rspress/shared';
 
-  const data: SiteData<ThemeConfig>;
+  const data: SiteData<DefaultThemeConfig>;
   export default data;
 }
 

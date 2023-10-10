@@ -31,7 +31,7 @@ export function Pre({
   return (
     <div className={className || DEFAULT_LANGUAGE_CLASS}>
       {codeTitle && <div className="rspress-code-title">{codeTitle}</div>}
-      <div className="rspress-code-content">{children}</div>
+      <div className="rspress-code-content rspress-scrollbar">{children}</div>
     </div>
   );
 }

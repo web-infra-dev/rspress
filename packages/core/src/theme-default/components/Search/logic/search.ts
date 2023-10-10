@@ -13,7 +13,7 @@ import {
 } from './util';
 import { LocalProvider } from './providers/LocalProvider';
 import { RemoteProvider } from './providers/RemoteProvider';
-import { normalizeHref } from '@/runtime';
+import { normalizeHrefInRuntime as normalizeHref } from '@/runtime';
 
 const THRESHOLD_CONTENT_LENGTH = 100;
 

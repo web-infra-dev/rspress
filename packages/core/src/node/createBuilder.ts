@@ -1,5 +1,4 @@
 import path from 'path';
-import { createRequire } from 'module';
 import type { UserConfig } from '@rspress/shared';
 import fs from '@modern-js/utils/fs-extra';
 import {
@@ -29,8 +28,6 @@ import { detectReactVersion, resolveReactAlias } from './utils';
 import { initRouteService } from './route/init';
 import { PluginDriver } from './PluginDriver';
 import { RouteService } from './route/RouteService';
-
-const require = createRequire(import.meta.url);
 
 export interface MdxRsLoaderCallbackContext {
   resourcePath: string;
@@ -67,7 +64,7 @@ async function createInternalBuildConfig(
   const assetPrefix = isProduction()
     ? removeTrailingSlash(config?.builderConfig?.output?.assetPrefix ?? base)
     : '';
-  const enableMdxRs = config?.markdown?.experimentalMdxRs ?? false;
+  const enableMdxRs = config?.markdown?.mdxRs ?? true;
   const reactVersion = await detectReactVersion();
   const normalizeIcon = (icon: string | undefined) => {
     if (!icon) {
@@ -113,8 +110,7 @@ async function createInternalBuildConfig(
         // `root` must be a relative path in Builder
         root: path.isAbsolute(outDir) ? path.relative(cwd, outDir) : outDir,
       },
-      // TODO: switch to 'usage' if Rspack supports it
-      polyfill: 'entry',
+      polyfill: 'usage',
       svgDefaultExport: 'component',
       disableTsChecker: true,
       // Disable production source map, it is useless for doc site
@@ -132,7 +128,7 @@ async function createInternalBuildConfig(
         'react-lazy-with-preload': require.resolve('react-lazy-with-preload'),
         ...(await resolveReactAlias(reactVersion)),
       },
-      include: [PACKAGE_ROOT],
+      include: [PACKAGE_ROOT, /@rspress\/plugin-medium-zoom/],
       define: {
         'process.env.__ASSET_PREFIX__': JSON.stringify(assetPrefix),
         'process.env.__SSR__': JSON.stringify(isSSR),
@@ -203,6 +199,7 @@ async function createInternalBuildConfig(
 
         if (chain.plugins.has(CHAIN_ID.PLUGIN.REACT_FAST_REFRESH)) {
           chain.plugin(CHAIN_ID.PLUGIN.REACT_FAST_REFRESH).tap(options => {
+            options[0] ??= {};
             options[0].include = [/\.([cm]js|[jt]sx?|flow)$/i, MDX_REGEXP];
             return options;
           });

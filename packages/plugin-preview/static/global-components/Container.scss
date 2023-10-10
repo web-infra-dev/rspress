@@ -42,9 +42,8 @@
     &.web {
       display: flex;
       justify-content: center;
-      position: absolute;
-      top: calc(50% - 14px);
-      right: 16px;
+      align-items: center;
+      flex: none;
     }
   }
 
@@ -58,6 +57,7 @@
     position: relative;
     border: 1px solid #e6e6e6;
     border-radius: 8px;
+    display: flex;
   }
 
   &-qrcode {

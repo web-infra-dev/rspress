@@ -3,10 +3,9 @@ import { defineConfig } from 'rspress/config';
 
 export default defineConfig({
   markdown: {
-    experimentalMdxRs: true,
     checkDeadLinks: true,
   },
-  root: path.join(__dirname, 'docs'),
+  root: 'docs',
   title: 'Rspress',
   description: 'Rspack based static site generator',
   lang: 'en',
@@ -19,6 +18,18 @@ export default defineConfig({
   builderConfig: {
     dev: {
       startUrl: false,
+    },
+    source: {
+      define: {
+        'process.env.DOCUMATE_BACKEND_URL': JSON.stringify(
+          process.env.DOCUMATE_BACKEND_URL,
+        ),
+      },
+      alias: {
+        'rspress/theme': process.env.DOC_DEBUG
+          ? path.join(__dirname, '../core/src/theme-default')
+          : 'rspress/theme',
+      },
     },
   },
   route: {
