@@ -1,6 +1,6 @@
 {
   "name": "@rspress/plugin-typedoc",
-  "version": "1.0.0-beta.2",
+  "version": "1.0.0-beta.3",
   "description": "A plugin for rspress to integrate typedoc",
   "bugs": "https://github.com/web-infra-dev/rspress/issues",
   "repository": {
@@ -46,7 +46,7 @@
     "@rspress/shared": "workspace:*"
   },
   "peerDependencies": {
-    "rspress": "1.0.0-beta.2"
+    "rspress": "1.0.0-beta.3"
   },
   "sideEffects": [
     "*.css",
