@@ -104,7 +104,7 @@ export const Layout: React.FC<LayoutProps> = props => {
       return;
     }
     // Normalize current url, to ensure that the home url is always with a trailing slash
-    const { pathname } = window.location;
+    const { pathname, hash } = window.location;
     const cleanPathname = removeBase(pathname);
     // Check if the user is visiting the site for the first time
     const FIRST_VISIT_KEY = 'rspress-visited';
@@ -124,7 +124,9 @@ export const Layout: React.FC<LayoutProps> = props => {
         window.location.replace(pathname.replace(`/${currentLang}`, ''));
       } else if (currentLang === defaultLang) {
         // Redirect to the current language
-        window.location.replace(withBase(`/${targetLang}${cleanPathname}`));
+        window.location.replace(
+          withBase(`/${targetLang}${cleanPathname}${hash}`),
+        );
       } else {
         // Redirect to the current language
         window.location.replace(
