@@ -8,7 +8,7 @@ test.describe('plugin test', async () => {
   let appPort;
   let app;
   test.beforeAll(async () => {
-    const appDir = path.join(fixtureDir, 'plugin');
+    const appDir = path.join(fixtureDir, 'modern-js');
     appPort = await getPort();
     app = await runDevCommand(appDir, appPort);
   });
@@ -26,6 +26,6 @@ test.describe('plugin test', async () => {
     const h1 = await page.getByRole('heading', {
       name: /Button/,
     });
-    await expect(h1).toBeTruthy();
+    expect(h1).toBeTruthy();
   });
 });

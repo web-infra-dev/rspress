@@ -4,15 +4,18 @@ import { withBase, useLang } from '@rspress/core/runtime';
 import IconLaunch from '../icons/Launch';
 import IconQrcode from '../icons/Qrcode';
 import IconRefresh from '../icons/Refresh';
+import IconCodesandbox from '../icons/Codesandbox';
 
 const locales = {
   zh: {
     refresh: '刷新页面',
     open: '在新页面打开',
+    codesandbox: '在 Codesandbox 打开',
   },
   en: {
-    refresh: 'refresh',
+    refresh: 'Refresh',
     open: 'Open in new page',
+    codesandbox: 'Open in Codesandbox',
   },
 };
 
@@ -20,9 +23,10 @@ export default (props: {
   url: string;
   className?: string;
   refresh: () => void;
+  gotoCodeSandBox?: () => void;
 }) => {
   const [showQRCode, setShowQRCode] = useState(false);
-  const { url, className = '', refresh } = props;
+  const { url, className = '', refresh, gotoCodeSandBox } = props;
   const lang = useLang();
   const triggerRef = useRef(null);
   const t = lang === 'zh' ? locales.zh : locales.en;
@@ -85,6 +89,11 @@ export default (props: {
 
   return (
     <div className={`rspress-preview-operations mobile ${className}`}>
+      {gotoCodeSandBox && (
+        <button onClick={gotoCodeSandBox} aria-label={t.codesandbox}>
+          <IconCodesandbox />
+        </button>
+      )}
       <button onClick={refresh} aria-label={t.refresh}>
         <IconRefresh />
       </button>
