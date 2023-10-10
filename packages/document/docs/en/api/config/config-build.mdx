@@ -119,11 +119,12 @@ export default defineConfig({
 
 After enabling this config, the framework will check the links in the document based on the conventional routing table. If there is an unreachable link, the build will throw an error and exit.
 
-### markdown.experimentalMdxRs
+### markdown.mdxRs
 
 - Type: `boolean`
+- Default: `true`
 
-Whether to use the Rust version of the MDX compiler, an experimental feature. For example:
+Whether to use the Rust version of the MDX compiler. For example:
 
 import MdxRs from '../../fragments/mdx-rs';
 
@@ -159,5 +160,5 @@ Then you can use the `Alert` component in any MDX file:
 ```
 
 :::danger Danger
-Do not enable `experimentalMdxRs` when configuring `globalComponents`, otherwise the global components will not take effect.
+Please set `markdown.mdxRs` to `false` when configuring `globalComponents`, otherwise the global components will not take effect.
 :::

@@ -119,11 +119,12 @@ export default defineConfig({
 
 开启这个配置后，框架会基于约定式路由表对文档中的链接进行检查，若出现无法访问的链接，构建会抛出错误并退出。
 
-### markdown.experimentalMdxRs
+### markdown.mdxRs
 
 - Type: `boolean`
+- Default: `true`
 
-是否使用 MDX 的 Rust 版本编译器，为实验性质功能。比如：
+是否使用 MDX 的 Rust 版本编译器，默认开启。比如：
 
 import MdxRs from '../../fragments/mdx-rs';
 
@@ -159,5 +160,5 @@ export default defineConfig({
 ```
 
 :::danger 警告
-请勿在配置 `globalComponents` 时开启 `experimentalMdxRs`，否则会导致全局组件不生效。
+请在配置 `globalComponents` 时设置 `markdown.mdxRs` 为 `false` 以开启 JS 版本的编译器，否则会导致全局组件不生效。
 :::
