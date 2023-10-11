@@ -1,6 +1,11 @@
-import { useContext, useEffect, useRef } from 'react';
+import { useEffect, useRef } from 'react';
 import { disableBodyScroll, clearAllBodyScrollLocks } from 'body-scroll-lock';
-import { LocaleConfig, NavItem, DefaultThemeConfig } from '@rspress/shared';
+import {
+  LocaleConfig,
+  NavItem,
+  DefaultThemeConfig,
+  replaceLang,
+} from '@rspress/shared';
 import type { SiteData } from '@rspress/shared';
 import {
   NavScreenMenuGroup,
@@ -10,16 +15,14 @@ import { NavMenuSingleItem } from '../Nav/NavMenuSingleItem';
 import { SwitchAppearance } from '../SwitchAppearance';
 import Translator from '../../assets/translator.svg';
 import { SocialLinks } from '../SocialLinks';
-import { getLogoUrl } from '../../logic/utils';
 import styles from './index.module.scss';
-import { NoSSR, ThemeContext } from '@/runtime';
+import { NoSSR, useLang, useVersion } from '@/runtime';
 
 interface Props {
   isScreenOpen: boolean;
   localeData: LocaleConfig;
   siteData: SiteData<DefaultThemeConfig>;
   pathname: string;
-  setLogo: (logo: string) => void;
 }
 
 const NavScreenTranslations = ({
@@ -39,9 +42,10 @@ const NavScreenTranslations = ({
 };
 
 export function NavScreen(props: Props) {
-  const { isScreenOpen, localeData, siteData, pathname, setLogo } = props;
+  const { isScreenOpen, localeData, siteData, pathname } = props;
+  const currentVersion = useVersion();
+  const currentLang = useLang();
   const screen = useRef<HTMLDivElement | null>(null);
-  const { theme } = useContext(ThemeContext);
   const localesData = siteData.themeConfig.locales || [];
   const hasMultiLanguage = localesData.length > 1;
   const menuItems = localeData.nav || [];
@@ -49,7 +53,8 @@ export function NavScreen(props: Props) {
   const socialLinks = siteData?.themeConfig?.socialLinks || [];
   const hasSocialLinks = socialLinks.length > 0;
   const langs = localesData.map(item => item.lang || 'zh') || [];
-  const { base, logo } = siteData;
+  const { base, lang: defaultLang, multiVersion } = siteData;
+  const { default: defaultVersion } = multiVersion;
   const translationMenuData = hasMultiLanguage
     ? {
         text: (
@@ -62,7 +67,19 @@ export function NavScreen(props: Props) {
         ),
         items: localesData.map(item => ({
           text: item?.label,
-          link: `/${item.lang}`,
+          link: replaceLang(
+            pathname,
+            {
+              current: currentLang,
+              target: item.lang,
+              default: defaultLang,
+            },
+            {
+              current: currentVersion,
+              default: defaultVersion,
+            },
+            base,
+          ),
         })),
         activeValue: localesData.find(item => item.lang === localeData.lang)
           ?.label,
@@ -72,11 +89,7 @@ export function NavScreen(props: Props) {
     return (
       <div className={`mt-2 ${styles.navAppearance} flex justify-center`}>
         <NoSSR>
-          <SwitchAppearance
-            onClick={() => {
-              setLogo(getLogoUrl(logo, theme === 'dark' ? 'light' : 'dark'));
-            }}
-          />
+          <SwitchAppearance />
         </NoSSR>
       </div>
     );
@@ -84,19 +97,19 @@ export function NavScreen(props: Props) {
   const NavScreenMenu = ({ menuItems }: { menuItems: NavItem[] }) => {
     return (
       <div className={styles.navMenu}>
-        {menuItems.map((item, index) => {
+        {menuItems.map(item => {
           return (
-            <div key={index} className={`${styles.navMenuItem} w-full`}>
+            <div key={item.text} className={`${styles.navMenuItem} w-full`}>
               {'link' in item ? (
                 <NavMenuSingleItem
                   pathname={pathname}
-                  key={index}
+                  key={item.text}
                   base={base}
                   langs={langs}
                   {...item}
                 />
               ) : (
-                <div key={index} className="mx-3 last:mr-0">
+                <div key={item.text} className="mx-3 last:mr-0">
                   <NavScreenMenuGroup
                     {...item}
                     items={'items' in item ? item.items : item}

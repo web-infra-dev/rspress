@@ -142,6 +142,7 @@ export const Layout: React.FC<LayoutProps> = props => {
         {description ? <meta name="description" content={description} /> : null}
       </Helmet>
       {top}
+
       {pageType !== 'blank' && !hideNavbar && (
         <Nav
           beforeNavTitle={beforeNavTitle}
