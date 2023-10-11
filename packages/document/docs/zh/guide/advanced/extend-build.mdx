@@ -42,6 +42,8 @@ import { defineConfig } from 'rspress/config';
 
 export default defineConfig({
   markdown: {
+    // 需要使用 JS 版本的 MDX 编译器
+    mdxRs: false,
     remarkPlugins: [
       [
         require('remark-autolink-headings'),
@@ -57,6 +59,6 @@ export default defineConfig({
 
 :::warning 注意
 
-仅 JS 版本的 MDX 编译器支持编译插件，这意味着如果你开启了 mdx-rs 编译器，你需要在配置文件中去掉 `markdown.experimenalMdxRs: true` 配置项。
+仅 JS 版本的 MDX 编译器支持编译插件。
 
 :::
