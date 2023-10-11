@@ -97,19 +97,19 @@ export function NavScreen(props: Props) {
   const NavScreenMenu = ({ menuItems }: { menuItems: NavItem[] }) => {
     return (
       <div className={styles.navMenu}>
-        {menuItems.map((item, index) => {
+        {menuItems.map(item => {
           return (
-            <div key={index} className={`${styles.navMenuItem} w-full`}>
+            <div key={item.text} className={`${styles.navMenuItem} w-full`}>
               {'link' in item ? (
                 <NavMenuSingleItem
                   pathname={pathname}
-                  key={index}
+                  key={item.text}
                   base={base}
                   langs={langs}
                   {...item}
                 />
               ) : (
-                <div key={index} className="mx-3 last:mr-0">
+                <div key={item.text} className="mx-3 last:mr-0">
                   <NavScreenMenuGroup
                     {...item}
                     items={'items' in item ? item.items : item}

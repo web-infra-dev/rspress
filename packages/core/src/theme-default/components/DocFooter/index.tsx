@@ -2,7 +2,10 @@ import { useLocaleSiteData, usePrevNextPage } from '../../logic';
 import EditLink from '../EditLink';
 import { Link } from '../Link';
 import styles from './index.module.scss';
-import { normalizeHrefInRuntime as normalizeHref, usePageData } from '@/runtime';
+import {
+  normalizeHrefInRuntime as normalizeHref,
+  usePageData,
+} from '@/runtime';
 
 export function DocFooter() {
   const { prevPage, nextPage } = usePrevNextPage();

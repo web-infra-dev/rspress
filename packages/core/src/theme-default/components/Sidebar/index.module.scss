@@ -24,10 +24,6 @@
   overflow-x: hidden;
 }
 
-:global(.dark) .sidebar {
-  box-shadow: var(--rp-shadow-1);
-}
-
 .sidebar.open {
   opacity: 1;
   visibility: visible;
@@ -135,8 +131,12 @@
   }
 }
 
-:global(.dark .rspress-sidebar-group) {
-  &::before {
+:global(.dark) {
+  :global(.rspress-sidebar-group)::before {
     background-color: var(--rp-c-bg-mute);
+  }
+
+  .sidebar {
+    box-shadow: var(--rp-shadow-1);
   }
 }
