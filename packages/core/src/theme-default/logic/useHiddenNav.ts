@@ -1,17 +1,20 @@
 import { throttle } from 'lodash-es';
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 
 export function useHiddenNav() {
   const [hiddenNav, setHiddenNav] = useState(false);
+  const lastScrollTop = useRef(0);
   useEffect(() => {
-    let lastScrollTop = 0;
     const onScrollListen = throttle(() => {
       const { scrollTop } = document.documentElement;
-      const downScroll =
-        scrollTop > 100 && lastScrollTop > 0 && scrollTop > lastScrollTop;
-      setHiddenNav(downScroll);
-      lastScrollTop = scrollTop <= 0 ? 0 : scrollTop;
-    }, 100);
+      if (scrollTop === lastScrollTop.current) {
+        return;
+      }
+      const shouldHidden =
+        lastScrollTop.current > 0 && scrollTop - lastScrollTop.current > 0;
+      setHiddenNav(shouldHidden);
+      lastScrollTop.current = scrollTop <= 0 ? 0 : scrollTop;
+    }, 200);
 
     window.addEventListener('mousewheel', onScrollListen);
 
