@@ -1,10 +1,13 @@
 import { throttle } from 'lodash-es';
 import { useEffect, useRef, useState } from 'react';
+import { useLocation } from '@/runtime';
 
 export function useHiddenNav() {
   const [hiddenNav, setHiddenNav] = useState(false);
+  const { pathname } = useLocation();
   const lastScrollTop = useRef(0);
   useEffect(() => {
+    setHiddenNav(false);
     const onScrollListen = throttle(() => {
       const { scrollTop } = document.documentElement;
       if (scrollTop === lastScrollTop.current) {
@@ -21,7 +24,7 @@ export function useHiddenNav() {
     return () => {
       window.removeEventListener('mousewheel', onScrollListen);
     };
-  }, []);
+  }, [pathname]);
 
   return hiddenNav;
 }
