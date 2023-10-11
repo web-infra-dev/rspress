@@ -92,7 +92,6 @@ export function bindingAsideScroll() {
       document.documentElement.scrollHeight
     );
   }
-  const marker = document.getElementById('aside-marker');
   const aside = document.getElementById('aside-container');
   const links = Array.from(
     document.querySelectorAll<HTMLAnchorElement>('.rspress-doc .header-anchor'),
@@ -106,8 +105,7 @@ export function bindingAsideScroll() {
   const headers = Array.from(aside?.getElementsByTagName('a') || []).map(item =>
     decodeURIComponent(item.hash),
   );
-  if (marker && !headers.length) {
-    marker.style.opacity = '0';
+  if (!headers.length) {
     return;
   }
   // Util function to set dom ref after determining the active link

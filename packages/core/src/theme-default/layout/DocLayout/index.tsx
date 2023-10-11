@@ -29,7 +29,7 @@ export function DocLayout(props: DocLayoutProps) {
   const localesData = useLocaleSiteData();
   const sidebar = localesData.sidebar || {};
 
-  const hideNavbar =
+  const disableNavbar =
     frontmatter?.hideNavbar ?? themeConfig?.hideNavbar ?? false;
   // siderbar Priority
   // 1. frontmatter.sidebar
@@ -61,7 +61,7 @@ export function DocLayout(props: DocLayoutProps) {
     <div
       className={`${styles.docLayout} pt-0`}
       style={{
-        ...(hideNavbar ? { marginTop: 0 } : {}),
+        ...(disableNavbar ? { marginTop: 0 } : {}),
       }}
     >
       {beforeDoc}
@@ -95,7 +95,7 @@ export function DocLayout(props: DocLayoutProps) {
             style={{
               maxHeight: 'calc(100vh - (var(--rp-nav-height) + 32px))',
               overflow: 'scroll',
-              ...(hideNavbar
+              ...(disableNavbar
                 ? {
                     marginTop: 0,
                     paddingTop: '32px',

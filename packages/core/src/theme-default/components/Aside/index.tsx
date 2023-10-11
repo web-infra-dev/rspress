@@ -1,4 +1,4 @@
-import { useRef, useEffect } from 'react';
+import { useEffect } from 'react';
 import { Header } from '@rspress/shared';
 import { bindingAsideScroll, scrollToTarget, useHiddenNav } from '../../logic';
 import { DEFAULT_NAV_HEIGHT } from '@/theme-default/logic/sideEffects';
@@ -8,15 +8,12 @@ export function Aside(props: { headers: Header[]; outlineTitle: string }) {
   const { headers } = props;
   const hasOutline = headers.length > 0;
   // For outline text highlight
-  const markerRef = useRef<HTMLDivElement>(null);
   const baseHeaderLevel = headers[0]?.depth || 2;
   const hiddenNav = useHiddenNav();
 
   useEffect(() => {
     let unbinding: (() => void) | undefined;
-    if (markerRef.current) {
-      markerRef.current.style.opacity = '0';
-    }
+
     setTimeout(() => {
       unbinding = bindingAsideScroll();
     }, 100);
