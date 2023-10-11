@@ -1,6 +1,11 @@
 import { useContext, useEffect, useState } from 'react';
 import styles from './index.module.scss';
-import { ThemeContext, usePageData, withBase } from '@/runtime';
+import {
+  ThemeContext,
+  normalizeImagePath,
+  usePageData,
+  withBase,
+} from '@/runtime';
 import { getLogoUrl, useLocaleSiteData } from '@/theme-default/logic';
 
 export const NavBarTitle = () => {
@@ -23,7 +28,7 @@ export const NavBarTitle = () => {
       >
         {logo ? (
           <img
-            src={logo}
+            src={normalizeImagePath(logo)}
             alt="logo"
             id="logo"
             className="w-24 mr-4 rspress-logo"
