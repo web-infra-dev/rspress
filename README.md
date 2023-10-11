@@ -13,14 +13,13 @@
 - **📦 Built-in Full Text Search**: Automatically generates a full-text search index for you during building process, providing out-of-the-box full-text search capabilities.
 - **🌈 Static Site Generation**: In production, it automatically builds into static HTML files, which can be easily deployed anywhere.
 - **🔌 Providing Plugin System**: Providing a plugin system, you can customize the build process and theme according to your needs.
+- **📝 Component Document**: Support multi ways to preview your component demo.
 
 ## Getting Started
 
 Go to the [Quick Start](https://rspress.dev/guide/start/getting-started.html) to get started.
 
 ## Contribution
-
-> **This project is new and under active development. Although Rspress can already successfully bundle real world projects, its APIs are not yet stable.If you have feedback, questions, or bug reports, please create a GitHub issue. Any contributions are greatly appreciated!**
 
 Please read the [contributing guide](./CONTRIBUTING.md) and let's build Rspress together.
 

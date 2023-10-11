@@ -58,6 +58,7 @@
     "provenance": true,
     "registry": "https://registry.npmjs.org/"
   },
+  "license": "MIT",
   "files": [
     "bin",
     "dist",

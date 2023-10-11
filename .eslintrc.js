@@ -8,5 +8,6 @@ module.exports = {
     '**/*.test.ts',
     'e2e/**',
     './scripts/**',
+    '**/node_modules/**',
   ],
 };

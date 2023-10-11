@@ -132,7 +132,7 @@ pnpm run test:unit
 Alternatively, you can run the unit tests of single package using the `--filter` option:
 
 ```sh
-pnpm run --filter @modern-js/some-package test
+pnpm run --filter rspress test
 ```
 
 ### Run E2E Tests
