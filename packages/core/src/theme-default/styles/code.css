@@ -140,7 +140,6 @@
   background-position: 50%;
   background-size: 20px;
   background-repeat: no-repeat;
-  transition: all 0.16s;
   background-color: var(--rp-code-copy-code-hover-bg);
 }
 

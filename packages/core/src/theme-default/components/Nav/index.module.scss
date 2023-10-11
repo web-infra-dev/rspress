@@ -12,6 +12,7 @@
   top: 0;
   left: 0;
   transition: all 0.3s ease;
+  transition-property: transform, opacity;
   background: var(--rp-c-bg);
   height: var(--rp-nav-height);
   z-index: var(--rp-z-index-nav);

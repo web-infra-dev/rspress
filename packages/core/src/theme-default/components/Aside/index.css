@@ -6,7 +6,6 @@
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
-  transition: all 0.2s ease-in-out;
   border-radius: 10px 0 0 10px;
   font-size: 13px;
   line-height: 1.75rem;
