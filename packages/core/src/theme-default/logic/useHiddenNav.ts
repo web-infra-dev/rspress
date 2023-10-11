@@ -6,7 +6,7 @@ export function useHiddenNav() {
   const {
     siteData: { themeConfig },
   } = usePageData();
-  const hiddenBehaivor = themeConfig.hideNavbar ?? 'auto';
+  const hiddenBehaivor = themeConfig.hideNavbar ?? 'never';
   const [hiddenNav, setHiddenNav] = useState(false);
   const { pathname } = useLocation();
   const lastScrollTop = useRef(0);
