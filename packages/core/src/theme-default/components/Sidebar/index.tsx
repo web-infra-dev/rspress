@@ -52,7 +52,7 @@ export function SideBar(props: Props) {
     page: { frontmatter },
   } = usePageData();
   const hideNavbar =
-    frontmatter?.hideNavbar ?? themeConfig?.hideNavbar ?? false;
+    !(frontmatter?.navbar ?? true) || themeConfig?.hideNavbar === 'always';
   const [sidebarData, setSidebarData] = useState<
     (ISidebarItem | NormalizedSidebarGroup)[]
   >(rawSidebarData.filter(Boolean).flat());
@@ -117,13 +117,13 @@ export function SideBar(props: Props) {
       className={`${styles.sidebar} rspress-sidebar ${
         isSidebarOpen ? styles.open : ''
       }`}
-      style={{
-        ...(hideNavbar ? { marginTop: 0 } : {}),
-      }}
     >
-      <div className={styles.navTitleMask}>
-        <NavBarTitle />
-      </div>
+      {hideNavbar ? null : (
+        <div className={styles.navTitleMask}>
+          <NavBarTitle />
+        </div>
+      )}
+
       <div className={`mt-1 ${styles.sidebarContent}`}>
         <div
           className="rspress-scrollbar"

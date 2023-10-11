@@ -448,17 +448,19 @@ export default defineConfig({
 
 ## hideNavbar
 
-- Type: `boolean`
-- Default: `false`
+- Type: `"always" | "auto" | "never"`
+- Default: `auto`
 
-Whether to hide the navigation bar. For example:
+Control the behavior of the hidden navigation bar. By default, the navigation bar will automatically hide when the page scrolls down. You can set it to always to **hide the navigation bar at all times**, or set it to **never to always display the navigation bar**.
+
+For example:
 
 ```ts title="rspress.config.ts"
 import { defineConfig } from 'rspress/config';
 
 export default defineConfig({
   themeConfig: {
-    hideNavbar: true,
+    hideNavbar: 'auto',
   },
 });
 ```

@@ -8,6 +8,8 @@
   overflow-y: auto;
   scrollbar-width: none;
   width: 0;
+  max-height: calc(100vh - (var(--rp-nav-height) + 32px));
+  overflow: 'scroll';
 }
 
 .aside-container::-webkit-scrollbar {
