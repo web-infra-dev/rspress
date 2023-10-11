@@ -128,7 +128,7 @@ export function SidebarGroup(props: SidebarItemProps) {
         }}
       >
         <h2
-          className="py-2.5 px-3 text-sm font-medium flex"
+          className="py-2 px-3 text-sm font-medium flex"
           style={{
             ...(depth === 0 ? highlightTitleStyle : {}),
           }}
