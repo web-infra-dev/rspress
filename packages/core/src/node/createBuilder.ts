@@ -1,5 +1,4 @@
 import path from 'path';
-import { createRequire } from 'module';
 import type { UserConfig } from '@rspress/shared';
 import fs from '@modern-js/utils/fs-extra';
 import {
@@ -28,8 +27,6 @@ import { detectReactVersion, resolveReactAlias } from './utils';
 import { initRouteService } from './route/init';
 import { PluginDriver } from './PluginDriver';
 import { RouteService } from './route/RouteService';
-
-const require = createRequire(import.meta.url);
 
 export interface MdxRsLoaderCallbackContext {
   resourcePath: string;
@@ -66,7 +63,7 @@ async function createInternalBuildConfig(
   const assetPrefix = isProduction()
     ? removeTrailingSlash(config?.builderConfig?.output?.assetPrefix ?? base)
     : '';
-  const enableMdxRs = config?.markdown?.experimentalMdxRs ?? false;
+  const enableMdxRs = config?.markdown?.mdxRs ?? true;
   const reactVersion = await detectReactVersion();
   const normalizeIcon = (icon: string | undefined) => {
     if (!icon) {
@@ -171,7 +168,7 @@ async function createInternalBuildConfig(
         // This config can be removed after upgrading Rspack v0.4
         // https://github.com/web-infra-dev/rspack/issues/3096
         optimization: {
-          chunkIds: 'deterministic',
+          chunkIds: isProduction() ? 'deterministic' : 'named',
         },
       },
       bundlerChain(chain) {

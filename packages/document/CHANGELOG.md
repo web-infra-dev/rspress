@@ -1,5 +1,17 @@
 # @rspress/docs
 
+## 1.0.0-beta.3
+
+### Minor Changes
+
+- 213c9e3: fix: tuning the animation for `first entry` and `navigate with hash`
+
+## 1.0.0-beta.2
+
+### Minor Changes
+
+- 213c9e3: fix: tuning the animation for `first entry` and `navigate with hash`
+
 ## 1.0.0-beta.1
 
 ### Minor Changes

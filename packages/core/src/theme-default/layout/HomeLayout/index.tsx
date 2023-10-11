@@ -25,7 +25,7 @@ export function HomeLayout(props: HomeLayoutProps) {
         paddingBottom: '80px',
       }}
     >
-      <div className="mt-14 pb-12">
+      <div className="pb-12">
         {beforeHero}
         <HomeHero frontmatter={frontmatter} />
         {afterHero}

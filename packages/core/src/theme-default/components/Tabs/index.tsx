@@ -21,6 +21,7 @@ interface TabsProps {
   children: ReactNode;
   groupId?: string;
   tabContainerClassName?: string;
+  tabPosition?: 'left' | 'center';
 }
 
 function isTabItem(item: unknown): item is TabItem {
@@ -44,6 +45,7 @@ export function Tabs(props: TabsProps): ReactElement {
     onChange,
     children,
     groupId,
+    tabPosition = 'left',
     tabContainerClassName,
   } = props;
   let tabValues = values || [];
@@ -74,7 +76,13 @@ export function Tabs(props: TabsProps): ReactElement {
     <div className={styles.container}>
       <div className={tabContainerClassName}>
         {tabValues.length ? (
-          <div className={styles.tabList}>
+          <div
+            className={styles.tabList}
+            style={{
+              justifyContent:
+                tabPosition === 'center' ? 'center' : 'flex-start',
+            }}
+          >
             {tabValues.map((item, index) => {
               return (
                 <div

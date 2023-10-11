@@ -2,13 +2,14 @@ import React, { useEffect, useState } from 'react';
 import {
   NormalizedSidebarGroup,
   SidebarItem as ISidebarItem,
+  normalizeSlash,
 } from '@rspress/shared';
-import { matchRoutes } from 'react-router-dom';
 import { routes } from 'virtual-routes';
-import { isActive } from '../../logic';
+import { isActive, useLocaleSiteData, useSidebarData } from '../../logic';
+import { NavBarTitle } from '../Nav/NavBarTitle';
 import styles from './index.module.scss';
 import { SidebarItem } from './SidebarItem';
-import { removeBase, usePageData } from '@/runtime';
+import { matchRoutes, useLocation, removeBase, usePageData } from '@/runtime';
 
 export interface SidebarItemProps {
   id: string;
@@ -24,9 +25,6 @@ export interface SidebarItemProps {
 
 interface Props {
   isSidebarOpen?: boolean;
-  pathname: string;
-  langRoutePrefix: string;
-  sidebarData: (NormalizedSidebarGroup | ISidebarItem)[];
 }
 
 export const highlightTitleStyle = {
@@ -42,12 +40,13 @@ export let matchCache: WeakMap<NormalizedSidebarGroup | ISidebarItem, boolean> =
   new WeakMap();
 
 export function SideBar(props: Props) {
-  const {
-    isSidebarOpen,
-    langRoutePrefix,
-    pathname: rawPathname,
-    sidebarData: rawSidebarData,
-  } = props;
+  const { isSidebarOpen } = props;
+  const { items: rawSidebarData } = useSidebarData();
+  const localesData = useLocaleSiteData();
+  const { pathname: rawPathname } = useLocation();
+
+  const langRoutePrefix = normalizeSlash(localesData.langRoutePrefix || '');
+
   const {
     siteData: { themeConfig },
     page: { frontmatter },
@@ -59,7 +58,7 @@ export function SideBar(props: Props) {
   >(rawSidebarData.filter(Boolean).flat());
   const pathname = decodeURIComponent(rawPathname);
   useEffect(() => {
-    if (props.sidebarData === sidebarData) {
+    if (rawSidebarData === sidebarData) {
       return;
     }
     // 1. Update sidebarData when pathname changes
@@ -92,10 +91,10 @@ export function SideBar(props: Props) {
         }
       }
     };
-    const newSidebarData = props.sidebarData.filter(Boolean).flat();
+    const newSidebarData = rawSidebarData.filter(Boolean).flat();
     newSidebarData.forEach(traverse);
     setSidebarData(newSidebarData);
-  }, [props.sidebarData, pathname]);
+  }, [rawSidebarData, pathname]);
 
   const removeLangPrefix = (path: string) => {
     return path.replace(langRoutePrefix, '');
@@ -122,6 +121,9 @@ export function SideBar(props: Props) {
         ...(hideNavbar ? { marginTop: 0 } : {}),
       }}
     >
+      <div className={styles.navTitleMask}>
+        <NavBarTitle />
+      </div>
       <div className={`mt-1 ${styles.sidebarContent}`}>
         <div
           className="rspress-scrollbar"
@@ -150,20 +152,6 @@ export function SideBar(props: Props) {
           </nav>
         </div>
       </div>
-      {/* SwitchAppearance at the bottom of sidebar */}
-      {/* <div
-        className="border-t border-solid border-gray-200 dark:border-gray-500 absolute"
-        style={{
-          left: '1.8rem',
-          width: 'calc(100% - 3.6rem)',
-        }}
-      >
-        <div className="mt-2 flex-center">
-          <NoSSR>
-            <SwitchAppearance />
-          </NoSSR>
-        </div>
-      </div> */}
     </aside>
   );
 }

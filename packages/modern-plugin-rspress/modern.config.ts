@@ -7,6 +7,7 @@ export default defineConfig({
     format: 'cjs',
     target: 'es2020',
     sourceMap: true,
+    externals: ['@modern-js/module-tools'],
   },
   plugins: [moduleTools()],
 });

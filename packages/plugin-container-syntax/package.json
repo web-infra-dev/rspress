@@ -1,6 +1,6 @@
 {
   "name": "@rspress/plugin-container-syntax",
-  "version": "1.0.0-beta.1",
+  "version": "1.0.0-beta.3",
   "description": "A remark plugin to support container syntax",
   "bugs": "https://github.com/web-infra-dev/rspress/issues",
   "repository": {
@@ -37,7 +37,7 @@
     "dist/"
   ],
   "peerDependencies": {
-    "rspress": "1.0.0-beta.1"
+    "rspress": "1.0.0-beta.3"
   },
   "sideEffects": [
     "*.css",
@@ -54,12 +54,14 @@
     "provenance": true,
     "registry": "https://registry.npmjs.org/"
   },
+  "dependencies": {
+    "@rspress/shared": "workspace:*"
+  },
   "devDependencies": {
     "@types/mdast": "^3.0.10",
     "rehype-stringify": "^9.0.3",
     "remark-parse": "^10.0.1",
     "remark-rehype": "^10.1.0",
-    "unified": "^10.1.2",
-    "@rspress/shared": "workspace:*"
+    "unified": "^10.1.2"
   }
 }

@@ -14,7 +14,7 @@ export function ProgressBar({ value, max }: { value: number; max: number }) {
   const [elapsedTime, setElapsedTime] = useState(0);
   const TOTAL_TIME = value * 1000;
   const isMobile = window.innerWidth < 768;
-  const progressBarWidth = isMobile ? 80 : 40;
+  const progressBarWidth = isMobile ? 70 : 35;
   const variants = {
     initial: { width: 0 },
     animate: { width: '100%' },

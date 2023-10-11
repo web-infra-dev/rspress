@@ -183,6 +183,8 @@ export function pluginForDoc(): RspressPlugin {
   return {
     name: 'plugin-name',
     markdown: {
+      // Use js version compiler to support plugins
+      mdxRs: false,
       remarkPlugins: [
         // Add custom remark plugin
       ],
@@ -196,10 +198,6 @@ export function pluginForDoc(): RspressPlugin {
   };
 }
 ```
-
-:::warning
-When mdx-rs compilation is enabled (that is, `markdown.experimentalMdxRs` is `true` in the config file), the added remark/rehype plugin will be ignored.
-:::
 
 ### extendPageData
 

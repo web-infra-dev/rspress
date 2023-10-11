@@ -1,3 +1,4 @@
+/* eslint-disable max-lines */
 import { createPortal } from 'react-dom';
 import { useEffect, useRef, useState } from 'react';
 import { groupBy, debounce } from 'lodash-es';

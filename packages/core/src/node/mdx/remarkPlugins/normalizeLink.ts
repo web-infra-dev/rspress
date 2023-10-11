@@ -15,7 +15,7 @@ interface LinkNode {
  * Remark plugin to normalize a link href
  */
 export const remarkPluginNormalizeLink: Plugin<
-  [{ base: string; root: string; cleanUrls: boolean; }],
+  [{ base: string; root: string; cleanUrls: boolean }],
   Root
 > =
   ({ base, root, cleanUrls }) =>

@@ -53,12 +53,15 @@ interface TabsProps {
   children: React.ReactNode;
   defaultValue?: string;
   groupId?: string;
+  tabPosition?: 'left' | 'center';
 }
 ```
 
 `defaultValue` is used to set the tab item selected by default. This value will be compared with the value field of the Tab component props, and if they are equal, the tab will be selected.
 
 `groupId` is used to sync the selected tab item between multiple Tabs components.The groups with the same groupId will be synchronized.
+
+`tabPosition` is used to set the position of the tab list, it has two values: `left` and `center`, the default is `left`.
 
 The props types of the Tab component are as follows:
 
@@ -130,12 +133,10 @@ Render TOC of current page
 import { Toc } from '@theme';
 
 function App() {
-  return (
-    <Toc />
-  );
+  return <Toc />;
 }
 ```
 
-import { Toc } from '@theme'
+import { Toc } from '@theme';
 
 <Toc />

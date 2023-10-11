@@ -5,6 +5,7 @@ export default defineConfig({
     buildType: 'bundle',
     format: 'esm',
     sourceMap: true,
+    target: 'esnext',
     dts: {
       respectExternal: false,
     },

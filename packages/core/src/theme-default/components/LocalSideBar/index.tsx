@@ -1,18 +1,13 @@
 import { Fragment, useEffect, useState } from 'react';
-import { NormalizedSidebarGroup, SidebarItem } from '@rspress/shared';
 import { SideBar } from '../Sidebar';
 import MenuIcon from '../../assets/menu.svg';
 import './index.scss';
+import { useLocation } from '@/runtime';
 
-interface Props {
-  pathname: string;
-  langRoutePrefix: string;
-  sidebarData: (NormalizedSidebarGroup | SidebarItem)[];
-}
-
-export function SideMenu(props: Props) {
-  const { langRoutePrefix, pathname, sidebarData } = props;
+export function SideMenu() {
   const [isSidebarOpen, setIsOpen] = useState<boolean>(false);
+  const { pathname } = useLocation();
+
   function openSidebar() {
     setIsOpen(true);
   }
@@ -35,12 +30,7 @@ export function SideMenu(props: Props) {
           <span className="text-sm">Menu</span>
         </button>
       </div>
-      <SideBar
-        langRoutePrefix={langRoutePrefix}
-        pathname={pathname}
-        sidebarData={sidebarData}
-        isSidebarOpen={isSidebarOpen}
-      />
+      <SideBar isSidebarOpen={isSidebarOpen} />
       {isSidebarOpen ? (
         <div onClick={closeSidebar} className="rspress-sidebar-back-drop" />
       ) : null}

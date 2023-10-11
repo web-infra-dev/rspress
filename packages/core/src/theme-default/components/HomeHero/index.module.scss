@@ -34,3 +34,9 @@
     width: 375px;
   }
 }
+
+@media (max-width: 768px) {
+  .mask {
+    display: none;
+  }
+}

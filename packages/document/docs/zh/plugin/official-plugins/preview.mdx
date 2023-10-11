@@ -26,7 +26,7 @@ export default defineConfig({
 ```
 
 :::warning 注意
-在加入该插件后，请勿开启 `markdown.experimentalMdxRs`配置，否则会导致插件失效。
+在加入该插件后，请设置 `markdown.mdxRs` 配置为 `false`，否则会导致插件失效。未来 Rspress 团队会将该插件移植到 Rust 版本的编译器中，届时此配置项就不再需要。
 :::
 
 ### 内部组件
@@ -87,7 +87,33 @@ export default function App() {
 ```ts
 interface PreviewOptions {
   isMobile: boolean;
+  iframePosition: 'follow' | 'fixed';
 }
 ```
 
-你可以通过 `isMobile` 参数来决定移动端/PC 端的预览模式。
+### isMobile
+
+`isMobile` 参数用于指定预览模式是否为移动端模式，默认为 `false`。默认 PC 模式的展示效果如下：
+
+![](https://lf3-static.bytednsdoc.com/obj/eden-cn/uhbfnupenuhf/rspress/demo-preview-pc.jpeg)
+
+### iframePosition
+
+在移动端预览模式下时，你可以通过 `iframePosition` 参数来决定预览区 iframe 的位置，是跟随页面滚动(`follow` 模式)还是固定在页面中(`fixed` 模式)，默认为 `follow`。
+
+`follow` 模式效果如下：
+
+![](https://lf3-static.bytednsdoc.com/obj/eden-cn/uhbfnupenuhf/rspress/demo-preview-mobile-follow.png)
+
+`fixed` 模式效果如下：
+
+![](https://lf3-static.bytednsdoc.com/obj/eden-cn/uhbfnupenuhf/rspress/demo-preview-mobile-fixed.png)
+
+### enableCodesandbox
+
+**试验性功能**，支持在 Codesandbox 打开 Demo，目前不支持 iframePosition 为 fixed 的情况。
+
+此功能，仍有一些使用上的限制：
+- 不能自定义 sandbox 依赖：默认仅会声明 react、react-dom、self 三个依赖，这意味着你无法在 demo 里引用其他依赖，
+同时，你需要确保 self 已经发包至 npm，这适用于模块类型的项目。
+- 不能自定义文件：这意味着你无法在 demo 里引用其他文件。

@@ -1,15 +1,14 @@
-import { useLocation } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import { MDXProvider } from '@mdx-js/react';
 import { getCustomMDXComponent } from '@theme';
 import { Aside } from '../../components/Aside';
 import { DocFooter } from '../../components/DocFooter';
-import { useLocaleSiteData, useSidebarData } from '../../logic';
+import { useLocaleSiteData } from '../../logic';
 import { SideMenu } from '../../components/LocalSideBar';
 import { Overview } from '../../components/Overview';
 import { TabDataContext } from '../../logic/TabDataContext';
 import styles from './index.module.scss';
-import { Content, usePageData, normalizeSlash } from '@/runtime';
+import { Content, usePageData } from '@/runtime';
 
 export interface DocLayoutProps {
   beforeDocFooter?: React.ReactNode;
@@ -29,10 +28,7 @@ export function DocLayout(props: DocLayoutProps) {
   const { themeConfig } = siteData;
   const localesData = useLocaleSiteData();
   const sidebar = localesData.sidebar || {};
-  const { pathname } = useLocation();
 
-  const { items: sidebarData } = useSidebarData();
-  const langRoutePrefix = normalizeSlash(localesData.langRoutePrefix || '');
   const hideNavbar =
     frontmatter?.hideNavbar ?? themeConfig?.hideNavbar ?? false;
   // siderbar Priority
@@ -69,13 +65,7 @@ export function DocLayout(props: DocLayoutProps) {
       }}
     >
       {beforeDoc}
-      {hasSidebar ? (
-        <SideMenu
-          pathname={pathname}
-          langRoutePrefix={langRoutePrefix}
-          sidebarData={sidebarData}
-        />
-      ) : null}
+      {hasSidebar ? <SideMenu /> : null}
       <div
         className={`${styles.content} rspress-doc-container flex flex-shrink-0`}
       >
