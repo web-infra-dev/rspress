@@ -3,7 +3,7 @@ import { MDXProvider } from '@mdx-js/react';
 import { getCustomMDXComponent } from '@theme';
 import { Aside } from '../../components/Aside';
 import { DocFooter } from '../../components/DocFooter';
-import { useLocaleSiteData } from '../../logic';
+import { useDisableNav, useLocaleSiteData } from '../../logic';
 import { SideMenu } from '../../components/LocalSideBar';
 import { Overview } from '../../components/Overview';
 import { TabDataContext } from '../../logic/TabDataContext';
@@ -29,8 +29,7 @@ export function DocLayout(props: DocLayoutProps) {
   const localesData = useLocaleSiteData();
   const sidebar = localesData.sidebar || {};
 
-  const disableNavbar =
-    frontmatter?.hideNavbar ?? themeConfig?.hideNavbar ?? false;
+  const disableNavbar = useDisableNav();
   // siderbar Priority
   // 1. frontmatter.sidebar
   // 2. themeConfig.locales.sidebar

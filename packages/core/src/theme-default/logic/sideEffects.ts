@@ -133,7 +133,8 @@ export function bindingAsideScroll() {
         const currentAnchor = links[i];
         const nextAnchor = links[i + 1];
         const scrollTop = Math.ceil(window.scrollY);
-        const currentAnchorTop = currentAnchor.parentElement.offsetTop;
+        const currentAnchorTop =
+          currentAnchor.parentElement.offsetTop - DEFAULT_NAV_HEIGHT;
         if ((i === 0 && scrollTop < currentAnchorTop) || scrollTop === 0) {
           activate(links, 0);
           break;
@@ -144,7 +145,8 @@ export function bindingAsideScroll() {
           break;
         }
 
-        const nextAnchorTop = nextAnchor.parentElement.offsetTop;
+        const nextAnchorTop =
+          nextAnchor.parentElement.offsetTop - DEFAULT_NAV_HEIGHT;
 
         if (scrollTop >= currentAnchorTop && scrollTop < nextAnchorTop) {
           activate(links, i);

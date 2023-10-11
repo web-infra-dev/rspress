@@ -8,7 +8,7 @@ import { DocLayout, DocLayoutProps } from '../DocLayout';
 import { HomeLayoutProps } from '../HomeLayout';
 import type { NavProps } from '../../components/Nav';
 import { usePageData, Content, removeBase, withBase } from '@/runtime';
-import { useLocaleSiteData } from '@/theme-default/logic';
+import { useDisableNav, useLocaleSiteData } from '@/theme-default/logic';
 
 export type LayoutProps = {
   top?: React.ReactNode;
@@ -48,7 +48,6 @@ export const Layout: React.FC<LayoutProps> = props => {
     afterFeatures,
   };
   const { siteData, page } = usePageData();
-  const { themeConfig } = siteData;
   const {
     pageType,
     lang: currentLang,
@@ -58,10 +57,8 @@ export const Layout: React.FC<LayoutProps> = props => {
   } = page;
   const localesData = useLocaleSiteData();
   const defaultLang = siteData.lang || '';
-  // Priority: frontmatter.navbar > themeConfig.hideNavbar
+  const hideNavbar = useDisableNav();
   // Always show sidebar by default
-  const hideNavbar =
-    !(frontmatter?.navbar ?? true) || themeConfig?.hideNavbar === 'always';
   // Priority: front matter title > h1 title
   let title = (frontmatter?.title as string) ?? articleTitle;
   const mainTitle = siteData.title || localesData.title;

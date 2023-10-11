@@ -5,11 +5,16 @@ import {
   normalizeSlash,
 } from '@rspress/shared';
 import { routes } from 'virtual-routes';
-import { isActive, useLocaleSiteData, useSidebarData } from '../../logic';
+import {
+  isActive,
+  useDisableNav,
+  useLocaleSiteData,
+  useSidebarData,
+} from '../../logic';
 import { NavBarTitle } from '../Nav/NavBarTitle';
 import styles from './index.module.scss';
 import { SidebarItem } from './SidebarItem';
-import { matchRoutes, useLocation, removeBase, usePageData } from '@/runtime';
+import { matchRoutes, useLocation, removeBase } from '@/runtime';
 
 export interface SidebarItemProps {
   id: string;
@@ -46,13 +51,7 @@ export function SideBar(props: Props) {
   const { pathname: rawPathname } = useLocation();
 
   const langRoutePrefix = normalizeSlash(localesData.langRoutePrefix || '');
-
-  const {
-    siteData: { themeConfig },
-    page: { frontmatter },
-  } = usePageData();
-  const hideNavbar =
-    !(frontmatter?.navbar ?? true) || themeConfig?.hideNavbar === 'always';
+  const hideNavbar = useDisableNav();
   const [sidebarData, setSidebarData] = useState<
     (ISidebarItem | NormalizedSidebarGroup)[]
   >(rawSidebarData.filter(Boolean).flat());
