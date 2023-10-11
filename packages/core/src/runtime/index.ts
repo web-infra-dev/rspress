@@ -2,6 +2,7 @@ export * from './hooks';
 export * from './Content';
 export {
   normalizeHrefInRuntime,
+  normalizeImagePath,
   withBase,
   removeBase,
   addLeadingSlash,

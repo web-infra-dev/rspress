@@ -7,6 +7,7 @@ import {
   normalizeHref,
   withBase as rawWithBase,
   removeBase as rawRemoveBase,
+  isExternalUrl,
 } from '@rspress/shared';
 
 export function normalizeRoutePath(routePath: string) {
@@ -32,6 +33,14 @@ export function isEqualPath(a: string, b: string) {
 export function normalizeHrefInRuntime(a: string) {
   const cleanUrls = Boolean(siteData?.route?.cleanUrls);
   return normalizeHref(a, cleanUrls);
+}
+
+export function normalizeImagePath(imagePath: string) {
+  if (isExternalUrl(imagePath)) {
+    return imagePath;
+  }
+
+  return withBase(imagePath);
 }
 
 export { addLeadingSlash, removeTrailingSlash, normalizeSlash, isProduction };

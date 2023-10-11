@@ -1,7 +1,10 @@
 import { FrontMatterMeta } from '@rspress/shared';
 import { Button } from '../Button';
 import styles from './index.module.scss';
-import { normalizeHrefInRuntime as normalizeHref } from '@/runtime';
+import {
+  normalizeHrefInRuntime as normalizeHref,
+  normalizeImagePath,
+} from '@/runtime';
 
 const DEFAULT_HERO = {
   name: 'modern',
@@ -59,7 +62,10 @@ export function HomeHero({ frontmatter }: { frontmatter: FrontMatterMeta }) {
 
         {hasImage ? (
           <div className="rspress-home-hero-image md:flex-center m-auto order-1 md:order-2 sm:flex md:none lg:flex">
-            <img src={hero.image?.src} alt={hero.image?.alt} />
+            <img
+              src={normalizeImagePath(hero.image?.src)}
+              alt={hero.image?.alt}
+            />
           </div>
         ) : null}
       </div>
