@@ -195,7 +195,3 @@ console.log(b);
 ## Rustify MDX compiler
 
 You can enable Rustify MDX compiler by following config:
-
-import MdxRs from '../../fragments/mdx-rs';
-
-<MdxRs />
