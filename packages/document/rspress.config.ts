@@ -47,6 +47,12 @@ export default defineConfig({
         mode: 'link',
         content: 'https://github.com/web-infra-dev/rspress',
       },
+      {
+        icon: 'discord',
+        mode: 'link',
+        content:
+          'https://discord.com/channels/977448667919286283/1161653869080756245',
+      },
     ],
     locales: [
       {
