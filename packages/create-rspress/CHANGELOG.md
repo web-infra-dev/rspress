@@ -1,5 +1,11 @@
 # create-rspress
 
+## 1.0.0-beta.4
+
+### Patch Changes
+
+- 92c80fe: fix: delete useless import
+
 ## 1.0.0-beta.3
 
 ## 1.0.0-beta.2

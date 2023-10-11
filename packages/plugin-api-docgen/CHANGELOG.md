@@ -1,5 +1,28 @@
 # @rspress/plugin-api-docgen
 
+## 1.0.0-beta.4
+
+### Patch Changes
+
+- f4ffb4e: chore(deps): unify rspack-plugin-virtual-module version
+
+  chore(deps): 统一 rspack-plugin-virtual-module 的版本
+
+- Updated dependencies [7f771b8]
+- Updated dependencies [213c9e3]
+- Updated dependencies [599291c]
+- Updated dependencies [4a133ab]
+- Updated dependencies [34ac6ed]
+- Updated dependencies [d1098cf]
+- Updated dependencies [fd49190]
+- Updated dependencies [3b89c1d]
+- Updated dependencies [1851d12]
+- Updated dependencies [12089b7]
+- Updated dependencies [a9271e9]
+- Updated dependencies [12d9569]
+- Updated dependencies [485d873]
+  - @rspress/core@1.0.0-beta.4
+
 ## 1.0.0-beta.3
 
 ### Patch Changes
