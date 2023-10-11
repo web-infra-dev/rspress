@@ -40,6 +40,7 @@ export default defineConfig({
     footer: {
       message: '© 2023 Bytedance Inc. All Rights Reserved.',
     },
+    hideNavbar: 'auto',
     socialLinks: [
       {
         icon: 'github',

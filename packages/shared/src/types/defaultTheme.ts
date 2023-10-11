@@ -74,7 +74,7 @@ export interface Config {
    */
   search?: boolean;
   /**
-   * Whether to hide the navbar
+   * The behavior of hiding navbar
    */
   hideNavbar?: 'always' | 'auto' | 'never';
   /**
