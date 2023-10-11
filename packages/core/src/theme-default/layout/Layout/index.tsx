@@ -61,7 +61,7 @@ export const Layout: React.FC<LayoutProps> = props => {
   // Priority: frontmatter.navbar > themeConfig.hideNavbar
   // Always show sidebar by default
   const hideNavbar =
-    !(frontmatter?.navbar ?? true) || (themeConfig?.hideNavbar ?? false);
+    !(frontmatter?.navbar ?? true) || themeConfig?.hideNavbar === 'always';
   // Priority: front matter title > h1 title
   let title = (frontmatter?.title as string) ?? articleTitle;
   const mainTitle = siteData.title || localesData.title;

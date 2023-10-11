@@ -433,21 +433,22 @@ export default defineConfig({
 
 ## hideNavbar
 
-- Type: `boolean`
-- Default: `false`
+- Type: `"always" | "auto" | "never"`
+- Default: `auto`
 
-用来隐藏导航栏。比如：
+控制隐藏导航栏行为。默认情况下，导航栏会在页面向下滚动时自动隐藏。你可以设置为 `always` 来始终**隐藏导航栏**，或者设置为 `never` 来总是**显示导航栏**。
+
+。比如：
 
 ```ts title="rspress.config.ts"
 import { defineConfig } from 'rspress/config';
 
 export default defineConfig({
   themeConfig: {
-    hideNavbar: true,
+    hideNavbar: 'never',
   },
 });
 ```
-
 
 ## enableContentAnimation
 

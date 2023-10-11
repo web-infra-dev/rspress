@@ -93,8 +93,6 @@ export function DocLayout(props: DocLayoutProps) {
           <div
             className={styles.asideContainer}
             style={{
-              maxHeight: 'calc(100vh - (var(--rp-nav-height) + 32px))',
-              overflow: 'scroll',
               ...(disableNavbar
                 ? {
                     marginTop: 0,

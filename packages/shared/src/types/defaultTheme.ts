@@ -7,7 +7,7 @@ export interface Config {
   /**
    * Custom outline title in the aside component.
    *
-   * @default 'On this page'
+   * @default 'ON THIS PAGE'
    */
   outlineTitle?: string;
   /**
@@ -74,13 +74,9 @@ export interface Config {
    */
   search?: boolean;
   /**
-   * Whether to use back top
-   */
-  backTop?: boolean;
-  /**
    * Whether to hide the navbar
    */
-  hideNavbar?: boolean;
+  hideNavbar?: 'always' | 'auto' | 'never';
   /**
    * Whether to enable the animation for translation pages
    */
