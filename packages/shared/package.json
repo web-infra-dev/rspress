@@ -1,6 +1,6 @@
 {
   "name": "@rspress/shared",
-  "version": "1.0.0-beta.5",
+  "version": "1.0.0",
   "types": "./dist/index.d.ts",
   "main": "./dist/index.js",
   "module": "./dist/index.mjs",
@@ -31,8 +31,8 @@
     "upgrade": "modern upgrade"
   },
   "dependencies": {
-    "@modern-js/builder": "2.35.1",
-    "@modern-js/builder-rspack-provider": "2.35.1",
+    "@modern-js/builder": "2.36.0",
+    "@modern-js/builder-rspack-provider": "2.36.0",
     "unified": "10.1.2",
     "chalk": "4.1.2",
     "rslog": "^1.0.0"
