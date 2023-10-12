@@ -1,5 +1,12 @@
 # @rspress/plugin-preview
 
+## 1.0.1
+
+### Patch Changes
+
+- @rspress/core@1.0.1
+- @rspress/shared@1.0.1
+
 ## 1.0.0
 
 ### Major Changes
