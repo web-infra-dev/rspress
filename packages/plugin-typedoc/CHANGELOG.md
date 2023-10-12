@@ -1,5 +1,12 @@
 # @rspress/plugin-typedoc
 
+## 1.0.1
+
+### Patch Changes
+
+- Updated dependencies [bc82afa]
+  - rspress@1.0.1
+
 ## 1.0.0
 
 ### Patch Changes

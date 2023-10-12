@@ -1,5 +1,13 @@
 # rspress
 
+## 1.0.1
+
+### Patch Changes
+
+- bc82afa: fix: bump 1.0.1
+  - @rspress/core@1.0.1
+  - @rspress/shared@1.0.1
+
 ## 1.0.0
 
 ### Patch Changes
