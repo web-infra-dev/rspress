@@ -1,5 +1,12 @@
 # @rspress/plugin-medium-zoom
 
+## 1.0.0
+
+### Patch Changes
+
+- fdf66e4: fix: medium zoom not work after switching route
+  - rspress@1.0.0
+
 ## 1.0.0-beta.5
 
 ### Patch Changes

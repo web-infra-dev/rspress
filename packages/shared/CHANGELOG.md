@@ -1,5 +1,17 @@
 # @rspress/shared
 
+## 1.0.0
+
+### Minor Changes
+
+- d1098cf: feat: support cleanUrls to generate url without suffix
+
+### Patch Changes
+
+- a9271e9: feat: using rslog as logger
+
+  feat: 使用 rslog 作为 logger
+
 ## 1.0.0-beta.5
 
 ### Minor Changes
