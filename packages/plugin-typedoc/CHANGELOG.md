@@ -1,5 +1,13 @@
 # @rspress/plugin-typedoc
 
+## 1.0.2
+
+### Patch Changes
+
+- a59f05c: chore: optimize readme in npm
+- Updated dependencies [a59f05c]
+  - rspress@1.0.2
+
 ## 1.0.1
 
 ### Patch Changes
