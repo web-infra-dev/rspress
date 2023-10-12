@@ -31,10 +31,11 @@ This repo has adopted the ByteDance Open Source Code of Conduct. Please check [C
 
 ### Links
 
-| Name                                                       | Description                    |
-| ---------------------------------------------------------- | ------------------------------ |
-| [@rspress/mdx-rs](https://github.com/web-infra-dev/mdx-rs) | Rust MDX compiler for Rspress. |
-| [Rspack](https://github.com/web-infra-dev/rspack)          | A Rust-based web bundler.      |
+| Name                                                       | Description                             |
+| ---------------------------------------------------------- | --------------------------------------- |
+| [@rspress/mdx-rs](https://github.com/web-infra-dev/mdx-rs) | Rust MDX compiler for Rspress.          |
+| [Rspack](https://github.com/web-infra-dev/rspack)          | A fast Rust-based web bundler.          |
+| [Rsbuild](https://github.com/web-infra-dev/rsbuild)        | An Rspack-based build tool for the web. |
 
 ### License
 
