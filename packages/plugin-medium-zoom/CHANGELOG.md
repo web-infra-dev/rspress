@@ -1,5 +1,12 @@
 # @rspress/plugin-medium-zoom
 
+## 1.0.2
+
+### Patch Changes
+
+- Updated dependencies [a59f05c]
+  - rspress@1.0.2
+
 ## 1.0.1
 
 ### Patch Changes

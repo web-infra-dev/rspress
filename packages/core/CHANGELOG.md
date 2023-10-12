@@ -1,5 +1,17 @@
 # @rspress/core
 
+## 1.0.2
+
+### Patch Changes
+
+- a59f05c: chore: optimize readme in npm
+- Updated dependencies [a59f05c]
+  - @rspress/plugin-auto-nav-sidebar@1.0.2
+  - @rspress/plugin-container-syntax@1.0.2
+  - @rspress/plugin-last-updated@1.0.2
+  - @rspress/plugin-medium-zoom@1.0.2
+  - @rspress/shared@1.0.2
+
 ## 1.0.1
 
 ### Patch Changes
