@@ -99,6 +99,8 @@
       color: var(--rp-c-gray);
       font-weight: 500;
       background-color: var(--rp-c-bg);
+      width: 43px;
+      transition: opacity 0.3s;
       > span {
         margin-left: 5px;
         + span {
