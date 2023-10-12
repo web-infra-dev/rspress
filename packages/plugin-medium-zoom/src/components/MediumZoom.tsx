@@ -13,8 +13,10 @@ export default function MediumZoom(props: Props) {
   const { selector = '.rspress-doc img', options = {} } = props;
 
   useEffect(() => {
-    const images = document.querySelectorAll(selector);
-    mediumZoom(images, options);
+    setTimeout(() => {
+      const images = document.querySelectorAll(selector);
+      mediumZoom(images, options);
+    }, 100);
   }, [pathname]);
   return null;
 }

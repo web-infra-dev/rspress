@@ -19,11 +19,11 @@
 
 Go to the [Quick Start](https://rspress.dev/guide/start/getting-started.html) to get started.
 
-If you have any quesions, you can open an issue or go to [Discord](https://discord.com/channels/977448667919286283/1161653869080756245) to communicate with us.
-
 ## Contribution
 
 Please read the [contributing guide](./CONTRIBUTING.md) and let's build Rspress together.
+
+If you have any quesions, you can open an issue or go to [Discord](https://discord.com/channels/977448667919286283/1161653869080756245) to communicate with us.
 
 ### Code of Conduct
 
