@@ -3,7 +3,8 @@
     "rootDir": ".",
     "baseUrl": ".",
     "skipLibCheck": true,
-    "jsx": "react-jsx"
+    "jsx": "react-jsx",
+    "esModuleInterop": true
   },
   "include": ["./**/*"]
 }

@@ -1,8 +1,9 @@
 import siteData from 'virtual-site-data';
 import { matchRoutes, useLocation } from 'react-router-dom';
 import { HelmetProvider } from 'react-helmet-async';
-import { useContext, useLayoutEffect } from 'react';
+import React, { useContext, useLayoutEffect } from 'react';
 import { Header, PageData, cleanUrl, isProduction } from '@rspress/shared';
+import globalComponents from 'virtual-global-components';
 import { isEqualPath, normalizeRoutePath } from './utils';
 import { DataContext } from './hooks';
 import 'virtual-global-styles';
@@ -103,6 +104,25 @@ export function App({ helmetContext }: { helmetContext?: object }) {
   return (
     <HelmetProvider context={helmetContext}>
       <Theme.Layout />
+      {
+        // Global UI
+        globalComponents.map((componentInfo, index) => {
+          if (Array.isArray(componentInfo)) {
+            const [component, props] = componentInfo;
+            return React.createElement(component, {
+              // The component order is stable
+              // eslint-disable-next-line react/no-array-index-key
+              key: index,
+              ...props,
+            });
+          } else {
+            return React.createElement(componentInfo, {
+              // eslint-disable-next-line react/no-array-index-key
+              key: index,
+            });
+          }
+        })
+      }
     </HelmetProvider>
   );
 }

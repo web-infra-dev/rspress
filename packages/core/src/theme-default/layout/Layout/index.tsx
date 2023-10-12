@@ -3,7 +3,6 @@ import '../../styles';
 import React, { useEffect } from 'react';
 import { Helmet } from 'react-helmet-async';
 import Theme, { Nav } from '@theme';
-import globalComponents from 'virtual-global-components';
 import { DocLayout, DocLayoutProps } from '../DocLayout';
 import { HomeLayoutProps } from '../HomeLayout';
 import type { NavProps } from '../../components/Nav';
@@ -148,25 +147,6 @@ export const Layout: React.FC<LayoutProps> = props => {
 
       <section>{getContentLayout()}</section>
       {bottom}
-      {
-        // Global UI
-        globalComponents.map((componentInfo, index) => {
-          if (Array.isArray(componentInfo)) {
-            const [component, props] = componentInfo;
-            return React.createElement(component, {
-              // The component order is stable
-              // eslint-disable-next-line react/no-array-index-key
-              key: index,
-              ...props,
-            });
-          } else {
-            return React.createElement(componentInfo, {
-              // eslint-disable-next-line react/no-array-index-key
-              key: index,
-            });
-          }
-        })
-      }
     </div>
   );
 };
