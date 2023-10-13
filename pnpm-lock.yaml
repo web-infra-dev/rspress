@@ -1021,8 +1021,8 @@ importers:
         specifier: 4.1.2
         version: 4.1.2
       rslog:
-        specifier: ^1.0.0
-        version: 1.0.0
+        specifier: ^1.1.0
+        version: 1.1.0
       unified:
         specifier: 10.1.2
         version: 10.1.2
@@ -4918,7 +4918,7 @@ packages:
       '@swc/helpers': 0.5.1
       caniuse-lite: 1.0.30001524
       lodash: 4.17.21
-      rslog: 1.0.0
+      rslog: 1.1.0
 
   /@monaco-editor/loader@1.3.3(monaco-editor@0.43.0):
     resolution: {integrity: sha512-6KKF4CTzcJiS8BJwtxtfyYt9shBiEv32ateQ9T4UVogwn4HM/uPo9iJd2Dmbkpz8CM6Y0PDUpjnZzCwC+eYo2Q==}
@@ -15548,8 +15548,8 @@ packages:
       fsevents: 2.3.2
     dev: true
 
-  /rslog@1.0.0:
-    resolution: {integrity: sha512-yTulfJJIYHBftErlZZXHdZuFA8275spDcTrCs8JIXIh+wRIRgi6RGoT8MAnB8H6NIEvJbMUP14Mo1t7hCw4k1g==}
+  /rslog@1.1.0:
+    resolution: {integrity: sha512-wtTijPuwUhyVG7YvnIVzlefhlto4qJ9vm42ewwJtqrOBP/vKdZCIyfiYm0odVCR3ajR1CIUqaloIzbqhlbyaZA==}
     engines: {node: '>=14.17.6'}
 
   /rspack-manifest-plugin@5.0.0-alpha0(webpack@5.88.2):
