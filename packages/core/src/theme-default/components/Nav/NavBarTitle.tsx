@@ -31,7 +31,7 @@ export const NavBarTitle = () => {
             src={normalizeImagePath(logo)}
             alt="logo"
             id="logo"
-            className="w-24 mr-4 rspress-logo"
+            className="h-8 mr-4 rspress-logo"
           />
         ) : (
           <span>{title}</span>
