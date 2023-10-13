@@ -66,8 +66,8 @@ cli.command('', 'Create a new rspress site').action(async () => {
   const filesToInterpret = ['docs/index.md', 'rspress.config.ts'];
   const siteData = siteOptions.reduce((prev: Record<string, any>, cur) => {
     prev[cur.name as string] = cur.value
-      .replace('\\', '\\\\')
-      .replace("'", "\\'");
+      .replace(/\\/g, '\\\\')
+      .replace(/'/g, "\\'");
     return prev;
   }, {});
   for (const file of filesToInterpret) {
