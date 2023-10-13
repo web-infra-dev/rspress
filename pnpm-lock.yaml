@@ -1021,8 +1021,8 @@ importers:
         specifier: 4.1.2
         version: 4.1.2
       rslog:
-        specifier: ^1.0.0
-        version: 1.0.0
+        specifier: ^1.1.0
+        version: 1.1.0
       unified:
         specifier: 10.1.2
         version: 10.1.2
@@ -4758,7 +4758,7 @@ packages:
       http-compression: 1.0.6
       minimatch: 3.1.2
       path-to-regexp: 6.2.1
-      ts-node: 10.9.1(@types/node@18.11.17)(typescript@5.0.4)
+      ts-node: 10.9.1(@types/node@16.11.7)(typescript@5.0.4)
       ws: 8.13.0
     transitivePeerDependencies:
       - '@babel/traverse'
@@ -6049,7 +6049,6 @@ packages:
 
   /@types/node@16.11.7:
     resolution: {integrity: sha512-QB5D2sqfSjCmTuWcBWyJ+/44bcjO7VbjSbOE0ucoVbAsSNQc4Lt6QkgkVXkTDwkL4z/beecZNDvVX15D4P8Jbw==}
-    dev: true
 
   /@types/node@18.11.17:
     resolution: {integrity: sha512-HJSUJmni4BeDHhfzn6nF0sVmd1SMezP7/4F0Lq+aXzmp2xm9O7WXrUtHW/CHlYVtZUbByEvWidHqRtcJXGF2Ng==}
@@ -15552,6 +15551,11 @@ packages:
     resolution: {integrity: sha512-yTulfJJIYHBftErlZZXHdZuFA8275spDcTrCs8JIXIh+wRIRgi6RGoT8MAnB8H6NIEvJbMUP14Mo1t7hCw4k1g==}
     engines: {node: '>=14.17.6'}
 
+  /rslog@1.1.0:
+    resolution: {integrity: sha512-wtTijPuwUhyVG7YvnIVzlefhlto4qJ9vm42ewwJtqrOBP/vKdZCIyfiYm0odVCR3ajR1CIUqaloIzbqhlbyaZA==}
+    engines: {node: '>=14.17.6'}
+    dev: false
+
   /rspack-manifest-plugin@5.0.0-alpha0(webpack@5.88.2):
     resolution: {integrity: sha512-a84H6P/lK0x3kb0I8Qdiwxrnjt1oNW0j+7kwPMWcODJu8eYFBrTXa1t+14n18Jvg9RKIR6llCH16mYxf2d0s8A==}
     engines: {node: '>=14'}
@@ -16727,7 +16731,6 @@ packages:
       typescript: 5.0.4
       v8-compile-cache-lib: 3.0.1
       yn: 3.1.1
-    dev: true
 
   /ts-node@10.9.1(@types/node@18.11.17)(typescript@5.0.4):
     resolution: {integrity: sha512-NtVysVPkxxrwFGUUxGYhfux8k78pQB3JqYBXlLRZgdGUqTO5wU/UyHop5p70iEbGhB7q5KmiZiU0Y3KlJrScEw==}
