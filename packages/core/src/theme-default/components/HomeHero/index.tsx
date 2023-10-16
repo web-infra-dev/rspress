@@ -17,6 +17,9 @@ const DEFAULT_HERO = {
 export function HomeHero({ frontmatter }: { frontmatter: FrontMatterMeta }) {
   const hero = frontmatter?.hero || DEFAULT_HERO;
   const hasImage = hero.image !== undefined;
+  const textMaxWidth = `max-w-392px ${
+    hasImage ? 'sm:max-w-xl' : 'sm:max-w-4xl'
+  }`;
   return (
     <div className="m-auto pt-0 px-6 pb-12 sm:pt-10 sm:px-16 md:pt-16 md:px-16 md:pb-16">
       <div
@@ -34,16 +37,16 @@ export function HomeHero({ frontmatter }: { frontmatter: FrontMatterMeta }) {
           </h1>
           {hero.text?.length && (
             <p
-              className={`mx-auto md:m-0 text-3xl sm:text-5xl md:text-6xl pb-2 font-bold z-10 max-w-392px ${
-                hasImage ? 'sm:max-w-xl' : 'sm:max-w-4xl'
-              }`}
+              className={`mx-auto md:m-0 text-3xl sm:text-5xl md:text-6xl pb-2 font-bold z-10 ${textMaxWidth}`}
               style={{ lineHeight: '1.2' }}
             >
               {hero.text}
             </p>
           )}
 
-          <p className="whitespace-pre-wrap pt-4 m-auto md:m-0 text-sm sm:tex-xl md:text-2xl text-text-2 font-medium z-10">
+          <p
+            className={`whitespace-pre-wrap pt-4 m-auto md:m-0 text-sm sm:tex-xl md:text-2xl text-text-2 font-medium z-10 ${textMaxWidth}`}
+          >
             {hero.tagline}
           </p>
           <div className="flex flex-wrap justify-center gap-3 m--1.5 pt-8 z-10">
