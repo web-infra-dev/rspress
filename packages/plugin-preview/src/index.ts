@@ -20,18 +20,18 @@ export type Options = {
    * when isMobile is true, 1. aside will hide. 2. default preview component by iframe
    * @default false
    */
-  isMobile: boolean;
+  isMobile?: boolean;
   /**
    * position of the iframe
    * @default 'follow'
    */
-  iframePosition: 'fixed' | 'follow';
+  iframePosition?: 'fixed' | 'follow';
   /**
    * whether the demo can open in codesandbox
    * @default false
    * @experimental
    */
-  enableCodesandbox: boolean;
+  enableCodesandbox?: boolean;
 };
 
 interface Heading {
