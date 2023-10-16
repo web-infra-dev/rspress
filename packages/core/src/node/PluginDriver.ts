@@ -92,6 +92,8 @@ export class PluginDriver {
       }
     }
     this.#config = config;
+    // Update the plugins  after the config is modified
+    this.#plugins = config.plugins;
     return this.#config;
   }
 
