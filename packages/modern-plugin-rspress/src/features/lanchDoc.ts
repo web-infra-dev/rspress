@@ -22,7 +22,7 @@ export async function launchDoc({
     fs.readFileSync(resolve(appDir, './package.json'), 'utf8'),
   );
   const root = join(appDir, 'docs');
-  const DEFAULT_LANG = languages[0];
+  const DEFAULT_LANG = languages[0] ?? '';
   const { dev, build } = await import('@rspress/core');
 
   // Compatible with older, poorer designs.
@@ -129,6 +129,7 @@ export async function launchDoc({
         locales,
       },
       markdown: {
+        mdxRs: false,
         globalComponents: [
           join(__dirname, '..', 'static', 'global-components', 'Overview.tsx'),
         ],
@@ -149,7 +150,10 @@ export async function launchDoc({
           `,
       ],
       plugins: [
-        pluginPreview({ isMobile: previewMode === 'mobile', iframePosition }),
+        pluginPreview({
+          isMobile: previewMode === 'mobile',
+          iframePosition,
+        }),
         pluginApiDocgen({
           entries,
           apiParseTool,
