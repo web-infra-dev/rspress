@@ -207,7 +207,23 @@ export async function scanSideMeta(workDir: string, rootDir: string) {
     // Don't use require to avoid require cache, which make hmr not work.
     sideMeta = (await fs.readJSON(metaFile, 'utf8')) as SideMeta;
   } catch (e) {
-    sideMeta = await fs.readdir(workDir);
+    // If the `_meta.json` file doesn't exist, we will generate the sidebar config from the directory structure.
+    const subItems = await fs.readdir(workDir);
+    sideMeta = await Promise.all(
+      subItems.map(async item => {
+        const stat = await fs.stat(path.join(workDir, item));
+        // If the item is a directory, we will transform it to a object with `type` and `name` property.
+        if (stat.isDirectory()) {
+          return {
+            type: 'dir',
+            name: item,
+            label: item,
+          };
+        } else {
+          return item;
+        }
+      }),
+    );
   }
 
   const sidebarFromMeta: (SidebarGroup | SidebarItem)[] = await Promise.all(
