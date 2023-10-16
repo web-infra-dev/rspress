@@ -79,12 +79,16 @@ export const docgen = async ({
                 `Unable to parse API document in ${moduleSourceFilePath}`,
               );
             }
-            languages.forEach(language => {
-              apiDocMap[`${key}-${language}`] = generateTable(
-                componentDoc,
-                language,
-              );
-            });
+            if (languages.length > 0) {
+              languages.forEach(language => {
+                apiDocMap[`${key}-${language}`] = generateTable(
+                  componentDoc,
+                  language,
+                );
+              });
+            } else {
+              apiDocMap[key] = generateTable(componentDoc, 'en');
+            }
           }
         } catch (e) {
           if (e instanceof Error) {

@@ -60,6 +60,11 @@ export function pluginPlayground(
 
   return {
     name: '@rspress/plugin-playground',
+    config(config) {
+      config.markdown = config.markdown || {};
+      config.markdown.mdxRs = false;
+      return config;
+    },
     async routeGenerated(routes: RouteMeta[]) {
       const { default: fs } = await import('@modern-js/utils/fs-extra');
 
