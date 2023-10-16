@@ -26,7 +26,7 @@ export interface CodeProps {
   meta?: string;
 }
 
-function registerLanguages() {
+function registerLanguages(highlightLanguages) {
   SyntaxHighlighter.registerLanguage('jsx', jsx);
   SyntaxHighlighter.registerLanguage('jsx', tsx);
   SyntaxHighlighter.registerLanguage('mdx', tsx);
@@ -41,15 +41,27 @@ function registerLanguages() {
   SyntaxHighlighter.registerLanguage('diff', diff);
   SyntaxHighlighter.registerLanguage('bash', bash);
   SyntaxHighlighter.registerLanguage('markdown', markdown);
+
+  highlightLanguages?.map(async name => {
+    try {
+      const { default: obj } = await import(
+        `react-syntax-highlighter/dist/esm/languages/prism/${name}`
+      );
+      SyntaxHighlighter.registerLanguage('', obj);
+    } catch (err) {
+      throw new Error(`The prism language "${name}" not found`);
+    }
+  });
+
   registered = true;
 }
 
 export function Code(props: CodeProps) {
   const copyButtonRef = useRef<HTMLButtonElement>(null);
   const { siteData } = usePageData();
-  const { showLineNumbers } = siteData.markdown;
+  const { showLineNumbers, highlightLanguages } = siteData.markdown;
   if (!registered) {
-    registerLanguages();
+    registerLanguages(highlightLanguages);
   }
   const { className, meta } = props;
   const language = className?.replace(/language-/, '');

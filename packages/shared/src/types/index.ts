@@ -329,6 +329,10 @@ export interface MarkdownOptions {
    */
   globalComponents?: string[];
   /**
+   * Register prism languages
+   */
+  highlightLanguages?: string[];
+  /**
    * Whether to enable mdx-rs, default is true
    */
   mdxRs?: boolean;
