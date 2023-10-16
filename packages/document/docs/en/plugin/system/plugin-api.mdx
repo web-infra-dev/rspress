@@ -121,7 +121,16 @@ export function pluginForDoc(slug: string): RspressPlugin {
 
 ### config
 
-- **Type**：`(config: DocConfig) => DocConfig | Promise<DocConfig>`
+- **Type**：`(config: DocConfig, utils: ConfigUtils) => DocConfig | Promise<DocConfig>`
+
+The type of `ConfigUtils` is as follows:
+
+```ts
+interface ConfigUtils {
+  addPlugin: (plugin: RspressPlugin) => void;
+  removePlugin: (pluginName: string) => void;
+}
+```
 
 It is used to modify/extend the configuration of Rspress itself. For example, if you want to modify the title of the document, you can do it through `config`:
 

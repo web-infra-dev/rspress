@@ -41,7 +41,13 @@ export interface RspressPlugin {
   /**
    * Modify doc config.
    */
-  config?: (config: UserConfig) => UserConfig | Promise<UserConfig>;
+  config?: (
+    config: UserConfig,
+    utils: {
+      addPlugin: (plugin: RspressPlugin) => void;
+      removePlugin: (pluginName: string) => void;
+    },
+  ) => UserConfig | Promise<UserConfig>;
   /**
    * Callback before build
    */
