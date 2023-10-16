@@ -162,3 +162,20 @@ Then you can use the `Alert` component in any MDX file:
 :::danger Danger
 Please set `markdown.mdxRs` to `false` when configuring `globalComponents`, otherwise the global components will not take effect.
 :::
+
+### markdown.highlightLanguages
+
+- Type: `string[]`
+
+Register Language Highlighting. For example:
+
+```ts title="rspress.config.ts"
+import { defineConfig } from 'rspress/config';
+import path from 'path';
+
+export default defineConfig({
+  markdown: {
+    highlightLanguages: ['ejs', 'go'],
+  },
+});
+```

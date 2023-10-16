@@ -162,3 +162,20 @@ export default defineConfig({
 :::danger 警告
 请在配置 `globalComponents` 时设置 `markdown.mdxRs` 为 `false` 以开启 JS 版本的编译器，否则会导致全局组件不生效。
 :::
+
+### markdown.highlightLanguages
+
+- Type: `string[]`
+
+注册语言高亮。比如：
+
+```ts title="rspress.config.ts"
+import { defineConfig } from 'rspress/config';
+import path from 'path';
+
+export default defineConfig({
+  markdown: {
+    highlightLanguages: ['ejs', 'go'],
+  },
+});
+```
