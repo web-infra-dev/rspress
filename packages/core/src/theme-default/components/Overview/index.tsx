@@ -3,7 +3,12 @@ import { Header, NormalizedSidebarGroup, SidebarItem } from '@rspress/shared';
 import { useSidebarData } from '../../logic';
 import { Link } from '../Link';
 import styles from './index.module.scss';
-import { usePageData, normalizeHrefInRuntime as normalizeHref, withBase, isEqualPath } from '@/runtime';
+import {
+  usePageData,
+  normalizeHrefInRuntime as normalizeHref,
+  withBase,
+  isEqualPath,
+} from '@/runtime';
 
 interface GroupItem {
   text?: string;
@@ -85,7 +90,7 @@ export function Overview() {
   return (
     <div className="overview-index mx-auto px-8">
       <div className="flex items-center justify-between">
-        <h1>Overview</h1>
+        <h1 className="text-3xl leading-10 tracking-tight">Overview</h1>
       </div>
 
       {groups.map(group => (
