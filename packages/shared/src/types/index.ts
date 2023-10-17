@@ -332,7 +332,7 @@ export interface MarkdownOptions {
   /**
    * Register prism languages
    */
-  highlightLanguages?: string[];
+  highlightLanguages?: (string | [string, string])[];
   /**
    * Whether to enable mdx-rs, default is true
    */

@@ -165,9 +165,9 @@ Please set `markdown.mdxRs` to `false` when configuring `globalComponents`, othe
 
 ### markdown.highlightLanguages
 
-- Type: `string[]`
+- Type: `(string | [string, string])[]`
 
-Register Language Highlighting. For example:
+Register the languages that need to be highlighted. For example:
 
 ```ts title="rspress.config.ts"
 import { defineConfig } from 'rspress/config';
@@ -175,7 +175,14 @@ import path from 'path';
 
 export default defineConfig({
   markdown: {
-    highlightLanguages: ['ejs', 'go'],
+    highlightLanguages: [
+      'ejs',
+      'go',
+      // Alias as md, full name as markdown
+      ['md', 'markdown'],
+    ],
   },
 });
 ```
+
+Each language config supports both `string` and `[string, string]` formats. In the array format, the former is the alias of the language, and the latter is the full name of the language. You can go to the [file list](https://github.com/react-syntax-highlighter/react-syntax-highlighter/tree/master/src/languages/prism) to view all supported language full names.
