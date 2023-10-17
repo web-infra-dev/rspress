@@ -17,9 +17,7 @@ const DEFAULT_HERO = {
 export function HomeHero({ frontmatter }: { frontmatter: FrontMatterMeta }) {
   const hero = frontmatter?.hero || DEFAULT_HERO;
   const hasImage = hero.image !== undefined;
-  const textMaxWidth = `max-w-392px ${
-    hasImage ? 'sm:max-w-xl' : 'sm:max-w-4xl'
-  }`;
+  const textMaxWidth = hasImage ? 'sm:max-w-xl' : 'sm:max-w-4xl';
   return (
     <div className="m-auto pt-0 px-6 pb-12 sm:pt-10 sm:px-16 md:pt-16 md:px-16 md:pb-16">
       <div
