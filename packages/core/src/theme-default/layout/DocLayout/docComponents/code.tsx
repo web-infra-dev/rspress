@@ -1,17 +1,5 @@
 import { PrismLight as SyntaxHighlighter } from 'react-syntax-highlighter';
-import jsx from 'react-syntax-highlighter/dist/esm/languages/prism/jsx';
-import js from 'react-syntax-highlighter/dist/esm/languages/prism/javascript';
-import ts from 'react-syntax-highlighter/dist/esm/languages/prism/typescript';
-import tsx from 'react-syntax-highlighter/dist/esm/languages/prism/tsx';
-import json from 'react-syntax-highlighter/dist/esm/languages/prism/json';
-import css from 'react-syntax-highlighter/dist/esm/languages/prism/css';
-import scss from 'react-syntax-highlighter/dist/esm/languages/prism/scss';
-import less from 'react-syntax-highlighter/dist/esm/languages/prism/less';
-import xml from 'react-syntax-highlighter/dist/esm/languages/prism/xml-doc';
-import yaml from 'react-syntax-highlighter/dist/esm/languages/prism/yaml';
-import diff from 'react-syntax-highlighter/dist/esm/languages/prism/diff';
-import bash from 'react-syntax-highlighter/dist/esm/languages/prism/bash';
-import markdown from 'react-syntax-highlighter/dist/esm/languages/prism/markdown';
+import languagesInfo from 'virtual-prism-languages';
 import copy from 'copy-to-clipboard';
 import { useRef } from 'react';
 import style from './prisim-theme';
@@ -27,20 +15,9 @@ export interface CodeProps {
 }
 
 function registerLanguages() {
-  SyntaxHighlighter.registerLanguage('jsx', jsx);
-  SyntaxHighlighter.registerLanguage('jsx', tsx);
-  SyntaxHighlighter.registerLanguage('mdx', tsx);
-  SyntaxHighlighter.registerLanguage('js', js);
-  SyntaxHighlighter.registerLanguage('ts', ts);
-  SyntaxHighlighter.registerLanguage('json', json);
-  SyntaxHighlighter.registerLanguage('css', css);
-  SyntaxHighlighter.registerLanguage('scss', scss);
-  SyntaxHighlighter.registerLanguage('less', less);
-  SyntaxHighlighter.registerLanguage('xml', xml);
-  SyntaxHighlighter.registerLanguage('yaml', yaml);
-  SyntaxHighlighter.registerLanguage('diff', diff);
-  SyntaxHighlighter.registerLanguage('bash', bash);
-  SyntaxHighlighter.registerLanguage('markdown', markdown);
+  Object.keys(languagesInfo).forEach(key => {
+    SyntaxHighlighter.registerLanguage(key, languagesInfo[key]);
+  });
   registered = true;
 }
 
