@@ -4,14 +4,17 @@ import { FactoryContext, RuntimeModuleID } from '.';
 const DEFAULT_LANGUAGES = [
   ['js', 'javascript'],
   ['ts', 'typescript'],
+  ['jsx', 'tsx'],
   'tsx',
   'json',
   'css',
   'scss',
   'less',
   ['xml', 'xml-doc'],
+  'diff',
   'yaml',
   ['md', 'markdown'],
+  ['mdx', 'tsx'],
 ];
 
 export async function prismLanguageVMPlugin(context: FactoryContext) {

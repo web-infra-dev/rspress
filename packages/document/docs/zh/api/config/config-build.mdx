@@ -167,7 +167,7 @@ export default defineConfig({
 
 - Type: `(string | [string, string])[]`
 
-注册需要高亮的语言。比如：
+注册需要高亮的语言。默认支持的语言包括`js`、`jsx`、`ts`、`tsx`、`json`、`css`、`scss`、`less`、`xml`、`diff`、`yaml`、`md`、`mdx`，你可以在这些语言的基础上进行扩展。比如：
 
 ```ts title="rspress.config.ts"
 import { defineConfig } from 'rspress/config';
