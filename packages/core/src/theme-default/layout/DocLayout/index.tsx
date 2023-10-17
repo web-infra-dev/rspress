@@ -7,8 +7,9 @@ import { useDisableNav, useLocaleSiteData } from '../../logic';
 import { SideMenu } from '../../components/LocalSideBar';
 import { Overview } from '../../components/Overview';
 import { TabDataContext } from '../../logic/TabDataContext';
+import { QueryStatus } from '../Layout';
 import styles from './index.module.scss';
-import { Content, usePageData } from '@/runtime';
+import { Content, useLocation, usePageData } from '@/runtime';
 
 export interface DocLayoutProps {
   beforeDocFooter?: React.ReactNode;
@@ -28,18 +29,19 @@ export function DocLayout(props: DocLayoutProps) {
   const { themeConfig } = siteData;
   const localesData = useLocaleSiteData();
   const sidebar = localesData.sidebar || {};
-
-  const disableNavbar = useDisableNav();
+  const [disableNavbar] = useDisableNav();
   // siderbar Priority
   // 1. frontmatter.sidebar
   // 2. themeConfig.locales.sidebar
   // 3. themeConfig.sidebar
   const hasSidebar =
     frontmatter?.sidebar !== false && Object.keys(sidebar).length > 0;
+
   const outlineTitle =
     localesData?.outlineTitle || themeConfig?.outlineTitle || 'ON THIS PAGE';
   const isOverviewPage = frontmatter?.overview ?? false;
-  const hasFooter = frontmatter?.footer ?? true;
+  const [hasFooter, setHasFooter] = useState(frontmatter?.footer ?? true);
+  const location = useLocation();
 
   const getHasAside = () => {
     // if in iframe, default value is false
@@ -56,6 +58,14 @@ export function DocLayout(props: DocLayoutProps) {
     setHasAside(getHasAside());
   }, [page, siteData]);
 
+  useEffect(() => {
+    const query = new URLSearchParams(location.search);
+    const footer = query.get('footer');
+    if (footer === QueryStatus.Hide) {
+      setHasFooter(false);
+    }
+  }, []);
+
   return (
     <div
       className={`${styles.docLayout} pt-0`}
@@ -66,7 +76,7 @@ export function DocLayout(props: DocLayoutProps) {
       {beforeDoc}
       {hasSidebar ? <SideMenu /> : null}
       <div
-        className={`${styles.content} rspress-doc-container flex flex-shrink-0`}
+        className={`${styles.content} rspress-doc-container flex flex-shrink-0 m-auto`}
       >
         <div className="w-full">
           {isOverviewPage ? (

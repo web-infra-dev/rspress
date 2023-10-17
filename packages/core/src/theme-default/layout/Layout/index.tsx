@@ -9,6 +9,11 @@ import type { NavProps } from '../../components/Nav';
 import { usePageData, Content, removeBase, withBase } from '@/runtime';
 import { useDisableNav, useLocaleSiteData } from '@/theme-default/logic';
 
+export enum QueryStatus {
+  Show = '1',
+  Hide = '0',
+}
+
 export type LayoutProps = {
   top?: React.ReactNode;
   bottom?: React.ReactNode;
@@ -56,7 +61,7 @@ export const Layout: React.FC<LayoutProps> = props => {
   } = page;
   const localesData = useLocaleSiteData();
   const defaultLang = siteData.lang || '';
-  const hideNavbar = useDisableNav();
+  const [hideNavbar, setHideNavbar] = useDisableNav();
   // Always show sidebar by default
   // Priority: front matter title > h1 title
   let title = (frontmatter?.title as string) ?? articleTitle;
@@ -127,6 +132,25 @@ export const Layout: React.FC<LayoutProps> = props => {
           pathname.replace(`/${currentLang}`, `/${targetLang}`),
         );
       }
+    }
+  }, []);
+
+  // Control the display of the navbar, sidebar and aside
+  useEffect(() => {
+    const query = new URLSearchParams(location.search);
+    const navbar = query.get('navbar');
+    const sidebar = query.get('sidebar');
+    const aside = query.get('outline');
+    if (navbar === QueryStatus.Hide) {
+      setHideNavbar(true);
+    }
+
+    if (sidebar === QueryStatus.Hide) {
+      document.documentElement.style.setProperty('--rp-sidebar-width', '0');
+    }
+
+    if (aside === QueryStatus.Hide) {
+      document.documentElement.style.setProperty('--rp-aside-width', '0');
     }
   }, []);
   return (

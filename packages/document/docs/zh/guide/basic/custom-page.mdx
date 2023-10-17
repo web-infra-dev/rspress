@@ -135,7 +135,8 @@ import PageType from '@zh/fragments/page-type';
 
 - `navbar`：是否展示侧边栏，当你想要隐藏顶部导航栏时，可以配置为 `false`；
 - `sidebar`：是否展示侧边栏，当你想要隐藏侧边栏时，可以配置为 `false`；
-- `outline`：是否展示大纲栏，当你想要隐藏大纲栏时，可以配置为 `false`。
+- `outline`：是否展示大纲栏，当你想要隐藏大纲栏时，可以配置为 `false`；
+- `footer`：是否展示页脚，当你想要隐藏页脚时，可以配置为 `false`；
 
 示例：
 
@@ -144,5 +145,22 @@ import PageType from '@zh/fragments/page-type';
 navbar: false
 sidebar: false
 outline: false
+footer: false
 ---
 ```
+
+### 使用 URL 参数开关
+
+除此之外，你还可以使用 URL 参数在运行时控制页面的布局结构，比如：
+
+```bash
+# 隐藏导航栏和右侧大纲栏
+http://YOUR_DOMAIN/foo?navbar=0&outline=0
+```
+
+通过 URL 参数，你可以在不修改源码的情况下，快速地调整页面的布局结构，这些参数具体包括：
+
+- `navbar`：是否展示导航栏，当你想要隐藏顶部导航栏时，可以配置为 `0`；
+- `sidebar`：是否展示侧边栏，当你想要隐藏侧边栏时，可以配置为 `0`；
+- `outline`：是否展示大纲栏，当你想要隐藏大纲栏时，可以配置为 `0`；
+- `footer`：是否展示页脚，当你想要隐藏页脚时，可以配置为 `0`；

@@ -143,5 +143,22 @@ Example:
 navbar: false
 sidebar: false
 outline: false
+footer: false
 ---
 ```
+
+### Using URL Parameters as Switches
+
+In addition, you can use URL parameters to control the layout structure of the page at runtime, such as:
+
+```bash
+# Hide the navigation bar and outline in the right column
+http://YOUR_DOMAIN/foo?navbar=0&outline=0
+```
+
+With URL parameters, you can quickly adjust the layout structure of the page without modifying the source code. These parameters specifically include:
+
+- `navbar`: Whether to display the navigation bar. When you want to hide the top navigation bar, you can set it to `0`.
+- `sidebar`: Whether to display the sidebar. When you want to hide the sidebar, you can set it to `0`.
+- `outline`: Whether to display the outline column. When you want to hide the outline column, you can set it to `0`.
+- `footer`: Whether to display the footer. When you want to hide the footer, you can set it to `0`.
