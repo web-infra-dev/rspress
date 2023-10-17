@@ -1,3 +1,5 @@
+import path from 'path';
+import crypto from 'crypto';
 import { createRequire } from 'module';
 import { defineConfig, moduleTools } from '@modern-js/module-tools';
 import { tailwindConfig } from './tailwind.config';
@@ -103,6 +105,17 @@ export default defineConfig({
         },
         modules: {
           localsConvention: 'camelCase',
+          generateScopedName(name, filename) {
+            const relative = path
+              .relative(__dirname, filename)
+              .replace(/\\/g, '/');
+            const hash = crypto
+              .createHash('sha256')
+              .update(relative)
+              .digest('hex')
+              .slice(0, 5);
+            return `${name}_${hash}`;
+          },
         },
       },
     },
