@@ -17,6 +17,7 @@ const COMMON_EXTERNALS = [
   '@/runtime',
   '@runtime',
   'virtual-i18n-text',
+  'virtual-prism-languages',
 ];
 
 export default defineConfig({

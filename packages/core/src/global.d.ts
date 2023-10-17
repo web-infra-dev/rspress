@@ -11,8 +11,7 @@ declare module 'virtual-routes-ssr' {
 }
 
 declare module 'virtual-site-data' {
-  import { SiteData } from '@rspress/shared';
-  import { DefaultThemeConfig } from '@rspress/shared';
+  import { SiteData, DefaultThemeConfig } from '@rspress/shared';
 
   const data: SiteData<DefaultThemeConfig>;
   export default data;
@@ -36,6 +35,12 @@ declare module 'virtual-i18n-text';
 
 declare module 'virtual-search-hooks' {
   export const onSearch: (query: string) => void | Promise<void>;
+}
+
+declare module 'virtual-prism-languages' {
+  const languagesInfo: Record<string, unknown>;
+
+  export default languagesInfo;
 }
 
 declare module '*.module.scss' {
