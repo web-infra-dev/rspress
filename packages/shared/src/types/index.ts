@@ -183,7 +183,6 @@ export interface SiteData<ThemeConfig = NormalizedDefaultThemeConfig> {
   search: SearchOptions;
   markdown: {
     showLineNumbers: boolean;
-    highlightLanguages: string[];
   };
   multiVersion: {
     default: string;
