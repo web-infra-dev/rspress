@@ -123,9 +123,18 @@ export function pluginForDoc(slug: string): RspressPlugin {
 
 ### config
 
-- **类型**：`(config: DocConfig) => DocConfig | Promise<DocConfig>`
+- **类型**：`(config: DocConfig, utils: ConfigUtils) => DocConfig | Promise<DocConfig>`
 
-用于修改/扩展 Rspress 本身的配置，比如你想要修改文档的标题，可以通过 `config` 来实现：
+其中，`ConfigUtils` 的类型定义如下：
+
+```ts
+interface ConfigUtils {
+  addPlugin: (plugin: RspressPlugin) => void;
+  removePlugin: (pluginName: string) => void;
+}
+```
+
+用于修改 Rspress 本身的配置，比如你想要修改文档的标题，可以通过 `config` 来实现：
 
 ```tsx title="plugin.ts"
 import { RspressPlugin } from '@rspress/shared';
@@ -141,6 +150,30 @@ export function pluginForDoc(): RspressPlugin {
         // 这里可以扩展 Rspress 的配置
         title: '新的文档标题',
       };
+    },
+  };
+}
+```
+
+If it involves adding and removing a plugin, you need to implement it through `addPlugin` and `removePlugin`:
+
+```tsx title="plugin.ts"
+import { RspressPlugin } from '@rspress/shared';
+
+export function pluginForDoc(): RspressPlugin {
+  return {
+    // Plugin name
+    name: 'plugin-name',
+    // Extend the config of Rspress itself
+    config(config, utils) {
+      // Add a plugin
+      utils.addPlugin({
+        name: 'plugin-name',
+        // ... other config of the plugin
+      });
+      // Remove a plugin, pass in the name of the plugin
+      utils.removePlugin('plugin-name');
+      return config;
     },
   };
 }

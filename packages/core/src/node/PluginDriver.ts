@@ -83,12 +83,22 @@ export class PluginDriver {
     this.#plugins = [];
   }
 
+  removePlugin(pluginName: string) {
+    const index = this.#plugins.findIndex(item => item.name === pluginName);
+    if (index !== -1) {
+      this.#plugins.splice(index, 1);
+    }
+  }
+
   async modifyConfig() {
     let config = this.#config;
 
     for (const plugin of this.#plugins) {
       if (typeof plugin.config === 'function') {
-        config = await plugin.config(config || {});
+        config = await plugin.config(config || {}, {
+          addPlugin: this.addPlugin.bind(this),
+          removePlugin: this.removePlugin.bind(this),
+        });
       }
     }
     this.#config = config;
