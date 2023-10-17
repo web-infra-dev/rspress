@@ -51,7 +51,7 @@ export function SideBar(props: Props) {
   const { pathname: rawPathname } = useLocation();
 
   const langRoutePrefix = normalizeSlash(localesData.langRoutePrefix || '');
-  const hideNavbar = useDisableNav();
+  const [hideNavbar] = useDisableNav();
   const [sidebarData, setSidebarData] = useState<
     (ISidebarItem | NormalizedSidebarGroup)[]
   >(rawSidebarData.filter(Boolean).flat());

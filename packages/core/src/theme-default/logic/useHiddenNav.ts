@@ -11,8 +11,11 @@ export function useDisableNav() {
     siteData: { themeConfig },
     page: { frontmatter = {} },
   } = usePageData();
+  const initialState =
+    !(frontmatter?.navbar ?? true) || themeConfig?.hideNavbar === 'always';
+  const [disableNav, setDisableNav] = useState<boolean>(initialState);
   // Priority: frontmatter.navbar > themeConfig.hideNavbar
-  return !(frontmatter?.navbar ?? true) || themeConfig?.hideNavbar === 'always';
+  return [disableNav, setDisableNav] as const;
 }
 
 export function useHiddenNav() {
