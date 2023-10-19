@@ -1,5 +1,16 @@
 # @rspress/core
 
+## 1.1.1
+
+### Patch Changes
+
+- adc6924: fix: resolve error for react-syntax-highlighter
+  - @rspress/plugin-auto-nav-sidebar@1.1.1
+  - @rspress/plugin-container-syntax@1.1.1
+  - @rspress/plugin-last-updated@1.1.1
+  - @rspress/plugin-medium-zoom@1.1.1
+  - @rspress/shared@1.1.1
+
 ## 1.1.0
 
 ### Minor Changes

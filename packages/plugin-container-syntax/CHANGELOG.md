@@ -1,5 +1,11 @@
 # @rspress/remark-container
 
+## 1.1.1
+
+### Patch Changes
+
+- @rspress/shared@1.1.1
+
 ## 1.1.0
 
 ### Patch Changes
