@@ -7,7 +7,6 @@ import {
   withoutBase,
 } from '@rspress/shared';
 import { Link } from '../Link';
-import Translator from '../../assets/translator.svg';
 import Down from '../../assets/down.svg';
 import { Tag } from '../Tag';
 import { NavMenuSingleItem } from './NavMenuSingleItem';
@@ -25,8 +24,6 @@ export interface NavMenuGroupItem {
   base?: string;
   // Locales
   langs?: string[];
-  // When the item is transition, we need to give a react element instead of a string.
-  isTranslation?: boolean;
 }
 
 function ActiveGroupItem({ item }: { item: NavItemWithLink }) {
@@ -67,7 +64,6 @@ function NormalGroupItem({ item }: { item: NavItemWithLink }) {
 export function NavMenuGroup(item: NavMenuGroupItem) {
   const {
     activeValue,
-    isTranslation,
     items: groupItems,
     base = '',
     link = '',
@@ -120,16 +116,7 @@ export function NavMenuGroup(item: NavMenuGroupItem) {
               }}
             >
               <Tag tag={item.tag} />
-              {isTranslation ? (
-                <Translator
-                  style={{
-                    with: '18px',
-                    height: '18px',
-                  }}
-                />
-              ) : (
-                item.text
-              )}
+              {item.text}
             </span>
             <Down />
           </>

@@ -1,4 +1,4 @@
-import { test, expect, describe, it } from 'vitest';
+import { test, expect, describe } from 'vitest';
 import {
   withoutLang,
   withBase,
@@ -7,6 +7,7 @@ import {
   replaceLang,
   parseUrl,
   normalizePosixPath,
+  replaceVersion,
 } from '.';
 
 describe('test shared utils', () => {
@@ -58,8 +59,8 @@ describe('test shared utils', () => {
     expect(normalizeHref('tel:123456789')).toBe('tel:123456789');
   });
 
-  test('replaceLang', () => {
-    it('should correctly replace language and version in the URL', () => {
+  describe('replaceLang', () => {
+    test('should correctly replace language in the URL', () => {
       const rawUrl = '/v1/index.html';
       const lang = {
         current: 'zh',
@@ -68,7 +69,7 @@ describe('test shared utils', () => {
       };
       const version = {
         current: 'v1',
-        default: 'v1',
+        default: 'v2',
       };
       const base = '';
 
@@ -77,12 +78,12 @@ describe('test shared utils', () => {
       expect(result).toEqual('/v1/en/index.html');
     });
 
-    it('should correctly handle when no version is provided', () => {
+    test('should correctly handle when no version is provided', () => {
       const rawUrl = '/zh/index.html';
       const lang = {
         current: 'zh',
         target: 'en',
-        default: 'zh',
+        default: 'en',
       };
       const version = {
         current: 'v1',
@@ -92,7 +93,33 @@ describe('test shared utils', () => {
 
       const result = replaceLang(rawUrl, lang, version, base);
 
-      expect(result).toEqual('/en/index.html');
+      expect(result).toEqual('/index.html');
+    });
+  });
+
+  describe('replaceVersion', () => {
+    test('should correctly replace version in the URL', () => {
+      const rawUrl = '/index.html';
+      const version = {
+        current: 'v1',
+        target: 'v2',
+        default: 'v1',
+      };
+      const expected = '/v2/index.html';
+
+      expect(replaceVersion(rawUrl, version, '')).toBe(expected);
+    });
+
+    test('should correctly to the default version', () => {
+      const rawUrl = '/v2/index.html';
+      const version = {
+        current: 'v2',
+        target: 'v1',
+        default: 'v1',
+      };
+      const expected = '/index.html';
+
+      expect(replaceVersion(rawUrl, version, '')).toBe(expected);
     });
   });
 

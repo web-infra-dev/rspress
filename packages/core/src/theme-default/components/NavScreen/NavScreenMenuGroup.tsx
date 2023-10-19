@@ -21,7 +21,7 @@ export function NavScreenMenuGroup(item: NavScreenMenuGroupItem) {
 
   function ActiveGroupItem({ item }: { item: NavItemWithLink }) {
     return (
-      <div className="p-1">
+      <div className="p-1 text-center">
         <span className="text-brand">{item.text}</span>
       </div>
     );

@@ -1,4 +1,4 @@
-import { NavItem, replaceLang } from '@rspress/shared';
+import { NavItem } from '@rspress/shared';
 import { useLocation } from 'react-router-dom';
 import { Search } from '@theme';
 import { useEffect, useState } from 'react';
@@ -6,11 +6,13 @@ import { isMobileDevice, useHiddenNav, useLocaleSiteData } from '../../logic';
 import { NavHamburger } from '../NavHambmger';
 import { SocialLinks } from '../SocialLinks';
 import { SwitchAppearance } from '../SwitchAppearance';
-import { NavMenuGroup, NavMenuGroupItem } from './NavMenuGroup';
+import { NavMenuGroup } from './NavMenuGroup';
 import { NavMenuSingleItem } from './NavMenuSingleItem';
 import styles from './index.module.scss';
 import { NavBarTitle } from './NavBarTitle';
-import { usePageData, useVersion } from '@/runtime';
+import { NavTranslations } from './NavTranslations';
+import { NavVersions } from './NavVersions';
+import { usePageData } from '@/runtime';
 
 export interface NavProps {
   beforeNav?: React.ReactNode;
@@ -20,61 +22,22 @@ export interface NavProps {
 
 const DEFAULT_NAV_POSTION = 'right';
 
-const NavTranslations = ({
-  translationMenuData,
-}: {
-  translationMenuData: NavMenuGroupItem;
-}) => {
-  return (
-    <div
-      className={`translation ${styles.menuItem} flex text-sm font-bold items-center px-3 py-2`}
-    >
-      <div>
-        <NavMenuGroup {...translationMenuData} isTranslation />
-      </div>
-    </div>
-  );
-};
-
 export function Nav(props: NavProps) {
   const { beforeNavTitle, afterNavTitle, beforeNav } = props;
-  const { siteData, page } = usePageData();
+  const { siteData } = usePageData();
   const { base } = siteData;
   const { pathname } = useLocation();
   const localeData = useLocaleSiteData();
-  const currentVersion = useVersion();
   const [isMobile, setIsMobile] = useState(false);
   const hiddenNav = useHiddenNav();
-  const localeLanguages = Object.values(siteData.themeConfig.locales || {});
+  const localeLanguages = Object.values(
+    siteData.locales || siteData.themeConfig.locales || {},
+  );
   const hasMultiLanguage = localeLanguages.length > 1;
+  const hasMutilVersion = siteData.multiVersion.versions.length > 1;
   const socialLinks = siteData.themeConfig.socialLinks || [];
   const hasSocialLinks = socialLinks.length > 0;
-  const defaultLang = siteData.lang || '';
-  const defaultVersion = siteData.multiVersion.default || '';
-  const { lang } = page;
   const langs = localeLanguages.map(item => item.lang || '') || [];
-
-  const translationMenuData = hasMultiLanguage
-    ? {
-        items: localeLanguages.map(item => ({
-          text: item?.label,
-          link: replaceLang(
-            pathname,
-            {
-              current: lang,
-              target: item.lang,
-              default: defaultLang,
-            },
-            {
-              current: currentVersion,
-              default: defaultVersion,
-            },
-            base,
-          ),
-        })),
-        activeValue: localeLanguages.find(item => lang === item.lang)?.label,
-      }
-    : null;
 
   useEffect(() => {
     setIsMobile(isMobileDevice());
@@ -139,9 +102,8 @@ export function Nav(props: NavProps) {
         )}
         <NavMenu menuItems={rightMenuItems} />
         <div className="flex-center flex-row">
-          {hasMultiLanguage && (
-            <NavTranslations translationMenuData={translationMenuData} />
-          )}
+          {hasMultiLanguage && <NavTranslations />}
+          {hasMutilVersion && <NavVersions />}
           {hasAppearanceSwitch && (
             <div className="mx-2">
               <SwitchAppearance />
