@@ -1,22 +1,17 @@
 import { useEffect, useRef } from 'react';
 import { disableBodyScroll, clearAllBodyScrollLocks } from 'body-scroll-lock';
-import {
-  LocaleConfig,
-  NavItem,
-  DefaultThemeConfig,
-  replaceLang,
-} from '@rspress/shared';
+import { LocaleConfig, NavItem, DefaultThemeConfig } from '@rspress/shared';
 import type { SiteData } from '@rspress/shared';
-import {
-  NavScreenMenuGroup,
-  NavScreenMenuGroupItem,
-} from '../NavScreenMenuGroup/NavScreenMenuGroup';
 import { NavMenuSingleItem } from '../Nav/NavMenuSingleItem';
 import { SwitchAppearance } from '../SwitchAppearance';
-import Translator from '../../assets/translator.svg';
 import { SocialLinks } from '../SocialLinks';
+import {
+  useTranslationMenuData,
+  useVersionMenuData,
+} from '../Nav/menuDataHooks';
+import { NavScreenMenuGroup } from './NavScreenMenuGroup';
 import styles from './index.module.scss';
-import { NoSSR, useLang, useVersion } from '@/runtime';
+import { NoSSR } from '@/runtime';
 
 interface Props {
   isScreenOpen: boolean;
@@ -25,11 +20,8 @@ interface Props {
   pathname: string;
 }
 
-const NavScreenTranslations = ({
-  translationMenuData,
-}: {
-  translationMenuData: NavScreenMenuGroupItem;
-}) => {
+const NavScreenTranslations = () => {
+  const translationMenuData = useTranslationMenuData();
   return (
     <div
       className={`${styles.navTranslations} flex text-sm font-bold justify-center`}
@@ -41,50 +33,31 @@ const NavScreenTranslations = ({
   );
 };
 
+const NavScreenVersions = () => {
+  const versionMenuData = useVersionMenuData();
+  return (
+    <div
+      className={`${styles.navTranslations} flex text-sm font-bold justify-center`}
+    >
+      <div className="mx-1.5 my-1">
+        <NavScreenMenuGroup {...versionMenuData} />
+      </div>
+    </div>
+  );
+};
+
 export function NavScreen(props: Props) {
   const { isScreenOpen, localeData, siteData, pathname } = props;
-  const currentVersion = useVersion();
-  const currentLang = useLang();
   const screen = useRef<HTMLDivElement | null>(null);
   const localesData = siteData.themeConfig.locales || [];
   const hasMultiLanguage = localesData.length > 1;
+  const hasMultiVersion = siteData.multiVersion.versions.length > 1;
   const menuItems = localeData.nav || [];
   const hasAppearanceSwitch = siteData.themeConfig.darkMode !== false;
   const socialLinks = siteData?.themeConfig?.socialLinks || [];
   const hasSocialLinks = socialLinks.length > 0;
   const langs = localesData.map(item => item.lang || 'zh') || [];
-  const { base, lang: defaultLang, multiVersion } = siteData;
-  const { default: defaultVersion } = multiVersion;
-  const translationMenuData = hasMultiLanguage
-    ? {
-        text: (
-          <Translator
-            style={{
-              width: '18px',
-              height: '18px',
-            }}
-          />
-        ),
-        items: localesData.map(item => ({
-          text: item?.label,
-          link: replaceLang(
-            pathname,
-            {
-              current: currentLang,
-              target: item.lang,
-              default: defaultLang,
-            },
-            {
-              current: currentVersion,
-              default: defaultVersion,
-            },
-            base,
-          ),
-        })),
-        activeValue: localesData.find(item => item.lang === localeData.lang)
-          ?.label,
-      }
-    : null;
+  const { base } = siteData;
   const NavScreenAppearance = () => {
     return (
       <div className={`mt-2 ${styles.navAppearance} flex justify-center`}>
@@ -140,9 +113,8 @@ export function NavScreen(props: Props) {
         <NavScreenMenu menuItems={menuItems} />
         <div className="flex-center flex-col gap-2">
           {hasAppearanceSwitch && <NavScreenAppearance />}
-          {hasMultiLanguage && (
-            <NavScreenTranslations translationMenuData={translationMenuData} />
-          )}
+          {hasMultiLanguage && <NavScreenTranslations />}
+          {hasMultiVersion && <NavScreenVersions />}
           {hasSocialLinks && <SocialLinks socialLinks={socialLinks} />}
         </div>
       </div>
