@@ -192,6 +192,22 @@ const b = 2;
 console.log(b);
 ```
 
+## Customizing anchor id
+
+By default, Rspress will automatically generate ids based on the content of each title. This id will also serve as the content of the anchor. You can use the following syntax to customize the id of the header:
+
+```md
+## Hello World {#custom-id}
+```
+
+Where `custom-id` is your custom id.
+
+:::warning Note
+
+Currently, this feature is not available when you set `markdown.mdxRs` to `false`.
+
+:::
+
 ## Disabling the Rust Version Compiler
 
 In default mode, Rspress uses the Rust version of the MDX compiler, which is faster than the JavaScript version. However, the Rust version of the compiler does not support custom plugins.
