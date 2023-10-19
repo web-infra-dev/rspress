@@ -1,5 +1,31 @@
 # @rspress/core
 
+## 1.1.0
+
+### Minor Changes
+
+- c9c894d: feat: support url query to adjust page layout
+- 342c932: feat: add configure prism languages
+
+### Patch Changes
+
+- 887b0cb: feat: support multi version menu in nav
+- c4ed0e7: fix(style): keep overview h1 size same as other pages
+- 6cfc67e: perf(core): reduce polyfills by adjusting browserslist
+- 6732716: feat: set metakey `ctrl` in windows
+- b1fe901: fix(style): limit the max width of hero tagline
+- f0dfa65: feat: support remove plugin in config hook
+- 8c1dce1: feat: support cutsom anchor in default mdx compiler
+- Updated dependencies [887b0cb]
+- Updated dependencies [ff42bc6]
+- Updated dependencies [0e8d366]
+- Updated dependencies [342c932]
+  - @rspress/shared@1.1.0
+  - @rspress/plugin-auto-nav-sidebar@1.1.0
+  - @rspress/plugin-container-syntax@1.1.0
+  - @rspress/plugin-last-updated@1.1.0
+  - @rspress/plugin-medium-zoom@1.1.0
+
 ## 1.0.2
 
 ### Patch Changes

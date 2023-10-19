@@ -1,5 +1,11 @@
 # create-rspress
 
+## 1.1.0
+
+### Minor Changes
+
+- d96974b: fix: cli string escape
+
 ## 1.0.2
 
 ## 1.0.1
