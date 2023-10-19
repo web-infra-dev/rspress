@@ -1,5 +1,5 @@
 ---
-'create-rspress': major
+'create-rspress': minor
 ---
 
-fix cli string escape
+fix: cli string escape
