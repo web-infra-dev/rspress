@@ -1,5 +1,27 @@
 # @modern-js/plugin-rspress
 
+## 2.0.0
+
+### Patch Changes
+
+- 6338985: fix: modernjs crash in single language
+- 6338985: fix: disable mdxRs by default in preview and playground plugin
+- Updated dependencies [887b0cb]
+- Updated dependencies [c4ed0e7]
+- Updated dependencies [6cfc67e]
+- Updated dependencies [6732716]
+- Updated dependencies [c9c894d]
+- Updated dependencies [3bde3a5]
+- Updated dependencies [b1fe901]
+- Updated dependencies [f0dfa65]
+- Updated dependencies [6338985]
+- Updated dependencies [342c932]
+- Updated dependencies [6338985]
+- Updated dependencies [8c1dce1]
+  - @rspress/core@2.0.0
+  - @rspress/plugin-preview@2.0.0
+  - @rspress/plugin-api-docgen@2.0.0
+
 ## 1.0.2
 
 ### Patch Changes
