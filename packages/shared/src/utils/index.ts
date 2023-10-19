@@ -136,6 +136,45 @@ export function replaceLang(
   );
 }
 
+export function replaceVersion(
+  rawUrl: string,
+  version: {
+    current: string;
+    target: string;
+    default: string;
+  },
+  base = '',
+) {
+  let url = removeBase(rawUrl, base);
+  // rspress.dev/builder + switch to en -> rspress.dev/builder/en/index.html
+  if (!url) {
+    url = '/index.html';
+  }
+  let versionPart = '';
+
+  const parts = url.split('/').filter(Boolean);
+
+  if (version.target !== version.default) {
+    versionPart = version.target;
+    if (version.current !== version.default) {
+      parts.shift();
+    }
+  } else {
+    parts.shift();
+  }
+
+  let restPart = parts.join('/') || '';
+
+  if (versionPart && !restPart) {
+    restPart = 'index.html';
+  }
+
+  return withBase(
+    addLeadingSlash([versionPart, restPart].filter(Boolean).join('/')),
+    base,
+  );
+}
+
 export const omit = (obj: Record<string, unknown>, keys: string[]) => {
   const ret = { ...obj };
   for (const key of keys) {
