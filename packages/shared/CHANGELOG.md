@@ -1,5 +1,7 @@
 # @rspress/shared
 
+## 1.1.1-beta.0
+
 ## 1.1.0
 
 ### Minor Changes

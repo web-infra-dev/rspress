@@ -1,6 +1,6 @@
 {
   "name": "@rspress/plugin-last-updated",
-  "version": "1.1.0",
+  "version": "1.1.1-beta.0",
   "description": "A plugin for rspress to record the last updated time of the doc.",
   "bugs": "https://github.com/web-infra-dev/rspress/issues",
   "repository": {
@@ -47,7 +47,7 @@
     "@rspress/shared": "workspace:*"
   },
   "peerDependencies": {
-    "rspress": "^1.0.2"
+    "rspress": "^1.1.1-beta.0"
   },
   "sideEffects": [
     "*.css",

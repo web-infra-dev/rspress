@@ -1,5 +1,11 @@
 # @rspress/plugin-last-updated
 
+## 1.1.1-beta.0
+
+### Patch Changes
+
+- rspress@1.1.1-beta.0
+
 ## 1.1.0
 
 ## 1.0.2
