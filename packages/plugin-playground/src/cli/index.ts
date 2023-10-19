@@ -53,7 +53,6 @@ export function pluginPlayground(
   }
 
   const preloads: string[] = [];
-  preloads.push(babelUrl || DEFAULT_BABEL_URL);
   const monacoPrefix = monacoLoader.paths?.vs || DEFAULT_MONACO_URL;
   preloads.push(normalizeUrl(`${monacoPrefix}/loader.js`));
   preloads.push(normalizeUrl(`${monacoPrefix}/editor/editor.main.js`));
@@ -180,21 +179,31 @@ export function pluginPlayground(
     builderConfig: {
       source: {
         define: {
-          __PLAYGROUND_BABEL_URL__: JSON.stringify(babelUrl),
           __PLAYGROUND_MONACO_LOADER__: JSON.stringify(monacoLoader),
           __PLAYGROUND_MONACO_OPTIONS__: JSON.stringify(monacoOptions),
         },
       },
       html: {
-        tags: preloads.map(url => ({
-          tag: 'link',
-          head: true,
-          attrs: {
-            rel: 'preload',
-            href: url,
-            as: 'script',
+        tags: [
+          ...preloads.map(url => ({
+            tag: 'link',
+            head: true,
+            attrs: {
+              rel: 'preload',
+              href: url,
+              as: 'script',
+            },
+          })),
+          {
+            tag: 'script',
+            head: true,
+            attrs: {
+              id: 'rspress-playground-babel',
+              async: true,
+              src: babelUrl || DEFAULT_BABEL_URL,
+            },
           },
-        })),
+        ],
       },
       tools: {
         // eslint-disable-next-line @typescript-eslint/ban-ts-comment, @typescript-eslint/prefer-ts-expect-error

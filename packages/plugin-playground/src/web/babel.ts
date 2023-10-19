@@ -1,30 +1,26 @@
 import type babel from '@babel/standalone';
-import { DEFAULT_BABEL_URL } from './constant';
-import { loadScript } from './utils';
+
+type Babel = typeof babel;
 
 declare global {
-  // inject by builder in cli/index.ts
-  // see: https://modernjs.dev/builder/api/config-source.html#sourcedefine
-  const __PLAYGROUND_BABEL_URL__: any;
   interface Window {
-    Babel: typeof babel;
+    Babel: Babel;
   }
 }
 
-async function getBabel() {
-  if (!window.Babel) {
-    let babelUrl = DEFAULT_BABEL_URL;
-    try {
-      const u = __PLAYGROUND_BABEL_URL__;
-      if (u) {
-        babelUrl = u;
-      }
-    } catch (e) {
-      // ignore
-    }
-    await loadScript(babelUrl);
+function getBabel(): Babel | Promise<Babel> {
+  if (window.Babel) {
+    return window.Babel;
   }
-  return window.Babel;
+  const el = document.getElementById('rspress-playground-babel');
+  if (!el) {
+    throw new Error('Babel not found');
+  }
+  return new Promise(resolve => {
+    el.addEventListener('load', () => {
+      resolve(window.Babel);
+    });
+  });
 }
 
 export { getBabel };
