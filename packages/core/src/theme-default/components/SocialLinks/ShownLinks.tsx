@@ -23,7 +23,7 @@ export const ShownLinks = (props: IShownLinksProps) => {
         ))}
       </div>
       {moreIconVisible ? (
-        <div className="md:ml-1" onMouseEnter={mouseEnter}>
+        <div className="md:ml-1 p-2" onMouseEnter={mouseEnter}>
           <ArrowDown />
         </div>
       ) : null}
