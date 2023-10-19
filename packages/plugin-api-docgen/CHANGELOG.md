@@ -1,5 +1,12 @@
 # @rspress/plugin-api-docgen
 
+## 1.1.0
+
+### Patch Changes
+
+- 6338985: fix: modernjs crash in single language
+- 6338985: fix: disable mdxRs by default in preview and playground plugin
+
 ## 1.0.2
 
 ### Patch Changes

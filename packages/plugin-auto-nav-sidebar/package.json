@@ -1,6 +1,6 @@
 {
   "name": "@rspress/plugin-auto-nav-sidebar",
-  "version": "1.0.2",
+  "version": "1.1.0",
   "description": "A plugin for rspress to generate navbar and sidebar config automatically.",
   "bugs": "https://github.com/web-infra-dev/rspress/issues",
   "repository": {
@@ -37,7 +37,7 @@
     "dist/"
   ],
   "devDependencies": {
-    "@modern-js/tsconfig": "2.36.0",
+    "@modern-js/tsconfig": "2.37.0",
     "@types/node": "^18.11.17",
     "@types/react": "^18",
     "@types/react-dom": "^18",
@@ -64,7 +64,7 @@
     "registry": "https://registry.npmjs.org/"
   },
   "dependencies": {
-    "@modern-js/utils": "2.36.0",
+    "@modern-js/utils": "2.37.0",
     "@rspress/shared": "workspace:*"
   }
 }
