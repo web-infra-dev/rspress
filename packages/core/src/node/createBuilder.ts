@@ -80,13 +80,7 @@ async function createInternalBuildConfig(
   // Using latest browserslist in development to improve build performance
   const browserslist = {
     web: isProduction()
-      ? [
-          'chrome >= 61',
-          'edge >= 16',
-          'firefox >= 60',
-          'safari >= 11',
-          'ios_saf >= 11',
-        ]
+      ? ['chrome >= 87', 'edge >= 88', 'firefox >= 78', 'safari >= 14']
       : [
           'last 1 chrome version',
           'last 1 firefox version',
@@ -168,13 +162,6 @@ async function createInternalBuildConfig(
             }),
           );
         }
-      },
-      rspack: {
-        // This config can be removed after upgrading Rspack v0.4
-        // https://github.com/web-infra-dev/rspack/issues/3096
-        optimization: {
-          chunkIds: isProduction() ? 'deterministic' : 'named',
-        },
       },
       bundlerChain(chain) {
         chain.module
