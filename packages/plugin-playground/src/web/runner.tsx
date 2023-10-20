@@ -18,6 +18,8 @@ interface RunnerState {
   comp: any;
 }
 
+const DEBOUNCE_TIME = 800;
+
 class Runner extends Component<RunnerProps, RunnerState> {
   static getDerivedStateFromError(error: Error) {
     return {
@@ -47,7 +49,7 @@ class Runner extends Component<RunnerProps, RunnerState> {
     this.timer = setTimeout(() => {
       this.timer = null;
       this.doCompile(targetCode);
-    }, 600);
+    }, DEBOUNCE_TIME);
   }
 
   async doCompile(targetCode: string) {
@@ -73,12 +75,18 @@ class Runner extends Component<RunnerProps, RunnerState> {
         presets,
         plugins: [
           {
+            pre() {
+              this.hasReactImported = false;
+            },
             visitor: {
               ImportDeclaration(path) {
                 const pkg = path.node.source.value;
                 const code: Node[] = [];
                 const specifiers: string[] = [];
                 for (const specifier of path.node.specifiers) {
+                  if (specifier.local.name === 'React') {
+                    this.hasReactImported = true;
+                  }
                   // import X from 'xxx'
                   if (specifier.type === 'ImportDefaultSpecifier') {
                     // const ${specifier.local.name} = __get_import()
@@ -116,6 +124,17 @@ class Runner extends Component<RunnerProps, RunnerState> {
                 path.replaceWithMultiple(code);
               },
             },
+            post(file) {
+              // Auto import React
+              if (!this.hasReactImported) {
+                file.ast.program.body.unshift(
+                  createVariableDeclaration(
+                    'React',
+                    createGetImport('react', true),
+                  ),
+                );
+              }
+            },
           },
         ],
       });
@@ -140,7 +159,6 @@ class Runner extends Component<RunnerProps, RunnerState> {
 
       this.setState({
         error: new Error('No default export'),
-        comp: null,
       });
     } catch (e) {
       // Code has been updated
@@ -150,7 +168,6 @@ class Runner extends Component<RunnerProps, RunnerState> {
       console.error(e);
       this.setState({
         error: e as Error,
-        comp: null,
       });
     }
   }
@@ -174,17 +191,12 @@ class Runner extends Component<RunnerProps, RunnerState> {
     const { className = '', code, language, getImport, ...rest } = this.props;
     const { error, comp } = this.state;
 
-    if (error) {
-      return (
-        <div className={`rspress-playground-runner ${className}`} {...rest}>
-          <span style={{ color: 'red' }}>{error.message}</span>
-        </div>
-      );
-    }
-
     return (
       <div className={`rspress-playground-runner ${className}`} {...rest}>
         {comp}
+        {error && (
+          <pre className="rspress-playground-error">{error.message}</pre>
+        )}
       </div>
     );
   }
