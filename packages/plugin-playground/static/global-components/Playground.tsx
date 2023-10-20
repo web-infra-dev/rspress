@@ -1,12 +1,50 @@
-import React, { HTMLAttributes, useCallback, useState } from 'react';
+import React, { HTMLAttributes, ReactNode, useCallback, useState } from 'react';
 import getImport from '_rspress_playground_imports';
+import { usePageData } from '@rspress/core/runtime';
 import { Editor, Runner } from '../../dist/web/esm';
 
-interface PlaygroundProps extends HTMLAttributes<HTMLDivElement> {
+// inject by builder in cli/index.ts
+declare global {
+  const __PLAYGROUND_DIRECTION__: any;
+}
+
+type Direction = 'horizontal' | 'vertical';
+
+export interface PlaygroundProps extends HTMLAttributes<HTMLDivElement> {
   code: string;
   language: string;
-  direction?: 'horizontal' | 'vertical';
+  direction?: Direction;
   editorPosition?: 'left' | 'right';
+  renderChildren?: (
+    props: PlaygroundProps,
+    code: string,
+    direction: Direction,
+  ) => ReactNode;
+}
+
+function useDirection(props: PlaygroundProps): Direction {
+  const { page } = usePageData();
+  const { frontmatter = {} } = page;
+  const { playgroundDirection } = frontmatter;
+
+  // from props
+  if (props.direction) {
+    return props.direction;
+  }
+
+  // from page frontmatter
+  if (playgroundDirection) {
+    return playgroundDirection as Direction;
+  }
+
+  // inject by config
+  try {
+    return __PLAYGROUND_DIRECTION__;
+  } catch (e) {
+    // ignore
+  }
+
+  return 'horizontal';
 }
 
 export default function Playground(props: PlaygroundProps) {
@@ -14,10 +52,13 @@ export default function Playground(props: PlaygroundProps) {
     code: codeProp,
     language,
     className = '',
-    direction = 'horizontal',
+    direction: directionProp,
     editorPosition,
+    renderChildren,
     ...rest
   } = props;
+
+  const direction = useDirection(props);
 
   const [code, setCode] = useState(codeProp);
 
@@ -46,6 +87,7 @@ export default function Playground(props: PlaygroundProps) {
         onChange={handleCodeChange}
         language={monacoLanguage}
       />
+      {renderChildren?.(props, code, direction)}
     </div>
   );
 }
