@@ -1,5 +1,20 @@
 # create-rspress
 
+## 1.1.2
+
+### Patch Changes
+
+- 6bd818c: perf(create-rspress): minify the builtin images size
+- fe0e770: fix(create-rspress): should depend on rspress v1
+
+## 1.1.1
+
+## 1.1.0
+
+### Minor Changes
+
+- d96974b: fix: cli string escape
+
 ## 1.0.2
 
 ## 1.0.1

@@ -1,5 +1,29 @@
 # @rspress/plugin-preview
 
+## 1.1.2
+
+### Patch Changes
+
+- @rspress/shared@1.1.2
+
+## 1.1.1
+
+### Patch Changes
+
+- @rspress/shared@1.1.1
+
+## 1.1.0
+
+### Patch Changes
+
+- 3bde3a5: chore: set plugin option optional
+- 6338985: fix: modernjs crash in single language
+- 6338985: fix: disable mdxRs by default in preview and playground plugin
+- Updated dependencies [887b0cb]
+- Updated dependencies [0e8d366]
+- Updated dependencies [342c932]
+  - @rspress/shared@1.1.0
+
 ## 1.0.2
 
 ### Patch Changes

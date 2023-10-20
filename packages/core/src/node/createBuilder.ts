@@ -120,10 +120,8 @@ async function createInternalBuildConfig(
         '@/theme-default': DEFAULT_THEME_DIR,
         '@rspress/core': PACKAGE_ROOT,
         'react-lazy-with-preload': require.resolve('react-lazy-with-preload'),
-        'react-syntax-highlighter': path.join(
-          PACKAGE_ROOT,
-          'node_modules',
-          'react-syntax-highlighter',
+        'react-syntax-highlighter': path.dirname(
+          require.resolve('react-syntax-highlighter/package.json'),
         ),
         ...(await resolveReactAlias(reactVersion)),
       },

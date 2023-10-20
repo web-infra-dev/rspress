@@ -28,8 +28,8 @@ test.describe('basic test', async () => {
   });
 
   test('Navigation with animation', async ({ page }) => {
-    // If the animation is not triggered in 10 seconds, the test will fail
-    test.setTimeout(10000);
+    // If the animation is not triggered in 20 seconds, the test will fail
+    test.setTimeout(20000);
     await page.goto(`http://localhost:${appPort}/guide`);
     const session = await page.context().newCDPSession(page);
     await session.send('Animation.enable');

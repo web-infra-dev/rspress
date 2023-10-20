@@ -71,6 +71,7 @@ class Runner extends Component<RunnerProps, RunnerState> {
       }
       const result = babel.transform(targetCode, {
         sourceType: 'module',
+        sourceMaps: 'inline',
         presets,
         plugins: [
           {
@@ -81,6 +82,7 @@ class Runner extends Component<RunnerProps, RunnerState> {
               ImportDeclaration(path) {
                 const pkg = path.node.source.value;
                 const code: Node[] = [];
+                const specifiers: string[] = [];
                 for (const specifier of path.node.specifiers) {
                   if (specifier.local.name === 'React') {
                     this.hasReactImported = true;
@@ -108,13 +110,16 @@ class Runner extends Component<RunnerProps, RunnerState> {
                   // import { a, b, c } from 'xxx'
                   if (specifier.type === 'ImportSpecifier') {
                     // const {${specifier.local.name}} = __get_import()
-                    code.push(
-                      createVariableDeclaration(
-                        createObjectPattern([specifier.local.name]),
-                        createGetImport(pkg),
-                      ),
-                    );
+                    specifiers.push(specifier.local.name);
                   }
+                }
+                if (specifiers.length > 0) {
+                  code.push(
+                    createVariableDeclaration(
+                      createObjectPattern(specifiers),
+                      createGetImport(pkg),
+                    ),
+                  );
                 }
                 path.replaceWithMultiple(code);
               },

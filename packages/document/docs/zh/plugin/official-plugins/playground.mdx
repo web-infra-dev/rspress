@@ -4,7 +4,7 @@ import { PackageManagerTabs } from '@theme';
 
 > [源码地址](https://github.com/web-infra-dev/rspress/tree/main/packages/plugin-playground)
 
-提供一个可实时编辑的 Playground 以预览 md(x) 文件代码块中的组件。
+提供一个可实时编辑的 Playground 以预览 mdx 文件代码块中的组件。
 
 ## 安装
 
@@ -113,6 +113,19 @@ export default function App() {
 外部组件中同样需要将组件作为 default 导出。而通过 code 标签的 src 属性，你可以指定外部组件的路径，该插件同时支持相对路径以及别名路径(alias)。
 
 对于某些比较复杂的组件，这种外部组件的使用方式会更加方便。
+
+### 定义整个页面中的布局
+
+可以在 frontmatter 中编写 playgroundDirection，来定义整个页面中编辑器与预览区域的布局。
+
+```md title="example.mdx"
+---
+title: 标题
+playgroundDirection: horizontal
+---
+```
+
+优先级：直接定义在预览区域上 > 页面定义 > 配置中定义。
 
 ## 配置
 

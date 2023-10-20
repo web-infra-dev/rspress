@@ -1,5 +1,20 @@
 # @rspress/shared
 
+## 1.1.2
+
+## 1.1.1
+
+## 1.1.0
+
+### Minor Changes
+
+- 342c932: feat: add configure prism languages
+
+### Patch Changes
+
+- 887b0cb: feat: support multi version menu in nav
+- 0e8d366: fix(shared): bump rslog@1.1.0 to fix color support detection
+
 ## 1.0.2
 
 ## 1.0.1

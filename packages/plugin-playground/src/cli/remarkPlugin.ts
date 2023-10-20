@@ -23,7 +23,6 @@ function createPlaygroundNode(
 
 interface RemarkPluginProps {
   getRouteMeta: () => RouteMeta[];
-  defaultDirection: 'horizontal' | 'vertical';
   editorPosition: 'left' | 'right';
 }
 
@@ -32,7 +31,6 @@ interface RemarkPluginProps {
  */
 export const remarkPlugin: Plugin<[RemarkPluginProps], Root> = ({
   getRouteMeta,
-  defaultDirection,
   editorPosition,
 }) => {
   const routeMeta = getRouteMeta();
@@ -56,8 +54,7 @@ export const remarkPlugin: Plugin<[RemarkPluginProps], Root> = ({
         if (!fs.existsSync(demoPath)) {
           return;
         }
-        const direction =
-          getNodeAttribute(node, 'direction') || defaultDirection;
+        const direction = getNodeAttribute(node, 'direction') || '';
         const code = fs.readFileSync(demoPath, {
           encoding: 'utf8',
         });
@@ -81,7 +78,7 @@ export const remarkPlugin: Plugin<[RemarkPluginProps], Root> = ({
           return;
         }
 
-        const direction = getNodeMeta(node, 'direction') || defaultDirection;
+        const direction = getNodeMeta(node, 'direction') || '';
 
         createPlaygroundNode(node, [
           ['code', node.value],

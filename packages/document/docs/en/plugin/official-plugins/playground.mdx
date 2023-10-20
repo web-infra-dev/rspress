@@ -4,7 +4,7 @@ import { PackageManagerTabs } from '@theme';
 
 > [Source Code](https://github.com/web-infra-dev/rspress/tree/main/packages/plugin-playground)
 
-Provide a real-time playground to preview the code blocks in Markdown/MDX files.
+Provide a real-time playground to preview the code blocks in MDX files.
 
 ## Installation
 
@@ -113,6 +113,19 @@ Same as internal components, external components also support `direction` attrib
 External components also need to export the component as default. Through the src attribute of the code tag, you can specify the path of the external component. This plugin supports both relative paths and alias paths(alias).
 
 For some more complex components, this way of using external components will be more convenient.
+
+### Define the layout of the entire page
+
+You can write `playgroundDirection` in frontmatter to define the layout of the editor and preview area in the entire page.
+
+```md title="example.mdx"
+---
+title: title
+playgroundDirection: horizontal
+---
+```
+
+Priority: Defined directly on the preview area > Page Definition > Configuration.
 
 ## Configuration
 

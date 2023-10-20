@@ -183,6 +183,7 @@ export function pluginPlayground(
     builderConfig: {
       source: {
         define: {
+          __PLAYGROUND_DIRECTION__: JSON.stringify(defaultDirection),
           __PLAYGROUND_MONACO_LOADER__: JSON.stringify(monacoLoader),
           __PLAYGROUND_MONACO_OPTIONS__: JSON.stringify(monacoOptions),
         },
@@ -218,9 +219,7 @@ export function pluginPlayground(
       },
     },
     markdown: {
-      remarkPlugins: [
-        [remarkPlugin, { getRouteMeta, defaultDirection, editorPosition }],
-      ],
+      remarkPlugins: [[remarkPlugin, { getRouteMeta, editorPosition }]],
       globalComponents: [
         render
           ? render

@@ -1,5 +1,27 @@
 # @rspress/plugin-auto-sidebar
 
+## 1.1.2
+
+### Patch Changes
+
+- @rspress/shared@1.1.2
+
+## 1.1.1
+
+### Patch Changes
+
+- @rspress/shared@1.1.1
+
+## 1.1.0
+
+### Patch Changes
+
+- ff42bc6: feat: support nest dir without \_meta.json
+- Updated dependencies [887b0cb]
+- Updated dependencies [0e8d366]
+- Updated dependencies [342c932]
+  - @rspress/shared@1.1.0
+
 ## 1.0.2
 
 ### Patch Changes
