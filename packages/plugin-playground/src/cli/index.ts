@@ -151,6 +151,10 @@ export function pluginPlayground(
         });
       }
 
+      if (!('react' in imports)) {
+        imports.react = 'react';
+      }
+
       const importKeys = Object.keys(imports);
       const code = [
         ...importKeys.map(

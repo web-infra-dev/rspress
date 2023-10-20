@@ -74,11 +74,17 @@ class Runner extends Component<RunnerProps, RunnerState> {
         presets,
         plugins: [
           {
+            pre() {
+              this.hasReactImported = false;
+            },
             visitor: {
               ImportDeclaration(path) {
                 const pkg = path.node.source.value;
                 const code: Node[] = [];
                 for (const specifier of path.node.specifiers) {
+                  if (specifier.local.name === 'React') {
+                    this.hasReactImported = true;
+                  }
                   // import X from 'xxx'
                   if (specifier.type === 'ImportDefaultSpecifier') {
                     // const ${specifier.local.name} = __get_import()
@@ -112,6 +118,17 @@ class Runner extends Component<RunnerProps, RunnerState> {
                 }
                 path.replaceWithMultiple(code);
               },
+            },
+            post(file) {
+              // Auto import React
+              if (!this.hasReactImported) {
+                file.ast.program.body.unshift(
+                  createVariableDeclaration(
+                    'React',
+                    createGetImport('react', true),
+                  ),
+                );
+              }
             },
           },
         ],
