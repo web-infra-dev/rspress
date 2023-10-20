@@ -47,10 +47,7 @@ export function DocLayout(props: DocLayoutProps) {
     // if in iframe, default value is false
     const defaultHasAside =
       typeof window === 'undefined' ? true : window.top === window.self;
-    return (
-      (frontmatter?.outline ?? themeConfig?.outline ?? defaultHasAside) &&
-      headers.length > 0
-    );
+    return frontmatter?.outline ?? themeConfig?.outline ?? defaultHasAside;
   };
   const [hasAside, setHasAside] = useState(getHasAside());
 
