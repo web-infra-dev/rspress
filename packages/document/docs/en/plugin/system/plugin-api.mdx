@@ -219,7 +219,7 @@ export function pluginForDoc(): RspressPlugin {
   return {
     name: 'plugin-name',
     // Extend the page data
-    extendPageData(pageData) {
+    extendPageData(pageData, isProd) {
       // You can add or modify properties on the pageData object
       pageData.a = 1;
     },
@@ -311,9 +311,53 @@ export function pluginForDoc(): RspressPlugin {
     // plugin name
     name: 'plugin-routes',
     // Hook to execute after route generated
-    async routeGenerated(routes) {
+    async routeGenerated(routes, isProd) {
       // Do something here
     },
   };
 }
 ```
+
+### addRuntimeModules
+
+- **Type**: `(config: UserConfig, isProd: boolean) => Record<string, string> | Promise<Record<string, string>>;`
+
+Used to add additional runtime modules. For example, if you want to use some compile-time information in the document, you can achieve this through `addRuntimeModules`:
+
+```tsx title="plugin.ts"
+import { RspressPlugin } from '@rspress/shared';
+
+export function pluginForDoc(): RspressPlugin {
+  return {
+    // Plugin name
+    name: 'plugin-name',
+    // Add additional runtime modules
+    async addRuntimeModules(config, isProd) {
+      const fetchSomeData = async () => {
+        // Mock asynchronous request
+        return { a: 1 };
+      };
+      const data = await fetchSomeData();
+      return {
+        'virtual-xxx': `export default ${JSON.stringify(data)}`,
+      };
+    },
+  };
+}
+```
+
+In this way, you can use the `virtual-xxx` module in the runtime component:
+
+```jsx
+import myData from 'virtual-xxx';
+
+export function MyComponent() {
+  return <div>{myData.a}</div>;
+}
+```
+
+:::tip TIP
+
+This hook is executed after the `routeGenerated` hook.
+
+:::

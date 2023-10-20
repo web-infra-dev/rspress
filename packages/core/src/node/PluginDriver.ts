@@ -124,11 +124,15 @@ export class PluginDriver {
   async modifySearchIndexData(
     pages: PageIndexInfo[],
   ): Promise<PageIndexInfo[]> {
-    return this._runParallelAsyncHook('modifySearchIndexData', pages);
+    return this._runParallelAsyncHook(
+      'modifySearchIndexData',
+      pages,
+      this.#isProd,
+    );
   }
 
   async extendPageData(pageData: PageIndexInfo) {
-    return this._runParallelAsyncHook('extendPageData', pageData);
+    return this._runParallelAsyncHook('extendPageData', pageData, this.#isProd);
   }
 
   async addPages() {
@@ -143,6 +147,21 @@ export class PluginDriver {
 
   async routeGenerated(routes: RouteMeta[]) {
     return this._runParallelAsyncHook('routeGenerated', routes);
+  }
+
+  async addRuntimeModules() {
+    const result: Record<string, string>[] = await this._runParallelAsyncHook(
+      'addRuntimeModules',
+      this.#config || {},
+      this.#isProd,
+    );
+
+    return result.reduce((prev, current) => {
+      return {
+        ...prev,
+        ...current,
+      };
+    }, {});
   }
 
   async addSSGRoutes() {
