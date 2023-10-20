@@ -1,5 +1,16 @@
 # @rspress/core
 
+## 1.1.3
+
+### Patch Changes
+
+- a1c999f: fix: outline hidden style when headers is empty
+  - @rspress/plugin-auto-nav-sidebar@1.1.3
+  - @rspress/plugin-container-syntax@1.1.3
+  - @rspress/plugin-last-updated@1.1.3
+  - @rspress/plugin-medium-zoom@1.1.3
+  - @rspress/shared@1.1.3
+
 ## 1.1.2
 
 ### Patch Changes
