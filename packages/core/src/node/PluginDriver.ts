@@ -95,10 +95,14 @@ export class PluginDriver {
 
     for (const plugin of this.#plugins) {
       if (typeof plugin.config === 'function') {
-        config = await plugin.config(config || {}, {
-          addPlugin: this.addPlugin.bind(this),
-          removePlugin: this.removePlugin.bind(this),
-        });
+        config = await plugin.config(
+          config || {},
+          {
+            addPlugin: this.addPlugin.bind(this),
+            removePlugin: this.removePlugin.bind(this),
+          },
+          this.#isProd,
+        );
       }
     }
     this.#config = config;
