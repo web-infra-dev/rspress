@@ -61,6 +61,7 @@ export const runtimeModuleFactory: RuntimeModuleFactory[] = [
 export function builderDocVMPlugin(
   factoryContext: Omit<FactoryContext, 'alias'>,
 ): BuilderPlugin {
+  const { pluginDriver } = factoryContext;
   return {
     name: 'vmBuilderPlugin',
     setup(api) {
@@ -68,6 +69,7 @@ export function builderDocVMPlugin(
         // The order should be sync
         const alias = bundlerChain.resolve.alias.entries();
         const runtimeModule: Record<string, string> = {};
+        // Add internal runtime module
         for (const factory of runtimeModuleFactory) {
           const moduleResult = await factory({
             ...factoryContext,
@@ -75,6 +77,16 @@ export function builderDocVMPlugin(
           });
           Object.assign(runtimeModule, moduleResult);
         }
+        // Add runtime module from outer plugins
+        const modulesByPlugin = await pluginDriver.addRuntimeModules();
+        Object.keys(modulesByPlugin).forEach(key => {
+          if (runtimeModule[key]) {
+            throw new Error(
+              `The runtime module ${key} is duplicated, please check your plugin`,
+            );
+          }
+          runtimeModule[key] = modulesByPlugin[key];
+        });
         bundlerChain
           .plugin(`rspress-runtime-module`)
           .use(

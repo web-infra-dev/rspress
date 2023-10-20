@@ -123,7 +123,7 @@ export function pluginForDoc(slug: string): RspressPlugin {
 
 ### config
 
-- **类型**：`(config: DocConfig, utils: ConfigUtils) => DocConfig | Promise<DocConfig>`
+- **类型**：`(config: DocConfig, utils: ConfigUtils, isProd: boolean) => DocConfig | Promise<DocConfig>`
 
 其中，`ConfigUtils` 的类型定义如下：
 
@@ -253,7 +253,7 @@ export function pluginForDoc(): RspressPlugin {
     // 插件名称
     name: 'plugin-name',
     // 扩展页面数据
-    extendPageData(pageData) {
+    extendPageData(pageData, isProd) {
       // 你可以往 pageData 对象上添加或者修改属性
       pageData.a = 1;
     },
@@ -345,9 +345,53 @@ export function pluginForDoc(): RspressPlugin {
     // 插件名称
     name: 'plugin-routes',
     // 在构建之后执行的钩子
-    async routeGenerated(routes) {
+    async routeGenerated(routes, isProd) {
       // 这里可以拿到 routes 数组，执行一些操作
     },
   };
 }
 ```
+
+### addRuntimeModules
+
+- **类型**：`(config: UserConfig, isProd: boolean) => Record<string, string> | Promise<Record<string, string>>;`
+
+用于添加额外的运行时模块，比如你想要在文档中使用到某些编译时的信息，可以通过 `addRuntimeModules` 来实现：
+
+```tsx title="plugin.ts"
+import { RspressPlugin } from '@rspress/shared';
+
+export function pluginForDoc(): RspressPlugin {
+  return {
+    // 插件名称
+    name: 'plugin-name',
+    // 添加额外的运行时模块
+    async addRuntimeModules(config, isProd) {
+      const fetchSomeData = async () => {
+        // 模拟异步请求
+        return { a: 1 };
+      };
+      const data = await fetchSomeData();
+      return {
+        'virtual-xxx': `export default ${JSON.stringify(data)}`,
+      };
+    },
+  };
+}
+```
+
+这样你就可以在运行时组件中使用 `virtual-xxx` 模块了：
+
+```jsx
+import myData from 'virtual-xxx';
+
+export function MyComponent() {
+  return <div>{myData.a}</div>;
+}
+```
+
+:::tip 提醒
+
+该 hook 在 `routeGenerated` 之后执行。
+
+:::

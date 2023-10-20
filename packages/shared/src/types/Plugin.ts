@@ -47,15 +47,16 @@ export interface RspressPlugin {
       addPlugin: (plugin: RspressPlugin) => void;
       removePlugin: (pluginName: string) => void;
     },
+    isProd: boolean,
   ) => UserConfig | Promise<UserConfig>;
   /**
    * Callback before build
    */
-  beforeBuild?: (config: UserConfig, isProd: boolean) => Promise<void>;
+  beforeBuild?: (config: UserConfig, isProd: boolean) => void | Promise<void>;
   /**
    * Callback after build
    */
-  afterBuild?: (config: UserConfig, isProd: boolean) => Promise<void>;
+  afterBuild?: (config: UserConfig, isProd: boolean) => void | Promise<void>;
   /**
    * Extend every page's data
    */
@@ -63,6 +64,7 @@ export interface RspressPlugin {
     pageData: PageIndexInfo & {
       [key: string]: unknown;
     },
+    isProd: boolean,
   ) => void | Promise<void>;
   /**
    * Add custom route
@@ -72,9 +74,19 @@ export interface RspressPlugin {
     isProd: boolean,
   ) => AdditionalPage[] | Promise<AdditionalPage[]>;
   /**
+   * Add runtime modules
+   */
+  addRuntimeModules?: (
+    config: UserConfig,
+    isProd: boolean,
+  ) => Record<string, string> | Promise<Record<string, string>>;
+  /**
    * Callback after route generated
    */
-  routeGenerated?: (routes: RouteMeta[]) => Promise<void> | void;
+  routeGenerated?: (
+    routes: RouteMeta[],
+    isProd: boolean,
+  ) => Promise<void> | void;
   /**
    * Add addition ssg routes, for dynamic routes.
    */
@@ -86,5 +98,8 @@ export interface RspressPlugin {
    * @private
    * Modify search index data.
    */
-  modifySearchIndexData?: (data: PageIndexInfo[]) => void | Promise<void>;
+  modifySearchIndexData?: (
+    data: PageIndexInfo[],
+    isProd: boolean,
+  ) => void | Promise<void>;
 }
