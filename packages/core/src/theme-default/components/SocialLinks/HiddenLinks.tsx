@@ -14,8 +14,9 @@ export const HiddenLinks = (props: IHiddenLinksProps) => {
         boxShadow: 'var(--rp-shadow-3)',
         marginRight: '-2px',
         border: '1px solid var(--rp-c-divider-light)',
+        background: 'var(--rp-c-bg)',
       }}
-      className="absolute top-8 right-0 z-1 p-3 w-32 rounded-2xl bg-white flex flex-wrap gap-4"
+      className="absolute top-8 right-0 z-1 p-3 w-32 rounded-2xl flex flex-wrap gap-4"
     >
       {links.map(item => (
         <LinkContent
