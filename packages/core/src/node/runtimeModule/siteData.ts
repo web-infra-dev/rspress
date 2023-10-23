@@ -18,7 +18,6 @@ import {
   isExternalUrl,
   withoutBase,
 } from '@rspress/shared';
-import yamlFrontMatter from 'yaml-front-matter';
 import { htmlToText } from 'html-to-text';
 import fs from '@modern-js/utils/fs-extra';
 import { compile } from '@rspress/mdx-rs';
@@ -27,11 +26,9 @@ import { applyReplaceRules } from '../utils/applyReplaceRules';
 import { createHash } from '../utils';
 import { flattenMdxContent } from '../utils/flattenMdxContent';
 import { RouteService } from '../route/RouteService';
+import { loadFrontMatter } from '../utils/loadFrontMatter';
 import { getI18nData } from './i18n';
 import { FactoryContext, RuntimeModuleID } from '.';
-
-// eslint-disable-next-line import/no-named-as-default-member
-const { loadFront } = yamlFrontMatter;
 
 // How can we let the client runtime access the `indexHash`?
 // We can only do something after the Rspack build process becuase the index hash is generated within Rspack build process.There are two ways to do this:
@@ -231,9 +228,11 @@ async function extractPageData(
       .filter(route => MDX_REGEXP.test(route.absolutePath))
       .map(async (route, index) => {
         let content: string = await fs.readFile(route.absolutePath, 'utf8');
-        const frontmatter = {
-          ...loadFront(content),
-        };
+        const { frontmatter, content: strippedFrontMatter } = loadFrontMatter(
+          content,
+          route.absolutePath,
+          root,
+        );
 
         // 1. Replace rules for frontmatter & content
         Object.keys(frontmatter).forEach(key => {
@@ -247,7 +246,7 @@ async function extractPageData(
 
         // TODO: we will find a more efficient way to do this
         const flattenContent = await flattenMdxContent(
-          frontmatter.__content,
+          strippedFrontMatter,
           route.absolutePath,
           alias,
         );
