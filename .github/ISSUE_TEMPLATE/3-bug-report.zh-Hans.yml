@@ -1,7 +1,7 @@
 name: '🐞 Bug 报告'
 description: 给 Rspress 报告 bug
 title: '[Bug]: '
-labels: ['bug']
+labels: ['🐞 bug']
 body:
   - type: markdown
     attributes:
@@ -16,7 +16,7 @@ body:
     id: versions
     attributes:
       label: 版本信息
-      description: 在你的项目中运行 `npx envinfo --system --browsers --npmPackages '@rspress/*'` 命令，并将内容粘贴到下方输入框。
+      description: 在你的项目中运行 `npx envinfo --system --browsers --npmPackages '{@rspress/*,rspress}'` 命令，并将内容粘贴到下方输入框。
       placeholder: |
         System:
         Browsers:
