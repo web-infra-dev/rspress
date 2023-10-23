@@ -63,6 +63,14 @@ export function DocLayout(props: DocLayoutProps) {
     }
   }, []);
 
+  const docContent = (
+    <TabDataContext.Provider value={{ tabData, setTabData }}>
+      <MDXProvider components={getCustomMDXComponent()}>
+        <Content />
+      </MDXProvider>
+    </TabDataContext.Provider>
+  );
+
   return (
     <div
       className={`${styles.docLayout} pt-0`}
@@ -77,16 +85,12 @@ export function DocLayout(props: DocLayoutProps) {
       >
         <div className="w-full">
           {isOverviewPage ? (
-            <Overview />
+            <div className="rspress-doc">
+              <Overview content={docContent} />
+            </div>
           ) : (
             <div>
-              <div className="rspress-doc">
-                <TabDataContext.Provider value={{ tabData, setTabData }}>
-                  <MDXProvider components={getCustomMDXComponent()}>
-                    <Content />
-                  </MDXProvider>
-                </TabDataContext.Provider>
-              </div>
+              <div className="rspress-doc">{docContent}</div>
               <div className="rspress-doc-footer">
                 {beforeDocFooter}
                 {hasFooter && <DocFooter />}
