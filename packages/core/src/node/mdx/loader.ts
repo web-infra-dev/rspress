@@ -1,11 +1,12 @@
 import path from 'path';
 import type { Rspack } from '@modern-js/builder-rspack-provider';
 import { createProcessor } from '@mdx-js/mdx';
-import grayMatter from 'gray-matter';
 import type { Header, UserConfig } from '@rspress/shared';
+import { logger } from '@rspress/shared/logger';
 import type { RouteService } from '../route/RouteService';
 import { normalizePath } from '../utils';
 import { PluginDriver } from '../PluginDriver';
+import { loadFrontMatter } from '../utils/loadFrontMatter';
 import { createMDXOptions } from './options';
 import { TocItem } from './remarkPlugins/toc';
 import { checkLinks } from './remarkPlugins/checkDeadLink';
@@ -47,7 +48,12 @@ export default async function mdxLoader(
     pluginDriver,
   } = options;
 
-  const { data: frontmatter, content } = grayMatter(source);
+  const { frontmatter, content } = loadFrontMatter(
+    source,
+    filepath,
+    docDirectory,
+    true,
+  );
   const hasFrontMatter = Object.keys(frontmatter).length > 0;
 
   try {
@@ -113,7 +119,7 @@ ${
 `;
     callback(null, result);
   } catch (e) {
-    console.error(`MDX compile error: ${e.message} in ${filepath}`);
+    logger.error(`MDX compile error: ${e.message} in ${filepath}`);
     callback({ message: e.message, name: `${filepath} compile error` });
   }
 }
