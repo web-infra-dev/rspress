@@ -1,5 +1,11 @@
 # @rspress/docs
 
+## 1.2.0
+
+### Patch Changes
+
+- f35d535: feat: support playgroundDirection frontmatter
+
 ## 1.1.3
 
 ## 1.1.2
