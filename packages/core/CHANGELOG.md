@@ -1,5 +1,27 @@
 # @rspress/core
 
+## 2.0.0-beta.0
+
+### Minor Changes
+
+- 0687d48: feat: add runtime module hook
+
+### Patch Changes
+
+- 1575a79: fix: anchor missed when link exists in header
+- 8e64681: fix social link message and image display bug
+- 4143291: fix(core): Fix background of HiddenLinks to support dark theme
+- ac665cd: fix: production error for preview plugin
+- 29698ed: fix: app crashed when creating \_meta.json or appearing frontmatter syntax error
+- a5b9678: feat: support content in overview component
+- Updated dependencies [0687d48]
+- Updated dependencies [31e50ed]
+  - @rspress/shared@2.0.0-beta.0
+  - @rspress/plugin-auto-nav-sidebar@2.0.0-beta.0
+  - @rspress/plugin-container-syntax@2.0.0-beta.0
+  - @rspress/plugin-last-updated@2.0.0-beta.0
+  - @rspress/plugin-medium-zoom@2.0.0-beta.0
+
 ## 1.1.3
 
 ### Patch Changes

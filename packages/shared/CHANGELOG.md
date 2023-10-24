@@ -1,5 +1,15 @@
 # @rspress/shared
 
+## 2.0.0-beta.0
+
+### Minor Changes
+
+- 0687d48: feat: add runtime module hook
+
+### Patch Changes
+
+- 31e50ed: fix: wechat icon type error
+
 ## 1.1.3
 
 ## 1.1.2

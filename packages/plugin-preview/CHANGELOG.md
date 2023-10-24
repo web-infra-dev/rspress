@@ -1,5 +1,21 @@
 # @rspress/plugin-preview
 
+## 2.0.0-beta.0
+
+### Patch Changes
+
+- ac665cd: fix: production error for preview plugin
+- Updated dependencies [1575a79]
+- Updated dependencies [8e64681]
+- Updated dependencies [0687d48]
+- Updated dependencies [4143291]
+- Updated dependencies [ac665cd]
+- Updated dependencies [29698ed]
+- Updated dependencies [31e50ed]
+- Updated dependencies [a5b9678]
+  - @rspress/core@2.0.0-beta.0
+  - @rspress/shared@2.0.0-beta.0
+
 ## 1.1.3
 
 ### Patch Changes
