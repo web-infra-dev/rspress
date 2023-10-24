@@ -287,7 +287,7 @@ export default defineConfig({
 
 在路由中添加一些额外的文件。默认情况下，只有文档根目录中的文件才会包含在路由中。如果你想在路由中添加一些额外的文件，你可以使用这个选项。例如：
 
-```js
+```js title="rspress.config.ts"
 import { defineConfig } from 'rspress/config';
 
 export default defineConfig({
@@ -306,7 +306,7 @@ export default defineConfig({
 
 从路由中排除一些文件。例如：
 
-```js
+```js title="rspress.config.ts"
 import { defineConfig } from 'rspress/config';
 
 export default defineConfig({
@@ -325,7 +325,7 @@ export default defineConfig({
 
 将包含在路由中的文件的扩展名。默认情况下，Rspress 会在路由中包含所有 `'js'、'jsx'、'ts'、'tsx'、'md'、'mdx' 文件。如果你想自定义扩展名，你可以使用这个选项。例如：
 
-```js
+```js title="rspress.config.ts"
 import { defineConfig } from 'rspress/config';
 
 export default defineConfig({
@@ -337,17 +337,32 @@ export default defineConfig({
 
 ### route.cleanUrls
 
-- Type: `Boolean`
+- Type: `boolean`
 - Default: `false`
 
 开启后可以生成无 `.html` 后缀的链接，URL 可以更加简洁。
 
-```js
+```js title="rspress.config.ts"
 import { defineConfig } from 'rspress/config';
 
 export default defineConfig({
   route: {
     cleanUrls: true,
   },
+});
+```
+
+## ssg
+
+- Type: `boolean`
+- Default: `true`
+
+是否开启静态站点生成。默认开启，你可以通过设置 `ssg` 为 `false` 来关闭。
+
+```ts title="rspress.config.ts"
+import { defineConfig } from 'rspress/config';
+
+export default defineConfig({
+  ssg: false,
 });
 ```
