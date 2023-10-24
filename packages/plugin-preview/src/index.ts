@@ -6,6 +6,7 @@ import {
   RSPRESS_TEMP_DIR,
   normalizePosixPath,
 } from '@rspress/shared';
+import { uniqBy } from 'lodash';
 import { remarkCodeToDemo } from './codeToDemo';
 import { generateId, injectDemoBlockImport } from './utils';
 import {
@@ -276,6 +277,15 @@ import Demo from ${JSON.stringify(demoComponentPath)}
       `${isMobile ? 'mobile' : 'web'}.css`,
     ),
     addSSGRoutes() {
+      if (iframePosition === 'fixed') {
+        const normalizeRoutes = demoRoutes.map(({ path: item }) => {
+          const fragments = item.split('/').filter(Boolean);
+          const demoId = fragments.pop()?.replace(/_(\d+)$/, '');
+          return { path: `/${fragments.join('/')}/${demoId}` };
+        });
+        // Unique the routes accrodint to the path
+        return uniqBy(normalizeRoutes, 'path');
+      }
       return demoRoutes;
     },
   };

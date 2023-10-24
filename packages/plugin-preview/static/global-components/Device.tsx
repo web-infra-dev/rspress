@@ -1,6 +1,7 @@
 import { usePageData, withBase } from '@rspress/core/runtime';
 import { demos } from 'virtual-meta';
 import { useCallback, useEffect, useState } from 'react';
+import { normalizeId } from '../../src/utils';
 import MobileOperation from './common/mobile-operation';
 import './Device.scss';
 
@@ -12,22 +13,17 @@ export default () => {
     // Do nothing in ssr
     return '';
   };
-  const removeLeadingSlash = (url: string) => {
-    return url.charAt(0) === '/' ? url.slice(1) : url;
-  };
-
-  const getPageKey = (route: string) => {
-    const cleanRoute = removeLeadingSlash(route);
-    return cleanRoute.replace(/\//g, '_').replace(/\.[^.]+$/, '') || 'index';
-  };
   const { page } = usePageData();
-  const pageName = getPageKey(page.pagePath);
+
+  const pageName = `_${normalizeId(page.pagePath)}`;
   const url = `~demo/${pageName}`;
   const haveDemos =
     demos.flat().filter(item => new RegExp(`${pageName}_\\d+`).test(item.id))
       .length > 0;
+  const initialInnerWidth =
+    typeof window !== 'undefined' ? window.innerWidth : 0;
   const [asideWidth, setAsideWidth] = useState('0px');
-  const [innerWidth, setInnerWidth] = useState(window.innerWidth);
+  const [innerWidth, setInnerWidth] = useState(initialInnerWidth);
   const [iframeKey, setIframeKey] = useState(0);
   const refresh = useCallback(() => {
     setIframeKey(Math.random());

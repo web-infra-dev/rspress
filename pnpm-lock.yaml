@@ -196,6 +196,9 @@ importers:
 
   e2e/fixtures/plugin:
     dependencies:
+      '@rspress/plugin-preview':
+        specifier: workspace:*
+        version: link:../../../packages/plugin-preview
       '@rspress/shared':
         specifier: workspace:*
         version: link:../../../packages/shared
@@ -922,6 +925,9 @@ importers:
       codesandbox:
         specifier: 2.2.3
         version: 2.2.3
+      lodash:
+        specifier: 4.17.21
+        version: 4.17.21
       qrcode.react:
         specifier: ^3.1.0
         version: 3.1.0(react@18.2.0)
@@ -932,6 +938,9 @@ importers:
         specifier: 0.1.12
         version: 0.1.12
     devDependencies:
+      '@types/lodash':
+        specifier: 4.14.200
+        version: 4.14.200
       '@types/mdast':
         specifier: ^3.0.10
         version: 3.0.12
@@ -6127,11 +6136,15 @@ packages:
   /@types/lodash-es@4.17.8:
     resolution: {integrity: sha512-euY3XQcZmIzSy7YH5+Unb3b2X12Wtk54YWINBvvGQ5SmMvwb11JQskGsfkH/5HXK77Kr8GF0wkVDIxzAisWtog==}
     dependencies:
-      '@types/lodash': 4.14.197
+      '@types/lodash': 4.14.200
     dev: true
 
   /@types/lodash@4.14.197:
     resolution: {integrity: sha512-BMVOiWs0uNxHVlHBgzTIqJYmj+PgCo4euloGF+5m4okL3rEYzM2EEv78mw8zWSMM57dM7kVIgJ2QDvwHSoCI5g==}
+    dev: true
+
+  /@types/lodash@4.14.200:
+    resolution: {integrity: sha512-YI/M/4HRImtNf3pJgbF+W6FrXovqj+T+/HpENLTooK9PnkacBsDpeP3IpHab40CClUfhNmdM2WTNP2sa2dni5Q==}
     dev: true
 
   /@types/mdast@3.0.12:
