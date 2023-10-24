@@ -46,24 +46,35 @@ interface BuildOptions {
 }
 
 export async function bundle(
-  appDirectory: string,
   docDirectory: string,
   config: UserConfig,
   pluginDriver: PluginDriver,
+  enableSSG: boolean,
 ) {
   try {
     const outputDir = config?.outDir ?? OUTPUT_DIR;
-    const [clientBuilder, ssrBuilder] = await Promise.all([
-      createModernBuilder(docDirectory, config, pluginDriver, false),
-      createModernBuilder(docDirectory, config, pluginDriver, true, {
-        output: {
-          distPath: {
-            root: `${outputDir}/ssr`,
+    if (enableSSG) {
+      const [clientBuilder, ssrBuilder] = await Promise.all([
+        createModernBuilder(docDirectory, config, pluginDriver, false),
+        createModernBuilder(docDirectory, config, pluginDriver, true, {
+          output: {
+            distPath: {
+              root: `${outputDir}/ssr`,
+            },
           },
-        },
-      }),
-    ]);
-    await Promise.all([clientBuilder.build(), ssrBuilder.build()]);
+        }),
+      ]);
+      await Promise.all([clientBuilder.build(), ssrBuilder.build()]);
+    } else {
+      // Only build client bundle
+      const clientBuilder = await createModernBuilder(
+        docDirectory,
+        config,
+        pluginDriver,
+        false,
+      );
+      await clientBuilder.build();
+    }
     // Copy public dir to output folder
     const publicDir = join(docDirectory, PUBLIC_DIR);
     if (await fs.pathExists(publicDir)) {
@@ -86,6 +97,7 @@ export async function renderPages(
   appDirectory: string,
   config: UserConfig,
   pluginDriver: PluginDriver,
+  enableSSG: boolean,
 ) {
   logger.info('Rendering pages...');
   const startTime = Date.now();
@@ -96,19 +108,23 @@ export async function renderPages(
     // There are two cases where we will fallback to CSR:
     // 1. ssr bundle load failed
     // 2. ssr bundle render failed
+    // 3. ssg is disabled
     let render = null;
-    try {
-      const { default: ssrExports } = await import(
-        pathToFileURL(ssrBundlePath).toString()
-      );
-      ({ render } = ssrExports as SSRBundleExports);
-    } catch (e) {
-      logger.error(e);
-      logger.warn(
-        `Failed to load SSR bundle: ${ssrBundlePath}, fallback to CSR.`,
-      );
-      // fallback to csr
+    if (enableSSG) {
+      try {
+        const { default: ssrExports } = await import(
+          pathToFileURL(ssrBundlePath).toString()
+        );
+        ({ render } = ssrExports as SSRBundleExports);
+      } catch (e) {
+        logger.error(e);
+        logger.warn(
+          `Failed to load SSR bundle: ${ssrBundlePath}, fallback to CSR.`,
+        );
+        // fallback to csr
+      }
     }
+
     const routes = routeService.getRoutes();
     const base = config?.base ?? '';
 
@@ -202,6 +218,7 @@ export async function renderPages(
 export async function build(options: BuildOptions) {
   const { docDirectory, appDirectory, config } = options;
   const pluginDriver = new PluginDriver(config, true);
+  const enableSSG = config.ssg ?? true;
   await pluginDriver.init();
   const modifiedConfig = await pluginDriver.modifyConfig();
   await pluginDriver.beforeBuild();
@@ -209,7 +226,7 @@ export async function build(options: BuildOptions) {
   // empty temp dir before build
   await fs.emptyDir(TEMP_DIR);
 
-  await bundle(appDirectory, docDirectory, modifiedConfig, pluginDriver);
-  await renderPages(appDirectory, modifiedConfig, pluginDriver);
+  await bundle(docDirectory, modifiedConfig, pluginDriver, enableSSG);
+  await renderPages(appDirectory, modifiedConfig, pluginDriver, enableSSG);
   await pluginDriver.afterBuild();
 }

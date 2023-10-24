@@ -400,6 +400,7 @@ export async function siteDataVMPlugin(context: FactoryContext) {
     lang: userConfig?.lang || '',
     locales: userConfig?.locales || userConfig.themeConfig?.locales || [],
     logo: userConfig?.logo || '',
+    ssg: userConfig?.ssg ?? true,
     multiVersion: {
       default: userConfig?.multiVersion?.default || '',
       versions: userConfig?.multiVersion?.versions || [],
