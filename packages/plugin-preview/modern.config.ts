@@ -14,6 +14,16 @@ export default defineConfig({
     },
     {
       buildType: 'bundle',
+      format: 'cjs',
+      sourceMap: true,
+      input: ['./src/utils.ts'],
+      target: 'es2020',
+      dts: {
+        respectExternal: false,
+      },
+    },
+    {
+      buildType: 'bundle',
       format: 'esm',
       target: 'es2020',
       dts: false,
