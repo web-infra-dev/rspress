@@ -1,7 +1,7 @@
 import { usePageData, withBase } from '@rspress/core/runtime';
 import { demos } from 'virtual-meta';
 import { useCallback, useEffect, useState } from 'react';
-import { normalizeId } from '../../dist';
+import { normalizeId } from '../../dist/utils';
 import MobileOperation from './common/mobile-operation';
 import './Device.scss';
 
