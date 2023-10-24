@@ -31,6 +31,26 @@ export default defineConfig({
           : 'rspress/theme',
       },
     },
+    html: {
+      tags: [
+        // Configure Google Analytics
+        {
+          tag: 'script',
+          attrs: {
+            async: true,
+            src: 'https://www.googletagmanager.com/gtag/js?id=G-66B2Z6KG0J',
+          },
+        },
+        {
+          tag: 'script',
+          children: `
+window.dataLayer = window.dataLayer || [];
+function gtag(){dataLayer.push(arguments);}
+gtag('js', new Date());
+gtag('config', 'G-66B2Z6KG0J');`,
+        },
+      ],
+    },
   },
   route: {
     exclude: ['**/fragments/**'],
