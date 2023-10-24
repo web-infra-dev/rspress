@@ -290,3 +290,5 @@ import Demo from ${JSON.stringify(demoComponentPath)}
     },
   };
 }
+
+export { normalizeId } from './utils';
