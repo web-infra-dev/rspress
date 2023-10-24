@@ -6,7 +6,7 @@ interface ButtonProps {
   type?: string;
   size?: 'medium' | 'big';
   theme?: 'brand' | 'alt';
-  text: string;
+  text: string | React.ReactNode;
   href?: string;
   external?: boolean;
   className?: string;

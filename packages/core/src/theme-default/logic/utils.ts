@@ -1,3 +1,5 @@
+import htmr from 'htmr';
+import isHtml from 'is-html';
 import { isEqualPath } from '@/runtime';
 
 export function isActive(
@@ -35,4 +37,8 @@ export function getLogoUrl(
 
 export function isMobileDevice() {
   return window.innerWidth < 768;
+}
+
+export function renderHtmlOrText(str: string) {
+  return isHtml(str) ? htmr(str) : str;
 }
