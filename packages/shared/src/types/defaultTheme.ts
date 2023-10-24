@@ -206,7 +206,7 @@ export type SocialLinkIcon =
   | 'slack'
   | 'twitter'
   | 'youtube'
-  | 'weixin'
+  | 'wechat'
   | 'qq'
   | 'juejin'
   | 'zhihu'
