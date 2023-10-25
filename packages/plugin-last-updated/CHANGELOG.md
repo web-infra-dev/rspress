@@ -1,5 +1,7 @@
 # @rspress/plugin-last-updated
 
+## 1.2.0
+
 ## 1.1.3
 
 ## 1.1.2

@@ -1,5 +1,21 @@
 # @modern-js/plugin-rspress
 
+## 1.2.0
+
+### Patch Changes
+
+- Updated dependencies [1575a79]
+- Updated dependencies [8e64681]
+- Updated dependencies [0687d48]
+- Updated dependencies [4143291]
+- Updated dependencies [ac665cd]
+- Updated dependencies [29698ed]
+- Updated dependencies [d57a88c]
+- Updated dependencies [a5b9678]
+  - @rspress/core@1.2.0
+  - @rspress/plugin-preview@1.2.0
+  - @rspress/plugin-api-docgen@1.2.0
+
 ## 1.1.3
 
 ### Patch Changes
