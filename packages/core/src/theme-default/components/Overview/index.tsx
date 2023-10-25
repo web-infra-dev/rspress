@@ -26,10 +26,10 @@ interface Group {
 // In the meantime, some sidebar items also should be shown in the page, we collect them in the group named 'Others' and show them in the page.
 const DEFAULT_GROUP = 'Others';
 
-export function Overview() {
+export function Overview(props: { content: React.ReactNode }) {
   const {
     siteData,
-    page: { routePath },
+    page: { routePath, title },
   } = usePageData();
   const { pages } = siteData;
   const overviewModules = pages.filter(
@@ -90,9 +90,11 @@ export function Overview() {
   return (
     <div className="overview-index mx-auto px-8">
       <div className="flex items-center justify-between">
-        <h1 className="text-3xl leading-10 tracking-tight">Overview</h1>
+        {!title && (
+          <h1 className="text-3xl leading-10 tracking-tight">Overview</h1>
+        )}
       </div>
-
+      {props.content}
       {groups.map(group => (
         <div className="mb-16" key={group.name}>
           {/* If there is no sidebar group, we show the sidebar items directly and hide the group name */}

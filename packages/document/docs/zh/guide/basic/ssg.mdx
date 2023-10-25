@@ -69,3 +69,22 @@ export default defineConfig({
 
 Preview server running at http://localhost:4173/
 ```
+
+## 关闭 SSG
+
+如果你不想使用静态站点生成，可以通过 `ssg` 配置来关闭它。
+
+```js title="rspress.config.ts"
+import { defineConfig } from 'rspress/config';
+
+export default defineConfig({
+  // ...
+  ssg: false,
+});
+```
+
+:::warning 注意
+
+请谨慎关闭 SSG，因为这会丧失上文中提到的静态站点生成的诸多优势。
+
+:::

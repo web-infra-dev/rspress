@@ -69,3 +69,22 @@ After the production build is complete, you can preview the output by using the 
 
 Preview server running at http://localhost:4173/
 ```
+
+## Disabling SSG
+
+If you do not want to use Static Site Generation, you can disable it through the `ssg` config.
+
+```js title="rspress.config.ts"
+import { defineConfig } from 'rspress/config';
+
+export default defineConfig({
+  // ...
+  ssg: false,
+});
+```
+
+:::warning
+
+Please be cautious when disabling SSG, as this will forfeit many of the advantages of Static Site Generation mentioned above.
+
+:::

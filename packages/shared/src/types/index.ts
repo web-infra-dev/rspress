@@ -136,6 +136,10 @@ export interface UserConfig<ThemeConfig = DefaultThemeConfig> {
    */
   search?: SearchOptions;
   /**
+   * Whether to enable ssg, default is true
+   */
+  ssg?: boolean;
+  /**
    * Whether to enable medium-zoom, default is true
    */
   mediumZoom?:
@@ -181,6 +185,7 @@ export interface SiteData<ThemeConfig = NormalizedDefaultThemeConfig> {
   logo: string | { dark: string; light: string };
   pages: BaseRuntimePageInfo[];
   search: SearchOptions;
+  ssg: boolean;
   markdown: {
     showLineNumbers: boolean;
   };

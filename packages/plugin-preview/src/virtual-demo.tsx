@@ -8,13 +8,13 @@ import './virtual-demo.scss';
 export default function Demo(props: { iframePosition: string }) {
   // get the id from the pathname
   const { pathname } = useLocation();
-  const id = pathname.split('/').pop();
-  const normalizedId = normalizeId(id || '');
+  const pureDemoPath = pathname.split('/').filter(Boolean).slice(1)?.join('/');
+  const normalizedId = normalizeId(pureDemoPath || '');
   // get component from virtual-meta
   if (props.iframePosition === 'fixed') {
     const renderDemos = demos
       .flat()
-      .filter(item => new RegExp(`_${normalizedId}_\\d+`).test(item.id));
+      .filter(item => new RegExp(`${normalizedId}_\\d+`).test(item.id));
     return renderDemos.length > 0 ? (
       <NoSSR>
         <div className="preview-container">

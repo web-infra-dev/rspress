@@ -30,7 +30,7 @@ cli
   .alias('dev')
   .action(async (root, options) => {
     setNodeEnv('development');
-
+    let isRestarting = false;
     const cwd = process.cwd();
     let docDirectory: string;
     let cliWatcher: chokidar.FSWatcher;
@@ -69,6 +69,10 @@ cli
           (eventName === 'change' &&
             CONFIG_FILES.includes(path.basename(filepath)))
         ) {
+          if (isRestarting) {
+            return;
+          }
+          isRestarting = true;
           console.log(
             `\n✨ ${eventName} ${chalk.green(
               path.relative(cwd, filepath),
@@ -77,6 +81,7 @@ cli
           await devServer.close();
           await cliWatcher.close();
           await startDevServer();
+          isRestarting = false;
         }
       });
     };
