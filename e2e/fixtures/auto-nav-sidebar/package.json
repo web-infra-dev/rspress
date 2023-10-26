@@ -1,5 +1,5 @@
 {
-  "name": "rspress-auto-nav-sidebar",
+  "name": "@rspress-fixture/rspress-auto-nav-sidebar",
   "version": "1.0.0",
   "private": true,
   "scripts": {

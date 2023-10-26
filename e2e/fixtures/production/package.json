@@ -1,5 +1,5 @@
 {
-  "name": "simple-doc-production",
+  "name": "@rspress-fixture/simple-doc-production",
   "version": "1.0.0",
   "private": true,
   "scripts": {
