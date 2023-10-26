@@ -237,6 +237,7 @@ export interface Feature {
   icon: string;
   title: string;
   details: string;
+  span?: number;
   link?: string;
 }
 

@@ -98,6 +98,8 @@ export interface Feature {
   title: string;
   details: string;
   icon: string;
+  // 卡片栅格的长度，目前仅支持[3, 4, 6]
+  span?: number;
   // feature 卡片跳转链接，选填
   link?: string;
 }
