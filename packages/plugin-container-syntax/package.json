@@ -36,9 +36,6 @@
     "node_modules/",
     "dist/"
   ],
-  "peerDependencies": {
-    "rspress": "^1.0.2"
-  },
   "sideEffects": [
     "*.css",
     "*.less",

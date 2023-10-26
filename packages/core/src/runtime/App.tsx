@@ -1,15 +1,19 @@
 import siteData from 'virtual-site-data';
-import { matchRoutes, useLocation } from 'react-router-dom';
+import {
+  matchRoutes,
+  useLocation,
+  isEqualPath,
+  normalizeRoutePath,
+  DataContext,
+} from '@rspress/runtime';
 import { HelmetProvider } from 'react-helmet-async';
 import React, { useContext, useLayoutEffect } from 'react';
 import { Header, PageData, cleanUrl, isProduction } from '@rspress/shared';
 import globalComponents from 'virtual-global-components';
-import { isEqualPath, normalizeRoutePath } from './utils';
-import { DataContext } from './hooks';
 import 'virtual-global-styles';
 
 // eslint-disable-next-line import/no-commonjs
-const { default: Theme } = require('@theme');
+const { default: Theme } = require('@rspress/theme-default');
 
 type RspressPageMeta = Record<
   string,

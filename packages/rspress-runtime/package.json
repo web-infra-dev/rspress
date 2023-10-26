@@ -1,0 +1,86 @@
+{
+  "name": "@rspress/runtime",
+  "version": "1.2.1",
+  "description": "The Runtime of Rspress Documentation Framework",
+  "bugs": "https://github.com/web-infra-dev/rspress/issues",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/web-infra-dev/rspress",
+    "directory": "packages/rspress-runtime"
+  },
+  "license": "MIT",
+  "type": "module",
+  "jsnext:source": "./src/runtime/index.ts",
+  "types": "./dist/runtime/index.d.ts",
+  "main": "./dist/runtime/index.js",
+  "exports": {
+    ".": {
+      "types": "./dist/runtime/index.d.ts",
+      "default": "./dist/runtime/index.js"
+    },
+    "./server": {
+      "default": "./server.js"
+    }
+  },
+  "scripts": {
+    "dev": "modern build -w",
+    "build": "modern build",
+    "reset": "rimraf ./**/node_modules",
+    "lint": "modern lint",
+    "change": "modern change",
+    "bump": "modern bump",
+    "pre": "modern pre",
+    "change-status": "modern change-status",
+    "gen-release-note": "modern gen-release-note",
+    "release": "modern release",
+    "new": "modern new",
+    "test": "echo nothing",
+    "upgrade": "modern upgrade"
+  },
+  "engines": {
+    "node": ">=14.17.6"
+  },
+  "eslintIgnore": [
+    "node_modules/",
+    "dist/"
+  ],
+  "dependencies": {
+    "@rspress/shared": "workspace:*",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "react-helmet-async": "^1.3.0",
+    "react-router-dom": "^6.8.1"
+  },
+  "devDependencies": {
+    "@modern-js/tsconfig": "2.38.0",
+    "@modern-js/types": "2.38.0",
+    "@types/jest": "^26.0.9",
+    "@types/react": "^18",
+    "@types/react-dom": "^18",
+    "husky": "^8",
+    "lint-staged": "~13.1.0",
+    "prettier": "^2.6.2",
+    "typescript": "^5"
+  },
+  "sideEffects": [
+    "*.css",
+    "*.less",
+    "*.sass",
+    "*.scss",
+    "**/virtual-global-styles.js",
+    "virtual-global-styles",
+    "./src/theme-default/styles/index.ts"
+  ],
+  "files": [
+    "bin",
+    "dist",
+    "src",
+    "runtime.ts",
+    "server.js"
+  ],
+  "publishConfig": {
+    "access": "public",
+    "provenance": true,
+    "registry": "https://registry.npmjs.org/"
+  }
+}

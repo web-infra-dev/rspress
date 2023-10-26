@@ -124,7 +124,7 @@ export class RouteService {
           ...this.#exclude,
           '**/node_modules/**',
           '**/.eslintrc.js',
-          '**/.turbo/**',
+          '**/.nx-cache/**',
         ],
       })
       .sort();

@@ -1,0 +1,10 @@
+{
+  "compilerOptions": {
+    "rootDir": ".",
+    "baseUrl": ".",
+    "skipLibCheck": true,
+    "jsx": "react-jsx",
+    "esModuleInterop": true
+  },
+  "include": ["./**/*", "../../server.js"]
+}

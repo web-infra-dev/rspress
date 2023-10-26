@@ -1,5 +1,3 @@
-import path from 'path';
-import crypto from 'crypto';
 import { createRequire } from 'module';
 import { defineConfig, moduleTools } from '@modern-js/module-tools';
 import { tailwindConfig } from './tailwind.config';
@@ -77,52 +75,6 @@ export default defineConfig({
       },
       tsconfig: './src/runtime/tsconfig.json',
       externals: COMMON_EXTERNALS,
-    },
-    {
-      input: {
-        bundle: './src/theme-default/index.ts',
-      },
-      copy: {
-        patterns: [
-          {
-            from: './.theme-entry.js',
-            to: './index.js',
-            context: __dirname,
-          },
-          {
-            from: './.theme-entry.d.ts',
-            to: './index.d.ts',
-            context: __dirname,
-          },
-        ],
-      },
-      outDir: 'dist/theme',
-      sourceMap: true,
-      format: 'esm',
-      externals: COMMON_EXTERNALS,
-      asset: {
-        svgr: true,
-      },
-      style: {
-        tailwindcss: {
-          // ...tailwindConfig,
-          darkMode: 'class',
-        },
-        modules: {
-          localsConvention: 'camelCase',
-          generateScopedName(name, filename) {
-            const relative = path
-              .relative(__dirname, filename)
-              .replace(/\\/g, '/');
-            const hash = crypto
-              .createHash('sha256')
-              .update(relative)
-              .digest('hex')
-              .slice(0, 5);
-            return `${name}_${hash}`;
-          },
-        },
-      },
     },
   ],
 });

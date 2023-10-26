@@ -1,6 +1,6 @@
 {
   "private": true,
-  "name": "modern-js",
+  "name": "@rspress-fixture/modern-js",
   "version": "0.1.0",
   "jsnext:source": "./src/index.ts",
   "types": "./dist/types/index.d.ts",

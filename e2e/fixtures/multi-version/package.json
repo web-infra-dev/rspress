@@ -1,5 +1,5 @@
 {
-  "name": "rspress-multi-version-docs",
+  "name": "@rspress-fixture/rspress-multi-version-docs",
   "version": "1.0.0",
   "private": true,
   "scripts": {
