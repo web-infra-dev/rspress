@@ -117,6 +117,27 @@ If you need to clean all `node_modules/*` in the project, run the `reset` comman
 pnpm run reset
 ```
 
+### Debug Code
+
+After `build`, we need to link this repo to the global, run the link command:
+
+```sh
+pnpm link --global
+```
+
+At debug repo, replace the version in node_modules with the local version:
+
+```sh
+pnpm link --global rspress
+```
+
+If you want to debug package, first open the package directory, then run the `build` command:
+
+```sh
+# Replace some-path with the path of the package you want to work on
+cd ./packages/some-path
+pnpm run dev
+```
 ---
 
 ## Testing
