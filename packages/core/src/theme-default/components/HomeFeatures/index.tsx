@@ -1,34 +1,25 @@
-import { FrontMatterMeta } from '@rspress/shared';
+import { FrontMatterMeta, Feature } from '@rspress/shared';
 import styles from './index.module.scss';
 
-const PRESET_COUNT = [2, 3, 4];
+const GRID_PREFIX = 'grid-';
 
-const getGridClass = (count?: number): string => {
-  if (!count) {
-    return '';
-  } else if (PRESET_COUNT.includes(count)) {
-    return `grid-${12 / count}`;
-  } else if (count % 3 === 0) {
-    return 'grid-4';
-  } else if (count % 2 === 0) {
-    return 'grid-6';
-  }
-  return '';
+const getGridClass = (feature: Feature): string => {
+  const { span } = feature;
+  return `${GRID_PREFIX}${span || 4}`;
 };
 
 export function HomeFeature({ frontmatter }: { frontmatter: FrontMatterMeta }) {
   const features = frontmatter?.features;
-  const gridClass = getGridClass(features?.length);
 
   return (
-    <div className="overflow-hidden m-auto flex flex-wrap justify-between max-w-6xl">
+    <div className="overflow-hidden m-auto flex flex-wrap max-w-6xl">
       {features?.map(feature => {
         const { icon, title, details, link } = feature;
         return (
           <div
             key={title}
             className={`${
-              gridClass ? styles[gridClass] : 'w-full'
+              styles[getGridClass(feature)]
             } rounded hover:var(--rp-c-brand)`}
           >
             <div className="h-full p-2">
