@@ -16,7 +16,7 @@ export const LinkContent = (props: ILinkContentComp) => {
       // eslint-disable-next-line react/no-danger
       <div dangerouslySetInnerHTML={{ __html: icon.svg }}></div>
     ) : (
-      presetIcons[icon as keyof typeof presetIcons]
+      presetIcons[icon]
     );
 
   const [contentVisible, setContentVisible] = useState(false);
