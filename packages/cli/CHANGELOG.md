@@ -1,5 +1,30 @@
 # rspress
 
+## 1.2.1
+
+### Patch Changes
+
+- Updated dependencies [b8226b0]
+  - @rspress/core@1.2.1
+  - @rspress/shared@1.2.1
+
+## 1.2.0
+
+### Patch Changes
+
+- 29698ed: fix: app crashed when creating \_meta.json or appearing frontmatter syntax error
+- Updated dependencies [1575a79]
+- Updated dependencies [8e64681]
+- Updated dependencies [0687d48]
+- Updated dependencies [4143291]
+- Updated dependencies [ac665cd]
+- Updated dependencies [29698ed]
+- Updated dependencies [d57a88c]
+- Updated dependencies [31e50ed]
+- Updated dependencies [a5b9678]
+  - @rspress/core@1.2.0
+  - @rspress/shared@1.2.0
+
 ## 1.1.3
 
 ### Patch Changes

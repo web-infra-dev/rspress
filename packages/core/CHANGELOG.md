@@ -1,5 +1,40 @@
 # @rspress/core
 
+## 1.2.1
+
+### Patch Changes
+
+- b8226b0: fix: rspress-doc-container margin css style
+  - @rspress/plugin-auto-nav-sidebar@1.2.1
+  - @rspress/plugin-container-syntax@1.2.1
+  - @rspress/plugin-last-updated@1.2.1
+  - @rspress/plugin-medium-zoom@1.2.1
+  - @rspress/shared@1.2.1
+
+## 1.2.0
+
+### Minor Changes
+
+- 0687d48: feat: add runtime module hook
+- d57a88c: feat: support ssg config
+
+### Patch Changes
+
+- 1575a79: fix: anchor missed when link exists in header
+- 8e64681: fix social link message and image display bug
+- 4143291: fix(core): Fix background of HiddenLinks to support dark theme
+- ac665cd: fix: production error for preview plugin
+- 29698ed: fix: app crashed when creating \_meta.json or appearing frontmatter syntax error
+- a5b9678: feat: support content in overview component
+- Updated dependencies [0687d48]
+- Updated dependencies [d57a88c]
+- Updated dependencies [31e50ed]
+  - @rspress/shared@1.2.0
+  - @rspress/plugin-auto-nav-sidebar@1.2.0
+  - @rspress/plugin-container-syntax@1.2.0
+  - @rspress/plugin-last-updated@1.2.0
+  - @rspress/plugin-medium-zoom@1.2.0
+
 ## 1.1.3
 
 ### Patch Changes

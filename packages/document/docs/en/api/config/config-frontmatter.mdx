@@ -118,6 +118,8 @@ export interface Feature {
   title: string;
   details: string;
   icon: string;
+  // The length of the card grid, currently only support[3, 4, 6]
+  span?: number;
   // The link of the feature, not required.
   link?: string;
 }

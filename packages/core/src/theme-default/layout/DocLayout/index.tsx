@@ -81,7 +81,7 @@ export function DocLayout(props: DocLayoutProps) {
       {beforeDoc}
       {hasSidebar ? <SideMenu /> : null}
       <div
-        className={`${styles.content} rspress-doc-container flex flex-shrink-0 m-auto`}
+        className={`${styles.content} rspress-doc-container flex flex-shrink-0 mx-auto`}
       >
         <div className="w-full">
           {isOverviewPage ? (
