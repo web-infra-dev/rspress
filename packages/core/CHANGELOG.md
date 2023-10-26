@@ -1,5 +1,16 @@
 # @rspress/core
 
+## 1.2.1
+
+### Patch Changes
+
+- b8226b0: fix: rspress-doc-container margin css style
+  - @rspress/plugin-auto-nav-sidebar@1.2.1
+  - @rspress/plugin-container-syntax@1.2.1
+  - @rspress/plugin-last-updated@1.2.1
+  - @rspress/plugin-medium-zoom@1.2.1
+  - @rspress/shared@1.2.1
+
 ## 1.2.0
 
 ### Minor Changes
