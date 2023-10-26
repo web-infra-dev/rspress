@@ -89,6 +89,11 @@ export default defineConfig({
             to: './index.js',
             context: __dirname,
           },
+          {
+            from: './.theme-entry.d.ts',
+            to: './index.d.ts',
+            context: __dirname,
+          },
         ],
       },
       outDir: 'dist/theme',
