@@ -60,10 +60,9 @@ jobs:
         uses: actions/cache@v3
         with:
           path: .nx-cache
-          key: nx-${{ github.ref_name }}-${{ github.sha }}-${{ runner.os }}
+          key: nx-${{ github.ref_name }}-${{ runner.os }}-${{ github.sha }}
           restore-keys: |
-            nx-${{ github.ref_name }}-
-            nx-
+            nx-${{ github.ref_name }}-${{ runner.os }}
 
       - name: Install Dependencies
         if: ${{steps.skip-ci.outputs.RESULT != 'true'}}
