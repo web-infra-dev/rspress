@@ -1,4 +1,4 @@
-import { PrismLight as SyntaxHighlighter } from 'react-syntax-highlighter';
+import { PrismAsyncLight as SyntaxHighlighter } from 'react-syntax-highlighter';
 import languagesInfo from 'virtual-prism-languages';
 import copy from 'copy-to-clipboard';
 import { useRef } from 'react';
