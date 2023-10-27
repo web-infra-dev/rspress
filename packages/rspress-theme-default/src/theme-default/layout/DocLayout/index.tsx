@@ -47,7 +47,10 @@ export function DocLayout(props: DocLayoutProps) {
     // if in iframe, default value is false
     const defaultHasAside =
       typeof window === 'undefined' ? true : window.top === window.self;
-    return frontmatter?.outline ?? themeConfig?.outline ?? defaultHasAside;
+    return (
+      (frontmatter?.outline ?? themeConfig?.outline ?? defaultHasAside) &&
+      !isOverviewPage
+    );
   };
   const [hasAside, setHasAside] = useState(getHasAside());
 
@@ -85,9 +88,7 @@ export function DocLayout(props: DocLayoutProps) {
       >
         <div className="w-full">
           {isOverviewPage ? (
-            <div className="rspress-doc">
-              <Overview content={docContent} />
-            </div>
+            <Overview content={docContent} />
           ) : (
             <div>
               <div className="rspress-doc">{docContent}</div>
