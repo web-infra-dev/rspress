@@ -1,7 +1,7 @@
 ---
-'@rspress/core': major
+'@rspress/core': minor
 '@rspress/docs': minor
 '@rspress/shared': minor
 ---
 
-support home feature grid 3xN & costom grid length
+feat: support home feature grid 3xN & costom grid length

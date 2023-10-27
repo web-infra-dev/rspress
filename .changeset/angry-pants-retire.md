@@ -1,5 +1,5 @@
 ---
-'@rspress/theme-default': major
+'@rspress/theme-default': patch
 ---
 
-prevent hero's some fields from not being strings
+fix: prevent hero's some fields from not being strings
