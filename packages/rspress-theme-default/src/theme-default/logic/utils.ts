@@ -3,6 +3,7 @@ import React from 'react';
 import htmr from 'htmr';
 import isHtml from 'is-html';
 import { isEqualPath } from '@rspress/runtime';
+import { isNull, isNumber } from 'lodash-es';
 
 export function isActive(
   currentPath: string,
@@ -41,6 +42,10 @@ export function isMobileDevice() {
   return window.innerWidth < 768;
 }
 
-export function renderHtmlOrText(str: string) {
+export function renderHtmlOrText(str: string | number | null) {
+  if (isNull(str) || isNumber(str)) {
+    return str;
+  }
+
   return isHtml(str) ? htmr(str) : str;
 }
