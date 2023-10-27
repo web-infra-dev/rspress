@@ -54,7 +54,7 @@ export function Editor(props: EditorProps) {
       return themeProp;
     }
     return dark ? 'vs-dark' : 'light';
-  }, [dark]);
+  }, [themeProp, dark]);
 
   return (
     <div className={`rspress-playground-editor ${className}`}>
