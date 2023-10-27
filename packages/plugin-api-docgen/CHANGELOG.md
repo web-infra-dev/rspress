@@ -1,5 +1,15 @@
 # @rspress/plugin-api-docgen
 
+## 2.0.0
+
+### Patch Changes
+
+- Updated dependencies [9aa5bbf]
+- Updated dependencies [4a6a052]
+- Updated dependencies [7dd0103]
+- Updated dependencies [a267cc9]
+  - @rspress/core@2.0.0
+
 ## 1.2.1
 
 ## 1.2.0

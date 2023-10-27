@@ -1,5 +1,12 @@
 # @rspress/docs
 
+## 2.0.0
+
+### Minor Changes
+
+- 9aa5bbf: feat: add support HTML to frontmatter hero config
+- 7dd0103: support home feature grid 3xN & costom grid length
+
 ## 1.2.1
 
 ## 1.2.0

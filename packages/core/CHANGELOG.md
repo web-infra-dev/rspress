@@ -1,5 +1,29 @@
 # @rspress/core
 
+## 2.0.0
+
+### Major Changes
+
+- 7dd0103: support home feature grid 3xN & costom grid length
+
+### Minor Changes
+
+- 9aa5bbf: feat: add support HTML to frontmatter hero config
+
+### Patch Changes
+
+- 4a6a052: feat(core): beautify <Tab> sytle when using with code title on default theme
+- a267cc9: fix: theme types missed
+- Updated dependencies [0ff27fd]
+- Updated dependencies [7dd0103]
+  - @rspress/theme-default@2.0.0
+  - @rspress/shared@2.0.0
+  - @rspress/plugin-auto-nav-sidebar@2.0.0
+  - @rspress/plugin-container-syntax@2.0.0
+  - @rspress/plugin-last-updated@2.0.0
+  - @rspress/plugin-medium-zoom@2.0.0
+  - @rspress/runtime@2.0.0
+
 ## 1.2.1
 
 ### Patch Changes
