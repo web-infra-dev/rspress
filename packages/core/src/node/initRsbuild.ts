@@ -2,15 +2,13 @@ import path from 'path';
 import type { UserConfig } from '@rspress/shared';
 import fs from '@modern-js/utils/fs-extra';
 import {
+  MDX_REGEXP,
   RSPRESS_TEMP_DIR,
   isDebugMode,
   removeTrailingSlash,
 } from '@rspress/shared';
-import type { BuilderInstance } from '@modern-js/builder';
-import type {
-  BuilderConfig,
-  BuilderRspackProvider,
-} from '@modern-js/builder-rspack-provider';
+import type { RsbuildInstance } from '@rsbuild/core';
+import type { RsbuildConfig } from '@rsbuild/core/rspack-provider';
 import sirv from 'sirv';
 import { tailwindConfig } from '../../tailwind.config';
 import {
@@ -21,7 +19,7 @@ import {
   isProduction,
   PUBLIC_DIR,
 } from './constants';
-import { builderDocVMPlugin } from './runtimeModule';
+import { rsbuildPluginDocVM } from './runtimeModule';
 import { serveSearchIndexMiddleware } from './searchIndex';
 import { detectReactVersion, resolveReactAlias } from './utils';
 import { initRouteService } from './route/init';
@@ -41,7 +39,7 @@ async function createInternalBuildConfig(
   isSSR: boolean,
   routeService: RouteService,
   pluginDriver: PluginDriver,
-): Promise<BuilderConfig> {
+): Promise<RsbuildConfig> {
   const cwd = process.cwd();
   const { default: fs } = await import('@modern-js/utils/fs-extra');
   const CUSTOM_THEME_DIR =
@@ -97,16 +95,15 @@ async function createInternalBuildConfig(
     html: {
       favicon: normalizeIcon(config?.icon),
       template: path.join(PACKAGE_ROOT, 'index.html'),
+      outputStructure: 'nested',
     },
     output: {
       distPath: {
         // `root` must be a relative path in Builder
         root: path.isAbsolute(outDir) ? path.relative(cwd, outDir) : outDir,
+        html: 'html',
       },
-      // TODO: switch to 'usage' if Rspack supports it
-      polyfill: 'entry',
-      svgDefaultExport: 'component',
-      disableTsChecker: true,
+      polyfill: 'usage',
       // Disable production source map, it is useless for doc site
       disableSourceMap: isProduction(),
       overrideBrowserslist: browserslist,
@@ -125,7 +122,11 @@ async function createInternalBuildConfig(
         ),
         ...(await resolveReactAlias(reactVersion)),
       },
-      include: [PACKAGE_ROOT],
+      include: [
+        PACKAGE_ROOT,
+        // To compile components/MediumZoom.tsx
+        /\/plugin-medium-zoom/,
+      ],
       define: {
         'process.env.__ASSET_PREFIX__': JSON.stringify(assetPrefix),
         'process.env.__SSR__': JSON.stringify(isSSR),
@@ -161,12 +162,21 @@ async function createInternalBuildConfig(
           );
         }
       },
-      bundlerChain(chain) {
+      bundlerChain(chain, { CHAIN_ID }) {
+        const swcLoaderOptions = chain.module
+          .rule(CHAIN_ID.RULE.JS)
+          .use(CHAIN_ID.USE.SWC)
+          .get('options');
+
         chain.module
           .rule('MDX')
-          .type('jsx')
-          .test(/\.mdx?$/)
+          .type('javascript/auto')
+          .test(MDX_REGEXP)
           .oneOf('MDXCompile')
+          .use('builtin:swc-loader')
+          .loader('builtin:swc-loader')
+          .options(swcLoaderOptions)
+          .end()
           .use('mdx-loader')
           .loader(require.resolve('../loader.cjs'))
           .options({
@@ -184,19 +194,27 @@ async function createInternalBuildConfig(
             multiple: config?.replaceRules || [],
           });
 
+        if (chain.plugins.has(CHAIN_ID.PLUGIN.REACT_FAST_REFRESH)) {
+          chain.plugin(CHAIN_ID.PLUGIN.REACT_FAST_REFRESH).tap(options => {
+            options[0] ??= {};
+            options[0].include = [/\.([cm]js|[jt]sx?|flow)$/i, MDX_REGEXP];
+            return options;
+          });
+        }
+
         chain.resolve.extensions.prepend('.md').prepend('.mdx').prepend('.mjs');
       },
     },
   };
 }
 
-export async function createModernBuilder(
+export async function initRsbuild(
   rootDir: string,
   config: UserConfig,
   pluginDriver: PluginDriver,
   isSSR = false,
-  extraBuilderConfig?: BuilderConfig,
-): Promise<BuilderInstance<BuilderRspackProvider>> {
+  extraBuilderConfig?: RsbuildConfig,
+): Promise<RsbuildInstance> {
   const cwd = process.cwd();
   const userDocRoot = path.resolve(rootDir || config?.root || cwd);
   const builderPlugins = config?.builderPlugins ?? [];
@@ -213,11 +231,10 @@ export async function createModernBuilder(
     pluginDriver,
   });
   const {
-    default: { createBuilder, mergeBuilderConfig },
-  } = await import('@modern-js/builder');
-  const {
-    default: { builderRspackProvider },
-  } = await import('@modern-js/builder-rspack-provider');
+    default: { createRsbuild, mergeRsbuildConfig },
+  } = await import('@rsbuild/core');
+  const { pluginReact } = await import('@rsbuild/plugin-react');
+  const { pluginSvgr } = await import('@rsbuild/plugin-svgr');
 
   const internalBuilderConfig = await createInternalBuildConfig(
     userDocRoot,
@@ -227,8 +244,12 @@ export async function createModernBuilder(
     pluginDriver,
   );
 
-  const builderProvider = builderRspackProvider({
-    builderConfig: mergeBuilderConfig(
+  const rsbuild = await createRsbuild({
+    target: isSSR ? 'node' : 'web',
+    entry: {
+      main: isSSR ? SSR_ENTRY : CLIENT_ENTRY,
+    },
+    rsbuildConfig: mergeRsbuildConfig(
       internalBuilderConfig,
       ...(config?.plugins?.map(plugin => plugin.builderConfig ?? {}) || []),
       config?.builderConfig || {},
@@ -236,16 +257,8 @@ export async function createModernBuilder(
     ),
   });
 
-  const builder = await createBuilder(builderProvider, {
-    target: isSSR ? 'node' : 'web',
-    entry: {
-      main: isSSR ? SSR_ENTRY : CLIENT_ENTRY,
-    },
-    framework: 'Rspress',
-  });
-
-  builder.addPlugins([
-    builderDocVMPlugin({
+  rsbuild.addPlugins([
+    rsbuildPluginDocVM({
       userDocRoot,
       config,
       isSSR,
@@ -253,8 +266,12 @@ export async function createModernBuilder(
       routeService,
       pluginDriver,
     }),
+    pluginReact(),
+    pluginSvgr({
+      svgDefaultExport: 'component',
+    }),
     ...builderPlugins,
   ]);
 
-  return builder;
+  return rsbuild;
 }

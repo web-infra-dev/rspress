@@ -1,5 +1,5 @@
 import type { UserConfig } from '@rspress/shared';
-import type { BuilderPlugin } from '@modern-js/builder';
+import type { RsbuildPlugin } from '@rsbuild/core';
 import { RspackVirtualModulePlugin } from 'rspack-plugin-virtual-module';
 import { RouteService } from '../route/RouteService';
 import { PluginDriver } from '../PluginDriver';
@@ -57,10 +57,10 @@ export const runtimeModuleFactory: RuntimeModuleFactory[] = [
 ];
 
 // We will use this plugin to generate runtime module in browser, which is important to ensure the client have access to some compile-time data
-// TODO: We can seperate the compile-time data generation and runtime module generation logic instead of putting them together(such as `siteDataVMPlugin` plugin, it does too much thing) to make it more clear
-export function builderDocVMPlugin(
+// TODO: We can separate the compile-time data generation and runtime module generation logic instead of putting them together(such as `siteDataVMPlugin` plugin, it does too much thing) to make it more clear
+export function rsbuildPluginDocVM(
   factoryContext: Omit<FactoryContext, 'alias'>,
-): BuilderPlugin {
+): RsbuildPlugin {
   const { pluginDriver } = factoryContext;
   return {
     name: 'vmBuilderPlugin',

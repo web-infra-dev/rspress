@@ -1,6 +1,6 @@
 import { UserConfig, removeLeadingSlash } from '@rspress/shared';
 import { logger } from '@rspress/shared/logger';
-import { createModernBuilder } from './createBuilder';
+import { initRsbuild } from './initRsbuild';
 import { writeSearchIndex } from './searchIndex';
 import { PluginDriver } from './PluginDriver';
 
@@ -26,7 +26,7 @@ export async function dev(options: DevOptions): Promise<ServerInstance> {
     await pluginDriver.beforeBuild();
     // empty temp dir before build
     // await fs.emptyDir( TEMP_DIR);
-    const builder = await createModernBuilder(
+    const builder = await initRsbuild(
       docDirectory,
       modifiedConfig,
       pluginDriver,
