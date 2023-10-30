@@ -20,7 +20,7 @@ test.describe('Auto nav and sidebar test', async () => {
   });
 
   test('Should render nav and sidebar correctly', async ({ page }) => {
-    await page.goto(`http://localhost:${appPort}`, {
+    await page.goto(`http://localhost:${appPort}/guide/`, {
       waitUntil: 'networkidle',
     });
 
