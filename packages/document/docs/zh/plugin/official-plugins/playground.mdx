@@ -40,7 +40,7 @@ export default defineConfig({
 
 内部组件的组件代码声明在 mdx 文件内。支持 jsx 或 tsx。你可以在 mdx 文件中声明如下的代码块：
 
-````md
+````mdx
 ```jsx
 import React from 'react';
 
@@ -54,7 +54,7 @@ export default App;
 
 另外，你可以通过 `direction` 参数，指定编辑器与预览区域的布局；支持 `horizontal` 或 `vertical`：
 
-````md
+````mdx
 ```jsx direction=vertical
 import React from 'react';
 
@@ -70,7 +70,7 @@ export default App;
 
 但是如果你想保留代码块的样式，而不是将其作为组件渲染，你可以添加 `pure` 标识符来指定，使用方式如下：
 
-````md pure
+````mdx
 ```tsx pure
 import React from 'react';
 
@@ -84,7 +84,7 @@ export default App;
 
 如果你配置了 `defaultInternalBehavior` 为 `'pure'`，那么默认情况下，Rspress 将不会渲染这个组件，而是将其作为代码块来渲染。这种情况下，如果需要将某个代码块渲染为组件，可以通过添加 `playground` 标识符来指定，使用方式如下：
 
-````md
+````mdx
 ```tsx playground
 function App() {
   return <div>Hello World</div>;
