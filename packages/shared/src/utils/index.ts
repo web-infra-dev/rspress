@@ -242,7 +242,10 @@ export function withBase(url = '/', base = ''): string {
 }
 
 export function removeBase(url: string, base: string) {
-  return addLeadingSlash(url).replace(normalizeSlash(base), '');
+  return addLeadingSlash(url).replace(
+    new RegExp(`^${normalizeSlash(base)}`),
+    '',
+  );
 }
 
 export function withoutHash(url: string) {
