@@ -41,7 +41,7 @@ export async function runCommand(
       const message = data.toString();
       const bootupMarkers = {
         dev: /Local:/i,
-        preview: /Local:/i,
+        preview: /(Local:|Preview server)/i,
         build: /Pages rendered/,
       };
 
