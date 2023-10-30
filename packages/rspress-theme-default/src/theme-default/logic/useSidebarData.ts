@@ -28,6 +28,10 @@ export const getSidebarGroupData = (
     // Such as `/guide/getting-started`, it will return the guide groups and the group name `Introduction`
     const result = sidebar[name].find(group => {
       const match = (item: NormalizedSidebarGroup | SidebarItem): boolean => {
+        // Fix https://github.com/web-infra-dev/rspress/issues/241
+        if (!currentPathname.startsWith(withBase(name))) {
+          return false;
+        }
         const equalFunc = () =>
           isEqualPath(withBase(item.link), currentPathname);
         if ('items' in item) {

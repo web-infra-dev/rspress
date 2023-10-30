@@ -31,8 +31,7 @@
     "upgrade": "modern upgrade"
   },
   "dependencies": {
-    "@modern-js/builder": "2.38.0",
-    "@modern-js/builder-rspack-provider": "2.38.0",
+    "@rsbuild/core": "0.0.10",
     "unified": "10.1.2",
     "chalk": "4.1.2",
     "rslog": "^1.1.0"

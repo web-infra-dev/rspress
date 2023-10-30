@@ -33,10 +33,14 @@ export default defineConfig({
 
 内部组件的组件代码声明在 mdx 文件内。你可以在 mdx 文件中声明如下的代码块：
 
-````md
+````mdx
 ```tsx
 function App() {
-  return <div>Hello World</div>;
+  return (
+    <div>
+      <span>Hello World</span>
+    </div>
+  );
 }
 
 export default App;
@@ -47,7 +51,7 @@ export default App;
 
 但是如果你想保留代码块的样式，而不是将其作为组件渲染，你可以添加 `pure` 标识符来指定，使用方式如下：
 
-````md
+````mdx
 ```tsx pure
 function App() {
   return <div>Hello World</div>;
@@ -58,7 +62,7 @@ export default App;
 
 如果你配置了 `defaultInternalBehavior` 为 `'pure'`，那么默认情况下，Rspress 将不会渲染这个组件，而是将其作为代码块来渲染。这种情况下，如果需要将某个代码块渲染为组件，可以通过添加 `preview` 标识符来指定，使用方式如下：
 
-````md
+````mdx
 ```tsx preview
 function App() {
   return <div>Hello World</div>;

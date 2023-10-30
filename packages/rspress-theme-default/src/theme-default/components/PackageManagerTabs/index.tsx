@@ -11,10 +11,10 @@ export interface PackageManagerTabProps {
   command:
     | string
     | {
-        npm: string;
-        yarn: string;
-        pnpm: string;
-        bun: string;
+        npm?: string;
+        yarn?: string;
+        pnpm?: string;
+        bun?: string;
       };
   additionalTabs?: {
     tool: string;
@@ -23,7 +23,7 @@ export interface PackageManagerTabProps {
 }
 
 function normalizeCommand(command: string): string {
-  if (!command.includes('install')) {
+  if (!command?.includes('install')) {
     return command;
   }
   // If command include `install` and package name, replace `install` with `add`
@@ -43,10 +43,10 @@ export function PackageManagerTabs({
   additionalTabs = [],
 }: PackageManagerTabProps) {
   let commandInfo: {
-    npm: string;
-    yarn: string;
-    pnpm: string;
-    bun: string;
+    npm?: string;
+    yarn?: string;
+    pnpm?: string;
+    bun?: string;
     [key: string]: string;
   };
 

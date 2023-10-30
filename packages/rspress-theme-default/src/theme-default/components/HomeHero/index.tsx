@@ -48,18 +48,20 @@ export function HomeHero({ frontmatter }: { frontmatter: FrontMatterMeta }) {
           >
             {renderHtmlOrText(hero.tagline)}
           </p>
-          <div className="flex flex-wrap justify-center gap-3 m--1.5 pt-8 z-10">
-            {hero.actions.map(action => (
-              <div className="flex flex-shrink-0 p-1" key={action.link}>
-                <Button
-                  type="a"
-                  text={renderHtmlOrText(action.text)}
-                  href={normalizeHref(action.link)}
-                  theme={action.theme}
-                />
-              </div>
-            ))}
-          </div>
+          {hero.actions?.length && (
+            <div className="flex flex-wrap justify-center gap-3 m--1.5 pt-8 z-10">
+              {hero.actions.map(action => (
+                <div className="flex flex-shrink-0 p-1" key={action.link}>
+                  <Button
+                    type="a"
+                    text={renderHtmlOrText(action.text)}
+                    href={normalizeHref(action.link)}
+                    theme={action.theme}
+                  />
+                </div>
+              ))}
+            </div>
+          )}
         </div>
 
         {hasImage ? (

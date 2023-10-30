@@ -1,10 +1,10 @@
 # 构建能力扩展
 
-## Modern.js Builder
+## Rsbuild
 
-Rspress 底层基于 [Modern.js Builder](https://modernjs.dev/builder/) 的 Rspack 模式来进行文档构建。
+Rspress 底层基于 [Rsbuild](https://github.com/web-infra-dev/rsbuild) 来进行文档构建。
 
-Modern.js Builder 提供了丰富的构建配置，你可以使用 [builderConfig](/api/config/config-build.html#builderconfig) 来自定义这些配置项。比如，将产物目录修改为 `doc_dist`：
+Rsbuild 提供了丰富的构建配置，你可以使用 [builderConfig](/api/config/config-build.html#builderconfig) 来自定义这些配置项。比如，将产物目录修改为 `doc_dist`：
 
 ```ts title="rspress.config.ts"
 import { defineConfig } from 'rspress/config';
@@ -27,7 +27,7 @@ export default defineConfig({
 
 :::tip
 
-你可以通过 [Modern.js Builder - API](https://modernjs.dev/builder/api/index.html) 的文档来了解更多的配置项。
+你可以通过 [Rsbuild - 配置](https://rsbuild.dev/zh/config/) 的文档来了解更多的配置项。
 
 注意，Rspress 仅支持 Rspack 打包工具，因此一些与 webpack 相关的配置项将无法生效，比如 `tools.webpack`。当然，你可以通过 `tools.rspack` 来修改 Rspack 的配置。
 
