@@ -126,7 +126,7 @@ async function createInternalBuildConfig(
       include: [
         PACKAGE_ROOT,
         // To compile components/MediumZoom.tsx
-        /\/plugin-medium-zoom/,
+        /[\\/]plugin-medium-zoom/,
       ],
       define: {
         'process.env.__ASSET_PREFIX__': JSON.stringify(assetPrefix),
