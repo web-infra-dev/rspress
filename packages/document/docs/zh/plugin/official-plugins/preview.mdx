@@ -33,10 +33,14 @@ export default defineConfig({
 
 内部组件的组件代码声明在 mdx 文件内。你可以在 mdx 文件中声明如下的代码块：
 
-````md
+````mdx
 ```tsx
 function App() {
-  return <div>Hello World</div>;
+  return (
+    <div>
+      <span>Hello World</span>
+    </div>
+  );
 }
 
 export default App;
@@ -47,7 +51,7 @@ export default App;
 
 但是如果你想保留代码块的样式，而不是将其作为组件渲染，你可以添加 `pure` 标识符来指定，使用方式如下：
 
-````md pure
+````mdx
 ```tsx pure
 function App() {
   return <div>Hello World</div>;
@@ -114,6 +118,7 @@ interface PreviewOptions {
 **试验性功能**，支持在 Codesandbox 打开 Demo，目前不支持 iframePosition 为 fixed 的情况。
 
 此功能，仍有一些使用上的限制：
+
 - 不能自定义 sandbox 依赖：默认仅会声明 react、react-dom、self 三个依赖，这意味着你无法在 demo 里引用其他依赖，
-同时，你需要确保 self 已经发包至 npm，这适用于模块类型的项目。
+  同时，你需要确保 self 已经发包至 npm，这适用于模块类型的项目。
 - 不能自定义文件：这意味着你无法在 demo 里引用其他文件。
