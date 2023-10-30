@@ -49,8 +49,19 @@ It's worth noting that you need to export the component as default, and Rspress 
 
 But if you want to keep the style of the code block instead of rendering it as a component, you can add the `pure` identifier to specify, the usage is as follows:
 
-````md pure
+````md
 ```tsx pure
+function App() {
+  return <div>Hello World</div>;
+}
+export default App;
+```
+````
+
+If you have set `defaultInternalBehavior` to `'pure'`, Rspress will not render this component by default, but instead display it as a code block. If you want to render a code block as a component in this situation, you can do add the `preview` identifier to specify, the usage is as follows:
+
+````md
+```tsx preview
 function App() {
   return <div>Hello World</div>;
 }
@@ -61,8 +72,6 @@ export default App;
 :::tip Tip
 Make sure the document ends with `.mdx`.
 :::
-
-In this way, the code block will not be rendered as a component, but will be kept as it is.
 
 ### External Components
 
@@ -88,8 +97,10 @@ This plugin accepts an object parameter of the following type:
 
 ```ts
 interface PreviewOptions {
-  isMobile: boolean;
-  iframePosition: 'follow' | 'fixed';
+  isMobile?: boolean;
+  iframePosition?: 'fixed' | 'follow';
+  enableCodesandbox?: boolean;
+  defaultInternalBehavior?: 'pure' | 'preview';
 }
 ```
 
@@ -116,6 +127,14 @@ The effect of `fixed` mode is as follows:
 **experimental feature** that enables opening demos in Codesandbox. Currently not supported when `iframePosition` is set to `fixed`.
 
 There are still some limitations with this feature:
+
 - You cannot customize sandbox dependencies: Default dependencies will be only `react`, `react-dom`, and `self`. This means you cannot import other dependencies in your demo,
-and you need to ensure that `self` is published to npm, which is suitable for projects that are modular in nature.
+  and you need to ensure that `self` is published to npm, which is suitable for projects that are modular in nature.
 - You cannot customize files: This means you cannot import other files in your demo.
+
+### defaultInternalBehavior
+
+The default behavior of rendering internal code blocks that do not have the `pure` or `preview` identifiers declared by users, defaulting to `preview`.
+
+- `pure`: render as regular code block
+- `preview`: render as component

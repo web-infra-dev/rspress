@@ -82,11 +82,20 @@ export default App;
 ```
 ````
 
+如果你配置了 `defaultInternalBehavior` 为 `'pure'`，那么默认情况下，Rspress 将不会渲染这个组件，而是将其作为代码块来渲染。这种情况下，如果需要将某个代码块渲染为组件，可以通过添加 `playground` 标识符来指定，使用方式如下：
+
+````md
+```tsx playground
+function App() {
+  return <div>Hello World</div>;
+}
+export default App;
+```
+````
+
 :::tip 提示
 需要保证文档为 `.mdx` 结尾的文件。
 :::
-
-这样，代码块就不会被作为组件渲染，而是保留原样。
 
 ### 外部组件
 
@@ -204,3 +213,10 @@ Playground 使用 `@babel/standalone` 对演示代码进行编译，默认从 [c
 ### monacoOptions
 
 配置 monaco editor，对应 [IStandaloneEditorConstructionOptions](https://microsoft.github.io/monaco-editor/typedoc/interfaces/editor.IStandaloneEditorConstructionOptions.html)
+
+### defaultInternalBehavior
+
+支持用户配置没有主动声明 `pure` 或 `playground` 标识符的内部代码块的默认行为，默认为 `playground`。
+
+- `pure`: 渲染为普通代码块
+- `playground`: 渲染为 Playground 组件
