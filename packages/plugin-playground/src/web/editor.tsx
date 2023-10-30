@@ -5,8 +5,8 @@ import MonacoEditor, {
 } from '@monaco-editor/react';
 import { DEFAULT_MONACO_URL } from './constant';
 
-// inject by builder in cli/index.ts
-// see: https://modernjs.dev/builder/api/config-source.html#sourcedefine
+// inject by Rsbuild in cli/index.ts
+// see: https://rsbuild.dev/zh/config/options/source.html#sourcedefine
 declare global {
   const __PLAYGROUND_MONACO_LOADER__: any;
   const __PLAYGROUND_MONACO_OPTIONS__: any;

@@ -4,7 +4,7 @@
 
 - Type: `Object`
 
-Used to customize the configurations of Modern.js Builder. For complete configurations, please refer to [Modern.js Builder - API](https://modernjs.dev/builder/en/api/index.html).
+Used to customize the configurations of Rsbuild. For complete configurations, please refer to [Rsbuild - Config](https://rsbuild.dev/config/).
 
 For example, change the output directory to `doc_dist`:
 
@@ -22,30 +22,30 @@ export default defineConfig({
 
 ## builderPlugins
 
-- Type: `BuilderPlugin[]`
+- Type: `RsbuildPlugin[]`
 
-Used to customize the [plugins of Modern.js Builder](https://modernjs.dev/builder/en/plugins/introduction.html). For example:
+Used to customize the [plugins of Rsbuild](https://rsbuild.dev). For example:
 
 ```ts title="rspress.config.ts"
 import { defineConfig } from 'rspress/config';
-import { builderPluginStylus } from '@rspress/builder-plugin-stylus';
+import { pluginStylus } from '@rsbuild/plugin-stylus';
 
 export default defineConfig({
-  builderPlugins: [builderPluginStylus()],
+  builderPlugins: [pluginStylus()],
 });
 ```
 
 ### Default Config
 
-If you need to see the default `builderConfig`, you can add the `DEBUG=builder` parameter when running the `rspress dev` or `rspress build` command:
+If you need to see the default `builderConfig`, you can add the `DEBUG=rsbuild` parameter when running the `rspress dev` or `rspress build` command:
 
 ```bash
-DEBUG=builder rspress dev
+DEBUG=rsbuild rspress dev
 ```
 
-After execution, the `builder.config.js` file is created in the `doc_build` directory, which contains the complete `builderConfig`.
+After execution, the `rsbuild.config.js` file is created in the `doc_build` directory, which contains the complete `builderConfig`.
 
-> Please refer to [Modern.js Builder - Debug Mode](https://modernjs.dev/builder/en/guide/debug/debug-mode.html) for more information on how to debug the Builder.
+> Please refer to [Rsbuild - Debug Mode](https://rsbuild.dev/guide/debug/debug-mode) for more information on how to debug the Rsbuild.
 
 ## markdown
 

@@ -99,7 +99,7 @@ async function createInternalBuildConfig(
     },
     output: {
       distPath: {
-        // `root` must be a relative path in Builder
+        // `root` must be a relative path in Rsbuild
         root: path.isAbsolute(outDir) ? path.relative(cwd, outDir) : outDir,
         html: 'html',
       },
@@ -213,7 +213,7 @@ export async function initRsbuild(
   config: UserConfig,
   pluginDriver: PluginDriver,
   isSSR = false,
-  extraBuilderConfig?: RsbuildConfig,
+  extraRsbuildConfig?: RsbuildConfig,
 ): Promise<RsbuildInstance> {
   const cwd = process.cwd();
   const userDocRoot = path.resolve(rootDir || config?.root || cwd);
@@ -236,7 +236,7 @@ export async function initRsbuild(
   const { pluginReact } = await import('@rsbuild/plugin-react');
   const { pluginSvgr } = await import('@rsbuild/plugin-svgr');
 
-  const internalBuilderConfig = await createInternalBuildConfig(
+  const internalRsbuildConfig = await createInternalBuildConfig(
     userDocRoot,
     config,
     isSSR,
@@ -250,10 +250,10 @@ export async function initRsbuild(
       main: isSSR ? SSR_ENTRY : CLIENT_ENTRY,
     },
     rsbuildConfig: mergeRsbuildConfig(
-      internalBuilderConfig,
+      internalRsbuildConfig,
       ...(config?.plugins?.map(plugin => plugin.builderConfig ?? {}) || []),
       config?.builderConfig || {},
-      extraBuilderConfig || {},
+      extraRsbuildConfig || {},
     ),
   });
 

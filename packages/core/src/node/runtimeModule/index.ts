@@ -63,7 +63,7 @@ export function rsbuildPluginDocVM(
 ): RsbuildPlugin {
   const { pluginDriver } = factoryContext;
   return {
-    name: 'vmBuilderPlugin',
+    name: 'rsbuild-plugin-doc-vm',
     setup(api) {
       api.modifyBundlerChain(async bundlerChain => {
         // The order should be sync

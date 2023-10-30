@@ -96,7 +96,7 @@ export interface UserConfig<ThemeConfig = DefaultThemeConfig> {
    */
   themeConfig?: ThemeConfig;
   /**
-   * Builder Configuration
+   * Rsbuild Configuration
    */
   builderConfig?: RsbuildConfig;
   /**

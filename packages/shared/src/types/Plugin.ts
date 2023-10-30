@@ -31,7 +31,7 @@ export interface RspressPlugin {
     globalComponents?: string[];
   };
   /**
-   * Builder config.
+   * Rsbuild config.
    */
   builderConfig?: RsbuildConfig;
   /**
