@@ -1,4 +1,4 @@
-import type { BuilderConfig } from '@modern-js/builder-rspack-provider';
+import type { RsbuildConfig } from '@rsbuild/core/rspack-provider';
 import type { PluggableList } from 'unified';
 import { UserConfig, PageIndexInfo, RouteMeta } from '.';
 
@@ -31,9 +31,9 @@ export interface RspressPlugin {
     globalComponents?: string[];
   };
   /**
-   * Builder config.
+   * Rsbuild config.
    */
-  builderConfig?: BuilderConfig;
+  builderConfig?: RsbuildConfig;
   /**
    * Inject global components.
    */

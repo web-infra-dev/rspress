@@ -20,7 +20,7 @@ import {
   PUBLIC_DIR,
   TEMP_DIR,
 } from './constants';
-import { createModernBuilder } from './createBuilder';
+import { initRsbuild } from './initRsbuild';
 import { writeSearchIndex } from './searchIndex';
 import { PluginDriver } from './PluginDriver';
 import type { Route } from '@/node/route/RouteService';
@@ -55,8 +55,8 @@ export async function bundle(
     const outputDir = config?.outDir ?? OUTPUT_DIR;
     if (enableSSG) {
       const [clientBuilder, ssrBuilder] = await Promise.all([
-        createModernBuilder(docDirectory, config, pluginDriver, false),
-        createModernBuilder(docDirectory, config, pluginDriver, true, {
+        initRsbuild(docDirectory, config, pluginDriver, false),
+        initRsbuild(docDirectory, config, pluginDriver, true, {
           output: {
             distPath: {
               root: `${outputDir}/ssr`,
@@ -67,7 +67,7 @@ export async function bundle(
       await Promise.all([clientBuilder.build(), ssrBuilder.build()]);
     } else {
       // Only build client bundle
-      const clientBuilder = await createModernBuilder(
+      const clientBuilder = await initRsbuild(
         docDirectory,
         config,
         pluginDriver,

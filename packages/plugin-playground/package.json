@@ -48,7 +48,7 @@
   ],
   "dependencies": {
     "@mdx-js/mdx": "2.2.1",
-    "@modern-js/utils": "2.38.0",
+    "@modern-js/utils": "2.39.0",
     "@monaco-editor/react": "~4.4.6",
     "@oxidation-compiler/napi": "^0.1.0",
     "@rspress/shared": "workspace:*",

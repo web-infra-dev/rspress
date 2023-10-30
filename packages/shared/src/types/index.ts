@@ -1,6 +1,6 @@
-import type { BuilderConfig } from '@modern-js/builder-rspack-provider';
+import type { RsbuildPlugin } from '@rsbuild/core';
+import type { RsbuildConfig } from '@rsbuild/core/rspack-provider';
 import type { PluggableList } from 'unified';
-import type { BuilderPlugin } from '@modern-js/builder';
 import type { ZoomOptions } from 'medium-zoom';
 import type {
   Config as DefaultThemeConfig,
@@ -96,9 +96,9 @@ export interface UserConfig<ThemeConfig = DefaultThemeConfig> {
    */
   themeConfig?: ThemeConfig;
   /**
-   * Builder Configuration
+   * Rsbuild Configuration
    */
-  builderConfig?: BuilderConfig;
+  builderConfig?: RsbuildConfig;
   /**
    * The custom config of vite-plugin-route
    */
@@ -151,7 +151,7 @@ export interface UserConfig<ThemeConfig = DefaultThemeConfig> {
   /**
    * Add some extra builder plugins
    */
-  builderPlugins?: BuilderPlugin[];
+  builderPlugins?: RsbuildPlugin[];
   /**
    * Multi version config
    */
