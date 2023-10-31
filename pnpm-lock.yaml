@@ -1,4 +1,4 @@
-lockfileVersion: '6.1'
+lockfileVersion: '6.0'
 
 settings:
   autoInstallPeers: true
@@ -199,6 +199,9 @@ importers:
 
   e2e/fixtures/plugin:
     dependencies:
+      '@rspress/plugin-playground':
+        specifier: workspace:*
+        version: link:../../../packages/plugin-playground
       '@rspress/plugin-preview':
         specifier: workspace:*
         version: link:../../../packages/plugin-preview

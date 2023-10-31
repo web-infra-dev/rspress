@@ -187,6 +187,7 @@ export function pluginPlayground(
           __PLAYGROUND_MONACO_LOADER__: JSON.stringify(monacoLoader),
           __PLAYGROUND_MONACO_OPTIONS__: JSON.stringify(monacoOptions),
         },
+        include: [join(__dirname, '..', '..', '..')],
       },
       html: {
         tags: [
