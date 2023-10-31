@@ -1,4 +1,10 @@
-import { createContext, useContext, useLayoutEffect, useState } from 'react';
+import {
+  ReactElement,
+  createContext,
+  useContext,
+  useLayoutEffect,
+  useState,
+} from 'react';
 import { PageData } from '@rspress/shared';
 import i18nTextData from 'virtual-i18n-text';
 import { flushSync } from 'react-dom';
@@ -55,17 +61,7 @@ declare global {
   }
 }
 
-/**
- * There is a pitfall.
- * I was working on the navigation between pages with hash. eg. from `guide/start` -> `config/repress#nav`
- *    I need a time to dispatch an event so that the sideEffect.ts would know that
- *    the dom is attached to the browser. Otherwise the scroll position and the
- *    animation would be incorrect. You can search for `RspressReloadContent` in this codebase
- *    to findout the logic that are consuming the event.
- * The reason I didn't write it here is that I hope the logic of handling scroll and position
- *    could be in one place so that people wouldn't be confused.
- */
-export function useViewTransition(dom) {
+export function useViewTransition(dom: ReactElement) {
   /**
    * use a pesudo element to hold the actual JSX element so we can schedule the
    * update later in sync

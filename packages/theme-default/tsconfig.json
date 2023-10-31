@@ -13,9 +13,9 @@
     "skipLibCheck": true,
     "paths": {
       "@/*": ["./*"],
-      "@theme": ["./theme-default"],
-      "@/theme-default/*": ["./theme-default/*"],
-    },
+      "@theme": ["./"],
+      "@/theme-default": ["./"]
+    }
   },
   "include": [
     "src",
@@ -23,5 +23,5 @@
     "./modern.config.ts",
     "./tailwind.config.ts"
   ],
-  "exclude": ["theme.ts", "node_modules"],
+  "exclude": ["theme.ts", "node_modules"]
 }

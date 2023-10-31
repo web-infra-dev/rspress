@@ -10,7 +10,7 @@ import {
 import nprogress from 'nprogress';
 import { routes } from 'virtual-routes';
 import styles from './index.module.scss';
-import { scrollToTarget } from '@/theme-default/logic';
+import { scrollToTarget } from '@/logic';
 
 export interface LinkProps {
   href?: string;
