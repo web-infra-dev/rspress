@@ -1,6 +1,6 @@
 .rspress-playground {
   display: flex;
-  border: 1px solid rgba(28, 31, 35, 0.08);
+  border: 1px solid var(--rp-c-divider-light);
   border-radius: 3px;
   margin-top: 20px;
   margin-bottom: 20px;
@@ -35,12 +35,12 @@
 
 .rspress-playground-horizontal.rspress-playground-reverse-y
   > .rspress-playground-editor {
-  border-right: 1px solid rgba(28, 31, 35, 0.08);
+  border-right: 1px solid var(--rp-c-divider-light);
 }
 
 .rspress-playground-horizontal.rspress-playground-reverse-n
   > .rspress-playground-editor {
-  border-left: 1px solid rgba(28, 31, 35, 0.08);
+  border-left: 1px solid var(--rp-c-divider-light);
 }
 
 .rspress-playground-vertical > .rspress-playground-editor {
@@ -48,7 +48,7 @@
 }
 
 .rspress-playground-vertical > .rspress-playground-editor {
-  border-top: 1px solid rgba(28, 31, 35, 0.08);
+  border-top: 1px solid var(--rp-c-divider-light);
 }
 
 .rspress-playground-error {
