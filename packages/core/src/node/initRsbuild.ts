@@ -113,7 +113,6 @@ async function createInternalBuildConfig(
     source: {
       alias: {
         '@mdx-js/react': require.resolve('@mdx-js/react'),
-        '@/runtime': path.join(PACKAGE_ROOT, 'dist', 'runtime'),
         '@theme': themeDir,
         '@/theme-default': DEFAULT_THEME_DIR,
         '@rspress/core': PACKAGE_ROOT,
@@ -125,6 +124,7 @@ async function createInternalBuildConfig(
       },
       include: [
         PACKAGE_ROOT,
+        path.join(cwd, 'node_modules', RSPRESS_TEMP_DIR),
         // To compile components/MediumZoom.tsx
         /[\\/]plugin-medium-zoom/,
       ],

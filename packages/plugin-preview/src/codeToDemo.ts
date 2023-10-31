@@ -69,7 +69,9 @@ export const remarkCodeToDemo: Plugin<
       // get external demo content
       const tempVar = `externalDemoContent${externalDemoIndex}`;
       if (externalDemoIndex !== undefined) {
-        demos.push(getASTNodeImport(tempVar, `${demoPath}?raw`));
+        // Such as `import externalDemoContent0 from '!!xxx?raw'`
+        // `!!` prefix is used to avoid other loaders in rspack
+        demos.push(getASTNodeImport(tempVar, `!!${demoPath}?raw`));
       }
 
       if (isMobileMode && iframePosition === 'fixed') {
@@ -128,10 +130,9 @@ export const remarkCodeToDemo: Plugin<
         });
       }
     }
-
     // 1. External demo , use <code src="xxx" /> to declare demo
-    tree.children.forEach((node: any) => {
-      if (node.type === 'mdxJsxFlowElement' && node.name === 'code') {
+    visit(tree, 'mdxJsxFlowElement', (node: any) => {
+      if (node.name === 'code') {
         const src = node.attributes.find(
           (attr: { name: string; value: string }) => attr.name === 'src',
         )?.value;
