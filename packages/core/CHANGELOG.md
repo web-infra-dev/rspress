@@ -1,5 +1,37 @@
 # @rspress/core
 
+## 1.3.0
+
+### Minor Changes
+
+- c71b487: feat: add support for the dev port or host param
+- 9aa5bbf: feat: add support HTML to frontmatter hero config
+- 7dd0103: feat: support home feature grid 3xN & costom grid length
+
+### Patch Changes
+
+- 9c8b9f9: feat: integrate Rsbuild to replace Modern.js Builder
+- 4a6a052: feat(core): beautify <Tab> sytle when using with code title on default theme
+- 42f982d: fix: code tag in nested jsx structure cannot be parsed in preview/playground plugin
+- a267cc9: fix: theme types missed
+- Updated dependencies [0ff27fd]
+- Updated dependencies [c5b864f]
+- Updated dependencies [500e5bf]
+- Updated dependencies [d66037f]
+- Updated dependencies [9c8b9f9]
+- Updated dependencies [daaf70d]
+- Updated dependencies [bc17b81]
+- Updated dependencies [d3eaa8f]
+- Updated dependencies [7dd0103]
+- Updated dependencies [1e4827c]
+  - @rspress/theme-default@1.3.0
+  - @rspress/shared@1.3.0
+  - @rspress/plugin-auto-nav-sidebar@1.3.0
+  - @rspress/plugin-last-updated@1.3.0
+  - @rspress/plugin-medium-zoom@1.3.0
+  - @rspress/runtime@1.3.0
+  - @rspress/plugin-container-syntax@1.3.0
+
 ## 1.2.1
 
 ### Patch Changes
