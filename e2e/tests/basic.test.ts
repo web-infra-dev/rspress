@@ -38,8 +38,8 @@ test.describe('basic test', async () => {
       waitUntil: 'networkidle',
     });
     const h1 = await page.$('h1');
-    const className = await page.evaluate(h1 => h1?.className, h1)
-    expect(className).toContain('title_e0087') // hash in css module should stable
+    const className = await page.evaluate(h1 => h1?.className, h1);
+    expect(className).toContain('title_3b154'); // hash in css module should stable
     const text = await page.evaluate(h1 => h1?.textContent, h1);
     expect(text).toContain('Guide');
   });

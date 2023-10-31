@@ -10,15 +10,12 @@ const tailwindPlugin = require('@modern-js/plugin-tailwindcss').default;
 const COMMON_EXTERNALS = [
   'virtual-routes-ssr',
   'virtual-routes',
-  // '@theme',
   'virtual-search-index-hash',
   'virtual-site-data',
   'virtual-global-styles',
   'virtual-global-components',
   'virtual-search-hooks',
-  // '@/runtime',
-  // '@rspress/runtime',
-  // '@runtime',
+  '@rspress/runtime',
   'virtual-i18n-text',
   'virtual-prism-languages',
 ];
@@ -32,7 +29,7 @@ export default defineConfig({
   buildConfig: [
     {
       input: {
-        bundle: './src/theme-default/index.ts',
+        bundle: './src/index.ts',
       },
       copy: {
         patterns: [
@@ -48,7 +45,7 @@ export default defineConfig({
           },
         ],
       },
-      outDir: 'dist/theme',
+      outDir: 'dist',
       sourceMap: true,
       format: 'esm',
       externals: COMMON_EXTERNALS,
@@ -57,7 +54,7 @@ export default defineConfig({
       },
       style: {
         tailwindcss: {
-          // ...tailwindConfig,
+          ...tailwindConfig,
           darkMode: 'class',
         },
         modules: {

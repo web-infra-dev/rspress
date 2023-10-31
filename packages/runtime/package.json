@@ -1,22 +1,25 @@
 {
-  "name": "@rspress/theme-default",
+  "name": "@rspress/runtime",
   "version": "1.2.1",
-  "description": "The Default Theme of Rspress Documentation Framework",
+  "description": "The Runtime of Rspress Documentation Framework",
   "bugs": "https://github.com/web-infra-dev/rspress/issues",
   "repository": {
     "type": "git",
     "url": "https://github.com/web-infra-dev/rspress",
-    "directory": "packages/rspress-theme-default"
+    "directory": "packages/runtime"
   },
   "license": "MIT",
   "type": "module",
-  "jsnext:source": "./src/theme-default/index.ts",
-  "types": "./dist/theme/bundle.d.ts",
-  "main": "./dist/theme/index.js",
+  "jsnext:source": "./src/index.ts",
+  "types": "./dist/index.d.ts",
+  "main": "./dist/index.js",
   "exports": {
     ".": {
-      "types": "./dist/theme/bundle.d.ts",
-      "default": "./dist/theme/index.js"
+      "types": "./dist/index.d.ts",
+      "default": "./dist/index.js"
+    },
+    "./server": {
+      "default": "./server.js"
     }
   },
   "scripts": {
@@ -42,52 +45,22 @@
     "dist/"
   ],
   "dependencies": {
-    "htmr": "^1.0.2",
-    "is-html": "^3.0.0",
     "@rspress/shared": "workspace:*",
-    "@mdx-js/react": "2.2.1",
-    "@rspress/runtime": "workspace:*",
-    "body-scroll-lock": "4.0.0-beta.0",
-    "copy-to-clipboard": "^3.3.3",
-    "flexsearch": "0.6.32",
-    "github-slugger": "^2.0.0",
-    "globby": "11.1.0",
-    "hast-util-from-html": "^1.0.0",
-    "html-to-text": "^9.0.3",
-    "jsdom": "20.0.3",
-    "lodash-es": "^4.17.21",
-    "nprogress": "^0.2.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-helmet-async": "^1.3.0",
-    "react-syntax-highlighter": "^15.5.0",
-    "string-replace-loader": "^3.1.0",
-    "tailwindcss": "3.2.7",
-    "rspack-plugin-virtual-module": "0.1.12"
+    "react-router-dom": "^6.8.1"
   },
   "devDependencies": {
-    "@types/is-html": "^2.0.1",
-    "@modern-js/plugin-tailwindcss": "2.39.0",
-    "@modern-js/plugin-testing": "2.39.0",
     "@modern-js/tsconfig": "2.39.0",
     "@modern-js/types": "2.39.0",
-    "@types/body-scroll-lock": "^3.1.0",
-    "@types/hast": "^2.3.4",
-    "@types/html-to-text": "^8.1.1",
     "@types/jest": "^26.0.9",
-    "@types/lodash-es": "^4.17.6",
-    "@types/mdast": "^3.0.10",
-    "@types/nprogress": "^0.2.0",
     "@types/react": "^18",
     "@types/react-dom": "^18",
-    "gray-matter": "4.0.3",
     "husky": "^8",
     "lint-staged": "~13.1.0",
     "prettier": "^2.6.2",
-    "typescript": "^5",
-    "vite": "^4.0.5",
-    "vitest": "0.33.0",
-    "webpack": "^5.88.1"
+    "typescript": "^5"
   },
   "sideEffects": [
     "*.css",
@@ -101,13 +74,9 @@
   "files": [
     "bin",
     "dist",
-    "src/runtime",
-    "src/theme-default",
-    "src/shared",
-    "index.html",
+    "src",
     "runtime.ts",
-    "theme.ts",
-    "loader.cjs"
+    "server.js"
   ],
   "publishConfig": {
     "access": "public",
