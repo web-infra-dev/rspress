@@ -27,7 +27,7 @@ interface PlaygroundOptions {
    * determine how to handle a internal code block without meta
    * @default 'playground'
    */
-  defaultInternalBehavior?: 'pure' | 'playground';
+  defaultRenderMode?: 'pure' | 'playground';
 }
 
 // eslint-disable-next-line import/no-mutable-exports
@@ -47,7 +47,7 @@ export function pluginPlayground(
     babelUrl = '',
     monacoLoader = {},
     monacoOptions = {},
-    defaultInternalBehavior = 'playground',
+    defaultRenderMode = 'playground',
   } = options || {};
 
   const playgroundVirtualModule = new RspackVirtualModulePlugin({});
@@ -130,7 +130,7 @@ export function pluginPlayground(
                 const hasPlaygroundMeta = meta?.includes('playground');
 
                 let noTransform;
-                switch (defaultInternalBehavior) {
+                switch (defaultRenderMode) {
                   case 'pure':
                     noTransform = !hasPlaygroundMeta;
                     break;

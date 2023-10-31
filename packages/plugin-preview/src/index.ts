@@ -38,7 +38,7 @@ export type Options = {
    * determine how to handle a internal code block without meta
    * @default 'preview'
    */
-  defaultInternalBehavior?: 'pure' | 'preview';
+  defaultRenderMode?: 'pure' | 'preview';
 };
 
 interface Heading {
@@ -68,7 +68,7 @@ export function pluginPreview(options?: Options): RspressPlugin {
   const isMobile = options?.isMobile ?? false;
   const iframePosition = options?.iframePosition ?? 'follow';
   const enableCodesandbox = options?.enableCodesandbox ?? false;
-  const defaultInternalBehavior = options?.defaultInternalBehavior ?? 'preview';
+  const defaultRenderMode = options?.defaultRenderMode ?? 'preview';
 
   const demoRuntimeModule = new RspackVirtualModulePlugin({});
   const globalUIComponents =
@@ -184,7 +184,7 @@ import Demo from ${JSON.stringify(demoComponentPath)}
                 const hasPreviewMeta = meta?.includes('preview');
 
                 let noTransform;
-                switch (defaultInternalBehavior) {
+                switch (defaultRenderMode) {
                   case 'pure':
                     noTransform = !hasPreviewMeta;
                     break;

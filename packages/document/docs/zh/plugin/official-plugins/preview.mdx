@@ -60,7 +60,7 @@ export default App;
 ```
 ````
 
-如果你配置了 `defaultInternalBehavior` 为 `'pure'`，那么默认情况下，Rspress 将不会渲染这个组件，而是将其作为代码块来渲染。这种情况下，如果需要将某个代码块渲染为组件，可以通过添加 `preview` 标识符来指定，使用方式如下：
+如果你配置了 `defaultRenderMode` 为 `'pure'`，那么默认情况下，Rspress 将不会渲染这个组件，而是将其作为代码块来渲染。这种情况下，如果需要将某个代码块渲染为组件，可以通过添加 `preview` 标识符来指定，使用方式如下：
 
 ````mdx
 ```tsx preview
@@ -102,7 +102,7 @@ interface PreviewOptions {
   isMobile?: boolean;
   iframePosition?: 'fixed' | 'follow';
   enableCodesandbox?: boolean;
-  defaultInternalBehavior?: 'pure' | 'preview';
+  defaultRenderMode?: 'pure' | 'preview';
 }
 ```
 
@@ -134,7 +134,7 @@ interface PreviewOptions {
   同时，你需要确保 self 已经发包至 npm，这适用于模块类型的项目。
 - 不能自定义文件：这意味着你无法在 demo 里引用其他文件。
 
-### defaultInternalBehavior
+### defaultRenderMode
 
 支持用户配置没有主动声明 `pure` 或 `preview` 标识符的内部代码块的默认行为，默认为 `preview`。
 
