@@ -1,5 +1,5 @@
 import { UserConfig, removeLeadingSlash } from '@rspress/shared';
-import type { BuilderConfig } from '@modern-js/builder-rspack-provider';
+import type { RsbuildConfig } from '@rsbuild/core';
 import { logger } from '@rspress/shared/logger';
 import { initRsbuild } from './initRsbuild';
 import { writeSearchIndex } from './searchIndex';
@@ -13,7 +13,7 @@ interface DevOptions {
   appDirectory: string;
   docDirectory: string;
   config: UserConfig;
-  extraBuilderConfig?: BuilderConfig;
+  extraBuilderConfig?: RsbuildConfig;
 }
 
 export async function dev(options: DevOptions): Promise<ServerInstance> {
