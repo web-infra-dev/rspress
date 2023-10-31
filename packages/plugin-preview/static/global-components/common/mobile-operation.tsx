@@ -5,6 +5,7 @@ import IconLaunch from '../icons/Launch';
 import IconQrcode from '../icons/Qrcode';
 import IconRefresh from '../icons/Refresh';
 import IconCodesandbox from '../icons/Codesandbox';
+import './index.scss';
 
 const locales = {
   zh: {

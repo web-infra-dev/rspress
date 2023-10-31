@@ -26,7 +26,6 @@ export function Pre({
   }
 
   const { className, meta } = children.props as CodeProps;
-
   const codeTitle = parseTitleFromMeta(meta);
   return (
     <div className={className || DEFAULT_LANGUAGE_CLASS}>
