@@ -188,6 +188,7 @@ export interface SiteData<ThemeConfig = NormalizedDefaultThemeConfig> {
   ssg: boolean;
   markdown: {
     showLineNumbers: boolean;
+    defaultWrapCode: boolean;
   };
   multiVersion: {
     default: string;
@@ -330,6 +331,10 @@ export interface MarkdownOptions {
    */
   checkDeadLinks?: boolean;
   showLineNumbers?: boolean;
+  /**
+   * Whether to wrap code by default, default is false
+   */
+  defaultWrapCode?: boolean;
   /**
    * Register global components in mdx files
    */

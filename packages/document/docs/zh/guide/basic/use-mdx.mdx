@@ -218,6 +218,19 @@ export default {
 };
 ```
 
+### Wrap Code
+
+如果你想要默认启用长代码换行展示，你可以在配置文件中开启 `defaultWrapCode` 选项:
+
+```ts title="rspress.config.ts"
+export default {
+  // ...
+  markdown: {
+    defaultWrapCode: true,
+  },
+};
+```
+
 ## 自定义锚点 id
 
 默认情况下，Rspress 会根据各个标题的内容自动生成 id，这个 id 也会作为锚点的内容，你可以通过如下的语法来自定义 header 的 id:
