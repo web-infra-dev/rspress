@@ -7,7 +7,7 @@ import { usePageData, Content, removeBase, withBase } from '@rspress/runtime';
 import { DocLayout, DocLayoutProps } from '../DocLayout';
 import { HomeLayoutProps } from '../HomeLayout';
 import type { NavProps } from '../../components/Nav';
-import { useDisableNav, useLocaleSiteData } from '@/theme-default/logic';
+import { useDisableNav, useLocaleSiteData } from '@/logic';
 
 export enum QueryStatus {
   Show = '1',

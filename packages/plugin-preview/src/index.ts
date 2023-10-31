@@ -1,4 +1,5 @@
 import { join, parse, extname } from 'path';
+import { type Code } from 'mdast';
 import { RspackVirtualModulePlugin } from 'rspack-plugin-virtual-module';
 import {
   type RspressPlugin,
@@ -33,6 +34,11 @@ export type Options = {
    * @experimental
    */
   enableCodesandbox?: boolean;
+  /**
+   * determine how to handle a internal code block without meta
+   * @default 'preview'
+   */
+  defaultRenderMode?: 'pure' | 'preview';
 };
 
 interface Heading {
@@ -62,6 +68,8 @@ export function pluginPreview(options?: Options): RspressPlugin {
   const isMobile = options?.isMobile ?? false;
   const iframePosition = options?.iframePosition ?? 'follow';
   const enableCodesandbox = options?.enableCodesandbox ?? false;
+  const defaultRenderMode = options?.defaultRenderMode ?? 'preview';
+
   const demoRuntimeModule = new RspackVirtualModulePlugin({});
   const globalUIComponents =
     iframePosition === 'fixed'
@@ -169,13 +177,26 @@ import Demo from ${JSON.stringify(demoComponentPath)}
               }
             });
 
-            visit(ast, 'code', (node: any) => {
+            visit(ast, 'code', (node: Code) => {
               if (node.lang === 'jsx' || node.lang === 'tsx') {
-                const { value } = node;
-                const isPure = node?.meta?.includes('pure');
+                const { value, meta } = node;
+                const hasPureMeta = meta?.includes('pure');
+                const hasPreviewMeta = meta?.includes('preview');
+
+                let noTransform;
+                switch (defaultRenderMode) {
+                  case 'pure':
+                    noTransform = !hasPreviewMeta;
+                    break;
+                  case 'preview':
+                    noTransform = hasPureMeta;
+                    break;
+                  default:
+                    break;
+                }
 
                 // do not anything for pure mode
-                if (isPure) {
+                if (noTransform) {
                   return;
                 }
 
@@ -235,6 +256,9 @@ import Demo from ${JSON.stringify(demoComponentPath)}
       demoRuntimeModule.writeModule('virtual-meta', virtualMeta);
     },
     builderConfig: {
+      source: {
+        include: [join(__dirname, '..')],
+      },
       tools: {
         // eslint-disable-next-line @typescript-eslint/ban-ts-comment, @typescript-eslint/prefer-ts-expect-error
         // @ts-ignore

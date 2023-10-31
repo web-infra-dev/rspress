@@ -6,17 +6,17 @@
   "repository": {
     "type": "git",
     "url": "https://github.com/web-infra-dev/rspress",
-    "directory": "packages/rspress-theme-default"
+    "directory": "packages/theme-default"
   },
   "license": "MIT",
   "type": "module",
-  "jsnext:source": "./src/theme-default/index.ts",
-  "types": "./dist/theme/bundle.d.ts",
-  "main": "./dist/theme/index.js",
+  "jsnext:source": "./src/index.ts",
+  "types": "./dist/bundle.d.ts",
+  "main": "./dist/index.js",
   "exports": {
     ".": {
-      "types": "./dist/theme/bundle.d.ts",
-      "default": "./dist/theme/index.js"
+      "types": "./dist/bundle.d.ts",
+      "default": "./dist/index.js"
     }
   },
   "scripts": {
@@ -97,7 +97,7 @@
     "*.scss",
     "**/virtual-global-styles.js",
     "virtual-global-styles",
-    "./src/theme-default/styles/index.ts"
+    "./src/styles/index.ts"
   ],
   "files": [
     "bin",

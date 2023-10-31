@@ -1,3 +1,4 @@
+import path from 'path';
 import { defineConfig, moduleTools } from '@modern-js/module-tools';
 
 const COMMON_EXTERNALS = [
@@ -19,17 +20,15 @@ export default defineConfig({
   plugins: [moduleTools()],
   buildConfig: [
     {
-      input: ['src/runtime'],
-      sourceDir: 'src/runtime',
+      sourceDir: 'src',
       buildType: 'bundleless',
       target: 'es2020',
       format: 'esm',
-      outDir: 'dist/runtime',
+      outDir: 'dist',
       dts: {
-        tsconfigPath: './src/runtime/tsconfig.json',
         respectExternal: true,
       },
-      tsconfig: './src/runtime/tsconfig.json',
+      tsconfig: path.join(__dirname, 'tsconfig.json'),
       externals: COMMON_EXTERNALS,
     },
   ],

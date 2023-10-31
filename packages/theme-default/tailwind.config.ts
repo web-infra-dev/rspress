@@ -1,7 +1,7 @@
 import { Config } from 'tailwindcss';
 
 export const tailwindConfig: Config = {
-  content: [],
+  content: ['./src/**/*.{js,ts,jsx,tsx}'],
   darkMode: 'class',
   theme: {
     backgroundColor: ctx => ({

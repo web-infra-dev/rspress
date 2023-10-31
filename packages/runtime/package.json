@@ -6,17 +6,17 @@
   "repository": {
     "type": "git",
     "url": "https://github.com/web-infra-dev/rspress",
-    "directory": "packages/rspress-runtime"
+    "directory": "packages/runtime"
   },
   "license": "MIT",
   "type": "module",
-  "jsnext:source": "./src/runtime/index.ts",
-  "types": "./dist/runtime/index.d.ts",
-  "main": "./dist/runtime/index.js",
+  "jsnext:source": "./src/index.ts",
+  "types": "./dist/index.d.ts",
+  "main": "./dist/index.js",
   "exports": {
     ".": {
-      "types": "./dist/runtime/index.d.ts",
-      "default": "./dist/runtime/index.js"
+      "types": "./dist/index.d.ts",
+      "default": "./dist/index.js"
     },
     "./server": {
       "default": "./server.js"
