@@ -28,81 +28,73 @@ cli.option('--config [config]', 'Specify the path to the config file');
 cli
   .command('[root]', 'start dev server') // default command
   .alias('dev')
-  .option('--port [port]', 'port number')
-  .option('--host [host]', 'hostname')
-  .action(
-    async (
-      root,
-      options?: { port?: number; host?: string; config?: string },
-    ) => {
-      setNodeEnv('development');
-      let isRestarting = false;
-      const cwd = process.cwd();
-      let docDirectory: string;
-      let cliWatcher: chokidar.FSWatcher;
-      let devServer: Awaited<ReturnType<typeof dev>>;
-      const startDevServer = async () => {
-        const { port, host } = options || {};
-        const config = await loadConfigFile(options?.config);
+  .action(async (root, options) => {
+    setNodeEnv('development');
+    let isRestarting = false;
+    const cwd = process.cwd();
+    let docDirectory: string;
+    let cliWatcher: chokidar.FSWatcher;
+    let devServer: Awaited<ReturnType<typeof dev>>;
 
-        // Support root relative to cwd
-        if (config.root && !path.isAbsolute(config.root)) {
-          config.root = path.join(cwd, config.root);
-        }
+    const startDevServer = async () => {
+      const config = await loadConfigFile(options.config);
 
-        // Support root in command, override config file
-        if (root) {
-          config.root = path.join(cwd, root);
-        }
+      // Support root relative to cwd
+      if (config.root && !path.isAbsolute(config.root)) {
+        config.root = path.join(cwd, config.root);
+      }
 
-        docDirectory = config.root || path.join(cwd, root ?? 'docs');
-        devServer = await dev({
-          appDirectory: cwd,
-          docDirectory,
-          config,
-          extraBuilderConfig: { dev: { port, host } },
-        });
-        cliWatcher = chokidar.watch(
-          [`${cwd}/**/{${CONFIG_FILES.join(',')}}`, docDirectory!],
-          {
-            ignoreInitial: true,
-            ignored: ['**/node_modules/**', '**/.git/**', '**/.DS_Store/**'],
-          },
-        );
-        cliWatcher.on('all', async (eventName, filepath) => {
-          if (
-            eventName === 'add' ||
-            eventName === 'unlink' ||
-            (eventName === 'change' &&
-              CONFIG_FILES.includes(path.basename(filepath)))
-          ) {
-            if (isRestarting) {
-              return;
-            }
-            isRestarting = true;
-            console.log(
-              `\n✨ ${eventName} ${chalk.green(
-                path.relative(cwd, filepath),
-              )}, dev server will restart...\n`,
-            );
-            await devServer.close();
-            await cliWatcher.close();
-            await startDevServer();
-            isRestarting = false;
+      // Support root in command, override config file
+      if (root) {
+        config.root = path.join(cwd, root);
+      }
+
+      docDirectory = config.root || path.join(cwd, root ?? 'docs');
+      devServer = await dev({
+        appDirectory: cwd,
+        docDirectory,
+        config,
+      });
+      cliWatcher = chokidar.watch(
+        [`${cwd}/**/{${CONFIG_FILES.join(',')}}`, docDirectory!],
+        {
+          ignoreInitial: true,
+          ignored: ['**/node_modules/**', '**/.git/**', '**/.DS_Store/**'],
+        },
+      );
+      cliWatcher.on('all', async (eventName, filepath) => {
+        if (
+          eventName === 'add' ||
+          eventName === 'unlink' ||
+          (eventName === 'change' &&
+            CONFIG_FILES.includes(path.basename(filepath)))
+        ) {
+          if (isRestarting) {
+            return;
           }
-        });
-      };
+          isRestarting = true;
+          console.log(
+            `\n✨ ${eventName} ${chalk.green(
+              path.relative(cwd, filepath),
+            )}, dev server will restart...\n`,
+          );
+          await devServer.close();
+          await cliWatcher.close();
+          await startDevServer();
+          isRestarting = false;
+        }
+      });
+    };
 
-      await startDevServer();
+    await startDevServer();
 
-      const exitProcess = async () => {
-        await cliWatcher.close();
-        await devServer.close();
-      };
-      process.on('SIGINT', exitProcess);
-      process.on('SIGTERM', exitProcess);
-    },
-  );
+    const exitProcess = async () => {
+      await cliWatcher.close();
+      await devServer.close();
+    };
+    process.on('SIGINT', exitProcess);
+    process.on('SIGTERM', exitProcess);
+  });
 
 cli
   .command('build [root]')
