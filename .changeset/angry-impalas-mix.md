@@ -2,4 +2,4 @@
 '@rspress/theme-default': patch
 ---
 
-fix: HomeHero Comp crashes when some hero fields' value is undefined
+fix: Homehero comp crashes when hero field value is undefined
