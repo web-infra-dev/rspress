@@ -1,5 +1,18 @@
 # @rspress/core
 
+## 1.3.1
+
+### Patch Changes
+
+- 91c35f6: fix: @theme alias not found
+  - @rspress/plugin-auto-nav-sidebar@1.3.1
+  - @rspress/plugin-container-syntax@1.3.1
+  - @rspress/plugin-last-updated@1.3.1
+  - @rspress/plugin-medium-zoom@1.3.1
+  - @rspress/runtime@1.3.1
+  - @rspress/shared@1.3.1
+  - @rspress/theme-default@1.3.1
+
 ## 1.3.0
 
 ### Minor Changes
