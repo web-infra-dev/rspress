@@ -36,7 +36,8 @@ export function normalizeHrefInRuntime(a: string) {
 }
 
 export function normalizeImagePath(imagePath: string) {
-  if (isExternalUrl(imagePath)) {
+  const isProd = isProduction();
+  if (isExternalUrl(imagePath) || !isProd) {
     return imagePath;
   }
 
