@@ -102,7 +102,7 @@ pnpm run build
 Alternatively, you can build the package from the root directory of the repository using the `--filter` option:
 
 ```sh
-pnpm run --filter @modern-js/some-package build
+pnpm run --filter @rspress/some-package build
 ```
 
 Build all packages:
