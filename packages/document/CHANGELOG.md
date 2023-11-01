@@ -1,5 +1,11 @@
 # @rspress/docs
 
+## 1.3.2
+
+### Patch Changes
+
+- d3b08e7: fix: image link crash in dev
+
 ## 1.3.1
 
 ## 1.3.0

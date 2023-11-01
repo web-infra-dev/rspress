@@ -18,8 +18,8 @@ importers:
         specifier: 2.39.0
         version: 2.39.0(react-dom@18.2.0)(react@18.2.0)(ts-node@10.9.1)(typescript@5.0.4)
       '@modern-js/generator-utils':
-        specifier: 3.2.7
-        version: 3.2.7(@modern-js/codesmith@2.3.0)(typescript@5.0.4)
+        specifier: 3.2.8
+        version: 3.2.8(@modern-js/codesmith@2.3.0)(typescript@5.0.4)
       '@modern-js/module-tools':
         specifier: 2.39.0
         version: 2.39.0(typescript@5.0.4)
@@ -4370,17 +4370,6 @@ packages:
       - typescript
     dev: true
 
-  /@modern-js/generator-common@3.2.7(@modern-js/codesmith@2.3.0)(typescript@5.0.4):
-    resolution: {integrity: sha512-QAhPaI00qX0eYbzCPZnNYv26kFY5e0hOWZdwBmlHbAM5eJWs5Yyzjh31NRb0RvFmiRS5Dm8jCiZfxRqrMig3rA==}
-    dependencies:
-      '@modern-js/codesmith-formily': 2.3.0(@modern-js/codesmith@2.3.0)(typescript@5.0.4)
-      '@modern-js/plugin-i18n': 2.38.0
-      '@swc/helpers': 0.5.1
-    transitivePeerDependencies:
-      - '@modern-js/codesmith'
-      - typescript
-    dev: true
-
   /@modern-js/generator-common@3.2.8(@modern-js/codesmith@2.3.0)(typescript@5.0.4):
     resolution: {integrity: sha512-JTAhQoFIYqQHtxkL3BIdGSGYb+Jm0sn6GljBs4NHmSL+2fyOe/Sq/tS22/GLovI8IB8DTINkm5fA2kH76BqT3g==}
     dependencies:
@@ -4398,18 +4387,6 @@ packages:
       '@modern-js/generator-common': 3.2.2(@modern-js/codesmith@2.2.5)(typescript@5.0.4)
       '@modern-js/plugin-i18n': 2.35.1
       '@modern-js/utils': 2.35.1
-      '@swc/helpers': 0.5.1
-    transitivePeerDependencies:
-      - '@modern-js/codesmith'
-      - typescript
-    dev: true
-
-  /@modern-js/generator-utils@3.2.7(@modern-js/codesmith@2.3.0)(typescript@5.0.4):
-    resolution: {integrity: sha512-GMjGWuD5mMruvGGQpW6M5phISog/TJP7B9XQUk5iJkQfxDJ3tXcz4ZRcDXCci3ggkkUh5XEK5yU5beVEtWri/g==}
-    dependencies:
-      '@modern-js/generator-common': 3.2.7(@modern-js/codesmith@2.3.0)(typescript@5.0.4)
-      '@modern-js/plugin-i18n': 2.38.0
-      '@modern-js/utils': 2.38.0
       '@swc/helpers': 0.5.1
     transitivePeerDependencies:
       - '@modern-js/codesmith'
@@ -4648,13 +4625,6 @@ packages:
     resolution: {integrity: sha512-DAFfWjzFfeVBIXTR8KYZTJ1tWvDFxQPnkmQikpxPRSIliTV/3vIPW5TFG1m/T+7MvrJWremgktcNI7Ru4tXoqQ==}
     dependencies:
       '@modern-js/utils': 2.35.1
-      '@swc/helpers': 0.5.1
-    dev: true
-
-  /@modern-js/plugin-i18n@2.38.0:
-    resolution: {integrity: sha512-Jgxw3hae1XgBBDLbYIyMQJtof9I/zcMEXS/s7Du5k0I7DXBV91iXhjY7lRLphsOQ7VbcmsqrXzIzM5LLt/8mBA==}
-    dependencies:
-      '@modern-js/utils': 2.38.0
       '@swc/helpers': 0.5.1
     dev: true
 
@@ -5116,15 +5086,6 @@ packages:
       '@swc/helpers': 0.5.1
       caniuse-lite: 1.0.30001551
       lodash: 4.17.21
-    dev: true
-
-  /@modern-js/utils@2.38.0:
-    resolution: {integrity: sha512-shRDwZpo3ZitfRrZ0hFKSWmBd8XtfwwkCXxWAykkei+7TRkkCVFgRT8pazJnMtgwNml1kYNOnDCSMXcG/qwx/Q==}
-    dependencies:
-      '@swc/helpers': 0.5.1
-      caniuse-lite: 1.0.30001551
-      lodash: 4.17.21
-      rslog: 1.1.0
     dev: true
 
   /@modern-js/utils@2.39.0:
