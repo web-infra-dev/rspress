@@ -1,5 +1,11 @@
 # @rspress/plugin-medium-zoom
 
+## 1.3.0
+
+### Patch Changes
+
+- 9c8b9f9: feat: integrate Rsbuild to replace Modern.js Builder
+
 ## 1.2.1
 
 ## 1.2.0
