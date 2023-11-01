@@ -1,12 +1,13 @@
-import React from 'react';
+import React, { useMemo } from 'react';
 import MonacoEditor, {
   loader,
   EditorProps as MonacoEditorProps,
 } from '@monaco-editor/react';
+import { useDark } from '@rspress/core/runtime';
 import { DEFAULT_MONACO_URL } from './constant';
 
-// inject by builder in cli/index.ts
-// see: https://modernjs.dev/builder/api/config-source.html#sourcedefine
+// inject by Rsbuild in cli/index.ts
+// see: https://rsbuild.dev/zh/config/options/source.html#sourcedefine
 declare global {
   const __PLAYGROUND_MONACO_LOADER__: any;
   const __PLAYGROUND_MONACO_OPTIONS__: any;
@@ -45,13 +46,21 @@ function getMonacoOptions() {
 export type EditorProps = Partial<MonacoEditorProps>;
 
 export function Editor(props: EditorProps) {
-  const { options, className = '', ...rest } = props || {};
+  const { options, className = '', theme: themeProp, ...rest } = props || {};
+
+  const dark = useDark();
+  const theme = useMemo(() => {
+    if (themeProp) {
+      return themeProp;
+    }
+    return dark ? 'vs-dark' : 'light';
+  }, [themeProp, dark]);
 
   return (
     <div className={`rspress-playground-editor ${className}`}>
       <MonacoEditor
         {...rest}
-        theme="light"
+        theme={theme}
         options={{
           minimap: {
             enabled: true,

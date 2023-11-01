@@ -1,0 +1,54 @@
+{
+
+  "tasksRunnerOptions": {
+    "default": {
+      "runner": "nx/tasks-runners/default",
+      "options": {
+        "cacheableOperations": [
+          "dev",
+          "build",
+          "test"
+        ],
+        "cacheDirectory": ".nx-cache"
+      }
+    }
+  },
+  "targetDefaults": {
+    "dev": {
+      "dependsOn": [
+        "^build"
+      ],
+      "inputs": [
+        "{projectRoot}/src/**/*",
+        "{projectRoot}/tsconfig.json",
+        "{projectRoot}/package.json",
+        "{projectRoot}/modern.config.*"
+      ]
+    },
+    "build": {
+      "dependsOn": [
+        "^build"
+      ],
+      "outputs": [
+        "{projectRoot}/dist"
+      ],
+      "inputs": [
+        "{projectRoot}/src/**/*",
+        "{projectRoot}/tsconfig.json",
+        "{projectRoot}/package.json",
+        "{projectRoot}/modern.config.*"
+      ]
+    },
+    "test": {
+      "inputs": [
+        "{projectRoot}/src/**/*",
+        "{projectRoot}/tsconfig.json",
+        "{projectRoot}/package.json",
+        "{projectRoot}/modern.config.*"
+      ]
+    }
+  },
+  "affected": {
+    "defaultBase": "main"
+  }
+}

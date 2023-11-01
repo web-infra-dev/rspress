@@ -1,0 +1,27 @@
+{
+  "extends": "@modern-js/tsconfig/base",
+  "compilerOptions": {
+    "declaration": false,
+    "strict": false,
+    "module": "ESNext",
+    "target": "ESNext",
+    "jsx": "react-jsx",
+    "baseUrl": "src",
+    "rootDir": ".",
+    "lib": ["ESNext", "DOM"],
+    "esModuleInterop": true,
+    "skipLibCheck": true,
+    "paths": {
+      "@/*": ["./*"],
+      "@theme": ["./"],
+      "@/theme-default": ["./"]
+    }
+  },
+  "include": [
+    "src",
+    "vitest.config.ts",
+    "./modern.config.ts",
+    "./tailwind.config.ts"
+  ],
+  "exclude": ["theme.ts", "node_modules"]
+}

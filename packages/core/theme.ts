@@ -1,2 +1,2 @@
-export * from './dist/theme/index';
-export { default } from './dist/theme/index';
+export * from '@rspress/theme-default';
+export { default } from '@rspress/theme-default';

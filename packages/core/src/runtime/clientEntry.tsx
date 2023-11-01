@@ -1,15 +1,18 @@
 import { useState } from 'react';
-import { BrowserRouter } from 'react-router-dom';
 import { isProduction } from '@rspress/shared';
 import siteData from 'virtual-site-data';
+import {
+  DataContext,
+  ThemeContext,
+  normalizeRoutePath,
+  BrowserRouter,
+} from '@rspress/runtime';
 import { App, initPageData } from './App';
-import { DataContext, ThemeContext } from './hooks';
-import { normalizeRoutePath } from './utils';
 
 const enableSSG = siteData.ssg;
 
 // eslint-disable-next-line import/no-commonjs
-const { default: Theme } = require('@theme');
+const { default: Theme } = require('@rspress/theme-default');
 
 export async function renderInBrowser() {
   const container = document.getElementById('root')!;

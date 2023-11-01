@@ -1,10 +1,10 @@
 # Build Extension
 
-## Modern.js Builder
+## Rsbuild
 
-Rspress builds documents based on the Rspack mode of [Modern.js Builder](https://modernjs.dev/builder/en/).
+Rspress builds documents based on [Rsbuild](https://github.com/web-infra-dev/rsbuild).
 
-Modern.js Builder provides flexible build configurations, you can use [builderConfig](/api/config/config-build.html#builderconfig) to customize these configurations. For example, change the output directory to `doc_dist`:
+Rsbuild provides flexible build configurations, you can use [builderConfig](/api/config/config-build.html#builderconfig) to customize these configurations. For example, change the output directory to `doc_dist`:
 
 ```ts title="rspress.config.ts"
 import { defineConfig } from 'rspress/config';
@@ -18,7 +18,7 @@ export default defineConfig({
     },
     tools: {
       rspack(options) {
-        // 修改 rspack 的配置
+        // change rspack's options
       },
     },
   },
@@ -27,7 +27,7 @@ export default defineConfig({
 
 :::tip
 
-You can learn more configurations through the [Modern.js Builder - API](https://modernjs.dev/builder/en/api/index.html) documentation.
+You can learn more configurations through the [Rsbuild - Config](https://rsbuild.dev/config/) documentation.
 
 Note that Rspress only supports Rspack bundler, so some configurations related to webpack will not work, such as `tools.webpack`. Of course, you can use the `tools.rspack` to customize the Rspack config.
 

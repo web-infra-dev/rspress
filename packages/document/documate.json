@@ -1,6 +1,6 @@
 {
   "root": ".",
   "include": ["**/*.md", "**/*.mdx"],
-  "exclude": ["**/node_modules/**", "**/.turbo/**"],
+  "exclude": ["**/node_modules/**"],
   "backend": ""
 }

@@ -1,5 +1,5 @@
 {
-  "name": "with-base",
+  "name": "@rspress-fixture/with-base",
   "version": "1.0.0",
   "private": true,
   "scripts": {

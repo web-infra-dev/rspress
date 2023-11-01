@@ -69,7 +69,9 @@ export const remarkCodeToDemo: Plugin<
       // get external demo content
       const tempVar = `externalDemoContent${externalDemoIndex}`;
       if (externalDemoIndex !== undefined) {
-        demos.push(getASTNodeImport(tempVar, `${demoPath}?raw`));
+        // Such as `import externalDemoContent0 from '!!xxx?raw'`
+        // `!!` prefix is used to avoid other loaders in rspack
+        demos.push(getASTNodeImport(tempVar, `!!${demoPath}?raw`));
       }
 
       if (isMobileMode && iframePosition === 'fixed') {
@@ -128,10 +130,9 @@ export const remarkCodeToDemo: Plugin<
         });
       }
     }
-
     // 1. External demo , use <code src="xxx" /> to declare demo
-    tree.children.forEach((node: any) => {
-      if (node.type === 'mdxJsxFlowElement' && node.name === 'code') {
+    visit(tree, 'mdxJsxFlowElement', (node: any) => {
+      if (node.name === 'code') {
         const src = node.attributes.find(
           (attr: { name: string; value: string }) => attr.name === 'src',
         )?.value;
@@ -224,39 +225,50 @@ const getASTNodeImport = (name: string, from: string) =>
   } as MdxjsEsm);
 
 const getExternalDemoContent = (tempVar: string) => ({
+  /**
+   * We create a empty parent node here. If we don't do this, the `pre` tag won't be rendered as our custom mdx component and will be rendered as a normal `pre` tag, which will cause the code block to be displayed incorrectly.
+   */
   type: 'mdxJsxFlowElement',
-  name: 'pre',
+  name: '',
+  attributes: [],
   children: [
     {
       type: 'mdxJsxFlowElement',
-      name: 'code',
-      attributes: [
+      name: 'pre',
+      attributes: [],
+      children: [
         {
-          type: 'mdxJsxAttribute',
-          name: 'className',
-          value: 'language-tsx',
-        },
-        {
-          type: 'mdxJsxAttribute',
-          name: 'children',
-          value: {
-            type: 'mdxJsxExpressionAttribute',
-            value: tempVar,
-            data: {
-              estree: {
-                type: 'Program',
-                body: [
-                  {
-                    type: 'ExpressionStatement',
-                    expression: {
-                      type: 'Identifier',
-                      name: tempVar,
-                    },
+          type: 'mdxJsxFlowElement',
+          name: 'code',
+          attributes: [
+            {
+              type: 'mdxJsxAttribute',
+              name: 'className',
+              value: 'language-tsx',
+            },
+            {
+              type: 'mdxJsxAttribute',
+              name: 'children',
+              value: {
+                type: 'mdxJsxExpressionAttribute',
+                value: tempVar,
+                data: {
+                  estree: {
+                    type: 'Program',
+                    body: [
+                      {
+                        type: 'ExpressionStatement',
+                        expression: {
+                          type: 'Identifier',
+                          name: tempVar,
+                        },
+                      },
+                    ],
                   },
-                ],
+                },
               },
             },
-          },
+          ],
         },
       ],
     },

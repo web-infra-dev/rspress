@@ -1,6 +1,6 @@
 # Hello World
 
-```tsx
+```jsx
 import React from 'react';
 
 export default function HelloWorld() {

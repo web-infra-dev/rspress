@@ -1,8 +1,8 @@
 import { renderToString } from 'react-dom/server';
-import { StaticRouter } from 'react-router-dom/server';
 import { PageData } from '@rspress/shared';
+import { DataContext, ThemeContext } from '@rspress/runtime';
+import { StaticRouter } from '@rspress/runtime/server';
 import { App, initPageData } from './App';
-import { DataContext, ThemeContext } from './hooks';
 
 const DEFAULT_THEME = 'light';
 

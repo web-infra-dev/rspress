@@ -5,6 +5,7 @@ import type {
   loader,
   EditorProps as MonacoEditorProps,
 } from '@monaco-editor/react';
+import { type Code } from 'mdast';
 import { staticPath } from './constant';
 import { getNodeAttribute, parseImports } from './utils';
 import { remarkPlugin } from './remarkPlugin';
@@ -22,6 +23,11 @@ interface PlaygroundOptions {
 
   monacoLoader: Parameters<typeof loader.config>[0];
   monacoOptions: MonacoEditorProps['options'];
+  /**
+   * determine how to handle a internal code block without meta
+   * @default 'playground'
+   */
+  defaultRenderMode?: 'pure' | 'playground';
 }
 
 // eslint-disable-next-line import/no-mutable-exports
@@ -41,6 +47,7 @@ export function pluginPlayground(
     babelUrl = '',
     monacoLoader = {},
     monacoOptions = {},
+    defaultRenderMode = 'playground',
   } = options || {};
 
   const playgroundVirtualModule = new RspackVirtualModulePlugin({});
@@ -116,13 +123,26 @@ export function pluginPlayground(
               }
             });
 
-            visit(ast, 'code', (node: any) => {
+            visit(ast, 'code', (node: Code) => {
               if (node.lang === 'jsx' || node.lang === 'tsx') {
-                const { value } = node;
-                const isPure = node?.meta?.includes('pure');
+                const { value, meta } = node;
+                const hasPureMeta = meta?.includes('pure');
+                const hasPlaygroundMeta = meta?.includes('playground');
+
+                let noTransform;
+                switch (defaultRenderMode) {
+                  case 'pure':
+                    noTransform = !hasPlaygroundMeta;
+                    break;
+                  case 'playground':
+                    noTransform = hasPureMeta;
+                    break;
+                  default:
+                    break;
+                }
 
                 // do not anything for pure mode
-                if (isPure) {
+                if (noTransform) {
                   return;
                 }
 
@@ -187,6 +207,7 @@ export function pluginPlayground(
           __PLAYGROUND_MONACO_LOADER__: JSON.stringify(monacoLoader),
           __PLAYGROUND_MONACO_OPTIONS__: JSON.stringify(monacoOptions),
         },
+        include: [join(__dirname, '..', '..', '..')],
       },
       html: {
         tags: [

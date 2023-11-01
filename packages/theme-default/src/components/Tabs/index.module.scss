@@ -1,0 +1,45 @@
+.container {
+  background-color: var(--rp-code-block-bg);
+  contain: content;
+  border-radius: 16px;
+
+  :global(div[class*='language-']) {
+    margin: 6px 0;
+    code {
+      background-color: var(--rp-c-bg);
+    }
+  }
+}
+
+.tab-list {
+  padding-left: 8px;
+  padding-top: 4px;
+  display: flex;
+  min-width: 100%;
+}
+
+.tab {
+  color: var(--rp-c-text-2);
+  border-bottom: 1px solid transparent;
+  box-sizing: border-box;
+  margin-right: 10px;
+  padding: 6px 12px;
+  margin-bottom: -1px;
+  user-select: none;
+  transition: all 0.2s ease-in-out;
+  cursor: pointer;
+}
+
+.tab:last-child {
+  margin-right: 0;
+}
+
+.not-selected:hover {
+  color: var(--rp-c-text-1);
+  border-color: var(--rp-c-gray);
+}
+
+.selected {
+  color: var(--rp-c-brand-dark);
+  border-color: var(--rp-c-brand-dark);
+}

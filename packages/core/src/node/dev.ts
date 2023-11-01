@@ -1,6 +1,7 @@
 import { UserConfig, removeLeadingSlash } from '@rspress/shared';
+import type { RsbuildConfig } from '@rsbuild/core';
 import { logger } from '@rspress/shared/logger';
-import { createModernBuilder } from './createBuilder';
+import { initRsbuild } from './initRsbuild';
 import { writeSearchIndex } from './searchIndex';
 import { PluginDriver } from './PluginDriver';
 
@@ -12,10 +13,11 @@ interface DevOptions {
   appDirectory: string;
   docDirectory: string;
   config: UserConfig;
+  extraBuilderConfig?: RsbuildConfig;
 }
 
 export async function dev(options: DevOptions): Promise<ServerInstance> {
-  const { docDirectory, config } = options;
+  const { docDirectory, config, extraBuilderConfig } = options;
   const base = config?.base ?? '';
   const isProd = false;
   const pluginDriver = new PluginDriver(config, isProd);
@@ -26,12 +28,12 @@ export async function dev(options: DevOptions): Promise<ServerInstance> {
     await pluginDriver.beforeBuild();
     // empty temp dir before build
     // await fs.emptyDir( TEMP_DIR);
-    const builder = await createModernBuilder(
+    const builder = await initRsbuild(
       docDirectory,
       modifiedConfig,
       pluginDriver,
       false,
-      {},
+      extraBuilderConfig,
     );
     const { server } = await builder.startDevServer({
       printURLs: urls => {

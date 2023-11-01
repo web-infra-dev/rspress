@@ -138,6 +138,14 @@ Or use an absolute path to reference:
 ![](/demo.png)
 ```
 
+**A special case to note is that**, when your site is configured with a `base` path, if you want to use the `img` tag to introduce an absolute path, you need to use `normalizeImagePath` provided by `rspress/runtime` to manually add the `base` path to its src. Here is an example:
+
+```tsx title="guide.mdx"
+import { normalizeImagePath } from 'rspress/runtime';
+
+<img src={normalizeImagePath('/demo.png')} />;
+```
+
 Not only images, but you can also import videos, audios and other static assets in markdown files.
 
 ## Other Static Assets

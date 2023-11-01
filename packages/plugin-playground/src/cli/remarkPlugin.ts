@@ -44,8 +44,8 @@ export const remarkPlugin: Plugin<[RemarkPluginProps], Root> = ({
     }
 
     // 1. External demo , use <code src="xxx" /> to declare demo
-    tree.children.forEach((node: any) => {
-      if (node.type === 'mdxJsxFlowElement' && node.name === 'code') {
+    visit(tree, 'mdxJsxFlowElement', node => {
+      if (node.name === 'code') {
         const src = getNodeAttribute(node, 'src');
         if (!src) {
           return;

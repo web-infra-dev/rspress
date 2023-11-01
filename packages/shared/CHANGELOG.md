@@ -1,5 +1,33 @@
 # @rspress/shared
 
+## 1.3.2
+
+## 1.3.1
+
+## 1.3.0
+
+### Minor Changes
+
+- 7dd0103: feat: support home feature grid 3xN & costom grid length
+
+### Patch Changes
+
+- d66037f: fix: remove base logic should only work in the leading path
+- 9c8b9f9: feat: integrate Rsbuild to replace Modern.js Builder
+
+## 1.2.1
+
+## 1.2.0
+
+### Minor Changes
+
+- 0687d48: feat: add runtime module hook
+- d57a88c: feat: support ssg config
+
+### Patch Changes
+
+- 31e50ed: fix: wechat icon type error
+
 ## 1.1.3
 
 ## 1.1.2
