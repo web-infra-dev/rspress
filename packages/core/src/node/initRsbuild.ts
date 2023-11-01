@@ -45,13 +45,10 @@ async function createInternalBuildConfig(
   const CUSTOM_THEME_DIR =
     config?.themeDir ?? path.join(process.cwd(), 'theme');
   const outDir = config?.outDir ?? OUTPUT_DIR;
-  // In debug mode, we will not use the bundled theme chunk and skip the build process of module tools, which make the debug process faster
-  const DEFAULT_THEME_DIR = isDebugMode()
-    ? path.join(PACKAGE_ROOT, 'src', 'theme-default')
-    : path.join(PACKAGE_ROOT, 'dist', 'theme');
+  const DEFAULT_THEME = require.resolve('@rspress/theme-default');
   const themeDir = (await fs.pathExists(CUSTOM_THEME_DIR))
     ? CUSTOM_THEME_DIR
-    : DEFAULT_THEME_DIR;
+    : DEFAULT_THEME;
   const checkDeadLinks = (config?.markdown?.checkDeadLinks && !isSSR) ?? false;
   const base = config?.base ?? '';
 
@@ -114,7 +111,7 @@ async function createInternalBuildConfig(
       alias: {
         '@mdx-js/react': require.resolve('@mdx-js/react'),
         '@theme': themeDir,
-        '@/theme-default': DEFAULT_THEME_DIR,
+        '@/theme-default': DEFAULT_THEME,
         '@rspress/core': PACKAGE_ROOT,
         'react-lazy-with-preload': require.resolve('react-lazy-with-preload'),
         'react-syntax-highlighter': path.dirname(
