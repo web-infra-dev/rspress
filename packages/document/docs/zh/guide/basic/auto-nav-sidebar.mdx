@@ -90,7 +90,7 @@ export type SideMetaItem =
 
 其中文件名可以带后缀，也可以不带后缀，比如 `introduction` 会被解析为 `introduction.mdx`。
 
-### obejct
+### object
 
 当类型为对象形式时，你可以描述为一个文件、目录或者自定义链接。
 
@@ -137,6 +137,22 @@ export type SideMetaItem =
   "collapsed": false
 }
 ```
+
+:::tip 提示
+
+如果想要点击侧边栏目录显示某篇文档，你可以在当前目录同级创建一个同名的 `md(x)` 文件，比如：
+
+```bash
+docs
+├── advanced.mdx
+└── advanced
+  ├── _meta.json
+  └── ...
+```
+
+这样，当你点击 `Advanced` 目录时，会显示 `advanced.mdx` 文件的内容。
+
+:::
 
 在描述**自定义链接**的情况下，类型如下:
 
