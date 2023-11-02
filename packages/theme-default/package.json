@@ -1,6 +1,6 @@
 {
   "name": "@rspress/theme-default",
-  "version": "1.3.2",
+  "version": "1.4.0",
   "description": "The Default Theme of Rspress Documentation Framework",
   "bugs": "https://github.com/web-infra-dev/rspress/issues",
   "repository": {
@@ -67,10 +67,10 @@
   },
   "devDependencies": {
     "@types/is-html": "^2.0.1",
-    "@modern-js/plugin-tailwindcss": "2.39.0",
-    "@modern-js/plugin-testing": "2.39.0",
-    "@modern-js/tsconfig": "2.39.0",
-    "@modern-js/types": "2.39.0",
+    "@modern-js/plugin-tailwindcss": "2.39.1",
+    "@modern-js/plugin-testing": "2.39.1",
+    "@modern-js/tsconfig": "2.39.1",
+    "@modern-js/types": "2.39.1",
     "@types/body-scroll-lock": "^3.1.0",
     "@types/hast": "^2.3.4",
     "@types/html-to-text": "^8.1.1",
