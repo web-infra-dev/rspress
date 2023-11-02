@@ -1,5 +1,17 @@
 # @rspress/plugin-last-updated
 
+## 1.4.0
+
+## 1.3.2
+
+## 1.3.1
+
+## 1.3.0
+
+### Patch Changes
+
+- 9c8b9f9: feat: integrate Rsbuild to replace Modern.js Builder
+
 ## 1.2.1
 
 ## 1.2.0

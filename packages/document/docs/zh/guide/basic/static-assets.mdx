@@ -139,6 +139,14 @@ docs
 ![](/demo.png)
 ```
 
+**需要注意的一种特殊情况是**，当你的站点配置了 `base` 路径，那么如果你要使用 `img` 标签的方式来引入绝对路径，你需要使用 `rspress/runtime` 提供的 `normalizeImagePath` 来手动为其 src 添加 `base` 路径。示例如下：
+
+```tsx title="guide.mdx"
+import { normalizeImagePath } from 'rspress/runtime';
+
+<img src={normalizeImagePath('/demo.png')} />;
+```
+
 不光是图片，你也可以在 markdown 文件中引入视频、音频等静态资源。
 
 ## 其它静态资源

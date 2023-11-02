@@ -138,6 +138,22 @@ Among them, `name` indicates the directory name, `label` indicates the display n
 }
 ```
 
+:::tip
+
+If you want to display a document when clicking on the sidebar directory, you can create an `md(x)` file with the same name at the same level as the current directory, for example:
+
+```bash
+docs
+├── advanced.mdx
+└── advanced
+  ├── _meta.json
+  └── ...
+```
+
+In this way, when you click on the `Advanced` directory, the content of the `advanced.mdx` file will be displayed.
+
+:::
+
 In the case of describing **custom link**, the types are as follows:
 
 ```ts

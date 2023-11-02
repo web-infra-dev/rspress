@@ -8,6 +8,7 @@ import { A } from './link';
 import { P, Strong, Blockquote } from './paragraph';
 import { Code } from './code';
 import { Pre } from './pre';
+import { Img } from './img';
 
 export function getCustomMDXComponent() {
   return {
@@ -31,5 +32,6 @@ export function getCustomMDXComponent() {
     a: A,
     code: Code,
     pre: Pre,
+    img: Img,
   };
 }

@@ -1,5 +1,32 @@
 # @rspress/docs
 
+## 1.4.0
+
+### Minor Changes
+
+- 6839eba: doc: translate missing Chinese words
+
+## 1.3.2
+
+### Patch Changes
+
+- d3b08e7: fix: image link crash in dev
+
+## 1.3.1
+
+## 1.3.0
+
+### Minor Changes
+
+- c71b487: feat: add support for the dev port or host param
+- 9aa5bbf: feat: add support HTML to frontmatter hero config
+- 7dd0103: feat: support home feature grid 3xN & costom grid length
+
+### Patch Changes
+
+- 581e3a6: fix: jsx tag missed in document
+- 9c8b9f9: feat: integrate Rsbuild to replace Modern.js Builder
+
 ## 1.2.1
 
 ## 1.2.0
