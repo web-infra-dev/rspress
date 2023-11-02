@@ -1,5 +1,11 @@
 # @rspress/plugin-playground
 
+## 1.4.0
+
+### Patch Changes
+
+- @rspress/shared@1.4.0
+
 ## 1.3.2
 
 ### Patch Changes

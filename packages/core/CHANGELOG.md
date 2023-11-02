@@ -1,5 +1,17 @@
 # @rspress/core
 
+## 1.4.0
+
+### Patch Changes
+
+- @rspress/plugin-auto-nav-sidebar@1.4.0
+- @rspress/plugin-container-syntax@1.4.0
+- @rspress/plugin-last-updated@1.4.0
+- @rspress/plugin-medium-zoom@1.4.0
+- @rspress/runtime@1.4.0
+- @rspress/shared@1.4.0
+- @rspress/theme-default@1.4.0
+
 ## 1.3.2
 
 ### Patch Changes

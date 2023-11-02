@@ -1,5 +1,11 @@
 # @rspress/docs
 
+## 1.4.0
+
+### Minor Changes
+
+- 6839eba: doc: translate missing Chinese words
+
 ## 1.3.2
 
 ### Patch Changes
