@@ -15,6 +15,7 @@ const DEFAULT_LANGUAGES = [
   'yaml',
   ['md', 'markdown'],
   ['mdx', 'tsx'],
+  'bash',
 ];
 
 export async function prismLanguageVMPlugin(context: FactoryContext) {
