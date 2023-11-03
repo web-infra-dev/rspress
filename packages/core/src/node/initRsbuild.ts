@@ -122,8 +122,7 @@ async function createInternalBuildConfig(
       include: [
         PACKAGE_ROOT,
         path.join(cwd, 'node_modules', RSPRESS_TEMP_DIR),
-        // To compile components/MediumZoom.tsx
-        /[\\/]plugin-medium-zoom/,
+        /(.*?)\.tsx?$/,
       ],
       define: {
         'process.env.__ASSET_PREFIX__': JSON.stringify(assetPrefix),

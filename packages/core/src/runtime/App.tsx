@@ -13,7 +13,7 @@ import globalComponents from 'virtual-global-components';
 import 'virtual-global-styles';
 
 // eslint-disable-next-line import/no-commonjs
-const { default: Theme } = require('@rspress/theme-default');
+const { default: Theme } = require('@theme');
 
 type RspressPageMeta = Record<
   string,

@@ -1,5 +1,19 @@
 # @rspress/core
 
+## 1.4.1
+
+### Patch Changes
+
+- d7fec5f: fix: tsx file in node_modules cannot be compiled
+- 9659d65: fix: use theme alias path
+  - @rspress/plugin-auto-nav-sidebar@1.4.1
+  - @rspress/plugin-container-syntax@1.4.1
+  - @rspress/plugin-last-updated@1.4.1
+  - @rspress/plugin-medium-zoom@1.4.1
+  - @rspress/runtime@1.4.1
+  - @rspress/shared@1.4.1
+  - @rspress/theme-default@1.4.1
+
 ## 1.4.0
 
 ### Patch Changes
