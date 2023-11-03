@@ -1,5 +1,7 @@
 # @rspress/plugin-medium-zoom
 
+## 1.4.1
+
 ## 1.4.0
 
 ## 1.3.2
