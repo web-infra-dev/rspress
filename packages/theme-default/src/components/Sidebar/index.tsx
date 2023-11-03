@@ -128,7 +128,7 @@ export function SideBar(props: Props) {
           className="rspress-scrollbar"
           style={{
             maxHeight: 'calc(100vh - var(--rp-nav-height) - 8px)',
-            overflow: 'scroll',
+            overflow: 'auto',
           }}
         >
           <nav className="pb-2">
