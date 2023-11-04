@@ -412,6 +412,7 @@ export async function siteDataVMPlugin(context: FactoryContext) {
     }),
     markdown: {
       showLineNumbers: userConfig?.markdown?.showLineNumbers ?? false,
+      defaultWrapCode: userConfig?.markdown?.defaultWrapCode ?? false,
     },
   };
 

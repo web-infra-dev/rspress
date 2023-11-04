@@ -158,6 +158,19 @@ export default {
 };
 ```
 
+### Wrap Code
+
+If you want to wrap long code line by default, you can enable the `defaultWrapCode` option in the config file:
+
+```ts title="rspress.config.ts"
+export default {
+  // ...
+  markdown: {
+    defaultWrapCode: true,
+  },
+};
+```
+
 ### Line Highlighting
 
 You can also apply line highlighting and code block title at the same time, for example:

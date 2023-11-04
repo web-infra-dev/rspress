@@ -1,7 +1,7 @@
 import { PrismLight as SyntaxHighlighter } from 'react-syntax-highlighter';
 import languagesInfo from 'virtual-prism-languages';
 import copy from 'copy-to-clipboard';
-import { useRef } from 'react';
+import { useRef, useState } from 'react';
 import { usePageData } from '@rspress/runtime';
 import style from './prisim-theme';
 
@@ -24,7 +24,8 @@ function registerLanguages() {
 export function Code(props: CodeProps) {
   const copyButtonRef = useRef<HTMLButtonElement>(null);
   const { siteData } = usePageData();
-  const { showLineNumbers } = siteData.markdown;
+  const { showLineNumbers, defaultWrapCode } = siteData.markdown;
+  const [codeWrap, setCodeWrap] = useState(defaultWrapCode);
   if (!registered) {
     registerLanguages();
   }
@@ -64,6 +65,10 @@ export function Code(props: CodeProps) {
     }
   }
 
+  const toggleCodeWrap = () => {
+    setCodeWrap(!codeWrap);
+  };
+
   const copyCode = () => {
     const isCopied = copy(children);
     const el = copyButtonRef.current;
@@ -87,6 +92,7 @@ export function Code(props: CodeProps) {
         style={style}
         wrapLines={true}
         className="code"
+        wrapLongLines={codeWrap}
         customStyle={{ backgroundColor: 'inherit' }}
         // Notice: if the highlight line is specified, the line number must be displayed
         showLineNumbers={showLineNumbers || highlightLines.length > 0}
@@ -106,6 +112,10 @@ export function Code(props: CodeProps) {
       >
         {children}
       </SyntaxHighlighter>
+      <button
+        className={`wrap ${codeWrap ? 'wrapped' : ''}`}
+        onClick={toggleCodeWrap}
+      ></button>
       <button className="copy" onClick={copyCode} ref={copyButtonRef}></button>
     </>
   );
