@@ -1,6 +1,6 @@
 ---
-'@rspress/core': major
+'@rspress/core': minor
 '@rspress/docs': minor
 ---
 
-bash syntax highlighting is supported by default
+feat: bash syntax highlighting is supported by default
