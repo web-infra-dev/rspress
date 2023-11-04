@@ -19,6 +19,12 @@ export function HomeHero({ frontmatter }: { frontmatter: FrontMatterMeta }) {
   const hero = frontmatter?.hero || DEFAULT_HERO;
   const hasImage = hero.image !== undefined;
   const textMaxWidth = hasImage ? 'sm:max-w-xl' : 'sm:max-w-4xl';
+  const multiHeroText = hero.text
+    ? hero.text
+        .toString()
+        .split(/\n/g)
+        .filter(text => text !== '')
+    : [];
   return (
     <div className="m-auto pt-0 px-6 pb-12 sm:pt-10 sm:px-16 md:pt-16 md:px-16 md:pb-16">
       <div
@@ -34,14 +40,16 @@ export function HomeHero({ frontmatter }: { frontmatter: FrontMatterMeta }) {
               {renderHtmlOrText(hero.name)}
             </span>
           </h1>
-          {hero.text?.length && (
-            <p
-              className={`mx-auto md:m-0 text-3xl sm:text-5xl md:text-6xl pb-2 font-bold z-10 ${textMaxWidth}`}
-              style={{ lineHeight: '1.2' }}
-            >
-              {renderHtmlOrText(hero.text)}
-            </p>
-          )}
+          {multiHeroText.length !== 0 &&
+            multiHeroText.map(heroText => (
+              <p
+                key={heroText}
+                className={`mx-auto md:m-0 text-3xl sm:text-5xl md:text-6xl pb-2 font-bold z-10 ${textMaxWidth}`}
+                style={{ lineHeight: '1.2' }}
+              >
+                {renderHtmlOrText(heroText)}
+              </p>
+            ))}
 
           <p
             className={`whitespace-pre-wrap pt-4 m-auto md:m-0 text-sm sm:tex-xl md:text-2xl text-text-2 font-medium z-10 ${textMaxWidth}`}
