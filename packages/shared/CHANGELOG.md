@@ -1,5 +1,15 @@
 # @rspress/shared
 
+## 1.5.0
+
+### Minor Changes
+
+- 8043517: feat: add support for wrap code in markdown code block
+
+### Patch Changes
+
+- 750ed07: feat(deps): bump Rsbuild from 0.0.10 to 0.0.13
+
 ## 1.4.1
 
 ## 1.4.0

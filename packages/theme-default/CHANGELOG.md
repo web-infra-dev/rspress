@@ -1,5 +1,22 @@
 # @rspress/theme-default
 
+## 1.5.0
+
+### Minor Changes
+
+- 8043517: feat: add support for wrap code in markdown code block
+
+### Patch Changes
+
+- f9fbc46: fix: Homehero comp crashes when hero field value is undefined
+- 29f3dbd: feat: support multiline hero text
+- 5bcb36c: fix: compatible with scrollbar in firefox
+- 1b6e6e3: fix: error wrapping in CodeBlock when set language to toml
+- Updated dependencies [750ed07]
+- Updated dependencies [8043517]
+  - @rspress/shared@1.5.0
+  - @rspress/runtime@1.5.0
+
 ## 1.4.1
 
 ### Patch Changes

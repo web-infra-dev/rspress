@@ -1,5 +1,29 @@
 # @rspress/core
 
+## 1.5.0
+
+### Minor Changes
+
+- 1165c9a: feat: bash syntax highlighting is supported by default
+- 8043517: feat: add support for wrap code in markdown code block
+
+### Patch Changes
+
+- 750ed07: feat(deps): bump Rsbuild from 0.0.10 to 0.0.13
+- Updated dependencies [f9fbc46]
+- Updated dependencies [29f3dbd]
+- Updated dependencies [750ed07]
+- Updated dependencies [5bcb36c]
+- Updated dependencies [1b6e6e3]
+- Updated dependencies [8043517]
+  - @rspress/theme-default@1.5.0
+  - @rspress/shared@1.5.0
+  - @rspress/plugin-auto-nav-sidebar@1.5.0
+  - @rspress/plugin-container-syntax@1.5.0
+  - @rspress/plugin-last-updated@1.5.0
+  - @rspress/plugin-medium-zoom@1.5.0
+  - @rspress/runtime@1.5.0
+
 ## 1.4.1
 
 ### Patch Changes

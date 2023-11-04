@@ -1,5 +1,11 @@
 # @rspress/docs
 
+## 1.5.0
+
+### Minor Changes
+
+- 1165c9a: feat: bash syntax highlighting is supported by default
+
 ## 1.4.1
 
 ## 1.4.0
