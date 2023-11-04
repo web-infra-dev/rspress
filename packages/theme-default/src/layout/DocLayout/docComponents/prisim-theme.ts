@@ -70,4 +70,7 @@ export default {
   italic: {
     fontStyle: 'italic',
   },
+  table: {
+    display: 'content',
+  },
 };
