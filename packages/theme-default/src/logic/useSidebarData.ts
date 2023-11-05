@@ -2,6 +2,7 @@ import {
   NormalizedSidebarGroup,
   SidebarItem,
   NormalizedSidebar,
+  SidebarDivider,
 } from '@rspress/shared';
 import { useEffect, useState } from 'react';
 import { useLocation, withBase, isEqualPath } from '@rspress/runtime';
@@ -10,7 +11,7 @@ import { useLocaleSiteData } from './useLocaleSiteData';
 interface SidebarData {
   // The group name for the sidebar
   group: string;
-  items: (NormalizedSidebarGroup | SidebarItem)[];
+  items: (NormalizedSidebarGroup | SidebarItem | SidebarDivider)[];
 }
 
 export const getSidebarGroupData = (
@@ -27,13 +28,15 @@ export const getSidebarGroupData = (
     }
     // Such as `/guide/getting-started`, it will return the guide groups and the group name `Introduction`
     const result = sidebar[name].find(group => {
-      const match = (item: NormalizedSidebarGroup | SidebarItem): boolean => {
+      const match = (
+        item: NormalizedSidebarGroup | SidebarItem | SidebarDivider,
+      ): boolean => {
         // Fix https://github.com/web-infra-dev/rspress/issues/241
         if (!currentPathname.startsWith(withBase(name))) {
           return false;
         }
         const equalFunc = () =>
-          isEqualPath(withBase(item.link), currentPathname);
+          'link' in item && isEqualPath(withBase(item.link), currentPathname);
         if ('items' in item) {
           // If the current path is the same as the group link, return true
           if (equalFunc()) {
@@ -50,7 +53,7 @@ export const getSidebarGroupData = (
     if (result) {
       const sidebarGroup = sidebar[name];
       return {
-        group: result.text || '',
+        group: ('text' in result && result.text) || '',
         items: sidebarGroup,
       };
     }

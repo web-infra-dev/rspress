@@ -1,5 +1,10 @@
 import { useMemo } from 'react';
-import { Header, NormalizedSidebarGroup, SidebarItem } from '@rspress/shared';
+import {
+  Header,
+  NormalizedSidebarGroup,
+  SidebarItem,
+  SidebarDivider,
+} from '@rspress/shared';
 import {
   usePageData,
   normalizeHrefInRuntime as normalizeHref,
@@ -45,9 +50,9 @@ export function Overview(props: { content: React.ReactNode }) {
       isEqualPath(m.routePath, withBase(item.link || '')),
     );
     const getChildLink = (
-      traverseItem: SidebarItem | NormalizedSidebarGroup,
+      traverseItem: SidebarDivider | SidebarItem | NormalizedSidebarGroup,
     ): string => {
-      if (traverseItem.link) {
+      if ('link' in traverseItem && traverseItem.link) {
         return traverseItem.link;
       }
       if ('items' in traverseItem) {

@@ -9,6 +9,7 @@ import ArrowRight from '../../assets/arrow-right.svg';
 import { Tag } from '../Tag';
 import styles from './index.module.scss';
 import { SidebarItem } from './SidebarItem';
+import { SidebarDivider } from './SidebarDivider';
 import { highlightTitleStyle, matchCache, type SidebarItemProps } from '.';
 
 export function SidebarGroup(props: SidebarItemProps) {
@@ -164,18 +165,27 @@ export function SidebarGroup(props: SidebarItemProps) {
             marginLeft: depth === 0 ? '12px' : 0,
           }}
         >
-          {(item as NormalizedSidebarGroup)?.items?.map((item, index) => (
-            // eslint-disable-next-line react/no-array-index-key
-            <div key={index}>
-              <SidebarItem
-                {...props}
-                item={item}
+          {(item as NormalizedSidebarGroup)?.items?.map((item, index) =>
+            'dividerType' in item ? (
+              <SidebarDivider
+                // eslint-disable-next-line react/no-array-index-key
+                key={index}
                 depth={depth + 1}
-                id={`${id}-${index}`}
-                preloadLink={props.preloadLink}
+                dividerType={item.dividerType}
               />
-            </div>
-          ))}
+            ) : (
+              // eslint-disable-next-line react/no-array-index-key
+              <div key={index}>
+                <SidebarItem
+                  {...props}
+                  item={item}
+                  depth={depth + 1}
+                  id={`${id}-${index}`}
+                  preloadLink={props.preloadLink}
+                />
+              </div>
+            ),
+          )}
         </div>
       </div>
     </section>

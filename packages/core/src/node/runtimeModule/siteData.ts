@@ -17,6 +17,7 @@ import {
   addLeadingSlash,
   isExternalUrl,
   withoutBase,
+  SidebarDivider,
 } from '@rspress/shared';
 import { htmlToText } from 'html-to-text';
 import fs from '@modern-js/utils/fs-extra';
@@ -94,8 +95,8 @@ export function normalizeThemeConfig(
       return {};
     }
     const normalizeSidebarItem = (
-      item: SidebarGroup | SidebarItem | string,
-    ): NormalizedSidebarGroup | SidebarItem => {
+      item: SidebarGroup | SidebarItem | SidebarDivider | string,
+    ): NormalizedSidebarGroup | SidebarItem | SidebarDivider => {
       if (typeof item === 'object' && 'items' in item) {
         return {
           text: applyReplaceRules(
@@ -110,6 +111,10 @@ export function normalizeThemeConfig(
             return normalizeSidebarItem(subItem);
           }),
         };
+      }
+
+      if (typeof item === 'object' && 'dividerType' in item) {
+        return item;
       }
 
       if (typeof item === 'string') {

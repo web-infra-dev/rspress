@@ -16,14 +16,14 @@ export function usePrevNextPage() {
         });
       }
       sidebarItem.items.forEach(item => {
-        walk(item);
+        !('dividerType' in item) && walk(item);
       });
     } else {
       flattenTitles.push(sidebarItem);
     }
   };
 
-  items.forEach(item => walk(item));
+  items.forEach(item => !('dividerType' in item) && walk(item));
 
   const pageIndex = flattenTitles.findIndex(item =>
     isEqualPath(withBase(item.link), pathname),
