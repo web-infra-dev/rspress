@@ -77,6 +77,10 @@ export type SideMetaItem =
       label?: string;
       collapsible?: boolean;
       collapsed?: boolean;
+    }
+  | {
+      type: 'divider';
+      dashed?: boolean;
     };
 ```
 
@@ -137,6 +141,17 @@ Among them, `name` indicates the directory name, `label` indicates the display n
   "collapsed": false
 }
 ```
+
+In the case of describing **divider**, the types are as follows:
+
+```ts
+{
+  type: 'divider';
+  dashed?: boolean;
+}
+```
+
+When `dashed` is set to `true`, it indicates that the divider line is dashed. Otherwise, it is solid.
 
 :::tip
 
