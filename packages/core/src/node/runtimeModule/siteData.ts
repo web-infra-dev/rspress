@@ -17,6 +17,8 @@ import {
   addLeadingSlash,
   isExternalUrl,
   withoutBase,
+  NavItem,
+  SidebarData,
 } from '@rspress/shared';
 import { htmlToText } from 'html-to-text';
 import fs from '@modern-js/utils/fs-extra';
@@ -102,7 +104,7 @@ export function normalizeThemeConfig(
             getI18nText(item.text, currentLang),
             replaceRules,
           ),
-          link: normalizeLangPrefix(item.link, currentLang),
+          link: item.link,
           collapsed: item.collapsed ?? false,
           collapsible: item.collapsible ?? true,
           tag: item.tag,
@@ -128,15 +130,20 @@ export function normalizeThemeConfig(
           getI18nText(item.text, currentLang),
           replaceRules,
         ),
-        link: normalizeLangPrefix(item.link, currentLang),
+        link: item.link,
         tag: item.tag,
       };
     };
-    Object.keys(sidebar).forEach(key => {
-      const value = sidebar[key];
-      const normalizedKey = normalizeLangPrefix(key, currentLang);
-      normalizedSidebar[normalizedKey] = value.map(normalizeSidebarItem);
-    });
+
+    const normalizeSidebar = (sidebar: SidebarData) => {
+      Object.keys(sidebar).forEach(key => {
+        const value = sidebar[key];
+        normalizedSidebar[key] = value.map(normalizeSidebarItem);
+      });
+    };
+
+    normalizeSidebar(sidebar as SidebarData);
+
     return normalizedSidebar;
   };
 
@@ -147,7 +154,7 @@ export function normalizeThemeConfig(
     if (!nav) {
       return [];
     }
-    return nav?.map(navItem => {
+    const transformNavItem = (navItem: NavItem) => {
       const text = applyReplaceRules(
         getI18nText(navItem.text, currentLang),
         replaceRules,
@@ -178,7 +185,17 @@ export function normalizeThemeConfig(
       }
 
       return navItem;
-    });
+    };
+
+    if (Array.isArray(nav)) {
+      return nav.map(transformNavItem);
+    }
+
+    // Multi version case
+    return Object.entries(nav).reduce((acc, [key, value]) => {
+      acc[key] = value.map(transformNavItem);
+      return acc;
+    }, {});
   };
 
   /**
