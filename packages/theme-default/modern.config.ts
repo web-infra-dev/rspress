@@ -16,6 +16,7 @@ const COMMON_EXTERNALS = [
   'virtual-global-components',
   'virtual-search-hooks',
   '@rspress/runtime',
+  '@theme',
   'virtual-i18n-text',
   'virtual-prism-languages',
 ];
