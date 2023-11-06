@@ -1,5 +1,11 @@
 # @rspress/shared
 
+## 1.5.1
+
+### Patch Changes
+
+- d616c0b: chore(deps): bump Rsbuild v0.0.14 and remove Modern.js plugin testing
+
 ## 1.5.0
 
 ### Minor Changes

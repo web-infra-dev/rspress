@@ -1,5 +1,25 @@
 # @rspress/core
 
+## 1.5.1
+
+### Patch Changes
+
+- d616c0b: chore(deps): bump Rsbuild v0.0.14 and remove Modern.js plugin testing
+- 5b413ec: fix: HomeLayout cannot be customized
+- a852f65: perf: using polyfill usage mode to reduce bundle size
+- 5b413ec: fix: sidebar disappear when the `link` of items doesn't start with the sidebar group key
+- Updated dependencies [d616c0b]
+- Updated dependencies [5b413ec]
+- Updated dependencies [fa91446]
+- Updated dependencies [5b413ec]
+  - @rspress/shared@1.5.1
+  - @rspress/theme-default@1.5.1
+  - @rspress/plugin-auto-nav-sidebar@1.5.1
+  - @rspress/plugin-container-syntax@1.5.1
+  - @rspress/plugin-last-updated@1.5.1
+  - @rspress/plugin-medium-zoom@1.5.1
+  - @rspress/runtime@1.5.1
+
 ## 1.5.0
 
 ### Minor Changes

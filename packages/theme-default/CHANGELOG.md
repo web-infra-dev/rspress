@@ -1,5 +1,16 @@
 # @rspress/theme-default
 
+## 1.5.1
+
+### Patch Changes
+
+- 5b413ec: fix: HomeLayout cannot be customized
+- fa91446: fix: fix right aside nav item doesn't highlight automatically while opening in a new tab
+- 5b413ec: fix: sidebar disappear when the `link` of items doesn't start with the sidebar group key
+- Updated dependencies [d616c0b]
+  - @rspress/shared@1.5.1
+  - @rspress/runtime@1.5.1
+
 ## 1.5.0
 
 ### Minor Changes

@@ -1,5 +1,12 @@
 # @rspress/plugin-auto-sidebar
 
+## 1.5.1
+
+### Patch Changes
+
+- Updated dependencies [d616c0b]
+  - @rspress/shared@1.5.1
+
 ## 1.5.0
 
 ### Patch Changes
