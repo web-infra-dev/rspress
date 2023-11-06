@@ -100,8 +100,6 @@ async function createInternalBuildConfig(
         root: path.isAbsolute(outDir) ? path.relative(cwd, outDir) : outDir,
         html: 'html',
       },
-      // TODO: switch to 'usage' if Rspack supports it
-      polyfill: 'entry',
       // Disable production source map, it is useless for doc site
       disableSourceMap: isProduction(),
       overrideBrowserslist: browserslist,
