@@ -14,11 +14,28 @@ const Component = () => {
 };
 ```
 
+## Helmet
+
+一般用于在文档中设置自定义 head 内容(底层使用 `react-helmet-async`)。使用方法如下：
+
+```tsx title="index.tsx"
+// 以下为一个自定义组件，你可以将其引入到文档中
+import { Helmet } from 'rspress/runtime';
+
+function App() {
+  return (
+    <Helmet>
+      <meta property="og:description"  value="Out-of-box Rspack build tools">
+    </Helmet>
+  );
+}
+```
+
 ## Tab/Tabs
 
 你可以在文档中直接使用 Tab/Tabs 组件来实现 tab 切换的效果。比如
 
-```tsx title="index.mdx"
+```tsx title="index.tsx"
 import { Tab, Tabs } from 'rspress/theme';
 
 function App() {
