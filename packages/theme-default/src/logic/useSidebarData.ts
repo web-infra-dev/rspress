@@ -97,7 +97,6 @@ export const getSidebarGroupData = (
 export function useSidebarData(): SidebarData {
   const localeData = useLocaleSiteData();
   const sidebar = localeData.sidebar ?? {};
-  console.log('sidebar', sidebar);
   const { pathname: rawPathname } = useLocation();
   const pathname = decodeURIComponent(rawPathname);
   const [sidebarData, setSidebarData] = useState<SidebarData>(
