@@ -12,7 +12,7 @@ import { App, initPageData } from './App';
 const enableSSG = siteData.ssg;
 
 // eslint-disable-next-line import/no-commonjs
-const { default: Theme } = require('@rspress/theme-default');
+const { default: Theme } = require('@theme');
 
 export async function renderInBrowser() {
   const container = document.getElementById('root')!;
