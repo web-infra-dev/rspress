@@ -67,7 +67,6 @@
   },
   "devDependencies": {
     "@modern-js/plugin-tailwindcss": "2.39.2",
-    "@modern-js/plugin-testing": "2.39.2",
     "@modern-js/tsconfig": "2.39.2",
     "@modern-js/types": "2.39.2",
     "@types/body-scroll-lock": "^3.1.0",
