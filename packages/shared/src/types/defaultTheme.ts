@@ -144,11 +144,9 @@ export interface NavItemWithLinkAndChildren {
 export type Image = string | { src: string; alt?: string };
 
 // sidebar -------------------------------------------------------------------
-export interface SidebarData {
+export interface Sidebar {
   [path: string]: (SidebarGroup | SidebarItem)[];
 }
-
-export type Sidebar = SidebarData | { [key: string]: SidebarData };
 
 export interface SidebarGroup {
   text: string;
