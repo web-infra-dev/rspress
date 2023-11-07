@@ -4,7 +4,7 @@ import { RspackVirtualModulePlugin } from 'rspack-plugin-virtual-module';
 import { RouteService } from '../route/RouteService';
 import { PluginDriver } from '../PluginDriver';
 import { routeVMPlugin } from './routeData';
-import { siteDataVMPlugin } from './siteData';
+import { siteDataVMPlugin } from './siteData/index';
 import { i18nVMPlugin } from './i18n';
 import { globalUIComponentsVMPlugin } from './globalUIComponents';
 import { globalStylesVMPlugin } from './globalStyles';

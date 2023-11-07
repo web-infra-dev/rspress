@@ -127,14 +127,14 @@ export type NavItemWithLink = {
 export interface NavItemWithChildren {
   text?: string;
   tag?: string;
-  items: NavItem[];
+  items: NavItemWithLink[];
   position?: 'left' | 'right';
 }
 
 export interface NavItemWithLinkAndChildren {
   text: string;
   link: string;
-  items: NavItem[];
+  items: NavItemWithLink[];
   tag?: string;
   activeMatch?: string;
   position?: 'left' | 'right';
