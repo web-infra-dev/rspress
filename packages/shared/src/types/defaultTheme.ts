@@ -15,9 +15,9 @@ export interface Config {
    */
   outline?: boolean;
   /**
-   * The nav items.
+   * The nav items. When it's an object, the key is the version of current doc.
    */
-  nav?: NavItem[];
+  nav?: NavItem[] | { [key: string]: NavItem[] };
 
   /**
    * The sidebar items.
@@ -97,7 +97,7 @@ export interface LocaleConfig {
   /**
    * Theme i18n config
    */
-  nav?: NavItem[];
+  nav?: Nav;
   sidebar?: Sidebar;
   outlineTitle?: string;
   lastUpdatedText?: string;
@@ -108,6 +108,7 @@ export interface LocaleConfig {
   langRoutePrefix?: string;
 }
 // nav -----------------------------------------------------------------------
+export type Nav = NavItem[] | { [key: string]: NavItem[] };
 
 // TODO combine below nav item types into one
 export type NavItem =
@@ -126,14 +127,14 @@ export type NavItemWithLink = {
 export interface NavItemWithChildren {
   text?: string;
   tag?: string;
-  items: NavItem[];
+  items: NavItemWithLink[];
   position?: 'left' | 'right';
 }
 
 export interface NavItemWithLinkAndChildren {
   text: string;
   link: string;
-  items: NavItem[];
+  items: NavItemWithLink[];
   tag?: string;
   activeMatch?: string;
   position?: 'left' | 'right';

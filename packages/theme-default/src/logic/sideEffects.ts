@@ -159,6 +159,8 @@ export function bindingAsideScroll() {
 
   window.addEventListener('scroll', throttledSetLink);
 
+  setActiveLink();
+
   // eslint-disable-next-line consistent-return
   return () => {
     window.removeEventListener('scroll', throttledSetLink);

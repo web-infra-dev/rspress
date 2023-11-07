@@ -14,6 +14,23 @@ const Component = () => {
 };
 ```
 
+## Helmet
+
+It is generally used to set custom head content in documents (using `react-helmet-async` at the underlying level). The usage is as follows:
+
+```tsx title="index.tsx"
+// Below is a custom component, you can import it into your document
+import { Helmet } from 'rspress/runtime';
+
+function App() {
+  return (
+    <Helmet>
+      <meta property="og:description"  value="Out-of-box Rspack build tools">
+    </Helmet>
+  );
+}
+```
+
 ## Tab/Tabs
 
 You can directly use the Tab/Tabs component in the document to achieve the effect of tab switching. for example:

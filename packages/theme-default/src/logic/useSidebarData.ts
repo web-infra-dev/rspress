@@ -18,22 +18,56 @@ export const getSidebarGroupData = (
   sidebar: NormalizedSidebar,
   currentPathname: string,
 ) => {
+  let detectedGroupName;
   for (const name of Object.keys(sidebar)) {
-    // Such as `/api/`，it will return all the sidebar group
+    if (detectedGroupName && detectedGroupName !== name) {
+      continue;
+    }
     if (isEqualPath(withBase(name), currentPathname)) {
+      // Such as `/api/`，it will return all the sidebar group
       return {
         group: 'Documentation',
         items: sidebar[name],
       };
     }
     // Such as `/guide/getting-started`, it will return the guide groups and the group name `Introduction`
+    // eslint-disable-next-line @typescript-eslint/no-loop-func
     const result = sidebar[name].find(group => {
       const match = (
         item: NormalizedSidebarGroup | SidebarItem | SidebarDivider,
       ): boolean => {
         // Fix https://github.com/web-infra-dev/rspress/issues/241
+        // For example, there is the following sidebar:
+        // {
+        //   '/guide/': [
+        //     {
+        //       text: 'Introduction',
+        //       link: '/misc/team',
+        //     },
+        //     {
+        //       text: 'Getting Started',
+        //       link: '/xyz/getting-started',
+        //     },
+        //   ],
+        //   '/misc/': [
+        //     {
+        //       ...
+        //     }
+        //   ]
+        // }
+        // The /misc/team will match the /misc/ group instead of the /guide/ group
+        // However, if the current path is /xyz/getting-started, it will match the /guide/ group because there isn't any other group that matches the current path
         if (!currentPathname.startsWith(withBase(name))) {
-          return false;
+          for (const otherGroupName of Object.keys(sidebar)) {
+            if (
+              otherGroupName !== name &&
+              currentPathname.startsWith(withBase(otherGroupName))
+            ) {
+              // Performance optimization, once we find the other group name, we can skip the other group in the future loops
+              detectedGroupName = otherGroupName;
+              return false;
+            }
+          }
         }
         const equalFunc = () =>
           'link' in item && isEqualPath(withBase(item.link), currentPathname);

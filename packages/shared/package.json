@@ -1,6 +1,6 @@
 {
   "name": "@rspress/shared",
-  "version": "1.5.0",
+  "version": "1.5.1",
   "types": "./dist/index.d.ts",
   "main": "./dist/index.js",
   "module": "./dist/index.mjs",
@@ -31,7 +31,7 @@
     "upgrade": "modern upgrade"
   },
   "dependencies": {
-    "@rsbuild/core": "0.0.13",
+    "@rsbuild/core": "0.0.14",
     "unified": "10.1.2",
     "chalk": "4.1.2",
     "rslog": "^1.1.0"

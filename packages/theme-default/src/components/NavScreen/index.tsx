@@ -1,6 +1,6 @@
 import { useEffect, useRef } from 'react';
 import { disableBodyScroll, clearAllBodyScrollLocks } from 'body-scroll-lock';
-import { LocaleConfig, NavItem, DefaultThemeConfig } from '@rspress/shared';
+import { NavItem, DefaultThemeConfig } from '@rspress/shared';
 import type { SiteData } from '@rspress/shared';
 import { NoSSR } from '@rspress/runtime';
 import { NavMenuSingleItem } from '../Nav/NavMenuSingleItem';
@@ -12,10 +12,10 @@ import {
 } from '../Nav/menuDataHooks';
 import { NavScreenMenuGroup } from './NavScreenMenuGroup';
 import styles from './index.module.scss';
+import { useNavData } from '@/logic/useNav';
 
 interface Props {
   isScreenOpen: boolean;
-  localeData: LocaleConfig;
   siteData: SiteData<DefaultThemeConfig>;
   pathname: string;
 }
@@ -47,12 +47,12 @@ const NavScreenVersions = () => {
 };
 
 export function NavScreen(props: Props) {
-  const { isScreenOpen, localeData, siteData, pathname } = props;
+  const { isScreenOpen, siteData, pathname } = props;
   const screen = useRef<HTMLDivElement | null>(null);
   const localesData = siteData.themeConfig.locales || [];
   const hasMultiLanguage = localesData.length > 1;
   const hasMultiVersion = siteData.multiVersion.versions.length > 1;
-  const menuItems = localeData.nav || [];
+  const menuItems = useNavData();
   const hasAppearanceSwitch = siteData.themeConfig.darkMode !== false;
   const socialLinks = siteData?.themeConfig?.socialLinks || [];
   const hasSocialLinks = socialLinks.length > 0;

@@ -30,3 +30,5 @@ declare module 'virtual-prism-languages' {
 
   export default languagesInfo;
 }
+
+declare module '@theme';

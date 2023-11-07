@@ -65,10 +65,20 @@ export function pluginTypeDoc(options: PluginTypeDocOptions): RspressPlugin {
         config.themeConfig = config.themeConfig || {};
         config.themeConfig.nav = config.themeConfig.nav || [];
         const apiIndexLink = `/${outDir.replace(/(^\/)|(\/$)/, '')}/`;
-        config.themeConfig.nav.push({
-          text: 'API',
-          link: apiIndexLink,
-        });
+        const { nav } = config.themeConfig;
+        // Note: TypeDoc does not support i18n
+        if (Array.isArray(nav)) {
+          nav.push({
+            text: 'API',
+            link: apiIndexLink,
+          });
+        } else if ('default' in nav) {
+          nav.default.push({
+            text: 'API',
+            link: apiIndexLink,
+          });
+        }
+
         config.themeConfig.sidebar = config.themeConfig.sidebar || {};
         config.themeConfig.sidebar[apiIndexLink] =
           entryPoints.length > 1
