@@ -60,18 +60,23 @@ export function normalizeThemeConfig(
     base = '',
     lang,
     replaceRules = [],
+    multiVersion,
   } = docConfig;
+  const { versions = [] } = multiVersion || {};
+  const hasMultiVersion = versions.length > 0;
   docConfig.themeConfig = docConfig.themeConfig || {};
   const { themeConfig } = docConfig;
   const locales = siteLocales ?? (themeConfig?.locales || []);
   const i18nTextData = getI18nData(docConfig);
   // In following code, we will normalize the theme config reference to the pages data extracted from mdx files
-  const normalizeLangPrefix = (link?: string, currentLang?: string) => {
+  const normalizeLinkPrefix = (link?: string, currentLang?: string) => {
     if (
       !currentLang ||
       !link ||
       withoutBase(link, base).startsWith(`/${currentLang}`) ||
-      isExternalUrl(link)
+      isExternalUrl(link) ||
+      // In multi version case, we have got the complete link prefix in `plugin-auto-nav-sidebar` and does not need to add the lang prefix
+      hasMultiVersion
     ) {
       return link;
     }
@@ -104,7 +109,7 @@ export function normalizeThemeConfig(
             getI18nText(item.text, currentLang),
             replaceRules,
           ),
-          link: item.link,
+          link: normalizeLinkPrefix(item.link),
           collapsed: item.collapsed ?? false,
           collapsible: item.collapsible ?? true,
           tag: item.tag,
@@ -115,7 +120,7 @@ export function normalizeThemeConfig(
       }
 
       if (typeof item === 'string') {
-        const normalizedItem = normalizeLangPrefix(item, currentLang);
+        const normalizedItem = normalizeLinkPrefix(item, currentLang);
         const page = pages.find(
           page => page.routePath === withBase(normalizedItem, base),
         );
@@ -130,7 +135,7 @@ export function normalizeThemeConfig(
           getI18nText(item.text, currentLang),
           replaceRules,
         ),
-        link: item.link,
+        link: normalizeLinkPrefix(item.link),
         tag: item.tag,
       };
     };
@@ -163,7 +168,7 @@ export function normalizeThemeConfig(
         return {
           ...navItem,
           text,
-          link: normalizeLangPrefix(navItem.link, currentLang),
+          link: normalizeLinkPrefix(navItem.link, currentLang),
         };
       }
 
@@ -178,7 +183,7 @@ export function normalizeThemeConfig(
                 getI18nText(item.text, currentLang),
                 replaceRules,
               ),
-              link: normalizeLangPrefix(item.link, currentLang),
+              link: normalizeLinkPrefix(item.link, currentLang),
             };
           }),
         };
