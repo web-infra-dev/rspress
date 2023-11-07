@@ -1,6 +1,8 @@
 import { useState } from 'react';
+import { useVersion } from '@rspress/runtime';
+import { useLocaleSiteData } from './useLocaleSiteData';
 
-export function useNav() {
+export function useNavScreen() {
   const [isScreenOpen, setIsScreenOpen] = useState(false);
   function openScreen() {
     setIsScreenOpen(true);
@@ -33,4 +35,16 @@ export function useNav() {
     closeScreen,
     toggleScreen,
   };
+}
+
+export function useNavData() {
+  const { nav } = useLocaleSiteData();
+  const version = useVersion();
+  // Normalize the nav item links to include the version prefix
+  if (Array.isArray(nav)) {
+    return nav;
+  } else {
+    const navKey = version.length > 0 ? version : 'default';
+    return [...nav[navKey]];
+  }
 }

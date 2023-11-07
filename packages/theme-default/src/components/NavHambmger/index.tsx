@@ -1,28 +1,22 @@
 import { Fragment } from 'react';
-import type {
-  LocaleConfig,
-  SiteData,
-  DefaultThemeConfig,
-} from '@rspress/shared';
+import type { SiteData, DefaultThemeConfig } from '@rspress/shared';
 import { NavScreen } from '../NavScreen';
-import { useNav } from '../../logic/useNav';
+import { useNavScreen } from '../../logic/useNav';
 import SmallMenu from '../../assets/small-menu.svg';
 import styles from './index.module.scss';
 
 interface Props {
-  localeData: LocaleConfig;
   siteData: SiteData<DefaultThemeConfig>;
   pathname: string;
 }
 
 export function NavHamburger(props: Props) {
-  const { localeData, siteData, pathname } = props;
-  const { isScreenOpen, toggleScreen } = useNav();
+  const { siteData, pathname } = props;
+  const { isScreenOpen, toggleScreen } = useNavScreen();
   return (
     <Fragment>
       <NavScreen
         isScreenOpen={isScreenOpen}
-        localeData={localeData}
         siteData={siteData}
         pathname={pathname}
       />

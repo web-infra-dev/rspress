@@ -2,7 +2,7 @@ import { NavItem } from '@rspress/shared';
 import { useLocation, usePageData } from '@rspress/runtime';
 import { Search } from '@theme';
 import { useEffect, useState } from 'react';
-import { isMobileDevice, useHiddenNav, useLocaleSiteData } from '../../logic';
+import { isMobileDevice, useHiddenNav } from '../../logic';
 import { NavHamburger } from '../NavHambmger';
 import { SocialLinks } from '../SocialLinks';
 import { SwitchAppearance } from '../SwitchAppearance';
@@ -12,6 +12,7 @@ import styles from './index.module.scss';
 import { NavBarTitle } from './NavBarTitle';
 import { NavTranslations } from './NavTranslations';
 import { NavVersions } from './NavVersions';
+import { useNavData } from '@/logic/useNav';
 
 export interface NavProps {
   beforeNav?: React.ReactNode;
@@ -26,7 +27,6 @@ export function Nav(props: NavProps) {
   const { siteData } = usePageData();
   const { base } = siteData;
   const { pathname } = useLocation();
-  const localeData = useLocaleSiteData();
   const [isMobile, setIsMobile] = useState(false);
   const hiddenNav = useHiddenNav();
   const localeLanguages = Object.values(
@@ -70,7 +70,7 @@ export function Nav(props: NavProps) {
     );
   };
 
-  const menuItems = localeData.nav || [];
+  const menuItems = useNavData();
 
   const getPosition = (menuItem: NavItem) =>
     menuItem.position ?? DEFAULT_NAV_POSTION;
@@ -137,11 +137,7 @@ export function Nav(props: NavProps) {
 
             <div className={styles.mobileNavMenu}>
               {isMobile && <Search />}
-              <NavHamburger
-                localeData={localeData}
-                siteData={siteData}
-                pathname={pathname}
-              />
+              <NavHamburger siteData={siteData} pathname={pathname} />
             </div>
           </div>
         </div>

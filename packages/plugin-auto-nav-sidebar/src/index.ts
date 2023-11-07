@@ -1,15 +1,7 @@
 import path from 'path';
-import fs from '@modern-js/utils/fs-extra';
-import {
-  LocaleConfig,
-  RspressPlugin,
-  Sidebar,
-  SidebarGroup,
-  SidebarItem,
-  slash,
-} from '@rspress/shared';
-import { logger } from '@rspress/shared/logger';
-import { NavMeta, SideMeta } from './type';
+import { RspressPlugin, addTrailingSlash } from '@rspress/shared';
+import { combineWalkResult } from './utils';
+import { walk } from './walk';
 
 // Scan all the directories and files in the work directory(such as `docs`), and then generate the nav and sidebar configuration according to the directory structure.
 // We will do as follows:
@@ -157,184 +149,34 @@ import { NavMeta, SideMeta } from './type';
 //   }
 // ]
 // ```
-export async function detectFilePath(rawPath: string) {
-  const extensions = ['.mdx', '.md', '.tsx', '.jsx', '.ts', '.js'];
-  // The params doesn't have extension name, so we need to try to find the file with the extension name.
-  let realPath: string | undefined = rawPath;
-  const filename = path.basename(rawPath);
-  if (filename.indexOf('.') === -1) {
-    const pathWithExtension = extensions.map(ext => `${rawPath}${ext}`);
-    const pathExistInfo = await Promise.all(
-      pathWithExtension.map(p => fs.pathExists(p)),
-    );
-    realPath = pathWithExtension.find((_, i) => pathExistInfo[i]);
-  }
-
-  if (!realPath) {
-    // Throw an error and it will be caught by the `extractH1Title`.
-    throw new Error();
-  }
-
-  return realPath;
-}
-
-export async function extractH1Title(filePath: string): Promise<string> {
-  try {
-    const realPath = await detectFilePath(filePath);
-    const content = await fs.readFile(realPath, 'utf-8');
-    const h1RegExp = /^#\s+(.*)$/m;
-    const match = content.match(h1RegExp);
-    return match ? match[1] : '';
-  } catch (e) {
-    logger.warn(
-      `Can't find the file: ${filePath}, please check it in "${path.join(
-        path.dirname(filePath),
-        '_meta.json',
-      )}".`,
-    );
-    return '';
-  }
-}
-
-export async function scanSideMeta(workDir: string, rootDir: string) {
-  // find the `_meta.json` file
-  const metaFile = path.resolve(workDir, '_meta.json');
-  // Fix the windows path
-  const relativePath = slash(path.relative(rootDir, workDir));
-  let sideMeta: SideMeta | undefined;
-  // Get the sidebar config from the `_meta.json` file
-  try {
-    // Don't use require to avoid require cache, which make hmr not work.
-    sideMeta = (await fs.readJSON(metaFile, 'utf8')) as SideMeta;
-  } catch (e) {
-    // If the `_meta.json` file doesn't exist, we will generate the sidebar config from the directory structure.
-    const subItems = await fs.readdir(workDir);
-    sideMeta = await Promise.all(
-      subItems.map(async item => {
-        const stat = await fs.stat(path.join(workDir, item));
-        // If the item is a directory, we will transform it to a object with `type` and `name` property.
-        if (stat.isDirectory()) {
-          return {
-            type: 'dir',
-            name: item,
-            label: item,
-          };
-        } else {
-          return item;
-        }
-      }),
-    );
-  }
-
-  const sidebarFromMeta: (SidebarGroup | SidebarItem)[] = await Promise.all(
-    sideMeta.map(async metaItem => {
-      if (typeof metaItem === 'string') {
-        const title = await extractH1Title(path.resolve(workDir, metaItem));
-        return {
-          text: title,
-          link: `/${relativePath}/${metaItem.replace(/\.mdx?$/, '')}`,
-        };
-      }
-
-      const {
-        type = 'file',
-        name,
-        label,
-        collapsible,
-        collapsed,
-        link,
-        tag,
-      } = metaItem;
-      if (type === 'file') {
-        const title =
-          label ?? (await extractH1Title(path.resolve(workDir, name)));
-        return {
-          text: title,
-          link: `/${relativePath}/${name.replace(/\.mdx?$/, '')}`,
-          tag,
-        };
-      } else if (type === 'dir') {
-        const subDir = path.resolve(workDir, name);
-        const subSidebar = await scanSideMeta(subDir, rootDir);
-        let realPath = '';
-        try {
-          realPath = await detectFilePath(subDir);
-        } catch (e) {
-          // ignore
-        }
-        return {
-          text: label!,
-          collapsible,
-          collapsed,
-          items: subSidebar,
-          link: realPath ? `/${relativePath}/${name}` : undefined,
-          tag,
-        };
-      } else {
-        return {
-          text: label!,
-          link,
-          tag,
-        } as SidebarItem;
-      }
-    }),
-  );
-
-  return sidebarFromMeta;
-}
-
-export async function walk(workDir: string) {
-  // find the `_meta.json` file
-  const rootMetaFile = path.resolve(workDir, '_meta.json');
-  let navConfig: NavMeta | undefined;
-  // Get the nav config from the `_meta.json` file
-  try {
-    navConfig = (await fs.readJSON(rootMetaFile, 'utf8')) as NavMeta;
-  } catch (e) {
-    navConfig = [];
-  }
-  // find the `_meta.json` file in the subdirectory
-  const subDirs = (await fs.readdir(workDir)).filter(v =>
-    fs.statSync(path.join(workDir, v)).isDirectory(),
-  );
-  // Every sub dir will represent a group of sidebar
-  const sidebarConfig: Sidebar = {};
-  for (const subDir of subDirs) {
-    sidebarConfig[`/${subDir}/`] = await scanSideMeta(
-      path.join(workDir, subDir),
-      workDir,
-    );
-  }
-  return {
-    nav: navConfig,
-    sidebar: sidebarConfig,
-  };
-}
 
 function processLocales(
-  locales: LocaleConfig[],
+  langs: string[],
   versions: string[],
   root: string,
+  defaultLang: string,
+  defaultVersion: string,
 ) {
   return Promise.all(
-    locales.map(async locale => {
+    langs.map(async lang => {
       const walks = versions.length
         ? await Promise.all(
-            versions.map(version =>
-              walk(path.join(root, version, locale.lang)),
-            ),
+            versions.map(version => {
+              const routePrefix = addTrailingSlash(
+                `${version === defaultVersion ? '' : `/${version}`}${
+                  lang === defaultLang ? '' : `/${lang}`
+                }`,
+              );
+              return walk(path.join(root, version, lang), routePrefix);
+            }),
           )
-        : [await walk(path.join(root, locale.lang))];
-
-      const combined = walks.reduce(
-        (acc, cur) => ({
-          nav: [...(acc.nav || []), ...(cur.nav || [])],
-          sidebar: { ...acc.sidebar, ...cur.sidebar },
-        }),
-        {} as Omit<LocaleConfig, 'lang' | 'label'>,
-      );
-
-      return { ...locale, ...combined };
+        : [
+            await walk(
+              path.join(root, lang),
+              addTrailingSlash(lang === defaultLang ? '' : `/${lang}`),
+            ),
+          ];
+      return combineWalkResult(walks, versions);
     }),
   );
 }
@@ -344,35 +186,40 @@ export function pluginAutoNavSidebar(): RspressPlugin {
     name: 'auto-nav-sidebar',
     async config(config) {
       config.themeConfig = config.themeConfig || {};
-      config.themeConfig.locales = config.themeConfig.locales || [];
-      const langs =
-        config.locales?.map(locale => locale.lang) ||
-        config.themeConfig?.locales?.map(locale => locale.lang) ||
-        [];
-
+      config.themeConfig.locales =
+        config.themeConfig.locales || config.locales || [];
+      const langs = config.themeConfig.locales.map(locale => locale.lang);
       const hasLocales = langs.length > 0;
       const versions = config.multiVersion?.versions || [];
-
+      const defaultLang = config.lang || '';
+      const { default: defaultVersion = '' } = config.multiVersion || {};
       if (hasLocales) {
-        config.themeConfig.locales = await processLocales(
-          config.themeConfig.locales,
+        const metaInfo = await processLocales(
+          langs,
           versions,
           config.root!,
+          defaultLang,
+          defaultVersion,
+        );
+        config.themeConfig.locales = config.themeConfig.locales.map(
+          (item, index) => ({
+            ...item,
+            ...metaInfo[index],
+          }),
         );
       } else {
         const walks = versions.length
           ? await Promise.all(
-              versions.map(version => walk(path.join(config.root!, version))),
+              versions.map(version => {
+                const routePrefix = addTrailingSlash(
+                  version === defaultVersion ? '' : `/${version}`,
+                );
+                return walk(path.join(config.root!, version), routePrefix);
+              }),
             )
           : [await walk(config.root!)];
 
-        const combined = walks.reduce(
-          (acc, cur) => ({
-            nav: [...(acc.nav || []), ...(cur.nav || [])],
-            sidebar: { ...acc.sidebar, ...cur.sidebar },
-          }),
-          {} as Omit<LocaleConfig, 'lang' | 'label'>,
-        );
+        const combined = combineWalkResult(walks, versions);
 
         config.themeConfig = { ...config.themeConfig, ...combined };
       }
