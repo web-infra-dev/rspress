@@ -144,7 +144,7 @@ async function createInternalBuildConfig(
           },
         ],
         historyApiFallback: {
-          disableDotRule: true,
+          rewrites: [{ from: /.*\.html/, to: '/' }],
         },
       },
       postcss(config) {
