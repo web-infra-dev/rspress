@@ -143,7 +143,9 @@ async function createInternalBuildConfig(
             middlewares.push(serveSearchIndexMiddleware);
           },
         ],
-        historyApiFallback: true,
+        historyApiFallback: {
+          disableDotRule: true,
+        },
       },
       postcss(config) {
         // In debug mode, we should use tailwindcss to build the theme source code
