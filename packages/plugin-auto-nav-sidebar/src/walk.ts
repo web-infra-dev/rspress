@@ -5,6 +5,7 @@ import {
   Sidebar,
   SidebarGroup,
   SidebarItem,
+  SidebarDivider,
   slash,
   withBase,
 } from '@rspress/shared';
@@ -46,65 +47,69 @@ export async function scanSideMeta(
     );
   }
 
-  const sidebarFromMeta: (SidebarGroup | SidebarItem)[] = await Promise.all(
-    sideMeta.map(async metaItem => {
-      if (typeof metaItem === 'string') {
-        const title = await extractH1Title(path.resolve(workDir, metaItem));
-        return {
-          text: title,
-          link: addRoutePrefix(
-            `${relativePath}/${metaItem.replace(/\.mdx?$/, '')}`,
-          ),
-        };
-      }
-
-      const {
-        type = 'file',
-        name,
-        label = '',
-        collapsible,
-        collapsed,
-        link,
-        tag,
-      } = metaItem;
-      if (type === 'file') {
-        const title =
-          label ?? (await extractH1Title(path.resolve(workDir, name)));
-        return {
-          text: title,
-          link: addRoutePrefix(
-            `${relativePath}/${name.replace(/\.mdx?$/, '')}`,
-          ),
-          tag,
-        };
-      } else if (type === 'dir') {
-        const subDir = path.resolve(workDir, name);
-        const subSidebar = await scanSideMeta(subDir, rootDir, routePrefix);
-        let realPath = '';
-        try {
-          realPath = await detectFilePath(subDir);
-        } catch (e) {
-          // ignore
+  const sidebarFromMeta: (SidebarGroup | SidebarItem | SidebarDivider)[] =
+    await Promise.all(
+      sideMeta.map(async metaItem => {
+        if (typeof metaItem === 'string') {
+          const title = await extractH1Title(path.resolve(workDir, metaItem));
+          return {
+            text: title,
+            link: addRoutePrefix(
+              `${relativePath}/${metaItem.replace(/\.mdx?$/, '')}`,
+            ),
+          };
         }
-        return {
-          text: label,
+
+        const {
+          type = 'file',
+          name,
+          label = '',
           collapsible,
           collapsed,
-          items: subSidebar,
-          link: realPath
-            ? addRoutePrefix(`${relativePath}/${name}`)
-            : undefined,
-          tag,
-        };
-      } else {
-        return {
-          text: label,
           link,
           tag,
-        } as SidebarItem;
-      }
-    }),
-  );
+          dashed,
+        } = metaItem;
+        if (type === 'file') {
+          const title =
+            label ?? (await extractH1Title(path.resolve(workDir, name)));
+          return {
+            text: title,
+            link: addRoutePrefix(
+              `${relativePath}/${name.replace(/\.mdx?$/, '')}`,
+            ),
+            tag,
+          };
+        } else if (type === 'dir') {
+          const subDir = path.resolve(workDir, name);
+          const subSidebar = await scanSideMeta(subDir, rootDir, routePrefix);
+          let realPath = '';
+          try {
+            realPath = await detectFilePath(subDir);
+          } catch (e) {
+            // ignore
+          }
+          return {
+            text: label,
+            collapsible,
+            collapsed,
+            items: subSidebar,
+            link: realPath
+              ? addRoutePrefix(`${relativePath}/${name}`)
+              : undefined,
+            tag,
+          };
+        } else if (type === 'divider') {
+          return { dividerType: dashed ? 'dashed' : 'solid' };
+        } else {
+          return {
+            text: label,
+            link,
+            tag,
+          } as SidebarItem;
+        }
+      }),
+    );
 
   return sidebarFromMeta;
 }

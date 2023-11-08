@@ -13,6 +13,7 @@ import {
   withoutBase,
   NavItem,
   Sidebar,
+  SidebarDivider,
 } from '@rspress/shared';
 import { applyReplaceRules } from '../../utils/applyReplaceRules';
 import { getI18nData } from '../i18n';
@@ -67,8 +68,8 @@ export function normalizeThemeConfig(
       return {};
     }
     const normalizeSidebarItem = (
-      item: SidebarGroup | SidebarItem | string,
-    ): NormalizedSidebarGroup | SidebarItem => {
+      item: SidebarGroup | SidebarItem | SidebarDivider | string,
+    ): NormalizedSidebarGroup | SidebarItem | SidebarDivider => {
       if (typeof item === 'object' && 'items' in item) {
         return {
           text: applyReplaceRules(
@@ -83,6 +84,10 @@ export function normalizeThemeConfig(
             return normalizeSidebarItem(subItem);
           }),
         };
+      }
+
+      if (typeof item === 'object' && 'dividerType' in item) {
+        return item;
       }
 
       if (typeof item === 'string') {

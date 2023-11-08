@@ -8,7 +8,7 @@ import { SidebarItemProps, highlightTitleStyle } from '.';
 
 export function SidebarItem(props: SidebarItemProps) {
   const { item, depth = 0, activeMatcher, id, setSidebarData } = props;
-  const active = item.link && activeMatcher(item.link);
+  const active = 'link' in item && item.link && activeMatcher(item.link);
 
   const ref = useRef<HTMLDivElement>(null);
   useEffect(() => {

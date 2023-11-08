@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import {
   NormalizedSidebarGroup,
   SidebarItem as ISidebarItem,
+  SidebarDivider as ISidebarDivider,
   normalizeSlash,
 } from '@rspress/shared';
 import { routes } from 'virtual-routes';
@@ -15,6 +16,7 @@ import {
 import { NavBarTitle } from '../Nav/NavBarTitle';
 import styles from './index.module.scss';
 import { SidebarItem } from './SidebarItem';
+import { SidebarDivider } from './SidebarDivider';
 
 export interface SidebarItemProps {
   id: string;
@@ -23,7 +25,9 @@ export interface SidebarItemProps {
   activeMatcher: (link: string) => boolean;
   collapsed?: boolean;
   setSidebarData: React.Dispatch<
-    React.SetStateAction<(NormalizedSidebarGroup | ISidebarItem)[]>
+    React.SetStateAction<
+      (NormalizedSidebarGroup | ISidebarItem | ISidebarDivider)[]
+    >
   >;
   preloadLink: (link: string) => void;
 }
@@ -41,8 +45,10 @@ export const highlightTitleStyle = {
 
 // Note: the cache object won't be reassign in other module
 // eslint-disable-next-line import/no-mutable-exports
-export let matchCache: WeakMap<NormalizedSidebarGroup | ISidebarItem, boolean> =
-  new WeakMap();
+export let matchCache: WeakMap<
+  NormalizedSidebarGroup | ISidebarItem | ISidebarDivider,
+  boolean
+> = new WeakMap();
 
 export function SideBar(props: Props) {
   const { isSidebarOpen } = props;
@@ -53,7 +59,7 @@ export function SideBar(props: Props) {
   const langRoutePrefix = normalizeSlash(localesData.langRoutePrefix || '');
   const [hideNavbar] = useDisableNav();
   const [sidebarData, setSidebarData] = useState<
-    (ISidebarItem | NormalizedSidebarGroup)[]
+    (ISidebarDivider | ISidebarItem | NormalizedSidebarGroup)[]
   >(rawSidebarData.filter(Boolean).flat());
   const pathname = decodeURIComponent(rawPathname);
   useEffect(() => {
@@ -63,12 +69,17 @@ export function SideBar(props: Props) {
     // 1. Update sidebarData when pathname changes
     // 2. For current active item, expand its parent group
     // Cache, Avoid redundant calculation
-    matchCache = new WeakMap<NormalizedSidebarGroup | ISidebarItem, boolean>();
-    const match = (item: NormalizedSidebarGroup | ISidebarItem) => {
+    matchCache = new WeakMap<
+      NormalizedSidebarGroup | ISidebarItem | ISidebarDivider,
+      boolean
+    >();
+    const match = (
+      item: NormalizedSidebarGroup | ISidebarItem | ISidebarDivider,
+    ) => {
       if (matchCache.has(item)) {
         return matchCache.get(item);
       }
-      if (item.link && activeMatcher(item.link)) {
+      if ('link' in item && item.link && activeMatcher(item.link)) {
         matchCache.set(item, true);
         return true;
       }
@@ -82,7 +93,9 @@ export function SideBar(props: Props) {
       matchCache.set(item, false);
       return false;
     };
-    const traverse = (item: NormalizedSidebarGroup | ISidebarItem) => {
+    const traverse = (
+      item: NormalizedSidebarGroup | ISidebarItem | ISidebarDivider,
+    ) => {
       if ('items' in item) {
         item.items.forEach(traverse);
         if (match(item)) {
@@ -133,20 +146,33 @@ export function SideBar(props: Props) {
         >
           <nav className="pb-2">
             {sidebarData.map(
-              (item: NormalizedSidebarGroup | ISidebarItem, index: number) => (
-                <SidebarItem
-                  id={String(index)}
-                  item={item}
-                  depth={0}
-                  activeMatcher={activeMatcher}
-                  // The siderbarData is stable, so it's safe to use index as key
-                  // eslint-disable-next-line react/no-array-index-key
-                  key={index}
-                  collapsed={(item as NormalizedSidebarGroup).collapsed ?? true}
-                  setSidebarData={setSidebarData}
-                  preloadLink={preloadLink}
-                />
-              ),
+              (
+                item: NormalizedSidebarGroup | ISidebarItem | ISidebarDivider,
+                index: number,
+              ) =>
+                'dividerType' in item ? (
+                  <SidebarDivider
+                    // eslint-disable-next-line react/no-array-index-key
+                    key={index}
+                    depth={0}
+                    dividerType={item.dividerType}
+                  />
+                ) : (
+                  <SidebarItem
+                    id={String(index)}
+                    item={item}
+                    depth={0}
+                    activeMatcher={activeMatcher}
+                    // The siderbarData is stable, so it's safe to use index as key
+                    // eslint-disable-next-line react/no-array-index-key
+                    key={index}
+                    collapsed={
+                      (item as NormalizedSidebarGroup).collapsed ?? true
+                    }
+                    setSidebarData={setSidebarData}
+                    preloadLink={preloadLink}
+                  />
+                ),
             )}
           </nav>
         </div>

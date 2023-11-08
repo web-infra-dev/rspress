@@ -77,6 +77,10 @@ export type SideMetaItem =
       label?: string;
       collapsible?: boolean;
       collapsed?: boolean;
+    }
+  | {
+      type: 'divider';
+      dashed?: boolean;
     };
 ```
 
@@ -137,6 +141,17 @@ export type SideMetaItem =
   "collapsed": false
 }
 ```
+
+在描述**分割线**的情况下，类型如下：
+
+```ts
+{
+  type: 'divider';
+  dashed?: boolean;
+}
+```
+
+`dashed` 为 `true` 时表示该分割线是虚线，否则是实线。
 
 :::tip 提示
 

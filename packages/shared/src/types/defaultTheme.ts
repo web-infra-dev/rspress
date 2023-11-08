@@ -145,19 +145,21 @@ export type Image = string | { src: string; alt?: string };
 
 // sidebar -------------------------------------------------------------------
 export interface Sidebar {
-  [path: string]: (SidebarGroup | SidebarItem)[];
+  [path: string]: (SidebarGroup | SidebarItem | SidebarDivider)[];
 }
 
 export interface SidebarGroup {
   text: string;
   link?: string;
   tag?: string;
-  items: (SidebarItem | SidebarGroup | string)[];
+  items: (SidebarItem | SidebarDivider | SidebarGroup | string)[];
   collapsible?: boolean;
   collapsed?: boolean;
 }
 
 export type SidebarItem = { text: string; link: string; tag?: string };
+
+export type SidebarDivider = { dividerType: 'dashed' | 'solid' };
 
 // edit link -----------------------------------------------------------------
 
@@ -236,12 +238,12 @@ export interface LocaleLink {
 
 // normalized config ---------------------------------------------------------
 export interface NormalizedSidebarGroup extends Omit<SidebarGroup, 'items'> {
-  items: (SidebarItem | NormalizedSidebarGroup)[];
+  items: (SidebarDivider | SidebarItem | NormalizedSidebarGroup)[];
   collapsible: boolean;
   collapsed: boolean;
 }
 export interface NormalizedSidebar {
-  [path: string]: (NormalizedSidebarGroup | SidebarItem)[];
+  [path: string]: (NormalizedSidebarGroup | SidebarItem | SidebarDivider)[];
 }
 export interface NormalizedLocales extends Omit<LocaleConfig, 'sidebar'> {
   sidebar: NormalizedSidebar;
