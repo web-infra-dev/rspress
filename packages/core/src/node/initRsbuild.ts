@@ -140,10 +140,11 @@ async function createInternalBuildConfig(
               middlewares.push(sirv(publicDir));
             }
 
-            middlewares.push(serveSearchIndexMiddleware);
+            middlewares.push(serveSearchIndexMiddleware(config));
           },
         ],
         historyApiFallback: {
+          // not support fallback the requested path which contain a . (DOT) character by default
           rewrites: [{ from: /.*\.html/, to: '/' }],
         },
       },
