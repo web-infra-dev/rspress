@@ -10,7 +10,7 @@ export function SidebarDivider(props: SidebarDividerProps) {
 
   return (
     <div
-      className={`${borderTypeStyle} border-t border-divider-light my-0.5`}
+      className={`${borderTypeStyle} border-t border-divider-light my-3`}
       style={{ marginLeft: depth === 0 ? 0 : '18px' }}
     />
   );
