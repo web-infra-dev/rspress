@@ -92,13 +92,11 @@ async function createInternalBuildConfig(
     html: {
       favicon: normalizeIcon(config?.icon),
       template: path.join(PACKAGE_ROOT, 'index.html'),
-      outputStructure: 'nested',
     },
     output: {
       distPath: {
         // `root` must be a relative path in Rsbuild
         root: path.isAbsolute(outDir) ? path.relative(cwd, outDir) : outDir,
-        html: 'html',
       },
       // Disable production source map, it is useless for doc site
       disableSourceMap: isProduction(),
@@ -136,9 +134,14 @@ async function createInternalBuildConfig(
     tools: {
       devServer: {
         // Serve static files
-        after: [
-          ...(isPublicDirExist ? [sirv(publicDir)] : []),
-          serveSearchIndexMiddleware(config),
+        setupMiddlewares: [
+          middlewares => {
+            if (isPublicDirExist) {
+              middlewares.push(sirv(publicDir));
+            }
+
+            middlewares.push(serveSearchIndexMiddleware);
+          },
         ],
         historyApiFallback: true,
       },
@@ -242,7 +245,7 @@ export async function initRsbuild(
   const rsbuild = await createRsbuild({
     target: isSSR ? 'node' : 'web',
     entry: {
-      main: isSSR ? SSR_ENTRY : CLIENT_ENTRY,
+      index: isSSR ? SSR_ENTRY : CLIENT_ENTRY,
     },
     rsbuildConfig: mergeRsbuildConfig(
       internalRsbuildConfig,
