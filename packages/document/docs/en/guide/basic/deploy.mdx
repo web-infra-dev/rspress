@@ -162,3 +162,23 @@ Then click the `Deploy site` button to complete the deployment.
 #### Configure Custom Domain
 
 If you want to bind your site to your own domain, you can configure it in the `Domain management` column of `Netlify`. The specific configuration method can refer to the [Netlify official documentation](https://docs.netlify.com/domains-https/custom-domains/).
+
+### Deploy to Kinsta Static Site Hosting
+
+You can deploy your Rspress on [Kinsta](https://kinsta.com/static-site-hosting/).
+
+1. Login or create an account to view your [MyKinsta](https://my.kinsta.com/) dashboard.
+
+2. Authorize Kinsta with your Git provider.
+
+3. Select **Static Sites** from the left sidebar and press **Add sites**.
+
+4. Select the repository and branch you want to deploy.
+
+5. During the build settings, Kinsta will automatically try to fill out the **Build command**, **Node version**, and **Publish directory**. If it won't, fill out the following:
+
+   - Build command: `npm run build`
+   - Node version: `18.16.0`
+   - Publish directory: `doc_build`
+
+6. Click the **Create site**.
