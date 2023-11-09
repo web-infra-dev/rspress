@@ -21,7 +21,7 @@ export function scrollToTarget(
   // Only scroll smoothly in page header anchor
   window.scrollTo({
     left: 0,
-    top: targetTop,
+    top: Math.round(targetTop),
     ...(isSmooth ? { behavior: 'smooth' } : {}),
   });
 }
