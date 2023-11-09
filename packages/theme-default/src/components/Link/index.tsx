@@ -6,6 +6,7 @@ import {
   normalizeHrefInRuntime as normalizeHref,
   normalizeRoutePath,
   withBase,
+  isEqualPath,
 } from '@rspress/runtime';
 import nprogress from 'nprogress';
 import { routes } from 'virtual-routes';
@@ -31,7 +32,7 @@ export function Link(props: LinkProps) {
   const withBaseUrl = isExternal ? href : withBase(normalizeHref(href));
   const navigate = useNavigate();
   const { pathname } = useLocation();
-  const inCurrentPage = withBaseUrl.startsWith(pathname);
+  const inCurrentPage = isEqualPath(pathname, withBaseUrl);
   const handleNavigate = async (
     e: React.MouseEvent<HTMLAnchorElement, MouseEvent>,
   ) => {
