@@ -21,6 +21,10 @@ export function slash(str: string) {
   return str.replace(/\\/g, '/');
 }
 
+export function removeHash(str: string) {
+  return str.replace(/#.*$/, '');
+}
+
 export function normalizePosixPath(id: string): string {
   const path = slash(id);
   const isAbsolutePath = path.startsWith('/');
