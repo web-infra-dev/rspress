@@ -1,5 +1,11 @@
 # @rspress/docs
 
+## 1.6.0
+
+### Patch Changes
+
+- 00c293a: feat: support SidebarDivider
+
 ## 1.5.1
 
 ## 1.5.0

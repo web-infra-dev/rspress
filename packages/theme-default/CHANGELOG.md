@@ -1,5 +1,21 @@
 # @rspress/theme-default
 
+## 1.6.0
+
+### Minor Changes
+
+- b43b0fa: feat: support nav and sidebar for multi version scene
+
+### Patch Changes
+
+- c92f9ed: fix: overview page links cannot click
+- 00c293a: feat: support SidebarDivider
+- ca2c5fb: fix: fix the activation status update error after clicking on the right navigation bar
+- Updated dependencies [00c293a]
+- Updated dependencies [b43b0fa]
+  - @rspress/shared@1.6.0
+  - @rspress/runtime@1.6.0
+
 ## 1.5.1
 
 ### Patch Changes

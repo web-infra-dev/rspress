@@ -1,5 +1,18 @@
 # @rspress/plugin-auto-sidebar
 
+## 1.6.0
+
+### Minor Changes
+
+- b43b0fa: feat: support nav and sidebar for multi version scene
+
+### Patch Changes
+
+- 00c293a: feat: support SidebarDivider
+- Updated dependencies [00c293a]
+- Updated dependencies [b43b0fa]
+  - @rspress/shared@1.6.0
+
 ## 1.5.1
 
 ### Patch Changes
