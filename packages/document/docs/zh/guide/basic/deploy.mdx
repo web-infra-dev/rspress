@@ -162,3 +162,23 @@ jobs:
 #### 配置自定义域名
 
 如果你想要将你的站点绑定到自己的域名上，那么你可以在 `Netlify` 的 `Domain management` 栏目中进行配置，具体的配置方法可以参考 [Netlify 官方文档](https://docs.netlify.com/domains-https/custom-domains/)。
+
+### 通过 Kinsta 部署
+
+你可以在 [Kinsta](https://kinsta.com/static-site-hosting/) 上部署你的 Rspress 网站。
+
+1. 登录或创建账户，来查看你的 [MyKinsta](https://my.kinsta.com/) 面板。
+
+2. 通过 Git 提供商授权 Kinsta。
+
+3. 从左侧边栏选择 **Static Sites**，然后点击 **Add sites**。
+
+4. 选择需要部署的仓库和分支。
+
+5. 在构建设置中，Kinsta 会尝试自动填写 **Build command**、**Node version** 以及 **Publish directory**。如果没有自动填写，请填写以下内容：
+
+   - 构建命令: `npm run build`
+   - Node 版本: `18.16.0`
+   - 发布目录: `doc_build`
+
+6. 点击 **Create site**。
