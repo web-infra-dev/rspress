@@ -88,6 +88,21 @@ async function createInternalBuildConfig(
     dev: {
       port: process.env.PORT ? Number(process.env.PORT) : undefined,
       progressBar: false,
+      // Serve static files
+      // @ts-expect-error
+      setupMiddlewares: [
+        middlewares => {
+          if (isPublicDirExist) {
+            middlewares.push(sirv(publicDir));
+          }
+
+          middlewares.push(serveSearchIndexMiddleware(config));
+        },
+      ],
+      historyApiFallback: {
+        // not support fallback the requested path which contain a . (DOT) character by default
+        rewrites: [{ from: /.*\.html/, to: '/' }],
+      },
     },
     html: {
       favicon: normalizeIcon(config?.icon),
@@ -132,22 +147,6 @@ async function createInternalBuildConfig(
       printFileSize: !isSSR,
     },
     tools: {
-      devServer: {
-        // Serve static files
-        setupMiddlewares: [
-          middlewares => {
-            if (isPublicDirExist) {
-              middlewares.push(sirv(publicDir));
-            }
-
-            middlewares.push(serveSearchIndexMiddleware(config));
-          },
-        ],
-        historyApiFallback: {
-          // not support fallback the requested path which contain a . (DOT) character by default
-          rewrites: [{ from: /.*\.html/, to: '/' }],
-        },
-      },
       postcss(config) {
         // In debug mode, we should use tailwindcss to build the theme source code
         if (isDebugMode()) {
