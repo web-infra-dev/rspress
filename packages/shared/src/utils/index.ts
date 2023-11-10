@@ -8,6 +8,23 @@ export const APPEARANCE_KEY = 'rspress-theme-appearance';
 export const SEARCH_INDEX_NAME = 'search_index';
 export const RSPRESS_TEMP_DIR = '.rspress';
 
+export const DEFAULT_HIGHLIGHT_LANGUAGES = [
+  ['js', 'javascript'],
+  ['ts', 'typescript'],
+  ['jsx', 'tsx'],
+  'tsx',
+  'json',
+  'css',
+  'scss',
+  'less',
+  ['xml', 'xml-doc'],
+  'diff',
+  'yaml',
+  ['md', 'markdown'],
+  ['mdx', 'tsx'],
+  'bash',
+];
+
 export const isSCM = () => Boolean(process.env.BUILD_VERSION);
 
 export const isProduction = () => process.env.NODE_ENV === 'production';

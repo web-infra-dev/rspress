@@ -5,5 +5,6 @@
   "container-syntax",
   "typedoc",
   "preview",
-  "playground"
+  "playground",
+  "shiki"
 ]

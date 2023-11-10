@@ -1,0 +1,53 @@
+# @rspress/plugin-shiki
+
+> [源码地址](https://github.com/web-infra-dev/rspress/tree/main/packages/plugin-shiki)
+
+集成 [Shiki](https://github.com/shikijs/shiki) 代码高亮插件。在默认情况下，Rspress 会基于 [Prism.js](https://prismjs.com/) 来实现语法高亮。不过在某些情况下，你需要实现更多语言的代码高亮，Prism.js 可能不够用，此时你可以接入该插件，使用 Shiki 支持更多的语言。
+
+:::warning 注意
+
+不过，引入该 Shiki 插件之后，Rspress 的编译性能会有所下降，所以请根据自己的需求来评估是否需要引入该插件。
+
+:::
+
+## 安装
+
+import { PackageManagerTabs } from '@theme';
+
+<PackageManagerTabs command="add @rspress/plugin-shiki -D" />
+
+## 使用
+
+### 引入插件
+
+首先在配置文件中写入以下的配置：
+
+```ts title="rspress.config.ts"
+import { defineConfig } from 'rspress/config';
+import { pluginShiki } from '@rspress/plugin-shiki';
+
+export default defineConfig({
+  plugins: [pluginShiki()],
+});
+```
+
+## 配置
+
+该插件支持传入一个对象配置，该对象配置的属性如下：
+
+```ts
+interface PluginShikiOptions {
+  /**
+   * 代码高亮主题
+   */
+  theme: string;
+  /**
+   * 代码高亮的语言
+   */
+  langs: string[];
+}
+```
+
+其中，代码高亮主题使用的是 `css-variables`，你也可以选择自己喜欢的主题，具体可以参考 [Shiki 主题列表文档](https://github.com/shikijs/shiki/blob/main/docs/themes.md)。
+
+默认支持的语言包括 `js`、`jsx`、`ts`、`tsx`、`json`、`css`、`scss`、`less`、`xml`、`diff`、`yaml`、`md`、`mdx`、`bash`，如果你想支持更多的语言，可以在配置文件中传入 `langs` 属性，该属性是一个数组，数组中的每一项都是一个语言的 id，具体可以参考 [Shiki 支持的语言列表](https://github.com/shikijs/shiki/blob/main/docs/languages.md)。

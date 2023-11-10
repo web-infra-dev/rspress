@@ -1,5 +1,6 @@
 import path from 'path';
 import { defineConfig } from 'rspress/config';
+import { pluginShiki } from '@rspress/plugin-shiki';
 
 export default defineConfig({
   markdown: {
@@ -9,6 +10,7 @@ export default defineConfig({
   title: 'Rspress',
   description: 'Rspack based static site generator',
   lang: 'en',
+  plugins: [pluginShiki()],
   logo: {
     light:
       'https://lf3-static.bytednsdoc.com/obj/eden-cn/rjhwzy/ljhwZthlaukjlkulzlp/rspress/rspress-navbar-logo-0904.png',
