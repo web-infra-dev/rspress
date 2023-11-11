@@ -109,6 +109,11 @@ export function replaceLang(
   if (!url) {
     url = '/index.html';
   }
+
+  if (url.endsWith('/')) {
+    url += 'index.html';
+  }
+
   let versionPart = '';
   let langPart = '';
   let purePathPart = '';
