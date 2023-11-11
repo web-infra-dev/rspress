@@ -95,6 +95,24 @@ describe('test shared utils', () => {
 
       expect(result).toEqual('/index.html');
     });
+
+    test('should correctly handle the url that ends with a slash', () => {
+      const rawUrl = '/zh/';
+      const lang = {
+        current: 'zh',
+        target: 'en',
+        default: 'en',
+      };
+      const version = {
+        current: 'v1',
+        default: 'v1',
+      };
+      const base = '';
+
+      const result = replaceLang(rawUrl, lang, version, base);
+
+      expect(result).toEqual('/index.html');
+    });
   });
 
   describe('replaceVersion', () => {
