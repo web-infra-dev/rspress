@@ -20,6 +20,7 @@ type RspressPageMeta = Record<
   {
     title: string;
     toc: Header[];
+    frontmatter: Record<string, any>;
   }
 >;
 
@@ -43,16 +44,14 @@ export async function initPageData(routePath: string): Promise<PageData> {
     // FIXME: when sidebar item is configured as link string, the sidebar text won't updated when page title changed
     // Reason: The sidebar item text depends on pageData, which is not updated when page title changed, because the pageData is computed once when build
     const encodedPagePath = encodeURIComponent(pagePath);
-    let {
-      // eslint-disable-next-line prefer-const
+    const {
       toc = [],
-      // eslint-disable-next-line prefer-const
-      title = '',
-    } =
-      (mod.default.__RSPRESS_PAGE_META as RspressPageMeta)?.[encodedPagePath] ||
-      {};
 
-    const frontmatter = mod.frontmatter || {};
+      title = '',
+      frontmatter,
+    } = (mod.default.__RSPRESS_PAGE_META as RspressPageMeta)?.[
+      encodedPagePath
+    ] || {};
 
     return {
       siteData,
