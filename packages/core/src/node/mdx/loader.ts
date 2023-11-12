@@ -23,6 +23,7 @@ interface LoaderOptions {
 export interface PageMeta {
   toc: TocItem[];
   title: string;
+  frontmatter?: Record<string, any>;
 }
 
 export default async function mdxLoader(
@@ -54,7 +55,7 @@ export default async function mdxLoader(
     docDirectory,
     true,
   );
-  const hasFrontMatter = Object.keys(frontmatter).length > 0;
+  const isHomePage = frontmatter.pageType === 'home';
 
   try {
     let compileResult: string;
@@ -80,7 +81,11 @@ export default async function mdxLoader(
 
       compileResult = String(vFile);
       pageMeta = {
-        ...(compiler.data('pageMeta') as { toc: Header[]; title: string }),
+        ...(compiler.data('pageMeta') as {
+          toc: Header[];
+          title: string;
+        }),
+        frontmatter,
       } as PageMeta;
     } else {
       const { compile } = require('@rspress/mdx-rs');
@@ -97,6 +102,7 @@ export default async function mdxLoader(
       pageMeta = {
         toc,
         title,
+        frontmatter,
       };
       // We should check dead links in mdx-rs mode
       if (checkDeadLinks) {
@@ -111,9 +117,8 @@ MDXContent.__RSPRESS_PAGE_META["${encodeURIComponent(
       normalizePath(path.relative(docDirectory, filepath)),
     )}"] = ${JSON.stringify(pageMeta)};
 ${
-  hasFrontMatter
-    ? `export const frontmatter = ${JSON.stringify(frontmatter)};`
-    : ''
+  // Fix the home page won't update when the frontmatter is changed
+  isHomePage ? `export const frontmatter = ${JSON.stringify(frontmatter)};` : ''
 }
 
 `;

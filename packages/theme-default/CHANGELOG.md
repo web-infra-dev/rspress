@@ -1,5 +1,12 @@
 # @rspress/theme-default
 
+## 1.6.2
+
+### Patch Changes
+
+- @rspress/runtime@1.6.2
+- @rspress/shared@1.6.2
+
 ## 1.6.1
 
 ### Patch Changes

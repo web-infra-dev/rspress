@@ -1,5 +1,18 @@
 # @rspress/core
 
+## 1.6.2
+
+### Patch Changes
+
+- af9ea2f: fix: home page update after frontmatter changes
+  - @rspress/plugin-auto-nav-sidebar@1.6.2
+  - @rspress/plugin-container-syntax@1.6.2
+  - @rspress/plugin-last-updated@1.6.2
+  - @rspress/plugin-medium-zoom@1.6.2
+  - @rspress/runtime@1.6.2
+  - @rspress/shared@1.6.2
+  - @rspress/theme-default@1.6.2
+
 ## 1.6.1
 
 ### Patch Changes
