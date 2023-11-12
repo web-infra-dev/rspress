@@ -1,5 +1,20 @@
 # @rspress/core
 
+## 1.6.1
+
+### Patch Changes
+
+- Updated dependencies [0f81799]
+- Updated dependencies [9b122b6]
+- Updated dependencies [1fd3c30]
+  - @rspress/theme-default@1.6.1
+  - @rspress/plugin-auto-nav-sidebar@1.6.1
+  - @rspress/shared@1.6.1
+  - @rspress/plugin-container-syntax@1.6.1
+  - @rspress/plugin-last-updated@1.6.1
+  - @rspress/plugin-medium-zoom@1.6.1
+  - @rspress/runtime@1.6.1
+
 ## 1.6.0
 
 ### Minor Changes

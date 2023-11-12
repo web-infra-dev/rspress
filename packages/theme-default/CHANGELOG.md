@@ -1,5 +1,14 @@
 # @rspress/theme-default
 
+## 1.6.1
+
+### Patch Changes
+
+- 0f81799: feat: support render html in feature card details
+- Updated dependencies [1fd3c30]
+  - @rspress/shared@1.6.1
+  - @rspress/runtime@1.6.1
+
 ## 1.6.0
 
 ### Minor Changes

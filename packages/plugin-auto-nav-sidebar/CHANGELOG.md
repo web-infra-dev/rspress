@@ -1,5 +1,13 @@
 # @rspress/plugin-auto-sidebar
 
+## 1.6.1
+
+### Patch Changes
+
+- 9b122b6: fix: sidebar includes \_meta.json.html link
+- Updated dependencies [1fd3c30]
+  - @rspress/shared@1.6.1
+
 ## 1.6.0
 
 ### Minor Changes
