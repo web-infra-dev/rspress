@@ -1,5 +1,11 @@
 # @rspress/shared
 
+## 1.6.1
+
+### Patch Changes
+
+- 1fd3c30: fix: replaceLang should handle the url ends with a slash
+
 ## 1.6.0
 
 ### Minor Changes
