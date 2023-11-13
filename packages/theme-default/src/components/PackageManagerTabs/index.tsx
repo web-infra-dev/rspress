@@ -77,8 +77,8 @@ export function PackageManagerTabs({
   }
 
   // Normalize yarn/bun command
-  commandInfo.yarn = normalizeCommand(commandInfo.yarn);
-  commandInfo.bun = normalizeCommand(commandInfo.bun);
+  commandInfo.yarn && (commandInfo.yarn = normalizeCommand(commandInfo.yarn));
+  commandInfo.bun && (commandInfo.bun = normalizeCommand(commandInfo.bun));
 
   return (
     <Tabs

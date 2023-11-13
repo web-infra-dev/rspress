@@ -8,6 +8,7 @@ import {
   withBase as rawWithBase,
   removeBase as rawRemoveBase,
   isExternalUrl,
+  removeHash,
 } from '@rspress/shared';
 
 export function normalizeRoutePath(routePath: string) {
@@ -26,7 +27,8 @@ export function removeBase(url: string): string {
 
 export function isEqualPath(a: string, b: string) {
   return (
-    withBase(normalizeHrefInRuntime(a)) === withBase(normalizeHrefInRuntime(b))
+    withBase(normalizeHrefInRuntime(removeHash(a))) ===
+    withBase(normalizeHrefInRuntime(removeHash(b)))
   );
 }
 

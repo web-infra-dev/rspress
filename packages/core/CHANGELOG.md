@@ -1,5 +1,55 @@
 # @rspress/core
 
+## 1.6.2
+
+### Patch Changes
+
+- af9ea2f: fix: home page update after frontmatter changes
+  - @rspress/plugin-auto-nav-sidebar@1.6.2
+  - @rspress/plugin-container-syntax@1.6.2
+  - @rspress/plugin-last-updated@1.6.2
+  - @rspress/plugin-medium-zoom@1.6.2
+  - @rspress/runtime@1.6.2
+  - @rspress/shared@1.6.2
+  - @rspress/theme-default@1.6.2
+
+## 1.6.1
+
+### Patch Changes
+
+- Updated dependencies [0f81799]
+- Updated dependencies [9b122b6]
+- Updated dependencies [1fd3c30]
+  - @rspress/theme-default@1.6.1
+  - @rspress/plugin-auto-nav-sidebar@1.6.1
+  - @rspress/shared@1.6.1
+  - @rspress/plugin-container-syntax@1.6.1
+  - @rspress/plugin-last-updated@1.6.1
+  - @rspress/plugin-medium-zoom@1.6.1
+  - @rspress/runtime@1.6.1
+
+## 1.6.0
+
+### Minor Changes
+
+- b43b0fa: feat: support nav and sidebar for multi version scene
+
+### Patch Changes
+
+- 00c293a: feat: support SidebarDivider
+- f705dc7: fix: replace rules not works in toc
+- Updated dependencies [c92f9ed]
+- Updated dependencies [00c293a]
+- Updated dependencies [b43b0fa]
+- Updated dependencies [ca2c5fb]
+  - @rspress/theme-default@1.6.0
+  - @rspress/plugin-auto-nav-sidebar@1.6.0
+  - @rspress/shared@1.6.0
+  - @rspress/plugin-container-syntax@1.6.0
+  - @rspress/plugin-last-updated@1.6.0
+  - @rspress/plugin-medium-zoom@1.6.0
+  - @rspress/runtime@1.6.0
+
 ## 1.5.1
 
 ### Patch Changes

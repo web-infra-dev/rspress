@@ -21,6 +21,10 @@ export function slash(str: string) {
   return str.replace(/\\/g, '/');
 }
 
+export function removeHash(str: string) {
+  return str.replace(/#.*$/, '');
+}
+
 export function normalizePosixPath(id: string): string {
   const path = slash(id);
   const isAbsolutePath = path.startsWith('/');
@@ -105,6 +109,11 @@ export function replaceLang(
   if (!url) {
     url = '/index.html';
   }
+
+  if (url.endsWith('/')) {
+    url += 'index.html';
+  }
+
   let versionPart = '';
   let langPart = '';
   let purePathPart = '';

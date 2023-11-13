@@ -30,21 +30,27 @@ export async function scanSideMeta(
   } catch (e) {
     // If the `_meta.json` file doesn't exist, we will generate the sidebar config from the directory structure.
     const subItems = await fs.readdir(workDir);
-    sideMeta = await Promise.all(
-      subItems.map(async item => {
-        const stat = await fs.stat(path.join(workDir, item));
-        // If the item is a directory, we will transform it to a object with `type` and `name` property.
-        if (stat.isDirectory()) {
-          return {
-            type: 'dir',
-            name: item,
-            label: item,
-          };
-        } else {
-          return item;
-        }
-      }),
-    );
+    sideMeta = (
+      await Promise.all(
+        subItems.map(async item => {
+          // Fix https://github.com/web-infra-dev/rspress/issues/346
+          if (item === '_meta.json') {
+            return null;
+          }
+          const stat = await fs.stat(path.join(workDir, item));
+          // If the item is a directory, we will transform it to a object with `type` and `name` property.
+          if (stat.isDirectory()) {
+            return {
+              type: 'dir',
+              name: item,
+              label: item,
+            };
+          } else {
+            return item;
+          }
+        }),
+      )
+    ).filter(Boolean) as SideMeta;
   }
 
   const sidebarFromMeta: (SidebarGroup | SidebarItem | SidebarDivider)[] =

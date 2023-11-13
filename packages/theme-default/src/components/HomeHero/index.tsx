@@ -44,7 +44,7 @@ export function HomeHero({ frontmatter }: { frontmatter: FrontMatterMeta }) {
             multiHeroText.map(heroText => (
               <p
                 key={heroText}
-                className={`mx-auto md:m-0 text-3xl sm:text-5xl md:text-6xl pb-2 font-bold z-10 ${textMaxWidth}`}
+                className={`rspress-home-hero-text mx-auto md:m-0 text-3xl sm:text-5xl md:text-6xl pb-2 font-bold z-10 ${textMaxWidth}`}
                 style={{ lineHeight: '1.2' }}
               >
                 {renderHtmlOrText(heroText)}
@@ -52,7 +52,7 @@ export function HomeHero({ frontmatter }: { frontmatter: FrontMatterMeta }) {
             ))}
 
           <p
-            className={`whitespace-pre-wrap pt-4 m-auto md:m-0 text-sm sm:tex-xl md:text-2xl text-text-2 font-medium z-10 ${textMaxWidth}`}
+            className={`rspress-home-hero-tagline whitespace-pre-wrap pt-4 m-auto md:m-0 text-sm sm:tex-xl md:text-2xl text-text-2 font-medium z-10 ${textMaxWidth}`}
           >
             {renderHtmlOrText(hero.tagline)}
           </p>
