@@ -189,6 +189,7 @@ export interface SiteData<ThemeConfig = NormalizedDefaultThemeConfig> {
   markdown: {
     showLineNumbers: boolean;
     defaultWrapCode: boolean;
+    codeHighlighter: 'prism' | 'shiki';
   };
   multiVersion: {
     default: string;
@@ -339,6 +340,10 @@ export interface MarkdownOptions {
    * Register global components in mdx files
    */
   globalComponents?: string[];
+  /**
+   * Code highlighter, default is prism for performance reason
+   */
+  codeHighlighter?: 'prism' | 'shiki';
   /**
    * Register prism languages
    */

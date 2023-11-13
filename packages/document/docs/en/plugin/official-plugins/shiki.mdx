@@ -1,0 +1,53 @@
+# @rspress/plugin-shiki
+
+> [Source Code](https://github.com/web-infra-dev/rspress/tree/main/packages/plugin-shiki)
+
+This is an integration of the [Shiki](https://github.com/shikijs/shiki) code highlighting plugin. By default, Rspress uses [Prism.js](https://prismjs.com/) for syntax highlighting. However, in some cases, if you need to highlight more languages, Prism.js may not be sufficient. At this point, you can use this plugin and Shiki to support more languages.
+
+:::warning Note
+
+After introducing the Shiki plugin, the compilation performance of Rspress will decrease, so please evaluate whether you need to introduce this plugin based on your own needs.
+
+:::
+
+## Installation
+
+import { PackageManagerTabs } from '@theme';
+
+<PackageManagerTabs command="add @rspress/plugin-shiki -D" />
+
+## Usage
+
+### Importing the Plugin
+
+First, write the following configuration in the configuration file:
+
+```ts title="rspress.config.ts"
+import { defineConfig } from 'rspress/config';
+import { pluginShiki } from '@rspress/plugin-shiki';
+
+export default defineConfig({
+  plugins: [pluginShiki()],
+});
+```
+
+## Options
+
+This plugin supports passing in an object configuration, the properties of this object configuration are as follows:
+
+```ts
+interface PluginShikiOptions {
+  /**
+   * Code highlighting theme
+   */
+  theme: string;
+  /**
+   * Languages for code highlighting
+   */
+  langs: string[];
+}
+```
+
+The code highlighting theme uses `css-variables`, and you can also choose your favorite theme. For details, refer to the [Shiki Theme List Document](https://github.com/shikijs/shiki/blob/main/docs/themes.md).
+
+The default supported languages include `js`, `jsx`, `ts`, `tsx`, `json`, `css`, `scss`, `less`, `xml`, `diff`, `yaml`, `md`, `mdx`, `bash`. If you want to support more languages, you can pass the `langs` property in the configuration file. This property is an array, and each item in the array is a language id. For details, refer to the [Shiki Supported Language List](https://github.com/shikijs/shiki/blob/main/docs/languages.md).
