@@ -242,7 +242,9 @@ export function normalizeHref(url?: string, cleanUrls = false) {
     return url;
   }
 
-  if (!cleanUrls && !cleanUrl.endsWith('.html')) {
+  const hasExt = cleanUrl.split('/').pop()?.includes('.');
+
+  if (!cleanUrls && !cleanUrl.endsWith('.html') && !hasExt) {
     if (cleanUrl.endsWith('/')) {
       cleanUrl += 'index.html';
     } else {
