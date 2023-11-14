@@ -1,5 +1,4 @@
-import type { RsbuildPlugin } from '@rsbuild/core';
-import type { RsbuildConfig } from '@rsbuild/core/rspack-provider';
+import type { RsbuildPlugin, RsbuildConfig } from '@rsbuild/core';
 import type { PluggableList } from 'unified';
 import type { ZoomOptions } from 'medium-zoom';
 import type {

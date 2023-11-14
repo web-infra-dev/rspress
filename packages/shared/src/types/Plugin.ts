@@ -1,4 +1,4 @@
-import type { RsbuildConfig } from '@rsbuild/core/rspack-provider';
+import type { RsbuildConfig } from '@rsbuild/core';
 import type { PluggableList } from 'unified';
 import { UserConfig, PageIndexInfo, RouteMeta } from '.';
 

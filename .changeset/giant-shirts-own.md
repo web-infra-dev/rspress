@@ -2,4 +2,4 @@
 '@rspress/core': patch
 ---
 
-chore: format html distPath to adapt new Rsbuild Server
+chore: bump Rsbuild v0.0.21 and adapt new Rsbuild Server

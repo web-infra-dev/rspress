@@ -89,7 +89,6 @@ async function createInternalBuildConfig(
       port: process.env.PORT ? Number(process.env.PORT) : undefined,
       progressBar: false,
       // Serve static files
-      // @ts-expect-error
       setupMiddlewares: [
         middlewares => {
           if (isPublicDirExist) {
