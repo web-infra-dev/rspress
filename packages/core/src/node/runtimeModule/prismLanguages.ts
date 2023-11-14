@@ -1,28 +1,12 @@
 import { uniqBy } from 'lodash-es';
+import { DEFAULT_HIGHLIGHT_LANGUAGES } from '@rspress/shared';
 import { FactoryContext, RuntimeModuleID } from '.';
-
-const DEFAULT_LANGUAGES = [
-  ['js', 'javascript'],
-  ['ts', 'typescript'],
-  ['jsx', 'tsx'],
-  'tsx',
-  'json',
-  'css',
-  'scss',
-  'less',
-  ['xml', 'xml-doc'],
-  'diff',
-  'yaml',
-  ['md', 'markdown'],
-  ['mdx', 'tsx'],
-  'bash',
-];
 
 export async function prismLanguageVMPlugin(context: FactoryContext) {
   const { config } = context;
   const { highlightLanguages = [] } = config.markdown || {};
   const languageMeta = uniqBy(
-    [...DEFAULT_LANGUAGES, ...highlightLanguages].map(language => {
+    [...DEFAULT_HIGHLIGHT_LANGUAGES, ...highlightLanguages].map(language => {
       const [alias, name] = Array.isArray(language)
         ? language
         : [language, language];

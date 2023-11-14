@@ -10,6 +10,7 @@ const timeoutIdMap: Map<HTMLElement, NodeJS.Timeout> = new Map();
 
 export interface CodeProps {
   children: string;
+  // eslint-disable-next-line react/no-unused-prop-types
   className?: string;
   meta?: string;
 }
@@ -21,27 +22,12 @@ function registerLanguages() {
   registered = true;
 }
 
-export function Code(props: CodeProps) {
-  const copyButtonRef = useRef<HTMLButtonElement>(null);
+function PrismSyntaxHighlighter(
+  props: CodeProps & { language: string; codeWrap: boolean },
+) {
   const { siteData } = usePageData();
-  const { showLineNumbers, defaultWrapCode } = siteData.markdown;
-  const [codeWrap, setCodeWrap] = useState(defaultWrapCode);
-  if (!registered) {
-    registerLanguages();
-  }
-  const { className, meta } = props;
-  const language = className?.replace(/language-/, '');
-  if (!language) {
-    return <code {...props}></code>;
-  }
-  let children: string;
-  if (typeof props.children === 'string') {
-    children = props.children.trim();
-  } else if (Array.isArray(props.children)) {
-    children = (props.children[0] as string).trim();
-  } else {
-    children = '';
-  }
+  const { meta, language, codeWrap } = props;
+  const { showLineNumbers } = siteData.markdown;
   let highlightMeta = '';
   let highlightLines: number[] = [];
   if (meta) {
@@ -64,6 +50,57 @@ export function Code(props: CodeProps) {
         .flat();
     }
   }
+  if (!registered) {
+    registerLanguages();
+  }
+  return (
+    <SyntaxHighlighter
+      language={language}
+      style={style}
+      wrapLines={true}
+      className="code"
+      wrapLongLines={codeWrap}
+      customStyle={{ backgroundColor: 'inherit' }}
+      // Notice: if the highlight line is specified, the line number must be displayed
+      showLineNumbers={showLineNumbers || highlightLines.length > 0}
+      lineProps={lineNumber => {
+        const isHighlighted = highlightLines.includes(lineNumber);
+        return {
+          className: isHighlighted ? 'line highlighted' : '',
+          style: {
+            backgroundColor: isHighlighted
+              ? 'var(--rp-code-line-highlight-color)'
+              : '',
+            display: 'block',
+            padding: '0 1.25rem',
+          },
+        };
+      }}
+    >
+      {props.children}
+    </SyntaxHighlighter>
+  );
+}
+
+export function Code(props: CodeProps) {
+  const copyButtonRef = useRef<HTMLButtonElement>(null);
+  const { siteData } = usePageData();
+  const { defaultWrapCode, codeHighlighter } = siteData.markdown;
+  const [codeWrap, setCodeWrap] = useState(defaultWrapCode);
+
+  const { className } = props;
+  const language = className?.replace(/language-/, '');
+  if (!language) {
+    return <code {...props}></code>;
+  }
+  let children: string;
+  if (typeof props.children === 'string') {
+    children = props.children.trim();
+  } else if (Array.isArray(props.children)) {
+    ({ children } = props);
+  } else {
+    children = '';
+  }
 
   const toggleCodeWrap = () => {
     setCodeWrap(!codeWrap);
@@ -84,34 +121,18 @@ export function Code(props: CodeProps) {
       timeoutIdMap.set(el, timeoutId);
     }
   };
-
   return (
     <>
-      <SyntaxHighlighter
-        language={language}
-        style={style}
-        wrapLines={true}
-        className="code"
-        wrapLongLines={codeWrap}
-        customStyle={{ backgroundColor: 'inherit' }}
-        // Notice: if the highlight line is specified, the line number must be displayed
-        showLineNumbers={showLineNumbers || highlightLines.length > 0}
-        lineProps={lineNumber => {
-          const isHighlighted = highlightLines.includes(lineNumber);
-          return {
-            className: isHighlighted ? 'line highlighted' : '',
-            style: {
-              backgroundColor: isHighlighted
-                ? 'var(--rp-code-line-highlight-color)'
-                : '',
-              display: 'block',
-              padding: '0 1.25rem',
-            },
-          };
-        }}
-      >
-        {children}
-      </SyntaxHighlighter>
+      {/* Use prism.js to highlight code by default */}
+      {codeHighlighter === 'prism' ? (
+        <PrismSyntaxHighlighter
+          {...props}
+          language={language}
+          codeWrap={codeWrap}
+        />
+      ) : (
+        <code {...props}></code>
+      )}
       <button
         className={`wrap ${codeWrap ? 'wrapped' : ''}`}
         onClick={toggleCodeWrap}
