@@ -111,6 +111,7 @@ export function Code(props: CodeProps) {
     const el = copyButtonRef.current;
 
     if (isCopied && el) {
+      copy(el.previousElementSibling.previousElementSibling.textContent);
       el.classList.add('copied');
       clearTimeout(timeoutIdMap.get(el));
       const timeoutId = setTimeout(() => {
@@ -121,18 +122,27 @@ export function Code(props: CodeProps) {
       timeoutIdMap.set(el, timeoutId);
     }
   };
+
+  const getHighlighter = () => {
+    switch (codeHighlighter) {
+      case 'prism':
+        return (
+          <PrismSyntaxHighlighter
+            {...props}
+            language={language}
+            codeWrap={codeWrap}
+          />
+        );
+      case 'shiki':
+      default:
+        return <code {...props}></code>;
+    }
+  };
+
   return (
     <>
       {/* Use prism.js to highlight code by default */}
-      {codeHighlighter === 'prism' ? (
-        <PrismSyntaxHighlighter
-          {...props}
-          language={language}
-          codeWrap={codeWrap}
-        />
-      ) : (
-        <code {...props}></code>
-      )}
+      {getHighlighter()}
       <button
         className={`wrap ${codeWrap ? 'wrapped' : ''}`}
         onClick={toggleCodeWrap}
