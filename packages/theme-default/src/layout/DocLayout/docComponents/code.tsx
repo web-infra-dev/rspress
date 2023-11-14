@@ -93,25 +93,18 @@ export function Code(props: CodeProps) {
   if (!language) {
     return <code {...props}></code>;
   }
-  let children: string;
-  if (typeof props.children === 'string') {
-    children = props.children.trim();
-  } else if (Array.isArray(props.children)) {
-    ({ children } = props);
-  } else {
-    children = '';
-  }
 
   const toggleCodeWrap = () => {
     setCodeWrap(!codeWrap);
   };
 
   const copyCode = () => {
-    const isCopied = copy(children);
     const el = copyButtonRef.current;
+    const isCopied = copy(
+      el.previousElementSibling.previousElementSibling.textContent,
+    );
 
     if (isCopied && el) {
-      copy(el.previousElementSibling.previousElementSibling.textContent);
       el.classList.add('copied');
       clearTimeout(timeoutIdMap.get(el));
       const timeoutId = setTimeout(() => {
