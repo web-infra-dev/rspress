@@ -50,6 +50,9 @@ function PrismSyntaxHighlighter(
         .flat();
     }
   }
+  if (!registered) {
+    registerLanguages();
+  }
   return (
     <SyntaxHighlighter
       language={language}
@@ -84,9 +87,7 @@ export function Code(props: CodeProps) {
   const { siteData } = usePageData();
   const { defaultWrapCode, codeHighlighter } = siteData.markdown;
   const [codeWrap, setCodeWrap] = useState(defaultWrapCode);
-  if (!registered) {
-    registerLanguages();
-  }
+
   const { className } = props;
   const language = className?.replace(/language-/, '');
   if (!language) {
@@ -120,14 +121,13 @@ export function Code(props: CodeProps) {
       timeoutIdMap.set(el, timeoutId);
     }
   };
-
   return (
     <>
       {/* Use prism.js to highlight code by default */}
       {codeHighlighter === 'prism' ? (
         <PrismSyntaxHighlighter
           {...props}
-          language="language"
+          language={language}
           codeWrap={codeWrap}
         />
       ) : (
