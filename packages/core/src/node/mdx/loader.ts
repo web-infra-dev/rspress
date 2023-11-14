@@ -1,5 +1,5 @@
 import path from 'path';
-import type { Rspack } from '@rsbuild/core/rspack-provider';
+import type { Rspack } from '@rsbuild/core';
 import { createProcessor } from '@mdx-js/mdx';
 import type { Header, UserConfig } from '@rspress/shared';
 import { logger } from '@rspress/shared/logger';
