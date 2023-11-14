@@ -93,22 +93,16 @@ export function Code(props: CodeProps) {
   if (!language) {
     return <code {...props}></code>;
   }
-  let children: string;
-  if (typeof props.children === 'string') {
-    children = props.children.trim();
-  } else if (Array.isArray(props.children)) {
-    ({ children } = props);
-  } else {
-    children = '';
-  }
 
   const toggleCodeWrap = () => {
     setCodeWrap(!codeWrap);
   };
 
   const copyCode = () => {
-    const isCopied = copy(children);
     const el = copyButtonRef.current;
+    const isCopied = copy(
+      el.previousElementSibling.previousElementSibling.textContent,
+    );
 
     if (isCopied && el) {
       el.classList.add('copied');
@@ -121,18 +115,27 @@ export function Code(props: CodeProps) {
       timeoutIdMap.set(el, timeoutId);
     }
   };
+
+  const getHighlighter = () => {
+    switch (codeHighlighter) {
+      case 'prism':
+        return (
+          <PrismSyntaxHighlighter
+            {...props}
+            language={language}
+            codeWrap={codeWrap}
+          />
+        );
+      case 'shiki':
+      default:
+        return <code {...props}></code>;
+    }
+  };
+
   return (
     <>
       {/* Use prism.js to highlight code by default */}
-      {codeHighlighter === 'prism' ? (
-        <PrismSyntaxHighlighter
-          {...props}
-          language={language}
-          codeWrap={codeWrap}
-        />
-      ) : (
-        <code {...props}></code>
-      )}
+      {getHighlighter()}
       <button
         className={`wrap ${codeWrap ? 'wrapped' : ''}`}
         onClick={toggleCodeWrap}
