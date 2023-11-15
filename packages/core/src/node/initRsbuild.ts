@@ -118,7 +118,7 @@ async function createInternalBuildConfig(
       assetPrefix,
     },
     source: {
-      entries: {
+      entry: {
         index: isSSR ? SSR_ENTRY : CLIENT_ENTRY,
       },
       alias: {
@@ -132,11 +132,7 @@ async function createInternalBuildConfig(
         ),
         ...(await resolveReactAlias(reactVersion)),
       },
-      include: [
-        PACKAGE_ROOT,
-        path.join(cwd, 'node_modules', RSPRESS_TEMP_DIR),
-        /(.*?)\.tsx?$/,
-      ],
+      include: [PACKAGE_ROOT, path.join(cwd, 'node_modules', RSPRESS_TEMP_DIR)],
       define: {
         'process.env.__ASSET_PREFIX__': JSON.stringify(assetPrefix),
         'process.env.__SSR__': JSON.stringify(isSSR),
