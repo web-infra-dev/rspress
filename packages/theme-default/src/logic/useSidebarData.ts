@@ -3,6 +3,7 @@ import {
   SidebarItem,
   NormalizedSidebar,
   SidebarDivider,
+  addTrailingSlash,
 } from '@rspress/shared';
 import { useEffect, useState } from 'react';
 import { useLocation, withBase, isEqualPath } from '@rspress/runtime';
@@ -61,7 +62,11 @@ export const getSidebarGroupData = (
           for (const otherGroupName of Object.keys(sidebar)) {
             if (
               otherGroupName !== name &&
-              currentPathname.startsWith(withBase(otherGroupName))
+              currentPathname.startsWith(
+                // https://github.com/web-infra-dev/rspress/issues/360
+                // Ensure the other group name ends with `/` to avoid some unexpected results, for example, `/react-native` will match `/react`, that's not what we want
+                addTrailingSlash(withBase(otherGroupName)),
+              )
             ) {
               // Performance optimization, once we find the other group name, we can skip the other group in the future loops
               detectedGroupName = otherGroupName;
