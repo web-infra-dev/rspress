@@ -318,14 +318,14 @@ importers:
         specifier: 2.40.0
         version: 2.40.0
       '@rsbuild/core':
-        specifier: 0.0.22
-        version: 0.0.22
+        specifier: 0.0.0-next-20231115072032
+        version: 0.0.0-next-20231115072032
       '@rsbuild/plugin-react':
-        specifier: 0.0.22
-        version: 0.0.22(webpack@5.88.2)
+        specifier: 0.0.0-next-20231115072032
+        version: 0.0.0-next-20231115072032(webpack@5.88.2)
       '@rsbuild/plugin-svgr':
-        specifier: 0.0.22
-        version: 0.0.22(webpack@5.88.2)
+        specifier: 0.0.0-next-20231115072032
+        version: 0.0.0-next-20231115072032(webpack@5.88.2)
       '@rspress/mdx-rs':
         specifier: 0.4.1
         version: 0.4.1
@@ -1116,8 +1116,8 @@ importers:
   packages/shared:
     dependencies:
       '@rsbuild/core':
-        specifier: 0.0.22
-        version: 0.0.22
+        specifier: 0.0.0-next-20231115072032
+        version: 0.0.0-next-20231115072032
       chalk:
         specifier: 4.1.2
         version: 4.1.2
@@ -4962,22 +4962,18 @@ packages:
       - supports-color
     dev: true
 
-  /@rsbuild/core@0.0.22:
-    resolution: {integrity: sha512-5CnT7t2A9UdCjW33fsR8n5vdGZm9TwWt0iaKKpGaEQYS9IrJMaQTSviz9qPc7yZjDXb9x6Lj7zIPqbI3ydCJMA==}
+  /@rsbuild/core@0.0.0-next-20231115072032:
+    resolution: {integrity: sha512-RERATRz5RpAPBaHv0mb11LZXOvt21jANBIHiQbmWfJLfYnjZbbkxH9cUt9jWPS7u+wyor9pD+1de1XHM4lxBTg==}
     engines: {node: '>=14.0.0'}
     hasBin: true
     dependencies:
-      '@rsbuild/shared': 0.0.22
+      '@rsbuild/shared': 0.0.0-next-20231115072032
       '@rspack/core': 0.3.12
-      commander: 10.0.1
       core-js: 3.32.2
-      gzip-size: 6.0.0
       html-webpack-plugin: /html-rspack-plugin@5.5.5
-      http-compression: 1.0.6
       http-proxy-middleware: 2.0.6
       jiti: 1.20.0
       postcss: 8.4.31
-      rslog: 1.1.0
       semver: 7.5.4
       sirv: 2.0.3
       ws: 8.13.0
@@ -4988,10 +4984,10 @@ packages:
       - utf-8-validate
     dev: false
 
-  /@rsbuild/plugin-react@0.0.22(webpack@5.88.2):
-    resolution: {integrity: sha512-NKJ/ps7BlTxq+AIh1dQtPe87/iAPRsI1RGAHJiPcduOqVxR81E9zU4IPjqzoxnt0LYHdXN/hGU79EvCPTrg9RA==}
+  /@rsbuild/plugin-react@0.0.0-next-20231115072032(webpack@5.88.2):
+    resolution: {integrity: sha512-ibIfIV5qFEvJn29+SpdkU2Xz/Z9RbpAnnV1zj1MqgHSCi3rU0Sx9brR0OeKLYN5w3rUsgiJFdyv1GRllpiwFJA==}
     dependencies:
-      '@rsbuild/shared': 0.0.22
+      '@rsbuild/shared': 0.0.0-next-20231115072032
       '@rspack/plugin-react-refresh': 0.3.12(react-refresh@0.14.0)(webpack@5.88.2)
       react-refresh: 0.14.0
     transitivePeerDependencies:
@@ -5004,10 +5000,10 @@ packages:
       - webpack-plugin-serve
     dev: false
 
-  /@rsbuild/plugin-svgr@0.0.22(webpack@5.88.2):
-    resolution: {integrity: sha512-gcCNCw1c+0kwzla2ptwmKxne2Rk1T+zznqQHH5ARAewbBCn3aACsB+Rvx72bBKgVOxmUgFNh6YuX/t0FWnEkrw==}
+  /@rsbuild/plugin-svgr@0.0.0-next-20231115072032(webpack@5.88.2):
+    resolution: {integrity: sha512-4HRiviDxYxUyTScj0LiYKKODRV/Y8APZI90+7p11HQEU+702YZTwgCkWEQOKq+KTRilx0p5wt2PozjJy8ZXG+A==}
     dependencies:
-      '@rsbuild/shared': 0.0.22
+      '@rsbuild/shared': 0.0.0-next-20231115072032
       '@svgr/webpack': 8.0.1
       url-loader: 4.1.1(webpack@5.88.2)
     transitivePeerDependencies:
@@ -5016,17 +5012,15 @@ packages:
       - webpack
     dev: false
 
-  /@rsbuild/shared@0.0.22:
-    resolution: {integrity: sha512-/vITZGH5m4ZEUM4kFTaQ4wcyBu2ZjJ5pWbGsmbt0zhlCQiEGdpqEPmOn9t9L35ooSVWFaK1udNxjSFqVzQCfgQ==}
+  /@rsbuild/shared@0.0.0-next-20231115072032:
+    resolution: {integrity: sha512-+/RG7cm+GWdzc/Bg07C5kntv1s82rQVluJgcK1jky1VxukLQdDMeKv1scpFCQvfAfwlJC5Go18CHmK13LbGfEw==}
     dependencies:
       '@rspack/core': 0.3.12
       caniuse-lite: 1.0.30001561
-      gzip-size: 6.0.0
       json5: 2.2.3
       line-diff: 2.1.1
       lodash: 4.17.21
       postcss: 8.4.31
-      rslog: 1.1.0
       semver: 7.5.4
     dev: false
 
@@ -7988,6 +7982,7 @@ packages:
 
   /duplexer@0.1.2:
     resolution: {integrity: sha512-jtD6YG370ZCIi/9GTaJKQxWTZD045+4R4hTk/x1UyoqadyJ9x9CgSi1RlVDQF8U2sxLLSnFkCaMihqljHIWgMg==}
+    dev: true
 
   /duplexify@3.7.1:
     resolution: {integrity: sha512-07z8uv2wMyS51kKhD1KsdXJg5WQ6t93RneqRxUHnskXVtlYYkLqM0gqStQZ3pj073g687jPCHrqNfCzawLYh5g==}
@@ -9417,13 +9412,6 @@ packages:
       strip-bom-string: 1.0.0
     dev: true
 
-  /gzip-size@6.0.0:
-    resolution: {integrity: sha512-ax7ZYomf6jqPTQ4+XCpUGyXKHk5WweS+e05MBO4/y3WJ5RkmPXNKvX+bx1behVILVwr6JSQvZAku021CHPXG3Q==}
-    engines: {node: '>=10'}
-    dependencies:
-      duplexer: 0.1.2
-    dev: false
-
   /handlebars@4.7.8:
     resolution: {integrity: sha512-vafaFqs8MZkRrSX7sFVUdo3ap/eNiLnb4IakshzvP56X5Nr1iGKAIqdX6tMlm6HcNRIkr6AxO5jFEoJzzpT8aQ==}
     engines: {node: '>=0.4.7'}
@@ -9783,11 +9771,6 @@ packages:
 
   /http-cache-semantics@3.8.1:
     resolution: {integrity: sha512-5ai2iksyV8ZXmnZhHH4rWPoxxistEexSi5936zIQ1bnNTW5VnA85B6P/VpXiRM017IgRvb2kKo1a//y+0wSp3w==}
-    dev: false
-
-  /http-compression@1.0.6:
-    resolution: {integrity: sha512-Yy9VFT/0fJhbpSHmqA34CJKZDXLnHoQUP2wbFXY7duOx3nc9Qf8MVJezaXTP7IirvJ9DmUv/vm7qFNu/RntdWw==}
-    engines: {node: '>= 4'}
     dev: false
 
   /http-proxy-agent@2.1.0:

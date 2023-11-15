@@ -118,6 +118,9 @@ async function createInternalBuildConfig(
       assetPrefix,
     },
     source: {
+      entries: {
+        index: isSSR ? SSR_ENTRY : CLIENT_ENTRY,
+      },
       alias: {
         '@mdx-js/react': require.resolve('@mdx-js/react'),
         '@theme': themeDir,
@@ -245,9 +248,6 @@ export async function initRsbuild(
 
   const rsbuild = await createRsbuild({
     target: isSSR ? 'node' : 'web',
-    entry: {
-      index: isSSR ? SSR_ENTRY : CLIENT_ENTRY,
-    },
     rsbuildConfig: mergeRsbuildConfig(
       internalRsbuildConfig,
       ...(config?.plugins?.map(plugin => plugin.builderConfig ?? {}) || []),
