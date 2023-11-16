@@ -66,11 +66,10 @@ function PrismSyntaxHighlighter(
       lineProps={lineNumber => {
         const isHighlighted = highlightLines.includes(lineNumber);
         return {
-          className: isHighlighted ? 'line highlighted' : '',
           style: {
-            backgroundColor: isHighlighted
-              ? 'var(--rp-code-line-highlight-color)'
-              : '',
+            ...(isHighlighted
+              ? { backgroundColor: 'var(--rp-code-line-highlight-color)' }
+              : {}),
             display: 'block',
             padding: '0 1.25rem',
           },
@@ -137,7 +136,7 @@ export function Code(props: CodeProps) {
       {/* Use prism.js to highlight code by default */}
       {getHighlighter()}
       <button
-        className={`wrap ${codeWrap ? 'wrapped' : ''}`}
+        className={`wrap${codeWrap ? ' wrapped' : ''}`}
         onClick={toggleCodeWrap}
       ></button>
       <button className="copy" onClick={copyCode} ref={copyButtonRef}></button>
