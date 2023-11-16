@@ -118,6 +118,9 @@ async function createInternalBuildConfig(
       assetPrefix,
     },
     source: {
+      entry: {
+        index: isSSR ? SSR_ENTRY : CLIENT_ENTRY,
+      },
       alias: {
         '@mdx-js/react': require.resolve('@mdx-js/react'),
         '@theme': themeDir,
@@ -129,11 +132,7 @@ async function createInternalBuildConfig(
         ),
         ...(await resolveReactAlias(reactVersion)),
       },
-      include: [
-        PACKAGE_ROOT,
-        path.join(cwd, 'node_modules', RSPRESS_TEMP_DIR),
-        /(.*?)\.tsx?$/,
-      ],
+      include: [PACKAGE_ROOT, path.join(cwd, 'node_modules', RSPRESS_TEMP_DIR)],
       define: {
         'process.env.__ASSET_PREFIX__': JSON.stringify(assetPrefix),
         'process.env.__SSR__': JSON.stringify(isSSR),
@@ -245,9 +244,6 @@ export async function initRsbuild(
 
   const rsbuild = await createRsbuild({
     target: isSSR ? 'node' : 'web',
-    entry: {
-      index: isSSR ? SSR_ENTRY : CLIENT_ENTRY,
-    },
     rsbuildConfig: mergeRsbuildConfig(
       internalRsbuildConfig,
       ...(config?.plugins?.map(plugin => plugin.builderConfig ?? {}) || []),
