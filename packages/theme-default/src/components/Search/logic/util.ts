@@ -1,6 +1,7 @@
 import { RemoteSearchIndexInfo, Header } from '@rspress/shared';
 
 const MAX_TITLE_LENGTH = 20;
+const kRegex = /[\u3131-\u314e|\u314f-\u3163|\uac00-\ud7a3]/u;
 
 export function backTrackHeaders(
   rawHeaders: Header[],
@@ -37,10 +38,11 @@ export function formatText(text: string) {
 }
 
 export function normalizeTextCase(text: string) {
-  return text
+  const result = text
     .toLowerCase()
     .normalize('NFD')
     .replace(/[\u0300-\u036f]/g, '');
+  return kRegex.test(text) ? result.normalize('NFC') : result;
 }
 
 export function removeDomain(url: string) {
