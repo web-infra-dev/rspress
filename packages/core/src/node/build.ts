@@ -9,6 +9,7 @@ import {
   APPEARANCE_KEY,
   normalizeSlash,
   withBase,
+  isDebugMode,
 } from '@rspress/shared';
 import { logger } from '@rspress/shared/logger';
 import {
@@ -62,6 +63,11 @@ export async function bundle(
               root: `${outputDir}/ssr`,
             },
           },
+          tools: {
+            rspack(options) {
+              options.output.filename = 'main.cjs';
+            },
+          },
         }),
       ]);
       await Promise.all([clientBuilder.build(), ssrBuilder.build()]);
@@ -102,7 +108,7 @@ export async function renderPages(
   logger.info('Rendering pages...');
   const startTime = Date.now();
   const outputPath = config?.outDir ?? join(appDirectory, OUTPUT_DIR);
-  const ssrBundlePath = join(outputPath, 'ssr', 'bundles', 'index.js');
+  const ssrBundlePath = join(outputPath, 'ssr', 'main.cjs');
   try {
     const { default: fs } = await import('@modern-js/utils/fs-extra');
     // There are two cases where we will fallback to CSR:
@@ -204,7 +210,10 @@ export async function renderPages(
         }),
     );
     // Remove ssr bundle
-    await fs.remove(join(outputPath, 'ssr'));
+    if (!isDebugMode()) {
+      await fs.remove(join(outputPath, 'ssr'));
+    }
+    await fs.remove(join(outputPath, 'html'));
 
     const totalTime = Date.now() - startTime;
     logger.success(`Pages rendered in ${chalk.yellow(totalTime)} ms.`);
