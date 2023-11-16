@@ -4,37 +4,15 @@ export default defineConfig({
   plugins: [moduleTools()],
   buildConfig: [
     {
+      input: ['src/index.ts', 'src/logger.ts'],
       target: 'esnext',
       format: 'esm',
       buildType: 'bundle',
-      esbuildOptions(options) {
-        delete options.outdir;
-        options.outfile = 'dist/index.mjs';
-        return options;
-      },
+      dts: false,
+      autoExtension: true,
     },
     {
-      target: 'esnext',
-      format: 'cjs',
-      buildType: 'bundle',
-    },
-    {
-      input: {
-        logger: './src/logger.ts',
-      },
-      target: 'esnext',
-      format: 'esm',
-      buildType: 'bundle',
-      esbuildOptions(options) {
-        delete options.outdir;
-        options.outfile = 'dist/logger.mjs';
-        return options;
-      },
-    },
-    {
-      input: {
-        logger: './src/logger.ts',
-      },
+      input: ['src/index.ts', 'src/logger.ts'],
       target: 'esnext',
       format: 'cjs',
       buildType: 'bundle',

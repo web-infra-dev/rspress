@@ -5,21 +5,6 @@ import { tailwindConfig } from './tailwind.config';
 const require = createRequire(import.meta.url);
 const tailwindPlugin = require('@modern-js/plugin-tailwindcss').default;
 
-const COMMON_EXTERNALS = [
-  'virtual-routes-ssr',
-  'virtual-routes',
-  '@theme',
-  'virtual-search-index-hash',
-  'virtual-site-data',
-  'virtual-global-styles',
-  'virtual-global-components',
-  'virtual-search-hooks',
-  '@/runtime',
-  '@runtime',
-  'virtual-i18n-text',
-  'virtual-prism-languages',
-];
-
 export default defineConfig({
   plugins: [tailwindPlugin(), moduleTools()],
   testing: {
@@ -38,11 +23,8 @@ export default defineConfig({
         'jsdom',
         '@rspress/plugin-container-syntax',
       ],
-      esbuildOptions: options => {
-        options.banner = {
-          js: 'import { createRequire } from "module";\nconst { url } = import.meta;\nconst require = createRequire(url);',
-        };
-        return options;
+      banner: {
+        js: 'import { createRequire } from "module";\nconst { url } = import.meta;\nconst require = createRequire(url);',
       },
     },
     {
@@ -55,26 +37,17 @@ export default defineConfig({
       outDir: 'dist',
       sourceMap: true,
       externals: ['@rspress/mdx-rs'],
-      esbuildOptions: options => {
-        options.banner = {
-          js: 'import { createRequire } from "module";\nconst { url } = import.meta;\nconst require = createRequire(url);',
-        };
-        return options;
+      banner: {
+        js: 'import { createRequire } from "module";\nconst { url } = import.meta;\nconst require = createRequire(url);',
       },
     },
     {
-      input: ['src/runtime'],
       sourceDir: 'src/runtime',
       buildType: 'bundleless',
       target: 'es2020',
       format: 'esm',
       outDir: 'dist/runtime',
-      dts: {
-        tsconfigPath: './src/runtime/tsconfig.json',
-        respectExternal: true,
-      },
       tsconfig: './src/runtime/tsconfig.json',
-      externals: COMMON_EXTERNALS,
     },
   ],
 });
