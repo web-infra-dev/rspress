@@ -66,6 +66,7 @@
 
 .inline-link {
   display: inline;
+  word-break: break-all;
 }
 
 // For the className injected by shiki rehype plugin
