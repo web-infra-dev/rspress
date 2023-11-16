@@ -233,6 +233,8 @@ export class RouteService {
     routeMeta: RouteMeta[],
     isStaticImport: boolean,
   ) {
+    // TODO: webpackChunkName need fix https://github.com/web-infra-dev/rspack/issues/4664
+
     return `
 import React from 'react';
 import { lazyWithPreload } from "react-lazy-with-preload";
@@ -240,7 +242,7 @@ ${routeMeta
   .map((route, index) => {
     return isStaticImport
       ? `import * as Route${index} from '${route.absolutePath}';`
-      : `const Route${index} = lazyWithPreload(() => import(/* webpackChunkName: "${route.pageName}" */'${route.absolutePath}'))`;
+      : `const Route${index} = lazyWithPreload(() => import('${route.absolutePath}'))`;
   })
   .join('\n')}
 export const routes = [

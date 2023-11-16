@@ -71,22 +71,22 @@ describe('RouteService', async () => {
   test('Should generate routes code', () => {
     expect(routeService.generateRoutesCodeByRouteMeta(routeMeta, false))
       .toMatchInlineSnapshot(`
-      "
-      import React from 'react';
-      import { lazyWithPreload } from \\"react-lazy-with-preload\\";
-      const Route0 = lazyWithPreload(() => import(/* webpackChunkName: \\"a\\" */'/a.mdx'))
-      const Route1 = lazyWithPreload(() => import(/* webpackChunkName: \\"guide_b\\" */'/guide/b.mdx'))
-      export const routes = [
-      { path: '/a', element: React.createElement(Route0), filePath: 'a.mdx', preload: async () => {
-              await Route0.preload();
-              return import(\\"/a.mdx\\");
-            }, lang: '', version: '' },
-      { path: '/guide/b', element: React.createElement(Route1), filePath: 'guide/b.mdx', preload: async () => {
-              await Route1.preload();
-              return import(\\"/guide/b.mdx\\");
-            }, lang: '', version: '' }
-      ];
-      "
-    `);
+        "
+        import React from 'react';
+        import { lazyWithPreload } from \\"react-lazy-with-preload\\";
+        const Route0 = lazyWithPreload(() => import('/a.mdx'))
+        const Route1 = lazyWithPreload(() => import('/guide/b.mdx'))
+        export const routes = [
+        { path: '/a', element: React.createElement(Route0), filePath: 'a.mdx', preload: async () => {
+                await Route0.preload();
+                return import(\\"/a.mdx\\");
+              }, lang: '', version: '' },
+        { path: '/guide/b', element: React.createElement(Route1), filePath: 'guide/b.mdx', preload: async () => {
+                await Route1.preload();
+                return import(\\"/guide/b.mdx\\");
+              }, lang: '', version: '' }
+        ];
+        "
+      `);
   });
 });
