@@ -88,17 +88,29 @@ async function createInternalBuildConfig(
     dev: {
       port: process.env.PORT ? Number(process.env.PORT) : undefined,
       progressBar: false,
+      // Serve static files
+      setupMiddlewares: [
+        middlewares => {
+          if (isPublicDirExist) {
+            middlewares.push(sirv(publicDir));
+          }
+
+          middlewares.push(serveSearchIndexMiddleware(config));
+        },
+      ],
+      historyApiFallback: {
+        // not support fallback the requested path which contain a . (DOT) character by default
+        rewrites: [{ from: /.*\.html/, to: '/' }],
+      },
     },
     html: {
       favicon: normalizeIcon(config?.icon),
       template: path.join(PACKAGE_ROOT, 'index.html'),
-      outputStructure: 'nested',
     },
     output: {
       distPath: {
         // `root` must be a relative path in Rsbuild
         root: path.isAbsolute(outDir) ? path.relative(cwd, outDir) : outDir,
-        html: 'html',
       },
       // Disable production source map, it is useless for doc site
       disableSourceMap: isProduction(),
@@ -106,6 +118,9 @@ async function createInternalBuildConfig(
       assetPrefix,
     },
     source: {
+      entry: {
+        index: isSSR ? SSR_ENTRY : CLIENT_ENTRY,
+      },
       alias: {
         '@mdx-js/react': require.resolve('@mdx-js/react'),
         '@theme': themeDir,
@@ -117,11 +132,7 @@ async function createInternalBuildConfig(
         ),
         ...(await resolveReactAlias(reactVersion)),
       },
-      include: [
-        PACKAGE_ROOT,
-        path.join(cwd, 'node_modules', RSPRESS_TEMP_DIR),
-        /(.*?)\.tsx?$/,
-      ],
+      include: [PACKAGE_ROOT, path.join(cwd, 'node_modules', RSPRESS_TEMP_DIR)],
       define: {
         'process.env.__ASSET_PREFIX__': JSON.stringify(assetPrefix),
         'process.env.__SSR__': JSON.stringify(isSSR),
@@ -134,14 +145,6 @@ async function createInternalBuildConfig(
       printFileSize: !isSSR,
     },
     tools: {
-      devServer: {
-        // Serve static files
-        after: [
-          ...(isPublicDirExist ? [sirv(publicDir)] : []),
-          serveSearchIndexMiddleware(config),
-        ],
-        historyApiFallback: true,
-      },
       postcss(config) {
         // In debug mode, we should use tailwindcss to build the theme source code
         if (isDebugMode()) {
@@ -241,9 +244,6 @@ export async function initRsbuild(
 
   const rsbuild = await createRsbuild({
     target: isSSR ? 'node' : 'web',
-    entry: {
-      main: isSSR ? SSR_ENTRY : CLIENT_ENTRY,
-    },
     rsbuildConfig: mergeRsbuildConfig(
       internalRsbuildConfig,
       ...(config?.plugins?.map(plugin => plugin.builderConfig ?? {}) || []),
