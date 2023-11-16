@@ -4,7 +4,6 @@ import { getParameters } from 'codesandbox/lib/api/define';
 import MobileOperation from './common/mobile-operation';
 import IconCode from './icons/Code';
 import IconCodesandbox from './icons/Codesandbox';
-import './Container.scss';
 
 type ContainerProps = {
   children: React.ReactNode[];
