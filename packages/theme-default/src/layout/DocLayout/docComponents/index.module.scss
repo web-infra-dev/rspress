@@ -67,3 +67,8 @@
 .inline-link {
   display: inline;
 }
+
+// For the className injected by shiki rehype plugin
+:global(span.code-line-highlighted) {
+  background-color: var(--rp-code-line-highlight-color);
+}
