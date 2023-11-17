@@ -12,7 +12,7 @@ export function docPluginDemo(): RspressPlugin {
         },
         {
           routePath: '/content-route',
-          content: '# Demo2',
+          content: '# Demo21',
         },
       ];
     },
