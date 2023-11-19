@@ -147,7 +147,6 @@ export function pluginForDoc(): RspressPlugin {
     config(config) {
       return {
         ...config,
-        // 这里可以扩展 Rspress 的配置
         title: '新的文档标题',
       };
     },
@@ -155,23 +154,23 @@ export function pluginForDoc(): RspressPlugin {
 }
 ```
 
-If it involves adding and removing a plugin, you need to implement it through `addPlugin` and `removePlugin`:
+如果涉及到添加和删除插件，需要通过 `addPlugin` 和 `removePlugin` 来实现：
 
 ```tsx title="plugin.ts"
 import { RspressPlugin } from '@rspress/shared';
 
 export function pluginForDoc(): RspressPlugin {
   return {
-    // Plugin name
+    // 插件名字
     name: 'plugin-name',
-    // Extend the config of Rspress itself
+    // 扩展 Rspress 本身的配置
     config(config, utils) {
-      // Add a plugin
+      // 添加插件
       utils.addPlugin({
         name: 'plugin-name',
-        // ... other config of the plugin
+        // ...插件的其他配置
       });
-      // Remove a plugin, pass in the name of the plugin
+      // 通过插件名称来删除插件
       utils.removePlugin('plugin-name');
       return config;
     },
