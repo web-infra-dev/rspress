@@ -139,13 +139,38 @@ import { RspressPlugin } from '@rspress/shared';
 
 export function pluginForDoc(): RspressPlugin {
   return {
+    // Plugin name
     name: 'plugin-name',
     // Extend the config of the Rspress itself
     config(config) {
       return {
         ...config,
-        title: '新的文档标题',
+        title: 'New Document Title',
       };
+    },
+  };
+}
+```
+
+If it involves adding and removing a plugin, you need to implement it through `addPlugin` and `removePlugin`:
+
+```tsx title="plugin.ts"
+import { RspressPlugin } from '@rspress/shared';
+
+export function pluginForDoc(): RspressPlugin {
+  return {
+    // Plugin name
+    name: 'plugin-name',
+    // Extend the config of Rspress itself
+    config(config, utils) {
+      // Add a plugin
+      utils.addPlugin({
+        name: 'plugin-name',
+        // ... other config of the plugin
+      });
+      // Remove a plugin, pass in the name of the plugin
+      utils.removePlugin('plugin-name');
+      return config;
     },
   };
 }
