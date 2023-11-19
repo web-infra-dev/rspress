@@ -163,6 +163,9 @@ export function bindingAsideScroll() {
 
   // eslint-disable-next-line consistent-return
   return () => {
+    if (prevActiveLink) {
+      prevActiveLink.classList.remove('aside-active');
+    }
     window.removeEventListener('scroll', throttledSetLink);
   };
 }
