@@ -1,5 +1,15 @@
 # @rspress/shared
 
+## 1.7.0
+
+### Minor Changes
+
+- c435b8f: feat: support shiki highlight
+
+### Patch Changes
+
+- 3bddde2: fix: reserve existed extension in normalizeHref
+
 ## 1.6.2
 
 ## 1.6.1
