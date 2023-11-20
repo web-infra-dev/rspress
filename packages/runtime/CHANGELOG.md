@@ -1,5 +1,13 @@
 # @rspress/runtime
 
+## 1.7.0
+
+### Patch Changes
+
+- Updated dependencies [3bddde2]
+- Updated dependencies [c435b8f]
+  - @rspress/shared@1.7.0
+
 ## 1.6.2
 
 ### Patch Changes

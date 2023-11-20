@@ -1,5 +1,25 @@
 # @rspress/theme-default
 
+## 1.7.0
+
+### Minor Changes
+
+- c435b8f: feat: support shiki highlight
+
+### Patch Changes
+
+- 4b97045: fix: copy content invalid in shiki mode
+- 7fd7d3e: fix: reset prevActiveLink when unbinding AsideScrol
+- e32247b: fix: highlight and code title not work in shiki mode
+- e3a07e8: fix: code highlight invalid
+- 42e5173: 文档中链接在小屏的样式优化
+- 532a693: fix: fix the wrong rendering when the yarn or bun field is invalid.
+- ce83920: fix: sidebar weird behaviour
+- Updated dependencies [3bddde2]
+- Updated dependencies [c435b8f]
+  - @rspress/shared@1.7.0
+  - @rspress/runtime@1.7.0
+
 ## 1.6.2
 
 ### Patch Changes

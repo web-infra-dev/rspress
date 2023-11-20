@@ -1,5 +1,15 @@
 # @rspress/docs
 
+## 1.7.0
+
+### Minor Changes
+
+- c435b8f: feat: support shiki highlight
+
+### Patch Changes
+
+- 39fe6b5: docs: Sync documents for the config of plugin
+
 ## 1.6.2
 
 ## 1.6.1

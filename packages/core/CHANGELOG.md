@@ -1,5 +1,32 @@
 # @rspress/core
 
+## 1.7.0
+
+### Minor Changes
+
+- c435b8f: feat: support shiki highlight
+
+### Patch Changes
+
+- e887242: fix: support pure esm project
+- ac0bfb0: chore: bump Rsbuild v0.0.24 and adapt new Rsbuild Server
+- Updated dependencies [4b97045]
+- Updated dependencies [7fd7d3e]
+- Updated dependencies [e32247b]
+- Updated dependencies [e3a07e8]
+- Updated dependencies [42e5173]
+- Updated dependencies [3bddde2]
+- Updated dependencies [532a693]
+- Updated dependencies [c435b8f]
+- Updated dependencies [ce83920]
+  - @rspress/theme-default@1.7.0
+  - @rspress/shared@1.7.0
+  - @rspress/plugin-auto-nav-sidebar@1.7.0
+  - @rspress/plugin-container-syntax@1.7.0
+  - @rspress/plugin-last-updated@1.7.0
+  - @rspress/plugin-medium-zoom@1.7.0
+  - @rspress/runtime@1.7.0
+
 ## 1.6.2
 
 ### Patch Changes
