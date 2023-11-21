@@ -27,7 +27,6 @@ export default defineConfig({
       },
       alias: {
         '@/logic': path.join(__dirname, '../theme-default/src/logic'),
-        '@/component': path.join(__dirname, '../theme-default/src/logic'),
       },
     },
     html: {
