@@ -76,7 +76,7 @@ function PrismSyntaxHighlighter(
         };
       }}
     >
-      {props.children}
+      {props.children.trim()}
     </SyntaxHighlighter>
   );
 }
@@ -99,9 +99,21 @@ export function Code(props: CodeProps) {
 
   const copyCode = () => {
     const el = copyButtonRef.current;
-    const isCopied = copy(
-      el.previousElementSibling.previousElementSibling.textContent,
+    let text = '';
+    const walk = document.createTreeWalker(
+      el.previousElementSibling.previousElementSibling,
+      NodeFilter.SHOW_TEXT,
+      null,
     );
+    let node = walk.nextNode();
+    while (node) {
+      if (!node.parentElement.classList.contains('linenumber')) {
+        text += node.nodeValue;
+      }
+      node = walk.nextNode();
+    }
+
+    const isCopied = copy(text);
 
     if (isCopied && el) {
       el.classList.add('copied');
