@@ -26,9 +26,7 @@ export default defineConfig({
         ),
       },
       alias: {
-        'rspress/theme': process.env.DOC_DEBUG
-          ? path.join(__dirname, '../core/src/theme-default')
-          : 'rspress/theme',
+        '@/logic': path.join(__dirname, '../theme-default/src/logic'),
       },
     },
     html: {
