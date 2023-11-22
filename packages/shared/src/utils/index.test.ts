@@ -57,6 +57,7 @@ describe('test shared utils', () => {
       'mailto:bluth@example.com',
     );
     expect(normalizeHref('tel:123456789')).toBe('tel:123456789');
+    expect(normalizeHref('/guide/', true)).toBe('/guide/index');
   });
 
   describe('replaceLang', () => {
