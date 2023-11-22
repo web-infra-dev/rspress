@@ -31,7 +31,7 @@
     "upgrade": "modern upgrade"
   },
   "dependencies": {
-    "@rsbuild/core": "0.0.24",
+    "@rsbuild/core": "0.1.0",
     "unified": "10.1.2",
     "chalk": "4.1.2",
     "rslog": "^1.1.0"
