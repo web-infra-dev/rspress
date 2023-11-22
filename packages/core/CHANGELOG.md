@@ -1,5 +1,19 @@
 # @rspress/core
 
+## 1.7.3
+
+### Patch Changes
+
+- Updated dependencies [34c4ff7]
+- Updated dependencies [510c996]
+  - @rspress/theme-default@1.7.3
+  - @rspress/shared@1.7.3
+  - @rspress/plugin-auto-nav-sidebar@1.7.3
+  - @rspress/plugin-container-syntax@1.7.3
+  - @rspress/plugin-last-updated@1.7.3
+  - @rspress/plugin-medium-zoom@1.7.3
+  - @rspress/runtime@1.7.3
+
 ## 1.7.2
 
 ### Patch Changes

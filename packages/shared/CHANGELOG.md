@@ -1,5 +1,11 @@
 # @rspress/shared
 
+## 1.7.3
+
+### Patch Changes
+
+- 510c996: fix: clean urls should handle the urls ending with /
+
 ## 1.7.2
 
 ## 1.7.1

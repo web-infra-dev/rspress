@@ -1,5 +1,14 @@
 # @rspress/theme-default
 
+## 1.7.3
+
+### Patch Changes
+
+- 34c4ff7: fix: some external urls cannot jump
+- Updated dependencies [510c996]
+  - @rspress/shared@1.7.3
+  - @rspress/runtime@1.7.3
+
 ## 1.7.2
 
 ### Patch Changes
