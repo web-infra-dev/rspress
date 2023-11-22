@@ -1,5 +1,18 @@
 # @rspress/core
 
+## 1.7.2
+
+### Patch Changes
+
+- 0a1fc27: fix: normalize route optimize
+  - @rspress/plugin-auto-nav-sidebar@1.7.2
+  - @rspress/plugin-container-syntax@1.7.2
+  - @rspress/plugin-last-updated@1.7.2
+  - @rspress/plugin-medium-zoom@1.7.2
+  - @rspress/runtime@1.7.2
+  - @rspress/shared@1.7.2
+  - @rspress/theme-default@1.7.2
+
 ## 1.7.1
 
 ### Patch Changes
