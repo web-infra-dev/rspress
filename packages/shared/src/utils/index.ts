@@ -237,11 +237,6 @@ export function normalizeHref(url?: string, cleanUrls = false) {
   // eslint-disable-next-line prefer-const
   let { url: cleanUrl, hash } = parseUrl(decodeURIComponent(url));
 
-  // Ignore email and telephone links
-  if (url.startsWith('mailto:') || url.startsWith('tel:')) {
-    return url;
-  }
-
   const hasExt = cleanUrl.split('/').pop()?.includes('.');
 
   if (!cleanUrls && !cleanUrl.endsWith('.html') && !hasExt) {
@@ -250,6 +245,10 @@ export function normalizeHref(url?: string, cleanUrls = false) {
     } else {
       cleanUrl += '.html';
     }
+  }
+
+  if (cleanUrls && cleanUrl.endsWith('/')) {
+    cleanUrl += 'index';
   }
 
   return addLeadingSlash(hash ? `${cleanUrl}#${hash}` : cleanUrl);
