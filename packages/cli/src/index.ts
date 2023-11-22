@@ -60,7 +60,7 @@ cli
           appDirectory: cwd,
           docDirectory,
           config,
-          extraBuilderConfig: { dev: { port, host } },
+          extraBuilderConfig: { server: { port, host } },
         });
         cliWatcher = chokidar.watch(
           [`${cwd}/**/{${CONFIG_FILES.join(',')}}`, docDirectory!],

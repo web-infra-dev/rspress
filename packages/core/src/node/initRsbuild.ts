@@ -7,8 +7,7 @@ import {
   isDebugMode,
   removeTrailingSlash,
 } from '@rspress/shared';
-import type { RsbuildInstance } from '@rsbuild/core';
-import type { RsbuildConfig } from '@rsbuild/core/rspack-provider';
+import type { RsbuildInstance, RsbuildConfig } from '@rsbuild/core';
 import sirv from 'sirv';
 import { tailwindConfig } from '../../tailwind.config';
 import {
@@ -85,8 +84,13 @@ async function createInternalBuildConfig(
   };
 
   return {
+    server: {
+      port:
+        !isProduction() && process.env.PORT
+          ? Number(process.env.PORT)
+          : undefined,
+    },
     dev: {
-      port: process.env.PORT ? Number(process.env.PORT) : undefined,
       progressBar: false,
       // Serve static files
       setupMiddlewares: [
@@ -98,10 +102,6 @@ async function createInternalBuildConfig(
           middlewares.push(serveSearchIndexMiddleware(config));
         },
       ],
-      historyApiFallback: {
-        // not support fallback the requested path which contain a . (DOT) character by default
-        rewrites: [{ from: /.*\.html/, to: '/' }],
-      },
     },
     html: {
       favicon: normalizeIcon(config?.icon),
