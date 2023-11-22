@@ -1,5 +1,13 @@
 # @rspress/theme-default
 
+## 1.7.1
+
+### Patch Changes
+
+- 8f62669: fix: blank line in code block when open line numbers
+  - @rspress/runtime@1.7.1
+  - @rspress/shared@1.7.1
+
 ## 1.7.0
 
 ### Minor Changes

@@ -1,5 +1,7 @@
 # @rspress/shared
 
+## 1.7.1
+
 ## 1.7.0
 
 ### Minor Changes
