@@ -22,10 +22,6 @@ export function isActive(
   }
 }
 
-export function isExternalHref(href: string) {
-  return /^https?:\/\//.test(href);
-}
-
 export function getLogoUrl(
   rawLogo: string | { dark: string; light: string },
   theme: 'dark' | 'light',

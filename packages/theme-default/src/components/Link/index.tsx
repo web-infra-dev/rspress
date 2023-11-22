@@ -10,6 +10,7 @@ import {
 } from '@rspress/runtime';
 import nprogress from 'nprogress';
 import { routes } from 'virtual-routes';
+import { isExternalUrl } from '@rspress/shared';
 import styles from './index.module.scss';
 import { scrollToTarget } from '@/logic';
 
@@ -22,11 +23,9 @@ export interface LinkProps {
 
 nprogress.configure({ showSpinner: false });
 
-const EXTERNAL_URL_RE = /^(https?:)?\/\//;
-
 export function Link(props: LinkProps) {
   const { href = '/', children, className = '', onNavigate } = props;
-  const isExternal = EXTERNAL_URL_RE.test(href);
+  const isExternal = isExternalUrl(href);
   const target = isExternal ? '_blank' : '';
   const rel = isExternal ? 'noopener noreferrer' : undefined;
   const withBaseUrl = isExternal ? href : withBase(normalizeHref(href));
