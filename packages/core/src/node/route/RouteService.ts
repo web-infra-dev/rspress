@@ -27,9 +27,11 @@ export const addLeadingSlash = (str: string) => {
 
 export const normalizeRoutePath = (
   routePath: string,
-  lang: string,
   base: string,
+  lang: string,
   version: string,
+  langs: string[],
+  versions: string[],
 ): { routePath: string; lang: string; version: string } => {
   const hasTrailSlash = routePath.endsWith('/');
   let versionPart = '';
@@ -38,16 +40,22 @@ export const normalizeRoutePath = (
   const parts: string[] = routePath.split('/').filter(Boolean);
 
   if (version) {
-    const versionToMatch = parts.shift();
-    if (versionToMatch !== version) {
-      versionPart = versionToMatch;
+    const versionToMatch = parts[0];
+    if (versions.includes(versionToMatch)) {
+      if (versionToMatch !== version) {
+        versionPart = versionToMatch;
+      }
+      parts.shift();
     }
   }
 
   if (lang) {
-    const langToMatch = parts.shift();
-    if (langToMatch !== lang) {
-      langPart = langToMatch;
+    const langToMatch = parts[0];
+    if (langs.includes(langToMatch)) {
+      if (langToMatch !== lang) {
+        langPart = langToMatch;
+      }
+      parts.shift();
     }
   }
   purePathPart = parts.join('/');
@@ -82,6 +90,10 @@ export class RouteService {
 
   #extensions: string[] = [];
 
+  #langs: string[] = [];
+
+  #versions: string[] = [];
+
   #include: string[] = [];
 
   #exclude: string[] = [];
@@ -104,12 +116,18 @@ export class RouteService {
     this.#include = routeOptions.include || [];
     this.#exclude = routeOptions.exclude || [];
     this.#defaultLang = userConfig?.lang || '';
+    this.#langs = (
+      userConfig?.locales ??
+      userConfig?.themeConfig?.locales ??
+      []
+    ).map(item => item.lang);
     this.#base = userConfig?.base || '';
     this.#tempDir = tempDir;
     this.#pluginDriver = pluginDriver;
 
     if (userConfig.multiVersion) {
       this.#defaultVersion = userConfig.multiVersion.default || '';
+      this.#versions = userConfig.multiVersion.versions || [];
     }
   }
 
@@ -134,9 +152,11 @@ export class RouteService {
       );
       const { routePath, lang, version } = normalizeRoutePath(
         fileRelativePath,
-        this.#defaultLang,
         this.#base,
+        this.#defaultLang,
         this.#defaultVersion,
+        this.#langs,
+        this.#versions,
       );
       const absolutePath = path.join(this.#scanDir, fileRelativePath);
 
@@ -198,12 +218,7 @@ export class RouteService {
 
   removeRoute(filePath: string) {
     const fileRelativePath = path.relative(this.#scanDir, filePath);
-    const { routePath } = normalizeRoutePath(
-      fileRelativePath,
-      this.#defaultLang,
-      this.#base,
-      this.#defaultVersion,
-    );
+    const { routePath } = this.#normalizeRoutePath(fileRelativePath);
     this.routeData.delete(routePath);
   }
 
@@ -212,12 +227,7 @@ export class RouteService {
   }
 
   isExistRoute(routePath: string) {
-    const { routePath: normalizedRoute } = normalizeRoutePath(
-      routePath,
-      this.#defaultLang,
-      this.#base,
-      this.#defaultVersion,
-    );
+    const { routePath: normalizedRoute } = this.#normalizeRoutePath(routePath);
     return this.routeData.get(normalizedRoute);
   }
 
@@ -293,12 +303,7 @@ ${routeMeta
       routePath: normalizedPath,
       lang,
       version,
-    } = normalizeRoutePath(
-      routePath,
-      this.#defaultLang,
-      this.#base,
-      this.#defaultVersion,
-    );
+    } = this.#normalizeRoutePath(routePath);
     return {
       routePath: normalizedPath,
       absolutePath: normalizePath(filepath),
@@ -307,5 +312,16 @@ ${routeMeta
       lang,
       version,
     };
+  }
+
+  #normalizeRoutePath(routePath: string) {
+    return normalizeRoutePath(
+      routePath,
+      this.#base,
+      this.#defaultLang,
+      this.#defaultVersion,
+      this.#langs,
+      this.#versions,
+    );
   }
 }
