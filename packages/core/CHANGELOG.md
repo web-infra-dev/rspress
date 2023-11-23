@@ -1,5 +1,18 @@
 # @rspress/core
 
+## 1.7.4
+
+### Patch Changes
+
+- 7b7482d: feat: bump rsbuild to 0.1.0
+  - @rspress/plugin-auto-nav-sidebar@1.7.4
+  - @rspress/plugin-container-syntax@1.7.4
+  - @rspress/plugin-last-updated@1.7.4
+  - @rspress/plugin-medium-zoom@1.7.4
+  - @rspress/runtime@1.7.4
+  - @rspress/shared@1.7.4
+  - @rspress/theme-default@1.7.4
+
 ## 1.7.3
 
 ### Patch Changes
