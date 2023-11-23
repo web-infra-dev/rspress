@@ -1,4 +1,4 @@
-lockfileVersion: '6.1'
+lockfileVersion: '6.0'
 
 settings:
   autoInstallPeers: true
@@ -327,8 +327,8 @@ importers:
         specifier: 0.1.0
         version: 0.1.0(webpack@5.88.2)
       '@rspress/mdx-rs':
-        specifier: 0.4.1
-        version: 0.4.1
+        specifier: 0.4.2
+        version: 0.4.2
       '@rspress/plugin-auto-nav-sidebar':
         specifier: workspace:*
         version: link:../plugin-auto-nav-sidebar
@@ -5155,8 +5155,8 @@ packages:
       - webpack-plugin-serve
     dev: false
 
-  /@rspress/mdx-rs-darwin-arm64@0.4.1:
-    resolution: {integrity: sha512-Yq6b5QIJGIsFpQvEXlnrdpL0oA36Hz0LTHmhO4hJpd2277OKAwc3Z4XipH4E1ptxIMyEtB8S2bKaax2YoR0ULw==}
+  /@rspress/mdx-rs-darwin-arm64@0.4.2:
+    resolution: {integrity: sha512-ddiiLjzcwN8oPRRZ5waEkyIA8XtS463xeztlk3RgXOUmnkJB15AUAZE5fDPwVWRTMnHu+eAZahj5mYJWT6fAdw==}
     engines: {node: '>=14.12'}
     cpu: [arm64]
     os: [darwin]
@@ -5164,8 +5164,8 @@ packages:
     dev: false
     optional: true
 
-  /@rspress/mdx-rs-darwin-x64@0.4.1:
-    resolution: {integrity: sha512-pF3IkRkNfevaHwmU0sJnaVpUbGdkR4LeBVny+2hux3VNogxdHpa28IuNDzkpG5m73YnJyirbD/Lhj82YftaeZA==}
+  /@rspress/mdx-rs-darwin-x64@0.4.2:
+    resolution: {integrity: sha512-AldxS17bS847cMyYQBGRh5bzoFqRLU0iO/afXpNJSK/kA09dGJDiPcjfLEwPXW/OorGrRjVv7OoQMWPkVXVurA==}
     engines: {node: '>=14.12'}
     cpu: [x64]
     os: [darwin]
@@ -5173,8 +5173,8 @@ packages:
     dev: false
     optional: true
 
-  /@rspress/mdx-rs-linux-arm-gnueabihf@0.4.1:
-    resolution: {integrity: sha512-wqe5xgS59zhtjMoB22UVN3zEVFnGTRvjrixDJVj2JM5f0h0yiOtQ3m+CyemzhmN3Vj9yEU7mlF50go5TKphrrQ==}
+  /@rspress/mdx-rs-linux-arm-gnueabihf@0.4.2:
+    resolution: {integrity: sha512-A/OcvQgfaLwcg4dCa9apRgBA6eehJGjB/heUQZl4RZKTvG6rX5JFzSuhw6OczsS8bb6sas/YEVSNvj6EvkjNJw==}
     engines: {node: '>=14.12'}
     cpu: [arm]
     os: [linux]
@@ -5182,8 +5182,8 @@ packages:
     dev: false
     optional: true
 
-  /@rspress/mdx-rs-linux-arm64-gnu@0.4.1:
-    resolution: {integrity: sha512-qGxnX/qGop0a3XlecP99F5Cdl8cxKVYj/6gXIzAp7NKYSdC7NEkPct5uv9QHxbD+eLmg1ZCG9CR3UeNSaore+A==}
+  /@rspress/mdx-rs-linux-arm64-gnu@0.4.2:
+    resolution: {integrity: sha512-Ve8hBi4OjSk/0VVV37lMfZSHjbZRHJ3bxxD6+fGqu9QlyA0osFgpvxmeONeG5tKZHnYReP0M7whrIJIlxgWcEg==}
     engines: {node: '>=14.12'}
     cpu: [arm64]
     os: [linux]
@@ -5191,8 +5191,8 @@ packages:
     dev: false
     optional: true
 
-  /@rspress/mdx-rs-linux-arm64-musl@0.4.1:
-    resolution: {integrity: sha512-guQKCDxNbQHbxFM2CUsl6rEKE/vKg1+6C8fqpPH/f8ZEORb8GPgSF2of7oENZCXbLFCaIH2eNazO/2tzpQsPVw==}
+  /@rspress/mdx-rs-linux-arm64-musl@0.4.2:
+    resolution: {integrity: sha512-DvOp4EvmrgV2J8AK7hhhCn56Sb3zFUdNd4Vy9IUI+PGcZ0DeWAejc9+8XZM2XpfiTKb5TF3k3RTtsCLCm0QLAA==}
     engines: {node: '>=14.12'}
     cpu: [arm64]
     os: [linux]
@@ -5200,8 +5200,8 @@ packages:
     dev: false
     optional: true
 
-  /@rspress/mdx-rs-linux-x64-gnu@0.4.1:
-    resolution: {integrity: sha512-EX8oQZ9EgkJPVZkDBb7FN9su9dIoNcWeI656BPO4cMB9qy2kwbSy0eG7jxcaA8IxAT0cumMWkNtwI9K0EksYBg==}
+  /@rspress/mdx-rs-linux-x64-gnu@0.4.2:
+    resolution: {integrity: sha512-s2WhLHAMUwhCMSNy5E1FLNdixFIht2XDh7m9PDJ2enMTj8bnjNvM0dFpnMGT8pBxCbb+wuRuc6dStkKh5kmoXg==}
     engines: {node: '>=14.12'}
     cpu: [x64]
     os: [linux]
@@ -5209,8 +5209,8 @@ packages:
     dev: false
     optional: true
 
-  /@rspress/mdx-rs-linux-x64-musl@0.4.1:
-    resolution: {integrity: sha512-gksGKsI0eNWeb+XfxvCpxwO4lX8nl2sHCsf8EpXDKvBb8+S9yIvD/gYtvXPpUBfUeD0pbfpR2CNg78wX+E5Kyg==}
+  /@rspress/mdx-rs-linux-x64-musl@0.4.2:
+    resolution: {integrity: sha512-TSSrTkfF7dUeuhMAVzSCw6CmeL83riftGqdceGDWvBhgKRImgGZteO7Ct8wWlE85zaIL4nCI2p2ngiLFsYBbKA==}
     engines: {node: '>=14.12'}
     cpu: [x64]
     os: [linux]
@@ -5218,8 +5218,8 @@ packages:
     dev: false
     optional: true
 
-  /@rspress/mdx-rs-win32-arm64-msvc@0.4.1:
-    resolution: {integrity: sha512-KnFr9LAa/mPeDY7BB+raEB0SOK2W6xnNCSLuFUot2n30NPvUigUPobWEKgvXGXxc99jaqwh2TwsrlGqJaGBPEA==}
+  /@rspress/mdx-rs-win32-arm64-msvc@0.4.2:
+    resolution: {integrity: sha512-lxH003YB8QuYS2fj3EKVRpoUbXoR4ourlTYHBYfzSQLPrmf7i+YzTf/szsZqqUDmyY+LjoqlE7KPj5RCY1jM3w==}
     engines: {node: '>=14.12'}
     cpu: [arm64]
     os: [win32]
@@ -5227,8 +5227,8 @@ packages:
     dev: false
     optional: true
 
-  /@rspress/mdx-rs-win32-x64-msvc@0.4.1:
-    resolution: {integrity: sha512-CXoYz/zq8SVRMVBTOqc54DZSuqiHJpYC+6Hw435gxaCKbVyEHrnTsGe0j+7a5yhKozUwW/q8lTK/tOqbSQa/Bg==}
+  /@rspress/mdx-rs-win32-x64-msvc@0.4.2:
+    resolution: {integrity: sha512-JAYmfj7udscRekLEcdaisxnm3RgtCWPs6g1WtoZd7GSgpSw4k7O9h74geEeteR5oy1O41X6GhSC0jQQsEPUgYg==}
     engines: {node: '>=14.12'}
     cpu: [x64]
     os: [win32]
@@ -5236,19 +5236,19 @@ packages:
     dev: false
     optional: true
 
-  /@rspress/mdx-rs@0.4.1:
-    resolution: {integrity: sha512-H2lIFQrO4TpKe4HtWc8mBc1rPZCuPiw7y7UwDPD3J7eOG06nPwKdzCLtyWD+3zgsRX+hX+ZHNVHT4/g2ad6M8w==}
+  /@rspress/mdx-rs@0.4.2:
+    resolution: {integrity: sha512-U4ILoBCcXrCKbV8RNOJr8MToqLfltQcATc8sbLJPjGX5zZrqWkyxtT8r8Qxxn4w2Fvr/CdN8GONyUpMvTPGVEQ==}
     engines: {node: '>= 10'}
     optionalDependencies:
-      '@rspress/mdx-rs-darwin-arm64': 0.4.1
-      '@rspress/mdx-rs-darwin-x64': 0.4.1
-      '@rspress/mdx-rs-linux-arm-gnueabihf': 0.4.1
-      '@rspress/mdx-rs-linux-arm64-gnu': 0.4.1
-      '@rspress/mdx-rs-linux-arm64-musl': 0.4.1
-      '@rspress/mdx-rs-linux-x64-gnu': 0.4.1
-      '@rspress/mdx-rs-linux-x64-musl': 0.4.1
-      '@rspress/mdx-rs-win32-arm64-msvc': 0.4.1
-      '@rspress/mdx-rs-win32-x64-msvc': 0.4.1
+      '@rspress/mdx-rs-darwin-arm64': 0.4.2
+      '@rspress/mdx-rs-darwin-x64': 0.4.2
+      '@rspress/mdx-rs-linux-arm-gnueabihf': 0.4.2
+      '@rspress/mdx-rs-linux-arm64-gnu': 0.4.2
+      '@rspress/mdx-rs-linux-arm64-musl': 0.4.2
+      '@rspress/mdx-rs-linux-x64-gnu': 0.4.2
+      '@rspress/mdx-rs-linux-x64-musl': 0.4.2
+      '@rspress/mdx-rs-win32-arm64-msvc': 0.4.2
+      '@rspress/mdx-rs-win32-x64-msvc': 0.4.2
     dev: false
 
   /@rushstack/node-core-library@3.53.3:
@@ -9631,6 +9631,7 @@ packages:
   /he@1.2.0:
     resolution: {integrity: sha512-F/1DnUGPopORZi0ni+CvrCgHQ5FyEAHRLSApuYWMmrbSwoN2Mn/7k+Gl38gJnR7yyDZk6WLXwiGod1JOWNDKGw==}
     hasBin: true
+    requiresBuild: true
     dev: false
     optional: true
 
