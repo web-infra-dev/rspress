@@ -1,4 +1,71 @@
+:root {
+  --rp-preview-button-hover-bg: #e5e6eb;
+  --rp-preview-button-bg: #e5e6eb;
+}
+
+.dark {
+  --rp-preview-button-hover-bg: #c5c5c5;
+  --rp-preview-button-bg: #c5c5c5;
+}
+
 .rspress-preview {
+  padding: 16px 0;
+
+  &-wrapper {
+    border: 1px solid #e6e6e6;
+    border-radius: 8px;
+  }
+
+  &-card {
+    padding: 16px;
+    position: relative;
+    border: 1px solid #e6e6e6;
+    border-radius: 8px;
+    display: flex;
+  }
+
+  &-qrcode {
+    background-color: #fff;
+    width: 120px;
+    height: 120px;
+    position: absolute;
+    top: -132px;
+    right: -46px;
+    padding: 12px;
+  }
+
+  &-code {
+    position: relative;
+    overflow: hidden;
+    flex: 1 1;
+    max-height: 700px;
+  }
+
+  &-code-hide {
+    position: relative;
+    overflow: hidden;
+    display: none;
+  }
+
+  &-code-show {
+    margin-top: 16px;
+    display: block;
+  }
+
+  &-device {
+    position: relative;
+    flex: 0 0;
+    border-left: 1px solid #e6e6e6;
+    display: flex;
+    flex-direction: column;
+    iframe {
+      border-bottom: 1px solid #e6e6e6;
+      width: 360px;
+      height: 100%;
+      flex: auto;
+    }
+  }
+
   &-operations {
     button {
       width: 28px;
