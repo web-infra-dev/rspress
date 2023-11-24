@@ -99,7 +99,7 @@ export function normalizeSlash(url: string) {
   return removeTrailingSlash(addLeadingSlash(normalizePosixPath(url)));
 }
 
-export function isExternalUrl(url: string) {
+export function isExternalUrl(url = '') {
   return (
     url.startsWith('http://') ||
     url.startsWith('https://') ||
