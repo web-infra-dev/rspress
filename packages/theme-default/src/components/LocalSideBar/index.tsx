@@ -4,7 +4,13 @@ import MenuIcon from '../../assets/menu.svg';
 import { SideBar } from '../Sidebar';
 import './index.scss';
 
-export function SideMenu() {
+export function SideMenu({
+  beforeSidebar,
+  afterSidebar,
+}: {
+  beforeSidebar?: React.ReactNode;
+  afterSidebar?: React.ReactNode;
+}) {
   const [isSidebarOpen, setIsOpen] = useState<boolean>(false);
   const { pathname } = useLocation();
 
@@ -30,7 +36,11 @@ export function SideMenu() {
           <span className="text-sm">Menu</span>
         </button>
       </div>
-      <SideBar isSidebarOpen={isSidebarOpen} />
+      <SideBar
+        isSidebarOpen={isSidebarOpen}
+        beforeSidebar={beforeSidebar}
+        afterSidebar={afterSidebar}
+      />
       {isSidebarOpen ? (
         <div onClick={closeSidebar} className="rspress-sidebar-back-drop" />
       ) : null}

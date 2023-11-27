@@ -34,6 +34,8 @@ export interface SidebarItemProps {
 
 interface Props {
   isSidebarOpen?: boolean;
+  beforeSidebar?: React.ReactNode;
+  afterSidebar?: React.ReactNode;
 }
 
 export const highlightTitleStyle = {
@@ -51,7 +53,7 @@ export let matchCache: WeakMap<
 > = new WeakMap();
 
 export function SideBar(props: Props) {
-  const { isSidebarOpen } = props;
+  const { isSidebarOpen, beforeSidebar, afterSidebar } = props;
   const { items: rawSidebarData } = useSidebarData();
   const localesData = useLocaleSiteData();
   const { pathname: rawPathname } = useLocation();
@@ -135,7 +137,6 @@ export function SideBar(props: Props) {
           <NavBarTitle />
         </div>
       )}
-
       <div className={`mt-1 ${styles.sidebarContent}`}>
         <div
           className="rspress-scrollbar"
@@ -144,6 +145,7 @@ export function SideBar(props: Props) {
             overflow: 'auto',
           }}
         >
+          {beforeSidebar}
           <nav className="pb-2">
             {sidebarData.map(
               (
@@ -175,6 +177,7 @@ export function SideBar(props: Props) {
                 ),
             )}
           </nav>
+          {afterSidebar}
         </div>
       </div>
     </aside>
