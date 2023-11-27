@@ -1,5 +1,19 @@
 # @rspress/core
 
+## 1.7.5
+
+### Patch Changes
+
+- cfbae4f: fix: skip code blocks in search index
+- Updated dependencies [2b8f4fe]
+  - @rspress/shared@1.7.5
+  - @rspress/plugin-auto-nav-sidebar@1.7.5
+  - @rspress/plugin-container-syntax@1.7.5
+  - @rspress/plugin-last-updated@1.7.5
+  - @rspress/plugin-medium-zoom@1.7.5
+  - @rspress/runtime@1.7.5
+  - @rspress/theme-default@1.7.5
+
 ## 1.7.4
 
 ### Patch Changes

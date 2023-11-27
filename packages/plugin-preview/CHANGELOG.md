@@ -1,5 +1,13 @@
 # @rspress/plugin-preview
 
+## 1.7.5
+
+### Patch Changes
+
+- 53ab0fa: fix(plugin-preview): add preview style to device
+- Updated dependencies [2b8f4fe]
+  - @rspress/shared@1.7.5
+
 ## 1.7.4
 
 ### Patch Changes
