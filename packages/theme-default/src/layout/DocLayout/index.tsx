@@ -12,6 +12,8 @@ import { QueryStatus } from '../Layout';
 import styles from './index.module.scss';
 
 export interface DocLayoutProps {
+  beforeSidebar?: React.ReactNode;
+  afterSidebar?: React.ReactNode;
   beforeDocFooter?: React.ReactNode;
   beforeDoc?: React.ReactNode;
   afterDoc?: React.ReactNode;
@@ -20,8 +22,15 @@ export interface DocLayoutProps {
 }
 
 export function DocLayout(props: DocLayoutProps) {
-  const { beforeDocFooter, beforeDoc, afterDoc, beforeOutline, afterOutline } =
-    props;
+  const {
+    beforeDocFooter,
+    beforeDoc,
+    afterDoc,
+    beforeOutline,
+    afterOutline,
+    beforeSidebar,
+    afterSidebar,
+  } = props;
   const { siteData, page } = usePageData();
   const { toc = [], frontmatter } = page;
   const [tabData, setTabData] = useState({});
@@ -82,7 +91,9 @@ export function DocLayout(props: DocLayoutProps) {
       }}
     >
       {beforeDoc}
-      {hasSidebar ? <SideMenu /> : null}
+      {hasSidebar ? (
+        <SideMenu beforeSidebar={beforeSidebar} afterSidebar={afterSidebar} />
+      ) : null}
       <div
         className={`${styles.content} rspress-doc-container flex flex-shrink-0 mx-auto`}
       >
