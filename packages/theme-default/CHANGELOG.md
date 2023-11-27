@@ -1,5 +1,13 @@
 # @rspress/theme-default
 
+## 1.7.5
+
+### Patch Changes
+
+- Updated dependencies [2b8f4fe]
+  - @rspress/shared@1.7.5
+  - @rspress/runtime@1.7.5
+
 ## 1.7.4
 
 ### Patch Changes

@@ -1,5 +1,11 @@
 # @rspress/shared
 
+## 1.7.5
+
+### Patch Changes
+
+- 2b8f4fe: fix: set isExternal default param
+
 ## 1.7.4
 
 ## 1.7.3
