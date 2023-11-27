@@ -96,10 +96,10 @@ async function createInternalBuildConfig(
       setupMiddlewares: [
         middlewares => {
           if (isPublicDirExist) {
-            middlewares.push(sirv(publicDir));
+            middlewares.unshift(sirv(publicDir));
           }
 
-          middlewares.push(serveSearchIndexMiddleware(config));
+          middlewares.unshift(serveSearchIndexMiddleware(config));
         },
       ],
     },
