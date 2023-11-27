@@ -78,6 +78,11 @@ export async function extractPageData(
               selector: 'img',
               format: 'skip',
             },
+            {
+              // Skip code blocks
+              selector: 'pre > code',
+              format: 'skip',
+            },
             ...['h1', 'h2', 'h3', 'h4', 'h5', 'h6'].map(tag => ({
               selector: tag,
               options: {
