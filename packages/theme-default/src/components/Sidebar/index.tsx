@@ -145,8 +145,8 @@ export function SideBar(props: Props) {
             overflow: 'auto',
           }}
         >
-          {beforeSidebar}
           <nav className="pb-2">
+            {beforeSidebar}
             {sidebarData.map(
               (
                 item: NormalizedSidebarGroup | ISidebarItem | ISidebarDivider,
@@ -176,8 +176,8 @@ export function SideBar(props: Props) {
                   />
                 ),
             )}
+            {afterSidebar}
           </nav>
-          {afterSidebar}
         </div>
       </div>
     </aside>
