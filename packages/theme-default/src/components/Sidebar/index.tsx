@@ -39,7 +39,6 @@ interface Props {
 }
 
 export const highlightTitleStyle = {
-  color: 'var(--rp-c-text-1)',
   fontSize: '14px',
   paddingLeft: '24px',
   fontWeight: 'bold',
