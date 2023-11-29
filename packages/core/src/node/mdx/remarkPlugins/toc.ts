@@ -4,6 +4,7 @@ import Slugger from 'github-slugger';
 import type { Root } from 'hast';
 import { Processor } from '@mdx-js/mdx/lib/core';
 import { PageMeta } from '../loader';
+import { extractTextAndId } from '../utils';
 
 export interface TocItem {
   id: string;
@@ -37,21 +38,23 @@ export const parseToc = (tree: Root) => {
       title = node.children[0].value;
     }
 
-    // Collect h2 ~ h5
+    // Collect h2 ~ h4
     if (node.depth > 1 && node.depth < 5) {
-      const originText = node.children
+      let customId = '';
+      const text = node.children
         .map((child: ChildNode) => {
           if (child.type === 'link') {
             return child.children?.map(item => item.value).join('');
           } else {
-            return child.value;
+            const [textPart, idPart] = extractTextAndId(child.value);
+            customId = idPart;
+            return textPart;
           }
         })
         .join('');
-      const id = slugger.slug(originText);
-
+      const id = customId ? customId : slugger.slug(text);
       const { depth } = node;
-      toc.push({ id, text: originText, depth });
+      toc.push({ id, text, depth });
     }
   })(tree);
   return {
