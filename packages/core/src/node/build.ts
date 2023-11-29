@@ -177,7 +177,9 @@ export async function renderPages(
                   helmet?.link?.toString(),
                   helmet?.style?.toString(),
                   helmet?.script?.toString(),
-                  CHECK_DARK_LIGHT_SCRIPT,
+                  config.themeConfig?.darkMode !== false
+                    ? CHECK_DARK_LIGHT_SCRIPT
+                    : '',
                 ])
                 .join(''),
             );
