@@ -3,7 +3,7 @@ import { visit } from 'unist-util-visit';
 import GithubSlugger from 'github-slugger';
 import type { Plugin } from 'unified';
 import type { Root, Element } from 'hast';
-import { extractTextAndId } from '../utils';
+import { extractTextAndId } from '../../utils';
 
 /**
  * Generate `id`s for headings and applies to headings with `id`s.

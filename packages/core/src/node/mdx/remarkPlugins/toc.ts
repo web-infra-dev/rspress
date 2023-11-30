@@ -4,7 +4,7 @@ import Slugger from 'github-slugger';
 import type { Root } from 'hast';
 import { Processor } from '@mdx-js/mdx/lib/core';
 import { PageMeta } from '../loader';
-import { extractTextAndId } from '../utils';
+import { extractTextAndId } from '../../utils';
 
 export interface TocItem {
   id: string;
