@@ -13,11 +13,11 @@ export async function globalUIComponentsVMPlugin(context: FactoryContext) {
     .map(source => {
       const name = `Comp_${index}`;
       if (Array.isArray(source)) {
-        return `import ${name} from '${source[0]}';
+        return `import ${name} from ${JSON.stringify(source[0])};
 const Props_${index++} = ${JSON.stringify(source[1])};\n`;
       } else {
         index++;
-        return `import ${name} from '${source}';\n`;
+        return `import ${name} from ${JSON.stringify(source)};\n`;
       }
     })
     .concat(
