@@ -1,5 +1,7 @@
 # @rspress/plugin-typedoc
 
+## 1.8.0
+
 ## 1.7.5
 
 ## 1.7.4

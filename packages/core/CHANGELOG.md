@@ -1,5 +1,23 @@
 # @rspress/core
 
+## 1.8.0
+
+### Patch Changes
+
+- e4329b6: fix(core): support custom id when disable mdxRs and escape heading id in processor
+- bfc0e80: fix: devServer use searchIndexMiddleware first.
+- 7841e4c: fix: disable dark mode script when darkMode is false in config
+- Updated dependencies [482faf5]
+- Updated dependencies [b435c24]
+- Updated dependencies [3756fab]
+  - @rspress/shared@1.8.0
+  - @rspress/theme-default@1.8.0
+  - @rspress/plugin-auto-nav-sidebar@1.8.0
+  - @rspress/plugin-container-syntax@1.8.0
+  - @rspress/plugin-last-updated@1.8.0
+  - @rspress/plugin-medium-zoom@1.8.0
+  - @rspress/runtime@1.8.0
+
 ## 1.7.5
 
 ### Patch Changes
