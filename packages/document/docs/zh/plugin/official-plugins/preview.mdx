@@ -101,7 +101,6 @@ export default function App() {
 interface PreviewOptions {
   isMobile?: boolean;
   iframePosition?: 'fixed' | 'follow';
-  enableCodesandbox?: boolean;
   defaultRenderMode?: 'pure' | 'preview';
 }
 ```
@@ -123,16 +122,6 @@ interface PreviewOptions {
 `fixed` 模式效果如下：
 
 ![](https://lf3-static.bytednsdoc.com/obj/eden-cn/uhbfnupenuhf/rspress/demo-preview-mobile-fixed.png)
-
-### enableCodesandbox
-
-**试验性功能**，支持在 Codesandbox 打开 Demo，目前不支持 iframePosition 为 fixed 的情况。
-
-此功能，仍有一些使用上的限制：
-
-- 不能自定义 sandbox 依赖：默认仅会声明 react、react-dom、self 三个依赖，这意味着你无法在 demo 里引用其他依赖，
-  同时，你需要确保 self 已经发包至 npm，这适用于模块类型的项目。
-- 不能自定义文件：这意味着你无法在 demo 里引用其他文件。
 
 ### defaultRenderMode
 

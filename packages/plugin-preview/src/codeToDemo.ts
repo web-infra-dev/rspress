@@ -27,11 +27,10 @@ export const remarkCodeToDemo: Plugin<
       isMobile: boolean;
       getRouteMeta: () => RouteMeta[];
       iframePosition: 'fixed' | 'follow';
-      enableCodesandbox: boolean;
     },
   ],
   Root
-> = ({ isMobile, getRouteMeta, iframePosition, enableCodesandbox }) => {
+> = ({ isMobile, getRouteMeta, iframePosition }) => {
   const routeMeta = getRouteMeta();
 
   return (tree, vfile) => {
@@ -103,11 +102,6 @@ export const remarkCodeToDemo: Plugin<
               type: 'mdxJsxAttribute',
               name: 'packageName',
               value: json.name,
-            },
-            {
-              type: 'mdxJsxAttribute',
-              name: 'enableCodesandbox',
-              value: enableCodesandbox,
             },
           ],
           children: [

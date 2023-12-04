@@ -29,12 +29,6 @@ export type Options = {
    */
   iframePosition?: 'fixed' | 'follow';
   /**
-   * whether the demo can open in codesandbox
-   * @default false
-   * @experimental
-   */
-  enableCodesandbox?: boolean;
-  /**
    * determine how to handle a internal code block without meta
    * @default 'preview'
    */
@@ -67,7 +61,6 @@ export const demoMeta: Record<
 export function pluginPreview(options?: Options): RspressPlugin {
   const isMobile = options?.isMobile ?? false;
   const iframePosition = options?.iframePosition ?? 'follow';
-  const enableCodesandbox = options?.enableCodesandbox ?? false;
   const defaultRenderMode = options?.defaultRenderMode ?? 'preview';
 
   const demoRuntimeModule = new RspackVirtualModulePlugin({});
@@ -285,10 +278,7 @@ import Demo from ${JSON.stringify(demoComponentPath)}
     },
     markdown: {
       remarkPlugins: [
-        [
-          remarkCodeToDemo,
-          { isMobile, getRouteMeta, iframePosition, enableCodesandbox },
-        ],
+        [remarkCodeToDemo, { isMobile, getRouteMeta, iframePosition }],
       ],
       globalComponents: [
         join(staticPath, 'global-components', 'Container.tsx'),
