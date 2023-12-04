@@ -64,7 +64,7 @@
     "@rspress/plugin-medium-zoom": "workspace:*",
     "@rspress/plugin-last-updated": "workspace:*",
     "@rspress/plugin-auto-nav-sidebar": "workspace:*",
-    "@rspress/mdx-rs": "0.4.2",
+    "@rspress/mdx-rs": "0.4.3",
     "@rspress/plugin-container-syntax": "workspace:*",
     "@rspress/shared": "workspace:*",
     "@types/compression": "^1.7.2",
