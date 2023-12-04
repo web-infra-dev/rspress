@@ -15,6 +15,11 @@ import 'virtual-global-styles';
 // eslint-disable-next-line import/no-commonjs
 const { default: Theme } = require('@theme');
 
+export enum QueryStatus {
+  Show = '1',
+  Hide = '0',
+}
+
 type RspressPageMeta = Record<
   string,
   {
@@ -46,7 +51,6 @@ export async function initPageData(routePath: string): Promise<PageData> {
     const encodedPagePath = encodeURIComponent(pagePath);
     const {
       toc = [],
-
       title = '',
       frontmatter,
     } = (mod.default.__RSPRESS_PAGE_META as RspressPageMeta)?.[
@@ -91,8 +95,15 @@ export async function initPageData(routePath: string): Promise<PageData> {
 }
 
 export function App({ helmetContext }: { helmetContext?: object }) {
-  const { setData: setPageData } = useContext(DataContext);
-  const { pathname } = useLocation();
+  const { setData: setPageData, data } = useContext(DataContext);
+  const frontmatter = data.page.frontmatter || {};
+  const { pathname, search } = useLocation();
+  const query = new URLSearchParams(search);
+  const GLOBAL_COMPONENTS_KEY = 'globalUIComponents';
+  const hideGlobalUIComponents =
+    // Disable global components in frontmatter or query
+    frontmatter[GLOBAL_COMPONENTS_KEY] === false ||
+    query.get(GLOBAL_COMPONENTS_KEY) === QueryStatus.Hide;
   useLayoutEffect(() => {
     async function refetchData() {
       try {
@@ -104,27 +115,29 @@ export function App({ helmetContext }: { helmetContext?: object }) {
     }
     refetchData();
   }, [pathname, setPageData]);
+
   return (
     <HelmetProvider context={helmetContext}>
       <Theme.Layout />
       {
         // Global UI
-        globalComponents.map((componentInfo, index) => {
-          if (Array.isArray(componentInfo)) {
-            const [component, props] = componentInfo;
-            return React.createElement(component, {
-              // The component order is stable
-              // eslint-disable-next-line react/no-array-index-key
-              key: index,
-              ...props,
-            });
-          } else {
-            return React.createElement(componentInfo, {
-              // eslint-disable-next-line react/no-array-index-key
-              key: index,
-            });
-          }
-        })
+        !hideGlobalUIComponents &&
+          globalComponents.map((componentInfo, index) => {
+            if (Array.isArray(componentInfo)) {
+              const [component, props] = componentInfo;
+              return React.createElement(component, {
+                // The component order is stable
+                // eslint-disable-next-line react/no-array-index-key
+                key: index,
+                ...props,
+              });
+            } else {
+              return React.createElement(componentInfo, {
+                // eslint-disable-next-line react/no-array-index-key
+                key: index,
+              });
+            }
+          })
       }
     </HelmetProvider>
   );
