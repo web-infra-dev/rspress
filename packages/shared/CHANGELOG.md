@@ -1,5 +1,11 @@
 # @rspress/shared
 
+## 1.8.0
+
+### Patch Changes
+
+- 482faf5: fix: license for share package
+
 ## 1.7.5
 
 ### Patch Changes

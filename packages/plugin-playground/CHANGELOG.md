@@ -1,5 +1,12 @@
 # @rspress/plugin-playground
 
+## 1.8.0
+
+### Patch Changes
+
+- Updated dependencies [482faf5]
+  - @rspress/shared@1.8.0
+
 ## 1.7.5
 
 ### Patch Changes
