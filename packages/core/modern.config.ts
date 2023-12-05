@@ -18,11 +18,7 @@ export default defineConfig({
       target: 'es2020',
       outDir: 'dist',
       sourceMap: true,
-      externals: [
-        '@rspress/mdx-rs',
-        'jsdom',
-        '@rspress/plugin-container-syntax',
-      ],
+      externals: ['@rspress/mdx-rs', '@rspress/plugin-container-syntax'],
       banner: {
         js: 'import { createRequire } from "module";\nconst { url } = import.meta;\nconst require = createRequire(url);',
       },
