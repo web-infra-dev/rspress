@@ -54,7 +54,6 @@
     "html-to-text": "^9.0.3",
     "htmr": "^1.0.2",
     "is-html": "^3.0.0",
-    "jsdom": "20.0.3",
     "lodash-es": "^4.17.21",
     "nprogress": "^0.2.0",
     "react": "^18.2.0",
