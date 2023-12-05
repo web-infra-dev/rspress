@@ -35,6 +35,19 @@ export function Link(props: LinkProps) {
   const handleNavigate = async (
     e: React.MouseEvent<HTMLAnchorElement, MouseEvent>,
   ) => {
+    if (
+      // left click only
+      e.button !== 0 ||
+      // `target` are usually used for open link in new window/tab
+      (e.currentTarget.target && e.currentTarget.target !== '_self') ||
+      // modifier keys are usually used for open link in new window/tab
+      e.metaKey ||
+      e.shiftKey ||
+      e.altKey ||
+      e.ctrlKey
+    ) {
+      return;
+    }
     e.preventDefault();
     // handle hash link in current page
     const hash = withBaseUrl.split('#')[1];
