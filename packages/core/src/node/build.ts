@@ -62,6 +62,7 @@ export async function bundle(
             distPath: {
               root: `${outputDir}/ssr`,
             },
+            disableMinimize: true,
           },
           tools: {
             rspack(options) {
