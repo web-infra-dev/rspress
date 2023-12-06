@@ -8,6 +8,7 @@ import {
   withBase as rawWithBase,
   removeBase as rawRemoveBase,
   isExternalUrl,
+  isDataUrl,
   removeHash,
 } from '@rspress/shared';
 
@@ -39,7 +40,10 @@ export function normalizeHrefInRuntime(a: string) {
 
 export function normalizeImagePath(imagePath: string) {
   const isProd = isProduction();
-  if (isExternalUrl(imagePath) || !isProd) {
+  if (!isProd) {
+    return imagePath;
+  }
+  if (isExternalUrl(imagePath) || isDataUrl(imagePath)) {
     return imagePath;
   }
 
