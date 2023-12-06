@@ -5,16 +5,12 @@ import {
 import { useLocaleSiteData, usePrevNextPage } from '../../logic';
 import EditLink from '../EditLink';
 import { LastUpdated } from '../LastUpdated';
-import { Link } from '../Link';
+import { PrevNextPage } from '../PrevNextPage';
 import styles from './index.module.scss';
 
 export function DocFooter() {
   const { prevPage, nextPage } = usePrevNextPage();
-  const {
-    prevPageText = 'Previous Page',
-    nextPageText = 'Next page',
-    lastUpdated: localesLastUpdated = false,
-  } = useLocaleSiteData();
+  const { lastUpdated: localesLastUpdated = false } = useLocaleSiteData();
   const { siteData } = usePageData();
   const { themeConfig } = siteData;
   const showLastUpdated = themeConfig.lastUpdated || localesLastUpdated;
@@ -30,24 +26,20 @@ export function DocFooter() {
       <div className="flex flex-col sm:flex-row sm:justify-around gap-4 pt-6">
         <div className={`${styles.prev} flex flex-col`}>
           {prevPage ? (
-            <Link
+            <PrevNextPage
+              type="prev"
+              text={prevPage.text}
               href={normalizeHref(prevPage.link)}
-              className={styles.pagerLink}
-            >
-              <span className={styles.desc}>{prevPageText}</span>
-              <span className={styles.title}>{prevPage.text}</span>
-            </Link>
+            />
           ) : null}
         </div>
         <div className={`${styles.next} flex flex-col`}>
           {nextPage ? (
-            <Link
+            <PrevNextPage
+              type="next"
+              text={nextPage.text}
               href={normalizeHref(nextPage.link)}
-              className={`${styles.pagerLink} ${styles.next}`}
-            >
-              <span className={styles.desc}>{nextPageText}</span>
-              <span className={styles.title}>{nextPage.text}</span>
-            </Link>
+            />
           ) : null}
         </div>
       </div>
