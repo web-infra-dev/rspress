@@ -4,6 +4,7 @@ import {
 } from '@rspress/runtime';
 import { useLocaleSiteData, usePrevNextPage } from '../../logic';
 import EditLink from '../EditLink';
+import { LastUpdated } from '../LastUpdated';
 import { Link } from '../Link';
 import styles from './index.module.scss';
 
@@ -12,27 +13,16 @@ export function DocFooter() {
   const {
     prevPageText = 'Previous Page',
     nextPageText = 'Next page',
-    lastUpdatedText: localesLastUpdatedText = 'Last Updated',
     lastUpdated: localesLastUpdated = false,
   } = useLocaleSiteData();
-  const {
-    page: { lastUpdatedTime },
-    siteData,
-  } = usePageData();
+  const { siteData } = usePageData();
   const { themeConfig } = siteData;
-  const lastUpdatedText =
-    themeConfig?.lastUpdatedText || localesLastUpdatedText;
   const showLastUpdated = themeConfig.lastUpdated || localesLastUpdated;
 
   return (
     <footer className="mt-8">
       <div className="xs:flex pb-5 px-2 justify-end items-center">
-        {showLastUpdated && (
-          <div className="flex text-sm text-text-2 leading-6 sm:leading-8 font-medium">
-            <p>{lastUpdatedText}: </p>
-            <span>{lastUpdatedTime}</span>
-          </div>
-        )}
+        {showLastUpdated && <LastUpdated />}
       </div>
       <div className="flex flex-col">
         <EditLink />
