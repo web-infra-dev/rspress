@@ -132,7 +132,6 @@ export async function launchDoc({
         'index.css',
       ),
       themeConfig: {
-        // TODO: support dark mode in code block
         darkMode: false,
         sidebar: useModuleSidebar ? await getAutoSidebar() : undefined,
         locales,
