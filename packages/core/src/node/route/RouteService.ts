@@ -1,6 +1,6 @@
 import path from 'path';
 import type { ComponentType } from 'react';
-import fs from '@modern-js/utils/fs-extra';
+import fs from '@rspress/shared/fs-extra';
 import { PageModule, UserConfig, RouteMeta, withBase } from '@rspress/shared';
 import { getPageKey, normalizePath } from '../utils';
 import { PluginDriver } from '../PluginDriver';
@@ -132,7 +132,13 @@ export class RouteService {
   }
 
   async init() {
-    const { default: globby } = await import('@modern-js/utils/globby');
+    const globby = (
+      await import(
+        // @ts-expect-error
+        // eslint-disable-next-line node/file-extension-in-import
+        '../compiled/globby/index.js'
+      )
+    ).default as typeof import('../../../compiled/globby');
     // 1. internal pages
     const files = globby
       .sync([`**/*.{${this.#extensions.join(',')}}`, ...this.#include], {

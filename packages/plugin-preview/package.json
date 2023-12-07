@@ -37,7 +37,6 @@
   "dependencies": {
     "@mdx-js/mdx": "2.2.1",
     "@rspress/shared": "workspace:*",
-    "@modern-js/utils": "2.42.0",
     "qrcode.react": "^3.1.0",
     "remark-gfm": "3.0.1",
     "rspack-plugin-virtual-module": "0.1.12",

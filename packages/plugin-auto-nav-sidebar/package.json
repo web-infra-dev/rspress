@@ -61,7 +61,6 @@
     "registry": "https://registry.npmjs.org/"
   },
   "dependencies": {
-    "@modern-js/utils": "2.42.0",
     "@rspress/shared": "workspace:*"
   }
 }

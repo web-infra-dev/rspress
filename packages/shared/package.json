@@ -15,6 +15,21 @@
       "require": "./dist/index.js",
       "types": "./dist/index.d.ts"
     },
+    "./execa": {
+      "import": "./dist/execa.mjs",
+      "require": "./dist/execa.js",
+      "types": "./dist/execa.d.ts"
+    },
+    "./chalk": {
+      "import": "./dist/chalk.mjs",
+      "require": "./dist/chalk.js",
+      "types": "./dist/chalk.d.ts"
+    },
+    "./fs-extra": {
+      "import": "./dist/fs-extra.mjs",
+      "require": "./dist/fs-extra.js",
+      "types": "./dist/fs-extra.d.ts"
+    },
     "./logger": {
       "import": "./dist/logger.mjs",
       "require": "./dist/logger.js",
@@ -34,7 +49,10 @@
     "@rsbuild/core": "0.2.1",
     "unified": "10.1.2",
     "chalk": "4.1.2",
-    "rslog": "^1.1.0"
+    "rslog": "^1.1.0",
+    "execa": "5.1.1",
+    "fs-extra": "11.2.0",
+    "globby": "14.0.0"
   },
   "devDependencies": {
     "lodash-es": "^4.17.21",
@@ -48,7 +66,8 @@
     "rimraf": "~3.0.2",
     "ts-node": "^10.9.1",
     "typescript": "~5.0.4",
-    "medium-zoom": "1.0.8"
+    "medium-zoom": "1.0.8",
+    "@types/fs-extra": "11.0.4"
   },
   "sideEffects": [],
   "publishConfig": {

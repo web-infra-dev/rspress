@@ -1,5 +1,5 @@
 import type { RspressPlugin } from '@rspress/shared';
-import execa from '@modern-js/utils/execa';
+import execa from '@rspress/shared/execa';
 
 function transform(timestamp: number, lang: string) {
   return new Date(timestamp).toLocaleString(lang || 'zh');

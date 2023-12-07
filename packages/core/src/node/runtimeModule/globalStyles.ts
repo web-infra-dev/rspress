@@ -1,4 +1,4 @@
-import fs from '@modern-js/utils/fs-extra';
+import fs from '@rspress/shared/fs-extra';
 import { FactoryContext, RuntimeModuleID } from '.';
 
 export async function globalStylesVMPlugin(context: FactoryContext) {
