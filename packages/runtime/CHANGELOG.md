@@ -1,5 +1,15 @@
 # @rspress/runtime
 
+## 1.8.1
+
+### Patch Changes
+
+- 126f0aa: fix: inline image data url start with slash prefix.
+- Updated dependencies [126f0aa]
+- Updated dependencies [0a4b727]
+- Updated dependencies [c038048]
+  - @rspress/shared@1.8.1
+
 ## 1.8.0
 
 ### Patch Changes
