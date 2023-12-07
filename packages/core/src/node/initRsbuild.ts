@@ -104,6 +104,7 @@ async function createInternalBuildConfig(
       ],
     },
     html: {
+      title: config?.title,
       favicon: normalizeIcon(config?.icon),
       template: path.join(PACKAGE_ROOT, 'index.html'),
     },
