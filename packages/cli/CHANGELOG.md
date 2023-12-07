@@ -1,5 +1,19 @@
 # rspress
 
+## 1.8.1
+
+### Patch Changes
+
+- Updated dependencies [126f0aa]
+- Updated dependencies [d6f5294]
+- Updated dependencies [c8e655e]
+- Updated dependencies [21b2845]
+- Updated dependencies [0a4b727]
+- Updated dependencies [f7a5a09]
+- Updated dependencies [c038048]
+  - @rspress/shared@1.8.1
+  - @rspress/core@1.8.1
+
 ## 1.8.0
 
 ### Patch Changes
