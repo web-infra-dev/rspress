@@ -157,3 +157,46 @@ function App() {
 import { Toc } from '@theme';
 
 <Toc />
+
+## LastUpdated
+
+LastUpdated 组件用来显示文章的最后更新时间。使用方法如下：
+
+```tsx title="index.mdx"
+import { LastUpdated } from '@theme';
+
+function App() {
+  return <LastUpdated />;
+}
+```
+
+:::tip
+
+如果没有在默认主题中配置 `lastUpdated: true` 的话需要安装和注册 `@rspress/plugin-last-updated` 插件。
+
+:::
+
+## PrevNextPage
+
+PrevNextPage 组件用来渲染上一页和下一页的链接。使用方法如下：
+
+```tsx title="index.mdx"
+import { PrevNextPage } from '@theme';
+
+function App() {
+  return <PrevNextPage type="prev" text="上一页" href="https://rspress.dev/" />;
+}
+```
+
+其中包含的 props 类型如下：
+
+```ts
+interface PrevNextPageProps {
+  // 通过 type 来设置该链接是上一页还是下一页
+  type: 'prev' | 'next';
+  // 用于设置上一页或下一页的文本
+  text: string;
+  // 用于设置上一页或下一页的链接
+  href: string;
+}
+```
