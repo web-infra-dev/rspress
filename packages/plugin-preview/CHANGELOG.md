@@ -1,5 +1,12 @@
 # @rspress/plugin-preview
 
+## 1.8.2
+
+### Patch Changes
+
+- 577856f: fix(plugin-preview): add defaultRenderMode to remark plugin
+  - @rspress/shared@1.8.2
+
 ## 1.8.1
 
 ### Patch Changes
