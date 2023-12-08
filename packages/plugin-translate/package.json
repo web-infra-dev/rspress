@@ -1,0 +1,75 @@
+{
+  "name": "@rspress/plugin-translate",
+  "version": "0.0.1",
+  "description": "A plugin for rspress to integrate translate",
+  "bugs": "https://github.com/web-infra-dev/rspress/issues",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/web-infra-dev/rspress",
+    "directory": "packages/plugin-translate"
+  },
+  "license": "MIT",
+  "jsnext:source": "./src/index.ts",
+  "types": "./dist/types/index.d.ts",
+  "main": "./dist/lib/index.js",
+  "module": "./dist/es/index.js",
+  "scripts": {
+    "dev": "modern build -w",
+    "build": "modern build",
+    "reset": "rimraf ./**/node_modules",
+    "lint": "modern lint",
+    "change": "modern change",
+    "bump": "modern bump",
+    "pre": "modern pre",
+    "change-status": "modern change-status",
+    "gen-release-note": "modern gen-release-note",
+    "release": "modern release",
+    "new": "modern new",
+    "test": "vitest run --passWithNoTests",
+    "upgrade": "modern upgrade"
+  },
+  "engines": {
+    "node": ">=14.17.6"
+  },
+  "eslintIgnore": [
+    "node_modules/",
+    "dist/"
+  ],
+  "devDependencies": {
+    "@modern-js/tsconfig": "2.41.0",
+    "@rspress/shared": "workspace:*",
+    "@types/node": "^18.11.17",
+    "@types/react": "^18",
+    "@types/react-dom": "^18",
+    "react": "^18",
+    "typescript": "^5",
+    "vitest": "0.33.0"
+  },
+  "peerDependencies": {
+    "rspress": "^1.0.2"
+  },
+  "sideEffects": [
+    "*.css",
+    "*.less",
+    "*.sass",
+    "*.scss"
+  ],
+  "files": [
+    "dist",
+    "src"
+  ],
+  "publishConfig": {
+    "access": "public",
+    "provenance": true,
+    "registry": "https://registry.npmjs.org/"
+  },
+  "dependencies": {
+    "@modern-js/builder-shared": "^2.41.0",
+    "@modern-js/utils": "2.41.0",
+    "@types/cacache": "^17.0.2",
+    "cacache": "^18.0.1",
+    "crypto": "^1.0.1",
+    "openai": "^4.20.1",
+    "tiktoken": "^1.0.11"
+  }
+}
