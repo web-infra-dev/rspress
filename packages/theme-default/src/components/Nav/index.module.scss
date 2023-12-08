@@ -28,12 +28,20 @@
   display: none;
 }
 
+.singleItem {
+  word-break: keep-all;
+}
+
 .activeItem,
 .singleItem:hover {
   background-color: var(--rp-c-bg-soft);
   cursor: pointer;
   color: var(--rp-c-brand-dark);
   border-radius: 12px;
+}
+
+.navBarTitle {
+  flex-shrink: 0;
 }
 
 .navContainer :deep(*) {
