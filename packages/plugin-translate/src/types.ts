@@ -8,10 +8,6 @@ export interface MatchOptions {
    */
   extensions?: string[];
   /**
-   * Include extra files from being translated
-   */
-  include?: string[];
-  /**
    * Exclude files from being translated
    */
   exclude?: string[];
@@ -21,7 +17,6 @@ export interface PluginOptions {
   /**
    * The model config
    */
-  // TODO 是否支持自定义模型调用 'GPT' | 'GLM'
   modelConfig: {
     clientOptions: ClientOptions;
     model?: string;

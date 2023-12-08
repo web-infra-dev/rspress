@@ -27,10 +27,12 @@ export const translate = async ({
   const { root = path.join(cwd, 'docs'), lang, locales } = config;
 
   if (!config?.lang) {
-    throw new Error('请配置源语言');
+    throw new Error('Please configure the lang.');
   }
   if ((locales || []).length < 2) {
-    throw new Error('请配置目标语言数组,并创建对应文件夹');
+    throw new Error(
+      'Please configure the target language array and create the corresponding folder.',
+    );
   }
 
   const cacheDirPath = path.join(cwd, 'node_modules', RSPRESS_CACHE_DIR);
@@ -43,7 +45,6 @@ export const translate = async ({
   );
 
   const extensions = match.extensions || DEFAULT_NEED_TRANSLATE_EXTENSIONS;
-  const include = match.include || [];
   const exclude = match.exclude || [];
 
   const { default: globby } = await import('@modern-js/utils/globby');
@@ -51,7 +52,7 @@ export const translate = async ({
   logger.start('[doc-translate-plugin]', `Scanning...`);
 
   const needTransFiles = globby
-    .sync([`**/*.{${extensions.join(',')}}`, ...include], {
+    .sync([`**/*.{${extensions.join(',')}}`], {
       cwd: originalLangDir,
       absolute: true,
       ignore: [...exclude],

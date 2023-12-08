@@ -6,5 +6,6 @@
   "typedoc",
   "preview",
   "playground",
-  "shiki"
+  "shiki",
+  "translate"
 ]
