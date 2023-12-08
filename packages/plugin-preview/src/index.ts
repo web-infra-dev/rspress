@@ -278,7 +278,10 @@ import Demo from ${JSON.stringify(demoComponentPath)}
     },
     markdown: {
       remarkPlugins: [
-        [remarkCodeToDemo, { isMobile, getRouteMeta, iframePosition }],
+        [
+          remarkCodeToDemo,
+          { isMobile, getRouteMeta, iframePosition, defaultRenderMode },
+        ],
       ],
       globalComponents: [
         join(staticPath, 'global-components', 'Container.tsx'),
