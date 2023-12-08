@@ -1,7 +1,5 @@
 import path from 'path';
 import remarkGFM from 'remark-gfm';
-import rehypeSlug from 'rehype-slug';
-import rehypeAutoLink from 'rehype-autolink-headings';
 import { Options } from '@mdx-js/loader';
 import { UserConfig } from '@rspress/shared';
 import { PluggableList } from 'unified';
@@ -10,6 +8,7 @@ import type { RouteService } from '../route/RouteService';
 import type { PluginDriver } from '../PluginDriver';
 import { remarkPluginToc } from './remarkPlugins/toc';
 import { rehypePluginCodeMeta } from './rehypePlugins/codeMeta';
+import { rehypeHeaderAnchor } from './rehypePlugins/headerAnchor';
 import { remarkPluginNormalizeLink } from './remarkPlugins/normalizeLink';
 import { remarkCheckDeadLinks } from './remarkPlugins/checkDeadLink';
 import { remarkBuiltin } from './remarkPlugins/builtin';
@@ -75,20 +74,7 @@ export async function createMDXOptions(
       ...remarkPluginsFromPlugins,
     ].filter(Boolean) as PluggableList,
     rehypePlugins: [
-      rehypeSlug,
-      [
-        rehypeAutoLink,
-        {
-          properties: {
-            class: 'header-anchor',
-            ariaHidden: 'true',
-          },
-          content: {
-            type: 'text',
-            value: '#',
-          },
-        },
-      ],
+      rehypeHeaderAnchor,
       rehypePluginCodeMeta,
       [
         rehypePluginExternalLinks,

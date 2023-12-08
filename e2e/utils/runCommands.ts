@@ -40,7 +40,7 @@ export async function runCommand(
     async function handleStdout(data) {
       const message = data.toString();
       const bootupMarkers = {
-        dev: /Local:/i,
+        dev: /compiled/i,
         preview: /(Local:|Preview server)/i,
         build: /Pages rendered/,
       };

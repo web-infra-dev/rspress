@@ -1,5 +1,38 @@
 # @rspress/theme-default
 
+## 1.8.2
+
+### Patch Changes
+
+- @rspress/runtime@1.8.2
+- @rspress/shared@1.8.2
+
+## 1.8.1
+
+### Patch Changes
+
+- a96e651: fix: remove unuse css that is not recognized by browsers.
+- c8e655e: perf(deps): remove unused jsdom dependency
+- df6e061: feat: support LastUpdated and PrevNextPage
+- Updated dependencies [126f0aa]
+- Updated dependencies [0a4b727]
+- Updated dependencies [c038048]
+  - @rspress/runtime@1.8.1
+  - @rspress/shared@1.8.1
+
+## 1.8.0
+
+### Minor Changes
+
+- 3756fab: feat: add sidebar slots
+
+### Patch Changes
+
+- b435c24: chore: optimize sidebar group title color
+- Updated dependencies [482faf5]
+  - @rspress/shared@1.8.0
+  - @rspress/runtime@1.8.0
+
 ## 1.7.5
 
 ### Patch Changes

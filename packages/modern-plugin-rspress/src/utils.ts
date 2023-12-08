@@ -16,11 +16,6 @@ export const mergeModuleDocConfig = <T>(...configs: T[]): T =>
         return source ?? target;
       }
 
-      // can not enable darkMode.
-      if (key === 'darkMode' && target === false) {
-        return false;
-      }
-
       if (pair.some(_.isArray)) {
         return [..._.castArray(target), ..._.castArray(source)];
       }

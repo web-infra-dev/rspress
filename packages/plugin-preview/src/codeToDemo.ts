@@ -27,11 +27,11 @@ export const remarkCodeToDemo: Plugin<
       isMobile: boolean;
       getRouteMeta: () => RouteMeta[];
       iframePosition: 'fixed' | 'follow';
-      enableCodesandbox: boolean;
+      defaultRenderMode: 'pure' | 'preview';
     },
   ],
   Root
-> = ({ isMobile, getRouteMeta, iframePosition, enableCodesandbox }) => {
+> = ({ isMobile, getRouteMeta, iframePosition, defaultRenderMode }) => {
   const routeMeta = getRouteMeta();
 
   return (tree, vfile) => {
@@ -104,11 +104,6 @@ export const remarkCodeToDemo: Plugin<
               name: 'packageName',
               value: json.name,
             },
-            {
-              type: 'mdxJsxAttribute',
-              name: 'enableCodesandbox',
-              value: enableCodesandbox,
-            },
           ],
           children: [
             externalDemoIndex === undefined
@@ -159,10 +154,23 @@ export const remarkCodeToDemo: Plugin<
       if (node.lang === 'jsx' || node.lang === 'tsx') {
         const value = injectDemoBlockImport(node.value, demoBlockComponentPath);
 
-        const isPure = node?.meta?.includes('pure');
+        const hasPureMeta = node?.meta?.includes('pure');
+        const hasPreviewMeta = node?.meta?.includes('preview');
 
-        // do nothing for pure mode
-        if (isPure) {
+        let noTransform;
+        switch (defaultRenderMode) {
+          case 'pure':
+            noTransform = !hasPreviewMeta;
+            break;
+          case 'preview':
+            noTransform = hasPureMeta;
+            break;
+          default:
+            break;
+        }
+
+        // do not anything for pure mode
+        if (noTransform) {
           return;
         }
 

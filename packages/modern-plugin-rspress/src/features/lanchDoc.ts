@@ -98,16 +98,25 @@ export async function launchDoc({
 
       return [...fileItems, ...directoryItems];
     };
-    return {
-      '': [
-        {
-          text: 'Module List',
-          link: `/index`,
-          collapsible: false,
-          items: await traverse(base),
-        },
-      ],
+
+    const sidebarGroup = [
+      {
+        text: 'Module List',
+        link: `/index`,
+        collapsible: false,
+        items: await traverse(base),
+      },
+    ];
+    const sidebar: Sidebar = {
+      '/': sidebarGroup,
     };
+
+    // support auto sidebar when is bilingual
+    if (languages.length === 2) {
+      const path = `/${languages[1]}/`;
+      sidebar[path] = sidebarGroup;
+    }
+    return sidebar;
   };
 
   const modernDocConfig = mergeModuleDocConfig<UserConfig>(
@@ -123,7 +132,6 @@ export async function launchDoc({
         'index.css',
       ),
       themeConfig: {
-        // TODO: support dark mode in code block
         darkMode: false,
         sidebar: useModuleSidebar ? await getAutoSidebar() : undefined,
         locales,

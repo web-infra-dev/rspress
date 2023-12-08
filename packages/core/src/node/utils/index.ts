@@ -6,3 +6,5 @@ export * from './getASTNodeImport';
 export * from './flattenMdxContent';
 export * from './loadFrontMatter';
 export * from './applyReplaceRules';
+export * from './extractTextAndId';
+export * from './escapeHeadingIds';

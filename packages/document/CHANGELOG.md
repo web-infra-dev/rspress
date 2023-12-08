@@ -1,5 +1,15 @@
 # @rspress/docs
 
+## 1.8.2
+
+## 1.8.1
+
+### Patch Changes
+
+- 0a4b727: feat: support url query to disable global ui components
+
+## 1.8.0
+
 ## 1.7.5
 
 ## 1.7.4

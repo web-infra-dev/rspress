@@ -4,9 +4,12 @@ import { createProcessor } from '@mdx-js/mdx';
 import type { Header, UserConfig } from '@rspress/shared';
 import { logger } from '@rspress/shared/logger';
 import type { RouteService } from '../route/RouteService';
-import { normalizePath } from '../utils';
+import {
+  normalizePath,
+  loadFrontMatter,
+  escapeMarkdownHeadingIds,
+} from '../utils';
 import { PluginDriver } from '../PluginDriver';
-import { loadFrontMatter } from '../utils/loadFrontMatter';
 import { createMDXOptions } from './options';
 import { TocItem } from './remarkPlugins/toc';
 import { checkLinks } from './remarkPlugins/checkDeadLink';
@@ -55,6 +58,9 @@ export default async function mdxLoader(
     docDirectory,
     true,
   );
+
+  // preprocessor
+  const preprocessedContent = escapeMarkdownHeadingIds(content);
   const isHomePage = frontmatter.pageType === 'home';
 
   try {
@@ -75,7 +81,7 @@ export default async function mdxLoader(
         title: '',
       });
       const vFile = await compiler.process({
-        value: content,
+        value: preprocessedContent,
         path: filepath,
       });
 
@@ -92,7 +98,7 @@ export default async function mdxLoader(
 
       // TODO: Cannot get correct toc from mdx which has internal components
       const { toc, links, title, code } = await compile({
-        value: content,
+        value: preprocessedContent,
         filepath,
         root: docDirectory,
         development: process.env.NODE_ENV !== 'production',

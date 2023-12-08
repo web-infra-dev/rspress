@@ -1,5 +1,42 @@
 # @modern-js/plugin-rspress
 
+## 1.8.2
+
+### Patch Changes
+
+- Updated dependencies [577856f]
+  - @rspress/plugin-preview@1.8.2
+  - @rspress/core@1.8.2
+  - @rspress/plugin-api-docgen@1.8.2
+
+## 1.8.1
+
+### Patch Changes
+
+- e6a787f: fix(modern-plugin): support auto sidebar when is bilingual
+- 25b8bdc: fix(modern-plugin): remove the limit to enable darkmode
+- Updated dependencies [d6f5294]
+- Updated dependencies [c8e655e]
+- Updated dependencies [21b2845]
+- Updated dependencies [39f72b9]
+- Updated dependencies [0a4b727]
+- Updated dependencies [f7a5a09]
+- Updated dependencies [c038048]
+  - @rspress/core@1.8.1
+  - @rspress/plugin-preview@1.8.1
+  - @rspress/plugin-api-docgen@1.8.1
+
+## 1.8.0
+
+### Patch Changes
+
+- Updated dependencies [e4329b6]
+- Updated dependencies [bfc0e80]
+- Updated dependencies [7841e4c]
+  - @rspress/core@1.8.0
+  - @rspress/plugin-api-docgen@1.8.0
+  - @rspress/plugin-preview@1.8.0
+
 ## 1.7.5
 
 ### Patch Changes

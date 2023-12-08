@@ -1,5 +1,29 @@
 # @rspress/plugin-preview
 
+## 1.8.2
+
+### Patch Changes
+
+- 577856f: fix(plugin-preview): add defaultRenderMode to remark plugin
+  - @rspress/shared@1.8.2
+
+## 1.8.1
+
+### Patch Changes
+
+- 39f72b9: fix(plugin-preview): remove codesandbox because codesandbox-import-utils license is GPL
+- Updated dependencies [126f0aa]
+- Updated dependencies [0a4b727]
+- Updated dependencies [c038048]
+  - @rspress/shared@1.8.1
+
+## 1.8.0
+
+### Patch Changes
+
+- Updated dependencies [482faf5]
+  - @rspress/shared@1.8.0
+
 ## 1.7.5
 
 ### Patch Changes

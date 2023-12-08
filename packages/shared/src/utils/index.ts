@@ -108,6 +108,10 @@ export function isExternalUrl(url = '') {
   );
 }
 
+export function isDataUrl(url = '') {
+  return /^\s*data:/i.test(url);
+}
+
 export function replaceLang(
   rawUrl: string,
   lang: {
