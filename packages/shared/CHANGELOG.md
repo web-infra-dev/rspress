@@ -1,5 +1,15 @@
 # @rspress/shared
 
+## 1.8.2
+
+## 1.8.1
+
+### Patch Changes
+
+- 126f0aa: fix: inline image data url start with slash prefix.
+- 0a4b727: feat: support url query to disable global ui components
+- c038048: chore(deps): bump Rsbuild from v0.1.0 to v0.1.9
+
 ## 1.8.0
 
 ### Patch Changes

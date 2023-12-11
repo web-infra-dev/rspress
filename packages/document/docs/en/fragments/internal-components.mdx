@@ -1,6 +1,6 @@
 ## NoSSR
 
-Used to skip the ssr for some components.For example
+Used to skip the ssr for some components. For example:
 
 ```tsx
 import { NoSSR } from 'rspress/runtime';
@@ -33,7 +33,7 @@ function App() {
 
 ## Tab/Tabs
 
-You can directly use the Tab/Tabs component in the document to achieve the effect of tab switching. for example:
+You can directly use the Tab/Tabs component in the document to achieve the effect of tab switching. For example:
 
 ```tsx title="index.mdx"
 import { Tab, Tabs } from 'rspress/theme';
@@ -157,3 +157,46 @@ function App() {
 import { Toc } from '@theme';
 
 <Toc />
+
+## LastUpdated
+
+The LastUpdated component is used to display the last update time of the current page. For example:
+
+```tsx title="index.mdx"
+import { LastUpdated } from '@theme';
+
+function App() {
+  return <LastUpdated />;
+}
+```
+
+:::tip
+
+If `lastUpdated: true` is not configured in the default theme, you need to install and register the `@rspress/plugin-last-updated` plugin.
+
+:::
+
+## PrevNextPage
+
+The PrevNextPage component is used to display the previous and next pages of the current page. For example:
+
+```tsx title="index.mdx"
+import { PrevNextPage } from '@theme';
+
+function App() {
+  return <PrevNextPage type="prev" text="Previous Page" href="https://rspress.dev/" />;
+}
+```
+
+The types of props included are as follows:
+
+```ts
+interface PrevNextPageProps {
+  // Set the link to the previous page or the next page through type
+  type: 'prev' | 'next';
+  // Used to set the text of the previous page or the next page
+  text: string;
+  // Used to set the link to the previous page or the next page
+  href: string;
+}
+```

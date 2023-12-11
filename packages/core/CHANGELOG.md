@@ -1,5 +1,41 @@
 # @rspress/core
 
+## 1.8.2
+
+### Patch Changes
+
+- @rspress/plugin-auto-nav-sidebar@1.8.2
+- @rspress/plugin-container-syntax@1.8.2
+- @rspress/plugin-last-updated@1.8.2
+- @rspress/plugin-medium-zoom@1.8.2
+- @rspress/runtime@1.8.2
+- @rspress/shared@1.8.2
+- @rspress/theme-default@1.8.2
+
+## 1.8.1
+
+### Patch Changes
+
+- d6f5294: feat: use config.title as html title.
+- c8e655e: perf(deps): remove unused jsdom dependency
+- 21b2845: fix: disable minify in ssr build
+- 0a4b727: feat: support url query to disable global ui components
+- f7a5a09: fix(core): stringify global compoennts path
+- c038048: chore(deps): bump Rsbuild from v0.1.0 to v0.1.9
+- Updated dependencies [126f0aa]
+- Updated dependencies [a96e651]
+- Updated dependencies [c8e655e]
+- Updated dependencies [df6e061]
+- Updated dependencies [0a4b727]
+- Updated dependencies [c038048]
+  - @rspress/runtime@1.8.1
+  - @rspress/shared@1.8.1
+  - @rspress/theme-default@1.8.1
+  - @rspress/plugin-medium-zoom@1.8.1
+  - @rspress/plugin-auto-nav-sidebar@1.8.1
+  - @rspress/plugin-container-syntax@1.8.1
+  - @rspress/plugin-last-updated@1.8.1
+
 ## 1.8.0
 
 ### Patch Changes
