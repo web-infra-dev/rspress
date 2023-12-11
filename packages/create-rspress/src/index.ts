@@ -9,6 +9,7 @@ import {
   formatTargetDir,
   getPkgManager,
   renderFile,
+  cancelPrompt,
 } from './utils';
 import { CustomPromptObject } from './types';
 
@@ -45,7 +46,7 @@ cli.command('', 'Create a new rspress site').action(async () => {
           targetDir = formatTargetDir(state.value) || defaultProjectName;
         },
       },
-    ]);
+    ], { onCancel: cancelPrompt });
 
   await promptProjectDir();
   let root = path.resolve(process.cwd(), targetDir);
