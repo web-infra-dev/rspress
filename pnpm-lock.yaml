@@ -318,14 +318,14 @@ importers:
         specifier: 2.41.0
         version: 2.41.0
       '@rsbuild/core':
-        specifier: 0.0.0-next-20231207110454
-        version: 0.0.0-next-20231207110454
+        specifier: 0.2.0
+        version: 0.2.0
       '@rsbuild/plugin-react':
-        specifier: 0.0.0-next-20231207110454
-        version: 0.0.0-next-20231207110454
+        specifier: 0.2.0
+        version: 0.2.0
       '@rsbuild/plugin-svgr':
-        specifier: 0.0.0-next-20231207110454
-        version: 0.0.0-next-20231207110454(webpack@5.88.2)
+        specifier: 0.2.0
+        version: 0.2.0(webpack@5.88.2)
       '@rspress/mdx-rs':
         specifier: 0.4.3
         version: 0.4.3
@@ -1107,8 +1107,8 @@ importers:
   packages/shared:
     dependencies:
       '@rsbuild/core':
-        specifier: 0.0.0-next-20231207110454
-        version: 0.0.0-next-20231207110454
+        specifier: 0.2.0
+        version: 0.2.0
       chalk:
         specifier: 4.1.2
         version: 4.1.2
@@ -4997,47 +4997,37 @@ packages:
       - supports-color
     dev: true
 
-  /@rsbuild/core@0.0.0-next-20231207110454:
-    resolution: {integrity: sha512-4QpI+SMSkOijBtDPzK2txunogmzRlLn5VrEWSrmQR/Kscw/7UOiz8xnq7h9zjD4h8w5yU6HRv9npMCtMZbPogQ==}
+  /@rsbuild/core@0.2.0:
+    resolution: {integrity: sha512-pjVNvsDLh4CK3DAm1RG2h74gZXVucY92eHdvxOOMKdbHPWdK7d4gKiwH6hb/Jy1mRoKm5dkAkTpVYnIUrGveZA==}
     engines: {node: '>=14.0.0'}
     hasBin: true
     dependencies:
-      '@rsbuild/shared': 0.0.0-next-20231207110454
+      '@rsbuild/shared': 0.2.0
       '@rspack/core': 0.4.2
       core-js: 3.32.2
       html-webpack-plugin: /html-rspack-plugin@5.5.7
       postcss: 8.4.31
     dev: false
 
-  /@rsbuild/plugin-react@0.0.0-next-20231207110454:
-    resolution: {integrity: sha512-et+fx5RDAeImdfCdKe5nesSfAHyn3xO5RZrtGRg15+uithNjvZHV0R7Hr7EOBoNQ+UL2bBTSX0lvuKkU8UwRxA==}
+  /@rsbuild/plugin-react@0.2.0:
+    resolution: {integrity: sha512-uvG6TDNhoZ6jNnd49oBjsIqkLohXOe21UDQ0yGYOKN+xFvIG6a24fmDhiTRFCProZ5M75iQPM+1zyk+C19evcQ==}
     dependencies:
-      '@rsbuild/shared': 0.0.0-next-20231207110454
+      '@rsbuild/shared': 0.2.0
       '@rspack/plugin-react-refresh': 0.4.2(react-refresh@0.14.0)
       react-refresh: 0.14.0
       semver: 7.5.4
     dev: false
 
-  /@rsbuild/plugin-svgr@0.0.0-next-20231207110454(webpack@5.88.2):
-    resolution: {integrity: sha512-RXYnDI+EEtJJGkPv4DVp/AiW0/3J4QO6dx71dzUufgkPyl+BdVODLYOV4I0RdeOCuXZGxNM60CoZ8XJyIkkfAw==}
+  /@rsbuild/plugin-svgr@0.2.0(webpack@5.88.2):
+    resolution: {integrity: sha512-EjyYxRYNrLV+FZ55REiGCR0/WNIPJxcl7/KNiY4HD1q/+Pd6ddLwy5Uv4CVlmwlbMw3oI/g8IW1uETwmlzoGIw==}
     dependencies:
-      '@rsbuild/shared': 0.0.0-next-20231207110454
+      '@rsbuild/shared': 0.2.0
       '@svgr/webpack': 8.0.1
       url-loader: 4.1.1(webpack@5.88.2)
     transitivePeerDependencies:
       - file-loader
       - supports-color
       - webpack
-    dev: false
-
-  /@rsbuild/shared@0.0.0-next-20231207110454:
-    resolution: {integrity: sha512-+hgXaDsmFFARU8tko+Q7mSNPR542+7CTOR12A1TbmpUp9iWZbKbDMeVlr3+H2KgOmLhcfTIYDsDrNWKTJtEbuA==}
-    dependencies:
-      '@rspack/core': 0.4.2
-      caniuse-lite: 1.0.30001561
-      line-diff: 2.1.1
-      lodash: 4.17.21
-      postcss: 8.4.31
     dev: false
 
   /@rsbuild/shared@0.0.7:
@@ -5048,6 +5038,15 @@ packages:
       deepmerge: 4.3.1
       fs-extra: 11.1.1
     dev: true
+
+  /@rsbuild/shared@0.2.0:
+    resolution: {integrity: sha512-HULJpfp3Ij1bxJg4nhM0mwFmnQMqTARVNUbOCOjcGhgegyfe0gCK3ixM9Jw2rrCcI9OdE9go3IL1GZi/tpYDvw==}
+    dependencies:
+      '@rspack/core': 0.4.2
+      caniuse-lite: 1.0.30001561
+      lodash: 4.17.21
+      postcss: 8.4.31
+    dev: false
 
   /@rspack/binding-darwin-arm64@0.4.2:
     resolution: {integrity: sha512-DLchrjW1tTTFjtysgqKo6O+RBr4nq7wT4C+wHYqMqByPfQ6m0WtuSORFRDBHBEWt5RQvcjt+mSDO76imiBzSyg==}
@@ -9741,10 +9740,6 @@ packages:
     resolution: {integrity: sha512-y+SqErxb8h7nE/fiEX07jsbuhrpO9lL8eca7/Y1nuWV2moNlXhyd59iDGcRf6moVyDMbmTNzL40SUyrFU/yDpg==}
     dev: false
 
-  /levdist@1.0.0:
-    resolution: {integrity: sha512-YguwC2spb0pqpJM3a5OsBhih/GG2ZHoaSHnmBqhEI7997a36buhqcRTegEjozHxyxByIwLpZHZTVYMThq+Zd3g==}
-    dev: false
-
   /levn@0.4.1:
     resolution: {integrity: sha512-+bT2uH4E5LGE7h/n3evcS/sQlJXCpIp6ym8OWJ5eV6+67Dsql/LaaT7qJBAt2rzfoa/5QBGBhxDix1dMt2kQKQ==}
     engines: {node: '>= 0.8.0'}
@@ -9761,12 +9756,6 @@ packages:
   /lilconfig@2.1.0:
     resolution: {integrity: sha512-utWOt/GHzuUxnLKxB6dk81RoOeoNeHgbrXiuGk4yyF5qlRz+iIVWu56E2fqGHFrXz0QNUhLB/8nKqvRH66JKGQ==}
     engines: {node: '>=10'}
-
-  /line-diff@2.1.1:
-    resolution: {integrity: sha512-vswdynAI5AMPJacOo2o+JJ4caDJbnY2NEqms4MhMW0NJbjh3skP/brpVTAgBxrg55NRZ2Vtw88ef18hnagIpYQ==}
-    dependencies:
-      levdist: 1.0.0
-    dev: false
 
   /lines-and-columns@1.2.4:
     resolution: {integrity: sha512-7ylylesZQ/PV29jhEDl3Ufjo6ZX7gCqJr5F7PKrqc93v7fzSymt1BpwEU8nAUXs8qzzvqhbjhK5QZg6Mt/HkBg==}
