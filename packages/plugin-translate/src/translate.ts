@@ -97,6 +97,10 @@ export const translate = async ({
         continue;
       }
 
+      if (!originalFileLangContent) {
+        continue;
+      }
+
       const prompt = getPrompt(
         originalFileLangContent,
         originLangFullName,

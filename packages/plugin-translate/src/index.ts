@@ -17,7 +17,7 @@ export function pluginTranslate(options: PluginOptions): RspressPlugin {
       if (isProd) {
         return;
       }
-      await translate({
+      translate({
         modelConfig,
         match,
         getPrompt,
