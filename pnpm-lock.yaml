@@ -318,14 +318,14 @@ importers:
         specifier: 2.42.0
         version: 2.42.0
       '@rsbuild/core':
-        specifier: 0.2.0
-        version: 0.2.0
+        specifier: 0.2.1
+        version: 0.2.1
       '@rsbuild/plugin-react':
-        specifier: 0.2.0
-        version: 0.2.0
+        specifier: 0.2.1
+        version: 0.2.1
       '@rsbuild/plugin-svgr':
-        specifier: 0.2.0
-        version: 0.2.0(webpack@5.88.2)
+        specifier: 0.2.1
+        version: 0.2.1(webpack@5.88.2)
       '@rspress/mdx-rs':
         specifier: 0.4.3
         version: 0.4.3
@@ -1107,8 +1107,8 @@ importers:
   packages/shared:
     dependencies:
       '@rsbuild/core':
-        specifier: 0.2.0
-        version: 0.2.0
+        specifier: 0.2.1
+        version: 0.2.1
       chalk:
         specifier: 4.1.2
         version: 4.1.2
@@ -4993,31 +4993,31 @@ packages:
       - supports-color
     dev: true
 
-  /@rsbuild/core@0.2.0:
-    resolution: {integrity: sha512-pjVNvsDLh4CK3DAm1RG2h74gZXVucY92eHdvxOOMKdbHPWdK7d4gKiwH6hb/Jy1mRoKm5dkAkTpVYnIUrGveZA==}
+  /@rsbuild/core@0.2.1:
+    resolution: {integrity: sha512-e00WhYCtoMEa4CYTmV8jcuya1Irjs2rtRWEa4NJ6YDSm/0JRJCRs4QCPB++zoXnaNCJAknwo7gkwf5M+VOS5yA==}
     engines: {node: '>=14.0.0'}
     hasBin: true
     dependencies:
-      '@rsbuild/shared': 0.2.0
+      '@rsbuild/shared': 0.2.1
       '@rspack/core': 0.4.2
       core-js: 3.32.2
       html-webpack-plugin: /html-rspack-plugin@5.5.7
       postcss: 8.4.31
     dev: false
 
-  /@rsbuild/plugin-react@0.2.0:
-    resolution: {integrity: sha512-uvG6TDNhoZ6jNnd49oBjsIqkLohXOe21UDQ0yGYOKN+xFvIG6a24fmDhiTRFCProZ5M75iQPM+1zyk+C19evcQ==}
+  /@rsbuild/plugin-react@0.2.1:
+    resolution: {integrity: sha512-oCs7KsSKRiyUQsGRZpAqIQFBmHOfYnGMOihr1eeUBG8CmCkjnx6FW8jkNb2LsW38Y5x1iW+1HgjbrpsH0itWWQ==}
     dependencies:
-      '@rsbuild/shared': 0.2.0
+      '@rsbuild/shared': 0.2.1
       '@rspack/plugin-react-refresh': 0.4.2(react-refresh@0.14.0)
       react-refresh: 0.14.0
       semver: 7.5.4
     dev: false
 
-  /@rsbuild/plugin-svgr@0.2.0(webpack@5.88.2):
-    resolution: {integrity: sha512-EjyYxRYNrLV+FZ55REiGCR0/WNIPJxcl7/KNiY4HD1q/+Pd6ddLwy5Uv4CVlmwlbMw3oI/g8IW1uETwmlzoGIw==}
+  /@rsbuild/plugin-svgr@0.2.1(webpack@5.88.2):
+    resolution: {integrity: sha512-8tjwHnm7GTLZpk6xjnSEzOoNGVRQOnQYhChqJfM9GLfRLNuctGpv5/B0fCkJv2dLTzf0OI3bJi0CtFzIOgX8cA==}
     dependencies:
-      '@rsbuild/shared': 0.2.0
+      '@rsbuild/shared': 0.2.1
       '@svgr/webpack': 8.0.1
       url-loader: 4.1.1(webpack@5.88.2)
     transitivePeerDependencies:
@@ -5035,8 +5035,8 @@ packages:
       fs-extra: 11.1.1
     dev: true
 
-  /@rsbuild/shared@0.2.0:
-    resolution: {integrity: sha512-HULJpfp3Ij1bxJg4nhM0mwFmnQMqTARVNUbOCOjcGhgegyfe0gCK3ixM9Jw2rrCcI9OdE9go3IL1GZi/tpYDvw==}
+  /@rsbuild/shared@0.2.1:
+    resolution: {integrity: sha512-UIYzvME/gt+iecHR1m9FTfAmBFVrzcMgzlcKZeQhF2G4yn46SPuSCsGFaVtANX0+51TLl2Q7tl2eJdb22L6e8w==}
     dependencies:
       '@rspack/core': 0.4.2
       caniuse-lite: 1.0.30001561
