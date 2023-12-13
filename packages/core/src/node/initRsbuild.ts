@@ -109,6 +109,7 @@ async function createInternalBuildConfig(
       template: path.join(PACKAGE_ROOT, 'index.html'),
     },
     output: {
+      targets: isSSR ? ['node'] : ['web'],
       distPath: {
         // `root` must be a relative path in Rsbuild
         root: path.isAbsolute(outDir) ? path.relative(cwd, outDir) : outDir,
@@ -244,7 +245,6 @@ export async function initRsbuild(
   );
 
   const rsbuild = await createRsbuild({
-    target: isSSR ? 'node' : 'web',
     rsbuildConfig: mergeRsbuildConfig(
       internalRsbuildConfig,
       ...(config?.plugins?.map(plugin => plugin.builderConfig ?? {}) || []),

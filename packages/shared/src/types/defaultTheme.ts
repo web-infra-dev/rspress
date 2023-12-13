@@ -66,6 +66,10 @@ export interface Config {
    */
   nextPageText?: string;
   /**
+   * The source code text.
+   */
+  sourceCodeText?: string;
+  /**
    * Locale config
    */
   locales?: LocaleConfig[];
@@ -105,6 +109,7 @@ export interface LocaleConfig {
   editLink?: EditLink;
   prevPageText?: string;
   nextPageText?: string;
+  sourceCodeText?: string;
   langRoutePrefix?: string;
 }
 // nav -----------------------------------------------------------------------
