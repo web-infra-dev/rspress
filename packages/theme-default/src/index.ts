@@ -15,6 +15,7 @@ export { Toc } from './components/Toc';
 export { PackageManagerTabs } from './components/PackageManagerTabs';
 export { LastUpdated } from './components/LastUpdated';
 export { PrevNextPage } from './components/PrevNextPage';
+export { SourceCode } from './components/SourceCode';
 
 export default {
   Layout,
