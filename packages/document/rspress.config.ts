@@ -68,8 +68,7 @@ gtag('config', 'G-66B2Z6KG0J');`,
       {
         icon: 'discord',
         mode: 'link',
-        content:
-          'https://discord.com/channels/977448667919286283/1161653869080756245',
+        content: 'https://discord.gg/csSX8TBy',
       },
     ],
     locales: [
