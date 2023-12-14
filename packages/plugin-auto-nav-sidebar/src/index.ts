@@ -1,5 +1,6 @@
 import path from 'path';
 import { RspressPlugin, addTrailingSlash } from '@rspress/shared';
+import { logger } from '@rspress/shared/logger';
 import { combineWalkResult } from './utils';
 import { walk } from './walk';
 
@@ -190,6 +191,7 @@ export function pluginAutoNavSidebar(): RspressPlugin {
         config.themeConfig.locales || config.locales || [];
       const langs = config.themeConfig.locales.map(locale => locale.lang);
       const hasLocales = langs.length > 0;
+      const hasLang = Boolean(config.lang);
       const versions = config.multiVersion?.versions || [];
       const defaultLang = config.lang || '';
       const { default: defaultVersion = '' } = config.multiVersion || {};
@@ -208,6 +210,15 @@ export function pluginAutoNavSidebar(): RspressPlugin {
           }),
         );
       } else {
+        if (hasLang) {
+          logger.error(
+            `\`lang\` is configured but \`locales\` not, ` +
+              `thus \`@rspress/plugin-auto-nav-sidebar\` can not auto generate ` +
+              `navbar level config correctly!\n` +
+              `please check your config file`,
+          );
+          return config;
+        }
         const walks = versions.length
           ? await Promise.all(
               versions.map(version => {
