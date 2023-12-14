@@ -1,5 +1,12 @@
 # @rspress/docs
 
+## 1.8.3
+
+### Patch Changes
+
+- 0585384: docs: update the documention of SourceCode component.
+- 2875b15: docs: update the document for LastUpdated and PrevNextPage component
+
 ## 1.8.2
 
 ## 1.8.1

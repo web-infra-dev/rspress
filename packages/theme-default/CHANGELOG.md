@@ -1,5 +1,19 @@
 # @rspress/theme-default
 
+## 1.8.3
+
+### Patch Changes
+
+- d4f89b3: feat: support SourceCode component
+- bd4543d: style(Nav): fix styling issues for specific sizes
+- 38a2c6e: perf: optimize dependencies size
+- 62d9e74: feat(theme-default): should open new tab/window on clicking with modifier keys
+- Updated dependencies [d4f89b3]
+- Updated dependencies [bfe47e8]
+- Updated dependencies [38a2c6e]
+  - @rspress/shared@1.8.3
+  - @rspress/runtime@1.8.3
+
 ## 1.8.2
 
 ### Patch Changes
