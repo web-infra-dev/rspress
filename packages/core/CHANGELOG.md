@@ -1,5 +1,26 @@
 # @rspress/core
 
+## 1.8.3
+
+### Patch Changes
+
+- bfe47e8: feat(deps): bump Rsbuild from v0.1.9 to v0.2.0
+- 50b84b7: feat(core): support custom meta in tsx file
+- 38a2c6e: perf: optimize dependencies size
+- Updated dependencies [d4f89b3]
+- Updated dependencies [bfe47e8]
+- Updated dependencies [bd4543d]
+- Updated dependencies [06554d5]
+- Updated dependencies [38a2c6e]
+- Updated dependencies [62d9e74]
+  - @rspress/theme-default@1.8.3
+  - @rspress/shared@1.8.3
+  - @rspress/plugin-auto-nav-sidebar@1.8.3
+  - @rspress/plugin-last-updated@1.8.3
+  - @rspress/plugin-container-syntax@1.8.3
+  - @rspress/plugin-medium-zoom@1.8.3
+  - @rspress/runtime@1.8.3
+
 ## 1.8.2
 
 ### Patch Changes
