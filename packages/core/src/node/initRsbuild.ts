@@ -1,6 +1,6 @@
 import path from 'path';
 import type { UserConfig } from '@rspress/shared';
-import fs from '@modern-js/utils/fs-extra';
+import fs from '@rspress/shared/fs-extra';
 import {
   MDX_REGEXP,
   RSPRESS_TEMP_DIR,
@@ -40,7 +40,7 @@ async function createInternalBuildConfig(
   pluginDriver: PluginDriver,
 ): Promise<RsbuildConfig> {
   const cwd = process.cwd();
-  const { default: fs } = await import('@modern-js/utils/fs-extra');
+  const { default: fs } = await import('@rspress/shared/fs-extra');
   const CUSTOM_THEME_DIR =
     config?.themeDir ?? path.join(process.cwd(), 'theme');
   const outDir = config?.outDir ?? OUTPUT_DIR;

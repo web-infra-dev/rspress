@@ -1,8 +1,8 @@
 import { dirname, join } from 'path';
 import { pathToFileURL } from 'url';
 import { HelmetData } from 'react-helmet-async';
-import chalk from '@modern-js/utils/chalk';
-import fs from '@modern-js/utils/fs-extra';
+import chalk from '@rspress/shared/chalk';
+import fs from '@rspress/shared/fs-extra';
 import {
   PageData,
   UserConfig,
@@ -111,7 +111,7 @@ export async function renderPages(
   const outputPath = config?.outDir ?? join(appDirectory, OUTPUT_DIR);
   const ssrBundlePath = join(outputPath, 'ssr', 'main.cjs');
   try {
-    const { default: fs } = await import('@modern-js/utils/fs-extra');
+    const { default: fs } = await import('@rspress/shared/fs-extra');
     // There are two cases where we will fallback to CSR:
     // 1. ssr bundle load failed
     // 2. ssr bundle render failed

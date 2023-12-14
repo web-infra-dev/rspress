@@ -77,7 +77,6 @@
     "flexsearch": "0.6.32",
     "fs-extra": "10.1.0",
     "github-slugger": "^2.0.0",
-    "globby": "11.1.0",
     "hast-util-from-html": "^1.0.0",
     "hast-util-heading-rank": "^3.0.0",
     "html-to-text": "^9.0.3",
@@ -156,7 +155,8 @@
     "index.html",
     "runtime.ts",
     "theme.ts",
-    "loader.cjs"
+    "loader.cjs",
+    "compiled"
   ],
   "publishConfig": {
     "access": "public",

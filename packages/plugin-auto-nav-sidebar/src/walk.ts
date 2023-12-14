@@ -1,5 +1,5 @@
 import path from 'path';
-import fs from '@modern-js/utils/fs-extra';
+import fs from '@rspress/shared/fs-extra';
 import {
   NavItem,
   Sidebar,

@@ -43,7 +43,9 @@
     "@types/react-dom": "^18",
     "typescript": "^5",
     "vitest": "0.33.0",
-    "react": "^18.2.0",
+    "react": "^18.2.0"
+  },
+  "dependencies": {
     "@rspress/shared": "workspace:*"
   },
   "sideEffects": [
@@ -60,8 +62,5 @@
     "access": "public",
     "provenance": true,
     "registry": "https://registry.npmjs.org/"
-  },
-  "dependencies": {
-    "@modern-js/utils": "2.42.0"
   }
 }

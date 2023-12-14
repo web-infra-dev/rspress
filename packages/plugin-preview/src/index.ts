@@ -106,7 +106,7 @@ import Demo from ${JSON.stringify(demoComponentPath)}
           }
           const { createProcessor } = await import('@mdx-js/mdx');
           const { visit } = await import('unist-util-visit');
-          const { default: fs } = await import('@modern-js/utils/fs-extra');
+          const { default: fs } = await import('@rspress/shared/fs-extra');
           const { default: remarkGFM } = await import('remark-gfm');
           let title = parse(filepath).name;
           try {

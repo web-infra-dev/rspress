@@ -6,7 +6,7 @@ import {
   MDX_REGEXP,
 } from '@rspress/shared';
 import { htmlToText } from 'html-to-text';
-import fs from '@modern-js/utils/fs-extra';
+import fs from '@rspress/shared/fs-extra';
 import { compile } from '@rspress/mdx-rs';
 import { flattenMdxContent, loadFrontMatter } from '@/node/utils';
 import { RouteService } from '@/node/route/RouteService';
