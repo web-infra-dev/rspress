@@ -200,3 +200,32 @@ interface PrevNextPageProps {
   href: string;
 }
 ```
+
+## SourceCode
+
+The SourceCode component is used to jump to the source code. For example:
+
+```tsx title="index.mdx"
+import { SourceCode } from '@theme';
+
+function App() {
+  return (
+    <SourceCode href="https://github.com/web-infra-dev/rspress/blob/main/packages/theme-default/src/components/SourceCode/index.tsx" />
+  );
+}
+```
+
+The effect is as follows:
+
+import { SourceCode } from '@theme';
+
+<SourceCode href="https://github.com/web-infra-dev/rspress/blob/main/packages/theme-default/src/components/SourceCode/index.tsx" />
+
+The types of props included are as follows:
+
+```ts
+interface SourceCodeProps {
+  // Used to set the link to the source code
+  href: string;
+}
+```
