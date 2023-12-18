@@ -1,9 +1,11 @@
-import { useState } from 'react';
-import { useVersion } from '@rspress/runtime';
+import { useEffect, useState } from 'react';
+import { useLocation, useVersion } from '@rspress/runtime';
 import { useLocaleSiteData } from './useLocaleSiteData';
 
 export function useNavScreen() {
+  const { pathname } = useLocation();
   const [isScreenOpen, setIsScreenOpen] = useState(false);
+
   function openScreen() {
     setIsScreenOpen(true);
     window.addEventListener('resize', closeScreenOnTabletWindow);
@@ -21,6 +23,10 @@ export function useNavScreen() {
       openScreen();
     }
   }
+
+  useEffect(() => {
+    closeScreen();
+  }, [pathname]);
 
   /**
    * Close screen when the user resizes the window wider than tablet size.
