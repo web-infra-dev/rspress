@@ -1,5 +1,16 @@
 # @rspress/plugin-auto-sidebar
 
+## 1.8.3
+
+### Patch Changes
+
+- 06554d5: feat: improve error logs if missing locales config
+- 38a2c6e: perf: optimize dependencies size
+- Updated dependencies [d4f89b3]
+- Updated dependencies [bfe47e8]
+- Updated dependencies [38a2c6e]
+  - @rspress/shared@1.8.3
+
 ## 1.8.2
 
 ### Patch Changes

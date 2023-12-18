@@ -1,5 +1,13 @@
 # @rspress/shared
 
+## 1.8.3
+
+### Patch Changes
+
+- d4f89b3: feat: support SourceCode component
+- bfe47e8: feat(deps): bump Rsbuild from v0.1.9 to v0.2.0
+- 38a2c6e: perf: optimize dependencies size
+
 ## 1.8.2
 
 ## 1.8.1

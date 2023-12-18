@@ -1,6 +1,6 @@
 import path from 'path';
 import { PageIndexInfo, SEARCH_INDEX_NAME } from '@rspress/shared';
-import fs from '@modern-js/utils/fs-extra';
+import fs from '@rspress/shared/fs-extra';
 import { FactoryContext, RuntimeModuleID } from '..';
 import { normalizeThemeConfig } from './normalizeThemeConfig';
 import { extractPageData } from './extractPageData';

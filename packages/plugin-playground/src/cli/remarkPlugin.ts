@@ -1,6 +1,6 @@
 import path, { join } from 'path';
 import { visit } from 'unist-util-visit';
-import fs from '@modern-js/utils/fs-extra';
+import fs from '@rspress/shared/fs-extra';
 import type { RouteMeta } from '@rspress/shared';
 import type { Plugin } from 'unified';
 import type { Root } from 'mdast';

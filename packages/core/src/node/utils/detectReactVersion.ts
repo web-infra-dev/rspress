@@ -1,5 +1,5 @@
 import path from 'path';
-import fs from '@modern-js/utils/fs-extra';
+import fs from '@rspress/shared/fs-extra';
 import { logger } from '@rspress/shared/logger';
 import enhancedResolve from 'enhanced-resolve';
 import { PACKAGE_ROOT } from '../constants';

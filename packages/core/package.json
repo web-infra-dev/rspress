@@ -1,6 +1,6 @@
 {
   "name": "@rspress/core",
-  "version": "1.8.2",
+  "version": "1.8.3",
   "description": "The Rspress Documentation Framework",
   "bugs": "https://github.com/web-infra-dev/rspress/issues",
   "repository": {
@@ -56,9 +56,9 @@
     "@mdx-js/mdx": "2.2.1",
     "@mdx-js/react": "2.2.1",
     "@modern-js/utils": "2.42.0",
-    "@rsbuild/core": "0.1.9",
-    "@rsbuild/plugin-react": "0.1.9",
-    "@rsbuild/plugin-svgr": "0.1.9",
+    "@rsbuild/core": "0.2.1",
+    "@rsbuild/plugin-react": "0.2.1",
+    "@rsbuild/plugin-svgr": "0.2.1",
     "@rspress/theme-default": "workspace:*",
     "@rspress/runtime": "workspace:*",
     "@rspress/plugin-medium-zoom": "workspace:*",
@@ -77,7 +77,6 @@
     "flexsearch": "0.6.32",
     "fs-extra": "10.1.0",
     "github-slugger": "^2.0.0",
-    "globby": "11.1.0",
     "hast-util-from-html": "^1.0.0",
     "hast-util-heading-rank": "^3.0.0",
     "html-to-text": "^9.0.3",
@@ -156,7 +155,8 @@
     "index.html",
     "runtime.ts",
     "theme.ts",
-    "loader.cjs"
+    "loader.cjs",
+    "compiled"
   ],
   "publishConfig": {
     "access": "public",

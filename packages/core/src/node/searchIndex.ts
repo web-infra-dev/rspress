@@ -1,6 +1,6 @@
 import path, { join } from 'path';
-import fs from '@modern-js/utils/fs-extra';
-import chalk from '@modern-js/utils/chalk';
+import fs from '@rspress/shared/fs-extra';
+import chalk from '@rspress/shared/chalk';
 import { RequestHandler } from '@modern-js/types';
 import fetch from 'node-fetch';
 import { UserConfig, isSCM, SEARCH_INDEX_NAME } from '@rspress/shared';

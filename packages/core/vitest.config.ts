@@ -11,6 +11,10 @@ export default defineConfig({
   resolve: {
     alias: {
       '@': path.join(__dirname, 'src'),
+      '../compiled/globby/index.js': path.join(
+        __dirname,
+        'compiled/globby/index.js',
+      ),
     },
   },
 });

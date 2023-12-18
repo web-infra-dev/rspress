@@ -109,5 +109,10 @@ export function initSitePrompts(options: CustomPromptObject[]) {
   // init formatFn and assign value
   options.forEach(initOptionEvent);
 
-  return prompts(options);
+  return prompts(options, { onCancel: cancelPrompt });
 }
+
+export const cancelPrompt = () => {
+  console.log("Operation cancelled.");
+  process.exit(0);
+};

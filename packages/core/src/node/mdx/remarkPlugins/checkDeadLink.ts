@@ -1,13 +1,11 @@
 import path from 'path';
 import { visit } from 'unist-util-visit';
 import type { Plugin } from 'unified';
-import logUtils from '@modern-js/utils/logger';
+import { logger } from '@rspress/shared/logger';
 import { cleanUrl, isProduction } from '@rspress/shared';
 import { normalizeRoutePath } from '@/node/runtimeModule/routeData';
 import type { RouteService } from '@/node/route/RouteService';
 import { normalizePath } from '@/node/utils';
-
-const { logger } = logUtils;
 
 export interface DeadLinkCheckOptions {
   root: string;

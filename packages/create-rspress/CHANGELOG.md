@@ -1,5 +1,11 @@
 # create-rspress
 
+## 1.8.3
+
+### Patch Changes
+
+- 2fb628f: feat(create_rspress): support cancel operation
+
 ## 1.8.2
 
 ## 1.8.1

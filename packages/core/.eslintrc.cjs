@@ -7,6 +7,7 @@ module.exports = {
     'mdx-rs-loader.cjs',
     'tailwind.config.ts',
     'vitest.config.ts',
+    'compiled/',
   ],
   rules: {
     '@typescript-eslint/no-non-null-assertion': 'off',

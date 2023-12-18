@@ -8,7 +8,13 @@ import {
 } from '@rspress/runtime';
 import { HelmetProvider } from 'react-helmet-async';
 import React, { useContext, useLayoutEffect } from 'react';
-import { Header, PageData, cleanUrl, isProduction } from '@rspress/shared';
+import {
+  Header,
+  PageData,
+  cleanUrl,
+  isProduction,
+  MDX_REGEXP,
+} from '@rspress/shared';
 import globalComponents from 'virtual-global-components';
 import 'virtual-global-styles';
 
@@ -20,14 +26,11 @@ export enum QueryStatus {
   Hide = '0',
 }
 
-type RspressPageMeta = Record<
-  string,
-  {
-    title: string;
-    toc: Header[];
-    frontmatter: Record<string, any>;
-  }
->;
+type PageMeta = {
+  title: string;
+  toc: Header[];
+  frontmatter: Record<string, any>;
+};
 
 export async function initPageData(routePath: string): Promise<PageData> {
   const { routes } = process.env.__SSR__
@@ -49,14 +52,15 @@ export async function initPageData(routePath: string): Promise<PageData> {
     // FIXME: when sidebar item is configured as link string, the sidebar text won't updated when page title changed
     // Reason: The sidebar item text depends on pageData, which is not updated when page title changed, because the pageData is computed once when build
     const encodedPagePath = encodeURIComponent(pagePath);
+    const meta: PageMeta =
+      mod.default.__RSPRESS_PAGE_META?.[encodedPagePath] || {};
+    // mdx loader will generate __RSPRESS_PAGE_META,
+    // if the filePath don't match it, we can get meta from j(t)sx if we customize it
     const {
       toc = [],
       title = '',
-      frontmatter,
-    } = (mod.default.__RSPRESS_PAGE_META as RspressPageMeta)?.[
-      encodedPagePath
-    ] || {};
-
+      frontmatter = {},
+    } = MDX_REGEXP.test(matchedRoute.filePath) ? meta : mod;
     return {
       siteData,
       page: {

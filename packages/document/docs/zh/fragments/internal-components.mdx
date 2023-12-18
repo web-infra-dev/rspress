@@ -200,3 +200,32 @@ interface PrevNextPageProps {
   href: string;
 }
 ```
+
+## SourceCode
+
+SourceCode 组件用来跳转到源代码。使用方法如下：
+
+```tsx title="index.mdx"
+import { SourceCode } from '@theme';
+
+function App() {
+  return (
+    <SourceCode href="https://github.com/web-infra-dev/rspress/blob/main/packages/theme-default/src/components/SourceCode/index.tsx" />
+  );
+}
+```
+
+效果如下：
+
+import { SourceCode } from '@theme';
+
+<SourceCode href="https://github.com/web-infra-dev/rspress/blob/main/packages/theme-default/src/components/SourceCode/index.tsx" />
+
+其中包含的 props 类型如下：
+
+```ts
+interface SourceCodeProps {
+  // 用于设置源代码的链接
+  href: string;
+}
+```

@@ -72,7 +72,7 @@ export function pluginPlayground(
       return config;
     },
     async routeGenerated(routes: RouteMeta[]) {
-      const { default: fs } = await import('@modern-js/utils/fs-extra');
+      const { default: fs } = await import('@rspress/shared/fs-extra');
 
       // init routeMeta
       routeMeta = routes;

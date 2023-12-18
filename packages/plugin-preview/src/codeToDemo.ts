@@ -1,6 +1,6 @@
 import { join, resolve } from 'path';
 import { visit } from 'unist-util-visit';
-import fs from '@modern-js/utils/fs-extra';
+import fs from '@rspress/shared/fs-extra';
 import {
   RSPRESS_TEMP_DIR,
   normalizePosixPath,
