@@ -17,6 +17,7 @@ export {
   useNavigate,
   matchRoutes,
   BrowserRouter,
+  useSearchParams,
 } from 'react-router-dom';
 export { Helmet } from 'react-helmet-async';
 export { NoSSR } from './NoSSR';
