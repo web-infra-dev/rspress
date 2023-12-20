@@ -1,5 +1,4 @@
 ---
-'@rspress/plugin-translate': minor
 '@rspress/docs': minor
 ---
 
