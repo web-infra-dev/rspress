@@ -242,7 +242,9 @@ export function pluginPlayground(
       },
     },
     markdown: {
-      remarkPlugins: [[remarkPlugin, { getRouteMeta, editorPosition }]],
+      remarkPlugins: [
+        [remarkPlugin, { getRouteMeta, editorPosition, defaultRenderMode }],
+      ],
       globalComponents: [
         render
           ? render

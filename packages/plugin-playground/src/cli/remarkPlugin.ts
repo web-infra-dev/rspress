@@ -24,6 +24,7 @@ function createPlaygroundNode(
 interface RemarkPluginProps {
   getRouteMeta: () => RouteMeta[];
   editorPosition: 'left' | 'right';
+  defaultRenderMode: 'pure' | 'preview';
 }
 
 /**
@@ -32,6 +33,7 @@ interface RemarkPluginProps {
 export const remarkPlugin: Plugin<[RemarkPluginProps], Root> = ({
   getRouteMeta,
   editorPosition,
+  defaultRenderMode,
 }) => {
   const routeMeta = getRouteMeta();
 
@@ -44,7 +46,7 @@ export const remarkPlugin: Plugin<[RemarkPluginProps], Root> = ({
     }
 
     // 1. External demo , use <code src="xxx" /> to declare demo
-    visit(tree, 'mdxJsxFlowElement', node => {
+    visit(tree, 'mdxJsxFlowElement', (node: any) => {
       if (node.name === 'code') {
         const src = getNodeAttribute(node, 'src');
         if (!src) {
@@ -71,10 +73,23 @@ export const remarkPlugin: Plugin<[RemarkPluginProps], Root> = ({
     // 2. Internal demo, use ```j/tsx to declare demo
     visit(tree, 'code', node => {
       if (node.lang === 'jsx' || node.lang === 'tsx') {
-        const isPure = getNodeMeta(node, 'pure') === 'pure';
+        const hasPureMeta = node?.meta?.includes('pure');
+        const hasPreviewMeta = node?.meta?.includes('preview');
 
-        // do nothing for pure mode
-        if (isPure) {
+        let noTransform;
+        switch (defaultRenderMode) {
+          case 'pure':
+            noTransform = !hasPreviewMeta;
+            break;
+          case 'preview':
+            noTransform = hasPureMeta;
+            break;
+          default:
+            break;
+        }
+
+        // do not anything for pure mode
+        if (noTransform) {
           return;
         }
 
