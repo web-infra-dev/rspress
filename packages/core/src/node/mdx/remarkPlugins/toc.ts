@@ -13,7 +13,7 @@ export interface TocItem {
 }
 
 interface ChildNode {
-  type: 'link' | 'text' | 'inlineCode';
+  type: 'link' | 'text' | 'inlineCode' | 'strong';
   value: string;
   children?: ChildNode[];
 }
@@ -43,13 +43,20 @@ export const parseToc = (tree: Root) => {
       let customId = '';
       const text = node.children
         .map((child: ChildNode) => {
-          if (child.type === 'link') {
-            return child.children?.map(item => item.value).join('');
-          } else {
+          if (child.type === 'link' || child.type === 'strong') {
+            return child.children
+              ?.map(item => (item.type === 'text' ? item.value : ''))
+              .join('');
+          }
+          if (child.type === 'text') {
             const [textPart, idPart] = extractTextAndId(child.value);
             customId = idPart;
             return textPart;
           }
+          if (child.type === 'inlineCode') {
+            return child.value;
+          }
+          return '';
         })
         .join('');
       const id = customId ? customId : slugger.slug(text);
