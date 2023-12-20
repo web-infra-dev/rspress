@@ -1,21 +1,21 @@
-# @rspress/plugin-translate
+# rspress-plugin-translate
 
 import { PackageManagerTabs } from '@theme';
 
-> [Source Code](https://github.com/web-infra-dev/rspress/tree/main/packages/plugin-translate)
+> [Source Code](https://github.com/byteHulk/rspress-plugin-translate)
 
 Rspress plugin for translating files using LLM, currently only supports GPT.
 
 ## Installation
 
-<PackageManagerTabs command="add @rspress/plugin-translate -D" />
+<PackageManagerTabs command="add rspress-plugin-translate -D" />
 
 ## Usage
 
 ```ts
 import { defineConfig } from 'rspress/config';
 import path from 'path';
-import { pluginTranslate } from "@rspress/plugin-translate"
+import { pluginTranslate } from "rspress-plugin-translate"
 import { config } from "dotenv"
 
 config()
@@ -89,7 +89,7 @@ Exclude certain files from translation. For example:
 
 ```js title="rspress.config.ts"
 import { defineConfig } from 'rspress/config';
-import { pluginTranslate } from "@rspress/plugin-translate"
+import { pluginTranslate } from "rspress-plugin-translate"
 
 export default defineConfig({
   plugins: [
@@ -113,7 +113,7 @@ The file extensions of files included in the translation process. By default, Rs
 
 ```js title="rspress.config.ts"
 import { defineConfig } from 'rspress/config';
-import { pluginTranslate } from "@rspress/plugin-translate"
+import { pluginTranslate } from "rspress-plugin-translate"
 
 export default defineConfig({
   plugins: [
@@ -141,7 +141,7 @@ Prompt function for the large model, which takes three parameters: content (cont
 
 ```ts title="rspress.config.ts"
 import { defineConfig } from 'rspress/config';
-import { pluginTranslate } from "@rspress/plugin-translate"
+import { pluginTranslate } from "rspress-plugin-translate"
 
 export default defineConfig({
   plugins: [

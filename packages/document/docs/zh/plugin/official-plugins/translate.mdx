@@ -1,21 +1,21 @@
-# @rspress/plugin-translate
+# rspress-plugin-translate
 
 import { PackageManagerTabs } from '@theme';
 
-> [源码地址](https://github.com/web-infra-dev/rspress/tree/main/packages/plugin-translate)
+> [源码地址](https://github.com/byteHulk/rspress-plugin-translate)
 
 使用 LLM 进行文件翻译的 Rspress 插件，目前仅支持 GPT。
 
 ## 安装
 
-<PackageManagerTabs command="add @rspress/plugin-translate -D" />
+<PackageManagerTabs command="add rspress-plugin-translate -D" />
 
 ## 使用
 
 ```ts
 import { defineConfig } from 'rspress/config';
 import path from 'path';
-import { pluginTranslate } from "@rspress/plugin-translate"
+import { pluginTranslate } from "rspress-plugin-translate"
 import { config } from "dotenv"
 
 config()
@@ -91,7 +91,7 @@ export default defineConfig({
 
 ```js title="rspress.config.ts"
 import { defineConfig } from 'rspress/config';
-import { pluginTranslate } from "@rspress/plugin-translate"
+import { pluginTranslate } from "rspress-plugin-translate"
 
 export default defineConfig({
   plugins: [
@@ -115,7 +115,7 @@ export default defineConfig({
 
 ```js title="rspress.config.ts"
 import { defineConfig } from 'rspress/config';
-import { pluginTranslate } from "@rspress/plugin-translate"
+import { pluginTranslate } from "rspress-plugin-translate"
 
 export default defineConfig({
   plugins: [
@@ -143,7 +143,7 @@ export default defineConfig({
 
 ```ts title="rspress.config.ts"
 import { defineConfig } from 'rspress/config';
-import { pluginTranslate } from "@rspress/plugin-translate"
+import { pluginTranslate } from "rspress-plugin-translate"
 
 export default defineConfig({
   plugins: [
