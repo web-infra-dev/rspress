@@ -1,5 +1,11 @@
 # @rspress/shared
 
+## 1.8.4
+
+### Patch Changes
+
+- 2b94aa1: chore(@rspress/shared): remove globby
+
 ## 1.8.3
 
 ### Patch Changes

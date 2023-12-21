@@ -1,5 +1,15 @@
 # @rspress/theme-default
 
+## 1.8.4
+
+### Patch Changes
+
+- 6e8a07f: feat: close nav screen when route changed
+- Updated dependencies [2b94aa1]
+- Updated dependencies [392066f]
+  - @rspress/shared@1.8.4
+  - @rspress/runtime@1.8.4
+
 ## 1.8.3
 
 ### Patch Changes
