@@ -7,7 +7,6 @@ import type { Options } from '../types';
 import { mergeModuleDocConfig } from '../utils';
 
 export async function launchDoc({
-  languages,
   appDir,
   doc,
   isProduction,
@@ -15,33 +14,28 @@ export async function launchDoc({
   entries,
   apiParseTool,
   parseToolOptions,
-  useModuleSidebar,
   iframePosition,
 }: Required<Options>) {
   const json = JSON.parse(
     fs.readFileSync(resolve(appDir, './package.json'), 'utf8'),
   );
   const root = join(appDir, 'docs');
-  const DEFAULT_LANG = languages[0] ?? '';
   const { dev, build } = await import('@rspress/core');
 
-  // Compatible with older, poorer designs.
-  // If user don't have 'zh' or 'en' dir, we will use root instead.
-  const defaultBase = join(root, DEFAULT_LANG);
-  const defaultLocales = [
-    {
-      lang: 'zh',
-      label: '简体中文',
-    },
-    {
-      lang: 'en',
-      label: 'English',
-    },
-  ];
-  const base = (await fs.pathExists(defaultBase)) ? defaultBase : root;
-  const locales = languages.length === 2 ? defaultLocales : undefined;
+  const languages = doc.themeConfig?.locales?.map(locale => locale.lang) ||
+    doc.locales?.map(locale => locale.lang) || [''];
 
-  const getAutoSidebar = async (): Promise<Sidebar> => {
+  const defaultLanguage = doc.lang || '';
+
+  const sidebar: Sidebar = {};
+
+  let haveMetaJson = false;
+
+  const getAutoSidebarGroup = async (
+    lang: string,
+    prefix: string,
+  ): Promise<SidebarGroup> => {
+    const base = join(root, lang);
     const traverse = async (cwd: string): Promise<SidebarGroup['items']> => {
       // FIXME: win32
       const [files, directories] = await Promise.all([
@@ -57,12 +51,16 @@ export async function launchDoc({
       ]);
 
       // files --> string[]
+      if (files.filter(file => file === '_meta.json').length > 0) {
+        haveMetaJson = true;
+        return [];
+      }
       const fileItems = files.map(file => {
         const link = `/${relative(base, join(cwd, file)).replace(
           /\.[^.]+$/,
           '',
         )}`;
-        return link;
+        return prefix + link;
       });
 
       // dir --> SidebarGroup[]
@@ -76,7 +74,7 @@ export async function launchDoc({
                 onlyFiles: true,
               })
             ).length > 0;
-          const link = `/${relative(base, directoryCwd)}/`;
+          const link = `${prefix}/${relative(base, directoryCwd)}/`;
           const items = await traverse(directoryCwd);
           const text = directory[0].toUpperCase() + directory.slice(1);
           if (hasIndex) {
@@ -99,31 +97,27 @@ export async function launchDoc({
       return [...fileItems, ...directoryItems];
     };
 
-    const sidebarGroup = [
-      {
-        text: 'Module List',
-        link: `/index`,
-        collapsible: false,
-        items: await traverse(base),
-      },
-    ];
-    const sidebar: Sidebar = {
-      '/': sidebarGroup,
+    return {
+      text: 'Module List',
+      link: `${prefix}/`,
+      collapsible: false,
+      items: await traverse(base),
     };
-
-    // support auto sidebar when is bilingual
-    if (languages.length === 2) {
-      const path = `/${languages[1]}/`;
-      sidebar[path] = sidebarGroup;
-    }
-    return sidebar;
   };
+
+  await Promise.all(
+    languages.map(async lang => {
+      const havePrefix = lang && lang !== defaultLanguage;
+      const prefix = havePrefix ? `/${lang}` : '';
+      const sidebarGroup = await getAutoSidebarGroup(lang, prefix);
+      sidebar[`${prefix}/`] = [sidebarGroup];
+    }),
+  );
 
   const modernDocConfig = mergeModuleDocConfig<UserConfig>(
     {
       root,
       title: json.name,
-      lang: DEFAULT_LANG,
       globalStyles: join(
         __dirname,
         '..',
@@ -133,8 +127,7 @@ export async function launchDoc({
       ),
       themeConfig: {
         darkMode: false,
-        sidebar: useModuleSidebar ? await getAutoSidebar() : undefined,
-        locales,
+        sidebar: !haveMetaJson ? sidebar : undefined,
       },
       markdown: {
         mdxRs: false,
