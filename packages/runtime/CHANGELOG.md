@@ -1,5 +1,13 @@
 # @rspress/runtime
 
+## 1.8.4
+
+### Patch Changes
+
+- 392066f: feat: add useSearchParams hook in rspress/runtime
+- Updated dependencies [2b94aa1]
+  - @rspress/shared@1.8.4
+
 ## 1.8.3
 
 ### Patch Changes

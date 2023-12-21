@@ -1,5 +1,14 @@
 # @rspress/plugin-playground
 
+## 1.8.4
+
+### Patch Changes
+
+- de694be: fix(plugin-playground): add defaultRenderMode to remark plugin
+- 31c3196: fix(plugin-playground): remove preview plugin when use playground
+- Updated dependencies [2b94aa1]
+  - @rspress/shared@1.8.4
+
 ## 1.8.3
 
 ### Patch Changes

@@ -1,5 +1,17 @@
 # @modern-js/plugin-rspress
 
+## 1.8.4
+
+### Patch Changes
+
+- 8c31983: fix(modern-plugin): add useModuleSidebar to plugin option
+- Updated dependencies [f277e0c]
+- Updated dependencies [ed42924]
+- Updated dependencies [97bf15e]
+  - @rspress/core@1.8.4
+  - @rspress/plugin-api-docgen@1.8.4
+  - @rspress/plugin-preview@1.8.4
+
 ## 1.8.3
 
 ### Patch Changes

@@ -1,5 +1,22 @@
 # @rspress/core
 
+## 1.8.4
+
+### Patch Changes
+
+- f277e0c: chore(core): move tailwindcss from dependencies to devDependencies
+- 97bf15e: fix(core): parseToc support strong text
+- Updated dependencies [2b94aa1]
+- Updated dependencies [6e8a07f]
+- Updated dependencies [392066f]
+  - @rspress/shared@1.8.4
+  - @rspress/theme-default@1.8.4
+  - @rspress/runtime@1.8.4
+  - @rspress/plugin-auto-nav-sidebar@1.8.4
+  - @rspress/plugin-container-syntax@1.8.4
+  - @rspress/plugin-last-updated@1.8.4
+  - @rspress/plugin-medium-zoom@1.8.4
+
 ## 1.8.3
 
 ### Patch Changes

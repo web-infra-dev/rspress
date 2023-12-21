@@ -1,5 +1,11 @@
 # @rspress/plugin-api-docgen
 
+## 1.8.4
+
+### Patch Changes
+
+- ed42924: chore(plugin-api-docgen): disable mdxRs by default
+
 ## 1.8.3
 
 ## 1.8.2
