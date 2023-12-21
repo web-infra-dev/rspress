@@ -14,6 +14,7 @@ export type PluginOptions = Pick<
   | 'apiParseTool'
   | 'parseToolOptions'
   | 'iframePosition'
+  | 'useModuleSidebar'
 >;
 
 export type Options = {

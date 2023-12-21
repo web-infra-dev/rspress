@@ -150,16 +150,20 @@ async function createInternalBuildConfig(
       postcss(config) {
         // In debug mode, we should use tailwindcss to build the theme source code
         if (isDebugMode()) {
-          config.postcssOptions.plugins.push(
-            require('tailwindcss')({
-              config: {
-                ...tailwindConfig,
-                content: [
-                  path.join(PACKAGE_ROOT, 'src', 'theme-default', '**/*'),
-                ],
-              },
-            }),
-          );
+          try {
+            config.postcssOptions.plugins.push(
+              require('tailwindcss')({
+                config: {
+                  ...tailwindConfig,
+                  content: [
+                    path.join(PACKAGE_ROOT, 'src', 'theme-default', '**/*'),
+                  ],
+                },
+              }),
+            );
+          } catch (e) {
+            // if require tailwindcss failed, skip
+          }
         }
       },
       bundlerChain(chain, { CHAIN_ID }) {
