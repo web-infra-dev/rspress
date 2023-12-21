@@ -21,6 +21,7 @@ export default defineConfig({
       externals: [
         '@rspress/mdx-rs',
         'jsdom',
+        'tailwindcss',
         '@rspress/plugin-container-syntax',
         '../compiled/globby/index.js',
       ],
