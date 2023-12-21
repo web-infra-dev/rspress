@@ -29,3 +29,77 @@
   --shiki-token-punctuation: #bbbbbb;
   --shiki-token-link: #f9a76d;
 }
+
+.diff,
+.code-line-highlighted {
+  transition: background-color 0.5s;
+  margin: 0 -20px;
+  padding: 0 20px;
+  width: calc(100% + 40px);
+  display: inline-block;
+  position: relative;
+}
+
+.diff.add::after {
+  content: '+';
+  position: absolute;
+  left: 10px;
+  color: #3dd68c;
+}
+
+.diff.remove::after {
+  content: '-';
+  position: absolute;
+  left: 10px;
+  color: #cb7676;
+}
+
+.has-diff div[class*='language-'] .diff.add {
+  background-color: rgba(16, 185, 129, 0.16);
+  border-left: 1px solid #10b981;
+  padding: 0 20px 0 19px;
+}
+
+div[class*='language-'] code .diff.remove {
+  background-color: rgba(244, 63, 94, 0.16);
+  border-left: 1px solid #f43f5e;
+  padding: 0 20px 0 19px;
+}
+
+.has-highlight div[class*='language-'] .line.highlighted {
+  background-color: rgba(101, 117, 133, 0.16);
+}
+
+.has-highlight div[class*='language-'] .line.highlighted.error {
+  background-color: rgba(244, 63, 94, 0.16);
+}
+
+.has-highlight div[class*='language-'] .line.highlighted.warning {
+  background-color: rgba(234, 179, 8, 0.16);
+}
+
+.has-focused div[class*='language-'] .line:not(.focused) {
+  filter: blur(0.095rem);
+  opacity: 0.4;
+  transition: filter 0.35s, opacity 0.35s;
+}
+
+.has-focused:hover div[class*='language-'] .line:not(.focused) {
+  filter: blur(0);
+  opacity: 1;
+}
+
+.has-line-number code {
+  counter-reset: step;
+  counter-increment: step 0;
+}
+
+.has-line-number code .line-number::before {
+  content: counter(step);
+  counter-increment: step;
+  width: 15px;
+  margin-right: 15px;
+  display: inline-block;
+  text-align: right;
+  color: rgba(115, 138, 148, 0.4);
+}
