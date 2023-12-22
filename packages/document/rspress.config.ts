@@ -53,9 +53,6 @@ gtag('config', 'G-66B2Z6KG0J');`,
   route: {
     exclude: ['**/fragments/**'],
   },
-  search: {
-    searchHooks: path.join(__dirname, './search.tsx'),
-  },
   themeConfig: {
     enableContentAnimation: true,
     footer: {
