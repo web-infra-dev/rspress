@@ -3,8 +3,8 @@
 To achieve document internationalization in Rspress, you need to do the following:
 
 - 1. Defines I18n text data.
-- 2. Configure the default language.
-- 3. Configure `locales` and `themeConfig.locales`。
+- 2. Configure `locales` and `themeConfig.locales`。
+- 3. Configure the default language.
 - 4. Create documents in different language version.
 - 5. Configure sidebar and navbar.
 - 6. Use `useI18n` in custom components.
@@ -55,20 +55,6 @@ For example:
 
 These text data are used in both **config file** and **custom components**, which will be introduced in detail later.
 
-## Configure the default language
-
-In `rspress.config.ts`, you can configure the default language of the document via `lang`, as shown in the following example:
-
-```ts title="rspress.config.ts"
-import { defineConfig } from 'rspress/config';
-
-export default defineConfig({
-  lang: 'zh',
-});
-```
-
-This is important because **for routes in the default language, the framework will remove the language prefix**, such as `/zh/guide/getting-started` will be converted to `/guide/getting-started`.
-
 ## Configure `locales`
 
 In `rspress.config.ts`, you can configure `locales` data in two places:
@@ -116,6 +102,21 @@ In the default theme, `themeConfig.locales` also contains all the fields in `loc
 :::
 
 For other international theme parameters, please refer to [API type](/api/config/config-theme#locales).
+
+## Configure the default language
+
+After configure `locales` data, you need configure the default language of the document via `lang`, as shown in the following example:
+
+```ts title="rspress.config.ts"
+import { defineConfig } from 'rspress/config';
+
+export default defineConfig({
+  lang: 'zh',
+});
+```
+
+This is important because **for routes in the default language, the framework will remove the language prefix**, such as `/zh/guide/getting-started` will be converted to `/guide/getting-started`.
+
 
 ## Create documents in different language
 

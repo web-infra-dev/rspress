@@ -13,6 +13,19 @@ export default defineConfig({
       previewMode: 'mobile',
       iframePosition: 'fixed',
       apiParseTool: 'react-docgen-typescript',
+      doc: {
+        lang: 'en',
+        locales: [
+          {
+            lang: 'en',
+            label: 'English',
+          },
+          {
+            lang: 'zh',
+            label: '简体中文',
+          },
+        ],
+      },
     }),
   ],
   buildPreset: 'npm-component',

@@ -20,8 +20,7 @@ export type PluginOptions = Pick<
 export type Options = {
   /**
    * Target language
-   * @zh 文档站的目标语言
-   * @default ['zh']
+   * @deprecated Please use https://rspress.dev/guide/default-theme/i18n.html
    */
   languages?: Array<ModuleDocgenLanguage>;
   /**
@@ -43,8 +42,7 @@ export type Options = {
   previewMode?: 'mobile' | 'web';
   /**
    * set it true to use module default sidebar, or customize the sidebar with false value
-   * @zh 使用模块列表侧边栏
-   * @default true
+   * @deprecated Please see https://rspress.dev/guide/basic/auto-nav-sidebar.html
    */
   useModuleSidebar?: boolean;
   /**
