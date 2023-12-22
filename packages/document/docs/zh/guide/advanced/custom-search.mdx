@@ -1,0 +1,169 @@
+# 自定义搜索功能
+
+在某些场景下，我们需要对搜索功能进行定制，比如：
+
+- 对搜索过程中的关键词进行处理，比如去除敏感词
+- 对默认的全文搜索结果进行过滤
+- 对搜索关键字进行打点上报
+- 自定义搜索数据源，比如从数据库中搜索
+- 对自定义搜索数据源进行渲染
+- ......
+
+面对这些灵活的自定义需求，我们提供了相应的接口，对默认主题的搜索组件进行扩展，让你可以很容易地定制搜索功能。
+
+## searchHooks 概念和配置
+
+在 Rspress 配置中，我们提供了 `search.searchHooks` 配置项，用于配置搜索组件的钩子函数，如下：
+
+```js
+import { defineConfig } from 'rspress/config';
+import path from 'path';
+
+export default defineConfig({
+  search: {
+    searchHooks: path.join(__dirname, './search.tsx'),
+  },
+});
+```
+
+`search.searchHooks` 配置项的值为一个文件路径，这个文件会导出对应的钩子逻辑，如 `onSearch`，从而让你可以定制搜索运行时的能力。我们可以称这个文件为 **`searchHooks` 模块**。
+
+## searchHooks 中的钩子函数
+
+下面我们来介绍 searchHooks 中的钩子函数，即 `beforeSearch`、`onSearch`、`afterRender`、`render`。
+
+:::tip 提示
+
+在 searchHooks 模块中，你只需要导出你需要的钩子函数，而不是必须导出全部的钩子函数。
+
+:::
+
+### beforeSearch
+
+`beforeSearch` 钩子函数会在搜索开始前执行，你可以用来对搜索关键字进行处理，比如去除敏感词，或者对搜索关键字进行打点上报。
+
+> 该钩子支持异步操作。
+
+使用示例如下：
+
+```ts
+import type { BeforeSearch } from 'rspress/theme';
+
+const beforeSearch: BeforeSearch = (query: string) => {
+  // 可以在这里做一些搜索前的操作
+  console.log('beforeSearch');
+  // 返回处理后的 query
+  return query.replace(' ', '');
+};
+
+export { beforeSearch };
+```
+
+### onSearch
+
+`onSearch` 钩子函数会在默认的全文搜索逻辑完成之后执行，你可以在这个钩子函数中对搜索结果进行过滤或者上报，也可以在这个钩子函数中增加自定义的搜索数据源。
+
+> 该钩子支持异步操作。
+
+使用示例如下：
+
+```ts
+import type { OnSearch } from 'rspress/theme';
+
+const onSearch: OnSearch = async (query, defaultSearchResult) => {
+  // 可根据 query 请求数据
+  console.log(query);
+  // 默认的搜索源的结果，为一个数组
+  console.log(defaultSearchResult);
+  // const customResult = await searchQuery(query);
+
+  // 返回值为一个数组，数组中的每一项为一个搜索源的结果
+  return [
+    {
+      group: 'Custom',
+      result: {
+        list: [
+          {
+            title: 'Search Result 1',
+            path: '/search1',
+          },
+          {
+            title: 'Search Result 2',
+            path: '/search2',
+          },
+        ],
+      },
+    },
+  ];
+};
+
+export { onSearch };
+```
+
+需要注意的是，`onSearch` 钩子函数的返回值为一个数组，数组中的每一项为一个搜索源的结果，每一项的结构如下：
+
+```ts
+{
+  group: string; // 搜索结果的分组名称，将会在搜索结果中显示
+  result: unknown;
+}
+```
+
+其中 `result` 为搜索结果，你可以自定义内部的结构，并且在后续的 `render` 钩子函数中拿到它进行渲染。
+
+### afterSearch
+
+`afterSearch` 钩子函数会在搜索结果渲染完成之后执行，你可以在这个钩子拿到最终的搜索关键词和搜索结果。
+
+> 该钩子支持异步操作。
+
+使用示例如下：
+
+```ts
+import type { AfterSearch } from 'rspress/theme';
+
+const afterSearch: AfterSearch = async (query, searchResult) => {
+  // 搜索关键词
+  console.log(query);
+  // 搜索结果
+  console.log(searchResult);
+};
+
+export { afterSearch };
+```
+
+### render
+
+`render` 函数会对你在 `onSearch` 钩子中自定义的搜索源数据进行渲染，因此一般需要和 `onSearch` 一起使用。使用方式如下：
+
+```ts
+import type { RenderSearchFunction } from 'rspress/theme';
+
+// 上述的 OnSearch 钩子实现省略
+
+interface ResultData {
+  list: {
+    title: string;
+    path: string;
+  }[];
+}
+
+// 针对每一个搜索源的渲染函数
+const render: RenderSearchFunction<ResultData> = item => {
+  return (
+    <div>
+      {item.list.map(i => (
+        <div>
+          <a href={i.path}>{i.title}</a>
+        </div>
+      ))}
+    </div>
+  );
+};
+
+export { onSearch, render };
+```
+
+效果如下：
+
+![自定义搜索源渲染](https://lf3-static.bytednsdoc.com/obj/eden-cn/uhbfnupenuhf/rspress/custom-search-preview.png)

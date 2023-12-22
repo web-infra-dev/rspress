@@ -1,5 +1,5 @@
 /**
- * The local search provider for Modern.js Doc.
+ * The local search provider.
  * Powered by FlexSearch. https://github.com/nextapps-de/flexsearch
  */
 
@@ -27,7 +27,9 @@ export class LocalProvider implements Provider {
 
   async #getPages(lang: string): Promise<PageIndexInfo[]> {
     const result = await fetch(
-      `${process.env.__ASSET_PREFIX__}/static/${SEARCH_INDEX_NAME}.${lang}.${searchIndexHash[lang]}.json`,
+      `${process.env.__ASSET_PREFIX__}/static/${SEARCH_INDEX_NAME}${
+        lang ? `.${lang}` : ''
+      }.${searchIndexHash[lang]}.json`,
     );
     return result.json();
   }

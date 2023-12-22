@@ -208,15 +208,7 @@ export default defineConfig({
 });
 ```
 
-`searchHooks.ts` 中，你需要导出 `onSearch` 函数，这个函数将会在每次搜索时被调用，入参为搜索关键词，你可以在这里自定义搜索拦截逻辑，比如：
-
-```ts title="searchHooks.ts"
-// 支持 async 函数
-export async function onSearch(query: string) {
-  // 执行自定义逻辑，比如打点上报
-  console.log(query);
-}
-```
+关于具体的钩子逻辑，你可以阅读 [自定义搜索功能](/zh/guide/advanced/custom-search)。
 
 ## globalUIComponents
 

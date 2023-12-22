@@ -2,9 +2,9 @@
 import { createPortal } from 'react-dom';
 import { useEffect, useRef, useState } from 'react';
 import { groupBy, debounce } from 'lodash-es';
-import { onSearch } from 'virtual-search-hooks';
-import { SearchOptions } from '@rspress/shared';
-import { isProduction, usePageData } from '@rspress/runtime';
+import * as userSearchHooks from 'virtual-search-hooks';
+import { SearchOptions, isProduction } from '@rspress/shared';
+import { usePageData } from '@rspress/runtime';
 import { getSidebarGroupData } from '../../logic/useSidebarData';
 import { useLocaleSiteData } from '../../logic/useLocaleSiteData';
 import { Tabs, Tab } from '../Tabs';
@@ -12,7 +12,13 @@ import styles from './index.module.scss';
 import SearchSvg from './assets/search.svg';
 import LoadingSvg from './assets/loading.svg';
 import CloseSvg from './assets/close.svg';
-import { MatchResult, MatchResultItem, PageSearcher } from './logic/search';
+import type {
+  CustomMatchResult,
+  DefaultMatchResult,
+  MatchResult,
+} from './logic/types';
+import { RenderType } from './logic/types';
+import { PageSearcher } from './logic/search';
 import { SuggestItem } from './SuggestItem';
 import { normalizeSearchIndexes, removeDomain } from './logic/util';
 import { NoSearchResult } from './NoSearchResult';
@@ -25,11 +31,6 @@ const KEY_CODE = {
   ESC: 'Escape',
 };
 
-const RECOMMEND_WORD: Record<string, string> = {
-  zh: '其它站点推荐结果',
-  en: 'Other Site Search Results',
-};
-
 export interface SearchPanelProps {
   focused: boolean;
   setFocused: (focused: boolean) => void;
@@ -37,10 +38,7 @@ export interface SearchPanelProps {
 
 export function SearchPanel({ focused, setFocused }: SearchPanelProps) {
   const [query, setQuery] = useState('');
-  const [searchResult, setSearchResult] = useState<MatchResult>({
-    current: [],
-    others: [],
-  });
+  const [searchResult, setSearchResult] = useState<MatchResult>([]);
   const searchInputRef = useRef<HTMLInputElement | null>(null);
   const [initing, setIniting] = useState(true);
   const [currentSuggestionIndex, setCurrentSuggestionIndex] = useState(0);
@@ -50,12 +48,16 @@ export function SearchPanel({ focused, setFocused }: SearchPanelProps) {
     page: { lang },
   } = usePageData();
   const { sidebar } = useLocaleSiteData();
-  const { search } = siteData;
-
-  const suggestions = [
-    ...searchResult.current,
-    ...searchResult.others.map(item => item.items),
-  ].flat();
+  const { search, title: siteTitle } = siteData;
+  const DEFAULT_RESULT = [
+    { group: siteTitle, result: [], renderType: RenderType.Default },
+  ];
+  const [currentSuggestions, setCurrentSuggestions] = useState<
+    DefaultMatchResult['result']
+  >([]);
+  const [currentRenderType, setCurrentRenderType] = useState<RenderType>(
+    RenderType.Default,
+  );
 
   // We need to extract the group name by the link so that we can divide the search result into different groups.
   const extractGroupName = (link: string) =>
@@ -66,6 +68,7 @@ export function SearchPanel({ focused, setFocused }: SearchPanelProps) {
       return;
     }
     const pageSearcher = new PageSearcher({
+      indexName: siteTitle,
       ...search,
       currentLang: lang,
       extractGroupName,
@@ -76,7 +79,7 @@ export function SearchPanel({ focused, setFocused }: SearchPanelProps) {
     const query = searchInputRef.current?.value;
     if (query) {
       const matched = await pageSearcherRef.current?.match(query);
-      setSearchResult(matched || { current: [], others: [] });
+      setSearchResult(matched || DEFAULT_RESULT);
     }
   }
 
@@ -92,25 +95,35 @@ export function SearchPanel({ focused, setFocused }: SearchPanelProps) {
         case KEY_CODE.ARROW_DOWN:
           if (focused) {
             e.preventDefault();
-            setCurrentSuggestionIndex(
-              (currentSuggestionIndex + 1) % suggestions.length,
-            );
+            if (
+              currentSuggestions &&
+              currentRenderType === RenderType.Default
+            ) {
+              setCurrentSuggestionIndex(
+                (currentSuggestionIndex + 1) % currentSuggestions.length,
+              );
+            }
           }
           break;
         case KEY_CODE.ARROW_UP:
           if (focused) {
             e.preventDefault();
-            setCurrentSuggestionIndex(
-              (currentSuggestionIndex - 1 + suggestions.length) %
-                suggestions.length,
-            );
+            if (currentRenderType === RenderType.Default) {
+              const currentSuggestionsLength = currentSuggestions.length;
+              setCurrentSuggestionIndex(
+                (currentSuggestionIndex - 1 + currentSuggestionsLength) %
+                  currentSuggestionsLength,
+              );
+            }
           }
           break;
         case KEY_CODE.ENTER:
-          if (currentSuggestionIndex >= 0) {
-            const suggestion = suggestions[currentSuggestionIndex];
-            const isCurrent =
-              currentSuggestionIndex < searchResult.current.length;
+          if (
+            currentSuggestionIndex >= 0 &&
+            currentRenderType === RenderType.Default
+          ) {
+            const suggestion = currentSuggestions[currentSuggestionIndex];
+            const isCurrent = currentSuggestions === searchResult[0].result;
             if (isCurrent) {
               window.location.href = isProduction()
                 ? suggestion.link
@@ -135,13 +148,13 @@ export function SearchPanel({ focused, setFocused }: SearchPanelProps) {
   }, [
     setCurrentSuggestionIndex,
     setFocused,
-    suggestions,
+    currentSuggestions,
     currentSuggestionIndex,
   ]);
 
   useEffect(() => {
     if (focused) {
-      setSearchResult({ current: [], others: [] });
+      setSearchResult(DEFAULT_RESULT);
       if (!pageSearcherRef.current) {
         initPageSearcher();
       }
@@ -154,16 +167,59 @@ export function SearchPanel({ focused, setFocused }: SearchPanelProps) {
   }, [lang]);
 
   const onQueryChanged = async (e: React.ChangeEvent<HTMLInputElement>) => {
-    const newQuery = e.target.value;
+    let newQuery = e.target.value;
     setQuery(newQuery);
     if (newQuery) {
-      await onSearch(newQuery);
-      const matched = await pageSearcherRef.current?.match(newQuery);
-      setSearchResult(matched || { current: [], others: [] });
+      const searchResult: MatchResult = [];
+
+      if (userSearchHooks.beforeSearch) {
+        const transformedQuery = await userSearchHooks.beforeSearch(newQuery);
+        if (transformedQuery) {
+          newQuery = transformedQuery;
+        }
+      }
+
+      const defaultSearchResult = await pageSearcherRef.current?.match(
+        newQuery,
+      );
+
+      if (defaultSearchResult) {
+        searchResult.push(...defaultSearchResult);
+      }
+
+      if (userSearchHooks.onSearch) {
+        const customSearchResult = await userSearchHooks.onSearch(
+          newQuery,
+          searchResult as DefaultMatchResult[],
+        );
+        if (customSearchResult) {
+          searchResult.push(
+            ...customSearchResult.map(
+              item =>
+                ({
+                  ...item,
+                  renderType: RenderType.Custom,
+                } as CustomMatchResult),
+            ),
+          );
+        }
+      }
+
+      setSearchResult(searchResult || DEFAULT_RESULT);
+
+      if (userSearchHooks.afterSearch) {
+        await userSearchHooks.afterSearch(newQuery, searchResult);
+      }
+
+      if (searchResult.length > 0) {
+        setCurrentSuggestions(
+          searchResult[0].result as DefaultMatchResult['result'],
+        );
+      }
     }
   };
 
-  const normalizeSuggestions = (suggestions: MatchResultItem[]) =>
+  const normalizeSuggestions = (suggestions: DefaultMatchResult['result']) =>
     groupBy(suggestions, 'group');
 
   // accumulateIndex is used to calculate the index of the suggestion in the whole list.
@@ -173,47 +229,51 @@ export function SearchPanel({ focused, setFocused }: SearchPanelProps) {
     result: MatchResult,
     searchOptions: SearchOptions,
   ) => {
-    if (!suggestions.length && !initing) {
-      return <NoSearchResult query={query} />;
+    if (result.length === 1) {
+      const currentSearchResult = result[0]
+        .result as DefaultMatchResult['result'];
+      if (currentSearchResult.length === 0) {
+        return <NoSearchResult query={query} />;
+      }
+      return <div>{renderSearchResultItem(currentSearchResult)}</div>;
     }
 
-    const hasOtherResult =
-      searchResult.others.map(item => item.items).flat().length > 0;
-
-    const tabValues = result.others.map(item => {
+    const tabValues = result.map(item => {
       if (!searchOptions || searchOptions.mode !== 'remote') {
-        return item;
+        return item.group;
       }
       const indexItem = normalizeSearchIndexes(
         searchOptions.searchIndexes || [],
-      ).find(indexInfo => indexInfo.value === item.index);
+      ).find(indexInfo => indexInfo.value === item.group);
       return indexItem.label;
-    }) as string[];
+    });
 
     return (
-      <div>
-        {/* current index */}
-        {renderSearchResultItem(result.current)}
-        {/* other indexes */}
-        {hasOtherResult && (
-          <h2 className={styles.groupTitle}>{RECOMMEND_WORD[lang]}</h2>
-        )}
-        <div style={{ marginTop: '-12px' }}>
-          <Tabs values={tabValues} tabContainerClassName={styles.tabClassName}>
-            {result.others.map(item => (
-              <Tab key={item.index}>
-                {renderSearchResultItem(item.items, false)}
-              </Tab>
-            ))}
-          </Tabs>
-        </div>
-      </div>
+      <Tabs
+        values={tabValues}
+        tabContainerClassName={styles.tabClassName}
+        onChange={index => {
+          setCurrentSuggestions(
+            result[index].result as DefaultMatchResult['result'],
+          );
+          setCurrentSuggestionIndex(0);
+          setCurrentRenderType(result[index].renderType);
+        }}
+      >
+        {result.map(item => (
+          <Tab key={item.group}>
+            {item.renderType === RenderType.Default &&
+              renderSearchResultItem(item.result)}
+            {item.renderType === RenderType.Custom &&
+              userSearchHooks.render(item.result)}
+          </Tab>
+        ))}
+      </Tabs>
     );
   };
 
   const renderSearchResultItem = (
-    suggestionList: MatchResultItem[],
-    isCurrent = true,
+    suggestionList: DefaultMatchResult['result'],
   ) => {
     // if no result, show no result
     if (suggestionList.length === 0 && !initing) {
@@ -237,7 +297,6 @@ export function SearchPanel({ focused, setFocused }: SearchPanelProps) {
           const groupSuggestions = normalizedSuggestions[group] || [];
           return (
             <li key={group}>
-              {isCurrent && <h2 className={styles.groupTitle}>{group}</h2>}
               <ul className="pb-2">
                 {groupSuggestions.map(suggestion => {
                   accumulateIndex++;
@@ -252,7 +311,7 @@ export function SearchPanel({ focused, setFocused }: SearchPanelProps) {
                       }}
                       closeSearch={() => setFocused(false)}
                       inCurrentDocIndex={
-                        suggestionIndex < searchResult.current.length
+                        currentSuggestions === searchResult[0].result
                       }
                     />
                   );

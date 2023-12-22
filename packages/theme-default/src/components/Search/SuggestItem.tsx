@@ -3,7 +3,7 @@ import FileSvg from './assets/file.svg';
 import JumpSvg from './assets/jump.svg';
 import HeaderSvg from './assets/header.svg';
 import TitleSvg from './assets/title.svg';
-import { HightlightInfo, MatchResultItem } from './logic/search';
+import { DefaultMatchResultItem, HightlightInfo } from './logic/types';
 import styles from './index.module.scss';
 import { getSlicedStrByByteLength, removeDomain } from './logic/util';
 
@@ -20,7 +20,7 @@ export function SuggestItem({
   setCurrentSuggestionIndex,
   inCurrentDocIndex,
 }: {
-  suggestion: MatchResultItem;
+  suggestion: DefaultMatchResultItem;
   closeSearch: () => void;
   isCurrent: boolean;
   setCurrentSuggestionIndex: () => void;

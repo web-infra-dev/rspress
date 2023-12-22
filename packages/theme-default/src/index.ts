@@ -1,5 +1,3 @@
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
-import React from 'react';
 import { NotFoundLayout } from './layout/NotFountLayout';
 import { Layout } from './layout/Layout';
 import { HomeLayout } from './layout/HomeLayout';
@@ -29,3 +27,5 @@ export { getCustomMDXComponent } from './layout/DocLayout/docComponents';
 export * from './logic';
 
 export { Layout, NotFoundLayout, HomeLayout };
+
+export * from './components/Search/logic/types';

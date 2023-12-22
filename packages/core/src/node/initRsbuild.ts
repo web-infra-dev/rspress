@@ -59,6 +59,10 @@ async function createInternalBuildConfig(
     : '';
   const enableMdxRs = config?.markdown?.mdxRs ?? true;
   const reactVersion = await detectReactVersion();
+  const searchHooksModule =
+    config.search && 'searchHooks' in config.search
+      ? config.search.searchHooks
+      : undefined;
   const normalizeIcon = (icon: string | undefined) => {
     if (!icon) {
       return undefined;
@@ -134,7 +138,11 @@ async function createInternalBuildConfig(
         ),
         ...(await resolveReactAlias(reactVersion)),
       },
-      include: [PACKAGE_ROOT, path.join(cwd, 'node_modules', RSPRESS_TEMP_DIR)],
+      include: [
+        PACKAGE_ROOT,
+        path.join(cwd, 'node_modules', RSPRESS_TEMP_DIR),
+        searchHooksModule,
+      ],
       define: {
         'process.env.__ASSET_PREFIX__': JSON.stringify(assetPrefix),
         'process.env.__SSR__': JSON.stringify(isSSR),

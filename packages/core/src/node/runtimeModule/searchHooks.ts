@@ -3,7 +3,7 @@ import { FactoryContext, RuntimeModuleID } from '.';
 
 export async function searchHookVMPlugin(context: FactoryContext) {
   const { config } = context;
-  let content = 'export const onSearch = () => {}';
+  let content = 'export const onSearch = () => {};';
   if (
     typeof config.search === 'object' &&
     typeof config.search.searchHooks === 'string'

@@ -22,13 +22,28 @@ declare module 'virtual-routes' {
 }
 
 declare module 'virtual-search-hooks' {
-  export const onSearch: (query: string) => void | Promise<void>;
+  import type {
+    BeforeSearch,
+    OnSearch,
+    AfterSearch,
+    RenderSearchFunction,
+  } from '@/components/Search/logic/types';
+
+  export const beforeSearch: BeforeSearch;
+  export const onSearch: OnSearch;
+  export const afterSearch: AfterSearch;
+  export const render: RenderSearchFunction;
 }
 
 declare module 'virtual-prism-languages' {
   const languagesInfo: Record<string, unknown>;
 
   export default languagesInfo;
+}
+
+declare module 'virtual-search-index-hash' {
+  const hash: string;
+  export default hash;
 }
 
 declare module '@theme';

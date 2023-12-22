@@ -1,5 +1,5 @@
 import { PageIndexInfo } from '@rspress/shared';
-import { SearchOptions } from './search';
+import { SearchOptions } from './types';
 
 export interface SearchQuery {
   keyword: string;
@@ -13,7 +13,7 @@ export interface NormalizedSearchResultItem {
 
 export type NormalizedSearchResult = NormalizedSearchResultItem[];
 
-export const LOCAL_INDEX = 'LOCAL_INDEX';
+export const LOCAL_INDEX = 'default';
 
 /**
  * Implement universal behavior of different search engine
