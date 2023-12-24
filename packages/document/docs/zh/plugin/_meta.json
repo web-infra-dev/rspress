@@ -8,5 +8,10 @@
     "type": "dir",
     "name": "official-plugins",
     "label": "官方插件"
+  },
+  {
+    "type": "dir",
+    "name": "community-plugins",
+    "label": "社区插件"
   }
 ]

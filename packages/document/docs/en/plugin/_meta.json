@@ -8,5 +8,10 @@
     "type": "dir",
     "name": "official-plugins",
     "label": "Official Plugins"
+  },
+  {
+    "type": "dir",
+    "name": "community-plugins",
+    "label": "Community Plugins"
   }
 ]
