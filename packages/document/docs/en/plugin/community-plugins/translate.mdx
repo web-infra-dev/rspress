@@ -1,8 +1,8 @@
 # rspress-plugin-translate
 
-import { PackageManagerTabs } from '@theme';
+import { SourceCode, PackageManagerTabs } from 'rspress/theme';
 
-> [Source Code](https://github.com/byteHulk/rspress-plugin-translate)
+<SourceCode href="https://github.com/byteHulk/rspress-plugin-translate" />
 
 Rspress plugin for translating files using LLM, currently only supports GPT.
 
@@ -15,10 +15,10 @@ Rspress plugin for translating files using LLM, currently only supports GPT.
 ```ts
 import { defineConfig } from 'rspress/config';
 import path from 'path';
-import { pluginTranslate } from "rspress-plugin-translate"
-import { config } from "dotenv"
+import { pluginTranslate } from 'rspress-plugin-translate';
+import { config } from 'dotenv';
 
-config()
+config();
 
 export default defineConfig({
   plugins: [
@@ -26,26 +26,27 @@ export default defineConfig({
       modelConfig: {
         clientOptions: {
           apiKey: process.env.OPENAI_API_KEY,
-          httpAgent: new HttpsProxyAgent("http://127.0.0.1:7890"),
+          httpAgent: new HttpsProxyAgent('http://127.0.0.1:7890'),
         },
       },
     }),
   ],
-  root: path.join(__dirname, "docs"),
-  lang: "en",
+  root: path.join(__dirname, 'docs'),
+  lang: 'en',
   locales: [
     {
-      lang: "en",
-      label: "English",
-      title: "Modern.js",
-      description: "Modern.js Documentation Framework",
+      lang: 'en',
+      label: 'English',
+      title: 'Modern.js',
+      description: 'Modern.js Documentation Framework',
     },
     {
-      lang: "zh",
-      label: "简体中文",
-      title: "Modern.js",
-      description: "Rspress",
-    },]
+      lang: 'zh',
+      label: '简体中文',
+      title: 'Modern.js',
+      description: 'Rspress',
+    },
+  ],
 });
 ```
 
@@ -89,7 +90,7 @@ Exclude certain files from translation. For example:
 
 ```js title="rspress.config.ts"
 import { defineConfig } from 'rspress/config';
-import { pluginTranslate } from "rspress-plugin-translate"
+import { pluginTranslate } from 'rspress-plugin-translate';
 
 export default defineConfig({
   plugins: [
@@ -99,7 +100,7 @@ export default defineConfig({
       },
     }),
   ],
-})
+});
 ```
 
 > Note: The strings in the array support glob patterns.
@@ -113,17 +114,17 @@ The file extensions of files included in the translation process. By default, Rs
 
 ```js title="rspress.config.ts"
 import { defineConfig } from 'rspress/config';
-import { pluginTranslate } from "rspress-plugin-translate"
+import { pluginTranslate } from 'rspress-plugin-translate';
 
 export default defineConfig({
   plugins: [
     pluginTranslate({
       match: {
-        extensions: [".jsx", ".md", ".mdx"],
+        extensions: ['.jsx', '.md', '.mdx'],
       },
     }),
   ],
-})
+});
 ```
 
 ### rateLimitPerMinute
@@ -141,18 +142,18 @@ Prompt function for the large model, which takes three parameters: content (cont
 
 ```ts title="rspress.config.ts"
 import { defineConfig } from 'rspress/config';
-import { pluginTranslate } from "rspress-plugin-translate"
+import { pluginTranslate } from 'rspress-plugin-translate';
 
 export default defineConfig({
   plugins: [
     pluginTranslate({
-         getPrompt: (
-           content: string,
-           from: string,
-           to: string
-        ) => `A ${from} markdown file content is provided: ${content}
-      The masterful ${from} translator flawlessly translates the phrase into ${to} and keep the markdown formatting:`
+      getPrompt: (
+        content: string,
+        from: string,
+        to: string,
+      ) => `A ${from} markdown file content is provided: ${content}
+      The masterful ${from} translator flawlessly translates the phrase into ${to} and keep the markdown formatting:`,
     }),
-  ]
+  ],
 });
 ```

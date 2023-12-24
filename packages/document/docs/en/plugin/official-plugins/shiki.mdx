@@ -1,12 +1,14 @@
 # @rspress/plugin-shiki
 
-> [Source Code](https://github.com/web-infra-dev/rspress/tree/main/packages/plugin-shiki)
+import { SourceCode } from 'rspress/theme';
 
-This is an integration of the [Shiki](https://github.com/shikijs/shiki) code highlighting plugin. By default, Rspress uses [Prism.js](https://prismjs.com/) for syntax highlighting. However, in some cases, if you need to highlight more languages, Prism.js may not be sufficient. At this point, you can use this plugin and Shiki to support more languages.
+<SourceCode href="https://github.com/web-infra-dev/rspress/tree/main/packages/plugin-shiki" />
+
+Integrated [Shiki](https://github.com/shikijs/shiki) code highlighting plugin. By default, Rspress uses [Prism.js](https://prismjs.com/) to achieve syntax highlighting. However, in some cases, when you need to implement code highlighting for more languages, Prism.js may not be sufficient, so you can integrate this plugin to use Shiki to support more languages.
 
 :::warning Note
 
-After introducing the Shiki plugin, the compilation performance of Rspress will decrease, so please evaluate whether you need to introduce this plugin based on your own needs.
+However, after introducing the Shiki plugin, the compilation performance of Rspress will decrease, so please evaluate whether you need to introduce this plugin based on your needs.
 
 :::
 
@@ -17,8 +19,6 @@ import { PackageManagerTabs } from '@theme';
 <PackageManagerTabs command="add @rspress/plugin-shiki -D" />
 
 ## Usage
-
-### Importing the Plugin
 
 First, write the following configuration in the configuration file:
 
@@ -31,9 +31,9 @@ export default defineConfig({
 });
 ```
 
-## Options
+## Configuration
 
-This plugin supports passing in an object configuration, the properties of this object configuration are as follows:
+This plugin supports passing in an object configuration. The properties of this object configuration are as follows:
 
 ```ts
 interface PluginShikiOptions {
@@ -42,12 +42,103 @@ interface PluginShikiOptions {
    */
   theme: string;
   /**
-   * Languages for code highlighting
+   * Code highlighting language
    */
   langs: string[];
+  /**
+   * Add custom transformer
+   */
+  transformers: Transformer[];
 }
 ```
 
-The code highlighting theme uses `css-variables`, and you can also choose your favorite theme. For details, refer to the [Shiki Theme List Document](https://github.com/shikijs/shiki/blob/main/docs/themes.md).
+The code highlighting theme uses `css-variables`. You can also choose your favorite theme, refer to the [Shiki theme list documentation](https://github.com/shikijs/shiki/blob/main/docs/themes.md) for details.
 
-The default supported languages include `js`, `jsx`, `ts`, `tsx`, `json`, `css`, `scss`, `less`, `xml`, `diff`, `yaml`, `md`, `mdx`, `bash`. If you want to support more languages, you can pass the `langs` property in the configuration file. This property is an array, and each item in the array is a language id. For details, refer to the [Shiki Supported Language List](https://github.com/shikijs/shiki/blob/main/docs/languages.md).
+The default languages supported include `js`, `jsx`, `ts`, `tsx`, `json`, `css`, `scss`, `less`, `xml`, `diff`, `yaml`, `md`, `mdx`, `bash`. If you want to support more languages, you can pass the `langs` attribute in the configuration file. This attribute is an array, each item in the array is an id of a language, refer to the [Shiki-supported language list](https://github.com/shikijs/shiki/blob/main/docs/languages.md) for details.
+
+## Transformer Concept and Usage
+
+Transformer is a concept in this plugin, its function is to transform specific syntax of code blocks, for example, you can use this feature to implement the diff highlighting effect of code blocks.
+
+### Introduction to Built-in Transformers
+
+A few Transformers are built into this plugin, including:
+
+- `createTransformerDiff`: Implementation of the diff highlighting effect of the code block.
+- `createTransformerLineNumber`: Implement the display of the line number of the code block.
+- `createTransformerErrorLevel`: Implement the display of the error level of the corresponding line of the code block, including `error` and `warning`.
+- `createTransformerHighlight`: Implement line highlighting display of the code block.
+- `createTransformerFocus`: Implement line focus display of the code block.
+
+You can enable these Transformers by configuring the `transformers` attribute, such as:
+
+```ts title="rspress.config.ts"
+import { defineConfig } from 'rspress/config';
+import { pluginShiki, createTransformerDiff } from '@rspress/plugin-shiki';
+
+export default defineConfig({
+  plugins: [
+    pluginShiki({
+      transformers: [
+        // Add as needed
+        createTransformerDiff(),
+        // createTransformerLineNumber(),
+        // createTransformerErrorLevel(),
+        // createTransformerHighlight(),
+        // createTransformerFocus(),
+      ],
+    }),
+  ],
+});
+```
+
+Then let us introduce how to use the syntax corresponding to these Transformers.
+
+#### Diff highlighting
+
+Use the `diff` syntax in the markdown code block, such as:
+
+```ts
+export function foo() {
+  console.log('Diff remove'); // [!code --]
+  console.log('Diff add'); // [!code ++]
+}
+```
+
+This will automatically apply the diff highlighting effect to the corresponding line of code.
+
+#### Line number display
+
+Use the `hl` syntax in the markdown code block, such as:
+
+```ts
+export function foo() {
+  console.log('Line number'); // [!code hl]
+}
+```
+
+This will automatically display the line number for the corresponding line of code.
+
+#### Error level display
+
+Use the `error` or `warning` syntax in the markdown code block, such as:
+
+```ts
+export function foo() {
+  console.log('Error level'); // [!code error]
+}
+```
+
+This will automatically display the error level for the corresponding line of code.
+
+#### Line focus display
+
+Use the `focus` syntax in the markdown code block, such as:
+
+```ts
+export function foo() {
+  console.log('Focus'); // [!code focus]
+}
+```
+
+This will automatically display the focus effect for the corresponding line of code.
