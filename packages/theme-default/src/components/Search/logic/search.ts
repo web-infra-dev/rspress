@@ -25,7 +25,7 @@ export class PageSearcher {
 
   #provider?: Provider;
 
-  constructor(options: SearchOptions & { indexName: string }) {
+  constructor(options: SearchOptions & { indexName?: string }) {
     this.#options = options;
     this.#indexName = options.indexName;
     switch (options.mode) {

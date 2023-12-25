@@ -267,3 +267,40 @@ function MySearch() {
 ```
 
 其中，你需要自己维护 `focused` 状态和 `setFocused` 方法，并且作为 props 传给 `SearchPanel` 组件，用于控制搜索面板的显示和隐藏。
+
+#### 复用默认全文搜索逻辑
+
+如果你想复用默认的全文搜索逻辑，你可以使用 `useFullTextSearch` Hook，比如:
+
+```tsx
+import { useFullTextSearch } from 'rspress/theme';
+
+function MySearch() {
+  const { initialized, search } = useFullTextSearch();
+
+  useEffect(() => {
+    async function searchSomeKeywords(keywords: string) {
+      if (initialized) {
+        // 搜索关键字
+        const results = await search(keywords);
+        console.log(results);
+      }
+    }
+    searchSomeKeywords('keyword');
+  }, [initialized]);
+
+  return <div>Search</div>;
+}
+```
+
+其中，`initialized` 表示搜索是否初始化完成，`search` 方法用于搜索关键字，返回一个 Promise，Promise 的结果为默认全文搜索的结果。
+
+需要注意的是，`useFullTextSearch` Hook 会在初始化时自动加载搜索索引，所以你需要先判断 `initialized` 状态，确保初始化完成之后，然后再调用 `search` 方法。
+
+search 方法的类型定义如下:
+
+```ts
+type SearchFn = (keywords: string, limit?: number) => Promise<SearchResult>;
+```
+
+limit 表示搜索结果的最大数量，默认为 7，也就是默认最多返回七篇文章的结果。
