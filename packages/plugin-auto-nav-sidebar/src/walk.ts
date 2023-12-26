@@ -57,7 +57,10 @@ export async function scanSideMeta(
     await Promise.all(
       sideMeta.map(async metaItem => {
         if (typeof metaItem === 'string') {
-          const title = await extractH1Title(path.resolve(workDir, metaItem));
+          const title = await extractH1Title(
+            path.resolve(workDir, metaItem),
+            rootDir,
+          );
           return {
             text: title,
             link: addRoutePrefix(
@@ -78,7 +81,8 @@ export async function scanSideMeta(
         } = metaItem;
         if (type === 'file') {
           const title =
-            label ?? (await extractH1Title(path.resolve(workDir, name)));
+            label ??
+            (await extractH1Title(path.resolve(workDir, name), rootDir));
           return {
             text: title,
             link: addRoutePrefix(

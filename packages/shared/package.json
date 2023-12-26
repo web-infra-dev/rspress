@@ -34,6 +34,11 @@
       "import": "./dist/logger.mjs",
       "require": "./dist/logger.js",
       "types": "./dist/logger.d.ts"
+    },
+    "./node-utils": {
+      "import": "./dist/node-utils.mjs",
+      "require": "./dist/node-utils.js",
+      "types": "./dist/node-utils.d.ts"
     }
   },
   "scripts": {
@@ -51,7 +56,8 @@
     "chalk": "4.1.2",
     "rslog": "^1.1.0",
     "execa": "5.1.1",
-    "fs-extra": "11.2.0"
+    "fs-extra": "11.2.0",
+    "gray-matter": "4.0.3"
   },
   "devDependencies": {
     "lodash-es": "^4.17.21",
