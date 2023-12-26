@@ -49,6 +49,11 @@
       "packages/*"
     ]
   },
+  "pnpm": {
+    "overrides": {
+      "@rspack/core": "0.4.0"
+    }
+  },
   "devDependencies": {
     "@manypkg/get-packages": "^2.2.0",
     "@modern-js-app/eslint-config": "2.43.0",
