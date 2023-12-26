@@ -3,12 +3,9 @@ import type { Rspack } from '@rsbuild/core';
 import { createProcessor } from '@mdx-js/mdx';
 import type { Header, UserConfig } from '@rspress/shared';
 import { logger } from '@rspress/shared/logger';
+import { loadFrontMatter } from '@rspress/shared/node-utils';
 import type { RouteService } from '../route/RouteService';
-import {
-  normalizePath,
-  loadFrontMatter,
-  escapeMarkdownHeadingIds,
-} from '../utils';
+import { normalizePath, escapeMarkdownHeadingIds } from '../utils';
 import { PluginDriver } from '../PluginDriver';
 import { createMDXOptions } from './options';
 import { TocItem } from './remarkPlugins/toc';

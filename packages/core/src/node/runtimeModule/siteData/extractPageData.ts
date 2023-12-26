@@ -8,7 +8,8 @@ import {
 import { htmlToText } from 'html-to-text';
 import fs from '@rspress/shared/fs-extra';
 import { compile } from '@rspress/mdx-rs';
-import { flattenMdxContent, loadFrontMatter } from '@/node/utils';
+import { loadFrontMatter } from '@rspress/shared/node-utils';
+import { flattenMdxContent } from '@/node/utils';
 import { RouteService } from '@/node/route/RouteService';
 import { applyReplaceRules } from '@/node/utils/applyReplaceRules';
 import { importStatementRegex } from '@/node/constants';
