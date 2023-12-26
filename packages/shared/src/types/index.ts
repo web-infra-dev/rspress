@@ -303,7 +303,7 @@ export interface SearchHooks {
 }
 
 export type LocalSearchOptions = SearchHooks & {
-  mode: 'local';
+  mode?: 'local';
 };
 
 export type RemoteSearchIndexInfo =

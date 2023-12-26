@@ -1,9 +1,4 @@
-import {
-  LocalSearchOptions,
-  PageIndexInfo,
-  RemotePageInfo,
-  RemoteSearchOptions,
-} from '@rspress/shared';
+import { PageIndexInfo, RemotePageInfo } from '@rspress/shared';
 import { normalizeHrefInRuntime as normalizeHref } from '@rspress/runtime';
 import { LOCAL_INDEX, NormalizedSearchResultItem, Provider } from './Provider';
 import {
@@ -14,50 +9,14 @@ import {
 } from './util';
 import { LocalProvider } from './providers/LocalProvider';
 import { RemoteProvider } from './providers/RemoteProvider';
+import {
+  DefaultMatchResultItem,
+  MatchResult,
+  RenderType,
+  SearchOptions,
+} from './types';
 
 const THRESHOLD_CONTENT_LENGTH = 100;
-
-export interface HightlightInfo {
-  start: number;
-  length: number;
-}
-
-interface CommonMatchResult {
-  title: string;
-  header: string;
-  link: string;
-  query: string;
-  highlightInfoList: HightlightInfo[];
-  group: string;
-}
-
-interface TitleMatch extends CommonMatchResult {
-  type: 'title';
-}
-
-interface HeaderMatch extends CommonMatchResult {
-  type: 'header';
-}
-
-interface ContentMatch extends CommonMatchResult {
-  type: 'content';
-  statement: string;
-}
-
-export type MatchResultItem = TitleMatch | HeaderMatch | ContentMatch;
-
-export interface MatchResult {
-  current: MatchResultItem[];
-  others: {
-    index: string;
-    items: MatchResultItem[];
-  }[];
-}
-
-export type SearchOptions = (LocalSearchOptions | RemoteSearchOptions) & {
-  currentLang: string;
-  extractGroupName: (path: string) => string;
-};
 
 export class PageSearcher {
   #options: SearchOptions;
@@ -66,12 +25,12 @@ export class PageSearcher {
 
   #provider?: Provider;
 
-  constructor(options: SearchOptions) {
+  constructor(options: SearchOptions & { indexName?: string }) {
     this.#options = options;
+    this.#indexName = options.indexName;
     switch (options.mode) {
       case 'remote':
         this.#provider = new RemoteProvider();
-        this.#indexName = options.indexName;
         break;
       default:
         this.#provider = new LocalProvider();
@@ -90,18 +49,24 @@ export class PageSearcher {
       this.#isCurrentIndex(res.index),
     ) || {
       index: LOCAL_INDEX,
+      renderType: RenderType.Default,
       hits: [],
     };
 
-    const matchResult: MatchResult = {
-      current: this.#matchResultItem(normaizedKeyWord, currentIndexInfo),
-      others: (
+    const matchResult: MatchResult = [
+      {
+        group: this.#indexName,
+        renderType: RenderType.Default,
+        result: this.#matchResultItem(normaizedKeyWord, currentIndexInfo),
+      },
+      ...(
         searchResult?.filter(res => !this.#isCurrentIndex(res.index)) || []
       ).map(res => ({
-        index: res.index,
-        items: this.#matchResultItem(normaizedKeyWord, res),
+        group: res.index,
+        renderType: RenderType.Default,
+        result: this.#matchResultItem(normaizedKeyWord, res),
       })),
-    };
+    ];
 
     return matchResult;
   }
@@ -110,7 +75,7 @@ export class PageSearcher {
     normaizedKeyWord: string,
     resultItem: NormalizedSearchResultItem,
   ) {
-    const matchedResult: MatchResultItem[] = [];
+    const matchedResult: DefaultMatchResultItem[] = [];
     resultItem?.hits.forEach(item => {
       // Title Match
       this.#matchTitle(item, normaizedKeyWord, matchedResult);
@@ -134,7 +99,7 @@ export class PageSearcher {
   #matchTitle(
     item: PageIndexInfo,
     query: string,
-    matchedResult: MatchResultItem[],
+    matchedResult: DefaultMatchResultItem[],
   ): boolean {
     const { title = '' } = item;
     const normalizedTitle = normalizeTextCase(title);
@@ -161,7 +126,7 @@ export class PageSearcher {
   #matchHeader(
     item: PageIndexInfo,
     query: string,
-    matchedResult: MatchResultItem[],
+    matchedResult: DefaultMatchResultItem[],
   ): boolean {
     const { toc = [], domain = '', title = '' } = item;
     for (const [index, header] of toc.entries()) {
@@ -198,7 +163,7 @@ export class PageSearcher {
   #matchContent(
     item: PageIndexInfo,
     query: string,
-    matchedResult: MatchResultItem[],
+    matchedResult: DefaultMatchResultItem[],
   ) {
     const { content, toc, domain } = item;
     if (!content.length) {

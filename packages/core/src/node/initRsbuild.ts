@@ -59,6 +59,7 @@ async function createInternalBuildConfig(
     : '';
   const enableMdxRs = config?.markdown?.mdxRs ?? true;
   const reactVersion = await detectReactVersion();
+
   const normalizeIcon = (icon: string | undefined) => {
     if (!icon) {
       return undefined;

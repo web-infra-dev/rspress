@@ -267,3 +267,40 @@ function MySearch() {
 ```
 
 In this case, you need to maintain the `focused` state and `setFocused` method yourself, and pass them as props to the `SearchPanel` component for controlling the display and hiding of the search panel.
+
+#### Reuse Default Full Text Search Logic
+
+If you want to reuse the default full text search logic, you can use the `useFullTextSearch` Hook, for example:
+
+```tsx
+import { useFullTextSearch } from 'rspress/theme';
+
+function MySearch() {
+  const { initialized, search } = useFullTextSearch();
+
+  useEffect(() => {
+    async function searchSomeKeywords(keywords: string) {
+      if (initialized) {
+        // Search for keywords
+        const results = await search(keywords);
+        console.log(results);
+      }
+    }
+    searchSomeKeywords('keyword');
+  }, [initialized]);
+
+  return <div>Search</div>;
+}
+```
+
+Here, `initialized` indicates whether the search is initialized, the `search` method is used to search for keywords, returning a Promise, the result of the Promise is the result of the default full text search.
+
+It should be noted that the `useFullTextSearch` Hook will automatically load the search index during initialization, so you need to first determine the `initialized` status, ensure that initialization is complete, and then call the `search` method.
+
+The type definition of the search method is as follows:
+
+```ts
+type SearchFn = (keywords: string, limit?: number) => Promise<SearchResult>;
+```
+
+The limit represents the maximum number of search results, default is 7, which means by default it returns a maximum of seven article results.

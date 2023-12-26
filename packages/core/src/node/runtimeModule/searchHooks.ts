@@ -1,17 +1,19 @@
-import fs from '@rspress/shared/fs-extra';
+import path from 'path';
 import { FactoryContext, RuntimeModuleID } from '.';
 
 export async function searchHookVMPlugin(context: FactoryContext) {
   const { config } = context;
-  let content = 'export const onSearch = () => {}';
+  let content = 'export const onSearch = () => {};';
+  let extname = '';
   if (
     typeof config.search === 'object' &&
     typeof config.search.searchHooks === 'string'
   ) {
-    content = await fs.readFile(config.search.searchHooks, 'utf-8');
+    content = `export * from '${config.search.searchHooks}'`;
+    extname = path.extname(config.search.searchHooks);
   }
 
   return {
-    [RuntimeModuleID.SearchHooks]: content,
+    [`${RuntimeModuleID.SearchHooks}${extname}`]: content,
   };
 }

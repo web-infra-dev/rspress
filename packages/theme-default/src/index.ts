@@ -29,3 +29,5 @@ export { getCustomMDXComponent } from './layout/DocLayout/docComponents';
 export * from './logic';
 
 export { Layout, NotFoundLayout, HomeLayout };
+
+export * from './components/Search/logic/types';
