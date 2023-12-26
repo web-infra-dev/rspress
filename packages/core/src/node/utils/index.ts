@@ -4,7 +4,6 @@ export * from './createHash';
 export * from './detectReactVersion';
 export * from './getASTNodeImport';
 export * from './flattenMdxContent';
-export * from './loadFrontMatter';
 export * from './applyReplaceRules';
 export * from './extractTextAndId';
 export * from './escapeHeadingIds';
