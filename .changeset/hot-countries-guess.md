@@ -3,4 +3,4 @@
 '@rspress/shared': patch
 ---
 
-feat: optimize default title strategy
+feat: optimize default sidebar title strategy
