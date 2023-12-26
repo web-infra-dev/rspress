@@ -526,9 +526,6 @@ importers:
       '@types/yaml-front-matter':
         specifier: ^4.1.0
         version: 4.1.0
-      gray-matter:
-        specifier: 4.0.3
-        version: 4.0.3
       husky:
         specifier: ^8
         version: 8.0.1
