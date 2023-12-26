@@ -54,7 +54,7 @@
   color: var(--rp-c-brand-dark);
 }
 
-.rspress-doc div[class*='language-'] {
+.rspress-doc div[class^='language-'] {
   position: relative;
   margin: 16px 0;
   background-color: var(--rp-code-block-bg);
@@ -70,7 +70,7 @@
 }
 
 @media (min-width: 640px) {
-  .rspress-doc div[class*='language-'] {
+  .rspress-doc div[class^='language-'] {
     border-radius: 16px;
     margin: 24px 0;
     /* box-shadow: 0px 0.8px 2px rgba(0, 0, 0, 0.032), */
@@ -80,13 +80,13 @@
 }
 
 @media (max-width: 640px) {
-  .rspress-doc li div[class*='language-'] {
+  .rspress-doc li div[class^='language-'] {
     border-radius: 8px 0 0 8px;
   }
 }
 
-.rspress-doc [class*='language-'] pre,
-.rspress-doc [class*='language-'] code {
+.rspress-doc [class^='language-'] pre,
+.rspress-doc [class^='language-'] code {
   text-align: left;
   white-space: pre;
   word-spacing: normal;
@@ -101,7 +101,7 @@
   hyphens: none;
 }
 
-.rspress-doc [class*='language-'] pre {
+.rspress-doc [class^='language-'] pre {
   position: relative;
   z-index: 1;
   margin: 0;
@@ -109,7 +109,7 @@
   overflow-x: auto;
 }
 
-.rspress-doc [class*='language-'] code {
+.rspress-doc [class^='language-'] code {
   display: block;
   padding: 16px 0;
   width: fit-content;
@@ -121,12 +121,12 @@
   transition: color 0.5s;
 }
 
-.rspress-doc [class*='language-'] .rspress-code-content {
+.rspress-doc [class^='language-'] .rspress-code-content {
   position: relative;
 }
 
-.rspress-doc [class*='language-'] .rspress-code-content button.copy,
-.rspress-doc [class*='language-'] .rspress-code-content button.wrap {
+.rspress-doc [class^='language-'] .rspress-code-content button.copy,
+.rspress-doc [class^='language-'] .rspress-code-content button.wrap {
   position: absolute;
   top: 12px;
   z-index: 3;
@@ -143,37 +143,40 @@
   background-repeat: no-repeat;
 }
 
-.rspress-doc [class*='language-'] .rspress-code-content button.wrap {
+.rspress-doc [class^='language-'] .rspress-code-content button.wrap {
   right: 44px;
   background-image: var(--rp-icon-wrap);
   background-color: var(--rp-code-wrap-code-hover-bg);
 }
 
-.rspress-doc [class*='language-'] .rspress-code-content button.copy {
+.rspress-doc [class^='language-'] .rspress-code-content button.copy {
   right: 12px;
   background-image: var(--rp-icon-copy);
   background-color: var(--rp-code-copy-code-hover-bg);
 }
 
-.rspress-doc [class*='language-']:hover .rspress-code-content button.copy,
-.rspress-doc [class*='language-']:hover .rspress-code-content button.wrap {
+.rspress-doc [class^='language-']:hover .rspress-code-content button.copy,
+.rspress-doc [class^='language-']:hover .rspress-code-content button.wrap {
   opacity: 1;
 }
 
-.rspress-doc [class*='language-'] .rspress-code-content button.copy:hover,
-.rspress-doc [class*='language-'] .rspress-code-content button.wrap:hover {
+.rspress-doc [class^='language-'] .rspress-code-content button.copy:hover,
+.rspress-doc [class^='language-'] .rspress-code-content button.wrap:hover {
   transform: scale(1.15);
 }
 
-.rspress-doc [class*='language-'] .rspress-code-content button.wrap.wrapped,
-.rspress-doc [class*='language-'] .rspress-code-content button.wrap:hover.wrapped {
+.rspress-doc [class^='language-'] .rspress-code-content button.wrap.wrapped,
+.rspress-doc
+  [class^='language-']
+  .rspress-code-content
+  button.wrap:hover.wrapped {
   background-image: var(--rp-icon-wrapped);
   transform: scale(1);
 }
 
-.rspress-doc [class*='language-'] .rspress-code-content button.copy.copied,
+.rspress-doc [class^='language-'] .rspress-code-content button.copy.copied,
 .rspress-doc
-  [class*='language-']
+  [class^='language-']
   .rspress-code-content
   button.copy:hover.copied {
   border-radius: 0 4px 4px 0;
@@ -182,7 +185,7 @@
   opacity: 1;
 }
 
-.rspress-doc [class*='language-'] .rspress-code-content span.highlighted {
+.rspress-doc [class^='language-'] .rspress-code-content span.highlighted {
   background-color: var(--rp-code-line-highlight-color);
   position: absolute;
   display: block;
@@ -191,6 +194,6 @@
   padding-left: 20px;
 }
 
-.rspress-doc [class*='language-'] .rspress-code-content > code {
+.rspress-doc [class^='language-'] .rspress-code-content > code {
   padding: 16px 20px;
 }
