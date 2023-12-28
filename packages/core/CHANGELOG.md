@@ -1,5 +1,25 @@
 # @rspress/core
 
+## 1.9.0
+
+### Minor Changes
+
+- 0f97eb8: feat: support custom search source
+
+### Patch Changes
+
+- a477d1b: perf(deps): remove unused ora and autoprefixer
+- Updated dependencies [0f97eb8]
+- Updated dependencies [08b9305]
+- Updated dependencies [f78ec18]
+  - @rspress/theme-default@1.9.0
+  - @rspress/shared@1.9.0
+  - @rspress/plugin-auto-nav-sidebar@1.9.0
+  - @rspress/plugin-container-syntax@1.9.0
+  - @rspress/plugin-last-updated@1.9.0
+  - @rspress/plugin-medium-zoom@1.9.0
+  - @rspress/runtime@1.9.0
+
 ## 1.8.4
 
 ### Patch Changes

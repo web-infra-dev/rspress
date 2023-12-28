@@ -1,6 +1,6 @@
 {
   "name": "@rspress/plugin-playground",
-  "version": "1.8.4",
+  "version": "1.9.0",
   "description": "A plugin for rspress to preview the code block in markdown/mdx file.",
   "bugs": "https://github.com/web-infra-dev/rspress/issues",
   "repository": {
