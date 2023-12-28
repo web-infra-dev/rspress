@@ -1,5 +1,11 @@
 # @rspress/docs
 
+## 1.9.0
+
+### Minor Changes
+
+- 13e2722: feat: add translate-plugins
+
 ## 1.8.4
 
 ## 1.8.3

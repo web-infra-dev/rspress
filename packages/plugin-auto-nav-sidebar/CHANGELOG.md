@@ -1,5 +1,14 @@
 # @rspress/plugin-auto-sidebar
 
+## 1.9.0
+
+### Patch Changes
+
+- 08b9305: feat: optimize default sidebar title strategy
+- Updated dependencies [0f97eb8]
+- Updated dependencies [08b9305]
+  - @rspress/shared@1.9.0
+
 ## 1.8.4
 
 ### Patch Changes
