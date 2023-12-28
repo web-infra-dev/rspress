@@ -39,6 +39,7 @@ export const Layout: React.FC<LayoutProps> = props => {
     afterHero,
     beforeFeatures,
     afterFeatures,
+    afterNavMenu,
   } = props;
   const docProps: DocLayoutProps = {
     beforeDocFooter,
@@ -174,6 +175,7 @@ export const Layout: React.FC<LayoutProps> = props => {
           beforeNavTitle={beforeNavTitle}
           afterNavTitle={afterNavTitle}
           beforeNav={beforeNav}
+          afterNavMenu={afterNavMenu}
         />
       )}
 

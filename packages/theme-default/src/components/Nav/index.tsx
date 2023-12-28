@@ -18,12 +18,13 @@ export interface NavProps {
   beforeNav?: React.ReactNode;
   beforeNavTitle?: React.ReactNode;
   afterNavTitle?: React.ReactNode;
+  afterNavMenu?: React.ReactNode;
 }
 
 const DEFAULT_NAV_POSTION = 'right';
 
 export function Nav(props: NavProps) {
-  const { beforeNavTitle, afterNavTitle, beforeNav } = props;
+  const { beforeNavTitle, afterNavTitle, beforeNav, afterNavMenu } = props;
   const { siteData } = usePageData();
   const { base } = siteData;
   const { pathname } = useLocation();
@@ -134,7 +135,7 @@ export function Nav(props: NavProps) {
           >
             {leftNav()}
             {rightNav()}
-
+            {afterNavMenu}
             <div className={styles.mobileNavMenu}>
               {isMobile && <Search />}
               <NavHamburger siteData={siteData} pathname={pathname} />
