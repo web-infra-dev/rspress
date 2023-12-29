@@ -1,27 +1,27 @@
 /* eslint-disable max-lines */
-import { createPortal } from 'react-dom';
-import { useEffect, useRef, useState } from 'react';
-import { groupBy, debounce } from 'lodash-es';
-import * as userSearchHooks from 'virtual-search-hooks';
-import { SearchOptions, isProduction } from '@rspress/shared';
 import { usePageData } from '@rspress/runtime';
-import { getSidebarGroupData } from '../../logic/useSidebarData';
+import { SearchOptions, isProduction } from '@rspress/shared';
+import { debounce, groupBy } from 'lodash-es';
+import { useEffect, useMemo, useRef, useState } from 'react';
+import { createPortal } from 'react-dom';
+import * as userSearchHooks from 'virtual-search-hooks';
 import { useLocaleSiteData } from '../../logic/useLocaleSiteData';
-import { Tabs, Tab } from '../Tabs';
-import styles from './index.module.scss';
-import SearchSvg from './assets/search.svg';
-import LoadingSvg from './assets/loading.svg';
+import { getSidebarGroupData } from '../../logic/useSidebarData';
+import { Tab, Tabs } from '../Tabs';
+import { NoSearchResult } from './NoSearchResult';
+import { SuggestItem } from './SuggestItem';
 import CloseSvg from './assets/close.svg';
+import LoadingSvg from './assets/loading.svg';
+import SearchSvg from './assets/search.svg';
+import styles from './index.module.scss';
+import { PageSearcher } from './logic/search';
 import type {
   CustomMatchResult,
   DefaultMatchResult,
   MatchResult,
 } from './logic/types';
 import { RenderType } from './logic/types';
-import { PageSearcher } from './logic/search';
-import { SuggestItem } from './SuggestItem';
 import { normalizeSearchIndexes, removeDomain } from './logic/util';
-import { NoSearchResult } from './NoSearchResult';
 
 const KEY_CODE = {
   ARROW_UP: 'ArrowUp',
@@ -166,8 +166,8 @@ export function SearchPanel({ focused, setFocused }: SearchPanelProps) {
     // init pageSearcher again when lang changed
   }, [lang]);
 
-  const onQueryChanged = async (e: React.ChangeEvent<HTMLInputElement>) => {
-    let newQuery = e.target.value;
+  const handleQueryChangedImpl = async (value: string) => {
+    let newQuery = value;
     setQuery(newQuery);
     if (newQuery) {
       const searchResult: MatchResult = [];
@@ -218,6 +218,10 @@ export function SearchPanel({ focused, setFocused }: SearchPanelProps) {
       }
     }
   };
+  const handleQueryChange = useMemo(
+    () => debounce(handleQueryChangedImpl, 150),
+    [],
+  );
 
   const normalizeSuggestions = (suggestions: DefaultMatchResult['result']) =>
     groupBy(suggestions, 'group');
@@ -348,7 +352,7 @@ export function SearchPanel({ focused, setFocused }: SearchPanelProps) {
                     aria-label="Search"
                     autoComplete="off"
                     autoFocus
-                    onChange={debounce(onQueryChanged, 150)}
+                    onChange={e => handleQueryChange(e.target.value)}
                   />
                   <label>
                     <CloseSvg
