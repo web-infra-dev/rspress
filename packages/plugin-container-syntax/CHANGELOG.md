@@ -1,5 +1,11 @@
 # @rspress/remark-container
 
+## 1.9.1
+
+### Patch Changes
+
+- @rspress/shared@1.9.1
+
 ## 1.9.0
 
 ### Patch Changes

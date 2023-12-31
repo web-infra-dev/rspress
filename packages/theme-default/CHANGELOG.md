@@ -1,5 +1,14 @@
 # @rspress/theme-default
 
+## 1.9.1
+
+### Patch Changes
+
+- e97bbc6: feat: add after nav menu slot
+- 77125d5: fix: failed to submit search when rendering with react@16
+  - @rspress/runtime@1.9.1
+  - @rspress/shared@1.9.1
+
 ## 1.9.0
 
 ### Minor Changes
