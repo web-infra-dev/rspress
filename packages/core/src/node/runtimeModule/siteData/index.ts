@@ -72,7 +72,10 @@ export async function siteDataVMPlugin(context: FactoryContext) {
       indexHashByLang[lang] = indexHash;
       await fs.ensureDir(TEMP_DIR);
       await fs.writeFile(
-        path.join(TEMP_DIR, `${SEARCH_INDEX_NAME}.${lang}.${indexHash}.json`),
+        path.join(
+          TEMP_DIR,
+          `${SEARCH_INDEX_NAME}${lang ? `.${lang}` : ''}.${indexHash}.json`,
+        ),
         stringfiedIndex,
       );
     }),
