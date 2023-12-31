@@ -7,10 +7,6 @@ import { UserConfig, isSCM, SEARCH_INDEX_NAME } from '@rspress/shared';
 import { logger } from '@rspress/shared/logger';
 import { isProduction, OUTPUT_DIR, TEMP_DIR } from './constants';
 
-export function getSearchIndexFilename(indexHash: string) {
-  return `${SEARCH_INDEX_NAME}.${indexHash}.json`;
-}
-
 export async function writeSearchIndex(config: UserConfig) {
   if (config?.search === false) {
     return;
