@@ -1,5 +1,11 @@
 # @rspress/docs
 
+## 1.9.1
+
+### Patch Changes
+
+- e97bbc6: feat: add after nav menu slot
+
 ## 1.9.0
 
 ### Minor Changes
