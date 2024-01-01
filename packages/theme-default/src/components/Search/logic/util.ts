@@ -37,12 +37,13 @@ export function formatText(text: string) {
     : text;
 }
 
-export function normalizeTextCase(text: string) {
+export function normalizeTextCase(text: string | number) {
   const result = text
+    .toString()
     .toLowerCase()
     .normalize('NFD')
     .replace(/[\u0300-\u036f]/g, '');
-  return kRegex.test(text) ? result.normalize('NFC') : result;
+  return kRegex.test(String(text)) ? result.normalize('NFC') : result;
 }
 
 export function removeDomain(url: string) {
