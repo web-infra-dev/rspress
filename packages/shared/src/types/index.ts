@@ -323,6 +323,13 @@ export type RemoteSearchOptions = SearchHooks & {
 
 export type SearchOptions = LocalSearchOptions | RemoteSearchOptions | false;
 
+export interface MdxRsOptions {
+  /**
+   * Determine whether the file use mdxRs compiler
+   */
+  include?: (filepath: string) => boolean;
+}
+
 export interface MarkdownOptions {
   remarkPlugins?: PluggableList;
   rehypePlugins?: PluggableList;
@@ -350,7 +357,7 @@ export interface MarkdownOptions {
   /**
    * Whether to enable mdx-rs, default is true
    */
-  mdxRs?: boolean;
+  mdxRs?: boolean | MdxRsOptions;
   /**
    * @deprecated, use `mdxRs` instead
    */

@@ -15,7 +15,6 @@ interface LoaderOptions {
   config: UserConfig;
   docDirectory: string;
   checkDeadLinks: boolean;
-  enableMdxRs: boolean;
   routeService: RouteService;
   pluginDriver: PluginDriver;
 }
@@ -40,14 +39,8 @@ export default async function mdxLoader(
     toc: [],
   } as PageMeta;
 
-  const {
-    config,
-    docDirectory,
-    checkDeadLinks,
-    routeService,
-    enableMdxRs,
-    pluginDriver,
-  } = options;
+  const { config, docDirectory, checkDeadLinks, routeService, pluginDriver } =
+    options;
 
   const { frontmatter, content } = loadFrontMatter(
     source,
@@ -59,6 +52,15 @@ export default async function mdxLoader(
   // preprocessor
   const preprocessedContent = escapeMarkdownHeadingIds(content);
   const isHomePage = frontmatter.pageType === 'home';
+
+  let enableMdxRs;
+  const mdxRs = config?.markdown?.mdxRs ?? true;
+  if (typeof mdxRs === 'object') {
+    enableMdxRs =
+      typeof mdxRs?.include === 'function' ? mdxRs.include(filepath) : true;
+  } else {
+    enableMdxRs = mdxRs;
+  }
 
   try {
     let compileResult: string;

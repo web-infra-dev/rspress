@@ -121,10 +121,8 @@ export default defineConfig({
 
 ### markdown.mdxRs
 
-- Type: `boolean`
+- Type: `boolean | { include: (filepath: string) => boolean }`
 - Default: `true`
-
-是否使用 MDX 的 Rust 版本编译器，默认开启。比如：
 
 import MdxRs from '../../fragments/mdx-rs';
 
