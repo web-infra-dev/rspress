@@ -11,6 +11,7 @@ export function useTranslationMenuData() {
   const localeLanguages = Object.values(
     siteData.locales || siteData.themeConfig.locales || {},
   );
+  const cleanUrls = siteData.route?.cleanUrls || false;
   const hasMultiLanguage = localeLanguages.length > 1;
   const { lang: currentLang } = page;
   const { base } = siteData;
@@ -39,6 +40,7 @@ export function useTranslationMenuData() {
               default: defaultVersion,
             },
             base,
+            cleanUrls,
           ),
         })),
         activeValue: localeLanguages.find(item => currentLang === item.lang)
@@ -52,6 +54,7 @@ export function useVersionMenuData() {
   const { siteData } = usePageData();
   const currentVersion = useVersion();
   const { pathname } = useLocation();
+  const cleanUrls = siteData.route?.cleanUrls || false;
   const defaultVersion = siteData.multiVersion.default || '';
   const versions = siteData.multiVersion.versions || [];
   const { base } = siteData;
@@ -66,6 +69,7 @@ export function useVersionMenuData() {
           default: defaultVersion,
         },
         base,
+        cleanUrls,
       ),
     })),
     text: currentVersion,
