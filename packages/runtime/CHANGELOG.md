@@ -1,5 +1,12 @@
 # @rspress/runtime
 
+## 1.9.2
+
+### Patch Changes
+
+- Updated dependencies [e1619c7]
+  - @rspress/shared@1.9.2
+
 ## 1.9.1
 
 ### Patch Changes
