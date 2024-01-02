@@ -29,13 +29,13 @@ test.describe('i18n test', async () => {
     const text = await page.evaluate(h1 => h1?.textContent, h1);
     await expect(text).toContain('首页');
 
-    const button = await page.$('.translation .nav-menu-group-button')!;
+    const button = await page.$('.translation .rspress-nav-menu-group-button')!;
     expect(button).toBeTruthy();
     // hover the button
     await button!.hover();
     // click the button content to switch to English
     const buttonContent = await page.$(
-      '.translation .nav-menu-group-content > div > div:nth-child(2)',
+      '.translation .rspress-nav-menu-group-content > div > div:nth-child(2)',
     );
     const buttonContentText = await page.evaluate(
       buttonContent => buttonContent?.textContent,
