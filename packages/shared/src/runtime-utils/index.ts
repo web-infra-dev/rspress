@@ -124,15 +124,16 @@ export function replaceLang(
     default: string;
   },
   base = '',
+  cleanUrls = false,
 ) {
   let url = removeBase(rawUrl, base);
   // rspress.dev/builder + switch to en -> rspress.dev/builder/en/index.html
   if (!url) {
-    url = '/index.html';
+    url = cleanUrls ? '/index' : '/index.html';
   }
 
   if (url.endsWith('/')) {
-    url += 'index.html';
+    url += cleanUrls ? '/index' : '/index.html';
   }
 
   let versionPart = '';
@@ -159,7 +160,7 @@ export function replaceLang(
   purePathPart = parts.join('/') || '';
 
   if ((versionPart || langPart) && !purePathPart) {
-    purePathPart = 'index.html';
+    purePathPart = cleanUrls ? 'index' : 'index.html';
   }
 
   return withBase(
@@ -178,11 +179,12 @@ export function replaceVersion(
     default: string;
   },
   base = '',
+  cleanUrls = false,
 ) {
   let url = removeBase(rawUrl, base);
   // rspress.dev/builder + switch to en -> rspress.dev/builder/en/index.html
   if (!url) {
-    url = '/index.html';
+    url = cleanUrls ? '/index' : '/index.html';
   }
   let versionPart = '';
 
@@ -200,7 +202,7 @@ export function replaceVersion(
   let restPart = parts.join('/') || '';
 
   if (versionPart && !restPart) {
-    restPart = 'index.html';
+    restPart = cleanUrls ? 'index' : 'index.html';
   }
 
   return withBase(
