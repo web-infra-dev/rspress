@@ -197,8 +197,8 @@ export function SearchPanel({ focused, setFocused }: SearchPanelProps) {
             ...customSearchResult.map(
               item =>
                 ({
-                  ...item,
                   renderType: RenderType.Custom,
+                  ...item,
                 } as CustomMatchResult),
             ),
           );

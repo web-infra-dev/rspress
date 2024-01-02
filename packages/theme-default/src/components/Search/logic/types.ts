@@ -62,8 +62,8 @@ export type OnSearch = (
   query: string,
   matchedResult: DefaultMatchResult[],
 ) =>
-  | { group: string; result: unknown }[]
-  | Promise<{ group: string; result: unknown }[]>
+  | { group: string; result: unknown; renderType?: RenderType }[]
+  | Promise<{ group: string; result: unknown; renderType?: RenderType }[]>
   | void;
 
 export type AfterSearch = (
