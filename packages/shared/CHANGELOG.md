@@ -1,5 +1,11 @@
 # @rspress/shared
 
+## 1.9.2
+
+### Patch Changes
+
+- e1619c7: fix: sidebar disappeared in cleanUrl mode
+
 ## 1.9.1
 
 ## 1.9.0

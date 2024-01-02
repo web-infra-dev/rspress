@@ -1,5 +1,16 @@
 # @rspress/theme-default
 
+## 1.9.2
+
+### Patch Changes
+
+- 6ac3d36: feat: support custom render type in onSearch hook
+- e1619c7: fix: sidebar disappeared in cleanUrl mode
+- d8f974b: fix: normalize text case for number
+- Updated dependencies [e1619c7]
+  - @rspress/shared@1.9.2
+  - @rspress/runtime@1.9.2
+
 ## 1.9.1
 
 ### Patch Changes
