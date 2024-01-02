@@ -69,6 +69,7 @@ export { beforeSearch };
 
 ```ts
 import type { OnSearch } from 'rspress/theme';
+import { RenderType } from 'rspress/theme';
 
 const onSearch: OnSearch = async (query, defaultSearchResult) => {
   // 可根据 query 请求数据
@@ -93,6 +94,7 @@ const onSearch: OnSearch = async (query, defaultSearchResult) => {
           },
         ],
       },
+      renderType: RenderType.Custom,
     },
   ];
 };
@@ -106,10 +108,11 @@ export { onSearch };
 {
   group: string; // 搜索结果的分组名称，将会在搜索结果中显示
   result: unknown;
+  renderType?: RenderType; // 搜索结果的渲染类型，支持 Default 和 Custom 两种类型。如果不填，默认取 RenderType.Custom
 }
 ```
 
-其中 `result` 为搜索结果，你可以自定义内部的结构，并且在后续的 `render` 钩子函数中拿到它进行渲染。
+其中 `result` 为搜索结果，你可以自定义内部的结构。如果 renderType 为 `RenderType.Default`，则会使用默认的渲染方式进行渲染，如果为 `RenderType.Custom`，则会使用 `render` 钩子函数中的渲染方式进行渲染。
 
 ### afterSearch
 

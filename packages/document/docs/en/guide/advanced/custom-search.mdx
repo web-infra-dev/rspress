@@ -69,6 +69,7 @@ Here is an example of how to use it:
 
 ```ts
 import type { OnSearch } from 'rspress/theme';
+import { RenderType } from 'rspress/theme';
 
 const onSearch: OnSearch = async (query, defaultSearchResult) => {
   // Can request data based on query
@@ -93,6 +94,7 @@ const onSearch: OnSearch = async (query, defaultSearchResult) => {
           },
         ],
       },
+      renderType: RenderType.Custom,
     },
   ];
 };
@@ -106,10 +108,11 @@ Note that the return value of the `onSearch` hook function is an array, each ite
 {
   group: string; // The group name of the search result, which will be displayed in the search results.
   result: unknown;
+  renderType: RenderType; // The type of the search result, which can be `RenderType.Default` or `RenderType.Custom`. `RenderType.custom` by default.
 }
 ```
 
-The `result` is the search result, you can customize its internal structure and render it in the following `render` hook.
+The `result` is the search result, you can customize its internal structure. The `renderType` is the type of the search result, which can be `RenderType.Default` or `RenderType.Custom`. If it is `RenderType.Default`, the default search result rendering logic will be used; if it is `RenderType.Custom`, the `render` function will be used to render the search result.
 
 ### afterSearch
 
