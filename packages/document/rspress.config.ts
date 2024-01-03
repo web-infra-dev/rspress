@@ -56,7 +56,7 @@ gtag('config', 'G-66B2Z6KG0J');`,
   themeConfig: {
     enableContentAnimation: true,
     footer: {
-      message: '© 2023 Bytedance Inc. All Rights Reserved.',
+      message: '© 2024 Bytedance Inc. All Rights Reserved.',
     },
     hideNavbar: 'auto',
     socialLinks: [
