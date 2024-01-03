@@ -76,6 +76,9 @@ export function pluginPreview(options?: Options): RspressPlugin {
       config.markdown.mdxRs = false;
       return config;
     },
+    extendPageData(pageData) {
+      pageData.demoMeta = Object.values(demoMeta).flat();
+    },
     addPages(_config, _isProd) {
       return [
         {
