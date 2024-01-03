@@ -10,7 +10,9 @@ export default (props: { moduleName: string }) => {
   const { moduleName } = props;
   // some api doc have two languages.
   const apiDocMap = page.apiDocMap as Record<string, string>;
-  const apiDoc = apiDocMap[moduleName] || apiDocMap[`${moduleName}-${lang}`];
+  // avoid error when no page data
+  const apiDoc =
+    apiDocMap?.[moduleName] || apiDocMap?.[`${moduleName}-${lang}`];
   return (
     <ReactMarkdown
       remarkPlugins={[[remarkGfm]]}
