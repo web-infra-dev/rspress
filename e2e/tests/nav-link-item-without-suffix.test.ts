@@ -29,17 +29,23 @@ test.describe('Nav should functions well', async () => {
     navMenu = page.locator('.rspress-nav-menu');
     navMenuItems = await page.locator('.rspress-nav-menu > *').all();
 
-    onlyItemsButton = navMenuItems[1].locator('.nav-menu-group-button');
+    onlyItemsButton = navMenuItems[1].locator('.rspress-nav-menu-group-button');
     onlyItemsChildren = await navMenuItems[1]
-      .locator('.nav-menu-group-content a')
+      .locator('.rspress-nav-menu-group-content a')
       .all();
-    onlyItemsContainer = navMenuItems[1].locator('.nav-menu-group-content');
+    onlyItemsContainer = navMenuItems[1].locator(
+      '.rspress-nav-menu-group-content',
+    );
 
-    itemsAndLinkButton = navMenuItems[2].locator('.nav-menu-group-button');
+    itemsAndLinkButton = navMenuItems[2].locator(
+      '.rspress-nav-menu-group-button',
+    );
     itemsAndLinkChildren = await navMenuItems[2]
-      .locator('.nav-menu-group-content a')
+      .locator('.rspress-nav-menu-group-content a')
       .all();
-    itemsAndLinkContainer = navMenuItems[2].locator('.nav-menu-group-content');
+    itemsAndLinkContainer = navMenuItems[2].locator(
+      '.rspress-nav-menu-group-content',
+    );
   };
 
   const gotoPage = (suffix: string) => `http://localhost:${appPort}${suffix}`;

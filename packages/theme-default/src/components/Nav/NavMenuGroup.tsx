@@ -91,7 +91,7 @@ export function NavMenuGroup(item: NavMenuGroupItem) {
             {item.text}
           </p>
         )}
-        {(item.items as NavItemWithLink[]).map(renderLinkItem)}
+        {item.items.map(renderLinkItem)}
       </div>
     );
   };
@@ -102,7 +102,7 @@ export function NavMenuGroup(item: NavMenuGroupItem) {
     >
       <button
         onMouseEnter={() => setIsOpen(true)}
-        className="nav-menu-group-button flex-center items-center font-medium text-sm text-text-1 hover:text-text-2 transition-colors duration-200"
+        className="rspress-nav-menu-group-button flex-center items-center font-medium text-sm text-text-1 hover:text-text-2 transition-colors duration-200"
       >
         {link ? (
           // @ts-expect-error item.text may be ReactElement
@@ -123,7 +123,7 @@ export function NavMenuGroup(item: NavMenuGroupItem) {
         )}
       </button>
       <div
-        className="nav-menu-group-content absolute mx-0.8 transition-opacity duration-300"
+        className="rspress-nav-menu-group-content absolute mx-0.8 transition-opacity duration-300"
         style={{
           opacity: isOpen ? 1 : 0,
           visibility: isOpen ? 'visible' : 'hidden',

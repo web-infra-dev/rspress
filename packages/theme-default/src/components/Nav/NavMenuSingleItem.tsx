@@ -27,7 +27,7 @@ export function NavMenuSingleItem(
     <Link href={normalizeHref(item.link)}>
       <div
         key={item.text}
-        className={`${styles.singleItem} ${
+        className={`rspress-nav-menu-item ${styles.singleItem} ${
           isActive ? styles.activeItem : ''
         } text-sm font-medium mx-1.5 px-3 py-2 flex items-center`}
       >

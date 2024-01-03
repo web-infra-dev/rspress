@@ -15,7 +15,10 @@ export function Search() {
 
   return (
     <>
-      <div className={styles.navSearchButton} onClick={() => setFocused(true)}>
+      <div
+        className={`rspress-nav-search-button ${styles.navSearchButton}`}
+        onClick={() => setFocused(true)}
+      >
         <button>
           <SearchSvg width="18" hight="18" />
           <p className={styles.searchWord}>Search Docs</p>
