@@ -1,5 +1,19 @@
 # @rspress/core
 
+## 1.9.3
+
+### Patch Changes
+
+- Updated dependencies [ca9c0f6]
+- Updated dependencies [1617bae]
+  - @rspress/runtime@1.9.3
+  - @rspress/theme-default@1.9.3
+  - @rspress/plugin-medium-zoom@1.9.3
+  - @rspress/plugin-auto-nav-sidebar@1.9.3
+  - @rspress/plugin-container-syntax@1.9.3
+  - @rspress/plugin-last-updated@1.9.3
+  - @rspress/shared@1.9.3
+
 ## 1.9.2
 
 ### Patch Changes

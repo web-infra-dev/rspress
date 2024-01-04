@@ -1,5 +1,11 @@
 # @rspress/plugin-api-docgen
 
+## 1.9.3
+
+### Patch Changes
+
+- 15e3905: fix(api-docgen): add opitional chaining operator when read apiDocMap
+
 ## 1.9.2
 
 ## 1.9.1
