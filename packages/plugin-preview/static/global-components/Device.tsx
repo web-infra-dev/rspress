@@ -1,5 +1,4 @@
 import { usePageData, withBase } from '@rspress/core/runtime';
-import { demos } from 'virtual-meta';
 import { useCallback, useEffect, useState } from 'react';
 import { normalizeId } from '../../dist/utils';
 import MobileOperation from './common/mobile-operation';
@@ -18,8 +17,9 @@ export default () => {
   const pageName = `_${normalizeId(page.pagePath)}`;
   const url = `~demo/${pageName}`;
   const haveDemos =
-    demos.flat().filter(item => new RegExp(`${pageName}_\\d+`).test(item.id))
-      .length > 0;
+    ((page.demoMeta || []) as { id: string }[]).filter(item =>
+      new RegExp(`${pageName}_\\d+`).test(item.id),
+    ).length > 0;
   const initialInnerWidth =
     typeof window !== 'undefined' ? window.innerWidth : 0;
   const [asideWidth, setAsideWidth] = useState('0px');
