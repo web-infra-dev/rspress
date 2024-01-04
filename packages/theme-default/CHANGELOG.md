@@ -1,5 +1,14 @@
 # @rspress/theme-default
 
+## 1.9.3
+
+### Patch Changes
+
+- 1617bae: feat: add class name for nav menu item and search button
+- Updated dependencies [ca9c0f6]
+  - @rspress/runtime@1.9.3
+  - @rspress/shared@1.9.3
+
 ## 1.9.2
 
 ### Patch Changes

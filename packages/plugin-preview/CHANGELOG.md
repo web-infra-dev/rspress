@@ -1,5 +1,12 @@
 # @rspress/plugin-preview
 
+## 1.9.3
+
+### Patch Changes
+
+- a949537: fix(plugin-preview): remove virtual demo and get it from pageData in Device
+  - @rspress/shared@1.9.3
+
 ## 1.9.2
 
 ### Patch Changes
