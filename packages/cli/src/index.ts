@@ -23,7 +23,7 @@ const setNodeEnv = (env: 'development' | 'production') => {
   process.env.NODE_ENV = env;
 };
 
-cli.option('--config [config]', 'Specify the path to the config file');
+cli.option('-c,--config [config]', 'Specify the path to the config file');
 
 cli
   .command('[root]', 'start dev server') // default command
@@ -104,27 +104,23 @@ cli
     },
   );
 
-cli
-  .command('build [root]')
-  .option('-c --config <config>', 'specify config file')
-  .action(async (root, options) => {
-    setNodeEnv('production');
-    const cwd = process.cwd();
-    const config = await loadConfigFile(options.config);
-    if (root) {
-      config.root = path.join(cwd, root);
-    }
-    await build({
-      appDirectory: cwd,
-      docDirectory: config.root || path.join(cwd, root ?? 'docs'),
-      config,
-    });
+cli.command('build [root]').action(async (root, options) => {
+  setNodeEnv('production');
+  const cwd = process.cwd();
+  const config = await loadConfigFile(options.config);
+  if (root) {
+    config.root = path.join(cwd, root);
+  }
+  await build({
+    appDirectory: cwd,
+    docDirectory: config.root || path.join(cwd, root ?? 'docs'),
+    config,
   });
+});
 
 cli
   .command('preview')
   .alias('serve')
-  .option('-c --config <config>', 'specify config file')
   .option('--port [port]', 'port number')
   .option('--host [host]', 'hostname')
   .action(
