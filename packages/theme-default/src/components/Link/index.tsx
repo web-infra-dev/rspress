@@ -60,7 +60,7 @@ export function Link(props: LinkProps) {
     }
 
     // handle normal link
-    if (!process.env.__SSR__) {
+    if (!process.env.__SSR__ && !inCurrentPage) {
       const matchedRoutes = matchRoutes(
         routes,
         normalizeRoutePath(withBaseUrl),
