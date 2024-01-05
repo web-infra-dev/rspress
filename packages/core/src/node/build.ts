@@ -16,6 +16,7 @@ import {
   OUTPUT_DIR,
   APP_HTML_MARKER,
   HEAD_MARKER,
+  META_GENERATOR,
   HTML_START_TAG,
   BODY_START_TAG,
   PUBLIC_DIR,
@@ -112,6 +113,7 @@ export async function renderPages(
   const ssrBundlePath = join(outputPath, 'ssr', 'main.cjs');
   try {
     const { default: fs } = await import('@rspress/shared/fs-extra');
+    const { version } = await import('../../package.json');
     // There are two cases where we will fallback to CSR:
     // 1. ssr bundle load failed
     // 2. ssr bundle render failed
@@ -169,6 +171,10 @@ export async function renderPages(
             // Don't use `string` as second param
             // To avoid some special characters transformed to the marker, such as `$&`, etc.
             .replace(APP_HTML_MARKER, () => appHtml)
+            .replace(
+              META_GENERATOR,
+              () => `<meta name="generator" content="Rspress v${version}">`,
+            )
             .replace(
               HEAD_MARKER,
               (config?.head || [])
