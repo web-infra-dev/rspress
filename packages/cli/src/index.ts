@@ -6,6 +6,7 @@ import { logger } from '@rspress/shared/logger';
 import chokidar from 'chokidar';
 import chalk from 'chalk';
 import { loadConfigFile } from './config/loadConfigFile';
+import update from './update';
 
 const CONFIG_FILES = ['rspress.config.ts', 'rspress.config.js', '_meta.json'];
 
@@ -136,5 +137,7 @@ cli
       });
     },
   );
+
+cli.command('update', 'update elavant packages about rspress').action(update);
 
 cli.parse();
