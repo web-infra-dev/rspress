@@ -158,6 +158,8 @@ export function SearchPanel({ focused, setFocused }: SearchPanelProps) {
       if (!pageSearcherRef.current) {
         initPageSearcher();
       }
+    } else {
+      setQuery('');
     }
   }, [focused]);
 
