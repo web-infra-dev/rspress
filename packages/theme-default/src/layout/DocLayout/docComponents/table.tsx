@@ -5,6 +5,9 @@ export const Table = (props: ComponentProps<'table'>) => {
     <table
       {...props}
       className="table border-collapse text-base my-5 overflow-x-auto leading-7 border-gray-light-2"
+      style={{
+        wordBreak: 'break-word',
+      }}
     />
   );
 };
