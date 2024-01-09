@@ -1,12 +1,12 @@
 import { join } from 'path';
 import type { RspressPlugin } from '@rspress/shared';
 import { DEFAULT_HIGHLIGHT_LANGUAGES } from '@rspress/shared';
-import { Lang } from 'shiki';
+import type { Lang } from 'shiki';
 import { getHighlighter } from './highlighter';
 import { rehypePluginShiki } from './rehypePlugin';
-import { ITransformer } from './types';
+import type { ITransformer } from './types';
 
-interface PluginShikiOptions {
+export interface PluginShikiOptions {
   /**
    * The theme of shiki.
    */
