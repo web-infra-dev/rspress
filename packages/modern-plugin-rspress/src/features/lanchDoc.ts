@@ -19,7 +19,7 @@ export async function launchDoc({
   const json = JSON.parse(
     fs.readFileSync(resolve(appDir, './package.json'), 'utf8'),
   );
-  const root = join(appDir, 'docs');
+  const root = resolve(appDir, doc.root ?? 'docs');
   const { dev, build } = await import('@rspress/core');
 
   const languages = doc.themeConfig?.locales?.map(locale => locale.lang) ||
