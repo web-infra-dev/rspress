@@ -1,12 +1,13 @@
 import path from 'path';
-import type { UserConfig } from '@rspress/shared';
-import fs from '@rspress/shared/fs-extra';
 import {
+  type UserConfig,
+  removeLeadingSlash,
   MDX_REGEXP,
   RSPRESS_TEMP_DIR,
   isDebugMode,
   removeTrailingSlash,
 } from '@rspress/shared';
+import fs from '@rspress/shared/fs-extra';
 import type { RsbuildInstance, RsbuildConfig } from '@rsbuild/core';
 import sirv from 'sirv';
 import { tailwindConfig } from '../../tailwind.config';
@@ -89,6 +90,9 @@ async function createInternalBuildConfig(
         !isProduction() && process.env.PORT
           ? Number(process.env.PORT)
           : undefined,
+      printUrls: ({ urls }) => {
+        return urls.map(url => `${url}/${removeLeadingSlash(base)}`);
+      },
     },
     dev: {
       progressBar: false,
@@ -114,8 +118,6 @@ async function createInternalBuildConfig(
         // `root` must be a relative path in Rsbuild
         root: path.isAbsolute(outDir) ? path.relative(cwd, outDir) : outDir,
       },
-      // Disable production source map, it is useless for doc site
-      disableSourceMap: isProduction(),
       overrideBrowserslist: browserslist,
       assetPrefix,
     },
