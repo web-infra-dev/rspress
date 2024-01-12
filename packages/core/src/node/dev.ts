@@ -1,6 +1,5 @@
 import { UserConfig } from '@rspress/shared';
-import { type RsbuildConfig, logger as rsbuildLogger } from '@rsbuild/core';
-import { logger } from '@rspress/shared/logger';
+import { type RsbuildConfig } from '@rsbuild/core';
 import { initRsbuild } from './initRsbuild';
 import { writeSearchIndex } from './searchIndex';
 import { PluginDriver } from './PluginDriver';
@@ -25,8 +24,6 @@ export async function dev(options: DevOptions): Promise<ServerInstance> {
   try {
     const modifiedConfig = await pluginDriver.modifyConfig();
     await pluginDriver.beforeBuild();
-
-    rsbuildLogger.override(logger);
 
     // empty temp dir before build
     // await fs.emptyDir( TEMP_DIR);
