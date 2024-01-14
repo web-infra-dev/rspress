@@ -16,9 +16,10 @@ export async function serve(options: ServeOptions) {
   const envHost = process.env.HOST;
   const { builderConfig } = config;
   const port = Number(
-    envPort || userPort || builderConfig.server?.port || 4173,
+    envPort || userPort || builderConfig?.server?.port || 4173,
   );
-  const host = envHost || userHost || builderConfig.server?.host || 'localhost';
+  const host =
+    envHost || userHost || builderConfig?.server?.host || 'localhost';
 
   config.builderConfig = mergeRsbuildConfig(builderConfig, {
     server: {
