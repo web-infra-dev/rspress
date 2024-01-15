@@ -1,15 +1,7 @@
-import sirv from 'sirv';
-import compression from 'compression';
-import polka from 'polka';
 import type { UserConfig } from '@rspress/shared';
-import { OUTPUT_DIR } from './constants';
-
-export interface CLIServeOption {
-  base?: string;
-  rootDir?: string;
-  port?: number;
-  host?: string;
-}
+import { mergeRsbuildConfig } from '@rsbuild/core';
+import { initRsbuild } from './initRsbuild';
+import { PluginDriver } from './PluginDriver';
 
 interface ServeOptions {
   config: UserConfig;
@@ -22,35 +14,31 @@ export async function serve(options: ServeOptions) {
   const { config, port: userPort, host: userHost } = options;
   const envPort = process.env.PORT;
   const envHost = process.env.HOST;
-  const port = envPort || userPort || 4173;
-  const host = envHost || userHost || 'localhost';
-  const base = config?.base?.replace(/^\//, '').replace(/\/$/, '') || '';
-  const compress = compression();
-  const serve = sirv(config?.outDir || OUTPUT_DIR, {
-    etag: true,
-    maxAge: 31536000,
-    immutable: true,
+  const { builderConfig } = config;
+  const port = Number(
+    envPort || userPort || builderConfig?.server?.port || 4173,
+  );
+  const host =
+    envHost || userHost || builderConfig?.server?.host || 'localhost';
+
+  config.builderConfig = mergeRsbuildConfig(builderConfig, {
+    server: {
+      port,
+      host,
+    },
   });
 
-  if (base) {
-    polka()
-      .use(base, compress, serve)
-      .listen(port, host, (err: Error) => {
-        if (err) {
-          throw err;
-        }
-        console.log(
-          `Preview server running at http://${host}:${port}/${base}/\n`,
-        );
-      });
-  } else {
-    polka()
-      .use(compress, serve)
-      .listen(port, host, (err: Error) => {
-        if (err) {
-          throw err;
-        }
-        console.log(`Preview server running at http://${host}:${port}/\n`);
-      });
-  }
+  const pluginDriver = new PluginDriver(config, true);
+  await pluginDriver.init();
+
+  const modifiedConfig = await pluginDriver.modifyConfig();
+
+  const builder = await initRsbuild(
+    config.root,
+    modifiedConfig,
+    pluginDriver,
+    false,
+  );
+
+  await builder.preview();
 }
