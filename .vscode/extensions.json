@@ -5,6 +5,7 @@
     "EditorConfig.editorconfig",
     "dbaeumer.vscode-eslint",
     "esbenp.prettier-vscode",
+    "biomejs.biome",
     "drKnoxy.eslint-disable-snippets",
     "mkaufman.htmlhint",
     "streetsidesoftware.code-spell-checker",

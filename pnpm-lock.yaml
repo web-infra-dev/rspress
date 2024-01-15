@@ -8,6 +8,9 @@ importers:
 
   .:
     devDependencies:
+      '@biomejs/biome':
+        specifier: 1.5.2
+        version: 1.5.2
       '@manypkg/get-packages':
         specifier: ^2.2.0
         version: 2.2.0
@@ -65,9 +68,6 @@ importers:
       playwright:
         specifier: 1.33.0
         version: 1.33.0
-      prettier:
-        specifier: ^2.6.2
-        version: 2.8.1
       tree-kill:
         specifier: ^1.2.2
         version: 1.2.2
@@ -134,6 +134,9 @@ importers:
         specifier: ^2.46.0
         version: 2.46.0(@types/react@18.0.26)(react-dom@18.2.0)(react@18.2.0)
     devDependencies:
+      '@biomejs/biome':
+        specifier: 1.5.2
+        version: 1.5.2
       '@modern-js/module-tools':
         specifier: 2.35.1
         version: 2.35.1(typescript@5.0.4)
@@ -161,9 +164,6 @@ importers:
       lint-staged:
         specifier: ~13.1.0
         version: 13.1.0
-      prettier:
-        specifier: ~2.8.1
-        version: 2.8.1
       react:
         specifier: ^18.2.0
         version: 18.2.0
@@ -469,6 +469,9 @@ importers:
         specifier: ^4.1.1
         version: 4.1.1
     devDependencies:
+      '@biomejs/biome':
+        specifier: 1.5.2
+        version: 1.5.2
       '@modern-js/plugin-tailwindcss':
         specifier: 2.45.0
         version: 2.45.0(tailwindcss@3.2.7)
@@ -520,9 +523,6 @@ importers:
       lint-staged:
         specifier: ~13.1.0
         version: 13.1.0
-      prettier:
-        specifier: ^2.6.2
-        version: 2.8.1
       rimraf:
         specifier: ^3.0.2
         version: 3.0.2
@@ -664,6 +664,9 @@ importers:
         specifier: 3.0.1
         version: 3.0.1
     devDependencies:
+      '@biomejs/biome':
+        specifier: 1.5.2
+        version: 1.5.2
       '@rspress/shared':
         specifier: workspace:*
         version: link:../shared
@@ -682,9 +685,6 @@ importers:
       mdast-util-mdxjs-esm:
         specifier: ^1.3.0
         version: 1.3.0
-      prettier:
-        specifier: ^2.6.2
-        version: 2.8.1
       react:
         specifier: ^18
         version: 18.2.0
@@ -843,6 +843,9 @@ importers:
       '@babel/types':
         specifier: ^7.22.17
         version: 7.22.17
+      '@biomejs/biome':
+        specifier: 1.5.2
+        version: 1.5.2
       '@types/babel__core':
         specifier: ^7.20.1
         version: 7.20.1
@@ -867,9 +870,6 @@ importers:
       mdast-util-mdxjs-esm:
         specifier: ^1.3.0
         version: 1.3.0
-      prettier:
-        specifier: ^2.6.2
-        version: 2.8.1
       react:
         specifier: ^18
         version: 18.2.0
@@ -913,6 +913,9 @@ importers:
         specifier: 0.1.12
         version: 0.1.12
     devDependencies:
+      '@biomejs/biome':
+        specifier: 1.5.2
+        version: 1.5.2
       '@types/lodash':
         specifier: 4.14.200
         version: 4.14.200
@@ -931,9 +934,6 @@ importers:
       mdast-util-mdxjs-esm:
         specifier: ^1.3.0
         version: 1.3.0
-      prettier:
-        specifier: ^2.6.2
-        version: 2.8.1
       react:
         specifier: ^18
         version: 18.2.0
@@ -1051,6 +1051,9 @@ importers:
         specifier: ^6.8.1
         version: 6.11.1(react-dom@18.2.0)(react@18.2.0)
     devDependencies:
+      '@biomejs/biome':
+        specifier: 1.5.2
+        version: 1.5.2
       '@modern-js/tsconfig':
         specifier: 2.45.0
         version: 2.45.0
@@ -1072,9 +1075,6 @@ importers:
       lint-staged:
         specifier: ~13.1.0
         version: 13.1.0
-      prettier:
-        specifier: ^2.6.2
-        version: 2.8.1
       typescript:
         specifier: ^5
         version: 5.0.4
@@ -1206,6 +1206,9 @@ importers:
         specifier: ^3.1.0
         version: 3.1.0(webpack@5.88.2)
     devDependencies:
+      '@biomejs/biome':
+        specifier: 1.5.2
+        version: 1.5.2
       '@modern-js/plugin-tailwindcss':
         specifier: 2.45.0
         version: 2.45.0(tailwindcss@3.2.7)
@@ -1257,9 +1260,6 @@ importers:
       lint-staged:
         specifier: ~13.1.0
         version: 13.1.0
-      prettier:
-        specifier: ^2.6.2
-        version: 2.8.1
       tailwindcss:
         specifier: 3.2.7
         version: 3.2.7(postcss@8.4.21)(ts-node@10.9.1)
@@ -2828,6 +2828,94 @@ packages:
       '@babel/helper-string-parser': 7.22.5
       '@babel/helper-validator-identifier': 7.22.20
       to-fast-properties: 2.0.0
+
+  /@biomejs/biome@1.5.2:
+    resolution: {integrity: sha512-LhycxGQBQLmfv6M3e4tMfn/XKcUWyduDYOlCEBrHXJ2mMth2qzYt1JWypkWp+XmU/7Hl2dKvrP4mZ5W44+nWZw==}
+    engines: {node: '>=14.*'}
+    hasBin: true
+    requiresBuild: true
+    optionalDependencies:
+      '@biomejs/cli-darwin-arm64': 1.5.2
+      '@biomejs/cli-darwin-x64': 1.5.2
+      '@biomejs/cli-linux-arm64': 1.5.2
+      '@biomejs/cli-linux-arm64-musl': 1.5.2
+      '@biomejs/cli-linux-x64': 1.5.2
+      '@biomejs/cli-linux-x64-musl': 1.5.2
+      '@biomejs/cli-win32-arm64': 1.5.2
+      '@biomejs/cli-win32-x64': 1.5.2
+    dev: true
+
+  /@biomejs/cli-darwin-arm64@1.5.2:
+    resolution: {integrity: sha512-3JVl08aHKsPyf0XL9SEj1lssIMmzOMAn2t1zwZKBiy/mcZdb0vuyMSTM5haMQ/90wEmrkYN7zux777PHEGrGiw==}
+    engines: {node: '>=14.*'}
+    cpu: [arm64]
+    os: [darwin]
+    requiresBuild: true
+    dev: true
+    optional: true
+
+  /@biomejs/cli-darwin-x64@1.5.2:
+    resolution: {integrity: sha512-QAPW9rZb/AgucUx+ogMg+9eJNipQDqvabktC5Tx4Aqb/mFzS6eDqNP7O0SbGz3DtC5Y2LATEj6o6zKIQ4ZT+3w==}
+    engines: {node: '>=14.*'}
+    cpu: [x64]
+    os: [darwin]
+    requiresBuild: true
+    dev: true
+    optional: true
+
+  /@biomejs/cli-linux-arm64-musl@1.5.2:
+    resolution: {integrity: sha512-Z29SjaOyO4QfajplNXSjLx17S79oPN42D094zjE24z7C7p3NxvLhKLygtSP9emgaXkcoESe2chOzF4IrGy/rlg==}
+    engines: {node: '>=14.*'}
+    cpu: [arm64]
+    os: [linux]
+    requiresBuild: true
+    dev: true
+    optional: true
+
+  /@biomejs/cli-linux-arm64@1.5.2:
+    resolution: {integrity: sha512-fVLrUgIlo05rO4cNu+Py5EwwmXnXhWH+8KrNlWkr2weMYjq85SihUsuWWKpmqU+bUVR+m5gwfcIXZVWYVCJMHw==}
+    engines: {node: '>=14.*'}
+    cpu: [arm64]
+    os: [linux]
+    requiresBuild: true
+    dev: true
+    optional: true
+
+  /@biomejs/cli-linux-x64-musl@1.5.2:
+    resolution: {integrity: sha512-ZolquPEjWYUmGeERS8svHOOT7OXEeoriPnV8qptgWJmYF9EO9HUGRn1UtCvdVziDYK+u1A7PxjOdkY1B00ty5A==}
+    engines: {node: '>=14.*'}
+    cpu: [x64]
+    os: [linux]
+    requiresBuild: true
+    dev: true
+    optional: true
+
+  /@biomejs/cli-linux-x64@1.5.2:
+    resolution: {integrity: sha512-ixqJtUHtF0ho1+1DTZQLAEwHGSqvmvHhAAFXZQoaSdABn+IcITYExlFVA3bGvASy/xtPjRhTx42hVwPtLwMHwg==}
+    engines: {node: '>=14.*'}
+    cpu: [x64]
+    os: [linux]
+    requiresBuild: true
+    dev: true
+    optional: true
+
+  /@biomejs/cli-win32-arm64@1.5.2:
+    resolution: {integrity: sha512-DN4cXSAoFTdjOoh7f+JITj1uQgQSXt+1pVea9bFrpbgip+ZwkONqQq+jUcmFMMehbp9LuiVtNXFz/ReHn6FY7A==}
+    engines: {node: '>=14.*'}
+    cpu: [arm64]
+    os: [win32]
+    requiresBuild: true
+    dev: true
+    optional: true
+
+  /@biomejs/cli-win32-x64@1.5.2:
+    resolution: {integrity: sha512-YvWWXZmk936FdrXqc2jcP6rfsXsNBIs9MKBQQoVXIihwNNRiAaBD9Iwa/ouU1b7Zxq2zETgeuRewVJickFuVOw==}
+    engines: {node: '>=14.*'}
+    cpu: [x64]
+    os: [win32]
+    requiresBuild: true
+    dev: true
+    optional: true
 
   /@changesets/apply-release-plan@6.1.4:
     resolution: {integrity: sha512-FMpKF1fRlJyCZVYHr3CbinpZZ+6MwvOtWUuO8uo+svcATEoc1zRDcj23pAurJ2TZ/uVz1wFHH6K3NlACy0PLew==}

@@ -22,7 +22,8 @@
     "dev:website": "cross-env NX_DAEMON=false NX_REJECT_UNKNOWN_LOCAL_CACHE=0 nx run @rspress/docs:dev",
     "build:website": "cross-env NX_DAEMON=false NX_REJECT_UNKNOWN_LOCAL_CACHE=0 nx run @rspress/docs:build",
     "preview:website": "cd packages/document && npm run preview",
-    "update:modern": "ts-node ./scripts/update-modern.ts"
+    "update:modern": "ts-node ./scripts/update-modern.ts",
+    "format": "biome format --write ./packages"
   },
   "engines": {
     "node": ">=16.18.1"
@@ -36,18 +37,9 @@
       "node --max_old_space_size=8192 ./node_modules/eslint/bin/eslint.js --fix --color --cache --quiet"
     ]
   },
-  "eslintIgnore": [
-    "node_modules/",
-    "dist/",
-    ".rpt2_cache/"
-  ],
+  "eslintIgnore": ["node_modules/", "dist/", ".rpt2_cache/"],
   "workspaces": {
-    "packages": [
-      "apps/*",
-      "examples/*",
-      "features/*",
-      "packages/*"
-    ]
+    "packages": ["apps/*", "examples/*", "features/*", "packages/*"]
   },
   "devDependencies": {
     "@manypkg/get-packages": "^2.2.0",
@@ -68,7 +60,7 @@
     "husky": "^8.0.0",
     "lint-staged": "~13.1.0",
     "playwright": "1.33.0",
-    "prettier": "^2.6.2",
+    "@biomejs/biome": "1.5.2",
     "tree-kill": "^1.2.2",
     "ts-node": "^10.9.1",
     "vitest": "0.34.1",

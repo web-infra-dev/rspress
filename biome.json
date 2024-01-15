@@ -1,0 +1,15 @@
+{
+  "$schema": "https://biomejs.dev/schemas/1.5.2/schema.json",
+  "javascript": {
+    "formatter": {
+      "quoteStyle": "single",
+      "trailingComma": "all",
+      "arrowParentheses": "asNeeded"
+    }
+  },
+  "formatter": {
+    "include": ["packages/**/*.ts"],
+    "ignore": ["*.d.ts"],
+    "indentStyle": "space"
+  }
+}
