@@ -96,7 +96,6 @@
     "remark-parse": "^10.0.1",
     "remark-rehype": "^10.1.0",
     "rspack-plugin-virtual-module": "0.1.12",
-    "sirv": "^2.0.2",
     "source-map": "0.7.4",
     "string-replace-loader": "^3.1.0",
     "unified": "^10.1.2",

@@ -19,7 +19,6 @@ import {
   META_GENERATOR,
   HTML_START_TAG,
   BODY_START_TAG,
-  PUBLIC_DIR,
   TEMP_DIR,
 } from './constants';
 import { initRsbuild } from './initRsbuild';
@@ -82,11 +81,6 @@ export async function bundle(
         false,
       );
       await clientBuilder.build();
-    }
-    // Copy public dir to output folder
-    const publicDir = join(docDirectory, PUBLIC_DIR);
-    if (await fs.pathExists(publicDir)) {
-      await fs.copy(publicDir, outputDir);
     }
   } finally {
     await writeSearchIndex(config);
