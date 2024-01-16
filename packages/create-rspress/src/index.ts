@@ -36,17 +36,20 @@ cli.command('', 'Create a new rspress site').action(async () => {
   const defaultProjectName = 'rspress-site';
   let targetDir = defaultProjectName;
   const promptProjectDir = async () =>
-    await prompts([
-      {
-        type: 'text',
-        name: 'projectDir',
-        initial: defaultProjectName,
-        message: 'Project folder',
-        onState: state => {
-          targetDir = formatTargetDir(state.value) || defaultProjectName;
+    await prompts(
+      [
+        {
+          type: 'text',
+          name: 'projectDir',
+          initial: defaultProjectName,
+          message: 'Project folder',
+          onState: state => {
+            targetDir = formatTargetDir(state.value) || defaultProjectName;
+          },
         },
-      },
-    ], { onCancel: cancelPrompt });
+      ],
+      { onCancel: cancelPrompt },
+    );
 
   await promptProjectDir();
   let root = path.resolve(process.cwd(), targetDir);

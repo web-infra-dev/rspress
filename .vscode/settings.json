@@ -61,7 +61,7 @@
   "editor.codeActionsOnSave": {
     "source.fixAll.eslint": "explicit"
   },
-  "editor.defaultFormatter": "esbenp.prettier-vscode",
+  "editor.defaultFormatter": "biomejs.biome",
   "javascript.format.enable": false,
   "typescript.format.enable": false,
   //
@@ -76,7 +76,8 @@
     "editor.tabSize": 2,
     "editor.formatOnType": true,
     "editor.formatOnPaste": true,
-    "editor.formatOnSave": true
+    "editor.formatOnSave": true,
+    "editor.defaultFormatter": "biomejs.biome"
   },
   "emmet.triggerExpansionOnTab": true,
   "typescript.tsdk": "node_modules/typescript/lib"

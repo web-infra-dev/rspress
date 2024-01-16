@@ -113,6 +113,7 @@ export function initSitePrompts(options: CustomPromptObject[]) {
 }
 
 export const cancelPrompt = () => {
-  console.log("Operation cancelled.");
+  console.log('Operation cancelled.');
+  // eslint-disable-next-line no-process-exit
   process.exit(0);
 };
