@@ -1,1 +1,1 @@
-export { logger } from 'rslog';
+export { logger } from '@rsbuild/core';
