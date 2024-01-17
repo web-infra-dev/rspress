@@ -54,7 +54,6 @@
     "@rsbuild/core": "0.3.1",
     "unified": "10.1.2",
     "chalk": "4.1.2",
-    "rslog": "^1.1.0",
     "execa": "5.1.1",
     "fs-extra": "11.2.0",
     "gray-matter": "4.0.3"
