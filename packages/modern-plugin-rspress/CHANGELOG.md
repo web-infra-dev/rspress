@@ -1,5 +1,20 @@
 # @modern-js/plugin-rspress
 
+## 2.0.0
+
+### Patch Changes
+
+- 5ddf44d: fix(modern-plugin): support custom root
+- Updated dependencies [8239618]
+- Updated dependencies [58f1ce2]
+- Updated dependencies [e9d69d8]
+- Updated dependencies [c55b967]
+- Updated dependencies [a493d1d]
+- Updated dependencies [bf2a51f]
+  - @rspress/core@2.0.0
+  - @rspress/plugin-api-docgen@2.0.0
+  - @rspress/plugin-preview@2.0.0
+
 ## 1.9.3
 
 ### Patch Changes

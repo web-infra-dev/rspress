@@ -1,6 +1,6 @@
 {
   "name": "@rspress/plugin-preview",
-  "version": "1.9.3",
+  "version": "2.0.0",
   "description": "A plugin for rspress to preview the code block in markdown/mdx file.",
   "bugs": "https://github.com/web-infra-dev/rspress/issues",
   "repository": {
@@ -60,7 +60,7 @@
   "peerDependencies": {
     "react": ">=17",
     "react-router-dom": "^6.8.1",
-    "@rspress/core": "^1.0.2"
+    "@rspress/core": "^2.0.0"
   },
   "files": [
     "dist",

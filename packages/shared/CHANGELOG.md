@@ -1,5 +1,12 @@
 # @rspress/shared
 
+## 2.0.0
+
+### Patch Changes
+
+- cfee5d2: feat: reuse logger from Rsbuild
+- c55b967: chore(deps): bump rsbuild to [0.3.1](https://github.com/web-infra-dev/rsbuild/releases/tag/v0.3.1)
+
 ## 1.9.3
 
 ## 1.9.2

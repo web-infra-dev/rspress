@@ -1,6 +1,6 @@
 {
   "name": "@rspress/core",
-  "version": "1.9.3",
+  "version": "2.0.0",
   "description": "The Rspress Documentation Framework",
   "bugs": "https://github.com/web-infra-dev/rspress/issues",
   "repository": {
@@ -55,7 +55,7 @@
     "@mdx-js/loader": "2.2.1",
     "@mdx-js/mdx": "2.2.1",
     "@mdx-js/react": "2.2.1",
-    "@modern-js/utils": "2.45.0",
+    "@modern-js/utils": "2.46.0",
     "@rsbuild/core": "0.3.1",
     "@rsbuild/plugin-react": "0.3.1",
     "@rsbuild/plugin-svgr": "0.3.1",
@@ -105,9 +105,9 @@
   },
   "devDependencies": {
     "tailwindcss": "^3.2.7",
-    "@modern-js/plugin-tailwindcss": "2.45.0",
-    "@modern-js/tsconfig": "2.45.0",
-    "@modern-js/types": "2.45.0",
+    "@modern-js/plugin-tailwindcss": "2.46.0",
+    "@modern-js/tsconfig": "2.46.0",
+    "@modern-js/types": "2.46.0",
     "@types/body-scroll-lock": "^3.1.0",
     "@types/fs-extra": "^9.0.13",
     "@types/hast": "^2.3.4",

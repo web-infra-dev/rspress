@@ -1,5 +1,11 @@
 # @rspress/plugin-medium-zoom
 
+## 2.0.0
+
+### Patch Changes
+
+- @rspress/runtime@2.0.0
+
 ## 1.9.3
 
 ## 1.9.2

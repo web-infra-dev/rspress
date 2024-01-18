@@ -1,5 +1,14 @@
 # @rspress/plugin-shiki
 
+## 2.0.0
+
+### Patch Changes
+
+- 0d150eb: types: export PluginShikiOptions type
+- Updated dependencies [cfee5d2]
+- Updated dependencies [c55b967]
+  - @rspress/shared@2.0.0
+
 ## 1.9.3
 
 ### Patch Changes
