@@ -37,18 +37,27 @@
       "node --max_old_space_size=8192 ./node_modules/eslint/bin/eslint.js --fix --color --cache --quiet"
     ]
   },
-  "eslintIgnore": ["node_modules/", "dist/", ".rpt2_cache/"],
+  "eslintIgnore": [
+    "node_modules/",
+    "dist/",
+    ".rpt2_cache/"
+  ],
   "workspaces": {
-    "packages": ["apps/*", "examples/*", "features/*", "packages/*"]
+    "packages": [
+      "apps/*",
+      "examples/*",
+      "features/*",
+      "packages/*"
+    ]
   },
   "devDependencies": {
     "@manypkg/get-packages": "^2.2.0",
-    "@modern-js-app/eslint-config": "2.45.0",
-    "@modern-js/eslint-config": "2.45.0",
-    "@modern-js/generator-utils": "3.3.6",
-    "@modern-js/module-tools": "2.45.0",
-    "@modern-js/monorepo-tools": "2.45.0",
-    "@modern-js/tsconfig": "2.45.0",
+    "@modern-js-app/eslint-config": "2.46.0",
+    "@modern-js/eslint-config": "2.46.0",
+    "@modern-js/generator-utils": "3.3.7",
+    "@modern-js/module-tools": "2.46.0",
+    "@modern-js/monorepo-tools": "2.46.0",
+    "@modern-js/tsconfig": "2.46.0",
     "@playwright/test": "1.33.0",
     "@types/cross-spawn": "^6.0.2",
     "@types/fs-extra": "^11.0.1",

@@ -1,5 +1,31 @@
 # @rspress/core
 
+## 1.10.0
+
+### Minor Changes
+
+- a493d1d: feat html head meta generator
+
+### Patch Changes
+
+- 8239618: fix: custom tsx file error
+- 58f1ce2: fix: `-c` unknown option in rspress cli
+- e9d69d8: refactor: use rsbuild.preview for preview
+- c55b967: chore(deps): bump rsbuild to [0.3.1](https://github.com/web-infra-dev/rsbuild/releases/tag/v0.3.1)
+- bf2a51f: feat: serve publicDir via Rsbuild
+- Updated dependencies [6db690c]
+- Updated dependencies [f25d897]
+- Updated dependencies [cfee5d2]
+- Updated dependencies [c55b967]
+- Updated dependencies [bd4eff3]
+  - @rspress/theme-default@1.10.0
+  - @rspress/shared@1.10.0
+  - @rspress/plugin-auto-nav-sidebar@1.10.0
+  - @rspress/plugin-container-syntax@1.10.0
+  - @rspress/plugin-last-updated@1.10.0
+  - @rspress/plugin-medium-zoom@1.10.0
+  - @rspress/runtime@1.10.0
+
 ## 1.9.3
 
 ### Patch Changes
