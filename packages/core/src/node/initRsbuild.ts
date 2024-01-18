@@ -90,9 +90,11 @@ async function createInternalBuildConfig(
       printUrls: ({ urls }) => {
         return urls.map(url => `${url}/${removeLeadingSlash(base)}`);
       },
-      publicDir: {
-        name: path.join(userDocRoot, PUBLIC_DIR),
-      },
+      publicDir: isSSR
+        ? false
+        : {
+            name: path.join(userDocRoot, PUBLIC_DIR),
+          },
     },
     dev: {
       progressBar: false,
