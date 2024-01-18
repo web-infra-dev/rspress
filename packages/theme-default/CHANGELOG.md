@@ -1,5 +1,20 @@
 # @rspress/theme-default
 
+## 1.10.0
+
+### Minor Changes
+
+- f25d897: fix avoid pushing to history when clicking on the current link
+- bd4eff3: fix clear query text when search box opens again
+
+### Patch Changes
+
+- 6db690c: fix: table word break style
+- Updated dependencies [cfee5d2]
+- Updated dependencies [c55b967]
+  - @rspress/shared@1.10.0
+  - @rspress/runtime@1.10.0
+
 ## 1.9.3
 
 ### Patch Changes
