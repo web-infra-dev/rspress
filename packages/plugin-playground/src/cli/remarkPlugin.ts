@@ -1,4 +1,4 @@
-import path, { join } from 'path';
+import { dirname, join, resolve } from 'path';
 import { visit } from 'unist-util-visit';
 import fs from '@rspress/shared/fs-extra';
 import type { RouteMeta } from '@rspress/shared';
@@ -39,7 +39,7 @@ export const remarkPlugin: Plugin<[RemarkPluginProps], Root> = ({
 
   return (tree, vfile) => {
     const route = routeMeta.find(
-      meta => meta.absolutePath === (vfile.path || vfile.history[0]),
+      meta => resolve(meta.absolutePath) === resolve((vfile.path || vfile.history[0])),
     );
     if (!route) {
       return;
@@ -52,7 +52,7 @@ export const remarkPlugin: Plugin<[RemarkPluginProps], Root> = ({
         if (!src) {
           return;
         }
-        const demoPath = join(path.dirname(route.absolutePath), src);
+        const demoPath = join(dirname(route.absolutePath), src);
         if (!fs.existsSync(demoPath)) {
           return;
         }
