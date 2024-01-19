@@ -73,7 +73,8 @@
     "tree-kill": "^1.2.2",
     "ts-node": "^10.9.1",
     "vitest": "0.34.1",
-    "nx": "17.0.2"
+    "nx": "17.0.2",
+    "prettier": "3.2.2"
   },
   "publishConfig": {
     "access": "public",
