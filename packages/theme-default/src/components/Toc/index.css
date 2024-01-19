@@ -1,18 +1,20 @@
-.toc-link {
-  padding-bottom: 1px;
+.rspress-toc-link {
+  display: block;
+  border-radius: 4px;
+  transition: all 0.3s;
 }
 
-.toc-link-text {
-  padding: 4px 12px;
+.rspress-toc-link-text {
+  padding: 6px 12px;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
   transition: all 0.2s ease-in-out;
-  border-radius: 10px 0 0 10px;
-  font-size: 16px;
-  line-height: 1.75rem;
+  border-radius: 10px;
+  color: var(--rp-c-text-2);
 }
 
-.toc-link-text:hover {
+.rspress-toc-link-text:hover {
   background-color: var(--rp-c-bg-mute);
+  color: var(--rp-c-text-1);
 }

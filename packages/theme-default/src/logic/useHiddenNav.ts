@@ -48,9 +48,11 @@ export function useHiddenNav() {
       }, 200);
 
       window.addEventListener('mousewheel', onScrollListen);
+      window.addEventListener('touchmove', onScrollListen);
 
       return () => {
         window.removeEventListener('mousewheel', onScrollListen);
+        window.removeEventListener('touchmove', onScrollListen);
       };
     }, [pathname]);
 
