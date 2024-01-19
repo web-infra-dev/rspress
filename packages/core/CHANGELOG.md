@@ -1,5 +1,18 @@
 # @rspress/core
 
+## 1.10.1
+
+### Patch Changes
+
+- 5d5d292: fix: publicDir repeat mkdir conflict
+  - @rspress/plugin-auto-nav-sidebar@1.10.1
+  - @rspress/plugin-container-syntax@1.10.1
+  - @rspress/plugin-last-updated@1.10.1
+  - @rspress/plugin-medium-zoom@1.10.1
+  - @rspress/runtime@1.10.1
+  - @rspress/shared@1.10.1
+  - @rspress/theme-default@1.10.1
+
 ## 1.10.0
 
 ### Minor Changes
