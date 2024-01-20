@@ -3,11 +3,12 @@
   position: sticky;
   top: 0;
   left: 0;
-  z-index: 2;
+  z-index: var(--rp-z-index-nav);
   display: flex;
   justify-content: space-between;
   align-items: center;
   border-bottom: 1px solid var(--rp-c-divider-light);
+  border-top: 1px solid var(--rp-c-divider-light);
   width: 100%;
   color: var(--rp-c-text-1);
   background-color: var(--rp-c-bg);

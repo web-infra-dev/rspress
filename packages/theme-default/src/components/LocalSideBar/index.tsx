@@ -31,9 +31,11 @@ export function SideMenu({
   }, [pathname]);
 
   useEffect(() => {
+    document.addEventListener('mouseup', handleClickOutsideForToc);
     document.addEventListener('touchend', handleClickOutsideForToc);
 
     return () => {
+      document.addEventListener('mouseup', handleClickOutsideForToc);
       document.removeEventListener('touchend', handleClickOutsideForToc);
     };
   }, []);
@@ -47,6 +49,7 @@ export function SideMenu({
 
   return (
     <Fragment>
+      {/* Top Menu, only displayed in mobile device */}
       <div className="rspress-sidebar-menu">
         <button onClick={openSidebar} className="flex-center">
           <div className="text-md mr-2">
@@ -73,6 +76,7 @@ export function SideMenu({
           <Toc />
         </div>
       </div>
+      {/* Sidebar Component */}
       <SideBar
         isSidebarOpen={isSidebarOpen}
         beforeSidebar={beforeSidebar}
