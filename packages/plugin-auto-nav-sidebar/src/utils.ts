@@ -28,16 +28,21 @@ export async function detectFilePath(rawPath: string) {
 export async function extractH1Title(
   filePath: string,
   rootDir: string,
+  /** prefer using the title declared in frontmatter rather than file content */
+  preferFrontMatter = true,
 ): Promise<string> {
   try {
     const realPath = await detectFilePath(filePath);
     const content = await fs.readFile(realPath, 'utf-8');
+    const { frontmatter } = loadFrontMatter(content, filePath, rootDir);
+    if (frontmatter.title && preferFrontMatter) {
+      return frontmatter.title;
+    }
     const fileNameWithoutExt = path.basename(realPath, path.extname(realPath));
     const h1RegExp = /^#\s+(.*)$/m;
     const match = content.match(h1RegExp);
     if (!match) {
-      const { frontmatter } = loadFrontMatter(content, filePath, rootDir);
-      return frontmatter.title || fileNameWithoutExt;
+      return fileNameWithoutExt;
     } else {
       return match[1] || fileNameWithoutExt;
     }
