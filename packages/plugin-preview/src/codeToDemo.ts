@@ -9,14 +9,13 @@ import {
 import type { Plugin } from 'unified';
 import type { Root } from 'mdast';
 import type { MdxjsEsm } from 'mdast-util-mdxjs-esm';
-import rsbuild, { createRsbuild } from '@rsbuild/core';
-import { pluginSolid } from '@rsbuild/plugin-solid';
-import { pluginBabel } from '@rsbuild/plugin-babel';
+
 import { injectDemoBlockImport, generateId } from './utils';
 import { demoBlockComponentPath } from './constant';
-import { demoRoutes } from '.';
+// import { demoRoutes } from '.';
 
-const rsbuildInstanceMap = new Map<string, rsbuild.RsbuildInstance>();
+export const demoEntryMap: Record<string, string> = {};
+export const DEMO_SERVER_PORT = '7890';
 
 // FIXME: remove it
 const json = JSON.parse(
@@ -60,15 +59,15 @@ export const remarkCodeToDemo: Plugin<
       // Only for external demo
       externalDemoIndex?: number,
     ) {
-      const demoRoute = `/~demo/${demoId}`;
-      if (isMobileMode) {
-        // only add demoRoutes in mobile mode
-        demoRoutes.push({
-          path: demoRoute,
-        });
-      } else {
-        demos.push(getASTNodeImport(`Demo${demoId}`, demoPath));
-      }
+      // const demoRoute = `/~demo/${demoId}`;
+      // if (isMobileMode) {
+      //   // only add demoRoutes in mobile mode
+      //   demoRoutes.push({
+      //     path: demoRoute,
+      //   });
+      // } else {
+      //   demos.push(getASTNodeImport(`Demo${demoId}`, demoPath));
+      // }
 
       // get external demo content
       const tempVar = `externalDemoContent${externalDemoIndex}`;
@@ -96,7 +95,7 @@ export const remarkCodeToDemo: Plugin<
             {
               type: 'mdxJsxAttribute',
               name: 'url',
-              value: demoRoute,
+              value: demoPath,
             },
             {
               type: 'mdxJsxAttribute',
@@ -209,53 +208,10 @@ export const remarkCodeToDemo: Plugin<
           }
           fs.writeFileSync(virtualEntryPath, entryContent);
         }
+        demoEntryMap[id] = virtualEntryPath;
 
-        if (rsbuildInstanceMap.has(virtualEntryPath)) {
-          return;
-        }
-
-        createRsbuild({
-          rsbuildConfig: {
-            source: {
-              entry: {
-                [id]: virtualEntryPath,
-              },
-              alias: {
-                'solid-js/web': `${require.resolve(
-                  'solid-js/web/dist/web.js',
-                )}`,
-              },
-            },
-            output: {
-              distPath: {
-                root: 'demo_build',
-              },
-              assetPrefix: 'https://cdn.example.com/assets/',
-            },
-            dev: {},
-            tools: {
-              rspack: {
-                output: {
-                  publicPath: '/demos',
-                },
-              },
-            },
-          },
-        }).then(async ins => {
-          console.log('start dev server');
-          ins.addPlugins([
-            pluginBabel({
-              include: /\.(?:jsx|tsx)$/,
-            }),
-            pluginSolid(),
-          ]);
-          rsbuildInstanceMap.set(virtualEntryPath, ins);
-          // const server = await ins.startDevServer({
-          //   getPortSilently: true,
-          // });
-          await ins.build();
-        });
-        constructDemoNode(id, virtualModulePath, node, isMobileMode);
+        const demoPath = `http://localhost:${DEMO_SERVER_PORT}/demos/${id}.html`;
+        constructDemoNode(id, demoPath, node, isMobileMode);
       }
     });
 

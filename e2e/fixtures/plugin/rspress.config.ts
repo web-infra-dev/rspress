@@ -12,7 +12,6 @@ export default defineConfig({
       isMobile: true,
       iframePosition: 'fixed',
     }),
-    // pluginPlayground(),
   ],
 
 });

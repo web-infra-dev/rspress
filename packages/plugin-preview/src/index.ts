@@ -8,7 +8,10 @@ import {
   normalizePosixPath,
 } from '@rspress/shared';
 import { uniqBy } from 'lodash';
-import { remarkCodeToDemo } from './codeToDemo';
+import { createRsbuild } from '@rsbuild/core';
+import { pluginSolid } from '@rsbuild/plugin-solid';
+import { pluginBabel } from '@rsbuild/plugin-babel';
+import { DEMO_SERVER_PORT, demoEntryMap, remarkCodeToDemo } from './codeToDemo';
 import { generateId, injectDemoBlockImport } from './utils';
 import {
   demoBlockComponentPath,
@@ -307,6 +310,50 @@ import Demo from ${JSON.stringify(demoComponentPath)}
         return uniqBy(normalizeRoutes, 'path');
       }
       return demoRoutes;
+    },
+    async afterBuild() {
+      // Create demo dev server
+      const rsbuildInstance = await createRsbuild({
+        rsbuildConfig: {
+          dev: {
+            client: {
+              port: DEMO_SERVER_PORT,
+            },
+            progressBar: false,
+          },
+          server: {
+            // Don't display the demo server log
+            printUrls: () => undefined,
+          },
+          source: {
+            entry: demoEntryMap,
+            alias: {
+              'solid-js/web': `${require.resolve('solid-js/web/dist/web.js')}`,
+            },
+          },
+          output: {
+            distPath: {
+              root: 'demo_build',
+            },
+          },
+          tools: {
+            rspack: {
+              output: {
+                publicPath: '/demos',
+              },
+            },
+          },
+        },
+      });
+      rsbuildInstance.addPlugins([
+        pluginBabel({
+          include: /\.(?:jsx|tsx)$/,
+        }),
+        pluginSolid(),
+      ]);
+      await rsbuildInstance.startDevServer({
+        getPortSilently: true,
+      });
     },
   };
 }
