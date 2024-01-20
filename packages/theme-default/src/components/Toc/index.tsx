@@ -5,14 +5,12 @@ import './index.css';
 
 const TocItem = (header: Header) => {
   return (
-    <li key={header.id} className={'py-1'}>
+    <li key={header.id}>
       <a
         href={`#${header.id}`}
-        className={
-          'toc-link transition-all duration-300 hover:text-text-1 text-text-2 block underline underline-offset-2'
-        }
+        className={'rspress-toc-link sm:text-normal text-sm'}
         style={{
-          marginLeft: header.depth * 12,
+          marginLeft: (header.depth - 2) * 12,
         }}
         onClick={e => {
           e.preventDefault();
@@ -23,7 +21,7 @@ const TocItem = (header: Header) => {
           }
         }}
       >
-        <span className={'toc-link-text block'}>{header.text}</span>
+        <span className={'rspress-toc-link-text block'}>{header.text}</span>
       </a>
     </li>
   );
