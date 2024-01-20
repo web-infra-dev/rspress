@@ -4,7 +4,7 @@
     "declaration": false,
     "module": "ESNext",
     "target": "ESNext",
-    "jsx": "react-jsx",
+    "jsx": "preserve",
     "baseUrl": "src",
     "rootDir": ".",
     "lib": ["ESNext", "DOM"],

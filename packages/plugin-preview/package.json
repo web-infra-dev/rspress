@@ -37,19 +37,23 @@
   "dependencies": {
     "@mdx-js/mdx": "2.2.1",
     "@rspress/shared": "workspace:*",
+    "lodash": "4.17.21",
     "qrcode.react": "^3.1.0",
     "remark-gfm": "3.0.1",
     "rspack-plugin-virtual-module": "0.1.12",
-    "lodash": "4.17.21"
+    "solid-js": "1.8.11"
   },
   "devDependencies": {
+    "@biomejs/biome": "1.5.2",
+    "@rsbuild/core": "0.3.1",
+    "@rsbuild/plugin-solid": "0.3.1",
+    "@rsbuild/plugin-babel": "0.3.1",
+    "@types/lodash": "4.14.200",
     "@types/mdast": "^3.0.10",
     "@types/node": "^18.11.17",
-    "@types/lodash": "4.14.200",
     "@types/react": "^18",
     "@types/react-dom": "^18",
     "mdast-util-mdxjs-esm": "^1.3.0",
-    "@biomejs/biome": "1.5.2",
     "react": "^18",
     "react-dom": "^18",
     "react-router-dom": "^6.8.1",
@@ -58,9 +62,9 @@
     "unist-util-visit": "^4.1.1"
   },
   "peerDependencies": {
+    "@rspress/core": "^1.0.2",
     "react": ">=17",
-    "react-router-dom": "^6.8.1",
-    "@rspress/core": "^1.0.2"
+    "react-router-dom": "^6.8.1"
   },
   "files": [
     "dist",

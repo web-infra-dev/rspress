@@ -4,7 +4,7 @@
     "rootDir": "src",
     "baseUrl": ".",
     "skipLibCheck": true,
-    "jsx": "react-jsx",
+    "jsx": "preserve",
     "esModuleInterop": true
   },
   "include": ["./src/**/*"]

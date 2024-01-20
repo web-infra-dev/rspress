@@ -27,9 +27,8 @@ export const normalizeId = (routePath: string) => {
   return toValidVarName(result);
 };
 
-export const injectDemoBlockImport = (str: string, path: string): string => {
+export const injectDemoBlockImport = (str: string, _path: string): string => {
   return `
-    import DemoBlock from '${path}';
     ${str}
   `;
 };

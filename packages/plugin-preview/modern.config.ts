@@ -7,6 +7,11 @@ export default defineConfig({
       format: 'cjs',
       sourceMap: true,
       input: ['./src/index.ts'],
+      externals: [
+        '@rsbuild/core',
+        '@rsbuild/plugin-babel',
+        '@rsbuild/plugin-solid',
+      ],
       target: 'es2020',
       dts: {
         respectExternal: false,

@@ -9,15 +9,19 @@ import {
 import type { Plugin } from 'unified';
 import type { Root } from 'mdast';
 import type { MdxjsEsm } from 'mdast-util-mdxjs-esm';
+import rsbuild, { createRsbuild } from '@rsbuild/core';
+import { pluginSolid } from '@rsbuild/plugin-solid';
+import { pluginBabel } from '@rsbuild/plugin-babel';
 import { injectDemoBlockImport, generateId } from './utils';
 import { demoBlockComponentPath } from './constant';
 import { demoRoutes } from '.';
+
+const rsbuildInstanceMap = new Map<string, rsbuild.RsbuildInstance>();
 
 // FIXME: remove it
 const json = JSON.parse(
   fs.readFileSync(resolve(process.cwd(), './package.json'), 'utf8'),
 );
-
 /**
  * remark plugin to transform code to demo
  */
@@ -187,6 +191,14 @@ export const remarkCodeToDemo: Plugin<
         );
         const id = generateId(pageName, index++);
         const virtualModulePath = join(demoDir, `${id}.tsx`);
+        const virtualEntryPath = join(demoDir, `${id}.entry.tsx`);
+
+        const entryContent = `
+        import { render } from 'solid-js/web';
+        import Demo from '${virtualModulePath}';
+
+        render(() => <Demo /> , document.getElementById('root'));
+`;
         fs.ensureDirSync(join(demoDir));
         // Only when the content of the file changes, the file will be written
         // Avoid to trigger the hmr indefinitely
@@ -195,7 +207,54 @@ export const remarkCodeToDemo: Plugin<
           if (content !== value) {
             fs.writeFileSync(virtualModulePath, value);
           }
+          fs.writeFileSync(virtualEntryPath, entryContent);
         }
+
+        if (rsbuildInstanceMap.has(virtualEntryPath)) {
+          return;
+        }
+
+        createRsbuild({
+          rsbuildConfig: {
+            source: {
+              entry: {
+                [id]: virtualEntryPath,
+              },
+              alias: {
+                'solid-js/web': `${require.resolve(
+                  'solid-js/web/dist/web.js',
+                )}`,
+              },
+            },
+            output: {
+              distPath: {
+                root: 'demo_build',
+              },
+              assetPrefix: 'https://cdn.example.com/assets/',
+            },
+            dev: {},
+            tools: {
+              rspack: {
+                output: {
+                  publicPath: '/demos',
+                },
+              },
+            },
+          },
+        }).then(async ins => {
+          console.log('start dev server');
+          ins.addPlugins([
+            pluginBabel({
+              include: /\.(?:jsx|tsx)$/,
+            }),
+            pluginSolid(),
+          ]);
+          rsbuildInstanceMap.set(virtualEntryPath, ins);
+          // const server = await ins.startDevServer({
+          //   getPortSilently: true,
+          // });
+          await ins.build();
+        });
         constructDemoNode(id, virtualModulePath, node, isMobileMode);
       }
     });
