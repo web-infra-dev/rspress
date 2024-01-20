@@ -34,12 +34,21 @@ export async function dev(options: DevOptions): Promise<ServerInstance> {
       false,
       extraBuilderConfig,
     );
+    builder.addPlugins([
+      {
+        name: 'rspress:afterBuild',
+        setup(api) {
+          api.onDevCompileDone(async () => {
+            await pluginDriver.afterBuild();
+          });
+        },
+      },
+    ]);
     const { server } = await builder.startDevServer({
       // We will support the following options in the future
       getPortSilently: true,
     });
 
-    await pluginDriver.afterBuild();
     return server;
   } finally {
     await writeSearchIndex(config);
