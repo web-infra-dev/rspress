@@ -3,19 +3,19 @@
 Let's inject a global component as an example to see how to define and use plugins.
 
 :::tip TIP
-In order to get better type hints, you can install `@rspress/shared` in the project, and then import the `RspressPlugin` type through `import { RspressPlugin } from '@rspress/shared'`.
+In order to get better type hints, you can install `@rspress/shared` in the project, and then import the `RspressPlugin` type through `import type { RspressPlugin } from '@rspress/shared'`.
 :::
 
 ### 1. Define a plugin
 
 ```tsx title="plugin.ts"
-import { RspressPlugin } from '@rspress/shared';
+import type { RspressPlugin } from '@rspress/shared';
 
-export function pluginMonitor(slug: string): RspressPlugin {
+export function pluginExample(slug: string): RspressPlugin {
   // Component path, you need to implement the content of the component yourself
   const componentPath = path.join(__dirname, 'Example.tsx');
   return {
-    name: 'plugin-monitor',
+    name: 'plugin-example',
     // Path to global components
     globalUIComponents: [componentPath],
     // Global variable definitions for build phase
@@ -43,18 +43,18 @@ export default Example;
 
 A plugin is generally a function that receives some plugin params (optional) and returns an object that contains the name of the plugin and other config.
 
-In the above example, we define a plugin named `plugin-example`, which will define a global environment variable `slug` during the build phase, and inject a global component `Example.tsx` in the document.
+In the above example, we define a plugin named `plugin-example`, which will define a global environment variable `process.env.SLUG` during the build phase, and inject a global component `Example.tsx` in the document.
 
 ### 2. Use a plugin
 
-Register plugins via `doc.plugins` in `rspress.config.ts`:
+Register plugins via `plugins` in `rspress.config.ts`:
 
 ```tsx title="rspress.config.ts"
-import { pluginMonitor } from './plugin';
+import { pluginExample } from './plugin';
 
 export default {
-  plugins: [pluginMonitor('test')],
+  plugins: [pluginExample('test')],
 };
 ```
 
-Then the `Example` component will be injected into the page and we can access the `slug` variable in the component.
+Then the `Example` component will be injected into the page and we can access the `process.env.SLUG` variable in the component.
