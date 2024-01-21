@@ -114,18 +114,22 @@ export default async function mdxLoader(
         checkLinks(links, filepath, docDirectory, routeService);
       }
     }
+    // Note: encode filename to be compatible with Windows
 
-    // encode filename to be compatible with Windows
-    const result = `${compileResult}
+    const result = `${
+      // Why do we add the frontmatter to the compiled result?
+      // 1. Inject the frontmatter to the compiled result, so that we can get the frontmatter in the mdx content
+      // 2. Fix the home page won't update when the frontmatter is changed. When the frontmatter in the mdx of home page is changed, the home page will not be updated. The reason is that the home page component isn't the mdx module compiled currently. But the frontmatter of the mdx module have sincerely changed. So we reload the page and the home page will be updated.
+      // In react-refresh, if a module can be hot updated, all the its exports need to be component(function/class & upper case first letter), otherwise it will trigger a full reload.
+      // In this case, we export a component named `export` to make the home page can be hot updated after the frontmatter is changed.
+      isHomePage ? 'export' : ''
+    } const frontmatter = ${JSON.stringify(frontmatter)};
+${compileResult}
 MDXContent.__RSPRESS_PAGE_META = {};
+
 MDXContent.__RSPRESS_PAGE_META["${encodeURIComponent(
       normalizePath(path.relative(docDirectory, filepath)),
     )}"] = ${JSON.stringify(pageMeta)};
-${
-  // Fix the home page won't update when the frontmatter is changed
-  isHomePage ? `export const frontmatter = ${JSON.stringify(frontmatter)};` : ''
-}
-
 `;
     callback(null, result);
   } catch (e) {
