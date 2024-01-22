@@ -43,6 +43,11 @@
   "css.validate": false,
   "scss.validate": false,
   "less.validate": false,
+  "[tsx]": {
+    "editor.formatOnType": true,
+    "editor.formatOnPaste": true,
+    "editor.formatOnSave": true
+  },
   "[css]": {
     "editor.formatOnType": true,
     "editor.formatOnPaste": true,
@@ -51,7 +56,8 @@
   "[scss]": {
     "editor.formatOnType": true,
     "editor.formatOnPaste": true,
-    "editor.formatOnSave": true
+    "editor.formatOnSave": true,
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
   },
   "[less]": {
     "editor.formatOnType": true,
