@@ -68,7 +68,7 @@ gtag('config', 'G-66B2Z6KG0J');`,
       {
         icon: 'discord',
         mode: 'link',
-        content: 'https://discord.gg/csSX8TBy',
+        content: 'https://discord.gg/mkVw5zPAtf',
       },
     ],
     locales: [
