@@ -35,6 +35,12 @@
   }
 }
 
+@media (max-width: 640px) {
+  :global(.rspress-home-hero-image) {
+    max-width: 250px;
+  }
+}
+
 @media (max-width: 768px) {
   .mask {
     display: none;
