@@ -46,14 +46,12 @@ cli
         const { port, host } = options || {};
         const config = await loadConfigFile(options?.config);
 
-        // Support root relative to cwd
-        if (config.root && !path.isAbsolute(config.root)) {
-          config.root = path.join(cwd, config.root);
-        }
-
-        // Support root in command, override config file
         if (root) {
+          // Support root in command, override config file
           config.root = path.join(cwd, root);
+        } else if (config.root && !path.isAbsolute(config.root)) {
+          // Support root relative to cwd
+          config.root = path.join(cwd, config.root);
         }
 
         docDirectory = config.root || path.join(cwd, root ?? 'docs');
