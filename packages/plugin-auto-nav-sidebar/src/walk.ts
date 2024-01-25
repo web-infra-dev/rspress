@@ -150,8 +150,9 @@ export async function walk(workDir: string, routePrefix = '/') {
     }
   });
   // find the `_meta.json` file in the subdirectory
-  const subDirs = (await fs.readdir(workDir)).filter(v =>
-    fs.statSync(path.join(workDir, v)).isDirectory(),
+  const subDirs = (await fs.readdir(workDir)).filter(
+    v =>
+      fs.statSync(path.join(workDir, v)).isDirectory() && v !== 'node_modules',
   );
   // Every sub dir will represent a group of sidebar
   const sidebarConfig: Sidebar = {};
