@@ -8,13 +8,14 @@
     "preview": "rspress preview"
   },
   "dependencies": {
+    "@rspress/plugin-playground": "workspace:*",
+    "@rspress/plugin-preview": "workspace:*",
+    "@rspress/shared": "workspace:*",
     "react": "^18",
     "react-dom": "^18",
     "react-transition-group": "4.4.5",
     "rspress": "workspace:*",
-    "@rspress/shared": "workspace:*",
-    "@rspress/plugin-preview": "workspace:*",
-    "@rspress/plugin-playground": "workspace:*"
+    "solid-js": "^1.8.12"
   },
   "devDependencies": {
     "@types/node": "^14"

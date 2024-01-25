@@ -11,6 +11,11 @@ export default defineConfig({
       dts: {
         respectExternal: false,
       },
+      externals: [
+        '@rsbuild/core',
+        '@rsbuild/plugin-solid',
+        '@rsbuild/plugin-babel',
+      ],
     },
     {
       buildType: 'bundle',
@@ -22,23 +27,23 @@ export default defineConfig({
         respectExternal: false,
       },
     },
-    {
-      buildType: 'bundle',
-      format: 'esm',
-      target: 'es2020',
-      dts: false,
-      input: ['./src/virtual-demo.tsx'],
-      externals: [
-        'virtual-meta',
-        '@rspress/core/runtime',
-        'react',
-        'react-dom',
-        'react-router-dom',
-      ],
-      style: {
-        inject: true,
-      },
-    },
+    // {
+    //   buildType: 'bundle',
+    //   format: 'esm',
+    //   target: 'es2020',
+    //   dts: false,
+    //   input: ['./src/virtual-demo.tsx'],
+    //   externals: [
+    //     'virtual-meta',
+    //     '@rspress/core/runtime',
+    //     'react',
+    //     'react-dom',
+    //     'react-router-dom',
+    //   ],
+    //   style: {
+    //     inject: true,
+    //   },
+    // },
   ],
   plugins: [moduleTools()],
 });

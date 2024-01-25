@@ -1,4 +1,4 @@
-import { join, resolve } from 'path';
+import { join, isAbsolute, dirname } from 'path';
 import { visit } from 'unist-util-visit';
 import fs from '@rspress/shared/fs-extra';
 import {
@@ -13,11 +13,6 @@ import { injectDemoBlockImport, generateId } from './utils';
 import { demoBlockComponentPath } from './constant';
 import { demoRoutes } from '.';
 
-// FIXME: remove it
-const json = JSON.parse(
-  fs.readFileSync(resolve(process.cwd(), './package.json'), 'utf8'),
-);
-
 /**
  * remark plugin to transform code to demo
  */
@@ -26,14 +21,21 @@ export const remarkCodeToDemo: Plugin<
     {
       isMobile: boolean;
       getRouteMeta: () => RouteMeta[];
+      getIframeInfo: () => any;
       iframePosition: 'fixed' | 'follow';
       defaultRenderMode: 'pure' | 'preview';
     },
   ],
   Root
-> = ({ isMobile, getRouteMeta, iframePosition, defaultRenderMode }) => {
+> = ({
+  isMobile,
+  getRouteMeta,
+  iframePosition,
+  defaultRenderMode,
+  getIframeInfo,
+}) => {
   const routeMeta = getRouteMeta();
-
+  const { isProd, devPort, framework } = getIframeInfo();
   return (tree, vfile) => {
     const demos: MdxjsEsm[] = [];
     const route = routeMeta.find(
@@ -47,6 +49,45 @@ export const remarkCodeToDemo: Plugin<
     const { pageName } = route;
     let index = 1;
     let externalDemoIndex = 0;
+    const virtualDir = join(
+      process.cwd(),
+      'node_modules',
+      RSPRESS_TEMP_DIR,
+      'virtual-demo',
+    );
+    fs.ensureDirSync(virtualDir);
+
+    function writeVirtualEntry(demoId: string, demoPath: string) {
+      const virtualEntryPath = join(virtualDir, `${demoId}.entry.tsx`);
+      demoRoutes.push({
+        id: demoId,
+        url: `/~demo/${demoId}`,
+        path: demoPath,
+        entry: virtualEntryPath,
+      });
+      const solidEntry = `
+        import { render } from 'solid-js/web';
+        import Demo from '${demoPath}';
+        render(() => <Demo /> , document.getElementById('root'));
+      `;
+
+      const reactEntry = `
+        import React from 'react';
+        import { render } from 'react-dom';
+        import Demo from '${demoPath}';
+        render(<Demo /> , document.getElementById('root'));
+      `;
+      const entryContent = framework === 'react' ? reactEntry : solidEntry;
+      // Only when the content of the file changes, the file will be written
+      // Avoid to trigger the hmr indefinitely
+      if (fs.existsSync(virtualEntryPath)) {
+        const prevContent = fs.readFileSync(virtualEntryPath, 'utf-8');
+        if (entryContent === prevContent) {
+          return;
+        }
+      }
+      fs.writeFileSync(virtualEntryPath, entryContent);
+    }
 
     function constructDemoNode(
       demoId: string,
@@ -56,12 +97,16 @@ export const remarkCodeToDemo: Plugin<
       // Only for external demo
       externalDemoIndex?: number,
     ) {
-      const demoRoute = `/~demo/${demoId}`;
+      const demoRoute = isProd
+        ? `/~demo/${demoId}`
+        : `http://localhost:${devPort}/${demoId}`;
       if (isMobileMode) {
-        // only add demoRoutes in mobile mode
-        demoRoutes.push({
-          path: demoRoute,
-        });
+        writeVirtualEntry(
+          demoId,
+          isAbsolute(demoPath)
+            ? demoPath
+            : join(vfile.dirname || dirname(vfile.path), demoPath),
+        );
       } else {
         demos.push(getASTNodeImport(`Demo${demoId}`, demoPath));
       }
@@ -96,13 +141,8 @@ export const remarkCodeToDemo: Plugin<
             },
             {
               type: 'mdxJsxAttribute',
-              name: 'content',
-              value: currentNode.value,
-            },
-            {
-              type: 'mdxJsxAttribute',
-              name: 'packageName',
-              value: json.name,
+              name: 'isProd',
+              value: isProd,
             },
           ],
           children: [
@@ -192,24 +232,18 @@ export const remarkCodeToDemo: Plugin<
           node?.meta?.includes('mobile') ||
           (!node?.meta?.includes('web') && isMobile);
 
-        const demoDir = join(
-          process.cwd(),
-          'node_modules',
-          RSPRESS_TEMP_DIR,
-          `virtual-demo`,
-        );
         const id = generateId(pageName, index++);
-        const virtualModulePath = join(demoDir, `${id}.tsx`);
-        fs.ensureDirSync(join(demoDir));
+        const virtualModulePath = join(virtualDir, `${id}.tsx`);
+        constructDemoNode(id, virtualModulePath, node, isMobileMode);
         // Only when the content of the file changes, the file will be written
         // Avoid to trigger the hmr indefinitely
         if (fs.existsSync(virtualModulePath)) {
           const content = fs.readFileSync(virtualModulePath, 'utf-8');
-          if (content !== value) {
-            fs.writeFileSync(virtualModulePath, value);
+          if (content === value) {
+            return;
           }
         }
-        constructDemoNode(id, virtualModulePath, node, isMobileMode);
+        fs.writeFileSync(virtualModulePath, value);
       }
     });
 

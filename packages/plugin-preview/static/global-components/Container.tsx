@@ -7,16 +7,19 @@ type ContainerProps = {
   children: React.ReactNode[];
   isMobile: 'true' | 'false';
   url: string;
-  content: string;
-  packageName: string;
+  isProd: 'true' | 'false';
 };
 
 const Container: React.FC<ContainerProps> = props => {
-  const { children, isMobile, url } = props;
+  const { children, isMobile, url, isProd } = props;
   const [showCode, setShowCode] = useState(false);
   const lang = useLang();
 
   const getPageUrl = () => {
+    console.log(typeof isProd, url);
+    if (isProd === 'false') {
+      return url;
+    }
     if (typeof window !== 'undefined') {
       return `${window.location.origin}${withBase(url)}`;
     }
@@ -43,7 +46,7 @@ const Container: React.FC<ContainerProps> = props => {
             <div className="rspress-preview-code">{children?.[0]}</div>
             <div className="rspress-preview-device">
               <iframe src={getPageUrl()} key={iframeKey}></iframe>
-              <MobileOperation url={url} refresh={refresh} />
+              <MobileOperation url={getPageUrl()} refresh={refresh} />
             </div>
           </div>
         ) : (

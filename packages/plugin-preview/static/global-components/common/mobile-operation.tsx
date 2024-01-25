@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useRef, useState } from 'react';
 import { QRCodeSVG } from 'qrcode.react';
-import { withBase, useLang } from '@rspress/core/runtime';
+import { useLang } from '@rspress/core/runtime';
 import IconLaunch from '../icons/Launch';
 import IconQrcode from '../icons/Qrcode';
 import IconRefresh from '../icons/Refresh';
@@ -28,13 +28,6 @@ export default (props: {
   const triggerRef = useRef(null);
   const t = lang === 'zh' ? locales.zh : locales.en;
 
-  const getPageUrl = () => {
-    if (typeof window !== 'undefined') {
-      return window.location.origin + withBase(url);
-    }
-    // Do nothing in ssr
-    return '';
-  };
   const toggleQRCode = (e: any) => {
     if (!showQRCode) {
       e.target.blur();
@@ -42,7 +35,7 @@ export default (props: {
     setShowQRCode(!showQRCode);
   };
   const openNewPage = () => {
-    window.open(getPageUrl());
+    window.open(url);
   };
 
   const contains = function (root: HTMLElement | null, ele: any) {
@@ -92,7 +85,7 @@ export default (props: {
       <div className="relative" ref={triggerRef}>
         {showQRCode && (
           <div className="rspress-preview-qrcode">
-            <QRCodeSVG value={getPageUrl()} size={96} />
+            <QRCodeSVG value={url} size={96} />
           </div>
         )}
         <button onClick={toggleQRCode}>
