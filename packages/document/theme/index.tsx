@@ -1,6 +1,8 @@
 import Theme from 'rspress/theme';
 // import { NoSSR, useLang } from 'rspress/runtime';
 // import { Documate } from '@documate/react';
+import { RsfamilyNavIcon } from 'rsfamily-nav-icon';
+import 'rsfamily-nav-icon/dist/index.css';
 import '@documate/react/dist/style.css';
 import './index.css';
 
@@ -23,14 +25,15 @@ const Layout = () => {
   // const lang = useLang();
   return (
     <Theme.Layout
-    // afterNavTitle={
-    //   <NoSSR>
-    //     <Documate
-    //       endpoint={`${process.env.DOCUMATE_BACKEND_URL}/ask`}
-    //       predefinedQuestions={predefinedQuestions[lang as 'zh' | 'en']}
-    //     />
-    //   </NoSSR>
-    // }
+      beforeNavTitle={<RsfamilyNavIcon />}
+      // afterNavTitle={
+      //   <NoSSR>
+      //     <Documate
+      //       endpoint={`${process.env.DOCUMATE_BACKEND_URL}/ask`}
+      //       predefinedQuestions={predefinedQuestions[lang as 'zh' | 'en']}
+      //     />
+      //   </NoSSR>
+      // }
     />
   );
 };

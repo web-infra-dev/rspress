@@ -586,6 +586,10 @@ importers:
         version: 5.0.4
 
   packages/document:
+    dependencies:
+      rsfamily-nav-icon:
+        specifier: ^1.0.1
+        version: 1.0.1
     devDependencies:
       '@documate/documate':
         specifier: ^0.1.0
@@ -12687,6 +12691,10 @@ packages:
     optionalDependencies:
       fsevents: 2.3.2
     dev: true
+
+  /rsfamily-nav-icon@1.0.1:
+    resolution: {integrity: sha512-TJdyzLpFfmEGfJiPAwZqn1TdXwoR7j/Y0j9ejovNk3zABzJ1FRQ6WZl7DVQQTHoJnABlRgXphMuxnAZ2UMePdQ==}
+    dev: false
 
   /rslog@1.1.0:
     resolution: {integrity: sha512-wtTijPuwUhyVG7YvnIVzlefhlto4qJ9vm42ewwJtqrOBP/vKdZCIyfiYm0odVCR3ajR1CIUqaloIzbqhlbyaZA==}
