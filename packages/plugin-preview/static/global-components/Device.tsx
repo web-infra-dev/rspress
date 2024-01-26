@@ -6,13 +6,6 @@ import MobileOperation from './common/mobile-operation';
 import './Device.scss';
 
 export default () => {
-  const getPageUrl = (url: string) => {
-    if (typeof window !== 'undefined') {
-      return window.location.origin + withBase(url);
-    }
-    // Do nothing in ssr
-    return '';
-  };
   const { page } = usePageData();
   const pageName = `_${normalizeId(page.pagePath)}`;
   const url = `~demo/${pageName}`;
@@ -20,6 +13,17 @@ export default () => {
     ((demos || []) as { id: string }[]).filter(item =>
       new RegExp(`${pageName}_\\d+`).test(item.id),
     ).length > 0;
+
+  const getPageUrl = (url: string) => {
+    if (page?.devPort) {
+      return `http://localhost:${page.devPort}/${pageName}`;
+    }
+    if (typeof window !== 'undefined') {
+      return `${window.location.origin}${withBase(url)}`;
+    }
+    // Do nothing in ssr
+    return '';
+  };
   console.log(pageName, demos, url);
   const initialInnerWidth =
     typeof window !== 'undefined' ? window.innerWidth : 0;

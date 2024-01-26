@@ -16,7 +16,6 @@ const Container: React.FC<ContainerProps> = props => {
   const lang = useLang();
 
   const getPageUrl = () => {
-    console.log(typeof isProd, url);
     if (isProd === 'false') {
       return url;
     }

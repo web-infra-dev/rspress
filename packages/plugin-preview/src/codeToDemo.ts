@@ -1,41 +1,28 @@
 import { join, isAbsolute, dirname } from 'path';
 import { visit } from 'unist-util-visit';
 import fs from '@rspress/shared/fs-extra';
-import {
-  RSPRESS_TEMP_DIR,
-  normalizePosixPath,
-  type RouteMeta,
-} from '@rspress/shared';
+import { normalizePosixPath } from '@rspress/shared';
 import type { Plugin } from 'unified';
 import type { Root } from 'mdast';
 import type { MdxjsEsm } from 'mdast-util-mdxjs-esm';
 import { injectDemoBlockImport, generateId } from './utils';
-import { demoBlockComponentPath } from './constant';
+import { demoBlockComponentPath, virtualDir } from './constant';
+import type { RemarkPluginOptions } from './types';
 import { demoRoutes } from '.';
 
 /**
  * remark plugin to transform code to demo
  */
-export const remarkCodeToDemo: Plugin<
-  [
-    {
-      isMobile: boolean;
-      getRouteMeta: () => RouteMeta[];
-      getIframeInfo: () => any;
-      iframePosition: 'fixed' | 'follow';
-      defaultRenderMode: 'pure' | 'preview';
-    },
-  ],
-  Root
-> = ({
-  isMobile,
-  getRouteMeta,
-  iframePosition,
+export const remarkCodeToDemo: Plugin<[RemarkPluginOptions], Root> = ({
+  getInfo,
+  previewMode,
   defaultRenderMode,
-  getIframeInfo,
+  devPort,
+  position,
 }) => {
-  const routeMeta = getRouteMeta();
-  const { isProd, devPort, framework } = getIframeInfo();
+  const { routeMeta, isProd } = getInfo();
+  const isMobile = previewMode === 'iframe';
+  fs.ensureDirSync(virtualDir);
   return (tree, vfile) => {
     const demos: MdxjsEsm[] = [];
     const route = routeMeta.find(
@@ -49,45 +36,6 @@ export const remarkCodeToDemo: Plugin<
     const { pageName } = route;
     let index = 1;
     let externalDemoIndex = 0;
-    const virtualDir = join(
-      process.cwd(),
-      'node_modules',
-      RSPRESS_TEMP_DIR,
-      'virtual-demo',
-    );
-    fs.ensureDirSync(virtualDir);
-
-    function writeVirtualEntry(demoId: string, demoPath: string) {
-      const virtualEntryPath = join(virtualDir, `${demoId}.entry.tsx`);
-      demoRoutes.push({
-        id: demoId,
-        url: `/~demo/${demoId}`,
-        path: demoPath,
-        entry: virtualEntryPath,
-      });
-      const solidEntry = `
-        import { render } from 'solid-js/web';
-        import Demo from '${demoPath}';
-        render(() => <Demo /> , document.getElementById('root'));
-      `;
-
-      const reactEntry = `
-        import React from 'react';
-        import { render } from 'react-dom';
-        import Demo from '${demoPath}';
-        render(<Demo /> , document.getElementById('root'));
-      `;
-      const entryContent = framework === 'react' ? reactEntry : solidEntry;
-      // Only when the content of the file changes, the file will be written
-      // Avoid to trigger the hmr indefinitely
-      if (fs.existsSync(virtualEntryPath)) {
-        const prevContent = fs.readFileSync(virtualEntryPath, 'utf-8');
-        if (entryContent === prevContent) {
-          return;
-        }
-      }
-      fs.writeFileSync(virtualEntryPath, entryContent);
-    }
 
     function constructDemoNode(
       demoId: string,
@@ -101,12 +49,13 @@ export const remarkCodeToDemo: Plugin<
         ? `/~demo/${demoId}`
         : `http://localhost:${devPort}/${demoId}`;
       if (isMobileMode) {
-        writeVirtualEntry(
-          demoId,
-          isAbsolute(demoPath)
+        demoRoutes.push({
+          group: pageName,
+          id: demoId,
+          path: isAbsolute(demoPath)
             ? demoPath
             : join(vfile.dirname || dirname(vfile.path), demoPath),
-        );
+        });
       } else {
         demos.push(getASTNodeImport(`Demo${demoId}`, demoPath));
       }
@@ -119,7 +68,7 @@ export const remarkCodeToDemo: Plugin<
         demos.push(getASTNodeImport(tempVar, `!!${demoPath}?raw`));
       }
 
-      if (isMobileMode && iframePosition === 'fixed') {
+      if (isMobileMode && position === 'fixed') {
         // Only show the code block
         externalDemoIndex !== undefined &&
           Object.assign(currentNode, getExternalDemoContent(tempVar));

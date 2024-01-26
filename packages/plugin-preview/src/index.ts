@@ -1,4 +1,4 @@
-import { join, resolve } from 'path';
+import { join } from 'path';
 import { type RouteMeta, type RspressPlugin } from '@rspress/shared';
 import { createRsbuild } from '@rsbuild/core';
 import { pluginSolid } from '@rsbuild/plugin-solid';
@@ -6,49 +6,18 @@ import { pluginBabel } from '@rsbuild/plugin-babel';
 import { demoRuntimeModule } from './virtual-module';
 import { remarkCodeToDemo } from './codeToDemo';
 import { staticPath } from './constant';
+import type { Options } from './types';
+import { generateEntry } from './generate-entry';
 
-type IframeOptions = {
-  framework?: 'react' | 'solid';
-  position?: 'fixed' | 'follow';
-  devPort?: number;
-};
-
-export type Options = {
-  /**
-   * @deprecated Use previewMode instead.
-   * true = 'iframe'
-   * false = 'internal'
-   */
-  isMobile?: boolean;
-  /**
-   * internal mode: component will be rendered inside the documentation, only support react.
-   *
-   * inframe mode: component will be rendered in iframe, note that aside will hide.
-   * @default 'internal'
-   */
-  previewMode?: 'internal' | 'iframe';
-  /**
-   * position of the iframe
-   * @default 'follow'
-   */
-  iframePosition?: 'fixed' | 'follow';
-  iframeOptions?: IframeOptions;
-  /**
-   * determine how to handle a internal code block without meta
-   * @default 'preview'
-   */
-  defaultRenderMode?: 'pure' | 'preview';
-};
-
-// eslint-disable-next-line import/no-mutable-exports
-export let routeMeta: RouteMeta[];
+let routeMeta: RouteMeta[];
 let isProd: boolean;
 let firstBuild = true;
 export const demoRoutes: {
   id: string;
-  url: string;
+  // url: string;
   path: string;
-  entry: string;
+  // entry: string;
+  group: string;
 }[] = [];
 export const demoMeta: Record<
   string,
@@ -59,21 +28,25 @@ export const demoMeta: Record<
  * The plugin is used to preview component.
  */
 export function pluginPreview(options?: Options): RspressPlugin {
-  const isMobile = options?.isMobile ?? false;
-  const previewMode =
-    options?.previewMode ?? options?.isMobile ? 'iframe' : 'internal';
-  const iframePosition = options?.iframePosition ?? 'follow';
-  const defaultRenderMode = options?.defaultRenderMode ?? 'preview';
-  const { devPort = 7890, framework = 'react' } = options?.iframeOptions ?? {};
+  const {
+    isMobile = false,
+    iframeOptions = {},
+    iframePosition = 'follow',
+    defaultRenderMode = 'preview',
+  } = options ?? {};
+  const previewMode = options?.previewMode ?? isMobile ? 'iframe' : 'internal';
+  const {
+    devPort = 7890,
+    framework = 'react',
+    position = iframePosition,
+  } = iframeOptions;
   const globalUIComponents =
     iframePosition === 'fixed'
       ? [join(staticPath, 'global-components', 'Device.tsx')]
       : [];
-  const getRouteMeta = () => routeMeta;
-  const getIframeInfo = () => ({
+  const getInfo = () => ({
     isProd,
-    devPort,
-    framework,
+    routeMeta,
   });
   return {
     name: '@rspress/plugin-preview',
@@ -82,7 +55,7 @@ export function pluginPreview(options?: Options): RspressPlugin {
       config.markdown.mdxRs = false;
       return config;
     },
-    async routeGenerated(routes: RouteMeta[]) {
+    routeGenerated(routes: RouteMeta[]) {
       // init routeMeta
       routeMeta = routes;
     },
@@ -90,31 +63,23 @@ export function pluginPreview(options?: Options): RspressPlugin {
       isProd = isProduction;
     },
     async afterBuild(config, isProd) {
-      if (isMobile && iframePosition === 'fixed') {
-        // TODO: write entry for all page
+      // TODO: support Add demo, which may change the entry
+      if (!firstBuild || demoRoutes.length === 0) {
+        return;
       }
+      firstBuild = false;
       const meta = `
       export const demos = ${JSON.stringify(demoRoutes)}
       `;
       demoRuntimeModule.writeModule('virtual-meta', meta);
-      if (!firstBuild) {
-        return;
-      }
-      firstBuild = false;
-      const sourceEntry: Record<string, string> = {};
-      demoRoutes.forEach(route => {
-        const { id, entry } = route;
-        sourceEntry[id] = entry;
-      });
-      const outDir = resolve(config.outDir ?? 'doc_build', '~demo');
-      // Create demo dev server
+      const sourceEntry = generateEntry(demoRoutes, framework, position);
+      const outDir = join(config.outDir ?? 'doc_build', '~demo');
       const rsbuildInstance = await createRsbuild({
         rsbuildConfig: {
           dev: {
             progressBar: false,
           },
           server: {
-            // Don't display the demo server log
             printUrls: () => undefined,
             port: devPort,
           },
@@ -170,16 +135,22 @@ export function pluginPreview(options?: Options): RspressPlugin {
         },
       },
     },
+    extendPageData(pageData, isProd) {
+      if (!isProd) {
+        pageData.devPort = devPort;
+      }
+    },
     markdown: {
       remarkPlugins: [
         [
           remarkCodeToDemo,
           {
-            isMobile,
-            getRouteMeta,
-            iframePosition,
+            getInfo,
+            devPort,
+            framework,
+            position,
+            previewMode,
             defaultRenderMode,
-            getIframeInfo,
           },
         ],
       ],
@@ -193,3 +164,5 @@ export function pluginPreview(options?: Options): RspressPlugin {
 }
 
 export { normalizeId } from './utils';
+
+export type { Options };

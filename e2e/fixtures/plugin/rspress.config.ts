@@ -11,9 +11,9 @@ export default defineConfig({
     pluginPreview({
       isMobile: true,
       iframeOptions: {
-        framework: 'solid'
+        framework: 'react'
       },
-      // iframePosition: 'fixed',
+      iframePosition: 'fixed',
     }),
     // pluginPlayground(),
   ],
