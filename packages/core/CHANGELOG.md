@@ -1,5 +1,22 @@
 # @rspress/core
 
+## 1.11.0
+
+### Patch Changes
+
+- c491578: fix: ensure afterBuild executed after dev compile done
+- 82a1e46: style: optimize code copy animation
+- Updated dependencies [4bb6d61]
+- Updated dependencies [82a1e46]
+- Updated dependencies [85e9601]
+  - @rspress/theme-default@1.11.0
+  - @rspress/runtime@1.11.0
+  - @rspress/plugin-medium-zoom@1.11.0
+  - @rspress/plugin-auto-nav-sidebar@1.11.0
+  - @rspress/plugin-container-syntax@1.11.0
+  - @rspress/plugin-last-updated@1.11.0
+  - @rspress/shared@1.11.0
+
 ## 1.10.1
 
 ### Patch Changes

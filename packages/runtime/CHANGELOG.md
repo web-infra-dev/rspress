@@ -1,5 +1,12 @@
 # @rspress/runtime
 
+## 1.11.0
+
+### Patch Changes
+
+- 82a1e46: style: optimize code copy animation
+  - @rspress/shared@1.11.0
+
 ## 1.10.1
 
 ### Patch Changes

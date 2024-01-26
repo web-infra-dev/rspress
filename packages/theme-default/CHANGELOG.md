@@ -1,5 +1,16 @@
 # @rspress/theme-default
 
+## 1.11.0
+
+### Patch Changes
+
+- 4bb6d61: feat: allow table scrolling to avoid breaking work
+- 82a1e46: style: optimize code copy animation
+- 85e9601: feat: support toc component in mobile device
+- Updated dependencies [82a1e46]
+  - @rspress/runtime@1.11.0
+  - @rspress/shared@1.11.0
+
 ## 1.10.1
 
 ### Patch Changes
