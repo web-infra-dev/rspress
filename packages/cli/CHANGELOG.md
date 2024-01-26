@@ -1,5 +1,12 @@
 # rspress
 
+## 1.11.1
+
+### Patch Changes
+
+- @rspress/core@1.11.1
+- @rspress/shared@1.11.1
+
 ## 1.11.0
 
 ### Minor Changes

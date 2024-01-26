@@ -1,5 +1,12 @@
 # @rspress/plugin-auto-sidebar
 
+## 1.11.1
+
+### Patch Changes
+
+- acfb9ad: fix: sidebar walk excludes node_modules
+  - @rspress/shared@1.11.1
+
 ## 1.11.0
 
 ### Patch Changes
