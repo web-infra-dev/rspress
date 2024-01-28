@@ -2,7 +2,6 @@
   * Some common css theme variables and they will be used in the tailwind theme as well.
 */
 :root {
-  --rp-layout-max-width: 1440px;
   --rp-nav-height: 72px;
   --rp-sidebar-width: 320px;
   --rp-aside-width: 368px;
@@ -66,10 +65,8 @@
 :root {
   --rp-z-index-local-nav: 10;
   --rp-z-index-nav: 20;
-  --rp-z-index-layout-top: 30;
-  --rp-z-index-backdrop: 40;
-  --rp-z-index-sidebar: 50;
-  --rp-z-index-footer: 60;
+  --rp-z-index-backdrop: 30;
+  --rp-z-index-sidebar: 40;
 }
 
 :root {
