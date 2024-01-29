@@ -16,6 +16,7 @@ export function useLocaleSiteData(): NormalizedLocales {
       prevPageText: themeConfig.prevPageText,
       nextPageText: themeConfig.nextPageText,
       sourceCodeText: themeConfig.sourceCodeText,
+      searchPlaceholderText: themeConfig.searchPlaceholderText,
     } as NormalizedLocales;
   }
   const localeInfo = locales.find(locale => locale.lang === lang)!;

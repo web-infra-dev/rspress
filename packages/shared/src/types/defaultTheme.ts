@@ -78,6 +78,10 @@ export interface Config {
    */
   search?: boolean;
   /**
+   * The placeholder of search input
+   */
+  searchPlaceholderText?: string;
+  /**
    * The behavior of hiding navbar
    */
   hideNavbar?: 'always' | 'auto' | 'never';
@@ -111,6 +115,7 @@ export interface LocaleConfig {
   nextPageText?: string;
   sourceCodeText?: string;
   langRoutePrefix?: string;
+  searchPlaceholderText?: string;
 }
 // nav -----------------------------------------------------------------------
 export type Nav = NavItem[] | { [key: string]: NavItem[] };

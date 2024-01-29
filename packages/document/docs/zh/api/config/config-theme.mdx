@@ -275,6 +275,23 @@ export default defineConfig({
 });
 ```
 
+## searchPlaceholderText
+
+- Type: `string`
+- Default: `Search Docs`
+
+搜索框的占位符文本。比如:
+
+```ts title="rspress.config.ts"
+import { defineConfig } from 'rspress/config';
+
+export default defineConfig({
+  themeConfig: {
+    searchPlaceholderText: 'Search Docs',
+  },
+});
+```
+
 ## socialLinks
 
 - Type: `Array`
@@ -408,6 +425,8 @@ export interface LocaleConfig {
   prevPageText?: string;
   // 下一页文本
   nextPageText?: string;
+  // 搜索框占位符文本
+  searchPlaceholderText?: string;
 }
 ```
 
