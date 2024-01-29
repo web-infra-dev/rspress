@@ -3,26 +3,36 @@ import { type RouteMeta, type RspressPlugin } from '@rspress/shared';
 import { createRsbuild } from '@rsbuild/core';
 import { pluginSolid } from '@rsbuild/plugin-solid';
 import { pluginBabel } from '@rsbuild/plugin-babel';
-import { demoRuntimeModule } from './virtual-module';
+import { isEqual, cloneDeep } from 'lodash';
 import { remarkCodeToDemo } from './codeToDemo';
 import { staticPath } from './constant';
 import type { Options } from './types';
 import { generateEntry } from './generate-entry';
+import { demoRuntimeModule } from './virtual-module';
 
 let routeMeta: RouteMeta[];
 let isProd: boolean;
-let firstBuild = true;
-export const demoRoutes: {
-  id: string;
-  // url: string;
-  path: string;
-  // entry: string;
-  group: string;
-}[] = [];
+
+export const demoRoutes: Record<
+  string,
+  {
+    id: string;
+    path: string;
+  }[]
+> = {};
+
 export const demoMeta: Record<
   string,
   { id: string; virtualModulePath: string; title: string }[]
 > = {};
+
+type StartServerResult = {
+  urls: string[];
+  port: number;
+  server: {
+    close: () => Promise<void>;
+  };
+};
 
 /**
  * The plugin is used to preview component.
@@ -48,6 +58,8 @@ export function pluginPreview(options?: Options): RspressPlugin {
     isProd,
     routeMeta,
   });
+  let lastDemoRoutes: typeof demoRoutes;
+  let devServer: StartServerResult;
   return {
     name: '@rspress/plugin-preview',
     config(config) {
@@ -63,15 +75,15 @@ export function pluginPreview(options?: Options): RspressPlugin {
       isProd = isProduction;
     },
     async afterBuild(config, isProd) {
-      // TODO: support Add demo, which may change the entry
-      if (!firstBuild || demoRoutes.length === 0) {
+      if (isEqual(demoRoutes, lastDemoRoutes)) {
+        console.log(true);
         return;
+      } else {
+        console.log(false);
+
+        lastDemoRoutes = cloneDeep(demoRoutes);
+        await devServer?.server?.close();
       }
-      firstBuild = false;
-      const meta = `
-      export const demos = ${JSON.stringify(demoRoutes)}
-      `;
-      demoRuntimeModule.writeModule('virtual-meta', meta);
       const sourceEntry = generateEntry(demoRoutes, framework, position);
       const outDir = join(config.outDir ?? 'doc_build', '~demo');
       const rsbuildInstance = await createRsbuild({
@@ -111,7 +123,8 @@ export function pluginPreview(options?: Options): RspressPlugin {
       if (isProd) {
         rsbuildInstance.build();
       } else {
-        rsbuildInstance.startDevServer({
+        console.log(devPort);
+        devServer = await rsbuildInstance.startDevServer({
           getPortSilently: false,
         });
       }

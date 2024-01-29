@@ -8,6 +8,7 @@ import type { MdxjsEsm } from 'mdast-util-mdxjs-esm';
 import { injectDemoBlockImport, generateId } from './utils';
 import { demoBlockComponentPath, virtualDir } from './constant';
 import type { RemarkPluginOptions } from './types';
+import { demoRuntimeModule } from './virtual-module';
 import { demoRoutes } from '.';
 
 /**
@@ -34,6 +35,8 @@ export const remarkCodeToDemo: Plugin<[RemarkPluginOptions], Root> = ({
       return;
     }
     const { pageName } = route;
+    // clear all demo in this pageName and recollect, bacause we may delete the demo
+    demoRoutes[pageName] = [];
     let index = 1;
     let externalDemoIndex = 0;
 
@@ -49,8 +52,7 @@ export const remarkCodeToDemo: Plugin<[RemarkPluginOptions], Root> = ({
         ? `/~demo/${demoId}`
         : `http://localhost:${devPort}/${demoId}`;
       if (isMobileMode) {
-        demoRoutes.push({
-          group: pageName,
+        demoRoutes[pageName].push({
           id: demoId,
           path: isAbsolute(demoPath)
             ? demoPath
@@ -120,24 +122,16 @@ export const remarkCodeToDemo: Plugin<[RemarkPluginOptions], Root> = ({
         const src = node.attributes.find(
           (attr: { name: string; value: string }) => attr.name === 'src',
         )?.value;
-        let isMobileMode = node.attributes.find(
-          (attr: { name: string; value: boolean }) => attr.name === 'isMobile',
-        )?.value;
-        if (isMobileMode === undefined) {
-          // isMobile is not specified, eg: <code />
-          isMobileMode = isMobile;
-        } else if (isMobileMode === null) {
-          // true by default, eg: <code isMobile />
-          isMobileMode = true;
-        } else if (typeof isMobileMode === 'object') {
-          // jsx value, isMobileMode.value now must be string, even if input is
-          // any complex struct rather than primitive type
-          // eg: <code isMobile={ anyOfOrOther([true, false, 'true', 'false', {}]) } />
-          isMobileMode = isMobileMode.value !== 'false';
-        } else {
-          // string value, eg: <code isMobile="true" />
-          isMobileMode = isMobileMode !== 'false';
-        }
+        const currtentMode =
+          node.attributes.find(
+            (attr: { name: string; value: boolean }) =>
+              attr.name === 'previewMode',
+          )?.value ?? previewMode;
+        const isMobileMode =
+          node.attributes.find(
+            (attr: { name: string; value: boolean }) =>
+              attr.name === 'isMobile',
+          )?.value ?? currtentMode === 'iframe';
         if (!src) {
           return;
         }
@@ -156,30 +150,21 @@ export const remarkCodeToDemo: Plugin<[RemarkPluginOptions], Root> = ({
       if (node.lang === 'jsx' || node.lang === 'tsx') {
         const value = injectDemoBlockImport(node.value, demoBlockComponentPath);
 
-        const hasPureMeta = node?.meta?.includes('pure');
-        const hasPreviewMeta = node?.meta?.includes('preview');
-
-        let noTransform;
-        switch (defaultRenderMode) {
-          case 'pure':
-            noTransform = !hasPreviewMeta;
-            break;
-          case 'preview':
-            noTransform = hasPureMeta;
-            break;
-          default:
-            break;
-        }
-
         // do not anything for pure mode
-        if (noTransform) {
+        if (
+          node?.meta?.includes('pure') ||
+          (!node?.meta?.includes('preview') && defaultRenderMode === 'pure')
+        ) {
           return;
         }
 
         // every code block can change their preview mode by meta
         const isMobileMode =
           node?.meta?.includes('mobile') ||
-          (!node?.meta?.includes('web') && isMobile);
+          node?.meta?.includes('iframe') ||
+          (!node?.meta?.includes('web') &&
+            !node?.meta?.includes('internal') &&
+            isMobile);
 
         const id = generateId(pageName, index++);
         const virtualModulePath = join(virtualDir, `${id}.tsx`);
@@ -197,6 +182,12 @@ export const remarkCodeToDemo: Plugin<[RemarkPluginOptions], Root> = ({
     });
 
     tree.children.unshift(...demos);
+
+    // TODO maybe rewrite
+    const meta = `
+      export const demos = ${JSON.stringify(demoRoutes)}
+      `;
+    demoRuntimeModule.writeModule('virtual-meta', meta);
   };
 };
 

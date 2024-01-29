@@ -7,16 +7,14 @@ import './Device.scss';
 
 export default () => {
   const { page } = usePageData();
-  const pageName = `_${normalizeId(page.pagePath)}`;
-  const url = `~demo/${pageName}`;
-  const haveDemos =
-    ((demos || []) as { id: string }[]).filter(item =>
-      new RegExp(`${pageName}_\\d+`).test(item.id),
-    ).length > 0;
+  const pageName = `${normalizeId(page.pagePath)}`;
+  const url = `~demo/_${pageName}`;
+  console.log(demos, pageName, url);
+  const haveDemos = demos[pageName]?.length > 0;
 
   const getPageUrl = (url: string) => {
     if (page?.devPort) {
-      return `http://localhost:${page.devPort}/${pageName}`;
+      return `http://localhost:${page.devPort}/_${pageName}`;
     }
     if (typeof window !== 'undefined') {
       return `${window.location.origin}${withBase(url)}`;
@@ -24,7 +22,6 @@ export default () => {
     // Do nothing in ssr
     return '';
   };
-  console.log(pageName, demos, url);
   const initialInnerWidth =
     typeof window !== 'undefined' ? window.innerWidth : 0;
   const [asideWidth, setAsideWidth] = useState('0px');

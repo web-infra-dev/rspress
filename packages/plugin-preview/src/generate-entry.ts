@@ -1,55 +1,63 @@
 import { join } from 'path';
 import fs from 'fs';
-import { virtualDir } from './constant';
+import { virtualDir, staticPath } from './constant';
 
 // TODO: Support custom entry template files
 export function generateEntry(
-  demoRoutes: {
-    id: string;
-    path: string;
-    group: string;
-  }[],
+  demoRoutes: Record<
+    string,
+    {
+      id: string;
+      path: string;
+    }[]
+  >,
   framework: 'react' | 'solid',
   position: 'follow' | 'fixed',
 ) {
   const sourceEntry: Record<string, string> = {};
+  const entryCssPath = join(staticPath, 'global-styles', 'entry.css');
   if (position === 'follow') {
-    demoRoutes.forEach(route => {
-      const { id, path: demoPath } = route;
-      const entry = join(virtualDir, `${id}.entry.tsx`);
-      const solidEntry = `
-      import { render } from 'solid-js/web';
-      import Demo from '${demoPath}';
-      render(() => <Demo /> , document.getElementById('root'));
-      `;
+    Object.values(demoRoutes).forEach(routes => {
+      routes.forEach(route => {
+        const { id, path: demoPath } = route;
+        const entry = join(virtualDir, `${id}.entry.tsx`);
+        const solidEntry = `
+        import { render } from 'solid-js/web';
+        import '${entryCssPath}';
+        import Demo from '${demoPath}';
+        render(() => <Demo /> , document.getElementById('root'));
+        `;
 
-      const reactEntry = `
-      import React from 'react';
-      import { render } from 'react-dom';
-      import Demo from '${demoPath}';
-      render(<Demo /> , document.getElementById('root'));
-      `;
-      const entryContent = framework === 'react' ? reactEntry : solidEntry;
-      fs.writeFileSync(entry, entryContent);
-      sourceEntry[id] = entry;
+        const reactEntry = `
+        import React from 'react';
+        import { render } from 'react-dom';
+        import '${entryCssPath}';
+        import Demo from '${demoPath}';
+        render(<Demo /> , document.getElementById('root'));
+        `;
+        const entryContent = framework === 'react' ? reactEntry : solidEntry;
+        fs.writeFileSync(entry, entryContent);
+        sourceEntry[id] = entry;
+      });
     });
   } else {
-    const groupedObj: Record<string, typeof demoRoutes> = {};
+    // const groupedObj: Record<string, typeof demoRoutes> = {};
 
-    for (const obj of demoRoutes) {
-      const groupValue = obj.group;
+    // for (const obj of demoRoutes) {
+    //   const groupValue = obj.group;
 
-      if (!groupedObj[groupValue]) {
-        groupedObj[groupValue] = [];
-      }
+    //   if (!groupedObj[groupValue]) {
+    //     groupedObj[groupValue] = [];
+    //   }
 
-      groupedObj[groupValue].push(obj);
-    }
+    //   groupedObj[groupValue].push(obj);
+    // }
 
-    Object.entries(groupedObj).forEach(([key, demos]) => {
+    Object.entries(demoRoutes).forEach(([key, demos]) => {
       // TODO: add solid template
       const renderContent = `
         import React from 'react';
+        import '${entryCssPath}';
         import { render } from 'react-dom';
         ${demos
           .map((demo, index) => {
