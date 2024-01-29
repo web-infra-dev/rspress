@@ -39,7 +39,8 @@ export const remarkPlugin: Plugin<[RemarkPluginProps], Root> = ({
 
   return (tree, vfile) => {
     const route = routeMeta.find(
-      meta => resolve(meta.absolutePath) === resolve((vfile.path || vfile.history[0])),
+      meta =>
+        resolve(meta.absolutePath) === resolve(vfile.path || vfile.history[0]),
     );
     if (!route) {
       return;
