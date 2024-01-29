@@ -289,6 +289,23 @@ export default defineConfig({
 });
 ```
 
+## searchPlaceholderText
+
+- Type: `string`
+- Default: `Search Docs`
+
+The placeholder text of the search box. for example:
+
+```ts title="rspress.config.ts"
+import { defineConfig } from 'rspress/config';
+
+export default defineConfig({
+  themeConfig: {
+    searchPlaceholderText: 'Search Docs',
+  },
+});
+```
+
 ## socialLinks
 
 - Type: `Array`
@@ -424,6 +441,8 @@ export interface LocaleConfig {
   prevPageText?: string;
   // Next page text
   nextPageText?: string;
+  // Search box placeholder text
+  searchPlaceholderText?: string;
 }
 ```
 

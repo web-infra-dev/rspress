@@ -2,11 +2,12 @@ import { useEffect, useState } from 'react';
 import SearchSvg from './assets/search.svg';
 import styles from './index.module.scss';
 import { SearchPanel } from './SearchPanel';
+import { useLocaleSiteData } from '@/logic';
 
 export function Search() {
   const [focused, setFocused] = useState(false);
   const [metaKey, setMetaKey] = useState<null | string>(null);
-
+  const { searchPlaceholderText = 'Search Docs' } = useLocaleSiteData();
   useEffect(() => {
     setMetaKey(
       /(Mac|iPhone|iPod|iPad)/i.test(navigator.platform) ? '⌘' : 'Ctrl',
@@ -21,7 +22,7 @@ export function Search() {
       >
         <button>
           <SearchSvg width="18" hight="18" />
-          <p className={styles.searchWord}>Search Docs</p>
+          <p className={styles.searchWord}>{searchPlaceholderText}</p>
           <div style={{ opacity: metaKey ? 1 : 0 }}>
             <span>{metaKey}</span>
             <span>K</span>
