@@ -1,7 +1,9 @@
 import type {
   CallExpression,
   Expression,
+  Identifier,
   ObjectPattern,
+  ObjectProperty,
   VariableDeclaration,
 } from '@babel/types';
 
@@ -28,23 +30,33 @@ export function createVariableDeclaration(
   };
 }
 
-export function createObjectPattern(names: string[]): ObjectPattern {
+function createIdentifier(name: string): Identifier {
+  return {
+    type: 'Identifier',
+    name,
+  };
+}
+
+function createObjectProperty(key: string, value: string): ObjectProperty {
+  return {
+    type: 'ObjectProperty',
+    key: createIdentifier(key),
+    computed: false,
+    shorthand: key === value,
+    value: createIdentifier(value),
+  };
+}
+
+export function createObjectPattern(
+  names: (string | [string, string])[],
+): ObjectPattern {
   return {
     type: 'ObjectPattern',
-    properties: names.map(name => ({
-      type: 'ObjectProperty',
-      key: {
-        type: 'Identifier',
-        name,
-      },
-      computed: false,
-      method: false,
-      shorthand: true,
-      value: {
-        type: 'Identifier',
-        name,
-      },
-    })),
+    properties: names.map(name =>
+      Array.isArray(name)
+        ? createObjectProperty(name[0], name[1])
+        : createObjectProperty(name, name),
+    ),
   };
 }
 
