@@ -1,23 +1,24 @@
 import { useCallback, useState } from 'react';
-import { withBase, useLang, NoSSR } from '@rspress/core/runtime';
+import { withBase, useLang, NoSSR, usePageData } from '@rspress/core/runtime';
 import MobileOperation from './common/mobile-operation';
 import IconCode from './icons/Code';
 
 type ContainerProps = {
   children: React.ReactNode[];
   isMobile: 'true' | 'false';
-  url: string;
-  isProd: 'true' | 'false';
+  demoId: string;
 };
 
 const Container: React.FC<ContainerProps> = props => {
-  const { children, isMobile, url, isProd } = props;
+  const { children, isMobile, demoId } = props;
+  const { page } = usePageData();
   const [showCode, setShowCode] = useState(false);
   const lang = useLang();
+  const url = `/~demo/${demoId}`;
 
   const getPageUrl = () => {
-    if (isProd === 'false') {
-      return url;
+    if (page?.devPort) {
+      return `http://localhost:${page.devPort}/${demoId}`;
     }
     if (typeof window !== 'undefined') {
       return `${window.location.origin}${withBase(url)}`;

@@ -9,7 +9,6 @@ export default () => {
   const { page } = usePageData();
   const pageName = `${normalizeId(page.pagePath)}`;
   const url = `~demo/_${pageName}`;
-  console.log(demos, pageName, url);
   const haveDemos = demos[pageName]?.length > 0;
 
   const getPageUrl = (url: string) => {
@@ -81,7 +80,7 @@ export default () => {
         key={iframeKey}
       ></iframe>
       <MobileOperation
-        url={url}
+        url={getPageUrl(url)}
         className="fixed-operation"
         refresh={refresh}
       />

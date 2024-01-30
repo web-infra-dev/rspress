@@ -29,7 +29,7 @@ export type Options = {
   defaultRenderMode?: 'pure' | 'preview';
 };
 
-type IframeOptions = {
+export type IframeOptions = {
   /**
    * framework in the iframe
    * @default 'react'
@@ -51,10 +51,24 @@ export type RemarkPluginOptions = Required<
   Pick<Options, 'previewMode' | 'defaultRenderMode'>
 > &
   Required<IframeOptions> & {
-    getInfo: () => Info;
+    getRouteMeta: () => RouteMeta[];
   };
 
-type Info = {
-  isProd: boolean;
-  routeMeta: RouteMeta[];
+// key: pageName
+export type DemoInfo = Record<
+  string,
+  {
+    id: string;
+    path: string;
+    title: string;
+  }[]
+>;
+
+// copied from rsbuild, only need close function
+export type StartServerResult = {
+  urls: string[];
+  port: number;
+  server: {
+    close: () => Promise<void>;
+  };
 };

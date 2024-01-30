@@ -1,3 +1,5 @@
+@import url(@rspress/core/theme.css);
+
 :root {
   --rp-iframe-bg: var(--rp-code-block-bg);
 }

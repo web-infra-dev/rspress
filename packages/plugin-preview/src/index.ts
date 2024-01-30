@@ -4,35 +4,14 @@ import { createRsbuild } from '@rsbuild/core';
 import { pluginSolid } from '@rsbuild/plugin-solid';
 import { pluginBabel } from '@rsbuild/plugin-babel';
 import { isEqual, cloneDeep } from 'lodash';
-import { remarkCodeToDemo } from './codeToDemo';
+import { remarkCodeToDemo } from './remarkPlugin';
 import { staticPath } from './constant';
-import type { Options } from './types';
+import type { Options, StartServerResult } from './types';
 import { generateEntry } from './generate-entry';
-import { demoRuntimeModule } from './virtual-module';
+import { demoRuntimeModule, demos } from './virtual-module';
 
+// global variables which need to be initialized in plugin
 let routeMeta: RouteMeta[];
-let isProd: boolean;
-
-export const demoRoutes: Record<
-  string,
-  {
-    id: string;
-    path: string;
-  }[]
-> = {};
-
-export const demoMeta: Record<
-  string,
-  { id: string; virtualModulePath: string; title: string }[]
-> = {};
-
-type StartServerResult = {
-  urls: string[];
-  port: number;
-  server: {
-    close: () => Promise<void>;
-  };
-};
 
 /**
  * The plugin is used to preview component.
@@ -54,11 +33,8 @@ export function pluginPreview(options?: Options): RspressPlugin {
     iframePosition === 'fixed'
       ? [join(staticPath, 'global-components', 'Device.tsx')]
       : [];
-  const getInfo = () => ({
-    isProd,
-    routeMeta,
-  });
-  let lastDemoRoutes: typeof demoRoutes;
+  const getRouteMeta = () => routeMeta;
+  let lastDemos: typeof demos;
   let devServer: StartServerResult;
   return {
     name: '@rspress/plugin-preview',
@@ -71,29 +47,30 @@ export function pluginPreview(options?: Options): RspressPlugin {
       // init routeMeta
       routeMeta = routes;
     },
-    beforeBuild(_, isProduction) {
-      isProd = isProduction;
-    },
     async afterBuild(config, isProd) {
-      if (isEqual(demoRoutes, lastDemoRoutes)) {
-        console.log(true);
+      if (isEqual(demos, lastDemos)) {
         return;
       } else {
-        console.log(false);
-
-        lastDemoRoutes = cloneDeep(demoRoutes);
+        lastDemos = cloneDeep(demos);
         await devServer?.server?.close();
       }
-      const sourceEntry = generateEntry(demoRoutes, framework, position);
+      const sourceEntry = generateEntry(demos, framework, position);
       const outDir = join(config.outDir ?? 'doc_build', '~demo');
+      if (Object.keys(sourceEntry).length === 0) {
+        return;
+      }
       const rsbuildInstance = await createRsbuild({
         rsbuildConfig: {
           dev: {
             progressBar: false,
           },
           server: {
-            printUrls: () => undefined,
             port: devPort,
+            printUrls: () => undefined,
+            strictPort: false,
+          },
+          performance: {
+            printFileSize: false,
           },
           source: {
             entry: sourceEntry,
@@ -123,10 +100,7 @@ export function pluginPreview(options?: Options): RspressPlugin {
       if (isProd) {
         rsbuildInstance.build();
       } else {
-        console.log(devPort);
-        devServer = await rsbuildInstance.startDevServer({
-          getPortSilently: false,
-        });
+        devServer = await rsbuildInstance.startDevServer();
       }
     },
     builderConfig: {
@@ -158,9 +132,7 @@ export function pluginPreview(options?: Options): RspressPlugin {
         [
           remarkCodeToDemo,
           {
-            getInfo,
-            devPort,
-            framework,
+            getRouteMeta,
             position,
             previewMode,
             defaultRenderMode,
@@ -175,7 +147,5 @@ export function pluginPreview(options?: Options): RspressPlugin {
     globalStyles: join(staticPath, 'global-styles', `${previewMode}.css`),
   };
 }
-
-export { normalizeId } from './utils';
 
 export type { Options };

@@ -22,7 +22,8 @@
       "default": "./dist/index.js"
     },
     "./node/*": "./dist/node/*",
-    "./package.json": "./package.json"
+    "./package.json": "./package.json",
+    "./bundle.css": "./dist/bundle.css"
   },
   "scripts": {
     "dev": "modern build -w",

@@ -1,31 +1,29 @@
 import { join, isAbsolute, dirname } from 'path';
 import { visit } from 'unist-util-visit';
-import fs from '@rspress/shared/fs-extra';
 import { normalizePosixPath } from '@rspress/shared';
+import fs from '@rspress/shared/fs-extra';
 import type { Plugin } from 'unified';
 import type { Root } from 'mdast';
 import type { MdxjsEsm } from 'mdast-util-mdxjs-esm';
+import type { RemarkPluginOptions } from './types';
 import { injectDemoBlockImport, generateId } from './utils';
 import { demoBlockComponentPath, virtualDir } from './constant';
-import type { RemarkPluginOptions } from './types';
-import { demoRuntimeModule } from './virtual-module';
-import { demoRoutes } from '.';
+import { demoRuntimeModule, demos } from './virtual-module';
 
 /**
  * remark plugin to transform code to demo
  */
 export const remarkCodeToDemo: Plugin<[RemarkPluginOptions], Root> = ({
-  getInfo,
+  getRouteMeta,
   previewMode,
   defaultRenderMode,
-  devPort,
   position,
 }) => {
-  const { routeMeta, isProd } = getInfo();
+  const routeMeta = getRouteMeta();
   const isMobile = previewMode === 'iframe';
   fs.ensureDirSync(virtualDir);
   return (tree, vfile) => {
-    const demos: MdxjsEsm[] = [];
+    const demoMdx: MdxjsEsm[] = [];
     const route = routeMeta.find(
       meta =>
         normalizePosixPath(meta.absolutePath) ===
@@ -36,7 +34,8 @@ export const remarkCodeToDemo: Plugin<[RemarkPluginOptions], Root> = ({
     }
     const { pageName } = route;
     // clear all demo in this pageName and recollect, bacause we may delete the demo
-    demoRoutes[pageName] = [];
+    demos[pageName] = [];
+    let title = pageName;
     let index = 1;
     let externalDemoIndex = 0;
 
@@ -48,18 +47,16 @@ export const remarkCodeToDemo: Plugin<[RemarkPluginOptions], Root> = ({
       // Only for external demo
       externalDemoIndex?: number,
     ) {
-      const demoRoute = isProd
-        ? `/~demo/${demoId}`
-        : `http://localhost:${devPort}/${demoId}`;
       if (isMobileMode) {
-        demoRoutes[pageName].push({
+        demos[pageName].push({
+          title,
           id: demoId,
           path: isAbsolute(demoPath)
             ? demoPath
             : join(vfile.dirname || dirname(vfile.path), demoPath),
         });
       } else {
-        demos.push(getASTNodeImport(`Demo${demoId}`, demoPath));
+        demoMdx.push(getASTNodeImport(`Demo${demoId}`, demoPath));
       }
 
       // get external demo content
@@ -67,7 +64,7 @@ export const remarkCodeToDemo: Plugin<[RemarkPluginOptions], Root> = ({
       if (externalDemoIndex !== undefined) {
         // Such as `import externalDemoContent0 from '!!xxx?raw'`
         // `!!` prefix is used to avoid other loaders in rspack
-        demos.push(getASTNodeImport(tempVar, `!!${demoPath}?raw`));
+        demoMdx.push(getASTNodeImport(tempVar, `!!${demoPath}?raw`));
       }
 
       if (isMobileMode && position === 'fixed') {
@@ -87,13 +84,8 @@ export const remarkCodeToDemo: Plugin<[RemarkPluginOptions], Root> = ({
             },
             {
               type: 'mdxJsxAttribute',
-              name: 'url',
-              value: demoRoute,
-            },
-            {
-              type: 'mdxJsxAttribute',
-              name: 'isProd',
-              value: isProd,
+              name: 'demoId',
+              value: demoId,
             },
           ],
           children: [
@@ -116,6 +108,14 @@ export const remarkCodeToDemo: Plugin<[RemarkPluginOptions], Root> = ({
         });
       }
     }
+    visit(tree, 'heading', node => {
+      if (node.depth === 1) {
+        if (node.children) {
+          title = (node.children[0] as any)?.value || title;
+        }
+      }
+    });
+
     // 1. External demo , use <code src="xxx" /> to declare demo
     visit(tree, 'mdxJsxFlowElement', (node: any) => {
       if (node.name === 'code') {
@@ -181,11 +181,11 @@ export const remarkCodeToDemo: Plugin<[RemarkPluginOptions], Root> = ({
       }
     });
 
-    tree.children.unshift(...demos);
+    tree.children.unshift(...demoMdx);
 
     // TODO maybe rewrite
     const meta = `
-      export const demos = ${JSON.stringify(demoRoutes)}
+      export const demos = ${JSON.stringify(demos)}
       `;
     demoRuntimeModule.writeModule('virtual-meta', meta);
   };
