@@ -12,8 +12,10 @@ export const normalizeOptions = (options: Options): Required<Options> => {
     parseToolOptions = {},
     useModuleSidebar = true,
     iframePosition = 'follow',
+    defaultRenderMode = 'preview',
   } = options;
   return {
+    defaultRenderMode,
     iframePosition,
     languages,
     doc,

@@ -15,6 +15,7 @@ export type PluginOptions = Pick<
   | 'parseToolOptions'
   | 'iframePosition'
   | 'useModuleSidebar'
+  | 'defaultRenderMode'
 >;
 
 export type Options = {
@@ -49,4 +50,9 @@ export type Options = {
    * iframePosition
    */
   iframePosition?: 'fixed' | 'follow';
+  /**
+   * determine how to handle a internal code block without meta
+   * @default 'preview'
+   */
+  defaultRenderMode?: 'pure' | 'preview';
 } & DocGenOptions;
