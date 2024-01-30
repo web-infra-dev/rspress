@@ -465,6 +465,26 @@ export default defineConfig({
 });
 ```
 
+You can also specify the default theme mode through inject global variable into html template, for example:
+
+```ts title="rspress.config.ts"
+import { defineConfig } from 'rspress/config';
+
+export default defineConfig({
+  builderConfig: {
+    html: {
+      tags: [
+        {
+          tag: 'script',
+          // Specify the default theme mode, which can be `dark` or `light`
+          children: "window.RSPRESS_THEME = 'dark';",
+        },
+      ],
+    },
+  },
+});
+```
+
 ## hideNavbar
 
 - Type: `"always" | "auto" | "never"`
