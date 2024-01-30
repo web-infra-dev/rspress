@@ -4,6 +4,7 @@ import { APPEARANCE_KEY } from '@rspress/shared';
 declare global {
   interface Window {
     MODERN_THEME?: string;
+    RSPRESS_THEME?: string;
   }
 }
 
@@ -18,12 +19,13 @@ const setClass = (dark: boolean): void => {
 
 const updateAppearance = (): void => {
   const disableDarkMode = siteData.themeConfig.darkMode === false;
-  if (disableDarkMode) {
+  // We set the RSPRESS_THEME as a global variable to determine whether the theme is dark or light.
+  const defaultTheme = window.RSPRESS_THEME ?? window.MODERN_THEME;
+  if (defaultTheme) {
+    setClass(defaultTheme === 'dark');
     return;
   }
-  // We set the MODERN_THEME as a global variable to determine whether the theme is dark or light.
-  if (window.MODERN_THEME) {
-    setClass(window.MODERN_THEME === 'dark');
+  if (disableDarkMode) {
     return;
   }
   const userPreference = localStorage.getItem(APPEARANCE_KEY) || 'auto';

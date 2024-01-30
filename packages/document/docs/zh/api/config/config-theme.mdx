@@ -449,6 +449,26 @@ export default defineConfig({
 });
 ```
 
+同时，你也可以通过在 HTML 中注入如下的全局变量来指定默认的主题模式：
+
+```ts title="rspress.config.ts"
+import { defineConfig } from 'rspress/config';
+
+export default defineConfig({
+  builderConfig: {
+    html: {
+      tags: [
+        {
+          tag: 'script',
+          // 通过 window.RSPRESS_THEME 变量来指定默认的主题模式，可选值为 'dark' 和 'light'
+          children: "window.RSPRESS_THEME = 'dark';",
+        },
+      ],
+    },
+  },
+});
+```
+
 ## hideNavbar
 
 - Type: `"always" | "auto" | "never"`
