@@ -131,11 +131,24 @@ export const remarkCodeToDemo: Plugin<
         const src = node.attributes.find(
           (attr: { name: string; value: string }) => attr.name === 'src',
         )?.value;
-        const isMobileMode =
-          node.attributes.find(
-            (attr: { name: string; value: boolean }) =>
-              attr.name === 'isMobile',
-          )?.value ?? isMobile;
+        let isMobileMode = node.attributes.find(
+          (attr: { name: string; value: boolean }) => attr.name === 'isMobile',
+        )?.value;
+        if (isMobileMode === undefined) {
+          // isMobile is not specified, eg: <code />
+          isMobileMode = isMobile;
+        } else if (isMobileMode === null) {
+          // true by default, eg: <code isMobile />
+          isMobileMode = true;
+        } else if (typeof isMobileMode === 'object') {
+          // jsx value, isMobileMode.value now must be string, even if input is
+          // any complex struct rather than primitive type
+          // eg: <code isMobile={ anyOfOrOther([true, false, 'true', 'false', {}]) } />
+          isMobileMode = isMobileMode.value !== 'false';
+        } else {
+          // string value, eg: <code isMobile="true" />
+          isMobileMode = isMobileMode !== 'false';
+        }
         if (!src) {
           return;
         }
