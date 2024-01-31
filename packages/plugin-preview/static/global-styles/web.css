@@ -1,4 +1,4 @@
-:root .preview-code div[class*='language-'] {
+:root .rspress-preview-code div[class*='language-'] {
   margin: 0;
   border-radius: 0;
   height: 100%;
