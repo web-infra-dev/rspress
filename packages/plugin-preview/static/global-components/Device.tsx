@@ -8,12 +8,13 @@ import './Device.scss';
 export default () => {
   const { page } = usePageData();
   const pageName = `${normalizeId(page.pagePath)}`;
-  const url = `~demo/_${pageName}`;
+  const demoId = `_${pageName}`;
+  const url = `~demo/${demoId}`;
   const haveDemos = demos[pageName]?.length > 0;
 
   const getPageUrl = (url: string) => {
     if (page?.devPort) {
-      return `http://localhost:${page.devPort}/_${pageName}`;
+      return `http://localhost:${page.devPort}/${demoId}`;
     }
     if (typeof window !== 'undefined') {
       return `${window.location.origin}${withBase(url)}`;

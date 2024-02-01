@@ -43,9 +43,9 @@
     "lodash": "4.17.21"
   },
   "devDependencies": {
-    "@rsbuild/core": "0.3.1",
-    "@rsbuild/plugin-solid": "0.3.1",
-    "@rsbuild/plugin-babel": "0.3.1",
+    "@rsbuild/core": "0.3.10",
+    "@rsbuild/plugin-solid": "0.3.10",
+    "@rsbuild/plugin-babel": "0.3.10",
     "@types/mdast": "^3.0.10",
     "@types/node": "^18.11.17",
     "@types/lodash": "4.14.200",

@@ -20,7 +20,6 @@ export const remarkCodeToDemo: Plugin<[RemarkPluginOptions], Root> = ({
   position,
 }) => {
   const routeMeta = getRouteMeta();
-  const isMobile = previewMode === 'iframe';
   fs.ensureDirSync(virtualDir);
   return (tree, vfile) => {
     const demoMdx: MdxjsEsm[] = [];
@@ -122,19 +121,37 @@ export const remarkCodeToDemo: Plugin<[RemarkPluginOptions], Root> = ({
         const src = node.attributes.find(
           (attr: { name: string; value: string }) => attr.name === 'src',
         )?.value;
+        if (!src) {
+          return;
+        }
+
+        // don't support expression syntax
         const currtentMode =
           node.attributes.find(
             (attr: { name: string; value: boolean }) =>
               attr.name === 'previewMode',
           )?.value ?? previewMode;
-        const isMobileMode =
-          node.attributes.find(
-            (attr: { name: string; value: boolean }) =>
-              attr.name === 'isMobile',
-          )?.value ?? currtentMode === 'iframe';
-        if (!src) {
-          return;
+
+        // TODO: remove isMobileAttribute
+        let isMobileMode = node.attributes.find(
+          (attr: { name: string; value: boolean }) => attr.name === 'isMobile',
+        )?.value;
+        if (isMobileMode === undefined) {
+          // isMobile is not specified, eg: <code />
+          isMobileMode = currtentMode === 'iframe';
+        } else if (isMobileMode === null) {
+          // true by default, eg: <code isMobile />
+          isMobileMode = true;
+        } else if (typeof isMobileMode === 'object') {
+          // jsx value, isMobileMode.value now must be string, even if input is
+          // any complex struct rather than primitive type
+          // eg: <code isMobile={ anyOfOrOther([true, false, 'true', 'false', {}]) } />
+          isMobileMode = isMobileMode.value !== 'false';
+        } else {
+          // string value, eg: <code isMobile="true" />
+          isMobileMode = isMobileMode !== 'false';
         }
+
         const id = generateId(pageName, index++);
         constructDemoNode(id, src, node, isMobileMode, externalDemoIndex++);
       }
@@ -164,7 +181,7 @@ export const remarkCodeToDemo: Plugin<[RemarkPluginOptions], Root> = ({
           node?.meta?.includes('iframe') ||
           (!node?.meta?.includes('web') &&
             !node?.meta?.includes('internal') &&
-            isMobile);
+            previewMode === 'iframe');
 
         const id = generateId(pageName, index++);
         const virtualModulePath = join(virtualDir, `${id}.tsx`);
@@ -183,7 +200,7 @@ export const remarkCodeToDemo: Plugin<[RemarkPluginOptions], Root> = ({
 
     tree.children.unshift(...demoMdx);
 
-    // TODO maybe rewrite
+    // maybe rewrite, but it is necessary
     const meta = `
       export const demos = ${JSON.stringify(demos)}
       `;

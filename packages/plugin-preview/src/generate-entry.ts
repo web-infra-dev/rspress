@@ -2,6 +2,7 @@ import { join } from 'path';
 import { writeFileSync } from 'fs';
 import { virtualDir, staticPath } from './constant';
 import type { DemoInfo } from './types';
+import { toValidVarName } from './utils';
 
 // TODO: Support custom entry template files
 export function generateEntry(
@@ -36,12 +37,15 @@ export function generateEntry(
       });
     });
   } else {
-    Object.entries(demos).forEach(([key, demos]) => {
+    Object.entries(demos).forEach(([key, routes]) => {
+      if (routes.length === 0) {
+        return;
+      }
       const reactContent = `
         import React from 'react';
         import { render } from 'react-dom';
         import '${entryCssPath}';
-        ${demos
+        ${routes
           .map((demo, index) => {
             return `import Demo_${index} from '${demo.path}'`;
           })
@@ -49,8 +53,8 @@ export function generateEntry(
         function App() {
           return (
             <div className="preview-container">
-              <div className="preview-nav">{"${demos[0].title}"}</div>
-              ${demos
+              <div className="preview-nav">{"${routes[0].title}"}</div>
+              ${routes
                 .map((demo, index) => {
                   return `<Demo_${index} />`;
                 })
@@ -63,7 +67,7 @@ export function generateEntry(
       const solidContent = `
         import { render } from 'solid-js/web';
         import '${entryCssPath}';
-        ${demos
+        ${routes
           .map((demo, index) => {
             return `import Demo_${index} from '${demo.path}'`;
           })
@@ -71,9 +75,9 @@ export function generateEntry(
         function App() {
           return (
             <div class="preview-container">
-              <div class="preview-nav">{"${demos[0].title}"}</div>
-              ${demos
-                .map((demo, index) => {
+              <div class="preview-nav">{"${routes[0].title}"}</div>
+              ${routes
+                .map((_, index) => {
                   return `<Demo_${index} />`;
                 })
                 .join('\n')}
@@ -83,9 +87,10 @@ export function generateEntry(
         render(<App /> , document.getElementById('root'));
       `;
       const renderContent = framework === 'solid' ? solidContent : reactContent;
-      const entry = join(virtualDir, `${key}.entry.tsx`);
+      const id = `_${toValidVarName(key)}`;
+      const entry = join(virtualDir, `${id}.entry.tsx`);
       writeFileSync(entry, renderContent);
-      sourceEntry[`_${key}`] = entry;
+      sourceEntry[id] = entry;
     });
   }
   return sourceEntry;

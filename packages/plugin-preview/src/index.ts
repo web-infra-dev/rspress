@@ -50,10 +50,9 @@ export function pluginPreview(options?: Options): RspressPlugin {
     async afterBuild(config, isProd) {
       if (isEqual(demos, lastDemos)) {
         return;
-      } else {
-        lastDemos = cloneDeep(demos);
-        await devServer?.server?.close();
       }
+      lastDemos = cloneDeep(demos);
+      await devServer?.server?.close();
       const sourceEntry = generateEntry(demos, framework, position);
       const outDir = join(config.outDir ?? 'doc_build', '~demo');
       if (Object.keys(sourceEntry).length === 0) {
