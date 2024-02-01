@@ -23,7 +23,7 @@ jobs:
     strategy:
       matrix:
         node-version: [16.x, 18.x]
-        os: [macos-latest] # macos-latest
+        os: [macos-14] # M1 Mac
 
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
