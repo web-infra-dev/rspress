@@ -19,16 +19,16 @@ export function generateEntry(
         const entry = join(virtualDir, `${id}.entry.tsx`);
         const solidEntry = `
         import { render } from 'solid-js/web';
-        import '${entryCssPath}';
-        import Demo from '${demoPath}';
-        render(<Demo />, document.getElementById('root'));
+        import ${JSON.stringify(entryCssPath)};
+        import Demo from ${JSON.stringify(demoPath)};
+        render(() => <Demo />, document.getElementById('root'));
         `;
 
         const reactEntry = `
         import React from 'react';
         import { render } from 'react-dom';
-        import '${entryCssPath}';
-        import Demo from '${demoPath}';
+        import ${JSON.stringify(entryCssPath)};
+        import Demo from ${JSON.stringify(demoPath)};
         render(<Demo />, document.getElementById('root'));
         `;
         const entryContent = framework === 'react' ? reactEntry : solidEntry;
@@ -44,10 +44,10 @@ export function generateEntry(
       const reactContent = `
         import React from 'react';
         import { render } from 'react-dom';
-        import '${entryCssPath}';
+        import ${JSON.stringify(entryCssPath)};
         ${routes
           .map((demo, index) => {
-            return `import Demo_${index} from '${demo.path}'`;
+            return `import Demo_${index} from ${JSON.stringify(demo.path)}`;
           })
           .join('\n')}
         function App() {
@@ -66,10 +66,10 @@ export function generateEntry(
       `;
       const solidContent = `
         import { render } from 'solid-js/web';
-        import '${entryCssPath}';
+        import ${JSON.stringify(entryCssPath)};
         ${routes
           .map((demo, index) => {
-            return `import Demo_${index} from '${demo.path}'`;
+            return `import Demo_${index} from ${JSON.stringify(demo.path)}`;
           })
           .join('\n')}
         function App() {
@@ -84,7 +84,7 @@ export function generateEntry(
             </div>
           )
         }
-        render(<App /> , document.getElementById('root'));
+        render(() => <App /> , document.getElementById('root'));
       `;
       const renderContent = framework === 'solid' ? solidContent : reactContent;
       const id = `_${toValidVarName(key)}`;
