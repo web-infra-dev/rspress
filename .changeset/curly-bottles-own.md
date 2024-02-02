@@ -2,4 +2,4 @@
 '@modern-js/plugin-rspress': patch
 ---
 
-support defaultRenderMode to keep same as preview
+feat: support defaultRenderMode to keep same as preview
