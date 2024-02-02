@@ -8,8 +8,8 @@ import './virtual-demo.scss';
 export default function Demo(props: { iframePosition: string }) {
   // get the id from the pathname
   const { pathname } = useLocation();
-  const pureDemoPath = pathname.split('/').filter(Boolean).slice(1)?.join('/');
-  const normalizedId = normalizeId(pureDemoPath || '');
+  const id = pathname.split('/').filter(Boolean).pop();
+  const normalizedId = normalizeId(id || '');
   // get component from virtual-meta
   if (props.iframePosition === 'fixed') {
     const renderDemos = demos
