@@ -127,7 +127,8 @@ export function SidebarGroup(props: SidebarItemProps) {
           }
         }}
         style={{
-          borderRadius: depth === 0 ? '0 1rem 1rem 0' : undefined,
+          borderRadius:
+            depth === 0 ? '0 var(--rp-radius) var(--rp-radius) 0' : undefined,
           cursor: collapsible || item.link ? 'pointer' : 'normal',
         }}
       >

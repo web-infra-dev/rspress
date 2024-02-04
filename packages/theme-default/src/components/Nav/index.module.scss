@@ -37,7 +37,7 @@
   background-color: var(--rp-c-bg-mute);
   cursor: pointer;
   color: var(--rp-c-brand-dark);
-  border-radius: 12px;
+  border-radius: var(--rp-radius);
 }
 
 .navBarTitle {

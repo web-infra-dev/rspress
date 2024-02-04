@@ -42,6 +42,10 @@
   --rp-c-dark-light-3: #4a4a4a;
   --rp-c-dark-light-4: #5c5c5c;
   --rp-c-dark-light-5: #6b6b6b;
+
+  --rp-radius: 1rem;
+  --rp-radius-small: 0.5rem;
+  --rp-radius-large: 1.5rem;
 }
 
 .dark {

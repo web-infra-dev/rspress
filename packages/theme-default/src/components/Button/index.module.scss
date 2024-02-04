@@ -15,7 +15,7 @@
 }
 
 .button.medium {
-  border-radius: 20px;
+  border-radius: var(--rp-radius);
   padding: 0 20px;
   line-height: 38px;
   height: 38px;
@@ -23,7 +23,7 @@
 }
 
 .button.big {
-  border-radius: 40px;
+  border-radius: var(--rp-radius-large);
   font-size: 16px;
   min-width: 142px;
   font-weight: 700;

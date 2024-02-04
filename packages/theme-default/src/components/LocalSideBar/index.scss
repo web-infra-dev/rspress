@@ -22,7 +22,6 @@
   }
 }
 
-
 .rspress-sidebar-back-drop {
   position: fixed;
   top: 0;
@@ -44,7 +43,7 @@
 .rspress-local-toc-container {
   position: absolute;
   padding: 6px;
-  border-radius: 10px;
+  border-radius: var(--rp-radius-small);
   top: var(--rp-nav-height);
   background-color: var(--rp-c-bg-soft);
   right: 20px;

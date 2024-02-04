@@ -13,7 +13,7 @@
 
   /* The thumb of scroll bar */
   &::-webkit-scrollbar-thumb {
-    border-radius: 10px;
+    border-radius: var(--rp-radius-small);
   }
 
   &:hover::-webkit-scrollbar-thumb {

@@ -1,6 +1,6 @@
 .rspress-toc-link {
   display: block;
-  border-radius: 4px;
+  border-radius: var(--rp-radius-small);
   transition: all 0.3s;
 }
 
@@ -10,7 +10,7 @@
   overflow: hidden;
   text-overflow: ellipsis;
   transition: all 0.2s ease-in-out;
-  border-radius: 10px;
+  border-radius: var(--rp-radius-small);
   color: var(--rp-c-text-2);
 }
 

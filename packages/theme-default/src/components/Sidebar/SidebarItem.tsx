@@ -47,7 +47,7 @@ export function SidebarItem(props: SidebarItemProps) {
             // The first level menu item will have the same font size as the sidebar group
             fontSize: depth === 0 ? '14px' : '13px',
             marginLeft: depth === 0 ? 0 : '18px',
-            borderRadius: '0 1rem 1rem 0',
+            borderRadius: '0 var(--rp-radius) var(--rp-radius) 0',
             ...(depth === 0 ? highlightTitleStyle : {}),
             ...(active ? { color: 'var(--rp-c-brand)' } : {}),
           }}

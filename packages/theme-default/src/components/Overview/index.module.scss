@@ -111,7 +111,7 @@
   break-inside: avoid;
   margin-bottom: 28px;
   background-color: var(--rp-c-bg-soft);
-  border-radius: 12px;
+  border-radius: var(--rp-radius);
   padding: 28px 32px;
   transition: background-color 0.5s;
 }
