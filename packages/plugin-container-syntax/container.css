@@ -33,7 +33,7 @@
 
 .rspress-doc .rspress-directive {
   border: 1px solid transparent;
-  border-radius: 16px;
+  border-radius: var(--rp-radius);
   padding: 20px 24px 12px;
   line-height: 1.7;
   font-size: 14px;

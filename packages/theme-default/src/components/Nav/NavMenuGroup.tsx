@@ -137,7 +137,7 @@ export function NavMenuGroup(item: NavMenuGroupItem) {
             boxShadow: 'var(--rp-shadow-3)',
             zIndex: 100,
             border: '1px solid var(--rp-c-divider-light)',
-            borderRadius: '2rem',
+            borderRadius: 'var(--rp-radius-lg)',
             background: 'var(--rp-c-bg)',
           }}
         >

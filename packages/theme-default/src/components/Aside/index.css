@@ -6,7 +6,7 @@
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
-  border-radius: 10px 0 0 10px;
+  border-radius: var(--rp-radius-small) 0 0 var(--rp-radius-small);
   font-size: 13px;
   line-height: 1.75rem;
 }

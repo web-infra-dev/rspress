@@ -21,7 +21,7 @@
 
 .featureCard {
   background-color: transparent;
-  border-radius: 8px;
+  border-radius: var(--rp-radius-small);
   border: 1px solid rgb(229, 231, 235);
   transition: all 0.3s;
   font-size: 20px;

@@ -11,7 +11,7 @@
 .modal {
   position: relative;
   background-color: var(--rp-c-bg-soft);
-  border-radius: 16px;
+  border-radius: var(--rp-radius);
   margin: 80px auto auto;
   max-width: 560px;
   padding: 20px;
@@ -27,7 +27,7 @@
   padding: 0 12px;
   background-color: var(--rp-c-bg);
   border: 1px solid var(--rp-c-brand);
-  border-radius: 12px;
+  border-radius: var(--rp-radius-small);
 
   .input {
     flex: 1;
@@ -71,7 +71,7 @@
 
 .navSearchButton {
   display: flex;
-  border-radius: 24px;
+  border-radius: var(--rp-radius);
   padding: 0 10px;
   height: 40px;
   width: 100%;
@@ -96,7 +96,7 @@
     }
 
     > div {
-      border-radius: 4px;
+      border-radius: var(--rp-radius-small);
       color: var(--rp-c-gray);
       font-weight: 500;
       background-color: var(--rp-c-bg);
@@ -134,7 +134,7 @@
 
   & > a {
     background-color: var(--rp-c-bg);
-    border-radius: 12px;
+    border-radius: var(--rp-radius-small);
     padding-left: 12px;
     color: var(--rp-c-black-soft);
     display: flex;

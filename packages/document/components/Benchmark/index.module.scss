@@ -21,7 +21,7 @@
 .progress-bar-container {
   width: 50vw;
   height: 50px;
-  border-radius: 10px;
+  border-radius: var(--rp-radius-small);
   padding: 4px;
   padding-right: 15px;
   border: 1px solid var(--rp-c-gray-light-4);
@@ -31,18 +31,25 @@
 .progress-bar-inner-container {
   height: 50px;
   background: var(--rp-c-gray-light-4);
-  border-radius: 5px;
+  border-radius: var(--rp-radius-small);
 }
 
 .progress-bar {
   height: 100%;
   background: linear-gradient(to right, #514fe6, #6a93f1, #2fa5e0);
-  border-radius: 5px;
+  border-radius: var(--rp-radius-small);
 }
 
 .font-mono {
-  font-family: Menlo, Monaco, Lucida Console, Liberation Mono, DejaVu Sans Mono,
-    Bitstream Vera Sans Mono, Courier New, monospace;
+  font-family:
+    Menlo,
+    Monaco,
+    Lucida Console,
+    Liberation Mono,
+    DejaVu Sans Mono,
+    Bitstream Vera Sans Mono,
+    Courier New,
+    monospace;
 }
 
 :global(.dark) {
