@@ -1,4 +1,3 @@
-import getRandomPort from 'get-port';
 import spawn from 'cross-spawn';
 import treeKill from 'tree-kill';
 
@@ -98,6 +97,7 @@ export async function runPreviewCommand(appDir: string, port: number) {
 
 export async function getPort() {
   while (true) {
+    const { default: getRandomPort } = await import('get-port');
     const port = await getRandomPort();
     if (!portMap.get(port)) {
       portMap.set(port, 1);

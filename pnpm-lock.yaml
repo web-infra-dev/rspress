@@ -54,8 +54,8 @@ importers:
         specifier: ^11.1.1
         version: 11.1.1
       get-port:
-        specifier: 5.0.0
-        version: 5.0.0
+        specifier: 6.1.2
+        version: 6.1.2
       husky:
         specifier: ^8.0.0
         version: 8.0.1
@@ -8789,11 +8789,9 @@ packages:
       has-symbols: 1.0.3
     dev: true
 
-  /get-port@5.0.0:
-    resolution: {integrity: sha512-imzMU0FjsZqNa6BqOjbbW6w5BivHIuQKopjpPqcnx0AVHJQKCxK1O+Ab3OrVXhrekqfVMjwA9ZYu062R+KcIsQ==}
-    engines: {node: '>=8'}
-    dependencies:
-      type-fest: 0.3.1
+  /get-port@6.1.2:
+    resolution: {integrity: sha512-BrGGraKm2uPqurfGVj/z97/zv8dPleC6x9JBNRTrDNtCkkRF4rPwrQXFgL7+I+q8QSdU4ntLQX2D7KIxSy8nGw==}
+    engines: {node: ^12.20.0 || ^14.13.1 || >=16.0.0}
     dev: true
 
   /get-stream@6.0.1:
@@ -13722,11 +13720,6 @@ packages:
     resolution: {integrity: sha512-t0rzBq87m3fVcduHDUFhKmyyX+9eo6WQjZvf51Ea/M0Q7+T374Jp1aUiyUl0GKxp8M/OETVHSDvmkyPgvX+X2w==}
     engines: {node: '>=10'}
 
-  /type-fest@0.3.1:
-    resolution: {integrity: sha512-cUGJnCdr4STbePCgqNFbpVNCepa+kAVohJs1sLhxzdH+gnEoOd8VhbYa7pD3zZYGiURWM2xzEII3fQcRizDkYQ==}
-    engines: {node: '>=6'}
-    dev: true
-
   /type-fest@0.6.0:
     resolution: {integrity: sha512-q+MB8nYR1KDLrgr4G5yemftpMC7/QLqVndBmEEdqzmNj5dcFOO4Oo8qlwZE3ULT3+Zim1F8Kq4cBnikNhlCMlg==}
     engines: {node: '>=8'}
@@ -14197,7 +14190,7 @@ packages:
     dependencies:
       '@types/node': 14.0.0
       esbuild: 0.18.20
-      postcss: 8.4.33
+      postcss: 8.4.31
       rollup: 3.28.0
     optionalDependencies:
       fsevents: 2.3.2
