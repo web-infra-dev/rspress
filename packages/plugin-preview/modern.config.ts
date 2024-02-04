@@ -11,11 +11,6 @@ export default defineConfig({
       dts: {
         respectExternal: false,
       },
-      externals: [
-        '@rsbuild/core',
-        '@rsbuild/plugin-solid',
-        '@rsbuild/plugin-babel',
-      ],
     },
     {
       buildType: 'bundle',

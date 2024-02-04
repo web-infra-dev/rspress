@@ -3,6 +3,7 @@ import { type RouteMeta, type RspressPlugin } from '@rspress/shared';
 import { createRsbuild } from '@rsbuild/core';
 import { pluginSolid } from '@rsbuild/plugin-solid';
 import { pluginBabel } from '@rsbuild/plugin-babel';
+import { pluginReact } from '@rsbuild/plugin-react';
 import { isEqual, cloneDeep } from 'lodash';
 import { remarkCodeToDemo } from './remarkPlugin';
 import { staticPath } from './constant';
@@ -36,6 +37,7 @@ export function pluginPreview(options?: Options): RspressPlugin {
   const getRouteMeta = () => routeMeta;
   let lastDemos: typeof demos;
   let devServer: StartServerResult;
+  let port = devPort;
   return {
     name: '@rspress/plugin-preview',
     config(config) {
@@ -46,6 +48,15 @@ export function pluginPreview(options?: Options): RspressPlugin {
     routeGenerated(routes: RouteMeta[]) {
       // init routeMeta
       routeMeta = routes;
+    },
+    async beforeBuild(_, isProd) {
+      if (!isProd) {
+        const { portNumbers, default: getPort } = await import('get-port');
+
+        port = await getPort({
+          port: portNumbers(devPort, devPort + 20),
+        });
+      }
     },
     async afterBuild(config, isProd) {
       if (isEqual(demos, lastDemos)) {
@@ -96,6 +107,9 @@ export function pluginPreview(options?: Options): RspressPlugin {
           pluginSolid(),
         ]);
       }
+      if (framework === 'react') {
+        rsbuildInstance.addPlugins([pluginReact()]);
+      }
       if (isProd) {
         rsbuildInstance.build();
       } else {
@@ -123,7 +137,7 @@ export function pluginPreview(options?: Options): RspressPlugin {
     },
     extendPageData(pageData, isProd) {
       if (!isProd) {
-        pageData.devPort = devPort;
+        pageData.devPort = port;
       }
     },
     markdown: {

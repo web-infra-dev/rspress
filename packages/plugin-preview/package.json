@@ -36,16 +36,18 @@
   ],
   "dependencies": {
     "@mdx-js/mdx": "2.2.1",
+    "@rsbuild/core": "0.3.10",
+    "@rsbuild/plugin-solid": "0.3.10",
+    "@rsbuild/plugin-babel": "0.3.10",
+    "@rsbuild/plugin-react": "0.3.10",
     "@rspress/shared": "workspace:*",
+    "get-port": "6.1.2",
     "qrcode.react": "^3.1.0",
     "remark-gfm": "3.0.1",
     "rspack-plugin-virtual-module": "0.1.12",
     "lodash": "4.17.21"
   },
   "devDependencies": {
-    "@rsbuild/core": "0.3.10",
-    "@rsbuild/plugin-solid": "0.3.10",
-    "@rsbuild/plugin-babel": "0.3.10",
     "@types/mdast": "^3.0.10",
     "@types/node": "^18.11.17",
     "@types/lodash": "4.14.200",

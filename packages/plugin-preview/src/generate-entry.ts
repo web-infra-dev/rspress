@@ -25,7 +25,6 @@ export function generateEntry(
         `;
 
         const reactEntry = `
-        import React from 'react';
         import { render } from 'react-dom';
         import ${JSON.stringify(entryCssPath)};
         import Demo from ${JSON.stringify(demoPath)};
@@ -42,7 +41,6 @@ export function generateEntry(
         return;
       }
       const reactContent = `
-        import React from 'react';
         import { render } from 'react-dom';
         import ${JSON.stringify(entryCssPath)};
         ${routes
