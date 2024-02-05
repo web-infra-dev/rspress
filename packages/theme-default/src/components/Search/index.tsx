@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import SearchSvg from './assets/search.svg';
 import styles from './index.module.scss';
 import { SearchPanel } from './SearchPanel';
-import { useLocaleSiteData } from '@/logic';
+import { useLocaleSiteData } from '#theme/logic';
 
 export function Search() {
   const [focused, setFocused] = useState(false);

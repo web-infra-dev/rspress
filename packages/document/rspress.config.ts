@@ -1,6 +1,12 @@
 import path from 'path';
 import { defineConfig } from 'rspress/config';
 
+const alias: Record<string, string | string[]> = {};
+
+if (process.env.DOC_DEBUG) {
+  alias['rspress/theme'] = path.resolve(__dirname, '../theme-default/src');
+}
+
 export default defineConfig({
   markdown: {
     checkDeadLinks: true,
@@ -25,9 +31,7 @@ export default defineConfig({
           process.env.DOCUMATE_BACKEND_URL,
         ),
       },
-      alias: {
-        '@/logic': path.join(__dirname, '../theme-default/src/logic'),
-      },
+      alias,
     },
     html: {
       tags: [

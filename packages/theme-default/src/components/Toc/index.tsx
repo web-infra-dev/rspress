@@ -1,6 +1,6 @@
 import { Header } from '@rspress/shared';
 import { usePageData } from '@rspress/runtime';
-import { scrollToTarget } from '@/theme-default';
+import { scrollToTarget } from '#theme/logic';
 import './index.css';
 
 const TocItem = (header: Header) => {

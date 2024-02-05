@@ -12,7 +12,7 @@ import styles from './index.module.scss';
 import { NavBarTitle } from './NavBarTitle';
 import { NavTranslations } from './NavTranslations';
 import { NavVersions } from './NavVersions';
-import { useNavData } from '@/logic/useNav';
+import { useNavData } from '#theme/logic/useNav';
 
 export interface NavProps {
   beforeNav?: React.ReactNode;

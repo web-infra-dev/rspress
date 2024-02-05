@@ -156,7 +156,10 @@ async function createInternalBuildConfig(
                 config: {
                   ...tailwindConfig,
                   content: [
-                    path.join(PACKAGE_ROOT, 'src', 'theme-default', '**/*'),
+                    path.resolve(
+                      PACKAGE_ROOT,
+                      '../theme-default/src/**/*.{ts,tsx}',
+                    ),
                   ],
                 },
               }),

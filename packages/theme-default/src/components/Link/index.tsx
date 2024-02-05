@@ -12,7 +12,7 @@ import nprogress from 'nprogress';
 import { routes } from 'virtual-routes';
 import { isExternalUrl } from '@rspress/shared';
 import styles from './index.module.scss';
-import { scrollToTarget } from '@/logic';
+import { scrollToTarget } from '#theme/logic';
 
 export interface LinkProps {
   href?: string;

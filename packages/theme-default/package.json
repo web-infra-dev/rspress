@@ -13,11 +13,15 @@
   "jsnext:source": "./src/index.ts",
   "types": "./dist/bundle.d.ts",
   "main": "./dist/index.js",
+  "imports": {
+    "#theme/*": "./src/*"
+  },
   "exports": {
     ".": {
       "types": "./dist/bundle.d.ts",
       "default": "./dist/index.js"
-    }
+    },
+    "./package.json": "./package.json"
   },
   "scripts": {
     "dev": "modern build -w",

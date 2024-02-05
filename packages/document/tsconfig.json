@@ -5,10 +5,9 @@
     "paths": {
       "i18n": ["./i18n.json"],
       "@/assets/*": ["./docs/public/*"],
-      "@/*": ["../theme-default/src/*", "./*"],
+      "@/components/*": ["./components/*"],
       "@zh/*": ["./docs/zh/*"],
       "@en/*": ["./docs/en/*"],
-      "rspress/theme": ["../theme-default/src/index.ts"]
     }
   },
   "include": [

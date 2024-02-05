@@ -27,7 +27,7 @@ declare module 'virtual-search-hooks' {
     OnSearch,
     AfterSearch,
     RenderSearchFunction,
-  } from '@/components/Search/logic/types';
+  } from '#theme/components/Search/logic/types';
 
   export const beforeSearch: BeforeSearch;
   export const onSearch: OnSearch;
