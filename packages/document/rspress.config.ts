@@ -1,11 +1,4 @@
-import path from 'path';
 import { defineConfig } from 'rspress/config';
-
-const alias: Record<string, string | string[]> = {};
-
-if (process.env.DOC_DEBUG) {
-  alias['rspress/theme'] = path.resolve(__dirname, '../theme-default/src');
-}
 
 export default defineConfig({
   markdown: {
@@ -31,7 +24,6 @@ export default defineConfig({
           process.env.DOCUMATE_BACKEND_URL,
         ),
       },
-      alias,
     },
     html: {
       tags: [

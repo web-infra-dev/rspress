@@ -74,5 +74,16 @@ export default defineConfig({
         },
       },
     },
+    {
+      buildType: 'bundle',
+      input: { 'source-build-plugin': './src/node/source-build-plugin.ts' },
+      format: 'esm',
+      target: 'es2020',
+      outDir: 'dist/node',
+      platform: 'node',
+      sourceMap: true,
+      dts: {},
+      externals: ['tailwindcss'],
+    },
   ],
 });
