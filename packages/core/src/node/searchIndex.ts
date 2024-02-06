@@ -70,7 +70,7 @@ export function serveSearchIndexMiddleware(config: UserConfig): RequestHandler {
       res.setHeader('Content-Type', 'application/json');
       // Get search index name from request url
       const searchIndexFile = req.url?.split('/').pop();
-      const searchIndex = fs.readFileSync(
+      fs.createReadStream(
         path.join(
           process.cwd(),
           config?.outDir || OUTPUT_DIR,
@@ -78,8 +78,7 @@ export function serveSearchIndexMiddleware(config: UserConfig): RequestHandler {
           searchIndexFile,
         ),
         'utf-8',
-      );
-      res.end(searchIndex);
+      ).pipe(res, { end: true });
     } else {
       next?.();
     }
