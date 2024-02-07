@@ -1,5 +1,15 @@
 # @rspress/remark-container
 
+## 1.11.2
+
+### Patch Changes
+
+- 2951d30: feat: expose radius css variable
+- Updated dependencies [b025510]
+- Updated dependencies [8160f63]
+- Updated dependencies [d969f14]
+  - @rspress/shared@1.11.2
+
 ## 1.11.1
 
 ### Patch Changes

@@ -1,5 +1,13 @@
 # @rspress/shared
 
+## 1.11.2
+
+### Patch Changes
+
+- b025510: chore(deps): bump rsbuild 0.4.0
+- 8160f63: feat: support custom search placeholder text
+- d969f14: feat(deps): bump Rsbuild to v0.3.10
+
 ## 1.11.1
 
 ## 1.11.0

@@ -1,5 +1,16 @@
 # @rspress/plugin-playground
 
+## 1.11.2
+
+### Patch Changes
+
+- e19c41a: fix pure meta in code block which not effective
+- b2bd0e0: fix: playground cannot work with name import alias
+- Updated dependencies [b025510]
+- Updated dependencies [8160f63]
+- Updated dependencies [d969f14]
+  - @rspress/shared@1.11.2
+
 ## 1.11.1
 
 ### Patch Changes
