@@ -1,5 +1,21 @@
 # @modern-js/plugin-rspress
 
+## 1.11.2
+
+### Patch Changes
+
+- 67b74da: feat: support defaultRenderMode to keep same as preview
+- 2951d30: feat: expose radius css variable
+- Updated dependencies [3cf6fa0]
+- Updated dependencies [2951d30]
+- Updated dependencies [08b94ee]
+- Updated dependencies [b025510]
+- Updated dependencies [d969f14]
+- Updated dependencies [f76db0d]
+  - @rspress/core@1.11.2
+  - @rspress/plugin-preview@1.11.2
+  - @rspress/plugin-api-docgen@1.11.2
+
 ## 1.11.1
 
 ### Patch Changes

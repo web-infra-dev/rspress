@@ -1,5 +1,17 @@
 # @rspress/plugin-preview
 
+## 1.11.2
+
+### Patch Changes
+
+- 2951d30: feat: expose radius css variable
+- 08b94ee: fix: fix demo id and avoid 404 in production
+- f76db0d: Support external demo to specific isMobile prop
+- Updated dependencies [b025510]
+- Updated dependencies [8160f63]
+- Updated dependencies [d969f14]
+  - @rspress/shared@1.11.2
+
 ## 1.11.1
 
 ### Patch Changes

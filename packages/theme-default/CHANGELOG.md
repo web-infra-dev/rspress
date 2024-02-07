@@ -1,5 +1,18 @@
 # @rspress/theme-default
 
+## 1.11.2
+
+### Patch Changes
+
+- 2951d30: feat: expose radius css variable
+- 8e4052b: fix: global theme vars not work
+- 8160f63: feat: support custom search placeholder text
+- Updated dependencies [b025510]
+- Updated dependencies [8160f63]
+- Updated dependencies [d969f14]
+  - @rspress/shared@1.11.2
+  - @rspress/runtime@1.11.2
+
 ## 1.11.1
 
 ### Patch Changes

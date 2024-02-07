@@ -1,5 +1,25 @@
 # @rspress/core
 
+## 1.11.2
+
+### Patch Changes
+
+- 3cf6fa0: perf: use stream to serve search index file.
+- b025510: chore(deps): bump rsbuild 0.4.0
+- d969f14: feat(deps): bump Rsbuild to v0.3.10
+- Updated dependencies [2951d30]
+- Updated dependencies [b025510]
+- Updated dependencies [8e4052b]
+- Updated dependencies [8160f63]
+- Updated dependencies [d969f14]
+  - @rspress/plugin-container-syntax@1.11.2
+  - @rspress/theme-default@1.11.2
+  - @rspress/shared@1.11.2
+  - @rspress/plugin-auto-nav-sidebar@1.11.2
+  - @rspress/plugin-last-updated@1.11.2
+  - @rspress/plugin-medium-zoom@1.11.2
+  - @rspress/runtime@1.11.2
+
 ## 1.11.1
 
 ### Patch Changes

@@ -1,5 +1,12 @@
 # @rspress/docs
 
+## 1.11.2
+
+### Patch Changes
+
+- 2951d30: feat: expose radius css variable
+- 8160f63: feat: support custom search placeholder text
+
 ## 1.11.1
 
 ## 1.11.0

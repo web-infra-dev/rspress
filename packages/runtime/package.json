@@ -1,6 +1,6 @@
 {
   "name": "@rspress/runtime",
-  "version": "1.11.1",
+  "version": "1.11.2",
   "description": "The Runtime of Rspress Documentation Framework",
   "bugs": "https://github.com/web-infra-dev/rspress/issues",
   "repository": {
