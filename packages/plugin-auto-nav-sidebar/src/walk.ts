@@ -81,7 +81,7 @@ export async function scanSideMeta(
         } = metaItem;
         if (type === 'file') {
           const title =
-            label ??
+            label ||
             (await extractH1Title(path.resolve(workDir, name), rootDir));
           return {
             text: title,
