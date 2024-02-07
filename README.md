@@ -23,7 +23,7 @@ Go to the [Quick Start](https://rspress.dev/guide/start/getting-started.html) to
 
 Please read the [contributing guide](./CONTRIBUTING.md) and let's build Rspress together.
 
-If you have any questions, you can open an issue or go to [Discord](https://discord.gg/csSX8TBy) to communicate with us.
+If you have any questions, you can open an issue or go to [Discord](https://discord.com/invite/Cq6HweJM26) to communicate with us.
 
 ### Code of Conduct
 
