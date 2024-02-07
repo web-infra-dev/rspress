@@ -4,12 +4,10 @@ import {
   removeLeadingSlash,
   MDX_REGEXP,
   RSPRESS_TEMP_DIR,
-  isDebugMode,
   removeTrailingSlash,
 } from '@rspress/shared';
 import fs from '@rspress/shared/fs-extra';
 import type { RsbuildInstance, RsbuildConfig } from '@rsbuild/core';
-import { tailwindConfig } from '../../tailwind.config';
 import {
   CLIENT_ENTRY,
   SSR_ENTRY,
@@ -147,25 +145,6 @@ async function createInternalBuildConfig(
       printFileSize: !isSSR,
     },
     tools: {
-      postcss(config) {
-        // In debug mode, we should use tailwindcss to build the theme source code
-        if (isDebugMode()) {
-          try {
-            config.postcssOptions.plugins.push(
-              require('tailwindcss')({
-                config: {
-                  ...tailwindConfig,
-                  content: [
-                    path.join(PACKAGE_ROOT, 'src', 'theme-default', '**/*'),
-                  ],
-                },
-              }),
-            );
-          } catch (e) {
-            // if require tailwindcss failed, skip
-          }
-        }
-      },
       bundlerChain(chain, { CHAIN_ID }) {
         const swcLoaderOptions = chain.module
           .rule(CHAIN_ID.RULE.JS)
@@ -250,7 +229,9 @@ export async function initRsbuild(
   const rsbuild = await createRsbuild({
     rsbuildConfig: mergeRsbuildConfig(
       internalRsbuildConfig,
-      ...(config?.plugins?.map(plugin => plugin.builderConfig ?? {}) || []),
+      ...(pluginDriver
+        .getPlugins()
+        ?.map(plugin => plugin.builderConfig ?? {}) || []),
       config?.builderConfig || {},
       extraRsbuildConfig || {},
     ),
