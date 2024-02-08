@@ -1,6 +1,6 @@
 :global(.rspress-code-content):hover {
   .code-button-group {
-    > button {
+    >button {
       opacity: 1;
     }
   }
@@ -13,7 +13,8 @@
   z-index: 10;
   display: flex;
   gap: 10px;
-  > button {
+
+  >button {
     position: relative;
     display: flex;
     justify-content: center;
@@ -27,6 +28,7 @@
     height: 20px;
     transition: all 0.2s ease;
     color: var(--rp-c-text-3);
+
     &:hover {
       color: var(--rp-c-text-2);
     }
@@ -49,7 +51,31 @@
     transform: scale(0.33);
     opacity: 0;
   }
+
   .icon-success {
+    transform: translate(-50%, -50%) scale(1);
+    opacity: 1;
+    transition-delay: 0.075s;
+  }
+}
+
+.icon-wrapped {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%) scale(0);
+  opacity: 0;
+  color: #00d600;
+}
+
+
+.wrapped-btn {
+  .icon-wrap {
+    transform: scale(0.33);
+    opacity: 0;
+  }
+
+  .icon-wrapped {
     transform: translate(-50%, -50%) scale(1);
     opacity: 1;
     transition-delay: 0.075s;

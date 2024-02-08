@@ -16,6 +16,7 @@ export function Code(props: CodeProps) {
   const { siteData } = usePageData();
   const { defaultWrapCode, codeHighlighter } = siteData.markdown;
   const [codeWrap, setCodeWrap] = useState(defaultWrapCode);
+  const wrapButtonRef = useRef<HTMLButtonElement>(null);
   const codeBlockRef = useRef<HTMLDivElement>();
 
   const { className } = props;
@@ -25,7 +26,12 @@ export function Code(props: CodeProps) {
     return <code {...props}></code>;
   }
 
-  const toggleCodeWrap = () => {
+  const toggleCodeWrap = (wrapButtonElement: HTMLButtonElement) => {
+    if (codeWrap) {
+      wrapButtonElement?.classList.remove(styles.wrappedBtn);
+    } else {
+      wrapButtonElement?.classList.add(styles.wrappedBtn);
+    }
     setCodeWrap(!codeWrap);
   };
 
@@ -50,12 +56,13 @@ export function Code(props: CodeProps) {
       {/* Use prism.js to highlight code by default */}
       <div ref={codeBlockRef}>{getHighlighter()}</div>
       <div className={styles.codeButtonGroup}>
-        <button className={styles.codeWrapButton} onClick={toggleCodeWrap}>
-          {codeWrap ? (
-            <IconWrapped className={styles.iconWrapped} />
-          ) : (
-            <IconWrap className={styles.iconWrap} />
-          )}
+        <button
+          ref={wrapButtonRef}
+          className={styles.codeWrapButton}
+          onClick={() => toggleCodeWrap(wrapButtonRef.current)}
+        >
+          <IconWrapped className={styles.iconWrapped} />
+          <IconWrap className={styles.iconWrap} />
         </button>
         <CopyCodeButton codeBlockRef={codeBlockRef} />
       </div>
