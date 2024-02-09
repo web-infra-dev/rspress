@@ -6,7 +6,7 @@
   "access": "restricted",
   "baseBranch": "main",
   "fixed": [
-    ["@rspress/*", "rspress", "create-rspress", "@modern-js/plugin-rspress"]
+    ["@rspress/*", "rspress", "create-rspress", "@modern-js/plugin-rspress", "@rspress-fixture/*"]
   ],
   "___experimentalUnsafeOptions_WILL_CHANGE_IN_PATCH": {
     "onlyUpdatePeerDependentsWhenOutOfRange": true,
