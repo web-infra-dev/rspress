@@ -1,22 +1,25 @@
 import { useCallback, useState } from 'react';
-import { withBase, useLang, NoSSR } from '@rspress/core/runtime';
+import { withBase, useLang, NoSSR, usePageData } from '@rspress/core/runtime';
 import MobileOperation from './common/mobile-operation';
 import IconCode from './icons/Code';
 
 type ContainerProps = {
   children: React.ReactNode[];
   isMobile: 'true' | 'false';
-  url: string;
-  content: string;
-  packageName: string;
+  demoId: string;
 };
 
 const Container: React.FC<ContainerProps> = props => {
-  const { children, isMobile, url } = props;
+  const { children, isMobile, demoId } = props;
+  const { page } = usePageData();
   const [showCode, setShowCode] = useState(false);
   const lang = useLang();
+  const url = `/~demo/${demoId}`;
 
   const getPageUrl = () => {
+    if (page?.devPort) {
+      return `http://localhost:${page.devPort}/${demoId}`;
+    }
     if (typeof window !== 'undefined') {
       return `${window.location.origin}${withBase(url)}`;
     }
@@ -43,7 +46,7 @@ const Container: React.FC<ContainerProps> = props => {
             <div className="rspress-preview-code">{children?.[0]}</div>
             <div className="rspress-preview-device">
               <iframe src={getPageUrl()} key={iframeKey}></iframe>
-              <MobileOperation url={url} refresh={refresh} />
+              <MobileOperation url={getPageUrl()} refresh={refresh} />
             </div>
           </div>
         ) : (

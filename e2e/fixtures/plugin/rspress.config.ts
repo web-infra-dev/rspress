@@ -10,6 +10,9 @@ export default defineConfig({
     docPluginDemo(),
     pluginPreview({
       isMobile: true,
+      iframeOptions: {
+        framework: 'react'
+      },
       iframePosition: 'fixed',
     }),
     // pluginPlayground(),

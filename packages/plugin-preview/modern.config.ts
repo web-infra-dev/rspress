@@ -22,23 +22,6 @@ export default defineConfig({
         respectExternal: false,
       },
     },
-    {
-      buildType: 'bundle',
-      format: 'esm',
-      target: 'es2020',
-      dts: false,
-      input: ['./src/virtual-demo.tsx'],
-      externals: [
-        'virtual-meta',
-        '@rspress/core/runtime',
-        'react',
-        'react-dom',
-        'react-router-dom',
-      ],
-      style: {
-        inject: true,
-      },
-    },
   ],
   plugins: [moduleTools()],
 });

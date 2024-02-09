@@ -1,25 +1,27 @@
 import { usePageData, withBase } from '@rspress/core/runtime';
 import { useCallback, useEffect, useState } from 'react';
+import { demos } from 'virtual-meta';
 import { normalizeId } from '../../dist/utils';
 import MobileOperation from './common/mobile-operation';
 import './Device.scss';
 
 export default () => {
+  const { page } = usePageData();
+  const pageName = `${normalizeId(page.pagePath)}`;
+  const demoId = `_${pageName}`;
+  const url = `~demo/${demoId}`;
+  const haveDemos = demos[pageName]?.length > 0;
+
   const getPageUrl = (url: string) => {
+    if (page?.devPort) {
+      return `http://localhost:${page.devPort}/${demoId}`;
+    }
     if (typeof window !== 'undefined') {
-      return window.location.origin + withBase(url);
+      return `${window.location.origin}${withBase(url)}`;
     }
     // Do nothing in ssr
     return '';
   };
-  const { page } = usePageData();
-
-  const pageName = `_${normalizeId(page.pagePath)}`;
-  const url = `~demo/${pageName}`;
-  const haveDemos =
-    ((page.demoMeta || []) as { id: string }[]).filter(item =>
-      new RegExp(`${pageName}_\\d+`).test(item.id),
-    ).length > 0;
   const initialInnerWidth =
     typeof window !== 'undefined' ? window.innerWidth : 0;
   const [asideWidth, setAsideWidth] = useState('0px');
@@ -79,7 +81,7 @@ export default () => {
         key={iframeKey}
       ></iframe>
       <MobileOperation
-        url={url}
+        url={getPageUrl(url)}
         className="fixed-operation"
         refresh={refresh}
       />

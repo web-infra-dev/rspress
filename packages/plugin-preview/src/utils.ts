@@ -29,7 +29,7 @@ export const normalizeId = (routePath: string) => {
 
 export const injectDemoBlockImport = (str: string, path: string): string => {
   return `
-    import DemoBlock from '${path}';
+    import DemoBlock from ${JSON.stringify(path)};
     ${str}
   `;
 };
