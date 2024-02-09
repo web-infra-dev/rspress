@@ -1,4 +1,5 @@
 import { join } from 'path';
+import net from 'node:net';
 import { type RouteMeta, type RspressPlugin } from '@rspress/shared';
 import { createRsbuild } from '@rsbuild/core';
 import { pluginSolid } from '@rsbuild/plugin-solid';
@@ -37,7 +38,7 @@ export function pluginPreview(options?: Options): RspressPlugin {
   const getRouteMeta = () => routeMeta;
   let lastDemos: typeof demos;
   let devServer: StartServerResult;
-  let port = devPort;
+  const port = devPort;
   return {
     name: '@rspress/plugin-preview',
     config(config) {
@@ -51,11 +52,24 @@ export function pluginPreview(options?: Options): RspressPlugin {
     },
     async beforeBuild(_, isProd) {
       if (!isProd) {
-        const { portNumbers, default: getPort } = await import('get-port');
-
-        port = await getPort({
-          port: portNumbers(devPort, devPort + 20),
-        });
+        try {
+          await new Promise((resolve, reject) => {
+            const server = net.createServer();
+            server.unref();
+            server.on('error', reject);
+            server.listen({ port, host: '0.0.0.0' }, () => {
+              server.close(resolve);
+            });
+          });
+        } catch (e: any) {
+          if (e.code !== 'EADDRINUSE') {
+            throw e;
+          } else {
+            throw new Error(
+              `Port "${port}" is occupied, please choose another one.`,
+            );
+          }
+        }
       }
     },
     async afterBuild(config, isProd) {
@@ -77,7 +91,7 @@ export function pluginPreview(options?: Options): RspressPlugin {
           server: {
             port: devPort,
             printUrls: () => undefined,
-            strictPort: false,
+            strictPort: true,
           },
           performance: {
             printFileSize: false,
@@ -134,6 +148,16 @@ export function pluginPreview(options?: Options): RspressPlugin {
           chain.resolve.extensions.prepend('.md').prepend('.mdx');
         },
       },
+      plugins: [
+        {
+          name: 'close-demo-server',
+          setup: api => {
+            api.onCloseDevServer(async () => {
+              await devServer?.server?.close();
+            });
+          },
+        },
+      ],
     },
     extendPageData(pageData, isProd) {
       if (!isProd) {
