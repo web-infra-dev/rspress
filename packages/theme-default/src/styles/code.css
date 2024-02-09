@@ -29,6 +29,7 @@
   padding: 4px 8px;
   color: var(--rp-c-text-code);
   background-color: var(--rp-c-bg-mute);
+  overflow-wrap: break-word;
 }
 
 .rspress-doc h1 > code,
