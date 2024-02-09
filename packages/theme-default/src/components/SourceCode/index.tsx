@@ -1,13 +1,15 @@
 import { useLocaleSiteData } from '../../logic';
 import Github from '../../assets/github.svg';
+import Gitlab from '../../assets/gitlab.svg';
 import styles from './index.module.scss';
 
 interface SourceCodeProps {
   href: string;
+  platform?: 'github' | 'gitlab';
 }
 
 export function SourceCode(props: SourceCodeProps) {
-  const { href } = props;
+  const { href, platform = 'github' } = props;
   const { sourceCodeText = 'Source' } = useLocaleSiteData();
   return (
     <div
@@ -19,7 +21,7 @@ export function SourceCode(props: SourceCodeProps) {
         className="flex items-center content-center transition-all duration-300 text-xs block px-2 py-1 "
       >
         <span className="mr-2 inline-flex w-4 h-4">
-          <Github />
+          {platform === 'gitlab' ? <Gitlab /> : <Github />}
         </span>
         <span>{sourceCodeText}</span>
       </a>
