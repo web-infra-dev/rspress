@@ -77,7 +77,7 @@ export function Tabs(props: TabsProps): ReactElement {
       <div className={tabContainerClassName}>
         {tabValues.length ? (
           <div
-            className={styles.tabList}
+            className={`${styles.tabList} ${styles.noScrollbar}`}
             style={{
               justifyContent:
                 tabPosition === 'center' ? 'center' : 'flex-start',
