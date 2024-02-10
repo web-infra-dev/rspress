@@ -226,6 +226,7 @@ export type SocialLinkIcon =
   | 'bilibili'
   | 'weibo'
   | 'gitlab'
+  | 'X'
   | { svg: string };
 
 // footer --------------------------------------------------------------------
