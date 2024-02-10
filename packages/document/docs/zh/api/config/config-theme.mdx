@@ -343,7 +343,7 @@ export type SocialLinkIcon =
   | 'slack'
   | 'twitter'
   | 'youtube'
-  | 'weixin'
+  | 'wechat'
   | 'qq'
   | 'juejin'
   | 'zhihu'
@@ -540,3 +540,21 @@ export default defineConfig({
   },
 });
 ```
+
+## enableScrollToTop
+
+- Type: `boolean`
+- Default: `false`
+
+启用文档上的滚动到顶部按钮. 比如:
+
+```ts title="rspress.config.ts"
+import { defineConfig } from 'rspress/config';
+
+export default defineConfig({
+  themeConfig: {
+    enableScrollToTop: true,
+  },
+});
+```
+

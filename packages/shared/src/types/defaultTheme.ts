@@ -89,6 +89,11 @@ export interface Config {
    * Whether to enable the animation for translation pages
    */
   enableContentAnimation?: boolean;
+  /**
+   * Enable scroll to top button on documentation. For example:
+   * @default false
+   */
+  enableScrollToTop?: boolean;
 }
 
 /**

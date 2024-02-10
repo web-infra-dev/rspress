@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { MDXProvider } from '@mdx-js/react';
 import { getCustomMDXComponent } from '@theme';
-import { Content, useLocation, usePageData } from '@rspress/runtime';
+import { Content, useLocation, usePageData, NoSSR } from '@rspress/runtime';
 import { Aside } from '../../components/Aside';
 import { DocFooter } from '../../components/DocFooter';
 import { useDisableNav, useLocaleSiteData } from '../../logic';
@@ -9,6 +9,7 @@ import { SideMenu } from '../../components/LocalSideBar';
 import { Overview } from '../../components/Overview';
 import { TabDataContext } from '../../logic/TabDataContext';
 import { QueryStatus } from '../Layout';
+import ScrollToTop from '../../components/ScrollToTop/index';
 import styles from './index.module.scss';
 
 export interface DocLayoutProps {
@@ -39,6 +40,7 @@ export function DocLayout(props: DocLayoutProps) {
   const localesData = useLocaleSiteData();
   const sidebar = localesData.sidebar || {};
   const [disableNavbar] = useDisableNav();
+  const enableScrollToTop = themeConfig.enableScrollToTop ?? false;
   // siderbar Priority
   // 1. frontmatter.sidebar
   // 2. themeConfig.locales.sidebar
@@ -110,7 +112,11 @@ export function DocLayout(props: DocLayoutProps) {
             </div>
           )}
         </div>
-
+        {enableScrollToTop && (
+          <NoSSR>
+            <ScrollToTop />
+          </NoSSR>
+        )}
         {hasAside ? (
           <div
             className={styles.asideContainer}

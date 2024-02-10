@@ -357,7 +357,7 @@ export type SocialLinkIcon =
   | 'slack'
   | 'twitter'
   | 'youtube'
-  | 'weixin'
+  | 'wechat'
   | 'qq'
   | 'juejin'
   | 'zhihu'
@@ -553,6 +553,23 @@ import { defineConfig } from 'rspress/config';
 export default defineConfig({
   themeConfig: {
     sourceCodeText: 'Source',
+  },
+});
+```
+
+## enableScrollToTop
+
+- Type: `boolean`
+- Default: `false`
+
+Enable scroll to top button on documentation. For example:
+
+```ts title="rspress.config.ts"
+import { defineConfig } from 'rspress/config';
+
+export default defineConfig({
+  themeConfig: {
+    enableScrollToTop: true,
   },
 });
 ```
