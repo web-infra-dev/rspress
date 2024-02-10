@@ -22,7 +22,7 @@ export function NavHamburger(props: Props) {
       />
       <button
         onClick={toggleScreen}
-        ariaLabel="mobile hamburger"
+        aria-label="mobile hamburger"
         className={`${isScreenOpen ? styles.active : ''} ${
           styles.navHamburger
         } text-gray-500`}
