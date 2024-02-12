@@ -90,7 +90,7 @@ export interface Config {
    */
   enableContentAnimation?: boolean;
   /**
-   * Enable scroll to top button on documentation. For example:
+   * Enable scroll to top button on documentation
    * @default false
    */
   enableScrollToTop?: boolean;
