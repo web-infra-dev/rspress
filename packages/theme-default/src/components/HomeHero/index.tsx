@@ -78,6 +78,8 @@ export function HomeHero({ frontmatter }: { frontmatter: FrontMatterMeta }) {
             <img
               src={normalizeImagePath(hero.image?.src)}
               alt={hero.image?.alt}
+              width={375}
+              height={375}
             />
           </div>
         ) : null}
