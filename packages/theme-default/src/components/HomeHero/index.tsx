@@ -57,7 +57,7 @@ export function HomeHero({ frontmatter }: { frontmatter: FrontMatterMeta }) {
             {renderHtmlOrText(hero.tagline)}
           </p>
           {hero.actions?.length && (
-            <div className="grid md:flex md:flex-wrap justify-center gap-3 m--1.5 pt-6 sm:pt-8 z-10">
+            <div className="grid md:flex md:flex-wrap md:justify-center gap-3 m--1.5 pt-6 sm:pt-8 z-10">
               {hero.actions.map(action => (
                 <div className="flex flex-shrink-0 p-1" key={action.link}>
                   <Button

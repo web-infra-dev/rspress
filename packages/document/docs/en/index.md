@@ -13,7 +13,7 @@ hero:
       text: Quick Start
       link: /guide/start/getting-started
   image:
-    src: https://lf3-static.bytednsdoc.com/obj/eden-cn/uhbfnupenuhf/rspress/rspress-logo.png
+    src: /rspress-logo.webp
     alt: Rspress Logo
 features:
   - title: Blazing fast build speed

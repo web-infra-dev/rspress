@@ -6,7 +6,7 @@ hero:
   text: 基于 Rspack 的静态站点生成器
   tagline: 简单、高性能、易于扩展。
   image:
-    src: https://lf3-static.bytednsdoc.com/obj/eden-cn/uhbfnupenuhf/rspress/rspress-logo.png
+    src: /rspress-logo.webp
     alt: Rspress Logo
   actions:
     - theme: brand
