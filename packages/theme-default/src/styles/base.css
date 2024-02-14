@@ -52,7 +52,7 @@ button:focus-visible {
 }
 
 .rspress-logo {
-  max-width: 30%;
+  height: 26px !important;
 }
 
 #nprogress .bar {
