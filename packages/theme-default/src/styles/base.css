@@ -51,6 +51,10 @@ button:focus-visible {
   @apply flex justify-around items-center text-sm font-bold;
 }
 
+.rspress-logo {
+  height: 1.6rem;
+}
+
 #nprogress .bar {
   background: var(--rp-c-brand);
   position: fixed;
