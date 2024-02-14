@@ -32,8 +32,6 @@ export const NavBarTitle = () => {
             alt="logo"
             id="logo"
             className="mr-4 rspress-logo"
-            height={26}
-            width="auto"
           />
         ) : (
           <span>{title}</span>
