@@ -7,6 +7,7 @@ import {
 } from '@rspress/shared';
 import { routes } from 'virtual-routes';
 import { matchRoutes, useLocation, removeBase } from '@rspress/runtime';
+import { disableBodyScroll, clearAllBodyScrollLocks } from 'body-scroll-lock';
 import {
   isActive,
   useDisableNav,
@@ -108,6 +109,14 @@ export function SideBar(props: Props) {
     newSidebarData.forEach(traverse);
     setSidebarData(newSidebarData);
   }, [rawSidebarData, pathname]);
+
+  useEffect(() => {
+    isSidebarOpen &&
+      disableBodyScroll(document.body, { reserveScrollBarGap: true });
+    return () => {
+      clearAllBodyScrollLocks();
+    };
+  }, [isSidebarOpen]);
 
   const removeLangPrefix = (path: string) => {
     return path.replace(langRoutePrefix, '');
