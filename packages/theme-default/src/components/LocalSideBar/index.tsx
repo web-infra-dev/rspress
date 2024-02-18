@@ -5,13 +5,16 @@ import ArrowRight from '../../assets/arrow-right.svg';
 import { SideBar } from '../Sidebar';
 import './index.scss';
 import { Toc } from '../Toc';
+import { UISwitchResult } from '#theme/logic/useUISwitch';
 
 export function SideMenu({
   beforeSidebar,
   afterSidebar,
+  uiSwitch,
 }: {
   beforeSidebar?: React.ReactNode;
   afterSidebar?: React.ReactNode;
+  uiSwitch?: UISwitchResult;
 }) {
   const [isSidebarOpen, setSidebarIsOpen] = useState<boolean>(false);
   const [isTocOpen, setIsTocOpen] = useState<boolean>(false);
@@ -81,6 +84,7 @@ export function SideMenu({
         isSidebarOpen={isSidebarOpen}
         beforeSidebar={beforeSidebar}
         afterSidebar={afterSidebar}
+        uiSwitch={uiSwitch}
       />
       {isSidebarOpen ? (
         <div

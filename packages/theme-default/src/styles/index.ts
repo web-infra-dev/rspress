@@ -4,4 +4,4 @@
 import './vars.css';
 import './base.css';
 import './code.css';
-import './scrollbar.css';
+import './scrollbar.scss';

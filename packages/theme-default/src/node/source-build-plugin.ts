@@ -5,7 +5,7 @@ import { RspressPlugin } from '@rspress/shared';
 import { tailwindConfig } from '../../tailwind.config';
 
 const require = createRequire(import.meta.url);
-const RootDir = fileURLToPath(new URL('../..', import.meta.url).href);
+const ROOT_DIR = fileURLToPath(new URL('../..', import.meta.url).href);
 
 /**
  * @internal it is for debug changes on `theme-default` with other internal projects like `document`.
@@ -16,7 +16,7 @@ export function SourceBuildPlugin(): RspressPlugin {
     builderConfig: {
       source: {
         alias: {
-          'rspress/theme': path.resolve(RootDir, './src'),
+          'rspress/theme': path.resolve(ROOT_DIR, './src'),
         },
       },
       tools: {
@@ -26,7 +26,7 @@ export function SourceBuildPlugin(): RspressPlugin {
               config: {
                 ...tailwindConfig,
                 content: tailwindConfig.content.map(item =>
-                  path.resolve(RootDir, item),
+                  path.resolve(ROOT_DIR, item),
                 ),
               },
             }),

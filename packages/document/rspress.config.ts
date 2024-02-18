@@ -44,9 +44,10 @@ export default defineConfig({
         {
           tag: 'meta',
           attrs: {
-            content: 'https://github.com/web-infra-dev/rspress/assets/39261479/999e7946-45ff-45d5-b9cd-594e634e0e5a',
-            property: "og:image",
-          }
+            content:
+              'https://github.com/web-infra-dev/rspress/assets/39261479/999e7946-45ff-45d5-b9cd-594e634e0e5a',
+            property: 'og:image',
+          },
         },
         {
           tag: 'script',

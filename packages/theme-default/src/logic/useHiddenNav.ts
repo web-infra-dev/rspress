@@ -4,19 +4,19 @@ import React, { useEffect, useRef, useState } from 'react';
 import { useLocation, usePageData } from '@rspress/runtime';
 
 // The two hooks has the similar name, but they are quite different.
-// `useDisableNav` is used to determine whether the navigation bar is disabled. It depends on both the frontmatter and the themeConfig.
+// `useEnableNav` is used to determine whether the navigation bar is enabled. It depends on both the frontmatter and the themeConfig.
 // `useHiddenNav` is used to determine whether the navigation bar is hidden. It depends on the themeConfig and the scroll event.
 
-export function useDisableNav() {
+export function useEnableNav() {
   const {
     siteData: { themeConfig },
     page: { frontmatter = {} },
   } = usePageData();
   const initialState =
-    !(frontmatter?.navbar ?? true) || themeConfig?.hideNavbar === 'always';
-  const [disableNav, setDisableNav] = useState<boolean>(initialState);
+    (frontmatter?.navbar ?? true) && themeConfig?.hideNavbar !== 'always';
+  const [enableNav, setEnableNav] = useState<boolean>(initialState);
   // Priority: frontmatter.navbar > themeConfig.hideNavbar
-  return [disableNav, setDisableNav] as const;
+  return [enableNav, setEnableNav] as const;
 }
 
 export function useHiddenNav() {

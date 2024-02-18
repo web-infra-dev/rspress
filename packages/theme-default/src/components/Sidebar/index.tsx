@@ -7,16 +7,12 @@ import {
 } from '@rspress/shared';
 import { routes } from 'virtual-routes';
 import { matchRoutes, useLocation, removeBase } from '@rspress/runtime';
-import {
-  isActive,
-  useDisableNav,
-  useLocaleSiteData,
-  useSidebarData,
-} from '../../logic';
+import { isActive, useLocaleSiteData, useSidebarData } from '../../logic';
 import { NavBarTitle } from '../Nav/NavBarTitle';
 import styles from './index.module.scss';
 import { SidebarItem } from './SidebarItem';
 import { SidebarDivider } from './SidebarDivider';
+import { UISwitchResult } from '#theme/logic/useUISwitch';
 
 export interface SidebarItemProps {
   id: string;
@@ -36,6 +32,7 @@ interface Props {
   isSidebarOpen?: boolean;
   beforeSidebar?: React.ReactNode;
   afterSidebar?: React.ReactNode;
+  uiSwitch?: UISwitchResult;
 }
 
 export const highlightTitleStyle = {
@@ -52,13 +49,12 @@ export let matchCache: WeakMap<
 > = new WeakMap();
 
 export function SideBar(props: Props) {
-  const { isSidebarOpen, beforeSidebar, afterSidebar } = props;
+  const { isSidebarOpen, beforeSidebar, afterSidebar, uiSwitch } = props;
   const { items: rawSidebarData } = useSidebarData();
   const localesData = useLocaleSiteData();
   const { pathname: rawPathname } = useLocation();
 
   const langRoutePrefix = normalizeSlash(localesData.langRoutePrefix || '');
-  const [hideNavbar] = useDisableNav();
   const [sidebarData, setSidebarData] = useState<
     (ISidebarDivider | ISidebarItem | NormalizedSidebarGroup)[]
   >(rawSidebarData.filter(Boolean).flat());
@@ -131,7 +127,7 @@ export function SideBar(props: Props) {
         isSidebarOpen ? styles.open : ''
       }`}
     >
-      {hideNavbar ? null : (
+      {!uiSwitch.showNavbar ? null : (
         <div className={styles.navTitleMask}>
           <NavBarTitle />
         </div>
