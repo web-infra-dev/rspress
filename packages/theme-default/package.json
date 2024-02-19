@@ -104,15 +104,8 @@
     "./src/styles/index.ts"
   ],
   "files": [
-    "bin",
     "dist",
-    "src/runtime",
-    "src/theme-default",
-    "src/shared",
-    "index.html",
-    "runtime.ts",
-    "theme.ts",
-    "loader.cjs"
+    "src"
   ],
   "publishConfig": {
     "access": "public",
