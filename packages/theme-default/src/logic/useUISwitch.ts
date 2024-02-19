@@ -31,67 +31,67 @@ export function useUISwitch(): UISwitchResult {
       !isOverviewPage
     );
   };
-  const [showNavbar, setShowNavbar] = useEnableNav();
+  const [originNavbar] = useEnableNav();
+  const [showNavbar, setShowNavbar] = useState(originNavbar);
+  const [showSidebar, setShowSidebar] = useState(true);
   const [showAside, setShowAside] = useState(getShowAside());
   const [showDocFooter, setShowDocFooter] = useState(
     (frontmatter?.footer as boolean) ?? true,
   );
 
-  const sidebar = localesData.sidebar || {};
-  // siderbar Priority
-  // 1. frontmatter.sidebar
-  // 2. themeConfig.locales.sidebar
-  // 3. themeConfig.sidebar
-  const showSidebar =
-    frontmatter?.sidebar !== false && Object.keys(sidebar).length > 0;
+  // Recalculate the display of navbar, sidebar, aside and doc footer
   useEffect(() => {
-    setShowAside(getShowAside());
-  }, [page, siteData]);
+    const query = new URLSearchParams(location.search);
+    // check display of navbar
+    const queryNavbar = query.get('navbar');
+    setShowNavbar(
+      [originNavbar, queryNavbar !== QueryStatus.Hide].every(Boolean),
+    );
+
+    // check display of sidebar
+    // siderbar Priority
+    // 1. url query
+    // 2. frontmatter.sidebar
+    // 3. themeConfig.locales.sidebar
+    // 4. themeConfig.sidebar
+    const sidebar = localesData.sidebar || {};
+    const showSidebar =
+      frontmatter?.sidebar !== false && Object.keys(sidebar).length > 0;
+    const querySidebar = query.get('sidebar');
+    setShowSidebar(
+      [showSidebar, querySidebar !== QueryStatus.Hide].every(Boolean),
+    );
+
+    // check display of aside
+    const queryAside = query.get('outline');
+    setShowAside(
+      [getShowAside(), queryAside !== QueryStatus.Hide].every(Boolean),
+    );
+
+    // check display of doc footer
+    const queryFooter = query.get('footer');
+    setShowDocFooter(
+      [
+        (frontmatter?.footer as boolean) ?? true,
+        queryFooter !== QueryStatus.Hide,
+      ].every(Boolean),
+    );
+  }, [originNavbar, localesData, frontmatter, location.search]);
 
   // Control the display of the navbar, sidebar and aside
   useEffect(() => {
-    const query = new URLSearchParams(location.search);
-    const documentStyle = document.documentElement.style;
-    const originalSidebarWidth =
-      documentStyle.getPropertyValue('--rp-sidebar-width');
-    const originalAsideWidth =
-      documentStyle.getPropertyValue('--rp-aside-width');
-    const originNavbar = showNavbar;
-    const originDocFooter = showDocFooter;
-    const navbar = query.get('navbar');
-    const sidebar = query.get('sidebar');
-    const aside = query.get('outline');
-    const footer = query.get('footer');
-
-    if (navbar === QueryStatus.Hide) {
-      setShowNavbar(false);
-    }
-
-    if (sidebar === QueryStatus.Hide) {
+    if (showSidebar) {
+      document.documentElement.style.removeProperty('--rp-sidebar-width');
+    } else {
       document.documentElement.style.setProperty('--rp-sidebar-width', '0px');
     }
 
-    if (aside === QueryStatus.Hide) {
+    if (showAside) {
+      document.documentElement.style.removeProperty('--rp-aside-width');
+    } else {
       document.documentElement.style.setProperty('--rp-aside-width', '0px');
     }
-
-    if (footer === QueryStatus.Hide) {
-      setShowDocFooter(false);
-    }
-
-    return () => {
-      document.documentElement.style.setProperty(
-        '--rp-sidebar-width',
-        originalSidebarWidth,
-      );
-      document.documentElement.style.setProperty(
-        '--rp-aside-width',
-        originalAsideWidth,
-      );
-      setShowNavbar(originNavbar);
-      setShowDocFooter(originDocFooter);
-    };
-  }, [location.search]);
+  }, [showSidebar, showAside]);
 
   return {
     showAside,
