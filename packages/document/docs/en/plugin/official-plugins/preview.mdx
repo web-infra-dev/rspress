@@ -27,7 +27,7 @@ export default defineConfig({
 
 :::warning Note
 
-After adding this plugin, please set `markdown.mdxRs` to `false`, otherwise it will cause the plugin to fail.
+This plugin will set `markdown.mdxRs` to `false`. In the future, the Rspress team will port this plugin to the Rust version of the compiler.
 
 :::
 
@@ -97,21 +97,51 @@ This plugin accepts an object parameter of the following type:
 
 ```ts
 interface PreviewOptions {
-  isMobile?: boolean;
-  iframePosition?: 'fixed' | 'follow';
+  previewMode?: 'internal' | 'iframe';
+  iframeOptions?: IframeOptions;
   defaultRenderMode?: 'pure' | 'preview';
+}
+
+interface IframeOptions {
+  framework?: 'react' | 'solid';
+  position?: 'fixed' | 'follow';
+  devPort?: number;
 }
 ```
 
-### isMobile
+### defaultRenderMode
 
-The `isMobile` parameter is used to specify whether the preview mode is mobile mode, defaulting to `false`. The default PC mode display effect is as follows:
+The default mode of rendering internal code blocks that do not have the `pure` or `preview` identifiers declared by users, defaulting to `preview`.
+
+- `pure`: render as regular code block
+- `preview`: render as component
+
+### previewMode
+
+The `previewMode` parameter is used to specify whether the preview mode is internal, defaulting to `internal`. The default mode display effect is as follows:
 
 ![](https://lf3-static.bytednsdoc.com/obj/eden-cn/uhbfnupenuhf/rspress/demo-preview-pc.jpeg)
 
-### iframePosition
+You can also set it for each individual code block:
 
-In mobile preview mode, you can use the `iframePosition` parameter to determine the position of the preview area iframe, whether it follows page scrolling (`follow` mode) or is fixed on the page (`fixed` mode), defaulting to `follow`.
+```md title="example.mdx"
+<code src="./Demo.tsx" previewMode="iframe"/>
+```
+
+````md title="example.mdx"
+```tsx iframe
+function App() {
+  return <div>Hello World</div>;
+}
+export default App;
+```
+````
+
+If previewMode is `inframe`, you can use the following configuration for the iframe:
+
+### iframeOptions.position
+
+In iframe preview mode, you can use the `iframeOptions.position` parameter to determine the position of the preview area iframe, whether it follows page scrolling (`follow` mode) or is fixed on the page (`fixed` mode), defaulting to `follow`.
 
 The effect of `follow` mode is as follows:
 
@@ -121,9 +151,18 @@ The effect of `fixed` mode is as follows:
 
 ![](https://lf3-static.bytednsdoc.com/obj/eden-cn/uhbfnupenuhf/rspress/demo-preview-mobile-fixed.png)
 
-### defaultRenderMode
+### iframeOptions.framework
 
-The default mode of rendering internal code blocks that do not have the `pure` or `preview` identifiers declared by users, defaulting to `preview`.
+In iframe preview mode, you can choose the rendering framework, currently supports `react` and `solid`.
 
-- `pure`: render as regular code block
-- `preview`: render as component
+### iframeOptions.devPort
+
+In the iframe preview mode, you can configure the dev server port of the preview component.
+
+### deprecated: isMobile
+
+From v1.12.0, please use [previewMode](#previewmode) instead.
+
+### deprecated: iframePosition
+
+From v1.12.0, please use [iframeOptions.position](#iframeoptionsposition) instead.
