@@ -26,14 +26,14 @@ export default defineConfig({
 ```
 
 :::warning 注意
-在加入该插件后，请设置 `markdown.mdxRs` 配置为 `false`，否则会导致插件失效。未来 Rspress 团队会将该插件移植到 Rust 版本的编译器中，届时此配置项就不再需要。
+此插件会将 `markdown.mdxRs` 配置为 `false`，未来 Rspress 团队会将该插件移植到 Rust 版本的编译器中。
 :::
 
 ### 内部组件
 
 内部组件的组件代码声明在 mdx 文件内。你可以在 mdx 文件中声明如下的代码块：
 
-````mdx
+````md
 ```tsx
 function App() {
   return (
@@ -51,7 +51,7 @@ export default App;
 
 但是如果你想保留代码块的样式，而不是将其作为组件渲染，你可以添加 `pure` 标识符来指定，使用方式如下：
 
-````mdx
+````md
 ```tsx pure
 function App() {
   return <div>Hello World</div>;
@@ -62,7 +62,7 @@ export default App;
 
 如果你配置了 `defaultRenderMode` 为 `'pure'`，那么默认情况下，Rspress 将不会渲染这个组件，而是将其作为代码块来渲染。这种情况下，如果需要将某个代码块渲染为组件，可以通过添加 `preview` 标识符来指定，使用方式如下：
 
-````mdx
+````md
 ```tsx preview
 function App() {
   return <div>Hello World</div>;
@@ -99,21 +99,51 @@ export default function App() {
 
 ```ts
 interface PreviewOptions {
-  isMobile?: boolean;
-  iframePosition?: 'fixed' | 'follow';
+  previewMode?: 'internal' | 'iframe';
+  iframeOptions?: IframeOptions;
   defaultRenderMode?: 'pure' | 'preview';
+}
+
+interface IframeOptions {
+  framework?: 'react' | 'solid';
+  position?: 'fixed' | 'follow';
+  devPort?: number;
 }
 ```
 
-### isMobile
+### defaultRenderMode
 
-`isMobile` 参数用于指定预览模式是否为移动端模式，默认为 `false`。默认 PC 模式的展示效果如下：
+支持用户配置没有主动声明 `pure` 或 `preview` 标识符的内部代码块的默认行为，默认为 `preview`。
+
+- `pure`: 渲染为普通代码块
+- `preview`: 渲染为预览组件
+
+### previewMode
+
+`previewMode` 参数用于指定预览组件是否内置，默认为 `internal`。默认内置模式的展示效果如下：
 
 ![](https://lf3-static.bytednsdoc.com/obj/eden-cn/uhbfnupenuhf/rspress/demo-preview-pc.jpeg)
 
-### iframePosition
+你也可以针对单个代码块设置，例如
 
-在移动端预览模式下时，你可以通过 `iframePosition` 参数来决定预览区 iframe 的位置，是跟随页面滚动(`follow` 模式)还是固定在页面中(`fixed` 模式)，默认为 `follow`。
+```md title="example.mdx"
+<code src="./Demo.tsx" previewMode="iframe"/>
+```
+
+````md title="example.mdx"
+```tsx iframe
+function App() {
+  return <div>Hello World</div>;
+}
+export default App;
+```
+````
+
+如果使用 iframe 预览模式，还有以下配置：
+
+### iframeOptions.position
+
+在 iframe 预览模式下时，你可以通过 `position` 参数来决定预览区 iframe 的位置，是跟随页面滚动(`follow` 模式)还是固定在页面中(`fixed` 模式)，默认为 `follow`。
 
 `follow` 模式效果如下：
 
@@ -123,9 +153,18 @@ interface PreviewOptions {
 
 ![](https://lf3-static.bytednsdoc.com/obj/eden-cn/uhbfnupenuhf/rspress/demo-preview-mobile-fixed.png)
 
-### defaultRenderMode
+### iframeOptions.framework
 
-支持用户配置没有主动声明 `pure` 或 `preview` 标识符的内部代码块的默认行为，默认为 `preview`。
+在 iframe 预览模式下，你可以选择渲染框架，目前支持 `react` 和 `solid`。
 
-- `pure`: 渲染为普通代码块
-- `preview`: 渲染为预览组件
+### iframeOptions.devPort
+
+在 iframe 预览模式下，你可以配置预览组件的 dev server port。
+
+### deprecated: isMobile
+
+从 1.12.0 版本开始，请使用 [previewMode](#previewmode) 配置预览模式。
+
+### deprecated: iframePosition
+
+从 1.12.0 版本开始，请使用 [iframeOptions.position](#iframeoptionsposition)。
