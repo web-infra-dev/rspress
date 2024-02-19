@@ -67,7 +67,7 @@ export function PrismSyntaxHighlighter(
         };
       }}
     >
-      {props.children.trim()}
+      {String(props.children).trim()}
     </SyntaxHighlighter>
   );
 }
