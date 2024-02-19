@@ -11,7 +11,6 @@
   bottom: 0;
   left: 0;
   z-index: var(--rp-z-index-sidebar);
-  padding: 0 12px 96px 0;
   width: calc(100vw - 64px);
   max-width: 320px;
   opacity: 0;
@@ -20,6 +19,10 @@
     opacity 0.5s,
     transform 0.25s ease;
   background: var(--rp-c-bg);
+}
+
+.sidebarContainer {
+  padding: 0 12px 96px 0;
 }
 
 .sidebarContent {
@@ -55,8 +58,11 @@
 
 @media (min-width: 1440px) {
   .sidebar {
-    padding-left: 0;
     width: var(--rp-sidebar-width);
+  }
+
+  .sidebarContainer {
+    padding-left: 0;
   }
 }
 
