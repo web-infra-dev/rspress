@@ -4,9 +4,12 @@ import { createProcessor } from '@mdx-js/mdx';
 import type { Header, UserConfig } from '@rspress/shared';
 import { logger } from '@rspress/shared/logger';
 import { loadFrontMatter } from '@rspress/shared/node-utils';
+import fs from 'fs-extra';
 import type { RouteService } from '../route/RouteService';
 import { normalizePath, escapeMarkdownHeadingIds } from '../utils';
 import { PluginDriver } from '../PluginDriver';
+import { TEMP_DIR } from '../constants';
+import { RuntimeModuleID } from '../runtimeModule';
 import { createMDXOptions } from './options';
 import { TocItem } from './remarkPlugins/toc';
 import { checkLinks } from './remarkPlugins/checkDeadLink';
@@ -25,6 +28,22 @@ export interface PageMeta {
   frontmatter?: Record<string, any>;
 }
 
+export async function triggerReload() {
+  const siteDataModulePath = path.join(
+    TEMP_DIR,
+    'runtime',
+    `${RuntimeModuleID.SiteData}.mjs`,
+  );
+  const { default: siteData } = await import(siteDataModulePath);
+  await fs.writeFile(
+    siteDataModulePath,
+    `export default ${JSON.stringify({
+      ...siteData,
+      timestamp: Date.now().toString(),
+    })}`,
+  );
+}
+
 export default async function mdxLoader(
   context: Rspack.LoaderContext<LoaderOptions>,
   source: string,
@@ -33,7 +52,6 @@ export default async function mdxLoader(
   const options = context.getOptions();
   const filepath = context.resourcePath;
   context.cacheable(true);
-
   let pageMeta = {
     title: '',
     toc: [],

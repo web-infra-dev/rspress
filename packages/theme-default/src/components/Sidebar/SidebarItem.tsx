@@ -1,15 +1,22 @@
 import { useEffect, useRef } from 'react';
-import { normalizeHrefInRuntime as normalizeHref } from '@rspress/runtime';
+import {
+  normalizeHrefInRuntime as normalizeHref,
+  usePageData,
+} from '@rspress/runtime';
 import { Link } from '../Link';
 import { Tag } from '../Tag';
 import styles from './index.module.scss';
 import { SidebarGroup } from './SidebarGroup';
 import { SidebarItemProps, highlightTitleStyle } from '.';
 
+const removeExtension = (path: string) => {
+  return path.replace(/\.(mdx?)$/, '');
+};
+
 export function SidebarItem(props: SidebarItemProps) {
   const { item, depth = 0, activeMatcher, id, setSidebarData } = props;
   const active = 'link' in item && item.link && activeMatcher(item.link);
-
+  const { page } = usePageData();
   const ref = useRef<HTMLDivElement>(null);
   useEffect(() => {
     if (active) {
@@ -19,7 +26,11 @@ export function SidebarItem(props: SidebarItemProps) {
     }
   }, []);
 
-  const { text } = item;
+  let { text } = item;
+  // In development, we use the latest title after hmr
+  if (item._fileKey === removeExtension(page.pagePath) && page.title) {
+    text = page.title;
+  }
 
   if ('items' in item) {
     return (

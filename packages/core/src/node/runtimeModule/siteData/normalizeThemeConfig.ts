@@ -72,6 +72,7 @@ export function normalizeThemeConfig(
     ): NormalizedSidebarGroup | SidebarItem | SidebarDivider => {
       if (typeof item === 'object' && 'items' in item) {
         return {
+          ...item,
           text: applyReplaceRules(
             getI18nText(item.text, currentLang),
             replaceRules,
@@ -98,10 +99,12 @@ export function normalizeThemeConfig(
         return {
           text: applyReplaceRules(page?.title || '', replaceRules),
           link: normalizedItem,
+          _fileKey: page._relativePath.replace(/\.mdx?$/, ''),
         };
       }
 
       return {
+        ...item,
         text: applyReplaceRules(
           getI18nText(item.text, currentLang),
           replaceRules,
