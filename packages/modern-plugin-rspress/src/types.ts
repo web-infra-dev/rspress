@@ -1,58 +1,39 @@
 import type { UserConfig } from '@rspress/core';
 import type { PluginOptions as DocGenOptions } from '@rspress/plugin-api-docgen';
+import type { Options as PreviewOptions } from '@rspress/plugin-preview';
 
-export type APIParseTools = 'ts-document' | 'react-docgen-typescript';
+/**
+ * @deprecated
+ */
+type DeprecatedMode = 'mobile' | 'web';
 
-export type ModuleDocgenLanguage = 'zh' | 'en';
+/**
+ * @deprecated
+ */
+type ModuleDocgenLanguage = 'zh' | 'en';
 
-export type PluginOptions = Pick<
-  Options,
-  | 'entries'
-  | 'languages'
-  | 'doc'
-  | 'previewMode'
-  | 'apiParseTool'
-  | 'parseToolOptions'
-  | 'iframePosition'
-  | 'useModuleSidebar'
-  | 'defaultRenderMode'
->;
-
-export type Options = {
+type ExtraOptions = {
   /**
    * Target language
    * @deprecated Please use https://rspress.dev/guide/default-theme/i18n.html
    */
   languages?: Array<ModuleDocgenLanguage>;
   /**
-   * Doc framework config
-   * @zh 文档框架配置
-   */
-  doc?: UserConfig;
-  /**
-   * isProduction
-   * @zh 是否是生产环境
-   * @default process.env.NODE_ENV === 'production'
-   */
-  isProduction?: boolean;
-  /**
-   * previewMode
-   * @zh 预览方式
-   * @default 'web'
-   */
-  previewMode?: 'mobile' | 'web';
-  /**
    * set it true to use module default sidebar, or customize the sidebar with false value
    * @deprecated Please see https://rspress.dev/guide/basic/auto-nav-sidebar.html
    */
   useModuleSidebar?: boolean;
   /**
-   * iframePosition
+   * Doc framework config
    */
-  iframePosition?: 'fixed' | 'follow';
+  doc?: UserConfig;
   /**
-   * determine how to handle a internal code block without meta
-   * @default 'preview'
+   * previewMode
+   * @default 'internal'
    */
-  defaultRenderMode?: 'pure' | 'preview';
-} & DocGenOptions;
+  previewMode?: DeprecatedMode | 'internal' | 'iframe';
+};
+
+export type PluginOptions = DocGenOptions &
+  Omit<PreviewOptions, 'previewMode'> &
+  ExtraOptions;

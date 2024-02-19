@@ -3,20 +3,35 @@ import { fs, fastGlob } from '@modern-js/utils';
 import { pluginPreview } from '@rspress/plugin-preview';
 import type { UserConfig, Sidebar, SidebarGroup } from '@rspress/core';
 import { pluginApiDocgen } from '@rspress/plugin-api-docgen';
-import type { Options } from '../types';
-import { mergeModuleDocConfig } from '../utils';
+import { mergeModuleDocConfig } from './utils';
+import type { PluginOptions } from './types';
 
 export async function launchDoc({
   appDir,
-  doc,
   isProduction,
-  previewMode,
-  entries,
-  apiParseTool,
-  parseToolOptions,
-  iframePosition,
-  defaultRenderMode,
-}: Required<Options>) {
+  pluginOptions,
+}: {
+  appDir: string;
+  isProduction: boolean;
+  pluginOptions?: PluginOptions;
+}) {
+  const {
+    doc = {},
+    iframeOptions,
+    iframePosition,
+    defaultRenderMode,
+    entries,
+    apiParseTool,
+    parseToolOptions,
+  } = pluginOptions || {};
+  // TODO: remove
+  let previewMode = pluginOptions?.previewMode;
+  if (previewMode === 'web') {
+    previewMode = 'internal';
+  }
+  if (previewMode === 'mobile') {
+    previewMode = 'iframe';
+  }
   const json = JSON.parse(
     fs.readFileSync(resolve(appDir, './package.json'), 'utf8'),
   );
@@ -153,8 +168,9 @@ export async function launchDoc({
       ],
       plugins: [
         pluginPreview({
-          isMobile: previewMode === 'mobile',
+          previewMode,
           iframePosition,
+          iframeOptions,
           defaultRenderMode,
         }),
         pluginApiDocgen({

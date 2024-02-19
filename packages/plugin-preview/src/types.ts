@@ -42,7 +42,7 @@ export type IframeOptions = {
   position?: 'fixed' | 'follow';
   /**
    * dev server port for the iframe
-   * @default 'follow'
+   * @default 7890
    */
   devPort?: number;
 };
