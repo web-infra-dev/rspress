@@ -1,6 +1,6 @@
 import type { CliPlugin, ModuleTools } from '@modern-js/module-tools';
 import type { PluginOptions } from './types';
-import { run } from './features';
+import { launchDoc } from './lanchDoc';
 
 export const modulePluginDoc = (
   pluginOptions?: PluginOptions,
@@ -19,8 +19,8 @@ export const modulePluginDoc = (
           const appContext = api.useAppContext();
           const { appDirectory } = appContext;
 
-          await run({
-            ...pluginOptions,
+          await launchDoc({
+            pluginOptions,
             appDir: appDirectory,
             isProduction: false,
           });
@@ -33,8 +33,8 @@ export const modulePluginDoc = (
         async build() {
           const appContext = api.useAppContext();
           const { appDirectory } = appContext;
-          await run({
-            ...pluginOptions,
+          await launchDoc({
+            pluginOptions,
             appDir: appDirectory,
             isProduction: true,
           });
