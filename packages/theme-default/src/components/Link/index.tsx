@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { ComponentProps } from 'react';
 import {
   matchRoutes,
   useLocation,
@@ -14,7 +14,7 @@ import { isExternalUrl } from '@rspress/shared';
 import styles from './index.module.scss';
 import { scrollToTarget } from '#theme/logic';
 
-export interface LinkProps {
+export interface LinkProps extends ComponentProps<'a'> {
   href?: string;
   children?: React.ReactNode;
   className?: string;
@@ -24,7 +24,7 @@ export interface LinkProps {
 nprogress.configure({ showSpinner: false });
 
 export function Link(props: LinkProps) {
-  const { href = '/', children, className = '', onNavigate } = props;
+  const { href = '/', children, className = '', onNavigate, ...rest } = props;
   const isExternal = isExternalUrl(href);
   const target = isExternal ? '_blank' : '';
   const rel = isExternal ? 'noopener noreferrer' : undefined;
@@ -81,6 +81,7 @@ export function Link(props: LinkProps) {
   if (!isExternal) {
     return (
       <a
+        {...rest}
         className={`${styles.link} ${className} cursor-pointer`}
         rel={rel}
         target={target}
@@ -93,6 +94,7 @@ export function Link(props: LinkProps) {
   } else {
     return (
       <a
+        {...rest}
         href={withBaseUrl}
         target={target}
         rel={rel}
