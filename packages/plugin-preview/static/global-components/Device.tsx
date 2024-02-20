@@ -66,7 +66,7 @@ export default () => {
       } else {
         node?.removeAttribute('style');
       }
-      style.setProperty('--rp-aside-width', '0');
+      style.setProperty('--rp-aside-width', '0px');
     } else {
       node?.removeAttribute('style');
       style.setProperty('--rp-aside-width', asideWidth);
