@@ -1,5 +1,6 @@
 ---
 "@rspress/theme-default": patch
+"@rspress/plugin-preview": patch
 ---
 
-fix(theme-default): fix theme style issues.
+fix: fix theme style issues.
