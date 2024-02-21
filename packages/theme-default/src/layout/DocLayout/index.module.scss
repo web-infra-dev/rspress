@@ -8,7 +8,7 @@
   overflow-y: auto;
   scrollbar-width: none;
   width: 0;
-  max-height: calc(100vh - (var(--rp-nav-height) + 32px));
+  max-height: calc(100vh - var(--rp-nav-height) + 32px);
 }
 
 .aside-container::-webkit-scrollbar {
@@ -81,7 +81,7 @@
 
   .content {
     width: calc(100% - var(--rp-sidebar-width));
-    padding: 48px 48px 72px 0;
+    padding: 48px 48px 72px max(0px, calc(48px - var(--rp-sidebar-width)));
 
     :global(.rspress-doc),
     :global(.rspress-doc-footer) {
@@ -105,7 +105,7 @@
     :global(.rspress-doc),
     :global(.rspress-doc-footer) {
       padding: 0 48px;
-      box-sizing: content-box;
+      box-sizing: border-box;
       width: calc(100vw - var(--rp-aside-width) - var(--rp-sidebar-width));
     }
   }

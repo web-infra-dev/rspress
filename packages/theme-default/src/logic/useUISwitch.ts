@@ -67,11 +67,11 @@ export function useUISwitch(): UISwitchResult {
     }
 
     if (sidebar === QueryStatus.Hide) {
-      document.documentElement.style.setProperty('--rp-sidebar-width', '0');
+      document.documentElement.style.setProperty('--rp-sidebar-width', '0px');
     }
 
     if (aside === QueryStatus.Hide) {
-      document.documentElement.style.setProperty('--rp-aside-width', '0');
+      document.documentElement.style.setProperty('--rp-aside-width', '0px');
     }
 
     if (footer === QueryStatus.Hide) {
