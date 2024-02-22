@@ -1,4 +1,4 @@
-lockfileVersion: '6.1'
+lockfileVersion: '6.0'
 
 settings:
   autoInstallPeers: true
@@ -914,7 +914,7 @@ importers:
         specifier: 0.4.0
         version: 0.4.0(@babel/core@7.23.2)(@rsbuild/core@0.4.0)(@swc/helpers@0.5.3)(solid-js@1.8.12)
       '@rspress/core':
-        specifier: workspace:*
+        specifier: ^1.0.2
         version: link:../core
       '@rspress/shared':
         specifier: workspace:*
@@ -14353,7 +14353,7 @@ packages:
     dependencies:
       '@types/node': 14.0.0
       esbuild: 0.18.20
-      postcss: 8.4.33
+      postcss: 8.4.31
       rollup: 3.28.0
     optionalDependencies:
       fsevents: 2.3.2
