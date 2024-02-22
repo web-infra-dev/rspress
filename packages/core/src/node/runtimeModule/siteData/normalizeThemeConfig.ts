@@ -52,7 +52,7 @@ export function normalizeThemeConfig(
     // if lang exists, we should add the lang prefix to the link
     // such /guide -> /en/guide
     return lang === currentLang
-      ? link
+      ? normalizedLink
       : `/${currentLang}${addLeadingSlash(normalizedLink)}`;
   };
 
