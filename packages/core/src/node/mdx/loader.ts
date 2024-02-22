@@ -1,7 +1,7 @@
 import path from 'path';
 import type { Rspack } from '@rsbuild/core';
 import { createProcessor } from '@mdx-js/mdx';
-import type { Header, UserConfig } from '@rspress/shared';
+import { isProduction, type Header, type UserConfig } from '@rspress/shared';
 import { logger } from '@rspress/shared/logger';
 import { loadFrontMatter } from '@rspress/shared/node-utils';
 import fs from 'fs-extra';
@@ -164,7 +164,9 @@ export default async function mdxLoader(
     }
 
     // If page meta changed, we trigger page reload to ensure the page is up to date.
-    checkPageMetaUpdate(filepath, pageMeta);
+    if (!isProduction()) {
+      checkPageMetaUpdate(filepath, pageMeta);
+    }
 
     const result = `const frontmatter = ${JSON.stringify(frontmatter)};
 ${compileResult}
