@@ -23,6 +23,7 @@ export const Layout: React.FC<LayoutProps> = props => {
     top,
     bottom,
     beforeDocFooter,
+    afterDocFooter,
     beforeDoc,
     afterDoc,
     beforeSidebar,
@@ -40,6 +41,7 @@ export const Layout: React.FC<LayoutProps> = props => {
   } = props;
   const docProps: DocLayoutProps = {
     beforeDocFooter,
+    afterDocFooter,
     beforeDoc,
     afterDoc,
     beforeSidebar,
@@ -80,7 +82,6 @@ export const Layout: React.FC<LayoutProps> = props => {
     localesData.description;
   // Control whether to show navbar/sidebar/outline/footer
   const uiSwitch = useUISwitch();
-  console.log('uiSwitch', uiSwitch);
   // Use doc layout by default
   const getContentLayout = () => {
     switch (pageType) {

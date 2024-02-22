@@ -16,6 +16,7 @@ export interface DocLayoutProps {
   beforeSidebar?: React.ReactNode;
   afterSidebar?: React.ReactNode;
   beforeDocFooter?: React.ReactNode;
+  afterDocFooter?: React.ReactNode;
   beforeDoc?: React.ReactNode;
   afterDoc?: React.ReactNode;
   beforeOutline?: React.ReactNode;
@@ -26,6 +27,7 @@ export interface DocLayoutProps {
 export function DocLayout(props: DocLayoutProps) {
   const {
     beforeDocFooter,
+    afterDocFooter,
     beforeDoc,
     afterDoc,
     beforeOutline,
@@ -54,8 +56,6 @@ export function DocLayout(props: DocLayoutProps) {
     </TabDataContext.Provider>
   );
 
-  console.log('uiSwitch', uiSwitch);
-
   return (
     <div
       className={`${styles.docLayout} pt-0`}
@@ -83,6 +83,7 @@ export function DocLayout(props: DocLayoutProps) {
               <div className="rspress-doc-footer">
                 {beforeDocFooter}
                 {uiSwitch.showDocFooter && <DocFooter />}
+                {afterDocFooter}
               </div>
             </div>
           )}
