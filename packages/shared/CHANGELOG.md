@@ -1,5 +1,22 @@
 # @rspress/shared
 
+## 1.12.0
+
+### Minor Changes
+
+- d697778: feat(theme-default): Scroll to top button on docs | enableScrollToTop
+  chore(docs): weixin -> wechat
+- 51f5541: feat(presetIcons): new social platform for social links - X
+  feat(SourceCode): support for gitlab platform for button
+  add(assets): new gitlab vector
+  feat(SocialLinkIcon): Added new social icon type - X
+
+### Patch Changes
+
+- 24c03fc: fix: update sidebar after h1 change
+- 24c03fc: feat: trigger auto page reload after page meta changed
+- 24c03fc: fix: doc fragments' headers disappeared in development
+
 ## 1.11.2
 
 ### Patch Changes

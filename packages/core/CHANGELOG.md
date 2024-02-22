@@ -1,5 +1,40 @@
 # @rspress/core
 
+## 1.12.0
+
+### Minor Changes
+
+- 24c03fc: feat: trigger auto page reload after page meta changed
+
+### Patch Changes
+
+- 24c03fc: fix: update sidebar after h1 change
+- 24c03fc: fix: doc fragments' headers disappeared in development
+- Updated dependencies [1551705]
+- Updated dependencies [760027b]
+- Updated dependencies [88e7eae]
+- Updated dependencies [d697778]
+- Updated dependencies [e4508b5]
+- Updated dependencies [515d65c]
+- Updated dependencies [4a73062]
+- Updated dependencies [2e1550a]
+- Updated dependencies [710ca6a]
+- Updated dependencies [51f5541]
+- Updated dependencies [24c03fc]
+- Updated dependencies [24c03fc]
+- Updated dependencies [24c03fc]
+- Updated dependencies [c429464]
+- Updated dependencies [6212c89]
+- Updated dependencies [0ec1c5d]
+- Updated dependencies [42c78f4]
+  - @rspress/theme-default@1.12.0
+  - @rspress/shared@1.12.0
+  - @rspress/plugin-auto-nav-sidebar@1.12.0
+  - @rspress/plugin-container-syntax@1.12.0
+  - @rspress/plugin-last-updated@1.12.0
+  - @rspress/plugin-medium-zoom@1.12.0
+  - @rspress/runtime@1.12.0
+
 ## 1.11.2
 
 ### Patch Changes

@@ -1,5 +1,20 @@
 # @rspress/plugin-auto-sidebar
 
+## 1.12.0
+
+### Patch Changes
+
+- 710ca6a: fix: use logical OR instead of nullish coalescing when label is empty
+- 24c03fc: fix: update sidebar after h1 change
+- 24c03fc: feat: trigger auto page reload after page meta changed
+- 24c03fc: fix: doc fragments' headers disappeared in development
+- Updated dependencies [d697778]
+- Updated dependencies [51f5541]
+- Updated dependencies [24c03fc]
+- Updated dependencies [24c03fc]
+- Updated dependencies [24c03fc]
+  - @rspress/shared@1.12.0
+
 ## 1.11.2
 
 ### Patch Changes
