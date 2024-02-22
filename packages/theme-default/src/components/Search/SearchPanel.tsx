@@ -74,7 +74,10 @@ export function SearchPanel({ focused, setFocused }: SearchPanelProps) {
       extractGroupName,
     });
     pageSearcherRef.current = pageSearcher;
-    await pageSearcherRef.current.init();
+    await Promise.all([
+      pageSearcherRef.current.init(),
+      new Promise(resolve => setTimeout(resolve, 1000)),
+    ]);
     setIniting(false);
     const query = searchInputRef.current?.value;
     if (query) {
