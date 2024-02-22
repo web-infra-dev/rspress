@@ -1,6 +1,6 @@
 ---
-"@rspress/theme-default": patch
-"@rspress/docs": patch
+'@rspress/theme-default': patch
+'@rspress/docs': patch
 ---
 
-fix: ui switch query
+fix(theme-default): ui switch query
