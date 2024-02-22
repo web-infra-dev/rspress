@@ -14,6 +14,7 @@ import {
   NavItem,
   Sidebar,
   SidebarDivider,
+  slash,
 } from '@rspress/shared';
 import { applyReplaceRules } from '../../utils/applyReplaceRules';
 import { getI18nData } from '../i18n';
@@ -37,21 +38,22 @@ export function normalizeThemeConfig(
   const i18nTextData = getI18nData(docConfig);
   // In following code, we will normalize the theme config reference to the pages data extracted from mdx files
   const normalizeLinkPrefix = (link = '', currentLang = '') => {
+    const normalizedLink = slash(link);
     if (
       !currentLang ||
       !link ||
-      withoutBase(link, base).startsWith(`/${currentLang}`) ||
-      isExternalUrl(link) ||
+      withoutBase(normalizedLink, base).startsWith(`/${currentLang}`) ||
+      isExternalUrl(normalizedLink) ||
       // In multi version case, we have got the complete link prefix in `plugin-auto-nav-sidebar` and does not need to add the lang prefix
       hasMultiVersion
     ) {
-      return link;
+      return normalizedLink;
     }
     // if lang exists, we should add the lang prefix to the link
     // such /guide -> /en/guide
     return lang === currentLang
       ? link
-      : `/${currentLang}${addLeadingSlash(link)}`;
+      : `/${currentLang}${addLeadingSlash(normalizedLink)}`;
   };
 
   const getI18nText = (key = '', currentLang = '') => {

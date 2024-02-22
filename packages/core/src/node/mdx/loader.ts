@@ -1,4 +1,5 @@
 import path from 'path';
+import { pathToFileURL } from 'url';
 import type { Rspack } from '@rsbuild/core';
 import { createProcessor } from '@mdx-js/mdx';
 import { isProduction, type Header, type UserConfig } from '@rspress/shared';
@@ -38,7 +39,9 @@ export async function triggerReload() {
     'runtime',
     `${RuntimeModuleID.SiteData}.mjs`,
   );
-  const { default: siteData } = await import(siteDataModulePath);
+  const { default: siteData } = await import(
+    pathToFileURL(siteDataModulePath).href
+  );
   await fs.writeFile(
     siteDataModulePath,
     `export default ${JSON.stringify({
