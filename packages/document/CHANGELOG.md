@@ -1,5 +1,15 @@
 # @rspress/docs
 
+## 1.12.0
+
+### Patch Changes
+
+- 88e7eae: feat: add afterDocFooter slot for custom theme
+- d697778: feat(theme-default): Scroll to top button on docs | enableScrollToTop
+  chore(docs): weixin -> wechat
+- d1fda14: fix(404): tried to configure 404 page on netlify hosting for rspress docs
+- c429464: fix(theme-default): ui switch query
+
 ## 1.11.2
 
 ### Patch Changes
