@@ -15,8 +15,9 @@ export function LastUpdated() {
 
   return (
     <div className="flex text-sm text-text-2 leading-6 sm:leading-8 font-medium">
-      <p>{lastUpdatedText}: </p>
-      <span>{lastUpdatedTime}</span>
+      <p>
+        {lastUpdatedText}: <span>{lastUpdatedTime}</span>
+      </p>
     </div>
   );
 }
