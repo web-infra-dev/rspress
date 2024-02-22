@@ -168,13 +168,14 @@ function processLocales(
                   lang === defaultLang ? '' : `/${lang}`
                 }`,
               );
-              return walk(path.join(root, version, lang), routePrefix);
+              return walk(path.join(root, version, lang), routePrefix, root);
             }),
           )
         : [
             await walk(
               path.join(root, lang),
               addTrailingSlash(lang === defaultLang ? '' : `/${lang}`),
+              root,
             ),
           ];
       return combineWalkResult(walks, versions);
@@ -225,10 +226,14 @@ export function pluginAutoNavSidebar(): RspressPlugin {
                 const routePrefix = addTrailingSlash(
                   version === defaultVersion ? '' : `/${version}`,
                 );
-                return walk(path.join(config.root!, version), routePrefix);
+                return walk(
+                  path.join(config.root!, version),
+                  routePrefix,
+                  config.root!,
+                );
               }),
             )
-          : [await walk(config.root!)];
+          : [await walk(config.root!, '/', config.root!)];
 
         const combined = combineWalkResult(walks, versions);
 

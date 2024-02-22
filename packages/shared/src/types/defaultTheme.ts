@@ -170,9 +170,21 @@ export interface SidebarGroup {
   items: (SidebarItem | SidebarDivider | SidebarGroup | string)[];
   collapsible?: boolean;
   collapsed?: boolean;
+  /**
+   * For hmr usage in development
+   */
+  _fileKey?: string;
 }
 
-export type SidebarItem = { text: string; link: string; tag?: string };
+export type SidebarItem = {
+  text: string;
+  link: string;
+  tag?: string;
+  /**
+   * For hmr usage in development
+   */
+  _fileKey?: string;
+};
 
 export type SidebarDivider = { dividerType: 'dashed' | 'solid' };
 

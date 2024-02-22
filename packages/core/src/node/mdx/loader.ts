@@ -1,12 +1,20 @@
 import path from 'path';
+import { pathToFileURL } from 'url';
 import type { Rspack } from '@rsbuild/core';
 import { createProcessor } from '@mdx-js/mdx';
-import type { Header, UserConfig } from '@rspress/shared';
+import { isProduction, type Header, type UserConfig } from '@rspress/shared';
 import { logger } from '@rspress/shared/logger';
 import { loadFrontMatter } from '@rspress/shared/node-utils';
+import fs from 'fs-extra';
 import type { RouteService } from '../route/RouteService';
-import { normalizePath, escapeMarkdownHeadingIds } from '../utils';
+import {
+  normalizePath,
+  escapeMarkdownHeadingIds,
+  flattenMdxContent,
+} from '../utils';
 import { PluginDriver } from '../PluginDriver';
+import { TEMP_DIR } from '../constants';
+import { RuntimeModuleID } from '../runtimeModule';
 import { createMDXOptions } from './options';
 import { TocItem } from './remarkPlugins/toc';
 import { checkLinks } from './remarkPlugins/checkDeadLink';
@@ -25,6 +33,48 @@ export interface PageMeta {
   frontmatter?: Record<string, any>;
 }
 
+export async function triggerReload() {
+  const siteDataModulePath = path.join(
+    TEMP_DIR,
+    'runtime',
+    `${RuntimeModuleID.SiteData}.mjs`,
+  );
+  const { default: siteData } = await import(
+    pathToFileURL(siteDataModulePath).href
+  );
+  await fs.writeFile(
+    siteDataModulePath,
+    `export default ${JSON.stringify({
+      ...siteData,
+      timestamp: Date.now().toString(),
+    })}`,
+  );
+}
+
+export function createCheckPageMetaUpdateFn() {
+  const pageMetaMap = new Map<string, string>();
+  return (modulePath: string, pageMeta: PageMeta) => {
+    const prevMeta = pageMetaMap.get(modulePath);
+    const deserializedMeta = JSON.stringify(pageMeta);
+    pageMetaMap.set(modulePath, deserializedMeta);
+
+    if (!prevMeta) {
+      return;
+    }
+
+    if (prevMeta !== deserializedMeta) {
+      setTimeout(async () => {
+        logger.info(
+          `⭐️ Page metadata changed, rspress will trigger page reload...`,
+        );
+        await triggerReload();
+      });
+    }
+  };
+}
+
+const checkPageMetaUpdate = createCheckPageMetaUpdateFn();
+
 export default async function mdxLoader(
   context: Rspack.LoaderContext<LoaderOptions>,
   source: string,
@@ -32,8 +82,8 @@ export default async function mdxLoader(
 ) {
   const options = context.getOptions();
   const filepath = context.resourcePath;
+  const { alias } = context._compiler.options.resolve;
   context.cacheable(true);
-
   let pageMeta = {
     title: '',
     toc: [],
@@ -50,8 +100,9 @@ export default async function mdxLoader(
   );
 
   // preprocessor
-  const preprocessedContent = escapeMarkdownHeadingIds(content);
-  const isHomePage = frontmatter.pageType === 'home';
+  const preprocessedContent = escapeMarkdownHeadingIds(
+    await flattenMdxContent(content, filepath, alias as Record<string, string>),
+  );
 
   let enableMdxRs;
   const mdxRs = config?.markdown?.mdxRs ?? true;
@@ -114,16 +165,13 @@ export default async function mdxLoader(
         checkLinks(links, filepath, docDirectory, routeService);
       }
     }
-    // Note: encode filename to be compatible with Windows
 
-    const result = `${
-      // Why do we add the frontmatter to the compiled result?
-      // 1. Inject the frontmatter to the compiled result, so that we can get the frontmatter in the mdx content
-      // 2. Fix the home page won't update when the frontmatter is changed. When the frontmatter in the mdx of home page is changed, the home page will not be updated. The reason is that the home page component isn't the mdx module compiled currently. But the frontmatter of the mdx module have sincerely changed. So we reload the page and the home page will be updated.
-      // In react-refresh, if a module can be hot updated, all the its exports need to be component(function/class & upper case first letter), otherwise it will trigger a full reload.
-      // In this case, we export a component named `export` to make the home page can be hot updated after the frontmatter is changed.
-      isHomePage ? 'export' : ''
-    } const frontmatter = ${JSON.stringify(frontmatter)};
+    // If page meta changed, we trigger page reload to ensure the page is up to date.
+    if (!isProduction()) {
+      checkPageMetaUpdate(filepath, pageMeta);
+    }
+
+    const result = `const frontmatter = ${JSON.stringify(frontmatter)};
 ${compileResult}
 MDXContent.__RSPRESS_PAGE_META = {};
 

@@ -53,12 +53,12 @@ export function SideBar(props: Props) {
   const { items: rawSidebarData } = useSidebarData();
   const localesData = useLocaleSiteData();
   const { pathname: rawPathname } = useLocation();
-
   const langRoutePrefix = normalizeSlash(localesData.langRoutePrefix || '');
   const [sidebarData, setSidebarData] = useState<
     (ISidebarDivider | ISidebarItem | NormalizedSidebarGroup)[]
   >(rawSidebarData.filter(Boolean).flat());
   const pathname = decodeURIComponent(rawPathname);
+
   useEffect(() => {
     if (rawSidebarData === sidebarData) {
       return;

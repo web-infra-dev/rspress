@@ -5,6 +5,7 @@ import fs from '@rspress/shared/fs-extra';
 import { createProcessor } from '@mdx-js/mdx';
 import type { Root } from 'hast';
 import { MDX_REGEXP } from '@rspress/shared';
+import { importStatementRegex } from '../constants';
 
 const { CachedInputFileSystem, ResolverFactory } = enhancedResolve;
 const processor = createProcessor();
@@ -60,6 +61,11 @@ export async function flattenMdxContent(
   basePath: string,
   alias: Record<string, string | string[]>,
 ): Promise<string> {
+  // Performance optimization: if the content does not contain any import statement, we can skip the parsing process
+
+  if (!importStatementRegex.test(content)) {
+    return content;
+  }
   let result = content;
   // We should update the resolver instanceof because the alias should be passed to it
   // If we reuse the resolver instance in `detectReactVersion` method, the resolver will lose the alias info and cannot resolve path correctly in mdx files.
@@ -81,12 +87,10 @@ export async function flattenMdxContent(
   const importNodes = ast.children
     .filter(node => node.type === 'mdxjsEsm')
     .map(node => {
-      result = result.replace((node as { value: string }).value, '');
       return (node.data?.estree as { body: ImportNode[] })?.body || [];
     })
     .flat()
     .filter(node => node.type === 'ImportDeclaration');
-
   for (const importNode of importNodes) {
     // import Comp from './a';
     // id: Comp
@@ -104,6 +108,7 @@ export async function flattenMdxContent(
     } catch (e) {
       continue;
     }
+
     if (MDX_REGEXP.test(absoluteImportPath)) {
       // replace import statement with the content of the imported file
       const importedContent = fs.readFileSync(absoluteImportPath, 'utf-8');

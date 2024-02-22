@@ -1,6 +1,6 @@
 import type { UserConfig } from '@rspress/shared';
-import type { RsbuildPlugin } from '@rsbuild/core';
 import { RspackVirtualModulePlugin } from 'rspack-plugin-virtual-module';
+import { RsbuildPlugin } from '@rsbuild/core';
 import { RouteService } from '../route/RouteService';
 import { PluginDriver } from '../PluginDriver';
 import { routeVMPlugin } from './routeData';
@@ -57,7 +57,6 @@ export const runtimeModuleFactory: RuntimeModuleFactory[] = [
 ];
 
 // We will use this plugin to generate runtime module in browser, which is important to ensure the client have access to some compile-time data
-// TODO: We can separate the compile-time data generation and runtime module generation logic instead of putting them together(such as `siteDataVMPlugin` plugin, it does too much thing) to make it more clear
 export function rsbuildPluginDocVM(
   factoryContext: Omit<FactoryContext, 'alias'>,
 ): RsbuildPlugin {
@@ -73,7 +72,7 @@ export function rsbuildPluginDocVM(
         for (const factory of runtimeModuleFactory) {
           const moduleResult = await factory({
             ...factoryContext,
-            alias,
+            alias: alias as Record<string, string>,
           });
           Object.assign(runtimeModule, moduleResult);
         }
@@ -87,14 +86,13 @@ export function rsbuildPluginDocVM(
           }
           runtimeModule[key] = modulesByPlugin[key];
         });
-        bundlerChain
-          .plugin(`rspress-runtime-module`)
-          .use(
-            new RspackVirtualModulePlugin(
-              runtimeModule,
-              factoryContext.runtimeTempDir,
-            ),
-          );
+        bundlerChain.plugin(`rspress-runtime-module`).use(
+          // @ts-expect-error
+          new RspackVirtualModulePlugin(
+            runtimeModule,
+            factoryContext.runtimeTempDir,
+          ),
+        );
       });
     },
   };

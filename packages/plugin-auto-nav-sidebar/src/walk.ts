@@ -15,6 +15,7 @@ import { detectFilePath, extractH1Title } from './utils';
 export async function scanSideMeta(
   workDir: string,
   rootDir: string,
+  docsDir: string,
   routePrefix: string,
 ) {
   const addRoutePrefix = (link: string) => `${routePrefix}${link}`;
@@ -61,11 +62,11 @@ export async function scanSideMeta(
             path.resolve(workDir, metaItem),
             rootDir,
           );
+          const pureLink = `${relativePath}/${metaItem.replace(/\.mdx?$/, '')}`;
           return {
             text: title,
-            link: addRoutePrefix(
-              `${relativePath}/${metaItem.replace(/\.mdx?$/, '')}`,
-            ),
+            link: addRoutePrefix(pureLink),
+            _fileKey: path.relative(docsDir, path.join(workDir, metaItem)),
           };
         }
 
@@ -79,20 +80,26 @@ export async function scanSideMeta(
           tag,
           dashed,
         } = metaItem;
+        const pureLink = `${relativePath}/${name.replace(/\.mdx?$/, '')}`;
         if (type === 'file') {
           const title =
             label ||
             (await extractH1Title(path.resolve(workDir, name), rootDir));
+          const filePath = await detectFilePath(path.resolve(workDir, name));
           return {
             text: title,
-            link: addRoutePrefix(
-              `${relativePath}/${name.replace(/\.mdx?$/, '')}`,
-            ),
+            link: addRoutePrefix(pureLink),
             tag,
+            _fileKey: path.relative(docsDir, filePath),
           };
         } else if (type === 'dir') {
           const subDir = path.resolve(workDir, name);
-          const subSidebar = await scanSideMeta(subDir, rootDir, routePrefix);
+          const subSidebar = await scanSideMeta(
+            subDir,
+            rootDir,
+            docsDir,
+            routePrefix,
+          );
           let realPath = '';
           try {
             realPath = await detectFilePath(subDir);
@@ -104,10 +111,9 @@ export async function scanSideMeta(
             collapsible,
             collapsed,
             items: subSidebar,
-            link: realPath
-              ? addRoutePrefix(`${relativePath}/${name}`)
-              : undefined,
+            link: realPath ? addRoutePrefix(pureLink) : undefined,
             tag,
+            _fileKey: path.relative(docsDir, realPath),
           };
         } else if (type === 'divider') {
           return { dividerType: dashed ? 'dashed' : 'solid' };
@@ -126,7 +132,11 @@ export async function scanSideMeta(
 
 // Start walking from the doc directory, scan the `_meta.json` file in each subdirectory
 // and generate the nav and sidebar config
-export async function walk(workDir: string, routePrefix = '/') {
+export async function walk(
+  workDir: string,
+  routePrefix = '/',
+  docsDir: string,
+) {
   // find the `_meta.json` file
   const rootMetaFile = path.resolve(workDir, '_meta.json');
   let navConfig: NavMeta | undefined;
@@ -161,6 +171,7 @@ export async function walk(workDir: string, routePrefix = '/') {
     sidebarConfig[sidebarGroupKey] = await scanSideMeta(
       path.join(workDir, subDir),
       workDir,
+      docsDir,
       routePrefix,
     );
   }

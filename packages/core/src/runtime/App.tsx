@@ -8,13 +8,7 @@ import {
 } from '@rspress/runtime';
 import { HelmetProvider } from 'react-helmet-async';
 import React, { useContext, useLayoutEffect } from 'react';
-import {
-  Header,
-  PageData,
-  cleanUrl,
-  isProduction,
-  MDX_REGEXP,
-} from '@rspress/shared';
+import { Header, PageData, cleanUrl, MDX_REGEXP } from '@rspress/shared';
 import globalComponents from 'virtual-global-components';
 import 'virtual-global-styles';
 
@@ -69,13 +63,7 @@ export async function initPageData(routePath: string): Promise<PageData> {
         pageType: frontmatter?.pageType || 'doc',
         title,
         frontmatter,
-        // Trade off:
-        // 1. the `extractPageInfo` includes complete toc even if import doc fragments, because we use `flattenMdxContent` function to make all doc fragments' toc included.However, it is only computed once when build
-        // 2. the mod.toc is not complete toc, but it is computed every time through loader when doc changed
-        // We choose the better solutions for different environments:
-        // In production, we use the extractPageInfo.toc to ensure the toc is complete and accurate.
-        // In development, we use the mod.toc to ensure the toc is up to date to ensure DX.However, we cannot ensure the complete toc info when including doc fragments.
-        toc: isProduction() ? extractPageInfo?.toc : toc,
+        toc,
       },
     };
   } else {

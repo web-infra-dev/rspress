@@ -20,7 +20,7 @@ test.describe('plugin test', async () => {
   });
 
   test('Basic', async ({ page }) => {
-    await page.goto(`http://localhost:${appPort}/en/general/button`, {
+    await page.goto(`http://localhost:${appPort}/general/button`, {
       waitUntil: 'networkidle',
     });
     const h1 = await page.getByRole('heading', {

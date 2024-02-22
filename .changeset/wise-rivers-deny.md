@@ -1,5 +1,5 @@
 ---
-"@rspress/theme-default": patch
+'@rspress/theme-default': patch
 ---
 
-feat: set search index initing min time
+feat(theme-default): set search index initing min time
