@@ -1,5 +1,13 @@
 # @rspress/plugin-typedoc
 
+## 1.12.0
+
+### Patch Changes
+
+- Updated dependencies [d697778]
+- Updated dependencies [51f5541]
+  - @rspress/shared@1.12.0
+
 ## 1.11.2
 
 ### Patch Changes

@@ -1,5 +1,15 @@
 # @rspress/plugin-preview
 
+## 1.12.0
+
+### Patch Changes
+
+- 760027b: fix: fix theme style issues.
+- 0861d45: fix(plugin-preview): support rspress restart
+- Updated dependencies [d697778]
+- Updated dependencies [51f5541]
+  - @rspress/shared@1.12.0
+
 ## 1.11.2
 
 ### Patch Changes

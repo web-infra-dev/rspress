@@ -1,5 +1,14 @@
 # @rspress/plugin-auto-sidebar
 
+## 1.12.0
+
+### Patch Changes
+
+- 710ca6a: fix: use logical OR instead of nullish coalescing when label is empty
+- Updated dependencies [d697778]
+- Updated dependencies [51f5541]
+  - @rspress/shared@1.12.0
+
 ## 1.11.2
 
 ### Patch Changes

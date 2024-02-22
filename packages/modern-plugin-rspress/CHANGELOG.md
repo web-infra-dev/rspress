@@ -1,5 +1,16 @@
 # @modern-js/plugin-rspress
 
+## 1.12.0
+
+### Patch Changes
+
+- f27baa6: chore: update options
+- Updated dependencies [760027b]
+- Updated dependencies [0861d45]
+  - @rspress/plugin-preview@1.12.0
+  - @rspress/core@1.12.0
+  - @rspress/plugin-api-docgen@1.12.0
+
 ## 1.11.2
 
 ### Patch Changes
