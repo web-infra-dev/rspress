@@ -1,5 +1,13 @@
 # @rspress/plugin-shiki
 
+## 2.0.0
+
+### Patch Changes
+
+- Updated dependencies [d697778]
+- Updated dependencies [51f5541]
+  - @rspress/shared@2.0.0
+
 ## 1.11.2
 
 ### Patch Changes

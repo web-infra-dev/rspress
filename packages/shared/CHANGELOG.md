@@ -1,5 +1,16 @@
 # @rspress/shared
 
+## 2.0.0
+
+### Minor Changes
+
+- d697778: feat(theme-default): Scroll to top button on docs | enableScrollToTop
+  chore(docs): weixin -> wechat
+- 51f5541: feat(presetIcons): new social platform for social links - X
+  feat(SourceCode): support for gitlab platform for button
+  add(assets): new gitlab vector
+  feat(SocialLinkIcon): Added new social icon type - X
+
 ## 1.11.2
 
 ### Patch Changes

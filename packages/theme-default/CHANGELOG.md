@@ -1,5 +1,34 @@
 # @rspress/theme-default
 
+## 2.0.0
+
+### Minor Changes
+
+- d697778: feat(theme-default): Scroll to top button on docs | enableScrollToTop
+  chore(docs): weixin -> wechat
+
+### Patch Changes
+
+- 1551705: fix(doc-components): change code children to string
+- 760027b: fix: fix theme style issues.
+- 88e7eae: feat: add afterDocFooter slot for custom theme
+- e4508b5: Updated codeblock - fix copyBtn Icons && updated wordWrapBtn animations for equality between both buttons
+- 515d65c: fix(theme-default): fix incorrect css variable name
+- 4a73062: feat: pass through HTMLAnchorElement props to Link component.
+- 2e1550a: fix(theme-default): private import not work in production
+- 51f5541: feat(presetIcons): new social platform for social links - X
+  feat(SourceCode): support for gitlab platform for button
+  add(assets): new gitlab vector
+  feat(SocialLinkIcon): Added new social icon type - X
+- c429464: fix: ui switch query
+- 6212c89: fix(tab-list):overflown tabs not showing on mobile fixed
+- 0ec1c5d: feat(theme-default): add DocLayout export
+- 42c78f4: feat: set search index initing min time
+- Updated dependencies [d697778]
+- Updated dependencies [51f5541]
+  - @rspress/shared@2.0.0
+  - @rspress/runtime@2.0.0
+
 ## 1.11.2
 
 ### Patch Changes

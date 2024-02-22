@@ -1,6 +1,6 @@
 {
   "name": "@rspress/plugin-api-docgen",
-  "version": "1.11.2",
+  "version": "2.0.0",
   "description": "A plugin for rspress to generate api doc.",
   "bugs": "https://github.com/web-infra-dev/rspress/issues",
   "repository": {
@@ -35,7 +35,7 @@
     "dist/"
   ],
   "dependencies": {
-    "@modern-js/utils": "2.46.1",
+    "@modern-js/utils": "2.47.0",
     "react-markdown": "8.0.7",
     "react-docgen-typescript": "2.2.2",
     "documentation": "14.0.2",
@@ -59,7 +59,7 @@
   "peerDependencies": {
     "react": ">=17",
     "react-router-dom": "^6.8.1",
-    "@rspress/core": "^1.0.2"
+    "@rspress/core": "^2.0.0"
   },
   "files": [
     "dist",

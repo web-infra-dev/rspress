@@ -1,5 +1,11 @@
 # @rspress/plugin-api-docgen
 
+## 2.0.0
+
+### Patch Changes
+
+- @rspress/core@2.0.0
+
 ## 1.11.2
 
 ## 1.11.1
