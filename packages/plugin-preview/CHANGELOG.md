@@ -1,5 +1,11 @@
 # @rspress/plugin-preview
 
+## 1.12.2
+
+### Patch Changes
+
+- @rspress/shared@1.12.2
+
 ## 1.12.1
 
 ### Patch Changes

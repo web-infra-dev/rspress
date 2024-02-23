@@ -1,5 +1,20 @@
 # @rspress/core
 
+## 1.12.2
+
+### Patch Changes
+
+- 4725cba: fix: nested mdx imports build failed
+- 4725cba: fix: location is not defined in ssg
+- Updated dependencies [4725cba]
+  - @rspress/theme-default@1.12.2
+  - @rspress/plugin-auto-nav-sidebar@1.12.2
+  - @rspress/plugin-container-syntax@1.12.2
+  - @rspress/plugin-last-updated@1.12.2
+  - @rspress/plugin-medium-zoom@1.12.2
+  - @rspress/runtime@1.12.2
+  - @rspress/shared@1.12.2
+
 ## 1.12.1
 
 ### Patch Changes
