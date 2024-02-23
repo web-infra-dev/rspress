@@ -15,12 +15,6 @@ export default defineConfig({
   },
   icon: 'https://lf3-static.bytednsdoc.com/obj/eden-cn/uhbfnupenuhf/rspress/rspress-logo.png',
   builderConfig: {
-    server: {
-      publicDir: {
-        name: 'public',
-        copyOnBuild: true,
-      },
-    },
     dev: {
       startUrl: false,
     },
