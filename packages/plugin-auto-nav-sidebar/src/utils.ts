@@ -17,11 +17,6 @@ export async function detectFilePath(rawPath: string) {
     realPath = pathWithExtension.find((_, i) => pathExistInfo[i]);
   }
 
-  if (!realPath) {
-    // Throw an error and it will be caught by the `extractH1Title`.
-    throw new Error();
-  }
-
   return realPath;
 }
 
@@ -29,19 +24,8 @@ export async function extractH1Title(
   filePath: string,
   rootDir: string,
 ): Promise<string> {
-  try {
-    const realPath = await detectFilePath(filePath);
-    const content = await fs.readFile(realPath, 'utf-8');
-    const fileNameWithoutExt = path.basename(realPath, path.extname(realPath));
-    const h1RegExp = /^#\s+(.*)$/m;
-    const match = content.match(h1RegExp);
-    if (!match) {
-      const { frontmatter } = loadFrontMatter(content, filePath, rootDir);
-      return frontmatter.title || fileNameWithoutExt;
-    } else {
-      return match[1] || fileNameWithoutExt;
-    }
-  } catch (e) {
+  const realPath = await detectFilePath(filePath);
+  if (!realPath) {
     logger.warn(
       `Can't find the file: ${filePath}, please check it in "${path.join(
         path.dirname(filePath),
@@ -49,6 +33,16 @@ export async function extractH1Title(
       )}".`,
     );
     return '';
+  }
+  const content = await fs.readFile(realPath, 'utf-8');
+  const fileNameWithoutExt = path.basename(realPath, path.extname(realPath));
+  const h1RegExp = /^#\s+(.*)$/m;
+  const match = content.match(h1RegExp);
+  if (!match) {
+    const { frontmatter } = loadFrontMatter(content, filePath, rootDir);
+    return frontmatter.title || fileNameWithoutExt;
+  } else {
+    return match[1] || fileNameWithoutExt;
   }
 }
 

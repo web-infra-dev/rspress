@@ -85,12 +85,12 @@ export async function scanSideMeta(
           const title =
             label ||
             (await extractH1Title(path.resolve(workDir, name), rootDir));
-          const filePath = await detectFilePath(path.resolve(workDir, name));
+          const realPath = await detectFilePath(path.resolve(workDir, name));
           return {
             text: title,
             link: addRoutePrefix(pureLink),
             tag,
-            _fileKey: path.relative(docsDir, filePath),
+            _fileKey: realPath ? path.relative(docsDir, realPath) : '',
           };
         } else if (type === 'dir') {
           const subDir = path.resolve(workDir, name);
@@ -100,20 +100,15 @@ export async function scanSideMeta(
             docsDir,
             routePrefix,
           );
-          let realPath = '';
-          try {
-            realPath = await detectFilePath(subDir);
-          } catch (e) {
-            // ignore
-          }
+          const realPath = await detectFilePath(subDir);
           return {
             text: label,
             collapsible,
             collapsed,
             items: subSidebar,
-            link: realPath ? addRoutePrefix(pureLink) : undefined,
+            link: realPath ? addRoutePrefix(pureLink) : '',
             tag,
-            _fileKey: path.relative(docsDir, realPath),
+            _fileKey: realPath ? path.relative(docsDir, realPath) : '',
           };
         } else if (type === 'divider') {
           return { dividerType: dashed ? 'dashed' : 'solid' };
