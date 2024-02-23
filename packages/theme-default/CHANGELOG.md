@@ -1,5 +1,13 @@
 # @rspress/theme-default
 
+## 1.12.1
+
+### Patch Changes
+
+- 5ea9055: fix(theme-default): Fix collapsed space between last updated text and time
+  - @rspress/runtime@1.12.1
+  - @rspress/shared@1.12.1
+
 ## 1.12.0
 
 ### Minor Changes
