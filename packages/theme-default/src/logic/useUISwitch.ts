@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { usePageData } from '@rspress/runtime';
+import { useLocation, usePageData } from '@rspress/runtime';
 import { useEnableNav } from './useHiddenNav';
 import { useLocaleSiteData } from './useLocaleSiteData';
 
@@ -20,6 +20,7 @@ export function useUISwitch(): UISwitchResult {
   const { frontmatter } = page;
   const { themeConfig } = siteData;
   const localesData = useLocaleSiteData();
+  const location = useLocation();
   const isOverviewPage = frontmatter?.overview ?? false;
   const getShowAside = () => {
     // if in iframe, default value is false
