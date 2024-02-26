@@ -80,7 +80,8 @@ export async function scanSideMeta(
           tag,
           dashed,
         } = metaItem;
-        const pureLink = `${relativePath}/${name.replace(/\.mdx?$/, '')}`;
+        // when type is divider, name maybe undefined, and link is not used
+        const pureLink = `${relativePath}/${name?.replace(/\.mdx?$/, '')}`;
         if (type === 'file') {
           const title =
             label ||
