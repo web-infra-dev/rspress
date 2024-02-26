@@ -231,3 +231,40 @@ interface SourceCodeProps {
   platform?: 'github' | 'gitlab'
 }
 ```
+
+
+## Steps
+
+The Steps component is used to turn your content into a visual representation of steps.
+
+```tsx title="index.mdx"
+import { Steps } from '@theme';
+
+function App() {
+  return (
+    <Steps>
+      ### Step 1
+
+      Body for Step 1.
+
+      ### Step 2
+
+      > Body for Step 2.
+    </Steps>
+  );
+}
+```
+
+The effect is as follows:
+
+import { Steps } from '@theme';
+
+<Steps>
+  ### Step 1
+
+  Body for Step 1.
+
+  ### Step 2
+
+  > Body for Step 2.
+</Steps>

@@ -231,3 +231,40 @@ interface SourceCodeProps {
   platform?: 'github' | 'gitlab'
 }
 ```
+
+
+## Steps
+
+Steps 组件用于将编号列表转换为步骤的可视化表示形式。使用方法如下：
+
+```tsx title="index.mdx"
+import { Steps } from '@theme';
+
+function App() {
+  return (
+    <Steps>
+      ### 第 1 步
+
+      步骤 1 的正文
+
+      ### 第 2 步
+
+      > 步骤 2 的正文
+    </Steps>
+  );
+}
+```
+
+效果如下:
+
+import { Steps } from '@theme';
+
+<Steps>
+  ### 第 1 步
+
+  步骤 1 的正文
+
+  ### 第 2 步
+
+  > 步骤 2 的正文
+</Steps>

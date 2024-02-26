@@ -17,6 +17,7 @@ export { PackageManagerTabs } from './components/PackageManagerTabs';
 export { LastUpdated } from './components/LastUpdated';
 export { PrevNextPage } from './components/PrevNextPage';
 export { SourceCode } from './components/SourceCode';
+export { Steps } from './components/Steps';
 
 export default {
   Layout,
