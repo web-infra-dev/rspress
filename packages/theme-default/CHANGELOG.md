@@ -1,5 +1,20 @@
 # @rspress/theme-default
 
+## 1.12.3
+
+### Patch Changes
+
+- @rspress/runtime@1.12.3
+- @rspress/shared@1.12.3
+
+## 1.12.2
+
+### Patch Changes
+
+- 4725cba: fix: location is not defined in ssg
+  - @rspress/runtime@1.12.2
+  - @rspress/shared@1.12.2
+
 ## 1.12.1
 
 ### Patch Changes

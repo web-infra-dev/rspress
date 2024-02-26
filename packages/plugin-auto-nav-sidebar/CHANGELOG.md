@@ -1,5 +1,18 @@
 # @rspress/plugin-auto-sidebar
 
+## 1.12.3
+
+### Patch Changes
+
+- 8abf9b8: fix: avoid error which caught by type divider
+  - @rspress/shared@1.12.3
+
+## 1.12.2
+
+### Patch Changes
+
+- @rspress/shared@1.12.2
+
 ## 1.12.1
 
 ### Patch Changes
