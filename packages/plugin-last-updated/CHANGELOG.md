@@ -1,5 +1,11 @@
 # @rspress/plugin-last-updated
 
+## 1.12.3
+
+### Patch Changes
+
+- @rspress/shared@1.12.3
+
 ## 1.12.2
 
 ### Patch Changes
