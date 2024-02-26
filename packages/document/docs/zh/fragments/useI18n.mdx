@@ -4,7 +4,7 @@
 import { useI18n } from 'rspress/runtime';
 
 const MyComponent = () => {
-  const { t } = useI18n();
+  const t = useI18n();
 
   return <div>{t('getting-started')}</div>;
 };
@@ -28,7 +28,7 @@ const MyComponent = () => {
 import { useI18n } from 'rspress/runtime';
 
 const MyComponent = () => {
-  const { t } = useI18n<keyof typeof import('i18n')>();
+  const t = useI18n<typeof import('i18n')>();
 
   return <div>{t('getting-started')}</div>;
 };
