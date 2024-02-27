@@ -124,6 +124,10 @@ async function createInternalBuildConfig(
       alias: {
         '@mdx-js/react': require.resolve('@mdx-js/react'),
         '@theme': themeDir,
+        '@theme-assets': [
+          path.join(CUSTOM_THEME_DIR, 'assets'),
+          path.join(DEFAULT_THEME, '../../src/assets'),
+        ],
         '@/theme-default': DEFAULT_THEME,
         '@rspress/core': PACKAGE_ROOT,
         'react-lazy-with-preload': require.resolve('react-lazy-with-preload'),

@@ -1,7 +1,7 @@
 import { useContext, useEffect } from 'react';
 import { ThemeContext } from '@rspress/runtime';
-import SunSvg from '../../assets/sun.svg';
-import MoonSvg from '../../assets/moon.svg';
+import SunSvg from '@theme-assets/sun.svg';
+import MoonSvg from '@theme-assets/moon.svg';
 import {
   getToggle,
   isDarkMode,
