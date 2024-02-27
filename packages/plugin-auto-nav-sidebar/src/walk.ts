@@ -8,6 +8,7 @@ import {
   SidebarDivider,
   slash,
   withBase,
+  isExternalUrl,
 } from '@rspress/shared';
 import { NavMeta, SideMeta } from './type';
 import { detectFilePath, extractH1Title } from './utils';
@@ -146,12 +147,12 @@ export async function walk(
   navConfig.forEach(navItem => {
     if ('items' in navItem) {
       navItem.items.forEach(item => {
-        if ('link' in item) {
+        if ('link' in item && !isExternalUrl(item.link)) {
           item.link = withBase(item.link, routePrefix);
         }
       });
     }
-    if ('link' in navItem) {
+    if ('link' in navItem && !isExternalUrl(navItem.link)) {
       navItem.link = withBase(navItem.link, routePrefix);
     }
   });

@@ -80,7 +80,7 @@ export function normalizePosixPath(id: string): string {
 export const inBrowser = () => !process.env.__SSR__;
 
 export function addLeadingSlash(url: string) {
-  return url.charAt(0) === '/' || url.startsWith('https') ? url : `/${url}`;
+  return url.charAt(0) === '/' || isExternalUrl(url) ? url : `/${url}`;
 }
 
 export function removeLeadingSlash(url: string) {
