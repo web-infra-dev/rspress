@@ -38,14 +38,10 @@ async function createInternalBuildConfig(
   pluginDriver: PluginDriver,
 ): Promise<RsbuildConfig> {
   const cwd = process.cwd();
-  const { default: fs } = await import('@rspress/shared/fs-extra');
   const CUSTOM_THEME_DIR =
     config?.themeDir ?? path.join(process.cwd(), 'theme');
   const outDir = config?.outDir ?? OUTPUT_DIR;
   const DEFAULT_THEME = require.resolve('@rspress/theme-default');
-  const themeDir = (await fs.pathExists(CUSTOM_THEME_DIR))
-    ? CUSTOM_THEME_DIR
-    : DEFAULT_THEME;
   const checkDeadLinks = (config?.markdown?.checkDeadLinks && !isSSR) ?? false;
   const base = config?.base ?? '';
 
@@ -123,7 +119,7 @@ async function createInternalBuildConfig(
       },
       alias: {
         '@mdx-js/react': require.resolve('@mdx-js/react'),
-        '@theme': themeDir,
+        '@theme': [CUSTOM_THEME_DIR, DEFAULT_THEME],
         '@theme-assets': [
           path.join(CUSTOM_THEME_DIR, 'assets'),
           path.join(DEFAULT_THEME, '../../src/assets'),
