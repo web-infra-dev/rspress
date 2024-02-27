@@ -1,5 +1,12 @@
 # @rspress/plugin-auto-sidebar
 
+## 1.12.4
+
+### Patch Changes
+
+- 51d8ae9: fix: avoid error in auto nav sidebar plugin
+  - @rspress/shared@1.12.4
+
 ## 1.12.3
 
 ### Patch Changes

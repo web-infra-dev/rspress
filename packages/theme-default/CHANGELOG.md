@@ -1,5 +1,15 @@
 # @rspress/theme-default
 
+## 1.12.4
+
+### Patch Changes
+
+- facceac: fix: respect search flag on mobile devices
+- 51d8ae9: fix: location is not defined in ssg
+- 8fcf385: fix: add explicit height to social link icons, which is needed on Safari
+  - @rspress/runtime@1.12.4
+  - @rspress/shared@1.12.4
+
 ## 1.12.3
 
 ### Patch Changes
