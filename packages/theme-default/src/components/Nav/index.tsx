@@ -137,7 +137,7 @@ export function Nav(props: NavProps) {
             {rightNav()}
             {afterNavMenu}
             <div className={styles.mobileNavMenu}>
-              {isMobile && <Search />}
+              {isMobile && hasSearch && <Search />}
               <NavHamburger siteData={siteData} pathname={pathname} />
             </div>
           </div>
