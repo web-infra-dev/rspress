@@ -1,6 +1,6 @@
 import { replaceLang, replaceVersion } from '@rspress/shared';
 import { useLocation, usePageData, useVersion } from '@rspress/runtime';
-import Translator from '../../assets/translator.svg';
+import Translator from '@theme-assets/translator.svg';
 
 export function useTranslationMenuData() {
   const { siteData, page } = usePageData();

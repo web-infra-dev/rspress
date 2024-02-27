@@ -1,7 +1,7 @@
 import { Fragment, useEffect, useRef, useState } from 'react';
 import { useLocation } from '@rspress/runtime';
-import MenuIcon from '../../assets/menu.svg';
-import ArrowRight from '../../assets/arrow-right.svg';
+import MenuIcon from '@theme-assets/menu.svg';
+import ArrowRight from '@theme-assets/arrow-right.svg';
 import { SideBar } from '../Sidebar';
 import './index.scss';
 import { Toc } from '../Toc';

@@ -1,4 +1,4 @@
-import Empty from './empty.svg';
+import Empty from '@theme-assets/empty.svg';
 
 export function NoSearchResult({ query }: { query: string }) {
   return (

@@ -1,8 +1,8 @@
 import { Fragment } from 'react';
 import type { SiteData, DefaultThemeConfig } from '@rspress/shared';
+import SmallMenu from '@theme-assets/small-menu.svg';
 import { NavScreen } from '../NavScreen';
 import { useNavScreen } from '../../logic/useNav';
-import SmallMenu from '../../assets/small-menu.svg';
 import styles from './index.module.scss';
 
 interface Props {
