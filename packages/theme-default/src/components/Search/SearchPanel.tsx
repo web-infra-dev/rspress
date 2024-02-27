@@ -44,6 +44,17 @@ export function SearchPanel({ focused, setFocused }: SearchPanelProps) {
   const [initing, setIniting] = useState(true);
   const [currentSuggestionIndex, setCurrentSuggestionIndex] = useState(0);
   const pageSearcherRef = useRef<PageSearcher | null>(null);
+  const searchResultRef = useRef<HTMLInputElement | null>(null);
+
+  // only scroll after keydown arrow up and arrow down.
+  const [canScroll, setCanScroll] = useState(false);
+  const scrollTo = (top: number) => {
+    if (canScroll) {
+      searchResultRef?.current?.scrollTo({
+        top,
+      });
+    }
+  };
   const {
     siteData,
     page: { lang },
@@ -103,6 +114,7 @@ export function SearchPanel({ focused, setFocused }: SearchPanelProps) {
               currentSuggestions &&
               currentRenderType === RenderType.Default
             ) {
+              setCanScroll(true);
               setCurrentSuggestionIndex(
                 (currentSuggestionIndex + 1) % currentSuggestions.length,
               );
@@ -114,6 +126,7 @@ export function SearchPanel({ focused, setFocused }: SearchPanelProps) {
             e.preventDefault();
             if (currentRenderType === RenderType.Default) {
               const currentSuggestionsLength = currentSuggestions.length;
+              setCanScroll(true);
               setCurrentSuggestionIndex(
                 (currentSuggestionIndex - 1 + currentSuggestionsLength) %
                   currentSuggestionsLength,
@@ -313,15 +326,18 @@ export function SearchPanel({ focused, setFocused }: SearchPanelProps) {
                   return (
                     <SuggestItem
                       key={`${suggestion.title}-${suggestionIndex}`}
+                      suggestionIndex={suggestionIndex}
                       suggestion={suggestion}
                       isCurrent={suggestionIndex === currentSuggestionIndex}
                       setCurrentSuggestionIndex={() => {
+                        setCanScroll(false);
                         setCurrentSuggestionIndex(suggestionIndex);
                       }}
                       closeSearch={() => setFocused(false)}
                       inCurrentDocIndex={
                         currentSuggestions === searchResult[0].result
                       }
+                      scrollTo={scrollTo}
                     />
                   );
                 })}
@@ -389,7 +405,10 @@ export function SearchPanel({ focused, setFocused }: SearchPanelProps) {
               </div>
 
               {query ? (
-                <div className={`${styles.searchHits}  rspress-scrollbar`}>
+                <div
+                  className={`${styles.searchHits}  rspress-scrollbar`}
+                  ref={searchResultRef}
+                >
                   {renderSearchResult(searchResult, search)}
                 </div>
               ) : null}
