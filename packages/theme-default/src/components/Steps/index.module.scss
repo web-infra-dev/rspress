@@ -1,15 +1,16 @@
 .rspressSteps h3 {
   counter-increment: step;
+  margin-top: 3px;
   &:before {
     content: counter(step);
     border-radius: 9999px;
     font-weight: 400;
     text-align: center;
-    margin-top: 3px;
+    font-size: 1.1rem;
     margin-left: -41px;
     position: absolute;
-    width: 33px;
-    height: 33px;
+    width: 30px;
+    height: 30px;
     color: var(--rp-c-text-1);
     background-color: var(--rp-code-block-bg);
     border-width: 1.5px;
