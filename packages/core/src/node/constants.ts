@@ -4,9 +4,9 @@ import { RSPRESS_TEMP_DIR } from '@rspress/shared';
 
 export const isProduction = () => process.env.NODE_ENV === 'production';
 
-// remove global to avoid ambiguity in non-greedy match.
+// Keep the quotation marks consistent before and after.
 export const importStatementRegex =
-  /import\s+(.*?)\s+from\s+(['"])(.*?)(?:"|')/m;
+  /import\s+(.*?)\s+from\s+(['"])(.*?)(?:"|');?/gm;
 
 // @ts-expect-error
 const dirname = path.dirname(fileURLToPath(new URL(import.meta.url)));
