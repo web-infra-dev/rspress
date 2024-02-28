@@ -62,6 +62,7 @@ export async function flattenMdxContent(
   alias: Record<string, string | string[]>,
 ): Promise<string> {
   // Performance optimization: if the content does not contain any import statement, we can skip the parsing process
+  // so we need to check this match
 
   if (!importStatementRegex.test(content)) {
     return content;
