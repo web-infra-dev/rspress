@@ -62,8 +62,12 @@ export async function flattenMdxContent(
   alias: Record<string, string | string[]>,
 ): Promise<string> {
   // Performance optimization: if the content does not contain any import statement, we can skip the parsing process
+  // So we need to check this match
 
-  if (!importStatementRegex.test(content)) {
+  // Create new regExp to avoid the regex cache the last match index
+  // https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/RegExp/test#using_test_on_a_regex_with_the_global_flag
+  const regex = new RegExp(importStatementRegex);
+  if (!regex.test(content)) {
     return content;
   }
   let result = content;
