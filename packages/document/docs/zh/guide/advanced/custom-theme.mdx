@@ -119,6 +119,18 @@ export * from 'rspress/theme';
 
 当然，在开发过程可能需要使用页面的数据，你可以通过 [`usePageData`](/api/client-api/api-runtime#usepagedata) 这个 Hook 来获取。
 
+### 4. 自定义图标
+
+如果想要单独修改默认主题组件里用到的图标，只需要将同名图标放在 theme/assets 目录下即可。
+
+```bash
+├── theme
+│   └── assets
+│     └── xx.svg
+```
+
+[查看](https://github.com/web-infra-dev/rspress/tree/main/packages/theme-default/src/assets)默认主题中用到的所有图标
+
 ## 重新开发自定义主题
 
 如果你要从头开始开发一个自定义主题，你需要了解一下主题的组成。
