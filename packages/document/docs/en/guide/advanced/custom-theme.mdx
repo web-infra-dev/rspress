@@ -119,6 +119,18 @@ export * from 'rspress/theme';
 
 Of course, you may need to use page data during the development process, you can get it through the Hook [`usePageData`](/api/client-api/api-runtime#usepagedata).
 
+### 4. Custom Icon
+
+If you want to modify the icons used in the default theme component individually, just put the icons with the same name in the theme/assets directory.
+
+```bash
+├── theme
+│   └── assets
+│     └── xx.svg
+```
+
+[Look](https://github.com/web-infra-dev/rspress/tree/main/packages/theme-default/src/assets)All icons used in the default theme.
+
 ## Redevelop a custom theme
 
 If you're developing a custom theme from scratch, you need to understand the basic structure of the theme and the runtime API.
