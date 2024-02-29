@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import SearchSvg from './assets/search.svg';
+import SearchSvg from '@theme-assets/search';
 import styles from './index.module.scss';
 import { SearchPanel } from './SearchPanel';
 import { useLocaleSiteData } from '#theme/logic';

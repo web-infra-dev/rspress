@@ -22,6 +22,7 @@ import { detectReactVersion, resolveReactAlias } from './utils';
 import { initRouteService } from './route/init';
 import { PluginDriver } from './PluginDriver';
 import { RouteService } from './route/RouteService';
+import { detectCustomIcon } from './utils/detectCustomIcon';
 
 export interface MdxRsLoaderCallbackContext {
   resourcePath: string;
@@ -38,14 +39,10 @@ async function createInternalBuildConfig(
   pluginDriver: PluginDriver,
 ): Promise<RsbuildConfig> {
   const cwd = process.cwd();
-  const { default: fs } = await import('@rspress/shared/fs-extra');
   const CUSTOM_THEME_DIR =
     config?.themeDir ?? path.join(process.cwd(), 'theme');
   const outDir = config?.outDir ?? OUTPUT_DIR;
   const DEFAULT_THEME = require.resolve('@rspress/theme-default');
-  const themeDir = (await fs.pathExists(CUSTOM_THEME_DIR))
-    ? CUSTOM_THEME_DIR
-    : DEFAULT_THEME;
   const checkDeadLinks = (config?.markdown?.checkDeadLinks && !isSSR) ?? false;
   const base = config?.base ?? '';
 
@@ -123,7 +120,7 @@ async function createInternalBuildConfig(
       },
       alias: {
         '@mdx-js/react': require.resolve('@mdx-js/react'),
-        '@theme': themeDir,
+        '@theme': [CUSTOM_THEME_DIR, DEFAULT_THEME],
         '@/theme-default': DEFAULT_THEME,
         '@rspress/core': PACKAGE_ROOT,
         'react-lazy-with-preload': require.resolve('react-lazy-with-preload'),
@@ -131,6 +128,8 @@ async function createInternalBuildConfig(
           require.resolve('react-syntax-highlighter/package.json'),
         ),
         ...(await resolveReactAlias(reactVersion)),
+        ...(await detectCustomIcon(CUSTOM_THEME_DIR)),
+        '@theme-assets': path.join(DEFAULT_THEME, '../assets'),
       },
       include: [PACKAGE_ROOT, path.join(cwd, 'node_modules', RSPRESS_TEMP_DIR)],
       define: {
@@ -143,6 +142,21 @@ async function createInternalBuildConfig(
     performance: {
       // No need to print the server bundles size
       printFileSize: !isSSR,
+      chunkSplit: {
+        override: {
+          cacheGroups: {
+            // extract all CSS into a single file
+            // ensure CSS in async chunks can be loaded for SSG
+            styles: {
+              name: 'styles',
+              minSize: 0,
+              chunks: 'all',
+              test: /\.(?:css|less|sass|scss)$/,
+              priority: 99,
+            },
+          },
+        },
+      },
     },
     tools: {
       bundlerChain(chain, { CHAIN_ID }) {

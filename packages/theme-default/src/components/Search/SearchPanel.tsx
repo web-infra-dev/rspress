@@ -5,14 +5,14 @@ import { debounce, groupBy } from 'lodash-es';
 import { useEffect, useMemo, useRef, useState } from 'react';
 import { createPortal } from 'react-dom';
 import * as userSearchHooks from 'virtual-search-hooks';
+import CloseSvg from '@theme-assets/close';
+import LoadingSvg from '@theme-assets/loading';
+import SearchSvg from '@theme-assets/search';
 import { useLocaleSiteData } from '../../logic/useLocaleSiteData';
 import { getSidebarGroupData } from '../../logic/useSidebarData';
 import { Tab, Tabs } from '../Tabs';
 import { NoSearchResult } from './NoSearchResult';
 import { SuggestItem } from './SuggestItem';
-import CloseSvg from './assets/close.svg';
-import LoadingSvg from './assets/loading.svg';
-import SearchSvg from './assets/search.svg';
 import styles from './index.module.scss';
 import { PageSearcher } from './logic/search';
 import type {

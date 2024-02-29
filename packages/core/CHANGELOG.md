@@ -1,5 +1,34 @@
 # @rspress/core
 
+## 1.13.0
+
+### Minor Changes
+
+- 7e95dcd: feat: add support for custom theme assets
+
+### Patch Changes
+
+- 74751bd: fix(core): remove global to avoid ambiguity in non-greedy match in flat mdx
+- 51d8ae9: fix: nested mdx imports build failed
+- 90c5586: fix(core): use alias to support custom theme, instead of detect
+- 51d8ae9: fix: location is not defined in ssg
+- Updated dependencies [f426d2f]
+- Updated dependencies [4b8fcd2]
+- Updated dependencies [4ae7bf1]
+- Updated dependencies [7e95dcd]
+- Updated dependencies [facceac]
+- Updated dependencies [51d8ae9]
+- Updated dependencies [51d8ae9]
+- Updated dependencies [2bffb37]
+- Updated dependencies [8fcf385]
+  - @rspress/theme-default@1.13.0
+  - @rspress/plugin-auto-nav-sidebar@1.13.0
+  - @rspress/shared@1.13.0
+  - @rspress/runtime@1.13.0
+  - @rspress/plugin-container-syntax@1.13.0
+  - @rspress/plugin-last-updated@1.13.0
+  - @rspress/plugin-medium-zoom@1.13.0
+
 ## 1.12.3
 
 ### Patch Changes

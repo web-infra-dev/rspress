@@ -28,11 +28,16 @@ const updateAppearance = (): void => {
   if (disableDarkMode) {
     return;
   }
+  updateUserPreferenceFromStorage();
+};
+
+export const updateUserPreferenceFromStorage = () => {
   const userPreference = localStorage.getItem(APPEARANCE_KEY) || 'auto';
   query = window.matchMedia('(prefers-color-scheme: dark)');
-  setClass(
-    userPreference === 'auto' ? query.matches : userPreference === 'dark',
-  );
+  const isDark =
+    userPreference === 'auto' ? query.matches : userPreference === 'dark';
+  setClass(isDark);
+  return isDark;
 };
 
 if (typeof window !== 'undefined' && typeof localStorage !== 'undefined') {
@@ -45,9 +50,6 @@ if (typeof window !== 'undefined' && typeof localStorage !== 'undefined') {
 export const isDarkMode = () => classList?.contains('dark');
 
 export const getToggle = () => {
-  if (typeof window !== 'undefined') {
-    window.addEventListener('storage', updateAppearance);
-  }
   return () => {
     const isDark = isDarkMode();
     if (typeof window !== 'undefined' && typeof localStorage !== 'undefined') {

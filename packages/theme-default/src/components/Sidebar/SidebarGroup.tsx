@@ -5,7 +5,7 @@ import {
   normalizeHrefInRuntime as normalizeHref,
   withBase,
 } from '@rspress/runtime';
-import ArrowRight from '../../assets/arrow-right.svg';
+import ArrowRight from '@theme-assets/arrow-right';
 import { Tag } from '../Tag';
 import styles from './index.module.scss';
 import { SidebarItem } from './SidebarItem';

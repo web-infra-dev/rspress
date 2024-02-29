@@ -5,7 +5,7 @@ import {
   NavItemWithLinkAndChildren,
 } from '@rspress/shared';
 import { useState } from 'react';
-import Down from '../../assets/down.svg';
+import Down from '@theme-assets/down';
 import { Link } from '../Link';
 import styles from './index.module.scss';
 
@@ -59,7 +59,7 @@ export function NavScreenMenuGroup(item: NavScreenMenuGroupItem) {
             {item.text}
           </p>
         )}
-        {(item.items as NavItemWithLink[]).map(renderLinkItem)}
+        {item.items.map(renderLinkItem)}
       </div>
     );
   };

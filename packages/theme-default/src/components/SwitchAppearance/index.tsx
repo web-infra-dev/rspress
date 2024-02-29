@@ -1,17 +1,33 @@
 import { useContext, useEffect } from 'react';
 import { ThemeContext } from '@rspress/runtime';
-import SunSvg from '../../assets/sun.svg';
-import MoonSvg from '../../assets/moon.svg';
-import { getToggle, isDarkMode } from '../../logic/useAppearance';
+import SunSvg from '@theme-assets/sun';
+import MoonSvg from '@theme-assets/moon';
+import {
+  getToggle,
+  isDarkMode,
+  updateUserPreferenceFromStorage,
+} from '../../logic/useAppearance';
 
 export function SwitchAppearance({ onClick }: { onClick?: () => void }) {
   const { theme, setTheme } = useContext(ThemeContext);
   const toggleAppearance = getToggle();
+  const updateAppearanceAndTheme = () => {
+    const isDark = updateUserPreferenceFromStorage();
+    setTheme(isDark ? 'dark' : 'light');
+  };
 
   useEffect(() => {
     if (isDarkMode()) {
       setTheme('dark');
     }
+    if (typeof window !== 'undefined') {
+      window.addEventListener('storage', updateAppearanceAndTheme);
+    }
+    return () => {
+      if (typeof window !== 'undefined') {
+        window.removeEventListener('storage', updateAppearanceAndTheme);
+      }
+    };
   }, []);
 
   return (

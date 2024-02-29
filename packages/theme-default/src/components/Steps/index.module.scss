@@ -1,0 +1,27 @@
+.rspressSteps h3 {
+  counter-increment: step;
+  margin-top: 3px;
+  &:before {
+    content: counter(step);
+    border-radius: 9999px;
+    font-weight: 400;
+    text-align: center;
+    font-size: 1.1rem;
+    margin-left: -41px;
+    position: absolute;
+    width: 30px;
+    height: 30px;
+    color: var(--rp-c-text-1);
+    background-color: var(--rp-code-block-bg);
+    border-width: 1.5px;
+    border-color: var(--rp-c-text-3);
+  }
+}
+
+.rspressSteps {
+  border-color: var(--rp-c-text-3);
+}
+
+.rspressSteps p {
+  color: var(--rp-c-text-1);
+}

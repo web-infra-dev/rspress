@@ -1,6 +1,6 @@
+import Github from '@theme-assets/github';
+import Gitlab from '@theme-assets/gitlab';
 import { useLocaleSiteData } from '../../logic';
-import Github from '../../assets/github.svg';
-import Gitlab from '../../assets/gitlab.svg';
 import styles from './index.module.scss';
 
 interface SourceCodeProps {

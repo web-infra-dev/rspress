@@ -1,6 +1,7 @@
 import {
   ReactElement,
   createContext,
+  useCallback,
   useContext,
   useLayoutEffect,
   useState,
@@ -52,7 +53,7 @@ export function useDark() {
 export function useI18n<T = Record<string, Record<string, string>>>() {
   const lang = useLang();
 
-  return (key: keyof T) => i18nTextData[key][lang];
+  return useCallback((key: keyof T) => i18nTextData[key][lang], [lang]);
 }
 
 declare global {
