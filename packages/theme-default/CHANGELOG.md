@@ -1,5 +1,17 @@
 # @rspress/theme-default
 
+## 1.13.1
+
+### Patch Changes
+
+- baa2236: fix(style): overview links margin not work
+- a233e23: fix(theme-default): adjust sidebar menu z-index
+- 9b02797: fix(theme-default): doc container with full width.
+- ddb169b: perf: pre build svg in theme package
+- 321c4c8: chore: replace omitted svg import statement
+  - @rspress/runtime@1.13.1
+  - @rspress/shared@1.13.1
+
 ## 1.13.0
 
 ### Minor Changes
