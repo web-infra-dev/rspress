@@ -106,7 +106,7 @@
     :global(.rspress-doc-footer) {
       padding: 0 48px;
       box-sizing: border-box;
-      width: calc(100vw - var(--rp-aside-width) - var(--rp-sidebar-width));
+      width: 100%;
     }
   }
 }
