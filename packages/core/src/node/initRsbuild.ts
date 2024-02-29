@@ -122,7 +122,7 @@ async function createInternalBuildConfig(
         '@theme': [CUSTOM_THEME_DIR, DEFAULT_THEME],
         '@theme-assets': [
           path.join(CUSTOM_THEME_DIR, 'assets'),
-          path.join(DEFAULT_THEME, '../../src/assets'),
+          path.join(DEFAULT_THEME, '../assets'),
         ],
         '@/theme-default': DEFAULT_THEME,
         '@rspress/core': PACKAGE_ROOT,
@@ -185,6 +185,8 @@ async function createInternalBuildConfig(
         }
 
         chain.resolve.extensions.prepend('.md').prepend('.mdx').prepend('.mjs');
+        // support custom svg, and add it in the last
+        chain.resolve.extensions.add('.svg');
       },
     },
   };

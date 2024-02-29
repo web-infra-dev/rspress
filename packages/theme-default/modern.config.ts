@@ -86,5 +86,17 @@ export default defineConfig({
       dts: {},
       externals: ['tailwindcss'],
     },
+    // pre-built svg files
+    {
+      input: ['src/assets'],
+      outDir: 'dist/assets',
+      asset: {
+        svgr: true,
+        name: '[name].[ext]',
+      },
+      dts: false,
+      format: 'esm',
+      target: 'es2020',
+    },
   ],
 });

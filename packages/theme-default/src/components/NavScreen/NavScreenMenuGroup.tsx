@@ -5,7 +5,7 @@ import {
   NavItemWithLinkAndChildren,
 } from '@rspress/shared';
 import { useState } from 'react';
-import Down from '@theme-assets/down.svg';
+import Down from '@theme-assets/down';
 import { Link } from '../Link';
 import styles from './index.module.scss';
 

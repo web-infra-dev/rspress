@@ -1,8 +1,8 @@
 import { isProduction } from '@rspress/runtime';
-import FileSvg from '@theme-assets/file.svg';
-import JumpSvg from '@theme-assets/jump.svg';
-import HeaderSvg from '@theme-assets/header.svg';
-import TitleSvg from '@theme-assets/title.svg';
+import FileSvg from '@theme-assets/file';
+import JumpSvg from '@theme-assets/jump';
+import HeaderSvg from '@theme-assets/header';
+import TitleSvg from '@theme-assets/title';
 import { getSlicedStrByByteLength, removeDomain } from './logic/util';
 import styles from './index.module.scss';
 import { DefaultMatchResultItem, HightlightInfo } from './logic/types';

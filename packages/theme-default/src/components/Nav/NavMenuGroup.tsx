@@ -6,7 +6,7 @@ import {
   NavItemWithLinkAndChildren,
   withoutBase,
 } from '@rspress/shared';
-import Down from '@theme-assets/down.svg';
+import Down from '@theme-assets/down';
 import { Link } from '../Link';
 import { Tag } from '../Tag';
 import { NavMenuSingleItem } from './NavMenuSingleItem';
