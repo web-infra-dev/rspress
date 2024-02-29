@@ -1,5 +1,5 @@
-import Github from '@theme-assets/github.svg';
-import Gitlab from '@theme-assets/gitlab.svg';
+import Github from '@theme-assets/github';
+import Gitlab from '@theme-assets/gitlab';
 import { useLocaleSiteData } from '../../logic';
 import styles from './index.module.scss';
 
