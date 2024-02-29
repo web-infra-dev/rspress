@@ -1,5 +1,13 @@
 # @rspress/runtime
 
+## 1.13.0
+
+### Patch Changes
+
+- 4ae7bf1: fix: memoize the callback in `useI18n` hook
+- Updated dependencies [4b8fcd2]
+  - @rspress/shared@1.13.0
+
 ## 1.12.3
 
 ### Patch Changes

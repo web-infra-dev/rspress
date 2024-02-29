@@ -1,5 +1,12 @@
 # @rspress/docs
 
+## 1.13.0
+
+### Patch Changes
+
+- f426d2f: feat(internal-components): New Steps Component!
+  patch(docs): Add documentation for Steps Component!
+
 ## 1.12.3
 
 ## 1.12.2
