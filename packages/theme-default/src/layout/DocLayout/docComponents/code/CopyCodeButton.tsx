@@ -1,7 +1,7 @@
 import { useRef, type MutableRefObject } from 'react';
 import copy from 'copy-to-clipboard';
-import IconCopy from '../../../../assets/copy.svg';
-import IconSuccess from '../../../../assets/success.svg';
+import IconCopy from '@theme-assets/copy';
+import IconSuccess from '@theme-assets/success';
 import styles from './index.module.scss';
 
 const timeoutIdMap: Map<HTMLElement, NodeJS.Timeout> = new Map();

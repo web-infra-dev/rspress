@@ -1,7 +1,7 @@
 import { useRef, useState } from 'react';
 import { usePageData } from '@rspress/runtime';
-import IconWrap from '../../../../assets/wrap.svg';
-import IconWrapped from '../../../../assets/wrapped.svg';
+import IconWrap from '@theme-assets/wrap';
+import IconWrapped from '@theme-assets/wrapped';
 import styles from './index.module.scss';
 import { PrismSyntaxHighlighter } from './PrismSytaxHighlighter';
 import { CopyCodeButton } from './CopyCodeButton';
