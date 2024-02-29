@@ -143,6 +143,21 @@ async function createInternalBuildConfig(
     performance: {
       // No need to print the server bundles size
       printFileSize: !isSSR,
+      chunkSplit: {
+        override: {
+          cacheGroups: {
+            // extract all CSS into a single file
+            // ensure CSS in async chunks can be loaded for SSG
+            styles: {
+              name: 'styles',
+              minSize: 0,
+              chunks: 'all',
+              test: /\.(?:css|less|sass|scss)$/,
+              priority: 99,
+            },
+          },
+        },
+      },
     },
     tools: {
       bundlerChain(chain, { CHAIN_ID }) {
