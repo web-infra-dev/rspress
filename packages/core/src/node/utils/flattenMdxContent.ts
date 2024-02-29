@@ -124,7 +124,7 @@ export async function flattenMdxContent(
 
       result = result
         .replace(
-          new RegExp(`import\\s+${id}\\s+from\\s+['"](${importPath})['"]`),
+          new RegExp(`import\\s+${id}\\s+from\\s+['"](${importPath})['"];?`),
           '',
         )
         .replace(new RegExp(`<${id}\\s*/>`), () => replacedValue);
