@@ -199,8 +199,6 @@ async function createInternalBuildConfig(
         }
 
         chain.resolve.extensions.prepend('.md').prepend('.mdx').prepend('.mjs');
-        // support custom svg, and add it in the last
-        chain.resolve.extensions.add('.svg');
       },
     },
   };
