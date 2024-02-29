@@ -1,5 +1,14 @@
 # @rspress/plugin-auto-sidebar
 
+## 1.13.0
+
+### Patch Changes
+
+- 4b8fcd2: fix: support external link in nav
+- 51d8ae9: fix: avoid error in auto nav sidebar plugin
+- Updated dependencies [4b8fcd2]
+  - @rspress/shared@1.13.0
+
 ## 1.12.3
 
 ### Patch Changes

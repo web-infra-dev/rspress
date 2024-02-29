@@ -1,5 +1,24 @@
 # @rspress/theme-default
 
+## 1.13.0
+
+### Minor Changes
+
+- f426d2f: feat(internal-components): New Steps Component!
+  patch(docs): Add documentation for Steps Component!
+- 7e95dcd: feat: add support for custom theme assets
+
+### Patch Changes
+
+- facceac: fix: respect search flag on mobile devices
+- 51d8ae9: fix: location is not defined in ssg
+- 2bffb37: fix: update theme when change storage
+- 8fcf385: fix: add explicit height to social link icons, which is needed on Safari
+- Updated dependencies [4b8fcd2]
+- Updated dependencies [4ae7bf1]
+  - @rspress/shared@1.13.0
+  - @rspress/runtime@1.13.0
+
 ## 1.12.3
 
 ### Patch Changes

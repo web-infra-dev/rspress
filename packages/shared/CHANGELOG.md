@@ -1,5 +1,11 @@
 # @rspress/shared
 
+## 1.13.0
+
+### Patch Changes
+
+- 4b8fcd2: fix: support external link in nav
+
 ## 1.12.3
 
 ## 1.12.2
