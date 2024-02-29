@@ -1,5 +1,24 @@
 # @rspress/core
 
+## 1.13.1
+
+### Patch Changes
+
+- 294eeeb: fix: add semicon judgement in flattenMdxContent
+- 75dff6b: feat: extract all CSS into a single file
+- Updated dependencies [baa2236]
+- Updated dependencies [a233e23]
+- Updated dependencies [9b02797]
+- Updated dependencies [ddb169b]
+- Updated dependencies [321c4c8]
+  - @rspress/theme-default@1.13.1
+  - @rspress/plugin-auto-nav-sidebar@1.13.1
+  - @rspress/plugin-container-syntax@1.13.1
+  - @rspress/plugin-last-updated@1.13.1
+  - @rspress/plugin-medium-zoom@1.13.1
+  - @rspress/runtime@1.13.1
+  - @rspress/shared@1.13.1
+
 ## 1.13.0
 
 ### Minor Changes
