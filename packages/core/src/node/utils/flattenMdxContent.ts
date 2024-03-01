@@ -127,7 +127,7 @@ export async function flattenMdxContent(
           new RegExp(`import\\s+${id}\\s+from\\s+['"](${importPath})['"];?`),
           '',
         )
-        .replace(new RegExp(`<${id}\\s*/>`), () => replacedValue);
+        .replace(new RegExp(`<${id}\\s*/>`, 'g'), () => replacedValue);
     }
   }
 
