@@ -104,9 +104,11 @@
     padding: 48px 0 72px 0;
     :global(.rspress-doc),
     :global(.rspress-doc-footer) {
-      padding: 0 24px;
+      padding: 0 48px;
       box-sizing: border-box;
       width: calc(100vw - var(--rp-sidebar-width) - var(--rp-aside-width));
+      max-width: calc(960px + 48px * 2);
+      margin: auto;
     }
   }
 }
