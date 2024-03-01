@@ -106,7 +106,7 @@
     :global(.rspress-doc-footer) {
       padding: 0 48px;
       box-sizing: border-box;
-      width: 100%;
+      width: calc(100vw - var(--rp-sidebar-width) - var(--rp-aside-width));
     }
   }
 }
@@ -120,16 +120,9 @@
   .content {
     :global(.rspress-doc),
     :global(.rspress-doc-footer) {
-      box-sizing: content-box;
+      box-sizing: border-box;
       width: calc(100vw - var(--rp-sidebar-width) - var(--rp-aside-width));
-      padding: 0
-        max(
-          48px,
-          calc(
-            (100vw - var(--rp-sidebar-width) - var(--rp-aside-width) - 960px) /
-              2
-          )
-        );
+      padding: 0 48px;
       max-width: 960px;
       margin: auto;
     }
