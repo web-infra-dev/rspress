@@ -1,5 +1,13 @@
 # @rspress/theme-default
 
+## 1.13.2
+
+### Patch Changes
+
+- b13bcc4: fix(theme-default): make outline have a well width again
+  - @rspress/runtime@1.13.2
+  - @rspress/shared@1.13.2
+
 ## 1.13.1
 
 ### Patch Changes

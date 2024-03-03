@@ -1,5 +1,19 @@
 # @rspress/core
 
+## 1.13.2
+
+### Patch Changes
+
+- f07b64f: fix(core): replace all import info in mdx
+- Updated dependencies [b13bcc4]
+  - @rspress/theme-default@1.13.2
+  - @rspress/plugin-auto-nav-sidebar@1.13.2
+  - @rspress/plugin-container-syntax@1.13.2
+  - @rspress/plugin-last-updated@1.13.2
+  - @rspress/plugin-medium-zoom@1.13.2
+  - @rspress/runtime@1.13.2
+  - @rspress/shared@1.13.2
+
 ## 1.13.1
 
 ### Patch Changes
