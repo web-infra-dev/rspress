@@ -1,5 +1,5 @@
 import { useLang } from '@rspress/runtime';
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { MatchResult } from '..';
 import { PageSearcher } from '../components/Search/logic/search';
 import { getSidebarGroupData } from './useSidebarData';
@@ -14,25 +14,26 @@ export function useFullTextSearch(): {
   const { sidebar } = useLocaleSiteData();
   const extractGroupName = (link: string) =>
     getSidebarGroupData(sidebar, link).group;
-
-  const searcher = new PageSearcher({
-    mode: 'local',
-    currentLang: lang,
-    extractGroupName,
-  });
+  const searchRef = useRef<PageSearcher | null>(null);
 
   useEffect(() => {
     async function init() {
       if (!initialized) {
+        const searcher = new PageSearcher({
+          mode: 'local',
+          currentLang: lang,
+          extractGroupName,
+        });
+        searchRef.current = searcher;
         await searcher.init();
         setInitialized(true);
       }
     }
     init();
-  });
+  }, []);
 
   return {
     initialized,
-    search: searcher.match.bind(searcher),
+    search: searchRef.current?.match.bind(searchRef.current),
   };
 }
