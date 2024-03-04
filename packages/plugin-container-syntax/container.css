@@ -14,7 +14,7 @@
 
   --rp-container-danger-border: rgba(237, 60, 80, 0.5);
   --rp-container-danger-text: #ab2131;
-  --rp-container-danger-bg: rgba(237, 60, 80, 0.02);
+  --rp-container-danger-bg: rgba(237, 60, 80, 0.1);
   --rp-container-danger-code-bg: rgba(237, 60, 80, 0.1);
 
   --rp-container-details-border: rgba(128, 128, 128, 0.3);
