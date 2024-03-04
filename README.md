@@ -41,7 +41,7 @@ If you have any questions, you can open an issue or go to [Discord](https://disc
             srcset="https://next.ossinsight.io/widgets/official/compose-org-active-contributors/thumbnail.png?activity=active&period=past_28_days&owner_id=87694465&repo_ids=659104635&image_size=2x3&color_scheme=dark"
           />
           <img
-            alt="Contributors of web-infra-dev/rsbuild"
+            alt="Contributors of web-infra-dev/rspress"
             src="https://next.ossinsight.io/widgets/official/compose-org-active-contributors/thumbnail.png?activity=active&period=past_28_days&owner_id=87694465&repo_ids=659104635&image_size=2x3&color_scheme=light"
           />
         </picture>
@@ -61,7 +61,7 @@ If you have any questions, you can open an issue or go to [Discord](https://disc
             srcset="https://next.ossinsight.io/widgets/official/compose-org-active-contributors/thumbnail.png?activity=new&period=past_28_days&owner_id=87694465&repo_ids=659104635&image_size=2x3&color_scheme=dark"
           />
           <img
-            alt="Contributors of web-infra-dev/rsbuild"
+            alt="Contributors of web-infra-dev/rspress"
             src="https://next.ossinsight.io/widgets/official/compose-org-active-contributors/thumbnail.png?activity=new&period=past_28_days&owner_id=87694465&repo_ids=659104635&image_size=2x3&color_scheme=light"
           />
         </picture>
