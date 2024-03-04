@@ -228,10 +228,9 @@ interface SourceCodeProps {
   // 用于设置源代码的链接
   href: string;
   // 用于设置源平台
-  platform?: 'github' | 'gitlab'
+  platform?: 'github' | 'gitlab';
 }
 ```
-
 
 ## Steps
 
@@ -262,9 +261,41 @@ import { Steps } from '@theme';
 <Steps>
   ### 第 1 步
 
-  步骤 1 的正文
+步骤 1 的正文
 
-  ### 第 2 步
+### 第 2 步
 
-  > 步骤 2 的正文
+> 步骤 2 的正文
+
 </Steps>
+
+## Badge
+
+Badge 组件用于展示状态的标记。使用方法如下：
+
+```tsx title="index.mdx"
+import { Badge } from '@theme';
+
+function App() {
+  return <Badge text="info" type="info" />;
+}
+```
+
+效果如下：
+
+import { Badge } from '@theme';
+
+<Badge text="info" type="info" />
+<Badge text="warning" type="warning" />
+<Badge text="danger" type="danger" />
+
+其中包含的 props 类型如下：
+
+```ts
+interface BadgeProps {
+  // 用于设置 badge 的文本
+  text: string;
+  // 用于设置 badge 的类型
+  type: 'info' | 'warning' | 'danger';
+}
+```

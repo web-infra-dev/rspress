@@ -10,6 +10,7 @@ export { Nav } from './components/Nav';
 export { Search, SearchPanel } from './components/Search';
 export { Tab, Tabs } from './components/Tabs';
 export { Button } from './components/Button';
+export { Badge } from './components/Badge';
 export { Link } from './components/Link';
 export { HomeFooter } from './components/HomeFooter';
 export { Toc } from './components/Toc';
