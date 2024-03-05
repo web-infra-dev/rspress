@@ -97,6 +97,7 @@ export function pluginPreview(options?: Options): RspressPlugin {
             printFileSize: false,
           },
           source: {
+            alias: config?.builderConfig?.source?.alias,
             entry: sourceEntry,
           },
           output: {
