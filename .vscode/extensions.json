@@ -1,19 +1,3 @@
 {
-  "recommendations": [
-    "styled-components.vscode-styled-components",
-    "cpylua.language-postcss",
-    "EditorConfig.editorconfig",
-    "dbaeumer.vscode-eslint",
-    "esbenp.prettier-vscode",
-    "biomejs.biome",
-    "drKnoxy.eslint-disable-snippets",
-    "mkaufman.htmlhint",
-    "streetsidesoftware.code-spell-checker",
-    "codezombiech.gitignore",
-    "aaron-bond.better-comments",
-    "jasonnutter.search-node-modules",
-    "jock.svg",
-    "mikestead.dotenv",
-    "vscode-icons-team.vscode-icons"
-  ]
+  "recommendations": ["biomejs.biome", "esbenp.prettier-vscode"]
 }
