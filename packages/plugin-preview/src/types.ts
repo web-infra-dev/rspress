@@ -1,4 +1,5 @@
 import { type RouteMeta } from '@rspress/shared';
+import { RsbuildConfig} from '@rsbuild/core'
 
 export type Options = {
   /**
@@ -45,6 +46,7 @@ export type IframeOptions = {
    * @default 7890
    */
   devPort?: number;
+  builderConfig?: RsbuildConfig;
 };
 
 export type RemarkPluginOptions = Required<
