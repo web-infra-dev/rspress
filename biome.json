@@ -10,15 +10,29 @@
       "arrowParentheses": "asNeeded"
     }
   },
+  "files": {
+    "include": [
+      "packages/**/*.ts",
+      "packages/**/*.tsx",
+      "packages/**/*.js",
+      "packages/**/*.jsx"
+    ],
+    "ignore": [
+      "*.d.ts",
+      "dist/**/*",
+      "dist-*/**/*",
+      "doc_build/**/*",
+      "compiled/**/*",
+      "node_modules/**/*",
+      "create-rspress/template/rspress.config.ts"
+    ],
+    "ignoreUnknown": true
+  },
   "formatter": {
-    "include": ["packages/**/*.ts"],
-    "ignore": ["*.d.ts"],
     "indentStyle": "space"
   },
   "linter": {
     "enabled": true,
-    "include": ["packages/**/*.ts"],
-    "ignore": ["*.d.ts", "create-rspress/template/rspress.config.ts"],
     "rules": {
       "recommended": true,
       "style": {
@@ -57,9 +71,11 @@
         "noAccumulatingSpread": "off"
       },
       "a11y": {
+        "useAltText": "off",
         "noAutofocus": "off",
         "noBlankTarget": "off",
         "useButtonType": "off",
+        "useIframeTitle": "off",
         "useValidAnchor": "off",
         "noSvgWithoutTitle": "off",
         "useHeadingContent": "off",
