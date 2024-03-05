@@ -20,6 +20,7 @@ node_modules/
 .node_repl_history
 .nyc_output
 *.tsbuildinfo
+.eslintcache
 .sonarlint
 
 dist/
