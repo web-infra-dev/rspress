@@ -2,12 +2,6 @@
   "files.associations": {
     ".code-workspace": "jsonc",
     ".babelrc": "json",
-    ".eslintrc": "jsonc",
-    ".eslintrc*.json": "jsonc",
-    ".stylelintrc": "jsonc",
-    "stylelintrc": "jsonc",
-    ".htmlhintrc": "jsonc",
-    "htmlhintrc": "jsonc",
     "Procfile*": "shellscript",
     "README": "markdown"
   },
@@ -27,17 +21,6 @@
   "files.insertFinalNewline": true,
   //
   "cSpell.diagnosticLevel": "Hint",
-  "eslint.alwaysShowStatus": true,
-  "eslint.run": "onType",
-  "eslint.probe": [
-    "javascript",
-    "javascriptreact",
-    "typescript",
-    "typescriptreact",
-    "vue"
-  ],
-  "eslint.format.enable": true,
-  "eslint.lintTask.enable": true,
   "javascript.validate.enable": false,
   "typescript.validate.enable": true,
   "css.validate": false,
@@ -75,9 +58,6 @@
     "editor.formatOnPaste": true,
     "editor.formatOnSave": true,
     "editor.defaultFormatter": "esbenp.prettier-vscode"
-  },
-  "editor.codeActionsOnSave": {
-    "source.fixAll.eslint": "explicit"
   },
   "editor.defaultFormatter": "biomejs.biome",
   "javascript.format.enable": false,

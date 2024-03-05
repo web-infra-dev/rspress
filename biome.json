@@ -1,5 +1,8 @@
 {
-  "$schema": "https://biomejs.dev/schemas/1.5.2/schema.json",
+  "$schema": "https://biomejs.dev/schemas/1.5.3/schema.json",
+  "organizeImports": {
+    "enabled": true
+  },
   "javascript": {
     "formatter": {
       "quoteStyle": "single",
@@ -11,5 +14,57 @@
     "include": ["packages/**/*.ts"],
     "ignore": ["*.d.ts"],
     "indentStyle": "space"
+  },
+  "linter": {
+    "enabled": true,
+    "include": ["packages/**/*.ts"],
+    "ignore": ["*.d.ts", "create-rspress/template/rspress.config.ts"],
+    "rules": {
+      "recommended": true,
+      "style": {
+        "useConst": "off",
+        "noUselessElse": "off",
+        "noParameterAssign": "off",
+        "noInferrableTypes": "off",
+        "noNonNullAssertion": "off",
+        "useSelfClosingElements": "off",
+        "useDefaultParameterLast": "off",
+        "noUnusedTemplateLiteral": "off"
+      },
+      "security": {
+        "noDangerouslySetInnerHtml": "off"
+      },
+      "suspicious": {
+        "noConstEnum": "off",
+        "noExplicitAny": "off",
+        "noArrayIndexKey": "off",
+        "noImplicitAnyLet": "off",
+        "noConfusingVoidType": "off",
+        "noAssignInExpressions": "off"
+      },
+      "correctness": {
+        "noUnnecessaryContinue": "off",
+        "useExhaustiveDependencies": "off"
+      },
+      "complexity": {
+        "noForEach": "off",
+        "useFlatMap": "off",
+        "useArrowFunction": "off",
+        "noUselessSwitchCase": "off"
+      },
+      "performance": {
+        "noDelete": "off",
+        "noAccumulatingSpread": "off"
+      },
+      "a11y": {
+        "noAutofocus": "off",
+        "noBlankTarget": "off",
+        "useButtonType": "off",
+        "useValidAnchor": "off",
+        "noSvgWithoutTitle": "off",
+        "useHeadingContent": "off",
+        "useKeyWithClickEvents": "off"
+      }
+    }
   }
 }

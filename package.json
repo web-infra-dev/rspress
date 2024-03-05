@@ -17,7 +17,7 @@
     "gen-release-note": "modern gen-release-note",
     "release": "modern release",
     "deploy": "modern deploy",
-    "lint": "modern lint",
+    "lint": "biome lint . --diagnostic-level=warn",
     "upgrade": "modern upgrade",
     "dev:website": "cross-env NX_DAEMON=false NX_REJECT_UNKNOWN_LOCAL_CACHE=0 nx run @rspress/docs:dev",
     "build:website": "cross-env NX_DAEMON=false NX_REJECT_UNKNOWN_LOCAL_CACHE=0 nx run @rspress/docs:build",
@@ -30,18 +30,10 @@
   },
   "packageManager": "pnpm@8.6.1",
   "lint-staged": {
-    "*.{ts,tsx}": [
-      "node --max_old_space_size=8192 ./node_modules/eslint/bin/eslint.js --fix --color --cache --quiet"
-    ],
-    "*.{js,jsx,mjs,mjsx,cjs,cjsx}": [
-      "node --max_old_space_size=8192 ./node_modules/eslint/bin/eslint.js --fix --color --cache --quiet"
+    "*.{ts,tsx,js,jsx,mjs,cjs}": [
+      "biome lint . --diagnostic-level=warn"
     ]
   },
-  "eslintIgnore": [
-    "node_modules/",
-    "dist/",
-    ".rpt2_cache/"
-  ],
   "workspaces": {
     "packages": [
       "apps/*",
@@ -51,9 +43,8 @@
     ]
   },
   "devDependencies": {
+    "@biomejs/biome": "1.5.3",
     "@manypkg/get-packages": "^2.2.0",
-    "@modern-js-app/eslint-config": "2.48.0",
-    "@modern-js/eslint-config": "2.48.0",
     "@modern-js/generator-utils": "3.3.11",
     "@modern-js/module-tools": "2.48.0",
     "@modern-js/monorepo-tools": "2.48.0",
@@ -69,7 +60,6 @@
     "husky": "^8.0.0",
     "lint-staged": "~13.1.0",
     "playwright": "1.33.0",
-    "@biomejs/biome": "1.5.2",
     "tree-kill": "^1.2.2",
     "ts-node": "^10.9.1",
     "vitest": "0.34.1",

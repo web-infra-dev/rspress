@@ -43,10 +43,6 @@
   "engines": {
     "node": ">=14.17.6"
   },
-  "eslintIgnore": [
-    "node_modules/",
-    "dist/"
-  ],
   "dependencies": {
     "@mdx-js/react": "2.2.1",
     "@rspress/runtime": "workspace:*",
@@ -85,9 +81,6 @@
     "@types/react-dom": "^18",
     "@types/react-syntax-highlighter": "^15.5.9",
     "gray-matter": "4.0.3",
-    "husky": "^8",
-    "lint-staged": "~13.1.0",
-    "@biomejs/biome": "1.5.2",
     "typescript": "^5",
     "vite": "^4.0.5",
     "vitest": "0.33.0",

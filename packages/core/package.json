@@ -47,10 +47,6 @@
   "engines": {
     "node": ">=14.17.6"
   },
-  "eslintIgnore": [
-    "node_modules/",
-    "dist/"
-  ],
   "dependencies": {
     "@loadable/component": "5.15.2",
     "@mdx-js/loader": "2.2.1",
@@ -121,9 +117,6 @@
     "@types/react": "^18",
     "@types/react-dom": "^18",
     "@types/yaml-front-matter": "^4.1.0",
-    "husky": "^8",
-    "lint-staged": "~13.1.0",
-    "@biomejs/biome": "1.5.2",
     "rimraf": "^3.0.2",
     "typescript": "^5",
     "vite": "^4.0.5",
