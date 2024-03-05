@@ -24,7 +24,8 @@
       "doc_build/**/*",
       "compiled/**/*",
       "node_modules/**/*",
-      "create-rspress/template/rspress.config.ts"
+      "create-rspress/template/rspress.config.ts",
+      ".history/**/*"
     ],
     "ignoreUnknown": true
   },
