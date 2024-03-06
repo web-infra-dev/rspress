@@ -160,7 +160,7 @@ export type Image = string | { src: string; alt?: string };
 
 // sidebar -------------------------------------------------------------------
 export interface Sidebar {
-  [path: string]: (SidebarGroup | SidebarItem | SidebarDivider)[];
+  [path: string]: (SidebarGroup | SidebarItem | SidebarDivider | SidebarSectionHeader)[];
 }
 
 export interface SidebarGroup {
@@ -187,6 +187,11 @@ export type SidebarItem = {
 };
 
 export type SidebarDivider = { dividerType: 'dashed' | 'solid' };
+
+export type SidebarSectionHeader = {
+  sectionHeaderText: string;
+  tag?: string;
+};
 
 // edit link -----------------------------------------------------------------
 

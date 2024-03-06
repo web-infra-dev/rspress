@@ -136,11 +136,13 @@ export default async function mdxLoader(
       });
 
       compileResult = String(vFile);
+      const compilationMeta = compiler.data('pageMeta') as {
+        toc: Header[];
+        title: string;
+      };
       pageMeta = {
-        ...(compiler.data('pageMeta') as {
-          toc: Header[];
-          title: string;
-        }),
+        toc: compilationMeta.toc,
+        title: frontmatter.title || compilationMeta.title || '',
         frontmatter,
       } as PageMeta;
     } else {
@@ -157,7 +159,7 @@ export default async function mdxLoader(
       compileResult = code;
       pageMeta = {
         toc,
-        title,
+        title: frontmatter.title || title || '',
         frontmatter,
       };
       // We should check dead links in mdx-rs mode
