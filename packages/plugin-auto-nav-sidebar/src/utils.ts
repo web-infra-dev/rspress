@@ -38,12 +38,8 @@ export async function extractH1Title(
   const fileNameWithoutExt = path.basename(realPath, path.extname(realPath));
   const h1RegExp = /^#\s+(.*)$/m;
   const match = content.match(h1RegExp);
-  if (!match) {
-    const { frontmatter } = loadFrontMatter(content, filePath, rootDir);
-    return frontmatter.title || fileNameWithoutExt;
-  } else {
-    return match[1] || fileNameWithoutExt;
-  }
+  const { frontmatter } = loadFrontMatter(content, filePath, rootDir);
+  return frontmatter.title || match?.[1] || fileNameWithoutExt;
 }
 
 export function combineWalkResult(
