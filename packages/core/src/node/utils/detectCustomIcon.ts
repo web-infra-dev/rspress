@@ -3,9 +3,10 @@ import path from 'path';
 
 export const detectCustomIcon = async (customThemeDir: string) => {
   const assetsDir = path.join(customThemeDir, 'assets');
+  const alias: Record<string, string> = {};
 
   if (!existsSync(assetsDir)) {
-    return;
+    return alias;
   }
 
   const globby = (
@@ -18,7 +19,6 @@ export const detectCustomIcon = async (customThemeDir: string) => {
   const files = await globby('*.svg', {
     cwd: assetsDir,
   });
-  const alias: Record<string, string> = {};
   files.forEach(file => {
     const name = path.basename(file, '.svg');
     alias[`@theme-assets/${name}`] = path.join(assetsDir, file);
