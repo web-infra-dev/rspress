@@ -9,7 +9,7 @@ export function Badge(props: BadgeProps) {
   const { text, type = 'info' } = props;
   return (
     <span
-      className={`inline-block rounded-full font-medium ${styles.badge} ${styles[type]}`}
+      className={`inline-block rounded-full border border-solid border-transparent font-medium ${styles.badge} ${styles[type]}`}
     >
       {text}
     </span>
