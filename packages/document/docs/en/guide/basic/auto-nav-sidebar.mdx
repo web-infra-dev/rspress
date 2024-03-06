@@ -169,6 +169,44 @@ In this way, when you click on the `Advanced` directory, the content of the `adv
 
 :::
 
+In the case of describing **section header**, the type is as follows:
+
+```ts
+{
+  type: 'section-header';
+  label: string;
+}
+```
+
+Here, `label` represents the display name of this section header in the sidebar, for example:
+
+```json
+{
+  "type": "section-header",
+  "label": "Section Header"
+}
+```
+
+This way, you can add section headers to the sidebar, which makes it easier to group documents and directories. Generally, you can use it in conjunction with `divider` to better distinguish different groups. For example:
+
+```json
+[
+  {
+    "type": "section-header",
+    "label": "Section 1"
+  },
+  "introduction",
+  {
+    "type": "divider"
+  },
+  {
+    "type": "section-header",
+    "label": "Section 2"
+  },
+  "advanced"
+]
+```
+
 In the case of describing **custom link**, the types are as follows:
 
 ```ts

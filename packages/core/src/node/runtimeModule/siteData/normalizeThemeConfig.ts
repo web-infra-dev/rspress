@@ -15,6 +15,7 @@ import {
   Sidebar,
   SidebarDivider,
   slash,
+  SidebarSectionHeader,
 } from '@rspress/shared';
 import { applyReplaceRules } from '../../utils/applyReplaceRules';
 import { getI18nData } from '../i18n';
@@ -70,8 +71,13 @@ export function normalizeThemeConfig(
       return {};
     }
     const normalizeSidebarItem = (
-      item: SidebarGroup | SidebarItem | SidebarDivider | string,
-    ): NormalizedSidebarGroup | SidebarItem | SidebarDivider => {
+      item: SidebarGroup | SidebarItem | SidebarDivider | SidebarSectionHeader | string,
+    ): NormalizedSidebarGroup | SidebarItem | SidebarDivider | SidebarSectionHeader => {
+      // Meet the divider or section header, return directly
+      if (typeof item === 'object' && ('dividerType' in item || 'sectionHeaderText' in item)) {
+        return item;
+      }
+
       if (typeof item === 'object' && 'items' in item) {
         return {
           ...item,
@@ -84,14 +90,11 @@ export function normalizeThemeConfig(
           collapsible: item.collapsible ?? true,
           tag: item.tag,
           items: item.items.map(subItem => {
-            return normalizeSidebarItem(subItem);
+            return normalizeSidebarItem(subItem) as NormalizedSidebarGroup | SidebarItem;
           }),
         };
       }
 
-      if (typeof item === 'object' && 'dividerType' in item) {
-        return item;
-      }
 
       if (typeof item === 'string') {
         const normalizedItem = normalizeLinkPrefix(item, currentLang);
@@ -119,7 +122,7 @@ export function normalizeThemeConfig(
     const normalizeSidebar = (sidebar: Sidebar) => {
       Object.keys(sidebar).forEach(key => {
         const value = sidebar[key];
-        normalizedSidebar[key] = value.map(normalizeSidebarItem);
+        normalizedSidebar[key] = value.map(normalizeSidebarItem) as (NormalizedSidebarGroup | SidebarItem)[];
       });
     };
 

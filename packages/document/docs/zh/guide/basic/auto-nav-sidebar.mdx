@@ -70,6 +70,7 @@ export type SideMetaItem =
       type: 'file';
       name: string;
       label?: string;
+      tag?: string;
     }
   | {
       type: 'dir';
@@ -77,10 +78,16 @@ export type SideMetaItem =
       label?: string;
       collapsible?: boolean;
       collapsed?: boolean;
+      tag?: string;
     }
   | {
       type: 'divider';
       dashed?: boolean;
+    }
+  | {
+      type: 'section-header';
+      label: string;
+      tag?: string;
     };
 ```
 
@@ -168,6 +175,44 @@ docs
 这样，当你点击 `Advanced` 目录时，会显示 `advanced.mdx` 文件的内容。
 
 :::
+
+在描述**分组标题**的情况下，类型如下:
+
+```ts
+{
+  type: 'section-header';
+  label: string;
+}
+```
+
+其中，`label` 表示该分组标题在侧边栏中的显示名称，比如:
+
+```json
+{
+  "type": "section-header",
+  "label": "Section Header"
+}
+```
+
+这样，你可以在侧边栏中添加分组标题，方便对文档和目录进行分组。一般情况下，你可以配合 `divider` 使用，来更好的区分不同的分组。比如:
+
+```json
+[
+  {
+    "type": "section-header",
+    "label": "Section 1"
+  },
+  "introduction",
+  {
+    "type": "divider"
+  },
+  {
+    "type": "section-header",
+    "label": "Section 2"
+  },
+  "advanced"
+]
+```
 
 在描述**自定义链接**的情况下，类型如下:
 

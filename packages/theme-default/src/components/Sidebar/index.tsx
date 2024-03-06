@@ -3,6 +3,7 @@ import {
   NormalizedSidebarGroup,
   SidebarItem as ISidebarItem,
   SidebarDivider as ISidebarDivider,
+  SidebarSectionHeader as ISidebarSectionHeader,
   normalizeSlash,
 } from '@rspress/shared';
 import { routes } from 'virtual-routes';
@@ -13,6 +14,15 @@ import styles from './index.module.scss';
 import { SidebarItem } from './SidebarItem';
 import { SidebarDivider } from './SidebarDivider';
 import { UISwitchResult } from '#theme/logic/useUISwitch';
+import { SidebarSectionHeader } from './SidebarSectionHeader';
+
+const isSidebarDivider = (item: NormalizedSidebarGroup | ISidebarItem | ISidebarDivider | ISidebarSectionHeader): item is ISidebarDivider => {
+  return 'dividerType' in item;
+}
+
+const isSidebarSectionHeader = (item: NormalizedSidebarGroup | ISidebarItem | ISidebarDivider | ISidebarSectionHeader): item is ISidebarSectionHeader => {
+  return 'sectionHeaderText' in item;
+}
 
 export interface SidebarItemProps {
   id: string;
@@ -121,6 +131,40 @@ export function SideBar(props: Props) {
       route.preload();
     }
   };
+  const renderItem = (item: NormalizedSidebarGroup | ISidebarItem | ISidebarDivider | ISidebarSectionHeader, index: number) => {
+    if (isSidebarDivider(item)) {
+      return (
+        <SidebarDivider
+          key={index}
+          depth={0}
+          dividerType={item.dividerType}
+        />
+      );
+    }
+
+    if (isSidebarSectionHeader(item)) {
+      return (
+        <SidebarSectionHeader
+          key={index}
+          sectionHeaderText={item.sectionHeaderText}
+          tag={item.tag}
+        />
+      );
+    }
+
+    return (
+      <SidebarItem
+        id={String(index)}
+        item={item}
+        depth={0}
+        activeMatcher={activeMatcher}
+        key={index}
+        collapsed={(item as NormalizedSidebarGroup).collapsed ?? true}
+        setSidebarData={setSidebarData}
+        preloadLink={preloadLink}
+      />
+    );
+  }
   return (
     <aside
       className={`${styles.sidebar} rspress-sidebar ${
@@ -143,35 +187,7 @@ export function SideBar(props: Props) {
           >
             <nav className="pb-2">
               {beforeSidebar}
-              {sidebarData.map(
-                (
-                  item: NormalizedSidebarGroup | ISidebarItem | ISidebarDivider,
-                  index: number,
-                ) =>
-                  'dividerType' in item ? (
-                    <SidebarDivider
-                      // eslint-disable-next-line react/no-array-index-key
-                      key={index}
-                      depth={0}
-                      dividerType={item.dividerType}
-                    />
-                  ) : (
-                    <SidebarItem
-                      id={String(index)}
-                      item={item}
-                      depth={0}
-                      activeMatcher={activeMatcher}
-                      // The siderbarData is stable, so it's safe to use index as key
-                      // eslint-disable-next-line react/no-array-index-key
-                      key={index}
-                      collapsed={
-                        (item as NormalizedSidebarGroup).collapsed ?? true
-                      }
-                      setSidebarData={setSidebarData}
-                      preloadLink={preloadLink}
-                    />
-                  ),
-              )}
+              {sidebarData.map(renderItem)}
               {afterSidebar}
             </nav>
           </div>
