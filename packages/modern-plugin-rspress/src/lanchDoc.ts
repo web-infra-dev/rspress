@@ -156,6 +156,10 @@ export async function launchDoc({
           alias: {
             'rspress/runtime': '@rspress/core/runtime',
             'rspress/theme': '@rspress/core/theme',
+            '@rspress/core': join(
+              require.resolve('@rspress/core/package.json'),
+              '..',
+            ),
           },
         },
       },

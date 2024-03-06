@@ -8,7 +8,6 @@
 
 node_modules/
 *.tsbuildinfo
-.eslintcache
 
 coverage/
 output/
@@ -27,7 +26,5 @@ src/
 modern.config.js
 modern.config.ts
 jest.config.js
-.eslintrc.js
-.eslintrc
 tsconfig.json
 

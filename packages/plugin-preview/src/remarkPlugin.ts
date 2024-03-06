@@ -1,4 +1,4 @@
-import { join, isAbsolute, dirname } from 'path';
+import { join, resolve, dirname } from 'path';
 import { visit } from 'unist-util-visit';
 import { normalizePosixPath } from '@rspress/shared';
 import fs from '@rspress/shared/fs-extra';
@@ -47,12 +47,13 @@ export const remarkCodeToDemo: Plugin<[RemarkPluginOptions], Root> = ({
       externalDemoIndex?: number,
     ) {
       if (isMobileMode) {
+        const relativePathReg = new RegExp(/^\.\.?\/.*$/);
         demos[pageName].push({
           title,
           id: demoId,
-          path: isAbsolute(demoPath)
-            ? demoPath
-            : join(vfile.dirname || dirname(vfile.path), demoPath),
+          path: relativePathReg.test(demoPath)
+            ? resolve(vfile.dirname || dirname(vfile.path), demoPath)
+            : demoPath,
         });
       } else {
         demoMdx.push(getASTNodeImport(`Demo${demoId}`, demoPath));
