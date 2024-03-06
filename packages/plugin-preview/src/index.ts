@@ -1,7 +1,7 @@
 import { join } from 'path';
 import net from 'node:net';
 import { type RouteMeta, type RspressPlugin } from '@rspress/shared';
-import { createRsbuild } from '@rsbuild/core';
+import { createRsbuild, mergeRsbuildConfig } from '@rsbuild/core';
 import { pluginSolid } from '@rsbuild/plugin-solid';
 import { pluginBabel } from '@rsbuild/plugin-babel';
 import { pluginReact } from '@rsbuild/plugin-react';
@@ -30,6 +30,7 @@ export function pluginPreview(options?: Options): RspressPlugin {
     devPort = 7890,
     framework = 'react',
     position = iframePosition,
+    builderConfig = {},
   } = iframeOptions;
   const globalUIComponents =
     iframePosition === 'fixed'
@@ -83,8 +84,8 @@ export function pluginPreview(options?: Options): RspressPlugin {
       if (Object.keys(sourceEntry).length === 0) {
         return;
       }
-      const rsbuildInstance = await createRsbuild({
-        rsbuildConfig: {
+      const rsbuildConfig = mergeRsbuildConfig(
+        {
           dev: {
             progressBar: false,
           },
@@ -113,6 +114,10 @@ export function pluginPreview(options?: Options): RspressPlugin {
             },
           },
         },
+        builderConfig,
+      );
+      const rsbuildInstance = await createRsbuild({
+        rsbuildConfig,
       });
       if (framework === 'solid') {
         rsbuildInstance.addPlugins([
