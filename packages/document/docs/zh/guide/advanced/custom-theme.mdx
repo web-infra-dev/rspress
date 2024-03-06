@@ -15,8 +15,8 @@
 默认情况下，你需要在项目根目录下创建一个 `theme` 目录，然后在 `theme` 目录下创建一个 `index.ts` 或者 `index.tsx` 文件，该文件用于导出主题配置。
 
 ```bash
-├── theme
-│   └── index.tsx
+└── theme
+    └── index.tsx
 ```
 
 你可以使用如下的方式来书写 `theme/index.tsx` 文件:
@@ -124,12 +124,12 @@ export * from 'rspress/theme';
 如果想要单独修改默认主题组件里用到的图标，只需要将同名图标放在 theme/assets 目录下即可。
 
 ```bash
-├── theme
-│   └── assets
-│     └── xx.svg
+└── theme
+    └── assets
+        └── xx.svg
 ```
 
-[查看](https://github.com/web-infra-dev/rspress/tree/main/packages/theme-default/src/assets)默认主题中用到的所有图标
+你可以在 [这里](https://github.com/web-infra-dev/rspress/tree/main/packages/theme-default/src/assets) 查看默认主题中用到的所有图标。
 
 ## 重新开发自定义主题
 
