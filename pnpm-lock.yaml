@@ -889,6 +889,9 @@ importers:
       '@rspress/shared':
         specifier: workspace:*
         version: link:../shared
+      '@rspress/theme-default':
+        specifier: workspace:*
+        version: link:../theme-default
       get-port:
         specifier: 6.1.2
         version: 6.1.2
