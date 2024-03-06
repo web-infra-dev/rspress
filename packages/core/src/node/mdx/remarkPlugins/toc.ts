@@ -33,20 +33,16 @@ export const parseToc = (tree: Root) => {
       return;
     }
 
-    // Collect h1, use first h1 as title
-    if (node.depth === 1 && title.length === 0) {
-      title = node.children[0].value;
-    }
-
-    // Collect h2 ~ h4
-    if (node.depth > 1 && node.depth < 5) {
+    // Collect h1 ~ h4
+    if (node.depth >= 1 && node.depth < 5) {
       let customId = '';
       const text = node.children
         .map((child: ChildNode) => {
-          if (child.type === 'link' || child.type === 'strong') {
-            return child.children
-              ?.map(item => (item.type === 'text' ? item.value : ''))
-              .join('');
+          if (child.type === 'link') {
+            return child.children?.map(item => item.value).join('');
+          }
+          if (child.type === 'strong') {
+            return `**${child.children?.map(item => item.value).join('')}**`;
           }
           if (child.type === 'text') {
             const [textPart, idPart] = extractTextAndId(child.value);
@@ -54,14 +50,19 @@ export const parseToc = (tree: Root) => {
             return textPart;
           }
           if (child.type === 'inlineCode') {
-            return child.value;
+            return `\`${child.value}\``;
           }
           return '';
         })
         .join('');
-      const id = customId ? customId : slugger.slug(text);
-      const { depth } = node;
-      toc.push({ id, text, depth });
+
+      if (node.depth === 1) {
+        if (!title) title = text;
+      } else {
+        const id = customId ? customId : slugger.slug(text);
+        const { depth } = node;
+        toc.push({ id, text, depth });
+      }
     }
   })(tree);
   return {

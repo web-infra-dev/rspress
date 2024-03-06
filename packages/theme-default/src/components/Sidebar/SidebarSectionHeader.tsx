@@ -1,3 +1,4 @@
+import { renderInlineMarkdown } from "#theme/logic";
 import { Tag } from "../Tag";
 
 export function SidebarSectionHeader({ sectionHeaderText, tag }: {
@@ -5,9 +6,9 @@ export function SidebarSectionHeader({ sectionHeaderText, tag }: {
     tag?: string;
 }) {
     return (
-      <h3 className="rspress-sidebar-section-header">
+      <div className="rspress-sidebar-section-header">
         <Tag tag={tag} />
-        <span>{sectionHeaderText}</span>
-      </h3>
+        <span>{renderInlineMarkdown(sectionHeaderText)}</span>
+      </div>
     );
 }

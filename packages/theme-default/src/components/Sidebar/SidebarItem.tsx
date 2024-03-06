@@ -8,6 +8,7 @@ import { Tag } from '../Tag';
 import styles from './index.module.scss';
 import { SidebarGroup } from './SidebarGroup';
 import { SidebarItemProps, highlightTitleStyle } from '.';
+import { renderInlineMarkdown } from '#theme/logic';
 
 const removeExtension = (path: string) => {
   return path.replace(/\.(mdx?)$/, '');
@@ -64,7 +65,7 @@ export function SidebarItem(props: SidebarItemProps) {
           }}
         >
           <Tag tag={item.tag} />
-          {text}
+          {renderInlineMarkdown(text)}
         </div>
       </Link>
     );
