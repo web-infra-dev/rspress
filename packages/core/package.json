@@ -55,7 +55,6 @@
     "@modern-js/utils": "2.48.0",
     "@rsbuild/core": "0.4.11",
     "@rsbuild/plugin-react": "0.4.11",
-    "@rsbuild/plugin-svgr": "0.4.11",
     "@rspress/theme-default": "workspace:*",
     "@rspress/runtime": "workspace:*",
     "@rspress/plugin-medium-zoom": "workspace:*",
