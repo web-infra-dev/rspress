@@ -9,6 +9,7 @@ import {
   slash,
   withBase,
   isExternalUrl,
+  SidebarSectionHeader,
 } from '@rspress/shared';
 import { NavMeta, SideMeta } from './type';
 import { detectFilePath, extractH1Title } from './utils';
@@ -55,7 +56,7 @@ export async function scanSideMeta(
     ).filter(Boolean) as SideMeta;
   }
 
-  const sidebarFromMeta: (SidebarGroup | SidebarItem | SidebarDivider)[] =
+  const sidebarFromMeta: (SidebarGroup | SidebarItem | SidebarDivider | SidebarSectionHeader)[] =
     await Promise.all(
       sideMeta.map(async metaItem => {
         if (typeof metaItem === 'string') {
@@ -114,7 +115,9 @@ export async function scanSideMeta(
           };
         } else if (type === 'divider') {
           return { dividerType: dashed ? 'dashed' : 'solid' };
-        } else {
+        } else if (type === 'section-header') {
+          return { sectionHeaderText: label, tag };
+        }else {
           return {
             text: label,
             link,

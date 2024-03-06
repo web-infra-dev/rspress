@@ -5,7 +5,7 @@ export type NavMeta = Nav;
 export type SideMetaItem =
   | string
   | {
-      type: 'file' | 'dir' | 'divider' | 'custom-link';
+      type: 'file' | 'dir' | 'divider' | 'custom-link' | 'section-header';
       name: string;
       link?: string;
       // Use the h1 title as the sidebar title by default
