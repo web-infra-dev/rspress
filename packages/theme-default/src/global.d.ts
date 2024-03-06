@@ -11,12 +11,12 @@ declare module '*.module.scss' {
 }
 
 declare module '@theme-assets/*' {
-  export const ReactComponent: React.SFC<React.SVGProps<SVGSVGElement>>;
-  export default ReactComponent;
+  const SvgIcon: React.FC<React.SVGProps<SVGSVGElement>> | string;
+  export default SvgIcon;
 }
 
 declare module '*.svg' {
-  export const ReactComponent: React.SFC<React.SVGProps<SVGSVGElement>>;
+  export const ReactComponent: React.FC<React.SVGProps<SVGSVGElement>>;
   export default ReactComponent;
 }
 

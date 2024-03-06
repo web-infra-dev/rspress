@@ -10,6 +10,7 @@ import Down from '@theme-assets/down';
 import { Link } from '../Link';
 import { Tag } from '../Tag';
 import { NavMenuSingleItem } from './NavMenuSingleItem';
+import { SvgWrapper } from '../SvgWrapper';
 
 export interface NavMenuGroupItem {
   text?: string | React.ReactElement;
@@ -106,7 +107,7 @@ export function NavMenuGroup(item: NavMenuGroupItem) {
       >
         {link ? (
           // @ts-expect-error item.text may be ReactElement
-          <NavMenuSingleItem {...item} rightIcon={<Down />} />
+          <NavMenuSingleItem {...item} rightIcon={<SvgWrapper icon={Down} />} />
         ) : (
           <>
             <span
@@ -118,7 +119,7 @@ export function NavMenuGroup(item: NavMenuGroupItem) {
               <Tag tag={item.tag} />
               {item.text}
             </span>
-            <Down />
+            <SvgWrapper icon={Down} />
           </>
         )}
       </button>

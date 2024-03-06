@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import SearchSvg from '@theme-assets/search';
 import styles from './index.module.scss';
 import { SearchPanel } from './SearchPanel';
+import { SvgWrapper } from '../SvgWrapper';
 import { useLocaleSiteData } from '#theme/logic';
 
 export function Search() {
@@ -21,7 +22,7 @@ export function Search() {
         onClick={() => setFocused(true)}
       >
         <button>
-          <SearchSvg width="18" hight="18" />
+          <SvgWrapper icon={SearchSvg} width="18" height="18" />
           <p className={styles.searchWord}>{searchPlaceholderText}</p>
           <div style={{ opacity: metaKey ? 1 : 0 }}>
             <span>{metaKey}</span>
@@ -33,7 +34,7 @@ export function Search() {
         className={styles.mobileNavSearchButton}
         onClick={() => setFocused(true)}
       >
-        <SearchSvg />
+        <SvgWrapper icon={SearchSvg} />
       </div>
       <SearchPanel focused={focused} setFocused={setFocused} />
     </>

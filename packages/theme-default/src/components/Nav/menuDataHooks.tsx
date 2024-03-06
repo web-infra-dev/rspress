@@ -1,6 +1,7 @@
 import { replaceLang, replaceVersion } from '@rspress/shared';
 import { useLocation, usePageData, useVersion } from '@rspress/runtime';
 import Translator from '@theme-assets/translator';
+import { SvgWrapper } from '../SvgWrapper';
 
 export function useTranslationMenuData() {
   const { siteData, page } = usePageData();
@@ -19,7 +20,8 @@ export function useTranslationMenuData() {
   const translationMenuData = hasMultiLanguage
     ? {
         text: (
-          <Translator
+          <SvgWrapper
+            icon={Translator}
             style={{
               width: '18px',
               height: '18px',

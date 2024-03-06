@@ -6,6 +6,7 @@ import { SideBar } from '../Sidebar';
 import './index.scss';
 import { Toc } from '../Toc';
 import { UISwitchResult } from '#theme/logic/useUISwitch';
+import { SvgWrapper } from '../SvgWrapper';
 
 export function SideMenu({
   beforeSidebar,
@@ -56,7 +57,7 @@ export function SideMenu({
       <div className="rspress-sidebar-menu">
         <button onClick={openSidebar} className="flex-center">
           <div className="text-md mr-2">
-            <MenuIcon />
+            <SvgWrapper icon={MenuIcon} />
           </div>
           <span className="text-sm">Menu</span>
         </button>
@@ -66,7 +67,7 @@ export function SideMenu({
         >
           <span className="text-sm">On this page</span>
           <div className="text-md mr-2">
-            <ArrowRight />
+            <SvgWrapper icon={ArrowRight} />
           </div>
         </button>
         <div

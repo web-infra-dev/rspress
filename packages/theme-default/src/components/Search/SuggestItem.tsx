@@ -6,6 +6,7 @@ import TitleSvg from '@theme-assets/title';
 import { getSlicedStrByByteLength, removeDomain } from './logic/util';
 import styles from './index.module.scss';
 import { DefaultMatchResultItem, HightlightInfo } from './logic/types';
+import { SvgWrapper } from '../SvgWrapper';
 
 const ICON_MAP = {
   title: TitleSvg,
@@ -120,13 +121,13 @@ export function SuggestItem({
       >
         <div className={styles.suggestItemContainer}>
           <div className={styles.hitIcon}>
-            <HitIcon />
+            <SvgWrapper icon={HitIcon} />
           </div>
           <div className={styles.contentWrapper}>
             <span>{hitContent}</span>
           </div>
           <div className={styles.actionIcon}>
-            <JumpSvg />
+            <SvgWrapper icon={JumpSvg} />
           </div>
         </div>
       </a>

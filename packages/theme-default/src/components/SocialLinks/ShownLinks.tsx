@@ -1,6 +1,7 @@
 import { SocialLink } from '@rspress/shared';
 import ArrowDown from '@theme-assets/arrow-down';
 import { LinkContent } from './LinkContent';
+import { SvgWrapper } from '../SvgWrapper';
 
 interface IShownLinksProps {
   links: SocialLink[];
@@ -24,7 +25,7 @@ export const ShownLinks = (props: IShownLinksProps) => {
       </div>
       {moreIconVisible ? (
         <div className="md:ml-1 p-2" onMouseEnter={mouseEnter}>
-          <ArrowDown />
+          <SvgWrapper icon={ArrowDown} />
         </div>
       ) : null}
     </>
