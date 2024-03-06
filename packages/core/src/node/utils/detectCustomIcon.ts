@@ -1,7 +1,13 @@
+import { existsSync } from 'fs';
 import path from 'path';
 
 export const detectCustomIcon = async (customThemeDir: string) => {
   const assetsDir = path.join(customThemeDir, 'assets');
+
+  if (!existsSync(assetsDir)) {
+    return;
+  }
+
   const globby = (
     await import(
       // @ts-expect-error
