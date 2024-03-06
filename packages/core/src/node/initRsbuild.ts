@@ -230,7 +230,6 @@ export async function initRsbuild(
     default: { createRsbuild, mergeRsbuildConfig },
   } = await import('@rsbuild/core');
   const { pluginReact } = await import('@rsbuild/plugin-react');
-  const { pluginSvgr } = await import('@rsbuild/plugin-svgr');
 
   const internalRsbuildConfig = await createInternalBuildConfig(
     userDocRoot,
@@ -261,9 +260,6 @@ export async function initRsbuild(
       pluginDriver,
     }),
     pluginReact(),
-    pluginSvgr({
-      svgDefaultExport: 'component',
-    }),
     ...builderPlugins,
   ]);
 
