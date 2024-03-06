@@ -25,12 +25,14 @@ Please read the [contributing guide](./CONTRIBUTING.md) and let's build Rspress 
 
 If you have any questions, you can open an issue or go to [Discord](https://discord.com/invite/Cq6HweJM26) to communicate with us.
 
+### Contributors
+
 <a href="https://github.com/web-infra-dev/rspress/graphs/contributors" target="_blank">
   <table>
     <tr>
       <th colspan="2">
         <br/>
-        <img src="https://contrib.rocks/image?repo=web-infra-dev/rspress"><br/><br/>
+        <img src="https://contrib.rocks/image?repo=web-infra-dev/rspress&columns=16&max=96"><br/><br/>
       </th>
     </tr>
     <tr>
@@ -38,18 +40,18 @@ If you have any questions, you can open an issue or go to [Discord](https://disc
         <picture>
           <source
             media="(prefers-color-scheme: dark)"
-            srcset="https://next.ossinsight.io/widgets/official/compose-org-active-contributors/thumbnail.png?activity=active&period=past_28_days&owner_id=87694465&repo_ids=659104635&image_size=2x3&color_scheme=dark"
+            srcset="https://next.ossinsight.io/widgets/official/compose-org-active-contributors/thumbnail.png?activity=active&period=past_90_days&owner_id=87694465&repo_ids=659104635&image_size=2x3&color_scheme=dark"
           />
           <img
             alt="Contributors of web-infra-dev/rspress"
-            src="https://next.ossinsight.io/widgets/official/compose-org-active-contributors/thumbnail.png?activity=active&period=past_28_days&owner_id=87694465&repo_ids=659104635&image_size=2x3&color_scheme=light"
+            src="https://next.ossinsight.io/widgets/official/compose-org-active-contributors/thumbnail.png?activity=active&period=past_90_days&owner_id=87694465&repo_ids=659104635&image_size=2x3&color_scheme=light"
           />
         </picture>
       </td>
       <td rowspan="2">
        <picture>
-        <source media="(prefers-color-scheme: dark)" srcset="https://next.ossinsight.io/widgets/official/compose-org-participants-growth/thumbnail.png?activity=new&period=past_28_days&owner_id=87694465&repo_ids=659104635&image_size=4x7&color_scheme=dark">
-        <img alt="New trends of web-infra-dev" src="https://next.ossinsight.io/widgets/official/compose-org-participants-growth/thumbnail.png?activity=new&period=past_28_days&owner_id=87694465&repo_ids=659104635&image_size=4x7&color_scheme=light">
+        <source media="(prefers-color-scheme: dark)" srcset="https://next.ossinsight.io/widgets/official/compose-org-participants-growth/thumbnail.png?activity=new&period=past_90_days&owner_id=87694465&repo_ids=659104635&image_size=4x7&color_scheme=dark">
+        <img alt="New trends of web-infra-dev" src="https://next.ossinsight.io/widgets/official/compose-org-participants-growth/thumbnail.png?activity=new&period=past_90_days&owner_id=87694465&repo_ids=659104635&image_size=4x7&color_scheme=light">
       </picture>
       </td>
     </tr>
@@ -58,11 +60,11 @@ If you have any questions, you can open an issue or go to [Discord](https://disc
         <picture>
           <source
             media="(prefers-color-scheme: dark)"
-            srcset="https://next.ossinsight.io/widgets/official/compose-org-active-contributors/thumbnail.png?activity=new&period=past_28_days&owner_id=87694465&repo_ids=659104635&image_size=2x3&color_scheme=dark"
+            srcset="https://next.ossinsight.io/widgets/official/compose-org-active-contributors/thumbnail.png?activity=new&period=past_90_days&owner_id=87694465&repo_ids=659104635&image_size=2x3&color_scheme=dark"
           />
           <img
             alt="Contributors of web-infra-dev/rspress"
-            src="https://next.ossinsight.io/widgets/official/compose-org-active-contributors/thumbnail.png?activity=new&period=past_28_days&owner_id=87694465&repo_ids=659104635&image_size=2x3&color_scheme=light"
+            src="https://next.ossinsight.io/widgets/official/compose-org-active-contributors/thumbnail.png?activity=new&period=past_90_days&owner_id=87694465&repo_ids=659104635&image_size=2x3&color_scheme=light"
           />
         </picture>
       </td>
