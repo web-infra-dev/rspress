@@ -25,6 +25,8 @@ Please read the [contributing guide](./CONTRIBUTING.md) and let's build Rspress 
 
 If you have any questions, you can open an issue or go to [Discord](https://discord.com/invite/Cq6HweJM26) to communicate with us.
 
+### Contributors
+
 <a href="https://github.com/web-infra-dev/rspress/graphs/contributors" target="_blank">
   <table>
     <tr>
