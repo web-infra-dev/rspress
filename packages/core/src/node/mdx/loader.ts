@@ -33,7 +33,10 @@ export interface PageMeta {
   frontmatter?: Record<string, any>;
 }
 
-export async function updateSiteDataRuntimeModule(modulePath: string, pageMeta: PageMeta) {
+export async function updateSiteDataRuntimeModule(
+  modulePath: string,
+  pageMeta: PageMeta,
+) {
   const siteDataModulePath = path.join(
     TEMP_DIR,
     'runtime',
@@ -47,10 +50,10 @@ export async function updateSiteDataRuntimeModule(modulePath: string, pageMeta: 
     `export default ${JSON.stringify({
       ...siteData,
       timestamp: Date.now().toString(),
-      pages:siteData.pages.map(page =>
+      pages: siteData.pages.map(page =>
         // Update page meta if the page is updated
-        page._filepath === modulePath ? { ...page, ...pageMeta } : page
-      )
+        page._filepath === modulePath ? { ...page, ...pageMeta } : page,
+      ),
     })}`,
   );
 }
