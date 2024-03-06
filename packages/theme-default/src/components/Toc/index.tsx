@@ -1,6 +1,6 @@
 import { Header } from '@rspress/shared';
 import { usePageData } from '@rspress/runtime';
-import { scrollToTarget } from '#theme/logic';
+import { renderInlineMarkdown, scrollToTarget } from '#theme/logic';
 import './index.css';
 
 const TocItem = (header: Header) => {
@@ -21,7 +21,7 @@ const TocItem = (header: Header) => {
           }
         }}
       >
-        <span className={'rspress-toc-link-text block'}>{header.text}</span>
+        <span className={'rspress-toc-link-text block'}>{renderInlineMarkdown(header.text)}</span>
       </a>
     </li>
   );
