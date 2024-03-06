@@ -8,6 +8,7 @@ import * as userSearchHooks from 'virtual-search-hooks';
 import CloseSvg from '@theme-assets/close';
 import LoadingSvg from '@theme-assets/loading';
 import SearchSvg from '@theme-assets/search';
+import { SvgWrapper } from '../SvgWrapper';
 import { useLocaleSiteData } from '../../logic/useLocaleSiteData';
 import { getSidebarGroupData } from '../../logic/useSidebarData';
 import { Tab, Tabs } from '../Tabs';
@@ -184,9 +185,8 @@ export function SearchPanel({ focused, setFocused }: SearchPanelProps) {
         }
       }
 
-      const defaultSearchResult = await pageSearcherRef.current?.match(
-        newQuery,
-      );
+      const defaultSearchResult =
+        await pageSearcherRef.current?.match(newQuery);
 
       if (defaultSearchResult) {
         searchResult.push(...defaultSearchResult);
@@ -204,7 +204,7 @@ export function SearchPanel({ focused, setFocused }: SearchPanelProps) {
                 ({
                   renderType: RenderType.Custom,
                   ...item,
-                } as CustomMatchResult),
+                }) as CustomMatchResult,
             ),
           );
         }
@@ -348,7 +348,7 @@ export function SearchPanel({ focused, setFocused }: SearchPanelProps) {
               <div className="flex items-center">
                 <div className={styles.inputForm}>
                   <label>
-                    <SearchSvg />
+                    <SvgWrapper icon={SearchSvg} />
                   </label>
                   <input
                     className={styles.input}
@@ -360,7 +360,8 @@ export function SearchPanel({ focused, setFocused }: SearchPanelProps) {
                     onChange={e => handleQueryChange(e.target.value)}
                   />
                   <label>
-                    <CloseSvg
+                    <SvgWrapper
+                      icon={CloseSvg}
                       className={styles.close}
                       onClick={e => {
                         if (searchInputRef.current) {
@@ -395,7 +396,7 @@ export function SearchPanel({ focused, setFocused }: SearchPanelProps) {
               {initing && (
                 <div className="flex-center">
                   <div className="p-2 text-sm">
-                    <LoadingSvg />
+                    <SvgWrapper icon={LoadingSvg} />
                   </div>
                 </div>
               )}

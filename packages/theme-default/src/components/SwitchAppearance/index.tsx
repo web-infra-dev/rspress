@@ -7,6 +7,7 @@ import {
   isDarkMode,
   updateUserPreferenceFromStorage,
 } from '../../logic/useAppearance';
+import { SvgWrapper } from '../SvgWrapper';
 
 export function SwitchAppearance({ onClick }: { onClick?: () => void }) {
   const { theme, setTheme } = useContext(ThemeContext);
@@ -40,11 +41,12 @@ export function SwitchAppearance({ onClick }: { onClick?: () => void }) {
       className="md:mr-2 rspress-nav-appearance"
     >
       <div className="p-1 border border-solid border-gray-300 text-gray-400  cursor-pointer rounded-md hover:border-gray-600 hover:text-gray-600 dark:hover:border-gray-200 dark:hover:text-gray-200 transition-all duration-300">
-        {theme === 'light' ? (
-          <SunSvg width="18" height="18" fill="currentColor" />
-        ) : (
-          <MoonSvg width="18" height="18" fill="currentColor" />
-        )}
+        <SvgWrapper
+          icon={theme === 'light' ? SunSvg : MoonSvg}
+          width="18"
+          height="18"
+          fill="currentColor"
+        />
       </div>
     </div>
   );

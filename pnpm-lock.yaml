@@ -1,4 +1,4 @@
-lockfileVersion: '6.1'
+lockfileVersion: '6.0'
 
 settings:
   autoInstallPeers: true
@@ -86,6 +86,16 @@ importers:
         version: 14.0.0
 
   e2e/fixtures/basic:
+    dependencies:
+      rspress:
+        specifier: workspace:*
+        version: link:../../../packages/cli
+    devDependencies:
+      '@types/node':
+        specifier: ^14
+        version: 14.0.0
+
+  e2e/fixtures/custom-icon:
     dependencies:
       rspress:
         specifier: workspace:*

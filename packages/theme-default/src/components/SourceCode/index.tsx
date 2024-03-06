@@ -2,6 +2,7 @@ import Github from '@theme-assets/github';
 import Gitlab from '@theme-assets/gitlab';
 import { useLocaleSiteData } from '../../logic';
 import styles from './index.module.scss';
+import { SvgWrapper } from '../SvgWrapper';
 
 interface SourceCodeProps {
   href: string;
@@ -21,7 +22,7 @@ export function SourceCode(props: SourceCodeProps) {
         className="flex items-center content-center transition-all duration-300 text-xs block px-2 py-1 "
       >
         <span className="mr-2 inline-flex w-4 h-4">
-          {platform === 'gitlab' ? <Gitlab /> : <Github />}
+          {<SvgWrapper icon={platform === 'gitlab' ? Gitlab : Github} />}
         </span>
         <span>{sourceCodeText}</span>
       </a>
