@@ -33,7 +33,7 @@ export interface RspressPlugin {
   /**
    * Rsbuild config.
    */
-  builderConfig?: RsbuildConfig;
+  builderConfig?: RsbuildConfig | ((config: RsbuildConfig, isSSR: boolean) => void | RsbuildConfig);
   /**
    * Inject global components.
    */

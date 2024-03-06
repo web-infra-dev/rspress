@@ -239,15 +239,13 @@ export async function initRsbuild(
     pluginDriver,
   );
 
+  const builderConfigList = [...pluginDriver.getPlugins().map(plugin => plugin.builderConfig ?? {}), config?.builderConfig || {}, extraRsbuildConfig || {}]
+  const rsbuildConfig = builderConfigList.reduce<RsbuildConfig>((acc, cur): RsbuildConfig => {
+    return cur instanceof Function ? cur(acc, isSSR) || acc : mergeRsbuildConfig(acc, cur);
+  }, internalRsbuildConfig)
+
   const rsbuild = await createRsbuild({
-    rsbuildConfig: mergeRsbuildConfig(
-      internalRsbuildConfig,
-      ...(pluginDriver
-        .getPlugins()
-        ?.map(plugin => plugin.builderConfig ?? {}) || []),
-      config?.builderConfig || {},
-      extraRsbuildConfig || {},
-    ),
+    rsbuildConfig
   });
 
   rsbuild.addPlugins([
