@@ -33,7 +33,7 @@ export interface PageMeta {
   frontmatter?: Record<string, any>;
 }
 
-export async function triggerReload() {
+export async function updateSiteDataRuntimeModule(modulePath: string, pageMeta: PageMeta) {
   const siteDataModulePath = path.join(
     TEMP_DIR,
     'runtime',
@@ -47,6 +47,10 @@ export async function triggerReload() {
     `export default ${JSON.stringify({
       ...siteData,
       timestamp: Date.now().toString(),
+      pages:siteData.pages.map(page =>
+        // Update page meta if the page is updated
+        page._filepath === modulePath ? { ...page, ...pageMeta } : page
+      )
     })}`,
   );
 }
@@ -67,7 +71,7 @@ export function createCheckPageMetaUpdateFn() {
         logger.info(
           `⭐️ Page metadata changed, rspress will trigger page reload...`,
         );
-        await triggerReload();
+        await updateSiteDataRuntimeModule(modulePath, pageMeta);
       });
     }
   };

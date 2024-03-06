@@ -141,7 +141,7 @@ export function SidebarGroup(props: SidebarItemProps) {
           }}
         >
           <Tag tag={item.tag} />
-          {renderInlineMarkdown(item.text)}
+          <span className='flex-center'>{renderInlineMarkdown(item.text)}</span>
         </h2>
         {collapsible && (
           <div
