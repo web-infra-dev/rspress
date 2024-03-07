@@ -1,5 +1,11 @@
 # @rspress/shared
 
+## 1.14.0
+
+### Patch Changes
+
+- f401506: feat: support section header
+
 ## 1.13.2
 
 ## 1.13.1

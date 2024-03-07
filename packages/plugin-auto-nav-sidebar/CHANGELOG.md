@@ -1,5 +1,14 @@
 # @rspress/plugin-auto-sidebar
 
+## 1.14.0
+
+### Patch Changes
+
+- f401506: feat: support section header
+- b95368e: fix: frontmatter.title priority is higher than h1 title
+- Updated dependencies [f401506]
+  - @rspress/shared@1.14.0
+
 ## 1.13.2
 
 ### Patch Changes

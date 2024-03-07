@@ -1,5 +1,12 @@
 # @rspress/docs
 
+## 1.14.0
+
+### Patch Changes
+
+- 0953263: feat: support Badge component
+- f401506: feat: support section header
+
 ## 1.13.2
 
 ## 1.13.1

@@ -1,5 +1,22 @@
 # @rspress/theme-default
 
+## 1.14.0
+
+### Patch Changes
+
+- 0953263: feat: support Badge component
+- b620be0: fix: useFullTextSearch hook not work
+- 806316c: chore: remove useless overflow-hidden style
+- 7b6eea0: chore: optimize dark mode style
+- 6e8a6a8: fix: adjust rspress doc max width
+- f401506: feat: support section header
+- cfc0842: feat: support inline markdown in sidebar
+- dfe3bb2: fix: implement svg icon wrapper
+- 0903f7e: correct style issue with lark svg icon
+- Updated dependencies [f401506]
+  - @rspress/shared@1.14.0
+  - @rspress/runtime@1.14.0
+
 ## 1.13.2
 
 ### Patch Changes
