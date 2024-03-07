@@ -106,10 +106,15 @@ export default async function mdxLoader(
     true,
   );
 
-  // preprocessor
-  const preprocessedContent = escapeMarkdownHeadingIds(
-    await flattenMdxContent(content, filepath, alias as Record<string, string>),
+  const { flattenContent, deps } = await flattenMdxContent(
+    content,
+    filepath,
+    alias as Record<string, string>,
   );
+  // preprocessor
+  const preprocessedContent = escapeMarkdownHeadingIds(flattenContent);
+
+  deps.forEach(dep => context.addDependency(dep));
 
   let enableMdxRs;
   const mdxRs = config?.markdown?.mdxRs ?? true;
