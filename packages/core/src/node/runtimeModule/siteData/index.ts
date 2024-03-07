@@ -5,7 +5,7 @@ import { FactoryContext, RuntimeModuleID } from '..';
 import { normalizeThemeConfig } from './normalizeThemeConfig';
 import { extractPageData } from './extractPageData';
 import { createHash } from '@/node/utils';
-import { TEMP_DIR } from '@/node/constants';
+import { TEMP_DIR, isProduction } from '@/node/constants';
 
 // How can we let the client runtime access the `indexHash`?
 // We can only do something after the Rspack build process becuase the index hash is generated within Rspack build process.There are two ways to do this:
@@ -104,7 +104,8 @@ export async function siteDataVMPlugin(context: FactoryContext) {
     search: userConfig?.search ?? { mode: 'local' },
     pages: pages.map(page => {
       const { content, id, domain, _filepath, ...rest } = page;
-      return rest;
+      // In production, we cannot expose the complete filepath for security reasons
+      return isProduction() ? rest : { ...rest, _filepath }
     }),
     markdown: {
       showLineNumbers: userConfig?.markdown?.showLineNumbers ?? false,

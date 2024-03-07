@@ -1,4 +1,4 @@
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import {
   normalizeHrefInRuntime as normalizeHref,
   usePageData,
@@ -8,6 +8,7 @@ import { Tag } from '../Tag';
 import styles from './index.module.scss';
 import { SidebarGroup } from './SidebarGroup';
 import { SidebarItemProps, highlightTitleStyle } from '.';
+import { renderInlineMarkdown } from '#theme/logic';
 
 const removeExtension = (path: string) => {
   return path.replace(/\.(mdx?)$/, '');
@@ -18,6 +19,7 @@ export function SidebarItem(props: SidebarItemProps) {
   const active = 'link' in item && item.link && activeMatcher(item.link);
   const { page } = usePageData();
   const ref = useRef<HTMLDivElement>(null);
+  const textRef = useRef<string>(item.text);
   useEffect(() => {
     if (active) {
       ref.current?.scrollIntoView({
@@ -26,10 +28,9 @@ export function SidebarItem(props: SidebarItemProps) {
     }
   }, []);
 
-  let { text } = item;
   // In development, we use the latest title after hmr
   if (item._fileKey === removeExtension(page.pagePath) && page.title) {
-    text = page.title;
+    textRef.current = page.title;
   }
 
   if ('items' in item) {
@@ -64,7 +65,7 @@ export function SidebarItem(props: SidebarItemProps) {
           }}
         >
           <Tag tag={item.tag} />
-          {text}
+          <span className='flex-center'>{renderInlineMarkdown(textRef.current)}</span>
         </div>
       </Link>
     );

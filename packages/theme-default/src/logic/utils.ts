@@ -48,3 +48,16 @@ export function renderHtmlOrText(str?: string | number | null) {
 
   return isHtml(str) ? htmr(str) : str;
 }
+
+/**
+ * In this method, we will render the markdown text to inline html and support basic markdown syntax, including the following:
+ * - bold
+ * - inline code
+ * @param text The markdown text to render.
+ */
+export function renderInlineMarkdown(text: string) {
+  const htmlText = text
+    .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')
+    .replace(/`(.*?)`/g, '<code>$1</code>');
+  return renderHtmlOrText(htmlText);
+}

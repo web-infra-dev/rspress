@@ -60,7 +60,7 @@
     "@rspress/plugin-medium-zoom": "workspace:*",
     "@rspress/plugin-last-updated": "workspace:*",
     "@rspress/plugin-auto-nav-sidebar": "workspace:*",
-    "@rspress/mdx-rs": "0.4.4",
+    "@rspress/mdx-rs": "0.5.0",
     "@rspress/plugin-container-syntax": "workspace:*",
     "@rspress/shared": "workspace:*",
     "body-scroll-lock": "4.0.0-beta.0",

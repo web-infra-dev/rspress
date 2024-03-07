@@ -12,6 +12,7 @@ import { SidebarItem } from './SidebarItem';
 import { SidebarDivider } from './SidebarDivider';
 import { highlightTitleStyle, matchCache, type SidebarItemProps } from '.';
 import { SvgWrapper } from '../SvgWrapper';
+import { renderInlineMarkdown } from '#theme/logic';
 
 export function SidebarGroup(props: SidebarItemProps) {
   const { item, depth = 0, activeMatcher, id, setSidebarData } = props;
@@ -115,8 +116,8 @@ export function SidebarGroup(props: SidebarItemProps) {
           active
             ? styles.menuItemActive
             : collapsible || item.link
-            ? styles.menuItem
-            : styles.menuItemStatic
+              ? styles.menuItem
+              : styles.menuItemStatic
         }`}
         onMouseEnter={() => item.link && props.preloadLink(item.link)}
         onClick={e => {
@@ -140,7 +141,7 @@ export function SidebarGroup(props: SidebarItemProps) {
           }}
         >
           <Tag tag={item.tag} />
-          {item.text}
+          <span className='flex-center'>{renderInlineMarkdown(item.text)}</span>
         </h2>
         {collapsible && (
           <div
