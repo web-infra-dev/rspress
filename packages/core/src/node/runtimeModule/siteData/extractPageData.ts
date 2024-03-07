@@ -53,7 +53,7 @@ export async function extractPageData(
         }
       });
 
-      const flattenContent = await flattenMdxContent(
+      const { flattenContent } = await flattenMdxContent(
         applyReplaceRules(strippedFrontMatter, replaceRules),
         route.absolutePath,
         alias,

@@ -60,7 +60,8 @@ export async function flattenMdxContent(
   content: string,
   basePath: string,
   alias: Record<string, string | string[]>,
-): Promise<string> {
+): Promise<{ flattenContent: string; deps: string[] }> {
+  const deps = [];
   // Performance optimization: if the content does not contain any import statement, we can skip the parsing process
   // So we need to check this match
 
@@ -68,7 +69,7 @@ export async function flattenMdxContent(
   // https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/RegExp/test#using_test_on_a_regex_with_the_global_flag
   const regex = new RegExp(importStatementRegex);
   if (!regex.test(content)) {
-    return content;
+    return { flattenContent: content, deps };
   }
   let result = content;
   // We should update the resolver instanceof because the alias should be passed to it
@@ -86,7 +87,7 @@ export async function flattenMdxContent(
     ast = processor.parse(content) as Root;
   } catch (e) {
     // Fallback: if mdx parse failed, just return the content
-    return content;
+    return { flattenContent: content, deps };
   }
   const importNodes = ast.children
     .filter(node => node.type === 'mdxjsEsm')
@@ -116,11 +117,8 @@ export async function flattenMdxContent(
     if (MDX_REGEXP.test(absoluteImportPath)) {
       // replace import statement with the content of the imported file
       const importedContent = fs.readFileSync(absoluteImportPath, 'utf-8');
-      const replacedValue = await flattenMdxContent(
-        importedContent,
-        absoluteImportPath,
-        alias,
-      );
+      const { flattenContent: replacedValue, deps: subDeps } =
+        await flattenMdxContent(importedContent, absoluteImportPath, alias);
 
       result = result
         .replace(
@@ -128,8 +126,10 @@ export async function flattenMdxContent(
           '',
         )
         .replace(new RegExp(`<${id}\\s*/>`, 'g'), () => replacedValue);
+
+      deps.push(...subDeps, absoluteImportPath);
     }
   }
 
-  return result;
+  return { flattenContent: result, deps };
 }
