@@ -107,7 +107,7 @@
       padding: 0 48px;
       box-sizing: border-box;
       width: calc(100vw - var(--rp-sidebar-width) - var(--rp-aside-width));
-      max-width: calc(960px + 48px * 2);
+      max-width: min(100%, calc(960px + 48px * 2));
       margin: auto;
     }
   }
@@ -125,7 +125,7 @@
       box-sizing: border-box;
       width: calc(100vw - var(--rp-sidebar-width) - var(--rp-aside-width));
       padding: 0 48px;
-      max-width: calc(960px + 48px * 2);
+      max-width: min(100%, calc(960px + 48px * 2));
       margin: auto;
     }
   }
