@@ -64,13 +64,11 @@ export function DocLayout(props: DocLayoutProps) {
       }}
     >
       {beforeDoc}
-      {uiSwitch.showSidebar ? (
-        <SideMenu
-          beforeSidebar={beforeSidebar}
-          afterSidebar={afterSidebar}
-          uiSwitch={uiSwitch}
-        />
-      ) : null}
+      <SideMenu
+        beforeSidebar={beforeSidebar}
+        afterSidebar={afterSidebar}
+        uiSwitch={uiSwitch}
+      />
       <div
         className={`${styles.content} rspress-doc-container flex flex-shrink-0 mx-auto`}
       >

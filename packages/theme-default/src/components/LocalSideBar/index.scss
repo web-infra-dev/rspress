@@ -20,6 +20,10 @@
       color: var(--rp-c-text-3);
     }
   }
+
+  &:empty {
+    display: none;
+  }
 }
 
 .rspress-sidebar-back-drop {
