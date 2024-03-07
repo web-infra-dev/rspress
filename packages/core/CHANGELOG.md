@@ -1,5 +1,36 @@
 # @rspress/core
 
+## 1.14.0
+
+### Minor Changes
+
+- 7d1103c: perf: remove the builtin @rsbuild/plugin-svgr
+- 3860b74: feat: support custom pageMeta in js mdx loader
+
+### Patch Changes
+
+- 4fd420d: feat(deps): bump Rsbuild v0.4.11
+- 0ea38be: fix: doc fragment hmr invalid
+- f401506: feat: support section header
+- cfc0842: feat: support inline markdown in sidebar
+- Updated dependencies [0953263]
+- Updated dependencies [b620be0]
+- Updated dependencies [806316c]
+- Updated dependencies [7b6eea0]
+- Updated dependencies [6e8a6a8]
+- Updated dependencies [f401506]
+- Updated dependencies [cfc0842]
+- Updated dependencies [dfe3bb2]
+- Updated dependencies [b95368e]
+- Updated dependencies [0903f7e]
+  - @rspress/theme-default@1.14.0
+  - @rspress/plugin-container-syntax@1.14.0
+  - @rspress/plugin-auto-nav-sidebar@1.14.0
+  - @rspress/shared@1.14.0
+  - @rspress/plugin-last-updated@1.14.0
+  - @rspress/plugin-medium-zoom@1.14.0
+  - @rspress/runtime@1.14.0
+
 ## 1.13.2
 
 ### Patch Changes

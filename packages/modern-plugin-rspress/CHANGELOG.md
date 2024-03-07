@@ -1,5 +1,25 @@
 # @modern-js/plugin-rspress
 
+## 1.14.0
+
+### Patch Changes
+
+- 55fe1aa: fix: modernjs plugin alias problem in iframe
+- Updated dependencies [7d1103c]
+- Updated dependencies [a28bb78]
+- Updated dependencies [55fe1aa]
+- Updated dependencies [300c478]
+- Updated dependencies [4fd420d]
+- Updated dependencies [3860b74]
+- Updated dependencies [0ea38be]
+- Updated dependencies [f401506]
+- Updated dependencies [23f13aa]
+- Updated dependencies [070e96b]
+- Updated dependencies [cfc0842]
+  - @rspress/core@1.14.0
+  - @rspress/plugin-preview@1.14.0
+  - @rspress/plugin-api-docgen@1.14.0
+
 ## 1.13.2
 
 ### Patch Changes

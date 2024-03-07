@@ -1,5 +1,13 @@
 # @rspress/remark-container
 
+## 1.14.0
+
+### Patch Changes
+
+- 7b6eea0: chore: optimize dark mode style
+- Updated dependencies [f401506]
+  - @rspress/shared@1.14.0
+
 ## 1.13.2
 
 ### Patch Changes
