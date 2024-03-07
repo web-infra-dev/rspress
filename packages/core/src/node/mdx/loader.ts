@@ -153,7 +153,7 @@ export default async function mdxLoader(
         title: string;
       };
       pageMeta = {
-        toc: compilationMeta.toc,
+        ...compilationMeta,
         title: frontmatter.title || compilationMeta.title || '',
         frontmatter,
       } as PageMeta;

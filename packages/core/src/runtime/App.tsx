@@ -54,10 +54,12 @@ export async function initPageData(routePath: string): Promise<PageData> {
       toc = [],
       title = '',
       frontmatter = {},
+      ...rest
     } = MDX_REGEXP.test(matchedRoute.filePath) ? meta : mod;
     return {
       siteData,
       page: {
+        ...rest,
         pagePath,
         ...extractPageInfo,
         pageType: frontmatter?.pageType || 'doc',
