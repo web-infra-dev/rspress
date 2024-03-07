@@ -1,0 +1,18 @@
+.badge {
+  padding: 0 10px;
+  line-height: 22px;
+  font-size: 12px;
+
+  &.info {
+    color: #2e3440;
+    background-color: rgba(46, 52, 64, 0.16);
+  }
+  &.warning {
+    color: #ad850e;
+    background-color: rgba(255, 197, 23, 0.16);
+  }
+  &.danger {
+    color: #ab2131;
+    background-color: rgba(237, 60, 80, 0.16);
+  }
+}

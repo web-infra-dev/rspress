@@ -184,7 +184,13 @@ The PrevNextPage component is used to display the previous and next pages of the
 import { PrevNextPage } from '@theme';
 
 function App() {
-  return <PrevNextPage type="prev" text="Previous Page" href="https://rspress.dev/" />;
+  return (
+    <PrevNextPage
+      type="prev"
+      text="Previous Page"
+      href="https://rspress.dev/"
+    />
+  );
 }
 ```
 
@@ -228,10 +234,9 @@ interface SourceCodeProps {
   // Used to set the link to the source code
   href: string;
   // Used to set source platform
-  platform?: 'github' | 'gitlab'
+  platform?: 'github' | 'gitlab';
 }
 ```
-
 
 ## Steps
 
@@ -262,9 +267,41 @@ import { Steps } from '@theme';
 <Steps>
   ### Step 1
 
-  Body for Step 1.
+Body for Step 1.
 
-  ### Step 2
+### Step 2
 
-  > Body for Step 2.
+> Body for Step 2.
+
 </Steps>
+
+## Badge
+
+The Badge component is used to display a badge. For example:
+
+```tsx title="index.mdx"
+import { Badge } from '@theme';
+
+function App() {
+  return <Badge text="info" type="info" />;
+}
+```
+
+The effect is as follows:
+
+import { Badge } from '@theme';
+
+<Badge text="info" type="info" />
+<Badge text="warning" type="warning" />
+<Badge text="danger" type="danger" />
+
+The types of props included are as follows:
+
+```ts
+interface BadgeProps {
+  // Used to set the text of the badge
+  text: string;
+  // Used to set the type of the badge
+  type?: 'info' | 'warning' | 'danger';
+}
+```
