@@ -1,5 +1,5 @@
 import { Link } from '@rspress/core/theme';
-import IconRight from './right.svg';
+import IconRight from './arrow-right';
 import styles from './Overview.module.scss';
 
 type List = {
