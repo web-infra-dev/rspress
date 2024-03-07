@@ -1,6 +1,5 @@
-import { usePageData, withBase } from '@rspress/core/runtime';
-import { useCallback, useEffect, useState } from 'react';
-import { demos } from 'virtual-meta';
+import { usePageData, withBase, NoSSR } from '@rspress/core/runtime';
+import { useCallback, useEffect, useState, useMemo } from 'react';
 import { normalizeId } from '../../dist/utils';
 import MobileOperation from './common/mobile-operation';
 import './Device.scss';
@@ -10,7 +9,7 @@ export default () => {
   const pageName = `${normalizeId(page.pagePath)}`;
   const demoId = `_${pageName}`;
   const url = `~demo/${demoId}`;
-  const haveDemos = demos[pageName]?.length > 0;
+  const { haveDemos } = page;
 
   const getPageUrl = (url: string) => {
     if (page?.devPort) {
@@ -75,11 +74,14 @@ export default () => {
 
   return haveDemos ? (
     <div className="fixed-device">
-      <iframe
-        src={getPageUrl(url)}
-        className="fixed-iframe"
-        key={iframeKey}
-      ></iframe>
+      <NoSSR>
+        <iframe
+          // refresh when load the iframe, then remove NoSSR
+          src={getPageUrl(url)}
+          className="fixed-iframe"
+          key={iframeKey}
+        ></iframe>
+      </NoSSR>
       <MobileOperation
         url={getPageUrl(url)}
         className="fixed-operation"

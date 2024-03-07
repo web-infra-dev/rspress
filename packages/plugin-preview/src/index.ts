@@ -6,11 +6,10 @@ import { pluginSolid } from '@rsbuild/plugin-solid';
 import { pluginBabel } from '@rsbuild/plugin-babel';
 import { pluginReact } from '@rsbuild/plugin-react';
 import { isEqual, cloneDeep } from 'lodash';
-import { remarkCodeToDemo } from './remarkPlugin';
+import { remarkCodeToDemo, demos } from './remarkPlugin';
 import { staticPath } from './constant';
 import type { Options, StartServerResult } from './types';
 import { generateEntry } from './generate-entry';
-import { demoRuntimeModule, demos } from './virtual-module';
 
 // global variables which need to be initialized in plugin
 let routeMeta: RouteMeta[];
@@ -141,9 +140,6 @@ export function pluginPreview(options?: Options): RspressPlugin {
         include: [join(__dirname, '..')],
       },
       tools: {
-        rspack: {
-          plugins: [demoRuntimeModule],
-        },
         bundlerChain(chain) {
           chain.module
             .rule('Raw')
