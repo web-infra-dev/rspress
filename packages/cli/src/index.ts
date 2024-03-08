@@ -8,7 +8,12 @@ import chalk from 'chalk';
 import { loadConfigFile } from './config/loadConfigFile';
 import update from './update';
 
-const CONFIG_FILES = ['rspress.config.ts', 'rspress.config.js', '_meta.json'];
+const CONFIG_FILES = [
+  'rspress.config.ts',
+  'rspress.config.js',
+  '_meta.json',
+  'i18n.json',
+];
 
 const require = createRequire(import.meta.url);
 
