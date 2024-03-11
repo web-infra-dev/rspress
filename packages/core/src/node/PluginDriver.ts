@@ -33,8 +33,8 @@ export class PluginDriver {
     const haveNavSidebarConfig =
       themeConfig.nav ||
       themeConfig.sidebar ||
-      themeConfig.locales?.[0].nav ||
-      themeConfig.locales?.[0].sidebar;
+      themeConfig.locales?.[0]?.nav ||
+      themeConfig.locales?.[0]?.sidebar;
     if (enableLastUpdated) {
       const { pluginLastUpdated } = await import(
         '@rspress/plugin-last-updated'
