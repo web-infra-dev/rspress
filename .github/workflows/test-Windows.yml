@@ -20,7 +20,6 @@ jobs:
   ut-windows:
     # The type of runner that the job will run on
     runs-on: ${{ matrix.os }}
-    if: github.repository == 'web-infra-dev/rspress'
     strategy:
       matrix:
         node-version: [18.x]
