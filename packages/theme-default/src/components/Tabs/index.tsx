@@ -64,7 +64,8 @@ export function Tabs(props: TabsProps): ReactElement {
     defaultIndex = tabValues.findIndex(item => {
       if (typeof item === 'string') {
         return item === defaultValue;
-      } else if (item && typeof item === 'object' && 'value' in item) {
+      }
+      if (item && typeof item === 'object' && 'value' in item) {
         return item.value === defaultValue;
       }
       return false;

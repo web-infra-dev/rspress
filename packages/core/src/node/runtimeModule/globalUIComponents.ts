@@ -15,18 +15,17 @@ export async function globalUIComponentsVMPlugin(context: FactoryContext) {
       if (Array.isArray(source)) {
         return `import ${name} from ${JSON.stringify(source[0])};
 const Props_${index++} = ${JSON.stringify(source[1])};\n`;
-      } else {
-        index++;
-        return `import ${name} from ${JSON.stringify(source)};\n`;
       }
+
+      index++;
+      return `import ${name} from ${JSON.stringify(source)};\n`;
     })
     .concat(
       `export default [${Array.from({ length: index }, (_, i) => {
         if (Array.isArray(globalComponents[i])) {
           return `[${`Comp_${i}`}, Props_${i}]`;
-        } else {
-          return `Comp_${i}`;
         }
+        return `Comp_${i}`;
       }).join(', ')}];`,
     )
     .join('');

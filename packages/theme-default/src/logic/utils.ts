@@ -15,11 +15,11 @@ export function isActive(
   }
   if (strict) {
     return isEqualPath(currentPath, targetLink);
-  } else {
-    return (
-      isEqualPath(currentPath, targetLink) || currentPath.startsWith(targetLink)
-    );
   }
+
+  return (
+    isEqualPath(currentPath, targetLink) || currentPath.startsWith(targetLink)
+  );
 }
 
 export function getLogoUrl(

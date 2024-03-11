@@ -18,9 +18,9 @@ export async function detectReactVersion(): Promise<number> {
     const reactPkg = await fs.readJson(path.join(reactPath, 'package.json'));
     const version = Number(reactPkg.version.split('.')[0]);
     return version;
-  } else {
-    return DEFAULT_REACT_VERSION;
   }
+
+  return DEFAULT_REACT_VERSION;
 }
 
 export async function resolveReactAlias(reactVersion: number) {

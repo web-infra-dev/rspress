@@ -100,13 +100,12 @@ export async function launchDoc({
               items,
               text,
             };
-          } else {
-            return {
-              collapsible: items.length > 0,
-              items,
-              text,
-            };
           }
+          return {
+            collapsible: items.length > 0,
+            items,
+            text,
+          };
         }),
       );
 

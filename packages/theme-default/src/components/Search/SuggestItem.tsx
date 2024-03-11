@@ -80,10 +80,11 @@ export function SuggestItem({
           {getHighlightedFragments(header, highlightInfoList)}
         </div>
       );
-    } else {
-      return <div className="font-medium">{suggestion.header}</div>;
     }
+
+    return <div className="font-medium">{suggestion.header}</div>;
   };
+
   const renderStatementMatch = () => {
     if (suggestion.type !== 'content') {
       return <div></div>;
