@@ -3,6 +3,7 @@ import FileSvg from '@theme-assets/file';
 import JumpSvg from '@theme-assets/jump';
 import HeaderSvg from '@theme-assets/header';
 import TitleSvg from '@theme-assets/title';
+import { useRef } from 'react';
 import { getSlicedStrByByteLength, removeDomain } from './logic/util';
 import styles from './index.module.scss';
 import { DefaultMatchResultItem, HightlightInfo } from './logic/types';
@@ -20,18 +21,27 @@ export function SuggestItem({
   isCurrent,
   setCurrentSuggestionIndex,
   inCurrentDocIndex,
+  scrollTo,
+  suggestionIndex,
 }: {
   suggestion: DefaultMatchResultItem;
   closeSearch: () => void;
   isCurrent: boolean;
   setCurrentSuggestionIndex: () => void;
   inCurrentDocIndex: boolean;
+  scrollTo: (top: number) => void;
+  suggestionIndex: number;
 }) {
   const HitIcon = ICON_MAP[suggestion.type];
   const link =
     inCurrentDocIndex && !isProduction()
       ? removeDomain(suggestion.link)
       : suggestion.link;
+  const selfRef = useRef<HTMLInputElement | null>(null);
+  if (isCurrent) {
+    // TODO: only scroll when unvisible
+    scrollTo(selfRef?.current?.offsetTop - 80);
+  }
 
   const getHighlightedFragments = (
     rawText: string,
@@ -110,6 +120,7 @@ export function SuggestItem({
       key={suggestion.link}
       className={`${styles.suggestItem} ${isCurrent ? styles.current : ''}`}
       onMouseEnter={setCurrentSuggestionIndex}
+      ref={selfRef}
     >
       <a
         href={link}
