@@ -19,6 +19,8 @@ jobs:
   lint:
     # The type of runner that the job will run on
     runs-on: ubuntu-latest
+    # Only run on origin repository not forked repository
+    if: github.repository == 'web-infra-dev/rspress'
 
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:

@@ -13,6 +13,7 @@ jobs:
   release:
     name: Release Nightly
     runs-on: ubuntu-latest
+    if: github.repository == 'web-infra-dev/rspress'
     steps:
       - name: Checkout Repo
         uses: actions/checkout@v3
