@@ -19,6 +19,7 @@ export { LastUpdated } from './components/LastUpdated';
 export { PrevNextPage } from './components/PrevNextPage';
 export { SourceCode } from './components/SourceCode';
 export { Steps } from './components/Steps';
+export { Overview } from './components/Overview';
 
 export default {
   Layout,
