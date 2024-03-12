@@ -38,9 +38,15 @@ export function Nav(props: NavProps) {
   const socialLinks = siteData.themeConfig.socialLinks || [];
   const hasSocialLinks = socialLinks.length > 0;
   const langs = localeLanguages.map(item => item.lang || '') || [];
-
-  useEffect(() => {
+  const updateIsMobile = () => {
     setIsMobile(isMobileDevice());
+  };
+  useEffect(() => {
+    window.addEventListener('resize', updateIsMobile);
+    setIsMobile(isMobileDevice());
+    return () => {
+      window.removeEventListener('resize', updateIsMobile);
+    };
   }, []);
 
   const NavMenu = ({ menuItems }: { menuItems: NavItem[] }) => {
