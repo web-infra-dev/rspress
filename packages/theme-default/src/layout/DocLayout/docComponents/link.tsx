@@ -10,13 +10,13 @@ export const A = (props: ComponentProps<'a'>) => {
 
   if (hasHeaderAnchor || href.startsWith('#')) {
     return <a {...props} className={`${styles.link} ${className}`} />;
-  } else {
-    return (
-      <Link
-        {...props}
-        className={`${className} ${styles.link} ${styles['inline-link']}`}
-        href={normalizeLinkHref(href)}
-      />
-    );
   }
+
+  return (
+    <Link
+      {...props}
+      className={`${className} ${styles.link} ${styles['inline-link']}`}
+      href={normalizeLinkHref(href)}
+    />
+  );
 };

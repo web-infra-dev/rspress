@@ -12,7 +12,7 @@ export const Tag = ({ tag }: { tag?: string }) => {
         style={{ width: 20, marginRight: 4 }}
       ></div>
     );
-  } else {
-    return <img src={tag} />;
   }
+
+  return <img src={tag} />;
 };

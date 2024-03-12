@@ -213,10 +213,10 @@ export function pluginAutoNavSidebar(): RspressPlugin {
       } else {
         if (hasLang) {
           logger.error(
-            `\`lang\` is configured but \`locales\` not, ` +
-              `thus \`@rspress/plugin-auto-nav-sidebar\` can not auto generate ` +
-              `navbar level config correctly!\n` +
-              `please check your config file`,
+            '`lang` is configured but `locales` not, ' +
+              'thus `@rspress/plugin-auto-nav-sidebar` can not auto generate ' +
+              'navbar level config correctly!\n' +
+              'please check your config file',
           );
           return config;
         }

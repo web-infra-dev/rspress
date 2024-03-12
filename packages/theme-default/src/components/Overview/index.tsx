@@ -80,7 +80,8 @@ export function Overview(props: {
               sidebarGroup.items.filter(item => subFilter(getChildLink(item)))
                 .length > 0
             );
-          } else return false;
+          }
+          return false;
         })
         .map(sidebarGroup => ({
           name: sidebarGroup.text || '',

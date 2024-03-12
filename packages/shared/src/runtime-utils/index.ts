@@ -51,7 +51,6 @@ export function normalizePosixPath(id: string): string {
   for (const part of parts) {
     if (part === '.' || part === '') {
       // Ignore "." and empty parts
-      continue;
     } else if (part === '..') {
       // Go up one level for ".." part
       if (

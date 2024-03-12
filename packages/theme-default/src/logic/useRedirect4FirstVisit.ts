@@ -25,9 +25,10 @@ export function useRedirect4FirstVisit() {
     const visited = localStorage.getItem(FIRST_VISIT_KEY);
     if (visited) {
       return;
-    } else {
-      localStorage.setItem(FIRST_VISIT_KEY, '1');
     }
+
+    localStorage.setItem(FIRST_VISIT_KEY, '1');
+
     const targetLang = window.navigator.language.split('-')[0];
     if (!langs.includes(targetLang)) {
       return;

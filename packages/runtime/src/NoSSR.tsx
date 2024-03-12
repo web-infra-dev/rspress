@@ -10,7 +10,7 @@ export function NoSSR(props: { children: React.ReactNode }) {
 
   if (!isMounted) {
     return null;
-  } else {
-    return <>{children}</>;
   }
+
+  return <>{children}</>;
 }

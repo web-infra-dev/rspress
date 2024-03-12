@@ -91,17 +91,17 @@ export function Link(props: LinkProps) {
         {children}
       </a>
     );
-  } else {
-    return (
-      <a
-        {...rest}
-        href={withBaseUrl}
-        target={target}
-        rel={rel}
-        className={`${styles.link} ${className}`}
-      >
-        {children}
-      </a>
-    );
   }
+
+  return (
+    <a
+      {...rest}
+      href={withBaseUrl}
+      target={target}
+      rel={rel}
+      className={`${styles.link} ${className}`}
+    >
+      {children}
+    </a>
+  );
 }

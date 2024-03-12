@@ -33,9 +33,9 @@ function normalizeCommand(command: string): string {
     .join(' ');
   if (pureCommand === 'yarn install' || pureCommand === 'bun install') {
     return command;
-  } else {
-    return command.replace('install', 'add');
   }
+
+  return command.replace('install', 'add');
 }
 
 export function PackageManagerTabs({

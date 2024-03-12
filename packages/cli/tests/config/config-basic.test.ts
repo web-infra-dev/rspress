@@ -7,7 +7,7 @@ const TEST_TITLE = 'my-title';
 describe('Should load config file', () => {
   test('Load config.cjs', async () => {
     const fixtureDir = path.join(__dirname, './cjs');
-    let config = await loadConfigFile(
+    const config = await loadConfigFile(
       path.join(fixtureDir, 'rspress.config.cjs'),
     );
     expect(config).toEqual({
@@ -18,7 +18,7 @@ describe('Should load config file', () => {
 
   test('Load config.mjs', async () => {
     const fixtureDir = path.join(__dirname, './esm');
-    let config = await loadConfigFile(
+    const config = await loadConfigFile(
       path.join(fixtureDir, 'rspress.config.mjs'),
     );
     expect(config).toEqual({

@@ -68,24 +68,24 @@ export async function initPageData(routePath: string): Promise<PageData> {
         toc,
       },
     };
-  } else {
-    // 404 Page
-    return {
-      siteData,
-      page: {
-        pagePath: '',
-        pageType: '404',
-        routePath: '/404',
-        lang: siteData.lang || '',
-        frontmatter: {},
-        title: '404',
-        toc: [],
-        version: '',
-        _filepath: '',
-        _relativePath: '',
-      },
-    };
   }
+
+  // 404 Page
+  return {
+    siteData,
+    page: {
+      pagePath: '',
+      pageType: '404',
+      routePath: '/404',
+      lang: siteData.lang || '',
+      frontmatter: {},
+      title: '404',
+      toc: [],
+      version: '',
+      _filepath: '',
+      _relativePath: '',
+    },
+  };
 }
 
 export function App({ helmetContext }: { helmetContext?: object }) {
@@ -125,12 +125,12 @@ export function App({ helmetContext }: { helmetContext?: object }) {
                 key: index,
                 ...props,
               });
-            } else {
-              return React.createElement(componentInfo, {
-                // eslint-disable-next-line react/no-array-index-key
-                key: index,
-              });
             }
+
+            return React.createElement(componentInfo, {
+              // eslint-disable-next-line react/no-array-index-key
+              key: index,
+            });
           })
       }
     </HelmetProvider>
