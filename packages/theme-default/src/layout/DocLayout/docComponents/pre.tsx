@@ -34,7 +34,6 @@ export function Pre({
 
   if (Array.isArray(children)) {
     return <div>{children.map(child => renderChildren(child))}</div>;
-  } else {
-    return renderChildren(children);
   }
+  return renderChildren(children);
 }
