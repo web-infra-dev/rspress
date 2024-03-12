@@ -1,51 +1,37 @@
 {
-
+  "$schema": "./node_modules/nx/schemas/nx-schema.json",
   "tasksRunnerOptions": {
     "default": {
       "runner": "nx/tasks-runners/default",
       "options": {
-        "cacheableOperations": [
-          "dev",
-          "build",
-          "test"
-        ],
+        "cacheableOperations": ["dev", "build", "test"],
         "cacheDirectory": ".nx-cache"
       }
     }
   },
+  "namedInputs": {
+    "default": [
+      "{projectRoot}/src/**/*",
+      "{projectRoot}/tsconfig.json",
+      "{projectRoot}/package.json",
+      "{projectRoot}/modern.config.*"
+    ],
+    "dev": ["default"],
+    "build": ["default"],
+    "test": ["default"]
+  },
   "targetDefaults": {
     "dev": {
-      "dependsOn": [
-        "^build"
-      ],
-      "inputs": [
-        "{projectRoot}/src/**/*",
-        "{projectRoot}/tsconfig.json",
-        "{projectRoot}/package.json",
-        "{projectRoot}/modern.config.*"
-      ]
+      "dependsOn": ["^build"],
+      "inputs": ["dev", "^dev"]
     },
     "build": {
-      "dependsOn": [
-        "^build"
-      ],
-      "outputs": [
-        "{projectRoot}/dist"
-      ],
-      "inputs": [
-        "{projectRoot}/src/**/*",
-        "{projectRoot}/tsconfig.json",
-        "{projectRoot}/package.json",
-        "{projectRoot}/modern.config.*"
-      ]
+      "dependsOn": ["^build"],
+      "outputs": ["{projectRoot}/dist"],
+      "inputs": ["build", "^build"]
     },
     "test": {
-      "inputs": [
-        "{projectRoot}/src/**/*",
-        "{projectRoot}/tsconfig.json",
-        "{projectRoot}/package.json",
-        "{projectRoot}/modern.config.*"
-      ]
+      "inputs": ["test", "^test"]
     }
   },
   "affected": {
