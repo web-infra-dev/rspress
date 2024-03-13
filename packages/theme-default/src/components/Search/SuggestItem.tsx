@@ -22,25 +22,22 @@ export function SuggestItem({
   setCurrentSuggestionIndex,
   inCurrentDocIndex,
   scrollTo,
-  suggestionIndex,
 }: {
   suggestion: DefaultMatchResultItem;
   closeSearch: () => void;
   isCurrent: boolean;
   setCurrentSuggestionIndex: () => void;
   inCurrentDocIndex: boolean;
-  scrollTo: (top: number) => void;
-  suggestionIndex: number;
+  scrollTo: (top: number, height: number) => void;
 }) {
   const HitIcon = ICON_MAP[suggestion.type];
   const link =
     inCurrentDocIndex && !isProduction()
       ? removeDomain(suggestion.link)
       : suggestion.link;
-  const selfRef = useRef<HTMLInputElement | null>(null);
+  const selfRef = useRef(null);
   if (isCurrent) {
-    // TODO: only scroll when unvisible
-    scrollTo(selfRef?.current?.offsetTop - 80);
+    scrollTo(selfRef?.current?.offsetTop, selfRef?.current?.offsetHeight);
   }
 
   const getHighlightedFragments = (
