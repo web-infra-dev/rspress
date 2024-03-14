@@ -1,5 +1,22 @@
 # @rspress/theme-default
 
+## 1.15.0
+
+### Minor Changes
+
+- 2f6bda9: feat: support custom overview and sub overview
+
+### Patch Changes
+
+- 79a4142: fix sidebar begining top items was unchanged after page switch
+- 3b6aafe: fix: plugin-shiki space style
+- 3b64c40: fix: update nav when resize
+- 52dc2e5: fix: support format pre code when children is array
+- 915064f: fix(theme-deafult): use new Lark icon
+- 22487ef: fix(theme-default): scroll search panel when current item is unvisible
+  - @rspress/runtime@1.15.0
+  - @rspress/shared@1.15.0
+
 ## 1.14.0
 
 ### Patch Changes
