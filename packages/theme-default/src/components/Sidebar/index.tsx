@@ -174,7 +174,7 @@ export function SideBar(props: Props) {
 
     return (
       <SidebarItem
-        id={itemId}
+        id={String(index)}
         item={item}
         depth={0}
         activeMatcher={activeMatcher}
