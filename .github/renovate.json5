@@ -1,0 +1,38 @@
+{
+  "$schema": "https://docs.renovatebot.com/renovate-schema.json",
+  "extends": ["config:recommended"],
+  "packageRules": [
+    // Use chore as semantic commit type for commit messages
+    {
+      "matchPackagePatterns": ["*"],
+      "semanticCommitType": "chore"
+    },
+    {
+      "groupName": "rsbuild",
+      "packagePatterns": ["rsbuild"],
+      "groupSlug": "rsbuild"
+    },
+    {
+      "groupName": "modern-js",
+      "packagePatterns": ["modern-js"],
+      "groupSlug": "modern-js"
+    },
+    {
+      "groupName": "all patch dependencies",
+      "groupSlug": "all-patch",
+      "matchPackagePatterns": ["*"],
+      "matchUpdateTypes": ["patch"]
+    },
+    // manually update peer dependencies
+    {
+      "depTypeList": ["peerDependencies"],
+      "enabled": false
+    }
+  ],
+  "ignoreDeps": [
+    // manually updating
+    "typescript",
+    // align Node.js version minimum requirements
+    "@types/node"
+  ]
+}
