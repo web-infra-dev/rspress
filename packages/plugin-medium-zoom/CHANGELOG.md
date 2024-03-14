@@ -1,5 +1,11 @@
 # @rspress/plugin-medium-zoom
 
+## 1.15.0
+
+### Patch Changes
+
+- e3359be: feat: set mask color of image preview to be black #000 in dark mode (#730)
+
 ## 1.14.0
 
 ## 1.13.2
