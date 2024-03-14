@@ -6,6 +6,8 @@ export interface ITransformerLineNumberOptions {
   classActiveLine?: string;
 }
 
+export const SHIKI_TRANSFORMER_LINE_NUMBER = 'shiki-transformer:line-number';
+
 export function createTransformerLineNumber(
   options: ITransformerLineNumberOptions = {},
 ): ITransformer {
@@ -15,7 +17,7 @@ export function createTransformerLineNumber(
   } = options;
 
   return {
-    name: 'shiki-transformer:line-number',
+    name: SHIKI_TRANSFORMER_LINE_NUMBER,
     preTransformer: ({ code }) => {
       const lineOptions = [] as TLineOptions;
 
