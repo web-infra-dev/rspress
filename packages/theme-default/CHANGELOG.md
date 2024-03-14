@@ -1,5 +1,15 @@
 # @rspress/theme-default
 
+## 1.15.1
+
+### Patch Changes
+
+- 9139dc3: fix: add scroll padding top
+- 1f2febd: fix: only scroll panel when item is unvisible
+- ab88310: fix: sidebar text not update when navigate to other nav item (#770)
+  - @rspress/runtime@1.15.1
+  - @rspress/shared@1.15.1
+
 ## 1.15.0
 
 ### Minor Changes

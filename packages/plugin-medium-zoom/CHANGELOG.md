@@ -1,5 +1,7 @@
 # @rspress/plugin-medium-zoom
 
+## 1.15.1
+
 ## 1.15.0
 
 ### Patch Changes

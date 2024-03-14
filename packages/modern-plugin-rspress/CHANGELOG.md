@@ -1,5 +1,13 @@
 # @modern-js/plugin-rspress
 
+## 1.15.1
+
+### Patch Changes
+
+- @rspress/core@1.15.1
+- @rspress/plugin-preview@1.15.1
+- @rspress/plugin-api-docgen@1.15.1
+
 ## 1.15.0
 
 ### Patch Changes
