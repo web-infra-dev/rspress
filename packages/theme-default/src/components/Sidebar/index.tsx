@@ -16,25 +16,13 @@ import { SidebarDivider } from './SidebarDivider';
 import { UISwitchResult } from '#theme/logic/useUISwitch';
 import { SidebarSectionHeader } from './SidebarSectionHeader';
 
-const isSidebarDivider = (
-  item:
-    | NormalizedSidebarGroup
-    | ISidebarItem
-    | ISidebarDivider
-    | ISidebarSectionHeader,
-): item is ISidebarDivider => {
+const isSidebarDivider = (item: NormalizedSidebarGroup | ISidebarItem | ISidebarDivider | ISidebarSectionHeader): item is ISidebarDivider => {
   return 'dividerType' in item;
-};
+}
 
-const isSidebarSectionHeader = (
-  item:
-    | NormalizedSidebarGroup
-    | ISidebarItem
-    | ISidebarDivider
-    | ISidebarSectionHeader,
-): item is ISidebarSectionHeader => {
+const isSidebarSectionHeader = (item: NormalizedSidebarGroup | ISidebarItem | ISidebarDivider | ISidebarSectionHeader): item is ISidebarSectionHeader => {
   return 'sectionHeaderText' in item;
-};
+}
 
 export interface SidebarItemProps {
   id: string;
@@ -143,14 +131,7 @@ export function SideBar(props: Props) {
       route.preload();
     }
   };
-  const renderItem = (
-    item:
-      | NormalizedSidebarGroup
-      | ISidebarItem
-      | ISidebarDivider
-      | ISidebarSectionHeader,
-    index: number,
-  ) => {
+  const renderItem = (item: NormalizedSidebarGroup | ISidebarItem | ISidebarDivider | ISidebarSectionHeader, index: number) => {
     if (isSidebarDivider(item)) {
       return (
         <SidebarDivider
@@ -170,21 +151,20 @@ export function SideBar(props: Props) {
         />
       );
     }
-    const itemId = getSideBarItemKey(item, [index]);
 
     return (
       <SidebarItem
-        id={itemId}
+        id={String(index)}
         item={item}
         depth={0}
         activeMatcher={activeMatcher}
-        key={itemId}
+        key={index}
         collapsed={(item as NormalizedSidebarGroup).collapsed ?? true}
         setSidebarData={setSidebarData}
         preloadLink={preloadLink}
       />
     );
-  };
+  }
   return (
     <aside
       className={`${styles.sidebar} rspress-sidebar ${
@@ -215,15 +195,4 @@ export function SideBar(props: Props) {
       </div>
     </aside>
   );
-}
-
-function getSideBarItemKey(item: NormalizedSidebarGroup | ISidebarItem, additionalParts?: any[]) {
-  const parts: (PropertyKey | null | undefined)[] = [
-    item._fileKey,
-    item.link,
-    item.text,
-    'items' in item ? item.items.length : -1,
-    ...additionalParts
-  ];
-  return parts.join('|');
 }
