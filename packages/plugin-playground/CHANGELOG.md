@@ -1,5 +1,11 @@
 # @rspress/plugin-playground
 
+## 1.15.1
+
+### Patch Changes
+
+- @rspress/shared@1.15.1
+
 ## 1.15.0
 
 ### Patch Changes
