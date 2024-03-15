@@ -1,5 +1,13 @@
 # @rspress/plugin-api-docgen
 
+## 2.0.0
+
+### Patch Changes
+
+- ce837d0: fix: support match double label api comp
+- Updated dependencies [7bf8e1c]
+  - @rspress/core@2.0.0
+
 ## 1.15.1
 
 ## 1.15.0

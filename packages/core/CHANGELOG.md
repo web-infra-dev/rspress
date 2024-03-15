@@ -1,5 +1,21 @@
 # @rspress/core
 
+## 2.0.0
+
+### Major Changes
+
+- 7bf8e1c: fix(PluginDriver): nav and sidebar add ?
+
+### Patch Changes
+
+- @rspress/plugin-auto-nav-sidebar@2.0.0
+- @rspress/plugin-container-syntax@2.0.0
+- @rspress/plugin-last-updated@2.0.0
+- @rspress/plugin-medium-zoom@2.0.0
+- @rspress/runtime@2.0.0
+- @rspress/shared@2.0.0
+- @rspress/theme-default@2.0.0
+
 ## 1.15.1
 
 ### Patch Changes
