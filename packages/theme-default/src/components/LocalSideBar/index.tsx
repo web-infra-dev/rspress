@@ -55,46 +55,56 @@ export function SideMenu({
     <Fragment>
       {/* Top Menu, only displayed in mobile device */}
       <div className="rspress-sidebar-menu">
-        <button onClick={openSidebar} className="flex-center">
-          <div className="text-md mr-2">
-            <SvgWrapper icon={MenuIcon} />
-          </div>
-          <span className="text-sm">Menu</span>
-        </button>
-        <button
-          onClick={() => setIsTocOpen(tocOpened => !tocOpened)}
-          className="flex-center"
-        >
-          <span className="text-sm">On this page</span>
-          <div className="text-md mr-2">
-            <SvgWrapper icon={ArrowRight} />
-          </div>
-        </button>
-        <div
-          className="rspress-local-toc-container"
-          style={{
-            display: isTocOpen ? 'block' : 'none',
-          }}
-          ref={tocContainerRef}
-        >
-          <Toc />
-        </div>
+        {uiSwitch.showSidebar ? (
+          <button onClick={openSidebar} className="flex-center mr-auto">
+            <div className="text-md mr-2">
+              <SvgWrapper icon={MenuIcon} />
+            </div>
+            <span className="text-sm">Menu</span>
+          </button>
+        ) : null}
+        {uiSwitch.showAside ? (
+          <Fragment>
+            <button
+              onClick={() => setIsTocOpen(tocOpened => !tocOpened)}
+              className="flex-center ml-auto"
+            >
+              <span className="text-sm">On this page</span>
+              <div className="text-md mr-2">
+                <SvgWrapper icon={ArrowRight} />
+              </div>
+            </button>
+            <div
+              className="rspress-local-toc-container"
+              style={{
+                display: isTocOpen ? 'block' : 'none',
+              }}
+              ref={tocContainerRef}
+            >
+              <Toc />
+            </div>
+          </Fragment>
+        ) : null}
       </div>
       {/* Sidebar Component */}
-      <SideBar
-        isSidebarOpen={isSidebarOpen}
-        beforeSidebar={beforeSidebar}
-        afterSidebar={afterSidebar}
-        uiSwitch={uiSwitch}
-      />
-      {isSidebarOpen ? (
-        <div
-          onClick={closeSidebar}
-          className="rspress-sidebar-back-drop"
-          style={{
-            background: 'rgba(0, 0, 0, 0.6)',
-          }}
-        />
+      {uiSwitch.showSidebar ? (
+        <Fragment>
+          <SideBar
+            isSidebarOpen={isSidebarOpen}
+            beforeSidebar={beforeSidebar}
+            afterSidebar={afterSidebar}
+            uiSwitch={uiSwitch}
+          />
+          {isSidebarOpen ? (
+            <div
+              onClick={closeSidebar}
+              className="rspress-sidebar-back-drop"
+              style={{
+                background: 'rgba(0, 0, 0, 0.6)',
+              }}
+            />
+          ) : null}
+        </Fragment>
       ) : null}
     </Fragment>
   );
