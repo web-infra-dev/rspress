@@ -45,7 +45,7 @@
   "dependencies": {
     "@mdx-js/mdx": "2.2.1",
     "@monaco-editor/react": "~4.4.6",
-    "@oxidation-compiler/napi": "^0.1.0",
+    "@oxidation-compiler/napi": "^0.2.0",
     "@rspress/shared": "workspace:*",
     "remark-gfm": "3.0.1",
     "rspack-plugin-virtual-module": "0.1.12"
