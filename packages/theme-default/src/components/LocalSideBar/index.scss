@@ -48,16 +48,23 @@
   background-color: var(--rp-c-bg-soft);
   left: 20px;
   right: 20px;
-  height: calc(100vh - var(--rp-nav-height) - 20px);
+  max-height: calc(100vh - var(--rp-nav-height) - 20px);
   overflow: scroll;
   box-shadow: var(--rp-shadow-1);
   border: 1px solid var(--rp-c-divider-light);
-  transition: transform 0.3s ease-out;
 }
 
 .fly-in-enter {
   opacity: 0;
   transform: translateY(-16px);
+}
+
+.fly-in-enter-active {
+  opacity: 1;
+  transform: translateX(0);
+  transition:
+    opacity 300ms,
+    transform 300ms;
 }
 
 .fly-in-exit,

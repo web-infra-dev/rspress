@@ -87,12 +87,12 @@ export function SideMenu({
 
         <CSSTransition
           in={isTocOpen}
-          timeout={200}
+          timeout={300}
           unmountOnExit
-          classNames="rspress-local-toc-container fly-in"
+          classNames="fly-in"
           nodeRef={tocContainerRef}
         >
-          <div ref={tocContainerRef} className="absolute">
+          <div className="rspress-local-toc-container" ref={tocContainerRef}>
             <Toc
               onItemClick={() => {
                 setIsTocOpen(false);
