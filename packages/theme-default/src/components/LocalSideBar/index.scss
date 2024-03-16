@@ -44,10 +44,24 @@
   position: absolute;
   padding: 6px;
   border-radius: var(--rp-radius-small);
-  top: var(--rp-nav-height);
+  top: calc(var(--rp-nav-height) - 14px);
   background-color: var(--rp-c-bg-soft);
+  left: 20px;
   right: 20px;
-  max-width: 250px;
-  transition: all 0.3s;
-  overflow-y: scroll;
+  height: calc(100vh - var(--rp-nav-height) - 20px);
+  overflow: scroll;
+  box-shadow: var(--rp-shadow-1);
+  border: 1px solid var(--rp-c-divider-light);
+  transition: transform 0.3s ease-out;
+}
+
+.fly-in-enter {
+  opacity: 0;
+  transform: translateY(-16px);
+}
+
+.fly-in-exit,
+.fly-in-exit-active {
+  opacity: 0;
+  transition: none;
 }
