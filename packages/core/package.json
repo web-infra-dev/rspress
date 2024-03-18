@@ -78,7 +78,7 @@
     "mdast-util-mdxjs-esm": "^1.3.0",
     "node-fetch": "3.3.0",
     "nprogress": "^0.2.0",
-    "postcss": "8.4.21",
+    "postcss": "8.4.31",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-helmet-async": "^1.3.0",
