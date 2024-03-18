@@ -130,12 +130,3 @@ jobs:
           -H 'Authorization: Bearer ${{ secrets.REPO_SCOPED_TOKEN }}' \
           -d '{"ref": "main"}' \
           https://api.github.com/repos/web-infra-dev/modern.js/actions/workflows/update-rspress.yml/dispatches
-
-      - name: Trigger Rsbuild Update Rspress
-        if: ${{github.event.inputs.version == 'latest'}}
-        run: |
-          curl -X POST \
-          -H 'Content-Type: application/json' \
-          -H 'Authorization: Bearer ${{ secrets.REPO_SCOPED_TOKEN }}' \
-          -d '{"ref": "main"}' \
-          https://api.github.com/repos/web-infra-dev/rsbuild/actions/workflows/update-rspress.yml/dispatches
