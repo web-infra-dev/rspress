@@ -8,3 +8,4 @@ export { usePathUtils } from './usePathUtils';
 export { useFullTextSearch } from './useFullTextSearch';
 export { useRedirect4FirstVisit } from './useRedirect4FirstVisit';
 export * from './utils';
+export { renderInlineMarkdown } from './react-markdown';
