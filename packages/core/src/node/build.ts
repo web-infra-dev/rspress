@@ -53,14 +53,13 @@ export async function bundle(
   enableSSG: boolean,
 ) {
   try {
-    const outputDir = config?.outDir ?? OUTPUT_DIR;
     if (enableSSG) {
       const [clientBuilder, ssrBuilder] = await Promise.all([
         initRsbuild(docDirectory, config, pluginDriver, false),
         initRsbuild(docDirectory, config, pluginDriver, true, {
           output: {
             distPath: {
-              root: `${outputDir}/ssr`,
+              server: 'ssr',
             },
             disableMinimize: true,
           },
