@@ -41,8 +41,10 @@ export function Overview(props: {
   } = usePageData();
   const { content, groups: customGroups, defaultGroupTitle = 'Others' } = props;
   const subFilter = (link: string) =>
-    link.startsWith(routePath.replace(/overview$/, '')) &&
-    !isEqualPath(link, routePath);
+    // sidebar items link without base path
+    // pages route path with base path
+    withBase(link).startsWith(routePath.replace(/overview$/, '')) &&
+    !isEqualPath(withBase(link), routePath);
   const getChildLink = (
     traverseItem: SidebarDivider | SidebarItem | NormalizedSidebarGroup,
   ): string => {
@@ -60,6 +62,7 @@ export function Overview(props: {
     items: (NormalizedSidebarGroup | SidebarItem)[];
   };
   function normalizeSidebarItem(item: NormalizedSidebarGroup | SidebarItem) {
+    // sidebar items link without base path
     const pageModule = overviewModules.find(m =>
       isEqualPath(m.routePath, withBase(item.link || '')),
     );
