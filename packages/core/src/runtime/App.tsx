@@ -10,10 +10,12 @@ import { HelmetProvider } from 'react-helmet-async';
 import React, { useContext, useLayoutEffect } from 'react';
 import { Header, PageData, cleanUrl, MDX_REGEXP } from '@rspress/shared';
 import globalComponents from 'virtual-global-components';
-import 'virtual-global-styles';
 
 // eslint-disable-next-line import/no-commonjs
 const { default: Theme } = require('@theme');
+
+// Inject the global styles come from plugins or config file
+require('virtual-global-styles');
 
 export enum QueryStatus {
   Show = '1',
@@ -39,7 +41,9 @@ export async function initPageData(routePath: string): Promise<PageData> {
     const extractPageInfo = siteData.pages.find(page => {
       const normalize = (p: string) =>
         // compat the path that has no / suffix and ignore case
-        p.replace(/\/$/, '').toLowerCase();
+        p
+          .replace(/\/$/, '')
+          .toLowerCase();
       return isEqualPath(normalize(page.routePath), normalize(routePath));
     });
 
