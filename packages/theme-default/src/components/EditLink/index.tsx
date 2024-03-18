@@ -1,7 +1,7 @@
 import { useEditLink } from '../../logic';
 import styles from './index.module.scss';
 
-export default function EditLink() {
+export function EditLink() {
   const editLinkObj = useEditLink();
 
   if (!editLinkObj) {

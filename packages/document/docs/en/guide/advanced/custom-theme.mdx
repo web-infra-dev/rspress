@@ -95,13 +95,14 @@ export * from 'rspress/theme';
 
 ### 3. Custom Home page and 404 page
 
-To extend the components of the default theme, in addition to slots, you can also customize the Home page and 404 page, such as:
+In addition to the slot method, if you want to extend the default theme components, you can also customize the Home page components and 404 page components,
+as well as other Rspress [built-in components](https://github.com/web-infra-dev/rspress/tree/main/packages/theme-default/src/components)
 
 ```tsx title="theme/index.tsx"
-import Theme from 'rspress/theme';
+import Theme, { Search } from 'rspress/theme';
 
+// Use slot
 const Layout = () => <Theme.Layout beforeNavTitle={<div>some content</div>} />;
-
 // Custom Home Page
 const HomeLayout = () => <div>Home</div>;
 // Custom 404 page
@@ -114,10 +115,14 @@ export default {
   NotFoundLayout,
 };
 
+// Custom Search Component
+const MySearch = () => <div className="my-search">{Search}</div>;
+export { MySearch as Search };
+// re-export
 export * from 'rspress/theme';
 ```
 
-Of course, you may need to use page data during the development process, you can get it through the Hook [`usePageData`](/api/client-api/api-runtime#usepagedata).
+Of course, you may need to use page data during the development process, you can get it through [`Runtime API`](/api/client-api/api-runtime).
 
 ### 4. Custom Icon
 

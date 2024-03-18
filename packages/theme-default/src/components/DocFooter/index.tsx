@@ -3,9 +3,7 @@ import {
   usePageData,
 } from '@rspress/runtime';
 import { useLocaleSiteData, usePrevNextPage } from '../../logic';
-import EditLink from '../EditLink';
-import { LastUpdated } from '../LastUpdated';
-import { PrevNextPage } from '../PrevNextPage';
+import { LastUpdated, PrevNextPage, EditLink } from '@theme';
 import styles from './index.module.scss';
 
 export function DocFooter() {
