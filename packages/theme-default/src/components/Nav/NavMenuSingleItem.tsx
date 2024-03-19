@@ -4,8 +4,7 @@ import {
   withoutBase,
 } from '@rspress/shared';
 import { normalizeHrefInRuntime as normalizeHref } from '@rspress/runtime';
-import { Link } from '../Link';
-import { Tag } from '../Tag';
+import { Link, Tag } from '@theme';
 import styles from './index.module.scss';
 
 interface Props {

@@ -1,5 +1,5 @@
 import React from 'react';
-import { Link } from '../Link';
+import { Link } from '@theme';
 import styles from './index.module.scss';
 
 interface ButtonProps {

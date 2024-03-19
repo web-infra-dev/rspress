@@ -1,6 +1,4 @@
-// internal components: Button, Link, SvgWrapper
 export { Aside } from './Aside';
-export { BackDrop } from './BackDrop';
 export { Badge } from './Badge';
 export { Button } from './Button';
 export { DocFooter } from './DocFooter';
@@ -20,7 +18,6 @@ export { SideBar } from './SideBar';
 export { SocialLinks } from './SocialLinks';
 export { SourceCode } from './SourceCode';
 export { Steps } from './Steps';
-export { SvgWrapper } from './SvgWrapper';
 export { SwitchAppearance } from './SwitchAppearance';
 export { Tab, Tabs } from './Tabs';
 export { Tag } from './Tag';

@@ -4,8 +4,7 @@ import {
   normalizeHrefInRuntime as normalizeHref,
   usePageData,
 } from '@rspress/runtime';
-import { Link } from '../Link';
-import { Tag } from '../Tag';
+import { Link, Tag } from '@theme';
 import styles from './index.module.scss';
 import { SidebarGroup } from './SidebarGroup';
 import { SidebarItemProps, highlightTitleStyle } from '.';
