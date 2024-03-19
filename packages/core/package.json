@@ -49,9 +49,9 @@
   },
   "dependencies": {
     "@loadable/component": "5.15.2",
-    "@mdx-js/loader": "2.2.1",
-    "@mdx-js/mdx": "2.2.1",
-    "@mdx-js/react": "2.2.1",
+    "@mdx-js/loader": "2.3.0",
+    "@mdx-js/mdx": "2.3.0",
+    "@mdx-js/react": "2.3.0",
     "@modern-js/utils": "2.48.1",
     "@rsbuild/core": "0.4.15",
     "@rsbuild/plugin-react": "0.4.15",
