@@ -1,17 +1,32 @@
-## NoSSR
+## Badge
 
-用于在服务端渲染时不渲染某些组件。使用方法如下：
+Badge 组件用于展示状态的标记。使用方法如下：
 
-```tsx
-import { NoSSR } from 'rspress/runtime';
+```tsx title="index.mdx"
+import { Badge } from '@theme';
 
-const Component = () => {
-  return (
-    <NoSSR>
-      <div>这里的内容只会在客户端渲染</div>
-    </NoSSR>
-  );
-};
+function App() {
+  return <Badge text="info" type="info" />;
+}
+```
+
+效果如下：
+
+import { Badge } from '@theme';
+
+<Badge text="info" type="info" />
+<Badge text="warning" type="warning" />
+<Badge text="danger" type="danger" />
+
+其中包含的 props 类型如下：
+
+```ts
+interface BadgeProps {
+  // 用于设置 badge 的文本
+  text: string;
+  // 用于设置 badge 的类型
+  type: 'info' | 'warning' | 'danger';
+}
 ```
 
 ## Helmet
@@ -31,67 +46,110 @@ function App() {
 }
 ```
 
-## Tab/Tabs
+## HomeFeature
 
-你可以在文档中直接使用 Tab/Tabs 组件来实现 tab 切换的效果。比如
+Home 页面 Feature 组件，查看[本站的效果](/zh/)
 
-```tsx title="index.tsx"
-import { Tab, Tabs } from 'rspress/theme';
+```tsx
+import { HomeFeature } from 'rspress/theme';
+
+export interface Feature {
+  title: string;
+  details: string;
+  icon: string;
+  // 卡片栅格的长度，目前仅支持[3, 4, 6]
+  span?: number;
+  // feature 卡片跳转链接，选填
+  link?: string;
+}
+
+export type Features = Feature[];
+```
+
+## HomeHero
+
+Home 页面 Hero 组件
+
+```tsx
+import { HomeHero } from 'rspress/theme';
+
+export interface Hero {
+  name: string;
+  text: string;
+  tagline: string;
+  image?: {
+    src: string;
+    alt: string;
+  };
+  actions: {
+    text: string;
+    link: string;
+    theme: 'brand' | 'alt';
+  }[];
+}
+```
+
+## LastUpdated
+
+LastUpdated 组件用来显示文章的最后更新时间。使用方法如下：
+
+```tsx title="index.mdx"
+import { LastUpdated } from '@theme';
 
 function App() {
-  return (
-    <Tabs>
-      <Tab label="Tab 1">Tab 1 content</Tab>
-      <Tab label="Tab 2">Tab 2 content</Tab>
-    </Tabs>
-  );
+  return <LastUpdated />;
 }
 ```
 
-import { Tab, Tabs } from '@theme';
+:::tip
 
-<Tabs>
-  <Tab label="1" value="1">
-    Tab 1 content
-  </Tab>
-  <Tab label="2" value="2">
-    Tab 2 content
-  </Tab>
-</Tabs>
+如果没有在默认主题中配置 `lastUpdated: true` 的话需要安装和注册 `@rspress/plugin-last-updated` 插件。
 
-:::info 提醒
-为了让你更方便地使用这些组件，框架内部对于 `rspress/theme` 这个包做了 alias 处理，所以你可以直接使用 `@theme` 来引入这些组件。
 :::
 
-其中 Tabs 组件的 props 类型如下:
+## NoSSR
 
-```ts
-interface TabsProps {
-  children: React.ReactNode;
-  defaultValue?: string;
-  groupId?: string;
-  tabPosition?: 'left' | 'center';
-}
+用于在服务端渲染时不渲染某些组件。使用方法如下：
+
+```tsx
+import { NoSSR } from 'rspress/runtime';
+
+const Component = () => {
+  return (
+    <NoSSR>
+      <div>这里的内容只会在客户端渲染</div>
+    </NoSSR>
+  );
+};
 ```
 
-defaultValue 用于设置默认选中的 tab 项，这个值会和 Tab 组件的 value 字段做比较，如果相等则选中该 tab。
+## Overview
 
-groupId 用于设置 tab 项的分组，当你需要多个 Tabs 组件进行联动的时候，可以通过 groupId 来实现。groupId 相同的 Tabs 组件会进行联动。
+预览组件，查看[本站的效果](/zh/api/)
 
-tabPosition 用于设置 tab 列表的排列位置，目前支持 left 和 center 两个值，分为表示靠左和居中，默认为 left。
+```tsx
+import { Overview } from 'rspress/theme';
 
-Tab 组件的 props 类型如下:
+interface GroupItem {
+  text?: string;
+  link?: string;
+  headers?: Header[];
+}
 
-```ts
-interface TabProps {
-  label: string;
-  // 用于标识当前 tab，如果不传则默认使用 label
-  value?: string;
-  children: React.ReactNode;
+interface Group {
+  name: string;
+  items: GroupItem[];
+}
+
+export interface OverviewProps {
+  // 预览部分上方的内容
+  content?: React.ReactNode;
+  // 预览数据
+  groups?: Group[];
+  // 默认标题
+  defaultGroupTitle?: string;
 }
 ```
-
-其中的 `value` 字段用于标识当前 tab，如果不传则默认使用 label。
 
 ## PackageManagerTabs
 
@@ -139,40 +197,6 @@ interface PackageManagerTabsProps {
 :::tip
 
 在 install 命令中，对 yarn 和 bun 做了特殊处理，如果你的命令是`install some-packages`，在 yarn 和 bun 的 tab 中会自动将 install 替换为 add。
-
-:::
-
-## Table of Contents
-
-渲染当前页面的 TOC
-
-```tsx title="index.mdx"
-import { Toc } from '@theme';
-
-function App() {
-  return <Toc />;
-}
-```
-
-import { Toc } from '@theme';
-
-<Toc />
-
-## LastUpdated
-
-LastUpdated 组件用来显示文章的最后更新时间。使用方法如下：
-
-```tsx title="index.mdx"
-import { LastUpdated } from '@theme';
-
-function App() {
-  return <LastUpdated />;
-}
-```
-
-:::tip
-
-如果没有在默认主题中配置 `lastUpdated: true` 的话需要安装和注册 `@rspress/plugin-last-updated` 插件。
 
 :::
 
@@ -269,33 +293,80 @@ import { Steps } from '@theme';
 
 </Steps>
 
-## Badge
+## Tab/Tabs
 
-Badge 组件用于展示状态的标记。使用方法如下：
+你可以在文档中直接使用 Tab/Tabs 组件来实现 tab 切换的效果。比如
 
-```tsx title="index.mdx"
-import { Badge } from '@theme';
+```tsx title="index.tsx"
+import { Tab, Tabs } from 'rspress/theme';
 
 function App() {
-  return <Badge text="info" type="info" />;
+  return (
+    <Tabs>
+      <Tab label="Tab 1">Tab 1 content</Tab>
+      <Tab label="Tab 2">Tab 2 content</Tab>
+    </Tabs>
+  );
 }
 ```
 
-效果如下：
+import { Tab, Tabs } from '@theme';
 
-import { Badge } from '@theme';
+<Tabs>
+  <Tab label="1" value="1">
+    Tab 1 content
+  </Tab>
+  <Tab label="2" value="2">
+    Tab 2 content
+  </Tab>
+</Tabs>
 
-<Badge text="info" type="info" />
-<Badge text="warning" type="warning" />
-<Badge text="danger" type="danger" />
+:::info 提醒
+为了让你更方便地使用这些组件，框架内部对于 `rspress/theme` 这个包做了 alias 处理，所以你可以直接使用 `@theme` 来引入这些组件。
+:::
 
-其中包含的 props 类型如下：
+其中 Tabs 组件的 props 类型如下:
 
 ```ts
-interface BadgeProps {
-  // 用于设置 badge 的文本
-  text: string;
-  // 用于设置 badge 的类型
-  type: 'info' | 'warning' | 'danger';
+interface TabsProps {
+  children: React.ReactNode;
+  defaultValue?: string;
+  groupId?: string;
+  tabPosition?: 'left' | 'center';
 }
 ```
+
+defaultValue 用于设置默认选中的 tab 项，这个值会和 Tab 组件的 value 字段做比较，如果相等则选中该 tab。
+
+groupId 用于设置 tab 项的分组，当你需要多个 Tabs 组件进行联动的时候，可以通过 groupId 来实现。groupId 相同的 Tabs 组件会进行联动。
+
+tabPosition 用于设置 tab 列表的排列位置，目前支持 left 和 center 两个值，分为表示靠左和居中，默认为 left。
+
+Tab 组件的 props 类型如下:
+
+```ts
+interface TabProps {
+  label: string;
+  // 用于标识当前 tab，如果不传则默认使用 label
+  value?: string;
+  children: React.ReactNode;
+}
+```
+
+其中的 `value` 字段用于标识当前 tab，如果不传则默认使用 label。
+
+## Table of Contents
+
+渲染当前页面的 TOC
+
+```tsx title="index.mdx"
+import { Toc } from '@theme';
+
+function App() {
+  return <Toc />;
+}
+```
+
+import { Toc } from '@theme';
+
+<Toc />
