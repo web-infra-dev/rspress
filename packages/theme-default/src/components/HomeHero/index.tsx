@@ -3,7 +3,7 @@ import {
   normalizeHrefInRuntime as normalizeHref,
   normalizeImagePath,
 } from '@rspress/runtime';
-import { Button } from '../Button';
+import { Button } from '@theme';
 import { renderHtmlOrText } from '../../logic';
 import styles from './index.module.scss';
 

@@ -1,14 +1,12 @@
 import { useState } from 'react';
 import { MDXProvider } from '@mdx-js/react';
-import { getCustomMDXComponent } from '@theme';
+import { getCustomMDXComponent, ScrollToTop, Overview } from '@theme';
 import { Content, usePageData, NoSSR } from '@rspress/runtime';
 import { Aside } from '../../components/Aside';
 import { DocFooter } from '../../components/DocFooter';
 import { useLocaleSiteData } from '../../logic';
 import { SideMenu } from '../../components/LocalSideBar';
-import { Overview } from '../../components/Overview';
 import { TabDataContext } from '../../logic/TabDataContext';
-import ScrollToTop from '../../components/ScrollToTop/index';
 import styles from './index.module.scss';
 import { UISwitchResult } from '#theme/logic/useUISwitch';
 

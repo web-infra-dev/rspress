@@ -7,8 +7,7 @@ import {
   withoutBase,
 } from '@rspress/shared';
 import Down from '@theme-assets/down';
-import { Link } from '../Link';
-import { Tag } from '../Tag';
+import { Link, Tag } from '@theme';
 import { NavMenuSingleItem } from './NavMenuSingleItem';
 import { SvgWrapper } from '../SvgWrapper';
 

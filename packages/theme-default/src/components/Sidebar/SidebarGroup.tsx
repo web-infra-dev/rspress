@@ -6,7 +6,7 @@ import {
   withBase,
 } from '@rspress/runtime';
 import ArrowRight from '@theme-assets/arrow-right';
-import { Tag } from '../Tag';
+import { Tag } from '@theme';
 import styles from './index.module.scss';
 import { SidebarItem } from './SidebarItem';
 import { SidebarDivider } from './SidebarDivider';
@@ -141,7 +141,7 @@ export function SidebarGroup(props: SidebarItemProps) {
           }}
         >
           <Tag tag={item.tag} />
-          <span className='flex-center'>{renderInlineMarkdown(item.text)}</span>
+          <span className="flex-center">{renderInlineMarkdown(item.text)}</span>
         </h2>
         {collapsible && (
           <div
