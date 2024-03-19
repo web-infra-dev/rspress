@@ -1,17 +1,32 @@
-## NoSSR
+## Badge
 
-Used to skip the ssr for some components. For example:
+The Badge component is used to display a badge. For example:
 
-```tsx
-import { NoSSR } from 'rspress/runtime';
+```tsx title="index.mdx"
+import { Badge } from '@theme';
 
-const Component = () => {
-  return (
-    <NoSSR>
-      <div>The content here will only be rendered on the client side</div>
-    </NoSSR>
-  );
-};
+function App() {
+  return <Badge text="info" type="info" />;
+}
+```
+
+The effect is as follows:
+
+import { Badge } from '@theme';
+
+<Badge text="info" type="info" />
+<Badge text="warning" type="warning" />
+<Badge text="danger" type="danger" />
+
+The types of props included are as follows:
+
+```ts
+interface BadgeProps {
+  // Used to set the text of the badge
+  text: string;
+  // Used to set the type of the badge
+  type?: 'info' | 'warning' | 'danger';
+}
 ```
 
 ## Helmet
@@ -31,67 +46,108 @@ function App() {
 }
 ```
 
-## Tab/Tabs
+## HomeFeature
 
-You can directly use the Tab/Tabs component in the document to achieve the effect of tab switching. For example:
+Feature component in Hero page, look [the effect in this website](/).
+
+```tsx
+import { HomeFeature } from 'rspress/theme';
+
+export interface Feature {
+  title: string;
+  details: string;
+  icon: string;
+  // only support [3, 4, 6]
+  span?: number;
+  link?: string;
+}
+
+export type Features = Feature[];
+```
+
+## HomeHero
+
+Hero component in Hero page.
+
+```tsx
+import { HomeHero } from 'rspress/theme';
+
+export interface Hero {
+  name: string;
+  text: string;
+  tagline: string;
+  image?: {
+    src: string;
+    alt: string;
+  };
+  actions: {
+    text: string;
+    link: string;
+    theme: 'brand' | 'alt';
+  }[];
+}
+```
+
+## LastUpdated
+
+The LastUpdated component is used to display the last update time of the current page. For example:
 
 ```tsx title="index.mdx"
-import { Tab, Tabs } from 'rspress/theme';
+import { LastUpdated } from '@theme';
 
 function App() {
-  return (
-    <Tabs>
-      <Tab label="Tab 1">Tab 1 content</Tab>
-      <Tab label="Tab 2">Tab 2 content</Tab>
-    </Tabs>
-  );
+  return <LastUpdated />;
 }
 ```
 
-import { Tab, Tabs } from '@theme';
+:::tip
 
-<Tabs>
-  <Tab label="1" value="1">
-    Tab 1 content
-  </Tab>
-  <Tab label="2" value="2">
-    Tab 2 content
-  </Tab>
-</Tabs>
+If `lastUpdated: true` is not configured in the default theme, you need to install and register the `@rspress/plugin-last-updated` plugin.
 
-:::info Note
-In order to make it easier for you to use these components, the `rspress/theme` package has been aliased inside the framework, so you can directly use `@theme` to import these components.
 :::
 
-The props type of the Tabs component is as follows:
+## NoSSR
 
-```ts
-interface TabsProps {
-  children: React.ReactNode;
-  defaultValue?: string;
-  groupId?: string;
-  tabPosition?: 'left' | 'center';
-}
+Used to skip the ssr for some components. For example:
+
+```tsx
+import { NoSSR } from 'rspress/runtime';
+
+const Component = () => {
+  return (
+    <NoSSR>
+      <div>The content here will only be rendered on the client side</div>
+    </NoSSR>
+  );
+};
 ```
 
-`defaultValue` is used to set the tab item selected by default. This value will be compared with the value field of the Tab component props, and if they are equal, the tab will be selected.
+## Overview
 
-`groupId` is used to sync the selected tab item between multiple Tabs components.The groups with the same groupId will be synchronized.
+Overview component, look [the effect in this website](/api/)
 
-`tabPosition` is used to set the position of the tab list, it has two values: `left` and `center`, the default is `left`.
+```tsx
+import { Overview } from 'rspress/theme';
 
-The props types of the Tab component are as follows:
+interface GroupItem {
+  text?: string;
+  link?: string;
+  headers?: Header[];
+}
 
-```ts
-interface TabProps {
-  label: string;
-  // Used to identify the current tab, if not passed, the default label will be used
-  value?: string;
-  children: React.ReactNode;
+interface Group {
+  name: string;
+  items: GroupItem[];
+}
+
+export interface OverviewProps {
+  // content before data rendering
+  content?: React.ReactNode;
+  // data
+  groups?: Group[];
+  defaultGroupTitle?: string;
 }
 ```
-
-The `value` field is used to identify the current tab, if not passed, the default label will be used.
 
 ## PackageManagerTabs
 
@@ -139,40 +195,6 @@ When `command` is set to a string, it will default to displaying three tabs: npm
 :::tip
 
 In the install command, special processing has been done for yarn and bun. If your command is `install some-packages`, the install will be automatically replaced with add in the yarn/bun tab.
-
-:::
-
-## Table of Contents
-
-Render TOC of current page
-
-```tsx title="index.mdx"
-import { Toc } from '@theme';
-
-function App() {
-  return <Toc />;
-}
-```
-
-import { Toc } from '@theme';
-
-<Toc />
-
-## LastUpdated
-
-The LastUpdated component is used to display the last update time of the current page. For example:
-
-```tsx title="index.mdx"
-import { LastUpdated } from '@theme';
-
-function App() {
-  return <LastUpdated />;
-}
-```
-
-:::tip
-
-If `lastUpdated: true` is not configured in the default theme, you need to install and register the `@rspress/plugin-last-updated` plugin.
 
 :::
 
@@ -275,33 +297,80 @@ Body for Step 1.
 
 </Steps>
 
-## Badge
+## Tab/Tabs
 
-The Badge component is used to display a badge. For example:
+You can directly use the Tab/Tabs component in the document to achieve the effect of tab switching. For example:
 
 ```tsx title="index.mdx"
-import { Badge } from '@theme';
+import { Tab, Tabs } from 'rspress/theme';
 
 function App() {
-  return <Badge text="info" type="info" />;
+  return (
+    <Tabs>
+      <Tab label="Tab 1">Tab 1 content</Tab>
+      <Tab label="Tab 2">Tab 2 content</Tab>
+    </Tabs>
+  );
 }
 ```
 
-The effect is as follows:
+import { Tab, Tabs } from '@theme';
 
-import { Badge } from '@theme';
+<Tabs>
+  <Tab label="1" value="1">
+    Tab 1 content
+  </Tab>
+  <Tab label="2" value="2">
+    Tab 2 content
+  </Tab>
+</Tabs>
 
-<Badge text="info" type="info" />
-<Badge text="warning" type="warning" />
-<Badge text="danger" type="danger" />
+:::info Note
+In order to make it easier for you to use these components, the `rspress/theme` package has been aliased inside the framework, so you can directly use `@theme` to import these components.
+:::
 
-The types of props included are as follows:
+The props type of the Tabs component is as follows:
 
 ```ts
-interface BadgeProps {
-  // Used to set the text of the badge
-  text: string;
-  // Used to set the type of the badge
-  type?: 'info' | 'warning' | 'danger';
+interface TabsProps {
+  children: React.ReactNode;
+  defaultValue?: string;
+  groupId?: string;
+  tabPosition?: 'left' | 'center';
 }
 ```
+
+`defaultValue` is used to set the tab item selected by default. This value will be compared with the value field of the Tab component props, and if they are equal, the tab will be selected.
+
+`groupId` is used to sync the selected tab item between multiple Tabs components.The groups with the same groupId will be synchronized.
+
+`tabPosition` is used to set the position of the tab list, it has two values: `left` and `center`, the default is `left`.
+
+The props types of the Tab component are as follows:
+
+```ts
+interface TabProps {
+  label: string;
+  // Used to identify the current tab, if not passed, the default label will be used
+  value?: string;
+  children: React.ReactNode;
+}
+```
+
+The `value` field is used to identify the current tab, if not passed, the default label will be used.
+
+## Table of Contents
+
+Render TOC of current page
+
+```tsx title="index.mdx"
+import { Toc } from '@theme';
+
+function App() {
+  return <Toc />;
+}
+```
+
+import { Toc } from '@theme';
+
+<Toc />
