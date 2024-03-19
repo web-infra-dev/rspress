@@ -1,6 +1,6 @@
 import { Header } from '@rspress/shared';
 import { usePageData } from '@rspress/runtime';
-import { renderInlineMarkdown, scrollToTarget } from '#theme/logic';
+import { renderInlineMarkdown, scrollToTarget } from '../../logic';
 import './index.css';
 
 const TocItem = ({

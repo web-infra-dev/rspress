@@ -4,7 +4,7 @@ import MenuIcon from '@theme-assets/menu';
 import ArrowRight from '@theme-assets/arrow-right';
 import { SideBar, Toc } from '@theme';
 import './index.scss';
-import { UISwitchResult } from '#theme/logic/useUISwitch';
+import { UISwitchResult } from '../../logic/useUISwitch';
 import { SvgWrapper } from '../SvgWrapper';
 import { CSSTransition } from 'react-transition-group';
 

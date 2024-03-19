@@ -13,7 +13,7 @@ import { NavBarTitle } from '../Nav/NavBarTitle';
 import styles from './index.module.scss';
 import { SidebarItem } from './SidebarItem';
 import { SidebarDivider } from './SidebarDivider';
-import { UISwitchResult } from '#theme/logic/useUISwitch';
+import { UISwitchResult } from '../../logic/useUISwitch';
 import { SidebarSectionHeader } from './SidebarSectionHeader';
 
 const isSidebarDivider = (

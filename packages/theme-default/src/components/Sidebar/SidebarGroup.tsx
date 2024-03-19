@@ -12,7 +12,7 @@ import { SidebarItem } from './SidebarItem';
 import { SidebarDivider } from './SidebarDivider';
 import { highlightTitleStyle, matchCache, type SidebarItemProps } from '.';
 import { SvgWrapper } from '../SvgWrapper';
-import { renderInlineMarkdown } from '#theme/logic';
+import { renderInlineMarkdown } from '../../logic';
 
 export function SidebarGroup(props: SidebarItemProps) {
   const { item, depth = 0, activeMatcher, id, setSidebarData } = props;

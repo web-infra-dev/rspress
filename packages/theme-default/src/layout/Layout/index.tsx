@@ -7,9 +7,9 @@ import { usePageData, Content } from '@rspress/runtime';
 import { DocLayout, DocLayoutProps } from '../DocLayout';
 import { HomeLayoutProps } from '../HomeLayout';
 import type { NavProps } from '../../components/Nav';
-import { useLocaleSiteData } from '#theme/logic';
-import { useRedirect4FirstVisit } from '#theme/logic/useRedirect4FirstVisit';
-import { useUISwitch } from '#theme/logic/useUISwitch';
+import { useLocaleSiteData } from '../../logic';
+import { useRedirect4FirstVisit } from '../../logic/useRedirect4FirstVisit';
+import { useUISwitch } from '../../logic/useUISwitch';
 
 export type LayoutProps = {
   top?: React.ReactNode;

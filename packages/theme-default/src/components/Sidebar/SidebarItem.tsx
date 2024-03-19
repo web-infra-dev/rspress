@@ -8,8 +8,8 @@ import { Link, Tag } from '@theme';
 import styles from './index.module.scss';
 import { SidebarGroup } from './SidebarGroup';
 import { SidebarItemProps, highlightTitleStyle } from '.';
-import { renderInlineMarkdown } from '#theme/logic';
-import { useRenderer } from '#theme/logic/useRerender';
+import { renderInlineMarkdown } from '../../logic';
+import { useRenderer } from '../../logic/useRerender';
 
 const removeExtension = (path: string) => {
   return path.replace(/\.(mdx?)$/, '');

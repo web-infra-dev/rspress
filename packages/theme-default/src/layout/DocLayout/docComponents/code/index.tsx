@@ -5,7 +5,7 @@ import IconWrapped from '@theme-assets/wrapped';
 import styles from './index.module.scss';
 import { PrismSyntaxHighlighter } from './PrismSytaxHighlighter';
 import { CopyCodeButton } from './CopyCodeButton';
-import { SvgWrapper } from '#theme/components/SvgWrapper';
+import { SvgWrapper } from '../../../../components/SvgWrapper';
 
 export interface CodeProps {
   children: string;

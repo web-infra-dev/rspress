@@ -3,7 +3,7 @@ import SearchSvg from '@theme-assets/search';
 import styles from './index.module.scss';
 import { SearchPanel } from './SearchPanel';
 import { SvgWrapper } from '../SvgWrapper';
-import { useLocaleSiteData } from '#theme/logic';
+import { useLocaleSiteData } from '../../logic';
 
 export function Search() {
   const [focused, setFocused] = useState(false);
