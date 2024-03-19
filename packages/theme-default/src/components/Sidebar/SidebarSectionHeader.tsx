@@ -1,4 +1,4 @@
-import { renderInlineMarkdown } from '#theme/logic';
+import { renderInlineMarkdown } from '../../logic';
 import { Tag } from '@theme';
 
 export function SidebarSectionHeader({

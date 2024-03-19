@@ -8,7 +8,7 @@ import { useLocaleSiteData } from '../../logic';
 import { SideMenu } from '../../components/LocalSideBar';
 import { TabDataContext } from '../../logic/TabDataContext';
 import styles from './index.module.scss';
-import { UISwitchResult } from '#theme/logic/useUISwitch';
+import { UISwitchResult } from '../../logic/useUISwitch';
 
 export interface DocLayoutProps {
   beforeSidebar?: React.ReactNode;

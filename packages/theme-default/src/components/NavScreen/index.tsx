@@ -12,7 +12,7 @@ import {
 } from '../Nav/menuDataHooks';
 import { NavScreenMenuGroup } from './NavScreenMenuGroup';
 import styles from './index.module.scss';
-import { useNavData } from '#theme/logic/useNav';
+import { useNavData } from '../../logic/useNav';
 
 interface Props {
   isScreenOpen: boolean;
