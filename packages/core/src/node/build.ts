@@ -61,7 +61,7 @@ export async function bundle(
             distPath: {
               server: 'ssr',
             },
-            disableMinimize: true,
+            minify: false,
           },
           tools: {
             rspack(options) {
