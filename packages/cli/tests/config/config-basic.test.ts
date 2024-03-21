@@ -1,6 +1,7 @@
 import { describe, test, expect } from 'vitest';
 import { loadConfigFile } from '../../src/config/loadConfigFile';
 import path from 'path';
+import { normalizePath } from '../../../core/src/node/utils/normalizePath';
 
 const TEST_TITLE = 'my-title';
 
@@ -24,9 +25,8 @@ describe('Should load config file', () => {
     );
 
     expect(config).toContain({
-      // use path.posix here,
-      // as jiti will inject `__dirname` with posix separator in esm files
-      root: path.posix.join(__dirname, 'esm'),
+      // we need to normalize path as jiti will inject `__dirname` with posix separator in esm files
+      root: normalizePath(fixtureDir),
       title: TEST_TITLE,
     });
   });
@@ -38,7 +38,7 @@ describe('Should load config file', () => {
     );
 
     const expectConfig = {
-      root: path.posix.join(__dirname, 'cjs'),
+      root: normalizePath(fixtureDir),
       title: TEST_TITLE,
     };
     expect(config).toContain(expectConfig);
@@ -54,7 +54,7 @@ describe('Should load config file', () => {
     );
 
     const expectConfig = {
-      root: path.posix.join(__dirname, 'esm'),
+      root: normalizePath(fixtureDir),
       title: TEST_TITLE,
     };
     expect(config).toContain(expectConfig);
