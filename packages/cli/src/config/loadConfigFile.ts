@@ -33,5 +33,8 @@ export async function loadConfigFile(
     path: configFilePath,
   });
 
+  // delete the meta info of Rsbuild
+  delete content._privateMeta;
+
   return content as UserConfig;
 }
