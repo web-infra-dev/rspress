@@ -1,6 +1,7 @@
 import fs from 'fs';
 import path from 'path';
 import type { UserConfig } from '@rspress/core';
+import { logger } from '@rspress/shared/logger';
 import { DEFAULT_CONFIG_NAME, DEFAULT_EXTENSIONS } from '@/constants';
 
 const findConfig = (basePath: string): string | undefined => {
@@ -22,7 +23,7 @@ export async function loadConfigFile(
     configFilePath = findConfig(path.join(baseDir, DEFAULT_CONFIG_NAME))!;
   }
   if (!configFilePath) {
-    console.log('no config file found');
+    logger.info(`No config file found in ${baseDir}`);
     return {};
   }
 
