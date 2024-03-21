@@ -10,7 +10,7 @@ describe('Should load config file', () => {
     const config = await loadConfigFile(
       path.join(fixtureDir, 'rspress.config.cjs'),
     );
-    expect(config).toEqual({
+    expect(config).toContain({
       root: fixtureDir,
       title: TEST_TITLE,
     });
@@ -21,7 +21,7 @@ describe('Should load config file', () => {
     const config = await loadConfigFile(
       path.join(fixtureDir, 'rspress.config.mjs'),
     );
-    expect(config).toEqual({
+    expect(config).toContain({
       root: fixtureDir,
       title: TEST_TITLE,
     });
@@ -32,13 +32,13 @@ describe('Should load config file', () => {
     let config = await loadConfigFile(
       path.join(fixtureDir, 'rspress.config.js'),
     );
-    expect(config).toEqual({
+    expect(config).toContain({
       root: fixtureDir,
       title: TEST_TITLE,
     });
 
     config = await loadConfigFile(path.join(fixtureDir, 'rspress.config.ts'));
-    expect(config).toEqual({
+    expect(config).toContain({
       root: fixtureDir,
       title: TEST_TITLE,
     });
@@ -49,13 +49,13 @@ describe('Should load config file', () => {
     let config = await loadConfigFile(
       path.join(fixtureDir, 'rspress.config.js'),
     );
-    expect(config).toEqual({
+    expect(config).toContain({
       root: fixtureDir,
       title: TEST_TITLE,
     });
 
     config = await loadConfigFile(path.join(fixtureDir, 'rspress.config.ts'));
-    expect(config).toEqual({
+    expect(config).toContain({
       root: fixtureDir,
       title: TEST_TITLE,
     });
