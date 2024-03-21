@@ -92,15 +92,13 @@
 }
 
 .menuItem,
-.menuItemStatic,
 .menuItemActive {
   font-size: 13px;
   line-height: 19px;
   border-radius: 0 var(--rp-radius) var(--rp-radius) 0;
 }
 
-.menuItem,
-.menuItemStatic {
+.menuItem {
   color: var(--rp-c-text-2);
   transition: color 0.2s;
   font-weight: 500;

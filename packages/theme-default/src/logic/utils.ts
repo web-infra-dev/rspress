@@ -35,7 +35,7 @@ export function getLogoUrl(
 }
 
 export function isMobileDevice() {
-  return window.innerWidth < 768;
+  return window.innerWidth <= 1024;
 }
 
 export function renderHtmlOrText(str?: string | number | null) {

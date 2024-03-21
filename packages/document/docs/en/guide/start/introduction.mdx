@@ -170,21 +170,17 @@ Rspress provides out-of-the-box full-text search capabilities, which you can acc
 
 Rspress supports two ways to customize themes:
 
-1. Extend from the default theme. In each component of the default theme, many slots are provided for you to add custom layout content, such as integrating the AI Q&A component provided by [`documate`](https://documate.site):
+1. Extend from the default theme. In each component of the default theme, many slots are provided for you to add custom layout content, for example:
 
 ```ts
 // theme/index.tsx
 import Theme from 'rspress/theme';
 import { NoSSR } from 'rspress/runtime';
-import { Documate } from '@documate/react';
-import '@documate/react/dist/style.css';
 
 const Layout = () => (
   <Theme.Layout
-    afterNavTitle={
-      <NoSSR>
-        <Documate endpoint="" />
-      </NoSSR>
+    beforeNavTitle={
+      <p>Custom Block</p>
     }
   />
 );
@@ -196,12 +192,6 @@ export default {
 
 export * from 'rspress/theme';
 ```
-
-The effect is as follows:
-
-![](https://lf3-static.bytednsdoc.com/obj/eden-cn/uhbfnupenuhf/rspress/rspress-ai-search.jpeg)
-
-> Integrating AI Q&A in Rspress: https://documate.site/integration/rspress
 
 2.  Fully customized theme. If you want to develop a custom theme from scratch, you can customize the content of Layout and use various Runtime APIs provided by Rspress (such as `usePageData`) to obtain compile-time data, routing information, etc.
 

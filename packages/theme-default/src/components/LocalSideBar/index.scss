@@ -44,10 +44,31 @@
   position: absolute;
   padding: 6px;
   border-radius: var(--rp-radius-small);
-  top: var(--rp-nav-height);
+  top: calc(var(--rp-nav-height) - 14px);
   background-color: var(--rp-c-bg-soft);
+  left: 20px;
   right: 20px;
-  max-width: 250px;
-  transition: all 0.3s;
-  overflow-y: scroll;
+  max-height: calc(100vh - var(--rp-nav-height) - 20px);
+  overflow: scroll;
+  box-shadow: var(--rp-shadow-1);
+  border: 1px solid var(--rp-c-divider-light);
+}
+
+.fly-in-enter {
+  opacity: 0;
+  transform: translateY(-16px);
+}
+
+.fly-in-enter-active {
+  opacity: 1;
+  transform: translateX(0);
+  transition:
+    opacity 300ms,
+    transform 300ms;
+}
+
+.fly-in-exit,
+.fly-in-exit-active {
+  opacity: 0;
+  transition: none;
 }

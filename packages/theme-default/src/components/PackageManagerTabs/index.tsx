@@ -1,4 +1,4 @@
-import { Tabs, Tab } from '../Tabs';
+import { Tabs, Tab } from '@theme';
 import { Pre } from '../../layout/DocLayout/docComponents/pre';
 import { Code } from '../../layout/DocLayout/docComponents/code';
 import { Npm } from './icons/Npm';

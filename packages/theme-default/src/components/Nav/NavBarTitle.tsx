@@ -6,7 +6,7 @@ import {
   withBase,
 } from '@rspress/runtime';
 import styles from './index.module.scss';
-import { getLogoUrl, useLocaleSiteData } from '#theme/logic';
+import { getLogoUrl, useLocaleSiteData } from '../../logic';
 
 export const NavBarTitle = () => {
   const { siteData } = usePageData();

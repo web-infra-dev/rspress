@@ -91,7 +91,7 @@ If you have any questions, you can open an issue or go to [Discord](https://disc
 
 This repo has adopted the ByteDance Open Source Code of Conduct. Please check [Code of Conduct](./CODE_OF_CONDUCT.md) for more details.
 
-### 🦀 Links
+## 🦀 Links
 
 | Name                                                       | Description                                       |
 | ---------------------------------------------------------- | ------------------------------------------------- |
@@ -104,6 +104,6 @@ This repo has adopted the ByteDance Open Source Code of Conduct. Please check [C
 
 Rspress uses [Web Infra QoS](https://web-infra-qos.netlify.app?product=rspress) to observe the trend of key metrics, such as bundle size, compile speed and install size.
 
-### 📖 License
+## 📖 License
 
 Rspress is licensed under the [MIT License](./LICENSE).

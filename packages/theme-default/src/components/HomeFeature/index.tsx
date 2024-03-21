@@ -1,6 +1,6 @@
 import { FrontMatterMeta, Feature } from '@rspress/shared';
 import styles from './index.module.scss';
-import { renderHtmlOrText } from '#theme/logic';
+import { renderHtmlOrText } from '../../logic';
 
 const GRID_PREFIX = 'grid-';
 
