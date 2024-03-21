@@ -7,4 +7,5 @@ export { setup, bindingAsideScroll, scrollToTarget } from './sideEffects';
 export { usePathUtils } from './usePathUtils';
 export { useFullTextSearch } from './useFullTextSearch';
 export { useRedirect4FirstVisit } from './useRedirect4FirstVisit';
+export { isDarkMode } from './useAppearance'
 export * from './utils';

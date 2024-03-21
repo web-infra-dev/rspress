@@ -7,6 +7,7 @@ import {
   normalizeRoutePath,
   BrowserRouter,
 } from '@rspress/runtime';
+import { isDarkMode } from '@theme';
 import { App, initPageData } from './App';
 
 const enableSSG = siteData.ssg;
@@ -22,7 +23,10 @@ export async function renderInBrowser() {
     );
     return function RootApp() {
       const [data, setData] = useState(initialPageData);
-      const [theme, setTheme] = useState<'light' | 'dark'>('light');
+      const [theme, setTheme] = useState<'light' | 'dark'>(
+        // set the initial theme
+        isDarkMode() ? 'dark' : 'light',
+      );
       return (
         <ThemeContext.Provider value={{ theme, setTheme }}>
           <DataContext.Provider value={{ data, setData }}>

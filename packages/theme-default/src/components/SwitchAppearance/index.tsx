@@ -22,6 +22,7 @@ export function SwitchAppearance({ onClick }: { onClick?: () => void }) {
       setTheme('dark');
     }
     if (typeof window !== 'undefined') {
+      // Keep theme same when multiple pages are open and switch appearance in one page.
       window.addEventListener('storage', updateAppearanceAndTheme);
     }
     return () => {

@@ -11,7 +11,6 @@ export async function render(
   helmetContext: object,
 ): Promise<{ appHtml: string; pageData: PageData }> {
   const initialPageData = await initPageData(pagePath);
-
   const appHtml = renderToString(
     <ThemeContext.Provider value={{ theme: DEFAULT_THEME }}>
       <DataContext.Provider value={{ data: initialPageData }}>
