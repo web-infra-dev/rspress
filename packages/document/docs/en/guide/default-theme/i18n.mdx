@@ -2,12 +2,12 @@
 
 To achieve document internationalization in Rspress, you need to do the following:
 
-- 1. Defines I18n text data.
-- 2. Configure `locales` and `themeConfig.locales`。
-- 3. Configure the default language.
-- 4. Create documents in different language version.
-- 5. Configure sidebar and navbar.
-- 6. Use `useI18n` in custom components.
+1. Defines I18n text data.
+2. Configure `locales` and `themeConfig.locales`。
+3. Configure the default language.
+4. Create documents in different language version.
+5. Configure sidebar and navbar.
+6. Use `useI18n` in custom components.
 
 ## Defines I18n text data
 
@@ -116,7 +116,6 @@ export default defineConfig({
 ```
 
 This is important because **for routes in the default language, the framework will remove the language prefix**, such as `/zh/guide/getting-started` will be converted to `/guide/getting-started`.
-
 
 ## Create documents in different language
 

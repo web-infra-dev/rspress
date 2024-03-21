@@ -2,12 +2,12 @@
 
 在 Rspress 中实现文档的国际化，你需要做如下的操作:
 
-- 1. 定义 I18n 文本数据。
-- 2. 配置 `locales` 和 `themeConfig.locales`。
-- 3. 配置默认语言。
-- 4. 新建不同的语言版本的文档。
-- 5. 配置侧边栏和导航栏。
-- 6. 自定义组件中使用 `useI18n`。
+1. 定义 I18n 文本数据。
+2. 配置 `locales` 和 `themeConfig.locales`。
+3. 配置默认语言。
+4. 新建不同的语言版本的文档。
+5. 配置侧边栏和导航栏。
+6. 自定义组件中使用 `useI18n`。
 
 ## 定义 I18n 文本数据
 
@@ -117,7 +117,6 @@ export default defineConfig({
 ```
 
 这很重要，因为**对于默认语言下的路由，框架会去掉语言前缀**，比如 `/zh/guide/getting-started` 会被转换为 `/guide/getting-started`。
-
 
 ## 新建不同的语言版本的文档
 
