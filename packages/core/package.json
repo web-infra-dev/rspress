@@ -103,7 +103,6 @@
     "tailwindcss": "^3.2.7",
     "@modern-js/plugin-tailwindcss": "2.48.1",
     "@modern-js/tsconfig": "2.48.1",
-    "@modern-js/types": "2.48.1",
     "@types/body-scroll-lock": "^3.1.0",
     "@types/fs-extra": "^9.0.13",
     "@types/hast": "^2.3.4",

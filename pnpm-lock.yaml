@@ -461,9 +461,6 @@ importers:
       '@modern-js/tsconfig':
         specifier: 2.48.1
         version: 2.48.1
-      '@modern-js/types':
-        specifier: 2.48.1
-        version: 2.48.1
       '@types/body-scroll-lock':
         specifier: ^3.1.0
         version: 3.1.0
@@ -1041,9 +1038,6 @@ importers:
       '@modern-js/tsconfig':
         specifier: 2.48.1
         version: 2.48.1
-      '@modern-js/types':
-        specifier: 2.48.1
-        version: 2.48.1
       '@types/jest':
         specifier: ^26.0.9
         version: 26.0.9
@@ -1188,9 +1182,6 @@ importers:
         specifier: 2.48.1
         version: 2.48.1(tailwindcss@3.2.7)
       '@modern-js/tsconfig':
-        specifier: 2.48.1
-        version: 2.48.1
-      '@modern-js/types':
         specifier: 2.48.1
         version: 2.48.1
       '@types/body-scroll-lock':

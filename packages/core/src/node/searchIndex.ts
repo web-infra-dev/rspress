@@ -1,7 +1,7 @@
 import path, { join } from 'path';
 import fs from '@rspress/shared/fs-extra';
 import chalk from '@rspress/shared/chalk';
-import { RequestHandler } from '@modern-js/types';
+import type { IncomingMessage, ServerResponse } from 'http';
 import fetch from 'node-fetch';
 import { UserConfig, isSCM, SEARCH_INDEX_NAME } from '@rspress/shared';
 import { logger } from '@rspress/shared/logger';
@@ -62,6 +62,12 @@ export async function writeSearchIndex(config: UserConfig) {
     }
   }
 }
+
+type RequestHandler = (
+  req: IncomingMessage,
+  res: ServerResponse,
+  next: () => void,
+) => void;
 
 export function serveSearchIndexMiddleware(config: UserConfig): RequestHandler {
   return (req, res, next) => {
