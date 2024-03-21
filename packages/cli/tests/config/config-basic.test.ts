@@ -6,7 +6,7 @@ const TEST_TITLE = 'my-title';
 
 describe('Should load config file', () => {
   test('Load config.cjs', async () => {
-    const fixtureDir = path.join(__dirname, './cjs');
+    const fixtureDir = path.join(__dirname, 'cjs');
     const config = await loadConfigFile(
       path.join(fixtureDir, 'rspress.config.cjs'),
     );
@@ -17,7 +17,7 @@ describe('Should load config file', () => {
   });
 
   test('Load config.mjs', async () => {
-    const fixtureDir = path.join(__dirname, './esm');
+    const fixtureDir = path.join(__dirname, 'esm');
     const config = await loadConfigFile(
       path.join(fixtureDir, 'rspress.config.mjs'),
     );
@@ -28,7 +28,7 @@ describe('Should load config file', () => {
   });
 
   test('Load config.js/config.ts in cjs project', async () => {
-    const fixtureDir = path.join(__dirname, './cjs');
+    const fixtureDir = path.join(__dirname, 'cjs');
     let config = await loadConfigFile(
       path.join(fixtureDir, 'rspress.config.js'),
     );
@@ -45,7 +45,7 @@ describe('Should load config file', () => {
   });
 
   test('Load config.js/config.ts in esm project', async () => {
-    const fixtureDir = path.join(__dirname, './esm');
+    const fixtureDir = path.join(__dirname, 'esm');
     let config = await loadConfigFile(
       path.join(fixtureDir, 'rspress.config.js'),
     );
