@@ -70,7 +70,7 @@ export let matchCache: WeakMap<
   boolean
 > = new WeakMap();
 
-export function SideBar(props: Props) {
+export function Sidebar(props: Props) {
   const { isSidebarOpen, beforeSidebar, afterSidebar, uiSwitch } = props;
   const { items: rawSidebarData } = useSidebarData();
   const localesData = useLocaleSiteData();
