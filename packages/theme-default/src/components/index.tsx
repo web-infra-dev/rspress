@@ -14,7 +14,7 @@ export { PackageManagerTabs } from './PackageManagerTabs';
 export { PrevNextPage } from './PrevNextPage';
 export { ScrollToTop } from './ScrollToTop';
 export { Search, SearchPanel } from './Search';
-export { SideBar } from './SideBar';
+export { Sidebar } from './Sidebar';
 export { SocialLinks } from './SocialLinks';
 export { SourceCode } from './SourceCode';
 export { Steps } from './Steps';
