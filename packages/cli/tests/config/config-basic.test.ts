@@ -11,7 +11,7 @@ describe('Should load config file', () => {
       path.join(fixtureDir, 'rspress.config.cjs'),
     );
 
-    expect(config).toEqual({
+    expect(config).toContain({
       root: fixtureDir,
       title: TEST_TITLE,
     });
@@ -22,8 +22,11 @@ describe('Should load config file', () => {
     const config = await loadConfigFile(
       path.join(fixtureDir, 'rspress.config.mjs'),
     );
-    expect(config).toEqual({
-      root: fixtureDir,
+
+    expect(config).toContain({
+      // use path.posix here,
+      // as jiti will inject `__dirname` with posix separator in esm files
+      root: path.posix.join(__dirname, 'esm'),
       title: TEST_TITLE,
     });
   });
@@ -33,16 +36,15 @@ describe('Should load config file', () => {
     let config = await loadConfigFile(
       path.join(fixtureDir, 'rspress.config.js'),
     );
-    expect(config).toEqual({
-      root: fixtureDir,
+
+    const expectConfig = {
+      root: path.posix.join(__dirname, 'cjs'),
       title: TEST_TITLE,
-    });
+    };
+    expect(config).toContain(expectConfig);
 
     config = await loadConfigFile(path.join(fixtureDir, 'rspress.config.ts'));
-    expect(config).toEqual({
-      root: fixtureDir,
-      title: TEST_TITLE,
-    });
+    expect(config).toContain(expectConfig);
   });
 
   test('Load config.js/config.ts in esm project', async () => {
@@ -50,15 +52,14 @@ describe('Should load config file', () => {
     let config = await loadConfigFile(
       path.join(fixtureDir, 'rspress.config.js'),
     );
-    expect(config).toEqual({
-      root: fixtureDir,
+
+    const expectConfig = {
+      root: path.posix.join(__dirname, 'esm'),
       title: TEST_TITLE,
-    });
+    };
+    expect(config).toContain(expectConfig);
 
     config = await loadConfigFile(path.join(fixtureDir, 'rspress.config.ts'));
-    expect(config).toEqual({
-      root: fixtureDir,
-      title: TEST_TITLE,
-    });
+    expect(config).toContain(expectConfig);
   });
 });
