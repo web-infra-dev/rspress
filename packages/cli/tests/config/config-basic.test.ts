@@ -37,14 +37,16 @@ describe('Should load config file', () => {
       path.join(fixtureDir, 'rspress.config.js'),
     );
 
-    const expectConfig = {
-      root: normalizePath(fixtureDir),
+    expect(config).toContain({
+      root: fixtureDir,
       title: TEST_TITLE,
-    };
-    expect(config).toContain(expectConfig);
+    });
 
     config = await loadConfigFile(path.join(fixtureDir, 'rspress.config.ts'));
-    expect(config).toContain(expectConfig);
+    expect(config).toContain({
+      root: normalizePath(fixtureDir),
+      title: TEST_TITLE,
+    });
   });
 
   test('Load config.js/config.ts in esm project', async () => {
