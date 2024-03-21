@@ -48,7 +48,6 @@
   },
   "devDependencies": {
     "@modern-js/tsconfig": "2.48.1",
-    "@modern-js/types": "2.48.1",
     "@types/jest": "^26.0.9",
     "@types/react": "^18",
     "@types/react-dom": "^18",
