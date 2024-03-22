@@ -141,6 +141,6 @@ cli
     },
   );
 
-cli.command('update', 'update elavant packages about rspress').action(update);
+cli.command('update', 'update relevant packages about rspress').action(update);
 
 cli.parse();
