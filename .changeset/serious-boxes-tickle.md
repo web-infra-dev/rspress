@@ -2,4 +2,4 @@
 "@rspress/plugin-container-syntax": patch
 ---
 
-docs: improve bg opacity of container blocks
+feat: improve bg opacity of container blocks
