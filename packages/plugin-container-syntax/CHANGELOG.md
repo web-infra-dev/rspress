@@ -1,5 +1,14 @@
 # @rspress/remark-container
 
+## 1.16.0
+
+### Patch Changes
+
+- ee9e3a0: feat: improve bg opacity of container blocks
+- Updated dependencies [4cf049c]
+- Updated dependencies [516c8cc]
+  - @rspress/shared@1.16.0
+
 ## 1.15.1
 
 ### Patch Changes

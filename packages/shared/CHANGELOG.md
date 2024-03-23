@@ -1,5 +1,12 @@
 # @rspress/shared
 
+## 1.16.0
+
+### Patch Changes
+
+- 4cf049c: feat(deps): update rsbuild to v0.5.1
+- 516c8cc: chore: bump Rsbuild and update distPath config
+
 ## 1.15.1
 
 ## 1.15.0

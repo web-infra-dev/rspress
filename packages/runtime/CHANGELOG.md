@@ -1,5 +1,14 @@
 # @rspress/runtime
 
+## 1.16.0
+
+### Patch Changes
+
+- 4a76d4a: chore: remove @modern-js/types dependency
+- Updated dependencies [4cf049c]
+- Updated dependencies [516c8cc]
+  - @rspress/shared@1.16.0
+
 ## 1.15.1
 
 ### Patch Changes
