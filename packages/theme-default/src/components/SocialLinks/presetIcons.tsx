@@ -233,7 +233,7 @@ export default {
       />
     </svg>
   ),
-  x: (
+  X: (
     <svg
       role="img"
       viewBox="0 0 24 24"
