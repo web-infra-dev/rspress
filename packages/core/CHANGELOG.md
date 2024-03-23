@@ -1,5 +1,47 @@
 # @rspress/core
 
+## 1.16.0
+
+### Minor Changes
+
+- 7bf8e1c: fix(PluginDriver): nav and sidebar add ?
+
+### Patch Changes
+
+- 4cf049c: feat(deps): update rsbuild to v0.5.1
+- 1d0ea3a: fix: support source-build in mdx files
+- 516c8cc: chore: bump Rsbuild and update distPath config
+- 4a76d4a: chore: remove @modern-js/types dependency
+- 1731178: chore: optimize the nav experience in pad device
+- 943b2eb: fix: avoid panic when relative path in markdown links point outside the root path
+- f2e5b86: fix: custom theme color not work
+- 7d24c66: chore: update mdx to 2.3.0
+- Updated dependencies [72be418]
+- Updated dependencies [4ebdf1a]
+- Updated dependencies [4cf049c]
+- Updated dependencies [6e8097e]
+- Updated dependencies [f0d5452]
+- Updated dependencies [d27c2e2]
+- Updated dependencies [516c8cc]
+- Updated dependencies [12dc515]
+- Updated dependencies [9062915]
+- Updated dependencies [b208ed9]
+- Updated dependencies [4a76d4a]
+- Updated dependencies [d7df90f]
+- Updated dependencies [1bef4dc]
+- Updated dependencies [1d5ebc7]
+- Updated dependencies [1731178]
+- Updated dependencies [ee9e3a0]
+- Updated dependencies [cf9f3a9]
+- Updated dependencies [7d24c66]
+  - @rspress/theme-default@1.16.0
+  - @rspress/shared@1.16.0
+  - @rspress/runtime@1.16.0
+  - @rspress/plugin-container-syntax@1.16.0
+  - @rspress/plugin-auto-nav-sidebar@1.16.0
+  - @rspress/plugin-last-updated@1.16.0
+  - @rspress/plugin-medium-zoom@1.16.0
+
 ## 1.15.1
 
 ### Patch Changes
