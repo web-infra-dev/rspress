@@ -7,7 +7,7 @@ import { useDark } from '@rspress/core/runtime';
 import { DEFAULT_MONACO_URL } from './constant';
 
 // inject by Rsbuild in cli/index.ts
-// see: https://rsbuild.dev/zh/config/options/source.html#sourcedefine
+// see: https://rsbuild.dev/config/source/define
 declare global {
   const __PLAYGROUND_MONACO_LOADER__: any;
   const __PLAYGROUND_MONACO_OPTIONS__: any;
