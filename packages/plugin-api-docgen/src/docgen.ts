@@ -155,7 +155,7 @@ export const docgen = async ({
     });
   }
 
-  logger.success('[module-doc-plugin]', `Generate API table successfully!`);
+  logger.success('[module-doc-plugin]', 'Generate API table successfully!');
 };
 
 function generateTable(componentDoc: ComponentDoc[], language: 'zh' | 'en') {

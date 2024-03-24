@@ -15,7 +15,11 @@
       "packages/**/*.ts",
       "packages/**/*.tsx",
       "packages/**/*.js",
-      "packages/**/*.jsx"
+      "packages/**/*.jsx",
+      "scripts/**/*.js",
+      "scripts/**/*.ts",
+      "e2e/**/*.js",
+      "e2e/**/*.ts"
     ],
     "ignore": [
       "*.d.ts",
@@ -38,14 +42,11 @@
     "rules": {
       "recommended": true,
       "style": {
-        "useConst": "off",
-        "noUselessElse": "off",
         "noParameterAssign": "off",
         "noInferrableTypes": "off",
         "noNonNullAssertion": "off",
         "useSelfClosingElements": "off",
-        "useDefaultParameterLast": "off",
-        "noUnusedTemplateLiteral": "off"
+        "useDefaultParameterLast": "off"
       },
       "security": {
         "noDangerouslySetInnerHtml": "off"
@@ -59,7 +60,6 @@
         "noAssignInExpressions": "off"
       },
       "correctness": {
-        "noUnnecessaryContinue": "off",
         "useExhaustiveDependencies": "off"
       },
       "complexity": {

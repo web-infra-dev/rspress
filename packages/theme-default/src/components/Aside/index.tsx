@@ -1,7 +1,12 @@
 import { useEffect } from 'react';
 import { Header } from '@rspress/shared';
-import { bindingAsideScroll, renderInlineMarkdown, scrollToTarget, useHiddenNav } from '../../logic';
-import { DEFAULT_NAV_HEIGHT } from '#theme/logic/sideEffects';
+import {
+  bindingAsideScroll,
+  renderInlineMarkdown,
+  scrollToTarget,
+  useHiddenNav,
+} from '../../logic';
+import { DEFAULT_NAV_HEIGHT } from '../../logic/sideEffects';
 import './index.css';
 
 export function Aside(props: { headers: Header[]; outlineTitle: string }) {
@@ -52,7 +57,9 @@ export function Aside(props: { headers: Header[]; outlineTitle: string }) {
             }
           }}
         >
-          <span className="aside-link-text block">{renderInlineMarkdown(header.text)}</span>
+          <span className="aside-link-text block">
+            {renderInlineMarkdown(header.text)}
+          </span>
         </a>
       </li>
     );
@@ -60,7 +67,7 @@ export function Aside(props: { headers: Header[]; outlineTitle: string }) {
 
   return (
     <div className="flex flex-col">
-      <div className={hasOutline ? `<lg:hidden` : 'hidden'}>
+      <div className={hasOutline ? '<lg:hidden' : 'hidden'}>
         <div id="aside-container" className="relative text-sm font-medium">
           <div className="leading-7 block text-sm font-semibold pl-3">
             {props.outlineTitle}

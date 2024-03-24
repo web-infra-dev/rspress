@@ -55,9 +55,9 @@ function getCharByteCount(char: string) {
   if (charCode > 255) {
     // Chinese character
     return 3;
-  } else {
-    return 1;
   }
+
+  return 1;
 }
 
 export const normalizeSearchIndexes = (
@@ -81,7 +81,8 @@ export function substrByBytes(str: string, start: number, len: number): string {
     bytesCount += getCharByteCount(str.charAt(i));
     if (bytesCount > start + len) {
       break;
-    } else if (bytesCount > start) {
+    }
+    if (bytesCount > start) {
       resultStr += str.charAt(i);
     }
   }

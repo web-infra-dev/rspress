@@ -1,7 +1,15 @@
 import { join } from 'path';
 import net from 'node:net';
-import { type RouteMeta, type RspressPlugin, removeTrailingSlash } from '@rspress/shared';
-import { type RsbuildConfig, createRsbuild, mergeRsbuildConfig } from '@rsbuild/core';
+import {
+  type RouteMeta,
+  type RspressPlugin,
+  removeTrailingSlash,
+} from '@rspress/shared';
+import {
+  type RsbuildConfig,
+  createRsbuild,
+  mergeRsbuildConfig,
+} from '@rsbuild/core';
 import { pluginSolid } from '@rsbuild/plugin-solid';
 import { pluginBabel } from '@rsbuild/plugin-babel';
 import { pluginReact } from '@rsbuild/plugin-react';
@@ -65,11 +73,11 @@ export function pluginPreview(options?: Options): RspressPlugin {
         } catch (e: any) {
           if (e.code !== 'EADDRINUSE') {
             throw e;
-          } else {
-            throw new Error(
-              `Port "${port}" is occupied, please choose another one.`,
-            );
           }
+
+          throw new Error(
+            `Port "${port}" is occupied, please choose another one.`,
+          );
         }
       }
     },
@@ -106,13 +114,16 @@ export function pluginPreview(options?: Options): RspressPlugin {
           },
           output: {
             ...output,
-            assetPrefix: output?.assetPrefix ? `${removeTrailingSlash(output.assetPrefix)}/~demo` : '/~demo',
+            assetPrefix: output?.assetPrefix
+              ? `${removeTrailingSlash(output.assetPrefix)}/~demo`
+              : '/~demo',
             distPath: {
               root: outDir,
             },
             // not copy files again
             copy: undefined,
           },
+          plugins: config?.builderPlugins,
         },
         builderConfig,
       );
@@ -156,11 +167,11 @@ export function pluginPreview(options?: Options): RspressPlugin {
           name: 'close-demo-server',
           setup: api => {
             api.modifyRsbuildConfig(config => {
-              if (config.output?.targets?.every(target => target ==='web')) {
+              if (config.output?.targets?.every(target => target === 'web')) {
                 // client build config
                 clientConfig = config;
               }
-            })
+            });
             api.onCloseDevServer(async () => {
               await devServer?.server?.close();
             });

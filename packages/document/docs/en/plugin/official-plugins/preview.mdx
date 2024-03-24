@@ -35,7 +35,7 @@ This plugin will set `markdown.mdxRs` to `false`. In the future, the Rspress tea
 
 The component code of internal components is declared in the mdx file. You can declare the following code block in the mdx file:
 
-````mdx
+````md
 ```tsx
 function App() {
   return <div>Hello World</div>;
@@ -49,7 +49,7 @@ It's worth noting that you need to export the component as default, and Rspress 
 
 But if you want to keep the style of the code block instead of rendering it as a component, you can add the `pure` identifier to specify, the usage is as follows:
 
-````mdx
+````md
 ```tsx pure
 function App() {
   return <div>Hello World</div>;
@@ -60,7 +60,7 @@ export default App;
 
 If you have set `defaultRenderMode` to `'pure'`, Rspress will not render this component by default, but instead display it as a code block. If you want to render a code block as a component in this situation, you can do add the `preview` identifier to specify, the usage is as follows:
 
-````mdx
+````md
 ```tsx preview
 function App() {
   return <div>Hello World</div>;

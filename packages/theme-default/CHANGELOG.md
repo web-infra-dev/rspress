@@ -1,5 +1,60 @@
 # @rspress/theme-default
 
+## 1.16.0
+
+### Minor Changes
+
+- d27c2e2: feat(theme-default): preserve query string on locale change
+- 1d5ebc7: feat(theme): export all internal components
+- cf9f3a9: feat(theme): support link keep current params and navigate
+
+### Patch Changes
+
+- 72be418: chore: remove #theme in source code
+- 4ebdf1a: fix: svg not displayed in iOS device
+- 6e8097e: chore: optimize code style in aside component
+- f0d5452: Fix the capitalization issue of X in socialLinks presetIcons
+- 12dc515: feat: optimize mobile ui
+- 9062915: chore: remove duplicated sidebar files
+- b208ed9: chore: remove parent sidebar group highlight background
+- 4a76d4a: chore: remove @modern-js/types dependency
+- d7df90f: fix: improve filter func when generate overview
+- 1bef4dc: fix(theme): replace angle brackets in inline markdown
+- 1731178: chore: optimize the nav experience in pad device
+- 7d24c66: chore: update mdx to 2.3.0
+- Updated dependencies [4cf049c]
+- Updated dependencies [516c8cc]
+- Updated dependencies [4a76d4a]
+  - @rspress/shared@1.16.0
+  - @rspress/runtime@1.16.0
+
+## 1.15.1
+
+### Patch Changes
+
+- 9139dc3: fix: add scroll padding top
+- 1f2febd: fix: only scroll panel when item is unvisible
+- ab88310: fix: sidebar text not update when navigate to other nav item (#770)
+  - @rspress/runtime@1.15.1
+  - @rspress/shared@1.15.1
+
+## 1.15.0
+
+### Minor Changes
+
+- 2f6bda9: feat: support custom overview and sub overview
+
+### Patch Changes
+
+- 79a4142: fix sidebar begining top items was unchanged after page switch
+- 3b6aafe: fix: plugin-shiki space style
+- 3b64c40: fix: update nav when resize
+- 52dc2e5: fix: support format pre code when children is array
+- 915064f: fix(theme-deafult): use new Lark icon
+- 22487ef: fix(theme-default): scroll search panel when current item is unvisible
+  - @rspress/runtime@1.15.0
+  - @rspress/shared@1.15.0
+
 ## 1.14.0
 
 ### Patch Changes

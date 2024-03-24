@@ -6,7 +6,7 @@ import { SvgWrapper } from '../SvgWrapper';
 export function useTranslationMenuData() {
   const { siteData, page } = usePageData();
   const currentVersion = useVersion();
-  const { pathname } = useLocation();
+  const { pathname, search } = useLocation();
   const defaultLang = siteData.lang || '';
   const defaultVersion = siteData.multiVersion.default || '';
   const localeLanguages = Object.values(
@@ -31,7 +31,7 @@ export function useTranslationMenuData() {
         items: localeLanguages.map(item => ({
           text: item?.label,
           link: replaceLang(
-            pathname,
+            pathname + search,
             {
               current: currentLang,
               target: item.lang,

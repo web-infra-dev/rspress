@@ -1,5 +1,5 @@
 import { useLocation } from '@rspress/runtime';
-import mediumZoom, { ZoomOptions } from 'medium-zoom';
+import mediumZoom, { Zoom, ZoomOptions } from 'medium-zoom';
 import { useEffect } from 'react';
 import './MediumZoom.css';
 
@@ -13,10 +13,17 @@ export default function MediumZoom(props: Props) {
   const { selector = '.rspress-doc img', options = {} } = props;
 
   useEffect(() => {
-    setTimeout(() => {
+    let zoom: Zoom | undefined;
+    const timeout = setTimeout(() => {
       const images = document.querySelectorAll(selector);
-      mediumZoom(images, options);
+      zoom = mediumZoom(images, { ...options, background: 'var(--rp-c-bg)' });
     }, 100);
+    return () => {
+      clearTimeout(timeout);
+      zoom?.detach();
+      zoom?.close();
+    };
   }, [pathname]);
+
   return null;
 }

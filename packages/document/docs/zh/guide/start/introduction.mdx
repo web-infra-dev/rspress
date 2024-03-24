@@ -171,21 +171,17 @@ Rspress 中提供开箱即用的全文搜索能力，你无需任何配置即可
 
 Rspress 支持两种自定义主题的方式：
 
-1.  基于默认主题扩展。在默认主题的各个组件中，提供了许多插槽让你能添加自定义的布局内容，比如接入 `documate` 提供的 AI 问答组件：
+1.  基于默认主题扩展。在默认主题的各个组件中，提供了许多插槽让你能添加自定义的布局内容，比如
 
 ```ts
 // theme/index.tsx
 import Theme from 'rspress/theme';
 import { NoSSR } from 'rspress/runtime';
-import { Documate } from '@documate/react';
-import '@documate/react/dist/style.css';
 
 const Layout = () => (
   <Theme.Layout
-    afterNavTitle={
-      <NoSSR>
-        <Documate endpoint="" />
-      </NoSSR>
+    beforeNavTitle={
+      <p>Custom Block</p>
     }
   />
 );
@@ -197,12 +193,6 @@ export default {
 
 export * from 'rspress/theme';
 ```
-
-效果如下：
-
-![](https://lf3-static.bytednsdoc.com/obj/eden-cn/uhbfnupenuhf/rspress/rspress-ai-search.jpeg)
-
-> Rspress 中接入 AI 问答: https://documate.site/integration/rspress
 
 2.  完全自定义主题。如果你想从头开发一套自定义主题，可以重新自定义 Layout 的内容，并借助 Rspress 提供的各个 Runtime API （如 `usePageData`）来获取编译时数据、路由等信息。
 

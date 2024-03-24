@@ -62,9 +62,9 @@ export function usePathUtils() {
           [versionPart, langPart, purePathPart].filter(Boolean).join('/'),
         ),
       );
-    } else {
-      return href;
     }
+
+    return href;
   };
 
   return {

@@ -1,9 +1,15 @@
 import { Header } from '@rspress/shared';
 import { usePageData } from '@rspress/runtime';
-import { renderInlineMarkdown, scrollToTarget } from '#theme/logic';
+import { renderInlineMarkdown, scrollToTarget } from '../../logic';
 import './index.css';
 
-const TocItem = (header: Header) => {
+const TocItem = ({
+  header,
+  onItemClick,
+}: {
+  header: Header;
+  onItemClick?: (header: Header) => void;
+}) => {
   return (
     <li key={header.id}>
       <a
@@ -19,21 +25,28 @@ const TocItem = (header: Header) => {
           if (target) {
             scrollToTarget(target, false);
           }
+          onItemClick?.(header);
         }}
       >
-        <span className={'rspress-toc-link-text block'}>{renderInlineMarkdown(header.text)}</span>
+        <span className={'rspress-toc-link-text block'}>
+          {renderInlineMarkdown(header.text)}
+        </span>
       </a>
     </li>
   );
 };
 
-export function Toc() {
+export function Toc({
+  onItemClick,
+}: {
+  onItemClick?: (header: Header) => void;
+}) {
   const { page } = usePageData();
 
   return (
     <ul>
       {page.toc.map(item => (
-        <TocItem key={item.id} {...item} />
+        <TocItem key={item.id} header={item} onItemClick={onItemClick} />
       ))}
     </ul>
   );

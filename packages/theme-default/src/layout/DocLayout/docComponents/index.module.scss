@@ -9,7 +9,9 @@
     font-weight: 500;
     opacity: 0;
     font-size: inherit;
-    transition: color 0.25s, opacity 0.25s;
+    transition:
+      color 0.25s,
+      opacity 0.25s;
   }
   &:hover {
     :global(.header-anchor) {
@@ -39,14 +41,14 @@
     transition: color 0.25s;
   }
 
-  &:global(.header-anchor) {
-    color: var(--rp-c-brand);
-  }
-
   &:hover {
     color: var(--rp-c-brand-dark);
     border-style: solid;
   }
+}
+
+:global(.header-anchor) {
+  color: var(--rp-c-brand);
 }
 
 :global(.rspress-doc details) {

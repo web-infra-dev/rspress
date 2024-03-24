@@ -12,7 +12,7 @@ import {
   isEqualPath,
 } from '@rspress/runtime';
 import { useSidebarData } from '../../logic';
-import { Link } from '../Link';
+import { Link } from '@theme';
 import styles from './index.module.scss';
 
 interface GroupItem {
@@ -41,8 +41,10 @@ export function Overview(props: {
   } = usePageData();
   const { content, groups: customGroups, defaultGroupTitle = 'Others' } = props;
   const subFilter = (link: string) =>
-    link.startsWith(routePath.replace(/overview$/, '')) &&
-    !isEqualPath(link, routePath);
+    // sidebar items link without base path
+    // pages route path with base path
+    withBase(link).startsWith(routePath.replace(/overview$/, '')) &&
+    !isEqualPath(withBase(link), routePath);
   const getChildLink = (
     traverseItem: SidebarDivider | SidebarItem | NormalizedSidebarGroup,
   ): string => {
@@ -60,6 +62,7 @@ export function Overview(props: {
     items: (NormalizedSidebarGroup | SidebarItem)[];
   };
   function normalizeSidebarItem(item: NormalizedSidebarGroup | SidebarItem) {
+    // sidebar items link without base path
     const pageModule = overviewModules.find(m =>
       isEqualPath(m.routePath, withBase(item.link || '')),
     );
@@ -80,7 +83,8 @@ export function Overview(props: {
               sidebarGroup.items.filter(item => subFilter(getChildLink(item)))
                 .length > 0
             );
-          } else return false;
+          }
+          return false;
         })
         .map(sidebarGroup => ({
           name: sidebarGroup.text || '',

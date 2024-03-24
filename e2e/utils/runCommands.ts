@@ -117,8 +117,8 @@ export async function killProcess(instance) {
         if (
           process.platform === 'win32' &&
           typeof err.message === 'string' &&
-          (err.message.includes(`no running instance of the task`) ||
-            err.message.includes(`not found`))
+          (err.message.includes('no running instance of the task') ||
+            err.message.includes('not found'))
         ) {
           // Windows throws an error if the process is already dead
           //

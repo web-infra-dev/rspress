@@ -2,11 +2,11 @@ import { Fragment, useEffect, useRef, useState } from 'react';
 import { useLocation } from '@rspress/runtime';
 import MenuIcon from '@theme-assets/menu';
 import ArrowRight from '@theme-assets/arrow-right';
-import { SideBar } from '../Sidebar';
+import { Sidebar, Toc } from '@theme';
 import './index.scss';
-import { Toc } from '../Toc';
-import { UISwitchResult } from '#theme/logic/useUISwitch';
+import { UISwitchResult } from '../../logic/useUISwitch';
 import { SvgWrapper } from '../SvgWrapper';
+import { CSSTransition } from 'react-transition-group';
 
 export function SideMenu({
   beforeSidebar,
@@ -20,6 +20,7 @@ export function SideMenu({
   const [isSidebarOpen, setSidebarIsOpen] = useState<boolean>(false);
   const [isTocOpen, setIsTocOpen] = useState<boolean>(false);
   const tocContainerRef = useRef<HTMLDivElement>();
+  const outlineButtonRef = useRef<HTMLButtonElement>();
   const { pathname } = useLocation();
 
   function openSidebar() {
@@ -46,6 +47,10 @@ export function SideMenu({
 
   const handleClickOutsideForToc = e => {
     const { current: tocContainer } = tocContainerRef;
+    if (outlineButtonRef.current.contains(e.target)) {
+      return;
+    }
+
     if (tocContainer && !tocContainer.contains(e.target)) {
       setIsTocOpen(false);
     }
@@ -64,24 +69,39 @@ export function SideMenu({
         <button
           onClick={() => setIsTocOpen(tocOpened => !tocOpened)}
           className="flex-center"
+          ref={outlineButtonRef}
         >
           <span className="text-sm">On this page</span>
-          <div className="text-md mr-2">
+          <div
+            className="text-md mr-2"
+            style={{
+              transform: isTocOpen ? 'rotate(90deg)' : 'rotate(0deg)',
+              transition: 'transform 0.2s ease-out',
+              marginTop: '2px',
+            }}
+          >
             <SvgWrapper icon={ArrowRight} />
           </div>
         </button>
-        <div
-          className="rspress-local-toc-container"
-          style={{
-            display: isTocOpen ? 'block' : 'none',
-          }}
-          ref={tocContainerRef}
+
+        <CSSTransition
+          in={isTocOpen}
+          timeout={300}
+          unmountOnExit
+          classNames="fly-in"
+          nodeRef={tocContainerRef}
         >
-          <Toc />
-        </div>
+          <div className="rspress-local-toc-container" ref={tocContainerRef}>
+            <Toc
+              onItemClick={() => {
+                setIsTocOpen(false);
+              }}
+            />
+          </div>
+        </CSSTransition>
       </div>
       {/* Sidebar Component */}
-      <SideBar
+      <Sidebar
         isSidebarOpen={isSidebarOpen}
         beforeSidebar={beforeSidebar}
         afterSidebar={afterSidebar}

@@ -1,5 +1,56 @@
 # @rspress/plugin-preview
 
+## 1.16.0
+
+### Patch Changes
+
+- 4cf049c: feat(deps): update rsbuild to v0.5.1
+- 516c8cc: chore: bump Rsbuild and update distPath config
+- 55474e3: fix: add user builderPlugin to iframe builder
+- Updated dependencies [72be418]
+- Updated dependencies [4ebdf1a]
+- Updated dependencies [4cf049c]
+- Updated dependencies [6e8097e]
+- Updated dependencies [f0d5452]
+- Updated dependencies [d27c2e2]
+- Updated dependencies [516c8cc]
+- Updated dependencies [12dc515]
+- Updated dependencies [9062915]
+- Updated dependencies [b208ed9]
+- Updated dependencies [4a76d4a]
+- Updated dependencies [d7df90f]
+- Updated dependencies [1bef4dc]
+- Updated dependencies [1d5ebc7]
+- Updated dependencies [1731178]
+- Updated dependencies [cf9f3a9]
+- Updated dependencies [7d24c66]
+  - @rspress/theme-default@1.16.0
+  - @rspress/shared@1.16.0
+
+## 1.15.1
+
+### Patch Changes
+
+- Updated dependencies [9139dc3]
+- Updated dependencies [1f2febd]
+- Updated dependencies [ab88310]
+  - @rspress/theme-default@1.15.1
+  - @rspress/shared@1.15.1
+
+## 1.15.0
+
+### Patch Changes
+
+- Updated dependencies [79a4142]
+- Updated dependencies [3b6aafe]
+- Updated dependencies [3b64c40]
+- Updated dependencies [2f6bda9]
+- Updated dependencies [52dc2e5]
+- Updated dependencies [915064f]
+- Updated dependencies [22487ef]
+  - @rspress/theme-default@1.15.0
+  - @rspress/shared@1.15.0
+
 ## 1.14.0
 
 ### Minor Changes

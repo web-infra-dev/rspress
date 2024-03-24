@@ -12,25 +12,35 @@ import nprogress from 'nprogress';
 import { routes } from 'virtual-routes';
 import { isExternalUrl } from '@rspress/shared';
 import styles from './index.module.scss';
-import { scrollToTarget } from '#theme/logic';
+import { scrollToTarget } from '../../logic';
 
 export interface LinkProps extends ComponentProps<'a'> {
   href?: string;
   children?: React.ReactNode;
   className?: string;
   onNavigate?: () => void;
+  // keep current url parameters when href is internal
+  keepCurrentParams?: boolean;
 }
 
 nprogress.configure({ showSpinner: false });
 
 export function Link(props: LinkProps) {
-  const { href = '/', children, className = '', onNavigate, ...rest } = props;
+  const {
+    href = '/',
+    children,
+    className = '',
+    onNavigate,
+    keepCurrentParams = false,
+    ...rest
+  } = props;
   const isExternal = isExternalUrl(href);
   const target = isExternal ? '_blank' : '';
   const rel = isExternal ? 'noopener noreferrer' : undefined;
   const withBaseUrl = isExternal ? href : withBase(normalizeHref(href));
   const navigate = useNavigate();
-  const { pathname } = useLocation();
+  const { pathname, search } = useLocation();
+  const withQueryUrl = keepCurrentParams ? withBaseUrl + search : withBaseUrl;
   const inCurrentPage = isEqualPath(pathname, withBaseUrl);
   const handleNavigate = async (
     e: React.MouseEvent<HTMLAnchorElement, MouseEvent>,
@@ -74,7 +84,7 @@ export function Link(props: LinkProps) {
         nprogress.done();
       }
       onNavigate?.();
-      navigate(withBaseUrl, { replace: false });
+      navigate(withQueryUrl, { replace: false });
     }
   };
 
@@ -91,17 +101,17 @@ export function Link(props: LinkProps) {
         {children}
       </a>
     );
-  } else {
-    return (
-      <a
-        {...rest}
-        href={withBaseUrl}
-        target={target}
-        rel={rel}
-        className={`${styles.link} ${className}`}
-      >
-        {children}
-      </a>
-    );
   }
+
+  return (
+    <a
+      {...rest}
+      href={withBaseUrl}
+      target={target}
+      rel={rel}
+      className={`${styles.link} ${className}`}
+    >
+      {children}
+    </a>
+  );
 }

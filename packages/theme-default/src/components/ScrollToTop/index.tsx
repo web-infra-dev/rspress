@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import styles from './index.module.scss';
 
-export default function ScrollToTop() {
+export function ScrollToTop() {
   const [isVisible, setIsVisible] = useState(false);
 
   const handleScroll = () => {

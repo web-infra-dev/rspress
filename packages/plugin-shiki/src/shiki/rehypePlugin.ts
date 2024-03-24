@@ -65,6 +65,12 @@ export const rehypePluginShiki: Plugin<[Options], Root> = function ({
             }
           });
 
+        // Strip the final empty span
+        const lastLine = codeLines[codeLines.length - 1];
+        if (lastLine?.children.length === 0) {
+          codeLines.pop();
+        }
+
         // @ts-expect-error
         parent.children.splice(index!, 1, {
           type: 'element',

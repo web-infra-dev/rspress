@@ -1,5 +1,40 @@
 # rspress
 
+## 1.16.0
+
+### Patch Changes
+
+- 57c85e1: perf: remove node-bundle-require dependency
+- 8a16cad: fix(cli): fix relevant typo
+- Updated dependencies [4cf049c]
+- Updated dependencies [1d0ea3a]
+- Updated dependencies [516c8cc]
+- Updated dependencies [4a76d4a]
+- Updated dependencies [1731178]
+- Updated dependencies [943b2eb]
+- Updated dependencies [f2e5b86]
+- Updated dependencies [7bf8e1c]
+- Updated dependencies [7d24c66]
+  - @rspress/shared@1.16.0
+  - @rspress/core@1.16.0
+
+## 1.15.1
+
+### Patch Changes
+
+- @rspress/core@1.15.1
+- @rspress/shared@1.15.1
+
+## 1.15.0
+
+### Patch Changes
+
+- cdc2342: fix: i18n json change won't trigger rebuild
+- 59ff70b: chore: enable more lint rules
+- Updated dependencies [59ff70b]
+  - @rspress/core@1.15.0
+  - @rspress/shared@1.15.0
+
 ## 1.14.0
 
 ### Patch Changes

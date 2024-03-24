@@ -86,7 +86,7 @@ export default defineConfig({
 
 The framework will find your icon in the `public` directory, of course you can also set it to a CDN address.
 
-## logo
+## logo \{#logo-1}
 
 - Type: `string | { dark: string; light: string }`
 - Default: `""`
@@ -113,6 +113,21 @@ export default defineConfig({
     dark: '/logo-dark.png',
     light: '/logo-light.png',
   },
+});
+```
+
+## logoText
+
+- Type: `string`
+- Default: `""`
+
+Site logo Text. This text will be used as the logo text in the upper left corner of the navbar. For example:
+
+```ts title="rspress.config.ts"
+import { defineConfig } from 'rspress/config';
+
+export default defineConfig({
+  logoText: 'rspress',
 });
 ```
 

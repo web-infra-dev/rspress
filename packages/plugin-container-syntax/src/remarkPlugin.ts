@@ -37,7 +37,7 @@ export const REGEX_END = /\s*:::$/;
 export const TITLE_REGEX_IN_MD = /{\s*title=["']?(.+)}\s*/;
 export const TITLE_REGEX_IN_MDX = /\s*title=["']?(.+)\s*/;
 
-export type DirectiveType = typeof DIRECTIVE_TYPES[number];
+export type DirectiveType = (typeof DIRECTIVE_TYPES)[number];
 
 const trimTailingQuote = (str: string) => str.replace(/['"]$/g, '');
 
@@ -227,13 +227,13 @@ function transformer(tree: Root) {
           tree.children.splice(i, 1, newChild as Content);
           i++;
           continue;
-        } else if (
-          lastChildInNode !== firstTextNode &&
-          wrappedChildren.length
-        ) {
+        }
+
+        if (lastChildInNode !== firstTextNode && wrappedChildren.length) {
           // We don't find the end of the container directive in current paragraph
           (wrappedChildren[0] as Paragraph).children.push(lastChildInNode);
         }
+
         // 2.3 The final case: has newline after the start of container, for example:
         // ::: tip
         //
@@ -264,7 +264,6 @@ function transformer(tree: Root) {
               ),
             });
             j++;
-            continue;
           } else {
             // 3. We find the end of the container directive
             // Then create the container directive, and remove the original paragraphs

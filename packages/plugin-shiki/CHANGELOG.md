@@ -1,5 +1,27 @@
 # @rspress/plugin-shiki
 
+## 1.16.0
+
+### Patch Changes
+
+- Updated dependencies [4cf049c]
+- Updated dependencies [516c8cc]
+  - @rspress/shared@1.16.0
+
+## 1.15.1
+
+### Patch Changes
+
+- @rspress/shared@1.15.1
+
+## 1.15.0
+
+### Patch Changes
+
+- 2a10e2d: feat: support showing line numbers in shiki plugin
+- 3b6aafe: fix: plugin-shiki space style
+  - @rspress/shared@1.15.0
+
 ## 1.14.0
 
 ### Patch Changes

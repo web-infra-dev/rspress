@@ -78,7 +78,10 @@ const onSearch: OnSearch = async (query, defaultSearchResult) => {
   console.log(defaultSearchResult);
   // const customResult = await searchQuery(query);
 
-  // The return value is an array, each item in the array is a search source result
+  // Can directly operate the default search results.
+  defaultSearchResult.pop();
+
+  // The return value is an array, each item in the array is a search source result, and they will be added to the search result
   return [
     {
       group: 'Custom',

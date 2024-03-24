@@ -1,23 +1,22 @@
 import React, { useEffect, useRef } from 'react';
-import { NormalizedSidebarGroup } from '@rspress/shared';
+import { NormalizedSidebarGroup, SidebarItem } from '@rspress/shared';
 import {
   useNavigate,
   normalizeHrefInRuntime as normalizeHref,
   withBase,
 } from '@rspress/runtime';
 import ArrowRight from '@theme-assets/arrow-right';
-import { Tag } from '../Tag';
+import { Tag } from '@theme';
 import styles from './index.module.scss';
-import { SidebarItem } from './SidebarItem';
+import { SidebarItem as SidebarItemComp } from './SidebarItem';
 import { SidebarDivider } from './SidebarDivider';
-import { highlightTitleStyle, matchCache, type SidebarItemProps } from '.';
+import { highlightTitleStyle, type SidebarItemProps } from '.';
 import { SvgWrapper } from '../SvgWrapper';
-import { renderInlineMarkdown } from '#theme/logic';
+import { renderInlineMarkdown } from '../../logic';
 
 export function SidebarGroup(props: SidebarItemProps) {
   const { item, depth = 0, activeMatcher, id, setSidebarData } = props;
   const navigate = useNavigate();
-  const isGroupMatched = matchCache.get(item);
   const containerRef = useRef<HTMLDivElement>(null);
   const transitionRef = useRef<any>(null);
   const innerRef = useRef<HTMLDivElement>(null);
@@ -110,14 +109,7 @@ export function SidebarGroup(props: SidebarItemProps) {
     >
       <div
         className={`flex justify-between items-center ${
-          isGroupMatched && !active ? styles.menuGroupActive : ''
-        } ${
-          // eslint-disable-next-line no-nested-ternary
-          active
-            ? styles.menuItemActive
-            : collapsible || item.link
-              ? styles.menuItem
-              : styles.menuItemStatic
+          active ? styles.menuItemActive : styles.menuItem
         }`}
         onMouseEnter={() => item.link && props.preloadLink(item.link)}
         onClick={e => {
@@ -141,7 +133,7 @@ export function SidebarGroup(props: SidebarItemProps) {
           }}
         >
           <Tag tag={item.tag} />
-          <span className='flex-center'>{renderInlineMarkdown(item.text)}</span>
+          <span className="flex-center">{renderInlineMarkdown(item.text)}</span>
         </h2>
         {collapsible && (
           <div
@@ -179,7 +171,7 @@ export function SidebarGroup(props: SidebarItemProps) {
             ) : (
               // eslint-disable-next-line react/no-array-index-key
               <div key={index}>
-                <SidebarItem
+                <SidebarItemComp
                   {...props}
                   item={item}
                   depth={depth + 1}
