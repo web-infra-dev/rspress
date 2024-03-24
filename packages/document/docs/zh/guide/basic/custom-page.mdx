@@ -1,3 +1,5 @@
+import { PackageManagerTabs } from '@theme';
+
 # 自定义页面
 
 Rspress 提供了多种方式能让你自定义页面的内容，包括：
@@ -96,6 +98,46 @@ export default defineConfig({
 ```
 
 > 如果想了解更多内部的全局样式，可以查看 [vars.css](https://github.com/web-infra-dev/rspress/blob/main/packages/theme-default/src/styles/vars.css)
+
+### Tailwind CSS
+
+要在 Rspress 中使用 Tailwind CSS，你可以按照以下步骤操作：
+
+1. 安装 Tailwind CSS：
+
+<PackageManagerTabs command="install tailwindcss -D" />
+
+2. 创建一个包含 `tailwindcss` 插件的 `postcss.config.js` 文件：
+
+```js title="postcss.config.js"
+module.exports = {
+  plugins: {
+    tailwindcss: {},
+  },
+};
+```
+
+3. 创建一个 `tailwind.config.js` 文件，并确保 `content` 包含了所有使用 Tailwind CSS 的文件：
+
+```js title="tailwind.config.js"
+module.exports = {
+  content: ['./src/**/*.tsx', './docs/**/*.mdx'],
+  theme: {
+    extend: {},
+  },
+  plugins: [],
+};
+```
+
+4. 在你的 CSS 样式文件中添加 Tailwind 指令，参考 [自定义样式](#自定义样式)：
+
+```css title=styles/index.css
+@import 'tailwindcss/base';
+@import 'tailwindcss/components';
+@import 'tailwindcss/utilities';
+```
+
+> 请参考官方 [Tailwind CSS 文档](https://tailwindcss.com/docs/installation/using-postcss) 了解最新用法。
 
 ## 自定义布局结构
 

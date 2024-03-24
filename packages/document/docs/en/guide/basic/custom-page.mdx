@@ -100,11 +100,11 @@ Here are some commonly used global styles:
 
 In order to get Tailwind CSS working with Rspress, you can use the following steps:
 
-1. Install Tailwind CSS and its dependencies:
+1. Install Tailwind CSS:
 
 <PackageManagerTabs command="install tailwindcss -D" />
 
-2. Create a `postcss.config.js` file containing `tailwindcss` and `autoprefixer` plugins:
+2. Create a `postcss.config.js` file containing `tailwindcss` plugin:
 
 ```js title="postcss.config.js"
 module.exports = {
@@ -114,19 +114,17 @@ module.exports = {
 };
 ```
 
-3. Create a `tailwind.config.js` file and make sure all the content files are included:
+3. Create a `tailwind.config.js` file and make sure all the content files are included via `content`:
 
 ```js title="tailwind.config.js"
 module.exports = {
-  content: ['./src/**/*.tsx'],
+  content: ['./src/**/*.tsx', './docs/**/*.mdx'],
   theme: {
     extend: {},
   },
   plugins: [],
 };
 ```
-
-> You can also include and style React component directly in the `.mdx` files by including those files in the `content` value, such as `content: ['./src/**/*.tsx', './docs/**/*.mdx']`.
 
 4. Include the Tailwind directives in your CSS styles file from [Custom Styles](#custom-styles):
 
