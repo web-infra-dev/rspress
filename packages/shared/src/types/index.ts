@@ -59,6 +59,10 @@ export interface UserConfig<ThemeConfig = DefaultThemeConfig> {
    */
   logo?: string | { dark: string; light: string };
   /**
+   * The text of the logo in nav bar.
+   */
+  logoText?: string;
+  /**
    * Base path of the site.
    */
   base?: string;
@@ -182,6 +186,7 @@ export interface SiteData<ThemeConfig = NormalizedDefaultThemeConfig> {
   icon: string;
   themeConfig: ThemeConfig;
   logo: string | { dark: string; light: string };
+  logoText: string;
   pages: BaseRuntimePageInfo[];
   search: SearchOptions;
   ssg: boolean;

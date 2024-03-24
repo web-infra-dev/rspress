@@ -96,6 +96,7 @@ export async function siteDataVMPlugin(context: FactoryContext) {
     lang: userConfig?.lang || '',
     locales: userConfig?.locales || userConfig.themeConfig?.locales || [],
     logo: userConfig?.logo || '',
+    logoText: userConfig?.logoText || '',
     ssg: userConfig?.ssg ?? true,
     multiVersion: {
       default: userConfig?.multiVersion?.default || '',
