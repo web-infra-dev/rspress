@@ -75,6 +75,19 @@ importers:
         specifier: 0.34.1
         version: 0.34.1(playwright@1.33.0)
 
+  e2e/fixtures/api-docgen:
+    dependencies:
+      '@rspress/plugin-api-docgen':
+        specifier: workspace:*
+        version: link:../../../packages/plugin-api-docgen
+      rspress:
+        specifier: workspace:*
+        version: link:../../../packages/cli
+    devDependencies:
+      '@types/node':
+        specifier: ^14
+        version: 14.0.0
+
   e2e/fixtures/auto-nav-sidebar:
     dependencies:
       rspress:
