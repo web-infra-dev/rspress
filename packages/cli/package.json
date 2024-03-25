@@ -45,7 +45,7 @@
     "chalk": "5.3.0"
   },
   "devDependencies": {
-    "@types/jest": "~29.2.4",
+    "@types/jest": "~29.5.12",
     "@types/node": "~16.11.7",
     "@types/react": "~18.0.26",
     "rimraf": "~3.0.2",

@@ -168,8 +168,8 @@ importers:
         specifier: workspace:*
         version: link:../../../packages/modern-plugin-rspress
       '@types/jest':
-        specifier: ^29
-        version: 29.2.4
+        specifier: ^29.5.12
+        version: 29.5.12
       '@types/node':
         specifier: ~16.11.7
         version: 16.11.7
@@ -280,8 +280,8 @@ importers:
         version: link:../../../packages/cli
     devDependencies:
       '@types/jest':
-        specifier: ^29
-        version: 29.2.4
+        specifier: ^29.5.12
+        version: 29.5.12
       '@types/node':
         specifier: ^14
         version: 14.0.0
@@ -317,8 +317,8 @@ importers:
         version: 3.5.3
     devDependencies:
       '@types/jest':
-        specifier: ~29.2.4
-        version: 29.2.4
+        specifier: ~29.5.12
+        version: 29.5.12
       '@types/node':
         specifier: ~16.11.7
         version: 16.11.7
@@ -556,8 +556,8 @@ importers:
         specifier: 11.0.1
         version: 11.0.1
       '@types/jest':
-        specifier: ~29.2.4
-        version: 29.2.4
+        specifier: ~29.5.12
+        version: 29.5.12
       '@types/node':
         specifier: ~16.11.7
         version: 16.11.7
@@ -1109,8 +1109,8 @@ importers:
         specifier: ^1.1.1
         version: 1.1.1
       '@types/jest':
-        specifier: ~29.2.4
-        version: 29.2.4
+        specifier: ~29.5.12
+        version: 29.5.12
       '@types/lodash':
         specifier: ^4.14.197
         version: 4.14.200
@@ -4329,8 +4329,8 @@ packages:
       pretty-format: 25.5.0
     dev: true
 
-  /@types/jest@29.2.4:
-    resolution: {integrity: sha512-PipFB04k2qTRPePduVLTRiPzQfvMeLwUN3Z21hsAKaB/W9IIzgB2pizCL466ftJlcyZqnHoC9ZHpxLGl3fS86A==}
+  /@types/jest@29.5.12:
+    resolution: {integrity: sha512-eDC8bTvT/QhYdxJAulQikueigY5AsdBRH2yDKW3yveW7svY3+DzN84/2NUgkw10RTiJbWqZrTtoGVdYlvFJdLw==}
     dependencies:
       expect: 29.6.2
       pretty-format: 29.6.2
@@ -7534,7 +7534,7 @@ packages:
     resolution: {integrity: sha512-vnIGYEjoPSuRqV8W9t+Wow95SDp6KPX2Uf7EoeG9G99J2OVh7OSwpS4B6J0NfpEIpfkBNHlBZpA2rblEuEFhZQ==}
     engines: {node: ^14.15.0 || ^16.10.0 || >=18.0.0}
     dependencies:
-      '@babel/code-frame': 7.22.13
+      '@babel/code-frame': 7.24.2
       '@jest/types': 29.6.1
       '@types/stack-utils': 2.0.1
       chalk: 4.1.2
