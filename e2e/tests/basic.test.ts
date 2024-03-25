@@ -23,7 +23,7 @@ test.describe('basic test', async () => {
     await page.goto(`http://localhost:${appPort}`);
     const h1 = await page.$('h1');
     const text = await page.evaluate(h1 => h1?.textContent, h1);
-    await expect(text).toContain('Hello World');
+    expect(text).toContain('Hello World');
     // expect the .header-anchor to be rendered and take the correct href
     const headerAnchor = await page.$('.header-anchor');
     const href = await page.evaluate(
@@ -31,6 +31,9 @@ test.describe('basic test', async () => {
       headerAnchor,
     );
     expect(href).toBe('#hello-world');
+    const h2 = await page.$('h2');
+    const content = await page.evaluate(h2 => h2?.textContent, h2);
+    expect(content).toContain('h2')
   });
 
   test('Guide page', async ({ page }) => {

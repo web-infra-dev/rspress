@@ -189,12 +189,7 @@ async function createInternalBuildConfig(
             routeService,
             pluginDriver,
           })
-          .end()
-          .use('string-replace-loader')
-          .loader(require.resolve('string-replace-loader'))
-          .options({
-            multiple: config?.replaceRules || [],
-          });
+          .end();
 
         if (chain.plugins.has(CHAIN_ID.PLUGIN.REACT_FAST_REFRESH)) {
           chain.plugin(CHAIN_ID.PLUGIN.REACT_FAST_REFRESH).tap(options => {
