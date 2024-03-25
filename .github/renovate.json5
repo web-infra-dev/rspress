@@ -35,6 +35,8 @@
     // manually updating
     "typescript",
     // align Node.js version minimum requirements
-    "@types/node"
+    "@types/node",
+    "node",
+    "pnpm"
   ]
 }
