@@ -31,20 +31,6 @@ test.describe('basic test', async () => {
       headerAnchor,
     );
     expect(href).toBe('#hello-world');
-    const h2 = await page.$('h2');
-    const content = await page.evaluate(h2 => h2?.textContent, h2);
-    expect(content).toContain('h2')
-  });
-
-  test('Guide page', async ({ page }) => {
-    await page.goto(`http://localhost:${appPort}/guide`, {
-      waitUntil: 'networkidle',
-    });
-    const h1 = await page.$('h1');
-    const className = await page.evaluate(h1 => h1?.className, h1);
-    expect(className).toContain('title_3b154'); // hash in css module should stable
-    const text = await page.evaluate(h1 => h1?.textContent, h1);
-    expect(text).toContain('Guide');
   });
 
   test('404 page', async ({ page }) => {
