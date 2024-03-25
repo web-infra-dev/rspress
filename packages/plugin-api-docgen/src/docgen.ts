@@ -196,7 +196,12 @@ function generateTable(componentDoc: ComponentDoc[], language: 'zh' | 'en') {
                 return description;
             }
           };
-          return `|${[name, getDescription(), getType(), getDefaultValue()]
+
+          const formattedDescription = getDescription()
+            // allow newline
+            .replace(/\n/g, '&#10;');
+
+          return `|${[name, formattedDescription, getType(), getDefaultValue()]
             .map(str => str.replace(/(?<!\\)\|/g, '&#124;'))
             .join('|')}|`;
         });

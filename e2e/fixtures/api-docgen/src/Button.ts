@@ -1,6 +1,8 @@
 export type ButtonProps = {
   /**
    * Whether to disable the button
+   * - This is extra line a
+   * - This is extra line b
    */
   disabled?: boolean;
   /**
