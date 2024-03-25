@@ -105,6 +105,16 @@ importers:
         specifier: ^14
         version: 14.0.0
 
+  e2e/fixtures/custom-id:
+    dependencies:
+      rspress:
+        specifier: workspace:*
+        version: link:../../../packages/cli
+    devDependencies:
+      '@types/node':
+        specifier: ^14
+        version: 14.0.0
+
   e2e/fixtures/i18n:
     dependencies:
       rspress:
@@ -231,6 +241,16 @@ importers:
         version: 14.0.0
 
   e2e/fixtures/production:
+    dependencies:
+      rspress:
+        specifier: workspace:*
+        version: link:../../../packages/cli
+    devDependencies:
+      '@types/node':
+        specifier: ^14
+        version: 14.0.0
+
+  e2e/fixtures/replace-rules:
     dependencies:
       rspress:
         specifier: workspace:*
