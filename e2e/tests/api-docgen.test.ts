@@ -33,6 +33,8 @@ test.describe('api-docgen test', async () => {
     // Description
     expect(tableContent).toContain('Description');
     expect(tableContent).toContain('Whether to disable the button');
+    expect(tableContent).toContain('- This is extra line a');
+    expect(tableContent).toContain('- This is extra line b');
     expect(tableContent).toContain('Type of Button');
 
     // Type
