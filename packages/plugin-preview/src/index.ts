@@ -40,7 +40,7 @@ export function pluginPreview(options?: Options): RspressPlugin {
     builderConfig = {},
   } = iframeOptions;
   const globalUIComponents =
-    iframePosition === 'fixed'
+    position === 'fixed'
       ? [join(staticPath, 'global-components', 'Device.tsx')]
       : [];
   const getRouteMeta = () => routeMeta;
