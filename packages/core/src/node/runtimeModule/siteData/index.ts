@@ -115,6 +115,12 @@ export async function siteDataVMPlugin(context: FactoryContext) {
     },
   };
 
+
+  // searchHooks is a absolute path which may leak information
+  if (siteData.search) {
+    siteData.search.searchHooks = undefined;
+  }
+
   return {
     [`${RuntimeModuleID.SiteData}.mjs`]: `export default ${JSON.stringify(
       siteData,
