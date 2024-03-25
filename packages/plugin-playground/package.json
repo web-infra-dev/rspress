@@ -43,7 +43,7 @@
     "node": ">=14.17.6"
   },
   "dependencies": {
-    "@mdx-js/mdx": "2.2.1",
+    "@mdx-js/mdx": "2.3.0",
     "@monaco-editor/react": "~4.4.6",
     "@oxidation-compiler/napi": "^0.2.0",
     "@rspress/shared": "workspace:*",
