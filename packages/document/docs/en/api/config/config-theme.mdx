@@ -574,3 +574,20 @@ export default defineConfig({
   },
 });
 ```
+
+## localeRedirect
+
+- Type: `'auto' | 'never'`
+- Default: `'auto'`
+
+Whether to redirect to the closest locale when the user visits the site, the default is `auto`, which means that the user will be redirected on the first visit. If you set it to `never`, the user will not be redirected. For example:
+
+```ts title="rspress.config.ts"
+import { defineConfig } from 'rspress/config';
+
+export default defineConfig({
+  themeConfig: {
+    localeRedirect: 'never',
+  },
+});
+```
