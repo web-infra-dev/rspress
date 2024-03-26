@@ -1,4 +1,4 @@
-import { useContext, useEffect } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import { ThemeContext } from '@rspress/runtime';
 import SunSvg from '@theme-assets/sun';
 import MoonSvg from '@theme-assets/moon';
@@ -16,6 +16,7 @@ export function SwitchAppearance({ onClick }: { onClick?: () => void }) {
     const isDark = updateUserPreferenceFromStorage();
     setTheme(isDark ? 'dark' : 'light');
   };
+  const [iconVisible, setIconVisible] = useState(false);
 
   useEffect(() => {
     if (isDarkMode()) {
@@ -24,6 +25,7 @@ export function SwitchAppearance({ onClick }: { onClick?: () => void }) {
     if (typeof window !== 'undefined') {
       window.addEventListener('storage', updateAppearanceAndTheme);
     }
+    setIconVisible(true);
     return () => {
       if (typeof window !== 'undefined') {
         window.removeEventListener('storage', updateAppearanceAndTheme);
@@ -40,13 +42,15 @@ export function SwitchAppearance({ onClick }: { onClick?: () => void }) {
       }}
       className="md:mr-2 rspress-nav-appearance"
     >
-      <div className="p-1 border border-solid border-gray-300 text-gray-400  cursor-pointer rounded-md hover:border-gray-600 hover:text-gray-600 dark:hover:border-gray-200 dark:hover:text-gray-200 transition-all duration-300">
-        <SvgWrapper
-          icon={theme === 'light' ? SunSvg : MoonSvg}
-          width="18"
-          height="18"
-          fill="currentColor"
-        />
+      <div className="p-1 border border-solid border-gray-300 text-gray-400  cursor-pointer rounded-md hover:border-gray-600 hover:text-gray-600 dark:hover:border-gray-200 dark:hover:text-gray-200 transition-all duration-300 w-7 h-7">
+        {iconVisible && (
+          <SvgWrapper
+            icon={theme === 'light' ? SunSvg : MoonSvg}
+            width="18"
+            height="18"
+            fill="currentColor"
+          />
+        )}
       </div>
     </div>
   );
