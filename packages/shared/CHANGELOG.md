@@ -1,5 +1,11 @@
 # @rspress/shared
 
+## 1.16.1
+
+### Patch Changes
+
+- 145bb16: feat: support logo text config
+
 ## 1.16.0
 
 ### Patch Changes

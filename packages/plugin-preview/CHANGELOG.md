@@ -1,5 +1,15 @@
 # @rspress/plugin-preview
 
+## 1.16.1
+
+### Patch Changes
+
+- 609ef99: fix: replace iframePosition with iframe.position
+- Updated dependencies [b872bd5]
+- Updated dependencies [145bb16]
+  - @rspress/theme-default@1.16.1
+  - @rspress/shared@1.16.1
+
 ## 1.16.0
 
 ### Patch Changes

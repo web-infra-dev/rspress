@@ -1,5 +1,12 @@
 # @rspress/remark-container
 
+## 1.16.1
+
+### Patch Changes
+
+- Updated dependencies [145bb16]
+  - @rspress/shared@1.16.1
+
 ## 1.16.0
 
 ### Patch Changes

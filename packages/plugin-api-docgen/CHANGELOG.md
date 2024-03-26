@@ -1,5 +1,11 @@
 # @rspress/plugin-api-docgen
 
+## 1.16.1
+
+### Patch Changes
+
+- 37e626d: fix(api-docgen): allow multiple lines description
+
 ## 1.16.0
 
 ### Patch Changes
