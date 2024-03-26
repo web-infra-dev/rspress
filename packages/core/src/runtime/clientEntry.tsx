@@ -16,6 +16,7 @@ const { default: Theme } = require('@theme');
 
 export async function renderInBrowser() {
   const container = document.getElementById('root')!;
+
   const enhancedApp = async () => {
     const initialPageData = await initPageData(
       normalizeRoutePath(window.location.pathname),
