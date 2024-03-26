@@ -1,5 +1,23 @@
 # @rspress/core
 
+## 1.16.1
+
+### Patch Changes
+
+- 1a22fe0: fix(core): replace flattened mdx content by rules
+- ab822fe: fix: remove searchHooks in siteData
+- b872bd5: fix: icon/logo display error in dark mode when refresh page
+- 145bb16: feat: support logo text config
+- Updated dependencies [b872bd5]
+- Updated dependencies [145bb16]
+  - @rspress/theme-default@1.16.1
+  - @rspress/shared@1.16.1
+  - @rspress/plugin-auto-nav-sidebar@1.16.1
+  - @rspress/plugin-container-syntax@1.16.1
+  - @rspress/plugin-last-updated@1.16.1
+  - @rspress/plugin-medium-zoom@1.16.1
+  - @rspress/runtime@1.16.1
+
 ## 1.16.0
 
 ### Minor Changes

@@ -1,5 +1,15 @@
 # @rspress/theme-default
 
+## 1.16.1
+
+### Patch Changes
+
+- b872bd5: fix: icon/logo display error in dark mode when refresh page
+- 145bb16: feat: support logo text config
+- Updated dependencies [145bb16]
+  - @rspress/shared@1.16.1
+  - @rspress/runtime@1.16.1
+
 ## 1.16.0
 
 ### Minor Changes

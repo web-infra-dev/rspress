@@ -1,6 +1,6 @@
 {
   "name": "@rspress/theme-default",
-  "version": "1.16.0",
+  "version": "1.16.1",
   "description": "The Default Theme of Rspress Documentation Framework",
   "bugs": "https://github.com/web-infra-dev/rspress/issues",
   "repository": {
@@ -95,7 +95,10 @@
     "virtual-global-styles",
     "./src/styles/index.ts"
   ],
-  "files": ["dist", "src"],
+  "files": [
+    "dist",
+    "src"
+  ],
   "publishConfig": {
     "access": "public",
     "provenance": true,
