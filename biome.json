@@ -3,6 +3,12 @@
   "organizeImports": {
     "enabled": true
   },
+  "vcs": {
+    "enabled": true,
+    "clientKind": "git",
+    "defaultBranch": "main",
+    "useIgnoreFile": true
+  },
   "javascript": {
     "formatter": {
       "quoteStyle": "single",
