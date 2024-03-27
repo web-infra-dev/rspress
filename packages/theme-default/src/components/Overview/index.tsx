@@ -11,7 +11,7 @@ import {
   withBase,
   isEqualPath,
 } from '@rspress/runtime';
-import { useSidebarData } from '../../logic';
+import { renderInlineMarkdown, useSidebarData } from '../../logic';
 import { Link } from '@theme';
 import styles from './index.module.scss';
 
@@ -122,7 +122,7 @@ export function Overview(props: {
           {group.name === defaultGroupTitle && groups.length === 1 ? (
             <h2 style={{ paddingTop: 0 }}></h2>
           ) : (
-            <h2>{group.name}</h2>
+            <h2>{renderInlineMarkdown(group.name)}</h2>
           )}
 
           <div className={styles.overviewGroups}>
@@ -130,7 +130,9 @@ export function Overview(props: {
               <div className={styles.overviewGroup} key={item.link}>
                 <div className="flex">
                   <h3 style={{ marginBottom: 8 }}>
-                    <Link href={normalizeHref(item.link)}>{item.text}</Link>
+                    <Link href={normalizeHref(item.link)}>
+                      {renderInlineMarkdown(item.text)}
+                    </Link>
                   </h3>
                 </div>
                 <ul className="list-none">
@@ -142,7 +144,7 @@ export function Overview(props: {
                       } first:mt-2`}
                     >
                       <Link href={`${normalizeHref(item.link)}#${header.id}`}>
-                        {header.text}
+                        {renderInlineMarkdown(header.text)}
                       </Link>
                     </li>
                   ))}
