@@ -20,14 +20,12 @@
   --rp-code-line-number-color: rgba(60, 60, 60, 0.33);
 }
 
-.rspress-doc :not(pre, h1, h2, h3, h4, h5, h6) > code,
-.rspress-sidebar code
+.rspress-doc :not(pre, h1, h2, h3, h4, h5, h6) > code
 {
   font-size: var(--rp-code-font-size);
 }
 
-.rspress-doc :not(pre, div, a) > code,
-.rspress-sidebar code
+.rspress-doc :not(pre, div, a) > code
 {
   border-radius: var(--rp-radius-small);
   padding: 4px 8px;
