@@ -1,0 +1,67 @@
+{
+  "name": "@rspress/plugin-rss",
+  "version": "1.16.1",
+  "description": "A plugin for rss generation for rspress",
+  "bugs": "https://github.com/web-infra-dev/rspress/issues",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/web-infra-dev/rspress",
+    "directory": "packages/plugin-rss"
+  },
+  "license": "MIT",
+  "jsnext:source": "./src/index.ts",
+  "types": "./dist/index.d.ts",
+  "main": "./dist/index.cjs",
+  "module": "./dist/index.mjs",
+  "exports": {
+    ".": {
+      "import": "./dist/index.mjs",
+      "types": "./dist/index.d.ts",
+      "default": "./dist/index.cjs"
+    },
+    "./FeedsAnnotations": "./static/global-components/FeedsAnnotations"
+  },
+  "scripts": {
+    "dev": "modern build -w",
+    "build": "modern build",
+    "reset": "rimraf ./**/node_modules",
+    "lint": "modern lint",
+    "change": "modern change",
+    "bump": "modern bump",
+    "pre": "modern pre",
+    "change-status": "modern change-status",
+    "gen-release-note": "modern gen-release-note",
+    "release": "modern release",
+    "new": "modern new",
+    "test": "vitest run --passWithNoTests",
+    "upgrade": "modern upgrade"
+  },
+  "engines": {
+    "node": ">=14.17.6"
+  },
+  "dependencies": {
+    "feed": "^4.2.2"
+  },
+  "devDependencies": {
+    "@types/node": "^18.11.17",
+    "@types/react": "^18",
+    "@rspress/shared": "workspace:*",
+    "@rspress/runtime": "workspace:*",
+    "react": "^18",
+    "typescript": "^5"
+  },
+  "peerDependencies": {
+    "react": ">=17.0.0",
+    "@types/react": ">=17.0.0",
+    "@rspress/runtime": "^1.0.0"
+  },
+  "files": [
+    "dist",
+    "static"
+  ],
+  "publishConfig": {
+    "access": "public",
+    "provenance": true,
+    "registry": "https://registry.npmjs.org/"
+  }
+}
