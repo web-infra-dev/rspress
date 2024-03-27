@@ -47,7 +47,7 @@ test.describe('i18n test', async () => {
   test('Add language prefix in route automatically when current language is not default language', async ({
     page,
   }) => {
-    await page.goto(`http://localhost:${appPort}/en/guide/quick-start`, {
+    await page.goto(`http://localhost:${appPort}/en/guide/basic/quick-start`, {
       waitUntil: 'networkidle',
     });
     // take the `click` button
@@ -56,20 +56,24 @@ test.describe('i18n test', async () => {
     });
     expect(link).toBeTruthy();
     // check the compile result of absolute link in doc content
-    expect(await link.getAttribute('href')).toBe('/en/guide/install.html');
+    expect(await link.getAttribute('href')).toBe(
+      '/en/guide/basic/install.html',
+    );
     link = await page.getByRole('link', {
       name: /relative/,
     });
 
     // check the compile result of relative link in doc content
     expect(link).toBeTruthy();
-    expect(await link.getAttribute('href')).toBe('/en/guide/install.html');
+    expect(await link.getAttribute('href')).toBe(
+      '/en/guide/basic/install.html',
+    );
   });
 
   test('Should not add language prefix when current language is default language', async ({
     page,
   }) => {
-    await page.goto(`http://localhost:${appPort}/guide/quick-start`, {
+    await page.goto(`http://localhost:${appPort}/guide/basic/quick-start`, {
       waitUntil: 'networkidle',
     });
     // check the compile result of absolute link in doc content
@@ -77,17 +81,17 @@ test.describe('i18n test', async () => {
       name: /绝对路径/,
     });
     expect(link).toBeTruthy();
-    expect(await link.getAttribute('href')).toBe('/guide/install.html');
+    expect(await link.getAttribute('href')).toBe('/guide/basic/install.html');
     // check the compile result of relative link in doc content
     link = await page.getByRole('link', {
       name: /相对路径/,
     });
     expect(link).toBeTruthy();
-    expect(await link.getAttribute('href')).toBe('/guide/install.html');
+    expect(await link.getAttribute('href')).toBe('/guide/basic/install.html');
   });
 
   test('Should render sidebar correctly', async ({ page }) => {
-    await page.goto(`http://localhost:${appPort}/guide/quick-start`, {
+    await page.goto(`http://localhost:${appPort}/guide/basic/quick-start`, {
       waitUntil: 'networkidle',
     });
     // take the sidebar
@@ -98,7 +102,7 @@ test.describe('i18n test', async () => {
   });
 
   test('Should not render appearance switch button', async ({ page }) => {
-    await page.goto(`http://localhost:${appPort}/guide/quick-start`, {
+    await page.goto(`http://localhost:${appPort}/guide/basic/quick-start`, {
       waitUntil: 'networkidle',
     });
     // take the appearance switch button
@@ -121,5 +125,35 @@ test.describe('i18n test', async () => {
     });
     const content = await page.evaluate(() => document.body.textContent);
     expect(content?.includes('PAGE NOT FOUND')).toBe(false);
+  });
+
+  test('Should render i18n sidebar - cn', async ({ page }) => {
+    await page.goto(`http://localhost:${appPort}/guide/basic/quick-start`, {
+      waitUntil: 'networkidle',
+    });
+    const dirContent = await page.textContent(
+      '.rspress-sidebar .rspress-scrollbar nav section',
+    );
+    expect(dirContent).toContain('基本');
+
+    const sectionHeaderContent = await page.textContent(
+      '.rspress-sidebar-section-header span',
+    );
+    expect(sectionHeaderContent).toEqual('成长');
+  });
+
+  test('Should render i18n sidebar - en', async ({ page }) => {
+    await page.goto(`http://localhost:${appPort}/en/guide/basic/quick-start`, {
+      waitUntil: 'networkidle',
+    });
+    const dirContent = await page.textContent(
+      '.rspress-sidebar .rspress-scrollbar nav section',
+    );
+    expect(dirContent).toContain('Basic');
+
+    const sectionHeaderContent = await page.textContent(
+      '.rspress-sidebar-section-header span',
+    );
+    expect(sectionHeaderContent).toEqual('Growth');
   });
 });
