@@ -11,11 +11,13 @@ export const importStatementRegex =
 // In the first render, the theme will be set according to the user's system theme
 // - Should be injected into both development and production modes
 // - Class hook (.dark) is set for internal use (Tailwind)
+// - Style hook (colorScheme) is set for external use (CSS media queries or `light-dark()` function)
 export const inlineThemeScript = `{
   const saved = localStorage.getItem('${APPEARANCE_KEY}')
   const preferDark = window.matchMedia('(prefers-color-scheme: dark)').matches
   const isDark = !saved || saved === 'auto' ? preferDark : saved === 'dark'
   document.documentElement.classList.toggle('dark', isDark)
+  document.documentElement.style.colorScheme = isDark ? 'dark' : 'light'
 }`
   .replace(/\n/g, ';')
   .replace(/\s{2,}/g, '');
