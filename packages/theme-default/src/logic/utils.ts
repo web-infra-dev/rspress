@@ -22,18 +22,6 @@ export function isActive(
   );
 }
 
-export function getLogoUrl(
-  rawLogo: string | { dark: string; light: string },
-  theme: 'dark' | 'light',
-) {
-  // If logo is a string, use it directly
-  if (typeof rawLogo === 'string') {
-    return rawLogo;
-  }
-  // If logo is an object, use dark/light mode logo
-  return theme === 'dark' ? rawLogo.dark : rawLogo.light;
-}
-
 export function isMobileDevice() {
   return window.innerWidth <= 1024;
 }
