@@ -1,12 +1,24 @@
 import path from 'path';
 import { fileURLToPath } from 'url';
-import { RSPRESS_TEMP_DIR } from '@rspress/shared';
+import { APPEARANCE_KEY, RSPRESS_TEMP_DIR } from '@rspress/shared';
 
 export const isProduction = () => process.env.NODE_ENV === 'production';
 
 // Keep the quotation marks consistent before and after.
 export const importStatementRegex =
   /import\s+(.*?)\s+from\s+(['"])(.*?)(?:"|');?/gm;
+
+// In the first render, the theme will be set according to the user's system theme
+// - Should be injected into both development and production modes
+// - Class hook (.dark) is set for internal use (Tailwind)
+export const inlineThemeScript = `{
+  const saved = localStorage.getItem('${APPEARANCE_KEY}')
+  const preferDark = window.matchMedia('(prefers-color-scheme: dark)').matches
+  const isDark = !saved || saved === 'auto' ? preferDark : saved === 'dark'
+  document.documentElement.classList.toggle('dark', isDark)
+}`
+  .replace(/\n/g, ';')
+  .replace(/\s{2,}/g, '');
 
 // @ts-expect-error
 const dirname = path.dirname(fileURLToPath(new URL(import.meta.url)));
