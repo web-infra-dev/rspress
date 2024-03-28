@@ -19,11 +19,11 @@
   "license": "MIT",
   "devDependencies": {
     "@documate/documate": "^0.1.0",
-    "@documate/react": "0.2.1",
-    "@types/react": "18.2.0",
+    "@documate/react": "0.2.2",
+    "@types/react": "18.2.73",
     "framer-motion": "10.16.4",
     "rspress": "workspace:*",
-    "ts-node": "^10.9.1",
+    "ts-node": "^10.9.2",
     "typescript": "^5"
   },
   "publishConfig": {
@@ -35,6 +35,6 @@
     "docs"
   ],
   "dependencies": {
-    "rsfamily-nav-icon": "^1.0.1"
+    "rsfamily-nav-icon": "^1.0.2"
   }
 }
