@@ -1,5 +1,21 @@
 # @rspress/core
 
+## 1.16.2
+
+### Patch Changes
+
+- 37b4ffe: fix(core): set ssg:false in plugin not work in build mode
+- 5d88d28: fix(core): section header text should return i18n result
+- Updated dependencies [5b98eaa]
+- Updated dependencies [5376e70]
+  - @rspress/theme-default@1.16.2
+  - @rspress/plugin-auto-nav-sidebar@1.16.2
+  - @rspress/plugin-container-syntax@1.16.2
+  - @rspress/plugin-last-updated@1.16.2
+  - @rspress/plugin-medium-zoom@1.16.2
+  - @rspress/runtime@1.16.2
+  - @rspress/shared@1.16.2
+
 ## 1.16.1
 
 ### Patch Changes

@@ -1,5 +1,14 @@
 # @rspress/plugin-preview
 
+## 1.16.2
+
+### Patch Changes
+
+- Updated dependencies [5b98eaa]
+- Updated dependencies [5376e70]
+  - @rspress/theme-default@1.16.2
+  - @rspress/shared@1.16.2
+
 ## 1.16.1
 
 ### Patch Changes

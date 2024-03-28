@@ -1,5 +1,14 @@
 # @rspress/theme-default
 
+## 1.16.2
+
+### Patch Changes
+
+- 5b98eaa: chore: optimize code style in sidebar
+- 5376e70: feat: render code in overview component
+  - @rspress/runtime@1.16.2
+  - @rspress/shared@1.16.2
+
 ## 1.16.1
 
 ### Patch Changes
