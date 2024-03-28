@@ -1,4 +1,9 @@
 table {
   table-layout: fixed;
   width: 100%;
+
+  td {
+    // allow use &#10; to break line
+    white-space: pre-wrap;
+  }
 }

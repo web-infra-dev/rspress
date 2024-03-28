@@ -96,6 +96,7 @@ export async function siteDataVMPlugin(context: FactoryContext) {
     lang: userConfig?.lang || '',
     locales: userConfig?.locales || userConfig.themeConfig?.locales || [],
     logo: userConfig?.logo || '',
+    logoText: userConfig?.logoText || '',
     ssg: userConfig?.ssg ?? true,
     multiVersion: {
       default: userConfig?.multiVersion?.default || '',
@@ -113,6 +114,12 @@ export async function siteDataVMPlugin(context: FactoryContext) {
       codeHighlighter: userConfig?.markdown?.codeHighlighter || 'prism',
     },
   };
+
+
+  // searchHooks is a absolute path which may leak information
+  if (siteData.search) {
+    siteData.search.searchHooks = undefined;
+  }
 
   return {
     [`${RuntimeModuleID.SiteData}.mjs`]: `export default ${JSON.stringify(

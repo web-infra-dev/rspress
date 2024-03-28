@@ -86,7 +86,7 @@ export default defineConfig({
 
 框架会在 `public` 目录中找到你的图标，当然你也可以设置成一个 CDN 地址。
 
-## logo
+## logo \{#logo-1}
 
 - Type: `string | { dark: string; light: string }`
 - Default: `""`
@@ -113,6 +113,21 @@ export default defineConfig({
     dark: '/logo-dark.png',
     light: '/logo-light.png',
   },
+});
+```
+
+## logoText
+
+- Type: `string`
+- Default: `""`
+
+站点 logo 文字。这个文字将用作导航栏左上角的 logo 文字。例如：
+
+```ts title="rspress.config.ts"
+import { defineConfig } from 'rspress/config';
+
+export default defineConfig({
+  logoText: 'rspress',
 });
 ```
 

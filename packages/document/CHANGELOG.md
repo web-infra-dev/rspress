@@ -1,5 +1,15 @@
 # @rspress/docs
 
+## 1.16.2
+
+## 1.16.1
+
+### Patch Changes
+
+- 7e0d6aa: fix(doc): fix logo sidebar cannot be used properly.
+- 6ea2cba: Document setup steps for using Tailwind CSS with Rspress
+- 145bb16: feat: support logo text config
+
 ## 1.16.0
 
 ## 1.15.1

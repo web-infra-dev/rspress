@@ -228,10 +228,10 @@ export async function renderPages(
 export async function build(options: BuildOptions) {
   const { docDirectory, appDirectory, config } = options;
   const pluginDriver = new PluginDriver(config, true);
-  const enableSSG = config.ssg ?? true;
   await pluginDriver.init();
   const modifiedConfig = await pluginDriver.modifyConfig();
   await pluginDriver.beforeBuild();
+  const enableSSG = modifiedConfig.ssg ?? true;
 
   // empty temp dir before build
   await fs.emptyDir(TEMP_DIR);

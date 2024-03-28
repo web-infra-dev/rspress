@@ -1,3 +1,5 @@
+import { PackageManagerTabs } from '@theme';
+
 # Customizing Page
 
 Rspress provides several ways for you to customize the content of your pages, including:
@@ -63,8 +65,7 @@ export default defineConfig({
 
 Then you can add the following code:
 
-```css
-/* styles/index.css */
+```css title="styles/index.css"
 :root {
   --rp-c-brand: #f00;
 }
@@ -74,9 +75,7 @@ In this way, the framework will automatically collect all global styles and merg
 
 Here are some commonly used global styles:
 
-```css
-/* styles/index.css */
-
+```css title="styles/index.css"
 :root {
   /* Modify theme color */
   --rp-c-brand: #f00;
@@ -96,6 +95,46 @@ Here are some commonly used global styles:
 ```
 
 > If you want to know more about the internal global styles, you can check [vars.css](https://github.com/web-infra-dev/rspress/blob/main/packages/theme-default/src/styles/vars.css)
+
+### Tailwind CSS
+
+In order to get Tailwind CSS working with Rspress, you can use the following steps:
+
+1. Install Tailwind CSS:
+
+<PackageManagerTabs command="install tailwindcss -D" />
+
+2. Create a `postcss.config.js` file containing `tailwindcss` plugin:
+
+```js title="postcss.config.js"
+module.exports = {
+  plugins: {
+    tailwindcss: {},
+  },
+};
+```
+
+3. Create a `tailwind.config.js` file and make sure all the content files are included via `content`:
+
+```js title="tailwind.config.js"
+module.exports = {
+  content: ['./src/**/*.tsx', './docs/**/*.mdx'],
+  theme: {
+    extend: {},
+  },
+  plugins: [],
+};
+```
+
+4. Include the Tailwind directives in your CSS styles file from [Custom Styles](#custom-styles):
+
+```css title=styles/index.css
+@import 'tailwindcss/base';
+@import 'tailwindcss/components';
+@import 'tailwindcss/utilities';
+```
+
+> For most up to date configuration, please refer to the official [Tailwind CSS documentation](https://tailwindcss.com/docs/installation/using-postcss).
 
 ## Custom Layout Structure
 

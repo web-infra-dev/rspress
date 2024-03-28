@@ -11,14 +11,17 @@ import { getLogoUrl, useLocaleSiteData } from '../../logic';
 export const NavBarTitle = () => {
   const { siteData } = usePageData();
   const localeData = useLocaleSiteData();
-  const { logo: rawLogo } = siteData;
+  const { logo: rawLogo, logoText } = siteData;
   const title = localeData.title ?? siteData.title;
   const { theme } = useContext(ThemeContext);
   const [logo, setLogo] = useState(getLogoUrl(rawLogo, theme));
+  const [logoVisible, setLogoVisible] = useState(false);
 
   useEffect(() => {
-    setLogo(getLogoUrl(rawLogo, theme));
-  }, [theme]);
+    setLogoVisible(true);
+    const newLogoUrl = getLogoUrl(rawLogo, theme);
+    setLogo(newLogoUrl);
+  }, [theme, rawLogo]);
 
   return (
     <div className={`${styles.navBarTitle}`}>
@@ -26,16 +29,16 @@ export const NavBarTitle = () => {
         href={withBase(localeData.langRoutePrefix || '/')}
         className="flex items-center w-full h-full text-base font-semibold transition-opacity duration-300 hover:opacity-60"
       >
-        {logo ? (
+        {logo && logoVisible && (
           <img
             src={normalizeImagePath(logo)}
             alt="logo"
             id="logo"
             className="mr-4 rspress-logo"
           />
-        ) : (
-          <span>{title}</span>
         )}
+        {logoText && <span>{logoText}</span>}
+        {!logo && !logoText && <span>{title}</span>}
       </a>
     </div>
   );

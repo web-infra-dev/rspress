@@ -73,8 +73,17 @@ export function normalizeThemeConfig(
     const normalizeSidebarItem = (
       item: SidebarGroup | SidebarItem | SidebarDivider | SidebarSectionHeader | string,
     ): NormalizedSidebarGroup | SidebarItem | SidebarDivider | SidebarSectionHeader => {
-      // Meet the divider or section header, return directly
-      if (typeof item === 'object' && ('dividerType' in item || 'sectionHeaderText' in item)) {
+      // Meet the divider, return directly
+      if (typeof item === 'object' && 'dividerType' in item) {
+        return item;
+      }
+
+      // Meet the section header, return i18n text
+      if (typeof item === 'object' && 'sectionHeaderText' in item) {
+        item.sectionHeaderText = applyReplaceRules(
+          getI18nText(item.sectionHeaderText, currentLang),
+          replaceRules,
+        );
         return item;
       }
 
