@@ -11,6 +11,10 @@ export function useRedirect4FirstVisit() {
   const langs = localeLanguages.map(item => item.lang) || [];
   const currentLang = page.lang;
   useEffect(() => {
+    const localeRedirect = siteData.themeConfig.localeRedirect ?? 'auto';
+    if (localeRedirect !== 'auto') {
+      return;
+    }
     if (!defaultLang || process.env.TEST === '1') {
       // Check the window.navigator.language to determine the default language
       // If the default language is not the same as the current language, redirect to the default language

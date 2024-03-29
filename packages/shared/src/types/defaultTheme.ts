@@ -94,6 +94,11 @@ export interface Config {
    * @default false
    */
   enableScrollToTop?: boolean;
+  /**
+   * Whether to redirect to the closest locale when the user visits the site
+   * @default 'auto'
+   */
+  localeRedirect?: 'auto' | 'never';
 }
 
 /**
@@ -160,7 +165,12 @@ export type Image = string | { src: string; alt?: string };
 
 // sidebar -------------------------------------------------------------------
 export interface Sidebar {
-  [path: string]: (SidebarGroup | SidebarItem | SidebarDivider | SidebarSectionHeader)[];
+  [path: string]: (
+    | SidebarGroup
+    | SidebarItem
+    | SidebarDivider
+    | SidebarSectionHeader
+  )[];
 }
 
 export interface SidebarGroup {
