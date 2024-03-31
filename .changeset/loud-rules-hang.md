@@ -1,5 +1,5 @@
 ---
-"@rspress/theme-default": major
+'@rspress/theme-default': minor
 ---
 
 support search with lang cyrillic
