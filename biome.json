@@ -10,6 +10,12 @@
       "arrowParentheses": "asNeeded"
     }
   },
+  "vcs": {
+    "enabled": true,
+    "defaultBranch": "main",
+    "clientKind": "git",
+    "useIgnoreFile": true
+  },
   "files": {
     "include": [
       "packages/**/*.ts",
@@ -23,14 +29,9 @@
     ],
     "ignore": [
       "*.d.ts",
-      "dist/**/*",
       "dist-*/**/*",
-      "doc_build/**/*",
       "compiled/**/*",
-      "node_modules/**/*",
-      "create-rspress/template/rspress.config.ts",
-      ".history/**/*",
-      "coverage/**/*"
+      "create-rspress/template/rspress.config.ts"
     ],
     "ignoreUnknown": true
   },
