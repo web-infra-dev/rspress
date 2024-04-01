@@ -77,7 +77,10 @@ export function pluginRss(pluginRssOptions: PluginRssOptions): RspressPlugin {
    * workaround for retrieving data of pages in `afterBuild`
    * TODO: get pageData list directly in `afterBuild`
    **/
-  let _rssWorkaround: null | Record<string, FeedItemWithChannel[]> = null;
+  let _rssWorkaround: null | Record<
+    string,
+    PromiseLike<FeedItemWithChannel[]>
+  > = null;
   let _config: null | UserConfig;
 
   return {
@@ -96,17 +99,19 @@ export function pluginRss(pluginRssOptions: PluginRssOptions): RspressPlugin {
       if (!_rssWorkaround) return;
 
       const pageData = _pageData as PageWithFeeds;
-      // rspress run `extendPageData` twice for each page - we need one only
-      if (!_rssWorkaround[pageData.id]) {
-        _rssWorkaround[pageData.id] = await getRssItems(
+
+      // rspress run `extendPageData` for each page
+      //   - let's cache rss items within a complete rspress build
+      _rssWorkaround[pageData.id] =
+        _rssWorkaround[pageData.id] ||
+        getRssItems(
           feedsSet.get(),
           pageData,
           _config!,
           pluginRssOptions.siteUrl,
         );
-      }
 
-      const feeds = _rssWorkaround[pageData.id];
+      const feeds = await _rssWorkaround[pageData.id];
       const showRssList = new Set(
         concatArray(pageData.frontmatter['link-rss'] as string[] | string),
       );
@@ -126,7 +131,9 @@ export function pluginRss(pluginRssOptions: PluginRssOptions): RspressPlugin {
     async afterBuild(config) {
       if (!_rssWorkaround) return;
 
-      const items = concatArray(...Object.values(_rssWorkaround));
+      const items = concatArray(
+        ...(await Promise.all(Object.values(_rssWorkaround))),
+      );
       const feeds: Record<string, Feed> = Object.create(null);
 
       for (const { channel, ...item } of items) {
