@@ -2,9 +2,9 @@
 
 ## builderConfig
 
-- Type: `Object`
+- Type: `RsbuildConfig`
 
-Used to customize the configurations of Rsbuild. For complete configurations, please refer to [Rsbuild - Config](https://rsbuild.dev/config/).
+Used to customize the configurations of Rsbuild. For detailed configurations, please refer to [Rsbuild - Config](https://rsbuild.dev/config/).
 
 For example, change the output directory to `doc_dist`:
 
@@ -24,20 +24,57 @@ export default defineConfig({
 
 - Type: `RsbuildPlugin[]`
 
-Used to customize the [plugins of Rsbuild](https://rsbuild.dev). For example:
+Used to register [Rsbuild plugins](https://rsbuild.dev/plugins/list/).
+
+You can use the rich plugins of Rsbuild in the Rspress project to quickly extend the building capabilities.
+
+- Example: Support Vue SFC through [@rsbuild/plugin-vue](https://rsbuild.dev/plugins/list/plugin-vue)
 
 ```ts title="rspress.config.ts"
 import { defineConfig } from 'rspress/config';
-import { pluginStylus } from '@rsbuild/plugin-stylus';
+import { pluginVue } from '@rsbuild/plugin-vue';
 
 export default defineConfig({
-  builderPlugins: [pluginStylus()],
+  builderPlugins: [pluginVue()],
+});
+```
+
+- Example: Add Google analytics through [rsbuild-plugin-google-analytics](https://github.com/rspack-contrib/rsbuild-plugin-google-analytics)
+
+```ts title="rspress.config.ts"
+import { defineConfig } from 'rspress/config';
+import { pluginGoogleAnalytics } from 'rsbuild-plugin-google-analytics';
+
+export default defineConfig({
+  builderPlugins: [
+    pluginGoogleAnalytics({
+      // replace this with your Google tag ID
+      id: 'G-xxxxxxxxxx',
+    }),
+  ],
+});
+```
+
+- Example: Add Open Graph meta tags through [rsbuild-plugin-open-graph](https://github.com/rspack-contrib/rsbuild-plugin-open-graph)
+
+```ts title="rspress.config.ts"
+import { defineConfig } from 'rspress/config';
+import { pluginOpenGraph } from 'rsbuild-plugin-open-graph';
+
+export default defineConfig({
+  builderPlugins: [
+    pluginOpenGraph({
+      title: 'My Website',
+      type: 'website',
+      // ...options
+    }),
+  ],
 });
 ```
 
 ### Default Config
 
-If you need to see the default `builderConfig`, you can add the `DEBUG=rsbuild` parameter when running the `rspress dev` or `rspress build` command:
+If you need to view the default Rspack or Rsbuild configs, you can add the `DEBUG=rsbuild` parameter when running the `rspress dev` or `rspress build` command:
 
 ```bash
 DEBUG=rsbuild rspress dev
