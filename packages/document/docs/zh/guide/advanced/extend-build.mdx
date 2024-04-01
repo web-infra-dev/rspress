@@ -4,6 +4,8 @@
 
 Rspress 底层基于 [Rsbuild](https://github.com/web-infra-dev/rsbuild) 来进行文档构建。
 
+### Rsbuild 配置
+
 Rsbuild 提供了丰富的构建配置，你可以使用 [builderConfig](/api/config/config-build.html#builderconfig) 来自定义这些配置项。比如，将产物目录修改为 `doc_dist`：
 
 ```ts title="rspress.config.ts"
@@ -16,6 +18,23 @@ export default defineConfig({
         root: 'doc_dist',
       },
     },
+  },
+});
+```
+
+:::tip
+你可以通过 [Rsbuild - 配置](https://rsbuild.dev/zh/config/) 文档来了解更多的配置项。
+:::
+
+### Rspack 配置
+
+你可以通过 Rsbuild 提供的 [tools.rspack](https://rsbuild.dev/config/tools/rspack) 选项来修改 Rspack 的配置：
+
+```ts title="rspress.config.ts"
+import { defineConfig } from 'rspress/config';
+
+export default defineConfig({
+  builderConfig: {
     tools: {
       rspack(options) {
         // 修改 rspack 的配置
@@ -24,14 +43,6 @@ export default defineConfig({
   },
 });
 ```
-
-:::tip
-
-你可以通过 [Rsbuild - 配置](https://rsbuild.dev/zh/config/) 的文档来了解更多的配置项。
-
-注意，Rspress 仅支持 Rspack 打包工具，因此一些与 webpack 相关的配置项将无法生效，比如 `tools.webpack`。当然，你可以通过 `tools.rspack` 来修改 Rspack 的配置。
-
-:::
 
 ## MDX 编译插件
 

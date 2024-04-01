@@ -4,7 +4,9 @@
 
 Rspress builds documents based on [Rsbuild](https://github.com/web-infra-dev/rsbuild).
 
-Rsbuild provides flexible build configurations, you can use [builderConfig](/api/config/config-build.html#builderconfig) to customize these configurations. For example, change the output directory to `doc_dist`:
+### Configure Rsbuild
+
+Rsbuild provides a rich set of build configurations. You can customize these configurations through [builderConfig](/api/config/config-build.html#builderconfig). For example, change the output directory to `doc_dist`:
 
 ```ts title="rspress.config.ts"
 import { defineConfig } from 'rspress/config';
@@ -16,22 +18,31 @@ export default defineConfig({
         root: 'doc_dist',
       },
     },
-    tools: {
-      rspack(options) {
-        // change rspack's options
-      },
-    },
   },
 });
 ```
 
 :::tip
-
-You can learn more configurations through the [Rsbuild - Config](https://rsbuild.dev/config/) documentation.
-
-Note that Rspress only supports Rspack bundler, so some configurations related to webpack will not work, such as `tools.webpack`. Of course, you can use the `tools.rspack` to customize the Rspack config.
-
+You can learn more about the configuration options through [Rsbuild - Config](https://rsbuild.dev/config/) documentation.
 :::
+
+### Configure Rspack
+
+You can configure Rspack through the [tools.rspack](https://rsbuild.dev/config/tools/rspack) option provided by Rsbuild:
+
+```ts title="rspress.config.ts"
+import { defineConfig } from 'rspress/config';
+
+export default defineConfig({
+  builderConfig: {
+    tools: {
+      rspack(options) {
+        // modify the rspack configuration
+      },
+    },
+  },
+});
+```
 
 ## MDX Compilation
 

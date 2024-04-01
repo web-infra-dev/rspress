@@ -2,7 +2,7 @@
 
 ## builderConfig
 
-- Type: `Object`
+- Type: `RsbuildConfig`
 
 用于自定义 Rsbuild 的配置项，完整配置项请查看 [Rsbuild - 配置](https://rsbuild.dev/zh/config/)。
 
@@ -24,20 +24,57 @@ export default defineConfig({
 
 - Type: `RsbuildPlugin[]`
 
-用于加入 [Rsbuild 的插件](https://rsbuild.dev/zh/plugins/list/)，比如：
+用于注册 [Rsbuild 插件](https://rsbuild.dev/zh/plugins/list/)。
+
+你可以在 Rspress 项目中使用 Rsbuild 丰富的插件，来快速扩展构建能力。
+
+- 示例：通过 [@rsbuild/plugin-vue](https://rsbuild.dev/plugins/list/plugin-vue) 支持 Vue SFC
 
 ```ts title="rspress.config.ts"
 import { defineConfig } from 'rspress/config';
-import { pluginStylus } from '@rsbuild/plugin-stylus';
+import { pluginVue } from '@rsbuild/plugin-vue';
 
 export default defineConfig({
-  builderPlugins: [pluginStylus()],
+  builderPlugins: [pluginVue()],
+});
+```
+
+- 示例：通过 [rsbuild-plugin-google-analytics](https://github.com/rspack-contrib/rsbuild-plugin-google-analytics) 添加 Google analytics
+
+```ts title="rspress.config.ts"
+import { defineConfig } from 'rspress/config';
+import { pluginGoogleAnalytics } from 'rsbuild-plugin-google-analytics';
+
+export default defineConfig({
+  builderPlugins: [
+    pluginGoogleAnalytics({
+      // replace this with your Google tag ID
+      id: 'G-xxxxxxxxxx',
+    }),
+  ],
+});
+```
+
+- 示例：通过 [rsbuild-plugin-open-graph](https://github.com/rspack-contrib/rsbuild-plugin-open-graph) 添加 Open Graph meta 标签
+
+```ts title="rspress.config.ts"
+import { defineConfig } from 'rspress/config';
+import { pluginOpenGraph } from 'rsbuild-plugin-open-graph';
+
+export default defineConfig({
+  builderPlugins: [
+    pluginOpenGraph({
+      title: 'My Website',
+      type: 'website',
+      // ...options
+    }),
+  ],
 });
 ```
 
 ### 默认配置
 
-如果你需要查看默认的 `builderConfig`，可以在执行 `rspress dev` 或 `rspress build` 命令时，添加 `DEBUG=rsbuild` 参数：
+如果你需要查看默认的 Rspack 或 Rsbuild 配置，可以在执行 `rspress dev` 或 `rspress build` 命令时，添加 `DEBUG=rsbuild` 参数：
 
 ```bash
 DEBUG=rsbuild rspress dev
