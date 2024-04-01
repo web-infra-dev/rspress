@@ -43,6 +43,7 @@ export default defineConfig({
     exclude: ['**/fragments/**'],
   },
   themeConfig: {
+    enableContentAnimation: true,
     footer: {
       message: '© 2024 Bytedance Inc. All Rights Reserved.',
     },
