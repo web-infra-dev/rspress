@@ -299,12 +299,18 @@ import { defineConfig } from 'rspress/config';
 
 export default defineConfig({
   route: {
-    include: ['other-dir/**/*'],
+    include: ['other-dir/**/*.{md,mdx}'],
   },
 });
 ```
 
-> 注意：数组中的字符串支持 glob 模式。
+> 注意：数组中的字符串支持 glob 模式，填写的 glob 表达式应基于文档的 `root` 目录，并带上对应的 extensions 后缀。
+
+:::note
+
+我们更加推荐在自定义 Rspress 插件中使用 [addPages hook](plugin/system/plugin-api.html#addpages) 来在路由中添加一些额外的文件，这样可以更灵活且更合理地指定页面路由和文件路径/内容。
+
+:::
 
 ### route.exclude
 
@@ -323,7 +329,7 @@ export default defineConfig({
 });
 ```
 
-> 注意：数组中的字符串支持 glob 模式。
+> 注意：数组中的字符串支持 glob 模式，填写的 glob 表达式应基于文档的 `root` 目录。
 
 ### route.extensions
 
