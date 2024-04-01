@@ -587,8 +587,8 @@ importers:
         version: 1.0.1
     devDependencies:
       '@documate/documate':
-        specifier: ^0.1.0
-        version: 0.1.0
+        specifier: ^0.2.1
+        version: 0.2.1
       '@documate/react':
         specifier: 0.2.1
         version: 0.2.1(react-dom@18.2.0)(react@18.2.0)
@@ -2165,15 +2165,16 @@ packages:
       '@jridgewell/trace-mapping': 0.3.9
     dev: true
 
-  /@documate/documate@0.1.0:
-    resolution: {integrity: sha512-g7HWjAQyHmuy3ecDo53TfPv5uF8e1Ku+x1CXUYGEZxzeCj8RbP778aZQaLrFswgFwKwKh5JbZFxNulGpYgRRww==}
+  /@documate/documate@0.2.1:
+    resolution: {integrity: sha512-FhbDmWBNyezbzoSOwBpv8SdWEF/OtcSS3GYTcHvLS41IXLi0MZJNx3t+/m73S+CmYLE1M5WgEzcZsO1E8NqeyA==}
     hasBin: true
     dependencies:
-      axios: 1.5.1
+      axios: 1.6.8
       commander: 11.0.0
       detect-package-manager: 3.0.1
       execa: 8.0.1
       glob: 10.3.5
+      prompts: 2.4.2
       spinnies: 0.5.1
     transitivePeerDependencies:
       - debug
@@ -9089,6 +9090,14 @@ packages:
 
   /prompts@2.4.1:
     resolution: {integrity: sha512-EQyfIuO2hPDsX1L/blblV+H7I0knhgAd82cVneCwcdND9B8AuCDuRcBH6yIcG4dFzlOUqbazQqwGjx5xmsNLuQ==}
+    engines: {node: '>= 6'}
+    dependencies:
+      kleur: 3.0.3
+      sisteransi: 1.0.5
+    dev: true
+
+  /prompts@2.4.2:
+    resolution: {integrity: sha512-NxNv/kLguCA7p3jE8oL2aEBsrJWgAakBpgmgK6lpPWV+WuOmY6r2/zbAVnP+T8bQlA0nzHXSJSJW0Hq7ylaD2Q==}
     engines: {node: '>= 6'}
     dependencies:
       kleur: 3.0.3

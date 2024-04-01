@@ -18,7 +18,7 @@
   "author": "",
   "license": "MIT",
   "devDependencies": {
-    "@documate/documate": "^0.1.0",
+    "@documate/documate": "^0.2.1",
     "@documate/react": "0.2.1",
     "@types/react": "18.2.0",
     "framer-motion": "10.16.4",
