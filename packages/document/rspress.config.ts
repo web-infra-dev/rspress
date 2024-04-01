@@ -1,9 +1,8 @@
 import { defineConfig } from 'rspress/config';
+import { pluginOpenGraph } from 'rsbuild-plugin-open-graph';
+import { pluginGoogleAnalytics } from 'rsbuild-plugin-google-analytics';
 
 export default defineConfig({
-  markdown: {
-    checkDeadLinks: true,
-  },
   root: 'docs',
   title: 'Rspress',
   description: 'Rspack based static site generator',
@@ -14,10 +13,24 @@ export default defineConfig({
     dark: 'https://lf3-static.bytednsdoc.com/obj/eden-cn/rjhwzy/ljhwZthlaukjlkulzlp/rspress/rspress-navbar-logo-dark-0904.png',
   },
   icon: 'https://lf3-static.bytednsdoc.com/obj/eden-cn/uhbfnupenuhf/rspress/rspress-logo.png',
+  markdown: {
+    checkDeadLinks: true,
+  },
   builderConfig: {
-    dev: {
-      startUrl: false,
-    },
+    plugins: [
+      pluginGoogleAnalytics({ id: 'G-66B2Z6KG0J' }),
+      pluginOpenGraph({
+        title: 'Rspress',
+        type: 'website',
+        url: 'https://rspress.dev/',
+        image: 'https://rspress.dev/og-image.png',
+        description: 'Rspack based static site generator',
+        twitter: {
+          site: '@rspack_dev',
+          card: 'summary_large_image',
+        },
+      }),
+    ],
     source: {
       define: {
         'process.env.DOCUMATE_BACKEND_URL': JSON.stringify(
@@ -25,40 +38,11 @@ export default defineConfig({
         ),
       },
     },
-    html: {
-      tags: [
-        // Configure Google Analytics
-        {
-          tag: 'script',
-          attrs: {
-            async: true,
-            src: 'https://www.googletagmanager.com/gtag/js?id=G-66B2Z6KG0J',
-          },
-        },
-        {
-          tag: 'meta',
-          attrs: {
-            content:
-              'https://github.com/web-infra-dev/rspress/assets/39261479/999e7946-45ff-45d5-b9cd-594e634e0e5a',
-            property: 'og:image',
-          },
-        },
-        {
-          tag: 'script',
-          children: `
-window.dataLayer = window.dataLayer || [];
-function gtag(){dataLayer.push(arguments);}
-gtag('js', new Date());
-gtag('config', 'G-66B2Z6KG0J');`,
-        },
-      ],
-    },
   },
   route: {
     exclude: ['**/fragments/**'],
   },
   themeConfig: {
-    enableContentAnimation: true,
     footer: {
       message: '© 2024 Bytedance Inc. All Rights Reserved.',
     },
