@@ -19,16 +19,14 @@ async function loadUmdBabelModule(): Promise<Babel> {
     'exports',
     'module',
     'require',
-    'globalThis',
-    `with(exports, module, require, globalThis) {return ${umdSourceCode}}`,
+    `with(exports, module, require) {return ${umdSourceCode}}`,
   );
 
-  const exports: Babel = { version: undefined } as unknown as Babel;
+  const exports: Babel = {} as unknown as Babel;
   const module = { exports };
-  const global: any = {};
-  const require = (key: string) => {};
+  const require = () => {};
 
-  run(exports, module, require, global);
+  run(exports, module, require);
 
   return exports;
 }
