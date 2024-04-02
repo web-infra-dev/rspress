@@ -157,6 +157,7 @@ function processLocales(
   root: string,
   defaultLang: string,
   defaultVersion: string,
+  excludedFiles?: string[],
 ) {
   return Promise.all(
     langs.map(async lang => {
@@ -168,7 +169,12 @@ function processLocales(
                   lang === defaultLang ? '' : `/${lang}`
                 }`,
               );
-              return walk(path.join(root, version, lang), routePrefix, root);
+              return walk(
+                path.join(root, version, lang),
+                routePrefix,
+                root,
+                excludedFiles,
+              );
             }),
           )
         : [
@@ -176,6 +182,7 @@ function processLocales(
               path.join(root, lang),
               addTrailingSlash(lang === defaultLang ? '' : `/${lang}`),
               root,
+              excludedFiles,
             ),
           ];
       return combineWalkResult(walks, versions);
@@ -203,6 +210,7 @@ export function pluginAutoNavSidebar(): RspressPlugin {
           config.root!,
           defaultLang,
           defaultVersion,
+          config.route?.exclude,
         );
         config.themeConfig.locales = config.themeConfig.locales.map(
           (item, index) => ({
@@ -230,10 +238,18 @@ export function pluginAutoNavSidebar(): RspressPlugin {
                   path.join(config.root!, version),
                   routePrefix,
                   config.root!,
+                  config.route?.exclude,
                 );
               }),
             )
-          : [await walk(config.root!, '/', config.root!)];
+          : [
+              await walk(
+                config.root!,
+                '/',
+                config.root!,
+                config.route?.exclude,
+              ),
+            ];
 
         const combined = combineWalkResult(walks, versions);
 
