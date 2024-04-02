@@ -266,7 +266,9 @@ Here is a complete example using the three types above:
 
 ### No Config Usage
 
-In some directories, you don't need to configure `_meta.json` and let the framework automatically generate the sidebar. This requires ensuring that the directory contains only documents, not subdirectories, and you have no requirements for the order of documents. For example, there is now the following document structure:
+In some directories, you don't need to configure `_meta.json` and let the framework automatically generate the sidebar.
+
+For example, there is a document structure:
 
 ```bash
 docs
@@ -293,7 +295,9 @@ In the guides directory you can configure `_meta.json` as follows:
 ]
 ```
 
-In `basic` directory, you may not configure `_meta.json`, and then the framework will automatically generate a sidebar for you, the default is sorted alphabetically according to the file name. If you want to customize the order, you can prefix the file name with a number, such as:
+In `basic` directory, you may not configure `_meta.json`, and then the framework will automatically generate a sidebar for you.
+
+By default files are sorted alphabetically. If you want to customize their orders, you can prefix the file names with a number, such as:
 
 ```bash
 basic
@@ -301,6 +305,8 @@ basic
   ├── 2-install.mdx
   └── 3-plugin-development.md
 ```
+
+> Note : The files defined in [route.exclude](/api/config/config-basic.html#routeexclude) won't appear in the auto-generated sidebar.
 
 ### Add SVG Icons Before Titles
 

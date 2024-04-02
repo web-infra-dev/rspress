@@ -57,6 +57,7 @@
     "registry": "https://registry.npmjs.org/"
   },
   "dependencies": {
-    "@rspress/shared": "workspace:*"
+    "@rspress/shared": "workspace:*",
+    "globby": "11.1.0"
   }
 }

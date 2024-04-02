@@ -13,7 +13,7 @@ import {
 } from '@rspress/shared';
 import { NavMeta, SideMeta } from './type';
 import { detectFilePath, extractH1Title } from './utils';
-import globby from '../../core/compiled/globby';
+import globby from 'globby';
 
 export async function scanSideMeta(
   workDir: string,
@@ -37,7 +37,6 @@ export async function scanSideMeta(
 
     const includedFiles = globby.sync('**', {
       cwd: workDir,
-      onlyFiles: false,
       ignore: [...excludedFiles],
     });
     const subItems = [

@@ -727,6 +727,9 @@ importers:
       '@rspress/shared':
         specifier: workspace:*
         version: link:../shared
+      globby:
+        specifier: 11.1.0
+        version: link:../core/compiled/globby
     devDependencies:
       '@modern-js/tsconfig':
         specifier: 2.48.4
