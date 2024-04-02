@@ -10,7 +10,7 @@ export async function globalStylesVMPlugin(context: FactoryContext) {
     const source = config.globalStyles;
     const styleContent = await fs.readFile(source, 'utf-8');
 
-    // Patch --modern-xxx, .modern-xxx global name
+    // Patch --modern-abc, .modern-abc global name
     const patchedStyleContent = styleContent
       .replace(/--modern-/g, '--rp-')
       .replace(/\.modern-doc/g, '.rspress')

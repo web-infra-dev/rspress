@@ -50,7 +50,7 @@ import { RspressPlugin } from '@rspress/shared';
 
 export function pluginForDoc(): RspressPlugin {
   // component path
-  const componentPath = path.join(__dirname, 'xxx.tsx');
+  const componentPath = path.join(__dirname, 'foo.tsx');
   return {
     // plugin name
     name: 'plugin-comp',
@@ -68,7 +68,7 @@ import { RspressPlugin } from '@rspress/shared';
 
 export function pluginForDoc(): RspressPlugin {
   // component path
-  const componentPath = path.join(__dirname, 'xxx.tsx');
+  const componentPath = path.join(__dirname, 'foo.tsx');
   return {
     // plugin name
     name: 'plugin-comp',
@@ -364,17 +364,17 @@ export function pluginForDoc(): RspressPlugin {
       };
       const data = await fetchSomeData();
       return {
-        'virtual-xxx': `export default ${JSON.stringify(data)}`,
+        'virtual-foo': `export default ${JSON.stringify(data)}`,
       };
     },
   };
 }
 ```
 
-In this way, you can use the `virtual-xxx` module in the runtime component:
+In this way, you can use the `virtual-foo` module in the runtime component:
 
 ```jsx
-import myData from 'virtual-xxx';
+import myData from 'virtual-foo';
 
 export function MyComponent() {
   return <div>{myData.a}</div>;

@@ -280,7 +280,7 @@ ${routeMeta
      *   route: '/',
      *   element: jsx(Route0),
      *   preload: Route0.preload,
-     *   filePath: '/Users/xxx/xxx/index.md'
+     *   filePath: '/Users/foo/bar/index.md'
      * }
      *
      * For client render, example:
@@ -288,7 +288,7 @@ ${routeMeta
      *   route: '/',
      *   element: jsx(Route0.default),
      *   preload: Route0.preload,
-     *   filePath: '/Users/xxx/xxx/index.md'
+     *   filePath: '/Users/foo/bar/index.md'
      * }
      */
     return `{ path: '${route.routePath}', element: React.createElement(${component}), filePath: '${route.relativePath}', preload: ${preload}, lang: '${route.lang}', version: '${route.version}' }`;

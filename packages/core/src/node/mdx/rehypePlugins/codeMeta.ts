@@ -13,7 +13,7 @@ export const rehypePluginCodeMeta: Plugin<[], Root> = () => {
         node.children[0].tagName === 'code'
       ) {
         const codeNode = node.children[0];
-        // language-xxx
+        // language-foo
         const meta = (codeNode.data?.meta as string) || '';
         codeNode.properties.meta = meta;
       }

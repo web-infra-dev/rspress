@@ -9,7 +9,7 @@ import { TEMP_DIR, isProduction } from '@/node/constants';
 
 // How can we let the client runtime access the `indexHash`?
 // We can only do something after the Rspack build process becuase the index hash is generated within Rspack build process.There are two ways to do this:
-// 1. insert window.__INDEX_HASH__ = 'xxx' into the html template manually
+// 1. insert window.__INDEX_HASH__ = 'foo' into the html template manually
 // 2. replace the `__INDEX_HASH__` placeholder in the html template with the real index hash after Rspack build
 export const indexHash = '';
 
