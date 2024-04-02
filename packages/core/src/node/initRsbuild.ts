@@ -14,6 +14,7 @@ import {
   PACKAGE_ROOT,
   OUTPUT_DIR,
   isProduction,
+  inlineThemeScript,
   PUBLIC_DIR,
 } from './constants';
 import { rsbuildPluginDocVM } from './runtimeModule';
@@ -104,6 +105,13 @@ async function createInternalBuildConfig(
       title: config?.title,
       favicon: normalizeIcon(config?.icon),
       template: path.join(PACKAGE_ROOT, 'index.html'),
+      tags: [
+        config.themeConfig?.darkMode !== false && {
+          tag: 'script',
+          children: inlineThemeScript,
+          append: false,
+        },
+      ].filter(Boolean),
     },
     output: {
       targets: isSSR ? ['node'] : ['web'],
