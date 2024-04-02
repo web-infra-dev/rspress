@@ -62,7 +62,7 @@
     "lodash-es": "^4.17.21",
     "@types/interpret": "^1.1.1",
     "@types/jest": "~29.2.4",
-    "@types/lodash": "^4.14.197",
+    "@types/lodash": "^4.17.0",
     "@types/lodash-es": "^4.17.8",
     "@types/node": "~16.11.7",
     "@types/react": "~18.0.26",
