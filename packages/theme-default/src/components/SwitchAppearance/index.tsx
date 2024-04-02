@@ -1,41 +1,16 @@
-import { useContext, useEffect, useState } from 'react';
+import { useContext } from 'react';
 import { ThemeContext } from '@rspress/runtime';
 import SunSvg from '@theme-assets/sun';
 import MoonSvg from '@theme-assets/moon';
-import {
-  getToggle,
-  isDarkMode,
-  updateUserPreferenceFromStorage,
-} from '../../logic/useAppearance';
 import { SvgWrapper } from '../SvgWrapper';
 
 export function SwitchAppearance({ onClick }: { onClick?: () => void }) {
   const { theme, setTheme } = useContext(ThemeContext);
-  const toggleAppearance = getToggle();
-  const updateAppearanceAndTheme = () => {
-    const isDark = updateUserPreferenceFromStorage();
-    setTheme(isDark ? 'dark' : 'light');
-  };
-
-  useEffect(() => {
-    if (isDarkMode()) {
-      setTheme('dark');
-    }
-    if (typeof window !== 'undefined') {
-      window.addEventListener('storage', updateAppearanceAndTheme);
-    }
-    return () => {
-      if (typeof window !== 'undefined') {
-        window.removeEventListener('storage', updateAppearanceAndTheme);
-      }
-    };
-  }, []);
 
   return (
     <div
       onClick={() => {
         setTheme(theme === 'dark' ? 'light' : 'dark');
-        toggleAppearance();
         onClick?.();
       }}
       className="md:mr-2 rspress-nav-appearance"
