@@ -51,7 +51,7 @@ import { RspressPlugin } from '@rspress/shared';
 
 export function pluginForDoc(): RspressPlugin {
   // 组件路径
-  const componentPath = path.join(__dirname, 'xxx.tsx');
+  const componentPath = path.join(__dirname, 'foo.tsx');
   return {
     // 插件名称
     name: 'plugin-comp',
@@ -69,7 +69,7 @@ import { RspressPlugin } from '@rspress/shared';
 
 export function pluginForDoc(): RspressPlugin {
   // component path
-  const componentPath = path.join(__dirname, 'xxx.tsx');
+  const componentPath = path.join(__dirname, 'foo.tsx');
   return {
     // plugin name
     name: 'plugin-comp',
@@ -372,17 +372,17 @@ export function pluginForDoc(): RspressPlugin {
       };
       const data = await fetchSomeData();
       return {
-        'virtual-xxx': `export default ${JSON.stringify(data)}`,
+        'virtual-foo': `export default ${JSON.stringify(data)}`,
       };
     },
   };
 }
 ```
 
-这样你就可以在运行时组件中使用 `virtual-xxx` 模块了：
+这样你就可以在运行时组件中使用 `virtual-foo` 模块了：
 
 ```jsx
-import myData from 'virtual-xxx';
+import myData from 'virtual-foo';
 
 export function MyComponent() {
   return <div>{myData.a}</div>;

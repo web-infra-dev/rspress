@@ -204,7 +204,7 @@ The format of PR titles follow Conventional Commits.
 An example:
 
 ```
-feat(plugin-swc): Add `xxx` config
+feat(plugin-swc): Add `myOption` config
 ^    ^    ^
 |    |    |__ Subject
 |    |_______ Scope

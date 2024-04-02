@@ -328,7 +328,7 @@ export default defineConfig({
       {
         icon: 'wechat',
         mode: 'text',
-        content: 'wechat: xxx',
+        content: 'wechat: foo',
       },
       {
         icon: 'qq',
@@ -374,19 +374,17 @@ If you need to customize the icon, you can pass in an object with `svg attribute
 import { defineConfig } from 'rspress/config';
 
 export default defineConfig({
-      themeConfig: {
-      socialLinks: [
-        {
-          icon: {
-            svg: '<svg>xxx</svg>',
-          },
-          mode: 'link',
-          content: 'https://github.com/',
+  themeConfig: {
+    socialLinks: [
+      {
+        icon: {
+          svg: '<svg>foo</svg>',
         },
-      ],
-    },
-  }
-  plugins: [docTools()],·
+        mode: 'link',
+        content: 'https://github.com/',
+      },
+    ],
+  },
 });
 ```
 

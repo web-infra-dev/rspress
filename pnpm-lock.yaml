@@ -41,6 +41,9 @@ importers:
       cross-spawn:
         specifier: ^7.0.3
         version: 7.0.3
+      cspell-ban-words:
+        specifier: ^0.0.3
+        version: 0.0.3
       execa:
         specifier: 8.0.1
         version: 8.0.1
@@ -5356,6 +5359,10 @@ packages:
 
   /crypt@0.0.2:
     resolution: {integrity: sha512-mCxBlsHFYh9C+HVpiEacem8FEBnMXgU9gy4zmNC+SXAZNB/1idgp/aulFJ4FgCi7GPEVbfyng092GqL2k2rmow==}
+    dev: true
+
+  /cspell-ban-words@0.0.3:
+    resolution: {integrity: sha512-Q7ZO16DFWEP8Vv5CJ63LG95/FomTuxB6WvKhvGUDE3L2hiYl7n2fH+0qoSXL5C3zH6NRPQT4rDS66t1Pi/fILA==}
     dev: true
 
   /cssesc@3.0.0:

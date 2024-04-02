@@ -87,7 +87,7 @@ class Runner extends Component<RunnerProps, RunnerState> {
                   if (specifier.local.name === 'React') {
                     this.hasReactImported = true;
                   }
-                  // import X from 'xxx'
+                  // import X from 'foo'
                   if (specifier.type === 'ImportDefaultSpecifier') {
                     // const ${specifier.local.name} = __get_import()
                     code.push(
@@ -97,7 +97,7 @@ class Runner extends Component<RunnerProps, RunnerState> {
                       ),
                     );
                   }
-                  // import * as X from 'xxx'
+                  // import * as X from 'foo'
                   if (specifier.type === 'ImportNamespaceSpecifier') {
                     // const ${specifier.local.name} = __get_import()
                     code.push(
@@ -107,7 +107,7 @@ class Runner extends Component<RunnerProps, RunnerState> {
                       ),
                     );
                   }
-                  // import { a, b, c } from 'xxx'
+                  // import { a, b, c } from 'foo'
                   if (specifier.type === 'ImportSpecifier') {
                     if (
                       'name' in specifier.imported &&
