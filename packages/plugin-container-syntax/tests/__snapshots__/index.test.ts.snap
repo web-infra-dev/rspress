@@ -13,11 +13,11 @@ This is a tip</p></div></div>
 <p>12312</p>"
 `;
 
-exports[`remark-container > Use {title="foo"} as title 1`] = `"<div class=\\"rspress-directive tip\\"><div class=\\"rspress-directive-title\\">Cutsom title</div><div class=\\"rspress-directive-content\\"><p>This is a tip.</p></div></div>"`;
+exports[`remark-container > Use {title="foo"} as title 1`] = `"<div class=\\"rspress-directive tip\\"><div class=\\"rspress-directive-title\\">Custom title</div><div class=\\"rspress-directive-content\\"><p>This is a tip.</p></div></div>"`;
 
-exports[`remark-container > Use {title='foo'} as title 1`] = `"<div class=\\"rspress-directive tip\\"><div class=\\"rspress-directive-title\\">Cutsom title</div><div class=\\"rspress-directive-content\\"><p>This is a tip.</p></div></div>"`;
+exports[`remark-container > Use {title='foo'} as title 1`] = `"<div class=\\"rspress-directive tip\\"><div class=\\"rspress-directive-title\\">Custom title</div><div class=\\"rspress-directive-content\\"><p>This is a tip.</p></div></div>"`;
 
-exports[`remark-container > Use {title=foo} as title 1`] = `"<div class=\\"rspress-directive tip\\"><div class=\\"rspress-directive-title\\">Cutsom title</div><div class=\\"rspress-directive-content\\"><p>This is a tip.</p></div></div>"`;
+exports[`remark-container > Use {title=foo} as title 1`] = `"<div class=\\"rspress-directive tip\\"><div class=\\"rspress-directive-title\\">Custom title</div><div class=\\"rspress-directive-content\\"><p>This is a tip.</p></div></div>"`;
 
 exports[`remark-container > With a new line after the start position of container 1`] = `"<div class=\\"rspress-directive tip\\"><div class=\\"rspress-directive-title\\">TIP</div><div class=\\"rspress-directive-content\\"><p>This is a tip</p></div></div>"`;
 
