@@ -244,6 +244,19 @@ importers:
         specifier: ^14
         version: 14.0.0
 
+  e2e/fixtures/plugin-rss:
+    dependencies:
+      '@rspress/plugin-rss':
+        specifier: workspace:*
+        version: link:../../../packages/plugin-rss
+      rspress:
+        specifier: workspace:*
+        version: link:../../../packages/cli
+    devDependencies:
+      '@types/node':
+        specifier: ^14
+        version: 14.0.0
+
   e2e/fixtures/production:
     dependencies:
       rspress:
@@ -963,6 +976,31 @@ importers:
       unist-util-visit:
         specifier: ^4.1.1
         version: 4.1.1
+
+  packages/plugin-rss:
+    dependencies:
+      feed:
+        specifier: ^4.2.2
+        version: 4.2.2
+    devDependencies:
+      '@rspress/runtime':
+        specifier: workspace:*
+        version: link:../runtime
+      '@rspress/shared':
+        specifier: workspace:*
+        version: link:../shared
+      '@types/node':
+        specifier: ^18.11.17
+        version: 18.11.17
+      '@types/react':
+        specifier: ^18
+        version: 18.0.26
+      react:
+        specifier: ^18
+        version: 18.2.0
+      typescript:
+        specifier: ^5
+        version: 5.0.4
 
   packages/plugin-shiki:
     dependencies:
@@ -6077,6 +6115,13 @@ packages:
       format: 0.2.2
     dev: false
 
+  /feed@4.2.2:
+    resolution: {integrity: sha512-u5/sxGfiMfZNtJ3OvQpXcvotFpYkL0n9u9mM2vkui2nGo8b4wvDkJ8gAkYqbA8QpGyFCv3RK0Z+Iv+9veCS9bQ==}
+    engines: {node: '>=0.4.0'}
+    dependencies:
+      xml-js: 1.6.11
+    dev: false
+
   /fetch-blob@3.2.0:
     resolution: {integrity: sha512-7yAQpD2UMJzLi1Dqv7qFYnPbaPx7ZfFK6PiIxQ4PfkGPyNyl2Ugx+a/umUonmKqjhM4DnfbMvdX6otXq83soQQ==}
     engines: {node: ^12.20 || >= 14.13}
@@ -9682,6 +9727,10 @@ packages:
     resolution: {integrity: sha512-YZo3K82SD7Riyi0E1EQPojLz7kpepnSQI9IyPbHHg1XXXevb5dJI7tpyN2ADxGcQbHG7vcyRHk0cbwqcQriUtg==}
     dev: true
 
+  /sax@1.3.0:
+    resolution: {integrity: sha512-0s+oAmw9zLl1V1cS9BtZN7JAd0cW5e0QH4W3LWEK6a4LaLEA2OTpGYWDY+6XasBLtz6wkm3u1xRw95mRuJ59WA==}
+    dev: false
+
   /scheduler@0.23.0:
     resolution: {integrity: sha512-CtuThmgHNg7zIZWAXi3AsyIzA3n4xx7aNyjwC2VJldO2LMVDhFK+63xGqq6CsJH4rTAt6/M+N4GhZiDYPx9eUw==}
     dependencies:
@@ -11325,6 +11374,13 @@ packages:
 
   /wrappy@1.0.2:
     resolution: {integrity: sha512-l4Sp/DRseor9wL6EvV2+TuQn63dMkPjZ/sp9XkghTEbV9KlPS1xUsZ3u7/IQO4wxtcFB4bgpQPRcR3QCvezPcQ==}
+
+  /xml-js@1.6.11:
+    resolution: {integrity: sha512-7rVi2KMfwfWFl+GpPg6m80IVMWXLRjO+PxTq7V2CDhoGak0wzYzFgUY2m4XJ47OGdXd8eLE8EmwfAmdjw7lC1g==}
+    hasBin: true
+    dependencies:
+      sax: 1.3.0
+    dev: false
 
   /xtend@4.0.2:
     resolution: {integrity: sha512-LKYU1iAXJXUgAXn9URjiu+MWhyUXHsvfp7mcuYm9dSUKK0/CjtrUwFAxD82/mCWbtLsGjFIad0wIsod4zrTAEQ==}

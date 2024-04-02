@@ -1,0 +1,283 @@
+# @rspress/plugin-rss
+
+import { SourceCode, PackageManagerTabs } from 'rspress/theme';
+
+<SourceCode href="https://github.com/web-infra-dev/rspress/tree/main/packages/plugin-rss" />
+
+使用 [feed](https://github.com/jpmonette/feed) 为文档中的某些页面生成 RSS 文件。
+
+## 安装
+
+<PackageManagerTabs command="add @rspress/plugin-rss -D" />
+
+### 引入插件
+
+修改 `rspress.config.ts` 引入插件
+
+```ts title="rspress.config.ts"
+import { defineConfig } from 'rspress/config';
+import { pluginRss } from '@rspress/plugin-rss';
+
+export default defineConfig({
+  plugins: [
+    pluginRss({
+      // 你的文档站点的 url
+      siteUrl: 'https://example.com',
+      // ...更多配置请见下文
+    })
+  ],
+});
+```
+
+默认配置下，该插件会为所有路由为 `/blog/` 开头的文档在 `doc_build/rss/` 文件夹中生成一份名为 `blog.xml` 的文件，可以通过 `/rss/blog.xml` 访问。
+
+:::tip
+该插件仅工作于 build 阶段，在 dev 阶段不会生成 RSS 文件。
+:::
+
+## 用法
+
+### 选择要纳入 RSS 的文档
+
+可以通过 `feed.test` 参数来选择要包含在 RSS 文件中的文档。
+
+```ts
+pluginRss({
+  // ...
+  feed: { test: '/zh/blog' }
+})
+```
+
+### 文档要求
+
+所有包含在 RSS 内的文档都需要含有 `date` 或 `published_at` 的 frontmatter，以确保 RSS 在用户侧的更新是稳定的。
+
+```md
+---
+published_at: 2024-01-10 08:00:00
+---
+
+或者使用 `date` 这个 frontmatter
+```
+
+### 输出多个 RSS 文件
+
+通常情况下，你会有输出多个 RSS 文件的需要，比如按语言区分、按类目区分。
+
+可以为 `feed` 传一组 RSS 配置来实现。比如
+
+```ts
+pluginRss({
+  feed: [
+    { id: 'blog', test: '/blog/', title: 'Rspress Blog', language: 'en-US' },
+    { id: 'blog-zh', test: '/zh/blog/', title: 'Rspress 博客', language: 'zh-CN' },
+    { id: 'rspack', test: ({frontmatter}) => frontmatter.categories.includes('rspack'), title: 'Rspack Releases', language: 'en-US' },
+    { id: 'rsbuild', test: ({frontmatter}) => frontmatter.categories.includes('rsbuild'), title: 'Rsbuild Releases', language: 'en-US' },
+  ]
+})
+```
+
+以上配置会输出四个 RSS 文件，分别为 `blog.xml`、`blog-zh.xml`、`rspack.xml`、`rsbuild.xml`，均在 `rss` 文件夹中。
+
+### 修改输出路径
+
+可以通过 `output` 以及 `feed.output` 参数来修改输出路径。
+
+请参考下文的 [FeedOutputOptions](#feedoutputoptions)。
+
+### 链接 RSS 到文档页面中
+
+默认情况下，该插件会在被选择纳入 RSS 的页面中插入一个 `<link rel="alternative">` 标签，链接到 RSS 文件的 URL。RSS 阅读器能够自动识别到 RSS URL。
+
+如果你想在没被纳入 RSS 的页面（比如首页）中也插入这个标签，可以在文档中添加 `link-rss` 这个 frontmatter，取值为 feed id。比如
+
+```markdown
+---
+link-rss: blog
+---
+
+这个 frontmatter 会为这个文档的页面中插入 `<link rel="alternative">` 标签指向 blog 的 RSS URL。
+
+但这个页面自身不会被纳入该 RSS。
+```
+
+### 修改输出的 RSS 内容
+
+RSS 文件由两部分组成，一部分是 RSS 的基础信息，在 RSS 格式中称为 `channel`，另一部分是文章列表，在 RSS 格式中称为 `item`。
+
+其中：
+- `channel` 可以由 `feed` 这个参数完全控制，请参考下文的 [其他参数](#其他参数)。
+- `item` 可以由 `feed.item` 这个参数完全控制，请参考下文的 [item](#item)。
+
+## 配置
+
+### PluginRssOptions
+
+插件的选项。
+
+```ts
+export interface PluginRssOptions {
+  siteUrl: string;
+  feed?: Partial<FeedChannel> | FeedChannel[];
+  output?: Omit<FeedOutputOptions, 'filename'>;
+}
+```
+
+#### `siteUrl`
+
+- **类型**： `string`
+- **必填**
+
+当前文档站点的站点 URL。将在 RSS 文件中使用。
+
+#### `feed`
+
+- **类型**：`FeedChannel | FeedChannel[]`
+- **默认值**：`{ id: 'blog', test: '/blog/' }`
+
+RSS 配置，多值数组可以生成多个 RSS 文件。
+
+详见 [FeedChannel](#feedchannel)。
+
+#### `output`
+
+- **类型**：`Omit<FeedOutputOptions, "filename">`
+- **默认值**：`{ dir: 'rss', type: 'atom' }`
+
+文档输出配置。请参考下文的 [FeedOutputOptions](#feedoutputoptions)。
+
+### FeedChannel
+
+```ts
+export interface FeedChannel extends Partial<FeedOptions> {
+  id: string;
+  test:
+    | RegExp
+    | string
+    | (RegExp | string)[]
+    | ((item: PageIndexInfo, base: string) => boolean);
+  item?: (
+    item: FeedItem,
+    page: PageIndexInfo,
+    siteUrl: string,
+  ) => FeedItem | PromiseLike<FeedItem>;
+  output?: FeedOutputOptions;
+}
+```
+
+#### `id`
+
+- **类型**：`string`
+- **必填**
+
+RSS 的 ID，在多个 RSS 配置中唯一。同时也是该 RSS 文件的默认文件名。
+
+#### `test`
+
+- **类型**：`RegExp | string | (RegExp | string)[] | ((item: PageIndexInfo, base: string) => boolean)`
+- **必填**
+
+用于匹配文档。匹配上的文档会纳入该 RSS 中。类型说明：
+
+- `RegExp`: 正则匹配文档的路由。当文档设有 `base` 时，会同时匹配含 `base` 和不含 `base` 的路由。
+- `string`: 前缀匹配文档的路由。当文档设有 `base` 时，会同时匹配含 `base` 和不含 `base` 的路由。
+- `(item: PageIndexInfo, base: string) => boolean`: 根据文档基础信息和 frontmatter 来匹配页面。
+
+#### `item`
+
+- **类型**：`(item: FeedItem, page: PageIndexInfo, siteUrl: string) => FeedItem | PromiseLike<FeedItem>`
+- **默认值**：内部逻辑
+
+生成 RSS 文件中每一篇文章的结构化数据。
+
+结构化数据的的类型请参考：<SourceCode href="https://github.com/jpmonette/feed/blob/8ca7f3e4e8e421e2a2632bb9524385e86f30744c/src/typings/index.ts#L1-L25" />
+
+该插件内置有一个生成逻辑，会充分利用文档的 frontmatter 和页面数据，比如 RSS 中的 `content` 会优先取 frontmatter 中的 `summary`，再尝试取文章内容。
+
+你可以传入一个函数来修改内置逻辑生成的数据，该数据会作为第一个参数传给你传入的这个函数。比如下方配置可以截断 RSS 中的文章内容：
+
+```ts
+const item: FeedChannel['item'] = (item) => ({...item, content: item.content.slice(0, 1000)});
+```
+
+默认逻辑详情请参考：<SourceCode href="https://github.com/web-infra-dev/rspress/tree/main/packages/plugin-rss/src/feed.ts" />
+
+#### `output`
+
+- **类型**：`FeedOutputOptions`
+- **默认值**：默认使用插件的 `output` 参数
+
+相比插件的 `output` 参数，多一个 `filename`，用于修改输出的文件名。
+
+请参考下文的 [FeedOutputOptions](#feedoutputoptions)。
+
+#### 其他参数
+
+`FeedChannel` 还继承了 feed package 的 `FeedOptions`，未列出的参数请参考 <SourceCode href="https://github.com/jpmonette/feed/blob/8ca7f3e4e8e421e2a2632bb9524385e86f30744c/src/typings/index.ts#L48-L67" />
+
+### FeedOutputOptions
+
+RSS 的输出配置，在插件参数顶层和 `feed` 这一层都有该配置。使用以下类型。
+
+```ts
+interface FeedOutputOptions {
+  dir?: string;
+  type?: "atom" | "rss" | "json";
+  filename?: string;
+  publicPath?: string;
+}
+```
+
+一个例子：
+
+```ts
+pluginRss({
+  // 应用于所有 RSS 输出
+  output: {
+    // 将 RSS 文件输出文件夹改为 `feeds`，该值为相对于 `doc_build` 的位置
+    dir: 'feeds',
+    // 输出为 RSS 2.0 格式，默认为 .rss 后缀。
+    type: 'rss'
+  },
+  feed: [
+    { id: 'blog', test: '/blog/', title: 'My Blog', output: { type: 'atom' /* 默认会以 `id` 作为基础文件名 */ } },
+    { id: 'releases', test: '/releases/', title: 'Releases', output: { dir: 'releases', filename: 'feed.rss' } },
+  ]
+})
+```
+
+以上配置将输出 `feeds/blog.xml`、`releases/feed.rss` 两个文件。
+
+#### `dir`
+
+- **类型**：`string`
+- **默认值**：`rss`
+
+RSS 文件的输出文件夹，相对于 `doc_build` 的相对位置。
+
+#### `type`
+
+- **类型**：`"atom" | "rss" | "json"`
+- **默认值**：`atom`
+
+修改 RSS 文件的输出格式，默认为 `atom`。不同类型的说明如下：
+
+| 值 | 格式                                                    | 默认后缀名  | MIME Type |
+|---|-------------------------------------------------------|--------|---|
+| `atom` | [Atom 1.0](https://www.ietf.org/rfc/rfc4287.txt)      | `.xml` | `application/atom+xml` |
+| `rss` | [RSS 2.0](https://www.rssboard.org/rss-specification) | `.rss` | `application/rss+xml` |
+| `json` | [JSON Feed 1.1](https://www.jsonfeed.org/version/1.1/)    | `.json`    | `application/json` |
+
+#### `filename`
+
+- **类型**：`string`
+- **默认值**：由 id 作为文件名，根据 RSS 输出格式选择后缀名
+
+修改 RSS 文件的输出完整文件名。
+
+#### `publicPath`
+
+- **类型**：`string`
+- **默认值**：使用 `siteUrl` 的值作为默认值
+
+RSS 文件 URL 的前缀。一个 RSS URL 由 `publicPath` 、`dir`、`filename` 共同组成。

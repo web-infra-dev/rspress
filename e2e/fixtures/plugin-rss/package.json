@@ -1,0 +1,17 @@
+{
+  "name": "@rspress-fixture/doc-plugin-rss",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "dev": "rspress dev",
+    "build": "rspress build",
+    "preview": "rspress preview"
+  },
+  "dependencies": {
+    "@rspress/plugin-rss": "workspace:*",
+    "rspress": "workspace:*"
+  },
+  "devDependencies": {
+    "@types/node": "^14"
+  }
+}
