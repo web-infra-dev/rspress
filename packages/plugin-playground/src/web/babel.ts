@@ -19,7 +19,7 @@ async function loadUmdBabelModule(): Promise<Babel> {
     'exports',
     'module',
     'require',
-    `with(exports, module, require) {return ${umdSourceCode}}`,
+    `with(exports, module, require) {${umdSourceCode}}`,
   );
 
   const exports: Babel = {} as unknown as Babel;
