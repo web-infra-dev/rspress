@@ -216,6 +216,16 @@ importers:
         specifier: ^14
         version: 14.0.0
 
+  e2e/fixtures/page-type-home:
+    dependencies:
+      rspress:
+        specifier: workspace:*
+        version: link:../../../packages/cli
+    devDependencies:
+      '@types/node':
+        specifier: ^14
+        version: 14.0.0
+
   e2e/fixtures/plugin:
     dependencies:
       '@rspress/plugin-playground':

@@ -1,11 +1,11 @@
-import type { RsbuildPlugin, RsbuildConfig } from '@rsbuild/core';
-import type { PluggableList } from 'unified';
+import type { RsbuildConfig, RsbuildPlugin } from '@rsbuild/core';
 import type { ZoomOptions } from 'medium-zoom';
+import type { PluggableList } from 'unified';
+import type { AdditionalPage, RspressPlugin } from './Plugin';
 import type {
   Config as DefaultThemeConfig,
   NormalizedConfig as NormalizedDefaultThemeConfig,
 } from './defaultTheme';
-import type { RspressPlugin, AdditionalPage } from './Plugin';
 
 export type { DefaultThemeConfig, NormalizedDefaultThemeConfig };
 export * from './defaultTheme';
@@ -231,6 +231,8 @@ export interface Hero {
   image?: {
     src: string;
     alt: string;
+    sizes?: string | string[];
+    srcset?: string | string[];
   };
   actions: {
     text: string;

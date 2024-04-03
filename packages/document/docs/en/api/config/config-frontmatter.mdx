@@ -57,6 +57,8 @@ export interface Hero {
   image?: {
     src: string;
     alt: string;
+    srcset?: string | string[];
+    sizes?: string | string[];
   };
   actions: {
     text: string;
