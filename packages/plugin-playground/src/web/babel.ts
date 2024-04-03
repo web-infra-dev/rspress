@@ -6,21 +6,50 @@ declare global {
   interface Window {
     Babel: Babel;
   }
+  const __PLAYGROUND_BABEL_URL__: string;
 }
 
-function getBabel(): Babel | Promise<Babel> {
+// see https://github.com/web-infra-dev/rspress/issues/876
+async function loadUmdBabelModule(): Promise<Babel> {
+  const data = await fetch(__PLAYGROUND_BABEL_URL__);
+
+  const umdSourceCode = await data.text();
+
+  const run = new Function(
+    'exports',
+    'module',
+    'require',
+    `with(exports, module, require) {${umdSourceCode}}`,
+  );
+
+  const exports: Babel = {} as unknown as Babel;
+  const module = { exports };
+  const require = () => {};
+
+  run(exports, module, require);
+
+  return exports;
+}
+
+let loadBabelPromise: null | Promise<Babel> = null;
+
+async function getBabel(): Promise<Babel> {
   if (window.Babel) {
     return window.Babel;
   }
-  const el = document.getElementById('rspress-playground-babel');
-  if (!el) {
-    throw new Error('Babel not found');
+  if (loadBabelPromise) {
+    return loadBabelPromise;
   }
-  return new Promise(resolve => {
-    el.addEventListener('load', () => {
-      resolve(window.Babel);
-    });
-  });
+
+  loadBabelPromise = loadUmdBabelModule();
+  try {
+    const Babel = await loadBabelPromise;
+    window.Babel = Babel;
+    return Babel;
+  } catch (e) {
+    loadBabelPromise = null;
+    throw e;
+  }
 }
 
 export { getBabel };
