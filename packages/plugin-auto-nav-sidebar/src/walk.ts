@@ -20,7 +20,7 @@ export async function scanSideMeta(
   rootDir: string,
   docsDir: string,
   routePrefix: string,
-  excludedFiles: string[] = [],
+  excludedFiles?: string[],
 ) {
   const addRoutePrefix = (link: string) => `${routePrefix}${link}`;
   // find the `_meta.json` file
@@ -37,7 +37,7 @@ export async function scanSideMeta(
 
     const includedFiles = globby.sync('**', {
       cwd: workDir,
-      ignore: [...excludedFiles],
+      ignore: excludedFiles ?? [],
     });
     const subItems = [
       ...new Set(includedFiles.map(file => file.split('/')[0])),
