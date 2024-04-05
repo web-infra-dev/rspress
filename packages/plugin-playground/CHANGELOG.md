@@ -1,5 +1,13 @@
 # @rspress/plugin-playground
 
+## 1.17.0
+
+### Patch Changes
+
+- 9e36f75: fix(plugin-playground): manually load babel.min.js to avoid conflict with monaco
+- Updated dependencies [94e1b0f]
+  - @rspress/shared@1.17.0
+
 ## 1.16.2
 
 ### Patch Changes

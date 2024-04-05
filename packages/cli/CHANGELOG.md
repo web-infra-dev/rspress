@@ -1,5 +1,16 @@
 # rspress
 
+## 1.17.0
+
+### Patch Changes
+
+- Updated dependencies [4a0555f]
+- Updated dependencies [4a0555f]
+- Updated dependencies [55cb0f4]
+- Updated dependencies [94e1b0f]
+  - @rspress/core@1.17.0
+  - @rspress/shared@1.17.0
+
 ## 1.16.2
 
 ### Patch Changes

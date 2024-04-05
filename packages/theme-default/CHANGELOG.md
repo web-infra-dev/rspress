@@ -1,5 +1,21 @@
 # @rspress/theme-default
 
+## 1.17.0
+
+### Minor Changes
+
+- 0c92bcc: feat: preserve query string when redirecting on first visit
+- 657c4c1: support search with lang cyrillic
+- 55cb0f4: feat: respond to the change of system theme appearance
+- 94e1b0f: feat: add `localeRedirect` option to theme config
+
+### Patch Changes
+
+- d965a06: fix: avoid flash of navbar images (logo and theme icon)
+- Updated dependencies [94e1b0f]
+  - @rspress/shared@1.17.0
+  - @rspress/runtime@1.17.0
+
 ## 1.16.2
 
 ### Patch Changes

@@ -1,5 +1,11 @@
 # @rspress/docs
 
+## 1.17.0
+
+### Minor Changes
+
+- 94e1b0f: feat: add `localeRedirect` option to theme config
+
 ## 1.16.2
 
 ## 1.16.1
