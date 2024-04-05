@@ -52,8 +52,7 @@
   },
   "peerDependencies": {
     "react": ">=17.0.0",
-    "rspress": "^1.17.0",
-    "@types/react": ">=17.0.0"
+    "rspress": "^1.17.0"
   },
   "files": [
     "dist",
