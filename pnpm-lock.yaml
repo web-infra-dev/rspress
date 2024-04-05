@@ -982,16 +982,19 @@ importers:
 
   packages/plugin-rss:
     dependencies:
+      '@rspress/shared':
+        specifier: workspace:*
+        version: link:../shared
       feed:
         specifier: ^4.2.2
         version: 4.2.2
+      rspress:
+        specifier: ^1.17.0
+        version: link:../cli
     devDependencies:
       '@rspress/runtime':
         specifier: workspace:*
         version: link:../runtime
-      '@rspress/shared':
-        specifier: workspace:*
-        version: link:../shared
       '@types/node':
         specifier: ^18.11.17
         version: 18.11.17
