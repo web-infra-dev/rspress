@@ -40,20 +40,19 @@
     "node": ">=14.17.6"
   },
   "dependencies": {
+    "@rspress/shared": "workspace:*",
     "feed": "^4.2.2"
   },
   "devDependencies": {
     "@types/node": "^18.11.17",
     "@types/react": "^18",
-    "@rspress/shared": "workspace:*",
     "@rspress/runtime": "workspace:*",
     "react": "^18",
     "typescript": "^5"
   },
   "peerDependencies": {
     "react": ">=17.0.0",
-    "@types/react": ">=17.0.0",
-    "@rspress/runtime": "^1.0.0"
+    "rspress": "^1.17.0"
   },
   "files": [
     "dist",
