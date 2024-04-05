@@ -1,5 +1,7 @@
 # @rspress/plugin-api-docgen
 
+## 1.17.0
+
 ## 1.16.2
 
 ## 1.16.1

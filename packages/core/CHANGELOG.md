@@ -1,5 +1,28 @@
 # @rspress/core
 
+## 1.17.0
+
+### Minor Changes
+
+- 4a0555f: feat: add color-scheme on root to enable native color scheme features
+- 55cb0f4: feat: respond to the change of system theme appearance
+
+### Patch Changes
+
+- 4a0555f: fix: avoid flash of theme appearance in dev mode
+- Updated dependencies [0c92bcc]
+- Updated dependencies [657c4c1]
+- Updated dependencies [55cb0f4]
+- Updated dependencies [94e1b0f]
+- Updated dependencies [d965a06]
+  - @rspress/theme-default@1.17.0
+  - @rspress/shared@1.17.0
+  - @rspress/plugin-auto-nav-sidebar@1.17.0
+  - @rspress/plugin-container-syntax@1.17.0
+  - @rspress/plugin-last-updated@1.17.0
+  - @rspress/plugin-medium-zoom@1.17.0
+  - @rspress/runtime@1.17.0
+
 ## 1.16.2
 
 ### Patch Changes
