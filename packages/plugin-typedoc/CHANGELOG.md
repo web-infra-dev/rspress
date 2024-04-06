@@ -1,5 +1,11 @@
 # @rspress/plugin-typedoc
 
+## 1.17.1
+
+### Patch Changes
+
+- @rspress/shared@1.17.1
+
 ## 1.17.0
 
 ### Patch Changes
