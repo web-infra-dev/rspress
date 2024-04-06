@@ -10,7 +10,7 @@ export default function FeedsAnnotations() {
     <Helmet>
       {feeds.map(({ language, url, mime }) => {
         const props: LinkHTMLAttributes<HTMLLinkElement> = {
-          rel: 'alternative',
+          rel: 'alternate',
           type: mime,
           href: url,
         };
