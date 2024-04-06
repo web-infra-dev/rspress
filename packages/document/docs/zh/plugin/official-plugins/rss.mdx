@@ -102,7 +102,7 @@ pluginRss({
 
 ### 链接 RSS 到文档页面中
 
-默认情况下，该插件会在被选择纳入 RSS 的页面中插入一个 `<link rel="alternative">` 标签，链接到 RSS 文件的 URL。RSS 阅读器能够自动识别到 RSS URL。
+默认情况下，该插件会在被选择纳入 RSS 的页面中插入一个 `<link rel="alternate">` 标签，链接到 RSS 文件的 URL。RSS 阅读器能够自动识别到 RSS URL。
 
 如果你想在没被纳入 RSS 的页面（比如首页）中也插入这个标签，可以在文档中添加 `link-rss` 这个 frontmatter，取值为 feed id。比如
 
@@ -111,7 +111,7 @@ pluginRss({
 link-rss: blog
 ---
 
-这个 frontmatter 会为这个文档的页面中插入 `<link rel="alternative">` 标签指向 blog 的 RSS URL。
+这个 frontmatter 会为这个文档的页面中插入 `<link rel="alternate">` 标签指向 blog 的 RSS URL。
 
 但这个页面自身不会被纳入该 RSS。
 ```

@@ -102,7 +102,7 @@ Please refer to the [FeedOutputOptions](#feedoutputoptions) below.
 
 ### Linking RSS to document pages
 
-By default, this plugin will insert a `<link rel="alternative">` tag in the selected pages that are included in the RSS, linking to the URL of the RSS file. RSS readers can automatically detect the RSS URL.
+By default, this plugin will insert a `<link rel="alternate">` tag in the selected pages that are included in the RSS, linking to the URL of the RSS file. RSS readers can automatically detect the RSS URL.
 
 If you want to insert this tag in pages that are not included in the RSS (such as the homepage), you can add the `link-rss` frontmatter to the document, with the value being the feed id. For example:
 
@@ -111,7 +111,7 @@ If you want to insert this tag in pages that are not included in the RSS (such a
 link-rss: blog
 ---
 
-This frontmatter will insert a `<link rel="alternative">` tag in the page of this document, pointing to the RSS URL of the `blog` feed.
+This frontmatter will insert a `<link rel="alternate">` tag in the page of this document, pointing to the RSS URL of the `blog` feed.
 
 However, this page itself will not be included in that RSS.
 ```

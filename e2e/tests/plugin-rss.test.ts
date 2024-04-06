@@ -31,7 +31,7 @@ test.describe('plugin rss test', async () => {
   test('`link-rss` should add rss <link> to this page', async ({ page }) => {
     await page.goto(`${prefix}`, { waitUntil: 'networkidle' });
 
-    const link = page.locator('link[rel="alternative"]', {});
+    const link = page.locator('link[rel="alternate"]', {});
 
     await expect(link.getAttribute('href')).resolves.toBe(
       `${siteUrl}rss/blog.xml`,
@@ -41,7 +41,7 @@ test.describe('plugin rss test', async () => {
   test('should add rss <link> to pages matched', async ({ page }) => {
     await page.goto(`${prefix}blog/foo`, { waitUntil: 'networkidle' });
 
-    const link = page.locator('link[rel="alternative"]', {});
+    const link = page.locator('link[rel="alternate"]', {});
 
     await expect(link.getAttribute('href')).resolves.toBe(
       `${siteUrl}rss/blog.xml`,
