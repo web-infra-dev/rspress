@@ -543,9 +543,6 @@ importers:
       typescript:
         specifier: ^5
         version: 5.0.4
-      vite:
-        specifier: ^4.0.5
-        version: 4.5.2(@types/node@14.0.0)
       vitest:
         specifier: 0.33.0
         version: 0.33.0(playwright@1.33.0)
@@ -1294,9 +1291,6 @@ importers:
       typescript:
         specifier: ^5
         version: 5.0.4
-      vite:
-        specifier: ^4.0.5
-        version: 4.5.2(@types/node@18.11.17)
       vitest:
         specifier: 0.33.0
         version: 0.33.0(playwright@1.33.0)
@@ -11004,42 +10998,6 @@ packages:
         optional: true
     dependencies:
       '@types/node': 18.11.17
-      esbuild: 0.18.20
-      postcss: 8.4.37
-      rollup: 3.29.4
-    optionalDependencies:
-      fsevents: 2.3.3
-    dev: true
-
-  /vite@4.5.2(@types/node@14.0.0):
-    resolution: {integrity: sha512-tBCZBNSBbHQkaGyhGCDUGqeo2ph8Fstyp6FMSvTtsXeZSPpSMGlviAOav2hxVTqFcx8Hj/twtWKsMJXNY0xI8w==}
-    engines: {node: ^14.18.0 || >=16.0.0}
-    hasBin: true
-    peerDependencies:
-      '@types/node': '>= 14'
-      less: '*'
-      lightningcss: ^1.21.0
-      sass: '*'
-      stylus: '*'
-      sugarss: '*'
-      terser: ^5.4.0
-    peerDependenciesMeta:
-      '@types/node':
-        optional: true
-      less:
-        optional: true
-      lightningcss:
-        optional: true
-      sass:
-        optional: true
-      stylus:
-        optional: true
-      sugarss:
-        optional: true
-      terser:
-        optional: true
-    dependencies:
-      '@types/node': 14.0.0
       esbuild: 0.18.20
       postcss: 8.4.37
       rollup: 3.29.4

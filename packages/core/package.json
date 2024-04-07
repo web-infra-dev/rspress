@@ -116,7 +116,6 @@
     "@types/yaml-front-matter": "^4.1.0",
     "rimraf": "^3.0.2",
     "typescript": "^5",
-    "vite": "^4.0.5",
     "vitest": "0.33.0",
     "webpack": "^5.88.1"
   },
