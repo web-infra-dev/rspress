@@ -26,7 +26,7 @@ export function HomeHero({ frontmatter }: { frontmatter: FrontMatterMeta }) {
         .filter(text => text !== '')
     : [];
   return (
-    <div className="m-auto pt-0 px-6 pb-12 sm:pt-10 sm:px-16 md:pt-16 md:px-16 md:pb-16">
+    <div className="m-auto pt-0 px-6 pb-12 sm:pt-10 sm:px-16 md:pt-16 md:px-16 md:pb-16 relative">
       <div
         className={styles.mask}
         style={{
