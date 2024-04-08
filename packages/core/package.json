@@ -1,6 +1,6 @@
 {
   "name": "@rspress/core",
-  "version": "1.16.2",
+  "version": "1.17.1",
   "description": "The Rspress Documentation Framework",
   "bugs": "https://github.com/web-infra-dev/rspress/issues",
   "repository": {
@@ -33,16 +33,7 @@
     "dev": "modern build -w",
     "build": "modern build",
     "reset": "rimraf ./**/node_modules",
-    "lint": "modern lint",
-    "change": "modern change",
-    "bump": "modern bump",
-    "pre": "modern pre",
-    "change-status": "modern change-status",
-    "gen-release-note": "modern gen-release-note",
-    "release": "modern release",
-    "new": "modern new",
-    "test": "vitest run --passWithNoTests",
-    "upgrade": "modern upgrade"
+    "test": "vitest run --passWithNoTests"
   },
   "engines": {
     "node": ">=14.17.6"
@@ -116,7 +107,6 @@
     "@types/yaml-front-matter": "^4.1.0",
     "rimraf": "^3.0.2",
     "typescript": "^5",
-    "vite": "^4.0.5",
     "vitest": "0.33.0",
     "webpack": "^5.88.1"
   },

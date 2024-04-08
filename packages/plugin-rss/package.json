@@ -1,6 +1,6 @@
 {
   "name": "@rspress/plugin-rss",
-  "version": "1.16.1",
+  "version": "1.17.1",
   "description": "A plugin for rss generation for rspress",
   "bugs": "https://github.com/web-infra-dev/rspress/issues",
   "repository": {
@@ -15,8 +15,8 @@
   "module": "./dist/index.mjs",
   "exports": {
     ".": {
-      "import": "./dist/index.mjs",
       "types": "./dist/index.d.ts",
+      "import": "./dist/index.mjs",
       "default": "./dist/index.cjs"
     },
     "./FeedsAnnotations": "./static/global-components/FeedsAnnotations"
@@ -25,35 +25,25 @@
     "dev": "modern build -w",
     "build": "modern build",
     "reset": "rimraf ./**/node_modules",
-    "lint": "modern lint",
-    "change": "modern change",
-    "bump": "modern bump",
-    "pre": "modern pre",
-    "change-status": "modern change-status",
-    "gen-release-note": "modern gen-release-note",
-    "release": "modern release",
-    "new": "modern new",
-    "test": "vitest run --passWithNoTests",
-    "upgrade": "modern upgrade"
+    "test": "vitest run --passWithNoTests"
   },
   "engines": {
     "node": ">=14.17.6"
   },
   "dependencies": {
+    "@rspress/shared": "workspace:*",
     "feed": "^4.2.2"
   },
   "devDependencies": {
     "@types/node": "^18.11.17",
     "@types/react": "^18",
-    "@rspress/shared": "workspace:*",
     "@rspress/runtime": "workspace:*",
     "react": "^18",
     "typescript": "^5"
   },
   "peerDependencies": {
     "react": ">=17.0.0",
-    "@types/react": ">=17.0.0",
-    "@rspress/runtime": "^1.0.0"
+    "rspress": "^1.17.0"
   },
   "files": [
     "dist",

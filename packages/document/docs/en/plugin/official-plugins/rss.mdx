@@ -22,7 +22,7 @@ export default defineConfig({
       // The URL of your document site
       siteUrl: 'https://example.com',
       // ...more configurations below
-    })
+    }),
   ],
 });
 ```
@@ -44,8 +44,8 @@ Use the `feed.test` option to select which pages to be included in the RSS file.
 ```ts
 pluginRss({
   // ...
-  feed: { test: '/zh/blog' }
-})
+  feed: { test: '/zh/blog' },
+});
 ```
 
 ### Requirements
@@ -70,11 +70,26 @@ You can provide a list of RSS options to the `feed` option. For instance:
 pluginRss({
   feed: [
     { id: 'blog', test: '/blog/', title: 'Rspress Blog', language: 'en-US' },
-    { id: 'blog-zh', test: '/zh/blog/', title: 'Rspress 博客', language: 'zh-CN' },
-    { id: 'rspack', test: ({frontmatter}) => frontmatter.categories.includes('rspack'), title: 'Rspack Releases', language: 'en-US' },
-    { id: 'rsbuild', test: ({frontmatter}) => frontmatter.categories.includes('rsbuild'), title: 'Rsbuild Releases', language: 'en-US' },
-  ]
-})
+    {
+      id: 'blog-zh',
+      test: '/zh/blog/',
+      title: 'Rspress 博客',
+      language: 'zh-CN',
+    },
+    {
+      id: 'rspack',
+      test: ({ frontmatter }) => frontmatter.categories.includes('rspack'),
+      title: 'Rspack Releases',
+      language: 'en-US',
+    },
+    {
+      id: 'rsbuild',
+      test: ({ frontmatter }) => frontmatter.categories.includes('rsbuild'),
+      title: 'Rsbuild Releases',
+      language: 'en-US',
+    },
+  ],
+});
 ```
 
 The options above will generate four RSS files: `blog.xml`, `blog-zh.xml`, `rspack.xml`, `rsbuild.xml`, all located in the `rss` folder.
@@ -87,7 +102,7 @@ Please refer to the [FeedOutputOptions](#feedoutputoptions) below.
 
 ### Linking RSS to document pages
 
-By default, this plugin will insert a `<link rel="alternative">` tag in the selected pages that are included in the RSS, linking to the URL of the RSS file. RSS readers can automatically detect the RSS URL.
+By default, this plugin will insert a `<link rel="alternate">` tag in the selected pages that are included in the RSS, linking to the URL of the RSS file. RSS readers can automatically detect the RSS URL.
 
 If you want to insert this tag in pages that are not included in the RSS (such as the homepage), you can add the `link-rss` frontmatter to the document, with the value being the feed id. For example:
 
@@ -96,9 +111,19 @@ If you want to insert this tag in pages that are not included in the RSS (such a
 link-rss: blog
 ---
 
-This frontmatter will insert a `<link rel="alternative">` tag in the page of this document, pointing to the RSS URL of the `blog` feed.
+This frontmatter will insert a `<link rel="alternate">` tag in the page of this document, pointing to the RSS URL of the `blog` feed.
 
 However, this page itself will not be included in that RSS.
+```
+
+`link-rss` also supports inserting multiple `<link>` tags associated with feed ids on a single page:
+
+```markdown
+---
+link-rss:
+  - blog
+  - releases
+---
 ```
 
 ### Cook the RSS content
@@ -204,7 +229,10 @@ You can provide the `item` function to modify the generated data which will be p
 For example, the following configuration truncates the content of articles in the RSS:
 
 ```ts
-const item: FeedChannel['item'] = (item) => ({...item, content: item.content.slice(0, 1000)});
+const item: FeedChannel['item'] = item => ({
+  ...item,
+  content: item.content.slice(0, 1000),
+});
 ```
 
 For details on the logic of the built-in generator, please refer to: <SourceCode href="https://github.com/web-infra-dev/rspress/tree/main/packages/plugin-rss/src/feed.ts" />
@@ -229,7 +257,7 @@ Output options for RSS files, available at both the top level of the plugin opti
 ```ts
 interface FeedOutputOptions {
   dir?: string;
-  type?: "atom" | "rss" | "json";
+  type?: 'atom' | 'rss' | 'json';
   filename?: string;
   publicPath?: string;
 }
@@ -244,13 +272,25 @@ pluginRss({
     // Change the output folder for RSS files to 'feeds', relative to `doc_build`
     dir: 'feeds',
     // Output in RSS 2.0 format, use `.rss` extension by default.
-    type: 'rss'
+    type: 'rss',
   },
   feed: [
-    { id: 'blog', test: '/blog/', title: 'My Blog', output: { type: 'atom' /* default to using `id` as the base file name */ } },
-    { id: 'releases', test: '/releases/', title: 'Releases', output: { dir: 'releases', filename: 'feed.rss' } },
-  ]
-})
+    {
+      id: 'blog',
+      test: '/blog/',
+      title: 'My Blog',
+      output: {
+        type: 'atom' /* default to using `id` as the base file name */,
+      },
+    },
+    {
+      id: 'releases',
+      test: '/releases/',
+      title: 'Releases',
+      output: { dir: 'releases', filename: 'feed.rss' },
+    },
+  ],
+});
 ```
 
 Building with the options above will output two files: `feeds/blog.xml` and `releases/feed.rss`.
@@ -269,11 +309,11 @@ Output folder for RSS files, relative to `doc_build`.
 
 Output format of the RSS file, `atom` by default. Details of these types:
 
-| Value | Format                                                    | Default Extension | MIME Type              |
-|-------|-----------------------------------------------------------|-------------------|------------------------|
-| `atom`  | [Atom 1.0](https://www.ietf.org/rfc/rfc4287.txt)      | `.xml` | `application/atom+xml` |
-| `rss` | [RSS 2.0](https://www.rssboard.org/rss-specification) | `.rss` | `application/rss+xml` |
-| `json` | [JSON Feed 1.1](https://www.jsonfeed.org/version/1.1/)    | `.json`    | `application/json`     |
+| Value  | Format                                                 | Default Extension | MIME Type              |
+| ------ | ------------------------------------------------------ | ----------------- | ---------------------- |
+| `atom` | [Atom 1.0](https://www.ietf.org/rfc/rfc4287.txt)       | `.xml`            | `application/atom+xml` |
+| `rss`  | [RSS 2.0](https://www.rssboard.org/rss-specification)  | `.rss`            | `application/rss+xml`  |
+| `json` | [JSON Feed 1.1](https://www.jsonfeed.org/version/1.1/) | `.json`           | `application/json`     |
 
 #### `filename`
 

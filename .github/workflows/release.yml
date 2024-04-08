@@ -40,7 +40,7 @@ jobs:
         run: corepack enable
 
       - name: Setup Node.js 18
-        uses: actions/setup-node@v3
+        uses: actions/setup-node@v4
         with:
           node-version: '18'
           cache: 'pnpm'
@@ -67,7 +67,7 @@ jobs:
           version: 'next'
           type: 'release'
           branch: ''
-          tools: 'modern'
+          tools: 'changeset'
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
@@ -88,7 +88,7 @@ jobs:
         run: corepack enable
 
       - name: Setup Node.js 18
-        uses: actions/setup-node@v3
+        uses: actions/setup-node@v4
         with:
           node-version: '18'
           cache: 'pnpm'
@@ -115,7 +115,7 @@ jobs:
           version: ${{ github.event.inputs.version }}
           branch: ${{ github.event.inputs.branch }}
           type: 'release'
-          tools: 'modern'
+          tools: 'changeset'
         env:
           GITHUB_TOKEN: ${{ secrets.REPO_SCOPED_TOKEN }}
           NPM_TOKEN: ${{ secrets.NPM_TOKEN }}

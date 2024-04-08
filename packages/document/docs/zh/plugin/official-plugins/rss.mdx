@@ -24,7 +24,7 @@ export default defineConfig({
       // 你的文档站点的 url
       siteUrl: 'https://example.com',
       // ...更多配置请见下文
-    })
+    }),
   ],
 });
 ```
@@ -44,8 +44,8 @@ export default defineConfig({
 ```ts
 pluginRss({
   // ...
-  feed: { test: '/zh/blog' }
-})
+  feed: { test: '/zh/blog' },
+});
 ```
 
 ### 文档要求
@@ -70,11 +70,26 @@ published_at: 2024-01-10 08:00:00
 pluginRss({
   feed: [
     { id: 'blog', test: '/blog/', title: 'Rspress Blog', language: 'en-US' },
-    { id: 'blog-zh', test: '/zh/blog/', title: 'Rspress 博客', language: 'zh-CN' },
-    { id: 'rspack', test: ({frontmatter}) => frontmatter.categories.includes('rspack'), title: 'Rspack Releases', language: 'en-US' },
-    { id: 'rsbuild', test: ({frontmatter}) => frontmatter.categories.includes('rsbuild'), title: 'Rsbuild Releases', language: 'en-US' },
-  ]
-})
+    {
+      id: 'blog-zh',
+      test: '/zh/blog/',
+      title: 'Rspress 博客',
+      language: 'zh-CN',
+    },
+    {
+      id: 'rspack',
+      test: ({ frontmatter }) => frontmatter.categories.includes('rspack'),
+      title: 'Rspack Releases',
+      language: 'en-US',
+    },
+    {
+      id: 'rsbuild',
+      test: ({ frontmatter }) => frontmatter.categories.includes('rsbuild'),
+      title: 'Rsbuild Releases',
+      language: 'en-US',
+    },
+  ],
+});
 ```
 
 以上配置会输出四个 RSS 文件，分别为 `blog.xml`、`blog-zh.xml`、`rspack.xml`、`rsbuild.xml`，均在 `rss` 文件夹中。
@@ -87,7 +102,7 @@ pluginRss({
 
 ### 链接 RSS 到文档页面中
 
-默认情况下，该插件会在被选择纳入 RSS 的页面中插入一个 `<link rel="alternative">` 标签，链接到 RSS 文件的 URL。RSS 阅读器能够自动识别到 RSS URL。
+默认情况下，该插件会在被选择纳入 RSS 的页面中插入一个 `<link rel="alternate">` 标签，链接到 RSS 文件的 URL。RSS 阅读器能够自动识别到 RSS URL。
 
 如果你想在没被纳入 RSS 的页面（比如首页）中也插入这个标签，可以在文档中添加 `link-rss` 这个 frontmatter，取值为 feed id。比如
 
@@ -96,9 +111,19 @@ pluginRss({
 link-rss: blog
 ---
 
-这个 frontmatter 会为这个文档的页面中插入 `<link rel="alternative">` 标签指向 blog 的 RSS URL。
+这个 frontmatter 会为这个文档的页面中插入 `<link rel="alternate">` 标签指向 blog 的 RSS URL。
 
 但这个页面自身不会被纳入该 RSS。
+```
+
+`link-rss` 也支持在单个页面插入多个 feed id 关联的 `<link>` 标签：
+
+```markdown
+---
+link-rss:
+  - blog
+  - releases
+---
 ```
 
 ### 修改输出的 RSS 内容
@@ -106,6 +131,7 @@ link-rss: blog
 RSS 文件由两部分组成，一部分是 RSS 的基础信息，在 RSS 格式中称为 `channel`，另一部分是文章列表，在 RSS 格式中称为 `item`。
 
 其中：
+
 - `channel` 可以由 `feed` 这个参数完全控制，请参考下文的 [其他参数](#其他参数)。
 - `item` 可以由 `feed.item` 这个参数完全控制，请参考下文的 [item](#item)。
 
@@ -197,7 +223,10 @@ RSS 的 ID，在多个 RSS 配置中唯一。同时也是该 RSS 文件的默认
 你可以传入一个函数来修改内置逻辑生成的数据，该数据会作为第一个参数传给你传入的这个函数。比如下方配置可以截断 RSS 中的文章内容：
 
 ```ts
-const item: FeedChannel['item'] = (item) => ({...item, content: item.content.slice(0, 1000)});
+const item: FeedChannel['item'] = item => ({
+  ...item,
+  content: item.content.slice(0, 1000),
+});
 ```
 
 默认逻辑详情请参考：<SourceCode href="https://github.com/web-infra-dev/rspress/tree/main/packages/plugin-rss/src/feed.ts" />
@@ -222,7 +251,7 @@ RSS 的输出配置，在插件参数顶层和 `feed` 这一层都有该配置�
 ```ts
 interface FeedOutputOptions {
   dir?: string;
-  type?: "atom" | "rss" | "json";
+  type?: 'atom' | 'rss' | 'json';
   filename?: string;
   publicPath?: string;
 }
@@ -237,13 +266,23 @@ pluginRss({
     // 将 RSS 文件输出文件夹改为 `feeds`，该值为相对于 `doc_build` 的位置
     dir: 'feeds',
     // 输出为 RSS 2.0 格式，默认为 .rss 后缀。
-    type: 'rss'
+    type: 'rss',
   },
   feed: [
-    { id: 'blog', test: '/blog/', title: 'My Blog', output: { type: 'atom' /* 默认会以 `id` 作为基础文件名 */ } },
-    { id: 'releases', test: '/releases/', title: 'Releases', output: { dir: 'releases', filename: 'feed.rss' } },
-  ]
-})
+    {
+      id: 'blog',
+      test: '/blog/',
+      title: 'My Blog',
+      output: { type: 'atom' /* 默认会以 `id` 作为基础文件名 */ },
+    },
+    {
+      id: 'releases',
+      test: '/releases/',
+      title: 'Releases',
+      output: { dir: 'releases', filename: 'feed.rss' },
+    },
+  ],
+});
 ```
 
 以上配置将输出 `feeds/blog.xml`、`releases/feed.rss` 两个文件。
@@ -262,11 +301,11 @@ RSS 文件的输出文件夹，相对于 `doc_build` 的相对位置。
 
 修改 RSS 文件的输出格式，默认为 `atom`。不同类型的说明如下：
 
-| 值 | 格式                                                    | 默认后缀名  | MIME Type |
-|---|-------------------------------------------------------|--------|---|
-| `atom` | [Atom 1.0](https://www.ietf.org/rfc/rfc4287.txt)      | `.xml` | `application/atom+xml` |
-| `rss` | [RSS 2.0](https://www.rssboard.org/rss-specification) | `.rss` | `application/rss+xml` |
-| `json` | [JSON Feed 1.1](https://www.jsonfeed.org/version/1.1/)    | `.json`    | `application/json` |
+| 值     | 格式                                                   | 默认后缀名 | MIME Type              |
+| ------ | ------------------------------------------------------ | ---------- | ---------------------- |
+| `atom` | [Atom 1.0](https://www.ietf.org/rfc/rfc4287.txt)       | `.xml`     | `application/atom+xml` |
+| `rss`  | [RSS 2.0](https://www.rssboard.org/rss-specification)  | `.rss`     | `application/rss+xml`  |
+| `json` | [JSON Feed 1.1](https://www.jsonfeed.org/version/1.1/) | `.json`    | `application/json`     |
 
 #### `filename`
 

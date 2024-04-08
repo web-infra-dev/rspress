@@ -1,5 +1,5 @@
 import type { PageFeedData } from '@rspress/plugin-rss';
-import { Helmet, usePageData } from '@rspress/runtime';
+import { Helmet, usePageData } from 'rspress/runtime';
 import { LinkHTMLAttributes } from 'react';
 
 export default function FeedsAnnotations() {
@@ -10,7 +10,7 @@ export default function FeedsAnnotations() {
     <Helmet>
       {feeds.map(({ language, url, mime }) => {
         const props: LinkHTMLAttributes<HTMLLinkElement> = {
-          rel: 'alternative',
+          rel: 'alternate',
           type: mime,
           href: url,
         };

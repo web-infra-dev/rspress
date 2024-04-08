@@ -1,6 +1,6 @@
 {
   "name": "@rspress/shared",
-  "version": "1.16.2",
+  "version": "1.17.1",
   "types": "./dist/index.d.ts",
   "main": "./dist/index.js",
   "module": "./dist/index.mjs",
@@ -11,34 +11,34 @@
   },
   "exports": {
     ".": {
+      "types": "./dist/index.d.ts",
       "import": "./dist/index.mjs",
-      "require": "./dist/index.js",
-      "types": "./dist/index.d.ts"
+      "require": "./dist/index.js"
     },
     "./execa": {
+      "types": "./dist/execa.d.ts",
       "import": "./dist/execa.mjs",
-      "require": "./dist/execa.js",
-      "types": "./dist/execa.d.ts"
+      "require": "./dist/execa.js"
     },
     "./chalk": {
+      "types": "./dist/chalk.d.ts",
       "import": "./dist/chalk.mjs",
-      "require": "./dist/chalk.js",
-      "types": "./dist/chalk.d.ts"
+      "require": "./dist/chalk.js"
     },
     "./fs-extra": {
+      "types": "./dist/fs-extra.d.ts",
       "import": "./dist/fs-extra.mjs",
-      "require": "./dist/fs-extra.js",
-      "types": "./dist/fs-extra.d.ts"
+      "require": "./dist/fs-extra.js"
     },
     "./logger": {
+      "types": "./dist/logger.d.ts",
       "import": "./dist/logger.mjs",
-      "require": "./dist/logger.js",
-      "types": "./dist/logger.d.ts"
+      "require": "./dist/logger.js"
     },
     "./node-utils": {
+      "types": "./dist/node-utils.d.ts",
       "import": "./dist/node-utils.mjs",
-      "require": "./dist/node-utils.js",
-      "types": "./dist/node-utils.d.ts"
+      "require": "./dist/node-utils.js"
     }
   },
   "scripts": {

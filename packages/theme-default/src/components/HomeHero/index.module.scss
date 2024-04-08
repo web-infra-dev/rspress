@@ -20,7 +20,8 @@
   mixblendmode: normal;
   filter: blur(80px);
   opacity: 0.05;
-  top: -100px;
+  top: 50%;
+  margin-top: -250px;
   transform: translateX(-50%);
   z-index: 0;
 }

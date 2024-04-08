@@ -1,14 +1,12 @@
 ## Summary
 
-
 ## Related Issue
 
 <!--- Provide link of related issues -->
 
 ## Checklist
 
-<!--- Go over all the following points, and put an `x` in all the boxes that apply. -->
+<!--- Check and mark with an "x" -->
 
-- [ ] I have added changeset via `pnpm run change`.
-- [ ] I have updated the documentation.
-- [ ] I have added tests to cover my changes.
+- [ ] Tests updated (or not required).
+- [ ] Documentation updated (or not required).
