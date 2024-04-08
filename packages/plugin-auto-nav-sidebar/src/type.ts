@@ -14,6 +14,7 @@ export type SideMetaItem =
       collapsed?: boolean;
       tag?: string;
       dashed?: boolean;
+      overviewHeaders?: number[];
     };
 
 export type SideMeta = SideMetaItem[];
