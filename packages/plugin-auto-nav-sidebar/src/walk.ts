@@ -126,10 +126,9 @@ export async function scanSideMeta(
       if (type === 'section-header') {
         return { sectionHeaderText: label, tag };
       }
-
       return {
         text: label,
-        link,
+        link: isExternalUrl(link) ? link : withBase(link, routePrefix),
         tag,
       } as SidebarItem;
     }),
