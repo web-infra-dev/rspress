@@ -156,4 +156,22 @@ test.describe('i18n test', async () => {
     );
     expect(sectionHeaderContent).toEqual('Growth');
   });
+
+  test('Should add routePrefix when type is custom-link', async ({ page }) => {
+    await page.goto(`http://localhost:${appPort}/guide/basic/quick-start`, {
+      waitUntil: 'networkidle',
+    });
+    await page.click('a.menuLink_71eca');
+    expect(page.url()).toBe(
+      `http://localhost:${appPort}/guide/basic/install.html`,
+    );
+
+    await page.goto(`http://localhost:${appPort}/en/guide/basic/quick-start`, {
+      waitUntil: 'networkidle',
+    });
+    await page.click('a.menuLink_71eca');
+    expect(page.url()).toBe(
+      `http://localhost:${appPort}/en/guide/basic/install.html`,
+    );
+  });
 });
