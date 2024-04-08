@@ -56,7 +56,7 @@
     "@rspress/shared": "workspace:*",
     "body-scroll-lock": "4.0.0-beta.0",
     "copy-to-clipboard": "^3.3.3",
-    "enhanced-resolve": "5.12.0",
+    "enhanced-resolve": "5.16.0",
     "flexsearch": "0.6.32",
     "fs-extra": "10.1.0",
     "github-slugger": "^2.0.0",
