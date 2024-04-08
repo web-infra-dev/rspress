@@ -184,6 +184,7 @@ export interface SidebarGroup {
    * For hmr usage in development
    */
   _fileKey?: string;
+  overviewHeaders?: number[];
 }
 
 export type SidebarItem = {
@@ -194,6 +195,7 @@ export type SidebarItem = {
    * For hmr usage in development
    */
   _fileKey?: string;
+  overviewHeaders?: number[];
 };
 
 export type SidebarDivider = { dividerType: 'dashed' | 'solid' };

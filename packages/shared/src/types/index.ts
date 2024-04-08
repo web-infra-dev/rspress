@@ -266,6 +266,7 @@ export interface FrontMatterMeta {
   sidebar?: boolean;
   outline?: boolean;
   lineNumbers?: boolean;
+  overviewHeaders?: number;
 }
 
 export interface PageData {

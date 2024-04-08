@@ -185,3 +185,24 @@ footer: false
 navbar: false
 ---
 ```
+
+## overviewHeaders
+
+- Type: `number[]`
+- Default: `[2]`
+
+在预览页中展示的标题级别。默认情况下，展示的标题为 h2。但是如果你想展示不同的标题级别，你可以使用 `overviewHeaders` 这个 Front Matter 字段来指定。例如：
+
+```yaml
+---
+overviewHeaders: []
+---
+```
+
+或者
+
+```yaml
+---
+overviewHeaders: [2, 3]
+---
+```

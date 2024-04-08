@@ -185,3 +185,24 @@ Whether to hide the top navigation bar. You can hide the top nav bar with the fo
 navbar: true
 ---
 ```
+
+## overviewHeaders
+
+- Type: `number[]`
+- Default: `[2]`
+
+The headers shown in the overview page. By default, the displayed header is h2. But if you want to display different headers, you can specify it using the `overviewHeaders` Front Matter field. For example:
+
+```yaml
+---
+overviewHeaders: []
+---
+```
+
+Or
+
+```yaml
+---
+overviewHeaders: [2, 3]
+---
+```

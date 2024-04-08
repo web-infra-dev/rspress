@@ -12,7 +12,7 @@ import {
   SidebarSectionHeader,
 } from '@rspress/shared';
 import { NavMeta, SideMeta } from './type';
-import { detectFilePath, extractH1Title } from './utils';
+import { detectFilePath, extractTitleAndOverviewHeaders } from './utils';
 
 export async function scanSideMeta(
   workDir: string,
@@ -63,7 +63,7 @@ export async function scanSideMeta(
   )[] = await Promise.all(
     sideMeta.map(async metaItem => {
       if (typeof metaItem === 'string') {
-        const title = await extractH1Title(
+        const { title, overviewHeaders } = await extractTitleAndOverviewHeaders(
           path.resolve(workDir, metaItem),
           rootDir,
         );
@@ -71,6 +71,7 @@ export async function scanSideMeta(
         return {
           text: title,
           link: addRoutePrefix(pureLink),
+          overviewHeaders,
           _fileKey: path.relative(docsDir, path.join(workDir, metaItem)),
         };
       }
@@ -84,17 +85,24 @@ export async function scanSideMeta(
         link,
         tag,
         dashed,
+        overviewHeaders,
       } = metaItem;
       // when type is divider, name maybe undefined, and link is not used
       const pureLink = `${relativePath}/${name?.replace(/\.mdx?$/, '')}`;
       if (type === 'file') {
-        const title =
-          label || (await extractH1Title(path.resolve(workDir, name), rootDir));
+        const titleAndOverviewHeaders = await extractTitleAndOverviewHeaders(
+          path.resolve(workDir, name),
+          rootDir,
+        );
+        const title = label || titleAndOverviewHeaders.title;
         const realPath = await detectFilePath(path.resolve(workDir, name));
         return {
           text: title,
           link: addRoutePrefix(pureLink),
           tag,
+          overviewHeaders: titleAndOverviewHeaders.overviewHeaders
+            ? titleAndOverviewHeaders.overviewHeaders
+            : overviewHeaders,
           _fileKey: realPath ? path.relative(docsDir, realPath) : '',
         };
       }
@@ -115,6 +123,7 @@ export async function scanSideMeta(
           items: subSidebar,
           link: realPath ? addRoutePrefix(pureLink) : '',
           tag,
+          overviewHeaders,
           _fileKey: realPath ? path.relative(docsDir, realPath) : '',
         };
       }
