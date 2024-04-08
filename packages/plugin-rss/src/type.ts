@@ -42,6 +42,10 @@ export interface FeedOutputOptions {
    * public path of feed files. siteUrl by default
    */
   publicPath?: string;
+  /**
+   * sort feed items
+   */
+  sorting?: (left: FeedItem, right: FeedItem) => number;
 }
 
 export interface FeedChannel
