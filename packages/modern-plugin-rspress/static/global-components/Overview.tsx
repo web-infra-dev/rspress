@@ -1,5 +1,5 @@
 import { Link } from '@rspress/core/theme';
-import IconRight from './right.svg';
+import IconRight from './arrow-right';
 import styles from './Overview.module.scss';
 
 type List = {
@@ -12,9 +12,11 @@ type List = {
 const getGridClass = (count?: number): string => {
   if (!count) {
     return '';
-  } else if (count % 3 === 0) {
+  }
+  if (count % 3 === 0) {
     return 'grid-4';
-  } else if (count % 2 === 0) {
+  }
+  if (count % 2 === 0) {
     return 'grid-6';
   }
   return 'grid-6';

@@ -5,22 +5,26 @@ import fs from '@rspress/shared/fs-extra';
 import type { Plugin } from 'unified';
 import type { Root } from 'mdast';
 import type { MdxjsEsm } from 'mdast-util-mdxjs-esm';
-import type { RemarkPluginOptions } from './types';
+import type { RemarkPluginOptions, DemoInfo } from './types';
 import { injectDemoBlockImport, generateId } from './utils';
 import { demoBlockComponentPath, virtualDir } from './constant';
-import { demoRuntimeModule, demos } from './virtual-module';
+
+export const demos: DemoInfo = {};
 
 /**
  * remark plugin to transform code to demo
  */
-export const remarkCodeToDemo: Plugin<[RemarkPluginOptions], Root> = ({
+export const remarkCodeToDemo: Plugin<[RemarkPluginOptions], Root> = function ({
   getRouteMeta,
   previewMode,
   defaultRenderMode,
   position,
-}) => {
+}) {
   const routeMeta = getRouteMeta();
   fs.ensureDirSync(virtualDir);
+  const data = this.data() as {
+    pageMeta: Record<string, any>;
+  };
   return (tree, vfile) => {
     const demoMdx: MdxjsEsm[] = [];
     const route = routeMeta.find(
@@ -62,7 +66,7 @@ export const remarkCodeToDemo: Plugin<[RemarkPluginOptions], Root> = ({
       // get external demo content
       const tempVar = `externalDemoContent${externalDemoIndex}`;
       if (externalDemoIndex !== undefined) {
-        // Such as `import externalDemoContent0 from '!!xxx?raw'`
+        // Such as `import externalDemoContent0 from '!!foo?raw'`
         // `!!` prefix is used to avoid other loaders in rspack
         demoMdx.push(getASTNodeImport(tempVar, `!!${demoPath}?raw`));
       }
@@ -116,7 +120,7 @@ export const remarkCodeToDemo: Plugin<[RemarkPluginOptions], Root> = ({
       }
     });
 
-    // 1. External demo , use <code src="xxx" /> to declare demo
+    // 1. External demo , use <code src="foo" /> to declare demo
     visit(tree, 'mdxJsxFlowElement', (node: any) => {
       if (node.name === 'code') {
         const src = node.attributes.find(
@@ -201,11 +205,9 @@ export const remarkCodeToDemo: Plugin<[RemarkPluginOptions], Root> = ({
 
     tree.children.unshift(...demoMdx);
 
-    // maybe rewrite, but it is necessary
-    const meta = `
-      export const demos = ${JSON.stringify(demos)}
-      `;
-    demoRuntimeModule.writeModule('virtual-meta', meta);
+    if (demos[pageName].length > 0) {
+      data.pageMeta.haveDemos = true;
+    }
   };
 };
 
@@ -235,7 +237,7 @@ const getASTNodeImport = (name: string, from: string) =>
         ],
       },
     },
-  } as MdxjsEsm);
+  }) as MdxjsEsm;
 
 const getExternalDemoContent = (tempVar: string) => ({
   /**

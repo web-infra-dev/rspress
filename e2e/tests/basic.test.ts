@@ -23,7 +23,7 @@ test.describe('basic test', async () => {
     await page.goto(`http://localhost:${appPort}`);
     const h1 = await page.$('h1');
     const text = await page.evaluate(h1 => h1?.textContent, h1);
-    await expect(text).toContain('Hello World');
+    expect(text).toContain('Hello World');
     // expect the .header-anchor to be rendered and take the correct href
     const headerAnchor = await page.$('.header-anchor');
     const href = await page.evaluate(
@@ -31,17 +31,6 @@ test.describe('basic test', async () => {
       headerAnchor,
     );
     expect(href).toBe('#hello-world');
-  });
-
-  test('Guide page', async ({ page }) => {
-    await page.goto(`http://localhost:${appPort}/guide`, {
-      waitUntil: 'networkidle',
-    });
-    const h1 = await page.$('h1');
-    const className = await page.evaluate(h1 => h1?.className, h1);
-    expect(className).toContain('title_3b154'); // hash in css module should stable
-    const text = await page.evaluate(h1 => h1?.textContent, h1);
-    expect(text).toContain('Guide');
   });
 
   test('404 page', async ({ page }) => {

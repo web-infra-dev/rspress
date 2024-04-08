@@ -1,0 +1,14 @@
+{
+  "extends": "@modern-js/tsconfig/base",
+  "compilerOptions": {
+    "composite": true,
+    "declaration": false,
+    "module": "Node16",
+    "target": "ES2020",
+    "esModuleInterop": true,
+    "skipLibCheck": true,
+    "moduleResolution": "Node16",
+    "noEmit": true
+  },
+  "include": ["modern.config.ts", "vitest.config.ts"]
+}

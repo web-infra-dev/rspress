@@ -10,23 +10,28 @@
       "arrowParentheses": "asNeeded"
     }
   },
+  "vcs": {
+    "enabled": true,
+    "defaultBranch": "main",
+    "clientKind": "git",
+    "useIgnoreFile": true
+  },
   "files": {
     "include": [
       "packages/**/*.ts",
       "packages/**/*.tsx",
       "packages/**/*.js",
-      "packages/**/*.jsx"
+      "packages/**/*.jsx",
+      "scripts/**/*.js",
+      "scripts/**/*.ts",
+      "e2e/**/*.js",
+      "e2e/**/*.ts"
     ],
     "ignore": [
       "*.d.ts",
-      "dist/**/*",
       "dist-*/**/*",
-      "doc_build/**/*",
       "compiled/**/*",
-      "node_modules/**/*",
-      "create-rspress/template/rspress.config.ts",
-      ".history/**/*",
-      "coverage/**/*"
+      "create-rspress/template/rspress.config.ts"
     ],
     "ignoreUnknown": true
   },
@@ -38,14 +43,11 @@
     "rules": {
       "recommended": true,
       "style": {
-        "useConst": "off",
-        "noUselessElse": "off",
         "noParameterAssign": "off",
         "noInferrableTypes": "off",
         "noNonNullAssertion": "off",
         "useSelfClosingElements": "off",
-        "useDefaultParameterLast": "off",
-        "noUnusedTemplateLiteral": "off"
+        "useDefaultParameterLast": "off"
       },
       "security": {
         "noDangerouslySetInnerHtml": "off"
@@ -59,7 +61,6 @@
         "noAssignInExpressions": "off"
       },
       "correctness": {
-        "noUnnecessaryContinue": "off",
         "useExhaustiveDependencies": "off"
       },
       "complexity": {

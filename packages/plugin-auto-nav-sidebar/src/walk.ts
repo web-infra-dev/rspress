@@ -48,84 +48,92 @@ export async function scanSideMeta(
               name: item,
               label: item,
             };
-          } else {
-            return item;
           }
+          return item;
         }),
       )
     ).filter(Boolean) as SideMeta;
   }
 
-  const sidebarFromMeta: (SidebarGroup | SidebarItem | SidebarDivider | SidebarSectionHeader)[] =
-    await Promise.all(
-      sideMeta.map(async metaItem => {
-        if (typeof metaItem === 'string') {
-          const title = await extractH1Title(
-            path.resolve(workDir, metaItem),
-            rootDir,
-          );
-          const pureLink = `${relativePath}/${metaItem.replace(/\.mdx?$/, '')}`;
-          return {
-            text: title,
-            link: addRoutePrefix(pureLink),
-            _fileKey: path.relative(docsDir, path.join(workDir, metaItem)),
-          };
-        }
+  const sidebarFromMeta: (
+    | SidebarGroup
+    | SidebarItem
+    | SidebarDivider
+    | SidebarSectionHeader
+  )[] = await Promise.all(
+    sideMeta.map(async metaItem => {
+      if (typeof metaItem === 'string') {
+        const title = await extractH1Title(
+          path.resolve(workDir, metaItem),
+          rootDir,
+        );
+        const pureLink = `${relativePath}/${metaItem.replace(/\.mdx?$/, '')}`;
+        return {
+          text: title,
+          link: addRoutePrefix(pureLink),
+          _fileKey: path.relative(docsDir, path.join(workDir, metaItem)),
+        };
+      }
 
-        const {
-          type = 'file',
-          name,
-          label = '',
+      const {
+        type = 'file',
+        name,
+        label = '',
+        collapsible,
+        collapsed,
+        link,
+        tag,
+        dashed,
+      } = metaItem;
+      // when type is divider, name maybe undefined, and link is not used
+      const pureLink = `${relativePath}/${name?.replace(/\.mdx?$/, '')}`;
+      if (type === 'file') {
+        const title =
+          label || (await extractH1Title(path.resolve(workDir, name), rootDir));
+        const realPath = await detectFilePath(path.resolve(workDir, name));
+        return {
+          text: title,
+          link: addRoutePrefix(pureLink),
+          tag,
+          _fileKey: realPath ? path.relative(docsDir, realPath) : '',
+        };
+      }
+
+      if (type === 'dir') {
+        const subDir = path.resolve(workDir, name);
+        const subSidebar = await scanSideMeta(
+          subDir,
+          rootDir,
+          docsDir,
+          routePrefix,
+        );
+        const realPath = await detectFilePath(subDir);
+        return {
+          text: label,
           collapsible,
           collapsed,
-          link,
+          items: subSidebar,
+          link: realPath ? addRoutePrefix(pureLink) : '',
           tag,
-          dashed,
-        } = metaItem;
-        // when type is divider, name maybe undefined, and link is not used
-        const pureLink = `${relativePath}/${name?.replace(/\.mdx?$/, '')}`;
-        if (type === 'file') {
-          const title =
-            label ||
-            (await extractH1Title(path.resolve(workDir, name), rootDir));
-          const realPath = await detectFilePath(path.resolve(workDir, name));
-          return {
-            text: title,
-            link: addRoutePrefix(pureLink),
-            tag,
-            _fileKey: realPath ? path.relative(docsDir, realPath) : '',
-          };
-        } else if (type === 'dir') {
-          const subDir = path.resolve(workDir, name);
-          const subSidebar = await scanSideMeta(
-            subDir,
-            rootDir,
-            docsDir,
-            routePrefix,
-          );
-          const realPath = await detectFilePath(subDir);
-          return {
-            text: label,
-            collapsible,
-            collapsed,
-            items: subSidebar,
-            link: realPath ? addRoutePrefix(pureLink) : '',
-            tag,
-            _fileKey: realPath ? path.relative(docsDir, realPath) : '',
-          };
-        } else if (type === 'divider') {
-          return { dividerType: dashed ? 'dashed' : 'solid' };
-        } else if (type === 'section-header') {
-          return { sectionHeaderText: label, tag };
-        }else {
-          return {
-            text: label,
-            link,
-            tag,
-          } as SidebarItem;
-        }
-      }),
-    );
+          _fileKey: realPath ? path.relative(docsDir, realPath) : '',
+        };
+      }
+
+      if (type === 'divider') {
+        return { dividerType: dashed ? 'dashed' : 'solid' };
+      }
+
+      if (type === 'section-header') {
+        return { sectionHeaderText: label, tag };
+      }
+
+      return {
+        text: label,
+        link,
+        tag,
+      } as SidebarItem;
+    }),
+  );
 
   return sidebarFromMeta;
 }

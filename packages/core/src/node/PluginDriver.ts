@@ -33,8 +33,8 @@ export class PluginDriver {
     const haveNavSidebarConfig =
       themeConfig.nav ||
       themeConfig.sidebar ||
-      themeConfig.locales?.[0].nav ||
-      themeConfig.locales?.[0].sidebar;
+      themeConfig.locales?.[0]?.nav ||
+      themeConfig.locales?.[0]?.sidebar;
     if (enableLastUpdated) {
       const { pluginLastUpdated } = await import(
         '@rspress/plugin-last-updated'
@@ -79,15 +79,15 @@ export class PluginDriver {
   }
 
   addPlugin(plugin: RspressPlugin) {
-    const exsitedIndex = this.#plugins.findIndex(
+    const existedIndex = this.#plugins.findIndex(
       item => item.name === plugin.name,
     );
     // Avoid the duplicated plugin
-    if (exsitedIndex !== -1) {
+    if (existedIndex !== -1) {
       throw new Error(`The plugin "${plugin.name}" has been registered`);
-    } else {
-      this.#plugins.push(plugin);
     }
+
+    this.#plugins.push(plugin);
   }
 
   getPlugins() {

@@ -1,3 +1,3 @@
 # @rspress/core
 
-The core pacakge for [Rspress](https://rspress.dev).
+The core package for [Rspress](https://rspress.dev).

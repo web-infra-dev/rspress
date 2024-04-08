@@ -1,0 +1,330 @@
+# @rspress/plugin-rss
+
+import { SourceCode, PackageManagerTabs } from 'rspress/theme';
+
+<SourceCode href="https://github.com/web-infra-dev/rspress/tree/main/packages/plugin-rss" />
+
+Generates RSS files for specific document pages with [feed](https://github.com/jpmonette/feed).
+
+## Installation
+
+<PackageManagerTabs command="add @rspress/plugin-rss -D" />
+
+### Update Rspress Config
+
+```ts title="rspress.config.ts"
+import { defineConfig } from 'rspress/config';
+import { pluginRss } from '@rspress/plugin-rss';
+
+export default defineConfig({
+  plugins: [
+    pluginRss({
+      // The URL of your document site
+      siteUrl: 'https://example.com',
+      // ...more configurations below
+    }),
+  ],
+});
+```
+
+By default, this plugin generates a `blog.xml` file in the `doc_build/rss/` folder for all pages starting with `/blog/`.
+
+The RSS file can be accessed via `/rss/blog.xml`.
+
+:::tip
+This plugin only works with `rspress build` and does not generate RSS files on `rspress dev`.
+:::
+
+## Usage
+
+### Selecting pages to be included in RSS
+
+Use the `feed.test` option to select which pages to be included in the RSS file.
+
+```ts
+pluginRss({
+  // ...
+  feed: { test: '/zh/blog' },
+});
+```
+
+### Requirements
+
+All documents included in the RSS must have either `date` or `published_at` in their frontmatter to ensure that the RSS updates are stable on the user side.
+
+```md
+---
+published_at: 2024-01-10 08:00:00
+---
+
+Or frontmatter `date`.
+```
+
+### Generating multiple RSS files
+
+Sometimes, you may need to generate multiple RSS files for, e.g., different languages or categories.
+
+You can provide a list of RSS options to the `feed` option. For instance:
+
+```ts
+pluginRss({
+  feed: [
+    { id: 'blog', test: '/blog/', title: 'Rspress Blog', language: 'en-US' },
+    {
+      id: 'blog-zh',
+      test: '/zh/blog/',
+      title: 'Rspress 博客',
+      language: 'zh-CN',
+    },
+    {
+      id: 'rspack',
+      test: ({ frontmatter }) => frontmatter.categories.includes('rspack'),
+      title: 'Rspack Releases',
+      language: 'en-US',
+    },
+    {
+      id: 'rsbuild',
+      test: ({ frontmatter }) => frontmatter.categories.includes('rsbuild'),
+      title: 'Rsbuild Releases',
+      language: 'en-US',
+    },
+  ],
+});
+```
+
+The options above will generate four RSS files: `blog.xml`, `blog-zh.xml`, `rspack.xml`, `rsbuild.xml`, all located in the `rss` folder.
+
+### Modifying the output path
+
+You can customize the output path using the `output` and `feed.output` parameters.
+
+Please refer to the [FeedOutputOptions](#feedoutputoptions) below.
+
+### Linking RSS to document pages
+
+By default, this plugin will insert a `<link rel="alternate">` tag in the selected pages that are included in the RSS, linking to the URL of the RSS file. RSS readers can automatically detect the RSS URL.
+
+If you want to insert this tag in pages that are not included in the RSS (such as the homepage), you can add the `link-rss` frontmatter to the document, with the value being the feed id. For example:
+
+```markdown
+---
+link-rss: blog
+---
+
+This frontmatter will insert a `<link rel="alternate">` tag in the page of this document, pointing to the RSS URL of the `blog` feed.
+
+However, this page itself will not be included in that RSS.
+```
+
+`link-rss` also supports inserting multiple `<link>` tags associated with feed ids on a single page:
+
+```markdown
+---
+link-rss:
+  - blog
+  - releases
+---
+```
+
+### Cook the RSS content
+
+The RSS file consists of two parts: the RSS basic information, known as the `channel` in the RSS format, and the list of articles, known as the `item` in the RSS format.
+
+Here's how you can cook each part:
+
+- The `channel` can be fully modified through the `feed` parameter. Please refer to the [Other Options](#other-options) below.
+- The `item` can be fully modified through the `feed.item` parameter. Please refer to the [item](#item) section below.
+
+## Options
+
+### PluginRssOptions
+
+Options of the plugin.
+
+```ts
+export interface PluginRssOptions {
+  siteUrl: string;
+  feed?: Partial<FeedChannel> | FeedChannel[];
+  output?: Omit<FeedOutputOptions, 'filename'>;
+}
+```
+
+#### `siteUrl`
+
+- **Type**: `string`
+- **Required**
+
+The site URL of the current document site. It will be used in the RSS file.
+
+#### `feed`
+
+- **Type**: `FeedChannel | FeedChannel[]`
+- **Default**: `{ id: 'blog', test: '/blog/' }`
+
+Options for RSS file(s). Provide an array to generate multiple RSS files.
+
+See [FeedChannel](#feedchannel) for more information.
+
+#### `output`
+
+- **Type**: `Omit<FeedOutputOptions, "filename">`
+- **Default**: `{ dir: 'rss', type: 'atom' }`
+
+Options for document output. Please refer to [FeedOutputOptions](#feedoutputoptions) below.
+
+### FeedChannel
+
+Options for RSS file.
+
+```ts
+export interface FeedChannel extends Partial<FeedOptions> {
+  id: string;
+  test:
+    | RegExp
+    | string
+    | (RegExp | string)[]
+    | ((item: PageIndexInfo, base: string) => boolean);
+  item?: (
+    item: FeedItem,
+    page: PageIndexInfo,
+    siteUrl: string,
+  ) => FeedItem | PromiseLike<FeedItem>;
+  output?: FeedOutputOptions;
+}
+```
+
+#### `id`
+
+- **Type**: `string`
+- **Required**
+
+The ID of an RSS, unique among multiple RSS options. It is also the default file basename for the RSS file.
+
+#### `test`
+
+- **Type**: `RegExp | string | (RegExp | string)[] | ((item: PageIndexInfo, base: string) => boolean)`
+- **Required**
+
+Used to select documents to be included in the RSS. The types are as follows:
+
+- `RegExp`: Regular expression to match the document's route. When the rspress site has `base` configured, it will match both routes with and without the `base` path.
+- `string`: Prefix-based matching to the document's route. When the rspress site has `base` configured, it will match both routes with and without the `base` path.
+- `(item: PageIndexInfo, base: string) => boolean`: Match pages based on page data and frontmatter.
+
+#### `item`
+
+- **Type**: `(item: FeedItem, page: PageIndexInfo, siteUrl: string) => FeedItem | PromiseLike<FeedItem>`
+- **Default**: Elaborated below
+
+Generates structured data for each article in the RSS file.
+
+Refer to the type of structured data: <SourceCode href="https://github.com/jpmonette/feed/blob/8ca7f3e4e8e421e2a2632bb9524385e86f30744c/src/typings/index.ts#L1-L25" />
+
+The plugin has a built-in generator that utilizes the document's frontmatter and page data.
+
+For example, the `content` in the RSS will prioritize the `summary` from frontmatter, and then try the document content.
+
+You can provide the `item` function to modify the generated data which will be passed as the first parameter to the function you provided.
+
+For example, the following configuration truncates the content of articles in the RSS:
+
+```ts
+const item: FeedChannel['item'] = item => ({
+  ...item,
+  content: item.content.slice(0, 1000),
+});
+```
+
+For details on the logic of the built-in generator, please refer to: <SourceCode href="https://github.com/web-infra-dev/rspress/tree/main/packages/plugin-rss/src/feed.ts" />
+
+#### `output`
+
+- **Type**: `FeedOutputOptions`
+- **Default**: Uses the plugin's `output` option by default
+
+In addition to the plugin's `output` option, there is an additional `filename` to modify the output filename.
+
+Please refer to [FeedOutputOptions](#feedoutputoptions) below.
+
+#### Other options
+
+`FeedChannel` also inherits the `FeedOptions` from the feed package. Please refer to <SourceCode href="https://github.com/jpmonette/feed/blob/8ca7f3e4e8e421e2a2632bb9524385e86f30744c/src/typings/index.ts#L48-L67" /> for parameters that are not listed.
+
+### FeedOutputOptions
+
+Output options for RSS files, available at both the top level of the plugin options and the `feed` level. Using the following type:
+
+```ts
+interface FeedOutputOptions {
+  dir?: string;
+  type?: 'atom' | 'rss' | 'json';
+  filename?: string;
+  publicPath?: string;
+}
+```
+
+Example:
+
+```ts
+pluginRss({
+  // Applied to all RSS outputs
+  output: {
+    // Change the output folder for RSS files to 'feeds', relative to `doc_build`
+    dir: 'feeds',
+    // Output in RSS 2.0 format, use `.rss` extension by default.
+    type: 'rss',
+  },
+  feed: [
+    {
+      id: 'blog',
+      test: '/blog/',
+      title: 'My Blog',
+      output: {
+        type: 'atom' /* default to using `id` as the base file name */,
+      },
+    },
+    {
+      id: 'releases',
+      test: '/releases/',
+      title: 'Releases',
+      output: { dir: 'releases', filename: 'feed.rss' },
+    },
+  ],
+});
+```
+
+Building with the options above will output two files: `feeds/blog.xml` and `releases/feed.rss`.
+
+#### `dir`
+
+- **Type**: `string`
+- **Default**: `rss`
+
+Output folder for RSS files, relative to `doc_build`.
+
+#### `type`
+
+- **Type**: `"atom" | "rss" | "json"`
+- **Default**: `atom`
+
+Output format of the RSS file, `atom` by default. Details of these types:
+
+| Value  | Format                                                 | Default Extension | MIME Type              |
+| ------ | ------------------------------------------------------ | ----------------- | ---------------------- |
+| `atom` | [Atom 1.0](https://www.ietf.org/rfc/rfc4287.txt)       | `.xml`            | `application/atom+xml` |
+| `rss`  | [RSS 2.0](https://www.rssboard.org/rss-specification)  | `.rss`            | `application/rss+xml`  |
+| `json` | [JSON Feed 1.1](https://www.jsonfeed.org/version/1.1/) | `.json`           | `application/json`     |
+
+#### `filename`
+
+- **Type**: `string`
+- **Default**: ID as the file basename; extension by RSS output format
+
+Modify the full filename of the RSS file.
+
+#### `publicPath`
+
+- **Type**: `string`
+- **Default**: the value of `siteUrl`
+
+URL Prefix for the RSS file. An RSS URL is composed of `publicPath`, `dir`, and `filename`.

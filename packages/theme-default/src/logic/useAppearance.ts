@@ -1,5 +1,9 @@
 import siteData from 'virtual-site-data';
 import { APPEARANCE_KEY } from '@rspress/shared';
+import { useCallback, useEffect, useState } from 'react';
+import { useHandler } from './useHandler';
+import { useMediaQuery } from './useMediaQuery';
+import { useStorageValue } from './useStorageValue';
 
 declare global {
   interface Window {
@@ -8,54 +12,83 @@ declare global {
   }
 }
 
-let classList: DOMTokenList | undefined;
-// Determine if the theme mode of the user's operating system is dark
-let userPreference: string;
-let query: MediaQueryList;
+// Value to be used in the app
+type ThemeValue = 'light' | 'dark';
+// Value to be stored
+type ThemeConfigValue = ThemeValue | 'auto';
 
-const setClass = (dark: boolean): void => {
-  classList?.[dark ? 'add' : 'remove']('dark');
+const sanitize = (value: string): ThemeConfigValue => {
+  return ['light', 'dark', 'auto'].includes(value)
+    ? (value as ThemeConfigValue)
+    : 'auto';
 };
 
-const updateAppearance = (): void => {
-  const disableDarkMode = siteData.themeConfig.darkMode === false;
-  // We set the RSPRESS_THEME as a global variable to determine whether the theme is dark or light.
-  const defaultTheme = window.RSPRESS_THEME ?? window.MODERN_THEME;
-  if (defaultTheme) {
-    setClass(defaultTheme === 'dark');
-    return;
-  }
-  if (disableDarkMode) {
-    return;
-  }
-  updateUserPreferenceFromStorage();
-};
+const disableDarkMode = siteData.themeConfig.darkMode === false;
 
-export const updateUserPreferenceFromStorage = () => {
-  const userPreference = localStorage.getItem(APPEARANCE_KEY) || 'auto';
-  query = window.matchMedia('(prefers-color-scheme: dark)');
-  const isDark =
-    userPreference === 'auto' ? query.matches : userPreference === 'dark';
-  setClass(isDark);
-  return isDark;
-};
+/**
+ * State provider for theme context.
+ */
+export const useThemeState = () => {
+  const matchesDark = useMediaQuery('(prefers-color-scheme: dark)');
+  const [storedTheme, setStoredTheme] = useStorageValue(APPEARANCE_KEY);
 
-if (typeof window !== 'undefined' && typeof localStorage !== 'undefined') {
-  // When user preference is auto,the modern theme will change with the system user's operating system theme.
-  // eslint-disable-next-line prefer-destructuring
-  classList = document.documentElement.classList;
-  updateAppearance();
-}
-
-export const isDarkMode = () => classList?.contains('dark');
-
-export const getToggle = () => {
-  return () => {
-    const isDark = isDarkMode();
-    if (typeof window !== 'undefined' && typeof localStorage !== 'undefined') {
-      setClass(!isDark);
-      userPreference = isDark ? 'light' : 'dark';
-      localStorage.setItem(APPEARANCE_KEY, userPreference);
+  const getPreferredTheme = useHandler(() => {
+    if (disableDarkMode) {
+      return 'light';
     }
-  };
+    const sanitized = sanitize(storedTheme);
+    return sanitized === 'auto' ? (matchesDark ? 'dark' : 'light') : sanitized;
+  });
+
+  const [theme, setThemeInternal] = useState<ThemeValue>(() => {
+    if (typeof window === 'undefined') {
+      return 'light';
+    }
+    // We set the RSPRESS_THEME as a global variable to determine whether the theme is dark or light.
+    const defaultTheme = window.RSPRESS_THEME ?? window.MODERN_THEME;
+    if (defaultTheme) {
+      return defaultTheme === 'dark' ? 'dark' : 'light';
+    }
+    return getPreferredTheme();
+  });
+  const setTheme = useCallback(
+    (value: ThemeValue, storeValue: ThemeConfigValue = value) => {
+      if (disableDarkMode) {
+        return;
+      }
+      setThemeInternal(value);
+      setStoredTheme(storeValue);
+      setSkipEffect(true);
+    },
+    [],
+  );
+
+  useEffect(() => {
+    document.documentElement.classList.toggle('dark', theme === 'dark');
+    document.documentElement.style.colorScheme = theme;
+  }, [theme]);
+
+  // Skip the first effect on mount, only run on updates
+  const [skipEffect, setSkipEffect] = useState(true);
+  useEffect(() => {
+    setSkipEffect(false);
+  }, [skipEffect]);
+
+  // Update the theme when the localStorage changes
+  useEffect(() => {
+    if (skipEffect) {
+      return;
+    }
+    setTheme(getPreferredTheme(), sanitize(storedTheme));
+  }, [storedTheme]);
+
+  // Update the theme when the OS theme changes
+  useEffect(() => {
+    if (skipEffect) {
+      return;
+    }
+    setTheme(matchesDark ? 'dark' : 'light', 'auto');
+  }, [matchesDark]);
+
+  return [theme, setTheme] as const;
 };

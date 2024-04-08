@@ -1,6 +1,6 @@
 {
   "name": "@rspress/docs",
-  "version": "1.13.2",
+  "version": "1.17.1",
   "description": "",
   "main": "index.js",
   "scripts": {
@@ -22,6 +22,8 @@
     "@documate/react": "0.2.1",
     "@types/react": "18.2.0",
     "framer-motion": "10.16.4",
+    "rsbuild-plugin-google-analytics": "^1.0.0",
+    "rsbuild-plugin-open-graph": "^1.0.0",
     "rspress": "workspace:*",
     "ts-node": "^10.9.1",
     "typescript": "^5"

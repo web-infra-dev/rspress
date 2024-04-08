@@ -6,7 +6,7 @@ import {
 } from '@rspress/shared';
 import { useState } from 'react';
 import Down from '@theme-assets/down';
-import { Link } from '../Link';
+import { Link } from '@theme';
 import styles from './index.module.scss';
 
 export interface NavScreenMenuGroupItem {

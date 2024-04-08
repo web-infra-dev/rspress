@@ -86,7 +86,7 @@ export function rsbuildPluginDocVM(
           }
           runtimeModule[key] = modulesByPlugin[key];
         });
-        bundlerChain.plugin(`rspress-runtime-module`).use(
+        bundlerChain.plugin('rspress-runtime-module').use(
           // @ts-expect-error
           new RspackVirtualModulePlugin(
             runtimeModule,

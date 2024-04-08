@@ -5,9 +5,9 @@ import styles from './index.module.scss';
 export function formatTime(time: number, totalTime: number) {
   if (totalTime < 1000) {
     return `${time.toFixed(0)}ms`;
-  } else {
-    return `${(time / 1000).toFixed(2)}s`;
   }
+
+  return `${(time / 1000).toFixed(2)}s`;
 }
 
 export function ProgressBar({ value, max }: { value: number; max: number }) {

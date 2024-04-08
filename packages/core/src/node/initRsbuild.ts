@@ -14,6 +14,7 @@ import {
   PACKAGE_ROOT,
   OUTPUT_DIR,
   isProduction,
+  inlineThemeScript,
   PUBLIC_DIR,
 } from './constants';
 import { rsbuildPluginDocVM } from './runtimeModule';
@@ -104,6 +105,13 @@ async function createInternalBuildConfig(
       title: config?.title,
       favicon: normalizeIcon(config?.icon),
       template: path.join(PACKAGE_ROOT, 'index.html'),
+      tags: [
+        config.themeConfig?.darkMode !== false && {
+          tag: 'script',
+          children: inlineThemeScript,
+          append: false,
+        },
+      ].filter(Boolean),
     },
     output: {
       targets: isSSR ? ['node'] : ['web'],
@@ -160,8 +168,9 @@ async function createInternalBuildConfig(
     },
     tools: {
       bundlerChain(chain, { CHAIN_ID }) {
-        const swcLoaderOptions = chain.module
-          .rule(CHAIN_ID.RULE.JS)
+        const jsModuleRule = chain.module.rule(CHAIN_ID.RULE.JS);
+
+        const swcLoaderOptions = jsModuleRule
           .use(CHAIN_ID.USE.SWC)
           .get('options');
 
@@ -169,6 +178,11 @@ async function createInternalBuildConfig(
           .rule('MDX')
           .type('javascript/auto')
           .test(MDX_REGEXP)
+          .resolve.merge({
+            conditionNames: jsModuleRule.resolve.get('conditionNames'),
+            mainFields: jsModuleRule.resolve.mainFields.values(),
+          })
+          .end()
           .oneOf('MDXCompile')
           .use('builtin:swc-loader')
           .loader('builtin:swc-loader')
@@ -183,12 +197,7 @@ async function createInternalBuildConfig(
             routeService,
             pluginDriver,
           })
-          .end()
-          .use('string-replace-loader')
-          .loader(require.resolve('string-replace-loader'))
-          .options({
-            multiple: config?.replaceRules || [],
-          });
+          .end();
 
         if (chain.plugins.has(CHAIN_ID.PLUGIN.REACT_FAST_REFRESH)) {
           chain.plugin(CHAIN_ID.PLUGIN.REACT_FAST_REFRESH).tap(options => {

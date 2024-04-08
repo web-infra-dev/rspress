@@ -1,0 +1,16 @@
+{
+  "extends": "@modern-js/tsconfig/base",
+  "compilerOptions": {
+    "declaration": false,
+    "module": "Node16",
+    "target": "ES2020",
+    "esModuleInterop": true,
+    "skipLibCheck": true,
+    "moduleResolution": "Node16"
+  },
+  "include": ["src"],
+  "references": [
+    { "path": "./tsconfig.runtime.json" },
+    { "path": "./tsconfig.tools.json" }
+  ]
+}

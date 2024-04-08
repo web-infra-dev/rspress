@@ -13,16 +13,28 @@ import { NavBarTitle } from '../Nav/NavBarTitle';
 import styles from './index.module.scss';
 import { SidebarItem } from './SidebarItem';
 import { SidebarDivider } from './SidebarDivider';
-import { UISwitchResult } from '#theme/logic/useUISwitch';
+import { UISwitchResult } from '../../logic/useUISwitch';
 import { SidebarSectionHeader } from './SidebarSectionHeader';
 
-const isSidebarDivider = (item: NormalizedSidebarGroup | ISidebarItem | ISidebarDivider | ISidebarSectionHeader): item is ISidebarDivider => {
+const isSidebarDivider = (
+  item:
+    | NormalizedSidebarGroup
+    | ISidebarItem
+    | ISidebarDivider
+    | ISidebarSectionHeader,
+): item is ISidebarDivider => {
   return 'dividerType' in item;
-}
+};
 
-const isSidebarSectionHeader = (item: NormalizedSidebarGroup | ISidebarItem | ISidebarDivider | ISidebarSectionHeader): item is ISidebarSectionHeader => {
+const isSidebarSectionHeader = (
+  item:
+    | NormalizedSidebarGroup
+    | ISidebarItem
+    | ISidebarDivider
+    | ISidebarSectionHeader,
+): item is ISidebarSectionHeader => {
   return 'sectionHeaderText' in item;
-}
+};
 
 export interface SidebarItemProps {
   id: string;
@@ -58,7 +70,7 @@ export let matchCache: WeakMap<
   boolean
 > = new WeakMap();
 
-export function SideBar(props: Props) {
+export function Sidebar(props: Props) {
   const { isSidebarOpen, beforeSidebar, afterSidebar, uiSwitch } = props;
   const { items: rawSidebarData } = useSidebarData();
   const localesData = useLocaleSiteData();
@@ -131,14 +143,17 @@ export function SideBar(props: Props) {
       route.preload();
     }
   };
-  const renderItem = (item: NormalizedSidebarGroup | ISidebarItem | ISidebarDivider | ISidebarSectionHeader, index: number) => {
+  const renderItem = (
+    item:
+      | NormalizedSidebarGroup
+      | ISidebarItem
+      | ISidebarDivider
+      | ISidebarSectionHeader,
+    index: number,
+  ) => {
     if (isSidebarDivider(item)) {
       return (
-        <SidebarDivider
-          key={index}
-          depth={0}
-          dividerType={item.dividerType}
-        />
+        <SidebarDivider key={index} depth={0} dividerType={item.dividerType} />
       );
     }
 
@@ -164,7 +179,7 @@ export function SideBar(props: Props) {
         preloadLink={preloadLink}
       />
     );
-  }
+  };
   return (
     <aside
       className={`${styles.sidebar} rspress-sidebar ${

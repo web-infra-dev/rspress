@@ -44,7 +44,7 @@ export function pluginPlayground(
     include,
     defaultDirection = 'horizontal',
     editorPosition = 'left',
-    babelUrl = '',
+    babelUrl = DEFAULT_BABEL_URL,
     monacoLoader = {},
     monacoOptions = {},
     defaultRenderMode = 'playground',
@@ -208,30 +208,20 @@ export function pluginPlayground(
           __PLAYGROUND_DIRECTION__: JSON.stringify(defaultDirection),
           __PLAYGROUND_MONACO_LOADER__: JSON.stringify(monacoLoader),
           __PLAYGROUND_MONACO_OPTIONS__: JSON.stringify(monacoOptions),
+          __PLAYGROUND_BABEL_URL__: JSON.stringify(babelUrl),
         },
         include: [join(__dirname, '..', '..', '..')],
       },
       html: {
-        tags: [
-          ...preloads.map(url => ({
-            tag: 'link',
-            head: true,
-            attrs: {
-              rel: 'preload',
-              href: url,
-              as: 'script',
-            },
-          })),
-          {
-            tag: 'script',
-            head: true,
-            attrs: {
-              id: 'rspress-playground-babel',
-              async: true,
-              src: babelUrl || DEFAULT_BABEL_URL,
-            },
+        tags: preloads.map(url => ({
+          tag: 'link',
+          head: true,
+          attrs: {
+            rel: 'preload',
+            href: url,
+            as: 'script',
           },
-        ],
+        })),
       },
       tools: {
         // eslint-disable-next-line @typescript-eslint/ban-ts-comment, @typescript-eslint/prefer-ts-expect-error

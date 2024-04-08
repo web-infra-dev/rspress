@@ -11,6 +11,10 @@ export function useRedirect4FirstVisit() {
   const langs = localeLanguages.map(item => item.lang) || [];
   const currentLang = page.lang;
   useEffect(() => {
+    const localeRedirect = siteData.themeConfig.localeRedirect ?? 'auto';
+    if (localeRedirect !== 'auto') {
+      return;
+    }
     if (!defaultLang || process.env.TEST === '1') {
       // Check the window.navigator.language to determine the default language
       // If the default language is not the same as the current language, redirect to the default language
@@ -18,33 +22,37 @@ export function useRedirect4FirstVisit() {
       return;
     }
     // Normalize current url, to ensure that the home url is always with a trailing slash
-    const { pathname } = window.location;
+    const { pathname, search } = window.location;
     const cleanPathname = removeBase(pathname);
     // Check if the user is visiting the site for the first time
     const FIRST_VISIT_KEY = 'rspress-visited';
     const visited = localStorage.getItem(FIRST_VISIT_KEY);
     if (visited) {
       return;
-    } else {
-      localStorage.setItem(FIRST_VISIT_KEY, '1');
     }
+
+    localStorage.setItem(FIRST_VISIT_KEY, '1');
+
     const targetLang = window.navigator.language.split('-')[0];
     if (!langs.includes(targetLang)) {
       return;
     }
-    if (targetLang !== currentLang) {
-      if (targetLang === defaultLang) {
-        // Redirect to the default language
-        window.location.replace(pathname.replace(`/${currentLang}`, ''));
-      } else if (currentLang === defaultLang) {
-        // Redirect to the current language
-        window.location.replace(withBase(`/${targetLang}${cleanPathname}`));
-      } else {
-        // Redirect to the current language
-        window.location.replace(
-          pathname.replace(`/${currentLang}`, `/${targetLang}`),
-        );
-      }
+    if (targetLang === currentLang) {
+      return;
+    }
+    let newPath: string;
+    if (targetLang === defaultLang) {
+      // Redirect to the default language
+      newPath = pathname.replace(`/${currentLang}`, '');
+    } else if (currentLang === defaultLang) {
+      // Redirect to the current language
+      newPath = withBase(`/${targetLang}${cleanPathname}`);
+    } else {
+      // Redirect to the current language
+      newPath = pathname.replace(`/${currentLang}`, `/${targetLang}`);
+    }
+    if (newPath) {
+      window.location.replace(newPath + search);
     }
   }, []);
 }

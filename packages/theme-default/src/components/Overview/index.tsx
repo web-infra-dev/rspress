@@ -11,8 +11,8 @@ import {
   withBase,
   isEqualPath,
 } from '@rspress/runtime';
-import { useSidebarData } from '../../logic';
-import { Link } from '../Link';
+import { renderInlineMarkdown, useSidebarData } from '../../logic';
+import { Link } from '@theme';
 import styles from './index.module.scss';
 
 interface GroupItem {
@@ -29,37 +29,43 @@ interface Group {
 // The sidebar data include two types: sidebar item and sidebar group.
 // In overpage page, we select all the related sidebar groups and show the groups in the page.
 // In the meantime, some sidebar items also should be shown in the page, we collect them in the group named 'Others' and show them in the page.
-const DEFAULT_GROUP = 'Others';
 
-export function Overview(props: { content: React.ReactNode }) {
+export function Overview(props: {
+  content?: React.ReactNode;
+  groups?: Group[];
+  defaultGroupTitle?: string;
+}) {
   const {
     siteData,
     page: { routePath, title },
   } = usePageData();
+  const { content, groups: customGroups, defaultGroupTitle = 'Others' } = props;
+  const subFilter = (link: string) =>
+    // sidebar items link without base path
+    // pages route path with base path
+    withBase(link).startsWith(routePath.replace(/overview$/, '')) &&
+    !isEqualPath(withBase(link), routePath);
+  const getChildLink = (
+    traverseItem: SidebarDivider | SidebarItem | NormalizedSidebarGroup,
+  ): string => {
+    if ('link' in traverseItem && traverseItem.link) {
+      return traverseItem.link;
+    }
+    if ('items' in traverseItem) {
+      return getChildLink(traverseItem.items[0]);
+    }
+    return '';
+  };
   const { pages } = siteData;
-  const overviewModules = pages.filter(
-    page =>
-      page.routePath.startsWith(routePath.replace(/overview$/, '')) &&
-      page.routePath !== routePath,
-  );
+  const overviewModules = pages.filter(page => subFilter(page.routePath));
   const { items: overviewSidebarGroups } = useSidebarData() as {
     items: (NormalizedSidebarGroup | SidebarItem)[];
   };
   function normalizeSidebarItem(item: NormalizedSidebarGroup | SidebarItem) {
+    // sidebar items link without base path
     const pageModule = overviewModules.find(m =>
       isEqualPath(m.routePath, withBase(item.link || '')),
     );
-    const getChildLink = (
-      traverseItem: SidebarDivider | SidebarItem | NormalizedSidebarGroup,
-    ): string => {
-      if ('link' in traverseItem && traverseItem.link) {
-        return traverseItem.link;
-      }
-      if ('items' in traverseItem) {
-        return getChildLink(traverseItem.items[0]);
-      }
-      return '';
-    };
     const link = getChildLink(item);
     return {
       ...item,
@@ -67,30 +73,40 @@ export function Overview(props: { content: React.ReactNode }) {
       headers: pageModule?.toc?.filter(header => header.depth === 2) || [],
     };
   }
-  const groups = useMemo(() => {
-    const group = overviewSidebarGroups
-      .filter(item => 'items' in item)
-      .map(sidebarGroup => ({
-        name: sidebarGroup.text || '',
-        items: (sidebarGroup as NormalizedSidebarGroup).items
-          .map(normalizeSidebarItem)
-          .filter(Boolean),
-      })) as Group[];
-    const singleLinks = overviewSidebarGroups.filter(
-      item => !('items' in item) && !isEqualPath(item.link || '', routePath),
-    );
-    return [
-      ...group,
-      ...(singleLinks.length > 0
-        ? [
-            {
-              name: DEFAULT_GROUP,
-              items: singleLinks.map(normalizeSidebarItem),
-            },
-          ]
-        : []),
-    ];
-  }, [overviewSidebarGroups]);
+  const groups =
+    customGroups ??
+    useMemo(() => {
+      const group = overviewSidebarGroups
+        .filter(sidebarGroup => {
+          if ('items' in sidebarGroup && sidebarGroup.items) {
+            return (
+              sidebarGroup.items.filter(item => subFilter(getChildLink(item)))
+                .length > 0
+            );
+          }
+          return false;
+        })
+        .map(sidebarGroup => ({
+          name: sidebarGroup.text || '',
+          items: (sidebarGroup as NormalizedSidebarGroup).items
+            .map(normalizeSidebarItem)
+            .filter(Boolean),
+        })) as Group[];
+      const singleLinks = overviewSidebarGroups.filter(
+        item => !('items' in item) && subFilter(item.link),
+      );
+      return [
+        ...group,
+        ...(singleLinks.length > 0
+          ? [
+              {
+                name: defaultGroupTitle,
+                items: singleLinks.map(normalizeSidebarItem),
+              },
+            ]
+          : []),
+      ];
+    }, [overviewSidebarGroups]);
 
   return (
     <div className="overview-index mx-auto px-8">
@@ -99,14 +115,14 @@ export function Overview(props: { content: React.ReactNode }) {
           <h1 className="text-3xl leading-10 tracking-tight">Overview</h1>
         )}
       </div>
-      {props.content}
+      {content}
       {groups.map(group => (
         <div className="mb-16" key={group.name}>
           {/* If there is no sidebar group, we show the sidebar items directly and hide the group name */}
-          {group.name === DEFAULT_GROUP && groups.length === 1 ? (
+          {group.name === defaultGroupTitle && groups.length === 1 ? (
             <h2 style={{ paddingTop: 0 }}></h2>
           ) : (
-            <h2>{group.name}</h2>
+            <h2>{renderInlineMarkdown(group.name)}</h2>
           )}
 
           <div className={styles.overviewGroups}>
@@ -114,7 +130,9 @@ export function Overview(props: { content: React.ReactNode }) {
               <div className={styles.overviewGroup} key={item.link}>
                 <div className="flex">
                   <h3 style={{ marginBottom: 8 }}>
-                    <Link href={normalizeHref(item.link)}>{item.text}</Link>
+                    <Link href={normalizeHref(item.link)}>
+                      {renderInlineMarkdown(item.text)}
+                    </Link>
                   </h3>
                 </div>
                 <ul className="list-none">
@@ -126,7 +144,7 @@ export function Overview(props: { content: React.ReactNode }) {
                       } first:mt-2`}
                     >
                       <Link href={`${normalizeHref(item.link)}#${header.id}`}>
-                        {header.text}
+                        {renderInlineMarkdown(header.text)}
                       </Link>
                     </li>
                   ))}

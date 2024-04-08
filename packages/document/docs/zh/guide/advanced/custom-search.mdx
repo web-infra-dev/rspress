@@ -78,7 +78,10 @@ const onSearch: OnSearch = async (query, defaultSearchResult) => {
   console.log(defaultSearchResult);
   // const customResult = await searchQuery(query);
 
-  // 返回值为一个数组，数组中的每一项为一个搜索源的结果
+  // 可直接操作默认搜索结果
+  defaultSearchResult.pop();
+
+  // 返回值为一个数组，数组中的每一项为一个搜索源的结果，它们会被添加到搜索结果中
   return [
     {
       group: 'Custom',

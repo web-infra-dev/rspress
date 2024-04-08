@@ -314,7 +314,7 @@ export default defineConfig({
       {
         icon: 'wechat',
         mode: 'text',
-        content: '微信号xxx',
+        content: '微信号 foo',
       },
       {
         icon: 'qq',
@@ -354,7 +354,7 @@ export type SocialLinkIcon =
   | { svg: string };
 ```
 
-如果需要自定义 icon，可以通过传入一个带有`svg属性`的对象，svg 的值为自定义图标内容即可，比如：
+如果需要自定义 icon，可以通过传入一个带有 `svg 属性` 的对象，svg 的值为自定义图标内容即可，比如：
 
 ```js
 import { defineConfig } from 'rspress/config';
@@ -364,7 +364,7 @@ export default defineConfig({
     socialLinks: [
       {
         icon: {
-          svg: 'svg图标内容',
+          svg: '<svg>foo</svg>',
         },
         mode: 'link',
         content: 'https://github.com/',
@@ -559,3 +559,19 @@ export default defineConfig({
 });
 ```
 
+## localeRedirect
+
+- Type: `'auto' | 'never'`
+- Default: `'auto'`
+
+是否在访问网站时重定向到最接近 `window.navigator.language` 的语言，默认为 `auto` 表示首次访问时将重定向，`never` 表示不重定向。比如:
+
+```ts title="rspress.config.ts"
+import { defineConfig } from 'rspress/config';
+
+export default defineConfig({
+  themeConfig: {
+    localeRedirect: 'never',
+  },
+});
+```

@@ -5,17 +5,20 @@ import IconWrapped from '@theme-assets/wrapped';
 import styles from './index.module.scss';
 import { PrismSyntaxHighlighter } from './PrismSytaxHighlighter';
 import { CopyCodeButton } from './CopyCodeButton';
-import { SvgWrapper } from '#theme/components/SvgWrapper';
+import { SvgWrapper } from '../../../../components/SvgWrapper';
 
 export interface CodeProps {
   children: string;
   className?: string;
+  codeHighlighter?: 'prism' | 'shiki';
   meta?: string;
 }
 
 export function Code(props: CodeProps) {
   const { siteData } = usePageData();
-  const { defaultWrapCode, codeHighlighter } = siteData.markdown;
+  const codeHighlighter =
+    props.codeHighlighter ?? siteData.markdown.codeHighlighter;
+  const { defaultWrapCode } = siteData.markdown;
   const [codeWrap, setCodeWrap] = useState(defaultWrapCode);
   const wrapButtonRef = useRef<HTMLButtonElement>(null);
   const codeBlockRef = useRef<HTMLDivElement>();

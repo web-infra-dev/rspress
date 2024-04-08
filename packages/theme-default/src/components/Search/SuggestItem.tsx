@@ -3,6 +3,7 @@ import FileSvg from '@theme-assets/file';
 import JumpSvg from '@theme-assets/jump';
 import HeaderSvg from '@theme-assets/header';
 import TitleSvg from '@theme-assets/title';
+import { useRef } from 'react';
 import { getSlicedStrByByteLength, removeDomain } from './logic/util';
 import styles from './index.module.scss';
 import { DefaultMatchResultItem, HightlightInfo } from './logic/types';
@@ -20,18 +21,24 @@ export function SuggestItem({
   isCurrent,
   setCurrentSuggestionIndex,
   inCurrentDocIndex,
+  scrollTo,
 }: {
   suggestion: DefaultMatchResultItem;
   closeSearch: () => void;
   isCurrent: boolean;
   setCurrentSuggestionIndex: () => void;
   inCurrentDocIndex: boolean;
+  scrollTo: (top: number, height: number) => void;
 }) {
   const HitIcon = ICON_MAP[suggestion.type];
   const link =
     inCurrentDocIndex && !isProduction()
       ? removeDomain(suggestion.link)
       : suggestion.link;
+  const selfRef = useRef(null);
+  if (isCurrent) {
+    scrollTo(selfRef?.current?.offsetTop, selfRef?.current?.offsetHeight);
+  }
 
   const getHighlightedFragments = (
     rawText: string,
@@ -40,14 +47,14 @@ export function SuggestItem({
     // Split raw text into several parts, and add styles.mark className to the parts that need to be highlighted.
     // highlightInfoList is an array of objects, each object contains the start index and the length of the part that needs to be highlighted.
     // For example, if the statement is "This is a statement", and the query is "is", then highlightInfoList is [{start: 2, length: 2}, {start: 5, length: 2}].
-    const framegmentList = [];
+    const fragmentList = [];
     let lastIndex = 0;
     for (const highlightInfo of highlights) {
       const { start, length } = highlightInfo;
       const prefix = rawText.slice(lastIndex, start);
       const queryStr = getSlicedStrByByteLength(rawText, start, length);
-      framegmentList.push(prefix);
-      framegmentList.push(
+      fragmentList.push(prefix);
+      fragmentList.push(
         <span key={start} className={styles.mark}>
           {queryStr}
         </span>,
@@ -56,10 +63,10 @@ export function SuggestItem({
     }
 
     if (lastIndex < rawText.length) {
-      framegmentList.push(rawText.slice(lastIndex));
+      fragmentList.push(rawText.slice(lastIndex));
     }
 
-    return framegmentList;
+    return fragmentList;
   };
 
   const renderHeaderMatch = () => {
@@ -70,10 +77,11 @@ export function SuggestItem({
           {getHighlightedFragments(header, highlightInfoList)}
         </div>
       );
-    } else {
-      return <div className="font-medium">{suggestion.header}</div>;
     }
+
+    return <div className="font-medium">{suggestion.header}</div>;
   };
+
   const renderStatementMatch = () => {
     if (suggestion.type !== 'content') {
       return <div></div>;
@@ -110,6 +118,7 @@ export function SuggestItem({
       key={suggestion.link}
       className={`${styles.suggestItem} ${isCurrent ? styles.current : ''}`}
       onMouseEnter={setCurrentSuggestionIndex}
+      ref={selfRef}
     >
       <a
         href={link}

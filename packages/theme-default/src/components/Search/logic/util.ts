@@ -2,6 +2,7 @@ import { RemoteSearchIndexInfo, Header } from '@rspress/shared';
 
 const MAX_TITLE_LENGTH = 20;
 const kRegex = /[\u3131-\u314e|\u314f-\u3163|\uac00-\ud7a3]/u;
+const cyrillicRegex = /[\u0400-\u04FF]/u;
 
 export function backTrackHeaders(
   rawHeaders: Header[],
@@ -38,12 +39,16 @@ export function formatText(text: string) {
 }
 
 export function normalizeTextCase(text: string | number) {
-  const result = text
-    .toString()
-    .toLowerCase()
-    .normalize('NFD')
-    .replace(/[\u0300-\u036f]/g, '');
-  return kRegex.test(String(text)) ? result.normalize('NFC') : result;
+  const textNormalized = text.toString().toLowerCase().normalize('NFD');
+  const resultWithAccents = textNormalized;
+  const resultWithoutAccents = textNormalized.replace(/[\u0300-\u036f]/g, '');
+  if (cyrillicRegex.test(String(text))) {
+    return resultWithAccents.normalize('NFC');
+  }
+  if (kRegex.test(String(text))) {
+    return resultWithoutAccents.normalize('NFC');
+  }
+  return resultWithoutAccents;
 }
 
 export function removeDomain(url: string) {
@@ -55,9 +60,9 @@ function getCharByteCount(char: string) {
   if (charCode > 255) {
     // Chinese character
     return 3;
-  } else {
-    return 1;
   }
+
+  return 1;
 }
 
 export const normalizeSearchIndexes = (
@@ -81,7 +86,8 @@ export function substrByBytes(str: string, start: number, len: number): string {
     bytesCount += getCharByteCount(str.charAt(i));
     if (bytesCount > start + len) {
       break;
-    } else if (bytesCount > start) {
+    }
+    if (bytesCount > start) {
       resultStr += str.charAt(i);
     }
   }

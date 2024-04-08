@@ -1,6 +1,6 @@
 {
   "name": "@rspress/plugin-shiki",
-  "version": "1.13.2",
+  "version": "1.17.1",
   "description": "A plugin for rspress to record the last updated time of the doc.",
   "bugs": "https://github.com/web-infra-dev/rspress/issues",
   "repository": {
@@ -18,22 +18,13 @@
     "dev": "modern build -w",
     "build": "modern build",
     "reset": "rimraf ./**/node_modules",
-    "lint": "modern lint",
-    "change": "modern change",
-    "bump": "modern bump",
-    "pre": "modern pre",
-    "change-status": "modern change-status",
-    "gen-release-note": "modern gen-release-note",
-    "release": "modern release",
-    "new": "modern new",
-    "test": "vitest run --passWithNoTests",
-    "upgrade": "modern upgrade"
+    "test": "vitest run --passWithNoTests"
   },
   "engines": {
     "node": ">=14.17.6"
   },
   "devDependencies": {
-    "@modern-js/tsconfig": "2.48.0",
+    "@modern-js/tsconfig": "2.48.4",
     "@types/node": "^18.11.17",
     "@types/react": "^18",
     "@types/react-dom": "^18",

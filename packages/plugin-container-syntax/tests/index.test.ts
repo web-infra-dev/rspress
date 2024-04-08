@@ -54,7 +54,7 @@ describe('remark-container', () => {
     const result = processor.processSync(`
   :::tip
 
-  This is a tip with \`code\` and [link](xxx) some text
+  This is a tip with \`code\` and [link](foo) some text
 
   \`\`\`js
   const a = 1;
@@ -68,7 +68,7 @@ describe('remark-container', () => {
     const result = processor.processSync(`
   :::tip
 
-  This is a tip with \`code\` and [link](xxx) some text
+  This is a tip with \`code\` and [link](foo) some text
 
   > This is a quote
 
@@ -80,12 +80,12 @@ describe('remark-container', () => {
     const result = processor.processSync(`
   :::tip
 
-  This is a tip with \`code\` and [link](xxx) some text
+  This is a tip with \`code\` and [link](foo) some text
 
   - list 1
   - list 2
 
-  ![img](xxx)
+  ![img](foo)
 
   :::`);
     expect(result.value).toMatchSnapshot();
@@ -101,9 +101,9 @@ describe('remark-container', () => {
     expect(result.value).toMatchSnapshot();
   });
 
-  test('Use {title="xxx"} as title', () => {
+  test('Use {title="foo"} as title', () => {
     const result = processor.processSync(`
-  ::: tip{title="Cutsom title"}
+  ::: tip{title="Custom title"}
 
   This is a tip.
 
@@ -111,9 +111,9 @@ describe('remark-container', () => {
     expect(result.value).toMatchSnapshot();
   });
 
-  test("Use {title='xxx'} as title", () => {
+  test("Use {title='foo'} as title", () => {
     const result = processor.processSync(`
-::: tip{title='Cutsom title'}
+::: tip{title='Custom title'}
 
 This is a tip.
 
@@ -121,9 +121,9 @@ This is a tip.
     expect(result.value).toMatchSnapshot();
   });
 
-  test('Use {title=xxx} as title', () => {
+  test('Use {title=foo} as title', () => {
     const result = processor.processSync(`
-::: tip{title=Cutsom title}
+::: tip{title=Custom title}
 
 This is a tip.
 

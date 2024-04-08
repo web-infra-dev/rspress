@@ -44,6 +44,39 @@ export function SearchPanel({ focused, setFocused }: SearchPanelProps) {
   const [initing, setIniting] = useState(true);
   const [currentSuggestionIndex, setCurrentSuggestionIndex] = useState(0);
   const pageSearcherRef = useRef<PageSearcher | null>(null);
+  const searchResultRef = useRef(null);
+  const searchResultTabRef = useRef(null);
+
+  // only scroll after keydown arrow up and arrow down.
+  const [canScroll, setCanScroll] = useState(false);
+  const scrollTo = (offsetTop: number, offsetHeight: number) => {
+    if (canScroll) {
+      // Down
+      // 50 = 20(modal margin) + 40(input height) - 10(item margin)
+      // -10 = 50(following) - 50(tab title) - 10(item margin)
+      const scrollDown =
+        offsetTop +
+        offsetHeight -
+        searchResultRef?.current?.offsetHeight -
+        (searchResult.length === 1 ? 50 : -10);
+      if (scrollDown > searchResultRef?.current?.scrollTop) {
+        searchResultRef?.current?.scrollTo({
+          top: scrollDown,
+        });
+      }
+
+      // Up
+      // 70 = 20(modal margin) + 40(input height) + 10(item margin)
+      // 10 = 70(following) - 50(tab title) - 10(item margin)
+      const scrollUp =
+        searchResult.length === 1 ? offsetTop - 70 : offsetTop - 10;
+      if (scrollUp < searchResultRef?.current?.scrollTop) {
+        searchResultRef?.current?.scrollTo({
+          top: scrollUp,
+        });
+      }
+    }
+  };
   const {
     siteData,
     page: { lang },
@@ -103,6 +136,7 @@ export function SearchPanel({ focused, setFocused }: SearchPanelProps) {
               currentSuggestions &&
               currentRenderType === RenderType.Default
             ) {
+              setCanScroll(true);
               setCurrentSuggestionIndex(
                 (currentSuggestionIndex + 1) % currentSuggestions.length,
               );
@@ -114,6 +148,7 @@ export function SearchPanel({ focused, setFocused }: SearchPanelProps) {
             e.preventDefault();
             if (currentRenderType === RenderType.Default) {
               const currentSuggestionsLength = currentSuggestions.length;
+              setCanScroll(true);
               setCurrentSuggestionIndex(
                 (currentSuggestionIndex - 1 + currentSuggestionsLength) %
                   currentSuggestionsLength,
@@ -244,7 +279,11 @@ export function SearchPanel({ focused, setFocused }: SearchPanelProps) {
       if (currentSearchResult.length === 0) {
         return <NoSearchResult query={query} />;
       }
-      return <div>{renderSearchResultItem(currentSearchResult)}</div>;
+      return (
+        <div ref={searchResultTabRef}>
+          {renderSearchResultItem(currentSearchResult)}
+        </div>
+      );
     }
 
     const tabValues = result.map(item => {
@@ -268,6 +307,8 @@ export function SearchPanel({ focused, setFocused }: SearchPanelProps) {
           setCurrentSuggestionIndex(0);
           setCurrentRenderType(result[index].renderType);
         }}
+        // @ts-ignore
+        ref={searchResultTabRef}
       >
         {result.map(item => (
           <Tab key={item.group}>
@@ -316,12 +357,14 @@ export function SearchPanel({ focused, setFocused }: SearchPanelProps) {
                       suggestion={suggestion}
                       isCurrent={suggestionIndex === currentSuggestionIndex}
                       setCurrentSuggestionIndex={() => {
+                        setCanScroll(false);
                         setCurrentSuggestionIndex(suggestionIndex);
                       }}
                       closeSearch={() => setFocused(false)}
                       inCurrentDocIndex={
                         currentSuggestions === searchResult[0].result
                       }
+                      scrollTo={scrollTo}
                     />
                   );
                 })}
@@ -389,7 +432,10 @@ export function SearchPanel({ focused, setFocused }: SearchPanelProps) {
               </div>
 
               {query ? (
-                <div className={`${styles.searchHits}  rspress-scrollbar`}>
+                <div
+                  className={`${styles.searchHits}  rspress-scrollbar`}
+                  ref={searchResultRef}
+                >
                   {renderSearchResult(searchResult, search)}
                 </div>
               ) : null}

@@ -9,7 +9,7 @@ import { TEMP_DIR, isProduction } from '@/node/constants';
 
 // How can we let the client runtime access the `indexHash`?
 // We can only do something after the Rspack build process becuase the index hash is generated within Rspack build process.There are two ways to do this:
-// 1. insert window.__INDEX_HASH__ = 'xxx' into the html template manually
+// 1. insert window.__INDEX_HASH__ = 'foo' into the html template manually
 // 2. replace the `__INDEX_HASH__` placeholder in the html template with the real index hash after Rspack build
 export const indexHash = '';
 
@@ -96,6 +96,7 @@ export async function siteDataVMPlugin(context: FactoryContext) {
     lang: userConfig?.lang || '',
     locales: userConfig?.locales || userConfig.themeConfig?.locales || [],
     logo: userConfig?.logo || '',
+    logoText: userConfig?.logoText || '',
     ssg: userConfig?.ssg ?? true,
     multiVersion: {
       default: userConfig?.multiVersion?.default || '',
@@ -113,6 +114,12 @@ export async function siteDataVMPlugin(context: FactoryContext) {
       codeHighlighter: userConfig?.markdown?.codeHighlighter || 'prism',
     },
   };
+
+
+  // searchHooks is a absolute path which may leak information
+  if (siteData.search) {
+    siteData.search.searchHooks = undefined;
+  }
 
   return {
     [`${RuntimeModuleID.SiteData}.mjs`]: `export default ${JSON.stringify(

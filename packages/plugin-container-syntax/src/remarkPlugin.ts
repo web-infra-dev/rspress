@@ -1,11 +1,11 @@
 /**
  * 🚀 This plugin is used to support container directive in unified.
  * Taking into account the compatibility of the VuePress/Docusaurus container directive, current remark plugin in unified ecosystem only supports the following syntax:
- * ::: tip {title="xxx"}
+ * ::: tip {title="foo"}
  * This is a tip
  * :::
  * But the following syntax is not supported:
- * ::: tip xxx
+ * ::: tip foo
  * This is a tip
  * :::
  * In fact, the syntax is usually used in SSG Frameworks, such as VuePress/Docusaurus.
@@ -37,7 +37,7 @@ export const REGEX_END = /\s*:::$/;
 export const TITLE_REGEX_IN_MD = /{\s*title=["']?(.+)}\s*/;
 export const TITLE_REGEX_IN_MDX = /\s*title=["']?(.+)\s*/;
 
-export type DirectiveType = typeof DIRECTIVE_TYPES[number];
+export type DirectiveType = (typeof DIRECTIVE_TYPES)[number];
 
 const trimTailingQuote = (str: string) => str.replace(/['"]$/g, '');
 
@@ -52,7 +52,7 @@ const parseTitle = (rawTitle = '', isMDX = false) => {
  * Construct the DOM structure of the container directive.
  * For example:
  *
- * ::: tip {title="xxx"}
+ * ::: tip {title="foo"}
  * This is a tip
  * :::
  *
@@ -137,19 +137,19 @@ function transformer(tree: Root) {
         continue;
       }
       const [, type, rawTitle] = match;
-      // In .md, we can get :::tip{title="xxx"} in the first text node
-      // In .mdx, we get :::tip in first node and {title="xxx"} in second node
+      // In .md, we can get :::tip{title="foo"} in the first text node
+      // In .mdx, we get :::tip in first node and {title="foo"} in second node
       let title = parseTitle(rawTitle);
-      // :::tip{title="xxx"}
+      // :::tip{title="foo"}
       const titleExpressionNode =
         // @ts-expect-error mdxTextExpression is not defined in mdast
         node.children[1] && node.children[1].type === 'mdxTextExpression'
           ? node.children[1]
           : null;
-      // Handle the case of `::: tip {title="xxx"}`
+      // Handle the case of `::: tip {title="foo"}`
       if (titleExpressionNode) {
         title = parseTitle((titleExpressionNode as Literal).value, true);
-        // {title="xxx"} is not a part of the content, So we need to remove it
+        // {title="foo"} is not a part of the content, So we need to remove it
         node.children.splice(1, 1);
       }
       if (!DIRECTIVE_TYPES.includes(type as DirectiveType)) {
@@ -227,13 +227,13 @@ function transformer(tree: Root) {
           tree.children.splice(i, 1, newChild as Content);
           i++;
           continue;
-        } else if (
-          lastChildInNode !== firstTextNode &&
-          wrappedChildren.length
-        ) {
+        }
+
+        if (lastChildInNode !== firstTextNode && wrappedChildren.length) {
           // We don't find the end of the container directive in current paragraph
           (wrappedChildren[0] as Paragraph).children.push(lastChildInNode);
         }
+
         // 2.3 The final case: has newline after the start of container, for example:
         // ::: tip
         //
@@ -264,7 +264,6 @@ function transformer(tree: Root) {
               ),
             });
             j++;
-            continue;
           } else {
             // 3. We find the end of the container directive
             // Then create the container directive, and remove the original paragraphs

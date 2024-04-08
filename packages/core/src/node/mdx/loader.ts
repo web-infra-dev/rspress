@@ -11,6 +11,7 @@ import {
   normalizePath,
   escapeMarkdownHeadingIds,
   flattenMdxContent,
+  applyReplaceRules,
 } from '../utils';
 import { PluginDriver } from '../PluginDriver';
 import { TEMP_DIR } from '../constants';
@@ -72,7 +73,7 @@ export function createCheckPageMetaUpdateFn() {
     if (prevMeta !== deserializedMeta) {
       setTimeout(async () => {
         logger.info(
-          `⭐️ Page metadata changed, rspress will trigger page reload...`,
+          '⭐️ Page metadata changed, rspress will trigger page reload...',
         );
         await updateSiteDataRuntimeModule(modulePath, pageMeta);
       });
@@ -111,8 +112,10 @@ export default async function mdxLoader(
     filepath,
     alias as Record<string, string>,
   );
+  // replace content
+  const replacedContent = applyReplaceRules(flattenContent, config.replaceRules);
   // preprocessor
-  const preprocessedContent = escapeMarkdownHeadingIds(flattenContent);
+  const preprocessedContent = escapeMarkdownHeadingIds(replacedContent);
 
   deps.forEach(dep => context.addDependency(dep));
 
@@ -153,7 +156,7 @@ export default async function mdxLoader(
         title: string;
       };
       pageMeta = {
-        toc: compilationMeta.toc,
+        ...compilationMeta,
         title: frontmatter.title || compilationMeta.title || '',
         frontmatter,
       } as PageMeta;

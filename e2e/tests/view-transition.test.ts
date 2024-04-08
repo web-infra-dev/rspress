@@ -6,7 +6,7 @@ const fixtureDir = path.resolve(__dirname, '../fixtures');
 
 function getPendingPromise() {
   let resolve;
-  let promise = new Promise(r => {
+  const promise = new Promise(r => {
     resolve = r;
   });
   return [promise, resolve];

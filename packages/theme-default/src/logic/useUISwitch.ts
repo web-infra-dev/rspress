@@ -38,7 +38,7 @@ export function useUISwitch(): UISwitchResult {
   );
 
   const sidebar = localesData.sidebar || {};
-  // siderbar Priority
+  // sidebar Priority
   // 1. frontmatter.sidebar
   // 2. themeConfig.locales.sidebar
   // 3. themeConfig.sidebar

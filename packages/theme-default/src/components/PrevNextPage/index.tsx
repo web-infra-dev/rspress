@@ -1,5 +1,5 @@
 import { useLocaleSiteData } from '../../logic';
-import { Link } from '../Link';
+import { Link } from '@theme';
 import styles from './index.module.scss';
 
 interface PrevNextPageProps {

@@ -49,8 +49,8 @@ export function useNavData() {
   // Normalize the nav item links to include the version prefix
   if (Array.isArray(nav)) {
     return nav;
-  } else {
-    const navKey = version.length > 0 ? version : 'default';
-    return [...nav[navKey]];
   }
+
+  const navKey = version.length > 0 ? version : 'default';
+  return [...nav[navKey]];
 }

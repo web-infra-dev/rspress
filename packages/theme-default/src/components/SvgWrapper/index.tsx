@@ -8,6 +8,9 @@ export function SvgWrapper({
 }: {
   icon: string | React.FC<React.SVGProps<SVGSVGElement>>;
 } & React.SVGAttributes<SVGSVGElement | HTMLImageElement>) {
+  if (!Icon) {
+    return null;
+  }
   if (typeof Icon === 'string') {
     return <img src={Icon} alt="" {...rest} />;
   }

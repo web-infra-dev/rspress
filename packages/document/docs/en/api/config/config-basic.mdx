@@ -86,7 +86,7 @@ export default defineConfig({
 
 The framework will find your icon in the `public` directory, of course you can also set it to a CDN address.
 
-## logo
+## logo \{#logo-1}
 
 - Type: `string | { dark: string; light: string }`
 - Default: `""`
@@ -113,6 +113,21 @@ export default defineConfig({
     dark: '/logo-dark.png',
     light: '/logo-light.png',
   },
+});
+```
+
+## logoText
+
+- Type: `string`
+- Default: `""`
+
+Site logo Text. This text will be used as the logo text in the upper left corner of the navbar. For example:
+
+```ts title="rspress.config.ts"
+import { defineConfig } from 'rspress/config';
+
+export default defineConfig({
+  logoText: 'rspress',
 });
 ```
 
@@ -292,12 +307,18 @@ import { defineConfig } from 'rspress/config';
 
 export default defineConfig({
   route: {
-    include: ['other-dir/**/*'],
+    include: ['other-dir/**/*.{md,mdx}'],
   },
 });
 ```
 
-> Note: The strings in the array support glob patterns.
+> Note: The strings in the array support glob patterns, the glob expression should be based on the `root` directory of the document, with the corresponding extensions suffix.
+
+:::note
+
+We recommend using [addPages hook](plugin/system/plugin-api.html#addpages) in a custom Rspress plugin to add some additional files to the route, so that the page route and file path/content can be specified more flexibly and reasonably.
+
+:::
 
 ### route.exclude
 
@@ -316,7 +337,7 @@ export default defineConfig({
 });
 ```
 
-> Note: The strings in the array support glob patterns.
+> Note: The strings in the array support glob patterns, the glob expression should be based on the `root` directory of the document.
 
 ### route.extensions
 

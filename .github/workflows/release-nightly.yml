@@ -13,6 +13,7 @@ jobs:
   release:
     name: Release Nightly
     runs-on: ubuntu-latest
+    if: github.repository == 'web-infra-dev/rspress'
     steps:
       - name: Checkout Repo
         uses: actions/checkout@v3
@@ -24,7 +25,7 @@ jobs:
         run: corepack enable
 
       - name: Setup Node.js 18
-        uses: actions/setup-node@v3
+        uses: actions/setup-node@v4
         with:
           node-version: "18"
           cache: 'pnpm'
@@ -51,7 +52,7 @@ jobs:
           version: nightly
           branch: main
           type: 'release'
-          tools: 'modern'
+          tools: 'changeset'
         env:
           GITHUB_TOKEN: ${{ secrets.REPO_SCOPED_TOKEN }}
           NPM_TOKEN: ${{ secrets.NPM_TOKEN }}

@@ -20,10 +20,10 @@ interface ModuleItem {
 async function patchLinks(outputDir: string) {
   // Patch links in markdown files
   // Scan all the markdown files in the output directory
-  // replace [xxx](yyy) -> [xxx](./yyy)
+  // replace [foo](bar) -> [foo](./bar)
   const normlizeLinksInFile = async (filePath: string) => {
     const content = await fs.readFile(filePath, 'utf-8');
-    // replace: [xxx](yyy) -> [xxx](./yyy)
+    // replace: [foo](bar) -> [foo](./bar)
     const newContent = content.replace(
       /\[([^\]]+)\]\(([^)]+)\)/g,
       (_match, p1, p2) => {

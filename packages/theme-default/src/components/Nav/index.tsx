@@ -12,7 +12,7 @@ import styles from './index.module.scss';
 import { NavBarTitle } from './NavBarTitle';
 import { NavTranslations } from './NavTranslations';
 import { NavVersions } from './NavVersions';
-import { useNavData } from '#theme/logic/useNav';
+import { useNavData } from '../../logic/useNav';
 
 export interface NavProps {
   beforeNav?: React.ReactNode;
@@ -38,9 +38,15 @@ export function Nav(props: NavProps) {
   const socialLinks = siteData.themeConfig.socialLinks || [];
   const hasSocialLinks = socialLinks.length > 0;
   const langs = localeLanguages.map(item => item.lang || '') || [];
-
-  useEffect(() => {
+  const updateIsMobile = () => {
     setIsMobile(isMobileDevice());
+  };
+  useEffect(() => {
+    window.addEventListener('resize', updateIsMobile);
+    setIsMobile(isMobileDevice());
+    return () => {
+      window.removeEventListener('resize', updateIsMobile);
+    };
   }, []);
 
   const NavMenu = ({ menuItems }: { menuItems: NavItem[] }) => {
@@ -120,9 +126,13 @@ export function Nav(props: NavProps) {
     <>
       {beforeNav}
       <div
-        className={`${styles.navContainer} sticky rspress-nav px-6 ${
-          hiddenNav ? styles.hidden : ''
+        className={`${styles.navContainer} rspress-nav px-6 ${
+          // Only hidden when it's not mobile
+          hiddenNav && !isMobile ? styles.hidden : ''
         }`}
+        style={{
+          position: isMobile ? 'relative' : 'sticky',
+        }}
       >
         <div
           className={`${styles.container} flex justify-between items-center h-full`}

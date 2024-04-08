@@ -15,27 +15,15 @@ export function isActive(
   }
   if (strict) {
     return isEqualPath(currentPath, targetLink);
-  } else {
-    return (
-      isEqualPath(currentPath, targetLink) || currentPath.startsWith(targetLink)
-    );
   }
-}
 
-export function getLogoUrl(
-  rawLogo: string | { dark: string; light: string },
-  theme: 'dark' | 'light',
-) {
-  // If logo is a string, use it directly
-  if (typeof rawLogo === 'string') {
-    return rawLogo;
-  }
-  // If logo is an object, use dark/light mode logo
-  return theme === 'dark' ? rawLogo.dark : rawLogo.light;
+  return (
+    isEqualPath(currentPath, targetLink) || currentPath.startsWith(targetLink)
+  );
 }
 
 export function isMobileDevice() {
-  return window.innerWidth < 768;
+  return window.innerWidth <= 1024;
 }
 
 export function renderHtmlOrText(str?: string | number | null) {
@@ -57,6 +45,7 @@ export function renderHtmlOrText(str?: string | number | null) {
  */
 export function renderInlineMarkdown(text: string) {
   const htmlText = text
+    .replace(/</g, '&lt;')
     .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')
     .replace(/`(.*?)`/g, '<code>$1</code>');
   return renderHtmlOrText(htmlText);

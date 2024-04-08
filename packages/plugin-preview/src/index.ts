@@ -1,16 +1,23 @@
 import { join } from 'path';
 import net from 'node:net';
-import { type RouteMeta, type RspressPlugin } from '@rspress/shared';
-import { createRsbuild, mergeRsbuildConfig } from '@rsbuild/core';
+import {
+  type RouteMeta,
+  type RspressPlugin,
+  removeTrailingSlash,
+} from '@rspress/shared';
+import {
+  type RsbuildConfig,
+  createRsbuild,
+  mergeRsbuildConfig,
+} from '@rsbuild/core';
 import { pluginSolid } from '@rsbuild/plugin-solid';
 import { pluginBabel } from '@rsbuild/plugin-babel';
 import { pluginReact } from '@rsbuild/plugin-react';
 import { isEqual, cloneDeep } from 'lodash';
-import { remarkCodeToDemo } from './remarkPlugin';
+import { remarkCodeToDemo, demos } from './remarkPlugin';
 import { staticPath } from './constant';
 import type { Options, StartServerResult } from './types';
 import { generateEntry } from './generate-entry';
-import { demoRuntimeModule, demos } from './virtual-module';
 
 // global variables which need to be initialized in plugin
 let routeMeta: RouteMeta[];
@@ -33,12 +40,13 @@ export function pluginPreview(options?: Options): RspressPlugin {
     builderConfig = {},
   } = iframeOptions;
   const globalUIComponents =
-    iframePosition === 'fixed'
+    position === 'fixed'
       ? [join(staticPath, 'global-components', 'Device.tsx')]
       : [];
   const getRouteMeta = () => routeMeta;
   let lastDemos: typeof demos;
   let devServer: StartServerResult;
+  let clientConfig: RsbuildConfig;
   const port = devPort;
   return {
     name: '@rspress/plugin-preview',
@@ -65,11 +73,11 @@ export function pluginPreview(options?: Options): RspressPlugin {
         } catch (e: any) {
           if (e.code !== 'EADDRINUSE') {
             throw e;
-          } else {
-            throw new Error(
-              `Port "${port}" is occupied, please choose another one.`,
-            );
           }
+
+          throw new Error(
+            `Port "${port}" is occupied, please choose another one.`,
+          );
         }
       }
     },
@@ -84,6 +92,7 @@ export function pluginPreview(options?: Options): RspressPlugin {
       if (Object.keys(sourceEntry).length === 0) {
         return;
       }
+      const { html, source, output, performance } = clientConfig ?? {};
       const rsbuildConfig = mergeRsbuildConfig(
         {
           dev: {
@@ -95,24 +104,26 @@ export function pluginPreview(options?: Options): RspressPlugin {
             strictPort: true,
           },
           performance: {
+            ...performance,
             printFileSize: false,
           },
+          html,
           source: {
-            alias: config?.builderConfig?.source?.alias,
+            ...source,
             entry: sourceEntry,
           },
           output: {
+            ...output,
+            assetPrefix: output?.assetPrefix
+              ? `${removeTrailingSlash(output.assetPrefix)}/~demo`
+              : '/~demo',
             distPath: {
               root: outDir,
             },
+            // not copy files again
+            copy: undefined,
           },
-          tools: {
-            rspack: {
-              output: {
-                publicPath: '/~demo',
-              },
-            },
-          },
+          plugins: config?.builderPlugins,
         },
         builderConfig,
       );
@@ -141,9 +152,6 @@ export function pluginPreview(options?: Options): RspressPlugin {
         include: [join(__dirname, '..')],
       },
       tools: {
-        rspack: {
-          plugins: [demoRuntimeModule],
-        },
         bundlerChain(chain) {
           chain.module
             .rule('Raw')
@@ -158,6 +166,12 @@ export function pluginPreview(options?: Options): RspressPlugin {
         {
           name: 'close-demo-server',
           setup: api => {
+            api.modifyRsbuildConfig(config => {
+              if (config.output?.targets?.every(target => target === 'web')) {
+                // client build config
+                clientConfig = config;
+              }
+            });
             api.onCloseDevServer(async () => {
               await devServer?.server?.close();
             });

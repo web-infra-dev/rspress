@@ -30,6 +30,10 @@
   --shiki-token-link: #f9a76d;
 }
 
+.rspress-doc span.line {
+  padding: 0 1.25rem;
+}
+
 .diff,
 .code-line-highlighted {
   transition: background-color 0.5s;

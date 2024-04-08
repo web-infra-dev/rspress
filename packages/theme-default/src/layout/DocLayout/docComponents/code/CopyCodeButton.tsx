@@ -3,7 +3,7 @@ import copy from 'copy-to-clipboard';
 import IconCopy from '@theme-assets/copy';
 import IconSuccess from '@theme-assets/success';
 import styles from './index.module.scss';
-import { SvgWrapper } from '#theme/components/SvgWrapper';
+import { SvgWrapper } from '../../../../components/SvgWrapper';
 
 const timeoutIdMap: Map<HTMLElement, NodeJS.Timeout> = new Map();
 

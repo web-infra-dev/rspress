@@ -4,6 +4,9 @@ import {
   ReactNode,
   useContext,
   useState,
+  forwardRef,
+  type ForwardRefExoticComponent,
+  ForwardedRef,
 } from 'react';
 import { TabDataContext } from '../../logic/TabDataContext';
 import styles from './index.module.scss';
@@ -38,78 +41,83 @@ const renderTab = (item: ReactNode | TabItem) => {
   return item;
 };
 
-export function Tabs(props: TabsProps): ReactElement {
-  const {
-    values,
-    defaultValue,
-    onChange,
-    children,
-    groupId,
-    tabPosition = 'left',
-    tabContainerClassName,
-  } = props;
-  let tabValues = values || [];
-  if (tabValues.length === 0) {
-    tabValues = (children as ReactElement[]).map(child => ({
-      label: child.props?.label,
-      value: child.props?.value || child.props?.label,
-    }));
-  }
-  const { tabData, setTabData } = useContext(TabDataContext);
-  let defaultIndex = 0;
-  const needSync = groupId && tabData[groupId] !== undefined;
-  if (needSync) {
-    defaultIndex = tabData[groupId];
-  } else if (defaultValue) {
-    defaultIndex = tabValues.findIndex(item => {
-      if (typeof item === 'string') {
-        return item === defaultValue;
-      } else if (item && typeof item === 'object' && 'value' in item) {
-        return item.value === defaultValue;
-      }
-      return false;
-    });
-  }
-  const [activeIndex, setActiveIndex] = useState(defaultIndex);
+export const Tabs: ForwardRefExoticComponent<TabsProps> = forwardRef(
+  (props: TabsProps, ref: ForwardedRef<any>): ReactElement => {
+    const {
+      values,
+      defaultValue,
+      onChange,
+      children,
+      groupId,
+      tabPosition = 'left',
+      tabContainerClassName,
+    } = props;
+    let tabValues = values || [];
+    if (tabValues.length === 0) {
+      tabValues = (children as ReactElement[]).map(child => ({
+        label: child.props?.label,
+        value: child.props?.value || child.props?.label,
+      }));
+    }
+    const { tabData, setTabData } = useContext(TabDataContext);
+    let defaultIndex = 0;
+    const needSync = groupId && tabData[groupId] !== undefined;
+    if (needSync) {
+      defaultIndex = tabData[groupId];
+    } else if (defaultValue) {
+      defaultIndex = tabValues.findIndex(item => {
+        if (typeof item === 'string') {
+          return item === defaultValue;
+        }
+        if (item && typeof item === 'object' && 'value' in item) {
+          return item.value === defaultValue;
+        }
+        return false;
+      });
+    }
+    const [activeIndex, setActiveIndex] = useState(defaultIndex);
 
-  return (
-    <div className={styles.container}>
-      <div className={tabContainerClassName}>
-        {tabValues.length ? (
-          <div
-            className={`${styles.tabList} ${styles.noScrollbar}`}
-            style={{
-              justifyContent:
-                tabPosition === 'center' ? 'center' : 'flex-start',
-            }}
-          >
-            {tabValues.map((item, index) => {
-              return (
-                <div
-                  // eslint-disable-next-line react/no-array-index-key
-                  key={index}
-                  className={`${styles.tab} ${
-                    activeIndex === index ? styles.selected : styles.notSelected
-                  }`}
-                  onClick={() => {
-                    onChange?.(index);
-                    setActiveIndex(index);
-                    if (groupId) {
-                      setTabData({ ...tabData, [groupId]: index });
-                    }
-                  }}
-                >
-                  {renderTab(item)}
-                </div>
-              );
-            })}
-          </div>
-        ) : null}
+    return (
+      <div className={styles.container} ref={ref}>
+        <div className={tabContainerClassName}>
+          {tabValues.length ? (
+            <div
+              className={`${styles.tabList} ${styles.noScrollbar}`}
+              style={{
+                justifyContent:
+                  tabPosition === 'center' ? 'center' : 'flex-start',
+              }}
+            >
+              {tabValues.map((item, index) => {
+                return (
+                  <div
+                    // eslint-disable-next-line react/no-array-index-key
+                    key={index}
+                    className={`${styles.tab} ${
+                      activeIndex === index
+                        ? styles.selected
+                        : styles.notSelected
+                    }`}
+                    onClick={() => {
+                      onChange?.(index);
+                      setActiveIndex(index);
+                      if (groupId) {
+                        setTabData({ ...tabData, [groupId]: index });
+                      }
+                    }}
+                  >
+                    {renderTab(item)}
+                  </div>
+                );
+              })}
+            </div>
+          ) : null}
+        </div>
+        <div>{children[activeIndex]}</div>
       </div>
-      <div>{children[activeIndex]}</div>
-    </div>
-  );
-}
+    );
+  },
+);
 
 export function Tab({
   children,
