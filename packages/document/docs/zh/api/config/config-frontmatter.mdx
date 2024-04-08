@@ -57,6 +57,10 @@ export interface Hero {
   image?: {
     src: string;
     alt: string;
+    /**
+     * `srcset` 和 `sizes` 同 `<img>` 的同名属性，取值请参考 https://mdn.io/srcset。
+     * 值为数组时，rspress 将使用逗号将其合并为字符串。
+     **/
     srcset?: string | string[];
     sizes?: string | string[];
   };

@@ -231,6 +231,10 @@ export interface Hero {
   image?: {
     src: string;
     alt: string;
+    /**
+     * `srcset` and `sizes` are attributes of `<img>` tag. Please refer to https://mdn.io/srcset for the usage.
+     * When the value is an array, rspress will join array members with commas.
+     **/
     sizes?: string | string[];
     srcset?: string | string[];
   };
