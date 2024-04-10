@@ -1,6 +1,6 @@
 import type { PageIndexInfo } from '@rspress/shared';
 import type { Feed } from 'feed';
-import type { FeedOutputType, PageFeedData } from '../type';
+import type { FeedItem, FeedOutputType, PageFeedData } from '../type';
 
 export type PageWithFeeds = PageIndexInfo & { feeds: PageFeedData[] };
 
@@ -12,4 +12,5 @@ export interface ResolvedOutput {
   dir: string;
   publicPath: string;
   url: string;
+  sorting: (left: FeedItem, right: FeedItem) => number;
 }

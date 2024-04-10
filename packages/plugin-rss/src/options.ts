@@ -1,7 +1,7 @@
 import { resolve as resolveUrl } from 'node:url';
 import type { PageIndexInfo } from '@rspress/shared';
 import { Feed } from 'feed';
-import type { ResolvedOutput } from './internals';
+import { ResolvedOutput, sortByDate } from './internals';
 import type { FeedChannel, FeedOutputType, PluginRssOptions } from './type';
 
 export function testPage(
@@ -73,5 +73,9 @@ export function getOutputInfo(
   const url = [publicPath, `${dir}/`, filename].reduce((u, part) =>
     u ? resolveUrl(u, part) : part,
   );
-  return { type, mime, filename, getContent, dir, publicPath, url };
+  const sorting =
+    output?.sorting ||
+    globalOutput?.sorting ||
+    ((l, r) => sortByDate(l.date, r.date));
+  return { type, mime, filename, getContent, dir, publicPath, url, sorting };
 }

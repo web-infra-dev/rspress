@@ -57,6 +57,21 @@ test.describe('plugin rss test', async () => {
     await expect(feed.textContent()).resolves.toBe('releases');
   });
 
+  test('should sort by pubDate by default', async ({ page }) => {
+    await page.goto(`${prefix}rss/blog.xml`, { waitUntil: 'networkidle' });
+
+    const all = await page.locator('rss>channel>item').all();
+    const allPubDates = await Promise.all(
+      all.map(item => item.locator('pubDate').textContent()),
+    );
+    const sorted = allPubDates
+      .slice(0)
+      .sort(
+        (a, b) => new Date(b || '').getTime() - new Date(a || '').getTime(),
+      );
+    expect(allPubDates).toEqual(sorted);
+  });
+
   test.describe('rss content', async () => {
     // todo: add more tests for rss content
     test('should has expected content', async ({ page }) => {

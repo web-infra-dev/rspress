@@ -260,6 +260,7 @@ interface FeedOutputOptions {
   type?: 'atom' | 'rss' | 'json';
   filename?: string;
   publicPath?: string;
+  sorting?: (left: FeedItem, right: FeedItem) => number;
 }
 ```
 
@@ -328,3 +329,9 @@ Modify the full filename of the RSS file.
 - **Default**: the value of `siteUrl`
 
 URL Prefix for the RSS file. An RSS URL is composed of `publicPath`, `dir`, and `filename`.
+
+#### `sorting`
+
+- **Type**：`sorting?: (left: FeedItem, right: FeedItem) => number;`
+
+Used for sorting the articles. By default, the newest articles go first, followed by the older ones.

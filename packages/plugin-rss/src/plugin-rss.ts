@@ -145,7 +145,7 @@ export function pluginRss(pluginRssOptions: PluginRssOptions): RspressPlugin {
 
       for (const [channel, feed] of Object.entries(feeds)) {
         const { output } = feedsSet.get(channel)!;
-
+        feed.items.sort(output.sorting);
         const path = NodePath.resolve(
           config.outDir || 'doc_build',
           output.dir,

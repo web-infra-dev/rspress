@@ -254,6 +254,7 @@ interface FeedOutputOptions {
   type?: 'atom' | 'rss' | 'json';
   filename?: string;
   publicPath?: string;
+  sorting?: (left: FeedItem, right: FeedItem) => number;
 }
 ```
 
@@ -320,3 +321,9 @@ RSS 文件的输出文件夹，相对于 `doc_build` 的相对位置。
 - **默认值**：使用 `siteUrl` 的值作为默认值
 
 RSS 文件 URL 的前缀。一个 RSS URL 由 `publicPath` 、`dir`、`filename` 共同组成。
+
+#### `sorting`
+
+- **类型**：`sorting?: (left: FeedItem, right: FeedItem) => number;`
+
+可以对 RSS 文件中的文章进行排序。默认情况下是新的文章在前，旧的文章在后。
