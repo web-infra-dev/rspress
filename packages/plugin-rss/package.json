@@ -1,6 +1,6 @@
 {
   "name": "@rspress/plugin-rss",
-  "version": "1.17.1",
+  "version": "1.18.0",
   "description": "A plugin for rss generation for rspress",
   "bugs": "https://github.com/web-infra-dev/rspress/issues",
   "repository": {
