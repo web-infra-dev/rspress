@@ -242,9 +242,7 @@ export function normalizeHref(url?: string, cleanUrls = false) {
   // eslint-disable-next-line prefer-const
   let { url: cleanUrl, hash } = parseUrl(decodeURIComponent(url));
 
-  const hasHtmlExt = cleanUrl.endsWith('.html');
-
-  if (!cleanUrls && !cleanUrl.endsWith('.html') && !hasHtmlExt) {
+  if (!cleanUrls && !cleanUrl.endsWith('.html')) {
     if (cleanUrl.endsWith('/')) {
       cleanUrl += 'index.html';
     } else {
