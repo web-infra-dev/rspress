@@ -101,8 +101,10 @@ export function Overview(props: {
     ) {
       return false;
     }
+    // props > frontmatter in single file > _meta.json config in a file > frontmatter in overview page > _meta.json config in sidebar
     const overviewHeaders = props?.overviewHeaders ??
       item.overviewHeaders ??
+      (frontmatter?.overviewHeaders as number[]) ??
       sidebarGroup?.overviewHeaders ?? [2];
     // sidebar items link without base path
     const pageModule = overviewModules.find(m =>
