@@ -37,7 +37,7 @@
     "upgrade": "modern upgrade"
   },
   "dependencies": {
-    "@rsbuild/core": "0.5.1",
+    "@rsbuild/core": "0.6.1",
     "@rspress/core": "workspace:*",
     "@rspress/shared": "workspace:*",
     "cac": "^6.7.14",
