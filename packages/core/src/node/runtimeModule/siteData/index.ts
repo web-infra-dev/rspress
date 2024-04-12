@@ -29,6 +29,14 @@ function deletePriviteKey<T>(obj: T): T {
 export async function siteDataVMPlugin(context: FactoryContext) {
   const { config, alias, userDocRoot, routeService, pluginDriver } = context;
   const userConfig = config;
+  // prevent modify the origin config object
+  const tempSearchObj = Object.assign({}, userConfig.search);
+
+  // searchHooks is a absolute path which may leak information
+  if (tempSearchObj) {
+    tempSearchObj.searchHooks = undefined;
+  }
+
   const replaceRules = userConfig?.replaceRules || [];
   // If the dev server restart when config file, we will reuse the siteData instead of extracting the siteData from source files again.
   const domain =
@@ -48,16 +56,19 @@ export async function siteDataVMPlugin(context: FactoryContext) {
   await pluginDriver.modifySearchIndexData(pages);
 
   // Categorize pages, sorted by language, and write search index to file
-  const pagesByLang = pages.reduce((acc, page) => {
-    if (!acc[page.lang]) {
-      acc[page.lang] = [];
-    }
-    if (page.frontmatter?.pageType === 'home') {
+  const pagesByLang = pages.reduce(
+    (acc, page) => {
+      if (!acc[page.lang]) {
+        acc[page.lang] = [];
+      }
+      if (page.frontmatter?.pageType === 'home') {
+        return acc;
+      }
+      acc[page.lang].push(page);
       return acc;
-    }
-    acc[page.lang].push(page);
-    return acc;
-  }, {} as Record<string, PageIndexInfo[]>);
+    },
+    {} as Record<string, PageIndexInfo[]>,
+  );
 
   const indexHashByLang = {} as Record<string, string>;
 
@@ -102,11 +113,11 @@ export async function siteDataVMPlugin(context: FactoryContext) {
       default: userConfig?.multiVersion?.default || '',
       versions: userConfig?.multiVersion?.versions || [],
     },
-    search: userConfig?.search ?? { mode: 'local' },
+    search: tempSearchObj ?? { mode: 'local' },
     pages: pages.map(page => {
       const { content, id, domain, _filepath, ...rest } = page;
       // In production, we cannot expose the complete filepath for security reasons
-      return isProduction() ? rest : { ...rest, _filepath }
+      return isProduction() ? rest : { ...rest, _filepath };
     }),
     markdown: {
       showLineNumbers: userConfig?.markdown?.showLineNumbers ?? false,
@@ -114,12 +125,6 @@ export async function siteDataVMPlugin(context: FactoryContext) {
       codeHighlighter: userConfig?.markdown?.codeHighlighter || 'prism',
     },
   };
-
-
-  // searchHooks is a absolute path which may leak information
-  if (siteData.search) {
-    siteData.search.searchHooks = undefined;
-  }
 
   return {
     [`${RuntimeModuleID.SiteData}.mjs`]: `export default ${JSON.stringify(
