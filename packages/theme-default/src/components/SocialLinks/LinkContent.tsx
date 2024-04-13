@@ -97,7 +97,7 @@ export const LinkContent = (props: ILinkContentComp) => {
         {IconComp}
         {contentVisible ? (
           <div
-            className="break-all z-[1] p-3 w-[50px] h-[50px] absolute right-0 bg-white dark:bg-dark rounded-xl"
+            className="break-all z-[1] p-3 absolute right-0 bg-white dark:bg-dark rounded-xl"
             style={{
               boxShadow: 'var(--rp-shadow-3)',
               ...popperStyle,
