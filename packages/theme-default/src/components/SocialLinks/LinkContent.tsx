@@ -3,8 +3,9 @@ import { SocialLink } from '@rspress/shared';
 import styles from './index.module.scss';
 import presetIcons from './presetIcons';
 
+type ExtendedSocialLink = SocialLink & { mode: 'dom', content: string | HTMLElement };
 interface ILinkContentComp {
-  link: SocialLink;
+  link: SocialLink | ExtendedSocialLink;
   popperStyle?: Record<string, unknown>;
 }
 
@@ -80,6 +81,29 @@ export const LinkContent = (props: ILinkContentComp) => {
             }}
           >
             <img src={content} alt="img" />
+          </div>
+        ) : null}
+      </div>
+    );
+  }
+
+  if (mode === 'dom') {
+    return (
+      <div
+        className={`${styles.socialLinksIcon} cursor-pointer relative`}
+        onMouseEnter={mouseEnterIcon}
+        onMouseLeave={mouseLeavePopper}
+      >
+        {IconComp}
+        {contentVisible ? (
+          <div
+            className="break-all z-[1] p-3 w-[50px] h-[50px] absolute right-0 bg-white dark:bg-dark rounded-xl"
+            style={{
+              boxShadow: 'var(--rp-shadow-3)',
+              ...popperStyle,
+            }}
+          >
+            {content}
           </div>
         ) : null}
       </div>
