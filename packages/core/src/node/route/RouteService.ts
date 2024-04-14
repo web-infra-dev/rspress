@@ -241,27 +241,34 @@ ${routeMeta
 `;
   }
 
-  normalizeRoutePath(routePath: string) {
+  normalizeRoutePath(
+    routePath: string,
+    base = this.#base,
+    lang = this.#defaultLang,
+    version = this.#defaultVersion,
+    langs = this.#langs,
+    versions = this.#versions,
+  ) {
     const hasTrailSlash = routePath.endsWith('/');
     let versionPart = '';
     let langPart = '';
     let purePathPart = '';
     const parts: string[] = routePath.split('/').filter(Boolean);
 
-    if (this.#defaultVersion) {
+    if (version) {
       const versionToMatch = parts[0];
-      if (this.#versions.includes(versionToMatch)) {
-        if (versionToMatch !== this.#defaultVersion) {
+      if (versions.includes(versionToMatch)) {
+        if (versionToMatch !== version) {
           versionPart = versionToMatch;
         }
         parts.shift();
       }
     }
 
-    if (this.#defaultLang) {
+    if (lang) {
       const langToMatch = parts[0];
-      if (this.#langs.includes(langToMatch)) {
-        if (langToMatch !== this.#defaultLang) {
+      if (langs.includes(langToMatch)) {
+        if (langToMatch !== lang) {
           langPart = langToMatch;
         }
         parts.shift();
@@ -282,9 +289,9 @@ ${routeMeta
     }
 
     return {
-      routePath: withBase(normalizedRoutePath, this.#base),
-      lang: langPart || this.#defaultLang,
-      version: versionPart || this.#defaultVersion,
+      routePath: withBase(normalizedRoutePath, base),
+      lang: langPart || lang,
+      version: versionPart || version,
     };
   }
 
