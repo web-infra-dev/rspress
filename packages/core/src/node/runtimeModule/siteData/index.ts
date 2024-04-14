@@ -80,10 +80,10 @@ export async function siteDataVMPlugin(context: FactoryContext) {
   await Promise.all(
     Object.keys(groupedPages).map(async group => {
       // Avoid writing filepath in compile-time
-      const stringfiedIndex = JSON.stringify(
+      const stringifiedIndex = JSON.stringify(
         groupedPages[group].map(deletePriviteKey),
       );
-      const indexHash = createHash(stringfiedIndex);
+      const indexHash = createHash(stringifiedIndex);
 
       const [version, lang] = group.split('###');
       const indexVersion = version ? `.${version.replace('.', '_')}` : '';
@@ -95,7 +95,7 @@ export async function siteDataVMPlugin(context: FactoryContext) {
           TEMP_DIR,
           `${SEARCH_INDEX_NAME}${indexVersion}${indexLang}.${indexHash}.json`,
         ),
-        stringfiedIndex,
+        stringifiedIndex,
       );
     }),
   );
