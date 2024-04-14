@@ -53,7 +53,7 @@ export class LocalProvider implements Provider {
 
   async init(options: SearchOptions) {
     const { currentLang, currentVersion } = options;
-    const versioned = options.mode === 'local' && options.versioned;
+    const versioned = options.mode !== 'remote' && options.versioned;
 
     const pagesForSearch: PageIndexForFlexSearch[] = (
       await this.#getPages(currentLang, versioned ? currentVersion : '')
