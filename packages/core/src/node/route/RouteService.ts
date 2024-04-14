@@ -28,60 +28,6 @@ export interface RouteOptions {
   exclude?: string[];
 }
 
-export const normalizeRoutePath = (
-  routePath: string,
-  base: string,
-  lang: string,
-  version: string,
-  langs: string[],
-  versions: string[],
-): { routePath: string; lang: string; version: string } => {
-  const hasTrailSlash = routePath.endsWith('/');
-  let versionPart = '';
-  let langPart = '';
-  let purePathPart = '';
-  const parts: string[] = routePath.split('/').filter(Boolean);
-
-  if (version) {
-    const versionToMatch = parts[0];
-    if (versions.includes(versionToMatch)) {
-      if (versionToMatch !== version) {
-        versionPart = versionToMatch;
-      }
-      parts.shift();
-    }
-  }
-
-  if (lang) {
-    const langToMatch = parts[0];
-    if (langs.includes(langToMatch)) {
-      if (langToMatch !== lang) {
-        langPart = langToMatch;
-      }
-      parts.shift();
-    }
-  }
-  purePathPart = parts.join('/');
-
-  let normalizedRoutePath = addLeadingSlash(
-    [versionPart, langPart, purePathPart].filter(Boolean).join('/'),
-  )
-    // remove the extension
-    .replace(/\.[^.]+$/, '')
-    .replace(/\/index$/, '/');
-
-  // restore the trail slash
-  if (hasTrailSlash) {
-    normalizedRoutePath = addTrailingSlash(normalizedRoutePath);
-  }
-
-  return {
-    routePath: withBase(normalizedRoutePath, base),
-    lang: langPart || lang,
-    version: versionPart || version,
-  };
-};
-
 export class RouteService {
   routeData: Map<string, RouteMeta> = new Map();
 
@@ -159,14 +105,8 @@ export class RouteService {
       const fileRelativePath = normalizePath(
         path.relative(this.#scanDir, filePath),
       );
-      const { routePath, lang, version } = normalizeRoutePath(
-        fileRelativePath,
-        this.#base,
-        this.#defaultLang,
-        this.#defaultVersion,
-        this.#langs,
-        this.#versions,
-      );
+      const { routePath, lang, version } =
+        this.normalizeRoutePath(fileRelativePath);
       const absolutePath = path.join(this.#scanDir, fileRelativePath);
 
       const routeInfo = {
@@ -227,7 +167,7 @@ export class RouteService {
 
   removeRoute(filePath: string) {
     const fileRelativePath = path.relative(this.#scanDir, filePath);
-    const { routePath } = this.#normalizeRoutePath(fileRelativePath);
+    const { routePath } = this.normalizeRoutePath(fileRelativePath);
     this.routeData.delete(routePath);
   }
 
@@ -236,7 +176,7 @@ export class RouteService {
   }
 
   isExistRoute(routePath: string) {
-    const { routePath: normalizedRoute } = this.#normalizeRoutePath(routePath);
+    const { routePath: normalizedRoute } = this.normalizeRoutePath(routePath);
     return this.routeData.get(normalizedRoute);
   }
 
@@ -312,7 +252,7 @@ ${routeMeta
       routePath: normalizedPath,
       lang,
       version,
-    } = this.#normalizeRoutePath(routePath);
+    } = this.normalizeRoutePath(routePath);
     return {
       routePath: normalizedPath,
       absolutePath: normalizePath(filepath),
@@ -323,14 +263,50 @@ ${routeMeta
     };
   }
 
-  #normalizeRoutePath(routePath: string) {
-    return normalizeRoutePath(
-      routePath,
-      this.#base,
-      this.#defaultLang,
-      this.#defaultVersion,
-      this.#langs,
-      this.#versions,
-    );
+  normalizeRoutePath(routePath: string) {
+    const hasTrailSlash = routePath.endsWith('/');
+    let versionPart = '';
+    let langPart = '';
+    let purePathPart = '';
+    const parts: string[] = routePath.split('/').filter(Boolean);
+
+    if (this.#defaultVersion) {
+      const versionToMatch = parts[0];
+      if (this.#versions.includes(versionToMatch)) {
+        if (versionToMatch !== this.#defaultVersion) {
+          versionPart = versionToMatch;
+        }
+        parts.shift();
+      }
+    }
+
+    if (this.#defaultLang) {
+      const langToMatch = parts[0];
+      if (this.#langs.includes(langToMatch)) {
+        if (langToMatch !== this.#defaultLang) {
+          langPart = langToMatch;
+        }
+        parts.shift();
+      }
+    }
+    purePathPart = parts.join('/');
+
+    let normalizedRoutePath = addLeadingSlash(
+      [versionPart, langPart, purePathPart].filter(Boolean).join('/'),
+    )
+      // remove the extension
+      .replace(/\.[^.]+$/, '')
+      .replace(/\/index$/, '/');
+
+    // restore the trail slash
+    if (hasTrailSlash) {
+      normalizedRoutePath = addTrailingSlash(normalizedRoutePath);
+    }
+
+    return {
+      routePath: withBase(normalizedRoutePath, this.#base),
+      lang: langPart || this.#defaultLang,
+      version: versionPart || this.#defaultVersion,
+    };
   }
 }
