@@ -241,28 +241,6 @@ ${routeMeta
 `;
   }
 
-  async #writeTempFile(index: number, content: string) {
-    const tempFilePath = path.join(this.#tempDir, `temp-${index}.mdx`);
-    await fs.writeFile(tempFilePath, content);
-    return tempFilePath;
-  }
-
-  #generateRouteInfo(routePath: string, filepath: string): RouteMeta {
-    const {
-      routePath: normalizedPath,
-      lang,
-      version,
-    } = this.normalizeRoutePath(routePath);
-    return {
-      routePath: normalizedPath,
-      absolutePath: normalizePath(filepath),
-      relativePath: normalizePath(path.relative(this.#scanDir, filepath)),
-      pageName: getPageKey(routePath),
-      lang,
-      version,
-    };
-  }
-
   normalizeRoutePath(routePath: string) {
     const hasTrailSlash = routePath.endsWith('/');
     let versionPart = '';
@@ -307,6 +285,28 @@ ${routeMeta
       routePath: withBase(normalizedRoutePath, this.#base),
       lang: langPart || this.#defaultLang,
       version: versionPart || this.#defaultVersion,
+    };
+  }
+
+  async #writeTempFile(index: number, content: string) {
+    const tempFilePath = path.join(this.#tempDir, `temp-${index}.mdx`);
+    await fs.writeFile(tempFilePath, content);
+    return tempFilePath;
+  }
+
+  #generateRouteInfo(routePath: string, filepath: string): RouteMeta {
+    const {
+      routePath: normalizedPath,
+      lang,
+      version,
+    } = this.normalizeRoutePath(routePath);
+    return {
+      routePath: normalizedPath,
+      absolutePath: normalizePath(filepath),
+      relativePath: normalizePath(path.relative(this.#scanDir, filepath)),
+      pageName: getPageKey(routePath),
+      lang,
+      version,
     };
   }
 }
