@@ -40,19 +40,23 @@ export class LocalProvider implements Provider {
 
   #cyrilicIndex?: SearchIndex<PageIndexInfo[]>;
 
-  async #getPages(lang: string): Promise<PageIndexInfo[]> {
+  async #getPages(lang: string, version: string): Promise<PageIndexInfo[]> {
+    const searchIndexGroupID = `${version}###${lang}`;
+    const searchIndexVersion = version ? `.${version.replace('.', '_')}` : '';
+    const searchIndexLang = lang ? `.${lang}` : '';
+
     const result = await fetch(
-      `${process.env.__ASSET_PREFIX__}/static/${SEARCH_INDEX_NAME}${
-        lang ? `.${lang}` : ''
-      }.${searchIndexHash[lang]}.json`,
+      `${process.env.__ASSET_PREFIX__}/static/${SEARCH_INDEX_NAME}${searchIndexVersion}${searchIndexLang}.${searchIndexHash[searchIndexGroupID]}.json`,
     );
     return result.json();
   }
 
   async init(options: SearchOptions) {
-    const { currentLang } = options;
+    const { currentLang, currentVersion } = options;
+    const versioned = options.mode === 'local' && options.versioned;
+
     const pagesForSearch: PageIndexForFlexSearch[] = (
-      await this.#getPages(currentLang)
+      await this.#getPages(currentLang, versioned ? currentVersion : '')
     )
       .filter(page => page.lang === currentLang)
       .map(page => ({
