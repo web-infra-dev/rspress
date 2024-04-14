@@ -212,7 +212,7 @@ export function SearchPanel({ focused, setFocused }: SearchPanelProps) {
   }, [focused]);
 
   useEffect(() => {
-    const { currentLang, currentVersion } = pageSearcherConfigRef.current;
+    const { currentLang, currentVersion } = pageSearcherConfigRef.current ?? {};
     const isLangChanged = lang !== currentLang;
     const isVersionChanged = versionedSearch && version !== currentVersion;
 
