@@ -1,7 +1,13 @@
 import path from 'path';
 import type { ComponentType } from 'react';
 import fs from '@rspress/shared/fs-extra';
-import { PageModule, UserConfig, RouteMeta, withBase } from '@rspress/shared';
+import {
+  addLeadingSlash,
+  PageModule,
+  UserConfig,
+  RouteMeta,
+  withBase,
+} from '@rspress/shared';
 import { getPageKey, normalizePath } from '../utils';
 import { PluginDriver } from '../PluginDriver';
 
@@ -20,10 +26,6 @@ export interface RouteOptions {
   include?: string[];
   exclude?: string[];
 }
-
-export const addLeadingSlash = (str: string) => {
-  return str.startsWith('/') ? str : `/${str}`;
-};
 
 export const normalizeRoutePath = (
   routePath: string,
