@@ -63,7 +63,7 @@ export async function siteDataVMPlugin(context: FactoryContext) {
 
   const groupedPages = groupBy(pages, page => {
     if (page.frontmatter?.pageType === 'home') {
-      return 'omit';
+      return 'noindex';
     }
 
     const version = versioned ? page.version : '';
@@ -71,8 +71,8 @@ export async function siteDataVMPlugin(context: FactoryContext) {
 
     return `${version}###${lang}`;
   });
-  // remove the pages marked as omit
-  delete groupedPages.omit;
+  // remove the pages marked as noindex
+  delete groupedPages.noindex;
 
   const indexHashByGroup = {} as Record<string, string>;
 
