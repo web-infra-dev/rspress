@@ -58,7 +58,7 @@ export async function siteDataVMPlugin(context: FactoryContext) {
 
   const versioned =
     userConfig.search &&
-    userConfig.search.mode === 'local' &&
+    userConfig.search.mode !== 'remote' &&
     userConfig.search.versioned;
 
   const groupedPages = groupBy(pages, page => {
