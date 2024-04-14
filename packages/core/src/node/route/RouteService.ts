@@ -248,6 +248,7 @@ ${routeMeta
     version = this.#defaultVersion,
     langs = this.#langs,
     versions = this.#versions,
+    extensions = this.#extensions,
   ) {
     const hasTrailSlash = routePath.endsWith('/');
     let versionPart = '';
@@ -280,7 +281,7 @@ ${routeMeta
       [versionPart, langPart, purePathPart].filter(Boolean).join('/'),
     )
       // remove the extension
-      .replace(/\.[^.]+$/, '')
+      .replace(new RegExp(`\\.(${extensions.join('|')})$`), '')
       .replace(/\/index$/, '/');
 
     // restore the trail slash
