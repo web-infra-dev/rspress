@@ -2,7 +2,7 @@ import path from 'path';
 import { expect, describe, test } from 'vitest';
 import { PluginDriver } from '../PluginDriver';
 import { normalizePath } from '../utils';
-import { RouteService, normalizeRoutePath } from './RouteService';
+import { RouteService } from './RouteService';
 
 describe('RouteService', async () => {
   const testDir = normalizePath(path.join(__dirname, 'fixtures'));
@@ -19,7 +19,7 @@ describe('RouteService', async () => {
   }));
   test('normalizeRoutePath', () => {
     expect(
-      normalizeRoutePath(
+      routeService.normalizeRoutePath(
         '/v1/en/foo/bar',
         '/',
         'en',
@@ -33,7 +33,7 @@ describe('RouteService', async () => {
       routePath: '/foo/bar',
     });
     expect(
-      normalizeRoutePath(
+      routeService.normalizeRoutePath(
         '/v1/zh/foo/bar',
         '/',
         'en',
@@ -47,7 +47,7 @@ describe('RouteService', async () => {
       routePath: '/zh/foo/bar',
     });
     expect(
-      normalizeRoutePath(
+      routeService.normalizeRoutePath(
         '/v2/en/foo/bar',
         '/',
         'en',
@@ -61,7 +61,7 @@ describe('RouteService', async () => {
       routePath: '/v2/foo/bar',
     });
     expect(
-      normalizeRoutePath(
+      routeService.normalizeRoutePath(
         '/v2/zh/foo/bar',
         '/',
         'en',
@@ -75,7 +75,7 @@ describe('RouteService', async () => {
       routePath: '/v2/zh/foo/bar',
     });
     expect(
-      normalizeRoutePath(
+      routeService.normalizeRoutePath(
         '/v2/en/api/',
         '/',
         'en',
@@ -90,7 +90,7 @@ describe('RouteService', async () => {
     });
 
     expect(
-      normalizeRoutePath(
+      routeService.normalizeRoutePath(
         '/foo/bar',
         '/',
         'en',
