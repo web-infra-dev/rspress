@@ -84,6 +84,7 @@ export async function siteDataVMPlugin(context: FactoryContext) {
         groupedPages[group].map(deletePriviteKey),
       );
       const indexHash = createHash(stringifiedIndex);
+      indexHashByGroup[group] = indexHash;
 
       const [version, lang] = group.split('###');
       const indexVersion = version ? `.${version.replace('.', '_')}` : '';
