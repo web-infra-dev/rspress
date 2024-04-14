@@ -3,6 +3,7 @@ import type { ComponentType } from 'react';
 import fs from '@rspress/shared/fs-extra';
 import {
   addLeadingSlash,
+  addTrailingSlash,
   PageModule,
   UserConfig,
   RouteMeta,
@@ -70,8 +71,8 @@ export const normalizeRoutePath = (
     .replace(/\/index$/, '/');
 
   // restore the trail slash
-  if (hasTrailSlash && !normalizedRoutePath.endsWith('/')) {
-    normalizedRoutePath = `${normalizedRoutePath}/`;
+  if (hasTrailSlash) {
+    normalizedRoutePath = addTrailingSlash(normalizedRoutePath);
   }
 
   return {
