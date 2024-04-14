@@ -79,7 +79,7 @@ export function SearchPanel({ focused, setFocused }: SearchPanelProps) {
   };
   const {
     siteData,
-    page: { lang },
+    page: { lang, version },
   } = usePageData();
   const { sidebar } = useLocaleSiteData();
   const { search, title: siteTitle } = siteData;
@@ -105,6 +105,7 @@ export function SearchPanel({ focused, setFocused }: SearchPanelProps) {
       indexName: siteTitle,
       ...search,
       currentLang: lang,
+      currentVersion: version,
       extractGroupName,
     });
     pageSearcherRef.current = pageSearcher;

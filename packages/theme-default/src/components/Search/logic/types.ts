@@ -53,6 +53,7 @@ export type MatchResult = (DefaultMatchResult | CustomMatchResult)[];
 
 export type SearchOptions = (LocalSearchOptions | RemoteSearchOptions) & {
   currentLang: string;
+  currentVersion: string;
   extractGroupName: (path: string) => string;
 };
 
