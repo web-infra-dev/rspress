@@ -57,16 +57,12 @@ export class LocalProvider implements Provider {
 
     const pagesForSearch: PageIndexForFlexSearch[] = (
       await this.#getPages(currentLang, versioned ? currentVersion : '')
-    )
-      .filter(page => page.lang === currentLang)
-      .map(page => ({
-        ...page,
-        normalizedContent: normalizeTextCase(page.content),
-        headers: page.toc
-          .map(header => normalizeTextCase(header.text))
-          .join(' '),
-        normalizedTitle: normalizeTextCase(page.title),
-      }));
+    ).map(page => ({
+      ...page,
+      normalizedContent: normalizeTextCase(page.content),
+      headers: page.toc.map(header => normalizeTextCase(header.text)).join(' '),
+      normalizedTitle: normalizeTextCase(page.title),
+    }));
     const createOptions: CreateOptions = {
       tokenize: 'full',
       async: true,
