@@ -55,3 +55,21 @@ export default () => {
   return <div>Current version: {version}</div>;
 };
 ```
+
+## Limit search to Current Version only
+
+You can configure search to only search through the current version's documents.
+
+```ts title="rspress.config.ts"
+import { defineConfig } from 'rspress/config';
+
+export default defineConfig({
+  multiVersion: {
+    default: 'v1',
+    versions: ['v1', 'v2'],
+  },
+  search: {
+    versioned: true,
+  },
+});
+```
