@@ -298,7 +298,7 @@ export default defineConfig({
 - Default: `[]`
 
 你可以通过如下的配置添加相关链接，比如 `github` 链接、`twitter` 链接等。
-相关链接支持三种模式：`链接模式link` `文本模式text` `图片模式img`，相关例子如下：
+相关链接支持四种模式：`链接模式link` `文本模式text` `图片模式img` `自定义模式dom`，相关例子如下：
 
 ```ts title="rspress.config.ts"
 import { defineConfig } from 'rspress/config';
@@ -321,6 +321,11 @@ export default defineConfig({
         mode: 'img',
         content: '/qrcode.png',
       },
+      {
+        icon: 'github',
+        mode: 'dom',
+        content: <img src="https://lf3-static.bytednsdoc.com/obj/eden-cn/rjhwzy/ljhwZthlaukjlkulzlp/rspress/rspress-navbar-logo-0904.png" alt="logo" id="logo" class="mr-4 rspress-logo dark:hidden">,
+      },
     ],
   },
 });
@@ -329,6 +334,7 @@ export default defineConfig({
 - 当`link`模式时，点击 icon 即可跳转链接。
 - 当`text`模式时，鼠标移到 icon 上会显示弹框，弹框内容是输入的文本。
 - 当`img`模式时，鼠标移到 icon 上会显示弹框，弹框内容是指定的图片，需要注意的是，图片需要放在`public`目录下。
+- 当`dom`模式时，可以直接在 content 字段中传入需要渲染的 HTML 内容。
 
 相关链接支持以下几种图片，通过 icon 属性来选择：
 

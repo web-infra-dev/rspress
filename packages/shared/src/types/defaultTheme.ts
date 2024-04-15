@@ -239,8 +239,8 @@ export interface DocFooter {
 
 export interface SocialLink {
   icon: SocialLinkIcon;
-  mode: 'link' | 'text' | 'img';
-  content: string;
+  mode: 'link' | 'text' | 'img' | 'dom';
+  content: string | HTMLElement;
 }
 
 export type SocialLinkIcon =

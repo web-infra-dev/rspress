@@ -3,9 +3,8 @@ import { SocialLink } from '@rspress/shared';
 import styles from './index.module.scss';
 import presetIcons from './presetIcons';
 
-type ExtendedSocialLink = SocialLink & { mode: 'dom', content: string | HTMLElement };
 interface ILinkContentComp {
-  link: SocialLink | ExtendedSocialLink;
+  link: SocialLink;
   popperStyle?: Record<string, unknown>;
 }
 
