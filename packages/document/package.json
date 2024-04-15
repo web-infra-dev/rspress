@@ -21,7 +21,7 @@
     "@documate/documate": "^0.1.0",
     "@documate/react": "0.2.1",
     "@types/react": "18.2.0",
-    "framer-motion": "10.16.4",
+    "framer-motion": "10.18.0",
     "rsbuild-plugin-google-analytics": "^1.0.0",
     "rsbuild-plugin-open-graph": "^1.0.0",
     "rspress": "workspace:*",

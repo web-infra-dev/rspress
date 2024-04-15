@@ -619,8 +619,8 @@ importers:
         specifier: 18.2.0
         version: 18.2.0
       framer-motion:
-        specifier: 10.16.4
-        version: 10.16.4(react-dom@18.2.0)(react@18.2.0)
+        specifier: 10.18.0
+        version: 10.18.0(react-dom@18.2.0)(react@18.2.0)
       rsbuild-plugin-google-analytics:
         specifier: ^1.0.0
         version: 1.0.0
@@ -6230,8 +6230,8 @@ packages:
       fetch-blob: 3.2.0
     dev: false
 
-  /framer-motion@10.16.4(react-dom@18.2.0)(react@18.2.0):
-    resolution: {integrity: sha512-p9V9nGomS3m6/CALXqv6nFGMuFOxbWsmaOrdmhyQimMIlLl3LC7h7l86wge/Js/8cRu5ktutS/zlzgR7eBOtFA==}
+  /framer-motion@10.18.0(react-dom@18.2.0)(react@18.2.0):
+    resolution: {integrity: sha512-oGlDh1Q1XqYPksuTD/usb0I70hq95OUzmL9+6Zd+Hs4XV0oaISBa/UUMSjYiq6m8EUF32132mOJ8xVZS+I0S6w==}
     peerDependencies:
       react: ^18.0.0
       react-dom: ^18.0.0
