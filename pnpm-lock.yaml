@@ -51,8 +51,8 @@ importers:
         specifier: ^11.1.1
         version: 11.1.1
       get-port:
-        specifier: 5.0.0
-        version: 5.0.0
+        specifier: 5.1.1
+        version: 5.1.1
       husky:
         specifier: ^8.0.0
         version: 8.0.1
@@ -6365,11 +6365,9 @@ packages:
       has-symbols: 1.0.3
     dev: true
 
-  /get-port@5.0.0:
-    resolution: {integrity: sha512-imzMU0FjsZqNa6BqOjbbW6w5BivHIuQKopjpPqcnx0AVHJQKCxK1O+Ab3OrVXhrekqfVMjwA9ZYu062R+KcIsQ==}
+  /get-port@5.1.1:
+    resolution: {integrity: sha512-g/Q1aTSDOxFpchXC4i8ZWvxA1lnPqx/JHqcpIw0/LX9T8x/GBbi6YnlN5nhaKIFkT8oFsscUKgDJYxfwfS6QsQ==}
     engines: {node: '>=8'}
-    dependencies:
-      type-fest: 0.3.1
     dev: true
 
   /get-port@6.1.2:
@@ -10466,11 +10464,6 @@ packages:
   /type-fest@0.21.3:
     resolution: {integrity: sha512-t0rzBq87m3fVcduHDUFhKmyyX+9eo6WQjZvf51Ea/M0Q7+T374Jp1aUiyUl0GKxp8M/OETVHSDvmkyPgvX+X2w==}
     engines: {node: '>=10'}
-    dev: true
-
-  /type-fest@0.3.1:
-    resolution: {integrity: sha512-cUGJnCdr4STbePCgqNFbpVNCepa+kAVohJs1sLhxzdH+gnEoOd8VhbYa7pD3zZYGiURWM2xzEII3fQcRizDkYQ==}
-    engines: {node: '>=6'}
     dev: true
 
   /type-fest@0.6.0:
