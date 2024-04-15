@@ -237,10 +237,17 @@ export interface DocFooter {
 
 // social link ---------------------------------------------------------------
 
-export interface SocialLink {
+interface BaseSocialLink {
   icon: SocialLinkIcon;
   mode: 'link' | 'text' | 'img' | 'dom';
-  content: string | HTMLElement;
+}
+
+export type ContentByMode<T extends BaseSocialLink['mode']> = T extends 'dom'
+  ? JSX.Element
+  : string;
+
+export interface SocialLink extends BaseSocialLink {
+  content: ContentByMode<SocialLink['mode']>;
 }
 
 export type SocialLinkIcon =
