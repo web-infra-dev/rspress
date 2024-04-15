@@ -168,3 +168,56 @@ export default App;
 ### deprecated: iframePosition
 
 从 1.12.0 版本开始，请使用 [iframeOptions.position](#iframeoptionsposition)。
+
+### previewLanguages
+
+- Type: `string[]`
+- Default: `['jsx', 'tsx']`
+
+支持预览的代码语言，默认支持 jsx 和 tsx 代码。如果你需要支持其它格式的代码，如 json/yaml, 可以配合下面的 `previewCodeTransform` 配置一起使用。
+
+### previewCodeTransform
+
+- Type: `(codeInfo: { language: string; code: string }) => string`
+- default: `({ code }) => code`
+
+预览前对代码进行自定义的转换。以 JSON 代码为例，如果你想要通过自定义的转换逻辑渲染一段 JSON Schema：
+
+```json
+{
+  "type": "div",
+  "children": "Render from JSON"
+}
+```
+
+可以做如下配置：
+
+```ts
+pluginPreview({
+  // 注意添加默认的 jsx 和 tsx
+  previewLanguages: ['jsx', 'tsx', 'json'],
+  previewCodeTransform(codeInfo) {
+    if (codeInfo.language === 'json') {
+      return `
+import React from 'react';
+
+const json = ${codeInfo.code};
+
+export default function() {
+return React.createElement(json.type, null, json.children);
+}
+`;
+    } else {
+      return codeInfo.code;
+    }
+  },
+});
+```
+
+这样，最后会渲染出自定义逻辑转换后的组件代码。
+
+:::warning 注意
+
+`previewLanguages` 和 `previewCodeTransform` 配置仅对内部组件生效，即对声明在 mdx 文件中的代码块生效，而对于 `code` 标签中声明的外部文件不会生效！
+
+:::
