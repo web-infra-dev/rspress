@@ -1,5 +1,5 @@
 import { type RouteMeta } from '@rspress/shared';
-import { RsbuildConfig} from '@rsbuild/core'
+import { RsbuildConfig } from '@rsbuild/core';
 
 export type Options = {
   /**
@@ -28,6 +28,17 @@ export type Options = {
    * @default 'preview'
    */
   defaultRenderMode?: 'pure' | 'preview';
+  /**
+   * Supported languages to be previewed
+   */
+  previewLanguages?: string[];
+  /**
+   * Transform previewed code in custom way
+   */
+  previewCodeTransform?: (codeInfo: {
+    language: string;
+    code: string;
+  }) => string;
 };
 
 export type IframeOptions = {
@@ -50,7 +61,13 @@ export type IframeOptions = {
 };
 
 export type RemarkPluginOptions = Required<
-  Pick<Options, 'previewMode' | 'defaultRenderMode'>
+  Pick<
+    Options,
+    | 'previewMode'
+    | 'defaultRenderMode'
+    | 'previewLanguages'
+    | 'previewCodeTransform'
+  >
 > &
   Required<IframeOptions> & {
     getRouteMeta: () => RouteMeta[];

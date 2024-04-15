@@ -22,6 +22,8 @@ import { generateEntry } from './generate-entry';
 // global variables which need to be initialized in plugin
 let routeMeta: RouteMeta[];
 
+const DEFAULT_PREVIEW_LANGUAGES = ['jsx', 'tsx'];
+
 /**
  * The plugin is used to preview component.
  */
@@ -31,6 +33,8 @@ export function pluginPreview(options?: Options): RspressPlugin {
     iframeOptions = {},
     iframePosition = 'follow',
     defaultRenderMode = 'preview',
+    previewLanguages = DEFAULT_PREVIEW_LANGUAGES,
+    previewCodeTransform = ({ code }: { code: string }) => code,
   } = options ?? {};
   const previewMode = options?.previewMode ?? isMobile ? 'iframe' : 'internal';
   const {
@@ -193,6 +197,8 @@ export function pluginPreview(options?: Options): RspressPlugin {
             position,
             previewMode,
             defaultRenderMode,
+            previewLanguages,
+            previewCodeTransform,
           },
         ],
       ],
