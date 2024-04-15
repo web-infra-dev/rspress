@@ -243,7 +243,7 @@ interface BaseSocialLink {
 }
 
 export type ContentByMode<T extends BaseSocialLink['mode']> = T extends 'dom'
-  ? JSX.Element
+  ? React.ReactNode
   : string;
 
 export interface SocialLink extends BaseSocialLink {
