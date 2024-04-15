@@ -20,6 +20,7 @@ import type {
   CustomMatchResult,
   DefaultMatchResult,
   MatchResult,
+  PageSearcherConfig,
 } from './logic/types';
 import { RenderType } from './logic/types';
 import { normalizeSearchIndexes, removeDomain } from './logic/util';
@@ -44,6 +45,7 @@ export function SearchPanel({ focused, setFocused }: SearchPanelProps) {
   const [initing, setIniting] = useState(true);
   const [currentSuggestionIndex, setCurrentSuggestionIndex] = useState(0);
   const pageSearcherRef = useRef<PageSearcher | null>(null);
+  const pageSearcherConfigRef = useRef<PageSearcherConfig | null>(null);
   const searchResultRef = useRef(null);
   const searchResultTabRef = useRef(null);
 
@@ -79,10 +81,12 @@ export function SearchPanel({ focused, setFocused }: SearchPanelProps) {
   };
   const {
     siteData,
-    page: { lang },
+    page: { lang, version },
   } = usePageData();
   const { sidebar } = useLocaleSiteData();
   const { search, title: siteTitle } = siteData;
+  const versionedSearch =
+    search && search.mode !== 'remote' && search.versioned;
   const DEFAULT_RESULT = [
     { group: siteTitle, result: [], renderType: RenderType.Default },
   ];
@@ -101,13 +105,18 @@ export function SearchPanel({ focused, setFocused }: SearchPanelProps) {
     if (search === false) {
       return;
     }
+    const pageSearcherConfig = {
+      currentLang: lang,
+      currentVersion: version,
+      extractGroupName,
+    };
     const pageSearcher = new PageSearcher({
       indexName: siteTitle,
       ...search,
-      currentLang: lang,
-      extractGroupName,
+      ...pageSearcherConfig,
     });
     pageSearcherRef.current = pageSearcher;
+    pageSearcherConfigRef.current = pageSearcherConfig;
     await Promise.all([
       pageSearcherRef.current.init(),
       new Promise(resolve => setTimeout(resolve, 1000)),
@@ -203,9 +212,15 @@ export function SearchPanel({ focused, setFocused }: SearchPanelProps) {
   }, [focused]);
 
   useEffect(() => {
-    !initing && initPageSearcher();
-    // init pageSearcher again when lang changed
-  }, [lang]);
+    const { currentLang, currentVersion } = pageSearcherConfigRef.current ?? {};
+    const isLangChanged = lang !== currentLang;
+    const isVersionChanged = versionedSearch && version !== currentVersion;
+
+    if (!initing && (isLangChanged || isVersionChanged)) {
+      initPageSearcher();
+    }
+    // init pageSearcher again when lang or version changed
+  }, [lang, version, versionedSearch]);
 
   const handleQueryChangedImpl = async (value: string) => {
     let newQuery = value;

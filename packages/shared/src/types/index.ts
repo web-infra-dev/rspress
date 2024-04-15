@@ -316,6 +316,10 @@ export interface SearchHooks {
 
 export type LocalSearchOptions = SearchHooks & {
   mode?: 'local';
+  /**
+   * Whether to generate separate search index for each version
+   */
+  versioned?: boolean;
 };
 
 export type RemoteSearchIndexInfo =

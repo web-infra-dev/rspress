@@ -1,4 +1,4 @@
-import { useLang } from '@rspress/runtime';
+import { usePageData } from '@rspress/runtime';
 import { useEffect, useRef, useState } from 'react';
 import { MatchResult } from '..';
 import { PageSearcher } from '../components/Search/logic/search';
@@ -9,7 +9,7 @@ export function useFullTextSearch(): {
   initialized: boolean;
   search: (keyword: string, limit?: number) => Promise<MatchResult>;
 } {
-  const lang = useLang();
+  const { siteData, page } = usePageData();
   const [initialized, setInitialized] = useState(false);
   const { sidebar } = useLocaleSiteData();
   const extractGroupName = (link: string) =>
@@ -20,8 +20,10 @@ export function useFullTextSearch(): {
     async function init() {
       if (!initialized) {
         const searcher = new PageSearcher({
+          ...siteData.search,
           mode: 'local',
-          currentLang: lang,
+          currentLang: page.lang,
+          currentVersion: page.version,
           extractGroupName,
         });
         searchRef.current = searcher;

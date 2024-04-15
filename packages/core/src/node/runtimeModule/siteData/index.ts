@@ -1,5 +1,6 @@
 import path from 'path';
-import { PageIndexInfo, SEARCH_INDEX_NAME } from '@rspress/shared';
+import { groupBy } from 'lodash-es';
+import { SEARCH_INDEX_NAME } from '@rspress/shared';
 import fs from '@rspress/shared/fs-extra';
 import { FactoryContext, RuntimeModuleID } from '..';
 import { normalizeThemeConfig } from './normalizeThemeConfig';
@@ -55,39 +56,47 @@ export async function siteDataVMPlugin(context: FactoryContext) {
   // modify page index by plugins
   await pluginDriver.modifySearchIndexData(pages);
 
-  // Categorize pages, sorted by language, and write search index to file
-  const pagesByLang = pages.reduce(
-    (acc, page) => {
-      if (!acc[page.lang]) {
-        acc[page.lang] = [];
-      }
-      if (page.frontmatter?.pageType === 'home') {
-        return acc;
-      }
-      acc[page.lang].push(page);
-      return acc;
-    },
-    {} as Record<string, PageIndexInfo[]>,
-  );
+  const versioned =
+    userConfig.search &&
+    userConfig.search.mode !== 'remote' &&
+    userConfig.search.versioned;
 
-  const indexHashByLang = {} as Record<string, string>;
+  const groupedPages = groupBy(pages, page => {
+    if (page.frontmatter?.pageType === 'home') {
+      return 'noindex';
+    }
 
-  // Generate search index by different languages, file name is {SEARCH_INDEX_NAME}.{lang}.{hash}.json
+    const version = versioned ? page.version : '';
+    const lang = page.lang || '';
+
+    return `${version}###${lang}`;
+  });
+  // remove the pages marked as noindex
+  delete groupedPages.noindex;
+
+  const indexHashByGroup = {} as Record<string, string>;
+
+  // Generate search index by different versions & languages, file name is {SEARCH_INDEX_NAME}.{version}.{lang}.{hash}.json
   await Promise.all(
-    Object.keys(pagesByLang).map(async lang => {
+    Object.keys(groupedPages).map(async group => {
       // Avoid writing filepath in compile-time
-      const stringfiedIndex = JSON.stringify(
-        pagesByLang[lang].map(deletePriviteKey),
+      const stringifiedIndex = JSON.stringify(
+        groupedPages[group].map(deletePriviteKey),
       );
-      const indexHash = createHash(stringfiedIndex);
-      indexHashByLang[lang] = indexHash;
+      const indexHash = createHash(stringifiedIndex);
+      indexHashByGroup[group] = indexHash;
+
+      const [version, lang] = group.split('###');
+      const indexVersion = version ? `.${version.replace('.', '_')}` : '';
+      const indexLang = lang ? `.${lang}` : '';
+
       await fs.ensureDir(TEMP_DIR);
       await fs.writeFile(
         path.join(
           TEMP_DIR,
-          `${SEARCH_INDEX_NAME}${lang ? `.${lang}` : ''}.${indexHash}.json`,
+          `${SEARCH_INDEX_NAME}${indexVersion}${indexLang}.${indexHash}.json`,
         ),
-        stringfiedIndex,
+        stringifiedIndex,
       );
     }),
   );
@@ -131,7 +140,7 @@ export async function siteDataVMPlugin(context: FactoryContext) {
       siteData,
     )}`,
     [RuntimeModuleID.SearchIndexHash]: `export default ${JSON.stringify(
-      indexHashByLang,
+      indexHashByGroup,
     )}`,
   };
 }
