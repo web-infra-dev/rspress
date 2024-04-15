@@ -28,6 +28,61 @@ export interface RouteOptions {
   exclude?: string[];
 }
 
+export const normalizeRoutePath = (
+  routePath: string,
+  base: string,
+  lang: string,
+  version: string,
+  langs: string[],
+  versions: string[],
+  extensions: string[] = DEFAULT_PAGE_EXTENSIONS,
+) => {
+  const hasTrailSlash = routePath.endsWith('/');
+  let versionPart = '';
+  let langPart = '';
+  let purePathPart = '';
+  const parts: string[] = routePath.split('/').filter(Boolean);
+
+  if (version) {
+    const versionToMatch = parts[0];
+    if (versions.includes(versionToMatch)) {
+      if (versionToMatch !== version) {
+        versionPart = versionToMatch;
+      }
+      parts.shift();
+    }
+  }
+
+  if (lang) {
+    const langToMatch = parts[0];
+    if (langs.includes(langToMatch)) {
+      if (langToMatch !== lang) {
+        langPart = langToMatch;
+      }
+      parts.shift();
+    }
+  }
+  purePathPart = parts.join('/');
+
+  let normalizedRoutePath = addLeadingSlash(
+    [versionPart, langPart, purePathPart].filter(Boolean).join('/'),
+  )
+    // remove the extension
+    .replace(new RegExp(`\\.(${extensions.join('|')})$`), '')
+    .replace(/\/index$/, '/');
+
+  // restore the trail slash
+  if (hasTrailSlash) {
+    normalizedRoutePath = addTrailingSlash(normalizedRoutePath);
+  }
+
+  return {
+    routePath: withBase(normalizedRoutePath, base),
+    lang: langPart || lang,
+    version: versionPart || version,
+  };
+};
+
 export class RouteService {
   routeData: Map<string, RouteMeta> = new Map();
 
@@ -241,59 +296,16 @@ ${routeMeta
 `;
   }
 
-  normalizeRoutePath(
-    routePath: string,
-    base = this.#base,
-    lang = this.#defaultLang,
-    version = this.#defaultVersion,
-    langs = this.#langs,
-    versions = this.#versions,
-    extensions = this.#extensions,
-  ) {
-    const hasTrailSlash = routePath.endsWith('/');
-    let versionPart = '';
-    let langPart = '';
-    let purePathPart = '';
-    const parts: string[] = routePath.split('/').filter(Boolean);
-
-    if (version) {
-      const versionToMatch = parts[0];
-      if (versions.includes(versionToMatch)) {
-        if (versionToMatch !== version) {
-          versionPart = versionToMatch;
-        }
-        parts.shift();
-      }
-    }
-
-    if (lang) {
-      const langToMatch = parts[0];
-      if (langs.includes(langToMatch)) {
-        if (langToMatch !== lang) {
-          langPart = langToMatch;
-        }
-        parts.shift();
-      }
-    }
-    purePathPart = parts.join('/');
-
-    let normalizedRoutePath = addLeadingSlash(
-      [versionPart, langPart, purePathPart].filter(Boolean).join('/'),
-    )
-      // remove the extension
-      .replace(new RegExp(`\\.(${extensions.join('|')})$`), '')
-      .replace(/\/index$/, '/');
-
-    // restore the trail slash
-    if (hasTrailSlash) {
-      normalizedRoutePath = addTrailingSlash(normalizedRoutePath);
-    }
-
-    return {
-      routePath: withBase(normalizedRoutePath, base),
-      lang: langPart || lang,
-      version: versionPart || version,
-    };
+  normalizeRoutePath(routePath: string) {
+    return normalizeRoutePath(
+      routePath,
+      this.#base,
+      this.#defaultLang,
+      this.#defaultVersion,
+      this.#langs,
+      this.#versions,
+      this.#extensions,
+    );
   }
 
   async #writeTempFile(index: number, content: string) {
