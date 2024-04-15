@@ -51,10 +51,14 @@ export type CustomMatchResult = UserMatchResultItem & {
 
 export type MatchResult = (DefaultMatchResult | CustomMatchResult)[];
 
-export type SearchOptions = (LocalSearchOptions | RemoteSearchOptions) & {
+export type PageSearcherConfig = {
   currentLang: string;
+  currentVersion: string;
   extractGroupName: (path: string) => string;
 };
+
+export type SearchOptions = (LocalSearchOptions | RemoteSearchOptions) &
+  PageSearcherConfig;
 
 export type BeforeSearch = (query: string) => string | Promise<string> | void;
 
