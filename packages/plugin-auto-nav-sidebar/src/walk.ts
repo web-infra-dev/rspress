@@ -13,12 +13,14 @@ import {
 } from '@rspress/shared';
 import { NavMeta, SideMeta } from './type';
 import { detectFilePath, extractTitleAndOverviewHeaders } from './utils';
+import globby from 'globby';
 
 export async function scanSideMeta(
   workDir: string,
   rootDir: string,
   docsDir: string,
   routePrefix: string,
+  excludedFiles?: string[],
 ) {
   const addRoutePrefix = (link: string) => `${routePrefix}${link}`;
   // find the `_meta.json` file
@@ -32,7 +34,18 @@ export async function scanSideMeta(
     sideMeta = (await fs.readJSON(metaFile, 'utf8')) as SideMeta;
   } catch (e) {
     // If the `_meta.json` file doesn't exist, we will generate the sidebar config from the directory structure.
-    const subItems = await fs.readdir(workDir);
+
+    const includedFiles = globby.sync('*', {
+      cwd: workDir,
+      onlyFiles: false,
+      expandDirectories: false,
+      ignore: excludedFiles ?? [],
+    });
+
+    const subItems = [
+      ...new Set(includedFiles.map(file => file.split('/')[0])),
+    ];
+
     sideMeta = (
       await Promise.all(
         subItems.map(async item => {
@@ -114,6 +127,7 @@ export async function scanSideMeta(
           rootDir,
           docsDir,
           routePrefix,
+          excludedFiles,
         );
         const realPath = await detectFilePath(subDir);
         return {
@@ -152,6 +166,7 @@ export async function walk(
   workDir: string,
   routePrefix = '/',
   docsDir: string,
+  excludedFiles?: string[],
 ) {
   // find the `_meta.json` file
   const rootMetaFile = path.resolve(workDir, '_meta.json');
@@ -189,6 +204,7 @@ export async function walk(
       workDir,
       docsDir,
       routePrefix,
+      excludedFiles,
     );
   }
   return {
