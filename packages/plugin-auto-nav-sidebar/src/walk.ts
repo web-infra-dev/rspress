@@ -35,10 +35,13 @@ export async function scanSideMeta(
   } catch (e) {
     // If the `_meta.json` file doesn't exist, we will generate the sidebar config from the directory structure.
 
-    const includedFiles = globby.sync('**', {
+    const includedFiles = globby.sync('*', {
       cwd: workDir,
+      onlyFiles: false,
+      expandDirectories: false,
       ignore: excludedFiles ?? [],
     });
+
     const subItems = [
       ...new Set(includedFiles.map(file => file.split('/')[0])),
     ];
