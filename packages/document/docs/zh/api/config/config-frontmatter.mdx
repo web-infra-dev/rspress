@@ -57,6 +57,12 @@ export interface Hero {
   image?: {
     src: string;
     alt: string;
+    /**
+     * `srcset` 和 `sizes` 同 `<img>` 的同名属性，取值请参考 https://mdn.io/srcset。
+     * 值为数组时，rspress 将使用逗号将其合并为字符串。
+     **/
+    srcset?: string | string[];
+    sizes?: string | string[];
   };
   actions: {
     text: string;
@@ -183,5 +189,26 @@ footer: false
 ```yaml
 ---
 navbar: false
+---
+```
+
+## overviewHeaders
+
+- Type: `number[]`
+- Default: `[2]`
+
+在预览页中展示的标题级别。默认情况下，展示的标题为 h2。但是如果你想展示不同的标题级别，你可以使用 `overviewHeaders` 这个 Front Matter 字段来指定。例如：
+
+```yaml
+---
+overviewHeaders: []
+---
+```
+
+或者
+
+```yaml
+---
+overviewHeaders: [2, 3]
 ---
 ```

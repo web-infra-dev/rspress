@@ -1,11 +1,11 @@
-import type { RsbuildPlugin, RsbuildConfig } from '@rsbuild/core';
-import type { PluggableList } from 'unified';
+import type { RsbuildConfig, RsbuildPlugin } from '@rsbuild/core';
 import type { ZoomOptions } from 'medium-zoom';
+import type { PluggableList } from 'unified';
+import type { AdditionalPage, RspressPlugin } from './Plugin';
 import type {
   Config as DefaultThemeConfig,
   NormalizedConfig as NormalizedDefaultThemeConfig,
 } from './defaultTheme';
-import type { RspressPlugin, AdditionalPage } from './Plugin';
 
 export type { DefaultThemeConfig, NormalizedDefaultThemeConfig };
 export * from './defaultTheme';
@@ -231,6 +231,12 @@ export interface Hero {
   image?: {
     src: string;
     alt: string;
+    /**
+     * `srcset` and `sizes` are attributes of `<img>` tag. Please refer to https://mdn.io/srcset for the usage.
+     * When the value is an array, rspress will join array members with commas.
+     **/
+    sizes?: string | string[];
+    srcset?: string | string[];
   };
   actions: {
     text: string;
@@ -266,6 +272,7 @@ export interface FrontMatterMeta {
   sidebar?: boolean;
   outline?: boolean;
   lineNumbers?: boolean;
+  overviewHeaders?: number;
 }
 
 export interface PageData {
@@ -309,6 +316,10 @@ export interface SearchHooks {
 
 export type LocalSearchOptions = SearchHooks & {
   mode?: 'local';
+  /**
+   * Whether to generate separate search index for each version
+   */
+  versioned?: boolean;
 };
 
 export type RemoteSearchIndexInfo =

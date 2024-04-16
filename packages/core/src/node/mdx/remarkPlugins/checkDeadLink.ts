@@ -3,7 +3,6 @@ import { visit } from 'unist-util-visit';
 import type { Plugin } from 'unified';
 import { logger } from '@rspress/shared/logger';
 import { cleanUrl, isProduction } from '@rspress/shared';
-import { normalizeRoutePath } from '@/node/runtimeModule/routeData';
 import type { RouteService } from '@/node/route/RouteService';
 import { normalizePath } from '@/node/utils';
 
@@ -66,9 +65,9 @@ export const remarkCheckDeadLinks: Plugin<
       }
 
       if (!url.startsWith('http') && !url.startsWith('https')) {
-        const normalizeUrl = normalizeRoutePath(
+        const { routePath: normalizeUrl } = routeService.normalizeRoutePath(
           // fix: windows path
-          url?.split(path.sep).join('/')?.split('#')[0],
+          url.split(path.sep).join('/')?.split('#')[0],
         );
         internalLinks.add(normalizeUrl);
       }

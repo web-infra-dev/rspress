@@ -1,13 +1,13 @@
-import { FrontMatterMeta } from '@rspress/shared';
 import {
   normalizeHrefInRuntime as normalizeHref,
   normalizeImagePath,
 } from '@rspress/runtime';
+import { FrontMatterMeta } from '@rspress/shared';
 import { Button } from '@theme';
 import { renderHtmlOrText } from '../../logic';
 import styles from './index.module.scss';
 
-const DEFAULT_HERO = {
+const DEFAULT_HERO: FrontMatterMeta['hero'] = {
   name: 'modern',
   text: 'modern ssg',
   tagline: 'modern ssg',
@@ -78,6 +78,8 @@ export function HomeHero({ frontmatter }: { frontmatter: FrontMatterMeta }) {
             <img
               src={normalizeImagePath(hero.image?.src)}
               alt={hero.image?.alt}
+              srcSet={normalizeSrcsetAndSizes(hero.image?.srcset)}
+              sizes={normalizeSrcsetAndSizes(hero.image?.sizes)}
               width={375}
               height={375}
             />
@@ -86,4 +88,11 @@ export function HomeHero({ frontmatter }: { frontmatter: FrontMatterMeta }) {
       </div>
     </div>
   );
+}
+
+function normalizeSrcsetAndSizes(
+  field: undefined | string | string[],
+): string | undefined {
+  const r = (Array.isArray(field) ? field : [field]).filter(Boolean).join(', ');
+  return r || undefined;
 }

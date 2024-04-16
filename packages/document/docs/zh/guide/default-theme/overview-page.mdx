@@ -40,6 +40,11 @@ overview: true
 ```json
 [
   {
+    "type": "file",
+    "name": "index",
+    "label": "API Overview"
+  },
+  {
     "type": "dir",
     "name": "theme",
     "label": "Theme"
@@ -56,3 +61,47 @@ overview: true
 > `_meta.json` 的详细配置用法可以参考[自动化导航栏/侧边栏](/guide/basic/auto-nav-sidebar)。
 
 在如上的配置中，最后预览页会生成一个 `Theme` 的分组，这个分组里面包含 `component.md(x)` 和 `utils.md(x)` 两篇文章的 h1、h2 标题。当然，你也可以参考 `Theme` 分组的配置，添加更多的分组。
+
+如果要控制在预览页中展示的标题级别，可以通过 `_meta.json` 中的 `overviewHeaders` 配置，默认为 `[2]`，也可以在对应的文件中配置 `overviewHeaders: [2]` 的 FrontMatter。
+
+如果要在 `theme` 下同样生成一个子预览页，有以下两种方式：
+
+1. 在 `theme` 的上级目录新建一个同名文件 `theme.md`，配置 `overview: true` 的 frontmatter。
+
+```bash
+├── docs
+│   ├── index.md
+│   ├── api
+│   │   ├── index.md
+│   │   ├── theme.md
+│   │   ├── theme
+│   │   │  ├── component.mdx
+│   │   │  ├── utils.mdx
+// ...
+```
+
+2. 在 `theme` 目录新建一个 `index.md`，配置 `overview: true` 的 frontmatter。
+
+```bash
+├── docs
+│   ├── index.md
+│   ├── api
+│   │   ├── index.md
+│   │   ├── theme
+│   │   │  ├── index.md
+│   │   │  ├── component.mdx
+│   │   │  ├── utils.mdx
+// ...
+```
+
+然后配置 `theme/_meta.json` 如下：
+
+```json
+[
+  {
+    "type": "file",
+    "name": "index",
+    "label": "Overview"
+  }
+]
+```

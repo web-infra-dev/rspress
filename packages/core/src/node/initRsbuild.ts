@@ -38,7 +38,10 @@ async function createInternalBuildConfig(
   isSSR: boolean,
   routeService: RouteService,
   pluginDriver: PluginDriver,
+  runtimeTempDir: string,
 ): Promise<RsbuildConfig> {
+  const { pluginReact } = await import('@rsbuild/plugin-react');
+
   const cwd = process.cwd();
   const CUSTOM_THEME_DIR =
     config?.themeDir ?? path.join(process.cwd(), 'theme');
@@ -78,6 +81,17 @@ async function createInternalBuildConfig(
   };
 
   return {
+    plugins: [
+      pluginReact(),
+      rsbuildPluginDocVM({
+        userDocRoot,
+        config,
+        isSSR,
+        runtimeTempDir,
+        routeService,
+        pluginDriver,
+      }),
+    ],
     server: {
       port:
         !isProduction() && process.env.PORT
@@ -238,7 +252,6 @@ export async function initRsbuild(
   const {
     default: { createRsbuild, mergeRsbuildConfig },
   } = await import('@rsbuild/core');
-  const { pluginReact } = await import('@rsbuild/plugin-react');
 
   const internalRsbuildConfig = await createInternalBuildConfig(
     userDocRoot,
@@ -246,6 +259,7 @@ export async function initRsbuild(
     isSSR,
     routeService,
     pluginDriver,
+    runtimeTempDir,
   );
 
   const rsbuild = await createRsbuild({
@@ -259,18 +273,7 @@ export async function initRsbuild(
     ),
   });
 
-  rsbuild.addPlugins([
-    rsbuildPluginDocVM({
-      userDocRoot,
-      config,
-      isSSR,
-      runtimeTempDir,
-      routeService,
-      pluginDriver,
-    }),
-    pluginReact(),
-    ...builderPlugins,
-  ]);
+  rsbuild.addPlugins(builderPlugins);
 
   return rsbuild;
 }

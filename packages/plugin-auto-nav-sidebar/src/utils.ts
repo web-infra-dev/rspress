@@ -20,10 +20,10 @@ export async function detectFilePath(rawPath: string) {
   return realPath;
 }
 
-export async function extractH1Title(
+export async function extractTitleAndOverviewHeaders(
   filePath: string,
   rootDir: string,
-): Promise<string> {
+): Promise<{ title: string; overviewHeaders: string | undefined }> {
   const realPath = await detectFilePath(filePath);
   if (!realPath) {
     logger.warn(
@@ -32,14 +32,20 @@ export async function extractH1Title(
         '_meta.json',
       )}".`,
     );
-    return '';
+    return {
+      title: '',
+      overviewHeaders: undefined,
+    };
   }
   const content = await fs.readFile(realPath, 'utf-8');
   const fileNameWithoutExt = path.basename(realPath, path.extname(realPath));
   const h1RegExp = /^#\s+(.*)$/m;
   const match = content.match(h1RegExp);
   const { frontmatter } = loadFrontMatter(content, filePath, rootDir);
-  return frontmatter.title || match?.[1] || fileNameWithoutExt;
+  return {
+    title: frontmatter.title || match?.[1] || fileNameWithoutExt,
+    overviewHeaders: frontmatter.overviewHeaders,
+  };
 }
 
 export function combineWalkResult(

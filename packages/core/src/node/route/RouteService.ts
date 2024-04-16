@@ -1,7 +1,14 @@
 import path from 'path';
 import type { ComponentType } from 'react';
 import fs from '@rspress/shared/fs-extra';
-import { PageModule, UserConfig, RouteMeta, withBase } from '@rspress/shared';
+import {
+  addLeadingSlash,
+  addTrailingSlash,
+  PageModule,
+  UserConfig,
+  RouteMeta,
+  withBase,
+} from '@rspress/shared';
 import { getPageKey, normalizePath } from '../utils';
 import { PluginDriver } from '../PluginDriver';
 
@@ -21,10 +28,6 @@ export interface RouteOptions {
   exclude?: string[];
 }
 
-export const addLeadingSlash = (str: string) => {
-  return str.startsWith('/') ? str : `/${str}`;
-};
-
 export const normalizeRoutePath = (
   routePath: string,
   base: string,
@@ -32,7 +35,8 @@ export const normalizeRoutePath = (
   version: string,
   langs: string[],
   versions: string[],
-): { routePath: string; lang: string; version: string } => {
+  extensions: string[] = DEFAULT_PAGE_EXTENSIONS,
+) => {
   const hasTrailSlash = routePath.endsWith('/');
   let versionPart = '';
   let langPart = '';
@@ -64,12 +68,12 @@ export const normalizeRoutePath = (
     [versionPart, langPart, purePathPart].filter(Boolean).join('/'),
   )
     // remove the extension
-    .replace(/\.[^.]+$/, '')
+    .replace(new RegExp(`\\.(${extensions.join('|')})$`), '')
     .replace(/\/index$/, '/');
 
   // restore the trail slash
-  if (hasTrailSlash && !normalizedRoutePath.endsWith('/')) {
-    normalizedRoutePath = `${normalizedRoutePath}/`;
+  if (hasTrailSlash) {
+    normalizedRoutePath = addTrailingSlash(normalizedRoutePath);
   }
 
   return {
@@ -156,14 +160,8 @@ export class RouteService {
       const fileRelativePath = normalizePath(
         path.relative(this.#scanDir, filePath),
       );
-      const { routePath, lang, version } = normalizeRoutePath(
-        fileRelativePath,
-        this.#base,
-        this.#defaultLang,
-        this.#defaultVersion,
-        this.#langs,
-        this.#versions,
-      );
+      const { routePath, lang, version } =
+        this.normalizeRoutePath(fileRelativePath);
       const absolutePath = path.join(this.#scanDir, fileRelativePath);
 
       const routeInfo = {
@@ -224,7 +222,7 @@ export class RouteService {
 
   removeRoute(filePath: string) {
     const fileRelativePath = path.relative(this.#scanDir, filePath);
-    const { routePath } = this.#normalizeRoutePath(fileRelativePath);
+    const { routePath } = this.normalizeRoutePath(fileRelativePath);
     this.routeData.delete(routePath);
   }
 
@@ -233,7 +231,7 @@ export class RouteService {
   }
 
   isExistRoute(routePath: string) {
-    const { routePath: normalizedRoute } = this.#normalizeRoutePath(routePath);
+    const { routePath: normalizedRoute } = this.normalizeRoutePath(routePath);
     return this.routeData.get(normalizedRoute);
   }
 
@@ -298,6 +296,18 @@ ${routeMeta
 `;
   }
 
+  normalizeRoutePath(routePath: string) {
+    return normalizeRoutePath(
+      routePath,
+      this.#base,
+      this.#defaultLang,
+      this.#defaultVersion,
+      this.#langs,
+      this.#versions,
+      this.#extensions,
+    );
+  }
+
   async #writeTempFile(index: number, content: string) {
     const tempFilePath = path.join(this.#tempDir, `temp-${index}.mdx`);
     await fs.writeFile(tempFilePath, content);
@@ -309,7 +319,7 @@ ${routeMeta
       routePath: normalizedPath,
       lang,
       version,
-    } = this.#normalizeRoutePath(routePath);
+    } = this.normalizeRoutePath(routePath);
     return {
       routePath: normalizedPath,
       absolutePath: normalizePath(filepath),
@@ -318,16 +328,5 @@ ${routeMeta
       lang,
       version,
     };
-  }
-
-  #normalizeRoutePath(routePath: string) {
-    return normalizeRoutePath(
-      routePath,
-      this.#base,
-      this.#defaultLang,
-      this.#defaultVersion,
-      this.#langs,
-      this.#versions,
-    );
   }
 }

@@ -1,8 +1,10 @@
 # @rspress/plugin-api-docgen
 
-The plugin is used to generate api documentation automatically, powered by [react-docgen-typescript](https://github.com/styleguidist/react-docgen-typescript) and [documentation](https://github.com/documentationjs/documentation).
+The plugin is used to generate api document description automatically, powered by [react-docgen-typescript](https://github.com/styleguidist/react-docgen-typescript) and [documentation](https://github.com/documentationjs/documentation).
 
 ## Install
+
+import { PackageManagerTabs } from '@theme';
 
 <PackageManagerTabs command="add @rspress/plugin-api-docgen -D" />
 
@@ -47,6 +49,7 @@ interface Options {
   entries?: Record<string, string>;
   apiParseTool?: 'react-docgen-typescript' | 'documentation';
   appDir?: string;
+  parseToolOptions?: ParseToolOptions;
 }
 ```
 
@@ -159,3 +162,21 @@ Returns **[string][1]** The greeting message.
 
 [1]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String
 ```
+
+### parseToolOptions
+
+`parseToolOptions` is used to pass options to the corresponding parse tool, whose types are as follows:
+
+```ts
+type ParseToolOptions = {
+  'react-docgen-typescript'?: ParserOptions & {
+    tsconfigPath?: string;
+    compilerOptions?: ts.CompilerOptions;
+  };
+  documentation?: DocumentationArgs;
+};
+```
+
+Please refer to [ParserOptions](https://github.com/styleguidist/react-docgen-typescript/blob/b7ea0a235efb7c78a1158ca12d864de2bc2ee30e/src/parser.ts#L84-L95) and [DocumentationArgs](https://github.com/documentationjs/documentation/blob/master/docs/NODE_API.md#parameters-1) to learn about available options.
+
+If the parser is `react-docgen-typescript`, the `withDefaultConfig` method is used by default to create a parser instance. If `tsconfigPath` or `compilerOptions` is configured, the `withCompilerOptions` and `withCustomConfig` methods are used to create the parser instance respectively. See [Custom Parsers](https://github.com/styleguidist/react-docgen-typescript/blob/b7ea0a235efb7c78a1158ca12d864de2bc2ee30e/README.md#usage) for details.

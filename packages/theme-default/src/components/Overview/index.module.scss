@@ -102,6 +102,22 @@
       left: -0.25rem;
     }
   }
+
+  &.level-3 {
+    padding-left: 8px;
+
+    &:before {
+      left: -0.25rem;
+    }
+  }
+
+  &.level-4 {
+    padding-left: 16px;
+
+    &:before {
+      left: -0.25rem;
+    }
+  }
 }
 
 :global(.dark) overview-groups a {

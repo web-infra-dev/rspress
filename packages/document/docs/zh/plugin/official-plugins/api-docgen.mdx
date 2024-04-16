@@ -1,8 +1,10 @@
 # @rspress/plugin-api-docgen
 
-用于自动生成 API 文档，支持 [react-docgen-typescript](https://github.com/styleguidist/react-docgen-typescript) 和 [documentation](https://github.com/documentationjs/documentation)。
+用于自动生成 API 文档描述，支持 [react-docgen-typescript](https://github.com/styleguidist/react-docgen-typescript) 和 [documentation](https://github.com/documentationjs/documentation)。
 
 ## 安装
+
+import { PackageManagerTabs } from '@theme';
 
 <PackageManagerTabs command="add @rspress/plugin-api-docgen -D" />
 
@@ -47,6 +49,7 @@ interface Options {
   entries?: Record<string, string>;
   apiParseTool?: 'react-docgen-typescript' | 'documentation';
   appDir?: string;
+  parseToolOptions?: ParseToolOptions;
 }
 ```
 
@@ -159,3 +162,21 @@ Returns **[string][1]** The greeting message.
 
 [1]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String
 ```
+
+### parseToolOptions
+
+`parseToolOptions` 用来传入对应解析器的参数，其类型如下：
+
+```ts
+type ParseToolOptions = {
+  'react-docgen-typescript'?: ParserOptions & {
+    tsconfigPath?: string;
+    compilerOptions?: ts.CompilerOptions;
+  };
+  documentation?: DocumentationArgs;
+};
+```
+
+请参考 [ParserOptions](https://github.com/styleguidist/react-docgen-typescript/blob/b7ea0a235efb7c78a1158ca12d864de2bc2ee30e/src/parser.ts#L84-L95) 和 [DocumentationArgs](https://github.com/documentationjs/documentation/blob/master/docs/NODE_API.md#parameters-1) 了解可用选项。
+
+如果解析器是 `react-docgen-typescript`，默认使用 `withDefaultConfig` 方法创建解析器实例，如果配置了 `tsconfigPath` 或 `compilerOptions` 则会分别使用 `withCompilerOptions` 和 `withCustomConfig` 方法创建解析器实例，详情查看 [Custom Parsers](https://github.com/styleguidist/react-docgen-typescript/blob/b7ea0a235efb7c78a1158ca12d864de2bc2ee30e/README.md#usage)。

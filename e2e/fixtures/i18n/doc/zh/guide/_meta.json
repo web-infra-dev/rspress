@@ -10,5 +10,10 @@
   {
     "type": "section-header",
     "label": "growth"
+  },
+  {
+    "type": "custom-link",
+    "label": "My Link",
+    "link": "/guide/basic/install"
   }
 ]

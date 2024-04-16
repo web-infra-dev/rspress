@@ -170,3 +170,56 @@ From v1.12.0, please use [previewMode](#previewmode) instead.
 ### deprecated: iframePosition
 
 From v1.12.0, please use [iframeOptions.position](#iframeoptionsposition) instead.
+
+### previewLanguages
+
+- Type: `string[]`
+- Default: `['jsx', 'tsx']`
+
+The code languages that support preview, by default jsx and tsx codes are supported. If you need to support other formats of code, such as json/yaml, you can use it in conjunction with the `previewCodeTransform` configuration below.
+
+### previewCodeTransform
+
+- Type: `(codeInfo: { language: string; code: string }) => string`
+- default: `({ code }) => code`
+
+Customize the transformation of the code before previewing. For example, if you want to render a piece of JSON Schema through custom transformation logic:
+
+```json
+{
+  "type": "div",
+  "children": "Render from JSON"
+}
+```
+
+You can make the following configuration:
+
+```ts
+pluginPreview({
+  // Note to add the default jsx and tsx
+  previewLanguages: ['jsx', 'tsx', 'json'],
+  previewCodeTransform(codeInfo) {
+    if (codeInfo.language === 'json') {
+      return `
+import React from 'react';
+
+const json = ${codeInfo.code};
+
+export default function() {
+return React.createElement(json.type, null, json.children);
+}
+`;
+    } else {
+      return codeInfo.code;
+    }
+  },
+});
+```
+
+In this way, the component code after custom logic transformation will be rendered in the end.
+
+:::warning Note
+
+The `previewLanguages` and `previewCodeTransform` configurations only take effect for internal components, that is, they take effect for code blocks declared in mdx files, but they do not take effect for external files declared in `code` tags!
+
+:::

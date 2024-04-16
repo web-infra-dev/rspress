@@ -12,7 +12,7 @@ export async function writeSearchIndex(config: UserConfig) {
     return;
   }
   const cwd = process.cwd();
-  // get all search index files, format is `${SEARCH_INDEX_NAME}.foo.${hash}.json`
+  // get all search index files, format is `${SEARCH_INDEX_NAME}.foo.bar.${hash}.json`
   const searchIndexFiles = await fs.readdir(TEMP_DIR);
   const outDir = config?.outDir ?? join(cwd, OUTPUT_DIR);
 

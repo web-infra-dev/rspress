@@ -27,3 +27,7 @@ export function toDate(s: string | Date): null | Date {
   const d = new Date(s);
   return Number.isNaN(d.getDate()) ? null : d;
 }
+
+export function sortByDate(l: null | Date, r: null | Date): number {
+  return (r ? r.getTime() : 0) - (l ? l.getTime() : 0);
+}

@@ -1,6 +1,6 @@
 {
   "name": "rspress",
-  "version": "1.17.1",
+  "version": "1.18.1",
   "type": "module",
   "types": "./dist/index.d.ts",
   "main": "./dist/index.js",
@@ -37,11 +37,11 @@
     "upgrade": "modern upgrade"
   },
   "dependencies": {
-    "@rsbuild/core": "0.5.1",
+    "@rsbuild/core": "0.6.1",
     "@rspress/core": "workspace:*",
     "@rspress/shared": "workspace:*",
     "cac": "^6.7.14",
-    "chokidar": "^3.5.3",
+    "chokidar": "^3.6.0",
     "chalk": "5.3.0"
   },
   "devDependencies": {

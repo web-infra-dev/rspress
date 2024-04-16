@@ -70,6 +70,8 @@ export type SideMetaItem =
       type: 'file';
       name: string;
       label?: string;
+      tag?: string;
+      overviewHeaders?: number[];
     }
   | {
       type: 'dir';
@@ -77,6 +79,8 @@ export type SideMetaItem =
       label?: string;
       collapsible?: boolean;
       collapsed?: boolean;
+      tag?: string;
+      overviewHeaders?: number[];
     }
   | {
       type: 'divider';
@@ -105,10 +109,11 @@ In the case of describing **file**, the types are as follows:
   type: 'file';
   name: string;
   label?: string;
+  overviewHeaders?: number[];
 }
 ```
 
-Among them, `name` means the file name, `with`/`without` suffix is ​​supported, `label` means the display name of the file in the sidebar.`label` is an optional value, if it is not filled, it will automatically take the h1 title in the document. For example:
+Among them, `name` means the file name, `with`/`without` suffix is ​​supported, `label` means the display name of the file in the sidebar.`label` is an optional value, if it is not filled, it will automatically take the h1 title in the document. `overviewHeaders` means the headers displayed in the overview page of the file. It is an optional value and the default value is `[2]`. For example:
 
 ```json
 {
@@ -127,10 +132,11 @@ In the case of describing **directories**, the types are as follows:
   label?: string;
   collapsible?: boolean;
   collapsed?: boolean;
+  overviewHeaders?: number[];
 }
 ```
 
-Among them, `name` indicates the directory name, `label` indicates the display name of the directory in the sidebar, `collapsible` indicates whether the directory can be collapsed, and `collapsed` indicates whether the directory is collapsed by default, for example:
+Among them, `name` indicates the directory name, `label` indicates the display name of the directory in the sidebar, `collapsible` indicates whether the directory can be collapsed, `collapsed` indicates whether the directory is collapsed by default, and `overviewHeaders` indicates the headers displayed on the overview page for files in this directory. It is an optional value and the default value is `[2]`. For example:
 
 ```json
 {

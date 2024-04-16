@@ -34,10 +34,11 @@ export function Overview(props: {
   content?: React.ReactNode;
   groups?: Group[];
   defaultGroupTitle?: string;
+  overviewHeaders?: number[];
 }) {
   const {
     siteData,
-    page: { routePath, title },
+    page: { routePath, title, frontmatter },
   } = usePageData();
   const { content, groups: customGroups, defaultGroupTitle = 'Others' } = props;
   const subFilter = (link: string) =>
@@ -56,12 +57,55 @@ export function Overview(props: {
     }
     return '';
   };
+  const findItemByRoutePath = (items, routePath, originalItems) => {
+    for (const item of items) {
+      if (withBase(item.link) === routePath) {
+        return [item];
+      }
+      if (item.items) {
+        const foundItem = findItemByRoutePath(
+          item.items,
+          routePath,
+          originalItems,
+        );
+        if (foundItem) {
+          return foundItem;
+        }
+      }
+    }
+    return originalItems;
+  };
   const { pages } = siteData;
   const overviewModules = pages.filter(page => subFilter(page.routePath));
-  const { items: overviewSidebarGroups } = useSidebarData() as {
+  let { items: overviewSidebarGroups } = useSidebarData() as {
     items: (NormalizedSidebarGroup | SidebarItem)[];
   };
-  function normalizeSidebarItem(item: NormalizedSidebarGroup | SidebarItem) {
+  overviewSidebarGroups = findItemByRoutePath(
+    overviewSidebarGroups,
+    routePath,
+    overviewSidebarGroups,
+  );
+
+  function normalizeSidebarItem(
+    item: SidebarItem | SidebarDivider | NormalizedSidebarGroup,
+    sidebarGroup?: NormalizedSidebarGroup,
+    frontmatter?: Record<string, unknown>,
+  ) {
+    if ('dividerType' in item) {
+      return item;
+    }
+    // do not display overview title in sub pages overview
+    if (
+      withBase(item.link) === `${routePath}index` &&
+      frontmatter?.overview === true
+    ) {
+      return false;
+    }
+    // props > frontmatter in single file > _meta.json config in a file > frontmatter in overview page > _meta.json config in sidebar
+    const overviewHeaders = props?.overviewHeaders ??
+      item.overviewHeaders ??
+      (frontmatter?.overviewHeaders as number[]) ??
+      sidebarGroup?.overviewHeaders ?? [2];
     // sidebar items link without base path
     const pageModule = overviewModules.find(m =>
       isEqualPath(m.routePath, withBase(item.link || '')),
@@ -70,7 +114,10 @@ export function Overview(props: {
     return {
       ...item,
       link,
-      headers: pageModule?.toc?.filter(header => header.depth === 2) || [],
+      headers:
+        pageModule?.toc?.filter(header =>
+          overviewHeaders.some(depth => header.depth === depth),
+        ) || [],
     };
   }
   const groups =
@@ -89,7 +136,13 @@ export function Overview(props: {
         .map(sidebarGroup => ({
           name: sidebarGroup.text || '',
           items: (sidebarGroup as NormalizedSidebarGroup).items
-            .map(normalizeSidebarItem)
+            .map(item =>
+              normalizeSidebarItem(
+                item,
+                sidebarGroup as NormalizedSidebarGroup,
+                frontmatter,
+              ),
+            )
             .filter(Boolean),
         })) as Group[];
       const singleLinks = overviewSidebarGroups.filter(
@@ -101,12 +154,12 @@ export function Overview(props: {
           ? [
               {
                 name: defaultGroupTitle,
-                items: singleLinks.map(normalizeSidebarItem),
+                items: singleLinks.map(item => normalizeSidebarItem(item)),
               },
             ]
           : []),
       ];
-    }, [overviewSidebarGroups]);
+    }, [overviewSidebarGroups, routePath, frontmatter]);
 
   return (
     <div className="overview-index mx-auto px-8">
