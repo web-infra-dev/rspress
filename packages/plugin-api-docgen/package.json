@@ -48,6 +48,11 @@
     "@rspress/core": "^1.0.2",
     "typescript": "^5"
   },
+  "peerDependenciesMeta": {
+    "typescript": {
+      "optional": true
+    }
+  },
   "files": [
     "dist",
     "static",
