@@ -5,7 +5,7 @@ import presetIcons from './presetIcons';
 
 interface ILinkContentComp {
   link: SocialLink;
- popperStyle?: React.CSSProperties;
+ popperStyle?: Record<string, unknown>;
 }
 
 export const LinkContent = (props: ILinkContentComp) => {
