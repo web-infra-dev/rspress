@@ -5,7 +5,7 @@ import presetIcons from './presetIcons';
 
 interface ILinkContentComp {
   link: SocialLink;
-  popperStyle?: Record<string, unknown>;
+ popperStyle?: React.CSSProperties;
 }
 
 export const LinkContent = (props: ILinkContentComp) => {
@@ -27,7 +27,7 @@ export const LinkContent = (props: ILinkContentComp) => {
     setContentVisible(false);
   };
 
-  if (mode === 'link') {
+  if (mode === 'link' && typeof content === 'string') {
     return (
       <a
         key={content}
@@ -63,7 +63,7 @@ export const LinkContent = (props: ILinkContentComp) => {
       </div>
     );
   }
-  if (mode === 'img') {
+  if (mode === 'img'&& typeof content === 'string') {
     return (
       <div
         className={`${styles.socialLinksIcon} cursor-pointer relative`}
