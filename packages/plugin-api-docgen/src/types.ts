@@ -1,6 +1,6 @@
 import type { PageIndexInfo } from '@rspress/shared';
 import type { ParserOptions } from 'react-docgen-typescript';
-import * as ts from 'typescript';
+import type { CompilerOptions } from 'typescript';
 
 export type Entries = Record<string, string>;
 
@@ -29,7 +29,7 @@ export type DocumentationArgs = {
 export type ParseToolOptions = {
   'react-docgen-typescript'?: ParserOptions & {
     tsconfigPath?: string;
-    compilerOptions?: ts.CompilerOptions;
+    compilerOptions?: CompilerOptions;
   };
   documentation?: DocumentationArgs;
 };
