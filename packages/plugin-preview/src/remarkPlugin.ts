@@ -8,6 +8,7 @@ import type { MdxjsEsm } from 'mdast-util-mdxjs-esm';
 import type { RemarkPluginOptions, DemoInfo } from './types';
 import { injectDemoBlockImport, generateId } from './utils';
 import { demoBlockComponentPath, virtualDir } from './constant';
+import { getASTNodeImport, getExternalDemoContent } from './ast-helpers';
 
 export const demos: DemoInfo = {};
 
@@ -19,6 +20,8 @@ export const remarkCodeToDemo: Plugin<[RemarkPluginOptions], Root> = function ({
   previewMode,
   defaultRenderMode,
   position,
+  previewLanguages,
+  previewCodeTransform,
 }) {
   const routeMeta = getRouteMeta();
   fs.ensureDirSync(virtualDir);
@@ -162,16 +165,13 @@ export const remarkCodeToDemo: Plugin<[RemarkPluginOptions], Root> = function ({
       }
     });
 
-    // 2. Internal demo, use ```j/tsx to declare demo
+    // 2. Internal demo, such as using ```jsx to declare demo
     visit(tree, 'code', node => {
       // hasVisited is a custom property
       if ('hasVisited' in node) {
         return;
       }
-
-      if (node.lang === 'jsx' || node.lang === 'tsx') {
-        const value = injectDemoBlockImport(node.value, demoBlockComponentPath);
-
+      if (node.lang && previewLanguages.includes(node.lang)) {
         // do not anything for pure mode
         if (
           node?.meta?.includes('pure') ||
@@ -179,6 +179,13 @@ export const remarkCodeToDemo: Plugin<[RemarkPluginOptions], Root> = function ({
         ) {
           return;
         }
+        const value = injectDemoBlockImport(
+          previewCodeTransform({
+            language: node.lang,
+            code: node.value,
+          }),
+          demoBlockComponentPath,
+        );
 
         // every code block can change their preview mode by meta
         const isMobileMode =
@@ -210,82 +217,3 @@ export const remarkCodeToDemo: Plugin<[RemarkPluginOptions], Root> = function ({
     }
   };
 };
-
-const getASTNodeImport = (name: string, from: string) =>
-  ({
-    type: 'mdxjsEsm',
-    value: `import ${name} from ${JSON.stringify(from)}`,
-    data: {
-      estree: {
-        type: 'Program',
-        sourceType: 'module',
-        body: [
-          {
-            type: 'ImportDeclaration',
-            specifiers: [
-              {
-                type: 'ImportDefaultSpecifier',
-                local: { type: 'Identifier', name },
-              },
-            ],
-            source: {
-              type: 'Literal',
-              value: from,
-              raw: `${JSON.stringify(from)}`,
-            },
-          },
-        ],
-      },
-    },
-  }) as MdxjsEsm;
-
-const getExternalDemoContent = (tempVar: string) => ({
-  /**
-   * We create a empty parent node here. If we don't do this, the `pre` tag won't be rendered as our custom mdx component and will be rendered as a normal `pre` tag, which will cause the code block to be displayed incorrectly.
-   */
-  type: 'mdxJsxFlowElement',
-  name: '',
-  attributes: [],
-  children: [
-    {
-      type: 'mdxJsxFlowElement',
-      name: 'pre',
-      attributes: [],
-      children: [
-        {
-          type: 'mdxJsxFlowElement',
-          name: 'code',
-          attributes: [
-            {
-              type: 'mdxJsxAttribute',
-              name: 'className',
-              value: 'language-tsx',
-            },
-            {
-              type: 'mdxJsxAttribute',
-              name: 'children',
-              value: {
-                type: 'mdxJsxExpressionAttribute',
-                value: tempVar,
-                data: {
-                  estree: {
-                    type: 'Program',
-                    body: [
-                      {
-                        type: 'ExpressionStatement',
-                        expression: {
-                          type: 'Identifier',
-                          name: tempVar,
-                        },
-                      },
-                    ],
-                  },
-                },
-              },
-            },
-          ],
-        },
-      ],
-    },
-  ],
-});
