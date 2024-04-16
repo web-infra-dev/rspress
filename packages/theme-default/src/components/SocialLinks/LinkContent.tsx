@@ -27,7 +27,7 @@ export const LinkContent = (props: ILinkContentComp) => {
     setContentVisible(false);
   };
 
-  if (mode === 'link') {
+  if (mode === 'link' && typeof content === 'string') {
     return (
       <a
         key={content}
@@ -63,7 +63,7 @@ export const LinkContent = (props: ILinkContentComp) => {
       </div>
     );
   }
-  if (mode === 'img') {
+  if (mode === 'img'&& typeof content === 'string') {
     return (
       <div
         className={`${styles.socialLinksIcon} cursor-pointer relative`}
@@ -80,6 +80,29 @@ export const LinkContent = (props: ILinkContentComp) => {
             }}
           >
             <img src={content} alt="img" />
+          </div>
+        ) : null}
+      </div>
+    );
+  }
+
+  if (mode === 'dom') {
+    return (
+      <div
+        className={`${styles.socialLinksIcon} cursor-pointer relative`}
+        onMouseEnter={mouseEnterIcon}
+        onMouseLeave={mouseLeavePopper}
+      >
+        {IconComp}
+        {contentVisible ? (
+          <div
+            className="break-all z-[1] p-3 absolute right-0 bg-white dark:bg-dark rounded-xl"
+            style={{
+              boxShadow: 'var(--rp-shadow-3)',
+              ...popperStyle,
+            }}
+          >
+            {content}
           </div>
         ) : null}
       </div>
