@@ -1,7 +1,11 @@
 import path from 'path';
 import type { ComponentDoc, PropItem } from 'react-docgen-typescript';
 import { logger, chokidar, fs } from '@modern-js/utils';
-import { parse } from 'react-docgen-typescript';
+import {
+  withDefaultConfig,
+  withCustomConfig,
+  withCompilerOptions,
+} from 'react-docgen-typescript';
 import { RSPRESS_TEMP_DIR } from '@rspress/shared';
 import { apiDocMap } from './constants';
 import { locales } from './locales';
@@ -53,7 +57,9 @@ export const docgen = async ({
             });
             apiDocMap[key] = apiDoc;
           } else {
-            const componentDoc = parse(moduleSourceFilePath, {
+            const { tsconfigPath, compilerOptions, ...restOptions } =
+              parseToolOptions?.['react-docgen-typescript'] ?? {};
+            const parserOpts = {
               // https://github.com/styleguidist/react-docgen-typescript/blob/master/README.md?plain=1#L111
               propFilter: (prop: PropItem) => {
                 if (
@@ -71,8 +77,15 @@ export const docgen = async ({
 
                 return true;
               },
-              ...parseToolOptions['react-docgen-typescript'],
-            });
+              ...restOptions,
+            };
+            let fileParser = withDefaultConfig(parserOpts);
+            if (tsconfigPath) {
+              fileParser = withCustomConfig(tsconfigPath, parserOpts);
+            } else if (compilerOptions) {
+              fileParser = withCompilerOptions(compilerOptions, parserOpts);
+            }
+            const componentDoc = fileParser.parse(moduleSourceFilePath);
             if (componentDoc.length === 0) {
               logger.warn(
                 '[module-doc-plugin]',
