@@ -103,6 +103,37 @@ describe('RouteService', async () => {
       version: 'v1',
       routePath: '/foo/bar',
     });
+
+    expect(
+      normalizeRoutePath(
+        '/foo/bar/baz.xyz',
+        '/',
+        'en',
+        'v1',
+        ['zh', 'en'],
+        ['v1', 'v2'],
+      ),
+    ).toEqual({
+      lang: 'en',
+      version: 'v1',
+      routePath: '/foo/bar/baz.xyz',
+    });
+
+    expect(
+      normalizeRoutePath(
+        '/foo/bar/baz.xyz',
+        '/',
+        'en',
+        'v1',
+        ['zh', 'en'],
+        ['v1', 'v2'],
+        ['xyz'],
+      ),
+    ).toEqual({
+      lang: 'en',
+      version: 'v1',
+      routePath: '/foo/bar/baz',
+    });
   });
 
   test('Conventional route by file structure', async () => {
