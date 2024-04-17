@@ -58,6 +58,16 @@ describe('test shared utils', () => {
     );
     expect(normalizeHref('tel:123456789')).toBe('tel:123456789');
     expect(normalizeHref('/guide/', true)).toBe('/guide/index');
+    expect(normalizeHref('/guide/version-0.1')).toBe('/guide/version-0.1.html');
+    expect(normalizeHref('/guide/version-0.1.html')).toBe(
+      '/guide/version-0.1.html',
+    );
+    expect(normalizeHref('/guide/version-0.1/')).toBe(
+      '/guide/version-0.1/index.html',
+    );
+    expect(normalizeHref('/guide/version-0.1/', true)).toBe(
+      '/guide/version-0.1/index',
+    );
   });
 
   describe('replaceLang', () => {
