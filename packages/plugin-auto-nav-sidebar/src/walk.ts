@@ -13,6 +13,7 @@ import {
 } from '@rspress/shared';
 import { NavMeta, SideMeta } from './type';
 import { detectFilePath, extractTitleAndOverviewHeaders } from './utils';
+import { logger } from '@rspress/shared/logger';
 
 export async function scanSideMeta(
   workDir: string,
@@ -20,6 +21,12 @@ export async function scanSideMeta(
   docsDir: string,
   routePrefix: string,
 ) {
+  if (!(await fs.exists(workDir))) {
+    logger.error(
+      '[plugin-auto-nav-sidebar]',
+      `Generate sidebar meta error: ${workDir} not exists`,
+    );
+  }
   const addRoutePrefix = (link: string) => `${routePrefix}${link}`;
   // find the `_meta.json` file
   const metaFile = path.resolve(workDir, '_meta.json');
