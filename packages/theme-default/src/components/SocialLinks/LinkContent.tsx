@@ -27,7 +27,7 @@ export const LinkContent = (props: ILinkContentComp) => {
     setContentVisible(false);
   };
 
-  if (mode === 'link' && typeof content === 'string') {
+  if (mode === 'link') {
     return (
       <a
         key={content}
@@ -63,7 +63,7 @@ export const LinkContent = (props: ILinkContentComp) => {
       </div>
     );
   }
-  if (mode === 'img'&& typeof content === 'string') {
+  if (mode === 'img') {
     return (
       <div
         className={`${styles.socialLinksIcon} cursor-pointer relative`}
@@ -85,8 +85,7 @@ export const LinkContent = (props: ILinkContentComp) => {
       </div>
     );
   }
-
-  if (mode === 'dom') {
+  if(mode === 'dom') {
     return (
       <div
         className={`${styles.socialLinksIcon} cursor-pointer relative`}
@@ -102,7 +101,7 @@ export const LinkContent = (props: ILinkContentComp) => {
               ...popperStyle,
             }}
           >
-            {content}
+            <div dangerouslySetInnerHTML={{ __html: content }} />
           </div>
         ) : null}
       </div>

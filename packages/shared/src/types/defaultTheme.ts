@@ -237,19 +237,10 @@ export interface DocFooter {
 
 // social link ---------------------------------------------------------------
 
-type ContentMode = 'link' | 'text' | 'img' | 'dom';
-
-interface BaseSocialLink {
+export interface SocialLink {
   icon: SocialLinkIcon;
-  mode: ContentMode;
-}
-
-export type ContentByMode<T extends ContentMode> = T extends 'dom'
-  ? React.ReactNode
-  : string;
-
-export interface SocialLink extends BaseSocialLink {
-  content: ContentByMode<SocialLink['mode']> | string;
+  mode: 'link' | 'text' | 'img' | 'dom';
+  content: string;
 }
 
 export type SocialLinkIcon =

@@ -338,7 +338,8 @@ export default defineConfig({
       {
         icon: 'github',
         mode: 'dom',
-        content: <img src="https://lf3-static.bytednsdoc.com/obj/eden-cn/rjhwzy/ljhwZthlaukjlkulzlp/rspress/rspress-navbar-logo-0904.png" alt="logo" id="logo" class="mr-4 rspress-logo dark:hidden">,
+        content:
+          '<img src="https://lf3-static.bytednsdoc.com/obj/eden-cn/rjhwzy/ljhwZthlaukjlkulzlp/rspress/rspress-navbar-logo-0904.png" alt="logo" id="logo" class="mr-4 rspress-logo dark:hidden">',
       },
     ],
   },
@@ -348,7 +349,7 @@ export default defineConfig({
 - When in `link` mode, click the icon to jump to the link.
 - When in `text` mode, when the mouse moves over the icon, a pop-up box will be displayed, and the content of the pop-up box is the entered text
 - When in the `img` mode, moving the mouse over the icon will display a bullet box, and the content of the bullet box is the specified picture. It should be noted that the picture needs to be placed in the `public` directory.
-- When in the `dom` mode, you can pass ReactNode content to render directly into the content field.
+- When in dom mode, html to render can be passed directly into the content field. Use '' for wrapping
 
 Related links support the following types of images, which can be selected through the icon attribute:
 
