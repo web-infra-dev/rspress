@@ -233,6 +233,19 @@ export async function onSearch(query: string) {
 }
 ```
 
+If you are using `multiVersion`, the `versioned` parameter allows you to create a separate search index for each version of your documentation.
+When enabled, the search will only query the index corresponding to the currently selected version.
+
+```ts title="rspress.config.ts"
+import { defineConfig } from 'rspress/config';
+
+export default defineConfig({
+  search: {
+    versioned: true,
+  },
+});
+```
+
 ## globalUIComponents
 
 - Type: `(string | [string, object])[]`
