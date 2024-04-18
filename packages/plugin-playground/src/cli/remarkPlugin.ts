@@ -65,6 +65,7 @@ export const remarkPlugin: Plugin<[RemarkPluginProps], Root> = ({
         createPlaygroundNode(node, [
           ['code', code],
           ['language', language],
+          ['source', demoPath],
           ['direction', direction],
           ['editorPosition', editorPosition],
         ]);

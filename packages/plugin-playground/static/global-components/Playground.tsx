@@ -13,6 +13,7 @@ type Direction = 'horizontal' | 'vertical';
 export interface PlaygroundProps extends HTMLAttributes<HTMLDivElement> {
   code: string;
   language: string;
+  source?: string;
   direction?: Direction;
   editorPosition?: 'left' | 'right';
   renderChildren?: (
