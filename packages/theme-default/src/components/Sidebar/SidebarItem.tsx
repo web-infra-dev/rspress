@@ -83,9 +83,7 @@ export function SidebarItem(props: SidebarItemProps) {
         }}
       >
         <Tag tag={item.tag} />
-        <span className="flex-center">
-          {renderInlineMarkdown(textRef.current)}
-        </span>
+        <span>{renderInlineMarkdown(textRef.current)}</span>
       </div>
     </Link>
   );
