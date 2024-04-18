@@ -1,12 +1,14 @@
 import {
-  ComponentPropsWithRef,
+  Children,
   ReactElement,
   ReactNode,
   useContext,
   useState,
   forwardRef,
-  type ForwardRefExoticComponent,
   ForwardedRef,
+  isValidElement,
+  ComponentPropsWithRef,
+  type ForwardRefExoticComponent,
 } from 'react';
 import { TabDataContext } from '../../logic/TabDataContext';
 import styles from './index.module.scss';
@@ -52,13 +54,25 @@ export const Tabs: ForwardRefExoticComponent<TabsProps> = forwardRef(
       tabPosition = 'left',
       tabContainerClassName,
     } = props;
+
     let tabValues = values || [];
+
     if (tabValues.length === 0) {
-      tabValues = (children as ReactElement[]).map(child => ({
-        label: child.props?.label,
-        value: child.props?.value || child.props?.label,
-      }));
+      tabValues = Children.map(children, child => {
+        if (isValidElement(child)) {
+          return {
+            label: child.props?.label,
+            value: child.props?.value || child.props?.label,
+          };
+        }
+
+        return {
+          label: undefined,
+          value: undefined,
+        };
+      });
     }
+
     const { tabData, setTabData } = useContext(TabDataContext);
     let defaultIndex = 0;
     const needSync = groupId && tabData[groupId] !== undefined;
@@ -113,7 +127,7 @@ export const Tabs: ForwardRefExoticComponent<TabsProps> = forwardRef(
             </div>
           ) : null}
         </div>
-        <div>{children[activeIndex]}</div>
+        <div>{Children.toArray(children)[activeIndex]}</div>
       </div>
     );
   },
