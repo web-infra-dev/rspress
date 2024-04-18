@@ -80,10 +80,10 @@ export const docgen = async ({
               ...restOptions,
             };
             let fileParser = withDefaultConfig(parserOpts);
-            if (tsconfigPath) {
-              fileParser = withCustomConfig(tsconfigPath, parserOpts);
-            } else if (compilerOptions) {
-              fileParser = withCompilerOptions(compilerOptions, parserOpts);
+            if (tsconfigPath?.[key]) {
+              fileParser = withCustomConfig(tsconfigPath[key], parserOpts);
+            } else if (compilerOptions?.[key]) {
+              fileParser = withCompilerOptions(compilerOptions[key], parserOpts);
             }
             const componentDoc = fileParser.parse(moduleSourceFilePath);
             if (componentDoc.length === 0) {
