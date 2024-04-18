@@ -9,10 +9,12 @@ import { SvgWrapper } from '../SvgWrapper';
 import { CSSTransition } from 'react-transition-group';
 
 export function SideMenu({
+  outlineTitle,
   beforeSidebar,
   afterSidebar,
   uiSwitch,
 }: {
+  outlineTitle: string;
   beforeSidebar?: React.ReactNode;
   afterSidebar?: React.ReactNode;
   uiSwitch?: UISwitchResult;
@@ -76,7 +78,7 @@ export function SideMenu({
               className="flex-center ml-auto"
               ref={outlineButtonRef}
             >
-              <span className="text-sm">On this page</span>
+              <span className="text-sm">{outlineTitle}</span>
               <div
                 className="text-md mr-2"
                 style={{

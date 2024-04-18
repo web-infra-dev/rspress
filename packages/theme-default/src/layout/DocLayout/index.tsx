@@ -63,6 +63,7 @@ export function DocLayout(props: DocLayoutProps) {
     >
       {beforeDoc}
       <SideMenu
+        outlineTitle={outlineTitle}
         beforeSidebar={beforeSidebar}
         afterSidebar={afterSidebar}
         uiSwitch={uiSwitch}
