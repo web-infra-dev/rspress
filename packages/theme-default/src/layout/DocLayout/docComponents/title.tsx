@@ -14,7 +14,7 @@ export const H2 = (props: React.ComponentProps<'h2'>) => {
   return (
     <h2
       {...props}
-      className={`mt-14 mb-6 text-2xl tracking-tight ${styles.title}`}
+      className={`mt-12 mb-6 pt-8 text-2xl tracking-tight border-t-[1px] border-divider-light ${styles.title}`}
     />
   );
 };
