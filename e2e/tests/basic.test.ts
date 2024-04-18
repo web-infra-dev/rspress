@@ -66,4 +66,12 @@ test.describe('basic test', async () => {
       defaultMode === 'dark',
     );
   });
+
+  test('Hover over social links', async ({ page }) => {
+    await page.goto(`http://localhost:${appPort}`);
+    await page.hover('.social-links');
+    await page.waitForTimeout(1000);
+    const logoLink = await page.$('a[href="/zh"]');
+    expect(logoLink).not.toBeNull();
+  });
 });

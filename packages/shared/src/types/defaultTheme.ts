@@ -239,7 +239,7 @@ export interface DocFooter {
 
 export interface SocialLink {
   icon: SocialLinkIcon;
-  mode: 'link' | 'text' | 'img';
+  mode: 'link' | 'text' | 'img' | 'dom';
   content: string;
 }
 

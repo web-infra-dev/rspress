@@ -85,6 +85,28 @@ export const LinkContent = (props: ILinkContentComp) => {
       </div>
     );
   }
+  if(mode === 'dom') {
+    return (
+      <div
+        className={`${styles.socialLinksIcon} cursor-pointer relative`}
+        onMouseEnter={mouseEnterIcon}
+        onMouseLeave={mouseLeavePopper}
+      >
+        {IconComp}
+        {contentVisible ? (
+          <div
+            className="break-all z-[1] p-3 absolute right-0 bg-white dark:bg-dark rounded-xl"
+            style={{
+              boxShadow: 'var(--rp-shadow-3)',
+              ...popperStyle,
+            }}
+          >
+            <div dangerouslySetInnerHTML={{ __html: content }} />
+          </div>
+        ) : null}
+      </div>
+    );
+  }
 
   return <div></div>;
 };
