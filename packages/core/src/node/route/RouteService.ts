@@ -69,6 +69,7 @@ export const normalizeRoutePath = (
   )
     // remove the extension
     .replace(new RegExp(`\\.(${extensions.join('|')})$`), '')
+    .replace(/\.html$/, '')
     .replace(/\/index$/, '/');
 
   // restore the trail slash
