@@ -49,11 +49,15 @@ export const Tabs: ForwardRefExoticComponent<TabsProps> = forwardRef(
       values,
       defaultValue,
       onChange,
-      children,
+      children: rawChildren,
       groupId,
       tabPosition = 'left',
       tabContainerClassName,
     } = props;
+    // remove "\n" character when write JSX element in multiple lines, use Children.toArray for Tabs with no Tab element
+    const children = Children.toArray(rawChildren).filter(
+      child => !(typeof child === 'string' && child.trim() === ''),
+    );
 
     let tabValues = values || [];
 
