@@ -55,3 +55,21 @@ export default () => {
   return <div>当前版本：{version}</div>;
 };
 ```
+
+## 仅搜索当前版本
+
+可以配置 `search.versioned` 来仅搜索当前版本的文档。
+
+```ts title="rspress.config.ts"
+import { defineConfig } from 'rspress/config';
+
+export default defineConfig({
+  multiVersion: {
+    default: 'v1',
+    versions: ['v1', 'v2'],
+  },
+  search: {
+    versioned: true,
+  },
+});
+```
