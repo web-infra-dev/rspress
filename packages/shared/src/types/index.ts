@@ -273,6 +273,7 @@ export interface FrontMatterMeta {
   outline?: boolean;
   lineNumbers?: boolean;
   overviewHeaders?: number;
+  titleSuffix?: string;
 }
 
 export interface PageData {
