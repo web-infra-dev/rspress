@@ -52,10 +52,11 @@ export async function launchDoc({
     prefix: string,
   ): Promise<SidebarGroup> => {
     const base = join(root, lang);
+    const source = ['*.(js|jsx|ts|tsx|md|mdx)']
     const traverse = async (cwd: string): Promise<SidebarGroup['items']> => {
       // FIXME: win32
       const [files, directories] = await Promise.all([
-        fastGlob(['*'], {
+        fastGlob(source, {
           cwd,
           onlyFiles: true,
           ignore: ['index.*'],
@@ -63,6 +64,7 @@ export async function launchDoc({
         fastGlob(['*'], {
           cwd,
           onlyDirectories: true,
+          ignore: ['public'],
         }),
       ]);
 
