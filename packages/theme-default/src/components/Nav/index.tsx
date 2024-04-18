@@ -140,9 +140,7 @@ export function Nav(props: NavProps) {
           {beforeNavTitle}
           <NavBarTitle />
           {afterNavTitle}
-          <div
-            className={`${styles.content} flex flex-1 justify-end items-center`}
-          >
+          <div className="flex flex-1 justify-end items-center">
             {leftNav()}
             {rightNav()}
             {afterNavMenu}

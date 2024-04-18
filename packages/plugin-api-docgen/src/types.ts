@@ -28,8 +28,8 @@ export type DocumentationArgs = {
 
 export type ParseToolOptions = {
   'react-docgen-typescript'?: ParserOptions & {
-    tsconfigPath?: string;
-    compilerOptions?: CompilerOptions;
+    tsconfigPath?: Record<string, string>;
+    compilerOptions?: Record<string, CompilerOptions>;
   };
   documentation?: DocumentationArgs;
 };

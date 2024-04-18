@@ -208,7 +208,9 @@ export default defineConfig({
 
 ## search
 
-- Type: `{ searchHooks: string }`
+- Type: `{ searchHooks: string; versioned: boolean; }`
+
+### searchHooks
 
 You can add search runtime hooks logic through the `searchHooks` parameter, for example:
 
@@ -223,14 +225,21 @@ export default defineConfig({
 });
 ```
 
-In `searchHooks.ts`, you need to export the `onSearch` function, which will be called every time a search is performed. The input parameter is the search keyword, and you can customize the search interception logic here, for example:
+For specific hook logic, you can read [Customize Search Functions](/guide/advanced/custom-search).
 
-```ts title="searchHooks.ts"
-// Supports async function
-export async function onSearch(query: string) {
-  // Execute custom logic, such as logging reporting
-  console.log(query);
-}
+### versioned
+
+If you are using `multiVersion`, the `versioned` parameter allows you to create a separate search index for each version of your documentation.
+When enabled, the search will only query the index corresponding to the currently selected version.
+
+```ts title="rspress.config.ts"
+import { defineConfig } from 'rspress/config';
+
+export default defineConfig({
+  search: {
+    versioned: true,
+  },
+});
 ```
 
 ## globalUIComponents

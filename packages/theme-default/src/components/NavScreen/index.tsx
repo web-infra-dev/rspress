@@ -23,9 +23,7 @@ interface Props {
 const NavScreenTranslations = () => {
   const translationMenuData = useTranslationMenuData();
   return (
-    <div
-      className={`${styles.navTranslations} flex text-sm font-bold justify-center`}
-    >
+    <div className="flex text-sm font-bold justify-center">
       <div className="mx-1.5 my-1">
         <NavScreenMenuGroup {...translationMenuData} />
       </div>

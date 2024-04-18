@@ -170,8 +170,8 @@ Returns **[string][1]** The greeting message.
 ```ts
 type ParseToolOptions = {
   'react-docgen-typescript'?: ParserOptions & {
-    tsconfigPath?: string;
-    compilerOptions?: ts.CompilerOptions;
+    tsconfigPath?: Record<string, string>;
+    compilerOptions?: Record<string, ts.CompilerOptions>;
   };
   documentation?: DocumentationArgs;
 };
@@ -179,4 +179,4 @@ type ParseToolOptions = {
 
 请参考 [ParserOptions](https://github.com/styleguidist/react-docgen-typescript/blob/b7ea0a235efb7c78a1158ca12d864de2bc2ee30e/src/parser.ts#L84-L95) 和 [DocumentationArgs](https://github.com/documentationjs/documentation/blob/master/docs/NODE_API.md#parameters-1) 了解可用选项。
 
-如果解析器是 `react-docgen-typescript`，默认使用 `withDefaultConfig` 方法创建解析器实例，如果配置了 `tsconfigPath` 或 `compilerOptions` 则会分别使用 `withCompilerOptions` 和 `withCustomConfig` 方法创建解析器实例，详情查看 [Custom Parsers](https://github.com/styleguidist/react-docgen-typescript/blob/b7ea0a235efb7c78a1158ca12d864de2bc2ee30e/README.md#usage)。
+如果解析器是 `react-docgen-typescript`，默认使用 `withDefaultConfig` 方法创建解析器实例，如果配置了 `tsconfigPath` 或 `compilerOptions` 则会分别使用 `withCompilerOptions` 和 `withCustomConfig` 方法创建解析器实例，`tsconfigPath` 和 `compilerOptions`可以分别针对每个 `entry` 设置，详情查看 [Custom Parsers](https://github.com/styleguidist/react-docgen-typescript/blob/b7ea0a235efb7c78a1158ca12d864de2bc2ee30e/README.md#usage)。

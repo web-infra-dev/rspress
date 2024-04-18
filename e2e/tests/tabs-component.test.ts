@@ -38,5 +38,18 @@ test.describe('tabs-component test', async () => {
     const contentBText = await page.evaluate(node => node?.innerHTML, contentB);
     expect(tabBText).toContain('label2');
     expect(contentBText).toContain('content2');
+    const notSelected = await page.$$eval(
+      '.tabs-b div',
+      divs => divs.filter(div => div.className.includes('not-selected')).length,
+    );
+    expect(notSelected).toEqual(2);
+
+    // Tab C
+    const tabC = await page.$('.tabs-c');
+    const contentC = await page.$('.tabs-c + div');
+    const tabCText = await page.evaluate(node => node?.innerHTML, tabC);
+    const contentCText = await page.evaluate(node => node?.innerHTML, contentC);
+    expect(tabCText).toEqual('');
+    expect(contentCText).toEqual('');
   });
 });
