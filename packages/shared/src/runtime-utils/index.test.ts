@@ -46,6 +46,7 @@ describe('test shared utils', () => {
   });
 
   test('normalizeHref', () => {
+    expect(normalizeHref()).toEqual('/');
     expect(normalizeHref('/guide/')).toBe('/guide/index.html');
     expect(normalizeHref('/guide')).toBe('/guide.html');
     expect(normalizeHref('/guide/index.html')).toBe('/guide/index.html');
@@ -57,7 +58,10 @@ describe('test shared utils', () => {
       'mailto:bluth@example.com',
     );
     expect(normalizeHref('tel:123456789')).toBe('tel:123456789');
+    expect(normalizeHref('/guide', true)).toBe('/guide');
     expect(normalizeHref('/guide/', true)).toBe('/guide/index');
+    expect(normalizeHref('/guide.html', true)).toBe('/guide');
+    expect(normalizeHref('/guide/index.html', true)).toBe('/guide/index');
     expect(normalizeHref('/guide/version-0.1')).toBe('/guide/version-0.1.html');
     expect(normalizeHref('/guide/version-0.1.html')).toBe(
       '/guide/version-0.1.html',

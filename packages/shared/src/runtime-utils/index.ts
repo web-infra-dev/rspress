@@ -254,6 +254,10 @@ export function normalizeHref(url?: string, cleanUrls = false) {
     cleanUrl += 'index';
   }
 
+  if (cleanUrls && cleanUrl.endsWith('.html')) {
+    cleanUrl = cleanUrl.replace(/\.html$/, '');
+  }
+
   return addLeadingSlash(hash ? `${cleanUrl}#${hash}` : cleanUrl);
 }
 
