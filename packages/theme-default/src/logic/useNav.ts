@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { useLocation, useVersion } from '@rspress/runtime';
+import { useLocation, usePageData } from '@rspress/runtime';
 import { useLocaleSiteData } from './useLocaleSiteData';
 
 export function useNavScreen() {
@@ -44,13 +44,16 @@ export function useNavScreen() {
 }
 
 export function useNavData() {
+  const { siteData, page } = usePageData();
+  const defaultVersion = siteData.multiVersion.default ?? 'default';
+  const currentVersion = page.version;
+
   const { nav } = useLocaleSiteData();
-  const version = useVersion();
-  // Normalize the nav item links to include the version prefix
+
   if (Array.isArray(nav)) {
     return nav;
   }
 
-  const navKey = version.length > 0 ? version : 'default';
+  const navKey = currentVersion.length > 0 ? currentVersion : defaultVersion;
   return [...nav[navKey]];
 }
