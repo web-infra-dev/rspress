@@ -45,7 +45,7 @@ export function useNavScreen() {
 
 export function useNavData() {
   const { siteData, page } = usePageData();
-  const defaultVersion = siteData.multiVersion.default ?? 'default';
+  const defaultVersion = siteData.multiVersion.default;
   const currentVersion = page.version;
 
   const { nav } = useLocaleSiteData();
@@ -54,6 +54,6 @@ export function useNavData() {
     return nav;
   }
 
-  const navKey = currentVersion.length > 0 ? currentVersion : defaultVersion;
+  const navKey = currentVersion || defaultVersion || 'default';
   return [...nav[navKey]];
 }
