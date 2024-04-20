@@ -396,8 +396,8 @@ importers:
   packages/core:
     dependencies:
       '@loadable/component':
-        specifier: 5.15.2
-        version: 5.15.2(react@18.2.0)
+        specifier: 5.16.4
+        version: 5.16.4(react@18.2.0)
       '@mdx-js/loader':
         specifier: 2.3.0
         version: 2.3.0(webpack@5.88.2)
@@ -3118,11 +3118,11 @@ packages:
       '@jridgewell/sourcemap-codec': 1.4.15
     dev: true
 
-  /@loadable/component@5.15.2(react@18.2.0):
-    resolution: {integrity: sha512-ryFAZOX5P2vFkUdzaAtTG88IGnr9qxSdvLRvJySXcUA4B4xVWurUNADu3AnKPksxOZajljqTrDEDcYjeL4lvLw==}
+  /@loadable/component@5.16.4(react@18.2.0):
+    resolution: {integrity: sha512-fJWxx9b5WHX90QKmizo9B+es2so8DnBthI1mbflwCoOyvzEwxiZ/SVDCTtXEnHG72/kGBdzr297SSIekYtzSOQ==}
     engines: {node: '>=8'}
     peerDependencies:
-      react: '>=16.3.0'
+      react: ^16.3.0 || ^17.0.0 || ^18.0.0
     dependencies:
       '@babel/runtime': 7.23.2
       hoist-non-react-statics: 3.3.2

@@ -29,7 +29,7 @@ body {
   color: var(--rp-c-text-1);
   background-color: var(--rp-c-bg);
   direction: ltr;
-  font-synthesis: none;
+  font-synthesis: style;
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;

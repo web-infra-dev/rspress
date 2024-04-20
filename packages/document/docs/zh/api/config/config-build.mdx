@@ -207,8 +207,33 @@ export default defineConfig({
 ### markdown.highlightLanguages
 
 - Type: `(string | [string, string])[]`
+- Default:
 
-注册需要高亮的语言。默认支持的语言包括`js`、`jsx`、`ts`、`tsx`、`json`、`css`、`scss`、`less`、`xml`、`diff`、`yaml`、`md`、`mdx`、`bash`，你可以在这些语言的基础上进行扩展。比如：
+```js
+const DEFAULT_HIGHLIGHT_LANGUAGES = [
+  ['js', 'javascript'],
+  ['ts', 'typescript'],
+  ['jsx', 'tsx'],
+  'tsx',
+  'json',
+  'css',
+  'scss',
+  'less',
+  ['xml', 'xml-doc'],
+  'diff',
+  'yaml',
+  ['md', 'markdown'],
+  ['mdx', 'tsx'],
+  'bash',
+];
+```
+
+注册需要代码高亮的语言。
+
+- 默认基于 [Prism.js](https://prismjs.com/) 实现，你也可以通过 [@rspress/plugin-shiki](/plugin/official-plugins/shiki) 切换到 Shiki。
+- 默认支持的语言包括 `js`、`jsx`、`ts`、`tsx`、`json`、`css`、`scss`、`less`、`html`、`xml`、`diff`、`yaml`、`md`、`mdx`、`bash`。
+
+Rspress 默认没有注册所有可支持的语言，这是为了减少构建产物的包体积。你可以在这些默认语言的基础上进行扩展，比如：
 
 ```ts title="rspress.config.ts"
 import { defineConfig } from 'rspress/config';
