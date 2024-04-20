@@ -92,6 +92,12 @@ export function bindingAsideScroll() {
       document.documentElement.scrollHeight
     );
   }
+  function getElementTop(element: HTMLElement) {
+    const style = window.getComputedStyle(element);
+    const paddingTop = style.getPropertyValue('padding-top');
+
+    return element.offsetTop - parseInt(paddingTop);
+  }
   const aside = document.getElementById('aside-container');
   const links = Array.from(
     document.querySelectorAll<HTMLAnchorElement>('.rspress-doc .header-anchor'),
@@ -134,7 +140,7 @@ export function bindingAsideScroll() {
         const nextAnchor = links[i + 1];
         const scrollTop = Math.ceil(window.scrollY);
         const currentAnchorTop =
-          currentAnchor.parentElement.offsetTop - DEFAULT_NAV_HEIGHT;
+          getElementTop(currentAnchor.parentElement) - DEFAULT_NAV_HEIGHT;
         if ((i === 0 && scrollTop < currentAnchorTop) || scrollTop === 0) {
           activate(links, 0);
           break;
@@ -146,7 +152,7 @@ export function bindingAsideScroll() {
         }
 
         const nextAnchorTop =
-          nextAnchor.parentElement.offsetTop - DEFAULT_NAV_HEIGHT;
+          getElementTop(nextAnchor.parentElement) - DEFAULT_NAV_HEIGHT;
 
         if (scrollTop >= currentAnchorTop && scrollTop < nextAnchorTop) {
           activate(links, i);
