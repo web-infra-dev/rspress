@@ -207,8 +207,33 @@ Please set `markdown.mdxRs` to `false` when configuring `globalComponents`, othe
 ### markdown.highlightLanguages
 
 - Type: `(string | [string, string])[]`
+- Default:
 
-Register the languages that need to be highlighted. The default supported languages include `js`, `jsx`, `ts`, `tsx`, `json`, `css`, `scss`, `less`, `xml`, `diff`, `yaml`, `md`, `mdx`, `bash`. You can extend based on these languages. For example:
+```js
+const DEFAULT_HIGHLIGHT_LANGUAGES = [
+  ['js', 'javascript'],
+  ['ts', 'typescript'],
+  ['jsx', 'tsx'],
+  'tsx',
+  'json',
+  'css',
+  'scss',
+  'less',
+  ['xml', 'xml-doc'],
+  'diff',
+  'yaml',
+  ['md', 'markdown'],
+  ['mdx', 'tsx'],
+  'bash',
+];
+```
+
+Register the language needed for code highlighting.
+
+- By default, it is implemented based on [Prism.js](https://prismjs.com/). You can also switch to Shiki through [@rspress/plugin-shiki](/plugin/official-plugins/shiki).
+- Default supported languages include `js`, `jsx`, `ts`, `tsx`, `json`, `css`, `scss`, `less`, `html`, `xml`, `diff`, `yaml`, `md`, `mdx`, and `bash`.
+
+Rspress does not register all supported languages by default in order to reduce the bundle size of the build output. You can extend on these default languages, for example:
 
 ```ts title="rspress.config.ts"
 import { defineConfig } from 'rspress/config';
