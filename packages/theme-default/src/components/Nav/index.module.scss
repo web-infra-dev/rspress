@@ -1,3 +1,7 @@
+:global(.rspress-nav-menu-group-button) {
+  background-color: transparent;
+}
+
 .hidden {
   transform: translate3d(0, calc(-100%), 0);
   background: transparent;
