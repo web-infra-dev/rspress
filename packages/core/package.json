@@ -39,7 +39,7 @@
     "node": ">=14.17.6"
   },
   "dependencies": {
-    "@loadable/component": "5.15.2",
+    "@loadable/component": "5.16.4",
     "@mdx-js/loader": "2.3.0",
     "@mdx-js/mdx": "2.3.0",
     "@mdx-js/react": "2.3.0",
