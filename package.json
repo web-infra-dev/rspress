@@ -29,9 +29,13 @@
   },
   "pnpm": {
     "overrides": {
+      "documentation@14>mdast-util-find-and-replace": "3",
+      "documentation@14>micromark-util-character": "2",
+      "documentation@14>remark": "15",
       "documentation@14>remark-gfm": "4",
       "documentation@14>remark-html": "16",
-      "documentation@14>remark-reference-links": "7"
+      "documentation@14>remark-reference-links": "7",
+      "documentation@14>unist-util-visit": "5"
     }
   },
   "workspaces": {
