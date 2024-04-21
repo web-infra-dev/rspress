@@ -35,7 +35,7 @@
     "node": ">=14.17.6"
   },
   "dependencies": {
-    "@mdx-js/react": "2.3.0",
+    "@mdx-js/react": "3.0.1",
     "@rspress/runtime": "workspace:*",
     "@rspress/shared": "workspace:*",
     "body-scroll-lock": "4.0.0-beta.0",
@@ -43,7 +43,7 @@
     "flexsearch": "0.6.32",
     "github-slugger": "^2.0.0",
     "globby": "11.1.0",
-    "hast-util-from-html": "^1.0.0",
+    "hast-util-from-html": "^2.0.1",
     "html-to-text": "^9.0.3",
     "htmr": "^1.0.2",
     "is-html": "^3.0.0",
@@ -53,8 +53,8 @@
     "react-dom": "^18.2.0",
     "react-helmet-async": "^1.3.0",
     "react-syntax-highlighter": "^15.5.0",
-    "rspack-plugin-virtual-module": "0.1.12",
-    "react-transition-group": "4.4.5"
+    "react-transition-group": "4.4.5",
+    "rspack-plugin-virtual-module": "0.1.12"
   },
   "devDependencies": {
     "@modern-js/plugin-tailwindcss": "2.49.0",
@@ -65,16 +65,16 @@
     "@types/is-html": "^2.0.1",
     "@types/jest": "^26.0.9",
     "@types/lodash-es": "^4.17.6",
-    "@types/mdast": "^3.0.10",
+    "@types/mdast": "^4.0.3",
     "@types/nprogress": "^0.2.0",
     "@types/react": "^18",
     "@types/react-dom": "^18",
     "@types/react-syntax-highlighter": "^15.5.9",
     "gray-matter": "4.0.3",
+    "tailwindcss": "3.2.7",
     "typescript": "^5",
     "vitest": "0.33.0",
-    "webpack": "^5.88.1",
-    "tailwindcss": "3.2.7"
+    "webpack": "^5.88.1"
   },
   "sideEffects": [
     "*.css",

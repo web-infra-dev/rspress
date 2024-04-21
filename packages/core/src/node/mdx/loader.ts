@@ -20,6 +20,15 @@ import { createMDXOptions } from './options';
 import { TocItem } from './remarkPlugins/toc';
 import { checkLinks } from './remarkPlugins/checkDeadLink';
 
+declare module 'unified' {
+  interface Data {
+    pageMeta?: {
+      toc: Header[];
+      title: string;
+    };
+  }
+}
+
 interface LoaderOptions {
   config: UserConfig;
   docDirectory: string;
@@ -154,10 +163,7 @@ export default async function mdxLoader(
       });
 
       compileResult = String(vFile);
-      const compilationMeta = compiler.data('pageMeta') as {
-        toc: Header[];
-        title: string;
-      };
+      const compilationMeta = compiler.data('pageMeta');
       pageMeta = {
         ...compilationMeta,
         title: frontmatter.title || compilationMeta.title || '',

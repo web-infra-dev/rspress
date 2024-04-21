@@ -1,10 +1,17 @@
 import type { Plugin } from 'unified';
 import { visitChildren } from 'unist-util-visit-children';
 import Slugger from 'github-slugger';
-import type { Root } from 'hast';
+import type { Root, Node } from 'hast';
 import { Processor } from '@mdx-js/mdx/lib/core';
 import { PageMeta } from '../loader';
 import { extractTextAndId } from '../../utils';
+
+declare module 'hast' {
+  interface RootContentMap {
+    // Allow using raw nodes defined by `rehype-raw`.
+    heading: Heading;
+  }
+}
 
 export interface TocItem {
   id: string;
@@ -12,23 +19,23 @@ export interface TocItem {
   depth: number;
 }
 
-interface ChildNode {
+interface ChildNode extends Node {
   type: 'link' | 'text' | 'inlineCode' | 'strong';
   value: string;
   children?: ChildNode[];
 }
 
-interface Heading {
+interface Heading extends Node {
   type: string;
   depth?: number;
-  children?: ChildNode[];
+  children: ChildNode[];
 }
 
 export const parseToc = (tree: Root) => {
   let title = '';
   const toc: TocItem[] = [];
   const slugger = new Slugger();
-  visitChildren((node: Heading) => {
+  visitChildren<Root>((node): undefined => {
     if (node.type !== 'heading' || !node.depth || !node.children) {
       return;
     }
