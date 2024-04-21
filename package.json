@@ -27,6 +27,13 @@
       "biome lint . --diagnostic-level=warn"
     ]
   },
+  "pnpm": {
+    "overrides": {
+      "documentation@14>remark-gfm": "4",
+      "documentation@14>remark-html": "16",
+      "documentation@14>remark-reference-links": "7"
+    }
+  },
   "workspaces": {
     "packages": [
       "apps/*",
