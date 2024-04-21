@@ -27,6 +27,18 @@
       "biome lint . --diagnostic-level=warn"
     ]
   },
+  "pnpm": {
+    "//": "The `documentation` package is quite out-of-date. The following packages only contains breaking changes with types and node version. Overrides them to reduce size.",
+    "overrides": {
+      "documentation@14>mdast-util-find-and-replace": "3",
+      "documentation@14>micromark-util-character": "2",
+      "documentation@14>remark": "15",
+      "documentation@14>remark-gfm": "4",
+      "documentation@14>remark-html": "16",
+      "documentation@14>remark-reference-links": "7",
+      "documentation@14>unist-util-visit": "5"
+    }
+  },
   "workspaces": {
     "packages": [
       "apps/*",
