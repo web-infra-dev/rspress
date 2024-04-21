@@ -28,6 +28,7 @@
     ]
   },
   "pnpm": {
+    "//": "The `documentation` package is quite out-of-date. The following packages only contains breaking changes with types and node version. Overrides them to reduce size.",
     "overrides": {
       "documentation@14>mdast-util-find-and-replace": "3",
       "documentation@14>micromark-util-character": "2",
