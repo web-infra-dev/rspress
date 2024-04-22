@@ -47,6 +47,7 @@ export function renderInlineMarkdown(text: string) {
   const htmlText = text
     .replace(/</g, '&lt;')
     .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')
-    .replace(/`(.*?)`/g, '<code>$1</code>');
+    .replace(/`(.*?)`/g, '<code>$1</code>')
+    .replace(/\*(.*?)\*/g, '<em>$1</em>');
   return renderHtmlOrText(htmlText);
 }
