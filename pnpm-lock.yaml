@@ -468,8 +468,8 @@ importers:
         specifier: ^1.0.2
         version: 1.0.2(react@18.2.0)
       is-html:
-        specifier: ^3.0.0
-        version: 3.0.0
+        specifier: ^3.1.0
+        version: 3.1.0
       lodash-es:
         specifier: ^4.17.21
         version: 4.17.21
@@ -1261,8 +1261,8 @@ importers:
         specifier: ^1.0.2
         version: 1.0.2(react@18.2.0)
       is-html:
-        specifier: ^3.0.0
-        version: 3.0.0
+        specifier: ^3.1.0
+        version: 3.1.0
       lodash-es:
         specifier: ^4.17.21
         version: 4.17.21
@@ -7122,8 +7122,8 @@ packages:
     resolution: {integrity: sha512-DgZQp241c8oO6cA1SbTEWiXeoxV42vlcJxgH+B3hi1AiqqKruZR3ZGF8In3fj4+/y/7rHvlOZLZtgJ/4ttYGZg==}
     dev: false
 
-  /is-html@3.0.0:
-    resolution: {integrity: sha512-LmdKtXjzmYi07R1wJA6ZJk/8Y+6J40x8zwsJT3VnhqgxJdRWwYWizpGjvdtA9PkeA57pjZYMbwm6IpPMSn4JNA==}
+  /is-html@3.1.0:
+    resolution: {integrity: sha512-eHrJ9L14RlcKIFXh+RlqVYiRPGp8YhSn5pSNibDLtouaJdDcn3R0Fyu3mWTXQeKCQiLoiR2V8sPPzoQSomukSg==}
     engines: {node: ^12.20.0 || ^14.13.1 || >=16.0.0}
     dependencies:
       html-tags: 3.3.1
