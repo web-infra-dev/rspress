@@ -1,6 +1,7 @@
-@tailwind base;
+@import url(./preflight.css);
 @tailwind components;
 @tailwind utilities;
+
 
 *,
 ::before,
