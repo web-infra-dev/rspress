@@ -3,25 +3,30 @@ import { inBrowser } from '@rspress/shared';
 
 export const DEFAULT_NAV_HEIGHT = 72;
 
-export function scrollToTarget(
-  target: HTMLElement,
-  isSmooth: boolean,
-  fallbackHeight = DEFAULT_NAV_HEIGHT,
-) {
+function getTargetTop(element: HTMLElement, fallbackHeight = DEFAULT_NAV_HEIGHT) {
   const targetPadding = parseInt(
-    window.getComputedStyle(target).paddingTop,
+    window.getComputedStyle(element).paddingTop,
     10,
   );
 
   const targetTop =
     window.scrollY +
-    target.getBoundingClientRect().top -
+    element.getBoundingClientRect().top -
     fallbackHeight -
     targetPadding;
+
+  return Math.round(targetTop);
+}
+
+export function scrollToTarget(
+  target: HTMLElement,
+  isSmooth: boolean,
+  fallbackHeight = DEFAULT_NAV_HEIGHT,
+) {
   // Only scroll smoothly in page header anchor
   window.scrollTo({
     left: 0,
-    top: Math.round(targetTop),
+    top: getTargetTop(target, fallbackHeight),
     ...(isSmooth ? { behavior: 'smooth' } : {}),
   });
 }
@@ -133,8 +138,7 @@ export function bindingAsideScroll() {
         const currentAnchor = links[i];
         const nextAnchor = links[i + 1];
         const scrollTop = Math.ceil(window.scrollY);
-        const currentAnchorTop =
-          currentAnchor.parentElement.offsetTop - DEFAULT_NAV_HEIGHT;
+        const currentAnchorTop = getTargetTop(currentAnchor.parentElement);
         if ((i === 0 && scrollTop < currentAnchorTop) || scrollTop === 0) {
           activate(links, 0);
           break;
@@ -145,8 +149,7 @@ export function bindingAsideScroll() {
           break;
         }
 
-        const nextAnchorTop =
-          nextAnchor.parentElement.offsetTop - DEFAULT_NAV_HEIGHT;
+        const nextAnchorTop = getTargetTop(nextAnchor.parentElement);
 
         if (scrollTop >= currentAnchorTop && scrollTop < nextAnchorTop) {
           activate(links, i);
