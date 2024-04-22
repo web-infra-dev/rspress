@@ -83,7 +83,7 @@ export function SearchPanel({ focused, setFocused }: SearchPanelProps) {
     siteData,
     page: { lang, version },
   } = usePageData();
-  const { sidebar } = useLocaleSiteData();
+  const { sidebar, searchPlaceholderText = 'Search Docs' } = useLocaleSiteData();
   const { search, title: siteTitle } = siteData;
   const versionedSearch =
     search && search.mode !== 'remote' && search.versioned;
@@ -411,7 +411,7 @@ export function SearchPanel({ focused, setFocused }: SearchPanelProps) {
                   <input
                     className={styles.input}
                     ref={searchInputRef}
-                    placeholder="Search Docs"
+                    placeholder={searchPlaceholderText}
                     aria-label="Search"
                     autoComplete="off"
                     autoFocus
