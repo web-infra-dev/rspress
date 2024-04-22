@@ -70,7 +70,7 @@
     "rimraf": "^3.0.2",
     "ts-node": "^10.9.1",
     "typescript": "^5",
-    "medium-zoom": "1.0.8",
+    "medium-zoom": "1.1.0",
     "@types/fs-extra": "11.0.4"
   },
   "sideEffects": [],
