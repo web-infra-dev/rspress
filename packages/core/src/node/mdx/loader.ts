@@ -5,7 +5,7 @@ import { createProcessor } from '@mdx-js/mdx';
 import { isProduction, type Header, type UserConfig } from '@rspress/shared';
 import { logger } from '@rspress/shared/logger';
 import { loadFrontMatter } from '@rspress/shared/node-utils';
-import fs from 'fs-extra';
+import fs from '@rspress/shared/fs-extra';
 import type { RouteService } from '../route/RouteService';
 import {
   normalizePath,
@@ -113,7 +113,10 @@ export default async function mdxLoader(
     alias as Record<string, string>,
   );
   // replace content
-  const replacedContent = applyReplaceRules(flattenContent, config.replaceRules);
+  const replacedContent = applyReplaceRules(
+    flattenContent,
+    config.replaceRules,
+  );
   // preprocessor
   const preprocessedContent = escapeMarkdownHeadingIds(replacedContent);
 
