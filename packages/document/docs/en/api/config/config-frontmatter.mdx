@@ -50,7 +50,7 @@ import PageType from '@en/fragments/page-type';
 The hero config for the home page. It has the following types:
 
 ```ts
-export interface Hero {
+interface Hero {
   name: string;
   text: string;
   tagline: string;
@@ -81,7 +81,7 @@ pageType: home
 
 hero:
   name: Rspress
-  text: A documentation solution
+  text: A Documentation Solution
   tagline: A modern documentation development technology stack
   titleSuffix: '- Rspack-based Static Site Generator'
   actions:
@@ -94,6 +94,19 @@ hero:
 ---
 ```
 
+When setting `hero.text`, you can use the `|` symbol in YAML to manually control line breaks:
+
+```yaml
+---
+pageType: home
+
+hero:
+  name: Rspress
+  text: |
+    A Documentation
+    Solution
+```
+
 Or you can use `HTML` to specify the hero config for the page:
 
 ```yaml
@@ -102,7 +115,7 @@ pageType: home
 
 hero:
   name: <span class="hero-name">Rspress</span>
-  text: <span class="hero-text">A documentation solution</span>
+  text: <span class="hero-text">A Documentation Solution</span>
   tagline: <span class="hero-tagline">A modern documentation development technology stack</span>
   actions:
     - theme: brand
@@ -122,7 +135,7 @@ hero:
 features config of the `home` page. It has the following types:
 
 ```ts
-export interface Feature {
+interface Feature {
   title: string;
   details: string;
   icon: string;
