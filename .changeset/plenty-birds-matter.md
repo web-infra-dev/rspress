@@ -2,4 +2,4 @@
 "@rspress/theme-default": patch
 ---
 
-fix: remove invalid `className`
+hero use align-items

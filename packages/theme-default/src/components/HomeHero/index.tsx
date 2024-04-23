@@ -34,7 +34,7 @@ export function HomeHero({ frontmatter }: { frontmatter: FrontMatterMeta }) {
         }}
       ></div>
       <div className="m-auto flex flex-col md:flex-row max-w-6xl min-h-[50vh] mt-12 sm:mt-0">
-        <div className="flex flex-col justify-center text-center max-w-xl sm:max-w-4xl m-auto order-2 md:order-1">
+        <div className="flex flex-col justify-center items-center text-center max-w-xl sm:max-w-4xl m-auto order-2 md:order-1">
           <h1 className="font-bold text-3xl pb-2 sm:text-6xl md:text-7xl m-auto sm:m-4 md:m-0 md:pb-3 lg:pb-2 leading-tight z-10">
             <span className={styles.clip} style={{ lineHeight: '1.3' }}>
               {renderHtmlOrText(hero.name)}

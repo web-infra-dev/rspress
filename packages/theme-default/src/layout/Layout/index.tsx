@@ -26,6 +26,8 @@ export const Layout: React.FC<LayoutProps> = props => {
     afterDocFooter,
     beforeDoc,
     afterDoc,
+    beforeDocContent,
+    afterDocContent,
     beforeSidebar,
     afterSidebar,
     beforeOutline,
@@ -42,6 +44,8 @@ export const Layout: React.FC<LayoutProps> = props => {
   const docProps: DocLayoutProps = {
     beforeDocFooter,
     afterDocFooter,
+    beforeDocContent,
+    afterDocContent,
     beforeDoc,
     afterDoc,
     beforeSidebar,

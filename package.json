@@ -6,6 +6,7 @@
     "changeset": "changeset",
     "prepare": "npm run build && husky install",
     "check-spell": "npx cspell",
+    "check-dependency-version": "check-dependency-version-consistency . --dep-type devDependencies",
     "dev": "cross-env NX_DAEMON=false NX_REJECT_UNKNOWN_LOCAL_CACHE=0 nx run-many -t dev --exclude @rspress-fixture/*",
     "build": "cross-env NX_DAEMON=false NX_REJECT_UNKNOWN_LOCAL_CACHE=0 nx run-many -t build --exclude @rspress-fixture/*",
     "test": "pnpm test:unit && pnpm test:e2e",
@@ -25,6 +26,9 @@
   "lint-staged": {
     "*.{ts,tsx,js,jsx,mjs,cjs}": [
       "biome lint . --diagnostic-level=warn"
+    ],
+    "package.json": [
+      "pnpm run check-dependency-version"
     ]
   },
   "workspaces": {
@@ -36,6 +40,7 @@
     ]
   },
   "devDependencies": {
+    "check-dependency-version-consistency": "^4.1.0",
     "@biomejs/biome": "1.5.3",
     "@changesets/cli": "^2.27.1",
     "@manypkg/get-packages": "^2.2.0",

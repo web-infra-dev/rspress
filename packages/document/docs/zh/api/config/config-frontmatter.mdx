@@ -50,7 +50,7 @@ import PageType from '@zh/fragments/page-type';
 `home` 页面的 hero 配置。它有以下类型：
 
 ```ts
-export interface Hero {
+interface Hero {
   name: string;
   text: string;
   tagline: string;
@@ -94,6 +94,19 @@ hero:
 ---
 ```
 
+在设置 `hero.text` 时，你可以使用 YAML 的 `|` 符号来手动控制换行：
+
+```yaml
+---
+pageType: home
+
+hero:
+  name: Rspress
+  text: |
+    文档工程
+    解决方案
+```
+
 或者你也可以用 `HTML` 来指定页面的 hero config：
 
 ```yaml
@@ -122,7 +135,7 @@ hero:
 `home` 页面的功能配置。它有以下类型：
 
 ```ts
-export interface Feature {
+interface Feature {
   title: string;
   details: string;
   icon: string;

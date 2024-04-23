@@ -1,6 +1,6 @@
 {
   "name": "@rspress/plugin-auto-nav-sidebar",
-  "version": "1.18.2",
+  "version": "1.18.3",
   "description": "A plugin for rspress to generate navbar and sidebar config automatically.",
   "bugs": "https://github.com/web-infra-dev/rspress/issues",
   "repository": {
@@ -29,7 +29,7 @@
     "@types/react": "^18",
     "@types/react-dom": "^18",
     "typescript": "^5",
-    "vitest": "0.33.0",
+    "vitest": "0.34.1",
     "react": "^18.2.0"
   },
   "sideEffects": [

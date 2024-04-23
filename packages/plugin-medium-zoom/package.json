@@ -1,6 +1,6 @@
 {
   "name": "@rspress/plugin-medium-zoom",
-  "version": "1.18.2",
+  "version": "1.18.3",
   "description": "A plugin for rspress to zoom images in docs.",
   "bugs": "https://github.com/web-infra-dev/rspress/issues",
   "repository": {
@@ -29,8 +29,8 @@
     "@types/react": "^18",
     "@types/react-dom": "^18",
     "typescript": "^5",
-    "vitest": "0.33.0",
-    "react": "^17",
+    "vitest": "0.34.1",
+    "react": "^18.2.0",
     "@rspress/shared": "workspace:*"
   },
   "peerDependencies": {
