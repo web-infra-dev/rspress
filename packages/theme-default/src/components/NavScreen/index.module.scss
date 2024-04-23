@@ -36,7 +36,9 @@
   font-weight: 500;
   color: var(--rp-c-text-1);
   border-bottom: 1px solid var(--rp-c-divider-light);
-  transition: border-color 0.5s, color 0.25s;
+  transition:
+    border-color 0.5s,
+    color 0.25s;
 }
 .navAppearance {
   padding-right: 0;
@@ -65,6 +67,7 @@
   font-weight: 500;
   color: var(--rp-c-text-1);
   transition: color 0.25s;
+  background-color: transparent;
 }
 
 .buttonSpan {

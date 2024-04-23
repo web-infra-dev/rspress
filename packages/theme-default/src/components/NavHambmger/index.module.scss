@@ -5,6 +5,7 @@
   width: 36px;
   height: 56px;
   margin-left: 6px;
+  background-color: transparent;
 }
 
 @media (min-width: 768px) {
@@ -51,7 +52,10 @@
 .navHamburger.active:hover .top,
 .navHamburger.active:hover .middle,
 .navHamburger.active:hover .bottom {
-  transition: top 0.25s, background-color 0.25s, transform 0.25s;
+  transition:
+    top 0.25s,
+    background-color 0.25s,
+    transform 0.25s;
 }
 
 .top,
@@ -61,7 +65,10 @@
   width: 16px;
   height: 1.5px;
   background-color: var(--rp-c-text-2);
-  transition: top 0.25s, background-color 0.5s, transform 0.25s;
+  transition:
+    top 0.25s,
+    background-color 0.5s,
+    transform 0.25s;
 }
 
 .top {
