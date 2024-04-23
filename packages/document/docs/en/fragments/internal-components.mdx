@@ -31,7 +31,7 @@ interface BadgeProps {
 
 ## Helmet
 
-It is generally used to set custom head content in documents (using `react-helmet-async` at the underlying level). The usage is as follows:
+It is generally used to set custom head content in documents (based on [react-helmet-async](https://www.npmjs.com/package/react-helmet-async)). The usage is as follows:
 
 ```tsx title="index.tsx"
 // Below is a custom component, you can import it into your document
@@ -40,7 +40,7 @@ import { Helmet } from 'rspress/runtime';
 function App() {
   return (
     <Helmet>
-      <meta property="og:description"  value="Out-of-box Rspack build tools">
+      <meta property="og:description" value="Out-of-box Rspack build tools" />
     </Helmet>
   );
 }
@@ -53,7 +53,7 @@ Feature component in Hero page, look [the effect in this website](/).
 ```tsx
 import { HomeFeature } from 'rspress/theme';
 
-export interface Feature {
+interface Feature {
   title: string;
   details: string;
   icon: string;
@@ -72,7 +72,7 @@ Hero component in Hero page.
 ```tsx
 import { HomeHero } from 'rspress/theme';
 
-export interface Hero {
+interface Hero {
   name: string;
   text: string;
   tagline: string;
@@ -140,7 +140,7 @@ interface Group {
   items: GroupItem[];
 }
 
-export interface OverviewProps {
+interface OverviewProps {
   // content before data rendering
   content?: React.ReactNode;
   // data
