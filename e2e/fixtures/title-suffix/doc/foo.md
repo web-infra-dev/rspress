@@ -1,0 +1,5 @@
+---
+titleSuffix: '| Foo Suffix'
+---
+
+# Foo
