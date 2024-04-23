@@ -43,6 +43,26 @@ import PageType from '@en/fragments/page-type';
 
 <PageType />
 
+## titleSuffix
+
+- Type: `string`
+
+Set the suffix of the page title. When `titleSuffix` is not set, the site's [title](/api//config/config-basic#title) is used as the suffix by default.
+
+```yaml
+---
+titleSuffix: 'Rspack-based Static Site Generator'
+---
+```
+
+The default separator between the title and the suffix is `-`, you can also use `|` for separation:
+
+```yaml
+---
+titleSuffix: '| Rspack-based Static Site Generator'
+---
+```
+
 ## hero
 
 - Type: `Object`
@@ -69,7 +89,6 @@ interface Hero {
     link: string;
     theme: 'brand' | 'alt';
   }[];
-  titleSuffix?: string;
 }
 ```
 
@@ -83,7 +102,6 @@ hero:
   name: Rspress
   text: A Documentation Solution
   tagline: A modern documentation development technology stack
-  titleSuffix: '- Rspack-based Static Site Generator'
   actions:
     - theme: brand
       text: Introduction
