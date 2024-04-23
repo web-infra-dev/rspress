@@ -1,6 +1,6 @@
 :global(.rspress-code-content):hover {
   .code-button-group {
-    >button {
+    > button {
       opacity: 1;
     }
   }
@@ -14,12 +14,13 @@
   display: flex;
   gap: 10px;
 
-  >button {
+  > button {
     position: relative;
     display: flex;
     justify-content: center;
     align-items: center;
     opacity: 0;
+    background-color: transparent;
   }
 
   svg {
@@ -67,7 +68,6 @@
   opacity: 0;
   color: #00d600;
 }
-
 
 .wrapped-btn {
   .icon-wrap {
