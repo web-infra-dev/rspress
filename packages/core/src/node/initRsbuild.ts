@@ -149,7 +149,7 @@ async function createInternalBuildConfig(
         'react-syntax-highlighter': path.dirname(
           require.resolve('react-syntax-highlighter/package.json'),
         ),
-        ...(await resolveReactAlias(reactVersion)),
+        ...(await resolveReactAlias(reactVersion, isSSR)),
         ...(await detectCustomIcon(CUSTOM_THEME_DIR)),
         '@theme-assets': path.join(DEFAULT_THEME, '../assets'),
       },
