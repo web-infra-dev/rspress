@@ -23,7 +23,7 @@ export async function detectReactVersion(): Promise<number> {
   return DEFAULT_REACT_VERSION;
 }
 
-export async function resolveReactAlias(reactVersion: number) {
+export async function resolveReactAlias(reactVersion: number, isSSR: boolean) {
   const basedir =
     reactVersion === DEFAULT_REACT_VERSION ? PACKAGE_ROOT : process.cwd();
   const libPaths = [
@@ -41,6 +41,7 @@ export async function resolveReactAlias(reactVersion: number) {
     fileSystem: new CachedInputFileSystem(fs),
     extensions: ['.js'],
     alias,
+    conditionNames: isSSR ? ['...'] : ['browser', '...'],
   });
   await Promise.all(
     libPaths.map(async lib => {
