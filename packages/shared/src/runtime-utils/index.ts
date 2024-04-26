@@ -124,10 +124,11 @@ export function replaceLang(
   },
   base = '',
   cleanUrls = false,
+  isPageNotFound = false,
 ) {
   let url = removeBase(rawUrl, base);
   // rspress.dev/builder + switch to en -> rspress.dev/builder/en/index.html
-  if (!url) {
+  if (!url || isPageNotFound) {
     url = cleanUrls ? '/index' : '/index.html';
   }
 
@@ -179,10 +180,11 @@ export function replaceVersion(
   },
   base = '',
   cleanUrls = false,
+  isPageNotFound = false,
 ) {
   let url = removeBase(rawUrl, base);
   // rspress.dev/builder + switch to en -> rspress.dev/builder/en/index.html
-  if (!url) {
+  if (!url || isPageNotFound) {
     url = cleanUrls ? '/index' : '/index.html';
   }
   let versionPart = '';
