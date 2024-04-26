@@ -1,6 +1,6 @@
 {
   "name": "@rspress/plugin-typedoc",
-  "version": "1.18.4",
+  "version": "1.19.0",
   "description": "A plugin for rspress to integrate typedoc",
   "bugs": "https://github.com/web-infra-dev/rspress/issues",
   "repository": {
@@ -23,7 +23,7 @@
     "node": ">=14.17.6"
   },
   "devDependencies": {
-    "@modern-js/tsconfig": "2.49.0",
+    "@modern-js/tsconfig": "2.49.2",
     "@types/node": "^18.11.17",
     "@types/react": "^18",
     "@types/react-dom": "^18",
