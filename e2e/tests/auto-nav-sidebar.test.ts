@@ -44,7 +44,7 @@ test.describe('Auto nav and sidebar test', async () => {
     const h2 = await page.$$('.overview-index h2');
     const h2Texts = await Promise.all(h2.map(element => element.textContent()));
     expect(h2Texts.join(',')).toEqual(
-      ['Config', 'Client API', 'Others'].join(','),
+      ['Config', 'Client API', '命令', 'Single'].join(','),
     );
 
     const h3 = await page.$$('.overview-group_8f375 h3');
@@ -59,6 +59,7 @@ test.describe('Auto nav and sidebar test', async () => {
         'Runtime API',
         '内置组件',
         '命令',
+        'Single',
       ].join(','),
     );
 
