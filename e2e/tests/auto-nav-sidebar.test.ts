@@ -44,21 +44,21 @@ test.describe('Auto nav and sidebar test', async () => {
     const h2 = await page.$$('.overview-index h2');
     const h2Texts = await Promise.all(h2.map(element => element.textContent()));
     expect(h2Texts.join(',')).toEqual(
-      ['Config', 'Client API', '命令', 'Single'].join(','),
+      ['Config', 'Client API', 'Commands', 'Single'].join(','),
     );
 
     const h3 = await page.$$('.overview-group_8f375 h3');
     const h3Texts = await Promise.all(h3.map(element => element.textContent()));
     expect(h3Texts.join(',')).toEqual(
       [
-        '基础配置',
-        '主题配置',
-        'Front Matter 配置',
-        '构建配置',
+        'Basic Config',
+        'Theme Config',
+        'Front Matter Config',
+        'Build Config',
         'Client API Overview',
         'Runtime API',
-        '内置组件',
-        '命令',
+        'Components',
+        'Commands',
         'Single',
       ].join(','),
     );
@@ -72,11 +72,11 @@ test.describe('Auto nav and sidebar test', async () => {
         'nav',
         'sidebar',
         'builderConfig',
-        '默认配置',
+        'Default Config',
         'markdown',
         'markdown.remarkPlugins',
-        '用法',
-        '示例',
+        'Usage',
+        'Example',
         'rspress dev',
         'rspress build',
       ].join(','),
@@ -97,7 +97,12 @@ test.describe('Auto nav and sidebar test', async () => {
     const h3 = await page.$$('.overview-group_8f375 h3');
     const h3Texts = await Promise.all(h3.map(element => element.textContent()));
     expect(h3Texts.join(',')).toEqual(
-      ['基础配置', '主题配置', 'Front Matter 配置', '构建配置'].join(','),
+      [
+        'Basic Config',
+        'Theme Config',
+        'Front Matter Config',
+        'Build Config',
+      ].join(','),
     );
 
     const a = await page.$$('.overview-group_8f375 ul a');
@@ -109,7 +114,7 @@ test.describe('Auto nav and sidebar test', async () => {
         'nav',
         'sidebar',
         'builderConfig',
-        '默认配置',
+        'Default Config',
         'markdown',
         'markdown.remarkPlugins',
       ].join(','),
@@ -129,10 +134,10 @@ test.describe('Auto nav and sidebar test', async () => {
 
     const h3 = await page.$$('.overview-group_8f375 h3');
     const h3Texts = await Promise.all(h3.map(element => element.textContent()));
-    expect(h3Texts.join(',')).toEqual(['Runtime API', '内置组件'].join(','));
+    expect(h3Texts.join(',')).toEqual(['Runtime API', 'Components'].join(','));
 
     const a = await page.$$('.overview-group_8f375 ul a');
     const aTexts = await Promise.all(a.map(element => element.textContent()));
-    expect(aTexts.join(',')).toEqual(['用法', '示例'].join(','));
+    expect(aTexts.join(',')).toEqual(['Usage', 'Example'].join(','));
   });
 });

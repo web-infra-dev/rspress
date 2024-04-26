@@ -34,9 +34,11 @@ test.describe('Auto nav and sidebar test', async () => {
       sidebar.map(element => element.textContent()),
     );
     expect(sidebarTexts.join(',')).toEqual(
-      ['API', '命令', 'config基础配置构建配置Front Matter 配置主题配置'].join(
-        ',',
-      ),
+      [
+        'API',
+        'Commands',
+        'configBasic ConfigBuild ConfigFront Matter ConfigTheme Config',
+      ].join(','),
     );
   });
 });
