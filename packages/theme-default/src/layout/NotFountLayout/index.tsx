@@ -1,8 +1,9 @@
-import { usePageData } from '@rspress/runtime';
+import { usePageData, withBase } from '@rspress/runtime';
 
 export function NotFoundLayout() {
-  const { siteData } = usePageData();
+  const { siteData, page } = usePageData();
   const defaultLang = siteData.lang;
+  const defaultVersion = siteData.multiVersion.default;
   // Consider the existing sites include the defaultLang in some links, such as '/zh/guide/quick-start'
   // We need to redirect them to '/guide/quick-start'
   // In the meanwhile, we will not show the 404 page for the user experience
@@ -14,6 +15,14 @@ export function NotFoundLayout() {
     const redirectUrl = location.pathname.replace(`/${defaultLang}/`, '/');
     window.location.replace(redirectUrl);
     return <></>;
+  }
+
+  let root = '/';
+  if (defaultVersion && page.version !== defaultVersion) {
+    root += `${page.version}/`;
+  }
+  if (defaultLang && page.lang !== defaultLang) {
+    root += `${page.lang}/`;
   }
 
   // The 404 page content
@@ -29,7 +38,7 @@ export function NotFoundLayout() {
       <div className="pt-5">
         <a
           className="py-2 px-4 rounded-2xl inline-block border-solid border-brand text-brand font-medium hover:border-brand-dark hover:text-brand-dark transition-colors duration-300"
-          href={siteData.base}
+          href={withBase(root)}
           aria-label="go to home"
         >
           Take me home
