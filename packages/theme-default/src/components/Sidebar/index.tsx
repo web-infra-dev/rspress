@@ -180,6 +180,12 @@ export function Sidebar(props: Props) {
       />
     );
   };
+
+  // If there is no sidebar data, do not render the sidebar
+  if (!sidebarData.length) {
+    return null;
+  }
+
   return (
     <aside
       className={`${styles.sidebar} rspress-sidebar ${

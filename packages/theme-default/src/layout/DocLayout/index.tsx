@@ -102,7 +102,7 @@ export function DocLayout(props: DocLayoutProps) {
             <ScrollToTop />
           </NoSSR>
         )}
-        {uiSwitch.showAside ? (
+        {uiSwitch.showAside && headers.length ? (
           <div
             className={styles.asideContainer}
             style={{
