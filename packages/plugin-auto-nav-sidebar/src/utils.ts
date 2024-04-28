@@ -8,8 +8,10 @@ export async function detectFilePath(rawPath: string) {
   const extensions = ['.mdx', '.md', '.tsx', '.jsx', '.ts', '.js'];
   // The params doesn't have extension name, so we need to try to find the file with the extension name.
   let realPath: string | undefined = rawPath;
-  const filename = path.basename(rawPath);
-  if (filename.indexOf('.') === -1) {
+  const fileExtname = path.extname(rawPath);
+
+  // pathname may contain .json, see issue: https://github.com/web-infra-dev/rspress/issues/951
+  if (!extensions.includes(fileExtname)) {
     const pathWithExtension = extensions.map(ext => `${rawPath}${ext}`);
     const pathExistInfo = await Promise.all(
       pathWithExtension.map(p => fs.pathExists(p)),
@@ -23,7 +25,11 @@ export async function detectFilePath(rawPath: string) {
 export async function extractTitleAndOverviewHeaders(
   filePath: string,
   rootDir: string,
-): Promise<{ title: string; overviewHeaders: string | undefined }> {
+): Promise<{
+  realPath: string | undefined;
+  title: string;
+  overviewHeaders: string | undefined;
+}> {
   const realPath = await detectFilePath(filePath);
   if (!realPath) {
     logger.warn(
@@ -33,6 +39,7 @@ export async function extractTitleAndOverviewHeaders(
       )}".`,
     );
     return {
+      realPath,
       title: '',
       overviewHeaders: undefined,
     };
@@ -43,6 +50,7 @@ export async function extractTitleAndOverviewHeaders(
   const match = content.match(h1RegExp);
   const { frontmatter } = loadFrontMatter(content, filePath, rootDir);
   return {
+    realPath,
     title: frontmatter.title || match?.[1] || fileNameWithoutExt,
     overviewHeaders: frontmatter.overviewHeaders,
   };

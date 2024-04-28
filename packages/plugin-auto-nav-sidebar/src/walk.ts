@@ -131,7 +131,7 @@ export async function scanSideMeta(
           rootDir,
         );
         const title = label || titleAndOverviewHeaders.title;
-        const realPath = await detectFilePath(path.resolve(workDir, name));
+        const realPath = titleAndOverviewHeaders.realPath;
         return {
           text: title,
           link: addRoutePrefix(pureLink),
