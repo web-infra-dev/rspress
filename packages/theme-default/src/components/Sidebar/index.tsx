@@ -181,16 +181,10 @@ export function Sidebar(props: Props) {
     );
   };
 
-  // If there is no sidebar data, do not render the sidebar
-  if (!sidebarData.length) {
-    return null;
-  }
-
-  return (
+  return uiSwitch.showSidebar ? (
     <aside
-      className={`${styles.sidebar} rspress-sidebar ${
-        isSidebarOpen ? styles.open : ''
-      }`}
+      className={`${styles.sidebar} rspress-sidebar ${isSidebarOpen ? styles.open : ''
+        }`}
     >
       <div className={`${styles.sidebarContainer}`}>
         {!uiSwitch.showNavbar ? null : (
@@ -215,5 +209,5 @@ export function Sidebar(props: Props) {
         </div>
       </div>
     </aside>
-  );
+  ) : null;
 }

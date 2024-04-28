@@ -79,7 +79,7 @@ export function DocLayout(props: DocLayoutProps) {
           {isOverviewPage ? (
             <>
               {beforeDocContent}
-                <Overview content={docContent} />
+              <Overview content={docContent} />
               {afterDocContent}
             </>
           ) : (
@@ -102,16 +102,16 @@ export function DocLayout(props: DocLayoutProps) {
             <ScrollToTop />
           </NoSSR>
         )}
-        {uiSwitch.showAside && headers.length ? (
+        {uiSwitch.showAside ? (
           <div
             className={styles.asideContainer}
             style={{
               ...(uiSwitch.showNavbar
                 ? {}
                 : {
-                    marginTop: 0,
-                    paddingTop: '32px',
-                  }),
+                  marginTop: 0,
+                  paddingTop: '32px',
+                }),
             }}
           >
             <div>

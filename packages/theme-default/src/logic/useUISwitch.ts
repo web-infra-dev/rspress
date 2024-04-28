@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import { useLocation, usePageData } from '@rspress/runtime';
 import { useEnableNav } from './useHiddenNav';
 import { useLocaleSiteData } from './useLocaleSiteData';
+import { useSidebarData } from './useSidebarData';
 
 export enum QueryStatus {
   Show = '1',
@@ -17,6 +18,7 @@ export interface UISwitchResult {
 
 export function useUISwitch(): UISwitchResult {
   const { page, siteData } = usePageData();
+  const sidebarData = useSidebarData()
   const { frontmatter } = page;
   const { themeConfig } = siteData;
   const localesData = useLocaleSiteData();
@@ -28,6 +30,7 @@ export function useUISwitch(): UISwitchResult {
       typeof window === 'undefined' ? true : window.top === window.self;
     return (
       (frontmatter?.outline ?? themeConfig?.outline ?? defaultHasAside) &&
+      page.toc.length > 0 &&
       !isOverviewPage
     );
   };
@@ -43,7 +46,7 @@ export function useUISwitch(): UISwitchResult {
   // 2. themeConfig.locales.sidebar
   // 3. themeConfig.sidebar
   const showSidebar =
-    frontmatter?.sidebar !== false && Object.keys(sidebar).length > 0;
+    frontmatter?.sidebar !== false && Object.keys(sidebar).length > 0 && sidebarData.items.length > 0;
   useEffect(() => {
     setShowAside(getShowAside());
   }, [page, siteData]);
