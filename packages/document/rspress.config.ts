@@ -1,6 +1,7 @@
 import { defineConfig } from 'rspress/config';
 import { pluginOpenGraph } from 'rsbuild-plugin-open-graph';
 import { pluginGoogleAnalytics } from 'rsbuild-plugin-google-analytics';
+import { pluginFontOpenSans } from 'rspress-plugin-font-open-sans';
 
 export default defineConfig({
   root: 'docs',
@@ -16,6 +17,7 @@ export default defineConfig({
   markdown: {
     checkDeadLinks: true,
   },
+  plugins: [pluginFontOpenSans()],
   builderConfig: {
     plugins: [
       pluginGoogleAnalytics({ id: 'G-66B2Z6KG0J' }),
