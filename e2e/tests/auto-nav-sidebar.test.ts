@@ -55,6 +55,7 @@ test.describe('Auto nav and sidebar test', async () => {
         'Theme Config',
         'Front Matter Config',
         'Build Config',
+        'Extname Config',
         'Client API Overview',
         'Runtime API',
         'Components',
@@ -102,6 +103,7 @@ test.describe('Auto nav and sidebar test', async () => {
         'Theme Config',
         'Front Matter Config',
         'Build Config',
+        'Extname Config',
       ].join(','),
     );
 
