@@ -13,7 +13,10 @@ export async function prismLanguageVMPlugin(context: FactoryContext) {
 
       if (isArray) {
         const temp = aliases[name] || (aliases[name] = []);
-        temp.push(alias);
+
+        if(!temp.includes(alias)) {
+          temp.push(alias);
+        }
       }
 
       return { alias, name };

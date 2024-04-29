@@ -314,6 +314,16 @@ importers:
         specifier: ^14
         version: 14.0.0
 
+  e2e/fixtures/prism-sytax-highlighter:
+    dependencies:
+      rspress:
+        specifier: workspace:*
+        version: link:../../../packages/cli
+    devDependencies:
+      '@types/node':
+        specifier: ^14
+        version: 14.0.0
+
   e2e/fixtures/production:
     dependencies:
       rspress:
