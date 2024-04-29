@@ -1,0 +1,13 @@
+export default [
+  {
+    type: 'file',
+    name: 'index',
+    label: 'Client API Overview',
+  },
+  {
+    type: 'file',
+    name: 'api-runtime',
+    overviewHeaders: [],
+  },
+  'api-components',
+];

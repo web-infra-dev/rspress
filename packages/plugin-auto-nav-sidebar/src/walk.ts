@@ -51,10 +51,11 @@ async function getSideMetaFromMetaFile(
     await Promise.all(
       subItems.map(async item => {
         // Fix https://github.com/web-infra-dev/rspress/issues/346
-        if (item === '_meta.json') {
-          return null;
-        }
-        if (item === '_meta.js') {
+        if (
+          item === '_meta.json' ||
+          item === '_meta.js' ||
+          item === '_meta.ts'
+        ) {
           return null;
         }
         const stat = await fs.stat(path.join(workDir, item));
