@@ -14,7 +14,7 @@ import {
 import { NavMeta, SideMeta } from './type';
 import { detectFilePath, extractTitleAndOverviewHeaders } from './utils';
 import { logger } from '@rspress/shared/logger';
-import { loadConfig } from '@rspress/shared';
+import { loadConfig } from '@rspress/shared/node-utils';
 
 // Get the sidebar config from the `_meta.json` file
 async function getSideMetaFromMetaFile(
