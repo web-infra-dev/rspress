@@ -757,9 +757,6 @@ importers:
       '@rspress/core':
         specifier: ^1.0.2
         version: link:../core
-      '@rspress/shared':
-        specifier: workspace:*
-        version: link:../shared
       documentation:
         specifier: 14.0.2
         version: 14.0.2
@@ -773,6 +770,9 @@ importers:
         specifier: 3.0.1
         version: 3.0.1
     devDependencies:
+      '@rspress/shared':
+        specifier: workspace:*
+        version: link:../shared
       '@types/mdast':
         specifier: ^3.0.10
         version: 3.0.12
@@ -890,9 +890,6 @@ importers:
       '@rspress/runtime':
         specifier: ^1.0.2
         version: link:../runtime
-      '@rspress/shared':
-        specifier: workspace:*
-        version: link:../shared
       medium-zoom:
         specifier: 1.1.0
         version: 1.1.0
@@ -900,6 +897,9 @@ importers:
       '@modern-js/tsconfig':
         specifier: 2.49.2
         version: 2.49.2
+      '@rspress/shared':
+        specifier: workspace:*
+        version: link:../shared
       '@types/node':
         specifier: ^18.11.17
         version: 18.11.17
