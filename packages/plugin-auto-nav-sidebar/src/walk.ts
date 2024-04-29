@@ -54,6 +54,9 @@ async function getSideMetaFromMetaFile(
         if (item === '_meta.json') {
           return null;
         }
+        if (item === '_meta.js') {
+          return null;
+        }
         const stat = await fs.stat(path.join(workDir, item));
         // If the item is a directory, we will transform it to a object with `type` and `name` property.
         if (stat.isDirectory()) {
