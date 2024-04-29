@@ -115,10 +115,8 @@ export function SidebarGroup(props: SidebarItemProps) {
         onClick={e => {
           if (item.link) {
             navigate(withBase(normalizeHref(item.link)));
-            collapsed && toggleCollapse(e);
-          } else {
-            collapsible && toggleCollapse(e);
           }
+          collapsible && toggleCollapse(e);
         }}
         style={{
           borderRadius:
