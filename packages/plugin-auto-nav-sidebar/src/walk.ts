@@ -14,6 +14,80 @@ import {
 import { NavMeta, SideMeta } from './type';
 import { detectFilePath, extractTitleAndOverviewHeaders } from './utils';
 import { logger } from '@rspress/shared/logger';
+import { loadConfig } from '@rspress/shared';
+
+// Get the sidebar config from the `_meta.json` file
+async function getSideMetaFromMetaFile(
+  workDir: string,
+  rootDir: string,
+): Promise<SideMeta> {
+  const metaJsFilePath = path.resolve(workDir, '_meta.js');
+  if (await fs.exists(metaJsFilePath)) {
+    const { content: sideMeta } = (await loadConfig({
+      path: metaJsFilePath,
+    })) as any;
+    return sideMeta;
+  }
+
+  const metaJsonFilePath = path.resolve(workDir, '_meta.json');
+  if (await fs.exists(metaJsonFilePath)) {
+    const sideMeta = (await fs.readJSON(metaJsonFilePath, 'utf8')) as SideMeta;
+    return sideMeta;
+  }
+
+  // If `_meta.js` or `_meta.json` file doesn't exist, we will generate the sidebar config from the directory structure.
+  let subItems = await fs.readdir(workDir);
+  // If there exists a file with the same name of the directory folder
+  // we don't need to generate SideMeta for this single file
+  subItems = subItems.filter(item => {
+    const hasExtension = ['.md', '.mdx'].some(ext => item.endsWith(ext));
+    const hasSameBaseName = subItems.some(elem => {
+      const baseName = elem.replace(/\.[^/.]+$/, '');
+      return baseName === item.replace(/\.[^/.]+$/, '') && elem !== item;
+    });
+    return !(hasExtension && hasSameBaseName);
+  });
+  const sideMeta = (
+    await Promise.all(
+      subItems.map(async item => {
+        // Fix https://github.com/web-infra-dev/rspress/issues/346
+        if (item === '_meta.json') {
+          return null;
+        }
+        const stat = await fs.stat(path.join(workDir, item));
+        // If the item is a directory, we will transform it to a object with `type` and `name` property.
+        if (stat.isDirectory()) {
+          // set H1 title to sidebar label when have same name md/mdx file
+          const mdFilePath = path.join(workDir, `${item}.md`);
+          const mdxFilePath = path.join(workDir, `${item}.mdx`);
+          let label = item;
+
+          const setLabelFromFilePath = async (filePath: string) => {
+            const { title } = await extractTitleAndOverviewHeaders(
+              filePath,
+              rootDir,
+            );
+            label = title;
+          };
+
+          if (fs.existsSync(mdxFilePath)) {
+            await setLabelFromFilePath(mdxFilePath);
+          } else if (fs.existsSync(mdFilePath)) {
+            await setLabelFromFilePath(mdFilePath);
+          }
+
+          return {
+            type: 'dir',
+            name: item,
+            label,
+          };
+        }
+        return item;
+      }),
+    )
+  ).filter(Boolean) as SideMeta;
+  return sideMeta;
+}
 
 export async function scanSideMeta(
   workDir: string,
@@ -32,64 +106,7 @@ export async function scanSideMeta(
   const metaFile = path.resolve(workDir, '_meta.json');
   // Fix the windows path
   const relativePath = slash(path.relative(rootDir, workDir));
-  let sideMeta: SideMeta | undefined;
-  // Get the sidebar config from the `_meta.json` file
-  try {
-    // Don't use require to avoid require cache, which make hmr not work.
-    sideMeta = (await fs.readJSON(metaFile, 'utf8')) as SideMeta;
-  } catch (e) {
-    // If the `_meta.json` file doesn't exist, we will generate the sidebar config from the directory structure.
-    let subItems = await fs.readdir(workDir);
-    // If there exists a file with the same name of the directory folder
-    // we don't need to generate SideMeta for this single file
-    subItems = subItems.filter(item => {
-      const hasExtension = ['.md', '.mdx'].some(ext => item.endsWith(ext));
-      const hasSameBaseName = subItems.some(elem => {
-        const baseName = elem.replace(/\.[^/.]+$/, '');
-        return baseName === item.replace(/\.[^/.]+$/, '') && elem !== item;
-      });
-      return !(hasExtension && hasSameBaseName);
-    });
-    sideMeta = (
-      await Promise.all(
-        subItems.map(async item => {
-          // Fix https://github.com/web-infra-dev/rspress/issues/346
-          if (item === '_meta.json') {
-            return null;
-          }
-          const stat = await fs.stat(path.join(workDir, item));
-          // If the item is a directory, we will transform it to a object with `type` and `name` property.
-          if (stat.isDirectory()) {
-            // set H1 title to sidebar label when have same name md/mdx file
-            const mdFilePath = path.join(workDir, `${item}.md`);
-            const mdxFilePath = path.join(workDir, `${item}.mdx`);
-            let label = item;
-
-            const setLabelFromFilePath = async (filePath: string) => {
-              const { title } = await extractTitleAndOverviewHeaders(
-                filePath,
-                rootDir,
-              );
-              label = title;
-            };
-
-            if (fs.existsSync(mdxFilePath)) {
-              await setLabelFromFilePath(mdxFilePath);
-            } else if (fs.existsSync(mdFilePath)) {
-              await setLabelFromFilePath(mdFilePath);
-            }
-
-            return {
-              type: 'dir',
-              name: item,
-              label,
-            };
-          }
-          return item;
-        }),
-      )
-    ).filter(Boolean) as SideMeta;
-  }
+  const sideMeta: SideMeta = await getSideMetaFromMetaFile(workDir, rootDir);
 
   const sidebarFromMeta: (
     | SidebarGroup
