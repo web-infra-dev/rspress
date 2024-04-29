@@ -1,0 +1,19 @@
+[
+  {
+    "type": "file",
+    "name": "index",
+    "label": "API Overview"
+  },
+  {
+    "type": "dir",
+    "name": "config",
+    "label": "Config"
+  },
+  {
+    "type": "dir",
+    "name": "client-api",
+    "label": "Client API"
+  },
+  "commands",
+  "single-page"
+]
