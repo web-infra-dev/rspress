@@ -42,8 +42,8 @@
 }
 
 .selected {
-  color: var(--rp-c-brand-dark);
-  border-color: var(--rp-c-brand-dark);
+  color: var(--rp-c-link);
+  border-color: currentColor;
 }
 
 .no-scrollbar::-webkit-scrollbar {
