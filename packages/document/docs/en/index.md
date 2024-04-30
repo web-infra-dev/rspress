@@ -5,7 +5,7 @@ titleSuffix: 'Rspack-based Static Site Generator'
 hero:
   name: Rspress
   text: |
-    The Lightning Fast
+    Lightning Fast
     Static Site Generator
   tagline: Simple, efficient and easy to extend
   actions:
