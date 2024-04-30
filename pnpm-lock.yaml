@@ -698,6 +698,9 @@ importers:
       rspress:
         specifier: workspace:*
         version: link:../cli
+      rspress-plugin-font-open-sans:
+        specifier: ^1.0.0
+        version: 1.0.0
       ts-node:
         specifier: ^10.9.1
         version: 10.9.1(@types/node@18.11.17)(typescript@5.0.4)
@@ -9575,6 +9578,10 @@ packages:
     dependencies:
       fs-extra: 11.2.0
     dev: false
+
+  /rspress-plugin-font-open-sans@1.0.0:
+    resolution: {integrity: sha512-4GP0pd7h3W8EWdqE0VkA62nzUJZNy4ZnYK7be8+lOKHQKsQ5nZ+22A/VurNssi1eZFx3kjwbmIuoAkgb5W8S9Q==}
+    dev: true
 
   /run-async@2.4.1:
     resolution: {integrity: sha512-tvVnVv01b8c1RrA6Ep7JkStj85Guv/YrMcwqYQnwjsAS2cTmmPGBBjAjpCW7RrSodNSoE2/qg9O4bceNvUuDgQ==}

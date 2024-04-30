@@ -7,3 +7,7 @@
 .documate-button {
   border-radius: 2rem !important;
 }
+
+.rspress-home-hero-text {
+  max-width: 40rem;
+}
