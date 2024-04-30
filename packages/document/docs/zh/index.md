@@ -5,7 +5,7 @@ titleSuffix: '基于 Rspack 的静态站点生成器'
 hero:
   name: Rspress
   text: |
-    闪电般快速的
+    快如闪电的
     静态站点生成器
   tagline: 简单、高性能、易于扩展
   image:
