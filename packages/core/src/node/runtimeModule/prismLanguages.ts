@@ -5,14 +5,23 @@ import { FactoryContext, RuntimeModuleID } from '.';
 export async function prismLanguageVMPlugin(context: FactoryContext) {
   const { config } = context;
   const { highlightLanguages = [] } = config.markdown || {};
+  const aliases: Record<string, string[]> = {};
   const languageMeta = uniqBy(
     [...DEFAULT_HIGHLIGHT_LANGUAGES, ...highlightLanguages].map(language => {
-      const [alias, name] = Array.isArray(language)
-        ? language
-        : [language, language];
+      const isArray = Array.isArray(language);
+      const [alias, name] = isArray ? language : [language, language];
+
+      if (isArray) {
+        const temp = aliases[name] || (aliases[name] = []);
+
+        if(!temp.includes(alias)) {
+          temp.push(alias);
+        }
+      }
+
       return { alias, name };
     }),
-    'alias',
+    'name',
   );
 
   const importStatement = languageMeta.map(language => {
@@ -23,8 +32,12 @@ export async function prismLanguageVMPlugin(context: FactoryContext) {
   const moduleContent = `
 ${importStatement.join('\n')}
 
+export const aliases = ${JSON.stringify(aliases)};
+
 export default {
-  ${languageMeta.map(({ alias }) => `"${alias}": ${alias}`)}
+  ${languageMeta.map(({ alias, name }) => {
+    return `"${name}": ${alias}`;
+  })}
 };
 `;
   return {

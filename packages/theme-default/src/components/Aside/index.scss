@@ -1,6 +1,7 @@
 .aside-link {
   padding-bottom: 1px;
 }
+
 .aside-link-text {
   padding: 0px 12px;
   white-space: nowrap;
@@ -9,14 +10,16 @@
   border-radius: var(--rp-radius-small) 0 0 var(--rp-radius-small);
   font-size: 13px;
   line-height: 1.75rem;
+
+  &:hover {
+    background-color: var(--rp-c-bg-mute);
+  }
 }
 
-.aside-link-text:hover {
-  background-color: var(--rp-c-bg-mute);
-}
-
-.aside-active,
-.aside-active:hover {
-  color: var(--rp-c-brand-dark) !important;
-  background-color: var(--rp-c-brand-tint);
+.aside-active {
+  &,
+  &:hover {
+    color: var(--rp-c-link);
+    background-color: var(--rp-c-brand-tint);
+  }
 }

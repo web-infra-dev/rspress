@@ -37,12 +37,12 @@
 :global(summary a) {
   &:not(:global(.header-anchor)) {
     font-weight: 500;
-    border-bottom: 1px dashed var(--rp-c-brand);
+    color: var(--rp-c-link);
     transition: color 0.25s;
   }
 
   &:hover {
-    color: var(--rp-c-brand-dark);
+    border-bottom: 1px dashed var(--rp-c-brand);
     border-style: solid;
   }
 }

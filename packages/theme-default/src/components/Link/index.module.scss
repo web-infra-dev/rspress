@@ -1,8 +1,12 @@
-.link:hover {
-  color: var(--rp-c-brand);
-  transition: color 0.2s;
-}
-
 .link {
   font-weight: 500;
+  transition: opacity 0.2s;
+
+  &:hover {
+    opacity: 0.85;
+  }
+
+  &:active {
+    opacity: 0.7;
+  }
 }

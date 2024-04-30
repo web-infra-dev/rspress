@@ -82,6 +82,7 @@ export function PackageManagerTabs({
 
   return (
     <Tabs
+      groupId="package.manager"
       values={Object.entries(commandInfo).map(([key]) => (
         <div
           key={key}

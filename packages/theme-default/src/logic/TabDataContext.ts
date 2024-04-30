@@ -10,6 +10,7 @@ export interface ITabDataContext {
   setTabData: (data: TabData) => void;
 }
 
-export const TabDataContext = createContext<ITabDataContext>(
-  {} as ITabDataContext,
-);
+export const TabDataContext = createContext<ITabDataContext>({
+  tabData: {},
+  setTabData: () => {},
+});

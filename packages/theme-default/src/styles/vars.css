@@ -21,12 +21,13 @@
   --rp-c-text-4: rgba(60, 60, 60, 0.18);
 
   --rp-c-text-code: #476573;
+  --rp-c-text-code-bg: rgb(153 161 179/ 0.1);
 
-  --rp-c-brand: #0095ff;
-  --rp-c-brand-light: #00aaff;
-  --rp-c-brand-lighter: #ecf4ff;
-  --rp-c-brand-dark: #0077ff;
-  --rp-c-brand-darker: #3367af;
+  --rp-c-brand: #0095ff; /* hsl(204deg 100% 50%) */
+  --rp-c-brand-light: #33adff; /* hsl(204deg 100% 60%) */
+  --rp-c-brand-lighter: #66c2ff; /* hsl(204deg 100% 70%) */
+  --rp-c-brand-dark: #0077ff; /* hsl(212deg 100% 50%) */
+  --rp-c-brand-darker: #005fcc; /* hsl(212deg 100% 40%) */
   --rp-c-brand-tint: rgba(127, 163, 255, 0.16);
 
   --rp-c-gray: #8e8e8e;
@@ -46,6 +47,8 @@
   --rp-radius: 1rem;
   --rp-radius-small: 0.5rem;
   --rp-radius-large: 1.5rem;
+
+  --rp-c-link: var(--rp-c-brand-dark);
 }
 
 .dark {
@@ -64,6 +67,8 @@
 
   /* Will be used in overview page */
   --rp-c-text-code: #c9def1;
+
+  --rp-c-link: var(--rp-c-brand-light);
 }
 
 :root {

@@ -14,5 +14,6 @@
     "name": "client-api",
     "label": "Client API"
   },
-  "commands"
+  "commands",
+  "single-page"
 ]

@@ -14,7 +14,7 @@ export function useTranslationMenuData() {
   );
   const cleanUrls = siteData.route?.cleanUrls || false;
   const hasMultiLanguage = localeLanguages.length > 1;
-  const { lang: currentLang } = page;
+  const { lang: currentLang, pageType } = page;
   const { base } = siteData;
 
   const translationMenuData = hasMultiLanguage
@@ -43,6 +43,7 @@ export function useTranslationMenuData() {
             },
             base,
             cleanUrls,
+            pageType === '404',
           ),
         })),
         activeValue: localeLanguages.find(item => currentLang === item.lang)
@@ -53,7 +54,7 @@ export function useTranslationMenuData() {
 }
 
 export function useVersionMenuData() {
-  const { siteData } = usePageData();
+  const { siteData, page } = usePageData();
   const currentVersion = useVersion();
   const { pathname } = useLocation();
   const cleanUrls = siteData.route?.cleanUrls || false;
@@ -72,6 +73,7 @@ export function useVersionMenuData() {
         },
         base,
         cleanUrls,
+        page.pageType === '404',
       ),
     })),
     text: currentVersion,

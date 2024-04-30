@@ -68,6 +68,34 @@ export async function initPageData(routePath: string): Promise<PageData> {
     };
   }
 
+  let lang = siteData.lang || '';
+  let version = siteData.multiVersion?.default || '';
+
+  if (siteData.lang && typeof window !== 'undefined') {
+    const path = location.pathname
+      .replace(siteData.base, '')
+      .split('/')
+      .slice(0, 2);
+
+    if (siteData.locales.length) {
+      const result = siteData.locales.find(({ lang }) => path.includes(lang));
+
+      if (result) {
+        lang = result.lang;
+      }
+    }
+
+    if (siteData.multiVersion.versions) {
+      const result = siteData.multiVersion.versions.find(version =>
+        path.includes(version),
+      );
+
+      if (result) {
+        version = result;
+      }
+    }
+  }
+
   // 404 Page
   return {
     siteData,
@@ -75,11 +103,11 @@ export async function initPageData(routePath: string): Promise<PageData> {
       pagePath: '',
       pageType: '404',
       routePath: '/404',
-      lang: siteData.lang || '',
+      lang,
       frontmatter: {},
       title: '404',
       toc: [],
-      version: siteData.multiVersion.default || '',
+      version,
       _filepath: '',
       _relativePath: '',
     },

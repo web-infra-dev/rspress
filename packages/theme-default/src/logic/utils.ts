@@ -37,16 +37,29 @@ export function renderHtmlOrText(str?: string | number | null) {
   return isHtml(str) ? htmr(str) : str;
 }
 
+const CODE_TEXT_PATTERN = /`(.*?)`/g;
+const STRONG_TEXT_PATTERN = /\*{2}(?!\*)(.*?)(?<!\*)\*{2}/g;
+const EMPHASIS_TEXT_PATTERN = /\*(?!\*)(.*?)(?<!\*)\*/g;
+
 /**
  * In this method, we will render the markdown text to inline html and support basic markdown syntax, including the following:
  * - bold
+ * - emphasis
  * - inline code
  * @param text The markdown text to render.
  */
 export function renderInlineMarkdown(text: string) {
   const htmlText = text
     .replace(/</g, '&lt;')
-    .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')
-    .replace(/`(.*?)`/g, '<code>$1</code>');
+    .replace(STRONG_TEXT_PATTERN, '<strong>$1</strong>')
+    .replace(EMPHASIS_TEXT_PATTERN, '<em>$1</em>')
+    .replace(CODE_TEXT_PATTERN, '<code>$1</code>');
   return renderHtmlOrText(htmlText);
+}
+
+export function parseInlineMarkdownText(mdx: string) {
+  return mdx
+    .replace(STRONG_TEXT_PATTERN, '$1')
+    .replace(EMPHASIS_TEXT_PATTERN, '$1')
+    .replace(CODE_TEXT_PATTERN, '$1');
 }

@@ -52,7 +52,7 @@ export async function launchDoc({
     prefix: string,
   ): Promise<SidebarGroup> => {
     const base = join(root, lang);
-    const source = ['*.(js|jsx|ts|tsx|md|mdx)']
+    const source = ['*.(js|jsx|ts|tsx|md|mdx|json)'];
     const traverse = async (cwd: string): Promise<SidebarGroup['items']> => {
       // FIXME: win32
       const [files, directories] = await Promise.all([

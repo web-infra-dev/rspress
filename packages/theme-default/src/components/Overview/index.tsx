@@ -120,6 +120,10 @@ export function Overview(props: {
         ) || [],
     };
   }
+
+  const isSingleFile = (item: SidebarItem | NormalizedSidebarGroup) =>
+    !('items' in item) && 'link' in item && '_fileKey' in item;
+
   const groups =
     customGroups ??
     useMemo(() => {
@@ -131,34 +135,47 @@ export function Overview(props: {
                 .length > 0
             );
           }
+          if (
+            isSingleFile(sidebarGroup) &&
+            subFilter(getChildLink(sidebarGroup))
+          ) {
+            return true;
+          }
           return false;
         })
-        .map(sidebarGroup => ({
-          name: sidebarGroup.text || '',
-          items: (sidebarGroup as NormalizedSidebarGroup).items
-            .map(item =>
+        .map(sidebarGroup => {
+          let items = [];
+          if ((sidebarGroup as NormalizedSidebarGroup)?.items) {
+            items = (sidebarGroup as NormalizedSidebarGroup)?.items
+              ?.map(item =>
+                normalizeSidebarItem(
+                  item,
+                  sidebarGroup as NormalizedSidebarGroup,
+                  frontmatter,
+                ),
+              )
+              .filter(Boolean);
+          } else if (isSingleFile(sidebarGroup)) {
+            items = [
               normalizeSidebarItem(
-                item,
-                sidebarGroup as NormalizedSidebarGroup,
+                {
+                  link: sidebarGroup.link,
+                  text: sidebarGroup.text || '',
+                  tag: sidebarGroup.tag,
+                  _fileKey: sidebarGroup._fileKey,
+                  overviewHeaders: sidebarGroup.overviewHeaders,
+                },
+                undefined,
                 frontmatter,
               ),
-            )
-            .filter(Boolean),
-        })) as Group[];
-      const singleLinks = overviewSidebarGroups.filter(
-        item => !('items' in item) && subFilter(item.link),
-      );
-      return [
-        ...group,
-        ...(singleLinks.length > 0
-          ? [
-              {
-                name: defaultGroupTitle,
-                items: singleLinks.map(item => normalizeSidebarItem(item)),
-              },
-            ]
-          : []),
-      ];
+            ];
+          }
+          return {
+            name: sidebarGroup.text || '',
+            items,
+          };
+        }) as Group[];
+      return group;
     }, [overviewSidebarGroups, routePath, frontmatter]);
 
   return (

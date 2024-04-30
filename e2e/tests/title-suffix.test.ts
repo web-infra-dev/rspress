@@ -1,30 +1,22 @@
 import path from 'path';
-import { expect, test } from '@playwright/test';
-import { getPort, killProcess, runDevCommand } from '../utils/runCommands';
+import { test, expect } from '@playwright/test';
+import { runBuildCommand } from '../utils/runCommands';
+import { readFileSync } from 'fs-extra';
 
 const appDir = path.resolve(__dirname, '../fixtures/title-suffix');
 
-test.describe('title suffix', async () => {
-  let appPort: number;
-  let app: unknown;
-  test.beforeAll(async () => {
-    appPort = await getPort();
-    app = await runDevCommand(appDir, appPort);
-  });
+test('title suffix', async () => {
+  await runBuildCommand(appDir);
 
-  test.afterAll(async () => {
-    if (app) {
-      await killProcess(app);
-    }
-  });
+  expect(
+    readFileSync(path.join(appDir, 'doc_build/index.html'), 'utf-8').includes(
+      '<title data-rh="true">Default Title - Index Suffix</title>',
+    ),
+  ).toBeTruthy();
 
-  test('Index page', async ({ page }) => {
-    await page.goto(`http://localhost:${appPort}`);
-    await expect(await page.title()).toBe('Default Title - Index Suffix');
-  });
-
-  test('Foo page', async ({ page }) => {
-    await page.goto(`http://localhost:${appPort}/foo/`);
-    await expect(await page.title()).toBe('Foo | Foo Suffix');
-  });
+  expect(
+    readFileSync(path.join(appDir, 'doc_build/foo.html'), 'utf-8').includes(
+      '<title data-rh="true">Foo | Foo Suffix</title>',
+    ),
+  ).toBeTruthy();
 });

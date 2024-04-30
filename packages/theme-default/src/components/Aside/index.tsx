@@ -1,13 +1,14 @@
 import { useEffect } from 'react';
 import { Header } from '@rspress/shared';
 import {
+  useHiddenNav,
+  scrollToTarget,
   bindingAsideScroll,
   renderInlineMarkdown,
-  scrollToTarget,
-  useHiddenNav,
+  parseInlineMarkdownText,
 } from '../../logic';
 import { DEFAULT_NAV_HEIGHT } from '../../logic/sideEffects';
-import './index.css';
+import './index.scss';
 
 export function Aside(props: { headers: Header[]; outlineTitle: string }) {
   const { headers } = props;
@@ -43,6 +44,7 @@ export function Aside(props: { headers: Header[]; outlineTitle: string }) {
       <li key={header.id}>
         <a
           href={`#${header.id}`}
+          title={parseInlineMarkdownText(header.text)}
           className="aside-link transition-all duration-300 hover:text-text-1 text-text-2 block"
           style={{
             paddingLeft: (header.depth - baseHeaderLevel) * 12,
