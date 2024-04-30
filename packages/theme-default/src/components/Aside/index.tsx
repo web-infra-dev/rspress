@@ -8,7 +8,7 @@ import {
   parseInlineMarkdownText,
 } from '../../logic';
 import { DEFAULT_NAV_HEIGHT } from '../../logic/sideEffects';
-import './index.css';
+import './index.scss';
 
 export function Aside(props: { headers: Header[]; outlineTitle: string }) {
   const { headers } = props;

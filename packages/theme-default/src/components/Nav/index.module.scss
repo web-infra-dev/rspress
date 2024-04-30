@@ -44,6 +44,13 @@
   border-radius: var(--rp-radius);
 }
 
+:global(.dark) {
+  .activeItem,
+  .singleItem:hover {
+    color: var(--rp-c-brand-light);
+  }
+}
+
 .navBarTitle {
   flex-shrink: 0;
 }

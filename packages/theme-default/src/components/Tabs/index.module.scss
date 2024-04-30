@@ -46,6 +46,13 @@
   border-color: var(--rp-c-brand-dark);
 }
 
+:global(.dark) {
+  .selected {
+    color: var(--rp-c-brand-light);
+    border-color: var(--rp-c-brand-light);
+  }
+}
+
 .no-scrollbar::-webkit-scrollbar {
   display: none;
 }

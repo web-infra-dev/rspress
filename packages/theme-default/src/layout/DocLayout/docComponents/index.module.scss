@@ -47,6 +47,18 @@
   }
 }
 
+:global(.dark) {
+  .link,
+  :global(summary) .link,
+  :global(summary a) {
+    &:not(:global(.header-anchor)) {
+      font-weight: 500;
+      color: var(--rp-c-brand-light);
+      transition: color 0.25s;
+    }
+  }
+}
+
 :global(.header-anchor) {
   color: var(--rp-c-brand);
 }

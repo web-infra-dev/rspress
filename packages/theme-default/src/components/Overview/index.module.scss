@@ -81,6 +81,15 @@
   }
 }
 
+:global(.dark) {
+  :global(.overview-index) {
+    h3,
+    h3 > a {
+      color: var(--rp-c-brand-light);
+    }
+  }
+}
+
 .overview-groups a {
   display: block;
   font-size: 15px;
@@ -118,10 +127,6 @@
       left: -0.25rem;
     }
   }
-}
-
-:global(.dark) overview-groups a {
-  font-weight: 400;
 }
 
 .overview-group {

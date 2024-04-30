@@ -122,6 +122,12 @@
   transition: all 0.2s ease;
 }
 
+:global(.dark) {
+  .menuItemActive {
+    color: var(--rp-c-brand-light);
+  }
+}
+
 .menuGroupActive {
   background-color: var(--rp-c-bg-mute);
 }

@@ -79,7 +79,6 @@ export function SidebarItem(props: SidebarItemProps) {
           marginLeft: depth === 0 ? 0 : '18px',
           borderRadius: '0 var(--rp-radius) var(--rp-radius) 0',
           ...(depth === 0 ? highlightTitleStyle : {}),
-          ...(active ? { color: 'var(--rp-c-brand)' } : {}),
         }}
       >
         <Tag tag={item.tag} />
