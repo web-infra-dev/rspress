@@ -106,7 +106,7 @@
 
 .menuItemActive {
   background-color: var(--rp-c-brand-tint);
-  color: var(--rp-c-brand);
+  color: var(--rp-c-link);
   font-weight: bolder;
   position: relative;
 }
@@ -120,12 +120,6 @@
   height: 100%;
   background-color: var(--rp-c-brand);
   transition: all 0.2s ease;
-}
-
-:global(.dark) {
-  .menuItemActive {
-    color: var(--rp-c-brand-light);
-  }
 }
 
 .menuGroupActive {

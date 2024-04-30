@@ -19,16 +19,7 @@
 .aside-active {
   &,
   &:hover {
-    color: var(--rp-c-brand-dark);
+    color: var(--rp-c-link);
     background-color: var(--rp-c-brand-tint);
-  }
-}
-
-.dark {
-  .aside-active {
-    &,
-    &:hover {
-      color: var(--rp-c-brand-light);
-    }
   }
 }

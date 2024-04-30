@@ -47,6 +47,8 @@
   --rp-radius: 1rem;
   --rp-radius-small: 0.5rem;
   --rp-radius-large: 1.5rem;
+
+  --rp-c-link: var(--rp-c-brand-dark);
 }
 
 .dark {
@@ -65,6 +67,8 @@
 
   /* Will be used in overview page */
   --rp-c-text-code: #c9def1;
+
+  --rp-c-link: var(--rp-c-brand-light);
 }
 
 :root {
