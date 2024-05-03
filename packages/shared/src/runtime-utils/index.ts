@@ -12,17 +12,9 @@ export const DEFAULT_HIGHLIGHT_LANGUAGES = [
   ['js', 'javascript'],
   ['ts', 'typescript'],
   ['jsx', 'tsx'],
-  'tsx',
-  'json',
-  'css',
-  'scss',
-  'less',
   ['xml', 'xml-doc'],
-  'diff',
-  'yaml',
   ['md', 'markdown'],
   ['mdx', 'tsx'],
-  'bash',
 ];
 
 export const isSCM = () => Boolean(process.env.BUILD_VERSION);
