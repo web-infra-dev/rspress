@@ -1,7 +1,7 @@
 import path from 'path';
-import fs from '@rspress/shared/fs-extra';
-import { logger } from '@rspress/shared/logger';
+import fsExtra from '@rspress/shared/fs-extra';
 import enhancedResolve from 'enhanced-resolve';
+import { logger } from '@rspress/shared/logger';
 import { PACKAGE_ROOT } from '../constants';
 
 const { CachedInputFileSystem, ResolverFactory } = enhancedResolve;
@@ -14,8 +14,10 @@ export async function detectReactVersion(): Promise<number> {
   // if not found, return 18
   const cwd = process.cwd();
   const reactPath = path.join(cwd, 'node_modules', 'react');
-  if (await fs.pathExists(reactPath)) {
-    const reactPkg = await fs.readJson(path.join(reactPath, 'package.json'));
+  if (await fsExtra.pathExists(reactPath)) {
+    const reactPkg = await fsExtra.readJson(
+      path.join(reactPath, 'package.json'),
+    );
     const version = Number(reactPkg.version.split('.')[0]);
     return version;
   }
@@ -38,7 +40,7 @@ export async function resolveReactAlias(reactVersion: number, isSSR: boolean) {
   }
   const alias: Record<string, string> = {};
   const resolver = ResolverFactory.createResolver({
-    fileSystem: new CachedInputFileSystem(fs),
+    fileSystem: new CachedInputFileSystem(fsExtra as any, 0),
     extensions: ['.js'],
     alias,
     conditionNames: isSSR ? ['...'] : ['browser', '...'],

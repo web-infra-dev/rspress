@@ -20,6 +20,7 @@ export async function extractPageData(
   domain: string,
   root: string,
   routeService: RouteService,
+  highlighterLangs: Set<string>,
 ): Promise<(PageIndexInfo | null)[]> {
   return Promise.all(
     routeService.getRoutes().map(async (route, index) => {
@@ -65,6 +66,7 @@ export async function extractPageData(
         html,
         title,
         toc: rawToc,
+        languages,
       } = await compile({
         value: content,
         filepath: route.absolutePath,
@@ -75,6 +77,8 @@ export async function extractPageData(
       if (!title?.length && !frontmatter && !frontmatter.title?.length) {
         return null;
       }
+
+      languages.forEach(lang => highlighterLangs.add(lang));
       content = htmlToText(String(html), {
         wordwrap: 80,
         selectors: [

@@ -1,12 +1,15 @@
 import path from 'path';
+import fsExtra from '@rspress/shared/fs-extra';
 import { groupBy } from 'lodash-es';
-import { SEARCH_INDEX_NAME } from '@rspress/shared';
-import fs from '@rspress/shared/fs-extra';
-import { FactoryContext, RuntimeModuleID } from '..';
-import { normalizeThemeConfig } from './normalizeThemeConfig';
-import { extractPageData } from './extractPageData';
+import {
+  DEFAULT_HIGHLIGHT_LANGUAGES,
+  SEARCH_INDEX_NAME,
+} from '@rspress/shared';
 import { createHash } from '@/node/utils';
 import { TEMP_DIR, isProduction } from '@/node/constants';
+import { normalizeThemeConfig } from './normalizeThemeConfig';
+import { extractPageData } from './extractPageData';
+import { FactoryContext, RuntimeModuleID } from '..';
 
 // How can we let the client runtime access the `indexHash`?
 // We can only do something after the Rspack build process becuase the index hash is generated within Rspack build process.There are two ways to do this:
@@ -27,6 +30,7 @@ function deletePriviteKey<T>(obj: T): T {
   return newObj;
 }
 
+let supportedLanguages: Set<string>;
 export async function siteDataVMPlugin(context: FactoryContext) {
   const { config, alias, userDocRoot, routeService, pluginDriver } = context;
   const userConfig = config;
@@ -38,6 +42,7 @@ export async function siteDataVMPlugin(context: FactoryContext) {
     tempSearchObj.searchHooks = undefined;
   }
 
+  const highlighterLangs: Set<string> = new Set();
   const replaceRules = userConfig?.replaceRules || [];
   // If the dev server restart when config file, we will reuse the siteData instead of extracting the siteData from source files again.
   const domain =
@@ -51,6 +56,7 @@ export async function siteDataVMPlugin(context: FactoryContext) {
       domain,
       userDocRoot,
       routeService,
+      highlighterLangs,
     )
   ).filter(Boolean);
   // modify page index by plugins
@@ -90,8 +96,8 @@ export async function siteDataVMPlugin(context: FactoryContext) {
       const indexVersion = version ? `.${version.replace('.', '_')}` : '';
       const indexLang = lang ? `.${lang}` : '';
 
-      await fs.ensureDir(TEMP_DIR);
-      await fs.writeFile(
+      await fsExtra.ensureDir(TEMP_DIR);
+      await fsExtra.writeFile(
         path.join(
           TEMP_DIR,
           `${SEARCH_INDEX_NAME}${indexVersion}${indexLang}.${indexHash}.json`,
@@ -135,6 +141,43 @@ export async function siteDataVMPlugin(context: FactoryContext) {
     },
   };
 
+  // Automatically import prism languages
+  const aliases: Record<string, string[]> = {};
+  if (highlighterLangs.size) {
+    if (!supportedLanguages) {
+      const langs =
+        require('react-syntax-highlighter/dist/cjs/languages/prism/supported-languages').default;
+      supportedLanguages = new Set(langs);
+    }
+
+    // Restore alias to the original name
+    const names: Record<string, string> = {};
+    const { highlightLanguages = [] } = config.markdown || {};
+    [...DEFAULT_HIGHLIGHT_LANGUAGES, ...highlightLanguages].forEach(lang => {
+      if (Array.isArray(lang)) {
+        const [alias, name] = lang;
+        names[alias] = name;
+      }
+    });
+
+    [...highlighterLangs.values()].forEach(lang => {
+      const name = names[lang];
+      if (name && supportedLanguages.has(name)) {
+        const temp = aliases[name] || (aliases[name] = []);
+        if (!temp.includes(lang)) {
+          temp.push(lang);
+        }
+
+        highlighterLangs.add(name);
+        highlighterLangs.delete(lang);
+        return;
+      }
+
+      if (!supportedLanguages.has(lang)) {
+        highlighterLangs.delete(lang);
+      }
+    });
+  }
   return {
     [`${RuntimeModuleID.SiteData}.mjs`]: `export default ${JSON.stringify(
       siteData,
@@ -142,5 +185,15 @@ export async function siteDataVMPlugin(context: FactoryContext) {
     [RuntimeModuleID.SearchIndexHash]: `export default ${JSON.stringify(
       indexHashByGroup,
     )}`,
+    [RuntimeModuleID.PrismLanguages]: `export const aliases = ${JSON.stringify(
+      aliases,
+    )};
+    export const languages = {
+      ${Array.from(highlighterLangs).map(lang => {
+        return `"${lang}": require(
+          "react-syntax-highlighter/dist/cjs/languages/prism/${lang}"
+        ).default`;
+      })}
+    }`,
   };
 }
