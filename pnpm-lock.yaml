@@ -1358,8 +1358,8 @@ importers:
         specifier: ^18
         version: 18.0.0
       '@types/react-syntax-highlighter':
-        specifier: ^15.5.9
-        version: 15.5.9
+        specifier: ^15.5.13
+        version: 15.5.13
       gray-matter:
         specifier: 4.0.3
         version: 4.0.3
@@ -4312,8 +4312,8 @@ packages:
       '@types/react': 18.0.26
     dev: true
 
-  /@types/react-syntax-highlighter@15.5.9:
-    resolution: {integrity: sha512-ven8zRSVMNkqt8ySJ2eEW5ugbfl/V/Z9S1c9UNhGqwkwVZNV5akk10rYDALxgwS25cLmN+/Q5UxlGj9CJmZ6Ew==}
+  /@types/react-syntax-highlighter@15.5.13:
+    resolution: {integrity: sha512-uLGJ87j6Sz8UaBAooU0T6lWJ0dBmjZgN1PZTrj05TNql2/XpC6+4HhMT5syIdFUUt+FASfCeLLv4kBygNU+8qA==}
     dependencies:
       '@types/react': 18.0.26
     dev: true

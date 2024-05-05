@@ -10,7 +10,7 @@ function registerLanguages() {
     SyntaxHighlighter.registerLanguage(name, languages[name]);
   });
 
-  (SyntaxHighlighter as any).alias(aliases);
+  SyntaxHighlighter.alias(aliases);
   registered = true;
 }
 

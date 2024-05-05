@@ -69,7 +69,7 @@
     "@types/nprogress": "^0.2.0",
     "@types/react": "^18",
     "@types/react-dom": "^18",
-    "@types/react-syntax-highlighter": "^15.5.9",
+    "@types/react-syntax-highlighter": "^15.5.13",
     "gray-matter": "4.0.3",
     "typescript": "^5",
     "vitest": "0.34.1",
@@ -85,10 +85,7 @@
     "virtual-global-styles",
     "./src/styles/index.ts"
   ],
-  "files": [
-    "dist",
-    "src"
-  ],
+  "files": ["dist", "src"],
   "publishConfig": {
     "access": "public",
     "provenance": true,
