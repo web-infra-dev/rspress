@@ -89,7 +89,7 @@
     "yaml-front-matter": "^4.1.1"
   },
   "devDependencies": {
-    "tailwindcss": "^3.2.7",
+    "tailwindcss": "^3.4.3",
     "@modern-js/plugin-tailwindcss": "2.49.2",
     "@modern-js/tsconfig": "2.49.2",
     "@types/body-scroll-lock": "^3.1.0",
