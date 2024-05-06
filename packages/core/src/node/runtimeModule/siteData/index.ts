@@ -1,4 +1,5 @@
 import path from 'path';
+import chalk from '@rspress/shared/chalk';
 import fsExtra from '@rspress/shared/fs-extra';
 import { groupBy } from 'lodash-es';
 import {
@@ -151,12 +152,21 @@ export async function siteDataVMPlugin(context: FactoryContext) {
     }
 
     // Restore alias to the original name
+    let useDeprecatedTypeWarning = true;
     const names: Record<string, string> = {};
     const { highlightLanguages = [] } = config.markdown || {};
     [...DEFAULT_HIGHLIGHT_LANGUAGES, ...highlightLanguages].forEach(lang => {
       if (Array.isArray(lang)) {
         const [alias, name] = lang;
         names[alias] = name;
+      } else if (useDeprecatedTypeWarning) {
+        // Deprecated warning
+        console.log(
+          `${chalk.yellowBright(
+            'warning',
+          )} Automatic import is supported. \`highlightLanguages\` is now used only as alias, and string types will be ignored. \n`,
+        );
+        useDeprecatedTypeWarning = false;
       }
     });
 
