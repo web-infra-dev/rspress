@@ -1,15 +1,12 @@
 import path from 'path';
-import chalk from '@rspress/shared/chalk';
 import fs from '@rspress/shared/fs-extra';
 import { groupBy } from 'lodash-es';
-import {
-  DEFAULT_HIGHLIGHT_LANGUAGES,
-  SEARCH_INDEX_NAME,
-} from '@rspress/shared';
+import { SEARCH_INDEX_NAME } from '@rspress/shared';
 import { createHash } from '@/node/utils';
 import { TEMP_DIR, isProduction } from '@/node/constants';
-import { normalizeThemeConfig } from './normalizeThemeConfig';
 import { extractPageData } from './extractPageData';
+import { normalizeThemeConfig } from './normalizeThemeConfig';
+import { handleHighlightLanguages } from './highlightLanguages';
 import { FactoryContext, RuntimeModuleID } from '..';
 
 // How can we let the client runtime access the `indexHash`?
@@ -31,7 +28,6 @@ function deletePriviteKey<T>(obj: T): T {
   return newObj;
 }
 
-let supportedLanguages: Set<string>;
 export async function siteDataVMPlugin(context: FactoryContext) {
   const { config, alias, userDocRoot, routeService, pluginDriver } = context;
   const userConfig = config;
@@ -43,7 +39,7 @@ export async function siteDataVMPlugin(context: FactoryContext) {
     tempSearchObj.searchHooks = undefined;
   }
 
-  const highlighterLangs: Set<string> = new Set();
+  const highlightLanguages: Set<string> = new Set();
   const replaceRules = userConfig?.replaceRules || [];
   // If the dev server restart when config file, we will reuse the siteData instead of extracting the siteData from source files again.
   const domain =
@@ -57,7 +53,7 @@ export async function siteDataVMPlugin(context: FactoryContext) {
       domain,
       userDocRoot,
       routeService,
-      highlighterLangs,
+      highlightLanguages,
     )
   ).filter(Boolean);
   // modify page index by plugins
@@ -142,52 +138,12 @@ export async function siteDataVMPlugin(context: FactoryContext) {
     },
   };
 
-  // Automatically import prism languages
-  const aliases: Record<string, string[]> = {};
-  if (highlighterLangs.size) {
-    if (!supportedLanguages) {
-      const langs =
-        require('react-syntax-highlighter/dist/cjs/languages/prism/supported-languages').default;
-      supportedLanguages = new Set(langs);
-    }
+  const { highlightLanguages: defaultLanguages = [] } = config.markdown || {};
+  const aliases = handleHighlightLanguages(
+    highlightLanguages,
+    defaultLanguages,
+  );
 
-    // Restore alias to the original name
-    let useDeprecatedTypeWarning = true;
-    const names: Record<string, string> = {};
-    const { highlightLanguages = [] } = config.markdown || {};
-    [...DEFAULT_HIGHLIGHT_LANGUAGES, ...highlightLanguages].forEach(lang => {
-      if (Array.isArray(lang)) {
-        const [alias, name] = lang;
-        names[alias] = name;
-      } else if (useDeprecatedTypeWarning) {
-        // Deprecated warning
-        console.log(
-          `${chalk.yellowBright(
-            'warning',
-          )} Automatic import is supported. \`highlightLanguages\` is now used only as alias, and string types will be ignored. \n`,
-        );
-        useDeprecatedTypeWarning = false;
-      }
-    });
-
-    [...highlighterLangs.values()].forEach(lang => {
-      const name = names[lang];
-      if (name && supportedLanguages.has(name)) {
-        const temp = aliases[name] || (aliases[name] = []);
-        if (!temp.includes(lang)) {
-          temp.push(lang);
-        }
-
-        highlighterLangs.add(name);
-        highlighterLangs.delete(lang);
-        return;
-      }
-
-      if (!supportedLanguages.has(lang)) {
-        highlighterLangs.delete(lang);
-      }
-    });
-  }
   return {
     [`${RuntimeModuleID.SiteData}.mjs`]: `export default ${JSON.stringify(
       siteData,
@@ -199,7 +155,7 @@ export async function siteDataVMPlugin(context: FactoryContext) {
       aliases,
     )};
     export const languages = {
-      ${Array.from(highlighterLangs).map(lang => {
+      ${Array.from(highlightLanguages).map(lang => {
         return `"${lang}": require(
           "react-syntax-highlighter/dist/cjs/languages/prism/${lang}"
         ).default`;
