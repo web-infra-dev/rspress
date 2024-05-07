@@ -142,4 +142,14 @@ test.describe('Auto nav and sidebar test', async () => {
     const aTexts = await Promise.all(a.map(element => element.textContent()));
     expect(aTexts.join(',')).toEqual(['Usage', 'Example'].join(','));
   });
+
+  test('Sidebar not have same name md/mdx will not navigate', async ({
+    page,
+  }) => {
+    await page.goto(`http://localhost:${appPort}/guide/`, {
+      waitUntil: 'networkidle',
+    });
+    await page.click('.rspress-scrollbar nav section div');
+    expect(page.url()).toBe(`http://localhost:${appPort}/guide/`);
+  });
 });
