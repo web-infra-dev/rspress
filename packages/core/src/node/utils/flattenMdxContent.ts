@@ -1,5 +1,5 @@
 import path from 'path';
-import fsExtra from '@rspress/shared/fs-extra';
+import fs from '@rspress/shared/fs-extra';
 import enhancedResolve from 'enhanced-resolve';
 import { MDX_REGEXP } from '@rspress/shared';
 import { createProcessor } from '@mdx-js/mdx';
@@ -21,7 +21,7 @@ export async function resolveDepPath(
 ) {
   if (!resolver) {
     resolver = ResolverFactory.createResolver({
-      fileSystem: new CachedInputFileSystem(fsExtra as any, 0),
+      fileSystem: new CachedInputFileSystem(fs as any, 0),
       extensions: ['.mdx', '.md'],
       alias,
     });
@@ -80,7 +80,7 @@ export async function flattenMdxContent(
   // If we reuse the resolver instance in `detectReactVersion` method, the resolver will lose the alias info and cannot resolve path correctly in mdx files.
   if (!startFlatten) {
     resolver = ResolverFactory.createResolver({
-      fileSystem: new CachedInputFileSystem(fsExtra as any, 0),
+      fileSystem: new CachedInputFileSystem(fs as any, 0),
       extensions: ['.mdx', '.md', '.js'],
       alias,
     });
@@ -120,7 +120,7 @@ export async function flattenMdxContent(
 
     if (MDX_REGEXP.test(absoluteImportPath)) {
       // replace import statement with the content of the imported file
-      const importedContent = fsExtra.readFileSync(absoluteImportPath, 'utf-8');
+      const importedContent = fs.readFileSync(absoluteImportPath, 'utf-8');
       const { flattenContent: replacedValue, deps: subDeps } =
         await flattenMdxContent(importedContent, absoluteImportPath, alias);
 

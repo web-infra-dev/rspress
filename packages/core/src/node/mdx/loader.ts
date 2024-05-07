@@ -1,5 +1,5 @@
 import path from 'path';
-import fsExtra from '@rspress/shared/fs-extra';
+import fs from '@rspress/shared/fs-extra';
 import { pathToFileURL } from 'url';
 import { createProcessor } from '@mdx-js/mdx';
 import { isProduction } from '@rspress/shared';
@@ -48,7 +48,7 @@ export async function updateSiteDataRuntimeModule(
   const { default: siteData } = await import(
     pathToFileURL(siteDataModulePath).href
   );
-  await fsExtra.writeFile(
+  await fs.writeFile(
     siteDataModulePath,
     `export default ${JSON.stringify({
       ...siteData,
@@ -139,28 +139,7 @@ export default async function mdxLoader(
     let compileResult: string;
     let pageMeta = { title: '', toc: [] } as PageMeta;
 
-    if (enableMdxRs) {
-      const { compile } = require('@rspress/mdx-rs');
-
-      const { toc, code, links, title } = await compile({
-        value: preprocessedContent,
-        filepath,
-        root: docDirectory,
-        development: process.env.NODE_ENV !== 'production',
-      });
-
-      compileResult = code;
-      pageMeta = {
-        toc,
-        frontmatter,
-        title: frontmatter.title || title || '',
-      };
-
-      // We should check dead links in mdx-rs mode
-      if (checkDeadLinks) {
-        checkLinks(links, filepath, docDirectory, routeService);
-      }
-    } else {
+    if (!enableMdxRs) {
       const compiler = createProcessor(
         await createMDXOptions(
           docDirectory,
@@ -187,6 +166,27 @@ export default async function mdxLoader(
         title: frontmatter.title || metaData.title || '',
         frontmatter,
       } as PageMeta;
+    } else {
+      const { compile } = require('@rspress/mdx-rs');
+
+      const { toc, code, links, title } = await compile({
+        value: preprocessedContent,
+        filepath,
+        root: docDirectory,
+        development: process.env.NODE_ENV !== 'production',
+      });
+
+      compileResult = code;
+      pageMeta = {
+        toc,
+        frontmatter,
+        title: frontmatter.title || title || '',
+      };
+
+      // We should check dead links in mdx-rs mode
+      if (checkDeadLinks) {
+        checkLinks(links, filepath, docDirectory, routeService);
+      }
     }
 
     // If page meta changed, we trigger page reload to ensure the page is up to date.
@@ -197,6 +197,7 @@ export default async function mdxLoader(
     const result = `const frontmatter = ${JSON.stringify(frontmatter)};
 ${compileResult}
 MDXContent.__RSPRESS_PAGE_META = {};
+
 MDXContent.__RSPRESS_PAGE_META["${encodeURIComponent(
       normalizePath(path.relative(docDirectory, filepath)),
     )}"] = ${JSON.stringify(pageMeta)};

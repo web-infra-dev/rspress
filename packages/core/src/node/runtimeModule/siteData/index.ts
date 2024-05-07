@@ -1,6 +1,6 @@
 import path from 'path';
 import chalk from '@rspress/shared/chalk';
-import fsExtra from '@rspress/shared/fs-extra';
+import fs from '@rspress/shared/fs-extra';
 import { groupBy } from 'lodash-es';
 import {
   DEFAULT_HIGHLIGHT_LANGUAGES,
@@ -97,8 +97,8 @@ export async function siteDataVMPlugin(context: FactoryContext) {
       const indexVersion = version ? `.${version.replace('.', '_')}` : '';
       const indexLang = lang ? `.${lang}` : '';
 
-      await fsExtra.ensureDir(TEMP_DIR);
-      await fsExtra.writeFile(
+      await fs.ensureDir(TEMP_DIR);
+      await fs.writeFile(
         path.join(
           TEMP_DIR,
           `${SEARCH_INDEX_NAME}${indexVersion}${indexLang}.${indexHash}.json`,

@@ -1,14 +1,14 @@
 import { join } from 'path';
-import type { RspressPlugin } from '@rspress/shared';
-import { DEFAULT_HIGHLIGHT_LANGUAGES } from '@rspress/shared';
-import type { Lang } from 'shiki';
 import { getHighlighter } from './highlighter';
 import { rehypePluginShiki } from './rehypePlugin';
-import type { ITransformer } from './types';
 import {
   SHIKI_TRANSFORMER_LINE_NUMBER,
   createTransformerLineNumber,
 } from './transformers/line-number';
+
+import type { Lang } from 'shiki';
+import type { RspressPlugin } from '@rspress/shared';
+import type { ITransformer } from './types';
 
 export interface PluginShikiOptions {
   /**
@@ -24,6 +24,23 @@ export interface PluginShikiOptions {
    */
   transformers?: ITransformer[];
 }
+
+export const SHIKI_DEFAULT_HIGHLIGHT_LANGUAGES = [
+  'js',
+  'ts',
+  'jsx',
+  'tsx',
+  'json',
+  'css',
+  'scss',
+  'less',
+  'xml',
+  'diff',
+  'yaml',
+  'md',
+  'mdx',
+  'bash',
+];
 
 /**
  * The plugin is used to add the last updated time to the page.
@@ -55,12 +72,7 @@ export function pluginShiki(options?: PluginShikiOptions): RspressPlugin {
       }
       const highlighter = await getHighlighter({
         theme,
-        langs: [
-          ...DEFAULT_HIGHLIGHT_LANGUAGES.map(item =>
-            Array.isArray(item) ? item[0] : item,
-          ),
-          ...langs,
-        ] as Lang[],
+        langs: [...SHIKI_DEFAULT_HIGHLIGHT_LANGUAGES, ...langs] as Lang[],
         transformers,
       });
 
