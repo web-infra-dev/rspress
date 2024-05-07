@@ -51,7 +51,7 @@
     "upgrade": "modern upgrade"
   },
   "dependencies": {
-    "@rsbuild/core": "0.6.7",
+    "@rsbuild/core": "0.6.11",
     "unified": "^10.1.2",
     "chalk": "4.1.2",
     "execa": "5.1.1",
