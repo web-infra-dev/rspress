@@ -156,20 +156,20 @@ export default async function mdxLoader(
         value: preprocessedContent,
         path: filepath,
       });
-      const metaData = compiler.data('pageMeta') as {
+      const compilationMeta = compiler.data('pageMeta') as {
         toc: Header[];
         title: string;
       };
       compileResult = String(vFile);
       pageMeta = {
-        ...metaData,
-        title: frontmatter.title || metaData.title || '',
+        ...compilationMeta,
+        title: frontmatter.title || compilationMeta.title || '',
         frontmatter,
       } as PageMeta;
     } else {
       const { compile } = require('@rspress/mdx-rs');
 
-      const { toc, code, links, title } = await compile({
+      const { toc, links, title, code } = await compile({
         value: preprocessedContent,
         filepath,
         root: docDirectory,
@@ -179,8 +179,8 @@ export default async function mdxLoader(
       compileResult = code;
       pageMeta = {
         toc,
-        frontmatter,
         title: frontmatter.title || title || '',
+        frontmatter,
       };
 
       // We should check dead links in mdx-rs mode
@@ -188,7 +188,6 @@ export default async function mdxLoader(
         checkLinks(links, filepath, docDirectory, routeService);
       }
     }
-
     // If page meta changed, we trigger page reload to ensure the page is up to date.
     if (!isProduction()) {
       checkPageMetaUpdate(filepath, pageMeta);
