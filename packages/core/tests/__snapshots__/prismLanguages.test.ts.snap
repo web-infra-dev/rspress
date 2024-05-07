@@ -1,0 +1,28 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`getHighlightLanguages > prismLanguageVMPlugin should be configurable to users 1`] = `
+{
+  "virtual-prism-languages": "
+import js from 'react-syntax-highlighter/dist/esm/languages/prism/javascript'
+import ts from 'react-syntax-highlighter/dist/esm/languages/prism/typescript'
+import jsx from 'react-syntax-highlighter/dist/esm/languages/prism/tsx'
+import json from 'react-syntax-highlighter/dist/esm/languages/prism/json'
+import css from 'react-syntax-highlighter/dist/esm/languages/prism/css'
+import scss from 'react-syntax-highlighter/dist/esm/languages/prism/scss'
+import less from 'react-syntax-highlighter/dist/esm/languages/prism/less'
+import xml from 'react-syntax-highlighter/dist/esm/languages/prism/xml-doc'
+import diff from 'react-syntax-highlighter/dist/esm/languages/prism/diff'
+import yaml from 'react-syntax-highlighter/dist/esm/languages/prism/yaml'
+import md from 'react-syntax-highlighter/dist/esm/languages/prism/markdown'
+import bash from 'react-syntax-highlighter/dist/esm/languages/prism/bash'
+import zig from 'react-syntax-highlighter/dist/esm/languages/prism/zig'
+import oc from 'react-syntax-highlighter/dist/esm/languages/prism/objectivec'
+
+export const aliases = {\\"javascript\\":[\\"js\\"],\\"typescript\\":[\\"ts\\"],\\"tsx\\":[\\"jsx\\",\\"mdx\\"],\\"xml-doc\\":[\\"xml\\"],\\"markdown\\":[\\"md\\",\\"MD\\"],\\"objectivec\\":[\\"oc\\"]};
+
+export default {
+  \\"javascript\\": js,\\"typescript\\": ts,\\"tsx\\": jsx,\\"json\\": json,\\"css\\": css,\\"scss\\": scss,\\"less\\": less,\\"xml-doc\\": xml,\\"diff\\": diff,\\"yaml\\": yaml,\\"markdown\\": md,\\"bash\\": bash,\\"zig\\": zig,\\"objectivec\\": oc
+};
+",
+}
+`;
