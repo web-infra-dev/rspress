@@ -18,7 +18,7 @@ export async function detectFilePath(rawPath: string) {
     );
     const findPath = pathWithExtension.find((_, i) => pathExistInfo[i]);
     // file may be public resource, see issue: https://github.com/web-infra-dev/rspress/issues/1052
-    if (findPath) {
+    if (!fileExtname || findPath) {
       realPath = findPath;
     }
   }
