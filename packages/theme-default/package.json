@@ -83,7 +83,8 @@
     "*.scss",
     "**/virtual-global-styles.js",
     "virtual-global-styles",
-    "./src/styles/index.ts"
+    "./src/styles/index.ts",
+    "./dist/index.js"
   ],
   "files": [
     "dist",
