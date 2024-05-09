@@ -4,7 +4,7 @@ import { RuntimeModuleID } from '../src/node/runtimeModule';
 import { siteDataVMPlugin } from '../src/node/runtimeModule/siteData';
 
 describe('automatic import of prism languages', () => {
-  const userDocRoot = path.join(__dirname, 'mdx');
+  const userDocRoot = path.join(__dirname, 'prismLanguages');
 
   const context: any = {
     alias: {},
@@ -17,7 +17,8 @@ describe('automatic import of prism languages', () => {
     routeService: {
       getRoutes() {
         return [
-          { absolutePath: path.join(userDocRoot, 'prismLanguages.test.mdx') },
+          { absolutePath: path.join(userDocRoot, 'index.mdx') },
+          { absolutePath: path.join(userDocRoot, 'other.mdx') },
         ];
       },
     },

@@ -3,10 +3,12 @@
 exports[`automatic import of prism languages > prism languages aliases should be configurable to users 1`] = `
 "export const aliases = {\\"javascript\\":[\\"js\\"]};
     export const languages = {
-      \\"rust\\": require(
-          \\"react-syntax-highlighter/dist/cjs/languages/prism/rust\\"
-        ).default,\\"javascript\\": require(
+      \\"javascript\\": require(
           \\"react-syntax-highlighter/dist/cjs/languages/prism/javascript\\"
+        ).default,\\"rust\\": require(
+          \\"react-syntax-highlighter/dist/cjs/languages/prism/rust\\"
+        ).default,\\"typescript\\": require(
+          \\"react-syntax-highlighter/dist/cjs/languages/prism/typescript\\"
         ).default
     }"
 `;
