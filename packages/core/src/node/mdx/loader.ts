@@ -95,7 +95,8 @@ export default async function mdxLoader(
   const options = context.getOptions();
   const filepath = context.resourcePath;
   const { alias } = context._compiler.options.resolve;
-  const { config, docDirectory, checkDeadLinks, routeService } = options;
+  const { config, docDirectory, checkDeadLinks, routeService, pluginDriver } =
+    options;
 
   // Separate frontmatter and content in MDX source
   const { frontmatter, content } = loadFrontMatter(
@@ -140,27 +141,27 @@ export default async function mdxLoader(
     let pageMeta = { title: '', toc: [] } as PageMeta;
 
     if (!enableMdxRs) {
-      const compiler = createProcessor(
-        await createMDXOptions(
-          docDirectory,
-          config,
-          checkDeadLinks,
-          routeService,
-          filepath,
-          options.pluginDriver,
-        ),
+      const mdxOptions = await createMDXOptions(
+        docDirectory,
+        config,
+        checkDeadLinks,
+        routeService,
+        filepath,
+        pluginDriver,
       );
+      const compiler = createProcessor(mdxOptions);
 
       compiler.data('pageMeta', { toc: [], title: '' });
       const vFile = await compiler.process({
         value: preprocessedContent,
         path: filepath,
       });
+
+      compileResult = String(vFile);
       const compilationMeta = compiler.data('pageMeta') as {
         toc: Header[];
         title: string;
       };
-      compileResult = String(vFile);
       pageMeta = {
         ...compilationMeta,
         title: frontmatter.title || compilationMeta.title || '',
@@ -182,12 +183,12 @@ export default async function mdxLoader(
         title: frontmatter.title || title || '',
         frontmatter,
       };
-
       // We should check dead links in mdx-rs mode
       if (checkDeadLinks) {
         checkLinks(links, filepath, docDirectory, routeService);
       }
     }
+
     // If page meta changed, we trigger page reload to ensure the page is up to date.
     if (!isProduction()) {
       checkPageMetaUpdate(filepath, pageMeta);
