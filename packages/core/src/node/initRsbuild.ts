@@ -223,6 +223,11 @@ async function createInternalBuildConfig(
         }
 
         chain.resolve.extensions.prepend('.md').prepend('.mdx').prepend('.mjs');
+
+        chain.module
+          .rule('css-virtual-module')
+          .test(/\.rspress[\\/]runtime[\\/]virtual-global-styles/)
+          .merge({ sideEffects: true });
       },
     },
   };
