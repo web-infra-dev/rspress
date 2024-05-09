@@ -80,11 +80,14 @@ export function Overview(props: {
   let { items: overviewSidebarGroups } = useSidebarData() as {
     items: (NormalizedSidebarGroup | SidebarItem)[];
   };
-  overviewSidebarGroups = findItemByRoutePath(
-    overviewSidebarGroups,
-    routePath,
-    overviewSidebarGroups,
-  );
+
+  if (overviewSidebarGroups[0].link !== routePath) {
+    overviewSidebarGroups = findItemByRoutePath(
+      overviewSidebarGroups,
+      routePath,
+      overviewSidebarGroups,
+    );
+  }
 
   function normalizeSidebarItem(
     item: SidebarItem | SidebarDivider | NormalizedSidebarGroup,
@@ -122,7 +125,7 @@ export function Overview(props: {
   }
 
   const isSingleFile = (item: SidebarItem | NormalizedSidebarGroup) =>
-    !('items' in item) && 'link' in item && '_fileKey' in item;
+    !('items' in item) && 'link' in item;
 
   const groups =
     customGroups ??

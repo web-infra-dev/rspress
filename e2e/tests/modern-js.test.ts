@@ -4,7 +4,7 @@ import { getPort, killProcess, runDevCommand } from '../utils/runCommands';
 
 const fixtureDir = path.resolve(__dirname, '../fixtures');
 
-test.describe('plugin test', async () => {
+test.describe('modernjs module doc test', async () => {
   let appPort;
   let app;
   test.beforeAll(async () => {
@@ -27,5 +27,19 @@ test.describe('plugin test', async () => {
       name: /Button/,
     });
     expect(h1).toBeTruthy();
+  });
+
+  test('preview iframe fixed should display', async ({ page }) => {
+    await page.goto(`http://localhost:${appPort}/general/button`, {
+      waitUntil: 'networkidle',
+    });
+
+    const iframe = await page.$('.fixed-device');
+    const previewPadding = await iframe?.evaluate(el => {
+      return window
+        .getComputedStyle(el)
+        .getPropertyValue('--rp-preview-padding');
+    });
+    expect(previewPadding).toEqual('32px');
   });
 });

@@ -74,4 +74,13 @@ test.describe('basic test', async () => {
     const logoLink = await page.$('a[href="/zh"]');
     expect(logoLink).not.toBeNull();
   });
+
+  test('globalStyles should work', async ({ page }) => {
+    await page.goto(`http://localhost:${appPort}`);
+    const link = await page.$('.rspress-doc a');
+    const colorValue = await link?.evaluate(
+      element => getComputedStyle(element).color,
+    );
+    expect(colorValue).toEqual('rgb(255, 165, 0)');
+  });
 });
