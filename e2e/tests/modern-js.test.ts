@@ -35,9 +35,11 @@ test.describe('modernjs module doc test', async () => {
     });
 
     const iframe = await page.$('.fixed-device');
-    const leftCssValue = await iframe?.evaluate(el => {
-      return window.getComputedStyle(el).getPropertyValue('left');
+    const previewPadding = await iframe?.evaluate(el => {
+      return window
+        .getComputedStyle(el)
+        .getPropertyValue('--rp-preview-padding');
     });
-    expect(leftCssValue).not.toEqual('0px');
+    expect(previewPadding).toEqual('32px');
   });
 });
