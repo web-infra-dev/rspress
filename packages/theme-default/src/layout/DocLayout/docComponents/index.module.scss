@@ -42,8 +42,7 @@
   }
 
   &:hover {
-    border-bottom: 1px dashed var(--rp-c-brand);
-    border-style: solid;
+    border-bottom: 1px solid var(--rp-c-brand);
   }
 }
 
