@@ -22,7 +22,6 @@ export const inlineThemeScript = `{
   .replace(/\n/g, ';')
   .replace(/\s{2,}/g, '');
 
-// @ts-expect-error
 const dirname = path.dirname(fileURLToPath(new URL(import.meta.url)));
 
 export const PACKAGE_ROOT = path.join(dirname, '..');
@@ -48,6 +47,8 @@ export const HEAD_MARKER = '<!--<?- HEAD ?>-->';
 export const META_GENERATOR = '<!--<?- GENERATOR ?>-->';
 export const HTML_START_TAG = '<html';
 export const BODY_START_TAG = '<body';
+
+export const DEFAULT_TITLE = 'Rspress';
 
 export const PUBLIC_DIR = 'public';
 export const TEMP_DIR = path.join(

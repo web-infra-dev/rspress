@@ -1,6 +1,6 @@
 {
   "name": "@rspress/theme-default",
-  "version": "1.19.1",
+  "version": "1.20.1",
   "description": "The Default Theme of Rspress Documentation Framework",
   "bugs": "https://github.com/web-infra-dev/rspress/issues",
   "repository": {
@@ -74,7 +74,7 @@
     "typescript": "^5",
     "vitest": "0.34.1",
     "webpack": "^5.88.1",
-    "tailwindcss": "^3.2.7"
+    "tailwindcss": "^3.4.3"
   },
   "sideEffects": [
     "*.css",
@@ -83,7 +83,8 @@
     "*.scss",
     "**/virtual-global-styles.js",
     "virtual-global-styles",
-    "./src/styles/index.ts"
+    "./src/styles/index.ts",
+    "./dist/index.js"
   ],
   "files": [
     "dist",

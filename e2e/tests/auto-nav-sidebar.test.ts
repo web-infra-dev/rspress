@@ -56,6 +56,7 @@ test.describe('Auto nav and sidebar test', async () => {
         'Front Matter Config',
         'Build Config',
         'Extname Config',
+        'Nested',
         'Client API Overview',
         'Runtime API',
         'Components',
@@ -104,6 +105,7 @@ test.describe('Auto nav and sidebar test', async () => {
         'Front Matter Config',
         'Build Config',
         'Extname Config',
+        'Nested',
       ].join(','),
     );
 
@@ -141,5 +143,35 @@ test.describe('Auto nav and sidebar test', async () => {
     const a = await page.$$('.overview-group_8f375 ul a');
     const aTexts = await Promise.all(a.map(element => element.textContent()));
     expect(aTexts.join(',')).toEqual(['Usage', 'Example'].join(','));
+  });
+
+  test('Sidebar not have same name md/mdx will not navigate', async ({
+    page,
+  }) => {
+    await page.goto(`http://localhost:${appPort}/guide/`, {
+      waitUntil: 'networkidle',
+    });
+    await page.click('.rspress-scrollbar nav section div');
+    expect(page.url()).toBe(`http://localhost:${appPort}/guide/`);
+  });
+
+  test('Should load nested subpage API Overview correctly', async ({
+    page,
+  }) => {
+    await page.goto(`http://localhost:${appPort}/api/config/nested.html`, {
+      waitUntil: 'networkidle',
+    });
+
+    const h2 = await page.$$('.overview-index h2');
+    const h2Texts = await Promise.all(h2.map(element => element.textContent()));
+    expect(h2Texts.join(',')).toEqual(['Nested'].join(','));
+
+    const h3 = await page.$$('.overview-group_8f375 h3');
+    const h3Texts = await Promise.all(h3.map(element => element.textContent()));
+    expect(h3Texts.join(',')).toEqual(['Nested Config'].join(','));
+
+    const a = await page.$$('.overview-group_8f375 ul a');
+    const aTexts = await Promise.all(a.map(element => element.textContent()));
+    expect(aTexts.join(',')).toEqual(['Nested H2'].join(','));
   });
 });

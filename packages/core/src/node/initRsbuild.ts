@@ -16,6 +16,7 @@ import {
   isProduction,
   inlineThemeScript,
   PUBLIC_DIR,
+  DEFAULT_TITLE,
 } from './constants';
 import { rsbuildPluginDocVM } from './runtimeModule';
 import { serveSearchIndexMiddleware } from './searchIndex';
@@ -116,7 +117,7 @@ async function createInternalBuildConfig(
       ],
     },
     html: {
-      title: config?.title,
+      title: config?.title ?? DEFAULT_TITLE,
       favicon: normalizeIcon(config?.icon),
       template: path.join(PACKAGE_ROOT, 'index.html'),
       tags: [
@@ -222,6 +223,11 @@ async function createInternalBuildConfig(
         }
 
         chain.resolve.extensions.prepend('.md').prepend('.mdx').prepend('.mjs');
+
+        chain.module
+          .rule('css-virtual-module')
+          .test(/\.rspress[\\/]runtime[\\/]virtual-global-styles/)
+          .merge({ sideEffects: true });
       },
     },
   };

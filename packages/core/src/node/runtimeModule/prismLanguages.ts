@@ -1,10 +1,8 @@
-import { uniqBy } from 'lodash-es';
 import { DEFAULT_HIGHLIGHT_LANGUAGES } from '@rspress/shared';
+import { uniqBy } from 'lodash-es';
 import { FactoryContext, RuntimeModuleID } from '.';
 
-export async function prismLanguageVMPlugin(context: FactoryContext) {
-  const { config } = context;
-  const { highlightLanguages = [] } = config.markdown || {};
+function getLanguageMeta(highlightLanguages: (string | string[])[]) {
   const aliases: Record<string, string[]> = {};
   const languageMeta = uniqBy(
     [...DEFAULT_HIGHLIGHT_LANGUAGES, ...highlightLanguages].map(language => {
@@ -14,7 +12,7 @@ export async function prismLanguageVMPlugin(context: FactoryContext) {
       if (isArray) {
         const temp = aliases[name] || (aliases[name] = []);
 
-        if(!temp.includes(alias)) {
+        if (!temp.includes(alias)) {
           temp.push(alias);
         }
       }
@@ -23,6 +21,14 @@ export async function prismLanguageVMPlugin(context: FactoryContext) {
     }),
     'name',
   );
+  return { languageMeta, aliases };
+}
+
+export async function prismLanguageVMPlugin(context: FactoryContext) {
+  const { config } = context;
+  const { highlightLanguages = [] } = config.markdown || {};
+
+  const { languageMeta, aliases } = getLanguageMeta(highlightLanguages);
 
   const importStatement = languageMeta.map(language => {
     const { alias, name } = language;
