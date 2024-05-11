@@ -1,5 +1,7 @@
 import {
   ReactElement,
+  SetStateAction,
+  Dispatch,
   createContext,
   useCallback,
   useContext,
@@ -18,7 +20,7 @@ declare global {
 }
 interface IDataContext {
   data: PageData;
-  setData?: (data: PageData) => void;
+  setData?: Dispatch<SetStateAction<PageData>>;
 }
 
 interface IThemeContext {

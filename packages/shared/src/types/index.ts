@@ -168,6 +168,10 @@ export interface UserConfig<ThemeConfig = DefaultThemeConfig> {
      */
     versions: string[];
   };
+  /**
+   * Default package manager
+   */
+  defaultPackageManager?: PackageManager;
 }
 
 export type BaseRuntimePageInfo = Omit<
@@ -199,7 +203,10 @@ export interface SiteData<ThemeConfig = NormalizedDefaultThemeConfig> {
     default: string;
     versions: string[];
   };
+  defaultPackageManager?: PackageManager;
 }
+
+export type PackageManager = 'npm' | 'yarn' | 'pnpm' | 'bun';
 
 export type PageIndexInfo = {
   id: number;

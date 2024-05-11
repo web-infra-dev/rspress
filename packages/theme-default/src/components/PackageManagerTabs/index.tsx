@@ -1,3 +1,6 @@
+import { useContext } from 'react';
+import { DataContext } from '@rspress/runtime';
+
 import { Tabs, Tab } from '@theme';
 import { Pre } from '../../layout/DocLayout/docComponents/pre';
 import { Code } from '../../layout/DocLayout/docComponents/code';
@@ -5,17 +8,13 @@ import { Npm } from './icons/Npm';
 import { Yarn } from './icons/Yarn';
 import { Pnpm } from './icons/Pnpm';
 import { Bun } from './icons/Bun';
+import { type PackageManager } from '@rspress/shared';
 import './index.scss';
 
+type PackageManagerDict<T> = Record<PackageManager, T>;
+
 export interface PackageManagerTabProps {
-  command:
-    | string
-    | {
-        npm?: string;
-        yarn?: string;
-        pnpm?: string;
-        bun?: string;
-      };
+  command: string | Partial<PackageManagerDict<string>>;
   additionalTabs?: {
     tool: string;
     icon?: React.ReactNode;
@@ -42,16 +41,12 @@ export function PackageManagerTabs({
   command,
   additionalTabs = [],
 }: PackageManagerTabProps) {
-  let commandInfo: {
-    npm?: string;
-    yarn?: string;
-    pnpm?: string;
-    bun?: string;
-    [key: string]: string;
-  };
+  const { data, setData } = useContext(DataContext);
+
+  let commandInfo: Partial<PackageManagerDict<string>>;
 
   // Init Icons
-  const packageMangerToIcon = {
+  const packageMangerToIcon: PackageManagerDict<React.ReactNode> = {
     npm: <Npm />,
     yarn: <Yarn />,
     pnpm: <Pnpm />,
@@ -83,6 +78,17 @@ export function PackageManagerTabs({
   return (
     <Tabs
       groupId="package.manager"
+      onChange={(index: number) => {
+        setData(prev => ({
+          ...prev,
+          siteData: {
+            ...prev.siteData,
+            defaultPackageManager: Object.keys(commandInfo)[
+              index
+            ] as PackageManager,
+          },
+        }));
+      }}
       values={Object.entries(commandInfo).map(([key]) => (
         <div
           key={key}
