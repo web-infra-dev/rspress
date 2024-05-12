@@ -77,7 +77,7 @@ interface Hero {
   text: string;
   tagline: string;
   image?: {
-    src: string;
+    src: string | { dark: string; light: string };
     alt: string;
   };
   actions: {

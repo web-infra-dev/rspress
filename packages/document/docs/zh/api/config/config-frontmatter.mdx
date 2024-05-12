@@ -75,7 +75,7 @@ interface Hero {
   text: string;
   tagline: string;
   image?: {
-    src: string;
+    src: string | { dark: string; light: string };
     alt: string;
     /**
      * `srcset` 和 `sizes` 同 `<img>` 的同名属性，取值请参考 https://mdn.io/srcset。

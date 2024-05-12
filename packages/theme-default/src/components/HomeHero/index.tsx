@@ -25,6 +25,10 @@ export function HomeHero({ frontmatter }: { frontmatter: FrontMatterMeta }) {
         .split(/\n/g)
         .filter(text => text !== '')
     : [];
+  const imageSrc =
+    typeof hero.image?.src === 'string'
+      ? { light: hero.image.src, dark: hero.image.src }
+      : hero.image?.src || { light: '', dark: '' };
   return (
     <div className="m-auto pt-0 px-6 pb-12 sm:pt-10 sm:px-16 md:pt-16 md:px-16 md:pb-16 relative">
       <div
@@ -76,12 +80,22 @@ export function HomeHero({ frontmatter }: { frontmatter: FrontMatterMeta }) {
         {hasImage ? (
           <div className="rspress-home-hero-image md:flex-center m-auto order-1 md:order-2 sm:flex md:none lg:flex">
             <img
-              src={normalizeImagePath(hero.image?.src)}
+              src={normalizeImagePath(imageSrc.light)}
               alt={hero.image?.alt}
               srcSet={normalizeSrcsetAndSizes(hero.image?.srcset)}
               sizes={normalizeSrcsetAndSizes(hero.image?.sizes)}
               width={375}
               height={375}
+              className="dark:hidden"
+            />
+            <img
+              src={normalizeImagePath(imageSrc.dark)}
+              alt={hero.image?.alt}
+              srcSet={normalizeSrcsetAndSizes(hero.image?.srcset)}
+              sizes={normalizeSrcsetAndSizes(hero.image?.sizes)}
+              width={375}
+              height={375}
+              className="hidden dark:block"
             />
           </div>
         ) : null}
