@@ -14,7 +14,7 @@ export function SourceCode(props: SourceCodeProps) {
   const { sourceCodeText = 'Source' } = useLocaleSiteData();
   return (
     <div
-      className={`inline-block rounded border border-solid border-gray-300 text-gray-400 ${styles.sourceCode}`}
+      className={`inline-block rounded border border-solid border-gray-light-3 dark:border-divider text-gray-400 ${styles.sourceCode}`}
     >
       <a
         href={href}
