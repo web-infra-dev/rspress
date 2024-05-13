@@ -61,7 +61,7 @@
   "devDependencies": {
     "lodash-es": "^4.17.21",
     "@types/interpret": "^1.1.1",
-    "@types/jest": "~29.2.4",
+    "@types/jest": "~29.5.12",
     "@types/lodash": "^4.17.0",
     "@types/lodash-es": "^4.17.8",
     "@types/node": "^18.11.17",

@@ -63,7 +63,7 @@
     "@types/hast": "3.0.3",
     "@types/html-to-text": "^8.1.1",
     "@types/is-html": "^2.0.1",
-    "@types/jest": "~29.2.4",
+    "@types/jest": "~29.5.12",
     "@types/lodash-es": "^4.17.8",
     "@types/mdast": "^3.0.10",
     "@types/nprogress": "^0.2.0",
