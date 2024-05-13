@@ -143,6 +143,8 @@ export async function siteDataVMPlugin(context: FactoryContext) {
     highlightLanguages,
     defaultLanguages,
   );
+  const sortedAliases = Object.fromEntries(Object.entries(aliases).sort());
+  const sortedHighlightLanguages = Array.from(highlightLanguages).sort();
 
   return {
     [`${RuntimeModuleID.SiteData}.mjs`]: `export default ${JSON.stringify(
@@ -152,10 +154,10 @@ export async function siteDataVMPlugin(context: FactoryContext) {
       indexHashByGroup,
     )}`,
     [RuntimeModuleID.PrismLanguages]: `export const aliases = ${JSON.stringify(
-      aliases,
+      sortedAliases,
     )};
     export const languages = {
-      ${Array.from(highlightLanguages).map(lang => {
+      ${sortedHighlightLanguages.map(lang => {
         return `"${lang}": require(
           "react-syntax-highlighter/dist/cjs/languages/prism/${lang}"
         ).default`;
