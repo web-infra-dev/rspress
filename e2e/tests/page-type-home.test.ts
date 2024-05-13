@@ -30,7 +30,7 @@ test.describe('home pageType', async () => {
       page.locator('.rspress-home-hero-tagline').textContent(),
     ).resolves.toBe('E2E case tagline');
 
-    const img = page.locator('.rspress-home-hero-image img');
+    const img = page.locator('.rspress-home-hero-image img').first();
     await expect(img.getAttribute('src')).resolves.toBe('/brand.png');
     await expect(img.getAttribute('alt')).resolves.toBe('E2E case brand image');
     await expect(img.getAttribute('srcset')).resolves.toBe(
