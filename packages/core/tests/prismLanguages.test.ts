@@ -10,7 +10,10 @@ describe('automatic import of prism languages', () => {
     alias: {},
     config: {
       markdown: {
-        highlightLanguages: [['js', 'javascript']],
+        highlightLanguages: [
+          ['js', 'javascript'],
+          ['oc', 'objectivec'],
+        ],
       },
     },
     userDocRoot,
