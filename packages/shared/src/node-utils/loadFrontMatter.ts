@@ -11,11 +11,11 @@ export function loadFrontMatter(
   frontmatter: Record<string, string>;
   content: string;
 } {
-  let frontmatter: Record<string, string> = {};
   let content = '';
+  let frontmatter: Record<string, string> = {};
 
   try {
-    ({ data: frontmatter, content } = grayMatter(source));
+    ({ content, data: frontmatter } = grayMatter(source));
   } catch (e: any) {
     if (outputWarning) {
       logger.warn(

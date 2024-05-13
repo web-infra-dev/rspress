@@ -1,16 +1,18 @@
 import path from 'path';
-import enhancedResolve from 'enhanced-resolve';
-import type { Resolver } from 'enhanced-resolve';
 import fs from '@rspress/shared/fs-extra';
-import { createProcessor } from '@mdx-js/mdx';
-import type { Root } from 'hast';
+import enhancedResolve from 'enhanced-resolve';
 import { MDX_REGEXP } from '@rspress/shared';
+import { createProcessor } from '@mdx-js/mdx';
 import { importStatementRegex } from '../constants';
 
-const { CachedInputFileSystem, ResolverFactory } = enhancedResolve;
-const processor = createProcessor();
+import type { Root } from 'hast';
+import type { Resolver } from 'enhanced-resolve';
+
 let resolver: Resolver;
 let startFlatten = false;
+
+const processor = createProcessor();
+const { CachedInputFileSystem, ResolverFactory } = enhancedResolve;
 
 export async function resolveDepPath(
   importPath: string,
@@ -19,7 +21,7 @@ export async function resolveDepPath(
 ) {
   if (!resolver) {
     resolver = ResolverFactory.createResolver({
-      fileSystem: new CachedInputFileSystem(fs),
+      fileSystem: new CachedInputFileSystem(fs as any, 0),
       extensions: ['.mdx', '.md'],
       alias,
     });
@@ -50,10 +52,12 @@ export async function resolveDepPath(
   return resolveResult;
 }
 
-interface ImportNode {
-  type: 'ImportDeclaration';
-  specifiers: { local: { name: string } }[];
-  source: { value: string };
+interface ESTree {
+  body: {
+    type: 'ImportDeclaration';
+    specifiers: { local: { name: string } }[];
+    source: { value: string };
+  }[];
 }
 
 export async function flattenMdxContent(
@@ -71,35 +75,35 @@ export async function flattenMdxContent(
   if (!regex.test(content)) {
     return { flattenContent: content, deps };
   }
-  let result = content;
+
   // We should update the resolver instanceof because the alias should be passed to it
   // If we reuse the resolver instance in `detectReactVersion` method, the resolver will lose the alias info and cannot resolve path correctly in mdx files.
   if (!startFlatten) {
     resolver = ResolverFactory.createResolver({
-      fileSystem: new CachedInputFileSystem(fs),
+      fileSystem: new CachedInputFileSystem(fs as any, 0),
       extensions: ['.mdx', '.md', '.js'],
       alias,
     });
     startFlatten = true;
   }
+
   let ast: Root;
+  let result = content;
+
   try {
     ast = processor.parse(content) as Root;
   } catch (e) {
     // Fallback: if mdx parse failed, just return the content
     return { flattenContent: content, deps };
   }
+
   const importNodes = ast.children
-    .filter(node => node.type === 'mdxjsEsm')
-    .map(node => {
-      return (node.data?.estree as { body: ImportNode[] })?.body || [];
-    })
-    .flat()
+    .filter(node => node.type === ('mdxjsEsm' as any))
+    .flatMap(node => (node.data?.estree as ESTree)?.body || [])
     .filter(node => node.type === 'ImportDeclaration');
   for (const importNode of importNodes) {
     // import Comp from './a';
-    // id: Comp
-    // importPath: './a'
+    // {id: Comp, importPath: './a'}
     const id = importNode.specifiers[0].local.name;
     const importPath = importNode.source.value;
 

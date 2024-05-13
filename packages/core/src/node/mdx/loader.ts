@@ -1,24 +1,26 @@
 import path from 'path';
+import fs from '@rspress/shared/fs-extra';
 import { pathToFileURL } from 'url';
-import type { Rspack } from '@rsbuild/core';
 import { createProcessor } from '@mdx-js/mdx';
-import { isProduction, type Header, type UserConfig } from '@rspress/shared';
+import { isProduction } from '@rspress/shared';
 import { logger } from '@rspress/shared/logger';
 import { loadFrontMatter } from '@rspress/shared/node-utils';
-import fs from '@rspress/shared/fs-extra';
-import type { RouteService } from '../route/RouteService';
+import { createMDXOptions } from './options';
+import { TocItem } from './remarkPlugins/toc';
+import { checkLinks } from './remarkPlugins/checkDeadLink';
+import { TEMP_DIR } from '../constants';
+import { PluginDriver } from '../PluginDriver';
+import { RuntimeModuleID } from '../runtimeModule';
 import {
   normalizePath,
   escapeMarkdownHeadingIds,
   flattenMdxContent,
   applyReplaceRules,
 } from '../utils';
-import { PluginDriver } from '../PluginDriver';
-import { TEMP_DIR } from '../constants';
-import { RuntimeModuleID } from '../runtimeModule';
-import { createMDXOptions } from './options';
-import { TocItem } from './remarkPlugins/toc';
-import { checkLinks } from './remarkPlugins/checkDeadLink';
+
+import type { Rspack } from '@rsbuild/core';
+import type { Header, UserConfig } from '@rspress/shared';
+import type { RouteService } from '../route/RouteService';
 
 interface LoaderOptions {
   config: UserConfig;
@@ -88,18 +90,15 @@ export default async function mdxLoader(
   source: string,
   callback: Rspack.LoaderContext['callback'],
 ) {
+  context.cacheable(true);
+
   const options = context.getOptions();
   const filepath = context.resourcePath;
   const { alias } = context._compiler.options.resolve;
-  context.cacheable(true);
-  let pageMeta = {
-    title: '',
-    toc: [],
-  } as PageMeta;
-
   const { config, docDirectory, checkDeadLinks, routeService, pluginDriver } =
     options;
 
+  // Separate frontmatter and content in MDX source
   const { frontmatter, content } = loadFrontMatter(
     source,
     filepath,
@@ -107,22 +106,28 @@ export default async function mdxLoader(
     true,
   );
 
+  // Replace imported built-in MDX content
   const { flattenContent, deps } = await flattenMdxContent(
     content,
     filepath,
     alias as Record<string, string>,
   );
-  // replace content
+
+  deps.forEach(dep => context.addDependency(dep));
+
+  // Resolve side effects caused by flattenMdxContent.
+  // Perhaps this problem should be solved within flattenMdxContent?
   const replacedContent = applyReplaceRules(
     flattenContent,
     config.replaceRules,
   );
-  // preprocessor
+
+  // Support custom id like `#hello world {#custom-id}`.
+  // TODO > issue: `#hello world {#custom-id}` will also be replaced.
   const preprocessedContent = escapeMarkdownHeadingIds(replacedContent);
 
-  deps.forEach(dep => context.addDependency(dep));
-
-  let enableMdxRs;
+  // Whether to use the Rust version of the MDX compiler.
+  let enableMdxRs: boolean;
   const mdxRs = config?.markdown?.mdxRs ?? true;
   if (typeof mdxRs === 'object') {
     enableMdxRs =
@@ -133,6 +138,8 @@ export default async function mdxLoader(
 
   try {
     let compileResult: string;
+    let pageMeta = { title: '', toc: [] } as PageMeta;
+
     if (!enableMdxRs) {
       const mdxOptions = await createMDXOptions(
         docDirectory,
@@ -144,10 +151,7 @@ export default async function mdxLoader(
       );
       const compiler = createProcessor(mdxOptions);
 
-      compiler.data('pageMeta', {
-        toc: [],
-        title: '',
-      });
+      compiler.data('pageMeta', { toc: [], title: '' });
       const vFile = await compiler.process({
         value: preprocessedContent,
         path: filepath,
@@ -166,7 +170,6 @@ export default async function mdxLoader(
     } else {
       const { compile } = require('@rspress/mdx-rs');
 
-      // TODO: Cannot get correct toc from mdx which has internal components
       const { toc, links, title, code } = await compile({
         value: preprocessedContent,
         filepath,

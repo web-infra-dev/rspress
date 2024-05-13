@@ -9,7 +9,6 @@ import { i18nVMPlugin } from './i18n';
 import { globalUIComponentsVMPlugin } from './globalUIComponents';
 import { globalStylesVMPlugin } from './globalStyles';
 import { searchHookVMPlugin } from './searchHooks';
-import { prismLanguageVMPlugin } from './prismLanguages';
 
 export interface FactoryContext {
   userDocRoot: string;
@@ -32,6 +31,7 @@ export const runtimeModuleFactory: RuntimeModuleFactory[] = [
   routeVMPlugin,
   /**
    * Generate search index and site data for client runtime
+   * Also responsible for automatically importing prism languages
    */
   siteDataVMPlugin,
   /**
@@ -50,10 +50,6 @@ export const runtimeModuleFactory: RuntimeModuleFactory[] = [
    * Generate search hook module
    */
   searchHookVMPlugin,
-  /**
-   * Generate prism languages module
-   */
-  prismLanguageVMPlugin,
 ];
 
 // We will use this plugin to generate runtime module in browser, which is important to ensure the client have access to some compile-time data
@@ -119,5 +115,4 @@ export const runtimeModuleIDs = [
   RuntimeModuleID.SearchIndexHash,
   RuntimeModuleID.I18nText,
   RuntimeModuleID.SearchHooks,
-  RuntimeModuleID.PrismLanguages,
 ];

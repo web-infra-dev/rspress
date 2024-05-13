@@ -206,7 +206,7 @@ Please set `markdown.mdxRs` to `false` when configuring `globalComponents`, othe
 
 ### markdown.highlightLanguages
 
-- Type: `(string | [string, string])[]`
+- Type: `[string, string][]`
 - Default:
 
 ```js
@@ -214,26 +214,18 @@ const DEFAULT_HIGHLIGHT_LANGUAGES = [
   ['js', 'javascript'],
   ['ts', 'typescript'],
   ['jsx', 'tsx'],
-  'tsx',
-  'json',
-  'css',
-  'scss',
-  'less',
   ['xml', 'xml-doc'],
-  'diff',
-  'yaml',
   ['md', 'markdown'],
   ['mdx', 'tsx'],
-  'bash',
 ];
 ```
 
-Register the language needed for code highlighting.
+Rspress supports automatic import of highlighted languages and makes some language aliases by default.
 
 - By default, it is implemented based on [Prism.js](https://prismjs.com/). You can also switch to Shiki through [@rspress/plugin-shiki](/plugin/official-plugins/shiki).
-- Default supported languages include `js`, `jsx`, `ts`, `tsx`, `json`, `css`, `scss`, `less`, `html`, `xml`, `diff`, `yaml`, `md`, `mdx`, and `bash`.
+- The default configuration alias languages include `js`, `jsx`, `ts`, `tsx`, `xml`, `md`, `mdx`.
 
-Rspress does not register all supported languages by default in order to reduce the bundle size of the build output. You can extend on these default languages, for example:
+You can also extend these default aliases, such as:
 
 ```ts title="rspress.config.ts"
 import { defineConfig } from 'rspress/config';
@@ -242,8 +234,6 @@ import path from 'path';
 export default defineConfig({
   markdown: {
     highlightLanguages: [
-      'ejs',
-      'go',
       // Alias as md, full name as markdown
       ['md', 'markdown'],
     ],
@@ -251,4 +241,4 @@ export default defineConfig({
 });
 ```
 
-Each language config supports both `string` and `[string, string]` formats. In the array format, the former is the alias of the language, and the latter is the full name of the language. You can go to the [file list](https://github.com/react-syntax-highlighter/react-syntax-highlighter/tree/master/src/languages/prism) to view all supported language full names.
+The alias of each language is configured in the format of `[string, string]`. The former is the alias of the language, and the latter is the full name of the language. You can go to [File List](https://github.com/react-syntax-highlighter/react-syntax-highlighter/tree/master/src/languages/prism) to view the full names of all supported languages.

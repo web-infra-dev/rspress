@@ -1,12 +1,13 @@
 import path from 'path';
+import fs from '@rspress/shared/fs-extra';
 import { groupBy } from 'lodash-es';
 import { SEARCH_INDEX_NAME } from '@rspress/shared';
-import fs from '@rspress/shared/fs-extra';
-import { FactoryContext, RuntimeModuleID } from '..';
-import { normalizeThemeConfig } from './normalizeThemeConfig';
-import { extractPageData } from './extractPageData';
 import { createHash } from '@/node/utils';
 import { TEMP_DIR, isProduction } from '@/node/constants';
+import { extractPageData } from './extractPageData';
+import { normalizeThemeConfig } from './normalizeThemeConfig';
+import { handleHighlightLanguages } from './highlightLanguages';
+import { FactoryContext, RuntimeModuleID } from '..';
 
 // How can we let the client runtime access the `indexHash`?
 // We can only do something after the Rspack build process becuase the index hash is generated within Rspack build process.There are two ways to do this:
@@ -38,6 +39,7 @@ export async function siteDataVMPlugin(context: FactoryContext) {
     tempSearchObj.searchHooks = undefined;
   }
 
+  const highlightLanguages: Set<string> = new Set();
   const replaceRules = userConfig?.replaceRules || [];
   // If the dev server restart when config file, we will reuse the siteData instead of extracting the siteData from source files again.
   const domain =
@@ -51,6 +53,7 @@ export async function siteDataVMPlugin(context: FactoryContext) {
       domain,
       userDocRoot,
       routeService,
+      highlightLanguages,
     )
   ).filter(Boolean);
   // modify page index by plugins
@@ -135,6 +138,12 @@ export async function siteDataVMPlugin(context: FactoryContext) {
     },
   };
 
+  const { highlightLanguages: defaultLanguages = [] } = config.markdown || {};
+  const aliases = handleHighlightLanguages(
+    highlightLanguages,
+    defaultLanguages,
+  );
+
   return {
     [`${RuntimeModuleID.SiteData}.mjs`]: `export default ${JSON.stringify(
       siteData,
@@ -142,5 +151,15 @@ export async function siteDataVMPlugin(context: FactoryContext) {
     [RuntimeModuleID.SearchIndexHash]: `export default ${JSON.stringify(
       indexHashByGroup,
     )}`,
+    [RuntimeModuleID.PrismLanguages]: `export const aliases = ${JSON.stringify(
+      aliases,
+    )};
+    export const languages = {
+      ${Array.from(highlightLanguages).map(lang => {
+        return `"${lang}": require(
+          "react-syntax-highlighter/dist/cjs/languages/prism/${lang}"
+        ).default`;
+      })}
+    }`,
   };
 }

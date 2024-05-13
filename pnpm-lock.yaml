@@ -450,8 +450,8 @@ importers:
         specifier: 0.6.13
         version: 0.6.13(@rsbuild/core@0.6.13)(@swc/helpers@0.5.3)
       '@rspress/mdx-rs':
-        specifier: 0.5.4
-        version: 0.5.4
+        specifier: 0.5.5
+        version: 0.5.5
       '@rspress/plugin-auto-nav-sidebar':
         specifier: workspace:*
         version: link:../plugin-auto-nav-sidebar
@@ -1358,8 +1358,8 @@ importers:
         specifier: ^18
         version: 18.0.0
       '@types/react-syntax-highlighter':
-        specifier: ^15.5.9
-        version: 15.5.9
+        specifier: ^15.5.13
+        version: 15.5.13
       gray-matter:
         specifier: 4.0.3
         version: 4.0.3
@@ -4073,8 +4073,8 @@ packages:
       react-refresh: 0.14.2
     dev: false
 
-  /@rspress/mdx-rs-darwin-arm64@0.5.4:
-    resolution: {integrity: sha512-IdfxxwRN7XZ0ADTd3112xQcSoZz8wyePzTDgUedSRvn+38Jp8dH2JSNOthyi4POIz/LUk4oajoHFK4W0eIZN0A==}
+  /@rspress/mdx-rs-darwin-arm64@0.5.5:
+    resolution: {integrity: sha512-XlRjqOnxkXs+jZ9TEDrt3XExeOp1CRQBawZYlAwleGFvvOxcnFjVoAGaFsCEID5snoXFyfoMheyvNcShbLSj2A==}
     engines: {node: '>=14.12'}
     cpu: [arm64]
     os: [darwin]
@@ -4082,8 +4082,8 @@ packages:
     dev: false
     optional: true
 
-  /@rspress/mdx-rs-darwin-x64@0.5.4:
-    resolution: {integrity: sha512-JtNT4v8jhqQMQ90hLui1vkFC3oHsLnpdGHGT/womyVB7gllAupAf4a/W8HvjEZesuY/YZ9SK1jbA+77Kgr+N9g==}
+  /@rspress/mdx-rs-darwin-x64@0.5.5:
+    resolution: {integrity: sha512-uyXxBuPPdQQaixf4lkwQLRduK3K1w6UdG+o+aprp6HSHbpZWjYRKSaSfpqFZQTVZF2I+/XBxGe8fbZFw27KDlg==}
     engines: {node: '>=14.12'}
     cpu: [x64]
     os: [darwin]
@@ -4091,8 +4091,8 @@ packages:
     dev: false
     optional: true
 
-  /@rspress/mdx-rs-linux-arm64-gnu@0.5.4:
-    resolution: {integrity: sha512-KV/mGqVi+zi5ORbiLP5NMTgBURE8HXSRQLrKl+6gC3yYuIPp/4SFfC5YNu7OLNCV0PjJIniTJ8MZsl6ZVvC/wg==}
+  /@rspress/mdx-rs-linux-arm64-gnu@0.5.5:
+    resolution: {integrity: sha512-cLRpcNCcuFm7mkzJAzcZTYrlarwruOmShZXnKDcBHTRBF3ELnKe5C+rPGB/lM2sHp4TnD5MaGyhIsZ1lULoytw==}
     engines: {node: '>=14.12'}
     cpu: [arm64]
     os: [linux]
@@ -4100,8 +4100,8 @@ packages:
     dev: false
     optional: true
 
-  /@rspress/mdx-rs-linux-arm64-musl@0.5.4:
-    resolution: {integrity: sha512-wwLrvO5HwXt2Atpr+Wi90VgrlC+7NVaaK8QL9FIK39FkdYo7FDz8Jl9DpJC2S1Z/Nth+y3OuT2OIL//wsZYifA==}
+  /@rspress/mdx-rs-linux-arm64-musl@0.5.5:
+    resolution: {integrity: sha512-G2YvWnG7kQ2B++skU6TRQDoPP+jETpJDaSTf45+77bIFvOnNxsgWEE761hJTqXfOfSjr/WN85Bu+83k8V21wcg==}
     engines: {node: '>=14.12'}
     cpu: [arm64]
     os: [linux]
@@ -4109,8 +4109,8 @@ packages:
     dev: false
     optional: true
 
-  /@rspress/mdx-rs-linux-x64-gnu@0.5.4:
-    resolution: {integrity: sha512-xXK2suilncasTYWkbKIRBbggDTlYmDC55Lhnic+fc/rhoxvsIhnKFcwVcz1nNR5122Ly1xoXdhPCHTA6cOJUwg==}
+  /@rspress/mdx-rs-linux-x64-gnu@0.5.5:
+    resolution: {integrity: sha512-GACjD8qQXEVZQd009S3E0G+81MkjMVQfoGJJDlGqwW1rbEqqXYJoh1aTqEjoJQc499OvJFmyBExALQug03e6rA==}
     engines: {node: '>=14.12'}
     cpu: [x64]
     os: [linux]
@@ -4118,8 +4118,8 @@ packages:
     dev: false
     optional: true
 
-  /@rspress/mdx-rs-linux-x64-musl@0.5.4:
-    resolution: {integrity: sha512-4J81DKiUa/NPmo+CCfxj2zxyk6ZrRNq+Wi3K/93POmL5vM87LRNgXi7FskoOUahalCo6Lzb9KA/B3H+oEQRddw==}
+  /@rspress/mdx-rs-linux-x64-musl@0.5.5:
+    resolution: {integrity: sha512-r+CS3t3z/upiylN/bNH3rmqrPvEZCNhefGwPHHV0jfpJj6OsCPk67Ec6MQBm7zp3VWB08GBGYvj6N29T9I8dSQ==}
     engines: {node: '>=14.12'}
     cpu: [x64]
     os: [linux]
@@ -4127,8 +4127,8 @@ packages:
     dev: false
     optional: true
 
-  /@rspress/mdx-rs-win32-arm64-msvc@0.5.4:
-    resolution: {integrity: sha512-FzlUpyL6rGggVME2TIuHcMlRguDVam8aw2SNTt6gWkuAxROX2jKan+FvkAQyyDeLYNNy79eBTLxRF6+cczNsAw==}
+  /@rspress/mdx-rs-win32-arm64-msvc@0.5.5:
+    resolution: {integrity: sha512-k6rCbcb3BMTnP+kFTwtyZvY0KKJtgKpkgsqR9k2SnIn/NY8x3DzjH6CpHSKqdYn3taESE0am6/L2Z1lmbs1+5A==}
     engines: {node: '>=14.12'}
     cpu: [arm64]
     os: [win32]
@@ -4136,8 +4136,8 @@ packages:
     dev: false
     optional: true
 
-  /@rspress/mdx-rs-win32-x64-msvc@0.5.4:
-    resolution: {integrity: sha512-G4Pkeegj8JuvHUDP96tAyK+p2RWKNYILlPbQNEpJFEizu6urytaQgu4B+GkMXHArfLQw/CGqaPrcPbIoFGbt+Q==}
+  /@rspress/mdx-rs-win32-x64-msvc@0.5.5:
+    resolution: {integrity: sha512-SGCb19Cl5aeJu/4i1sALZIVs3qdvbNfmhYQZQzhYrTbMkjkymbcnaEboj1uU73yh9k/U/q4EMFrdg9+Uq/ztkQ==}
     engines: {node: '>=14.12'}
     cpu: [x64]
     os: [win32]
@@ -4145,18 +4145,18 @@ packages:
     dev: false
     optional: true
 
-  /@rspress/mdx-rs@0.5.4:
-    resolution: {integrity: sha512-1drGjRhIE5ZEDYU7KYdcr/cXEFXXhC6VMfAh0uMPA7XIzpz3cM+U3CSlg82rmEe2gQOZfE00C6UZRYn2aCNbGg==}
+  /@rspress/mdx-rs@0.5.5:
+    resolution: {integrity: sha512-slReZPDzDmilw35Gpoxl13xPLuORppA9gdcjjkfnNZ4t45EbqLDsfBXWfF3awz2df+GMdQDTLjrM6lmj4BcUDw==}
     engines: {node: '>= 10'}
     optionalDependencies:
-      '@rspress/mdx-rs-darwin-arm64': 0.5.4
-      '@rspress/mdx-rs-darwin-x64': 0.5.4
-      '@rspress/mdx-rs-linux-arm64-gnu': 0.5.4
-      '@rspress/mdx-rs-linux-arm64-musl': 0.5.4
-      '@rspress/mdx-rs-linux-x64-gnu': 0.5.4
-      '@rspress/mdx-rs-linux-x64-musl': 0.5.4
-      '@rspress/mdx-rs-win32-arm64-msvc': 0.5.4
-      '@rspress/mdx-rs-win32-x64-msvc': 0.5.4
+      '@rspress/mdx-rs-darwin-arm64': 0.5.5
+      '@rspress/mdx-rs-darwin-x64': 0.5.5
+      '@rspress/mdx-rs-linux-arm64-gnu': 0.5.5
+      '@rspress/mdx-rs-linux-arm64-musl': 0.5.5
+      '@rspress/mdx-rs-linux-x64-gnu': 0.5.5
+      '@rspress/mdx-rs-linux-x64-musl': 0.5.5
+      '@rspress/mdx-rs-win32-arm64-msvc': 0.5.5
+      '@rspress/mdx-rs-win32-x64-msvc': 0.5.5
     dev: false
 
   /@selderee/plugin-htmlparser2@0.10.0:
@@ -4434,8 +4434,8 @@ packages:
       '@types/react': 18.0.26
     dev: true
 
-  /@types/react-syntax-highlighter@15.5.9:
-    resolution: {integrity: sha512-ven8zRSVMNkqt8ySJ2eEW5ugbfl/V/Z9S1c9UNhGqwkwVZNV5akk10rYDALxgwS25cLmN+/Q5UxlGj9CJmZ6Ew==}
+  /@types/react-syntax-highlighter@15.5.13:
+    resolution: {integrity: sha512-uLGJ87j6Sz8UaBAooU0T6lWJ0dBmjZgN1PZTrj05TNql2/XpC6+4HhMT5syIdFUUt+FASfCeLLv4kBygNU+8qA==}
     dependencies:
       '@types/react': 18.0.26
     dev: true

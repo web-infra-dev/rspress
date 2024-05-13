@@ -1,18 +1,18 @@
 import path from 'path';
-import {
-  PageIndexInfo,
-  ReplaceRule,
-  Header,
-  MDX_REGEXP,
-} from '@rspress/shared';
-import { htmlToText } from 'html-to-text';
 import fs from '@rspress/shared/fs-extra';
+import { htmlToText } from 'html-to-text';
 import { compile } from '@rspress/mdx-rs';
 import { loadFrontMatter } from '@rspress/shared/node-utils';
+import {
+  Header,
+  MDX_REGEXP,
+  ReplaceRule,
+  PageIndexInfo,
+} from '@rspress/shared';
 import { flattenMdxContent } from '@/node/utils';
+import { importStatementRegex } from '@/node/constants';
 import { RouteService } from '@/node/route/RouteService';
 import { applyReplaceRules } from '@/node/utils/applyReplaceRules';
-import { importStatementRegex } from '@/node/constants';
 
 export async function extractPageData(
   replaceRules: ReplaceRule[],
@@ -20,6 +20,7 @@ export async function extractPageData(
   domain: string,
   root: string,
   routeService: RouteService,
+  highlighterLangs: Set<string>,
 ): Promise<(PageIndexInfo | null)[]> {
   return Promise.all(
     routeService.getRoutes().map(async (route, index) => {
@@ -65,6 +66,7 @@ export async function extractPageData(
         html,
         title,
         toc: rawToc,
+        languages,
       } = await compile({
         value: content,
         filepath: route.absolutePath,
@@ -75,6 +77,7 @@ export async function extractPageData(
       if (!title?.length && !frontmatter && !frontmatter.title?.length) {
         return null;
       }
+
       content = htmlToText(String(html), {
         wordwrap: 80,
         selectors: [
@@ -110,6 +113,7 @@ export async function extractPageData(
         content = content.slice(title.length);
       }
 
+      languages.forEach(lang => highlighterLangs.add(lang));
       const toc: Header[] = rawToc.map(item => {
         // If the item.id ends with '-number', we take the number
         const match = item.id.match(/-(\d+)$/);

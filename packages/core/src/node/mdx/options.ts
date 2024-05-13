@@ -1,17 +1,18 @@
 import path from 'path';
 import remarkGFM from 'remark-gfm';
+import rehypePluginExternalLinks from 'rehype-external-links';
+import { PluggableList } from 'unified';
 import { Options } from '@mdx-js/loader';
 import { UserConfig } from '@rspress/shared';
-import { PluggableList } from 'unified';
-import rehypePluginExternalLinks from 'rehype-external-links';
-import type { RouteService } from '../route/RouteService';
-import type { PluginDriver } from '../PluginDriver';
 import { remarkPluginToc } from './remarkPlugins/toc';
+import { remarkBuiltin } from './remarkPlugins/builtin';
 import { rehypePluginCodeMeta } from './rehypePlugins/codeMeta';
 import { rehypeHeaderAnchor } from './rehypePlugins/headerAnchor';
-import { remarkPluginNormalizeLink } from './remarkPlugins/normalizeLink';
 import { remarkCheckDeadLinks } from './remarkPlugins/checkDeadLink';
-import { remarkBuiltin } from './remarkPlugins/builtin';
+import { remarkPluginNormalizeLink } from './remarkPlugins/normalizeLink';
+
+import type { PluginDriver } from '../PluginDriver';
+import type { RouteService } from '../route/RouteService';
 
 export async function createMDXOptions(
   docDirectory: string,
