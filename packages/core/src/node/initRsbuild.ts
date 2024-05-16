@@ -255,9 +255,7 @@ export async function initRsbuild(
     scanDir: userDocRoot,
     pluginDriver,
   });
-  const {
-    default: { createRsbuild, mergeRsbuildConfig },
-  } = await import('@rsbuild/core');
+  const { createRsbuild, mergeRsbuildConfig } = await import('@rsbuild/core');
 
   const internalRsbuildConfig = await createInternalBuildConfig(
     userDocRoot,
