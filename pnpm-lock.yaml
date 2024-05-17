@@ -208,8 +208,8 @@ importers:
   e2e/fixtures/modern-js:
     dependencies:
       '@arco-design/web-react':
-        specifier: ^2.46.0
-        version: 2.46.0(@types/react@18.0.26)(react-dom@18.2.0)(react@18.2.0)
+        specifier: ^2.62.0
+        version: 2.62.0(@types/react@18.0.26)(react-dom@18.2.0)(react@18.2.0)
     devDependencies:
       '@modern-js/plugin-rspress':
         specifier: workspace:*
@@ -1403,8 +1403,8 @@ packages:
       color: 3.2.1
     dev: false
 
-  /@arco-design/web-react@2.46.0(@types/react@18.0.26)(react-dom@18.2.0)(react@18.2.0):
-    resolution: {integrity: sha512-M33kL4K41x7u2Ln88sxQiqNTLm0s2b8GCYLk7GMbin0HP6jFLazFn9n7zY+HLK8p2jiFqt/bVD9qiJXJ5G0d6A==}
+  /@arco-design/web-react@2.62.0(@types/react@18.0.26)(react-dom@18.2.0)(react@18.2.0):
+    resolution: {integrity: sha512-PXWuMukxMUx5e7uk9EOlq6syYCvPTCwutNOUCitR2bASR8uRjHBJKWnRTy3oMzfLhISLJmjzmT0itZ9oKZKpIA==}
     peerDependencies:
       react: '>=16'
       react-dom: '>=16'
@@ -1420,6 +1420,7 @@ packages:
       react: 18.2.0
       react-dom: 18.2.0(react@18.2.0)
       react-focus-lock: 2.9.5(@types/react@18.0.26)(react@18.2.0)
+      react-is: 18.2.0
       react-transition-group: 4.4.5(react-dom@18.2.0)(react@18.2.0)
       resize-observer-polyfill: 1.5.1
       scroll-into-view-if-needed: 2.2.20
