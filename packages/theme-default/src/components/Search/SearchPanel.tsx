@@ -118,10 +118,14 @@ export function SearchPanel({ focused, setFocused }: SearchPanelProps) {
     });
     pageSearcherRef.current = pageSearcher;
     pageSearcherConfigRef.current = pageSearcherConfig;
-    await Promise.all([
-      pageSearcherRef.current.init(),
-      new Promise(resolve => setTimeout(resolve, 1000)),
-    ]);
+    if (search.mode === 'remote') {
+      await pageSearcherRef.current.init();
+    } else {
+      await Promise.all([
+        pageSearcherRef.current.init(),
+        new Promise(resolve => setTimeout(resolve, 1000)),
+      ]);
+    }
     setIniting(false);
     const query = searchInputRef.current?.value;
     if (query) {
@@ -301,7 +305,7 @@ export function SearchPanel({ focused, setFocused }: SearchPanelProps) {
       }
       return (
         <div ref={searchResultTabRef}>
-          {renderSearchResultItem(currentSearchResult)}
+          {renderSearchResultItem(currentSearchResult, query)}
         </div>
       );
     }
@@ -333,7 +337,7 @@ export function SearchPanel({ focused, setFocused }: SearchPanelProps) {
         {result.map(item => (
           <Tab key={item.group}>
             {item.renderType === RenderType.Default &&
-              renderSearchResultItem(item.result)}
+              renderSearchResultItem(item.result, query)}
             {item.renderType === RenderType.Custom &&
               userSearchHooks.render(item.result)}
           </Tab>
@@ -344,21 +348,11 @@ export function SearchPanel({ focused, setFocused }: SearchPanelProps) {
 
   const renderSearchResultItem = (
     suggestionList: DefaultMatchResult['result'],
+    query: string,
   ) => {
     // if no result, show no result
     if (suggestionList.length === 0 && !initing) {
-      return (
-        <div className="mt-4 flex-center">
-          <div
-            className="p-2 font-bold text-md"
-            style={{
-              color: '#2c3e50',
-            }}
-          >
-            No results found
-          </div>
-        </div>
-      );
+      return <NoSearchResult query={query} />;
     }
     const normalizedSuggestions = normalizeSuggestions(suggestionList);
     return (
@@ -395,6 +389,11 @@ export function SearchPanel({ focused, setFocused }: SearchPanelProps) {
       </ul>
     );
   };
+
+  const isSearching =
+    JSON.stringify(searchResult[0]) === JSON.stringify(DEFAULT_RESULT[0]);
+  const isRenderLoading = initing || (query && isSearching);
+  const isRenderSearchResult = query && !isSearching;
 
   return (
     <>
@@ -451,7 +450,7 @@ export function SearchPanel({ focused, setFocused }: SearchPanelProps) {
                 </h2>
               </div>
 
-              {query ? (
+              {isRenderSearchResult ? (
                 <div
                   className={`${styles.searchHits}  rspress-scrollbar`}
                   ref={searchResultRef}
@@ -459,7 +458,7 @@ export function SearchPanel({ focused, setFocused }: SearchPanelProps) {
                   {renderSearchResult(searchResult, search)}
                 </div>
               ) : null}
-              {initing && (
+              {isRenderLoading && (
                 <div className="flex-center">
                   <div className="p-2 text-sm">
                     <SvgWrapper icon={LoadingSvg} />
