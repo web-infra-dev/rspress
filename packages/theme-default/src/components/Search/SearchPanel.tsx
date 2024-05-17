@@ -83,7 +83,8 @@ export function SearchPanel({ focused, setFocused }: SearchPanelProps) {
     siteData,
     page: { lang, version },
   } = usePageData();
-  const { sidebar, searchPlaceholderText = 'Search Docs' } = useLocaleSiteData();
+  const { sidebar, searchPlaceholderText = 'Search Docs' } =
+    useLocaleSiteData();
   const { search, title: siteTitle } = siteData;
   const versionedSearch =
     search && search.mode !== 'remote' && search.versioned;
@@ -170,7 +171,11 @@ export function SearchPanel({ focused, setFocused }: SearchPanelProps) {
             currentSuggestionIndex >= 0 &&
             currentRenderType === RenderType.Default
           ) {
-            const suggestion = currentSuggestions[currentSuggestionIndex];
+            // the ResultItem has been normalized to display
+            const flatSuggestions = [].concat(
+              ...Object.values(normalizeSuggestions(currentSuggestions)),
+            );
+            const suggestion = flatSuggestions[currentSuggestionIndex];
             const isCurrent = currentSuggestions === searchResult[0].result;
             if (isCurrent) {
               window.location.href = isProduction()
