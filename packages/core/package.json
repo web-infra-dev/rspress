@@ -106,7 +106,7 @@
     "rimraf": "^3.0.2",
     "typescript": "^5",
     "vitest": "0.34.1",
-    "webpack": "^5.88.1"
+    "webpack": "^5.91.0"
   },
   "sideEffects": [
     "*.css",
