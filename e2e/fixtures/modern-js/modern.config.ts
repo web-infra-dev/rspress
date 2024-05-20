@@ -29,4 +29,7 @@ export default defineConfig({
     }),
   ],
   buildPreset: 'npm-component',
+  buildConfig: {
+    tsconfig: './tsconfig.build.json',
+  },
 });
