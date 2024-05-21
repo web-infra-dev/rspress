@@ -336,6 +336,7 @@ export type RemoteSearchOptions = SearchHooks & {
   domain?: string;
   indexName: string;
   searchIndexes?: RemoteSearchIndexInfo[];
+  searchLoading?: boolean;
 };
 
 export type SearchOptions = LocalSearchOptions | RemoteSearchOptions | false;
