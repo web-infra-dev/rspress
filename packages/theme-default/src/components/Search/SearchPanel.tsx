@@ -43,6 +43,7 @@ export function SearchPanel({ focused, setFocused }: SearchPanelProps) {
   const [searchResult, setSearchResult] = useState<MatchResult>([]);
   const searchInputRef = useRef<HTMLInputElement | null>(null);
   const [initing, setIniting] = useState(true);
+  const [isSearching, setIsSearching] = useState(false);
   const [currentSuggestionIndex, setCurrentSuggestionIndex] = useState(0);
   const pageSearcherRef = useRef<PageSearcher | null>(null);
   const pageSearcherConfigRef = useRef<PageSearcherConfig | null>(null);
@@ -118,19 +119,13 @@ export function SearchPanel({ focused, setFocused }: SearchPanelProps) {
     });
     pageSearcherRef.current = pageSearcher;
     pageSearcherConfigRef.current = pageSearcherConfig;
-    if (search.mode === 'remote') {
-      await pageSearcherRef.current.init();
-    } else {
-      await Promise.all([
-        pageSearcherRef.current.init(),
-        new Promise(resolve => setTimeout(resolve, 1000)),
-      ]);
-    }
+    await pageSearcherRef.current.init();
     setIniting(false);
     const query = searchInputRef.current?.value;
     if (query) {
       const matched = await pageSearcherRef.current?.match(query);
       setSearchResult(matched || DEFAULT_RESULT);
+      setIsSearching(false);
     }
   }
 
@@ -234,6 +229,9 @@ export function SearchPanel({ focused, setFocused }: SearchPanelProps) {
   const handleQueryChangedImpl = async (value: string) => {
     let newQuery = value;
     setQuery(newQuery);
+    if (search && search.mode === 'remote' && search.searchLoading) {
+      setIsSearching(true);
+    }
     if (newQuery) {
       const searchResult: MatchResult = [];
 
@@ -270,6 +268,7 @@ export function SearchPanel({ focused, setFocused }: SearchPanelProps) {
       }
 
       setSearchResult(searchResult || DEFAULT_RESULT);
+      setIsSearching(false);
 
       if (userSearchHooks.afterSearch) {
         await userSearchHooks.afterSearch(newQuery, searchResult);
@@ -296,16 +295,17 @@ export function SearchPanel({ focused, setFocused }: SearchPanelProps) {
   const renderSearchResult = (
     result: MatchResult,
     searchOptions: SearchOptions,
+    isSearching: boolean,
   ) => {
     if (result.length === 1) {
       const currentSearchResult = result[0]
         .result as DefaultMatchResult['result'];
-      if (currentSearchResult.length === 0) {
+      if (currentSearchResult.length === 0 && !isSearching) {
         return <NoSearchResult query={query} />;
       }
       return (
         <div ref={searchResultTabRef}>
-          {renderSearchResultItem(currentSearchResult, query)}
+          {renderSearchResultItem(currentSearchResult, query, isSearching)}
         </div>
       );
     }
@@ -337,7 +337,7 @@ export function SearchPanel({ focused, setFocused }: SearchPanelProps) {
         {result.map(item => (
           <Tab key={item.group}>
             {item.renderType === RenderType.Default &&
-              renderSearchResultItem(item.result, query)}
+              renderSearchResultItem(item.result, query, isSearching)}
             {item.renderType === RenderType.Custom &&
               userSearchHooks.render(item.result)}
           </Tab>
@@ -349,7 +349,16 @@ export function SearchPanel({ focused, setFocused }: SearchPanelProps) {
   const renderSearchResultItem = (
     suggestionList: DefaultMatchResult['result'],
     query: string,
+    isSearching: boolean,
   ) => {
+    // if isSearching, show loading svg
+    if (isSearching) {
+      return (
+        <div className="flex flex-col items-center">
+          <SvgWrapper icon={LoadingSvg} className="m-8 opacity-80" />
+        </div>
+      );
+    }
     // if no result, show no result
     if (suggestionList.length === 0 && !initing) {
       return <NoSearchResult query={query} />;
@@ -389,11 +398,6 @@ export function SearchPanel({ focused, setFocused }: SearchPanelProps) {
       </ul>
     );
   };
-
-  const isSearching =
-    JSON.stringify(searchResult[0]) === JSON.stringify(DEFAULT_RESULT[0]);
-  const isRenderLoading = initing || (query && isSearching);
-  const isRenderSearchResult = query && !isSearching;
 
   return (
     <>
@@ -450,21 +454,14 @@ export function SearchPanel({ focused, setFocused }: SearchPanelProps) {
                 </h2>
               </div>
 
-              {isRenderSearchResult ? (
+              {query && !initing ? (
                 <div
                   className={`${styles.searchHits}  rspress-scrollbar`}
                   ref={searchResultRef}
                 >
-                  {renderSearchResult(searchResult, search)}
+                  {renderSearchResult(searchResult, search, isSearching)}
                 </div>
               ) : null}
-              {isRenderLoading && (
-                <div className="flex-center">
-                  <div className="p-2 text-sm">
-                    <SvgWrapper icon={LoadingSvg} />
-                  </div>
-                </div>
-              )}
             </div>
           </div>,
           document.getElementById('search-container')!,
