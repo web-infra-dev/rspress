@@ -294,7 +294,7 @@ export default defineConfig({
 - Type: `string`
 - Default: `Search Docs`
 
-The placeholder text of the search box. for example:
+The placeholder text of the search box. For example:
 
 ```ts title="rspress.config.ts"
 import { defineConfig } from 'rspress/config';
@@ -302,6 +302,40 @@ import { defineConfig } from 'rspress/config';
 export default defineConfig({
   themeConfig: {
     searchPlaceholderText: 'Search Docs',
+  },
+});
+```
+
+## searchNoResultsText
+
+- Type: `string`
+- Default: `No results for`
+
+The text of no search result. For example:
+
+```ts title="rspress.config.ts"
+import { defineConfig } from 'rspress/config';
+
+export default defineConfig({
+  themeConfig: {
+    searchNoResultsText: 'No results for',
+  },
+});
+```
+
+## searchSuggestedQueryText
+
+- Type: `string`
+- Default: `Please try again with a different keyword`
+
+The text of suggested query text when no search result. For example:
+
+```ts title="rspress.config.ts"
+import { defineConfig } from 'rspress/config';
+
+export default defineConfig({
+  themeConfig: {
+    searchSuggestedQueryText: 'Please search again',
   },
 });
 ```
@@ -449,6 +483,10 @@ export interface LocaleConfig {
   nextPageText?: string;
   // Search box placeholder text
   searchPlaceholderText?: string;
+  // The text of no search result
+  searchNoResultsText?: string;
+  // The text of suggested query text when no search result
+  searchSuggestedQueryText?: string;
 }
 ```
 
