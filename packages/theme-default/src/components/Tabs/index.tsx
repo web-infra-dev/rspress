@@ -23,7 +23,7 @@ type TabItem = {
 };
 
 interface TabsProps {
-  values: ReactNode[] | ReadonlyArray<ReactNode> | TabItem[];
+  values?: ReactNode[] | ReadonlyArray<ReactNode> | TabItem[];
   defaultValue?: string;
   onChange?: (index: number) => void;
   children: ReactNode;
@@ -176,7 +176,8 @@ export const Tabs: ForwardRefExoticComponent<TabsProps> = forwardRef(
 export function Tab({
   children,
   ...props
-}: ComponentPropsWithRef<'div'>): ReactElement {
+}: ComponentPropsWithRef<'div'> &
+  Pick<TabItem, 'label' | 'value'>): ReactElement {
   return (
     <div {...props} className="rounded px-2">
       {children}
