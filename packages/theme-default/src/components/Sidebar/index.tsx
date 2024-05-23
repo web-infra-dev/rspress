@@ -1,20 +1,23 @@
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import {
+  inBrowser,
+  normalizeSlash,
   NormalizedSidebarGroup,
   SidebarItem as ISidebarItem,
   SidebarDivider as ISidebarDivider,
   SidebarSectionHeader as ISidebarSectionHeader,
-  normalizeSlash,
 } from '@rspress/shared';
 import { routes } from 'virtual-routes';
 import { matchRoutes, useLocation, removeBase } from '@rspress/runtime';
 import { isActive, useLocaleSiteData, useSidebarData } from '../../logic';
-import { NavBarTitle } from '../Nav/NavBarTitle';
-import styles from './index.module.scss';
+
 import { SidebarItem } from './SidebarItem';
+import { NavBarTitle } from '../Nav/NavBarTitle';
 import { SidebarDivider } from './SidebarDivider';
 import { UISwitchResult } from '../../logic/useUISwitch';
 import { SidebarSectionHeader } from './SidebarSectionHeader';
+
+import styles from './index.module.scss';
 
 const isSidebarDivider = (
   item:
@@ -57,11 +60,15 @@ interface Props {
   uiSwitch?: UISwitchResult;
 }
 
+type SidebarData = (ISidebarDivider | ISidebarItem | NormalizedSidebarGroup)[];
+
 export const highlightTitleStyle = {
   fontSize: '14px',
   paddingLeft: '24px',
   fontWeight: 'bold',
 };
+
+export let bodyStyleOverflow: string;
 
 // Note: the cache object won't be reassign in other module
 // eslint-disable-next-line import/no-mutable-exports
@@ -72,14 +79,27 @@ export let matchCache: WeakMap<
 
 export function Sidebar(props: Props) {
   const { isSidebarOpen, beforeSidebar, afterSidebar, uiSwitch } = props;
-  const { items: rawSidebarData } = useSidebarData();
-  const localesData = useLocaleSiteData();
+
   const { pathname: rawPathname } = useLocation();
-  const langRoutePrefix = normalizeSlash(localesData.langRoutePrefix || '');
-  const [sidebarData, setSidebarData] = useState<
-    (ISidebarDivider | ISidebarItem | NormalizedSidebarGroup)[]
-  >(rawSidebarData.filter(Boolean).flat());
+  const { items: rawSidebarData } = useSidebarData();
+  const [sidebarData, setSidebarData] = useState<SidebarData>(() => {
+    return rawSidebarData.filter(Boolean).flat();
+  });
+
+  const localesData = useLocaleSiteData();
   const pathname = decodeURIComponent(rawPathname);
+  const langRoutePrefix = normalizeSlash(localesData.langRoutePrefix || '');
+
+  useEffect(() => {
+    if (inBrowser) {
+      if (isSidebarOpen) {
+        bodyStyleOverflow = document.body.style.overflow;
+        document.body.style.overflow = 'hidden';
+      } else {
+        document.body.style.overflow = bodyStyleOverflow || '';
+      }
+    }
+  }, [isSidebarOpen]);
 
   useEffect(() => {
     if (rawSidebarData === sidebarData) {
@@ -186,27 +206,17 @@ export function Sidebar(props: Props) {
         isSidebarOpen ? styles.open : ''
       }`}
     >
-      <div className={`${styles.sidebarContainer}`}>
-        {!uiSwitch.showNavbar ? null : (
-          <div className={styles.navTitleMask}>
-            <NavBarTitle />
-          </div>
-        )}
-        <div className={`mt-1 ${styles.sidebarContent}`}>
-          <div
-            className="rspress-scrollbar"
-            style={{
-              maxHeight: 'calc(100vh - var(--rp-nav-height) - 8px)',
-              overflow: 'auto',
-            }}
-          >
-            <nav className="pb-2">
-              {beforeSidebar}
-              {sidebarData.map(renderItem)}
-              {afterSidebar}
-            </nav>
-          </div>
+      {!uiSwitch.showNavbar ? null : (
+        <div className={styles.navTitleMask}>
+          <NavBarTitle />
         </div>
+      )}
+      <div className={`rspress-scrollbar ${styles.sidebarContent}`}>
+        <nav className="pb-2">
+          {beforeSidebar}
+          {sidebarData.map(renderItem)}
+          {afterSidebar}
+        </nav>
       </div>
     </aside>
   );
