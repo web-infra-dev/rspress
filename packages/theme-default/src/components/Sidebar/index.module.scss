@@ -21,14 +21,6 @@
   background: var(--rp-c-bg);
 }
 
-.sidebarContainer {
-  padding: 0 0 96px 0;
-}
-
-.sidebarContent {
-  overflow-x: hidden;
-}
-
 .sidebar.open {
   opacity: 1;
   visibility: visible;
@@ -59,10 +51,6 @@
 @media (min-width: 1440px) {
   .sidebar {
     width: var(--rp-sidebar-width);
-  }
-
-  .sidebarContainer {
-    padding-left: 0;
   }
 }
 
