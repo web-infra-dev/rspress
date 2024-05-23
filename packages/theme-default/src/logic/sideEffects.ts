@@ -3,7 +3,10 @@ import { inBrowser } from '@rspress/shared';
 
 export const DEFAULT_NAV_HEIGHT = 72;
 
-function getTargetTop(element: HTMLElement, fallbackHeight = DEFAULT_NAV_HEIGHT) {
+function getTargetTop(
+  element: HTMLElement,
+  fallbackHeight = DEFAULT_NAV_HEIGHT,
+) {
   const targetPadding = parseInt(
     window.getComputedStyle(element).paddingTop,
     10,

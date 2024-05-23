@@ -79,7 +79,7 @@ export function DocLayout(props: DocLayoutProps) {
           {isOverviewPage ? (
             <>
               {beforeDocContent}
-                <Overview content={docContent} />
+              <Overview content={docContent} />
               {afterDocContent}
             </>
           ) : (

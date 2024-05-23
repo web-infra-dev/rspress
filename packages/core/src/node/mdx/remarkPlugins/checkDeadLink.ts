@@ -47,32 +47,31 @@ export function checkLinks(
 /**
  * Remark plugin to check dead links
  */
-export const remarkCheckDeadLinks: Plugin<
-  DeadLinkCheckOptions[]
-> = checkLink => {
-  const { root, routeService } = checkLink;
+export const remarkCheckDeadLinks: Plugin<DeadLinkCheckOptions[]> =
+  checkLink => {
+    const { root, routeService } = checkLink;
 
-  return (tree, vfile) => {
-    const internalLinks = new Set<string>();
+    return (tree, vfile) => {
+      const internalLinks = new Set<string>();
 
-    visit(tree, 'link', (node: { url: string }) => {
-      const { url } = node;
-      if (!url) {
-        return;
-      }
-      if (internalLinks.has(url)) {
-        return;
-      }
+      visit(tree, 'link', (node: { url: string }) => {
+        const { url } = node;
+        if (!url) {
+          return;
+        }
+        if (internalLinks.has(url)) {
+          return;
+        }
 
-      if (!url.startsWith('http') && !url.startsWith('https')) {
-        const { routePath: normalizeUrl } = routeService.normalizeRoutePath(
-          // fix: windows path
-          url.split(path.sep).join('/')?.split('#')[0],
-        );
-        internalLinks.add(normalizeUrl);
-      }
-    });
+        if (!url.startsWith('http') && !url.startsWith('https')) {
+          const { routePath: normalizeUrl } = routeService.normalizeRoutePath(
+            // fix: windows path
+            url.split(path.sep).join('/')?.split('#')[0],
+          );
+          internalLinks.add(normalizeUrl);
+        }
+      });
 
-    checkLinks(Array.from(internalLinks), vfile.path, root, routeService);
+      checkLinks(Array.from(internalLinks), vfile.path, root, routeService);
+    };
   };
-};
