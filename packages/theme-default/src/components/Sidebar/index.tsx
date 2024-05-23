@@ -208,14 +208,7 @@ export function Sidebar(props: Props) {
           <NavBarTitle />
         </div>
       )}
-      <div
-        className="rspress-scrollbar"
-        style={{
-          maxHeight: 'calc(100% - var(--rp-nav-height))',
-          overflowX: 'hidden',
-          overflowY: 'auto',
-        }}
-      >
+      <div className={`rspress-scrollbar ${styles['sidebar-content']}`}>
         <nav className="pb-2">
           {beforeSidebar}
           {sidebarData.map(renderItem)}

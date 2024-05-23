@@ -21,6 +21,12 @@
   background: var(--rp-c-bg);
 }
 
+.sidebar-content {
+  overflow-y: auto;
+  overflow-x: hidden;
+  max-height: calc(100% - var(--rp-nav-height));
+}
+
 .sidebar.open {
   opacity: 1;
   visibility: visible;
