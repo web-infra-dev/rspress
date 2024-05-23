@@ -160,8 +160,9 @@ describe('RouteService', async () => {
   });
 
   test('Should generate routes code', () => {
-    expect(routeService.generateRoutesCodeByRouteMeta(routeMeta, false))
-      .toMatchInlineSnapshot(`
+    expect(
+      routeService.generateRoutesCodeByRouteMeta(routeMeta, false),
+    ).toMatchInlineSnapshot(`
         "
         import React from 'react';
         import { lazyWithPreload } from \\"react-lazy-with-preload\\";

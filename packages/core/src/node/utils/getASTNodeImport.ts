@@ -28,4 +28,4 @@ export const getASTNodeImport = (name: string, from: string) =>
         ],
       },
     },
-  } as MdxjsEsm);
+  }) as MdxjsEsm;

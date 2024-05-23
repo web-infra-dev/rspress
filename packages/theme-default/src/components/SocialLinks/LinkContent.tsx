@@ -85,7 +85,7 @@ export const LinkContent = (props: ILinkContentComp) => {
       </div>
     );
   }
-  if(mode === 'dom') {
+  if (mode === 'dom') {
     return (
       <div
         className={`${styles.socialLinksIcon} cursor-pointer relative`}

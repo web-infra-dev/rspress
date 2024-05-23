@@ -15,9 +15,7 @@ export async function detectReactVersion(): Promise<number> {
   const cwd = process.cwd();
   const reactPath = path.join(cwd, 'node_modules', 'react');
   if (await fs.pathExists(reactPath)) {
-    const reactPkg = await fs.readJson(
-      path.join(reactPath, 'package.json'),
-    );
+    const reactPkg = await fs.readJson(path.join(reactPath, 'package.json'));
     const version = Number(reactPkg.version.split('.')[0]);
     return version;
   }
