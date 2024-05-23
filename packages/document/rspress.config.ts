@@ -76,6 +76,8 @@ export default defineConfig({
         nextPageText: '下一篇',
         outlineTitle: '目录',
         searchPlaceholderText: '搜索',
+        searchNoResultsText: '未搜索到相关结果',
+        searchSuggestedQueryText: '可更换不同的关键字后重试',
       },
       {
         lang: 'en',

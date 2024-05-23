@@ -82,6 +82,14 @@ export interface Config {
    */
   searchPlaceholderText?: string;
   /**
+   * The text of no search result
+   */
+  searchNoResultsText?: string;
+  /**
+   * The text of suggested query text when no search result
+   */
+  searchSuggestedQueryText?: string;
+  /**
    * The behavior of hiding navbar
    */
   hideNavbar?: 'always' | 'auto' | 'never';
@@ -126,6 +134,8 @@ export interface LocaleConfig {
   sourceCodeText?: string;
   langRoutePrefix?: string;
   searchPlaceholderText?: string;
+  searchNoResultsText?: string;
+  searchSuggestedQueryText?: string;
 }
 // nav -----------------------------------------------------------------------
 export type Nav = NavItem[] | { [key: string]: NavItem[] };
