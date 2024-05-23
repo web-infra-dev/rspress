@@ -68,6 +68,8 @@ export const highlightTitleStyle = {
   fontWeight: 'bold',
 };
 
+export let bodyStyleOverflow: string;
+
 // Note: the cache object won't be reassign in other module
 // eslint-disable-next-line import/no-mutable-exports
 export let matchCache: WeakMap<
@@ -91,9 +93,10 @@ export function Sidebar(props: Props) {
   useEffect(() => {
     if (inBrowser) {
       if (isSidebarOpen) {
+        bodyStyleOverflow = document.body.style.overflow;
         document.body.style.overflow = 'hidden';
       } else {
-        document.body.style.overflow = '';
+        document.body.style.overflow = bodyStyleOverflow || '';
       }
     }
   }, [isSidebarOpen]);
