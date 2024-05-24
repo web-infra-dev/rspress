@@ -23,6 +23,6 @@ test.describe('replace-rules test', async () => {
     await page.goto(`http://localhost:${appPort}`);
     const h1 = await page.$('h1');
     const content = await page.evaluate(h1 => h1?.textContent, h1);
-    expect(content).toContain('h1')
+    expect(content).toContain('h1');
   });
 });

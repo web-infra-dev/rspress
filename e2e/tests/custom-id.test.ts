@@ -29,5 +29,4 @@ test.describe('custom-id test', async () => {
     const text = await page.evaluate(h1 => h1?.textContent, h1);
     expect(text).toContain('Guide');
   });
-
 });
