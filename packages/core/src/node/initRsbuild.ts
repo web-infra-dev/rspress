@@ -42,6 +42,8 @@ async function createInternalBuildConfig(
   runtimeTempDir: string,
 ): Promise<RsbuildConfig> {
   const { pluginReact } = await import('@rsbuild/plugin-react');
+  const { pluginSass } = await import('@rsbuild/plugin-sass');
+  const { pluginLess } = await import('@rsbuild/plugin-less');
 
   const cwd = process.cwd();
   const CUSTOM_THEME_DIR =
@@ -84,6 +86,8 @@ async function createInternalBuildConfig(
   return {
     plugins: [
       pluginReact(),
+      pluginSass(),
+      pluginLess(),
       rsbuildPluginDocVM({
         userDocRoot,
         config,
