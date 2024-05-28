@@ -174,4 +174,21 @@ test.describe('i18n test', async () => {
       `http://localhost:${appPort}/en/guide/basic/install.html`,
     );
   });
+
+  test('Should not crash when switch language in api page', async ({
+    page,
+  }) => {
+    await page.goto(`http://localhost:${appPort}/api`, {
+      waitUntil: 'networkidle',
+    });
+    const overviewContentZh = await page.textContent('.overview-index');
+    expect(overviewContentZh).toEqual('Overviewzh');
+    await page.click('.rspress-nav-menu-group-button');
+    await page.click('.rspress-nav-menu-group-content a');
+    await page.waitForLoadState();
+    const content = await page.textContent('#root');
+    expect(content).not.toEqual('');
+    const overviewContentEn = await page.textContent('.overview-index');
+    expect(overviewContentEn).toEqual('Overviewen');
+  });
 });

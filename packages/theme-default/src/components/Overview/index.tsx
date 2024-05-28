@@ -81,7 +81,7 @@ export function Overview(props: {
     items: (NormalizedSidebarGroup | SidebarItem)[];
   };
 
-  if (overviewSidebarGroups[0].link !== routePath) {
+  if (overviewSidebarGroups[0]?.link !== routePath) {
     overviewSidebarGroups = findItemByRoutePath(
       overviewSidebarGroups,
       routePath,
