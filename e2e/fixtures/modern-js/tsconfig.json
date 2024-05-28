@@ -7,5 +7,5 @@
       "demo": ["./src"]
     }
   },
-  "include": ["src"]
+  "include": ["src", "modern.config.ts"]
 }

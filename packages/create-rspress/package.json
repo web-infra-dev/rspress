@@ -1,6 +1,6 @@
 {
   "name": "create-rspress",
-  "version": "1.21.0",
+  "version": "1.21.1",
   "types": "./dist/index.d.ts",
   "main": "./dist/index.js",
   "module": "./dist/index.js",
@@ -21,7 +21,7 @@
     "upgrade": "modern upgrade"
   },
   "devDependencies": {
-    "@types/jest": "~29.2.4",
+    "@types/jest": "~29.5.12",
     "@types/node": "^18.11.17",
     "@types/prompts": "^2.4.4",
     "@types/react": "^18",

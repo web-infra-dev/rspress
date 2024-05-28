@@ -1,6 +1,6 @@
 {
   "name": "@rspress/theme-default",
-  "version": "1.21.0",
+  "version": "1.21.1",
   "description": "The Default Theme of Rspress Documentation Framework",
   "bugs": "https://github.com/web-infra-dev/rspress/issues",
   "repository": {
@@ -57,13 +57,13 @@
     "react-transition-group": "4.4.5"
   },
   "devDependencies": {
-    "@modern-js/plugin-tailwindcss": "2.49.3",
-    "@modern-js/tsconfig": "2.49.3",
+    "@modern-js/plugin-tailwindcss": "2.49.4",
+    "@modern-js/tsconfig": "2.49.4",
     "@types/body-scroll-lock": "^3.1.0",
     "@types/hast": "3.0.3",
     "@types/html-to-text": "^8.1.1",
     "@types/is-html": "^2.0.1",
-    "@types/jest": "~29.2.4",
+    "@types/jest": "~29.5.12",
     "@types/lodash-es": "^4.17.8",
     "@types/mdast": "^3.0.10",
     "@types/nprogress": "^0.2.0",
@@ -73,7 +73,7 @@
     "gray-matter": "4.0.3",
     "typescript": "^5",
     "vitest": "0.34.1",
-    "webpack": "^5.88.1",
+    "webpack": "^5.91.0",
     "tailwindcss": "^3.4.3"
   },
   "sideEffects": [

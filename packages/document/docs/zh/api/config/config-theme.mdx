@@ -292,6 +292,40 @@ export default defineConfig({
 });
 ```
 
+## searchNoResultsText
+
+- Type: `string`
+- Default: `No results for`
+
+没有搜索结果时的显示文本。比如:
+
+```ts title="rspress.config.ts"
+import { defineConfig } from 'rspress/config';
+
+export default defineConfig({
+  themeConfig: {
+    searchNoResultsText: 'No results for',
+  },
+});
+```
+
+## searchSuggestedQueryText
+
+- Type: `string`
+- Default: `Please try again with a different keyword`
+
+没有搜索结果时的建议查询提示文本。比如:
+
+```ts title="rspress.config.ts"
+import { defineConfig } from 'rspress/config';
+
+export default defineConfig({
+  themeConfig: {
+    searchSuggestedQueryText: 'Please search again',
+  },
+});
+```
+
 ## socialLinks
 
 - Type: `Array`
@@ -435,6 +469,10 @@ export interface LocaleConfig {
   nextPageText?: string;
   // 搜索框占位符文本
   searchPlaceholderText?: string;
+  // 没有搜索结果时的显示文本
+  searchNoResultsText?: string;
+  // 没有搜索结果时的建议查询提示文本
+  searchSuggestedQueryText?: string;
 }
 ```
 

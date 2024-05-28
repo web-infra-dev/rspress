@@ -21,12 +21,10 @@
   background: var(--rp-c-bg);
 }
 
-.sidebarContainer {
-  padding: 0 12px 96px 0;
-}
-
 .sidebarContent {
+  overflow-y: auto;
   overflow-x: hidden;
+  max-height: calc(100% - var(--rp-nav-height));
 }
 
 .sidebar.open {
@@ -59,10 +57,6 @@
 @media (min-width: 1440px) {
   .sidebar {
     width: var(--rp-sidebar-width);
-  }
-
-  .sidebarContainer {
-    padding-left: 0;
   }
 }
 

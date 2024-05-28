@@ -81,7 +81,7 @@
 
   .content {
     width: calc(100% - var(--rp-sidebar-width));
-    padding: 48px 48px 72px max(0px, calc(48px - var(--rp-sidebar-width)));
+    padding: 48px 48px 72px max(24px, calc(48px - var(--rp-sidebar-width)));
 
     :global(.rspress-doc),
     :global(.rspress-doc-footer) {
