@@ -21,22 +21,24 @@
   --rp-container-details-text: #666666;
   --rp-container-details-bg: rgba(128, 128, 128, 0.1);
   --rp-container-details-code-bg: rgba(128, 128, 128, 0.1);
+  --rp-container-details-link: rgb(0, 119, 255);
 }
 
 .dark {
-  --rp-container-info-text: var(--rp-text-1);
+  --rp-container-info-text: rgb(66, 215, 140);
   --rp-container-info-bg: rgba(7, 156, 112, 0.1);
+
+  --rp-container-warning-text: rgb(251, 180, 81);
+  --rp-container-warning-border: rgba(255, 197, 23, 0.25);
+  --rp-container-warning-bg: rgba(255, 197, 23, 0.12);
+
+  --rp-container-danger-text: rgb(247, 110, 133);
+  --rp-container-danger-border: rgba(237, 60, 80, 0.3);
+  --rp-container-danger-bg: rgba(237, 60, 80, 0.12);
 
   --rp-container-details-text: var(--rp-text-1);
   --rp-container-details-bg: rgba(128, 128, 128, 0.16);
-
-  --rp-container-warning-border: rgba(255, 197, 23, 0.25);
-  --rp-container-warning-bg: rgba(255, 197, 23, 0.12);
-  --rp-container-warning-text: var(--rp-text-1);
-
-  --rp-container-danger-border: rgba(237, 60, 80, 0.3);
-  --rp-container-danger-bg: rgba(237, 60, 80, 0.12);
-  --rp-container-danger-text: var(--rp-text-1);
+  --rp-container-details-link: rgb(0, 119, 255);
 }
 
 .rspress-doc .rspress-directive {
@@ -45,7 +47,7 @@
   padding: 20px 24px 12px;
   line-height: 1.7;
   font-size: 14px;
-  font-weight: 500;
+  font-weight: 400;
   margin: 24px 0;
 }
 
@@ -72,7 +74,6 @@
 
 .rspress-doc .rspress-directive code {
   color: inherit;
-  font-weight: bold;
   font-size: 13px;
 }
 
@@ -80,47 +81,109 @@
 .rspress-doc .rspress-directive.note,
 .rspress-doc .rspress-directive.info {
   border-color: var(--rp-container-info-border);
-  color: var(--rp-container-info-text);
   background-color: var(--rp-container-info-bg);
 }
 
+.rspress-doc .rspress-directive.tip .rspress-directive-title,
+.rspress-doc .rspress-directive.note .rspress-directive-title,
+.rspress-doc .rspress-directive.info .rspress-directive-title {
+  color: var(--rp-container-info-text);
+}
+
 .rspress-doc .rspress-directive.tip code,
-.rspress-doc .rspress-directive.note code {
+.rspress-doc .rspress-directive.note code,
+.rspress-doc .rspress-directive.info code {
+  color: var(--rp-container-info-text);
   background-color: var(--rp-container-info-code-bg);
 }
 
-.rspress-doc .rspress-directive.info code {
-  background-color: var(--rp-container-info-code-bg);
+.rspress-doc .rspress-directive.tip a,
+.rspress-doc .rspress-directive.note a,
+.rspress-doc .rspress-directive.info a {
+  font-weight: 500;
+  color: var(--rp-container-info-text);
+  transition: color 0.25s;
+}
+
+.rspress-doc .rspress-directive.tip a:hover,
+.rspress-doc .rspress-directive.note a:hover,
+.rspress-doc .rspress-directive.info a:hover {
+  border-bottom: 1px solid var(--rp-container-info-text);
 }
 
 .rspress-doc .rspress-directive.warning {
   border-color: var(--rp-container-warning-border);
-  color: var(--rp-container-warning-text);
   background-color: var(--rp-container-warning-bg);
 }
 
+.rspress-doc .rspress-directive.warning .rspress-directive-title {
+  color: var(--rp-container-warning-text);
+}
+
 .rspress-doc .rspress-directive.warning code {
+  color: var(--rp-container-warning-text);
   background-color: var(--rp-container-warning-code-bg);
+}
+
+.rspress-doc .rspress-directive.warning a {
+  font-weight: 500;
+  color: var(--rp-container-warning-text);
+  transition: color 0.25s;
+}
+
+.rspress-doc .rspress-directive.warning a:hover {
+  border-bottom: 1px solid var(--rp-container-warning-text);
 }
 
 .rspress-doc .rspress-directive.caution,
 .rspress-doc .rspress-directive.danger {
   border-color: var(--rp-container-danger-border);
-  color: var(--rp-container-danger-text);
   background-color: var(--rp-container-danger-bg);
+}
+
+.rspress-doc .rspress-directive.caution .rspress-directive-title,
+.rspress-doc .rspress-directive.danger .rspress-directive-title {
+  color: var(--rp-container-danger-text);
 }
 
 .rspress-doc .rspress-directive.caution code,
 .rspress-doc .rspress-directive.danger code {
+  color: var(--rp-container-danger-text);
   background-color: var(--rp-container-danger-code-bg);
+}
+
+.rspress-doc .rspress-directive.caution a,
+.rspress-doc .rspress-directive.danger a {
+  font-weight: 500;
+  color: var(--rp-container-danger-text);
+  transition: color 0.25s;
+}
+
+.rspress-doc .rspress-directive.caution a:hover,
+.rspress-doc .rspress-directive.danger a:hover {
+  border-bottom: 1px solid var(--rp-container-danger-text);
 }
 
 .rspress-doc .rspress-directive.details {
   border-color: var(--rp-container-details-border);
-  color: var(--rp-container-details-text);
   background-color: var(--rp-container-details-bg);
 }
 
+.rspress-doc .rspress-directive.details .rspress-directive-title {
+  color: var(--rp-container-details-text);
+}
+
 .rspress-doc .rspress-directive.details code {
+  color: var(--rp-container-details-text);
   background-color: var(--rp-container-details-code-bg);
+}
+
+.rspress-doc .rspress-directive.details a {
+  font-weight: 500;
+  color: var(--rp-container-details-link);
+  transition: color 0.25s;
+}
+
+.rspress-doc .rspress-directive.details a:hover {
+  border-bottom: 1px solid var(--rp-container-details-link);
 }
