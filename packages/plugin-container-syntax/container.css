@@ -77,6 +77,11 @@
   font-size: 13px;
 }
 
+.rspress-doc .rspress-directive a {
+  font-weight: 500;
+  transition: color 0.25s;
+}
+
 .rspress-doc .rspress-directive.tip,
 .rspress-doc .rspress-directive.note,
 .rspress-doc .rspress-directive.info {
@@ -100,9 +105,7 @@
 .rspress-doc .rspress-directive.tip a,
 .rspress-doc .rspress-directive.note a,
 .rspress-doc .rspress-directive.info a {
-  font-weight: 500;
   color: var(--rp-container-info-text);
-  transition: color 0.25s;
 }
 
 .rspress-doc .rspress-directive.tip a:hover,
@@ -126,9 +129,7 @@
 }
 
 .rspress-doc .rspress-directive.warning a {
-  font-weight: 500;
   color: var(--rp-container-warning-text);
-  transition: color 0.25s;
 }
 
 .rspress-doc .rspress-directive.warning a:hover {
@@ -154,9 +155,7 @@
 
 .rspress-doc .rspress-directive.caution a,
 .rspress-doc .rspress-directive.danger a {
-  font-weight: 500;
   color: var(--rp-container-danger-text);
-  transition: color 0.25s;
 }
 
 .rspress-doc .rspress-directive.caution a:hover,
@@ -179,9 +178,7 @@
 }
 
 .rspress-doc .rspress-directive.details a {
-  font-weight: 500;
   color: var(--rp-container-details-link);
-  transition: color 0.25s;
 }
 
 .rspress-doc .rspress-directive.details a:hover {
