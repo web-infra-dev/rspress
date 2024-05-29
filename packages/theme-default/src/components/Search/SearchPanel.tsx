@@ -200,6 +200,7 @@ export function SearchPanel({ focused, setFocused }: SearchPanelProps) {
   }, [
     setCurrentSuggestionIndex,
     setFocused,
+    focused,
     currentSuggestions,
     currentSuggestionIndex,
   ]);
