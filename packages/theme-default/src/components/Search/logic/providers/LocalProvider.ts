@@ -104,12 +104,20 @@ export class LocalProvider implements Provider {
       this.#cjkIndex?.search(searchParams),
       this.#cyrilicIndex.search(searchParams),
     ]);
+
     const flattenSearchResult = searchResult.flat(2).filter(Boolean);
+
+    // There may be duplicate search results when there are multiple languages ​​in the search keyword
+    const uniqueSearchResult = Array.from(
+      new Set(flattenSearchResult.map(item => item.id)),
+    ).map(id => {
+      return flattenSearchResult.find(item => item.id === id);
+    });
 
     return [
       {
         index: LOCAL_INDEX,
-        hits: flattenSearchResult,
+        hits: uniqueSearchResult,
       },
     ];
   }
