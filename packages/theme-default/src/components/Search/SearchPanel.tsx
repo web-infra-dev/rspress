@@ -1,7 +1,7 @@
 /* eslint-disable max-lines */
 import { usePageData } from '@rspress/runtime';
 import { SearchOptions, isProduction } from '@rspress/shared';
-import { debounce, groupBy } from 'lodash-es';
+import { isEqual, debounce, groupBy } from 'lodash-es';
 import { useEffect, useMemo, useRef, useState } from 'react';
 import { createPortal } from 'react-dom';
 import * as userSearchHooks from 'virtual-search-hooks';
@@ -175,7 +175,10 @@ export function SearchPanel({ focused, setFocused }: SearchPanelProps) {
               ...Object.values(normalizeSuggestions(currentSuggestions)),
             );
             const suggestion = flatSuggestions[currentSuggestionIndex];
-            const isCurrent = currentSuggestions === searchResult[0].result;
+            const isCurrent = isEqual(
+              currentSuggestions,
+              searchResult[0].result,
+            );
             if (isCurrent) {
               window.location.href = isProduction()
                 ? suggestion.link
@@ -384,9 +387,10 @@ export function SearchPanel({ focused, setFocused }: SearchPanelProps) {
                         setCurrentSuggestionIndex(suggestionIndex);
                       }}
                       closeSearch={() => setFocused(false)}
-                      inCurrentDocIndex={
-                        currentSuggestions === searchResult[0].result
-                      }
+                      inCurrentDocIndex={isEqual(
+                        currentSuggestions,
+                        searchResult[0].result,
+                      )}
                       scrollTo={scrollTo}
                     />
                   );
