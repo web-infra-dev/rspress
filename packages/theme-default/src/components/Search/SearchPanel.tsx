@@ -239,8 +239,9 @@ export function SearchPanel({ focused, setFocused }: SearchPanelProps) {
     if (newQuery) {
       const searchResult: MatchResult = [];
 
-      if (userSearchHooks.beforeSearch) {
-        const transformedQuery = await userSearchHooks.beforeSearch(newQuery);
+      if ('beforeSearch' in userSearchHooks) {
+        const key = 'beforeSearch' as const;
+        const transformedQuery = await userSearchHooks[key](newQuery);
         if (transformedQuery) {
           newQuery = transformedQuery;
         }
@@ -253,8 +254,9 @@ export function SearchPanel({ focused, setFocused }: SearchPanelProps) {
         searchResult.push(...defaultSearchResult);
       }
 
-      if (userSearchHooks.onSearch) {
-        const customSearchResult = await userSearchHooks.onSearch(
+      if ('onSearch' in userSearchHooks) {
+        const key = 'onSearch' as const;
+        const customSearchResult = await userSearchHooks[key](
           newQuery,
           searchResult as DefaultMatchResult[],
         );
@@ -274,8 +276,9 @@ export function SearchPanel({ focused, setFocused }: SearchPanelProps) {
       setSearchResult(searchResult || DEFAULT_RESULT);
       setIsSearching(false);
 
-      if (userSearchHooks.afterSearch) {
-        await userSearchHooks.afterSearch(newQuery, searchResult);
+      if ('afterSearch' in userSearchHooks) {
+        const key = 'afterSearch' as const;
+        await userSearchHooks[key](newQuery, searchResult);
       }
 
       if (searchResult.length > 0) {
@@ -324,6 +327,8 @@ export function SearchPanel({ focused, setFocused }: SearchPanelProps) {
       return indexItem.label;
     });
 
+    const renderKey = 'render' as const;
+
     return (
       <Tabs
         values={tabValues}
@@ -343,7 +348,7 @@ export function SearchPanel({ focused, setFocused }: SearchPanelProps) {
             {item.renderType === RenderType.Default &&
               renderSearchResultItem(item.result, query, isSearching)}
             {item.renderType === RenderType.Custom &&
-              userSearchHooks.render(item.result)}
+              userSearchHooks[renderKey](item.result)}
           </Tab>
         ))}
       </Tabs>
