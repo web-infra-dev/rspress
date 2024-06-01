@@ -26,9 +26,7 @@ export const H3 = (props: React.ComponentProps<'h3'>) => {
 };
 
 export const H4 = (props: React.ComponentProps<'h4'>) => {
-  return (
-    <h4 {...props} className={`mt-8 leading-6 text-base ${styles.title}`} />
-  );
+  return <h4 {...props} className={`mt-8 leading-6 text-lg ${styles.title}`} />;
 };
 
 export const H5 = (props: React.ComponentProps<'h5'>) => {
