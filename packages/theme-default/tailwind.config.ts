@@ -11,6 +11,12 @@ export const tailwindConfig = {
       mute: 'var(--rp-c-bg-mute)',
     }),
     extend: {
+      fontSize: {
+        '3xl': '2rem',
+        '2xl': '1.625rem',
+        xl: '1.375rem',
+        lg: '1.25rem',
+      },
       borderRadius: {
         '4xl': '2rem',
       },

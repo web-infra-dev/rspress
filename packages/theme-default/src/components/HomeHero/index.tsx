@@ -56,7 +56,7 @@ export function HomeHero({ frontmatter }: { frontmatter: FrontMatterMeta }) {
             ))}
 
           <p
-            className={`rspress-home-hero-tagline whitespace-pre-wrap pt-4 m-auto md:m-0 text-sm sm:tex-xl md:text-2xl text-text-2 font-medium z-10 ${textMaxWidth}`}
+            className={`rspress-home-hero-tagline whitespace-pre-wrap pt-4 m-auto md:m-0 text-sm sm:tex-xl md:text-[1.5rem] text-text-2 font-medium z-10 ${textMaxWidth}`}
           >
             {renderHtmlOrText(hero.tagline)}
           </p>
