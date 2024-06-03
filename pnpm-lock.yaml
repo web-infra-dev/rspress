@@ -18,8 +18,8 @@ importers:
         specifier: ^2.2.0
         version: 2.2.0
       '@modern-js/generator-utils':
-        specifier: 3.3.23
-        version: 3.3.23(@modern-js/codesmith@2.3.5)(typescript@5.0.4)
+        specifier: 3.3.24
+        version: 3.3.24(@modern-js/codesmith@2.3.5)(typescript@5.0.4)
       '@modern-js/module-tools':
         specifier: 2.51.0
         version: 2.51.0(typescript@5.0.4)
@@ -3216,23 +3216,23 @@ packages:
       '@swc/helpers': 0.5.3
     dev: true
 
-  /@modern-js/generator-common@3.3.23(@modern-js/codesmith@2.3.5)(typescript@5.0.4):
-    resolution: {integrity: sha512-n+GC/vPlpctRl6t1QV2qdOIZvbe+sU949BYl2k2M8QdXBEPtRudhiOw9Ritp2O64Lzeo4dPC9JZsikGSbuewXQ==}
+  /@modern-js/generator-common@3.3.24(@modern-js/codesmith@2.3.5)(typescript@5.0.4):
+    resolution: {integrity: sha512-dG8MkeUGIn4MlSdosZdeQmVPr0agDFdIY0aD++mW028FQUsLIUWfdGwUhzzSmflIR4sI+AfvWMh6YmX/9vLlQA==}
     dependencies:
       '@modern-js/codesmith-formily': 2.3.5(@modern-js/codesmith@2.3.5)(typescript@5.0.4)
-      '@modern-js/plugin-i18n': 2.50.0
+      '@modern-js/plugin-i18n': 2.51.0
       '@swc/helpers': 0.5.3
     transitivePeerDependencies:
       - '@modern-js/codesmith'
       - typescript
     dev: true
 
-  /@modern-js/generator-utils@3.3.23(@modern-js/codesmith@2.3.5)(typescript@5.0.4):
-    resolution: {integrity: sha512-cH+aVfbCeFSaqIXqa7cX7zEl+sPxo3K2zeqYq0DVgub+7yk3UEp8vChg+ffujS7xeQ2S7fbtkl3BD+kZMt8WRw==}
+  /@modern-js/generator-utils@3.3.24(@modern-js/codesmith@2.3.5)(typescript@5.0.4):
+    resolution: {integrity: sha512-cYrpzYgJUs7kb4wKF1pZpZJXfoT0rDDcXND8YV1RZmFCRsa0zotYOwp6wsU+WnSPys/n2o7itic6182D0iCIkA==}
     dependencies:
-      '@modern-js/generator-common': 3.3.23(@modern-js/codesmith@2.3.5)(typescript@5.0.4)
-      '@modern-js/plugin-i18n': 2.50.0
-      '@modern-js/utils': 2.50.0
+      '@modern-js/generator-common': 3.3.24(@modern-js/codesmith@2.3.5)(typescript@5.0.4)
+      '@modern-js/plugin-i18n': 2.51.0
+      '@modern-js/utils': 2.51.0
       '@swc/helpers': 0.5.3
     transitivePeerDependencies:
       - '@modern-js/codesmith'
@@ -3304,13 +3304,6 @@ packages:
       resolve-from: 5.0.0
     transitivePeerDependencies:
       - debug
-    dev: true
-
-  /@modern-js/plugin-i18n@2.50.0:
-    resolution: {integrity: sha512-oYWHufVkFJocLX8luo2mq4KORzxOzclXJv/i6x/TOvRqf/p6hzi+muF33gu/yhwCiWj3Qk87ui45ZX2Bvz58pw==}
-    dependencies:
-      '@modern-js/utils': 2.50.0
-      '@swc/helpers': 0.5.3
     dev: true
 
   /@modern-js/plugin-i18n@2.51.0:
@@ -3455,15 +3448,6 @@ packages:
 
   /@modern-js/types@2.51.0:
     resolution: {integrity: sha512-CulbEPA8dgwwy6Lwsj0Z3ur+8MYfUq0C6uERpls/nA8MFuDI2aF+il8Y43Z8j5ecB5D6nSXmIk6hgcwym6IZ3w==}
-    dev: true
-
-  /@modern-js/utils@2.50.0:
-    resolution: {integrity: sha512-Gt/NIAsbkmwXif9uIPWaEt6nWoMCtYlvwuNNJN7ktD2SOmecaVAGWHn6+IEtkz794SQQHTe1b8Wd72LilaN/zw==}
-    dependencies:
-      '@swc/helpers': 0.5.3
-      caniuse-lite: 1.0.30001620
-      lodash: 4.17.21
-      rslog: 1.1.0
     dev: true
 
   /@modern-js/utils@2.51.0:
