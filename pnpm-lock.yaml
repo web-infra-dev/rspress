@@ -27,8 +27,8 @@ importers:
         specifier: 2.51.0
         version: 2.51.0
       '@playwright/test':
-        specifier: 1.33.0
-        version: 1.33.0
+        specifier: 1.44.1
+        version: 1.44.1
       '@types/cross-spawn':
         specifier: ^6.0.2
         version: 6.0.2
@@ -66,8 +66,8 @@ importers:
         specifier: 17.0.2
         version: 17.0.2
       playwright:
-        specifier: 1.33.0
-        version: 1.33.0
+        specifier: 1.44.1
+        version: 1.44.1
       prettier:
         specifier: 3.3.0
         version: 3.3.0
@@ -79,7 +79,7 @@ importers:
         version: 10.9.1(@types/node@18.11.17)(typescript@5.0.4)
       vitest:
         specifier: 0.34.1
-        version: 0.34.1(playwright@1.33.0)
+        version: 0.34.1(playwright@1.44.1)
 
   e2e/fixtures/api-docgen:
     dependencies:
@@ -629,7 +629,7 @@ importers:
         version: 5.0.4
       vitest:
         specifier: 0.34.1
-        version: 0.34.1(playwright@1.33.0)
+        version: 0.34.1(playwright@1.44.1)
       webpack:
         specifier: ^5.91.0
         version: 5.91.0
@@ -740,7 +740,7 @@ importers:
         version: 5.0.4
       vitest:
         specifier: 0.34.1
-        version: 0.34.1(playwright@1.33.0)
+        version: 0.34.1(playwright@1.44.1)
 
   packages/plugin-api-docgen:
     dependencies:
@@ -826,7 +826,7 @@ importers:
         version: 5.0.4
       vitest:
         specifier: 0.34.1
-        version: 0.34.1(playwright@1.33.0)
+        version: 0.34.1(playwright@1.44.1)
 
   packages/plugin-container-syntax:
     dependencies:
@@ -876,7 +876,7 @@ importers:
         version: 5.0.4
       vitest:
         specifier: 0.34.1
-        version: 0.34.1(playwright@1.33.0)
+        version: 0.34.1(playwright@1.44.1)
 
   packages/plugin-medium-zoom:
     dependencies:
@@ -910,7 +910,7 @@ importers:
         version: 5.0.4
       vitest:
         specifier: 0.34.1
-        version: 0.34.1(playwright@1.33.0)
+        version: 0.34.1(playwright@1.44.1)
 
   packages/plugin-playground:
     dependencies:
@@ -1130,7 +1130,7 @@ importers:
         version: 10.1.2
       vitest:
         specifier: 0.34.1
-        version: 0.34.1(playwright@1.33.0)
+        version: 0.34.1(playwright@1.44.1)
 
   packages/plugin-typedoc:
     dependencies:
@@ -1167,7 +1167,7 @@ importers:
         version: 5.0.4
       vitest:
         specifier: 0.34.1
-        version: 0.34.1(playwright@1.33.0)
+        version: 0.34.1(playwright@1.44.1)
 
   packages/runtime:
     dependencies:
@@ -1377,7 +1377,7 @@ importers:
         version: 5.0.4
       vitest:
         specifier: 0.34.1
-        version: 0.34.1(playwright@1.33.0)
+        version: 0.34.1(playwright@1.44.1)
       webpack:
         specifier: ^5.91.0
         version: 5.91.0
@@ -3714,15 +3714,12 @@ packages:
     dev: true
     optional: true
 
-  /@playwright/test@1.33.0:
-    resolution: {integrity: sha512-YunBa2mE7Hq4CfPkGzQRK916a4tuZoVx/EpLjeWlTVOnD4S2+fdaQZE0LJkbfhN5FTSKNLdcl7MoT5XB37bTkg==}
-    engines: {node: '>=14'}
+  /@playwright/test@1.44.1:
+    resolution: {integrity: sha512-1hZ4TNvD5z9VuhNJ/walIjvMVvYkZKf71axoF/uiAqpntQJXpG64dlXhoDXE3OczPuTuvjf/M5KWFg5VAVUS3Q==}
+    engines: {node: '>=16'}
     hasBin: true
     dependencies:
-      '@types/node': 18.11.17
-      playwright-core: 1.33.0
-    optionalDependencies:
-      fsevents: 2.3.2
+      playwright: 1.44.1
     dev: true
 
   /@remix-run/router@1.6.1:
@@ -8755,19 +8752,20 @@ packages:
       pathe: 1.1.1
     dev: true
 
-  /playwright-core@1.33.0:
-    resolution: {integrity: sha512-aizyPE1Cj62vAECdph1iaMILpT0WUDCq3E6rW6I+dleSbBoGbktvJtzS6VHkZ4DKNEOG9qJpiom/ZxO+S15LAw==}
-    engines: {node: '>=14'}
+  /playwright-core@1.44.1:
+    resolution: {integrity: sha512-wh0JWtYTrhv1+OSsLPgFzGzt67Y7BE/ZS3jEqgGBlp2ppp1ZDj8c+9IARNW4dwf1poq5MgHreEM2KV/GuR4cFA==}
+    engines: {node: '>=16'}
     hasBin: true
     dev: true
 
-  /playwright@1.33.0:
-    resolution: {integrity: sha512-+zzU3V2TslRX2ETBRgQKsKytYBkJeLZ2xzUj4JohnZnxQnivoUvOvNbRBYWSYykQTO0Y4zb8NwZTYFUO+EpPBQ==}
-    engines: {node: '>=14'}
+  /playwright@1.44.1:
+    resolution: {integrity: sha512-qr/0UJ5CFAtloI3avF95Y0L1xQo6r3LQArLIg/z/PoGJ6xa+EwzrwO5lpNr/09STxdHuUoP2mvuELJS+hLdtgg==}
+    engines: {node: '>=16'}
     hasBin: true
-    requiresBuild: true
     dependencies:
-      playwright-core: 1.33.0
+      playwright-core: 1.44.1
+    optionalDependencies:
+      fsevents: 2.3.2
     dev: true
 
   /postcss-import@15.1.0(postcss@8.4.31):
@@ -10935,7 +10933,7 @@ packages:
       fsevents: 2.3.3
     dev: true
 
-  /vitest@0.34.1(playwright@1.33.0):
+  /vitest@0.34.1(playwright@1.44.1):
     resolution: {integrity: sha512-G1PzuBEq9A75XSU88yO5G4vPT20UovbC/2osB2KEuV/FisSIIsw7m5y2xMdB7RsAGHAfg2lPmp2qKr3KWliVlQ==}
     engines: {node: '>=v14.18.0'}
     hasBin: true
@@ -10983,7 +10981,7 @@ packages:
       magic-string: 0.30.8
       pathe: 1.1.1
       picocolors: 1.0.0
-      playwright: 1.33.0
+      playwright: 1.44.1
       std-env: 3.3.3
       strip-literal: 1.3.0
       tinybench: 2.5.0
