@@ -83,4 +83,22 @@ test.describe('basic test', async () => {
     );
     expect(colorValue).toEqual('rgb(255, 165, 0)');
   });
+
+  test('page specific headers should be injected', async ({ page }) => {
+    await page.goto(`http://localhost:${appPort}`, {
+      waitUntil: 'networkidle',
+    });
+
+    const customMetaContent = await page.$eval(
+      'meta[name="custom-meta"]',
+      customMeta => customMeta.getAttribute('content'),
+    );
+    expect(customMetaContent).toEqual('custom-meta-content');
+
+    const customMetaContent2 = await page.$eval(
+      'meta[name="custom-meta-2"]',
+      customMeta => customMeta.getAttribute('content'),
+    );
+    expect(customMetaContent2).toEqual('custom-meta-content-2');
+  });
 });
