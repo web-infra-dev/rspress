@@ -126,6 +126,16 @@ export const Layout: React.FC<LayoutProps> = props => {
     }
   };
 
+  const frontmatterHeaders = (
+    (frontmatter.head ?? []) as [string, Record<string, string>][]
+  ).filter(([tag, attrs]) => {
+    // Precaution, filter out duplicate tags
+    if (title && tag === 'title') return false;
+    if (description && tag === 'meta' && attrs.name === 'description')
+      return false;
+    return true;
+  });
+
   return (
     <div>
       <Helmet
@@ -135,6 +145,7 @@ export const Layout: React.FC<LayoutProps> = props => {
       >
         {title ? <title>{title}</title> : null}
         {description ? <meta name="description" content={description} /> : null}
+        {...frontmatterHeaders.map(([Tag, attrs]) => <Tag {...attrs} />)}
       </Helmet>
       {top}
 
