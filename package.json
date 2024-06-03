@@ -60,7 +60,7 @@
     "lint-staged": "~13.3.0",
     "nx": "17.0.2",
     "playwright": "1.33.0",
-    "prettier": "3.2.2",
+    "prettier": "3.3.0",
     "tree-kill": "^1.2.2",
     "ts-node": "^10.9.1",
     "vitest": "0.34.1"
