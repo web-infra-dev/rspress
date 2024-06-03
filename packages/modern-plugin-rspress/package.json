@@ -39,7 +39,7 @@
     "@rspress/plugin-api-docgen": "workspace:*"
   },
   "devDependencies": {
-    "@modern-js/utils": "2.50.0",
+    "@modern-js/utils": "2.51.0",
     "@types/node": "^18.11.17",
     "@types/react": "^18",
     "react": "^18.2.0",
