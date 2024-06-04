@@ -72,6 +72,27 @@ export default defineConfig({
 });
 ```
 
+You can also override the built-in plugins [@rsbuild/plugin-react](https://rsbuild.dev/plugins/list/plugin-react), [@rsbuild/plugin-sass](https://rsbuild.dev/plugins/list/plugin-sass) and [@rsbuild/plugin-less](https://rsbuild.dev/plugins/list/plugin-less), and customize relevant plugin options.
+
+- Example: Modify related options of built-in [@rsbuild/plugin-less](https://rsbuild.dev/plugins/list/plugin-less) plugin
+
+```ts title="rspress.config.ts"
+import { defineConfig } from 'rspress/config';
+import { pluginLess } from '@rsbuild/plugin-less';
+
+export default defineConfig({
+  builderPlugins: [
+    pluginLess({
+      lessLoaderOptions: {
+        lessOptions: {
+          math: 'always',
+        },
+      },
+    }),
+  ],
+});
+```
+
 ### Default Config
 
 If you need to view the default Rspack or Rsbuild configs, you can add the `DEBUG=rsbuild` parameter when running the `rspress dev` or `rspress build` command:

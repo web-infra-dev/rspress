@@ -72,6 +72,27 @@ export default defineConfig({
 });
 ```
 
+你也可以覆盖内置的 [@rsbuild/plugin-react](https://rsbuild.dev/zh/plugins/list/plugin-react)、[@rsbuild/plugin-sass](https://rsbuild.dev/zh/plugins/list/plugin-sass) 和 [@rsbuild/plugin-less](https://rsbuild.dev/zh/plugins/list/plugin-less) 插件，并传入相关插件选项。
+
+- 示例：修改内置的 [@rsbuild/plugin-less](https://rsbuild.dev/zh/plugins/list/plugin-less) 插件的相关选项
+
+```ts title="rspress.config.ts"
+import { defineConfig } from 'rspress/config';
+import { pluginLess } from '@rsbuild/plugin-less';
+
+export default defineConfig({
+  builderPlugins: [
+    pluginLess({
+      lessLoaderOptions: {
+        lessOptions: {
+          math: 'always',
+        },
+      },
+    }),
+  ],
+});
+```
+
 ### 默认配置
 
 如果你需要查看默认的 Rspack 或 Rsbuild 配置，可以在执行 `rspress dev` 或 `rspress build` 命令时，添加 `DEBUG=rsbuild` 参数：
