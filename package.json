@@ -40,7 +40,6 @@
     ]
   },
   "devDependencies": {
-    "check-dependency-version-consistency": "^4.1.0",
     "@biomejs/biome": "1.5.3",
     "@changesets/cli": "^2.27.1",
     "@manypkg/get-packages": "^2.2.0",
@@ -50,6 +49,7 @@
     "@playwright/test": "1.44.1",
     "@types/cross-spawn": "^6.0.2",
     "@types/fs-extra": "11.0.4",
+    "check-dependency-version-consistency": "^4.1.0",
     "cross-env": "^7.0.3",
     "cross-spawn": "^7.0.3",
     "cspell-ban-words": "^0.0.3",
