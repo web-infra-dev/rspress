@@ -27,9 +27,9 @@
     "@types/node": "^18.11.17",
     "@types/react": "^18",
     "@types/react-dom": "^18",
+    "react": "^18.2.0",
     "typescript": "^5",
-    "vitest": "0.34.1",
-    "react": "^18.2.0"
+    "vitest": "0.34.1"
   },
   "peerDependencies": {
     "rspress": "^1.0.2"
@@ -50,8 +50,8 @@
     "registry": "https://registry.npmjs.org/"
   },
   "dependencies": {
+    "@rspress/shared": "workspace:*",
     "typedoc": "0.24.8",
-    "typedoc-plugin-markdown": "3.17.1",
-    "@rspress/shared": "workspace:*"
+    "typedoc-plugin-markdown": "3.17.1"
   }
 }

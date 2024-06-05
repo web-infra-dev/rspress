@@ -25,13 +25,13 @@
   },
   "devDependencies": {
     "@modern-js/tsconfig": "2.51.0",
+    "@rspress/shared": "workspace:*",
     "@types/node": "^18.11.17",
     "@types/react": "^18",
     "@types/react-dom": "^18",
-    "typescript": "^5",
-    "vitest": "0.34.1",
     "react": "^18.2.0",
-    "@rspress/shared": "workspace:*"
+    "typescript": "^5",
+    "vitest": "0.34.1"
   },
   "peerDependencies": {
     "@rspress/runtime": "^1.0.2"
