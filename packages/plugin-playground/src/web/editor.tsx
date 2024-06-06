@@ -1,7 +1,7 @@
 import React, { useMemo } from 'react';
 import MonacoEditor, {
   loader,
-  EditorProps as MonacoEditorProps,
+  type EditorProps as MonacoEditorProps,
 } from '@monaco-editor/react';
 import { useDark } from '@rspress/core/runtime';
 import { DEFAULT_MONACO_URL } from './constant';
