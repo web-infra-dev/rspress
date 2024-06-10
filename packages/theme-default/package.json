@@ -57,8 +57,8 @@
     "rspack-plugin-virtual-module": "0.1.12"
   },
   "devDependencies": {
-    "@modern-js/plugin-tailwindcss": "2.51.0",
-    "@modern-js/tsconfig": "2.51.0",
+    "@modern-js/plugin-tailwindcss": "2.52.0",
+    "@modern-js/tsconfig": "2.52.0",
     "@types/body-scroll-lock": "^3.1.0",
     "@types/hast": "3.0.3",
     "@types/html-to-text": "^8.1.1",
