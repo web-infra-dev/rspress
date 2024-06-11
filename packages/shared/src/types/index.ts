@@ -274,6 +274,8 @@ export interface FrontMatterMeta {
   lineNumbers?: boolean;
   overviewHeaders?: number;
   titleSuffix?: string;
+  head?: [string, Record<string, string>][];
+  [key: string]: unknown;
 }
 
 export interface PageData {

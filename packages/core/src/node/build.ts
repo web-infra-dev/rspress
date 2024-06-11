@@ -25,6 +25,7 @@ import { writeSearchIndex } from './searchIndex';
 import { PluginDriver } from './PluginDriver';
 import type { Route } from '@/node/route/RouteService';
 import { routeService } from '@/node/route/init';
+import renderFrontmatterHead from './utils/renderFrontmatterHead';
 
 interface BuildOptions {
   appDirectory: string;
@@ -163,6 +164,7 @@ export async function renderPages(
                   helmet?.link?.toString(),
                   helmet?.style?.toString(),
                   helmet?.script?.toString(),
+                  await renderFrontmatterHead(route),
                 ])
                 .join(''),
             );
