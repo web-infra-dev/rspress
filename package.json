@@ -17,6 +17,7 @@
     "build:website": "cross-env NX_DAEMON=false NX_REJECT_UNKNOWN_LOCAL_CACHE=0 nx run @rspress/docs:build",
     "preview:website": "cd packages/document && npm run preview",
     "update:modern": "ts-node ./scripts/update-modern.ts",
+    "update:rsbuild": "npx taze minor --include /rsbuild/ -w -r -l",
     "format": "biome format --write ./packages"
   },
   "engines": {
@@ -40,16 +41,16 @@
     ]
   },
   "devDependencies": {
-    "check-dependency-version-consistency": "^4.1.0",
     "@biomejs/biome": "1.5.3",
     "@changesets/cli": "^2.27.1",
     "@manypkg/get-packages": "^2.2.0",
     "@modern-js/generator-utils": "3.3.24",
-    "@modern-js/module-tools": "2.51.0",
-    "@modern-js/tsconfig": "2.51.0",
+    "@modern-js/module-tools": "2.52.0",
+    "@modern-js/tsconfig": "2.52.0",
     "@playwright/test": "1.44.1",
     "@types/cross-spawn": "^6.0.2",
     "@types/fs-extra": "11.0.4",
+    "check-dependency-version-consistency": "^4.1.0",
     "cross-env": "^7.0.3",
     "cross-spawn": "^7.0.3",
     "cspell-ban-words": "^0.0.3",

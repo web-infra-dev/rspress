@@ -1,6 +1,6 @@
 {
   "name": "@rspress/docs",
-  "version": "1.23.0",
+  "version": "1.23.1",
   "description": "",
   "main": "index.js",
   "scripts": {
@@ -22,8 +22,8 @@
     "framer-motion": "10.18.0",
     "rsbuild-plugin-google-analytics": "^1.0.0",
     "rsbuild-plugin-open-graph": "^1.0.0",
-    "rspress-plugin-font-open-sans": "^1.0.0",
     "rspress": "workspace:*",
+    "rspress-plugin-font-open-sans": "^1.0.0",
     "ts-node": "^10.9.1",
     "typescript": "^5"
   },
