@@ -128,6 +128,19 @@ importers:
         specifier: ^18.11.17
         version: 18.11.17
 
+  e2e/fixtures/client-redirects:
+    dependencies:
+      '@rspress/plugin-client-redirects':
+        specifier: workspace:*
+        version: link:../../../packages/plugin-client-redirects
+      rspress:
+        specifier: workspace:*
+        version: link:../../../packages/cli
+    devDependencies:
+      '@types/node':
+        specifier: ^14
+        version: 14.0.0
+
   e2e/fixtures/custom-icon:
     dependencies:
       rspress:
@@ -813,6 +826,37 @@ importers:
       '@modern-js/tsconfig':
         specifier: 2.52.0
         version: 2.52.0
+      '@types/node':
+        specifier: ^18.11.17
+        version: 18.11.17
+      '@types/react':
+        specifier: ^18
+        version: 18.0.26
+      '@types/react-dom':
+        specifier: ^18
+        version: 18.0.0
+      react:
+        specifier: ^18.2.0
+        version: 18.2.0
+      typescript:
+        specifier: ^5
+        version: 5.0.4
+      vitest:
+        specifier: 0.34.1
+        version: 0.34.1(playwright@1.44.1)
+
+  packages/plugin-client-redirects:
+    dependencies:
+      '@rspress/runtime':
+        specifier: ^1.0.2
+        version: link:../runtime
+    devDependencies:
+      '@modern-js/tsconfig':
+        specifier: 2.52.0
+        version: 2.52.0
+      '@rspress/shared':
+        specifier: workspace:*
+        version: link:../shared
       '@types/node':
         specifier: ^18.11.17
         version: 18.11.17
