@@ -1,6 +1,11 @@
 import { expect, test } from '@playwright/test';
 import path from 'path';
-import { getPort, killProcess, runDevCommand } from '../utils/runCommands';
+import {
+  getPort,
+  killProcess,
+  runBuildCommand,
+  runPreviewCommand,
+} from '../utils/runCommands';
 
 const fixtureDir = path.resolve(__dirname, '../fixtures');
 
@@ -10,7 +15,8 @@ test.describe('frontmatter headers', async () => {
   test.beforeAll(async () => {
     const appDir = path.join(fixtureDir, 'frontmatter-headers');
     appPort = await getPort();
-    app = await runDevCommand(appDir, appPort);
+    await runBuildCommand(appDir);
+    app = await runPreviewCommand(appDir, appPort);
   });
 
   test.afterAll(async () => {
