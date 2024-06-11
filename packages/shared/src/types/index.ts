@@ -85,7 +85,13 @@ export interface UserConfig<ThemeConfig = DefaultThemeConfig> {
   /**
    * Head tags.
    */
-  head?: string[];
+  head?: (
+    | string
+    | [string, Record<string, string>]
+    | ((
+        route: RouteMeta,
+      ) => string | [string, Record<string, string>] | undefined)
+  )[];
   /**
    * I18n config of the site.
    */

@@ -1,10 +1,8 @@
-import type { FrontMatterMeta, RouteMeta } from '@rspress/shared';
+import type { FrontMatterMeta, RouteMeta, UserConfig } from '@rspress/shared';
 import fsExtra from '@rspress/shared/fs-extra';
 import { loadFrontMatter } from '@rspress/shared/node-utils';
 
-export default async function renderFrontmatterHead(
-  route: any,
-): Promise<string> {
+export async function renderFrontmatterHead(route: any): Promise<string> {
   if (!isRouteMeta(route)) return '';
   const content = await fsExtra.readFile(route.absolutePath, {
     encoding: 'utf-8',
@@ -15,6 +13,27 @@ export default async function renderFrontmatterHead(
   if (!head || head.length === 0) return '';
 
   return head.map(([tag, attrs]) => `<${tag} ${renderAttrs(attrs)}}>`).join('');
+}
+
+export async function renderConfigHead(
+  config: UserConfig,
+  route: any,
+): Promise<string> {
+  if (!isRouteMeta(route)) return '';
+  if (!config.head || config.head.length === 0) return '';
+
+  return config.head
+    .map(head => {
+      if (typeof head === 'string') return head;
+      if (typeof head === 'function') {
+        const resultHead = head(route);
+        if (!resultHead) return '';
+        if (typeof resultHead === 'string') return resultHead;
+        return `<${resultHead[0]} ${renderAttrs(resultHead[1])}>`;
+      }
+      return `<${head[0]} ${renderAttrs(head[1])}>`;
+    })
+    .join('');
 }
 
 function renderAttrs(attrs: FrontMatterMeta['head'][number][1]): string {

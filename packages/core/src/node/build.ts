@@ -25,7 +25,7 @@ import { writeSearchIndex } from './searchIndex';
 import { PluginDriver } from './PluginDriver';
 import type { Route } from '@/node/route/RouteService';
 import { routeService } from '@/node/route/init';
-import renderFrontmatterHead from './utils/renderFrontmatterHead';
+import { renderFrontmatterHead, renderConfigHead } from './utils/renderHead';
 
 interface BuildOptions {
   appDirectory: string;
@@ -157,16 +157,15 @@ export async function renderPages(
             )
             .replace(
               HEAD_MARKER,
-              (config?.head || [])
-                .concat([
-                  helmet?.title?.toString(),
-                  helmet?.meta?.toString(),
-                  helmet?.link?.toString(),
-                  helmet?.style?.toString(),
-                  helmet?.script?.toString(),
-                  await renderFrontmatterHead(route),
-                ])
-                .join(''),
+              [
+                await renderConfigHead(config, route),
+                helmet?.title?.toString(),
+                helmet?.meta?.toString(),
+                helmet?.link?.toString(),
+                helmet?.style?.toString(),
+                helmet?.script?.toString(),
+                await renderFrontmatterHead(route),
+              ].join(''),
             );
           if (helmet?.htmlAttributes) {
             html = html.replace(
