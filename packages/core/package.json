@@ -58,7 +58,7 @@
     "@rspress/theme-default": "workspace:*",
     "body-scroll-lock": "4.0.0-beta.0",
     "copy-to-clipboard": "^3.3.3",
-    "enhanced-resolve": "5.16.0",
+    "enhanced-resolve": "5.17.0",
     "flexsearch": "0.6.32",
     "github-slugger": "^2.0.0",
     "hast-util-from-html": "^1.0.0",
