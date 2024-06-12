@@ -281,6 +281,7 @@ export interface FrontMatterMeta {
   overviewHeaders?: number;
   titleSuffix?: string;
   head?: [string, Record<string, string>][];
+  context?: string;
   [key: string]: unknown;
 }
 

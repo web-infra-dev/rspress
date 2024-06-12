@@ -15,6 +15,7 @@ export type SideMetaItem =
       tag?: string;
       dashed?: boolean;
       overviewHeaders?: number[];
+      context?: string;
     };
 
 export type SideMeta = SideMetaItem[];

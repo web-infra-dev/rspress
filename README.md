@@ -8,7 +8,7 @@ A fast Rspack-based static site generator.
 
 <p>
   <a href="https://discord.gg/mkVw5zPAtf">
-    <img src="https://img.shields.io/discord/977448667919286283?logo=discord&label=discord&colorA=564341&colorB=EDED91" alt="discord channel" />
+    <img src="https://img.shields.io/badge/chat-discord-blue?logo=discord&colorA=564341&colorB=EDED91" alt="discord channel" />
   </a>
   <a href="https://npmjs.com/package/rspress?activeTab=readme">
    <img src="https://img.shields.io/npm/v/rspress?style=flat-square&colorA=564341&colorB=EDED91" alt="npm version" />

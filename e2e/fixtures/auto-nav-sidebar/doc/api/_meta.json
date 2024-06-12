@@ -7,12 +7,14 @@
   {
     "type": "dir",
     "name": "config",
-    "label": "Config"
+    "label": "Config",
+    "context": "config"
   },
   {
     "type": "dir",
     "name": "client-api",
-    "label": "Client API"
+    "label": "Client API",
+    "context": "client-api"
   },
   "commands",
   "single-page"

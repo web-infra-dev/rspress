@@ -282,3 +282,30 @@ Or
 overviewHeaders: [2, 3]
 ---
 ```
+
+## context
+
+- Type: `string`
+
+After configuration, the `data-context` attribute will be added to the DOM node when the sidebar is generated, and the value is the configured value.
+
+```yaml title="foo.mdx"
+---
+context: 'context-foo'
+---
+```
+
+```yaml title="bar.mdx"
+---
+context: 'context-bar'
+---
+```
+
+The DOM structure of the final generated sidebar is abbreviated as follows:
+
+```html
+<div class="rspress-sidebar-group">
+  <div data-context="context-foo"></div>
+  <div data-context="context-bar"></div>
+</div>
+```
