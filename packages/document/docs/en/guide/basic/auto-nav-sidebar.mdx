@@ -72,6 +72,7 @@ export type SideMetaItem =
       label?: string;
       tag?: string;
       overviewHeaders?: number[];
+      context?: string;
     }
   | {
       type: 'dir';
@@ -81,6 +82,7 @@ export type SideMetaItem =
       collapsed?: boolean;
       tag?: string;
       overviewHeaders?: number[];
+      context?: string;
     }
   | {
       type: 'divider';
@@ -110,10 +112,11 @@ In the case of describing **file**, the types are as follows:
   name: string;
   label?: string;
   overviewHeaders?: number[];
+  context?: string;
 }
 ```
 
-Among them, `name` means the file name, `with`/`without` suffix is ​​supported, `label` means the display name of the file in the sidebar.`label` is an optional value, if it is not filled, it will automatically take the h1 title in the document. `overviewHeaders` means the headers displayed in the overview page of the file. It is an optional value and the default value is `[2]`. For example:
+Among them, `name` means the file name, `with`/`without` suffix is ​​supported, `label` means the display name of the file in the sidebar.`label` is an optional value, if it is not filled, it will automatically take the h1 title in the document. `overviewHeaders` means the headers displayed in the overview page of the file. It is an optional value and the default value is `[2]`. `context` means adding the value of the `data-context` attribute to the DOM node when generating the sidebar, it is an optional value and will not be added by default. For example:
 
 ```json
 {
@@ -133,10 +136,11 @@ In the case of describing **directories**, the types are as follows:
   collapsible?: boolean;
   collapsed?: boolean;
   overviewHeaders?: number[];
+  context?: string;
 }
 ```
 
-Among them, `name` indicates the directory name, `label` indicates the display name of the directory in the sidebar, `collapsible` indicates whether the directory can be collapsed, `collapsed` indicates whether the directory is collapsed by default, and `overviewHeaders` indicates the headers displayed on the overview page for files in this directory. It is an optional value and the default value is `[2]`. For example:
+Among them, `name` indicates the directory name, `label` indicates the display name of the directory in the sidebar, `collapsible` indicates whether the directory can be collapsed, `collapsed` indicates whether the directory is collapsed by default, and `overviewHeaders` indicates the headers displayed on the overview page for files in this directory. It is an optional value and the default value is `[2]`. `context` means adding the value of the `data-context` attribute to the DOM node when generating the sidebar, it is an optional value and will not be added by default. For example:
 
 ```json
 {

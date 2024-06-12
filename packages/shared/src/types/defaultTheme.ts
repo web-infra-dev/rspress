@@ -195,6 +195,7 @@ export interface SidebarGroup {
    */
   _fileKey?: string;
   overviewHeaders?: number[];
+  context?: string;
 }
 
 export type SidebarItem = {
@@ -206,6 +207,7 @@ export type SidebarItem = {
    */
   _fileKey?: string;
   overviewHeaders?: number[];
+  context?: string;
 };
 
 export type SidebarDivider = { dividerType: 'dashed' | 'solid' };
