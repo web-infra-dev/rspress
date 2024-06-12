@@ -1,0 +1,14 @@
+export default [
+  'config-basic',
+  'config-theme',
+  'config-frontmatter',
+  {
+    type: 'file',
+    name: 'config-build',
+    overviewHeaders: [2, 3],
+  },
+  {
+    type: 'file',
+    name: 'config-extname.json',
+  },
+];

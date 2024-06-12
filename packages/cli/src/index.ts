@@ -8,10 +8,12 @@ import chalk from 'chalk';
 import { loadConfigFile } from './config/loadConfigFile';
 import update from './update';
 
+// for config reload, restart the server
 const CONFIG_FILES = [
   'rspress.config.ts',
   'rspress.config.js',
   '_meta.json',
+  '_meta.js',
   'i18n.json',
 ];
 
