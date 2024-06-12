@@ -182,6 +182,34 @@ export default defineConfig({
 });
 ```
 
+## head
+
+- Type: `string` | `[string, Record<string, string>]` | `(route) => string | [string, Record<string, string>] | undefined`
+- 也可以通过 [frontmatter](./config-frontmatter.mdx#head) 针对每个页面设置
+
+页面 HTML 的 `<head>` 标签中呈现的附加元素。
+
+```ts title="rspress.config.ts"
+import { defineConfig } from 'rspress/config';
+
+export default defineConfig({
+  // ... 其他用户配置
+  head: [
+    '<meta name="author" content="John Doe">',
+    // 或者
+    ['meta', { name: 'author', content: 'John Doe' }],
+    // [htmlTag, { attrName: attrValue, attrName2: attrValue2 }]
+    // 或者
+    (route) => {
+      if (route.routePath.startsWith('/jane/')) return "<meta name='author' content='Jane Doe'>";
+      if (route.routePath.startsWith('/john/')) return ['meta', { name: 'author', content: 'John Doe' }];
+      \\ or even skip returning anything
+      return undefined;
+    }
+  ]
+});
+```
+
 ## mediumZoom
 
 - Type: `boolean` | `{ selector?: string }`

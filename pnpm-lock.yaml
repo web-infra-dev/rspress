@@ -134,8 +134,8 @@ importers:
         version: link:../../../packages/cli
     devDependencies:
       '@types/node':
-        specifier: ^14
-        version: 14.0.0
+        specifier: ^18.11.17
+        version: 18.11.17
 
   e2e/fixtures/custom-icon:
     dependencies:
