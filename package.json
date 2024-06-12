@@ -16,7 +16,7 @@
     "dev:website": "cross-env NX_DAEMON=false NX_REJECT_UNKNOWN_LOCAL_CACHE=0 nx run @rspress/docs:dev",
     "build:website": "cross-env NX_DAEMON=false NX_REJECT_UNKNOWN_LOCAL_CACHE=0 nx run @rspress/docs:build",
     "preview:website": "cd packages/document && npm run preview",
-    "update:modern": "ts-node ./scripts/update-modern.ts",
+    "update:modern": "npx taze minor --include /modern-js/ -w -r -l",
     "update:rsbuild": "npx taze minor --include /rsbuild/ -w -r -l",
     "format": "biome format --write ./packages"
   },
@@ -43,8 +43,6 @@
   "devDependencies": {
     "@biomejs/biome": "1.8.1",
     "@changesets/cli": "^2.27.1",
-    "@manypkg/get-packages": "^2.2.0",
-    "@modern-js/generator-utils": "3.3.25",
     "@modern-js/module-tools": "2.52.0",
     "@modern-js/tsconfig": "2.52.0",
     "@playwright/test": "1.44.1",
@@ -64,7 +62,6 @@
     "playwright": "1.44.1",
     "prettier": "3.3.0",
     "tree-kill": "^1.2.2",
-    "ts-node": "^10.9.1",
     "vitest": "0.34.1"
   },
   "publishConfig": {
