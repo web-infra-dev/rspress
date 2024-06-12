@@ -274,6 +274,7 @@ export interface FrontMatterMeta {
   lineNumbers?: boolean;
   overviewHeaders?: number;
   titleSuffix?: string;
+  context?: string;
 }
 
 export interface PageData {

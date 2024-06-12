@@ -72,6 +72,7 @@ export type SideMetaItem =
       label?: string;
       tag?: string;
       overviewHeaders?: number[];
+      context?: string;
     }
   | {
       type: 'dir';
@@ -81,6 +82,7 @@ export type SideMetaItem =
       collapsed?: boolean;
       tag?: string;
       overviewHeaders?: number[];
+      context?: string;
     }
   | {
       type: 'divider';
@@ -115,10 +117,11 @@ export type SideMetaItem =
   name: string;
   label?: string;
   overviewHeaders?: number[];
+  context?: string;
 }
 ```
 
-其中，`name` 表示文件名，同时支持`带`/`不带`后缀，`label` 表示该文件在侧边栏中的显示名称，为可选值，如果未填则会自动取文档中的 h1 标题。`overviewHeaders` 表示该文件在预览页中展示的标题级别，为可选值，默认为 `[2]`。比如:
+其中，`name` 表示文件名，同时支持`带`/`不带`后缀，`label` 表示该文件在侧边栏中的显示名称，为可选值，如果未填则会自动取文档中的 h1 标题。`overviewHeaders` 表示该文件在预览页中展示的标题级别，为可选值，默认为 `[2]`。`context` 表示在生成侧边栏时在所在的 DOM 节点添加 `data-context` 属性的值。为可选值，默认不会添加。比如:
 
 ```json
 {
@@ -138,10 +141,11 @@ export type SideMetaItem =
   collapsible?: boolean;
   collapsed?: boolean;
   overviewHeaders?: number[];
+  context?: string;
 }
 ```
 
-其中，`name` 表示目录名，`label` 表示该目录在侧边栏中的显示名称，`collapsible` 表示该目录是否可以折叠，`collapsed` 表示该目录是否默认折叠，`overviewHeaders` 表示该目录下的文件在预览页中展示的标题级别，为可选值，默认为 `[2]`。比如:
+其中，`name` 表示目录名，`label` 表示该目录在侧边栏中的显示名称，`collapsible` 表示该目录是否可以折叠，`collapsed` 表示该目录是否默认折叠，`overviewHeaders` 表示该目录下的文件在预览页中展示的标题级别，为可选值，默认为 `[2]`。`context` 表示在生成侧边栏时在所在的 DOM 节点添加 `data-context` 属性的值。为可选值，默认不会添加。比如:
 
 ```json
 {
