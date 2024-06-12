@@ -12,6 +12,6 @@
     "rspress": "workspace:*"
   },
   "devDependencies": {
-    "@types/node": "^14"
+    "@types/node": "^18.11.17"
   }
 }

@@ -1,6 +1,6 @@
-import path from 'path';
-import { type RspressPlugin } from '@rspress/shared';
-import { RedirectsOptions } from './types';
+import path from 'node:path';
+import type { RspressPlugin } from '@rspress/shared';
+import type { RedirectsOptions } from './types';
 
 /**
  * The plugin is used to add client redirect feature to the doc site.
