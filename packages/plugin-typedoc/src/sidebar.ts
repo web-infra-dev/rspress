@@ -1,4 +1,4 @@
-import path from 'path';
+import path from 'node:path';
 import fs from '@rspress/shared/fs-extra';
 import type { SidebarGroup } from '@rspress/shared';
 import { transformModuleName } from './utils';

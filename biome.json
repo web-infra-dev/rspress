@@ -47,8 +47,7 @@
         "noInferrableTypes": "off",
         "noNonNullAssertion": "off",
         "useSelfClosingElements": "off",
-        "useDefaultParameterLast": "off",
-        "useNodejsImportProtocol": "off"
+        "useDefaultParameterLast": "off"
       },
       "security": {
         "noDangerouslySetInnerHtml": "off"

@@ -1,4 +1,4 @@
-import path from 'path';
+import path from 'node:path';
 import { describe, expect, it } from 'vitest';
 import { RuntimeModuleID } from '../src/node/runtimeModule';
 import { siteDataVMPlugin } from '../src/node/runtimeModule/siteData';

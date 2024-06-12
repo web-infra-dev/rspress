@@ -1,4 +1,4 @@
-import { createRequire } from 'module';
+import { createRequire } from 'node:module';
 import { defineConfig, moduleTools } from '@modern-js/module-tools';
 import { tailwindConfig } from './tailwind.config';
 

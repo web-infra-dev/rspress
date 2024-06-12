@@ -1,4 +1,4 @@
-import path from 'path';
+import path from 'node:path';
 import { defineConfig, moduleTools } from '@modern-js/module-tools';
 
 const COMMON_EXTERNALS = [

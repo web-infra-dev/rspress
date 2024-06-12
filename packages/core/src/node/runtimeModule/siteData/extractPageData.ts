@@ -1,4 +1,4 @@
-import path from 'path';
+import path from 'node:path';
 import fs from '@rspress/shared/fs-extra';
 import { htmlToText } from 'html-to-text';
 import { compile } from '@rspress/mdx-rs';

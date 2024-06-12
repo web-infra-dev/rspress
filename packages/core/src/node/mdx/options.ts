@@ -1,4 +1,4 @@
-import path from 'path';
+import path from 'node:path';
 import remarkGFM from 'remark-gfm';
 import rehypePluginExternalLinks from 'rehype-external-links';
 import type { PluggableList } from 'unified';

@@ -1,4 +1,4 @@
-import path from 'path';
+import path from 'node:path';
 import { expect, test } from '@playwright/test';
 import fixture from '../fixtures/plugin-rss/fixture.json';
 import {

@@ -1,5 +1,5 @@
-import { join } from 'path';
-import { writeFileSync } from 'fs';
+import { join } from 'node:path';
+import { writeFileSync } from 'node:fs';
 import { virtualDir, staticPath } from './constant';
 import type { DemoInfo } from './types';
 import { toValidVarName } from './utils';

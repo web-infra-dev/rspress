@@ -1,4 +1,4 @@
-import path, { join } from 'path';
+import path, { join } from 'node:path';
 import type { RouteMeta, RspressPlugin } from '@rspress/shared';
 import { RspackVirtualModulePlugin } from 'rspack-plugin-virtual-module';
 import type {

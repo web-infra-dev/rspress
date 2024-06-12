@@ -1,4 +1,4 @@
-import path from 'path';
+import path from 'node:path';
 import fs from '@rspress/shared/fs-extra';
 import { groupBy } from 'lodash-es';
 import { SEARCH_INDEX_NAME } from '@rspress/shared';

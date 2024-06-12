@@ -1,4 +1,4 @@
-import path from 'path';
+import path from 'node:path';
 import { visit } from 'unist-util-visit';
 import type { Plugin } from 'unified';
 import { logger } from '@rspress/shared/logger';

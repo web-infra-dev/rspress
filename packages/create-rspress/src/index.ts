@@ -1,5 +1,5 @@
 #!/usr/bin/env node
-import path from 'path';
+import path from 'node:path';
 import { cac } from 'cac';
 import prompts from 'prompts';
 import fs from 'fs-extra';

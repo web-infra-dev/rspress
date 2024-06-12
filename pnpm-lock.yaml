@@ -35,6 +35,9 @@ importers:
       '@types/fs-extra':
         specifier: 11.0.4
         version: 11.0.4
+      '@types/node':
+        specifier: ^18.11.17
+        version: 18.11.17
       check-dependency-version-consistency:
         specifier: ^4.1.0
         version: 4.1.0
@@ -91,8 +94,8 @@ importers:
         version: link:../../../packages/cli
     devDependencies:
       '@types/node':
-        specifier: ^14
-        version: 14.0.0
+        specifier: ^18.11.17
+        version: 18.11.17
 
   e2e/fixtures/auto-nav-sidebar:
     dependencies:
@@ -101,8 +104,8 @@ importers:
         version: link:../../../packages/cli
     devDependencies:
       '@types/node':
-        specifier: ^14
-        version: 14.0.0
+        specifier: ^18.11.17
+        version: 18.11.17
 
   e2e/fixtures/auto-nav-sidebar-no-meta:
     dependencies:
@@ -111,8 +114,8 @@ importers:
         version: link:../../../packages/cli
     devDependencies:
       '@types/node':
-        specifier: ^14
-        version: 14.0.0
+        specifier: ^18.11.17
+        version: 18.11.17
 
   e2e/fixtures/basic:
     dependencies:
@@ -121,8 +124,8 @@ importers:
         version: link:../../../packages/cli
     devDependencies:
       '@types/node':
-        specifier: ^14
-        version: 14.0.0
+        specifier: ^18.11.17
+        version: 18.11.17
 
   e2e/fixtures/custom-icon:
     dependencies:
@@ -131,8 +134,8 @@ importers:
         version: link:../../../packages/cli
     devDependencies:
       '@types/node':
-        specifier: ^14
-        version: 14.0.0
+        specifier: ^18.11.17
+        version: 18.11.17
 
   e2e/fixtures/custom-id:
     dependencies:
@@ -141,8 +144,8 @@ importers:
         version: link:../../../packages/cli
     devDependencies:
       '@types/node':
-        specifier: ^14
-        version: 14.0.0
+        specifier: ^18.11.17
+        version: 18.11.17
 
   e2e/fixtures/custom-plugin:
     dependencies:
@@ -172,8 +175,8 @@ importers:
         version: 1.8.16
     devDependencies:
       '@types/node':
-        specifier: ^14
-        version: 14.0.0
+        specifier: ^18.11.17
+        version: 18.11.17
 
   e2e/fixtures/i18n:
     dependencies:
@@ -182,8 +185,8 @@ importers:
         version: link:../../../packages/cli
     devDependencies:
       '@types/node':
-        specifier: ^14
-        version: 14.0.0
+        specifier: ^18.11.17
+        version: 18.11.17
 
   e2e/fixtures/link:
     dependencies:
@@ -192,8 +195,8 @@ importers:
         version: link:../../../packages/cli
     devDependencies:
       '@types/node':
-        specifier: ^14
-        version: 14.0.0
+        specifier: ^18.11.17
+        version: 18.11.17
 
   e2e/fixtures/mdx-rs:
     dependencies:
@@ -202,8 +205,8 @@ importers:
         version: link:../../../packages/cli
     devDependencies:
       '@types/node':
-        specifier: ^14
-        version: 14.0.0
+        specifier: ^18.11.17
+        version: 18.11.17
 
   e2e/fixtures/modern-js:
     dependencies:
@@ -215,8 +218,8 @@ importers:
         specifier: workspace:*
         version: link:../../../packages/modern-plugin-rspress
       '@types/node':
-        specifier: ~16.11.7
-        version: 16.11.7
+        specifier: ^18.11.17
+        version: 18.11.17
       '@types/react':
         specifier: ~18.0.26
         version: 18.0.26
@@ -237,8 +240,8 @@ importers:
         version: link:../../../packages/cli
     devDependencies:
       '@types/node':
-        specifier: ^14
-        version: 14.0.0
+        specifier: ^18.11.17
+        version: 18.11.17
 
   e2e/fixtures/nav-link-items:
     dependencies:
@@ -247,8 +250,8 @@ importers:
         version: link:../../../packages/cli
     devDependencies:
       '@types/node':
-        specifier: ^14
-        version: 14.0.0
+        specifier: ^18.11.17
+        version: 18.11.17
 
   e2e/fixtures/nav-link-items-without-suffix:
     dependencies:
@@ -257,8 +260,8 @@ importers:
         version: link:../../../packages/cli
     devDependencies:
       '@types/node':
-        specifier: ^14
-        version: 14.0.0
+        specifier: ^18.11.17
+        version: 18.11.17
 
   e2e/fixtures/page-type-home:
     dependencies:
@@ -267,8 +270,8 @@ importers:
         version: link:../../../packages/cli
     devDependencies:
       '@types/node':
-        specifier: ^14
-        version: 14.0.0
+        specifier: ^18.11.17
+        version: 18.11.17
 
   e2e/fixtures/plugin-preview:
     dependencies:
@@ -298,8 +301,8 @@ importers:
         version: 1.8.16
     devDependencies:
       '@types/node':
-        specifier: ^14
-        version: 14.0.0
+        specifier: ^18.11.17
+        version: 18.11.17
 
   e2e/fixtures/plugin-rss:
     dependencies:
@@ -311,8 +314,8 @@ importers:
         version: link:../../../packages/cli
     devDependencies:
       '@types/node':
-        specifier: ^14
-        version: 14.0.0
+        specifier: ^18.11.17
+        version: 18.11.17
 
   e2e/fixtures/prism-sytax-highlighter:
     dependencies:
@@ -321,8 +324,8 @@ importers:
         version: link:../../../packages/cli
     devDependencies:
       '@types/node':
-        specifier: ^14
-        version: 14.0.0
+        specifier: ^18.11.17
+        version: 18.11.17
 
   e2e/fixtures/production:
     dependencies:
@@ -331,8 +334,8 @@ importers:
         version: link:../../../packages/cli
     devDependencies:
       '@types/node':
-        specifier: ^14
-        version: 14.0.0
+        specifier: ^18.11.17
+        version: 18.11.17
 
   e2e/fixtures/replace-rules:
     dependencies:
@@ -341,8 +344,8 @@ importers:
         version: link:../../../packages/cli
     devDependencies:
       '@types/node':
-        specifier: ^14
-        version: 14.0.0
+        specifier: ^18.11.17
+        version: 18.11.17
 
   e2e/fixtures/tabs-component:
     dependencies:
@@ -351,8 +354,8 @@ importers:
         version: link:../../../packages/cli
     devDependencies:
       '@types/node':
-        specifier: ^14
-        version: 14.0.0
+        specifier: ^18.11.17
+        version: 18.11.17
 
   e2e/fixtures/title-suffix:
     dependencies:
@@ -361,8 +364,8 @@ importers:
         version: link:../../../packages/cli
     devDependencies:
       '@types/node':
-        specifier: ^14
-        version: 14.0.0
+        specifier: ^18.11.17
+        version: 18.11.17
 
   e2e/fixtures/view-transition:
     dependencies:
@@ -374,14 +377,14 @@ importers:
         specifier: ^29.5.12
         version: 29.5.12
       '@types/node':
-        specifier: ^14
-        version: 14.0.0
+        specifier: ^18.11.17
+        version: 18.11.17
 
   e2e/fixtures/with-base:
     devDependencies:
       '@types/node':
-        specifier: ^14
-        version: 14.0.0
+        specifier: ^18.11.17
+        version: 18.11.17
       rspress:
         specifier: workspace:*
         version: link:../../../packages/cli
@@ -4247,14 +4250,6 @@ packages:
 
   /@types/node@12.20.55:
     resolution: {integrity: sha512-J8xLz7q2OFulZ2cyGTLE1TbbZcjpno7FaN6zdJNrgAdrJ+DZzh/uFR6YrTb4C+nXakvud8Q4+rbhoIWlYQbUFQ==}
-    dev: true
-
-  /@types/node@14.0.0:
-    resolution: {integrity: sha512-BZHGudjgZ8cweaQC2Q7hKpZNT2sq//NNbc7KcuTdti10S/tKIXpqiAgzZZFdwm6uUdRE9jy6UYSESNvB5rmFgA==}
-    dev: true
-
-  /@types/node@16.11.7:
-    resolution: {integrity: sha512-QB5D2sqfSjCmTuWcBWyJ+/44bcjO7VbjSbOE0ucoVbAsSNQc4Lt6QkgkVXkTDwkL4z/beecZNDvVX15D4P8Jbw==}
     dev: true
 
   /@types/node@18.11.17:

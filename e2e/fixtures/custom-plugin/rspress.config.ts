@@ -1,4 +1,4 @@
-import path from 'path';
+import path from 'node:path';
 import { defineConfig } from 'rspress/config';
 import { docPluginDemo } from './plugin';
 import { pluginPreview } from '@rspress/plugin-preview';

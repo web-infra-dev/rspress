@@ -1,4 +1,4 @@
-import path from 'path';
+import path from 'node:path';
 import type { RspressPlugin } from '@rspress/shared';
 import fs from '@modern-js/utils/fs-extra';
 import type {

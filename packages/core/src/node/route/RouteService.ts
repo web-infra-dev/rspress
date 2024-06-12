@@ -1,4 +1,4 @@
-import path from 'path';
+import path from 'node:path';
 import type { ComponentType } from 'react';
 import fs from '@rspress/shared/fs-extra';
 import {

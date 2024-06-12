@@ -1,6 +1,6 @@
-import path from 'path';
+import path from 'node:path';
 import fs from '@rspress/shared/fs-extra';
-import { pathToFileURL } from 'url';
+import { pathToFileURL } from 'node:url';
 import { createProcessor } from '@mdx-js/mdx';
 import { isProduction } from '@rspress/shared';
 import { logger } from '@rspress/shared/logger';

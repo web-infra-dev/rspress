@@ -1,4 +1,4 @@
-import path from 'path';
+import path from 'node:path';
 import { type RspressPlugin, addTrailingSlash } from '@rspress/shared';
 import { logger } from '@rspress/shared/logger';
 import { combineWalkResult } from './utils';

@@ -1,6 +1,6 @@
-import path from 'path';
-import fs from 'fs/promises';
-import { spawn } from 'child_process';
+import path from 'node:path';
+import fs from 'node:fs/promises';
+import { spawn } from 'node:child_process';
 import { pathExists } from '@rspress/shared/fs-extra';
 import { logger } from '@rspress/shared/logger';
 
