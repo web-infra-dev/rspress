@@ -1,5 +1,5 @@
 import { useEffect } from 'react';
-import { Header } from '@rspress/shared';
+import type { Header } from '@rspress/shared';
 import {
   useHiddenNav,
   scrollToTarget,

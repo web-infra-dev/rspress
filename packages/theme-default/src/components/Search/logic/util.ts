@@ -1,4 +1,4 @@
-import { RemoteSearchIndexInfo, Header } from '@rspress/shared';
+import type { RemoteSearchIndexInfo, Header } from '@rspress/shared';
 
 const MAX_TITLE_LENGTH = 20;
 const kRegex = /[\u3131-\u314e|\u314f-\u3163|\uac00-\ud7a3]/u;
@@ -41,6 +41,7 @@ export function formatText(text: string) {
 export function normalizeTextCase(text: string | number) {
   const textNormalized = text.toString().toLowerCase().normalize('NFD');
   const resultWithAccents = textNormalized;
+  // biome-ignore lint/suspicious/noMisleadingCharacterClass: temporarily ignore
   const resultWithoutAccents = textNormalized.replace(/[\u0300-\u036f]/g, '');
   if (cyrillicRegex.test(String(text))) {
     return resultWithAccents.normalize('NFC');

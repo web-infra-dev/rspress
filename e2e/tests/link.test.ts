@@ -1,10 +1,10 @@
 import { expect, test } from '@playwright/test';
-import path from 'path';
+import path from 'node:path';
 import { getPort, killProcess, runDevCommand } from '../utils/runCommands';
 
 import type { Locator, Page } from '@playwright/test';
 import { getShouldOpenNewPage } from '../utils/new-page';
-import os from 'os';
+import os from 'node:os';
 
 const fixtureDir = path.resolve(__dirname, '../fixtures');
 

@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-var-requires */
 /* eslint-disable @typescript-eslint/no-require-imports */
-import { ReactNode, Suspense, memo, ReactElement } from 'react';
+import { type ReactNode, Suspense, memo, type ReactElement } from 'react';
 import { matchRoutes, useLocation } from 'react-router-dom';
 import siteData from 'virtual-site-data';
 import { normalizeRoutePath } from './utils';

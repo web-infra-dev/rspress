@@ -1,6 +1,6 @@
 /* eslint-disable max-lines */
 import { usePageData } from '@rspress/runtime';
-import { SearchOptions, isProduction } from '@rspress/shared';
+import { type SearchOptions, isProduction } from '@rspress/shared';
 import { debounce, groupBy } from 'lodash-es';
 import { useCallback, useEffect, useRef, useState } from 'react';
 import { createPortal } from 'react-dom';

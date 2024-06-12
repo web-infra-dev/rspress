@@ -1,5 +1,5 @@
-import path from 'path';
-import { fileURLToPath } from 'url';
+import path from 'node:path';
+import { fileURLToPath } from 'node:url';
 import { APPEARANCE_KEY, RSPRESS_TEMP_DIR } from '@rspress/shared';
 
 export const isProduction = () => process.env.NODE_ENV === 'production';

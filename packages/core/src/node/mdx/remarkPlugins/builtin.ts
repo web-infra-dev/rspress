@@ -1,4 +1,4 @@
-import path from 'path';
+import path from 'node:path';
 import type { Plugin } from 'unified';
 import type { Root } from 'mdast';
 import type { MdxjsEsm } from 'mdast-util-mdxjs-esm';

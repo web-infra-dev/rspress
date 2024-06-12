@@ -2,8 +2,8 @@ import type { Plugin } from 'unified';
 import { visitChildren } from 'unist-util-visit-children';
 import Slugger from 'github-slugger';
 import type { Root } from 'hast';
-import { Processor } from '@mdx-js/mdx/lib/core';
-import { PageMeta } from '../loader';
+import type { Processor } from '@mdx-js/mdx/lib/core';
+import type { PageMeta } from '../loader';
 import { extractTextAndId } from '../../utils';
 
 export interface TocItem {

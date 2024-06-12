@@ -1,6 +1,6 @@
 import { describe, test, expect } from 'vitest';
 import { loadConfigFile } from '../../src/config/loadConfigFile';
-import path from 'path';
+import path from 'node:path';
 import { normalizePath } from '../../../core/src/node/utils/normalizePath';
 
 const TEST_TITLE = 'my-title';

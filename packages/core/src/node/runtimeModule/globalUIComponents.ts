@@ -1,4 +1,4 @@
-import { FactoryContext, RuntimeModuleID } from '.';
+import { type FactoryContext, RuntimeModuleID } from '.';
 
 export async function globalUIComponentsVMPlugin(context: FactoryContext) {
   const { config, pluginDriver } = context;

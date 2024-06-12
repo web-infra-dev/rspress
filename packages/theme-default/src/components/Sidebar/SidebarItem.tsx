@@ -7,7 +7,7 @@ import {
 import { Link, Tag } from '@theme';
 import styles from './index.module.scss';
 import { SidebarGroup } from './SidebarGroup';
-import { SidebarItemProps, highlightTitleStyle } from '.';
+import { type SidebarItemProps, highlightTitleStyle } from '.';
 import { renderInlineMarkdown } from '../../logic';
 import { useRenderer } from '../../logic/useRerender';
 

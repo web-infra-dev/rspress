@@ -1,5 +1,5 @@
 import { expect, test } from '@playwright/test';
-import path from 'path';
+import path from 'node:path';
 import { getPort, killProcess, runDevCommand } from '../utils/runCommands';
 
 import type { Locator, Page } from '@playwright/test';

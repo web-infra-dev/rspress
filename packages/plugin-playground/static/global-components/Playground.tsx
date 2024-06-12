@@ -1,4 +1,9 @@
-import React, { HTMLAttributes, ReactNode, useCallback, useState } from 'react';
+import React, {
+  type HTMLAttributes,
+  type ReactNode,
+  useCallback,
+  useState,
+} from 'react';
 import getImport from '_rspress_playground_imports';
 import { usePageData } from '@rspress/core/runtime';
 import { Editor, Runner } from '../../dist/web/esm';

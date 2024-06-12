@@ -1,4 +1,4 @@
-import * as NodePath from 'path';
+import * as NodePath from 'node:path';
 import { pluginRss } from '@rspress/plugin-rss';
 import { defineConfig } from 'rspress/config';
 import fixture from './fixture.json';

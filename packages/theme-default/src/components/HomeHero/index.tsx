@@ -2,7 +2,7 @@ import {
   normalizeHrefInRuntime as normalizeHref,
   normalizeImagePath,
 } from '@rspress/runtime';
-import { FrontMatterMeta } from '@rspress/shared';
+import type { FrontMatterMeta } from '@rspress/shared';
 import { Button } from '@theme';
 import { renderHtmlOrText } from '../../logic';
 import styles from './index.module.scss';

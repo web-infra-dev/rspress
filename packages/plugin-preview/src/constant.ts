@@ -1,4 +1,4 @@
-import path from 'path';
+import path from 'node:path';
 import { RSPRESS_TEMP_DIR } from '@rspress/shared';
 
 export const staticPath = path.join(__dirname, '..', 'static');

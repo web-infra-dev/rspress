@@ -1,5 +1,5 @@
 import { renderToString } from 'react-dom/server';
-import { PageData } from '@rspress/shared';
+import type { PageData } from '@rspress/shared';
 import { DataContext, ThemeContext } from '@rspress/runtime';
 import { StaticRouter } from '@rspress/runtime/server';
 import { App, initPageData } from './App';

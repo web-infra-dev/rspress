@@ -1,15 +1,15 @@
-import path from 'path';
+import path from 'node:path';
 import fs from '@rspress/shared/fs-extra';
-import { pathToFileURL } from 'url';
+import { pathToFileURL } from 'node:url';
 import { createProcessor } from '@mdx-js/mdx';
 import { isProduction } from '@rspress/shared';
 import { logger } from '@rspress/shared/logger';
 import { loadFrontMatter } from '@rspress/shared/node-utils';
 import { createMDXOptions } from './options';
-import { TocItem } from './remarkPlugins/toc';
+import type { TocItem } from './remarkPlugins/toc';
 import { checkLinks } from './remarkPlugins/checkDeadLink';
 import { TEMP_DIR } from '../constants';
-import { PluginDriver } from '../PluginDriver';
+import type { PluginDriver } from '../PluginDriver';
 import { RuntimeModuleID } from '../runtimeModule';
 import {
   normalizePath,

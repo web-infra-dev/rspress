@@ -1,9 +1,9 @@
-import path, { join } from 'path';
+import path, { join } from 'node:path';
 import fs from '@rspress/shared/fs-extra';
 import chalk from '@rspress/shared/chalk';
-import type { IncomingMessage, ServerResponse } from 'http';
+import type { IncomingMessage, ServerResponse } from 'node:http';
 import fetch from 'node-fetch';
-import { UserConfig, isSCM, SEARCH_INDEX_NAME } from '@rspress/shared';
+import { type UserConfig, isSCM, SEARCH_INDEX_NAME } from '@rspress/shared';
 import { logger } from '@rspress/shared/logger';
 import { isProduction, OUTPUT_DIR, TEMP_DIR } from './constants';
 

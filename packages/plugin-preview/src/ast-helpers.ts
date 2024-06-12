@@ -1,4 +1,4 @@
-import { MdxjsEsm } from 'mdast-util-mdxjs-esm';
+import type { MdxjsEsm } from 'mdast-util-mdxjs-esm';
 
 export const getASTNodeImport = (name: string, from: string) =>
   ({

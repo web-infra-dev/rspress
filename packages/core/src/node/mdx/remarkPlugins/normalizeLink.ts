@@ -1,4 +1,4 @@
-import path from 'path';
+import path from 'node:path';
 import type { Plugin } from 'unified';
 import { visit } from 'unist-util-visit';
 import type { Root } from 'mdast';

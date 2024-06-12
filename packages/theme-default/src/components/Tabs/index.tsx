@@ -1,15 +1,15 @@
 import {
   Children,
-  ReactNode,
-  ReactElement,
+  type ReactNode,
+  type ReactElement,
   useMemo,
   useState,
   useEffect,
   useContext,
   forwardRef,
-  ForwardedRef,
+  type ForwardedRef,
   isValidElement,
-  ComponentPropsWithRef,
+  type ComponentPropsWithRef,
   type ForwardRefExoticComponent,
 } from 'react';
 import { TabDataContext } from '../../logic/TabDataContext';
@@ -110,7 +110,7 @@ export const Tabs: ForwardRefExoticComponent<TabsProps> = forwardRef(
           return tabData[groupId];
         }
 
-        return parseInt(storageIndex);
+        return Number.parseInt(storageIndex);
       }
 
       return activeIndex;
@@ -119,7 +119,7 @@ export const Tabs: ForwardRefExoticComponent<TabsProps> = forwardRef(
     // sync when other browser page trigger update
     useEffect(() => {
       if (groupId) {
-        const correctIndex = parseInt(storageIndex);
+        const correctIndex = Number.parseInt(storageIndex);
 
         if (syncIndex !== correctIndex) {
           setTabData({ ...tabData, [groupId]: correctIndex });

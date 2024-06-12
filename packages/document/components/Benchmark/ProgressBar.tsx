@@ -39,7 +39,7 @@ export function ProgressBar({ value, max }: { value: number; max: number }) {
           animate="animate"
           variants={variants}
           onUpdate={(latest: { width: string }) => {
-            const width = parseFloat(latest.width);
+            const width = Number.parseFloat(latest.width);
             setElapsedTime((width / 100) * TOTAL_TIME);
           }}
           // 2x speed

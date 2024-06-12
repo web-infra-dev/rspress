@@ -2,10 +2,10 @@ import { useEffect, useState } from 'react';
 import {
   inBrowser,
   normalizeSlash,
-  NormalizedSidebarGroup,
-  SidebarItem as ISidebarItem,
-  SidebarDivider as ISidebarDivider,
-  SidebarSectionHeader as ISidebarSectionHeader,
+  type NormalizedSidebarGroup,
+  type SidebarItem as ISidebarItem,
+  type SidebarDivider as ISidebarDivider,
+  type SidebarSectionHeader as ISidebarSectionHeader,
 } from '@rspress/shared';
 import { routes } from 'virtual-routes';
 import { matchRoutes, useLocation, removeBase } from '@rspress/runtime';
@@ -14,7 +14,7 @@ import { isActive, useLocaleSiteData, useSidebarData } from '../../logic';
 import { SidebarItem } from './SidebarItem';
 import { NavBarTitle } from '../Nav/NavBarTitle';
 import { SidebarDivider } from './SidebarDivider';
-import { UISwitchResult } from '../../logic/useUISwitch';
+import type { UISwitchResult } from '../../logic/useUISwitch';
 import { SidebarSectionHeader } from './SidebarSectionHeader';
 
 import styles from './index.module.scss';

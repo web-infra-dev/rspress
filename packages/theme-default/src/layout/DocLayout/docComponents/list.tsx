@@ -1,4 +1,4 @@
-import { ComponentProps } from 'react';
+import type { ComponentProps } from 'react';
 
 export const Ol = (props: ComponentProps<'ol'>) => {
   return <ol {...props} className="list-decimal pl-5 my-4 leading-7" />;

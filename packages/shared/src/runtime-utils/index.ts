@@ -1,5 +1,5 @@
 import { castArray, isArray, isUndefined, mergeWith } from 'lodash-es';
-import { UserConfig } from '@/types';
+import type { UserConfig } from '@/types';
 
 export const QUERY_REGEXP = /\?.*$/s;
 export const HASH_REGEXP = /#.*$/s;

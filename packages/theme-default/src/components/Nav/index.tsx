@@ -1,4 +1,4 @@
-import { NavItem } from '@rspress/shared';
+import type { NavItem } from '@rspress/shared';
 import { useLocation, usePageData } from '@rspress/runtime';
 import { Search } from '@theme';
 import { useEffect, useState } from 'react';

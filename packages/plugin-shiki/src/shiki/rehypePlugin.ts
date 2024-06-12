@@ -2,7 +2,7 @@ import { visit } from 'unist-util-visit';
 import type { Plugin } from 'unified';
 import type { Text, Root, ElementContent } from 'hast';
 import { fromHtml } from 'hast-util-from-html';
-import shiki from 'shiki';
+import type shiki from 'shiki';
 
 interface Options {
   highlighter: shiki.Highlighter;

@@ -7,7 +7,7 @@ function getTargetTop(
   element: HTMLElement,
   fallbackHeight = DEFAULT_NAV_HEIGHT,
 ) {
-  const targetPadding = parseInt(
+  const targetPadding = Number.parseInt(
     window.getComputedStyle(element).paddingTop,
     10,
   );

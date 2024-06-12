@@ -1,12 +1,12 @@
 {
-  "$schema": "https://biomejs.dev/schemas/1.5.3/schema.json",
+  "$schema": "https://biomejs.dev/schemas/1.8.1/schema.json",
   "organizeImports": {
     "enabled": true
   },
   "javascript": {
     "formatter": {
       "quoteStyle": "single",
-      "trailingComma": "all",
+      "trailingCommas": "all",
       "arrowParentheses": "asNeeded"
     }
   },

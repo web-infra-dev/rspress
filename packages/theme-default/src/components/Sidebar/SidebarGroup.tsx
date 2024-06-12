@@ -1,5 +1,6 @@
-import React, { useEffect, useRef } from 'react';
-import { NormalizedSidebarGroup, SidebarItem } from '@rspress/shared';
+import type React from 'react';
+import { useEffect, useRef } from 'react';
+import { type NormalizedSidebarGroup, SidebarItem } from '@rspress/shared';
 import {
   useNavigate,
   normalizeHrefInRuntime as normalizeHref,

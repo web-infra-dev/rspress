@@ -1,5 +1,5 @@
 import { useMemo } from 'react';
-import {
+import type {
   Header,
   NormalizedSidebarGroup,
   SidebarItem,

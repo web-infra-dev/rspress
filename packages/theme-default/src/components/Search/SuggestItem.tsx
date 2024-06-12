@@ -6,7 +6,7 @@ import TitleSvg from '@theme-assets/title';
 import { useRef } from 'react';
 import { getSlicedStrByByteLength, removeDomain } from './logic/util';
 import styles from './index.module.scss';
-import { DefaultMatchResultItem, HightlightInfo } from './logic/types';
+import type { DefaultMatchResultItem, HightlightInfo } from './logic/types';
 import { SvgWrapper } from '../SvgWrapper';
 
 const ICON_MAP = {

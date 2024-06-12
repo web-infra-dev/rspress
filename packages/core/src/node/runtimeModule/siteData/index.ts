@@ -1,4 +1,4 @@
-import path from 'path';
+import path from 'node:path';
 import fs from '@rspress/shared/fs-extra';
 import { groupBy } from 'lodash-es';
 import { SEARCH_INDEX_NAME } from '@rspress/shared';
@@ -7,7 +7,7 @@ import { TEMP_DIR, isProduction } from '@/node/constants';
 import { extractPageData } from './extractPageData';
 import { normalizeThemeConfig } from './normalizeThemeConfig';
 import { handleHighlightLanguages } from './highlightLanguages';
-import { FactoryContext, RuntimeModuleID } from '..';
+import { type FactoryContext, RuntimeModuleID } from '..';
 
 // How can we let the client runtime access the `indexHash`?
 // We can only do something after the Rspack build process becuase the index hash is generated within Rspack build process.There are two ways to do this:

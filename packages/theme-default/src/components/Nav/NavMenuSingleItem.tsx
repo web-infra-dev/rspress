@@ -1,6 +1,6 @@
 import {
-  NavItemWithLink,
-  NavItemWithLinkAndChildren,
+  type NavItemWithLink,
+  type NavItemWithLinkAndChildren,
   withoutBase,
 } from '@rspress/shared';
 import { normalizeHrefInRuntime as normalizeHref } from '@rspress/runtime';

@@ -1,17 +1,17 @@
-import path from 'path';
+import path from 'node:path';
 import fs from '@rspress/shared/fs-extra';
 import { htmlToText } from 'html-to-text';
 import { compile } from '@rspress/mdx-rs';
 import { loadFrontMatter } from '@rspress/shared/node-utils';
 import {
-  Header,
+  type Header,
   MDX_REGEXP,
-  ReplaceRule,
-  PageIndexInfo,
+  type ReplaceRule,
+  type PageIndexInfo,
 } from '@rspress/shared';
 import { flattenMdxContent } from '@/node/utils';
 import { importStatementRegex } from '@/node/constants';
-import { RouteService } from '@/node/route/RouteService';
+import type { RouteService } from '@/node/route/RouteService';
 import { applyReplaceRules } from '@/node/utils/applyReplaceRules';
 
 export async function extractPageData(

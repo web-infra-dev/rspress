@@ -1,17 +1,17 @@
-import path from 'path';
+import path from 'node:path';
 import fs from '@rspress/shared/fs-extra';
 import {
-  NavItem,
-  Sidebar,
-  SidebarGroup,
-  SidebarItem,
-  SidebarDivider,
+  type NavItem,
+  type Sidebar,
+  type SidebarGroup,
+  type SidebarItem,
+  type SidebarDivider,
   slash,
   withBase,
   isExternalUrl,
-  SidebarSectionHeader,
+  type SidebarSectionHeader,
 } from '@rspress/shared';
-import { NavMeta, SideMeta } from './type';
+import type { NavMeta, SideMeta } from './type';
 import { detectFilePath, extractInfoFromFrontmatter } from './utils';
 import { logger } from '@rspress/shared/logger';
 

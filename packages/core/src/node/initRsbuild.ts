@@ -1,4 +1,4 @@
-import path from 'path';
+import path from 'node:path';
 import {
   type UserConfig,
   removeLeadingSlash,
@@ -26,8 +26,8 @@ import { rsbuildPluginDocVM } from './runtimeModule';
 import { serveSearchIndexMiddleware } from './searchIndex';
 import { detectReactVersion, resolveReactAlias } from './utils';
 import { initRouteService } from './route/init';
-import { PluginDriver } from './PluginDriver';
-import { RouteService } from './route/RouteService';
+import type { PluginDriver } from './PluginDriver';
+import type { RouteService } from './route/RouteService';
 import { detectCustomIcon } from './utils/detectCustomIcon';
 import { PLUGIN_REACT_NAME, pluginReact } from '@rsbuild/plugin-react';
 import { PLUGIN_SASS_NAME, pluginSass } from '@rsbuild/plugin-sass';

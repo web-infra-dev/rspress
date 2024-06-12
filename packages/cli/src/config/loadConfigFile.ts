@@ -1,5 +1,5 @@
-import fs from 'fs';
-import path from 'path';
+import fs from 'node:fs';
+import path from 'node:path';
 import type { UserConfig } from '@rspress/core';
 import { logger } from '@rspress/shared/logger';
 import { DEFAULT_CONFIG_NAME, DEFAULT_EXTENSIONS } from '@/constants';

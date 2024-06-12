@@ -1,6 +1,6 @@
 import type { RsbuildConfig } from '@rsbuild/core';
 import type { PluggableList } from 'unified';
-import { UserConfig, PageIndexInfo, RouteMeta } from '.';
+import type { UserConfig, PageIndexInfo, RouteMeta } from '.';
 
 /**
  * There are two ways to define what addtion routes represent.

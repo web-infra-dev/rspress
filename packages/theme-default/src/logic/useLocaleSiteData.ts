@@ -1,4 +1,4 @@
-import { NormalizedLocales } from '@rspress/shared';
+import type { NormalizedLocales } from '@rspress/shared';
 import { usePageData } from '@rspress/runtime';
 
 export function useLocaleSiteData(): NormalizedLocales {

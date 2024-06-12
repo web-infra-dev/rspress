@@ -1,4 +1,4 @@
-import path from 'path';
+import path from 'node:path';
 import { test, expect } from '@playwright/test';
 import { runBuildCommand } from '../utils/runCommands';
 import { readFileSync } from 'fs-extra';

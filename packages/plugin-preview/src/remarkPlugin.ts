@@ -1,4 +1,4 @@
-import { join, resolve, dirname } from 'path';
+import { join, resolve, dirname } from 'node:path';
 import { visit } from 'unist-util-visit';
 import { normalizePosixPath } from '@rspress/shared';
 import fs from '@rspress/shared/fs-extra';

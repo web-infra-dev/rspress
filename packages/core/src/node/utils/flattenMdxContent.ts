@@ -1,4 +1,4 @@
-import path from 'path';
+import path from 'node:path';
 import fs from '@rspress/shared/fs-extra';
 import enhancedResolve from 'enhanced-resolve';
 import { MDX_REGEXP } from '@rspress/shared';
