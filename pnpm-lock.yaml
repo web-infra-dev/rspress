@@ -124,6 +124,16 @@ importers:
         specifier: ^14
         version: 14.0.0
 
+  e2e/fixtures/custom-headers:
+    dependencies:
+      rspress:
+        specifier: workspace:*
+        version: link:../../../packages/cli
+    devDependencies:
+      '@types/node':
+        specifier: ^14
+        version: 14.0.0
+
   e2e/fixtures/custom-icon:
     dependencies:
       rspress:
@@ -170,16 +180,6 @@ importers:
       solid-js:
         specifier: ^1.8.12
         version: 1.8.16
-    devDependencies:
-      '@types/node':
-        specifier: ^14
-        version: 14.0.0
-
-  e2e/fixtures/frontmatter-headers:
-    dependencies:
-      rspress:
-        specifier: workspace:*
-        version: link:../../../packages/cli
     devDependencies:
       '@types/node':
         specifier: ^14
@@ -3190,7 +3190,7 @@ packages:
   /@modern-js/codesmith@2.3.5:
     resolution: {integrity: sha512-B55big7ceKnCW/9t8mk57uru43RLAyWT7PmaqLEqlaxAq6u+oPDmlii32hHp8n4tg8dbn4bZuAq7Rddv+iepjw==}
     dependencies:
-      '@modern-js/utils': 2.51.0
+      '@modern-js/utils': 2.52.0
       '@swc/helpers': 0.5.1
       axios: 1.6.8
       tar: 6.2.0
