@@ -123,8 +123,17 @@ export async function renderPages(
     const additionalRoutes = (await pluginDriver.addSSGRoutes()).map(route => ({
       routePath: withBase(route.path, base),
     }));
+    const allRoutes = [...routes, ...additionalRoutes];
+    const is404RouteInRoutes = allRoutes.some(
+      route => route.routePath === '/404',
+    );
+    if (!is404RouteInRoutes) {
+      allRoutes.push({
+        routePath: '/404',
+      });
+    }
     await Promise.all(
-      [...routes, ...additionalRoutes]
+      allRoutes
         .filter(route => {
           // filter the route including dynamic params
           return !route.routePath.includes(':');
