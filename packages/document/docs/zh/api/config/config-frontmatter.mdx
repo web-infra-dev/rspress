@@ -251,3 +251,24 @@ overviewHeaders: [2, 3]
 - Type: `string`
 
 配置后，在生成侧边栏时会在所在的 DOM 节点添加 `data-context` 属性，值为配置的值。
+
+```yaml title="foo.mdx"
+---
+context: 'context-foo'
+---
+```
+
+```yaml title="bar.mdx"
+---
+context: 'context-bar'
+---
+```
+
+最终生成的侧边栏的 DOM 结构缩略如下：
+
+```html
+<div class="rspress-sidebar-group">
+  <div data-context="context-foo"></div>
+  <div data-context="context-bar"></div>
+</div>
+```
