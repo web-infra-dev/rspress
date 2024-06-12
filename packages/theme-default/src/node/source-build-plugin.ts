@@ -1,7 +1,7 @@
 import path from 'path';
 import { fileURLToPath } from 'url';
 import { createRequire } from 'module';
-import { RspressPlugin } from '@rspress/shared';
+import type { RspressPlugin } from '@rspress/shared';
 import { tailwindConfig } from '../../tailwind.config';
 
 const require = createRequire(import.meta.url);

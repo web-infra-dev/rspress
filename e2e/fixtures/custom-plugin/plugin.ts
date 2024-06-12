@@ -1,5 +1,5 @@
 import path from 'path';
-import { RspressPlugin } from '@rspress/shared';
+import type { RspressPlugin } from '@rspress/shared';
 
 export function docPluginDemo(): RspressPlugin {
   return {

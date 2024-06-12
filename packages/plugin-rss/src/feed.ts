@@ -2,7 +2,7 @@ import { resolve as resolveUrl } from 'node:url';
 import type { PageIndexInfo, UserConfig } from '@rspress/shared';
 import type { Author, FeedOptions } from 'feed';
 import {
-  ResolvedOutput,
+  type ResolvedOutput,
   concatArray,
   selectNonNullishProperty,
   toDate,

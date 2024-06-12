@@ -1,4 +1,4 @@
-import { Nav } from '@rspress/shared';
+import type { Nav } from '@rspress/shared';
 
 export type NavMeta = Nav;
 

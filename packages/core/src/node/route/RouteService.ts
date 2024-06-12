@@ -4,13 +4,13 @@ import fs from '@rspress/shared/fs-extra';
 import {
   addLeadingSlash,
   addTrailingSlash,
-  PageModule,
-  UserConfig,
-  RouteMeta,
+  type PageModule,
+  type UserConfig,
+  type RouteMeta,
   withBase,
 } from '@rspress/shared';
 import { getPageKey, normalizePath } from '../utils';
-import { PluginDriver } from '../PluginDriver';
+import type { PluginDriver } from '../PluginDriver';
 
 export const DEFAULT_PAGE_EXTENSIONS = ['js', 'jsx', 'ts', 'tsx', 'md', 'mdx'];
 

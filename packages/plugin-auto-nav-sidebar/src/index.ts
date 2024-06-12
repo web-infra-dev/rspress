@@ -1,5 +1,5 @@
 import path from 'path';
-import { RspressPlugin, addTrailingSlash } from '@rspress/shared';
+import { type RspressPlugin, addTrailingSlash } from '@rspress/shared';
 import { logger } from '@rspress/shared/logger';
 import { combineWalkResult } from './utils';
 import { walk } from './walk';

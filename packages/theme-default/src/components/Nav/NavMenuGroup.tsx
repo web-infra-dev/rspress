@@ -1,9 +1,9 @@
 import { useState } from 'react';
 import {
-  NavItem,
-  NavItemWithChildren,
-  NavItemWithLink,
-  NavItemWithLinkAndChildren,
+  type NavItem,
+  type NavItemWithChildren,
+  type NavItemWithLink,
+  type NavItemWithLinkAndChildren,
   withoutBase,
 } from '@rspress/shared';
 import Down from '@theme-assets/down';

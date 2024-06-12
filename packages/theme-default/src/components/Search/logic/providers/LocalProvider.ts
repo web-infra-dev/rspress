@@ -6,9 +6,9 @@
 import type { CreateOptions, Index as SearchIndex } from 'flexsearch';
 import FlexSearch from 'flexsearch';
 import searchIndexHash from 'virtual-search-index-hash';
-import { PageIndexInfo, SEARCH_INDEX_NAME } from '@rspress/shared';
-import { SearchOptions } from '../types';
-import { LOCAL_INDEX, Provider, SearchQuery } from '../Provider';
+import { type PageIndexInfo, SEARCH_INDEX_NAME } from '@rspress/shared';
+import type { SearchOptions } from '../types';
+import { LOCAL_INDEX, type Provider, type SearchQuery } from '../Provider';
 import { normalizeTextCase } from '../util';
 
 interface PageIndexForFlexSearch extends PageIndexInfo {

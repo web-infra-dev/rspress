@@ -1,6 +1,6 @@
 import { join } from 'path';
-import { UserConfig } from '@rspress/shared';
-import { FactoryContext, RuntimeModuleID } from '.';
+import type { UserConfig } from '@rspress/shared';
+import { type FactoryContext, RuntimeModuleID } from '.';
 
 const DEFAULT_I18N_SOURCE = join(process.cwd(), 'i18n.json');
 

@@ -1,8 +1,8 @@
 import {
-  NormalizedSidebarGroup,
-  SidebarItem,
-  NormalizedSidebar,
-  SidebarDivider,
+  type NormalizedSidebarGroup,
+  type SidebarItem,
+  type NormalizedSidebar,
+  type SidebarDivider,
   addTrailingSlash,
 } from '@rspress/shared';
 import { useEffect, useState } from 'react';

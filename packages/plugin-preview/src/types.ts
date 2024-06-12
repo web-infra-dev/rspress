@@ -1,5 +1,5 @@
-import { type RouteMeta } from '@rspress/shared';
-import { RsbuildConfig } from '@rsbuild/core';
+import type { RouteMeta } from '@rspress/shared';
+import type { RsbuildConfig } from '@rsbuild/core';
 
 export type Options = {
   /**

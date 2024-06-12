@@ -1,4 +1,4 @@
-import { type Config } from 'tailwindcss';
+import type { Config } from 'tailwindcss';
 
 export const tailwindConfig = {
   content: ['./src/**/*.{js,ts,jsx,tsx}'],

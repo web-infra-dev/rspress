@@ -1,5 +1,5 @@
 import fs from '@rspress/shared/fs-extra';
-import { FactoryContext, RuntimeModuleID } from '.';
+import { type FactoryContext, RuntimeModuleID } from '.';
 
 export async function globalStylesVMPlugin(context: FactoryContext) {
   const { config, pluginDriver } = context;

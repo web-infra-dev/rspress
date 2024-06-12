@@ -1,4 +1,4 @@
-import { CodeProps } from './code';
+import type { CodeProps } from './code';
 
 const DEFAULT_LANGUAGE_CLASS = 'language-bash';
 

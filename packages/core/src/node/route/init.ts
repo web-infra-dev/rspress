@@ -1,5 +1,5 @@
-import { UserConfig } from '@rspress/shared';
-import { PluginDriver } from '../PluginDriver';
+import type { UserConfig } from '@rspress/shared';
+import type { PluginDriver } from '../PluginDriver';
 import { RouteService } from './RouteService';
 
 interface InitOptions {

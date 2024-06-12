@@ -1,6 +1,6 @@
-import { RemoteSearchOptions } from '@rspress/shared';
-import { SearchOptions } from '../types';
-import { Provider, SearchQuery } from '../Provider';
+import type { RemoteSearchOptions } from '@rspress/shared';
+import type { SearchOptions } from '../types';
+import type { Provider, SearchQuery } from '../Provider';
 
 function buildQueryString(params: Record<string, string>) {
   return Object.entries(params)

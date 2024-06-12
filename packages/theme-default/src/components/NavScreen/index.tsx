@@ -1,6 +1,6 @@
 import { useEffect, useRef } from 'react';
 import { disableBodyScroll, clearAllBodyScrollLocks } from 'body-scroll-lock';
-import { NavItem, DefaultThemeConfig } from '@rspress/shared';
+import type { NavItem, DefaultThemeConfig } from '@rspress/shared';
 import type { SiteData } from '@rspress/shared';
 import { NoSSR } from '@rspress/runtime';
 import { NavMenuSingleItem } from '../Nav/NavMenuSingleItem';

@@ -1,4 +1,4 @@
-import { NormalizedSidebarGroup, SidebarItem } from '@rspress/shared';
+import type { NormalizedSidebarGroup, SidebarItem } from '@rspress/shared';
 import { useLocation, withBase, isEqualPath } from '@rspress/runtime';
 import { useSidebarData } from './useSidebarData';
 

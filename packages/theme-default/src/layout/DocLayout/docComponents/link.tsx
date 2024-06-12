@@ -1,4 +1,4 @@
-import { ComponentProps } from 'react';
+import type { ComponentProps } from 'react';
 import styles from './index.module.scss';
 import { Link } from '@theme';
 import { usePathUtils } from '../../../logic';

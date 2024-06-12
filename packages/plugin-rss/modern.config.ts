@@ -1,5 +1,5 @@
 import {
-  PartialBaseBuildConfig,
+  type PartialBaseBuildConfig,
   defineConfig,
   moduleTools,
 } from '@modern-js/module-tools';

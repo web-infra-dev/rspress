@@ -41,7 +41,7 @@
     ]
   },
   "devDependencies": {
-    "@biomejs/biome": "1.5.3",
+    "@biomejs/biome": "1.8.1",
     "@changesets/cli": "^2.27.1",
     "@manypkg/get-packages": "^2.2.0",
     "@modern-js/generator-utils": "3.3.24",

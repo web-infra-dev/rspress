@@ -11,7 +11,7 @@ import {
   renderFile,
   cancelPrompt,
 } from './utils';
-import { CustomPromptObject } from './types';
+import type { CustomPromptObject } from './types';
 
 const cli = cac('create-rspress').help();
 

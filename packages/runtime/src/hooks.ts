@@ -1,12 +1,12 @@
 import {
-  ReactElement,
+  type ReactElement,
   createContext,
   useCallback,
   useContext,
   useLayoutEffect,
   useState,
 } from 'react';
-import { PageData } from '@rspress/shared';
+import type { PageData } from '@rspress/shared';
 import i18nTextData from 'virtual-i18n-text';
 import { flushSync } from 'react-dom';
 

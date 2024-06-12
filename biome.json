@@ -1,12 +1,12 @@
 {
-  "$schema": "https://biomejs.dev/schemas/1.5.3/schema.json",
+  "$schema": "https://biomejs.dev/schemas/1.8.0/schema.json",
   "organizeImports": {
     "enabled": true
   },
   "javascript": {
     "formatter": {
       "quoteStyle": "single",
-      "trailingComma": "all",
+      "trailingCommas": "all",
       "arrowParentheses": "asNeeded"
     }
   },
@@ -47,7 +47,8 @@
         "noInferrableTypes": "off",
         "noNonNullAssertion": "off",
         "useSelfClosingElements": "off",
-        "useDefaultParameterLast": "off"
+        "useDefaultParameterLast": "off",
+        "useNodejsImportProtocol": "off"
       },
       "security": {
         "noDangerouslySetInnerHtml": "off"
