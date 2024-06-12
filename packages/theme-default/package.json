@@ -40,7 +40,7 @@
     "@rspress/shared": "workspace:*",
     "body-scroll-lock": "4.0.0-beta.0",
     "copy-to-clipboard": "^3.3.3",
-    "flexsearch": "0.6.32",
+    "flexsearch": "0.7.43",
     "github-slugger": "^2.0.0",
     "globby": "11.1.0",
     "hast-util-from-html": "^1.0.0",

@@ -502,8 +502,8 @@ importers:
         specifier: 5.17.0
         version: 5.17.0
       flexsearch:
-        specifier: 0.6.32
-        version: 0.6.32
+        specifier: 0.7.43
+        version: 0.7.43
       github-slugger:
         specifier: ^2.0.0
         version: 2.0.0
@@ -1295,8 +1295,8 @@ importers:
         specifier: ^3.3.3
         version: 3.3.3
       flexsearch:
-        specifier: 0.6.32
-        version: 0.6.32
+        specifier: 0.7.43
+        version: 0.7.43
       github-slugger:
         specifier: ^2.0.0
         version: 2.0.0
@@ -6062,8 +6062,8 @@ packages:
     hasBin: true
     dev: true
 
-  /flexsearch@0.6.32:
-    resolution: {integrity: sha512-EF1BWkhwoeLtbIlDbY/vDSLBen/E5l/f1Vg7iX5CDymQCamcx1vhlc3tIZxIDplPjgi0jhG37c67idFbjg+v+Q==}
+  /flexsearch@0.7.43:
+    resolution: {integrity: sha512-c5o/+Um8aqCSOXGcZoqZOm+NqtVwNsvVpWv6lfmSclU954O3wvQKxxK8zj74fPaSJbXpSLTs4PRhh+wnoCXnKg==}
     dev: false
 
   /focus-lock@0.11.6:
