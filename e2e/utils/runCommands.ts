@@ -61,11 +61,20 @@ export async function runCommand(
       process.stderr.write(stderrOutput);
     });
 
-    instance.on('close', () => {
+    instance.on('close', (code, signal) => {
       instance.stdout!.removeListener('data', handleStdout);
+
       if (!didResolve) {
+        if (code !== 0) {
+          reject(
+            new Error(
+              `process unexpected exit with code: ${code} signal: ${signal}`,
+            ),
+          );
+        } else {
+          resolve(null);
+        }
         didResolve = true;
-        resolve(null);
       }
     });
   });
