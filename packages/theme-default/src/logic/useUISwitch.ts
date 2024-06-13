@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react';
+import { inBrowser } from '@rspress/shared';
 import { useLocation, usePageData } from '@rspress/runtime';
 import { useEnableNav } from './useHiddenNav';
 import { useLocaleSiteData } from './useLocaleSiteData';
@@ -92,6 +93,13 @@ export function useUISwitch(): UISwitchResult {
       setShowDocFooter(originDocFooter);
     };
   }, [location.search]);
+
+  // Control the scroll behavior of the browser when location hash changed
+  useEffect(() => {
+    if (inBrowser && history.scrollRestoration) {
+      history.scrollRestoration = location.hash.length ? 'manual' : 'auto';
+    }
+  }, [!location.hash.length]);
 
   return {
     showAside,

@@ -4,8 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "dev": "cross-env RUST_MIN_STACK=4194304 rspress dev",
-    "build": "cross-env RUST_MIN_STACK=4194304 rspress build",
+    "dev": "rspress dev",
+    "build": "rspress build",
     "preview": "rspress preview",
     "documate:upload": "documate upload"
   },

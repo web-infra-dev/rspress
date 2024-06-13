@@ -98,6 +98,8 @@ export const Layout: React.FC<LayoutProps> = props => {
     );
   } else if (pageType === 'home') {
     title = concatTitle(mainTitle, frontmatter.titleSuffix as string);
+  } else if (pageType === '404') {
+    title = concatTitle('404', mainTitle);
   } else {
     title = mainTitle;
   }
