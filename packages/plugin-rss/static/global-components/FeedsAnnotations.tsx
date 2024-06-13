@@ -1,6 +1,6 @@
 import type { PageFeedData } from '@rspress/plugin-rss';
 import { Helmet, usePageData } from 'rspress/runtime';
-import { LinkHTMLAttributes } from 'react';
+import type { LinkHTMLAttributes } from 'react';
 
 export default function FeedsAnnotations() {
   const { page } = usePageData();
@@ -17,6 +17,7 @@ export default function FeedsAnnotations() {
         if (language) {
           props.hrefLang = language;
         }
+        // biome-ignore lint/correctness/useJsxKeyInIterable: no key props
         return <link {...props} />;
       })}
     </Helmet>

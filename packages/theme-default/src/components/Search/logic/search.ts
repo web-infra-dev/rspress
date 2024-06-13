@@ -1,6 +1,10 @@
-import { PageIndexInfo, RemotePageInfo } from '@rspress/shared';
+import type { PageIndexInfo, RemotePageInfo } from '@rspress/shared';
 import { normalizeHrefInRuntime as normalizeHref } from '@rspress/runtime';
-import { LOCAL_INDEX, NormalizedSearchResultItem, Provider } from './Provider';
+import {
+  LOCAL_INDEX,
+  type NormalizedSearchResultItem,
+  type Provider,
+} from './Provider';
 import {
   backTrackHeaders,
   byteToCharIndex,
@@ -10,10 +14,10 @@ import {
 import { LocalProvider } from './providers/LocalProvider';
 import { RemoteProvider } from './providers/RemoteProvider';
 import {
-  DefaultMatchResultItem,
-  MatchResult,
+  type DefaultMatchResultItem,
+  type MatchResult,
   RenderType,
-  SearchOptions,
+  type SearchOptions,
 } from './types';
 
 const THRESHOLD_CONTENT_LENGTH = 100;

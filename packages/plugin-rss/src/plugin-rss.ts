@@ -6,8 +6,8 @@ import { PluginComponents, PluginName } from './exports';
 import { createFeed, generateFeedItem } from './feed';
 
 import {
-  PageWithFeeds,
-  ResolvedOutput,
+  type PageWithFeeds,
+  type ResolvedOutput,
   concatArray,
   writeFile,
 } from './internals';

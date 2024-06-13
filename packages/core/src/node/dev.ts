@@ -1,5 +1,5 @@
-import { UserConfig } from '@rspress/shared';
-import { type RsbuildConfig } from '@rsbuild/core';
+import type { UserConfig } from '@rspress/shared';
+import type { RsbuildConfig } from '@rsbuild/core';
 import { initRsbuild } from './initRsbuild';
 import { writeSearchIndex } from './searchIndex';
 import { PluginDriver } from './PluginDriver';

@@ -1,7 +1,7 @@
 import { aliases, languages } from 'virtual-prism-languages';
 import { PrismLight as SyntaxHighlighter } from 'react-syntax-highlighter';
 import { usePageData } from '@rspress/runtime';
-import { CodeProps } from '.';
+import type { CodeProps } from '.';
 import prisimThemeStyle from '../prisim-theme';
 
 let registered = false;

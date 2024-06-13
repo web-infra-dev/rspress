@@ -1,5 +1,5 @@
-import { PageIndexInfo } from '@rspress/shared';
-import { SearchOptions } from './types';
+import type { PageIndexInfo } from '@rspress/shared';
+import type { SearchOptions } from './types';
 
 export interface SearchQuery {
   keyword: string;

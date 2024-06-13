@@ -1,5 +1,5 @@
 import type { Node } from '@babel/types';
-import React, { Component, HTMLAttributes } from 'react';
+import React, { Component, type HTMLAttributes } from 'react';
 import {
   createGetImport,
   createObjectPattern,

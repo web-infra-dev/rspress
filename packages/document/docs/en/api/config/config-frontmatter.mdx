@@ -63,6 +63,43 @@ titleSuffix: '| Rspack-based Static Site Generator'
 ---
 ```
 
+## head
+
+- Type: `[string, Record<string, string>][]`
+
+Specify extra head tags to be injected for the current page. Will be appended after head tags injected by site-level config.
+
+For example, you can use these headers to specify custom meta tags for [Open Graph](https://ogp.me/).
+
+```yaml
+---
+head:
+  - - meta
+    - name: og:title
+      content: The Rock
+  - - meta
+    - name: og:url
+      content: https://www.imdb.com/title/tt0117500/
+  - - meta
+    - name: og:image
+      content: https://ia.media-imdb.com/images/rock.jpg
+# - - [htmlTag]
+#   - [attributeName]: [attributeValue]
+#     [attributeName]: [attributeValue]
+---
+```
+
+::: tip Note
+
+Make sure to correctly define the header tag names and their attribute names.
+
+For tags and attribute names that contain a hyphen (`-`), use the camelCase format.
+For example, `http-equiv="refresh"` should be defined as `httpEquiv: refresh`.
+
+This is because under the hood, headers are handled by React and react-helmet-async.
+
+:::
+
 ## hero
 
 - Type: `Object`
@@ -244,4 +281,31 @@ Or
 ---
 overviewHeaders: [2, 3]
 ---
+```
+
+## context
+
+- Type: `string`
+
+After configuration, the `data-context` attribute will be added to the DOM node when the sidebar is generated, and the value is the configured value.
+
+```yaml title="foo.mdx"
+---
+context: 'context-foo'
+---
+```
+
+```yaml title="bar.mdx"
+---
+context: 'context-bar'
+---
+```
+
+The DOM structure of the final generated sidebar is abbreviated as follows:
+
+```html
+<div class="rspress-sidebar-group">
+  <div data-context="context-foo"></div>
+  <div data-context="context-bar"></div>
+</div>
 ```

@@ -27,7 +27,7 @@
   },
   "devDependencies": {
     "@modern-js/plugin-rspress": "workspace:*",
-    "@types/node": "~16.11.7",
+    "@types/node": "^18.11.17",
     "@types/react": "~18.0.26",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",

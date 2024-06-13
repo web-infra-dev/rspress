@@ -85,7 +85,13 @@ export interface UserConfig<ThemeConfig = DefaultThemeConfig> {
   /**
    * Head tags.
    */
-  head?: string[];
+  head?: (
+    | string
+    | [string, Record<string, string>]
+    | ((
+        route: RouteMeta,
+      ) => string | [string, Record<string, string>] | undefined)
+  )[];
   /**
    * I18n config of the site.
    */
@@ -274,6 +280,9 @@ export interface FrontMatterMeta {
   lineNumbers?: boolean;
   overviewHeaders?: number;
   titleSuffix?: string;
+  head?: [string, Record<string, string>][];
+  context?: string;
+  [key: string]: unknown;
 }
 
 export interface PageData {

@@ -1,9 +1,9 @@
-import path from 'path';
+import path from 'node:path';
 import remarkGFM from 'remark-gfm';
 import rehypePluginExternalLinks from 'rehype-external-links';
-import { PluggableList } from 'unified';
-import { Options } from '@mdx-js/loader';
-import { UserConfig } from '@rspress/shared';
+import type { PluggableList } from 'unified';
+import type { Options } from '@mdx-js/loader';
+import type { UserConfig } from '@rspress/shared';
 import { remarkPluginToc } from './remarkPlugins/toc';
 import { remarkBuiltin } from './remarkPlugins/builtin';
 import { rehypePluginCodeMeta } from './rehypePlugins/codeMeta';

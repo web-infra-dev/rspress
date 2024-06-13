@@ -1,4 +1,4 @@
-import { Header } from '@rspress/shared';
+import type { Header } from '@rspress/shared';
 import { usePageData } from '@rspress/runtime';
 import { renderInlineMarkdown, scrollToTarget } from '../../logic';
 import './index.css';

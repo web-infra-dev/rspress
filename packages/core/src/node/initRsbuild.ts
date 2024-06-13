@@ -1,4 +1,4 @@
-import path from 'path';
+import path from 'node:path';
 import {
   type UserConfig,
   removeLeadingSlash,
@@ -7,7 +7,11 @@ import {
   removeTrailingSlash,
 } from '@rspress/shared';
 import fs from '@rspress/shared/fs-extra';
-import type { RsbuildInstance, RsbuildConfig } from '@rsbuild/core';
+import type {
+  RsbuildInstance,
+  RsbuildConfig,
+  RsbuildPlugin,
+} from '@rsbuild/core';
 import {
   CLIENT_ENTRY,
   SSR_ENTRY,
@@ -22,15 +26,27 @@ import { rsbuildPluginDocVM } from './runtimeModule';
 import { serveSearchIndexMiddleware } from './searchIndex';
 import { detectReactVersion, resolveReactAlias } from './utils';
 import { initRouteService } from './route/init';
-import { PluginDriver } from './PluginDriver';
-import { RouteService } from './route/RouteService';
+import type { PluginDriver } from './PluginDriver';
+import type { RouteService } from './route/RouteService';
 import { detectCustomIcon } from './utils/detectCustomIcon';
+import { PLUGIN_REACT_NAME, pluginReact } from '@rsbuild/plugin-react';
+import { PLUGIN_SASS_NAME, pluginSass } from '@rsbuild/plugin-sass';
+import { PLUGIN_LESS_NAME, pluginLess } from '@rsbuild/plugin-less';
 
 export interface MdxRsLoaderCallbackContext {
   resourcePath: string;
   links: string[];
   root: string;
   base: string;
+}
+
+function isPluginIncluded(config: UserConfig, pluginName: string): boolean {
+  return (
+    config.builderPlugins?.some(plugin => plugin.name === pluginName) ||
+    config.builderConfig?.plugins?.some(
+      plugin => plugin && (plugin as RsbuildPlugin).name === pluginName,
+    )
+  );
 }
 
 async function createInternalBuildConfig(
@@ -41,10 +57,6 @@ async function createInternalBuildConfig(
   pluginDriver: PluginDriver,
   runtimeTempDir: string,
 ): Promise<RsbuildConfig> {
-  const { pluginReact } = await import('@rsbuild/plugin-react');
-  const { pluginSass } = await import('@rsbuild/plugin-sass');
-  const { pluginLess } = await import('@rsbuild/plugin-less');
-
   const cwd = process.cwd();
   const CUSTOM_THEME_DIR =
     config?.themeDir ?? path.join(process.cwd(), 'theme');
@@ -85,9 +97,9 @@ async function createInternalBuildConfig(
 
   return {
     plugins: [
-      pluginReact(),
-      pluginSass(),
-      pluginLess(),
+      ...(isPluginIncluded(config, PLUGIN_REACT_NAME) ? [] : [pluginReact()]),
+      ...(isPluginIncluded(config, PLUGIN_SASS_NAME) ? [] : [pluginSass()]),
+      ...(isPluginIncluded(config, PLUGIN_LESS_NAME) ? [] : [pluginLess()]),
       rsbuildPluginDocVM({
         userDocRoot,
         config,

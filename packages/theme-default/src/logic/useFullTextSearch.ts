@@ -1,6 +1,6 @@
 import { usePageData } from '@rspress/runtime';
 import { useEffect, useRef, useState } from 'react';
-import { MatchResult } from '..';
+import type { MatchResult } from '..';
 import { PageSearcher } from '../components/Search/logic/search';
 import { getSidebarGroupData } from './useSidebarData';
 import { useLocaleSiteData } from './useLocaleSiteData';

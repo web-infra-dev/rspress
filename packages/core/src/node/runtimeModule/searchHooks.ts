@@ -1,5 +1,5 @@
-import path from 'path';
-import { FactoryContext, RuntimeModuleID } from '.';
+import path from 'node:path';
+import { type FactoryContext, RuntimeModuleID } from '.';
 
 export async function searchHookVMPlugin(context: FactoryContext) {
   const { config } = context;

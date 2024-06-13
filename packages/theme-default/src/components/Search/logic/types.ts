@@ -1,4 +1,4 @@
-import { LocalSearchOptions, RemoteSearchOptions } from '@rspress/shared';
+import type { LocalSearchOptions, RemoteSearchOptions } from '@rspress/shared';
 
 export const enum RenderType {
   Default = 'default',

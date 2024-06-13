@@ -1,4 +1,4 @@
-import path from 'path';
+import path from 'node:path';
 import { Application, TSConfigReader } from 'typedoc';
 import type { RspressPlugin } from '@rspress/shared';
 import { load } from 'typedoc-plugin-markdown';

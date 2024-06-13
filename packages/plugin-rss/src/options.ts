@@ -1,7 +1,7 @@
 import { resolve as resolveUrl } from 'node:url';
 import type { PageIndexInfo } from '@rspress/shared';
-import { Feed } from 'feed';
-import { ResolvedOutput, sortByDate } from './internals';
+import type { Feed } from 'feed';
+import { type ResolvedOutput, sortByDate } from './internals';
 import type { FeedChannel, FeedOutputType, PluginRssOptions } from './type';
 
 export function testPage(

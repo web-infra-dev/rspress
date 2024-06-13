@@ -16,7 +16,8 @@
     "dev:website": "cross-env NX_DAEMON=false NX_REJECT_UNKNOWN_LOCAL_CACHE=0 nx run @rspress/docs:dev",
     "build:website": "cross-env NX_DAEMON=false NX_REJECT_UNKNOWN_LOCAL_CACHE=0 nx run @rspress/docs:build",
     "preview:website": "cd packages/document && npm run preview",
-    "update:modern": "ts-node ./scripts/update-modern.ts",
+    "update:modern": "npx taze minor --include /modern-js/ -w -r -l",
+    "update:rsbuild": "npx taze minor --include /rsbuild/ -w -r -l",
     "format": "biome format --write ./packages"
   },
   "engines": {
@@ -40,16 +41,15 @@
     ]
   },
   "devDependencies": {
-    "check-dependency-version-consistency": "^4.1.0",
-    "@biomejs/biome": "1.5.3",
+    "@biomejs/biome": "1.8.1",
     "@changesets/cli": "^2.27.1",
-    "@manypkg/get-packages": "^2.2.0",
-    "@modern-js/generator-utils": "3.3.23",
-    "@modern-js/module-tools": "2.50.0",
-    "@modern-js/tsconfig": "2.50.0",
-    "@playwright/test": "1.33.0",
+    "@modern-js/module-tools": "2.52.0",
+    "@modern-js/tsconfig": "2.52.0",
+    "@playwright/test": "1.44.1",
     "@types/cross-spawn": "^6.0.2",
     "@types/fs-extra": "11.0.4",
+    "@types/node": "^18.11.17",
+    "check-dependency-version-consistency": "^4.1.0",
     "cross-env": "^7.0.3",
     "cross-spawn": "^7.0.3",
     "cspell-ban-words": "^0.0.3",
@@ -59,10 +59,9 @@
     "husky": "^8.0.0",
     "lint-staged": "~13.3.0",
     "nx": "17.0.2",
-    "playwright": "1.33.0",
-    "prettier": "3.2.2",
+    "playwright": "1.44.1",
+    "prettier": "3.3.0",
     "tree-kill": "^1.2.2",
-    "ts-node": "^10.9.1",
     "vitest": "0.34.1"
   },
   "publishConfig": {

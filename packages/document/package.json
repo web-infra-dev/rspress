@@ -1,11 +1,11 @@
 {
   "name": "@rspress/docs",
-  "version": "1.22.0",
+  "version": "1.24.0",
   "description": "",
   "main": "index.js",
   "scripts": {
-    "dev": "rspress dev",
-    "build": "rspress build",
+    "dev": "cross-env RUST_MIN_STACK=4194304 rspress dev",
+    "build": "cross-env RUST_MIN_STACK=4194304 rspress build",
     "preview": "rspress preview",
     "documate:upload": "documate upload"
   },
@@ -22,8 +22,8 @@
     "framer-motion": "10.18.0",
     "rsbuild-plugin-google-analytics": "^1.0.0",
     "rsbuild-plugin-open-graph": "^1.0.0",
-    "rspress-plugin-font-open-sans": "^1.0.0",
     "rspress": "workspace:*",
+    "rspress-plugin-font-open-sans": "^1.0.0",
     "ts-node": "^10.9.1",
     "typescript": "^5"
   },

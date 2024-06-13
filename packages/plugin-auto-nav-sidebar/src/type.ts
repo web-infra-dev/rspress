@@ -1,4 +1,4 @@
-import { Nav } from '@rspress/shared';
+import type { Nav } from '@rspress/shared';
 
 export type NavMeta = Nav;
 
@@ -15,6 +15,7 @@ export type SideMetaItem =
       tag?: string;
       dashed?: boolean;
       overviewHeaders?: number[];
+      context?: string;
     };
 
 export type SideMeta = SideMetaItem[];

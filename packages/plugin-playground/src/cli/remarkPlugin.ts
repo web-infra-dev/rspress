@@ -1,4 +1,4 @@
-import { dirname, join, resolve } from 'path';
+import { dirname, join, resolve } from 'node:path';
 import { visit } from 'unist-util-visit';
 import fs from '@rspress/shared/fs-extra';
 import type { RouteMeta } from '@rspress/shared';

@@ -182,6 +182,34 @@ export default defineConfig({
 });
 ```
 
+## head
+
+- Type: `string` | `[string, Record<string, string>]` | `(route) => string | [string, Record<string, string>] | undefined`
+- Can be appended per page via [frontmatter](./config-frontmatter.mdx#head)
+
+Additional elements to render in the `<head>` tag in the page HTML.
+
+```ts title="rspress.config.ts"
+import { defineConfig } from 'rspress/config';
+
+export default defineConfig({
+  // ... other user config
+  head: [
+    '<meta name="author" content="John Doe">',
+    // or
+    ['meta', { name: 'author', content: 'John Doe' }],
+    // [htmlTag, { attrName: attrValue, attrName2: attrValue2 }]
+    // or
+    (route) => {
+      if (route.routePath.startsWith('/jane/')) return "<meta name='author' content='Jane Doe'>";
+      if (route.routePath.startsWith('/john/')) return ['meta', { name: 'author', content: 'John Doe' }];
+      \\ or even skip returning anything
+      return undefined;
+    }
+  ]
+});
+```
+
 ## mediumZoom
 
 - Type: `boolean` | `{ selector?: string }`

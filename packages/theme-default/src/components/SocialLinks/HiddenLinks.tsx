@@ -1,4 +1,4 @@
-import { SocialLink } from '@rspress/shared';
+import type { SocialLink } from '@rspress/shared';
 import { LinkContent } from './LinkContent';
 
 interface IHiddenLinksProps {

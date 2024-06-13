@@ -1,6 +1,6 @@
-import path from 'path';
+import path from 'node:path';
 import fs from '@rspress/shared/fs-extra';
-import { NavItem, Sidebar } from '@rspress/shared';
+import type { NavItem, Sidebar } from '@rspress/shared';
 import { logger } from '@rspress/shared/logger';
 import { loadFrontMatter } from '@rspress/shared/node-utils';
 
@@ -26,13 +26,14 @@ export async function detectFilePath(rawPath: string) {
   return realPath;
 }
 
-export async function extractTitleAndOverviewHeaders(
+export async function extractInfoFromFrontmatter(
   filePath: string,
   rootDir: string,
 ): Promise<{
   realPath: string | undefined;
   title: string;
   overviewHeaders: string | undefined;
+  context: string | undefined;
 }> {
   const realPath = await detectFilePath(filePath);
   if (!realPath) {
@@ -46,6 +47,7 @@ export async function extractTitleAndOverviewHeaders(
       realPath,
       title: '',
       overviewHeaders: undefined,
+      context: undefined,
     };
   }
   const content = await fs.readFile(realPath, 'utf-8');
@@ -57,6 +59,7 @@ export async function extractTitleAndOverviewHeaders(
     realPath,
     title: frontmatter.title || match?.[1] || fileNameWithoutExt,
     overviewHeaders: frontmatter.overviewHeaders,
+    context: frontmatter.context,
   };
 }
 

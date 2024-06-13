@@ -1,5 +1,5 @@
-import { existsSync } from 'fs';
-import path from 'path';
+import { existsSync } from 'node:fs';
+import path from 'node:path';
 
 export const detectCustomIcon = async (customThemeDir: string) => {
   const assetsDir = path.join(customThemeDir, 'assets');

@@ -1,11 +1,11 @@
-import { dirname, join } from 'path';
-import { pathToFileURL } from 'url';
-import { HelmetData } from 'react-helmet-async';
+import { dirname, join } from 'node:path';
+import { pathToFileURL } from 'node:url';
+import type { HelmetData } from 'react-helmet-async';
 import chalk from '@rspress/shared/chalk';
 import fs from '@rspress/shared/fs-extra';
 import {
-  PageData,
-  UserConfig,
+  type PageData,
+  type UserConfig,
   normalizeSlash,
   withBase,
   isDebugMode,
@@ -25,6 +25,7 @@ import { writeSearchIndex } from './searchIndex';
 import { PluginDriver } from './PluginDriver';
 import type { Route } from '@/node/route/RouteService';
 import { routeService } from '@/node/route/init';
+import { renderFrontmatterHead, renderConfigHead } from './utils/renderHead';
 
 interface BuildOptions {
   appDirectory: string;
@@ -156,15 +157,15 @@ export async function renderPages(
             )
             .replace(
               HEAD_MARKER,
-              (config?.head || [])
-                .concat([
-                  helmet?.title?.toString(),
-                  helmet?.meta?.toString(),
-                  helmet?.link?.toString(),
-                  helmet?.style?.toString(),
-                  helmet?.script?.toString(),
-                ])
-                .join(''),
+              [
+                await renderConfigHead(config, route),
+                helmet?.title?.toString(),
+                helmet?.meta?.toString(),
+                helmet?.link?.toString(),
+                helmet?.style?.toString(),
+                helmet?.script?.toString(),
+                await renderFrontmatterHead(route),
+              ].join(''),
             );
           if (helmet?.htmlAttributes) {
             html = html.replace(

@@ -8,7 +8,7 @@
     "preview": "rspress preview"
   },
   "devDependencies": {
-    "rspress": "workspace:*",
-    "@types/node": "^14"
+    "@types/node": "^18.11.17",
+    "rspress": "workspace:*"
   }
 }

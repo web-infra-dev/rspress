@@ -44,7 +44,7 @@ export const modulePluginDoc = (
   }),
 });
 
-export { PluginOptions };
+export type { PluginOptions };
 
 // deprecated default export
 export default modulePluginDoc;

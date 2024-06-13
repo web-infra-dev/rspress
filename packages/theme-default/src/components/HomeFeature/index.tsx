@@ -1,4 +1,4 @@
-import { FrontMatterMeta, Feature } from '@rspress/shared';
+import type { FrontMatterMeta, Feature } from '@rspress/shared';
 import styles from './index.module.scss';
 import { renderHtmlOrText } from '../../logic';
 

@@ -13,7 +13,7 @@
  */
 
 import type { Plugin } from 'unified';
-import {
+import type {
   Root,
   Content,
   Parent,

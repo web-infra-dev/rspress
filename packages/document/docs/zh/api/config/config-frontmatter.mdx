@@ -63,6 +63,44 @@ titleSuffix: '| 基于 Rspack 的静态站点生成器'
 ---
 ```
 
+## head
+
+- Type: `[string, Record<string, string>][]`
+
+设置为当前页面注入的额外 head 标签，它们将附加在 Rspress 全局注入的 head 标签之后。
+
+例如，你可以使用这些 headers 为 [Open Graph](https://ogp.me/) 指定自定义元标签。
+
+```yaml
+---
+head:
+  - - meta
+    - name: og:title
+      content: The Rock
+  - - meta
+    - name: og:url
+      content: https://www.imdb.com/title/tt0117500/
+  - - meta
+    - name: og:image
+      content: https://ia.media-imdb.com/images/rock.jpg
+# - - [htmlTag]
+#   - [attributeName]: [attributeValue]
+#     [attributeName]: [attributeValue]
+---
+```
+
+::: tip Note
+
+确保正确定义 head 的标签（tag）名称及其属性（attribute）名称。
+
+对于包含连字符（`-`）的标签和属性名称，请使用驼峰式大小写格式。
+
+例如，`http-equiv="refresh"` 应定义为 `httpEquiv: refresh`。
+
+这是因为 headers 在底层由 React 和 react-helmet-async 处理。
+
+:::
+
 ## hero
 
 - Type: `Object`
@@ -244,4 +282,31 @@ overviewHeaders: []
 ---
 overviewHeaders: [2, 3]
 ---
+```
+
+## context
+
+- Type: `string`
+
+配置后，在生成侧边栏时会在所在的 DOM 节点添加 `data-context` 属性，值为配置的值。
+
+```yaml title="foo.mdx"
+---
+context: 'context-foo'
+---
+```
+
+```yaml title="bar.mdx"
+---
+context: 'context-bar'
+---
+```
+
+最终生成的侧边栏的 DOM 结构缩略如下：
+
+```html
+<div class="rspress-sidebar-group">
+  <div data-context="context-foo"></div>
+  <div data-context="context-bar"></div>
+</div>
 ```

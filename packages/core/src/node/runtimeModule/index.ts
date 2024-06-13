@@ -1,8 +1,8 @@
 import type { UserConfig } from '@rspress/shared';
 import { RspackVirtualModulePlugin } from 'rspack-plugin-virtual-module';
-import { RsbuildPlugin } from '@rsbuild/core';
-import { RouteService } from '../route/RouteService';
-import { PluginDriver } from '../PluginDriver';
+import type { RsbuildPlugin } from '@rsbuild/core';
+import type { RouteService } from '../route/RouteService';
+import type { PluginDriver } from '../PluginDriver';
 import { routeVMPlugin } from './routeData';
 import { siteDataVMPlugin } from './siteData/index';
 import { i18nVMPlugin } from './i18n';

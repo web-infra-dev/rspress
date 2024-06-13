@@ -1,11 +1,11 @@
 import 'nprogress/nprogress.css';
 import '../../styles';
-import React from 'react';
+import type React from 'react';
 import { Helmet } from 'react-helmet-async';
 import Theme, { Nav } from '@theme';
 import { usePageData, Content } from '@rspress/runtime';
-import { DocLayout, DocLayoutProps } from '../DocLayout';
-import { HomeLayoutProps } from '../HomeLayout';
+import { DocLayout, type DocLayoutProps } from '../DocLayout';
+import type { HomeLayoutProps } from '../HomeLayout';
 import type { NavProps } from '../../components/Nav';
 import { useLocaleSiteData } from '../../logic';
 import { useRedirect4FirstVisit } from '../../logic/useRedirect4FirstVisit';

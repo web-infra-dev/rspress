@@ -1,6 +1,6 @@
 {
   "name": "create-rspress",
-  "version": "1.22.0",
+  "version": "1.24.0",
   "types": "./dist/index.d.ts",
   "main": "./dist/index.js",
   "module": "./dist/index.js",
@@ -21,18 +21,18 @@
     "upgrade": "modern upgrade"
   },
   "devDependencies": {
+    "@types/fs-extra": "11.0.4",
     "@types/jest": "~29.5.12",
     "@types/node": "^18.11.17",
     "@types/prompts": "^2.4.4",
     "@types/react": "^18",
-    "@types/fs-extra": "11.0.4",
-    "rimraf": "^3.0.2",
-    "ts-node": "^10.9.1",
-    "typescript": "^5",
     "cac": "6.7.14",
     "chalk": "5.3.0",
     "fs-extra": "11.2.0",
-    "prompts": "2.4.1"
+    "prompts": "2.4.1",
+    "rimraf": "^3.0.2",
+    "ts-node": "^10.9.1",
+    "typescript": "^5"
   },
   "sideEffects": [],
   "publishConfig": {

@@ -1,4 +1,4 @@
-import path from 'path';
+import path from 'node:path';
 import type { ComponentDoc, PropItem } from 'react-docgen-typescript';
 import { logger, chokidar, fs } from '@modern-js/utils';
 import {

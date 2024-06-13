@@ -1,5 +1,5 @@
 import { expect, test } from '@playwright/test';
-import path from 'path';
+import path from 'node:path';
 import { getPort, killProcess, runDevCommand } from '../utils/runCommands';
 
 const fixtureDir = path.resolve(__dirname, '../fixtures');
@@ -56,15 +56,11 @@ test.describe('basic test', async () => {
     await darkModeButton?.click();
     // check the class in html
     htmlClass = await page.evaluate(html => html?.getAttribute('class'), html);
-    expect(htmlClass?.includes('dark') ? true : false).toBe(
-      defaultMode !== 'dark',
-    );
+    expect(!!htmlClass?.includes('dark')).toBe(defaultMode !== 'dark');
     // click the button again, check the class in html
     await darkModeButton?.click();
     htmlClass = await page.evaluate(html => html?.getAttribute('class'), html);
-    expect(htmlClass?.includes('dark') ? true : false).toBe(
-      defaultMode === 'dark',
-    );
+    expect(!!htmlClass?.includes('dark')).toBe(defaultMode === 'dark');
   });
 
   test('Hover over social links', async ({ page }) => {

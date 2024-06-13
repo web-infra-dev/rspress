@@ -1,5 +1,5 @@
 import { expect, test } from '@playwright/test';
-import path from 'path';
+import path from 'node:path';
 import { getPort, killProcess, runDevCommand } from '../utils/runCommands';
 
 const fixtureDir = path.resolve(__dirname, '../fixtures');
@@ -173,5 +173,33 @@ test.describe('Auto nav and sidebar test', async () => {
     const a = await page.$$('.overview-group_8f375 ul a');
     const aTexts = await Promise.all(a.map(element => element.textContent()));
     expect(aTexts.join(',')).toEqual(['Nested H2'].join(','));
+  });
+
+  test('Should generate data-context in sidebargroup dom', async ({ page }) => {
+    await page.goto(`http://localhost:${appPort}/api/index.html`, {
+      waitUntil: 'networkidle',
+    });
+
+    const sidebarGroups = await page.$$('nav section');
+    const contexts1 = await page.evaluate(
+      sidebars =>
+        sidebars?.map(sidebar => sidebar.getAttribute('data-context')),
+      sidebarGroups,
+    );
+
+    expect(contexts1.join(',')).toEqual(
+      ['config', null, 'client-api'].join(','),
+    );
+
+    const sidebarGroupConfig = await page.$$('.rspress-sidebar-group > div');
+    const contexts2 = await page.evaluate(
+      sidebarGroupConfig =>
+        sidebarGroupConfig?.map(sidebarItem =>
+          sidebarItem.getAttribute('data-context'),
+        ),
+      sidebarGroupConfig,
+    );
+    expect(contexts2?.[2]).toEqual('front-matter');
+    expect(contexts2?.[3]).toEqual('config-build');
   });
 });

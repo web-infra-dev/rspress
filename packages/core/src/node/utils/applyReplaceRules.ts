@@ -1,4 +1,4 @@
-import { ReplaceRule } from '@rspress/shared';
+import type { ReplaceRule } from '@rspress/shared';
 
 export function applyReplaceRules(
   code = '',

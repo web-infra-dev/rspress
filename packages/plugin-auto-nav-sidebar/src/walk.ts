@@ -1,18 +1,18 @@
-import path from 'path';
+import path from 'node:path';
 import fs from '@rspress/shared/fs-extra';
 import {
-  NavItem,
-  Sidebar,
-  SidebarGroup,
-  SidebarItem,
-  SidebarDivider,
+  type NavItem,
+  type Sidebar,
+  type SidebarGroup,
+  type SidebarItem,
+  type SidebarDivider,
   slash,
   withBase,
   isExternalUrl,
-  SidebarSectionHeader,
+  type SidebarSectionHeader,
 } from '@rspress/shared';
-import { NavMeta, SideMeta } from './type';
-import { detectFilePath, extractTitleAndOverviewHeaders } from './utils';
+import type { NavMeta, SideMeta } from './type';
+import { detectFilePath, extractInfoFromFrontmatter } from './utils';
 import { logger } from '@rspress/shared/logger';
 
 export async function scanSideMeta(
@@ -66,7 +66,7 @@ export async function scanSideMeta(
             let label = item;
 
             const setLabelFromFilePath = async (filePath: string) => {
-              const { title } = await extractTitleAndOverviewHeaders(
+              const { title } = await extractInfoFromFrontmatter(
                 filePath,
                 rootDir,
               );
@@ -99,15 +99,17 @@ export async function scanSideMeta(
   )[] = await Promise.all(
     sideMeta.map(async metaItem => {
       if (typeof metaItem === 'string') {
-        const { title, overviewHeaders } = await extractTitleAndOverviewHeaders(
-          path.resolve(workDir, metaItem),
-          rootDir,
-        );
+        const { title, overviewHeaders, context } =
+          await extractInfoFromFrontmatter(
+            path.resolve(workDir, metaItem),
+            rootDir,
+          );
         const pureLink = `${relativePath}/${metaItem.replace(/\.mdx?$/, '')}`;
         return {
           text: title,
           link: addRoutePrefix(pureLink),
           overviewHeaders,
+          context,
           _fileKey: path.relative(docsDir, path.join(workDir, metaItem)),
         };
       }
@@ -122,23 +124,25 @@ export async function scanSideMeta(
         tag,
         dashed,
         overviewHeaders,
+        context,
       } = metaItem;
       // when type is divider, name maybe undefined, and link is not used
       const pureLink = `${relativePath}/${name?.replace(/\.mdx?$/, '')}`;
       if (type === 'file') {
-        const titleAndOverviewHeaders = await extractTitleAndOverviewHeaders(
+        const info = await extractInfoFromFrontmatter(
           path.resolve(workDir, name),
           rootDir,
         );
-        const title = label || titleAndOverviewHeaders.title;
-        const realPath = titleAndOverviewHeaders.realPath;
+        const title = label || info.title;
+        const realPath = info.realPath;
         return {
           text: title,
           link: addRoutePrefix(pureLink),
           tag,
-          overviewHeaders: titleAndOverviewHeaders.overviewHeaders
-            ? titleAndOverviewHeaders.overviewHeaders
+          overviewHeaders: info.overviewHeaders
+            ? info.overviewHeaders
             : overviewHeaders,
+          context: info.context ? info.context : context,
           _fileKey: realPath ? path.relative(docsDir, realPath) : '',
         };
       }
@@ -160,6 +164,7 @@ export async function scanSideMeta(
           link: realPath ? addRoutePrefix(pureLink) : '',
           tag,
           overviewHeaders,
+          context,
           _fileKey: realPath ? path.relative(docsDir, realPath) : '',
         };
       }
