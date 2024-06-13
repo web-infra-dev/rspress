@@ -181,10 +181,5 @@ export function setup() {
     return;
   }
 
-  // Clear the browser's scroll memory
-  if (history.scrollRestoration) {
-    history.scrollRestoration = 'manual';
-  }
-
   bindingWindowScroll();
 }
