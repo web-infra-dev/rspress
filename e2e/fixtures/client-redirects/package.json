@@ -1,0 +1,17 @@
+{
+  "name": "@rspress-fixture/client-redirects",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "dev": "rspress dev",
+    "build": "rspress build",
+    "preview": "rspress preview"
+  },
+  "dependencies": {
+    "@rspress/plugin-client-redirects": "workspace:*",
+    "rspress": "workspace:*"
+  },
+  "devDependencies": {
+    "@types/node": "^18.11.17"
+  }
+}

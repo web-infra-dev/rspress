@@ -1,0 +1,117 @@
+# @rspress/plugin-client-redirects
+
+import { SourceCode, PackageManagerTabs } from 'rspress/theme';
+
+<SourceCode href="https://github.com/web-infra-dev/rspress/tree/main/packages/plugin-client-redirects" />
+
+用于客户端重定向。
+
+## 注意
+
+为了使该插件正常工作，你需要在服务器的部署配置中，将 fallback 路径设置为 Rspress 生成的 `404.html` 页面。
+
+例如：
+
+```js title="nginx"
+location / {
+  error_page 404 /404.html;
+}
+```
+
+```toml title="netlify.toml"
+[[redirects]]
+from = "/*"
+to = "/404.html"
+status = 404
+```
+
+## 安装
+
+<PackageManagerTabs command="add @rspress/plugin-client-redirects -D" />
+
+## 使用
+
+在配置文件中写入以下的配置：
+
+```ts title="rspress.config.ts"
+import { pluginClientRedirects } from '@rspress/plugin-client-redirects';
+import { defineConfig } from 'rspress/config';
+
+export default defineConfig({
+  pluginClientRedirects({
+    redirects: [
+      {
+        from: '/docs/old1',
+        to: '/docs/new1',
+      },
+    ],
+  }),
+});
+```
+
+## 配置
+
+该插件支持传入一个对象配置，该对象配置的属性如下：
+
+```ts
+type RedirectRule = {
+  from: string | string[];
+  to: string;
+};
+
+type RedirectsOptions = {
+  redirects?: RedirectRule[];
+};
+```
+
+`from` 表示匹配的路径，`to` 表示要重定向的路径，支持传入正则表达式字符串。
+
+:::note
+
+一个 `to` 支持匹配多个 `from`：它们将重定向到一个路径。
+
+一个 `from` 不能对应多个 `to`：需要有一个唯一明确的重定向路径。
+
+:::
+
+## 示例
+
+```ts
+import path from 'node:path';
+import { defineConfig } from 'rspress/config';
+import { pluginClientRedirects } from '@rspress/plugin-client-redirects';
+
+export default defineConfig({
+  root: path.join(__dirname, 'doc'),
+  plugins: [
+    pluginClientRedirects({
+      redirects: [
+        // /docs/old1 -> /docs/new1
+        {
+          from: '/docs/old1',
+          to: '/docs/new1',
+        },
+        // redirect from multiple old paths to the new path
+        {
+          from: ['/docs/2022', '/docs/2023'],
+          to: '/docs/2024',
+        },
+        // redirect using regular expressions
+        {
+          from: '^/docs/old2',
+          to: '/docs/new2',
+        },
+        {
+          from: '/docs/old3$',
+          to: '/docs/new3',
+        },
+        // redirect to an external URL
+        {
+          from: '/docs/old4',
+          to: 'https://example.com',
+        },
+      ],
+    }),
+  ],
+});
+```
