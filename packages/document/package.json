@@ -6,8 +6,7 @@
   "scripts": {
     "dev": "rspress dev",
     "build": "rspress build",
-    "preview": "rspress preview",
-    "documate:upload": "documate upload"
+    "preview": "rspress preview"
   },
   "repository": {
     "type": "git",
