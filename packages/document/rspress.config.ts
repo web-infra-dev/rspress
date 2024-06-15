@@ -33,13 +33,6 @@ export default defineConfig({
         },
       }),
     ],
-    source: {
-      define: {
-        'process.env.DOCUMATE_BACKEND_URL': JSON.stringify(
-          process.env.DOCUMATE_BACKEND_URL,
-        ),
-      },
-    },
   },
   route: {
     cleanUrls: true,
