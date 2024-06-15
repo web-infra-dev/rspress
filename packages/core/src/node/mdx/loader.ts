@@ -50,14 +50,18 @@ export async function updateSiteDataRuntimeModule(
   );
   await fs.writeFile(
     siteDataModulePath,
-    `export default ${JSON.stringify({
-      ...siteData,
-      timestamp: Date.now().toString(),
-      pages: siteData.pages.map(page =>
-        // Update page meta if the page is updated
-        page._filepath === modulePath ? { ...page, ...pageMeta } : page,
-      ),
-    })}`,
+    `export default ${JSON.stringify(
+      {
+        ...siteData,
+        timestamp: Date.now().toString(),
+        pages: siteData.pages.map(page =>
+          // Update page meta if the page is updated
+          page._filepath === modulePath ? { ...page, ...pageMeta } : page,
+        ),
+      },
+      null,
+      2,
+    )}`,
   );
 }
 
