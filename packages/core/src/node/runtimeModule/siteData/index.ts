@@ -149,12 +149,18 @@ export async function siteDataVMPlugin(context: FactoryContext) {
   return {
     [`${RuntimeModuleID.SiteData}.mjs`]: `export default ${JSON.stringify(
       siteData,
+      null,
+      2,
     )}`,
     [RuntimeModuleID.SearchIndexHash]: `export default ${JSON.stringify(
       indexHashByGroup,
+      null,
+      2,
     )}`,
     [RuntimeModuleID.PrismLanguages]: `export const aliases = ${JSON.stringify(
       sortedAliases,
+      null,
+      2,
     )};
     export const languages = {
       ${sortedHighlightLanguages.map(lang => {

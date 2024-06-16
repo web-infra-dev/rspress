@@ -19,6 +19,6 @@ export function i18nVMPlugin(context: FactoryContext) {
   const { config } = context;
   const i18nData = getI18nData(config);
   return {
-    [RuntimeModuleID.I18nText]: `export default ${JSON.stringify(i18nData)}`,
+    [RuntimeModuleID.I18nText]: `export default ${JSON.stringify(i18nData, null, 2)}`,
   };
 }
