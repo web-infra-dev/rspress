@@ -161,18 +161,22 @@ test.describe('i18n test', async () => {
     await page.goto(`http://localhost:${appPort}/guide/basic/quick-start`, {
       waitUntil: 'networkidle',
     });
-    await page.click('a.menuLink_71eca');
-    expect(page.url()).toBe(
-      `http://localhost:${appPort}/guide/basic/install.html`,
+    const customLinkZh = await page.$('nav > a');
+    const hrefZh = await page.evaluate(
+      customLinkZh => customLinkZh?.getAttribute('href'),
+      customLinkZh,
     );
+    expect(hrefZh).toBe('/guide/basic/install.html');
 
     await page.goto(`http://localhost:${appPort}/en/guide/basic/quick-start`, {
       waitUntil: 'networkidle',
     });
-    await page.click('a.menuLink_71eca');
-    expect(page.url()).toBe(
-      `http://localhost:${appPort}/en/guide/basic/install.html`,
+    const customLinkEn = await page.$('nav > a');
+    const hrefEn = await page.evaluate(
+      customLinkEn => customLinkEn?.getAttribute('href'),
+      customLinkEn,
     );
+    expect(hrefEn).toBe('/en/guide/basic/install.html');
   });
 
   test('Should not crash when switch language in api page', async ({

@@ -19,12 +19,14 @@ test.describe('client redirects test', async () => {
     }
   });
 
-  test('Should redirect correctly', async ({ page }) => {
+  test('Should redirect correctly - normal', async ({ page }) => {
     await page.goto(`http://localhost:${appPort}/docs/old1`, {
       waitUntil: 'networkidle',
     });
     expect(page.url()).toBe(`http://localhost:${appPort}/docs/new1`);
+  });
 
+  test('Should redirect correctly - array', async ({ page }) => {
     await page.goto(`http://localhost:${appPort}/docs/2022`, {
       waitUntil: 'networkidle',
     });
@@ -34,7 +36,9 @@ test.describe('client redirects test', async () => {
       waitUntil: 'networkidle',
     });
     expect(page.url()).toBe(`http://localhost:${appPort}/docs/2024/new`);
+  });
 
+  test('Should redirect correctly - reg1', async ({ page }) => {
     await page.goto(`http://localhost:${appPort}/docs/old2`, {
       waitUntil: 'networkidle',
     });
@@ -44,7 +48,9 @@ test.describe('client redirects test', async () => {
       waitUntil: 'networkidle',
     });
     expect(page.url()).toBe(`http://localhost:${appPort}/docs/new2/foo`);
+  });
 
+  test('Should redirect correctly - reg2', async ({ page }) => {
     await page.goto(`http://localhost:${appPort}/docs/old3`, {
       waitUntil: 'networkidle',
     });
@@ -54,7 +60,9 @@ test.describe('client redirects test', async () => {
       waitUntil: 'networkidle',
     });
     expect(page.url()).toBe(`http://localhost:${appPort}/foo/docs/new3`);
+  });
 
+  test('Should redirect correctly - external', async ({ page }) => {
     await page.goto(`http://localhost:${appPort}/docs/old4`, {
       waitUntil: 'networkidle',
     });
