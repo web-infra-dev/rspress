@@ -63,9 +63,20 @@ test.describe('client redirects test', async () => {
   });
 
   test('Should redirect correctly - external', async ({ page }) => {
+    const externalUrl = 'https://example.com/';
+
+    await page.route(externalUrl, route => {
+      route.fulfill({
+        status: 200,
+        contentType: 'text/html',
+        body: `<html><body>Mocked response for ${externalUrl}</body></html>`,
+      });
+    });
+
     await page.goto(`http://localhost:${appPort}/docs/old4`, {
       waitUntil: 'networkidle',
     });
-    expect(page.url()).toBe('https://example.com/');
+
+    expect(page.url()).toBe(externalUrl);
   });
 });
