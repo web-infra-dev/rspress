@@ -7,6 +7,9 @@ exports[`automatic import of prism languages > prism languages aliases should be
   ],
   \\"objectivec\\": [
     \\"oc\\"
+  ],
+  \\"tsx\\": [
+    \\"jsx\\"
   ]
 };
     export const languages = {
@@ -16,6 +19,8 @@ exports[`automatic import of prism languages > prism languages aliases should be
           \\"react-syntax-highlighter/dist/cjs/languages/prism/objectivec\\"
         ).default,\\"rust\\": require(
           \\"react-syntax-highlighter/dist/cjs/languages/prism/rust\\"
+        ).default,\\"tsx\\": require(
+          \\"react-syntax-highlighter/dist/cjs/languages/prism/tsx\\"
         ).default,\\"typescript\\": require(
           \\"react-syntax-highlighter/dist/cjs/languages/prism/typescript\\"
         ).default
