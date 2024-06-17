@@ -210,7 +210,7 @@ async function createInternalBuildConfig(
           .type('javascript/auto')
           .test(MDX_REGEXP)
           .resolve.merge({
-            conditionNames: jsModuleRule.resolve.get('conditionNames'),
+            conditionNames: jsModuleRule.resolve.conditionNames.values(),
             mainFields: jsModuleRule.resolve.mainFields.values(),
           })
           .end()
