@@ -225,8 +225,8 @@ importers:
   e2e/fixtures/modern-js:
     dependencies:
       '@arco-design/web-react':
-        specifier: ^2.62.0
-        version: 2.62.0(@types/react@18.0.26)(react-dom@18.2.0)(react@18.2.0)
+        specifier: ^2.63.0
+        version: 2.63.0(@types/react@18.0.26)(react-dom@18.2.0)(react@18.2.0)
     devDependencies:
       '@modern-js/plugin-rspress':
         specifier: workspace:*
@@ -1450,8 +1450,8 @@ packages:
       color: 3.2.1
     dev: false
 
-  /@arco-design/web-react@2.62.0(@types/react@18.0.26)(react-dom@18.2.0)(react@18.2.0):
-    resolution: {integrity: sha512-PXWuMukxMUx5e7uk9EOlq6syYCvPTCwutNOUCitR2bASR8uRjHBJKWnRTy3oMzfLhISLJmjzmT0itZ9oKZKpIA==}
+  /@arco-design/web-react@2.63.0(@types/react@18.0.26)(react-dom@18.2.0)(react@18.2.0):
+    resolution: {integrity: sha512-n+vhyjCa4OzRBq2/guKmNUKoRj/iwltvGvGT6K+1vL4jpl2LR6pnr6BHXUiSe5lEYAFXeRhvFRmnv8CrXi0nMg==}
     peerDependencies:
       react: '>=16'
       react-dom: '>=16'
