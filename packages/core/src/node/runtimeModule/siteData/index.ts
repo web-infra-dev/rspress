@@ -139,6 +139,13 @@ export async function siteDataVMPlugin(context: FactoryContext) {
   };
 
   const { highlightLanguages: defaultLanguages = [] } = config.markdown || {};
+
+  if (siteData.pages[0]?.extraHighlightLanguages?.length) {
+    siteData.pages[0].extraHighlightLanguages.forEach(lang =>
+      highlightLanguages.add(lang),
+    );
+  }
+
   const aliases = handleHighlightLanguages(
     highlightLanguages,
     defaultLanguages,
