@@ -25,12 +25,11 @@ test.describe('custom headers', async () => {
     }
   });
 
-  test('should be only one <title></title>', async ({ page }) => {
+  test('should render only one title tag during ssg', async ({ page }) => {
     await page.goto(`http://localhost:${appPort}`, {
       waitUntil: 'networkidle',
     });
     const titleDoms = await page.$$('title');
-    console.log(titleDoms);
     expect(titleDoms.length).toBe(1);
   });
 

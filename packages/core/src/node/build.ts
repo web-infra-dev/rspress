@@ -157,6 +157,8 @@ export async function renderPages(
 
           const { helmet } = helmetContext.context;
           let html = htmlTemplate
+            // During ssr, we already have the title in react-helmet
+            .replace(/<title>(.*?)<\/title>/gi, '')
             // Don't use `string` as second param
             // To avoid some special characters transformed to the marker, such as `$&`, etc.
             .replace(APP_HTML_MARKER, () => appHtml)
