@@ -25,6 +25,15 @@ test.describe('custom headers', async () => {
     }
   });
 
+  test('should be only one <title></title>', async ({ page }) => {
+    await page.goto(`http://localhost:${appPort}`, {
+      waitUntil: 'networkidle',
+    });
+    const titleDoms = await page.$$('title');
+    console.log(titleDoms);
+    expect(titleDoms.length).toBe(1);
+  });
+
   test('config headers should be injected', async ({ page }) => {
     await page.goto(`http://localhost:${appPort}`, {
       waitUntil: 'networkidle',
