@@ -43,7 +43,11 @@ export function normalizeImagePath(imagePath: string) {
   if (!isProd) {
     return imagePath;
   }
-  if (isExternalUrl(imagePath) || isDataUrl(imagePath)) {
+  if (isExternalUrl(imagePath) || isDataUrl(imagePath) || imagePath.startsWith('//')) {
+    return imagePath;
+  }
+  // only append base to internal non-relative urls
+  if (!imagePath.startsWith('/')) {
     return imagePath;
   }
 
