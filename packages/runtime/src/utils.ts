@@ -46,6 +46,10 @@ export function normalizeImagePath(imagePath: string) {
   if (isExternalUrl(imagePath) || isDataUrl(imagePath)) {
     return imagePath;
   }
+  // only append base to internal non-relative urls
+  if (!imagePath.startsWith('/') || imagePath.startsWith('//')) {
+    return imagePath;
+  }
 
   return withBase(imagePath);
 }
