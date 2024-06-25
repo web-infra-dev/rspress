@@ -167,6 +167,19 @@ import PageType from '@en/fragments/page-type';
 
 <PageType />
 
+### Using frontmatter to generate page metadata for better SEO
+
+Within frontmatter, you can also customize your page's meta tag for SEO optimization.
+
+For example, if you want to add `<meta name="description" content="A modern explaination of &quot;edge&quot;" data-rh="true">` in your `<header>` tag, you can use frontmatter like so:
+
+```md
+---
+title: What does edge mean? ## This will customize your title in frontmatter
+description: A modern explaination of "edge"
+---
+```
+
 ### Using Fine-grained Switches
 
 In addition to the `pageType` page layout level configuration, Rspress also provides more fine-grained switches. You can configure other fields in the frontmatter. These fields and their meanings are as follows:
