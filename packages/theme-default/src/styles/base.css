@@ -80,6 +80,8 @@ button:focus-visible {
   --code-token-link: #22863a;
   --code-token-variable: #1976d2;
   --code-token-symbol: #f59403;
+  --code-token-deleted: #d32828;
+  --code-token-inserted: #22863a;
 }
 
 .dark {
@@ -95,6 +97,8 @@ button:focus-visible {
   --code-token-link: #f9a76d;
   --code-token-variable: #6fb0fa;
   --code-token-symbol: #f9a86e;
+  --code-token-deleted: #ee6d7a;
+  --code-token-inserted: #36c47f;
 }
 
 /**
