@@ -100,9 +100,14 @@ cli
       await startDevServer();
 
       const exitProcess = async () => {
-        await cliWatcher.close();
-        await devServer.close();
+        try {
+          await devServer.close();
+          await cliWatcher.close();
+        } finally {
+          process.exit(0);
+        }
       };
+
       process.on('SIGINT', exitProcess);
       process.on('SIGTERM', exitProcess);
     },
