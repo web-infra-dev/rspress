@@ -9,8 +9,6 @@ export default defineConfig({
     route =>
       `<meta name="config-fn-string-head" content="${route.absolutePath}">`,
     route => {
-      console.log({ route });
-
       return [
         'meta',
         { name: 'config-fn-tuple-head', content: route.absolutePath },
