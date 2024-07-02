@@ -177,7 +177,7 @@ export function pluginPreview(options?: Options): RspressPlugin {
           name: 'close-demo-server',
           setup: api => {
             api.modifyRsbuildConfig(config => {
-              if (config.output?.targets?.every(target => target === 'web')) {
+              if (config.output?.target === 'web') {
                 // client build config
                 clientConfig = config;
               }

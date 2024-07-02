@@ -46,7 +46,7 @@ export async function bundle(
         initRsbuild(docDirectory, config, pluginDriver, true, {
           output: {
             distPath: {
-              server: 'ssr',
+              root: 'doc_build/ssr',
             },
             minify: false,
           },

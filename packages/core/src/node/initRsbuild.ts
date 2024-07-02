@@ -84,16 +84,14 @@ async function createInternalBuildConfig(
   };
 
   // Using latest browserslist in development to improve build performance
-  const browserslist = {
-    web: isProduction()
-      ? ['chrome >= 87', 'edge >= 88', 'firefox >= 78', 'safari >= 14']
-      : [
-          'last 1 chrome version',
-          'last 1 firefox version',
-          'last 1 safari version',
-        ],
-    node: ['node >= 14'],
-  };
+  const webBrowserslist = isProduction()
+    ? ['chrome >= 87', 'edge >= 88', 'firefox >= 78', 'safari >= 14']
+    : [
+        'last 1 chrome version',
+        'last 1 firefox version',
+        'last 1 safari version',
+      ];
+  const ssrBrowserslist = ['node >= 14'];
 
   return {
     plugins: [
@@ -145,12 +143,12 @@ async function createInternalBuildConfig(
       ].filter(Boolean),
     },
     output: {
-      targets: isSSR ? ['node'] : ['web'],
+      target: isSSR ? 'node' : 'web',
       distPath: {
         // `root` must be a relative path in Rsbuild
         root: path.isAbsolute(outDir) ? path.relative(cwd, outDir) : outDir,
       },
-      overrideBrowserslist: browserslist,
+      overrideBrowserslist: isSSR ? ssrBrowserslist : webBrowserslist,
       assetPrefix,
     },
     source: {
