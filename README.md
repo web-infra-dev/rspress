@@ -7,18 +7,10 @@
 A fast Rspack-based static site generator.
 
 <p>
-  <a href="https://discord.gg/mkVw5zPAtf">
-    <img src="https://img.shields.io/badge/chat-discord-blue?logo=discord&colorA=564341&colorB=EDED91" alt="discord channel" />
-  </a>
-  <a href="https://npmjs.com/package/rspress?activeTab=readme">
-   <img src="https://img.shields.io/npm/v/rspress?style=flat-square&colorA=564341&colorB=EDED91" alt="npm version" />
-  </a>
-  <a href="https://npmcharts.com/compare/rspress?minimal=true">
-    <img src="https://img.shields.io/npm/dm/rspress.svg?style=flat-square&colorA=564341&colorB=EDED91" alt="downloads" />
-  </a>
-  <a href="https://github.com/web-infra-dev/rsbuild/blob/main/LICENSE">
-    <img src="https://img.shields.io/npm/l/rspress?style=flat-square&colorA=564341&colorB=EDED91" alt="license" />
-  </a>
+  <a href="https://discord.gg/mkVw5zPAtf"><img src="https://img.shields.io/badge/chat-discord-blue?logo=discord&colorA=564341&colorB=EDED91" alt="discord channel" /></a>
+  <a href="https://npmjs.com/package/rspress?activeTab=readme"><img src="https://img.shields.io/npm/v/rspress?style=flat-square&colorA=564341&colorB=EDED91" alt="npm version" /></a>
+  <a href="https://npmcharts.com/compare/rspress?minimal=true"><img src="https://img.shields.io/npm/dm/rspress.svg?style=flat-square&colorA=564341&colorB=EDED91" alt="downloads" /></a>
+  <a href="https://github.com/web-infra-dev/rsbuild/blob/main/LICENSE"><img src="https://img.shields.io/npm/l/rspress?style=flat-square&colorA=564341&colorB=EDED91" alt="license" /></a>
 </p>
 
 ## 🔥 Features
