@@ -23,6 +23,9 @@ export const isSCM = () => Boolean(process.env.BUILD_VERSION);
 export const isProduction = () => process.env.NODE_ENV === 'production';
 
 export const isDebugMode = () => {
+  if (!process.env.DEBUG) {
+    return false;
+  }
   const values = process.env.DEBUG?.toLocaleLowerCase().split(',') ?? [];
   return ['rsbuild', 'builder', '*'].some(key => values.includes(key));
 };

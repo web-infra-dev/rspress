@@ -61,10 +61,8 @@ async function createInternalBuildConfig(
   const CUSTOM_THEME_DIR =
     config?.themeDir ?? path.join(process.cwd(), 'theme');
   const baseOutDir = config?.outDir ?? OUTPUT_DIR;
-  const getRelativePath = (outDir: string) =>
-    path.isAbsolute(outDir) ? path.relative(cwd, outDir) : outDir;
-  const csrOutDir = getRelativePath(baseOutDir);
-  const ssrOutDir = getRelativePath(path.join(baseOutDir, 'ssr'));
+  const csrOutDir = baseOutDir;
+  const ssrOutDir = path.join(baseOutDir, 'ssr');
 
   const DEFAULT_THEME = require.resolve('@rspress/theme-default');
   const base = config?.base ?? '';
@@ -245,7 +243,6 @@ async function createInternalBuildConfig(
 
         if (isServer) {
           chain.output.filename('main.cjs');
-          chain.optimization.minimize(false);
         }
       },
     },
@@ -266,7 +263,6 @@ async function createInternalBuildConfig(
           target: 'web',
           overrideBrowserslist: webBrowserslist,
           distPath: {
-            // `root` must be a relative path in Rsbuild
             root: csrOutDir,
           },
         },
@@ -292,9 +288,9 @@ async function createInternalBuildConfig(
                 target: 'node',
                 overrideBrowserslist: ssrBrowserslist,
                 distPath: {
-                  // `root` must be a relative path in Rsbuild
                   root: ssrOutDir,
                 },
+                minify: false,
               },
             },
           }
