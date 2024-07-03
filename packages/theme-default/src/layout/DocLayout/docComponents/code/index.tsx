@@ -64,6 +64,7 @@ export function Code(props: CodeProps) {
           ref={wrapButtonRef}
           className={styles.codeWrapButton}
           onClick={() => toggleCodeWrap(wrapButtonRef.current)}
+          title="Toggle code wrap"
         >
           <SvgWrapper icon={IconWrapped} className={styles.iconWrapped} />
           <SvgWrapper icon={IconWrap} className={styles.iconWrap} />
