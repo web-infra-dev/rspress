@@ -39,6 +39,16 @@ export interface SearchPanelProps {
   setFocused: (focused: boolean) => void;
 }
 
+const useDebounce = <T extends (...args: any[]) => void>(cb: T): T => {
+  const cbRef = useRef(cb);
+  cbRef.current = cb;
+  const debounced = useCallback(
+    debounce((...args: any) => cbRef.current(...args), 150),
+    [],
+  );
+  return debounced as unknown as T;
+};
+
 export function SearchPanel({ focused, setFocused }: SearchPanelProps) {
   const [query, setQuery] = useState('');
   const [searchResult, setSearchResult] = useState<MatchResult>([]);
@@ -282,19 +292,13 @@ export function SearchPanel({ focused, setFocused }: SearchPanelProps) {
         await userSearchHooks[key](newQuery, searchResult);
       }
 
-      setSearchResult(searchResult || DEFAULT_RESULT);
-      setIsSearching(false);
+      // only setSearchResult when query is current query value
+      const currQuery = searchInputRef.current?.value;
+      if (currQuery === newQuery) {
+        setSearchResult(searchResult || DEFAULT_RESULT);
+        setIsSearching(false);
+      }
     }
-  };
-
-  const useDebounce = <T extends (...args: any[]) => void>(cb: T): T => {
-    const cbRef = useRef(cb);
-    cbRef.current = cb;
-    const debounced = useCallback(
-      debounce((...args: any) => cbRef.current(...args), 150),
-      [],
-    );
-    return debounced as unknown as T;
   };
 
   const handleQueryChange = useDebounce(handleQueryChangedImpl);
