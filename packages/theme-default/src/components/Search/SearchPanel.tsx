@@ -296,8 +296,8 @@ export function SearchPanel({ focused, setFocused }: SearchPanelProps) {
       const currQuery = searchInputRef.current?.value;
       if (currQuery === newQuery) {
         setSearchResult(searchResult || DEFAULT_RESULT);
+        setIsSearching(false);
       }
-      setIsSearching(false);
     }
   };
 
