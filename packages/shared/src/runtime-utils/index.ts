@@ -17,11 +17,15 @@ export const DEFAULT_HIGHLIGHT_LANGUAGES = [
   ['mdx', 'tsx'],
 ];
 
+// TODO: these utils should be divided into node and runtime
 export const isSCM = () => Boolean(process.env.BUILD_VERSION);
 
 export const isProduction = () => process.env.NODE_ENV === 'production';
 
-export const isDebugMode = () => Boolean(process.env.DOC_DEBUG);
+export const isDebugMode = () => {
+  const values = process.env.DEBUG?.toLocaleLowerCase().split(',') ?? [];
+  return ['rsbuild', 'builder', '*'].some(key => values.includes(key));
+};
 
 export const cleanUrl = (url: string): string =>
   url.replace(HASH_REGEXP, '').replace(QUERY_REGEXP, '');

@@ -40,31 +40,15 @@ export async function bundle(
   enableSSG: boolean,
 ) {
   try {
-    if (enableSSG) {
-      const [clientBuilder, ssrBuilder] = await Promise.all([
-        initRsbuild(docDirectory, config, pluginDriver, false),
-        initRsbuild(docDirectory, config, pluginDriver, true, {
-          output: {
-            minify: false,
-          },
-          tools: {
-            rspack(options) {
-              options.output.filename = 'main.cjs';
-            },
-          },
-        }),
-      ]);
-      await Promise.all([clientBuilder.build(), ssrBuilder.build()]);
-    } else {
-      // Only build client bundle
-      const clientBuilder = await initRsbuild(
-        docDirectory,
-        config,
-        pluginDriver,
-        false,
-      );
-      await clientBuilder.build();
-    }
+    // if enableSSG, build both client and server bundle
+    // else only build client bundle
+    const rsbuild = await initRsbuild(
+      docDirectory,
+      config,
+      pluginDriver,
+      enableSSG,
+    );
+    await rsbuild.build();
   } finally {
     await writeSearchIndex(config);
   }

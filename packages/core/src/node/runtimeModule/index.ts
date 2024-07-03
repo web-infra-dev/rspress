@@ -54,13 +54,13 @@ export const runtimeModuleFactory: RuntimeModuleFactory[] = [
 
 // We will use this plugin to generate runtime module in browser, which is important to ensure the client have access to some compile-time data
 export function rsbuildPluginDocVM(
-  factoryContext: Omit<FactoryContext, 'alias'>,
+  factoryContext: Omit<FactoryContext, 'alias' | 'isSSR'>,
 ): RsbuildPlugin {
   const { pluginDriver } = factoryContext;
   return {
     name: 'rsbuild-plugin-doc-vm',
     setup(api) {
-      api.modifyBundlerChain(async bundlerChain => {
+      api.modifyBundlerChain(async (bundlerChain, { isServer }) => {
         // The order should be sync
         const alias = bundlerChain.resolve.alias.entries();
         const runtimeModule: Record<string, string> = {};
@@ -68,6 +68,7 @@ export function rsbuildPluginDocVM(
         for (const factory of runtimeModuleFactory) {
           const moduleResult = await factory({
             ...factoryContext,
+            isSSR: isServer,
             alias: alias as Record<string, string>,
           });
           Object.assign(runtimeModule, moduleResult);
@@ -82,13 +83,14 @@ export function rsbuildPluginDocVM(
           }
           runtimeModule[key] = modulesByPlugin[key];
         });
-        bundlerChain.plugin('rspress-runtime-module').use(
-          // @ts-expect-error
-          new RspackVirtualModulePlugin(
-            runtimeModule,
-            factoryContext.runtimeTempDir,
-          ),
-        );
+        bundlerChain
+          .plugin('rspress-runtime-module')
+          .use(
+            new RspackVirtualModulePlugin(
+              runtimeModule,
+              factoryContext.runtimeTempDir,
+            ),
+          );
       });
     },
   };

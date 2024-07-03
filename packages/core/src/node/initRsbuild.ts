@@ -52,7 +52,7 @@ function isPluginIncluded(config: UserConfig, pluginName: string): boolean {
 async function createInternalBuildConfig(
   userDocRoot: string,
   config: UserConfig,
-  isSSR: boolean,
+  enableSSG: boolean,
   routeService: RouteService,
   pluginDriver: PluginDriver,
   runtimeTempDir: string,
@@ -61,10 +61,12 @@ async function createInternalBuildConfig(
   const CUSTOM_THEME_DIR =
     config?.themeDir ?? path.join(process.cwd(), 'theme');
   const baseOutDir = config?.outDir ?? OUTPUT_DIR;
-  const outDir = isSSR ? path.join(baseOutDir, 'ssr') : baseOutDir;
+  const csrOutDir = baseOutDir;
+  const ssrOutDir = path.join(baseOutDir, 'ssr');
+  const getRelativePath = (outDir: string) =>
+    path.isAbsolute(outDir) ? path.relative(cwd, outDir) : outDir;
 
   const DEFAULT_THEME = require.resolve('@rspress/theme-default');
-  const checkDeadLinks = (config?.markdown?.checkDeadLinks && !isSSR) ?? false;
   const base = config?.base ?? '';
 
   // In production, we need to add assetPrefix in asset path
@@ -95,6 +97,10 @@ async function createInternalBuildConfig(
       ];
   const ssrBrowserslist = ['node >= 14'];
 
+  const detectCustomIconAlias = await detectCustomIcon(CUSTOM_THEME_DIR);
+  const reactSSRAlias = await resolveReactAlias(reactVersion, true);
+  const reactCSRAlias = await resolveReactAlias(reactVersion, false);
+
   return {
     plugins: [
       ...(isPluginIncluded(config, PLUGIN_REACT_NAME) ? [] : [pluginReact()]),
@@ -103,7 +109,6 @@ async function createInternalBuildConfig(
       rsbuildPluginDocVM({
         userDocRoot,
         config,
-        isSSR,
         runtimeTempDir,
         routeService,
         pluginDriver,
@@ -117,11 +122,9 @@ async function createInternalBuildConfig(
       printUrls: ({ urls }) => {
         return urls.map(url => `${url}/${removeLeadingSlash(base)}`);
       },
-      publicDir: isSSR
-        ? false
-        : {
-            name: path.join(userDocRoot, PUBLIC_DIR),
-          },
+      publicDir: {
+        name: path.join(userDocRoot, PUBLIC_DIR),
+      },
     },
     dev: {
       progressBar: false,
@@ -145,19 +148,15 @@ async function createInternalBuildConfig(
       ].filter(Boolean),
     },
     output: {
-      target: isSSR ? 'node' : 'web',
-      distPath: {
-        // `root` must be a relative path in Rsbuild
-        root: path.isAbsolute(outDir) ? path.relative(cwd, outDir) : outDir,
-      },
-      overrideBrowserslist: isSSR ? ssrBrowserslist : webBrowserslist,
       assetPrefix,
+      distPath: {
+        // TODO: just for rsbuild preview
+        root: getRelativePath(csrOutDir),
+      },
     },
     source: {
-      entry: {
-        index: isSSR ? SSR_ENTRY : CLIENT_ENTRY,
-      },
       alias: {
+        ...detectCustomIconAlias,
         '@mdx-js/react': require.resolve('@mdx-js/react'),
         '@theme': [CUSTOM_THEME_DIR, DEFAULT_THEME],
         '@/theme-default': DEFAULT_THEME,
@@ -166,21 +165,16 @@ async function createInternalBuildConfig(
         'react-syntax-highlighter': path.dirname(
           require.resolve('react-syntax-highlighter/package.json'),
         ),
-        ...(await resolveReactAlias(reactVersion, isSSR)),
-        ...(await detectCustomIcon(CUSTOM_THEME_DIR)),
         '@theme-assets': path.join(DEFAULT_THEME, '../assets'),
       },
       include: [PACKAGE_ROOT, path.join(cwd, 'node_modules', RSPRESS_TEMP_DIR)],
       define: {
         'process.env.__ASSET_PREFIX__': JSON.stringify(assetPrefix),
-        'process.env.__SSR__': JSON.stringify(isSSR),
         'process.env.__IS_REACT_18__': JSON.stringify(reactVersion === 18),
         'process.env.TEST': JSON.stringify(process.env.TEST),
       },
     },
     performance: {
-      // No need to print the server bundles size
-      printFileSize: !isSSR,
       chunkSplit: {
         override: {
           cacheGroups: {
@@ -198,12 +192,15 @@ async function createInternalBuildConfig(
       },
     },
     tools: {
-      bundlerChain(chain, { CHAIN_ID }) {
+      bundlerChain(chain, { CHAIN_ID, isServer }) {
         const jsModuleRule = chain.module.rule(CHAIN_ID.RULE.JS);
 
         const swcLoaderOptions = jsModuleRule
           .use(CHAIN_ID.USE.SWC)
           .get('options');
+
+        const checkDeadLinks =
+          (config?.markdown?.checkDeadLinks && !isServer) ?? false;
 
         chain.module
           .rule('MDX')
@@ -244,7 +241,63 @@ async function createInternalBuildConfig(
           .rule('css-virtual-module')
           .test(/\.rspress[\\/]runtime[\\/]virtual-global-styles/)
           .merge({ sideEffects: true });
+
+        if (isServer) {
+          chain.output.filename('main.cjs');
+          chain.optimization.minimize(false);
+        }
       },
+    },
+    environments: {
+      web: {
+        source: {
+          entry: {
+            index: CLIENT_ENTRY,
+          },
+          alias: {
+            ...reactCSRAlias,
+          },
+          define: {
+            'process.env.__SSR__': JSON.stringify(false),
+          },
+        },
+        output: {
+          target: 'web',
+          overrideBrowserslist: webBrowserslist,
+          distPath: {
+            // `root` must be a relative path in Rsbuild
+            root: getRelativePath(csrOutDir),
+          },
+        },
+      },
+      ...(enableSSG
+        ? {
+            node: {
+              source: {
+                entry: {
+                  index: SSR_ENTRY,
+                },
+                alias: {
+                  ...reactSSRAlias,
+                },
+                define: {
+                  'process.env.__SSR__': JSON.stringify(true),
+                },
+              },
+              performance: {
+                printFileSize: false,
+              },
+              output: {
+                target: 'node',
+                overrideBrowserslist: ssrBrowserslist,
+                distPath: {
+                  // `root` must be a relative path in Rsbuild
+                  root: getRelativePath(ssrOutDir),
+                },
+              },
+            },
+          }
+        : {}),
     },
   };
 }
@@ -253,7 +306,7 @@ export async function initRsbuild(
   rootDir: string,
   config: UserConfig,
   pluginDriver: PluginDriver,
-  isSSR = false,
+  enableSSG: boolean,
   extraRsbuildConfig?: RsbuildConfig,
 ): Promise<RsbuildInstance> {
   const cwd = process.cwd();
@@ -276,7 +329,7 @@ export async function initRsbuild(
   const internalRsbuildConfig = await createInternalBuildConfig(
     userDocRoot,
     config,
-    isSSR,
+    enableSSG,
     routeService,
     pluginDriver,
     runtimeTempDir,
