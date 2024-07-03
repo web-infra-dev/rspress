@@ -292,7 +292,7 @@ export function SearchPanel({ focused, setFocused }: SearchPanelProps) {
         await userSearchHooks[key](newQuery, searchResult);
       }
 
-      // for latest priority web-infra-dev/rspress#1229
+      // only setSearchResult when query is current query value
       const currQuery = searchInputRef.current?.value;
       if (currQuery === newQuery) {
         setSearchResult(searchResult || DEFAULT_RESULT);
