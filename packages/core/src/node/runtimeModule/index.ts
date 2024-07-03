@@ -60,7 +60,8 @@ export function rsbuildPluginDocVM(
   return {
     name: 'rsbuild-plugin-doc-vm',
     setup(api) {
-      api.modifyBundlerChain(async (bundlerChain, { isServer }) => {
+      api.modifyBundlerChain(async (bundlerChain, { target }) => {
+        const isServer = target === 'node';
         // The order should be sync
         const alias = bundlerChain.resolve.alias.entries();
         const runtimeModule: Record<string, string> = {};

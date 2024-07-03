@@ -192,7 +192,8 @@ async function createInternalBuildConfig(
       },
     },
     tools: {
-      bundlerChain(chain, { CHAIN_ID, isServer }) {
+      bundlerChain(chain, { CHAIN_ID, target }) {
+        const isServer = target === 'node';
         const jsModuleRule = chain.module.rule(CHAIN_ID.RULE.JS);
 
         const swcLoaderOptions = jsModuleRule
