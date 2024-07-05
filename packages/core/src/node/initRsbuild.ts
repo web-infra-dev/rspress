@@ -95,9 +95,12 @@ async function createInternalBuildConfig(
       ];
   const ssrBrowserslist = ['node >= 14'];
 
-  const detectCustomIconAlias = await detectCustomIcon(CUSTOM_THEME_DIR);
-  const reactSSRAlias = await resolveReactAlias(reactVersion, true);
-  const reactCSRAlias = await resolveReactAlias(reactVersion, false);
+  const [detectCustomIconAlias, reactCSRAlias, reactSSRAlias] =
+    await Promise.all([
+      detectCustomIcon(CUSTOM_THEME_DIR),
+      resolveReactAlias(reactVersion, false),
+      enableSSG ? resolveReactAlias(reactVersion, true) : Promise.resolve({}),
+    ]);
 
   return {
     plugins: [
@@ -252,9 +255,7 @@ async function createInternalBuildConfig(
           entry: {
             index: CLIENT_ENTRY,
           },
-          alias: {
-            ...reactCSRAlias,
-          },
+          alias: reactCSRAlias,
           define: {
             'process.env.__SSR__': JSON.stringify(false),
           },
@@ -274,9 +275,7 @@ async function createInternalBuildConfig(
                 entry: {
                   index: SSR_ENTRY,
                 },
-                alias: {
-                  ...reactSSRAlias,
-                },
+                alias: reactSSRAlias,
                 define: {
                   'process.env.__SSR__': JSON.stringify(true),
                 },
