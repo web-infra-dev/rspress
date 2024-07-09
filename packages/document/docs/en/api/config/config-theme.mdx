@@ -201,6 +201,8 @@ export interface Footer {
 }
 ```
 
+`message` is a string that can contain HTML content. This string will be inserted into the footer using `dangerouslySetInnerHTML`, allowing you to pass in HTML template tags to design your footer.
+
 For example:
 
 ```ts title="rspress.config.ts"
@@ -209,7 +211,8 @@ import { defineConfig } from 'rspress/config';
 export default defineConfig({
   themeConfig: {
     footer: {
-      message: 'This is a footer',
+      message:
+        '<p>This is a footer with a <a href="https://example.com">link</a> and <strong>bold text</strong></p>',
     },
   },
 });
