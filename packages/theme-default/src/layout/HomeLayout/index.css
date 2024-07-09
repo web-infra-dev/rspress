@@ -7,12 +7,12 @@
   );
   --rp-home-hero-image-background-image: none;
   --rp-home-hero-image-filter: none;
-  --rp-home-feature-bg: #f9f9f9;
+  --rp-home-feature-bg: var(--rp-c-bg-soft);
   --rp-home-feature-hover-bg: linear-gradient(to bottom, #ededed, #f9f9f9);
 }
 
 .dark {
   --rp-home-bg: #000;
-  --rp-home-feature-bg: #242424;
+  --rp-home-feature-bg: var(--rp-c-bg-soft);
   --rp-home-feature-hover-bg: #2f2f2f;
 }
