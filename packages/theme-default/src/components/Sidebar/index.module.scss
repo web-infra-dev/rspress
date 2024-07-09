@@ -70,6 +70,7 @@
 }
 
 .menuItem:hover {
+  color: var(--rp-c-text-1);
   background-color: var(--rp-c-bg-mute);
   transition: all 0.2s;
 }

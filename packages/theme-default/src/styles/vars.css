@@ -53,8 +53,8 @@
 
 .dark {
   --rp-c-bg: #23272f;
-  --rp-c-bg-soft: #2f2f2f;
-  --rp-c-bg-mute: #3a3a3a;
+  --rp-c-bg-soft: #292e37;
+  --rp-c-bg-mute: #343a46;
   --rp-c-bg-alt: #000;
 
   --rp-c-divider: rgba(84, 84, 84, 0.65);
