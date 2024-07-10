@@ -19,6 +19,9 @@ export default defineConfig({
   },
   plugins: [pluginFontOpenSans()],
   builderConfig: {
+    dev: {
+      lazyCompilation: true,
+    },
     plugins: [
       pluginGoogleAnalytics({ id: 'G-66B2Z6KG0J' }),
       pluginOpenGraph({
