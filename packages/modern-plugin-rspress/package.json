@@ -15,7 +15,7 @@
     "modern",
     "modern.js"
   ],
-  "version": "1.26.0",
+  "version": "1.26.1",
   "jsnext:source": "./src/index.ts",
   "types": "./dist/index.d.ts",
   "main": "./dist/index.js",
@@ -39,7 +39,7 @@
     "@rspress/plugin-preview": "workspace:*"
   },
   "devDependencies": {
-    "@modern-js/utils": "2.54.6",
+    "@modern-js/utils": "2.55.0",
     "@types/node": "^18.11.17",
     "@types/react": "^18",
     "react": "^18.2.0",
