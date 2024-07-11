@@ -7,6 +7,7 @@ import {
 } from '@rspress/shared';
 import {
   type RsbuildConfig,
+  type RsbuildPluginAPI,
   createRsbuild,
   mergeRsbuildConfig,
 } from '@rsbuild/core';
@@ -175,7 +176,7 @@ export function pluginPreview(options?: Options): RspressPlugin {
       plugins: [
         {
           name: 'close-demo-server',
-          setup: api => {
+          setup: (api: RsbuildPluginAPI) => {
             api.modifyRsbuildConfig(config => {
               if (config.output?.target === 'web') {
                 // client build config
