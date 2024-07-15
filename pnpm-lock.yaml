@@ -460,7 +460,7 @@ importers:
         version: 5.16.4(react@18.2.0)
       '@mdx-js/loader':
         specifier: 2.3.0
-        version: 2.3.0(webpack@5.92.1)
+        version: 2.3.0(webpack@5.93.0)
       '@mdx-js/mdx':
         specifier: 2.3.0
         version: 2.3.0
@@ -658,8 +658,8 @@ importers:
         specifier: 0.34.1
         version: 0.34.1(playwright@1.45.0)
       webpack:
-        specifier: ^5.92.1
-        version: 5.92.1
+        specifier: ^5.93.0
+        version: 5.93.0
 
   packages/core/compiled/fast-glob: {}
 
@@ -1437,8 +1437,8 @@ importers:
         specifier: 0.34.1
         version: 0.34.1(playwright@1.45.0)
       webpack:
-        specifier: ^5.92.1
-        version: 5.92.1
+        specifier: ^5.93.0
+        version: 5.93.0
 
 packages:
 
@@ -1567,7 +1567,7 @@ packages:
     engines: {node: '>=6.9.0'}
     dependencies:
       '@babel/highlight': 7.24.6
-      picocolors: 1.0.0
+      picocolors: 1.0.1
     dev: true
 
   /@babel/code-frame@7.24.6:
@@ -1582,7 +1582,7 @@ packages:
     engines: {node: '>=6.9.0'}
     dependencies:
       '@babel/highlight': 7.24.7
-      picocolors: 1.0.0
+      picocolors: 1.0.1
 
   /@babel/compat-data@7.24.6:
     resolution: {integrity: sha512-aC2DGhBq5eEdyXWqrDInSqQjO0k8xtPRf5YylULqx8MCd6jBtzqfta/3ETMRpuKIc5hyswfO80ObyA1MvkCcUQ==}
@@ -1932,7 +1932,7 @@ packages:
       '@babel/helper-validator-identifier': 7.24.7
       chalk: 2.4.2
       js-tokens: 4.0.0
-      picocolors: 1.0.0
+      picocolors: 1.0.1
 
   /@babel/parser@7.23.0:
     resolution: {integrity: sha512-vvPKKdMemU85V9WE/l5wZEmImpCtLqbnTvqDS2U1fJ96KrxoW7KrXhNsNCblQlg8Ck4b85yxdTyelsMUgFUXiw==}
@@ -3210,14 +3210,14 @@ packages:
       read-yaml-file: 1.1.0
     dev: true
 
-  /@mdx-js/loader@2.3.0(webpack@5.92.1):
+  /@mdx-js/loader@2.3.0(webpack@5.93.0):
     resolution: {integrity: sha512-IqsscXh7Q3Rzb+f5DXYk0HU71PK+WuFsEhf+mSV3fOhpLcEpgsHvTQ2h0T6TlZ5gHOaBeFjkXwB52by7ypMyNg==}
     peerDependencies:
       webpack: '>=4'
     dependencies:
       '@mdx-js/mdx': 2.3.0
       source-map: 0.7.4
-      webpack: 5.92.1
+      webpack: 5.93.0
     transitivePeerDependencies:
       - supports-color
     dev: false
@@ -10138,7 +10138,7 @@ packages:
     engines: {node: '>=8'}
     dev: true
 
-  /terser-webpack-plugin@5.3.10(webpack@5.92.1):
+  /terser-webpack-plugin@5.3.10(webpack@5.93.0):
     resolution: {integrity: sha512-BKFPWlPDndPs+NGGCr1U59t0XScL5317Y0UReNrHaw9/FwhPENlq6bfgs+4yPfyP51vqC1bQ4rp1EfXW5ZSH9w==}
     engines: {node: '>= 10.13.0'}
     peerDependencies:
@@ -10159,7 +10159,7 @@ packages:
       schema-utils: 3.3.0
       serialize-javascript: 6.0.1
       terser: 5.31.0
-      webpack: 5.92.1
+      webpack: 5.93.0
 
   /terser@5.19.2:
     resolution: {integrity: sha512-qC5+dmecKJA4cpYxRa5aVkKehYsQKc+AHeKl0Oe62aYjBL8ZA33tTljktDHJSaxxMnbI5ZYw+o/S2DxxLu8OfA==}
@@ -10732,7 +10732,7 @@ packages:
       debug: 4.3.4
       mlly: 1.4.0
       pathe: 1.1.1
-      picocolors: 1.0.0
+      picocolors: 1.0.1
       vite: 4.5.2(@types/node@18.11.17)
     transitivePeerDependencies:
       - '@types/node'
@@ -10893,8 +10893,8 @@ packages:
     resolution: {integrity: sha512-/DyMEOrDgLKKIG0fmvtz+4dUX/3Ghozwgm6iPp8KRhvn+eQf9+Q7GWxVNMk3+uCPWfdXYC4ExGBckIXdFEfH1w==}
     engines: {node: '>=10.13.0'}
 
-  /webpack@5.92.1:
-    resolution: {integrity: sha512-JECQ7IwJb+7fgUFBlrJzbyu3GEuNBcdqr1LD7IbSzwkSmIevTm8PF+wej3Oxuz/JFBUZ6O1o43zsPkwm1C4TmA==}
+  /webpack@5.93.0:
+    resolution: {integrity: sha512-Y0m5oEY1LRuwly578VqluorkXbvXKh7U3rLoQCEO04M97ScRr44afGVkI0FQFsXzysk5OgFAxjZAb9rsGQVihA==}
     engines: {node: '>=10.13.0'}
     hasBin: true
     peerDependencies:
@@ -10910,7 +10910,7 @@ packages:
       '@webassemblyjs/wasm-parser': 1.12.1
       acorn: 8.10.0
       acorn-import-attributes: 1.9.5(acorn@8.10.0)
-      browserslist: 4.23.0
+      browserslist: 4.23.1
       chrome-trace-event: 1.0.3
       enhanced-resolve: 5.17.0
       es-module-lexer: 1.3.0
@@ -10924,7 +10924,7 @@ packages:
       neo-async: 2.6.2
       schema-utils: 3.3.0
       tapable: 2.2.1
-      terser-webpack-plugin: 5.3.10(webpack@5.92.1)
+      terser-webpack-plugin: 5.3.10(webpack@5.93.0)
       watchpack: 2.4.1
       webpack-sources: 3.2.3
     transitivePeerDependencies:
