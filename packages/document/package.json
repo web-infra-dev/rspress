@@ -18,7 +18,7 @@
   "license": "MIT",
   "devDependencies": {
     "@types/react": "^18",
-    "framer-motion": "10.18.0",
+    "framer-motion": "11.3.2",
     "rsbuild-plugin-google-analytics": "^1.0.0",
     "rsbuild-plugin-open-graph": "^1.0.0",
     "rspress": "workspace:*",
