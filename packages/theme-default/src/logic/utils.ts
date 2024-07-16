@@ -50,7 +50,8 @@ const EMPHASIS_TEXT_PATTERN = /\*(?!\*)(.*?)(?<!\*)\*/g;
  */
 export function renderInlineMarkdown(text: string) {
   const htmlText = text
-    .replace(/</g, '&lt;')
+    // replace `<list>` to prevent disappearing in dom, but not replace \<number\>
+    .replace(/`[^`]+`/g, match => match.replace(/</g, '&lt;'))
     .replace(STRONG_TEXT_PATTERN, '<strong>$1</strong>')
     .replace(EMPHASIS_TEXT_PATTERN, '<em>$1</em>')
     .replace(CODE_TEXT_PATTERN, '<code>$1</code>');
