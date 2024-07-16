@@ -8,6 +8,15 @@
   --rp-home-hero-image-background-image: none;
   --rp-home-hero-image-filter: none;
   --rp-home-feature-bg: var(--rp-c-bg-soft);
+  --rp-home-mask-background-image: conic-gradient(
+    from 180deg at 50% 50%,
+    var(--rp-c-brand) 0deg,
+    180deg,
+    #42d392 1turn
+  );
+  --rp-home-hero-image-width-sm: 250px;
+  --rp-home-hero-image-width: 375px;
+  --rp-home-hero-text-max-width: 40rem;
 }
 
 .dark {
