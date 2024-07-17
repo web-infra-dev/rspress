@@ -1,4 +1,4 @@
-import { withBase } from '@rspress/shared';
+import { isExternalUrl, withBase } from '@rspress/shared';
 import { normalizeHrefInRuntime } from '@rspress/runtime';
 import { renderHtmlOrText } from '../../logic';
 import type { FrontMatterMeta, Feature } from '@rspress/shared';
@@ -25,7 +25,10 @@ export function HomeFeature({
     <div className="overflow-hidden m-auto flex flex-wrap max-w-6xl">
       {features?.map(feature => {
         const { icon, title, details, link: rawLink } = feature;
-        const link = normalizeHrefInRuntime(withBase(rawLink, routePath));
+        const link = isExternalUrl(rawLink)
+          ? rawLink
+          : normalizeHrefInRuntime(withBase(rawLink, routePath));
+
         return (
           <div
             key={title}
