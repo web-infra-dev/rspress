@@ -1,9 +1,6 @@
-import {
-  normalizeHrefInRuntime as normalizeHref,
-  normalizeImagePath,
-} from '@rspress/runtime';
 import { Button } from '@theme';
-import { withBase } from '@rspress/shared';
+import { isExternalUrl, withBase } from '@rspress/shared';
+import { normalizeHrefInRuntime, normalizeImagePath } from '@rspress/runtime';
 import { renderHtmlOrText } from '../../logic';
 import type { FrontMatterMeta } from '@rspress/shared';
 
@@ -20,7 +17,10 @@ const DEFAULT_HERO: FrontMatterMeta['hero'] = {
 export function HomeHero({
   frontmatter,
   routePath,
-}: { frontmatter: FrontMatterMeta; routePath: string }) {
+}: {
+  frontmatter: FrontMatterMeta;
+  routePath: string;
+}) {
   const hero = frontmatter?.hero || DEFAULT_HERO;
   const hasImage = hero.image !== undefined;
   const textMaxWidth = hasImage ? 'sm:max-w-xl' : 'sm:max-w-4xl';
@@ -67,17 +67,22 @@ export function HomeHero({
           </p>
           {hero.actions?.length && (
             <div className="grid md:flex md:flex-wrap md:justify-center gap-3 m--1.5 pt-6 sm:pt-8 z-10">
-              {hero.actions.map(action => (
-                <div className="flex flex-shrink-0 p-1" key={action.link}>
-                  <Button
-                    type="a"
-                    text={renderHtmlOrText(action.text)}
-                    href={normalizeHref(withBase(action.link, routePath))}
-                    theme={action.theme}
-                    className="w-full"
-                  />
-                </div>
-              ))}
+              {hero.actions.map(action => {
+                const link = isExternalUrl(action.link)
+                  ? action.link
+                  : normalizeHrefInRuntime(withBase(action.link, routePath));
+                return (
+                  <div className="flex flex-shrink-0 p-1" key={link}>
+                    <Button
+                      type="a"
+                      href={link}
+                      text={renderHtmlOrText(action.text)}
+                      theme={action.theme}
+                      className="w-full"
+                    />
+                  </div>
+                );
+              })}
             </div>
           )}
         </div>
