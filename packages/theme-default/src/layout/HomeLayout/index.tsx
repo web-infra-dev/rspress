@@ -28,7 +28,7 @@ export function HomeLayout(props: HomeLayoutProps) {
         <HomeHero frontmatter={frontmatter} routePath={routePath} />
         {afterHero}
         {beforeFeatures}
-        <HomeFeature frontmatter={frontmatter} />
+        <HomeFeature frontmatter={frontmatter} routePath={routePath} />
         {afterFeatures}
       </div>
       <HomeFooter />

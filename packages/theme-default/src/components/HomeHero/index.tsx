@@ -1,9 +1,6 @@
-import {
-  normalizeHrefInRuntime as normalizeHref,
-  normalizeImagePath,
-} from '@rspress/runtime';
 import { Button } from '@theme';
 import { withBase } from '@rspress/shared';
+import { normalizeHrefInRuntime, normalizeImagePath } from '@rspress/runtime';
 import { renderHtmlOrText } from '../../logic';
 import type { FrontMatterMeta } from '@rspress/shared';
 
@@ -20,7 +17,10 @@ const DEFAULT_HERO: FrontMatterMeta['hero'] = {
 export function HomeHero({
   frontmatter,
   routePath,
-}: { frontmatter: FrontMatterMeta; routePath: string }) {
+}: {
+  frontmatter: FrontMatterMeta;
+  routePath: string;
+}) {
   const hero = frontmatter?.hero || DEFAULT_HERO;
   const hasImage = hero.image !== undefined;
   const textMaxWidth = hasImage ? 'sm:max-w-xl' : 'sm:max-w-4xl';
@@ -72,7 +72,9 @@ export function HomeHero({
                   <Button
                     type="a"
                     text={renderHtmlOrText(action.text)}
-                    href={normalizeHref(withBase(action.link, routePath))}
+                    href={normalizeHrefInRuntime(
+                      withBase(action.link, routePath),
+                    )}
                     theme={action.theme}
                     className="w-full"
                   />
