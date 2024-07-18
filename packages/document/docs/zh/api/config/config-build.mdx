@@ -6,7 +6,7 @@
 
 用于自定义 Rsbuild 的配置项，完整配置项请查看 [Rsbuild - 配置](https://rsbuild.dev/zh/config/)。
 
-比如，将产物目录修改为 `doc_dist`：
+- 示例：使用 [output.distPath](https://rsbuild.dev/config/output/dist-path) 将输出目录修改为 `doc_dist`：
 
 ```ts title="rspress.config.ts"
 export default defineConfig({
@@ -14,6 +14,36 @@ export default defineConfig({
     output: {
       distPath: {
         root: 'doc_dist',
+      },
+    },
+  },
+});
+```
+
+- 示例：使用 [tools.rspack](https://rsbuild.dev/config/tools/rspack) 修改 Rspack 配置，比如注册一个 webpack 或 Rspack 插件。比如：
+
+```ts title="rspress.config.ts"
+export default defineConfig({
+  builderConfig: {
+    tools: {
+      rspack: async config => {
+        const { default: ESLintPlugin } = await import('eslint-webpack-plugin');
+        config.plugins?.push(new ESLintPlugin());
+        return config;
+      },
+    },
+  },
+});
+```
+
+- 示例：使用 [source.alias](https://rsbuild.dev/config/source/alias) 配置路径别名：
+
+```ts title="rspress.config.ts"
+export default defineConfig({
+  builderConfig: {
+    source: {
+      alias: {
+        '@common': './src/common',
       },
     },
   },
