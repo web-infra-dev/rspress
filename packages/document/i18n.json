@@ -1,13 +1,13 @@
 {
-  "getting-started": {
+  "gettingStarted": {
     "zh": "开始",
     "en": "Getting Started"
   },
   "features": {
-    "zh": "基础功能",
+    "zh": "特性",
     "en": "Features"
   },
-  "default-theme": {
+  "defaultTheme": {
     "zh": "默认主题",
     "en": "Default Theme"
   },
@@ -15,7 +15,7 @@
     "zh": "高级能力",
     "en": "Advanced"
   },
-  "api-overview": {
+  "apiOverview": {
     "zh": "API 概览",
     "en": "API Overview"
   },
@@ -23,7 +23,7 @@
     "zh": "配置",
     "en": "Config"
   },
-  "client-api": {
+  "clientApi": {
     "zh": "Client API",
     "en": "Client API"
   },
@@ -43,13 +43,17 @@
     "zh": "插件",
     "en": "Plugin"
   },
-  "plugin-system": {
+  "pluginSystem": {
     "zh": "插件机制",
     "en": "Plugin System"
   },
-  "plugin-list": {
-    "zh": "官方插件列表",
+  "pluginList": {
+    "zh": "官方插件",
     "en": "Official Plugins"
+  },
+  "communityPlugins": {
+    "zh": "社区插件",
+    "en": "Community Plugins"
   },
   "start": {
     "zh": "冷启动(Start)",
@@ -63,11 +67,11 @@
     "zh": "冷构建(Build)",
     "en": "Code Build"
   },
-  "tool-stack-title": {
+  "toolStackTitle": {
     "zh": "工具栈",
     "en": "Tool Stack"
   },
-  "tool-stack-desc": {
+  "toolStackDesc": {
     "zh": "围绕 Rspack 打造的高性能工具栈，助力现代 Web 开发",
     "en": "High-performance tool stack built around Rspack to boost modern web development"
   }

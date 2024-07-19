@@ -2,16 +2,16 @@
   {
     "type": "dir",
     "name": "system",
-    "label": "plugin-system"
+    "label": "pluginSystem"
   },
   {
     "type": "dir",
     "name": "official-plugins",
-    "label": "官方插件"
+    "label": "pluginList"
   },
   {
     "type": "dir",
     "name": "community-plugins",
-    "label": "社区插件"
+    "label": "communityPlugins"
   }
 ]

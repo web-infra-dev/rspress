@@ -8,8 +8,8 @@ export function ToolStack() {
   return (
     <div className={styles.root}>
       <div className={styles.header}>
-        <h2 className={styles.title}>{t('tool-stack-title')}</h2>
-        <p className={styles.desc}>{t('tool-stack-desc')}</p>
+        <h2 className={styles.title}>{t('toolStackTitle')}</h2>
+        <p className={styles.desc}>{t('toolStackDesc')}</p>
       </div>
       <BaseToolStack lang={lang === 'zh' ? 'zh' : 'en'} />
     </div>
