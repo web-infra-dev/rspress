@@ -39,7 +39,7 @@
     "@types/node": "^18.11.17",
     "@types/react": "^18",
     "react": "^18.2.0",
-    "typescript": "^5"
+    "typescript": "^5.5.3"
   },
   "peerDependencies": {
     "react": ">=17.0.0",
