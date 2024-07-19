@@ -62,5 +62,13 @@
   "build": {
     "zh": "冷构建(Build)",
     "en": "Code Build"
+  },
+  "tool-stack-title": {
+    "zh": "工具栈",
+    "en": "Tool Stack"
+  },
+  "tool-stack-desc": {
+    "zh": "围绕 Rspack 打造的高性能工具栈，助力现代 Web 开发",
+    "en": "High-performance tool stack built around Rspack to boost modern web development"
   }
 }
