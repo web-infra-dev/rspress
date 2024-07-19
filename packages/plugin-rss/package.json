@@ -37,8 +37,8 @@
   "devDependencies": {
     "@rspress/runtime": "workspace:*",
     "@types/node": "^18.11.17",
-    "@types/react": "^18",
-    "react": "^18.2.0",
+    "@types/react": "^18.3.3",
+    "react": "^18.3.1",
     "typescript": "^5.5.3"
   },
   "peerDependencies": {

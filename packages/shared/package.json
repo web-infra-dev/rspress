@@ -65,7 +65,7 @@
     "@types/lodash": "^4.17.0",
     "@types/lodash-es": "^4.17.8",
     "@types/node": "^18.11.17",
-    "@types/react": "^18",
+    "@types/react": "^18.3.3",
     "@types/rechoir": "^0.6.1",
     "lodash-es": "^4.17.21",
     "medium-zoom": "1.1.0",
