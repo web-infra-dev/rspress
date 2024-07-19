@@ -1,0 +1,17 @@
+import { ToolStack as BaseToolStack } from 'rsfamily-doc-ui/tool-stack';
+import { useLang, useI18n } from 'rspress/runtime';
+import styles from './ToolStack.module.scss';
+
+export function ToolStack() {
+  const t = useI18n<typeof import('i18n')>();
+  const lang = useLang();
+  return (
+    <div className={styles.root}>
+      <div className={styles.header}>
+        <h2 className={styles.title}>{t('tool-stack-title')}</h2>
+        <p className={styles.desc}>{t('tool-stack-desc')}</p>
+      </div>
+      <BaseToolStack lang={lang === 'zh' ? 'zh' : 'en'} />
+    </div>
+  );
+}
