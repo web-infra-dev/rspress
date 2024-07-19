@@ -1,15 +1,29 @@
 import Theme from 'rspress/theme';
-import { RsfamilyNavIcon } from 'rsfamily-nav-icon';
-import 'rsfamily-nav-icon/dist/index.css';
+import { NavIcon } from 'rsfamily-doc-ui/nav-icon';
+import { HomeLayout as BasicHomeLayout } from 'rspress/theme';
+import { ToolStack } from './components/ToolStack';
 import './index.css';
 
+function HomeLayout() {
+  return (
+    <BasicHomeLayout
+      afterFeatures={
+        <>
+          <ToolStack />
+        </>
+      }
+    />
+  );
+}
+
 const Layout = () => {
-  return <Theme.Layout beforeNavTitle={<RsfamilyNavIcon />} />;
+  return <Theme.Layout beforeNavTitle={<NavIcon />} />;
 };
 
 export default {
   ...Theme,
   Layout,
+  HomeLayout,
 };
 
 export * from 'rspress/theme';
