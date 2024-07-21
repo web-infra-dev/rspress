@@ -10,7 +10,7 @@ hero:
       text: Quick Start
       link: /guide/
     - theme: alt
-      text: Github
+      text: GitHub
       link: https://github.com/web-infra-dev/rspress
   image:
     src: /rspress-icon.png
