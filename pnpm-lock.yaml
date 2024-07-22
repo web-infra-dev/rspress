@@ -706,9 +706,9 @@ importers:
 
   packages/document:
     dependencies:
-      rsfamily-nav-icon:
-        specifier: ^1.0.1
-        version: 1.0.3
+      rsfamily-doc-ui:
+        specifier: ^1.1.2
+        version: 1.1.2
     devDependencies:
       '@types/react':
         specifier: ^18.3.3
@@ -6109,6 +6109,23 @@ packages:
       tslib: 2.6.1
     dev: true
 
+  /framer-motion@11.3.8:
+    resolution: {integrity: sha512-1D+RDTsIp4Rz2dq/oToqSEc9idEQwgBRQyBq4rGpFba+0Z+GCbj9z1s0+ikFbanWe3YJ0SqkNlDe08GcpFGj5A==}
+    peerDependencies:
+      '@emotion/is-prop-valid': '*'
+      react: ^18.0.0
+      react-dom: ^18.0.0
+    peerDependenciesMeta:
+      '@emotion/is-prop-valid':
+        optional: true
+      react:
+        optional: true
+      react-dom:
+        optional: true
+    dependencies:
+      tslib: 2.6.1
+    dev: false
+
   /fs-constants@1.0.0:
     resolution: {integrity: sha512-y6OAwoSIf7FyjMIv94u+b5rdheZEjzR63GTyZJm5qh4Bi+2YgwLCcI/fPFZkL5PSixOt6ZNKm+w+Hfp/Bciwow==}
     dev: true
@@ -9303,8 +9320,14 @@ packages:
         optional: true
     dev: true
 
-  /rsfamily-nav-icon@1.0.3:
-    resolution: {integrity: sha512-ZbSASDPb30II7x0NWlA9BNP6EA3+lvAVui9ahAT3vomqlP5Pt3cu1eSVaXApIv2gu0EFTC1TOQL4kKdK+8pXbA==}
+  /rsfamily-doc-ui@1.1.2:
+    resolution: {integrity: sha512-6GHgf1zg50HwjVDFUNMfT2TM4fa8BtoTDGJCCReJu6MPfrvJKqb221XaPS4XAVwv9wc1V5UpCg56e48kPruCCg==}
+    dependencies:
+      framer-motion: 11.3.8
+    transitivePeerDependencies:
+      - '@emotion/is-prop-valid'
+      - react
+      - react-dom
     dev: false
 
   /rslog@1.1.0:

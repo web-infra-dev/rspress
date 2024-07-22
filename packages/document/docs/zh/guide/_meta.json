@@ -2,7 +2,7 @@
   {
     "type": "dir",
     "name": "start",
-    "label": "getting-started"
+    "label": "gettingStarted"
   },
   {
     "type": "dir",
@@ -12,7 +12,7 @@
   {
     "type": "dir",
     "name": "default-theme",
-    "label": "default-theme"
+    "label": "defaultTheme"
   },
   {
     "type": "dir",

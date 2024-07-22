@@ -35,6 +35,6 @@
     "docs"
   ],
   "dependencies": {
-    "rsfamily-nav-icon": "^1.0.1"
+    "rsfamily-doc-ui": "^1.1.2"
   }
 }
