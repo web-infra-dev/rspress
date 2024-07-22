@@ -19,15 +19,6 @@
   "jsnext:source": "./src/index.ts",
   "types": "./dist/index.d.ts",
   "main": "./dist/index.js",
-  "exports": {
-    ".": {
-      "node": {
-        "jsnext:source": "./src/index.ts",
-        "require": "./dist/index.js"
-      }
-    },
-    "./package.json": "./package.json"
-  },
   "scripts": {
     "new": "modern new",
     "build": "modern build",
