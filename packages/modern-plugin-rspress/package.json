@@ -30,7 +30,7 @@
     "@rspress/plugin-preview": "workspace:*"
   },
   "devDependencies": {
-    "@modern-js/utils": "2.55.0",
+    "@modern-js/utils": "2.56.1",
     "@types/node": "^18.11.17",
     "@types/react": "^18.3.3",
     "react": "^18.3.1",
