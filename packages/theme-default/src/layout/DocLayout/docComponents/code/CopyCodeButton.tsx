@@ -51,6 +51,7 @@ export function CopyCodeButton({
       className={styles.codeCopyButton}
       onClick={() => copyCode(codeBlockRef.current, copyButtonRef.current)}
       ref={copyButtonRef}
+      title="Copy code"
     >
       <SvgWrapper icon={IconCopy} className={styles.iconCopy} />
       <SvgWrapper icon={IconSuccess} className={styles.iconSuccess} />

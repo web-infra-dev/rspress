@@ -12,7 +12,7 @@ export async function renderFrontmatterHead(route: any): Promise<string> {
   } = loadFrontMatter<FrontMatterMeta>(content, route.absolutePath, '', true);
   if (!head || head.length === 0) return '';
 
-  return head.map(([tag, attrs]) => `<${tag} ${renderAttrs(attrs)}}>`).join('');
+  return head.map(([tag, attrs]) => `<${tag} ${renderAttrs(attrs)}>`).join('');
 }
 
 export async function renderConfigHead(

@@ -92,9 +92,9 @@ import GlobalUIComponents from '../../fragments/global-ui-components.mdx';
 
 - **Type**：`RsbuildConfig`
 
-The bottom layer of Rspress is based [Rsbuild](https://github.com/web-infra-dev/rsbuild) for document build process. The Rsbuild can be configured through `builderConfig`. For specific configuration options, please refer to [Rsbuild(https://rsbuild.dev/config/).
+Rspress uses [Rsbuild](https://github.com/web-infra-dev/rsbuild) as the build tool. Rsbuild can be configured through `builderConfig`. For specific configuration options, please refer to [Rsbuild(https://rsbuild.dev/config/).
 
-> Of course, if you want to configure Rspack directly, you can also configure it through `buildConfig.tools.rspack`.
+> Of course, if you want to configure Rspack directly, you can also configure it through `builderConfig.tools.rspack`.
 
 ```tsx title="plugin.ts"
 import { RspressPlugin } from '@rspress/shared';
@@ -118,6 +118,8 @@ export function pluginForDoc(slug: string): RspressPlugin {
   };
 }
 ```
+
+> See [Build Config](/api/config/config-build) for more details.
 
 ### config
 

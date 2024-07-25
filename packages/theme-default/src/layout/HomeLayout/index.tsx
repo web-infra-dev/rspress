@@ -12,7 +12,7 @@ export interface HomeLayoutProps {
 export function HomeLayout(props: HomeLayoutProps) {
   const { beforeHero, afterHero, beforeFeatures, afterFeatures } = props;
   const {
-    page: { frontmatter },
+    page: { frontmatter, routePath },
   } = usePageData();
 
   return (
@@ -25,10 +25,10 @@ export function HomeLayout(props: HomeLayoutProps) {
     >
       <div className="pb-12">
         {beforeHero}
-        <HomeHero frontmatter={frontmatter} />
+        <HomeHero frontmatter={frontmatter} routePath={routePath} />
         {afterHero}
         {beforeFeatures}
-        <HomeFeature frontmatter={frontmatter} />
+        <HomeFeature frontmatter={frontmatter} routePath={routePath} />
         {afterFeatures}
       </div>
       <HomeFooter />

@@ -46,10 +46,10 @@ export default {
     color: 'var(--code-token-function)',
   },
   inserted: {
-    color: '#22863a',
+    color: 'var(--code-token-inserted)',
   },
   deleted: {
-    color: '#b31d28',
+    color: 'var(--code-token-deleted)',
   },
   regex: {
     color: 'var(--code-token-keyword)',

@@ -7,12 +7,7 @@
 
 .mask {
   position: absolute;
-  background-image: conic-gradient(
-    from 180deg at 50% 50%,
-    var(--rp-c-brand) 0deg,
-    180deg,
-    #42d392 1turn
-  );
+  background-image: var(--rp-home-mask-background-image);
   max-width: 500px;
   width: 100%;
   height: 500px;
@@ -32,13 +27,13 @@
 
 @media (min-width: 640px) {
   :global(.rspress-home-hero-image) {
-    width: 375px;
+    width: var(--rp-home-hero-image-width);
   }
 }
 
 @media (max-width: 640px) {
   :global(.rspress-home-hero-image) {
-    max-width: 250px;
+    max-width: var(--rp-home-hero-image-width-sm);
   }
 }
 

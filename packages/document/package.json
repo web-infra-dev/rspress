@@ -1,6 +1,6 @@
 {
   "name": "@rspress/docs",
-  "version": "1.25.1",
+  "version": "1.26.2",
   "description": "",
   "main": "index.js",
   "scripts": {
@@ -17,14 +17,14 @@
   "author": "",
   "license": "MIT",
   "devDependencies": {
-    "@types/react": "^18",
-    "framer-motion": "10.18.0",
+    "@types/react": "^18.3.3",
+    "framer-motion": "11.3.2",
     "rsbuild-plugin-google-analytics": "^1.0.0",
     "rsbuild-plugin-open-graph": "^1.0.0",
     "rspress": "workspace:*",
     "rspress-plugin-font-open-sans": "^1.0.0",
     "ts-node": "^10.9.1",
-    "typescript": "^5"
+    "typescript": "^5.5.3"
   },
   "publishConfig": {
     "access": "public",
@@ -35,6 +35,6 @@
     "docs"
   ],
   "dependencies": {
-    "rsfamily-nav-icon": "^1.0.1"
+    "rsfamily-doc-ui": "^1.1.2"
   }
 }

@@ -7,12 +7,19 @@
   );
   --rp-home-hero-image-background-image: none;
   --rp-home-hero-image-filter: none;
-  --rp-home-feature-bg: #f9f9f9;
-  --rp-home-feature-hover-bg: linear-gradient(to bottom, #ededed, #f9f9f9);
+  --rp-home-feature-bg: var(--rp-c-bg-soft);
+  --rp-home-mask-background-image: conic-gradient(
+    from 180deg at 50% 50%,
+    var(--rp-c-brand) 0deg,
+    180deg,
+    #42d392 1turn
+  );
+  --rp-home-hero-image-width-sm: 250px;
+  --rp-home-hero-image-width: 375px;
+  --rp-home-hero-text-max-width: 40rem;
 }
 
 .dark {
   --rp-home-bg: #000;
-  --rp-home-feature-bg: #242424;
-  --rp-home-feature-hover-bg: #2f2f2f;
+  --rp-home-feature-bg: var(--rp-c-bg-soft);
 }

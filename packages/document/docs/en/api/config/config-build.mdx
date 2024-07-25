@@ -6,7 +6,7 @@
 
 Used to customize the configurations of Rsbuild. For detailed configurations, please refer to [Rsbuild - Config](https://rsbuild.dev/config/).
 
-For example, change the output directory to `doc_dist`:
+- Example: Use [output.distPath](https://rsbuild.dev/config/output/dist-path) to change the output directory to `doc_dist`:
 
 ```ts title="rspress.config.ts"
 export default defineConfig({
@@ -14,6 +14,36 @@ export default defineConfig({
     output: {
       distPath: {
         root: 'doc_dist',
+      },
+    },
+  },
+});
+```
+
+- Example: Use [tools.rspack](https://rsbuild.dev/config/tools/rspack) to modify the Rspack configuration, such as registering a webpack or Rspack plugin:
+
+```ts title="rspress.config.ts"
+export default defineConfig({
+  builderConfig: {
+    tools: {
+      rspack: async config => {
+        const { default: ESLintPlugin } = await import('eslint-webpack-plugin');
+        config.plugins?.push(new ESLintPlugin());
+        return config;
+      },
+    },
+  },
+});
+```
+
+- Example: Use [source.alias](https://rsbuild.dev/config/source/alias) to configure path aliases:
+
+```ts title="rspress.config.ts"
+export default defineConfig({
+  builderConfig: {
+    source: {
+      alias: {
+        '@common': './src/common',
       },
     },
   },

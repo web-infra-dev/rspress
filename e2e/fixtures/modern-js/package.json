@@ -28,10 +28,10 @@
   "devDependencies": {
     "@modern-js/plugin-rspress": "workspace:*",
     "@types/node": "^18.11.17",
-    "@types/react": "~18.0.26",
-    "react": "^18.2.0",
-    "react-dom": "^18.2.0",
-    "typescript": "^5"
+    "@types/react": "~18.3.3",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1",
+    "typescript": "^5.5.3"
   },
   "sideEffects": []
 }

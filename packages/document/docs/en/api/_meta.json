@@ -2,7 +2,7 @@
   {
     "type": "file",
     "name": "index",
-    "label": "api-overview"
+    "label": "apiOverview"
   },
   {
     "type": "dir",
@@ -12,7 +12,7 @@
   {
     "type": "dir",
     "name": "client-api",
-    "label": "client-api"
+    "label": "clientApi"
   },
   "commands"
 ]

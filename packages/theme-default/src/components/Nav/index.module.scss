@@ -48,7 +48,7 @@
   flex-shrink: 0;
 }
 
-.navContainer :deep(*) {
+.navContainer * {
   pointer-events: all;
 }
 

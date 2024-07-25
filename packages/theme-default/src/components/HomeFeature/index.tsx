@@ -1,6 +1,9 @@
-import type { FrontMatterMeta, Feature } from '@rspress/shared';
-import styles from './index.module.scss';
+import { isExternalUrl, withBase } from '@rspress/shared';
+import { normalizeHrefInRuntime } from '@rspress/runtime';
 import { renderHtmlOrText } from '../../logic';
+import type { FrontMatterMeta, Feature } from '@rspress/shared';
+
+import styles from './index.module.scss';
 
 const GRID_PREFIX = 'grid-';
 
@@ -9,13 +12,23 @@ const getGridClass = (feature: Feature): string => {
   return `${GRID_PREFIX}${span || 4}`;
 };
 
-export function HomeFeature({ frontmatter }: { frontmatter: FrontMatterMeta }) {
+export function HomeFeature({
+  frontmatter,
+  routePath,
+}: {
+  frontmatter: FrontMatterMeta;
+  routePath: string;
+}) {
   const features = frontmatter?.features;
 
   return (
     <div className="overflow-hidden m-auto flex flex-wrap max-w-6xl">
       {features?.map(feature => {
-        const { icon, title, details, link } = feature;
+        const { icon, title, details, link: rawLink } = feature;
+        const link = isExternalUrl(rawLink)
+          ? rawLink
+          : normalizeHrefInRuntime(withBase(rawLink, routePath));
+
         return (
           <div
             key={title}

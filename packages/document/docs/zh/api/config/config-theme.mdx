@@ -187,6 +187,8 @@ export interface Footer {
 }
 ```
 
+`message` 是一个可以包含 HTML 内容的字符串。这个字符串将使用 `dangerouslySetInnerHTML` 插入到页脚中，因此你可以传入 HTML 模板标签来设计你的页脚。
+
 比如：
 
 ```ts title="rspress.config.ts"
@@ -195,7 +197,8 @@ import { defineConfig } from 'rspress/config';
 export default defineConfig({
   themeConfig: {
     footer: {
-      message: 'This is a footer',
+      message:
+        '<p>这是一个包含<a href="https://example.com">链接</a>的<strong>页脚</strong></p>',
     },
   },
 });

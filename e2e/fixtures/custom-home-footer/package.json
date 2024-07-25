@@ -1,5 +1,5 @@
 {
-  "name": "rspress-doc-template",
+  "name": "@rspress-fixture/rspress-home-footer",
   "version": "1.0.0",
   "private": true,
   "scripts": {
@@ -8,9 +8,9 @@
     "preview": "rspress preview"
   },
   "dependencies": {
-    "rspress": "^1.26.1"
+    "rspress": "workspace:*"
   },
   "devDependencies": {
-    "@types/node": "^16"
+    "@types/node": "^18.11.17"
   }
 }

@@ -87,5 +87,10 @@ test.describe('custom headers', async () => {
       'content',
     );
     expect(customMetaContent2).toEqual('custom-meta-content-2');
+
+    const htmlContent = await page.content();
+    expect(htmlContent).toContain(
+      '<meta name="custom-meta" content="custom-meta-content"><meta name="custom-meta-2" content="custom-meta-content-2">',
+    );
   });
 });
