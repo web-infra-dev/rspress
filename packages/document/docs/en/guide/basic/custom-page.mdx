@@ -167,28 +167,6 @@ import PageType from '@en/fragments/page-type';
 
 <PageType />
 
-## Custom tags
-
-
-### Customizing header tag
-
-In `rspress.config.ts`, you can edit HTML's metadata (aka header tag) on a page basis. We explain it with more details in [basic config](/api/config/config-frontmatter#head) within the api section.
-
-### Generate metadata for better SEO
-
-Within frontmatter, you can also customize your page's metadata tag for SEO optimization.
-
-For example, if you want to add `<meta name="description" content="A modern explaination of 'edge'" data-rh="true">` in your `<header>` tag, you can use frontmatter like so:
-
-```md title="*.mdx | *.md"
----
-title: What does edge mean? ## This will customize your title in frontmatter
-description: A modern explaination of 'edge'
----
-```
-
-Read more details on how to customize **open graph images (og:image)** and **open graph title (og:title)** can be seen here in [frontmatter config](/api/config/config-frontmatter#head).
-
 ### Using Fine-grained Switches
 
 In addition to the `pageType` page layout level configuration, Rspress also provides more fine-grained switches. You can configure other fields in the frontmatter. These fields and their meanings are as follows:
@@ -226,3 +204,24 @@ With URL parameters, you can quickly adjust the layout structure of the page wit
 - `outline`: Whether to display the outline column. When you want to hide the outline column, you can set it to `0`.
 - `footer`: Whether to display the footer. When you want to hide the footer, you can set it to `0`.
 - `globalUIComponents`: Whether to display the global components. When you want to hide the global components, you can set it to `0`.
+
+## Custom tags
+
+### Customizing head tag
+
+In `rspress.config.ts`, you can custom HTML's metadata (aka head tag) for all pages. We explain it with more details in [basic config - head](/api/config/config-basic#head) within the api section.
+
+### Generate metadata tags
+
+Within frontmatter, you can also customize your page's metadata tag for SEO optimization.
+
+For example, if you want to add `<meta name="description" content="This is description">` in your `<head>` tag, you can use frontmatter like so:
+
+```md title="example.mdx"
+---
+title: This is title
+description: This is description
+---
+```
+
+Read more details on how to customize **open graph images (og:image)** and **open graph title (og:title)** can be seen here in [frontmatter config](/api/config/config-frontmatter#head).

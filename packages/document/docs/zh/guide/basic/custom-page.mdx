@@ -209,3 +209,24 @@ http://YOUR_DOMAIN/foo?navbar=0&outline=0
 - `outline`：是否展示大纲栏，当你想要隐藏大纲栏时，可以配置为 `0`；
 - `footer`：是否展示页脚，当你想要隐藏页脚时，可以配置为 `0`；
 - `globalUIComponents`：是否展示全局组件，当你想要隐藏全局组件时，可以配置为 `0`。
+
+## 自定义标签
+
+### 自定义 head 标签
+
+在 `rspress.config.ts` 中，你可以为所有页面设置 HTML 的 metadata（即 head 标签）。我们在 [基础配置 - head](/api/config/config-basic#head) 中详细解释了这一点。
+
+### 生成 metadata 标签
+
+在 frontmatter 中，你还可以自定义页面的 metadata 标签以进行 SEO 优化。
+
+例如，如果你想在 `<head>` 标签中添加 `<meta name="description" content="This is description">`，你可以这样使用 frontmatter：
+
+```md title="example.mdx"
+---
+title: This is title
+description: This is description
+---
+```
+
+更多关于如何自定义 **open graph 图像（og:image）** 和 **open graph 标题（og:title）** 的详细信息可以在 [frontmatter 配置](/api/config/config-frontmatter#head) 中查看。
