@@ -5,17 +5,19 @@ import MoonSvg from '@theme-assets/moon';
 import { SvgWrapper } from '../SvgWrapper';
 import siteData from 'virtual-site-data';
 import { isUndefined } from 'lodash-es';
+import { flushSync } from 'react-dom';
+import './index.scss';
+
+const supportAppearanceTransition = () => {
+  return (
+    !isUndefined(document) &&
+    document.startViewTransition &&
+    !window.matchMedia('(prefers-reduced-motion: reduce)').matches
+  );
+};
 
 export function SwitchAppearance({ onClick }: { onClick?: () => void }) {
   const { theme, setTheme } = useContext(ThemeContext);
-
-  const supportAppearanceTransition = () => {
-    return (
-      !isUndefined(document) &&
-      document.startViewTransition &&
-      !window.matchMedia('(prefers-reduced-motion: reduce)').matches
-    );
-  };
 
   const handleClick = (event: MouseEvent) => {
     const supported = supportAppearanceTransition();
@@ -31,29 +33,26 @@ export function SwitchAppearance({ onClick }: { onClick?: () => void }) {
     console.log('isDark', isDark);
 
     if (supported && enabled) {
-      console.log('进来了');
-
       const x = event.clientX;
       const y = event.clientY;
 
       const endRadius = Math.hypot(
-        Math.max(x, innerWidth - x),
-        Math.max(y, innerHeight - y),
+        Math.max(x, innerWidth - x + 200),
+        Math.max(y, innerHeight - y + 200),
       );
 
-      const transition: any = document.startViewTransition(() => {
-        setTheme(nextTheme);
-        onClick?.();
+      const transition: any = document.startViewTransition(async () => {
+        flushSync(() => {
+          setTheme(nextTheme);
+          onClick?.();
+        });
       });
 
-      console.log('到这了');
-
+      const clipPath = [
+        `circle(0px at ${x}px ${y}px)`,
+        `circle(${endRadius}px at ${x}px ${y}px)`,
+      ];
       transition.ready.then(() => {
-        const clipPath = [
-          `circle(0px at ${x}px ${y}px)`,
-          `circle(${endRadius}px at ${x}px ${y}px)`,
-        ];
-
         document.documentElement.animate(
           {
             clipPath: isDark ? [...clipPath].reverse() : clipPath,
