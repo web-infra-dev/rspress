@@ -1345,9 +1345,6 @@ importers:
       github-slugger:
         specifier: ^2.0.0
         version: 2.0.0
-      globby:
-        specifier: 11.1.0
-        version: link:../core/compiled/globby
       hast-util-from-html:
         specifier: ^1.0.0
         version: 1.0.0
