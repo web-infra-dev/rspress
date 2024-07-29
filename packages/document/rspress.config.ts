@@ -6,7 +6,7 @@ import { pluginFontOpenSans } from 'rspress-plugin-font-open-sans';
 export default defineConfig({
   root: 'docs',
   title: 'Rspress',
-  description: 'Rspack based static site generator',
+  description: 'rspack based static site generator',
   lang: 'en',
   logo: {
     light:
