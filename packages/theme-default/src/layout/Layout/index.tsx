@@ -9,12 +9,16 @@ import type { HomeLayoutProps } from '../HomeLayout';
 import type { NavProps } from '../../components/Nav';
 import { useLocaleSiteData } from '../../logic';
 import { useRedirect4FirstVisit } from '../../logic/useRedirect4FirstVisit';
-import { useUISwitch } from '../../logic/useUISwitch';
+import { type UISwitchResult, useUISwitch } from '../../logic/useUISwitch';
 
 export type LayoutProps = {
   top?: React.ReactNode;
   bottom?: React.ReactNode;
-} & DocLayoutProps &
+  /**
+   * Control whether or not to display the navbar, sidebar, outline and footer
+   */
+  uiSwitch?: Partial<UISwitchResult>;
+} & Omit<DocLayoutProps, 'uiSwitch'> &
   HomeLayoutProps &
   NavProps;
 
@@ -108,8 +112,14 @@ export const Layout: React.FC<LayoutProps> = props => {
     (frontmatter?.description as string) ||
     siteData.description ||
     localesData.description;
-  // Control whether to show navbar/sidebar/outline/footer
-  const uiSwitch = useUISwitch();
+
+  // Control whether or not to display the navbar, sidebar, outline and footer
+  // `props.uiSwitch` has higher priority and allows user to override the default value
+  const uiSwitch = {
+    ...useUISwitch(),
+    ...props.uiSwitch,
+  };
+
   // Use doc layout by default
   const getContentLayout = () => {
     switch (pageType) {
