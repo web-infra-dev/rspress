@@ -21,16 +21,20 @@ export function SourceBuildPlugin(): RspressPlugin {
       },
       tools: {
         postcss: (_, { addPlugins }) => {
-          addPlugins(
-            require('tailwindcss')({
-              config: {
-                ...tailwindConfig,
-                content: tailwindConfig.content.map(item =>
-                  path.resolve(ROOT_DIR, item),
-                ),
-              },
-            }),
-          );
+          try {
+            addPlugins(
+              require('tailwindcss')({
+                config: {
+                  ...tailwindConfig,
+                  content: tailwindConfig.content.map(item =>
+                    path.resolve(ROOT_DIR, item),
+                  ),
+                },
+              }),
+            );
+          } catch (e) {
+            // if require tailwindcss failed, skip
+          }
         },
       },
     },
