@@ -43,7 +43,7 @@
   },
   "peerDependencies": {
     "react": ">=17.0.0",
-    "rspress": "^1.17.0"
+    "rspress": "workspace:*"
   },
   "files": [
     "dist",
