@@ -3,13 +3,19 @@
  * Powered by FlexSearch. https://github.com/nextapps-de/flexsearch
  */
 
-import type { CreateOptions, Index as SearchIndex } from 'flexsearch';
-import FlexSearch from 'flexsearch';
+import type {
+  Document,
+  EnrichedDocumentSearchResultSetUnit,
+  IndexOptionsForDocumentSearch,
+} from 'flexsearch';
+import FlexSearchDocument from 'flexsearch/dist/module/document';
 import searchIndexHash from 'virtual-search-index-hash';
 import { type PageIndexInfo, SEARCH_INDEX_NAME } from '@rspress/shared';
 import type { SearchOptions } from '../types';
 import { LOCAL_INDEX, type Provider, type SearchQuery } from '../Provider';
 import { normalizeTextCase } from '../util';
+
+type TFlexSearchDocumentWithType = Document<PageIndexInfo, true>;
 
 interface PageIndexForFlexSearch extends PageIndexInfo {
   normalizedContent: string;
@@ -34,11 +40,11 @@ function tokenize(str: string, regex) {
 }
 
 export class LocalProvider implements Provider {
-  #index?: SearchIndex<PageIndexInfo[]>;
+  #index?: TFlexSearchDocumentWithType;
 
-  #cjkIndex?: SearchIndex<PageIndexInfo[]>;
+  #cjkIndex?: TFlexSearchDocumentWithType;
 
-  #cyrilicIndex?: SearchIndex<PageIndexInfo[]>;
+  #cyrilicIndex?: TFlexSearchDocumentWithType;
 
   async #getPages(lang: string, version: string): Promise<PageIndexInfo[]> {
     const searchIndexGroupID = `${version}###${lang}`;
@@ -63,61 +69,83 @@ export class LocalProvider implements Provider {
       headers: page.toc.map(header => normalizeTextCase(header.text)).join(' '),
       normalizedTitle: normalizeTextCase(page.title),
     }));
-    const createOptions: CreateOptions = {
-      tokenize: 'full',
-      async: true,
-      doc: {
-        id: 'routePath',
-        field: ['normalizedTitle', 'headers', 'normalizedContent'],
-      },
-      cache: 100,
-      split: /\W+/,
-    };
+    const createOptions: IndexOptionsForDocumentSearch<PageIndexInfo[], true> =
+      {
+        tokenize: 'full',
+        document: {
+          id: 'id',
+          store: true,
+          index: ['normalizedTitle', 'headers', 'normalizedContent'],
+        },
+        cache: 100,
+        // charset: {
+        //   split: /\W+/,
+        // },
+      };
     // Init Search Indexes
     // English Index
-    this.#index = FlexSearch.create(createOptions);
+    this.#index = new FlexSearchDocument(createOptions);
     // CJK: Chinese, Japanese, Korean
-    this.#cjkIndex = FlexSearch.create({
+    this.#cjkIndex = new FlexSearchDocument({
       ...createOptions,
       tokenize: (str: string) => tokenize(str, cjkRegex),
     });
     // Cyrilic Index
-    this.#cyrilicIndex = FlexSearch.create({
+    this.#cyrilicIndex = new FlexSearchDocument({
       ...createOptions,
       tokenize: (str: string) => tokenize(str, cyrillicRegex),
     });
-    this.#index.add(pagesForSearch);
-    this.#cjkIndex.add(pagesForSearch);
-    this.#cyrilicIndex.add(pagesForSearch);
+    for (const item of pagesForSearch) {
+      this.#index.add(item);
+      this.#cjkIndex.add(item);
+      this.#cyrilicIndex.add(item);
+    }
   }
 
   async search(query: SearchQuery) {
     const { keyword, limit } = query;
-    const searchParams = {
-      query: keyword,
+
+    const options = {
+      enrich: true as const,
       limit,
-      field: ['normalizedTitle', 'headers', 'normalizedContent'],
+      index: ['normalizedTitle', 'headers', 'normalizedContent'],
     };
 
     const searchResult = await Promise.all([
-      this.#index?.search(searchParams),
-      this.#cjkIndex?.search(searchParams),
-      this.#cyrilicIndex.search(searchParams),
+      this.#index?.search<true>(keyword, limit, options),
+      this.#cjkIndex?.search<true>(keyword, limit, options),
+      this.#cyrilicIndex.search<true>(keyword, limit, options),
     ]);
 
-    const flattenSearchResult = searchResult.flat(2).filter(Boolean);
+    const commbindSeachResult: PageIndexInfo[] = [];
+    const pushedId: Set<string> = new Set();
 
-    // There may be duplicate search results when there are multiple languages ​​in the search keyword
-    const uniqueSearchResult = Array.from(
-      new Set(flattenSearchResult.map(item => item.id)),
-    ).map(id => {
-      return flattenSearchResult.find(item => item.id === id);
+    function insertCommbindSearchResult(
+      resultFromOneSearchIndex: EnrichedDocumentSearchResultSetUnit<PageIndexInfo>[],
+    ) {
+      for (const item of resultFromOneSearchIndex) {
+        // item.field; // ignored
+        item.result.forEach(resultItem => {
+          // type of resultItem doesn't match with runtime
+          const id = resultItem.id as unknown as string;
+          if (pushedId.has(id)) {
+            return;
+          }
+          // mark the doc is in the searched results
+          pushedId.add(id);
+          commbindSeachResult.push(resultItem.doc);
+        });
+      }
+    }
+
+    searchResult.forEach(searchResultItem => {
+      insertCommbindSearchResult(searchResultItem);
     });
 
     return [
       {
         index: LOCAL_INDEX,
-        hits: uniqueSearchResult,
+        hits: commbindSeachResult,
       },
     ];
   }
