@@ -32,7 +32,7 @@
     "vitest": "0.34.1"
   },
   "peerDependencies": {
-    "rspress": "^1.0.2"
+    "rspress": "workspace:*"
   },
   "sideEffects": [
     "*.css",

@@ -525,9 +525,6 @@ importers:
       enhanced-resolve:
         specifier: 5.17.0
         version: 5.17.0
-      flexsearch:
-        specifier: 0.6.32
-        version: 0.6.32
       github-slugger:
         specifier: ^2.0.0
         version: 2.0.0
@@ -785,7 +782,7 @@ importers:
         specifier: 2.56.2
         version: 2.56.2
       '@rspress/core':
-        specifier: ^1.0.2
+        specifier: workspace:*
         version: link:../core
       documentation:
         specifier: 14.0.2
@@ -868,7 +865,7 @@ importers:
   packages/plugin-client-redirects:
     dependencies:
       '@rspress/runtime':
-        specifier: ^1.0.2
+        specifier: workspace:*
         version: link:../runtime
     devDependencies:
       '@modern-js/tsconfig':
@@ -949,7 +946,7 @@ importers:
   packages/plugin-medium-zoom:
     dependencies:
       '@rspress/runtime':
-        specifier: ^1.0.2
+        specifier: workspace:*
         version: link:../runtime
       medium-zoom:
         specifier: 1.1.0
@@ -992,7 +989,7 @@ importers:
         specifier: ^0.2.0
         version: 0.2.0
       '@rspress/core':
-        specifier: ^1.0.2
+        specifier: workspace:*
         version: link:../core
       '@rspress/shared':
         specifier: workspace:*
@@ -1074,7 +1071,7 @@ importers:
         specifier: 1.0.0-alpha.9
         version: 1.0.0-alpha.9(@babel/core@7.24.7)(@rsbuild/core@1.0.0-alpha.9)(solid-js@1.8.16)
       '@rspress/core':
-        specifier: ^1.0.2
+        specifier: workspace:*
         version: link:../core
       '@rspress/shared':
         specifier: workspace:*
@@ -1138,7 +1135,7 @@ importers:
         specifier: ^4.2.2
         version: 4.2.2
       rspress:
-        specifier: ^1.17.0
+        specifier: workspace:*
         version: link:../cli
     devDependencies:
       '@rspress/runtime':
@@ -1206,7 +1203,7 @@ importers:
         specifier: workspace:*
         version: link:../shared
       rspress:
-        specifier: ^1.0.2
+        specifier: workspace:*
         version: link:../cli
       typedoc:
         specifier: 0.24.8
@@ -1350,8 +1347,8 @@ importers:
         specifier: ^3.3.3
         version: 3.3.3
       flexsearch:
-        specifier: 0.6.32
-        version: 0.6.32
+        specifier: 0.7.43
+        version: 0.7.43
       github-slugger:
         specifier: ^2.0.0
         version: 2.0.0
@@ -5892,8 +5889,8 @@ packages:
     hasBin: true
     dev: true
 
-  /flexsearch@0.6.32:
-    resolution: {integrity: sha512-EF1BWkhwoeLtbIlDbY/vDSLBen/E5l/f1Vg7iX5CDymQCamcx1vhlc3tIZxIDplPjgi0jhG37c67idFbjg+v+Q==}
+  /flexsearch@0.7.43:
+    resolution: {integrity: sha512-c5o/+Um8aqCSOXGcZoqZOm+NqtVwNsvVpWv6lfmSclU954O3wvQKxxK8zj74fPaSJbXpSLTs4PRhh+wnoCXnKg==}
     dev: false
 
   /focus-lock@0.11.6:
