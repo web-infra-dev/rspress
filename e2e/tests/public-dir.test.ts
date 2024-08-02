@@ -6,7 +6,7 @@ import { exists } from 'fs-extra';
 const fixtureDir = path.resolve(__dirname, '../fixtures');
 
 test.describe('basic test', async () => {
-  test('check the ', async () => {
+  test('should not generate the routes for html/js/mdx files in publicDir', async () => {
     const appDir = path.join(fixtureDir, 'public-dir');
     await runBuildCommand(appDir);
 
@@ -23,7 +23,7 @@ test.describe('basic test', async () => {
     const existsTestJS = exists(path.resolve(appDir, 'doc_build', 'test.js'));
     expect(existsTestJS).toBeTruthy();
 
-    const existsTestMDX = exists(path.resolve(appDir, 'doc_build', 'test.js'));
+    const existsTestMDX = exists(path.resolve(appDir, 'doc_build', 'test.mdx'));
     expect(existsTestMDX).toBeTruthy();
   });
 });
