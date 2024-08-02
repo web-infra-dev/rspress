@@ -1203,7 +1203,7 @@ importers:
         specifier: workspace:*
         version: link:../shared
       rspress:
-        specifier: workspace:*
+        specifier: workspace:^1.0.2
         version: link:../cli
       typedoc:
         specifier: 0.24.8
