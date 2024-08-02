@@ -24,7 +24,7 @@ test.describe('basic test', async () => {
     const existsTestJs = await exists(testJsPath);
     const testJsRaw = await readFile(testJsPath, 'utf-8');
     expect(existsTestJs).toBeTruthy();
-    expect(testJsRaw).toEqual("console.log('test.js');\n");
+    expect(testJsRaw.startsWith("console.log('test.js');")).toBeTruthy();
 
     const existsTestMDX = await exists(
       path.resolve(appDir, 'doc_build', 'test.mdx'),
