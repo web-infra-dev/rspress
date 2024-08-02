@@ -15,7 +15,7 @@ import type { SearchOptions } from '../types';
 import { LOCAL_INDEX, type Provider, type SearchQuery } from '../Provider';
 import { normalizeTextCase } from '../util';
 
-type TFlexSearchDocumentWithType = Document<PageIndexInfo, true>;
+type FlexSearchDocumentWithType = Document<PageIndexInfo, true>;
 
 interface PageIndexForFlexSearch extends PageIndexInfo {
   normalizedContent: string;
