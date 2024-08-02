@@ -52,7 +52,7 @@
   "peerDependencies": {
     "react": ">=17.0.0",
     "react-router-dom": "^6.8.1",
-    "@rspress/core": "workspace:*"
+    "@rspress/core": "workspace:^1.0.2"
   },
   "files": [
     "dist",

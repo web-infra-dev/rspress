@@ -34,7 +34,7 @@
     "vitest": "0.34.1"
   },
   "peerDependencies": {
-    "@rspress/runtime": "workspace:*"
+    "@rspress/runtime": "workspace:^1.0.2"
   },
   "sideEffects": [
     "*.css",
