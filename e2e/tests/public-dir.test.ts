@@ -1,7 +1,7 @@
 import { expect, test } from '@playwright/test';
 import path from 'node:path';
 import { runBuildCommand } from '../utils/runCommands';
-import { exists } from 'fs-extra';
+import { exists, readFile } from 'fs-extra';
 
 const fixtureDir = path.resolve(__dirname, '../fixtures');
 
@@ -15,15 +15,20 @@ test.describe('basic test', async () => {
     );
     expect(existsImg).toBeTruthy();
 
-    const existsTestHtml = exists(
+    const existsTestHtml = await exists(
       path.resolve(appDir, 'doc_build', 'test.html'),
     );
     expect(existsTestHtml).toBeTruthy();
 
-    const existsTestJS = exists(path.resolve(appDir, 'doc_build', 'test.js'));
-    expect(existsTestJS).toBeTruthy();
+    const testJsPath = path.resolve(appDir, 'doc_build', 'test.js');
+    const existsTestJs = await exists(testJsPath);
+    const testJsRaw = await readFile(testJsPath, 'utf-8');
+    expect(existsTestJs).toBeTruthy();
+    expect(testJsRaw).toEqual("console.log('test.js');");
 
-    const existsTestMDX = exists(path.resolve(appDir, 'doc_build', 'test.mdx'));
+    const existsTestMDX = await exists(
+      path.resolve(appDir, 'doc_build', 'test.mdx'),
+    );
     expect(existsTestMDX).toBeTruthy();
   });
 });
