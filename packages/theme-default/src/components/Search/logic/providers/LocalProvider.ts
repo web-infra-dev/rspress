@@ -40,11 +40,11 @@ function tokenize(str: string, regex) {
 }
 
 export class LocalProvider implements Provider {
-  #index?: TFlexSearchDocumentWithType;
+  #index?: FlexSearchDocumentWithType;
 
-  #cjkIndex?: TFlexSearchDocumentWithType;
+  #cjkIndex?: FlexSearchDocumentWithType;
 
-  #cyrilicIndex?: TFlexSearchDocumentWithType;
+  #cyrilicIndex?: FlexSearchDocumentWithType;
 
   async #getPages(lang: string, version: string): Promise<PageIndexInfo[]> {
     const searchIndexGroupID = `${version}###${lang}`;
