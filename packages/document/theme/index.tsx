@@ -1,5 +1,5 @@
 import Theme from 'rspress/theme';
-import { NavIcon } from 'rsfamily-doc-ui/nav-icon';
+import { NavIcon } from '@rstack-dev/doc-ui/nav-icon';
 import { HomeLayout as BasicHomeLayout } from 'rspress/theme';
 import { ToolStack } from './components/ToolStack';
 import './index.css';
