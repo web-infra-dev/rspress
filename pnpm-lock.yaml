@@ -539,8 +539,8 @@ importers:
         specifier: ^2.0.0
         version: 2.0.0
       hast-util-from-html:
-        specifier: ^1.0.0
-        version: 1.0.0
+        specifier: ^2.0.1
+        version: 2.0.1
       hast-util-heading-rank:
         specifier: ^3.0.0
         version: 3.0.0
@@ -1363,8 +1363,8 @@ importers:
         specifier: ^2.0.0
         version: 2.0.0
       hast-util-from-html:
-        specifier: ^1.0.0
-        version: 1.0.0
+        specifier: ^2.0.1
+        version: 2.0.1
       html-to-text:
         specifier: ^9.0.3
         version: 9.0.3
@@ -6422,15 +6422,6 @@ packages:
     engines: {node: '>= 0.4.0'}
     dependencies:
       function-bind: 1.1.1
-
-  /hast-util-from-html@1.0.0:
-    resolution: {integrity: sha512-tXYPhk28aMtDjGb4xNDaxtGKqlyZAEPGjN12jPCjczWppdLSrG/0r604a3FMvrd+9nV1HclILQiVqMnuPxN0WQ==}
-    dependencies:
-      '@types/hast': 2.3.4
-      hast-util-from-parse5: 7.1.2
-      parse5: 7.1.1
-      vfile: 5.3.7
-    dev: false
 
   /hast-util-from-html@2.0.1:
     resolution: {integrity: sha512-RXQBLMl9kjKVNkJTIO6bZyb2n+cUH8LFaSSzo82jiLT6Tfc+Pt7VQCS+/h3YwG4jaNE2TA2sdJisGWR+aJrp0g==}

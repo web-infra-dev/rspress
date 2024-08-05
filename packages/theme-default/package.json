@@ -42,7 +42,7 @@
     "copy-to-clipboard": "^3.3.3",
     "flexsearch": "0.7.43",
     "github-slugger": "^2.0.0",
-    "hast-util-from-html": "^1.0.0",
+    "hast-util-from-html": "^2.0.1",
     "html-to-text": "^9.0.3",
     "htmr": "^1.0.2",
     "is-html": "^3.1.0",
