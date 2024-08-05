@@ -90,6 +90,7 @@ This repo has adopted the ByteDance Open Source Code of Conduct. Please check [C
 | [@rspress/mdx-rs](https://github.com/web-infra-dev/mdx-rs) | Rust MDX compiler for Rspress.                    |
 | [Rspack](https://github.com/web-infra-dev/rspack)          | A fast Rust-based web bundler.                    |
 | [Rsbuild](https://github.com/web-infra-dev/rsbuild)        | An Rspack-based build tool for the web.           |
+| [Rslib](https://github.com/web-infra-dev/rslib)            | A library build tool powered by Rsbuild.          |
 | [Rsdoctor](https://github.com/web-infra-dev/rsdoctor)      | A one-stop build analyzer for Rspack and Webpack. |
 
 ## 🌟 Quality
