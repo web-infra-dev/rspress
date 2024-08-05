@@ -722,11 +722,10 @@ importers:
         version: 5.5.3
 
   packages/document:
-    dependencies:
-      rsfamily-doc-ui:
-        specifier: ^1.1.2
-        version: 1.1.2
     devDependencies:
+      '@rstack-dev/doc-ui':
+        specifier: ^1.2.0
+        version: 1.2.0
       '@types/react':
         specifier: ^18.3.3
         version: 18.3.3
@@ -4000,6 +3999,16 @@ packages:
       '@rspress/mdx-rs-win32-x64-msvc': 0.5.7
     dev: false
 
+  /@rstack-dev/doc-ui@1.2.0:
+    resolution: {integrity: sha512-/slMk3IPj9EQcdDnVriZce9qGavU+LJiHeylhgThEBfJBJT2MPUig/hMTpERlDtaJ0+Y/YE4THS1R2DsVG/W0A==}
+    dependencies:
+      framer-motion: 11.3.8
+    transitivePeerDependencies:
+      - '@emotion/is-prop-valid'
+      - react
+      - react-dom
+    dev: true
+
   /@selderee/plugin-htmlparser2@0.10.0:
     resolution: {integrity: sha512-gW69MEamZ4wk1OsOq1nG1jcyhXIQcnrsX5JwixVw/9xaiav8TCyjESAruu1Rz9yyInhgBXxkNwMeygKnN2uxNA==}
     dependencies:
@@ -6094,7 +6103,7 @@ packages:
         optional: true
     dependencies:
       tslib: 2.6.1
-    dev: false
+    dev: true
 
   /fs-constants@1.0.0:
     resolution: {integrity: sha512-y6OAwoSIf7FyjMIv94u+b5rdheZEjzR63GTyZJm5qh4Bi+2YgwLCcI/fPFZkL5PSixOt6ZNKm+w+Hfp/Bciwow==}
@@ -9323,16 +9332,6 @@ packages:
       '@rsbuild/core':
         optional: true
     dev: true
-
-  /rsfamily-doc-ui@1.1.2:
-    resolution: {integrity: sha512-6GHgf1zg50HwjVDFUNMfT2TM4fa8BtoTDGJCCReJu6MPfrvJKqb221XaPS4XAVwv9wc1V5UpCg56e48kPruCCg==}
-    dependencies:
-      framer-motion: 11.3.8
-    transitivePeerDependencies:
-      - '@emotion/is-prop-valid'
-      - react
-      - react-dom
-    dev: false
 
   /rslog@1.1.0:
     resolution: {integrity: sha512-wtTijPuwUhyVG7YvnIVzlefhlto4qJ9vm42ewwJtqrOBP/vKdZCIyfiYm0odVCR3ajR1CIUqaloIzbqhlbyaZA==}
