@@ -1,0 +1,9 @@
+[
+  "index",
+  {
+    "type": "dir",
+    "name": "test-dir",
+    "label": "test-dir"
+  },
+  "test-file"
+]

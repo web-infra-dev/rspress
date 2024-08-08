@@ -1,6 +1,7 @@
 import { expect, test } from '@playwright/test';
 import path from 'node:path';
 import { getPort, killProcess, runDevCommand } from '../utils/runCommands';
+import { getNavbar, getSidebar } from '../utils/getSideBar';
 
 const fixtureDir = path.resolve(__dirname, '../fixtures');
 
@@ -24,15 +25,10 @@ test.describe('Auto nav and sidebar test', async () => {
       waitUntil: 'networkidle',
     });
 
-    // take the nav
-    const nav = await page.$$('.rspress-nav-menu');
+    const nav = await getNavbar(page);
     expect(nav?.length).toBe(1);
 
-    // take the sidebar, properly a section or a tag
-    const sidebar = await page.$$(
-      `.rspress-sidebar .rspress-scrollbar > nav > section,
-      .rspress-sidebar .rspress-scrollbar > nav > a`,
-    );
+    const sidebar = await getSidebar(page);
     expect(sidebar?.length).toBe(2);
   });
 
