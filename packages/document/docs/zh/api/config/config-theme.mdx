@@ -334,7 +334,7 @@ export default defineConfig({
 - Type: `Array`
 - Default: `[]`
 
-你可以通过如下的配置添加相关链接，比如 `github` 链接、`twitter` 链接等。
+你可以通过如下的配置添加相关链接，比如 `github` 链接、`x` 链接等。
 相关链接支持四种模式：`链接模式link` `文本模式text` `图片模式img` `自定义模式dom`，相关例子如下：
 
 ```ts title="rspress.config.ts"
@@ -385,6 +385,7 @@ export type SocialLinkIcon =
   | 'instagram'
   | 'linkedin'
   | 'slack'
+  | 'x'
   | 'twitter'
   | 'youtube'
   | 'wechat'

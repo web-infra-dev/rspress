@@ -11,13 +11,17 @@ interface ILinkContentComp {
 export const LinkContent = (props: ILinkContentComp) => {
   const { link, popperStyle = {} } = props;
   const { icon, mode = 'link', content } = link;
-  const IconComp =
-    typeof icon === 'object' ? (
-      // eslint-disable-next-line react/no-danger
-      <div dangerouslySetInnerHTML={{ __html: icon.svg }}></div>
-    ) : (
-      presetIcons[icon]
-    );
+
+  let IconComp: React.ReactElement = null;
+  if (typeof icon === 'object') {
+    // eslint-disable-next-line react/no-danger
+    IconComp = <div dangerouslySetInnerHTML={{ __html: icon.svg }}></div>;
+  } else if (icon) {
+    const iconLowerCase = icon.toLowerCase();
+    IconComp =
+      // redirect twitter's logo to `x`
+      iconLowerCase === 'twitter' ? presetIcons.x : presetIcons[iconLowerCase];
+  }
 
   const [contentVisible, setContentVisible] = useState(false);
   const mouseEnterIcon = () => {
