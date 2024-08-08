@@ -58,6 +58,11 @@ export default defineConfig({
         mode: 'link',
         content: 'https://discord.gg/mkVw5zPAtf',
       },
+      {
+        icon: 'x',
+        mode: 'link',
+        content: 'https://x.com/rspack_dev',
+      },
     ],
     locales: [
       {
