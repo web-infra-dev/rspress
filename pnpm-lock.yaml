@@ -655,8 +655,8 @@ importers:
         specifier: ^4.17.8
         version: 4.17.8
       '@types/mdast':
-        specifier: ^3.0.10
-        version: 3.0.12
+        specifier: ^4.0.4
+        version: 4.0.4
       '@types/node':
         specifier: ^18.11.17
         version: 18.11.17
@@ -820,8 +820,8 @@ importers:
         specifier: workspace:*
         version: link:../shared
       '@types/mdast':
-        specifier: ^3.0.10
-        version: 3.0.12
+        specifier: ^4.0.4
+        version: 4.0.4
       '@types/node':
         specifier: ^18.11.17
         version: 18.11.17
@@ -919,8 +919,8 @@ importers:
         version: link:../shared
     devDependencies:
       '@types/mdast':
-        specifier: ^3.0.10
-        version: 3.0.12
+        specifier: ^4.0.4
+        version: 4.0.4
       rehype-stringify:
         specifier: ^9.0.3
         version: 9.0.3
@@ -1033,8 +1033,8 @@ importers:
         specifier: ^7.20.1
         version: 7.20.1
       '@types/mdast':
-        specifier: ^3.0.10
-        version: 3.0.12
+        specifier: ^4.0.4
+        version: 4.0.4
       '@types/node':
         specifier: ^18.11.17
         version: 18.11.17
@@ -1112,8 +1112,8 @@ importers:
         specifier: ^4.17.0
         version: 4.17.0
       '@types/mdast':
-        specifier: ^3.0.10
-        version: 3.0.12
+        specifier: ^4.0.4
+        version: 4.0.4
       '@types/node':
         specifier: ^18.11.17
         version: 18.11.17
@@ -1433,8 +1433,8 @@ importers:
         specifier: ^4.17.8
         version: 4.17.8
       '@types/mdast':
-        specifier: ^3.0.10
-        version: 3.0.12
+        specifier: ^4.0.4
+        version: 4.0.4
       '@types/nprogress':
         specifier: ^0.2.0
         version: 0.2.0
@@ -4237,6 +4237,12 @@ packages:
     resolution: {integrity: sha512-DT+iNIRNX884cx0/Q1ja7NyUPpZuv0KPyL5rGNxm1WC1OtHstl7n4Jb7nk+xacNShQMbczJjt8uFzznpp6kYBg==}
     dependencies:
       '@types/unist': 2.0.7
+
+  /@types/mdast@4.0.4:
+    resolution: {integrity: sha512-kGaNbPh1k7AFzgpud/gMdvIm5xuECykRR+JnWKQno9TAXVa6WIVCGTPvYGekIDL4uwCZQSYbUxNBSb1aUo79oA==}
+    dependencies:
+      '@types/unist': 3.0.2
+    dev: true
 
   /@types/mdx@2.0.6:
     resolution: {integrity: sha512-sVcwEG10aFU2KcM7cIA0M410UPv/DesOPyG8zMVk0QUDexHA3lYmGucpEpZ2dtWWhi2ip3CG+5g/iH0PwoW4Fw==}

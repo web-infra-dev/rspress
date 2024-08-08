@@ -97,7 +97,7 @@
     "@types/html-to-text": "^8.1.1",
     "@types/jest": "~29.5.12",
     "@types/lodash-es": "^4.17.8",
-    "@types/mdast": "^3.0.10",
+    "@types/mdast": "^4.0.4",
     "@types/node": "^18.11.17",
     "@types/nprogress": "^0.2.0",
     "@types/react": "^18.3.3",

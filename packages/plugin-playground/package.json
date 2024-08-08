@@ -46,7 +46,7 @@
     "@types/babel__core": "^7.20.1",
     "@types/babel__standalone": "^7.1.4",
     "@types/babel__traverse": "^7.20.1",
-    "@types/mdast": "^3.0.10",
+    "@types/mdast": "^4.0.4",
     "@types/node": "^18.11.17",
     "@types/react": "^18.3.3",
     "@types/react-dom": "^18.3.0",
