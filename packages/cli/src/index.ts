@@ -8,12 +8,9 @@ import chalk from 'chalk';
 import { loadConfigFile } from './config/loadConfigFile';
 import update from './update';
 
-const CONFIG_FILES = [
-  'rspress.config.ts',
-  'rspress.config.js',
-  '_meta.json',
-  'i18n.json',
-];
+const CONFIG_FILES = ['rspress.config.ts', 'rspress.config.js', 'i18n.json'];
+
+const META_FILE = '_meta.json';
 
 const require = createRequire(import.meta.url);
 
@@ -44,7 +41,6 @@ cli
       setNodeEnv('development');
       let isRestarting = false;
       const cwd = process.cwd();
-      let docDirectory: string;
       let cliWatcher: chokidar.FSWatcher;
       let devServer: Awaited<ReturnType<typeof dev>>;
       const startDevServer = async () => {
@@ -59,15 +55,19 @@ cli
           config.root = path.join(cwd, config.root);
         }
 
-        docDirectory = config.root || path.join(cwd, root ?? 'docs');
+        const docDirectory = config.root || path.join(cwd, root ?? 'docs');
         devServer = await dev({
           appDirectory: cwd,
           docDirectory,
           config,
           extraBuilderConfig: { server: { port, host } },
         });
+
         cliWatcher = chokidar.watch(
-          [`${cwd}/**/{${CONFIG_FILES.join(',')}}`, docDirectory!],
+          [
+            `${cwd}/**/{${CONFIG_FILES.join(',')}}`,
+            `${docDirectory}/**/${META_FILE}`,
+          ],
           {
             ignoreInitial: true,
             ignored: ['**/node_modules/**', '**/.git/**', '**/.DS_Store/**'],
@@ -78,7 +78,8 @@ cli
             eventName === 'add' ||
             eventName === 'unlink' ||
             (eventName === 'change' &&
-              CONFIG_FILES.includes(path.basename(filepath)))
+              (CONFIG_FILES.includes(path.basename(filepath)) ||
+                path.basename(filepath) === META_FILE))
           ) {
             if (isRestarting) {
               return;
