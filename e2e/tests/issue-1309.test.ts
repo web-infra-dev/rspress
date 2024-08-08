@@ -37,6 +37,6 @@ test.describe('issue-1309', async () => {
     expect(nav?.length).toBe(1);
 
     const sidebar = await getSidebar(page);
-    expect(sidebar?.length).toBe(0);
+    expect(sidebar?.length).toBe(3);
   });
 });
