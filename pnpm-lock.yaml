@@ -15,11 +15,11 @@ importers:
         specifier: ^2.27.1
         version: 2.27.1
       '@modern-js/module-tools':
-        specifier: 2.57.1
-        version: 2.57.1
+        specifier: 2.58.0
+        version: 2.58.0
       '@modern-js/tsconfig':
-        specifier: 2.57.1
-        version: 2.57.1
+        specifier: 2.58.0
+        version: 2.58.0
       '@playwright/test':
         specifier: 1.45.0
         version: 1.45.0
@@ -498,8 +498,8 @@ importers:
         specifier: 2.3.0
         version: 2.3.0(react@18.3.1)
       '@modern-js/utils':
-        specifier: 2.57.1
-        version: 2.57.1
+        specifier: 2.58.0
+        version: 2.58.0
       '@rsbuild/core':
         specifier: 1.0.1-beta.9
         version: 1.0.1-beta.9
@@ -634,11 +634,11 @@ importers:
         version: 4.1.1
     devDependencies:
       '@modern-js/plugin-tailwindcss':
-        specifier: 2.57.1
-        version: 2.57.1(react-dom@18.3.1)(react@18.3.1)(tailwindcss@3.4.3)
+        specifier: 2.58.0
+        version: 2.58.0(react-dom@18.3.1)(react@18.3.1)(tailwindcss@3.4.3)
       '@modern-js/tsconfig':
-        specifier: 2.57.1
-        version: 2.57.1
+        specifier: 2.58.0
+        version: 2.58.0
       '@types/body-scroll-lock':
         specifier: ^3.1.0
         version: 3.1.0
@@ -774,8 +774,8 @@ importers:
         version: link:../plugin-preview
     devDependencies:
       '@modern-js/utils':
-        specifier: 2.57.1
-        version: 2.57.1
+        specifier: 2.58.0
+        version: 2.58.0
       '@types/node':
         specifier: ^18.11.17
         version: 18.11.17
@@ -798,10 +798,10 @@ importers:
   packages/plugin-api-docgen:
     dependencies:
       '@modern-js/utils':
-        specifier: 2.57.1
-        version: 2.57.1
+        specifier: 2.58.0
+        version: 2.58.0
       '@rspress/core':
-        specifier: workspace:^1.27.0
+        specifier: workspace:^1.27.1
         version: link:../core
       documentation:
         specifier: 14.0.2
@@ -860,8 +860,8 @@ importers:
         version: link:../shared
     devDependencies:
       '@modern-js/tsconfig':
-        specifier: 2.57.1
-        version: 2.57.1
+        specifier: 2.58.0
+        version: 2.58.0
       '@types/node':
         specifier: ^18.11.17
         version: 18.11.17
@@ -884,12 +884,12 @@ importers:
   packages/plugin-client-redirects:
     dependencies:
       '@rspress/runtime':
-        specifier: workspace:^1.27.0
+        specifier: workspace:^1.27.1
         version: link:../runtime
     devDependencies:
       '@modern-js/tsconfig':
-        specifier: 2.57.1
-        version: 2.57.1
+        specifier: 2.58.0
+        version: 2.58.0
       '@rspress/shared':
         specifier: workspace:*
         version: link:../shared
@@ -941,8 +941,8 @@ importers:
         version: link:../shared
     devDependencies:
       '@modern-js/tsconfig':
-        specifier: 2.57.1
-        version: 2.57.1
+        specifier: 2.58.0
+        version: 2.58.0
       '@types/node':
         specifier: ^18.11.17
         version: 18.11.17
@@ -965,15 +965,15 @@ importers:
   packages/plugin-medium-zoom:
     dependencies:
       '@rspress/runtime':
-        specifier: workspace:^1.27.0
+        specifier: workspace:^1.27.1
         version: link:../runtime
       medium-zoom:
         specifier: 1.1.0
         version: 1.1.0
     devDependencies:
       '@modern-js/tsconfig':
-        specifier: 2.57.1
-        version: 2.57.1
+        specifier: 2.58.0
+        version: 2.58.0
       '@rspress/shared':
         specifier: workspace:*
         version: link:../shared
@@ -1008,7 +1008,7 @@ importers:
         specifier: ^0.2.0
         version: 0.2.0
       '@rspress/core':
-        specifier: workspace:^1.27.0
+        specifier: workspace:^1.27.1
         version: link:../core
       '@rspress/shared':
         specifier: workspace:*
@@ -1090,7 +1090,7 @@ importers:
         specifier: 1.0.1-beta.9
         version: 1.0.1-beta.9(@babel/core@7.25.2)(@rsbuild/core@1.0.1-beta.9)(solid-js@1.8.16)
       '@rspress/core':
-        specifier: workspace:^1.27.0
+        specifier: workspace:^1.27.1
         version: link:../core
       '@rspress/shared':
         specifier: workspace:*
@@ -1154,7 +1154,7 @@ importers:
         specifier: ^4.2.2
         version: 4.2.2
       rspress:
-        specifier: workspace:^1.27.0
+        specifier: workspace:^1.27.1
         version: link:../cli
     devDependencies:
       '@rspress/runtime':
@@ -1189,8 +1189,8 @@ importers:
         version: 5.0.0
     devDependencies:
       '@modern-js/tsconfig':
-        specifier: 2.57.1
-        version: 2.57.1
+        specifier: 2.58.0
+        version: 2.58.0
       '@types/hast':
         specifier: 3.0.3
         version: 3.0.3
@@ -1222,7 +1222,7 @@ importers:
         specifier: workspace:*
         version: link:../shared
       rspress:
-        specifier: workspace:^1.27.0
+        specifier: workspace:^1.27.1
         version: link:../cli
       typedoc:
         specifier: 0.24.8
@@ -1232,8 +1232,8 @@ importers:
         version: 3.17.1(typedoc@0.24.8)
     devDependencies:
       '@modern-js/tsconfig':
-        specifier: 2.57.1
-        version: 2.57.1
+        specifier: 2.58.0
+        version: 2.58.0
       '@types/node':
         specifier: ^18.11.17
         version: 18.11.17
@@ -1272,8 +1272,8 @@ importers:
         version: 6.11.1(react-dom@18.3.1)(react@18.3.1)
     devDependencies:
       '@modern-js/tsconfig':
-        specifier: 2.57.1
-        version: 2.57.1
+        specifier: 2.58.0
+        version: 2.58.0
       '@types/jest':
         specifier: ~29.5.12
         version: 29.5.12
@@ -1409,11 +1409,11 @@ importers:
         version: 0.1.12
     devDependencies:
       '@modern-js/plugin-tailwindcss':
-        specifier: 2.57.1
-        version: 2.57.1(react-dom@18.3.1)(react@18.3.1)(tailwindcss@3.4.3)
+        specifier: 2.58.0
+        version: 2.58.0(react-dom@18.3.1)(react@18.3.1)(tailwindcss@3.4.3)
       '@modern-js/tsconfig':
-        specifier: 2.57.1
-        version: 2.57.1
+        specifier: 2.58.0
+        version: 2.58.0
       '@types/body-scroll-lock':
         specifier: ^3.1.0
         version: 3.1.0
@@ -3208,17 +3208,17 @@ packages:
       react: 18.3.1
     dev: false
 
-  /@modern-js/core@2.57.1:
-    resolution: {integrity: sha512-L57fLvwjvAp3jVaE3+Rlr5GC6+/Qn2OIrZx4DEl4B9q0t/cL/qkjlmTKqMwYVk7XnYjzz8UXGvwoy8/BwTyvvA==}
+  /@modern-js/core@2.58.0:
+    resolution: {integrity: sha512-Oh0D94Y19kTd14dvLbKwzGYjpZgVTHio6qUButllxUburVFI0X5NY85dUt6cwc3m22ag+o8FIUNEK+LlvttOUA==}
     dependencies:
-      '@modern-js/node-bundle-require': 2.57.1
-      '@modern-js/plugin': 2.57.1
-      '@modern-js/utils': 2.57.1
+      '@modern-js/node-bundle-require': 2.58.0
+      '@modern-js/plugin': 2.58.0
+      '@modern-js/utils': 2.58.0
       '@swc/helpers': 0.5.3
     dev: true
 
-  /@modern-js/module-tools@2.57.1:
-    resolution: {integrity: sha512-ZJ90N1/7YLCiIJ9AYDf/rENMjMF7zGxkvVnFpiyqosoaQ2IOExXGSRrFeTRUr0exd3M56VmahWroOu/d7mi5iA==}
+  /@modern-js/module-tools@2.58.0:
+    resolution: {integrity: sha512-q4utnmoSxaz4sqC0sa9s5MSLI6IcnnxDIpiTAi4cJw4PChLcvo+oqY+Yb8bRvyf37DaZkDXgUctJ2kmCnzTIHw==}
     engines: {node: '>=16.0.0'}
     hasBin: true
     peerDependencies:
@@ -3231,14 +3231,14 @@ packages:
       '@ast-grep/napi': 0.16.0
       '@babel/core': 7.25.2
       '@babel/types': 7.25.2
-      '@modern-js/core': 2.57.1
-      '@modern-js/plugin': 2.57.1
-      '@modern-js/plugin-changeset': 2.57.1
-      '@modern-js/plugin-i18n': 2.57.1
-      '@modern-js/plugin-lint': 2.57.1
+      '@modern-js/core': 2.58.0
+      '@modern-js/plugin': 2.58.0
+      '@modern-js/plugin-changeset': 2.58.0
+      '@modern-js/plugin-i18n': 2.58.0
+      '@modern-js/plugin-lint': 2.58.0
       '@modern-js/swc-plugins': 0.6.6(@swc/helpers@0.5.3)
-      '@modern-js/types': 2.57.1
-      '@modern-js/utils': 2.57.1
+      '@modern-js/types': 2.58.0
+      '@modern-js/utils': 2.58.0
       '@rollup/pluginutils': 4.1.1
       '@swc/helpers': 0.5.3
       convert-source-map: 1.8.0
@@ -3260,22 +3260,22 @@ packages:
       - supports-color
     dev: true
 
-  /@modern-js/node-bundle-require@2.57.1:
-    resolution: {integrity: sha512-YCHN9+k0yqjHAufwS5PoE3IDGA4eWpdYmgkBRQyBSLO3MWwI23Ol6/wa3qhDOr7NXQ9fv3V+KZdTSvct8wMDVQ==}
+  /@modern-js/node-bundle-require@2.58.0:
+    resolution: {integrity: sha512-XlB84F++YRJK6lU18szAOfXgBbmC8hHdOf8oQG4KSpti642FUmXNuEcxrS8Ic8ox1e75Ch09377aDfmw3NdSvg==}
     dependencies:
-      '@modern-js/utils': 2.57.1
+      '@modern-js/utils': 2.58.0
       '@swc/helpers': 0.5.3
       esbuild: 0.17.19
     dev: true
 
-  /@modern-js/plugin-changeset@2.57.1:
-    resolution: {integrity: sha512-vLD7sjg0a6ZHy4hAfmbLwFYhuttmUYSQ6Yz/AVZ+bDGFKIsiN3ezEIFybf/zoSn4ljL1QiYXtuqqQyQuFm8hWQ==}
+  /@modern-js/plugin-changeset@2.58.0:
+    resolution: {integrity: sha512-FtX3E15eK4OiwqQ9Cc0ANqi4FEwPUETwrEnHxMHJUYJDOv75Ld+bA1nUnWACc5L2gsjsT4A2U5zD41YuPw2G2A==}
     dependencies:
       '@changesets/cli': 2.27.1
       '@changesets/git': 2.0.0
       '@changesets/read': 0.5.9
-      '@modern-js/plugin-i18n': 2.57.1
-      '@modern-js/utils': 2.57.1
+      '@modern-js/plugin-i18n': 2.58.0
+      '@modern-js/utils': 2.58.0
       '@swc/helpers': 0.5.3
       axios: 1.6.8
       resolve-from: 5.0.0
@@ -3283,40 +3283,40 @@ packages:
       - debug
     dev: true
 
-  /@modern-js/plugin-i18n@2.57.1:
-    resolution: {integrity: sha512-+QguKAcQQ86hAW1xbtyxjCKTg/Lw8aiKRSGtjtH8Jll6jQUWxBzdGzolCj8EEFM52WA/+cA9mYZjrkyF5+fkRQ==}
+  /@modern-js/plugin-i18n@2.58.0:
+    resolution: {integrity: sha512-dBGX4xDGt6/+lOLocx38PhgYt0bYsL6SSb62YFryC9PEjRxQmJDdiIoyX1KdxkY+K4yw0y4+WoL3p3OFmmvymw==}
     dependencies:
-      '@modern-js/utils': 2.57.1
+      '@modern-js/utils': 2.58.0
       '@swc/helpers': 0.5.3
     dev: true
 
-  /@modern-js/plugin-lint@2.57.1:
-    resolution: {integrity: sha512-cwg6xPGWn1lUgmEvB/jqlL5TAAwxFaENIjaTl4I9B8PJTAi9UpFJgqk1QFVDbCkTSsonpLCWelxJJUFfoVhWlA==}
+  /@modern-js/plugin-lint@2.58.0:
+    resolution: {integrity: sha512-ADhiOaMH6MDyuHZwRHjSHkV/10gJbFJbpgCarp8dmgOxMDqK2ElUsWRrQJ4ObSJO1inzMNjwVCi5fUM5pXhssw==}
     peerDependencies:
       eslint: ^8.28.0
     peerDependenciesMeta:
       eslint:
         optional: true
     dependencies:
-      '@modern-js/tsconfig': 2.57.1
-      '@modern-js/utils': 2.57.1
+      '@modern-js/tsconfig': 2.58.0
+      '@modern-js/utils': 2.58.0
       '@swc/helpers': 0.5.3
       cross-spawn: 7.0.3
       husky: 8.0.1
     dev: true
 
-  /@modern-js/plugin-tailwindcss@2.57.1(react-dom@18.3.1)(react@18.3.1)(tailwindcss@3.4.3):
-    resolution: {integrity: sha512-6EyNvvdzShlJ4cPUiP+3QSfs//ltTQeZduFQaVRpoLQrex/SqmYvQaeoocL/D3Qo9Z7ZRE+CFIicJM99nXA5oQ==}
+  /@modern-js/plugin-tailwindcss@2.58.0(react-dom@18.3.1)(react@18.3.1)(tailwindcss@3.4.3):
+    resolution: {integrity: sha512-PmY13ju2sl5PN/JbnqeQRhniC0Yjy0Bs1nL0fxsmugbDnrWdTTP5gFtH6loRndYuQS2cNToVMFlUzNsrUw98cQ==}
     peerDependencies:
-      '@modern-js/runtime': ^2.57.1
+      '@modern-js/runtime': ^2.58.0
       tailwindcss: '>= 2.0.0 || >= 3.0.0'
     peerDependenciesMeta:
       '@modern-js/runtime':
         optional: true
     dependencies:
-      '@modern-js/node-bundle-require': 2.57.1
-      '@modern-js/runtime-utils': 2.57.1(react-dom@18.3.1)(react@18.3.1)
-      '@modern-js/utils': 2.57.1
+      '@modern-js/node-bundle-require': 2.58.0
+      '@modern-js/runtime-utils': 2.58.0(react-dom@18.3.1)(react@18.3.1)
+      '@modern-js/utils': 2.58.0
       '@swc/helpers': 0.5.3
       babel-plugin-macros: 3.1.0
       tailwindcss: 3.4.3
@@ -3325,15 +3325,15 @@ packages:
       - react-dom
     dev: true
 
-  /@modern-js/plugin@2.57.1:
-    resolution: {integrity: sha512-ZR7Uv2gZzXpeXwkcx+MABX7tdwECwLbnDnipfwMiXkfxdbLieV1xpAuIfVxUXL5UlSKU2boFNADJqXEZRVFBwg==}
+  /@modern-js/plugin@2.58.0:
+    resolution: {integrity: sha512-wHNoWjlz8SlcvHhZ+YHnJF/P5OhZWC08LXGlun6VuTt8mHlCb0PwEFBSQwL+kP6RhwotVlFpTzexA1d0QHPz2g==}
     dependencies:
-      '@modern-js/utils': 2.57.1
+      '@modern-js/utils': 2.58.0
       '@swc/helpers': 0.5.3
     dev: true
 
-  /@modern-js/runtime-utils@2.57.1(react-dom@18.3.1)(react@18.3.1):
-    resolution: {integrity: sha512-SS46ONSYj5i0Oz5V+SxVfswMwCa5swTK8Z+z760+ROR1pHtMtJr+MP0Tox7bPyFo8/aZw+uixo12/zBv2XP/2g==}
+  /@modern-js/runtime-utils@2.58.0(react-dom@18.3.1)(react@18.3.1):
+    resolution: {integrity: sha512-+rqFwp+8La2kS70Gi9X5pEbdUt8R3QUC29zUIP2sVLf5+N5CVXFJxSRcTgZb7YOubTbcBxoyVDivxkrPWf9niw==}
     peerDependencies:
       react: '>=17.0.0'
       react-dom: '>=17.0.0'
@@ -3343,7 +3343,7 @@ packages:
       react-dom:
         optional: true
     dependencies:
-      '@modern-js/utils': 2.57.1
+      '@modern-js/utils': 2.58.0
       '@remix-run/router': 1.15.0
       '@swc/helpers': 0.5.3
       lru-cache: 6.0.0
@@ -3443,16 +3443,16 @@ packages:
       '@modern-js/swc-plugins-win32-x64-msvc': 0.6.6
     dev: true
 
-  /@modern-js/tsconfig@2.57.1:
-    resolution: {integrity: sha512-K2xrrvRCsoUYxVnsfpEUBEPp9i+TH4KB2NxFuMWbjTIqDUVp0VtjCOwGy8Iy9rNkGYUEmfvSoBVbYyS9hUfzjw==}
+  /@modern-js/tsconfig@2.58.0:
+    resolution: {integrity: sha512-4IdLJdgg1s/v4b9xyag2xbPlDHBiBuSr5qi4U6Teh6E1/sFqDh7WQiqeYr1N6miLxITf9OIz+NmOmmDr5QxEUg==}
     dev: true
 
-  /@modern-js/types@2.57.1:
-    resolution: {integrity: sha512-XeI6xVeW/H5n8pUFJUKS/dJ0zJhWImsa8eCInYuurs9nWf4/T6hLS6GNkIyNIDlgPJlKDx5bo6DkRxsrlFw9Og==}
+  /@modern-js/types@2.58.0:
+    resolution: {integrity: sha512-RVpqQg52SyhvMaKFoXSBIFT4uEyCYSXQ/d0xW8EdWa/ZYbeo1kKEzxjCYPCSHZ54NS3q5HSSYjuO3z88g3nkuA==}
     dev: true
 
-  /@modern-js/utils@2.57.1:
-    resolution: {integrity: sha512-mPlz8NV92U5cjo7wSCrfaOvOeIQ5aR2zJ/apPlTonVuwvHicTb2VcJkeN2bQ3stPz66NT+m6ofY+i8esGIBihw==}
+  /@modern-js/utils@2.58.0:
+    resolution: {integrity: sha512-a5rozYXKQj5BbTEboWZ0pTRwYTGNuga7kEdu14yPtDuvtzCXSr4+ta1cjdfvohDXFQ2QCJhtg6o8wM8OJBzJzA==}
     dependencies:
       '@swc/helpers': 0.5.3
       caniuse-lite: 1.0.30001646
