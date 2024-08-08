@@ -107,6 +107,10 @@ export interface Config {
    * @default 'auto'
    */
   localeRedirect?: 'auto' | 'never';
+  /**
+   * Whether to enable view transition animation for the theme
+   */
+  enableAppearanceAnimation?: boolean;
 }
 
 /**
