@@ -54,8 +54,8 @@ importers:
         specifier: 5.1.1
         version: 5.1.1
       husky:
-        specifier: ^8.0.0
-        version: 8.0.1
+        specifier: ^9.1.4
+        version: 9.1.4
       lint-staged:
         specifier: ~13.3.0
         version: 13.3.0
@@ -6724,6 +6724,12 @@ packages:
   /husky@8.0.1:
     resolution: {integrity: sha512-xs7/chUH/CKdOCs7Zy0Aev9e/dKOMZf3K1Az1nar3tzlv0jfqnYtu235bstsWTmXOR0EfINrPa97yy4Lz6RiKw==}
     engines: {node: '>=14'}
+    hasBin: true
+    dev: true
+
+  /husky@9.1.4:
+    resolution: {integrity: sha512-bho94YyReb4JV7LYWRWxZ/xr6TtOTt8cMfmQ39MQYJ7f/YE268s3GdghGwi+y4zAeqewE5zYLvuhV0M0ijsDEA==}
+    engines: {node: '>=18'}
     hasBin: true
     dev: true
 
