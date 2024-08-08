@@ -75,7 +75,9 @@ export const getSidebarGroupData = (
           }
         }
         const equalFunc = () =>
-          'link' in item && isEqualPath(withBase(item.link), currentPathname);
+          'link' in item &&
+          item.link !== '' &&
+          isEqualPath(withBase(item.link), currentPathname);
 
         if ('items' in item) {
           // If the current path is the same as the group link, return true
