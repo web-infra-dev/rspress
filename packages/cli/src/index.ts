@@ -64,10 +64,7 @@ cli
         });
 
         cliWatcher = chokidar.watch(
-          [
-            `${cwd}/**/{${CONFIG_FILES.join(',')}}`,
-            `${docDirectory}/**/${META_FILE}`,
-          ],
+          [`${cwd}/**/{${CONFIG_FILES.join(',')}}`, docDirectory],
           {
             ignoreInitial: true,
             ignored: ['**/node_modules/**', '**/.git/**', '**/.DS_Store/**'],
