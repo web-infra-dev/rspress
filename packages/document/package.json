@@ -19,12 +19,12 @@
   "devDependencies": {
     "@rstack-dev/doc-ui": "^1.2.0",
     "@types/react": "^18.3.3",
-    "framer-motion": "11.3.2",
-    "rsbuild-plugin-google-analytics": "^1.0.0",
-    "rsbuild-plugin-open-graph": "^1.0.0",
+    "framer-motion": "11.3.24",
+    "rsbuild-plugin-google-analytics": "^1.0.2",
+    "rsbuild-plugin-open-graph": "^1.0.2",
     "rspress": "workspace:*",
     "rspress-plugin-font-open-sans": "^1.0.0",
-    "ts-node": "^10.9.1",
+    "ts-node": "^10.9.2",
     "typescript": "^5.5.3"
   },
   "publishConfig": {

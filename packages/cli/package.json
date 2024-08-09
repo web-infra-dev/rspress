@@ -37,7 +37,7 @@
     "upgrade": "modern upgrade"
   },
   "dependencies": {
-    "@rsbuild/core": "1.0.1-beta.9",
+    "@rsbuild/core": "1.0.1-beta.11",
     "@rspress/core": "workspace:*",
     "@rspress/shared": "workspace:*",
     "cac": "^6.7.14",
@@ -49,7 +49,7 @@
     "@types/node": "^18.11.17",
     "@types/react": "^18.3.3",
     "rimraf": "^3.0.2",
-    "ts-node": "^10.9.1",
+    "ts-node": "^10.9.2",
     "typescript": "^5.5.3"
   },
   "sideEffects": [],

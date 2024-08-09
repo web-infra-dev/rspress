@@ -23,7 +23,7 @@
     "./package.json": "./package.json"
   },
   "dependencies": {
-    "@arco-design/web-react": "^2.63.0"
+    "@arco-design/web-react": "^2.63.3"
   },
   "devDependencies": {
     "@modern-js/plugin-rspress": "workspace:*",
