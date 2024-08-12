@@ -60,7 +60,7 @@
     "copy-to-clipboard": "^3.3.3",
     "enhanced-resolve": "5.17.0",
     "github-slugger": "^2.0.0",
-    "hast-util-from-html": "^1.0.0",
+    "hast-util-from-html": "^2.0.1",
     "hast-util-heading-rank": "^3.0.0",
     "html-to-text": "^9.0.3",
     "htmr": "^1.0.2",
