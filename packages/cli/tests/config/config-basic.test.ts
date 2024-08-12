@@ -12,7 +12,7 @@ describe('Should load config file', () => {
       path.join(fixtureDir, 'rspress.config.cjs'),
     );
 
-    expect(config).toContain({
+    expect(config).toMatchObject({
       root: fixtureDir,
       title: TEST_TITLE,
     });
@@ -24,7 +24,7 @@ describe('Should load config file', () => {
       path.join(fixtureDir, 'rspress.config.mjs'),
     );
 
-    expect(config).toContain({
+    expect(config).toMatchObject({
       // we need to normalize path as jiti will inject `__dirname` with posix separator in esm files
       root: normalizePath(fixtureDir),
       title: TEST_TITLE,
@@ -37,13 +37,13 @@ describe('Should load config file', () => {
       path.join(fixtureDir, 'rspress.config.js'),
     );
 
-    expect(config).toContain({
+    expect(config).toMatchObject({
       root: fixtureDir,
       title: TEST_TITLE,
     });
 
     config = await loadConfigFile(path.join(fixtureDir, 'rspress.config.ts'));
-    expect(config).toContain({
+    expect(config).toMatchObject({
       root: normalizePath(fixtureDir),
       title: TEST_TITLE,
     });
@@ -59,9 +59,9 @@ describe('Should load config file', () => {
       root: normalizePath(fixtureDir),
       title: TEST_TITLE,
     };
-    expect(config).toContain(expectConfig);
+    expect(config).toMatchObject(expectConfig);
 
     config = await loadConfigFile(path.join(fixtureDir, 'rspress.config.ts'));
-    expect(config).toContain(expectConfig);
+    expect(config).toMatchObject(expectConfig);
   });
 });

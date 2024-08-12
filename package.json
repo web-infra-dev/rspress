@@ -62,7 +62,7 @@
     "playwright": "1.46.0",
     "prettier": "3.3.0",
     "tree-kill": "^1.2.2",
-    "vitest": "0.34.1"
+    "vitest": "2.0.5"
   },
   "publishConfig": {
     "access": "public",
