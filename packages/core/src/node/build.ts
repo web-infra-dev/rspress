@@ -138,10 +138,14 @@ export async function renderPages(
             try {
               ({ appHtml } = await render(routePath, helmetContext.context));
             } catch (e) {
+              if (typeof ssgConfig === 'object' && ssgConfig.strict) {
+                throw e;
+              }
+
+              // fallback to CSR
               logger.warn(
                 `page "${routePath}" render error: ${e.message}, fallback to CSR.`,
               );
-              // fallback to csr
             }
           }
 
