@@ -49,6 +49,8 @@ export interface Locale {
   description?: string;
 }
 
+export type SSGConfig = boolean | { strict?: boolean };
+
 export interface UserConfig<ThemeConfig = DefaultThemeConfig> {
   /**
    * The root directory of the site.
@@ -147,7 +149,7 @@ export interface UserConfig<ThemeConfig = DefaultThemeConfig> {
   /**
    * Whether to enable ssg, default is true
    */
-  ssg?: boolean;
+  ssg?: SSGConfig;
   /**
    * Whether to enable medium-zoom, default is true
    */

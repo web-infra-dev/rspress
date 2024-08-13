@@ -411,7 +411,7 @@ export default defineConfig({
 
 ## ssg
 
-- Type: `boolean`
+- Type: `boolean | { strict?: boolean }`
 - Default: `true`
 
 是否开启静态站点生成。默认开启，你可以通过设置 `ssg` 为 `false` 来关闭。
@@ -422,4 +422,14 @@ import { defineConfig } from 'rspress/config';
 export default defineConfig({
   ssg: false,
 });
+```
+
+当 SSG 失败时，默认会 fallback 到 CSR。你可以通过设置 `ssg` 为 `{ strict: true }` 来严格要求 SSG 必须成功，否则抛出错误。
+
+```ts title="rspress.config.ts"
+export default {
+  ssg: {
+    strict: true,
+  },
+};
 ```
