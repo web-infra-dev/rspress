@@ -412,7 +412,7 @@ export default defineConfig({
 
 ## ssg
 
-- Type: `boolean`
+- Type: `boolean | { strict?: boolean }`
 - Default: `true`
 
 Determines whether to enable Static Site Generation. It is enabled by default, but you can disable it by setting `ssg` to `false`.
@@ -423,4 +423,14 @@ import { defineConfig } from 'rspress/config';
 export default defineConfig({
   ssg: false,
 });
+```
+
+If SSG fails, it will fallback to CSR by default. You can set `ssg` to `{ strict: true }` to strictly require SSG to succeed, otherwise an error will be thrown.
+
+```ts title="rspress.config.ts"
+export default {
+  ssg: {
+    strict: true,
+  },
+};
 ```

@@ -9,6 +9,7 @@ import {
   normalizeSlash,
   withBase,
   isDebugMode,
+  type SSGConfig,
 } from '@rspress/shared';
 import { logger } from '@rspress/shared/logger';
 import {
@@ -66,12 +67,13 @@ export async function renderPages(
   appDirectory: string,
   config: UserConfig,
   pluginDriver: PluginDriver,
-  enableSSG: boolean,
+  ssgConfig: SSGConfig,
 ) {
   logger.info('Rendering pages...');
   const startTime = Date.now();
   const outputPath = config?.outDir ?? join(appDirectory, OUTPUT_DIR);
   const ssrBundlePath = join(outputPath, 'ssr', 'main.cjs');
+
   try {
     const { default: fs } = await import('@rspress/shared/fs-extra');
     const { version } = await import('../../package.json');
@@ -80,18 +82,28 @@ export async function renderPages(
     // 2. ssr bundle render failed
     // 3. ssg is disabled
     let render = null;
-    if (enableSSG) {
+    if (ssgConfig) {
       try {
         const { default: ssrExports } = await import(
           pathToFileURL(ssrBundlePath).toString()
         );
         ({ render } = ssrExports as SSRBundleExports);
       } catch (e) {
+        // skip fallback to CSR if ssg config is strict
+        // TODO: strict by default in v2
+        // see: https://github.com/web-infra-dev/rspress/issues/1317
+        if (typeof ssgConfig === 'object' && ssgConfig.strict) {
+          logger.error(
+            `Failed to load SSG bundle: ${chalk.yellow(ssrBundlePath)}.`,
+          );
+          throw e;
+        }
+
+        // fallback to CSR
         logger.error(e);
         logger.warn(
-          `Failed to load SSR bundle: ${ssrBundlePath}, fallback to CSR.`,
+          `Failed to load SSG bundle: ${chalk.yellow(ssrBundlePath)}, fallback to CSR.`,
         );
-        // fallback to csr
       }
     }
 
@@ -129,10 +141,17 @@ export async function renderPages(
             try {
               ({ appHtml } = await render(routePath, helmetContext.context));
             } catch (e) {
+              if (typeof ssgConfig === 'object' && ssgConfig.strict) {
+                logger.error(
+                  `Page "${chalk.yellow(routePath)}" SSG rendering failed.`,
+                );
+                throw e;
+              }
+
+              // fallback to CSR
               logger.warn(
-                `page "${routePath}" render error: ${e.message}, fallback to CSR.`,
+                `Page "${chalk.yellow(routePath)}" SSG rendering error: ${e.message}, fallback to CSR.`,
               );
-              // fallback to csr
             }
           }
 
@@ -207,12 +226,12 @@ export async function build(options: BuildOptions) {
   await pluginDriver.init();
   const modifiedConfig = await pluginDriver.modifyConfig();
   await pluginDriver.beforeBuild();
-  const enableSSG = modifiedConfig.ssg ?? true;
+  const ssgConfig = modifiedConfig.ssg ?? true;
 
   // empty temp dir before build
   await fs.emptyDir(TEMP_DIR);
 
-  await bundle(docDirectory, modifiedConfig, pluginDriver, enableSSG);
-  await renderPages(appDirectory, modifiedConfig, pluginDriver, enableSSG);
+  await bundle(docDirectory, modifiedConfig, pluginDriver, Boolean(ssgConfig));
+  await renderPages(appDirectory, modifiedConfig, pluginDriver, ssgConfig);
   await pluginDriver.afterBuild();
 }
