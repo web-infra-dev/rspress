@@ -93,13 +93,16 @@ export async function renderPages(
         // TODO: strict by default in v2
         // see: https://github.com/web-infra-dev/rspress/issues/1317
         if (typeof ssgConfig === 'object' && ssgConfig.strict) {
+          logger.error(
+            `Failed to load SSG bundle: ${chalk.yellow(ssrBundlePath)}.`,
+          );
           throw e;
         }
 
         // fallback to CSR
         logger.error(e);
         logger.warn(
-          `Failed to load SSR bundle: ${ssrBundlePath}, fallback to CSR.`,
+          `Failed to load SSG bundle: ${chalk.yellow(ssrBundlePath)}, fallback to CSR.`,
         );
       }
     }
@@ -139,12 +142,15 @@ export async function renderPages(
               ({ appHtml } = await render(routePath, helmetContext.context));
             } catch (e) {
               if (typeof ssgConfig === 'object' && ssgConfig.strict) {
+                logger.error(
+                  `Page "${chalk.yellow(routePath)}" SSG rendering failed.`,
+                );
                 throw e;
               }
 
               // fallback to CSR
               logger.warn(
-                `page "${routePath}" render error: ${e.message}, fallback to CSR.`,
+                `Page "${chalk.yellow(routePath)}" SSG rendering error: ${e.message}, fallback to CSR.`,
               );
             }
           }
