@@ -10,17 +10,28 @@ export function useRedirect4FirstVisit() {
   const localeLanguages = Object.values(siteData.themeConfig.locales || {});
   const langs = localeLanguages.map(item => item.lang) || [];
   const currentLang = page.lang;
+
   useEffect(() => {
     const localeRedirect = siteData.themeConfig.localeRedirect ?? 'auto';
     if (localeRedirect !== 'auto') {
       return;
     }
+
     if (!defaultLang || process.env.TEST === '1') {
       // Check the window.navigator.language to determine the default language
       // If the default language is not the same as the current language, redirect to the default language
       // The default language will not have a lang prefix in the URL
       return;
     }
+
+    const botRegex = /bot|spider|crawl|lighthouse/i;
+    const userAgent = window.navigator.userAgent.toLowerCase();
+    // If the request is coming from a bot or crawler, do not redirect.
+    // this ensures that Google's search crawler can work as expected.
+    if (botRegex.test(userAgent)) {
+      return;
+    }
+
     // Normalize current url, to ensure that the home url is always with a trailing slash
     const { pathname, search } = window.location;
     const cleanPathname = removeBase(pathname);
