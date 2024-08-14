@@ -25,7 +25,7 @@ export function useRedirect4FirstVisit() {
     }
 
     const botRegex = /bot|spider|crawl|lighthouse/i;
-    const userAgent = window.navigator.userAgent.toLowerCase();
+    const userAgent = window.navigator.userAgent;
     // If the request is coming from a bot or crawler, do not redirect.
     // this ensures that Google's search crawler can work as expected.
     if (botRegex.test(userAgent)) {
