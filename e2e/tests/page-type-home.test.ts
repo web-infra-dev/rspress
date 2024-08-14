@@ -42,4 +42,17 @@ test.describe('home pageType', async () => {
 
     // todo: add tests for hero actions
   });
+
+  test('Features', async ({ page }) => {
+    await page.goto(`http://localhost:${appPort}`);
+    const features = await page.$$('.rspress-home-feature-card');
+    expect(features).toHaveLength(2);
+
+    const url1 = page.url();
+    await features[0].click();
+    expect(page.url()).toBe(url1);
+
+    await features[1].click();
+    expect(page.url()).toBe('https://example.com/');
+  });
 });

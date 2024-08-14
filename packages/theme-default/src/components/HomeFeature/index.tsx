@@ -25,9 +25,13 @@ export function HomeFeature({
     <div className="overflow-hidden m-auto flex flex-wrap max-w-6xl">
       {features?.map(feature => {
         const { icon, title, details, link: rawLink } = feature;
-        const link = isExternalUrl(rawLink)
-          ? rawLink
-          : normalizeHrefInRuntime(withBase(rawLink, routePath));
+
+        let link = rawLink;
+        if (rawLink) {
+          link = isExternalUrl(rawLink)
+            ? rawLink
+            : normalizeHrefInRuntime(withBase(rawLink, routePath));
+        }
 
         return (
           <div
