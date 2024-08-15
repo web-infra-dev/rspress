@@ -811,7 +811,7 @@ importers:
         specifier: 2.58.0
         version: 2.58.0
       '@rspress/core':
-        specifier: workspace:^1.27.1
+        specifier: workspace:^1.28.0
         version: link:../core
       documentation:
         specifier: 14.0.2
@@ -894,7 +894,7 @@ importers:
   packages/plugin-client-redirects:
     dependencies:
       '@rspress/runtime':
-        specifier: workspace:^1.27.1
+        specifier: workspace:^1.28.0
         version: link:../runtime
     devDependencies:
       '@modern-js/tsconfig':
@@ -975,7 +975,7 @@ importers:
   packages/plugin-medium-zoom:
     dependencies:
       '@rspress/runtime':
-        specifier: workspace:^1.27.1
+        specifier: workspace:^1.28.0
         version: link:../runtime
       medium-zoom:
         specifier: 1.1.0
@@ -1018,7 +1018,7 @@ importers:
         specifier: ^0.2.0
         version: 0.2.0
       '@rspress/core':
-        specifier: workspace:^1.27.1
+        specifier: workspace:^1.28.0
         version: link:../core
       '@rspress/shared':
         specifier: workspace:*
@@ -1100,7 +1100,7 @@ importers:
         specifier: 1.0.1-beta.9
         version: 1.0.1-beta.9(@babel/core@7.25.2)(@rsbuild/core@1.0.1-beta.9)(solid-js@1.8.16)
       '@rspress/core':
-        specifier: workspace:^1.27.1
+        specifier: workspace:^1.28.0
         version: link:../core
       '@rspress/shared':
         specifier: workspace:*
@@ -1164,7 +1164,7 @@ importers:
         specifier: ^4.2.2
         version: 4.2.2
       rspress:
-        specifier: workspace:^1.27.1
+        specifier: workspace:^1.28.0
         version: link:../cli
     devDependencies:
       '@rspress/runtime':
@@ -1232,7 +1232,7 @@ importers:
         specifier: workspace:*
         version: link:../shared
       rspress:
-        specifier: workspace:^1.27.1
+        specifier: workspace:^1.28.0
         version: link:../cli
       typedoc:
         specifier: 0.24.8
