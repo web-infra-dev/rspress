@@ -14,6 +14,21 @@ import { importStatementRegex } from '@/node/constants';
 import type { RouteService } from '@/node/route/RouteService';
 import { applyReplaceRules } from '@/node/utils/applyReplaceRules';
 
+export function applyReplaceRulesToNestedObject(
+  obj,
+  replaceRules: ReplaceRule[],
+) {
+  for (const key in obj) {
+    if (typeof obj[key] === 'string') {
+      obj[key] = applyReplaceRules(obj[key], replaceRules);
+    } else if (typeof obj[key] === 'object') {
+      obj[key] = applyReplaceRulesToNestedObject(obj[key], replaceRules);
+    }
+  }
+
+  return obj;
+}
+
 export async function extractPageData(
   replaceRules: ReplaceRule[],
   alias: Record<string, string | string[]>,
@@ -48,11 +63,7 @@ export async function extractPageData(
       );
 
       // 1. Replace rules for frontmatter & content
-      Object.keys(frontmatter).forEach(key => {
-        if (typeof frontmatter[key] === 'string') {
-          frontmatter[key] = applyReplaceRules(frontmatter[key], replaceRules);
-        }
-      });
+      applyReplaceRulesToNestedObject(frontmatter, replaceRules);
 
       const { flattenContent } = await flattenMdxContent(
         applyReplaceRules(strippedFrontMatter, replaceRules),

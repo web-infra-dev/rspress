@@ -21,8 +21,39 @@ test.describe('replace-rules test', async () => {
 
   test('Index page', async ({ page }) => {
     await page.goto(`http://localhost:${appPort}`);
-    const h1 = await page.$('h1');
-    const content = await page.evaluate(h1 => h1?.textContent, h1);
-    expect(content).toContain('h1');
+
+    // replace text in _meta.json
+    const nav = await page.$('.rspress-nav-menu');
+    const navContent = await page.evaluate(nav => nav?.textContent, nav);
+
+    // replace text in object frontmatter
+    const hero = await page.$('h1');
+    const heroContent = await page.evaluate(hero => hero?.textContent, hero);
+
+    expect(navContent).toEqual('bar-meta');
+    expect(heroContent).toEqual('bar-hero');
+  });
+
+  test('Foo page', async ({ page }) => {
+    await page.goto(`http://localhost:${appPort}/foo`);
+
+    // text in string frontmatter
+    const title = await page.$('title');
+    const titleContent = await page.evaluate(
+      title => title?.textContent,
+      title,
+    );
+
+    // replace text in shared mdx content
+    const h2 = await page.$('h2');
+    const h2Content = await page.evaluate(h2 => h2?.textContent, h2);
+
+    // replace text in mdx content
+    const text = await page.$('.rspress-doc p');
+    const textContent = await page.evaluate(text => text?.textContent, text);
+
+    expect(titleContent).toEqual('bar-title');
+    expect(h2Content).toEqual('bar-h2#');
+    expect(textContent).toEqual('bar-content');
   });
 });
