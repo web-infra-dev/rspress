@@ -433,3 +433,21 @@ export default {
   },
 };
 ```
+
+## replaceRules
+
+- Type: `{ search: string | RegExp; replace: string; }[]`
+- Default: `[]`
+
+你可以通过 `replaceRules` 来对整个站点设置文本替换规则，规则会作用于包括 `_meta.json` 文件、frontmatter 配置以及文档内容和标题等所有内容。
+
+```ts title="rspress.config.ts"
+export default {
+  replaceRules: [
+    {
+      search: /foo/g,
+      replace: 'bar',
+    },
+  ],
+};
+```

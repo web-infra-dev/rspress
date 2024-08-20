@@ -5,8 +5,8 @@ export default defineConfig({
   root: path.join(__dirname, 'doc'),
   replaceRules: [
     {
-      search: /content/g,
-      replace: 'h1',
+      search: /foo/g,
+      replace: 'bar',
     },
   ],
 });

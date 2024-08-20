@@ -434,3 +434,21 @@ export default {
   },
 };
 ```
+
+## replaceRules
+
+- Type: `{ search: string | RegExp; replace: string; }[]`
+- Default: `[]`
+
+You can set text replacement rules for the entire site through `replaceRules`. The rules will apply to everything including `_meta.json` files, frontmatter configurations, and document content and titles.
+
+```ts title="rspress.config.ts"
+export default {
+  replaceRules: [
+    {
+      search: /foo/g,
+      replace: 'bar',
+    },
+  ],
+};
+```
