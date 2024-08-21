@@ -10,7 +10,11 @@ import type {
 } from 'flexsearch';
 import FlexSearchDocument from 'flexsearch/dist/module/document';
 import searchIndexHash from 'virtual-search-index-hash';
-import { type PageIndexInfo, SEARCH_INDEX_NAME } from '@rspress/shared';
+import {
+  type PageIndexInfo,
+  removeTrailingSlash,
+  SEARCH_INDEX_NAME,
+} from '@rspress/shared';
 import type { SearchOptions } from '../types';
 import { LOCAL_INDEX, type Provider, type SearchQuery } from '../Provider';
 import { normalizeTextCase } from '../util';
@@ -52,7 +56,7 @@ export class LocalProvider implements Provider {
     const searchIndexLang = lang ? `.${lang}` : '';
 
     const result = await fetch(
-      `${__webpack_public_path__}static/${SEARCH_INDEX_NAME}${searchIndexVersion}${searchIndexLang}.${searchIndexHash[searchIndexGroupID]}.json`,
+      `${removeTrailingSlash(__webpack_public_path__)}/static/${SEARCH_INDEX_NAME}${searchIndexVersion}${searchIndexLang}.${searchIndexHash[searchIndexGroupID]}.json`,
     );
     return result.json();
   }
