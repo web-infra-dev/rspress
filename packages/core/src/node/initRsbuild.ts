@@ -170,7 +170,6 @@ async function createInternalBuildConfig(
       },
       include: [PACKAGE_ROOT, path.join(cwd, 'node_modules', RSPRESS_TEMP_DIR)],
       define: {
-        'process.env.__ASSET_PREFIX__': JSON.stringify(assetPrefix),
         'process.env.__IS_REACT_18__': JSON.stringify(reactVersion === 18),
         'process.env.TEST': JSON.stringify(process.env.TEST),
       },
