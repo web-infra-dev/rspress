@@ -14,14 +14,43 @@ MDX is a superset of Markdown, which means you can write Markdown files as usual
 
 When you want to use React components in Markdown files, you should name your files with `.mdx` extension. For example:
 
-```mdx
-// docs/index.mdx
+```mdx title="index.mdx"
 import { CustomComponent } from './custom';
 
 # Hello World
 
 <CustomComponent />
 ```
+
+All mdx files are also components and they can import each other:
+
+```mdx
+import Foo from './shared/foo.mdx';
+
+# Hello world
+
+<Foo />
+```
+
+::: tip
+
+Relevant components need to be excluded from routing meta info through [route.exclude](/api/config/config-basic#routeexclude) configuration.
+
+You can also place components in an adjacent directory outside [root](/api/config/config-basic#root). For example:
+
+```mdx
+// <cwd>/docs/index.mdx
+import { Button } from '../components/button';
+
+# Button
+
+<Button />
+
+// <cwd>/components/button.mdx
+export Button = () => <button />;
+```
+
+:::
 
 ## Front Matter
 
