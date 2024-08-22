@@ -12,10 +12,9 @@ MDX is a superset of Markdown, which means you can write Markdown files as usual
 
 ## Use Component
 
-When you want to use React components in Markdown files, you should name your files with `.mdx` extension. And remember to mark them [excluded from routes in `rspress.config.ts`](/api/config/config-basic#routeexclude).
+When you want to use React components in Markdown files, you should name your files with `.mdx` extension. For example:
 
-```mdx
-// docs/index.mdx
+```mdx title="index.mdx"
 import { CustomComponent } from './custom';
 
 # Hello World
@@ -23,34 +22,35 @@ import { CustomComponent } from './custom';
 <CustomComponent />
 ```
 
-Put all components under a different directory that is besides the `docs` directory if you don't want to configure `route.exclude`. For example:
+All mdx files are also components and they can import each other:
 
 ```mdx
-// <root>/docs/index.mdx
+import Foo from './shared/foo.mdx';
+
+# Hello world
+
+<Foo />
+```
+
+::: tip
+
+Relevant components need to be excluded from routing meta info through [route.exclude](/api/config/config-basic#routeexclude) configuration.
+
+You can also place components in an adjacent directory outside [root](/api/config/config-basic#root). For example:
+
+```mdx
+// <cwd>/docs/index.mdx
 import { Button } from '../components/button';
 
 # Button
 
 <Button />
 
-// <root>/components/button.mdx
+// <cwd>/components/button.mdx
 export Button = () => <button />;
 ```
 
-One step further, all MDX files are components, they can also import each other:
-
-```mdx
-import License from './license';
-import Contributing from './contributing'; // exclude these imported files from routes
-
-# Hello world
-
-<License />
-
----
-
-<Contributing />
-```
+:::
 
 ## Front Matter
 
