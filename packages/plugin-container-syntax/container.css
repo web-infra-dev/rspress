@@ -111,10 +111,6 @@
   color: var(--rp-container-note-text);
 }
 
-.rspress-doc .rspress-directive.note a {
-  color: var(--rp-container-details-link);
-}
-
 .rspress-doc .rspress-directive.tip {
   border-color: var(--rp-container-tip-border);
   background-color: var(--rp-container-tip-bg);
