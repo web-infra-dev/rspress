@@ -58,6 +58,10 @@ You can use the `:::` syntax to create custom containers and support custom titl
 **Input:**
 
 ```markdown
+:::note
+This is a `block` of type `note`
+:::
+
 :::tip
 This is a `block` of type `tip`
 :::
@@ -88,6 +92,10 @@ This is a `block` of `Custom Title`
 ```
 
 **Output:**
+
+:::note
+This is a `block` of type `note`
+:::
 
 :::tip
 This is a `block` of type `tip`
