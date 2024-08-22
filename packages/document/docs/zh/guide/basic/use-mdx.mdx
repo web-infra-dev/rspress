@@ -12,7 +12,7 @@ MDX 是 Markdown 的超集，这意味着你可以像往常一样编写 Markdown
 
 ## 使用组件
 
-当你想在 Markdown 文件中使用 React 组件时，你应该使用 `.mdx` 扩展名来命名你的文件。例如：
+当你想在 Markdown 文件中使用 React 组件时，你应该使用 `.mdx` 扩展名来命名你的文件。记得在 `rspress.config.ts` 的[路由配置中排除它们](/api/config/config-basic#routeexclude)。例如：
 
 ```mdx
 // docs/index.mdx
@@ -21,6 +21,36 @@ import { CustomComponent } from './custom';
 # Hello World
 
 <CustomComponent />
+```
+
+如果不想配置 `route.exclude`，可以将组件放到 `docs` 以外的相邻目录，例如：
+
+```mdx
+// <root>/docs/index.mdx
+import { Button } from '../components/button';
+
+# Button
+
+<Button />
+
+// <root>/components/button.mdx
+export Button = () => <button />;
+```
+
+更进一步地，所有的 mdx 文件都是组件，它们可以直接被引用：
+
+
+```mdx
+import License from './license';
+import Contributing from './contributing'; // 在路由配置中排除这两个被引用的文件
+
+# Hello world
+
+<License />
+
+---
+
+<Contributing />
 ```
 
 ## Front Matter

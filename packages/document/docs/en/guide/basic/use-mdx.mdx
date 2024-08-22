@@ -12,7 +12,7 @@ MDX is a superset of Markdown, which means you can write Markdown files as usual
 
 ## Use Component
 
-When you want to use React components in Markdown files, you should name your files with `.mdx` extension. For example:
+When you want to use React components in Markdown files, you should name your files with `.mdx` extension. And remember to mark them [excluded from routes in `rspress.config.ts`](/api/config/config-basic#routeexclude).
 
 ```mdx
 // docs/index.mdx
@@ -21,6 +21,35 @@ import { CustomComponent } from './custom';
 # Hello World
 
 <CustomComponent />
+```
+
+Put all components under a different directory that is besides the `docs` directory if you don't want to configure `route.exclude`. For example:
+
+```mdx
+// <root>/docs/index.mdx
+import { Button } from '../components/button';
+
+# Button
+
+<Button />
+
+// <root>/components/button.mdx
+export Button = () => <button />;
+```
+
+One step further, all MDX files are components, they can also import each other:
+
+```mdx
+import License from './license';
+import Contributing from './contributing'; // exclude these imported files from routes
+
+# Hello world
+
+<License />
+
+---
+
+<Contributing />
 ```
 
 ## Front Matter
