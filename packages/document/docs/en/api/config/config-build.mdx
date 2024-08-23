@@ -6,14 +6,14 @@
 
 Used to customize the configurations of Rsbuild. For detailed configurations, please refer to [Rsbuild - Config](https://rsbuild.dev/config/).
 
-- Example: Use [output.distPath](https://rsbuild.dev/config/output/dist-path) to change the output directory to `doc_dist`:
+- Example: Use [source.alias](https://rsbuild.dev/config/source/alias) to configure path aliases:
 
 ```ts title="rspress.config.ts"
 export default defineConfig({
   builderConfig: {
-    output: {
-      distPath: {
-        root: 'doc_dist',
+    source: {
+      alias: {
+        '@common': './src/common',
       },
     },
   },
@@ -36,19 +36,11 @@ export default defineConfig({
 });
 ```
 
-- Example: Use [source.alias](https://rsbuild.dev/config/source/alias) to configure path aliases:
+::: warning
 
-```ts title="rspress.config.ts"
-export default defineConfig({
-  builderConfig: {
-    source: {
-      alias: {
-        '@common': './src/common',
-      },
-    },
-  },
-});
-```
+If you want to modify the output directory, please use [outDir](/api/config/config-basic#outdir).
+
+:::
 
 ## builderPlugins
 
