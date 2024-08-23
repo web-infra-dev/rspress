@@ -6,14 +6,14 @@
 
 用于自定义 Rsbuild 的配置项，完整配置项请查看 [Rsbuild - 配置](https://rsbuild.dev/zh/config/)。
 
-- 示例：使用 [output.distPath](https://rsbuild.dev/config/output/dist-path) 将输出目录修改为 `doc_dist`：
+- 示例：使用 [source.alias](https://rsbuild.dev/config/source/alias) 配置路径别名：
 
 ```ts title="rspress.config.ts"
 export default defineConfig({
   builderConfig: {
-    output: {
-      distPath: {
-        root: 'doc_dist',
+    source: {
+      alias: {
+        '@common': './src/common',
       },
     },
   },
@@ -36,19 +36,11 @@ export default defineConfig({
 });
 ```
 
-- 示例：使用 [source.alias](https://rsbuild.dev/config/source/alias) 配置路径别名：
+::: warning
 
-```ts title="rspress.config.ts"
-export default defineConfig({
-  builderConfig: {
-    source: {
-      alias: {
-        '@common': './src/common',
-      },
-    },
-  },
-});
-```
+如果你想要修改产物输出目录，请使用 [outDir](/api/config/config-basic#outdir)。
+
+:::
 
 ## builderPlugins
 
