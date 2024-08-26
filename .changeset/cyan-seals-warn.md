@@ -1,0 +1,5 @@
+---
+"@rspress/core": patch
+---
+
+release
