@@ -84,7 +84,7 @@
   margin-top: 8px;
   color: var(--rp-c-text-code);
   transition: color 0.5s;
-  word-break: break-all;
+  overflow-wrap: break-word;
 }
 
 .overview-group-li {
