@@ -23,9 +23,15 @@ export interface PackageManagerTabProps {
 }
 
 function normalizeCommand(command: string): string {
+  // If command is yarn create foo@latest, remove `@latest`
+  if (command.startsWith('yarn create')) {
+    return command.replace(/(yarn create [^\s]+)@latest/, '$1');
+  }
+
   if (!command?.includes('install')) {
     return command;
   }
+
   // If command include `install` and package name, replace `install` with `add`
   const pureCommand = command
     .split(' ')
