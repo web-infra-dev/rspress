@@ -4,8 +4,7 @@ import type { NavItem, Sidebar } from '@rspress/shared';
 import { logger } from '@rspress/shared/logger';
 import { loadFrontMatter } from '@rspress/shared/node-utils';
 
-export async function detectFilePath(rawPath: string) {
-  const extensions = ['.mdx', '.md', '.tsx', '.jsx', '.ts', '.js'];
+export async function detectFilePath(rawPath: string, extensions: string[]) {
   // The params doesn't have extension name, so we need to try to find the file with the extension name.
   let realPath: string | undefined = rawPath;
   const fileExtname = path.extname(rawPath);
@@ -29,13 +28,14 @@ export async function detectFilePath(rawPath: string) {
 export async function extractInfoFromFrontmatter(
   filePath: string,
   rootDir: string,
+  extensions: string[],
 ): Promise<{
   realPath: string | undefined;
   title: string;
   overviewHeaders: string | undefined;
   context: string | undefined;
 }> {
-  const realPath = await detectFilePath(filePath);
+  const realPath = await detectFilePath(filePath, extensions);
   if (!realPath) {
     logger.warn(
       `Can't find the file: ${filePath}, please check it in "${path.join(

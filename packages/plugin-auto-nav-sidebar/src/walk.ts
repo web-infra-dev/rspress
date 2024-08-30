@@ -20,6 +20,7 @@ export async function scanSideMeta(
   rootDir: string,
   docsDir: string,
   routePrefix: string,
+  extensions: string[],
 ) {
   if (!(await fs.exists(workDir))) {
     logger.error(
@@ -43,7 +44,7 @@ export async function scanSideMeta(
     // If there exists a file with the same name of the directory folder
     // we don't need to generate SideMeta for this single file
     subItems = subItems.filter(item => {
-      const hasExtension = ['.md', '.mdx'].some(ext => item.endsWith(ext));
+      const hasExtension = extensions.some(ext => item.endsWith(ext));
       const hasSameBaseName = subItems.some(elem => {
         const baseName = elem.replace(/\.[^/.]+$/, '');
         return baseName === item.replace(/\.[^/.]+$/, '') && elem !== item;
@@ -69,6 +70,7 @@ export async function scanSideMeta(
               const { title } = await extractInfoFromFrontmatter(
                 filePath,
                 rootDir,
+                extensions,
               );
               label = title;
             };
@@ -85,7 +87,7 @@ export async function scanSideMeta(
               label,
             };
           }
-          return item;
+          return extensions.some(ext => item.endsWith(ext)) ? item : null;
         }),
       )
     ).filter(Boolean) as SideMeta;
@@ -103,6 +105,7 @@ export async function scanSideMeta(
           await extractInfoFromFrontmatter(
             path.resolve(workDir, metaItem),
             rootDir,
+            extensions,
           );
         const pureLink = `${relativePath}/${metaItem.replace(/\.mdx?$/, '')}`;
         return {
@@ -132,6 +135,7 @@ export async function scanSideMeta(
         const info = await extractInfoFromFrontmatter(
           path.resolve(workDir, name),
           rootDir,
+          extensions,
         );
         const title = label || info.title;
         const realPath = info.realPath;
@@ -154,8 +158,9 @@ export async function scanSideMeta(
           rootDir,
           docsDir,
           routePrefix,
+          extensions,
         );
-        const realPath = await detectFilePath(subDir);
+        const realPath = await detectFilePath(subDir, extensions);
         return {
           text: label,
           collapsible,
@@ -193,6 +198,7 @@ export async function walk(
   workDir: string,
   routePrefix = '/',
   docsDir: string,
+  extensions: string[],
 ) {
   // find the `_meta.json` file
   const rootMetaFile = path.resolve(workDir, '_meta.json');
@@ -230,6 +236,7 @@ export async function walk(
       workDir,
       docsDir,
       routePrefix,
+      extensions,
     );
   }
   return {
