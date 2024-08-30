@@ -157,6 +157,7 @@ function processLocales(
   root: string,
   defaultLang: string,
   defaultVersion: string,
+  extensions: string[],
 ) {
   return Promise.all(
     langs.map(async lang => {
@@ -168,7 +169,12 @@ function processLocales(
                   lang === defaultLang ? '' : `/${lang}`
                 }`,
               );
-              return walk(path.join(root, version, lang), routePrefix, root);
+              return walk(
+                path.join(root, version, lang),
+                routePrefix,
+                root,
+                extensions,
+              );
             }),
           )
         : [
@@ -176,12 +182,15 @@ function processLocales(
               path.join(root, lang),
               addTrailingSlash(lang === defaultLang ? '' : `/${lang}`),
               root,
+              extensions,
             ),
           ];
       return combineWalkResult(walks, versions);
     }),
   );
 }
+
+const defaultExtensions = ['.mdx', '.md', '.tsx', '.jsx', '.ts', '.js'];
 
 export function pluginAutoNavSidebar(): RspressPlugin {
   return {
@@ -196,6 +205,7 @@ export function pluginAutoNavSidebar(): RspressPlugin {
       const versions = config.multiVersion?.versions || [];
       const defaultLang = config.lang || '';
       const { default: defaultVersion = '' } = config.multiVersion || {};
+      const { extensions = defaultExtensions } = config?.route || {};
       if (hasLocales) {
         const metaInfo = await processLocales(
           langs,
@@ -203,6 +213,7 @@ export function pluginAutoNavSidebar(): RspressPlugin {
           config.root!,
           defaultLang,
           defaultVersion,
+          extensions,
         );
         config.themeConfig.locales = config.themeConfig.locales.map(
           (item, index) => ({
@@ -230,10 +241,11 @@ export function pluginAutoNavSidebar(): RspressPlugin {
                   path.join(config.root!, version),
                   routePrefix,
                   config.root!,
+                  extensions,
                 );
               }),
             )
-          : [await walk(config.root!, '/', config.root!)];
+          : [await walk(config.root!, '/', config.root!, extensions)];
 
         const combined = combineWalkResult(walks, versions);
 
