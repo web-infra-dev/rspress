@@ -22,11 +22,15 @@ export function SuggestItem({
   setCurrentSuggestionIndex,
   inCurrentDocIndex,
   scrollTo,
+  onMouseMove,
 }: {
   suggestion: DefaultMatchResultItem;
   closeSearch: () => void;
   isCurrent: boolean;
-  setCurrentSuggestionIndex: () => void;
+  setCurrentSuggestionIndex: (
+    event: React.MouseEvent<HTMLLIElement, MouseEvent>,
+  ) => void;
+  onMouseMove: (event: React.MouseEvent<HTMLLIElement, MouseEvent>) => void;
   inCurrentDocIndex: boolean;
   scrollTo: (top: number, height: number) => void;
 }) {
@@ -118,6 +122,7 @@ export function SuggestItem({
       key={suggestion.link}
       className={`${styles.suggestItem} ${isCurrent ? styles.current : ''}`}
       onMouseEnter={setCurrentSuggestionIndex}
+      onMouseMove={onMouseMove}
       ref={selfRef}
     >
       <a

@@ -61,6 +61,13 @@ export function SearchPanel({ focused, setFocused }: SearchPanelProps) {
   const pageSearcherConfigRef = useRef<PageSearcherConfig | null>(null);
   const searchResultRef = useRef(null);
   const searchResultTabRef = useRef(null);
+  const mousePositionRef = useRef<{
+    pageX: number | null;
+    pageY: number | null;
+  }>({
+    pageX: null,
+    pageY: null,
+  });
 
   // only scroll after keydown arrow up and arrow down.
   const [canScroll, setCanScroll] = useState(false);
@@ -394,9 +401,22 @@ export function SearchPanel({ focused, setFocused }: SearchPanelProps) {
                       key={`${suggestion.title}-${suggestionIndex}`}
                       suggestion={suggestion}
                       isCurrent={suggestionIndex === currentSuggestionIndex}
-                      setCurrentSuggestionIndex={() => {
+                      setCurrentSuggestionIndex={event => {
+                        if (
+                          mousePositionRef.current.pageX === event.pageX &&
+                          mousePositionRef.current.pageY === event.pageY
+                        ) {
+                          return;
+                        }
+
                         setCanScroll(false);
                         setCurrentSuggestionIndex(suggestionIndex);
+                      }}
+                      onMouseMove={event => {
+                        mousePositionRef.current = {
+                          pageX: event.pageX,
+                          pageY: event.pageY,
+                        };
                       }}
                       closeSearch={() => {
                         clearSearchState();
