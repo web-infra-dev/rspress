@@ -57,7 +57,7 @@
     "fs-extra": "11.2.0",
     "get-port": "5.1.1",
     "husky": "^8.0.0",
-    "lint-staged": "~13.3.0",
+    "lint-staged": "~15.2.10",
     "nx": "17.0.2",
     "playwright": "1.46.0",
     "prettier": "3.3.0",
