@@ -20,9 +20,9 @@ export async function dev(options: DevOptions): Promise<ServerInstance> {
   const isProd = false;
   const pluginDriver = new PluginDriver(config, isProd);
   await pluginDriver.init();
+  const modifiedConfig = await pluginDriver.modifyConfig();
 
   try {
-    const modifiedConfig = await pluginDriver.modifyConfig();
     await pluginDriver.beforeBuild();
 
     // empty temp dir before build
@@ -44,6 +44,6 @@ export async function dev(options: DevOptions): Promise<ServerInstance> {
 
     return server;
   } finally {
-    await writeSearchIndex(config);
+    await writeSearchIndex(modifiedConfig);
   }
 }
