@@ -6,6 +6,15 @@
   padding-top: 5rem;
   padding-bottom: 6rem;
   height: auto;
+
+  max-width: 72rem;
+  margin: 0 auto;
+}
+
+@media (min-width: 800px) and (max-width: 1000px) {
+  .root {
+    max-width: 800px;
+  }
 }
 
 .header {
