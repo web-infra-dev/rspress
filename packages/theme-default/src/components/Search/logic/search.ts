@@ -1,16 +1,10 @@
-import type { PageIndexInfo, RemotePageInfo } from '@rspress/shared';
 import { normalizeHrefInRuntime as normalizeHref } from '@rspress/runtime';
+import type { Header, PageIndexInfo, RemotePageInfo } from '@rspress/shared';
 import {
   LOCAL_INDEX,
   type NormalizedSearchResultItem,
   type Provider,
 } from './Provider';
-import {
-  backTrackHeaders,
-  byteToCharIndex,
-  getStrByteLength,
-  normalizeTextCase,
-} from './util';
 import { LocalProvider } from './providers/LocalProvider';
 import { RemoteProvider } from './providers/RemoteProvider';
 import {
@@ -19,6 +13,12 @@ import {
   RenderType,
   type SearchOptions,
 } from './types';
+import {
+  backTrackHeaders,
+  byteToCharIndex,
+  getStrByteLength,
+  normalizeTextCase,
+} from './util';
 
 const THRESHOLD_CONTENT_LENGTH = 100;
 
@@ -84,18 +84,13 @@ export class PageSearcher {
       // Title Match
       this.#matchTitle(item, normaizedKeyWord, matchedResult);
       // Header match
-      const matchedHeader = this.#matchHeader(
+      const matchHeaderSet = this.#matchHeader(
         item,
         normaizedKeyWord,
         matchedResult,
       );
-      // If we have matched header, we don't need to match content
-      // Because the header is already in the content
-      if (matchedHeader) {
-        return;
-      }
       // Content match
-      this.#matchContent(item, normaizedKeyWord, matchedResult);
+      this.#matchContent(item, normaizedKeyWord, matchedResult, matchHeaderSet);
     });
     return matchedResult;
   }
@@ -131,7 +126,11 @@ export class PageSearcher {
     item: PageIndexInfo,
     query: string,
     matchedResult: DefaultMatchResultItem[],
-  ): boolean {
+  ) {
+    /**
+     * 记录当前匹配到的 header，用于过滤后续的 content 匹配
+     */
+    const matchHeaderSet = new WeakSet<Header>();
     const { toc = [], domain = '', title = '' } = item;
     for (const [index, header] of toc.entries()) {
       const normalizedHeader = normalizeTextCase(header.text);
@@ -158,16 +157,17 @@ export class PageSearcher {
           query,
           group: this.#options.extractGroupName(item.routePath),
         });
-        return true;
+        matchHeaderSet.add(header);
       }
     }
-    return false;
+    return matchHeaderSet;
   }
 
   #matchContent(
     item: PageIndexInfo,
     query: string,
     matchedResult: DefaultMatchResultItem[],
+    matchHeaderSet?: WeakSet<Header>,
   ) {
     const { content, toc, domain } = item;
     if (!content.length) {
@@ -201,6 +201,11 @@ export class PageSearcher {
       const highlightStartIndex = (item as RemotePageInfo)._matchesPosition
         .content[0].start;
       const currentHeader = getCurrentHeader(highlightStartIndex);
+
+      if (matchHeaderSet?.has(currentHeader)) {
+        return;
+      }
+
       const statementStartIndex = byteToCharIndex(content, highlightStartIndex);
       const statementEndIndex = byteToCharIndex(
         content,
@@ -260,18 +265,22 @@ export class PageSearcher {
           length: getStrByteLength(query),
         },
       ];
-      matchedResult.push({
-        type: 'content',
-        title: item.title,
-        header: currentHeader?.text ?? item.title,
-        statement,
-        highlightInfoList,
-        link: `${domain}${normalizeHref(item.routePath)}${
-          currentHeader ? `#${currentHeader.id}` : ''
-        }`,
-        query,
-        group: this.#options.extractGroupName(item.routePath),
-      });
+      if (!matchHeaderSet?.has(currentHeader)) {
+        matchedResult.push({
+          type: 'content',
+          title: item.title,
+          header: currentHeader?.text ?? item.title,
+          statement,
+          highlightInfoList,
+          link: `${domain}${normalizeHref(item.routePath)}${
+            currentHeader ? `#${currentHeader.id}` : ''
+          }`,
+          query,
+          group: this.#options.extractGroupName(item.routePath),
+        });
+        // 同一区块只匹配一次
+        matchHeaderSet?.add(currentHeader);
+      }
       queryIndex = normalizedContent.indexOf(
         query,
         queryIndex + statement.length - highlightIndex,
