@@ -543,7 +543,7 @@ export default defineConfig({
 - Type: `boolean`
 - Default: `false`
 
-在页面切换的时候是否显示转场动画，例如：
+在页面切换的时候是否显示转场动画，使用 [View Transition API](https://developer.mozilla.org/docs/Web/API/View_Transitions_API) 实现。例如：
 
 > 转场动画暂时不能配置。
 
@@ -553,6 +553,25 @@ import { defineConfig } from 'rspress/config';
 export default defineConfig({
   themeConfig: {
     enableContentAnimation: true,
+  },
+});
+```
+
+## enableAppearanceAnimation
+
+- Type: `boolean`
+- Default: `false`
+
+在浅色和深色主题之间切换时是否有动画效果，使用 [View Transition API](https://developer.mozilla.org/docs/Web/API/View_Transitions_API) 实现。例如：
+
+> 切换动画暂时不能配置。
+
+```ts title="rspress.config.ts"
+import { defineConfig } from 'rspress/config';
+
+export default defineConfig({
+  themeConfig: {
+    enableAppearanceAnimation: true,
   },
 });
 ```

@@ -46,6 +46,7 @@ export default defineConfig({
   },
   themeConfig: {
     enableContentAnimation: true,
+    enableAppearanceAnimation: false,
     footer: {
       message: '© 2024 Bytedance Inc. All Rights Reserved.',
     },

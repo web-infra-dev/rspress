@@ -557,7 +557,7 @@ export default defineConfig({
 - Type: `boolean`
 - Default: `false`
 
-Whether there is an animation effect when switching between pages. For example:
+Whether there is animation effect when switching between pages. It is implemented with [View Transition API](https://developer.mozilla.org/docs/Web/API/View_Transitions_API). For example:
 
 > The animation is not configurable for now.
 
@@ -571,12 +571,31 @@ export default defineConfig({
 });
 ```
 
+## enableAppearanceAnimation
+
+- Type: `boolean`
+- Default: `false`
+
+Whether there is animation effect when switching between light and dark theme. It is implemented with [View Transition API](https://developer.mozilla.org/docs/Web/API/View_Transitions_API). For example:
+
+> The animation is not configurable for now.
+
+```ts title="rspress.config.ts"
+import { defineConfig } from 'rspress/config';
+
+export default defineConfig({
+  themeConfig: {
+    enableAppearanceAnimation: true,
+  },
+});
+```
+
 ## search
 
 - Type: `boolean`
 - Default: `true`
 
-Whether to display the search box. for example:
+Whether to display the search box. For example:
 
 ```ts title="rspress.config.ts"
 import { defineConfig } from 'rspress/config';
@@ -593,7 +612,7 @@ export default defineConfig({
 - Type: `string`
 - Default: `Source`
 
-The text of the source code button. for example:
+The text of the source code button. For example:
 
 ```ts title="rspress.config.ts"
 import { defineConfig } from 'rspress/config';

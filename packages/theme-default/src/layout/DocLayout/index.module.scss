@@ -20,10 +20,6 @@
   view-transition-name: flip;
 }
 
-:global(*) {
-  view-transition-name: none;
-}
-
 @keyframes fade-out {
   from {
     opacity: 1;

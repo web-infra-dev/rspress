@@ -58,7 +58,8 @@ export function useI18n<T = Record<string, Record<string, string>>>() {
 
 declare global {
   interface Document {
-    startViewTransition: (callback: () => void) => void;
+    // @ts-ignore view-transition new API type is failed in tsc, but it works in vscode
+    startViewTransition: (callback: () => void) => any;
   }
 }
 
