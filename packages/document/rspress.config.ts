@@ -1,7 +1,7 @@
-import { defineConfig } from 'rspress/config';
-import { pluginOpenGraph } from 'rsbuild-plugin-open-graph';
 import { pluginGoogleAnalytics } from 'rsbuild-plugin-google-analytics';
+import { pluginOpenGraph } from 'rsbuild-plugin-open-graph';
 import { pluginFontOpenSans } from 'rspress-plugin-font-open-sans';
+import { defineConfig } from 'rspress/config';
 
 export default defineConfig({
   root: 'docs',
