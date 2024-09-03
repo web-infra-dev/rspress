@@ -11,12 +11,6 @@
   margin: 0 auto;
 }
 
-@media (min-width: 800px) and (max-width: 1000px) {
-  .root {
-    max-width: 800px;
-  }
-}
-
 .header {
   display: flex;
   align-items: center;
