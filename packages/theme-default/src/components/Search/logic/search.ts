@@ -190,6 +190,10 @@ export class PageSearcher {
       });
       return toc[currentHeaderIndex];
     };
+
+    const isHeaderMatched = (header: Header) =>
+      header && matchHeaderSet?.has(header);
+
     if (queryIndex === -1) {
       // In case fuzzy search
       // We get the matched content position from server response
@@ -202,7 +206,7 @@ export class PageSearcher {
         .content[0].start;
       const currentHeader = getCurrentHeader(highlightStartIndex);
 
-      if (currentHeader && matchHeaderSet?.has(currentHeader)) {
+      if (isHeaderMatched(currentHeader)) {
         return;
       }
 
@@ -265,7 +269,7 @@ export class PageSearcher {
           length: getStrByteLength(query),
         },
       ];
-      if (!currentHeader || !matchHeaderSet?.has(currentHeader)) {
+      if (!isHeaderMatched(currentHeader)) {
         matchedResult.push({
           type: 'content',
           title: item.title,
