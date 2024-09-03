@@ -202,7 +202,7 @@ export class PageSearcher {
         .content[0].start;
       const currentHeader = getCurrentHeader(highlightStartIndex);
 
-      if (matchHeaderSet?.has(currentHeader)) {
+      if (currentHeader && matchHeaderSet?.has(currentHeader)) {
         return;
       }
 
@@ -265,7 +265,7 @@ export class PageSearcher {
           length: getStrByteLength(query),
         },
       ];
-      if (!matchHeaderSet?.has(currentHeader)) {
+      if (!currentHeader || !matchHeaderSet?.has(currentHeader)) {
         matchedResult.push({
           type: 'content',
           title: item.title,
@@ -279,7 +279,7 @@ export class PageSearcher {
           group: this.#options.extractGroupName(item.routePath),
         });
         // 同一区块只匹配一次
-        matchHeaderSet?.add(currentHeader);
+        currentHeader && matchHeaderSet?.add(currentHeader);
       }
       queryIndex = normalizedContent.indexOf(
         query,
