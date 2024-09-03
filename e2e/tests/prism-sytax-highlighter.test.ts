@@ -21,11 +21,14 @@ test.describe('markdown highlight test', async () => {
   test('does highlight work', async ({ page }) => {
     await page.goto(`http://localhost:${appPort}`);
 
-    const text = await page
+    const textOc = await page
       .locator('.language-objectivec .token.macro.directive-hash')
       .evaluate(node => node.textContent);
 
-    expect(text).toBe('#');
+    const tokenGo = await page.locator('.language-go .token').count();
+
+    expect(textOc).toBe('#');
+    expect(tokenGo).toBe(14);
   });
 
   test('alias content match', async ({ page }) => {

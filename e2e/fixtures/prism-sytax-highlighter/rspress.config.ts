@@ -8,6 +8,7 @@ export default defineConfig({
       ['js', 'javascript'],
       ['oc', 'objectivec'],
       ['mdx', 'tsx'],
+      ['go', 'go'],
     ],
   },
 });

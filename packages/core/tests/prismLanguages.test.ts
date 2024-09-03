@@ -13,6 +13,7 @@ describe('automatic import of prism languages', () => {
         highlightLanguages: [
           ['js', 'javascript'],
           ['oc', 'objectivec'],
+          ['go', 'go'],
         ],
       },
     },

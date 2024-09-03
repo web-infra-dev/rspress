@@ -19,3 +19,13 @@ int main(int argc, const char * argv[]) {
     return 0;
 }
 ```
+
+```go
+package main
+
+import "fmt"
+
+func main() {
+    fmt.Println("Hello, World!")
+}
+```

@@ -2,6 +2,9 @@
 
 exports[`automatic import of prism languages > prism languages aliases should be configurable to users 1`] = `
 "export const aliases = {
+  "go": [
+    "go"
+  ],
   "javascript": [
     "js"
   ],
@@ -13,7 +16,9 @@ exports[`automatic import of prism languages > prism languages aliases should be
   ]
 };
     export const languages = {
-      "javascript": require(
+      "go": require(
+          "react-syntax-highlighter/dist/cjs/languages/prism/go"
+        ).default,"javascript": require(
           "react-syntax-highlighter/dist/cjs/languages/prism/javascript"
         ).default,"objectivec": require(
           "react-syntax-highlighter/dist/cjs/languages/prism/objectivec"
