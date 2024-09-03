@@ -56,6 +56,13 @@ export function useI18n<T = Record<string, Record<string, string>>>() {
   return useCallback((key: keyof T) => i18nTextData[key][lang], [lang]);
 }
 
+declare global {
+  interface Document {
+    // @ts-ignore this type is failed in tsc, but it works in vscode
+    startViewTransition: (callback: () => void) => void;
+  }
+}
+
 export function useViewTransition(dom: ReactElement) {
   /**
    * use a pesudo element to hold the actual JSX element so we can schedule the
