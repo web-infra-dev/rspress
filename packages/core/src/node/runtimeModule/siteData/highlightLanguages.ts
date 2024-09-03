@@ -42,8 +42,9 @@ export function handleHighlightLanguages(
           temp.push(lang);
         }
 
-        highlightLanguages.add(name);
+        // delete first, user may config alias to itself like ['go', 'go']
         highlightLanguages.delete(lang);
+        highlightLanguages.add(name);
         return;
       }
 
