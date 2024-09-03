@@ -94,9 +94,13 @@ export interface Config {
    */
   hideNavbar?: 'always' | 'auto' | 'never';
   /**
-   * Whether to enable the animation for translation pages
+   * Whether to enable view transition animation for pages switching
    */
   enableContentAnimation?: boolean;
+  /**
+   * Whether to enable view transition animation for the theme
+   */
+  enableAppearanceAnimation?: boolean;
   /**
    * Enable scroll to top button on documentation
    * @default false
@@ -107,10 +111,6 @@ export interface Config {
    * @default 'auto'
    */
   localeRedirect?: 'auto' | 'never';
-  /**
-   * Whether to enable view transition animation for the theme
-   */
-  enableAppearanceAnimation?: boolean;
 }
 
 /**

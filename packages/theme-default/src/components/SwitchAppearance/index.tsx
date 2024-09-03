@@ -35,7 +35,7 @@ export function SwitchAppearance({ onClick }: { onClick?: () => void }) {
 
   const handleClick = (event: MouseEvent) => {
     const supported = supportAppearanceTransition();
-    const enabled = siteData.themeConfig.enableAppearanceAnimation;
+    const enabled = siteData?.themeConfig?.enableAppearanceAnimation;
 
     const nextTheme = theme === 'dark' ? 'light' : 'dark';
     const isDark = nextTheme === 'dark';
