@@ -16,4 +16,8 @@
   .menu-item:before {
     display: none;
   }
+
+  a:only-child .social-links-icon {
+    margin-left: 0rem;
+  }
 }
