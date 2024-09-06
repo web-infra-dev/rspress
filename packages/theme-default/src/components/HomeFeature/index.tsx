@@ -56,7 +56,7 @@ export function HomeFeature({
                 {icon ? (
                   <div className="flex-center">
                     <div className="rspress-home-feature-icon w-12 h-12 text-3xl text-center">
-                      {icon}
+                      {renderHtmlOrText(icon)}
                     </div>
                   </div>
                 ) : null}
