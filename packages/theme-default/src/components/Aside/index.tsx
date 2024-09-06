@@ -47,7 +47,7 @@ export function Aside(props: { headers: Header[]; outlineTitle: string }) {
           title={parseInlineMarkdownText(header.text)}
           className="aside-link transition-all duration-300 hover:text-text-1 text-text-2 block"
           style={{
-            paddingLeft: (header.depth - baseHeaderLevel) * 12,
+            marginLeft: (header.depth - baseHeaderLevel) * 12,
             fontWeight: 'semibold',
           }}
           onClick={e => {
