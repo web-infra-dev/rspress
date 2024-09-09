@@ -760,8 +760,8 @@ importers:
         specifier: ^18.3.3
         version: 18.3.3
       framer-motion:
-        specifier: 11.3.2
-        version: 11.3.2
+        specifier: 11.5.4
+        version: 11.5.4
       rsbuild-plugin-google-analytics:
         specifier: ^1.0.2
         version: 1.0.2
@@ -4156,7 +4156,7 @@ packages:
   /@rstack-dev/doc-ui@1.4.2:
     resolution: {integrity: sha512-dC1L65hIqzO0OwPtKXf7Y+wJJCy5FudEibUf8XW9AAaTM47/izBR768zTdhv+IIwk+40ZsBp7jnIIEsR05BnNQ==}
     dependencies:
-      framer-motion: 11.3.8
+      framer-motion: 11.5.4
     transitivePeerDependencies:
       - '@emotion/is-prop-valid'
       - react
@@ -6245,25 +6245,8 @@ packages:
       fetch-blob: 3.2.0
     dev: false
 
-  /framer-motion@11.3.2:
-    resolution: {integrity: sha512-RgjSzrNFZmedWcvmW4MMc84A7UcoY37jocadE3Mbg3o+UMofodfyeNnYD/HR15UhP22/bb5KOebNhYOj4mYkpQ==}
-    peerDependencies:
-      '@emotion/is-prop-valid': '*'
-      react: ^18.0.0
-      react-dom: ^18.0.0
-    peerDependenciesMeta:
-      '@emotion/is-prop-valid':
-        optional: true
-      react:
-        optional: true
-      react-dom:
-        optional: true
-    dependencies:
-      tslib: 2.6.1
-    dev: true
-
-  /framer-motion@11.3.8:
-    resolution: {integrity: sha512-1D+RDTsIp4Rz2dq/oToqSEc9idEQwgBRQyBq4rGpFba+0Z+GCbj9z1s0+ikFbanWe3YJ0SqkNlDe08GcpFGj5A==}
+  /framer-motion@11.5.4:
+    resolution: {integrity: sha512-E+tb3/G6SO69POkdJT+3EpdMuhmtCh9EWuK4I1DnIC23L7tFPrl8vxP+LSovwaw6uUr73rUbpb4FgK011wbRJQ==}
     peerDependencies:
       '@emotion/is-prop-valid': '*'
       react: ^18.0.0
