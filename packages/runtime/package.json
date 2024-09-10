@@ -24,6 +24,8 @@
   "scripts": {
     "dev": "modern build -w",
     "build": "modern build",
+    "build:rslib:wip": "rslib build",
+    "--wip": "No emit require warn when bundleless + ESM",
     "reset": "rimraf ./**/node_modules",
     "test": "echo nothing"
   },
