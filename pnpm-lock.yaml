@@ -4,6 +4,9 @@ settings:
   autoInstallPeers: true
   excludeLinksFromLockfile: false
 
+overrides:
+  '@rslib/core': link:../rslib/packages/core
+
 importers:
 
   .:
@@ -23,6 +26,9 @@ importers:
       '@playwright/test':
         specifier: 1.46.0
         version: 1.46.0
+      '@rslib/core':
+        specifier: link:../rslib/packages/core
+        version: link:../rslib/packages/core
       '@types/cross-spawn':
         specifier: ^6.0.2
         version: 6.0.2

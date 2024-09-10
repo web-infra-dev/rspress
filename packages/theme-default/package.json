@@ -28,6 +28,8 @@
   "scripts": {
     "dev": "modern build -w",
     "build": "modern build",
+    "build:rslib:wip": "rslib build",
+    "--wip--": "SVGR and tailwindcss is not ready",
     "reset": "rimraf ./**/node_modules",
     "test": "echo nothing"
   },

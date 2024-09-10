@@ -16,6 +16,7 @@
   "scripts": {
     "dev": "modern build -w",
     "build": "modern build",
+    "build:rslib": "rslib build",
     "reset": "rimraf ./**/node_modules",
     "test": "vitest run --passWithNoTests"
   },

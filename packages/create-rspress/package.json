@@ -15,6 +15,7 @@
   "scripts": {
     "dev": "modern build -w",
     "build": "modern build",
+    "build:rslib": "rslib build",
     "build:watch": "modern build -w",
     "reset": "rimraf ./**/node_modules",
     "new": "modern new",

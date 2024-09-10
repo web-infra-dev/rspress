@@ -46,6 +46,7 @@
     "@modern-js/module-tools": "2.59.0",
     "@modern-js/tsconfig": "2.59.0",
     "@playwright/test": "1.46.0",
+    "@rslib/core": "latest",
     "@types/cross-spawn": "^6.0.2",
     "@types/fs-extra": "11.0.4",
     "@types/node": "^18.11.17",
@@ -67,5 +68,10 @@
   "publishConfig": {
     "access": "public",
     "registry": "https://registry.npmjs.org/"
+  },
+  "pnpm": {
+    "overrides": {
+      "@rslib/core": "link:../rslib/packages/core"
+    }
   }
 }

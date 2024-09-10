@@ -30,6 +30,7 @@
   "scripts": {
     "dev": "modern build -w",
     "build": "modern build",
+    "build:rslib": "rslib build",
     "build:watch": "modern build -w",
     "test": "vitest run",
     "reset": "rimraf ./**/node_modules",
