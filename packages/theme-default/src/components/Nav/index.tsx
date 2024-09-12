@@ -69,7 +69,7 @@ export function Nav(props: NavProps) {
               langs={langs}
               base={base}
               key={item.link}
-              shrink={menuItems.length > 5}
+              compact={menuItems.length > 5}
               {...item}
             />
           );
