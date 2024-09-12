@@ -12,6 +12,8 @@
   "scripts": {
     "dev": "modern build -w",
     "build": "modern build",
+    "build:rslib:wip": "rslib build",
+    "--wip--": "entry module with dynamic import will break concatenation. cli failed, web is fine.",
     "reset": "rimraf ./**/node_modules",
     "test": "vitest run --passWithNoTests"
   },

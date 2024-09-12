@@ -21,7 +21,8 @@
   "main": "./dist/index.js",
   "scripts": {
     "new": "modern new",
-    "build": "modern build",
+    "build:rslib:wip": "rslib build",
+    "--wip--": "dynamic require will try to bundle all possible modules",
     "dev": "modern build --watch"
   },
   "dependencies": {
