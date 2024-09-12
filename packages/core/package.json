@@ -86,7 +86,7 @@
     "source-map": "0.7.4",
     "unified": "^10.1.2",
     "unist-util-visit": "^4.1.1",
-    "unist-util-visit-children": "^2.0.1",
+    "unist-util-visit-children": "^3.0.0",
     "yaml-front-matter": "^4.1.1"
   },
   "devDependencies": {
