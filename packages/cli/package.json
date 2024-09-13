@@ -45,7 +45,7 @@
     "chokidar": "^3.6.0"
   },
   "devDependencies": {
-    "@types/jest": "~29.5.12",
+    "@types/jest": "~29.5.13",
     "@types/node": "^18.11.17",
     "@types/react": "^18.3.5",
     "rimraf": "^3.0.2",
