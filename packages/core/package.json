@@ -94,7 +94,7 @@
     "@modern-js/tsconfig": "2.60.0",
     "@types/body-scroll-lock": "^3.1.2",
     "@types/hast": "3.0.4",
-    "@types/html-to-text": "^8.1.1",
+    "@types/html-to-text": "^9.0.4",
     "@types/jest": "~29.5.13",
     "@types/lodash-es": "^4.17.12",
     "@types/mdast": "^3.0.15",

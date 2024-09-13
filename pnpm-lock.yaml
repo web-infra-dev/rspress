@@ -666,8 +666,8 @@ importers:
         specifier: 3.0.4
         version: 3.0.4
       '@types/html-to-text':
-        specifier: ^8.1.1
-        version: 8.1.1
+        specifier: ^9.0.4
+        version: 9.0.4
       '@types/jest':
         specifier: ~29.5.13
         version: 29.5.13
@@ -1441,8 +1441,8 @@ importers:
         specifier: 3.0.4
         version: 3.0.4
       '@types/html-to-text':
-        specifier: ^8.1.1
-        version: 8.1.1
+        specifier: ^9.0.4
+        version: 9.0.4
       '@types/is-html':
         specifier: ^2.0.2
         version: 2.0.2
@@ -4184,8 +4184,8 @@ packages:
     dependencies:
       '@types/unist': 3.0.2
 
-  /@types/html-to-text@8.1.1:
-    resolution: {integrity: sha512-QFcqfc7TiVbvIX8Fc2kWUxakruI1Ay6uitaGCYHzI5M0WHQROV5D2XeSaVrK0FmvssivXum4yERVnJsiuH61Ww==}
+  /@types/html-to-text@9.0.4:
+    resolution: {integrity: sha512-pUY3cKH/Nm2yYrEmDlPR1mR7yszjGx4DrwPjQ702C4/D5CwHuZTgZdIdwPkRbcuhs7BAh2L5rg3CL5cbRiGTCQ==}
     dev: true
 
   /@types/interpret@1.1.3:
