@@ -12,6 +12,7 @@ interface Props {
   langs?: string[];
   base: string;
   rightIcon?: React.ReactNode;
+  compact?: boolean;
 }
 
 export function NavMenuSingleItem(
@@ -28,7 +29,7 @@ export function NavMenuSingleItem(
         key={item.text}
         className={`rspress-nav-menu-item ${styles.singleItem} ${
           isActive ? styles.activeItem : ''
-        } text-sm font-medium mx-1.5 px-3 py-2 flex items-center`}
+        } text-sm font-medium ${item.compact ? 'mx-0.5' : 'mx-1.5'} px-3 py-2 flex items-center`}
       >
         <Tag tag={item.tag} />
         {item.text}
