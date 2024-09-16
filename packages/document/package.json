@@ -17,7 +17,7 @@
   "author": "",
   "license": "MIT",
   "devDependencies": {
-    "@rstack-dev/doc-ui": "1.5.0",
+    "@rstack-dev/doc-ui": "1.5.2",
     "@types/react": "^18.3.5",
     "framer-motion": "11.5.4",
     "rsbuild-plugin-google-analytics": "^1.0.2",

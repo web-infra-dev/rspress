@@ -23,10 +23,10 @@
   },
   "dependencies": {
     "@mdx-js/mdx": "2.3.0",
-    "@rsbuild/core": "1.0.2",
+    "@rsbuild/core": "1.0.4",
     "@rsbuild/plugin-babel": "1.0.1",
     "@rsbuild/plugin-less": "1.0.1",
-    "@rsbuild/plugin-react": "1.0.1",
+    "@rsbuild/plugin-react": "1.0.2",
     "@rsbuild/plugin-sass": "1.0.1",
     "@rsbuild/plugin-solid": "1.0.1",
     "@rspress/shared": "workspace:*",
