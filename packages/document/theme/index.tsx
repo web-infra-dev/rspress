@@ -5,15 +5,7 @@ import { ToolStack } from './components/ToolStack';
 import './index.css';
 
 function HomeLayout() {
-  return (
-    <BasicHomeLayout
-      afterFeatures={
-        <>
-          <ToolStack />
-        </>
-      }
-    />
-  );
+  return <BasicHomeLayout afterFeatures={<ToolStack />} />;
 }
 
 const Layout = () => {
