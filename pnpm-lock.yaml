@@ -481,8 +481,8 @@ importers:
         specifier: 5.3.0
         version: 5.3.0
       chokidar:
-        specifier: ^3.6.0
-        version: 3.6.0
+        specifier: ^4.0.1
+        version: 4.0.1
     devDependencies:
       '@types/jest':
         specifier: ~29.5.13
@@ -4983,6 +4983,13 @@ packages:
     optionalDependencies:
       fsevents: 2.3.3
 
+  /chokidar@4.0.1:
+    resolution: {integrity: sha512-n8enUVCED/KVRQlab1hr3MVpcVMvxtZjmEa956u+4YijlmQED223XMSYj2tLuKvr4jcCTzNNMpQDUer72MMmzA==}
+    engines: {node: '>= 14.16.0'}
+    dependencies:
+      readdirp: 4.0.1
+    dev: false
+
   /chrome-trace-event@1.0.4:
     resolution: {integrity: sha512-rNjApaLzuwaOTjCiT8lSDdGN1APCiqkChLMJxJPWLunPAt5fy8xgU9/jNOchV84wfIxrA0lRQB7oCT8jrn/wrQ==}
     engines: {node: '>=6.0'}
@@ -8551,6 +8558,11 @@ packages:
     engines: {node: '>=8.10.0'}
     dependencies:
       picomatch: 2.3.1
+
+  /readdirp@4.0.1:
+    resolution: {integrity: sha512-GkMg9uOTpIWWKbSsgwb5fA4EavTR+SG/PMPoAY8hkhHfEEY0/vqljY+XHqtDf2cr2IJtoNRDbrrEpZUiZCkYRw==}
+    engines: {node: '>= 14.16.0'}
+    dev: false
 
   /reduce-configs@1.0.0:
     resolution: {integrity: sha512-/JCYSgL/QeXXsq0Lv/7kOZfqvof7vyzHWfyNQPt3c6vc73mU4WRyT8RJ6ZH5Ci08vUOqXwk7jkZy6BycHTDD9w==}
