@@ -42,7 +42,7 @@
     "copy-to-clipboard": "^3.3.3",
     "flexsearch": "0.7.43",
     "github-slugger": "^2.0.0",
-    "hast-util-from-html": "^2.0.2",
+    "hast-util-from-html": "^2.0.3",
     "html-to-text": "^9.0.5",
     "htmr": "^1.0.2",
     "is-html": "^3.1.0",
@@ -56,8 +56,8 @@
     "rspack-plugin-virtual-module": "0.1.13"
   },
   "devDependencies": {
-    "@modern-js/plugin-tailwindcss": "2.60.0",
-    "@modern-js/tsconfig": "2.60.0",
+    "@modern-js/plugin-tailwindcss": "2.60.1",
+    "@modern-js/tsconfig": "2.60.1",
     "@types/body-scroll-lock": "^3.1.2",
     "@types/hast": "3.0.4",
     "@types/html-to-text": "^9.0.4",
@@ -66,11 +66,11 @@
     "@types/lodash-es": "^4.17.12",
     "@types/mdast": "^3.0.15",
     "@types/nprogress": "^0.2.3",
-    "@types/react": "^18.3.5",
+    "@types/react": "^18.3.8",
     "@types/react-dom": "^18.3.0",
     "@types/react-syntax-highlighter": "^15.5.13",
     "gray-matter": "4.0.3",
-    "tailwindcss": "^3.4.11",
+    "tailwindcss": "^3.4.12",
     "typescript": "^5.5.3",
     "vitest": "2.1.1",
     "webpack": "^5.94.0"

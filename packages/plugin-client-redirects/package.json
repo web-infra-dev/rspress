@@ -24,10 +24,10 @@
     "node": ">=14.17.6"
   },
   "devDependencies": {
-    "@modern-js/tsconfig": "2.60.0",
+    "@modern-js/tsconfig": "2.60.1",
     "@rspress/shared": "workspace:*",
     "@types/node": "^18.11.17",
-    "@types/react": "^18.3.5",
+    "@types/react": "^18.3.8",
     "@types/react-dom": "^18.3.0",
     "react": "^18.3.1",
     "typescript": "^5.5.3",
