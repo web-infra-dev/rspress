@@ -24,7 +24,7 @@ export async function getHighlighter(
         typeof htmlOptions === 'object' ? htmlOptions.lang! : htmlOptions!;
 
       const baseLineOptions =
-        typeof htmlOptions === 'object' ? htmlOptions.lineOptions ?? [] : [];
+        typeof htmlOptions === 'object' ? (htmlOptions.lineOptions ?? []) : [];
 
       const theme =
         typeof htmlOptions === 'object' ? htmlOptions.theme : undefined;
