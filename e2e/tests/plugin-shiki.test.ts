@@ -25,11 +25,11 @@ test.describe('plugin shiki test', async () => {
     }
   });
 
-  test('should change output dir if dir is given', async ({ page }) => {
+  test('should render shiki code block successfully', async ({ page }) => {
     await page.goto(`http://localhost:${appPort}`, {
       waitUntil: 'networkidle',
     });
-    const titleDoms = await page.$$('.shiki');
-    expect(titleDoms.length).toBe(4);
+    const shikiDoms = await page.$$('.shiki');
+    expect(shikiDoms.length).toBe(4);
   });
 });
