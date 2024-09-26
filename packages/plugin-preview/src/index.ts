@@ -37,7 +37,8 @@ export function pluginPreview(options?: Options): RspressPlugin {
     previewLanguages = DEFAULT_PREVIEW_LANGUAGES,
     previewCodeTransform = ({ code }: { code: string }) => code,
   } = options ?? {};
-  const previewMode = options?.previewMode ?? isMobile ? 'iframe' : 'internal';
+  const previewMode =
+    (options?.previewMode ?? isMobile) ? 'iframe' : 'internal';
   const {
     devPort = 7890,
     framework = 'react',

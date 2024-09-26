@@ -7,7 +7,9 @@ export default defineConfig({
   buildConfig: {
     buildType: 'bundle',
     format: 'esm',
+    target: 'es2021',
     sourceMap: true,
+    shims: true,
     dts: {
       respectExternal: false,
     },

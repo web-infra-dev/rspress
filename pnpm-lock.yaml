@@ -371,6 +371,19 @@ importers:
         specifier: ^18.11.17
         version: 18.11.17
 
+  e2e/fixtures/plugin-shiki:
+    dependencies:
+      '@rspress/plugin-shiki':
+        specifier: workspace:*
+        version: link:../../../packages/plugin-shiki
+      rspress:
+        specifier: workspace:*
+        version: link:../../../packages/cli
+    devDependencies:
+      '@types/node':
+        specifier: ^18.11.17
+        version: 18.11.17
+
   e2e/fixtures/prism-sytax-highlighter:
     dependencies:
       rspress:
