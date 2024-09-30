@@ -37,7 +37,7 @@
   },
   "devDependencies": {
     "@types/lodash": "^4.17.9",
-    "@types/mdast": "^3.0.15",
+    "@types/mdast": "^4.0.4",
     "@types/node": "^18.11.17",
     "@types/react": "^18.3.10",
     "@types/react-dom": "^18.3.0",

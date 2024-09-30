@@ -42,7 +42,7 @@
     "@rspress/shared": "workspace:*"
   },
   "devDependencies": {
-    "@types/mdast": "^3.0.15",
+    "@types/mdast": "^4.0.4",
     "rehype-stringify": "^9.0.4",
     "remark-parse": "^10.0.2",
     "remark-rehype": "^10.1.0",
