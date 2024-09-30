@@ -205,8 +205,8 @@ importers:
         specifier: workspace:*
         version: link:../../../packages/cli
       solid-js:
-        specifier: ^1.8.22
-        version: 1.8.22
+        specifier: ^1.9.1
+        version: 1.9.1
     devDependencies:
       '@types/node':
         specifier: ^18.11.17
@@ -351,8 +351,8 @@ importers:
         specifier: workspace:*
         version: link:../../../packages/cli
       solid-js:
-        specifier: ^1.8.22
-        version: 1.8.22
+        specifier: ^1.9.1
+        version: 1.9.1
     devDependencies:
       '@types/node':
         specifier: ^18.11.17
@@ -1121,7 +1121,7 @@ importers:
         version: 1.0.1(@rsbuild/core@1.0.8)
       '@rsbuild/plugin-solid':
         specifier: 1.0.2
-        version: 1.0.2(@babel/core@7.25.2)(@rsbuild/core@1.0.8)(solid-js@1.8.22)
+        version: 1.0.2(@babel/core@7.25.2)(@rsbuild/core@1.0.8)(solid-js@1.9.1)
       '@rspress/core':
         specifier: workspace:^1.31.1
         version: link:../core
@@ -3839,7 +3839,7 @@ packages:
       sass-embedded: 1.78.0
     dev: false
 
-  /@rsbuild/plugin-solid@1.0.2(@babel/core@7.25.2)(@rsbuild/core@1.0.8)(solid-js@1.8.22):
+  /@rsbuild/plugin-solid@1.0.2(@babel/core@7.25.2)(@rsbuild/core@1.0.8)(solid-js@1.9.1):
     resolution: {integrity: sha512-te6cRrthEapoSd2FtaqQ19TMR5EPeDWlCtWfQ3TMlke+H1CiAu44DtWC/MXY5bm/8Z4HXc4ImxOea49qaOrlgQ==}
     peerDependencies:
       '@rsbuild/core': 1.x || ^1.0.1-rc.0
@@ -3847,7 +3847,7 @@ packages:
       '@rsbuild/core': 1.0.8
       '@rsbuild/plugin-babel': 1.0.1(@rsbuild/core@1.0.8)
       babel-preset-solid: 1.9.0(@babel/core@7.25.2)
-      solid-refresh: 0.6.3(solid-js@1.8.22)
+      solid-refresh: 0.6.3(solid-js@1.9.1)
     transitivePeerDependencies:
       - '@babel/core'
       - bufferutil
@@ -9363,15 +9363,15 @@ packages:
       is-fullwidth-code-point: 5.0.0
     dev: true
 
-  /solid-js@1.8.22:
-    resolution: {integrity: sha512-VBzN5j+9Y4rqIKEnK301aBk+S7fvFSTs9ljg+YEdFxjNjH0hkjXPiQRcws9tE5fUzMznSS6KToL5hwMfHDgpLA==}
+  /solid-js@1.9.1:
+    resolution: {integrity: sha512-Gd6QWRFfO2XKKZqVK4YwbhWZkr0jWw1dYHOt+VYebomeyikGP0SuMflf42XcDuU9HAEYDArFJIYsBNjlE7iZsw==}
     dependencies:
       csstype: 3.1.3
       seroval: 1.1.1
       seroval-plugins: 1.1.1(seroval@1.1.1)
     dev: false
 
-  /solid-refresh@0.6.3(solid-js@1.8.22):
+  /solid-refresh@0.6.3(solid-js@1.9.1):
     resolution: {integrity: sha512-F3aPsX6hVw9ttm5LYlth8Q15x6MlI/J3Dn+o3EQyRTtTxidepSTwAYdozt01/YA+7ObcciagGEyXIopGZzQtbA==}
     peerDependencies:
       solid-js: ^1.3
@@ -9379,7 +9379,7 @@ packages:
       '@babel/generator': 7.25.6
       '@babel/helper-module-imports': 7.24.7
       '@babel/types': 7.25.6
-      solid-js: 1.8.22
+      solid-js: 1.9.1
     transitivePeerDependencies:
       - supports-color
     dev: false
