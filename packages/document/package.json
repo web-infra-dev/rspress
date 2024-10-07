@@ -18,7 +18,7 @@
   "license": "MIT",
   "devDependencies": {
     "@rstack-dev/doc-ui": "1.5.2",
-    "@types/react": "^18.3.10",
+    "@types/react": "^18.3.11",
     "framer-motion": "11.9.0",
     "rsbuild-plugin-google-analytics": "^1.0.3",
     "rsbuild-plugin-open-graph": "^1.0.2",

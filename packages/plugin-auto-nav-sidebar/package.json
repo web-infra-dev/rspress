@@ -26,11 +26,11 @@
   "devDependencies": {
     "@modern-js/tsconfig": "2.60.2",
     "@types/node": "^18.11.17",
-    "@types/react": "^18.3.10",
+    "@types/react": "^18.3.11",
     "@types/react-dom": "^18.3.0",
     "react": "^18.3.1",
     "typescript": "^5.5.3",
-    "vitest": "2.1.1"
+    "vitest": "2.1.2"
   },
   "sideEffects": [
     "*.css",
