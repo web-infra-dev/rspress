@@ -6,7 +6,19 @@ Badge 组件用于展示状态的标记。使用方法如下：
 import { Badge } from '@theme';
 
 function App() {
+  // 使用 text 属性
   return <Badge text="info" type="info" />;
+
+  // 使用自定义子元素
+  return (
+    <Badge>
+      <img
+        style={{ height: '18px' }}
+        src="https://lf3-static.bytednsdoc.com/obj/eden-cn/uhbfnupenuhf/rspress/rspress-logo.png"
+      />
+      <span>Rspress</span>
+    </Badge>
+  );
 }
 ```
 
@@ -14,18 +26,59 @@ function App() {
 
 import { Badge } from '@theme';
 
+<Badge text="tip" type="tip" />
 <Badge text="info" type="info" />
 <Badge text="warning" type="warning" />
 <Badge text="danger" type="danger" />
+<Badge text="outlined" outline />
+
+import SearchSvg from '@theme-assets/github';
+
+自定义子元素：
+
+<Badge type="tip">
+  <img
+    style={{ height: '18px' }}
+    src="https://lf3-static.bytednsdoc.com/obj/eden-cn/uhbfnupenuhf/rspress/rspress-logo.png"
+  />
+  <span>Rspress</span>
+</Badge>
+
+<Badge type="info">
+  <SearchSvg width="16" />
+  <span>Github</span>
+</Badge>
+
+内联文本 <Badge text="Tip" />
+
+##### H5 <Badge text="Info" type="info" />
+
+#### H4 <Badge text="Warning" type="warning" />
+
+### H3 <Badge text="Danger" type="danger" />
 
 其中包含的 props 类型如下：
 
 ```ts
 interface BadgeProps {
-  // 用于设置 badge 的文本
-  text: string;
-  // 用于设置 badge 的类型
-  type: 'info' | 'warning' | 'danger';
+  /**
+   * 在徽章内显示的内容。可以是字符串或 React 节点。
+   */
+  children?: React.ReactNode;
+  /**
+   * 徽章的类型，决定其颜色和样式。
+   * @default 'tip'
+   */
+  type?: 'tip' | 'info' | 'warning' | 'danger';
+  /**
+   * 在徽章内显示的文本内容（为了向后兼容）。
+   */
+  text?: string;
+  /**
+   * 是否以轮廓样式显示徽章。
+   * @default false
+   */
+  outline?: boolean;
 }
 ```
 

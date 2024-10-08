@@ -6,7 +6,19 @@ The Badge component is used to display a badge. For example:
 import { Badge } from '@theme';
 
 function App() {
+  // Using text prop
   return <Badge text="info" type="info" />;
+
+  // Using custom children
+  return (
+    <Badge>
+      <img
+        style={{ height: '18px' }}
+        src="https://lf3-static.bytednsdoc.com/obj/eden-cn/uhbfnupenuhf/rspress/rspress-logo.png"
+      />
+      <span>Rspress</span>
+    </Badge>
+  );
 }
 ```
 
@@ -14,18 +26,59 @@ The effect is as follows:
 
 import { Badge } from '@theme';
 
+<Badge text="tip" type="tip" />
 <Badge text="info" type="info" />
 <Badge text="warning" type="warning" />
 <Badge text="danger" type="danger" />
+<Badge text="outlined" outline />
+
+Custom children:
+
+import SearchSvg from '@theme-assets/github';
+
+<Badge type="tip">
+  <img
+    style={{ height: '18px' }}
+    src="https://lf3-static.bytednsdoc.com/obj/eden-cn/uhbfnupenuhf/rspress/rspress-logo.png"
+  />
+  <span>Rspress</span>
+</Badge>
+
+<Badge type="info">
+  <SearchSvg width="16" />
+  <span>Github</span>
+</Badge>
+
+Inlined with text <Badge text="Tip" />
+
+##### H5 <Badge text="Info" type="info" />
+
+#### H4 <Badge text="Warning" type="warning" />
+
+### H3 <Badge text="Danger" type="danger" />
 
 The types of props included are as follows:
 
 ```ts
 interface BadgeProps {
-  // Used to set the text of the badge
-  text: string;
-  // Used to set the type of the badge
-  type?: 'info' | 'warning' | 'danger';
+  /**
+   * The content to display inside the badge. Can be a string or React nodes.
+   */
+  children?: React.ReactNode;
+  /**
+   * The type of badge, which determines its color and style.
+   * @default 'tip'
+   */
+  type?: 'tip' | 'info' | 'warning' | 'danger';
+  /**
+   * The text content to display inside the badge (for backwards compatibility).
+   */
+  text?: string;
+  /**
+   * Whether to display the badge with an outline style.
+   * @default false
+   */
+  outline?: boolean;
 }
 ```
 
