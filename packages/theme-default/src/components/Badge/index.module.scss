@@ -1,18 +1,44 @@
 .badge {
-  padding: 0 10px;
-  line-height: 22px;
-  font-size: 12px;
+  font-weight: 500;
+  transition: color 0.25s;
+
+  &.tip {
+    color: var(--rp-container-tip-text);
+    background-color: var(--rp-container-tip-bg);
+  }
 
   &.info {
-    color: #2e3440;
-    background-color: rgba(46, 52, 64, 0.16);
+    color: var(--rp-container-info-text);
+    background-color: var(--rp-container-info-bg);
   }
+
   &.warning {
-    color: #ad850e;
-    background-color: rgba(255, 197, 23, 0.16);
+    color: var(--rp-container-warning-text);
+    background-color: var(--rp-container-warning-bg);
   }
+
   &.danger {
-    color: #ab2131;
-    background-color: rgba(237, 60, 80, 0.16);
+    color: var(--rp-container-danger-text);
+    background-color: var(--rp-container-danger-bg);
+  }
+
+  &.outline {
+    border: 1px solid;
+
+    &.tip {
+      border-color: var(--rp-container-tip-border);
+    }
+
+    &.info {
+      border-color: var(--rp-container-info-border);
+    }
+
+    &.warning {
+      border-color: var(--rp-container-warning-border);
+    }
+
+    &.danger {
+      border-color: var(--rp-container-danger-border);
+    }
   }
 }
