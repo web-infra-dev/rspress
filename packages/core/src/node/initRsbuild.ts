@@ -135,6 +135,10 @@ async function createInternalBuildConfig(
           middlewares.unshift(serveSearchIndexMiddleware(config));
         },
       ],
+      cliShortcuts: {
+        // does not support restart server yet
+        custom: shortcuts => shortcuts.filter(({ key }) => key !== 'r'),
+      },
     },
     html: {
       title: config?.title ?? DEFAULT_TITLE,
