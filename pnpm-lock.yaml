@@ -205,8 +205,8 @@ importers:
         specifier: workspace:*
         version: link:../../../packages/cli
       solid-js:
-        specifier: ^1.9.1
-        version: 1.9.1
+        specifier: ^1.9.2
+        version: 1.9.2
     devDependencies:
       '@types/node':
         specifier: ^18.11.17
@@ -351,8 +351,8 @@ importers:
         specifier: workspace:*
         version: link:../../../packages/cli
       solid-js:
-        specifier: ^1.9.1
-        version: 1.9.1
+        specifier: ^1.9.2
+        version: 1.9.2
     devDependencies:
       '@types/node':
         specifier: ^18.11.17
@@ -479,8 +479,8 @@ importers:
   packages/cli:
     dependencies:
       '@rsbuild/core':
-        specifier: 1.0.10
-        version: 1.0.10
+        specifier: 1.0.11
+        version: 1.0.11
       '@rspress/core':
         specifier: workspace:*
         version: link:../core
@@ -534,17 +534,17 @@ importers:
         specifier: 2.60.2
         version: 2.60.2
       '@rsbuild/core':
-        specifier: 1.0.10
-        version: 1.0.10
+        specifier: 1.0.11
+        version: 1.0.11
       '@rsbuild/plugin-less':
         specifier: 1.0.1
-        version: 1.0.1(@rsbuild/core@1.0.10)
+        version: 1.0.1(@rsbuild/core@1.0.11)
       '@rsbuild/plugin-react':
         specifier: 1.0.3
-        version: 1.0.3(@rsbuild/core@1.0.10)
+        version: 1.0.3(@rsbuild/core@1.0.11)
       '@rsbuild/plugin-sass':
         specifier: 1.0.2
-        version: 1.0.2(@rsbuild/core@1.0.10)
+        version: 1.0.2(@rsbuild/core@1.0.11)
       '@rspress/mdx-rs':
         specifier: 0.5.7
         version: 0.5.7
@@ -1105,23 +1105,23 @@ importers:
         specifier: 2.3.0
         version: 2.3.0
       '@rsbuild/core':
-        specifier: 1.0.10
-        version: 1.0.10
+        specifier: 1.0.11
+        version: 1.0.11
       '@rsbuild/plugin-babel':
         specifier: 1.0.1
-        version: 1.0.1(@rsbuild/core@1.0.10)
+        version: 1.0.1(@rsbuild/core@1.0.11)
       '@rsbuild/plugin-less':
         specifier: 1.0.1
-        version: 1.0.1(@rsbuild/core@1.0.10)
+        version: 1.0.1(@rsbuild/core@1.0.11)
       '@rsbuild/plugin-react':
         specifier: 1.0.3
-        version: 1.0.3(@rsbuild/core@1.0.10)
+        version: 1.0.3(@rsbuild/core@1.0.11)
       '@rsbuild/plugin-sass':
         specifier: 1.0.2
-        version: 1.0.2(@rsbuild/core@1.0.10)
+        version: 1.0.2(@rsbuild/core@1.0.11)
       '@rsbuild/plugin-solid':
         specifier: 1.0.2
-        version: 1.0.2(@babel/core@7.25.2)(@rsbuild/core@1.0.10)(solid-js@1.9.1)
+        version: 1.0.2(@babel/core@7.25.2)(@rsbuild/core@1.0.11)(solid-js@1.9.2)
       '@rspress/core':
         specifier: workspace:^1.32.0
         version: link:../core
@@ -1323,8 +1323,8 @@ importers:
   packages/shared:
     dependencies:
       '@rsbuild/core':
-        specifier: 1.0.10
-        version: 1.0.10
+        specifier: 1.0.11
+        version: 1.0.11
       chalk:
         specifier: 5.3.0
         version: 5.3.0
@@ -3799,8 +3799,8 @@ packages:
     dev: true
     optional: true
 
-  /@rsbuild/core@1.0.10:
-    resolution: {integrity: sha512-617N8YzDeH5vymeeOyCqK0toO9yt7s2yey49OIvW9jZqBo0IvgbkFNQf34LDLsxVzy+cpf1nGrcYWjPKhVuGfQ==}
+  /@rsbuild/core@1.0.11:
+    resolution: {integrity: sha512-kYM5gl8XbYK9DX/7uAJ+DyOgHUN8Ihk2P8buJDjIa/sbbuYixjF2KtDgcqxWDzP4oRi2NMPPe4gqzksVwVvmqw==}
     engines: {node: '>=16.7.0'}
     hasBin: true
     dependencies:
@@ -3812,7 +3812,7 @@ packages:
       fsevents: 2.3.3
     dev: false
 
-  /@rsbuild/plugin-babel@1.0.1(@rsbuild/core@1.0.10):
+  /@rsbuild/plugin-babel@1.0.1(@rsbuild/core@1.0.11):
     resolution: {integrity: sha512-cdTiLDVv52r8bOa7rfzk8ADePcckyf4TSXcPv+qq0P/mCBcRmqA4BKQNYf3srXEOb7HrERFaO3pEqdrNe5QwqA==}
     peerDependencies:
       '@rsbuild/core': 1.x || ^1.0.1-rc.0
@@ -3821,7 +3821,7 @@ packages:
       '@babel/plugin-proposal-decorators': 7.24.7(@babel/core@7.25.2)
       '@babel/plugin-transform-class-properties': 7.25.4(@babel/core@7.25.2)
       '@babel/preset-typescript': 7.24.7(@babel/core@7.25.2)
-      '@rsbuild/core': 1.0.10
+      '@rsbuild/core': 1.0.11
       '@types/babel__core': 7.20.5
       deepmerge: 4.3.1
       reduce-configs: 1.0.0
@@ -3830,32 +3830,32 @@ packages:
       - supports-color
     dev: false
 
-  /@rsbuild/plugin-less@1.0.1(@rsbuild/core@1.0.10):
+  /@rsbuild/plugin-less@1.0.1(@rsbuild/core@1.0.11):
     resolution: {integrity: sha512-bXjPDII9b0MCdYxkoNUtf1z11lQVQDPqgC6Iu90s6X5lnfJd7uwxQC7Sr/cHKYDPKVKQZIvbmXHFJxnd8bsCLg==}
     peerDependencies:
       '@rsbuild/core': 1.x || ^1.0.1-rc.0
     dependencies:
-      '@rsbuild/core': 1.0.10
+      '@rsbuild/core': 1.0.11
       deepmerge: 4.3.1
       reduce-configs: 1.0.0
     dev: false
 
-  /@rsbuild/plugin-react@1.0.3(@rsbuild/core@1.0.10):
+  /@rsbuild/plugin-react@1.0.3(@rsbuild/core@1.0.11):
     resolution: {integrity: sha512-HVfPiKINmDsIcLLs7YWAYQgzytVZOydBuPOFg5EoJiMHkFVjH0Rg3QViS3Hn6k3INqdc6ylpcYyOHHYItEIkWA==}
     peerDependencies:
       '@rsbuild/core': 1.x || ^1.0.1-rc.0
     dependencies:
-      '@rsbuild/core': 1.0.10
+      '@rsbuild/core': 1.0.11
       '@rspack/plugin-react-refresh': 1.0.0(react-refresh@0.14.2)
       react-refresh: 0.14.2
     dev: false
 
-  /@rsbuild/plugin-sass@1.0.2(@rsbuild/core@1.0.10):
+  /@rsbuild/plugin-sass@1.0.2(@rsbuild/core@1.0.11):
     resolution: {integrity: sha512-3VVdl1m6Dw8cw2ovIaLf1WFrBNlhEQdBgXtUZmAJd0lcaCbTcHyjsssy4dfEN3tUYaMnCHmEEDVgpA84OtllGA==}
     peerDependencies:
       '@rsbuild/core': 1.x || ^1.0.1-rc.0
     dependencies:
-      '@rsbuild/core': 1.0.10
+      '@rsbuild/core': 1.0.11
       deepmerge: 4.3.1
       loader-utils: 2.0.4
       postcss: 8.4.47
@@ -3863,15 +3863,15 @@ packages:
       sass-embedded: 1.79.4
     dev: false
 
-  /@rsbuild/plugin-solid@1.0.2(@babel/core@7.25.2)(@rsbuild/core@1.0.10)(solid-js@1.9.1):
+  /@rsbuild/plugin-solid@1.0.2(@babel/core@7.25.2)(@rsbuild/core@1.0.11)(solid-js@1.9.2):
     resolution: {integrity: sha512-te6cRrthEapoSd2FtaqQ19TMR5EPeDWlCtWfQ3TMlke+H1CiAu44DtWC/MXY5bm/8Z4HXc4ImxOea49qaOrlgQ==}
     peerDependencies:
       '@rsbuild/core': 1.x || ^1.0.1-rc.0
     dependencies:
-      '@rsbuild/core': 1.0.10
-      '@rsbuild/plugin-babel': 1.0.1(@rsbuild/core@1.0.10)
+      '@rsbuild/core': 1.0.11
+      '@rsbuild/plugin-babel': 1.0.1(@rsbuild/core@1.0.11)
       babel-preset-solid: 1.9.0(@babel/core@7.25.2)
-      solid-refresh: 0.6.3(solid-js@1.9.1)
+      solid-refresh: 0.6.3(solid-js@1.9.2)
     transitivePeerDependencies:
       - '@babel/core'
       - bufferutil
@@ -9400,15 +9400,15 @@ packages:
       is-fullwidth-code-point: 5.0.0
     dev: true
 
-  /solid-js@1.9.1:
-    resolution: {integrity: sha512-Gd6QWRFfO2XKKZqVK4YwbhWZkr0jWw1dYHOt+VYebomeyikGP0SuMflf42XcDuU9HAEYDArFJIYsBNjlE7iZsw==}
+  /solid-js@1.9.2:
+    resolution: {integrity: sha512-fe/K03nV+kMFJYhAOE8AIQHcGxB4rMIEoEyrulbtmf217NffbbwBqJnJI4ovt16e+kaIt0czE2WA7mP/pYN9yg==}
     dependencies:
       csstype: 3.1.3
       seroval: 1.1.1
       seroval-plugins: 1.1.1(seroval@1.1.1)
     dev: false
 
-  /solid-refresh@0.6.3(solid-js@1.9.1):
+  /solid-refresh@0.6.3(solid-js@1.9.2):
     resolution: {integrity: sha512-F3aPsX6hVw9ttm5LYlth8Q15x6MlI/J3Dn+o3EQyRTtTxidepSTwAYdozt01/YA+7ObcciagGEyXIopGZzQtbA==}
     peerDependencies:
       solid-js: ^1.3
@@ -9416,7 +9416,7 @@ packages:
       '@babel/generator': 7.25.6
       '@babel/helper-module-imports': 7.24.7
       '@babel/types': 7.25.7
-      solid-js: 1.9.1
+      solid-js: 1.9.2
     transitivePeerDependencies:
       - supports-color
     dev: false
