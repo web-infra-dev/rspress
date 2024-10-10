@@ -35,9 +35,10 @@ Options:
 `rspress preview` 命令用于在本地预览 `rspress build` 命令构建出的产物。
 
 ```bash
-Usage: rspress preview [options]
+Usage: rspress preview [root] [options]
 
 Options:
+  root                  指定文档根目录，默认为当前工作目录下的 docs 目录，可选
   -c --config <config>  指定配置文件路径，可以为相对路径或绝对路径
   --port <port>         指定端口号
   --host <host>         指定 host

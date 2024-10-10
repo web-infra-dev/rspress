@@ -5,7 +5,7 @@ import { build, dev, serve } from '@rspress/core';
 import { logger } from '@rspress/shared/logger';
 import chokidar from 'chokidar';
 import chalk from 'chalk';
-import { loadConfigFile } from './config/loadConfigFile';
+import { loadConfigFile, resolveDocRoot } from './config/loadConfigFile';
 import update from './update';
 
 const CONFIG_FILES = ['rspress.config.ts', 'rspress.config.js', 'i18n.json'];
@@ -47,15 +47,10 @@ cli
         const { port, host } = options || {};
         const config = await loadConfigFile(options?.config);
 
-        if (root) {
-          // Support root in command, override config file
-          config.root = path.join(cwd, root);
-        } else if (config.root && !path.isAbsolute(config.root)) {
-          // Support root relative to cwd
-          config.root = path.join(cwd, config.root);
-        }
+        config.root = resolveDocRoot(cwd, root, config.root);
 
-        const docDirectory = config.root || path.join(cwd, root ?? 'docs');
+        const docDirectory = config.root;
+
         devServer = await dev({
           appDirectory: cwd,
           docDirectory,
@@ -115,26 +110,33 @@ cli.command('build [root]').action(async (root, options) => {
   setNodeEnv('production');
   const cwd = process.cwd();
   const config = await loadConfigFile(options.config);
-  if (root) {
-    config.root = path.join(cwd, root);
-  }
+
+  config.root = resolveDocRoot(cwd, root, config.root);
+  const docDirectory = config.root;
+
   await build({
     appDirectory: cwd,
-    docDirectory: config.root || path.join(cwd, root ?? 'docs'),
+    docDirectory,
     config,
   });
 });
 
 cli
-  .command('preview')
+  .command('preview [root]')
   .alias('serve')
   .option('--port [port]', 'port number')
   .option('--host [host]', 'hostname')
   .action(
-    async (options?: { port?: number; host?: string; config?: string }) => {
+    async (
+      root,
+      options?: { port?: number; host?: string; config?: string },
+    ) => {
       setNodeEnv('production');
+      const cwd = process.cwd();
       const { port, host } = options || {};
       const config = await loadConfigFile(options?.config);
+
+      config.root = resolveDocRoot(cwd, root, config.root);
 
       await serve({
         config,

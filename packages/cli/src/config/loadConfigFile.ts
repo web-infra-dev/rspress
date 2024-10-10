@@ -35,3 +35,24 @@ export async function loadConfigFile(
 
   return content as UserConfig;
 }
+
+export function resolveDocRoot(
+  cwd: string,
+  cliRoot?: string,
+  configRoot?: string,
+): string {
+  // CLI root has highest priority
+  if (cliRoot) {
+    return path.join(cwd, cliRoot);
+  }
+
+  // Config root is next in priority
+  if (configRoot) {
+    return path.isAbsolute(configRoot)
+      ? configRoot
+      : path.join(cwd, configRoot);
+  }
+
+  // Default to 'docs' if no root is specified
+  return path.join(cwd, 'docs');
+}
