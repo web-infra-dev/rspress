@@ -125,8 +125,10 @@ export async function extractPageData(
       }
 
       languages.forEach(lang => highlighterLangs.add(lang));
+
+      // rawToc comes from mdx compile and it uses `-number` to unique toc of same id
+      // We need to find the character index position of each toc in the content thus benefiting for search engines
       const toc: Header[] = rawToc.map(item => {
-        // If the item.id ends with '-number', we take the number
         const match = item.id.match(/-(\d+)$/);
         let position = -1;
         if (match) {
