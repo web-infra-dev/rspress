@@ -131,7 +131,13 @@ export async function extractPageData(
         let position = -1;
         if (match) {
           for (let i = 0; i < Number(match[1]); i++) {
+            // When text is repeated, the position needs to be determined based on -number
             position = content.indexOf(`\n${item.text}#\n\n`, position + 1);
+
+            // If the positions don't match, it means the text itself may exist -number
+            if (position === -1) {
+              break;
+            }
           }
         }
         return {
