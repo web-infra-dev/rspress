@@ -21,7 +21,7 @@ export async function dev(options: DevOptions): Promise<ServerInstance> {
   const pluginDriver = new PluginDriver(config, isProd);
   await pluginDriver.init();
   const modifiedConfig = await pluginDriver.modifyConfig();
-
+  console.log(111);
   try {
     await pluginDriver.beforeBuild();
 
