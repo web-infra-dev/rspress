@@ -146,4 +146,12 @@ This is a details block.
 
     expect(result.value).toMatchSnapshot();
   });
+
+  test('github alerts', () => {
+    const result = processor.processSync(`> [!TIP]
+> **Helpful advice for doing things better or more easily.**
+`);
+
+    expect(result.value).toMatchSnapshot();
+  });
 });

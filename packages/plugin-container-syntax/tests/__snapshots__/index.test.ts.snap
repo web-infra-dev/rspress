@@ -50,3 +50,5 @@ exports[`remark-container > details 1`] = `
 "<details class="rspress-directive details"><summary class="rspress-directive-title">DETAILS</summary><div class="rspress-directive-content"><p>
 This is a details block.</p></div></details>"
 `;
+
+exports[`remark-container > github alerts 1`] = `"<div class="rspress-directive tip"><div class="rspress-directive-title">TIP</div><div class="rspress-directive-content"><p><strong>Helpful advice for doing things better or more easily.</strong></p></div></div>"`;

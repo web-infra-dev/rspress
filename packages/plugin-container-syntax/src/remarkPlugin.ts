@@ -34,6 +34,7 @@ export const DIRECTIVE_TYPES = [
 ] as const;
 export const REGEX_BEGIN = /^\s*:::\s*(\w+)\s*(.*)?/;
 export const REGEX_END = /\s*:::$/;
+export const REGEX_GH_BEGIN = /^\s*\s*\[!(\w+)\]\s*(.*)?/;
 export const TITLE_REGEX_IN_MD = /{\s*title=["']?(.+)}\s*/;
 export const TITLE_REGEX_IN_MDX = /\s*title=["']?(.+)\s*/;
 
@@ -118,6 +119,54 @@ function transformer(tree: Root) {
   try {
     while (i < tree.children.length) {
       const node = tree.children[i];
+
+      /**
+       * Support for Github Alerts
+       * > [!TIP]
+       * > This is a tip
+       *
+       * will be transformed to:
+       *
+       * <div class="rspress-directive tip">
+       *   <div class="rspress-directive-title">TIP</div>
+       *   <div class="rspress-directive-content">
+       *     <p>This is a tip</p>
+       *   </div>
+       * </div>
+       */
+      if (node.type === 'blockquote' && node.children[0].type === 'paragraph') {
+        const initiaterTag: string =
+          // @ts-ignore
+          node.children[0].children[0].value.toString();
+
+        if (REGEX_GH_BEGIN.test(initiaterTag)) {
+          const match = initiaterTag.match(REGEX_GH_BEGIN);
+          const [, type] = match!;
+          if (!DIRECTIVE_TYPES.includes(type.toLowerCase() as DirectiveType)) {
+            i++;
+            continue;
+          }
+          if (
+            node.children.length === 1 &&
+            node.children[0].type === 'paragraph'
+          ) {
+            // @ts-ignore
+            node.children[0].children[0].value =
+              // @ts-ignore
+              initiaterTag!.match(REGEX_GH_BEGIN)[2]! ?? '';
+          }
+          const newChild = createContainer(
+            type.toLowerCase(),
+            type.toUpperCase(),
+            // @ts-ignore
+            node.children.slice(1).length === 0
+              ? node.children.slice(0)
+              : node.children.slice(1),
+          );
+          tree.children.splice(i, 1, newChild as Content);
+        }
+      }
+
       if (node.type !== 'paragraph') {
         i++;
         continue;
