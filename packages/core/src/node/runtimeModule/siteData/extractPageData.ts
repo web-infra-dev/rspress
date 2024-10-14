@@ -43,6 +43,7 @@ export async function extractPageData(
         id: index,
         title: '',
         content: '',
+        html: '',
         routePath: route.routePath,
         lang: route.lang,
         toc: [],
@@ -154,6 +155,7 @@ export async function extractPageData(
         toc,
         // Stripped frontmatter content
         content,
+        html,
         frontmatter: {
           ...frontmatter,
           __content: undefined,

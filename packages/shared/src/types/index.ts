@@ -180,7 +180,7 @@ export interface UserConfig<ThemeConfig = DefaultThemeConfig> {
 
 export type BaseRuntimePageInfo = Omit<
   PageIndexInfo,
-  'id' | 'content' | 'domain'
+  'id' | 'content' | 'domain' | 'html'
 >;
 
 export interface SiteData<ThemeConfig = NormalizedDefaultThemeConfig> {
@@ -215,6 +215,7 @@ export type PageIndexInfo = {
   routePath: string;
   toc: Header[];
   content: string;
+  html: string;
   frontmatter: Record<string, unknown>;
   lang: string;
   version: string;
