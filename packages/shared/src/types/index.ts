@@ -214,7 +214,9 @@ export interface SiteData<ThemeConfig = NormalizedDefaultThemeConfig> {
 }
 
 /**
+ * @description search-index.json file
  * "_foo" is the private field that won't be written to search-index.json file
+ * and should not be used in the runtime (usePageData).
  */
 export type PageIndexInfo = {
   id: number;
