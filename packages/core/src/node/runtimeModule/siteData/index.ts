@@ -46,16 +46,14 @@ export async function siteDataVMPlugin(context: FactoryContext) {
     userConfig?.search && userConfig?.search?.mode === 'remote'
       ? (userConfig?.search.domain ?? '')
       : '';
-  const pages = (
-    await extractPageData(
-      replaceRules,
-      alias,
-      domain,
-      userDocRoot,
-      routeService,
-      highlightLanguages,
-    )
-  ).filter(Boolean);
+  const pages = await extractPageData(
+    replaceRules,
+    alias,
+    domain,
+    userDocRoot,
+    routeService,
+    highlightLanguages,
+  );
   // modify page index by plugins
   await pluginDriver.modifySearchIndexData(pages);
 

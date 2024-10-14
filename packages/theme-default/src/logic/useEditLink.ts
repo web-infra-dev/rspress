@@ -23,7 +23,7 @@ export function useEditLink() {
     docRepoBaseUrl += '/';
   }
 
-  const relativePagePath = page._relativePath.replace(/\\/g, '/');
+  const relativePagePath = (page._relativePath as string).replace(/\\/g, '/');
   const link = `${docRepoBaseUrl}${relativePagePath}`;
 
   return {
