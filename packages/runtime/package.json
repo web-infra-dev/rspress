@@ -38,10 +38,10 @@
     "react-router-dom": "^6.26.2"
   },
   "devDependencies": {
-    "@modern-js/tsconfig": "2.60.2",
+    "@modern-js/tsconfig": "2.60.3",
     "@types/jest": "~29.5.13",
     "@types/react": "^18.3.11",
-    "@types/react-dom": "^18.3.0",
+    "@types/react-dom": "^18.3.1",
     "typescript": "^5.5.3"
   },
   "sideEffects": [
