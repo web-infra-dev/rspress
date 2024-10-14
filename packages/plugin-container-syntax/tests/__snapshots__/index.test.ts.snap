@@ -51,4 +51,13 @@ exports[`remark-container > details 1`] = `
 This is a details block.</p></div></details>"
 `;
 
-exports[`remark-container > github alerts 1`] = `"<div class="rspress-directive tip"><div class="rspress-directive-title">TIP</div><div class="rspress-directive-content"><p><strong>Helpful advice for doing things better or more easily.</strong></p></div></div>"`;
+exports[`remark-container > github alerts ~ caution 1`] = `
+"<div class="rspress-directive caution"><div class="rspress-directive-title">CAUTION</div><div class="rspress-directive-content"><p>Use this code:-</p><pre><code class="language-javascript">console.log(69);
+</code></pre></div></div>"
+`;
+
+exports[`remark-container > github alerts ~ note 1`] = `"<div class="rspress-directive note"><div class="rspress-directive-title">NOTE</div><div class="rspress-directive-content"><h1>Please read this note!</h1></div></div>"`;
+
+exports[`remark-container > github alerts ~ tip 1`] = `"<div class="rspress-directive tip"><div class="rspress-directive-title">TIP</div><div class="rspress-directive-content"><p><strong>Helpful advice for doing things better or more easily.</strong></p></div></div>"`;
+
+exports[`remark-container > github alerts ~ warning 1`] = `"<div class="rspress-directive warning"><div class="rspress-directive-title">WARNING</div><div class="rspress-directive-content"><p>Use <code>dummy</code> instead of <code>demo</code></p></div></div>"`;
