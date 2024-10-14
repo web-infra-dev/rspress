@@ -178,9 +178,13 @@ export interface UserConfig<ThemeConfig = DefaultThemeConfig> {
   };
 }
 
+type RemoveUnderscoreProps<T> = {
+  [K in keyof T as K extends `_${string}` ? never : K]: T[K];
+};
+
 export type BaseRuntimePageInfo = Omit<
-  PageIndexInfo,
-  'id' | 'content' | 'domain' | 'html'
+  RemoveUnderscoreProps<PageIndexInfo>,
+  'id' | 'content' | 'domain'
 >;
 
 export interface SiteData<ThemeConfig = NormalizedDefaultThemeConfig> {
@@ -209,13 +213,17 @@ export interface SiteData<ThemeConfig = NormalizedDefaultThemeConfig> {
   };
 }
 
+/**
+ * "_foo" is the private field that won't be written to search-index.json file
+ */
 export type PageIndexInfo = {
   id: number;
   title: string;
   routePath: string;
   toc: Header[];
   content: string;
-  html: string;
+  /* html content is too large to be written to index file */
+  _html: string;
   frontmatter: Record<string, unknown>;
   lang: string;
   version: string;
@@ -295,7 +303,6 @@ export interface PageData {
     lastUpdatedTime?: string;
     description?: string;
     pageType: PageType;
-    _relativePath: string;
     [key: string]: unknown;
   };
 }
