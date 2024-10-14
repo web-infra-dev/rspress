@@ -1,6 +1,6 @@
 {
   "name": "@rspress/plugin-client-redirects",
-  "version": "1.33.0",
+  "version": "1.33.1",
   "description": "A plugin for rspress to client redirect in docs.",
   "bugs": "https://github.com/web-infra-dev/rspress/issues",
   "repository": {
@@ -34,7 +34,7 @@
     "vitest": "2.1.2"
   },
   "peerDependencies": {
-    "@rspress/runtime": "workspace:^1.33.0"
+    "@rspress/runtime": "workspace:^1.33.1"
   },
   "sideEffects": [
     "*.css",
