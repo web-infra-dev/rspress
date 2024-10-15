@@ -1,5 +1,6 @@
 import { useMemo } from 'react';
-import { normalizeImagePath, usePageData, withBase } from '@rspress/runtime';
+import { normalizeImagePath, usePageData } from '@rspress/runtime';
+import { Link } from '@theme';
 import styles from './index.module.scss';
 import { useLocaleSiteData } from '../../logic';
 
@@ -42,14 +43,14 @@ export const NavBarTitle = () => {
 
   return (
     <div className={`${styles.navBarTitle}`}>
-      <a
-        href={withBase(localeData.langRoutePrefix || '/')}
+      <Link
+        href={localeData.langRoutePrefix}
         className="flex items-center w-full h-full text-base font-semibold transition-opacity duration-300 hover:opacity-60"
       >
         <div className="mr-1 min-w-8">{logo}</div>
         {logoText && <span>{logoText}</span>}
         {!logo && !logoText && <span>{title}</span>}
-      </a>
+      </Link>
     </div>
   );
 };
