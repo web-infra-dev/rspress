@@ -136,7 +136,7 @@ function transformer(tree: Root) {
        */
       if (node.type === 'blockquote' && node.children[0].type === 'paragraph') {
         const initiaterTag: string =
-          // @ts-expect-error: `value` is treated like `data`, but type expects `data`
+          // @ts-expect-error `value` is treated like `data`, but type expects `data`
           node.children[0].children[0].value.toString();
 
         if (REGEX_GH_BEGIN.test(initiaterTag)) {
@@ -150,7 +150,7 @@ function transformer(tree: Root) {
             node.children.length === 1 &&
             node.children[0].type === 'paragraph'
           ) {
-            // @ts-expect-error: `value` is treated like `data`, but type expects `data`
+            // @ts-expect-error `value` is treated like `data`, but type expects `data`
             node.children[0].children[0].value =
               initiaterTag!.match(REGEX_GH_BEGIN)![2]! ?? '';
           }
