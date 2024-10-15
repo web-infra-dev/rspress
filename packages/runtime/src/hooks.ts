@@ -30,7 +30,7 @@ export const DataContext = createContext({} as IDataContext);
 
 export const ThemeContext = createContext({} as IThemeContext);
 
-export function usePageData() {
+export function usePageData(): PageData {
   const ctx = useContext(DataContext);
   return ctx.data;
 }
