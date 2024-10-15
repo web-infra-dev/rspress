@@ -8,8 +8,8 @@
     "preview": "rspress preview"
   },
   "dependencies": {
-    "rspress": "workspace:*",
-    "@rspress/plugin-shiki": "workspace:*"
+    "@rspress/plugin-shiki": "workspace:*",
+    "rspress": "workspace:*"
   },
   "devDependencies": {
     "@types/node": "^18.11.17"
