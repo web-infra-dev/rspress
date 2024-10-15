@@ -36,7 +36,7 @@ export async function extractPageData(
   root: string,
   routeService: RouteService,
   highlighterLangs: Set<string>,
-): Promise<(PageIndexInfo | null)[]> {
+): Promise<PageIndexInfo[]> {
   const pageData = await Promise.all(
     routeService
       .getRoutes()
