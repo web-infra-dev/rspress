@@ -1,7 +1,7 @@
 import path from 'node:path';
 import fs from '@rspress/shared/fs-extra';
 import { groupBy } from 'lodash-es';
-import { SEARCH_INDEX_NAME } from '@rspress/shared';
+import { SEARCH_INDEX_NAME, type SiteData } from '@rspress/shared';
 import { createHash } from '@/node/utils';
 import { TEMP_DIR, isProduction } from '@/node/constants';
 import { extractPageData } from './extractPageData';
@@ -15,7 +15,7 @@ import { type FactoryContext, RuntimeModuleID } from '..';
 // 2. replace the `__INDEX_HASH__` placeholder in the html template with the real index hash after Rspack build
 export const indexHash = '';
 
-function deletePriviteKey<T>(obj: T): T {
+function deletePrivateField<T>(obj: T): T {
   if (typeof obj !== 'object' || obj === null) {
     return obj;
   }
@@ -46,16 +46,14 @@ export async function siteDataVMPlugin(context: FactoryContext) {
     userConfig?.search && userConfig?.search?.mode === 'remote'
       ? (userConfig?.search.domain ?? '')
       : '';
-  const pages = (
-    await extractPageData(
-      replaceRules,
-      alias,
-      domain,
-      userDocRoot,
-      routeService,
-      highlightLanguages,
-    )
-  ).filter(Boolean);
+  const pages = await extractPageData(
+    replaceRules,
+    alias,
+    domain,
+    userDocRoot,
+    routeService,
+    highlightLanguages,
+  );
   // modify page index by plugins
   await pluginDriver.modifySearchIndexData(pages);
 
@@ -84,7 +82,7 @@ export async function siteDataVMPlugin(context: FactoryContext) {
     Object.keys(groupedPages).map(async group => {
       // Avoid writing filepath in compile-time
       const stringifiedIndex = JSON.stringify(
-        groupedPages[group].map(deletePriviteKey),
+        groupedPages[group].map(deletePrivateField),
       );
       const indexHash = createHash(stringifiedIndex);
       indexHashByGroup[group] = indexHash;
@@ -109,7 +107,7 @@ export async function siteDataVMPlugin(context: FactoryContext) {
     pages.map(async pageData => pluginDriver.extendPageData(pageData)),
   );
 
-  const siteData = {
+  const siteData: SiteData = {
     title: userConfig?.title || '',
     description: userConfig?.description || '',
     icon: userConfig?.icon || '',
@@ -120,16 +118,16 @@ export async function siteDataVMPlugin(context: FactoryContext) {
     locales: userConfig?.locales || userConfig.themeConfig?.locales || [],
     logo: userConfig?.logo || '',
     logoText: userConfig?.logoText || '',
-    ssg: userConfig?.ssg ?? true,
+    ssg: Boolean(userConfig?.ssg) ?? true,
     multiVersion: {
       default: userConfig?.multiVersion?.default || '',
       versions: userConfig?.multiVersion?.versions || [],
     },
     search: tempSearchObj ?? { mode: 'local' },
     pages: pages.map(page => {
-      const { content, id, domain, _filepath, ...rest } = page;
-      // In production, we cannot expose the complete filepath for security reasons
-      return isProduction() ? rest : { ...rest, _filepath };
+      // omit some fields for runtime size
+      const { content, id, domain, _filepath, _html, ...rest } = page;
+      return rest;
     }),
     markdown: {
       showLineNumbers: userConfig?.markdown?.showLineNumbers ?? false,
@@ -140,8 +138,9 @@ export async function siteDataVMPlugin(context: FactoryContext) {
 
   const { highlightLanguages: defaultLanguages = [] } = config.markdown || {};
 
+  // @ts-ignore this field is extended in "plugin-preview"
   if (siteData.pages[0]?.extraHighlightLanguages?.length) {
-    siteData.pages[0].extraHighlightLanguages.forEach(lang =>
+    (siteData.pages[0] as any).extraHighlightLanguages.forEach((lang: string) =>
       highlightLanguages.add(lang),
     );
   }

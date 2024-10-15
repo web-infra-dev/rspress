@@ -5,6 +5,7 @@ import {
   MDX_REGEXP,
   RSPRESS_TEMP_DIR,
   removeTrailingSlash,
+  isDebugMode,
 } from '@rspress/shared';
 import fs from '@rspress/shared/fs-extra';
 import type {
@@ -284,9 +285,10 @@ async function createInternalBuildConfig(
                 },
               },
               performance: {
-                printFileSize: false,
+                printFileSize: isDebugMode(),
               },
               output: {
+                emitAssets: false,
                 target: 'node',
                 overrideBrowserslist: ssrBrowserslist,
                 distPath: {

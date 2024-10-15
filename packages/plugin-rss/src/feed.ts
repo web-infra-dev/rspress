@@ -25,7 +25,7 @@ export function generateFeedItem(page: PageIndexInfo, siteUrl: string) {
       selectNonNullishProperty(fm.permalink, page.routePath) || '',
     ),
     description: selectNonNullishProperty(fm.description) || '',
-    content: selectNonNullishProperty(fm.summary, page.content) || '',
+    content: selectNonNullishProperty(fm.summary, page._html) || '',
     date: toDate((fm.date as string) || (fm.published_at as string))!,
     category: concatArray(fm.categories as string[], fm.category as string).map(
       cat => ({ name: cat }),
