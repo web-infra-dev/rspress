@@ -157,10 +157,9 @@ function transformer(tree: Root) {
           const newChild = createContainer(
             type.toLowerCase(),
             type.toUpperCase(),
-            // @ts-ignore
-            node.children.slice(1).length === 0
+            (node.children.slice(1).length === 0
               ? node.children.slice(0)
-              : node.children.slice(1),
+              : node.children.slice(1)) as BlockContent[],
           );
           tree.children.splice(i, 1, newChild as Content);
         }
