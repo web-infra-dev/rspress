@@ -1,18 +1,18 @@
-import { useMemo } from 'react';
+import {
+  isEqualPath,
+  normalizeHrefInRuntime as normalizeHref,
+  usePageData,
+  withBase,
+} from '@rspress/runtime';
 import type {
   Header,
   NormalizedSidebarGroup,
-  SidebarItem,
   SidebarDivider,
+  SidebarItem,
 } from '@rspress/shared';
-import {
-  usePageData,
-  normalizeHrefInRuntime as normalizeHref,
-  withBase,
-  isEqualPath,
-} from '@rspress/runtime';
-import { renderInlineMarkdown, useSidebarData } from '../../logic';
 import { Link } from '@theme';
+import { useEffect, useMemo, useRef, useState } from 'react';
+import { renderInlineMarkdown, useSidebarData } from '../../logic';
 import styles from './index.module.scss';
 
 interface GroupItem {
@@ -26,9 +26,62 @@ interface Group {
   items: GroupItem[];
 }
 
-// The sidebar data include two types: sidebar item and sidebar group.
-// In overpage page, we select all the related sidebar groups and show the groups in the page.
-// In the meantime, some sidebar items also should be shown in the page, we collect them in the group named 'Others' and show them in the page.
+// Utility function to normalize text for search
+const normalizeText = (s: string) => s.toLowerCase().replace(/-/g, ' ');
+
+// Utility function to check if text matches query
+const matchesQuery = (text: string, query: string) =>
+  normalizeText(text).includes(normalizeText(query));
+
+// JSX fragment for the search input
+const SearchInput = ({ query, setQuery, searchRef }) => (
+  <div className="flex items-center justify-start gap-4">
+    <label htmlFor="api-filter">Filter</label>
+    <input
+      ref={searchRef}
+      type="search"
+      placeholder="Enter keyword"
+      id="api-filter"
+      value={query}
+      onChange={e => setQuery(e.target.value)}
+      className="border border-gray-300 dark:border-gray-700 rounded-lg px-3 py-2 transition-shadow duration-250 ease-in-out focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-opacity-50"
+    />
+  </div>
+);
+
+// JSX fragment for rendering a group
+const GroupRenderer = ({ group, styles }) => (
+  <div className="mb-16" key={group.name}>
+    <h2>{renderInlineMarkdown(group.name)}</h2>
+    <div className={styles.overviewGroups}>
+      {group.items.map(item => (
+        <div className={styles.overviewGroup} key={item.link}>
+          <div className="flex">
+            <h3 style={{ marginBottom: 8 }}>
+              <Link href={normalizeHref(item.link)}>
+                {renderInlineMarkdown(item.text)}
+              </Link>
+            </h3>
+          </div>
+          <ul className="list-none">
+            {item.headers?.map(header => (
+              <li
+                key={header.id}
+                className={`${styles.overviewGroupLi} ${
+                  styles[`level${header.depth}`]
+                } first:mt-2`}
+              >
+                <Link href={`${normalizeHref(item.link)}#${header.id}`}>
+                  {renderInlineMarkdown(header.text)}
+                </Link>
+              </li>
+            ))}
+          </ul>
+        </div>
+      ))}
+    </div>
+  </div>
+);
 
 export function Overview(props: {
   content?: React.ReactNode;
@@ -41,6 +94,16 @@ export function Overview(props: {
     page: { routePath, title, frontmatter },
   } = usePageData();
   const { content, groups: customGroups, defaultGroupTitle = 'Others' } = props;
+  // Added state for search query
+  const [query, setQuery] = useState('');
+  // Added ref for search input
+  const searchRef = useRef<HTMLInputElement>(null);
+
+  // Added effect to focus search input on mount
+  useEffect(() => {
+    searchRef.current?.focus();
+  }, []);
+
   const subFilter = (link: string) =>
     // sidebar items link without base path
     // pages route path with base path
@@ -181,52 +244,56 @@ export function Overview(props: {
       return group;
     }, [overviewSidebarGroups, routePath, frontmatter]);
 
+  // Added filtering functionality
+  const filtered = useMemo(() => {
+    if (!query) return groups;
+
+    return groups
+      .map(group => {
+        if (matchesQuery(group.name, query)) {
+          return group;
+        }
+
+        const matchedItems = group.items
+          .map(item => {
+            if (matchesQuery(item.text || '', query)) {
+              return item;
+            }
+            const matchedHeaders = item.headers?.filter(({ text }) =>
+              matchesQuery(text, query),
+            );
+            return matchedHeaders?.length
+              ? { ...item, headers: matchedHeaders }
+              : null;
+          })
+          .filter(Boolean);
+
+        return matchedItems.length ? { ...group, items: matchedItems } : null;
+      })
+      .filter(Boolean);
+  }, [groups, query]);
+
   return (
     <div className="overview-index mx-auto px-8">
-      <div className="flex items-center justify-between">
+      <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between">
         {!title && (
-          <h1 className="text-3xl leading-10 tracking-tight">Overview</h1>
+          <h1 className="text-3xl leading-10 tracking-tight mb-4 sm:mb-0">
+            Overview
+          </h1>
         )}
+        {/* Added search input */}
+        <SearchInput query={query} setQuery={setQuery} searchRef={searchRef} />
       </div>
       {content}
-      {groups.map(group => (
-        <div className="mb-16" key={group.name}>
-          {/* If there is no sidebar group, we show the sidebar items directly and hide the group name */}
-          {group.name === defaultGroupTitle && groups.length === 1 ? (
-            <h2 style={{ paddingTop: 0 }}></h2>
-          ) : (
-            <h2>{renderInlineMarkdown(group.name)}</h2>
-          )}
-
-          <div className={styles.overviewGroups}>
-            {group.items.map(item => (
-              <div className={styles.overviewGroup} key={item.link}>
-                <div className="flex">
-                  <h3 style={{ marginBottom: 8 }}>
-                    <Link href={normalizeHref(item.link)}>
-                      {renderInlineMarkdown(item.text)}
-                    </Link>
-                  </h3>
-                </div>
-                <ul className="list-none">
-                  {item.headers?.map(header => (
-                    <li
-                      key={header.id}
-                      className={`${styles.overviewGroupLi} ${
-                        styles[`level${header.depth}`]
-                      } first:mt-2`}
-                    >
-                      <Link href={`${normalizeHref(item.link)}#${header.id}`}>
-                        {renderInlineMarkdown(header.text)}
-                      </Link>
-                    </li>
-                  ))}
-                </ul>
-              </div>
-            ))}
-          </div>
+      {filtered.length > 0 ? (
+        filtered.map(group => (
+          <GroupRenderer key={group.name} group={group} styles={styles} />
+        ))
+      ) : (
+        <div className="text-lg text-gray-500 text-center mt-9 pt-9 border-t border-gray-200 dark:border-gray-800">
+          No API matching "{query}" found.
         </div>
-      ))}
+      )}
     </div>
   );
 }
