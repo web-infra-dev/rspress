@@ -1158,8 +1158,8 @@ importers:
         specifier: 4.17.21
         version: 4.17.21
       qrcode.react:
-        specifier: ^3.2.0
-        version: 3.2.0(react@18.3.1)
+        specifier: ^4.0.1
+        version: 4.0.1(react@18.3.1)
       remark-gfm:
         specifier: 3.0.1
         version: 3.0.1
@@ -8497,8 +8497,8 @@ packages:
     resolution: {integrity: sha512-vYt7UD1U9Wg6138shLtLOvdAu+8DsC/ilFtEVHcH+wydcSpNE20AfSOduf6MkRFahL5FY7X1oU7nKVZFtfq8Fg==}
     engines: {node: '>=6'}
 
-  /qrcode.react@3.2.0(react@18.3.1):
-    resolution: {integrity: sha512-YietHHltOHA4+l5na1srdaMx4sVSOjV9tamHs+mwiLWAMr6QVACRUw1Neax5CptFILcNoITctJY0Ipyn5enQ8g==}
+  /qrcode.react@4.0.1(react@18.3.1):
+    resolution: {integrity: sha512-Lpj0tPBn561WiQ3QQWXbkx8xTtB8BZkJeMZWLJIL8iaPBCoWzW1IpCeU3gY5MDqsb0+efCvEGkl9O0naP64crA==}
     peerDependencies:
       react: ^16.8.0 || ^17.0.0 || ^18.0.0
     dependencies:
