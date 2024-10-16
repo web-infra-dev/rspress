@@ -793,8 +793,8 @@ importers:
         specifier: ^18.3.11
         version: 18.3.11
       framer-motion:
-        specifier: 11.9.0
-        version: 11.9.0
+        specifier: 11.11.9
+        version: 11.11.9
       rsbuild-plugin-google-analytics:
         specifier: ^1.0.3
         version: 1.0.3
@@ -1144,7 +1144,7 @@ importers:
         version: 1.0.3(@rsbuild/core@1.0.14)
       '@rsbuild/plugin-solid':
         specifier: ~1.0.3
-        version: 1.0.3(@babel/core@7.25.2)(@rsbuild/core@1.0.14)(solid-js@1.9.2)
+        version: 1.0.3(@babel/core@7.25.8)(@rsbuild/core@1.0.14)(solid-js@1.9.2)
       '@rspress/core':
         specifier: workspace:^1.33.1
         version: link:../core
@@ -2007,13 +2007,13 @@ packages:
       '@babel/helper-plugin-utils': 7.25.7
     dev: false
 
-  /@babel/plugin-syntax-jsx@7.24.7(@babel/core@7.25.2):
+  /@babel/plugin-syntax-jsx@7.24.7(@babel/core@7.25.8):
     resolution: {integrity: sha512-6ddciUPe/mpMnOKv/U+RSd2vvVy+Yw/JfBB0ZHYjEZt9NLHmCUylNYlsbqCCS1Bffjlb0fCwC9Vqz+sBz6PsiQ==}
     engines: {node: '>=6.9.0'}
     peerDependencies:
       '@babel/core': ^7.0.0-0
     dependencies:
-      '@babel/core': 7.25.2
+      '@babel/core': 7.25.8
       '@babel/helper-plugin-utils': 7.24.8
     dev: false
 
@@ -3973,14 +3973,14 @@ packages:
       sass-embedded: 1.79.5
     dev: false
 
-  /@rsbuild/plugin-solid@1.0.3(@babel/core@7.25.2)(@rsbuild/core@1.0.14)(solid-js@1.9.2):
+  /@rsbuild/plugin-solid@1.0.3(@babel/core@7.25.8)(@rsbuild/core@1.0.14)(solid-js@1.9.2):
     resolution: {integrity: sha512-RCa1aAgyt4WCKPS1bjnQDqGZTupNC5NDwdJaoZrFA0Ivo8NNflBSloBNf1EW6lyVjXXyd8eIxdvx+eMG04rSWg==}
     peerDependencies:
       '@rsbuild/core': 1.x || ^1.0.1-rc.0
     dependencies:
       '@rsbuild/core': 1.0.14
       '@rsbuild/plugin-babel': 1.0.2(@rsbuild/core@1.0.14)
-      babel-preset-solid: 1.9.2(@babel/core@7.25.2)
+      babel-preset-solid: 1.9.2(@babel/core@7.25.8)
       solid-refresh: 0.6.3(solid-js@1.9.2)
     transitivePeerDependencies:
       - '@babel/core'
@@ -4197,7 +4197,7 @@ packages:
   /@rstack-dev/doc-ui@1.5.2:
     resolution: {integrity: sha512-LPJNTRhv0eVxhsu6GR9zVK5szQwLgLmBHcOjrYkxhy6tHmDr++0ZXG9c61iAOH8A5gEbygXAmnLDsxbHD9Hosw==}
     dependencies:
-      framer-motion: 11.9.0
+      framer-motion: 11.11.9
     transitivePeerDependencies:
       - '@emotion/is-prop-valid'
       - react
@@ -4884,14 +4884,14 @@ packages:
     resolution: {integrity: sha512-iCvCkGFskbaYtfQ0a3GmcQCHl/Sv1GufXFGuUQ+FE+WJa7A/espLOuFIn09B944V8/ImPj71T4+rTASxO2PAuA==}
     dev: false
 
-  /babel-plugin-jsx-dom-expressions@0.39.2(@babel/core@7.25.2):
+  /babel-plugin-jsx-dom-expressions@0.39.2(@babel/core@7.25.8):
     resolution: {integrity: sha512-rCkSYFuLl5/XD+BXjZk1XxFAsIBgNe9WZ7xBHjQV1dBliI64kO+EWktAD3b6Bj/SXk+LpVXFyMVydhnI35svWQ==}
     peerDependencies:
       '@babel/core': ^7.20.12
     dependencies:
-      '@babel/core': 7.25.2
+      '@babel/core': 7.25.8
       '@babel/helper-module-imports': 7.18.6
-      '@babel/plugin-syntax-jsx': 7.24.7(@babel/core@7.25.2)
+      '@babel/plugin-syntax-jsx': 7.24.7(@babel/core@7.25.8)
       '@babel/types': 7.25.8
       html-entities: 2.3.3
       jest-diff: 29.7.0
@@ -4908,13 +4908,13 @@ packages:
       resolve: 1.22.4
     dev: true
 
-  /babel-preset-solid@1.9.2(@babel/core@7.25.2):
+  /babel-preset-solid@1.9.2(@babel/core@7.25.8):
     resolution: {integrity: sha512-rWx968GIDghgFStRDQaoqelGspEm9rgPci/yNzNPFlkzMqHaL2yob+t7BbzyqZw5b9/llkzjqUNIOybT9Z9mcg==}
     peerDependencies:
       '@babel/core': ^7.0.0
     dependencies:
-      '@babel/core': 7.25.2
-      babel-plugin-jsx-dom-expressions: 0.39.2(@babel/core@7.25.2)
+      '@babel/core': 7.25.8
+      babel-plugin-jsx-dom-expressions: 0.39.2(@babel/core@7.25.8)
     dev: false
 
   /bail@2.0.2:
@@ -6060,8 +6060,8 @@ packages:
       fetch-blob: 3.2.0
     dev: false
 
-  /framer-motion@11.9.0:
-    resolution: {integrity: sha512-nCfGxvsQecVLjjYDu35G2F5ls+ArE3FBfhxV0RSiisMaUKqteq5DMBFNRKwMyVj+VqKTNhawt+BV480YCHKFlQ==}
+  /framer-motion@11.11.9:
+    resolution: {integrity: sha512-XpdZseuCrZehdHGuW22zZt3SF5g6AHJHJi7JwQIigOznW4Jg1n0oGPMJQheMaKLC+0rp5gxUKMRYI6ytd3q4RQ==}
     peerDependencies:
       '@emotion/is-prop-valid': '*'
       react: ^18.0.0
