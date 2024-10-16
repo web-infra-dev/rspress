@@ -9,6 +9,7 @@ export const NavBarTitle = () => {
   const localeData = useLocaleSiteData();
   const { logo: rawLogo, logoText } = siteData;
   const title = localeData.title ?? siteData.title;
+  const langRoutePrefix = localeData.langRoutePrefix ?? '/';
   const logo = useMemo(() => {
     if (!rawLogo) {
       return null;
@@ -44,7 +45,7 @@ export const NavBarTitle = () => {
   return (
     <div className={`${styles.navBarTitle}`}>
       <Link
-        href={localeData.langRoutePrefix}
+        href={langRoutePrefix === '/' ? undefined : langRoutePrefix}
         className="flex items-center w-full h-full text-base font-semibold transition-opacity duration-300 hover:opacity-60"
       >
         <div className="mr-1 min-w-8">{logo}</div>
