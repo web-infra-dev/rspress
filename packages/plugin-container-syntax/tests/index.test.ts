@@ -146,4 +146,41 @@ This is a details block.
 
     expect(result.value).toMatchSnapshot();
   });
+
+  test('github alerts ~ tip', () => {
+    const result = processor.processSync(`> [!TIP]
+> **Helpful advice for doing things better or more easily.**
+`);
+
+    expect(result.value).toMatchSnapshot();
+  });
+
+  test('github alerts ~ note', () => {
+    const result = processor.processSync(`> [!NOTE]
+>
+> # Please read this note!
+`);
+
+    expect(result.value).toMatchSnapshot();
+  });
+
+  test('github alerts ~ warning', () => {
+    const result = processor.processSync(`> [!warning]
+> Use \`dummy\` instead of \`demo\`
+`);
+
+    expect(result.value).toMatchSnapshot();
+  });
+
+  test('github alerts ~ caution', () => {
+    const result = processor.processSync(`> [!CAUTION]
+>
+> Use this code:-
+> \`\`\`javascript
+> console.log(69);
+> \`\`\`
+`);
+
+    expect(result.value).toMatchSnapshot();
+  });
 });
