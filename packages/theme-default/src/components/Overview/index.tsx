@@ -42,12 +42,12 @@ const SearchInput = ({
   query,
   setQuery,
   searchRef,
-  apiFilterText,
+  overviewFooText,
   apiFilterPlaceholderText,
 }) => {
   return (
     <div className="flex items-center justify-start gap-4">
-      <label htmlFor="api-filter">{apiFilterText}</label>
+      <label htmlFor="api-filter">{overviewFooText}</label>
       <input
         ref={searchRef}
         type="search"
@@ -157,7 +157,7 @@ export function Overview(props: {
   };
 
   const {
-    apiFilterText = 'Filter',
+    overviewFooText = 'Filter',
     apiFilterPlaceholderText = 'Enter keyword',
     apiFilterNoResultsText = 'No matching API found',
   } = useLocaleSiteData();
@@ -304,7 +304,7 @@ export function Overview(props: {
           query={query}
           setQuery={setQuery}
           searchRef={searchRef}
-          apiFilterText={apiFilterText}
+          overviewFooText={overviewFooText}
           apiFilterPlaceholderText={apiFilterPlaceholderText}
         />
       </div>

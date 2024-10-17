@@ -19,7 +19,7 @@ export function useLocaleSiteData(): NormalizedLocales {
       searchPlaceholderText: themeConfig.searchPlaceholderText,
       searchNoResultsText: themeConfig.searchNoResultsText,
       searchSuggestedQueryText: themeConfig.searchSuggestedQueryText,
-      apiFilterText: themeConfig.apiFilterText,
+      overviewFooText: themeConfig.overviewFooText,
       apiFilterPlaceholderText: themeConfig.apiFilterPlaceholderText,
       apiFilterNoResultsText: themeConfig.apiFilterNoResultsText,
     } as NormalizedLocales;
