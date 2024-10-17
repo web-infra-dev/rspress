@@ -10,7 +10,7 @@ interface PrevNextPageProps {
 
 export function PrevNextPage(props: PrevNextPageProps) {
   const { type, text, href } = props;
-  const { prevPageText = 'Previous Page', nextPageText = 'Next page' } =
+  const { prevPageText = 'Previous Page', nextPageText = 'Next Page' } =
     useLocaleSiteData();
   const pageText = type === 'prev' ? prevPageText : nextPageText;
   const linkClassName =
