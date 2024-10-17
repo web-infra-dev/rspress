@@ -90,6 +90,10 @@ export interface Config {
    */
   searchSuggestedQueryText?: string;
   /**
+   * The title of overview
+   */
+  overviewTitleText?: string;
+  /**
    * The text of overview filter
    */
   overviewFooText?: string;
@@ -152,6 +156,7 @@ export interface LocaleConfig {
   searchPlaceholderText?: string;
   searchNoResultsText?: string;
   searchSuggestedQueryText?: string;
+  overviewTitleText?: string;
   overviewFooText?: string;
   apiFilterPlaceholderText?: string;
   apiFilterNoResultsText?: string;
