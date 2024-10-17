@@ -137,7 +137,7 @@ function transformer(tree: Root) {
       if (node.type === 'blockquote' && node.children[0].type === 'paragraph') {
         const initiaterTag: string =
           // @ts-expect-error `value` is treated like `data`, but type expects `data`
-          node.children[0].children[0].value.toString();
+          node.children[0].children[0].value;
 
         if (REGEX_GH_BEGIN.test(initiaterTag)) {
           const match = initiaterTag.match(REGEX_GH_BEGIN);
