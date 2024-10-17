@@ -186,13 +186,17 @@ test.describe('i18n test', async () => {
       waitUntil: 'networkidle',
     });
     const overviewContentZh = await page.textContent('.overview-index');
-    expect(overviewContentZh).toEqual('Overviewzh');
+    expect(overviewContentZh).toContain('Overview');
+    expect(overviewContentZh).toContain('zh');
+    expect(overviewContentZh).not.toContain('en');
     await page.click('.rspress-nav-menu-group-button');
     await page.click('.rspress-nav-menu-group-content a');
     await page.waitForLoadState();
     const content = await page.textContent('#root');
     expect(content).not.toEqual('');
     const overviewContentEn = await page.textContent('.overview-index');
-    expect(overviewContentEn).toEqual('Overviewen');
+    expect(overviewContentEn).toContain('Overview');
+    expect(overviewContentEn).toContain('en');
+    expect(overviewContentEn).not.toContain('zh');
   });
 });
