@@ -15,11 +15,11 @@ importers:
         specifier: ^2.27.9
         version: 2.27.9
       '@modern-js/module-tools':
-        specifier: 2.60.3
-        version: 2.60.3
+        specifier: 2.60.4
+        version: 2.60.4
       '@modern-js/tsconfig':
-        specifier: 2.60.3
-        version: 2.60.3
+        specifier: 2.60.4
+        version: 2.60.4
       '@playwright/test':
         specifier: 1.47.2
         version: 1.47.2
@@ -551,8 +551,8 @@ importers:
         specifier: 2.3.0
         version: 2.3.0(react@18.3.1)
       '@modern-js/utils':
-        specifier: 2.60.3
-        version: 2.60.3
+        specifier: 2.60.4
+        version: 2.60.4
       '@rsbuild/core':
         specifier: ~1.0.14
         version: 1.0.14
@@ -687,11 +687,11 @@ importers:
         version: 4.1.1
     devDependencies:
       '@modern-js/plugin-tailwindcss':
-        specifier: 2.60.3
-        version: 2.60.3(react-dom@18.3.1)(react@18.3.1)(tailwindcss@3.4.13)
+        specifier: 2.60.4
+        version: 2.60.4(react-dom@18.3.1)(react@18.3.1)(tailwindcss@3.4.13)
       '@modern-js/tsconfig':
-        specifier: 2.60.3
-        version: 2.60.3
+        specifier: 2.60.4
+        version: 2.60.4
       '@types/body-scroll-lock':
         specifier: ^3.1.2
         version: 3.1.2
@@ -830,8 +830,8 @@ importers:
         version: link:../plugin-preview
     devDependencies:
       '@modern-js/utils':
-        specifier: 2.60.3
-        version: 2.60.3
+        specifier: 2.60.4
+        version: 2.60.4
       '@types/node':
         specifier: ^18.11.17
         version: 18.11.17
@@ -854,10 +854,10 @@ importers:
   packages/plugin-api-docgen:
     dependencies:
       '@modern-js/utils':
-        specifier: 2.60.3
-        version: 2.60.3
+        specifier: 2.60.4
+        version: 2.60.4
       '@rspress/core':
-        specifier: workspace:^1.33.1
+        specifier: workspace:^1.34.0
         version: link:../core
       documentation:
         specifier: 14.0.3
@@ -916,8 +916,8 @@ importers:
         version: link:../shared
     devDependencies:
       '@modern-js/tsconfig':
-        specifier: 2.60.3
-        version: 2.60.3
+        specifier: 2.60.4
+        version: 2.60.4
       '@types/node':
         specifier: ^18.11.17
         version: 18.11.17
@@ -940,12 +940,12 @@ importers:
   packages/plugin-client-redirects:
     dependencies:
       '@rspress/runtime':
-        specifier: workspace:^1.33.1
+        specifier: workspace:^1.34.0
         version: link:../runtime
     devDependencies:
       '@modern-js/tsconfig':
-        specifier: 2.60.3
-        version: 2.60.3
+        specifier: 2.60.4
+        version: 2.60.4
       '@rspress/shared':
         specifier: workspace:*
         version: link:../shared
@@ -997,8 +997,8 @@ importers:
         version: link:../shared
     devDependencies:
       '@modern-js/tsconfig':
-        specifier: 2.60.3
-        version: 2.60.3
+        specifier: 2.60.4
+        version: 2.60.4
       '@types/node':
         specifier: ^18.11.17
         version: 18.11.17
@@ -1021,15 +1021,15 @@ importers:
   packages/plugin-medium-zoom:
     dependencies:
       '@rspress/runtime':
-        specifier: workspace:^1.33.1
+        specifier: workspace:^1.34.0
         version: link:../runtime
       medium-zoom:
         specifier: 1.1.0
         version: 1.1.0
     devDependencies:
       '@modern-js/tsconfig':
-        specifier: 2.60.3
-        version: 2.60.3
+        specifier: 2.60.4
+        version: 2.60.4
       '@rspress/shared':
         specifier: workspace:*
         version: link:../shared
@@ -1064,7 +1064,7 @@ importers:
         specifier: ^0.2.0
         version: 0.2.0
       '@rspress/core':
-        specifier: workspace:^1.33.1
+        specifier: workspace:^1.34.0
         version: link:../core
       '@rspress/shared':
         specifier: workspace:*
@@ -1146,7 +1146,7 @@ importers:
         specifier: ~1.0.3
         version: 1.0.3(@babel/core@7.25.8)(@rsbuild/core@1.0.14)(solid-js@1.9.2)
       '@rspress/core':
-        specifier: workspace:^1.33.1
+        specifier: workspace:^1.34.0
         version: link:../core
       '@rspress/shared':
         specifier: workspace:*
@@ -1210,7 +1210,7 @@ importers:
         specifier: ^4.2.2
         version: 4.2.2
       rspress:
-        specifier: workspace:^1.33.1
+        specifier: workspace:^1.34.0
         version: link:../cli
     devDependencies:
       '@rspress/runtime':
@@ -1245,8 +1245,8 @@ importers:
         version: 5.0.0
     devDependencies:
       '@modern-js/tsconfig':
-        specifier: 2.60.3
-        version: 2.60.3
+        specifier: 2.60.4
+        version: 2.60.4
       '@types/hast':
         specifier: 3.0.4
         version: 3.0.4
@@ -1278,7 +1278,7 @@ importers:
         specifier: workspace:*
         version: link:../shared
       rspress:
-        specifier: workspace:^1.33.1
+        specifier: workspace:^1.34.0
         version: link:../cli
       typedoc:
         specifier: 0.24.8
@@ -1288,8 +1288,8 @@ importers:
         version: 3.17.1(typedoc@0.24.8)
     devDependencies:
       '@modern-js/tsconfig':
-        specifier: 2.60.3
-        version: 2.60.3
+        specifier: 2.60.4
+        version: 2.60.4
       '@types/node':
         specifier: ^18.11.17
         version: 18.11.17
@@ -1328,8 +1328,8 @@ importers:
         version: 6.26.2(react-dom@18.3.1)(react@18.3.1)
     devDependencies:
       '@modern-js/tsconfig':
-        specifier: 2.60.3
-        version: 2.60.3
+        specifier: 2.60.4
+        version: 2.60.4
       '@types/jest':
         specifier: ~29.5.13
         version: 29.5.13
@@ -1465,11 +1465,11 @@ importers:
         version: 0.1.13
     devDependencies:
       '@modern-js/plugin-tailwindcss':
-        specifier: 2.60.3
-        version: 2.60.3(react-dom@18.3.1)(react@18.3.1)(tailwindcss@3.4.13)
+        specifier: 2.60.4
+        version: 2.60.4(react-dom@18.3.1)(react@18.3.1)(tailwindcss@3.4.13)
       '@modern-js/tsconfig':
-        specifier: 2.60.3
-        version: 2.60.3
+        specifier: 2.60.4
+        version: 2.60.4
       '@types/body-scroll-lock':
         specifier: ^3.1.2
         version: 3.1.2
@@ -1654,16 +1654,15 @@ packages:
     dependencies:
       '@babel/highlight': 7.25.7
       picocolors: 1.1.0
-    dev: false
 
   /@babel/compat-data@7.25.2:
     resolution: {integrity: sha512-bYcppcpKBvX4znYaPEeFau03bp89ShqNMLs+rmdptMw+heSZh9+z84d2YG+K7cYLbWwzdjtDoW/uqZmPjulClQ==}
     engines: {node: '>=6.9.0'}
+    dev: false
 
   /@babel/compat-data@7.25.8:
     resolution: {integrity: sha512-ZsysZyXY4Tlx+Q53XdnOFmqwfB9QDTHYxaZYajWRoBLuLEAwI2UIbtxOjWh/cFaa9IKUlcB+DDuoskLuKu56JA==}
     engines: {node: '>=6.9.0'}
-    dev: false
 
   /@babel/core@7.25.2:
     resolution: {integrity: sha512-BBt3opiCOxUr9euZ5/ro/Xv8/V7yJ5bjYMqG/C1YAo8MIKAnumZalCN+msbci3Pigy4lIQfPUpfMM27HMGaYEA==}
@@ -1686,6 +1685,7 @@ packages:
       semver: 6.3.1
     transitivePeerDependencies:
       - supports-color
+    dev: false
 
   /@babel/core@7.25.8:
     resolution: {integrity: sha512-Oixnb+DzmRT30qu9d3tJSQkxuygWm32DFykT4bRoORPa9hZ/L4KhVB/XiRm6KG+roIEM7DBQlmg27kw2HZkdZg==}
@@ -1708,7 +1708,6 @@ packages:
       semver: 6.3.1
     transitivePeerDependencies:
       - supports-color
-    dev: false
 
   /@babel/generator@7.25.0:
     resolution: {integrity: sha512-3LEEcj3PVW8pW2R1SR1M89g/qrYk/m/mB/tLqn7dn4sbBUQyTqnlod+II2U4dqiGtUmkcnAmkMDralTFZttRiw==}
@@ -1728,6 +1727,7 @@ packages:
       '@jridgewell/gen-mapping': 0.3.5
       '@jridgewell/trace-mapping': 0.3.25
       jsesc: 2.5.2
+    dev: false
 
   /@babel/generator@7.25.7:
     resolution: {integrity: sha512-5Dqpl5fyV9pIAD62yK9P7fcA768uVPUyrQmqpqstHWgMma4feF1x/oFysBCVZLY5wJ2GkMUCdsNDnGZrPoR6rA==}
@@ -1737,7 +1737,6 @@ packages:
       '@jridgewell/gen-mapping': 0.3.5
       '@jridgewell/trace-mapping': 0.3.25
       jsesc: 3.0.2
-    dev: false
 
   /@babel/helper-annotate-as-pure@7.25.7:
     resolution: {integrity: sha512-4xwU8StnqnlIhhioZf1tqnVWeQ9pvH/ujS8hRfw/WOza+/a+1qv69BWNy+oY231maTCWgKWhfBU7kDpsds6zAA==}
@@ -1755,6 +1754,7 @@ packages:
       browserslist: 4.23.3
       lru-cache: 5.1.1
       semver: 6.3.1
+    dev: false
 
   /@babel/helper-compilation-targets@7.25.7:
     resolution: {integrity: sha512-DniTEax0sv6isaw6qSQSfV4gVRNtw2rte8HHM45t9ZR0xILaufBRNkpMifCRiAPyvL4ACD6v0gfCwCmtOQaV4A==}
@@ -1765,7 +1765,6 @@ packages:
       browserslist: 4.24.0
       lru-cache: 5.1.1
       semver: 6.3.1
-    dev: false
 
   /@babel/helper-create-class-features-plugin@7.25.7(@babel/core@7.25.8):
     resolution: {integrity: sha512-bD4WQhbkx80mAyj/WCm4ZHcF4rDxkoLFO6ph8/5/mQ3z4vAzltQXAmbc7GvVJx5H+lk5Mi5EmbTeox5nMGCsbw==}
@@ -1810,6 +1809,7 @@ packages:
       '@babel/types': 7.25.8
     transitivePeerDependencies:
       - supports-color
+    dev: false
 
   /@babel/helper-module-imports@7.25.7:
     resolution: {integrity: sha512-o0xCgpNmRohmnoWKQ0Ij8IdddjyBFE4T2kagL/x6M3+4zUgc+4qTOUBoNe4XxDskt1HPKO007ZPiMgLDq2s7Kw==}
@@ -1819,7 +1819,6 @@ packages:
       '@babel/types': 7.25.8
     transitivePeerDependencies:
       - supports-color
-    dev: false
 
   /@babel/helper-module-transforms@7.25.2(@babel/core@7.25.2):
     resolution: {integrity: sha512-BjyRAbix6j/wv83ftcVJmBt72QtHI56C7JXZoG2xATiLpmoC7dpd8WnkikExHDVPpi/3qCmO6WY1EaXOluiecQ==}
@@ -1834,6 +1833,7 @@ packages:
       '@babel/traverse': 7.25.6
     transitivePeerDependencies:
       - supports-color
+    dev: false
 
   /@babel/helper-module-transforms@7.25.7(@babel/core@7.25.8):
     resolution: {integrity: sha512-k/6f8dKG3yDz/qCwSM+RKovjMix563SLxQFo0UhRNo239SP6n9u5/eLtKD6EAjwta2JHJ49CsD8pms2HdNiMMQ==}
@@ -1848,7 +1848,6 @@ packages:
       '@babel/traverse': 7.25.7
     transitivePeerDependencies:
       - supports-color
-    dev: false
 
   /@babel/helper-optimise-call-expression@7.25.7:
     resolution: {integrity: sha512-VAwcwuYhv/AT+Vfr28c9y6SHzTan1ryqrydSTFGjU0uDJHw3uZ+PduI8plCLkRsDnqK2DMEDmwrOQRsK/Ykjng==}
@@ -1889,6 +1888,7 @@ packages:
       '@babel/types': 7.25.8
     transitivePeerDependencies:
       - supports-color
+    dev: false
 
   /@babel/helper-simple-access@7.25.7:
     resolution: {integrity: sha512-FPGAkJmyoChQeM+ruBGIDyrT2tKfZJO8NcxdC+CWNJi7N8/rZpSxK7yvBJ5O/nF1gfu5KzN7VKG3YVSLFfRSxQ==}
@@ -1898,7 +1898,6 @@ packages:
       '@babel/types': 7.25.8
     transitivePeerDependencies:
       - supports-color
-    dev: false
 
   /@babel/helper-skip-transparent-expression-wrappers@7.25.7:
     resolution: {integrity: sha512-pPbNbchZBkPMD50K0p3JGcFMNLVUCuU/ABybm/PGNj4JiHrpmNyqqCphBk4i19xXtNV0JhldQJJtbSW5aUvbyA==}
@@ -1921,11 +1920,11 @@ packages:
   /@babel/helper-validator-option@7.24.8:
     resolution: {integrity: sha512-xb8t9tD1MHLungh/AIoWYN+gVHaB9kwlu8gffXGSt3FFEIT7RjS+xWbc2vUD1UTZdIpKj/ab3rdqJ7ufngyi2Q==}
     engines: {node: '>=6.9.0'}
+    dev: false
 
   /@babel/helper-validator-option@7.25.7:
     resolution: {integrity: sha512-ytbPLsm+GjArDYXJ8Ydr1c/KJuutjF2besPNbIZnZ6MKUxi/uTA22t2ymmA4WFjZFpjiAMO0xuuJPqK2nvDVfQ==}
     engines: {node: '>=6.9.0'}
-    dev: false
 
   /@babel/helpers@7.25.0:
     resolution: {integrity: sha512-MjgLZ42aCm0oGjJj8CtSM3DB8NOOf8h2l7DCTePJs29u+v7yO/RBX9nShlKMgFnRks/Q4tBAe7Hxnov9VkGwLw==}
@@ -1933,6 +1932,7 @@ packages:
     dependencies:
       '@babel/template': 7.25.0
       '@babel/types': 7.25.8
+    dev: false
 
   /@babel/helpers@7.25.7:
     resolution: {integrity: sha512-Sv6pASx7Esm38KQpF/U/OXLwPPrdGHNKoeblRxgZRLXnAtnkEe4ptJPDtAZM7fBLadbc1Q07kQpSiGQ0Jg6tRA==}
@@ -1940,7 +1940,6 @@ packages:
     dependencies:
       '@babel/template': 7.25.7
       '@babel/types': 7.25.8
-    dev: false
 
   /@babel/highlight@7.24.7:
     resolution: {integrity: sha512-EStJpq4OuY8xYfhGVXngigBJRWxftKX9ksiGDnmlY3o7B/V7KIAc9X4oiK87uPJSc/vs5L869bem5fhZa8caZw==}
@@ -1959,7 +1958,6 @@ packages:
       chalk: 2.4.2
       js-tokens: 4.0.0
       picocolors: 1.1.0
-    dev: false
 
   /@babel/parser@7.25.3:
     resolution: {integrity: sha512-iLTJKDbJ4hMvFPgQwwsVoxtHyWpKKPBrxkANrSYewDPaPpT5py5yeVkgPIJ7XYXhndxJpaA3PyALSXQ7u8e/Dw==}
@@ -1974,6 +1972,7 @@ packages:
     hasBin: true
     dependencies:
       '@babel/types': 7.25.8
+    dev: false
 
   /@babel/parser@7.25.8:
     resolution: {integrity: sha512-HcttkxzdPucv3nNFmfOOMfFf64KgdJVqm1KaCm25dPGMLElo9nsLvXeJECQg8UzPuBGLyTSA0ZzqCtDSzKTEoQ==}
@@ -1981,7 +1980,6 @@ packages:
     hasBin: true
     dependencies:
       '@babel/types': 7.25.8
-    dev: false
 
   /@babel/plugin-proposal-decorators@7.25.7(@babel/core@7.25.8):
     resolution: {integrity: sha512-q1mqqqH0e1lhmsEQHV5U8OmdueBC2y0RFr2oUzZoFRtN3MvPmt2fsFRcNQAoGLTSNdHBFUYGnlgcRFhkBbKjPw==}
@@ -2109,6 +2107,7 @@ packages:
       '@babel/code-frame': 7.24.7
       '@babel/parser': 7.25.6
       '@babel/types': 7.25.8
+    dev: false
 
   /@babel/template@7.25.7:
     resolution: {integrity: sha512-wRwtAgI3bAS+JGU2upWNL9lSlDcRCqD05BZ1n3X2ONLH1WilFP6O1otQjeMK/1g0pvYcXC7b/qVUB1keofjtZA==}
@@ -2117,7 +2116,6 @@ packages:
       '@babel/code-frame': 7.25.7
       '@babel/parser': 7.25.8
       '@babel/types': 7.25.8
-    dev: false
 
   /@babel/traverse@7.25.3:
     resolution: {integrity: sha512-HefgyP1x754oGCsKmV5reSmtV7IXj/kpaE1XYY+D9G5PvKKoFfSbiS4M77MdjuwlZKDIKFCffq9rPU+H/s3ZdQ==}
@@ -2147,6 +2145,7 @@ packages:
       globals: 11.12.0
     transitivePeerDependencies:
       - supports-color
+    dev: false
 
   /@babel/traverse@7.25.7:
     resolution: {integrity: sha512-jatJPT1Zjqvh/1FyJs6qAHL+Dzb7sTb+xr7Q+gM1b+1oBsMsQQ4FkVKb6dFlJvLlVssqkRzV05Jzervt9yhnzg==}
@@ -2161,7 +2160,6 @@ packages:
       globals: 11.12.0
     transitivePeerDependencies:
       - supports-color
-    dev: false
 
   /@babel/types@7.25.6:
     resolution: {integrity: sha512-/l42B1qxpG6RdfYf343Uw1vmDjeNhneUXtzhojE7pDgfpEypmRhI6j1kr17XCVv4Cgl9HdAiQY2x0GwKm7rWCw==}
@@ -3288,17 +3286,17 @@ packages:
       react: 18.3.1
     dev: false
 
-  /@modern-js/core@2.60.3:
-    resolution: {integrity: sha512-FpwXZVkJq3FxSYrnMN+EOprsGrEljWGt/EAP1sQ/DIYs98QWDpiqSY8czkyqyt5Ba6wth4Pu4lJelFs0WBwPdA==}
+  /@modern-js/core@2.60.4:
+    resolution: {integrity: sha512-R4ZBR42LOdT43wOEfpV4d4RfNhCj3gn0WWa0LcTl6xZqUQAzx/gV9M+rcy0gyJBAifTqQRRRKJohnHQ8+fskbQ==}
     dependencies:
-      '@modern-js/node-bundle-require': 2.60.3
-      '@modern-js/plugin': 2.60.3
-      '@modern-js/utils': 2.60.3
+      '@modern-js/node-bundle-require': 2.60.4
+      '@modern-js/plugin': 2.60.4
+      '@modern-js/utils': 2.60.4
       '@swc/helpers': 0.5.13
     dev: true
 
-  /@modern-js/module-tools@2.60.3:
-    resolution: {integrity: sha512-YF88Z1150Qs16CIXvsspUgQORY/9eq96iyBlsmzauaLaSWClBY5gLhmA7Up/G9C3UUAynp5Sy6GdqU9ERHj7eA==}
+  /@modern-js/module-tools@2.60.4:
+    resolution: {integrity: sha512-Kfe3+7HzquBvAkkA/J7sODRnbbH9FXNKDKBwm5j/XKOj2hPgrhLyQKyqCJxRaafIulldEhmVvqNnWPq1JtKa8Q==}
     engines: {node: '>=16.0.0'}
     hasBin: true
     peerDependencies:
@@ -3309,23 +3307,23 @@ packages:
     dependencies:
       '@ampproject/remapping': 2.3.0
       '@ast-grep/napi': 0.16.0
-      '@babel/core': 7.25.2
+      '@babel/core': 7.25.8
       '@babel/types': 7.25.8
-      '@modern-js/core': 2.60.3
-      '@modern-js/plugin': 2.60.3
-      '@modern-js/plugin-changeset': 2.60.3
-      '@modern-js/plugin-i18n': 2.60.3
+      '@modern-js/core': 2.60.4
+      '@modern-js/plugin': 2.60.4
+      '@modern-js/plugin-changeset': 2.60.4
+      '@modern-js/plugin-i18n': 2.60.4
       '@modern-js/swc-plugins': 0.6.11(@swc/helpers@0.5.13)
-      '@modern-js/types': 2.60.3
-      '@modern-js/utils': 2.60.3
+      '@modern-js/types': 2.60.4
+      '@modern-js/utils': 2.60.4
       '@rollup/pluginutils': 4.1.1
       '@swc/helpers': 0.5.13
       convert-source-map: 1.8.0
       enhanced-resolve: 5.12.0
       esbuild: 0.19.2
-      magic-string: 0.30.5
+      magic-string: 0.30.12
       postcss: 8.4.47
-      postcss-modules: 4.3.0(postcss@8.4.47)
+      postcss-modules: 4.3.1(postcss@8.4.47)
       safe-identifier: 0.4.2
       source-map: 0.7.4
       style-inject: 0.3.0
@@ -3338,22 +3336,22 @@ packages:
       - supports-color
     dev: true
 
-  /@modern-js/node-bundle-require@2.60.3:
-    resolution: {integrity: sha512-SUNH71LMn1Tyjf9Qw0Q1eVsPgoLfz8zTZXs0bYjzn7kNUHCSD+sgSN07GmwLTdR2N3uUKoa9GeC8nSYUby1enA==}
+  /@modern-js/node-bundle-require@2.60.4:
+    resolution: {integrity: sha512-mU7cDB9pYQd5h7gtrI0E2zbMdRQdJi2nDqxqBCKb3KKtmSr0VyhAcvHw6vbBvOVKkfbqN+Q/QmUSN0dFSqWyVg==}
     dependencies:
-      '@modern-js/utils': 2.60.3
+      '@modern-js/utils': 2.60.4
       '@swc/helpers': 0.5.13
       esbuild: 0.17.19
     dev: true
 
-  /@modern-js/plugin-changeset@2.60.3:
-    resolution: {integrity: sha512-u0DHbYmE9YocHLhS+k1Pm6PiR8MO4pmn+1IOG+/Ms1SDZNOs3oYERAxXo5Rn6Us6e68mWZyj36B1gWaAPi9GCA==}
+  /@modern-js/plugin-changeset@2.60.4:
+    resolution: {integrity: sha512-dNDeSOMgwojiOw2fqQICmGZddekLqD0Mv+AV6xYf6HmtAHAUKmjQ+SOckykno8yTJzUNPj58HGula0wbQDsoWA==}
     dependencies:
       '@changesets/cli': 2.27.9
       '@changesets/git': 2.0.0
       '@changesets/read': 0.5.9
-      '@modern-js/plugin-i18n': 2.60.3
-      '@modern-js/utils': 2.60.3
+      '@modern-js/plugin-i18n': 2.60.4
+      '@modern-js/utils': 2.60.4
       '@swc/helpers': 0.5.13
       axios: 1.7.5
       resolve-from: 5.0.0
@@ -3361,25 +3359,25 @@ packages:
       - debug
     dev: true
 
-  /@modern-js/plugin-i18n@2.60.3:
-    resolution: {integrity: sha512-cWWg8DXFznwUovmXQLwP6SoRy/yMfKIJZbQ7ARb8HXpsLglvpzLi8Iw8wzE7IsUazzaJmwo7frmG1AXbMWLDxg==}
+  /@modern-js/plugin-i18n@2.60.4:
+    resolution: {integrity: sha512-sWDaJ5pZ3iyD5J2nSdiA4MYs0BD7jnadamKzLAqsX2KDPPQ/3ZwwZsgSeTel+p5IyuRq5hkwjVS8GoxnQzHDwg==}
     dependencies:
-      '@modern-js/utils': 2.60.3
+      '@modern-js/utils': 2.60.4
       '@swc/helpers': 0.5.13
     dev: true
 
-  /@modern-js/plugin-tailwindcss@2.60.3(react-dom@18.3.1)(react@18.3.1)(tailwindcss@3.4.13):
-    resolution: {integrity: sha512-CDRcWdS0ACkebb/ODN/i9r0fm63/wTD7eqcn0ub0xeezsjIyAoFhuqC30fl78jDlxr9qUBhUmp728kJhXzJZxA==}
+  /@modern-js/plugin-tailwindcss@2.60.4(react-dom@18.3.1)(react@18.3.1)(tailwindcss@3.4.13):
+    resolution: {integrity: sha512-55xS2BL19UJXm7mdpCjRSWm66syeQ8Wqa/WVT2sOL1aK/IdH/WN2tWukgnoiorixk/ZWTcAYlA7O4gqnAVhy4A==}
     peerDependencies:
-      '@modern-js/runtime': ^2.60.3
+      '@modern-js/runtime': ^2.60.4
       tailwindcss: '>= 2.0.0 || >= 3.0.0'
     peerDependenciesMeta:
       '@modern-js/runtime':
         optional: true
     dependencies:
-      '@modern-js/node-bundle-require': 2.60.3
-      '@modern-js/runtime-utils': 2.60.3(react-dom@18.3.1)(react@18.3.1)
-      '@modern-js/utils': 2.60.3
+      '@modern-js/node-bundle-require': 2.60.4
+      '@modern-js/runtime-utils': 2.60.4(react-dom@18.3.1)(react@18.3.1)
+      '@modern-js/utils': 2.60.4
       '@swc/helpers': 0.5.13
       babel-plugin-macros: 3.1.0
       tailwindcss: 3.4.13
@@ -3388,15 +3386,15 @@ packages:
       - react-dom
     dev: true
 
-  /@modern-js/plugin@2.60.3:
-    resolution: {integrity: sha512-nWyCemxpXfngfWJamfHihBYh0sOQ3MuQleRpFTY3qMwtemmPr8SJPIZuoP/svA3mccOVmdlYNoFeRP3adqC89g==}
+  /@modern-js/plugin@2.60.4:
+    resolution: {integrity: sha512-u1RljHNayfN/MJziVyv1qonFBo7nTKsTzbvvJzlWqzpbXTGQeJpdaZKbyoKA1Aj5Oc1OpfQahIxMlhktkZ2USw==}
     dependencies:
-      '@modern-js/utils': 2.60.3
+      '@modern-js/utils': 2.60.4
       '@swc/helpers': 0.5.13
     dev: true
 
-  /@modern-js/runtime-utils@2.60.3(react-dom@18.3.1)(react@18.3.1):
-    resolution: {integrity: sha512-a2WEOiHZuerfaddW7OhFmMPaeHa6KB33jcyIiFO0F2SJ2FWFJJVvm3OZXFL7JVfWXVX6Ei9M7+kdn+ixy0E2RA==}
+  /@modern-js/runtime-utils@2.60.4(react-dom@18.3.1)(react@18.3.1):
+    resolution: {integrity: sha512-tAJ+rEsj58JdGDR0VMalSM1CKuIk1F/a7BuQsgRMcHD+ufRRjIBo0GRLWPAAe213pgO3IqHUeKBeXvcUs1SRRA==}
     peerDependencies:
       react: '>=17.0.0'
       react-dom: '>=17.0.0'
@@ -3406,13 +3404,13 @@ packages:
       react-dom:
         optional: true
     dependencies:
-      '@modern-js/utils': 2.60.3
-      '@remix-run/router': 1.15.0
+      '@modern-js/utils': 2.60.4
+      '@remix-run/router': 1.20.0
       '@swc/helpers': 0.5.13
       lru-cache: 6.0.0
       react: 18.3.1
       react-dom: 18.3.1(react@18.3.1)
-      react-router-dom: 6.22.0(react-dom@18.3.1)(react@18.3.1)
+      react-router-dom: 6.27.0(react-dom@18.3.1)(react@18.3.1)
       serialize-javascript: 6.0.2
     dev: true
 
@@ -3509,19 +3507,19 @@ packages:
       '@modern-js/swc-plugins-win32-x64-msvc': 0.6.11
     dev: true
 
-  /@modern-js/tsconfig@2.60.3:
-    resolution: {integrity: sha512-L8o5jatX18tf56mFUjZDxmMQFMxphpKW5ezJZnUzvX3we6oYLQeHXIrDxuov29ysApcMuUHR49op3D8akxB8Qg==}
+  /@modern-js/tsconfig@2.60.4:
+    resolution: {integrity: sha512-fsnZaN/MK9KFtn2V36R4jKzxm+bg98SsiATP4gyhvx7mc3XKXpKdNiOlXsrCAHt+ceE0nVpf2AKqHAuaLS4TBg==}
     dev: true
 
-  /@modern-js/types@2.60.3:
-    resolution: {integrity: sha512-v2MEvxmEa6jdXjMr3GUPVXwVlELoHaePHc9cmCCgu5Si23Vla5It4j27n72l8bBYhBuJ7zM1pqT9yrvNxIBPeQ==}
+  /@modern-js/types@2.60.4:
+    resolution: {integrity: sha512-hdX8ve21gAleoV7LSICxrHJROlRDdL0nFU6TkTCw1DXJhfIPJod5b5XG73VnXpxv+kf1u4pPrVtCPq2XX1SRyA==}
     dev: true
 
-  /@modern-js/utils@2.60.3:
-    resolution: {integrity: sha512-g9kxWsYZ71MZPXMEf2ltDP229WjGIChNB95fjmcvtWRoW9grhINdQJ0/tO+jEaHZiDDQEWuPJlqqUrXWcZB0nQ==}
+  /@modern-js/utils@2.60.4:
+    resolution: {integrity: sha512-RQuROvNA68Dr2SI0mEc1MmG5X2yVmz+aWViZP1Q89z9ErVSJGCSspUHpM2kFQaCwDgbB7Oz84bcAnP0C+ED9TQ==}
     dependencies:
       '@swc/helpers': 0.5.13
-      caniuse-lite: 1.0.30001660
+      caniuse-lite: 1.0.30001668
       lodash: 4.17.21
       rslog: 1.1.0
 
@@ -3764,14 +3762,14 @@ packages:
       playwright: 1.47.2
     dev: true
 
-  /@remix-run/router@1.15.0:
-    resolution: {integrity: sha512-HOil5aFtme37dVQTB6M34G95kPM3MMuqSmIRVCC52eKV+Y/tGSqw9P3rWhlAx6A+mz+MoX+XxsGsNJbaI5qCgQ==}
-    engines: {node: '>=14.0.0'}
-    dev: true
-
   /@remix-run/router@1.19.2:
     resolution: {integrity: sha512-baiMx18+IMuD1yyvOGaHM9QrVUPGGG0jC+z+IPHnRJWUAUvaKuWKyE8gjDj2rzv3sz9zOGoRSPgeBVHRhZnBlA==}
     engines: {node: '>=14.0.0'}
+
+  /@remix-run/router@1.20.0:
+    resolution: {integrity: sha512-mUnk8rPJBI9loFDZ+YzPGdeniYK+FTmRD1TMCz7ev2SNIozyKKpnGgsxO34u6Z4z/t0ITuu7voi/AshfsGsgFg==}
+    engines: {node: '>=14.0.0'}
+    dev: true
 
   /@rollup/pluginutils@4.1.1:
     resolution: {integrity: sha512-clDjivHqWGXi7u+0d2r2sBi4Ie6VLEAzWMIkvJLnDmxoOhBYOTfzGbOQBA32THHm11/LiJbd01tJUpJsbshSWQ==}
@@ -4087,7 +4085,7 @@ packages:
       '@rspack/binding': 1.0.10
       '@rspack/lite-tapable': 1.0.1
       '@swc/helpers': 0.5.13
-      caniuse-lite: 1.0.30001660
+      caniuse-lite: 1.0.30001668
     dev: false
 
   /@rspack/lite-tapable@1.0.1:
@@ -4998,7 +4996,6 @@ packages:
       electron-to-chromium: 1.5.38
       node-releases: 2.0.18
       update-browserslist-db: 1.1.0(browserslist@4.24.0)
-    dev: false
 
   /buffer-builder@0.2.0:
     resolution: {integrity: sha512-7VPMEPuYznPSoR21NE1zvd2Xna6c/CloiZCfcMXR1Jny6PjX0N4Nsa38zcBFo/FMK+BlA+FLKbJCQ0i2yxp+Xg==}
@@ -5033,7 +5030,6 @@ packages:
 
   /caniuse-lite@1.0.30001668:
     resolution: {integrity: sha512-nWLrdxqCdblixUO+27JtGJJE/txpJlyUy5YN1u53wLZkP0emYCo5zgS6QYft7VUYR42LGgi/S5hdLZTrnyIddw==}
-    dev: false
 
   /ccount@2.0.1:
     resolution: {integrity: sha512-eyrF0jiFpY+3drT6383f1qhkbGsLSifNAjA61IUjZjmLCWjItY6LB9ft9YhoDgwfmclB2zhu51Lc7+95b8NRAg==}
@@ -5593,7 +5589,6 @@ packages:
 
   /electron-to-chromium@1.5.38:
     resolution: {integrity: sha512-VbeVexmZ1IFh+5EfrYz1I0HTzHVIlJa112UEWhciPyeOcKJGeTv6N8WnG4wsQB81DGCaVEGhpSb6o6a8WYFXXg==}
-    dev: false
 
   /emoji-regex@10.4.0:
     resolution: {integrity: sha512-EC+0oUMY1Rqm4O6LLrgjtYDvcVYTy7chDnM4Q7030tP4Kwj3u/pR6gP9ygnp2CJMK5Gq+9Q2oqmrFJAz01DXjw==}
@@ -6977,12 +6972,12 @@ packages:
     resolution: {integrity: sha512-OYu7XEzjkCQ3C5Ps3QIZsQfNpqoJyZZA99wd9aWd05NCtC5pWOkShK2mkL6HXQR6/Cy2lbNdPlZBpuQHXE63gA==}
     engines: {node: '>=4'}
     hasBin: true
+    dev: false
 
   /jsesc@3.0.2:
     resolution: {integrity: sha512-xKqzzWXDttJuOcawBt4KnKHHIf5oQ/Cxax+0PWFG+DFDgHNAdi+TXECADI+RYiFUMmx8792xsMbbgXj4CwnP4g==}
     engines: {node: '>=6'}
     hasBin: true
-    dev: false
 
   /json-parse-even-better-errors@2.3.1:
     resolution: {integrity: sha512-xyFwyhro/JEof6Ghe2iz2NcXoj2sloNsWr/XsERDK/oiPCfaNhl5ONfp+jQdAZRQQ0IJWNzH9zIZF7li91kh2w==}
@@ -7213,9 +7208,8 @@ packages:
     dependencies:
       '@jridgewell/sourcemap-codec': 1.5.0
 
-  /magic-string@0.30.5:
-    resolution: {integrity: sha512-7xlpfBaQaP/T6Vh8MO/EqXSW5En6INHEvEXQiuff7Gku0PWjU3uf6w/j9o7O+SpB5fOAkrI5HeoNgwjEO0pFsA==}
-    engines: {node: '>=12'}
+  /magic-string@0.30.12:
+    resolution: {integrity: sha512-Ea8I3sQMVXr8JhN4z+H/d8zwo+tYDgHE9+5G4Wnrwhs0gaK9fXTKx0Tw5Xwsd/bCPTTZNRAdpyzvoeORe9LYpw==}
     dependencies:
       '@jridgewell/sourcemap-codec': 1.5.0
     dev: true
@@ -8371,8 +8365,8 @@ packages:
       postcss: 8.4.47
     dev: true
 
-  /postcss-modules@4.3.0(postcss@8.4.47):
-    resolution: {integrity: sha512-zoUttLDSsbWDinJM9jH37o7hulLRyEgH6fZm2PchxN7AZ8rkdWiALyNhnQ7+jg7cX9f10m6y5VhHsrjO0Mf/DA==}
+  /postcss-modules@4.3.1(postcss@8.4.47):
+    resolution: {integrity: sha512-ItUhSUxBBdNamkT3KzIZwYNNRFKmkJrofvC2nWab3CPKhYBQ1f27XXh1PAPE27Psx58jeelPsxWB/+og+KEH0Q==}
     peerDependencies:
       postcss: ^8.0.0
     dependencies:
@@ -8627,19 +8621,6 @@ packages:
     engines: {node: '>=0.10.0'}
     dev: false
 
-  /react-router-dom@6.22.0(react-dom@18.3.1)(react@18.3.1):
-    resolution: {integrity: sha512-z2w+M4tH5wlcLmH3BMMOMdrtrJ9T3oJJNsAlBJbwk+8Syxd5WFJ7J5dxMEW0/GEXD1BBis4uXRrNIz3mORr0ag==}
-    engines: {node: '>=14.0.0'}
-    peerDependencies:
-      react: '>=16.8'
-      react-dom: '>=16.8'
-    dependencies:
-      '@remix-run/router': 1.15.0
-      react: 18.3.1
-      react-dom: 18.3.1(react@18.3.1)
-      react-router: 6.22.0(react@18.3.1)
-    dev: true
-
   /react-router-dom@6.26.2(react-dom@18.3.1)(react@18.3.1):
     resolution: {integrity: sha512-z7YkaEW0Dy35T3/QKPYB1LjMK2R1fxnHO8kWpUMTBdfVzZrWOiY9a7CtN8HqdWtDUWd5FY6Dl8HFsqVwH4uOtQ==}
     engines: {node: '>=14.0.0'}
@@ -8652,14 +8633,17 @@ packages:
       react-dom: 18.3.1(react@18.3.1)
       react-router: 6.26.2(react@18.3.1)
 
-  /react-router@6.22.0(react@18.3.1):
-    resolution: {integrity: sha512-q2yemJeg6gw/YixRlRnVx6IRJWZD6fonnfZhN1JIOhV2iJCPeRNSH3V1ISwHf+JWcESzLC3BOLD1T07tmO5dmg==}
+  /react-router-dom@6.27.0(react-dom@18.3.1)(react@18.3.1):
+    resolution: {integrity: sha512-+bvtFWMC0DgAFrfKXKG9Fc+BcXWRUO1aJIihbB79xaeq0v5UzfvnM5houGUm1Y461WVRcgAQ+Clh5rdb1eCx4g==}
     engines: {node: '>=14.0.0'}
     peerDependencies:
       react: '>=16.8'
+      react-dom: '>=16.8'
     dependencies:
-      '@remix-run/router': 1.15.0
+      '@remix-run/router': 1.20.0
       react: 18.3.1
+      react-dom: 18.3.1(react@18.3.1)
+      react-router: 6.27.0(react@18.3.1)
     dev: true
 
   /react-router@6.26.2(react@18.3.1):
@@ -8670,6 +8654,16 @@ packages:
     dependencies:
       '@remix-run/router': 1.19.2
       react: 18.3.1
+
+  /react-router@6.27.0(react@18.3.1):
+    resolution: {integrity: sha512-YA+HGZXz4jaAkVoYBE98VQl+nVzI+cVI2Oj/06F5ZM+0u3TgedN9Y9kmMRo2mnkSK2nCpNQn0DVob4HCsY/WLw==}
+    engines: {node: '>=14.0.0'}
+    peerDependencies:
+      react: '>=16.8'
+    dependencies:
+      '@remix-run/router': 1.20.0
+      react: 18.3.1
+    dev: true
 
   /react-syntax-highlighter@15.5.0(react@18.3.1):
     resolution: {integrity: sha512-+zq2myprEnQmH5yw6Gqc8lD55QHnpKaU8TOcFeC/Lg/MQSs8UknEA0JC4nTZGFAXC2J2Hyj/ijJ7NlabyPi2gg==}
@@ -10062,7 +10056,6 @@ packages:
       browserslist: 4.24.0
       escalade: 3.1.2
       picocolors: 1.1.0
-    dev: false
 
   /uri-js@4.4.1:
     resolution: {integrity: sha512-7rKUyy33Q1yc98pQ1DAmLtwX109F7TIfWlW1Ydo8Wl1ii1SeHieeh0HHfPeL2fMXK6z0s8ecKs9frCuLJvndBg==}
