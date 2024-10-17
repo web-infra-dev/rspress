@@ -12,10 +12,5 @@
   },
   "devDependencies": {
     "@types/node": "^18.11.17"
-  },
-  "pnpm": {
-    "overrides": {
-      "@rspress/core": "link:../../../rspress/packages/core"
-    }
   }
 }
