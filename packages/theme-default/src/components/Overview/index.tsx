@@ -181,12 +181,12 @@ export function Overview(props: {
       return group;
     }, [overviewSidebarGroups, routePath, frontmatter]);
 
+  const overviewTitle = title || 'Overview';
+
   return (
     <div className="overview-index mx-auto px-8">
       <div className="flex items-center justify-between">
-        {!title && (
-          <h1 className="text-3xl leading-10 tracking-tight">Overview</h1>
-        )}
+        <h1 className="text-3xl leading-10 tracking-tight">{overviewTitle}</h1>
       </div>
       {content}
       {groups.map(group => (
