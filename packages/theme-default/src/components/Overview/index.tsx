@@ -12,7 +12,11 @@ import type {
 } from '@rspress/shared';
 import { Link } from '@theme';
 import { useEffect, useMemo, useRef, useState } from 'react';
-import { renderInlineMarkdown, useSidebarData } from '../../logic';
+import {
+  renderInlineMarkdown,
+  useSidebarData,
+  useLocaleSiteData,
+} from '../../logic';
 import styles from './index.module.scss';
 
 interface GroupItem {
@@ -34,20 +38,28 @@ const matchesQuery = (text: string, query: string) =>
   normalizeText(text).includes(normalizeText(query));
 
 // JSX fragment for the search input
-const SearchInput = ({ query, setQuery, searchRef }) => (
-  <div className="flex items-center justify-start gap-4">
-    <label htmlFor="api-filter">Filter</label>
-    <input
-      ref={searchRef}
-      type="search"
-      placeholder="Enter keyword"
-      id="api-filter"
-      value={query}
-      onChange={e => setQuery(e.target.value)}
-      className="border border-gray-300 dark:border-gray-700 rounded-lg px-3 py-2 transition-shadow duration-250 ease-in-out focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-opacity-50"
-    />
-  </div>
-);
+const SearchInput = ({
+  query,
+  setQuery,
+  searchRef,
+  apiFilterText,
+  apiFilterPlaceholderText,
+}) => {
+  return (
+    <div className="flex items-center justify-start gap-4">
+      <label htmlFor="api-filter">{apiFilterText}</label>
+      <input
+        ref={searchRef}
+        type="search"
+        placeholder={apiFilterPlaceholderText}
+        id="api-filter"
+        value={query}
+        onChange={e => setQuery(e.target.value)}
+        className="border border-gray-300 dark:border-gray-700 rounded-lg px-3 py-2 transition-shadow duration-250 ease-in-out focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-opacity-50"
+      />
+    </div>
+  );
+};
 
 // JSX fragment for rendering a group
 const GroupRenderer = ({ group, styles }) => (
@@ -143,6 +155,12 @@ export function Overview(props: {
   let { items: overviewSidebarGroups } = useSidebarData() as {
     items: (NormalizedSidebarGroup | SidebarItem)[];
   };
+
+  const {
+    apiFilterText = 'Filter',
+    apiFilterPlaceholderText = 'Enter keyword',
+    apiFilterNoResultsText = 'No matching API found',
+  } = useLocaleSiteData();
 
   if (overviewSidebarGroups[0]?.link !== routePath) {
     overviewSidebarGroups = findItemByRoutePath(
@@ -282,7 +300,13 @@ export function Overview(props: {
           {overviewTitle}
         </h1>
         {/* Added search input */}
-        <SearchInput query={query} setQuery={setQuery} searchRef={searchRef} />
+        <SearchInput
+          query={query}
+          setQuery={setQuery}
+          searchRef={searchRef}
+          apiFilterText={apiFilterText}
+          apiFilterPlaceholderText={apiFilterPlaceholderText}
+        />
       </div>
       {content}
       {filtered.length > 0 ? (
@@ -291,7 +315,7 @@ export function Overview(props: {
         ))
       ) : (
         <div className="text-lg text-gray-500 text-center mt-9 pt-9 border-t border-gray-200 dark:border-gray-800">
-          No API matching "{query}" found.
+          {`${apiFilterNoResultsText}: ${query}`}
         </div>
       )}
     </div>

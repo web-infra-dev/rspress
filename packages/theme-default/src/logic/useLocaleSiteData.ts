@@ -19,6 +19,9 @@ export function useLocaleSiteData(): NormalizedLocales {
       searchPlaceholderText: themeConfig.searchPlaceholderText,
       searchNoResultsText: themeConfig.searchNoResultsText,
       searchSuggestedQueryText: themeConfig.searchSuggestedQueryText,
+      apiFilterText: themeConfig.apiFilterText,
+      apiFilterPlaceholderText: themeConfig.apiFilterPlaceholderText,
+      apiFilterNoResultsText: themeConfig.apiFilterNoResultsText,
     } as NormalizedLocales;
   }
   const localeInfo = locales.find(locale => locale.lang === lang)!;

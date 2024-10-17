@@ -343,6 +343,57 @@ export default defineConfig({
 });
 ```
 
+## apiFilterText
+
+- Type: `string`
+- Default: `Filter`
+
+The title of the API filter. For example:
+
+```ts title="rspress.config.ts"
+import { defineConfig } from 'rspress/config';
+
+export default defineConfig({
+  themeConfig: {
+    apiFilterText: 'Filter',
+  },
+});
+```
+
+## apiFilterPlaceholderText
+
+- Type: `string`
+- Default: `Enter keyword`
+
+The placeholder of the API filter. For example:
+
+```ts title="rspress.config.ts"
+import { defineConfig } from 'rspress/config';
+
+export default defineConfig({
+  themeConfig: {
+    apiFilterPlaceholderText: 'Enter keyword',
+  },
+});
+```
+
+## apiFilterNoResultsText
+
+- Type: `string`
+- Default: `No matching API found`
+
+The text of no API result. For example:
+
+```ts title="rspress.config.ts"
+import { defineConfig } from 'rspress/config';
+
+export default defineConfig({
+  themeConfig: {
+    apiFilterNoResultsText: 'No matching API found',
+  },
+});
+```
+
 ## socialLinks
 
 - Type: `Array`
