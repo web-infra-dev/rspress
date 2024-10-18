@@ -33,9 +33,24 @@ overview: true
 ---
 ```
 
+::: note
+
+The title of the overview page can be configured through frontmatter. The default value is `Overview`. After `title` is configured in frontmatter, there is no need to write an H1 title in the markdown content.
+
+```md
+---
+overview: true
+title: Overview
+---
+
+This is an Overview page of our website.
+```
+
+:::
+
 ### 2. Configuring `_meta.json`
 
-The content structure of the preview page will be automatically generated according to `_meta.json` and the corresponding h1, h2 titles of the article. For example, the configuration of `api/_meta.json` is as follows:
+The content structure of the overview page will be automatically generated according to `_meta.json` and the corresponding h1, h2 titles of the article. For example, the configuration of `api/_meta.json` is as follows:
 
 ```json
 [
