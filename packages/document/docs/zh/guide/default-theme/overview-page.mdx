@@ -33,6 +33,21 @@ overview: true
 ---
 ```
 
+::: note
+
+预览页的标题可以通过 frontmatter 进行配置，默认为 `Overview`，在 frontmatter 中配置了 `title` 后，正文中不需要再写 H1 标题。
+
+```md
+---
+overview: true
+title: Overview
+---
+
+This is an Overview page of our website.
+```
+
+:::
+
 ### 2. 配置 `_meta.json`
 
 预览页面的内容结构会根据 `_meta.json` 及其对应文章的 h1、h2 标题自动生成。比如 `api/_meta.json` 的配置如下：

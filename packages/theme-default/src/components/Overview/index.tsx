@@ -273,14 +273,14 @@ export function Overview(props: {
       .filter(Boolean);
   }, [groups, query]);
 
+  const overviewTitle = title || 'Overview';
+
   return (
     <div className="overview-index mx-auto px-8">
       <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between">
-        {!title && (
-          <h1 className="text-3xl leading-10 tracking-tight mb-4 sm:mb-0">
-            Overview
-          </h1>
-        )}
+        <h1 className="text-3xl leading-10 tracking-tight mb-4 sm:mb-0">
+          {overviewTitle}
+        </h1>
         {/* Added search input */}
         <SearchInput query={query} setQuery={setQuery} searchRef={searchRef} />
       </div>
