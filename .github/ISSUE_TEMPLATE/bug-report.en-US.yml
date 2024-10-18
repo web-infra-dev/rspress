@@ -37,7 +37,7 @@ body:
     id: repro
     attributes:
       label: Reproduce link
-      description: 'Please provide a minimal reproduction of the issue. You can create a GitHub repo and use `npm create rsbuild@latest` as a starter. Or fork from the the [rspress-codesandbox-example](https://codesandbox.io/s/github/web-infra-dev/rspress-codesandbox-template).'
+      description: 'Please provide a minimal reproduction of the issue. You can create a GitHub repo and use `npm create rspress@latest` as a starter. Or fork from the the [rspress-codesandbox-example](https://codesandbox.io/s/github/web-infra-dev/rspress-codesandbox-template).'
       placeholder: paste link here
     validations:
       required: true
