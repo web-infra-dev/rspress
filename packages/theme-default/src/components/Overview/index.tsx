@@ -157,7 +157,6 @@ export function Overview(props: {
   };
 
   const {
-    overviewTitleText = 'Overview',
     overviewFooText = 'Filter',
     apiFilterPlaceholderText = 'Enter keyword',
     apiFilterNoResultsText = 'No matching API found',
@@ -292,12 +291,7 @@ export function Overview(props: {
       .filter(Boolean);
   }, [groups, query]);
 
-  const overviewTitle: string = useMemo<string>((): string => {
-    if (frontmatter?.title) {
-      return frontmatter.title as string;
-    }
-    return overviewTitleText;
-  }, [frontmatter, overviewTitleText]);
+  const overviewTitle = title || 'Overview';
 
   return (
     <div className="overview-index mx-auto px-8">
