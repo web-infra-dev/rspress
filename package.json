@@ -4,7 +4,7 @@
   "scripts": {
     "change": "changeset",
     "changeset": "changeset",
-    "prepare": "npm run build && husky install",
+    "prepare": "pnpm run build && husky install",
     "check-spell": "npx cspell",
     "check-dependency-version": "check-dependency-version-consistency . --dep-type devDependencies",
     "dev": "cross-env NX_DAEMON=false NX_REJECT_UNKNOWN_LOCAL_CACHE=0 nx run-many -t dev --exclude @rspress-fixture/*",
