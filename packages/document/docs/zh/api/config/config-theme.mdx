@@ -329,6 +329,74 @@ export default defineConfig({
 });
 ```
 
+## overviewTitleText
+
+- Type: `string`
+- Default: `Overview`
+
+概览视图的标题。比如:
+
+```ts title="rspress.config.ts"
+import { defineConfig } from 'rspress/config';
+
+export default defineConfig({
+  themeConfig: {
+    overviewTitleText: 'Overview',
+  },
+});
+```
+
+## overviewFooText
+
+- Type: `string`
+- Default: `Filter`
+
+概览视图的过滤文本。比如:
+
+```ts title="rspress.config.ts"
+import { defineConfig } from 'rspress/config';
+
+export default defineConfig({
+  themeConfig: {
+    overviewFooText: 'Filter',
+  },
+});
+```
+
+## apiFilterPlaceholderText
+
+- Type: `string`
+- Default: `Enter keyword`
+
+API 过滤的占位符文本。比如:
+
+```ts title="rspress.config.ts"
+import { defineConfig } from 'rspress/config';
+
+export default defineConfig({
+  themeConfig: {
+    apiFilterPlaceholderText: 'Enter keyword',
+  },
+});
+```
+
+## apiFilterNoResultsText
+
+- Type: `string`
+- Default: `No matching API found`
+
+没有 API 结果时的文本。比如:
+
+```ts title="rspress.config.ts"
+import { defineConfig } from 'rspress/config';
+
+export default defineConfig({
+  themeConfig: {
+    apiFilterNoResultsText: 'No matching API found',
+  },
+});
+```
+
 ## socialLinks
 
 - Type: `Array`

@@ -12,7 +12,11 @@ import type {
 } from '@rspress/shared';
 import { Link } from '@theme';
 import { useEffect, useMemo, useRef, useState } from 'react';
-import { renderInlineMarkdown, useSidebarData } from '../../logic';
+import {
+  renderInlineMarkdown,
+  useSidebarData,
+  useLocaleSiteData,
+} from '../../logic';
 import styles from './index.module.scss';
 
 interface GroupItem {
@@ -34,20 +38,28 @@ const matchesQuery = (text: string, query: string) =>
   normalizeText(text).includes(normalizeText(query));
 
 // JSX fragment for the search input
-const SearchInput = ({ query, setQuery, searchRef }) => (
-  <div className="flex items-center justify-start gap-4">
-    <label htmlFor="api-filter">Filter</label>
-    <input
-      ref={searchRef}
-      type="search"
-      placeholder="Enter keyword"
-      id="api-filter"
-      value={query}
-      onChange={e => setQuery(e.target.value)}
-      className="border border-gray-300 dark:border-gray-700 rounded-lg px-3 py-2 transition-shadow duration-250 ease-in-out focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-opacity-50"
-    />
-  </div>
-);
+const SearchInput = ({
+  query,
+  setQuery,
+  searchRef,
+  overviewFooText,
+  apiFilterPlaceholderText,
+}) => {
+  return (
+    <div className="flex items-center justify-start gap-4">
+      <label htmlFor="api-filter">{overviewFooText}</label>
+      <input
+        ref={searchRef}
+        type="search"
+        placeholder={apiFilterPlaceholderText}
+        id="api-filter"
+        value={query}
+        onChange={e => setQuery(e.target.value)}
+        className="border border-gray-300 dark:border-gray-700 rounded-lg px-3 py-2 transition-shadow duration-250 ease-in-out focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-opacity-50"
+      />
+    </div>
+  );
+};
 
 // JSX fragment for rendering a group
 const GroupRenderer = ({ group, styles }) => (
@@ -143,6 +155,13 @@ export function Overview(props: {
   let { items: overviewSidebarGroups } = useSidebarData() as {
     items: (NormalizedSidebarGroup | SidebarItem)[];
   };
+
+  const {
+    overviewTitleText = 'Overview',
+    overviewFooText = 'Filter',
+    apiFilterPlaceholderText = 'Enter keyword',
+    apiFilterNoResultsText = 'No matching API found',
+  } = useLocaleSiteData();
 
   if (overviewSidebarGroups[0]?.link !== routePath) {
     overviewSidebarGroups = findItemByRoutePath(
@@ -273,16 +292,27 @@ export function Overview(props: {
       .filter(Boolean);
   }, [groups, query]);
 
+  const overviewTitle: string = useMemo<string>((): string => {
+    if (frontmatter?.title) {
+      return frontmatter.title as string;
+    }
+    return overviewTitleText;
+  }, [frontmatter, overviewTitleText]);
+
   return (
     <div className="overview-index mx-auto px-8">
       <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between">
-        {!title && (
-          <h1 className="text-3xl leading-10 tracking-tight mb-4 sm:mb-0">
-            Overview
-          </h1>
-        )}
+        <h1 className="text-3xl leading-10 tracking-tight mb-4 sm:mb-0">
+          {overviewTitle}
+        </h1>
         {/* Added search input */}
-        <SearchInput query={query} setQuery={setQuery} searchRef={searchRef} />
+        <SearchInput
+          query={query}
+          setQuery={setQuery}
+          searchRef={searchRef}
+          overviewFooText={overviewFooText}
+          apiFilterPlaceholderText={apiFilterPlaceholderText}
+        />
       </div>
       {content}
       {filtered.length > 0 ? (
@@ -291,7 +321,7 @@ export function Overview(props: {
         ))
       ) : (
         <div className="text-lg text-gray-500 text-center mt-9 pt-9 border-t border-gray-200 dark:border-gray-800">
-          No API matching "{query}" found.
+          {`${apiFilterNoResultsText}: ${query}`}
         </div>
       )}
     </div>

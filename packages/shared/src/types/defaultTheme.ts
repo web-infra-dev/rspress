@@ -90,6 +90,22 @@ export interface Config {
    */
   searchSuggestedQueryText?: string;
   /**
+   * The title of overview
+   */
+  overviewTitleText?: string;
+  /**
+   * The text of overview filter
+   */
+  overviewFooText?: string;
+  /**
+   * The placeholder of api filter
+   */
+  apiFilterPlaceholderText?: string;
+  /**
+   * The text of no api result
+   */
+  apiFilterNoResultsText?: string;
+  /**
    * The behavior of hiding navbar
    */
   hideNavbar?: 'always' | 'auto' | 'never';
@@ -140,6 +156,10 @@ export interface LocaleConfig {
   searchPlaceholderText?: string;
   searchNoResultsText?: string;
   searchSuggestedQueryText?: string;
+  overviewTitleText?: string;
+  overviewFooText?: string;
+  apiFilterPlaceholderText?: string;
+  apiFilterNoResultsText?: string;
 }
 // nav -----------------------------------------------------------------------
 export type Nav = NavItem[] | { [key: string]: NavItem[] };
