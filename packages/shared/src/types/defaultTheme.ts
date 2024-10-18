@@ -92,15 +92,7 @@ export interface Config {
   /**
    * The text of overview filter
    */
-  overviewFooText?: string;
-  /**
-   * The placeholder of api filter
-   */
-  apiFilterPlaceholderText?: string;
-  /**
-   * The text of no api result
-   */
-  apiFilterNoResultsText?: string;
+  overview?: FilterConfig;
   /**
    * The behavior of hiding navbar
    */
@@ -152,10 +144,18 @@ export interface LocaleConfig {
   searchPlaceholderText?: string;
   searchNoResultsText?: string;
   searchSuggestedQueryText?: string;
-  overviewFooText?: string;
-  apiFilterPlaceholderText?: string;
-  apiFilterNoResultsText?: string;
+  overview?: FilterConfig;
 }
+
+/**
+ * The config of filter component
+ */
+export interface FilterConfig {
+  filterNameText?: string;
+  filterPlaceholderText?: string;
+  filterNoResultText?: string;
+}
+
 // nav -----------------------------------------------------------------------
 export type Nav = NavItem[] | { [key: string]: NavItem[] };
 

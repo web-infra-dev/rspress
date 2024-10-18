@@ -343,53 +343,32 @@ export default defineConfig({
 });
 ```
 
-## overviewFooText
+## overview
 
-- Type: `string`
-- Default: `Filter`
+- Type: `Object`
 
-The text of the overview filter. For example:
+The config of overview. The config is an object with the following types:
 
-```ts title="rspress.config.ts"
-import { defineConfig } from 'rspress/config';
-
-export default defineConfig({
-  themeConfig: {
-    overviewFooText: 'Filter',
-  },
-});
+```ts
+export interface FilterConfig {
+  filterNameText?: string;
+  filterPlaceholderText?: string;
+  filterNoResultText?: string;
+}
 ```
 
-## apiFilterPlaceholderText
-
-- Type: `string`
-- Default: `Enter keyword`
-
-The placeholder of the API filter. For example:
+For example:
 
 ```ts title="rspress.config.ts"
 import { defineConfig } from 'rspress/config';
 
 export default defineConfig({
   themeConfig: {
-    apiFilterPlaceholderText: 'Enter keyword',
-  },
-});
-```
-
-## apiFilterNoResultsText
-
-- Type: `string`
-- Default: `No matching API found`
-
-The text of no API result. For example:
-
-```ts title="rspress.config.ts"
-import { defineConfig } from 'rspress/config';
-
-export default defineConfig({
-  themeConfig: {
-    apiFilterNoResultsText: 'No matching API found',
+    overview: {
+      filterNameText: 'Filter',
+      filterPlaceholderText: 'Enter keyword',
+      filterNoResultText: 'No matching API found',
+    },
   },
 });
 ```

@@ -329,53 +329,32 @@ export default defineConfig({
 });
 ```
 
-## overviewFooText
+## overview
 
-- Type: `string`
-- Default: `Filter`
+- Type: `Object`
 
-概览视图的过滤文本。比如:
+overview 的配置项。配置为一个对象，类型如下：
 
-```ts title="rspress.config.ts"
-import { defineConfig } from 'rspress/config';
-
-export default defineConfig({
-  themeConfig: {
-    overviewFooText: 'Filter',
-  },
-});
+```ts
+export interface FilterConfig {
+  filterNameText?: string;
+  filterPlaceholderText?: string;
+  filterNoResultText?: string;
+}
 ```
 
-## apiFilterPlaceholderText
-
-- Type: `string`
-- Default: `Enter keyword`
-
-API 过滤的占位符文本。比如:
+For example:
 
 ```ts title="rspress.config.ts"
 import { defineConfig } from 'rspress/config';
 
 export default defineConfig({
   themeConfig: {
-    apiFilterPlaceholderText: 'Enter keyword',
-  },
-});
-```
-
-## apiFilterNoResultsText
-
-- Type: `string`
-- Default: `No matching API found`
-
-没有 API 结果时的文本。比如:
-
-```ts title="rspress.config.ts"
-import { defineConfig } from 'rspress/config';
-
-export default defineConfig({
-  themeConfig: {
-    apiFilterNoResultsText: 'No matching API found',
+    overview: {
+      filterNameText: 'Filter',
+      filterPlaceholderText: 'Enter keyword',
+      filterNoResultText: 'No matching API found',
+    },
   },
 });
 ```

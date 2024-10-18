@@ -85,9 +85,11 @@ export default defineConfig({
         searchNoResultsText: '未搜索到相关结果',
         searchPlaceholderText: '搜索文档',
         searchSuggestedQueryText: '可更换不同的关键字后重试',
-        overviewFooText: '过滤',
-        apiFilterPlaceholderText: '输入关键词',
-        apiFilterNoResultsText: '未找到匹配的 API',
+        overview: {
+          filterNameText: '过滤',
+          filterPlaceholderText: '输入关键词',
+          filterNoResultText: '未找到匹配的 API',
+        },
       },
       {
         lang: 'en',
