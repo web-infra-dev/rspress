@@ -42,16 +42,16 @@ const SearchInput = ({
   query,
   setQuery,
   searchRef,
-  overviewFooText,
-  apiFilterPlaceholderText,
+  filterNameText,
+  filterPlaceholderText,
 }) => {
   return (
     <div className="flex items-center justify-start gap-4">
-      <label htmlFor="api-filter">{overviewFooText}</label>
+      <label htmlFor="api-filter">{filterNameText}</label>
       <input
         ref={searchRef}
         type="search"
-        placeholder={apiFilterPlaceholderText}
+        placeholder={filterPlaceholderText}
         id="api-filter"
         value={query}
         onChange={e => setQuery(e.target.value)}
@@ -157,9 +157,11 @@ export function Overview(props: {
   };
 
   const {
-    overviewFooText = 'Filter',
-    apiFilterPlaceholderText = 'Enter keyword',
-    apiFilterNoResultsText = 'No matching API found',
+    overview: {
+      filterNameText = 'Filter',
+      filterPlaceholderText = 'Enter keyword',
+      filterNoResultText = 'No matching API found',
+    } = {},
   } = useLocaleSiteData();
 
   if (overviewSidebarGroups[0]?.link !== routePath) {
@@ -304,8 +306,8 @@ export function Overview(props: {
           query={query}
           setQuery={setQuery}
           searchRef={searchRef}
-          overviewFooText={overviewFooText}
-          apiFilterPlaceholderText={apiFilterPlaceholderText}
+          filterNameText={filterNameText}
+          filterPlaceholderText={filterPlaceholderText}
         />
       </div>
       {content}
@@ -315,7 +317,7 @@ export function Overview(props: {
         ))
       ) : (
         <div className="text-lg text-gray-500 text-center mt-9 pt-9 border-t border-gray-200 dark:border-gray-800">
-          {`${apiFilterNoResultsText}: ${query}`}
+          {`${filterNoResultText}: ${query}`}
         </div>
       )}
     </div>
