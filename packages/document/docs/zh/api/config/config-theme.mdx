@@ -329,6 +329,36 @@ export default defineConfig({
 });
 ```
 
+## overview
+
+- Type: `Object`
+
+预览页/组件的配置项。配置为一个对象，类型如下：
+
+```ts
+interface FilterConfig {
+  filterNameText?: string;
+  filterPlaceholderText?: string;
+  filterNoResultText?: string;
+}
+```
+
+For example:
+
+```ts title="rspress.config.ts"
+import { defineConfig } from 'rspress/config';
+
+export default defineConfig({
+  themeConfig: {
+    overview: {
+      filterNameText: 'Filter',
+      filterPlaceholderText: 'Enter keyword',
+      filterNoResultText: 'No matching API found',
+    },
+  },
+});
+```
+
 ## socialLinks
 
 - Type: `Array`

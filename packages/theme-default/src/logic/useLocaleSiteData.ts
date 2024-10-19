@@ -19,6 +19,7 @@ export function useLocaleSiteData(): NormalizedLocales {
       searchPlaceholderText: themeConfig.searchPlaceholderText,
       searchNoResultsText: themeConfig.searchNoResultsText,
       searchSuggestedQueryText: themeConfig.searchSuggestedQueryText,
+      overview: themeConfig.overview,
     } as NormalizedLocales;
   }
   const localeInfo = locales.find(locale => locale.lang === lang)!;

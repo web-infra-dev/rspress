@@ -90,6 +90,10 @@ export interface Config {
    */
   searchSuggestedQueryText?: string;
   /**
+   * The text of overview filter
+   */
+  overview?: FilterConfig;
+  /**
    * The behavior of hiding navbar
    */
   hideNavbar?: 'always' | 'auto' | 'never';
@@ -140,7 +144,18 @@ export interface LocaleConfig {
   searchPlaceholderText?: string;
   searchNoResultsText?: string;
   searchSuggestedQueryText?: string;
+  overview?: FilterConfig;
 }
+
+/**
+ * The config of filter component
+ */
+export interface FilterConfig {
+  filterNameText?: string;
+  filterPlaceholderText?: string;
+  filterNoResultText?: string;
+}
+
 // nav -----------------------------------------------------------------------
 export type Nav = NavItem[] | { [key: string]: NavItem[] };
 

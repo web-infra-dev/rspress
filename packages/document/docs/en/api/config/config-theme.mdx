@@ -343,6 +343,36 @@ export default defineConfig({
 });
 ```
 
+## overview
+
+- Type: `Object`
+
+The config of overview page/component. The config is an object with the following types:
+
+```ts
+interface FilterConfig {
+  filterNameText?: string;
+  filterPlaceholderText?: string;
+  filterNoResultText?: string;
+}
+```
+
+For example:
+
+```ts title="rspress.config.ts"
+import { defineConfig } from 'rspress/config';
+
+export default defineConfig({
+  themeConfig: {
+    overview: {
+      filterNameText: 'Filter',
+      filterPlaceholderText: 'Enter keyword',
+      filterNoResultText: 'No matching API found',
+    },
+  },
+});
+```
+
 ## socialLinks
 
 - Type: `Array`
