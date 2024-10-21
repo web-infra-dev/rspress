@@ -100,6 +100,29 @@ import { Card } from '@theme';
 
 <Card title="Card Title" text="Card Content" />
 
+其中包含的 props 类型如下：
+
+```ts
+interface CardProps {
+  /**
+   * 卡片标题。
+   */
+  title: React.ReactNode;
+  /**
+   * 卡片内容。
+   */
+  content?: React.ReactNode;
+  /**
+   * 卡片图标。
+   */
+  icon?: React.ReactNode;
+  /**
+   * 卡片样式。
+   */
+  style?: React.CSSProperties;
+}
+```
+
 ## LinkCard
 
 LinkCard 组件用于展示链接卡片。使用方法如下：
@@ -127,6 +150,29 @@ import { LinkCard } from '@theme';
   title="Link Card Title"
   description="Link Card Description"
 />
+
+其中包含的 props 类型如下：
+
+```ts
+interface LinkCardProps {
+  /**
+   * 链接的 URL。
+   */
+  href: string;
+  /**
+   * 链接的标题。
+   */
+  title: string;
+  /**
+   * 链接的描述。
+   */
+  description?: React.ReactNode;
+  /**
+   * 链接卡片的样式。
+   */
+  style?: React.CSSProperties;
+}
+```
 
 ## Helmet
 

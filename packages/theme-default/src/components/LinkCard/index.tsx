@@ -13,7 +13,7 @@ interface LinkCardProps {
   /**
    * The description of the link.
    */
-  description: string;
+  description?: React.ReactNode;
   /**
    * The style of the link card.
    */
