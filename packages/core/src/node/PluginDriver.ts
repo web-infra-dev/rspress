@@ -108,13 +108,22 @@ export class PluginDriver {
   async modifyConfig() {
     let config = this.#config;
 
-    for (const plugin of this.#plugins) {
+    for (let i = 0; i < this.#plugins.length; i++) {
+      const plugin = this.#plugins[i];
       if (typeof plugin.config === 'function') {
         config = await plugin.config(
           config || {},
           {
             addPlugin: this.addPlugin.bind(this),
-            removePlugin: this.removePlugin.bind(this),
+            removePlugin: (pluginName: string) => {
+              const index = this.#plugins.findIndex(
+                item => item.name === pluginName,
+              );
+              this.removePlugin(pluginName);
+              if (index <= i) {
+                i--;
+              }
+            },
           },
           this.#isProd,
         );
