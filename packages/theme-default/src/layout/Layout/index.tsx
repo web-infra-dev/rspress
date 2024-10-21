@@ -53,6 +53,7 @@ export const Layout: React.FC<LayoutProps> = props => {
     afterOutline,
     beforeNavTitle,
     afterNavTitle,
+    navTitle,
     beforeNav,
     beforeHero,
     afterHero,
@@ -126,7 +127,9 @@ export const Layout: React.FC<LayoutProps> = props => {
       case 'home':
         return <Theme.HomeLayout {...homeProps} />;
       case 'doc':
-        return <DocLayout {...docProps} uiSwitch={uiSwitch} />;
+        return (
+          <DocLayout {...docProps} uiSwitch={uiSwitch} navTitle={navTitle} />
+        );
       case '404':
         return <Theme.NotFoundLayout />;
       // The custom pageType will have navbar while the blank pageType will not.
@@ -154,6 +157,7 @@ export const Layout: React.FC<LayoutProps> = props => {
         <Nav
           beforeNavTitle={beforeNavTitle}
           afterNavTitle={afterNavTitle}
+          navTitle={navTitle}
           beforeNav={beforeNav}
           afterNavMenu={afterNavMenu}
         />
