@@ -53,6 +53,7 @@ export const Layout: React.FC<LayoutProps> = props => {
     afterOutline,
     beforeNavTitle,
     afterNavTitle,
+    navTitle,
     beforeNav,
     beforeHero,
     afterHero,
@@ -154,6 +155,7 @@ export const Layout: React.FC<LayoutProps> = props => {
         <Nav
           beforeNavTitle={beforeNavTitle}
           afterNavTitle={afterNavTitle}
+          navTitle={navTitle}
           beforeNav={beforeNav}
           afterNavMenu={afterNavMenu}
         />
