@@ -9,6 +9,7 @@ export { HomeFooter } from './HomeFooter';
 export { HomeHero } from './HomeHero';
 export { LastUpdated } from './LastUpdated';
 export { Link } from './Link';
+export { LinkCard } from './LinkCard';
 export { Nav } from './Nav';
 export { Overview } from './Overview';
 export { PackageManagerTabs } from './PackageManagerTabs';

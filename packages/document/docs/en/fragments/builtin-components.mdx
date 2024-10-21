@@ -100,6 +100,34 @@ import { Card } from '@theme';
 
 <Card title="Card Title" text="Card Content" />
 
+## LinkCard
+
+The LinkCard component is used to display a link card. For example:
+
+```tsx title="index.mdx"
+import { LinkCard } from '@theme';
+
+function App() {
+  return (
+    <LinkCard
+      href="https://rspress.dev/"
+      title="Link Card Title"
+      description="Link Card Description"
+    />
+  );
+}
+```
+
+The effect is as follows:
+
+import { LinkCard } from '@theme';
+
+<LinkCard
+  href="https://rspress.dev/"
+  title="Link Card Title"
+  description="Link Card Description"
+/>
+
 ## Helmet
 
 It is generally used to set custom head content in documents (based on [react-helmet-async](https://www.npmjs.com/package/react-helmet-async)). The usage is as follows:

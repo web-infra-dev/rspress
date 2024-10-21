@@ -100,6 +100,34 @@ import { Card } from '@theme';
 
 <Card title="Card Title" text="Card Content" />
 
+## LinkCard
+
+LinkCard 组件用于展示链接卡片。使用方法如下：
+
+```tsx title="index.mdx"
+import { LinkCard } from '@theme';
+
+function App() {
+  return (
+    <LinkCard
+      href="https://rspress.dev/"
+      title="Link Card Title"
+      description="Link Card Description"
+    />
+  );
+}
+```
+
+效果如下：
+
+import { LinkCard } from '@theme';
+
+<LinkCard
+  href="https://rspress.dev/"
+  title="Link Card Title"
+  description="Link Card Description"
+/>
+
 ## Helmet
 
 一般用于在文档中设置自定义 head 内容（基于 [react-helmet-async](https://www.npmjs.com/package/react-helmet-async)）。使用方法如下：
