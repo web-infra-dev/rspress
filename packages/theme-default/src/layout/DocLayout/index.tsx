@@ -22,6 +22,7 @@ export interface DocLayoutProps {
   beforeOutline?: React.ReactNode;
   afterOutline?: React.ReactNode;
   uiSwitch?: UISwitchResult;
+  navTitle?: React.ReactNode;
 }
 
 export function DocLayout(props: DocLayoutProps) {
@@ -37,6 +38,7 @@ export function DocLayout(props: DocLayoutProps) {
     beforeSidebar,
     afterSidebar,
     uiSwitch,
+    navTitle,
   } = props;
   const { siteData, page } = usePageData();
   const { toc = [], frontmatter } = page;
@@ -71,6 +73,7 @@ export function DocLayout(props: DocLayoutProps) {
         beforeSidebar={beforeSidebar}
         afterSidebar={afterSidebar}
         uiSwitch={uiSwitch}
+        navTitle={navTitle}
       />
       <div
         className={`${styles.content} rspress-doc-container flex flex-shrink-0 mx-auto`}

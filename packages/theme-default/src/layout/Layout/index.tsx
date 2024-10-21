@@ -127,7 +127,9 @@ export const Layout: React.FC<LayoutProps> = props => {
       case 'home':
         return <Theme.HomeLayout {...homeProps} />;
       case 'doc':
-        return <DocLayout {...docProps} uiSwitch={uiSwitch} />;
+        return (
+          <DocLayout {...docProps} uiSwitch={uiSwitch} navTitle={navTitle} />
+        );
       case '404':
         return <Theme.NotFoundLayout />;
       // The custom pageType will have navbar while the blank pageType will not.
