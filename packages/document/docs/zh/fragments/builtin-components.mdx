@@ -82,6 +82,24 @@ interface BadgeProps {
 }
 ```
 
+## Card
+
+Card 组件用于展示卡片。使用方法如下：
+
+```tsx title="index.mdx"
+import { Card } from '@theme';
+
+function App() {
+  return <Card title="Card Title" text="Card Content" />;
+}
+```
+
+效果如下：
+
+import { Card } from '@theme';
+
+<Card title="Card Title" text="Card Content" />
+
 ## Helmet
 
 一般用于在文档中设置自定义 head 内容（基于 [react-helmet-async](https://www.npmjs.com/package/react-helmet-async)）。使用方法如下：

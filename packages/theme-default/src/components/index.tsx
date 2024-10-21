@@ -1,6 +1,7 @@
 export { Aside } from './Aside';
 export { Badge } from './Badge';
 export { Button } from './Button';
+export { Card } from './Card';
 export { DocFooter } from './DocFooter';
 export { EditLink } from './EditLink';
 export { HomeFeature } from './HomeFeature';
