@@ -1,5 +1,5 @@
 ---
-'@rspress/theme-default': patch
+'@rspress/theme-default': minor
 '@rspress/docs': patch
 ---
 
