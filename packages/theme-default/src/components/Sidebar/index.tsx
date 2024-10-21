@@ -58,6 +58,7 @@ interface Props {
   beforeSidebar?: React.ReactNode;
   afterSidebar?: React.ReactNode;
   uiSwitch?: UISwitchResult;
+  navTitle?: React.ReactNode;
 }
 
 type SidebarData = (ISidebarDivider | ISidebarItem | NormalizedSidebarGroup)[];
@@ -78,7 +79,8 @@ export let matchCache: WeakMap<
 > = new WeakMap();
 
 export function Sidebar(props: Props) {
-  const { isSidebarOpen, beforeSidebar, afterSidebar, uiSwitch } = props;
+  const { isSidebarOpen, beforeSidebar, afterSidebar, uiSwitch, navTitle } =
+    props;
 
   const { pathname: rawPathname } = useLocation();
   const { items: rawSidebarData } = useSidebarData();
@@ -207,9 +209,7 @@ export function Sidebar(props: Props) {
       }`}
     >
       {!uiSwitch.showNavbar ? null : (
-        <div className={styles.navTitleMask}>
-          <NavBarTitle />
-        </div>
+        <div className={styles.navTitleMask}>{navTitle || <NavBarTitle />}</div>
       )}
       <div className={`rspress-scrollbar ${styles.sidebarContent}`}>
         <nav className="pb-2">

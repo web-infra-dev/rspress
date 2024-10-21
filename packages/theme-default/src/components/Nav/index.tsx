@@ -17,6 +17,7 @@ import { useNavData } from '../../logic/useNav';
 export interface NavProps {
   beforeNav?: React.ReactNode;
   beforeNavTitle?: React.ReactNode;
+  navTitle?: React.ReactNode;
   afterNavTitle?: React.ReactNode;
   afterNavMenu?: React.ReactNode;
 }
@@ -24,7 +25,8 @@ export interface NavProps {
 const DEFAULT_NAV_POSTION = 'right';
 
 export function Nav(props: NavProps) {
-  const { beforeNavTitle, afterNavTitle, beforeNav, afterNavMenu } = props;
+  const { beforeNavTitle, afterNavTitle, beforeNav, afterNavMenu, navTitle } =
+    props;
   const { siteData } = usePageData();
   const { base } = siteData;
   const { pathname } = useLocation();
@@ -139,7 +141,7 @@ export function Nav(props: NavProps) {
           className={`${styles.container} flex justify-between items-center h-full`}
         >
           {beforeNavTitle}
-          <NavBarTitle />
+          {navTitle || <NavBarTitle />}
           {afterNavTitle}
           <div className="flex flex-1 justify-end items-center">
             {leftNav()}

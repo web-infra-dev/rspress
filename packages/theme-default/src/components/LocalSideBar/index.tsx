@@ -13,11 +13,13 @@ export function SideMenu({
   beforeSidebar,
   afterSidebar,
   uiSwitch,
+  navTitle,
 }: {
   outlineTitle: string;
   beforeSidebar?: React.ReactNode;
   afterSidebar?: React.ReactNode;
   uiSwitch?: UISwitchResult;
+  navTitle?: React.ReactNode;
 }) {
   const [isSidebarOpen, setSidebarIsOpen] = useState<boolean>(false);
   const [isTocOpen, setIsTocOpen] = useState<boolean>(false);
@@ -120,6 +122,7 @@ export function SideMenu({
             beforeSidebar={beforeSidebar}
             afterSidebar={afterSidebar}
             uiSwitch={uiSwitch}
+            navTitle={navTitle}
           />
           {isSidebarOpen ? (
             <div
