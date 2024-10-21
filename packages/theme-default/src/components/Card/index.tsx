@@ -27,7 +27,7 @@ export function Card({ children, title, icon, style, text }: CardProps) {
   return (
     <div className="border border-gray-400 rounded-lg p-6" style={style}>
       <p className="flex items-center gap-2 mb-4">
-        {icon && <div className="">{icon}</div>}
+        {icon && <div>{icon}</div>}
         {title && <span className="text-2xl font-bold">{title}</span>}
       </p>
       <div className="text-base overflow-auto">{content}</div>
