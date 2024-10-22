@@ -1,6 +1,7 @@
 export { Aside } from './Aside';
 export { Badge } from './Badge';
 export { Button } from './Button';
+export { Card } from './Card';
 export { DocFooter } from './DocFooter';
 export { EditLink } from './EditLink';
 export { HomeFeature } from './HomeFeature';
@@ -8,6 +9,7 @@ export { HomeFooter } from './HomeFooter';
 export { HomeHero } from './HomeHero';
 export { LastUpdated } from './LastUpdated';
 export { Link } from './Link';
+export { LinkCard } from './LinkCard';
 export { Nav } from './Nav';
 export { Overview } from './Overview';
 export { PackageManagerTabs } from './PackageManagerTabs';

@@ -82,6 +82,98 @@ interface BadgeProps {
 }
 ```
 
+## Card
+
+The Card component is used to display a card. For example:
+
+```tsx title="index.mdx"
+import { Card } from '@theme';
+
+function App() {
+  return <Card title="Card Title" content="Card Content" />;
+}
+```
+
+The effect is as follows:
+
+import { Card } from '@theme';
+
+<Card title="Card Title" content="Card Content" />
+
+The types of props included are as follows:
+
+```ts
+interface CardProps {
+  /**
+   * The title of the card.
+   */
+  title: React.ReactNode;
+  /**
+   * The content to display inside the card.
+   */
+  content?: React.ReactNode;
+  /**
+   * The icon of the card.
+   */
+  icon?: React.ReactNode;
+  /**
+   * The style of the card.
+   */
+  style?: React.CSSProperties;
+}
+```
+
+## LinkCard
+
+The LinkCard component is used to display a link card. For example:
+
+```tsx title="index.mdx"
+import { LinkCard } from '@theme';
+
+function App() {
+  return (
+    <LinkCard
+      href="https://example.com"
+      title="Link Card Title"
+      description="Link Card Description"
+    />
+  );
+}
+```
+
+The effect is as follows:
+
+import { LinkCard } from '@theme';
+
+<LinkCard
+  href="https://example.com"
+  title="Link Card Title"
+  description="Link Card Description"
+/>
+
+The types of props included are as follows:
+
+```ts
+interface LinkCardProps {
+  /**
+   * The URL of the link.
+   */
+  href: string;
+  /**
+   * The title of the link.
+   */
+  title: string;
+  /**
+   * The description of the link.
+   */
+  description?: React.ReactNode;
+  /**
+   * The style of the link card.
+   */
+  style?: React.CSSProperties;
+}
+```
+
 ## Helmet
 
 It is generally used to set custom head content in documents (based on [react-helmet-async](https://www.npmjs.com/package/react-helmet-async)). The usage is as follows:
