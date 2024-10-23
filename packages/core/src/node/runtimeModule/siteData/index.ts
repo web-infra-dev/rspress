@@ -127,7 +127,8 @@ export async function siteDataVMPlugin(context: FactoryContext) {
     pages: pages.map(page => {
       // omit some fields for runtime size
       const { content, id, domain, _filepath, _html, ...rest } = page;
-      return rest;
+      // In production, we cannot expose the complete filepath for security reasons
+      return isProduction() ? rest : { ...rest, _filepath };
     }),
     markdown: {
       showLineNumbers: userConfig?.markdown?.showLineNumbers ?? false,

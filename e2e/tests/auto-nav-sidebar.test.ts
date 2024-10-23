@@ -176,26 +176,35 @@ test.describe('Auto nav and sidebar test', async () => {
       waitUntil: 'networkidle',
     });
 
-    const sidebarGroups = await page.$$('nav section');
+    const sidebarGroupSections = await page.$$('.rspress-sidebar-section');
     const contexts1 = await page.evaluate(
       sidebars =>
         sidebars?.map(sidebar => sidebar.getAttribute('data-context')),
-      sidebarGroups,
+      sidebarGroupSections,
     );
-
     expect(contexts1.join(',')).toEqual(
       ['config', null, 'client-api'].join(','),
     );
 
-    const sidebarGroupConfig = await page.$$('.rspress-sidebar-group > div');
+    const sidebarGroupCollapses = await page.$$('.rspress-sidebar-collapse');
     const contexts2 = await page.evaluate(
+      sidebars =>
+        sidebars?.map(sidebar => sidebar.getAttribute('data-context')),
+      sidebarGroupCollapses,
+    );
+    expect(contexts2.join(',')).toEqual(
+      ['config', null, 'client-api'].join(','),
+    );
+
+    const sidebarGroupItems = await page.$$('.rspress-sidebar-item');
+    const contexts3 = await page.evaluate(
       sidebarGroupConfig =>
         sidebarGroupConfig?.map(sidebarItem =>
           sidebarItem.getAttribute('data-context'),
         ),
-      sidebarGroupConfig,
+      sidebarGroupItems,
     );
-    expect(contexts2?.[2]).toEqual('front-matter');
-    expect(contexts2?.[3]).toEqual('config-build');
+    expect(contexts3?.[2]).toEqual('front-matter');
+    expect(contexts3?.[3]).toEqual('config-build');
   });
 });

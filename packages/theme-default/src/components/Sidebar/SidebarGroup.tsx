@@ -103,16 +103,17 @@ export function SidebarGroup(props: SidebarItemProps) {
   return (
     <section
       key={id}
-      className="mt-0.5 block"
+      className="rspress-sidebar-section mt-0.5 block"
       data-context={item.context}
       style={{
         marginLeft: depth === 0 ? 0 : '18px',
       }}
     >
       <div
-        className={`flex justify-between items-center ${
+        className={`rspress-sidebar-collapse flex justify-between items-center ${
           active ? styles.menuItemActive : styles.menuItem
         }`}
+        data-context={item.context}
         onMouseEnter={() => item.link && props.preloadLink(item.link)}
         onClick={e => {
           if (item.link) {
@@ -177,7 +178,11 @@ export function SidebarGroup(props: SidebarItemProps) {
               />
             ) : (
               // eslint-disable-next-line react/no-array-index-key
-              <div key={index} data-context={item.context}>
+              <div
+                className="rspress-sidebar-item"
+                key={index}
+                data-context={item.context}
+              >
                 <SidebarItemComp
                   {...props}
                   item={item}
