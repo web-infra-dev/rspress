@@ -176,9 +176,7 @@ test.describe('Auto nav and sidebar test', async () => {
       waitUntil: 'networkidle',
     });
 
-    const sidebarGroupSections = await page.$$(
-      '.rspress-sidebar-group-section',
-    );
+    const sidebarGroupSections = await page.$$('.rspress-sidebar-section');
     const contexts1 = await page.evaluate(
       sidebars =>
         sidebars?.map(sidebar => sidebar.getAttribute('data-context')),
@@ -188,7 +186,7 @@ test.describe('Auto nav and sidebar test', async () => {
       ['config', null, 'client-api'].join(','),
     );
 
-    const sidebarGroupMenus = await page.$$('.rspress-sidebar-group-menu');
+    const sidebarGroupMenus = await page.$$('.rspress-sidebar-menu');
     const contexts2 = await page.evaluate(
       sidebars =>
         sidebars?.map(sidebar => sidebar.getAttribute('data-context')),
@@ -198,7 +196,7 @@ test.describe('Auto nav and sidebar test', async () => {
       ['config', null, 'client-api'].join(','),
     );
 
-    const sidebarGroupItems = await page.$$('.rspress-sidebar-group-item');
+    const sidebarGroupItems = await page.$$('.rspress-sidebar-item');
     const contexts3 = await page.evaluate(
       sidebarGroupConfig =>
         sidebarGroupConfig?.map(sidebarItem =>

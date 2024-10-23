@@ -103,14 +103,14 @@ export function SidebarGroup(props: SidebarItemProps) {
   return (
     <section
       key={id}
-      className="rspress-sidebar-group-section mt-0.5 block"
+      className="rspress-sidebar-section mt-0.5 block"
       data-context={item.context}
       style={{
         marginLeft: depth === 0 ? 0 : '18px',
       }}
     >
       <div
-        className={`rspress-sidebar-group-menu flex justify-between items-center ${
+        className={`rspress-sidebar-menu flex justify-between items-center ${
           active ? styles.menuItemActive : styles.menuItem
         }`}
         data-context={item.context}
@@ -179,7 +179,7 @@ export function SidebarGroup(props: SidebarItemProps) {
             ) : (
               // eslint-disable-next-line react/no-array-index-key
               <div
-                className="rspress-sidebar-group-item"
+                className="rspress-sidebar-item"
                 key={index}
                 data-context={item.context}
               >
