@@ -1,6 +1,6 @@
 {
   "name": "rspress",
-  "version": "1.34.1",
+  "version": "1.35.0",
   "type": "module",
   "types": "./dist/index.d.ts",
   "main": "./dist/index.js",
