@@ -86,16 +86,6 @@ async function createInternalBuildConfig(
     return icon;
   };
 
-  // Using latest browserslist in development to improve build performance
-  const webBrowserslist = isProduction()
-    ? ['chrome >= 87', 'edge >= 88', 'firefox >= 78', 'safari >= 14']
-    : [
-        'last 1 chrome version',
-        'last 1 firefox version',
-        'last 1 safari version',
-      ];
-  const ssrBrowserslist = ['node >= 14'];
-
   const [detectCustomIconAlias, reactCSRAlias, reactSSRAlias] =
     await Promise.all([
       detectCustomIcon(CUSTOM_THEME_DIR),
@@ -266,7 +256,6 @@ async function createInternalBuildConfig(
         },
         output: {
           target: 'web',
-          overrideBrowserslist: webBrowserslist,
           distPath: {
             root: csrOutDir,
           },
@@ -290,7 +279,6 @@ async function createInternalBuildConfig(
               output: {
                 emitAssets: false,
                 target: 'node',
-                overrideBrowserslist: ssrBrowserslist,
                 distPath: {
                   root: ssrOutDir,
                 },
