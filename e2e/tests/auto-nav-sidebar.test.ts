@@ -186,11 +186,11 @@ test.describe('Auto nav and sidebar test', async () => {
       ['config', null, 'client-api'].join(','),
     );
 
-    const sidebarGroupMenus = await page.$$('.rspress-sidebar-menu');
+    const sidebarGroupCollapses = await page.$$('.rspress-sidebar-collapse');
     const contexts2 = await page.evaluate(
       sidebars =>
         sidebars?.map(sidebar => sidebar.getAttribute('data-context')),
-      sidebarGroupMenus,
+      sidebarGroupCollapses,
     );
     expect(contexts2.join(',')).toEqual(
       ['config', null, 'client-api'].join(','),

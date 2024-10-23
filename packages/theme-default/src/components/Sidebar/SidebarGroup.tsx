@@ -110,7 +110,7 @@ export function SidebarGroup(props: SidebarItemProps) {
       }}
     >
       <div
-        className={`rspress-sidebar-menu flex justify-between items-center ${
+        className={`rspress-sidebar-collapse flex justify-between items-center ${
           active ? styles.menuItemActive : styles.menuItem
         }`}
         data-context={item.context}
