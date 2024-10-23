@@ -48,7 +48,7 @@
     "@rsbuild/plugin-less": "~1.0.2",
     "@rsbuild/plugin-react": "~1.0.5",
     "@rsbuild/plugin-sass": "~1.0.4",
-    "@rspress/mdx-rs": "0.5.7",
+    "@rspress/mdx-rs": "0.6.1",
     "@rspress/plugin-auto-nav-sidebar": "workspace:*",
     "@rspress/plugin-container-syntax": "workspace:*",
     "@rspress/plugin-last-updated": "workspace:*",

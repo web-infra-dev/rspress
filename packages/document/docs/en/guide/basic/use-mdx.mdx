@@ -82,6 +82,8 @@ The previously defined properties will be passed to the component as `frontmatte
 
 ## Custom Container
 
+### `:::` Syntax
+
 You can use the `:::` syntax to create custom containers and support custom titles. For example:
 
 **Input:**
@@ -153,6 +155,64 @@ This is a `block` of `Custom Title`
 :::tip{title="Custom Title"}
 This is a `block` of `Custom Title`
 :::
+
+### GitHub Markdown Alerts syntax
+
+You can also [GitHub Markdown Alerts syntax](https://docs.github.com/zh/get-started/writing-on-github/getting-started-with-writing-and-formatting-on-github/basic-writing-and-formatting-syntax#alerts) to create custom containers.
+
+**Input:**
+
+```markdown
+> [!NOTE]
+> This is a `block` of type `note`
+
+> [!TIP]
+> This is a `block` of type `tip`
+
+> [!INFO]
+> This is a `block` of type `info`
+
+> [!WARNING]
+> This is a `block` of type `warning`
+
+> [!DANGER]
+> This is a `block` of type `danger`
+
+> [!DETAILS]
+> This is a `block` of type `details`
+
+> [!TIP]
+> This is a `block` of `Custom Title`
+
+> [!TIP]
+> This is a `block` of `Custom Title`
+```
+
+**Output:**
+
+> [!NOTE]
+> This is a `block` of type `note`
+
+> [!TIP]
+> This is a `block` of type `tip`
+
+> [!INFO]
+> This is a `block` of type `info`
+
+> [!WARNING]
+> This is a `block` of type `warning`
+
+> [!DANGER]
+> This is a `block` of type `danger`
+
+> [!DETAILS]
+> This is a `block` of type `details`
+
+> [!TIP]
+> This is a `block` of `Custom Title`
+
+> [!TIP]
+> This is a `block` of `Custom Title`
 
 ## Code Block
 

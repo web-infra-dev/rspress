@@ -82,6 +82,8 @@ title: Hello World
 
 ## 自定义容器
 
+### `:::` 语法
+
 你可以使用 `:::` 语法来创建自定义容器，且支持自定义标题。例如：
 
 **输入：**
@@ -153,6 +155,64 @@ title: Hello World
 :::tip{title="自定义标题"}
 自定义标题的 `block`
 :::
+
+### GitHub Markdown Alerts 语法
+
+你可以使用 [GitHub Markdown Alerts 语法](https://docs.github.com/zh/get-started/writing-on-github/getting-started-with-writing-and-formatting-on-github/basic-writing-and-formatting-syntax#alerts) 来创建自定义容器
+
+**Input:**
+
+```markdown
+> [!NOTE]
+> 这是一个 `note` 类型的 `block`
+
+> [!TIP]
+> 这是一个 `tip` 类型的 `block`
+
+> [!INFO]
+> 这是一个 `info` 类型的 `block`
+
+> [!WARNING]
+> 这是一个 `warning` 类型的 `block`
+
+> [!DANGER]
+> 这是一个 `danger` 类型的 `block`
+
+> [!DETAILS]
+> 这是一个 `details` 类型的 `block`
+
+> [!TIP]
+> 这是一个 `block` of `Custom Title`
+
+> [!TIP]
+> 这是一个 `block` of `Custom Title`
+```
+
+**Output:**
+
+> [!NOTE]
+> 这是一个 `note` 类型的 `block`
+
+> [!TIP]
+> 这是一个 `tip` 类型的 `block`
+
+> [!INFO]
+> 这是一个 `info` 类型的 `block`
+
+> [!WARNING]
+> 这是一个 `warning` 类型的 `block`
+
+> [!DANGER]
+> 这是一个 `danger` 类型的 `block`
+
+> [!DETAILS]
+> 这是一个 `details` 类型的 `block`
+
+> [!TIP]
+> 这是一个 `block` of `Custom Title`
+
+> [!TIP]
+> 这是一个 `block` of `Custom Title`
 
 ## 代码块
 
