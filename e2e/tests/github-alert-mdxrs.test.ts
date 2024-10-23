@@ -4,11 +4,11 @@ import { getPort, killProcess, runDevCommand } from '../utils/runCommands';
 
 const fixtureDir = path.resolve(__dirname, '../fixtures');
 
-test.describe('github alert syntax in mdx-js', async () => {
+test.describe('github alert syntax in mdx-rs', async () => {
   let appPort;
   let app;
   test.beforeAll(async () => {
-    const appDir = path.join(fixtureDir, 'github-alert-mdxjs');
+    const appDir = path.join(fixtureDir, 'github-alert-mdxrs');
     appPort = await getPort();
     app = await runDevCommand(appDir, appPort);
   });
