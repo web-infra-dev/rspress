@@ -120,7 +120,7 @@ export class PluginDriver {
                 item => item.name === pluginName,
               );
               this.removePlugin(pluginName);
-              if (index <= i) {
+              if (index <= i && index > 0) {
                 i--;
               }
             },
