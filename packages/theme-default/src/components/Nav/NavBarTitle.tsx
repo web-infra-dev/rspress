@@ -47,7 +47,7 @@ export const NavBarTitle = () => {
         href={localeData.langRoutePrefix}
         className="flex items-center w-full h-full text-base font-semibold transition-opacity duration-300 hover:opacity-60"
       >
-        <div className="mr-1 min-w-8">{logo}</div>
+        {logo && <div className="mr-1 min-w-8">{logo}</div>}
         {logoText && <span>{logoText}</span>}
         {!logo && !logoText && <span>{title}</span>}
       </Link>
