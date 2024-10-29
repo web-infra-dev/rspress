@@ -132,11 +132,24 @@ export function Overview(props: {
     }
     return '';
   };
+
+  const removeIndex = (link: string) => {
+    if (link.endsWith('/index')) {
+      return link.slice(0, -5);
+    }
+    return link;
+  };
+
   const findItemByRoutePath = (items, routePath, originalItems) => {
     for (const item of items) {
       if (withBase(item.link) === routePath) {
         return [item];
       }
+
+      if (removeIndex(withBase(item.link)) === routePath) {
+        return items;
+      }
+
       if (item.items) {
         const foundItem = findItemByRoutePath(
           item.items,
