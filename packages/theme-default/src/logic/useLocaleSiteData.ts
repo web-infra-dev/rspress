@@ -1,4 +1,4 @@
-import type { NormalizedLocales } from '@rspress/shared';
+import { addTrailingSlash, type NormalizedLocales } from '@rspress/shared';
 import { usePageData } from '@rspress/runtime';
 
 export function useLocaleSiteData(): NormalizedLocales {
@@ -26,6 +26,6 @@ export function useLocaleSiteData(): NormalizedLocales {
 
   return {
     ...localeInfo,
-    langRoutePrefix: lang === defaultLang ? '/' : lang,
+    langRoutePrefix: lang === defaultLang ? '/' : addTrailingSlash(lang),
   } as NormalizedLocales;
 }
