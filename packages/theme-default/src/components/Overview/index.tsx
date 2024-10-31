@@ -311,9 +311,7 @@ export function Overview(props: {
   return (
     <div className="overview-index mx-auto px-8">
       <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between mb-10">
-        <h1 className="text-3xl leading-10 tracking-tight sm:mb-0">
-          {overviewTitle}
-        </h1>
+        <h1 className="text-3xl leading-10 tracking-tight">{overviewTitle}</h1>
         {/* Added search input */}
         <SearchInput
           query={query}
