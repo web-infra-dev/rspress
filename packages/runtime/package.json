@@ -1,6 +1,6 @@
 {
   "name": "@rspress/runtime",
-  "version": "1.35.2",
+  "version": "1.35.3",
   "description": "The Runtime of Rspress Documentation Framework",
   "bugs": "https://github.com/web-infra-dev/rspress/issues",
   "repository": {
@@ -38,7 +38,7 @@
     "react-router-dom": "^6.27.0"
   },
   "devDependencies": {
-    "@modern-js/tsconfig": "2.60.5",
+    "@modern-js/tsconfig": "2.60.6",
     "@types/jest": "~29.5.14",
     "@types/react": "^18.3.12",
     "@types/react-dom": "^18.3.1",
