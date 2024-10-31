@@ -310,8 +310,8 @@ export function Overview(props: {
 
   return (
     <div className="overview-index mx-auto px-8">
-      <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between">
-        <h1 className="text-3xl leading-10 tracking-tight mb-4 sm:mb-0">
+      <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between mb-10">
+        <h1 className="text-3xl leading-10 tracking-tight sm:mb-0">
           {overviewTitle}
         </h1>
         {/* Added search input */}
