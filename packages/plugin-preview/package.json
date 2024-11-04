@@ -23,12 +23,12 @@
   },
   "dependencies": {
     "@mdx-js/mdx": "2.3.0",
-    "@rsbuild/core": "~1.0.18",
-    "@rsbuild/plugin-babel": "~1.0.2",
+    "@rsbuild/core": "~1.0.19",
+    "@rsbuild/plugin-babel": "~1.0.3",
     "@rsbuild/plugin-less": "~1.0.3",
-    "@rsbuild/plugin-react": "~1.0.5",
+    "@rsbuild/plugin-react": "~1.0.6",
     "@rsbuild/plugin-sass": "~1.0.4",
-    "@rsbuild/plugin-solid": "~1.0.3",
+    "@rsbuild/plugin-solid": "~1.0.4",
     "@rspress/shared": "workspace:*",
     "@rspress/theme-default": "workspace:*",
     "lodash": "4.17.21",
@@ -36,7 +36,7 @@
     "remark-gfm": "3.0.1"
   },
   "devDependencies": {
-    "@types/lodash": "^4.17.12",
+    "@types/lodash": "^4.17.13",
     "@types/mdast": "^4.0.4",
     "@types/node": "^18.11.17",
     "@types/react": "^18.3.12",
