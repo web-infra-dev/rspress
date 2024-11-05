@@ -20,18 +20,19 @@
   --rp-code-line-number-color: rgba(60, 60, 60, 0.33);
 }
 
-.rspress-doc :not(pre, h1, h2, h3, h4, h5, h6) > code
-{
+.rspress-doc :not(pre, h1, h2, h3, h4, h5, h6) > code {
   font-size: var(--rp-code-font-size);
 }
 
-.rspress-doc :not(pre, div) > code
-{
+.rspress-doc :not(pre, div) > code {
   padding: 3px 6px;
   border-radius: var(--rp-radius-small);
-  color: var(--rp-c-text-code);
   background-color: var(--rp-c-text-code-bg);
   overflow-wrap: break-word;
+}
+
+.rspress-doc :not(pre, div, a) > code {
+  color: var(--rp-c-text-code);
 }
 
 .rspress-doc h1 > code,
@@ -119,7 +120,6 @@
 .rspress-doc [class^='language-'] .rspress-code-content {
   position: relative;
 }
-
 
 .rspress-doc [class^='language-'] .rspress-code-content span.highlighted {
   background-color: var(--rp-code-line-highlight-color);
