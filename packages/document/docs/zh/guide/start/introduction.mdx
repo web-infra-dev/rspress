@@ -274,13 +274,6 @@ export default defineConfig({
 [Docusaurus](https://docusaurus.io/ 'Docusaurus') 是 Meta 开源的一款 SSG 框架，它和 Rspress 一样使用 React 作为渲染框架，且支持 MDX，但 Rspress 与 Docusaurus 的区别主要在于：
 
 1. Rspress 默认使用 [mdx-rs](https://github.com/web-infra-dev/mdx-rs) 来提供更好的构建性能，详见[构建性能](#构建性能)。
-
-::: tip
-
-Rspack 团队和 Docusaurus 团队进行了合作，Docusaurus 在 [3.6 版本](https://docusaurus.io/blog/releases/3.6#docusaurus-faster) 引入了基于 Rust 前端工具链来进行构建性能优化，并支持一键开启 Rspack 构建的能力。
-
-:::
-
 2. Rspress 的配置更简单，上手成本更低。Rspress 的配置更加简单，不引入过多的概念，尽可能降低心智负担，比如提供开箱即用的搜索功能、符合直觉的多版本文档管理方式等等。
 3. Rspress 架构上对 Bundler 提供了更上层的抽象。对于 webpack、Rspack 这类底层的 Bundler，其配置项繁琐且不易上手。Docusaurus 选择直接暴露底层 Bundler 的配置项，而 Rspress 则对 Bundler 进行了更上层的抽象，提供了更加简单易用的配置项，比如你可以通过 `builderConfig.html.tags` 轻松添加 `<head>` 中的标签，而不用通过 Bundler 来注册 `html-webpack-plugin` 相关插件。
 
