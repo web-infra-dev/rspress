@@ -37,9 +37,13 @@ export function renderHtmlOrText(str?: string | number | null) {
   return isHtml(str) ? htmr(str) : str;
 }
 
+// This doesn’t handle all nested complexities
+// but it’s sufficient for most common Markdown usage scenarios
+// while maintaining compatibility with all browsers (including Safari).
+// For some complex cases, more complex parsing logic or the use of a specialized Markdown AST parsing library may be required.
 const CODE_TEXT_PATTERN = /`(.*?)`/g;
-const STRONG_TEXT_PATTERN = /\*{2}(?!\*)(.*?)(?<!\*)\*{2}/g;
-const EMPHASIS_TEXT_PATTERN = /\*(?!\*)(.*?)(?<!\*)\*/g;
+const STRONG_TEXT_PATTERN = /\*{2}(?!\*)(.*?)\*{2}(?!\*)/g;
+const EMPHASIS_TEXT_PATTERN = /\*(?!\*)(.*?)\*(?!\*)/g;
 
 /**
  * In this method, we will render the markdown text to inline html and support basic markdown syntax, including the following:
