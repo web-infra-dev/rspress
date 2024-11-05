@@ -281,7 +281,8 @@ Rspack 团队和 Docusaurus 团队进行了合作，Docusaurus 在 [3.6 版本](
 
 :::
 
-2. Rspress 的配置更简单，上手成本更低。Rspress 的配置更加简单，不引入过多的概念，尽可能降低心智负担，比如提供开箱即用的搜索功能、符合直觉的多版本文档管理方式等等。3. Rspress 架构上对 Bundler 提供了更上层的抽象。对于 webpack、Rspack 这类底层的 Bundler，其配置项繁琐且不易上手。Docusaurus 选择直接暴露底层 Bundler 的配置项，而 Rspress 则对 Bundler 进行了更上层的抽象，提供了更加简单易用的配置项，比如你可以通过 `builderConfig.html.tags` 轻松添加 `<head>` 中的标签，而不用通过 Bundler 来注册 `html-webpack-plugin` 相关插件。
+2. Rspress 的配置更简单，上手成本更低。Rspress 的配置更加简单，不引入过多的概念，尽可能降低心智负担，比如提供开箱即用的搜索功能、符合直觉的多版本文档管理方式等等。
+3. Rspress 架构上对 Bundler 提供了更上层的抽象。对于 webpack、Rspack 这类底层的 Bundler，其配置项繁琐且不易上手。Docusaurus 选择直接暴露底层 Bundler 的配置项，而 Rspress 则对 Bundler 进行了更上层的抽象，提供了更加简单易用的配置项，比如你可以通过 `builderConfig.html.tags` 轻松添加 `<head>` 中的标签，而不用通过 Bundler 来注册 `html-webpack-plugin` 相关插件。
 
 ### 与 Nextra 的区别
 
