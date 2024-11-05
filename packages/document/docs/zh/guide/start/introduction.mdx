@@ -19,11 +19,7 @@ Rspress 主要以如下的几个方向来进行建设：
 
 我们不禁开始思考，是否能跳出目前社区工具链的限制，突破现有 SSG 框架的性能瓶颈，实现绝大多数场景的项目秒启效果？
 
-接着，我们在这个方向上持续地探索，最终在 Rspress 上实现了这样的效果。以 Rspress 官网文档的内容为例，Rspress、Docusaurus 和 Nextra 三者的性能对比情况如下：
-
-import { Benchmark } from '@/components/Benchmark';
-
-<Benchmark />
+接着，我们在这个方向上持续地探索，最终在 Rspress 上实现了这样的效果。
 
 如果只说一种最核心的优化手段，那无疑是 `Rust 前端工具链`。 我们主要在两个性能敏感部分使用了 Rust 工具链：
 
@@ -277,7 +273,7 @@ export default defineConfig({
 
 [Docusaurus](https://docusaurus.io/ 'Docusaurus') 是 Meta 开源的一款 SSG 框架，它和 Rspress 一样使用 React 作为渲染框架，且支持 MDX，但 Rspress 与 Docusaurus 的区别主要在于：
 
-1. Rspress 的构建性能更好。Rspress 基于 Rust 前端工具链，项目启动/构建速度快于 Docusaurus 5 ~ 10 倍，详情可以参考[构建性能](#构建性能)。
+1. Rspress 默认使用 [mdx-rs](https://github.com/web-infra-dev/mdx-rs) 来提供更好的构建性能，详见[构建性能](#构建性能)。
 2. Rspress 的配置更简单，上手成本更低。Rspress 的配置更加简单，不引入过多的概念，尽可能降低心智负担，比如提供开箱即用的搜索功能、符合直觉的多版本文档管理方式等等。
 3. Rspress 架构上对 Bundler 提供了更上层的抽象。对于 webpack、Rspack 这类底层的 Bundler，其配置项繁琐且不易上手。Docusaurus 选择直接暴露底层 Bundler 的配置项，而 Rspress 则对 Bundler 进行了更上层的抽象，提供了更加简单易用的配置项，比如你可以通过 `builderConfig.html.tags` 轻松添加 `<head>` 中的标签，而不用通过 Bundler 来注册 `html-webpack-plugin` 相关插件。
 
