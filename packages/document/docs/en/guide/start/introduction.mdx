@@ -19,11 +19,7 @@ As the project becomes larger and larger, team members often worry about the len
 
 We couldn't help but start thinking, can we break the limitations of the current community tool chain, break through the performance bottleneck of the existing SSG framework, and achieve the effect of instant startup for most project scenarios?
 
-Then, we continued to explore in this direction and finally achieved this effect on Rspress. Taking the content of Rspress's official website documentation as an example, the performance comparison between Rspress, Docusaurus, and Nextra is as follows:
-
-import { Benchmark } from '@/components/Benchmark';
-
-<Benchmark />
+Then, we continued to explore in this direction and finally achieved this effect on Rspress.
 
 If there is only one most core optimization method, it is undoubtedly the `Rust Frontend Toolchain`. We mainly use the Rust toolchain in two performance-sensitive parts:
 
@@ -276,7 +272,13 @@ export default defineConfig({
 
 [Docusaurus](https://docusaurus.io/ 'Docusaurus') is an open-source SSG framework by Meta. Like Rspress, it uses React as the rendering framework and supports MDX. However, the main differences between Rspress and Docusaurus are:
 
-1. Rspress has better build performance. Based on the Rust front-end toolchain, Rspress's project startup/build speed is 5 ~ 10 times faster than Docusaurus. For details, refer to [Build Performance](#build-performance).
+1. Rspress has better build performance based on the Rust front-end toolchain. For details, refer to [Build Performance](#build-performance).
+
+::: tip
+
+The Rspack team and the Docusaurus team have cooperated. Docusaurus modernized their infrastructure to use faster Rust-based tools for build performance optimization in [Version 3.6](https://docusaurus.io/blog/releases/3.6#docusaurus-faster) and you can enable the ability to build with Rspack with configs.
+
+:::
 
 2. Rspress has simpler config and lower learning curve. Rspress's config is simpler, does not introduce too many concepts, and reduces cognitive load as much as possible. For example, it provides out-of-the-box search functionality, intuitive multi-version document management, etc.
 
