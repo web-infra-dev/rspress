@@ -1,7 +1,7 @@
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 import React from 'react';
 import htmr from 'htmr';
-import isHtml from 'is-html';
+import { parseDocument } from 'htmlparser2';
 import { isEqualPath } from '@rspress/runtime';
 import { isNumber } from 'lodash-es';
 
@@ -30,11 +30,25 @@ export function renderHtmlOrText(str?: string | number | null) {
   if (!str) {
     return '';
   }
+
   if (isNumber(str)) {
     return str;
   }
 
-  return isHtml(str) ? htmr(str) : str;
+  // Parse the HTML to check for validity
+  const hasValidHtmlElements = parseDocument(str).children.some(
+    node => node.type === 'tag' && node.children.length > 0,
+  );
+
+  if (hasValidHtmlElements) {
+    return htmr(str);
+  }
+
+  return str
+    .replace(/\\</g, '<')
+    .replace(/\\>/g, '>')
+    .replace(/&lt;/g, '<')
+    .replace(/&gt;/g, '>');
 }
 
 // This doesn’t handle all nested complexities
@@ -59,6 +73,7 @@ export function renderInlineMarkdown(text: string) {
     .replace(STRONG_TEXT_PATTERN, '<strong>$1</strong>')
     .replace(EMPHASIS_TEXT_PATTERN, '<em>$1</em>')
     .replace(CODE_TEXT_PATTERN, '<code>$1</code>');
+
   return renderHtmlOrText(htmlText);
 }
 
