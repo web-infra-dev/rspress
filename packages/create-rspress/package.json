@@ -13,12 +13,9 @@
     "directory": "packages/create-rspress"
   },
   "scripts": {
-    "dev": "modern build -w",
-    "build": "modern build",
-    "build:watch": "modern build -w",
-    "reset": "rimraf ./**/node_modules",
-    "new": "modern new",
-    "upgrade": "modern upgrade"
+    "dev": "rslib build -w",
+    "build": "rslib build",
+    "reset": "rimraf ./**/node_modules"
   },
   "devDependencies": {
     "@types/fs-extra": "11.0.4",

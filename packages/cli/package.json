@@ -28,13 +28,10 @@
     }
   },
   "scripts": {
-    "dev": "modern build -w",
-    "build": "modern build",
-    "build:watch": "modern build -w",
+    "dev": "rslib build -w",
+    "build": "rslib build",
     "test": "vitest run",
-    "reset": "rimraf ./**/node_modules",
-    "new": "modern new",
-    "upgrade": "modern upgrade"
+    "reset": "rimraf ./**/node_modules"
   },
   "dependencies": {
     "@rsbuild/core": "~1.0.19",

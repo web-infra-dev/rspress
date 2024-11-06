@@ -43,9 +43,11 @@
   "devDependencies": {
     "@biomejs/biome": "1.9.4",
     "@changesets/cli": "^2.27.9",
+    "@microsoft/api-extractor": "^7.47.11",
     "@modern-js/module-tools": "2.60.6",
     "@modern-js/tsconfig": "2.60.6",
     "@playwright/test": "1.47.2",
+    "@rslib/core": "^0.0.16",
     "@types/cross-spawn": "^6.0.6",
     "@types/fs-extra": "11.0.4",
     "@types/node": "^18.11.17",

@@ -1,21 +1,21 @@
 {
-  "extends": "@modern-js/tsconfig/base",
-  "declaration": true,
-  "compilerOptions": {
-    "module": "ESNext",
-    "target": "ESNext",
-    "baseUrl": "./",
-    "paths": {
-      "@/*": ["./src/*"]
-    },
-    "isolatedModules": true
-  },
-  "include": [
-    "src",
-    "vitest.config.ts",
-    "modern.config.ts",
-    "runtime.ts",
-    "theme.ts"
-  ],
-  "exclude": ["**/node_modules"]
+	"extends": "@modern-js/tsconfig/base",
+	"declaration": true,
+	"compilerOptions": {
+		"module": "ESNext",
+		"target": "ESNext",
+		"baseUrl": "./",
+		"paths": {
+			"@/*": ["./src/*"]
+		},
+		"isolatedModules": true
+	},
+	"include": [
+		"src",
+		"vitest.config.ts",
+		"rslib.config.ts",
+		"runtime.ts",
+		"theme.ts"
+	],
+	"exclude": ["**/node_modules"]
 }
