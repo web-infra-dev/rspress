@@ -242,6 +242,16 @@ importers:
         specifier: ^18.11.17
         version: 18.11.17
 
+  e2e/fixtures/inline-markdown:
+    dependencies:
+      rspress:
+        specifier: workspace:*
+        version: link:../../../packages/cli
+    devDependencies:
+      '@types/node':
+        specifier: ^18.11.17
+        version: 18.11.17
+
   e2e/fixtures/issue-1309:
     dependencies:
       rspress:
@@ -1463,12 +1473,12 @@ importers:
       html-to-text:
         specifier: ^9.0.5
         version: 9.0.5
+      htmlparser2:
+        specifier: ^9.1.0
+        version: 9.1.0
       htmr:
         specifier: ^1.0.2
         version: 1.0.2(react@18.3.1)
-      is-html:
-        specifier: ^3.1.0
-        version: 3.1.0
       lodash-es:
         specifier: ^4.17.21
         version: 4.17.21
@@ -1509,9 +1519,6 @@ importers:
       '@types/html-to-text':
         specifier: ^9.0.4
         version: 9.0.4
-      '@types/is-html':
-        specifier: ^2.0.2
-        version: 2.0.2
       '@types/jest':
         specifier: ~29.5.14
         version: 29.5.14
@@ -4266,10 +4273,6 @@ packages:
       '@types/node': 18.11.17
     dev: true
 
-  /@types/is-html@2.0.2:
-    resolution: {integrity: sha512-SHdlXsp1XB8+CzelA4xFsUqykJxUVKD4HXHGDjtLUD7zZXtp+f/sUsUxdyziZclPFDzHZls/kWDawbuOG3oZVQ==}
-    dev: true
-
   /@types/istanbul-lib-coverage@2.0.4:
     resolution: {integrity: sha512-z/QT1XN4K4KYuslS23k62yDIDLwLFkzxOuMplDtObz0+y7VqJCaO2o+SPwHCvLFZh7xazvvoor2tA/hPz9ee7g==}
     dev: true
@@ -6486,6 +6489,15 @@ packages:
 
   /htmlparser2@8.0.2:
     resolution: {integrity: sha512-GYdjWKDkbRLkZ5geuHs5NY1puJ+PXwP7+fHPRz06Eirsb9ugf6d8kkXav6ADhcODhFFPMIXyxkxSuMf3D6NCFA==}
+    dependencies:
+      domelementtype: 2.3.0
+      domhandler: 5.0.3
+      domutils: 3.1.0
+      entities: 4.5.0
+    dev: false
+
+  /htmlparser2@9.1.0:
+    resolution: {integrity: sha512-5zfg6mHUoaer/97TxnGpxmbR7zJtPwIYFMZ/H5ucTlPZhKvtum05yiPK3Mgai3a0DyVxv7qYqoweaEd2nrYQzQ==}
     dependencies:
       domelementtype: 2.3.0
       domhandler: 5.0.3
