@@ -606,8 +606,8 @@ importers:
         specifier: ~1.0.4
         version: 1.0.4(@rsbuild/core@1.0.19)
       '@rspress/mdx-rs':
-        specifier: 0.6.1
-        version: 0.6.1
+        specifier: 0.6.2
+        version: 0.6.2
       '@rspress/plugin-auto-nav-sidebar':
         specifier: workspace:*
         version: link:../plugin-auto-nav-sidebar
@@ -4032,8 +4032,8 @@ packages:
       react-refresh: 0.14.2
     dev: false
 
-  /@rspress/mdx-rs-darwin-arm64@0.6.1:
-    resolution: {integrity: sha512-XV/meKCyAbuhv4u1iC2Y0l6bwspiqAwmSA55wG5r1L88DG5kD1sntiIB5seKkr7oUXcDJ/QbRy76GZuHuYdBzA==}
+  /@rspress/mdx-rs-darwin-arm64@0.6.2:
+    resolution: {integrity: sha512-kYyHeEcleRNxLIefDXPHuRkc9EiMnFxuJwOl4uzMUrVAVwHXHZyXsZKdgKPruJWDmg3gjDhdBQPEhCrEETniTg==}
     engines: {node: '>=14.12'}
     cpu: [arm64]
     os: [darwin]
@@ -4041,8 +4041,8 @@ packages:
     dev: false
     optional: true
 
-  /@rspress/mdx-rs-darwin-x64@0.6.1:
-    resolution: {integrity: sha512-29G3RfWSyfQOuNLnI4XC6uOwCf6tFtigcBDYFFY+JmYltUetRNRBCnn9xOyLd3RUKFaoc97oKRzwWBzpKougYw==}
+  /@rspress/mdx-rs-darwin-x64@0.6.2:
+    resolution: {integrity: sha512-i5rtg2wYC7/sVyhFjc2u4W0e+0UMA7kAPNjdO/sXCKBv9ep8zqOYyXF5VN6AmbK9XPCt3ZG/gxe1LzrOfTnDyg==}
     engines: {node: '>=14.12'}
     cpu: [x64]
     os: [darwin]
@@ -4050,8 +4050,8 @@ packages:
     dev: false
     optional: true
 
-  /@rspress/mdx-rs-linux-arm64-gnu@0.6.1:
-    resolution: {integrity: sha512-SHPlnghHBBx+yU+HyP1pZEeC6aKtx654kfKXx9YMauGvmA2XbTU7FRIio8rYK+e310F67vAZH7SRcTeczhSlyA==}
+  /@rspress/mdx-rs-linux-arm64-gnu@0.6.2:
+    resolution: {integrity: sha512-4VSdKQ2WIXv0yWvbDMurvI9dNHArwLTTX/Kv3H/WLLpc8VRRGAnf/8e6OlfuYEdunfcdwBbCFh8i7OBIsmPGvA==}
     engines: {node: '>=14.12'}
     cpu: [arm64]
     os: [linux]
@@ -4059,8 +4059,8 @@ packages:
     dev: false
     optional: true
 
-  /@rspress/mdx-rs-linux-arm64-musl@0.6.1:
-    resolution: {integrity: sha512-8o+V3LZ/OvT/0kky56GVM9uqCWbfi5m/RlCE2pS7DqZYvQZcMVeZc14eEWLtLcZd2dsZlqmT/fekbEkoP+pu5Q==}
+  /@rspress/mdx-rs-linux-arm64-musl@0.6.2:
+    resolution: {integrity: sha512-71VGZjIdlHe6M+V09kyKqTaeI0rz/DuXLycHreSUYkRVdbRvh/QhXScoRp5jLKU/HHQmDpHNQOnHhJTRpRDbhA==}
     engines: {node: '>=14.12'}
     cpu: [arm64]
     os: [linux]
@@ -4068,8 +4068,8 @@ packages:
     dev: false
     optional: true
 
-  /@rspress/mdx-rs-linux-x64-gnu@0.6.1:
-    resolution: {integrity: sha512-v4ZIscNR7AyeQE/8Hcy5Sceh2sbc481GfAUV7LMTcaAiAdHvVQXdWxeoUA/x23uAXmfP+dveZcmhfoGMe/y4rQ==}
+  /@rspress/mdx-rs-linux-x64-gnu@0.6.2:
+    resolution: {integrity: sha512-UILCcvfAGuVU00ytiSL3cEKhrG02EAKK9hTvX46x5iIRJySKN+fuvoU17grSXKd0Nqi7sJFjOud9OTGU5X3fsA==}
     engines: {node: '>=14.12'}
     cpu: [x64]
     os: [linux]
@@ -4077,8 +4077,8 @@ packages:
     dev: false
     optional: true
 
-  /@rspress/mdx-rs-linux-x64-musl@0.6.1:
-    resolution: {integrity: sha512-cbBIf6q73n/aB/0ctIW0FHkpBxSUXFazwXJ3nv4YISZP5/1ytE1RXsOPo47Zko3Ta41bNxLYvi5PLOz8cdIejw==}
+  /@rspress/mdx-rs-linux-x64-musl@0.6.2:
+    resolution: {integrity: sha512-TWvvmOQHGf4lOHveuxMwJ1GGfRvtamD6Sx+iOaNLHmxoW7fyB9M/VkQfAq/rQtMLt6AOvolGEXea25muDKqcxA==}
     engines: {node: '>=14.12'}
     cpu: [x64]
     os: [linux]
@@ -4086,8 +4086,8 @@ packages:
     dev: false
     optional: true
 
-  /@rspress/mdx-rs-win32-arm64-msvc@0.6.1:
-    resolution: {integrity: sha512-x3kujsuzl3kzsL9kBQy/5QdEO6Ga9+nyG3+lbLbGHKfberT0+ZbgOMTwpQ8hetv0qs/bFZWcMhNbZ6+KwKSUYg==}
+  /@rspress/mdx-rs-win32-arm64-msvc@0.6.2:
+    resolution: {integrity: sha512-/f07OHaygYg2kzXEgRQLTlY0bahw9dlsnQ0pe9eSLsXIRAABF3yJIZYOwiGPNe3qBmm+TumjrmfFbdUjaEqC4g==}
     engines: {node: '>=14.12'}
     cpu: [arm64]
     os: [win32]
@@ -4095,8 +4095,8 @@ packages:
     dev: false
     optional: true
 
-  /@rspress/mdx-rs-win32-x64-msvc@0.6.1:
-    resolution: {integrity: sha512-14YQOlV8YBHYNEzNZ4tXuSCWvnWpwuGI2WgXJMEBvhAFLOEpDAzof3KrcfExvBF0gxlUsC/loIorBT4RzoFn4g==}
+  /@rspress/mdx-rs-win32-x64-msvc@0.6.2:
+    resolution: {integrity: sha512-YCVgkwYbzcjGuresoWAhAfTL4JAcZ6OTjAjVMjIeCp7nTVLHIYjvYMGzSa2/y3z427+H3/RksJyitsqsxzjzyA==}
     engines: {node: '>=14.12'}
     cpu: [x64]
     os: [win32]
@@ -4104,18 +4104,18 @@ packages:
     dev: false
     optional: true
 
-  /@rspress/mdx-rs@0.6.1:
-    resolution: {integrity: sha512-hAZH2dZPueRACh2dL6EuKzNSxPShq0zd0BCat1IaOpJ8mX73IRvTAQib/26gTM1IRikjMY7R7Bs6/RDZrjM+dQ==}
+  /@rspress/mdx-rs@0.6.2:
+    resolution: {integrity: sha512-wACLGc3F6DOk8WXT/jQIWQrHqwwcddtmH9+kg8e0kckoWGPuXW/bo060SA1QzYpQpIMNFAaJafHN62jJoLLmpg==}
     engines: {node: '>= 10'}
     optionalDependencies:
-      '@rspress/mdx-rs-darwin-arm64': 0.6.1
-      '@rspress/mdx-rs-darwin-x64': 0.6.1
-      '@rspress/mdx-rs-linux-arm64-gnu': 0.6.1
-      '@rspress/mdx-rs-linux-arm64-musl': 0.6.1
-      '@rspress/mdx-rs-linux-x64-gnu': 0.6.1
-      '@rspress/mdx-rs-linux-x64-musl': 0.6.1
-      '@rspress/mdx-rs-win32-arm64-msvc': 0.6.1
-      '@rspress/mdx-rs-win32-x64-msvc': 0.6.1
+      '@rspress/mdx-rs-darwin-arm64': 0.6.2
+      '@rspress/mdx-rs-darwin-x64': 0.6.2
+      '@rspress/mdx-rs-linux-arm64-gnu': 0.6.2
+      '@rspress/mdx-rs-linux-arm64-musl': 0.6.2
+      '@rspress/mdx-rs-linux-x64-gnu': 0.6.2
+      '@rspress/mdx-rs-linux-x64-musl': 0.6.2
+      '@rspress/mdx-rs-win32-arm64-msvc': 0.6.2
+      '@rspress/mdx-rs-win32-x64-msvc': 0.6.2
     dev: false
 
   /@rstack-dev/doc-ui@1.5.2:

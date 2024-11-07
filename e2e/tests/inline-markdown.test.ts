@@ -28,7 +28,7 @@ test.describe('Inline markdown test', async () => {
     });
 
     const sidebar = await getSidebar(page);
-    expect(sidebar?.length).toBe(7);
+    expect(sidebar?.length).toBe(8);
 
     const sidebarTexts = await Promise.all(
       sidebar.map(element => element.textContent()),
@@ -42,6 +42,7 @@ test.describe('Inline markdown test', async () => {
         'emphasis',
         '<foo>',
         '-m <number>',
+        'delete',
       ].join(','),
     );
 
@@ -56,6 +57,7 @@ test.describe('Inline markdown test', async () => {
       '<span><em>emphasis</em></span>',
       '<span><code>&lt;foo&gt;</code></span>',
       '<span>-m &lt;number&gt;</span>',
+      '<span><del>delete</del></span>',
     ];
     for (const [index, html] of sidebarInnerHtml.entries()) {
       expect(html).toContain(expectedSidebarInnerHtml[index]);
@@ -79,6 +81,7 @@ test.describe('Inline markdown test', async () => {
         'emphasis',
         '<foo>',
         '-m <number>',
+        'delete',
       ].join(','),
     );
     const h2InnerHtml = await Promise.all(
@@ -92,6 +95,7 @@ test.describe('Inline markdown test', async () => {
         '<em>emphasis</em>',
         '<code>&lt;foo&gt;</code>',
         '-m &lt;number&gt;',
+        '<del>delete</del>',
       ].join(','),
     );
 
@@ -105,6 +109,7 @@ test.describe('Inline markdown test', async () => {
         'emphasis',
         '<foo>',
         '-m <number>',
+        'delete',
       ].join(','),
     );
     const h3InnerHtml = await Promise.all(
@@ -117,6 +122,7 @@ test.describe('Inline markdown test', async () => {
       '<em>emphasis</em></a>',
       '<code>&lt;foo&gt;</code></a>',
       '-m &lt;number&gt;</a>',
+      '<del>delete</del></a>',
     ];
     for (const [index, html] of h3InnerHtml.entries()) {
       expect(html).toContain(expectedH3InnerHtml[index]);
@@ -133,6 +139,7 @@ test.describe('Inline markdown test', async () => {
         'foo <bar> baz',
         'bold',
         'emphasis',
+        'delete',
       ].join(','),
     );
     const aInnerHtml = await Promise.all(a.map(element => element.innerHTML()));
@@ -144,6 +151,7 @@ test.describe('Inline markdown test', async () => {
       '<code>foo &lt;bar&gt; baz</code>',
       '<strong>bold</strong>',
       '<em>emphasis</em>',
+      '<del>delete</del>',
     ];
     for (const [index, html] of aInnerHtml.entries()) {
       expect(html).toContain(expectedAInnerHtml[index]);
@@ -168,6 +176,7 @@ test.describe('Inline markdown test', async () => {
         'foo <bar> baz',
         'bold',
         'emphasis',
+        'delete',
       ].join(','),
     );
     const asidesInnerHtml = await Promise.all(
@@ -182,6 +191,7 @@ test.describe('Inline markdown test', async () => {
         '<code>foo &lt;bar&gt; baz</code>',
         '<strong>bold</strong>',
         '<em>emphasis</em>',
+        '<del>delete</del>',
       ].join(','),
     );
   });
