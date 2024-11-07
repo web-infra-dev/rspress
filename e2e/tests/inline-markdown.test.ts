@@ -195,4 +195,39 @@ test.describe('Inline markdown test', async () => {
       ].join(','),
     );
   });
+
+  test('Should generate header anchor and id with inline markdown syntax correctly', async ({
+    page,
+  }) => {
+    await page.goto(`http://localhost:${appPort}/inline/all`, {
+      waitUntil: 'networkidle',
+    });
+
+    // Check h1 element
+    const h1 = await page.$('h1#class-componentp-s');
+    expect(h1).not.toBeNull();
+    const h1Anchor = await h1?.$('a.header-anchor');
+    expect(await h1Anchor?.getAttribute('href')).toBe('#class-componentp-s');
+
+    // Check h2 elements
+    const h2Selectors = [
+      'h2#class-componentp-s-1',
+      'h2#class-componentp-s-2',
+      'h2#-m-number',
+      'h2#foo',
+      'h2#foo-bar-baz',
+      'h2#bold',
+      'h2#emphasis',
+      'h2#delete',
+    ];
+
+    for (const selector of h2Selectors) {
+      const h2 = await page.$(selector);
+      expect(h2).not.toBeNull();
+      const h2Anchor = await h2?.$('a.header-anchor');
+      expect(await h2Anchor?.getAttribute('href')).toBe(
+        `#${selector.split('#')[1]}`,
+      );
+    }
+  });
 });
