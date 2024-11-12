@@ -26,7 +26,7 @@
     "@rsbuild/core": "~1.0.19",
     "@rsbuild/plugin-babel": "~1.0.3",
     "@rsbuild/plugin-less": "~1.0.3",
-    "@rsbuild/plugin-react": "~1.0.6",
+    "@rsbuild/plugin-react": "~1.0.7",
     "@rsbuild/plugin-sass": "~1.0.4",
     "@rsbuild/plugin-solid": "~1.0.4",
     "@rspress/shared": "workspace:*",

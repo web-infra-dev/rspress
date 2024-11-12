@@ -51,7 +51,7 @@
     "@types/node": "^18.11.17",
     "check-dependency-version-consistency": "^4.1.0",
     "cross-env": "^7.0.3",
-    "cross-spawn": "^7.0.3",
+    "cross-spawn": "^7.0.5",
     "cspell-ban-words": "^0.0.4",
     "execa": "8.0.1",
     "fs-extra": "11.2.0",
