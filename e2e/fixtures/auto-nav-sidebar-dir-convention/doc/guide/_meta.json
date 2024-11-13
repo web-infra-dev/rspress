@@ -1,0 +1,33 @@
+[
+  "index",
+  {
+    "type": "dir",
+    "label": "index-md-convention",
+    "name": "index-md-convention"
+  },
+  {
+    "type": "dir",
+    "label": "index-mdx-convention",
+    "name": "index-mdx-convention"
+  },
+  {
+    "type": "dir",
+    "label": "same-name",
+    "name": "same-name"
+  },
+  {
+    "type": "dir",
+    "label": "index-in-meta",
+    "name": "index-in-meta"
+  },
+  {
+    "type": "dir",
+    "label": "single-md",
+    "name": "single-md"
+  },
+  {
+    "type": "dir",
+    "label": "single-mdx",
+    "name": "single-mdx"
+  }
+]

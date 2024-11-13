@@ -43,11 +43,7 @@ export function normalizeImagePath(imagePath: string) {
   if (!isProd) {
     return imagePath;
   }
-  if (
-    isExternalUrl(imagePath) ||
-    isDataUrl(imagePath) ||
-    imagePath.startsWith('//')
-  ) {
+  if (isAbsoluteUrl(imagePath)) {
     return imagePath;
   }
   // only append base to internal non-relative urls
@@ -56,6 +52,10 @@ export function normalizeImagePath(imagePath: string) {
   }
 
   return withBase(imagePath);
+}
+
+export function isAbsoluteUrl(path: string) {
+  return isExternalUrl(path) || isDataUrl(path) || path.startsWith('//');
 }
 
 export { addLeadingSlash, removeTrailingSlash, normalizeSlash, isProduction };

@@ -4,7 +4,10 @@ import type { NavItem, Sidebar } from '@rspress/shared';
 import { logger } from '@rspress/shared/logger';
 import { loadFrontMatter } from '@rspress/shared/node-utils';
 
-export async function detectFilePath(rawPath: string, extensions: string[]) {
+export async function detectFilePath(
+  rawPath: string,
+  extensions: string[],
+): Promise<string | undefined> {
   // The params doesn't have extension name, so we need to try to find the file with the extension name.
   let realPath: string | undefined = rawPath;
   const fileExtname = path.extname(rawPath);
@@ -50,13 +53,26 @@ export async function extractInfoFromFrontmatter(
       context: undefined,
     };
   }
+  return {
+    ...(await extractInfoFromFrontmatterWithRealPath(realPath, rootDir)),
+    realPath,
+  };
+}
+
+export async function extractInfoFromFrontmatterWithRealPath(
+  realPath: string,
+  rootDir: string,
+): Promise<{
+  title: string;
+  overviewHeaders: string | undefined;
+  context: string | undefined;
+}> {
   const content = await fs.readFile(realPath, 'utf-8');
   const fileNameWithoutExt = path.basename(realPath, path.extname(realPath));
   const h1RegExp = /^#\s+(.*)$/m;
   const match = content.match(h1RegExp);
-  const { frontmatter } = loadFrontMatter(content, filePath, rootDir);
+  const { frontmatter } = loadFrontMatter(content, realPath, rootDir);
   return {
-    realPath,
     title: frontmatter.title || match?.[1] || fileNameWithoutExt,
     overviewHeaders: frontmatter.overviewHeaders,
     context: frontmatter.context,

@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useRef } from 'react';
 import {
   isProduction,
   normalizeHrefInRuntime as normalizeHref,

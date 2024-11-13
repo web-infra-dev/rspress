@@ -16,6 +16,17 @@
     "label": "Client API",
     "context": "client-api"
   },
+  {
+    "type": "custom-link",
+    "label": "Rspack Official Docsite",
+    "link": "https://rspack.dev/",
+    "context": "rspack-official-docsite-custom-link"
+  },
+  {
+    "type": "dir",
+    "name": "link",
+    "label": "Link"
+  },
   "commands",
   "single-page"
 ]

@@ -6,6 +6,7 @@ import {
   type SidebarItem as ISidebarItem,
   type SidebarDivider as ISidebarDivider,
   type SidebarSectionHeader as ISidebarSectionHeader,
+  isExternalUrl,
 } from '@rspress/shared';
 import { routes } from 'virtual-routes';
 import { matchRoutes, useLocation, removeBase } from '@rspress/runtime';
@@ -19,7 +20,7 @@ import { SidebarSectionHeader } from './SidebarSectionHeader';
 
 import styles from './index.module.scss';
 
-const isSidebarDivider = (
+export const isSidebarDivider = (
   item:
     | NormalizedSidebarGroup
     | ISidebarItem
@@ -29,7 +30,7 @@ const isSidebarDivider = (
   return 'dividerType' in item;
 };
 
-const isSidebarSectionHeader = (
+export const isSidebarSectionHeader = (
   item:
     | NormalizedSidebarGroup
     | ISidebarItem
@@ -37,6 +38,16 @@ const isSidebarSectionHeader = (
     | ISidebarSectionHeader,
 ): item is ISidebarSectionHeader => {
   return 'sectionHeaderText' in item;
+};
+
+export const isSideBarCustomLink = (
+  item:
+    | NormalizedSidebarGroup
+    | ISidebarItem
+    | ISidebarDivider
+    | ISidebarSectionHeader,
+) => {
+  return 'link' in item && isExternalUrl(item.link);
 };
 
 export interface SidebarItemProps {
@@ -186,6 +197,27 @@ export function Sidebar(props: Props) {
           sectionHeaderText={item.sectionHeaderText}
           tag={item.tag}
         />
+      );
+    }
+
+    if (isSideBarCustomLink(item)) {
+      return (
+        <div
+          className="rspress-sidebar-item rspress-sidebar-custom-link"
+          key={index}
+          data-context={item.context}
+        >
+          <SidebarItem
+            id={String(index)}
+            item={item}
+            depth={0}
+            activeMatcher={activeMatcher}
+            key={index}
+            collapsed={(item as NormalizedSidebarGroup).collapsed ?? true}
+            setSidebarData={setSidebarData}
+            preloadLink={preloadLink}
+          />
+        </div>
       );
     }
 

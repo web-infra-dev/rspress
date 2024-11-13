@@ -87,6 +87,17 @@ export type SideMetaItem =
   | {
       type: 'divider';
       dashed?: boolean;
+    }
+  | {
+      type: 'section-header';
+      label: string;
+      tag?: string;
+    }
+  | {
+      type: 'custom-link';
+      label: string;
+      link: string;
+      context?: string;
     };
 ```
 
@@ -222,8 +233,9 @@ In the case of describing **custom link**, the types are as follows:
 ```ts
 {
   type: 'custom-link';
-  link: string;
   label: string;
+  link: string;
+  context?: string;
 }
 ```
 
