@@ -60,4 +60,60 @@ test.describe('Auto nav and sidebar dir convention', async () => {
       `http://localhost:${appPort}/guide/index-md-convention.html`,
     );
   });
+
+  test('Should generate data-context in dir convention', async ({ page }) => {
+    await page.goto(`http://localhost:${appPort}/guide/`, {
+      waitUntil: 'networkidle',
+    });
+
+    const sidebarGroupSections = await page.$$('.rspress-sidebar-section');
+
+    // first level
+    const contexts1 = await page.evaluate(
+      sidebars =>
+        sidebars?.map(sidebar => sidebar.getAttribute('data-context')),
+      sidebarGroupSections,
+    );
+    expect(contexts1.join(',')).toEqual(
+      [
+        'context-index-md-convention',
+        'context-index-mdx-convention',
+        'context-same-name',
+        '',
+        '',
+        '',
+      ].join(','),
+    );
+
+    const sidebarGroupCollapses = await page.$$('.rspress-sidebar-collapse');
+    const contexts2 = await page.evaluate(
+      sidebars =>
+        sidebars?.map(sidebar => sidebar.getAttribute('data-context')),
+      sidebarGroupCollapses,
+    );
+    expect(contexts2.join(',')).toEqual(
+      [
+        'context-index-md-convention',
+        'context-index-mdx-convention',
+        'context-same-name',
+        '',
+        '',
+        '',
+      ].join(','),
+    );
+
+    const sidebarGroupItems = await page.$$('.rspress-sidebar-item');
+    const contexts3 = await page.evaluate(
+      sidebarGroupConfig =>
+        sidebarGroupConfig?.map(sidebarItem =>
+          sidebarItem.getAttribute('data-context'),
+        ),
+      sidebarGroupItems,
+    );
+    expect(contexts3.toString()).toEqual(
+      '["context-index-in-meta", "context-single-md", "context-single-mdx"]',
+    );
+    expect(contexts3?.[2]).toEqual('front-matter');
+    expect(contexts3?.[3]).toEqual('config-build');
+  });
 });
