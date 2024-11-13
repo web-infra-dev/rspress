@@ -3,6 +3,7 @@
   {
     "type": "dir",
     "name": "advanced",
-    "label": "Advanced"
+    "label": "Advanced",
+    "context": "advanced-dir"
   }
 ]

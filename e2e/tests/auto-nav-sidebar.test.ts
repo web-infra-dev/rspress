@@ -1,4 +1,4 @@
-import { expect, test } from '@playwright/test';
+import { type ElementHandle, expect, test } from '@playwright/test';
 import path from 'node:path';
 import { getPort, killProcess, runDevCommand } from '../utils/runCommands';
 import { getNavbar, getSidebar } from '../utils/getSideBar';
@@ -176,35 +176,47 @@ test.describe('Auto nav and sidebar test', async () => {
       waitUntil: 'networkidle',
     });
 
+    function getDataContextFromElements(
+      elements: ElementHandle<SVGElement | HTMLElement>[],
+    ) {
+      return page.evaluate(
+        sidebars =>
+          sidebars?.map(sidebar => sidebar.getAttribute('data-context')),
+        elements,
+      );
+    }
+
     const sidebarGroupSections = await page.$$('.rspress-sidebar-section');
-    const contexts1 = await page.evaluate(
-      sidebars =>
-        sidebars?.map(sidebar => sidebar.getAttribute('data-context')),
-      sidebarGroupSections,
-    );
-    expect(contexts1.join(',')).toEqual(
-      ['config', null, 'client-api'].join(','),
+    const c1 = await getDataContextFromElements(sidebarGroupSections);
+    expect(c1.join(',')).toEqual(
+      ['config', null, 'client-api', null].join(','),
     );
 
     const sidebarGroupCollapses = await page.$$('.rspress-sidebar-collapse');
-    const contexts2 = await page.evaluate(
+    const c2 = await page.evaluate(
       sidebars =>
         sidebars?.map(sidebar => sidebar.getAttribute('data-context')),
       sidebarGroupCollapses,
     );
-    expect(contexts2.join(',')).toEqual(
-      ['config', null, 'client-api'].join(','),
+    expect(c2.join(',')).toEqual(
+      ['config', null, 'client-api', null].join(','),
     );
 
     const sidebarGroupItems = await page.$$('.rspress-sidebar-item');
-    const contexts3 = await page.evaluate(
-      sidebarGroupConfig =>
-        sidebarGroupConfig?.map(sidebarItem =>
-          sidebarItem.getAttribute('data-context'),
-        ),
-      sidebarGroupItems,
+    const c3 = await getDataContextFromElements(sidebarGroupItems);
+    expect(c3?.[2]).toEqual('front-matter');
+    expect(c3?.[3]).toEqual('config-build');
+
+    // custom link should work
+    const customLinkItems = await page.$$(
+      '[data-context="rspack-official-docsite-custom-link"]',
     );
-    expect(contexts3?.[2]).toEqual('front-matter');
-    expect(contexts3?.[3]).toEqual('config-build');
+    const c4 = await Promise.all(customLinkItems.map(i => i.textContent()));
+
+    expect(c4.join(',')).toEqual(
+      ['Rspack Official Docsite', 'Inner SideBar Rspack Official Docsite'].join(
+        ',',
+      ),
+    );
   });
 });

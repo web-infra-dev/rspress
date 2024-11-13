@@ -1,6 +1,6 @@
 import type React from 'react';
 import { useEffect, useRef } from 'react';
-import { type NormalizedSidebarGroup, SidebarItem } from '@rspress/shared';
+import type { NormalizedSidebarGroup } from '@rspress/shared';
 import {
   useNavigate,
   normalizeHrefInRuntime as normalizeHref,
@@ -11,7 +11,11 @@ import { Tag } from '@theme';
 import styles from './index.module.scss';
 import { SidebarItem as SidebarItemComp } from './SidebarItem';
 import { SidebarDivider } from './SidebarDivider';
-import { highlightTitleStyle, type SidebarItemProps } from '.';
+import {
+  highlightTitleStyle,
+  isSidebarDivider,
+  type SidebarItemProps,
+} from '.';
 import { SvgWrapper } from '../SvgWrapper';
 import { renderInlineMarkdown } from '../../logic';
 
@@ -169,7 +173,7 @@ export function SidebarGroup(props: SidebarItemProps) {
           }}
         >
           {(item as NormalizedSidebarGroup)?.items?.map((item, index) =>
-            'dividerType' in item ? (
+            isSidebarDivider(item) ? (
               <SidebarDivider
                 // eslint-disable-next-line react/no-array-index-key
                 key={index}

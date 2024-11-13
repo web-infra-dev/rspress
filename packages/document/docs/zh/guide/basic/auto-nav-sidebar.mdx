@@ -92,6 +92,12 @@ export type SideMetaItem =
       type: 'section-header';
       label: string;
       tag?: string;
+    }
+  | {
+      type: 'custom-link';
+      label: string;
+      link: string;
+      context: string;
     };
 ```
 

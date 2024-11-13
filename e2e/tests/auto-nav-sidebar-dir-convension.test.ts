@@ -110,10 +110,10 @@ test.describe('Auto nav and sidebar dir convention', async () => {
         ),
       sidebarGroupItems,
     );
-    expect(contexts3.toString()).toEqual(
-      '["context-index-in-meta", "context-single-md", "context-single-mdx"]',
+    expect(contexts3.join(',')).toEqual(
+      ['context-index-in-meta', 'context-single-md', 'context-single-mdx'].join(
+        ',',
+      ),
     );
-    expect(contexts3?.[2]).toEqual('front-matter');
-    expect(contexts3?.[3]).toEqual('config-build');
   });
 });
