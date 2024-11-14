@@ -18,6 +18,7 @@ export default (props: { moduleName: string }) => {
       remarkPlugins={[[remarkGfm]]}
       components={getCustomMDXComponent() as Record<string, React.ElementType>}
       skipHtml={true}
+      className="rspress-plugin-api-docgen"
     >
       {apiDoc}
     </ReactMarkdown>
