@@ -1,7 +1,12 @@
 [
   {
-    "text": "Guide",
-    "link": "/level1/",
-    "activeMatch": "/level1/"
+    "text": "Basic",
+    "link": "/basic-level-1/",
+    "activeMatch": "/basic-level-1"
+  },
+  {
+    "text": "Index Convention",
+    "link": "/index-convention-level-1/",
+    "activeMatch": "/index-convention-level-1"
   }
 ]

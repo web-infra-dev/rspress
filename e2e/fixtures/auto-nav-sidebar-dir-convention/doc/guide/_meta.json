@@ -2,32 +2,32 @@
   "index",
   {
     "type": "dir",
-    "label": "index-md-convention",
+    "label": "index md convention",
     "name": "index-md-convention"
   },
   {
     "type": "dir",
-    "label": "index-mdx-convention",
+    "label": "index mdx convention",
     "name": "index-mdx-convention"
   },
   {
     "type": "dir",
-    "label": "same-name",
+    "label": "same name",
     "name": "same-name"
   },
   {
     "type": "dir",
-    "label": "index-in-meta",
+    "label": "index in meta",
     "name": "index-in-meta"
   },
   {
     "type": "dir",
-    "label": "no-meta-md",
+    "label": "no meta md",
     "name": "no-meta-md"
   },
   {
     "type": "dir",
-    "label": "no-meta-mdx",
+    "label": "no meta mdx",
     "name": "no-meta-mdx"
   }
 ]

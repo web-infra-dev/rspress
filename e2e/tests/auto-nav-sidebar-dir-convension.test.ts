@@ -39,12 +39,12 @@ test.describe('Auto nav and sidebar dir convention', async () => {
     expect(sidebarTexts.join(',')).toEqual(
       [
         '/guide Page',
-        'index-md-convention',
-        'index-mdx-convention',
-        'same-name',
-        'index-in-metaindex-in-meta inner Page', // index-in-meta has the sub sidebar
-        'no-meta-md',
-        'no-meta-mdx',
+        'index md convention',
+        'index mdx convention',
+        'same name',
+        'index in metaIndex In Meta',
+        'no meta md',
+        'no meta mdx',
       ].join(','),
     );
   });

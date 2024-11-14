@@ -6,7 +6,6 @@ import {
   type SidebarItem as ISidebarItem,
   type SidebarDivider as ISidebarDivider,
   type SidebarSectionHeader as ISidebarSectionHeader,
-  isExternalUrl,
 } from '@rspress/shared';
 import { routes } from 'virtual-routes';
 import { matchRoutes, useLocation, removeBase } from '@rspress/runtime';
@@ -19,36 +18,11 @@ import type { UISwitchResult } from '../../logic/useUISwitch';
 import { SidebarSectionHeader } from './SidebarSectionHeader';
 
 import styles from './index.module.scss';
-
-export const isSidebarDivider = (
-  item:
-    | NormalizedSidebarGroup
-    | ISidebarItem
-    | ISidebarDivider
-    | ISidebarSectionHeader,
-): item is ISidebarDivider => {
-  return 'dividerType' in item;
-};
-
-export const isSidebarSectionHeader = (
-  item:
-    | NormalizedSidebarGroup
-    | ISidebarItem
-    | ISidebarDivider
-    | ISidebarSectionHeader,
-): item is ISidebarSectionHeader => {
-  return 'sectionHeaderText' in item;
-};
-
-export const isSideBarCustomLink = (
-  item:
-    | NormalizedSidebarGroup
-    | ISidebarItem
-    | ISidebarDivider
-    | ISidebarSectionHeader,
-) => {
-  return 'link' in item && isExternalUrl(item.link);
-};
+import {
+  isSideBarCustomLink,
+  isSidebarDivider,
+  isSidebarSectionHeader,
+} from './utils';
 
 export interface SidebarItemProps {
   id: string;

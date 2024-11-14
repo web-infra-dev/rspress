@@ -1,0 +1,9 @@
+[
+  "index",
+  "two",
+  {
+    "type": "dir",
+    "name": "level-3",
+    "label": "Level 3"
+  }
+]
