@@ -2,9 +2,9 @@
 pageType: home
 
 hero:
-  name: <%= siteTitle %>
-  text: <%= siteDesc %>
-  tagline: <%= siteTitle %> tagline
+  name: My Site
+  text: A cool website!
+  tagline: This is the tagline
   actions:
     - theme: brand
       text: Quick Start
@@ -14,7 +14,7 @@ hero:
       link: https://github.com/web-infra-dev/rspress
   image:
     src: /rspress-icon.png
-    alt: <%= siteTitle %> Logo
+    alt: Logo
 features:
   - title: Blazing fast build speed
     details: The core compilation module is based on the Rust front-end toolchain, providing a more ultimate development experience.

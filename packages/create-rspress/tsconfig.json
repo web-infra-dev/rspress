@@ -10,6 +10,6 @@
     },
     "isolatedModules": true
   },
-  "include": ["src", "./modern.config.ts"],
+  "include": ["src"],
   "exclude": ["**/node_modules", "**/template/**"]
 }
