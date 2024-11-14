@@ -22,12 +22,12 @@
   },
   {
     "type": "dir",
-    "label": "single-md",
-    "name": "single-md"
+    "label": "no-meta-md",
+    "name": "no-meta-md"
   },
   {
     "type": "dir",
-    "label": "single-mdx",
-    "name": "single-mdx"
+    "label": "no-meta-mdx",
+    "name": "no-meta-mdx"
   }
 ]

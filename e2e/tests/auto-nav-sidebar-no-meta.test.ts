@@ -41,4 +41,6 @@ test.describe('Auto nav and sidebar test', async () => {
       ].join(','),
     );
   });
+
+  test('Should click the directory and navigate to the index page', async () => {});
 });
