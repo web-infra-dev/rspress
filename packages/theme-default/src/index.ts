@@ -1,9 +1,9 @@
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 import React from 'react';
-import { NotFoundLayout } from './layout/NotFountLayout';
-import { Layout } from './layout/Layout';
-import { HomeLayout } from './layout/HomeLayout';
 import { DocLayout } from './layout/DocLayout';
+import { HomeLayout } from './layout/HomeLayout';
+import { Layout } from './layout/Layout';
+import { NotFoundLayout } from './layout/NotFountLayout';
 import { setup } from './logic';
 
 export default {

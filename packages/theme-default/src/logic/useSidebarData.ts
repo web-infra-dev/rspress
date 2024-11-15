@@ -1,12 +1,12 @@
+import { isEqualPath, useLocation, withBase } from '@rspress/runtime';
 import {
-  type NormalizedSidebarGroup,
-  type SidebarItem,
   type NormalizedSidebar,
+  type NormalizedSidebarGroup,
   type SidebarDivider,
+  type SidebarItem,
   addTrailingSlash,
 } from '@rspress/shared';
 import { useEffect, useState } from 'react';
-import { useLocation, withBase, isEqualPath } from '@rspress/runtime';
 import { useLocaleSiteData } from './useLocaleSiteData';
 
 interface SidebarData {
@@ -65,6 +65,7 @@ export const getSidebarGroupData = (
               currentPathname.startsWith(
                 // https://github.com/web-infra-dev/rspress/issues/360
                 // Ensure the other group name ends with `/` to avoid some unexpected results, for example, `/react-native` will match `/react`, that's not what we want
+                // FIXME: should parse url instead of add trailing slash
                 addTrailingSlash(withBase(otherGroupName)),
               )
             ) {
@@ -74,20 +75,42 @@ export const getSidebarGroupData = (
             }
           }
         }
-        const equalFunc = () =>
-          'link' in item &&
-          item.link !== '' &&
-          isEqualPath(withBase(item.link), currentPathname);
 
-        if ('items' in item) {
-          // If the current path is the same as the group link, return true
-          if (equalFunc()) {
+        const isLink = 'link' in item && item.link !== '';
+        const isDir = 'items' in item;
+
+        // 0. divider or section headers others return false
+
+        // 1. file link
+        if (!isDir && isLink) {
+          // 1.1 /api/config /api/config.html
+          if (isEqualPath(withBase(item.link), currentPathname)) {
             return true;
           }
+          // 1.2 /api/config/index /api/config/index.html
+          if (
+            currentPathname.includes('index') &&
+            isEqualPath(`${item.link}/index`, currentPathname)
+          ) {
+            return true;
+          }
+        }
+
+        // 2. dir
+        if (isDir) {
+          // 2.1 dir link (index convention)
+          if (
+            isLink &&
+            (isEqualPath(withBase(item.link), currentPathname) ||
+              isEqualPath(withBase(`${item.link}/index`), currentPathname))
+          ) {
+            return true;
+          }
+          // 2.2 dir recursive
           return item.items.some(i => match(i));
         }
 
-        return equalFunc();
+        return false;
       };
 
       return match(group);
