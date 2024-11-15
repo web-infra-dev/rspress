@@ -79,17 +79,21 @@ export const getSidebarGroupData = (
         const isLink = 'link' in item && item.link !== '';
         const isDir = 'items' in item;
 
-        if (!isDir && !isLink) {
-          return false;
-        }
+        // 0. divider or section headers others return false
 
         // 1. file link
-        if (
-          !isDir &&
-          isLink &&
-          isEqualPath(withBase(item.link), currentPathname)
-        ) {
-          return true;
+        if (!isDir && isLink) {
+          // 1.1 /api/config /api/config.html
+          if (isEqualPath(withBase(item.link), currentPathname)) {
+            return true;
+          }
+          // 1.2 /api/config/index /api/config/index.html
+          if (
+            currentPathname.includes('index') &&
+            isEqualPath(`${item.link}/index`, currentPathname)
+          ) {
+            return true;
+          }
         }
 
         // 2. dir
