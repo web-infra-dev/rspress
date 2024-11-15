@@ -112,4 +112,51 @@ test.describe('Auto nav and sidebar dir convention', async () => {
     );
     expect(contexts3.join(',')).toEqual(['context-index-in-meta'].join(','));
   });
+
+  test('/api/config/index.html /api/config/index /api/config should be the same page', async ({
+    page,
+  }) => {
+    async function getSidebarLength(): Promise<number> {
+      return (
+        (await page.$$(
+          `.rspress-sidebar .rspress-scrollbar > nav > section,
+      .rspress-sidebar .rspress-scrollbar > nav > a`,
+        )) ?? []
+      ).length;
+    }
+
+    async function isMenuItemActive(): Promise<boolean> {
+      const activeMenuItem = await page.$(
+        '.rspress-sidebar-collapse[class*="menuItemActive"]',
+      );
+      const content = await activeMenuItem?.textContent();
+      return content === 'index md convention';
+    }
+    // /api/config/index.html
+    await page.goto(
+      `http://localhost:${appPort}/guide/index-md-convention/index.html`,
+      {
+        waitUntil: 'networkidle',
+      },
+    );
+    expect(await getSidebarLength()).toBe(7);
+    expect(await isMenuItemActive()).toBe(true);
+
+    // /api/config/index
+    await page.goto(
+      `http://localhost:${appPort}/guide/index-md-convention/index`,
+      {
+        waitUntil: 'networkidle',
+      },
+    );
+    expect(await getSidebarLength()).toBe(7);
+    expect(await isMenuItemActive()).toBe(true);
+
+    // /api/config
+    await page.goto(`http://localhost:${appPort}/guide/index-md-convention`, {
+      waitUntil: 'networkidle',
+    });
+    expect(await getSidebarLength()).toBe(7);
+    expect(await isMenuItemActive()).toBe(true);
+  });
 });

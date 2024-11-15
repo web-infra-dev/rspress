@@ -137,12 +137,13 @@ export function Sidebar(props: Props) {
   const removeLangPrefix = (path: string) => {
     return path.replace(langRoutePrefix, '');
   };
-  const activeMatcher = (path: string) =>
-    isActive(
+  const activeMatcher = (path: string) => {
+    return isActive(
       removeBase(removeLangPrefix(pathname)),
       removeLangPrefix(path),
       true,
     );
+  };
   const preloadLink = (link: string) => {
     const match = matchRoutes(routes, link);
     if (match?.length) {

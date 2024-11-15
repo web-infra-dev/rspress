@@ -1,9 +1,9 @@
+import { isEqualPath } from '@rspress/runtime';
+import { parseDocument } from 'htmlparser2';
+import htmr from 'htmr';
+import { isNumber } from 'lodash-es';
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 import React from 'react';
-import htmr from 'htmr';
-import { parseDocument } from 'htmlparser2';
-import { isEqualPath } from '@rspress/runtime';
-import { isNumber } from 'lodash-es';
 
 export function isActive(
   currentPath: string,
@@ -14,7 +14,10 @@ export function isActive(
     return false;
   }
   if (strict) {
-    return isEqualPath(currentPath, targetLink);
+    return (
+      isEqualPath(currentPath, targetLink) ||
+      isEqualPath(currentPath, `${targetLink}/index`)
+    );
   }
 
   return (
