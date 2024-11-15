@@ -18,6 +18,7 @@ import {
   useLocaleSiteData,
 } from '../../logic';
 import styles from './index.module.scss';
+import { findItemByRoutePath } from './utils';
 
 interface GroupItem {
   text?: string;
@@ -133,36 +134,6 @@ export function Overview(props: {
     return '';
   };
 
-  const removeIndex = (link: string) => {
-    if (link.endsWith('/index')) {
-      return link.slice(0, -5);
-    }
-    return link;
-  };
-
-  const findItemByRoutePath = (items, routePath, originalItems) => {
-    for (const item of items) {
-      if (withBase(item.link) === routePath) {
-        return [item];
-      }
-
-      if (removeIndex(withBase(item.link)) === routePath) {
-        return items;
-      }
-
-      if (item.items) {
-        const foundItem = findItemByRoutePath(
-          item.items,
-          routePath,
-          originalItems,
-        );
-        if (foundItem) {
-          return foundItem;
-        }
-      }
-    }
-    return originalItems;
-  };
   const { pages } = siteData;
   const overviewModules = pages.filter(page => subFilter(page.routePath));
   let { items: overviewSidebarGroups } = useSidebarData() as {
@@ -181,7 +152,6 @@ export function Overview(props: {
     overviewSidebarGroups = findItemByRoutePath(
       overviewSidebarGroups,
       routePath,
-      overviewSidebarGroups,
     );
   }
 
@@ -227,8 +197,9 @@ export function Overview(props: {
     customGroups ??
     useMemo(() => {
       const group = overviewSidebarGroups
-        .filter(sidebarGroup => {
-          if ('items' in sidebarGroup && sidebarGroup.items) {
+        .filter(normalizedSidebarGroup => {
+          const sidebarGroup = normalizedSidebarGroup as NormalizedSidebarGroup;
+          if (Array.isArray(sidebarGroup?.items)) {
             return (
               sidebarGroup.items.filter(item => subFilter(getChildLink(item)))
                 .length > 0
@@ -242,16 +213,13 @@ export function Overview(props: {
           }
           return false;
         })
-        .map(sidebarGroup => {
+        .map(normalizedSidebarGroup => {
+          const sidebarGroup = normalizedSidebarGroup as NormalizedSidebarGroup;
           let items = [];
-          if ((sidebarGroup as NormalizedSidebarGroup)?.items) {
-            items = (sidebarGroup as NormalizedSidebarGroup)?.items
+          if (sidebarGroup?.items) {
+            items = sidebarGroup?.items
               ?.map(item =>
-                normalizeSidebarItem(
-                  item,
-                  sidebarGroup as NormalizedSidebarGroup,
-                  frontmatter,
-                ),
+                normalizeSidebarItem(item, sidebarGroup, frontmatter),
               )
               .filter(Boolean);
           } else if (isSingleFile(sidebarGroup)) {

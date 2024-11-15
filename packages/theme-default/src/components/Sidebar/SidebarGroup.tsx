@@ -11,11 +11,8 @@ import { Tag } from '@theme';
 import styles from './index.module.scss';
 import { SidebarItem as SidebarItemComp } from './SidebarItem';
 import { SidebarDivider } from './SidebarDivider';
-import {
-  highlightTitleStyle,
-  isSidebarDivider,
-  type SidebarItemProps,
-} from '.';
+import { highlightTitleStyle, type SidebarItemProps } from '.';
+import { isSidebarDivider } from './utils';
 import { SvgWrapper } from '../SvgWrapper';
 import { renderInlineMarkdown } from '../../logic';
 

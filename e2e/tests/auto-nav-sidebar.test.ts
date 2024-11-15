@@ -53,7 +53,6 @@ test.describe('Auto nav and sidebar test', async () => {
         'Build Config',
         'Extname Config',
         'Nested',
-        'Client API Overview',
         'Runtime API',
         'Components',
         'Commands',
@@ -90,7 +89,16 @@ test.describe('Auto nav and sidebar test', async () => {
 
     const h2 = await page.$$('.overview-index h2');
     const h2Texts = await Promise.all(h2.map(element => element.textContent()));
-    expect(h2Texts.join(',')).toEqual(['Config'].join(','));
+    expect(h2Texts.join(',')).toEqual(
+      [
+        'Basic Config',
+        'Theme Config',
+        'Front Matter Config',
+        'Build Config',
+        'Extname Config',
+        'Nested',
+      ].join(','),
+    );
 
     const h3 = await page.$$('.overview-group_8f375 h3');
     const h3Texts = await Promise.all(h3.map(element => element.textContent()));
@@ -101,7 +109,7 @@ test.describe('Auto nav and sidebar test', async () => {
         'Front Matter Config',
         'Build Config',
         'Extname Config',
-        'Nested',
+        'Nested Config',
       ].join(','),
     );
 
@@ -117,6 +125,7 @@ test.describe('Auto nav and sidebar test', async () => {
         'Default Config',
         'markdown',
         'markdown.remarkPlugins',
+        'Nested H2',
       ].join(','),
     );
   });
@@ -124,7 +133,7 @@ test.describe('Auto nav and sidebar test', async () => {
   test('Should load subpage API Overview correctly - index.md', async ({
     page,
   }) => {
-    await page.goto(`http://localhost:${appPort}/api/client-api/index.html`, {
+    await page.goto(`http://localhost:${appPort}/api/client-api.html`, {
       waitUntil: 'networkidle',
     });
 

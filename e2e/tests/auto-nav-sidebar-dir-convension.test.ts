@@ -39,12 +39,12 @@ test.describe('Auto nav and sidebar dir convention', async () => {
     expect(sidebarTexts.join(',')).toEqual(
       [
         '/guide Page',
-        'index-md-convention',
-        'index-mdx-convention',
-        'same-name',
-        'index-in-metaindex-in-meta inner Page', // index-in-meta has the sub sidebar
-        'single-mdsingle-md inner Page', // single-md has the sub sidebar
-        'single-mdxsingle-mdx inner Page', // single-mdx has the sub sidebar
+        'index md convention',
+        'index mdx convention',
+        'same name',
+        'index in metaIndex In Meta',
+        'no meta md',
+        'no meta mdx',
       ].join(','),
     );
   });
@@ -80,8 +80,8 @@ test.describe('Auto nav and sidebar dir convention', async () => {
         'context-index-mdx-convention',
         'context-same-name',
         '',
-        '',
-        '',
+        'context-no-meta-md',
+        'context-no-meta-mdx',
       ].join(','),
     );
 
@@ -97,8 +97,8 @@ test.describe('Auto nav and sidebar dir convention', async () => {
         'context-index-mdx-convention',
         'context-same-name',
         '',
-        '',
-        '',
+        'context-no-meta-md',
+        'context-no-meta-mdx',
       ].join(','),
     );
 
@@ -110,10 +110,6 @@ test.describe('Auto nav and sidebar dir convention', async () => {
         ),
       sidebarGroupItems,
     );
-    expect(contexts3.join(',')).toEqual(
-      ['context-index-in-meta', 'context-single-md', 'context-single-mdx'].join(
-        ',',
-      ),
-    );
+    expect(contexts3.join(',')).toEqual(['context-index-in-meta'].join(','));
   });
 });

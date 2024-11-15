@@ -22,40 +22,43 @@ test.describe('Nested overview page', async () => {
   test('Should load nested overview page correctly - level 1', async ({
     page,
   }) => {
-    await page.goto(`http://localhost:${appPort}/level1/index.html`, {
+    await page.goto(`http://localhost:${appPort}/basic-level-1/index.html`, {
       waitUntil: 'networkidle',
     });
 
     const h2 = await page.$$('.overview-index h2');
     const h2Texts = await Promise.all(h2.map(element => element.textContent()));
-    expect(h2Texts.join(',')).toEqual(['level2'].join(','));
+    expect(h2Texts.join(',')).toEqual(['Level 2'].join(','));
 
     const h3 = await page.$$('.overview-group_8f375 h3');
     const h3Texts = await Promise.all(h3.map(element => element.textContent()));
-    expect(h3Texts.join(',')).toEqual(['index', 'level3', 'two'].join(','));
+    expect(h3Texts.join(',')).toEqual(['Level 2', 'two', 'Level 3'].join(','));
   });
 
   test('Should load nested overview page correctly - level 2', async ({
     page,
   }) => {
-    await page.goto(`http://localhost:${appPort}/level1/level2/index.html`, {
-      waitUntil: 'networkidle',
-    });
+    await page.goto(
+      `http://localhost:${appPort}/basic-level-1/level-2/index.html`,
+      {
+        waitUntil: 'networkidle',
+      },
+    );
 
     const h2 = await page.$$('.overview-index h2');
     const h2Texts = await Promise.all(h2.map(element => element.textContent()));
-    expect(h2Texts.join(',')).toEqual(['level3', 'two'].join(','));
+    expect(h2Texts.join(',')).toEqual(['two', 'Level 3'].join(','));
 
     const h3 = await page.$$('.overview-group_8f375 h3');
     const h3Texts = await Promise.all(h3.map(element => element.textContent()));
-    expect(h3Texts.join(',')).toEqual(['index', 'three', 'two'].join(','));
+    expect(h3Texts.join(',')).toEqual(['two', 'Level 3', 'three'].join(','));
   });
 
   test('Should load nested overview page correctly - level 3', async ({
     page,
   }) => {
     await page.goto(
-      `http://localhost:${appPort}/level1/level2/level3/index.html`,
+      `http://localhost:${appPort}/basic-level-1/level-2/level-3/index.html`,
       {
         waitUntil: 'networkidle',
       },

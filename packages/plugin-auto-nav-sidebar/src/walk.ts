@@ -70,33 +70,14 @@ export async function scanSideMeta(
           if (item === '_meta.json') {
             return null;
           }
+
           const stat = await fs.stat(path.join(workDir, item));
           // If the item is a directory, we will transform it to a object with `type` and `name` property.
           if (stat.isDirectory()) {
-            // set H1 title to sidebar label when have same name md/mdx file
-            const mdFilePath = path.join(workDir, `${item}.md`);
-            const mdxFilePath = path.join(workDir, `${item}.mdx`);
-            let label = item;
-
-            const setLabelFromFilePath = async (filePath: string) => {
-              const { title } = await extractInfoFromFrontmatter(
-                filePath,
-                rootDir,
-                extensions,
-              );
-              label = title;
-            };
-
-            if (fs.existsSync(mdxFilePath)) {
-              await setLabelFromFilePath(mdxFilePath);
-            } else if (fs.existsSync(mdFilePath)) {
-              await setLabelFromFilePath(mdFilePath);
-            }
-
             return {
               type: 'dir',
               name: item,
-              label,
+              label: undefined,
             };
           }
           return extensions.some(ext => item.endsWith(ext)) ? item : null;
@@ -133,7 +114,7 @@ export async function scanSideMeta(
       const {
         type = 'file',
         name,
-        label = '',
+        label,
         collapsible,
         collapsed,
         link,
@@ -197,25 +178,32 @@ export async function scanSideMeta(
           realPath = indexFileRealPath;
 
           // 3. if "index.mdx" or "index.md" or "index" is in _meta.json, index page should be placed to child sidebar
-          const isIndexFileInMetaItems = subSidebar.find(i => {
+          const indexItemIndex = subSidebar.findIndex(i => {
             return (
               (i as { _fileKey: string | undefined })._fileKey === _fileKey
             );
           });
+          const isIndexFileInMetaItems = indexItemIndex !== -1;
 
           if (isIndexFileInMetaItems) {
-            link = '';
-            _fileKey = getHmrFileKey(indexFileRealPath, docsDir);
-            realPath = undefined;
+            const isMetaJsonExist = await fs.exists(join(subDir, '_meta.json'));
+            if (isMetaJsonExist) {
+              link = '';
+              _fileKey = getHmrFileKey(indexFileRealPath, docsDir);
+              realPath = undefined;
+            } else {
+              // 4. if _meta.json not exist, index page should be placed to dir sidebar
+              subSidebar.splice(indexItemIndex, 1);
+            }
           }
         }
 
-        const { context: frontmatterContext = context } = realPath
+        const { context: frontmatterContext = context, title } = realPath
           ? await extractInfoFromFrontmatterWithRealPath(realPath, rootDir)
           : {};
 
         return {
-          text: label,
+          text: label ?? title,
           collapsible,
           collapsed,
           items: subSidebar,
@@ -235,10 +223,13 @@ export async function scanSideMeta(
       }
 
       if (type === 'section-header') {
-        return { sectionHeaderText: label, tag } satisfies SidebarSectionHeader;
+        return {
+          sectionHeaderText: label ?? '',
+          tag,
+        } satisfies SidebarSectionHeader;
       }
       return {
-        text: label,
+        text: label ?? '',
         link: link && isExternalUrl(link) ? link : withBase(link, routePrefix),
         tag,
         context,

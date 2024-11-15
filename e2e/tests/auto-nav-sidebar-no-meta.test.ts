@@ -41,4 +41,20 @@ test.describe('Auto nav and sidebar test', async () => {
       ].join(','),
     );
   });
+
+  test('Should click the directory and navigate to the index page', async ({
+    page,
+  }) => {
+    await page.goto(`http://localhost:${appPort}/api/index`, {
+      waitUntil: 'networkidle',
+    });
+
+    const ele = page.locator('h2 span');
+
+    expect(await ele.textContent()).toBe('config');
+    await ele.click();
+    expect(page.url()).toBe(
+      `http://localhost:${appPort}/api/rspress-config.html`,
+    );
+  });
 });
