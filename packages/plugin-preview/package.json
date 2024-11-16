@@ -22,7 +22,6 @@
     "node": ">=14.17.6"
   },
   "dependencies": {
-    "@mdx-js/mdx": "2.3.0",
     "@rsbuild/core": "~1.1.1",
     "@rsbuild/plugin-babel": "~1.0.3",
     "@rsbuild/plugin-less": "~1.1.0",
@@ -32,8 +31,7 @@
     "@rspress/shared": "workspace:*",
     "@rspress/theme-default": "workspace:*",
     "lodash": "4.17.21",
-    "qrcode.react": "^3.2.0",
-    "remark-gfm": "3.0.1"
+    "qrcode.react": "^3.2.0"
   },
   "devDependencies": {
     "@types/lodash": "^4.17.13",
