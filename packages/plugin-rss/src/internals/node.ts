@@ -6,6 +6,6 @@ export async function writeFile(
   content: Parameters<typeof promises.writeFile>[1],
 ) {
   const dir = NodePath.dirname(path);
-  await promises.mkdir(dir, { recursive: true });
+  await promises.mkdir(dir, { mode: 0o755, recursive: true });
   return promises.writeFile(path, content);
 }
