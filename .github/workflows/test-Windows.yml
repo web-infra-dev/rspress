@@ -22,7 +22,7 @@ jobs:
     runs-on: ${{ matrix.os }}
     strategy:
       matrix:
-        node-version: [18.x]
+        node-version: [22.x]
         os: [windows-latest] # windows-latest
 
     # Steps represent a sequence of tasks that will be executed as part of the job
@@ -35,7 +35,7 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
         with:
-          fetch-depth: 25
+          fetch-depth: 1
 
       - name: Install Pnpm
         run: corepack enable
