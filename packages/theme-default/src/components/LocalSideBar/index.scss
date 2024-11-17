@@ -54,6 +54,16 @@
   overflow: scroll;
   box-shadow: var(--rp-shadow-1);
   border: 1px solid var(--rp-c-divider-light);
+  opacity: 0;
+  transform: translateY(-20px);
+  visibility: hidden;
+  transition: all 0.3s ease-out;
+
+  &-show {
+    opacity: 1;
+    transform: translateY(0);
+    visibility: visible;
+  }
 }
 
 .fly-in-enter {

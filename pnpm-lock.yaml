@@ -210,9 +210,6 @@ importers:
       react-dom:
         specifier: ^18.3.1
         version: 18.3.1(react@18.3.1)
-      react-transition-group:
-        specifier: 4.4.5
-        version: 4.4.5(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
       rspress:
         specifier: workspace:*
         version: link:../../../packages/cli
@@ -406,9 +403,6 @@ importers:
       react-dom:
         specifier: ^18.3.1
         version: 18.3.1(react@18.3.1)
-      react-transition-group:
-        specifier: 4.4.5
-        version: 4.4.5(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
       rspress:
         specifier: workspace:*
         version: link:../../../packages/cli
@@ -1448,9 +1442,6 @@ importers:
       react-syntax-highlighter:
         specifier: ^15.6.1
         version: 15.6.1(react@18.3.1)
-      react-transition-group:
-        specifier: 4.4.5
-        version: 4.4.5(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
     devDependencies:
       '@modern-js/plugin-tailwindcss':
         specifier: 2.62.0

@@ -6,7 +6,6 @@ import { Sidebar, Toc } from '@theme';
 import './index.scss';
 import type { UISwitchResult } from '../../logic/useUISwitch';
 import { SvgWrapper } from '../SvgWrapper';
-import { CSSTransition } from 'react-transition-group';
 
 export function SideMenu({
   outlineTitle,
@@ -93,24 +92,15 @@ export function SideMenu({
               </div>
             </button>
 
-            <CSSTransition
-              in={isTocOpen}
-              timeout={300}
-              unmountOnExit
-              classNames="fly-in"
-              nodeRef={tocContainerRef}
+            <div
+              className={`rspress-local-toc-container ${isTocOpen ? 'rspress-local-toc-container-show' : ''}`}
             >
-              <div
-                className="rspress-local-toc-container"
-                ref={tocContainerRef}
-              >
-                <Toc
-                  onItemClick={() => {
-                    setIsTocOpen(false);
-                  }}
-                />
-              </div>
-            </CSSTransition>
+              <Toc
+                onItemClick={() => {
+                  setIsTocOpen(false);
+                }}
+              />
+            </div>
           </Fragment>
         ) : null}
       </div>
