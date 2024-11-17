@@ -1,5 +1,6 @@
 import { join, relative, resolve } from 'node:path';
-import { fs, fastGlob } from '@modern-js/utils';
+import fs from 'node:fs';
+import fastGlob from 'fast-glob';
 import { pluginPreview } from '@rspress/plugin-preview';
 import type { UserConfig, Sidebar, SidebarGroup } from '@rspress/core';
 import { pluginApiDocgen } from '@rspress/plugin-api-docgen';

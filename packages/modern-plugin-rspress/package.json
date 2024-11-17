@@ -27,10 +27,12 @@
   "dependencies": {
     "@rspress/core": "workspace:*",
     "@rspress/plugin-api-docgen": "workspace:*",
-    "@rspress/plugin-preview": "workspace:*"
+    "@rspress/plugin-preview": "workspace:*",
+    "fast-glob": "^3.2.12",
+    "lodash": "^4.17.21"
   },
   "devDependencies": {
-    "@modern-js/utils": "2.62.0",
+    "@types/lodash": "^4.17.13",
     "@types/node": "^18.11.17",
     "@types/react": "^18.3.12",
     "react": "^18.3.1",
