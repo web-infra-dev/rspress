@@ -596,9 +596,6 @@ importers:
       '@mdx-js/react':
         specifier: 2.3.0
         version: 2.3.0(react@18.3.1)
-      '@modern-js/utils':
-        specifier: 2.62.0
-        version: 2.62.0
       '@rsbuild/core':
         specifier: ~1.1.1
         version: 1.1.1
@@ -834,10 +831,16 @@ importers:
       '@rspress/plugin-preview':
         specifier: workspace:*
         version: link:../plugin-preview
+      fast-glob:
+        specifier: ^3.2.12
+        version: 3.3.2
+      lodash:
+        specifier: ^4.17.21
+        version: 4.17.21
     devDependencies:
-      '@modern-js/utils':
-        specifier: 2.62.0
-        version: 2.62.0
+      '@types/lodash':
+        specifier: ^4.17.13
+        version: 4.17.13
       '@types/node':
         specifier: ^18.11.17
         version: 18.11.17
@@ -859,12 +862,15 @@ importers:
 
   packages/plugin-api-docgen:
     dependencies:
-      '@modern-js/utils':
-        specifier: 2.62.0
-        version: 2.62.0
       '@rspress/core':
         specifier: workspace:^1.37.0
         version: link:../core
+      '@rspress/shared':
+        specifier: workspace:*
+        version: link:../shared
+      chokidar:
+        specifier: ^3.6.0
+        version: 3.6.0
       documentation:
         specifier: 14.0.3
         version: 14.0.3
@@ -878,9 +884,6 @@ importers:
         specifier: 3.0.1
         version: 3.0.1
     devDependencies:
-      '@rspress/shared':
-        specifier: workspace:*
-        version: link:../shared
       '@types/mdast':
         specifier: ^4.0.4
         version: 4.0.4

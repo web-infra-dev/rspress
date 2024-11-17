@@ -1,6 +1,6 @@
 import path from 'node:path';
 import type { RspressPlugin } from '@rspress/shared';
-import fs from '@modern-js/utils/fs-extra';
+import fs from 'node:fs';
 import type {
   PluginOptions,
   SupportLanguages,
@@ -48,7 +48,7 @@ export function pluginApiDocgen(options?: PluginOptions): RspressPlugin {
       await Promise.all(
         pages.map(async page => {
           const { _filepath, lang } = page;
-          let content = await fs.readFile(_filepath, 'utf-8');
+          let content = await fs.promises.readFile(_filepath, 'utf-8');
           let matchResult = new RegExp(apiCompRegExp).exec(content);
           if (!matchResult) {
             return;

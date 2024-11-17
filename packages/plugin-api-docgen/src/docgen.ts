@@ -1,6 +1,8 @@
 import path from 'node:path';
 import type { ComponentDoc, PropItem } from 'react-docgen-typescript';
-import { logger, chokidar, fs } from '@modern-js/utils';
+import fs from 'node:fs';
+import { logger } from '@rspress/shared/logger';
+import chokidar from 'chokidar';
 import {
   withDefaultConfig,
   withCustomConfig,

@@ -1,4 +1,4 @@
-import _ from '@modern-js/utils/lodash';
+import _ from 'lodash';
 
 export const mergeModuleDocConfig = <T>(...configs: T[]): T =>
   _.mergeWith(
