@@ -230,4 +230,18 @@ test.describe('Inline markdown test', async () => {
       );
     }
   });
+
+  test('Should render html like <img> with inline markdown syntax correctly', async ({
+    page,
+  }) => {
+    await page.goto(`http://localhost:${appPort}/`, {
+      waitUntil: 'networkidle',
+    });
+
+    const img = await page.$('img');
+    expect(img).not.toBeNull();
+    expect(await img?.getAttribute('src')).toBe(
+      'https://assets.rspack.dev/rspress/rspress-logo-480x480.png',
+    );
+  });
 });
