@@ -28,7 +28,7 @@
     "@rspress/core": "workspace:*",
     "@rspress/plugin-api-docgen": "workspace:*",
     "@rspress/plugin-preview": "workspace:*",
-    "fast-glob": "^3.2.12",
+    "fast-glob": "^3.3.2",
     "lodash": "^4.17.21"
   },
   "devDependencies": {
@@ -38,7 +38,7 @@
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
     "typescript": "^5.5.3",
-    "vitest": "2.1.4"
+    "vitest": "2.1.5"
   },
   "sideEffects": [
     "**/*.scss"
