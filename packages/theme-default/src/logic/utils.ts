@@ -1,5 +1,4 @@
 import { isEqualPath } from '@rspress/runtime';
-import { parseDocument } from 'htmlparser2';
 import htmr from 'htmr';
 import { isNumber } from 'lodash-es';
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
@@ -39,8 +38,13 @@ export function renderHtmlOrText(str?: string | number | null) {
   }
 
   // Parse the HTML to check for validity
-  const hasValidHtmlElements = parseDocument(str).children.some(
-    node => node.type === 'tag' && node.children.length > 0,
+  // Regular Expression: The regex /<([a-z]+)([^<]+)*(?:>(.*)<\/\1>|\s*\/>)/i is designed to match basic HTML tags, including self-closing tags.
+  // <([a-z]+): Matches the opening tag and captures the tag name.
+  // ([^<]+)*: Matches any attributes within the tag.
+  // (?:>(.*)<\/\1>|\s*\/>): Matches either a closing tag with content or a self-closing tag.
+  // i Flag: Makes the regex case-insensitive, allowing it to match tags like <IMG> as well as <img>.
+  const hasValidHtmlElements = /<([a-z]+)([^<]+)*(?:>(.*)<\/\1>|\s*\/>)/i.test(
+    str,
   );
 
   if (hasValidHtmlElements) {
