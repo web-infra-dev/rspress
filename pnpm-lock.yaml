@@ -775,7 +775,7 @@ importers:
   packages/create-rspress/template-basic:
     dependencies:
       rspress:
-        specifier: ^1.35.3
+        specifier: ^1.37.0
         version: link:../../cli
     devDependencies:
       '@types/node':
