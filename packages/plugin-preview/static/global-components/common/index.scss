@@ -12,14 +12,14 @@
   padding: 16px 0;
 
   &-wrapper {
-    border: 1px solid #e6e6e6;
+    border: 1px solid var(--rp-container-details-border);
     border-radius: var(--rp-radius-small);
   }
 
   &-card {
     padding: 16px;
     position: relative;
-    border: 1px solid #e6e6e6;
+    border: 1px solid var(--rp-container-details-border);
     border-radius: var(--rp-radius-small);
     display: flex;
   }
