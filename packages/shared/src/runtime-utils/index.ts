@@ -30,6 +30,8 @@ export const isDebugMode = () => {
   return ['rsbuild', 'builder', '*'].some(key => values.includes(key));
 };
 
+export const isDevDebugMode = () => process.env.DEBUG === 'rspress-dev';
+
 export const cleanUrl = (url: string): string =>
   url.replace(HASH_REGEXP, '').replace(QUERY_REGEXP, '');
 
