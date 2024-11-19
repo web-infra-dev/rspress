@@ -4,7 +4,7 @@ import type {
   RspressPlugin,
   RouteMeta,
 } from '@rspress/shared';
-import { isDebugMode } from '@rspress/shared';
+import { isDevDebugMode } from '@rspress/shared';
 import { pluginContainerSyntax } from '@rspress/plugin-container-syntax';
 
 export class PluginDriver {
@@ -59,7 +59,7 @@ export class PluginDriver {
     // Support the container syntax in markdown/mdx, such as :::tip
     this.addPlugin(pluginContainerSyntax());
 
-    if (isDebugMode()) {
+    if (isDevDebugMode()) {
       const SourceBuildPlugin = await import(
         // @ts-expect-error need moduleResolution: Node16, NodeNext or Bundler to get type declerations work
         '@rspress/theme-default/node/source-build-plugin.js'
