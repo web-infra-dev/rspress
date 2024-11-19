@@ -1,5 +1,5 @@
 {
-  "name": "@rspress-fixture/rspress-custom-id",
+  "name": "@rspress-fixture/rspress-toc-id",
   "version": "1.0.0",
   "private": true,
   "scripts": {
