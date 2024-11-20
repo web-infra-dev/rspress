@@ -78,9 +78,7 @@ export function createCheckPageMetaUpdateFn() {
 
     if (prevMeta !== deserializedMeta) {
       setTimeout(async () => {
-        logger.info(
-          '⭐️ Page metadata changed, rspress will trigger page reload...',
-        );
+        logger.info('Page metadata changed, page reloading...');
         await updateSiteDataRuntimeModule(modulePath, pageMeta);
       });
     }

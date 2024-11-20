@@ -1,6 +1,5 @@
 import { isEqualPath } from '@rspress/runtime';
 import htmr from 'htmr';
-import { isNumber } from 'lodash-es';
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 import React from 'react';
 
@@ -33,7 +32,7 @@ export function renderHtmlOrText(str?: string | number | null) {
     return '';
   }
 
-  if (isNumber(str)) {
+  if (typeof str === 'number') {
     return str;
   }
 
