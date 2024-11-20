@@ -4,14 +4,12 @@ import SunSvg from '@theme-assets/sun';
 import MoonSvg from '@theme-assets/moon';
 import { SvgWrapper } from '../SvgWrapper';
 import siteData from 'virtual-site-data';
-import { isUndefined } from 'lodash-es';
 import { flushSync } from 'react-dom';
 import './index.scss';
 
 const supportAppearanceTransition = () => {
   return (
-    !isUndefined(document) &&
-    document.startViewTransition &&
+    document?.startViewTransition &&
     !window.matchMedia('(prefers-reduced-motion: reduce)').matches
   );
 };

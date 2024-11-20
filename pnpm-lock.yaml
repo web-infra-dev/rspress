@@ -624,9 +624,6 @@ importers:
       '@rspress/theme-default':
         specifier: workspace:*
         version: link:../theme-default
-      copy-to-clipboard:
-        specifier: ^3.3.3
-        version: 3.3.3
       enhanced-resolve:
         specifier: 5.17.1
         version: 5.17.1
@@ -654,9 +651,6 @@ importers:
       node-fetch:
         specifier: 3.3.2
         version: 3.3.2
-      nprogress:
-        specifier: ^0.2.0
-        version: 0.2.0
       react:
         specifier: ^18.3.1
         version: 18.3.1
@@ -718,9 +712,6 @@ importers:
       '@types/node':
         specifier: ^18.11.17
         version: 18.11.17
-      '@types/nprogress':
-        specifier: ^0.2.3
-        version: 0.2.3
       '@types/react':
         specifier: ^18.3.12
         version: 18.3.12

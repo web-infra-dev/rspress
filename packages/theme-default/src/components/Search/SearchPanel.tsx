@@ -1,7 +1,7 @@
 /* eslint-disable max-lines */
 import { usePageData } from '@rspress/runtime';
 import { type SearchOptions, isProduction } from '@rspress/shared';
-import { debounce, groupBy } from 'lodash-es';
+import { debounce } from 'lodash-es';
 import { useCallback, useEffect, useRef, useState } from 'react';
 import { createPortal } from 'react-dom';
 import * as userSearchHooks from 'virtual-search-hooks';
@@ -310,8 +310,19 @@ export function SearchPanel({ focused, setFocused }: SearchPanelProps) {
 
   const handleQueryChange = useDebounce(handleQueryChangedImpl);
 
-  const normalizeSuggestions = (suggestions: DefaultMatchResult['result']) =>
-    groupBy(suggestions, 'group');
+  const normalizeSuggestions = (suggestions: DefaultMatchResult['result']) => {
+    return suggestions.reduce(
+      (groups, item) => {
+        const group = item.group;
+        if (!groups[group]) {
+          groups[group] = [];
+        }
+        groups[group].push(item);
+        return groups;
+      },
+      {} as Record<string, DefaultMatchResult['result']>,
+    );
+  };
 
   const renderSearchResult = (
     result: MatchResult,
