@@ -140,6 +140,7 @@ test.describe('Inline markdown test', async () => {
         'bold',
         'emphasis',
         'delete',
+        'This is a long string to test regex performance',
       ].join(','),
     );
     const aInnerHtml = await Promise.all(a.map(element => element.innerHTML()));
@@ -152,6 +153,7 @@ test.describe('Inline markdown test', async () => {
       '<strong>bold</strong>',
       '<em>emphasis</em>',
       '<del>delete</del>',
+      '<code>This is a long string to test regex performance</code>',
     ];
     for (const [index, html] of aInnerHtml.entries()) {
       expect(html).toContain(expectedAInnerHtml[index]);
@@ -177,6 +179,7 @@ test.describe('Inline markdown test', async () => {
         'bold',
         'emphasis',
         'delete',
+        'This is a long string to test regex performance',
       ].join(','),
     );
     const asidesInnerHtml = await Promise.all(
@@ -192,6 +195,7 @@ test.describe('Inline markdown test', async () => {
         '<strong>bold</strong>',
         '<em>emphasis</em>',
         '<del>delete</del>',
+        '<code>This is a long string to test regex performance</code>',
       ].join(','),
     );
   });
