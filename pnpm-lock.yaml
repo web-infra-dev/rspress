@@ -51,8 +51,8 @@ importers:
         specifier: 11.2.0
         version: 11.2.0
       get-port:
-        specifier: 5.1.1
-        version: 5.1.1
+        specifier: 7.1.0
+        version: 7.1.0
       husky:
         specifier: ^9.1.7
         version: 9.1.7
@@ -3891,9 +3891,9 @@ packages:
     resolution: {integrity: sha512-2nk+7SIVb14QrgXFHcm84tD4bKQz0RxPuMT8Ag5KPOq7J5fEmAg0UbXdTOSHqNuHSU28k55qnceesxXRZGzKWA==}
     engines: {node: '>=18'}
 
-  get-port@5.1.1:
-    resolution: {integrity: sha512-g/Q1aTSDOxFpchXC4i8ZWvxA1lnPqx/JHqcpIw0/LX9T8x/GBbi6YnlN5nhaKIFkT8oFsscUKgDJYxfwfS6QsQ==}
-    engines: {node: '>=8'}
+  get-port@7.1.0:
+    resolution: {integrity: sha512-QB9NKEeDg3xxVwCCwJQ9+xycaz6pBB6iQ76wiWMl1927n0Kir6alPiP+yuiICLLU4jpMe08dXfpebuQppFA2zw==}
+    engines: {node: '>=16'}
 
   get-stream@6.0.1:
     resolution: {integrity: sha512-ts6Wi+2j3jQjqi70w5AlN8DFnkSwC+MqmxEzdEALB2qXZYV3X/b1CTfgPLGJNMeAWxdPfU8FO1ms3NUfaHCPYg==}
@@ -8715,7 +8715,7 @@ snapshots:
 
   get-east-asian-width@1.2.0: {}
 
-  get-port@5.1.1: {}
+  get-port@7.1.0: {}
 
   get-stream@6.0.1: {}
 
