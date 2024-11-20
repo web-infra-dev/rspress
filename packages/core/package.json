@@ -106,7 +106,6 @@
     "./src/theme-default/styles/index.ts"
   ],
   "files": [
-    "bin",
     "dist",
     "src/runtime",
     "src/theme-default",
