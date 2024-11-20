@@ -23,6 +23,7 @@ export interface DocLayoutProps {
   afterOutline?: React.ReactNode;
   uiSwitch?: UISwitchResult;
   navTitle?: React.ReactNode;
+  components?: Record<string, React.FC>;
 }
 
 export function DocLayout(props: DocLayoutProps) {
@@ -39,6 +40,7 @@ export function DocLayout(props: DocLayoutProps) {
     afterSidebar,
     uiSwitch,
     navTitle,
+    components,
   } = props;
   const { siteData, page } = usePageData();
   const { toc = [], frontmatter } = page;
@@ -52,9 +54,11 @@ export function DocLayout(props: DocLayoutProps) {
     localesData?.outlineTitle || themeConfig?.outlineTitle || 'ON THIS PAGE';
   const isOverviewPage = frontmatter?.overview ?? false;
 
+  const mdxComponents = { ...getCustomMDXComponent(), ...components };
+
   const docContent = (
     <TabDataContext.Provider value={{ tabData, setTabData }}>
-      <MDXProvider components={getCustomMDXComponent()}>
+      <MDXProvider components={mdxComponents}>
         <Content />
       </MDXProvider>
     </TabDataContext.Provider>
