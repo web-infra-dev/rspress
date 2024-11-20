@@ -38,12 +38,12 @@ export function renderHtmlOrText(str?: string | number | null) {
   }
 
   // Parse the HTML to check for validity
-  // Regular Expression: The regex /<([a-z]+)([^<]+)*(?:>(.*)<\/\1>|\s*\/>)/i is designed to match basic HTML tags, including self-closing tags.
+  // Regular Expression: match basic HTML tags, including self-closing tags.
   // <([a-z]+): Matches the opening tag and captures the tag name.
-  // ([^<]+)*: Matches any attributes within the tag.
-  // (?:>(.*)<\/\1>|\s*\/>): Matches either a closing tag with content or a self-closing tag.
+  // ([^<]*): Matches any attributes within the tag.
+  // (?:>(.*?)<\/\1>|\s*\/>): Matches either a closing tag with content or a self-closing tag.
   // i Flag: Makes the regex case-insensitive, allowing it to match tags like <IMG> as well as <img>.
-  const hasValidHtmlElements = /<([a-z]+)([^<]+)*(?:>(.*)<\/\1>|\s*\/>)/i.test(
+  const hasValidHtmlElements = /<([a-z]+)([^<]*)(?:>(.*?)<\/\1>|\s*\/>)/i.test(
     str,
   );
 
