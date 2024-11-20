@@ -88,6 +88,8 @@ const Layout = () => (
     top={<div>top</div>}
     /* 整个页面最底部 */
     bottom={<div>bottom</div>}
+    /* 自定义 MDX 组件 */
+    components={{ p: props => <p {...props} className="my-4 leading-7" /> }}
   />
 );
 
