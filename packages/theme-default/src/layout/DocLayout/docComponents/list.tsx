@@ -1,13 +1,36 @@
 import type { ComponentProps } from 'react';
 
+import clsx from '../../../utils/tailwind';
+
 export const Ol = (props: ComponentProps<'ol'>) => {
-  return <ol {...props} className="list-decimal pl-5 my-4 leading-7" />;
+  const { className, ...restProps } = props;
+
+  return (
+    <ol
+      {...restProps}
+      className={clsx('list-decimal pl-5 my-4 leading-7', className)}
+    />
+  );
 };
 
 export const Ul = (props: ComponentProps<'ul'>) => {
-  return <ul {...props} className="list-disc pl-5 my-4 leading-7" />;
+  const { className, ...restProps } = props;
+
+  return (
+    <ul
+      {...restProps}
+      className={clsx('list-disc pl-5 my-4 leading-7', className)}
+    />
+  );
 };
 
 export const Li = (props: ComponentProps<'li'>) => {
-  return <li {...props} className="[&:not(:first-child)]:mt-2" />;
+  const { className, ...restProps } = props;
+
+  return (
+    <li
+      {...restProps}
+      className={clsx('[&:not(:first-child)]:mt-2', className)}
+    />
+  );
 };
