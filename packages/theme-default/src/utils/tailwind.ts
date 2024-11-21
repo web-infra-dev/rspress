@@ -7,6 +7,7 @@
  *
  * ```ts
  * const defaultClasses = 'm-8'
+ * const indented = true
  * const classNames = clsx('w-4 h-4', indented && 'pl-8', defaultClasses)
  * ```
  */
