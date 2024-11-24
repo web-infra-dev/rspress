@@ -49,12 +49,10 @@ export function useHiddenNav() {
       lastScrollTop.current = scrollTop <= 0 ? 0 : scrollTop;
     }, 200);
 
-    window.addEventListener('mousewheel', onScrollListen);
-    window.addEventListener('touchmove', onScrollListen);
+    window.addEventListener('scroll', onScrollListen);
 
     return () => {
-      window.removeEventListener('mousewheel', onScrollListen);
-      window.removeEventListener('touchmove', onScrollListen);
+      window.removeEventListener('scroll', onScrollListen);
     };
   }, [pathname]);
 
