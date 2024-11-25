@@ -14,6 +14,6 @@
       "@/*": ["./*"]
     }
   },
-  "include": ["src", "vitest.config.ts", "index.d.ts", "modern.config.ts"],
+  "include": ["src", "vitest.config.ts", "index.d.ts", "rslib.config.ts"],
   "exclude": ["node_modules", "dist"]
 }
