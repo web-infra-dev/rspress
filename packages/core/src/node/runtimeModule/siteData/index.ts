@@ -44,7 +44,7 @@ export async function siteDataVMPlugin(context: FactoryContext) {
   // If the dev server restart when config file, we will reuse the siteData instead of extracting the siteData from source files again.
   const domain =
     userConfig?.search && userConfig?.search?.mode === 'remote'
-      ? (userConfig?.search.domain ?? '')
+      ? userConfig?.search.domain ?? ''
       : '';
   const pages = await extractPageData(
     replaceRules,
@@ -119,6 +119,7 @@ export async function siteDataVMPlugin(context: FactoryContext) {
     logo: userConfig?.logo || '',
     logoText: userConfig?.logoText || '',
     ssg: Boolean(userConfig?.ssg) ?? true,
+    root: userConfig?.root || '',
     multiVersion: {
       default: userConfig?.multiVersion?.default || '',
       versions: userConfig?.multiVersion?.versions || [],

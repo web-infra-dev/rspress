@@ -91,7 +91,7 @@ export async function flattenMdxContent(
   let result = content;
 
   try {
-    ast = processor.parse(content) as Root;
+    ast = processor.parse(content) as unknown as Root;
   } catch (e) {
     // Fallback: if mdx parse failed, just return the content
     return { flattenContent: content, deps };
@@ -99,6 +99,7 @@ export async function flattenMdxContent(
 
   const importNodes = ast.children
     .filter(node => node.type === ('mdxjsEsm' as any))
+    // @ts-expect-error
     .flatMap(node => (node.data?.estree as ESTree)?.body || [])
     .filter(node => node.type === 'ImportDeclaration');
   for (const importNode of importNodes) {
