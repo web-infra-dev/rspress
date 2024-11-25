@@ -11,7 +11,7 @@ interface Options {
 export const rehypePluginShiki: Plugin<[Options], Root> = function ({
   highlighter,
 }) {
-  return tree => {
+  return (tree: Root) => {
     visit(tree, 'element', (node, index, parent) => {
       // <pre><code>...</code></pre>
       if (

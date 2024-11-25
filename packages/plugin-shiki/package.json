@@ -15,8 +15,8 @@
   "main": "./dist/index.js",
   "module": "./dist/node/index.js",
   "scripts": {
-    "dev": "modern build -w",
-    "build": "modern build",
+    "dev": "rslib build -w",
+    "build": "rslib build",
     "reset": "rimraf ./**/node_modules",
     "test": "vitest run --passWithNoTests"
   },
@@ -25,6 +25,8 @@
   },
   "devDependencies": {
     "@modern-js/tsconfig": "2.62.1",
+    "@rslib/core": "0.1.0",
+    "@microsoft/api-extractor": "^7.48.0",
     "@types/hast": "3.0.4",
     "@types/node": "^18.11.17",
     "@types/react": "^18.3.12",

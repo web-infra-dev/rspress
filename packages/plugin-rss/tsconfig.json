@@ -2,11 +2,11 @@
   "extends": "@modern-js/tsconfig/base",
   "compilerOptions": {
     "declaration": false,
-    "module": "Node16",
+    "module": "ESNext",
     "target": "ES2020",
     "esModuleInterop": true,
     "skipLibCheck": true,
-    "moduleResolution": "Node16"
+    "moduleResolution": "bundler"
   },
   "include": ["src"],
   "references": [

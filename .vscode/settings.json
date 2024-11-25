@@ -26,6 +26,11 @@
   "css.validate": false,
   "scss.validate": false,
   "less.validate": false,
+  "[ts]": {
+    "editor.formatOnType": true,
+    "editor.formatOnPaste": true,
+    "editor.formatOnSave": true
+  },
   "[tsx]": {
     "editor.formatOnType": true,
     "editor.formatOnPaste": true,
@@ -59,11 +64,6 @@
     "editor.formatOnSave": true,
     "editor.defaultFormatter": "esbenp.prettier-vscode"
   },
-  "editor.defaultFormatter": "biomejs.biome",
-  "javascript.format.enable": false,
-  "typescript.format.enable": false,
-  //
-  "json.format.enable": false,
   "[json]": {
     "editor.tabSize": 2,
     "editor.formatOnType": true,
@@ -71,12 +71,16 @@
     "editor.formatOnSave": true
   },
   "[jsonc]": {
-    "editor.tabSize": 2,
     "editor.formatOnType": true,
     "editor.formatOnPaste": true,
     "editor.formatOnSave": true,
-    "editor.defaultFormatter": "biomejs.biome"
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
   },
+  "editor.defaultFormatter": "biomejs.biome",
+  "javascript.format.enable": false,
+  "typescript.format.enable": false,
+  //
+  "json.format.enable": false,
   "emmet.triggerExpansionOnTab": true,
   "typescript.tsdk": "node_modules/typescript/lib"
 }

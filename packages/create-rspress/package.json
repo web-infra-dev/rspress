@@ -24,7 +24,7 @@
   ],
   "scripts": {
     "build": "rslib build",
-    "dev": "rslib build --watch",
+    "dev": "rslib build -w",
     "start": "node ./dist/index.js"
   },
   "dependencies": {
@@ -32,6 +32,7 @@
   },
   "devDependencies": {
     "@rslib/core": "0.1.0",
+    "@microsoft/api-extractor": "^7.48.0",
     "@types/node": "^18.11.17",
     "typescript": "^5.5.3"
   },

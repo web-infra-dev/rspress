@@ -5,6 +5,11 @@ import {
   SHIKI_TRANSFORMER_LINE_NUMBER,
   createTransformerLineNumber,
 } from './transformers/line-number';
+import { fileURLToPath } from 'node:url';
+import { dirname } from 'node:path';
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = dirname(__filename);
 
 import type { Lang } from 'shiki';
 import type { RspressPlugin } from '@rspress/shared';

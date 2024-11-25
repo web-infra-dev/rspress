@@ -200,7 +200,7 @@ export async function scanSideMeta(
 
         const { context: frontmatterContext = context, title } = realPath
           ? await extractInfoFromFrontmatterWithRealPath(realPath, rootDir)
-          : {};
+          : ({} as { context: undefined; title: undefined });
 
         return {
           text: label ?? title,

@@ -11,7 +11,7 @@ interface Options {
 export const rehypePluginShiki: Plugin<[Options], Root> = function ({
   highlighter,
 }) {
-  return tree => {
+  return (tree: Root) => {
     visit(tree, 'element', (node, index, parent) => {
       // <pre><code>...</code></pre>
       if (
@@ -71,8 +71,7 @@ export const rehypePluginShiki: Plugin<[Options], Root> = function ({
           codeLines.pop();
         }
 
-        // @ts-expect-error
-        parent.children.splice(index!, 1, {
+        parent?.children.splice(index!, 1, {
           type: 'element',
           tagName: 'pre',
           properties: {

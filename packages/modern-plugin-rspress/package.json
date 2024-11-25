@@ -20,11 +20,12 @@
   "types": "./dist/index.d.ts",
   "main": "./dist/index.js",
   "scripts": {
-    "new": "modern new",
-    "build": "modern build",
-    "dev": "modern build --watch"
+    "build": "rslib build",
+    "dev": "rslib build -w"
   },
   "dependencies": {
+    "@rslib/core": "0.1.0",
+    "@microsoft/api-extractor": "^7.48.0",
     "@rspress/core": "workspace:*",
     "@rspress/plugin-api-docgen": "workspace:*",
     "@rspress/plugin-preview": "workspace:*",

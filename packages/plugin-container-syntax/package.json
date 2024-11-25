@@ -15,8 +15,8 @@
   "main": "./dist/index.js",
   "module": "./dist/index.mjs",
   "scripts": {
-    "dev": "modern build -w",
-    "build": "modern build",
+    "dev": "rslib build -w",
+    "build": "rslib build",
     "reset": "rimraf ./**/node_modules",
     "test": "vitest run --passWithNoTests"
   },
@@ -42,6 +42,8 @@
     "@rspress/shared": "workspace:*"
   },
   "devDependencies": {
+    "@rslib/core": "0.1.0",
+    "@microsoft/api-extractor": "^7.48.0",
     "@types/mdast": "^4.0.4",
     "rehype-stringify": "^9.0.4",
     "remark-parse": "^10.0.2",

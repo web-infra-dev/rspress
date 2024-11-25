@@ -5,5 +5,5 @@
     "jsx": "preserve",
     "baseUrl": "./"
   },
-  "include": ["src", "static", "modern.config.ts"]
+  "include": ["src", "static", "rslib.config.ts"]
 }
