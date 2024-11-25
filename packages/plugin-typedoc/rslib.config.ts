@@ -13,7 +13,6 @@ export default defineConfig({
         distPath: {
           root: './dist/es',
         },
-        sourceMap: { js: 'source-map' },
       },
     },
     {
@@ -23,7 +22,6 @@ export default defineConfig({
         distPath: {
           root: './dist/lib',
         },
-        sourceMap: { js: 'source-map' },
       },
     },
   ],

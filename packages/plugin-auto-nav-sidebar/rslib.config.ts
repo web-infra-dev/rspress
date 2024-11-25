@@ -8,9 +8,6 @@ export default defineConfig({
       },
       format: 'esm',
       syntax: 'es6',
-      output: {
-        sourceMap: { js: 'source-map' },
-      },
     },
   ],
 });

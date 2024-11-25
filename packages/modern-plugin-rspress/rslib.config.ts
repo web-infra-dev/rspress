@@ -8,9 +8,6 @@ export default defineConfig({
       },
       format: 'cjs',
       syntax: 'es2020',
-      output: {
-        sourceMap: { js: 'source-map' },
-      },
     },
   ],
 });
