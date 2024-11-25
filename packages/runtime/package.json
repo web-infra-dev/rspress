@@ -38,7 +38,7 @@
     "react-router-dom": "^6.28.0"
   },
   "devDependencies": {
-    "@modern-js/tsconfig": "2.62.0",
+    "@modern-js/tsconfig": "2.62.1",
     "@types/jest": "~29.5.14",
     "@types/react": "^18.3.12",
     "@types/react-dom": "^18.3.1",

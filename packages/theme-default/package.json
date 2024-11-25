@@ -50,8 +50,8 @@
     "react-syntax-highlighter": "^15.6.1"
   },
   "devDependencies": {
-    "@modern-js/plugin-tailwindcss": "2.62.0",
-    "@modern-js/tsconfig": "2.62.0",
+    "@modern-js/plugin-tailwindcss": "2.62.1",
+    "@modern-js/tsconfig": "2.62.1",
     "@types/body-scroll-lock": "^3.1.2",
     "@types/hast": "3.0.4",
     "@types/jest": "~29.5.14",
