@@ -75,19 +75,6 @@ importers:
         specifier: 2.1.5
         version: 2.1.5(@types/node@18.11.17)(sass-embedded@1.81.0)(terser@5.31.6)
 
-  e2e/fixtures/api-docgen:
-    dependencies:
-      '@rspress/plugin-api-docgen':
-        specifier: workspace:*
-        version: link:../../../packages/plugin-api-docgen
-      rspress:
-        specifier: workspace:*
-        version: link:../../../packages/cli
-    devDependencies:
-      '@types/node':
-        specifier: ^18.11.17
-        version: 18.11.17
-
   e2e/fixtures/auto-nav-sidebar:
     dependencies:
       rspress:
@@ -374,6 +361,19 @@ importers:
         specifier: ^18.11.17
         version: 18.11.17
 
+  e2e/fixtures/plugin-api-docgen:
+    dependencies:
+      '@rspress/plugin-api-docgen':
+        specifier: workspace:*
+        version: link:../../../packages/plugin-api-docgen
+      rspress:
+        specifier: workspace:*
+        version: link:../../../packages/cli
+    devDependencies:
+      '@types/node':
+        specifier: ^18.11.17
+        version: 18.11.17
+
   e2e/fixtures/plugin-preview:
     dependencies:
       '@rspress/plugin-playground':
@@ -423,6 +423,19 @@ importers:
       rspress:
         specifier: workspace:*
         version: link:../../../packages/cli
+    devDependencies:
+      '@types/node':
+        specifier: ^18.11.17
+        version: 18.11.17
+
+  e2e/fixtures/plugin-typedoc/single:
+    dependencies:
+      '@rspress/plugin-typedoc':
+        specifier: workspace:*
+        version: link:../../../../packages/plugin-typedoc
+      rspress:
+        specifier: workspace:*
+        version: link:../../../../packages/cli
     devDependencies:
       '@types/node':
         specifier: ^18.11.17

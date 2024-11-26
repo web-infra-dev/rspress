@@ -49,12 +49,6 @@ export class PluginDriver {
         ),
       );
     }
-    if (!haveNavSidebarConfig) {
-      const { pluginAutoNavSidebar } = await import(
-        '@rspress/plugin-auto-nav-sidebar'
-      );
-      this.addPlugin(pluginAutoNavSidebar());
-    }
 
     // Support the container syntax in markdown/mdx, such as :::tip
     this.addPlugin(pluginContainerSyntax());
@@ -76,6 +70,14 @@ export class PluginDriver {
     (config.plugins || []).forEach(plugin => {
       this.addPlugin(plugin);
     });
+
+    // allow user's plugin to modify _meta.json
+    if (!haveNavSidebarConfig) {
+      const { pluginAutoNavSidebar } = await import(
+        '@rspress/plugin-auto-nav-sidebar'
+      );
+      this.addPlugin(pluginAutoNavSidebar());
+    }
   }
 
   addPlugin(plugin: RspressPlugin) {

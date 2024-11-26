@@ -1,5 +1,5 @@
 {
-  "name": "@rspress-fixture/rspress-api-docgen",
+  "name": "@rspress-fixture/rspress-plugin-typedoc-multi",
   "version": "1.0.0",
   "private": true,
   "scripts": {
@@ -8,7 +8,7 @@
     "preview": "rspress preview"
   },
   "dependencies": {
-    "@rspress/plugin-api-docgen": "workspace:*",
+    "@rspress/plugin-typedoc": "workspace:*",
     "rspress": "workspace:*"
   },
   "devDependencies": {

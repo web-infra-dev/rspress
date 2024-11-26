@@ -1,12 +1,9 @@
 import path from 'node:path';
 import { Application, TSConfigReader } from 'typedoc';
-import type { RspressPlugin } from '@rspress/shared';
+import type { NavItem, RspressPlugin } from '@rspress/shared';
 import { load } from 'typedoc-plugin-markdown';
 import { API_DIR } from './constants';
-import {
-  resolveSidebarForMultiEntry,
-  resolveSidebarForSingleEntry,
-} from './sidebar';
+import { patchGeneratedApiDocs } from './patch';
 
 export interface PluginTypeDocOptions {
   /**
@@ -24,12 +21,13 @@ export interface PluginTypeDocOptions {
 export function pluginTypeDoc(options: PluginTypeDocOptions): RspressPlugin {
   let docRoot: string | undefined;
   const { entryPoints = [], outDir = API_DIR } = options;
+  const apiPageRoute = `/${outDir.replace(/(^\/)|(\/$)/, '')}/`; // e.g: /api/
   return {
     name: '@rspress/plugin-typedoc',
     async addPages() {
       return [
         {
-          routePath: `${outDir.replace(/\/$/, '')}/`,
+          routePath: apiPageRoute,
           filepath: path.join(docRoot!, outDir, 'README.md'),
         },
       ];
@@ -56,41 +54,49 @@ export function pluginTypeDoc(options: PluginTypeDocOptions): RspressPlugin {
       const project = app.convert();
 
       if (project) {
-        // 1. Generate module doc by typedoc
-        const absoluteOutputdir = path.join(docRoot!, outDir);
-        await app.generateDocs(project, absoluteOutputdir);
-        const jsonDir = path.join(absoluteOutputdir, 'documentation.json');
-        await app.generateJson(project, jsonDir);
-        // 2. Generate sidebar
+        // 1. Generate doc/api, doc/api/_meta.json by typedoc
+        const absoluteApiDir = path.join(docRoot!, outDir);
+        await app.generateDocs(project, absoluteApiDir);
+        await patchGeneratedApiDocs(absoluteApiDir);
+
+        // 2. Generate "api" nav bar
         config.themeConfig = config.themeConfig || {};
         config.themeConfig.nav = config.themeConfig.nav || [];
-        const apiIndexLink = `/${outDir.replace(/(^\/)|(\/$)/, '')}/`;
         const { nav } = config.themeConfig;
-        // Note: TypeDoc does not support i18n
-        if (Array.isArray(nav)) {
-          nav.push({
-            text: 'API',
-            link: apiIndexLink,
-          });
-        } else if ('default' in nav) {
-          nav.default.push({
-            text: 'API',
-            link: apiIndexLink,
+
+        // avoid that user config "api" in doc/_meta.json
+        function isApiAlreadyInNav(navList: NavItem[]) {
+          return navList.some(item => {
+            if (
+              'link' in item &&
+              typeof item.link === 'string' &&
+              item.link.startsWith(
+                apiPageRoute.slice(0, apiPageRoute.length - 1), // /api
+              )
+            ) {
+              return true;
+            }
+            return false;
           });
         }
 
-        config.themeConfig.sidebar = config.themeConfig.sidebar || {};
-        config.themeConfig.sidebar[apiIndexLink] =
-          entryPoints.length > 1
-            ? await resolveSidebarForMultiEntry(jsonDir)
-            : await resolveSidebarForSingleEntry(jsonDir);
-        config.themeConfig.sidebar[apiIndexLink].unshift({
-          text: 'Overview',
-          link: `${apiIndexLink}README`,
-        });
+        // Note: TypeDoc does not support i18n
+        if (Array.isArray(nav)) {
+          if (!isApiAlreadyInNav(nav)) {
+            nav.push({
+              text: 'API',
+              link: apiPageRoute,
+            });
+          }
+        } else if ('default' in nav) {
+          if (!isApiAlreadyInNav(nav.default)) {
+            nav.default.push({
+              text: 'API',
+              link: apiPageRoute,
+            });
+          }
+        }
       }
-      config.route = config.route || {};
-      config.route.exclude = config.route.exclude || [];
       return config;
     },
   };

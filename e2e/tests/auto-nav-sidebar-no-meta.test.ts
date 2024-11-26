@@ -1,6 +1,7 @@
 import { expect, test } from '@playwright/test';
 import path from 'node:path';
 import { getPort, killProcess, runDevCommand } from '../utils/runCommands';
+import { getSidebarTexts } from '../utils/getSideBar';
 
 const fixtureDir = path.resolve(__dirname, '../fixtures');
 
@@ -24,15 +25,8 @@ test.describe('Auto nav and sidebar test', async () => {
       waitUntil: 'networkidle',
     });
 
-    // take the sidebar, properly a section or a tag
-    const sidebar = await page.$$(
-      `.rspress-sidebar .rspress-scrollbar > nav > section,
-      .rspress-sidebar .rspress-scrollbar > nav > a`,
-    );
-    expect(sidebar?.length).toBe(3);
-    const sidebarTexts = await Promise.all(
-      sidebar.map(element => element.textContent()),
-    );
+    const sidebarTexts = await getSidebarTexts(page);
+    expect(sidebarTexts.length).toBe(3);
     expect(sidebarTexts.join(',')).toEqual(
       [
         'API',

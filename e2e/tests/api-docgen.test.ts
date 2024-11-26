@@ -9,7 +9,7 @@ test.describe('api-docgen test', async () => {
   let app;
 
   test.beforeAll(async () => {
-    const appDir = path.join(fixtureDir, 'api-docgen');
+    const appDir = path.join(fixtureDir, 'plugin-api-docgen');
     appPort = await getPort();
     app = await runDevCommand(appDir, appPort);
   });
