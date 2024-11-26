@@ -71,7 +71,7 @@ export class PluginDriver {
       this.addPlugin(plugin);
     });
 
-    // allow user's plugin to modify _meta.json
+    // read _meta.json in the final, allow user's plugin to modify _meta.json
     if (!haveNavSidebarConfig) {
       const { pluginAutoNavSidebar } = await import(
         '@rspress/plugin-auto-nav-sidebar'
