@@ -428,6 +428,19 @@ importers:
         specifier: ^18.11.17
         version: 18.11.17
 
+  e2e/fixtures/plugin-typedoc/multi:
+    dependencies:
+      '@rspress/plugin-typedoc':
+        specifier: workspace:*
+        version: link:../../../../packages/plugin-typedoc
+      rspress:
+        specifier: workspace:*
+        version: link:../../../../packages/cli
+    devDependencies:
+      '@types/node':
+        specifier: ^18.11.17
+        version: 18.11.17
+
   e2e/fixtures/plugin-typedoc/single:
     dependencies:
       '@rspress/plugin-typedoc':
