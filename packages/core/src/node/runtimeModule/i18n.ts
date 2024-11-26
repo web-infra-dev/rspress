@@ -7,7 +7,9 @@ const DEFAULT_I18N_SOURCE = join(process.cwd(), 'i18n.json');
 export function getI18nData(docConfig: UserConfig) {
   const { i18nSourcePath = DEFAULT_I18N_SOURCE } = docConfig;
   try {
-    delete require.cache[i18nSourcePath];
+    // TODO: a workaround to skip require.cache parse
+    const cacheKey = 'cache';
+    delete require[cacheKey][i18nSourcePath];
     // eslint-disable-next-line import/no-dynamic-require
     const i18nSource = require(i18nSourcePath);
     return i18nSource;

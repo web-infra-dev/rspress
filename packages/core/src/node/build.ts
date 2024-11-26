@@ -76,7 +76,10 @@ export async function renderPages(
 
   try {
     const { default: fs } = await import('@rspress/shared/fs-extra');
-    const { version } = await import('../../package.json');
+    // const version = '1.1.1';
+    const { version } = await import(
+      /* webpackMode: "eager" */ '../../package.json'
+    );
     // There are two cases where we will fallback to CSR:
     // 1. ssr bundle load failed
     // 2. ssr bundle render failed

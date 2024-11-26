@@ -30,9 +30,11 @@ type PageMeta = {
 };
 
 export async function initPageData(routePath: string): Promise<PageData> {
-  const { routes } = process.env.__SSR__
-    ? (require('virtual-routes-ssr') as typeof import('virtual-routes-ssr'))
-    : (require('virtual-routes') as typeof import('virtual-routes'));
+  const { routes } = (await import(
+    /* webpackMode: "eager" */ process.env.__SSR__
+      ? 'virtual-routes-ssr'
+      : 'virtual-routes'
+  )) as typeof import('virtual-routes-ssr');
   const matched = matchRoutes(routes, routePath)!;
   if (matched) {
     // Preload route component
@@ -42,9 +44,7 @@ export async function initPageData(routePath: string): Promise<PageData> {
     const extractPageInfo = siteData.pages.find(page => {
       const normalize = (p: string) =>
         // compat the path that has no / suffix and ignore case
-        p
-          .replace(/\/$/, '')
-          .toLowerCase();
+        p.replace(/\/$/, '').toLowerCase();
       return isEqualPath(normalize(page.routePath), normalize(routePath));
     });
 
