@@ -43,8 +43,8 @@
   "devDependencies": {
     "@biomejs/biome": "1.9.4",
     "@changesets/cli": "^2.27.10",
-    "@modern-js/module-tools": "2.62.1",
-    "@modern-js/tsconfig": "2.62.1",
+    "@modern-js/module-tools": "2.63.0",
+    "@modern-js/tsconfig": "2.63.0",
     "@playwright/test": "1.47.2",
     "@types/cross-spawn": "^6.0.6",
     "@types/fs-extra": "11.0.4",

@@ -15,7 +15,7 @@
     "modern",
     "modern.js"
   ],
-  "version": "1.37.2",
+  "version": "1.37.3",
   "jsnext:source": "./src/index.ts",
   "types": "./dist/index.d.ts",
   "main": "./dist/index.js",
@@ -24,8 +24,8 @@
     "dev": "rslib build -w"
   },
   "dependencies": {
-    "@rslib/core": "0.1.0",
     "@microsoft/api-extractor": "^7.48.0",
+    "@rslib/core": "0.1.0",
     "@rspress/core": "workspace:*",
     "@rspress/plugin-api-docgen": "workspace:*",
     "@rspress/plugin-preview": "workspace:*",

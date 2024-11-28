@@ -1,6 +1,6 @@
 {
   "name": "@rspress/core",
-  "version": "1.37.2",
+  "version": "1.37.3",
   "description": "The Rspress Documentation Framework",
   "bugs": "https://github.com/web-infra-dev/rspress/issues",
   "repository": {
@@ -77,8 +77,8 @@
     "unist-util-visit-children": "^3.0.0"
   },
   "devDependencies": {
-    "@modern-js/plugin-tailwindcss": "2.62.1",
-    "@modern-js/tsconfig": "2.62.1",
+    "@modern-js/plugin-tailwindcss": "2.63.0",
+    "@modern-js/tsconfig": "2.63.0",
     "@types/hast": "3.0.4",
     "@types/html-to-text": "^9.0.4",
     "@types/jest": "~29.5.14",
@@ -88,10 +88,10 @@
     "@types/react": "^18.3.12",
     "@types/react-dom": "^18.3.1",
     "postcss": "8.4.49",
-    "rimraf": "^3.0.2",
-    "remark-rehype": "^10.1.0",
-    "remark-parse": "^10.0.2",
     "rehype-stringify": "^9.0.4",
+    "remark-parse": "^10.0.2",
+    "remark-rehype": "^10.1.0",
+    "rimraf": "^3.0.2",
     "tailwindcss": "^3.4.15",
     "typescript": "^5.5.3",
     "vitest": "2.1.5"
