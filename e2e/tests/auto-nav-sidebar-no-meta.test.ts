@@ -26,10 +26,11 @@ test.describe('Auto nav and sidebar test', async () => {
     });
 
     const sidebarTexts = await getSidebarTexts(page);
-    expect(sidebarTexts.length).toBe(3);
+    expect(sidebarTexts.length).toBe(4);
     expect(sidebarTexts.join(',')).toEqual(
       [
         'API',
+        'pluginPlugin APlugin B',
         'Commands',
         'configBasic ConfigBuild ConfigFront Matter ConfigTheme Config',
       ].join(','),
@@ -43,10 +44,11 @@ test.describe('Auto nav and sidebar test', async () => {
       waitUntil: 'networkidle',
     });
 
-    const ele = page.locator('h2 span');
+    const eles = await page.$$('h2 span');
 
-    expect(await ele.textContent()).toBe('config');
-    await ele.click();
+    const configDir = eles[1];
+    expect(await configDir.textContent()).toBe('config');
+    await configDir.click();
     expect(page.url()).toBe(
       `http://localhost:${appPort}/api/rspress-config.html`,
     );
