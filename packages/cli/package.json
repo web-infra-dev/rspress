@@ -1,6 +1,6 @@
 {
   "name": "rspress",
-  "version": "1.37.2",
+  "version": "1.37.3",
   "type": "module",
   "types": "./dist/index.d.ts",
   "main": "./dist/index.js",
@@ -42,8 +42,8 @@
     "chokidar": "^3.6.0"
   },
   "devDependencies": {
-    "@rslib/core": "0.1.0",
     "@microsoft/api-extractor": "^7.48.0",
+    "@rslib/core": "0.1.0",
     "@types/jest": "~29.5.14",
     "@types/node": "^18.11.17",
     "@types/react": "^18.3.12",

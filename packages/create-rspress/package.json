@@ -1,6 +1,6 @@
 {
   "name": "create-rspress",
-  "version": "1.37.2",
+  "version": "1.37.3",
   "description": "Create a new Rspress project",
   "homepage": "https://rspress.dev",
   "repository": {
@@ -31,8 +31,8 @@
     "create-rstack": "1.0.9"
   },
   "devDependencies": {
-    "@rslib/core": "0.1.0",
     "@microsoft/api-extractor": "^7.48.0",
+    "@rslib/core": "0.1.0",
     "@types/node": "^18.11.17",
     "typescript": "^5.5.3"
   },
