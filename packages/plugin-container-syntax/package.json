@@ -45,7 +45,7 @@
     "@microsoft/api-extractor": "^7.48.0",
     "@rslib/core": "0.1.0",
     "@types/mdast": "^4.0.4",
-    "rehype-stringify": "^9.0.4",
+    "rehype-stringify": "^10.0.1",
     "remark-parse": "^10.0.2",
     "remark-rehype": "^10.1.0",
     "unified": "^10.1.2"
