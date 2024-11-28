@@ -25,6 +25,7 @@ function getHmrFileKey(realPath: string | undefined, docsDir: string) {
     : '';
 }
 
+const DEFAULT_DIRNAME_PREFIX = 'rspress-dir-default-';
 export async function scanSideMeta(
   workDir: string,
   rootDir: string,
@@ -77,7 +78,7 @@ export async function scanSideMeta(
             return {
               type: 'dir',
               name: item,
-              label: undefined,
+              label: `${DEFAULT_DIRNAME_PREFIX}${item}`, // if no _meta.json, use the dir name as default
             };
           }
           return extensions.some(ext => item.endsWith(ext)) ? item : null;
@@ -202,8 +203,30 @@ export async function scanSideMeta(
           ? await extractInfoFromFrontmatterWithRealPath(realPath, rootDir)
           : ({} as { context: undefined; title: undefined });
 
+        function getDirLabelName(): string {
+          let dirName;
+
+          if (
+            typeof label === 'string' &&
+            label.startsWith(DEFAULT_DIRNAME_PREFIX)
+          ) {
+            dirName = label.replace(DEFAULT_DIRNAME_PREFIX, '');
+          }
+
+          // 1. { "label": "DIR", type: "dir" } in _meta.json
+          if (!dirName && label) {
+            return label;
+          }
+          // 2. H1 or frontmatter title in md
+          if (title) {
+            return title;
+          }
+          // 3. fallback to fs dirname
+          return dirName ?? '';
+        }
+
         return {
-          text: label ?? title,
+          text: getDirLabelName(),
           collapsible,
           collapsed,
           items: subSidebar,

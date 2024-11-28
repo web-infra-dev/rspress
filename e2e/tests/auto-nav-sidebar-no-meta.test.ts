@@ -1,6 +1,7 @@
 import { expect, test } from '@playwright/test';
 import path from 'node:path';
 import { getPort, killProcess, runDevCommand } from '../utils/runCommands';
+import { getSidebarTexts } from '../utils/getSideBar';
 
 const fixtureDir = path.resolve(__dirname, '../fixtures');
 
@@ -24,18 +25,12 @@ test.describe('Auto nav and sidebar test', async () => {
       waitUntil: 'networkidle',
     });
 
-    // take the sidebar, properly a section or a tag
-    const sidebar = await page.$$(
-      `.rspress-sidebar .rspress-scrollbar > nav > section,
-      .rspress-sidebar .rspress-scrollbar > nav > a`,
-    );
-    expect(sidebar?.length).toBe(3);
-    const sidebarTexts = await Promise.all(
-      sidebar.map(element => element.textContent()),
-    );
+    const sidebarTexts = await getSidebarTexts(page);
+    expect(sidebarTexts.length).toBe(4);
     expect(sidebarTexts.join(',')).toEqual(
       [
         'API',
+        'pluginPlugin APlugin B',
         'Commands',
         'configBasic ConfigBuild ConfigFront Matter ConfigTheme Config',
       ].join(','),
@@ -49,10 +44,11 @@ test.describe('Auto nav and sidebar test', async () => {
       waitUntil: 'networkidle',
     });
 
-    const ele = page.locator('h2 span');
+    const eles = await page.$$('h2 span');
 
-    expect(await ele.textContent()).toBe('config');
-    await ele.click();
+    const configDir = eles[1];
+    expect(await configDir.textContent()).toBe('config');
+    await configDir.click();
     expect(page.url()).toBe(
       `http://localhost:${appPort}/api/rspress-config.html`,
     );
