@@ -1,6 +1,7 @@
 import type { PageIndexInfo } from '@rspress/shared';
 import type { ParserOptions } from 'react-docgen-typescript';
 import type { CompilerOptions } from 'typescript';
+import type { RenderOptions } from 'jsdoc-to-markdown';
 
 export type Entries = Record<string, string>;
 
@@ -9,7 +10,10 @@ export type ToolEntries = {
   'react-docgen-typescript': Entries;
 };
 
-export type ApiParseTool = 'documentation' | 'react-docgen-typescript';
+export type ApiParseTool =
+  | 'documentation'
+  | 'react-docgen-typescript'
+  | 'jsdoc-to-markdown';
 
 export type DocumentationArgs = {
   // https://github.com/documentationjs/documentation/blob/master/docs/NODE_API.md#parameters-1
@@ -26,12 +30,18 @@ export type DocumentationArgs = {
   noReferenceLinks?: boolean;
 };
 
+export type jsdoc2mdArgs = {
+  'no-cache'?: boolean;
+  configure?: string;
+} & RenderOptions;
+
 export type ParseToolOptions = {
   'react-docgen-typescript'?: ParserOptions & {
     tsconfigPath?: Record<string, string>;
     compilerOptions?: Record<string, CompilerOptions>;
   };
   documentation?: DocumentationArgs;
+  'jsdoc-to-markdown'?: jsdoc2mdArgs;
 };
 
 export type PluginOptions = {

@@ -58,6 +58,17 @@ export const docgen = async ({
                 parseToolOptions.documentation?.noReferenceLinks ?? true,
             });
             apiDocMap[key] = apiDoc;
+          } else if (tool === 'jsdoc-to-markdown') {
+            const jsdoc2mdModule = await import('jsdoc-to-markdown');
+            const jsdoc2md = jsdoc2mdModule.default;
+
+            const apiDoc = await jsdoc2md.render({
+              files: moduleSourceFilePath,
+              source: fs.readFileSync(moduleSourceFilePath, 'utf-8'),
+              ...parseToolOptions['jsdoc-to-markdown'],
+            });
+
+            apiDocMap[key] = apiDoc;
           } else {
             const { tsconfigPath, compilerOptions, ...restOptions } =
               parseToolOptions?.['react-docgen-typescript'] ?? {};

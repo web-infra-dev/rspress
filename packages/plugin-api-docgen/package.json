@@ -25,6 +25,7 @@
     "@rspress/shared": "workspace:*",
     "chokidar": "^3.6.0",
     "documentation": "14.0.3",
+    "jsdoc-to-markdown": "^9.1.1",
     "react-docgen-typescript": "2.2.2",
     "react-markdown": "8.0.7",
     "remark-gfm": "3.0.1"
@@ -32,6 +33,7 @@
   "devDependencies": {
     "@microsoft/api-extractor": "^7.48.0",
     "@rslib/core": "0.1.0",
+    "@types/jsdoc-to-markdown": "^7.0.6",
     "@types/mdast": "^4.0.4",
     "@types/node": "^18.11.17",
     "@types/react": "^18.3.12",
@@ -45,9 +47,9 @@
     "unist-util-visit": "^4.1.2"
   },
   "peerDependencies": {
+    "@rspress/core": "workspace:^1.37.3",
     "react": ">=17.0.0",
     "react-router-dom": "^6.8.1",
-    "@rspress/core": "workspace:^1.37.3",
     "typescript": "^5.5.3"
   },
   "peerDependenciesMeta": {
