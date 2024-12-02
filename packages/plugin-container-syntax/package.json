@@ -43,7 +43,7 @@
   },
   "devDependencies": {
     "@microsoft/api-extractor": "^7.48.0",
-    "@rslib/core": "0.1.0",
+    "@rslib/core": "0.1.1",
     "@types/mdast": "^4.0.4",
     "rehype-stringify": "^9.0.4",
     "remark-parse": "^10.0.2",
