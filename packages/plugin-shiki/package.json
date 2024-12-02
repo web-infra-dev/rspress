@@ -54,7 +54,7 @@
   "dependencies": {
     "@rspress/shared": "workspace:*",
     "hast-util-from-html": "2.0.3",
-    "shiki": "0.14.7",
+    "shiki": "1.24.0",
     "unist-util-visit": "5.0.0"
   }
 }
