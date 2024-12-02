@@ -26,7 +26,7 @@
   "devDependencies": {
     "@microsoft/api-extractor": "^7.48.0",
     "@modern-js/tsconfig": "2.63.0",
-    "@rslib/core": "0.1.0",
+    "@rslib/core": "0.1.1",
     "@types/hast": "3.0.4",
     "@types/node": "^18.11.17",
     "@types/react": "^18.3.12",
@@ -34,7 +34,7 @@
     "react": "^18.3.1",
     "typescript": "^5.5.3",
     "unified": "^10.1.2",
-    "vitest": "2.1.5"
+    "vitest": "2.1.6"
   },
   "sideEffects": [
     "*.css",
