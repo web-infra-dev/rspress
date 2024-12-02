@@ -987,6 +987,9 @@ importers:
       '@rspress/runtime':
         specifier: workspace:^1.37.3
         version: link:../runtime
+      '@rspress/shared':
+        specifier: workspace:*
+        version: link:../shared
     devDependencies:
       '@microsoft/api-extractor':
         specifier: ^7.48.0
@@ -997,9 +1000,6 @@ importers:
       '@rslib/core':
         specifier: 0.1.1
         version: 0.1.1(@microsoft/api-extractor@7.48.0(@types/node@18.11.17))(typescript@5.5.3)
-      '@rspress/shared':
-        specifier: workspace:*
-        version: link:../shared
       '@types/node':
         specifier: ^18.11.17
         version: 18.11.17

@@ -23,11 +23,13 @@
   "engines": {
     "node": ">=14.17.6"
   },
+  "dependencies": {
+    "@rspress/shared": "workspace:*"
+  },
   "devDependencies": {
     "@microsoft/api-extractor": "^7.48.0",
     "@modern-js/tsconfig": "2.63.0",
     "@rslib/core": "0.1.1",
-    "@rspress/shared": "workspace:*",
     "@types/node": "^18.11.17",
     "@types/react": "^18.3.12",
     "@types/react-dom": "^18.3.1",
