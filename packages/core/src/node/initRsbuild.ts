@@ -150,7 +150,7 @@ async function createInternalBuildConfig(
         root: csrOutDir,
       },
     },
-    source: {
+    resolve: {
       alias: {
         ...detectCustomIconAlias,
         '@mdx-js/react': require.resolve('@mdx-js/react'),
@@ -163,6 +163,8 @@ async function createInternalBuildConfig(
         ),
         '@theme-assets': path.join(DEFAULT_THEME, '../assets'),
       },
+    },
+    source: {
       include: [PACKAGE_ROOT, path.join(cwd, 'node_modules', RSPRESS_TEMP_DIR)],
       define: {
         'process.env.__IS_REACT_18__': JSON.stringify(reactVersion === 18),
@@ -245,11 +247,13 @@ async function createInternalBuildConfig(
     },
     environments: {
       web: {
+        resolve: {
+          alias: reactCSRAlias,
+        },
         source: {
           entry: {
             index: CLIENT_ENTRY,
           },
-          alias: reactCSRAlias,
           define: {
             'process.env.__SSR__': JSON.stringify(false),
           },
@@ -264,11 +268,13 @@ async function createInternalBuildConfig(
       ...(enableSSG
         ? {
             node: {
+              resolve: {
+                alias: reactSSRAlias,
+              },
               source: {
                 entry: {
                   index: SSR_ENTRY,
                 },
-                alias: reactSSRAlias,
                 define: {
                   'process.env.__SSR__': JSON.stringify(true),
                 },

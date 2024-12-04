@@ -14,7 +14,7 @@ export function SourceBuildPlugin(): RspressPlugin {
   return {
     name: 'theme-default:source-build',
     builderConfig: {
-      source: {
+      resolve: {
         alias: {
           'rspress/theme': path.resolve(ROOT_DIR, './src'),
         },
