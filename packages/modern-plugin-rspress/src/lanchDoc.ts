@@ -154,7 +154,7 @@ export async function launchDoc({
         ],
       },
       builderConfig: {
-        source: {
+        resolve: {
           alias: {
             'rspress/runtime': '@rspress/core/runtime',
             'rspress/theme': '@rspress/core/theme',

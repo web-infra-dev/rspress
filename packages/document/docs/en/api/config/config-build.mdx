@@ -6,12 +6,12 @@
 
 Used to customize the configurations of Rsbuild. For detailed configurations, please refer to [Rsbuild - Config](https://rsbuild.dev/config/).
 
-- Example: Use [source.alias](https://rsbuild.dev/config/source/alias) to configure path aliases:
+- Example: Use [resolve.alias](https://rsbuild.dev/config/resolve/alias) to configure path aliases:
 
 ```ts title="rspress.config.ts"
 export default defineConfig({
   builderConfig: {
-    source: {
+    resolve: {
       alias: {
         '@common': './src/common',
       },
