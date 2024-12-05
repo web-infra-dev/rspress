@@ -251,9 +251,15 @@ export async function scanSideMeta(
           tag,
         } satisfies SidebarSectionHeader;
       }
+
       return {
         text: label ?? '',
-        link: link && isExternalUrl(link) ? link : withBase(link, routePrefix),
+        link:
+          typeof link === 'undefined'
+            ? ''
+            : isExternalUrl(link)
+              ? link
+              : withBase(link, routePrefix),
         tag,
         context,
       } satisfies SidebarItem;
