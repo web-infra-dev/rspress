@@ -40,7 +40,7 @@ export async function renderInBrowser() {
     };
   };
   const RootApp = await enhancedApp();
-  if (process.env.__IS_REACT_18__) {
+  if (process.env.__REACT_GTE_18__) {
     const { createRoot, hydrateRoot } = require('react-dom/client');
     if (isProduction() && enableSSG) {
       hydrateRoot(container, <RootApp />);
