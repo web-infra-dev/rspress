@@ -33,7 +33,7 @@ export async function resolveReactAlias(reactVersion: number, isSSR: boolean) {
     'react-dom',
     'react-dom/server',
   ];
-  if (reactVersion === DEFAULT_REACT_VERSION) {
+  if (reactVersion >= DEFAULT_REACT_VERSION) {
     libPaths.push('react-dom/client');
   }
   const alias: Record<string, string> = {};
