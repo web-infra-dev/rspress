@@ -22,9 +22,12 @@ test.describe('Nested overview page', async () => {
   test('Should load nested overview page correctly - level 1', async ({
     page,
   }) => {
-    await page.goto(`http://localhost:${appPort}/basic-level-1/index.html`, {
-      waitUntil: 'networkidle',
-    });
+    await page.goto(
+      `http://localhost:${appPort}/base-url/basic-level-1/index.html`,
+      {
+        waitUntil: 'networkidle',
+      },
+    );
 
     const h2 = await page.$$('.overview-index h2');
     const h2Texts = await Promise.all(h2.map(element => element.textContent()));
@@ -39,7 +42,7 @@ test.describe('Nested overview page', async () => {
     page,
   }) => {
     await page.goto(
-      `http://localhost:${appPort}/basic-level-1/level-2/index.html`,
+      `http://localhost:${appPort}/base-url/basic-level-1/level-2/index.html`,
       {
         waitUntil: 'networkidle',
       },
@@ -58,7 +61,7 @@ test.describe('Nested overview page', async () => {
     page,
   }) => {
     await page.goto(
-      `http://localhost:${appPort}/basic-level-1/level-2/level-3/index.html`,
+      `http://localhost:${appPort}/base-url/basic-level-1/level-2/level-3/index.html`,
       {
         waitUntil: 'networkidle',
       },

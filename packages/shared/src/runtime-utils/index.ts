@@ -258,11 +258,11 @@ export function withoutLang(path: string, langs: string[]) {
   return addLeadingSlash(path.replace(langRegexp, ''));
 }
 
-export function withoutBase(path: string, base = '') {
+export function withoutBase(path: string, base: string) {
   return addLeadingSlash(path).replace(normalizeSlash(base), '');
 }
 
-export function withBase(url = '/', base = ''): string {
+export function withBase(url: string, base: string): string {
   const normalizedUrl = addLeadingSlash(url);
   const normalizedBase = normalizeSlash(base);
   // Avoid adding base path repeatly
