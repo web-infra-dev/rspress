@@ -243,6 +243,12 @@ async function createInternalBuildConfig(
         if (isServer) {
           chain.output.filename('main.cjs');
         }
+
+        const enableIncremental =
+          !isProduction() && !process.env.DISABLE_RSPACK_INCREMENTAL;
+        if (enableIncremental) {
+          chain.merge({ experiments: { incremental: true } });
+        }
       },
     },
     environments: {
