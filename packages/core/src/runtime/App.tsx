@@ -25,6 +25,7 @@ export enum QueryStatus {
 
 type PageMeta = {
   title: string;
+  headingTitle: string;
   toc: Header[];
   frontmatter: Record<string, any>;
 };
