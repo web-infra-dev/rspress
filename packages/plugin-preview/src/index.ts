@@ -51,7 +51,7 @@ export function pluginPreview(options?: Options): RspressPlugin {
       : [];
   const getRouteMeta = () => routeMeta;
   let lastDemos: typeof demos;
-  let devServer: StartServerResult;
+  let devServer: StartServerResult | undefined;
   let clientConfig: RsbuildConfig;
   const port = devPort;
   return {
@@ -93,6 +93,7 @@ export function pluginPreview(options?: Options): RspressPlugin {
       }
       lastDemos = cloneDeep(demos);
       await devServer?.server?.close();
+      devServer = undefined;
       const sourceEntry = generateEntry(demos, framework, position);
       const outDir = join(config.outDir ?? 'doc_build', '~demo');
       if (Object.keys(sourceEntry).length === 0) {
@@ -186,6 +187,7 @@ export function pluginPreview(options?: Options): RspressPlugin {
             });
             api.onCloseDevServer(async () => {
               await devServer?.server?.close();
+              devServer = undefined;
             });
           },
         },
