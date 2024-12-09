@@ -643,8 +643,8 @@ importers:
         specifier: ~1.1.0
         version: 1.1.0(@rsbuild/core@1.1.9)
       '@rsbuild/plugin-react':
-        specifier: ~1.0.7
-        version: 1.0.7(@rsbuild/core@1.1.9)
+        specifier: ~1.1.0
+        version: 1.1.0(@rsbuild/core@1.1.9)
       '@rsbuild/plugin-sass':
         specifier: ~1.1.2
         version: 1.1.2(@rsbuild/core@1.1.9)
@@ -1219,8 +1219,8 @@ importers:
         specifier: ~1.1.0
         version: 1.1.0(@rsbuild/core@1.1.9)
       '@rsbuild/plugin-react':
-        specifier: ~1.0.7
-        version: 1.0.7(@rsbuild/core@1.1.9)
+        specifier: ~1.1.0
+        version: 1.1.0(@rsbuild/core@1.1.9)
       '@rsbuild/plugin-sass':
         specifier: ~1.1.2
         version: 1.1.2(@rsbuild/core@1.1.9)
@@ -2808,8 +2808,8 @@ packages:
     peerDependencies:
       '@rsbuild/core': 1.x
 
-  '@rsbuild/plugin-react@1.0.7':
-    resolution: {integrity: sha512-t7T/GqDwodusTAnxGpqVRnQ/G+HYh98zk71qIg19WkjVJJGv57AC1Ppx0/6zzbZAbxU60bfK8TeEEXjhXCdSxA==}
+  '@rsbuild/plugin-react@1.1.0':
+    resolution: {integrity: sha512-uqdRoV2V91G1XIA14dAmxqYTlTDVf0ktpE7TgwG29oQ2j+DerF1kh29WPHK9HvGE34JTfaBrsme2Zmb6bGD0cw==}
     peerDependencies:
       '@rsbuild/core': 1.x
 
@@ -5415,8 +5415,8 @@ packages:
       '@types/react': '>=16'
       react: '>=16'
 
-  react-refresh@0.14.2:
-    resolution: {integrity: sha512-jCvmsr+1IUSMUyzOkRcvnVbX3ZYC6g9TDrDbFuFmRDq7PD4yaGbLKNQL6k2jnArV8hjYxh7hVhAZB6s9HDGpZA==}
+  react-refresh@0.16.0:
+    resolution: {integrity: sha512-FPvF2XxTSikpJxcr+bHut2H4gJ17+18Uy20D5/F+SKzFap62R3cM5wH6b8WN3LyGSYeQilLEcJcR1fjBSI2S1A==}
     engines: {node: '>=0.10.0'}
 
   react-router-dom@6.27.0:
@@ -7805,11 +7805,11 @@ snapshots:
       deepmerge: 4.3.1
       reduce-configs: 1.0.0
 
-  '@rsbuild/plugin-react@1.0.7(@rsbuild/core@1.1.9)':
+  '@rsbuild/plugin-react@1.1.0(@rsbuild/core@1.1.9)':
     dependencies:
       '@rsbuild/core': 1.1.9
-      '@rspack/plugin-react-refresh': 1.0.0(react-refresh@0.14.2)
-      react-refresh: 0.14.2
+      '@rspack/plugin-react-refresh': 1.0.0(react-refresh@0.16.0)
+      react-refresh: 0.16.0
 
   '@rsbuild/plugin-sass@1.1.2(@rsbuild/core@1.1.9)':
     dependencies:
@@ -7890,12 +7890,12 @@ snapshots:
 
   '@rspack/lite-tapable@1.0.1': {}
 
-  '@rspack/plugin-react-refresh@1.0.0(react-refresh@0.14.2)':
+  '@rspack/plugin-react-refresh@1.0.0(react-refresh@0.16.0)':
     dependencies:
       error-stack-parser: 2.1.4
       html-entities: 2.4.0
     optionalDependencies:
-      react-refresh: 0.14.2
+      react-refresh: 0.16.0
 
   '@rspress/mdx-rs-darwin-arm64@0.6.4':
     optional: true
@@ -10874,7 +10874,7 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
-  react-refresh@0.14.2: {}
+  react-refresh@0.16.0: {}
 
   react-router-dom@6.27.0(react-dom@18.3.1(react@18.3.1))(react@18.3.1):
     dependencies:

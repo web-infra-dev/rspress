@@ -44,7 +44,7 @@
     "@mdx-js/react": "2.3.0",
     "@rsbuild/core": "~1.1.9",
     "@rsbuild/plugin-less": "~1.1.0",
-    "@rsbuild/plugin-react": "~1.0.7",
+    "@rsbuild/plugin-react": "~1.1.0",
     "@rsbuild/plugin-sass": "~1.1.2",
     "@rspress/mdx-rs": "0.6.4",
     "@rspress/plugin-auto-nav-sidebar": "workspace:*",
