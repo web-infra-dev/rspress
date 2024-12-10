@@ -2,7 +2,6 @@
 @tailwind components;
 @tailwind utilities;
 
-
 *,
 ::before,
 ::after {
@@ -39,6 +38,17 @@ body {
 button:focus,
 button:focus-visible {
   outline: none;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+li,
+p {
+  overflow-wrap: break-word;
 }
 
 .visually-hidden {
