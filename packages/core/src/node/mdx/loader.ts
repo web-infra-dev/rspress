@@ -33,6 +33,7 @@ interface LoaderOptions {
 export interface PageMeta {
   toc: TocItem[];
   title: string;
+  headingTitle: string;
   frontmatter?: Record<string, any>;
 }
 
@@ -167,6 +168,7 @@ export default async function mdxLoader(
       pageMeta = {
         ...compilationMeta,
         title: frontmatter.title || compilationMeta.title || '',
+        headingTitle: compilationMeta.title,
         frontmatter,
       } as PageMeta;
     } else {
@@ -183,6 +185,7 @@ export default async function mdxLoader(
       pageMeta = {
         toc,
         title: frontmatter.title || title || '',
+        headingTitle: title,
         frontmatter,
       };
       // We should check dead links in mdx-rs mode

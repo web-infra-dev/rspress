@@ -1,5 +1,6 @@
-import { useState } from 'react';
+import { useMemo, useState } from 'react';
 import { MDXProvider } from '@mdx-js/react';
+import GithubSlugger from 'github-slugger';
 import { getCustomMDXComponent, ScrollToTop, Overview } from '@theme';
 import { Content, usePageData, NoSSR } from '@rspress/runtime';
 import { Aside } from '../../components/Aside';
@@ -9,6 +10,8 @@ import { SideMenu } from '../../components/LocalSideBar';
 import { TabDataContext } from '../../logic/TabDataContext';
 import styles from './index.module.scss';
 import type { UISwitchResult } from '../../logic/useUISwitch';
+import { H1 } from './docComponents/title';
+import { A } from './docComponents/link';
 
 export interface DocLayoutProps {
   beforeSidebar?: React.ReactNode;
@@ -43,7 +46,7 @@ export function DocLayout(props: DocLayoutProps) {
     components,
   } = props;
   const { siteData, page } = usePageData();
-  const { toc = [], frontmatter } = page;
+  const { headingTitle, title, toc = [], frontmatter } = page;
   const [tabData, setTabData] = useState({});
   const headers = toc;
   const { themeConfig } = siteData;
@@ -63,6 +66,21 @@ export function DocLayout(props: DocLayoutProps) {
       </MDXProvider>
     </TabDataContext.Provider>
   );
+
+  const fallbackTitle = useMemo(() => {
+    const slugger = new GithubSlugger();
+    const titleSlug = slugger.slug(title);
+    return (
+      !headingTitle && (
+        <H1 id={titleSlug}>
+          {title}
+          <A className="header-anchor" href={`#${titleSlug}`} aria-hidden>
+            #
+          </A>
+        </H1>
+      )
+    );
+  }, [headingTitle, title]);
 
   return (
     <div
@@ -93,6 +111,7 @@ export function DocLayout(props: DocLayoutProps) {
             <div>
               <div className="rspress-doc">
                 {beforeDocContent}
+                {fallbackTitle}
                 {docContent}
                 {afterDocContent}
               </div>
