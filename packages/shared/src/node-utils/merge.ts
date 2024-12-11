@@ -1,11 +1,13 @@
-import { mergeWith } from 'lodash-es';
 import type { UserConfig } from '@/types';
 
 const castArray = <T>(value: T | T[]): T[] =>
   Array.isArray(value) ? value : [value];
 
-export const mergeDocConfig = (...configs: UserConfig[]): UserConfig =>
-  mergeWith({}, ...configs, (target: UserConfig, source: UserConfig) => {
+export const mergeDocConfig = async (
+  ...configs: UserConfig[]
+): Promise<UserConfig> => {
+  const { mergeWith } = await import('lodash-es');
+  return mergeWith({}, ...configs, (target: UserConfig, source: UserConfig) => {
     const pair = [target, source];
     if (pair.some(item => item === undefined)) {
       // fallback to lodash default merge behavior
@@ -17,3 +19,4 @@ export const mergeDocConfig = (...configs: UserConfig[]): UserConfig =>
     // fallback to lodash default merge behavior
     return undefined;
   });
+};
