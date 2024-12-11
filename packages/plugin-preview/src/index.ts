@@ -173,6 +173,11 @@ export function pluginPreview(options?: Options): RspressPlugin {
 
           chain.resolve.extensions.prepend('.md').prepend('.mdx');
         },
+        rspack: {
+          watchOptions: {
+            ignored: /\.git/,
+          },
+        },
       },
       plugins: [
         {
