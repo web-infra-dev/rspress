@@ -86,6 +86,31 @@ export default defineConfig({
 
 框架会在 `public` 目录中找到你的图标，当然你也可以设置成一个 CDN 地址。
 
+## lang
+
+- Type: `string`
+- Default: `""`
+
+站点默认使用的语言。查看 [国际化](/guide/default-theme/i18n) 了解更多。
+
+```ts title="rspress.config.ts"
+import { defineConfig } from 'rspress/config';
+
+export default defineConfig({
+  lang: 'en',
+  locales: [
+    {
+      lang: 'en',
+      // ...
+    },
+    {
+      lang: 'zh',
+      // ...
+    },
+  ],
+});
+```
+
 ## logo \{#logo-1}
 
 - Type: `string | { dark: string; light: string }`

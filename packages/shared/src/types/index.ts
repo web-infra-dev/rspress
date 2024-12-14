@@ -54,6 +54,7 @@ export type SSGConfig = boolean | { strict?: boolean };
 export interface UserConfig<ThemeConfig = DefaultThemeConfig> {
   /**
    * The root directory of the site.
+   * @default 'docs'
    */
   root?: string;
   /**
@@ -62,10 +63,12 @@ export interface UserConfig<ThemeConfig = DefaultThemeConfig> {
   logo?: string | { dark: string; light: string };
   /**
    * The text of the logo in nav bar.
+   * @default ''
    */
   logoText?: string;
   /**
    * Base path of the site.
+   * @default '/'
    */
   base?: string;
   /**
@@ -73,15 +76,17 @@ export interface UserConfig<ThemeConfig = DefaultThemeConfig> {
    */
   icon?: string;
   /**
-   * Language of the site.
+   * Default language of the site.
    */
   lang?: string;
   /**
    * Title of the site.
+   * @default 'Rspress'
    */
   title?: string;
   /**
    * Description of the site.
+   * @default ''
    */
   description?: string;
   /**

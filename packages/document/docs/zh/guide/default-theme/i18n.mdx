@@ -72,15 +72,14 @@ export default defineConfig({
       lang: 'en',
       // 导航栏切换语言的标签
       label: 'English',
-      title: 'Modern.js',
-      description: 'Modern.js 文档框架',
+      title: 'Rspress',
+      description: 'Static Site Generator',
     },
     {
       lang: 'zh',
-      // 导航栏切换语言的标签
       label: '简体中文',
-      title: 'Modern.js',
-      description: 'Rspress',
+      title: 'Rspress',
+      description: '静态网站生成器',
     },
   ],
   themeConfig: {
@@ -106,17 +105,17 @@ export default defineConfig({
 
 ## 配置默认语言
 
-在配置完 `locales` 之后，你需要通过 `lang` 配置文档的默认语言，如下例子所示:
+在配置完 `locales` 之后，你需要通过 [lang](/api/config/config-basic#lang) 配置文档的默认语言，如下例子所示:
 
 ```ts title="rspress.config.ts"
 import { defineConfig } from 'rspress/config';
 
 export default defineConfig({
-  lang: 'zh',
+  lang: 'en',
 });
 ```
 
-这很重要，因为**对于默认语言下的路由，框架会去掉语言前缀**，比如 `/zh/guide/getting-started` 会被转换为 `/guide/getting-started`。
+这很重要，因为**对于默认语言下的路由，框架会去掉语言前缀**，比如 `/en/guide/getting-started` 会被转换为 `/guide/getting-started`。
 
 ## 新建不同的语言版本的文档
 
