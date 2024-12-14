@@ -86,6 +86,31 @@ export default defineConfig({
 
 The framework will find your icon in the `public` directory, of course you can also set it to a CDN address.
 
+## lang
+
+- Type: `string`
+- Default: `""`
+
+Default language of the site. See [Internationalization](/guide/default-theme/i18n) for more details.
+
+```ts title="rspress.config.ts"
+import { defineConfig } from 'rspress/config';
+
+export default defineConfig({
+  lang: 'en',
+  locales: [
+    {
+      lang: 'en',
+      // ...
+    },
+    {
+      lang: 'zh',
+      // ...
+    },
+  ],
+});
+```
+
 ## logo \{#logo-1}
 
 - Type: `string | { dark: string; light: string }`

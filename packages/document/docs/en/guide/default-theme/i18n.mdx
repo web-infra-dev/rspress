@@ -71,15 +71,14 @@ export default defineConfig({
       lang: 'en',
       // The label in nav bar to switch language
       label: 'English',
-      title: 'Modern.js',
-      description: 'Modern.js 文档框架',
+      title: 'Rspress',
+      description: 'Static Site Generator',
     },
     {
       lang: 'zh',
-      // The label in nav bar to switch language
       label: '简体中文',
-      title: 'Modern.js',
-      description: 'Rspress',
+      title: 'Rspress',
+      description: '静态网站生成器',
     },
   ],
   themeConfig: {
@@ -105,17 +104,17 @@ For other international theme parameters, please refer to [API type](/api/config
 
 ## Configure the default language
 
-After configure `locales` data, you need configure the default language of the document via `lang`, as shown in the following example:
+After configure `locales` data, you need configure the default language of the document via [lang](/api/config/config-basic#lang), as shown in the following example:
 
 ```ts title="rspress.config.ts"
 import { defineConfig } from 'rspress/config';
 
 export default defineConfig({
-  lang: 'zh',
+  lang: 'en',
 });
 ```
 
-This is important because **for routes in the default language, the framework will remove the language prefix**, such as `/zh/guide/getting-started` will be converted to `/guide/getting-started`.
+This is important because **for routes in the default language, the framework will remove the language prefix**, such as `/en/guide/getting-started` will be converted to `/guide/getting-started`.
 
 ## Create documents in different language
 
