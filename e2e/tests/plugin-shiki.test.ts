@@ -1,6 +1,5 @@
 import path from 'node:path';
 import { expect, test } from '@playwright/test';
-import fixture from '../fixtures/plugin-rss/fixture.json';
 import {
   getPort,
   killProcess,
@@ -31,5 +30,15 @@ test.describe('plugin shiki test', async () => {
     });
     const shikiDoms = await page.$$('.shiki');
     expect(shikiDoms.length).toBe(4);
+
+    const firstShikiDom = shikiDoms[0];
+    expect(
+      await firstShikiDom.$eval('pre', node => node.style.whiteSpace),
+    ).toBe('pre');
+
+    await firstShikiDom.$eval('button', btn => btn.click());
+    expect(
+      await firstShikiDom.$eval('pre', node => node.style.whiteSpace),
+    ).toBe('pre-wrap');
   });
 });
