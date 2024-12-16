@@ -32,13 +32,17 @@ test.describe('plugin shiki test', async () => {
     expect(shikiDoms.length).toBe(4);
 
     const firstShikiDom = shikiDoms[0];
+    expect(await firstShikiDom.$eval('pre', node => node.style.overflowX)).toBe(
+      'auto',
+    );
+
     expect(
-      await firstShikiDom.$eval('pre', node => node.style.whiteSpace),
+      await firstShikiDom.$eval('code', node => node.style.whiteSpace),
     ).toBe('pre');
 
     await firstShikiDom.$eval('button', btn => btn.click());
     expect(
-      await firstShikiDom.$eval('pre', node => node.style.whiteSpace),
+      await firstShikiDom.$eval('code', node => node.style.whiteSpace),
     ).toBe('pre-wrap');
   });
 });
