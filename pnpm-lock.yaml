@@ -1507,6 +1507,9 @@ importers:
       flexsearch:
         specifier: 0.7.43
         version: 0.7.43
+      github-slugger:
+        specifier: ^2.0.0
+        version: 2.0.0
       htmr:
         specifier: ^1.0.2
         version: 1.0.2(react@18.3.1)

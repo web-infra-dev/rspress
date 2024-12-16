@@ -1,6 +1,6 @@
 import { useMemo, useState } from 'react';
 import { MDXProvider } from '@mdx-js/react';
-import GithubSlugger from 'github-slugger';
+import { slug } from 'github-slugger';
 import { getCustomMDXComponent, ScrollToTop, Overview } from '@theme';
 import { Content, usePageData, NoSSR } from '@rspress/runtime';
 import { Aside } from '../../components/Aside';
@@ -68,10 +68,11 @@ export function DocLayout(props: DocLayoutProps) {
   );
 
   const fallbackTitle = useMemo(() => {
-    const slugger = new GithubSlugger();
-    const titleSlug = slugger.slug(title);
+    const titleSlug = title && slug(title);
     return (
-      !headingTitle && (
+      siteData.themeConfig.fallbackHeadingTitle !== false &&
+      !headingTitle &&
+      titleSlug && (
         <H1 id={titleSlug}>
           {title}
           <A className="header-anchor" href={`#${titleSlug}`} aria-hidden>
