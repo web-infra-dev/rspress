@@ -52,14 +52,10 @@ export function Code(props: CodeProps) {
       case 'shiki':
       default:
         return (
-          <pre
-            {...props}
-            style={{
-              whiteSpace: codeWrap ? 'pre-wrap' : 'pre',
-              overflowX: 'auto',
-            }}
-          >
-            <code>{props.children}</code>
+          <pre {...props} style={{ overflowX: 'auto' }}>
+            <code style={{ whiteSpace: codeWrap ? 'pre-wrap' : 'pre' }}>
+              {props.children}
+            </code>
           </pre>
         );
     }
