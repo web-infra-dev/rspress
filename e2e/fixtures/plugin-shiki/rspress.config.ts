@@ -1,24 +1,26 @@
-import path from 'node:path';
-import { defineConfig } from 'rspress/config';
 import {
-  createTransformerDiff,
-  createTransformerErrorLevel,
-  createTransformerFocus,
-  createTransformerHighlight,
   createTransformerLineNumber,
   pluginShiki,
 } from '@rspress/plugin-shiki';
+import {
+  transformerNotationDiff,
+  transformerNotationErrorLevel,
+  transformerNotationFocus,
+  transformerNotationHighlight,
+} from '@shikijs/transformers';
+import path from 'node:path';
+import { defineConfig } from 'rspress/config';
 
 export default defineConfig({
   root: path.join(__dirname, 'doc'),
   plugins: [
     pluginShiki({
       transformers: [
-        createTransformerDiff(),
+        transformerNotationDiff(),
+        transformerNotationErrorLevel(),
+        transformerNotationHighlight(),
+        transformerNotationFocus(),
         createTransformerLineNumber(),
-        createTransformerErrorLevel(),
-        createTransformerHighlight(),
-        createTransformerFocus(),
       ],
     }),
   ],
