@@ -1,6 +1,13 @@
 import type { CodeProps } from './code';
 
+import clsx from '../../../utils/tailwind';
+
 const DEFAULT_LANGUAGE_CLASS = 'language-bash';
+
+export interface PreProps {
+  children: React.ReactElement[] | React.ReactElement;
+  className?: string;
+}
 
 export function parseTitleFromMeta(meta: string): string {
   if (!meta) {
@@ -16,24 +23,36 @@ export function parseTitleFromMeta(meta: string): string {
   return result?.replace(/["'`]/g, '');
 }
 
+const renderChildren = (children: React.ReactElement) => {
+  const { className, meta, ...restProps } = children.props as CodeProps;
+  const codeTitle = parseTitleFromMeta(meta);
+  return (
+    <>
+      {codeTitle && <div className="rspress-code-title">{codeTitle}</div>}
+      <div
+        {...restProps}
+        className={clsx('rspress-code-content rspress-scrollbar', className)}
+      >
+        {children}
+      </div>
+    </>
+  );
+};
+
 export function Pre({
   children,
-}: {
-  children: React.ReactElement[] | React.ReactElement;
-}) {
-  const renderChildren = (children: React.ReactElement) => {
-    const { className, meta } = children.props as CodeProps;
-    const codeTitle = parseTitleFromMeta(meta);
+  className = DEFAULT_LANGUAGE_CLASS,
+}: PreProps) {
+  if (Array.isArray(children)) {
     return (
-      <div className={className || DEFAULT_LANGUAGE_CLASS}>
-        {codeTitle && <div className="rspress-code-title">{codeTitle}</div>}
-        <div className="rspress-code-content rspress-scrollbar">{children}</div>
+      <div>
+        {children.map((child, index) => (
+          <div key={index} className={className}>
+            {renderChildren(child)}
+          </div>
+        ))}
       </div>
     );
-  };
-
-  if (Array.isArray(children)) {
-    return <div>{children.map(child => renderChildren(child))}</div>;
   }
-  return renderChildren(children);
+  return <div className={className}>{renderChildren(children)}</div>;
 }
