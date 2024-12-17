@@ -72,6 +72,10 @@ export interface UserConfig<ThemeConfig = DefaultThemeConfig> {
    */
   base?: string;
   /**
+   * Recognize the links with following prefixes as external links.
+   */
+  externalLinkPrefixes?: string[];
+  /**
    * Path to html icon file.
    */
   icon?: string;
@@ -195,6 +199,7 @@ export type BaseRuntimePageInfo = Omit<
 export interface SiteData<ThemeConfig = NormalizedDefaultThemeConfig> {
   root: string;
   base: string;
+  externalLinkPrefixes: string[];
   lang: string;
   route: RouteOptions;
   locales: { lang: string; label: string }[];

@@ -108,12 +108,14 @@ export async function siteDataVMPlugin(context: FactoryContext) {
   );
 
   const siteData: SiteData = {
+    root: userDocRoot,
     title: userConfig?.title || '',
     description: userConfig?.description || '',
     icon: userConfig?.icon || '',
     route: userConfig?.route,
     themeConfig: normalizeThemeConfig(userConfig, pages),
     base: userConfig?.base || '/',
+    externalLinkPrefixes: userConfig?.externalLinkPrefixes || [],
     lang: userConfig?.lang || '',
     locales: userConfig?.locales || userConfig.themeConfig?.locales || [],
     logo: userConfig?.logo || '',

@@ -8,6 +8,7 @@ import {
   normalizeRoutePath,
   withBase,
   isEqualPath,
+  usePageData,
 } from '@rspress/runtime';
 import nprogress from 'nprogress';
 import { routes } from 'virtual-routes';
@@ -35,7 +36,8 @@ export function Link(props: LinkProps) {
     keepCurrentParams = false,
     ...rest
   } = props;
-  const isExternal = isExternalUrl(href);
+  const { siteData } = usePageData();
+  const isExternal = isExternalUrl(href, siteData.externalLinkPrefixes);
   const target = isExternal ? '_blank' : '';
   const rel = isExternal ? 'noopener noreferrer' : undefined;
   const withBaseUrl = isExternal ? href : withBase(normalizeHref(href));
