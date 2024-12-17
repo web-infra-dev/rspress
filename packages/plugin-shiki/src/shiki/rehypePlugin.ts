@@ -1,17 +1,18 @@
 import type { Element, ElementContent, Root, Text } from 'hast';
 import { fromHtml } from 'hast-util-from-html';
-import type shiki from 'shiki';
+import type { BuiltinTheme, Highlighter } from 'shiki';
 import type { Plugin } from 'unified';
 import { visit } from 'unist-util-visit';
 
 interface Options {
-  highlighter: shiki.Highlighter;
+  highlighter: Highlighter;
+  theme: BuiltinTheme;
 }
 
-export const rehypePluginShiki: Plugin<[Options], Root> = function ({
-  highlighter,
-}) {
-  return (tree: Root) => {
+// TODO: migrate to official @shikijs/rehype plugin after upgrading unified/remark/rehype packages
+export const rehypePluginShiki: Plugin<[Options], Root> =
+  ({ highlighter, theme }) =>
+  (tree: Root) => {
     visit(tree, 'element', (node, index, parent) => {
       // <pre><code>...</code></pre>
       if (
@@ -32,7 +33,7 @@ export const rehypePluginShiki: Plugin<[Options], Root> = function ({
           highlightLines = highlightMatch
             ?.replace(/[{}]/g, '')
             .split(',')
-            .map(item => {
+            .flatMap(item => {
               const [start, end] = item.split('-');
               if (end) {
                 return Array.from(
@@ -41,15 +42,17 @@ export const rehypePluginShiki: Plugin<[Options], Root> = function ({
                 );
               }
               return Number(start);
-            })
-            .flat();
+            });
         }
         // for example: language-js {1,2,3-5}
         const lang = codeClassName.split(' ')[0].split('-')[1];
         if (!lang) {
           return;
         }
-        const highlightedCode = highlighter.codeToHtml(codeContent, { lang });
+        const highlightedCode = highlighter.codeToHtml(codeContent, {
+          lang,
+          theme,
+        });
         const fragmentAst = fromHtml(highlightedCode, { fragment: true });
         const preElement = fragmentAst.children[0] as Element;
         const codeElement = preElement.children[0] as Element;
@@ -87,4 +90,3 @@ export const rehypePluginShiki: Plugin<[Options], Root> = function ({
       }
     });
   };
-};

@@ -1,12 +1,14 @@
 import path from 'node:path';
 import {
-  createTransformerDiff,
-  createTransformerErrorLevel,
-  createTransformerFocus,
-  createTransformerHighlight,
   createTransformerLineNumber,
   pluginShiki,
 } from '@rspress/plugin-shiki';
+import {
+  transformerNotationDiff,
+  transformerNotationErrorLevel,
+  transformerNotationFocus,
+  transformerNotationHighlight,
+} from '@shikijs/transformers';
 import { defineConfig } from 'rspress/config';
 
 export default defineConfig({
@@ -14,11 +16,11 @@ export default defineConfig({
   plugins: [
     pluginShiki({
       transformers: [
-        createTransformerDiff(),
+        transformerNotationDiff(),
+        transformerNotationErrorLevel(),
+        transformerNotationHighlight(),
+        transformerNotationFocus(),
         createTransformerLineNumber(),
-        createTransformerErrorLevel(),
-        createTransformerHighlight(),
-        createTransformerFocus(),
       ],
     }),
   ],
