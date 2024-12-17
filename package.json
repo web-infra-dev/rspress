@@ -45,7 +45,7 @@
     "@changesets/cli": "^2.27.10",
     "@modern-js/module-tools": "2.63.2",
     "@modern-js/tsconfig": "2.63.2",
-    "@playwright/test": "1.47.2",
+    "@playwright/test": "1.49.1",
     "@types/cross-spawn": "^6.0.6",
     "@types/fs-extra": "11.0.4",
     "@types/node": "^18.11.17",
@@ -59,7 +59,7 @@
     "husky": "^9.1.7",
     "lint-staged": "~15.2.11",
     "nx": "20.2.2",
-    "playwright": "1.47.2",
+    "playwright": "1.49.1",
     "prettier": "3.4.2",
     "tree-kill": "^1.2.2",
     "vitest": "2.1.8"
