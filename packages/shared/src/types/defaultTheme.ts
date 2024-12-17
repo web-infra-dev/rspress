@@ -115,6 +115,11 @@ export interface Config {
    * @default 'auto'
    */
   localeRedirect?: 'auto' | 'never';
+  /**
+   * Whether to show the fallback heading title when the heading title is not presented but `frontmatter.title` exists
+   * @default true
+   */
+  fallbackHeadingTitle?: boolean;
 }
 
 /**

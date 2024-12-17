@@ -306,6 +306,7 @@ export interface FrontMatterMeta {
 export interface PageData {
   siteData: SiteData<DefaultThemeConfig>;
   page: BaseRuntimePageInfo & {
+    headingTitle?: string;
     pagePath: string;
     lastUpdatedTime?: string;
     description?: string;

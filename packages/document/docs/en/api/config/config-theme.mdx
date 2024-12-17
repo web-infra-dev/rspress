@@ -687,3 +687,20 @@ export default defineConfig({
   },
 });
 ```
+
+## fallbackHeadingTitle
+
+- Type: `boolean`
+- Default: `true`
+
+Whether to display [`frontmatter.title`](./config-frontmatter#title) as fallback when the heading title is not presented. For example:
+
+```ts title="rspress.config.ts"
+import { defineConfig } from 'rspress/config';
+
+export default defineConfig({
+  themeConfig: {
+    fallbackHeadingTitle: false,
+  },
+});
+```
