@@ -137,6 +137,7 @@ export function useSidebarData(): SidebarData {
   const [sidebarData, setSidebarData] = useState<SidebarData>(
     getSidebarGroupData(sidebar, pathname),
   );
+  console.log(getSidebarGroupData(sidebar, pathname));
   useEffect(() => {
     const newSidebarData = getSidebarGroupData(sidebar, pathname);
     setSidebarData(newSidebarData);

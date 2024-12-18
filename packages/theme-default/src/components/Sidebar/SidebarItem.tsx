@@ -1,27 +1,15 @@
 import { useEffect, useRef } from 'react';
-import {
-  isProduction,
-  normalizeHrefInRuntime as normalizeHref,
-  usePageData,
-} from '@rspress/runtime';
+import { normalizeHrefInRuntime as normalizeHref } from '@rspress/runtime';
 import { Link, Tag } from '@theme';
 import styles from './index.module.scss';
 import { SidebarGroup } from './SidebarGroup';
 import { type SidebarItemProps, highlightTitleStyle } from '.';
 import { renderInlineMarkdown } from '../../logic';
-import { useRenderer } from '../../logic/useRerender';
-
-const removeExtension = (path: string) => {
-  return path.replace(/\.(mdx?)$/, '');
-};
 
 export function SidebarItem(props: SidebarItemProps) {
   const { item, depth = 0, activeMatcher, id, setSidebarData } = props;
   const active = 'link' in item && item.link && activeMatcher(item.link);
-  const { page } = usePageData();
   const ref = useRef<HTMLDivElement>(null);
-  const textRef = useRef<string>(item.text);
-  const rerender = useRenderer();
   useEffect(() => {
     if (active) {
       ref.current?.scrollIntoView({
@@ -29,26 +17,6 @@ export function SidebarItem(props: SidebarItemProps) {
       });
     }
   }, []);
-
-  // In development, we use the latest title after hmr
-  if (
-    !isProduction() &&
-    item._fileKey === removeExtension(page.pagePath) &&
-    page.title
-  ) {
-    textRef.current = page.title;
-  }
-
-  useEffect(() => {
-    // Fix the sidebar text not update when navigating to the other nav item
-    // https://github.com/web-infra-dev/rspress/issues/770
-    if (item.text === textRef.current) {
-      return;
-    }
-    textRef.current = item.text;
-    // Trigger rerender to update the sidebar text
-    rerender();
-  }, [item.text]);
 
   if ('items' in item) {
     return (
@@ -82,7 +50,7 @@ export function SidebarItem(props: SidebarItemProps) {
         }}
       >
         <Tag tag={item.tag} />
-        <span>{renderInlineMarkdown(textRef.current)}</span>
+        <span>{renderInlineMarkdown(item.text)}</span>
       </div>
     </Link>
   );
