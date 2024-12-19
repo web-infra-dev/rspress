@@ -95,6 +95,16 @@ importers:
         specifier: ^18.11.17
         version: 18.11.17
 
+  e2e/fixtures/auto-nav-sidebar-issue-1682:
+    dependencies:
+      rspress:
+        specifier: workspace:*
+        version: link:../../../packages/cli
+    devDependencies:
+      '@types/node':
+        specifier: ^18.11.17
+        version: 18.11.17
+
   e2e/fixtures/auto-nav-sidebar-no-meta:
     dependencies:
       rspress:
@@ -247,16 +257,6 @@ importers:
         version: 18.11.17
 
   e2e/fixtures/issue-1309:
-    dependencies:
-      rspress:
-        specifier: workspace:*
-        version: link:../../../packages/cli
-    devDependencies:
-      '@types/node':
-        specifier: ^18.11.17
-        version: 18.11.17
-
-  e2e/fixtures/issue-1682:
     dependencies:
       rspress:
         specifier: workspace:*
