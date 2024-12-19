@@ -4,28 +4,30 @@ import type { NavItem, Sidebar } from '@rspress/shared';
 import { logger } from '@rspress/shared/logger';
 import { loadFrontMatter } from '@rspress/shared/node-utils';
 
+/**
+ *
+ * @param rawPath e.g: /usr/rspress-demo/docs/api.md or /usr/rspress-demo/docs/api
+ * @param extensions e.g: [".md"]
+ * @returns
+ */
 export async function detectFilePath(
   rawPath: string,
   extensions: string[],
 ): Promise<string | undefined> {
-  // The params doesn't have extension name, so we need to try to find the file with the extension name.
-  let realPath: string | undefined = rawPath;
-  const fileExtname = path.extname(rawPath);
+  const pathWithExtension = extensions.map(ext => `${rawPath}${ext}`);
+  const pathExistInfo = await Promise.all(
+    pathWithExtension.map(p => fs.pathExists(p)),
+  );
+  const findPath = pathWithExtension.find((_, i) => pathExistInfo[i]);
 
-  // pathname may contain .json, see issue: https://github.com/web-infra-dev/rspress/issues/951
-  if (!extensions.includes(fileExtname)) {
-    const pathWithExtension = extensions.map(ext => `${rawPath}${ext}`);
-    const pathExistInfo = await Promise.all(
-      pathWithExtension.map(p => fs.pathExists(p)),
-    );
-    const findPath = pathWithExtension.find((_, i) => pathExistInfo[i]);
-    // file may be public resource, see issue: https://github.com/web-infra-dev/rspress/issues/1052
-    if (!fileExtname || findPath) {
-      realPath = findPath;
+  if (!findPath) {
+    const stat = await fs.stat(rawPath);
+    if (stat.isFile()) {
+      return rawPath;
     }
+    return undefined;
   }
-
-  return realPath;
+  return findPath;
 }
 
 export async function extractInfoFromFrontmatter(
