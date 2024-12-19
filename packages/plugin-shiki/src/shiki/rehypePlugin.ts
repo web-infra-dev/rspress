@@ -1,17 +1,18 @@
 import { visit } from 'unist-util-visit';
 import type { Plugin } from 'unified';
-import type { Text, Root, ElementContent } from 'hast';
+import type { Element, Text, Root, ElementContent } from 'hast';
 import { fromHtml } from 'hast-util-from-html';
-import type shiki from 'shiki';
+import type { BuiltinTheme, Highlighter } from 'shiki';
 
 interface Options {
-  highlighter: shiki.Highlighter;
+  highlighter: Highlighter;
+  theme: BuiltinTheme;
 }
 
-export const rehypePluginShiki: Plugin<[Options], Root> = function ({
-  highlighter,
-}) {
-  return (tree: Root) => {
+// TODO: migrate to official @shikijs/rehype plugin after upgrading unified/remark/rehype packages
+export const rehypePluginShiki: Plugin<[Options], Root> =
+  ({ highlighter, theme }) =>
+  (tree: Root) => {
     visit(tree, 'element', (node, index, parent) => {
       // <pre><code>...</code></pre>
       if (
@@ -32,7 +33,7 @@ export const rehypePluginShiki: Plugin<[Options], Root> = function ({
           highlightLines = highlightMatch
             ?.replace(/[{}]/g, '')
             .split(',')
-            .map(item => {
+            .flatMap(item => {
               const [start, end] = item.split('-');
               if (end) {
                 return Array.from(
@@ -41,18 +42,20 @@ export const rehypePluginShiki: Plugin<[Options], Root> = function ({
                 );
               }
               return Number(start);
-            })
-            .flat();
+            });
         }
         // for example: language-js {1,2,3-5}
         const lang = codeClassName.split(' ')[0].split('-')[1];
         if (!lang) {
           return;
         }
-        const highlightedCode = highlighter.codeToHtml(codeContent, { lang });
+        const highlightedCode = highlighter.codeToHtml(codeContent, {
+          lang,
+          theme,
+        });
         const fragmentAst = fromHtml(highlightedCode, { fragment: true });
-        const preElement = fragmentAst.children[0] as unknown as any;
-        const codeElement = preElement.children[0];
+        const preElement = fragmentAst.children[0] as Element;
+        const codeElement = preElement.children[0] as Element;
         codeElement.properties.className = `language-${lang}`;
         codeElement.properties.meta = codeMeta;
         const codeLines = codeElement.children;
@@ -66,7 +69,7 @@ export const rehypePluginShiki: Plugin<[Options], Root> = function ({
           });
 
         // Strip the final empty span
-        const lastLine = codeLines[codeLines.length - 1];
+        const lastLine = codeLines[codeLines.length - 1] as Element;
         if (lastLine?.children.length === 0) {
           codeLines.pop();
         }
@@ -82,4 +85,3 @@ export const rehypePluginShiki: Plugin<[Options], Root> = function ({
       }
     });
   };
-};
