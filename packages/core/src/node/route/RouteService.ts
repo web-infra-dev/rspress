@@ -110,6 +110,12 @@ export class RouteService {
 
   #pluginDriver: PluginDriver;
 
+  #externalLinkPrefixes?: string[];
+
+  get externalLinkPrefixes() {
+    return this.#externalLinkPrefixes;
+  }
+
   constructor(
     scanDir: string,
     userConfig: UserConfig,
@@ -128,6 +134,7 @@ export class RouteService {
       []
     ).map(item => item.lang);
     this.#base = userConfig?.base || '';
+    this.#externalLinkPrefixes = userConfig?.externalLinkPrefixes;
     this.#tempDir = tempDir;
     this.#pluginDriver = pluginDriver;
 
