@@ -53,7 +53,7 @@
   },
   "dependencies": {
     "@rspress/shared": "workspace:*",
-    "typedoc": "0.24.8",
+    "typedoc": "0.27.5",
     "typedoc-plugin-markdown": "3.17.1"
   }
 }
