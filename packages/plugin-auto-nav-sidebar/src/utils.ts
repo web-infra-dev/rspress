@@ -4,28 +4,51 @@ import type { NavItem, Sidebar } from '@rspress/shared';
 import { logger } from '@rspress/shared/logger';
 import { loadFrontMatter } from '@rspress/shared/node-utils';
 
+/**
+ * @param rawPathWithExtension /usr/rspress-demo/docs/api.md
+ * @returns /usr/rspress-demo/docs/api.md or undefined
+ */
+export async function detectFilePathWithExtension(
+  rawPathWithExtension: string,
+): Promise<string | undefined> {
+  const exist = await fs.pathExists(rawPathWithExtension);
+  if (!exist) {
+    return undefined;
+  }
+  const stat = await fs.stat(rawPathWithExtension);
+  if (!stat.isFile()) {
+    return undefined;
+  }
+  return rawPathWithExtension;
+}
+
+/**
+ *
+ * @param rawPath e.g: /usr/rspress-demo/docs/api.md or /usr/rspress-demo/docs/api
+ * @param extensions e.g: [".md"]
+ * @returns
+ */
 export async function detectFilePath(
   rawPath: string,
   extensions: string[],
 ): Promise<string | undefined> {
-  // The params doesn't have extension name, so we need to try to find the file with the extension name.
-  let realPath: string | undefined = rawPath;
-  const fileExtname = path.extname(rawPath);
-
-  // pathname may contain .json, see issue: https://github.com/web-infra-dev/rspress/issues/951
-  if (!extensions.includes(fileExtname)) {
-    const pathWithExtension = extensions.map(ext => `${rawPath}${ext}`);
-    const pathExistInfo = await Promise.all(
-      pathWithExtension.map(p => fs.pathExists(p)),
-    );
-    const findPath = pathWithExtension.find((_, i) => pathExistInfo[i]);
-    // file may be public resource, see issue: https://github.com/web-infra-dev/rspress/issues/1052
-    if (!fileExtname || findPath) {
-      realPath = findPath;
+  // 1.  rawPath: /usr/rspress-demo/docs/api.md
+  const realPath = await detectFilePathWithExtension(rawPath);
+  if (realPath) {
+    const ext = path.extname(realPath);
+    if (extensions.includes(ext)) {
+      return realPath;
     }
   }
 
-  return realPath;
+  // 2. rawPath: /usr/rspress-demo/docs/api
+  // The params doesn't have extension name, so we need to try to find the file with the extension name.
+  const pathWithExtension = extensions.map(ext => `${rawPath}${ext}`);
+  const realPaths = await Promise.all(
+    pathWithExtension.map(p => detectFilePathWithExtension(p)),
+  );
+  const findPath = pathWithExtension.find((_, i) => realPaths[i]);
+  return findPath;
 }
 
 export async function extractInfoFromFrontmatter(
