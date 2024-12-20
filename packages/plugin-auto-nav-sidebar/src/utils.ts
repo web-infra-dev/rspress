@@ -6,6 +6,25 @@ import { loadFrontMatter } from '@rspress/shared/node-utils';
 
 /**
  *
+ * @param rawPathWithExtension /usr/rspress-demo/docs/api.md
+ * @param extensions e.g: [".md"]
+ */
+export async function detectFilePathWithExtension(
+  rawPathWithExtension: string,
+): Promise<string | undefined> {
+  const exist = await fs.pathExists(rawPathWithExtension);
+  if (!exist) {
+    return undefined;
+  }
+  const stat = await fs.stat(rawPathWithExtension);
+  if (stat.isFile()) {
+    return rawPathWithExtension;
+  }
+  return undefined;
+}
+
+/**
+ *
  * @param rawPath e.g: /usr/rspress-demo/docs/api.md or /usr/rspress-demo/docs/api
  * @param extensions e.g: [".md"]
  * @returns
@@ -14,19 +33,22 @@ export async function detectFilePath(
   rawPath: string,
   extensions: string[],
 ): Promise<string | undefined> {
-  const pathWithExtension = extensions.map(ext => `${rawPath}${ext}`);
-  const pathExistInfo = await Promise.all(
-    pathWithExtension.map(p => fs.pathExists(p)),
-  );
-  const findPath = pathWithExtension.find((_, i) => pathExistInfo[i]);
-
-  if (!findPath) {
-    const stat = await fs.stat(rawPath);
-    if (stat.isFile()) {
-      return rawPath;
+  // 1.  rawPath: /usr/rspress-demo/docs/api.md
+  const realPath = await detectFilePathWithExtension(rawPath);
+  if (realPath) {
+    const ext = path.extname(realPath);
+    if (extensions.includes(ext)) {
+      return realPath;
     }
-    return undefined;
   }
+
+  // 2. rawPath: /usr/rspress-demo/docs/api
+  // The params doesn't have extension name, so we need to try to find the file with the extension name.
+  const pathWithExtension = extensions.map(ext => `${rawPath}${ext}`);
+  const realPaths = await Promise.all(
+    pathWithExtension.map(p => detectFilePathWithExtension(p)),
+  );
+  const findPath = pathWithExtension.find((_, i) => realPaths[i]);
   return findPath;
 }
 
