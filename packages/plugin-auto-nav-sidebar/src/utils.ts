@@ -5,9 +5,8 @@ import { logger } from '@rspress/shared/logger';
 import { loadFrontMatter } from '@rspress/shared/node-utils';
 
 /**
- *
  * @param rawPathWithExtension /usr/rspress-demo/docs/api.md
- * @param extensions e.g: [".md"]
+ * @returns /usr/rspress-demo/docs/api.md or undefined
  */
 export async function detectFilePathWithExtension(
   rawPathWithExtension: string,
@@ -17,10 +16,10 @@ export async function detectFilePathWithExtension(
     return undefined;
   }
   const stat = await fs.stat(rawPathWithExtension);
-  if (stat.isFile()) {
-    return rawPathWithExtension;
+  if (!stat.isFile()) {
+    return undefined;
   }
-  return undefined;
+  return rawPathWithExtension;
 }
 
 /**
