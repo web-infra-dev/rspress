@@ -31,14 +31,14 @@
   },
   "devDependencies": {
     "@microsoft/api-extractor": "^7.48.1",
-    "@rslib/core": "0.1.4",
+    "@rslib/core": "0.1.5",
     "@types/mdast": "^4.0.4",
     "@types/node": "^18.11.17",
-    "@types/react": "^18.3.16",
+    "@types/react": "^18.3.18",
     "@types/react-dom": "^18.3.5",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
-    "react-router-dom": "^6.28.0",
+    "react-router-dom": "^6.28.1",
     "typescript": "^5.5.3",
     "unified": "^10.1.2",
     "unist-util-visit": "^4.1.2"
