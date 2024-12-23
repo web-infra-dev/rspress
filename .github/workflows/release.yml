@@ -19,9 +19,6 @@ on:
         required: true
         default: 'main'
 
-permissions:
-  id-token: write
-
 jobs:
   release:
     name: Release
