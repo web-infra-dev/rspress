@@ -617,8 +617,8 @@ importers:
         specifier: ^6.7.14
         version: 6.7.14
       chalk:
-        specifier: 5.3.0
-        version: 5.3.0
+        specifier: 5.4.1
+        version: 5.4.1
       chokidar:
         specifier: ^3.6.0
         version: 3.6.0
@@ -1454,8 +1454,8 @@ importers:
         specifier: ~1.1.12
         version: 1.1.12
       chalk:
-        specifier: 5.3.0
-        version: 5.3.0
+        specifier: 5.4.1
+        version: 5.4.1
       execa:
         specifier: 5.1.1
         version: 5.1.1
@@ -3513,6 +3513,10 @@ packages:
 
   chalk@5.3.0:
     resolution: {integrity: sha512-dLitG79d+GV1Nb/VYcCDFivJeK1hiukt9QjRNVOsUtTy1rR1YJsmpGGTZ3qJos+uw7WmWF4wUwBd9jxjocFC2w==}
+    engines: {node: ^12.17.0 || ^14.13 || >=16.0.0}
+
+  chalk@5.4.1:
+    resolution: {integrity: sha512-zgVZuo2WcZgfUEmsn6eO3kINexW8RAE4maiQ8QNs8CtpPCSyMiYsULR3HQYkm3w8FIA3SberyMJMSldGsW+U3w==}
     engines: {node: ^12.17.0 || ^14.13 || >=16.0.0}
 
   character-entities-html4@2.1.0:
@@ -8535,6 +8539,8 @@ snapshots:
 
   chalk@5.3.0: {}
 
+  chalk@5.4.1: {}
+
   character-entities-html4@2.1.0: {}
 
   character-entities-legacy@1.1.4: {}
@@ -8764,7 +8770,7 @@ snapshots:
       '@babel/parser': 7.25.3
       '@babel/traverse': 7.25.3
       '@babel/types': 7.25.6
-      chalk: 5.3.0
+      chalk: 5.4.1
       chokidar: 3.6.0
       diff: 5.1.0
       doctrine-temporary-fork: 2.1.0
