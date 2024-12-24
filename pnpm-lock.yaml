@@ -321,6 +321,16 @@ importers:
         specifier: ^18.11.17
         version: 18.11.17
 
+  e2e/fixtures/nav-link-item-with-hash:
+    dependencies:
+      rspress:
+        specifier: workspace:*
+        version: link:../../../packages/cli
+    devDependencies:
+      '@types/node':
+        specifier: ^18.11.17
+        version: 18.11.17
+
   e2e/fixtures/nav-link-items:
     dependencies:
       rspress:

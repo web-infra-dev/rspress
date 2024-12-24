@@ -66,6 +66,7 @@ export function Link(props: LinkProps) {
       const el = document.getElementById(hash);
       if (el) {
         scrollToTarget(el, true);
+        navigate(withQueryUrl, { replace: false });
       }
       return;
     }
