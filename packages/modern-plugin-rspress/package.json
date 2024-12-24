@@ -1,7 +1,7 @@
 {
-  "name": "@modern-js/plugin-rspress",
+  "name": "@rspress/modern-js-plugin",
   "description": "A Modern.js plugin to integrate rspress",
-  "homepage": "https://modernjs.dev",
+  "homepage": "https://rspress.dev",
   "bugs": "https://github.com/web-infra-dev/rspress/issues",
   "repository": {
     "type": "git",

@@ -26,7 +26,7 @@
     "@arco-design/web-react": "^2.65.0"
   },
   "devDependencies": {
-    "@modern-js/plugin-rspress": "workspace:*",
+    "@rspress/modern-js-plugin": "workspace:*",
     "@types/node": "^18.11.17",
     "@types/react": "~18.3.18",
     "react": "^18.3.1",
