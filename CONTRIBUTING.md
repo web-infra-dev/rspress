@@ -217,9 +217,8 @@ Dependencies installation-related metrics base on publishing process, so the dat
 
 Repository maintainers can publish a new version of changed packages to npm.
 
-1. Checkout a new release branch, for example `release_v1.2.0`
-2. Run [changesets](https://github.com/changesets/changesets) to bump changed packages and commit the changes.
-3. Create a pull request, the title should be `release: v1.2.0`.
-4. Run the [release action](https://github.com/web-infra-dev/rsbuild/actions/workflows/release.yml) to publish packages to npm.
-5. Generate the [release notes](https://github.com/web-infra-dev/rsbuild/releases) via GitHub, see [Automatically generated release notes](https://docs.github.com/en/repositories/releasing-projects-on-github/automatically-generated-release-notes)
-6. Merge the release pull request to `main`.
+1. Run `pnpm generate-release-pr` to generate a release branch, the default bump type is `patch`, use `--type minor/major` to bump minor/major version.
+2. Create a pull request, the title should be `Release: v1.2.0`, ensure the CI check passes.
+3. Run the [release action](https://github.com/web-infra-dev/rspress/actions/workflows/release.yml) to publish packages to npm.
+4. Merge the release pull request to `main`.
+5. Generate the [release notes](https://github.com/web-infra-dev/rspress/releases) via GitHub, see [Automatically generated release notes](https://docs.github.com/en/repositories/releasing-projects-on-github/automatically-generated-release-notes)
