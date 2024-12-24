@@ -31,9 +31,10 @@ jobs:
     environment: production
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@v4.2.2
         with:
           fetch-depth: 1
+          ref: ${{ github.event.inputs.branch }}
 
       - name: Install Pnpm
         run: corepack enable
