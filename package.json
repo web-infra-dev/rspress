@@ -5,6 +5,7 @@
     "change": "changeset",
     "changeset": "changeset",
     "prepare": "pnpm run build && husky",
+    "generate-release-pr": "zx scripts/generateReleasePr.mjs",
     "check-spell": "npx cspell",
     "check-dependency-version": "check-dependency-version-consistency . --dep-type devDependencies",
     "dev": "cross-env NX_DAEMON=false NX_REJECT_UNKNOWN_LOCAL_CACHE=0 nx run-many -t dev --exclude @rspress-fixture/* --exclude @rspress/docs",
@@ -62,7 +63,8 @@
     "playwright": "1.47.2",
     "prettier": "3.4.2",
     "tree-kill": "^1.2.2",
-    "vitest": "2.1.8"
+    "vitest": "2.1.8",
+    "zx": "^8.2.4"
   },
   "publishConfig": {
     "access": "public",
