@@ -1,6 +1,6 @@
 {
   "name": "@rspress/shared",
-  "version": "1.38.0",
+  "version": "1.39.0",
   "types": "./dist/index.d.ts",
   "main": "./dist/index.js",
   "module": "./dist/index.mjs",

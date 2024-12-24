@@ -1,5 +1,0 @@
----
-'@rspress/core': minor
----
-
-release
