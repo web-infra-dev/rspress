@@ -295,7 +295,7 @@ importers:
         specifier: ^2.65.0
         version: 2.65.0(@types/react@18.3.18)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
     devDependencies:
-      '@modern-js/plugin-rspress':
+      '@rspress/modern-js-plugin':
         specifier: workspace:*
         version: link:../../../packages/modern-plugin-rspress
       '@types/node':
