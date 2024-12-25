@@ -1,4 +1,4 @@
-#!/usr/bin/env node --experimental-fetch
+#!/usr/bin/env node
 import nodeModule from 'node:module';
 
 // enable on-disk code caching of all modules loaded by Node.js
