@@ -18,6 +18,11 @@ export default defineConfig({
         link: '#pageB',
         position: 'right',
       },
+      {
+        text: 'PageC',
+        link: '#pageC',
+        position: 'right',
+      },
     ],
   },
 });

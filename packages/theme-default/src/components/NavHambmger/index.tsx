@@ -18,13 +18,14 @@ export function NavHamburger(props: Props) {
     <Fragment>
       <NavScreen
         isScreenOpen={isScreenOpen}
+        toggleScreen={toggleScreen}
         siteData={siteData}
         pathname={pathname}
       />
       <button
         onClick={toggleScreen}
         aria-label="mobile hamburger"
-        className={`${isScreenOpen ? styles.active : ''} ${
+        className={`${isScreenOpen ? styles.active : ''} buttonHamburger ${
           styles.navHamburger
         } text-gray-500`}
       >

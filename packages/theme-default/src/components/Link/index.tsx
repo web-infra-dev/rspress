@@ -97,7 +97,10 @@ export function Link(props: LinkProps) {
         className={`${styles.link} ${className} cursor-pointer`}
         rel={rel}
         target={target}
-        onClick={handleNavigate}
+        onClick={event => {
+          rest.onClick?.(event);
+          handleNavigate(event);
+        }}
         href={withBaseUrl}
       >
         {children}

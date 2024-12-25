@@ -16,6 +16,7 @@ import { useNavData } from '../../logic/useNav';
 
 interface Props {
   isScreenOpen: boolean;
+  toggleScreen: () => void;
   siteData: SiteData<DefaultThemeConfig>;
   pathname: string;
 }
@@ -45,7 +46,7 @@ const NavScreenVersions = () => {
 };
 
 export function NavScreen(props: Props) {
-  const { isScreenOpen, siteData, pathname } = props;
+  const { isScreenOpen, toggleScreen, siteData, pathname } = props;
   const screen = useRef<HTMLDivElement | null>(null);
   const localesData = siteData.themeConfig.locales || [];
   const hasMultiLanguage = localesData.length > 1;
@@ -77,6 +78,7 @@ export function NavScreen(props: Props) {
                   key={item.text}
                   base={base}
                   langs={langs}
+                  onClick={toggleScreen}
                   {...item}
                 />
               ) : (
@@ -103,7 +105,7 @@ export function NavScreen(props: Props) {
   }, [isScreenOpen]);
   return (
     <div
-      className={`${styles.navScreen} ${isScreenOpen ? styles.active : ''}`}
+      className={`${styles.navScreen} ${isScreenOpen ? styles.active : ''} navScreen`}
       ref={screen}
       id="navScreen"
     >

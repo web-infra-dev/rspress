@@ -28,4 +28,18 @@ test.describe('basic test', async () => {
     await page.locator('.rspress-nav-menu a').nth(1).click();
     expect(page.url()).toContain('index#pageB');
   });
+
+  test('Close the hamburger menu when clicking on an item in mobile view', async ({
+    page,
+  }) => {
+    await page.setViewportSize({ width: 375, height: 812 });
+
+    await page.goto(`http://localhost:${appPort}/`);
+
+    await page.locator('.buttonHamburger').click();
+    await expect(page.locator('.navScreen')).toBeVisible();
+
+    await page.getByRole('link', { name: 'PageC' }).click();
+    await expect(page.locator('.navScreen')).not.toBeVisible();
+  });
 });
