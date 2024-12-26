@@ -13,6 +13,7 @@ interface Props {
   base: string;
   rightIcon?: React.ReactNode;
   compact?: boolean;
+  onClick?: () => void;
 }
 
 export function NavMenuSingleItem(
@@ -24,7 +25,7 @@ export function NavMenuSingleItem(
   );
 
   return (
-    <Link href={normalizeHref(item.link)}>
+    <Link href={normalizeHref(item.link)} onClick={item.onClick}>
       <div
         key={item.text}
         className={`rspress-nav-menu-item ${styles.singleItem} ${

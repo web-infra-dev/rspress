@@ -22,7 +22,7 @@ export interface NavProps {
   afterNavMenu?: React.ReactNode;
 }
 
-const DEFAULT_NAV_POSTION = 'right';
+const DEFAULT_NAV_POSITION = 'right';
 
 export function Nav(props: NavProps) {
   const { beforeNavTitle, afterNavTitle, beforeNav, afterNavMenu, navTitle } =
@@ -83,7 +83,7 @@ export function Nav(props: NavProps) {
   const menuItems = useNavData();
 
   const getPosition = (menuItem: NavItem) =>
-    menuItem.position ?? DEFAULT_NAV_POSTION;
+    menuItem.position ?? DEFAULT_NAV_POSITION;
   // eslint-disable-next-line react/prop-types
   const leftMenuItems = menuItems.filter(item => getPosition(item) === 'left');
   // eslint-disable-next-line react/prop-types
