@@ -25,7 +25,7 @@ export function NavHamburger(props: Props) {
       <button
         onClick={toggleScreen}
         aria-label="mobile hamburger"
-        className={`${isScreenOpen ? styles.active : ''} buttonHamburger ${
+        className={`${isScreenOpen ? styles.active : ''} rspress-mobile-hamburger ${
           styles.navHamburger
         } text-gray-500`}
       >

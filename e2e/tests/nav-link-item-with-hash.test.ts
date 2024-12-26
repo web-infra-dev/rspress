@@ -36,10 +36,10 @@ test.describe('basic test', async () => {
 
     await page.goto(`http://localhost:${appPort}/`);
 
-    await page.locator('.buttonHamburger').click();
-    await expect(page.locator('.navScreen')).toBeVisible();
+    await page.locator('.rspress-mobile-hamburger').click();
+    await expect(page.locator('.rspress-nav-screen')).toBeVisible();
 
     await page.getByRole('link', { name: 'PageC' }).click();
-    await expect(page.locator('.navScreen')).not.toBeVisible();
+    await expect(page.locator('.rspress-nav-screen')).not.toBeVisible();
   });
 });

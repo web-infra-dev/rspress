@@ -105,7 +105,7 @@ export function NavScreen(props: Props) {
   }, [isScreenOpen]);
   return (
     <div
-      className={`${styles.navScreen} ${isScreenOpen ? styles.active : ''} navScreen`}
+      className={`${styles.navScreen} ${isScreenOpen ? styles.active : ''} rspress-nav-screen`}
       ref={screen}
       id="navScreen"
     >
