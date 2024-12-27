@@ -54,9 +54,10 @@ export function pluginApiDocgen(options?: PluginOptions): RspressPlugin {
             return;
           }
           while (matchResult !== null) {
-            const [matchContent, moduleName] = matchResult;
+            const matchContent = matchResult[0];
+            const moduleName = matchResult[2] ?? matchResult[5] ?? '';
             const apiDoc =
-              apiDocMap[moduleName] || apiDocMap[`${moduleName}-${lang}`];
+              apiDocMap[moduleName] ?? apiDocMap[`${moduleName}-${lang}`] ?? '';
             content = content.replace(matchContent, apiDoc);
             matchResult = new RegExp(apiCompRegExp).exec(content);
           }

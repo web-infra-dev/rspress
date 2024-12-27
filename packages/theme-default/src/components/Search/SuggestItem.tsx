@@ -120,7 +120,7 @@ export function SuggestItem({
   return (
     <li
       key={suggestion.link}
-      className={`${styles.suggestItem} ${isCurrent ? styles.current : ''}`}
+      className={`rspress-search-suggest-item ${styles.suggestItem} ${isCurrent ? styles.current : ''}`}
       onMouseEnter={setCurrentSuggestionIndex}
       onMouseMove={onMouseMove}
       ref={selfRef}
