@@ -125,6 +125,13 @@ export function Nav(props: NavProps) {
       </div>
     );
   };
+
+  const computeNavPosition = () => {
+    if (siteData.themeConfig.hideNavbar === 'never') return 'sticky';
+
+    return 'relative';
+  };
+
   return (
     <>
       {beforeNav}
@@ -132,10 +139,7 @@ export function Nav(props: NavProps) {
         className={`${styles.navContainer} rspress-nav px-6 ${
           // Only hidden when it's not mobile
           hiddenNav && !isMobile ? styles.hidden : ''
-        }`}
-        style={{
-          position: isMobile ? 'relative' : 'sticky',
-        }}
+        } ${computeNavPosition()}`}
       >
         <div
           className={`${styles.container} flex justify-between items-center h-full`}
