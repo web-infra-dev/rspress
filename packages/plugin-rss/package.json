@@ -1,6 +1,6 @@
 {
   "name": "@rspress/plugin-rss",
-  "version": "1.39.2",
+  "version": "1.39.3",
   "description": "A plugin for rss generation for rspress",
   "bugs": "https://github.com/web-infra-dev/rspress/issues",
   "repository": {
@@ -44,7 +44,7 @@
   },
   "peerDependencies": {
     "react": ">=17.0.0",
-    "rspress": "workspace:^1.39.2"
+    "rspress": "workspace:^1.39.3"
   },
   "files": [
     "dist",
