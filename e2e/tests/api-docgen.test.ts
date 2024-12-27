@@ -1,6 +1,7 @@
 import { expect, test } from '@playwright/test';
 import path from 'node:path';
 import { getPort, killProcess, runDevCommand } from '../utils/runCommands';
+import { searchInPage } from '../utils/search';
 
 const fixtureDir = path.resolve(__dirname, '../fixtures');
 
@@ -46,5 +47,11 @@ test.describe('api-docgen test', async () => {
     expect(tableContent).toContain('Default Value');
     expect(tableContent).toContain('-');
     expect(tableContent).toContain("'default'");
+  });
+
+  test('search index should include api-docgen result', async ({ page }) => {
+    await page.goto(`http://localhost:${appPort}`);
+    const suggestItems = await searchInPage(page, 'disabled');
+    expect(suggestItems.length).toBe(1);
   });
 });

@@ -468,10 +468,10 @@ export function SearchPanel({ focused, setFocused }: SearchPanelProps) {
                     <SvgWrapper icon={SearchSvg} />
                   </label>
                   <input
-                    className={styles.input}
+                    className={`rspress-search-panel-input ${styles.input}`}
                     ref={searchInputRef}
                     placeholder={searchPlaceholderText}
-                    aria-label="Search"
+                    aria-label="SearchPanelInput"
                     autoComplete="off"
                     autoFocus
                     onChange={e => handleQueryChange(e.target.value)}
