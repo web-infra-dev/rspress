@@ -27,7 +27,7 @@ const DEFAULT_NAV_POSITION = 'right';
 export function Nav(props: NavProps) {
   const { beforeNavTitle, afterNavTitle, beforeNav, afterNavMenu, navTitle } =
     props;
-  const { siteData } = usePageData();
+  const { siteData, page } = usePageData();
   const { base } = siteData;
   const { pathname } = useLocation();
   const [isMobile, setIsMobile] = useState(false);
@@ -127,7 +127,9 @@ export function Nav(props: NavProps) {
   };
 
   const computeNavPosition = () => {
-    if (siteData.themeConfig.hideNavbar === 'never') return 'sticky';
+    // On doc page we have the menu bar that is already sticky
+    if (siteData.themeConfig.hideNavbar === 'never' && page.pageType !== 'doc')
+      return 'sticky';
 
     return 'relative';
   };
