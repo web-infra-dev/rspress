@@ -25,7 +25,7 @@
   },
   "dependencies": {
     "@microsoft/api-extractor": "^7.48.1",
-    "@rslib/core": "0.1.5",
+    "@rslib/core": "0.2.2",
     "@rspress/core": "workspace:*",
     "@rspress/plugin-api-docgen": "workspace:*",
     "@rspress/plugin-preview": "workspace:*",
