@@ -25,7 +25,7 @@
   },
   "devDependencies": {
     "@microsoft/api-extractor": "^7.48.1",
-    "@modern-js/tsconfig": "2.63.3",
+    "@modern-js/tsconfig": "2.63.4",
     "@rslib/core": "0.2.2",
     "@types/hast": "3.0.4",
     "@types/node": "^18.11.17",
