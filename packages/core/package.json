@@ -42,7 +42,7 @@
     "@mdx-js/loader": "2.3.0",
     "@mdx-js/mdx": "2.3.0",
     "@mdx-js/react": "2.3.0",
-    "@rsbuild/core": "~1.1.12",
+    "@rsbuild/core": "~1.1.13",
     "@rsbuild/plugin-less": "~1.1.0",
     "@rsbuild/plugin-react": "~1.1.0",
     "@rsbuild/plugin-sass": "~1.1.2",
@@ -76,8 +76,8 @@
     "unist-util-visit-children": "^3.0.0"
   },
   "devDependencies": {
-    "@modern-js/plugin-tailwindcss": "2.63.3",
-    "@modern-js/tsconfig": "2.63.3",
+    "@modern-js/plugin-tailwindcss": "2.63.4",
+    "@modern-js/tsconfig": "2.63.4",
     "@types/hast": "3.0.4",
     "@types/html-to-text": "^9.0.4",
     "@types/jest": "~29.5.14",

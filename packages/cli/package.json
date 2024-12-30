@@ -34,7 +34,7 @@
     "reset": "rimraf ./**/node_modules"
   },
   "dependencies": {
-    "@rsbuild/core": "~1.1.12",
+    "@rsbuild/core": "~1.1.13",
     "@rspress/core": "workspace:*",
     "@rspress/shared": "workspace:*",
     "cac": "^6.7.14",
