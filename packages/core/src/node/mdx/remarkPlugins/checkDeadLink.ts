@@ -2,7 +2,7 @@ import path from 'node:path';
 import { visit } from 'unist-util-visit';
 import type { Plugin } from 'unified';
 import { logger } from '@rspress/shared/logger';
-import { cleanUrl, isProduction } from '@rspress/shared';
+import { cleanUrl, isExternalUrl, isProduction } from '@rspress/shared';
 import type { RouteService } from '@/node/route/RouteService';
 import { normalizePath } from '@/node/utils';
 
@@ -12,8 +12,6 @@ export interface DeadLinkCheckOptions {
   routeService: RouteService;
 }
 
-const IGNORE_REGEXP = /^(https?|mailto|tel|#)/;
-
 export function checkLinks(
   links: string[],
   filepath: string,
@@ -22,7 +20,7 @@ export function checkLinks(
 ) {
   const errorInfos: string[] = [];
   links
-    .filter(link => !IGNORE_REGEXP.test(link))
+    .filter(link => !isExternalUrl(link, routeService.externalLinkPrefixes))
     .map(link => normalizePath(link))
     .forEach(link => {
       const relativePath = path.relative(root, filepath);
@@ -64,7 +62,7 @@ export const remarkCheckDeadLinks: Plugin<
         return;
       }
 
-      if (!url.startsWith('http') && !url.startsWith('https')) {
+      if (!isExternalUrl(url, routeService.externalLinkPrefixes)) {
         const { routePath: normalizeUrl } = routeService.normalizeRoutePath(
           // fix: windows path
           url.split(path.sep).join('/')?.split('#')[0],

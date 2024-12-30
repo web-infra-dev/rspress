@@ -96,12 +96,10 @@ export function normalizeSlash(url: string) {
   return removeTrailingSlash(addLeadingSlash(normalizePosixPath(url)));
 }
 
-export function isExternalUrl(url = '') {
+export function isExternalUrl(url = '', externalLinkPrefixes?: string[]) {
   return (
-    url.startsWith('http://') ||
-    url.startsWith('https://') ||
-    url.startsWith('mailto:') ||
-    url.startsWith('tel:')
+    /^((https?|mailto|tel):)?\/\//.test(url) ||
+    externalLinkPrefixes?.some(prefix => url.startsWith(prefix))
   );
 }
 

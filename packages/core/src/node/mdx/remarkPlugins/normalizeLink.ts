@@ -15,10 +15,17 @@ interface LinkNode {
  * Remark plugin to normalize a link href
  */
 export const remarkPluginNormalizeLink: Plugin<
-  [{ base: string; root: string; cleanUrls: boolean }],
+  [
+    {
+      base: string;
+      externalLinkPrefixes?: string[];
+      root: string;
+      cleanUrls: boolean;
+    },
+  ],
   Root
 > =
-  ({ base, root, cleanUrls }) =>
+  ({ base, externalLinkPrefixes, root, cleanUrls }) =>
   (tree, file) => {
     const images: MdxjsEsm[] = [];
     visit(
@@ -36,7 +43,7 @@ export const remarkPluginNormalizeLink: Plugin<
         // eslint-disable-next-line prefer-const
         let { url, hash } = parseUrl(node.url);
 
-        if (isExternalUrl(url)) {
+        if (isExternalUrl(url, externalLinkPrefixes)) {
           node.url = url + (hash ? `#${hash}` : '');
           return;
         }
