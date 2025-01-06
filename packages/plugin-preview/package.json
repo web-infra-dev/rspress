@@ -34,7 +34,7 @@
     "qrcode.react": "^3.2.0"
   },
   "devDependencies": {
-    "@types/lodash": "^4.17.13",
+    "@types/lodash": "^4.17.14",
     "@types/mdast": "^4.0.4",
     "@types/node": "^18.11.17",
     "@types/react": "^18.3.18",
