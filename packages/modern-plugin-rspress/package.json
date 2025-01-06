@@ -29,11 +29,11 @@
     "@rspress/core": "workspace:*",
     "@rspress/plugin-api-docgen": "workspace:*",
     "@rspress/plugin-preview": "workspace:*",
-    "fast-glob": "^3.3.2",
+    "fast-glob": "^3.3.3",
     "lodash": "^4.17.21"
   },
   "devDependencies": {
-    "@types/lodash": "^4.17.13",
+    "@types/lodash": "^4.17.14",
     "@types/node": "^18.11.17",
     "@types/react": "^18.3.18",
     "react": "^18.3.1",

@@ -76,8 +76,8 @@
     "unist-util-visit-children": "^3.0.0"
   },
   "devDependencies": {
-    "@modern-js/plugin-tailwindcss": "2.63.4",
-    "@modern-js/tsconfig": "2.63.4",
+    "@modern-js/plugin-tailwindcss": "2.63.5",
+    "@modern-js/tsconfig": "2.63.5",
     "@types/hast": "3.0.4",
     "@types/html-to-text": "^9.0.4",
     "@types/jest": "~29.5.14",
