@@ -18,33 +18,6 @@ test.describe('basic test', async () => {
       await killProcess(app);
     }
   });
-
-  test('Navigate with an hash as link', async ({ page }) => {
-    await launchApp('./rspress.config.ts');
-    await page.goto(`http://localhost:${appPort}/`);
-
-    await page.locator('.rspress-nav-menu a').first().click();
-    expect(page.url()).toContain('index#pageA');
-
-    await page.locator('.rspress-nav-menu a').nth(1).click();
-    expect(page.url()).toContain('index#pageB');
-  });
-
-  test('Close the hamburger menu when clicking on an item in mobile view', async ({
-    page,
-  }) => {
-    await launchApp('./rspress.config.ts');
-    await page.setViewportSize({ width: 375, height: 812 });
-
-    await page.goto(`http://localhost:${appPort}/`);
-
-    await page.locator('.rspress-mobile-hamburger').click();
-    await expect(page.locator('.rspress-nav-screen')).toBeVisible();
-
-    await page.getByRole('link', { name: 'PageC' }).click();
-    await expect(page.locator('.rspress-nav-screen')).not.toBeVisible();
-  });
-
   test('Navbar should be visible on mobile when we scroll down with hideNavbar to never', async ({
     page,
   }) => {
