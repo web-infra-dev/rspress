@@ -128,6 +128,9 @@ export function Nav(props: NavProps) {
 
   const computeNavPosition = () => {
     // On doc page we have the menu bar that is already sticky
+    if (!isMobile) {
+      return 'sticky';
+    }
     if (siteData.themeConfig.hideNavbar === 'never' && page.pageType !== 'doc')
       return 'sticky';
 
