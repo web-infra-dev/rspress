@@ -1,5 +1,5 @@
-import { expect, type Page, test } from '@playwright/test';
 import path from 'node:path';
+import { type Page, expect, test } from '@playwright/test';
 import { getPort, killProcess, runDevCommand } from '../utils/runCommands';
 
 const fixtureDir = path.resolve(__dirname, '../fixtures');
