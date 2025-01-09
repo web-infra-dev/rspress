@@ -1,6 +1,6 @@
 {
   "name": "@rspress-fixture/rspress-doc-view-transition",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "private": true,
   "scripts": {
     "build": "rspress build",
