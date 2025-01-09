@@ -1,14 +1,12 @@
 {
   "name": "@rspress/shared",
   "version": "1.39.3",
-  "types": "./dist/index.d.ts",
-  "main": "./dist/index.js",
-  "module": "./dist/index.mjs",
   "repository": {
     "type": "git",
     "url": "https://github.com/web-infra-dev/rspress",
     "directory": "packages/shared"
   },
+  "license": "MIT",
   "exports": {
     ".": {
       "types": "./dist/index.d.ts",
@@ -41,13 +39,19 @@
       "require": "./dist/node-utils.js"
     }
   },
+  "main": "./dist/index.js",
+  "module": "./dist/index.mjs",
+  "types": "./dist/index.d.ts",
+  "files": [
+    "dist"
+  ],
   "scripts": {
-    "dev": "modern build -w",
     "build": "modern build",
     "build:watch": "modern build -w",
-    "test": "vitest run",
-    "reset": "rimraf ./**/node_modules",
+    "dev": "modern build -w",
     "new": "modern new",
+    "reset": "rimraf ./**/node_modules",
+    "test": "vitest run",
     "upgrade": "modern upgrade"
   },
   "dependencies": {
@@ -69,14 +73,9 @@
     "rimraf": "^3.0.2",
     "typescript": "^5.5.3"
   },
-  "sideEffects": [],
   "publishConfig": {
     "access": "public",
     "provenance": true,
     "registry": "https://registry.npmjs.org/"
-  },
-  "license": "MIT",
-  "files": [
-    "dist"
-  ]
+  }
 }

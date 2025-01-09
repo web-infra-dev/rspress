@@ -9,11 +9,16 @@
     "directory": "packages/cli/core"
   },
   "license": "MIT",
+  "sideEffects": [
+    "*.css",
+    "*.less",
+    "*.sass",
+    "*.scss",
+    "**/virtual-global-styles.js",
+    "virtual-global-styles",
+    "./src/theme-default/styles/index.ts"
+  ],
   "type": "module",
-  "jsnext:source": "./src/index.ts",
-  "types": "./dist/index.d.ts",
-  "main": "./dist/index.js",
-  "module": "./dist/node/index.js",
   "exports": {
     ".": {
       "types": "./dist/index.d.ts",
@@ -29,14 +34,25 @@
       "default": "./runtime.ts"
     }
   },
+  "main": "./dist/index.js",
+  "module": "./dist/node/index.js",
+  "types": "./dist/index.d.ts",
+  "files": [
+    "dist",
+    "src/runtime",
+    "src/theme-default",
+    "src/shared",
+    "index.html",
+    "runtime.ts",
+    "theme.ts",
+    "loader.cjs",
+    "compiled"
+  ],
   "scripts": {
-    "dev": "modern build -w",
     "build": "modern build",
+    "dev": "modern build -w",
     "reset": "rimraf ./**/node_modules",
     "test": "vitest run --passWithNoTests"
-  },
-  "engines": {
-    "node": ">=14.17.6"
   },
   "dependencies": {
     "@mdx-js/loader": "2.3.0",
@@ -95,29 +111,13 @@
     "typescript": "^5.5.3",
     "vitest": "2.1.8"
   },
-  "sideEffects": [
-    "*.css",
-    "*.less",
-    "*.sass",
-    "*.scss",
-    "**/virtual-global-styles.js",
-    "virtual-global-styles",
-    "./src/theme-default/styles/index.ts"
-  ],
-  "files": [
-    "dist",
-    "src/runtime",
-    "src/theme-default",
-    "src/shared",
-    "index.html",
-    "runtime.ts",
-    "theme.ts",
-    "loader.cjs",
-    "compiled"
-  ],
+  "engines": {
+    "node": ">=14.17.6"
+  },
   "publishConfig": {
     "access": "public",
     "provenance": true,
     "registry": "https://registry.npmjs.org/"
-  }
+  },
+  "jsnext:source": "./src/index.ts"
 }

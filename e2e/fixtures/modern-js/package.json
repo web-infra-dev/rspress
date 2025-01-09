@@ -2,7 +2,6 @@
   "name": "@rspress-fixture/modern-js",
   "version": "0.1.0",
   "private": true,
-  "sideEffects": [],
   "exports": {
     ".": {
       "node": {
