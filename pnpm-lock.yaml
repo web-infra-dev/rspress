@@ -500,7 +500,7 @@ importers:
         specifier: ^18.11.17
         version: 18.11.17
 
-  e2e/fixtures/prism-sytax-highlighter:
+  e2e/fixtures/prism-syntax-highlighter:
     dependencies:
       rspress:
         specifier: workspace:*
