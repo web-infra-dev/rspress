@@ -834,10 +834,6 @@ importers:
         specifier: 2.1.8
         version: 2.1.8(@types/node@18.11.17)(sass-embedded@1.82.0)(terser@5.31.6)
 
-  packages/core/compiled/fast-glob: {}
-
-  packages/core/compiled/globby: {}
-
   packages/create-rspress:
     dependencies:
       create-rstack:
