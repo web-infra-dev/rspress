@@ -8,22 +8,6 @@ export default defineConfig({
   },
   themeConfig: {
     hideNavbar: 'auto',
-    nav: [
-      {
-        text: 'PageA',
-        link: '#pageA',
-        position: 'right',
-      },
-      {
-        text: 'PageB',
-        link: '#pageB',
-        position: 'right',
-      },
-      {
-        text: 'PageC',
-        link: '#pageC',
-        position: 'right',
-      },
-    ],
+    nav: [],
   },
 });

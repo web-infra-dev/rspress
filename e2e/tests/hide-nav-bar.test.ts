@@ -1,8 +1,15 @@
-import { expect, test } from '@playwright/test';
+import { expect, type Page, test } from '@playwright/test';
 import path from 'node:path';
 import { getPort, killProcess, runDevCommand } from '../utils/runCommands';
 
 const fixtureDir = path.resolve(__dirname, '../fixtures');
+async function isNavBarVisible(page: Page): Promise<boolean> {
+  const nav = await page.$('.rspress-nav');
+  const className: string = await nav?.evaluate(el => el.className);
+  console.log(className);
+
+  return !className.includes('hidden');
+}
 
 test.describe('basic test', async () => {
   let appPort;
@@ -18,6 +25,23 @@ test.describe('basic test', async () => {
       await killProcess(app);
     }
   });
+
+  test('hideNavBar: "auto" should work', async ({ page }) => {
+    await launchApp('./rspress-hide-auto.config.ts');
+    await page.goto(`http://localhost:${appPort}/`);
+
+    // scroll down
+    await page.mouse.wheel(0, 100);
+    await page.waitForTimeout(100);
+    await page.mouse.wheel(0, 100);
+    await page.waitForTimeout(100);
+    await page.mouse.wheel(0, 100);
+    await page.waitForTimeout(100);
+
+    const isVisible = await isNavBarVisible(page);
+    expect(isVisible).toBeFalsy();
+  });
+
   test('Navbar should be visible on mobile when we scroll down with hideNavbar to never', async ({
     page,
   }) => {
@@ -26,28 +50,13 @@ test.describe('basic test', async () => {
 
     await page.goto(`http://localhost:${appPort}/`);
 
-    await page.evaluate(() => {
-      window.scrollBy(0, 800);
-    });
+    // scroll down
+    await page.mouse.wheel(0, 100);
+    await page.waitForTimeout(100);
+    await page.mouse.wheel(0, 100);
+    await page.waitForTimeout(100);
+    await page.mouse.wheel(0, 100);
 
-    // Allow to check if the rspress-nav is in the viewport
-    // toBeVisible() doesn't work here because it check the visibility and the display property
-    const isInViewport = await page.evaluate(sel => {
-      const element = document.querySelector(sel);
-
-      if (!element) return false;
-
-      const rect = element.getBoundingClientRect();
-      return (
-        rect.top >= 0 &&
-        rect.left >= 0 &&
-        rect.bottom <=
-          (window.innerHeight || document.documentElement.clientHeight) &&
-        rect.right <=
-          (window.innerWidth || document.documentElement.clientWidth)
-      );
-    }, '.rspress-nav');
-
-    expect(isInViewport).toBeTruthy();
+    expect(await isNavBarVisible(page)).toBeTruthy();
   });
 });
