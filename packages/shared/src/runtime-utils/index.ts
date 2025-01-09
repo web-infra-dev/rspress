@@ -265,7 +265,7 @@ export function withoutBase(path: string, base: string) {
 export function withBase(url: string, base: string): string {
   const normalizedUrl = addLeadingSlash(url);
   const normalizedBase = normalizeSlash(base);
-  // Avoid adding base path repeatly
+  // Avoid adding base path repeatedly
   return normalizedUrl.startsWith(normalizedBase)
     ? normalizedUrl
     : `${normalizedBase}${normalizedUrl}`;

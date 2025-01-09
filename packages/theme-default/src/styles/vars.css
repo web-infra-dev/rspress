@@ -52,14 +52,13 @@
 }
 
 .dark {
-  --rp-c-bg: #191D24;
+  --rp-c-bg: #191d24;
   --rp-c-bg-soft: #292e37;
   --rp-c-bg-mute: #343a46;
   --rp-c-bg-alt: #000;
 
   --rp-c-divider: rgba(84, 84, 84, 0.65);
   --rp-c-divider-light: rgba(84, 84, 84, 0.48);
-
 
   --rp-c-text-1: rgba(255, 255, 245, 0.93);
   --rp-c-text-2: rgba(235, 235, 235, 0.56);

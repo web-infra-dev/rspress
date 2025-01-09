@@ -1,8 +1,8 @@
-import { Button } from '@theme';
-import { isExternalUrl, withBase } from '@rspress/shared';
 import { normalizeHrefInRuntime, normalizeImagePath } from '@rspress/runtime';
-import { renderHtmlOrText } from '../../logic';
+import { isExternalUrl, withBase } from '@rspress/shared';
 import type { FrontMatterMeta } from '@rspress/shared';
+import { Button } from '@theme';
+import { renderHtmlOrText } from '../../logic';
 
 import styles from './index.module.scss';
 

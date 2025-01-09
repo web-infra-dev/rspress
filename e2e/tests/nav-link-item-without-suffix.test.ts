@@ -1,5 +1,5 @@
-import { expect, test } from '@playwright/test';
 import path from 'node:path';
+import { expect, test } from '@playwright/test';
 import { getPort, killProcess, runDevCommand } from '../utils/runCommands';
 
 import type { Locator, Page } from '@playwright/test';
@@ -62,7 +62,7 @@ test.describe('Nav should functions well', async () => {
     }
   });
 
-  test('sidebar should redirect and render corrently', async ({ page }) => {
+  test('sidebar should redirect and render correctly', async ({ page }) => {
     await page.goto(`http://localhost:${appPort}/items-and-link/child-1`, {
       waitUntil: 'networkidle',
     });
@@ -72,7 +72,7 @@ test.describe('Nav should functions well', async () => {
     expect(content).toContain('child-2');
   });
 
-  test('bottom link should redirect and render corrently', async ({ page }) => {
+  test('bottom link should redirect and render correctly', async ({ page }) => {
     await page.goto(`http://localhost:${appPort}/items-and-link/child-1`, {
       waitUntil: 'networkidle',
     });

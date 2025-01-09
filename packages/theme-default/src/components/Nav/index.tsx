@@ -1,18 +1,18 @@
-import type { NavItem } from '@rspress/shared';
 import { useLocation, usePageData } from '@rspress/runtime';
+import type { NavItem } from '@rspress/shared';
 import { Search } from '@theme';
 import { useEffect, useState } from 'react';
 import { isMobileDevice, useHiddenNav } from '../../logic';
-import { NavHamburger } from '../NavHambmger';
+import { useNavData } from '../../logic/useNav';
+import { NavHamburger } from '../NavHamburger';
 import { SocialLinks } from '../SocialLinks';
 import { SwitchAppearance } from '../SwitchAppearance';
+import { NavBarTitle } from './NavBarTitle';
 import { NavMenuGroup } from './NavMenuGroup';
 import { NavMenuSingleItem } from './NavMenuSingleItem';
-import styles from './index.module.scss';
-import { NavBarTitle } from './NavBarTitle';
 import { NavTranslations } from './NavTranslations';
 import { NavVersions } from './NavVersions';
-import { useNavData } from '../../logic/useNav';
+import styles from './index.module.scss';
 
 export interface NavProps {
   beforeNav?: React.ReactNode;
@@ -36,7 +36,7 @@ export function Nav(props: NavProps) {
     siteData.locales || siteData.themeConfig.locales || {},
   );
   const hasMultiLanguage = localeLanguages.length > 1;
-  const hasMutilVersion = siteData.multiVersion.versions.length > 1;
+  const hasMultiVersion = siteData.multiVersion.versions.length > 1;
   const socialLinks = siteData.themeConfig.socialLinks || [];
   const hasSocialLinks = socialLinks.length > 0;
   const langs = localeLanguages.map(item => item.lang || '') || [];
@@ -114,7 +114,7 @@ export function Nav(props: NavProps) {
         <NavMenu menuItems={rightMenuItems} />
         <div className="flex-center flex-row">
           {hasMultiLanguage && <NavTranslations />}
-          {hasMutilVersion && <NavVersions />}
+          {hasMultiVersion && <NavVersions />}
           {hasAppearanceSwitch && (
             <div className="mx-2">
               <SwitchAppearance />

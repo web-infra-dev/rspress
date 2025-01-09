@@ -1,5 +1,5 @@
-import { usePageData, withBase, NoSSR } from '@rspress/core/runtime';
-import { useCallback, useEffect, useState, useMemo } from 'react';
+import { NoSSR, usePageData, withBase } from '@rspress/core/runtime';
+import { useCallback, useEffect, useMemo, useState } from 'react';
 import { normalizeId } from '../../dist/utils';
 import MobileOperation from './common/mobile-operation';
 import './Device.scss';

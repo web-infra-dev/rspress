@@ -1,5 +1,5 @@
-import type { Page } from '@playwright/test';
 import assert from 'node:assert';
+import type { Page } from '@playwright/test';
 
 async function getSearchButton(page: Page) {
   const searchButton = await page.$('.rspress-nav-search-button');

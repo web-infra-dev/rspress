@@ -1,16 +1,16 @@
 /* eslint-disable max-lines */
 import { usePageData } from '@rspress/runtime';
 import { type SearchOptions, isProduction } from '@rspress/shared';
+import CloseSvg from '@theme-assets/close';
+import LoadingSvg from '@theme-assets/loading';
+import SearchSvg from '@theme-assets/search';
 import { debounce } from 'lodash-es';
 import { useCallback, useEffect, useRef, useState } from 'react';
 import { createPortal } from 'react-dom';
 import * as userSearchHooks from 'virtual-search-hooks';
-import CloseSvg from '@theme-assets/close';
-import LoadingSvg from '@theme-assets/loading';
-import SearchSvg from '@theme-assets/search';
-import { SvgWrapper } from '../SvgWrapper';
 import { useLocaleSiteData } from '../../logic/useLocaleSiteData';
 import { getSidebarGroupData } from '../../logic/useSidebarData';
+import { SvgWrapper } from '../SvgWrapper';
 import { Tab, Tabs } from '../Tabs';
 import { NoSearchResult } from './NoSearchResult';
 import { SuggestItem } from './SuggestItem';

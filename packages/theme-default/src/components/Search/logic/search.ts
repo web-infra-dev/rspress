@@ -48,7 +48,7 @@ export class PageSearcher {
 
   async match(keyword: string, limit = 7) {
     const searchResult = await this.#provider?.search({ keyword, limit });
-    const normaizedKeyWord = normalizeTextCase(keyword);
+    const normalizedKeyWord = normalizeTextCase(keyword);
     const currentIndexInfo = searchResult?.find(res =>
       this.#isCurrentIndex(res.index),
     ) || {
@@ -61,14 +61,14 @@ export class PageSearcher {
       {
         group: this.#indexName,
         renderType: RenderType.Default,
-        result: this.#matchResultItem(normaizedKeyWord, currentIndexInfo),
+        result: this.#matchResultItem(normalizedKeyWord, currentIndexInfo),
       },
       ...(
         searchResult?.filter(res => !this.#isCurrentIndex(res.index)) || []
       ).map(res => ({
         group: res.index,
         renderType: RenderType.Default,
-        result: this.#matchResultItem(normaizedKeyWord, res),
+        result: this.#matchResultItem(normalizedKeyWord, res),
       })),
     ];
 
@@ -76,21 +76,26 @@ export class PageSearcher {
   }
 
   #matchResultItem(
-    normaizedKeyWord: string,
+    normalizedKeyWord: string,
     resultItem: NormalizedSearchResultItem,
   ) {
     const matchedResult: DefaultMatchResultItem[] = [];
     resultItem?.hits.forEach(item => {
       // Title Match
-      this.#matchTitle(item, normaizedKeyWord, matchedResult);
+      this.#matchTitle(item, normalizedKeyWord, matchedResult);
       // Header match
       const matchHeaderSet = this.#matchHeader(
         item,
-        normaizedKeyWord,
+        normalizedKeyWord,
         matchedResult,
       );
       // Content match
-      this.#matchContent(item, normaizedKeyWord, matchedResult, matchHeaderSet);
+      this.#matchContent(
+        item,
+        normalizedKeyWord,
+        matchedResult,
+        matchHeaderSet,
+      );
     });
     return matchedResult;
   }
@@ -197,9 +202,8 @@ export class PageSearcher {
     if (queryIndex === -1) {
       // In case fuzzy search
       // We get the matched content position from server response
-      const hightlightItems = (item as RemotePageInfo)._matchesPosition
-        ?.content;
-      if (!hightlightItems?.length) {
+      const highlightItems = (item as RemotePageInfo)._matchesPosition?.content;
+      if (!highlightItems?.length) {
         return;
       }
       const highlightStartIndex = (item as RemotePageInfo)._matchesPosition

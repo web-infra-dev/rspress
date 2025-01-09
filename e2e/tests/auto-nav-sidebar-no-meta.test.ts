@@ -1,7 +1,7 @@
-import { expect, test } from '@playwright/test';
 import path from 'node:path';
-import { getPort, killProcess, runDevCommand } from '../utils/runCommands';
+import { expect, test } from '@playwright/test';
 import { getSidebarTexts } from '../utils/getSideBar';
+import { getPort, killProcess, runDevCommand } from '../utils/runCommands';
 
 const fixtureDir = path.resolve(__dirname, '../fixtures');
 
@@ -44,9 +44,9 @@ test.describe('Auto nav and sidebar test', async () => {
       waitUntil: 'networkidle',
     });
 
-    const eles = await page.$$('h2 span');
+    const elements = await page.$$('h2 span');
 
-    const configDir = eles[1];
+    const configDir = elements[1];
     expect(await configDir.textContent()).toBe('config');
     await configDir.click();
     expect(page.url()).toBe(

@@ -1,6 +1,6 @@
 import type { PageFeedData } from '@rspress/plugin-rss';
-import { Helmet, usePageData } from 'rspress/runtime';
 import type { LinkHTMLAttributes } from 'react';
+import { Helmet, usePageData } from 'rspress/runtime';
 
 export default function FeedsAnnotations() {
   const { page } = usePageData();

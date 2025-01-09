@@ -223,7 +223,7 @@ RSS 的 ID，在多个 RSS 配置中唯一。同时也是该 RSS 文件的默认
 你可以传入一个函数来修改内置逻辑生成的数据，该数据会作为第一个参数传给你传入的这个函数。比如下方配置可以截断 RSS 中的文章内容：
 
 ```ts
-const item: FeedChannel['item'] = item => ({
+const item: FeedChannel['item'] = (item) => ({
   ...item,
   content: item.content.slice(0, 1000),
 });

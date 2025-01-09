@@ -1,8 +1,8 @@
-import { unified } from 'unified';
-import { describe, test, expect } from 'vitest';
+import rehypeStringify from 'rehype-stringify';
 import remarkParse from 'remark-parse';
 import remarkRehype from 'remark-rehype';
-import rehypeStringify from 'rehype-stringify';
+import { unified } from 'unified';
+import { describe, expect, test } from 'vitest';
 import { remarkPluginContainer } from '../src/remarkPlugin';
 
 describe('remark-container', () => {

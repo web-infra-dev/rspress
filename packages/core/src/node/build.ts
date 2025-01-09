@@ -1,32 +1,32 @@
 import { dirname, join } from 'node:path';
 import { pathToFileURL } from 'node:url';
-import type { HelmetData } from 'react-helmet-async';
-import chalk from '@rspress/shared/chalk';
-import fs from '@rspress/shared/fs-extra';
+import type { Route } from '@/node/route/RouteService';
+import { routeService } from '@/node/route/init';
 import {
   type PageData,
+  type SSGConfig,
   type UserConfig,
+  isDebugMode,
   normalizeSlash,
   withBase,
-  isDebugMode,
-  type SSGConfig,
 } from '@rspress/shared';
+import chalk from '@rspress/shared/chalk';
+import fs from '@rspress/shared/fs-extra';
 import { logger } from '@rspress/shared/logger';
+import type { HelmetData } from 'react-helmet-async';
+import { PluginDriver } from './PluginDriver';
 import {
-  OUTPUT_DIR,
   APP_HTML_MARKER,
-  HEAD_MARKER,
-  META_GENERATOR,
-  HTML_START_TAG,
   BODY_START_TAG,
+  HEAD_MARKER,
+  HTML_START_TAG,
+  META_GENERATOR,
+  OUTPUT_DIR,
   TEMP_DIR,
 } from './constants';
 import { initRsbuild } from './initRsbuild';
 import { writeSearchIndex } from './searchIndex';
-import { PluginDriver } from './PluginDriver';
-import type { Route } from '@/node/route/RouteService';
-import { routeService } from '@/node/route/init';
-import { renderFrontmatterHead, renderConfigHead } from './utils/renderHead';
+import { renderConfigHead, renderFrontmatterHead } from './utils/renderHead';
 
 interface BuildOptions {
   appDirectory: string;

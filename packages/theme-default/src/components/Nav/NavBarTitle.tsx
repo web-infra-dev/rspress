@@ -1,8 +1,8 @@
-import { useMemo } from 'react';
 import { normalizeImagePath, usePageData } from '@rspress/runtime';
 import { Link } from '@theme';
-import styles from './index.module.scss';
+import { useMemo } from 'react';
 import { useLocaleSiteData } from '../../logic';
+import styles from './index.module.scss';
 
 export const NavBarTitle = () => {
   const { siteData } = usePageData();

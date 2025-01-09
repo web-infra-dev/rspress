@@ -229,7 +229,7 @@ You can provide the `item` function to modify the generated data which will be p
 For example, the following configuration truncates the content of articles in the RSS:
 
 ```ts
-const item: FeedChannel['item'] = item => ({
+const item: FeedChannel['item'] = (item) => ({
   ...item,
   content: item.content.slice(0, 1000),
 });

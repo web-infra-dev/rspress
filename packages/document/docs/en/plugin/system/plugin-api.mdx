@@ -268,12 +268,12 @@ export function MyComponent() {
 
 ### addPages
 
-- Type: `(config: UserConfig) => AddtionalPage[] | Promise<AddtionalPage[]>`
+- Type: `(config: UserConfig) => AdditionalPage[] | Promise<AdditionalPage[]>`
 
-The `config` parameter is the `doc` config of `rspress.config.ts`, and the `AddtionalPage` type is defined as follows:
+The `config` parameter is the `doc` config of `rspress.config.ts`, and the `AdditionalPage` type is defined as follows:
 
 ```tsx
-interface AddtionalPage {
+interface AdditionalPage {
   routePath: string;
   filepath?: string;
   content?: string;

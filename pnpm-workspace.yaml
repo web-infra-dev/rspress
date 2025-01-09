@@ -1,9 +1,5 @@
 packages:
-  - 'apps/**'
-  - 'examples/**'
-  - 'services/**'
-  - 'features/**'
   - 'packages/**'
   - 'e2e/**'
   - '!**/tests/**'
-  - '!packages/create-rspress/template'
+  - '!packages/create-rspress/template-basic'

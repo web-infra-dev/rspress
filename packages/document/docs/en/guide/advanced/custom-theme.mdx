@@ -89,7 +89,7 @@ const Layout = () => (
     /* Bottom of the entire page */
     bottom={<div>bottom</div>}
     /* Custom MDX components */
-    components={{ p: props => <p {...props} className="my-4 leading-7" /> }}
+    components={{ p: (props) => <p {...props} className="my-4 leading-7" /> }}
   />
 );
 
@@ -139,7 +139,7 @@ If you want to modify the icons used in the default theme component individually
 ```bash
 └── theme
     └── assets
-        └── xx.svg
+        └── logo.svg
 ```
 
 You can view all the icons used in the default theme [here](https://github.com/web-infra-dev/rspress/tree/main/packages/theme-default/src/assets).

@@ -12,7 +12,7 @@ interface InitOptions {
 // eslint-disable-next-line import/no-mutable-exports
 export let routeService: RouteService | null = null;
 
-// The factory to create route serveice instance
+// The factory to create route service instance
 export async function initRouteService(options: InitOptions) {
   const { scanDir, config, runtimeTempDir, pluginDriver } = options;
   routeService = new RouteService(

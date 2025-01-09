@@ -1,5 +1,5 @@
-import { useEffect, useState } from 'react';
 import { useLocation, useVersion } from '@rspress/runtime';
+import { useEffect, useState } from 'react';
 import { useLocaleSiteData } from './useLocaleSiteData';
 
 export function useNavScreen() {

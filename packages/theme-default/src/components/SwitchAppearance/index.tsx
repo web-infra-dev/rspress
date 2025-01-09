@@ -1,10 +1,10 @@
-import { type MouseEvent, useContext } from 'react';
 import { ThemeContext } from '@rspress/runtime';
-import SunSvg from '@theme-assets/sun';
 import MoonSvg from '@theme-assets/moon';
-import { SvgWrapper } from '../SvgWrapper';
-import siteData from 'virtual-site-data';
+import SunSvg from '@theme-assets/sun';
+import { type MouseEvent, useContext } from 'react';
 import { flushSync } from 'react-dom';
+import siteData from 'virtual-site-data';
+import { SvgWrapper } from '../SvgWrapper';
 import './index.scss';
 
 const supportAppearanceTransition = () => {

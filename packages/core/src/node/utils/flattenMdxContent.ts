@@ -1,12 +1,12 @@
 import path from 'node:path';
+import { createProcessor } from '@mdx-js/mdx';
+import { MDX_REGEXP } from '@rspress/shared';
 import fs from '@rspress/shared/fs-extra';
 import enhancedResolve from 'enhanced-resolve';
-import { MDX_REGEXP } from '@rspress/shared';
-import { createProcessor } from '@mdx-js/mdx';
 import { importStatementRegex } from '../constants';
 
-import type { Root } from 'hast';
 import type { Resolver } from 'enhanced-resolve';
+import type { Root } from 'hast';
 
 let resolver: Resolver;
 let startFlatten = false;

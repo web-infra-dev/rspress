@@ -1,18 +1,18 @@
-import { useEffect, useRef } from 'react';
-import { disableBodyScroll, clearAllBodyScrollLocks } from 'body-scroll-lock';
-import type { NavItem, DefaultThemeConfig } from '@rspress/shared';
-import type { SiteData } from '@rspress/shared';
 import { NoSSR } from '@rspress/runtime';
+import type { DefaultThemeConfig, NavItem } from '@rspress/shared';
+import type { SiteData } from '@rspress/shared';
+import { clearAllBodyScrollLocks, disableBodyScroll } from 'body-scroll-lock';
+import { useEffect, useRef } from 'react';
+import { useNavData } from '../../logic/useNav';
 import { NavMenuSingleItem } from '../Nav/NavMenuSingleItem';
-import { SwitchAppearance } from '../SwitchAppearance';
-import { SocialLinks } from '../SocialLinks';
 import {
   useTranslationMenuData,
   useVersionMenuData,
 } from '../Nav/menuDataHooks';
+import { SocialLinks } from '../SocialLinks';
+import { SwitchAppearance } from '../SwitchAppearance';
 import { NavScreenMenuGroup } from './NavScreenMenuGroup';
 import styles from './index.module.scss';
-import { useNavData } from '../../logic/useNav';
 
 interface Props {
   isScreenOpen: boolean;

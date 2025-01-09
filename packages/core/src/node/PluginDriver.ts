@@ -1,11 +1,11 @@
+import { pluginContainerSyntax } from '@rspress/plugin-container-syntax';
 import type {
-  UserConfig,
   PageIndexInfo,
-  RspressPlugin,
   RouteMeta,
+  RspressPlugin,
+  UserConfig,
 } from '@rspress/shared';
 import { isDevDebugMode } from '@rspress/shared';
-import { pluginContainerSyntax } from '@rspress/plugin-container-syntax';
 
 export class PluginDriver {
   #config: UserConfig;
@@ -55,7 +55,7 @@ export class PluginDriver {
 
     if (isDevDebugMode()) {
       const SourceBuildPlugin = await import(
-        // @ts-expect-error need moduleResolution: Node16, NodeNext or Bundler to get type declerations work
+        // @ts-expect-error need moduleResolution: Node16, NodeNext or Bundler to get type declarations work
         '@rspress/theme-default/node/source-build-plugin.js'
       ).then(
         r => r.SourceBuildPlugin,
@@ -230,7 +230,7 @@ export class PluginDriver {
     );
   }
 
-  _runSerialAysncHook(hookName: string, ...args: unknown[]) {
+  _runSerialAsyncHook(hookName: string, ...args: unknown[]) {
     return this.#plugins.reduce(async (prev, plugin) => {
       if (typeof plugin[hookName] === 'function') {
         await prev;

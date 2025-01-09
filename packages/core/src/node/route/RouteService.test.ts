@@ -1,5 +1,5 @@
 import path from 'node:path';
-import { expect, describe, test } from 'vitest';
+import { describe, expect, test } from 'vitest';
 import { PluginDriver } from '../PluginDriver';
 import { normalizePath } from '../utils';
 import { RouteService, normalizeRoutePath } from './RouteService';

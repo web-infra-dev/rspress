@@ -9,19 +9,31 @@
     "directory": "packages/plugin-last-updated"
   },
   "license": "MIT",
+  "sideEffects": [
+    "*.css",
+    "*.less",
+    "*.sass",
+    "*.scss"
+  ],
   "type": "module",
-  "jsnext:source": "./src/index.ts",
-  "types": "./dist/index.d.ts",
   "main": "./dist/index.js",
   "module": "./dist/node/index.js",
+  "types": "./dist/index.d.ts",
+  "files": [
+    "dist",
+    "shiki.css"
+  ],
   "scripts": {
-    "dev": "rslib build -w",
     "build": "rslib build",
+    "dev": "rslib build -w",
     "reset": "rimraf ./**/node_modules",
     "test": "vitest run --passWithNoTests"
   },
-  "engines": {
-    "node": ">=14.17.6"
+  "dependencies": {
+    "@rspress/shared": "workspace:*",
+    "hast-util-from-html": "2.0.3",
+    "shiki": "0.14.7",
+    "unist-util-visit": "5.0.0"
   },
   "devDependencies": {
     "@microsoft/api-extractor": "^7.48.1",
@@ -36,25 +48,13 @@
     "unified": "^10.1.2",
     "vitest": "2.1.8"
   },
-  "sideEffects": [
-    "*.css",
-    "*.less",
-    "*.sass",
-    "*.scss"
-  ],
-  "files": [
-    "dist",
-    "shiki.css"
-  ],
+  "engines": {
+    "node": ">=14.17.6"
+  },
   "publishConfig": {
     "access": "public",
     "provenance": true,
     "registry": "https://registry.npmjs.org/"
   },
-  "dependencies": {
-    "@rspress/shared": "workspace:*",
-    "hast-util-from-html": "2.0.3",
-    "shiki": "0.14.7",
-    "unist-util-visit": "5.0.0"
-  }
+  "jsnext:source": "./src/index.ts"
 }

@@ -1,4 +1,3 @@
-import { useState } from 'react';
 import {
   type NavItem,
   type NavItemWithChildren,
@@ -6,10 +5,11 @@ import {
   type NavItemWithLinkAndChildren,
   withoutBase,
 } from '@rspress/shared';
-import Down from '@theme-assets/down';
 import { Link, Tag } from '@theme';
-import { NavMenuSingleItem } from './NavMenuSingleItem';
+import Down from '@theme-assets/down';
+import { useState } from 'react';
 import { SvgWrapper } from '../SvgWrapper';
+import { NavMenuSingleItem } from './NavMenuSingleItem';
 
 export interface NavMenuGroupItem {
   text?: string | React.ReactElement;
@@ -18,7 +18,7 @@ export interface NavMenuGroupItem {
   tag?: string;
   // Design for i18n highlight.
   activeValue?: string;
-  // Currrnt pathname.
+  // Current pathname.
   pathname?: string;
   // Base path.
   base?: string;

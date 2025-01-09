@@ -1,13 +1,13 @@
+import fs from 'node:fs';
 import path from 'node:path';
 import type { RspressPlugin } from '@rspress/shared';
-import fs from 'node:fs';
+import { apiDocMap } from './constants';
+import { docgen } from './docgen';
 import type {
+  ExtendedPageData,
   PluginOptions,
   SupportLanguages,
-  ExtendedPageData,
 } from './types';
-import { docgen } from './docgen';
-import { apiDocMap } from './constants';
 
 /**
  * The plugin is used to generate api doc for files.

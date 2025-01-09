@@ -1,42 +1,42 @@
 {
-  "$schema": "https://docs.renovatebot.com/renovate-schema.json",
-  "extends": ["config:recommended", "schedule:weekly"],
-  "packageRules": [
+  $schema: 'https://docs.renovatebot.com/renovate-schema.json',
+  extends: ['config:recommended', 'schedule:weekly'],
+  packageRules: [
     // Use chore as semantic commit type for commit messages
     {
-      "matchPackagePatterns": ["*"],
-      "semanticCommitType": "chore",
+      matchPackagePatterns: ['*'],
+      semanticCommitType: 'chore',
       // always bump package.json
-      "rangeStrategy": "bump"
+      rangeStrategy: 'bump',
     },
     {
-      "groupName": "rsbuild",
-      "packagePatterns": ["rsbuild"],
-      "groupSlug": "rsbuild"
+      groupName: 'rsbuild',
+      packagePatterns: ['rsbuild'],
+      groupSlug: 'rsbuild',
     },
     {
-      "groupName": "modern-js",
-      "packagePatterns": ["modern-js"],
-      "groupSlug": "modern-js"
+      groupName: 'modern-js',
+      packagePatterns: ['modern-js'],
+      groupSlug: 'modern-js',
     },
     {
-      "groupName": "all patch dependencies",
-      "groupSlug": "all-patch",
-      "matchPackagePatterns": ["*"],
-      "matchUpdateTypes": ["patch"]
+      groupName: 'all patch dependencies',
+      groupSlug: 'all-patch',
+      matchPackagePatterns: ['*'],
+      matchUpdateTypes: ['patch'],
     },
     // manually update peer dependencies
     {
-      "depTypeList": ["peerDependencies"],
-      "enabled": false
-    }
+      depTypeList: ['peerDependencies'],
+      enabled: false,
+    },
   ],
-  "ignoreDeps": [
+  ignoreDeps: [
     // manually updating
-    "typescript",
+    'typescript',
     // align Node.js version minimum requirements
-    "@types/node",
-    "node",
-    "pnpm"
-  ]
+    '@types/node',
+    'node',
+    'pnpm',
+  ],
 }

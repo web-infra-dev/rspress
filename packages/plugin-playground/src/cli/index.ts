@@ -1,16 +1,16 @@
 import path, { join } from 'node:path';
-import type { RouteMeta, RspressPlugin } from '@rspress/shared';
-import { RspackVirtualModulePlugin } from 'rspack-plugin-virtual-module';
-import type {
-  loader,
-  EditorProps as MonacoEditorProps,
-} from '@monaco-editor/react';
-import type { Code } from 'mdast';
-import { staticPath } from './constant';
-import { getNodeAttribute, parseImports } from './utils';
-import { remarkPlugin } from './remarkPlugin';
 import { DEFAULT_BABEL_URL, DEFAULT_MONACO_URL } from '@/web/constant';
 import { normalizeUrl } from '@/web/utils';
+import type {
+  EditorProps as MonacoEditorProps,
+  loader,
+} from '@monaco-editor/react';
+import type { RouteMeta, RspressPlugin } from '@rspress/shared';
+import type { Code } from 'mdast';
+import { RspackVirtualModulePlugin } from 'rspack-plugin-virtual-module';
+import { staticPath } from './constant';
+import { remarkPlugin } from './remarkPlugin';
+import { getNodeAttribute, parseImports } from './utils';
 
 interface PlaygroundOptions {
   render: string;

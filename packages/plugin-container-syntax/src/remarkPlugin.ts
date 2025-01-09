@@ -12,16 +12,16 @@
  * So the plugin is used to solve the problem and support both syntaxes in above cases.
  */
 
-import type { Plugin } from 'unified';
 import type {
-  Root,
-  Content,
-  Parent,
   BlockContent,
-  PhrasingContent,
-  Paragraph,
+  Content,
   Literal,
+  Paragraph,
+  Parent,
+  PhrasingContent,
+  Root,
 } from 'mdast';
+import type { Plugin } from 'unified';
 
 export const DIRECTIVE_TYPES = [
   'tip',
@@ -135,12 +135,12 @@ function transformer(tree: Root) {
        * </div>
        */
       if (node.type === 'blockquote' && node.children[0].type === 'paragraph') {
-        const initiaterTag: string =
+        const initiatorTag: string =
           // @ts-expect-error `value` is treated like `data`, but type expects `data`
           node.children[0].children[0].value;
 
-        if (REGEX_GH_BEGIN.test(initiaterTag)) {
-          const match = initiaterTag.match(REGEX_GH_BEGIN);
+        if (REGEX_GH_BEGIN.test(initiatorTag)) {
+          const match = initiatorTag.match(REGEX_GH_BEGIN);
           const [, type] = match!;
           if (!DIRECTIVE_TYPES.includes(type.toLowerCase() as DirectiveType)) {
             i++;
@@ -152,7 +152,7 @@ function transformer(tree: Root) {
           ) {
             // @ts-expect-error `value` is treated like `data`, but type expects `data`
             node.children[0].children[0].value =
-              initiaterTag!.match(REGEX_GH_BEGIN)![2]! ?? '';
+              initiatorTag!.match(REGEX_GH_BEGIN)![2]! ?? '';
           }
           const newChild = createContainer(
             type.toLowerCase(),
@@ -299,7 +299,7 @@ function transformer(tree: Root) {
           }
           const lastChild =
             currentParagraph.children[currentParagraph.children.length - 1];
-          // The whole paragrph doesn't arrive at the end of the container directive, we collect the whole paragraph
+          // The whole paragraph doesn't arrive at the end of the container directive, we collect the whole paragraph
           if (
             lastChild !== firstTextNode &&
             (lastChild.type !== 'text' || !REGEX_END.test(lastChild.value))

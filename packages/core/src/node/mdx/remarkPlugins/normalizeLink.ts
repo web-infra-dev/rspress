@@ -1,10 +1,10 @@
 import path from 'node:path';
-import type { Plugin } from 'unified';
-import { visit } from 'unist-util-visit';
+import { getASTNodeImport } from '@/node/utils/getASTNodeImport';
+import { isExternalUrl, normalizeHref, parseUrl, slash } from '@rspress/shared';
 import type { Root } from 'mdast';
 import type { MdxjsEsm } from 'mdast-util-mdxjs-esm';
-import { normalizeHref, parseUrl, isExternalUrl, slash } from '@rspress/shared';
-import { getASTNodeImport } from '@/node/utils/getASTNodeImport';
+import type { Plugin } from 'unified';
+import { visit } from 'unist-util-visit';
 
 interface LinkNode {
   type: string;
@@ -69,7 +69,7 @@ export const remarkPluginNormalizeLink: Plugin<
       return imageUrl;
     };
 
-    const getMdxSrcAttrbute = (tempVar: string) => {
+    const getMdxSrcAttribute = (tempVar: string) => {
       return {
         type: 'mdxJsxAttribute',
         name: 'src',
@@ -118,7 +118,7 @@ export const remarkPluginNormalizeLink: Plugin<
             name: 'alt',
             value: node.alt,
           },
-          getMdxSrcAttrbute(tempVariableName),
+          getMdxSrcAttribute(tempVariableName),
         ].filter(Boolean),
       });
 
@@ -145,7 +145,7 @@ export const remarkPluginNormalizeLink: Plugin<
 
       const tempVariableName = `image${images.length}`;
 
-      Object.assign(src, getMdxSrcAttrbute(tempVariableName));
+      Object.assign(src, getMdxSrcAttribute(tempVariableName));
 
       images.push(getASTNodeImport(tempVariableName, imagePath));
     });

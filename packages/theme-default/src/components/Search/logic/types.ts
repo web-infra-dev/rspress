@@ -5,7 +5,7 @@ export const enum RenderType {
   Custom = 'custom',
 }
 
-export interface HightlightInfo {
+export interface HighlightInfo {
   start: number;
   length: number;
 }
@@ -15,7 +15,7 @@ interface CommonMatchResult {
   header: string;
   link: string;
   query: string;
-  highlightInfoList: HightlightInfo[];
+  highlightInfoList: HighlightInfo[];
   group: string;
 }
 

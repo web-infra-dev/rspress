@@ -1,17 +1,17 @@
-import { useMemo, useState } from 'react';
 import { MDXProvider } from '@mdx-js/react';
+import { Content, NoSSR, usePageData } from '@rspress/runtime';
+import { Overview, ScrollToTop, getCustomMDXComponent } from '@theme';
 import { slug } from 'github-slugger';
-import { getCustomMDXComponent, ScrollToTop, Overview } from '@theme';
-import { Content, usePageData, NoSSR } from '@rspress/runtime';
+import { useMemo, useState } from 'react';
 import { Aside } from '../../components/Aside';
 import { DocFooter } from '../../components/DocFooter';
-import { useLocaleSiteData } from '../../logic';
 import { SideMenu } from '../../components/LocalSideBar';
+import { useLocaleSiteData } from '../../logic';
 import { TabDataContext } from '../../logic/TabDataContext';
-import styles from './index.module.scss';
 import type { UISwitchResult } from '../../logic/useUISwitch';
-import { H1 } from './docComponents/title';
 import { A } from './docComponents/link';
+import { H1 } from './docComponents/title';
+import styles from './index.module.scss';
 
 export interface DocLayoutProps {
   beforeSidebar?: React.ReactNode;

@@ -1,9 +1,9 @@
 import { dirname, join, resolve } from 'node:path';
-import { visit } from 'unist-util-visit';
-import fs from '@rspress/shared/fs-extra';
 import type { RouteMeta } from '@rspress/shared';
-import type { Plugin } from 'unified';
+import fs from '@rspress/shared/fs-extra';
 import type { Root } from 'mdast';
+import type { Plugin } from 'unified';
+import { visit } from 'unist-util-visit';
 import { getNodeAttribute, getNodeMeta } from './utils';
 
 function createPlaygroundNode(

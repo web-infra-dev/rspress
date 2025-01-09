@@ -2,8 +2,8 @@ import {
   normalizeHrefInRuntime as normalizeHref,
   usePageData,
 } from '@rspress/runtime';
+import { EditLink, LastUpdated, PrevNextPage } from '@theme';
 import { useLocaleSiteData, usePrevNextPage } from '../../logic';
-import { LastUpdated, PrevNextPage, EditLink } from '@theme';
 import styles from './index.module.scss';
 
 export function DocFooter() {

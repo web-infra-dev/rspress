@@ -1,5 +1,5 @@
-import fs from '@rspress/shared/fs-extra';
 import path from 'node:path';
+import fs from '@rspress/shared/fs-extra';
 
 async function patchLinks(outputDir: string) {
   // Patch links in markdown files
@@ -7,7 +7,7 @@ async function patchLinks(outputDir: string) {
   // replace
   // 1. [foo](bar) -> [foo](./bar)
   // 2. [foo](./bar) -> [foo](./bar) no change
-  const normlizeLinksInFile = async (filePath: string) => {
+  const normalizeLinksInFile = async (filePath: string) => {
     const content = await fs.readFile(filePath, 'utf-8');
     // 1. [foo](bar) -> [foo](./bar)
     const newContent = content.replace(
@@ -36,7 +36,7 @@ async function patchLinks(outputDir: string) {
           return traverse(filePath);
         }
         if (stat.isFile() && /\.mdx?/.test(file)) {
-          return normlizeLinksInFile(filePath);
+          return normalizeLinksInFile(filePath);
         }
       }),
     );

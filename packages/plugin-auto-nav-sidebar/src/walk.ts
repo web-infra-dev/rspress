@@ -1,23 +1,23 @@
 import path, { join } from 'node:path';
-import fs from '@rspress/shared/fs-extra';
 import {
   type NavItem,
   type Sidebar,
+  type SidebarDivider,
   type SidebarGroup,
   type SidebarItem,
-  type SidebarDivider,
+  type SidebarSectionHeader,
+  isExternalUrl,
   slash,
   withBase,
-  isExternalUrl,
-  type SidebarSectionHeader,
 } from '@rspress/shared';
+import fs from '@rspress/shared/fs-extra';
+import { logger } from '@rspress/shared/logger';
 import type { NavMeta, SideMeta } from './type';
 import {
   detectFilePath,
   extractInfoFromFrontmatter,
   extractInfoFromFrontmatterWithRealPath,
 } from './utils';
-import { logger } from '@rspress/shared/logger';
 
 function getHmrFileKey(realPath: string | undefined, docsDir: string) {
   return realPath

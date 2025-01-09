@@ -1,5 +1,5 @@
+import { isEqualPath, useLocation, withBase } from '@rspress/runtime';
 import type { NormalizedSidebarGroup, SidebarItem } from '@rspress/shared';
-import { useLocation, withBase, isEqualPath } from '@rspress/runtime';
 import { useSidebarData } from './useSidebarData';
 
 export function usePrevNextPage() {

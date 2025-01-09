@@ -1,44 +1,34 @@
 {
+  "name": "rspress-monorepo",
   "private": true,
-  "name": "monorepo",
   "scripts": {
+    "build": "cross-env NX_DAEMON=false NX_REJECT_UNKNOWN_LOCAL_CACHE=0 nx run-many -t build --exclude @rspress-fixture/* --exclude @rspress/docs",
+    "build:website": "cross-env NX_DAEMON=false NX_REJECT_UNKNOWN_LOCAL_CACHE=0 nx run @rspress/docs:build",
     "change": "changeset",
     "changeset": "changeset",
-    "prepare": "pnpm run build && husky",
-    "generate-release-pr": "zx scripts/generateReleasePr.mjs",
-    "check-spell": "npx cspell",
     "check-dependency-version": "check-dependency-version-consistency . --dep-type devDependencies",
+    "check-spell": "npx cspell",
     "dev": "cross-env NX_DAEMON=false NX_REJECT_UNKNOWN_LOCAL_CACHE=0 nx run-many -t dev --exclude @rspress-fixture/* --exclude @rspress/docs",
-    "build": "cross-env NX_DAEMON=false NX_REJECT_UNKNOWN_LOCAL_CACHE=0 nx run-many -t build --exclude @rspress-fixture/* --exclude @rspress/docs",
-    "test": "pnpm test:unit && pnpm test:e2e",
-    "test:unit": "cross-env NX_DAEMON=false NX_REJECT_UNKNOWN_LOCAL_CACHE=0 nx run-many -t test --exclude @rspress-fixture/*",
-    "test:e2e": "playwright test",
-    "lint": "biome lint . --diagnostic-level=warn",
     "dev:website": "cross-env NX_DAEMON=false NX_REJECT_UNKNOWN_LOCAL_CACHE=0 nx run @rspress/docs:dev",
-    "build:website": "cross-env NX_DAEMON=false NX_REJECT_UNKNOWN_LOCAL_CACHE=0 nx run @rspress/docs:build",
+    "format": "prettier . --write && biome check --write",
+    "generate-release-pr": "zx scripts/generateReleasePr.mjs",
+    "lint": "biome check . --diagnostic-level=warn && prettier . --check && pnpm run check-spell",
+    "prepare": "pnpm run build && husky",
     "preview:website": "cd packages/document && npm run preview",
+    "test": "pnpm test:unit && pnpm test:e2e",
+    "test:e2e": "playwright test",
+    "test:unit": "cross-env NX_DAEMON=false NX_REJECT_UNKNOWN_LOCAL_CACHE=0 nx run-many -t test --exclude @rspress-fixture/*",
     "update:modern": "npx taze minor --include /modern-js/ -w -r -l",
-    "update:rsbuild": "npx taze minor --include /rsbuild/ -w -r -l",
-    "format": "biome format --write ./packages"
+    "update:rsbuild": "npx taze minor --include /rsbuild/ -w -r -l"
   },
-  "engines": {
-    "node": ">=16.18.1"
-  },
-  "packageManager": "pnpm@10.0.0",
   "lint-staged": {
-    "*.{ts,tsx,js,jsx,mjs,cjs}": [
-      "biome check . --apply --organize-imports-enabled=false --no-errors-on-unmatched"
+    "*.{md,mdx,css,less,scss,json,jsonc,json5}": "prettier --write",
+    "*.{js,jsx,ts,tsx,mjs,cjs}": [
+      "biome check --write"
     ],
     "package.json": [
-      "pnpm run check-dependency-version"
-    ]
-  },
-  "workspaces": {
-    "packages": [
-      "apps/*",
-      "examples/*",
-      "features/*",
-      "packages/*"
+      "pnpm run check-dependency-version",
+      "prettier --write"
     ]
   },
   "devDependencies": {
@@ -62,9 +52,14 @@
     "nx": "20.3.0",
     "playwright": "1.47.2",
     "prettier": "3.4.2",
+    "prettier-plugin-packagejson": "^2.5.6",
     "tree-kill": "^1.2.2",
     "vitest": "2.1.8",
     "zx": "^8.3.0"
+  },
+  "packageManager": "pnpm@10.0.0",
+  "engines": {
+    "node": ">=16.18.1"
   },
   "publishConfig": {
     "access": "public",

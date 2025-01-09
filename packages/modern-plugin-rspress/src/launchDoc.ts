@@ -1,11 +1,11 @@
-import { join, relative, resolve } from 'node:path';
 import fs from 'node:fs';
-import fastGlob from 'fast-glob';
-import { pluginPreview } from '@rspress/plugin-preview';
-import type { UserConfig, Sidebar, SidebarGroup } from '@rspress/core';
+import { join, relative, resolve } from 'node:path';
+import type { Sidebar, SidebarGroup, UserConfig } from '@rspress/core';
 import { pluginApiDocgen } from '@rspress/plugin-api-docgen';
-import { mergeModuleDocConfig } from './utils';
+import { pluginPreview } from '@rspress/plugin-preview';
+import fastGlob from 'fast-glob';
 import type { PluginOptions } from './types';
+import { mergeModuleDocConfig } from './utils';
 
 export async function launchDoc({
   appDir,

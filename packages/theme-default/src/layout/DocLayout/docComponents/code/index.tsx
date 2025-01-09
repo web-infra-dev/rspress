@@ -1,11 +1,11 @@
-import { useRef, useState } from 'react';
 import { usePageData } from '@rspress/runtime';
 import IconWrap from '@theme-assets/wrap';
 import IconWrapped from '@theme-assets/wrapped';
-import styles from './index.module.scss';
-import { PrismSyntaxHighlighter } from './PrismSytaxHighlighter';
-import { CopyCodeButton } from './CopyCodeButton';
+import { useRef, useState } from 'react';
 import { SvgWrapper } from '../../../../components/SvgWrapper';
+import { CopyCodeButton } from './CopyCodeButton';
+import { PrismSyntaxHighlighter } from './PrismSyntaxHighlighter';
+import styles from './index.module.scss';
 
 export interface CodeProps {
   children: string;

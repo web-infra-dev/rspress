@@ -9,17 +9,18 @@
     "directory": "packages/plugin-preview"
   },
   "license": "MIT",
-  "jsnext:source": "./src/index.ts",
-  "types": "./dist/index.d.ts",
   "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "files": [
+    "dist",
+    "static",
+    "mdx-meta-loader.cjs"
+  ],
   "scripts": {
-    "dev": "modern build -w",
     "build": "modern build",
+    "dev": "modern build -w",
     "reset": "rimraf ./**/node_modules",
     "test": "vitest run --passWithNoTests"
-  },
-  "engines": {
-    "node": ">=14.17.6"
   },
   "dependencies": {
     "@rsbuild/core": "~1.1.13",
@@ -48,18 +49,17 @@
     "unist-util-visit": "^4.1.2"
   },
   "peerDependencies": {
+    "@rspress/core": "workspace:^1.39.3",
     "react": ">=17.0.0",
-    "react-router-dom": "^6.8.1",
-    "@rspress/core": "workspace:^1.39.3"
+    "react-router-dom": "^6.8.1"
   },
-  "files": [
-    "dist",
-    "static",
-    "mdx-meta-loader.cjs"
-  ],
+  "engines": {
+    "node": ">=14.17.6"
+  },
   "publishConfig": {
     "access": "public",
     "provenance": true,
     "registry": "https://registry.npmjs.org/"
-  }
+  },
+  "jsnext:source": "./src/index.ts"
 }

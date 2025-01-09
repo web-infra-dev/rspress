@@ -1,6 +1,6 @@
 import Empty from '@theme-assets/empty';
-import { SvgWrapper } from '../SvgWrapper';
 import { useLocaleSiteData } from '../../logic';
+import { SvgWrapper } from '../SvgWrapper';
 
 export function NoSearchResult({ query }: { query: string }) {
   const {

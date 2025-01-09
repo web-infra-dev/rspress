@@ -1,4 +1,4 @@
-import { moduleTools, defineConfig } from '@modern-js/module-tools';
+import { defineConfig, moduleTools } from '@modern-js/module-tools';
 import { modulePluginDoc } from '@rspress/modern-js-plugin';
 
 export default defineConfig({

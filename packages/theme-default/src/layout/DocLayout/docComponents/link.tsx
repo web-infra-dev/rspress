@@ -1,7 +1,7 @@
-import type { ComponentProps } from 'react';
-import styles from './index.module.scss';
 import { Link } from '@theme';
+import type { ComponentProps } from 'react';
 import { usePathUtils } from '../../../logic';
+import styles from './index.module.scss';
 
 export const A = (props: ComponentProps<'a'>) => {
   const { href = '', className = '' } = props;

@@ -1,14 +1,14 @@
+import type { RsbuildPlugin } from '@rsbuild/core';
 import type { UserConfig } from '@rspress/shared';
 import { RspackVirtualModulePlugin } from 'rspack-plugin-virtual-module';
-import type { RsbuildPlugin } from '@rsbuild/core';
-import type { RouteService } from '../route/RouteService';
 import type { PluginDriver } from '../PluginDriver';
-import { routeVMPlugin } from './routeData';
-import { siteDataVMPlugin } from './siteData/index';
-import { i18nVMPlugin } from './i18n';
-import { globalUIComponentsVMPlugin } from './globalUIComponents';
+import type { RouteService } from '../route/RouteService';
 import { globalStylesVMPlugin } from './globalStyles';
+import { globalUIComponentsVMPlugin } from './globalUIComponents';
+import { i18nVMPlugin } from './i18n';
+import { routeVMPlugin } from './routeData';
 import { searchHookVMPlugin } from './searchHooks';
+import { siteDataVMPlugin } from './siteData/index';
 
 export interface FactoryContext {
   userDocRoot: string;

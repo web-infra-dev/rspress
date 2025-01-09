@@ -1,20 +1,20 @@
-import { useEffect, useState } from 'react';
+import { matchRoutes, removeBase, useLocation } from '@rspress/runtime';
 import {
+  type SidebarDivider as ISidebarDivider,
+  type SidebarItem as ISidebarItem,
+  type SidebarSectionHeader as ISidebarSectionHeader,
+  type NormalizedSidebarGroup,
   inBrowser,
   normalizeSlash,
-  type NormalizedSidebarGroup,
-  type SidebarItem as ISidebarItem,
-  type SidebarDivider as ISidebarDivider,
-  type SidebarSectionHeader as ISidebarSectionHeader,
 } from '@rspress/shared';
+import { useEffect, useState } from 'react';
 import { routes } from 'virtual-routes';
-import { matchRoutes, useLocation, removeBase } from '@rspress/runtime';
 import { isActive, useLocaleSiteData, useSidebarData } from '../../logic';
 
-import { SidebarItem } from './SidebarItem';
+import type { UISwitchResult } from '../../logic/useUISwitch';
 import { NavBarTitle } from '../Nav/NavBarTitle';
 import { SidebarDivider } from './SidebarDivider';
-import type { UISwitchResult } from '../../logic/useUISwitch';
+import { SidebarItem } from './SidebarItem';
 import { SidebarSectionHeader } from './SidebarSectionHeader';
 
 import styles from './index.module.scss';

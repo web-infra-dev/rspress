@@ -1,20 +1,20 @@
-import type React from 'react';
-import { useEffect, useRef } from 'react';
-import type { NormalizedSidebarGroup } from '@rspress/shared';
 import {
-  useNavigate,
   normalizeHrefInRuntime as normalizeHref,
+  useNavigate,
   withBase,
 } from '@rspress/runtime';
-import ArrowRight from '@theme-assets/arrow-right';
+import type { NormalizedSidebarGroup } from '@rspress/shared';
 import { Tag } from '@theme';
-import styles from './index.module.scss';
-import { SidebarItem as SidebarItemComp } from './SidebarItem';
-import { SidebarDivider } from './SidebarDivider';
-import { highlightTitleStyle, type SidebarItemProps } from '.';
-import { isSidebarDivider } from './utils';
-import { SvgWrapper } from '../SvgWrapper';
+import ArrowRight from '@theme-assets/arrow-right';
+import type React from 'react';
+import { useEffect, useRef } from 'react';
+import { type SidebarItemProps, highlightTitleStyle } from '.';
 import { renderInlineMarkdown } from '../../logic';
+import { SvgWrapper } from '../SvgWrapper';
+import { SidebarDivider } from './SidebarDivider';
+import { SidebarItem as SidebarItemComp } from './SidebarItem';
+import styles from './index.module.scss';
+import { isSidebarDivider } from './utils';
 
 export function SidebarGroup(props: SidebarItemProps) {
   const { item, depth = 0, activeMatcher, id, setSidebarData } = props;

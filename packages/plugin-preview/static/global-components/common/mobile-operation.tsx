@@ -1,6 +1,6 @@
-import { useCallback, useEffect, useRef, useState } from 'react';
-import { QRCodeSVG } from 'qrcode.react';
 import { useLang } from '@rspress/core/runtime';
+import { QRCodeSVG } from 'qrcode.react';
+import { useCallback, useEffect, useRef, useState } from 'react';
 import IconLaunch from '../icons/Launch';
 import IconQrcode from '../icons/Qrcode';
 import IconRefresh from '../icons/Refresh';

@@ -1,9 +1,9 @@
 import {
-  isExternalUrl,
-  type NormalizedSidebarGroup,
-  type SidebarItem as ISidebarItem,
   type SidebarDivider as ISidebarDivider,
+  type SidebarItem as ISidebarItem,
   type SidebarSectionHeader as ISidebarSectionHeader,
+  type NormalizedSidebarGroup,
+  isExternalUrl,
 } from '@rspress/shared';
 
 export const isSidebarDivider = (

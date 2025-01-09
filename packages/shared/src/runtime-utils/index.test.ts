@@ -1,13 +1,13 @@
-import { test, expect, describe } from 'vitest';
+import { describe, expect, test } from 'vitest';
 import {
-  withoutLang,
+  normalizeHref,
+  normalizePosixPath,
+  parseUrl,
+  replaceLang,
+  replaceVersion,
   withBase,
   withoutBase,
-  normalizeHref,
-  replaceLang,
-  parseUrl,
-  normalizePosixPath,
-  replaceVersion,
+  withoutLang,
 } from '.';
 
 describe('test shared utils', () => {
@@ -22,7 +22,7 @@ describe('test shared utils', () => {
     expect(withBase('/guide/', '')).toBe('/guide/');
   });
 
-  test('mutiple withBase', () => {
+  test('multiple withBase', () => {
     const base = '/my-base/';
     const firstResult = withBase('/guide/', base);
     const secondResult = withBase(firstResult, base);

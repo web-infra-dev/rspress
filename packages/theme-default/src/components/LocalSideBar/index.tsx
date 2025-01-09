@@ -1,8 +1,8 @@
-import { Fragment, useEffect, useRef, useState } from 'react';
 import { useLocation } from '@rspress/runtime';
-import MenuIcon from '@theme-assets/menu';
-import ArrowRight from '@theme-assets/arrow-right';
 import { Sidebar, Toc } from '@theme';
+import ArrowRight from '@theme-assets/arrow-right';
+import MenuIcon from '@theme-assets/menu';
+import { Fragment, useEffect, useRef, useState } from 'react';
 import './index.scss';
 import type { UISwitchResult } from '../../logic/useUISwitch';
 import { SvgWrapper } from '../SvgWrapper';

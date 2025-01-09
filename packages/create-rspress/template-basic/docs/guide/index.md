@@ -191,7 +191,7 @@ console.log(b);
 ```
 ````
 
-**Ouput:**
+**Output:**
 
 ```js title="hello.js" {1,3-5}
 console.log('Hello World');

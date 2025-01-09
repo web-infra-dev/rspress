@@ -1,8 +1,8 @@
 import Github from '@theme-assets/github';
 import Gitlab from '@theme-assets/gitlab';
 import { useLocaleSiteData } from '../../logic';
-import styles from './index.module.scss';
 import { SvgWrapper } from '../SvgWrapper';
+import styles from './index.module.scss';
 
 interface SourceCodeProps {
   href: string;

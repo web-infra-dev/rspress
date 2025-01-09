@@ -1,5 +1,5 @@
-import { replaceLang, replaceVersion } from '@rspress/shared';
 import { useLocation, usePageData, useVersion } from '@rspress/runtime';
+import { replaceLang, replaceVersion } from '@rspress/shared';
 import Translator from '@theme-assets/translator';
 import { SvgWrapper } from '../SvgWrapper';
 

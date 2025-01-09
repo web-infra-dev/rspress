@@ -1,6 +1,6 @@
 import type { CliPlugin, ModuleTools } from '@modern-js/module-tools';
+import { launchDoc } from './launchDoc';
 import type { PluginOptions } from './types';
-import { launchDoc } from './lanchDoc';
 
 export const modulePluginDoc = (
   pluginOptions?: PluginOptions,

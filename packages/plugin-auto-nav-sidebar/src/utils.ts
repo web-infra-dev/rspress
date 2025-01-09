@@ -1,6 +1,6 @@
 import path from 'node:path';
-import fs from '@rspress/shared/fs-extra';
 import type { NavItem, Sidebar } from '@rspress/shared';
+import fs from '@rspress/shared/fs-extra';
 import { logger } from '@rspress/shared/logger';
 import { loadFrontMatter } from '@rspress/shared/node-utils';
 

@@ -1,5 +1,5 @@
-import { jsx } from 'react/jsx-runtime';
 import * as React from 'react';
+import { jsx } from 'react/jsx-runtime';
 const SvgRight = props =>
   /* @__PURE__ */ jsx('svg', {
     width: 24,

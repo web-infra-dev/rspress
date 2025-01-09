@@ -1,7 +1,7 @@
 import path from 'node:path';
-import { test, expect } from '@playwright/test';
-import { runBuildCommand } from '../utils/runCommands';
+import { expect, test } from '@playwright/test';
 import { readFileSync } from 'fs-extra';
+import { runBuildCommand } from '../utils/runCommands';
 
 const appDir = path.resolve(__dirname, '../fixtures/title-suffix');
 

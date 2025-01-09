@@ -1,10 +1,10 @@
 import path from 'node:path';
-import { visit } from 'unist-util-visit';
-import type { Plugin } from 'unified';
-import { logger } from '@rspress/shared/logger';
-import { cleanUrl, isProduction } from '@rspress/shared';
 import type { RouteService } from '@/node/route/RouteService';
 import { normalizePath } from '@/node/utils';
+import { cleanUrl, isProduction } from '@rspress/shared';
+import { logger } from '@rspress/shared/logger';
+import type { Plugin } from 'unified';
+import { visit } from 'unist-util-visit';
 
 export interface DeadLinkCheckOptions {
   root: string;

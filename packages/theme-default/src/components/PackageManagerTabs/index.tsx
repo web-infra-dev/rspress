@@ -1,10 +1,10 @@
-import { Tabs, Tab } from '@theme';
-import { Pre } from '../../layout/DocLayout/docComponents/pre';
+import { Tab, Tabs } from '@theme';
 import { Code } from '../../layout/DocLayout/docComponents/code';
-import { Npm } from './icons/Npm';
-import { Yarn } from './icons/Yarn';
-import { Pnpm } from './icons/Pnpm';
+import { Pre } from '../../layout/DocLayout/docComponents/pre';
 import { Bun } from './icons/Bun';
+import { Npm } from './icons/Npm';
+import { Pnpm } from './icons/Pnpm';
+import { Yarn } from './icons/Yarn';
 import './index.scss';
 
 export interface PackageManagerTabProps {

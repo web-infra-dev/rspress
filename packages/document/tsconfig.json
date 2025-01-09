@@ -8,7 +8,7 @@
       "@/assets/*": ["./docs/public/*"],
       "@/components/*": ["./theme/components/*"],
       "@zh/*": ["./docs/zh/*"],
-      "@en/*": ["./docs/en/*"],
+      "@en/*": ["./docs/en/*"]
     },
     "module": "ESNext",
     "moduleResolution": "Bundler"

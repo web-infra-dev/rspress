@@ -1,10 +1,10 @@
-import path, { join } from 'node:path';
-import fs from '@rspress/shared/fs-extra';
-import chalk from '@rspress/shared/chalk';
 import type { IncomingMessage, ServerResponse } from 'node:http';
-import { type UserConfig, isSCM, SEARCH_INDEX_NAME } from '@rspress/shared';
+import path, { join } from 'node:path';
+import { SEARCH_INDEX_NAME, type UserConfig, isSCM } from '@rspress/shared';
+import chalk from '@rspress/shared/chalk';
+import fs from '@rspress/shared/fs-extra';
 import { logger } from '@rspress/shared/logger';
-import { isProduction, OUTPUT_DIR, TEMP_DIR } from './constants';
+import { OUTPUT_DIR, TEMP_DIR, isProduction } from './constants';
 
 export async function writeSearchIndex(config: UserConfig) {
   if (config?.search === false) {
@@ -17,7 +17,7 @@ export async function writeSearchIndex(config: UserConfig) {
 
   // For performance, we only stitch the string of search index data instead of big JavaScript object in memory
   let searchIndexData = '[]';
-  let scaning = false;
+  let scanning = false;
   for (const searchIndexFile of searchIndexFiles) {
     if (
       !searchIndexFile.includes(SEARCH_INDEX_NAME) ||
@@ -32,10 +32,10 @@ export async function writeSearchIndex(config: UserConfig) {
       'utf-8',
     );
     searchIndexData = `${searchIndexData.slice(0, -1)}${
-      scaning ? ',' : ''
+      scanning ? ',' : ''
     }${searchIndex.slice(1)}`;
     await fs.move(source, target, { overwrite: true });
-    scaning = true;
+    scanning = true;
   }
 
   if (isProduction() && isSCM() && config?.search?.mode === 'remote') {

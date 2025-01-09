@@ -1,5 +1,5 @@
-import getRandomPort from 'get-port';
 import spawn from 'cross-spawn';
+import getRandomPort from 'get-port';
 import treeKill from 'tree-kill';
 
 const portMap = new Map();
@@ -40,13 +40,13 @@ export async function runNpmScript(
 
     async function handleStdout(data) {
       const message = data.toString();
-      const bootupMarkers = {
+      const markers = {
         dev: /Built/i,
         preview: /Network:/i,
         build: /Pages rendered/,
       };
 
-      if (bootupMarkers[command].test(message)) {
+      if (markers[commandName].test(message)) {
         if (!didResolve) {
           didResolve = true;
           resolve(instance);

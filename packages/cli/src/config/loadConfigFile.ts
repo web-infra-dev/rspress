@@ -1,8 +1,8 @@
 import fs from 'node:fs';
 import path from 'node:path';
+import { DEFAULT_CONFIG_NAME, DEFAULT_EXTENSIONS } from '@/constants';
 import type { UserConfig } from '@rspress/core';
 import { logger } from '@rspress/shared/logger';
-import { DEFAULT_CONFIG_NAME, DEFAULT_EXTENSIONS } from '@/constants';
 
 const findConfig = (basePath: string): string | undefined => {
   return DEFAULT_EXTENSIONS.map(ext => basePath + ext).find(fs.existsSync);

@@ -9,19 +9,25 @@
     "directory": "packages/plugin-client-redirects"
   },
   "license": "MIT",
+  "sideEffects": [
+    "*.css",
+    "*.less",
+    "*.sass",
+    "*.scss"
+  ],
   "type": "module",
-  "jsnext:source": "./src/index.ts",
-  "types": "./dist/index.d.ts",
   "main": "./dist/index.js",
   "module": "./dist/node/index.js",
+  "types": "./dist/index.d.ts",
+  "files": [
+    "dist",
+    "src"
+  ],
   "scripts": {
-    "dev": "rslib build -w",
     "build": "rslib build",
+    "dev": "rslib build -w",
     "reset": "rimraf ./**/node_modules",
     "test": "vitest run --passWithNoTests"
-  },
-  "engines": {
-    "node": ">=14.17.6"
   },
   "dependencies": {
     "@rspress/shared": "workspace:*"
@@ -40,19 +46,13 @@
   "peerDependencies": {
     "@rspress/runtime": "workspace:^1.39.3"
   },
-  "sideEffects": [
-    "*.css",
-    "*.less",
-    "*.sass",
-    "*.scss"
-  ],
-  "files": [
-    "dist",
-    "src"
-  ],
+  "engines": {
+    "node": ">=14.17.6"
+  },
   "publishConfig": {
     "access": "public",
     "provenance": true,
     "registry": "https://registry.npmjs.org/"
-  }
+  },
+  "jsnext:source": "./src/index.ts"
 }

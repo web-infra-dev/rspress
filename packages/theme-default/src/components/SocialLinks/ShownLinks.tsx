@@ -1,7 +1,7 @@
 import type { SocialLink } from '@rspress/shared';
 import ArrowDown from '@theme-assets/arrow-down';
-import { LinkContent } from './LinkContent';
 import { SvgWrapper } from '../SvgWrapper';
+import { LinkContent } from './LinkContent';
 
 interface IShownLinksProps {
   links: SocialLink[];

@@ -1,15 +1,15 @@
 import path from 'node:path';
-import remarkGFM from 'remark-gfm';
-import rehypePluginExternalLinks from 'rehype-external-links';
-import type { PluggableList } from 'unified';
 import type { Options } from '@mdx-js/loader';
 import type { UserConfig } from '@rspress/shared';
-import { remarkPluginToc } from './remarkPlugins/toc';
-import { remarkBuiltin } from './remarkPlugins/builtin';
+import rehypePluginExternalLinks from 'rehype-external-links';
+import remarkGFM from 'remark-gfm';
+import type { PluggableList } from 'unified';
 import { rehypePluginCodeMeta } from './rehypePlugins/codeMeta';
 import { rehypeHeaderAnchor } from './rehypePlugins/headerAnchor';
+import { remarkBuiltin } from './remarkPlugins/builtin';
 import { remarkCheckDeadLinks } from './remarkPlugins/checkDeadLink';
 import { remarkPluginNormalizeLink } from './remarkPlugins/normalizeLink';
+import { remarkPluginToc } from './remarkPlugins/toc';
 
 import type { PluginDriver } from '../PluginDriver';
 import type { RouteService } from '../route/RouteService';
