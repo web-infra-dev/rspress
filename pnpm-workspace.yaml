@@ -1,5 +1,6 @@
 packages:
   - 'packages/**'
   - 'e2e/**'
+  - '!**/compiled/**'
   - '!**/tests/**'
   - '!packages/create-rspress/template-basic'

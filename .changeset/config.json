@@ -5,6 +5,10 @@
   "linked": [],
   "access": "restricted",
   "baseBranch": "main",
+  "privatePackages": {
+    "version": false,
+    "tag": false
+  },
   "fixed": [["@rspress/*", "rspress", "create-rspress"]],
   "___experimentalUnsafeOptions_WILL_CHANGE_IN_PATCH": {
     "onlyUpdatePeerDependentsWhenOutOfRange": true,
