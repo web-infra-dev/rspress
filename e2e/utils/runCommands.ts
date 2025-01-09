@@ -9,18 +9,19 @@ export interface CommandOptions {
   env: Record<string, string>;
 }
 
-export type Command = 'dev' | 'build' | 'preview';
+export type Command = 'dev' | `dev -- -c ${string}` | 'build' | 'preview';
 
 export function sleep(ms: number) {
   return new Promise(resolve => setTimeout(resolve, ms));
 }
 
-export async function runCommand(
+export async function runNpmScript(
   commandName: Command,
   options: CommandOptions,
 ) {
+  const command = commandName.split(' ')[0];
   return new Promise((resolve, reject) => {
-    const instance = spawn('npm', ['run', commandName], {
+    const instance = spawn('npm', ['run', ...commandName.split(' ')], {
       cwd: options.appDir,
       env: {
         TEST: '1',
@@ -45,7 +46,7 @@ export async function runCommand(
         build: /Pages rendered/,
       };
 
-      if (bootupMarkers[commandName].test(message)) {
+      if (bootupMarkers[command].test(message)) {
         if (!didResolve) {
           didResolve = true;
           resolve(instance);
@@ -80,8 +81,12 @@ export async function runCommand(
   });
 }
 
-export async function runDevCommand(appDir: string, port: number) {
-  return runCommand('dev', {
+export async function runDevCommand(
+  appDir: string,
+  port: number,
+  configFile?: string,
+) {
+  return runNpmScript(configFile ? `dev -- -c ${configFile}` : 'dev', {
     appDir,
     env: {
       PORT: port.toString(),
@@ -90,14 +95,14 @@ export async function runDevCommand(appDir: string, port: number) {
 }
 
 export async function runBuildCommand(appDir: string) {
-  return runCommand('build', {
+  return runNpmScript('build', {
     appDir,
     env: {},
   });
 }
 
 export async function runPreviewCommand(appDir: string, port: number) {
-  return runCommand('preview', {
+  return runNpmScript('preview', {
     appDir,
     env: {
       PORT: port.toString(),
