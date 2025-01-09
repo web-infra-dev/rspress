@@ -46,7 +46,7 @@ export async function runNpmScript(
         build: /Pages rendered/,
       };
 
-      if (markers[commandName].test(message)) {
+      if (markers[command].test(message)) {
         if (!didResolve) {
           didResolve = true;
           resolve(instance);
