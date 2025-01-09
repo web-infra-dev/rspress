@@ -1,18 +1,13 @@
 {
   "name": "rspress",
   "version": "1.39.3",
-  "type": "module",
-  "types": "./dist/index.d.ts",
-  "main": "./dist/index.js",
-  "module": "./dist/index.js",
-  "bin": {
-    "rspress": "./bin/rspress.js"
-  },
   "repository": {
     "type": "git",
     "url": "https://github.com/web-infra-dev/rspress",
     "directory": "packages/cli"
   },
+  "license": "MIT",
+  "type": "module",
   "exports": {
     ".": {
       "default": "./dist/index.js"
@@ -27,11 +22,24 @@
       "default": "./config.ts"
     }
   },
+  "main": "./dist/index.js",
+  "module": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "bin": {
+    "rspress": "./bin/rspress.js"
+  },
+  "files": [
+    "bin",
+    "dist",
+    "runtime.ts",
+    "theme.ts",
+    "config.ts"
+  ],
   "scripts": {
-    "dev": "rslib build -w",
     "build": "rslib build",
-    "test": "vitest run",
-    "reset": "rimraf ./**/node_modules"
+    "dev": "rslib build -w",
+    "reset": "rimraf ./**/node_modules",
+    "test": "vitest run"
   },
   "dependencies": {
     "@rsbuild/core": "~1.1.13",
@@ -50,18 +58,9 @@
     "rimraf": "^3.0.2",
     "typescript": "^5.5.3"
   },
-  "sideEffects": [],
   "publishConfig": {
     "access": "public",
     "provenance": true,
     "registry": "https://registry.npmjs.org/"
-  },
-  "license": "MIT",
-  "files": [
-    "bin",
-    "dist",
-    "runtime.ts",
-    "theme.ts",
-    "config.ts"
-  ]
+  }
 }
