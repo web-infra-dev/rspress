@@ -1,17 +1,17 @@
 import path from 'node:path';
-import type { ComponentType } from 'react';
-import fs from '@rspress/shared/fs-extra';
 import {
+  type PageModule,
+  type RouteMeta,
+  type UserConfig,
   addLeadingSlash,
   addTrailingSlash,
-  type PageModule,
-  type UserConfig,
-  type RouteMeta,
   withBase,
 } from '@rspress/shared';
-import { getPageKey, normalizePath } from '../utils';
+import fs from '@rspress/shared/fs-extra';
+import type { ComponentType } from 'react';
 import type { PluginDriver } from '../PluginDriver';
 import { PUBLIC_DIR } from '../constants';
+import { getPageKey, normalizePath } from '../utils';
 
 export const DEFAULT_PAGE_EXTENSIONS = ['js', 'jsx', 'ts', 'tsx', 'md', 'mdx'];
 

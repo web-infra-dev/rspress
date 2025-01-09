@@ -1,7 +1,7 @@
-import type { UserConfig } from '@rspress/shared';
 import { mergeRsbuildConfig } from '@rsbuild/core';
-import { initRsbuild } from './initRsbuild';
+import type { UserConfig } from '@rspress/shared';
 import { PluginDriver } from './PluginDriver';
+import { initRsbuild } from './initRsbuild';
 
 interface ServeOptions {
   config: UserConfig;

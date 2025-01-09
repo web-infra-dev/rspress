@@ -1,10 +1,10 @@
 /* eslint-disable @typescript-eslint/no-var-requires */
 /* eslint-disable @typescript-eslint/no-require-imports */
-import { type ReactNode, Suspense, memo, type ReactElement } from 'react';
+import { type ReactElement, type ReactNode, Suspense, memo } from 'react';
 import { matchRoutes, useLocation } from 'react-router-dom';
 import siteData from 'virtual-site-data';
-import { normalizeRoutePath } from './utils';
 import { useViewTransition } from './hooks';
+import { normalizeRoutePath } from './utils';
 
 const { routes } = process.env.__SSR__
   ? (require('virtual-routes-ssr') as typeof import('virtual-routes-ssr'))

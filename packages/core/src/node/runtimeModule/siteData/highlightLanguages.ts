@@ -1,5 +1,5 @@
-import chalk from '@rspress/shared/chalk';
 import { DEFAULT_HIGHLIGHT_LANGUAGES } from '@rspress/shared';
+import chalk from '@rspress/shared/chalk';
 
 let supportedLanguages: Set<string>;
 

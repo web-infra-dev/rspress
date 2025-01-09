@@ -1,16 +1,16 @@
 import path from 'node:path';
+import { TEMP_DIR, isProduction } from '@/node/constants';
+import { createHash } from '@/node/utils';
+import { SEARCH_INDEX_NAME, type SiteData } from '@rspress/shared';
 import fs from '@rspress/shared/fs-extra';
 import { groupBy } from 'lodash-es';
-import { SEARCH_INDEX_NAME, type SiteData } from '@rspress/shared';
-import { createHash } from '@/node/utils';
-import { TEMP_DIR, isProduction } from '@/node/constants';
-import { extractPageData } from './extractPageData';
-import { normalizeThemeConfig } from './normalizeThemeConfig';
-import { handleHighlightLanguages } from './highlightLanguages';
 import { type FactoryContext, RuntimeModuleID } from '..';
+import { extractPageData } from './extractPageData';
+import { handleHighlightLanguages } from './highlightLanguages';
+import { normalizeThemeConfig } from './normalizeThemeConfig';
 
 // How can we let the client runtime access the `indexHash`?
-// We can only do something after the Rspack build process becuase the index hash is generated within Rspack build process.There are two ways to do this:
+// We can only do something after the Rspack build process because the index hash is generated within Rspack build process.There are two ways to do this:
 // 1. insert window.__INDEX_HASH__ = 'foo' into the html template manually
 // 2. replace the `__INDEX_HASH__` placeholder in the html template with the real index hash after Rspack build
 export const indexHash = '';

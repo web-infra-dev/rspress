@@ -1,5 +1,5 @@
-import styles from './index.module.scss';
 import ArrowRight from '@theme-assets/arrow-right';
+import styles from './index.module.scss';
 
 interface LinkCardProps {
   /**

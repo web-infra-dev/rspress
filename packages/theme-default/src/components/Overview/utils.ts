@@ -1,10 +1,10 @@
+import { withBase } from '@rspress/runtime';
 import type {
   NormalizedSidebarGroup,
   SidebarDivider,
   SidebarItem,
 } from '@rspress/shared';
 import { isSidebarDivider } from '../Sidebar/utils';
-import { withBase } from '@rspress/runtime';
 
 function removeIndex(link: string) {
   if (link.endsWith('/index')) {

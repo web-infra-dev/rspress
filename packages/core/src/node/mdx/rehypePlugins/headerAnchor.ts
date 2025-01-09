@@ -1,8 +1,8 @@
-import { headingRank } from 'hast-util-heading-rank';
-import { visit } from 'unist-util-visit';
 import GithubSlugger from 'github-slugger';
+import type { Element, Root } from 'hast';
+import { headingRank } from 'hast-util-heading-rank';
 import type { Plugin } from 'unified';
-import type { Root, Element } from 'hast';
+import { visit } from 'unist-util-visit';
 import { extractTextAndId } from '../../utils';
 
 /**

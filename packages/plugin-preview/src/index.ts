@@ -1,24 +1,24 @@
-import { join } from 'node:path';
 import net from 'node:net';
-import {
-  type RouteMeta,
-  type RspressPlugin,
-  removeTrailingSlash,
-} from '@rspress/shared';
+import { join } from 'node:path';
 import {
   type RsbuildConfig,
   type RsbuildPluginAPI,
   createRsbuild,
   mergeRsbuildConfig,
 } from '@rsbuild/core';
-import { pluginSolid } from '@rsbuild/plugin-solid';
 import { pluginBabel } from '@rsbuild/plugin-babel';
 import { pluginReact } from '@rsbuild/plugin-react';
-import { isEqual, cloneDeep } from 'lodash';
-import { remarkCodeToDemo, demos } from './remarkPlugin';
+import { pluginSolid } from '@rsbuild/plugin-solid';
+import {
+  type RouteMeta,
+  type RspressPlugin,
+  removeTrailingSlash,
+} from '@rspress/shared';
+import { cloneDeep, isEqual } from 'lodash';
 import { staticPath } from './constant';
-import type { Options, StartServerResult } from './types';
 import { generateEntry } from './generate-entry';
+import { demos, remarkCodeToDemo } from './remarkPlugin';
+import type { Options, StartServerResult } from './types';
 
 // global variables which need to be initialized in plugin
 let routeMeta: RouteMeta[];

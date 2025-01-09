@@ -20,7 +20,7 @@
     "vitest.config.ts",
     "index.d.ts",
     "mdx-meta-loader.cjs",
-    "static/",
+    "static/"
   ],
   "exclude": ["runtime.d.ts", "theme.d.ts", "node_modules", "dist"]
 }

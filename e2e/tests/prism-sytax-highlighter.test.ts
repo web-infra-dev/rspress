@@ -2,7 +2,7 @@ import path from 'node:path';
 import { expect, test } from '@playwright/test';
 import { getPort, killProcess, runDevCommand } from '../utils/runCommands';
 
-const appDir = path.resolve(__dirname, '../fixtures/prism-sytax-highlighter');
+const appDir = path.resolve(__dirname, '../fixtures/prism-syntax-highlighter');
 
 test.describe('markdown highlight test', async () => {
   let appPort: number;

@@ -1,8 +1,8 @@
-import { aliases, languages } from 'virtual-prism-languages';
-import { PrismLight as SyntaxHighlighter } from 'react-syntax-highlighter';
 import { usePageData } from '@rspress/runtime';
+import { PrismLight as SyntaxHighlighter } from 'react-syntax-highlighter';
+import { aliases, languages } from 'virtual-prism-languages';
 import type { CodeProps } from '.';
-import prisimThemeStyle from '../prisim-theme';
+import prismThemeStyle from '../prism-theme';
 
 let registered = false;
 function registerLanguages() {
@@ -48,7 +48,7 @@ export function PrismSyntaxHighlighter(
   return (
     <SyntaxHighlighter
       language={language}
-      style={prisimThemeStyle}
+      style={prismThemeStyle}
       wrapLines={true}
       className="code"
       wrapLongLines={codeWrap}

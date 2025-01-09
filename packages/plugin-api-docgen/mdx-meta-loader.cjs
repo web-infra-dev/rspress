@@ -6,12 +6,12 @@ module.exports = async function () {
   try {
     const result = `
       ${demos
-        .map(item => {
+        .map((item) => {
           return `import Demo_${item.id} from '${item.virtualModulePath}';`;
         })
         .join('\n')}
       export default [${demos
-        .map(item => {
+        .map((item) => {
           return `{
             "id": "${item.id}",
             "component": Demo_${item.id}

@@ -3,6 +3,11 @@
  * Powered by FlexSearch. https://github.com/nextapps-de/flexsearch
  */
 
+import {
+  type PageIndexInfo,
+  SEARCH_INDEX_NAME,
+  removeTrailingSlash,
+} from '@rspress/shared';
 import type {
   Document,
   EnrichedDocumentSearchResultSetUnit,
@@ -10,13 +15,8 @@ import type {
 } from 'flexsearch';
 import FlexSearchDocument from 'flexsearch/dist/module/document';
 import searchIndexHash from 'virtual-search-index-hash';
-import {
-  type PageIndexInfo,
-  removeTrailingSlash,
-  SEARCH_INDEX_NAME,
-} from '@rspress/shared';
-import type { SearchOptions } from '../types';
 import { LOCAL_INDEX, type Provider, type SearchQuery } from '../Provider';
+import type { SearchOptions } from '../types';
 import { normalizeTextCase } from '../util';
 
 type FlexSearchDocumentWithType = Document<PageIndexInfo, true>;
@@ -48,7 +48,7 @@ export class LocalProvider implements Provider {
 
   #cjkIndex?: FlexSearchDocumentWithType;
 
-  #cyrilicIndex?: FlexSearchDocumentWithType;
+  #cyrillicIndex?: FlexSearchDocumentWithType;
 
   async #getPages(lang: string, version: string): Promise<PageIndexInfo[]> {
     const searchIndexGroupID = `${version}###${lang}`;
@@ -94,15 +94,15 @@ export class LocalProvider implements Provider {
       ...createOptions,
       tokenize: (str: string) => tokenize(str, cjkRegex),
     });
-    // Cyrilic Index
-    this.#cyrilicIndex = new FlexSearchDocument({
+    // Cyrillic Index
+    this.#cyrillicIndex = new FlexSearchDocument({
       ...createOptions,
       tokenize: (str: string) => tokenize(str, cyrillicRegex),
     });
     for (const item of pagesForSearch) {
       this.#index.add(item);
       this.#cjkIndex.add(item);
-      this.#cyrilicIndex.add(item);
+      this.#cyrillicIndex.add(item);
     }
   }
 
@@ -118,13 +118,13 @@ export class LocalProvider implements Provider {
     const searchResult = await Promise.all([
       this.#index?.search<true>(keyword, limit, options),
       this.#cjkIndex?.search<true>(keyword, limit, options),
-      this.#cyrilicIndex.search<true>(keyword, limit, options),
+      this.#cyrillicIndex.search<true>(keyword, limit, options),
     ]);
 
-    const commbindSeachResult: PageIndexInfo[] = [];
+    const combinedSearchResult: PageIndexInfo[] = [];
     const pushedId: Set<string> = new Set();
 
-    function insertCommbindSearchResult(
+    function insertCombinedSearchResult(
       resultFromOneSearchIndex: EnrichedDocumentSearchResultSetUnit<PageIndexInfo>[],
     ) {
       for (const item of resultFromOneSearchIndex) {
@@ -137,19 +137,19 @@ export class LocalProvider implements Provider {
           }
           // mark the doc is in the searched results
           pushedId.add(id);
-          commbindSeachResult.push(resultItem.doc);
+          combinedSearchResult.push(resultItem.doc);
         });
       }
     }
 
     searchResult.forEach(searchResultItem => {
-      insertCommbindSearchResult(searchResultItem);
+      insertCombinedSearchResult(searchResultItem);
     });
 
     return [
       {
         index: LOCAL_INDEX,
-        hits: commbindSeachResult,
+        hits: combinedSearchResult,
       },
     ];
   }

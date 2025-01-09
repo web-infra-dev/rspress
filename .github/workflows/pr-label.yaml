@@ -19,7 +19,7 @@ jobs:
     steps:
       - uses: github/issue-labeler@v3.4
         with:
-          repo-token: "${{ secrets.GITHUB_TOKEN }}"
+          repo-token: '${{ secrets.GITHUB_TOKEN }}'
           configuration-path: .github/pr-labeler.yml
           enable-versioned-regex: 0
           include-title: 1

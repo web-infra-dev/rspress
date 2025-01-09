@@ -1,10 +1,10 @@
 {
-  "name": "@rspress-fixture/prism-sytax-highlighter",
+  "name": "@rspress-fixture/prism-syntax-highlighter",
   "version": "1.0.0",
   "private": true,
   "scripts": {
-    "dev": "rspress dev",
     "build": "rspress build",
+    "dev": "rspress dev",
     "preview": "rspress preview"
   },
   "dependencies": {

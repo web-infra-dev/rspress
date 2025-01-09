@@ -1,6 +1,6 @@
-import { useEffect, useState } from 'react';
-import { inBrowser } from '@rspress/shared';
 import { useLocation, usePageData } from '@rspress/runtime';
+import { inBrowser } from '@rspress/shared';
+import { useEffect, useState } from 'react';
 import { useEnableNav } from './useHiddenNav';
 import { useLocaleSiteData } from './useLocaleSiteData';
 

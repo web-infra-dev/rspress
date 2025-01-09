@@ -1,7 +1,7 @@
 import path from 'node:path';
 import fs from '@rspress/shared/fs-extra';
-import enhancedResolve from 'enhanced-resolve';
 import { logger } from '@rspress/shared/logger';
+import enhancedResolve from 'enhanced-resolve';
 import { PACKAGE_ROOT } from '../constants';
 
 const { CachedInputFileSystem, ResolverFactory } = enhancedResolve;

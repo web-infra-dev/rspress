@@ -1,11 +1,11 @@
-import { useEffect } from 'react';
 import type { Header } from '@rspress/shared';
+import { useEffect } from 'react';
 import {
-  useHiddenNav,
-  scrollToTarget,
   bindingAsideScroll,
-  renderInlineMarkdown,
   parseInlineMarkdownText,
+  renderInlineMarkdown,
+  scrollToTarget,
+  useHiddenNav,
 } from '../../logic';
 import { DEFAULT_NAV_HEIGHT } from '../../logic/sideEffects';
 import './index.scss';

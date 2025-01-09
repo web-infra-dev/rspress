@@ -1,6 +1,13 @@
 {
   "name": "@rspress/modern-js-plugin",
+  "version": "1.39.3",
   "description": "A Modern.js plugin to integrate rspress",
+  "keywords": [
+    "react",
+    "rspress",
+    "modern",
+    "modern.js"
+  ],
   "homepage": "https://rspress.dev",
   "bugs": "https://github.com/web-infra-dev/rspress/issues",
   "repository": {
@@ -9,16 +16,11 @@
     "directory": "packages/modern-plugin-rspress"
   },
   "license": "MIT",
-  "keywords": [
-    "react",
-    "rspress",
-    "modern",
-    "modern.js"
+  "sideEffects": [
+    "**/*.scss"
   ],
-  "version": "1.39.3",
-  "jsnext:source": "./src/index.ts",
-  "types": "./dist/index.d.ts",
   "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
   "scripts": {
     "build": "rslib build",
     "dev": "rslib build -w"
@@ -41,12 +43,10 @@
     "typescript": "^5.5.3",
     "vitest": "2.1.8"
   },
-  "sideEffects": [
-    "**/*.scss"
-  ],
   "publishConfig": {
-    "registry": "https://registry.npmjs.org/",
     "access": "public",
-    "provenance": true
-  }
+    "provenance": true,
+    "registry": "https://registry.npmjs.org/"
+  },
+  "jsnext:source": "./src/index.ts"
 }

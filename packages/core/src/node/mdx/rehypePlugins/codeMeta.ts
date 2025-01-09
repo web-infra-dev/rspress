@@ -1,6 +1,6 @@
+import type { Root } from 'hast';
 import type { Plugin } from 'unified';
 import { visit } from 'unist-util-visit';
-import type { Root } from 'hast';
 
 export const rehypePluginCodeMeta: Plugin<[], Root> = () => {
   return tree => {

@@ -1,6 +1,6 @@
-import path from 'node:path';
 import crypto from 'node:crypto';
 import { createRequire } from 'node:module';
+import path from 'node:path';
 import { defineConfig, moduleTools } from '@modern-js/module-tools';
 import { tailwindConfig } from './tailwind.config';
 

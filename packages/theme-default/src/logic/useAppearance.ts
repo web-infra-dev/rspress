@@ -1,6 +1,6 @@
-import siteData from 'virtual-site-data';
 import { APPEARANCE_KEY } from '@rspress/shared';
 import { useCallback, useEffect, useState } from 'react';
+import siteData from 'virtual-site-data';
 import { useHandler } from './useHandler';
 import { useMediaQuery } from './useMediaQuery';
 import { useStorageValue } from './useStorageValue';

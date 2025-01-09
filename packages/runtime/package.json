@@ -9,9 +9,15 @@
     "directory": "packages/runtime"
   },
   "license": "MIT",
-  "jsnext:source": "./src/index.ts",
-  "types": "./dist/index.d.ts",
-  "main": "./dist/index.js",
+  "sideEffects": [
+    "*.css",
+    "*.less",
+    "*.sass",
+    "*.scss",
+    "**/virtual-global-styles.js",
+    "virtual-global-styles",
+    "./src/theme-default/styles/index.ts"
+  ],
   "exports": {
     ".": {
       "types": "./dist/index.d.ts",
@@ -21,14 +27,19 @@
       "default": "./server.js"
     }
   },
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "files": [
+    "dist",
+    "src",
+    "runtime.ts",
+    "server.js"
+  ],
   "scripts": {
-    "dev": "modern build -w",
     "build": "modern build",
+    "dev": "modern build -w",
     "reset": "rimraf ./**/node_modules",
     "test": "echo nothing"
-  },
-  "engines": {
-    "node": ">=14.17.6"
   },
   "dependencies": {
     "@rspress/shared": "workspace:*",
@@ -44,24 +55,13 @@
     "@types/react-dom": "^18.3.5",
     "typescript": "^5.5.3"
   },
-  "sideEffects": [
-    "*.css",
-    "*.less",
-    "*.sass",
-    "*.scss",
-    "**/virtual-global-styles.js",
-    "virtual-global-styles",
-    "./src/theme-default/styles/index.ts"
-  ],
-  "files": [
-    "dist",
-    "src",
-    "runtime.ts",
-    "server.js"
-  ],
+  "engines": {
+    "node": ">=14.17.6"
+  },
   "publishConfig": {
     "access": "public",
     "provenance": true,
     "registry": "https://registry.npmjs.org/"
-  }
+  },
+  "jsnext:source": "./src/index.ts"
 }

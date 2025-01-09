@@ -1,5 +1,5 @@
 import { usePageData } from '@rspress/runtime';
-import { HomeHero, HomeFeature, HomeFooter } from '@theme';
+import { HomeFeature, HomeFooter, HomeHero } from '@theme';
 import './index.css';
 
 export interface HomeLayoutProps {

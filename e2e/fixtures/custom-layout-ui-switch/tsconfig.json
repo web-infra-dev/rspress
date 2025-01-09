@@ -5,10 +5,7 @@
     "module": "ESNext",
     "moduleResolution": "Bundler"
   },
-  "include": [
-    "docs/**/*",
-    "theme/**/*"
-  ],
+  "include": ["docs/**/*", "theme/**/*"],
   "mdx": {
     "checkMdx": true
   }

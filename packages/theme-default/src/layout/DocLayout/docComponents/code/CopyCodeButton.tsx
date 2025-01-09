@@ -1,9 +1,9 @@
-import { useRef, type MutableRefObject } from 'react';
-import copy from 'copy-to-clipboard';
 import IconCopy from '@theme-assets/copy';
 import IconSuccess from '@theme-assets/success';
-import styles from './index.module.scss';
+import copy from 'copy-to-clipboard';
+import { type MutableRefObject, useRef } from 'react';
 import { SvgWrapper } from '../../../../components/SvgWrapper';
+import styles from './index.module.scss';
 
 const timeoutIdMap: Map<HTMLElement, NodeJS.Timeout> = new Map();
 

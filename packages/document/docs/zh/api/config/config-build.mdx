@@ -26,7 +26,7 @@ export default defineConfig({
 export default defineConfig({
   builderConfig: {
     tools: {
-      rspack: async config => {
+      rspack: async (config) => {
         const { default: ESLintPlugin } = await import('eslint-webpack-plugin');
         config.plugins?.push(new ESLintPlugin());
         return config;

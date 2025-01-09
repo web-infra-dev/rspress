@@ -1,9 +1,9 @@
 import type { RsbuildConfig } from '@rsbuild/core';
 import type { PluggableList } from 'unified';
-import type { UserConfig, PageIndexInfo, RouteMeta } from '.';
+import type { PageIndexInfo, RouteMeta, UserConfig } from '.';
 
 /**
- * There are two ways to define what addtion routes represent.
+ * There are two ways to define what addition routes represent.
  * 1. Define filepath, then the content will be read from the file.
  * 2. Define content, then then content will be written to temp file and read from it.
  */

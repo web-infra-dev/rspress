@@ -1,8 +1,8 @@
-import { visit } from 'unist-util-visit';
-import type { Plugin } from 'unified';
-import type { Text, Root, ElementContent } from 'hast';
+import type { ElementContent, Root, Text } from 'hast';
 import { fromHtml } from 'hast-util-from-html';
 import type shiki from 'shiki';
+import type { Plugin } from 'unified';
+import { visit } from 'unist-util-visit';
 
 interface Options {
   highlighter: shiki.Highlighter;

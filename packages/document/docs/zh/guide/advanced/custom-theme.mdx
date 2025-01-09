@@ -89,7 +89,7 @@ const Layout = () => (
     /* 整个页面最底部 */
     bottom={<div>bottom</div>}
     /* 自定义 MDX 组件 */
-    components={{ p: props => <p {...props} className="my-4 leading-7" /> }}
+    components={{ p: (props) => <p {...props} className="my-4 leading-7" /> }}
   />
 );
 
@@ -139,7 +139,7 @@ export * from 'rspress/theme';
 ```bash
 └── theme
     └── assets
-        └── xx.svg
+        └── logo.svg
 ```
 
 你可以在 [这里](https://github.com/web-infra-dev/rspress/tree/main/packages/theme-default/src/assets) 查看默认主题中用到的所有图标。

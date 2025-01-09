@@ -1,7 +1,7 @@
-import { useState } from 'react';
 import type { SocialLink } from '@rspress/shared';
-import { ShownLinks } from './ShownLinks';
+import { useState } from 'react';
 import { HiddenLinks } from './HiddenLinks';
+import { ShownLinks } from './ShownLinks';
 import styles from './index.module.scss';
 
 export const SocialLinks = ({ socialLinks }: { socialLinks: SocialLink[] }) => {

@@ -1,9 +1,9 @@
-import { useEffect, useState } from 'react';
 import SearchSvg from '@theme-assets/search';
-import styles from './index.module.scss';
-import { SearchPanel } from './SearchPanel';
-import { SvgWrapper } from '../SvgWrapper';
+import { useEffect, useState } from 'react';
 import { useLocaleSiteData } from '../../logic';
+import { SvgWrapper } from '../SvgWrapper';
+import { SearchPanel } from './SearchPanel';
+import styles from './index.module.scss';
 
 export function Search() {
   const [focused, setFocused] = useState(false);

@@ -1,7 +1,7 @@
 import {
-  getHighlighter as getShikiHighlighter,
   type Highlighter,
   type HighlighterOptions as ShikiHighlighterOptions,
+  getHighlighter as getShikiHighlighter,
 } from 'shiki';
 
 import { postTransformer, transformer } from './transformer';

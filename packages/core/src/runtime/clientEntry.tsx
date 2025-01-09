@@ -1,12 +1,12 @@
-import { useState, useMemo } from 'react';
-import { isProduction } from '@rspress/shared';
-import siteData from 'virtual-site-data';
 import {
+  BrowserRouter,
   DataContext,
   ThemeContext,
   normalizeRoutePath,
-  BrowserRouter,
 } from '@rspress/runtime';
+import { isProduction } from '@rspress/shared';
+import { useMemo, useState } from 'react';
+import siteData from 'virtual-site-data';
 import { App, initPageData } from './App';
 
 const enableSSG = siteData.ssg;

@@ -85,7 +85,9 @@ div[class*='language-'] code .diff.remove {
 .has-focused div[class*='language-'] .line:not(.focused) {
   filter: blur(0.095rem);
   opacity: 0.4;
-  transition: filter 0.35s, opacity 0.35s;
+  transition:
+    filter 0.35s,
+    opacity 0.35s;
 }
 
 .has-focused:hover div[class*='language-'] .line:not(.focused) {

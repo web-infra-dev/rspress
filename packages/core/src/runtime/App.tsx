@@ -1,21 +1,21 @@
-import siteData from 'virtual-site-data';
 import {
-  matchRoutes,
-  useLocation,
-  isEqualPath,
-  normalizeRoutePath,
   DataContext,
+  isEqualPath,
+  matchRoutes,
+  normalizeRoutePath,
+  useLocation,
 } from '@rspress/runtime';
-import { HelmetProvider } from 'react-helmet-async';
-import React, { useContext, useLayoutEffect } from 'react';
 import {
   type Header,
+  MDX_REGEXP,
   type PageData,
   cleanUrl,
-  MDX_REGEXP,
 } from '@rspress/shared';
-import globalComponents from 'virtual-global-components';
 import Theme from '@theme';
+import React, { useContext, useLayoutEffect } from 'react';
+import { HelmetProvider } from 'react-helmet-async';
+import globalComponents from 'virtual-global-components';
+import siteData from 'virtual-site-data';
 import 'virtual-global-styles';
 
 export enum QueryStatus {

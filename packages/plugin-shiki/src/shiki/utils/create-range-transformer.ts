@@ -1,8 +1,8 @@
 import type {
+  IRangeTransformerOptions,
+  ITransformerOptions,
   TLineOptions,
   TPreTransformer,
-  ITransformerOptions,
-  IRangeTransformerOptions,
 } from '../types';
 
 export function createRangeTransformer(

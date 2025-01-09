@@ -1,6 +1,6 @@
-import { checkClass } from '../utils/check-class';
 import type { IRangeTransformerOptions, ITransformer } from '../types';
 import { addClass } from '../utils';
+import { checkClass } from '../utils/check-class';
 import { createRangeTransformer } from '../utils/create-range-transformer';
 
 export interface ITransformerDiffOptions extends IRangeTransformerOptions {

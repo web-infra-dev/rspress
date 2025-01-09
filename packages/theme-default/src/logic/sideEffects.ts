@@ -1,5 +1,5 @@
-import { throttle } from 'lodash-es';
 import { inBrowser } from '@rspress/shared';
+import { throttle } from 'lodash-es';
 
 export const DEFAULT_NAV_HEIGHT = 72;
 

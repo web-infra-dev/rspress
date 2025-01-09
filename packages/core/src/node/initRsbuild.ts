@@ -1,38 +1,38 @@
 import path from 'node:path';
-import {
-  type UserConfig,
-  removeLeadingSlash,
-  MDX_REGEXP,
-  RSPRESS_TEMP_DIR,
-  removeTrailingSlash,
-  isDebugMode,
-} from '@rspress/shared';
-import fs from '@rspress/shared/fs-extra';
 import type {
-  RsbuildInstance,
   RsbuildConfig,
+  RsbuildInstance,
   RsbuildPlugin,
 } from '@rsbuild/core';
+import { PLUGIN_LESS_NAME, pluginLess } from '@rsbuild/plugin-less';
+import { PLUGIN_REACT_NAME, pluginReact } from '@rsbuild/plugin-react';
+import { PLUGIN_SASS_NAME, pluginSass } from '@rsbuild/plugin-sass';
+import {
+  MDX_REGEXP,
+  RSPRESS_TEMP_DIR,
+  type UserConfig,
+  isDebugMode,
+  removeLeadingSlash,
+  removeTrailingSlash,
+} from '@rspress/shared';
+import fs from '@rspress/shared/fs-extra';
+import type { PluginDriver } from './PluginDriver';
 import {
   CLIENT_ENTRY,
-  SSR_ENTRY,
-  PACKAGE_ROOT,
-  OUTPUT_DIR,
-  isProduction,
-  inlineThemeScript,
-  PUBLIC_DIR,
   DEFAULT_TITLE,
+  OUTPUT_DIR,
+  PACKAGE_ROOT,
+  PUBLIC_DIR,
+  SSR_ENTRY,
+  inlineThemeScript,
+  isProduction,
 } from './constants';
+import type { RouteService } from './route/RouteService';
+import { initRouteService } from './route/init';
 import { rsbuildPluginDocVM } from './runtimeModule';
 import { serveSearchIndexMiddleware } from './searchIndex';
 import { detectReactVersion, resolveReactAlias } from './utils';
-import { initRouteService } from './route/init';
-import type { PluginDriver } from './PluginDriver';
-import type { RouteService } from './route/RouteService';
 import { detectCustomIcon } from './utils/detectCustomIcon';
-import { PLUGIN_REACT_NAME, pluginReact } from '@rsbuild/plugin-react';
-import { PLUGIN_SASS_NAME, pluginSass } from '@rsbuild/plugin-sass';
-import { PLUGIN_LESS_NAME, pluginLess } from '@rsbuild/plugin-less';
 
 export interface MdxRsLoaderCallbackContext {
   resourcePath: string;

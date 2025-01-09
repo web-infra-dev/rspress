@@ -3,15 +3,15 @@
   "version": "1.0.0",
   "private": true,
   "scripts": {
-    "dev": "rspress dev",
     "build": "rspress build",
+    "dev": "rspress dev",
     "preview": "rspress preview"
   },
   "dependencies": {
     "rspress": "workspace:*"
   },
   "devDependencies": {
-    "@types/jest": "^29.5.14",
+    "@types/jest": "~29.5.14",
     "@types/node": "^18.11.17"
   }
 }

@@ -1,6 +1,6 @@
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
-import { normalizePosixPath, type RspressPlugin } from '@rspress/shared';
+import { type RspressPlugin, normalizePosixPath } from '@rspress/shared';
 import { remarkPluginContainer } from './remarkPlugin';
 
 const __dirname = normalizePosixPath(

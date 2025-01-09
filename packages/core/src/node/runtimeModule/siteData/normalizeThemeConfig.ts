@@ -1,21 +1,21 @@
 import {
-  type UserConfig,
   type DefaultThemeConfig,
+  type NavItem,
+  type NavItemWithLink,
   type NormalizedDefaultThemeConfig,
-  type SidebarItem,
-  type SidebarGroup,
   type NormalizedSidebarGroup,
   type PageIndexInfo,
-  type NavItemWithLink,
-  withBase,
-  addLeadingSlash,
-  isExternalUrl,
-  withoutBase,
-  type NavItem,
   type Sidebar,
   type SidebarDivider,
-  slash,
+  type SidebarGroup,
+  type SidebarItem,
   type SidebarSectionHeader,
+  type UserConfig,
+  addLeadingSlash,
+  isExternalUrl,
+  slash,
+  withBase,
+  withoutBase,
 } from '@rspress/shared';
 import { applyReplaceRules } from '../../utils/applyReplaceRules';
 import { getI18nData } from '../i18n';
@@ -210,7 +210,7 @@ export function normalizeThemeConfig(
    * 2. in the `doc.themeConfig.locales`
    * The locales in the theme config will override the locales in the site config.
    *
-   * For nav and sidebar, we prefer the locales in the `themeConfig.nav` and `themeConfig.sidebar` if it exists. And the frameowork will generate complete nav and sidebar for each locale and place them in the `themeConfig.locales` field.
+   * For nav and sidebar, we prefer the locales in the `themeConfig.nav` and `themeConfig.sidebar` if it exists. And the framework will generate complete nav and sidebar for each locale and place them in the `themeConfig.locales` field.
    */
   if (locales.length) {
     themeConfig.locales = locales.map(({ lang: currentLang, label }) => {

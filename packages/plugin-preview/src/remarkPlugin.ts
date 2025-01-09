@@ -1,14 +1,14 @@
-import { join, resolve, dirname } from 'node:path';
-import { visit } from 'unist-util-visit';
+import { dirname, join, resolve } from 'node:path';
 import { normalizePosixPath } from '@rspress/shared';
 import fs from '@rspress/shared/fs-extra';
-import type { Plugin } from 'unified';
 import type { Root } from 'mdast';
 import type { MdxjsEsm } from 'mdast-util-mdxjs-esm';
-import type { RemarkPluginOptions, DemoInfo } from './types';
-import { injectDemoBlockImport, generateId } from './utils';
-import { demoBlockComponentPath, virtualDir } from './constant';
+import type { Plugin } from 'unified';
+import { visit } from 'unist-util-visit';
 import { getASTNodeImport, getExternalDemoContent } from './ast-helpers';
+import { demoBlockComponentPath, virtualDir } from './constant';
+import type { DemoInfo, RemarkPluginOptions } from './types';
+import { generateId, injectDemoBlockImport } from './utils';
 
 export const demos: DemoInfo = {};
 
@@ -39,7 +39,7 @@ export const remarkCodeToDemo: Plugin<[RemarkPluginOptions], Root> = function ({
       return;
     }
     const { pageName } = route;
-    // clear all demo in this pageName and recollect, bacause we may delete the demo
+    // clear all demo in this pageName and recollect, because we may delete the demo
     demos[pageName] = [];
     let title = pageName;
     let index = 1;
@@ -134,7 +134,7 @@ export const remarkCodeToDemo: Plugin<[RemarkPluginOptions], Root> = function ({
         }
 
         // don't support expression syntax
-        const currtentMode =
+        const currentMode =
           node.attributes.find(
             (attr: { name: string; value: boolean }) =>
               attr.name === 'previewMode',
@@ -146,7 +146,7 @@ export const remarkCodeToDemo: Plugin<[RemarkPluginOptions], Root> = function ({
         )?.value;
         if (isMobileMode === undefined) {
           // isMobile is not specified, eg: <code />
-          isMobileMode = currtentMode === 'iframe';
+          isMobileMode = currentMode === 'iframe';
         } else if (isMobileMode === null) {
           // true by default, eg: <code isMobile />
           isMobileMode = true;

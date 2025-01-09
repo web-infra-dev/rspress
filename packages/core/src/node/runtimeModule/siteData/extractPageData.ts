@@ -1,18 +1,18 @@
 import path from 'node:path';
-import fs from '@rspress/shared/fs-extra';
-import { htmlToText } from 'html-to-text';
+import { importStatementRegex } from '@/node/constants';
+import type { RouteService } from '@/node/route/RouteService';
+import { flattenMdxContent } from '@/node/utils';
+import { applyReplaceRules } from '@/node/utils/applyReplaceRules';
 import { compile } from '@rspress/mdx-rs';
-import { loadFrontMatter } from '@rspress/shared/node-utils';
 import {
   type Header,
   MDX_REGEXP,
-  type ReplaceRule,
   type PageIndexInfo,
+  type ReplaceRule,
 } from '@rspress/shared';
-import { flattenMdxContent } from '@/node/utils';
-import { importStatementRegex } from '@/node/constants';
-import type { RouteService } from '@/node/route/RouteService';
-import { applyReplaceRules } from '@/node/utils/applyReplaceRules';
+import fs from '@rspress/shared/fs-extra';
+import { loadFrontMatter } from '@rspress/shared/node-utils';
+import { htmlToText } from 'html-to-text';
 
 export function applyReplaceRulesToNestedObject(
   obj: Record<string, any>,

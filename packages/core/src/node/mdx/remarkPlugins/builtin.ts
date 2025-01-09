@@ -1,8 +1,8 @@
 import path from 'node:path';
-import type { Plugin } from 'unified';
+import { getASTNodeImport } from '@/node/utils/getASTNodeImport';
 import type { Root } from 'mdast';
 import type { MdxjsEsm } from 'mdast-util-mdxjs-esm';
-import { getASTNodeImport } from '@/node/utils/getASTNodeImport';
+import type { Plugin } from 'unified';
 
 /**
  * A remark plugin to import all builtin components.

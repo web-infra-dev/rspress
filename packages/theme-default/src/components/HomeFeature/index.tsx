@@ -1,7 +1,7 @@
-import { isExternalUrl, withBase } from '@rspress/shared';
 import { normalizeHrefInRuntime } from '@rspress/runtime';
+import { isExternalUrl, withBase } from '@rspress/shared';
+import type { Feature, FrontMatterMeta } from '@rspress/shared';
 import { renderHtmlOrText } from '../../logic';
-import type { FrontMatterMeta, Feature } from '@rspress/shared';
 
 import styles from './index.module.scss';
 

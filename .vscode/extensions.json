@@ -1,3 +1,8 @@
 {
-  "recommendations": ["biomejs.biome", "esbenp.prettier-vscode", "streetsidesoftware.code-spell-checker"]
+  "recommendations": [
+    "biomejs.biome",
+    "esbenp.prettier-vscode",
+    "streetsidesoftware.code-spell-checker",
+    "unifiedjs.vscode-mdx"
+  ]
 }

@@ -1,6 +1,6 @@
 import { Link } from '@rspress/core/theme';
-import IconRight from './arrow-right';
 import styles from './Overview.module.scss';
+import IconRight from './arrow-right';
 
 type List = {
   icon?: React.ReactNode;

@@ -1,7 +1,7 @@
-import { type ElementHandle, expect, test } from '@playwright/test';
 import path from 'node:path';
-import { getPort, killProcess, runDevCommand } from '../utils/runCommands';
+import { type ElementHandle, expect, test } from '@playwright/test';
 import { getNavbar, getSidebar } from '../utils/getSideBar';
+import { getPort, killProcess, runDevCommand } from '../utils/runCommands';
 
 const fixtureDir = path.resolve(__dirname, '../fixtures');
 
@@ -180,7 +180,9 @@ test.describe('Auto nav and sidebar test', async () => {
     expect(aTexts.join(',')).toEqual(['Nested H2'].join(','));
   });
 
-  test('Should generate data-context in sidebargroup dom', async ({ page }) => {
+  test('Should generate data-context in sidebar group dom', async ({
+    page,
+  }) => {
     await page.goto(`http://localhost:${appPort}/api/index.html`, {
       waitUntil: 'networkidle',
     });

@@ -1,5 +1,5 @@
-import { useState } from 'react';
 import type { SocialLink } from '@rspress/shared';
+import { useState } from 'react';
 import styles from './index.module.scss';
 import presetIcons from './presetIcons';
 

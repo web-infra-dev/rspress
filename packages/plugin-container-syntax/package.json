@@ -8,35 +8,26 @@
     "url": "https://github.com/web-infra-dev/rspress",
     "directory": "packages/plugin-container-syntax"
   },
-  "type": "module",
   "license": "MIT",
-  "jsnext:source": "./src/index.ts",
-  "types": "./dist/index.d.ts",
-  "main": "./dist/index.js",
-  "module": "./dist/index.mjs",
-  "scripts": {
-    "dev": "rslib build -w",
-    "build": "rslib build",
-    "reset": "rimraf ./**/node_modules",
-    "test": "vitest run --passWithNoTests"
-  },
-  "engines": {
-    "node": ">=14.17.6"
-  },
   "sideEffects": [
     "*.css",
     "*.less",
     "*.sass",
     "*.scss"
   ],
+  "type": "module",
+  "main": "./dist/index.js",
+  "module": "./dist/index.mjs",
+  "types": "./dist/index.d.ts",
   "files": [
     "dist",
     "container.css"
   ],
-  "publishConfig": {
-    "access": "public",
-    "provenance": true,
-    "registry": "https://registry.npmjs.org/"
+  "scripts": {
+    "build": "rslib build",
+    "dev": "rslib build -w",
+    "reset": "rimraf ./**/node_modules",
+    "test": "vitest run --passWithNoTests"
   },
   "dependencies": {
     "@rspress/shared": "workspace:*"
@@ -49,5 +40,14 @@
     "remark-parse": "^10.0.2",
     "remark-rehype": "^10.1.0",
     "unified": "^10.1.2"
-  }
+  },
+  "engines": {
+    "node": ">=14.17.6"
+  },
+  "publishConfig": {
+    "access": "public",
+    "provenance": true,
+    "registry": "https://registry.npmjs.org/"
+  },
+  "jsnext:source": "./src/index.ts"
 }

@@ -9,18 +9,29 @@
     "directory": "packages/plugin-typedoc"
   },
   "license": "MIT",
-  "jsnext:source": "./src/index.ts",
-  "types": "./dist/types/index.d.ts",
+  "sideEffects": [
+    "*.css",
+    "*.less",
+    "*.sass",
+    "*.scss"
+  ],
   "main": "./dist/lib/index.js",
   "module": "./dist/es/index.js",
+  "types": "./dist/types/index.d.ts",
+  "files": [
+    "dist",
+    "src"
+  ],
   "scripts": {
-    "dev": "rslib build -w",
     "build": "rslib build",
+    "dev": "rslib build -w",
     "reset": "rimraf ./**/node_modules",
     "test": "vitest run --passWithNoTests"
   },
-  "engines": {
-    "node": ">=14.17.6"
+  "dependencies": {
+    "@rspress/shared": "workspace:*",
+    "typedoc": "0.24.8",
+    "typedoc-plugin-markdown": "3.17.1"
   },
   "devDependencies": {
     "@microsoft/api-extractor": "^7.48.1",
@@ -36,24 +47,13 @@
   "peerDependencies": {
     "rspress": "workspace:^1.39.3"
   },
-  "sideEffects": [
-    "*.css",
-    "*.less",
-    "*.sass",
-    "*.scss"
-  ],
-  "files": [
-    "dist",
-    "src"
-  ],
+  "engines": {
+    "node": ">=14.17.6"
+  },
   "publishConfig": {
     "access": "public",
     "provenance": true,
     "registry": "https://registry.npmjs.org/"
   },
-  "dependencies": {
-    "@rspress/shared": "workspace:*",
-    "typedoc": "0.24.8",
-    "typedoc-plugin-markdown": "3.17.1"
-  }
+  "jsnext:source": "./src/index.ts"
 }

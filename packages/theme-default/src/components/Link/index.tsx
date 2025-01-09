@@ -1,19 +1,19 @@
-import type React from 'react';
-import type { ComponentProps } from 'react';
 import {
+  isEqualPath,
   matchRoutes,
-  useLocation,
-  useNavigate,
   normalizeHrefInRuntime as normalizeHref,
   normalizeRoutePath,
+  useLocation,
+  useNavigate,
   withBase,
-  isEqualPath,
 } from '@rspress/runtime';
-import nprogress from 'nprogress';
-import { routes } from 'virtual-routes';
 import { isExternalUrl } from '@rspress/shared';
-import styles from './index.module.scss';
+import nprogress from 'nprogress';
+import type React from 'react';
+import type { ComponentProps } from 'react';
+import { routes } from 'virtual-routes';
 import { scrollToTarget } from '../../logic';
+import styles from './index.module.scss';
 
 export interface LinkProps extends ComponentProps<'a'> {
   href?: string;

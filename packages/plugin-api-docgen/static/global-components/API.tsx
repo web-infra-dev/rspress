@@ -1,7 +1,7 @@
+import { useLang, usePageData } from '@rspress/core/runtime';
+import { getCustomMDXComponent } from '@rspress/core/theme';
 import ReactMarkdown from 'react-markdown';
 import remarkGfm from 'remark-gfm';
-import { getCustomMDXComponent } from '@rspress/core/theme';
-import { usePageData, useLang } from '@rspress/core/runtime';
 import './API.scss';
 
 export default (props: { moduleName: string }) => {

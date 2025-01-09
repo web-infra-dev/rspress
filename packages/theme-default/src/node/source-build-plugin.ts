@@ -1,6 +1,6 @@
+import { createRequire } from 'node:module';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
-import { createRequire } from 'node:module';
 import type { RspressPlugin } from '@rspress/shared';
 import { tailwindConfig } from '../../tailwind.config';
 

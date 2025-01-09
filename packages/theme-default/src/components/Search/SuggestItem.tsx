@@ -1,13 +1,13 @@
 import { isProduction } from '@rspress/runtime';
 import FileSvg from '@theme-assets/file';
-import JumpSvg from '@theme-assets/jump';
 import HeaderSvg from '@theme-assets/header';
+import JumpSvg from '@theme-assets/jump';
 import TitleSvg from '@theme-assets/title';
 import { useRef } from 'react';
-import { getSlicedStrByByteLength, removeDomain } from './logic/util';
-import styles from './index.module.scss';
-import type { DefaultMatchResultItem, HightlightInfo } from './logic/types';
 import { SvgWrapper } from '../SvgWrapper';
+import styles from './index.module.scss';
+import type { DefaultMatchResultItem, HighlightInfo } from './logic/types';
+import { getSlicedStrByByteLength, removeDomain } from './logic/util';
 
 const ICON_MAP = {
   title: TitleSvg,
@@ -46,7 +46,7 @@ export function SuggestItem({
 
   const getHighlightedFragments = (
     rawText: string,
-    highlights: HightlightInfo[],
+    highlights: HighlightInfo[],
   ) => {
     // Split raw text into several parts, and add styles.mark className to the parts that need to be highlighted.
     // highlightInfoList is an array of objects, each object contains the start index and the length of the part that needs to be highlighted.

@@ -1,7 +1,7 @@
-import { expect, test } from '@playwright/test';
 import path from 'node:path';
-import { runBuildCommand } from '../utils/runCommands';
+import { expect, test } from '@playwright/test';
 import { exists, readFile } from 'fs-extra';
+import { runBuildCommand } from '../utils/runCommands';
 
 const fixtureDir = path.resolve(__dirname, '../fixtures');
 

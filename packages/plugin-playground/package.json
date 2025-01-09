@@ -9,15 +9,6 @@
     "directory": "packages/plugin-preview"
   },
   "license": "MIT",
-  "scripts": {
-    "dev": "modern build -w",
-    "build": "modern build",
-    "reset": "rimraf ./**/node_modules",
-    "test": "vitest run --passWithNoTests"
-  },
-  "types": "./dist/cli/esm/index.d.ts",
-  "main": "./dist/cli/cjs/index.js",
-  "module": "./dist/cli/esm/index.js",
   "exports": {
     ".": {
       "types": "./dist/cli/esm/index.d.ts",
@@ -30,8 +21,18 @@
       "default": "./dist/web/cjs/index.js"
     }
   },
-  "engines": {
-    "node": ">=14.17.6"
+  "main": "./dist/cli/cjs/index.js",
+  "module": "./dist/cli/esm/index.js",
+  "types": "./dist/cli/esm/index.d.ts",
+  "files": [
+    "dist",
+    "static"
+  ],
+  "scripts": {
+    "build": "modern build",
+    "dev": "modern build -w",
+    "reset": "rimraf ./**/node_modules",
+    "test": "vitest run --passWithNoTests"
   },
   "dependencies": {
     "@mdx-js/mdx": "2.3.0",
@@ -62,10 +63,9 @@
     "react": ">=17.0.0",
     "react-router-dom": "^6.8.1"
   },
-  "files": [
-    "dist",
-    "static"
-  ],
+  "engines": {
+    "node": ">=14.17.6"
+  },
   "publishConfig": {
     "access": "public",
     "provenance": true,

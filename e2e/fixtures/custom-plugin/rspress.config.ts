@@ -1,7 +1,7 @@
 import path from 'node:path';
+import { pluginPreview } from '@rspress/plugin-preview';
 import { defineConfig } from 'rspress/config';
 import { docPluginDemo } from './plugin';
-import { pluginPreview } from '@rspress/plugin-preview';
 // import { pluginPlayground } from '@rspress/plugin-playground';
 
 export default defineConfig({

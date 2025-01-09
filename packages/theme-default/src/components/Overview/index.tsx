@@ -14,8 +14,8 @@ import { Link } from '@theme';
 import { useEffect, useMemo, useRef, useState } from 'react';
 import {
   renderInlineMarkdown,
-  useSidebarData,
   useLocaleSiteData,
+  useSidebarData,
 } from '../../logic';
 import styles from './index.module.scss';
 import { findItemByRoutePath } from './utils';

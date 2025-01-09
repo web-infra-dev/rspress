@@ -1,10 +1,10 @@
-import { expect, test } from '@playwright/test';
 import path from 'node:path';
+import { expect, test } from '@playwright/test';
 import { getPort, killProcess, runDevCommand } from '../utils/runCommands';
 
 const fixtureDir = path.resolve(__dirname, '../fixtures');
 
-test.describe('modernjs module doc test', async () => {
+test.describe('modern-js module doc test', async () => {
   let appPort;
   let app;
   test.beforeAll(async () => {

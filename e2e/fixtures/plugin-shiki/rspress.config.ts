@@ -1,5 +1,4 @@
 import path from 'node:path';
-import { defineConfig } from 'rspress/config';
 import {
   createTransformerDiff,
   createTransformerErrorLevel,
@@ -8,6 +7,7 @@ import {
   createTransformerLineNumber,
   pluginShiki,
 } from '@rspress/plugin-shiki';
+import { defineConfig } from 'rspress/config';
 
 export default defineConfig({
   root: path.join(__dirname, 'doc'),

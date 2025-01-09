@@ -1,12 +1,12 @@
-import { isExternalUrl } from '@rspress/shared';
 import {
+  normalizeHrefInRuntime as normalizeHref,
   removeBase,
   useLang,
   usePageData,
-  normalizeHrefInRuntime as normalizeHref,
   useVersion,
   withBase,
 } from '@rspress/runtime';
+import { isExternalUrl } from '@rspress/shared';
 
 export function usePathUtils() {
   const currentLang = useLang();
@@ -30,7 +30,7 @@ export function usePathUtils() {
 
       // When add the version prefix, the situation is as follows:
       // - current version is not default version
-      // - current link does not start with currrent version
+      // - current link does not start with current version
       if (defaultVersion) {
         if (currentVersion !== defaultVersion) {
           versionPart = currentVersion;

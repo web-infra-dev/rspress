@@ -1,6 +1,6 @@
 import path from 'node:path';
-import { defineConfig } from 'rspress/config';
 import { pluginApiDocgen } from '@rspress/plugin-api-docgen';
+import { defineConfig } from 'rspress/config';
 
 export default defineConfig({
   root: path.join(__dirname, 'doc'),

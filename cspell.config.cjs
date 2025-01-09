@@ -3,8 +3,8 @@ const { banWords } = require('cspell-ban-words');
 module.exports = {
   version: '0.2',
   language: 'en',
-  files: ['**/*.{ts,tsx,js,jsx,md,mdx}'],
-  enableFiletypes: ['mdx'],
+  files: ['**/{*,.*}/**/*.{ts,tsx,js,jsx,md,mdx,yml,yaml}'],
+  enableFiletypes: ['mdx', 'github-actions-workflow'],
   ignoreRegExpList: [
     // ignore markdown anchors such as [fooBar](#foobar)
     '#.*?\\)',

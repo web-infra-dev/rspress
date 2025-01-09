@@ -1,9 +1,9 @@
+import { normalizeHrefInRuntime as normalizeHref } from '@rspress/runtime';
 import {
   type NavItemWithLink,
   type NavItemWithLinkAndChildren,
   withoutBase,
 } from '@rspress/shared';
-import { normalizeHrefInRuntime as normalizeHref } from '@rspress/runtime';
 import { Link, Tag } from '@theme';
 import styles from './index.module.scss';
 

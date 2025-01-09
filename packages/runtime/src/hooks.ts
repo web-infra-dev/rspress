@@ -1,3 +1,4 @@
+import type { PageData } from '@rspress/shared';
 import {
   type ReactElement,
   createContext,
@@ -6,9 +7,8 @@ import {
   useLayoutEffect,
   useState,
 } from 'react';
-import type { PageData } from '@rspress/shared';
-import i18nTextData from 'virtual-i18n-text';
 import { flushSync } from 'react-dom';
+import i18nTextData from 'virtual-i18n-text';
 
 // Type shim for window.__EDEN_PAGE_DATA__
 declare global {
@@ -65,7 +65,7 @@ declare global {
 
 export function useViewTransition(dom: ReactElement) {
   /**
-   * use a pesudo element to hold the actual JSX element so we can schedule the
+   * use a pseudo element to hold the actual JSX element so we can schedule the
    * update later in sync
    */
   const [element, setElement] = useState(dom);
@@ -102,7 +102,7 @@ export function useViewTransition(dom: ReactElement) {
     }
   }, [dom]);
   /**
-   * take this element to the actual VDOM tree
+   * take this element to the actual V-DOM tree
    */
   return element;
 }

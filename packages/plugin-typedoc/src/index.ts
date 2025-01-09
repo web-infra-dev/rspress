@@ -1,6 +1,6 @@
 import path from 'node:path';
-import { Application, TSConfigReader } from 'typedoc';
 import type { NavItem, RspressPlugin } from '@rspress/shared';
+import { Application, TSConfigReader } from 'typedoc';
 import { load } from 'typedoc-plugin-markdown';
 import { API_DIR } from './constants';
 import { patchGeneratedApiDocs } from './patch';

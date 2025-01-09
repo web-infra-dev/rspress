@@ -1,16 +1,16 @@
-import siteData from 'virtual-site-data';
 import {
   addLeadingSlash,
-  removeTrailingSlash,
-  normalizeSlash,
+  isDataUrl,
+  isExternalUrl,
   isProduction,
   normalizeHref,
-  withBase as rawWithBase,
+  normalizeSlash,
   removeBase as rawRemoveBase,
-  isExternalUrl,
-  isDataUrl,
+  withBase as rawWithBase,
   removeHash,
+  removeTrailingSlash,
 } from '@rspress/shared';
+import siteData from 'virtual-site-data';
 
 export function normalizeRoutePath(routePath: string) {
   return decodeURIComponent(routePath)
