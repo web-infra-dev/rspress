@@ -6,9 +6,16 @@ const fixtureDir = path.resolve(__dirname, '../fixtures');
 async function isNavBarVisible(page: Page): Promise<boolean> {
   const nav = await page.$('.rspress-nav');
   const className: string = await nav?.evaluate(el => el.className);
-  console.log(className);
 
   return !className.includes('hidden');
+}
+
+async function scrollDown(page: Page) {
+  // Simulate the scrolling of people
+  await page.mouse.wheel(0, 100);
+  await page.waitForTimeout(100);
+  await page.mouse.wheel(0, 100);
+  await page.waitForTimeout(100);
 }
 
 test.describe('basic test', async () => {
@@ -30,16 +37,8 @@ test.describe('basic test', async () => {
     await launchApp('./rspress-hide-auto.config.ts');
     await page.goto(`http://localhost:${appPort}/`);
 
-    // scroll down
-    await page.mouse.wheel(0, 100);
-    await page.waitForTimeout(100);
-    await page.mouse.wheel(0, 100);
-    await page.waitForTimeout(100);
-    await page.mouse.wheel(0, 100);
-    await page.waitForTimeout(100);
-
-    const isVisible = await isNavBarVisible(page);
-    expect(isVisible).toBeFalsy();
+    await scrollDown(page);
+    expect(await isNavBarVisible(page)).toBeFalsy();
   });
 
   test('Navbar should be visible on mobile when we scroll down with hideNavbar to never', async ({
@@ -50,13 +49,7 @@ test.describe('basic test', async () => {
 
     await page.goto(`http://localhost:${appPort}/`);
 
-    // scroll down
-    await page.mouse.wheel(0, 100);
-    await page.waitForTimeout(100);
-    await page.mouse.wheel(0, 100);
-    await page.waitForTimeout(100);
-    await page.mouse.wheel(0, 100);
-
+    await scrollDown(page);
     expect(await isNavBarVisible(page)).toBeTruthy();
   });
 });
