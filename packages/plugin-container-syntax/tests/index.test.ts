@@ -1,4 +1,5 @@
 import rehypeStringify from 'rehype-stringify';
+import remarkMdx from 'remark-mdx';
 import remarkParse from 'remark-parse';
 import remarkRehype from 'remark-rehype';
 import { unified } from 'unified';
@@ -11,6 +12,9 @@ describe('remark-container', () => {
     .use(remarkPluginContainer)
     .use(remarkRehype)
     .use(rehypeStringify);
+
+  const mdxProcessor = processor().use(remarkMdx);
+
   test('No newline', () => {
     const result = processor.processSync(`
   :::tip
@@ -180,6 +184,90 @@ This is a details block.
 > console.log(69);
 > \`\`\`
 `);
+
+    expect(result.value).toMatchSnapshot();
+  });
+
+  test('nested in ordered list', () => {
+    const result = processor.processSync(`
+1. Title1
+
+  :::tip
+  This is a tip.
+  :::
+
+2. Title2
+`);
+
+    expect(result.value).toMatchSnapshot();
+  });
+
+  test('nested in unordered list', () => {
+    const result = processor.processSync(`
+- Title1
+
+  :::tip
+  This is a tip.
+  :::
+
+- Title2
+`);
+
+    expect(result.value).toMatchSnapshot();
+  });
+
+  test('nested in ordered list inside mdx component', () => {
+    const result = mdxProcessor.processSync(`
+<div>
+  <div>
+    <div>
+      1. Title1
+
+      :::tip
+      This is a tip.
+      :::
+
+      2. Title2
+    </div>
+  </div>
+</div>
+`);
+
+    expect(result.value).toMatchSnapshot();
+  });
+
+  test('nested in unordered list inside mdx component', () => {
+    const result = mdxProcessor.processSync(`
+<div>
+  <div>
+    <div>
+    - Title1
+
+      :::tip
+      This is a tip.
+      :::
+
+    - Title2
+    </div>
+  </div>
+</div>
+`);
+
+    expect(result.value).toMatchSnapshot();
+  });
+
+  test('nested in list - github alerts', () => {
+    const result = processor.processSync(`
+- Title
+
+  > [!TIP]
+  > This is a 'tip' style block.
+
+1. Title
+
+  > [!TIP]
+  > This is a 'tip' style block.
+ `);
 
     expect(result.value).toMatchSnapshot();
   });

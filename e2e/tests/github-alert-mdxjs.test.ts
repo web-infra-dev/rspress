@@ -24,13 +24,19 @@ test.describe('github alert syntax in mdx-js', async () => {
   }) => {
     await page.goto(`http://localhost:${appPort}`);
 
-    const directives = await page.$$(
+    const topLevelDirectives = await page.$$(
       '.rspress-doc > [class^="rspress-directive"]',
     );
-    expect(directives.length).toEqual(7);
+
+    expect(topLevelDirectives.length).toEqual(8);
+
+    const listDirectives = await page.$$(
+      '.rspress-doc > ul > li > [class^="rspress-directive"]',
+    );
+    expect(listDirectives.length).toEqual(1);
 
     const containerTypes = await Promise.all(
-      directives.map(async directive => {
+      [...topLevelDirectives, ...listDirectives].map(async directive => {
         const className = await directive.getAttribute('class');
         return className?.split(' ')[1];
       }),
@@ -43,6 +49,8 @@ test.describe('github alert syntax in mdx-js', async () => {
       'danger',
       'info',
       'details',
+      'info',
+      'warning',
     ]);
   });
 });

@@ -798,8 +798,8 @@ importers:
         specifier: ^4.17.12
         version: 4.17.12
       '@types/mdast':
-        specifier: ^4.0.4
-        version: 4.0.4
+        specifier: ^3.0.0
+        version: 3.0.15
       '@types/node':
         specifier: ^18.11.17
         version: 18.11.17
@@ -960,8 +960,8 @@ importers:
         specifier: 0.2.2
         version: 0.2.2(@microsoft/api-extractor@7.48.1(@types/node@18.11.17))(typescript@5.5.3)
       '@types/mdast':
-        specifier: ^4.0.4
-        version: 4.0.4
+        specifier: ^3.0.0
+        version: 3.0.15
       '@types/node':
         specifier: ^18.11.17
         version: 18.11.17
@@ -1074,11 +1074,17 @@ importers:
         specifier: 0.2.2
         version: 0.2.2(@microsoft/api-extractor@7.48.1(@types/node@22.10.2))(typescript@5.5.3)
       '@types/mdast':
-        specifier: ^4.0.4
-        version: 4.0.4
+        specifier: ^3.0.0
+        version: 3.0.15
+      mdast-util-mdx-jsx:
+        specifier: ^2.0.0
+        version: 2.1.4
       rehype-stringify:
         specifier: ^9.0.4
         version: 9.0.4
+      remark-mdx:
+        specifier: 2.3.0
+        version: 2.3.0
       remark-parse:
         specifier: ^10.0.2
         version: 10.0.2
@@ -1200,8 +1206,8 @@ importers:
         specifier: ^7.20.6
         version: 7.20.6
       '@types/mdast':
-        specifier: ^4.0.4
-        version: 4.0.4
+        specifier: ^3.0.0
+        version: 3.0.15
       '@types/node':
         specifier: ^18.11.17
         version: 18.11.17
@@ -1270,8 +1276,8 @@ importers:
         specifier: ^4.17.14
         version: 4.17.14
       '@types/mdast':
-        specifier: ^4.0.4
-        version: 4.0.4
+        specifier: ^3.0.0
+        version: 3.0.15
       '@types/node':
         specifier: ^18.11.17
         version: 18.11.17
@@ -1573,8 +1579,8 @@ importers:
         specifier: ^4.17.12
         version: 4.17.12
       '@types/mdast':
-        specifier: ^4.0.4
-        version: 4.0.4
+        specifier: ^3.0.0
+        version: 3.0.15
       '@types/nprogress':
         specifier: ^0.2.3
         version: 0.2.3
@@ -3141,9 +3147,6 @@ packages:
 
   '@types/mdast@3.0.15':
     resolution: {integrity: sha512-LnwD+mUEfxWMa1QpDraczIn6k0Ee3SMicuYSSzS6ZYl2gKS09EClnJYGd8Du6rfc5r/GZEk5o1mRb8TaTj03sQ==}
-
-  '@types/mdast@4.0.4':
-    resolution: {integrity: sha512-kGaNbPh1k7AFzgpud/gMdvIm5xuECykRR+JnWKQno9TAXVa6WIVCGTPvYGekIDL4uwCZQSYbUxNBSb1aUo79oA==}
 
   '@types/mdx@2.0.6':
     resolution: {integrity: sha512-sVcwEG10aFU2KcM7cIA0M410UPv/DesOPyG8zMVk0QUDexHA3lYmGucpEpZ2dtWWhi2ip3CG+5g/iH0PwoW4Fw==}
@@ -8273,10 +8276,6 @@ snapshots:
   '@types/mdast@3.0.15':
     dependencies:
       '@types/unist': 2.0.7
-
-  '@types/mdast@4.0.4':
-    dependencies:
-      '@types/unist': 3.0.2
 
   '@types/mdx@2.0.6': {}
 

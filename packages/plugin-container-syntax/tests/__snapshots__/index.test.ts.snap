@@ -61,3 +61,62 @@ exports[`remark-container > github alerts ~ note 1`] = `"<div class="rspress-dir
 exports[`remark-container > github alerts ~ tip 1`] = `"<div class="rspress-directive tip"><div class="rspress-directive-title">TIP</div><div class="rspress-directive-content"><p><strong>Helpful advice for doing things better or more easily.</strong></p></div></div>"`;
 
 exports[`remark-container > github alerts ~ warning 1`] = `"<div class="rspress-directive warning"><div class="rspress-directive-title">WARNING</div><div class="rspress-directive-content"><p>Use <code>dummy</code> instead of <code>demo</code></p></div></div>"`;
+
+exports[`remark-container > nested in list - github alerts 1`] = `
+"<ul>
+<li>
+<p>Title</p>
+<div class="rspress-directive tip"><div class="rspress-directive-title">TIP</div><div class="rspress-directive-content"><p>This is a 'tip' style block.</p></div></div>
+</li>
+</ul>
+<ol>
+<li>Title</li>
+</ol>
+<div class="rspress-directive tip"><div class="rspress-directive-title">TIP</div><div class="rspress-directive-content"><p>This is a 'tip' style block.</p></div></div>"
+`;
+
+exports[`remark-container > nested in ordered list 1`] = `
+"<ol>
+<li>Title1</li>
+</ol>
+<div class="rspress-directive tip"><div class="rspress-directive-title">TIP</div><div class="rspress-directive-content"><p>
+This is a tip.</p></div></div>
+<ol start="2">
+<li>Title2</li>
+</ol>"
+`;
+
+exports[`remark-container > nested in ordered list inside mdx component 1`] = `
+"<div><div><div><ol>
+<li>Title1</li>
+</ol><div class="rspress-directive tip"><div class="rspress-directive-title">TIP</div><div class="rspress-directive-content"><p>
+This is a tip.</p></div></div><ol start="2">
+<li>Title2</li>
+</ol></div></div></div>"
+`;
+
+exports[`remark-container > nested in unordered list 1`] = `
+"<ul>
+<li>
+<p>Title1</p>
+<div class="rspress-directive tip"><div class="rspress-directive-title">TIP</div><div class="rspress-directive-content"><p>
+This is a tip.</p></div></div>
+</li>
+<li>
+<p>Title2</p>
+</li>
+</ul>"
+`;
+
+exports[`remark-container > nested in unordered list inside mdx component 1`] = `
+"<div><div><div><ul>
+<li>
+<p>Title1</p>
+<div class="rspress-directive tip"><div class="rspress-directive-title">TIP</div><div class="rspress-directive-content"><p>
+This is a tip.</p></div></div>
+</li>
+<li>
+<p>Title2</p>
+</li>
+</ul></div></div></div>"
+`;

@@ -11,7 +11,7 @@
  * In fact, the syntax is usually used in SSG Frameworks, such as VuePress/Docusaurus.
  * So the plugin is used to solve the problem and support both syntaxes in above cases.
  */
-
+/// <reference types="mdast-util-mdx-jsx" />
 import type {
   BlockContent,
   Content,
@@ -114,11 +114,23 @@ const createContainer = (
  * 2. If it is, crawl the next nodes, if there is a paragraph node, we need to check if it is the end of the container directive. If not, we need to push it to the children of the container directive node.
  * 3. If we find the end of the container directive, we remove the visited node and insert the custom container directive node.
  */
-function transformer(tree: Root) {
+function transformer(tree: Parent) {
   let i = 0;
   try {
     while (i < tree.children.length) {
       const node = tree.children[i];
+
+      console.log(JSON.stringify(node, null, 2));
+
+      // The list ast must be traversed to find the container directive,
+      // especially for the unordered list whose ast is very different
+      if (node.type === 'list') {
+        for (const item of node.children) {
+          transformer(item);
+        }
+      } else if (node.type === 'mdxJsxFlowElement') {
+        transformer(node);
+      }
 
       /**
        * Support for Github Alerts
