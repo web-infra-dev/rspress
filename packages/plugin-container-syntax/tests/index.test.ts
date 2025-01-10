@@ -192,9 +192,9 @@ This is a details block.
     const result = processor.processSync(`
 1. Title1
 
-  :::tip
-  This is a tip.
-  :::
+    :::tip
+    This is a tip.
+    :::
 
 2. Title2
 `);
@@ -206,9 +206,9 @@ This is a details block.
     const result = processor.processSync(`
 - Title1
 
-  :::tip
-  This is a tip.
-  :::
+    :::tip
+    This is a tip.
+    :::
 
 - Title2
 `);
@@ -223,9 +223,9 @@ This is a details block.
     <div>
       1. Title1
 
-      :::tip
-      This is a tip.
-      :::
+          :::tip
+          This is a tip.
+          :::
 
       2. Title2
     </div>

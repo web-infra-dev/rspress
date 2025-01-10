@@ -28,12 +28,12 @@ test.describe('github alert syntax in mdx-js', async () => {
       '.rspress-doc > [class^="rspress-directive"]',
     );
 
-    expect(topLevelDirectives.length).toEqual(8);
+    expect(topLevelDirectives.length).toEqual(7);
 
     const listDirectives = await page.$$(
-      '.rspress-doc > ul > li > [class^="rspress-directive"]',
+      '.rspress-doc > * > li > [class^="rspress-directive"]',
     );
-    expect(listDirectives.length).toEqual(1);
+    expect(listDirectives.length).toEqual(2);
 
     const containerTypes = await Promise.all(
       [...topLevelDirectives, ...listDirectives].map(async directive => {

@@ -120,8 +120,6 @@ function transformer(tree: Parent) {
     while (i < tree.children.length) {
       const node = tree.children[i];
 
-      console.log(JSON.stringify(node, null, 2));
-
       // The list ast must be traversed to find the container directive,
       // especially for the unordered list whose ast is very different
       if (node.type === 'list') {

@@ -77,21 +77,27 @@ exports[`remark-container > nested in list - github alerts 1`] = `
 
 exports[`remark-container > nested in ordered list 1`] = `
 "<ol>
-<li>Title1</li>
-</ol>
+<li>
+<p>Title1</p>
 <div class="rspress-directive tip"><div class="rspress-directive-title">TIP</div><div class="rspress-directive-content"><p>
 This is a tip.</p></div></div>
-<ol start="2">
-<li>Title2</li>
+</li>
+<li>
+<p>Title2</p>
+</li>
 </ol>"
 `;
 
 exports[`remark-container > nested in ordered list inside mdx component 1`] = `
 "<div><div><div><ol>
-<li>Title1</li>
-</ol><div class="rspress-directive tip"><div class="rspress-directive-title">TIP</div><div class="rspress-directive-content"><p>
-This is a tip.</p></div></div><ol start="2">
-<li>Title2</li>
+<li>
+<p>Title1</p>
+<div class="rspress-directive tip"><div class="rspress-directive-title">TIP</div><div class="rspress-directive-content"><p>
+This is a tip.</p></div></div>
+</li>
+<li>
+<p>Title2</p>
+</li>
 </ol></div></div></div>"
 `;
 
