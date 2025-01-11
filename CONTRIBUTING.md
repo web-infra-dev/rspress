@@ -1,12 +1,12 @@
-# Contributing Guide
+# Contributing guide
 
 Thanks for that you are interested in contributing to Rspress. Before starting your contribution, please take a moment to read the following guidelines.
 
 ---
 
-## Setup the Dev Environment
+## Setup the dev environment
 
-### Fork the Repo
+### Fork the repo
 
 [Fork](https://help.github.com/articles/fork-a-repo/) this repository to your
 own GitHub account and then [clone](https://help.github.com/articles/cloning-a-repository/) it to your local.
@@ -41,7 +41,7 @@ nvm use 18
 corepack enable
 ```
 
-### Install Dependencies
+### Install dependencies
 
 ```sh
 pnpm install
@@ -53,7 +53,7 @@ What this will do:
 - Create symlinks between packages in the monorepo
 - Run the `build` script to build all packages (this will take some time, but is necessary to make ensure all packages are built)
 
-### Set Git Email
+### Set git email
 
 Please make sure you have your email set up in `<https://github.com/settings/emails>`. This will be needed later when you want to submit a pull request.
 
@@ -77,11 +77,11 @@ git config user.email "SOME_EMAIL@example.com"
 
 ---
 
-## Making Changes and Building
+## Making changes and building
 
 Once you have set up the local development environment in your forked repo, we can start development.
 
-### Checkout A New Branch
+### Checkout a new branch
 
 It is recommended to develop on a new branch, as it will make things easier later when you submit a pull request:
 
@@ -89,7 +89,7 @@ It is recommended to develop on a new branch, as it will make things easier late
 git checkout -b MY_BRANCH_NAME
 ```
 
-### Build the Package
+### Build the package
 
 To build the package you want to change, first open the package directory, then run the `build` command:
 
@@ -117,7 +117,7 @@ If you need to clean all `node_modules/*` in the project, run the `reset` comman
 pnpm run reset
 ```
 
-### Debug Code
+### Debug code
 
 After `build`, we need to link this repo to the global, run the link command:
 
@@ -143,7 +143,7 @@ pnpm run dev
 
 ## Testing
 
-### Run Unit Tests
+### Run unit tests
 
 Before submitting a pull request, it's important to make sure that the changes haven't introduced any regressions or bugs. You can run the unit tests for the project by executing the following command:
 
@@ -157,7 +157,7 @@ Alternatively, you can run the unit tests of single package using the `--filter`
 pnpm run --filter rspress test
 ```
 
-### Run E2E Tests
+### Run E2E tests
 
 In addition to the unit tests, the Rspress also includes end-to-end (E2E) tests, which checks the functionality of the application as a whole.
 
@@ -181,9 +181,9 @@ pnpm run lint
 
 ---
 
-## Submitting Changes
+## Submitting changes
 
-### Committing your Changes
+### Committing your changes
 
 Commit your changes to your forked repo, and [create a pull request](https://help.github.com/articles/creating-a-pull-request/).
 

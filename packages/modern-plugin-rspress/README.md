@@ -8,7 +8,7 @@
   A Progressive React Framework for modern web development.
 </p>
 
-## Getting Started
+## Getting started
 
 Please follow [Quick Start](https://modernjs.dev/en/guides/get-started/quick-start) to get started with Modern.js.
 

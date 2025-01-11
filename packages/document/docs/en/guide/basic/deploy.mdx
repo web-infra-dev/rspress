@@ -7,7 +7,7 @@ In this section, we will discuss the deployment of the project. We assume that y
 - Project base path configuration.
 - Choose deployment platform for deployment.
 
-## Build and Preview
+## Build and preview
 
 Before deployment, we need to first build the project in the production environment and preview it locally to ensure that the project can run normally. In Rspress projects, we can use the following `scripts` commands to build and preview:
 
@@ -28,7 +28,7 @@ For the preview command, you can specify the preview port number through the `--
 
 It is worth noting that the final output will be output to the `doc_build` directory under the project root directory. The content in this directory is what we need to deploy.
 
-## Static Resource Prefix Configuration
+## Static resource prefix configuration
 
 We can divide the deployment output into two parts: HTML files and static resources. HTML files refer to the HTML files in the output directory. These files are the files we finally deploy to the server.
 
@@ -52,7 +52,7 @@ In this way, when referencing static resources in HTML, the prefix will be autom
 <script src="https://cdn.com/static/js/app.123.js"></script>
 ```
 
-## Project Base Path Configuration
+## Project base path configuration
 
 When deploying, we may need to deploy the project to a subpath. For example, if you plan to deploy your site to `https://foo.github.io/bar/`, then you should set the `base` parameter to `"/bar/"`:
 
@@ -64,15 +64,15 @@ export default defineConfig({
 });
 ```
 
-## Deployment in Platform
+## Deployment in platform
 
 After completing the above configuration, we can deploy the output to the server. You have many choices, such as `GitHub Pages`, `Netlify`, `Vercel`, etc. Here we take `GitHub Pages` and `Netlify` as examples to explain how to deploy.
 
-### Deploy via GitHub Actions
+### Deploy via GitHub actions
 
 If your project is hosted on `GitHub`, then you can deploy via `GitHub Pages`. `GitHub Pages` is a static website hosting service provided by `GitHub`, which allows you to directly deploy your project to `GitHub` without having to build your own server.
 
-#### 1. Create Workflow File
+#### 1. Create workflow file
 
 First, you need to create a file named `.github/workflows/deploy.yml` in the project root directory, with the following content:
 
@@ -141,7 +141,7 @@ jobs:
 
 In the `Pages` column of the repository `Settings` interface, you can choose `GitHub Actions` as the deployment source.
 
-#### 3. Push Code to Main Branch
+#### 3. Push code to main branch
 
 When you push the code to the `main` branch, `GitHub Actions` will automatically execute the deployment process. You can view the progress of the deployment in the `Actions` column. After the deployment is complete, you can access your site through `https://<username>.github.io/<repository>/`.
 
@@ -149,7 +149,7 @@ When you push the code to the `main` branch, `GitHub Actions` will automatically
 
 `Netlify` is a Web application deployment platform, which allows you to directly deploy your project to `Netlify` without having to build your own server.
 
-#### Basic Configuration
+#### Basic configuration
 
 Deploying a project on `Netlify` is very simple. You only need to import your GitHub repository, and then configure some basic information to deploy. Just configure the following two fields:
 
@@ -158,11 +158,11 @@ Deploying a project on `Netlify` is very simple. You only need to import your Gi
 
 Then click the `Deploy site` button to complete the deployment.
 
-#### Configure Custom Domain
+#### Configure custom domain
 
 If you want to bind your site to your own domain, you can configure it in the `Domain management` column of `Netlify`. The specific configuration method can refer to the [Netlify official documentation](https://docs.netlify.com/domains-https/custom-domains/).
 
-### Deploy to Kinsta Static Site Hosting
+### Deploy to Kinsta static site hosting
 
 You can deploy your Rspress site on [Kinsta](https://kinsta.com/static-site-hosting/).
 
@@ -186,7 +186,7 @@ You can deploy your Rspress site on [Kinsta](https://kinsta.com/static-site-host
 
 [Zeabur](https://zeabur.com) is a platform for deploying services instantly, which allows you to directly deploy your Rspress site without any other configurations.
 
-#### How to Deploy
+#### How to deploy
 
 First of all, you need to [create a Zeabur account](https://zeabur.com). Then, follow the instructions to create a project and install a GitHub app to authorize Zeabur get your Rspress repository.
 

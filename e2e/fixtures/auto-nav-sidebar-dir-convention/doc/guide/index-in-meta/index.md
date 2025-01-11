@@ -2,4 +2,4 @@
 context: 'context-index-in-meta'
 ---
 
-# Index In Meta
+# Index in meta
