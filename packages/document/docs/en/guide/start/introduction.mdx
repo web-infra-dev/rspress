@@ -2,7 +2,7 @@
 
 Rspress is a static site generator based on [Rsbuild](https://rsbuild.dev/), rendered with the React framework. It comes with a default documentation theme, and you can quickly build a documentation site with Rspress. You can also customize the theme to meet your personalized static site needs, such as blog sites, product homepages, etc. Of course, you can also integrate the corresponding plugins provided by the official to easily build component library documentation.
 
-## Project Background
+## Project background
 
 Rspress is mainly built in the following directions:
 
@@ -13,7 +13,7 @@ Rspress is mainly built in the following directions:
 
 These also represent some core requirements for SSG site development. The following will introduce these aspects separately.
 
-### Build Performance
+### Build performance
 
 As the project becomes larger and larger, team members often worry about the lengthy project startup time, which negatively affects the development experience. The longer the project development time, the more obvious this deterioration of experience.
 
@@ -30,13 +30,13 @@ If there is only one most core optimization method, it is undoubtedly the `Rust 
 
 At the same time, Rspress internally also applies many other build optimization methods, such as `pre-bundle of theme`, etc. These additional optimization methods, combined with the powerful Rust front-end toolchain, push the compilation performance of the SSG framework to a new height.
 
-### MDX Support
+### MDX support
 
 In order to ensure the flexibility of content development, Rspress chooses to support the MDX content format.
 
 MDX represents a method of componentized content organization. In other words, documents serve as components, allowing for the reuse of document fragments across different documents. Additionally, custom React components can be incorporated into documents, significantly enhancing the flexibility of document development.
 
-### Basic Capabilities of Documentation Site
+### Basic capabilities of documentation site
 
 Of course, Rspress has also done a lot of work on the polishing of the basic capabilities of the documentation site, supporting the following functional features:
 
@@ -50,7 +50,7 @@ Of course, Rspress has also done a lot of work on the polishing of the basic cap
 
 In the following text, we will introduce these functional features in detail.
 
-### Extension Mechanism
+### Extension mechanism
 
 Rspress internally designed various extension mechanisms to ensure sufficient customization capabilities, including:
 
@@ -63,7 +63,7 @@ Rspress internally designed various extension mechanisms to ensure sufficient cu
 
 Next, let's introduce the main functional features of Rspress.
 
-### Automatic Layout Generation
+### Automatic layout generation
 
 For the construction of a documentation site, in addition to displaying the main content, we generally need the following layout modules:
 
@@ -93,7 +93,7 @@ We recommend using `declarative config` under normal scenes, which has many bene
 
 The `programming config` is very useful in some scenarios where dynamic config generation is needed. For example, the official Rspress [TypeDoc plugin](/plugin/official-plugins/typedoc) will automatically convert a json data provided by TypeDoc into `nav` and `sidebar` configs.
 
-### MDX Support
+### MDX support
 
 MDX is a powerful content development format. You can not only write Markdown files as usual, but also use React components in the content of Markdown:
 
@@ -154,13 +154,13 @@ docs
     └── guide
 ```
 
-### Full Text Search
+### Full text search
 
 Rspress provides out-of-the-box full-text search capabilities, which you can access without any config. It is based on the open-source FlexSearch engine, with the following effect:
 
 <img src="https://lf3-static.bytednsdoc.com/obj/eden-cn/uhbfnupenuhf/rspress/rspress-search.png" />
 
-### Custom Theme
+### Custom theme
 
 Rspress supports two ways to customize themes:
 
@@ -191,13 +191,13 @@ export * from 'rspress/theme';
 
 For details about custom themes, you can refer to the [Custom Theme Documentation](/guide/advanced/custom-theme.html 'Custom Theme Documentation').
 
-### Plugin System
+### Plugin system
 
 The plugin system is a crucial part of Rspress, which can help you conveniently extend the framework's functionality during site construction. Details can be found in the [Plugin Introduction Documentation](/plugin/system/introduction.html 'Introduction Documentation').
 
-### Component Documentation
+### Component documentation
 
-#### Demo Preview
+#### Demo preview
 
 Rspress provides a [preview plugin](/plugin/official-plugins/preview 'preview plugin'), which can automatically generate component previews for you. After you register the preview plugin, declare the following code block in the mdx file:
 
@@ -242,7 +242,7 @@ Of course, the plugin also supports mobile preview mode, which you can enable th
 
 ![](https://lf3-static.bytednsdoc.com/obj/eden-cn/uhbfnupenuhf/rspress/demo-preview-mobile.png)
 
-#### Demo Real-time Playground
+#### Demo real-time playground
 
 For component documentation, if real-time editing capabilities can be provided for components, it will greatly enhance the interactive experience of the documentation.
 
@@ -252,7 +252,7 @@ Next, you will see the following playground effect in the documentation:
 
 ![](https://lf3-static.bytednsdoc.com/obj/eden-cn/uhbfnupenuhf/rspress/demo-playground.gif)
 
-### Built-in Smooth Transition Animation
+### Built-in smooth transition animation
 
 [View Transition API](https://developer.mozilla.org/zh-CN/docs/Web/API/View_Transitions_API 'View Transition API') is a set of APIs natively provided by modern browsers for implementing transition effects during page jumps. In Rspress, we also followed up on this feature, implemented document transition animations based on View Transition, and did not use any third-party SPA animation schemes. In the future, we will explore more animation effects to further enhance the experience.
 
@@ -266,7 +266,7 @@ export default defineConfig({
 });
 ```
 
-## Differences from Other SSG Frameworks
+## Differences from other SSG frameworks
 
 ### Differences from Docusaurus
 

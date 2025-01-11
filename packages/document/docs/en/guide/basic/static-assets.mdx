@@ -1,4 +1,4 @@
-# Static Assets
+# Static assets
 
 ## Introduction
 
@@ -26,7 +26,7 @@ export default defineConfig({
 
 :::
 
-## Top Left Corner Logo
+## Top left corner logo
 
 In Rspress, you can specify the logo image at the top left corner through the `logo` field. For example:
 
@@ -79,7 +79,7 @@ The icon field supports string config, with the following specific ways:
 - Configured as an **absolute path**, such as `/favicon.ico`. In this case, Rspress will automatically find the `favicon.ico` icon in the `public directory` of your **document root directory** and display it.
 - Configured as a **relative path**, such as `./docs/public/favicon.ico`. In this case, Rspress will find the `favicon.ico` icon based on the project root directory and display it.
 
-## Homepage Logo
+## Homepage logo
 
 In the [frontmatter configuration](/api/config/config-frontmatter.html#hero) of the homepage, you can specify the homepage logo image through the `hero.image.src` field. For example:
 
@@ -99,7 +99,7 @@ Here, src is a string, supporting the following configurations:
 - Configured as an **external link**, like the above example.
 - Configured as an **absolute path**, such as `/rspress-logo.png`. In this case, Rspress will automatically find the `rspress-logo.png` image in the `public directory` of your **document root directory** and display it.
 
-## Static assets Used in .md(x) Files
+## Static assets used in .md(x) files
 
 You can import static assets in `markdown` (or `mdx`) files. Both relative paths and absolute paths are supported. For example, if there is an image in the same directory as the markdown, you can reference it like this:
 
@@ -148,7 +148,7 @@ import { normalizeImagePath } from 'rspress/runtime';
 
 Not only images, but you can also import videos, audios and other static assets in markdown files.
 
-## Other Static Assets
+## Other static assets
 
 In some scenarios, you may need to deploy certain specific static assets, such as adding the deployment configuration file `_headers` of `Netlify` to specify custom HTTP response headers.
 

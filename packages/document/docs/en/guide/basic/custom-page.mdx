@@ -1,6 +1,6 @@
 import { PackageManagerTabs } from '@theme';
 
-# Customizing Page
+# Customizing page
 
 Rspress provides several ways for you to customize the content of your pages, including:
 
@@ -8,11 +8,11 @@ Rspress provides several ways for you to customize the content of your pages, in
 - Adding custom global styles.
 - Customizing page layout structure.
 
-## Custom Global Components
+## Custom global components
 
 In some scenarios, you may need to add some custom global components to the page. The framework provides a config item `globalUIComponents` to achieve this function.
 
-### How to Use
+### How to use
 
 Add the following config in `rspress.config.ts`:
 
@@ -46,11 +46,11 @@ import GlobalUIComponents from '@en/fragments/global-ui-components';
 
 <GlobalUIComponents />
 
-## Custom Styles
+## Custom styles
 
 In some scenarios, you may need to add some global styles on top of the theme UI. The framework provides a configuration item `globalStyles` to achieve this function.
 
-### How to Use
+### How to use
 
 Add the following configuration in `rspress.config.ts`:
 
@@ -136,7 +136,7 @@ module.exports = {
 
 > For most up to date configuration, please refer to the official [Tailwind CSS documentation](https://tailwindcss.com/docs/installation/using-postcss).
 
-## Custom Layout Structure
+## Custom layout structure
 
 ### Using pageType
 
@@ -167,7 +167,7 @@ import PageType from '@en/fragments/page-type';
 
 <PageType />
 
-### Using Fine-grained Switches
+### Using fine-grained switches
 
 In addition to the `pageType` page layout level configuration, Rspress also provides more fine-grained switches. You can configure other fields in the frontmatter. These fields and their meanings are as follows:
 
@@ -188,7 +188,7 @@ globalUIComponents: false
 ---
 ```
 
-### Using URL Parameters as Switches
+### Using URL parameters as switches
 
 In addition, you can use URL parameters to control the layout structure of the page at runtime, such as:
 

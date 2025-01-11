@@ -7,10 +7,10 @@ Rspress supports not only Markdown but also [MDX](https://mdxjs.com/), a powerfu
 MDX is a superset of Markdown, which means you can write Markdown files as usual. For example:
 
 ```md
-# Hello World
+# Hello world
 ```
 
-## Use Component
+## Use component
 
 When you want to use React components in Markdown files, you should name your files with `.mdx` extension. For example:
 
@@ -18,18 +18,18 @@ When you want to use React components in Markdown files, you should name your fi
 // docs/index.mdx
 import { CustomComponent } from './custom';
 
-# Hello World
+# Hello world
 
 <CustomComponent />
 ```
 
-## Front Matter
+## Front matter
 
 You can add Front Matter at the beginning of your Markdown file, which is a YAML-formatted object that defines some metadata. For example:
 
 ```yaml
 ---
-title: Hello World
+title: Hello world
 ---
 ```
 
@@ -39,7 +39,7 @@ You can also access properties defined in Front Matter in the body, for example:
 
 ```markdown
 ---
-title: Hello World
+title: Hello world
 ---
 
 # {frontmatter.title}
@@ -48,10 +48,10 @@ title: Hello World
 The previously defined properties will be passed to the component as `frontmatter` properties. So the final output will be:
 
 ```html
-<h1>Hello World</h1>
+<h1>Hello world</h1>
 ```
 
-## Custom Container
+## Custom container
 
 You can use the `:::` syntax to create custom containers and support custom titles. For example:
 
@@ -117,9 +117,9 @@ This is a `block` of `Custom Title`
 This is a `block` of `Custom Title`
 :::
 
-## Code Block
+## Code block
 
-### Basic Usage
+### Basic usage
 
 You can use the \`\`\` syntax to create code blocks and support custom titles. For example:
 
@@ -145,7 +145,7 @@ console.log('Hello World');
 console.log('Hello World');
 ```
 
-### Show Line Numbers
+### Show line numbers
 
 If you want to display line numbers, you can enable the `showLineNumbers` option in the config file:
 
@@ -158,7 +158,7 @@ export default {
 };
 ```
 
-### Wrap Code
+### Wrap code
 
 If you want to wrap long code line by default, you can enable the `defaultWrapCode` option in the config file:
 
@@ -171,7 +171,7 @@ export default {
 };
 ```
 
-### Line Highlighting
+### Line highlighting
 
 You can also apply line highlighting and code block title at the same time, for example:
 

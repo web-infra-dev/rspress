@@ -1,4 +1,4 @@
-# Multi Version
+# Multi version
 
 Rspress's default theme supports multi-version document management. Next, we will introduce how to access multi-version documents.
 
@@ -19,7 +19,7 @@ export default defineConfig({
 
 Here, `default` is the default version, and `versions` is the version list.
 
-## Adding Multi-Version Documents
+## Adding multi-version documents
 
 According to the version list you configured, add multi-version documents under the `docs` directory, for example:
 
@@ -43,7 +43,7 @@ For links in the document, you do not need to manually add the version prefix. R
 
 :::
 
-## Get the Current Version in Components
+## Get the current version in components
 
 In components, you can get the current version through `useVersion`, for example:
 
@@ -56,7 +56,7 @@ export default () => {
 };
 ```
 
-## Limit Search to Current Version Only
+## Limit search to current version only
 
 You can configure `search.versioned` to only search through the current version's documents.
 

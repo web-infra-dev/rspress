@@ -1,4 +1,4 @@
-# Custom Theme
+# Custom theme
 
 This article will tell you how to develop custom theme.
 
@@ -101,7 +101,7 @@ export default {
 export * from 'rspress/theme';
 ```
 
-### 3. Custom Home page and 404 page
+### 3. Custom home page and 404 page
 
 In addition to the slot method, if you want to extend the default theme components, you can also customize the Home page components and 404 page components,
 as well as other Rspress [built-in components](https://github.com/web-infra-dev/rspress/tree/main/packages/theme-default/src/components)
@@ -132,7 +132,7 @@ export * from 'rspress/theme';
 
 Of course, you may need to use page data during the development process, you can get it through [`Runtime API`](/api/client-api/api-runtime).
 
-### 4. Custom Icon
+### 4. Custom icon
 
 If you want to modify the icons used in the default theme component individually, just put the icons with the same name in the theme/assets directory.
 
@@ -249,7 +249,7 @@ function Layout() {
 }
 ```
 
-#### Route Hook
+#### Route hook
 
 [react-router-dom](https://reactrouter.com/) is used inside the framework to implement routing, so you can directly use the Hook of `react-router-dom`, for example:
 
@@ -262,14 +262,14 @@ function Layout() {
 }
 ```
 
-### 3. Reusing Search Functionality
+### 3. Reusing search functionality
 
 The default theme comes with built-in search functionality, which we can break down into two components:
 
 1. The search box, i.e., the entry point to invoke the search.
 2. The search panel that pops up after clicking on the search box.
 
-#### Full Reuse
+#### Full reuse
 
 If you want to fully reuse the search functionality, you can directly import the `Search` component, like so:
 
@@ -281,7 +281,7 @@ function MySearch() {
 }
 ```
 
-#### Reusing the Search Panel
+#### Reusing the search panel
 
 If you only want to reuse the search panel and customize the search box part, then you need to import the `SearchPanel` component in your theme component, like so:
 
@@ -302,7 +302,7 @@ function MySearch() {
 
 In this case, you need to maintain the `focused` state and `setFocused` method yourself, and pass them as props to the `SearchPanel` component for controlling the display and hiding of the search panel.
 
-#### Reuse Default Full Text Search Logic
+#### Reuse default full text search logic
 
 If you want to reuse the default full text search logic, you can use the `useFullTextSearch` Hook, for example:
 

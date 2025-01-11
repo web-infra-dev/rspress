@@ -7,7 +7,7 @@ Rspress 支持 [MDX](https://mdxjs.com/)，这是一种功能强大的内容开�
 MDX 是 Markdown 的超集，这意味着你可以像往常一样编写 Markdown 文件。例如：
 
 ```md
-# Hello World
+# Hello world
 ```
 
 ## 使用组件
@@ -17,7 +17,7 @@ MDX 是 Markdown 的超集，这意味着你可以像往常一样编写 Markdown
 ```mdx title="index.mdx"
 import { CustomComponent } from './custom';
 
-# Hello World
+# Hello world
 
 <CustomComponent />
 ```
@@ -52,13 +52,13 @@ export Button = () => <button />;
 
 :::
 
-## Front Matter
+## Front matter
 
 你可以在 Markdown 文件的开头添加 Front Matter，它是一个 YAML 格式的对象，用于定义一些元数据。例如：
 
 ```yaml
 ---
-title: Hello World
+title: Hello world
 ---
 ```
 
@@ -68,7 +68,7 @@ title: Hello World
 
 ```mdx
 ---
-title: Hello World
+title: Hello world
 ---
 
 # {frontmatter.title}
@@ -77,7 +77,7 @@ title: Hello World
 前面定义的属性将作为 `frontmatter` 属性传递给组件。所以最终输出将是：
 
 ```html
-<h1>Hello World</h1>
+<h1>Hello world</h1>
 ```
 
 ## 自定义容器
@@ -156,7 +156,7 @@ title: Hello World
 自定义标题的 `block`
 :::
 
-### GitHub Markdown Alerts 语法
+### GitHub Markdown alerts 语法
 
 你可以使用 [GitHub Markdown Alerts 语法](https://docs.github.com/zh/get-started/writing-on-github/getting-started-with-writing-and-formatting-on-github/basic-writing-and-formatting-syntax#alerts) 来创建自定义容器。
 
@@ -303,7 +303,7 @@ export default {
 };
 ```
 
-### Wrap Code
+### Wrap code
 
 如果你想要默认启用长代码换行展示，你可以在配置文件中开启 `defaultWrapCode` 选项:
 
@@ -321,7 +321,7 @@ export default {
 默认情况下，Rspress 会根据各个标题的内容自动生成 id，这个 id 也会作为锚点的内容，你可以通过如下的语法来自定义 header 的 id:
 
 ```md
-## Hello World {#custom-id}
+## Hello world {#custom-id}
 ```
 
 其中 `custom-id` 就是你自定义的 id。

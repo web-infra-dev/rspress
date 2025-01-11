@@ -2,4 +2,4 @@
 context: 'context-index-md-convention'
 ---
 
-# Index Md Convention
+# Index md convention

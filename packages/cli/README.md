@@ -15,7 +15,7 @@
 - **🔌 Providing Plugin System**: Providing a plugin system, you can customize the build process and theme according to your needs.
 - **📝 Component Document**: Support multi ways to preview your component demo.
 
-## Getting Started
+## Getting started
 
 Go to the [Quick Start](https://rspress.dev/guide/start/getting-started.html) to get started.
 
@@ -25,7 +25,7 @@ Please read the [contributing guide](./CONTRIBUTING.md) and let's build Rspress 
 
 If you have any questions, you can open an issue or go to [Discord](https://discord.com/invite/Cq6HweJM26) to communicate with us.
 
-### Code of Conduct
+### Code of conduct
 
 This repo has adopted the ByteDance Open Source Code of Conduct. Please check [Code of Conduct](./CODE_OF_CONDUCT.md) for more details.
 

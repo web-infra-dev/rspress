@@ -1,4 +1,4 @@
-# Customize Search Functions
+# Customize search functions
 
 In some scenarios, we need to customize the search function, such as:
 
@@ -28,7 +28,7 @@ export default defineConfig({
 
 The value of the `search.searchHooks` config item is a file path. This file will export the corresponding hook logic, such as `onSearch`, so that you can customize the capabilities of the search at run time. We can call this file a **`searchHooks` module**.
 
-## Hook Functions in searchHooks
+## Hook functions in searchHooks
 
 Next, let us introduce the hook functions in searchHooks, namely `beforeSearch`, `onSearch`, `afterRender` and `render`.
 

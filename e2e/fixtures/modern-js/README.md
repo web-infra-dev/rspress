@@ -1,6 +1,6 @@
 # modern-js
 
-## Get Started
+## Get started
 
 按开发环境的要求，运行和调试项目
 

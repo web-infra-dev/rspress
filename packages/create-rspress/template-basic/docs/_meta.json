@@ -5,7 +5,7 @@
     "activeMatch": "/guide/"
   },
   {
-    "text": "Hello World",
+    "text": "Hello world",
     "link": "/hello/",
     "activeMatch": "/hello/"
   },

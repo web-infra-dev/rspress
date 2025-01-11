@@ -35,7 +35,7 @@ test.describe('Auto nav and sidebar dir convention', async () => {
         'index md convention',
         'index mdx convention',
         'same name',
-        'index in metaIndex In Meta',
+        'index in metaIndex in meta',
         'no meta md',
         'no meta mdx',
       ].join(','),
