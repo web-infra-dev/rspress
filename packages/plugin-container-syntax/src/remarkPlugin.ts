@@ -120,13 +120,7 @@ function transformer(tree: Parent) {
     while (i < tree.children.length) {
       const node = tree.children[i];
 
-      // The list ast must be traversed to find the container directive,
-      // especially for the unordered list whose ast is very different
-      if (node.type === 'list') {
-        for (const item of node.children) {
-          transformer(item);
-        }
-      } else if (node.type === 'mdxJsxFlowElement') {
+      if ('children' in node) {
         transformer(node);
       }
 

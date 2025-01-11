@@ -267,7 +267,7 @@ This is a details block.
 
   > [!TIP]
   > This is a 'tip' style block.
- `);
+`);
 
     expect(result.value).toMatchSnapshot();
   });
