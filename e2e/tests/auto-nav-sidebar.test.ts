@@ -47,11 +47,11 @@ test.describe('Auto nav and sidebar test', async () => {
     const h3Texts = await Promise.all(h3.map(element => element.textContent()));
     expect(h3Texts.join(',')).toEqual(
       [
-        'Basic Config',
-        'Theme Config',
-        'Front Matter Config',
-        'Build Config',
-        'Extname Config',
+        'Basic config',
+        'Theme config',
+        'Front matter config',
+        'Build config',
+        'Extname config',
         'Nested',
         'Runtime API',
         'Components',
@@ -69,7 +69,7 @@ test.describe('Auto nav and sidebar test', async () => {
         'nav',
         'sidebar',
         'builderConfig',
-        'Default Config',
+        'Default config',
         'markdown',
         'markdown.remarkPlugins',
         'Usage',
@@ -91,11 +91,11 @@ test.describe('Auto nav and sidebar test', async () => {
     const h2Texts = await Promise.all(h2.map(element => element.textContent()));
     expect(h2Texts.join(',')).toEqual(
       [
-        'Basic Config',
-        'Theme Config',
-        'Front Matter Config',
-        'Build Config',
-        'Extname Config',
+        'Basic config',
+        'Theme config',
+        'Front matter config',
+        'Build config',
+        'Extname config',
         'Nested',
       ].join(','),
     );
@@ -104,12 +104,12 @@ test.describe('Auto nav and sidebar test', async () => {
     const h3Texts = await Promise.all(h3.map(element => element.textContent()));
     expect(h3Texts.join(',')).toEqual(
       [
-        'Basic Config',
-        'Theme Config',
-        'Front Matter Config',
-        'Build Config',
-        'Extname Config',
-        'Nested Config',
+        'Basic config',
+        'Theme config',
+        'Front matter config',
+        'Build config',
+        'Extname config',
+        'Nested config',
       ].join(','),
     );
 
@@ -122,7 +122,7 @@ test.describe('Auto nav and sidebar test', async () => {
         'nav',
         'sidebar',
         'builderConfig',
-        'Default Config',
+        'Default config',
         'markdown',
         'markdown.remarkPlugins',
         'Nested H2',
@@ -173,7 +173,7 @@ test.describe('Auto nav and sidebar test', async () => {
 
     const h3 = await page.$$('.overview-group_8f375 h3');
     const h3Texts = await Promise.all(h3.map(element => element.textContent()));
-    expect(h3Texts.join(',')).toEqual(['Nested Config'].join(','));
+    expect(h3Texts.join(',')).toEqual(['Nested config'].join(','));
 
     const a = await page.$$('.overview-group_8f375 ul a');
     const aTexts = await Promise.all(a.map(element => element.textContent()));

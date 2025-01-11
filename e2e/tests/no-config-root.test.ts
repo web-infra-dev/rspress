@@ -29,7 +29,7 @@ test.describe('no config.root dev test', async () => {
     await page.goto(`http://localhost:${appPort}`);
     const h1 = await page.$('h1');
     const text = await page.evaluate(h1 => h1?.textContent, h1);
-    expect(text).toContain('Hello World');
+    expect(text).toContain('Hello world');
   });
 });
 
@@ -55,6 +55,6 @@ test.describe('no config.root build and preview test', async () => {
     });
     const h1 = await page.$('h1');
     const text = await page.evaluate(h1 => h1?.textContent, h1);
-    expect(text).toContain('Hello World');
+    expect(text).toContain('Hello world');
   });
 });

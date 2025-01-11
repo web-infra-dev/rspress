@@ -30,9 +30,9 @@ test.describe('Auto nav and sidebar test', async () => {
     expect(sidebarTexts.join(',')).toEqual(
       [
         'API',
-        'pluginPlugin APlugin B',
+        'pluginPlugin aPlugin b',
         'Commands',
-        'configBasic ConfigBuild ConfigFront Matter ConfigTheme Config',
+        'configBasic configBuild configFront matter configTheme config',
       ].join(','),
     );
   });

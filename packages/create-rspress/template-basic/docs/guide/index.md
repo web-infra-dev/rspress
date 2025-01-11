@@ -29,7 +29,7 @@ You can add Front Matter at the beginning of your Markdown file, which is a YAML
 
 ```yaml
 ---
-title: Hello World
+title: Hello world
 ---
 ```
 
@@ -39,7 +39,7 @@ You can also access properties defined in Front Matter in the body, for example:
 
 ```markdown
 ---
-title: Hello World
+title: Hello world
 ---
 
 # {frontmatter.title}
@@ -48,7 +48,7 @@ title: Hello World
 The previously defined properties will be passed to the component as `frontmatter` properties. So the final output will be:
 
 ```html
-<h1>Hello World</h1>
+<h1>Hello world</h1>
 ```
 
 ## Custom container
