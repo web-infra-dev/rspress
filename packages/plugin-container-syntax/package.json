@@ -33,7 +33,7 @@
     "@rspress/shared": "workspace:*"
   },
   "devDependencies": {
-    "@microsoft/api-extractor": "^7.48.1",
+    "@microsoft/api-extractor": "^7.49.1",
     "@rslib/core": "0.2.2",
     "@types/mdast": "^4.0.4",
     "rehype-stringify": "^9.0.4",
