@@ -43,11 +43,11 @@
     "rspack-plugin-virtual-module": "0.1.13"
   },
   "devDependencies": {
-    "@babel/types": "^7.26.3",
+    "@babel/types": "^7.26.5",
     "@types/babel__core": "^7.20.5",
     "@types/babel__standalone": "^7.1.9",
     "@types/babel__traverse": "^7.20.6",
-    "@types/mdast": "^4.0.4",
+    "@types/mdast": "^3.0.15",
     "@types/node": "^18.11.17",
     "@types/react": "^18.3.18",
     "@types/react-dom": "^18.3.5",
