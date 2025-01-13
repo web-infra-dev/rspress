@@ -26,6 +26,7 @@ import {
 } from './constants';
 import { initRsbuild } from './initRsbuild';
 import { writeSearchIndex } from './searchIndex';
+import { checkLanguageParity } from './utils/checkLanguageParity';
 import { renderConfigHead, renderFrontmatterHead } from './utils/renderHead';
 
 interface BuildOptions {
@@ -52,6 +53,7 @@ export async function bundle(
     await rsbuild.build();
   } finally {
     await writeSearchIndex(config);
+    await checkLanguageParity(config);
   }
 }
 
