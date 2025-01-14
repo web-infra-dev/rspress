@@ -129,15 +129,15 @@ export async function checkLanguageParity(config: UserConfig) {
     }
 
     if (missingLanguagesFile.length > 0) {
-      logger.warn(
+      throw new Error(
         `Check language parity failed! Missing content:\n${missingLanguagesFile
           .map(file => `        - ${file}`)
           .join('\n')}`,
       );
-    } else {
-      logger.success('Language parity checked successfully.');
     }
+    logger.success('Language parity checked successfully.');
   } catch (err) {
     logger.error(`Error during language parity check: ${err.message}`);
+    throw err;
   }
 }
