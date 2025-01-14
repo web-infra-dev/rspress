@@ -80,7 +80,6 @@ async function collectModuleFiles(
  */
 export async function checkLanguageParity(config: UserConfig) {
   if (!config?.languageParity || config.languageParity.enabled === false) {
-    logger.info('Language parity check is disabled.');
     return;
   }
 
@@ -130,7 +129,7 @@ export async function checkLanguageParity(config: UserConfig) {
     }
 
     if (missingLanguagesFile.length > 0) {
-      logger.error(
+      logger.warn(
         `Check language parity failed! Missing content:\n${missingLanguagesFile
           .map(file => `        - ${file}`)
           .join('\n')}`,
