@@ -58,8 +58,8 @@ async function collectModuleFiles(
       // exclude may includes path and files
       if (
         excludedDirs.some(excludedDir => {
-          const isFilePath = ['.md', '.mdx'].includes(excludedDir);
-          return relativePath.includes(excludedDir + isFilePath ? '' : '/');
+          const isFilePath = /\.(md|mdx)$/.test(excludedDir);
+          return relativePath.includes(excludedDir + (isFilePath ? '' : '/'));
         })
       )
         continue;
@@ -69,7 +69,7 @@ async function collectModuleFiles(
       fileLangMap[baseName].add(lang);
     }
   } catch {
-    logger.warn(`Failed to access directory: ${langModuleDir}`);
+    throw new Error(`Failed to access directory: ${langModuleDir}`);
   }
 
   return fileLangMap;
