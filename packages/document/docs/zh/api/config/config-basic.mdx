@@ -476,3 +476,59 @@ export default {
   ],
 };
 ```
+
+## languageParity
+
+- Type: `Object`
+
+对文档根目录的 md 和 mdx 文件进行扫描，检测是否存在某些语言版本缺失的情况，保证语言一致性。
+
+### languageParity.enable
+
+- Type: `boolean`
+- Default: `false`
+  是否启用语言一致性检查。
+
+```ts title="rspress.config.ts"
+import { defineConfig } from 'rspress/config';
+
+export default defineConfig({
+  languageParity: {
+    enabled: true,
+  },
+});
+```
+
+### languageParity.include
+
+- Type: `string[]`
+- Default: `[]`
+
+需要检查的文件夹，默认为文档根目录下所有文件。填写路径时，相对于文档各语言目录。例如：
+
+```ts title="rspress.config.ts"
+import { defineConfig } from 'rspress/config';
+
+export default defineConfig({
+  languageParity: {
+    // 包含 zh/en 语言目录下的 posts/foods 和 articles 文件夹
+    include: ['posts/foods', 'articles'],
+  },
+});
+```
+
+### languageParity.exclude
+
+- Type: `string[]`
+- Default: `[]`
+  从文档目录排除一些文件夹和文件，不进行检查。
+
+```ts title="rspress.config.ts"
+import { defineConfig } from 'rspress/config';
+
+export default defineConfig({
+  languageParity: {
+    exclude: ['excluded-directory', 'articles/secret.md'],
+  },
+});
+```

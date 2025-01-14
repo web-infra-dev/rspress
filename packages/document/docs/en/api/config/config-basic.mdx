@@ -477,3 +477,59 @@ export default {
   ],
 };
 ```
+
+## languageParity
+
+- Type: `Object`
+
+Scans the `md` and `mdx` files in the document root directory to detect missing language versions, protect language parity.
+
+### languageParity.enable
+
+- Type: `boolean`
+- Default: `false`
+  Whether to enable language parity checks.
+
+```ts title="rspress.config.ts"
+import { defineConfig } from 'rspress/config';
+
+export default defineConfig({
+  languageParity: {
+    enabled: true,
+  },
+});
+```
+
+### languageParity.include
+
+- Type: `string[]`
+- Default: `[]`
+
+Specifies the folders to be checked, defaulting to all files in the document root directory. Paths should be relative to each language directory. For example:
+
+```ts title="rspress.config.ts"
+import { defineConfig } from 'rspress/config';
+
+export default defineConfig({
+  languageParity: {
+    // `posts/foods` and `articles` folders under the zh/en language directories
+    include: ['posts/foods', 'articles'],
+  },
+});
+```
+
+### languageParity.exclude
+
+- Type: `string[]`
+- Default: `[]`
+  Excludes certain folders and files from the checks.
+
+```ts title="rspress.config.ts"
+import { defineConfig } from 'rspress/config';
+
+export default defineConfig({
+  languageParity: {
+    exclude: ['excluded-directory', 'articles/secret.md'],
+  },
+});
+```
