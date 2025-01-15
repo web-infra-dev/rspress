@@ -38,12 +38,9 @@ describe('checkLanguageParity', () => {
       // '/content/zh/api/api.mdx': 'API 文档',
     });
 
-    try {
-      await checkLanguageParity(mockConfig);
-      expect(true).toBe(false);
-    } catch (error) {
-      expect(error.message).toContain('zh/api/api.md');
-    }
+    await expect(checkLanguageParity(mockConfig)).rejects.toThrow(
+      'zh/api/api.mdx',
+    );
   });
 
   it('only check docs and about/me directory', async () => {
@@ -85,6 +82,7 @@ describe('checkLanguageParity', () => {
         exclude: ['excludePath', 'api/api.mdx'],
       },
     };
+
     await checkLanguageParity(excludeConfig);
     expect(logger.success).toHaveBeenCalledWith(
       'Language parity checked successfully.',
@@ -105,11 +103,8 @@ describe('checkLanguageParity', () => {
       },
     };
 
-    try {
-      await checkLanguageParity(configWithNonExistentDir);
-      expect(true).toBe(false);
-    } catch (error) {
-      expect(error.message).toContain('/content/en/non-existent');
-    }
+    await expect(checkLanguageParity(configWithNonExistentDir)).rejects.toThrow(
+      '/content/en/non-existent',
+    );
   });
 });
