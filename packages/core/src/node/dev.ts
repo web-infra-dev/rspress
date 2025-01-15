@@ -3,6 +3,7 @@ import type { UserConfig } from '@rspress/shared';
 import { PluginDriver } from './PluginDriver';
 import { initRsbuild } from './initRsbuild';
 import { writeSearchIndex } from './searchIndex';
+import { checkLanguageParity } from './utils/checkLanguageParity';
 
 interface ServerInstance {
   close: () => Promise<void>;
@@ -45,5 +46,6 @@ export async function dev(options: DevOptions): Promise<ServerInstance> {
     return server;
   } finally {
     await writeSearchIndex(modifiedConfig);
+    await checkLanguageParity(modifiedConfig);
   }
 }
