@@ -181,6 +181,23 @@ export interface UserConfig<ThemeConfig = DefaultThemeConfig> {
      */
     versions: string[];
   };
+  /**
+   * Language parity checking config
+   */
+  languageParity?: {
+    /**
+     * Whether to enable language parity checking
+     */
+    enabled: boolean;
+    /**
+     * Directories to include in the parity check
+     */
+    include: string[];
+    /**
+     * Directories to exclude from the parity check
+     */
+    exclude: string[];
+  };
 }
 
 type RemoveUnderscoreProps<T> = {
