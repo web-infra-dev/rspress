@@ -59,7 +59,6 @@ async function collectModuleFiles(
     const files = await getAllMarkdownFilesFrom(langModuleDir);
     for (const file of files) {
       const relativePath = normalizePath(path.relative(langDirPath, file));
-
       // exclude may includes path and files
       if (
         excludedDirs.some(excludedDir => {
@@ -74,7 +73,9 @@ async function collectModuleFiles(
       fileLangMap[baseName].add(lang);
     }
   } catch {
-    throw new Error(`Failed to access directory: ${langModuleDir}`);
+    throw new Error(
+      `Failed to access directory: ${normalizePath(langModuleDir)}`,
+    );
   }
 
   return fileLangMap;
@@ -136,7 +137,7 @@ export async function checkLanguageParity(config: UserConfig) {
     if (missingLanguagesFile.length > 0) {
       throw new Error(
         `Check language parity failed! Missing content:\n${missingLanguagesFile
-          .map(file => `        - ${file}`)
+          .map(file => `        - ${normalizePath(file)}`)
           .join('\n')}`,
       );
     }

@@ -105,8 +105,11 @@ describe('checkLanguageParity', () => {
       },
     };
 
-    await expect(async () => {
+    try {
       await checkLanguageParity(configWithNonExistentDir);
-    }).rejects.toThrow('Failed to access directory: /content/en/non-existent');
+      expect(true).toBe(false);
+    } catch (error) {
+      expect(error.message).toContain('/content/en/non-existent');
+    }
   });
 });
