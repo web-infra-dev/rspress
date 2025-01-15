@@ -3,6 +3,11 @@ import path from 'node:path';
 import type { UserConfig } from '@rspress/shared';
 import { logger } from '@rspress/shared/logger';
 
+// Normalize path separators to forward slashes
+function normalizePath(filePath: string) {
+  return filePath.split(path.sep).join('/');
+}
+
 /**
  * Recursively retrieves all Markdown files (.md and .mdx) from a directory.
  * @param dirPath - Target directory path
@@ -53,7 +58,7 @@ async function collectModuleFiles(
     // Recursively collect Markdown files
     const files = await getAllMarkdownFilesFrom(langModuleDir);
     for (const file of files) {
-      const relativePath = path.relative(langDirPath, file);
+      const relativePath = normalizePath(path.relative(langDirPath, file));
 
       // exclude may includes path and files
       if (
