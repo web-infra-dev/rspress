@@ -1,6 +1,6 @@
 {
   "name": "@rspress/modern-js-plugin",
-  "version": "1.39.4",
+  "version": "1.40.0",
   "description": "A Modern.js plugin to integrate rspress",
   "keywords": [
     "react",
