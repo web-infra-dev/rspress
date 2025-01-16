@@ -35,11 +35,18 @@ test.describe('github alert syntax in mdx-js', async () => {
     );
     expect(listDirectives.length).toEqual(2);
 
+    const stepsDirectives = await page.$$(
+      '.rspress-doc > .\\[counter-reset\\:step\\] * > li > [class^="rspress-directive"]',
+    );
+    expect(stepsDirectives.length).toEqual(2);
+
     const containerTypes = await Promise.all(
-      [...topLevelDirectives, ...listDirectives].map(async directive => {
-        const className = await directive.getAttribute('class');
-        return className?.split(' ')[1];
-      }),
+      [...topLevelDirectives, ...listDirectives, ...stepsDirectives].map(
+        async directive => {
+          const className = await directive.getAttribute('class');
+          return className?.split(' ')[1];
+        },
+      ),
     );
     expect(containerTypes).toEqual([
       'tip',
@@ -49,6 +56,8 @@ test.describe('github alert syntax in mdx-js', async () => {
       'danger',
       'info',
       'details',
+      'info',
+      'warning',
       'info',
       'warning',
     ]);
