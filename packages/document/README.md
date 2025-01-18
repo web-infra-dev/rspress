@@ -1,4 +1,4 @@
-# Rspress Website
+# Rspress website
 
 ## Writing style guide
 
