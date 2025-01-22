@@ -25,7 +25,7 @@ export function LinkCard(props: LinkCardProps) {
 
   return (
     <div
-      className="relative border border-gray-400 rounded-lg p-6 flex justify-between items-start hover:border-gray-500 hover:bg-gray-100 transition-all duration-300"
+      className={`relative border border-gray-400 rounded-lg p-6 flex justify-between items-start hover:border-gray-500 transition-all duration-300 ${styles.linkCard}`}
       style={style}
     >
       <div className="flex flex-col">
