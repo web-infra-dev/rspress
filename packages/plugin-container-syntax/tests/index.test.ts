@@ -1,4 +1,5 @@
 import rehypeStringify from 'rehype-stringify';
+import remarkDirective from 'remark-directive';
 import remarkMdx from 'remark-mdx';
 import remarkParse from 'remark-parse';
 import remarkRehype from 'remark-rehype';
@@ -10,6 +11,7 @@ describe('remark-container', () => {
   const processor = unified()
     .use(remarkParse)
     .use(remarkPluginContainer)
+    .use(remarkDirective)
     .use(remarkRehype)
     .use(rehypeStringify);
 
@@ -81,6 +83,21 @@ describe('remark-container', () => {
   });
 
   test('With link, inlineCode, img, list in container', () => {
+    const result = processor.processSync(`
+:::tip
+
+This is a tip with \`code\` and [link](foo) some text
+
+- list 1
+- list 2
+
+![img](foo)
+
+:::`);
+    expect(result.value).toMatchSnapshot();
+  });
+
+  test('With link, inlineCode, img, spread list in container', () => {
     const result = processor.processSync(`
   :::tip
 

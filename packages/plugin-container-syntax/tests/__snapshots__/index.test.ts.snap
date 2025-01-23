@@ -8,8 +8,7 @@ sss</p></div></div>"
 exports[`remark-container > Has space before type 1`] = `"<div class="rspress-directive tip"><div class="rspress-directive-title">TIP</div><div class="rspress-directive-content"><p>This is a tip.</p></div></div>"`;
 
 exports[`remark-container > No newline 1`] = `
-"<div class="rspress-directive tip"><div class="rspress-directive-title">TIP</div><div class="rspress-directive-content"><p>
-This is a tip</p></div></div>
+"<div class="rspress-directive tip"><div class="rspress-directive-title">TIP</div><div class="rspress-directive-content"><p>This is a tip</p></div></div>
 <p>12312</p>"
 `;
 
@@ -39,10 +38,18 @@ exports[`remark-container > With link, inlineCode, img, list in container 1`] = 
 </ul><p><img src="foo" alt="img"></p></div></div>"
 `;
 
-exports[`remark-container > With new line before the end position of container 1`] = `
-"<div class="rspress-directive tip"><div class="rspress-directive-title">TIP</div><div class="rspress-directive-content"><p>
-This is a tip</p></div></div>"
+exports[`remark-container > With link, inlineCode, img, spread list in container 1`] = `
+"<div class="rspress-directive tip"><div class="rspress-directive-title">TIP</div><div class="rspress-directive-content"><p>This is a tip with <code>code</code> and <a href="foo">link</a> some text</p><ul>
+<li>
+<p>list 1</p>
+</li>
+<li>
+<p>list 2</p>
+</li>
+</ul><p><img src="foo" alt="img"></p></div></div>"
 `;
+
+exports[`remark-container > With new line before the end position of container 1`] = `"<div class="rspress-directive tip"><div class="rspress-directive-title">TIP</div><div class="rspress-directive-content"><p>This is a tip</p></div></div>"`;
 
 exports[`remark-container > With new line in all case 1`] = `"<div class="rspress-directive tip"><div class="rspress-directive-title">TIP</div><div class="rspress-directive-content"><p>This is a tip</p></div></div>"`;
 
@@ -79,8 +86,7 @@ exports[`remark-container > nested in ordered list 1`] = `
 "<ol>
 <li>
 <p>Title1</p>
-<div class="rspress-directive tip"><div class="rspress-directive-title">TIP</div><div class="rspress-directive-content"><p>
-This is a tip.</p></div></div>
+<div class="rspress-directive tip"><div class="rspress-directive-title">TIP</div><div class="rspress-directive-content"><p>This is a tip.</p></div></div>
 </li>
 <li>
 <p>Title2</p>
@@ -92,8 +98,7 @@ exports[`remark-container > nested in ordered list inside mdx component 1`] = `
 "<div><div><div><ol>
 <li>
 <p>Title1</p>
-<div class="rspress-directive tip"><div class="rspress-directive-title">TIP</div><div class="rspress-directive-content"><p>
-This is a tip.</p></div></div>
+<div class="rspress-directive tip"><div class="rspress-directive-title">TIP</div><div class="rspress-directive-content"><p>This is a tip.</p></div></div>
 </li>
 <li>
 <p>Title2</p>
@@ -105,8 +110,7 @@ exports[`remark-container > nested in unordered list 1`] = `
 "<ul>
 <li>
 <p>Title1</p>
-<div class="rspress-directive tip"><div class="rspress-directive-title">TIP</div><div class="rspress-directive-content"><p>
-This is a tip.</p></div></div>
+<div class="rspress-directive tip"><div class="rspress-directive-title">TIP</div><div class="rspress-directive-content"><p>This is a tip.</p></div></div>
 </li>
 <li>
 <p>Title2</p>
@@ -118,8 +122,7 @@ exports[`remark-container > nested in unordered list inside mdx component 1`] = 
 "<div><div><div><ul>
 <li>
 <p>Title1</p>
-<div class="rspress-directive tip"><div class="rspress-directive-title">TIP</div><div class="rspress-directive-content"><p>
-This is a tip.</p></div></div>
+<div class="rspress-directive tip"><div class="rspress-directive-title">TIP</div><div class="rspress-directive-content"><p>This is a tip.</p></div></div>
 </li>
 <li>
 <p>Title2</p>

@@ -11,7 +11,7 @@
  * In fact, the syntax is usually used in SSG Frameworks, such as VuePress/Docusaurus.
  * So the plugin is used to solve the problem and support both syntaxes in above cases.
  */
-/// <reference types="mdast-util-mdx-jsx" />
+/// <reference types="remark-directive" />
 import type {
   BlockContent,
   Content,
@@ -124,21 +124,37 @@ function transformer(tree: Parent) {
         transformer(node);
       }
 
-      /**
-       * Support for Github Alerts
-       * > [!TIP]
-       * > This is a tip
-       *
-       * will be transformed to:
-       *
-       * <div class="rspress-directive tip">
-       *   <div class="rspress-directive-title">TIP</div>
-       *   <div class="rspress-directive-content">
-       *     <p>This is a tip</p>
-       *   </div>
-       * </div>
-       */
-      if (node.type === 'blockquote' && node.children[0].type === 'paragraph') {
+      if (node.type === 'containerDirective') {
+        const type = node.name as DirectiveType;
+        if (DIRECTIVE_TYPES.includes(type)) {
+          tree.children.splice(
+            i,
+            1,
+            createContainer(
+              type,
+              node.attributes?.title ?? type.toUpperCase(),
+              node.children as BlockContent[],
+            ) as Content,
+          );
+        }
+      } else if (
+        /**
+         * Support for Github Alerts
+         * > [!TIP]
+         * > This is a tip
+         *
+         * will be transformed to:
+         *
+         * <div class="rspress-directive tip">
+         *   <div class="rspress-directive-title">TIP</div>
+         *   <div class="rspress-directive-content">
+         *     <p>This is a tip</p>
+         *   </div>
+         * </div>
+         */
+        node.type === 'blockquote' &&
+        node.children[0].type === 'paragraph'
+      ) {
         const initiatorTag: string =
           // @ts-expect-error `value` is treated like `data`, but type expects `data`
           node.children[0].children[0].value;
@@ -169,15 +185,15 @@ function transformer(tree: Parent) {
         }
       }
 
-      if (node.type !== 'paragraph') {
+      if (
+        node.type !== 'paragraph' ||
+        // 1. We get the paragraph and check if it is a container directive
+        node.children[0].type !== 'text'
+      ) {
         i++;
         continue;
       }
-      // 1. We get the paragraph and check if it is a container directive
-      if (node.children[0].type !== 'text') {
-        i++;
-        continue;
-      }
+
       const firstTextNode = node.children[0];
       const text = firstTextNode.value;
       const metaText = text.split('\n')[0];
