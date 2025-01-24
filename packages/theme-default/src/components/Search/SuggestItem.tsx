@@ -39,9 +39,9 @@ export function SuggestItem({
     inCurrentDocIndex && !isProduction()
       ? removeDomain(suggestion.link)
       : suggestion.link;
-  const selfRef = useRef(null);
-  if (isCurrent) {
-    scrollTo(selfRef?.current?.offsetTop, selfRef?.current?.offsetHeight);
+  const selfRef = useRef<HTMLLIElement>(null);
+  if (isCurrent && selfRef.current?.offsetTop) {
+    scrollTo(selfRef.current?.offsetTop, selfRef.current?.offsetHeight);
   }
 
   const getHighlightedFragments = (

@@ -9,6 +9,7 @@ import './index.scss';
 
 const supportAppearanceTransition = () => {
   return (
+    // @ts-ignore document may not be defined in ssr
     document?.startViewTransition &&
     !window.matchMedia('(prefers-reduced-motion: reduce)').matches
   );
@@ -29,7 +30,7 @@ const removeClipViewTransition = () => {
 };
 
 export function SwitchAppearance({ onClick }: { onClick?: () => void }) {
-  const { theme, setTheme } = useContext(ThemeContext);
+  const { theme, setTheme = () => {} } = useContext(ThemeContext);
 
   const handleClick = (event: MouseEvent) => {
     const supported = supportAppearanceTransition();

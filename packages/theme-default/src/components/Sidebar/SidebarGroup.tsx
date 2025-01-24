@@ -14,7 +14,7 @@ import { SvgWrapper } from '../SvgWrapper';
 import { SidebarDivider } from './SidebarDivider';
 import { SidebarItem as SidebarItemComp } from './SidebarItem';
 import styles from './index.module.scss';
-import { isSidebarDivider } from './utils';
+import { isSidebarDivider, preloadLink } from './utils';
 
 export function SidebarGroup(props: SidebarItemProps) {
   const { item, depth = 0, activeMatcher, id, setSidebarData } = props;
@@ -115,7 +115,7 @@ export function SidebarGroup(props: SidebarItemProps) {
           active ? styles.menuItemActive : styles.menuItem
         }`}
         data-context={item.context}
-        onMouseEnter={() => item.link && props.preloadLink(item.link)}
+        onMouseEnter={() => item.link && preloadLink(item.link)}
         onClick={e => {
           if (item.link) {
             navigate(withBase(normalizeHref(item.link)));
@@ -189,7 +189,6 @@ export function SidebarGroup(props: SidebarItemProps) {
                   item={item}
                   depth={depth + 1}
                   id={`${id}-${index}`}
-                  preloadLink={props.preloadLink}
                 />
               </div>
             ),

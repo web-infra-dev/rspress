@@ -13,6 +13,7 @@ import type {
   EnrichedDocumentSearchResultSetUnit,
   IndexOptionsForDocumentSearch,
 } from 'flexsearch';
+// @ts-ignore no dts for this file
 import FlexSearchDocument from 'flexsearch/dist/module/document';
 import searchIndexHash from 'virtual-search-index-hash';
 import { LOCAL_INDEX, type Provider, type SearchQuery } from '../Provider';
@@ -31,7 +32,7 @@ const cjkRegex =
   /[\u3131-\u314e|\u314f-\u3163|\uac00-\ud7a3]|[\u4E00-\u9FCC\u3400-\u4DB5\uFA0E\uFA0F\uFA11\uFA13\uFA14\uFA1F\uFA21\uFA23\uFA24\uFA27-\uFA29]|[\ud840-\ud868][\udc00-\udfff]|\ud869[\udc00-\uded6\udf00-\udfff]|[\ud86a-\ud86c][\udc00-\udfff]|\ud86d[\udc00-\udf34\udf40-\udfff]|\ud86e[\udc00-\udc1d]|[\u3041-\u3096]|[\u30A1-\u30FA]/giu;
 const cyrillicRegex = /[\u0400-\u04FF]/g;
 
-function tokenize(str: string, regex) {
+function tokenize(str: string, regex: RegExp) {
   const words: string[] = [];
   let m: RegExpExecArray | null = null;
   do {
@@ -100,9 +101,9 @@ export class LocalProvider implements Provider {
       tokenize: (str: string) => tokenize(str, cyrillicRegex),
     });
     for (const item of pagesForSearch) {
-      this.#index.add(item);
-      this.#cjkIndex.add(item);
-      this.#cyrillicIndex.add(item);
+      this.#index!.add(item);
+      this.#cjkIndex!.add(item);
+      this.#cyrillicIndex!.add(item);
     }
   }
 
@@ -118,7 +119,7 @@ export class LocalProvider implements Provider {
     const searchResult = await Promise.all([
       this.#index?.search<true>(keyword, limit, options),
       this.#cjkIndex?.search<true>(keyword, limit, options),
-      this.#cyrillicIndex.search<true>(keyword, limit, options),
+      this.#cyrillicIndex?.search<true>(keyword, limit, options),
     ]);
 
     const combinedSearchResult: PageIndexInfo[] = [];
@@ -143,7 +144,7 @@ export class LocalProvider implements Provider {
     }
 
     searchResult.forEach(searchResultItem => {
-      insertCombinedSearchResult(searchResultItem);
+      searchResultItem && insertCombinedSearchResult(searchResultItem);
     });
 
     return [

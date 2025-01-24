@@ -46,7 +46,7 @@ declare module 'virtual-prism-languages' {
 }
 
 declare module 'virtual-search-index-hash' {
-  const hash: string;
+  const hash: Record<string, string>;
   export default hash;
 }
 

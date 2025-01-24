@@ -52,5 +52,5 @@ export function useNavData() {
   }
 
   const navKey = version.length > 0 ? version : 'default';
-  return [...nav[navKey]];
+  return [...nav![navKey]];
 }

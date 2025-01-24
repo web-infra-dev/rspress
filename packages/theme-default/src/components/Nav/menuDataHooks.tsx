@@ -2,8 +2,9 @@ import { useLocation, usePageData, useVersion } from '@rspress/runtime';
 import { replaceLang, replaceVersion } from '@rspress/shared';
 import Translator from '@theme-assets/translator';
 import { SvgWrapper } from '../SvgWrapper';
+import type { NavMenuGroupItem } from './NavMenuGroup';
 
-export function useTranslationMenuData() {
+export function useTranslationMenuData(): NavMenuGroupItem {
   const { siteData, page } = usePageData();
   const currentVersion = useVersion();
   const { pathname, search } = useLocation();
@@ -49,7 +50,7 @@ export function useTranslationMenuData() {
         activeValue: localeLanguages.find(item => currentLang === item.lang)
           ?.label,
       }
-    : null;
+    : { items: [] };
   return translationMenuData;
 }
 

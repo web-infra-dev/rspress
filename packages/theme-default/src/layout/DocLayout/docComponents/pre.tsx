@@ -2,7 +2,7 @@ import type { CodeProps } from './code';
 
 const DEFAULT_LANGUAGE_CLASS = 'language-bash';
 
-export function parseTitleFromMeta(meta: string): string {
+export function parseTitleFromMeta(meta: string | undefined): string {
   if (!meta) {
     return '';
   }

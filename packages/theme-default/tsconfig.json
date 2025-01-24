@@ -2,7 +2,7 @@
   "extends": "@modern-js/tsconfig/base",
   "compilerOptions": {
     "declaration": false,
-    "strict": false,
+    "strict": true,
     "module": "ESNext",
     "target": "ESNext",
     "jsx": "react-jsx",

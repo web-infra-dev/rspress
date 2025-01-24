@@ -23,7 +23,7 @@ export function SideMenu({
   const [isSidebarOpen, setSidebarIsOpen] = useState<boolean>(false);
   const [isTocOpen, setIsTocOpen] = useState<boolean>(false);
   const tocContainerRef = useRef<HTMLDivElement>();
-  const outlineButtonRef = useRef<HTMLButtonElement>();
+  const outlineButtonRef = useRef<HTMLButtonElement>(null);
   const { pathname } = useLocation();
 
   function openSidebar() {
@@ -48,14 +48,14 @@ export function SideMenu({
     };
   }, []);
 
-  const handleClickOutsideForToc = e => {
+  const handleClickOutsideForToc = (e: MouseEvent | TouchEvent) => {
     const { current: outlineButton } = outlineButtonRef;
-    if (outlineButton?.contains(e.target)) {
+    if (outlineButton?.contains(e.target as Node)) {
       return;
     }
 
     const { current: tocContainer } = tocContainerRef;
-    if (tocContainer && !tocContainer.contains(e.target)) {
+    if (tocContainer && !tocContainer.contains(e.target as Node)) {
       setIsTocOpen(false);
     }
   };
@@ -64,7 +64,7 @@ export function SideMenu({
     <Fragment>
       {/* Top Menu, only displayed in mobile device */}
       <div className="rspress-sidebar-menu">
-        {uiSwitch.showSidebar ? (
+        {uiSwitch?.showSidebar ? (
           <button onClick={openSidebar} className="flex-center mr-auto">
             <div className="text-md mr-2">
               <SvgWrapper icon={MenuIcon} />
@@ -72,7 +72,7 @@ export function SideMenu({
             <span className="text-sm">Menu</span>
           </button>
         ) : null}
-        {uiSwitch.showAside ? (
+        {uiSwitch?.showAside ? (
           <Fragment>
             <button
               onClick={() => setIsTocOpen(tocOpened => !tocOpened)}
@@ -105,7 +105,7 @@ export function SideMenu({
         ) : null}
       </div>
       {/* Sidebar Component */}
-      {uiSwitch.showSidebar ? (
+      {uiSwitch?.showSidebar ? (
         <Fragment>
           <Sidebar
             isSidebarOpen={isSidebarOpen}

@@ -9,7 +9,7 @@ function buildQueryString(params: Record<string, string>) {
 }
 
 export class RemoteProvider implements Provider {
-  #options: SearchOptions;
+  #options?: SearchOptions;
 
   async init(options: SearchOptions) {
     this.#options = options;
@@ -27,7 +27,7 @@ export class RemoteProvider implements Provider {
             typeof indexInfo === 'string' ? indexInfo : indexInfo.value,
           )
           .join(',') || '',
-      lang: this.#options.currentLang,
+      lang: this.#options?.currentLang ?? '',
     });
     try {
       const result = await fetch(`${apiUrl}?${urlParams}`);

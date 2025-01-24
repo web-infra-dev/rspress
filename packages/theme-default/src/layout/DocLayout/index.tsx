@@ -87,7 +87,7 @@ export function DocLayout(props: DocLayoutProps) {
     <div
       className={`${styles.docLayout} pt-0`}
       style={{
-        ...(uiSwitch.showNavbar ? {} : { marginTop: 0 }),
+        ...(uiSwitch?.showNavbar ? {} : { marginTop: 0 }),
       }}
     >
       {beforeDoc}
@@ -118,7 +118,7 @@ export function DocLayout(props: DocLayoutProps) {
               </div>
               <div className="rspress-doc-footer">
                 {beforeDocFooter}
-                {uiSwitch.showDocFooter && <DocFooter />}
+                {uiSwitch?.showDocFooter && <DocFooter />}
                 {afterDocFooter}
               </div>
             </div>
@@ -129,11 +129,11 @@ export function DocLayout(props: DocLayoutProps) {
             <ScrollToTop />
           </NoSSR>
         )}
-        {uiSwitch.showAside ? (
+        {uiSwitch?.showAside ? (
           <div
             className={styles.asideContainer}
             style={{
-              ...(uiSwitch.showNavbar
+              ...(uiSwitch?.showNavbar
                 ? {}
                 : {
                     marginTop: 0,

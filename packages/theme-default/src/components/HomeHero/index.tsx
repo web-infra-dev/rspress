@@ -6,13 +6,13 @@ import { renderHtmlOrText } from '../../logic';
 
 import styles from './index.module.scss';
 
-const DEFAULT_HERO: FrontMatterMeta['hero'] = {
+const DEFAULT_HERO = {
   name: 'modern',
   text: 'modern ssg',
   tagline: 'modern ssg',
   actions: [],
   image: undefined,
-};
+} satisfies FrontMatterMeta['hero'];
 
 export function HomeHero({
   frontmatter,

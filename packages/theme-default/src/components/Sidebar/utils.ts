@@ -1,3 +1,4 @@
+import { matchRoutes } from '@rspress/runtime';
 import {
   type SidebarDivider as ISidebarDivider,
   type SidebarItem as ISidebarItem,
@@ -5,6 +6,7 @@ import {
   type NormalizedSidebarGroup,
   isExternalUrl,
 } from '@rspress/shared';
+import { routes } from 'virtual-routes';
 
 export const isSidebarDivider = (
   item:
@@ -15,6 +17,10 @@ export const isSidebarDivider = (
 ): item is ISidebarDivider => {
   return 'dividerType' in item;
 };
+
+export const isSidebarSingleFile = (
+  item: ISidebarItem | NormalizedSidebarGroup,
+) => !('items' in item) && 'link' in item;
 
 export const isSidebarSectionHeader = (
   item:
@@ -34,4 +40,12 @@ export const isSideBarCustomLink = (
     | ISidebarSectionHeader,
 ) => {
   return 'link' in item && isExternalUrl(item.link);
+};
+
+export const preloadLink = (link: string) => {
+  const match = matchRoutes(routes, link);
+  if (match?.length) {
+    const { route } = match[0];
+    route.preload();
+  }
 };

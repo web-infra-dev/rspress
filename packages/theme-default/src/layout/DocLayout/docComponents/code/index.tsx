@@ -21,7 +21,7 @@ export function Code(props: CodeProps) {
   const { defaultWrapCode } = siteData.markdown;
   const [codeWrap, setCodeWrap] = useState(defaultWrapCode);
   const wrapButtonRef = useRef<HTMLButtonElement>(null);
-  const codeBlockRef = useRef<HTMLDivElement>();
+  const codeBlockRef = useRef<HTMLDivElement>(null);
 
   const { className } = props;
   const language = className?.replace(/language-/, '');
@@ -30,7 +30,7 @@ export function Code(props: CodeProps) {
     return <code {...props}></code>;
   }
 
-  const toggleCodeWrap = (wrapButtonElement: HTMLButtonElement) => {
+  const toggleCodeWrap = (wrapButtonElement: HTMLButtonElement | null) => {
     if (codeWrap) {
       wrapButtonElement?.classList.remove(styles.wrappedBtn);
     } else {

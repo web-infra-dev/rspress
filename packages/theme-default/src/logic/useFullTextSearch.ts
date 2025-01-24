@@ -36,6 +36,9 @@ export function useFullTextSearch(): {
 
   return {
     initialized,
-    search: searchRef.current?.match.bind(searchRef.current),
+    search: searchRef.current?.match.bind(searchRef.current) as (
+      keyword: string,
+      limit?: number,
+    ) => Promise<MatchResult>,
   };
 }
