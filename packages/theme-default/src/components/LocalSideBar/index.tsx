@@ -22,7 +22,7 @@ export function SideMenu({
 }) {
   const [isSidebarOpen, setSidebarIsOpen] = useState<boolean>(false);
   const [isTocOpen, setIsTocOpen] = useState<boolean>(false);
-  const tocContainerRef = useRef<HTMLDivElement>();
+  const tocContainerRef = useRef<HTMLDivElement>(null);
   const outlineButtonRef = useRef<HTMLButtonElement>(null);
   const { pathname } = useLocation();
 

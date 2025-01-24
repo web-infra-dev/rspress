@@ -75,7 +75,7 @@ const GroupRenderer = ({
   styles,
 }: {
   group: Group;
-  styles: any;
+  styles: Record<string, string>;
 }) => (
   <div className="mb-16" key={group.name}>
     <h2>{renderInlineMarkdown(group.name)}</h2>
