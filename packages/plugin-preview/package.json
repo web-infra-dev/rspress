@@ -17,8 +17,8 @@
     "mdx-meta-loader.cjs"
   ],
   "scripts": {
-    "build": "modern build",
-    "dev": "modern build -w",
+    "build": "rslib build",
+    "dev": "rslib build -w",
     "reset": "rimraf ./**/node_modules",
     "test": "vitest run --passWithNoTests"
   },
@@ -35,6 +35,7 @@
     "qrcode.react": "^3.2.0"
   },
   "devDependencies": {
+    "@rslib/core": "0.3.2",
     "@types/lodash": "^4.17.14",
     "@types/mdast": "^3.0.15",
     "@types/node": "^18.11.17",

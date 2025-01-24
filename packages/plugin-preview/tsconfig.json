@@ -21,7 +21,7 @@
     "index.d.ts",
     "mdx-meta-loader.cjs",
     "static/",
-    "modern.config.ts"
+    "rslib.config.ts"
   ],
   "exclude": ["runtime.d.ts", "theme.d.ts", "node_modules", "dist"]
 }
