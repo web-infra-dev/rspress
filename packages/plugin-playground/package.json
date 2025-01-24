@@ -12,12 +12,12 @@
   "exports": {
     ".": {
       "types": "./dist/cli/esm/index.d.ts",
-      "import": "./dist/cli/esm/index.js",
+      "import": "./dist/cli/esm/index.mjs",
       "default": "./dist/cli/cjs/index.js"
     },
     "./web": {
       "types": "./dist/web/esm/index.d.ts",
-      "import": "./dist/web/esm/index.js",
+      "import": "./dist/web/esm/index.mjs",
       "default": "./dist/web/cjs/index.js"
     }
   },
@@ -29,8 +29,8 @@
     "static"
   ],
   "scripts": {
-    "build": "modern build",
-    "dev": "modern build -w",
+    "build": "rslib build",
+    "dev": "rslib build -w",
     "reset": "rimraf ./**/node_modules",
     "test": "vitest run --passWithNoTests"
   },
@@ -44,6 +44,7 @@
   },
   "devDependencies": {
     "@babel/types": "^7.26.5",
+    "@rslib/core": "0.3.2",
     "@types/babel__core": "^7.20.5",
     "@types/babel__standalone": "^7.1.9",
     "@types/babel__traverse": "^7.20.6",

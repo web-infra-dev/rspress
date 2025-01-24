@@ -1,5 +1,6 @@
 import { NoSSR, usePageData, withBase } from '@rspress/core/runtime';
 import { useCallback, useEffect, useMemo, useState } from 'react';
+// @ts-ignore
 import { normalizeId } from '../../dist/utils';
 import MobileOperation from './common/mobile-operation';
 import './Device.scss';

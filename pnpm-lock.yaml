@@ -423,6 +423,31 @@ importers:
         specifier: ^18.11.17
         version: 18.11.17
 
+  e2e/fixtures/plugin-playground:
+    dependencies:
+      '@rspress/plugin-playground':
+        specifier: workspace:*
+        version: link:../../../packages/plugin-playground
+      '@rspress/shared':
+        specifier: workspace:*
+        version: link:../../../packages/shared
+      react:
+        specifier: ^18.3.1
+        version: 18.3.1
+      react-dom:
+        specifier: ^18.3.1
+        version: 18.3.1(react@18.3.1)
+      rspress:
+        specifier: workspace:*
+        version: link:../../../packages/cli
+      solid-js:
+        specifier: ^1.9.4
+        version: 1.9.4
+    devDependencies:
+      '@types/node':
+        specifier: ^18.11.17
+        version: 18.11.17
+
   e2e/fixtures/plugin-preview:
     dependencies:
       '@rspress/plugin-playground':
@@ -1205,6 +1230,9 @@ importers:
       '@babel/types':
         specifier: ^7.26.5
         version: 7.26.5
+      '@rslib/core':
+        specifier: 0.3.2
+        version: 0.3.2(@microsoft/api-extractor@7.49.1(@types/node@18.11.17))(typescript@5.5.3)
       '@types/babel__core':
         specifier: ^7.20.5
         version: 7.20.5
@@ -1281,6 +1309,9 @@ importers:
         specifier: ^3.2.0
         version: 3.2.0(react@18.3.1)
     devDependencies:
+      '@rslib/core':
+        specifier: 0.3.2
+        version: 0.3.2(@microsoft/api-extractor@7.49.1(@types/node@18.11.17))(typescript@5.5.3)
       '@types/lodash':
         specifier: ^4.17.14
         version: 4.17.14
