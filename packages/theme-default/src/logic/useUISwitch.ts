@@ -96,7 +96,7 @@ export function useUISwitch(): UISwitchResult {
 
   // Control the scroll behavior of the browser when location hash changed
   useEffect(() => {
-    if (inBrowser && history.scrollRestoration) {
+    if (inBrowser() && history.scrollRestoration) {
       history.scrollRestoration = location.hash.length ? 'manual' : 'auto';
     }
   }, [!location.hash.length]);

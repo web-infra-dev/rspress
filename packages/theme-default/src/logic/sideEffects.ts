@@ -77,7 +77,7 @@ function bindingWindowScroll() {
           } else {
             window.addEventListener('RspressReloadContent', () => {
               if (location.hash.length > 1) {
-                const ele = document.getElementById(location.hash.slice(1));
+                const ele = document.getElementById(location.hash.slice(1))!;
                 scrollToTarget(ele, false);
               }
             });
@@ -139,7 +139,7 @@ export function bindingAsideScroll() {
         const currentAnchor = links[i];
         const nextAnchor = links[i + 1];
         const scrollTop = Math.ceil(window.scrollY);
-        const currentAnchorTop = getTargetTop(currentAnchor.parentElement);
+        const currentAnchorTop = getTargetTop(currentAnchor.parentElement!);
         if ((i === 0 && scrollTop < currentAnchorTop) || scrollTop === 0) {
           activate(links, 0);
           break;
@@ -150,7 +150,7 @@ export function bindingAsideScroll() {
           break;
         }
 
-        const nextAnchorTop = getTargetTop(nextAnchor.parentElement);
+        const nextAnchorTop = getTargetTop(nextAnchor.parentElement!);
 
         if (scrollTop >= currentAnchorTop && scrollTop < nextAnchorTop) {
           activate(links, i);

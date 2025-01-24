@@ -1,17 +1,20 @@
 import IconCopy from '@theme-assets/copy';
 import IconSuccess from '@theme-assets/success';
 import copy from 'copy-to-clipboard';
-import { type MutableRefObject, useRef } from 'react';
+import { useRef } from 'react';
 import { SvgWrapper } from '../../../../components/SvgWrapper';
 import styles from './index.module.scss';
 
 const timeoutIdMap: Map<HTMLElement, NodeJS.Timeout> = new Map();
 
 function copyCode(
-  codeBlockElement: HTMLDivElement,
-  copyButtonElement: HTMLButtonElement,
+  codeBlockElement: HTMLDivElement | null,
+  copyButtonElement: HTMLButtonElement | null,
 ) {
   let text = '';
+  if (!codeBlockElement) {
+    return;
+  }
   const walk = document.createTreeWalker(
     codeBlockElement,
     NodeFilter.SHOW_TEXT,
@@ -19,7 +22,7 @@ function copyCode(
   );
   let node = walk.nextNode();
   while (node) {
-    if (!node.parentElement.classList.contains('linenumber')) {
+    if (!node.parentElement!.classList.contains('linenumber')) {
       text += node.nodeValue;
     }
     node = walk.nextNode();
@@ -42,14 +45,14 @@ function copyCode(
 export function CopyCodeButton({
   codeBlockRef,
 }: {
-  codeBlockRef: MutableRefObject<HTMLDivElement>;
+  codeBlockRef: React.RefObject<HTMLDivElement>;
 }) {
   const copyButtonRef = useRef<HTMLButtonElement>(null);
 
   return (
     <button
       className={styles.codeCopyButton}
-      onClick={() => copyCode(codeBlockRef.current, copyButtonRef.current)}
+      onClick={() => copyCode(codeBlockRef.current, copyButtonRef.current!)}
       ref={copyButtonRef}
       title="Copy code"
     >

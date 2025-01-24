@@ -30,7 +30,10 @@ const disableDarkMode = siteData.themeConfig.darkMode === false;
  */
 export const useThemeState = () => {
   const matchesDark = useMediaQuery('(prefers-color-scheme: dark)');
-  const [storedTheme, setStoredTheme] = useStorageValue(APPEARANCE_KEY);
+  const [storedTheme, setStoredTheme] = useStorageValue<ThemeConfigValue>(
+    APPEARANCE_KEY,
+    'auto',
+  );
 
   const getPreferredTheme = useHandler(() => {
     if (disableDarkMode) {

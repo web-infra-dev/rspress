@@ -12,12 +12,11 @@ export const LinkContent = (props: ILinkContentComp) => {
   const { link, popperStyle = {} } = props;
   const { icon, mode = 'link', content } = link;
 
-  let IconComp: React.ReactElement = null;
+  let IconComp: React.ReactElement = <></>;
   if (typeof icon === 'object') {
-    // eslint-disable-next-line react/no-danger
     IconComp = <div dangerouslySetInnerHTML={{ __html: icon.svg }}></div>;
   } else if (icon) {
-    const iconLowerCase = icon.toLowerCase();
+    const iconLowerCase = icon.toLowerCase() as keyof typeof presetIcons;
     IconComp =
       // redirect twitter's logo to `x`
       iconLowerCase === 'twitter' ? presetIcons.x : presetIcons[iconLowerCase];

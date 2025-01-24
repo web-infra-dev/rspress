@@ -99,9 +99,9 @@ export const Tabs: ForwardRefExoticComponent<TabsProps> = forwardRef(
       });
     });
 
-    const [storageIndex, setStorageIndex] = useStorageValue(
+    const [storageIndex, setStorageIndex] = useStorageValue<string>(
       `${groupIdPrefix}${groupId}`,
-      activeIndex,
+      activeIndex.toString(),
     );
 
     const syncIndex = useMemo(() => {
@@ -114,7 +114,7 @@ export const Tabs: ForwardRefExoticComponent<TabsProps> = forwardRef(
       }
 
       return activeIndex;
-    }, [tabData[groupId]]);
+    }, [groupId && tabData[groupId]]);
 
     // sync when other browser page trigger update
     useEffect(() => {
@@ -154,7 +154,7 @@ export const Tabs: ForwardRefExoticComponent<TabsProps> = forwardRef(
                       onChange?.(index);
                       if (groupId) {
                         setTabData({ ...tabData, [groupId]: index });
-                        setStorageIndex(index);
+                        setStorageIndex(index.toString());
                       } else {
                         setActiveIndex(index);
                       }

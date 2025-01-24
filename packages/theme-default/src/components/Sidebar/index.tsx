@@ -35,7 +35,6 @@ export interface SidebarItemProps {
       (NormalizedSidebarGroup | ISidebarItem | ISidebarDivider)[]
     >
   >;
-  preloadLink: (link: string) => void;
 }
 
 interface Props {
@@ -78,7 +77,7 @@ export function Sidebar(props: Props) {
   const langRoutePrefix = normalizeSlash(localesData.langRoutePrefix || '');
 
   useEffect(() => {
-    if (inBrowser) {
+    if (inBrowser()) {
       if (isSidebarOpen) {
         bodyStyleOverflow = document.body.style.overflow;
         document.body.style.overflow = 'hidden';
@@ -144,13 +143,7 @@ export function Sidebar(props: Props) {
       true,
     );
   };
-  const preloadLink = (link: string) => {
-    const match = matchRoutes(routes, link);
-    if (match?.length) {
-      const { route } = match[0];
-      route.preload();
-    }
-  };
+
   const renderItem = (
     item:
       | NormalizedSidebarGroup
@@ -190,7 +183,6 @@ export function Sidebar(props: Props) {
             key={index}
             collapsed={(item as NormalizedSidebarGroup).collapsed ?? true}
             setSidebarData={setSidebarData}
-            preloadLink={preloadLink}
           />
         </div>
       );
@@ -205,7 +197,6 @@ export function Sidebar(props: Props) {
         key={index}
         collapsed={(item as NormalizedSidebarGroup).collapsed ?? true}
         setSidebarData={setSidebarData}
-        preloadLink={preloadLink}
       />
     );
   };
@@ -215,7 +206,7 @@ export function Sidebar(props: Props) {
         isSidebarOpen ? styles.open : ''
       }`}
     >
-      {!uiSwitch.showNavbar ? null : (
+      {!uiSwitch?.showNavbar ? null : (
         <div className={styles.navTitleMask}>{navTitle || <NavBarTitle />}</div>
       )}
       <div className={`rspress-scrollbar ${styles.sidebarContent}`}>

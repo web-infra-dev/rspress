@@ -1,4 +1,3 @@
-/* eslint-disable max-lines */
 import { usePageData } from '@rspress/runtime';
 import { type SearchOptions, isProduction } from '@rspress/shared';
 import CloseSvg from '@theme-assets/close';
@@ -59,7 +58,7 @@ export function SearchPanel({ focused, setFocused }: SearchPanelProps) {
   const [currentSuggestionIndex, setCurrentSuggestionIndex] = useState(0);
   const pageSearcherRef = useRef<PageSearcher | null>(null);
   const pageSearcherConfigRef = useRef<PageSearcherConfig | null>(null);
-  const searchResultRef = useRef(null);
+  const searchResultRef = useRef<HTMLDivElement>(null);
   const searchResultTabRef = useRef(null);
   const mousePositionRef = useRef<{
     pageX: number | null;
@@ -72,17 +71,23 @@ export function SearchPanel({ focused, setFocused }: SearchPanelProps) {
   // only scroll after keydown arrow up and arrow down.
   const [canScroll, setCanScroll] = useState(false);
   const scrollTo = (offsetTop: number, offsetHeight: number) => {
-    if (canScroll) {
+    const currentOffsetHeight = searchResultRef.current?.offsetHeight;
+    const currentScrollTop = searchResultRef.current?.scrollTop;
+    if (
+      canScroll &&
+      currentOffsetHeight !== undefined &&
+      currentScrollTop !== undefined
+    ) {
       // Down
       // 50 = 20(modal margin) + 40(input height) - 10(item margin)
       // -10 = 50(following) - 50(tab title) - 10(item margin)
       const scrollDown =
         offsetTop +
         offsetHeight -
-        searchResultRef?.current?.offsetHeight -
+        currentOffsetHeight -
         (searchResult.length === 1 ? 50 : -10);
-      if (scrollDown > searchResultRef?.current?.scrollTop) {
-        searchResultRef?.current?.scrollTo({
+      if (scrollDown > currentScrollTop) {
+        searchResultRef.current?.scrollTo({
           top: scrollDown,
         });
       }
@@ -92,8 +97,8 @@ export function SearchPanel({ focused, setFocused }: SearchPanelProps) {
       // 10 = 70(following) - 50(tab title) - 10(item margin)
       const scrollUp =
         searchResult.length === 1 ? offsetTop - 70 : offsetTop - 10;
-      if (scrollUp < searchResultRef?.current?.scrollTop) {
-        searchResultRef?.current?.scrollTo({
+      if (scrollUp < currentScrollTop) {
+        searchResultRef.current?.scrollTo({
           top: scrollUp,
         });
       }
@@ -194,9 +199,9 @@ export function SearchPanel({ focused, setFocused }: SearchPanelProps) {
             currentRenderType === RenderType.Default
           ) {
             // the ResultItem has been normalized to display
-            const flatSuggestions = [].concat(
+            const flatSuggestions = [
               ...Object.values(normalizeSuggestions(currentSuggestions)),
-            );
+            ].flat();
             const suggestion = flatSuggestions[currentSuggestionIndex];
             const isCurrent = resultTabIndex === 0;
             if (isCurrent) {
@@ -310,7 +315,9 @@ export function SearchPanel({ focused, setFocused }: SearchPanelProps) {
 
   const handleQueryChange = useDebounce(handleQueryChangedImpl);
 
-  const normalizeSuggestions = (suggestions: DefaultMatchResult['result']) => {
+  const normalizeSuggestions = (
+    suggestions: DefaultMatchResult['result'],
+  ): Record<string, DefaultMatchResultItem[]> => {
     return suggestions.reduce(
       (groups, item) => {
         const group = item.group;
@@ -349,7 +356,7 @@ export function SearchPanel({ focused, setFocused }: SearchPanelProps) {
       const indexItem = normalizeSearchIndexes(
         searchOptions.searchIndexes || [],
       ).find(indexInfo => indexInfo.value === item.group);
-      return indexItem.label;
+      return indexItem!.label;
     });
 
     const renderKey = 'render' as const;

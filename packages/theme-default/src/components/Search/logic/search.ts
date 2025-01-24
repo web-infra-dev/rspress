@@ -31,7 +31,7 @@ export class PageSearcher {
 
   constructor(options: SearchOptions & { indexName?: string }) {
     this.#options = options;
-    this.#indexName = options.indexName;
+    this.#indexName = options.indexName ?? LOCAL_INDEX;
     switch (options.mode) {
       case 'remote':
         this.#provider = new RemoteProvider();

@@ -6,6 +6,7 @@ import { Npm } from './icons/Npm';
 import { Pnpm } from './icons/Pnpm';
 import { Yarn } from './icons/Yarn';
 import './index.scss';
+import type { ReactNode } from 'react';
 
 export interface PackageManagerTabProps {
   command:
@@ -18,7 +19,7 @@ export interface PackageManagerTabProps {
       };
   additionalTabs?: {
     tool: string;
-    icon?: React.ReactNode;
+    icon?: ReactNode;
   }[];
 }
 
@@ -48,16 +49,9 @@ export function PackageManagerTabs({
   command,
   additionalTabs = [],
 }: PackageManagerTabProps) {
-  let commandInfo: {
-    npm?: string;
-    yarn?: string;
-    pnpm?: string;
-    bun?: string;
-    [key: string]: string;
-  };
-
+  let commandInfo: Record<string, string>;
   // Init Icons
-  const packageMangerToIcon = {
+  const packageMangerToIcon: Record<string, ReactNode> = {
     npm: <Npm />,
     yarn: <Yarn />,
     pnpm: <Pnpm />,

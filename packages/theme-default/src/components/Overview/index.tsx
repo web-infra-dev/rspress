@@ -17,12 +17,13 @@ import {
   useLocaleSiteData,
   useSidebarData,
 } from '../../logic';
+import { isSidebarDivider, isSidebarSingleFile } from '../Sidebar/utils';
 import styles from './index.module.scss';
 import { findItemByRoutePath } from './utils';
 
 interface GroupItem {
-  text?: string;
-  link?: string;
+  text: string;
+  link: string;
   headers?: Header[];
 }
 
@@ -45,6 +46,12 @@ const SearchInput = ({
   searchRef,
   filterNameText,
   filterPlaceholderText,
+}: {
+  query: string;
+  setQuery: (query: string) => void;
+  searchRef: React.RefObject<HTMLInputElement>;
+  filterNameText: string;
+  filterPlaceholderText: string;
 }) => {
   return (
     <div className="flex items-center justify-start gap-4">
@@ -63,7 +70,13 @@ const SearchInput = ({
 };
 
 // JSX fragment for rendering a group
-const GroupRenderer = ({ group, styles }) => (
+const GroupRenderer = ({
+  group,
+  styles,
+}: {
+  group: Group;
+  styles: Record<string, string>;
+}) => (
   <div className="mb-16" key={group.name}>
     <h2>{renderInlineMarkdown(group.name)}</h2>
     <div className={styles.overviewGroups}>
@@ -159,9 +172,9 @@ export function Overview(props: {
     item: SidebarItem | SidebarDivider | NormalizedSidebarGroup,
     sidebarGroup?: NormalizedSidebarGroup,
     frontmatter?: Record<string, unknown>,
-  ) {
-    if ('dividerType' in item) {
-      return item;
+  ): GroupItem | false {
+    if (isSidebarDivider(item)) {
+      return false;
     }
     // do not display overview title in sub pages overview
     if (
@@ -190,9 +203,6 @@ export function Overview(props: {
     };
   }
 
-  const isSingleFile = (item: SidebarItem | NormalizedSidebarGroup) =>
-    !('items' in item) && 'link' in item;
-
   const groups =
     customGroups ??
     useMemo(() => {
@@ -206,7 +216,7 @@ export function Overview(props: {
             );
           }
           if (
-            isSingleFile(sidebarGroup) &&
+            isSidebarSingleFile(sidebarGroup) &&
             subFilter(getChildLink(sidebarGroup))
           ) {
             return true;
@@ -215,14 +225,14 @@ export function Overview(props: {
         })
         .map(normalizedSidebarGroup => {
           const sidebarGroup = normalizedSidebarGroup as NormalizedSidebarGroup;
-          let items = [];
+          let items: GroupItem[] = [];
           if (sidebarGroup?.items) {
             items = sidebarGroup?.items
               ?.map(item =>
                 normalizeSidebarItem(item, sidebarGroup, frontmatter),
               )
-              .filter(Boolean);
-          } else if (isSingleFile(sidebarGroup)) {
+              .filter(Boolean) as GroupItem[];
+          } else if (isSidebarSingleFile(sidebarGroup)) {
             items = [
               normalizeSidebarItem(
                 {
@@ -231,10 +241,10 @@ export function Overview(props: {
                   tag: sidebarGroup.tag,
                   _fileKey: sidebarGroup._fileKey,
                   overviewHeaders: sidebarGroup.overviewHeaders,
-                },
+                } as SidebarItem,
                 undefined,
                 frontmatter,
-              ),
+              ) as GroupItem,
             ];
           }
           return {
@@ -246,7 +256,7 @@ export function Overview(props: {
     }, [overviewSidebarGroups, routePath, frontmatter]);
 
   // Added filtering functionality
-  const filtered = useMemo(() => {
+  const filtered: Group[] = useMemo(() => {
     if (!query) return groups;
 
     return groups
@@ -267,11 +277,11 @@ export function Overview(props: {
               ? { ...item, headers: matchedHeaders }
               : null;
           })
-          .filter(Boolean);
+          .filter(Boolean) as GroupItem[];
 
         return matchedItems.length ? { ...group, items: matchedItems } : null;
       })
-      .filter(Boolean);
+      .filter(Boolean) as Group[];
   }, [groups, query]);
 
   const overviewTitle = title || 'Overview';
@@ -292,7 +302,7 @@ export function Overview(props: {
       {content}
       {filtered.length > 0 ? (
         filtered.map(group => (
-          <GroupRenderer key={group.name} group={group} styles={styles} />
+          <GroupRenderer key={group?.name} group={group} styles={styles} />
         ))
       ) : (
         <div className="text-lg text-gray-500 text-center mt-9 pt-9 border-t border-gray-200 dark:border-gray-800">

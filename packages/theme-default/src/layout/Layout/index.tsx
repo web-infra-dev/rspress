@@ -95,7 +95,7 @@ export const Layout: React.FC<LayoutProps> = props => {
   // Always show sidebar by default
   // Priority: front matter title > h1 title
   let title = (frontmatter.title as string) ?? articleTitle;
-  const mainTitle = siteData.title || localesData.title;
+  const mainTitle = siteData.title || localesData.title || '';
 
   if (title && pageType === 'doc') {
     // append main title as a suffix
