@@ -13,11 +13,6 @@
       "import": "./dist/index.mjs",
       "require": "./dist/index.js"
     },
-    "./execa": {
-      "types": "./dist/execa.d.ts",
-      "import": "./dist/execa.mjs",
-      "require": "./dist/execa.js"
-    },
     "./chalk": {
       "types": "./dist/chalk.d.ts",
       "import": "./dist/chalk.mjs",
@@ -57,7 +52,6 @@
   "dependencies": {
     "@rsbuild/core": "1.2.0",
     "chalk": "5.4.1",
-    "execa": "5.1.1",
     "fs-extra": "11.2.0",
     "gray-matter": "4.0.3",
     "lodash-es": "^4.17.21",
