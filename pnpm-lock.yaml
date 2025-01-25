@@ -670,9 +670,6 @@ importers:
       cac:
         specifier: ^6.7.14
         version: 6.7.14
-      chalk:
-        specifier: 5.4.1
-        version: 5.4.1
       chokidar:
         specifier: ^3.6.0
         version: 3.6.0

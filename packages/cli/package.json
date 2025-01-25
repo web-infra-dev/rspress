@@ -46,7 +46,6 @@
     "@rspress/core": "workspace:*",
     "@rspress/shared": "workspace:*",
     "cac": "^6.7.14",
-    "chalk": "5.4.1",
     "chokidar": "^3.6.0"
   },
   "devDependencies": {

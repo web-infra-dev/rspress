@@ -1,9 +1,9 @@
 import { createRequire } from 'node:module';
 import path from 'node:path';
 import { build, dev, serve } from '@rspress/core';
+import chalk from '@rspress/shared/chalk';
 import { logger } from '@rspress/shared/logger';
 import { cac } from 'cac';
-import chalk from 'chalk';
 import chokidar from 'chokidar';
 import { loadConfigFile, resolveDocRoot } from './config/loadConfigFile';
 import update from './update';
