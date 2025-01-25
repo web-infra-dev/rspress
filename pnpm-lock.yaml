@@ -797,6 +797,9 @@ importers:
       rspack-plugin-virtual-module:
         specifier: 0.1.13
         version: 0.1.13
+      tinyglobby:
+        specifier: ^0.2.10
+        version: 0.2.10
       unified:
         specifier: ^10.1.2
         version: 10.1.2
@@ -928,12 +931,12 @@ importers:
       '@rspress/plugin-preview':
         specifier: workspace:*
         version: link:../plugin-preview
-      fast-glob:
-        specifier: ^3.3.3
-        version: 3.3.3
       lodash:
         specifier: ^4.17.21
         version: 4.17.21
+      tinyglobby:
+        specifier: ^0.2.10
+        version: 0.2.10
     devDependencies:
       '@types/lodash':
         specifier: ^4.17.14

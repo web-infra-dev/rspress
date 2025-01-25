@@ -31,8 +31,8 @@
     "@rspress/core": "workspace:*",
     "@rspress/plugin-api-docgen": "workspace:*",
     "@rspress/plugin-preview": "workspace:*",
-    "fast-glob": "^3.3.3",
-    "lodash": "^4.17.21"
+    "lodash": "^4.17.21",
+    "tinyglobby": "^0.2.10"
   },
   "devDependencies": {
     "@types/lodash": "^4.17.14",
