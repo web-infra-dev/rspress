@@ -23,7 +23,6 @@ export default defineConfig({
         'jsdom',
         'tailwindcss',
         '@rspress/plugin-container-syntax',
-        '../compiled/globby/index.js',
       ],
       banner: {
         js: 'import { createRequire } from "module";\nconst { url } = import.meta;\nconst require = createRequire(url);',

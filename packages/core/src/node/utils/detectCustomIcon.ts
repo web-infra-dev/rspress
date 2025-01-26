@@ -1,5 +1,6 @@
 import { existsSync } from 'node:fs';
 import path from 'node:path';
+import { glob } from 'tinyglobby';
 
 export const detectCustomIcon = async (customThemeDir: string) => {
   const assetsDir = path.join(customThemeDir, 'assets');
@@ -9,14 +10,7 @@ export const detectCustomIcon = async (customThemeDir: string) => {
     return alias;
   }
 
-  const globby = (
-    await import(
-      // @ts-expect-error
-      // eslint-disable-next-line node/file-extension-in-import
-      '../compiled/globby/index.js'
-    )
-  ).default as typeof import('../../../compiled/globby');
-  const files = await globby('*.svg', {
+  const files = await glob('*.svg', {
     cwd: assetsDir,
   });
   files.forEach(file => {

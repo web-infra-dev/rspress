@@ -3,7 +3,7 @@ import { join, relative, resolve } from 'node:path';
 import type { Sidebar, SidebarGroup, UserConfig } from '@rspress/core';
 import { pluginApiDocgen } from '@rspress/plugin-api-docgen';
 import { pluginPreview } from '@rspress/plugin-preview';
-import fastGlob from 'fast-glob';
+import { glob } from 'tinyglobby';
 import type { PluginOptions } from './types';
 import { mergeModuleDocConfig } from './utils';
 
@@ -57,12 +57,12 @@ export async function launchDoc({
     const traverse = async (cwd: string): Promise<SidebarGroup['items']> => {
       // FIXME: win32
       const [files, directories] = await Promise.all([
-        fastGlob(source, {
+        glob(source, {
           cwd,
           onlyFiles: true,
           ignore: ['index.*'],
         }),
-        fastGlob(['*'], {
+        glob(['*'], {
           cwd,
           onlyDirectories: true,
           ignore: ['public'],
@@ -88,7 +88,7 @@ export async function launchDoc({
           const directoryCwd = join(cwd, directory);
           const hasIndex =
             (
-              await fastGlob(['index.*'], {
+              await glob(['index.*'], {
                 cwd: directoryCwd,
                 onlyFiles: true,
               })

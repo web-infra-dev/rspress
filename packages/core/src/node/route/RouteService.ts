@@ -9,6 +9,7 @@ import {
 } from '@rspress/shared';
 import fs from '@rspress/shared/fs-extra';
 import type { ComponentType } from 'react';
+import { glob } from 'tinyglobby';
 import type { PluginDriver } from '../PluginDriver';
 import { PUBLIC_DIR } from '../constants';
 import { getPageKey, normalizePath } from '../utils';
@@ -138,16 +139,9 @@ export class RouteService {
   }
 
   async init() {
-    const globby = (
-      await import(
-        // @ts-expect-error
-        // eslint-disable-next-line node/file-extension-in-import
-        '../compiled/globby/index.js'
-      )
-    ).default as typeof import('../../../compiled/globby');
     // 1. internal pages
     const files = (
-      await globby([`**/*.{${this.#extensions.join(',')}}`, ...this.#include], {
+      await glob([`**/*.{${this.#extensions.join(',')}}`, ...this.#include], {
         cwd: this.#scanDir,
         absolute: true,
         ignore: [
@@ -159,6 +153,7 @@ export class RouteService {
         ],
       })
     ).sort();
+
     files.forEach(filePath => {
       const fileRelativePath = normalizePath(
         path.relative(this.#scanDir, filePath),

@@ -88,6 +88,7 @@
     "remark": "^14.0.3",
     "remark-gfm": "3.0.1",
     "rspack-plugin-virtual-module": "0.1.13",
+    "tinyglobby": "^0.2.10",
     "unified": "^10.1.2",
     "unist-util-visit": "^4.1.2",
     "unist-util-visit-children": "^3.0.0"
