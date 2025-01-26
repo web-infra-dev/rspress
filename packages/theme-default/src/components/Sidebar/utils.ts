@@ -1,12 +1,14 @@
-import { matchRoutes } from '@rspress/runtime';
+import { matchRoutes, removeBase, useLocation } from '@rspress/runtime';
 import {
   type SidebarDivider as ISidebarDivider,
   type SidebarItem as ISidebarItem,
   type SidebarSectionHeader as ISidebarSectionHeader,
   type NormalizedSidebarGroup,
   isExternalUrl,
+  normalizeSlash,
 } from '@rspress/shared';
 import { routes } from 'virtual-routes';
+import { isActive, useLocaleSiteData } from '../../logic';
 
 export const isSidebarDivider = (
   item:
@@ -48,4 +50,25 @@ export const preloadLink = (link: string) => {
     const { route } = match[0];
     route.preload();
   }
+};
+
+export const useActiveMatcher = () => {
+  const localesData = useLocaleSiteData();
+  const langRoutePrefix = normalizeSlash(localesData.langRoutePrefix || '');
+
+  const { pathname: rawPathname } = useLocation();
+
+  const pathname = decodeURIComponent(rawPathname);
+  const removeLangPrefix = (path: string) => {
+    return path.replace(langRoutePrefix, '');
+  };
+  const activeMatcher = (link: string) => {
+    return isActive(
+      removeBase(removeLangPrefix(pathname)),
+      removeLangPrefix(link),
+      true,
+    );
+  };
+
+  return activeMatcher;
 };
