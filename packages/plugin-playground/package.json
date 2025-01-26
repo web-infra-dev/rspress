@@ -43,7 +43,7 @@
     "rspack-plugin-virtual-module": "0.1.13"
   },
   "devDependencies": {
-    "@babel/types": "^7.26.5",
+    "@babel/types": "^7.26.7",
     "@rslib/core": "0.3.2",
     "@types/babel__core": "^7.20.5",
     "@types/babel__standalone": "^7.1.9",
