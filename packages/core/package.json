@@ -104,7 +104,7 @@
     "@types/node": "^18.11.17",
     "@types/react": "^18.3.18",
     "@types/react-dom": "^18.3.5",
-    "postcss": "8.4.49",
+    "postcss": "8.5.1",
     "rehype-stringify": "^9.0.4",
     "remark-parse": "^10.0.2",
     "remark-rehype": "^10.1.0",
