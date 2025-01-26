@@ -33,7 +33,7 @@
   },
   "devDependencies": {
     "@biomejs/biome": "1.9.4",
-    "@changesets/cli": "^2.27.11",
+    "@changesets/cli": "^2.27.12",
     "@modern-js/module-tools": "2.63.7",
     "@modern-js/tsconfig": "2.63.7",
     "@playwright/test": "1.47.2",
@@ -50,7 +50,7 @@
     "heading-case": "^0.1.4",
     "husky": "^9.1.7",
     "lint-staged": "~15.3.0",
-    "nx": "20.3.2",
+    "nx": "20.3.3",
     "playwright": "1.47.2",
     "prettier": "3.4.2",
     "prettier-plugin-packagejson": "^2.5.8",

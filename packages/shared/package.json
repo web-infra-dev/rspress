@@ -50,7 +50,7 @@
     "upgrade": "modern upgrade"
   },
   "dependencies": {
-    "@rsbuild/core": "1.2.0",
+    "@rsbuild/core": "1.2.2",
     "chalk": "5.4.1",
     "fs-extra": "11.3.0",
     "gray-matter": "4.0.3",

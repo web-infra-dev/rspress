@@ -42,7 +42,7 @@
     "test": "vitest run"
   },
   "dependencies": {
-    "@rsbuild/core": "1.2.0",
+    "@rsbuild/core": "1.2.2",
     "@rspress/core": "workspace:*",
     "@rspress/shared": "workspace:*",
     "cac": "^6.7.14",
