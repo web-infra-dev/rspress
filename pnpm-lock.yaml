@@ -15,11 +15,11 @@ importers:
         specifier: ^2.27.12
         version: 2.27.12
       '@modern-js/module-tools':
-        specifier: 2.63.7
-        version: 2.63.7(typescript@5.7.2)
+        specifier: 2.64.0
+        version: 2.64.0(typescript@5.7.2)
       '@modern-js/tsconfig':
-        specifier: 2.63.7
-        version: 2.63.7
+        specifier: 2.64.0
+        version: 2.64.0
       '@playwright/test':
         specifier: 1.47.2
         version: 1.47.2
@@ -811,11 +811,11 @@ importers:
         version: 3.0.0
     devDependencies:
       '@modern-js/plugin-tailwindcss':
-        specifier: 2.63.7
-        version: 2.63.7(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(tailwindcss@3.4.17(ts-node@10.9.2(@types/node@18.11.17)(typescript@5.5.3)))
+        specifier: 2.64.0
+        version: 2.64.0(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(tailwindcss@3.4.17(ts-node@10.9.2(@types/node@18.11.17)(typescript@5.5.3)))
       '@modern-js/tsconfig':
-        specifier: 2.63.7
-        version: 2.63.7
+        specifier: 2.64.0
+        version: 2.64.0
       '@types/hast':
         specifier: 3.0.4
         version: 3.0.4
@@ -1031,8 +1031,8 @@ importers:
         specifier: ^7.49.1
         version: 7.49.1(@types/node@18.11.17)
       '@modern-js/tsconfig':
-        specifier: 2.63.7
-        version: 2.63.7
+        specifier: 2.64.0
+        version: 2.64.0
       '@rslib/core':
         specifier: 0.3.2
         version: 0.3.2(@microsoft/api-extractor@7.49.1(@types/node@18.11.17))(typescript@5.5.3)
@@ -1068,8 +1068,8 @@ importers:
         specifier: ^7.49.1
         version: 7.49.1(@types/node@18.11.17)
       '@modern-js/tsconfig':
-        specifier: 2.63.7
-        version: 2.63.7
+        specifier: 2.64.0
+        version: 2.64.0
       '@rslib/core':
         specifier: 0.3.2
         version: 0.3.2(@microsoft/api-extractor@7.49.1(@types/node@18.11.17))(typescript@5.5.3)
@@ -1139,8 +1139,8 @@ importers:
         specifier: ^7.49.1
         version: 7.49.1(@types/node@18.11.17)
       '@modern-js/tsconfig':
-        specifier: 2.63.7
-        version: 2.63.7
+        specifier: 2.64.0
+        version: 2.64.0
       '@rslib/core':
         specifier: 0.3.2
         version: 0.3.2(@microsoft/api-extractor@7.49.1(@types/node@18.11.17))(typescript@5.5.3)
@@ -1179,8 +1179,8 @@ importers:
         specifier: ^7.49.1
         version: 7.49.1(@types/node@18.11.17)
       '@modern-js/tsconfig':
-        specifier: 2.63.7
-        version: 2.63.7
+        specifier: 2.64.0
+        version: 2.64.0
       '@rslib/core':
         specifier: 0.3.2
         version: 0.3.2(@microsoft/api-extractor@7.49.1(@types/node@18.11.17))(typescript@5.5.3)
@@ -1402,8 +1402,8 @@ importers:
         specifier: ^7.49.1
         version: 7.49.1(@types/node@18.11.17)
       '@modern-js/tsconfig':
-        specifier: 2.63.7
-        version: 2.63.7
+        specifier: 2.64.0
+        version: 2.64.0
       '@rslib/core':
         specifier: 0.3.2
         version: 0.3.2(@microsoft/api-extractor@7.49.1(@types/node@18.11.17))(typescript@5.5.3)
@@ -1451,8 +1451,8 @@ importers:
         specifier: ^7.49.1
         version: 7.49.1(@types/node@18.11.17)
       '@modern-js/tsconfig':
-        specifier: 2.63.7
-        version: 2.63.7
+        specifier: 2.64.0
+        version: 2.64.0
       '@rslib/core':
         specifier: 0.3.2
         version: 0.3.2(@microsoft/api-extractor@7.49.1(@types/node@18.11.17))(typescript@5.5.3)
@@ -1494,8 +1494,8 @@ importers:
         version: 6.28.2(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
     devDependencies:
       '@modern-js/tsconfig':
-        specifier: 2.63.7
-        version: 2.63.7
+        specifier: 2.64.0
+        version: 2.64.0
       '@types/jest':
         specifier: ~29.5.14
         version: 29.5.14
@@ -1601,11 +1601,11 @@ importers:
         version: 15.6.1(react@18.3.1)
     devDependencies:
       '@modern-js/plugin-tailwindcss':
-        specifier: 2.63.7
-        version: 2.63.7(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(tailwindcss@3.4.17(ts-node@10.9.2(@types/node@22.10.2)(typescript@5.5.3)))
+        specifier: 2.64.0
+        version: 2.64.0(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(tailwindcss@3.4.17(ts-node@10.9.2(@types/node@22.10.2)(typescript@5.5.3)))
       '@modern-js/tsconfig':
-        specifier: 2.63.7
-        version: 2.63.7
+        specifier: 2.64.0
+        version: 2.64.0
       '@types/body-scroll-lock':
         specifier: ^3.1.2
         version: 3.1.2
@@ -1665,50 +1665,62 @@ packages:
       react: '>=16'
       react-dom: '>=16'
 
-  '@ast-grep/napi-darwin-arm64@0.16.0':
-    resolution: {integrity: sha512-ESjIg03S0ln+8CP43TKqY6+QPL2Kkm+6iMS5kAUMVtH/WNWd2z0oQLg9bmadUNPylYbB42B3zRtuTKwm/nCpdA==}
+  '@ast-grep/napi-darwin-arm64@0.33.1':
+    resolution: {integrity: sha512-HJcjxDhF1THn6VlUMpYFQoZBWWMk3flBJpLEDWLjH3Umk7/4tQvaJeKwhl32Snegj35p9SHGz1cS8D2k1nDsEg==}
     engines: {node: '>= 10'}
     cpu: [arm64]
     os: [darwin]
 
-  '@ast-grep/napi-darwin-x64@0.16.0':
-    resolution: {integrity: sha512-a7cOdfACgmsGyTSMLkVuGiK/v+M8eTgUWew5X/4gcPHX4GcqVbptP82kbtiVVWZW5QXX2j6VYkFCsmJ7knkXBA==}
+  '@ast-grep/napi-darwin-x64@0.33.1':
+    resolution: {integrity: sha512-Gu3dd+7RZcLyte/xwBX4ErT12GYgGeQGQh6743NffChyVnpwZpj2aWmdkD8gHRKswXz2dp5R01QMCV0G5o8rDQ==}
     engines: {node: '>= 10'}
     cpu: [x64]
     os: [darwin]
 
-  '@ast-grep/napi-linux-arm64-gnu@0.16.0':
-    resolution: {integrity: sha512-5BaueDB3ZJxLy/qGDzWO16zSmU02da96ABkp6S210OTlaThDgLpjfztoI10iwu/f3WpTnOvbggjfzOLWUAL3Aw==}
+  '@ast-grep/napi-linux-arm64-gnu@0.33.1':
+    resolution: {integrity: sha512-4rvHBtq/0Ziwr93Mp86GQPMMySNHCMXnSIdJqJjTikt/LhJNdxmXtEVadashwxbBGWvcIy8dL6OCBHblzY/3ZQ==}
     engines: {node: '>= 10'}
     cpu: [arm64]
     os: [linux]
 
-  '@ast-grep/napi-linux-x64-gnu@0.16.0':
-    resolution: {integrity: sha512-QjiY45TvPI50I2UxPlfPuoeDeEYJxGDyLegqYfrLsxtdv+wX2Jdgjew6myiMXCVG9oJWgtmp/z28zpl7H8YLPA==}
+  '@ast-grep/napi-linux-arm64-musl@0.33.1':
+    resolution: {integrity: sha512-+vTHYYP8iRG9lZHhcpQRxAuD8CBYXJHFXgsevmnurS/R53r0YjNtrtj6W33e7RYXY5hehmey2Cz/5h6OhdLcJw==}
+    engines: {node: '>= 10'}
+    cpu: [arm64]
+    os: [linux]
+
+  '@ast-grep/napi-linux-x64-gnu@0.33.1':
+    resolution: {integrity: sha512-Qm42//ZHIi2XvyvHboRPaNt32v143feG2aCqxZ2qhKJCI33abtH8pW8MF90Ix85d927xYtTwZX/ovOmJ4bghFQ==}
     engines: {node: '>= 10'}
     cpu: [x64]
     os: [linux]
 
-  '@ast-grep/napi-win32-arm64-msvc@0.16.0':
-    resolution: {integrity: sha512-4OCpEf44h63RVFiNA2InIoRNlTB2XJUq1nUiFacTagSP5L3HwnZQ4URC1+fdmZh1ESedm7KxzvhgByqGeUyzgA==}
+  '@ast-grep/napi-linux-x64-musl@0.33.1':
+    resolution: {integrity: sha512-+ye9d8nwgi+f9yhA0NEv5lDcpfIF7xhCcF9FerIKpksX57oI68QWNz1bOWHOuebaf9Wc0hgEtfai7lzcDWcsnA==}
+    engines: {node: '>= 10'}
+    cpu: [x64]
+    os: [linux]
+
+  '@ast-grep/napi-win32-arm64-msvc@0.33.1':
+    resolution: {integrity: sha512-0IrPtvqMUJmvmbBN3JcAmUoKUxsWMmrp0VAoJ+zUBHcz3GeWDISgxrUcx1z6edMeF+Ktm0SUG2LfqrzFhUqMyw==}
     engines: {node: '>= 10'}
     cpu: [arm64]
     os: [win32]
 
-  '@ast-grep/napi-win32-ia32-msvc@0.16.0':
-    resolution: {integrity: sha512-bJW9w9btdE9OuGKZSNiKkBR+Ax4113VhiJgxC2t9KbhmOsOM9E4l2U570h+DrjWdf+H3Oyb4Cz8so2noh5LQqw==}
+  '@ast-grep/napi-win32-ia32-msvc@0.33.1':
+    resolution: {integrity: sha512-rM6kK19Z9mknXQLZYvIGW1vR472n0dzhexWRM4O8BAL33B4NXA0qa7lX7I3ioHBTOUx0dGW10oNRm3yindUohg==}
     engines: {node: '>= 10'}
     cpu: [ia32]
     os: [win32]
 
-  '@ast-grep/napi-win32-x64-msvc@0.16.0':
-    resolution: {integrity: sha512-+qUauPADrUIBgSGMmjnCBuy2xuGlG97qjrRAYo9y+Mv9gGnAMpGA5zzLZArHcQwNzXwFB9aIqavtCL+tu28wHg==}
+  '@ast-grep/napi-win32-x64-msvc@0.33.1':
+    resolution: {integrity: sha512-8ATNhuU28PoUBxSgsPQnPpY+rl8DPEQCuUS55X0BLAvNQwR+Tc4MHHHX1FwjQxLLSAPfd5weiG4XQA+l7sIr0w==}
     engines: {node: '>= 10'}
     cpu: [x64]
     os: [win32]
 
-  '@ast-grep/napi@0.16.0':
-    resolution: {integrity: sha512-qOqQG9o97Q4tIZXZyWI7JuDZGJi3yibTN7LiGLmnzNLaIhmpv26BWj5OYJibUyQLVH/aTjdZSNx4spa7EihUzg==}
+  '@ast-grep/napi@0.33.1':
+    resolution: {integrity: sha512-AfUsqmEa8NoYq1QhY2LWKCgKRBrCW89WB2D7t4hhTwXcfBB+CWRtY11vUughpfGLrdyziPst7kpdFzI9TC9Efw==}
     engines: {node: '>= 10'}
 
   '@babel/code-frame@7.25.7':
@@ -2530,11 +2542,11 @@ packages:
   '@microsoft/tsdoc@0.15.1':
     resolution: {integrity: sha512-4aErSrCR/On/e5G2hDP0wjooqDdauzEbIq8hIkIe5pXV0rtWJZvdCEKL0ykZxex+IxIwBp0eGeV48hQN07dXtw==}
 
-  '@modern-js/core@2.63.7':
-    resolution: {integrity: sha512-84DYrQTmVn/QtL/jzIfq832+rF7VRvj/jTvA6Lr95a0i67R8ileBUTVGRZE6Ic9k2wz+AKsSsf6524m673Es4Q==}
+  '@modern-js/core@2.64.0':
+    resolution: {integrity: sha512-OB2aMiEFytwNwI9Jqw3Qs+UlbpU3g2FrEnPDgI1G5b9KhAiDMM0wf1OJNKdAeYph/focVA0ZUi4GIGIiZgSdTg==}
 
-  '@modern-js/module-tools@2.63.7':
-    resolution: {integrity: sha512-qy2XWTbm7Gyhu9cP2jecX/y7BdliZgoGYfLzFkHsaq741RmwWaUKfotNhPeOZPzYIaU3slDzF4UDIjj/1CHIbg==}
+  '@modern-js/module-tools@2.64.0':
+    resolution: {integrity: sha512-jeqjhjUdFG5GwO7LRFa/7ZqS/SrCfYFsr+z6nR67plP49SMkN0UAuqxI5ekiohybLvFABqKIYih0FMy0aEkWug==}
     engines: {node: '>=16.0.0'}
     hasBin: true
     peerDependencies:
@@ -2543,29 +2555,29 @@ packages:
       typescript:
         optional: true
 
-  '@modern-js/node-bundle-require@2.63.7':
-    resolution: {integrity: sha512-12K9zPuxbfxhqaq3wX9rhb17kxqJ0K8vufUubRGvfXaUxa5Fbcddg2UWovJH44THHVxCd4R5XnvK9FlEM2HhOQ==}
+  '@modern-js/node-bundle-require@2.64.0':
+    resolution: {integrity: sha512-MWzRzlBLsL2RJXLyS4Z/vVqKpt91QPVbH4nXiW1V/PgUDMlvu6DnLHPW5CDWkiP27701Olk826LVVrzanRDcdQ==}
 
-  '@modern-js/plugin-changeset@2.63.7':
-    resolution: {integrity: sha512-MB16Y38B5iTDTQKdlgZeCUxZ9cxZ9qjAq7+VjMQdWufjUoqanCUXwbaONY1BKlbZp31uM4PCzHzuE1HntM8efg==}
+  '@modern-js/plugin-changeset@2.64.0':
+    resolution: {integrity: sha512-hoNWwE8M1H2VT65OpVs+sQxMy3jrrc7KCNG5V9haFj2HDVX+EPzfEgxkZEN+or9nfXMFwWnmdvqkIvIZsHVjQQ==}
 
-  '@modern-js/plugin-i18n@2.63.7':
-    resolution: {integrity: sha512-juPz4w+ILHNPuSWnvI/KJ7PLFeQPBRqkISFO+DDBb06sL07aIJWhhFpB48VAjNWngPIHg3ijR1sTuflJwZ0eSg==}
+  '@modern-js/plugin-i18n@2.64.0':
+    resolution: {integrity: sha512-2tbhXPglCCHHxfwAP3Jl7i1dcr9l/RoXyUkkGIK3B6hoZvxo+3Yp4AO/jCAcDU6XAbFkTnqh/nCVF0+b2UDZAw==}
 
-  '@modern-js/plugin-tailwindcss@2.63.7':
-    resolution: {integrity: sha512-0o1PYIS68nmDcGEC7gmfheq8CEHn/CzJn/HYYsYXdkrA6wTrMWoshUmc2j/C4tMAydY1gZ9dMWi07Gq3+dpIBw==}
+  '@modern-js/plugin-tailwindcss@2.64.0':
+    resolution: {integrity: sha512-eDkrBzsQ+5s/Y36ZUyKPpLxbhfyZHBYfvDhJU4nwrYbx6Pbc/QlWQI3uzoa4C4xHfk18MP3prUTCN6jdtcn4nQ==}
     peerDependencies:
-      '@modern-js/runtime': ^2.63.7
+      '@modern-js/runtime': ^2.64.0
       tailwindcss: '>= 2.0.0 || >= 3.0.0'
     peerDependenciesMeta:
       '@modern-js/runtime':
         optional: true
 
-  '@modern-js/plugin@2.63.7':
-    resolution: {integrity: sha512-ooKj8wOsvsAj9Xnwe4YgT1U2hcIbjk0FuRsl9skj704BT1rnPF6iseIDfaZC9t/XzL+CQE+qyMzYfXigUEpLVg==}
+  '@modern-js/plugin@2.64.0':
+    resolution: {integrity: sha512-U4eRUjJlBXKhTZo/xxvwhTV+e+MhkTvBK0qbpeb2menWd9MibSpM5poyES2qLGtf8RS7Ecy3h4KhJquVsBXy7Q==}
 
-  '@modern-js/runtime-utils@2.63.7':
-    resolution: {integrity: sha512-KdxzAfCp/yqdxgHvF70Wb6yl9Tn3zkBR8HE/ZsuTdx1Sd7jA7miIV84LO3sKAR963T6m2Ei29Ub2omJ9GNaX0g==}
+  '@modern-js/runtime-utils@2.64.0':
+    resolution: {integrity: sha512-v1SXBYzdEVvKFgTQOJHqFqQFlhhH41QBwyRuuNLBBg7sxQHna6sWV0qZaiwfYns5qHfhaB9r8WeJg9XKzIrHTQ==}
     peerDependencies:
       react: '>=17.0.0'
       react-dom: '>=17.0.0'
@@ -2632,14 +2644,14 @@ packages:
       '@swc/helpers':
         optional: true
 
-  '@modern-js/tsconfig@2.63.7':
-    resolution: {integrity: sha512-tZJhe0q+SGyyQX02SiCfge1pzJrQvS0ygLUHuZKDvYYd4uVMtkc8NYmuzVWYuWHlcj1RlPFApm95Q31/HqPuTg==}
+  '@modern-js/tsconfig@2.64.0':
+    resolution: {integrity: sha512-ez3unNeWDGXv5o/1U+bIA5SfoGD0RpRkUoQOrCYm8EshuK+tPuLPUHjoFSQfM98YcWaMG8wb+hgWHEKL2tTfnA==}
 
-  '@modern-js/types@2.63.7':
-    resolution: {integrity: sha512-rTiE0req+dT0PCrNZr4FtqvDWdXD2P/AxdflOzv7Cp3hoUgE55pXu+uePN61w/aedK3101Sdt3C07n9yfS1gPA==}
+  '@modern-js/types@2.64.0':
+    resolution: {integrity: sha512-WpnIuGsXVqnFIvu8xzYmF2kYULWY6M7GfY1YBLDZ+XmZvl4T1kuwKUUhCFMYsxf28VgnkN6v6Tp5NqtpFGeV6w==}
 
-  '@modern-js/utils@2.63.7':
-    resolution: {integrity: sha512-w7Vrr3SbgN3hV7sNm9eUleKA+A/HcxxIXDrEdo+g1em9yKZXnY+fFsluVLHY9F0bUMcti5h8rDAvlxX4C6J0mg==}
+  '@modern-js/utils@2.64.0':
+    resolution: {integrity: sha512-WCYAPqfY2mBW1PutqyAIHqIzXnjfYGxeLrffmuuSa/MdNMptn8mXU+6nBCryUHUzy/Ig2CaxPtNAx5TnlYXucQ==}
 
   '@module-federation/error-codes@0.8.4':
     resolution: {integrity: sha512-55LYmrDdKb4jt+qr8qE8U3al62ZANp3FhfVaNPOaAmdTh0jHdD8M3yf5HKFlr5xVkVO4eV/F/J2NCfpbh+pEXQ==}
@@ -6779,36 +6791,44 @@ snapshots:
     transitivePeerDependencies:
       - '@types/react'
 
-  '@ast-grep/napi-darwin-arm64@0.16.0':
+  '@ast-grep/napi-darwin-arm64@0.33.1':
     optional: true
 
-  '@ast-grep/napi-darwin-x64@0.16.0':
+  '@ast-grep/napi-darwin-x64@0.33.1':
     optional: true
 
-  '@ast-grep/napi-linux-arm64-gnu@0.16.0':
+  '@ast-grep/napi-linux-arm64-gnu@0.33.1':
     optional: true
 
-  '@ast-grep/napi-linux-x64-gnu@0.16.0':
+  '@ast-grep/napi-linux-arm64-musl@0.33.1':
     optional: true
 
-  '@ast-grep/napi-win32-arm64-msvc@0.16.0':
+  '@ast-grep/napi-linux-x64-gnu@0.33.1':
     optional: true
 
-  '@ast-grep/napi-win32-ia32-msvc@0.16.0':
+  '@ast-grep/napi-linux-x64-musl@0.33.1':
     optional: true
 
-  '@ast-grep/napi-win32-x64-msvc@0.16.0':
+  '@ast-grep/napi-win32-arm64-msvc@0.33.1':
     optional: true
 
-  '@ast-grep/napi@0.16.0':
+  '@ast-grep/napi-win32-ia32-msvc@0.33.1':
+    optional: true
+
+  '@ast-grep/napi-win32-x64-msvc@0.33.1':
+    optional: true
+
+  '@ast-grep/napi@0.33.1':
     optionalDependencies:
-      '@ast-grep/napi-darwin-arm64': 0.16.0
-      '@ast-grep/napi-darwin-x64': 0.16.0
-      '@ast-grep/napi-linux-arm64-gnu': 0.16.0
-      '@ast-grep/napi-linux-x64-gnu': 0.16.0
-      '@ast-grep/napi-win32-arm64-msvc': 0.16.0
-      '@ast-grep/napi-win32-ia32-msvc': 0.16.0
-      '@ast-grep/napi-win32-x64-msvc': 0.16.0
+      '@ast-grep/napi-darwin-arm64': 0.33.1
+      '@ast-grep/napi-darwin-x64': 0.33.1
+      '@ast-grep/napi-linux-arm64-gnu': 0.33.1
+      '@ast-grep/napi-linux-arm64-musl': 0.33.1
+      '@ast-grep/napi-linux-x64-gnu': 0.33.1
+      '@ast-grep/napi-linux-x64-musl': 0.33.1
+      '@ast-grep/napi-win32-arm64-msvc': 0.33.1
+      '@ast-grep/napi-win32-ia32-msvc': 0.33.1
+      '@ast-grep/napi-win32-x64-msvc': 0.33.1
 
   '@babel/code-frame@7.25.7':
     dependencies:
@@ -7706,26 +7726,26 @@ snapshots:
 
   '@microsoft/tsdoc@0.15.1': {}
 
-  '@modern-js/core@2.63.7':
+  '@modern-js/core@2.64.0':
     dependencies:
-      '@modern-js/node-bundle-require': 2.63.7
-      '@modern-js/plugin': 2.63.7
-      '@modern-js/utils': 2.63.7
+      '@modern-js/node-bundle-require': 2.64.0
+      '@modern-js/plugin': 2.64.0
+      '@modern-js/utils': 2.64.0
       '@swc/helpers': 0.5.13
 
-  '@modern-js/module-tools@2.63.7(typescript@5.7.2)':
+  '@modern-js/module-tools@2.64.0(typescript@5.7.2)':
     dependencies:
       '@ampproject/remapping': 2.3.0
-      '@ast-grep/napi': 0.16.0
+      '@ast-grep/napi': 0.33.1
       '@babel/core': 7.26.0
       '@babel/types': 7.26.7
-      '@modern-js/core': 2.63.7
-      '@modern-js/plugin': 2.63.7
-      '@modern-js/plugin-changeset': 2.63.7
-      '@modern-js/plugin-i18n': 2.63.7
+      '@modern-js/core': 2.64.0
+      '@modern-js/plugin': 2.64.0
+      '@modern-js/plugin-changeset': 2.64.0
+      '@modern-js/plugin-i18n': 2.64.0
       '@modern-js/swc-plugins': 0.6.11(@swc/helpers@0.5.13)
-      '@modern-js/types': 2.63.7
-      '@modern-js/utils': 2.63.7
+      '@modern-js/types': 2.64.0
+      '@modern-js/utils': 2.64.0
       '@rollup/pluginutils': 4.2.1
       '@swc/helpers': 0.5.13
       convert-source-map: 1.8.0
@@ -7747,35 +7767,35 @@ snapshots:
       - debug
       - supports-color
 
-  '@modern-js/node-bundle-require@2.63.7':
+  '@modern-js/node-bundle-require@2.64.0':
     dependencies:
-      '@modern-js/utils': 2.63.7
+      '@modern-js/utils': 2.64.0
       '@swc/helpers': 0.5.13
       esbuild: 0.17.19
 
-  '@modern-js/plugin-changeset@2.63.7':
+  '@modern-js/plugin-changeset@2.64.0':
     dependencies:
       '@changesets/cli': 2.27.12
       '@changesets/git': 2.0.0
       '@changesets/read': 0.6.2
-      '@modern-js/plugin-i18n': 2.63.7
-      '@modern-js/utils': 2.63.7
+      '@modern-js/plugin-i18n': 2.64.0
+      '@modern-js/utils': 2.64.0
       '@swc/helpers': 0.5.13
       axios: 1.7.5
       resolve-from: 5.0.0
     transitivePeerDependencies:
       - debug
 
-  '@modern-js/plugin-i18n@2.63.7':
+  '@modern-js/plugin-i18n@2.64.0':
     dependencies:
-      '@modern-js/utils': 2.63.7
+      '@modern-js/utils': 2.64.0
       '@swc/helpers': 0.5.13
 
-  '@modern-js/plugin-tailwindcss@2.63.7(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(tailwindcss@3.4.17(ts-node@10.9.2(@types/node@18.11.17)(typescript@5.5.3)))':
+  '@modern-js/plugin-tailwindcss@2.64.0(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(tailwindcss@3.4.17(ts-node@10.9.2(@types/node@18.11.17)(typescript@5.5.3)))':
     dependencies:
-      '@modern-js/node-bundle-require': 2.63.7
-      '@modern-js/runtime-utils': 2.63.7(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
-      '@modern-js/utils': 2.63.7
+      '@modern-js/node-bundle-require': 2.64.0
+      '@modern-js/runtime-utils': 2.64.0(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
+      '@modern-js/utils': 2.64.0
       '@swc/helpers': 0.5.13
       babel-plugin-macros: 3.1.0
       tailwindcss: 3.4.17(ts-node@10.9.2(@types/node@18.11.17)(typescript@5.5.3))
@@ -7783,11 +7803,11 @@ snapshots:
       - react
       - react-dom
 
-  '@modern-js/plugin-tailwindcss@2.63.7(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(tailwindcss@3.4.17(ts-node@10.9.2(@types/node@22.10.2)(typescript@5.5.3)))':
+  '@modern-js/plugin-tailwindcss@2.64.0(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(tailwindcss@3.4.17(ts-node@10.9.2(@types/node@22.10.2)(typescript@5.5.3)))':
     dependencies:
-      '@modern-js/node-bundle-require': 2.63.7
-      '@modern-js/runtime-utils': 2.63.7(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
-      '@modern-js/utils': 2.63.7
+      '@modern-js/node-bundle-require': 2.64.0
+      '@modern-js/runtime-utils': 2.64.0(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
+      '@modern-js/utils': 2.64.0
       '@swc/helpers': 0.5.13
       babel-plugin-macros: 3.1.0
       tailwindcss: 3.4.17(ts-node@10.9.2(@types/node@22.10.2)(typescript@5.5.3))
@@ -7795,14 +7815,14 @@ snapshots:
       - react
       - react-dom
 
-  '@modern-js/plugin@2.63.7':
+  '@modern-js/plugin@2.64.0':
     dependencies:
-      '@modern-js/utils': 2.63.7
+      '@modern-js/utils': 2.64.0
       '@swc/helpers': 0.5.13
 
-  '@modern-js/runtime-utils@2.63.7(react-dom@18.3.1(react@18.3.1))(react@18.3.1)':
+  '@modern-js/runtime-utils@2.64.0(react-dom@18.3.1(react@18.3.1))(react@18.3.1)':
     dependencies:
-      '@modern-js/utils': 2.63.7
+      '@modern-js/utils': 2.64.0
       '@remix-run/router': 1.20.0
       '@swc/helpers': 0.5.13
       lru-cache: 6.0.0
@@ -7848,11 +7868,11 @@ snapshots:
       '@modern-js/swc-plugins-win32-x64-msvc': 0.6.11
       '@swc/helpers': 0.5.13
 
-  '@modern-js/tsconfig@2.63.7': {}
+  '@modern-js/tsconfig@2.64.0': {}
 
-  '@modern-js/types@2.63.7': {}
+  '@modern-js/types@2.64.0': {}
 
-  '@modern-js/utils@2.63.7':
+  '@modern-js/utils@2.64.0':
     dependencies:
       '@swc/helpers': 0.5.13
       caniuse-lite: 1.0.30001668
