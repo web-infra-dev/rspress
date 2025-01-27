@@ -19,9 +19,16 @@ interface SidebarData {
  * @param pattern /zh/guide
  * @param currentPathname /base/zh/guide/getting-started
  */
-const matchPath = (pattern: string, currentPathname: string): boolean => {
-  const prefix = withBase(addTrailingSlash(pattern));
-  return currentPathname.startsWith(prefix);
+export const matchPath = (
+  pattern: string,
+  currentPathname: string,
+): boolean => {
+  const prefix = withBase(pattern);
+  if (prefix === currentPathname) {
+    return true;
+  }
+  const prefixWithTrailingSlash = addTrailingSlash(pattern);
+  return currentPathname.startsWith(prefixWithTrailingSlash);
 };
 
 const match = (
