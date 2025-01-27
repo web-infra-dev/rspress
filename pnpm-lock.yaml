@@ -21,8 +21,8 @@ importers:
         specifier: 2.64.0
         version: 2.64.0
       '@playwright/test':
-        specifier: 1.47.2
-        version: 1.47.2
+        specifier: 1.50.0
+        version: 1.50.0
       '@types/cross-spawn':
         specifier: ^6.0.6
         version: 6.0.6
@@ -66,8 +66,8 @@ importers:
         specifier: 20.3.3
         version: 20.3.3
       playwright:
-        specifier: 1.47.2
-        version: 1.47.2
+        specifier: 1.50.0
+        version: 1.50.0
       prettier:
         specifier: 3.4.2
         version: 3.4.2
@@ -2796,8 +2796,8 @@ packages:
     resolution: {integrity: sha512-cq8o4cWH0ibXh9VGi5P20Tu9XF/0fFXl9EUinr9QfTM7a7p0oTA4iJRCQWppXR1Pg8dSM0UCItCkPwsk9qWWYA==}
     engines: {node: ^12.20.0 || ^14.18.0 || >=16.0.0}
 
-  '@playwright/test@1.47.2':
-    resolution: {integrity: sha512-jTXRsoSPONAs8Za9QEQdyjFn+0ZQFjCiIztAIF6bi1HqhBzG9Ma7g1WotyiGqFSBRZjIEqMdT8RUlbk1QVhzCQ==}
+  '@playwright/test@1.50.0':
+    resolution: {integrity: sha512-ZGNXbt+d65EGjBORQHuYKj+XhCewlwpnSd/EDuLPZGSiEWmgOJB5RmMCCYGy5aMfTs9wx61RivfDKi8H/hcMvw==}
     engines: {node: '>=18'}
     hasBin: true
 
@@ -5423,13 +5423,13 @@ packages:
     resolution: {integrity: sha512-saLsH7WeYYPiD25LDuLRRY/i+6HaPYr6G1OUlN39otzkSTxKnubR9RTxS3/Kk50s1g2JTgFwWQDQyplC5/SHZg==}
     engines: {node: '>= 6'}
 
-  playwright-core@1.47.2:
-    resolution: {integrity: sha512-3JvMfF+9LJfe16l7AbSmU555PaTl2tPyQsVInqm3id16pdDfvZ8TTZ/pyzmkbDrZTQefyzU7AIHlZqQnxpqHVQ==}
+  playwright-core@1.50.0:
+    resolution: {integrity: sha512-CXkSSlr4JaZs2tZHI40DsZUN/NIwgaUPsyLuOAaIZp2CyF2sN5MM5NJsyB188lFSSozFxQ5fPT4qM+f0tH/6wQ==}
     engines: {node: '>=18'}
     hasBin: true
 
-  playwright@1.47.2:
-    resolution: {integrity: sha512-nx1cLMmQWqmA3UsnjaaokyoUpdVaaDhJhMoxX2qj3McpjnsqFHs516QAKYhqHAgOP+oCFTEOCOAaD1RgD/RQfA==}
+  playwright@1.50.0:
+    resolution: {integrity: sha512-+GinGfGTrd2IfX1TA4N2gNmeIksSb+IAe589ZH+FlmpV3MYTx6+buChGIuDLQwrGNCw2lWibqV50fU510N7S+w==}
     engines: {node: '>=18'}
     hasBin: true
 
@@ -8012,9 +8012,9 @@ snapshots:
 
   '@pkgr/core@0.1.1': {}
 
-  '@playwright/test@1.47.2':
+  '@playwright/test@1.50.0':
     dependencies:
-      playwright: 1.47.2
+      playwright: 1.50.0
 
   '@remix-run/router@1.20.0': {}
 
@@ -11120,11 +11120,11 @@ snapshots:
 
   pirates@4.0.6: {}
 
-  playwright-core@1.47.2: {}
+  playwright-core@1.50.0: {}
 
-  playwright@1.47.2:
+  playwright@1.50.0:
     dependencies:
-      playwright-core: 1.47.2
+      playwright-core: 1.50.0
     optionalDependencies:
       fsevents: 2.3.2
 
