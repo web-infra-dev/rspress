@@ -60,8 +60,8 @@ importers:
         specifier: ^9.1.7
         version: 9.1.7
       lint-staged:
-        specifier: ~15.4.2
-        version: 15.4.2
+        specifier: ~15.4.3
+        version: 15.4.3
       nx:
         specifier: 20.3.3
         version: 20.3.3
@@ -659,8 +659,8 @@ importers:
   packages/cli:
     dependencies:
       '@rsbuild/core':
-        specifier: 1.2.2
-        version: 1.2.2
+        specifier: 1.2.3
+        version: 1.2.3
       '@rspress/core':
         specifier: workspace:*
         version: link:../core
@@ -708,17 +708,17 @@ importers:
         specifier: 2.3.0
         version: 2.3.0(react@18.3.1)
       '@rsbuild/core':
-        specifier: 1.2.2
-        version: 1.2.2
+        specifier: 1.2.3
+        version: 1.2.3
       '@rsbuild/plugin-less':
         specifier: ~1.1.0
-        version: 1.1.0(@rsbuild/core@1.2.2)
+        version: 1.1.0(@rsbuild/core@1.2.3)
       '@rsbuild/plugin-react':
         specifier: ~1.1.0
-        version: 1.1.0(@rsbuild/core@1.2.2)
+        version: 1.1.0(@rsbuild/core@1.2.3)
       '@rsbuild/plugin-sass':
         specifier: ~1.2.0
-        version: 1.2.0(@rsbuild/core@1.2.2)
+        version: 1.2.0(@rsbuild/core@1.2.3)
       '@rspress/mdx-rs':
         specifier: 0.6.6
         version: 0.6.6
@@ -897,10 +897,10 @@ importers:
         version: 11.18.2(react-dom@19.0.0(react@19.0.0))(react@19.0.0)
       rsbuild-plugin-google-analytics:
         specifier: ^1.0.3
-        version: 1.0.3(@rsbuild/core@1.2.2)
+        version: 1.0.3(@rsbuild/core@1.2.3)
       rsbuild-plugin-open-graph:
         specifier: ^1.0.2
-        version: 1.0.2(@rsbuild/core@1.2.2)
+        version: 1.0.2(@rsbuild/core@1.2.3)
       rspress:
         specifier: workspace:*
         version: link:../cli
@@ -1279,23 +1279,23 @@ importers:
   packages/plugin-preview:
     dependencies:
       '@rsbuild/core':
-        specifier: 1.2.2
-        version: 1.2.2
+        specifier: 1.2.3
+        version: 1.2.3
       '@rsbuild/plugin-babel':
         specifier: ~1.0.3
-        version: 1.0.3(@rsbuild/core@1.2.2)
+        version: 1.0.3(@rsbuild/core@1.2.3)
       '@rsbuild/plugin-less':
         specifier: ~1.1.0
-        version: 1.1.0(@rsbuild/core@1.2.2)
+        version: 1.1.0(@rsbuild/core@1.2.3)
       '@rsbuild/plugin-react':
         specifier: ~1.1.0
-        version: 1.1.0(@rsbuild/core@1.2.2)
+        version: 1.1.0(@rsbuild/core@1.2.3)
       '@rsbuild/plugin-sass':
         specifier: ~1.2.0
-        version: 1.2.0(@rsbuild/core@1.2.2)
+        version: 1.2.0(@rsbuild/core@1.2.3)
       '@rsbuild/plugin-solid':
         specifier: ~1.0.4
-        version: 1.0.4(@babel/core@7.26.0)(@rsbuild/core@1.2.2)(solid-js@1.9.4)
+        version: 1.0.4(@babel/core@7.26.0)(@rsbuild/core@1.2.3)(solid-js@1.9.4)
       '@rspress/core':
         specifier: workspace:^1.40.2
         version: link:../core
@@ -1512,8 +1512,8 @@ importers:
   packages/shared:
     dependencies:
       '@rsbuild/core':
-        specifier: 1.2.2
-        version: 1.2.2
+        specifier: 1.2.3
+        version: 1.2.3
       chalk:
         specifier: 5.4.1
         version: 5.4.1
@@ -2898,8 +2898,8 @@ packages:
     engines: {node: '>=16.7.0'}
     hasBin: true
 
-  '@rsbuild/core@1.2.2':
-    resolution: {integrity: sha512-PQ1ax5Z6yMvbgsBXa8bcNUiz+NVVf2PdrXj5A/xfqnnviZRjV/jCxQFWjw8ajAbJcmLxBcWYJnj4npz6g+FAAA==}
+  '@rsbuild/core@1.2.3':
+    resolution: {integrity: sha512-lUCt8gQe9E2PI3srcEJ1Na3GQYmsYuvAqK0f/k00HM0pEjrbOFC9Xq2kR85UoXHFqlTCIw/fLLDe91PKRCbKAw==}
     engines: {node: '>=16.7.0'}
     hasBin: true
 
@@ -4806,8 +4806,8 @@ packages:
     resolution: {integrity: sha512-cNOjgCnLB+FnvWWtyRTzmB3POJ+cXxTA81LoW7u8JdmhfXzriropYwpjShnz1QLLWsQwY7nIxoDmcPTwphDK9w==}
     engines: {node: ^12.20.0 || ^14.13.1 || >=16.0.0}
 
-  lint-staged@15.4.2:
-    resolution: {integrity: sha512-gCqzB/Li281uZJgReNci+oXXqUEdrFAQAzTE/LwoxxiEuP41vozNe4BATS+4ehdqkWn+Z6bGc3EDcBja3npBVw==}
+  lint-staged@15.4.3:
+    resolution: {integrity: sha512-FoH1vOeouNh1pw+90S+cnuoFwRfUD9ijY2GKy5h7HS3OR7JVir2N2xrsa0+Twc1B7cW72L+88geG5cW4wIhn7g==}
     engines: {node: '>=18.12.0'}
     hasBin: true
 
@@ -8060,7 +8060,7 @@ snapshots:
       '@swc/helpers': 0.5.15
       core-js: 3.40.0
 
-  '@rsbuild/core@1.2.2':
+  '@rsbuild/core@1.2.3':
     dependencies:
       '@rspack/core': 1.2.2(@swc/helpers@0.5.15)
       '@rspack/lite-tapable': 1.0.1
@@ -8069,13 +8069,13 @@ snapshots:
     transitivePeerDependencies:
       - '@rspack/tracing'
 
-  '@rsbuild/plugin-babel@1.0.3(@rsbuild/core@1.2.2)':
+  '@rsbuild/plugin-babel@1.0.3(@rsbuild/core@1.2.3)':
     dependencies:
       '@babel/core': 7.26.0
       '@babel/plugin-proposal-decorators': 7.25.9(@babel/core@7.26.0)
       '@babel/plugin-transform-class-properties': 7.25.9(@babel/core@7.26.0)
       '@babel/preset-typescript': 7.26.0(@babel/core@7.26.0)
-      '@rsbuild/core': 1.2.2
+      '@rsbuild/core': 1.2.3
       '@types/babel__core': 7.20.5
       deepmerge: 4.3.1
       reduce-configs: 1.0.0
@@ -8083,31 +8083,31 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
-  '@rsbuild/plugin-less@1.1.0(@rsbuild/core@1.2.2)':
+  '@rsbuild/plugin-less@1.1.0(@rsbuild/core@1.2.3)':
     dependencies:
-      '@rsbuild/core': 1.2.2
+      '@rsbuild/core': 1.2.3
       deepmerge: 4.3.1
       reduce-configs: 1.0.0
 
-  '@rsbuild/plugin-react@1.1.0(@rsbuild/core@1.2.2)':
+  '@rsbuild/plugin-react@1.1.0(@rsbuild/core@1.2.3)':
     dependencies:
-      '@rsbuild/core': 1.2.2
+      '@rsbuild/core': 1.2.3
       '@rspack/plugin-react-refresh': 1.0.0(react-refresh@0.16.0)
       react-refresh: 0.16.0
 
-  '@rsbuild/plugin-sass@1.2.0(@rsbuild/core@1.2.2)':
+  '@rsbuild/plugin-sass@1.2.0(@rsbuild/core@1.2.3)':
     dependencies:
-      '@rsbuild/core': 1.2.2
+      '@rsbuild/core': 1.2.3
       deepmerge: 4.3.1
       loader-utils: 2.0.4
       postcss: 8.5.1
       reduce-configs: 1.1.0
       sass-embedded: 1.83.4
 
-  '@rsbuild/plugin-solid@1.0.4(@babel/core@7.26.0)(@rsbuild/core@1.2.2)(solid-js@1.9.4)':
+  '@rsbuild/plugin-solid@1.0.4(@babel/core@7.26.0)(@rsbuild/core@1.2.3)(solid-js@1.9.4)':
     dependencies:
-      '@rsbuild/core': 1.2.2
-      '@rsbuild/plugin-babel': 1.0.3(@rsbuild/core@1.2.2)
+      '@rsbuild/core': 1.2.3
+      '@rsbuild/plugin-babel': 1.0.3(@rsbuild/core@1.2.3)
       babel-preset-solid: 1.9.3(@babel/core@7.26.0)
       solid-refresh: 0.6.3(solid-js@1.9.4)
     transitivePeerDependencies:
@@ -10188,7 +10188,7 @@ snapshots:
 
   lines-and-columns@2.0.3: {}
 
-  lint-staged@15.4.2:
+  lint-staged@15.4.3:
     dependencies:
       chalk: 5.4.1
       commander: 13.1.0
@@ -11572,13 +11572,13 @@ snapshots:
       '@microsoft/api-extractor': 7.49.1(@types/node@22.10.2)
       typescript: 5.7.2
 
-  rsbuild-plugin-google-analytics@1.0.3(@rsbuild/core@1.2.2):
+  rsbuild-plugin-google-analytics@1.0.3(@rsbuild/core@1.2.3):
     optionalDependencies:
-      '@rsbuild/core': 1.2.2
+      '@rsbuild/core': 1.2.3
 
-  rsbuild-plugin-open-graph@1.0.2(@rsbuild/core@1.2.2):
+  rsbuild-plugin-open-graph@1.0.2(@rsbuild/core@1.2.3):
     optionalDependencies:
-      '@rsbuild/core': 1.2.2
+      '@rsbuild/core': 1.2.3
 
   rslog@1.1.0: {}
 
