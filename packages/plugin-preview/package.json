@@ -32,7 +32,7 @@
     "@rspress/shared": "workspace:*",
     "@rspress/theme-default": "workspace:*",
     "lodash": "4.17.21",
-    "qrcode.react": "^3.2.0"
+    "qrcode.react": "^4.2.0"
   },
   "devDependencies": {
     "@rslib/core": "0.3.2",
