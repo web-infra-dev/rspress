@@ -241,7 +241,7 @@ const formatIconName = (icon: string): IconName => {
   return iconLowerCase;
 };
 
-export function getSocialIcons(socialLinks: SocialLink[]) {
+export function getSocialIcons(socialLinks: SocialLink[] = []) {
   const icons: Record<string, string> = {};
   for (const link of socialLinks) {
     if (typeof link.icon === 'string') {
