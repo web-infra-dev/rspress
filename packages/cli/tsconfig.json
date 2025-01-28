@@ -17,5 +17,13 @@
     "runtime.ts",
     "theme.ts"
   ],
-  "exclude": ["**/node_modules"]
+  "exclude": ["**/node_modules"],
+  "references": [
+    {
+      "path": "../core"
+    },
+    {
+      "path": "../shared"
+    }
+  ]
 }

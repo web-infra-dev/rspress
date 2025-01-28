@@ -1,9 +1,22 @@
 {
   "extends": "@modern-js/tsconfig/base",
   "compilerOptions": {
-    "declaration": false,
+    "declaration": true,
+    "noEmit": false,
+    "outDir": "dist",
     "jsx": "preserve",
     "baseUrl": "./"
   },
+  "references": [
+    {
+      "path": "../core"
+    },
+    {
+      "path": "../plugin-api-docgen"
+    },
+    {
+      "path": "../plugin-preview"
+    }
+  ],
   "include": ["src", "static", "rslib.config.ts"]
 }

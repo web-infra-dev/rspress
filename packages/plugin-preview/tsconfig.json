@@ -1,7 +1,10 @@
 {
   "extends": "@modern-js/tsconfig/base",
   "compilerOptions": {
-    "declaration": false,
+    "composite": true,
+    "noEmit": false,
+    "declaration": true,
+    "declarationDir": "dist",
     "module": "ESNext",
     "target": "ESNext",
     "jsx": "react-jsx",
@@ -10,7 +13,6 @@
     "lib": ["ESNext", "DOM"],
     "esModuleInterop": true,
     "skipLibCheck": true,
-    "noEmit": true,
     "paths": {
       "@/*": ["./*"]
     }
@@ -22,6 +24,14 @@
     "mdx-meta-loader.cjs",
     "static/",
     "rslib.config.ts"
+  ],
+  "references": [
+    {
+      "path": "../shared"
+    },
+    {
+      "path": "../theme-default"
+    }
   ],
   "exclude": ["runtime.d.ts", "theme.d.ts", "node_modules", "dist"]
 }

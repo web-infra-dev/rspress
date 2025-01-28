@@ -1,6 +1,6 @@
 import { defineConfig, moduleTools } from '@modern-js/module-tools';
 
-export default defineConfig({
+const config: ReturnType<typeof defineConfig> = defineConfig({
   plugins: [moduleTools()],
   buildConfig: [
     {
@@ -31,3 +31,5 @@ export default defineConfig({
     },
   ],
 });
+
+export default config;
