@@ -1,7 +1,12 @@
 import type { SocialLink } from '@rspress/shared';
 import { useState } from 'react';
 import styles from './index.module.scss';
-import presetIcons from './presetIcons';
+
+declare const process: {
+  env: {
+    RSPRESS_SOCIAL_ICONS: Record<string, string>;
+  };
+};
 
 interface ILinkContentComp {
   link: SocialLink;
@@ -13,13 +18,10 @@ export const LinkContent = (props: ILinkContentComp) => {
   const { icon, mode = 'link', content } = link;
 
   let IconComp: React.ReactElement = <></>;
-  if (typeof icon === 'object') {
-    IconComp = <div dangerouslySetInnerHTML={{ __html: icon.svg }}></div>;
-  } else if (icon) {
-    const iconLowerCase = icon.toLowerCase() as keyof typeof presetIcons;
-    IconComp =
-      // redirect twitter's logo to `x`
-      iconLowerCase === 'twitter' ? presetIcons.x : presetIcons[iconLowerCase];
+  if (icon) {
+    const iconMap = process.env.RSPRESS_SOCIAL_ICONS;
+    const html = typeof icon === 'string' ? iconMap[icon] : icon.svg;
+    IconComp = <div dangerouslySetInnerHTML={{ __html: html }}></div>;
   }
 
   const [contentVisible, setContentVisible] = useState(false);

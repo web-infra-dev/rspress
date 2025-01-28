@@ -33,6 +33,7 @@ import { rsbuildPluginDocVM } from './runtimeModule';
 import { serveSearchIndexMiddleware } from './searchIndex';
 import { detectReactVersion, resolveReactAlias } from './utils';
 import { detectCustomIcon } from './utils/detectCustomIcon';
+import { getSocialIcons } from './utils/getSocialIcons';
 
 export interface MdxRsLoaderCallbackContext {
   resourcePath: string;
@@ -169,6 +170,9 @@ async function createInternalBuildConfig(
       define: {
         'process.env.__REACT_GTE_18__': JSON.stringify(reactVersion >= 18),
         'process.env.TEST': JSON.stringify(process.env.TEST),
+        'process.env.RSPRESS_SOCIAL_ICONS': JSON.stringify(
+          getSocialIcons(config.themeConfig.socialLinks),
+        ),
       },
     },
     performance: {
