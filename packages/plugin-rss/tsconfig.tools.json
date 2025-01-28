@@ -3,12 +3,12 @@
   "compilerOptions": {
     "composite": true,
     "declaration": true,
+    "noEmit": false,
     "module": "ESNext",
     "target": "ES2020",
     "esModuleInterop": true,
     "skipLibCheck": true,
-    "moduleResolution": "bundler",
-    "noEmit": true
+    "moduleResolution": "bundler"
   },
   "include": ["modern.config.ts", "vitest.config.ts"]
 }

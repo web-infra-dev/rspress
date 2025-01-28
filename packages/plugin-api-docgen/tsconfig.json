@@ -1,26 +1,29 @@
 {
   "extends": "@modern-js/tsconfig/base",
   "compilerOptions": {
-    "declaration": false,
+    "composite": true,
+    "declaration": true,
+    "noEmit": false,
     "module": "ESNext",
     "target": "ESNext",
     "jsx": "react-jsx",
     "baseUrl": "src",
-    "rootDir": ".",
+    "rootDir": "src",
     "lib": ["ESNext", "DOM"],
     "esModuleInterop": true,
     "skipLibCheck": true,
-    "noEmit": true,
     "paths": {
       "@/*": ["./*"]
     }
   },
-  "include": [
-    "src",
-    "vitest.config.ts",
-    "index.d.ts",
-    "mdx-meta-loader.cjs",
-    "static/"
+  "references": [
+    {
+      "path": "../core"
+    },
+    {
+      "path": "../shared"
+    }
   ],
+  "include": ["src"],
   "exclude": ["runtime.d.ts", "theme.d.ts", "node_modules", "dist"]
 }
