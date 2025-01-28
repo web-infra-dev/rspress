@@ -2,13 +2,13 @@
   "extends": "@modern-js/tsconfig/react",
   "compilerOptions": {
     "composite": true,
-    "declaration": false,
+    "declaration": true,
+    "noEmit": false,
     "module": "ESNext",
     "target": "ESNext",
     "esModuleInterop": true,
     "skipLibCheck": true,
     "moduleResolution": "Bundler",
-    "noEmit": true,
     "jsx": "react-jsx"
   },
   "include": ["static"]

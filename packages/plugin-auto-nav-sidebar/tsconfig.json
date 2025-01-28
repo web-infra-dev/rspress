@@ -1,7 +1,11 @@
 {
   "extends": "@modern-js/tsconfig/base",
   "compilerOptions": {
-    "declaration": false,
+    "declaration": true,
+    "noEmit": false,
+    "composite": true,
+    "outDir": "dist",
+    "noImplicitAny": false,
     "module": "ESNext",
     "target": "ESNext",
     "jsx": "react-jsx",
@@ -14,6 +18,11 @@
       "@/*": ["./*"]
     }
   },
+  "references": [
+    {
+      "path": "../shared"
+    }
+  ],
   "include": ["src", "vitest.config.ts", "index.d.ts", "rslib.config.ts"],
   "exclude": ["node_modules", "dist"]
 }

@@ -107,7 +107,7 @@ export async function siteDataVMPlugin(context: FactoryContext) {
     pages.map(async pageData => pluginDriver.extendPageData(pageData)),
   );
 
-  const siteData: SiteData = {
+  const siteData: Omit<SiteData, 'root'> = {
     title: userConfig?.title || '',
     description: userConfig?.description || '',
     icon: userConfig?.icon || '',

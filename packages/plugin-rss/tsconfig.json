@@ -11,6 +11,7 @@
   "include": ["src"],
   "references": [
     { "path": "./tsconfig.runtime.json" },
-    { "path": "./tsconfig.tools.json" }
+    { "path": "./tsconfig.tools.json" },
+    { "path": "../runtime" }
   ]
 }

@@ -1,7 +1,10 @@
 {
   "extends": "@modern-js/tsconfig/base",
   "compilerOptions": {
-    "declaration": false,
+    "declaration": true,
+    "noEmit": false,
+    "declarationDir": "dist",
+    "composite": true,
     "strict": true,
     "module": "ESNext",
     "target": "ESNext",
@@ -20,6 +23,14 @@
     "vitest.config.ts",
     "./modern.config.ts",
     "./tailwind.config.ts"
+  ],
+  "references": [
+    {
+      "path": "../runtime"
+    },
+    {
+      "path": "../shared"
+    }
   ],
   "exclude": ["theme.ts", "node_modules"]
 }

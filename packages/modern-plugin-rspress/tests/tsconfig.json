@@ -5,7 +5,7 @@
     "jsx": "preserve",
     "baseUrl": "./",
     "outDir": "./out",
-    "emitDeclarationOnly": true,
+    "noEmit": false,
     "isolatedModules": true,
     "paths": {},
     "types": ["node", "jest"]

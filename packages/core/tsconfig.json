@@ -1,13 +1,16 @@
 {
   "extends": "@modern-js/tsconfig/base",
   "compilerOptions": {
-    "declaration": false,
     "strict": false,
+    "declaration": true,
+    "noEmit": false,
+    "declarationDir": "dist",
     "module": "ESNext",
     "target": "ESNext",
     "jsx": "react-jsx",
     "baseUrl": "src",
-    "rootDir": ".",
+    "rootDir": "src",
+    "composite": true,
     "lib": ["ESNext", "DOM"],
     "esModuleInterop": true,
     "skipLibCheck": true,
@@ -17,11 +20,29 @@
       "@/theme-default/*": ["./theme-default/*"]
     }
   },
-  "include": [
-    "src",
-    "vitest.config.ts",
-    "./modern.config.ts",
-    "./tailwind.config.ts"
+  "include": ["src"],
+  "references": [
+    {
+      "path": "../plugin-auto-nav-sidebar"
+    },
+    {
+      "path": "../plugin-last-updated"
+    },
+    {
+      "path": "../plugin-container-syntax"
+    },
+    {
+      "path": "../plugin-medium-zoom"
+    },
+    {
+      "path": "../shared"
+    },
+    {
+      "path": "../theme-default"
+    },
+    {
+      "path": "../runtime"
+    }
   ],
   "exclude": ["runtime.ts", "theme.ts", "node_modules"]
 }
