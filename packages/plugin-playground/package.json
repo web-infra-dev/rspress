@@ -44,7 +44,7 @@
   },
   "devDependencies": {
     "@babel/types": "^7.26.7",
-    "@rslib/core": "0.3.2",
+    "@rslib/core": "0.4.0",
     "@types/babel__core": "^7.20.5",
     "@types/babel__standalone": "^7.1.9",
     "@types/babel__traverse": "^7.20.6",
