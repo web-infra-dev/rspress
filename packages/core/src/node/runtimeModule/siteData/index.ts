@@ -41,11 +41,16 @@ export async function siteDataVMPlugin(context: FactoryContext) {
 
   const highlightLanguages: Set<string> = new Set();
   const replaceRules = userConfig?.replaceRules || [];
+
+  const searchConfig = userConfig?.search || {};
+
   // If the dev server restart when config file, we will reuse the siteData instead of extracting the siteData from source files again.
   const domain =
-    userConfig?.search && userConfig?.search?.mode === 'remote'
-      ? (userConfig?.search.domain ?? '')
-      : '';
+    searchConfig?.mode === 'remote' ? (searchConfig.domain ?? '') : '';
+
+  const searchCodeBlocks =
+    'codeBlocks' in searchConfig ? searchConfig.codeBlocks : false;
+
   const pages = await extractPageData(
     replaceRules,
     alias,
@@ -53,6 +58,7 @@ export async function siteDataVMPlugin(context: FactoryContext) {
     userDocRoot,
     routeService,
     highlightLanguages,
+    searchCodeBlocks,
   );
   // modify page index by plugins
   await pluginDriver.modifySearchIndexData(pages);

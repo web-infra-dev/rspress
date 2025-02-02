@@ -261,9 +261,20 @@ export default defineConfig({
 
 ## search
 
-- Type: `{ searchHooks: string; versioned: boolean; }`
+- Type:
+
+```ts
+type SearchOptions = {
+  searchHooks?: string;
+  versioned?: boolean;
+  codeBlocks?: boolean;
+};
+```
 
 ### searchHooks
+
+- Type: `string`
+- Default: `undefined`
 
 你可以通过 `searchHooks` 参数来增加搜索运行时钩子逻辑，比如：
 
@@ -282,6 +293,9 @@ export default defineConfig({
 
 ### versioned
 
+- Type: `boolean`
+- Default: `false`
+
 如果你配置了 `multiVersion`，可以使用 `versioned` 参数为文档的每个版本创建单独的搜索索引。开启该选项后，搜索将仅会查询当前所选版本对应的索引。
 
 ```ts title="rspress.config.ts"
@@ -290,6 +304,23 @@ import { defineConfig } from 'rspress/config';
 export default defineConfig({
   search: {
     versioned: true,
+  },
+});
+```
+
+### codeBlocks
+
+- Type: `boolean`
+- Default: `false`
+
+开启后，搜索的索引将包含代码块的内容，从而允许用户搜索代码块。
+
+```ts title="rspress.config.ts"
+import { defineConfig } from 'rspress/config';
+
+export default defineConfig({
+  search: {
+    codeBlocks: true,
   },
 });
 ```

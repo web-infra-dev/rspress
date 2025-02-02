@@ -36,6 +36,7 @@ export async function extractPageData(
   root: string,
   routeService: RouteService,
   highlighterLangs: Set<string>,
+  searchCodeBlocks: boolean,
 ): Promise<PageIndexInfo[]> {
   const pageData = await Promise.all(
     routeService
@@ -108,7 +109,7 @@ export async function extractPageData(
             {
               // Skip code blocks
               selector: 'pre > code',
-              format: 'skip',
+              format: searchCodeBlocks ? 'inlineTag' : 'skip',
             },
             ...['h1', 'h2', 'h3', 'h4', 'h5', 'h6'].map(tag => ({
               selector: tag,
