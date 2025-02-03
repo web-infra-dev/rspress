@@ -18,7 +18,7 @@
   "devDependencies": {
     "@rstack-dev/doc-ui": "1.6.0",
     "@types/react": "^18.3.18",
-    "framer-motion": "12.0.5",
+    "framer-motion": "12.0.6",
     "rsbuild-plugin-google-analytics": "^1.0.3",
     "rsbuild-plugin-open-graph": "^1.0.2",
     "rspress": "workspace:*",
