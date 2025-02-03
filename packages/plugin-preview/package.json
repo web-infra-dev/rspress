@@ -36,7 +36,7 @@
   },
   "devDependencies": {
     "@rslib/core": "0.4.0",
-    "@types/lodash": "^4.17.14",
+    "@types/lodash": "^4.17.15",
     "@types/mdast": "^3.0.15",
     "@types/node": "^18.11.17",
     "@types/react": "^18.3.18",
