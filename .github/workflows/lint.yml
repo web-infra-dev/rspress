@@ -28,7 +28,9 @@ jobs:
           fetch-depth: 1
 
       - name: Install Pnpm
-        run: corepack enable
+        run: |
+          npm install -g corepack@latest --force
+          corepack enable
 
       - name: Setup Node.js
         uses: actions/setup-node@v4
