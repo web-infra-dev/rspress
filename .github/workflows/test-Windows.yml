@@ -39,7 +39,7 @@ jobs:
 
       - name: Install Pnpm
         run: |
-          npm install -g corepack@latest
+          npm install -g corepack@latest --force
           corepack enable
 
       - name: Check skip CI
