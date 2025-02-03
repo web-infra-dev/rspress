@@ -33,7 +33,9 @@ jobs:
           fetch-depth: 1
 
       - name: Install Pnpm
-        run: corepack enable
+        run: |
+          npm install -g corepack@latest
+          corepack enable
 
       - name: Check skip CI
         run: echo "RESULT=$(node ./scripts/skipCI.js)" >> "$GITHUB_OUTPUT"
