@@ -1,3 +1,4 @@
+import fs from 'node:fs';
 import path, { join } from 'node:path';
 import { DEFAULT_BABEL_URL, DEFAULT_MONACO_URL } from '@/web/constant';
 import { normalizeUrl } from '@/web/utils';
@@ -74,8 +75,6 @@ export function pluginPlayground(
       return config;
     },
     async routeGenerated(routes: RouteMeta[]) {
-      const { default: fs } = await import('@rspress/shared/fs-extra');
-
       // init routeMeta
       routeMeta = routes;
 
@@ -98,7 +97,7 @@ export function pluginPlayground(
               format: path.extname(filepath).slice(1) as 'mdx' | 'md',
               remarkPlugins: [remarkGFM],
             });
-            const source = await fs.readFile(filepath, 'utf-8');
+            const source = await fs.promises.readFile(filepath, 'utf-8');
             const ast = processor.parse(source);
 
             visit(ast, 'mdxJsxFlowElement', (node: any) => {

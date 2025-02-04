@@ -1,3 +1,4 @@
+import fs from 'node:fs/promises';
 import path from 'node:path';
 import type {
   RsbuildConfig,
@@ -15,7 +16,6 @@ import {
   removeLeadingSlash,
   removeTrailingSlash,
 } from '@rspress/shared';
-import fs from '@rspress/shared/fs-extra';
 import type { PluginDriver } from './PluginDriver';
 import {
   CLIENT_ENTRY,
@@ -122,11 +122,11 @@ async function createInternalBuildConfig(
     dev: {
       progressBar: false,
       // Serve static files
-      setupMiddlewares: [
-        middlewares => {
-          middlewares.unshift(serveSearchIndexMiddleware(config));
-        },
-      ],
+      // setupMiddlewares: [
+      //   middlewares => {
+      //     middlewares.unshift(serveSearchIndexMiddleware(config));
+      //   },
+      // ],
       cliShortcuts: {
         // does not support restart server yet
         custom: shortcuts => shortcuts.filter(({ key }) => key !== 'r'),
@@ -321,7 +321,7 @@ export async function initRsbuild(
   // and we should empty temp dir before build
   const runtimeTempDir = path.join(RSPRESS_TEMP_DIR, 'runtime');
   const runtimeAbsTempDir = path.join(cwd, 'node_modules', runtimeTempDir);
-  await fs.ensureDir(runtimeAbsTempDir);
+  await fs.mkdir(runtimeAbsTempDir, { recursive: true });
 
   const routeService = await initRouteService({
     config,

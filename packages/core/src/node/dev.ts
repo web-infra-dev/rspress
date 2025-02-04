@@ -27,7 +27,6 @@ export async function dev(options: DevOptions): Promise<ServerInstance> {
     await pluginDriver.beforeBuild();
 
     // empty temp dir before build
-    // await fs.emptyDir( TEMP_DIR);
     const builder = await initRsbuild(
       docDirectory,
       modifiedConfig,

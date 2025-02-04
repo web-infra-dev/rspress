@@ -1,10 +1,10 @@
+import fs from 'node:fs/promises';
 import type { FrontMatterMeta, RouteMeta, UserConfig } from '@rspress/shared';
-import fsExtra from '@rspress/shared/fs-extra';
 import { loadFrontMatter } from '@rspress/shared/node-utils';
 
 export async function renderFrontmatterHead(route: any): Promise<string> {
   if (!isRouteMeta(route)) return '';
-  const content = await fsExtra.readFile(route.absolutePath, {
+  const content = await fs.readFile(route.absolutePath, {
     encoding: 'utf-8',
   });
   const {

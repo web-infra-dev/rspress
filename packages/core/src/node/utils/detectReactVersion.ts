@@ -1,9 +1,11 @@
+import fs from 'node:fs';
 import path from 'node:path';
-import fs from '@rspress/shared/fs-extra';
 import { logger } from '@rspress/shared/logger';
 import enhancedResolve from 'enhanced-resolve';
 import { PACKAGE_ROOT } from '../constants';
+import { pathExists, readJson } from './fs';
 
+// TODO: replace enhanced-resolve with this.getResolver
 const { CachedInputFileSystem, ResolverFactory } = enhancedResolve;
 
 const DEFAULT_REACT_VERSION = 18;
@@ -14,9 +16,11 @@ export async function detectReactVersion(): Promise<number> {
   // if not found, return 18
   const cwd = process.cwd();
   const reactPath = path.join(cwd, 'node_modules', 'react');
-  if (await fs.pathExists(reactPath)) {
-    const reactPkg = await fs.readJson(path.join(reactPath, 'package.json'));
-    const version = Number(reactPkg.version.split('.')[0]);
+  if (await pathExists(reactPath)) {
+    const reactPkg: { version?: string } = await readJson(
+      path.join(reactPath, 'package.json'),
+    );
+    const version = Number(reactPkg.version?.split('.')[0]);
     return version;
   }
 
