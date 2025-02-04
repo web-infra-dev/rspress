@@ -261,9 +261,20 @@ export default defineConfig({
 
 ## search
 
-- Type: `{ searchHooks: string; versioned: boolean; }`
+- Type:
+
+```ts
+type SearchOptions = {
+  searchHooks?: string;
+  versioned?: boolean;
+  codeBlocks?: boolean;
+};
+```
 
 ### searchHooks
+
+- Type: `string`
+- Default: `undefined`
 
 You can add search runtime hooks logic through the `searchHooks` parameter, for example:
 
@@ -282,6 +293,9 @@ For specific hook logic, you can read [Customize Search Functions](/guide/advanc
 
 ### versioned
 
+- Type: `boolean`
+- Default: `false`
+
 If you are using `multiVersion`, the `versioned` parameter allows you to create a separate search index for each version of your documentation.
 When enabled, the search will only query the index corresponding to the currently selected version.
 
@@ -291,6 +305,23 @@ import { defineConfig } from 'rspress/config';
 export default defineConfig({
   search: {
     versioned: true,
+  },
+});
+```
+
+### codeBlocks
+
+- Type: `boolean`
+- Default: `false`
+
+If enabled, the search index will include code block content, which allows users to search code blocks.
+
+```ts title="rspress.config.ts"
+import { defineConfig } from 'rspress/config';
+
+export default defineConfig({
+  search: {
+    codeBlocks: true,
   },
 });
 ```

@@ -365,6 +365,11 @@ export type LocalSearchOptions = SearchHooks & {
    * Whether to generate separate search index for each version
    */
   versioned?: boolean;
+  /**
+   * If enabled, the search index will include code block content, which allows users to search code blocks.
+   * @default false
+   */
+  codeBlocks?: boolean;
 };
 
 export type RemoteSearchIndexInfo =

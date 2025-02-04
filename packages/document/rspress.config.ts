@@ -45,6 +45,9 @@ export default defineConfig({
       }),
     ],
   },
+  search: {
+    codeBlocks: true,
+  },
   route: {
     cleanUrls: true,
     exclude: ['**/fragments/**'],
