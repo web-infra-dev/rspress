@@ -54,7 +54,7 @@
     "prettier": "3.4.2",
     "prettier-plugin-packagejson": "^2.5.8",
     "tree-kill": "^1.2.2",
-    "vitest": "2.1.8",
+    "vitest": "2.1.9",
     "zx": "^8.3.2"
   },
   "packageManager": "pnpm@10.0.0",
