@@ -7,3 +7,4 @@ export * from './flattenMdxContent';
 export * from './applyReplaceRules';
 export * from './extractTextAndId';
 export * from './escapeHeadingIds';
+export * from './fs';

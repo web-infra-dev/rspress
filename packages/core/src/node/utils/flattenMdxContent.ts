@@ -1,7 +1,7 @@
+import fs from 'node:fs';
 import path from 'node:path';
 import { createProcessor } from '@mdx-js/mdx';
 import { MDX_REGEXP } from '@rspress/shared';
-import fs from '@rspress/shared/fs-extra';
 import enhancedResolve from 'enhanced-resolve';
 import { importStatementRegex } from '../constants';
 

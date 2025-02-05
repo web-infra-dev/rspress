@@ -1,3 +1,4 @@
+import fs from 'node:fs/promises';
 import path, { join } from 'node:path';
 import {
   type NavItem,
@@ -10,13 +11,14 @@ import {
   slash,
   withBase,
 } from '@rspress/shared';
-import fs from '@rspress/shared/fs-extra';
 import { logger } from '@rspress/shared/logger';
 import type { NavMeta, SideMeta } from './type';
 import {
   detectFilePath,
   extractInfoFromFrontmatter,
   extractInfoFromFrontmatterWithRealPath,
+  pathExists,
+  readJson,
 } from './utils';
 
 function getHmrFileKey(realPath: string | undefined, docsDir: string) {
@@ -26,7 +28,7 @@ function getHmrFileKey(realPath: string | undefined, docsDir: string) {
 }
 
 const DEFAULT_DIRNAME_PREFIX = 'rspress-dir-default-';
-export async function scanSideMeta(
+async function scanSideMeta(
   workDir: string,
   rootDir: string,
   docsDir: string,
@@ -35,7 +37,7 @@ export async function scanSideMeta(
 ): Promise<
   (SidebarGroup | SidebarItem | SidebarDivider | SidebarSectionHeader)[]
 > {
-  if (!(await fs.exists(workDir))) {
+  if (!(await pathExists(workDir))) {
     logger.error(
       '[plugin-auto-nav-sidebar]',
       `Generate sidebar meta error: ${workDir} not exists`,
@@ -50,7 +52,7 @@ export async function scanSideMeta(
   // Get the sidebar config from the `_meta.json` file
   try {
     // Don't use require to avoid require cache, which make hmr not work.
-    sideMeta = (await fs.readJSON(metaFile, 'utf8')) as SideMeta;
+    sideMeta = (await readJson(metaFile)) as SideMeta;
   } catch (e) {
     // If the `_meta.json` file doesn't exist, we will generate the sidebar config from the directory structure.
     let subItems = await fs.readdir(workDir);
@@ -187,7 +189,9 @@ export async function scanSideMeta(
           const isIndexFileInMetaItems = indexItemIndex !== -1;
 
           if (isIndexFileInMetaItems) {
-            const isMetaJsonExist = await fs.exists(join(subDir, '_meta.json'));
+            const isMetaJsonExist = await pathExists(
+              join(subDir, '_meta.json'),
+            );
             if (isMetaJsonExist) {
               link = '';
               _fileKey = getHmrFileKey(indexFileRealPath, docsDir);
@@ -282,7 +286,7 @@ export async function walk(
   let navConfig: NavMeta | undefined;
   // Get the nav config from the `_meta.json` file
   try {
-    navConfig = (await fs.readJSON(rootMetaFile, 'utf8')) as NavItem[];
+    navConfig = (await readJson(rootMetaFile)) as NavItem[];
   } catch (e) {
     navConfig = [];
   }
@@ -300,10 +304,20 @@ export async function walk(
     }
   });
   // find the `_meta.json` file in the subdirectory
-  const subDirs = (await fs.readdir(workDir)).filter(
-    v =>
-      fs.statSync(path.join(workDir, v)).isDirectory() && v !== 'node_modules',
-  );
+  const subDirs: string[] = (
+    await Promise.all(
+      (
+        await fs.readdir(workDir)
+      ).map(v => {
+        return fs.stat(path.join(workDir, v)).then(s => {
+          if (s.isDirectory() && v !== 'node_modules') {
+            return v;
+          }
+          return false;
+        });
+      }),
+    )
+  ).filter(Boolean) as string[];
   // Every sub dir will represent a group of sidebar
   const sidebarConfig: Sidebar = {};
   for (const subDir of subDirs) {

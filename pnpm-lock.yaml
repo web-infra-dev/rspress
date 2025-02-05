@@ -26,9 +26,6 @@ importers:
       '@types/cross-spawn':
         specifier: ^6.0.6
         version: 6.0.6
-      '@types/fs-extra':
-        specifier: 11.0.4
-        version: 11.0.4
       '@types/node':
         specifier: ^18.11.17
         version: 18.11.17
@@ -44,9 +41,6 @@ importers:
       cspell-ban-words:
         specifier: ^0.0.4
         version: 0.0.4
-      fs-extra:
-        specifier: 11.3.0
-        version: 11.3.0
       get-port:
         specifier: 5.1.1
         version: 5.1.1
@@ -1524,9 +1518,6 @@ importers:
       chalk:
         specifier: 5.4.1
         version: 5.4.1
-      fs-extra:
-        specifier: 11.3.0
-        version: 11.3.0
       gray-matter:
         specifier: 4.0.3
         version: 4.0.3
@@ -1537,9 +1528,6 @@ importers:
         specifier: ^10.1.2
         version: 10.1.2
     devDependencies:
-      '@types/fs-extra':
-        specifier: 11.0.4
-        version: 11.0.4
       '@types/jest':
         specifier: ~29.5.14
         version: 29.5.14
@@ -8338,6 +8326,7 @@ snapshots:
     dependencies:
       '@types/jsonfile': 6.1.1
       '@types/node': 18.11.17
+    optional: true
 
   '@types/hast@2.3.4':
     dependencies:
@@ -8371,6 +8360,7 @@ snapshots:
   '@types/jsonfile@6.1.1':
     dependencies:
       '@types/node': 18.11.17
+    optional: true
 
   '@types/lodash-es@4.17.12':
     dependencies:

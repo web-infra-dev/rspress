@@ -1,3 +1,4 @@
+import fs from 'node:fs/promises';
 import { dirname, join } from 'node:path';
 import { pathToFileURL } from 'node:url';
 import type { Route } from '@/node/route/RouteService';
@@ -11,7 +12,6 @@ import {
   withBase,
 } from '@rspress/shared';
 import chalk from '@rspress/shared/chalk';
-import fs from '@rspress/shared/fs-extra';
 import { logger } from '@rspress/shared/logger';
 import type { HelmetData } from 'react-helmet-async';
 import { PluginDriver } from './PluginDriver';
@@ -50,11 +50,16 @@ export async function bundle(
       pluginDriver,
       enableSSG,
     );
+
     await rsbuild.build();
   } finally {
     await writeSearchIndex(config);
     await checkLanguageParity(config);
   }
+}
+
+function emptyDir(path: string): Promise<void> {
+  return fs.rm(path, { force: true, recursive: true });
 }
 
 export interface SSRBundleExports {
@@ -77,7 +82,6 @@ export async function renderPages(
   const ssrBundlePath = join(outputPath, 'ssr', 'main.cjs');
 
   try {
-    const { default: fs } = await import('@rspress/shared/fs-extra');
     const { version } = await import('../../package.json');
     // There are two cases where we will fallback to CSR:
     // 1. ssr bundle load failed
@@ -204,15 +208,17 @@ export async function renderPages(
             return `${path}.html`.replace(normalizedBase, '');
           };
           const fileName = normalizeHtmlFilePath(routePath);
-          await fs.ensureDir(join(outputPath, dirname(fileName)));
+          await fs.mkdir(join(outputPath, dirname(fileName)), {
+            recursive: true,
+          });
           await fs.writeFile(join(outputPath, fileName), html);
         }),
     );
     // Remove ssr bundle
     if (!isDebugMode()) {
-      await fs.remove(join(outputPath, 'ssr'));
+      await emptyDir(join(outputPath, 'ssr'));
     }
-    await fs.remove(join(outputPath, 'html'));
+    await emptyDir(join(outputPath, 'html'));
 
     const totalTime = Date.now() - startTime;
     logger.success(`Pages rendered in ${chalk.yellow(totalTime)} ms.`);
@@ -227,13 +233,15 @@ export async function build(options: BuildOptions) {
   const pluginDriver = new PluginDriver(config, true);
   await pluginDriver.init();
   const modifiedConfig = await pluginDriver.modifyConfig();
+
   await pluginDriver.beforeBuild();
   const ssgConfig = modifiedConfig.ssg ?? true;
 
   // empty temp dir before build
-  await fs.emptyDir(TEMP_DIR);
+  await emptyDir(TEMP_DIR);
 
   await bundle(docDirectory, modifiedConfig, pluginDriver, Boolean(ssgConfig));
+
   await renderPages(appDirectory, modifiedConfig, pluginDriver, ssgConfig);
   await pluginDriver.afterBuild();
 }

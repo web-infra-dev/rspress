@@ -1,8 +1,8 @@
+import fs from 'node:fs/promises';
 import path from 'node:path';
 import { pathToFileURL } from 'node:url';
 import { createProcessor } from '@mdx-js/mdx';
 import { isProduction } from '@rspress/shared';
-import fs from '@rspress/shared/fs-extra';
 import { logger } from '@rspress/shared/logger';
 import { loadFrontMatter } from '@rspress/shared/node-utils';
 import type { PluginDriver } from '../PluginDriver';

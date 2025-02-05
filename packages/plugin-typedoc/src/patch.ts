@@ -1,5 +1,5 @@
+import fs from 'node:fs/promises';
 import path from 'node:path';
-import fs from '@rspress/shared/fs-extra';
 
 async function patchLinks(outputDir: string) {
   // Patch links in markdown files

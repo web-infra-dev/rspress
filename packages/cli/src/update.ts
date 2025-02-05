@@ -1,8 +1,16 @@
 import { spawn } from 'node:child_process';
 import fs from 'node:fs/promises';
 import path from 'node:path';
-import fse from '@rspress/shared/fs-extra';
 import { logger } from '@rspress/shared/logger';
+
+async function pathExists(path: string): Promise<boolean> {
+  try {
+    await fs.access(path);
+    return true;
+  } catch {
+    return false;
+  }
+}
 
 type PackageManager = 'npm' | 'yarn' | 'pnpm' | 'bun';
 
@@ -16,7 +24,7 @@ const lockfileMap: Record<string, PackageManager> = {
 async function getPackageManager(rootPath: string) {
   let packageManager: PackageManager = 'npm';
   for (const file of Object.keys(lockfileMap)) {
-    if (await fse.pathExists(path.join(rootPath, file))) {
+    if (await pathExists(path.join(rootPath, file))) {
       packageManager = lockfileMap[file];
       break;
     }

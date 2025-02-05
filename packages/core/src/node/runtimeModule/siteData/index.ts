@@ -1,8 +1,8 @@
+import fs from 'node:fs/promises';
 import path from 'node:path';
 import { TEMP_DIR, isProduction } from '@/node/constants';
 import { createHash } from '@/node/utils';
 import { SEARCH_INDEX_NAME, type SiteData } from '@rspress/shared';
-import fs from '@rspress/shared/fs-extra';
 import { groupBy } from 'lodash-es';
 import { type FactoryContext, RuntimeModuleID } from '..';
 import { extractPageData } from './extractPageData';
@@ -97,7 +97,7 @@ export async function siteDataVMPlugin(context: FactoryContext) {
       const indexVersion = version ? `.${version.replace('.', '_')}` : '';
       const indexLang = lang ? `.${lang}` : '';
 
-      await fs.ensureDir(TEMP_DIR);
+      await fs.mkdir(TEMP_DIR, { recursive: true });
       await fs.writeFile(
         path.join(
           TEMP_DIR,

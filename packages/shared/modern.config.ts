@@ -7,7 +7,6 @@ const config: ReturnType<typeof defineConfig> = defineConfig({
       input: [
         'src/index.ts',
         'src/logger.ts',
-        'src/fs-extra.ts',
         'src/chalk.ts',
         'src/node-utils.ts',
       ],
@@ -21,7 +20,6 @@ const config: ReturnType<typeof defineConfig> = defineConfig({
       input: [
         'src/index.ts',
         'src/logger.ts',
-        'src/fs-extra.ts',
         'src/chalk.ts',
         'src/node-utils.ts',
       ],

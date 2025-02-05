@@ -1,6 +1,6 @@
+import fs from 'node:fs';
 import { dirname, join, resolve } from 'node:path';
 import { normalizePosixPath } from '@rspress/shared';
-import fs from '@rspress/shared/fs-extra';
 import type { Root } from 'mdast';
 import type { MdxjsEsm } from 'mdast-util-mdxjs-esm';
 import type { Plugin } from 'unified';
@@ -24,7 +24,7 @@ export const remarkCodeToDemo: Plugin<[RemarkPluginOptions], Root> = function ({
   previewCodeTransform,
 }) {
   const routeMeta = getRouteMeta();
-  fs.ensureDirSync(virtualDir);
+  fs.mkdirSync(virtualDir, { recursive: true });
   const data = this.data() as {
     pageMeta: Record<string, any>;
   };
