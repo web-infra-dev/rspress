@@ -2,6 +2,7 @@
   "extends": "@modern-js/tsconfig/base",
   "compilerOptions": {
     "jsx": "preserve",
+    "moduleResolution": "bundler",
     "paths": {
       "i18n": ["./i18n.json"],
       "@theme": ["./theme"],
@@ -10,8 +11,7 @@
       "@zh/*": ["./docs/zh/*"],
       "@en/*": ["./docs/en/*"]
     },
-    "module": "ESNext",
-    "moduleResolution": "Bundler"
+    "module": "ESNext"
   },
   "include": [
     "./rspress.config.ts",
