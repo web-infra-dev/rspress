@@ -55,7 +55,6 @@ export class PluginDriver {
 
     if (isDevDebugMode()) {
       const SourceBuildPlugin = await import(
-        // @ts-expect-error need moduleResolution: Node16, NodeNext or Bundler to get type declarations work
         '@rspress/theme-default/node/source-build-plugin.js'
       ).then(
         r => r.SourceBuildPlugin,
