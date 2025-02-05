@@ -1,6 +1,6 @@
+import fs from 'node:fs';
 import { dirname, join, resolve } from 'node:path';
 import type { RouteMeta } from '@rspress/shared';
-import fs from '@rspress/shared/fs-extra';
 import type { Root } from 'mdast';
 import type { Plugin } from 'unified';
 import { visit } from 'unist-util-visit';

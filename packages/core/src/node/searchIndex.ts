@@ -1,8 +1,9 @@
+import { createReadStream } from 'node:fs';
+import fs from 'node:fs/promises';
 import type { IncomingMessage, ServerResponse } from 'node:http';
 import path, { join } from 'node:path';
 import { SEARCH_INDEX_NAME, type UserConfig, isSCM } from '@rspress/shared';
 import chalk from '@rspress/shared/chalk';
-import fs from '@rspress/shared/fs-extra';
 import { logger } from '@rspress/shared/logger';
 import { OUTPUT_DIR, TEMP_DIR, isProduction } from './constants';
 
@@ -15,9 +16,14 @@ export async function writeSearchIndex(config: UserConfig) {
   const searchIndexFiles = await fs.readdir(TEMP_DIR);
   const outDir = config?.outDir ?? join(cwd, OUTPUT_DIR);
 
+  // Make sure the targetDir exists
+  const targetDir = join(outDir, 'static');
+  await fs.mkdir(targetDir, { recursive: true });
+
   // For performance, we only stitch the string of search index data instead of big JavaScript object in memory
   let searchIndexData = '[]';
   let scanning = false;
+  // TODO: use Promise for perf
   for (const searchIndexFile of searchIndexFiles) {
     if (
       !searchIndexFile.includes(SEARCH_INDEX_NAME) ||
@@ -26,7 +32,7 @@ export async function writeSearchIndex(config: UserConfig) {
       continue;
     }
     const source = join(TEMP_DIR, searchIndexFile);
-    const target = join(outDir, 'static', searchIndexFile);
+    const target = join(targetDir, searchIndexFile);
     const searchIndex = await fs.readFile(
       join(TEMP_DIR, searchIndexFile),
       'utf-8',
@@ -34,7 +40,7 @@ export async function writeSearchIndex(config: UserConfig) {
     searchIndexData = `${searchIndexData.slice(0, -1)}${
       scanning ? ',' : ''
     }${searchIndex.slice(1)}`;
-    await fs.move(source, target, { overwrite: true });
+    await fs.rename(source, target);
     scanning = true;
   }
 
@@ -75,7 +81,7 @@ export function serveSearchIndexMiddleware(config: UserConfig): RequestHandler {
       res.setHeader('Content-Type', 'application/json');
       // Get search index name from request url
       const searchIndexFile = req.url?.split('/').pop();
-      fs.createReadStream(
+      createReadStream(
         path.join(
           process.cwd(),
           config?.outDir || OUTPUT_DIR,

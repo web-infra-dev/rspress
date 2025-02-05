@@ -1,3 +1,4 @@
+import fs from 'node:fs/promises';
 import path from 'node:path';
 import {
   type PageModule,
@@ -7,7 +8,6 @@ import {
   addTrailingSlash,
   withBase,
 } from '@rspress/shared';
-import fs from '@rspress/shared/fs-extra';
 import type { ComponentType } from 'react';
 import { glob } from 'tinyglobby';
 import type { PluginDriver } from '../PluginDriver';

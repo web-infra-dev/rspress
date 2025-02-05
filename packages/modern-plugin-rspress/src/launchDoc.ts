@@ -1,4 +1,4 @@
-import fs from 'node:fs';
+import fs from 'node:fs/promises';
 import { join, relative, resolve } from 'node:path';
 import type { Sidebar, SidebarGroup, UserConfig } from '@rspress/core';
 import { pluginApiDocgen } from '@rspress/plugin-api-docgen';
@@ -34,7 +34,7 @@ export async function launchDoc({
     previewMode = 'iframe';
   }
   const json = JSON.parse(
-    fs.readFileSync(resolve(appDir, './package.json'), 'utf8'),
+    await fs.readFile(resolve(appDir, './package.json'), 'utf8'),
   );
   const root = resolve(appDir, doc.root ?? 'docs');
   const { dev, build } = await import('@rspress/core');

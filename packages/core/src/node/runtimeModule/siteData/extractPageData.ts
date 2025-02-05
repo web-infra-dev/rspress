@@ -1,3 +1,4 @@
+import fs from 'node:fs/promises';
 import path from 'node:path';
 import { importStatementRegex } from '@/node/constants';
 import type { RouteService } from '@/node/route/RouteService';
@@ -10,7 +11,6 @@ import {
   type PageIndexInfo,
   type ReplaceRule,
 } from '@rspress/shared';
-import fs from '@rspress/shared/fs-extra';
 import { loadFrontMatter } from '@rspress/shared/node-utils';
 import { htmlToText } from 'html-to-text';
 

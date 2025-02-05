@@ -1,8 +1,22 @@
+import fs from 'node:fs/promises';
 import path from 'node:path';
 import type { NavItem, Sidebar } from '@rspress/shared';
-import fs from '@rspress/shared/fs-extra';
 import { logger } from '@rspress/shared/logger';
 import { loadFrontMatter } from '@rspress/shared/node-utils';
+
+export async function pathExists(path: string): Promise<boolean> {
+  try {
+    await fs.access(path);
+    return true;
+  } catch {
+    return false;
+  }
+}
+
+export async function readJson(path: string): Promise<any> {
+  const raw = await fs.readFile(path, 'utf8');
+  return JSON.parse(raw);
+}
 
 /**
  * @param rawPathWithExtension /usr/rspress-demo/docs/api.md
@@ -11,7 +25,7 @@ import { loadFrontMatter } from '@rspress/shared/node-utils';
 export async function detectFilePathWithExtension(
   rawPathWithExtension: string,
 ): Promise<string | undefined> {
-  const exist = await fs.pathExists(rawPathWithExtension);
+  const exist = await pathExists(rawPathWithExtension);
   if (!exist) {
     return undefined;
   }
