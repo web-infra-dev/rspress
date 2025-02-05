@@ -30,12 +30,7 @@ const presetIcons = {
 type IconName = keyof typeof presetIcons;
 
 const formatIconName = (icon: string): IconName => {
-  const iconLowerCase = icon.toLowerCase();
-  // redirect twitter's logo to `x`
-  if (iconLowerCase === 'twitter') {
-    return 'x';
-  }
-  return iconLowerCase as IconName;
+  return icon.toLowerCase() as IconName;
 };
 
 export function getSocialIcons(socialLinks: SocialLink[] = []) {
