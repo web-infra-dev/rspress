@@ -1,6 +1,7 @@
 {
   "extends": "@modern-js/tsconfig/base",
   "compilerOptions": {
+    "moduleResolution": "bundler",
     "declaration": true,
     "noEmit": false,
     "outDir": "dist",

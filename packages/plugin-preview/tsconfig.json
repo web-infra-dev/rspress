@@ -1,6 +1,7 @@
 {
   "extends": "@modern-js/tsconfig/base",
   "compilerOptions": {
+    "moduleResolution": "bundler",
     "composite": true,
     "noEmit": false,
     "declaration": true,
