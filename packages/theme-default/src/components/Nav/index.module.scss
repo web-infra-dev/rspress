@@ -52,18 +52,6 @@
   pointer-events: all;
 }
 
-.social-links-icon {
-  width: 20px;
-  height: 100%;
-  display: flex;
-  fill: currentColor;
-  color: var(--rp-c-text-2);
-
-  &:hover {
-    color: var(--rp-c-text-1);
-  }
-}
-
 .menu-item {
   display: none;
   margin: 0 8px;
