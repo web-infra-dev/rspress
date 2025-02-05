@@ -245,6 +245,17 @@ export function SearchPanel({ focused, setFocused }: SearchPanelProps) {
     }
   }, [focused]);
 
+  // Preload the search index when the page is idle
+  useEffect(() => {
+    if ('requestIdleCallback' in window) {
+      window.requestIdleCallback(() => {
+        if (!pageSearcherRef.current) {
+          initPageSearcher();
+        }
+      });
+    }
+  }, []);
+
   useEffect(() => {
     const { currentLang, currentVersion } = pageSearcherConfigRef.current ?? {};
     const isLangChanged = lang !== currentLang;
