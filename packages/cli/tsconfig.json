@@ -2,6 +2,7 @@
   "extends": "@modern-js/tsconfig/base",
   "declaration": true,
   "compilerOptions": {
+    "moduleResolution": "bundler",
     "module": "ESNext",
     "target": "ESNext",
     "baseUrl": "./",
