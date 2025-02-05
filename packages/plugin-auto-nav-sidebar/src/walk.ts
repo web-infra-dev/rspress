@@ -28,7 +28,7 @@ function getHmrFileKey(realPath: string | undefined, docsDir: string) {
 }
 
 const DEFAULT_DIRNAME_PREFIX = 'rspress-dir-default-';
-export async function scanSideMeta(
+async function scanSideMeta(
   workDir: string,
   rootDir: string,
   docsDir: string,
@@ -310,7 +310,7 @@ export async function walk(
         await fs.readdir(workDir)
       ).map(v => {
         return fs.stat(path.join(workDir, v)).then(s => {
-          if (s.isDirectory()) {
+          if (s.isDirectory() && v !== 'node_modules') {
             return v;
           }
           return false;
