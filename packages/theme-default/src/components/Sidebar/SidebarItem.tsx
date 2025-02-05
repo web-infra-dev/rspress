@@ -9,6 +9,7 @@ import { preloadLink } from './utils';
 
 export function SidebarItem(props: SidebarItemProps) {
   const { item, depth = 0, activeMatcher, id, setSidebarData } = props;
+
   const active = 'link' in item && item.link && activeMatcher(item.link);
   const ref = useRef<HTMLDivElement>(null);
   useEffect(() => {
@@ -23,10 +24,10 @@ export function SidebarItem(props: SidebarItemProps) {
     return (
       <SidebarGroup
         id={id}
+        activeMatcher={activeMatcher}
         key={`${item.text}-${id}`}
         item={item}
         depth={depth}
-        activeMatcher={activeMatcher}
         collapsed={item.collapsed}
         setSidebarData={setSidebarData}
       />
