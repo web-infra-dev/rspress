@@ -1,36 +1,38 @@
 import type { SocialLink } from '@rspress/shared';
-import { useState } from 'react';
+import { useCallback, useState } from 'react';
 import { HiddenLinks } from './HiddenLinks';
 import { ShownLinks } from './ShownLinks';
 import styles from './index.module.scss';
 
+const MORE_LENGTH = 5;
+
 export const SocialLinks = ({ socialLinks }: { socialLinks: SocialLink[] }) => {
-  const moreThanThree = socialLinks.length > 3;
+  const isMore = socialLinks.length > MORE_LENGTH;
 
-  const shownLinks: SocialLink[] = [];
-  const hiddenLinks: SocialLink[] = [];
+  const shownLinks: SocialLink[] = socialLinks.slice(0, MORE_LENGTH);
+  const hiddenLinks: SocialLink[] = socialLinks.slice(MORE_LENGTH);
 
-  socialLinks.forEach((item, index) => {
-    if (index < 3) {
-      shownLinks.push(item);
-    } else {
-      hiddenLinks.push(item);
-    }
-  });
+  const [hiddenLinksVisible, setHiddenLinksVisible] = useState(false);
 
-  const [moreLinksVisible, setMoreLinksVisible] = useState(false);
+  const hide = useCallback(() => {
+    setHiddenLinksVisible(false);
+  }, [setHiddenLinksVisible]);
+
+  const show = useCallback(() => {
+    setHiddenLinksVisible(true);
+  }, [setHiddenLinksVisible]);
 
   return (
     <div
       className={`social-links ${styles.menuItem} flex-center relative`}
-      onMouseLeave={() => setMoreLinksVisible(false)}
+      onMouseLeave={hide}
     >
       <ShownLinks
         links={shownLinks}
-        moreIconVisible={moreThanThree}
-        mouseEnter={() => setMoreLinksVisible(true)}
+        moreIconVisible={isMore}
+        mouseEnter={show}
       />
-      {moreLinksVisible ? <HiddenLinks links={hiddenLinks} /> : null}
+      {hiddenLinksVisible ? <HiddenLinks links={hiddenLinks} /> : null}
     </div>
   );
 };
