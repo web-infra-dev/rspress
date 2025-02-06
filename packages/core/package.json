@@ -44,9 +44,7 @@
     "src/shared",
     "index.html",
     "runtime.ts",
-    "theme.ts",
-    "loader.cjs",
-    "compiled"
+    "theme.ts"
   ],
   "scripts": {
     "build": "modern build",

@@ -13,8 +13,7 @@
   "types": "./dist/index.d.ts",
   "files": [
     "dist",
-    "static",
-    "mdx-meta-loader.cjs"
+    "static"
   ],
   "scripts": {
     "build": "rslib build",
