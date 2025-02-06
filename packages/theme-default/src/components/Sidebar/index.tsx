@@ -1,15 +1,13 @@
-import { matchRoutes, removeBase, useLocation } from '@rspress/runtime';
+import { useLocation } from '@rspress/runtime';
 import {
   type SidebarDivider as ISidebarDivider,
   type SidebarItem as ISidebarItem,
   type SidebarSectionHeader as ISidebarSectionHeader,
   type NormalizedSidebarGroup,
   inBrowser,
-  normalizeSlash,
 } from '@rspress/shared';
 import { useEffect, useState } from 'react';
-import { routes } from 'virtual-routes';
-import { isActive, useLocaleSiteData, useSidebarData } from '../../logic';
+import { useSidebarData } from '../../logic';
 
 import type { UISwitchResult } from '../../logic/useUISwitch';
 import { NavBarTitle } from '../Nav/NavBarTitle';
@@ -22,6 +20,7 @@ import {
   isSideBarCustomLink,
   isSidebarDivider,
   isSidebarSectionHeader,
+  useActiveMatcher,
 } from './utils';
 
 export interface SidebarItemProps {
@@ -45,7 +44,11 @@ interface Props {
   navTitle?: React.ReactNode;
 }
 
-type SidebarData = (ISidebarDivider | ISidebarItem | NormalizedSidebarGroup)[];
+export type SidebarData = (
+  | ISidebarDivider
+  | ISidebarItem
+  | NormalizedSidebarGroup
+)[];
 
 export const highlightTitleStyle = {
   fontSize: '14px',
@@ -72,9 +75,9 @@ export function Sidebar(props: Props) {
     return rawSidebarData.filter(Boolean).flat();
   });
 
-  const localesData = useLocaleSiteData();
   const pathname = decodeURIComponent(rawPathname);
-  const langRoutePrefix = normalizeSlash(localesData.langRoutePrefix || '');
+
+  const activeMatcher = useActiveMatcher();
 
   useEffect(() => {
     if (inBrowser()) {
@@ -133,73 +136,6 @@ export function Sidebar(props: Props) {
     setSidebarData(newSidebarData);
   }, [rawSidebarData, pathname]);
 
-  const removeLangPrefix = (path: string) => {
-    return path.replace(langRoutePrefix, '');
-  };
-  const activeMatcher = (path: string) => {
-    return isActive(
-      removeBase(removeLangPrefix(pathname)),
-      removeLangPrefix(path),
-      true,
-    );
-  };
-
-  const renderItem = (
-    item:
-      | NormalizedSidebarGroup
-      | ISidebarItem
-      | ISidebarDivider
-      | ISidebarSectionHeader,
-    index: number,
-  ) => {
-    if (isSidebarDivider(item)) {
-      return (
-        <SidebarDivider key={index} depth={0} dividerType={item.dividerType} />
-      );
-    }
-
-    if (isSidebarSectionHeader(item)) {
-      return (
-        <SidebarSectionHeader
-          key={index}
-          sectionHeaderText={item.sectionHeaderText}
-          tag={item.tag}
-        />
-      );
-    }
-
-    if (isSideBarCustomLink(item)) {
-      return (
-        <div
-          className="rspress-sidebar-item rspress-sidebar-custom-link"
-          key={index}
-          data-context={item.context}
-        >
-          <SidebarItem
-            id={String(index)}
-            item={item}
-            depth={0}
-            activeMatcher={activeMatcher}
-            key={index}
-            collapsed={(item as NormalizedSidebarGroup).collapsed ?? true}
-            setSidebarData={setSidebarData}
-          />
-        </div>
-      );
-    }
-
-    return (
-      <SidebarItem
-        id={String(index)}
-        item={item}
-        depth={0}
-        activeMatcher={activeMatcher}
-        key={index}
-        collapsed={(item as NormalizedSidebarGroup).collapsed ?? true}
-        setSidebarData={setSidebarData}
-      />
-    );
-  };
   return (
     <aside
       className={`${styles.sidebar} rspress-sidebar ${
@@ -212,10 +148,98 @@ export function Sidebar(props: Props) {
       <div className={`rspress-scrollbar ${styles.sidebarContent}`}>
         <nav className="pb-2">
           {beforeSidebar}
-          {sidebarData.map(renderItem)}
+          <SidebarList
+            sidebarData={sidebarData}
+            setSidebarData={setSidebarData}
+          />
           {afterSidebar}
         </nav>
       </div>
     </aside>
+  );
+}
+
+export function SidebarList({
+  sidebarData,
+  setSidebarData,
+}: {
+  sidebarData: SidebarData;
+  setSidebarData: React.Dispatch<React.SetStateAction<SidebarData>>;
+}) {
+  const activeMatcher = useActiveMatcher();
+  return (
+    <>
+      {sidebarData.map((item, index) => {
+        return (
+          <SidebarListItem
+            key={index}
+            item={item}
+            index={index}
+            setSidebarData={setSidebarData}
+            activeMatcher={activeMatcher}
+          />
+        );
+      })}
+    </>
+  );
+}
+
+function SidebarListItem(props: {
+  item:
+    | NormalizedSidebarGroup
+    | ISidebarItem
+    | ISidebarDivider
+    | ISidebarSectionHeader;
+  index: number;
+  setSidebarData: React.Dispatch<React.SetStateAction<SidebarData>>;
+  activeMatcher: (link: string) => boolean;
+}) {
+  const { item, index, setSidebarData, activeMatcher } = props;
+  if (isSidebarDivider(item)) {
+    return (
+      <SidebarDivider key={index} depth={0} dividerType={item.dividerType} />
+    );
+  }
+
+  if (isSidebarSectionHeader(item)) {
+    return (
+      <SidebarSectionHeader
+        key={index}
+        sectionHeaderText={item.sectionHeaderText}
+        tag={item.tag}
+      />
+    );
+  }
+
+  if (isSideBarCustomLink(item)) {
+    return (
+      <div
+        className="rspress-sidebar-item rspress-sidebar-custom-link"
+        key={index}
+        data-context={item.context}
+      >
+        <SidebarItem
+          id={String(index)}
+          item={item}
+          depth={0}
+          key={index}
+          collapsed={(item as NormalizedSidebarGroup).collapsed ?? true}
+          setSidebarData={setSidebarData}
+          activeMatcher={activeMatcher}
+        />
+      </div>
+    );
+  }
+
+  return (
+    <SidebarItem
+      id={String(index)}
+      item={item}
+      depth={0}
+      key={index}
+      activeMatcher={activeMatcher}
+      collapsed={(item as NormalizedSidebarGroup).collapsed ?? true}
+      setSidebarData={setSidebarData}
+    />
   );
 }
