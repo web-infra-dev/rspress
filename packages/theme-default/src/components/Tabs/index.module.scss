@@ -2,6 +2,7 @@
   background-color: var(--rp-code-block-bg);
   contain: content;
   border-radius: var(--rp-radius);
+  margin: 1rem 0;
 
   :global(div[class*='language-']) {
     margin: 0 -0.5rem;
