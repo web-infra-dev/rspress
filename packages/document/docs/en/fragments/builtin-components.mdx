@@ -1,3 +1,7 @@
+:::info Note
+In order to make it easier for you to use these components, the `rspress/theme` package has been aliased inside Rspress, so you can directly use `@theme` to import these components.
+:::
+
 ## Badge
 
 The Badge component is used to display a badge. For example:
@@ -447,35 +451,71 @@ Body for Step 1.
 
 ## Tab/Tabs
 
-You can directly use the Tab/Tabs component in the document to achieve the effect of tab switching. For example:
+You can use the `Tab` and `Tabs` component in the document to achieve the effect of tab switching. For example:
 
-```tsx title="index.mdx"
+```mdx title="index.mdx"
 import { Tab, Tabs } from 'rspress/theme';
 
-function App() {
-  return (
-    <Tabs>
-      <Tab label="Tab 1">Tab 1 content</Tab>
-      <Tab label="Tab 2">Tab 2 content</Tab>
-    </Tabs>
-  );
-}
+<Tabs>
+  <Tab label="Tab 1">Tab 1 content</Tab>
+  <Tab label="Tab 2">Tab 2 content</Tab>
+</Tabs>
 ```
 
 import { Tab, Tabs } from '@theme';
 
 <Tabs>
-  <Tab label="1" value="1">
-    Tab 1 content
+  <Tab label="Tab 1">Tab 1 content</Tab>
+  <Tab label="Tab 2">Tab 2 content</Tab>
+</Tabs>
+
+### Code blocks
+
+Using `Tabs` component to switch multiple code blocks.
+
+````mdx title="index.mdx"
+import { Tab, Tabs } from 'rspress/theme';
+
+<Tabs>
+  <Tab label="Tab 1">
+
+```tsx title="src/index.mjs"
+import foo from 'foo';
+import bar from 'bar';
+```
+
   </Tab>
-  <Tab label="2" value="2">
-    Tab 2 content
+  <Tab label="Tab 2">
+
+```tsx title="src/index.cjs"
+const foo = require('foo');
+const bar = require('bar');
+```
+
+  </Tab>
+</Tabs>
+````
+
+<Tabs>
+  <Tab label="Tab 1">
+
+```tsx title="src/index.mjs"
+import foo from 'foo';
+import bar from 'bar';
+```
+
+  </Tab>
+  <Tab label="Tab 2">
+
+```tsx title="src/index.cjs"
+const foo = require('foo');
+const bar = require('bar');
+```
+
   </Tab>
 </Tabs>
 
-:::info Note
-In order to make it easier for you to use these components, the `rspress/theme` package has been aliased inside the framework, so you can directly use `@theme` to import these components.
-:::
+### Props
 
 The props type of the Tabs component is as follows:
 
@@ -488,11 +528,9 @@ interface TabsProps {
 }
 ```
 
-`defaultValue` is used to set the tab item selected by default. This value will be compared with the value field of the Tab component props, and if they are equal, the tab will be selected.
-
-`groupId` is used to sync the selected tab item between multiple Tabs components.The groups with the same groupId will be synchronized.
-
-`tabPosition` is used to set the position of the tab list, it has two values: `left` and `center`, the default is `left`.
+- `defaultValue` is used to set the tab item selected by default. This value will be compared with the value field of the Tab component props, and if they are equal, the tab will be selected.
+- `groupId` is used to sync the selected tab item between multiple Tabs components.The groups with the same groupId will be synchronized.
+- `tabPosition` is used to set the position of the tab list, it has two values: `left` and `center`, the default is `left`.
 
 The props types of the Tab component are as follows:
 
