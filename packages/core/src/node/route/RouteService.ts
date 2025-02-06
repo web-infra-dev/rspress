@@ -148,7 +148,7 @@ export class RouteService {
           ...this.#exclude,
           '**/node_modules/**',
           '**/.eslintrc.js',
-          '**/.nx-cache/**',
+          '**/.nx/**',
           `./${PUBLIC_DIR}/**`,
         ],
       })
