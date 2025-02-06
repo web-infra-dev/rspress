@@ -219,7 +219,7 @@ async function createInternalBuildConfig(
           .options(swcLoaderOptions)
           .end()
           .use('mdx-loader')
-          .loader(require.resolve('../loader.cjs'))
+          .loader(require.resolve('./loader.js'))
           .options({
             config,
             docDirectory: userDocRoot,

@@ -89,15 +89,15 @@ export function createCheckPageMetaUpdateFn() {
 const checkPageMetaUpdate = createCheckPageMetaUpdateFn();
 
 export default async function mdxLoader(
-  context: Rspack.LoaderContext<LoaderOptions>,
+  this: Rspack.LoaderContext<LoaderOptions>,
   source: string,
-  callback: Rspack.LoaderContext['callback'],
 ) {
-  context.cacheable(true);
+  this.cacheable(true);
+  const callback = this.async();
 
-  const options = context.getOptions();
-  const filepath = context.resourcePath;
-  const { alias } = context._compiler.options.resolve;
+  const options = this.getOptions();
+  const filepath = this.resourcePath;
+  const { alias } = this._compiler.options.resolve;
   const { config, docDirectory, checkDeadLinks, routeService, pluginDriver } =
     options;
 
@@ -116,7 +116,7 @@ export default async function mdxLoader(
     alias as Record<string, string>,
   );
 
-  deps.forEach(dep => context.addDependency(dep));
+  deps.forEach(dep => this.addDependency(dep));
 
   // Resolve side effects caused by flattenMdxContent.
   // Perhaps this problem should be solved within flattenMdxContent?
