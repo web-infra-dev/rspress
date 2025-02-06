@@ -77,15 +77,12 @@ const match = (
   return undefined;
 };
 
-export const getSidebarGroupData = (
+export const getSidebarData = (
   sidebar: NormalizedSidebar,
   currentPathname: string,
-) => {
-  console.log(sidebar, 111111);
+): SidebarData => {
   for (const name of Object.keys(sidebar)) {
-    const isMatch = matchPath(name, currentPathname);
-    console.log(isMatch, name, currentPathname);
-    if (isMatch) {
+    if (matchPath(name, currentPathname)) {
       const sidebarGroup = sidebar[name];
       const group = sidebarGroup.find(item => match(item, currentPathname));
       return {
@@ -105,7 +102,7 @@ export function useSidebarData(): SidebarData {
   const pathname = decodeURIComponent(rawPathname);
 
   const sidebarData = useMemo(() => {
-    return getSidebarGroupData(sidebar, pathname);
+    return getSidebarData(sidebar, pathname);
   }, [sidebar, pathname]);
 
   return sidebarData;

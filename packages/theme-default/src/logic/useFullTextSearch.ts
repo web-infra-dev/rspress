@@ -3,7 +3,7 @@ import { useEffect, useRef, useState } from 'react';
 import type { MatchResult } from '..';
 import { PageSearcher } from '../components/Search/logic/search';
 import { useLocaleSiteData } from './useLocaleSiteData';
-import { getSidebarGroupData } from './useSidebarData';
+import { getSidebarData } from './useSidebarData';
 
 export function useFullTextSearch(): {
   initialized: boolean;
@@ -13,7 +13,7 @@ export function useFullTextSearch(): {
   const [initialized, setInitialized] = useState(false);
   const { sidebar } = useLocaleSiteData();
   const extractGroupName = (link: string) =>
-    getSidebarGroupData(sidebar, link).group;
+    getSidebarData(sidebar, link).group;
   const searchRef = useRef<PageSearcher | null>(null);
 
   useEffect(() => {
