@@ -36,8 +36,8 @@
     "server.js"
   ],
   "scripts": {
-    "build": "modern build",
-    "dev": "modern build -w",
+    "build": "rslib build",
+    "dev": "rslib build -w",
     "reset": "rimraf ./**/node_modules",
     "test": "echo nothing"
   },
@@ -50,6 +50,8 @@
   },
   "devDependencies": {
     "@modern-js/tsconfig": "2.64.0",
+    "@rsbuild/plugin-react": "~1.1.0",
+    "@rslib/core": "0.4.0",
     "@types/jest": "~29.5.14",
     "@types/react": "^18.3.18",
     "@types/react-dom": "^18.3.5",

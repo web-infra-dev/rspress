@@ -1371,6 +1371,9 @@ importers:
         specifier: workspace:^1.41.1
         version: link:../cli
     devDependencies:
+      '@rslib/core':
+        specifier: 0.4.0
+        version: 0.4.0(@microsoft/api-extractor@7.49.2(@types/node@18.11.17))(typescript@5.5.3)
       '@rspress/runtime':
         specifier: workspace:*
         version: link:../runtime
@@ -1503,6 +1506,12 @@ importers:
       '@modern-js/tsconfig':
         specifier: 2.64.0
         version: 2.64.0
+      '@rsbuild/plugin-react':
+        specifier: ~1.1.0
+        version: 1.1.0(@rsbuild/core@1.2.3)
+      '@rslib/core':
+        specifier: 0.4.0
+        version: 0.4.0(@microsoft/api-extractor@7.49.2(@types/node@22.10.2))(typescript@5.5.3)
       '@types/jest':
         specifier: ~29.5.14
         version: 29.5.14
@@ -1531,6 +1540,12 @@ importers:
         specifier: ^10.1.2
         version: 10.1.2
     devDependencies:
+      '@rslib/core':
+        specifier: 0.4.0
+        version: 0.4.0(@microsoft/api-extractor@7.49.2(@types/node@18.11.17))(typescript@5.5.3)
+      '@types/fs-extra':
+        specifier: 11.0.4
+        version: 11.0.4
       '@types/jest':
         specifier: ~29.5.14
         version: 29.5.14
@@ -8043,6 +8058,17 @@ snapshots:
     transitivePeerDependencies:
       - '@rspack/tracing'
 
+  '@rslib/core@0.4.0(@microsoft/api-extractor@7.49.2(@types/node@22.10.2))(typescript@5.5.3)':
+    dependencies:
+      '@rsbuild/core': 1.2.3
+      rsbuild-plugin-dts: 0.4.0(@microsoft/api-extractor@7.49.2(@types/node@22.10.2))(@rsbuild/core@1.2.3)(typescript@5.5.3)
+      tinyglobby: 0.2.10
+    optionalDependencies:
+      '@microsoft/api-extractor': 7.49.2(@types/node@22.10.2)
+      typescript: 5.5.3
+    transitivePeerDependencies:
+      - '@rspack/tracing'
+
   '@rslib/core@0.4.0(@microsoft/api-extractor@7.49.2(@types/node@22.10.2))(typescript@5.7.2)':
     dependencies:
       '@rsbuild/core': 1.2.3
@@ -8329,7 +8355,6 @@ snapshots:
     dependencies:
       '@types/jsonfile': 6.1.1
       '@types/node': 18.11.17
-    optional: true
 
   '@types/hast@2.3.4':
     dependencies:
@@ -8363,7 +8388,6 @@ snapshots:
   '@types/jsonfile@6.1.1':
     dependencies:
       '@types/node': 18.11.17
-    optional: true
 
   '@types/lodash-es@4.17.12':
     dependencies:
@@ -8443,14 +8467,6 @@ snapshots:
       magic-string: 0.30.17
     optionalDependencies:
       vite: 5.4.0(@types/node@18.11.17)(sass-embedded@1.83.4)(terser@5.31.6)
-
-  '@vitest/mocker@2.1.9(vite@5.4.0(@types/node@22.10.2)(sass-embedded@1.83.4)(terser@5.31.6))':
-    dependencies:
-      '@vitest/spy': 2.1.9
-      estree-walker: 3.0.3
-      magic-string: 0.30.17
-    optionalDependencies:
-      vite: 5.4.0(@types/node@22.10.2)(sass-embedded@1.83.4)(terser@5.31.6)
 
   '@vitest/pretty-format@2.1.9':
     dependencies:
@@ -11429,6 +11445,16 @@ snapshots:
       '@microsoft/api-extractor': 7.49.2(@types/node@18.11.17)
       typescript: 5.5.3
 
+  rsbuild-plugin-dts@0.4.0(@microsoft/api-extractor@7.49.2(@types/node@22.10.2))(@rsbuild/core@1.2.3)(typescript@5.5.3):
+    dependencies:
+      '@rsbuild/core': 1.2.3
+      magic-string: 0.30.17
+      picocolors: 1.1.1
+      tinyglobby: 0.2.10
+    optionalDependencies:
+      '@microsoft/api-extractor': 7.49.2(@types/node@22.10.2)
+      typescript: 5.5.3
+
   rsbuild-plugin-dts@0.4.0(@microsoft/api-extractor@7.49.2(@types/node@22.10.2))(@rsbuild/core@1.2.3)(typescript@5.7.2):
     dependencies:
       '@rsbuild/core': 1.2.3
@@ -12353,7 +12379,7 @@ snapshots:
   vitest@2.1.9(@types/node@22.10.2)(sass-embedded@1.83.4)(terser@5.31.6):
     dependencies:
       '@vitest/expect': 2.1.9
-      '@vitest/mocker': 2.1.9(vite@5.4.0(@types/node@22.10.2)(sass-embedded@1.83.4)(terser@5.31.6))
+      '@vitest/mocker': 2.1.9(vite@5.4.0(@types/node@18.11.17)(sass-embedded@1.83.4)(terser@5.31.6))
       '@vitest/pretty-format': 2.1.9
       '@vitest/runner': 2.1.9
       '@vitest/snapshot': 2.1.9
