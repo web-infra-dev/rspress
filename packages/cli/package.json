@@ -46,7 +46,8 @@
     "@rspress/core": "workspace:*",
     "@rspress/shared": "workspace:*",
     "cac": "^6.7.14",
-    "chokidar": "^3.6.0"
+    "chokidar": "^3.6.0",
+    "picocolors": "^1.1.1"
   },
   "devDependencies": {
     "@microsoft/api-extractor": "^7.49.2",

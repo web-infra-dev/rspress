@@ -3,8 +3,8 @@ import fs from 'node:fs/promises';
 import type { IncomingMessage, ServerResponse } from 'node:http';
 import path, { join } from 'node:path';
 import { SEARCH_INDEX_NAME, type UserConfig, isSCM } from '@rspress/shared';
-import chalk from '@rspress/shared/chalk';
 import { logger } from '@rspress/shared/logger';
+import picocolors from 'picocolors';
 import { OUTPUT_DIR, TEMP_DIR, isProduction } from './constants';
 
 export async function writeSearchIndex(config: UserConfig) {
@@ -54,13 +54,13 @@ export async function writeSearchIndex(config: UserConfig) {
       });
 
       logger.info(
-        chalk.green(
+        picocolors.green(
           `[doc-tools] Search index uploaded to ${apiUrl}, indexName: ${indexName}`,
         ),
       );
     } catch (e) {
       logger.info(
-        chalk.red(
+        picocolors.red(
           `[doc-tools] Upload search index \`${indexName}\` failed:\n ${e}`,
         ),
       );

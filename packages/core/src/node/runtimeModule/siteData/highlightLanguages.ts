@@ -1,5 +1,5 @@
 import { DEFAULT_HIGHLIGHT_LANGUAGES } from '@rspress/shared';
-import chalk from '@rspress/shared/chalk';
+import picocolors from 'picocolors';
 
 let supportedLanguages: Set<string>;
 
@@ -26,7 +26,7 @@ export function handleHighlightLanguages(
       } else if (useDeprecatedTypeWarning) {
         // Deprecated warning
         console.log(
-          `${chalk.yellowBright(
+          `${picocolors.yellowBright(
             'warning',
           )} Automatic import is supported. \`highlightLanguages\` is now used only as alias, and string types will be ignored. \n`,
         );

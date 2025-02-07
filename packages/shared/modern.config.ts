@@ -4,12 +4,7 @@ const config: ReturnType<typeof defineConfig> = defineConfig({
   plugins: [moduleTools()],
   buildConfig: [
     {
-      input: [
-        'src/index.ts',
-        'src/logger.ts',
-        'src/chalk.ts',
-        'src/node-utils.ts',
-      ],
+      input: ['src/index.ts', 'src/logger.ts', 'src/node-utils.ts'],
       target: 'esnext',
       format: 'esm',
       buildType: 'bundle',
@@ -17,12 +12,7 @@ const config: ReturnType<typeof defineConfig> = defineConfig({
       autoExtension: true,
     },
     {
-      input: [
-        'src/index.ts',
-        'src/logger.ts',
-        'src/chalk.ts',
-        'src/node-utils.ts',
-      ],
+      input: ['src/index.ts', 'src/logger.ts', 'src/node-utils.ts'],
       target: 'esnext',
       format: 'cjs',
       buildType: 'bundle',
