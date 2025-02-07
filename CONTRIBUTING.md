@@ -13,31 +13,21 @@ own GitHub account and then [clone](https://help.github.com/articles/cloning-a-r
 
 ### Install Node.js
 
-We recommend using Node.js 18. You can check your currently used Node.js version with the following command:
+Use [fnm](https://github.com/Schniz/fnm) or [nvm](https://github.com/nvm-sh/nvm) to run the command below. This will switch to the Node.js version specified in the project's `.nvmrc` file.
 
 ```bash
-node -v
-```
+# with fnm
+fnm use
 
-If you do not have Node.js installed in your current environment, you can use [nvm](https://github.com/nvm-sh/nvm) or [fnm](https://github.com/Schniz/fnm) to install it.
-
-Here is an example of how to install the Node.js 18 LTS version via nvm:
-
-```bash
-# Install the LTS version of Node.js 18
-nvm install 18 --lts
-
-# Make the newly installed Node.js 18 as the default version
-nvm alias default 18
-
-# Switch to the newly installed Node.js 18
-nvm use 18
+# with nvm
+nvm use
 ```
 
 ### Install pnpm
 
-```sh
-# Enable pnpm with corepack, only available on Node.js >= `v14.19.0`
+Enable [pnpm](https://pnpm.io/) with corepack:
+
+```bash
 corepack enable
 ```
 
