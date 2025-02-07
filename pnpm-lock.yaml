@@ -674,6 +674,9 @@ importers:
       chokidar:
         specifier: ^3.6.0
         version: 3.6.0
+      picocolors:
+        specifier: ^1.1.1
+        version: 1.1.1
     devDependencies:
       '@microsoft/api-extractor':
         specifier: ^7.49.2
@@ -771,6 +774,9 @@ importers:
       memfs:
         specifier: ^4.17.0
         version: 4.17.0
+      picocolors:
+        specifier: ^1.1.1
+        version: 1.1.1
       react:
         specifier: ^18.3.1
         version: 18.3.1
@@ -1515,9 +1521,6 @@ importers:
       '@rsbuild/core':
         specifier: 1.2.3
         version: 1.2.3
-      chalk:
-        specifier: 5.4.1
-        version: 5.4.1
       gray-matter:
         specifier: 4.0.3
         version: 4.0.3

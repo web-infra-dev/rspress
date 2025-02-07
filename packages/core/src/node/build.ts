@@ -11,8 +11,8 @@ import {
   normalizeSlash,
   withBase,
 } from '@rspress/shared';
-import chalk from '@rspress/shared/chalk';
 import { logger } from '@rspress/shared/logger';
+import picocolors from 'picocolors';
 import type { HelmetData } from 'react-helmet-async';
 import { PluginDriver } from './PluginDriver';
 import {
@@ -100,7 +100,7 @@ export async function renderPages(
         // see: https://github.com/web-infra-dev/rspress/issues/1317
         if (typeof ssgConfig === 'object' && ssgConfig.strict) {
           logger.error(
-            `Failed to load SSG bundle: ${chalk.yellow(ssrBundlePath)}.`,
+            `Failed to load SSG bundle: ${picocolors.yellow(ssrBundlePath)}.`,
           );
           throw e;
         }
@@ -108,7 +108,7 @@ export async function renderPages(
         // fallback to CSR
         logger.error(e);
         logger.warn(
-          `Failed to load SSG bundle: ${chalk.yellow(ssrBundlePath)}, fallback to CSR.`,
+          `Failed to load SSG bundle: ${picocolors.yellow(ssrBundlePath)}, fallback to CSR.`,
         );
       }
     }
@@ -149,14 +149,14 @@ export async function renderPages(
             } catch (e) {
               if (typeof ssgConfig === 'object' && ssgConfig.strict) {
                 logger.error(
-                  `Page "${chalk.yellow(routePath)}" SSG rendering failed.`,
+                  `Page "${picocolors.yellow(routePath)}" SSG rendering failed.`,
                 );
                 throw e;
               }
 
               // fallback to CSR
               logger.warn(
-                `Page "${chalk.yellow(routePath)}" SSG rendering error: ${e.message}, fallback to CSR.`,
+                `Page "${picocolors.yellow(routePath)}" SSG rendering error: ${e.message}, fallback to CSR.`,
               );
             }
           }
@@ -221,7 +221,7 @@ export async function renderPages(
     await emptyDir(join(outputPath, 'html'));
 
     const totalTime = Date.now() - startTime;
-    logger.success(`Pages rendered in ${chalk.yellow(totalTime)} ms.`);
+    logger.success(`Pages rendered in ${picocolors.yellow(totalTime)} ms.`);
   } catch (e) {
     logger.error(`Pages render error: ${e.stack}`);
     throw e;
