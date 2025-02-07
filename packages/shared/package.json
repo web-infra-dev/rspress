@@ -31,13 +31,10 @@
     "dist"
   ],
   "scripts": {
-    "build": "modern build",
-    "build:watch": "modern build -w",
-    "dev": "modern build -w",
-    "new": "modern new",
+    "build": "rslib build",
+    "build:watch": "rslib build -w",
     "reset": "rimraf ./**/node_modules",
-    "test": "vitest run",
-    "upgrade": "modern upgrade"
+    "test": "vitest run"
   },
   "dependencies": {
     "@rsbuild/core": "1.2.3",
@@ -46,6 +43,8 @@
     "unified": "^10.1.2"
   },
   "devDependencies": {
+    "@rslib/core": "0.4.0",
+    "@types/fs-extra": "11.0.4",
     "@types/jest": "~29.5.14",
     "@types/lodash-es": "^4.17.12",
     "@types/node": "^18.11.17",

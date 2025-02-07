@@ -7,6 +7,7 @@ export async function routeVMPlugin(context: FactoryContext) {
   if (!isSSR) {
     return {
       [RuntimeModuleID.RouteForClient]: routeService.generateRoutesCode(false),
+      [RuntimeModuleID.RouteForSSR]: '',
     };
   }
 
