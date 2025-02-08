@@ -1,0 +1,23 @@
+import { Console } from 'node:console';
+import { defineWorkspace } from 'vitest/config';
+
+// Disable color in test
+process.env.NO_COLOR = '1';
+process.env.FORCE_COLOR = '0';
+
+// mock Console
+global.console.Console = Console;
+
+export default defineWorkspace([
+  {
+    test: {
+      name: 'node',
+      globals: true,
+      environment: 'node',
+      testTimeout: 30000,
+      // restoreMocks: true,
+      include: ['packages/**/*.test.ts'],
+      exclude: ['**/node_modules/**'],
+    },
+  },
+]);

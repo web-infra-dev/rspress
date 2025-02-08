@@ -1,9 +1,5 @@
 import fs from 'node:fs/promises';
 import path from 'node:path';
-import { importStatementRegex } from '@/node/constants';
-import type { RouteService } from '@/node/route/RouteService';
-import { flattenMdxContent } from '@/node/utils';
-import { applyReplaceRules } from '@/node/utils/applyReplaceRules';
 import { compile } from '@rspress/mdx-rs';
 import {
   type Header,
@@ -13,6 +9,10 @@ import {
 } from '@rspress/shared';
 import { loadFrontMatter } from '@rspress/shared/node-utils';
 import { htmlToText } from 'html-to-text';
+import { importStatementRegex } from '../../constants';
+import type { RouteService } from '../../route/RouteService';
+import { flattenMdxContent } from '../../utils';
+import { applyReplaceRules } from '../../utils/applyReplaceRules';
 
 export function applyReplaceRulesToNestedObject(
   obj: Record<string, any>,

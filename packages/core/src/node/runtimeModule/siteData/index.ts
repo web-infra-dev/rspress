@@ -1,10 +1,10 @@
 import fs from 'node:fs/promises';
 import path from 'node:path';
-import { TEMP_DIR, isProduction } from '@/node/constants';
-import { createHash } from '@/node/utils';
 import { SEARCH_INDEX_NAME, type SiteData } from '@rspress/shared';
 import { groupBy } from 'lodash-es';
 import { type FactoryContext, RuntimeModuleID } from '..';
+import { TEMP_DIR, isProduction } from '../../constants';
+import { createHash } from '../../utils';
 import { extractPageData } from './extractPageData';
 import { handleHighlightLanguages } from './highlightLanguages';
 import { normalizeThemeConfig } from './normalizeThemeConfig';

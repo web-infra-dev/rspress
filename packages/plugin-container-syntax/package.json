@@ -26,8 +26,7 @@
   "scripts": {
     "build": "rslib build",
     "dev": "rslib build -w",
-    "reset": "rimraf ./**/node_modules",
-    "test": "vitest run --passWithNoTests"
+    "reset": "rimraf ./**/node_modules"
   },
   "dependencies": {
     "@rspress/shared": "workspace:*"

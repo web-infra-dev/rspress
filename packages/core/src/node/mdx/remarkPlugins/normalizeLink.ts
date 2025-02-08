@@ -1,10 +1,10 @@
 import path from 'node:path';
-import { getASTNodeImport } from '@/node/utils/getASTNodeImport';
 import { isExternalUrl, normalizeHref, parseUrl, slash } from '@rspress/shared';
 import type { Root } from 'mdast';
 import type { MdxjsEsm } from 'mdast-util-mdxjs-esm';
 import type { Plugin } from 'unified';
 import { visit } from 'unist-util-visit';
+import { getASTNodeImport } from '../../utils';
 
 interface LinkNode {
   type: string;

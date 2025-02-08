@@ -38,8 +38,7 @@
   "scripts": {
     "build": "rslib build",
     "dev": "rslib build -w",
-    "reset": "rimraf ./**/node_modules",
-    "test": "echo nothing"
+    "reset": "rimraf ./**/node_modules"
   },
   "dependencies": {
     "@rspress/shared": "workspace:*",

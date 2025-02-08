@@ -6,9 +6,6 @@
     "module": "ESNext",
     "target": "ESNext",
     "baseUrl": "./",
-    "paths": {
-      "@/*": ["./src/*"]
-    },
     "isolatedModules": true
   },
   "include": ["src"],

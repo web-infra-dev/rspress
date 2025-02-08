@@ -72,7 +72,7 @@ async function collectModuleFiles(
       if (!fileLangMap[baseName]) fileLangMap[baseName] = new Set();
       fileLangMap[baseName].add(lang);
     }
-  } catch {
+  } catch (e) {
     throw new Error(
       `Failed to access directory: ${normalizePath(langModuleDir)}`,
     );
