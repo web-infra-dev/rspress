@@ -55,11 +55,25 @@ export class LocalProvider implements Provider {
     const searchIndexGroupID = `${version}###${lang}`;
     const searchIndexVersion = version ? `.${version.replace('.', '_')}` : '';
     const searchIndexLang = lang ? `.${lang}` : '';
+    const searchIndexURL = `${removeTrailingSlash(__webpack_public_path__)}/static/${SEARCH_INDEX_NAME}${searchIndexVersion}${searchIndexLang}.${searchIndexHash[searchIndexGroupID]}.json`;
 
-    const result = await fetch(
-      `${removeTrailingSlash(__webpack_public_path__)}/static/${SEARCH_INDEX_NAME}${searchIndexVersion}${searchIndexLang}.${searchIndexHash[searchIndexGroupID]}.json`,
-    );
-    return result.json();
+    const handleError = (result: unknown) => {
+      console.error(
+        'Failed to fetch search index, please reload the page and try again.',
+      );
+      console.error(result);
+    };
+
+    try {
+      const result = await fetch(searchIndexURL);
+      if (result.ok) {
+        return result.json();
+      }
+      handleError(result);
+    } catch (error) {
+      handleError(error);
+    }
+    return [];
   }
 
   async init(options: SearchOptions) {
