@@ -17,7 +17,7 @@
     "preview:website": "cd packages/document && npm run preview",
     "test": "pnpm test:unit && pnpm test:e2e",
     "test:e2e": "playwright test",
-    "test:unit": "npx vitest run",
+    "test:unit": "vitest run",
     "update:modern": "npx taze minor --include /modern-js/ -w -r -l",
     "update:rsbuild": "npx taze minor --include /rsbuild/ -w -r -l"
   },

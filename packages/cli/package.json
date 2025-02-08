@@ -38,8 +38,7 @@
   "scripts": {
     "build": "rslib build",
     "dev": "rslib build -w",
-    "reset": "rimraf ./**/node_modules",
-    "test": "vitest run"
+    "reset": "rimraf ./**/node_modules"
   },
   "dependencies": {
     "@rsbuild/core": "1.2.3",
