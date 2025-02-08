@@ -17,7 +17,7 @@
     "preview:website": "cd packages/document && npm run preview",
     "test": "pnpm test:unit && pnpm test:e2e",
     "test:e2e": "playwright test",
-    "test:unit": "cross-env NX_DAEMON=false NX_REJECT_UNKNOWN_LOCAL_CACHE=0 nx run-many -t test --exclude @rspress-fixture/*",
+    "test:unit": "npx vitest run",
     "update:modern": "npx taze minor --include /modern-js/ -w -r -l",
     "update:rsbuild": "npx taze minor --include /rsbuild/ -w -r -l"
   },

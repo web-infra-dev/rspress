@@ -11,7 +11,7 @@
     "paths": {}
   },
   "include": [
-    "vitest.config.ts",
+    "vitest.workspace.ts",
     "playwright.config.ts",
     "./scripts/update-modern.ts"
   ]

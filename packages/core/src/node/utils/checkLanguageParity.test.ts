@@ -1,9 +1,11 @@
 import { logger } from '@rspress/shared/logger';
 import { fs, vol } from 'memfs';
 import { beforeEach, describe, expect, it, vi } from 'vitest';
-import { checkLanguageParity } from '../src/node/utils/checkLanguageParity';
+import { checkLanguageParity } from './checkLanguageParity';
 
-vi.mock('node:fs/promises');
+vi.mock('node:fs/promises', () => {
+  return { default: fs.promises };
+});
 vi.mock('@rspress/shared/logger', () => ({
   logger: {
     info: vi.fn(),

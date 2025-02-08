@@ -14,12 +14,7 @@
     "composite": true,
     "lib": ["ESNext", "DOM"],
     "esModuleInterop": true,
-    "skipLibCheck": true,
-    "paths": {
-      "@/*": ["./*"],
-      "@theme": ["./theme-default"],
-      "@/theme-default/*": ["./theme-default/*"]
-    }
+    "skipLibCheck": true
   },
   "include": ["src"],
   "references": [

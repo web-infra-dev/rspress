@@ -1,7 +1,5 @@
 import fs from 'node:fs';
 import path, { join } from 'node:path';
-import { DEFAULT_BABEL_URL, DEFAULT_MONACO_URL } from '@/web/constant';
-import { normalizeUrl } from '@/web/utils';
 import type {
   EditorProps as MonacoEditorProps,
   loader,
@@ -9,6 +7,8 @@ import type {
 import type { RouteMeta, RspressPlugin } from '@rspress/shared';
 import type { Code } from 'mdast';
 import { RspackVirtualModulePlugin } from 'rspack-plugin-virtual-module';
+import { DEFAULT_BABEL_URL, DEFAULT_MONACO_URL } from '../web/constant';
+import { normalizeUrl } from '../web/utils';
 import { staticPath } from './constant';
 import { remarkPlugin } from './remarkPlugin';
 import { getNodeAttribute, parseImports } from './utils';

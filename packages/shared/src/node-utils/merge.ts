@@ -1,4 +1,4 @@
-import type { UserConfig } from '@/types';
+import type { UserConfig } from '../types/index';
 
 const castArray = <T>(value: T | T[]): T[] =>
   Array.isArray(value) ? value : [value];

@@ -14,10 +14,7 @@
     "rootDir": ".",
     "lib": ["ESNext", "DOM"],
     "esModuleInterop": true,
-    "skipLibCheck": true,
-    "paths": {
-      "@/*": ["./*"]
-    }
+    "skipLibCheck": true
   },
   "references": [
     {

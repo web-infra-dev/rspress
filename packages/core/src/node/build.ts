@@ -1,8 +1,6 @@
 import fs from 'node:fs/promises';
 import { dirname, join } from 'node:path';
 import { pathToFileURL } from 'node:url';
-import type { Route } from '@/node/route/RouteService';
-import { routeService } from '@/node/route/init';
 import {
   type PageData,
   type SSGConfig,
@@ -25,6 +23,8 @@ import {
   TEMP_DIR,
 } from './constants';
 import { initRsbuild } from './initRsbuild';
+import type { Route } from './route/RouteService';
+import { routeService } from './route/init';
 import { writeSearchIndex } from './searchIndex';
 import { checkLanguageParity } from './utils/checkLanguageParity';
 import { renderConfigHead, renderFrontmatterHead } from './utils/renderHead';
