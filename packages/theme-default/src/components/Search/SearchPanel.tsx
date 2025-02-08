@@ -7,8 +7,8 @@ import { debounce } from 'lodash-es';
 import { useCallback, useEffect, useRef, useState } from 'react';
 import { createPortal } from 'react-dom';
 import * as userSearchHooks from 'virtual-search-hooks';
+import { getSidebarDataGroup } from '../../logic/getSidebarDataGroup';
 import { useLocaleSiteData } from '../../logic/useLocaleSiteData';
-import { getSidebarData } from '../../logic/useSidebarData';
 import { SvgWrapper } from '../SvgWrapper';
 import { Tab, Tabs } from '../Tabs';
 import { NoSearchResult } from './NoSearchResult';
@@ -123,7 +123,7 @@ export function SearchPanel({ focused, setFocused }: SearchPanelProps) {
 
   // We need to extract the group name by the link so that we can divide the search result into different groups.
   const extractGroupName = (link: string) =>
-    getSidebarData(sidebar, link).group;
+    getSidebarDataGroup(sidebar, link).group;
 
   async function initPageSearcher() {
     if (search === false) {
