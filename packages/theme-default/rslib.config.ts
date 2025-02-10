@@ -76,7 +76,10 @@ export default defineConfig({
       format: 'esm',
       syntax: 'es2020',
       bundle: false,
-      plugins: [pluginReact(), pluginSvgr({ query: /.*/ })],
+      plugins: [
+        pluginReact(),
+        pluginSvgr({ svgrOptions: { exportType: 'default' } }),
+      ],
       source: {
         entry: {
           assets: ['src/assets'],
