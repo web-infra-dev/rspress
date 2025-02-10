@@ -14,9 +14,6 @@ importers:
       '@changesets/cli':
         specifier: ^2.27.12
         version: 2.27.12
-      '@modern-js/module-tools':
-        specifier: 2.64.0
-        version: 2.64.0(typescript@5.7.2)
       '@modern-js/tsconfig':
         specifier: 2.64.0
         version: 2.64.0
@@ -302,6 +299,9 @@ importers:
         specifier: ^2.65.0
         version: 2.65.0(@types/react@18.3.18)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
     devDependencies:
+      '@modern-js/module-tools':
+        specifier: 2.64.0
+        version: 2.64.0(typescript@5.5.3)
       '@rspress/modern-js-plugin':
         specifier: workspace:*
         version: link:../../../packages/modern-plugin-rspress
@@ -817,12 +817,15 @@ importers:
         specifier: ^3.0.0
         version: 3.0.0
     devDependencies:
-      '@modern-js/plugin-tailwindcss':
-        specifier: 2.64.0
-        version: 2.64.0(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(tailwindcss@3.4.17(ts-node@10.9.2(@types/node@18.11.17)(typescript@5.5.3)))
+      '@microsoft/api-extractor':
+        specifier: ^7.49.2
+        version: 7.49.2(@types/node@18.11.17)
       '@modern-js/tsconfig':
         specifier: 2.64.0
         version: 2.64.0
+      '@rslib/core':
+        specifier: 0.4.0
+        version: 0.4.0(@microsoft/api-extractor@7.49.2(@types/node@18.11.17))(typescript@5.5.3)
       '@types/hast':
         specifier: 3.0.4
         version: 3.0.4
@@ -942,6 +945,9 @@ importers:
         specifier: ^0.2.10
         version: 0.2.10
     devDependencies:
+      '@modern-js/module-tools':
+        specifier: 2.64.0
+        version: 2.64.0(typescript@5.5.3)
       '@types/lodash':
         specifier: ^4.17.15
         version: 4.17.15
@@ -1589,9 +1595,6 @@ importers:
       '@microsoft/api-extractor':
         specifier: ^7.49.2
         version: 7.49.2(@types/node@22.10.2)
-      '@modern-js/plugin-tailwindcss':
-        specifier: 2.64.0
-        version: 2.64.0(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(tailwindcss@3.4.17(ts-node@10.9.2(@types/node@22.10.2)(typescript@5.5.3)))
       '@modern-js/tsconfig':
         specifier: 2.64.0
         version: 2.64.0
@@ -2562,28 +2565,8 @@ packages:
   '@modern-js/plugin-i18n@2.64.0':
     resolution: {integrity: sha512-2tbhXPglCCHHxfwAP3Jl7i1dcr9l/RoXyUkkGIK3B6hoZvxo+3Yp4AO/jCAcDU6XAbFkTnqh/nCVF0+b2UDZAw==}
 
-  '@modern-js/plugin-tailwindcss@2.64.0':
-    resolution: {integrity: sha512-eDkrBzsQ+5s/Y36ZUyKPpLxbhfyZHBYfvDhJU4nwrYbx6Pbc/QlWQI3uzoa4C4xHfk18MP3prUTCN6jdtcn4nQ==}
-    peerDependencies:
-      '@modern-js/runtime': ^2.64.0
-      tailwindcss: '>= 2.0.0 || >= 3.0.0'
-    peerDependenciesMeta:
-      '@modern-js/runtime':
-        optional: true
-
   '@modern-js/plugin@2.64.0':
     resolution: {integrity: sha512-U4eRUjJlBXKhTZo/xxvwhTV+e+MhkTvBK0qbpeb2menWd9MibSpM5poyES2qLGtf8RS7Ecy3h4KhJquVsBXy7Q==}
-
-  '@modern-js/runtime-utils@2.64.0':
-    resolution: {integrity: sha512-v1SXBYzdEVvKFgTQOJHqFqQFlhhH41QBwyRuuNLBBg7sxQHna6sWV0qZaiwfYns5qHfhaB9r8WeJg9XKzIrHTQ==}
-    peerDependencies:
-      react: '>=17.0.0'
-      react-dom: '>=17.0.0'
-    peerDependenciesMeta:
-      react:
-        optional: true
-      react-dom:
-        optional: true
 
   '@modern-js/swc-plugins-darwin-arm64@0.6.11':
     resolution: {integrity: sha512-UMH0bo20vcD10//F7KaINLfuHawQBVcWCCyJvkYOiBt7e1tUjeybKu+y6eNq1USyFVElEMul8ytnYdwAS9sY+w==}
@@ -2798,10 +2781,6 @@ packages:
     resolution: {integrity: sha512-jTXRsoSPONAs8Za9QEQdyjFn+0ZQFjCiIztAIF6bi1HqhBzG9Ma7g1WotyiGqFSBRZjIEqMdT8RUlbk1QVhzCQ==}
     engines: {node: '>=18'}
     hasBin: true
-
-  '@remix-run/router@1.20.0':
-    resolution: {integrity: sha512-mUnk8rPJBI9loFDZ+YzPGdeniYK+FTmRD1TMCz7ev2SNIozyKKpnGgsxO34u6Z4z/t0ITuu7voi/AshfsGsgFg==}
-    engines: {node: '>=14.0.0'}
 
   '@remix-run/router@1.22.0':
     resolution: {integrity: sha512-MBOl8MeOzpK0HQQQshKB7pABXbmyHizdTpqnrIseTbsv0nAepwC2ENZa1aaBExNQcpLoXmWthhak8SABLzvGPw==}
@@ -3317,9 +3296,6 @@ packages:
   '@types/nprogress@0.2.3':
     resolution: {integrity: sha512-k7kRA033QNtC+gLc4VPlfnue58CM1iQLgn1IMAU8VPHGOj7oIHPp9UlhedEnD/Gl8evoCjwkZjlBORtZ3JByUA==}
 
-  '@types/parse-json@4.0.0':
-    resolution: {integrity: sha512-//oorEZjL6sbPcKUaCdIGlIUeH26mgzimjBB77G6XRgnDl/L5wOnpyBGRe/Mmf5CVW3PwEBE1NjiMZ/ssFh4wA==}
-
   '@types/parse5@6.0.3':
     resolution: {integrity: sha512-SuT16Q1K51EAVPz1K29DJ/sXjhSQ0zjvsypYJ6tlwVsRV9jwW5Adq2ch8Dq8kDBCkYnELS7N7VNCSB5nC56t/g==}
 
@@ -3595,10 +3571,6 @@ packages:
     peerDependencies:
       '@babel/core': ^7.20.12
 
-  babel-plugin-macros@3.1.0:
-    resolution: {integrity: sha512-Cg7TFGpIr01vOQNODXOOaGz2NpCU5gl8x1qJFbb6hbZxR7XrcE2vtbAsTAbJ7/xwJtUuJEw8K8Zr/AE0LHlesg==}
-    engines: {node: '>=10', npm: '>=6'}
-
   babel-preset-solid@1.9.3:
     resolution: {integrity: sha512-jvlx5wDp8s+bEF9sGFw/84SInXOA51ttkUEroQziKMbxplXThVKt83qB6bDTa1HuLNatdU9FHpFOiQWs1tLQIg==}
     peerDependencies:
@@ -3842,10 +3814,6 @@ packages:
 
   core-js@3.40.0:
     resolution: {integrity: sha512-7vsMc/Lty6AGnn7uFpYT56QesI5D2Y/UkgKounk87OP9Z2H9Z8kj6jzcSGAxFmUtDOS0ntK6lbQz+Nsa0Jj6mQ==}
-
-  cosmiconfig@7.1.0:
-    resolution: {integrity: sha512-AdmX6xUzdNASswsFtmwSt7Vj8po9IuqXm0UXz7QKPuEUmPB4XyjGfaAr2PSuELMwkRMVH1EpIkX5bTZGRB3eCA==}
-    engines: {node: '>=10'}
 
   cosmiconfig@8.3.6:
     resolution: {integrity: sha512-kcZ6+W5QzcJ3P1Mt+83OUv/oHFqZHIx8DuxG6eZ5RGMERoLqp4BuGjhHLYGK+Kf5XVkQvqBSmAy/nGWN3qDgEA==}
@@ -5670,25 +5638,12 @@ packages:
     resolution: {integrity: sha512-FPvF2XxTSikpJxcr+bHut2H4gJ17+18Uy20D5/F+SKzFap62R3cM5wH6b8WN3LyGSYeQilLEcJcR1fjBSI2S1A==}
     engines: {node: '>=0.10.0'}
 
-  react-router-dom@6.27.0:
-    resolution: {integrity: sha512-+bvtFWMC0DgAFrfKXKG9Fc+BcXWRUO1aJIihbB79xaeq0v5UzfvnM5houGUm1Y461WVRcgAQ+Clh5rdb1eCx4g==}
-    engines: {node: '>=14.0.0'}
-    peerDependencies:
-      react: '>=16.8'
-      react-dom: '>=16.8'
-
   react-router-dom@6.29.0:
     resolution: {integrity: sha512-pkEbJPATRJ2iotK+wUwHfy0xs2T59YPEN8BQxVCPeBZvK7kfPESRc/nyxzdcxR17hXgUPYx2whMwl+eo9cUdnQ==}
     engines: {node: '>=14.0.0'}
     peerDependencies:
       react: '>=16.8'
       react-dom: '>=16.8'
-
-  react-router@6.27.0:
-    resolution: {integrity: sha512-YA+HGZXz4jaAkVoYBE98VQl+nVzI+cVI2Oj/06F5ZM+0u3TgedN9Y9kmMRo2mnkSK2nCpNQn0DVob4HCsY/WLw==}
-    engines: {node: '>=14.0.0'}
-    peerDependencies:
-      react: '>=16.8'
 
   react-router@6.29.0:
     resolution: {integrity: sha512-DXZJoE0q+KyeVw75Ck6GkPxFak63C4fGqZGNijnWgzB/HzSP1ZfTlBj5COaGWwhrMQ/R8bXiq5Ooy4KG+ReyjQ==}
@@ -6794,10 +6749,6 @@ packages:
   yallist@4.0.0:
     resolution: {integrity: sha512-3wdGidZyq5PB084XLES5TpOSRA3wjXAlIWMhum2kRcv/41Sn2emQ0dycQW4uZXLejwKvg6EsvbdlVL+FYEct7A==}
 
-  yaml@1.10.2:
-    resolution: {integrity: sha512-r3vXyErRCYJ7wg28yvBY5VSoAF8ZvlcW9/BwUzEtUsjvX/DKs24dIkuwjtuprwJJHsbyUbLApepYTR1BN4uHrg==}
-    engines: {node: '>= 6'}
-
   yaml@2.6.1:
     resolution: {integrity: sha512-7r0XPzioN/Q9kXBro/XPnA6kznR73DHq+GXh5ON7ZozRO6aMjbmiBuKste2wslTFkC5d1dw0GooOCepZXJ2SAg==}
     engines: {node: '>= 14'}
@@ -7808,7 +7759,7 @@ snapshots:
       '@modern-js/utils': 2.64.0
       '@swc/helpers': 0.5.13
 
-  '@modern-js/module-tools@2.64.0(typescript@5.7.2)':
+  '@modern-js/module-tools@2.64.0(typescript@5.5.3)':
     dependencies:
       '@ampproject/remapping': 2.3.0
       '@ast-grep/napi': 0.33.1
@@ -7837,7 +7788,7 @@ snapshots:
       terser: 5.31.6
       tsconfig-paths-webpack-plugin: 4.1.0
     optionalDependencies:
-      typescript: 5.7.2
+      typescript: 5.5.3
     transitivePeerDependencies:
       - debug
       - supports-color
@@ -7866,46 +7817,10 @@ snapshots:
       '@modern-js/utils': 2.64.0
       '@swc/helpers': 0.5.13
 
-  '@modern-js/plugin-tailwindcss@2.64.0(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(tailwindcss@3.4.17(ts-node@10.9.2(@types/node@18.11.17)(typescript@5.5.3)))':
-    dependencies:
-      '@modern-js/node-bundle-require': 2.64.0
-      '@modern-js/runtime-utils': 2.64.0(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
-      '@modern-js/utils': 2.64.0
-      '@swc/helpers': 0.5.13
-      babel-plugin-macros: 3.1.0
-      tailwindcss: 3.4.17(ts-node@10.9.2(@types/node@18.11.17)(typescript@5.5.3))
-    transitivePeerDependencies:
-      - react
-      - react-dom
-
-  '@modern-js/plugin-tailwindcss@2.64.0(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(tailwindcss@3.4.17(ts-node@10.9.2(@types/node@22.10.2)(typescript@5.5.3)))':
-    dependencies:
-      '@modern-js/node-bundle-require': 2.64.0
-      '@modern-js/runtime-utils': 2.64.0(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
-      '@modern-js/utils': 2.64.0
-      '@swc/helpers': 0.5.13
-      babel-plugin-macros: 3.1.0
-      tailwindcss: 3.4.17(ts-node@10.9.2(@types/node@22.10.2)(typescript@5.5.3))
-    transitivePeerDependencies:
-      - react
-      - react-dom
-
   '@modern-js/plugin@2.64.0':
     dependencies:
       '@modern-js/utils': 2.64.0
       '@swc/helpers': 0.5.13
-
-  '@modern-js/runtime-utils@2.64.0(react-dom@18.3.1(react@18.3.1))(react@18.3.1)':
-    dependencies:
-      '@modern-js/utils': 2.64.0
-      '@remix-run/router': 1.20.0
-      '@swc/helpers': 0.5.13
-      lru-cache: 6.0.0
-      react-router-dom: 6.27.0(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
-      serialize-javascript: 6.0.2
-    optionalDependencies:
-      react: 18.3.1
-      react-dom: 18.3.1(react@18.3.1)
 
   '@modern-js/swc-plugins-darwin-arm64@0.6.11':
     optional: true
@@ -8070,8 +7985,6 @@ snapshots:
   '@playwright/test@1.47.2':
     dependencies:
       playwright: 1.47.2
-
-  '@remix-run/router@1.20.0': {}
 
   '@remix-run/router@1.22.0': {}
 
@@ -8648,8 +8561,6 @@ snapshots:
 
   '@types/nprogress@0.2.3': {}
 
-  '@types/parse-json@4.0.0': {}
-
   '@types/parse5@6.0.3': {}
 
   '@types/prop-types@15.7.5': {}
@@ -8967,12 +8878,6 @@ snapshots:
       parse5: 7.1.2
       validate-html-nesting: 1.2.2
 
-  babel-plugin-macros@3.1.0:
-    dependencies:
-      '@babel/runtime': 7.23.2
-      cosmiconfig: 7.1.0
-      resolve: 1.22.8
-
   babel-preset-solid@1.9.3(@babel/core@7.26.0):
     dependencies:
       '@babel/core': 7.26.0
@@ -9198,14 +9103,6 @@ snapshots:
       toggle-selection: 1.0.6
 
   core-js@3.40.0: {}
-
-  cosmiconfig@7.1.0:
-    dependencies:
-      '@types/parse-json': 4.0.0
-      import-fresh: 3.3.0
-      parse-json: 5.2.0
-      path-type: 4.0.0
-      yaml: 1.10.2
 
   cosmiconfig@8.3.6(typescript@5.5.3):
     dependencies:
@@ -11475,24 +11372,12 @@ snapshots:
 
   react-refresh@0.16.0: {}
 
-  react-router-dom@6.27.0(react-dom@18.3.1(react@18.3.1))(react@18.3.1):
-    dependencies:
-      '@remix-run/router': 1.20.0
-      react: 18.3.1
-      react-dom: 18.3.1(react@18.3.1)
-      react-router: 6.27.0(react@18.3.1)
-
   react-router-dom@6.29.0(react-dom@18.3.1(react@18.3.1))(react@18.3.1):
     dependencies:
       '@remix-run/router': 1.22.0
       react: 18.3.1
       react-dom: 18.3.1(react@18.3.1)
       react-router: 6.29.0(react@18.3.1)
-
-  react-router@6.27.0(react@18.3.1):
-    dependencies:
-      '@remix-run/router': 1.20.0
-      react: 18.3.1
 
   react-router@6.29.0(react@18.3.1):
     dependencies:
@@ -12758,8 +12643,6 @@ snapshots:
   yallist@3.1.1: {}
 
   yallist@4.0.0: {}
-
-  yaml@1.10.2: {}
 
   yaml@2.6.1: {}
 

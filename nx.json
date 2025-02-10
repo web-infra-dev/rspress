@@ -13,7 +13,7 @@
       "{projectRoot}/src/**/*",
       "{projectRoot}/tsconfig.json",
       "{projectRoot}/package.json",
-      "{projectRoot}/modern.config.*"
+      "{projectRoot}/rslib.config.*"
     ],
     "dev": ["default"],
     "build": ["default"],
