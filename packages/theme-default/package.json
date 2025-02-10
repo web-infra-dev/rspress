@@ -61,7 +61,6 @@
   },
   "devDependencies": {
     "@microsoft/api-extractor": "^7.49.2",
-    "@modern-js/plugin-tailwindcss": "2.64.0",
     "@modern-js/tsconfig": "2.64.0",
     "@rsbuild/plugin-react": "~1.1.0",
     "@rsbuild/plugin-sass": "~1.2.0",

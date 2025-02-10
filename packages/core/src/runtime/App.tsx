@@ -32,8 +32,11 @@ type PageMeta = {
 
 export async function initPageData(routePath: string): Promise<PageData> {
   const { routes } = process.env.__SSR__
-    ? (require('virtual-routes-ssr') as typeof import('virtual-routes-ssr'))
-    : (require('virtual-routes') as typeof import('virtual-routes'));
+    ? // biome-ignore format: Biome format will add an extra comma.
+      ((await import('virtual-routes-ssr')) as typeof import(
+        'virtual-routes-ssr'
+      ))
+    : ((await import('virtual-routes')) as typeof import('virtual-routes'));
   const matched = matchRoutes(routes, routePath)!;
   if (matched) {
     // Preload route component

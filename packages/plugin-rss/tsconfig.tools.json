@@ -10,5 +10,5 @@
     "skipLibCheck": true,
     "moduleResolution": "bundler"
   },
-  "include": ["modern.config.ts", "vitest.config.ts"]
+  "include": ["rslib.config.ts", "vitest.config.ts"]
 }
