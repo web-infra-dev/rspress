@@ -1,3 +1,5 @@
+// @ts-expect-error __VIRTUAL_ROUTES__ will be determined at build time
+import { routes } from '__VIRTUAL_ROUTES__';
 /* eslint-disable @typescript-eslint/no-var-requires */
 /* eslint-disable @typescript-eslint/no-require-imports */
 import { type ReactElement, type ReactNode, Suspense, memo } from 'react';
@@ -5,10 +7,6 @@ import { matchRoutes, useLocation } from 'react-router-dom';
 import siteData from 'virtual-site-data';
 import { useViewTransition } from './hooks';
 import { normalizeRoutePath } from './utils';
-
-const { routes } = process.env.__SSR__
-  ? (require('virtual-routes-ssr') as typeof import('virtual-routes-ssr'))
-  : (require('virtual-routes') as typeof import('virtual-routes'));
 
 function TransitionContentImpl(props: { el: ReactElement }) {
   let element = props.el;
@@ -26,7 +24,10 @@ const TransitionContent = memo(
 
 export const Content = ({ fallback = <></> }: { fallback?: ReactNode }) => {
   const { pathname } = useLocation();
-  const matched = matchRoutes(routes, normalizeRoutePath(pathname));
+  const matched = matchRoutes(
+    routes as typeof import('virtual-routes')['routes'],
+    normalizeRoutePath(pathname),
+  );
   if (!matched) {
     return <div></div>;
   }

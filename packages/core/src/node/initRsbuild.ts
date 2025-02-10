@@ -258,7 +258,7 @@ async function createInternalBuildConfig(
     environments: {
       web: {
         resolve: {
-          alias: reactCSRAlias,
+          alias: { ...reactCSRAlias, __VIRTUAL_ROUTES__: 'virtual-routes' },
         },
         source: {
           entry: {
@@ -279,7 +279,10 @@ async function createInternalBuildConfig(
         ? {
             node: {
               resolve: {
-                alias: reactSSRAlias,
+                alias: {
+                  ...reactSSRAlias,
+                  __VIRTUAL_ROUTES__: 'virtual-routes-ssr',
+                },
               },
               source: {
                 entry: {
