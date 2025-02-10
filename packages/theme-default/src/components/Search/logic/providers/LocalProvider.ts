@@ -55,7 +55,7 @@ export class LocalProvider implements Provider {
     const searchIndexGroupID = `${version}###${lang}`;
     const searchIndexVersion = version ? `.${version.replace('.', '_')}` : '';
     const searchIndexLang = lang ? `.${lang}` : '';
-    const searchIndexURL = `${removeTrailingSlash(__webpack_public_path__)}/static/${SEARCH_INDEX_NAME}${searchIndexVersion}${searchIndexLang}.${searchIndexHash[searchIndexGroupID]}.json`;
+    const searchIndexURL = `${removeTrailingSlash(__WEBPACK_PUBLIC_PATH__)}/static/${SEARCH_INDEX_NAME}${searchIndexVersion}${searchIndexLang}.${searchIndexHash[searchIndexGroupID]}.json`;
 
     const handleError = (result: unknown) => {
       console.error(

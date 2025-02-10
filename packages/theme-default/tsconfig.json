@@ -22,7 +22,7 @@
   "include": [
     "src",
     "vitest.config.ts",
-    "./modern.config.ts",
+    "./rslib.config.ts",
     "./tailwind.config.ts"
   ],
   "references": [

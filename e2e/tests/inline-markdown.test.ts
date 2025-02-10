@@ -99,7 +99,7 @@ test.describe('Inline markdown test', async () => {
       ].join(','),
     );
 
-    const h3 = await page.$$('.overview-group_8f375 h3');
+    const h3 = await page.$$('.overview-group_f8331 h3');
     const h3Texts = await Promise.all(h3.map(element => element.textContent()));
     expect(h3Texts.join(',')).toEqual(
       [
@@ -128,7 +128,7 @@ test.describe('Inline markdown test', async () => {
       expect(html).toContain(expectedH3InnerHtml[index]);
     }
 
-    const a = await page.$$('.overview-group_8f375 ul a');
+    const a = await page.$$('.overview-group_f8331 ul a');
     const aTexts = await Promise.all(a.map(element => element.textContent()));
     expect(aTexts.join(',')).toEqual(
       [

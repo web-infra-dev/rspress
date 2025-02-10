@@ -2,7 +2,7 @@ import { createRequire } from 'node:module';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import type { RspressPlugin } from '@rspress/shared';
-import { tailwindConfig } from '../../tailwind.config';
+import tailwindConfig from '../../tailwind.config';
 
 const require = createRequire(import.meta.url);
 const ROOT_DIR = fileURLToPath(new URL('../..', import.meta.url).href);
