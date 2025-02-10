@@ -33,7 +33,7 @@ test.describe('Nested overview page', async () => {
     const h2Texts = await Promise.all(h2.map(element => element.textContent()));
     expect(h2Texts.join(',')).toEqual(['Level 2'].join(','));
 
-    const h3 = await page.$$('.overview-group_8f375 h3');
+    const h3 = await page.$$('.overview-group_f8331 h3');
     const h3Texts = await Promise.all(h3.map(element => element.textContent()));
     expect(h3Texts.join(',')).toEqual(['Level 2', 'two', 'Level 3'].join(','));
   });
@@ -52,7 +52,7 @@ test.describe('Nested overview page', async () => {
     const h2Texts = await Promise.all(h2.map(element => element.textContent()));
     expect(h2Texts.join(',')).toEqual(['two', 'Level 3'].join(','));
 
-    const h3 = await page.$$('.overview-group_8f375 h3');
+    const h3 = await page.$$('.overview-group_f8331 h3');
     const h3Texts = await Promise.all(h3.map(element => element.textContent()));
     expect(h3Texts.join(',')).toEqual(['two', 'Level 3', 'three'].join(','));
   });
@@ -71,7 +71,7 @@ test.describe('Nested overview page', async () => {
     const h2Texts = await Promise.all(h2.map(element => element.textContent()));
     expect(h2Texts.join(',')).toEqual(['three'].join(','));
 
-    const h3 = await page.$$('.overview-group_8f375 h3');
+    const h3 = await page.$$('.overview-group_f8331 h3');
     const h3Texts = await Promise.all(h3.map(element => element.textContent()));
     expect(h3Texts.join(',')).toEqual(['three'].join(','));
   });

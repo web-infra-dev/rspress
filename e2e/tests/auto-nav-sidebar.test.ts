@@ -43,7 +43,7 @@ test.describe('Auto nav and sidebar test', async () => {
       ['Config', 'Client API', 'Commands', 'Single'].join(','),
     );
 
-    const h3 = await page.$$('.overview-group_8f375 h3');
+    const h3 = await page.$$('.overview-group_f8331 h3');
     const h3Texts = await Promise.all(h3.map(element => element.textContent()));
     expect(h3Texts.join(',')).toEqual(
       [
@@ -60,7 +60,7 @@ test.describe('Auto nav and sidebar test', async () => {
       ].join(','),
     );
 
-    const a = await page.$$('.overview-group_8f375 ul a');
+    const a = await page.$$('.overview-group_f8331 ul a');
     const aTexts = await Promise.all(a.map(element => element.textContent()));
     expect(aTexts.join(',')).toEqual(
       [
@@ -100,7 +100,7 @@ test.describe('Auto nav and sidebar test', async () => {
       ].join(','),
     );
 
-    const h3 = await page.$$('.overview-group_8f375 h3');
+    const h3 = await page.$$('.overview-group_f8331 h3');
     const h3Texts = await Promise.all(h3.map(element => element.textContent()));
     expect(h3Texts.join(',')).toEqual(
       [
@@ -113,7 +113,7 @@ test.describe('Auto nav and sidebar test', async () => {
       ].join(','),
     );
 
-    const a = await page.$$('.overview-group_8f375 ul a');
+    const a = await page.$$('.overview-group_f8331 ul a');
     const aTexts = await Promise.all(a.map(element => element.textContent()));
     expect(aTexts.join(',')).toEqual(
       [
@@ -141,11 +141,11 @@ test.describe('Auto nav and sidebar test', async () => {
     const h2Texts = await Promise.all(h2.map(element => element.textContent()));
     expect(h2Texts.join(',')).toEqual(['Client API'].join(','));
 
-    const h3 = await page.$$('.overview-group_8f375 h3');
+    const h3 = await page.$$('.overview-group_f8331 h3');
     const h3Texts = await Promise.all(h3.map(element => element.textContent()));
     expect(h3Texts.join(',')).toEqual(['Runtime API', 'Components'].join(','));
 
-    const a = await page.$$('.overview-group_8f375 ul a');
+    const a = await page.$$('.overview-group_f8331 ul a');
     const aTexts = await Promise.all(a.map(element => element.textContent()));
     expect(aTexts.join(',')).toEqual(['Usage', 'Example'].join(','));
   });
@@ -171,11 +171,11 @@ test.describe('Auto nav and sidebar test', async () => {
     const h2Texts = await Promise.all(h2.map(element => element.textContent()));
     expect(h2Texts.join(',')).toEqual(['Nested'].join(','));
 
-    const h3 = await page.$$('.overview-group_8f375 h3');
+    const h3 = await page.$$('.overview-group_f8331 h3');
     const h3Texts = await Promise.all(h3.map(element => element.textContent()));
     expect(h3Texts.join(',')).toEqual(['Nested config'].join(','));
 
-    const a = await page.$$('.overview-group_8f375 ul a');
+    const a = await page.$$('.overview-group_f8331 ul a');
     const aTexts = await Promise.all(a.map(element => element.textContent()));
     expect(aTexts.join(',')).toEqual(['Nested H2'].join(','));
   });
