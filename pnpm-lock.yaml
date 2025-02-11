@@ -682,8 +682,8 @@ importers:
         specifier: ^7.49.2
         version: 7.49.2(@types/node@18.11.17)
       '@rslib/core':
-        specifier: 0.4.0
-        version: 0.4.0(@microsoft/api-extractor@7.49.2(@types/node@18.11.17))(typescript@5.5.3)
+        specifier: 0.4.1
+        version: 0.4.1(@microsoft/api-extractor@7.49.2(@types/node@18.11.17))(typescript@5.5.3)
       '@types/jest':
         specifier: ~29.5.14
         version: 29.5.14
@@ -824,8 +824,8 @@ importers:
         specifier: 2.64.0
         version: 2.64.0
       '@rslib/core':
-        specifier: 0.4.0
-        version: 0.4.0(@microsoft/api-extractor@7.49.2(@types/node@18.11.17))(typescript@5.5.3)
+        specifier: 0.4.1
+        version: 0.4.1(@microsoft/api-extractor@7.49.2(@types/node@18.11.17))(typescript@5.5.3)
       '@types/hast':
         specifier: 3.0.4
         version: 3.0.4
@@ -882,8 +882,8 @@ importers:
         specifier: ^7.49.2
         version: 7.49.2(@types/node@18.11.17)
       '@rslib/core':
-        specifier: 0.4.0
-        version: 0.4.0(@microsoft/api-extractor@7.49.2(@types/node@18.11.17))(typescript@5.5.3)
+        specifier: 0.4.1
+        version: 0.4.1(@microsoft/api-extractor@7.49.2(@types/node@18.11.17))(typescript@5.5.3)
       '@types/node':
         specifier: ^18.11.17
         version: 18.11.17
@@ -904,10 +904,10 @@ importers:
         version: 12.0.6(react-dom@19.0.0(react@19.0.0))(react@19.0.0)
       rsbuild-plugin-google-analytics:
         specifier: ^1.0.3
-        version: 1.0.3(@rsbuild/core@1.2.3)
+        version: 1.0.3(@rsbuild/core@1.2.5)
       rsbuild-plugin-open-graph:
         specifier: ^1.0.2
-        version: 1.0.2(@rsbuild/core@1.2.3)
+        version: 1.0.2(@rsbuild/core@1.2.5)
       rspress:
         specifier: workspace:*
         version: link:../cli
@@ -923,12 +923,6 @@ importers:
 
   packages/modern-plugin-rspress:
     dependencies:
-      '@microsoft/api-extractor':
-        specifier: ^7.49.2
-        version: 7.49.2(@types/node@18.11.17)
-      '@rslib/core':
-        specifier: 0.4.0
-        version: 0.4.0(@microsoft/api-extractor@7.49.2(@types/node@18.11.17))(typescript@5.5.3)
       '@rspress/core':
         specifier: workspace:*
         version: link:../core
@@ -945,9 +939,15 @@ importers:
         specifier: ^0.2.10
         version: 0.2.10
     devDependencies:
+      '@microsoft/api-extractor':
+        specifier: ^7.49.2
+        version: 7.49.2(@types/node@18.11.17)
       '@modern-js/module-tools':
         specifier: 2.64.0
         version: 2.64.0(typescript@5.5.3)
+      '@rslib/core':
+        specifier: 0.4.1
+        version: 0.4.1(@microsoft/api-extractor@7.49.2(@types/node@18.11.17))(typescript@5.5.3)
       '@types/lodash':
         specifier: ^4.17.15
         version: 4.17.15
@@ -995,8 +995,8 @@ importers:
         specifier: ^7.49.2
         version: 7.49.2(@types/node@18.11.17)
       '@rslib/core':
-        specifier: 0.4.0
-        version: 0.4.0(@microsoft/api-extractor@7.49.2(@types/node@18.11.17))(typescript@5.5.3)
+        specifier: 0.4.1
+        version: 0.4.1(@microsoft/api-extractor@7.49.2(@types/node@18.11.17))(typescript@5.5.3)
       '@types/mdast':
         specifier: ^3.0.15
         version: 3.0.15
@@ -1041,8 +1041,8 @@ importers:
         specifier: 2.64.0
         version: 2.64.0
       '@rslib/core':
-        specifier: 0.4.0
-        version: 0.4.0(@microsoft/api-extractor@7.49.2(@types/node@18.11.17))(typescript@5.5.3)
+        specifier: 0.4.1
+        version: 0.4.1(@microsoft/api-extractor@7.49.2(@types/node@18.11.17))(typescript@5.5.3)
       '@types/node':
         specifier: ^18.11.17
         version: 18.11.17
@@ -1075,8 +1075,8 @@ importers:
         specifier: 2.64.0
         version: 2.64.0
       '@rslib/core':
-        specifier: 0.4.0
-        version: 0.4.0(@microsoft/api-extractor@7.49.2(@types/node@18.11.17))(typescript@5.5.3)
+        specifier: 0.4.1
+        version: 0.4.1(@microsoft/api-extractor@7.49.2(@types/node@18.11.17))(typescript@5.5.3)
       '@types/node':
         specifier: ^18.11.17
         version: 18.11.17
@@ -1103,8 +1103,8 @@ importers:
         specifier: ^7.49.2
         version: 7.49.2(@types/node@22.10.2)
       '@rslib/core':
-        specifier: 0.4.0
-        version: 0.4.0(@microsoft/api-extractor@7.49.2(@types/node@22.10.2))(typescript@5.7.2)
+        specifier: 0.4.1
+        version: 0.4.1(@microsoft/api-extractor@7.49.2(@types/node@22.10.2))(typescript@5.7.2)
       '@types/mdast':
         specifier: ^3.0.15
         version: 3.0.15
@@ -1143,8 +1143,8 @@ importers:
         specifier: 2.64.0
         version: 2.64.0
       '@rslib/core':
-        specifier: 0.4.0
-        version: 0.4.0(@microsoft/api-extractor@7.49.2(@types/node@18.11.17))(typescript@5.5.3)
+        specifier: 0.4.1
+        version: 0.4.1(@microsoft/api-extractor@7.49.2(@types/node@18.11.17))(typescript@5.5.3)
       '@types/node':
         specifier: ^18.11.17
         version: 18.11.17
@@ -1180,8 +1180,8 @@ importers:
         specifier: 2.64.0
         version: 2.64.0
       '@rslib/core':
-        specifier: 0.4.0
-        version: 0.4.0(@microsoft/api-extractor@7.49.2(@types/node@18.11.17))(typescript@5.5.3)
+        specifier: 0.4.1
+        version: 0.4.1(@microsoft/api-extractor@7.49.2(@types/node@18.11.17))(typescript@5.5.3)
       '@rspress/shared':
         specifier: workspace:*
         version: link:../shared
@@ -1229,8 +1229,8 @@ importers:
         specifier: ^7.26.7
         version: 7.26.7
       '@rslib/core':
-        specifier: 0.4.0
-        version: 0.4.0(@microsoft/api-extractor@7.49.2(@types/node@18.11.17))(typescript@5.5.3)
+        specifier: 0.4.1
+        version: 0.4.1(@microsoft/api-extractor@7.49.2(@types/node@18.11.17))(typescript@5.5.3)
       '@types/babel__core':
         specifier: ^7.20.5
         version: 7.20.5
@@ -1308,8 +1308,8 @@ importers:
         version: 3.2.0(react@18.3.1)
     devDependencies:
       '@rslib/core':
-        specifier: 0.4.0
-        version: 0.4.0(@microsoft/api-extractor@7.49.2(@types/node@18.11.17))(typescript@5.5.3)
+        specifier: 0.4.1
+        version: 0.4.1(@microsoft/api-extractor@7.49.2(@types/node@18.11.17))(typescript@5.5.3)
       '@types/lodash':
         specifier: ^4.17.15
         version: 4.17.15
@@ -1360,8 +1360,8 @@ importers:
         version: link:../cli
     devDependencies:
       '@rslib/core':
-        specifier: 0.4.0
-        version: 0.4.0(@microsoft/api-extractor@7.49.2(@types/node@18.11.17))(typescript@5.5.3)
+        specifier: 0.4.1
+        version: 0.4.1(@microsoft/api-extractor@7.49.2(@types/node@18.11.17))(typescript@5.5.3)
       '@rspress/runtime':
         specifier: workspace:*
         version: link:../runtime
@@ -1400,8 +1400,8 @@ importers:
         specifier: 2.64.0
         version: 2.64.0
       '@rslib/core':
-        specifier: 0.4.0
-        version: 0.4.0(@microsoft/api-extractor@7.49.2(@types/node@18.11.17))(typescript@5.5.3)
+        specifier: 0.4.1
+        version: 0.4.1(@microsoft/api-extractor@7.49.2(@types/node@18.11.17))(typescript@5.5.3)
       '@types/hast':
         specifier: 3.0.4
         version: 3.0.4
@@ -1446,8 +1446,8 @@ importers:
         specifier: 2.64.0
         version: 2.64.0
       '@rslib/core':
-        specifier: 0.4.0
-        version: 0.4.0(@microsoft/api-extractor@7.49.2(@types/node@18.11.17))(typescript@5.5.3)
+        specifier: 0.4.1
+        version: 0.4.1(@microsoft/api-extractor@7.49.2(@types/node@18.11.17))(typescript@5.5.3)
       '@types/node':
         specifier: ^18.11.17
         version: 18.11.17
@@ -1487,10 +1487,10 @@ importers:
         version: 2.64.0
       '@rsbuild/plugin-react':
         specifier: ~1.1.0
-        version: 1.1.0(@rsbuild/core@1.2.3)
+        version: 1.1.0(@rsbuild/core@1.2.5)
       '@rslib/core':
-        specifier: 0.4.0
-        version: 0.4.0(@microsoft/api-extractor@7.49.2(@types/node@22.10.2))(typescript@5.5.3)
+        specifier: 0.4.1
+        version: 0.4.1(@microsoft/api-extractor@7.49.2(@types/node@22.10.2))(typescript@5.5.3)
       '@types/jest':
         specifier: ~29.5.14
         version: 29.5.14
@@ -1520,8 +1520,8 @@ importers:
         version: 10.1.2
     devDependencies:
       '@rslib/core':
-        specifier: 0.4.0
-        version: 0.4.0(@microsoft/api-extractor@7.49.2(@types/node@18.11.17))(typescript@5.5.3)
+        specifier: 0.4.1
+        version: 0.4.1(@microsoft/api-extractor@7.49.2(@types/node@18.11.17))(typescript@5.5.3)
       '@types/fs-extra':
         specifier: 11.0.4
         version: 11.0.4
@@ -1600,16 +1600,16 @@ importers:
         version: 2.64.0
       '@rsbuild/plugin-react':
         specifier: ~1.1.0
-        version: 1.1.0(@rsbuild/core@1.2.3)
+        version: 1.1.0(@rsbuild/core@1.2.5)
       '@rsbuild/plugin-sass':
         specifier: ~1.2.0
-        version: 1.2.0(@rsbuild/core@1.2.3)
+        version: 1.2.0(@rsbuild/core@1.2.5)
       '@rsbuild/plugin-svgr':
         specifier: ^1.0.6
-        version: 1.0.6(@rsbuild/core@1.2.3)(typescript@5.5.3)
+        version: 1.0.6(@rsbuild/core@1.2.5)(typescript@5.5.3)
       '@rslib/core':
-        specifier: 0.4.0
-        version: 0.4.0(@microsoft/api-extractor@7.49.2(@types/node@22.10.2))(typescript@5.5.3)
+        specifier: 0.4.1
+        version: 0.4.1(@microsoft/api-extractor@7.49.2(@types/node@22.10.2))(typescript@5.5.3)
       '@types/body-scroll-lock':
         specifier: ^3.1.2
         version: 3.1.2
@@ -2875,6 +2875,11 @@ packages:
     engines: {node: '>=16.7.0'}
     hasBin: true
 
+  '@rsbuild/core@1.2.5':
+    resolution: {integrity: sha512-k9JFE613b0X0WUaqfp6CIh2sS+jpzx30cCqe8wPIaQ/tVfUc1kr7gfR3dwcdiE68+WVnFHGm1JqMdeOZogjsJQ==}
+    engines: {node: '>=16.7.0'}
+    hasBin: true
+
   '@rsbuild/plugin-babel@1.0.3':
     resolution: {integrity: sha512-3S/ykXv7KRo0FxVpkjoHFUwB04nKINIET1kuv4xiRaDmeww1Tp0wl9h4u8a7d7gU/4FllyoUflY8TVhci/o05g==}
     peerDependencies:
@@ -2905,8 +2910,8 @@ packages:
     peerDependencies:
       '@rsbuild/core': 1.x
 
-  '@rslib/core@0.4.0':
-    resolution: {integrity: sha512-dONhz7PsooyGUdSQbJRzlsCXgOKrP5NyW1dzcNBvfLHr13nd2anCCZzFdQXb/g7772h5moj+EkTEo982AmUeJQ==}
+  '@rslib/core@0.4.1':
+    resolution: {integrity: sha512-qYzXqmyJsYhrorxUnXz1UNaLlkun/4HPXfDmvkrvFJ/vbQTLZom66a9uMQfkluRish3kJNumYNwtgfxBzn6ZBQ==}
     engines: {node: '>=16.0.0'}
     hasBin: true
     peerDependencies:
@@ -5797,8 +5802,8 @@ packages:
     engines: {node: '>=18.0.0', npm: '>=8.0.0'}
     hasBin: true
 
-  rsbuild-plugin-dts@0.4.0:
-    resolution: {integrity: sha512-Yjr+6iSY/TgV2jd+bY8J0wFe3RSBZaj766ygIMmILBacWUmaxnyIXnXjiIR3KDO7fxSwUYZzqqvpSgrRoVCk6g==}
+  rsbuild-plugin-dts@0.4.1:
+    resolution: {integrity: sha512-9/GJ/U8vt7pvRJts8l/FX6f5HzT2/0LUlwCrCz4mvqHh7EF4DI/b1TWXehvR7OH5ORE3hQxmPAhW01eaHBT8IQ==}
     engines: {node: '>=16.0.0'}
     peerDependencies:
       '@microsoft/api-extractor': ^7
@@ -8050,6 +8055,15 @@ snapshots:
     transitivePeerDependencies:
       - '@rspack/tracing'
 
+  '@rsbuild/core@1.2.5':
+    dependencies:
+      '@rspack/core': 1.2.2(@swc/helpers@0.5.15)
+      '@rspack/lite-tapable': 1.0.1
+      '@swc/helpers': 0.5.15
+      core-js: 3.40.0
+    transitivePeerDependencies:
+      - '@rspack/tracing'
+
   '@rsbuild/plugin-babel@1.0.3(@rsbuild/core@1.2.3)':
     dependencies:
       '@babel/core': 7.26.0
@@ -8076,9 +8090,24 @@ snapshots:
       '@rspack/plugin-react-refresh': 1.0.0(react-refresh@0.16.0)
       react-refresh: 0.16.0
 
+  '@rsbuild/plugin-react@1.1.0(@rsbuild/core@1.2.5)':
+    dependencies:
+      '@rsbuild/core': 1.2.5
+      '@rspack/plugin-react-refresh': 1.0.0(react-refresh@0.16.0)
+      react-refresh: 0.16.0
+
   '@rsbuild/plugin-sass@1.2.0(@rsbuild/core@1.2.3)':
     dependencies:
       '@rsbuild/core': 1.2.3
+      deepmerge: 4.3.1
+      loader-utils: 2.0.4
+      postcss: 8.5.1
+      reduce-configs: 1.1.0
+      sass-embedded: 1.83.4
+
+  '@rsbuild/plugin-sass@1.2.0(@rsbuild/core@1.2.5)':
+    dependencies:
+      '@rsbuild/core': 1.2.5
       deepmerge: 4.3.1
       loader-utils: 2.0.4
       postcss: 8.5.1
@@ -8096,10 +8125,10 @@ snapshots:
       - solid-js
       - supports-color
 
-  '@rsbuild/plugin-svgr@1.0.6(@rsbuild/core@1.2.3)(typescript@5.5.3)':
+  '@rsbuild/plugin-svgr@1.0.6(@rsbuild/core@1.2.5)(typescript@5.5.3)':
     dependencies:
-      '@rsbuild/core': 1.2.3
-      '@rsbuild/plugin-react': 1.1.0(@rsbuild/core@1.2.3)
+      '@rsbuild/core': 1.2.5
+      '@rsbuild/plugin-react': 1.1.0(@rsbuild/core@1.2.5)
       '@svgr/core': 8.1.0(typescript@5.5.3)
       '@svgr/plugin-jsx': 8.1.0(@svgr/core@8.1.0(typescript@5.5.3))
       '@svgr/plugin-svgo': 8.1.0(@svgr/core@8.1.0(typescript@5.5.3))(typescript@5.5.3)
@@ -8109,10 +8138,10 @@ snapshots:
       - supports-color
       - typescript
 
-  '@rslib/core@0.4.0(@microsoft/api-extractor@7.49.2(@types/node@18.11.17))(typescript@5.5.3)':
+  '@rslib/core@0.4.1(@microsoft/api-extractor@7.49.2(@types/node@18.11.17))(typescript@5.5.3)':
     dependencies:
-      '@rsbuild/core': 1.2.3
-      rsbuild-plugin-dts: 0.4.0(@microsoft/api-extractor@7.49.2(@types/node@18.11.17))(@rsbuild/core@1.2.3)(typescript@5.5.3)
+      '@rsbuild/core': 1.2.5
+      rsbuild-plugin-dts: 0.4.1(@microsoft/api-extractor@7.49.2(@types/node@18.11.17))(@rsbuild/core@1.2.5)(typescript@5.5.3)
       tinyglobby: 0.2.10
     optionalDependencies:
       '@microsoft/api-extractor': 7.49.2(@types/node@18.11.17)
@@ -8120,10 +8149,10 @@ snapshots:
     transitivePeerDependencies:
       - '@rspack/tracing'
 
-  '@rslib/core@0.4.0(@microsoft/api-extractor@7.49.2(@types/node@22.10.2))(typescript@5.5.3)':
+  '@rslib/core@0.4.1(@microsoft/api-extractor@7.49.2(@types/node@22.10.2))(typescript@5.5.3)':
     dependencies:
-      '@rsbuild/core': 1.2.3
-      rsbuild-plugin-dts: 0.4.0(@microsoft/api-extractor@7.49.2(@types/node@22.10.2))(@rsbuild/core@1.2.3)(typescript@5.5.3)
+      '@rsbuild/core': 1.2.5
+      rsbuild-plugin-dts: 0.4.1(@microsoft/api-extractor@7.49.2(@types/node@22.10.2))(@rsbuild/core@1.2.5)(typescript@5.5.3)
       tinyglobby: 0.2.10
     optionalDependencies:
       '@microsoft/api-extractor': 7.49.2(@types/node@22.10.2)
@@ -8131,10 +8160,10 @@ snapshots:
     transitivePeerDependencies:
       - '@rspack/tracing'
 
-  '@rslib/core@0.4.0(@microsoft/api-extractor@7.49.2(@types/node@22.10.2))(typescript@5.7.2)':
+  '@rslib/core@0.4.1(@microsoft/api-extractor@7.49.2(@types/node@22.10.2))(typescript@5.7.2)':
     dependencies:
-      '@rsbuild/core': 1.2.3
-      rsbuild-plugin-dts: 0.4.0(@microsoft/api-extractor@7.49.2(@types/node@22.10.2))(@rsbuild/core@1.2.3)(typescript@5.7.2)
+      '@rsbuild/core': 1.2.5
+      rsbuild-plugin-dts: 0.4.1(@microsoft/api-extractor@7.49.2(@types/node@22.10.2))(@rsbuild/core@1.2.5)(typescript@5.7.2)
       tinyglobby: 0.2.10
     optionalDependencies:
       '@microsoft/api-extractor': 7.49.2(@types/node@22.10.2)
@@ -11611,9 +11640,9 @@ snapshots:
       '@rollup/rollup-win32-x64-msvc': 4.20.0
       fsevents: 2.3.3
 
-  rsbuild-plugin-dts@0.4.0(@microsoft/api-extractor@7.49.2(@types/node@18.11.17))(@rsbuild/core@1.2.3)(typescript@5.5.3):
+  rsbuild-plugin-dts@0.4.1(@microsoft/api-extractor@7.49.2(@types/node@18.11.17))(@rsbuild/core@1.2.5)(typescript@5.5.3):
     dependencies:
-      '@rsbuild/core': 1.2.3
+      '@rsbuild/core': 1.2.5
       magic-string: 0.30.17
       picocolors: 1.1.1
       tinyglobby: 0.2.10
@@ -11621,9 +11650,9 @@ snapshots:
       '@microsoft/api-extractor': 7.49.2(@types/node@18.11.17)
       typescript: 5.5.3
 
-  rsbuild-plugin-dts@0.4.0(@microsoft/api-extractor@7.49.2(@types/node@22.10.2))(@rsbuild/core@1.2.3)(typescript@5.5.3):
+  rsbuild-plugin-dts@0.4.1(@microsoft/api-extractor@7.49.2(@types/node@22.10.2))(@rsbuild/core@1.2.5)(typescript@5.5.3):
     dependencies:
-      '@rsbuild/core': 1.2.3
+      '@rsbuild/core': 1.2.5
       magic-string: 0.30.17
       picocolors: 1.1.1
       tinyglobby: 0.2.10
@@ -11631,9 +11660,9 @@ snapshots:
       '@microsoft/api-extractor': 7.49.2(@types/node@22.10.2)
       typescript: 5.5.3
 
-  rsbuild-plugin-dts@0.4.0(@microsoft/api-extractor@7.49.2(@types/node@22.10.2))(@rsbuild/core@1.2.3)(typescript@5.7.2):
+  rsbuild-plugin-dts@0.4.1(@microsoft/api-extractor@7.49.2(@types/node@22.10.2))(@rsbuild/core@1.2.5)(typescript@5.7.2):
     dependencies:
-      '@rsbuild/core': 1.2.3
+      '@rsbuild/core': 1.2.5
       magic-string: 0.30.17
       picocolors: 1.1.1
       tinyglobby: 0.2.10
@@ -11641,13 +11670,13 @@ snapshots:
       '@microsoft/api-extractor': 7.49.2(@types/node@22.10.2)
       typescript: 5.7.2
 
-  rsbuild-plugin-google-analytics@1.0.3(@rsbuild/core@1.2.3):
+  rsbuild-plugin-google-analytics@1.0.3(@rsbuild/core@1.2.5):
     optionalDependencies:
-      '@rsbuild/core': 1.2.3
+      '@rsbuild/core': 1.2.5
 
-  rsbuild-plugin-open-graph@1.0.2(@rsbuild/core@1.2.3):
+  rsbuild-plugin-open-graph@1.0.2(@rsbuild/core@1.2.5):
     optionalDependencies:
-      '@rsbuild/core': 1.2.3
+      '@rsbuild/core': 1.2.5
 
   rslog@1.1.0: {}
 
