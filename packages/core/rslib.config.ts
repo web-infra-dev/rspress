@@ -28,11 +28,8 @@ export default defineConfig({
             'react-syntax-highlighter/dist/cjs/languages/prism/supported-languages':
               'commonjs react-syntax-highlighter/dist/cjs/languages/prism/supported-languages',
           },
-          'react-syntax-highlighter/dist/cjs/languages/prism/supported-languages',
-          '@rspress/mdx-rs',
           'jsdom',
           'tailwindcss',
-          '@rspress/plugin-container-syntax',
         ],
       },
     },
