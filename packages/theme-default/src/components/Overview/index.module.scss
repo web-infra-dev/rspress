@@ -124,6 +124,10 @@
   transition: background-color 0.5s;
 }
 
+.overview-groups {
+  max-width: 1200px;
+}
+
 @media (max-width: 768px) {
   :global(.overview-index) {
     padding: 42px 24px;
@@ -155,7 +159,7 @@
   }
 }
 
-@media (min-width: 1024px) {
+@media (min-width: 1200px) {
   .overview-groups {
     columns: 3;
   }

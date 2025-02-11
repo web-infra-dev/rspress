@@ -42,7 +42,7 @@
 
 ::view-transition-old(flip),
 ::view-transition-new(flip) {
-  animation-time: 250ms;
+  animation-duration: 250ms;
 }
 
 ::view-transition-old(flip) {
@@ -103,7 +103,7 @@
       padding: 0 48px;
       box-sizing: border-box;
       width: calc(100vw - var(--rp-sidebar-width) - var(--rp-aside-width));
-      max-width: min(100%, calc(960px + 48px * 2));
+      max-width: min(100%, calc(864px + 48px * 2));
       margin: auto;
     }
   }
@@ -121,7 +121,7 @@
       box-sizing: border-box;
       width: calc(100vw - var(--rp-sidebar-width) - var(--rp-aside-width));
       padding: 0 48px;
-      max-width: min(100%, calc(960px + 48px * 2));
+      max-width: min(100%, calc(864px + 48px * 2));
       margin: auto;
     }
   }
