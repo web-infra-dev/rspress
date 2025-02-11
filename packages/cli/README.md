@@ -1,7 +1,7 @@
 # Rspress
 
 <picture>
-  <img alt="Rspress Banner" src="https://github.com/web-infra-dev/rspress/assets/39261479/999e7946-45ff-45d5-b9cd-594e634e0e5a">
+  <img alt="Rspress Banner" src="https://assets.rspack.dev/rspress/rspress-banner.png">
 </picture>
 
 <h2 align="center">A fast Rsbuild-based static site generator.</h2>
