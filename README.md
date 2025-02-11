@@ -1,10 +1,10 @@
 <picture>
-  <img alt="Rspress Banner" src="https://github.com/web-infra-dev/rspress/assets/39261479/999e7946-45ff-45d5-b9cd-594e634e0e5a">
+  <img alt="Rspress Banner" src="https://assets.rspack.dev/rspress/rspress-banner.png">
 </picture>
 
 # Rspress
 
-A fast Rspack-based static site generator.
+A fast Rsbuild-based static site generator.
 
 <p>
   <a href="https://discord.gg/mkVw5zPAtf"><img src="https://img.shields.io/badge/chat-discord-blue?logo=discord&colorA=564341&colorB=EDED91" alt="discord channel" /></a>
@@ -15,7 +15,7 @@ A fast Rspack-based static site generator.
 
 ## 🔥 Features
 
-- **🚀 Fast Startup**: Based on Rust-based build tool and markdown/mdx compiler, the build speed is extremely fast, bringing you the ultimate development experience.
+- **🚀 Fast Startup**: Based on Rsbuild and MDX compiler, the build speed is extremely fast, bringing you the ultimate development experience.
 - **📚 MDX Support**: MDX is a powerful way to write content, allowing you to use React components in Markdown.
 - **📦 Built-in Full Text Search**: Automatically generates a full-text search index for you during building process, providing out-of-the-box full-text search capabilities.
 - **🌈 Static Site Generation**: In production, it automatically builds into static HTML files, which can be easily deployed anywhere.
@@ -24,7 +24,7 @@ A fast Rspack-based static site generator.
 
 ## 📚 Getting started
 
-Go to the [Quick Start](https://rspress.dev/guide/start/getting-started.html) to get started.
+Go to the [Quick start](https://rspress.dev/guide/start/getting-started.html) to get started.
 
 ## 🤝 Contribution
 
@@ -91,7 +91,7 @@ This repo has adopted the ByteDance Open Source Code of Conduct. Please check [C
 | [Rspack](https://github.com/web-infra-dev/rspack)          | A fast Rust-based web bundler.                    |
 | [Rsbuild](https://github.com/web-infra-dev/rsbuild)        | An Rspack-based build tool for the web.           |
 | [Rslib](https://github.com/web-infra-dev/rslib)            | A library development tool powered by Rsbuild.    |
-| [Rsdoctor](https://github.com/web-infra-dev/rsdoctor)      | A one-stop build analyzer for Rspack and Webpack. |
+| [Rsdoctor](https://github.com/web-infra-dev/rsdoctor)      | A one-stop build analyzer for Rspack and webpack. |
 
 ## 🌟 Quality
 

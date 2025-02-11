@@ -1,6 +1,6 @@
 ---
 pageType: home
-titleSuffix: '基于 Rspack 的静态站点生成器'
+titleSuffix: '基于 Rsbuild 的静态站点生成器'
 
 hero:
   name: Rspress
