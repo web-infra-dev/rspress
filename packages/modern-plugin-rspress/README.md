@@ -10,7 +10,7 @@
 
 ## Getting started
 
-Please follow [Quick Start](https://modernjs.dev/en/guides/get-started/quick-start) to get started with Modern.js.
+Please follow [Quick start](https://modernjs.dev/en/guides/get-started/quick-start) to get started with Modern.js.
 
 ## Documentation
 

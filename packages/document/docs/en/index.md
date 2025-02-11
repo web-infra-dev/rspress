@@ -1,6 +1,6 @@
 ---
 pageType: home
-titleSuffix: 'Rspack-based Static Site Generator'
+titleSuffix: 'Rsbuild-based Static Site Generator'
 
 hero:
   name: Rspress
