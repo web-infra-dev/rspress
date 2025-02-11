@@ -42,7 +42,7 @@
 
 ::view-transition-old(flip),
 ::view-transition-new(flip) {
-  animation-time: 250ms;
+  animation-duration: 250ms;
 }
 
 ::view-transition-old(flip) {
@@ -98,12 +98,13 @@
 
   .content {
     padding: 48px 0 72px 0;
+
     :global(.rspress-doc),
     :global(.rspress-doc-footer) {
-      padding: 0 48px;
+      padding: 0 64px;
       box-sizing: border-box;
       width: calc(100vw - var(--rp-sidebar-width) - var(--rp-aside-width));
-      max-width: min(100%, calc(960px + 48px * 2));
+      max-width: min(100%, calc(864px + 64px * 2));
       margin: auto;
     }
   }
@@ -120,8 +121,8 @@
     :global(.rspress-doc-footer) {
       box-sizing: border-box;
       width: calc(100vw - var(--rp-sidebar-width) - var(--rp-aside-width));
-      padding: 0 48px;
-      max-width: min(100%, calc(960px + 48px * 2));
+      padding: 0 64px;
+      max-width: min(100%, calc(864px + 64px * 2));
       margin: auto;
     }
   }
