@@ -124,7 +124,11 @@ export default {
 };
 
 // Custom Search Component
-const MySearch = () => <div className="my-search">{Search}</div>;
+const MySearch = () => (
+  <div className="my-search">
+    <Search />
+  </div>
+);
 export { MySearch as Search };
 // re-export
 export * from 'rspress/theme';
