@@ -23,7 +23,11 @@ import {
 
 function getHmrFileKey(realPath: string | undefined, docsDir: string) {
   return realPath
-    ? path.relative(docsDir, realPath).replace(path.extname(realPath), '')
+    ? path
+        .relative(docsDir, realPath)
+        .replace(path.extname(realPath), '')
+        .split(path.sep)
+        .join('/')
     : '';
 }
 
