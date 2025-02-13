@@ -1,20 +1,13 @@
 import fs from 'node:fs/promises';
 import path from 'node:path';
-import {
-  type PageModule,
-  type RouteMeta,
-  type UserConfig,
-  addLeadingSlash,
-  addTrailingSlash,
-  withBase,
-} from '@rspress/shared';
+import type { PageModule, RouteMeta, UserConfig } from '@rspress/shared';
+import { DEFAULT_PAGE_EXTENSIONS } from '@rspress/shared/constants';
 import type { ComponentType } from 'react';
 import { glob } from 'tinyglobby';
 import type { PluginDriver } from '../PluginDriver';
 import { PUBLIC_DIR } from '../constants';
 import { getPageKey, normalizePath } from '../utils';
-
-export const DEFAULT_PAGE_EXTENSIONS = ['js', 'jsx', 'ts', 'tsx', 'md', 'mdx'];
+import { normalizeRoutePath } from './normalizeRoutePath';
 
 export interface Route {
   path: string;
@@ -29,62 +22,6 @@ export interface RouteOptions {
   include?: string[];
   exclude?: string[];
 }
-
-export const normalizeRoutePath = (
-  routePath: string,
-  base: string,
-  lang: string,
-  version: string,
-  langs: string[],
-  versions: string[],
-  extensions: string[] = DEFAULT_PAGE_EXTENSIONS,
-) => {
-  const hasTrailSlash = routePath.endsWith('/');
-  let versionPart = '';
-  let langPart = '';
-  let purePathPart = '';
-  const parts: string[] = routePath.split('/').filter(Boolean);
-
-  if (version) {
-    const versionToMatch = parts[0];
-    if (versions.includes(versionToMatch)) {
-      if (versionToMatch !== version) {
-        versionPart = versionToMatch;
-      }
-      parts.shift();
-    }
-  }
-
-  if (lang) {
-    const langToMatch = parts[0];
-    if (langs.includes(langToMatch)) {
-      if (langToMatch !== lang) {
-        langPart = langToMatch;
-      }
-      parts.shift();
-    }
-  }
-  purePathPart = parts.join('/');
-
-  let normalizedRoutePath = addLeadingSlash(
-    [versionPart, langPart, purePathPart].filter(Boolean).join('/'),
-  )
-    // remove the extension
-    .replace(new RegExp(`\\.(${extensions.join('|')})$`), '')
-    .replace(/\.html$/, '')
-    .replace(/\/index$/, '/');
-
-  // restore the trail slash
-  if (hasTrailSlash) {
-    normalizedRoutePath = addTrailingSlash(normalizedRoutePath);
-  }
-
-  return {
-    routePath: withBase(normalizedRoutePath, base),
-    lang: langPart || lang,
-    version: versionPart || version,
-  };
-};
 
 export class RouteService {
   routeData: Map<string, RouteMeta> = new Map();
@@ -140,10 +77,15 @@ export class RouteService {
 
   async init() {
     // 1. internal pages
+    const extensions = this.#extensions.map(i => {
+      // .mdx -> mdx, .tsx -> tsx
+      return i.slice(1);
+    });
     const files = (
-      await glob([`**/*.{${this.#extensions.join(',')}}`, ...this.#include], {
+      await glob([`**/*.{${extensions.join(',')}}`, ...this.#include], {
         cwd: this.#scanDir,
         absolute: true,
+        onlyFiles: true,
         ignore: [
           ...this.#exclude,
           '**/node_modules/**',
@@ -201,10 +143,10 @@ export class RouteService {
     if (this.routeData.has(routePath)) {
       // apply the one with the extension listed first in the array and skip the rest.
       const preRouteExtIndex = this.#extensions.indexOf(
-        path.extname(this.routeData.get(routePath)!.absolutePath).slice(1),
+        path.extname(this.routeData.get(routePath)!.absolutePath),
       );
       const currRouteExtIndex = this.#extensions.indexOf(
-        path.extname(absolutePath).slice(1),
+        path.extname(absolutePath),
       );
 
       if (
@@ -218,26 +160,26 @@ export class RouteService {
     }
   }
 
-  removeRoute(filePath: string) {
+  removeRoute(filePath: string): void {
     const fileRelativePath = path.relative(this.#scanDir, filePath);
     const { routePath } = this.normalizeRoutePath(fileRelativePath);
     this.routeData.delete(routePath);
   }
 
-  getRoutes() {
+  getRoutes(): RouteMeta[] {
     return Array.from(this.routeData.values());
   }
 
-  isExistRoute(routePath: string) {
+  isExistRoute(routePath: string): boolean {
     const { routePath: normalizedRoute } = this.normalizeRoutePath(routePath);
-    return this.routeData.get(normalizedRoute);
+    return Boolean(this.routeData.get(normalizedRoute));
   }
 
-  isEmpty() {
+  isEmpty(): boolean {
     return this.routeData.size === 0;
   }
 
-  generateRoutesCode(isStaticImport = false) {
+  generateRoutesCode(isStaticImport = false): string {
     return this.generateRoutesCodeByRouteMeta(this.getRoutes(), isStaticImport);
   }
 

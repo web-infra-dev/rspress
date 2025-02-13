@@ -54,7 +54,10 @@ export async function extractPageData(
           frontmatter: {},
           version: route.version,
           _filepath: route.absolutePath,
-          _relativePath: path.relative(root, route.absolutePath),
+          _relativePath: path
+            .relative(root, route.absolutePath)
+            .split(path.sep)
+            .join('/'),
         };
         if (!MDX_REGEXP.test(route.absolutePath)) {
           return defaultIndexInfo;

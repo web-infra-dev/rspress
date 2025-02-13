@@ -1,5 +1,6 @@
 import path from 'node:path';
 import { type RspressPlugin, addTrailingSlash } from '@rspress/shared';
+import { DEFAULT_PAGE_EXTENSIONS } from '@rspress/shared/constants';
 import { logger } from '@rspress/shared/logger';
 import { combineWalkResult } from './utils';
 import { walk } from './walk';
@@ -190,8 +191,6 @@ function processLocales(
   );
 }
 
-const defaultExtensions = ['.mdx', '.md', '.tsx', '.jsx', '.ts', '.js'];
-
 export function pluginAutoNavSidebar(): RspressPlugin {
   return {
     name: 'auto-nav-sidebar',
@@ -205,7 +204,8 @@ export function pluginAutoNavSidebar(): RspressPlugin {
       const versions = config.multiVersion?.versions || [];
       const defaultLang = config.lang || '';
       const { default: defaultVersion = '' } = config.multiVersion || {};
-      const { extensions = defaultExtensions } = config?.route || {};
+      const { extensions = DEFAULT_PAGE_EXTENSIONS } = config?.route || {};
+
       if (hasLocales) {
         const metaInfo = await processLocales(
           langs,

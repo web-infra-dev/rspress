@@ -434,7 +434,7 @@ export default defineConfig({
 ### route.extensions
 
 - Type: `string[]`
-- Default: `[]`
+- Default: `['.js', '.jsx', '.ts', '.tsx', '.md', '.mdx']`
 
 将包含在路由中的文件的扩展名。默认情况下，Rspress 会在路由中包含所有 `'js'、'jsx'、'ts'、'tsx'、'md'、'mdx' 文件。如果你想自定义扩展名，你可以使用这个选项。例如：
 
@@ -443,7 +443,7 @@ import { defineConfig } from 'rspress/config';
 
 export default defineConfig({
   route: {
-    extensions: ['.jsx', '.md', '.mdx'],
+    extensions: ['.md', '.mdx'],
   },
 });
 ```
