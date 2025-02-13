@@ -13,6 +13,11 @@
       "import": "./dist/index.mjs",
       "require": "./dist/index.js"
     },
+    "./constants": {
+      "types": "./dist/constants.d.ts",
+      "import": "./dist/constants.mjs",
+      "require": "./dist/constants.js"
+    },
     "./logger": {
       "types": "./dist/logger.d.ts",
       "import": "./dist/logger.mjs",

@@ -1,6 +1,6 @@
 export const DEFAULT_CONFIG_NAME = 'rspress.config' as const;
 
-export const DEFAULT_EXTENSIONS = [
+export const DEFAULT_CONFIG_EXTENSIONS = [
   '.js',
   '.ts',
   '.mjs',
@@ -8,3 +8,12 @@ export const DEFAULT_EXTENSIONS = [
   '.cjs',
   '.cts',
 ] as const;
+
+export const DEFAULT_PAGE_EXTENSIONS = [
+  '.js',
+  '.jsx',
+  '.ts',
+  '.tsx',
+  '.md',
+  '.mdx',
+];
