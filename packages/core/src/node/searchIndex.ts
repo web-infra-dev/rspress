@@ -1,7 +1,7 @@
 import { createReadStream } from 'node:fs';
 import fs from 'node:fs/promises';
 import type { IncomingMessage, ServerResponse } from 'node:http';
-import path, { join } from 'node:path';
+import { join } from 'node:path';
 import { SEARCH_INDEX_NAME, type UserConfig, isSCM } from '@rspress/shared';
 import { logger } from '@rspress/shared/logger';
 import picocolors from 'picocolors';
@@ -79,17 +79,13 @@ export function serveSearchIndexMiddleware(config: UserConfig): RequestHandler {
     const searchIndexRequestMatch = `/${SEARCH_INDEX_NAME}.`;
     if (req.url?.includes(searchIndexRequestMatch)) {
       res.setHeader('Content-Type', 'application/json');
+      const outDir = config?.outDir ?? join(process.cwd(), OUTPUT_DIR);
       // Get search index name from request url
       const searchIndexFile = req.url?.split('/').pop();
-      createReadStream(
-        path.join(
-          process.cwd(),
-          config?.outDir || OUTPUT_DIR,
-          'static',
-          searchIndexFile,
-        ),
-        'utf-8',
-      ).pipe(res, { end: true });
+      createReadStream(join(outDir, 'static', searchIndexFile), 'utf-8').pipe(
+        res,
+        { end: true },
+      );
     } else {
       next?.();
     }
