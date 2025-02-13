@@ -1,12 +1,14 @@
+import { createRequire } from 'node:module';
 import { DEFAULT_HIGHLIGHT_LANGUAGES } from '@rspress/shared';
 import picocolors from 'picocolors';
 
+const require = createRequire(import.meta.url);
 let supportedLanguages: Set<string>;
 
 export function handleHighlightLanguages(
   highlightLanguages: Set<string>,
   defaultLanguages: (string | [string, string])[],
-): Record<string, string[]> {
+) {
   // Automatically import prism languages
   const aliases: Record<string, string[]> = {};
   if (highlightLanguages.size) {

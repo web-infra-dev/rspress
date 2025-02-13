@@ -172,8 +172,7 @@ export default async function mdxLoader(
         frontmatter,
       } as PageMeta;
     } else {
-      const { compile } = require('@rspress/mdx-rs');
-
+      const { compile } = await import('@rspress/mdx-rs');
       const { toc, links, title, code } = await compile({
         value: preprocessedContent,
         filepath,

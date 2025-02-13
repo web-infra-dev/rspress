@@ -23,14 +23,7 @@ export default defineConfig({
         distPath: {
           root: './dist',
         },
-        externals: [
-          {
-            'react-syntax-highlighter/dist/cjs/languages/prism/supported-languages':
-              'commonjs react-syntax-highlighter/dist/cjs/languages/prism/supported-languages',
-          },
-          'jsdom',
-          'tailwindcss',
-        ],
+        externals: ['jsdom', 'tailwindcss'],
       },
     },
     {
@@ -47,9 +40,6 @@ export default defineConfig({
       output: {
         distPath: {
           root: './dist',
-        },
-        externals: {
-          '@rspress/mdx-rs': 'commonjs @rspress/mdx-rs',
         },
       },
       source: {
