@@ -1,10 +1,11 @@
 .button {
-  display: inline-block;
-  text-align: center;
+  display: inline-flex;
+  box-sizing: border-box;
+  align-items: center;
+  justify-content: center;
   font-weight: bold;
   white-space: nowrap;
   height: 48px;
-  line-height: 48px;
 }
 
 .button:active {
