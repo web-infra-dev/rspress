@@ -31,13 +31,13 @@ export interface Config {
   editLink?: EditLink;
 
   /**
-   * Set custom last updated text.
+   * Set custom git last updated text.
    *
    * @default 'Last updated'
    */
   lastUpdatedText?: string;
   /**
-   * Set custom last updated text.
+   * Set custom git last updated text.
    *
    * @default false
    */
