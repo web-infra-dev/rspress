@@ -23,7 +23,7 @@ import {
 
 function getHmrFileKey(realPath: string | undefined, docsDir: string) {
   return realPath
-    ? path.relative(docsDir, realPath).replace(/\.mdx?$/, '')
+    ? path.relative(docsDir, realPath).replace(path.extname(realPath), '')
     : '';
 }
 

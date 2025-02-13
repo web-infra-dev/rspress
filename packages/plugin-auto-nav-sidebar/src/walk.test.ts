@@ -21,14 +21,40 @@ describe('walk', () => {
         "sidebar": {
           "/guide": [
             {
+              "_fileKey": "guide/test-dir/index",
+              "collapsed": undefined,
+              "collapsible": undefined,
+              "context": undefined,
+              "items": [
+                {
+                  "_fileKey": "guide/test-dir/getting-started",
+                  "context": undefined,
+                  "link": "/guide/test-dir/getting-started",
+                  "overviewHeaders": undefined,
+                  "text": "Getting started",
+                },
+              ],
+              "link": "/guide/test-dir",
+              "overviewHeaders": undefined,
+              "tag": undefined,
+              "text": "Test dir",
+            },
+            {
+              "_fileKey": "guide/a",
+              "context": undefined,
+              "link": "/guide/a",
+              "overviewHeaders": undefined,
+              "text": "Page a",
+            },
+            {
               "_fileKey": "guide/b",
               "context": undefined,
               "link": "/guide/b",
               "overviewHeaders": undefined,
-              "text": "b",
+              "text": "Page b",
             },
             {
-              "_fileKey": "guide/c.tsx",
+              "_fileKey": "guide/c",
               "context": undefined,
               "link": "/guide/c",
               "overviewHeaders": undefined,
