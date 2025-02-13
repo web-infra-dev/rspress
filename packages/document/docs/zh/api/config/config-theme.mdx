@@ -228,7 +228,11 @@ export default defineConfig({
 - Type: `boolean`
 - Default: `false`
 
-是否显示 git 最后更新时间，默认情况下不显示。
+是否显示最后更新时间，默认情况下不显示。
+
+:::info
+你必须提交 markdown 文件才能看到最后更新时间。
+:::
 
 比如:
 
@@ -495,7 +499,7 @@ export interface LocaleConfig {
   outline?: boolean;
   // 最后更新时间文本
   lastUpdatedText?: string;
-  // 是否显示 git 最后更新时间
+  // 是否显示最后更新时间
   lastUpdated?: boolean;
   // 上一页文本
   prevPageText?: string;

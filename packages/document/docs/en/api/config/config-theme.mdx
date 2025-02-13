@@ -242,7 +242,11 @@ export default defineConfig({
 - Type: `boolean`
 - Default: `false`
 
-Whether to display the git last update time, it is not displayed by default.
+Whether to display the last update time, it is not displayed by default.
+
+:::info
+You need to commit the markdown file to see the updated time.
+:::
 
 For example:
 
@@ -507,7 +511,7 @@ export interface LocaleConfig {
   outlineTitle?: string;
   // Whether to display the outline title
   outline?: boolean;
-  // Whether to display the git last update time
+  // Whether to display the last update time
   lastUpdated?: boolean;
   // Last update time text
   lastUpdatedText?: string;
