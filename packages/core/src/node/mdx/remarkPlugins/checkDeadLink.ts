@@ -14,7 +14,7 @@ export interface DeadLinkCheckOptions {
 
 const IGNORE_REGEXP = /^(https?|mailto|tel|#)/;
 
-export function checkLinks(
+function checkLinks(
   links: string[],
   filepath: string,
   root: string,
