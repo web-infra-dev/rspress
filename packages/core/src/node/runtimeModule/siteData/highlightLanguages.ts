@@ -1,6 +1,8 @@
+import { createRequire } from 'node:module';
 import { DEFAULT_HIGHLIGHT_LANGUAGES } from '@rspress/shared';
 import picocolors from 'picocolors';
 
+const require = createRequire(import.meta.url);
 let supportedLanguages: Set<string>;
 
 export function handleHighlightLanguages(
