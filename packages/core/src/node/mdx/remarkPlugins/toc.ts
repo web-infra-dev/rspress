@@ -13,7 +13,7 @@ export interface TocItem {
 }
 
 interface ChildNode {
-  type: 'link' | 'text' | 'inlineCode' | 'strong';
+  type: 'link' | 'text' | 'inlineCode' | 'strong' | 'emphasis' | 'delete';
   value: string;
   children?: ChildNode[];
 }
@@ -43,6 +43,12 @@ export const parseToc = (tree: Root) => {
           }
           if (child.type === 'strong') {
             return `**${child.children?.map(item => item.value).join('')}**`;
+          }
+          if (child.type === 'emphasis') {
+            return `*${child.children?.map(item => item.value).join('')}*`;
+          }
+          if (child.type === 'delete') {
+            return `~~${child.children?.map(item => item.value).join('')}~~`;
           }
           if (child.type === 'text') {
             const [textPart, idPart] = extractTextAndId(child.value);
