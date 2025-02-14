@@ -110,10 +110,7 @@ export const docgen = async ({
           }
         } catch (e) {
           if (e instanceof Error) {
-            logger.error(
-              '[module-doc-plugin]',
-              `Generate API table error: ${e.message}`,
-            );
+            logger.error('[module-doc-plugin]', 'Generate API table error:', e);
           }
         }
       }),

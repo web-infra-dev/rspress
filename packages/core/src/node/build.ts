@@ -156,7 +156,8 @@ export async function renderPages(
 
               // fallback to CSR
               logger.warn(
-                `Page "${picocolors.yellow(routePath)}" SSG rendering error: ${e.message}, fallback to CSR.`,
+                `Page "${picocolors.yellow(routePath)}" SSG rendering error, fallback to CSR.`,
+                e,
               );
             }
           }

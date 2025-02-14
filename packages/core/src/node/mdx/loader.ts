@@ -20,6 +20,7 @@ import type { TocItem } from './remarkPlugins/toc';
 
 import type { Rspack } from '@rsbuild/core';
 import type { Header, UserConfig } from '@rspress/shared';
+import picocolors from 'picocolors';
 import type { RouteService } from '../route/RouteService';
 
 interface LoaderOptions {
@@ -208,7 +209,7 @@ MDXContent.__RSPRESS_PAGE_META["${encodeURIComponent(
 `;
     callback(null, result);
   } catch (e) {
-    logger.error(`MDX compile error: ${e.message} in ${filepath}`);
-    callback({ message: e.message, name: `${filepath} compile error` });
+    logger.error(`MDX compile error in ${picocolors.green(filepath)}: `, e);
+    callback(e);
   }
 }
