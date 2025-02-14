@@ -15,7 +15,6 @@ import {
   normalizePath,
 } from '../utils';
 import { createMDXOptions } from './options';
-import { checkLinks } from './remarkPlugins/checkDeadLink';
 import type { TocItem } from './remarkPlugins/toc';
 
 import type { Rspack } from '@rsbuild/core';
@@ -129,69 +128,36 @@ export default async function mdxLoader(
   // TODO > issue: `#hello world {#custom-id}` will also be replaced.
   const preprocessedContent = escapeMarkdownHeadingIds(replacedContent);
 
-  // Whether to use the Rust version of the MDX compiler.
-  let enableMdxRs: boolean;
-  const mdxRs = config?.markdown?.mdxRs ?? true;
-  if (typeof mdxRs === 'object') {
-    enableMdxRs =
-      typeof mdxRs?.include === 'function' ? mdxRs.include(filepath) : true;
-  } else {
-    enableMdxRs = mdxRs;
-  }
-
   try {
-    let compileResult: string;
     let pageMeta = { title: '', toc: [] } as PageMeta;
 
-    if (!enableMdxRs) {
-      const mdxOptions = await createMDXOptions(
-        docDirectory,
-        config,
-        checkDeadLinks,
-        routeService,
-        filepath,
-        pluginDriver,
-      );
-      const compiler = createProcessor(mdxOptions);
+    const mdxOptions = await createMDXOptions(
+      docDirectory,
+      config,
+      checkDeadLinks,
+      routeService,
+      filepath,
+      pluginDriver,
+    );
+    const compiler = createProcessor(mdxOptions);
 
-      compiler.data('pageMeta', { toc: [], title: '' });
-      const vFile = await compiler.process({
-        value: preprocessedContent,
-        path: filepath,
-      });
+    compiler.data('pageMeta', { toc: [], title: '' });
+    const vFile = await compiler.process({
+      value: preprocessedContent,
+      path: filepath,
+    });
 
-      compileResult = String(vFile);
-      const compilationMeta = compiler.data('pageMeta') as {
-        toc: Header[];
-        title: string;
-      };
-      pageMeta = {
-        ...compilationMeta,
-        title: frontmatter.title || compilationMeta.title || '',
-        headingTitle: compilationMeta.title,
-        frontmatter,
-      } as PageMeta;
-    } else {
-      const { compile } = await import('@rspress/mdx-rs');
-      const { toc, links, title, code } = await compile({
-        value: preprocessedContent,
-        filepath,
-        root: docDirectory,
-        development: process.env.NODE_ENV !== 'production',
-      });
-
-      compileResult = code;
-      pageMeta = {
-        toc,
-        title: frontmatter.title || title || '',
-        headingTitle: title,
-        frontmatter,
-      };
-      // We should check dead links in mdx-rs mode
-      if (checkDeadLinks) {
-        checkLinks(links, filepath, docDirectory, routeService);
-      }
-    }
+    const compileResult = String(vFile);
+    const compilationMeta = compiler.data('pageMeta') as {
+      toc: Header[];
+      title: string;
+    };
+    pageMeta = {
+      ...compilationMeta,
+      title: frontmatter.title || compilationMeta.title || '',
+      headingTitle: compilationMeta.title,
+      frontmatter,
+    } as PageMeta;
 
     // If page meta changed, we trigger page reload to ensure the page is up to date.
     if (!isProduction()) {
