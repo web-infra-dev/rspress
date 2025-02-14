@@ -63,7 +63,6 @@ export function pluginShiki(options?: PluginShikiOptions): RspressPlugin {
     async config(config) {
       config.markdown = config.markdown || {};
       // Shiki will be integrated by rehype plugin, so we should use the javascript version markdown compiler.
-      config.markdown.mdxRs = false;
       config.markdown.codeHighlighter = 'shiki';
       config.markdown.rehypePlugins = config.markdown.rehypePlugins || [];
       if (

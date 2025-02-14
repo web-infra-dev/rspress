@@ -20,8 +20,6 @@ export function pluginApiDocgen(options?: PluginOptions): RspressPlugin {
   return {
     name: '@modern-js/doc-plugin-api-docgen',
     config(config) {
-      config.markdown = config.markdown || {};
-      config.markdown.mdxRs = false;
       return config;
     },
     async beforeBuild(config, isProd) {
