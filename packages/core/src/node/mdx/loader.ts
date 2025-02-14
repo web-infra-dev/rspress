@@ -1,6 +1,3 @@
-import fs from 'node:fs/promises';
-import path from 'node:path';
-import { pathToFileURL } from 'node:url';
 import { createProcessor } from '@mdx-js/mdx';
 import type { Rspack } from '@rsbuild/core';
 import type {
@@ -13,6 +10,9 @@ import type {
 import { isProduction } from '@rspress/shared';
 import { logger } from '@rspress/shared/logger';
 import { extractTextAndId, loadFrontMatter } from '@rspress/shared/node-utils';
+import fs from 'node:fs/promises';
+import path from 'node:path';
+import { pathToFileURL } from 'node:url';
 
 import type { PluginDriver } from '../PluginDriver';
 import { TEMP_DIR } from '../constants';
@@ -27,6 +27,7 @@ import {
 import { createMDXOptions } from './options';
 import { checkLinks } from './remarkPlugins/checkDeadLink';
 import type { TocItem } from './remarkPlugins/toc';
+
 
 interface LoaderOptions {
   config: UserConfig;
