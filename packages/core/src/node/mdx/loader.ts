@@ -209,6 +209,7 @@ MDXContent.__RSPRESS_PAGE_META["${encodeURIComponent(
     callback(null, result);
   } catch (e) {
     logger.error(`MDX compile error: ${e.message} in ${filepath}`);
+    logger.debug(e);
     callback({ message: e.message, name: `${filepath} compile error` });
   }
 }

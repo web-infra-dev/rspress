@@ -1,5 +1,6 @@
 import { join } from 'node:path';
 import type { UserConfig } from '@rspress/shared';
+import { logger } from '@rspress/shared/logger';
 import { type FactoryContext, RuntimeModuleID } from '.';
 
 const DEFAULT_I18N_SOURCE = join(process.cwd(), 'i18n.json');
@@ -13,6 +14,7 @@ export function getI18nData(docConfig: UserConfig) {
     const i18nSource = require(i18nSourcePath);
     return i18nSource;
   } catch (e) {
+    logger.debug('getI18nData Failed: \n', e);
     return {};
   }
 }
