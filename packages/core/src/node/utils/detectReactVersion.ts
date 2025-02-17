@@ -65,8 +65,7 @@ export async function resolveReactAlias(reactVersion: number, isSSR: boolean) {
           );
         });
       } catch (e) {
-        console.log(e);
-        logger.warn(`${lib} not found`);
+        logger.warn(`${lib} not found: \n`, e);
       }
     }),
   );

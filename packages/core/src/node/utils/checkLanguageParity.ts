@@ -73,6 +73,7 @@ async function collectModuleFiles(
       fileLangMap[baseName].add(lang);
     }
   } catch (e) {
+    logger.error(e);
     throw new Error(
       `Failed to access directory: ${normalizePath(langModuleDir)}`,
     );
@@ -143,7 +144,7 @@ export async function checkLanguageParity(config: UserConfig) {
     }
     logger.success('Language parity checked successfully.');
   } catch (err) {
-    logger.error(`Error during language parity check: ${err.message}`);
+    logger.error('Error during language parity check: \n', err);
     throw err;
   }
 }

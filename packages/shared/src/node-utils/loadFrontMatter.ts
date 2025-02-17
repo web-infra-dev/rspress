@@ -19,10 +19,8 @@ export function loadFrontMatter<
   } catch (e: any) {
     if (outputWarning) {
       logger.warn(
-        `Parse frontmatter error: ${e.message} in ${path.relative(
-          root,
-          filepath,
-        )}`,
+        `Parse frontmatter error in ${path.relative(root, filepath)}: \n`,
+        e,
       );
     }
   }

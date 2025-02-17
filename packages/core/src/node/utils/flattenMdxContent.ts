@@ -5,6 +5,7 @@ import { MDX_REGEXP } from '@rspress/shared';
 import enhancedResolve from 'enhanced-resolve';
 import { importStatementRegex } from '../constants';
 
+import { logger } from '@rspress/shared/logger';
 import type { Resolver } from 'enhanced-resolve';
 import type { Root } from 'hast';
 
@@ -94,6 +95,7 @@ export async function flattenMdxContent(
     ast = processor.parse(content) as unknown as Root;
   } catch (e) {
     // Fallback: if mdx parse failed, just return the content
+    logger.debug('flattenMdxContent parse failed: \n', e);
     return { flattenContent: content, deps };
   }
 
