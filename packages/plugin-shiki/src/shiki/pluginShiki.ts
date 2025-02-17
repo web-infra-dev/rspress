@@ -18,7 +18,6 @@ import type { ITransformer } from './types';
 export interface PluginShikiOptions {
   /**
    * The theme of shiki.
-   * <https://shiki.style/themes#bundled-themes>
    */
   theme?: Exclude<shikiTheme, undefined> | (string & {});
   /**
