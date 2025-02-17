@@ -14,8 +14,7 @@ import { useLocation } from '@rspress/runtime';
 const TocItem = ({
   header,
   baseHeaderLevel,
-  hiddenNav,
-}: { header: Header; baseHeaderLevel: number; hiddenNav: boolean }) => {
+}: { header: Header; baseHeaderLevel: number }) => {
   return (
     <li>
       <a
@@ -29,10 +28,6 @@ const TocItem = ({
         onClick={e => {
           e.preventDefault();
           window.location.hash = header.id;
-          const target = document.getElementById(header.id);
-          if (target) {
-            scrollToTarget(target, false, hiddenNav ? 0 : DEFAULT_NAV_HEIGHT);
-          }
         }}
       >
         <span className="aside-link-text block">
@@ -56,7 +51,22 @@ export function Aside(props: { headers: Header[]; outlineTitle: string }) {
   }, [locationHash]);
 
   useEffect(() => {
-    const unbinding = bindingAsideScroll();
+    let unbinding: (() => void) | undefined;
+
+    setTimeout(() => {
+      unbinding = bindingAsideScroll();
+    }, 100);
+
+    return () => {
+      if (unbinding) {
+        unbinding();
+      }
+    };
+  }, [headers]);
+
+  // why window.scrollTo(0, 0)?
+  // when using history.scrollRestoration = 'auto' ref: "useUISwitch.ts", we scroll to the last page's position when navigating to nextPage
+  useEffect(() => {
     if (decodedHash.length === 0) {
       window.scrollTo(0, 0);
     } else {
@@ -65,12 +75,7 @@ export function Aside(props: { headers: Header[]; outlineTitle: string }) {
         scrollToTarget(target, false, hiddenNav ? 0 : DEFAULT_NAV_HEIGHT);
       }
     }
-    return () => {
-      if (unbinding) {
-        unbinding();
-      }
-    };
-  }, [headers, decodedHash]);
+  }, [decodedHash, headers, pathname]);
 
   return (
     <div className="flex flex-col">
@@ -87,7 +92,6 @@ export function Aside(props: { headers: Header[]; outlineTitle: string }) {
                     key={`${pathname}#${header.id}`}
                     baseHeaderLevel={baseHeaderLevel}
                     header={header}
-                    hiddenNav={hiddenNav}
                   />
                 );
               })}
