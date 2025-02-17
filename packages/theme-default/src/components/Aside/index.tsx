@@ -1,5 +1,5 @@
 import type { Header } from '@rspress/shared';
-import { useEffect } from 'react';
+import { useEffect, useMemo } from 'react';
 import {
   bindingAsideScroll,
   parseInlineMarkdownText,
@@ -9,6 +9,39 @@ import {
 } from '../../logic';
 import { DEFAULT_NAV_HEIGHT } from '../../logic/sideEffects';
 import './index.scss';
+import { useLocation } from '@rspress/runtime';
+
+const TocItem = ({
+  header,
+  baseHeaderLevel,
+  hiddenNav,
+}: { header: Header; baseHeaderLevel: number; hiddenNav: boolean }) => {
+  return (
+    <li>
+      <a
+        href={`#${header.id}`}
+        title={parseInlineMarkdownText(header.text)}
+        className="aside-link transition-all duration-300 hover:text-text-1 text-text-2 block"
+        style={{
+          marginLeft: (header.depth - baseHeaderLevel) * 12,
+          fontWeight: 'semibold',
+        }}
+        onClick={e => {
+          e.preventDefault();
+          window.location.hash = header.id;
+          const target = document.getElementById(header.id);
+          if (target) {
+            scrollToTarget(target, false, hiddenNav ? 0 : DEFAULT_NAV_HEIGHT);
+          }
+        }}
+      >
+        <span className="aside-link-text block">
+          {renderInlineMarkdown(header.text)}
+        </span>
+      </a>
+    </li>
+  );
+};
 
 export function Aside(props: { headers: Header[]; outlineTitle: string }) {
   const { headers } = props;
@@ -17,17 +50,19 @@ export function Aside(props: { headers: Header[]; outlineTitle: string }) {
   const baseHeaderLevel = headers[0]?.depth || 2;
   const hiddenNav = useHiddenNav();
 
-  useEffect(() => {
-    let unbinding: (() => void) | undefined;
+  const { hash: locationHash = '', pathname } = useLocation();
+  const decodedHash: string = useMemo(() => {
+    return decodeURIComponent(locationHash);
+  }, [locationHash]);
 
-    setTimeout(() => {
-      unbinding = bindingAsideScroll();
-    }, 100);
-    const hash = decodeURIComponent(window.location.hash);
-    if (!hash) {
+  console.log(locationHash, decodedHash);
+
+  useEffect(() => {
+    const unbinding = bindingAsideScroll();
+    if (decodedHash.length === 0) {
       window.scrollTo(0, 0);
     } else {
-      const target = document.getElementById(hash.slice(1));
+      const target = document.getElementById(decodedHash.slice(1));
       if (target) {
         scrollToTarget(target, false, hiddenNav ? 0 : DEFAULT_NAV_HEIGHT);
       }
@@ -37,35 +72,7 @@ export function Aside(props: { headers: Header[]; outlineTitle: string }) {
         unbinding();
       }
     };
-  }, [headers]);
-
-  const renderHeader = (header: Header) => {
-    return (
-      <li key={header.id}>
-        <a
-          href={`#${header.id}`}
-          title={parseInlineMarkdownText(header.text)}
-          className="aside-link transition-all duration-300 hover:text-text-1 text-text-2 block"
-          style={{
-            marginLeft: (header.depth - baseHeaderLevel) * 12,
-            fontWeight: 'semibold',
-          }}
-          onClick={e => {
-            e.preventDefault();
-            window.location.hash = header.id;
-            const target = document.getElementById(header.id);
-            if (target) {
-              scrollToTarget(target, false, hiddenNav ? 0 : DEFAULT_NAV_HEIGHT);
-            }
-          }}
-        >
-          <span className="aside-link-text block">
-            {renderInlineMarkdown(header.text)}
-          </span>
-        </a>
-      </li>
-    );
-  };
+  }, [headers, decodedHash]);
 
   return (
     <div className="flex flex-col">
@@ -75,7 +82,18 @@ export function Aside(props: { headers: Header[]; outlineTitle: string }) {
             {props.outlineTitle}
           </div>
           <nav className="mt-1">
-            <ul className="relative">{headers.map(renderHeader)}</ul>
+            <ul className="relative">
+              {headers.map(header => {
+                return (
+                  <TocItem
+                    key={`${pathname}#${header.id}`}
+                    baseHeaderLevel={baseHeaderLevel}
+                    header={header}
+                    hiddenNav={hiddenNav}
+                  />
+                );
+              })}
+            </ul>
           </nav>
         </div>
       </div>
