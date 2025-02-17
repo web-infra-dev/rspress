@@ -55,8 +55,6 @@ export function Aside(props: { headers: Header[]; outlineTitle: string }) {
     return decodeURIComponent(locationHash);
   }, [locationHash]);
 
-  console.log(locationHash, decodedHash);
-
   useEffect(() => {
     const unbinding = bindingAsideScroll();
     if (decodedHash.length === 0) {
