@@ -45,6 +45,58 @@ const NavScreenVersions = () => {
   );
 };
 
+const NavScreenAppearance = () => {
+  return (
+    <div className={`mt-2 ${styles.navAppearance} flex justify-center`}>
+      <NoSSR>
+        <SwitchAppearance />
+      </NoSSR>
+    </div>
+  );
+};
+
+const NavScreenMenu = ({
+  menuItems,
+  pathname,
+  base,
+  langs,
+  toggleScreen,
+}: {
+  menuItems: NavItem[];
+  pathname: string;
+  base: string;
+  langs: string[];
+  toggleScreen: () => void;
+}) => {
+  return (
+    <div className={styles.navMenu}>
+      {menuItems.map(item => {
+        return (
+          <div key={item.text} className={`${styles.navMenuItem} w-full`}>
+            {'link' in item ? (
+              <NavMenuSingleItem
+                pathname={pathname}
+                key={item.text}
+                base={base}
+                langs={langs}
+                onClick={toggleScreen}
+                {...item}
+              />
+            ) : (
+              <div key={item.text} className="mx-3 last:mr-0">
+                <NavScreenMenuGroup
+                  {...item}
+                  items={'items' in item ? item.items : item}
+                />
+              </div>
+            )}
+          </div>
+        );
+      })}
+    </div>
+  );
+};
+
 export function NavScreen(props: Props) {
   const { isScreenOpen, toggleScreen, siteData, pathname } = props;
   const screen = useRef<HTMLDivElement | null>(null);
@@ -57,44 +109,7 @@ export function NavScreen(props: Props) {
   const hasSocialLinks = socialLinks.length > 0;
   const langs = localesData.map(item => item.lang || 'zh') || [];
   const { base } = siteData;
-  const NavScreenAppearance = () => {
-    return (
-      <div className={`mt-2 ${styles.navAppearance} flex justify-center`}>
-        <NoSSR>
-          <SwitchAppearance />
-        </NoSSR>
-      </div>
-    );
-  };
-  const NavScreenMenu = ({ menuItems }: { menuItems: NavItem[] }) => {
-    return (
-      <div className={styles.navMenu}>
-        {menuItems.map(item => {
-          return (
-            <div key={item.text} className={`${styles.navMenuItem} w-full`}>
-              {'link' in item ? (
-                <NavMenuSingleItem
-                  pathname={pathname}
-                  key={item.text}
-                  base={base}
-                  langs={langs}
-                  onClick={toggleScreen}
-                  {...item}
-                />
-              ) : (
-                <div key={item.text} className="mx-3 last:mr-0">
-                  <NavScreenMenuGroup
-                    {...item}
-                    items={'items' in item ? item.items : item}
-                  />
-                </div>
-              )}
-            </div>
-          );
-        })}
-      </div>
-    );
-  };
+
   useEffect(() => {
     screen.current &&
       isScreenOpen &&
@@ -110,7 +125,13 @@ export function NavScreen(props: Props) {
       id="navScreen"
     >
       <div className={styles.container}>
-        <NavScreenMenu menuItems={menuItems} />
+        <NavScreenMenu
+          menuItems={menuItems}
+          base={base}
+          langs={langs}
+          pathname={pathname}
+          toggleScreen={toggleScreen}
+        />
         <div className="flex-center flex-col gap-2">
           {hasAppearanceSwitch && <NavScreenAppearance />}
           {hasMultiLanguage && <NavScreenTranslations />}
