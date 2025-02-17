@@ -8,7 +8,7 @@ test.describe('custom-id test', async () => {
   let appPort;
   let app;
   test.beforeAll(async () => {
-    const appDir = path.join(fixtureDir, 'toc-id');
+    const appDir = path.join(fixtureDir, 'toc-id-mdxjs');
     appPort = await getPort();
     app = await runDevCommand(appDir, appPort);
   });
