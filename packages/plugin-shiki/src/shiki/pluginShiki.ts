@@ -19,7 +19,7 @@ export interface PluginShikiOptions {
   /**
    * The theme of shiki.
    */
-  theme?: Exclude<shikiTheme, undefined> | (string & {});
+  theme?: shikiTheme | (string & {});
   /**
    * The languages to highlight.
    */
