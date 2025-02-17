@@ -159,7 +159,7 @@ export function bindingAsideScroll() {
       }
     }
   };
-  const throttledSetLink = throttle(setActiveLink, 200);
+  const throttledSetLink = throttle(setActiveLink, 100);
 
   window.addEventListener('scroll', throttledSetLink);
 
