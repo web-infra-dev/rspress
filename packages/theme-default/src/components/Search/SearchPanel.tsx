@@ -167,6 +167,10 @@ export function SearchPanel({ focused, setFocused }: SearchPanelProps) {
           }
           break;
         case KEY_CODE.ARROW_DOWN:
+          // prevent arrow down key event when IME is composing
+          if (e.isComposing) {
+            return;
+          }
           if (focused) {
             e.preventDefault();
             if (
@@ -181,6 +185,10 @@ export function SearchPanel({ focused, setFocused }: SearchPanelProps) {
           }
           break;
         case KEY_CODE.ARROW_UP:
+          // prevent arrow up key event when IME is composing
+          if (e.isComposing) {
+            return;
+          }
           if (focused) {
             e.preventDefault();
             if (currentRenderType === RenderType.Default) {
@@ -194,6 +202,13 @@ export function SearchPanel({ focused, setFocused }: SearchPanelProps) {
           }
           break;
         case KEY_CODE.ENTER:
+          /**
+           * prevent enter key event when IME is composing, it's more friendly for CJK users.
+           * @see https://github.com/web-infra-dev/rspress/issues/1861
+           */
+          if (e.isComposing) {
+            return;
+          }
           if (
             currentSuggestionIndex >= 0 &&
             currentRenderType === RenderType.Default
