@@ -1,6 +1,5 @@
 import { isEqualPath } from '@rspress/runtime';
 import htmr from 'htmr';
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
 import React from 'react';
 
 export function isActive(
@@ -70,6 +69,7 @@ const DELETE_TEXT_PATTERN = /\~{2}(.*?)\~{2}/g;
  * In this method, we will render the markdown text to inline html and support basic markdown syntax, including the following:
  * - bold
  * - emphasis
+ * - delete
  * - inline code
  * @param text The markdown text to render.
  */

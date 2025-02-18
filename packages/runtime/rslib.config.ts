@@ -10,8 +10,6 @@ const COMMON_EXTERNALS = [
   'virtual-global-styles',
   'virtual-global-components',
   'virtual-search-hooks',
-  '@/runtime',
-  '@runtime',
   'virtual-i18n-text',
   'virtual-prism-languages',
 ];

@@ -156,13 +156,12 @@ async function createInternalBuildConfig(
         ...detectCustomIconAlias,
         '@mdx-js/react': require.resolve('@mdx-js/react'),
         '@theme': [CUSTOM_THEME_DIR, DEFAULT_THEME],
-        '@/theme-default': DEFAULT_THEME,
+        '@theme-assets': path.join(DEFAULT_THEME, '../assets'),
         '@rspress/core': PACKAGE_ROOT,
         'react-lazy-with-preload': require.resolve('react-lazy-with-preload'),
         'react-syntax-highlighter': path.dirname(
           require.resolve('react-syntax-highlighter/package.json'),
         ),
-        '@theme-assets': path.join(DEFAULT_THEME, '../assets'),
       },
     },
     source: {

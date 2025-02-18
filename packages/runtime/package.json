@@ -32,7 +32,6 @@
   "files": [
     "dist",
     "src",
-    "runtime.ts",
     "server.js"
   ],
   "scripts": {
