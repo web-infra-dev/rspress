@@ -12,14 +12,14 @@ const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
 
 import type { RspressPlugin } from '@rspress/shared';
-import type { Lang } from 'shiki';
+import type { Lang, Theme as shikiTheme } from 'shiki';
 import type { ITransformer } from './types';
 
 export interface PluginShikiOptions {
   /**
    * The theme of shiki.
    */
-  theme?: string;
+  theme?: shikiTheme | (string & {});
   /**
    * The languages to highlight.
    */
