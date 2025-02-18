@@ -167,6 +167,9 @@ export function SearchPanel({ focused, setFocused }: SearchPanelProps) {
           }
           break;
         case KEY_CODE.ARROW_DOWN:
+          if (e.isComposing) {
+            return;
+          }
           if (focused) {
             e.preventDefault();
             if (
@@ -181,6 +184,9 @@ export function SearchPanel({ focused, setFocused }: SearchPanelProps) {
           }
           break;
         case KEY_CODE.ARROW_UP:
+          if (e.isComposing) {
+            return;
+          }
           if (focused) {
             e.preventDefault();
             if (currentRenderType === RenderType.Default) {
@@ -194,6 +200,9 @@ export function SearchPanel({ focused, setFocused }: SearchPanelProps) {
           }
           break;
         case KEY_CODE.ENTER:
+          if (e.isComposing) {
+            return;
+          }
           if (
             currentSuggestionIndex >= 0 &&
             currentRenderType === RenderType.Default
