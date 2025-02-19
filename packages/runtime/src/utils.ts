@@ -12,12 +12,6 @@ import {
 } from '@rspress/shared';
 import siteData from 'virtual-site-data';
 
-export function normalizeRoutePath(routePath: string) {
-  return decodeURIComponent(routePath)
-    .replace(/\.html$/, '')
-    .replace(/\/index$/, '/');
-}
-
 export function withBase(url = '/'): string {
   return rawWithBase(url, siteData.base);
 }

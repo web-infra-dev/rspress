@@ -1,14 +1,13 @@
-import { matchRoutes, removeBase, useLocation } from '@rspress/runtime';
+import { pathnameToRouteService, useLocation } from '@rspress/runtime';
 import {
   type SidebarDivider as ISidebarDivider,
   type SidebarItem as ISidebarItem,
   type SidebarSectionHeader as ISidebarSectionHeader,
   type NormalizedSidebarGroup,
   isExternalUrl,
-  normalizeSlash,
 } from '@rspress/shared';
-import { routes } from 'virtual-routes';
-import { isActive, useLocaleSiteData } from '../../logic';
+import { useCallback } from 'react';
+import { isActive } from '../../logic/getSidebarDataGroup';
 
 export const isSidebarDivider = (
   item:
@@ -45,30 +44,22 @@ export const isSideBarCustomLink = (
 };
 
 export const preloadLink = (link: string) => {
-  const match = matchRoutes(routes, link);
-  if (match?.length) {
-    const { route } = match[0];
+  const route = pathnameToRouteService(link);
+  if (route) {
     route.preload();
   }
 };
 
 export const useActiveMatcher = () => {
-  const localesData = useLocaleSiteData();
-  const langRoutePrefix = normalizeSlash(localesData.langRoutePrefix || '');
-
   const { pathname: rawPathname } = useLocation();
 
-  const pathname = decodeURIComponent(rawPathname);
-  const removeLangPrefix = (path: string) => {
-    return path.replace(langRoutePrefix, '');
-  };
-  const activeMatcher = (link: string) => {
-    return isActive(
-      removeBase(removeLangPrefix(pathname)),
-      removeLangPrefix(link),
-      true,
-    );
-  };
+  const activeMatcher = useCallback(
+    (link: string) => {
+      const pathname = decodeURIComponent(rawPathname);
+      return isActive(link, pathname);
+    },
+    [rawPathname],
+  );
 
   return activeMatcher;
 };

@@ -20,12 +20,6 @@ declare module '*.svg' {
   export default ReactComponent;
 }
 
-declare module 'virtual-routes' {
-  export { Route } from 'node/route/RouteService';
-
-  export const routes: Route[];
-}
-
 declare module 'virtual-search-hooks' {
   import type {
     BeforeSearch,

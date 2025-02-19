@@ -1,9 +1,4 @@
-import {
-  BrowserRouter,
-  DataContext,
-  ThemeContext,
-  normalizeRoutePath,
-} from '@rspress/runtime';
+import { BrowserRouter, DataContext, ThemeContext } from '@rspress/runtime';
 import { isProduction } from '@rspress/shared';
 import { useMemo, useState } from 'react';
 import siteData from 'virtual-site-data';
@@ -18,9 +13,8 @@ export async function renderInBrowser() {
   const container = document.getElementById('root')!;
 
   const enhancedApp = async () => {
-    const initialPageData = await initPageData(
-      normalizeRoutePath(window.location.pathname),
-    );
+    const initialPageData = await initPageData(window.location.pathname);
+    console.log(initialPageData, 22222222222);
     return function RootApp() {
       const [data, setData] = useState(initialPageData);
       const [theme, setTheme] = useThemeState();

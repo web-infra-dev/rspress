@@ -1,8 +1,7 @@
 import {
   DataContext,
   isEqualPath,
-  matchRoutes,
-  normalizeRoutePath,
+  pathnameToRouteService,
   useLocation,
 } from '@rspress/runtime';
 import {
@@ -31,18 +30,11 @@ type PageMeta = {
 };
 
 export async function initPageData(routePath: string): Promise<PageData> {
-  const { routes } = process.env.__SSR__
-    ? // biome-ignore format: Biome format will add an extra comma.
-      ((await import('virtual-routes-ssr')) as typeof import(
-        'virtual-routes-ssr'
-      ))
-    : ((await import('virtual-routes')) as typeof import('virtual-routes'));
-  const matched = matchRoutes(routes, routePath)!;
-  if (matched) {
+  const matchedRoute = pathnameToRouteService(routePath)!;
+  if (matchedRoute) {
     // Preload route component
-    const matchedRoute = matched[0].route;
     const mod = await matchedRoute.preload();
-    const pagePath = cleanUrl(matched[0].route.filePath);
+    const pagePath = cleanUrl(matchedRoute.filePath);
     const extractPageInfo = siteData.pages.find(page => {
       const normalize = (p: string) =>
         // compat the path that has no / suffix and ignore case
@@ -56,7 +48,11 @@ export async function initPageData(routePath: string): Promise<PageData> {
     // Reason: The sidebar item text depends on pageData, which is not updated when page title changed, because the pageData is computed once when build
     const encodedPagePath = encodeURIComponent(pagePath);
     const meta: PageMeta =
-      mod.default.__RSPRESS_PAGE_META?.[encodedPagePath] || {};
+      (
+        mod.default as unknown as {
+          __RSPRESS_PAGE_META: Record<string, PageMeta>;
+        }
+      ).__RSPRESS_PAGE_META?.[encodedPagePath] || ({} as PageMeta);
     // mdx loader will generate __RSPRESS_PAGE_META,
     // if the filePath don't match it, we can get meta from j(t)sx if we customize it
     const {
@@ -64,7 +60,9 @@ export async function initPageData(routePath: string): Promise<PageData> {
       title = '',
       frontmatter = {},
       ...rest
-    } = MDX_REGEXP.test(matchedRoute.filePath) ? meta : mod;
+    } = MDX_REGEXP.test(matchedRoute.filePath)
+      ? meta
+      : (mod as unknown as PageMeta);
     return {
       siteData,
       page: {
@@ -138,7 +136,7 @@ export function App({ helmetContext }: { helmetContext?: object }) {
   useLayoutEffect(() => {
     async function refetchData() {
       try {
-        const pageData = await initPageData(normalizeRoutePath(pathname));
+        const pageData = await initPageData(pathname);
         setPageData(pageData);
       } catch (e) {
         console.log(e);

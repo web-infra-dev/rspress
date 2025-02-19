@@ -20,6 +20,8 @@ import { LOCAL_INDEX, type Provider, type SearchQuery } from '../Provider';
 import type { SearchOptions } from '../types';
 import { normalizeTextCase } from '../util';
 
+console.log(searchIndexHash, 1111);
+
 type FlexSearchDocumentWithType = Document<PageIndexInfo, true>;
 
 interface PageIndexForFlexSearch extends PageIndexInfo {
@@ -52,7 +54,7 @@ export class LocalProvider implements Provider {
   #cyrillicIndex?: FlexSearchDocumentWithType;
 
   async #getPages(lang: string, version: string): Promise<PageIndexInfo[]> {
-    const searchIndexGroupID = `${version}###${lang}`;
+    const searchIndexGroupID = `${version ?? ''}###${lang ?? ''}`;
     const searchIndexVersion = version ? `.${version.replace('.', '_')}` : '';
     const searchIndexLang = lang ? `.${lang}` : '';
     const searchIndexURL = `${removeTrailingSlash(__WEBPACK_PUBLIC_PATH__)}/static/${SEARCH_INDEX_NAME}${searchIndexVersion}${searchIndexLang}.${searchIndexHash[searchIndexGroupID]}.json`;
