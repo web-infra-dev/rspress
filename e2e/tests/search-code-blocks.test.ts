@@ -43,7 +43,7 @@ test.describe('search code blocks test', async () => {
     expect(suggestItems2.length).toBe(1);
 
     // jsx code block
-    const suggestItems3 = await searchInPage(page, 'React.Suspense');
+    const suggestItems3 = await searchInPage(page, '<HelloFromJsxCodeBlock />');
     expect(suggestItems3.length).toBe(1);
   });
 });
