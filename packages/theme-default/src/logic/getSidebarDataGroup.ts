@@ -1,4 +1,4 @@
-import { isEqualPath, withBase } from '@rspress/runtime';
+import { pathnameToRouteService, withBase } from '@rspress/runtime';
 import {
   type NormalizedSidebar,
   type NormalizedSidebarGroup,
@@ -15,6 +15,7 @@ export interface SidebarDataGroup {
 }
 
 /**
+ * match the sidebar key in user config
  * @param pattern /zh/guide
  * @param currentPathname /base/zh/guide/getting-started
  */
@@ -27,9 +28,46 @@ export const matchPath = (
     return true;
   }
   const prefixWithTrailingSlash = addTrailingSlash(prefix);
-  return currentPathname.startsWith(prefixWithTrailingSlash);
+  if (currentPathname.startsWith(prefixWithTrailingSlash)) {
+    return true;
+  }
+
+  // be compatible with api-extractor
+  // '/api/react': [
+  //   { link: '/api/react.use' }
+  // ]
+  const prefixWithDot = `${prefix}.`;
+  return currentPathname.startsWith(prefixWithDot);
 };
 
+/**
+ * link: /api/config
+ * currentPathname:
+ *  0. /api/config
+ *  1. /api/config.html
+ *  2. /api/config/
+ *  3. /api/config/index
+ *  4. /api/config/index.html
+ * @param itemLink
+ * @param currentPathname
+ * @returns
+ */
+export function isActive(itemLink: string, currentPathname: string): boolean {
+  const linkMatchedRoute = pathnameToRouteService(withBase(itemLink));
+  const pathnameMatchedRoute = pathnameToRouteService(currentPathname);
+  return Boolean(
+    linkMatchedRoute &&
+      pathnameMatchedRoute &&
+      linkMatchedRoute.path === pathnameMatchedRoute.path,
+  );
+}
+
+/**
+ * get active menuItem of currentPathname
+ * @param item
+ * @param currentPathname
+ * @returns
+ */
 const match = (
   item: NormalizedSidebarGroup | SidebarItem | SidebarDivider,
   currentPathname: string,
@@ -42,14 +80,8 @@ const match = (
   // 1. file link
   if (!isDir && isLink) {
     // 1.1 /api/config /api/config.html
-    if (isEqualPath(withBase(item.link), currentPathname)) {
-      return item;
-    }
     // 1.2 /api/config/index /api/config/index.html
-    if (
-      currentPathname.includes('index') &&
-      isEqualPath(`${item.link}/index`, currentPathname)
-    ) {
+    if (isActive(item.link, currentPathname)) {
       return item;
     }
   }
@@ -57,11 +89,7 @@ const match = (
   // 2. dir
   if (isDir) {
     // 2.1 dir link (index convention)
-    if (
-      isLink &&
-      (isEqualPath(withBase(item.link), currentPathname) ||
-        isEqualPath(withBase(`${item.link}/index`), currentPathname))
-    ) {
+    if (isLink && isActive(item.link!, currentPathname)) {
       return item;
     }
     // 2.2 dir recursive
@@ -76,6 +104,12 @@ const match = (
   return undefined;
 };
 
+/**
+ * get the sidebar group for the current page
+ * @param sidebar const { sidebar } = useLocaleSiteData();
+ * @param currentPathname
+ * @returns
+ */
 export const getSidebarDataGroup = (
   sidebar: NormalizedSidebar,
   currentPathname: string,

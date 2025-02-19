@@ -57,11 +57,6 @@ export default (props: {
 
   const onClickOutside = useCallback(
     (e: MouseEvent) => {
-      console.log(
-        !contains(triggerRef.current, e.target),
-        triggerRef.current,
-        e.target,
-      );
       if (!contains(triggerRef.current, e.target)) {
         setShowQRCode(false);
       }

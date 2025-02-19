@@ -3,8 +3,17 @@ import { getSidebarDataGroup } from './getSidebarDataGroup';
 
 vi.mock('@rspress/runtime', () => {
   return {
-    isEqualPath: () => true,
     withBase: (arg0: string) => arg0,
+    pathnameToRouteService: (arg0: string) => {
+      const map: Record<string, any> = {
+        '/guide/getting-started': '/guide/getting-started',
+        '/api/react.use': '/api/react.use',
+        '/api/react.use.html': '/api/react.use',
+      };
+      return {
+        path: map[arg0],
+      };
+    },
   };
 });
 
@@ -30,6 +39,27 @@ describe('getSidebarDataGroup', () => {
           {
             "link": "/guide/getting-started",
             "text": "Getting Started",
+          },
+        ],
+      }
+    `);
+  });
+
+  it('when using api-extractor', async () => {
+    expect(
+      getSidebarDataGroup(
+        {
+          '/api/react': [{ link: '/api/react.use', text: 'react.use' }],
+        },
+        '/api/react.use.html',
+      ),
+    ).toMatchInlineSnapshot(`
+      {
+        "group": "react.use",
+        "items": [
+          {
+            "link": "/api/react.use",
+            "text": "react.use",
           },
         ],
       }

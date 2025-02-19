@@ -1,26 +1,4 @@
-import { isEqualPath } from '@rspress/runtime';
 import htmr from 'htmr';
-import React from 'react';
-
-export function isActive(
-  currentPath: string,
-  targetLink?: string,
-  strict = false,
-) {
-  if (!targetLink) {
-    return false;
-  }
-  if (strict) {
-    return (
-      isEqualPath(currentPath, targetLink) ||
-      isEqualPath(currentPath, `${targetLink}/index`)
-    );
-  }
-
-  return (
-    isEqualPath(currentPath, targetLink) || currentPath.startsWith(targetLink)
-  );
-}
 
 export function isMobileDevice() {
   return window.innerWidth <= 1024;

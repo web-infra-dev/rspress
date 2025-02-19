@@ -1,8 +1,7 @@
 import {
   isEqualPath,
-  matchRoutes,
   normalizeHrefInRuntime as normalizeHref,
-  normalizeRoutePath,
+  pathnameToRouteService,
   useLocation,
   useNavigate,
   withBase,
@@ -11,7 +10,6 @@ import { isExternalUrl } from '@rspress/shared';
 import nprogress from 'nprogress';
 import type React from 'react';
 import type { ComponentProps } from 'react';
-import { routes } from 'virtual-routes';
 import { scrollToTarget } from '../../logic';
 import styles from './index.module.scss';
 
@@ -73,15 +71,12 @@ export function Link(props: LinkProps) {
 
     // handle normal link
     if (!process.env.__SSR__ && !inCurrentPage) {
-      const matchedRoutes = matchRoutes(
-        routes,
-        normalizeRoutePath(withBaseUrl),
-      );
-      if (matchedRoutes?.length) {
+      const matchedRoute = pathnameToRouteService(withBaseUrl);
+      if (matchedRoute) {
         const timer = setTimeout(() => {
           nprogress.start();
         }, 200);
-        await matchedRoutes[0].route.preload();
+        await matchedRoute.preload();
         clearTimeout(timer);
         nprogress.done();
       }
