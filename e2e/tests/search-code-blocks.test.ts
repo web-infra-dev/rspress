@@ -25,7 +25,25 @@ test.describe('search code blocks test', async () => {
     page,
   }) => {
     await page.goto(`http://localhost:${appPort}`);
-    const suggestItems = await searchInPage(page, 'hello from code block');
-    expect(suggestItems.length).toBe(1);
+
+    // inline code block
+    const suggestItems0 = await searchInPage(
+      page,
+      'hello from inline code block',
+    );
+    expect(suggestItems0.length).toBe(1);
+    const suggestItems1 = await searchInPage(
+      page,
+      'hello from <React.inline />',
+    );
+    expect(suggestItems1.length).toBe(1);
+
+    // js code block
+    const suggestItems2 = await searchInPage(page, 'hello from js code block');
+    expect(suggestItems2.length).toBe(1);
+
+    // jsx code block
+    const suggestItems3 = await searchInPage(page, '<HelloFromJsxCodeBlock />');
+    expect(suggestItems3.length).toBe(1);
   });
 });
