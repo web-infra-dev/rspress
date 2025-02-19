@@ -97,7 +97,7 @@ export async function extractPageData(
         }
 
         /**
-         * escape jsx element in code block, or it cannot be searched
+         * Escape JSX elements in code block to allow them to be searched
          * @link https://github.com/sindresorhus/escape-goat/blob/eab4a382fcf5c977f7195e20d92ab1b25e6040a7/index.js#L3
          */
         function encodeHtml(html: string): string {
