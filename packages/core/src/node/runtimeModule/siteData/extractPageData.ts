@@ -96,7 +96,26 @@ export async function extractPageData(
           return null;
         }
 
-        content = htmlToText(String(html), {
+        /**
+         * escape jsx element in code block, or it cannot be searched
+         * @link https://github.com/sindresorhus/escape-goat/blob/eab4a382fcf5c977f7195e20d92ab1b25e6040a7/index.js#L3
+         */
+        function encodeHtml(html: string): string {
+          return html.replace(
+            /<code>([\s\S]*?)<\/\s?code>/gm,
+            function (_match: string, innerContent: string) {
+              return innerContent
+                .replace(/&/g, '&amp;') // Must happen first or else it will escape other just-escaped characters.
+                .replace(/"/g, '&quot;')
+                .replace(/'/g, '&#39;')
+                .replace(/</g, '&lt;')
+                .replace(/>/g, '&gt;');
+            },
+          );
+        }
+
+        const encodedCodeBlockHtml = encodeHtml(String(html));
+        content = htmlToText(encodedCodeBlockHtml, {
           wordwrap: 80,
           selectors: [
             {
