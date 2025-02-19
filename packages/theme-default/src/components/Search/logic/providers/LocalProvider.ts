@@ -20,8 +20,6 @@ import { LOCAL_INDEX, type Provider, type SearchQuery } from '../Provider';
 import type { SearchOptions } from '../types';
 import { normalizeTextCase } from '../util';
 
-console.log(searchIndexHash, 1111);
-
 type FlexSearchDocumentWithType = Document<PageIndexInfo, true>;
 
 interface PageIndexForFlexSearch extends PageIndexInfo {
