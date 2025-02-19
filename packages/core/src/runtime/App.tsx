@@ -41,7 +41,10 @@ export async function initPageData(routePath: string): Promise<PageData> {
         p
           .replace(/\/$/, '')
           .toLowerCase();
-      return isEqualPath(normalize(page.routePath), normalize(routePath));
+      return isEqualPath(
+        normalize(page.routePath),
+        normalize(matchedRoute.path),
+      );
     });
 
     // FIXME: when sidebar item is configured as link string, the sidebar text won't updated when page title changed

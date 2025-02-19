@@ -14,7 +14,7 @@ export async function renderInBrowser() {
 
   const enhancedApp = async () => {
     const initialPageData = await initPageData(window.location.pathname);
-    console.log(initialPageData, 22222222222);
+
     return function RootApp() {
       const [data, setData] = useState(initialPageData);
       const [theme, setTheme] = useThemeState();
