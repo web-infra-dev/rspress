@@ -60,20 +60,12 @@ describe('extractPageData', async () => {
       [
         {
           "_filepath": "<ROOT>/packages/core/src/node/route/fixtures/basic/a.mdx",
-          "_html": "<h1 id="page-a">Page a<a aria-hidden="true" href="#page-a">#</a></h1>
-      <p>1111</p>
-      <pre><code>&lt;Hello /&gt;
-      </code></pre>",
+          "_html": "<h1 id="page-a">Page a<a aria-hidden="true" href="#page-a">#</a></h1>",
           "_relativePath": "a.mdx",
-          "content": "#
-
-      1111
-
-      ",
+          "content": "#",
           "domain": "http://localhost:3000",
           "frontmatter": {
             "__content": undefined,
-            "title": "Page a",
           },
           "id": 0,
           "lang": "",
