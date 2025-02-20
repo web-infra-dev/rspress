@@ -81,7 +81,7 @@ export async function extractPageData(
         content = flattenContent.replace(importStatementRegex, '');
 
         const {
-          html,
+          html: rawHtml,
           title,
           toc: rawToc,
           languages,
@@ -104,18 +104,19 @@ export async function extractPageData(
           return html.replace(
             /<code>([\s\S]*?)<\/\s?code>/gm,
             function (_match: string, innerContent: string) {
-              return innerContent
+              return `<code>${innerContent
                 .replace(/&/g, '&amp;') // Must happen first or else it will escape other just-escaped characters.
                 .replace(/"/g, '&quot;')
                 .replace(/'/g, '&#39;')
                 .replace(/</g, '&lt;')
-                .replace(/>/g, '&gt;');
+                .replace(/>/g, '&gt;')}</code>`;
             },
           );
         }
 
-        const encodedCodeBlockHtml = encodeHtml(String(html));
-        content = htmlToText(encodedCodeBlockHtml, {
+        const html = encodeHtml(String(rawHtml));
+        content = htmlToText(html, {
+          // decodeEntities: true, // default value of decodeEntities is `true`, so that htmlToText can decode &lt; &gt;
           wordwrap: 80,
           selectors: [
             {
@@ -178,7 +179,7 @@ export async function extractPageData(
           ...defaultIndexInfo,
           title: frontmatter.title || title,
           toc,
-          // Stripped frontmatter content
+          // for search index
           content,
           _html: html,
           frontmatter: {
