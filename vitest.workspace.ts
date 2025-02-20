@@ -18,6 +18,7 @@ export default defineWorkspace([
       // restoreMocks: true,
       include: ['packages/**/*.test.ts'],
       exclude: ['**/node_modules/**'],
+      setupFiles: ['./scripts/test-helper/vitest.setup.ts'],
     },
   },
 ]);

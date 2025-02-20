@@ -53,6 +53,9 @@ importers:
       nx:
         specifier: 20.4.0
         version: 20.4.0
+      path-serializer:
+        specifier: 0.3.4
+        version: 0.3.4
       playwright:
         specifier: 1.47.2
         version: 1.47.2
@@ -5396,6 +5399,9 @@ packages:
   path-scurry@1.10.2:
     resolution: {integrity: sha512-7xTavNy5RQXnsjANvVvMkEjvloOinkAjv/Z6Ildz9v2RinZ4SBKTWFOVRbaF8p0vpHnyjV/UwNDdKuUv6M5qcA==}
     engines: {node: '>=16 || 14 >=14.17'}
+
+  path-serializer@0.3.4:
+    resolution: {integrity: sha512-bqNF6KKbFn2hrTgybBTqAqjKOneLvpFmvYx43ppm8IcmfgYLh4aMmR35+GnnKYdd0l6gtBlaok+aRR0PSwtGaQ==}
 
   path-type@4.0.0:
     resolution: {integrity: sha512-gDKb8aZMDeD/tZWs9P6+q0J9Mwkdl6xMV8TjnGP3qJVJ06bdMgkbBlLU8IdfOsIsFz2BW1rNVT3XuNEl8zPAvw==}
@@ -11162,6 +11168,8 @@ snapshots:
     dependencies:
       lru-cache: 10.2.2
       minipass: 7.1.0
+
+  path-serializer@0.3.4: {}
 
   path-type@4.0.0: {}
 
