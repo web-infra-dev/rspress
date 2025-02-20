@@ -15,7 +15,7 @@ describe('extractPageData', async () => {
       {},
       'http://localhost:3000',
       fixtureBasicDir,
-      // @ts-ignore
+      // @ts-ignore mock RouteService
       {
         getRoutes: () =>
           Object.values({
