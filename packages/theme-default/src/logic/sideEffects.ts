@@ -40,8 +40,8 @@ function bindingWindowScroll() {
   const scrollToAnchor = (fallbackToScrollTop: boolean) => {
     const currentUrl = window.location;
     const { hash } = currentUrl;
-    const target = document.getElementById(hash.slice(1));
-    if (target) {
+    const target = hash.length > 1 && document.getElementById(hash.slice(1));
+    if (hash && target) {
       scrollToTarget(
         target,
         true,
