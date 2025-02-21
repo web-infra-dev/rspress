@@ -16,12 +16,15 @@ export function usePathUtils() {
   const defaultVersion = pageData.siteData.multiVersion.default;
 
   const normalizeLinkHref = (rawHref: string) => {
+    if (isExternalUrl(rawHref)) {
+      return rawHref;
+    }
+    if (rawHref.startsWith('#')) {
+      return rawHref;
+    }
+
     let href = rawHref;
-    if (
-      (defaultLang || defaultVersion) &&
-      !isExternalUrl(href) &&
-      !href.startsWith('#')
-    ) {
+    if (defaultLang || defaultVersion) {
       href = removeBase(href);
       const linkParts = href.split('/').filter(Boolean);
       let versionPart = '';

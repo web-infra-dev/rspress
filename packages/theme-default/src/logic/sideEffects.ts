@@ -1,5 +1,6 @@
 import { inBrowser } from '@rspress/shared';
 import { throttle } from 'lodash-es';
+import { globalHiddenNav } from './useHiddenNav';
 
 export const DEFAULT_NAV_HEIGHT = 72;
 
@@ -36,8 +37,33 @@ export function scrollToTarget(
 
 // Control the scroll behavior of the browser when user clicks on a link
 function bindingWindowScroll() {
+  const scrollToAnchor = () => {
+    const currentUrl = window.location;
+    const { hash } = currentUrl;
+    const target = document.getElementById(hash.slice(1));
+    if (target) {
+      scrollToTarget(
+        target,
+        true,
+        globalHiddenNav.current ? 0 : DEFAULT_NAV_HEIGHT,
+      );
+    } else {
+      window.scrollTo(0, 0);
+    }
+  };
+
+  window.addEventListener('hashchange', e => {
+    e.preventDefault();
+    scrollToAnchor();
+  });
+
+  window.addEventListener('RspressReloadContent', e => {
+    e.preventDefault();
+    scrollToAnchor();
+  });
+
   // Initial scroll position
-  function scrollTo(el: HTMLElement, hash: string, isSmooth = false) {
+  function scrollTo(el: HTMLElement, hash: string) {
     let target: HTMLElement | null = null;
     try {
       target = el.classList.contains('header-anchor')
@@ -47,15 +73,19 @@ function bindingWindowScroll() {
       console.warn(e);
     }
     if (target) {
-      scrollToTarget(target, isSmooth);
+      scrollToTarget(target, true, 0);
     }
   }
 
+  // For header-anchor, H1, H2, H3, H4, H5
+  // why we watch header-anchor clickAndScroll individually?
+  // 1. header-anchor directly use <a /> in rehypePlugin, not <Link />,
+  // 2. When the page has already been at the URL is "/guide#head" then click the header-anchor link again, should scroll
   window.addEventListener(
     'click',
     e => {
       // Only handle a tag click
-      const link = (e.target as Element).closest('a');
+      const link: HTMLAnchorElement | null = (e.target as Element).closest('a');
       if (link) {
         const { origin, hash, target, pathname, search } = link;
         const currentUrl = window.location;
@@ -71,25 +101,13 @@ function bindingWindowScroll() {
             e.preventDefault();
             history.pushState(null, '', hash);
             // use smooth scroll when clicking on header anchor links
-            scrollTo(link, hash, true);
-            // still emit the event so we can listen to it in themes
-            window.dispatchEvent(new Event('hashchange'));
-          } else {
-            window.addEventListener('RspressReloadContent', () => {
-              if (location.hash.length > 1) {
-                const ele = document.getElementById(location.hash.slice(1))!;
-                scrollToTarget(ele, false);
-              }
-            });
+            scrollTo(link, hash);
           }
         }
       }
     },
     { capture: true },
   );
-  window.addEventListener('hashchange', e => {
-    e.preventDefault();
-  });
 }
 
 // Binding the scroll event to the aside element

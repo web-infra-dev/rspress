@@ -1,7 +1,8 @@
 import { useLocation, usePageData } from '@rspress/runtime';
 import { inBrowser } from '@rspress/shared';
-import { useEffect, useState } from 'react';
-import { useEnableNav } from './useHiddenNav';
+import { useEffect, useMemo, useState } from 'react';
+import { DEFAULT_NAV_HEIGHT, scrollToTarget } from './sideEffects';
+import { useEnableNav, useHiddenNav } from './useHiddenNav';
 import { useLocaleSiteData } from './useLocaleSiteData';
 
 export enum QueryStatus {
@@ -94,12 +95,25 @@ export function useUISwitch(): UISwitchResult {
     };
   }, [location.search]);
 
+  const { hash: locationHash = '', pathname } = useLocation();
+  const decodedHash: string = useMemo(() => {
+    return decodeURIComponent(locationHash);
+  }, [locationHash]);
+
   // Control the scroll behavior of the browser when location hash changed
+  const { hash } = useLocation();
   useEffect(() => {
     if (inBrowser() && history.scrollRestoration) {
-      history.scrollRestoration = location.hash.length ? 'manual' : 'auto';
+      history.scrollRestoration = hash.length ? 'manual' : 'auto';
     }
-  }, [!location.hash.length]);
+  }, [!hash.length]);
+  // why window.scrollTo(0, 0)?
+  // when using history.scrollRestoration = 'auto' ref: "useUISwitch.ts", we scroll to the last page's position when navigating to nextPage
+  useEffect(() => {
+    if (decodedHash.length === 0) {
+      window.scrollTo(0, 0);
+    }
+  }, [decodedHash, pathname]);
 
   return {
     showAside,
