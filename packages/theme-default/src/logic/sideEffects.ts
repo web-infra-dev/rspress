@@ -37,7 +37,7 @@ export function scrollToTarget(
 
 // Control the scroll behavior of the browser when user clicks on a link
 function bindingWindowScroll() {
-  const scrollToAnchor = () => {
+  const scrollToAnchor = (fallbackToScrollTop: boolean) => {
     const currentUrl = window.location;
     const { hash } = currentUrl;
     const target = document.getElementById(hash.slice(1));
@@ -48,18 +48,20 @@ function bindingWindowScroll() {
         globalHiddenNav.current ? 0 : DEFAULT_NAV_HEIGHT,
       );
     } else {
-      window.scrollTo(0, 0);
+      if (fallbackToScrollTop) {
+        window.scrollTo(0, 0);
+      }
     }
   };
 
   window.addEventListener('hashchange', e => {
     e.preventDefault();
-    scrollToAnchor();
+    scrollToAnchor(false);
   });
 
   window.addEventListener('RspressReloadContent', e => {
     e.preventDefault();
-    scrollToAnchor();
+    scrollToAnchor(true);
   });
 
   // Initial scroll position
