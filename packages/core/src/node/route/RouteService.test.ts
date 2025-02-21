@@ -14,24 +14,10 @@ async function initRouteService(config: UserConfig) {
     new PluginDriver(config, false),
   );
   await routeService.init();
-  function formatRouteMeta(routeMeta: RouteMeta): RouteMeta {
-    return {
-      ...routeMeta,
-      absolutePath: routeMeta.absolutePath.replace(testDir, ''),
-    };
-  }
 
-  const routeData: Map<string, RouteMeta> = new Map(
-    [...routeService.routeData.entries()].map(([key, item]) => [
-      key,
-      formatRouteMeta(item),
-    ]),
-  );
+  const { routeData } = routeService;
 
-  const routeMeta = routeService.getRoutes().map(item => ({
-    ...item,
-    absolutePath: item.absolutePath.replace(testDir, ''),
-  }));
+  const routeMeta = routeService.getRoutes();
   const routeCode = routeService.generateRoutesCodeByRouteMeta(
     routeMeta,
     false,
@@ -49,7 +35,7 @@ describe('RouteService', async () => {
     expect(routeData).toMatchInlineSnapshot(`
       Map {
         "/a" => {
-          "absolutePath": "/a.mdx",
+          "absolutePath": "<ROOT>/packages/core/src/node/route/fixtures/basic/a.mdx",
           "lang": "",
           "pageName": "a",
           "relativePath": "a.mdx",
@@ -57,7 +43,7 @@ describe('RouteService', async () => {
           "version": "",
         },
         "/guide/b" => {
-          "absolutePath": "/guide/b.mdx",
+          "absolutePath": "<ROOT>/packages/core/src/node/route/fixtures/basic/guide/b.mdx",
           "lang": "",
           "pageName": "guide_b",
           "relativePath": "guide/b.mdx",
@@ -65,7 +51,7 @@ describe('RouteService', async () => {
           "version": "",
         },
         "/guide/c" => {
-          "absolutePath": "/guide/c.tsx",
+          "absolutePath": "<ROOT>/packages/core/src/node/route/fixtures/basic/guide/c.tsx",
           "lang": "",
           "pageName": "guide_c",
           "relativePath": "guide/c.tsx",
@@ -73,7 +59,7 @@ describe('RouteService', async () => {
           "version": "",
         },
         "/" => {
-          "absolutePath": "/index.mdx",
+          "absolutePath": "<ROOT>/packages/core/src/node/route/fixtures/basic/index.mdx",
           "lang": "",
           "pageName": "index",
           "relativePath": "index.mdx",
@@ -87,26 +73,26 @@ describe('RouteService', async () => {
       "
       import React from 'react';
       import { lazyWithPreload } from "react-lazy-with-preload";
-      const Route0 = lazyWithPreload(() => import('/a.mdx'))
-      const Route1 = lazyWithPreload(() => import('/guide/b.mdx'))
-      const Route2 = lazyWithPreload(() => import('/guide/c.tsx'))
-      const Route3 = lazyWithPreload(() => import('/index.mdx'))
+      const Route0 = lazyWithPreload(() => import('<ROOT>/packages/core/src/node/route/fixtures/basic/a.mdx'))
+      const Route1 = lazyWithPreload(() => import('<ROOT>/packages/core/src/node/route/fixtures/basic/guide/b.mdx'))
+      const Route2 = lazyWithPreload(() => import('<ROOT>/packages/core/src/node/route/fixtures/basic/guide/c.tsx'))
+      const Route3 = lazyWithPreload(() => import('<ROOT>/packages/core/src/node/route/fixtures/basic/index.mdx'))
       export const routes = [
       { path: '/a', element: React.createElement(Route0), filePath: 'a.mdx', preload: async () => {
               await Route0.preload();
-              return import("/a.mdx");
+              return import("<ROOT>/packages/core/src/node/route/fixtures/basic/a.mdx");
             }, lang: '', version: '' },
       { path: '/guide/b', element: React.createElement(Route1), filePath: 'guide/b.mdx', preload: async () => {
               await Route1.preload();
-              return import("/guide/b.mdx");
+              return import("<ROOT>/packages/core/src/node/route/fixtures/basic/guide/b.mdx");
             }, lang: '', version: '' },
       { path: '/guide/c', element: React.createElement(Route2), filePath: 'guide/c.tsx', preload: async () => {
               await Route2.preload();
-              return import("/guide/c.tsx");
+              return import("<ROOT>/packages/core/src/node/route/fixtures/basic/guide/c.tsx");
             }, lang: '', version: '' },
       { path: '/', element: React.createElement(Route3), filePath: 'index.mdx', preload: async () => {
               await Route3.preload();
-              return import("/index.mdx");
+              return import("<ROOT>/packages/core/src/node/route/fixtures/basic/index.mdx");
             }, lang: '', version: '' }
       ];
       "
@@ -122,7 +108,7 @@ describe('RouteService', async () => {
     expect(routeData).toMatchInlineSnapshot(`
       Map {
         "/a" => {
-          "absolutePath": "/a.mdx",
+          "absolutePath": "<ROOT>/packages/core/src/node/route/fixtures/basic/a.mdx",
           "lang": "",
           "pageName": "a",
           "relativePath": "a.mdx",
@@ -130,7 +116,7 @@ describe('RouteService', async () => {
           "version": "",
         },
         "/guide/c" => {
-          "absolutePath": "/guide/c.tsx",
+          "absolutePath": "<ROOT>/packages/core/src/node/route/fixtures/basic/guide/c.tsx",
           "lang": "",
           "pageName": "guide_c",
           "relativePath": "guide/c.tsx",
@@ -138,7 +124,7 @@ describe('RouteService', async () => {
           "version": "",
         },
         "/" => {
-          "absolutePath": "/index.mdx",
+          "absolutePath": "<ROOT>/packages/core/src/node/route/fixtures/basic/index.mdx",
           "lang": "",
           "pageName": "index",
           "relativePath": "index.mdx",
@@ -151,21 +137,21 @@ describe('RouteService', async () => {
       "
       import React from 'react';
       import { lazyWithPreload } from "react-lazy-with-preload";
-      const Route0 = lazyWithPreload(() => import('/a.mdx'))
-      const Route1 = lazyWithPreload(() => import('/guide/c.tsx'))
-      const Route2 = lazyWithPreload(() => import('/index.mdx'))
+      const Route0 = lazyWithPreload(() => import('<ROOT>/packages/core/src/node/route/fixtures/basic/a.mdx'))
+      const Route1 = lazyWithPreload(() => import('<ROOT>/packages/core/src/node/route/fixtures/basic/guide/c.tsx'))
+      const Route2 = lazyWithPreload(() => import('<ROOT>/packages/core/src/node/route/fixtures/basic/index.mdx'))
       export const routes = [
       { path: '/a', element: React.createElement(Route0), filePath: 'a.mdx', preload: async () => {
               await Route0.preload();
-              return import("/a.mdx");
+              return import("<ROOT>/packages/core/src/node/route/fixtures/basic/a.mdx");
             }, lang: '', version: '' },
       { path: '/guide/c', element: React.createElement(Route1), filePath: 'guide/c.tsx', preload: async () => {
               await Route1.preload();
-              return import("/guide/c.tsx");
+              return import("<ROOT>/packages/core/src/node/route/fixtures/basic/guide/c.tsx");
             }, lang: '', version: '' },
       { path: '/', element: React.createElement(Route2), filePath: 'index.mdx', preload: async () => {
               await Route2.preload();
-              return import("/index.mdx");
+              return import("<ROOT>/packages/core/src/node/route/fixtures/basic/index.mdx");
             }, lang: '', version: '' }
       ];
       "
@@ -181,7 +167,7 @@ describe('RouteService', async () => {
     expect(routeData).toMatchInlineSnapshot(`
       Map {
         "/a" => {
-          "absolutePath": "/a.mdx",
+          "absolutePath": "<ROOT>/packages/core/src/node/route/fixtures/basic/a.mdx",
           "lang": "",
           "pageName": "a",
           "relativePath": "a.mdx",
@@ -189,7 +175,7 @@ describe('RouteService', async () => {
           "version": "",
         },
         "/guide/b" => {
-          "absolutePath": "/guide/b.mdx",
+          "absolutePath": "<ROOT>/packages/core/src/node/route/fixtures/basic/guide/b.mdx",
           "lang": "",
           "pageName": "guide_b",
           "relativePath": "guide/b.mdx",
@@ -197,7 +183,7 @@ describe('RouteService', async () => {
           "version": "",
         },
         "/" => {
-          "absolutePath": "/index.mdx",
+          "absolutePath": "<ROOT>/packages/core/src/node/route/fixtures/basic/index.mdx",
           "lang": "",
           "pageName": "index",
           "relativePath": "index.mdx",
@@ -210,21 +196,21 @@ describe('RouteService', async () => {
       "
       import React from 'react';
       import { lazyWithPreload } from "react-lazy-with-preload";
-      const Route0 = lazyWithPreload(() => import('/a.mdx'))
-      const Route1 = lazyWithPreload(() => import('/guide/b.mdx'))
-      const Route2 = lazyWithPreload(() => import('/index.mdx'))
+      const Route0 = lazyWithPreload(() => import('<ROOT>/packages/core/src/node/route/fixtures/basic/a.mdx'))
+      const Route1 = lazyWithPreload(() => import('<ROOT>/packages/core/src/node/route/fixtures/basic/guide/b.mdx'))
+      const Route2 = lazyWithPreload(() => import('<ROOT>/packages/core/src/node/route/fixtures/basic/index.mdx'))
       export const routes = [
       { path: '/a', element: React.createElement(Route0), filePath: 'a.mdx', preload: async () => {
               await Route0.preload();
-              return import("/a.mdx");
+              return import("<ROOT>/packages/core/src/node/route/fixtures/basic/a.mdx");
             }, lang: '', version: '' },
       { path: '/guide/b', element: React.createElement(Route1), filePath: 'guide/b.mdx', preload: async () => {
               await Route1.preload();
-              return import("/guide/b.mdx");
+              return import("<ROOT>/packages/core/src/node/route/fixtures/basic/guide/b.mdx");
             }, lang: '', version: '' },
       { path: '/', element: React.createElement(Route2), filePath: 'index.mdx', preload: async () => {
               await Route2.preload();
-              return import("/index.mdx");
+              return import("<ROOT>/packages/core/src/node/route/fixtures/basic/index.mdx");
             }, lang: '', version: '' }
       ];
       "
