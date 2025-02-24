@@ -11,6 +11,7 @@ import { isExternalUrl } from '@rspress/shared';
 import nprogress from 'nprogress';
 import type React from 'react';
 import type { ComponentProps } from 'react';
+// @ts-ignore
 import { routes } from 'virtual-routes';
 import { scrollToTarget } from '../../logic';
 import styles from './index.module.scss';
@@ -81,6 +82,7 @@ export function Link(props: LinkProps) {
         const timer = setTimeout(() => {
           nprogress.start();
         }, 200);
+        // @ts-ignore
         await matchedRoutes[0].route.preload();
         clearTimeout(timer);
         nprogress.done();

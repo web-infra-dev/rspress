@@ -7,6 +7,7 @@ import {
   isExternalUrl,
   normalizeSlash,
 } from '@rspress/shared';
+// @ts-ignore
 import { routes } from 'virtual-routes';
 import { isActive, useLocaleSiteData } from '../../logic';
 
@@ -48,6 +49,7 @@ export const preloadLink = (link: string) => {
   const match = matchRoutes(routes, link);
   if (match?.length) {
     const { route } = match[0];
+    // @ts-ignore
     route.preload();
   }
 };

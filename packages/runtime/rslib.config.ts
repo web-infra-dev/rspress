@@ -19,7 +19,7 @@ export default defineConfig({
     {
       bundle: false,
       source: {
-        entry: { index: 'src/**' },
+        entry: { index: ['src/**', '!src/**.test.ts'] },
       },
       dts: true,
       format: 'esm',
