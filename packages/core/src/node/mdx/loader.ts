@@ -4,7 +4,7 @@ import { pathToFileURL } from 'node:url';
 import { createProcessor } from '@mdx-js/mdx';
 import { isProduction } from '@rspress/shared';
 import { logger } from '@rspress/shared/logger';
-import { loadFrontMatter } from '@rspress/shared/node-utils';
+import { extractTextAndId, loadFrontMatter } from '@rspress/shared/node-utils';
 import type { PluginDriver } from '../PluginDriver';
 import { TEMP_DIR } from '../constants';
 import { RuntimeModuleID } from '../runtimeModule';
@@ -143,6 +143,8 @@ export default async function mdxLoader(
     let compileResult: string;
     let pageMeta = { title: '', toc: [] } as PageMeta;
 
+    const frontmatterTitle = extractTextAndId(frontmatter.title)[0];
+
     if (!enableMdxRs) {
       const mdxOptions = await createMDXOptions(
         docDirectory,
@@ -165,10 +167,11 @@ export default async function mdxLoader(
         toc: Header[];
         title: string;
       };
+      const headingTitle = extractTextAndId(compilationMeta.title)[0];
       pageMeta = {
         ...compilationMeta,
-        title: frontmatter.title || compilationMeta.title || '',
-        headingTitle: compilationMeta.title,
+        title: frontmatterTitle || headingTitle,
+        headingTitle,
         frontmatter,
       } as PageMeta;
     } else {
@@ -181,10 +184,11 @@ export default async function mdxLoader(
       });
 
       compileResult = code;
+      const headingTitle = extractTextAndId(title)[0];
       pageMeta = {
         toc,
-        title: frontmatter.title || title || '',
-        headingTitle: title,
+        title: frontmatterTitle || headingTitle,
+        headingTitle,
         frontmatter,
       };
       // We should check dead links in mdx-rs mode
