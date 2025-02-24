@@ -8,8 +8,6 @@ import { setup } from './logic';
 
 export default {
   Layout,
-  NotFoundLayout,
-  HomeLayout,
   setup,
 };
 

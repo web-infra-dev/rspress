@@ -9,13 +9,12 @@ function HomeLayout() {
 }
 
 const Layout = () => {
-  return <Theme.Layout beforeNavTitle={<NavIcon />} />;
+  return <Theme.Layout beforeNavTitle={<NavIcon />} HomeLayout={HomeLayout} />;
 };
 
 export default {
   ...Theme,
   Layout,
-  HomeLayout,
 };
 
 export * from 'rspress/theme';
