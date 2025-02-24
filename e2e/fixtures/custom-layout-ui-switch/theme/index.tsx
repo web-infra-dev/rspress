@@ -10,5 +10,5 @@ const Layout = () => {
   );
 };
 
-export { Layout };
+export default {...Theme, Layout };
 export * from 'rspress/theme';
