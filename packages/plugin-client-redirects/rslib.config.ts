@@ -8,6 +8,11 @@ export default defineConfig({
       },
       format: 'esm',
       syntax: 'esnext',
+      shims: {
+        esm: {
+          __dirname: true,
+        },
+      },
     },
   ],
 });
