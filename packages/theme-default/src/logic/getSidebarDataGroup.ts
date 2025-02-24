@@ -6,7 +6,7 @@ import {
   type SidebarItem,
   addTrailingSlash,
 } from '@rspress/shared';
-import type { SidebarData } from '../components';
+import type { SidebarData } from '../components/Sidebar';
 
 export interface SidebarDataGroup {
   // The group name for the sidebar

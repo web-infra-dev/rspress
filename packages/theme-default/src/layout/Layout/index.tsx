@@ -9,7 +9,7 @@ import {
 import type React from 'react';
 import { Helmet } from 'react-helmet-async';
 import type { NavProps } from '../../components/Nav';
-import { useLocaleSiteData } from '../../logic';
+import { useLocaleSiteData } from '../../logic/useLocaleSiteData';
 import { useRedirect4FirstVisit } from '../../logic/useRedirect4FirstVisit';
 import { type UISwitchResult, useUISwitch } from '../../logic/useUISwitch';
 import { DocLayout, type DocLayoutProps } from '../DocLayout';
