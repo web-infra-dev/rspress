@@ -1,6 +1,6 @@
 import { Link } from '@theme';
 import type { ComponentProps } from 'react';
-import { usePathUtils } from '../../../logic';
+import { usePathUtils } from '../../../logic/usePathUtils';
 import styles from './index.module.scss';
 
 export const A = (props: ComponentProps<'a'>) => {

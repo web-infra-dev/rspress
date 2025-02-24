@@ -1,4 +1,4 @@
-import { useEditLink } from '../../logic';
+import { useEditLink } from '../../logic/useEditLink';
 import styles from './index.module.scss';
 
 export function EditLink() {
