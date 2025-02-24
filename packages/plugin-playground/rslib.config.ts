@@ -19,6 +19,11 @@ export default defineConfig({
       source: {
         entry: { index: 'src/cli/index.ts' },
       },
+      shims: {
+        esm: {
+          __dirname: true,
+        },
+      },
       output: {
         distPath: {
           root: 'dist/cli/esm',
