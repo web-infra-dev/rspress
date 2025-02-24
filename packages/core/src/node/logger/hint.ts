@@ -23,16 +23,15 @@ export async function hintThemeBreakingChange(customThemeDir: string) {
   }
   if (useDefaultExportFilePath) {
     logger.warn(
-      `
-      [Rspress] Theme breaking change: The theme/index is now using namedExports instead of defaultExports, please update your config file in ${useDefaultExportFilePath}`,
+      `[Rspress] Theme breaking change: The theme/index is now using namedExports instead of defaultExports, please update your config file in ${useDefaultExportFilePath}`,
       picocolors.red(`
 - import Theme from '@rspress/theme-default';
 - export default {
 -  ...Theme,
 -  Layout,
 - };
-- export * from 'rspress/theme';\n`),
-      picocolors.green(`+ import { Layout } from '@rspress/theme-default';
+- export * from 'rspress/theme';`) +
+        picocolors.green(`+ import { Layout } from '@rspress/theme-default';
 
 + export { Layout };
 + export * from 'rspress/theme';
