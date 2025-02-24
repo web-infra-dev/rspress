@@ -10,7 +10,7 @@ import { isExternalUrl } from '@rspress/shared';
 import nprogress from 'nprogress';
 import type React from 'react';
 import type { ComponentProps } from 'react';
-import { scrollToTarget } from '../../logic';
+import { scrollToTarget } from '../../logic/sideEffects';
 import styles from './index.module.scss';
 
 export interface LinkProps extends ComponentProps<'a'> {

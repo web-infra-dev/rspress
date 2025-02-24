@@ -7,7 +7,6 @@ import {
   inBrowser,
 } from '@rspress/shared';
 import { useEffect, useState } from 'react';
-import { useSidebarData } from '../../logic';
 
 import type { UISwitchResult } from '../../logic/useUISwitch';
 import { NavBarTitle } from '../Nav/NavBarTitle';
@@ -15,6 +14,7 @@ import { SidebarDivider } from './SidebarDivider';
 import { SidebarItem } from './SidebarItem';
 import { SidebarSectionHeader } from './SidebarSectionHeader';
 
+import { useSidebarData } from '../../logic/useSidebarData';
 import styles from './index.module.scss';
 import {
   isSideBarCustomLink,
