@@ -1,5 +1,9 @@
 import type { Node } from '@babel/types';
-import React, { Component, type HTMLAttributes } from 'react';
+import React, {
+  Component,
+  type HTMLAttributes,
+  type ReactElement,
+} from 'react';
 import {
   createGetImport,
   createObjectPattern,
@@ -15,7 +19,7 @@ interface RunnerProps extends HTMLAttributes<HTMLDivElement> {
 
 interface RunnerState {
   error?: Error;
-  comp: any;
+  comp: ReactElement | null;
 }
 
 const DEBOUNCE_TIME = 800;
@@ -28,7 +32,7 @@ class Runner extends Component<RunnerProps, RunnerState> {
     };
   }
 
-  timer: any;
+  timer: number | null = null;
 
   constructor(props: RunnerProps) {
     super(props);
@@ -46,7 +50,7 @@ class Runner extends Component<RunnerProps, RunnerState> {
     if (this.timer) {
       clearTimeout(this.timer);
     }
-    this.timer = setTimeout(() => {
+    this.timer = window.setTimeout(() => {
       this.timer = null;
       this.doCompile(targetCode);
     }, DEBOUNCE_TIME);
@@ -155,7 +159,9 @@ class Runner extends Component<RunnerProps, RunnerState> {
         return;
       }
 
-      const runExports: any = {};
+      const runExports: {
+        default?: Parameters<typeof React.createElement>[0];
+      } = {};
       // eslint-disable-next-line @typescript-eslint/no-implied-eval, no-new-func
       const func = new Function('__get_import', 'exports', result.code);
       func(getImport, runExports);

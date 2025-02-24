@@ -1,4 +1,4 @@
-import type { ElementContent, Root, Text } from 'hast';
+import type { Element, ElementContent, Root, Text } from 'hast';
 import { fromHtml } from 'hast-util-from-html';
 import type shiki from 'shiki';
 import type { Plugin } from 'unified';
@@ -51,17 +51,22 @@ export const rehypePluginShiki: Plugin<[Options], Root> = function ({
         }
         const highlightedCode = highlighter.codeToHtml(codeContent, { lang });
         const fragmentAst = fromHtml(highlightedCode, { fragment: true });
-        const preElement = fragmentAst.children[0] as unknown as any;
-        const codeElement = preElement.children[0];
-        codeElement.properties.className = `language-${lang}`;
-        codeElement.properties.meta = codeMeta;
+        const preElement = fragmentAst.children[0] as Element;
+        const codeElement = preElement.children[0] as Element;
+        codeElement.properties!.className = `language-${lang}`;
+        codeElement.properties!.meta = codeMeta;
         const codeLines = codeElement.children;
         // Take the odd lines as highlighted lines
         codeLines
-          ?.filter((_: any, index: number) => index % 2 === 0)
-          .forEach((line: any, index: number) => {
-            if (highlightLines?.includes(index + 1)) {
-              line.properties.className.push('code-line-highlighted');
+          ?.filter((_, index: number) => index % 2 === 0)
+          .forEach((line, index: number) => {
+            if (
+              line.type === 'element' &&
+              highlightLines?.includes(index + 1)
+            ) {
+              (line.properties!.className as string[]).push(
+                'code-line-highlighted',
+              );
             }
           });
 

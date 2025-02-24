@@ -1,3 +1,5 @@
+/// <reference types="@rspress-dev/plugin-preview" />
+
 import fs from 'node:fs/promises';
 import path from 'node:path';
 import { SEARCH_INDEX_NAME, type SiteData } from '@rspress/shared';
@@ -145,9 +147,9 @@ export async function siteDataVMPlugin(context: FactoryContext) {
 
   const { highlightLanguages: defaultLanguages = [] } = config.markdown || {};
 
-  // @ts-ignore this field is extended in "plugin-preview"
-  if (siteData.pages[0]?.extraHighlightLanguages?.length) {
-    (siteData.pages[0] as any).extraHighlightLanguages.forEach((lang: string) =>
+  // this field is extended in "plugin-preview"
+  if (Array.isArray(siteData.pages[0]?.extraHighlightLanguages)) {
+    siteData.pages[0].extraHighlightLanguages.forEach(lang =>
       highlightLanguages.add(lang),
     );
   }

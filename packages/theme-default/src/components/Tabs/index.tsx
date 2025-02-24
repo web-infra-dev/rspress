@@ -48,8 +48,8 @@ const renderTab = (item: ReactNode | TabItem) => {
 
 export const groupIdPrefix = 'rspress.tabs.';
 
-export const Tabs: ForwardRefExoticComponent<TabsProps> = forwardRef(
-  (props: TabsProps, ref: ForwardedRef<any>): ReactElement => {
+export const Tabs = forwardRef(
+  (props: TabsProps, ref: ForwardedRef<HTMLDivElement>): ReactElement => {
     const {
       values,
       defaultValue,

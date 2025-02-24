@@ -8,7 +8,7 @@ export function getShouldOpenNewPage<T>(
 ) {
   return async function shouldOpenNewPage(
     /** after this function executed, a new page should be created */
-    shouldOpen: () => any,
+    shouldOpen: () => PromiseLike<void>,
   ) {
     const pPage = page.context().waitForEvent('page', { timeout });
 

@@ -1,5 +1,6 @@
 import { join } from 'node:path';
 import { describe, expect, it } from 'vitest';
+import type { RouteService } from '../../route/RouteService';
 import { extractPageData } from './extractPageData';
 
 const fixtureBasicDir = join(__dirname, '../../route/fixtures/basic');
@@ -15,7 +16,6 @@ describe('extractPageData', async () => {
       {},
       'http://localhost:3000',
       fixtureBasicDir,
-      // @ts-ignore mock RouteService
       {
         getRoutes: () =>
           Object.values({
@@ -52,7 +52,7 @@ describe('extractPageData', async () => {
               version: '',
             },
           }),
-      },
+      } as RouteService,
       new Set(),
       false,
     );

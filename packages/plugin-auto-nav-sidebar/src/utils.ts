@@ -13,7 +13,7 @@ export async function pathExists(path: string): Promise<boolean> {
   }
 }
 
-export async function readJson(path: string): Promise<any> {
+export async function readJson<T = unknown>(path: string): Promise<T> {
   const raw = await fs.readFile(path, 'utf8');
   return JSON.parse(raw);
 }
@@ -72,7 +72,7 @@ export async function extractInfoFromFrontmatter(
 ): Promise<{
   realPath: string | undefined;
   title: string;
-  overviewHeaders: string | undefined;
+  overviewHeaders: number[] | undefined;
   context: string | undefined;
 }> {
   const realPath = await detectFilePath(filePath, extensions);
@@ -101,7 +101,7 @@ export async function extractInfoFromFrontmatterWithRealPath(
   rootDir: string,
 ): Promise<{
   title: string;
-  overviewHeaders: string | undefined;
+  overviewHeaders: number[] | undefined;
   context: string | undefined;
 }> {
   const content = await fs.readFile(realPath, 'utf-8');

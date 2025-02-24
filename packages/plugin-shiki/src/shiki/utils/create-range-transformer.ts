@@ -36,10 +36,9 @@ export function createRangeTransformer(
         }).entries()) {
           lineOptions.push({
             line: lineNumber + rangeOffset + 1,
-            classes:
-              typeof classMap[tag] === 'string'
-                ? ([classMap[tag]] as string[])
-                : (classMap[tag as any] as any),
+            classes: Array.isArray(classMap[tag])
+              ? classMap[tag]
+              : [classMap[tag]],
           });
         }
 

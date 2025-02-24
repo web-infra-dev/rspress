@@ -8,19 +8,17 @@ import {
   SEARCH_INDEX_NAME,
   removeTrailingSlash,
 } from '@rspress/shared';
-import type {
-  Document,
-  EnrichedDocumentSearchResultSetUnit,
-  IndexOptionsForDocumentSearch,
+// https://github.com/nextapps-de/flexsearch/issues/438
+import Index, {
+  type EnrichedDocumentSearchResultSetUnit,
+  type IndexOptionsForDocumentSearch,
 } from 'flexsearch';
-// @ts-ignore no dts for this file
-import FlexSearchDocument from 'flexsearch/dist/module/document';
 import searchIndexHash from 'virtual-search-index-hash';
 import { LOCAL_INDEX, type Provider, type SearchQuery } from '../Provider';
 import type { SearchOptions } from '../types';
 import { normalizeTextCase } from '../util';
 
-type FlexSearchDocumentWithType = Document<PageIndexInfo, true>;
+type FlexSearchDocumentWithType = Index.Document<PageIndexInfo, true>;
 
 interface PageIndexForFlexSearch extends PageIndexInfo {
   normalizedContent: string;
@@ -53,6 +51,12 @@ export class LocalProvider implements Provider {
 
   async #getPages(lang: string, version: string): Promise<PageIndexInfo[]> {
     const searchIndexGroupID = `${version ?? ''}###${lang ?? ''}`;
+
+    // for example, in page-type-home fixture, there is only home index.md, so no search index generated
+    if (!searchIndexHash[searchIndexGroupID]) {
+      return [];
+    }
+
     const searchIndexVersion = version ? `.${version.replace('.', '_')}` : '';
     const searchIndexLang = lang ? `.${lang}` : '';
     const searchIndexURL = `${removeTrailingSlash(__WEBPACK_PUBLIC_PATH__)}/static/${SEARCH_INDEX_NAME}${searchIndexVersion}${searchIndexLang}.${searchIndexHash[searchIndexGroupID]}.json`;
@@ -88,29 +92,28 @@ export class LocalProvider implements Provider {
       headers: page.toc.map(header => normalizeTextCase(header.text)).join(' '),
       normalizedTitle: normalizeTextCase(page.title),
     }));
-    const createOptions: IndexOptionsForDocumentSearch<PageIndexInfo[], true> =
-      {
-        tokenize: 'full',
-        document: {
-          id: 'id',
-          store: true,
-          index: ['normalizedTitle', 'headers', 'normalizedContent'],
-        },
-        cache: 100,
-        // charset: {
-        //   split: /\W+/,
-        // },
-      };
+    const createOptions: IndexOptionsForDocumentSearch<PageIndexInfo, true> = {
+      tokenize: 'full',
+      document: {
+        id: 'id',
+        store: true,
+        index: ['normalizedTitle', 'headers', 'normalizedContent'],
+      },
+      cache: 100,
+      // charset: {
+      //   split: /\W+/,
+      // },
+    };
     // Init Search Indexes
     // English Index
-    this.#index = new FlexSearchDocument(createOptions);
+    this.#index = new Index.Document(createOptions);
     // CJK: Chinese, Japanese, Korean
-    this.#cjkIndex = new FlexSearchDocument({
+    this.#cjkIndex = new Index.Document({
       ...createOptions,
       tokenize: (str: string) => tokenize(str, cjkRegex),
     });
     // Cyrillic Index
-    this.#cyrillicIndex = new FlexSearchDocument({
+    this.#cyrillicIndex = new Index.Document({
       ...createOptions,
       tokenize: (str: string) => tokenize(str, cyrillicRegex),
     });

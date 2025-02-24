@@ -68,10 +68,6 @@ export type DocGenOptions = Required<PluginOptions> & {
 
 export type SupportLanguages = 'zh' | 'en';
 
-export type ExtendedPageData = PageIndexInfo & {
-  apiDocMap: Record<string, string>;
-};
-
 export type WatchFileInfo = {
   apiParseTool: ApiParseTool;
   moduleName: string;

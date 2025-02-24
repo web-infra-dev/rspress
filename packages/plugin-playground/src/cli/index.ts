@@ -5,13 +5,15 @@ import type {
   loader,
 } from '@monaco-editor/react';
 import type { RouteMeta, RspressPlugin } from '@rspress/shared';
-import type { Code } from 'mdast';
+import { getNodeAttribute } from '@rspress/shared/node-utils';
+import type { Root } from 'mdast';
 import { RspackVirtualModulePlugin } from 'rspack-plugin-virtual-module';
+import type { Processor } from 'unified';
 import { DEFAULT_BABEL_URL, DEFAULT_MONACO_URL } from '../web/constant';
 import { normalizeUrl } from '../web/utils';
 import { staticPath } from './constant';
 import { remarkPlugin } from './remarkPlugin';
-import { getNodeAttribute, parseImports } from './utils';
+import { parseImports } from './utils';
 
 interface PlaygroundOptions {
   render: string;
@@ -96,14 +98,14 @@ export function pluginPlayground(
             const processor = createProcessor({
               format: path.extname(filepath).slice(1) as 'mdx' | 'md',
               remarkPlugins: [remarkGFM],
-            });
+            }) as Processor<Root>;
             const source = await fs.promises.readFile(filepath, 'utf-8');
             const ast = processor.parse(source);
 
-            visit(ast, 'mdxJsxFlowElement', (node: any) => {
+            visit(ast, 'mdxJsxFlowElement', node => {
               if (node.name === 'code') {
                 const src = getNodeAttribute(node, 'src');
-                if (!src) {
+                if (typeof src !== 'string') {
                   return;
                 }
                 const demoPath = join(path.dirname(filepath), src);
@@ -124,7 +126,7 @@ export function pluginPlayground(
               }
             });
 
-            visit(ast, 'code', (node: Code) => {
+            visit(ast, 'code', node => {
               if (node.lang === 'jsx' || node.lang === 'tsx') {
                 const { value, meta } = node;
                 const hasPureMeta = meta?.includes('pure');
@@ -223,8 +225,6 @@ export function pluginPlayground(
         })),
       },
       tools: {
-        // eslint-disable-next-line @typescript-eslint/ban-ts-comment, @typescript-eslint/prefer-ts-expect-error
-        // @ts-ignore
         rspack: {
           plugins: [playgroundVirtualModule],
         },

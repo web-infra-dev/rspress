@@ -2,11 +2,15 @@ import fs from 'node:fs/promises';
 import path from 'node:path';
 import { pathToFileURL } from 'node:url';
 import { createProcessor } from '@mdx-js/mdx';
+import type { Rspack } from '@rsbuild/core';
+import type { FrontMatterMeta, Header, UserConfig } from '@rspress/shared';
 import { isProduction } from '@rspress/shared';
 import { logger } from '@rspress/shared/logger';
 import { extractTextAndId, loadFrontMatter } from '@rspress/shared/node-utils';
+
 import type { PluginDriver } from '../PluginDriver';
 import { TEMP_DIR } from '../constants';
+import type { RouteService } from '../route/RouteService';
 import { RuntimeModuleID } from '../runtimeModule';
 import {
   applyReplaceRules,
@@ -17,10 +21,6 @@ import {
 import { createMDXOptions } from './options';
 import { checkLinks } from './remarkPlugins/checkDeadLink';
 import type { TocItem } from './remarkPlugins/toc';
-
-import type { Rspack } from '@rsbuild/core';
-import type { Header, UserConfig } from '@rspress/shared';
-import type { RouteService } from '../route/RouteService';
 
 interface LoaderOptions {
   config: UserConfig;
@@ -34,7 +34,7 @@ export interface PageMeta {
   toc: TocItem[];
   title: string;
   headingTitle: string;
-  frontmatter?: Record<string, any>;
+  frontmatter?: FrontMatterMeta;
 }
 
 export async function updateSiteDataRuntimeModule(

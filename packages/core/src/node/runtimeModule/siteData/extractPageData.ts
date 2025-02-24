@@ -15,7 +15,7 @@ import { flattenMdxContent } from '../../utils';
 import { applyReplaceRules } from '../../utils/applyReplaceRules';
 
 export function applyReplaceRulesToNestedObject(
-  obj: Record<string, any>,
+  obj: object,
   replaceRules: ReplaceRule[],
 ) {
   for (const key in obj) {

@@ -11,7 +11,7 @@ import {
 } from '@rspress/shared';
 import { logger } from '@rspress/shared/logger';
 import picocolors from 'picocolors';
-import type { HelmetData } from 'react-helmet-async';
+import { HelmetData } from 'react-helmet-async';
 import { PluginDriver } from './PluginDriver';
 import {
   APP_HTML_MARKER,
@@ -87,7 +87,7 @@ export async function renderPages(
     // 1. ssr bundle load failed
     // 2. ssr bundle render failed
     // 3. ssg is disabled
-    let render = null;
+    let render: SSRBundleExports['render'];
     if (ssgConfig) {
       try {
         const { default: ssrExports } = await import(
@@ -138,9 +138,7 @@ export async function renderPages(
           return !route.routePath.includes(':');
         })
         .map(async route => {
-          const helmetContext: HelmetData = {
-            context: {},
-          } as HelmetData;
+          const helmetContext = new HelmetData({});
           const { routePath } = route;
           let appHtml = '';
           if (render) {
@@ -177,25 +175,25 @@ export async function renderPages(
               HEAD_MARKER,
               [
                 await renderConfigHead(config, route),
-                helmet?.title?.toString(),
-                helmet?.meta?.toString(),
-                helmet?.link?.toString(),
-                helmet?.style?.toString(),
-                helmet?.script?.toString(),
+                helmet.title.toString(),
+                helmet.meta.toString(),
+                helmet.link.toString(),
+                helmet.style.toString(),
+                helmet.script.toString(),
                 await renderFrontmatterHead(route),
               ].join(''),
             );
-          if (helmet?.htmlAttributes) {
+          if (helmet.htmlAttributes) {
             html = html.replace(
               HTML_START_TAG,
-              `${HTML_START_TAG} ${helmet?.htmlAttributes?.toString()}`,
+              `${HTML_START_TAG} ${helmet.htmlAttributes?.toString()}`,
             );
           }
 
-          if (helmet?.bodyAttributes) {
+          if (helmet.bodyAttributes) {
             html = html.replace(
               BODY_START_TAG,
-              `${BODY_START_TAG} ${helmet?.bodyAttributes?.toString()}`,
+              `${BODY_START_TAG} ${helmet.bodyAttributes?.toString()}`,
             );
           }
 

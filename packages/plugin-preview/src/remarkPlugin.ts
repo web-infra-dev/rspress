@@ -1,7 +1,9 @@
 import fs from 'node:fs';
 import { dirname, join, resolve } from 'node:path';
 import { normalizePosixPath } from '@rspress/shared';
-import type { Root } from 'mdast';
+import { getNodeAttribute } from '@rspress/shared/node-utils';
+import type { Code, Root } from 'mdast';
+import type { MdxJsxFlowElement } from 'mdast-util-mdx-jsx';
 import type { MdxjsEsm } from 'mdast-util-mdxjs-esm';
 import type { Plugin } from 'unified';
 import { visit } from 'unist-util-visit';
@@ -26,7 +28,7 @@ export const remarkCodeToDemo: Plugin<[RemarkPluginOptions], Root> = function ({
   const routeMeta = getRouteMeta();
   fs.mkdirSync(virtualDir, { recursive: true });
   const data = this.data() as {
-    pageMeta: Record<string, any>;
+    pageMeta: Record<string, unknown>;
   };
   return (tree, vfile) => {
     const demoMdx: MdxjsEsm[] = [];
@@ -48,7 +50,7 @@ export const remarkCodeToDemo: Plugin<[RemarkPluginOptions], Root> = function ({
     function constructDemoNode(
       demoId: string,
       demoPath: string,
-      currentNode: any,
+      currentNode: Code | MdxJsxFlowElement,
       isMobileMode: boolean,
       // Only for external demo
       externalDemoIndex?: number,
@@ -117,47 +119,42 @@ export const remarkCodeToDemo: Plugin<[RemarkPluginOptions], Root> = function ({
     }
     visit(tree, 'heading', node => {
       if (node.depth === 1) {
-        if (node.children) {
-          title = (node.children[0] as any)?.value || title;
-        }
+        const firstChild = node.children[0];
+        title =
+          (firstChild && 'value' in firstChild && firstChild.value) || title;
       }
     });
 
     // 1. External demo , use <code src="foo" /> to declare demo
-    visit(tree, 'mdxJsxFlowElement', (node: any) => {
+    visit(tree, 'mdxJsxFlowElement', node => {
       if (node.name === 'code') {
-        const src = node.attributes.find(
-          (attr: { name: string; value: string }) => attr.name === 'src',
-        )?.value;
-        if (!src) {
+        const src = getNodeAttribute(node, 'src');
+
+        if (typeof src !== 'string') {
           return;
         }
 
         // don't support expression syntax
         const currentMode =
-          node.attributes.find(
-            (attr: { name: string; value: boolean }) =>
-              attr.name === 'previewMode',
-          )?.value ?? previewMode;
+          getNodeAttribute(node, 'previewMode') ?? previewMode;
 
-        // TODO: remove isMobileAttribute
-        let isMobileMode = node.attributes.find(
-          (attr: { name: string; value: boolean }) => attr.name === 'isMobile',
-        )?.value;
-        if (isMobileMode === undefined) {
+        // TODO: remove isMobile attribute
+        const isMobileAttr = getNodeAttribute(node, 'isMobile');
+        let isMobileMode = false;
+        if (isMobileAttr === undefined) {
           // isMobile is not specified, eg: <code />
           isMobileMode = currentMode === 'iframe';
-        } else if (isMobileMode === null) {
+        } else if (isMobileAttr === null) {
           // true by default, eg: <code isMobile />
           isMobileMode = true;
-        } else if (typeof isMobileMode === 'object') {
+        } else if (typeof isMobileAttr === 'object') {
           // jsx value, isMobileMode.value now must be string, even if input is
           // any complex struct rather than primitive type
           // eg: <code isMobile={ anyOfOrOther([true, false, 'true', 'false', {}]) } />
-          isMobileMode = isMobileMode.value !== 'false';
+          isMobileMode = isMobileAttr.value !== 'false';
         } else {
           // string value, eg: <code isMobile="true" />
-          isMobileMode = isMobileMode !== 'false';
+          isMobileMode = isMobileAttr !== 'false';
         }
 
         const id = generateId(pageName, index++);
@@ -174,8 +171,8 @@ export const remarkCodeToDemo: Plugin<[RemarkPluginOptions], Root> = function ({
       if (node.lang && previewLanguages.includes(node.lang)) {
         // do not anything for pure mode
         if (
-          node?.meta?.includes('pure') ||
-          (!node?.meta?.includes('preview') && defaultRenderMode === 'pure')
+          node.meta?.includes('pure') ||
+          (!node.meta?.includes('preview') && defaultRenderMode === 'pure')
         ) {
           return;
         }
@@ -189,10 +186,10 @@ export const remarkCodeToDemo: Plugin<[RemarkPluginOptions], Root> = function ({
 
         // every code block can change their preview mode by meta
         const isMobileMode =
-          node?.meta?.includes('mobile') ||
-          node?.meta?.includes('iframe') ||
-          (!node?.meta?.includes('web') &&
-            !node?.meta?.includes('internal') &&
+          node.meta?.includes('mobile') ||
+          node.meta?.includes('iframe') ||
+          (!node.meta?.includes('web') &&
+            !node.meta?.includes('internal') &&
             previewMode === 'iframe');
 
         const id = generateId(pageName, index++);

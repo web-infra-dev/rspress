@@ -46,7 +46,7 @@ export function pluginTypeDoc(options: PluginTypeDocOptions): RspressPlugin {
         githubPages: false,
         requiredToBeDocumented: ['Class', 'Function', 'Interface'],
         plugin: ['typedoc-plugin-markdown'],
-        // @ts-expect-error MarkdownTheme has no export
+        // @ts-expect-error - FIXME: current version of MarkdownTheme has no export, bump related package versions
         hideBreadcrumbs: true,
         hideMembersSymbol: true,
         allReflectionsHaveOwnDocument: true,

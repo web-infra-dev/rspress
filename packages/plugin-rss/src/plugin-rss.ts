@@ -1,3 +1,5 @@
+/// <reference path="../index.d.ts" />
+
 import NodePath from 'node:path';
 import { resolve as resolveUrl } from 'node:url';
 import type { PageIndexInfo, RspressPlugin, UserConfig } from '@rspress/shared';
@@ -5,12 +7,7 @@ import { Feed } from 'feed';
 import { PluginComponents, PluginName } from './exports';
 import { createFeed, generateFeedItem } from './feed';
 
-import {
-  type PageWithFeeds,
-  type ResolvedOutput,
-  concatArray,
-  writeFile,
-} from './internals';
+import { type ResolvedOutput, concatArray, writeFile } from './internals';
 import { getDefaultFeedOption, getOutputInfo, testPage } from './options';
 import type { FeedChannel, FeedItem, PluginRssOptions } from './type';
 
@@ -95,10 +92,8 @@ export function pluginRss(pluginRssOptions: PluginRssOptions): RspressPlugin {
       _config = config;
       feedsSet.set(pluginRssOptions, config);
     },
-    async extendPageData(_pageData) {
+    async extendPageData(pageData) {
       if (!_rssWorkaround) return;
-
-      const pageData = _pageData as PageWithFeeds;
 
       // rspress run `extendPageData` for each page
       //   - let's cache rss items within a complete rspress build

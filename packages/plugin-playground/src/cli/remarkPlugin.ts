@@ -1,14 +1,19 @@
 import fs from 'node:fs';
 import { dirname, join, resolve } from 'node:path';
 import type { RouteMeta } from '@rspress/shared';
-import type { Root } from 'mdast';
+import { getNodeAttribute } from '@rspress/shared/node-utils';
+import type { Code, Root } from 'mdast';
+import type {
+  MdxJsxAttributeValueExpression,
+  MdxJsxFlowElement,
+} from 'mdast-util-mdx-jsx';
 import type { Plugin } from 'unified';
 import { visit } from 'unist-util-visit';
-import { getNodeAttribute, getNodeMeta } from './utils';
+import { getNodeMeta } from './utils';
 
 function createPlaygroundNode(
-  currentNode: any,
-  attrs: Array<[string, string]>,
+  currentNode: Code | MdxJsxFlowElement,
+  attrs: Array<[string, string | MdxJsxAttributeValueExpression]>,
 ) {
   Object.assign(currentNode, {
     type: 'mdxJsxFlowElement',
@@ -47,10 +52,10 @@ export const remarkPlugin: Plugin<[RemarkPluginProps], Root> = ({
     }
 
     // 1. External demo , use <code src="foo" /> to declare demo
-    visit(tree, 'mdxJsxFlowElement', (node: any) => {
+    visit(tree, 'mdxJsxFlowElement', node => {
       if (node.name === 'code') {
         const src = getNodeAttribute(node, 'src');
-        if (!src) {
+        if (typeof src !== 'string') {
           return;
         }
         const demoPath = join(dirname(route.absolutePath), src);
@@ -61,7 +66,7 @@ export const remarkPlugin: Plugin<[RemarkPluginProps], Root> = ({
         const code = fs.readFileSync(demoPath, {
           encoding: 'utf8',
         });
-        const language = src.substr(src.lastIndexOf('.') + 1);
+        const language = src.slice(src.lastIndexOf('.') + 1);
         createPlaygroundNode(node, [
           ['code', code],
           ['language', language],
@@ -74,8 +79,8 @@ export const remarkPlugin: Plugin<[RemarkPluginProps], Root> = ({
     // 2. Internal demo, use ```j/tsx to declare demo
     visit(tree, 'code', node => {
       if (node.lang === 'jsx' || node.lang === 'tsx') {
-        const hasPureMeta = node?.meta?.includes('pure');
-        const hasPlaygroundMeta = node?.meta?.includes('playground');
+        const hasPureMeta = node.meta?.includes('pure');
+        const hasPlaygroundMeta = node.meta?.includes('playground');
 
         let noTransform;
         switch (defaultRenderMode) {

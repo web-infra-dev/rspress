@@ -1,6 +1,7 @@
 import path from 'node:path';
 import { cleanUrl, isProduction } from '@rspress/shared';
 import { logger } from '@rspress/shared/logger';
+import type { Root } from 'mdast';
 import type { Plugin } from 'unified';
 import { visit } from 'unist-util-visit';
 import type { RouteService } from '../../route/RouteService';
@@ -48,15 +49,15 @@ export function checkLinks(
  * Remark plugin to check dead links
  */
 export const remarkCheckDeadLinks: Plugin<
-  DeadLinkCheckOptions[]
+  DeadLinkCheckOptions[],
+  Root
 > = checkLink => {
   const { root, routeService } = checkLink;
 
   return (tree, vfile) => {
     const internalLinks = new Set<string>();
 
-    visit(tree, 'link', (node: { url: string }) => {
-      const { url } = node;
+    visit(tree, 'link', ({ url }) => {
       if (!url) {
         return;
       }

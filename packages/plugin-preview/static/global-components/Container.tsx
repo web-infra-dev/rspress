@@ -1,5 +1,5 @@
 import { NoSSR, useLang, usePageData, withBase } from '@rspress/core/runtime';
-import { useCallback, useState } from 'react';
+import { type MouseEvent, useCallback, useState } from 'react';
 import MobileOperation from './common/mobile-operation';
 import IconCode from './icons/Code';
 
@@ -26,12 +26,15 @@ const Container: React.FC<ContainerProps> = props => {
     // Do nothing in ssr
     return '';
   };
-  const toggleCode = (e: any) => {
-    if (!showCode) {
-      e.target.blur();
-    }
-    setShowCode(!showCode);
-  };
+  const toggleCode = useCallback(
+    (ev: MouseEvent<HTMLButtonElement>) => {
+      if (!showCode) {
+        ev.currentTarget.blur();
+      }
+      setShowCode(!showCode);
+    },
+    [showCode],
+  );
 
   const [iframeKey, setIframeKey] = useState(0);
   const refresh = useCallback(() => {

@@ -9,8 +9,7 @@ import './index.scss';
 
 const supportAppearanceTransition = () => {
   return (
-    // @ts-ignore document may not be defined in ssr
-    document?.startViewTransition &&
+    typeof document?.startViewTransition === 'function' &&
     !window.matchMedia('(prefers-reduced-motion: reduce)').matches
   );
 };

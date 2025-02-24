@@ -17,7 +17,7 @@ export async function detectReactVersion(): Promise<number> {
   const cwd = process.cwd();
   const reactPath = path.join(cwd, 'node_modules', 'react');
   if (await pathExists(reactPath)) {
-    const reactPkg: { version?: string } = await readJson(
+    const reactPkg = await readJson<{ version?: string }>(
       path.join(reactPath, 'package.json'),
     );
     const version = Number(reactPkg.version?.split('.')[0]);
@@ -42,7 +42,10 @@ export async function resolveReactAlias(reactVersion: number, isSSR: boolean) {
   }
   const alias: Record<string, string> = {};
   const resolver = ResolverFactory.createResolver({
-    fileSystem: new CachedInputFileSystem(fs as any, 0),
+    fileSystem: new CachedInputFileSystem(
+      fs as unknown as enhancedResolve.CachedInputFileSystem['fileSystem'],
+      0,
+    ),
     extensions: ['.js'],
     alias,
     conditionNames: isSSR ? ['...'] : ['browser', '...'],

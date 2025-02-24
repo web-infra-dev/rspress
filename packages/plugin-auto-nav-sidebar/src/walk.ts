@@ -12,7 +12,7 @@ import {
   withBase,
 } from '@rspress/shared';
 import { logger } from '@rspress/shared/logger';
-import type { NavMeta, SideMeta } from './type';
+import type { SideMeta } from './type';
 import {
   detectFilePath,
   extractInfoFromFrontmatter,
@@ -56,7 +56,7 @@ async function scanSideMeta(
   // Get the sidebar config from the `_meta.json` file
   try {
     // Don't use require to avoid require cache, which make hmr not work.
-    sideMeta = (await readJson(metaFile)) as SideMeta;
+    sideMeta = await readJson<SideMeta>(metaFile);
   } catch (e) {
     // If the `_meta.json` file doesn't exist, we will generate the sidebar config from the directory structure.
     let subItems = await fs.readdir(workDir);
@@ -111,11 +111,10 @@ async function scanSideMeta(
         return {
           text: title,
           link: addRoutePrefix(pureLink),
-          // FIXME: overviewHeaders is number[]
           overviewHeaders,
           context,
           _fileKey: getHmrFileKey(realPath, docsDir),
-        } as SidebarItem;
+        } satisfies SidebarItem;
       }
 
       const {
@@ -144,13 +143,12 @@ async function scanSideMeta(
           text: title,
           link: addRoutePrefix(pureLink),
           tag,
-          // FIXME: overviewHeaders is number[]
           overviewHeaders: info.overviewHeaders
             ? info.overviewHeaders
             : overviewHeaders,
           context: info.context ? info.context : context,
           _fileKey: getHmrFileKey(realPath, docsDir),
-        } as SidebarItem;
+        } satisfies SidebarItem;
       }
 
       if (type === 'dir') {
@@ -240,7 +238,6 @@ async function scanSideMeta(
           items: subSidebar,
           link,
           tag,
-          // FIXME: overviewHeaders is number[]
           overviewHeaders,
           context: frontmatterContext,
           _fileKey,
@@ -287,10 +284,10 @@ export async function walk(
 ) {
   // find the `_meta.json` file
   const rootMetaFile = path.resolve(workDir, '_meta.json');
-  let navConfig: NavMeta | undefined;
+  let navConfig: NavItem[] | undefined;
   // Get the nav config from the `_meta.json` file
   try {
-    navConfig = (await readJson(rootMetaFile)) as NavItem[];
+    navConfig = await readJson<NavItem[]>(rootMetaFile);
   } catch (e) {
     navConfig = [];
   }

@@ -1,3 +1,4 @@
+import type { UserConfig } from '@rspress/shared';
 import { logger } from '@rspress/shared/logger';
 import { fs, vol } from 'memfs';
 import { beforeEach, describe, expect, it, vi } from 'vitest';
@@ -22,7 +23,7 @@ describe('checkLanguageParity', () => {
   });
 
   // base config
-  const mockConfig: any = {
+  const mockConfig = {
     root: '/content',
     locales: [{ lang: 'en' }, { lang: 'zh' }],
     languageParity: {
@@ -30,7 +31,7 @@ describe('checkLanguageParity', () => {
       include: [],
       exclude: [],
     },
-  };
+  } as UserConfig;
 
   it('expect check all directory when empty config', async () => {
     vol.fromJSON({
@@ -56,7 +57,7 @@ describe('checkLanguageParity', () => {
       '/content/en/about/qq/secret.mdx': 'secret',
       // '/content/zh/about/qq/secret.mdx': '秘密',
     });
-    const onlyIncludeConfig = {
+    const onlyIncludeConfig: UserConfig = {
       ...mockConfig,
       languageParity: {
         include: ['docs', 'about/me'],

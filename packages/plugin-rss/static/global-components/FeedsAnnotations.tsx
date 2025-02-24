@@ -1,10 +1,11 @@
-import type { PageFeedData } from '@rspress/plugin-rss';
+/// <reference path="../../index.d.ts" />
+
 import type { LinkHTMLAttributes } from 'react';
 import { Helmet, usePageData } from 'rspress/runtime';
 
 export default function FeedsAnnotations() {
   const { page } = usePageData();
-  const feeds = (page.feeds as PageFeedData[]) || [];
+  const feeds = page.feeds || [];
 
   return (
     <Helmet>

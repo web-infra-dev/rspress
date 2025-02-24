@@ -10,10 +10,11 @@
   },
   "license": "MIT",
   "main": "./dist/index.js",
-  "types": "./dist/index.d.ts",
+  "types": "./index.d.ts",
   "files": [
     "dist",
     "static",
+    "index.d.ts",
     "mdx-meta-loader.cjs"
   ],
   "scripts": {

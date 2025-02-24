@@ -1,3 +1,5 @@
+import type { MdxJsxFlowElement, MdxJsxTextElement } from 'mdast-util-mdx-jsx';
+
 /**
  * Converts a string to a valid variable name. If the string is already a valid variable name, returns the original string.
  * @param str - The string to convert.

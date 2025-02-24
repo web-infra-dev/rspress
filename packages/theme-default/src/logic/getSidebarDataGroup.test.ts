@@ -5,7 +5,7 @@ vi.mock('@rspress/runtime', () => {
   return {
     withBase: (arg0: string) => arg0,
     pathnameToRouteService: (arg0: string) => {
-      const map: Record<string, any> = {
+      const map: Record<string, string> = {
         '/guide/getting-started': '/guide/getting-started',
         '/api/react.use': '/api/react.use',
         '/api/react.use.html': '/api/react.use',

@@ -1,5 +1,9 @@
 import { usePageData } from '@rspress/runtime';
-import { type SearchOptions, isProduction } from '@rspress/shared';
+import {
+  type AnyFunction,
+  type SearchOptions,
+  isProduction,
+} from '@rspress/shared';
 import CloseSvg from '@theme-assets/close';
 import LoadingSvg from '@theme-assets/loading';
 import SearchSvg from '@theme-assets/search';
@@ -38,14 +42,17 @@ export interface SearchPanelProps {
   setFocused: (focused: boolean) => void;
 }
 
-const useDebounce = <T extends (...args: any[]) => void>(cb: T): T => {
+const useDebounce = <T extends AnyFunction>(cb: T) => {
   const cbRef = useRef(cb);
   cbRef.current = cb;
   const debounced = useCallback(
-    debounce((...args: any) => cbRef.current(...args), 150),
+    debounce(
+      ((...args: Parameters<T>): ReturnType<T> => cbRef.current(...args)) as T,
+      150,
+    ),
     [],
   );
-  return debounced as unknown as T;
+  return debounced;
 };
 
 export function SearchPanel({ focused, setFocused }: SearchPanelProps) {
@@ -59,7 +66,7 @@ export function SearchPanel({ focused, setFocused }: SearchPanelProps) {
   const pageSearcherRef = useRef<PageSearcher | null>(null);
   const pageSearcherConfigRef = useRef<PageSearcherConfig | null>(null);
   const searchResultRef = useRef<HTMLDivElement>(null);
-  const searchResultTabRef = useRef(null);
+  const searchResultTabRef = useRef<HTMLDivElement>(null);
   const mousePositionRef = useRef<{
     pageX: number | null;
     pageY: number | null;
@@ -395,7 +402,6 @@ export function SearchPanel({ focused, setFocused }: SearchPanelProps) {
           setResultTabIndex(index);
           setCurrentSuggestionIndex(0);
         }}
-        // @ts-ignore
         ref={searchResultTabRef}
       >
         {result.map(item => (

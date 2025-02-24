@@ -1,3 +1,5 @@
+/// <reference path="../../index.d.ts" />
+
 import { useLang, usePageData } from '@rspress/core/runtime';
 import { getCustomMDXComponent } from '@rspress/core/theme';
 import ReactMarkdown from 'react-markdown';
@@ -9,10 +11,10 @@ export default (props: { moduleName: string }) => {
   const { page } = usePageData();
   const { moduleName } = props;
   // some api doc have two languages.
-  const apiDocMap = page.apiDocMap as Record<string, string>;
+  const apiDocMap = page.apiDocMap;
   // avoid error when no page data
   const apiDoc =
-    apiDocMap?.[moduleName] || apiDocMap?.[`${moduleName}-${lang}`];
+    apiDocMap?.[moduleName] || apiDocMap?.[`${moduleName}-${lang}`] || '';
   return (
     <ReactMarkdown
       remarkPlugins={[[remarkGfm]]}

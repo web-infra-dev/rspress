@@ -11,6 +11,7 @@
  * In fact, the syntax is usually used in SSG Frameworks, such as VuePress/Docusaurus.
  * So the plugin is used to solve the problem and support both syntaxes in above cases.
  */
+/// <reference types="mdast-util-mdx-expression" />
 /// <reference types="remark-directive" />
 import type {
   BlockContent,
@@ -153,15 +154,14 @@ function transformer(tree: Parent) {
          * </div>
          */
         node.type === 'blockquote' &&
-        node.children[0].type === 'paragraph'
+        node.children[0].type === 'paragraph' &&
+        'value' in node.children[0].children[0]
       ) {
-        const initiatorTag: string =
-          // @ts-expect-error `value` is treated like `data`, but type expects `data`
-          node.children[0].children[0].value;
+        const initiatorTag = node.children[0].children[0].value;
+        const match = initiatorTag.match(REGEX_GH_BEGIN);
 
-        if (REGEX_GH_BEGIN.test(initiatorTag)) {
-          const match = initiatorTag.match(REGEX_GH_BEGIN);
-          const [, type] = match!;
+        if (match) {
+          const [, type] = match;
           if (!DIRECTIVE_TYPES.includes(type.toLowerCase() as DirectiveType)) {
             i++;
             continue;
@@ -170,9 +170,7 @@ function transformer(tree: Parent) {
             node.children.length === 1 &&
             node.children[0].type === 'paragraph'
           ) {
-            // @ts-expect-error `value` is treated like `data`, but type expects `data`
-            node.children[0].children[0].value =
-              initiatorTag!.match(REGEX_GH_BEGIN)![2]! ?? '';
+            node.children[0].children[0].value = match[2] ?? '';
           }
           const newChild = createContainer(
             type.toLowerCase(),
@@ -209,7 +207,6 @@ function transformer(tree: Parent) {
       let title = parseTitle(rawTitle);
       // :::tip{title="foo"}
       const titleExpressionNode =
-        // @ts-expect-error mdxTextExpression is not defined in mdast
         node.children[1] && node.children[1].type === 'mdxTextExpression'
           ? node.children[1]
           : null;

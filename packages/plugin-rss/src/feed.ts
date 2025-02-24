@@ -35,8 +35,8 @@ export function generateFeedItem(page: PageIndexInfo, siteUrl: string) {
 
 export function createFeed(
   options: Omit<FeedChannel, 'test' | 'item' | 'output'> & {
-    item?: any;
-    test?: any;
+    item?: unknown;
+    test?: unknown;
     output: ResolvedOutput;
   },
   config: UserConfig,

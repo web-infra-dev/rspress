@@ -1,19 +1,24 @@
 import fs from 'node:fs';
 import path from 'node:path';
+
 import { createProcessor } from '@mdx-js/mdx';
 import { MDX_REGEXP } from '@rspress/shared';
-import enhancedResolve from 'enhanced-resolve';
-import { importStatementRegex } from '../constants';
-
 import { logger } from '@rspress/shared/logger';
 import type { Resolver } from 'enhanced-resolve';
+import enhancedResolve from 'enhanced-resolve';
 import type { Root } from 'hast';
+import type { Processor } from 'unified';
+
+import { importStatementRegex } from '../constants';
 
 let resolver: Resolver;
 let startFlatten = false;
 
-const processor = createProcessor();
+const processor = createProcessor() as Processor<Root>;
 const { CachedInputFileSystem, ResolverFactory } = enhancedResolve;
+
+const fileSystem =
+  fs as unknown as enhancedResolve.CachedInputFileSystem['fileSystem'];
 
 export async function resolveDepPath(
   importPath: string,
@@ -22,7 +27,7 @@ export async function resolveDepPath(
 ) {
   if (!resolver) {
     resolver = ResolverFactory.createResolver({
-      fileSystem: new CachedInputFileSystem(fs as any, 0),
+      fileSystem: new CachedInputFileSystem(fileSystem, 0),
       extensions: ['.mdx', '.md'],
       alias,
     });
@@ -53,14 +58,6 @@ export async function resolveDepPath(
   return resolveResult;
 }
 
-interface ESTree {
-  body: {
-    type: 'ImportDeclaration';
-    specifiers: { local: { name: string } }[];
-    source: { value: string };
-  }[];
-}
-
 export async function flattenMdxContent(
   content: string,
   basePath: string,
@@ -81,7 +78,7 @@ export async function flattenMdxContent(
   // If we reuse the resolver instance in `detectReactVersion` method, the resolver will lose the alias info and cannot resolve path correctly in mdx files.
   if (!startFlatten) {
     resolver = ResolverFactory.createResolver({
-      fileSystem: new CachedInputFileSystem(fs as any, 0),
+      fileSystem: new CachedInputFileSystem(fileSystem, 0),
       extensions: ['.mdx', '.md', '.js'],
       alias,
     });
@@ -92,7 +89,7 @@ export async function flattenMdxContent(
   let result = content;
 
   try {
-    ast = processor.parse(content) as unknown as Root;
+    ast = processor.parse(content);
   } catch (e) {
     // Fallback: if mdx parse failed, just return the content
     logger.debug('flattenMdxContent parse failed: \n', e);
@@ -100,14 +97,14 @@ export async function flattenMdxContent(
   }
 
   const importNodes = ast.children
-    .filter(node => node.type === ('mdxjsEsm' as any))
-    .flatMap(node => ((node.data as any)?.estree as ESTree)?.body || [])
+    .filter(node => node.type === 'mdxjsEsm')
+    .flatMap(node => node.data?.estree?.body || [])
     .filter(node => node.type === 'ImportDeclaration');
   for (const importNode of importNodes) {
     // import Comp from './a';
     // {id: Comp, importPath: './a'}
     const id = importNode.specifiers[0].local.name;
-    const importPath = importNode.source.value;
+    const importPath = importNode.source.value as string;
 
     let absoluteImportPath: string;
     try {
