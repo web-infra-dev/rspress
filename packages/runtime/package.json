@@ -43,7 +43,7 @@
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
     "react-helmet-async": "^1.3.0",
-    "react-router-dom": "^6.29.0"
+    "react-router-dom": "^7.2.0"
   },
   "devDependencies": {
     "@rsbuild/plugin-react": "~1.1.0",
