@@ -1,18 +1,10 @@
 {
-  "extends": "@modern-js/tsconfig/base",
+  "extends": "@rspress/config/tsconfig",
   "compilerOptions": {
-    "moduleResolution": "bundler",
     "composite": true,
-    "declaration": true,
-    "noEmit": false,
-    "module": "ESNext",
-    "target": "ESNext",
-    "jsx": "react-jsx",
     "baseUrl": "src",
     "rootDir": "src",
-    "lib": ["ESNext", "DOM"],
-    "esModuleInterop": true,
-    "skipLibCheck": true
+    "noUnusedLocals": false
   },
   "references": [
     {
@@ -22,6 +14,5 @@
       "path": "../shared"
     }
   ],
-  "include": ["src"],
-  "exclude": ["runtime.d.ts", "theme.d.ts", "node_modules", "dist"]
+  "include": ["src"]
 }

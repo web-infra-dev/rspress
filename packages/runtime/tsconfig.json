@@ -1,17 +1,10 @@
 {
-  "extends": "@modern-js/tsconfig/base",
+  "extends": "@rspress/config/tsconfig",
   "compilerOptions": {
-    "moduleResolution": "bundler",
-    "module": "ESNext",
     "composite": true,
-    "declaration": true,
-    "noEmit": false,
     "declarationDir": "dist",
     "rootDir": "src",
-    "baseUrl": ".",
-    "skipLibCheck": true,
-    "jsx": "react-jsx",
-    "esModuleInterop": true
+    "baseUrl": "."
   },
   "references": [
     {

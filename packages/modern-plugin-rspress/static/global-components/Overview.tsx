@@ -1,5 +1,6 @@
 import { Link } from '@rspress/core/theme';
 import styles from './Overview.module.scss';
+// @ts-ignore import a js file
 import IconRight from './arrow-right';
 
 type List = {

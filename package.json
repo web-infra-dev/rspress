@@ -34,8 +34,8 @@
   "devDependencies": {
     "@biomejs/biome": "1.9.4",
     "@changesets/cli": "^2.27.12",
-    "@modern-js/tsconfig": "2.64.0",
     "@playwright/test": "1.47.2",
+    "@rspress/config": "workspace:*",
     "@types/cross-spawn": "^6.0.6",
     "@types/node": "^18.11.17",
     "check-dependency-version-consistency": "^5.0.0",

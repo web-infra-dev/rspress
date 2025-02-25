@@ -1,0 +1,9 @@
+{
+  "name": "@rspress/config",
+  "version": "1.0.0",
+  "private": true,
+  "devDependencies": {
+    "@types/node": "^18.11.17",
+    "typescript": "^5.5.3"
+  }
+}

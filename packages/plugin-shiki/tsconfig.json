@@ -1,17 +1,10 @@
 {
-  "extends": "@modern-js/tsconfig/base",
+  "extends": "@rspress/config/tsconfig",
   "compilerOptions": {
-    "moduleResolution": "bundler",
-    "declaration": false,
-    "module": "ESNext",
-    "target": "ESNext",
-    "jsx": "react-jsx",
+    "composite": true,
     "baseUrl": "src",
-    "rootDir": ".",
-    "lib": ["ESNext", "DOM"],
-    "esModuleInterop": true,
-    "skipLibCheck": true
+    "rootDir": "."
   },
-  "include": ["src", "vitest.config.ts", "index.d.ts", "rslib.config.ts"],
+  "include": ["src", "rslib.config.ts"],
   "exclude": ["node_modules", "dist"]
 }

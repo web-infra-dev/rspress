@@ -2,6 +2,7 @@ import { createRequire } from 'node:module';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import type { RspressPlugin } from '@rspress/shared';
+// @ts-ignore 'tailwind.config.ts' is not under 'rootDir'
 import tailwindConfig from '../../tailwind.config';
 
 const require = createRequire(import.meta.url);

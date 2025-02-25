@@ -1,5 +1,5 @@
 {
-  "extends": "@modern-js/tsconfig/base",
+  "extends": "@rspress/config/tsconfig",
   "compilerOptions": {
     "declaration": true,
     "jsx": "preserve",

@@ -1,5 +1,5 @@
 import type { RsbuildConfig, RsbuildPlugin } from '@rsbuild/core';
-import type { ConfigParams } from '@rsbuild/core/dist-types/config';
+import type { loadConfig } from '@rsbuild/core';
 import type { ZoomOptions } from 'medium-zoom';
 import type { PluggableList } from 'unified';
 import type { AdditionalPage, RspressPlugin } from './Plugin';
@@ -436,4 +436,6 @@ export interface MarkdownOptions {
 export type Config =
   | UserConfig
   | Promise<UserConfig>
-  | ((env: ConfigParams) => UserConfig | Promise<UserConfig>);
+  | ((
+      ...args: Parameters<typeof loadConfig>
+    ) => UserConfig | Promise<UserConfig>);
