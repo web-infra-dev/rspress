@@ -22,7 +22,7 @@ async function loadUmdBabelModule(): Promise<Babel> {
     `with(exports, module, require) {${umdSourceCode}}`,
   );
 
-  const exports: Babel = {} as unknown as Babel;
+  const exports = {} as unknown as Babel;
   const module = { exports };
   const require = () => {};
 

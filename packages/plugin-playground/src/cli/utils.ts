@@ -1,6 +1,6 @@
-/* eslint-disable consistent-return */
 import type { Program } from '@babel/types';
 import oxc from '@oxidation-compiler/napi';
+import type { Code } from 'mdast';
 
 export const parseImports = (code: string, sourceExt: string) => {
   const parsed = oxc.parseSync(code, {
@@ -23,28 +23,17 @@ export const parseImports = (code: string, sourceExt: string) => {
   return result;
 };
 
-export const getNodeAttribute = (
-  node: any,
-  attrName: string,
-): string | undefined => {
-  return node.attributes.find(
-    (attr: { name: string; value: string }) => attr.name === attrName,
-  )?.value;
-};
-
 export const getNodeMeta = (
-  node: any,
+  node: Code,
   metaName: string,
 ): string | undefined => {
   if (!node.meta) {
     return;
   }
-  const meta: string[] = node.meta.split(' ');
-  const item: string | undefined = meta.find((x: string) =>
-    x.startsWith(metaName),
-  );
+  const meta = node.meta.split(' ');
+  const item = meta.find((x: string) => x.startsWith(metaName));
   if (item?.startsWith(`${metaName}=`)) {
-    return item.substring(metaName.length + 1);
+    return item.slice(metaName.length + 1);
   }
   return item;
 };

@@ -19,8 +19,8 @@ import type {
   WatchFileInfo,
 } from './types';
 
-const isToolEntries = (obj: Record<string, any>): obj is ToolEntries => {
-  return obj.documentation || obj['react-docgen-typescript'];
+const isToolEntries = (obj: Record<string, unknown>): obj is ToolEntries => {
+  return !!obj.documentation || !!obj['react-docgen-typescript'];
 };
 
 export const docgen = async ({

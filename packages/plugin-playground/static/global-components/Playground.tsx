@@ -10,7 +10,7 @@ import { Editor, Runner } from '../../dist/web/esm';
 
 // inject by builder in cli/index.ts
 declare global {
-  const __PLAYGROUND_DIRECTION__: any;
+  const __PLAYGROUND_DIRECTION__: Direction;
 }
 
 type Direction = 'horizontal' | 'vertical';

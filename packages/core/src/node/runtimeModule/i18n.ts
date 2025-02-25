@@ -8,7 +8,7 @@ const DEFAULT_I18N_SOURCE = join(process.cwd(), 'i18n.json');
 export function getI18nData(docConfig: UserConfig) {
   const { i18nSourcePath = DEFAULT_I18N_SOURCE } = docConfig;
   try {
-    // @ts-expect-error require.cache is an API in Rslib.
+    // require.cache is an API in Rslib.
     delete REQUIRE_CACHE[i18nSourcePath];
     // eslint-disable-next-line import/no-dynamic-require
     const i18nSource = require(i18nSourcePath);

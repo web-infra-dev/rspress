@@ -7,7 +7,7 @@ export type Middleware = (
 ) => void;
 
 export function createMiddleware(): Middleware {
-  return [] as any;
+  return {} as Middleware;
 }
 
 /**

@@ -1,9 +1,3 @@
-declare module 'virtual-routes' {
-  export { Route } from '@rspress/shared';
-
-  export const routes: Route[];
-}
-
 declare module 'virtual-routes-ssr' {
   export { Route } from '@rspress/shared';
 
@@ -25,7 +19,7 @@ declare module 'virtual-search-index-hash' {
 declare module 'virtual-global-components' {
   import { ComponentType } from 'react';
 
-  const components: (ComponentType | [ComponentType, any])[];
+  const components: (ComponentType | [ComponentType, object])[];
   export default components;
 }
 

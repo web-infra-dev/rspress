@@ -18,10 +18,10 @@
   "type": "module",
   "main": "./dist/index.js",
   "module": "./dist/node/index.js",
-  "types": "./dist/index.d.ts",
+  "types": "./index.d.ts",
   "files": [
     "dist",
-    "src"
+    "index.d.ts"
   ],
   "scripts": {
     "build": "rslib build",

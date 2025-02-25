@@ -2,14 +2,14 @@ import fs from 'node:fs/promises';
 import type { FrontMatterMeta, RouteMeta, UserConfig } from '@rspress/shared';
 import { loadFrontMatter } from '@rspress/shared/node-utils';
 
-export async function renderFrontmatterHead(route: any): Promise<string> {
+export async function renderFrontmatterHead(route: unknown): Promise<string> {
   if (!isRouteMeta(route)) return '';
   const content = await fs.readFile(route.absolutePath, {
     encoding: 'utf-8',
   });
   const {
     frontmatter: { head },
-  } = loadFrontMatter<FrontMatterMeta>(content, route.absolutePath, '', true);
+  } = loadFrontMatter(content, route.absolutePath, '', true);
   if (!head || head.length === 0) return '';
 
   return head.map(([tag, attrs]) => `<${tag} ${renderAttrs(attrs)}>`).join('');
@@ -17,7 +17,7 @@ export async function renderFrontmatterHead(route: any): Promise<string> {
 
 export async function renderConfigHead(
   config: UserConfig,
-  route: any,
+  route: unknown,
 ): Promise<string> {
   if (!isRouteMeta(route)) return '';
   if (!config.head || config.head.length === 0) return '';
@@ -49,6 +49,11 @@ function renderAttrs(attrs: FrontMatterMeta['head'][number][1]): string {
     .join('');
 }
 
-function isRouteMeta(route: any): route is RouteMeta {
-  return 'routePath' in route && 'absolutePath' in route;
+function isRouteMeta(route: unknown): route is RouteMeta {
+  return (
+    !!route &&
+    typeof route === 'object' &&
+    'routePath' in route &&
+    'absolutePath' in route
+  );
 }

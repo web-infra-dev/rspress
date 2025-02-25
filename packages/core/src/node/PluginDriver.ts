@@ -1,5 +1,6 @@
 import { pluginContainerSyntax } from '@rspress/plugin-container-syntax';
 import type {
+  ExtractFunctionKeys,
   PageIndexInfo,
   RouteMeta,
   RspressPlugin,
@@ -150,9 +151,7 @@ export class PluginDriver {
     );
   }
 
-  async modifySearchIndexData(
-    pages: PageIndexInfo[],
-  ): Promise<PageIndexInfo[]> {
+  async modifySearchIndexData(pages: PageIndexInfo[]) {
     return this._runParallelAsyncHook(
       'modifySearchIndexData',
       pages,
@@ -165,7 +164,6 @@ export class PluginDriver {
   }
 
   async addPages() {
-    // addPages hooks
     const result = await this._runParallelAsyncHook(
       'addPages',
       this.#config || {},
@@ -175,11 +173,11 @@ export class PluginDriver {
   }
 
   async routeGenerated(routes: RouteMeta[]) {
-    return this._runParallelAsyncHook('routeGenerated', routes);
+    return this._runParallelAsyncHook('routeGenerated', routes, this.#isProd);
   }
 
   async addRuntimeModules() {
-    const result: Record<string, string>[] = await this._runParallelAsyncHook(
+    const result = await this._runParallelAsyncHook(
       'addRuntimeModules',
       this.#config || {},
       this.#isProd,
@@ -199,41 +197,51 @@ export class PluginDriver {
       this.#config || {},
       this.#isProd,
     );
-
     return result.flat();
   }
 
-  globalUIComponents(): (string | [string, object])[] {
-    const result = this.#plugins.map(plugin => {
-      return plugin.globalUIComponents || [];
-    });
-
+  globalUIComponents() {
+    const result = this.#plugins.map(plugin => plugin.globalUIComponents || []);
     return result.flat();
   }
 
-  globalStyles(): string[] {
+  globalStyles() {
     return this.#plugins
       .filter(plugin => typeof plugin.globalStyles === 'string')
-      .map(plugin => {
-        return plugin.globalStyles;
-      });
+      .map(plugin => plugin.globalStyles);
   }
 
-  _runParallelAsyncHook(hookName: string, ...args: unknown[]) {
+  _runParallelAsyncHook<
+    const H extends
+      ExtractFunctionKeys<RspressPlugin> = ExtractFunctionKeys<RspressPlugin>,
+  >(
+    hookName: H,
+    ...args: Parameters<RspressPlugin[H]>
+  ): Promise<Awaited<ReturnType<RspressPlugin[H]>>[]> {
+    // @ts-expect-error - FIXME: TS is not able to infer the correct type
     return Promise.all(
       this.#plugins
         .filter(plugin => typeof plugin[hookName] === 'function')
-        .map(plugin => {
-          return plugin[hookName](...args);
-        }),
+        .map(plugin =>
+          plugin[hookName](
+            // @ts-expect-error - FIXME: TS is not able to infer the correct type
+            ...args,
+          ),
+        ),
     );
   }
 
-  _runSerialAsyncHook(hookName: string, ...args: unknown[]) {
+  _runSerialAsyncHook<
+    const H extends
+      ExtractFunctionKeys<RspressPlugin> = ExtractFunctionKeys<RspressPlugin>,
+  >(hookName: H, ...args: Parameters<RspressPlugin[H]>) {
     return this.#plugins.reduce(async (prev, plugin) => {
       if (typeof plugin[hookName] === 'function') {
         await prev;
-        return plugin[hookName](...args);
+        return plugin[hookName](
+          // @ts-expect-error - FIXME: TS is not able to infer the correct type
+          ...args,
+        );
       }
       return prev;
     }, Promise.resolve());

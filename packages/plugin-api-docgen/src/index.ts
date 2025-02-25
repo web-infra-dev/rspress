@@ -1,13 +1,11 @@
+/// <reference path="../index.d.ts" />
+
 import fs from 'node:fs';
 import path from 'node:path';
 import type { RspressPlugin } from '@rspress/shared';
 import { apiDocMap } from './constants';
 import { docgen } from './docgen';
-import type {
-  ExtendedPageData,
-  PluginOptions,
-  SupportLanguages,
-} from './types';
+import type { PluginOptions, SupportLanguages } from './types';
 
 /**
  * The plugin is used to generate api doc for files.
@@ -66,7 +64,7 @@ export function pluginApiDocgen(options?: PluginOptions): RspressPlugin {
       );
     },
     extendPageData(pageData) {
-      (pageData as ExtendedPageData).apiDocMap = { ...apiDocMap };
+      pageData.apiDocMap = { ...apiDocMap };
     },
     markdown: {
       globalComponents: [

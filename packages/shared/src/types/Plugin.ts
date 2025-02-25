@@ -61,9 +61,7 @@ export interface RspressPlugin {
    * Extend every page's data
    */
   extendPageData?: (
-    pageData: PageIndexInfo & {
-      [key: string]: unknown;
-    },
+    pageData: PageIndexInfo,
     isProd: boolean,
   ) => void | Promise<void>;
   /**

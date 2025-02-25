@@ -24,7 +24,7 @@ export interface RouteOptions {
 }
 
 export class RouteService {
-  routeData: Map<string, RouteMeta> = new Map();
+  routeData = new Map<string, RouteMeta>();
 
   #scanDir: string;
 

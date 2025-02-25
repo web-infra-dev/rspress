@@ -76,8 +76,13 @@ export function pluginPreview(options?: Options): RspressPlugin {
               server.close(resolve);
             });
           });
-        } catch (e: any) {
-          if (e.code !== 'EADDRINUSE') {
+        } catch (e) {
+          if (
+            !!e &&
+            typeof e === 'object' &&
+            'code' in e &&
+            e.code !== 'EADDRINUSE'
+          ) {
             throw e;
           }
 

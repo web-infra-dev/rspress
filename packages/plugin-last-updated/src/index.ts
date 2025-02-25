@@ -1,3 +1,5 @@
+/// <reference path="../index.d.ts" />
+
 import type { RspressPlugin } from '@rspress/shared';
 import { execa } from 'execa';
 

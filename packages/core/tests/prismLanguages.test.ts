@@ -1,12 +1,17 @@
 import path from 'node:path';
+import type { PluginDriver } from 'src/node/PluginDriver';
+import type { RouteService } from 'src/node/route/RouteService';
 import { describe, expect, it } from 'vitest';
-import { RuntimeModuleID } from '../src/node/runtimeModule';
+import {
+  type FactoryContext,
+  RuntimeModuleID,
+} from '../src/node/runtimeModule';
 import { siteDataVMPlugin } from '../src/node/runtimeModule/siteData';
 
 describe('automatic import of prism languages', () => {
   const userDocRoot = path.join(__dirname, 'prismLanguages');
 
-  const context: any = {
+  const context = {
     alias: {},
     config: {
       markdown: {
@@ -25,19 +30,19 @@ describe('automatic import of prism languages', () => {
           { absolutePath: path.join(userDocRoot, 'other.mdx') },
         ];
       },
-    },
+    } as RouteService,
     pluginDriver: {
-      async extendPageData(pageData: any) {
+      extendPageData(pageData) {
         pageData.extraHighlightLanguages = ['jsx', 'tsx'];
       },
-      async modifySearchIndexData(_pages: any) {},
-    },
-  };
+      modifySearchIndexData() {},
+      // FIXME: not sure the difference with `RouteService` above
+    } as unknown as PluginDriver,
+  } as FactoryContext;
 
   it('prism languages aliases should be configurable to users', async () => {
     const meta = await siteDataVMPlugin(context);
     const prismLanguagesContent = meta[RuntimeModuleID.PrismLanguages];
-
     expect(prismLanguagesContent).toMatchSnapshot();
   });
 });

@@ -770,8 +770,8 @@ importers:
         specifier: ^2.0.3
         version: 2.0.3
       hast-util-heading-rank:
-        specifier: ^3.0.0
-        version: 3.0.0
+        specifier: ^2.1.1
+        version: 2.1.1
       html-to-text:
         specifier: ^9.0.5
         version: 9.0.5
@@ -827,8 +827,8 @@ importers:
         specifier: ^4.1.2
         version: 4.1.2
       unist-util-visit-children:
-        specifier: ^3.0.0
-        version: 3.0.0
+        specifier: ^2.0.2
+        version: 2.0.2
     devDependencies:
       '@microsoft/api-extractor':
         specifier: ^7.49.2
@@ -839,9 +839,12 @@ importers:
       '@rslib/core':
         specifier: 0.4.1
         version: 0.4.1(@microsoft/api-extractor@7.49.2(@types/node@18.11.17))(typescript@5.5.3)
+      '@rspress-dev/plugin-preview':
+        specifier: link:../plugin-preview
+        version: link:../plugin-preview
       '@types/hast':
-        specifier: 3.0.4
-        version: 3.0.4
+        specifier: ^2.3.10
+        version: 2.3.10
       '@types/html-to-text':
         specifier: ^9.0.4
         version: 9.0.4
@@ -1121,6 +1124,9 @@ importers:
       '@types/mdast':
         specifier: ^3.0.15
         version: 3.0.15
+      mdast-util-mdx-expression:
+        specifier: ^1.3.2
+        version: 1.3.2
       mdast-util-mdx-jsx:
         specifier: ^2.1.4
         version: 2.1.4
@@ -1265,6 +1271,9 @@ importers:
       '@types/react-dom':
         specifier: ^18.3.5
         version: 18.3.5(@types/react@18.3.18)
+      mdast-util-mdx-jsx:
+        specifier: ^2.1.4
+        version: 2.1.4
       react:
         specifier: ^18.3.1
         version: 18.3.1
@@ -1338,6 +1347,9 @@ importers:
       '@types/react-dom':
         specifier: ^18.3.5
         version: 18.3.5(@types/react@18.3.18)
+      mdast-util-mdx-jsx:
+        specifier: ^2.1.4
+        version: 2.1.4
       mdast-util-mdxjs-esm:
         specifier: ^1.3.1
         version: 1.3.1
@@ -1397,14 +1409,14 @@ importers:
         specifier: workspace:*
         version: link:../shared
       hast-util-from-html:
-        specifier: 2.0.3
-        version: 2.0.3
+        specifier: ^1.0.2
+        version: 1.0.2
       shiki:
-        specifier: 0.14.7
+        specifier: ^0.14.7
         version: 0.14.7
       unist-util-visit:
-        specifier: 5.0.0
-        version: 5.0.0
+        specifier: ^4.1.2
+        version: 4.1.2
     devDependencies:
       '@microsoft/api-extractor':
         specifier: ^7.49.2
@@ -1416,8 +1428,8 @@ importers:
         specifier: 0.4.1
         version: 0.4.1(@microsoft/api-extractor@7.49.2(@types/node@18.11.17))(typescript@5.5.3)
       '@types/hast':
-        specifier: 3.0.4
-        version: 3.0.4
+        specifier: ^2.3.10
+        version: 2.3.10
       '@types/node':
         specifier: ^18.11.17
         version: 18.11.17
@@ -1550,6 +1562,9 @@ importers:
       '@types/react':
         specifier: ^18.3.18
         version: 18.3.18
+      mdast-util-mdx-jsx:
+        specifier: ^2.1.4
+        version: 2.1.4
       medium-zoom:
         specifier: 1.1.0
         version: 1.1.0
@@ -1627,8 +1642,8 @@ importers:
         specifier: ^3.1.2
         version: 3.1.2
       '@types/hast':
-        specifier: 3.0.4
-        version: 3.0.4
+        specifier: ^2.3.10
+        version: 2.3.10
       '@types/jest':
         specifier: ~29.5.14
         version: 29.5.14
@@ -3251,8 +3266,8 @@ packages:
   '@types/fs-extra@11.0.4':
     resolution: {integrity: sha512-yTbItCNreRooED33qjunPthRcSjERP1r4MqCZc7wv0u2sUkzTFp45tgUfS5+r7FrZPdmCCNflLhVSP/o+SemsQ==}
 
-  '@types/hast@2.3.4':
-    resolution: {integrity: sha512-wLEm0QvaoawEDoTRwzTXp4b4jpwiJDvR5KMnFnVodm3scufTlBOWRD6N1OBf9TZMhjlNsSfcO5V+7AF4+Vy+9g==}
+  '@types/hast@2.3.10':
+    resolution: {integrity: sha512-McWspRw8xx8J9HurkVBfYj0xKoE25tOFlHGdx4MJ5xORQrMGZNqJhVQWaIbm6Oyla5kYOXtDiopzKRJzEOkwJw==}
 
   '@types/hast@3.0.4':
     resolution: {integrity: sha512-WPs+bbQw5aCj+x6laNGWLH3wviHtoCv/P3+otBhbOhJgG8qtpdAMlTCxLtsTWA7LH1Oh/bFCHsBn0TPS5m30EQ==}
@@ -4433,6 +4448,9 @@ packages:
     resolution: {integrity: sha512-f2dvO0VU6Oej7RkWJGrehjbzMAjFp5/VKPp5tTpWIV4JHHZK1/BxbFRtf/siA2SWTe09caDmVtYYzWEIbBS4zw==}
     engines: {node: '>= 0.4.0'}
 
+  hast-util-from-html@1.0.2:
+    resolution: {integrity: sha512-LhrTA2gfCbLOGJq2u/asp4kwuG0y6NhWTXiPKP+n0qNukKy7hc10whqqCFfyvIA1Q5U5d0sp9HhNim9gglEH4A==}
+
   hast-util-from-html@2.0.3:
     resolution: {integrity: sha512-CUSRHXyKjzHov8yKsQjGOElXy/3EKpyX56ELnkHH34vDVw1N1XSQ1ZcAvTyAPtGqLTuKP/uxM+aLkSPqF/EtMw==}
 
@@ -4442,8 +4460,8 @@ packages:
   hast-util-from-parse5@8.0.1:
     resolution: {integrity: sha512-Er/Iixbc7IEa7r/XLtuG52zoqn/b3Xng/w6aZQ0xGVxzhw5xUFxcRqdPzP6yFi/4HBYRaifaI5fQ1RH8n0ZeOQ==}
 
-  hast-util-heading-rank@3.0.0:
-    resolution: {integrity: sha512-EJKb8oMUXVHcWZTDepnr+WNbfnXKFNf9duMesmr4S8SXTJBJ9M4Yok08pu9vxdJwdlGRhVumk9mEhkEvKGifwA==}
+  hast-util-heading-rank@2.1.1:
+    resolution: {integrity: sha512-iAuRp+ESgJoRFJbSyaqsfvJDY6zzmFoEnL1gtz1+U8gKtGGj1p0CVlysuUAUjq95qlZESHINLThwJzNGmgGZxA==}
 
   hast-util-is-element@3.0.0:
     resolution: {integrity: sha512-Val9mnv2IWpLbNPqc/pUem+a7Ipj2aHacCwgNfTiK0vJKl0LF+4Ba4+v1oPHFpf3bLYmreq0/l3Gud9S5OH42g==}
@@ -6517,8 +6535,8 @@ packages:
   unist-util-stringify-position@4.0.0:
     resolution: {integrity: sha512-0ASV06AAoKCDkS2+xw5RXJywruurpbC4JZSm7nr7MOt1ojAzvyyaO+UxZf18j8FCF6kmzCZKcAgN/yu2gm2XgQ==}
 
-  unist-util-visit-children@3.0.0:
-    resolution: {integrity: sha512-RgmdTfSBOg04sdPcpTSD1jzoNBjt9a80/ZCzp5cI9n1qPzLZWF9YdvWGN2zmTumP1HWhXKdUWexjy/Wy/lJ7tA==}
+  unist-util-visit-children@2.0.2:
+    resolution: {integrity: sha512-+LWpMFqyUwLGpsQxpumsQ9o9DG2VGLFrpz+rpVXYIEdPy57GSy5HioC0g3bg/8WP9oCLlapQtklOzQ8uLS496Q==}
 
   unist-util-visit-parents@5.1.3:
     resolution: {integrity: sha512-x6+y8g7wWMyQhL1iZfhIPhDAs7Xwbn9nRosDXl7qoPTSCy0yNxnKc+hWokFifWQIDGi154rdUqKvbCa4+1kLhg==}
@@ -8544,9 +8562,9 @@ snapshots:
       '@types/jsonfile': 6.1.1
       '@types/node': 18.11.17
 
-  '@types/hast@2.3.4':
+  '@types/hast@2.3.10':
     dependencies:
-      '@types/unist': 3.0.2
+      '@types/unist': 2.0.7
 
   '@types/hast@3.0.4':
     dependencies:
@@ -9843,6 +9861,14 @@ snapshots:
     dependencies:
       function-bind: 1.1.1
 
+  hast-util-from-html@1.0.2:
+    dependencies:
+      '@types/hast': 2.3.10
+      hast-util-from-parse5: 7.1.2
+      parse5: 7.1.2
+      vfile: 5.3.7
+      vfile-message: 3.1.4
+
   hast-util-from-html@2.0.3:
     dependencies:
       '@types/hast': 3.0.4
@@ -9854,7 +9880,7 @@ snapshots:
 
   hast-util-from-parse5@7.1.2:
     dependencies:
-      '@types/hast': 2.3.4
+      '@types/hast': 2.3.10
       '@types/unist': 2.0.7
       hastscript: 7.2.0
       property-information: 6.2.0
@@ -9873,9 +9899,9 @@ snapshots:
       vfile-location: 5.0.2
       web-namespaces: 2.0.1
 
-  hast-util-heading-rank@3.0.0:
+  hast-util-heading-rank@2.1.1:
     dependencies:
-      '@types/hast': 3.0.4
+      '@types/hast': 2.3.10
 
   hast-util-is-element@3.0.0:
     dependencies:
@@ -9885,7 +9911,7 @@ snapshots:
 
   hast-util-parse-selector@3.1.1:
     dependencies:
-      '@types/hast': 2.3.4
+      '@types/hast': 2.3.10
 
   hast-util-parse-selector@4.0.0:
     dependencies:
@@ -9893,7 +9919,7 @@ snapshots:
 
   hast-util-raw@7.2.3:
     dependencies:
-      '@types/hast': 2.3.4
+      '@types/hast': 2.3.10
       '@types/parse5': 6.0.3
       hast-util-from-parse5: 7.1.2
       hast-util-to-parse5: 7.1.0
@@ -9907,13 +9933,13 @@ snapshots:
 
   hast-util-sanitize@4.1.0:
     dependencies:
-      '@types/hast': 2.3.4
+      '@types/hast': 2.3.10
 
   hast-util-to-estree@2.3.3:
     dependencies:
       '@types/estree': 1.0.6
       '@types/estree-jsx': 1.0.0
-      '@types/hast': 2.3.4
+      '@types/hast': 2.3.10
       '@types/unist': 2.0.7
       comma-separated-tokens: 2.0.3
       estree-util-attach-comments: 2.1.1
@@ -9931,7 +9957,7 @@ snapshots:
 
   hast-util-to-html@8.0.4:
     dependencies:
-      '@types/hast': 2.3.4
+      '@types/hast': 2.3.10
       '@types/unist': 2.0.7
       ccount: 2.0.1
       comma-separated-tokens: 2.0.3
@@ -9945,7 +9971,7 @@ snapshots:
 
   hast-util-to-parse5@7.1.0:
     dependencies:
-      '@types/hast': 2.3.4
+      '@types/hast': 2.3.10
       comma-separated-tokens: 2.0.3
       property-information: 6.2.0
       space-separated-tokens: 2.0.2
@@ -9956,7 +9982,7 @@ snapshots:
 
   hastscript@6.0.0:
     dependencies:
-      '@types/hast': 2.3.4
+      '@types/hast': 2.3.10
       comma-separated-tokens: 1.0.8
       hast-util-parse-selector: 2.2.5
       property-information: 5.6.0
@@ -9964,7 +9990,7 @@ snapshots:
 
   hastscript@7.2.0:
     dependencies:
-      '@types/hast': 2.3.4
+      '@types/hast': 2.3.10
       comma-separated-tokens: 2.0.3
       hast-util-parse-selector: 3.1.1
       property-information: 6.2.0
@@ -10498,7 +10524,7 @@ snapshots:
   mdast-util-mdx-expression@1.3.2:
     dependencies:
       '@types/estree-jsx': 1.0.0
-      '@types/hast': 2.3.4
+      '@types/hast': 2.3.10
       '@types/mdast': 3.0.15
       mdast-util-from-markdown: 1.3.1
       mdast-util-to-markdown: 1.5.0
@@ -10508,7 +10534,7 @@ snapshots:
   mdast-util-mdx-jsx@2.1.4:
     dependencies:
       '@types/estree-jsx': 1.0.0
-      '@types/hast': 2.3.4
+      '@types/hast': 2.3.10
       '@types/mdast': 3.0.15
       '@types/unist': 2.0.7
       ccount: 2.0.1
@@ -10535,7 +10561,7 @@ snapshots:
   mdast-util-mdxjs-esm@1.3.1:
     dependencies:
       '@types/estree-jsx': 1.0.0
-      '@types/hast': 2.3.4
+      '@types/hast': 2.3.10
       '@types/mdast': 3.0.15
       mdast-util-from-markdown: 1.3.1
       mdast-util-to-markdown: 1.5.0
@@ -10549,7 +10575,7 @@ snapshots:
 
   mdast-util-to-hast@12.3.0:
     dependencies:
-      '@types/hast': 2.3.4
+      '@types/hast': 2.3.10
       '@types/mdast': 3.0.15
       mdast-util-definitions: 5.1.2
       micromark-util-sanitize-uri: 1.2.0
@@ -11397,7 +11423,7 @@ snapshots:
 
   react-markdown@8.0.7(@types/react@18.3.18)(react@18.3.1):
     dependencies:
-      '@types/hast': 2.3.4
+      '@types/hast': 2.3.10
       '@types/prop-types': 15.7.5
       '@types/react': 18.3.18
       '@types/unist': 2.0.7
@@ -11515,7 +11541,7 @@ snapshots:
 
   rehype-stringify@9.0.4:
     dependencies:
-      '@types/hast': 2.3.4
+      '@types/hast': 2.3.10
       hast-util-to-html: 8.0.4
       unified: 10.1.2
 
@@ -11568,7 +11594,7 @@ snapshots:
 
   remark-rehype@10.1.0:
     dependencies:
-      '@types/hast': 2.3.4
+      '@types/hast': 2.3.10
       '@types/mdast': 3.0.15
       mdast-util-to-hast: 12.3.0
       unified: 10.1.2
@@ -12391,9 +12417,9 @@ snapshots:
     dependencies:
       '@types/unist': 3.0.2
 
-  unist-util-visit-children@3.0.0:
+  unist-util-visit-children@2.0.2:
     dependencies:
-      '@types/unist': 3.0.2
+      '@types/unist': 2.0.7
 
   unist-util-visit-parents@5.1.3:
     dependencies:

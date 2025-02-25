@@ -1,7 +1,3 @@
-import type { Nav } from '@rspress/shared';
-
-export type NavMeta = Nav;
-
 export type SideMetaItem =
   | string
   | {

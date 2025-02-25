@@ -1,5 +1,4 @@
 import type { Route } from '@rspress/shared';
-// @ts-expect-error __VIRTUAL_ROUTES__ will be determined at build time
 import { routes } from '__VIRTUAL_ROUTES__';
 import { matchRoutes } from 'react-router-dom';
 
@@ -20,10 +19,7 @@ export function pathnameToRouteService(pathname: string): Route | undefined {
   if (cacheItem) {
     return cacheItem;
   }
-  const matched = matchRoutes(
-    routes as typeof import('virtual-routes')['routes'],
-    normalizeRoutePath(pathname),
-  );
+  const matched = matchRoutes(routes, normalizeRoutePath(pathname));
   const route: Route | undefined = matched?.[0]?.route;
   if (route) {
     cache.set(pathname, route);

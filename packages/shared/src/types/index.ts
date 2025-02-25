@@ -1,4 +1,5 @@
 import type { RsbuildConfig, RsbuildPlugin } from '@rsbuild/core';
+import type { ConfigParams } from '@rsbuild/core/dist-types/config';
 import type { ZoomOptions } from 'medium-zoom';
 import type { PluggableList } from 'unified';
 import type { AdditionalPage, RspressPlugin } from './Plugin';
@@ -9,6 +10,7 @@ import type {
 
 export type { DefaultThemeConfig, NormalizedDefaultThemeConfig };
 export * from './defaultTheme';
+export * from './helpers';
 
 export type { RspressPlugin, AdditionalPage, RspressPlugin as Plugin };
 
@@ -188,15 +190,15 @@ export interface UserConfig<ThemeConfig = DefaultThemeConfig> {
     /**
      * Whether to enable language parity checking
      */
-    enabled: boolean;
+    enabled?: boolean;
     /**
      * Directories to include in the parity check
      */
-    include: string[];
+    include?: string[];
     /**
      * Directories to exclude from the parity check
      */
-    exclude: string[];
+    exclude?: string[];
   };
 }
 
@@ -240,7 +242,7 @@ export interface SiteData<ThemeConfig = NormalizedDefaultThemeConfig> {
  * "_foo" is the private field that won't be written to search-index.json file
  * and should not be used in the runtime (usePageData).
  */
-export type PageIndexInfo = {
+export interface PageIndexInfo {
   id: number;
   title: string;
   routePath: string;
@@ -248,13 +250,13 @@ export type PageIndexInfo = {
   content: string;
   /* html content is too large to be written to index file */
   _html: string;
-  frontmatter: Record<string, unknown>;
+  frontmatter: FrontMatterMeta;
   lang: string;
   version: string;
   domain: string;
   _filepath: string;
   _relativePath: string;
-};
+}
 
 export type RemotePageInfo = PageIndexInfo & {
   _matchesPosition: {
@@ -313,7 +315,7 @@ export interface FrontMatterMeta {
   sidebar?: boolean;
   outline?: boolean;
   lineNumbers?: boolean;
-  overviewHeaders?: number;
+  overviewHeaders?: number[];
   titleSuffix?: string;
   head?: [string, Record<string, string>][];
   context?: string;
@@ -434,4 +436,4 @@ export interface MarkdownOptions {
 export type Config =
   | UserConfig
   | Promise<UserConfig>
-  | ((env: any) => UserConfig | Promise<UserConfig>);
+  | ((env: ConfigParams) => UserConfig | Promise<UserConfig>);

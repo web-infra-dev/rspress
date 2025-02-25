@@ -11,17 +11,18 @@ import { visit } from 'unist-util-visit';
  */
 export const rehypeHeaderAnchor: Plugin<[], Root> = () => {
   const slugger = new GithubSlugger();
-  return function (tree) {
-    visit(tree, 'element', function (node) {
-      if (headingRank(node as any)) {
-        // generate id
-        if (!node.properties.id) {
-          const [text, customId] = collectHeaderText(node);
-          node.properties.id = customId || slugger.slug(text);
-        }
-        // apply to headings
-        node.children.unshift(create(node));
+  return tree => {
+    visit(tree, 'element', node => {
+      if (!headingRank(node)) {
+        return;
       }
+      // generate id
+      if (!node.properties.id) {
+        const [text, customId] = collectHeaderText(node);
+        node.properties.id = customId || slugger.slug(text);
+      }
+      // apply to headings
+      node.children.unshift(create(node));
     });
   };
 };

@@ -20,10 +20,10 @@ export function SidebarGroup(props: SidebarItemProps) {
   const { item, depth = 0, activeMatcher, id, setSidebarData } = props;
   const navigate = useNavigate();
   const containerRef = useRef<HTMLDivElement>(null);
-  const transitionRef = useRef<any>(null);
+  const transitionRef = useRef<number>();
   const innerRef = useRef<HTMLDivElement>(null);
   const initialRender = useRef(true);
-  const initialState = useRef((item as NormalizedSidebarGroup).collapsed);
+  const initialState = useRef('collapsed' in item && item.collapsed);
   const active = item.link && activeMatcher(item.link);
   const { collapsed, collapsible = true } = item as NormalizedSidebarGroup;
   const collapsibleIcon = (
@@ -60,7 +60,7 @@ export function SidebarGroup(props: SidebarItemProps) {
       container.style.transitionDuration = '0.5s';
       inner.style.opacity = '0';
 
-      transitionRef.current = setTimeout(() => {
+      transitionRef.current = window.setTimeout(() => {
         if (containerRef.current) {
           containerRef.current.style.maxHeight = '0px';
         }
@@ -70,7 +70,7 @@ export function SidebarGroup(props: SidebarItemProps) {
       container.style.transitionDuration = '0.3s';
       inner.style.opacity = '1';
 
-      transitionRef.current = setTimeout(() => {
+      transitionRef.current = window.setTimeout(() => {
         if (containerRef.current) {
           containerRef.current.style.removeProperty('max-height');
         }

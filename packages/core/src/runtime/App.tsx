@@ -5,6 +5,7 @@ import {
   useLocation,
 } from '@rspress/runtime';
 import {
+  type FrontMatterMeta,
   type Header,
   MDX_REGEXP,
   type PageData,
@@ -26,7 +27,7 @@ type PageMeta = {
   title: string;
   headingTitle: string;
   toc: Header[];
-  frontmatter: Record<string, any>;
+  frontmatter: FrontMatterMeta;
 };
 
 export async function initPageData(routePath: string): Promise<PageData> {
@@ -161,7 +162,8 @@ export function App({ helmetContext }: { helmetContext?: object }) {
                 // The component order is stable
                 // eslint-disable-next-line react/no-array-index-key
                 key: index,
-                ...props,
+                // FIXME: ` as object` should be omitted, seems like `@microsoft/api-extractor` issue
+                ...(props as object),
               });
             }
 
