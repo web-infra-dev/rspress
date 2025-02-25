@@ -12,6 +12,7 @@ import {
 import { logger } from '@rspress/shared/logger';
 import picocolors from 'picocolors';
 import { HelmetData } from 'react-helmet-async';
+import { version } from '../../package.json';
 import { PluginDriver } from './PluginDriver';
 import {
   APP_HTML_MARKER,
@@ -82,7 +83,6 @@ export async function renderPages(
   const ssrBundlePath = join(outputPath, 'ssr', 'main.cjs');
 
   try {
-    const { version } = await import('../../package.json');
     // There are two cases where we will fallback to CSR:
     // 1. ssr bundle load failed
     // 2. ssr bundle render failed

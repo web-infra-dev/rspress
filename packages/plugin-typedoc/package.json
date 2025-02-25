@@ -19,8 +19,7 @@
   "module": "./dist/es/index.js",
   "types": "./dist/types/index.d.ts",
   "files": [
-    "dist",
-    "src"
+    "dist"
   ],
   "scripts": {
     "build": "rslib build",
@@ -52,6 +51,5 @@
     "access": "public",
     "provenance": true,
     "registry": "https://registry.npmjs.org/"
-  },
-  "jsnext:source": "./src/index.ts"
+  }
 }
