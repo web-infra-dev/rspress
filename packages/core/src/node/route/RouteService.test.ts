@@ -1,5 +1,5 @@
 import path from 'node:path';
-import type { RouteMeta, UserConfig } from '@rspress/shared';
+import type { UserConfig } from '@rspress/shared';
 import { describe, expect, it } from 'vitest';
 import { PluginDriver } from '../PluginDriver';
 import { normalizePath } from '../utils';

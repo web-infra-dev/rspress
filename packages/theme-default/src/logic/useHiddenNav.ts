@@ -1,7 +1,6 @@
 import { useLocation, usePageData } from '@rspress/runtime';
 import { throttle } from 'lodash-es';
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
-import React, { useEffect, useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 
 // The two hooks has the similar name, but they are quite different.
 // `useEnableNav` is used to determine whether the navigation bar is enabled. It depends on both the frontmatter and the themeConfig.

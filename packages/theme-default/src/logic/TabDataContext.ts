@@ -1,5 +1,4 @@
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
-import React, { createContext } from 'react';
+import { createContext } from 'react';
 
 export interface TabData {
   [key: string]: number | undefined;

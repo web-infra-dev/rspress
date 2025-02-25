@@ -33,7 +33,7 @@ export function SourceBuildPlugin(): RspressPlugin {
                 },
               }),
             );
-          } catch (e) {
+          } catch (_e) {
             // if require tailwindcss failed, skip
           }
         },

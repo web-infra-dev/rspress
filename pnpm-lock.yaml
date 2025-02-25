@@ -1250,6 +1250,9 @@ importers:
       '@babel/types':
         specifier: ^7.26.7
         version: 7.26.7
+      '@rsbuild/plugin-react':
+        specifier: ~1.1.0
+        version: 1.1.0(@rsbuild/core@1.2.5)
       '@rslib/core':
         specifier: 0.4.1
         version: 0.4.1(@microsoft/api-extractor@7.49.2(@types/node@18.11.17))(typescript@5.5.3)

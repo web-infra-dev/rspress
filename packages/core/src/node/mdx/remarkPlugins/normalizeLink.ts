@@ -7,11 +7,6 @@ import type { Plugin } from 'unified';
 import { visit } from 'unist-util-visit';
 import { getASTNodeImport } from '../../utils';
 
-interface LinkNode {
-  type: string;
-  url?: string;
-}
-
 /**
  * Remark plugin to normalize a link href
  */

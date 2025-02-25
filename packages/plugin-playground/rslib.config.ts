@@ -1,3 +1,4 @@
+import { pluginReact } from '@rsbuild/plugin-react';
 import { defineConfig } from '@rslib/core';
 
 export default defineConfig({
@@ -50,6 +51,7 @@ export default defineConfig({
       source: {
         entry: { index: 'src/web/index.ts' },
       },
+      plugins: [pluginReact()],
       output: {
         externals: ['@types/react'],
         distPath: {

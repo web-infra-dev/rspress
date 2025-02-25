@@ -12,4 +12,4 @@ export type ButtonProps = {
   size?: 'mini' | 'small' | 'default' | 'large';
 };
 
-export const Button = (props?: ButtonProps) => {};
+export const Button = (_props?: ButtonProps) => {};

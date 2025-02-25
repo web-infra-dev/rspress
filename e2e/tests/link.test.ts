@@ -80,14 +80,14 @@ test.describe('Navigation with <Link>', async () => {
     ] satisfies Parameters<Locator['click']>[0][];
 
     for (const clickOption of clickOptionCases) {
-      test(JSON.stringify(clickOption), async ({ page }) => {
+      test(JSON.stringify(clickOption), async ({ page: _ }) => {
         await expect(
           scope.shouldOpenNewPage(() => scope.anchor.click(clickOption)),
         ).resolves.toBe(gotoPage('/doc-1/index.html'));
       });
     }
 
-    test('target=_blank', async ({ page }) => {
+    test('target=_blank', async ({ page: _ }) => {
       await scope.anchor.evaluate(e => e.setAttribute('target', '_blank'));
       await expect(
         scope.shouldOpenNewPage(() => scope.anchor.click()),

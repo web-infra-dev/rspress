@@ -113,7 +113,7 @@ export async function flattenMdxContent(
         path.dirname(basePath),
         alias,
       );
-    } catch (e) {
+    } catch (_e) {
       continue;
     }
 
