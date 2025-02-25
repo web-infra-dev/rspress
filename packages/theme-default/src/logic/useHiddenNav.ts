@@ -19,12 +19,15 @@ export function useEnableNav() {
   return [enableNav, setEnableNav] as const;
 }
 
+export const globalHiddenNav = { current: false };
+
 export function useHiddenNav() {
   const {
     siteData: { themeConfig },
   } = usePageData();
   const hiddenBehavior = themeConfig.hideNavbar ?? 'never';
   const [hiddenNav, setHiddenNav] = useState(false);
+  globalHiddenNav.current = hiddenNav;
   const { pathname } = useLocation();
   const lastScrollTop = useRef(0);
 

@@ -1,15 +1,13 @@
 import type { Header } from '@rspress/shared';
-import { useEffect, useMemo } from 'react';
+import { useEffect } from 'react';
 import {
   bindingAsideScroll,
   parseInlineMarkdownText,
   renderInlineMarkdown,
-  scrollToTarget,
-  useHiddenNav,
 } from '../../logic';
-import { DEFAULT_NAV_HEIGHT } from '../../logic/sideEffects';
 import './index.scss';
 import { useLocation } from '@rspress/runtime';
+import { Link } from '../Link';
 
 const TocItem = ({
   header,
@@ -17,7 +15,7 @@ const TocItem = ({
 }: { header: Header; baseHeaderLevel: number }) => {
   return (
     <li>
-      <a
+      <Link
         href={`#${header.id}`}
         title={parseInlineMarkdownText(header.text)}
         className="aside-link transition-all duration-300 hover:text-text-1 text-text-2 block"
@@ -25,15 +23,11 @@ const TocItem = ({
           marginLeft: (header.depth - baseHeaderLevel) * 12,
           fontWeight: 'semibold',
         }}
-        onClick={e => {
-          e.preventDefault();
-          window.location.hash = header.id;
-        }}
       >
         <span className="aside-link-text block">
           {renderInlineMarkdown(header.text)}
         </span>
-      </a>
+      </Link>
     </li>
   );
 };
@@ -43,12 +37,7 @@ export function Aside(props: { headers: Header[]; outlineTitle: string }) {
   const hasOutline = headers.length > 0;
   // For outline text highlight
   const baseHeaderLevel = headers[0]?.depth || 2;
-  const hiddenNav = useHiddenNav();
-
-  const { hash: locationHash = '', pathname } = useLocation();
-  const decodedHash: string = useMemo(() => {
-    return decodeURIComponent(locationHash);
-  }, [locationHash]);
+  const { pathname } = useLocation();
 
   useEffect(() => {
     let unbinding: (() => void) | undefined;
@@ -63,19 +52,6 @@ export function Aside(props: { headers: Header[]; outlineTitle: string }) {
       }
     };
   }, [headers]);
-
-  // why window.scrollTo(0, 0)?
-  // when using history.scrollRestoration = 'auto' ref: "useUISwitch.ts", we scroll to the last page's position when navigating to nextPage
-  useEffect(() => {
-    if (decodedHash.length === 0) {
-      window.scrollTo(0, 0);
-    } else {
-      const target = document.getElementById(decodedHash.slice(1));
-      if (target) {
-        scrollToTarget(target, false, hiddenNav ? 0 : DEFAULT_NAV_HEIGHT);
-      }
-    }
-  }, [decodedHash, headers, pathname]);
 
   return (
     <div className="flex flex-col">

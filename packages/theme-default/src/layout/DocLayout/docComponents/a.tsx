@@ -6,11 +6,6 @@ import styles from './index.module.scss';
 export const A = (props: ComponentProps<'a'>) => {
   const { href = '', className = '' } = props;
   const { normalizeLinkHref } = usePathUtils();
-  const hasHeaderAnchor = className.includes('header-anchor');
-
-  if (hasHeaderAnchor || href.startsWith('#')) {
-    return <a {...props} className={`${styles.link} ${className}`} />;
-  }
 
   return (
     <Link
