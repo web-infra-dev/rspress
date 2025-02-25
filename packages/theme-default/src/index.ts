@@ -1,5 +1,3 @@
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
-import React from 'react';
 import { DocLayout } from './layout/DocLayout';
 import { HomeLayout } from './layout/HomeLayout';
 import { Layout } from './layout/Layout';

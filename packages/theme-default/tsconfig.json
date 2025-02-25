@@ -6,7 +6,6 @@
     "declarationDir": "dist",
     "rootDir": "src",
     "baseUrl": ".",
-    "noUnusedLocals": false,
     "paths": {
       "#theme/*": ["./src/*"]
     }

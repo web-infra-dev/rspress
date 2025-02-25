@@ -1,5 +1,3 @@
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
-import React from 'react';
 import { Code } from './code';
 import { Hr } from './hr';
 import { Img } from './img';

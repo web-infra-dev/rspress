@@ -119,7 +119,11 @@ export function Overview(props: {
     siteData,
     page: { routePath, title, frontmatter },
   } = usePageData();
-  const { content, groups: customGroups, defaultGroupTitle = 'Others' } = props;
+  const {
+    content,
+    groups: customGroups,
+    defaultGroupTitle: _ = 'Others',
+  } = props;
   // Added state for search query
   const [query, setQuery] = useState('');
   // Added ref for search input

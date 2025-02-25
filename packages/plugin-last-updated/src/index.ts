@@ -17,7 +17,7 @@ async function getGitLastUpdatedTimeStamp(filePath: string) {
       filePath,
     ]);
     lastUpdated = Number(stdout) * 1000;
-  } catch (e) {
+  } catch (_e) {
     /* noop */
   }
   return lastUpdated;

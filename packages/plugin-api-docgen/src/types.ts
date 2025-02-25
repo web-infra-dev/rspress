@@ -1,4 +1,3 @@
-import type { PageIndexInfo } from '@rspress/shared';
 import type { ParserOptions } from 'react-docgen-typescript';
 import type { CompilerOptions } from 'typescript';
 

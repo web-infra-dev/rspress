@@ -3,8 +3,7 @@
   "compilerOptions": {
     "composite": true,
     "baseUrl": "src",
-    "rootDir": "src",
-    "noUnusedLocals": false
+    "rootDir": "src"
   },
   "include": ["src"],
   "exclude": ["node_modules", "dist"]

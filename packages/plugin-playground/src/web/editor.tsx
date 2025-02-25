@@ -3,7 +3,7 @@ import MonacoEditor, {
   type EditorProps as MonacoEditorProps,
 } from '@monaco-editor/react';
 import { useDark } from '@rspress/core/runtime';
-import React, { useMemo } from 'react';
+import { useMemo } from 'react';
 import { DEFAULT_MONACO_URL } from './constant';
 
 // inject by Rsbuild in cli/index.ts
@@ -26,7 +26,7 @@ function initLoader() {
     if (keys.length > 0) {
       loaderConfig = __PLAYGROUND_MONACO_LOADER__;
     }
-  } catch (e) {
+  } catch (_e) {
     // ignore
   }
 
@@ -37,7 +37,7 @@ initLoader();
 function getMonacoOptions() {
   try {
     return __PLAYGROUND_MONACO_OPTIONS__;
-  } catch (e) {
+  } catch (_e) {
     // ignore
   }
   return {};

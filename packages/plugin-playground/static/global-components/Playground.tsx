@@ -45,7 +45,7 @@ function useDirection(props: PlaygroundProps): Direction {
   // inject by config
   try {
     return __PLAYGROUND_DIRECTION__;
-  } catch (e) {
+  } catch (_e) {
     // ignore
   }
 

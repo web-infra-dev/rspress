@@ -6,8 +6,7 @@
     "baseUrl": "src",
     "rootDir": "src",
     "composite": true,
-    "lib": ["ESNext", "DOM"],
-    "noUnusedLocals": false
+    "lib": ["ESNext", "DOM"]
   },
   "include": ["src"],
   "references": [

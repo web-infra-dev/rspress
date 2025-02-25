@@ -9,14 +9,14 @@ const fixtureDir = path.resolve(__dirname, '../fixtures');
 test.describe('Nav should functions well', async () => {
   let appPort: number;
   let app: unknown;
-  let navMenu: Locator;
+  let _navMenu: Locator;
   let navMenuItems: Locator[];
   let onlyItemsButton: Locator;
-  let onlyItemsContainer: Locator;
+  let _onlyItemsContainer: Locator;
   let onlyItemsChildren: Locator[];
   let itemsAndLinkButton: Locator;
   let itemsAndLinkChildren: Locator[];
-  let itemsAndLinkContainer: Locator;
+  let _itemsAndLinkContainer: Locator;
 
   const init = async (page: Page) => {
     await page.goto(`http://localhost:${appPort}`, {
@@ -26,14 +26,14 @@ test.describe('Nav should functions well', async () => {
     // ElementHandler is currently discouraged by official
     // use Locator instead
     // Please refer to https://playwright.dev/docs/api/class-elementhandle
-    navMenu = page.locator('.rspress-nav-menu');
+    _navMenu = page.locator('.rspress-nav-menu');
     navMenuItems = await page.locator('.rspress-nav-menu > *').all();
 
     onlyItemsButton = navMenuItems[1].locator('.rspress-nav-menu-group-button');
     onlyItemsChildren = await navMenuItems[1]
       .locator('.rspress-nav-menu-group-content a')
       .all();
-    onlyItemsContainer = navMenuItems[1].locator(
+    _onlyItemsContainer = navMenuItems[1].locator(
       '.rspress-nav-menu-group-content',
     );
 
@@ -43,7 +43,7 @@ test.describe('Nav should functions well', async () => {
     itemsAndLinkChildren = await navMenuItems[2]
       .locator('.rspress-nav-menu-group-content a')
       .all();
-    itemsAndLinkContainer = navMenuItems[2].locator(
+    _itemsAndLinkContainer = navMenuItems[2].locator(
       '.rspress-nav-menu-group-content',
     );
   };

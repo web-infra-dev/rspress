@@ -1,6 +1,5 @@
-import type { PageIndexInfo } from '@rspress/shared';
 import type { Feed } from 'feed';
-import type { FeedItem, FeedOutputType, PageFeedData } from '../type';
+import type { FeedItem, FeedOutputType } from '../type';
 
 export interface ResolvedOutput {
   type: FeedOutputType;
