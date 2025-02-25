@@ -15,8 +15,7 @@
     "*.sass",
     "*.scss",
     "**/virtual-global-styles.js",
-    "virtual-global-styles",
-    "./src/theme-default/styles/index.ts"
+    "virtual-global-styles"
   ],
   "type": "module",
   "exports": {
@@ -29,7 +28,6 @@
     "./theme": {
       "default": "./theme.ts"
     },
-    "./theme.css": "./theme.css",
     "./runtime": {
       "default": "./runtime.ts"
     }
@@ -39,9 +37,6 @@
   "types": "./dist/index.d.ts",
   "files": [
     "dist",
-    "src/runtime",
-    "src/theme-default",
-    "src/shared",
     "index.html",
     "runtime.ts",
     "theme.ts"
@@ -119,6 +114,5 @@
     "access": "public",
     "provenance": true,
     "registry": "https://registry.npmjs.org/"
-  },
-  "jsnext:source": "./src/index.ts"
+  }
 }

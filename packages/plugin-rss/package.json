@@ -52,6 +52,5 @@
     "access": "public",
     "provenance": true,
     "registry": "https://registry.npmjs.org/"
-  },
-  "jsnext:source": "./src/index.ts"
+  }
 }

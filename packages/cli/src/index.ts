@@ -1,10 +1,11 @@
-import { createRequire } from 'node:module';
 import path from 'node:path';
 import { build, dev, serve } from '@rspress/core';
 import { logger } from '@rspress/shared/logger';
 import { cac } from 'cac';
 import chokidar from 'chokidar';
 import picocolors from 'picocolors';
+// Rslib(Rspack) will optimize the json module, the only one point that we need to concern is to bump the package.json version first then run build command
+import { version } from '../package.json';
 import { loadConfigFile, resolveDocRoot } from './config/loadConfigFile';
 import update from './update';
 
@@ -12,14 +13,9 @@ const CONFIG_FILES = ['rspress.config.ts', 'rspress.config.js', 'i18n.json'];
 
 const META_FILE = '_meta.json';
 
-const require = createRequire(import.meta.url);
+const cli = cac('rspress').version(version).help();
 
-// eslint-disable-next-line import/no-commonjs
-const packageJson = require('../package.json');
-
-const cli = cac('rspress').version(packageJson.version).help();
-
-const landingMessage = `🔥 Rspress v${packageJson.version}\n`;
+const landingMessage = `🔥 Rspress v${version}\n`;
 logger.greet(landingMessage);
 
 const setNodeEnv = (env: 'development' | 'production') => {

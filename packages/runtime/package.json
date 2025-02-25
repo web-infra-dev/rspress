@@ -31,7 +31,6 @@
   "types": "./dist/index.d.ts",
   "files": [
     "dist",
-    "src",
     "server.js"
   ],
   "scripts": {
@@ -62,6 +61,5 @@
     "access": "public",
     "provenance": true,
     "registry": "https://registry.npmjs.org/"
-  },
-  "jsnext:source": "./src/index.ts"
+  }
 }

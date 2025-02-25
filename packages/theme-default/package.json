@@ -35,8 +35,7 @@
   "main": "./dist/index.js",
   "types": "./dist/bundle.d.ts",
   "files": [
-    "dist",
-    "src"
+    "dist"
   ],
   "scripts": {
     "build": "rslib build",
@@ -86,6 +85,5 @@
     "access": "public",
     "provenance": true,
     "registry": "https://registry.npmjs.org/"
-  },
-  "jsnext:source": "./src/index.ts"
+  }
 }
