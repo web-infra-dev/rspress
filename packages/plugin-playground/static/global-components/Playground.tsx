@@ -1,4 +1,5 @@
 import { usePageData } from '@rspress/core/runtime';
+// @ts-ignore Cannot find module _rspress_playground_imports
 import getImport from '_rspress_playground_imports';
 import React, {
   type HTMLAttributes,
