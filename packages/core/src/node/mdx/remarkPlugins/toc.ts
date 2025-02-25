@@ -1,9 +1,9 @@
 import type { Processor } from '@mdx-js/mdx/lib/core';
+import { extractTextAndId } from '@rspress/shared/node-utils';
 import Slugger from 'github-slugger';
 import type { Root } from 'hast';
 import type { Plugin } from 'unified';
 import { visitChildren } from 'unist-util-visit-children';
-import { extractTextAndId } from '../../utils';
 import type { PageMeta } from '../loader';
 
 export interface TocItem {

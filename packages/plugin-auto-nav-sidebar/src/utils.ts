@@ -2,7 +2,7 @@ import fs from 'node:fs/promises';
 import path from 'node:path';
 import type { NavItem, Sidebar } from '@rspress/shared';
 import { logger } from '@rspress/shared/logger';
-import { loadFrontMatter } from '@rspress/shared/node-utils';
+import { extractTextAndId, loadFrontMatter } from '@rspress/shared/node-utils';
 
 export async function pathExists(path: string): Promise<boolean> {
   try {
@@ -110,7 +110,9 @@ export async function extractInfoFromFrontmatterWithRealPath(
   const match = content.match(h1RegExp);
   const { frontmatter } = loadFrontMatter(content, realPath, rootDir);
   return {
-    title: frontmatter.title || match?.[1] || fileNameWithoutExt,
+    title: extractTextAndId(
+      frontmatter.title || match?.[1] || fileNameWithoutExt,
+    )[0],
     overviewHeaders: frontmatter.overviewHeaders,
     context: frontmatter.context,
   };
