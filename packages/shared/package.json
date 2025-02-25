@@ -55,7 +55,7 @@
     "@types/react": "^18.3.18",
     "mdast-util-mdx-jsx": "^2.1.4",
     "medium-zoom": "1.1.0",
-    "rimraf": "^3.0.2",
+    "rimraf": "^6.0.1",
     "typescript": "^5.5.3"
   },
   "publishConfig": {
