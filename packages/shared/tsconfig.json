@@ -1,16 +1,12 @@
 {
-  "extends": "@modern-js/tsconfig/base",
+  "extends": "@rspress/config/tsconfig",
   "compilerOptions": {
     "composite": true,
+    "strict": true,
     "declarationDir": "dist",
-    "noEmit": false,
-    "declaration": true,
     "outDir": "dist",
-    "module": "ESNext",
-    "target": "ESNext",
     "rootDir": "src",
-    "baseUrl": "./",
-    "isolatedModules": true
+    "baseUrl": "./"
   },
   "include": ["src"],
   "exclude": ["**/node_modules"]

@@ -53,7 +53,7 @@ export function generateEntry(
             <div className="preview-container">
               <div className="preview-nav">{"${routes[0].title}"}</div>
               ${routes
-                .map((demo, index) => {
+                .map((_demo, index) => {
                   return `<Demo_${index} />`;
                 })
                 .join('\n')}

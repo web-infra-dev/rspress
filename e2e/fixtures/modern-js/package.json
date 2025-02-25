@@ -26,6 +26,7 @@
   },
   "devDependencies": {
     "@modern-js/module-tools": "2.64.0",
+    "@modern-js/tsconfig": "2.64.0",
     "@rspress/modern-js-plugin": "workspace:*",
     "@types/node": "^18.11.17",
     "@types/react": "^18.3.18",

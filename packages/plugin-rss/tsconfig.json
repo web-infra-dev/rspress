@@ -1,12 +1,10 @@
 {
-  "extends": "@modern-js/tsconfig/base",
+  "extends": "@rspress/config/tsconfig",
   "compilerOptions": {
-    "moduleResolution": "bundler",
-    "declaration": false,
-    "module": "ESNext",
-    "target": "ES2020",
-    "esModuleInterop": true,
-    "skipLibCheck": true
+    "composite": true,
+    "baseUrl": "src",
+    "rootDir": ".",
+    "noUnusedLocals": false
   },
   "include": ["src"],
   "references": [

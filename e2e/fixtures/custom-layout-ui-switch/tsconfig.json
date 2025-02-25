@@ -1,12 +1,1 @@
-{
-  "extends": "@modern-js/tsconfig/base",
-  "compilerOptions": {
-    "jsx": "preserve",
-    "module": "ESNext",
-    "moduleResolution": "Bundler"
-  },
-  "include": ["docs/**/*", "theme/**/*"],
-  "mdx": {
-    "checkMdx": true
-  }
-}
+{}

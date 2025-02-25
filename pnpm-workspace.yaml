@@ -1,4 +1,5 @@
 packages:
+  - 'scripts/config'
   - 'packages/**'
   - 'e2e/**'
   - '!**/compiled/**'

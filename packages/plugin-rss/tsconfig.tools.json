@@ -1,5 +1,5 @@
 {
-  "extends": "@modern-js/tsconfig/base",
+  "extends": "@rspress/config/tsconfig",
   "compilerOptions": {
     "composite": true,
     "declaration": true,
@@ -10,5 +10,5 @@
     "skipLibCheck": true,
     "moduleResolution": "bundler"
   },
-  "include": ["rslib.config.ts", "vitest.config.ts"]
+  "include": ["rslib.config.ts"]
 }
