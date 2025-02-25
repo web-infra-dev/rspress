@@ -5,17 +5,10 @@ export default defineConfig({
     {
       format: 'cjs',
       source: {
-        entry: { index: 'src/index.ts' },
-      },
-      syntax: 'es2020',
-      dts: {
-        bundle: true,
-      },
-    },
-    {
-      format: 'cjs',
-      source: {
-        entry: { utils: 'src/utils.ts' },
+        entry: {
+          index: 'src/index.ts',
+          utils: 'src/utils.ts',
+        },
       },
       syntax: 'es2020',
       dts: {
