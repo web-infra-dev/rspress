@@ -81,7 +81,7 @@ export function serveSearchIndexMiddleware(config: UserConfig): RequestHandler {
       res.setHeader('Content-Type', 'application/json');
       const outDir = config?.outDir ?? join(process.cwd(), OUTPUT_DIR);
       // Get search index name from request url
-      const searchIndexFile = req.url?.split('/').pop();
+      const searchIndexFile = req.url.split('/').pop()!;
       createReadStream(join(outDir, 'static', searchIndexFile), 'utf-8').pipe(
         res,
         { end: true },

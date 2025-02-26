@@ -22,7 +22,7 @@ export async function createMDXOptions(
   filepath: string,
   pluginDriver: PluginDriver,
 ): Promise<Options> {
-  const cleanUrls = Boolean(config?.route?.cleanUrls);
+  const cleanUrls = config?.route?.cleanUrls ?? false;
   const {
     remarkPlugins: remarkPluginsFromConfig = [],
     rehypePlugins: rehypePluginsFromConfig = [],

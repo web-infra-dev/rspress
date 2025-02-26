@@ -1,7 +1,6 @@
 {
   "extends": "@rspress/config/tsconfig",
   "compilerOptions": {
-    "strict": false,
     "declarationDir": "dist",
     "baseUrl": "src",
     "rootDir": "src",

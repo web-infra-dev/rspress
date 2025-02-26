@@ -9,7 +9,7 @@ import { PLUGIN_LESS_NAME, pluginLess } from '@rsbuild/plugin-less';
 import { PLUGIN_REACT_NAME, pluginReact } from '@rsbuild/plugin-react';
 import { PLUGIN_SASS_NAME, pluginSass } from '@rsbuild/plugin-sass';
 import {
-  MDX_REGEXP,
+  MDX_OR_MD_REGEXP,
   RSPRESS_TEMP_DIR,
   type UserConfig,
   isDebugMode,
@@ -43,11 +43,11 @@ export interface MdxRsLoaderCallbackContext {
 }
 
 function isPluginIncluded(config: UserConfig, pluginName: string): boolean {
-  return (
+  return Boolean(
     config.builderPlugins?.some(plugin => plugin.name === pluginName) ||
-    config.builderConfig?.plugins?.some(
-      plugin => plugin && (plugin as RsbuildPlugin).name === pluginName,
-    )
+      config.builderConfig?.plugins?.some(
+        plugin => plugin && (plugin as RsbuildPlugin).name === pluginName,
+      ),
   );
 }
 
@@ -137,11 +137,13 @@ async function createInternalBuildConfig(
       favicon: normalizeIcon(config?.icon),
       template: path.join(PACKAGE_ROOT, 'index.html'),
       tags: [
-        config.themeConfig?.darkMode !== false && {
-          tag: 'script',
-          children: inlineThemeScript,
-          append: false,
-        },
+        config.themeConfig?.darkMode !== false
+          ? {
+              tag: 'script',
+              children: inlineThemeScript,
+              append: false,
+            }
+          : null!,
       ].filter(Boolean),
     },
     output: {
@@ -170,7 +172,7 @@ async function createInternalBuildConfig(
         'process.env.__REACT_GTE_18__': JSON.stringify(reactVersion >= 18),
         'process.env.TEST': JSON.stringify(process.env.TEST),
         'process.env.RSPRESS_SOCIAL_ICONS': JSON.stringify(
-          getSocialIcons(config.themeConfig.socialLinks),
+          getSocialIcons(config.themeConfig?.socialLinks),
         ),
       },
     },
@@ -206,7 +208,7 @@ async function createInternalBuildConfig(
         chain.module
           .rule('MDX')
           .type('javascript/auto')
-          .test(MDX_REGEXP)
+          .test(MDX_OR_MD_REGEXP)
           .resolve.merge({
             conditionNames: jsModuleRule.resolve.conditionNames.values(),
             mainFields: jsModuleRule.resolve.mainFields.values(),
@@ -231,7 +233,10 @@ async function createInternalBuildConfig(
         if (chain.plugins.has(CHAIN_ID.PLUGIN.REACT_FAST_REFRESH)) {
           chain.plugin(CHAIN_ID.PLUGIN.REACT_FAST_REFRESH).tap(options => {
             options[0] ??= {};
-            options[0].include = [/\.([cm]js|[jt]sx?|flow)$/i, MDX_REGEXP];
+            options[0].include = [
+              /\.([cm]js|[jt]sx?|flow)$/i,
+              MDX_OR_MD_REGEXP,
+            ];
             return options;
           });
         }

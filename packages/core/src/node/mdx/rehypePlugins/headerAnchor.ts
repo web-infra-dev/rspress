@@ -17,8 +17,10 @@ export const rehypeHeaderAnchor: Plugin<[], Root> = () => {
         return;
       }
       // generate id
-      if (!node.properties.id) {
+
+      if (!node.properties?.id) {
         const [text, customId] = collectHeaderText(node);
+        node.properties ??= {};
         node.properties.id = customId || slugger.slug(text);
       }
       // apply to headings
@@ -63,7 +65,7 @@ function create(node: Element): Element {
     properties: {
       class: 'header-anchor',
       ariaHidden: 'true',
-      href: `#${node.properties.id}`,
+      href: `#${node.properties!.id}`,
     },
     children: [
       {

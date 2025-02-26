@@ -91,7 +91,7 @@ export async function checkLanguageParity(config: UserConfig) {
   }
 
   logger.info('Checking language parity...');
-  const contentPath = path.resolve(config.root);
+  const contentPath = path.resolve(config.root!);
   const includedDirs = config.languageParity.include?.length
     ? config.languageParity.include
     : ['']; // Default: check all directories

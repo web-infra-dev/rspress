@@ -2,7 +2,7 @@ import fs from 'node:fs';
 import path from 'node:path';
 
 import { createProcessor } from '@mdx-js/mdx';
-import { MDX_REGEXP } from '@rspress/shared';
+import { MDX_OR_MD_REGEXP } from '@rspress/shared';
 import { logger } from '@rspress/shared/logger';
 import type { Resolver } from 'enhanced-resolve';
 import enhancedResolve from 'enhanced-resolve';
@@ -63,7 +63,7 @@ export async function flattenMdxContent(
   basePath: string,
   alias: Record<string, string | string[]>,
 ): Promise<{ flattenContent: string; deps: string[] }> {
-  const deps = [];
+  const deps: string[] = [];
   // Performance optimization: if the content does not contain any import statement, we can skip the parsing process
   // So we need to check this match
 
@@ -117,7 +117,7 @@ export async function flattenMdxContent(
       continue;
     }
 
-    if (MDX_REGEXP.test(absoluteImportPath)) {
+    if (MDX_OR_MD_REGEXP.test(absoluteImportPath)) {
       // replace import statement with the content of the imported file
       const importedContent = fs.readFileSync(absoluteImportPath, 'utf-8');
       const { flattenContent: replacedValue, deps: subDeps } =
