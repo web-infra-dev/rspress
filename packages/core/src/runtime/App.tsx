@@ -33,7 +33,6 @@ type PageMeta = {
 
 export async function initPageData(routePath: string): Promise<PageData> {
   const matchedRoute = pathnameToRouteService(routePath);
-  console.log(siteData, 22222222);
   if (matchedRoute) {
     // Preload route component
     const mod = await matchedRoute.preload();
