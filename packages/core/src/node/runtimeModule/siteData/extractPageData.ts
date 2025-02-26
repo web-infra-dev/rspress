@@ -95,11 +95,6 @@ export async function extractPageData(
           root,
         });
 
-        // FIXME: should be `!title?.length && !frontmatter?.length` why return null if do not have title
-        if (!title?.length && !frontmatter) {
-          return null;
-        }
-
         /**
          * Escape JSX elements in code block to allow them to be searched
          * @link https://github.com/sindresorhus/escape-goat/blob/eab4a382fcf5c977f7195e20d92ab1b25e6040a7/index.js#L3
