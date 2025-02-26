@@ -11,7 +11,7 @@ export function pluginClientRedirects(
   return {
     name: '@rspress/plugin-client-redirects',
     globalUIComponents: [
-      [path.join(__dirname, '../src/components/Redirect.tsx'), options],
+      [path.join(__dirname, '../static/Redirect.tsx'), options],
     ],
   };
 }
