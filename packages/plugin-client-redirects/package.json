@@ -20,7 +20,8 @@
   "module": "./dist/node/index.js",
   "types": "./dist/index.d.ts",
   "files": [
-    "dist"
+    "dist",
+    "static"
   ],
   "scripts": {
     "build": "rslib build",

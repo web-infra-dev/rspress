@@ -1,7 +1,16 @@
 import { useLocation } from '@rspress/runtime';
 import { isExternalUrl } from '@rspress/shared';
 import { useEffect } from 'react';
-import type { RedirectsOptions } from '../types';
+
+// these are types copied from src/types.ts
+type RedirectRule = {
+  to: string;
+  from: string | string[];
+};
+
+type RedirectsOptions = {
+  redirects?: RedirectRule[];
+};
 
 export default function Redirect(props: RedirectsOptions = {}) {
   const { pathname } = useLocation();
