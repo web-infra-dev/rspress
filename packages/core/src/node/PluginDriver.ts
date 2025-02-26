@@ -1,12 +1,21 @@
 import { pluginContainerSyntax } from '@rspress/plugin-container-syntax';
 import type {
-  ExtractFunctionKeys,
   PageIndexInfo,
   RouteMeta,
   RspressPlugin,
   UserConfig,
 } from '@rspress/shared';
 import { isDevDebugMode } from '@rspress/shared';
+
+type RspressPluginHookKeys =
+  | 'beforeBuild'
+  | 'afterBuild'
+  | 'addPages'
+  | 'addRuntimeModules'
+  | 'routeGenerated'
+  | 'addSSGRoutes'
+  | 'extendPageData'
+  | 'modifySearchIndexData';
 
 export class PluginDriver {
   #config: UserConfig;
@@ -56,6 +65,7 @@ export class PluginDriver {
 
     if (isDevDebugMode()) {
       const SourceBuildPlugin = await import(
+        // @ts-ignore just for local dev, so we do not need type
         '@rspress/theme-default/node/source-build-plugin.js'
       ).then(
         r => r.SourceBuildPlugin,
@@ -192,7 +202,7 @@ export class PluginDriver {
   }
 
   async addSSGRoutes() {
-    const result = await this._runParallelAsyncHook(
+    const result = await this._runParallelAsyncHook<'addSSGRoutes'>(
       'addSSGRoutes',
       this.#config || {},
       this.#isProd,
@@ -205,25 +215,22 @@ export class PluginDriver {
     return result.flat();
   }
 
-  globalStyles() {
+  globalStyles(): string[] {
     return this.#plugins
       .filter(plugin => typeof plugin.globalStyles === 'string')
-      .map(plugin => plugin.globalStyles);
+      .map(plugin => plugin.globalStyles) as string[];
   }
 
-  _runParallelAsyncHook<
-    const H extends
-      ExtractFunctionKeys<RspressPlugin> = ExtractFunctionKeys<RspressPlugin>,
-  >(
+  _runParallelAsyncHook<H extends RspressPluginHookKeys>(
     hookName: H,
-    ...args: Parameters<RspressPlugin[H]>
-  ): Promise<Awaited<ReturnType<RspressPlugin[H]>>[]> {
+    ...args: Parameters<Required<RspressPlugin>[H]>
+  ): Promise<Awaited<ReturnType<Required<RspressPlugin>[H]>>[]> {
     // @ts-expect-error - FIXME: TS is not able to infer the correct type
     return Promise.all(
       this.#plugins
         .filter(plugin => typeof plugin[hookName] === 'function')
         .map(plugin =>
-          plugin[hookName](
+          plugin[hookName]!(
             // @ts-expect-error - FIXME: TS is not able to infer the correct type
             ...args,
           ),
@@ -231,10 +238,11 @@ export class PluginDriver {
     );
   }
 
-  _runSerialAsyncHook<
-    const H extends
-      ExtractFunctionKeys<RspressPlugin> = ExtractFunctionKeys<RspressPlugin>,
-  >(hookName: H, ...args: Parameters<RspressPlugin[H]>) {
+  _runSerialAsyncHook<H extends RspressPluginHookKeys>(
+    hookName: H,
+    ...args: Parameters<Required<RspressPlugin>[H]>
+  ) {
+    // @ts-expect-error - FIXME: TS is not able to infer the correct type
     return this.#plugins.reduce(async (prev, plugin) => {
       if (typeof plugin[hookName] === 'function') {
         await prev;

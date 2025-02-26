@@ -21,12 +21,12 @@ function deletePrivateField<T>(obj: T): T {
   if (typeof obj !== 'object' || obj === null) {
     return obj;
   }
-  const newObj = { ...obj };
-  Object.keys(newObj).forEach(key => {
+  const newObj: T = { ...obj };
+  for (const key in newObj) {
     if (key.startsWith('_')) {
       delete newObj[key];
     }
-  });
+  }
   return newObj;
 }
 
@@ -51,7 +51,7 @@ export async function siteDataVMPlugin(context: FactoryContext) {
     searchConfig?.mode === 'remote' ? (searchConfig.domain ?? '') : '';
 
   const searchCodeBlocks =
-    'codeBlocks' in searchConfig ? searchConfig.codeBlocks : false;
+    'codeBlocks' in searchConfig ? Boolean(searchConfig.codeBlocks) : false;
 
   const pages = await extractPageData(
     replaceRules,
@@ -119,7 +119,7 @@ export async function siteDataVMPlugin(context: FactoryContext) {
     title: userConfig?.title || '',
     description: userConfig?.description || '',
     icon: userConfig?.icon || '',
-    route: userConfig?.route,
+    route: userConfig?.route || {},
     themeConfig: normalizeThemeConfig(userConfig, pages),
     base: userConfig?.base || '/',
     lang: userConfig?.lang || '',

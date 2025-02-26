@@ -3,7 +3,13 @@ import path from 'node:path';
 import { pathToFileURL } from 'node:url';
 import { createProcessor } from '@mdx-js/mdx';
 import type { Rspack } from '@rsbuild/core';
-import type { FrontMatterMeta, Header, UserConfig } from '@rspress/shared';
+import type {
+  FrontMatterMeta,
+  Header,
+  PageIndexInfo,
+  SiteData,
+  UserConfig,
+} from '@rspress/shared';
 import { isProduction } from '@rspress/shared';
 import { logger } from '@rspress/shared/logger';
 import { extractTextAndId, loadFrontMatter } from '@rspress/shared/node-utils';
@@ -46,16 +52,17 @@ export async function updateSiteDataRuntimeModule(
     'runtime',
     `${RuntimeModuleID.SiteData}.mjs`,
   );
-  const { default: siteData } = await import(
+  const { default: siteData } = (await import(
     pathToFileURL(siteDataModulePath).href
-  );
+  )) as { default: SiteData };
   await fs.writeFile(
     siteDataModulePath,
     `export default ${JSON.stringify(
       {
         ...siteData,
         timestamp: Date.now().toString(),
-        pages: siteData.pages.map(page =>
+        // in node side, "_file" "_relativePath" underscore fields exist
+        pages: (siteData.pages as PageIndexInfo[]).map(page =>
           // Update page meta if the page is updated
           page._filepath === modulePath ? { ...page, ...pageMeta } : page,
         ),
@@ -141,7 +148,11 @@ export default async function mdxLoader(
 
   try {
     let compileResult: string;
-    let pageMeta = { title: '', toc: [] } as PageMeta;
+    let pageMeta: PageMeta = {
+      title: '',
+      toc: [] as TocItem[],
+      headingTitle: '',
+    };
 
     const frontmatterTitle = extractTextAndId(frontmatter.title)[0];
 
@@ -211,9 +222,11 @@ MDXContent.__RSPRESS_PAGE_META["${encodeURIComponent(
     )}"] = ${JSON.stringify(pageMeta)};
 `;
     callback(null, result);
-  } catch (e) {
-    logger.error(`MDX compile error: ${e.message} in ${filepath}`);
-    logger.debug(e);
-    callback({ message: e.message, name: `${filepath} compile error` });
+  } catch (e: unknown) {
+    if (e instanceof Error) {
+      logger.error(`MDX compile error: ${e.message} in ${filepath}`);
+      logger.debug(e);
+      callback({ message: e.message, name: `${filepath} compile error` });
+    }
   }
 }

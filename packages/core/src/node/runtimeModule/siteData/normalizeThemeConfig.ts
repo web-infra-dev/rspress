@@ -124,7 +124,7 @@ export function normalizeThemeConfig(
         return {
           text: applyReplaceRules(page?.title || '', replaceRules),
           link: normalizedItem,
-          _fileKey: page._relativePath.replace(
+          _fileKey: page?._relativePath.replace(
             path.extname(page._relativePath),
             '',
           ),
@@ -164,7 +164,7 @@ export function normalizeThemeConfig(
     if (!nav) {
       return [];
     }
-    const transformNavItem = (navItem: NavItem) => {
+    const transformNavItem = (navItem: NavItem): NavItem => {
       const text = applyReplaceRules(
         getI18nText(navItem.text, currentLang),
         replaceRules,
@@ -202,10 +202,13 @@ export function normalizeThemeConfig(
     }
 
     // Multi version case
-    return Object.entries(nav).reduce((acc, [key, value]) => {
-      acc[key] = value.map(transformNavItem);
-      return acc;
-    }, {});
+    return Object.entries<NavItem[]>(nav).reduce(
+      (acc, [key, value]) => {
+        acc[key] = value.map(transformNavItem);
+        return acc;
+      },
+      {} as Record<string, NavItem[]>,
+    );
   };
 
   /**

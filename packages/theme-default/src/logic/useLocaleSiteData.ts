@@ -6,6 +6,9 @@ export function useLocaleSiteData(): NormalizedLocales {
   const {
     page: { lang },
   } = pageData;
+  if (lang === undefined) {
+    console.log(pageData, 111111, lang);
+  }
   const themeConfig = pageData?.siteData?.themeConfig ?? {};
   const defaultLang = pageData.siteData.lang ?? '';
   const locales = themeConfig?.locales;

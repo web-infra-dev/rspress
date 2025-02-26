@@ -1,5 +1,5 @@
 import fs from 'node:fs/promises';
-import type { FrontMatterMeta, RouteMeta, UserConfig } from '@rspress/shared';
+import type { RouteMeta, UserConfig } from '@rspress/shared';
 import { loadFrontMatter } from '@rspress/shared/node-utils';
 
 export async function renderFrontmatterHead(route: unknown): Promise<string> {
@@ -36,7 +36,7 @@ export async function renderConfigHead(
     .join('');
 }
 
-function renderAttrs(attrs: FrontMatterMeta['head'][number][1]): string {
+function renderAttrs(attrs: Record<string, string>): string {
   return Object.entries(attrs)
     .map(([key, value]) => {
       if (typeof value === 'boolean') return key;

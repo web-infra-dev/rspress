@@ -60,7 +60,7 @@ export async function resolveReactAlias(reactVersion: number, isSSR: boolean) {
             lib,
             {},
             (err, filePath) => {
-              if (err || filePath === false) {
+              if (err || !filePath) {
                 return reject(err);
               }
               return resolve(filePath);

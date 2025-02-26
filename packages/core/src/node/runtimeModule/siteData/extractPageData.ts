@@ -3,7 +3,7 @@ import path from 'node:path';
 import { compile } from '@rspress/mdx-rs';
 import {
   type Header,
-  MDX_REGEXP,
+  MDX_OR_MD_REGEXP,
   type PageIndexInfo,
   type ReplaceRule,
 } from '@rspress/shared';
@@ -15,14 +15,17 @@ import { flattenMdxContent } from '../../utils';
 import { applyReplaceRules } from '../../utils/applyReplaceRules';
 
 export function applyReplaceRulesToNestedObject(
-  obj: object,
+  obj: Record<string, unknown>,
   replaceRules: ReplaceRule[],
 ) {
   for (const key in obj) {
     if (typeof obj[key] === 'string') {
       obj[key] = applyReplaceRules(obj[key], replaceRules);
-    } else if (typeof obj[key] === 'object') {
-      obj[key] = applyReplaceRulesToNestedObject(obj[key], replaceRules);
+    } else if (typeof obj[key] === 'object' && obj[key] !== null) {
+      obj[key] = applyReplaceRulesToNestedObject(
+        obj[key] as Record<string, unknown>,
+        replaceRules,
+      );
     }
   }
 
@@ -41,7 +44,7 @@ export async function extractPageData(
   const pageData = await Promise.all(
     routeService
       .getRoutes()
-      .map(async (route, index): Promise<PageIndexInfo> => {
+      .map(async (route, index): Promise<PageIndexInfo | null> => {
         const defaultIndexInfo: PageIndexInfo = {
           id: index,
           title: '',
@@ -59,7 +62,7 @@ export async function extractPageData(
             .split(path.sep)
             .join('/'),
         };
-        if (!MDX_REGEXP.test(route.absolutePath)) {
+        if (!MDX_OR_MD_REGEXP.test(route.absolutePath)) {
           return defaultIndexInfo;
         }
         let content: string = await fs.readFile(route.absolutePath, 'utf8');
@@ -92,7 +95,8 @@ export async function extractPageData(
           root,
         });
 
-        if (!title?.length && !frontmatter && !frontmatter.title?.length) {
+        // FIXME: should be `!title?.length && !frontmatter?.length` why return null if do not have title
+        if (!title?.length && !frontmatter) {
           return null;
         }
 
@@ -186,8 +190,8 @@ export async function extractPageData(
             ...frontmatter,
             __content: undefined,
           },
-        };
+        } satisfies PageIndexInfo;
       }),
   );
-  return pageData.filter(Boolean);
+  return pageData.filter(Boolean) as PageIndexInfo[];
 }
