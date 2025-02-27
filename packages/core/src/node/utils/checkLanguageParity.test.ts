@@ -25,7 +25,10 @@ describe('checkLanguageParity', () => {
   // base config
   const mockConfig = {
     root: '/content',
-    locales: [{ lang: 'en' }, { lang: 'zh' }],
+    locales: [
+      { lang: 'en', label: 'en' },
+      { lang: 'zh', label: 'zh' },
+    ],
     languageParity: {
       enabled: true,
       include: [],

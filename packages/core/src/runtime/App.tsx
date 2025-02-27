@@ -5,9 +5,10 @@ import {
   useLocation,
 } from '@rspress/runtime';
 import {
+  type BaseRuntimePageInfo,
   type FrontMatterMeta,
   type Header,
-  MDX_REGEXP,
+  MDX_OR_MD_REGEXP,
   type PageData,
   cleanUrl,
 } from '@rspress/shared';
@@ -31,12 +32,12 @@ type PageMeta = {
 };
 
 export async function initPageData(routePath: string): Promise<PageData> {
-  const matchedRoute = pathnameToRouteService(routePath)!;
+  const matchedRoute = pathnameToRouteService(routePath);
   if (matchedRoute) {
     // Preload route component
     const mod = await matchedRoute.preload();
     const pagePath = cleanUrl(matchedRoute.filePath);
-    const extractPageInfo = siteData.pages.find(page => {
+    const extractPageInfo: BaseRuntimePageInfo = siteData.pages.find(page => {
       const normalize = (p: string) =>
         // compat the path that has no / suffix and ignore case
         p
@@ -46,7 +47,7 @@ export async function initPageData(routePath: string): Promise<PageData> {
         normalize(page.routePath),
         normalize(matchedRoute.path),
       );
-    });
+    })!;
 
     // FIXME: when sidebar item is configured as link string, the sidebar text won't updated when page title changed
     // Reason: The sidebar item text depends on pageData, which is not updated when page title changed, because the pageData is computed once when build
@@ -64,7 +65,7 @@ export async function initPageData(routePath: string): Promise<PageData> {
       title = '',
       frontmatter = {},
       ...rest
-    } = MDX_REGEXP.test(matchedRoute.filePath)
+    } = MDX_OR_MD_REGEXP.test(matchedRoute.filePath)
       ? meta
       : (mod as unknown as PageMeta);
     return {
@@ -78,7 +79,7 @@ export async function initPageData(routePath: string): Promise<PageData> {
         frontmatter,
         toc,
       },
-    };
+    } satisfies PageData;
   }
 
   let lang = siteData.lang || '';
@@ -141,7 +142,7 @@ export function App({ helmetContext }: { helmetContext?: object }) {
     async function refetchData() {
       try {
         const pageData = await initPageData(pathname);
-        setPageData(pageData);
+        setPageData?.(pageData);
       } catch (e) {
         console.log(e);
       }

@@ -14,6 +14,7 @@ export const rehypePluginCodeMeta: Plugin<[], Root> = () => {
       ) {
         const codeNode = node.children[0];
         // language-foo
+        codeNode.properties ??= {};
         codeNode.properties.meta = codeNode.data?.meta as string;
       }
     });
