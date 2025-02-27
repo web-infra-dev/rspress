@@ -28,8 +28,8 @@ export function pluginApiDocgen(options?: PluginOptions): RspressPlugin {
       // only support zh , en and ru 
       const languages = (
         config.themeConfig?.locales?.map(locale => locale.lang) ||
-        config.locales?.map(locale => locale.lang) || [config.lang]
-      ).filter(lang => ['zh', 'en', 'ru'].includes(lang)) as SupportLanguages[];
+        config.locales?.map(locale => locale.lang) || [config.lang || 'en']
+      ).filter((lang): lang is SupportLanguages => ['zh', 'en', 'ru'].includes(lang)) as SupportLanguages[];
       await docgen({
         entries,
         apiParseTool,
