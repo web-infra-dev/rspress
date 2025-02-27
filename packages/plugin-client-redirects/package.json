@@ -42,7 +42,7 @@
     "typescript": "^5.5.3"
   },
   "peerDependencies": {
-    "@rspress/runtime": "workspace:^1.42.1"
+    "@rspress/runtime": "workspace:^2.0.0-alpha.0"
   },
   "engines": {
     "node": ">=14.17.6"
