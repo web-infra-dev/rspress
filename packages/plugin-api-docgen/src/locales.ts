@@ -31,4 +31,20 @@ export const locales = {
     defaultValue: 'Default Value',
     overview: 'Overview',
   },
+  ru: {
+    copy: 'Копировать',
+    copied: 'Скопировано успешно',
+    expand: 'Развернуть код',
+    collapse: 'Свернуть код',
+    className: 'Имя класса узла',
+    style: 'Стиль узла',
+    children: 'Дочерние элементы',
+    disabled: 'Отключено',
+    required: 'Обязательно',
+    property: 'Свойство',
+    description: 'Описание',
+    type: 'Тип',
+    defaultValue: 'Значение по умолчанию',
+    overview: 'Обзор',
+  }
 };
