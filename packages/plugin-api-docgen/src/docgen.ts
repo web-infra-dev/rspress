@@ -183,13 +183,6 @@ function generateTable(componentDoc: ComponentDoc[], language: SupportLanguages)
     .map(param => {
       const { props } = param;
       const t = locales[language];
-      if (!t) {
-        logger.warn(
-          '[module-doc-plugin]',
-          `Translation for language "${language}" not found, falling back to English`
-        );
-        return generateTable(componentDoc, 'en');
-      }
       const PROP_TABLE_HEADER = `|${t.property}|${t.description}|${t.type}|${t.defaultValue}|\n|:---:|:---:|:---:|:---:|`;
 
       const tableContent = Object.keys(props)
