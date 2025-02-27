@@ -90,7 +90,7 @@ async function main() {
     // 5. Run changeset version and pnpm install
     if(bumpType === 'alpha') {
       try {
-        await fs.rm(path.join(process.cwd(), '.changeset', 'pre.json'), {force: true});
+        await fs.rm(path.join(process.cwd(), '.changeset', 'pre.json'), { force: true });
       } catch (error) {
         console.warn(error);
       }
