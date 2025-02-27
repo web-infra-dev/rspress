@@ -25,11 +25,11 @@ export function pluginApiDocgen(options?: PluginOptions): RspressPlugin {
       return config;
     },
     async beforeBuild(config, isProd) {
-      // only support zh and en
+      // only support zh , en and ru 
       const languages = (
         config.themeConfig?.locales?.map(locale => locale.lang) ||
         config.locales?.map(locale => locale.lang) || [config.lang]
-      ).filter(lang => lang === 'zh' || lang === 'en') as SupportLanguages[];
+      ).filter(lang => ['zh', 'en', 'ru'].includes(lang)) as SupportLanguages[];
       await docgen({
         entries,
         apiParseTool,
