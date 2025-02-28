@@ -46,5 +46,5 @@ export const locales = {
     type: 'Тип',
     defaultValue: 'Значение по умолчанию',
     overview: 'Обзор',
-  }
+  },
 };
