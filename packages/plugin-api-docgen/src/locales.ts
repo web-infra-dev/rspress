@@ -1,3 +1,6 @@
+/* spell-checker: disable */
+// why disable cspell?
+// other languages except en cannot be linted by cspell, so ignore this file
 export const locales = {
   zh: {
     copy: '复制',
@@ -30,5 +33,21 @@ export const locales = {
     type: 'Type',
     defaultValue: 'Default Value',
     overview: 'Overview',
+  },
+  ru: {
+    copy: 'Копировать',
+    copied: 'Скопировано успешно',
+    expand: 'Развернуть код',
+    collapse: 'Свернуть код',
+    className: 'Имя класса узла',
+    style: 'Стиль узла',
+    children: 'Дочерние элементы',
+    disabled: 'Отключено',
+    required: 'Обязательно',
+    property: 'Свойство',
+    description: 'Описание',
+    type: 'Тип',
+    defaultValue: 'Значение по умолчанию',
+    overview: 'Обзор',
   },
 };
