@@ -17,7 +17,9 @@ async function getCurrentVersion() {
 }
 
 async function getNextVersion(currentVersion, type) {
-  const [major, minor, patch, _, prereleaseVersion] = currentVersion.split(/[\.-]/).map(Number);
+  const [major, minor, patch, _, prereleaseVersion] = currentVersion
+    .split(/[\.-]/)
+    .map(Number);
   switch (type) {
     case 'patch':
       return `${major}.${minor}.${patch + 1}`;
@@ -88,9 +90,11 @@ async function main() {
     await generateChangesetFile(bumpType, nextVersion);
 
     // 5. Run changeset version and pnpm install
-    if(bumpType === 'alpha') {
+    if (bumpType === 'alpha') {
       try {
-        await fs.rm(path.join(process.cwd(), '.changeset', 'pre.json'), { force: true });
+        await fs.rm(path.join(process.cwd(), '.changeset', 'pre.json'), {
+          force: true,
+        });
       } catch (error) {
         console.warn(error);
       }
