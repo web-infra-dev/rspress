@@ -1,3 +1,6 @@
+/* spell-checker: disable */
+// why disable cspell?
+// other languages except en cannot be linted by cspell, so ignore this file
 export const locales = {
   zh: {
     copy: '复制',
