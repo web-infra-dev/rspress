@@ -49,6 +49,8 @@ export class LocalProvider implements Provider {
 
   #cyrillicIndex?: FlexSearchDocumentWithType;
 
+  #fetchPromise?: Promise<PageIndexInfo[]>;
+
   async #getPages(lang: string, version: string): Promise<PageIndexInfo[]> {
     const searchIndexGroupID = `${version ?? ''}###${lang ?? ''}`;
 
@@ -80,18 +82,32 @@ export class LocalProvider implements Provider {
     return [];
   }
 
-  async init(options: SearchOptions) {
+  async fetchSearchIndex(options: SearchOptions) {
+    if (this.#fetchPromise) {
+      return this.#fetchPromise;
+    }
+
     const { currentLang, currentVersion } = options;
     const versioned = options.mode !== 'remote' && options.versioned;
 
+    this.#fetchPromise = this.#getPages(
+      currentLang,
+      versioned ? currentVersion : '',
+    );
+
+    return this.#fetchPromise;
+  }
+
+  async init(options: SearchOptions) {
     const pagesForSearch: PageIndexForFlexSearch[] = (
-      await this.#getPages(currentLang, versioned ? currentVersion : '')
+      await this.fetchSearchIndex(options)
     ).map(page => ({
       ...page,
       normalizedContent: normalizeTextCase(page.content),
       headers: page.toc.map(header => normalizeTextCase(header.text)).join(' '),
       normalizedTitle: normalizeTextCase(page.title),
     }));
+
     const createOptions: IndexOptionsForDocumentSearch<PageIndexInfo, true> = {
       tokenize: 'full',
       document: {

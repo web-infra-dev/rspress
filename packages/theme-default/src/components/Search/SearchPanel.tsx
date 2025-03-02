@@ -58,12 +58,14 @@ export function SearchPanel({ focused, setFocused }: SearchPanelProps) {
   const [query, setQuery] = useState('');
   const [searchResult, setSearchResult] = useState<MatchResult>([]);
   const searchInputRef = useRef<HTMLInputElement | null>(null);
-  const [initing, setIniting] = useState(true);
   const [isSearching, setIsSearching] = useState(false);
   const [resultTabIndex, setResultTabIndex] = useState(0);
   const [currentSuggestionIndex, setCurrentSuggestionIndex] = useState(0);
   const pageSearcherRef = useRef<PageSearcher | null>(null);
   const pageSearcherConfigRef = useRef<PageSearcherConfig | null>(null);
+  const [initStatus, setInitStatus] = useState<
+    'initial' | 'initing' | 'inited'
+  >('initial');
   const searchResultRef = useRef<HTMLDivElement>(null);
   const searchResultTabRef = useRef<HTMLDivElement>(null);
   const mousePositionRef = useRef<{
@@ -126,10 +128,18 @@ export function SearchPanel({ focused, setFocused }: SearchPanelProps) {
   const currentRenderType =
     searchResult[resultTabIndex]?.renderType ?? RenderType.Default;
 
-  async function initPageSearcher() {
-    if (search === false) {
-      return;
+  if (search === false) {
+    return null;
+  }
+
+  /**
+   * Create page searcher instance.
+   */
+  const createSearcher = () => {
+    if (pageSearcherRef.current) {
+      return pageSearcherRef.current;
     }
+
     const pageSearcherConfig = {
       currentLang: lang,
       currentVersion: version,
@@ -141,11 +151,27 @@ export function SearchPanel({ focused, setFocused }: SearchPanelProps) {
     });
     pageSearcherRef.current = pageSearcher;
     pageSearcherConfigRef.current = pageSearcherConfig;
-    await pageSearcherRef.current.init();
-    setIniting(false);
+
+    return pageSearcherRef.current;
+  };
+
+  /**
+   * Call `searcher.init` to initialize the search index
+   */
+  async function initSearch() {
+    if (initStatus === 'inited' || initStatus === 'initing') {
+      return;
+    }
+
+    const searcher = createSearcher();
+
+    setInitStatus('initing');
+    await searcher.init();
+    setInitStatus('inited');
+
     const query = searchInputRef.current?.value;
     if (query) {
-      const matched = await pageSearcherRef.current?.match(query);
+      const matched = await searcher.match(query);
       setSearchResult(matched || DEFAULT_RESULT);
       setIsSearching(false);
     }
@@ -252,34 +278,34 @@ export function SearchPanel({ focused, setFocused }: SearchPanelProps) {
   useEffect(() => {
     if (focused) {
       setSearchResult(DEFAULT_RESULT);
-      if (!pageSearcherRef.current) {
-        initPageSearcher();
-      }
+      initSearch();
     } else {
       setQuery('');
     }
   }, [focused]);
 
-  // Preload the search index when the page is idle
+  // Prefetch the search index when the page is idle
   useEffect(() => {
-    if ('requestIdleCallback' in window) {
+    if ('requestIdleCallback' in window && !pageSearcherRef.current) {
       window.requestIdleCallback(() => {
-        if (!pageSearcherRef.current) {
-          initPageSearcher();
-        }
+        const searcher = createSearcher();
+        searcher.fetchSearchIndex();
       });
     }
   }, []);
 
+  // init pageSearcher again when lang or version changed
   useEffect(() => {
     const { currentLang, currentVersion } = pageSearcherConfigRef.current ?? {};
     const isLangChanged = lang !== currentLang;
     const isVersionChanged = versionedSearch && version !== currentVersion;
 
-    if (!initing && (isLangChanged || isVersionChanged)) {
-      initPageSearcher();
+    if (isLangChanged || isVersionChanged) {
+      // reset status first
+      setInitStatus('initial');
+      pageSearcherRef.current = null;
+      initSearch();
     }
-    // init pageSearcher again when lang or version changed
   }, [lang, version, versionedSearch]);
 
   const handleQueryChangedImpl = async (value: string) => {
@@ -422,10 +448,12 @@ export function SearchPanel({ focused, setFocused }: SearchPanelProps) {
         </div>
       );
     }
-    // if no result, show no result
-    if (suggestionList.length === 0 && !initing) {
+
+    // if no result, show the no result tip
+    if (suggestionList.length === 0 && initStatus === 'inited') {
       return <NoSearchResult query={query} />;
     }
+
     const normalizedSuggestions = normalizeSuggestions(suggestionList);
     // accumulateIndex is used to calculate the index of the suggestion in the whole list.
     let accumulateIndex = -1;
@@ -537,7 +565,7 @@ export function SearchPanel({ focused, setFocused }: SearchPanelProps) {
                 </h2>
               </div>
 
-              {query && !initing ? (
+              {query && initStatus === 'inited' ? (
                 <div
                   className={`${styles.searchHits}  rspress-scrollbar`}
                   ref={searchResultRef}

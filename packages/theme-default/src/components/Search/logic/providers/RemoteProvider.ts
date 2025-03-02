@@ -15,6 +15,10 @@ export class RemoteProvider implements Provider {
     this.#options = options;
   }
 
+  async fetchSearchIndex(_options: SearchOptions) {
+    return [];
+  }
+
   async search(query: SearchQuery) {
     const { apiUrl, searchIndexes } = this.#options as RemoteSearchOptions;
     const { keyword, limit } = query;
