@@ -1,11 +1,15 @@
 import 'nprogress/nprogress.css';
 import '../../styles';
 import { Content, usePageData } from '@rspress/runtime';
-import Theme, { Nav } from '@theme';
+import {
+  HomeLayout as DefaultHomeLayout,
+  NotFoundLayout as DefaultNotFoundLayout,
+  Nav,
+} from '@theme';
 import type React from 'react';
 import { Helmet } from 'react-helmet-async';
 import type { NavProps } from '../../components/Nav';
-import { useLocaleSiteData } from '../../logic';
+import { useLocaleSiteData } from '../../logic/useLocaleSiteData';
 import { useRedirect4FirstVisit } from '../../logic/useRedirect4FirstVisit';
 import { type UISwitchResult, useUISwitch } from '../../logic/useUISwitch';
 import { DocLayout, type DocLayoutProps } from '../DocLayout';
@@ -18,6 +22,8 @@ export type LayoutProps = {
    * Control whether or not to display the navbar, sidebar, outline and footer
    */
   uiSwitch?: Partial<UISwitchResult>;
+  HomeLayout?: React.FC<HomeLayoutProps>;
+  NotFoundLayout?: React.FC<any>;
 } & Omit<DocLayoutProps, 'uiSwitch'> &
   HomeLayoutProps &
   NavProps;
@@ -37,7 +43,7 @@ const concatTitle = (title: string, suffix?: string) => {
   return `${title} ${suffix}`;
 };
 
-export const Layout: React.FC<LayoutProps> = props => {
+export function Layout(props: LayoutProps) {
   const {
     top,
     bottom,
@@ -61,6 +67,8 @@ export const Layout: React.FC<LayoutProps> = props => {
     afterFeatures,
     afterNavMenu,
     components,
+    HomeLayout = DefaultHomeLayout,
+    NotFoundLayout = DefaultNotFoundLayout,
   } = props;
   const docProps: DocLayoutProps = {
     beforeDocFooter,
@@ -127,13 +135,13 @@ export const Layout: React.FC<LayoutProps> = props => {
   const getContentLayout = () => {
     switch (pageType) {
       case 'home':
-        return <Theme.HomeLayout {...homeProps} />;
+        return <HomeLayout {...homeProps} />;
       case 'doc':
         return (
           <DocLayout {...docProps} uiSwitch={uiSwitch} navTitle={navTitle} />
         );
       case '404':
-        return <Theme.NotFoundLayout />;
+        return <NotFoundLayout />;
       // The custom pageType will have navbar while the blank pageType will not.
       case 'custom':
       case 'blank':
@@ -169,4 +177,4 @@ export const Layout: React.FC<LayoutProps> = props => {
       {bottom}
     </div>
   );
-};
+}

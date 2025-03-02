@@ -2,9 +2,12 @@ import { isEqualPath, useLocation, withBase } from '@rspress/runtime';
 import type { NormalizedSidebarGroup, SidebarItem } from '@rspress/shared';
 import { useSidebarData } from './useSidebarData';
 
-export function usePrevNextPage() {
+export function usePrevNextPage(): {
+  prevPage: SidebarItem;
+  nextPage: SidebarItem;
+} {
   const { pathname } = useLocation();
-  const { items } = useSidebarData();
+  const items = useSidebarData();
   const flattenTitles: SidebarItem[] = [];
 
   const walk = (sidebarItem: NormalizedSidebarGroup | SidebarItem) => {

@@ -1,17 +1,15 @@
 import { useLocation } from '@rspress/runtime';
 import { useMemo } from 'react';
-import {
-  type SidebarDataGroup,
-  getSidebarDataGroup,
-} from './getSidebarDataGroup';
+import type { SidebarData } from '../components/Sidebar';
+import { getSidebarDataGroup } from './getSidebarDataGroup';
 import { useLocaleSiteData } from './useLocaleSiteData';
 
-export function useSidebarData(): SidebarDataGroup {
+export function useSidebarData(): SidebarData {
   const { sidebar } = useLocaleSiteData();
   const { pathname: rawPathname } = useLocation();
   const pathname = decodeURIComponent(rawPathname);
 
-  const sidebarData = useMemo(() => {
+  const sidebarData: SidebarData = useMemo(() => {
     return getSidebarDataGroup(sidebar, pathname);
   }, [sidebar, pathname]);
 
