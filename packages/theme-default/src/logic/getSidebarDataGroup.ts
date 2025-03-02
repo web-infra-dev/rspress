@@ -1,6 +1,6 @@
 import {
-  matchPath as ReactRouterDomMatchPath,
   normalizeRoutePath,
+  matchPath as reactRouterDomMatchPath,
   withBase,
 } from '@rspress/runtime';
 import {
@@ -53,7 +53,7 @@ export const matchPath = (
 export function isActive(itemLink: string, currentPathname: string): boolean {
   const normalizedItemLink = normalizeRoutePath(withBase(itemLink));
   const normalizedCurrentPathname = normalizeRoutePath(currentPathname);
-  const linkMatched = ReactRouterDomMatchPath(
+  const linkMatched = reactRouterDomMatchPath(
     normalizedItemLink,
     normalizedCurrentPathname,
   );
