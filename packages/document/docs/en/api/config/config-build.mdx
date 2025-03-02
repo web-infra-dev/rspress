@@ -46,9 +46,9 @@ If you want to modify the output directory, please use [outDir](/api/config/conf
 
 - Type: `RsbuildPlugin[]`
 
-Used to register [Rsbuild plugins](https://rsbuild.dev/plugins/list/).
+To register [Rsbuild plugins](https://rsbuild.dev/plugins/list/).
 
-You can use the rich plugins of Rsbuild in the Rspress project to quickly extend the building capabilities.
+You can leverage Rsbuild's extensive plugin ecosystem to enhance and extend your build capabilities.
 
 - Example: Support Vue SFC through [@rsbuild/plugin-vue](https://rsbuild.dev/plugins/list/plugin-vue)
 
@@ -61,7 +61,7 @@ export default defineConfig({
 });
 ```
 
-- Example: Add Google analytics through [rsbuild-plugin-google-analytics](https://github.com/rspack-contrib/rsbuild-plugin-google-analytics)
+- Example: Add Google analytics through [rsbuild-plugin-google-analytics](https://github.com/rspack-contrib/rsbuild-plugin-google-analytics).
 
 ```ts title="rspress.config.ts"
 import { defineConfig } from 'rspress/config';
@@ -77,7 +77,7 @@ export default defineConfig({
 });
 ```
 
-- Example: Add Open Graph meta tags through [rsbuild-plugin-open-graph](https://github.com/rspack-contrib/rsbuild-plugin-open-graph)
+- Example: Add Open Graph meta tags through [rsbuild-plugin-open-graph](https://github.com/rspack-contrib/rsbuild-plugin-open-graph).
 
 ```ts title="rspress.config.ts"
 import { defineConfig } from 'rspress/config';
@@ -96,7 +96,7 @@ export default defineConfig({
 
 You can also override the built-in plugins [@rsbuild/plugin-react](https://rsbuild.dev/plugins/list/plugin-react), [@rsbuild/plugin-sass](https://rsbuild.dev/plugins/list/plugin-sass) and [@rsbuild/plugin-less](https://rsbuild.dev/plugins/list/plugin-less), and customize relevant plugin options.
 
-- Example: Modify related options of built-in [@rsbuild/plugin-less](https://rsbuild.dev/plugins/list/plugin-less) plugin
+- Example: Modify related options of built-in [@rsbuild/plugin-less](https://rsbuild.dev/plugins/list/plugin-less) plugin.
 
 ```ts title="rspress.config.ts"
 import { defineConfig } from 'rspress/config';

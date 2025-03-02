@@ -6,7 +6,9 @@ Rspress 底层基于 [Rsbuild](https://github.com/web-infra-dev/rsbuild) 来进�
 
 ### Rsbuild 配置
 
-Rsbuild 提供了丰富的构建配置，你可以使用 [builderConfig](/api/config/config-build.html#builderconfig) 来自定义这些配置项。比如，将产物目录修改为 `doc_dist`：
+Rsbuild 提供了丰富的构建配置，你可以使用 [builderConfig](/api/config/config-build.html#builderconfig) 来自定义这些配置项。
+
+比如，将产物目录修改为 `doc_dist`：
 
 ```ts title="rspress.config.ts"
 import { defineConfig } from 'rspress/config';
@@ -19,6 +21,24 @@ export default defineConfig({
       },
     },
   },
+});
+```
+
+Rspress 还提供了 [builderPlugins](/api/config/config-build#builderplugins) 配置项来注册 Rsbuild 插件。你可以利用 Rsbuild 丰富的插件生态来增强和扩展构建能力。
+
+比如通过 [rsbuild-plugin-google-analytics](https://github.com/rspack-contrib/rsbuild-plugin-google-analytics) 添加 Google analytics：
+
+```ts title="rspress.config.ts"
+import { defineConfig } from 'rspress/config';
+import { pluginGoogleAnalytics } from 'rsbuild-plugin-google-analytics';
+
+export default defineConfig({
+  builderPlugins: [
+    pluginGoogleAnalytics({
+      // replace this with your Google tag ID
+      id: 'G-xxxxxxxxxx',
+    }),
+  ],
 });
 ```
 
