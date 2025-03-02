@@ -35,13 +35,6 @@ import { detectReactVersion, resolveReactAlias } from './utils';
 import { detectCustomIcon } from './utils/detectCustomIcon';
 import { getSocialIcons } from './utils/getSocialIcons';
 
-export interface MdxRsLoaderCallbackContext {
-  resourcePath: string;
-  links: string[];
-  root: string;
-  base: string;
-}
-
 function isPluginIncluded(config: UserConfig, pluginName: string): boolean {
   return Boolean(
     config.builderPlugins?.some(plugin => plugin.name === pluginName) ||

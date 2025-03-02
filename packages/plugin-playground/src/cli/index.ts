@@ -70,8 +70,6 @@ export function pluginPlayground(
   return {
     name: '@rspress/plugin-playground',
     config(config, { removePlugin }) {
-      config.markdown = config.markdown || {};
-      config.markdown.mdxRs = false;
       // The preview and playground plugin are mutually conflicting.
       removePlugin('@rspress/plugin-preview');
       return config;
