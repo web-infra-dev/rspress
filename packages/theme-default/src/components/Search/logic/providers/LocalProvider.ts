@@ -119,9 +119,9 @@ export class LocalProvider implements Provider {
     });
     for (const item of pagesForSearch) {
       // Add search index async to avoid blocking the main thread
-      this.#index!.addAsync(item);
-      this.#cjkIndex!.addAsync(item);
-      this.#cyrillicIndex!.addAsync(item);
+      this.#index!.addAsync(item.id, item);
+      this.#cjkIndex!.addAsync(item.id, item);
+      this.#cyrillicIndex!.addAsync(item.id, item);
     }
   }
 
