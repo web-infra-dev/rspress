@@ -153,9 +153,10 @@ export function Overview(props: {
 
   const { pages } = siteData;
   const overviewModules = pages.filter(page => subFilter(page.routePath));
-  let { items: overviewSidebarGroups } = useSidebarData() as {
-    items: (NormalizedSidebarGroup | SidebarItem)[];
-  };
+  let overviewSidebarGroups = useSidebarData() as (
+    | NormalizedSidebarGroup
+    | SidebarItem
+  )[];
 
   const {
     overview: {
