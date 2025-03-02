@@ -1,15 +1,17 @@
 import type { Header } from '@rspress/shared';
 import { useEffect, useMemo } from 'react';
 import {
+  DEFAULT_NAV_HEIGHT,
   bindingAsideScroll,
-  parseInlineMarkdownText,
-  renderInlineMarkdown,
   scrollToTarget,
-  useHiddenNav,
-} from '../../logic';
-import { DEFAULT_NAV_HEIGHT } from '../../logic/sideEffects';
+} from '../../logic/sideEffects';
 import './index.scss';
 import { useLocation } from '@rspress/runtime';
+import { useHiddenNav } from '../../logic/useHiddenNav';
+import {
+  parseInlineMarkdownText,
+  renderInlineMarkdown,
+} from '../../logic/utils';
 
 const TocItem = ({
   header,
