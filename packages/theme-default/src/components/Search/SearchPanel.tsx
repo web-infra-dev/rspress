@@ -159,7 +159,7 @@ export function SearchPanel({ focused, setFocused }: SearchPanelProps) {
    * Call `searcher.init` to initialize the search index
    */
   async function initSearch() {
-    if (initStatus === 'inited' || initStatus === 'initing') {
+    if (initStatus !== 'initial') {
       return;
     }
 
