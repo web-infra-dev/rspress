@@ -27,6 +27,13 @@ export abstract class Provider {
   }
 
   /**
+   * Fetch the search index
+   */
+  async fetchSearchIndex(_options: SearchOptions): Promise<PageIndexInfo[]> {
+    throw new Error('Not implemented');
+  }
+
+  /**
    * Search the pages according to the query
    */
   search(_query: SearchQuery): Promise<NormalizedSearchResult> {

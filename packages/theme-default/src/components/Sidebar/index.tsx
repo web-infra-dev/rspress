@@ -70,7 +70,7 @@ export function Sidebar(props: Props) {
     props;
 
   const { pathname: rawPathname } = useLocation();
-  const { items: rawSidebarData } = useSidebarData();
+  const rawSidebarData = useSidebarData();
   const [sidebarData, setSidebarData] = useState<SidebarData>(() => {
     return rawSidebarData.filter(Boolean).flat();
   });

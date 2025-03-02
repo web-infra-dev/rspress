@@ -1,4 +1,8 @@
-import { pathnameToRouteService, withBase } from '@rspress/runtime';
+import {
+  normalizeRoutePath,
+  matchPath as reactRouterDomMatchPath,
+  withBase,
+} from '@rspress/runtime';
 import {
   type NormalizedSidebar,
   type NormalizedSidebarGroup,
@@ -7,12 +11,6 @@ import {
   addTrailingSlash,
 } from '@rspress/shared';
 import type { SidebarData } from '../components/Sidebar';
-
-export interface SidebarDataGroup {
-  // The group name for the sidebar
-  group: string;
-  items: SidebarData;
-}
 
 /**
  * match the sidebar key in user config
@@ -53,13 +51,13 @@ export const matchPath = (
  * @returns
  */
 export function isActive(itemLink: string, currentPathname: string): boolean {
-  const linkMatchedRoute = pathnameToRouteService(withBase(itemLink));
-  const pathnameMatchedRoute = pathnameToRouteService(currentPathname);
-  return Boolean(
-    linkMatchedRoute &&
-      pathnameMatchedRoute &&
-      linkMatchedRoute.path === pathnameMatchedRoute.path,
+  const normalizedItemLink = normalizeRoutePath(withBase(itemLink));
+  const normalizedCurrentPathname = normalizeRoutePath(currentPathname);
+  const linkMatched = reactRouterDomMatchPath(
+    normalizedItemLink,
+    normalizedCurrentPathname,
   );
+  return linkMatched !== null;
 }
 
 /**
@@ -113,7 +111,7 @@ const match = (
 export const getSidebarDataGroup = (
   sidebar: NormalizedSidebar,
   currentPathname: string,
-): SidebarDataGroup => {
+): SidebarData => {
   /**
    * why sort?
    * {
@@ -130,15 +128,8 @@ export const getSidebarDataGroup = (
   for (const name of navRoutes) {
     if (matchPath(name, currentPathname)) {
       const sidebarGroup = sidebar[name];
-      const group = sidebarGroup.find(item => match(item, currentPathname));
-      return {
-        group: group && 'text' in group ? group.text : '',
-        items: sidebarGroup,
-      };
+      return sidebarGroup;
     }
   }
-  return {
-    group: 'Documentation',
-    items: [],
-  };
+  return [];
 };

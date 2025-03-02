@@ -7,7 +7,7 @@ export function usePrevNextPage(): {
   nextPage: SidebarItem;
 } {
   const { pathname } = useLocation();
-  const { items } = useSidebarData();
+  const items = useSidebarData();
   const flattenTitles: SidebarItem[] = [];
 
   const walk = (sidebarItem: NormalizedSidebarGroup | SidebarItem) => {

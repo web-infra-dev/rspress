@@ -26,7 +26,8 @@ export {
   matchRoutes,
   BrowserRouter,
   useSearchParams,
+  matchPath,
 } from 'react-router-dom';
-export { pathnameToRouteService } from './route';
+export { pathnameToRouteService, normalizeRoutePath } from './route';
 export { Helmet } from 'react-helmet-async';
 export { NoSSR } from './NoSSR';
