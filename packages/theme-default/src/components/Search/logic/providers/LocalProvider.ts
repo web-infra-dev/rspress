@@ -135,9 +135,9 @@ export class LocalProvider implements Provider {
     };
 
     const searchResult = await Promise.all([
-      this.#index?.search<true>(keyword, limit, options),
-      this.#cjkIndex?.search<true>(keyword, limit, options),
-      this.#cyrillicIndex?.search<true>(keyword, limit, options),
+      this.#index?.searchAsync<true>(keyword, options),
+      this.#cjkIndex?.searchAsync<true>(keyword, options),
+      this.#cyrillicIndex?.searchAsync<true>(keyword, options),
     ]);
 
     const combinedSearchResult: PageIndexInfo[] = [];
