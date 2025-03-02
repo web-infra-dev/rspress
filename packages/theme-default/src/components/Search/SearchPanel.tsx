@@ -128,10 +128,6 @@ export function SearchPanel({ focused, setFocused }: SearchPanelProps) {
   const currentRenderType =
     searchResult[resultTabIndex]?.renderType ?? RenderType.Default;
 
-  // We need to extract the group name by the link so that we can divide the search result into different groups.
-  const extractGroupName = (link: string) =>
-    getSidebarDataGroup(sidebar, link).group;
-
   async function initPageSearcher() {
     if (search === false) {
       return;
@@ -139,7 +135,6 @@ export function SearchPanel({ focused, setFocused }: SearchPanelProps) {
     const pageSearcherConfig = {
       currentLang: lang,
       currentVersion: version,
-      extractGroupName,
     };
     const pageSearcher = new PageSearcher({
       indexName: siteTitle,
@@ -353,7 +348,7 @@ export function SearchPanel({ focused, setFocused }: SearchPanelProps) {
   ): Record<string, DefaultMatchResultItem[]> => {
     return suggestions.reduce(
       (groups, item) => {
-        const group = item.group;
+        const group = item.title;
         if (!groups[group]) {
           groups[group] = [];
         }
