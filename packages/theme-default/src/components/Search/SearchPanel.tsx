@@ -11,7 +11,6 @@ import { debounce } from 'lodash-es';
 import { useCallback, useEffect, useRef, useState } from 'react';
 import { createPortal } from 'react-dom';
 import * as userSearchHooks from 'virtual-search-hooks';
-import { getSidebarDataGroup } from '../../logic/getSidebarDataGroup';
 import { useLocaleSiteData } from '../../logic/useLocaleSiteData';
 import { SvgWrapper } from '../SvgWrapper';
 import { Tab, Tabs } from '../Tabs';
@@ -115,8 +114,7 @@ export function SearchPanel({ focused, setFocused }: SearchPanelProps) {
     siteData,
     page: { lang, version },
   } = usePageData();
-  const { sidebar, searchPlaceholderText = 'Search Docs' } =
-    useLocaleSiteData();
+  const { searchPlaceholderText = 'Search Docs' } = useLocaleSiteData();
   const { search, title: siteTitle } = siteData;
   const versionedSearch =
     search && search.mode !== 'remote' && search.versioned;
