@@ -1,6 +1,6 @@
 {
   "name": "@rspress/plugin-rss",
-  "version": "1.42.1",
+  "version": "1.43.0-canary-202503021457",
   "description": "A plugin for rss generation for rspress",
   "bugs": "https://github.com/web-infra-dev/rspress/issues",
   "repository": {
@@ -43,7 +43,7 @@
   },
   "peerDependencies": {
     "react": ">=17.0.0",
-    "rspress": "workspace:^1.42.1"
+    "rspress": "workspace:^1.43.0-canary-202503021457"
   },
   "engines": {
     "node": ">=14.17.6"
