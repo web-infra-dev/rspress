@@ -46,6 +46,10 @@ export class PageSearcher {
     await this.#provider?.init(this.#options);
   }
 
+  async fetchSearchIndex() {
+    return this.#provider?.fetchSearchIndex(this.#options);
+  }
+
   async match(keyword: string, limit = 7) {
     const searchResult = await this.#provider?.search({ keyword, limit });
     const normalizedKeyWord = normalizeTextCase(keyword);
