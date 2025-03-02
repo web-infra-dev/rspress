@@ -2,7 +2,7 @@ import type { Route } from '@rspress/shared';
 import { routes } from '__VIRTUAL_ROUTES__';
 import { matchRoutes } from 'react-router-dom';
 
-function normalizeRoutePath(routePath: string) {
+export function normalizeRoutePath(routePath: string) {
   return decodeURIComponent(routePath)
     .replace(/\.html$/, '')
     .replace(/\/index$/, '/');

@@ -1,20 +1,20 @@
 import { describe, expect, it, vi } from 'vitest';
-import { getSidebarDataGroup } from './getSidebarDataGroup';
+import { getSidebarDataGroup, isActive } from './getSidebarDataGroup';
 
-vi.mock('@rspress/runtime', () => {
+vi.mock('virtual-i18n-text', () => {
+  return { default: {} };
+});
+
+vi.mock('virtual-site-data', () => {
   return {
-    withBase: (arg0: string) => arg0,
-    pathnameToRouteService: (arg0: string) => {
-      const map: Record<string, string> = {
-        '/guide/getting-started': '/guide/getting-started',
-        '/api/react.use': '/api/react.use',
-        '/api/react.use.html': '/api/react.use',
-      };
-      return {
-        path: map[arg0],
-      };
+    default: {
+      base: '/',
     },
   };
+});
+
+vi.mock('__VIRTUAL_ROUTES__', () => {
+  return { routes: [] };
 });
 
 describe('getSidebarDataGroup', () => {
@@ -33,15 +33,12 @@ describe('getSidebarDataGroup', () => {
         '/guide/getting-started',
       ),
     ).toMatchInlineSnapshot(`
-      {
-        "group": "Getting Started",
-        "items": [
-          {
-            "link": "/guide/getting-started",
-            "text": "Getting Started",
-          },
-        ],
-      }
+      [
+        {
+          "link": "/guide/getting-started",
+          "text": "Getting Started",
+        },
+      ]
     `);
   });
 
@@ -54,15 +51,36 @@ describe('getSidebarDataGroup', () => {
         '/api/react.use.html',
       ),
     ).toMatchInlineSnapshot(`
-      {
-        "group": "react.use",
-        "items": [
-          {
-            "link": "/api/react.use",
-            "text": "react.use",
-          },
-        ],
-      }
+      [
+        {
+          "link": "/api/react.use",
+          "text": "react.use",
+        },
+      ]
     `);
+  });
+});
+
+describe('isActive', () => {
+  it('pass cases', () => {
+    const routes = [
+      '/api/config',
+      '/api/config.html',
+      '/api/config/',
+      '/api/config/index',
+      '/api/config/index.html',
+    ];
+
+    for (const route of routes) {
+      for (const route2 of routes) {
+        expect(isActive(route, route2)).toBeTruthy();
+      }
+    }
+  });
+
+  it('failed cases', () => {
+    expect(isActive('/api/config', '/api/config2')).toBeFalsy();
+    expect(isActive('/api/config', '/api/config/config2')).toBeFalsy();
+    expect(isActive('/api/config/index', '/api/config/config2')).toBeFalsy();
   });
 });
