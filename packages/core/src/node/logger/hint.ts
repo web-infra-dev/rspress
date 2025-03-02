@@ -11,7 +11,7 @@ const THEME_DEFAULT_EXPORT_PATTERN = /export default \{(.*?)\}/m;
  */
 export async function hintThemeBreakingChange(customThemeDir: string) {
   const fileList = ['index.ts', 'index.tsx', 'index.js', 'index.mjs'];
-  let useDefaultExportFilePath: string;
+  let useDefaultExportFilePath: string | null = null;
   for (const file of fileList) {
     const filePath = join(customThemeDir, file);
     if (await pathExists(filePath)) {
