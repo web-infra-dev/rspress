@@ -16,7 +16,6 @@ interface CommonMatchResult {
   link: string;
   query: string;
   highlightInfoList: HighlightInfo[];
-  group: string;
 }
 
 interface TitleMatch extends CommonMatchResult {
@@ -54,7 +53,6 @@ export type MatchResult = (DefaultMatchResult | CustomMatchResult)[];
 export type PageSearcherConfig = {
   currentLang: string;
   currentVersion: string;
-  extractGroupName: (path: string) => string;
 };
 
 export type SearchOptions = (LocalSearchOptions | RemoteSearchOptions) &

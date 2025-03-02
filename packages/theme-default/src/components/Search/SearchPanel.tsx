@@ -11,7 +11,6 @@ import { debounce } from 'lodash-es';
 import { useCallback, useEffect, useRef, useState } from 'react';
 import { createPortal } from 'react-dom';
 import * as userSearchHooks from 'virtual-search-hooks';
-import { getSidebarDataGroup } from '../../logic/getSidebarDataGroup';
 import { useLocaleSiteData } from '../../logic/useLocaleSiteData';
 import { SvgWrapper } from '../SvgWrapper';
 import { Tab, Tabs } from '../Tabs';
@@ -115,8 +114,7 @@ export function SearchPanel({ focused, setFocused }: SearchPanelProps) {
     siteData,
     page: { lang, version },
   } = usePageData();
-  const { sidebar, searchPlaceholderText = 'Search Docs' } =
-    useLocaleSiteData();
+  const { searchPlaceholderText = 'Search Docs' } = useLocaleSiteData();
   const { search, title: siteTitle } = siteData;
   const versionedSearch =
     search && search.mode !== 'remote' && search.versioned;
@@ -128,10 +126,6 @@ export function SearchPanel({ focused, setFocused }: SearchPanelProps) {
   const currentRenderType =
     searchResult[resultTabIndex]?.renderType ?? RenderType.Default;
 
-  // We need to extract the group name by the link so that we can divide the search result into different groups.
-  const extractGroupName = (link: string) =>
-    getSidebarDataGroup(sidebar, link).group;
-
   async function initPageSearcher() {
     if (search === false) {
       return;
@@ -139,7 +133,6 @@ export function SearchPanel({ focused, setFocused }: SearchPanelProps) {
     const pageSearcherConfig = {
       currentLang: lang,
       currentVersion: version,
-      extractGroupName,
     };
     const pageSearcher = new PageSearcher({
       indexName: siteTitle,
@@ -353,7 +346,7 @@ export function SearchPanel({ focused, setFocused }: SearchPanelProps) {
   ): Record<string, DefaultMatchResultItem[]> => {
     return suggestions.reduce(
       (groups, item) => {
-        const group = item.group;
+        const group = item.title;
         if (!groups[group]) {
           groups[group] = [];
         }

@@ -120,7 +120,6 @@ export class PageSearcher {
             length: getStrByteLength(query),
           },
         ],
-        group: this.#options.extractGroupName(item.routePath),
       });
       return true;
     }
@@ -160,7 +159,6 @@ export class PageSearcher {
           ],
           link: `${domain}${normalizeHref(item.routePath)}#${header.id}`,
           query,
-          group: this.#options.extractGroupName(item.routePath),
         });
         matchHeaderSet.add(header);
       }
@@ -248,7 +246,6 @@ export class PageSearcher {
         }`,
         query,
         highlightInfoList,
-        group: this.#options.extractGroupName(item.routePath),
         statement: `...${statement}...`,
       });
       return;
@@ -284,7 +281,6 @@ export class PageSearcher {
             currentHeader ? `#${currentHeader.id}` : ''
           }`,
           query,
-          group: this.#options.extractGroupName(item.routePath),
         });
         // 同一区块只匹配一次
         currentHeader && matchHeaderSet?.add(currentHeader);
