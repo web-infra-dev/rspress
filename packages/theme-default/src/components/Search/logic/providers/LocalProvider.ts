@@ -118,9 +118,10 @@ export class LocalProvider implements Provider {
       tokenize: (str: string) => tokenize(str, cyrillicRegex),
     });
     for (const item of pagesForSearch) {
-      this.#index!.add(item);
-      this.#cjkIndex!.add(item);
-      this.#cyrillicIndex!.add(item);
+      // Add search index async to avoid blocking the main thread
+      this.#index!.addAsync(item.id, item);
+      this.#cjkIndex!.addAsync(item.id, item);
+      this.#cyrillicIndex!.addAsync(item.id, item);
     }
   }
 
