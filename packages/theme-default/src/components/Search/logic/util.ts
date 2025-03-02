@@ -40,12 +40,13 @@ export function formatText(text: string) {
 
 export function normalizeTextCase(text: string | number) {
   const textNormalized = text.toString().toLowerCase().normalize('NFD');
-  const resultWithAccents = textNormalized;
+
+  if (cyrillicRegex.test(String(text))) {
+    return textNormalized.normalize('NFC');
+  }
+
   // biome-ignore lint/suspicious/noMisleadingCharacterClass: temporarily ignore
   const resultWithoutAccents = textNormalized.replace(/[\u0300-\u036f]/g, '');
-  if (cyrillicRegex.test(String(text))) {
-    return resultWithAccents.normalize('NFC');
-  }
   if (kRegex.test(String(text))) {
     return resultWithoutAccents.normalize('NFC');
   }
