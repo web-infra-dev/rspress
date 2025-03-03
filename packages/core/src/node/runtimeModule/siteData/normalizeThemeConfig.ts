@@ -217,7 +217,7 @@ export function normalizeThemeConfig(
    * 2. in the `doc.themeConfig.locales`
    * The locales in the theme config will override the locales in the site config.
    *
-   * For nav and sidebar, we prefer the locales in the `themeConfig.nav` and `themeConfig.sidebar` if it exists. And the framework will generate complete nav and sidebar for each locale and place them in the `themeConfig.locales` field.
+   * For nav and sidebar, we prefer the locales in the `themeConfig.nav` and `themeConfig.sidebar` if it exists. And Rspress will generate complete nav and sidebar for each locale and place them in the `themeConfig.locales` field.
    */
   if (locales.length) {
     themeConfig.locales = locales.map(({ lang: currentLang, label }) => {
