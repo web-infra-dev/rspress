@@ -46,11 +46,11 @@
     "heading-case": "^0.1.4",
     "husky": "^9.1.7",
     "lint-staged": "~15.4.3",
-    "nx": "20.4.0",
+    "nx": "20.4.6",
     "path-serializer": "0.3.4",
     "playwright": "1.47.2",
     "prettier": "3.4.2",
-    "prettier-plugin-packagejson": "^2.5.8",
+    "prettier-plugin-packagejson": "^2.5.10",
     "tree-kill": "^1.2.2",
     "vitest": "2.1.9",
     "zx": "^8.3.2"

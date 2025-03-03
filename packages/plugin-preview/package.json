@@ -22,12 +22,12 @@
     "reset": "rimraf ./**/node_modules"
   },
   "dependencies": {
-    "@rsbuild/core": "1.2.3",
-    "@rsbuild/plugin-babel": "~1.0.3",
-    "@rsbuild/plugin-less": "~1.1.0",
-    "@rsbuild/plugin-react": "~1.1.0",
-    "@rsbuild/plugin-sass": "~1.2.0",
-    "@rsbuild/plugin-solid": "~1.0.4",
+    "@rsbuild/core": "1.2.14",
+    "@rsbuild/plugin-babel": "~1.0.4",
+    "@rsbuild/plugin-less": "~1.1.1",
+    "@rsbuild/plugin-react": "~1.1.1",
+    "@rsbuild/plugin-sass": "~1.2.2",
+    "@rsbuild/plugin-solid": "~1.0.5",
     "@rspress/shared": "workspace:*",
     "@rspress/theme-default": "workspace:*",
     "lodash": "4.17.21",
@@ -35,7 +35,7 @@
   },
   "devDependencies": {
     "@rslib/core": "0.5.2",
-    "@types/lodash": "^4.17.15",
+    "@types/lodash": "^4.17.16",
     "@types/mdast": "^3.0.15",
     "@types/node": "^18.11.17",
     "@types/react": "^18.3.18",
