@@ -1,15 +1,22 @@
-import path from 'node:path';
 import type { RspressPlugin } from '@rspress/shared';
 
 interface Options {
   selector?: string;
 }
 
-export function pluginMediumZoom(options: Options = {}): RspressPlugin {
+export function pluginAlgolia(options: Options = {}): RspressPlugin {
+  options;
   return {
     name: '@rspress/plugin-algolia',
-    globalUIComponents: [
-      [path.join(__dirname, '../static/MediumZoom.tsx'), options],
-    ],
+    builderConfig: {
+      html: {
+        meta: {
+          'algolia-site-verification': {
+            name: 'algolia-site-verification',
+            content: '0F854AB11EB1D255',
+          },
+        },
+      },
+    },
   };
 }

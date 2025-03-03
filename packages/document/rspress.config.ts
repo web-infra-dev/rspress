@@ -1,3 +1,4 @@
+import { pluginAlgolia } from '@rspress/plugin-algolia';
 import { pluginGoogleAnalytics } from 'rsbuild-plugin-google-analytics';
 import { pluginOpenGraph } from 'rsbuild-plugin-open-graph';
 import { pluginFontOpenSans } from 'rspress-plugin-font-open-sans';
@@ -25,6 +26,7 @@ export default defineConfig({
     pluginSitemap({
       domain: siteUrl,
     }),
+    pluginAlgolia(),
   ],
   builderConfig: {
     dev: {

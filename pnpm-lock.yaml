@@ -912,6 +912,9 @@ importers:
 
   packages/document:
     devDependencies:
+      '@rspress/plugin-algolia':
+        specifier: workspace:*
+        version: link:../plugin-algolia
       '@rstack-dev/doc-ui':
         specifier: 1.6.0
         version: 1.6.0(react-dom@19.0.0(react@19.0.0))(react@19.0.0)
