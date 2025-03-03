@@ -1,12 +1,12 @@
 {
-  "name": "@rspress/plugin-last-updated",
+  "name": "@rspress/plugin-algolia",
   "version": "1.42.1",
-  "description": "A plugin for rspress to record the last updated time of the doc.",
+  "description": "A plugin for rspress to search with algolia in docs.",
   "bugs": "https://github.com/web-infra-dev/rspress/issues",
   "repository": {
     "type": "git",
     "url": "https://github.com/web-infra-dev/rspress",
-    "directory": "packages/plugin-last-updated"
+    "directory": "packages/plugin-algolia"
   },
   "license": "MIT",
   "sideEffects": [
@@ -18,29 +18,29 @@
   "type": "module",
   "main": "./dist/index.js",
   "module": "./dist/index.js",
-  "types": "./index.d.ts",
+  "types": "./dist/index.d.ts",
   "files": [
     "dist",
-    "index.d.ts"
+    "static"
   ],
   "scripts": {
     "build": "rslib build",
     "dev": "rslib build -w",
     "reset": "rimraf ./**/node_modules"
   },
-  "dependencies": {
-    "@rspress/shared": "workspace:*"
-  },
   "devDependencies": {
     "@microsoft/api-extractor": "^7.51.1",
     "@rslib/core": "0.5.2",
     "@rspress/config": "workspace:*",
+    "@rspress/shared": "workspace:*",
     "@types/node": "^18.11.17",
     "@types/react": "^18.3.18",
     "@types/react-dom": "^18.3.5",
-    "execa": "8.0.1",
     "react": "^18.3.1",
     "typescript": "^5.5.3"
+  },
+  "peerDependencies": {
+    "@rspress/runtime": "workspace:^1.42.1"
   },
   "engines": {
     "node": ">=14.17.6"
