@@ -30,13 +30,13 @@
     "@rspress/plugin-api-docgen": "workspace:*",
     "@rspress/plugin-preview": "workspace:*",
     "lodash": "^4.17.21",
-    "tinyglobby": "^0.2.10"
+    "tinyglobby": "^0.2.12"
   },
   "devDependencies": {
     "@microsoft/api-extractor": "^7.49.2",
     "@modern-js/module-tools": "2.64.0",
     "@rslib/core": "0.5.2",
-    "@types/lodash": "^4.17.15",
+    "@types/lodash": "^4.17.16",
     "@types/node": "^18.11.17",
     "@types/react": "^18.3.18",
     "react": "^18.3.1",
