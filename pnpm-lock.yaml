@@ -986,6 +986,40 @@ importers:
         specifier: ^5.5.3
         version: 5.5.3
 
+  packages/plugin-algolia:
+    dependencies:
+      '@rspress/runtime':
+        specifier: workspace:^1.42.1
+        version: link:../runtime
+    devDependencies:
+      '@microsoft/api-extractor':
+        specifier: ^7.51.1
+        version: 7.51.1(@types/node@18.11.17)
+      '@rslib/core':
+        specifier: 0.5.2
+        version: 0.5.2(@microsoft/api-extractor@7.51.1(@types/node@18.11.17))(typescript@5.7.3)
+      '@rspress/config':
+        specifier: workspace:*
+        version: link:../../scripts/config
+      '@rspress/shared':
+        specifier: workspace:*
+        version: link:../shared
+      '@types/node':
+        specifier: ^18.11.17
+        version: 18.11.17
+      '@types/react':
+        specifier: ^18.3.18
+        version: 18.3.18
+      '@types/react-dom':
+        specifier: ^18.3.5
+        version: 18.3.5(@types/react@18.3.18)
+      react:
+        specifier: ^18.3.1
+        version: 18.3.1
+      typescript:
+        specifier: ^5.5.3
+        version: 5.7.3
+
   packages/plugin-api-docgen:
     dependencies:
       '@rspress/core':
@@ -8439,6 +8473,17 @@ snapshots:
     transitivePeerDependencies:
       - '@rspack/tracing'
 
+  '@rslib/core@0.5.2(@microsoft/api-extractor@7.51.1(@types/node@18.11.17))(typescript@5.7.3)':
+    dependencies:
+      '@rsbuild/core': 1.2.14
+      rsbuild-plugin-dts: 0.5.2(@microsoft/api-extractor@7.51.1(@types/node@18.11.17))(@rsbuild/core@1.2.14)(typescript@5.7.3)
+      tinyglobby: 0.2.12
+    optionalDependencies:
+      '@microsoft/api-extractor': 7.51.1(@types/node@18.11.17)
+      typescript: 5.7.3
+    transitivePeerDependencies:
+      - '@rspack/tracing'
+
   '@rslib/core@0.5.2(@microsoft/api-extractor@7.51.1(@types/node@22.10.2))(typescript@5.5.3)':
     dependencies:
       '@rsbuild/core': 1.2.14
@@ -11990,6 +12035,18 @@ snapshots:
     optionalDependencies:
       '@microsoft/api-extractor': 7.51.1(@types/node@18.11.17)
       typescript: 5.5.3
+
+  rsbuild-plugin-dts@0.5.2(@microsoft/api-extractor@7.51.1(@types/node@18.11.17))(@rsbuild/core@1.2.14)(typescript@5.7.3):
+    dependencies:
+      '@ast-grep/napi': 0.35.0
+      '@rsbuild/core': 1.2.14
+      magic-string: 0.30.17
+      picocolors: 1.1.1
+      tinyglobby: 0.2.12
+      tsconfig-paths: 4.2.0
+    optionalDependencies:
+      '@microsoft/api-extractor': 7.51.1(@types/node@18.11.17)
+      typescript: 5.7.3
 
   rsbuild-plugin-dts@0.5.2(@microsoft/api-extractor@7.51.1(@types/node@22.10.2))(@rsbuild/core@1.2.14)(typescript@5.5.3):
     dependencies:
