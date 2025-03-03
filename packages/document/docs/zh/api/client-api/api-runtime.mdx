@@ -4,6 +4,8 @@ Rspress 暴露一些运行时 API，方便你做一些自定义的逻辑。
 
 ## usePageData
 
+- **类型：** `() => PageData`
+
 获取当前页面的数据，返回值为一个对象，包含了当前页面的所有数据。
 
 ```js
@@ -16,6 +18,8 @@ function MyComponent() {
 ```
 
 ## useLang
+
+- **类型：** `() => string`
 
 获取当前语言，返回值为一个字符串，即当前语言。
 
@@ -31,6 +35,8 @@ function MyComponent() {
 
 ## useVersion
 
+- **类型：** `() => string`
+
 在多版本文档的场景下，获取当前文档版本，返回值为一个字符串，即当前版本。
 
 ```tsx
@@ -44,6 +50,8 @@ export default () => {
 
 ## useDark
 
+- **类型：** `() => boolean`
+
 当前主题是否为暗黑模式，返回值为一个布尔值。
 
 ```js
@@ -52,6 +60,24 @@ import { useDark } from 'rspress/runtime';
 function MyComponent() {
   const dark = useDark();
   return <div>{dark}</div>;
+}
+```
+
+注意，在 SSG 过程中，`useDark` 无法准确反映用户浏览器的主题设置，因为 SSG 是在构建阶段执行的。只有在客户端 hydration 完成后，这个 hook 才会返回正确的主题值。
+
+如果你需要在 SSG 阶段应用暗黑主题样式，建议使用 CSS 选择器 `.dark` 来设置样式。Rspress 会在文档根元素上添加 `dark` 类名，这个类名在 SSG 和客户端都能正确生效：
+
+```css
+/* 浅色模式样式 */
+.my-component {
+  color: black;
+  background-color: white;
+}
+
+/* 暗黑模式样式 */
+.dark .my-component {
+  color: white;
+  background-color: #1a1a1a;
 }
 ```
 
@@ -65,7 +91,7 @@ import UseI18n from '../../fragments/useI18n';
 
 ## 路由 Hook
 
-框架内部使用并重导出了 `react-router-dom` 的所有 API，你可以这样来使用:
+Rspress 内部使用并重导出了 `react-router-dom` 的所有 API，你可以这样来使用:
 
 ```ts
 import { useLocation } from 'rspress/runtime';
