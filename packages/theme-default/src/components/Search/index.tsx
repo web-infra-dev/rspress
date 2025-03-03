@@ -1,6 +1,6 @@
 import SearchSvg from '@theme-assets/search';
 import { useEffect, useState } from 'react';
-import { useLocaleSiteData } from '../../logic';
+import { useLocaleSiteData } from '../../logic/useLocaleSiteData';
 import { SvgWrapper } from '../SvgWrapper';
 import { SearchPanel } from './SearchPanel';
 import styles from './index.module.scss';

@@ -34,6 +34,16 @@ export default defineConfig({
           bundle: './src/index.ts',
         },
       },
+      tools: {
+        rspack: {
+          output: {
+            environment: {
+              // For Circular import of "@theme", https://github.com/web-infra-dev/rsbuild/issues/2862
+              const: false,
+            },
+          },
+        },
+      },
       output: {
         target: 'web',
         externals: COMMON_EXTERNALS,
