@@ -12,11 +12,9 @@ import type {
 } from '@rspress/shared';
 import { Link } from '@theme';
 import { useEffect, useMemo, useRef, useState } from 'react';
-import {
-  renderInlineMarkdown,
-  useLocaleSiteData,
-  useSidebarData,
-} from '../../logic';
+import { useLocaleSiteData } from '../../logic/useLocaleSiteData';
+import { useSidebarData } from '../../logic/useSidebarData';
+import { renderInlineMarkdown } from '../../logic/utils';
 import { isSidebarDivider, isSidebarSingleFile } from '../Sidebar/utils';
 import styles from './index.module.scss';
 import { findItemByRoutePath } from './utils';

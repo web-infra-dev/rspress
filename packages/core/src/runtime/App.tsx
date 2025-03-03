@@ -12,7 +12,7 @@ import {
   type PageData,
   cleanUrl,
 } from '@rspress/shared';
-import Theme from '@theme';
+import { Layout } from '@theme';
 import React, { useContext, useLayoutEffect } from 'react';
 import { HelmetProvider } from 'react-helmet-async';
 import globalComponents from 'virtual-global-components';
@@ -152,7 +152,7 @@ export function App({ helmetContext }: { helmetContext?: object }) {
 
   return (
     <HelmetProvider context={helmetContext}>
-      <Theme.Layout />
+      <Layout />
       {
         // Global UI
         !hideGlobalUIComponents &&
