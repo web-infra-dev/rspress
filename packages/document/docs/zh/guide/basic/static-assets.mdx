@@ -44,7 +44,7 @@ logo 字段支持字符串和对象两种配置方式。
 当 logo 是一个字符串时，有如下的配置情况：
 
 - 配置为**外链**，如上面的例子。
-- 配置为**绝对路径**，如 `/rspress-logo.png`，这样 Rspress 在框架内部会自动在你的**文档根目录**的 `public 目录`中找到 `rspress-logo.png` 图片并进行展示。
+- 配置为**绝对路径**，如 `/rspress-logo.png`，这样 Rspress 在内部会自动在你的**文档根目录**的 `public 目录`中找到 `rspress-logo.png` 图片并进行展示。
 - 配置为**相对路径**，如 `./docs/public/rspress-logo.png`，这样 Rspress 基于项目根目录寻找到 `rspress-logo.png` 图片并进行展示。
 
 如果你的网站需要适配暗黑模式，那么也可以使用 logo 的对象配置，如：
@@ -77,7 +77,7 @@ export default defineConfig({
 icon 字段支持字符串配置，具体配置方式如下：
 
 - 配置为**外链**，如上面的例子。
-- 配置为**绝对路径**，如 `/favicon.ico`，这样 Rspress 在框架内部会自动在你的**文档根目录**的 `public 目录`中找到 `favicon.ico` 图标并进行展示。
+- 配置为**绝对路径**，如 `/favicon.ico`，这样 Rspress 在内部会自动在你的**文档根目录**的 `public 目录`中找到 `favicon.ico` 图标并进行展示。
 - 配置为**相对路径**，如 `./docs/public/favicon.ico`，这样 Rspress 基于项目根目录寻找到 `favicon.ico` 图标并进行展示。
 
 ## 主页 logo
@@ -98,7 +98,7 @@ hero:
 其中，src 为一个字符串，支持如下的配置方式：
 
 - 配置为**外链**，如上面的例子。
-- 配置为**绝对路径**，如 `/rspress-logo.png`，这样 Rspress 在框架内部会自动在你的**文档根目录**的 `public 目录`中找到 `rspress-logo.png` 图片并进行展示。
+- 配置为**绝对路径**，如 `/rspress-logo.png`，这样 Rspress 在内部会自动在你的**文档根目录**的 `public 目录`中找到 `rspress-logo.png` 图片并进行展示。
 
 你可以在 `markdown`（或 `mdx`）文件中导入静态资源。相对路径和绝对路径都是支持的，例如，如果在 markdown 同级目录有一张图片，你可以像这样引用它：
 

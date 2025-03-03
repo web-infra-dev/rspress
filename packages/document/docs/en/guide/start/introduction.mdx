@@ -9,7 +9,7 @@ Rspress is designed around the following core features:
 - **Build Performance**. Ensuring a fast enough startup speed brings a good development experience.
 - **MDX Support**. Through MDX, we can conveniently reuse document fragments and render custom React components in documents.
 - **Basic Capabilities of Documentation Site**. Including internationalization, multi-version support, full-text search, component library documentation, etc.
-- **Extensibility**. Such as Built-in plugin system, supports extending framework functions through plugin API.
+- **Extensibility**. Provides a built-in plugin system, supports extending Rspress through plugin API.
 
 These also represent some core requirements for static site development. The following will introduce these aspects separately.
 
@@ -23,7 +23,7 @@ Then, we continued to explore in this direction and finally achieved this effect
 
 If there is only one most core optimization method, it is undoubtedly the `Rust Frontend Toolchain`. We mainly use the Rust toolchain in two performance-sensitive parts:
 
-- Front-end Bundler. Traditional Bundlers include webpack, Rollup, etc. For a front-end project, the bundler is the integration hub of various compilation tool chains. It is a very critical engineering capability and has a huge impact on project construction performance. Rspress uses Rspack developed by the team. Rspack is a Bundler based on Rust, with built-in multiple performance optimization methods, such as multi-threaded parallel compilation, incremental compilation, etc., which are 5 to 10 times more efficient than traditional packaging tools in the community.
+- Bundler. Traditional bundlers include webpack, Rollup, etc. For a front-end project, the bundler is the integration hub of various compilation tool chains. It is a very critical engineering capability and has a huge impact on project construction performance. Rspress uses Rspack developed by the team. Rspack is a Bundler based on Rust, with built-in multiple performance optimization methods, such as multi-threaded parallel compilation, incremental compilation, etc., which are 5 to 10 times more efficient than traditional packaging tools in the community.
 - Markdown compiler. For another major compilation performance bottleneck in the SSG framework, namely `Markdown Compilation`, we also Rust this process to further speed up and customize Rspress's Markdown compiler (ie `@rspress/mdx-rs`). This compiler is nearly 20 times more efficient than the JS version of the compiler in the community:
 
 <img src="https://lf3-static.bytednsdoc.com/obj/eden-cn/uhbfnupenuhf/rspress/mdx-rs-benchmark.png" />
@@ -117,14 +117,14 @@ At the same time, we also provide config to easily customize the HTML content ge
 
 ### Internationalization (I18n)
 
-Internationalization is a common requirement in a document-type site, and Rspress encapsulates the ability of internationalization to be simple and easy to use. In the framework, we abstract internationalization into the following requirements:
+Internationalization is a common requirement in a document-type site, and Rspress encapsulates the ability of internationalization to be simple and easy to use. In Rspress, we abstract internationalization into the following requirements:
 
 - How to define I18n data source?
 - How to configure the site under different languages?
 - How to organize the document directory of different language versions?
 - How to use I18n data source in custom components?
 
-The framework has already supported these demand scenarios for you. You can follow the [I18n Tutorial](/guide/default-theme/i18n.html 'I18n Tutorial') to step by step to implement internationalization for your site.
+Rspress has already supported these demand scenarios for you. You can follow the [I18n Tutorial](/guide/default-theme/i18n.html 'I18n Tutorial') to step by step to implement internationalization for your site.
 
 ### Multi-version Documents
 
@@ -193,7 +193,7 @@ For details about custom themes, you can refer to the [Custom Theme Documentatio
 
 ### Plugin system
 
-The plugin system is a crucial part of Rspress, which can help you conveniently extend the framework's functionality during site construction. Details can be found in the [Plugin Introduction Documentation](/plugin/system/introduction.html 'Introduction Documentation').
+The plugin system is a crucial part of Rspress, which can help you conveniently extend Rspress's functionality during site construction. Details can be found in the [Plugin Introduction Documentation](/plugin/system/introduction.html 'Introduction Documentation').
 
 ### Component documentation
 
