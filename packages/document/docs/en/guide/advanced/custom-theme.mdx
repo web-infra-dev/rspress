@@ -22,30 +22,27 @@ By default, you need to create a `theme` directory under the project root direct
 You can write the `theme/index.tsx` file as follows:
 
 ```tsx title="theme/index.tsx"
-import Theme from 'rspress/theme';
+import { Layout as BasicLayout } from 'rspress/theme';
 
-const Layout = () => <Theme.Layout beforeNavTitle={<div>some content</div>} />;
+const Layout = () => <BasicLayout beforeNavTitle={<div>some content</div>} />;
 
-export default {
-  ...Theme,
-  Layout,
-};
+export { Layout };
 
 export * from 'rspress/theme';
 ```
 
-On the one hand, you need to export a theme configuration object through `export default`, on the other hand, you need to export all named exported content through `export * from 'rspress/theme'` so as to ensure your theme works fine.
+On the one hand, you need to export a theme configuration object through `export`, on the other hand, you need to export all named exported content through `export * from 'rspress/theme'` so as to ensure your theme works fine.
 
 ### 2. Use slot
 
 It is worth noting that the `Layout` component has designed a series of props to support slot elements. You can use these props to extend the layout of the default theme. For example, change the above `Layout` component to the following form:
 
 ```tsx title="theme/index.tsx"
-import Theme from 'rspress/theme';
+import { Layout as BasicLayout } from 'rspress/theme';
 
 // Show all props below
 const Layout = () => (
-  <Theme.Layout
+  <BasicLayout
     /* Before home hero */
     beforeHero={<div>beforeHero</div>}
     /* After home hero */
@@ -93,11 +90,8 @@ const Layout = () => (
   />
 );
 
-export default {
-  ...Theme,
-  Layout,
-};
-
+export { Layout };
+// re-export
 export * from 'rspress/theme';
 ```
 
@@ -107,29 +101,28 @@ In addition to the slot method, if you want to extend the default theme componen
 as well as other Rspress [built-in components](https://github.com/web-infra-dev/rspress/tree/main/packages/theme-default/src/components)
 
 ```tsx title="theme/index.tsx"
-import Theme, { Search } from 'rspress/theme';
+import { Search as BasicSearch, Layout as BasicLayout } from 'rspress/theme';
 
-// Use slot
-const Layout = () => <Theme.Layout beforeNavTitle={<div>some content</div>} />;
 // Custom Home Page
 const HomeLayout = () => <div>Home</div>;
 // Custom 404 page
 const NotFoundLayout = () => <div>404</div>;
-
-export default {
-  ...Theme,
-  Layout,
-  HomeLayout,
-  NotFoundLayout,
-};
+// Use slot
+const Layout = () => (
+  <BasicLayout
+    beforeNavTitle={<div>some content</div>}
+    HomeLayout={HomeLayout}
+    NotFoundLayout={NotFoundLayout}
+  />
+);
 
 // Custom Search Component
-const MySearch = () => (
+const Search = () => (
   <div className="my-search">
-    <Search />
+    <BasicSearch />
   </div>
 );
-export { MySearch as Search };
+export { Search, HomeLayout, NotFoundLayout };
 // re-export
 export * from 'rspress/theme';
 ```
@@ -172,12 +165,10 @@ function Layout() {
 // The setup function will be called when the page is initialized. It is generally used to monitor global events, and it can be an empty function
 const setup = () => {};
 
+// Export Layout component and setup function
+export { Layout, setup };
 // Export all content of the default theme to ensure that your theme configuration can work properly
 export * from 'rspress/theme';
-
-// Export Layout component and setup function
-// Note: both must export
-export default { Layout, setup };
 ```
 
 Layout component will be used to render the layout of the entire document site, you can introduce your custom components in this component, for example:
