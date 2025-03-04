@@ -9,7 +9,7 @@ import ArrowRight from '@theme-assets/arrow-right';
 import type React from 'react';
 import { useEffect, useRef } from 'react';
 import { type SidebarItemProps, highlightTitleStyle } from '.';
-import { renderInlineMarkdown } from '../../logic';
+import { renderInlineMarkdown } from '../../logic/utils';
 import { SvgWrapper } from '../SvgWrapper';
 import { SidebarDivider } from './SidebarDivider';
 import { SidebarItem as SidebarItemComp } from './SidebarItem';
