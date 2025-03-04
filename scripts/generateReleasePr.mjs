@@ -17,7 +17,7 @@ async function getCurrentVersion() {
 }
 
 async function getNextVersion(currentVersion, type) {
-  const [major, minor, patch] = currentVersion.split('.').map(Number);
+  const [major, minor, patch, _, prereleaseVersion] = currentVersion.split(/[\.-]/).map(Number);
   switch (type) {
     case 'patch':
       return `${major}.${minor}.${patch + 1}`;
@@ -25,6 +25,8 @@ async function getNextVersion(currentVersion, type) {
       return `${major}.${minor + 1}.0`;
     case 'major':
       return `${major + 1}.0.0`;
+    case 'alpha':
+      return `${major}.${minor}.${patch}-alpha.${prereleaseVersion + 1}`;
     default:
       throw new Error('Invalid version type');
   }
@@ -66,7 +68,7 @@ async function main() {
 
     const bumpType = values.type;
 
-    if (!['major', 'minor', 'patch'].includes(bumpType)) {
+    if (!['major', 'minor', 'patch', 'alpha'].includes(bumpType)) {
       console.error('Invalid bump type. Please select major, minor, or patch.');
       process.exit(1);
     }
@@ -86,6 +88,14 @@ async function main() {
     await generateChangesetFile(bumpType, nextVersion);
 
     // 5. Run changeset version and pnpm install
+    if(bumpType === 'alpha') {
+      try {
+        await fs.rm(path.join(process.cwd(), '.changeset', 'pre.json'), {force: true});
+      } catch (error) {
+        console.warn(error);
+      }
+      await $`pnpm run changeset pre enter alpha`;
+    }
     await $`pnpm run changeset version`;
     await $`pnpm install --ignore-scripts`;
 
