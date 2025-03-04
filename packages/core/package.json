@@ -50,7 +50,7 @@
     "@mdx-js/loader": "2.3.0",
     "@mdx-js/mdx": "2.3.0",
     "@mdx-js/react": "2.3.0",
-    "@rsbuild/core": "1.2.14",
+    "@rsbuild/core": "1.2.15",
     "@rsbuild/plugin-less": "~1.1.1",
     "@rsbuild/plugin-react": "~1.1.1",
     "@rsbuild/plugin-sass": "~1.2.2",
@@ -88,7 +88,7 @@
   },
   "devDependencies": {
     "@microsoft/api-extractor": "^7.51.1",
-    "@rslib/core": "0.5.2",
+    "@rslib/core": "0.5.3",
     "@rspress-dev/plugin-preview": "link:../plugin-preview",
     "@rspress/config": "workspace:*",
     "@types/hast": "^2.3.10",

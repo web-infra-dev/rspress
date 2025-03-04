@@ -22,7 +22,7 @@
     "reset": "rimraf ./**/node_modules"
   },
   "dependencies": {
-    "@rsbuild/core": "1.2.14",
+    "@rsbuild/core": "1.2.15",
     "@rsbuild/plugin-babel": "~1.0.4",
     "@rsbuild/plugin-less": "~1.1.1",
     "@rsbuild/plugin-react": "~1.1.1",
@@ -34,7 +34,7 @@
     "qrcode.react": "^3.2.0"
   },
   "devDependencies": {
-    "@rslib/core": "0.5.2",
+    "@rslib/core": "0.5.3",
     "@types/lodash": "^4.17.16",
     "@types/mdast": "^3.0.15",
     "@types/node": "^18.11.17",
