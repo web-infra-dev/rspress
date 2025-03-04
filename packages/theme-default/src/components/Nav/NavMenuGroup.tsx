@@ -7,7 +7,7 @@ import {
 } from '@rspress/shared';
 import { Link, Tag } from '@theme';
 import Down from '@theme-assets/down';
-import { useState } from 'react';
+import { useRef, useState } from 'react';
 import { SvgWrapper } from '../SvgWrapper';
 import { NavMenuSingleItem } from './NavMenuSingleItem';
 
@@ -70,6 +70,31 @@ export function NavMenuGroup(item: NavMenuGroupItem) {
     pathname = '',
   } = item;
   const [isOpen, setIsOpen] = useState(false);
+  const closeTimerRef = useRef<number>();
+
+  const clearCloseTimer = () => {
+    if (closeTimerRef.current) {
+      clearTimeout(closeTimerRef.current);
+      closeTimerRef.current = undefined;
+    }
+  };
+
+  /**
+   * Handle mouse leave event for the dropdown menu
+   * Closes the menu after a 150ms delay to allow diagonal mouse movement
+   * to the dropdown content area
+   */
+  const handleMouseLeave = () => {
+    closeTimerRef.current = window.setTimeout(() => {
+      setIsOpen(false);
+    }, 150);
+  };
+
+  const handleMouseEnter = () => {
+    clearCloseTimer();
+    setIsOpen(true);
+  };
+
   const renderLinkItem = (item: NavItemWithLink) => {
     const isLinkActive = new RegExp(item.activeMatch || item.link).test(
       withoutBase(pathname, base),
@@ -96,12 +121,9 @@ export function NavMenuGroup(item: NavMenuGroupItem) {
     );
   };
   return (
-    <div
-      className="relative flex-center h-14"
-      onMouseLeave={() => setIsOpen(false)}
-    >
+    <div className="relative flex-center h-14" onMouseLeave={handleMouseLeave}>
       <button
-        onMouseEnter={() => setIsOpen(true)}
+        onMouseEnter={handleMouseEnter}
         className="rspress-nav-menu-group-button flex-center items-center font-medium text-sm text-text-1 hover:text-text-2 transition-colors duration-200"
       >
         {link ? (
@@ -130,6 +152,7 @@ export function NavMenuGroup(item: NavMenuGroupItem) {
           right: 0,
           top: '52px',
         }}
+        onMouseEnter={clearCloseTimer}
       >
         <div
           className="p-3 pr-2 w-full h-full max-h-100vh whitespace-nowrap"
