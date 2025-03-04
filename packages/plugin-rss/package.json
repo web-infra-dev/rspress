@@ -34,7 +34,7 @@
     "feed": "^4.2.2"
   },
   "devDependencies": {
-    "@rslib/core": "0.5.2",
+    "@rslib/core": "0.5.3",
     "@rspress/runtime": "workspace:*",
     "@types/node": "^18.11.17",
     "@types/react": "^18.3.18",

@@ -32,7 +32,7 @@
   },
   "devDependencies": {
     "@microsoft/api-extractor": "^7.51.1",
-    "@rslib/core": "0.5.2",
+    "@rslib/core": "0.5.3",
     "@types/mdast": "^3.0.15",
     "@types/node": "^18.11.17",
     "@types/react": "^18.3.18",
