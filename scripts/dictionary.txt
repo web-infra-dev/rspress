@@ -1,4 +1,5 @@
 # Custom Dictionary Words
+algoliasearch
 alinks
 antd
 apng
@@ -51,8 +52,9 @@ icss
 idents
 iife
 imagex
-initing
 inited
+initing
+instantsearch
 jfif
 jiti
 jscpuprofile

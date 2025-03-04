@@ -16,5 +16,5 @@ export default defineConfig({
     trace: 'on',
     video: 'on',
   },
-  retries: 1,
+  retries: 3,
 });
