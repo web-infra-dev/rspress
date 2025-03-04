@@ -10,7 +10,7 @@ import {
   type SidebarItem,
   addTrailingSlash,
 } from '@rspress/shared';
-import type { SidebarData } from '../components';
+import type { SidebarData } from '../components/Sidebar';
 
 /**
  * match the sidebar key in user config

@@ -1,8 +1,9 @@
+import { SearchPanel } from '@theme';
 import SearchSvg from '@theme-assets/search';
 import { useEffect, useState } from 'react';
-import { useLocaleSiteData } from '../../logic';
+import { createPortal } from 'react-dom';
+import { useLocaleSiteData } from '../../logic/useLocaleSiteData';
 import { SvgWrapper } from '../SvgWrapper';
-import { SearchPanel } from './SearchPanel';
 import styles from './index.module.scss';
 
 export function Search() {
@@ -36,7 +37,10 @@ export function Search() {
       >
         <SvgWrapper icon={SearchSvg} />
       </div>
-      <SearchPanel focused={focused} setFocused={setFocused} />
+      {createPortal(
+        <SearchPanel focused={focused} setFocused={setFocused} />,
+        document.body,
+      )}
     </>
   );
 }
