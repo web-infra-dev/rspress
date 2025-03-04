@@ -16,6 +16,16 @@
     "*.scss"
   ],
   "type": "module",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "default": "./dist/index.js"
+    },
+    "./runtime": {
+      "types": "./dist/runtime/index.d.ts",
+      "default": "./dist/runtime/index.js"
+    }
+  },
   "main": "./dist/index.js",
   "module": "./dist/index.js",
   "types": "./dist/index.d.ts",
@@ -28,8 +38,17 @@
     "dev": "rslib build -w",
     "reset": "rimraf ./**/node_modules"
   },
+  "dependencies": {
+    "@docsearch/css": "^3.9.0",
+    "@docsearch/react": "^3.9.0",
+    "algoliasearch": "^5.20.3",
+    "instantsearch.css": "^8.5.1",
+    "instantsearch.js": "^4.77.3",
+    "react-instantsearch": "^7.15.3"
+  },
   "devDependencies": {
     "@microsoft/api-extractor": "^7.51.1",
+    "@rsbuild/plugin-react": "~1.1.1",
     "@rslib/core": "0.5.3",
     "@rspress/config": "workspace:*",
     "@rspress/shared": "workspace:*",
