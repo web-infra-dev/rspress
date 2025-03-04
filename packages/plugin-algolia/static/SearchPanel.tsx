@@ -18,7 +18,7 @@ type PluginAlgoliaSearchPanelProps = SearchPanelProps & {
   docSearchModalProps?: DocSearchModalProps;
 };
 
-function PluginAlgoliaSearchPanel({
+function SearchPanel({
   focused,
   setFocused,
   docSearchModalProps,
@@ -64,4 +64,4 @@ function PluginAlgoliaSearchPanel({
   );
 }
 
-export { PluginAlgoliaSearchPanel as SearchPanel };
+export { SearchPanel };
