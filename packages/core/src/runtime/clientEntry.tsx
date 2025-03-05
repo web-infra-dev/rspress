@@ -1,5 +1,6 @@
 import { BrowserRouter, DataContext, ThemeContext } from '@rspress/runtime';
 import { isProduction } from '@rspress/shared';
+import { setup, useThemeState } from '@theme';
 import { useMemo, useState } from 'react';
 import siteData from 'virtual-site-data';
 import { App, initPageData } from './App';
@@ -7,7 +8,6 @@ import { App, initPageData } from './App';
 const enableSSG = siteData.ssg;
 
 // eslint-disable-next-line import/no-commonjs
-const { default: Theme, useThemeState } = require('@theme');
 
 export async function renderInBrowser() {
   const container = document.getElementById('root')!;
@@ -52,5 +52,5 @@ export async function renderInBrowser() {
 }
 
 renderInBrowser().then(() => {
-  Theme.setup();
+  setup();
 });

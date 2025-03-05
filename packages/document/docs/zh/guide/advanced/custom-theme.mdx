@@ -22,30 +22,27 @@
 你可以使用如下的方式来书写 `theme/index.tsx` 文件:
 
 ```tsx title="theme/index.tsx"
-import Theme from 'rspress/theme';
+import { Layout as BasicLayout } from 'rspress/theme';
 
-const Layout = () => <Theme.Layout beforeNavTitle={<div>some content</div>} />;
+const Layout = () => <BasicLayout beforeNavTitle={<div>some content</div>} />;
 
-export default {
-  ...Theme,
-  Layout,
-};
+export { Layout };
 
 export * from 'rspress/theme';
 ```
 
-一方面你需要通过 `export default` 导出一个主题配置对象，另一方面你需要通过 `export * from 'rspress/theme'` 导出所有具名导出的内容，这样才能保证你的主题配置能够正常工作。
+一方面你需要通过 `export` 导出一个主题配置对象，另一方面你需要通过 `export * from 'rspress/theme'` 导出所有具名导出的内容，这样才能保证你的主题配置能够正常工作。
 
 ### 2. 使用插槽
 
 值得注意的是，`Layout` 组件设计了一系列的 props 支持插槽元素，你可以通过这些 props 来扩展默认主题的布局，比如将上面的 `Layout` 组件改成如下的形式:
 
 ```tsx title="theme/index.tsx"
-import Theme from 'rspress/theme';
+import { Layout as BasicLayout } from 'rspress/theme';
 
 // 以下展示所有的 Props
 const Layout = () => (
-  <Theme.Layout
+  <BasicLayout
     /* Home 页 Hero 部分之前 */
     beforeHero={<div>beforeHero</div>}
     /* Home 页 Hero 部分之后 */
@@ -93,11 +90,8 @@ const Layout = () => (
   />
 );
 
-export default {
-  ...Theme,
-  Layout,
-};
-
+export { Layout };
+// 重导出
 export * from 'rspress/theme';
 ```
 
@@ -107,29 +101,28 @@ export * from 'rspress/theme';
 以及其他 Rspress [内置的组件](https://github.com/web-infra-dev/rspress/tree/main/packages/theme-default/src/components)。比如:
 
 ```tsx title="theme/index.tsx"
-import Theme, { Search } from 'rspress/theme';
+import { Search as BasicSearch, Layout as BasicLayout } from 'rspress/theme';
 
-// 传入插槽
-const Layout = () => <Theme.Layout beforeNavTitle={<div>some content</div>} />;
 // 定制 Home 页面
 const HomeLayout = () => <div>Home</div>;
 // 定制 404 页面
 const NotFoundLayout = () => <div>404</div>;
-
-export default {
-  ...Theme,
-  Layout,
-  HomeLayout,
-  NotFoundLayout,
-};
+// 传入插槽
+const Layout = () => (
+  <BasicLayout
+    beforeNavTitle={<div>some content</div>}
+    HomeLayout={HomeLayout}
+    NotFoundLayout={NotFoundLayout}
+  />
+);
 
 // 定制 Search 组件
-const MySearch = () => (
+const Search = () => (
   <div className="my-search">
-    <Search />
+    <BasicSearch />
   </div>
 );
-export { MySearch as Search };
+export { Search, HomeLayout, NotFoundLayout };
 // 重导出其他部分
 export * from 'rspress/theme';
 ```
@@ -172,12 +165,11 @@ function Layout() {
 // setup 函数，会在页面初始化时调用，一般用来做全局事件的监听，可为空函数
 const setup = () => {};
 
-// 导出默认主题的所有内容，这样才能保证你的主题配置能够正常工作
-export * from 'rspress/theme';
-
 // 导出 Layout 组件和 setup 函数
 // 两者必须导出
-export default { Layout, setup };
+export { Layout, setup };
+// 导出默认主题的所有内容，这样才能保证你的主题配置能够正常工作
+export * from 'rspress/theme';
 ```
 
 这个 Layout 组件会被用来渲染整个文档站点的布局，你可以在这个组件中引入你的自定义组件，比如:

@@ -1,5 +1,5 @@
 import { usePageData } from '@rspress/runtime';
-import { useLocaleSiteData } from '../../logic';
+import { useLocaleSiteData } from '../../logic/useLocaleSiteData';
 
 export function LastUpdated() {
   const { lastUpdatedText: localesLastUpdatedText = 'Last Updated' } =

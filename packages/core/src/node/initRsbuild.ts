@@ -27,6 +27,7 @@ import {
   inlineThemeScript,
   isProduction,
 } from './constants';
+import { hintThemeBreakingChange } from './logger/hint';
 import type { RouteService } from './route/RouteService';
 import { initRouteService } from './route/init';
 import { rsbuildPluginDocVM } from './runtimeModule';
@@ -86,6 +87,8 @@ async function createInternalBuildConfig(
 
     return icon;
   };
+
+  await hintThemeBreakingChange(CUSTOM_THEME_DIR);
 
   const [detectCustomIconAlias, reactCSRAlias, reactSSRAlias] =
     await Promise.all([

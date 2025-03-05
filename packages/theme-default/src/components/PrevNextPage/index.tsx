@@ -1,5 +1,5 @@
 import { Link } from '@theme';
-import { useLocaleSiteData } from '../../logic';
+import { useLocaleSiteData } from '../../logic/useLocaleSiteData';
 import { preloadLink } from '../Sidebar/utils';
 import styles from './index.module.scss';
 
