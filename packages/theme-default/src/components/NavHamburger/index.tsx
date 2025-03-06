@@ -1,6 +1,5 @@
 import type { DefaultThemeConfig, SiteData } from '@rspress/shared';
 import SmallMenu from '@theme-assets/small-menu';
-import { Fragment } from 'react';
 import { useNavScreen } from '../../logic/useNav';
 import { NavScreen } from '../NavScreen';
 import { SvgWrapper } from '../SvgWrapper';
@@ -15,7 +14,7 @@ export function NavHamburger(props: Props) {
   const { siteData, pathname } = props;
   const { isScreenOpen, toggleScreen } = useNavScreen();
   return (
-    <Fragment>
+    <>
       <NavScreen
         isScreenOpen={isScreenOpen}
         toggleScreen={toggleScreen}
@@ -31,6 +30,6 @@ export function NavHamburger(props: Props) {
       >
         <SvgWrapper icon={SmallMenu} fill="currentColor" />
       </button>
-    </Fragment>
+    </>
   );
 }
