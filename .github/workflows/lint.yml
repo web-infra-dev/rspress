@@ -4,10 +4,10 @@ name: Lint
 on:
   # Triggers the workflow on pull request events but only for the main branch
   pull_request:
-    branches: [main]
+    branches: [main, 1.x]
 
   push:
-    branches: [main]
+    branches: [main, 1.x]
 
   merge_group:
 
