@@ -1,0 +1,17 @@
+.DocSearch {
+  align-self: center;
+  --docsearch-searchbox-background: var(--rp-c-bg-mute);
+}
+
+.DocSearch-Button-Container > .DocSearch-Button-Placeholder {
+  font-size: 0.825rem;
+}
+
+span.DocSearch-Button-Keys > kbd {
+  font-size: 0.825rem;
+}
+
+.DocSearch-Screen-Icon {
+  display: flex;
+  justify-content: center;
+}

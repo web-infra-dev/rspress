@@ -26,7 +26,10 @@ export default defineConfig({
     pluginSitemap({
       domain: siteUrl,
     }),
-    pluginAlgolia(),
+    pluginAlgolia({
+      verificationContent: '0F854AB11EB1D255',
+      appId: '4K97EBF08L',
+    }),
   ],
   builderConfig: {
     dev: {
