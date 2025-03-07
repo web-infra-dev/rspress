@@ -74,7 +74,7 @@ jobs:
 
       - name: E2E Test
         if: ${{steps.skip-ci.outputs.RESULT != 'true'}}
-        run: npx playwright install --with-deps chromium && pnpm run test:e2e
+        run: pnpm playwright install --with-deps chromium && pnpm run test:e2e
 
       - name: Upload Playwright Report
         uses: actions/upload-artifact@v4
