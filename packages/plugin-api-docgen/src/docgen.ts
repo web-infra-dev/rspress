@@ -15,6 +15,7 @@ import type {
   ApiParseTool,
   DocGenOptions,
   Entries,
+  SupportLanguages,
   ToolEntries,
   WatchFileInfo,
 } from './types';
@@ -177,7 +178,10 @@ export const docgen = async ({
   logger.success('[module-doc-plugin]', 'Generate API table successfully!');
 };
 
-function generateTable(componentDoc: ComponentDoc[], language: 'zh' | 'en') {
+function generateTable(
+  componentDoc: ComponentDoc[],
+  language: SupportLanguages,
+) {
   return componentDoc
     .map(param => {
       const { props } = param;
