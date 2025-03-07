@@ -60,13 +60,6 @@ interface Options {
 }
 ```
 
-### appId
-
-- Type: `string | undefined`
-- Default: `undefined`
-
-Generates a preconnect link tag to improve performance with algolia API. Format: `<link rel="preconnect" href="https://YOUR_APP_ID-dsn.algolia.net" crossorigin />`. Refer to [docsearch docs](https://docsearch.algolia.com/docs/docsearch-v3#preconnect).
-
 ### verificationContent
 
 - Type: `string | undefined`
@@ -190,6 +183,95 @@ import { Search as PluginAlgoliaSearch, ZH_LOCALES } from '@rspress/plugin-algol
   }}
 />
 ```
+
+## Algolia Crawler Config
+
+Here is an example config based on what this site uses:
+
+<details>
+
+```tsx
+new Crawler({
+  appId: 'YOUR_APP_ID',
+  apiKey: 'YOUR_API_KEY',
+  rateLimit: 8,
+  maxDepth: 10,
+  startUrls: ['https://rspress.dev'],
+  sitemaps: ['https://rspress.dev/sitemap.xml'],
+  discoveryPatterns: ['https://rspress.dev/**'],
+  actions: [
+    {
+      indexName: 'doc_search_rspress_pages',
+      pathsToMatch: ['https://rspress.dev/**'],
+      recordExtractor: ({ $, helpers }) => {
+        return helpers.docsearch({
+          recordProps: {
+            lvl0: {
+              selectors: '',
+              defaultValue: 'Documentation',
+            },
+            lvl1: '.rspress-doc h1',
+            lvl2: '.rspress-doc h2',
+            lvl3: '.rspress-doc h3',
+            lvl4: '.rspress-doc h4',
+            lvl5: '.rspress-doc h5',
+            lvl6: '.rspress-doc pre > code',
+            content: '.rspress-doc p, .rspress-doc li',
+          },
+          indexHeadings: true,
+          aggregateContent: true,
+          recordVersion: 'v3',
+        });
+      },
+    },
+  ],
+  initialIndexSettings: {
+    doc_search_rspress_pages: {
+      attributesForFaceting: ['type', 'lang'],
+      attributesToRetrieve: ['hierarchy', 'content', 'anchor', 'url'],
+      attributesToHighlight: ['hierarchy', 'content'],
+      attributesToSnippet: ['content:10'],
+      camelCaseAttributes: ['hierarchy', 'content'],
+      searchableAttributes: [
+        'unordered(hierarchy.lvl0)',
+        'unordered(hierarchy.lvl1)',
+        'unordered(hierarchy.lvl2)',
+        'unordered(hierarchy.lvl3)',
+        'unordered(hierarchy.lvl4)',
+        'unordered(hierarchy.lvl5)',
+        'unordered(hierarchy.lvl6)',
+        'content',
+      ],
+      distinct: true,
+      attributeForDistinct: 'url',
+      customRanking: [
+        'desc(weight.pageRank)',
+        'desc(weight.level)',
+        'asc(weight.position)',
+      ],
+      ranking: [
+        'words',
+        'filters',
+        'typo',
+        'attribute',
+        'proximity',
+        'exact',
+        'custom',
+      ],
+      minWordSizefor1Typo: 3,
+      minWordSizefor2Typos: 7,
+      allowTyposOnNumericTokens: false,
+      minProximity: 1,
+      ignorePlurals: true,
+      advancedSyntax: true,
+      attributeCriteriaComputedByMinProximity: true,
+      removeWordsIfNoResults: 'allOptional',
+    },
+  },
+});
+```
+
+</details>
 
 ## Distinguish search results based on i18n
 
