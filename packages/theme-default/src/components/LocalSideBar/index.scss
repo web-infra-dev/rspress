@@ -1,4 +1,4 @@
-// Only appear on mobile
+// Only appear on <1280px screen width
 .rspress-sidebar-menu {
   position: sticky;
   top: 0;
@@ -36,8 +36,14 @@
   z-index: var(--rp-z-index-backdrop);
 }
 
-@media (min-width: 960px) {
+@media (min-width: 1280px) {
   .rspress-sidebar-menu {
+    display: none;
+  }
+}
+
+@media (min-width: 960px) and (max-width: 1280px) {
+  .rspress-sidebar-menu > button:first-child {
     display: none;
   }
 }

@@ -6,7 +6,6 @@ const fixtureDir = path.resolve(__dirname, '../fixtures');
 async function isNavBarVisible(page: Page): Promise<boolean> {
   const nav = await page.$('.rspress-nav');
   const className: string = await nav?.evaluate(el => el.className);
-
   return !className.includes('hidden');
 }
 
@@ -36,7 +35,6 @@ test.describe('basic test', async () => {
   test('hideNavBar: "auto" should work', async ({ page }) => {
     await launchApp('./rspress-hide-auto.config.ts');
     await page.goto(`http://localhost:${appPort}/`);
-
     await scrollDown(page);
     expect(await isNavBarVisible(page)).toBeFalsy();
   });

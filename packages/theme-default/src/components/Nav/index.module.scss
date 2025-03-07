@@ -58,7 +58,7 @@
 }
 
 @media (max-width: 768px) {
-  :root {
+  html:root {
     --rp-nav-height: 56px;
   }
   .menu-item:before {
