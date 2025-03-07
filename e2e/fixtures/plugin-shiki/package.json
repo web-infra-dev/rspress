@@ -9,6 +9,7 @@
   },
   "dependencies": {
     "@rspress/plugin-shiki": "workspace:*",
+    "@shikijs/transformers": "1.24.2",
     "rspress": "workspace:*"
   },
   "devDependencies": {

@@ -4,8 +4,8 @@
  * -------------------------------------------------------------------------- */
 
 :root {
-  --shiki-color-text: #414141;
-  --shiki-color-background: transparent;
+  --shiki-foreground: #414141;
+  --shiki-background: transparent;
   --shiki-token-constant: #1976d2;
   --shiki-token-string: #31a94d;
   --shiki-token-comment: rgb(182, 180, 180);
@@ -18,7 +18,7 @@
 }
 
 .dark {
-  --shiki-color-text: #cac7c7;
+  --shiki-foreground: #cac7c7;
   --shiki-token-constant: #6fb0fa;
   --shiki-token-string: #f9a86e;
   --shiki-token-comment: #6a727b;
@@ -37,9 +37,8 @@
 .diff,
 .code-line-highlighted {
   transition: background-color 0.5s;
-  margin: 0 -20px;
   padding: 0 20px;
-  width: calc(100% + 40px);
+  width: 100%;
   display: inline-block;
   position: relative;
 }

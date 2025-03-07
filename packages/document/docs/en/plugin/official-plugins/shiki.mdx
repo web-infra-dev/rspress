@@ -36,19 +36,26 @@ export default defineConfig({
 This plugin supports passing in an object configuration. The properties of this object configuration are as follows:
 
 ```ts
-interface PluginShikiOptions {
+import type {
+  BuiltinLanguage,
+  BuiltinTheme,
+  ShikiTransformer,
+  SpecialLanguage,
+} from 'shiki';
+
+export interface PluginShikiOptions {
   /**
-   * Code highlighting theme
+   * Code highlighting theme, @see https://shiki.style/themes
    */
-  theme: string;
+  theme: BuiltinTheme | 'css-variables';
   /**
-   * Code highlighting language
+   * Code highlighting language, @see https://shiki.style/languages
    */
-  langs: string[];
+  langs: Array<BuiltinLanguage | SpecialLanguage>;
   /**
-   * Add custom transformer
+   * Custom shiki transformer, @see https://shiki.style/guide/transformers
    */
-  transformers: Transformer[];
+  transformers: ShikiTransformer[];
 }
 ```
 
@@ -64,81 +71,34 @@ Transformer is a concept in this plugin, its function is to transform specific s
 
 A few Transformers are built into this plugin, including:
 
-- `createTransformerDiff`: Implementation of the diff highlighting effect of the code block.
 - `createTransformerLineNumber`: Implement the display of the line number of the code block.
-- `createTransformerErrorLevel`: Implement the display of the error level of the corresponding line of the code block, including `error` and `warning`.
-- `createTransformerHighlight`: Implement line highlighting display of the code block.
-- `createTransformerFocus`: Implement line focus display of the code block.
 
 You can enable these Transformers by configuring the `transformers` attribute, such as:
 
 ```ts title="rspress.config.ts"
 import { defineConfig } from 'rspress/config';
 import { pluginShiki, createTransformerDiff } from '@rspress/plugin-shiki';
+import {
+  transformerNotationDiff,
+  transformerNotationErrorLevel,
+  transformerNotationFocus,
+  transformerNotationHighlight,
+} from '@shikijs/transformers';
 
 export default defineConfig({
   plugins: [
     pluginShiki({
       transformers: [
         // Add as needed
-        createTransformerDiff(),
-        // createTransformerLineNumber(),
-        // createTransformerErrorLevel(),
-        // createTransformerHighlight(),
-        // createTransformerFocus(),
+        createTransformerLineNumber(),
+        // transformerNotationDiff(),
+        // transformerNotationErrorLevel(),
+        // transformerNotationHighlight(),
+        // transformerNotationFocus(),
       ],
     }),
   ],
 });
 ```
 
-Then let us introduce how to use the syntax corresponding to these Transformers.
-
-#### Diff highlighting
-
-Use the `diff` syntax in the markdown code block, such as:
-
-```ts
-export function foo() {
-  console.log('Diff remove'); // [!code --]
-  console.log('Diff add'); // [!code ++]
-}
-```
-
-This will automatically apply the diff highlighting effect to the corresponding line of code.
-
-#### Line number display
-
-Use the `hl` syntax in the markdown code block, such as:
-
-```ts
-export function foo() {
-  console.log('Line number'); // [!code hl]
-}
-```
-
-This will automatically display the line number for the corresponding line of code.
-
-#### Error level display
-
-Use the `error` or `warning` syntax in the markdown code block, such as:
-
-```ts
-export function foo() {
-  console.log('Error level'); // [!code error]
-}
-```
-
-This will automatically display the error level for the corresponding line of code.
-
-#### Line focus display
-
-Use the `focus` syntax in the markdown code block, such as:
-
-```ts
-export function foo() {
-  console.log('Focus'); // [!code focus]
-}
-```
-
-This will automatically display the focus effect for the corresponding line of code.
+Please view [Shiki Transformers documentation](https://shiki.style/guide/transformers) for more information.

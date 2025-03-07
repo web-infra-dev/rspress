@@ -116,6 +116,7 @@ rstack
 Rustify
 selfsign
 shiki
+shikijs
 sirv
 sokra
 speedscope
