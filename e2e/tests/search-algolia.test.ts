@@ -2,7 +2,6 @@ import assert from 'node:assert';
 import path from 'node:path';
 import { expect, test } from '@playwright/test';
 import { getPort, killProcess, runDevCommand } from '../utils/runCommands';
-import { getSearchButton } from '../utils/search';
 
 const fixtureDir = path.resolve(__dirname, '../fixtures');
 
