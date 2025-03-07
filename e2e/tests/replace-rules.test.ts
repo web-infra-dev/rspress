@@ -53,7 +53,7 @@ test.describe('replace-rules test', async () => {
     const textContent = await page.evaluate(text => text?.textContent, text);
 
     expect(titleContent).toEqual('bar-title');
-    expect(h2Content).toEqual('bar-h2#');
+    expect(h2Content).toEqual('#bar-h2');
     expect(textContent).toEqual('bar-content');
   });
 });
