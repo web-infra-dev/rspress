@@ -992,7 +992,7 @@ importers:
   packages/plugin-algolia:
     dependencies:
       '@rspress/runtime':
-        specifier: workspace:^1.42.1
+        specifier: workspace:^2.0.0-alpha.0
         version: link:../runtime
     devDependencies:
       '@microsoft/api-extractor':
