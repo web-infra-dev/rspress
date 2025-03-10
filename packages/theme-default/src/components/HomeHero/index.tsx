@@ -7,9 +7,9 @@ import { renderHtmlOrText } from '../../logic/utils';
 import styles from './index.module.scss';
 
 const DEFAULT_HERO = {
-  name: 'modern',
-  text: 'modern ssg',
-  tagline: 'modern ssg',
+  name: '',
+  text: '',
+  tagline: '',
   actions: [],
   image: undefined,
 } satisfies FrontMatterMeta['hero'];
@@ -65,7 +65,7 @@ export function HomeHero({
           >
             {renderHtmlOrText(hero.tagline)}
           </p>
-          {hero.actions?.length && (
+          {hero.actions?.length ? (
             <div className="grid md:flex md:flex-wrap md:justify-center gap-3 m--1.5 pt-6 sm:pt-8 z-10">
               {hero.actions.map(action => {
                 const link = isExternalUrl(action.link)
@@ -84,7 +84,7 @@ export function HomeHero({
                 );
               })}
             </div>
-          )}
+          ) : null}
         </div>
 
         {hasImage ? (
