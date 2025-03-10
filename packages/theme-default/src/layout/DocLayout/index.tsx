@@ -5,8 +5,7 @@ import { slug } from 'github-slugger';
 import { useMemo, useState } from 'react';
 import { Aside } from '../../components/Aside';
 import { DocFooter } from '../../components/DocFooter';
-import { SidebarMenu } from '../../components/LocalSideBar';
-import { Sidebar } from '../../components/Sidebar';
+import { SideMenu } from '../../components/LocalSideBar';
 import { TabDataContext } from '../../logic/TabDataContext';
 import { useLocaleSiteData } from '../../logic/useLocaleSiteData';
 import type { UISwitchResult } from '../../logic/useUISwitch';
@@ -84,8 +83,6 @@ export function DocLayout(props: DocLayoutProps) {
     );
   }, [headingTitle, title]);
 
-  const [isSidebarOpen, setIsSidebarOpen] = useState(false);
-
   return (
     <div
       className={`${styles.docLayout} pt-0`}
@@ -94,71 +91,63 @@ export function DocLayout(props: DocLayoutProps) {
       }}
     >
       {beforeDoc}
-      <Sidebar
-        isSidebarOpen={isSidebarOpen}
+      <SideMenu
+        outlineTitle={outlineTitle}
         beforeSidebar={beforeSidebar}
         afterSidebar={afterSidebar}
         uiSwitch={uiSwitch}
         navTitle={navTitle}
       />
-      <div className="relative">
-        <SidebarMenu
-          isSidebarOpen={isSidebarOpen}
-          onIsSidebarOpenChange={setIsSidebarOpen}
-          outlineTitle={outlineTitle}
-          uiSwitch={uiSwitch}
-        />
-        <div
-          className={`${styles.content} rspress-doc-container w-full flex flex-shrink-0`}
-        >
-          <div className="flex-1">
-            {isOverviewPage ? (
-              <>
+      <div
+        className={`${styles.content} rspress-doc-container flex flex-shrink-0 mx-auto`}
+      >
+        <div className="w-full flex-1">
+          {isOverviewPage ? (
+            <>
+              {beforeDocContent}
+              <Overview content={docContent} />
+              {afterDocContent}
+            </>
+          ) : (
+            <div>
+              <div className="rspress-doc">
                 {beforeDocContent}
-                <Overview content={docContent} />
+                {fallbackTitle}
+                {docContent}
                 {afterDocContent}
-              </>
-            ) : (
-              <>
-                <div className="rspress-doc">
-                  {beforeDocContent}
-                  {fallbackTitle}
-                  {docContent}
-                  {afterDocContent}
-                </div>
-                <div className="rspress-doc-footer">
-                  {beforeDocFooter}
-                  {uiSwitch?.showDocFooter && <DocFooter />}
-                  {afterDocFooter}
-                </div>
-              </>
-            )}
-          </div>
-          {enableScrollToTop && (
-            <NoSSR>
-              <ScrollToTop />
-            </NoSSR>
-          )}
-          {uiSwitch?.showAside && (
-            <div
-              className={styles.asideContainer}
-              style={{
-                ...(uiSwitch?.showNavbar
-                  ? {}
-                  : {
-                      marginTop: 0,
-                      paddingTop: '32px',
-                    }),
-              }}
-            >
-              <div>
-                {beforeOutline}
-                <Aside headers={headers} outlineTitle={outlineTitle} />
-                {afterOutline}
+              </div>
+              <div className="rspress-doc-footer">
+                {beforeDocFooter}
+                {uiSwitch?.showDocFooter && <DocFooter />}
+                {afterDocFooter}
               </div>
             </div>
           )}
         </div>
+        {enableScrollToTop && (
+          <NoSSR>
+            <ScrollToTop />
+          </NoSSR>
+        )}
+        {uiSwitch?.showAside ? (
+          <div
+            className={styles.asideContainer}
+            style={{
+              ...(uiSwitch?.showNavbar
+                ? {}
+                : {
+                    marginTop: 0,
+                    paddingTop: '32px',
+                  }),
+            }}
+          >
+            <div>
+              {beforeOutline}
+              <Aside headers={headers} outlineTitle={outlineTitle} />
+              {afterOutline}
+            </div>
+          </div>
+        ) : null}
       </div>
       {afterDoc}
     </div>
