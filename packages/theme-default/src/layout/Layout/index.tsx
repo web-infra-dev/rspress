@@ -152,7 +152,7 @@ export function Layout(props: LayoutProps) {
   };
 
   return (
-    <>
+    <div>
       <Helmet
         htmlAttributes={{
           lang: currentLang || 'en',
@@ -175,6 +175,6 @@ export function Layout(props: LayoutProps) {
 
       <section>{getContentLayout()}</section>
       {bottom}
-    </>
+    </div>
   );
 }
