@@ -111,7 +111,7 @@ export function DocLayout(props: DocLayoutProps) {
         <div
           className={`${styles.content} rspress-doc-container w-full flex flex-shrink-0`}
         >
-          <div className="flex-1">
+          <div className="w-full flex-1">
             {isOverviewPage ? (
               <>
                 {beforeDocContent}
