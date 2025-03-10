@@ -130,8 +130,6 @@
 
 @media (max-width: 768px) {
   :global(.overview-index) {
-    padding: 42px 24px;
-
     h1 {
       font-size: 32px;
       margin-bottom: 24px;
@@ -159,7 +157,12 @@
   }
 }
 
-@media (min-width: 1200px) {
+@media (min-width: 1280px) {
+  :global(.overview-index) {
+    padding-left: 2rem;
+    padding-right: 2rem;
+  }
+
   .overview-groups {
     columns: 3;
   }

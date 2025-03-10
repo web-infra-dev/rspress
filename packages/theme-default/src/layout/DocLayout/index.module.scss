@@ -2,13 +2,15 @@
   position: sticky;
   display: none;
   top: 0;
-  margin-top: calc(var(--rp-nav-height) * -1 - 32px);
-  padding-top: calc(var(--rp-nav-height) + 32px);
+  margin-top: calc(var(--rp-nav-height) * -1 - var(--rp-content-padding-y));
+  padding-top: calc(var(--rp-nav-height) + var(--rp-content-padding-y));
   overflow-x: hidden;
   overflow-y: auto;
   scrollbar-width: none;
   width: 0;
-  max-height: calc(100vh - var(--rp-nav-height) + 32px);
+  max-height: calc(
+    100vh - var(--rp-nav-height) + var(--rp-content-padding-y) * 2
+  );
 }
 
 .aside-container::-webkit-scrollbar {
@@ -56,13 +58,15 @@
   transition-timing-function: cubic-bezier(0.42, 0, 1, 1);
 }
 
+.content {
+  padding: var(--rp-content-padding-y) var(--rp-content-padding-x);
+}
+
 @media (max-width: 960px) {
-  .docLayout {
-    position: relative;
+  :root {
+    --rp-content-padding-y: 36px;
   }
-  .content {
-    padding: 36px 24px 72px 24px;
-  }
+
   :global(.rspress-doc) {
     view-transition-name: none;
   }
@@ -74,50 +78,22 @@
     width: var(--rp-aside-width);
   }
   .docLayout {
-    width: 100%;
     display: flex;
-  }
-  .content {
-    width: calc(100% - var(--rp-sidebar-width));
-    padding: 48px 48px 72px max(24px, calc(48px - var(--rp-sidebar-width)));
-
-    :global(.rspress-doc),
-    :global(.rspress-doc-footer) {
-      width: 100%;
-    }
   }
 }
 
 @media (min-width: 1280px) {
+  :root {
+    --rp-content-padding-x: 0;
+  }
+
   .aside-container {
     display: block;
-    width: var(--rp-aside-width);
-  }
-  .content {
-    padding: 48px 0 72px 0;
-
-    :global(.rspress-doc),
-    :global(.rspress-doc-footer) {
-      padding: 0 64px;
-      box-sizing: border-box;
-      width: calc(100vw - var(--rp-sidebar-width) - var(--rp-aside-width));
-      max-width: min(100%, calc(864px + 64px * 2));
-      margin: auto;
-    }
-  }
-}
-
-@media (min-width: 1440px) {
-  .docLayout {
-    width: 100%;
-    margin-left: 0;
   }
 
   .content {
     :global(.rspress-doc),
     :global(.rspress-doc-footer) {
-      box-sizing: border-box;
-      width: calc(100vw - var(--rp-sidebar-width) - var(--rp-aside-width));
       padding: 0 64px;
       max-width: min(100%, calc(864px + 64px * 2));
       margin: auto;

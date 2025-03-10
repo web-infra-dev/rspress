@@ -5,6 +5,8 @@
   --rp-nav-height: 72px;
   --rp-sidebar-width: 320px;
   --rp-aside-width: 268px;
+  --rp-content-padding-x: 24px;
+  --rp-content-padding-y: 48px;
 }
 
 :root {
