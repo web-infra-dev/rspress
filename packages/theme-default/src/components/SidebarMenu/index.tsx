@@ -2,12 +2,12 @@ import { useLocation } from '@rspress/runtime';
 import { Sidebar, Toc } from '@theme';
 import ArrowRight from '@theme-assets/arrow-right';
 import MenuIcon from '@theme-assets/menu';
-import { Fragment, useEffect, useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import './index.scss';
 import type { UISwitchResult } from '../../logic/useUISwitch';
 import { SvgWrapper } from '../SvgWrapper';
 
-export function SideMenu({
+export function SidebarMenu({
   outlineTitle,
   beforeSidebar,
   afterSidebar,
@@ -61,7 +61,7 @@ export function SideMenu({
   };
 
   return (
-    <Fragment>
+    <>
       {/* Top Menu, only displayed in mobile device */}
       <div className="rspress-sidebar-menu">
         {uiSwitch?.showSidebar ? (
@@ -73,7 +73,7 @@ export function SideMenu({
           </button>
         ) : null}
         {uiSwitch?.showAside ? (
-          <Fragment>
+          <>
             <button
               onClick={() => setIsTocOpen(tocOpened => !tocOpened)}
               className="flex-center ml-auto"
@@ -101,12 +101,12 @@ export function SideMenu({
                 }}
               />
             </div>
-          </Fragment>
+          </>
         ) : null}
       </div>
       {/* Sidebar Component */}
       {uiSwitch?.showSidebar ? (
-        <Fragment>
+        <>
           <Sidebar
             isSidebarOpen={isSidebarOpen}
             beforeSidebar={beforeSidebar}
@@ -123,8 +123,8 @@ export function SideMenu({
               }}
             />
           ) : null}
-        </Fragment>
+        </>
       ) : null}
-    </Fragment>
+    </>
   );
 }

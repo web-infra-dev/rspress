@@ -5,7 +5,7 @@ import { slug } from 'github-slugger';
 import { useMemo, useState } from 'react';
 import { Aside } from '../../components/Aside';
 import { DocFooter } from '../../components/DocFooter';
-import { SideMenu } from '../../components/LocalSideBar';
+import { SidebarMenu } from '../../components/SidebarMenu';
 import { useLocaleSiteData } from '../../logic';
 import { TabDataContext } from '../../logic/TabDataContext';
 import type { UISwitchResult } from '../../logic/useUISwitch';
@@ -91,7 +91,7 @@ export function DocLayout(props: DocLayoutProps) {
       }}
     >
       {beforeDoc}
-      <SideMenu
+      <SidebarMenu
         outlineTitle={outlineTitle}
         beforeSidebar={beforeSidebar}
         afterSidebar={afterSidebar}
