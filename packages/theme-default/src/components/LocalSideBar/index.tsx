@@ -1,41 +1,41 @@
 import { useLocation } from '@rspress/runtime';
-import { Toc } from '@theme';
+import { Sidebar, Toc } from '@theme';
 import ArrowRight from '@theme-assets/arrow-right';
 import MenuIcon from '@theme-assets/menu';
-import { useEffect, useRef, useState } from 'react';
+import { Fragment, useEffect, useRef, useState } from 'react';
+import './index.scss';
 import type { UISwitchResult } from '../../logic/useUISwitch';
 import { SvgWrapper } from '../SvgWrapper';
-import './index.scss';
 
-/* Top Menu, only displayed on <1280px screen width */
-export const SidebarMenu = ({
-  isSidebarOpen,
-  onIsSidebarOpenChange,
+export function SideMenu({
   outlineTitle,
+  beforeSidebar,
+  afterSidebar,
   uiSwitch,
+  navTitle,
 }: {
-  isSidebarOpen: boolean;
-  onIsSidebarOpenChange: (isOpen: boolean) => void;
   outlineTitle: string;
+  beforeSidebar?: React.ReactNode;
+  afterSidebar?: React.ReactNode;
   uiSwitch?: UISwitchResult;
-}) => {
+  navTitle?: React.ReactNode;
+}) {
+  const [isSidebarOpen, setSidebarIsOpen] = useState<boolean>(false);
+  const [isTocOpen, setIsTocOpen] = useState<boolean>(false);
   const tocContainerRef = useRef<HTMLDivElement>(null);
   const outlineButtonRef = useRef<HTMLButtonElement>(null);
-
-  const [isTocOpen, setIsTocOpen] = useState<boolean>(false);
-
   const { pathname } = useLocation();
 
   function openSidebar() {
-    onIsSidebarOpenChange(true);
+    setSidebarIsOpen(true);
   }
 
   function closeSidebar() {
-    onIsSidebarOpenChange(false);
+    setSidebarIsOpen(false);
   }
 
   useEffect(() => {
-    onIsSidebarOpenChange(false);
+    setSidebarIsOpen(false);
   }, [pathname]);
 
   useEffect(() => {
@@ -61,16 +61,60 @@ export const SidebarMenu = ({
   };
 
   return (
-    <div className="rspress-sidebar-menu">
-      {uiSwitch?.showSidebar && (
-        <>
+    <Fragment>
+      {/* Top Menu, only displayed in mobile device */}
+      <div className="rspress-sidebar-menu">
+        {uiSwitch?.showSidebar ? (
           <button onClick={openSidebar} className="flex-center mr-auto">
             <div className="text-md mr-2">
               <SvgWrapper icon={MenuIcon} />
             </div>
             <span className="text-sm">Menu</span>
           </button>
-          {isSidebarOpen && (
+        ) : null}
+        {uiSwitch?.showAside ? (
+          <Fragment>
+            <button
+              onClick={() => setIsTocOpen(tocOpened => !tocOpened)}
+              className="flex-center ml-auto"
+              ref={outlineButtonRef}
+            >
+              <span className="text-sm">{outlineTitle}</span>
+              <div
+                className="text-md mr-2"
+                style={{
+                  transform: isTocOpen ? 'rotate(90deg)' : 'rotate(0deg)',
+                  transition: 'transform 0.2s ease-out',
+                  marginTop: '2px',
+                }}
+              >
+                <SvgWrapper icon={ArrowRight} />
+              </div>
+            </button>
+
+            <div
+              className={`rspress-local-toc-container ${isTocOpen ? 'rspress-local-toc-container-show' : ''}`}
+            >
+              <Toc
+                onItemClick={() => {
+                  setIsTocOpen(false);
+                }}
+              />
+            </div>
+          </Fragment>
+        ) : null}
+      </div>
+      {/* Sidebar Component */}
+      {uiSwitch?.showSidebar ? (
+        <Fragment>
+          <Sidebar
+            isSidebarOpen={isSidebarOpen}
+            beforeSidebar={beforeSidebar}
+            afterSidebar={afterSidebar}
+            uiSwitch={uiSwitch}
+            navTitle={navTitle}
+          />
+          {isSidebarOpen ? (
             <div
               onClick={closeSidebar}
               className="rspress-sidebar-back-drop"
@@ -78,40 +122,9 @@ export const SidebarMenu = ({
                 background: 'rgba(0, 0, 0, 0.6)',
               }}
             />
-          )}
-        </>
-      )}
-      {uiSwitch?.showAside && (
-        <>
-          <button
-            onClick={() => setIsTocOpen(tocOpened => !tocOpened)}
-            className="flex-center ml-auto"
-            ref={outlineButtonRef}
-          >
-            <span className="text-sm">{outlineTitle}</span>
-            <div
-              className="text-md mr-2"
-              style={{
-                transform: isTocOpen ? 'rotate(90deg)' : 'rotate(0deg)',
-                transition: 'transform 0.2s ease-out',
-                marginTop: '2px',
-              }}
-            >
-              <SvgWrapper icon={ArrowRight} />
-            </div>
-          </button>
-
-          <div
-            className={`rspress-local-toc-container ${isTocOpen ? 'rspress-local-toc-container-show' : ''}`}
-          >
-            <Toc
-              onItemClick={() => {
-                setIsTocOpen(false);
-              }}
-            />
-          </div>
-        </>
-      )}
-    </div>
+          ) : null}
+        </Fragment>
+      ) : null}
+    </Fragment>
   );
-};
+}

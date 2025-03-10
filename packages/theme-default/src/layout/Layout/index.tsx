@@ -144,7 +144,7 @@ export const Layout: React.FC<LayoutProps> = props => {
   };
 
   return (
-    <>
+    <div>
       <Helmet
         htmlAttributes={{
           lang: currentLang || 'en',
@@ -167,6 +167,6 @@ export const Layout: React.FC<LayoutProps> = props => {
 
       <section>{getContentLayout()}</section>
       {bottom}
-    </>
+    </div>
   );
 };
