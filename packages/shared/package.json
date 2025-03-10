@@ -41,7 +41,7 @@
     "reset": "rimraf ./**/node_modules"
   },
   "dependencies": {
-    "@rsbuild/core": "1.2.15",
+    "@rsbuild/core": "1.2.16",
     "gray-matter": "4.0.3",
     "lodash-es": "^4.17.21",
     "unified": "^10.1.2"
