@@ -57,11 +57,8 @@
 }
 
 @media (max-width: 960px) {
-  .docLayout {
-    position: relative;
-  }
   .content {
-    padding: 36px 24px 72px 24px;
+    padding: 36px 24px;
   }
   :global(.rspress-doc) {
     view-transition-name: none;
@@ -74,12 +71,10 @@
     width: var(--rp-aside-width);
   }
   .docLayout {
-    width: 100%;
     display: flex;
   }
   .content {
-    width: calc(100% - var(--rp-sidebar-width));
-    padding: 48px 48px 72px max(24px, calc(48px - var(--rp-sidebar-width)));
+    padding: 48px 24px;
 
     :global(.rspress-doc),
     :global(.rspress-doc-footer) {
