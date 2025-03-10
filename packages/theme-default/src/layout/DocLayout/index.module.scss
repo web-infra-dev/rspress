@@ -63,18 +63,20 @@
   .content {
     padding: 36px 24px 72px 24px;
   }
-
   :global(.rspress-doc) {
     view-transition-name: none;
   }
 }
 
 @media (min-width: 960px) {
+  .aside-container {
+    display: none;
+    width: var(--rp-aside-width);
+  }
   .docLayout {
     width: 100%;
     display: flex;
   }
-
   .content {
     width: calc(100% - var(--rp-sidebar-width));
     padding: 48px 48px 72px max(24px, calc(48px - var(--rp-sidebar-width)));
@@ -84,10 +86,6 @@
       width: 100%;
     }
   }
-
-  .aside-container {
-    width: var(--rp-aside-width);
-  }
 }
 
 @media (min-width: 1280px) {
@@ -95,7 +93,6 @@
     display: block;
     width: var(--rp-aside-width);
   }
-
   .content {
     padding: 48px 0 72px 0;
 
