@@ -1,7 +1,7 @@
 import htmr from 'htmr';
 
 export function isMobileDevice() {
-  return window.innerWidth < 1280;
+  return window.innerWidth <= 1024;
 }
 
 export function renderHtmlOrText(str?: string | number | null) {

@@ -57,6 +57,9 @@
 }
 
 @media (max-width: 960px) {
+  .docLayout {
+    position: relative;
+  }
   .content {
     padding: 36px 24px 72px 24px;
   }
@@ -68,6 +71,7 @@
 
 @media (min-width: 960px) {
   .docLayout {
+    width: 100%;
     display: flex;
   }
 
