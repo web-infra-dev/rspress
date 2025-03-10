@@ -42,7 +42,15 @@ export { Overview } from './components/Overview';
 export { PackageManagerTabs } from './components/PackageManagerTabs';
 export { PrevNextPage } from './components/PrevNextPage';
 export { ScrollToTop } from './components/ScrollToTop';
-export { Search, SearchPanel } from './components/Search';
+export { Search } from './components/Search';
+export {
+  SearchButton,
+  type SearchButtonProps,
+} from './components/Search/SearchButton';
+export {
+  SearchPanel,
+  type SearchPanelProps,
+} from './components/Search/SearchPanel';
 export { Sidebar, SidebarList, type SidebarData } from './components/Sidebar';
 export { SocialLinks } from './components/SocialLinks';
 export { SourceCode } from './components/SourceCode';

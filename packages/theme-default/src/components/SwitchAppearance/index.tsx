@@ -1,8 +1,8 @@
 import { ThemeContext } from '@rspress/runtime';
+import { flushSync } from '@rspress/runtime';
 import MoonSvg from '@theme-assets/moon';
 import SunSvg from '@theme-assets/sun';
 import { type MouseEvent, useContext } from 'react';
-import { flushSync } from 'react-dom';
 import siteData from 'virtual-site-data';
 import { SvgWrapper } from '../SvgWrapper';
 import './index.scss';
