@@ -1,43 +1,31 @@
 import {
+  type BuiltinLanguage,
+  type BuiltinTheme,
   type Highlighter,
-  type HighlighterOptions as ShikiHighlighterOptions,
-  getHighlighter as getShikiHighlighter,
+  type BundledHighlighterOptions as ShikiHighlighterOptions,
+  type ShikiTransformer,
+  createHighlighter as createShikiHighlighter,
 } from 'shiki';
 
-import { postTransformer, transformer } from './transformer';
-import type { ITransformer } from './types';
-
-export interface HighlighterOptions extends ShikiHighlighterOptions {
-  transformers?: ITransformer[];
+export interface HighlighterOptions
+  extends ShikiHighlighterOptions<BuiltinLanguage, BuiltinTheme> {
+  transformers?: ShikiTransformer[];
 }
 
 export async function getHighlighter(
-  options: HighlighterOptions = {},
+  options: HighlighterOptions,
 ): Promise<Highlighter> {
-  const highlighter = await getShikiHighlighter(options);
-  const transformers = options.transformers ?? [];
+  const highlighter = await createShikiHighlighter(options);
+  const baseTransformers = options.transformers ?? [];
 
   return {
     ...highlighter,
-    codeToHtml: (str, htmlOptions) => {
-      const lang =
-        typeof htmlOptions === 'object' ? htmlOptions.lang! : htmlOptions!;
-
-      const baseLineOptions =
-        typeof htmlOptions === 'object' ? (htmlOptions.lineOptions ?? []) : [];
-
-      const theme =
-        typeof htmlOptions === 'object' ? htmlOptions.theme : undefined;
-
-      const { code, lineOptions } = transformer(transformers, str, lang);
-
-      const highlighted = highlighter.codeToHtml(code, {
-        lang,
-        theme,
-        lineOptions: [...lineOptions, ...baseLineOptions],
+    codeToHtml: (code, htmlOptions) => {
+      const transformers = htmlOptions.transformers ?? [];
+      return highlighter.codeToHtml(code, {
+        ...htmlOptions,
+        transformers: [...baseTransformers, ...transformers],
       });
-
-      return postTransformer(transformers, highlighted, lang);
     },
   };
 }

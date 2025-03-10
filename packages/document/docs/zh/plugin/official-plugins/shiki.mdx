@@ -36,19 +36,26 @@ export default defineConfig({
 该插件支持传入一个对象配置，该对象配置的属性如下：
 
 ```ts
-interface PluginShikiOptions {
+import type {
+  BuiltinLanguage,
+  BuiltinTheme,
+  ShikiTransformer,
+  SpecialLanguage,
+} from 'shiki';
+
+export interface PluginShikiOptions {
   /**
-   * 代码高亮主题
+   * 代码高亮主题，@see https://shiki.style/themes
    */
-  theme: string;
+  theme: BuiltinTheme | 'css-variables';
   /**
-   * 代码高亮的语言
+   * 代码高亮的语言，@see https://shiki.style/languages
    */
-  langs: string[];
+  langs: Array<BuiltinLanguage | SpecialLanguage>;
   /**
-   * 添加自定义 transformer
+   * 自定义 shiki transformer，@see https://shiki.style/guide/transformers
    */
-  transformers: Transformer[];
+  transformers: ShikiTransformer[];
 }
 ```
 
@@ -64,81 +71,34 @@ Transformer 是本插件中的一个概念，它的作用是对代码块的特�
 
 本插件中内置了一些 Transformer，包括：
 
-- `createTransformerDiff`：实现代码块的 diff 高亮效果。
 - `createTransformerLineNumber`：实现代码块的行号显示。
-- `createTransformerErrorLevel`：实现代码块对应行的错误等级显示，包括 `error` 和 `warning`。
-- `createTransformerHighlight`：实现代码块的行高亮显示。
-- `createTransformerFocus`： 实现代码块的行聚焦显示。
 
 你可以通过配置 `transformers` 属性来启用这些 Transformer，比如：
 
 ```ts title="rspress.config.ts"
 import { defineConfig } from 'rspress/config';
 import { pluginShiki, createTransformerDiff } from '@rspress/plugin-shiki';
+import {
+  transformerNotationDiff,
+  transformerNotationErrorLevel,
+  transformerNotationFocus,
+  transformerNotationHighlight,
+} from '@shikijs/transformers';
 
 export default defineConfig({
   plugins: [
     pluginShiki({
       transformers: [
         // 按需加入即可
-        createTransformerDiff(),
-        // createTransformerLineNumber(),
-        // createTransformerErrorLevel(),
-        // createTransformerHighlight(),
-        // createTransformerFocus(),
+        createTransformerLineNumber(),
+        // transformerNotationDiff(),
+        // transformerNotationErrorLevel(),
+        // transformerNotationHighlight(),
+        // transformerNotationFocus(),
       ],
     }),
   ],
 });
 ```
 
-接着我们来介绍一下如何使用这些 Transformer 对应的语法。
-
-#### diff 高亮
-
-在 markdown 的代码块中使用 `diff` 语法，比如：
-
-```ts
-export function foo() {
-  console.log('Diff remove'); // [!code --]
-  console.log('Diff add'); // [!code ++]
-}
-```
-
-这样会自动对相应行的代码应用 diff 高亮效果。
-
-#### 行号显示
-
-在 markdown 的代码块中使用 `hl` 语法，比如：
-
-```ts
-export function foo() {
-  console.log('Line number'); // [!code hl]
-}
-```
-
-这样会自动对相应行的代码显示行号。
-
-#### 错误等级显示
-
-在 markdown 的代码块中使用 `error` 或 `warning` 语法，比如：
-
-```ts
-export function foo() {
-  console.log('Error level'); // [!code error]
-}
-```
-
-这样会自动对相应行的代码显示错误等级。
-
-#### 行聚焦显示
-
-在 markdown 的代码块中使用 `focus` 语法，比如：
-
-```ts
-export function foo() {
-  console.log('Focus'); // [!code focus]
-}
-```
-
-这样会自动对相应行的代码显示聚焦效果。
+请查看 [Shiki Transformers 文档](https://shiki.style/guide/transformers) 获取更多信息。
