@@ -311,6 +311,9 @@ importers:
       '@modern-js/tsconfig':
         specifier: 2.64.0
         version: 2.64.0
+      '@rsbuild/plugin-sass':
+        specifier: ~1.2.2
+        version: 1.2.2(@rsbuild/core@1.2.16)
       '@rspress/modern-js-plugin':
         specifier: workspace:*
         version: link:../../../packages/modern-plugin-rspress
