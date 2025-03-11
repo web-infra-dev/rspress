@@ -5,9 +5,7 @@ import type {
   RsbuildInstance,
   RsbuildPlugin,
 } from '@rsbuild/core';
-import { PLUGIN_LESS_NAME, pluginLess } from '@rsbuild/plugin-less';
 import { PLUGIN_REACT_NAME, pluginReact } from '@rsbuild/plugin-react';
-import { PLUGIN_SASS_NAME, pluginSass } from '@rsbuild/plugin-sass';
 import {
   MDX_OR_MD_REGEXP,
   RSPRESS_TEMP_DIR,
@@ -100,8 +98,6 @@ async function createInternalBuildConfig(
   return {
     plugins: [
       ...(isPluginIncluded(config, PLUGIN_REACT_NAME) ? [] : [pluginReact()]),
-      ...(isPluginIncluded(config, PLUGIN_SASS_NAME) ? [] : [pluginSass()]),
-      ...(isPluginIncluded(config, PLUGIN_LESS_NAME) ? [] : [pluginLess()]),
       rsbuildPluginDocVM({
         userDocRoot,
         config,
