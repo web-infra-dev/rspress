@@ -110,11 +110,16 @@ cli.command('build [root]').action(async (root, options) => {
   config.root = resolveDocRoot(cwd, root, config.root);
   const docDirectory = config.root;
 
-  await build({
-    appDirectory: cwd,
-    docDirectory,
-    config,
-  });
+  try {
+    await build({
+      appDirectory: cwd,
+      docDirectory,
+      config,
+    });
+  } catch (err) {
+    logger.error(err);
+    process.exit(1);
+  }
 });
 
 cli
