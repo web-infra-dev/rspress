@@ -51,7 +51,6 @@ export async function createMDXOptions(
       [
         remarkPluginNormalizeLink,
         {
-          base: config?.base || '',
           cleanUrls,
           defaultLang,
           root: docDirectory,
