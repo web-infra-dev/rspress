@@ -3,7 +3,7 @@ import { useCallback, useEffect, useState } from 'react';
 // @ts-ignore
 import { normalizeId } from '../../dist/utils';
 import MobileOperation from './common/mobile-operation';
-import './Device.scss';
+import './Device.css';
 
 export default () => {
   const { page } = usePageData();

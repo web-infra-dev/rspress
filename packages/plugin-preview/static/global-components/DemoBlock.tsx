@@ -1,4 +1,4 @@
-import './DemoBlock.scss';
+import './DemoBlock.css';
 
 interface Props {
   title: string;

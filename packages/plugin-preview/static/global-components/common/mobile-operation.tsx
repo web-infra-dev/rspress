@@ -10,7 +10,7 @@ import {
 import IconLaunch from '../icons/Launch';
 import IconQrcode from '../icons/Qrcode';
 import IconRefresh from '../icons/Refresh';
-import './index.scss';
+import './index.css';
 
 const locales = {
   zh: {
