@@ -7,6 +7,7 @@ import { defineConfig } from 'rspress/config';
 const siteUrl = 'https://rspress.dev';
 
 export default defineConfig({
+  base: 'test',
   root: 'docs',
   title: 'Rspress',
   description: 'Rspack based static site generator',
@@ -16,6 +17,7 @@ export default defineConfig({
   icon: 'https://assets.rspack.dev/rspress/rspress-logo-480x480.png',
   markdown: {
     checkDeadLinks: true,
+    mdxRs: false,
   },
   ssg: {
     strict: true,
