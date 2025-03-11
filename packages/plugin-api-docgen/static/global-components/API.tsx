@@ -4,7 +4,7 @@ import { useLang, usePageData } from '@rspress/core/runtime';
 import { getCustomMDXComponent } from '@rspress/core/theme';
 import ReactMarkdown from 'react-markdown';
 import remarkGfm from 'remark-gfm';
-import './API.scss';
+import './API.css';
 
 export default (props: { moduleName: string }) => {
   const lang = useLang();
