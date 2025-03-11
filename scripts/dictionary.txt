@@ -120,6 +120,7 @@ selfsign
 shiki
 shikijs
 sirv
+Sizefor
 sokra
 speedscope
 srcset
