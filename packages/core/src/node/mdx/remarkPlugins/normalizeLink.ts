@@ -11,10 +11,10 @@ import { getASTNodeImport } from '../../utils';
  * Remark plugin to normalize a link href
  */
 export const remarkPluginNormalizeLink: Plugin<
-  [{ base: string; root: string; cleanUrls: boolean }],
+  [{ root: string; cleanUrls: boolean }],
   Root
 > =
-  ({ base, root, cleanUrls }) =>
+  ({ root, cleanUrls }) =>
   (tree, file) => {
     const images: MdxjsEsm[] = [];
     visit(tree, 'link', node => {
@@ -50,7 +50,7 @@ export const remarkPluginNormalizeLink: Plugin<
       if (hash) {
         url += `#${hash}`;
       }
-      node.url = path.posix.join(base, url);
+      node.url = url;
     });
 
     const normalizeImageUrl = (imageUrl: string): string => {
