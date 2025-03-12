@@ -1,21 +1,31 @@
 import type { RspressPlugin } from '@rspress/shared';
 
 interface Options {
-  selector?: string;
+  /**
+   * Algolia meta tag for verification
+   * - <meta name="algolia-site-verification" content="YOUR_VERIFICATION_CONTENT" />
+   */
+  verificationContent?: string;
 }
 
 export function pluginAlgolia(options: Options = {}): RspressPlugin {
-  options;
+  const { verificationContent } = options;
   return {
     name: '@rspress/plugin-algolia',
+    config(config) {
+      config.search = false;
+      return config;
+    },
     builderConfig: {
       html: {
-        meta: {
-          'algolia-site-verification': {
-            name: 'algolia-site-verification',
-            content: '0F854AB11EB1D255',
-          },
-        },
+        meta: verificationContent
+          ? {
+              'algolia-site-verification': {
+                name: 'algolia-site-verification',
+                content: verificationContent,
+              },
+            }
+          : {},
       },
     },
   };

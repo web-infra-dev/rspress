@@ -1,0 +1,302 @@
+# @rspress/plugin-algolia
+
+import { SourceCode } from 'rspress/theme';
+
+<SourceCode href="https://github.com/web-infra-dev/rspress/tree/main/packages/plugin-algolia" />
+
+Based on [docsearch](https://docsearch.algolia.com), this plugin replaces Rspress's built-in search with [algolia](https://www.algolia.com/).
+
+## Installation
+
+import { PackageManagerTabs } from '@theme';
+
+<PackageManagerTabs command="add @rspress/plugin-algolia -D" />
+
+## Usage
+
+First, add the following configuration to your config file:
+
+```ts
+// rspress.config.ts
+import path from 'path';
+import { defineConfig } from 'rspress';
+import { pluginAlgolia } from '@rspress/plugin-algolia';
+
+export default defineConfig({
+  plugins: [pluginAlgolia()],
+});
+```
+
+Then override the `Search` component with an algolia-supported search box via [Custom Theme](/guide/advanced/custom-theme).
+
+```tsx
+// theme/index.tsx
+import { Search as PluginAlgoliaSearch } from '@rspress/plugin-algolia/runtime';
+
+const Search = () => {
+  return (
+    <PluginAlgoliaSearch
+      docSearchProps={{
+        appId: 'R2IYF7ETH7', // Replace with your own Algolia appId
+        apiKey: '599cec31baffa4868cae4e79f180729b', // Replace with your own Algolia apiKey
+        indexName: 'docsearch', // Replace with your own Algolia indexName
+      }}
+    />
+  );
+};
+export { Search };
+export * from 'rspress/theme';
+```
+
+## Configuration
+
+The plugin accepts an options object with the following type:
+
+```ts
+interface Options {
+  verificationContent?: string;
+}
+```
+
+### verificationContent
+
+- Type: `string | undefined`
+- Default: `undefined`
+
+Used for meta tag verification when creating algolia crawler. Format: `<meta name="algolia-site-verification" content="YOUR_VERIFICATION_CONTENT" />`. Refer to [Create a new crawler - algolia](https://www.algolia.com/doc/tools/crawler/getting-started/create-crawler/#dns)
+
+## SearchProps
+
+The `SearchProps` type from `@rspress/plugin-algolia/runtime` is as follows:
+
+```ts
+import type { DocSearchProps } from '@docsearch/react';
+
+type Locales = Record<
+  string,
+  { translations: DocSearchProps['translations']; placeholder: string }
+>;
+type SearchProps = {
+  /**
+   * @link https://docsearch.algolia.com/docs/api
+   */
+  docSearchProps?: DocSearchProps;
+  locales?: Locales;
+};
+```
+
+### docSearchProps
+
+- Type: `import('@docsearch/react').DocSearchProps`
+- Default: `undefined`
+
+`docSearchProps` will be directly passed to the `<DocSearch />` component in `@docsearch/react`. For specific types, please refer to [docsearch documentation](https://docsearch.algolia.com/docs/api).
+
+### locales
+
+- Type:
+
+```ts
+type Locales = Record<
+  string,
+  { translations: DocSearchProps['translations']; placeholder: string }
+>;
+```
+
+- Default: `{}`
+
+For customizing translated text in different languages, Rspress provides the following translated text, which can be imported through import.
+
+<details>
+
+```ts
+export const ZH_LOCALES: Locales = {
+  zh: {
+    placeholder: '搜索文档',
+    translations: {
+      button: {
+        buttonText: '搜索',
+        buttonAriaLabel: '搜索',
+      },
+      modal: {
+        searchBox: {
+          resetButtonTitle: '清除查询条件',
+          resetButtonAriaLabel: '清除查询条件',
+          cancelButtonText: '取消',
+          cancelButtonAriaLabel: '取消',
+        },
+        startScreen: {
+          recentSearchesTitle: '搜索历史',
+          noRecentSearchesText: '没有搜索历史',
+          saveRecentSearchButtonTitle: '保存至搜索历史',
+          removeRecentSearchButtonTitle: '从搜索历史中移除',
+          favoriteSearchesTitle: '收藏',
+          removeFavoriteSearchButtonTitle: '从收藏中移除',
+        },
+        errorScreen: {
+          titleText: '无法获取结果',
+          helpText: '你可能需要检查你的网络连接',
+        },
+        footer: {
+          selectText: '选择',
+          navigateText: '切换',
+          closeText: '关闭',
+          searchByText: '搜索提供者',
+        },
+        noResultsScreen: {
+          noResultsText: '无法找到相关结果',
+          suggestedQueryText: '你可以尝试查询',
+          reportMissingResultsText: '你认为该查询应该有结果？',
+          reportMissingResultsLinkText: '点击反馈',
+        },
+      },
+    },
+  },
+} as const;
+```
+
+</details>
+
+Rspress provides Chinese translation by default, and you can customize translated text in different languages ​​through `locales`.
+
+- Example:
+
+```tsx
+import { Search as PluginAlgoliaSearch, ZH_LOCALES } from '@rspress/plugin-algolia/runtime';
+
+<PluginAlgoliaSearch locales={ZH_LOCALES} />
+// or
+<PluginAlgoliaSearch
+  locales={{
+    en: {
+      placeholder: 'Search Documentation',
+      translations: {
+        button: {
+          buttonText: 'Search',
+          buttonAriaLabel: 'Search',
+        }
+      }
+    },
+    ...ZH_LOCALES,
+  }}
+/>
+```
+
+## Algolia crawler config
+
+Here is an example config based on what this site uses:
+
+<details>
+
+```tsx
+new Crawler({
+  appId: 'YOUR_APP_ID',
+  apiKey: 'YOUR_API_KEY',
+  rateLimit: 8,
+  maxDepth: 10,
+  startUrls: ['https://rspress.dev'],
+  sitemaps: ['https://rspress.dev/sitemap.xml'],
+  discoveryPatterns: ['https://rspress.dev/**'],
+  actions: [
+    {
+      indexName: 'doc_search_rspress_pages',
+      pathsToMatch: ['https://rspress.dev/**'],
+      recordExtractor: ({ $, helpers }) => {
+        return helpers.docsearch({
+          recordProps: {
+            lvl0: {
+              selectors: '',
+              defaultValue: 'Documentation',
+            },
+            lvl1: '.rspress-doc h1',
+            lvl2: '.rspress-doc h2',
+            lvl3: '.rspress-doc h3',
+            lvl4: '.rspress-doc h4',
+            lvl5: '.rspress-doc h5',
+            lvl6: '.rspress-doc pre > code', // if you want to search code blocks, add this line
+            content: '.rspress-doc p, .rspress-doc li',
+          },
+          indexHeadings: true,
+          aggregateContent: true,
+          recordVersion: 'v3',
+        });
+      },
+    },
+  ],
+  initialIndexSettings: {
+    doc_search_rspress_pages: {
+      attributesForFaceting: ['type', 'lang'],
+      attributesToRetrieve: ['hierarchy', 'content', 'anchor', 'url'],
+      attributesToHighlight: ['hierarchy', 'content'],
+      attributesToSnippet: ['content:10'],
+      camelCaseAttributes: ['hierarchy', 'content'],
+      searchableAttributes: [
+        'unordered(hierarchy.lvl0)',
+        'unordered(hierarchy.lvl1)',
+        'unordered(hierarchy.lvl2)',
+        'unordered(hierarchy.lvl3)',
+        'unordered(hierarchy.lvl4)',
+        'unordered(hierarchy.lvl5)',
+        'unordered(hierarchy.lvl6)',
+        'content',
+      ],
+      distinct: true,
+      attributeForDistinct: 'url',
+      customRanking: [
+        'desc(weight.pageRank)',
+        'desc(weight.level)',
+        'asc(weight.position)',
+      ],
+      ranking: [
+        'words',
+        'filters',
+        'typo',
+        'attribute',
+        'proximity',
+        'exact',
+        'custom',
+      ],
+      minWordSizefor1Typo: 3,
+      minWordSizefor2Typos: 7,
+      allowTyposOnNumericTokens: false,
+      minProximity: 1,
+      ignorePlurals: true,
+      advancedSyntax: true,
+      attributeCriteriaComputedByMinProximity: true,
+      removeWordsIfNoResults: 'allOptional',
+    },
+  },
+});
+```
+
+</details>
+
+## Distinguish search results based on i18n
+
+You can achieve internationalized search results by combining [Runtime API](/api/client-api/api-runtime) with `docSearchProps`.
+
+Here's an example using `docSearchProps.searchParameters`:
+
+```tsx
+// theme/index.tsx
+import { useLang } from 'rspress/runtime';
+import { Search as PluginAlgoliaSearch } from '@rspress/plugin-algolia/runtime';
+
+const Search = () => {
+  const lang = useLang();
+  return (
+    <PluginAlgoliaSearch
+      docSearchProps={{
+        appId: 'R2IYF7ETH7',
+        apiKey: '599cec31baffa4868cae4e79f180729b',
+        indexName: 'docsearch',
+        searchParameters: {
+          facetFilters: [`language:${lang}`],
+        },
+      }}
+    />
+  );
+};
+export { Search };
+export * from 'rspress/theme';
+```

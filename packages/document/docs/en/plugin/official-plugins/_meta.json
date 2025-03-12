@@ -9,5 +9,6 @@
   "preview",
   "playground",
   "rss",
-  "shiki"
+  "shiki",
+  "algolia"
 ]

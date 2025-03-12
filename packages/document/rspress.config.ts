@@ -27,7 +27,9 @@ export default defineConfig({
     pluginSitemap({
       domain: siteUrl,
     }),
-    pluginAlgolia(),
+    pluginAlgolia({
+      verificationContent: '0F854AB11EB1D255',
+    }),
   ],
   builderConfig: {
     dev: {
@@ -49,9 +51,7 @@ export default defineConfig({
       }),
     ],
   },
-  search: {
-    codeBlocks: true,
-  },
+  search: false,
   route: {
     cleanUrls: true,
     exclude: ['**/fragments/**'],

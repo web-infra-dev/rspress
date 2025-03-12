@@ -28,6 +28,10 @@ export {
   useSearchParams,
   matchPath,
 } from 'react-router-dom';
+export {
+  createPortal,
+  flushSync,
+} from 'react-dom';
 export { pathnameToRouteService, normalizeRoutePath } from './route';
 export { Helmet } from 'react-helmet-async';
 export { NoSSR } from './NoSSR';

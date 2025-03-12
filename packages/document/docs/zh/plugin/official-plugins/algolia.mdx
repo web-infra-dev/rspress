@@ -1,0 +1,304 @@
+# @rspress/plugin-algolia
+
+import { SourceCode } from 'rspress/theme';
+
+<SourceCode href="https://github.com/web-infra-dev/rspress/tree/main/packages/plugin-algolia" />
+
+基于 [docsearch](https://docsearch.algolia.com)，将 Rspress 内置的搜索功能替换为 [algolia](https://www.algolia.com/)。
+
+## 安装
+
+import { PackageManagerTabs } from '@theme';
+
+<PackageManagerTabs command="add @rspress/plugin-algolia -D" />
+
+## 使用
+
+首先在配置文件中写入以下的配置：
+
+```ts
+// rspress.config.ts
+import path from 'path';
+import { defineConfig } from 'rspress';
+import { pluginAlgolia } from '@rspress/plugin-algolia';
+
+export default defineConfig({
+  plugins: [pluginAlgolia()],
+});
+```
+
+然后通过 [自定义主题](/zh/guide/advanced/custom-theme) 将 `Search` 组件覆盖为支持 algolia 的搜索框。
+
+```tsx
+// theme/index.tsx
+import {
+  Search as PluginAlgoliaSearch,
+  ZH_LOCALES,
+} from '@rspress/plugin-algolia/runtime';
+
+const Search = () => {
+  return (
+    <PluginAlgoliaSearch
+      docSearchProps={{
+        appId: 'R2IYF7ETH7', // 替换为自己的 algolia appId
+        apiKey: '599cec31baffa4868cae4e79f180729b', // 替换为自己的 algolia apiKey
+        indexName: 'docsearch', // 替换为自己的 algolia indexName
+      }}
+      locales={ZH_LOCALES} // 默认支持 zh 和 en
+    />
+  );
+};
+export { Search };
+export * from 'rspress/theme';
+```
+
+## 配置
+
+这个插件接受一个对象参数，类型如下:
+
+```ts
+interface Options {
+  verificationContent?: string;
+}
+```
+
+### verificationContent
+
+- 类型： `string | undefined`
+- 默认值： `undefined`
+
+创建 algolia 爬虫时，用于 meta 标签验证。格式为 `<meta name="algolia-site-verification" content="YOUR_VERIFICATION_CONTENT" />`，具体信息参考 [Create a new crawler - algolia](https://www.algolia.com/doc/tools/crawler/getting-started/create-crawler/#dns)
+
+## SearchProps
+
+`@rspress/plugin-algolia/runtime` 中 `SearchProps` 的类型如下：
+
+```ts
+import type { DocSearchProps } from '@docsearch/react';
+
+type Locales = Record<
+  string,
+  { translations: DocSearchProps['translations']; placeholder: string }
+>;
+type SearchProps = {
+  /**
+   * @link https://docsearch.algolia.com/docs/api
+   */
+  docSearchProps?: DocSearchProps;
+  locales?: Locales;
+};
+```
+
+### docSearchProps
+
+- 类型： `import('@docsearch/react').DocSearchProps`
+- 默认值： `undefined`
+
+`docSearchProps` 会直接透传给 `@docsearch/react` 中的 `<DocSearch />` 组件，具体类型信息可参考 [docsearch 文档](https://docsearch.algolia.com/docs/api)。
+
+### locales
+
+- 类型：
+
+```ts
+type Locales = Record<
+  string,
+  { translations: DocSearchProps['translations']; placeholder: string }
+>;
+```
+
+- 默认值：`{}`
+
+用于自定义不同语言的翻译文本，Rspress 提供了以下翻译文本，可以通过 import 导入使用。
+
+<details>
+
+```ts
+export const ZH_LOCALES: Locales = {
+  zh: {
+    placeholder: '搜索文档',
+    translations: {
+      button: {
+        buttonText: '搜索',
+        buttonAriaLabel: '搜索',
+      },
+      modal: {
+        searchBox: {
+          resetButtonTitle: '清除查询条件',
+          resetButtonAriaLabel: '清除查询条件',
+          cancelButtonText: '取消',
+          cancelButtonAriaLabel: '取消',
+        },
+        startScreen: {
+          recentSearchesTitle: '搜索历史',
+          noRecentSearchesText: '没有搜索历史',
+          saveRecentSearchButtonTitle: '保存至搜索历史',
+          removeRecentSearchButtonTitle: '从搜索历史中移除',
+          favoriteSearchesTitle: '收藏',
+          removeFavoriteSearchButtonTitle: '从收藏中移除',
+        },
+        errorScreen: {
+          titleText: '无法获取结果',
+          helpText: '你可能需要检查你的网络连接',
+        },
+        footer: {
+          selectText: '选择',
+          navigateText: '切换',
+          closeText: '关闭',
+          searchByText: '搜索提供者',
+        },
+        noResultsScreen: {
+          noResultsText: '无法找到相关结果',
+          suggestedQueryText: '你可以尝试查询',
+          reportMissingResultsText: '你认为该查询应该有结果？',
+          reportMissingResultsLinkText: '点击反馈',
+        },
+      },
+    },
+  },
+} as const;
+```
+
+</details>
+
+- 示例：
+
+```tsx
+import { Search as PluginAlgoliaSearch, ZH_LOCALES } from '@rspress/plugin-algolia/runtime';
+
+<PluginAlgoliaSearch locales={ZH_LOCALES} />
+// 或者
+<PluginAlgoliaSearch
+  locales={{
+    en: {
+      placeholder: 'Search Documentation',
+      translations: {
+        button: {
+          buttonText: 'Search',
+          buttonAriaLabel: 'Search',
+        }
+      }
+    },
+    ...ZH_LOCALES,
+  }}
+/>
+```
+
+## Algolia crawler 配置
+
+以下是一个基于本站使用的示例配置：
+
+<details>
+
+```tsx
+new Crawler({
+  appId: 'YOUR_APP_ID',
+  apiKey: 'YOUR_API_KEY',
+  rateLimit: 8,
+  maxDepth: 10,
+  startUrls: ['https://rspress.dev'],
+  sitemaps: ['https://rspress.dev/sitemap.xml'],
+  discoveryPatterns: ['https://rspress.dev/**'],
+  actions: [
+    {
+      indexName: 'doc_search_rspress_pages',
+      pathsToMatch: ['https://rspress.dev/**'],
+      recordExtractor: ({ $, helpers }) => {
+        return helpers.docsearch({
+          recordProps: {
+            lvl0: {
+              selectors: '',
+              defaultValue: 'Documentation',
+            },
+            lvl1: '.rspress-doc h1',
+            lvl2: '.rspress-doc h2',
+            lvl3: '.rspress-doc h3',
+            lvl4: '.rspress-doc h4',
+            lvl5: '.rspress-doc h5',
+            lvl6: '.rspress-doc pre > code', // 如果要搜索到代码块中的内容，增加这一行
+            content: '.rspress-doc p, .rspress-doc li',
+          },
+          indexHeadings: true,
+          aggregateContent: true,
+          recordVersion: 'v3',
+        });
+      },
+    },
+  ],
+  initialIndexSettings: {
+    doc_search_rspress_pages: {
+      attributesForFaceting: ['type', 'lang'],
+      attributesToRetrieve: ['hierarchy', 'content', 'anchor', 'url'],
+      attributesToHighlight: ['hierarchy', 'content'],
+      attributesToSnippet: ['content:10'],
+      camelCaseAttributes: ['hierarchy', 'content'],
+      searchableAttributes: [
+        'unordered(hierarchy.lvl0)',
+        'unordered(hierarchy.lvl1)',
+        'unordered(hierarchy.lvl2)',
+        'unordered(hierarchy.lvl3)',
+        'unordered(hierarchy.lvl4)',
+        'unordered(hierarchy.lvl5)',
+        'unordered(hierarchy.lvl6)',
+        'content',
+      ],
+      distinct: true,
+      attributeForDistinct: 'url',
+      customRanking: [
+        'desc(weight.pageRank)',
+        'desc(weight.level)',
+        'asc(weight.position)',
+      ],
+      ranking: [
+        'words',
+        'filters',
+        'typo',
+        'attribute',
+        'proximity',
+        'exact',
+        'custom',
+      ],
+      minWordSizefor1Typo: 3,
+      minWordSizefor2Typos: 7,
+      allowTyposOnNumericTokens: false,
+      minProximity: 1,
+      ignorePlurals: true,
+      advancedSyntax: true,
+      attributeCriteriaComputedByMinProximity: true,
+      removeWordsIfNoResults: 'allOptional',
+    },
+  },
+});
+```
+
+</details>
+
+## 基于国际化区分搜索结果
+
+通过 [Runtime API](/api/client-api/api-runtime) 组合 `docSearchProps` 可以实现搜索结果的国际化。
+
+以下是通过 `docSearchProps.searchParameters` 实现的一个示例：
+
+```tsx
+// theme/index.tsx
+import { useLang } from 'rspress/runtime';
+import { Search as PluginAlgoliaSearch } from '@rspress/plugin-algolia/runtime';
+
+const Search = () => {
+  const lang = useLang();
+  return (
+    <PluginAlgoliaSearch
+      docSearchProps={{
+        appId: 'R2IYF7ETH7',
+        apiKey: '599cec31baffa4868cae4e79f180729b',
+        indexName: 'docsearch',
+        searchParameters: {
+          facetFilters: [`language:${lang}`],
+        },
+      }}
+    />
+  );
+};
+export { Search };
+export * from 'rspress/theme';
+```
