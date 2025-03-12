@@ -1,0 +1,16 @@
+{
+  "name": "@rspress-fixture/search-i18n",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "build": "rspress build",
+    "dev": "rspress dev",
+    "preview": "rspress preview"
+  },
+  "dependencies": {
+    "rspress": "workspace:*"
+  },
+  "devDependencies": {
+    "@types/node": "^18.11.17"
+  }
+}
