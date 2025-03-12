@@ -594,6 +594,12 @@ importers:
         specifier: ^18.11.17
         version: 18.11.17
 
+  e2e/fixtures/search-i18n:
+    dependencies:
+      rspress:
+        specifier: workspace:*
+        version: link:../../../packages/cli
+
   e2e/fixtures/ssg-fail-strict:
     dependencies:
       rspress:
