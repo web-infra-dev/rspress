@@ -12,6 +12,10 @@ export function pluginAlgolia(options: Options = {}): RspressPlugin {
   const { verificationContent } = options;
   return {
     name: '@rspress/plugin-algolia',
+    config(config) {
+      config.search = false;
+      return config;
+    },
     builderConfig: {
       html: {
         meta: verificationContent
