@@ -296,10 +296,6 @@ export function SearchPanel({ focused, setFocused }: SearchPanelProps) {
 
   // init pageSearcher again when lang or version changed
   useEffect(() => {
-    if (initStatus === 'initial') {
-      return;
-    }
-
     const { currentLang, currentVersion } = pageSearcherConfigRef.current ?? {};
     const isLangChanged = lang !== currentLang;
     const isVersionChanged = versionedSearch && version !== currentVersion;
@@ -308,7 +304,8 @@ export function SearchPanel({ focused, setFocused }: SearchPanelProps) {
       // reset status first
       setInitStatus('initial');
       pageSearcherRef.current = null;
-      initSearch();
+      const searcher = createSearcher();
+      searcher.fetchSearchIndex();
     }
   }, [lang, version, versionedSearch]);
 
