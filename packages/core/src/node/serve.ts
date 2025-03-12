@@ -1,4 +1,4 @@
-import { mergeRsbuildConfig } from '@rsbuild/core';
+import { type RsbuildInstance, mergeRsbuildConfig } from '@rsbuild/core';
 import type { UserConfig } from '@rspress/shared';
 import { PluginDriver } from './PluginDriver';
 import { initRsbuild } from './initRsbuild';
@@ -10,7 +10,9 @@ interface ServeOptions {
 }
 
 // Serve ssg site in production
-export async function serve(options: ServeOptions) {
+export async function serve(
+  options: ServeOptions,
+): Promise<ReturnType<RsbuildInstance['preview']>> {
   const { config, port: userPort, host: userHost } = options;
   const envPort = process.env.PORT;
   const envHost = process.env.HOST;
@@ -40,5 +42,5 @@ export async function serve(options: ServeOptions) {
     false,
   );
 
-  await builder.preview();
+  return builder.preview();
 }
