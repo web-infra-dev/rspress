@@ -1029,7 +1029,7 @@ importers:
         specifier: ^3.9.0
         version: 3.9.0(@algolia/client-search@5.20.4)(@types/react@18.3.18)(react-dom@19.0.0(react@18.3.1))(react@18.3.1)(search-insights@2.17.3)
       '@rspress/runtime':
-        specifier: workspace:^2.0.0-alpha.1
+        specifier: workspace:^2.0.0-alpha.2
         version: link:../runtime
       algoliasearch:
         specifier: ^5.20.3
@@ -1078,7 +1078,7 @@ importers:
   packages/plugin-api-docgen:
     dependencies:
       '@rspress/core':
-        specifier: workspace:^2.0.0-alpha.1
+        specifier: workspace:^2.0.0-alpha.2
         version: link:../core
       '@rspress/shared':
         specifier: workspace:*
@@ -1170,7 +1170,7 @@ importers:
   packages/plugin-client-redirects:
     dependencies:
       '@rspress/runtime':
-        specifier: workspace:^2.0.0-alpha.1
+        specifier: workspace:^2.0.0-alpha.2
         version: link:../runtime
       '@rspress/shared':
         specifier: workspace:*
@@ -1278,7 +1278,7 @@ importers:
   packages/plugin-medium-zoom:
     dependencies:
       '@rspress/runtime':
-        specifier: workspace:^2.0.0-alpha.1
+        specifier: workspace:^2.0.0-alpha.2
         version: link:../runtime
       medium-zoom:
         specifier: 1.1.0
@@ -1324,7 +1324,7 @@ importers:
         specifier: ^0.2.0
         version: 0.2.0
       '@rspress/core':
-        specifier: workspace:^2.0.0-alpha.1
+        specifier: workspace:^2.0.0-alpha.2
         version: link:../core
       '@rspress/shared':
         specifier: workspace:*
@@ -1409,7 +1409,7 @@ importers:
         specifier: ~1.0.5
         version: 1.0.5(@babel/core@7.26.9)(@rsbuild/core@1.2.16)(solid-js@1.9.5)
       '@rspress/core':
-        specifier: workspace:^2.0.0-alpha.1
+        specifier: workspace:^2.0.0-alpha.2
         version: link:../core
       '@rspress/shared':
         specifier: workspace:*
@@ -1476,7 +1476,7 @@ importers:
         specifier: ^4.2.2
         version: 4.2.2
       rspress:
-        specifier: workspace:^2.0.0-alpha.1
+        specifier: workspace:^2.0.0-alpha.2
         version: link:../cli
     devDependencies:
       '@rslib/core':
@@ -1550,7 +1550,7 @@ importers:
         specifier: workspace:*
         version: link:../shared
       rspress:
-        specifier: workspace:^2.0.0-alpha.1
+        specifier: workspace:^2.0.0-alpha.2
         version: link:../cli
       typedoc:
         specifier: 0.24.8
