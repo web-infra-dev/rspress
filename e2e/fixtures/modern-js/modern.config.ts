@@ -1,4 +1,5 @@
 import { defineConfig, moduleTools } from '@modern-js/module-tools';
+import { pluginSass } from '@rsbuild/plugin-sass';
 import { modulePluginDoc } from '@rspress/modern-js-plugin';
 
 export default defineConfig({
@@ -15,6 +16,7 @@ export default defineConfig({
       apiParseTool: 'react-docgen-typescript',
       doc: {
         lang: 'en',
+        builderPlugins: [pluginSass()],
         locales: [
           {
             lang: 'en',

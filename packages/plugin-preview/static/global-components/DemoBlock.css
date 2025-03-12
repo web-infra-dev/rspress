@@ -9,13 +9,15 @@
 .rspress-demo-block {
   padding-bottom: 12px;
   background-color: var(--rp-demo-block-bg);
-  &-title {
-    padding: 12px 12px 8px;
-    color: #697b8c;
-    font-size: 14px;
-  }
-  &-main {
-    border-right: none;
-    border-left: none;
-  }
+}
+
+.rspress-demo-block-title {
+  padding: 12px 12px 8px;
+  color: #697b8c;
+  font-size: 14px;
+}
+
+.rspress-demo-block-main {
+  border-right: none;
+  border-left: none;
 }

@@ -1,3 +1,4 @@
+import { pluginSass } from '@rsbuild/plugin-sass';
 import { pluginAlgolia } from '@rspress/plugin-algolia';
 import { pluginGoogleAnalytics } from 'rsbuild-plugin-google-analytics';
 import { pluginOpenGraph } from 'rsbuild-plugin-open-graph';
@@ -33,6 +34,7 @@ export default defineConfig({
       lazyCompilation: true,
     },
     plugins: [
+      pluginSass(),
       pluginGoogleAnalytics({ id: 'G-66B2Z6KG0J' }),
       pluginOpenGraph({
         title: 'Rspress',

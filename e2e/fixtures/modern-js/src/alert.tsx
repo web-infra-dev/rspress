@@ -1,5 +1,5 @@
 import { Alert } from '@arco-design/web-react';
-import '@arco-design/web-react/es/Alert/style';
+import '@arco-design/web-react/es/Alert/style/css';
 
 export type AlertProps = {
   /**

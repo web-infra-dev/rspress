@@ -1,5 +1,5 @@
 import { Button } from '@arco-design/web-react';
-import '@arco-design/web-react/es/Button/style';
+import '@arco-design/web-react/es/Button/style/css';
 
 export type ButtonProps = {
   /**
