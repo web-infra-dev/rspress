@@ -30,7 +30,7 @@ export function checkLinks(
 
       if (!routeService.isExistRoute(cleanUrl(link))) {
         errorInfos.push(
-          `Internal link to ${link} is dead, check it in ${relativePath}`,
+          `Internal link to "${link}" is dead, check it in "${relativePath}"`,
         );
       }
     });
