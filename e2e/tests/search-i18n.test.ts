@@ -25,7 +25,7 @@ test.describe('search i18n test', async () => {
     await page.goto(`http://localhost:${appPort}`);
 
     const suggestItems1 = await searchInPage(page, 'Button');
-    expect(await suggestItems1[0].textContent()).toContain('Button En');
+    expect(await suggestItems1[0].textContent()).toContain('Button en');
 
     // close the search modal
     await page.click('body');
@@ -45,6 +45,6 @@ test.describe('search i18n test', async () => {
     await page.waitForLoadState();
 
     const suggestItems3 = await searchInPage(page, 'Button');
-    expect(await suggestItems3[0].textContent()).toContain('Button En');
+    expect(await suggestItems3[0].textContent()).toContain('Button en');
   });
 });
