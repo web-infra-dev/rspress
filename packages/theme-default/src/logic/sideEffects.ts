@@ -34,6 +34,23 @@ export function scrollToTarget(
   });
 }
 
+export const scrollToAnchor = (
+  smooth: boolean,
+  fallbackToScrollTop: boolean,
+) => {
+  const currentUrl = window.location;
+  const { hash: rawHash } = currentUrl;
+  const hash = decodeURIComponent(rawHash);
+  const target = hash.length > 1 && document.getElementById(hash.slice(1));
+  if (hash && target) {
+    scrollToTarget(target, smooth, DEFAULT_NAV_HEIGHT);
+  } else {
+    if (fallbackToScrollTop) {
+      window.scrollTo(0, 0);
+    }
+  }
+};
+
 // Control the scroll behavior of the browser when user clicks on a link
 function bindingWindowScroll() {
   // Initial scroll position
