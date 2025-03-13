@@ -34,7 +34,7 @@
     "@microsoft/api-extractor": "^7.51.1",
     "@rslib/core": "0.5.3",
     "@types/node": "^18.11.17",
-    "typescript": "^5.5.3"
+    "typescript": "^5.8.2"
   },
   "engines": {
     "node": ">=16.7.0"
