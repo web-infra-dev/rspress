@@ -26,7 +26,7 @@
     "rspress": "workspace:*",
     "rspress-plugin-font-open-sans": "^1.0.0",
     "rspress-plugin-sitemap": "^1.1.1",
-    "typescript": "^5.5.3"
+    "typescript": "^5.8.2"
   },
   "publishConfig": {
     "access": "public",

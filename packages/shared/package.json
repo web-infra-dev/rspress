@@ -56,7 +56,7 @@
     "mdast-util-mdx-jsx": "^2.1.4",
     "medium-zoom": "1.1.0",
     "rimraf": "^6.0.1",
-    "typescript": "^5.5.3"
+    "typescript": "^5.8.2"
   },
   "publishConfig": {
     "access": "public",
