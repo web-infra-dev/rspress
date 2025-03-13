@@ -311,16 +311,16 @@ export default defineConfig({
 ### codeBlocks
 
 - Type: `boolean`
-- Default: `false`
+- Default: `true`
 
-开启后，搜索的索引将包含代码块的内容，从而允许用户搜索代码块。
+是否在搜索的索引中包含代码块的内容，这可以让用户搜索代码块。
 
 ```ts title="rspress.config.ts"
 import { defineConfig } from 'rspress/config';
 
 export default defineConfig({
   search: {
-    codeBlocks: true,
+    codeBlocks: false,
   },
 });
 ```
