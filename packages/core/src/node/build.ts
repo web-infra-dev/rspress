@@ -11,7 +11,7 @@ import {
 } from '@rspress/shared';
 import { logger } from '@rspress/shared/logger';
 import picocolors from 'picocolors';
-import { HelmetData } from 'react-helmet-async';
+import { default as ReactHelmetAsync } from 'react-helmet-async';
 import { version } from '../../package.json';
 import { PluginDriver } from './PluginDriver';
 import {
@@ -138,7 +138,7 @@ export async function renderPages(
           return !route.routePath.includes(':');
         })
         .map(async route => {
-          const helmetContext = new HelmetData({});
+          const helmetContext = new ReactHelmetAsync.HelmetData({});
           const { routePath } = route;
           let appHtml = '';
           if (render) {

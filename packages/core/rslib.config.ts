@@ -23,13 +23,7 @@ export default defineConfig({
         distPath: {
           root: './dist',
         },
-        externals: [
-          'jsdom',
-          'tailwindcss',
-          {
-            'react-helmet-async': 'react-helmet-async/lib/index.esm.js',
-          },
-        ],
+        externals: ['jsdom', 'tailwindcss'],
       },
     },
     {
