@@ -82,7 +82,7 @@ export function DocLayout(props: DocLayoutProps) {
         </H1>
       )
     );
-  }, [headingTitle, title]);
+  }, [headingTitle, title, siteData.themeConfig.fallbackHeadingTitle]);
 
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
 
@@ -140,20 +140,15 @@ export function DocLayout(props: DocLayoutProps) {
           {uiSwitch?.showAside && (
             <div
               className={styles.asideContainer}
-              style={{
-                ...(uiSwitch?.showNavbar
-                  ? {}
-                  : {
-                      marginTop: 0,
-                      paddingTop: '32px',
-                    }),
-              }}
+              style={
+                uiSwitch?.showNavbar
+                  ? undefined
+                  : { marginTop: 0, paddingTop: '32px' }
+              }
             >
-              <div>
-                {beforeOutline}
-                <Aside headers={headers} outlineTitle={outlineTitle} />
-                {afterOutline}
-              </div>
+              {beforeOutline}
+              <Aside headers={headers} outlineTitle={outlineTitle} />
+              {afterOutline}
             </div>
           )}
         </div>

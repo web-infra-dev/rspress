@@ -24,6 +24,20 @@
   // box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.1);
 }
 
+.relative {
+  position: relative;
+}
+
+.sticky {
+  position: sticky;
+
+  // https://github.com/web-infra-dev/rspress/issues/1540
+  + section :global(.rspress-sidebar-menu-container) {
+    margin-top: calc(var(--rp-nav-height) * -1);
+    padding-top: var(--rp-nav-height);
+  }
+}
+
 .leftNav {
   display: none;
 }
