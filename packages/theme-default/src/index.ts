@@ -11,7 +11,6 @@ export { useSidebarData } from './logic/useSidebarData';
 export { useHiddenNav, useEnableNav } from './logic/useHiddenNav';
 export { useLocaleSiteData } from './logic/useLocaleSiteData';
 export { setup, bindingAsideScroll, scrollToTarget } from './logic/sideEffects';
-export { usePathUtils } from './logic/usePathUtils';
 export { useFullTextSearch } from './logic/useFullTextSearch';
 export { useRedirect4FirstVisit } from './logic/useRedirect4FirstVisit';
 export { useThemeState } from './logic/useAppearance';
