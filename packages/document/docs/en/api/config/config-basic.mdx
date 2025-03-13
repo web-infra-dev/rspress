@@ -312,16 +312,16 @@ export default defineConfig({
 ### codeBlocks
 
 - Type: `boolean`
-- Default: `false`
+- Default: `true`
 
-If enabled, the search index will include code block content, which allows users to search code blocks.
+Whether to include code block content in the search index, which allows users to search code blocks.
 
 ```ts title="rspress.config.ts"
 import { defineConfig } from 'rspress/config';
 
 export default defineConfig({
   search: {
-    codeBlocks: true,
+    codeBlocks: false,
   },
 });
 ```

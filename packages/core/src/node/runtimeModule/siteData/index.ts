@@ -51,7 +51,7 @@ export async function siteDataVMPlugin(context: FactoryContext) {
     searchConfig?.mode === 'remote' ? (searchConfig.domain ?? '') : '';
 
   const searchCodeBlocks =
-    'codeBlocks' in searchConfig ? Boolean(searchConfig.codeBlocks) : false;
+    'codeBlocks' in searchConfig ? Boolean(searchConfig.codeBlocks) : true;
 
   const pages = await extractPageData(
     replaceRules,
