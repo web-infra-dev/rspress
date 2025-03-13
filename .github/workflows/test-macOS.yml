@@ -68,6 +68,10 @@ jobs:
         if: ${{steps.skip-ci.outputs.RESULT != 'true'}}
         run: pnpm run build
 
+      - name: Build Website # for test
+        if: ${{steps.skip-ci.outputs.RESULT != 'true'}}
+        run: pnpm run build:website
+
       - name: Unit Test
         if: ${{steps.skip-ci.outputs.RESULT != 'true'}}
         run: pnpm run test:unit
