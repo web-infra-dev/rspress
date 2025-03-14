@@ -1,7 +1,7 @@
 import { useLocation, usePageData } from '@rspress/runtime';
 import type { NavItem } from '@rspress/shared';
 import { Search } from '@theme';
-import { useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import { isMobileDevice, useHiddenNav } from '../../logic';
 import { useNavData } from '../../logic/useNav';
 import { NavHamburger } from '../NavHamburger';
@@ -40,16 +40,16 @@ export function Nav(props: NavProps) {
   const socialLinks = siteData.themeConfig.socialLinks || [];
   const hasSocialLinks = socialLinks.length > 0;
   const langs = localeLanguages.map(item => item.lang || '') || [];
-  const updateIsMobile = () => {
+  const updateIsMobile = useCallback(() => {
     setIsMobile(isMobileDevice());
-  };
+  }, []);
   useEffect(() => {
     window.addEventListener('resize', updateIsMobile);
     setIsMobile(isMobileDevice());
     return () => {
       window.removeEventListener('resize', updateIsMobile);
     };
-  }, []);
+  }, [updateIsMobile]);
 
   const NavMenu = ({ menuItems }: { menuItems: NavItem[] }) => {
     return (
@@ -128,13 +128,10 @@ export function Nav(props: NavProps) {
 
   const computeNavPosition = () => {
     // On doc page we have the menu bar that is already sticky
-    if (!isMobile) {
-      return 'sticky';
+    if (!isMobile || !hiddenNav || page.pageType !== 'doc') {
+      return styles.sticky;
     }
-    if (siteData.themeConfig.hideNavbar === 'never' && page.pageType !== 'doc')
-      return 'sticky';
-
-    return 'relative';
+    return styles.relative;
   };
 
   return (
