@@ -23,13 +23,9 @@
     margin-left: var(--rp-preview-padding);
   }
 
-  .rspress-doc-container {
-    padding-right: var(--rp-preview-padding);
-    padding-left: var(--rp-preview-padding);
-  }
-
   .rspress-doc {
     width: 100%;
+    padding-left: var(--rp-preview-padding);
     padding-right: var(--rp-preview-padding);
   }
 }

@@ -1,9 +1,12 @@
-// Only appear on <1280px screen width
-.rspress-sidebar-menu {
+.rspress-sidebar-menu-container {
   position: sticky;
   top: 0;
   left: 0;
   z-index: var(--rp-z-index-local-nav);
+}
+
+// Only appear on <1280px screen width
+.rspress-sidebar-menu {
   display: flex;
   justify-content: space-between;
   align-items: center;
