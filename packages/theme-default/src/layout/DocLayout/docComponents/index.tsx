@@ -1,7 +1,7 @@
+import { A } from './a';
 import { Code } from './code';
 import { Hr } from './hr';
 import { Img } from './img';
-import { A } from './link';
 import { Li, Ol, Ul } from './list';
 import { Blockquote, P, Strong } from './paragraph';
 import { Pre } from './pre';
