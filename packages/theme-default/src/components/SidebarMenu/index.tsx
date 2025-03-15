@@ -62,57 +62,64 @@ export function SidebarMenu({
   };
 
   return (
-    <div className="rspress-sidebar-menu">
-      {uiSwitch?.showSidebar && (
-        <>
-          <button onClick={openSidebar} className="flex-center mr-auto">
-            <div className="text-md mr-2">
-              <SvgWrapper icon={MenuIcon} />
-            </div>
-            <span className="text-sm">Menu</span>
-          </button>
-          {isSidebarOpen && (
-            <div
-              onClick={closeSidebar}
-              className="rspress-sidebar-back-drop"
-              style={{
-                background: 'rgba(0, 0, 0, 0.6)',
-              }}
-            />
-          )}
-        </>
-      )}
-      {uiSwitch?.showAside && (
-        <>
-          <button
-            onClick={() => setIsTocOpen(tocOpened => !tocOpened)}
-            className="flex-center ml-auto"
-            ref={outlineButtonRef}
-          >
-            <span className="text-sm">{outlineTitle}</span>
-            <div
-              className="text-md mr-2"
-              style={{
-                transform: isTocOpen ? 'rotate(90deg)' : 'rotate(0deg)',
-                transition: 'transform 0.2s ease-out',
-                marginTop: '2px',
-              }}
+    <div className="rspress-sidebar-menu-container">
+      <div className="rspress-sidebar-menu">
+        {uiSwitch?.showSidebar && (
+          <>
+            <button
+              type="button"
+              onClick={openSidebar}
+              className="flex-center mr-auto"
             >
-              <SvgWrapper icon={ArrowRight} />
-            </div>
-          </button>
+              <div className="text-md mr-2">
+                <SvgWrapper icon={MenuIcon} />
+              </div>
+              <span className="text-sm">Menu</span>
+            </button>
+            {isSidebarOpen && (
+              <div
+                onClick={closeSidebar}
+                className="rspress-sidebar-back-drop"
+                style={{
+                  background: 'rgba(0, 0, 0, 0.6)',
+                }}
+              />
+            )}
+          </>
+        )}
+        {uiSwitch?.showAside && (
+          <>
+            <button
+              type="button"
+              onClick={() => setIsTocOpen(tocOpened => !tocOpened)}
+              className="flex-center ml-auto"
+              ref={outlineButtonRef}
+            >
+              <span className="text-sm">{outlineTitle}</span>
+              <div
+                className="text-md mr-2"
+                style={{
+                  transform: isTocOpen ? 'rotate(90deg)' : 'rotate(0deg)',
+                  transition: 'transform 0.2s ease-out',
+                  marginTop: '2px',
+                }}
+              >
+                <SvgWrapper icon={ArrowRight} />
+              </div>
+            </button>
 
-          <div
-            className={`rspress-local-toc-container ${isTocOpen ? 'rspress-local-toc-container-show' : ''}`}
-          >
-            <Toc
-              onItemClick={() => {
-                setIsTocOpen(false);
-              }}
-            />
-          </div>
-        </>
-      )}
+            <div
+              className={`rspress-local-toc-container ${isTocOpen ? 'rspress-local-toc-container-show' : ''}`}
+            >
+              <Toc
+                onItemClick={() => {
+                  setIsTocOpen(false);
+                }}
+              />
+            </div>
+          </>
+        )}
+      </div>
     </div>
   );
 }

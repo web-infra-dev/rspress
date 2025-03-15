@@ -88,6 +88,11 @@ export function Sidebar(props: Props) {
         document.body.style.overflow = bodyStyleOverflow || '';
       }
     }
+    return () => {
+      if (inBrowser()) {
+        document.body.style.overflow = bodyStyleOverflow || '';
+      }
+    };
   }, [isSidebarOpen]);
 
   useEffect(() => {

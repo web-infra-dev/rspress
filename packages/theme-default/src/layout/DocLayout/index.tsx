@@ -82,7 +82,7 @@ export function DocLayout(props: DocLayoutProps) {
         </H1>
       )
     );
-  }, [headingTitle, title]);
+  }, [headingTitle, title, siteData.themeConfig.fallbackHeadingTitle]);
 
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
 
@@ -109,7 +109,7 @@ export function DocLayout(props: DocLayoutProps) {
           uiSwitch={uiSwitch}
         />
         <div className={`${styles.content} rspress-doc-container flex`}>
-          <div className="flex-1 overflow-x-auto">
+          <div className={`flex-1 ${isOverviewPage ? '' : 'overflow-x-auto'}`}>
             {isOverviewPage ? (
               <>
                 {beforeDocContent}
@@ -140,20 +140,15 @@ export function DocLayout(props: DocLayoutProps) {
           {uiSwitch?.showAside && (
             <div
               className={styles.asideContainer}
-              style={{
-                ...(uiSwitch?.showNavbar
-                  ? {}
-                  : {
-                      marginTop: 0,
-                      paddingTop: '32px',
-                    }),
-              }}
+              style={
+                uiSwitch?.showNavbar
+                  ? undefined
+                  : { marginTop: 0, paddingTop: '32px' }
+              }
             >
-              <div>
-                {beforeOutline}
-                <Aside headers={headers} outlineTitle={outlineTitle} />
-                {afterOutline}
-              </div>
+              {beforeOutline}
+              <Aside headers={headers} outlineTitle={outlineTitle} />
+              {afterOutline}
             </div>
           )}
         </div>

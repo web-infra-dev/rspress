@@ -59,11 +59,22 @@
 }
 
 .content {
-  padding: var(--rp-content-padding-y) var(--rp-content-padding-x);
+  :global(.rspress-doc),
+  :global(.rspress-doc-footer) {
+    padding: var(--rp-content-padding-y) var(--rp-content-padding-x);
+  }
+
+  :global(.rspress-doc) {
+    padding-bottom: 0;
+  }
+
+  :global(.rspress-doc-footer) {
+    padding-top: 0;
+  }
 }
 
 @media (max-width: 960px) {
-  :root {
+  html:root {
     --rp-content-padding-y: 36px;
   }
 
@@ -83,8 +94,8 @@
 }
 
 @media (min-width: 1280px) {
-  :root {
-    --rp-content-padding-x: 0;
+  html:root {
+    --rp-content-padding-x: 64px;
   }
 
   .aside-container {
@@ -94,7 +105,6 @@
   .content {
     :global(.rspress-doc),
     :global(.rspress-doc-footer) {
-      padding: 0 64px;
       max-width: min(100%, calc(864px + 64px * 2));
       margin: auto;
     }
