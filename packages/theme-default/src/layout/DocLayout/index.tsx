@@ -109,7 +109,7 @@ export function DocLayout(props: DocLayoutProps) {
           uiSwitch={uiSwitch}
         />
         <div className={`${styles.content} rspress-doc-container flex`}>
-          <div className="flex-1 overflow-x-auto">
+          <div className={`flex-1 ${isOverviewPage ? '' : 'overflow-x-auto'}`}>
             {isOverviewPage ? (
               <>
                 {beforeDocContent}
