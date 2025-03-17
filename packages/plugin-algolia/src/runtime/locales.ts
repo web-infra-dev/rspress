@@ -7,7 +7,7 @@ export type Locales = Record<
 
 export const ZH_LOCALES: Locales = {
   zh: {
-    placeholder: '搜索文档',
+    placeholder: '搜索',
     translations: {
       button: {
         buttonText: '搜索',
