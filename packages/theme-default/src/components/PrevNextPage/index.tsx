@@ -1,7 +1,7 @@
 import { Link } from '@theme';
 import { useLocaleSiteData } from '../../logic/useLocaleSiteData';
 import { preloadLink } from '../Sidebar/utils';
-import styles from './index.module.scss';
+import * as styles from './index.module.scss';
 
 interface PrevNextPageProps {
   type: 'prev' | 'next';

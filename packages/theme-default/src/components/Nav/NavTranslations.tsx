@@ -1,5 +1,5 @@
 import { NavMenuGroup } from './NavMenuGroup';
-import styles from './index.module.scss';
+import * as styles from './index.module.scss';
 import { useTranslationMenuData } from './menuDataHooks';
 
 export function NavTranslations() {

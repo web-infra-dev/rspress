@@ -15,7 +15,7 @@ import { SidebarItem } from './SidebarItem';
 import { SidebarSectionHeader } from './SidebarSectionHeader';
 
 import { useSidebarData } from '../../logic/useSidebarData';
-import styles from './index.module.scss';
+import * as styles from './index.module.scss';
 import {
   isSideBarCustomLink,
   isSidebarDivider,

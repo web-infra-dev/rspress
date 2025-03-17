@@ -4,7 +4,7 @@ import type { FrontMatterMeta } from '@rspress/shared';
 import { Button } from '@theme';
 
 import { renderHtmlOrText } from '../../logic/utils';
-import styles from './index.module.scss';
+import * as styles from './index.module.scss';
 
 const DEFAULT_HERO = {
   name: '',

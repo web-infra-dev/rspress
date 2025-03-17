@@ -4,7 +4,7 @@ import { useEffect, useRef } from 'react';
 import { type SidebarItemProps, highlightTitleStyle } from '.';
 import { renderInlineMarkdown } from '../../logic/utils';
 import { SidebarGroup } from './SidebarGroup';
-import styles from './index.module.scss';
+import * as styles from './index.module.scss';
 import { preloadLink } from './utils';
 
 export function SidebarItem(props: SidebarItemProps) {

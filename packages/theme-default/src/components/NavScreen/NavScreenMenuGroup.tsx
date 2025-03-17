@@ -7,7 +7,7 @@ import type {
 import { Link } from '@theme';
 import Down from '@theme-assets/down';
 import { useState } from 'react';
-import styles from './index.module.scss';
+import * as styles from './index.module.scss';
 
 export interface NavScreenMenuGroupItem {
   text?: string | React.ReactElement;

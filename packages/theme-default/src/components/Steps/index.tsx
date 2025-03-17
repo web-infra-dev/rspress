@@ -1,5 +1,5 @@
 import type { ReactNode } from 'react';
-import styles from './index.module.scss';
+import * as styles from './index.module.scss';
 
 export function Steps({ children }: { children: ReactNode }) {
   return (

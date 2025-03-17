@@ -16,7 +16,7 @@ import { useLocaleSiteData } from '../../logic/useLocaleSiteData';
 import { useSidebarData } from '../../logic/useSidebarData';
 import { renderInlineMarkdown } from '../../logic/utils';
 import { isSidebarDivider, isSidebarSingleFile } from '../Sidebar/utils';
-import styles from './index.module.scss';
+import * as styles from './index.module.scss';
 import { findItemByRoutePath } from './utils';
 
 interface GroupItem {

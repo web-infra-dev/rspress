@@ -12,7 +12,7 @@ import { useLocaleSiteData } from '../../logic/useLocaleSiteData';
 import type { UISwitchResult } from '../../logic/useUISwitch';
 import { A } from './docComponents/link';
 import { H1 } from './docComponents/title';
-import styles from './index.module.scss';
+import * as styles from './index.module.scss';
 
 export interface DocLayoutProps {
   beforeSidebar?: React.ReactNode;

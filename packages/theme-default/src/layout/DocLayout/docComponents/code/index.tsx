@@ -5,7 +5,7 @@ import { useRef, useState } from 'react';
 import { SvgWrapper } from '../../../../components/SvgWrapper';
 import { CopyCodeButton } from './CopyCodeButton';
 import { PrismSyntaxHighlighter } from './PrismSyntaxHighlighter';
-import styles from './index.module.scss';
+import * as styles from './index.module.scss';
 
 export interface CodeProps {
   children: string;
@@ -68,7 +68,6 @@ export function Code(props: CodeProps) {
       <div className={styles.codeButtonGroup}>
         <button
           ref={wrapButtonRef}
-          className={styles.codeWrapButton}
           onClick={() => toggleCodeWrap(wrapButtonRef.current)}
           title="Toggle code wrap"
         >

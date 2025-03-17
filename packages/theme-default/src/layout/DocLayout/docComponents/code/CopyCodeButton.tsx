@@ -3,7 +3,7 @@ import IconSuccess from '@theme-assets/success';
 import copy from 'copy-to-clipboard';
 import { useRef } from 'react';
 import { SvgWrapper } from '../../../../components/SvgWrapper';
-import styles from './index.module.scss';
+import * as styles from './index.module.scss';
 
 const timeoutIdMap: Map<HTMLElement, NodeJS.Timeout> = new Map();
 

@@ -1,6 +1,6 @@
 import { Link } from '@theme';
 import React from 'react';
-import styles from './index.module.scss';
+import * as styles from './index.module.scss';
 
 interface ButtonProps {
   type?: string;

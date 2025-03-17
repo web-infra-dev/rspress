@@ -1,5 +1,5 @@
 import type { ComponentProps } from 'react';
-import styles from './index.module.scss';
+import * as styles from './index.module.scss';
 
 export const P = (props: ComponentProps<'p'>) => {
   return <p {...props} className="my-4 leading-7" />;

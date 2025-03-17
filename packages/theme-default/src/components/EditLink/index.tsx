@@ -1,5 +1,5 @@
 import { useEditLink } from '../../logic/useEditLink';
-import styles from './index.module.scss';
+import * as styles from './index.module.scss';
 
 export function EditLink() {
   const editLinkObj = useEditLink();

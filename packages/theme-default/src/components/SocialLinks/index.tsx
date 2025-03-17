@@ -2,7 +2,7 @@ import type { SocialLink } from '@rspress/shared';
 import { useCallback, useState } from 'react';
 import { HiddenLinks } from './HiddenLinks';
 import { ShownLinks } from './ShownLinks';
-import styles from './index.module.scss';
+import * as styles from './index.module.scss';
 
 const MORE_LENGTH = 5;
 

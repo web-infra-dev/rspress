@@ -1,6 +1,7 @@
 import { pluginReact } from '@rsbuild/plugin-react';
 import { pluginSass } from '@rsbuild/plugin-sass';
 import { pluginSvgr } from '@rsbuild/plugin-svgr';
+import { pluginTypedCSSModules } from '@rsbuild/plugin-typed-css-modules';
 import { defineConfig } from '@rslib/core';
 
 const COMMON_EXTERNALS = [
@@ -25,7 +26,12 @@ export default defineConfig({
     {
       format: 'esm',
       dts: { bundle: true },
-      plugins: [pluginReact(), pluginSvgr(), pluginSass()],
+      plugins: [
+        pluginReact(),
+        pluginSvgr(),
+        pluginSass(),
+        pluginTypedCSSModules(),
+      ],
       source: {
         define: {
           __WEBPACK_PUBLIC_PATH__: '__webpack_public_path__',
@@ -49,6 +55,8 @@ export default defineConfig({
         externals: COMMON_EXTERNALS,
         cssModules: {
           localIdentName: '[local]_[hash:hex:5]',
+          namedExport: true,
+          exportLocalsConvention: 'camelCaseOnly',
         },
         copy: {
           patterns: [

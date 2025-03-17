@@ -12,7 +12,7 @@ import {
 import { SocialLinks } from '../SocialLinks';
 import { SwitchAppearance } from '../SwitchAppearance';
 import { NavScreenMenuGroup } from './NavScreenMenuGroup';
-import styles from './index.module.scss';
+import * as styles from './index.module.scss';
 
 interface Props {
   isScreenOpen: boolean;
@@ -35,9 +35,7 @@ const NavScreenTranslations = () => {
 const NavScreenVersions = () => {
   const versionMenuData = useVersionMenuData();
   return (
-    <div
-      className={`${styles.navTranslations} flex text-sm font-bold justify-center`}
-    >
+    <div className={'flex text-sm font-bold justify-center'}>
       <div className="mx-1.5 my-1">
         <NavScreenMenuGroup {...versionMenuData} />
       </div>

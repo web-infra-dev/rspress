@@ -16,7 +16,7 @@ import { SvgWrapper } from '../SvgWrapper';
 import { Tab, Tabs } from '../Tabs';
 import { NoSearchResult } from './NoSearchResult';
 import { SuggestItem } from './SuggestItem';
-import styles from './index.module.scss';
+import * as styles from './index.module.scss';
 import { PageSearcher } from './logic/search';
 import type {
   CustomMatchResult,
@@ -459,7 +459,7 @@ export function SearchPanel({ focused, setFocused }: SearchPanelProps) {
     // accumulateIndex is used to calculate the index of the suggestion in the whole list.
     let accumulateIndex = -1;
     return (
-      <ul className={styles.suggestList}>
+      <ul>
         {Object.keys(normalizedSuggestions).map(group => {
           const groupSuggestions = normalizedSuggestions[group] || [];
           return (
