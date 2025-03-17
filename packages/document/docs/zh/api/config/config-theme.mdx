@@ -204,6 +204,24 @@ export default defineConfig({
 });
 ```
 
+## outline
+
+- Type: `boolean`
+- Default: `true`
+
+是否显示右侧大纲。
+
+比如:
+
+````ts title="rspress.config.ts"
+import { defineConfig } from 'rspress/config';
+
+export default defineConfig({
+  themeConfig: {
+    outline: false,
+  },
+});
+
 ## outlineTitle
 
 - Type: `string`
@@ -221,7 +239,7 @@ export default defineConfig({
     outlineTitle: 'Outline',
   },
 });
-```
+````
 
 ## lastUpdated
 
@@ -495,8 +513,6 @@ export interface LocaleConfig {
    */
   // 右侧大纲标题
   outlineTitle?: string;
-  // 是否显示右侧大纲
-  outline?: boolean;
   // 最后更新时间文本
   lastUpdatedText?: string;
   // 是否显示最后更新时间
@@ -511,6 +527,8 @@ export interface LocaleConfig {
   searchNoResultsText?: string;
   // 没有搜索结果时的建议查询提示文本
   searchSuggestedQueryText?: string;
+  // 配置编辑链接
+  editLink?: EditLink;
 }
 ```
 
@@ -568,6 +586,46 @@ import { defineConfig } from 'rspress/config';
 export default defineConfig({
   themeConfig: {
     hideNavbar: 'never',
+  },
+});
+```
+
+## editLink
+
+- Type:
+
+```ts
+interface EditLink {
+  /**
+   * 自定义编辑链接的 URL
+   */
+  docRepoBaseUrl: string;
+
+  /**
+   * 自定义编辑链接的文本
+   *
+   * @default 'Edit this page'
+   */
+  text?: string;
+}
+```
+
+- Default: `undefined`
+
+用于配置编辑链接，以在 GitHub 或 GitLab 等 Git 管理服务上编辑页面。
+
+比如：
+
+```ts title="rspress.config.ts"
+import { defineConfig } from 'rspress/config';
+
+export default defineConfig({
+  themeConfig: {
+    editLink: {
+      docRepoBaseUrl:
+        'https://github.com/web-infra-dev/rspress/tree/main/packages/document/docs',
+      text: '📝 在 GitHub 上编辑此页',
+    },
   },
 });
 ```

@@ -218,6 +218,25 @@ export default defineConfig({
 });
 ```
 
+## outline
+
+- Type: `boolean`
+- Default: `true`
+
+Whether to show the sidebar in right position.
+
+For example:
+
+```ts title="rspress.config.ts"
+import { defineConfig } from 'rspress/config';
+
+export default defineConfig({
+  themeConfig: {
+    outline: false,
+  },
+});
+```
+
 ## outlineTitle
 
 - Type: `string`
@@ -509,8 +528,6 @@ export interface LocaleConfig {
    */
   // Right outline title
   outlineTitle?: string;
-  // Whether to display the outline title
-  outline?: boolean;
   // Whether to display the last update time
   lastUpdated?: boolean;
   // Last update time text
@@ -525,6 +542,8 @@ export interface LocaleConfig {
   searchNoResultsText?: string;
   // The text of suggested query text when no search result
   searchSuggestedQueryText?: string;
+  // Info for the edit link.
+  editLink?: EditLink;
 }
 ```
 
@@ -582,6 +601,46 @@ import { defineConfig } from 'rspress/config';
 export default defineConfig({
   themeConfig: {
     hideNavbar: 'auto',
+  },
+});
+```
+
+## editLink
+
+- Type:
+
+```ts
+interface EditLink {
+  /**
+   * Custom repository url for edit link.
+   */
+  docRepoBaseUrl: string;
+
+  /**
+   * Custom text for edit link.
+   *
+   * @default 'Edit this page'
+   */
+  text?: string;
+}
+```
+
+- Default: `undefined`
+
+Display a link to edit the page on Git management services such as GitHub, or GitLab.
+
+For example:
+
+```ts title="rspress.config.ts"
+import { defineConfig } from 'rspress/config';
+
+export default defineConfig({
+  themeConfig: {
+    editLink: {
+      docRepoBaseUrl:
+        'https://github.com/web-infra-dev/rspress/tree/main/packages/document/docs',
+      text: '📝 Edit this page on GitHub',
+    },
   },
 });
 ```
