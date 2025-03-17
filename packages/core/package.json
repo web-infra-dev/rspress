@@ -84,7 +84,7 @@
     "unist-util-visit-children": "^2.0.2"
   },
   "devDependencies": {
-    "@microsoft/api-extractor": "^7.51.1",
+    "@microsoft/api-extractor": "^7.52.1",
     "@rslib/core": "0.5.4",
     "@rspress-dev/plugin-preview": "link:../plugin-preview",
     "@rspress/config": "workspace:*",

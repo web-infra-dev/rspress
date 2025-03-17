@@ -33,7 +33,7 @@
     "tinyglobby": "^0.2.12"
   },
   "devDependencies": {
-    "@microsoft/api-extractor": "^7.51.1",
+    "@microsoft/api-extractor": "^7.52.1",
     "@modern-js/module-tools": "2.64.0",
     "@rslib/core": "0.5.4",
     "@types/lodash": "^4.17.16",

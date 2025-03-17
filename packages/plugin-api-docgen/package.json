@@ -31,7 +31,7 @@
     "remark-gfm": "3.0.1"
   },
   "devDependencies": {
-    "@microsoft/api-extractor": "^7.51.1",
+    "@microsoft/api-extractor": "^7.52.1",
     "@rslib/core": "0.5.4",
     "@types/mdast": "^3.0.15",
     "@types/node": "^18.11.17",

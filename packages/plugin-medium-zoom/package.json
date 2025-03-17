@@ -32,7 +32,7 @@
     "medium-zoom": "1.1.0"
   },
   "devDependencies": {
-    "@microsoft/api-extractor": "^7.51.1",
+    "@microsoft/api-extractor": "^7.52.1",
     "@rslib/core": "0.5.4",
     "@rspress/config": "workspace:*",
     "@rspress/shared": "workspace:*",
