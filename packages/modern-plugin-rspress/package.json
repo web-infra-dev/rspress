@@ -35,7 +35,7 @@
   "devDependencies": {
     "@microsoft/api-extractor": "^7.51.1",
     "@modern-js/module-tools": "2.64.0",
-    "@rslib/core": "0.5.3",
+    "@rslib/core": "0.5.4",
     "@types/lodash": "^4.17.16",
     "@types/node": "^18.11.17",
     "@types/react": "^18.3.18",
