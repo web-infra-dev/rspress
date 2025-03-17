@@ -45,6 +45,24 @@
   }
 }
 
+// Display external link icon
+.link[target='_blank'] {
+  &::after {
+    content: '↗';
+    font-weight: 700;
+    display: inline-block;
+    font-size: 0.7em;
+    transform: translate(0, -0.3em);
+    transition: transform 0.2s ease;
+    margin-left: 0.2em;
+    margin-right: 0.1em;
+  }
+
+  &:hover::after {
+    transform: translate(0.1em, -0.5em);
+  }
+}
+
 :global(.header-anchor) {
   color: var(--rp-c-brand);
 }
