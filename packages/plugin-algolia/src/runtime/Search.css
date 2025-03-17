@@ -3,6 +3,12 @@
   --docsearch-searchbox-background: var(--rp-c-bg-mute);
 }
 
+@media (max-width: 768px) {
+  .DocSearch {
+    --docsearch-searchbox-background: transparent;
+  }
+}
+
 .DocSearch-Button-Container > .DocSearch-Button-Placeholder {
   font-size: 0.825rem;
 }
