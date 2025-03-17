@@ -41,13 +41,13 @@
     "reset": "rimraf ./**/node_modules"
   },
   "dependencies": {
-    "@rsbuild/core": "1.2.16",
+    "@rsbuild/core": "1.2.19",
     "gray-matter": "4.0.3",
     "lodash-es": "^4.17.21",
     "unified": "^10.1.2"
   },
   "devDependencies": {
-    "@rslib/core": "0.5.3",
+    "@rslib/core": "0.5.4",
     "@types/fs-extra": "11.0.4",
     "@types/jest": "~29.5.14",
     "@types/lodash-es": "^4.17.12",
