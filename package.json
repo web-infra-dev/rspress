@@ -2,8 +2,8 @@
   "name": "rspress-monorepo",
   "private": true,
   "scripts": {
-    "build": "cross-env NX_DAEMON=false NX_REJECT_UNKNOWN_LOCAL_CACHE=0 nx run-many -t build --exclude @rspress-fixture/* --exclude @rspress/docs",
-    "build:website": "cross-env NX_DAEMON=false NX_REJECT_UNKNOWN_LOCAL_CACHE=0 nx run @rspress/docs:build",
+    "build": "cross-env NX_DAEMON=false nx run-many -t build --exclude @rspress-fixture/* --exclude @rspress/docs",
+    "build:website": "cross-env NX_DAEMON=false nx run @rspress/docs:build",
     "change": "changeset",
     "changeset": "changeset",
     "check-dependency-version": "check-dependency-version-consistency . --dep-type devDependencies",

@@ -5,6 +5,8 @@ declare module 'virtual-site-data' {
   export default data;
 }
 
+// for the first build when generating the module.scss.d.ts
+declare module '*.module.scss';
 declare module '@theme-assets/*' {
   const SvgIcon: React.FC<React.SVGProps<SVGSVGElement>> | string;
   export default SvgIcon;
