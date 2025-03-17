@@ -89,7 +89,7 @@ export default defineConfig({
           text: '📝 在 GitHub 上编辑此页',
         },
         searchNoResultsText: '未搜索到相关结果',
-        searchPlaceholderText: '搜索',
+        searchPlaceholderText: '搜索文档',
         searchSuggestedQueryText: '可更换不同的关键字后重试',
         overview: {
           filterNameText: '过滤',

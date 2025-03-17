@@ -116,7 +116,7 @@ export function SearchPanel({ focused, setFocused }: SearchPanelProps) {
     siteData,
     page: { lang, version },
   } = usePageData();
-  const { searchPlaceholderText = 'Search' } = useLocaleSiteData();
+  const { searchPlaceholderText = 'Search Docs' } = useLocaleSiteData();
   const { search, title: siteTitle } = siteData;
   const versionedSearch =
     search && search.mode !== 'remote' && search.versioned;

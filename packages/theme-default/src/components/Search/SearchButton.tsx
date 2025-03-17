@@ -10,7 +10,7 @@ export interface SearchButtonProps {
 
 export function SearchButton({ setFocused }: SearchButtonProps) {
   const [metaKey, setMetaKey] = useState<null | string>(null);
-  const { searchPlaceholderText = 'Search' } = useLocaleSiteData();
+  const { searchPlaceholderText = 'Search Docs' } = useLocaleSiteData();
   useEffect(() => {
     setMetaKey(
       /(Mac|iPhone|iPod|iPad)/i.test(navigator.platform) ? '⌘' : 'Ctrl',
