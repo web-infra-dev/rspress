@@ -230,6 +230,9 @@ export function normalizeHref(url?: string, cleanUrls = false) {
   if (isExternalUrl(url)) {
     return url;
   }
+  if (url.startsWith('#')) {
+    return url;
+  }
 
   // eslint-disable-next-line prefer-const
   let { url: cleanUrl, hash } = parseUrl(decodeURIComponent(url));
@@ -240,10 +243,6 @@ export function normalizeHref(url?: string, cleanUrls = false) {
     } else {
       cleanUrl += '.html';
     }
-  }
-
-  if (cleanUrls && cleanUrl.endsWith('/')) {
-    cleanUrl += 'index';
   }
 
   if (cleanUrls && cleanUrl.endsWith('.html')) {
