@@ -245,6 +245,10 @@ export function normalizeHref(url?: string, cleanUrls = false) {
     }
   }
 
+  if (cleanUrls && cleanUrl.endsWith('/index.html')) {
+    cleanUrl = cleanUrl.replace(/\/index\.html$/, '/');
+  }
+
   if (cleanUrls && cleanUrl.endsWith('.html')) {
     cleanUrl = cleanUrl.replace(/\.html$/, '');
   }
