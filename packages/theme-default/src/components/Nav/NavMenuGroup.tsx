@@ -126,6 +126,7 @@ export function NavMenuGroup(item: NavMenuGroupItem) {
       onMouseLeave={handleMouseLeave}
     >
       <button
+        aria-label="change-lang"
         onMouseEnter={handleMouseEnter}
         className="rspress-nav-menu-group-button rp-flex rp-justify-center rp-items-center rp-font-medium rp-text-sm rp-text-text-1 hover:rp-text-text-2 rp-transition-colors rp-duration-200"
       >
