@@ -5,7 +5,7 @@ import {
   withoutBase,
 } from '@rspress/shared';
 import { Link, Tag } from '@theme';
-import styles from './index.module.scss';
+import * as styles from './index.module.scss';
 
 interface Props {
   pathname: string;

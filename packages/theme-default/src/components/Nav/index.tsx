@@ -13,7 +13,7 @@ import { NavMenuGroup } from './NavMenuGroup';
 import { NavMenuSingleItem } from './NavMenuSingleItem';
 import { NavTranslations } from './NavTranslations';
 import { NavVersions } from './NavVersions';
-import styles from './index.module.scss';
+import * as styles from './index.module.scss';
 
 export interface NavProps {
   beforeNav?: React.ReactNode;

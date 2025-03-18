@@ -3,13 +3,24 @@ import { isExternalUrl, withBase } from '@rspress/shared';
 import type { Feature, FrontMatterMeta } from '@rspress/shared';
 
 import { renderHtmlOrText } from '../../logic/utils';
-import styles from './index.module.scss';
-
-const GRID_PREFIX = 'grid-';
+import * as styles from './index.module.scss';
 
 const getGridClass = (feature: Feature): string => {
   const { span } = feature;
-  return `${GRID_PREFIX}${span || 4}`;
+  switch (span) {
+    case 2:
+      return styles.grid2;
+    case 3:
+      return styles.grid3;
+    case 4:
+      return styles.grid4;
+    case 6:
+      return styles.grid6;
+    case undefined:
+      return styles.grid4;
+    default:
+      return '';
+  }
 };
 
 export function HomeFeature({
@@ -36,9 +47,9 @@ export function HomeFeature({
         return (
           <div
             key={title}
-            className={`${
-              styles[getGridClass(feature)]
-            } rounded hover:var(--rp-c-brand)`}
+            className={`${getGridClass(
+              feature,
+            )} rounded hover:var(--rp-c-brand)`}
           >
             <div className="h-full p-2">
               <article

@@ -5,7 +5,7 @@ import {
 import { EditLink, LastUpdated, PrevNextPage } from '@theme';
 import { useLocaleSiteData } from '../../logic/useLocaleSiteData';
 import { usePrevNextPage } from '../../logic/usePrevNextPage';
-import styles from './index.module.scss';
+import * as styles from './index.module.scss';
 
 export function DocFooter() {
   const { prevPage, nextPage } = usePrevNextPage();

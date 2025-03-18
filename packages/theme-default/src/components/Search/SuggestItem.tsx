@@ -5,7 +5,7 @@ import JumpSvg from '@theme-assets/jump';
 import TitleSvg from '@theme-assets/title';
 import { useRef } from 'react';
 import { SvgWrapper } from '../SvgWrapper';
-import styles from './index.module.scss';
+import * as styles from './index.module.scss';
 import type { DefaultMatchResultItem, HighlightInfo } from './logic/types';
 import { getSlicedStrByByteLength, removeDomain } from './logic/util';
 
@@ -134,7 +134,7 @@ export function SuggestItem({
         target={inCurrentDocIndex ? '_self' : '_blank'}
       >
         <div className={styles.suggestItemContainer}>
-          <div className={styles.hitIcon}>
+          <div>
             <SvgWrapper icon={HitIcon} />
           </div>
           <div className={styles.contentWrapper}>

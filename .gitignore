@@ -55,3 +55,6 @@ playwright-report/
 # plugin-typedoc auto-generated files
 e2e/fixtures/plugin-typedoc/single/doc/api
 e2e/fixtures/plugin-typedoc/multi/doc/api
+
+# ignore typed css module
+*.scss.d.ts

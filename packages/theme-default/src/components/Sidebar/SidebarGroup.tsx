@@ -13,7 +13,7 @@ import { renderInlineMarkdown } from '../../logic/utils';
 import { SvgWrapper } from '../SvgWrapper';
 import { SidebarDivider } from './SidebarDivider';
 import { SidebarItem as SidebarItemComp } from './SidebarItem';
-import styles from './index.module.scss';
+import * as styles from './index.module.scss';
 import { isSidebarDivider, preloadLink } from './utils';
 
 export function SidebarGroup(props: SidebarItemProps) {

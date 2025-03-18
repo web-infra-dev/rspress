@@ -13,7 +13,7 @@ import {
 } from 'react';
 import { TabDataContext } from '../../logic/TabDataContext';
 import { useStorageValue } from '../../logic/useStorageValue';
-import styles from './index.module.scss';
+import * as styles from './index.module.scss';
 
 type TabItem = {
   value?: string;

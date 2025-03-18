@@ -2,7 +2,7 @@ import { normalizeImagePath, usePageData } from '@rspress/runtime';
 import { Link } from '@theme';
 import { useMemo } from 'react';
 import { useLocaleSiteData } from '../../logic/useLocaleSiteData';
-import styles from './index.module.scss';
+import * as styles from './index.module.scss';
 
 export const NavBarTitle = () => {
   const { siteData } = usePageData();

@@ -1,6 +1,6 @@
 import type { SocialLink } from '@rspress/shared';
 import { useState } from 'react';
-import styles from './index.module.scss';
+import * as styles from './index.module.scss';
 
 declare const process: {
   env: {

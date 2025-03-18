@@ -1730,6 +1730,9 @@ importers:
       '@rsbuild/plugin-svgr':
         specifier: ^1.0.7
         version: 1.0.7(@rsbuild/core@1.2.19)(typescript@5.8.2)
+      '@rsbuild/plugin-typed-css-modules':
+        specifier: ~1.0.2
+        version: 1.0.2(@rsbuild/core@1.2.19)
       '@rslib/core':
         specifier: 0.5.4
         version: 0.5.4(@microsoft/api-extractor@7.52.1(@types/node@22.10.2))(typescript@5.8.2)
@@ -3444,6 +3447,14 @@ packages:
     resolution: {integrity: sha512-+hCaG78P0nt8nrMvdWJ720c0WNj9ogNBL7ib8+UfyYezqliMRR++Zx6QIPXYBfTP+pCa/TKPph/ZQvAdPJq+Ig==}
     peerDependencies:
       '@rsbuild/core': 1.x
+
+  '@rsbuild/plugin-typed-css-modules@1.0.2':
+    resolution: {integrity: sha512-QX376pBXWeBrZBvYLP2HGGrHiWA5O0SDHwRoBNto5BqYDXhi6y+Eol2Hb/cY+h2ARKZVanMfUiJRABULOJ/FCQ==}
+    peerDependencies:
+      '@rsbuild/core': 1.x || ^1.0.1-beta.0
+    peerDependenciesMeta:
+      '@rsbuild/core':
+        optional: true
 
   '@rslib/core@0.5.4':
     resolution: {integrity: sha512-rJ+wG++/Y8SbyuJB1RhlgnOUPzsxubD0lBivZWXVhOGawAea7mUoI4kZQ6YmF0iybW1QA61wHOf3FY+R1BxvgQ==}
@@ -9444,6 +9455,10 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
       - typescript
+
+  '@rsbuild/plugin-typed-css-modules@1.0.2(@rsbuild/core@1.2.19)':
+    optionalDependencies:
+      '@rsbuild/core': 1.2.19
 
   '@rslib/core@0.5.4(@microsoft/api-extractor@7.52.1(@types/node@18.11.17))(typescript@5.8.2)':
     dependencies:

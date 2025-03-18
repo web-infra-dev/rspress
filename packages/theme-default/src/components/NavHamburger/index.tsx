@@ -3,7 +3,7 @@ import SmallMenu from '@theme-assets/small-menu';
 import { useNavScreen } from '../../logic/useNav';
 import { NavScreen } from '../NavScreen';
 import { SvgWrapper } from '../SvgWrapper';
-import styles from './index.module.scss';
+import * as styles from './index.module.scss';
 
 interface Props {
   siteData: SiteData<DefaultThemeConfig>;
