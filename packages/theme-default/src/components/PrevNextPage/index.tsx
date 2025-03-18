@@ -1,6 +1,5 @@
 import { Link } from '@theme';
 import { useLocaleSiteData } from '../../logic/useLocaleSiteData';
-import { preloadLink } from '../Sidebar/utils';
 import * as styles from './index.module.scss';
 
 interface PrevNextPageProps {
@@ -18,11 +17,7 @@ export function PrevNextPage(props: PrevNextPageProps) {
     type === 'prev' ? styles.pagerLink : `${styles.pagerLink} ${styles.next}`;
 
   return (
-    <Link
-      href={href}
-      className={linkClassName}
-      onMouseEnter={() => preloadLink(href)}
-    >
+    <Link href={href} className={linkClassName}>
       <span className={styles.desc}>{pageText}</span>
       <span className={styles.title}>{text}</span>
     </Link>
