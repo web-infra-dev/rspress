@@ -115,6 +115,7 @@ export function SidebarGroup(props: SidebarItemProps) {
           active ? styles.menuItemActive : styles.menuItem
         }`}
         data-context={item.context}
+        // we use div instead of Link, so preloadLink manually
         onMouseEnter={() => item.link && preloadLink(item.link)}
         onClick={e => {
           if (item.link) {

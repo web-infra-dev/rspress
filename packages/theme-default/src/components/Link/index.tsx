@@ -11,6 +11,7 @@ import type React from 'react';
 import { type ComponentProps, useMemo } from 'react';
 import { isActive } from '../../logic/getSidebarDataGroup';
 import { DEFAULT_NAV_HEIGHT, scrollToTarget } from '../../logic/sideEffects';
+import { preloadLink } from '../Sidebar/utils';
 import * as styles from './index.module.scss';
 
 const scrollToAnchor = (smooth: boolean) => {
@@ -39,9 +40,8 @@ nprogress.configure({ showSpinner: false });
  * Link can tell whether it's in current site or external site.
  * 1. If external, open a new page and navigate to it.
  * 2. If inCurrentPage, scroll to anchor.
- * 3. If inCurrentSite, it will navigate and scroll to anchor.
+ * 3. If inCurrentSite, it will navigate and scroll to anchor, preload the asyncChunk onHover the link
  * 4. Link is styled.
- * TODO: if inCurrentSite, preload the asyncChunk onHover the link
  */
 export function Link(props: LinkProps) {
   const { href = '/', children, className = '', onNavigate, onClick } = props;
@@ -122,6 +122,7 @@ export function Link(props: LinkProps) {
       {...props}
       href={withBaseUrl}
       className={`${styles.link} ${className}`}
+      onMouseEnter={() => preloadLink(withBaseUrl)}
       onClick={event => {
         onClick?.(event);
         handleNavigate(event);
