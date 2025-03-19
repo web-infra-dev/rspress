@@ -87,8 +87,8 @@ test.describe('Nav should functions well', async () => {
     await init(page);
 
     await navMenuItems[0].click();
-    await page.waitForURL('**/only-link/index');
-    expect(page.url()).toBe(gotoPage('/only-link/index'));
+    await page.waitForURL('**/only-link/');
+    expect(page.url()).toBe(gotoPage('/only-link/'));
 
     await onlyItemsButton.hover();
     await onlyItemsChildren[0].click();
@@ -96,7 +96,7 @@ test.describe('Nav should functions well', async () => {
     expect(page.url()).toBe(gotoPage('/only-items/item'));
 
     await itemsAndLinkButton.click();
-    expect(page.url()).toBe(gotoPage('/items-and-link/index'));
+    expect(page.url()).toBe(gotoPage('/items-and-link/'));
 
     await page.goto(gotoPage('/'), {
       waitUntil: 'networkidle',
