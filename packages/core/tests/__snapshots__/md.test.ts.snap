@@ -1,0 +1,18 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`Markdown compile cases > remarkPluginNormalizeLink > should just work 1`] = `
+"import image0 from "./test3.jpg"
+
+import image1 from "./test4.png"
+
+[link1](/test1.html)
+
+{/* jsx link will not be transformed */}
+
+<a href="./test2">link2</a>
+
+<img alt="alt1" src={image0} />
+
+<img src={image1} alt="alt2" />
+"
+`;

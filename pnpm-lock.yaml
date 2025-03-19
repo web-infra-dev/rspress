@@ -847,7 +847,7 @@ importers:
         version: 7.49.2(@types/node@18.11.17)
       '@rslib/core':
         specifier: 0.5.2
-        version: 0.5.2(@microsoft/api-extractor@7.49.2(@types/node@18.11.17))(typescript@5.5.3)
+        version: 0.5.2(@microsoft/api-extractor@7.49.2(@types/node@18.11.17))(typescript@5.8.2)
       '@rspress-dev/plugin-preview':
         specifier: link:../plugin-preview
         version: link:../plugin-preview
@@ -884,21 +884,30 @@ importers:
       rehype-stringify:
         specifier: ^9.0.4
         version: 9.0.4
+      remark-mdx:
+        specifier: 2.3.0
+        version: 2.3.0
       remark-parse:
         specifier: ^10.0.2
         version: 10.0.2
       remark-rehype:
         specifier: ^10.1.0
         version: 10.1.0
+      remark-stringify:
+        specifier: ^10.0.3
+        version: 10.0.3
       rimraf:
         specifier: ^3.0.2
         version: 3.0.2
       tailwindcss:
         specifier: ^3.4.17
-        version: 3.4.17(ts-node@10.9.2(@types/node@18.11.17)(typescript@5.5.3))
+        version: 3.4.17(ts-node@10.9.2(@types/node@18.11.17)(typescript@5.8.2))
       typescript:
         specifier: ^5.5.3
-        version: 5.5.3
+        version: 5.8.2
+      vfile:
+        specifier: ^5.3.7
+        version: 5.3.7
 
   packages/create-rspress:
     dependencies:
@@ -1132,7 +1141,7 @@ importers:
         version: 7.49.2(@types/node@22.10.2)
       '@rslib/core':
         specifier: 0.5.2
-        version: 0.5.2(@microsoft/api-extractor@7.49.2(@types/node@22.10.2))(typescript@5.7.2)
+        version: 0.5.2(@microsoft/api-extractor@7.49.2(@types/node@22.10.2))(typescript@5.8.2)
       '@types/mdast':
         specifier: ^3.0.15
         version: 3.0.15
@@ -6984,6 +6993,11 @@ packages:
     engines: {node: '>=14.17'}
     hasBin: true
 
+  typescript@5.8.2:
+    resolution: {integrity: sha512-aJn6wq13/afZp/jT9QZmwEjDqqvSGp1VT5GVg+f/t6/oVyrgXM6BY1h9BRh/O5p3PlUPAe+WuiEZOmb/49RqoQ==}
+    engines: {node: '>=14.17'}
+    hasBin: true
+
   uglify-js@3.19.2:
     resolution: {integrity: sha512-S8KA6DDI47nQXJSi2ctQ629YzwOVs+bQML6DAtvy0wgNdpi+0ySpQK0g2pxBq2xfF2z3YCscu7NNA8nXT9PlIQ==}
     engines: {node: '>=0.8.0'}
@@ -8938,6 +8952,17 @@ snapshots:
     transitivePeerDependencies:
       - '@rspack/tracing'
 
+  '@rslib/core@0.5.2(@microsoft/api-extractor@7.49.2(@types/node@18.11.17))(typescript@5.8.2)':
+    dependencies:
+      '@rsbuild/core': 1.2.11
+      rsbuild-plugin-dts: 0.5.2(@microsoft/api-extractor@7.49.2(@types/node@18.11.17))(@rsbuild/core@1.2.11)(typescript@5.8.2)
+      tinyglobby: 0.2.12
+    optionalDependencies:
+      '@microsoft/api-extractor': 7.49.2(@types/node@18.11.17)
+      typescript: 5.8.2
+    transitivePeerDependencies:
+      - '@rspack/tracing'
+
   '@rslib/core@0.5.2(@microsoft/api-extractor@7.49.2(@types/node@22.10.2))(typescript@5.5.3)':
     dependencies:
       '@rsbuild/core': 1.2.11
@@ -8949,14 +8974,14 @@ snapshots:
     transitivePeerDependencies:
       - '@rspack/tracing'
 
-  '@rslib/core@0.5.2(@microsoft/api-extractor@7.49.2(@types/node@22.10.2))(typescript@5.7.2)':
+  '@rslib/core@0.5.2(@microsoft/api-extractor@7.49.2(@types/node@22.10.2))(typescript@5.8.2)':
     dependencies:
       '@rsbuild/core': 1.2.11
-      rsbuild-plugin-dts: 0.5.2(@microsoft/api-extractor@7.49.2(@types/node@22.10.2))(@rsbuild/core@1.2.11)(typescript@5.7.2)
+      rsbuild-plugin-dts: 0.5.2(@microsoft/api-extractor@7.49.2(@types/node@22.10.2))(@rsbuild/core@1.2.11)(typescript@5.8.2)
       tinyglobby: 0.2.12
     optionalDependencies:
       '@microsoft/api-extractor': 7.49.2(@types/node@22.10.2)
-      typescript: 5.7.2
+      typescript: 5.8.2
     transitivePeerDependencies:
       - '@rspack/tracing'
 
@@ -12210,13 +12235,13 @@ snapshots:
       camelcase-css: 2.0.1
       postcss: 8.5.1
 
-  postcss-load-config@4.0.2(postcss@8.5.1)(ts-node@10.9.2(@types/node@18.11.17)(typescript@5.5.3)):
+  postcss-load-config@4.0.2(postcss@8.5.1)(ts-node@10.9.2(@types/node@18.11.17)(typescript@5.8.2)):
     dependencies:
       lilconfig: 3.1.3
       yaml: 2.6.1
     optionalDependencies:
       postcss: 8.5.1
-      ts-node: 10.9.2(@types/node@18.11.17)(typescript@5.5.3)
+      ts-node: 10.9.2(@types/node@18.11.17)(typescript@5.8.2)
 
   postcss-load-config@4.0.2(postcss@8.5.1)(ts-node@10.9.2(@types/node@22.10.2)(typescript@5.5.3)):
     dependencies:
@@ -12659,6 +12684,18 @@ snapshots:
       '@microsoft/api-extractor': 7.49.2(@types/node@18.11.17)
       typescript: 5.5.3
 
+  rsbuild-plugin-dts@0.5.2(@microsoft/api-extractor@7.49.2(@types/node@18.11.17))(@rsbuild/core@1.2.11)(typescript@5.8.2):
+    dependencies:
+      '@ast-grep/napi': 0.35.0
+      '@rsbuild/core': 1.2.11
+      magic-string: 0.30.17
+      picocolors: 1.1.1
+      tinyglobby: 0.2.12
+      tsconfig-paths: 4.2.0
+    optionalDependencies:
+      '@microsoft/api-extractor': 7.49.2(@types/node@18.11.17)
+      typescript: 5.8.2
+
   rsbuild-plugin-dts@0.5.2(@microsoft/api-extractor@7.49.2(@types/node@22.10.2))(@rsbuild/core@1.2.11)(typescript@5.5.3):
     dependencies:
       '@ast-grep/napi': 0.35.0
@@ -12671,7 +12708,7 @@ snapshots:
       '@microsoft/api-extractor': 7.49.2(@types/node@22.10.2)
       typescript: 5.5.3
 
-  rsbuild-plugin-dts@0.5.2(@microsoft/api-extractor@7.49.2(@types/node@22.10.2))(@rsbuild/core@1.2.11)(typescript@5.7.2):
+  rsbuild-plugin-dts@0.5.2(@microsoft/api-extractor@7.49.2(@types/node@22.10.2))(@rsbuild/core@1.2.11)(typescript@5.8.2):
     dependencies:
       '@ast-grep/napi': 0.35.0
       '@rsbuild/core': 1.2.11
@@ -12681,7 +12718,7 @@ snapshots:
       tsconfig-paths: 4.2.0
     optionalDependencies:
       '@microsoft/api-extractor': 7.49.2(@types/node@22.10.2)
-      typescript: 5.7.2
+      typescript: 5.8.2
 
   rsbuild-plugin-google-analytics@1.0.3(@rsbuild/core@1.2.11):
     optionalDependencies:
@@ -13123,7 +13160,7 @@ snapshots:
       string-width: 4.2.3
       strip-ansi: 6.0.1
 
-  tailwindcss@3.4.17(ts-node@10.9.2(@types/node@18.11.17)(typescript@5.5.3)):
+  tailwindcss@3.4.17(ts-node@10.9.2(@types/node@18.11.17)(typescript@5.8.2)):
     dependencies:
       '@alloc/quick-lru': 5.2.0
       arg: 5.0.2
@@ -13142,7 +13179,7 @@ snapshots:
       postcss: 8.5.1
       postcss-import: 15.1.0(postcss@8.5.1)
       postcss-js: 4.0.1(postcss@8.5.1)
-      postcss-load-config: 4.0.2(postcss@8.5.1)(ts-node@10.9.2(@types/node@18.11.17)(typescript@5.5.3))
+      postcss-load-config: 4.0.2(postcss@8.5.1)(ts-node@10.9.2(@types/node@18.11.17)(typescript@5.8.2))
       postcss-nested: 6.2.0(postcss@8.5.1)
       postcss-selector-parser: 6.1.2
       resolve: 1.22.8
@@ -13265,7 +13302,7 @@ snapshots:
 
   ts-interface-checker@0.1.13: {}
 
-  ts-node@10.9.2(@types/node@18.11.17)(typescript@5.5.3):
+  ts-node@10.9.2(@types/node@18.11.17)(typescript@5.8.2):
     dependencies:
       '@cspotcode/source-map-support': 0.8.1
       '@tsconfig/node10': 1.0.9
@@ -13279,7 +13316,7 @@ snapshots:
       create-require: 1.1.1
       diff: 4.0.2
       make-error: 1.3.6
-      typescript: 5.5.3
+      typescript: 5.8.2
       v8-compile-cache-lib: 3.0.1
       yn: 3.1.1
     optional: true
@@ -13337,6 +13374,8 @@ snapshots:
   typescript@5.5.3: {}
 
   typescript@5.7.2: {}
+
+  typescript@5.8.2: {}
 
   uglify-js@3.19.2:
     optional: true

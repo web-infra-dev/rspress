@@ -101,11 +101,14 @@
     "@types/react-dom": "^18.3.5",
     "postcss": "8.5.1",
     "rehype-stringify": "^9.0.4",
+    "remark-mdx": "2.3.0",
     "remark-parse": "^10.0.2",
     "remark-rehype": "^10.1.0",
+    "remark-stringify": "^10.0.3",
     "rimraf": "^3.0.2",
     "tailwindcss": "^3.4.17",
-    "typescript": "^5.5.3"
+    "typescript": "^5.5.3",
+    "vfile": "^5.3.7"
   },
   "engines": {
     "node": ">=14.17.6"

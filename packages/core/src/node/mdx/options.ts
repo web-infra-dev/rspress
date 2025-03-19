@@ -41,7 +41,6 @@ export async function createMDXOptions(
     ),
     ...globalComponentsFromConfig,
   ];
-  const defaultLang = config?.lang || '';
   return {
     providerImportSource: '@mdx-js/react',
     format: path.extname(filepath).slice(1) as 'mdx' | 'md',
@@ -52,7 +51,6 @@ export async function createMDXOptions(
         remarkPluginNormalizeLink,
         {
           cleanUrls,
-          defaultLang,
           root: docDirectory,
         },
       ],
