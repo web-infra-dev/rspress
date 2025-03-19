@@ -237,20 +237,23 @@ export function normalizeHref(url?: string, cleanUrls = false) {
   // eslint-disable-next-line prefer-const
   let { url: cleanUrl, hash } = parseUrl(decodeURIComponent(url));
 
-  if (!cleanUrls && !cleanUrl.endsWith('.html')) {
-    if (cleanUrl.endsWith('/')) {
-      cleanUrl += 'index.html';
-    } else {
-      cleanUrl += '.html';
+  // 1. cleanUrls: false
+  if (!cleanUrls) {
+    if (!cleanUrl.endsWith('.html')) {
+      if (cleanUrl.endsWith('/')) {
+        cleanUrl += 'index.html';
+      } else {
+        cleanUrl += '.html';
+      }
     }
-  }
-
-  if (cleanUrls && cleanUrl.endsWith('/index.html')) {
-    cleanUrl = cleanUrl.replace(/\/index\.html$/, '/');
-  }
-
-  if (cleanUrls && cleanUrl.endsWith('.html')) {
-    cleanUrl = cleanUrl.replace(/\.html$/, '');
+  } else {
+    // 2. cleanUrls: true
+    if (cleanUrl.endsWith('.html')) {
+      cleanUrl = cleanUrl.replace(/\.html$/, '');
+    }
+    if (cleanUrls && cleanUrl.endsWith('/index')) {
+      cleanUrl = cleanUrl.replace(/\/index$/, '/');
+    }
   }
 
   return addLeadingSlash(hash ? `${cleanUrl}#${hash}` : cleanUrl);
