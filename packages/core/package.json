@@ -99,11 +99,14 @@
     "memfs": "^4.17.0",
     "postcss": "8.5.3",
     "rehype-stringify": "^9.0.4",
+    "remark-mdx": "2.3.0",
     "remark-parse": "^10.0.2",
     "remark-rehype": "^10.1.0",
+    "remark-stringify": "^10.0.3",
     "rimraf": "^6.0.1",
     "tailwindcss": "^3.4.17",
-    "typescript": "^5.8.2"
+    "typescript": "^5.8.2",
+    "vfile": "^5.3.7"
   },
   "engines": {
     "node": ">=14.17.6"
