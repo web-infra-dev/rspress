@@ -127,13 +127,13 @@ export const remarkPluginNormalizeLink: Plugin<
         return;
       }
 
-      const src = getNodeAttribute(node, 'src');
+      const srcAttr = getNodeAttribute(node, 'src', true);
 
-      if (typeof src !== 'string') {
+      if (typeof srcAttr?.value !== 'string') {
         return;
       }
 
-      const imagePath = normalizeImageUrl(src);
+      const imagePath = normalizeImageUrl(srcAttr.value);
 
       if (!imagePath) {
         return;
@@ -141,7 +141,7 @@ export const remarkPluginNormalizeLink: Plugin<
 
       const tempVariableName = `image${images.length}`;
 
-      Object.assign(src, getMdxSrcAttribute(tempVariableName));
+      Object.assign(srcAttr, getMdxSrcAttribute(tempVariableName));
 
       images.push(getASTNodeImport(tempVariableName, imagePath));
     });
