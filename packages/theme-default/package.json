@@ -38,7 +38,8 @@
     "dist"
   ],
   "scripts": {
-    "build": "rslib build",
+    "build": "rslib build || rslib build",
+    "//why build twice?": ".module.scss.d.ts is generaterd in webpack loader at the first time and parallel with tsc, it is flasky",
     "dev": "rslib build -w",
     "reset": "rimraf ./**/node_modules"
   },
