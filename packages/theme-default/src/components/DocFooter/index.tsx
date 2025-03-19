@@ -24,7 +24,7 @@ export function DocFooter() {
       </div>
       <div className="flex flex-col sm:flex-row sm:justify-around gap-4 pt-6">
         <div className={`${styles.prev} flex flex-col`}>
-          {prevPage ? (
+          {prevPage && Boolean(prevPage.text) ? (
             <PrevNextPage
               type="prev"
               text={prevPage.text}
@@ -33,7 +33,7 @@ export function DocFooter() {
           ) : null}
         </div>
         <div className={`${styles.next} flex flex-col`}>
-          {nextPage ? (
+          {nextPage && Boolean(nextPage.text) ? (
             <PrevNextPage
               type="next"
               text={nextPage.text}

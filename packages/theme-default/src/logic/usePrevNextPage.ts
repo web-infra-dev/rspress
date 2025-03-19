@@ -3,8 +3,8 @@ import type { NormalizedSidebarGroup, SidebarItem } from '@rspress/shared';
 import { useSidebarData } from './useSidebarData';
 
 export function usePrevNextPage(): {
-  prevPage: SidebarItem;
-  nextPage: SidebarItem;
+  prevPage: SidebarItem | null;
+  nextPage: SidebarItem | null;
 } {
   const { pathname } = useLocation();
   const items = useSidebarData();
