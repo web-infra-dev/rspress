@@ -23,10 +23,10 @@ test.describe('basic test', async () => {
     await page.goto(`http://localhost:${appPort}/`);
 
     await page.locator('.rspress-nav-menu a').first().click();
-    expect(page.url()).toContain('index#pageA');
+    expect(page.url()).toContain('/#pageA');
 
     await page.locator('.rspress-nav-menu a').nth(1).click();
-    expect(page.url()).toContain('index#pageB');
+    expect(page.url()).toContain('/#pageB');
   });
 
   test('Close the hamburger menu when clicking on an item in mobile view', async ({

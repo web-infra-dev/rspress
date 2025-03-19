@@ -230,24 +230,30 @@ export function normalizeHref(url?: string, cleanUrls = false) {
   if (isExternalUrl(url)) {
     return url;
   }
+  if (url.startsWith('#')) {
+    return url;
+  }
 
   // eslint-disable-next-line prefer-const
   let { url: cleanUrl, hash } = parseUrl(decodeURIComponent(url));
 
-  if (!cleanUrls && !cleanUrl.endsWith('.html')) {
-    if (cleanUrl.endsWith('/')) {
-      cleanUrl += 'index.html';
-    } else {
-      cleanUrl += '.html';
+  // 1. cleanUrls: false
+  if (!cleanUrls) {
+    if (!cleanUrl.endsWith('.html')) {
+      if (cleanUrl.endsWith('/')) {
+        cleanUrl += 'index.html';
+      } else {
+        cleanUrl += '.html';
+      }
     }
-  }
-
-  if (cleanUrls && cleanUrl.endsWith('/')) {
-    cleanUrl += 'index';
-  }
-
-  if (cleanUrls && cleanUrl.endsWith('.html')) {
-    cleanUrl = cleanUrl.replace(/\.html$/, '');
+  } else {
+    // 2. cleanUrls: true
+    if (cleanUrl.endsWith('.html')) {
+      cleanUrl = cleanUrl.replace(/\.html$/, '');
+    }
+    if (cleanUrls && cleanUrl.endsWith('/index')) {
+      cleanUrl = cleanUrl.replace(/\/index$/, '/');
+    }
   }
 
   return addLeadingSlash(hash ? `${cleanUrl}#${hash}` : cleanUrl);
