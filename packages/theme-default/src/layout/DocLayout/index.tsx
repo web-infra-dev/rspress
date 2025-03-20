@@ -94,13 +94,15 @@ export function DocLayout(props: DocLayoutProps) {
       }}
     >
       {beforeDoc}
-      <Sidebar
-        isSidebarOpen={isSidebarOpen}
-        beforeSidebar={beforeSidebar}
-        afterSidebar={afterSidebar}
-        uiSwitch={uiSwitch}
-        navTitle={navTitle}
-      />
+      {uiSwitch?.showSidebar && (
+        <Sidebar
+          isSidebarOpen={isSidebarOpen}
+          beforeSidebar={beforeSidebar}
+          afterSidebar={afterSidebar}
+          uiSwitch={uiSwitch}
+          navTitle={navTitle}
+        />
+      )}
       <div className="flex-1 relative min-w-0">
         <SidebarMenu
           isSidebarOpen={isSidebarOpen}
@@ -137,7 +139,7 @@ export function DocLayout(props: DocLayoutProps) {
               <ScrollToTop />
             </NoSSR>
           )}
-          {uiSwitch?.showAside && (
+          {uiSwitch?.showAside && headers.length > 0 && (
             <div
               className={styles.asideContainer}
               style={
