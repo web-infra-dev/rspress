@@ -1,4 +1,8 @@
 :global(.overview-index) {
+  padding-left: 2rem;
+  padding-right: 2rem;
+  max-width: 1152px;
+
   h1,
   h2,
   h3 {
@@ -124,10 +128,6 @@
   transition: background-color 0.5s;
 }
 
-.overview-groups {
-  max-width: 1152px;
-}
-
 @media (max-width: 768px) {
   :global(.overview-index) {
     h1 {
@@ -158,11 +158,6 @@
 }
 
 @media (min-width: 1280px) {
-  :global(.overview-index) {
-    padding-left: 2rem;
-    padding-right: 2rem;
-  }
-
   .overview-groups {
     columns: 3;
   }
