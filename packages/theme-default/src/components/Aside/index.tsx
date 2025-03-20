@@ -42,7 +42,6 @@ const TocItem = ({
 
 export function Aside(props: { headers: Header[]; outlineTitle: string }) {
   const { headers } = props;
-  const hasOutline = headers.length > 0;
   // For outline text highlight
   const baseHeaderLevel = headers[0]?.depth || 2;
   const hiddenNav = useHiddenNav();
@@ -81,25 +80,21 @@ export function Aside(props: { headers: Header[]; outlineTitle: string }) {
 
   return (
     <div className="flex flex-col">
-      <div className={hasOutline ? '<lg:hidden' : 'hidden'}>
-        <div id="aside-container" className="relative text-sm font-medium">
-          <div className="leading-7 block text-sm font-semibold pl-3">
-            {props.outlineTitle}
-          </div>
-          <nav className="mt-1">
-            <ul className="relative">
-              {headers.map(header => {
-                return (
-                  <TocItem
-                    key={`${pathname}#${header.id}`}
-                    baseHeaderLevel={baseHeaderLevel}
-                    header={header}
-                  />
-                );
-              })}
-            </ul>
-          </nav>
+      <div id="aside-container" className="relative text-sm font-medium">
+        <div className="leading-7 block text-sm font-semibold pl-3">
+          {props.outlineTitle}
         </div>
+        <nav className="mt-1">
+          <ul className="relative">
+            {headers.map(header => (
+              <TocItem
+                key={`${pathname}#${header.id}`}
+                baseHeaderLevel={baseHeaderLevel}
+                header={header}
+              />
+            ))}
+          </ul>
+        </nav>
       </div>
     </div>
   );

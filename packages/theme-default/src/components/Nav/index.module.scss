@@ -32,9 +32,17 @@
   position: sticky;
 
   // https://github.com/web-infra-dev/rspress/issues/1540
-  + section :global(.rspress-sidebar-menu-container) {
-    margin-top: calc(var(--rp-nav-height) * -1);
-    padding-top: var(--rp-nav-height);
+  + section {
+    :global {
+      .rspress-sidebar-menu-container {
+        margin-top: calc(var(--rp-nav-height) * -1);
+        padding-top: var(--rp-nav-height);
+      }
+
+      .rspress-local-toc-container {
+        margin-top: var(--rp-nav-height);
+      }
+    }
   }
 }
 

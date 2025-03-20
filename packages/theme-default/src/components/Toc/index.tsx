@@ -37,12 +37,13 @@ export function Toc({
   onItemClick?: (header: Header) => void;
 }) {
   const { page } = usePageData();
-
   return (
-    <ul>
-      {page.toc.map(item => (
-        <TocItem key={item.id} header={item} onItemClick={onItemClick} />
-      ))}
-    </ul>
+    page.toc.length > 0 && (
+      <ul>
+        {page.toc.map(item => (
+          <TocItem key={item.id} header={item} onItemClick={onItemClick} />
+        ))}
+      </ul>
+    )
   );
 }
