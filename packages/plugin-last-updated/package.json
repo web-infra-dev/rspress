@@ -1,6 +1,6 @@
 {
   "name": "@rspress/plugin-last-updated",
-  "version": "1.43.7",
+  "version": "1.43.8",
   "description": "A plugin for rspress to record the last updated time of the doc.",
   "bugs": "https://github.com/web-infra-dev/rspress/issues",
   "repository": {
