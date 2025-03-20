@@ -49,6 +49,10 @@
   .rspress-sidebar-menu > button:first-child {
     display: none;
   }
+
+  .rspress-sidebar-menu-container.no-toc {
+    display: none;
+  }
 }
 
 .rspress-local-toc-container {
