@@ -56,11 +56,11 @@ p {
 }
 
 .flex-center {
-  @apply flex items-center justify-center;
+  @apply rp-flex rp-items-center rp-justify-center;
 }
 
 .menu {
-  @apply flex justify-around items-center text-sm font-bold;
+  @apply rp-flex rp-justify-around rp-items-center rp-text-sm rp-font-bold;
 }
 
 .rspress-logo {
