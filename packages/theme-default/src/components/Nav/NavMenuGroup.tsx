@@ -123,6 +123,7 @@ export function NavMenuGroup(item: NavMenuGroupItem) {
   return (
     <div className="relative flex-center h-14" onMouseLeave={handleMouseLeave}>
       <button
+        aria-label="change-lang"
         onMouseEnter={handleMouseEnter}
         className="rspress-nav-menu-group-button flex-center items-center font-medium text-sm text-text-1 hover:text-text-2 transition-colors duration-200"
       >
