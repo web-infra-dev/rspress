@@ -1,10 +1,14 @@
 # Front matter config
 
+This document introduces how to configure various properties of a page using front matter, including title, description, page type, navbar, etc.
+
+See [Front matter](/guide/basic/use-mdx#front-matter) for what front matter is and how to use it.
+
 ## title
 
 - Type: `string`
 
-The title of the page. By default, the page's h1 heading will be used as the title of the HTML document. But if you want to use a different title, you can use Front Matter to specify the title of the page. For example:
+The title of the page. By default, the page's h1 heading will be used as the title of the HTML document. But if you want to use a different title, you can use front matter to specify the title of the page. For example:
 
 ```yaml
 ---
@@ -29,7 +33,7 @@ description: This is my custom description for this page.
 - Type: `'home' | 'doc' | 'custom' | 'blank' | '404'`
 - Default: `'doc'`
 
-The type of the page. By default, the page type is `doc`. But if you want to use a different page type, you can use the Front Matter field `pageType` to specify the page type. E.g:
+The type of the page. By default, the page type is `doc`. But if you want to use a different page type, you can use the front matter field `pageType` to specify the page type. E.g:
 
 ```yaml
 ---
@@ -129,7 +133,7 @@ interface Hero {
 }
 ```
 
-For example, you can use the following Front Matter to specify a page's hero config:
+For example, you can use the following front matter to specify a page's hero config:
 
 ```yaml
 ---
@@ -224,7 +228,7 @@ features:
 
 ## sidebar
 
-Whether to show the sidebar on the left. By default, the `doc` page will display the sidebar on the left. If you want to hide the sidebar on the left, you can use the following Front Matter config:
+Whether to show the sidebar on the left. By default, the `doc` page will display the sidebar on the left. If you want to hide the sidebar on the left, you can use the following front matter config:
 
 ```yaml
 ---
@@ -267,7 +271,7 @@ navbar: true
 - Type: `number[]`
 - Default: `[2]`
 
-The headers shown in the overview page. By default, the displayed header is h2. But if you want to display different headers, you can specify it using the `overviewHeaders` Front Matter field. For example:
+The headers shown in the overview page. By default, the displayed header is h2. But if you want to display different headers, you can specify it using the `overviewHeaders` front matter field. For example:
 
 ```yaml
 ---

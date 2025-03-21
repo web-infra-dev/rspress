@@ -54,7 +54,9 @@ export Button = () => <button />;
 
 ## Front matter
 
-You can add Front Matter at the beginning of your Markdown file, which is a YAML-formatted object that defines some metadata. For example:
+You can add front matter at the beginning of your Markdown file, which is a special part that uses [YAML](https://yaml.org/) format to define metadata, and is included in the file's top three dashes `---`.
+
+For example, use [title](/api/config/config-frontmatter#title) to specify the title of the page:
 
 ```yaml
 ---
@@ -62,9 +64,7 @@ title: Hello world
 ---
 ```
 
-> Note: By default, Rspress uses h1 headings as html headings.
-
-You can also access properties defined in Front Matter in the body, for example:
+You can also access properties defined in front matter in the body, for example:
 
 ```markdown
 ---
@@ -79,6 +79,10 @@ The previously defined properties will be passed to the component as `frontmatte
 ```html
 <h1>Hello world</h1>
 ```
+
+:::tip
+See [Front matter config](/api/config/config-frontmatter) for available front matter configurations.
+:::
 
 ## Custom container
 
