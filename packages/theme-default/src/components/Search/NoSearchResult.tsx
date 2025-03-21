@@ -9,9 +9,9 @@ export function NoSearchResult({ query }: { query: string }) {
   } = useLocaleSiteData();
 
   return (
-    <div className="flex flex-col items-center pt-8 pb-2">
-      <SvgWrapper icon={Empty} className="mb-4 opacity-80" />
-      <p className="mb-2">
+    <div className="rp-flex rp-flex-col rp-items-center rp-pt-8 rp-pb-2">
+      <SvgWrapper icon={Empty} className="rp-mb-4 rp-opacity-80" />
+      <p className="rp-mb-2">
         {searchNoResultsText} <b>&quot;{query}&quot;</b>
       </p>
       <p>{searchSuggestedQueryText}</p>

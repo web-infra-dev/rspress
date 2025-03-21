@@ -75,12 +75,12 @@ export function SidebarMenu({
             <button
               type="button"
               onClick={openSidebar}
-              className="flex-center mr-auto"
+              className="rp-flex-center rp-mr-auto"
             >
-              <div className="text-md mr-2">
+              <div className="rp-text-md rp-mr-2">
                 <SvgWrapper icon={MenuIcon} />
               </div>
-              <span className="text-sm">Menu</span>
+              <span className="rp-text-sm">Menu</span>
             </button>
             {isSidebarOpen && (
               <div
@@ -98,12 +98,12 @@ export function SidebarMenu({
             <button
               type="button"
               onClick={() => setIsTocOpen(tocOpened => !tocOpened)}
-              className="flex-center ml-auto"
+              className="rp-flex-center rp-ml-auto"
               ref={outlineButtonRef}
             >
-              <span className="text-sm">{outlineTitle}</span>
+              <span className="rp-text-sm">{outlineTitle}</span>
               <div
-                className="text-md mr-2"
+                className="rp-text-md rp-mr-2"
                 style={{
                   transform: isTocOpen ? 'rotate(90deg)' : 'rotate(0deg)',
                   transition: 'transform 0.2s ease-out',

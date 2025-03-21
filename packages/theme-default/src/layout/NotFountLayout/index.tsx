@@ -27,17 +27,19 @@ export function NotFoundLayout() {
 
   // The 404 page content
   return (
-    <div className="m-auto mt-50 p-16 sm:p-8 sm:pt-24 sm:pb-40 text-center flex-center flex-col">
-      <p className="text-6xl font-semibold">404</p>
-      <h1 className="leading-5 pt-3 text-xl font-bold">PAGE NOT FOUND</h1>
+    <div className="rp-m-auto rp-mt-50 rp-p-16 sm:rp-p-8 sm:rp-pt-24 sm:rp-pb-40 rp-text-center rp-flex-center rp-flex-col">
+      <p className="rp-text-6xl rp-font-semibold">404</p>
+      <h1 className="rp-leading-5 rp-pt-3 rp-text-xl rp-font-bold">
+        PAGE NOT FOUND
+      </h1>
       <div
         style={{ height: '1px' }}
-        className="mt-6 mx-auto mb-4.5 w-16 bg-gray-light-1"
+        className="rp-mt-6 rp-mx-auto rp-mb-4.5 rp-w-16 rp-bg-gray-light-1"
       />
 
-      <div className="pt-5">
+      <div className="rp-pt-5">
         <a
-          className="py-2 px-4 rounded-2xl inline-block border-solid border-brand text-brand font-medium hover:border-brand-dark hover:text-brand-dark transition-colors duration-300"
+          className="rp-py-2 rp-px-4 rp-rounded-2xl rp-inline-block rp-border-solid rp-border-brand rp-text-brand rp-font-medium hover:rp-border-brand-dark hover:rp-text-brand-dark rp-transition-colors rp-duration-300"
           href={withBase(root)}
           aria-label="go to home"
         >
