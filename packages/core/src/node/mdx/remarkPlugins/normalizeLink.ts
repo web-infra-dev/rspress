@@ -54,7 +54,7 @@ export const remarkPluginNormalizeLink: Plugin<
       if (
         (routeService?.extensions ?? DEFAULT_PAGE_EXTENSIONS).includes(extname)
       ) {
-        url = url.replace(extname, '');
+        url = url.replace(new RegExp(`\\${extname}$`), '');
       }
 
       const relativePath = path.relative(root, file.path);
