@@ -52,6 +52,7 @@ export async function createMDXOptions(
         {
           cleanUrls,
           root: docDirectory,
+          routeService,
         },
       ],
       checkDeadLinks && [

@@ -27,7 +27,6 @@ export function checkLinks(
     .map(link => normalizePath(link))
     .forEach(link => {
       const relativePath = path.relative(root, filepath);
-
       if (!routeService.isExistRoute(cleanUrl(link))) {
         errorInfos.push(
           `Internal link to "${link}" is dead, check it in "${relativePath}"`,
