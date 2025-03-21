@@ -29,13 +29,13 @@ export const NavBarTitle = () => {
           src={normalizeImagePath(rawLogo.light)}
           alt="logo"
           id="logo"
-          className="rspress-logo dark:hidden"
+          className="rspress-logo dark:rp-hidden"
         />
         <img
           src={normalizeImagePath(rawLogo.dark)}
           alt="logo"
           id="logo"
-          className="rspress-logo hidden dark:block"
+          className="rspress-logo rp-hidden dark:rp-block"
         />
       </>
     );
@@ -45,9 +45,9 @@ export const NavBarTitle = () => {
     <div className={`${styles.navBarTitle}`}>
       <Link
         href={localeData.langRoutePrefix}
-        className="flex items-center w-full h-full text-base font-semibold transition-opacity duration-300 hover:opacity-60"
+        className="rp-flex rp-items-center rp-w-full rp-h-full rp-text-base rp-font-semibold rp-transition-opacity rp-duration-300 hover:rp-opacity-60"
       >
-        {logo && <div className="mr-1 min-w-8">{logo}</div>}
+        {logo && <div className="rp-mr-1 rp-min-w-8">{logo}</div>}
         {logoText && <span>{logoText}</span>}
         {!logo && !logoText && <span>{title}</span>}
       </Link>

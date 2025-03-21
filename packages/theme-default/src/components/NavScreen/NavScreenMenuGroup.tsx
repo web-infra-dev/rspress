@@ -67,7 +67,7 @@ export function NavScreenMenuGroup(item: NavScreenMenuGroupItem) {
     <div
       className={`${isOpen ? styles.open : ''} ${
         styles.navScreenMenuGroup
-      } relative`}
+      } rp-relative`}
     >
       <button
         className={styles.button}

@@ -14,7 +14,7 @@ export const ShownLinks = (props: IShownLinksProps) => {
 
   return (
     <>
-      <div className="flex-center h-full gap-x-4 transition-colors duration-300 md:mr-2">
+      <div className="rp-flex-center rp-h-full rp-gap-x-4 rp-transition-colors rp-duration-300 md:rp-mr-2">
         {links.map((item, index) => (
           <LinkContent
             key={index}
@@ -24,7 +24,7 @@ export const ShownLinks = (props: IShownLinksProps) => {
         ))}
       </div>
       {moreIconVisible ? (
-        <div className="md:ml-1 p-2" onMouseEnter={mouseEnter}>
+        <div className="md:rp-ml-1 rp-p-2" onMouseEnter={mouseEnter}>
           <SvgWrapper icon={ArrowDown} />
         </div>
       ) : null}
