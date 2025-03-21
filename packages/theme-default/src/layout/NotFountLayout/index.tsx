@@ -27,7 +27,7 @@ export function NotFoundLayout() {
 
   // The 404 page content
   return (
-    <div className="rp-m-auto rp-mt-50 rp-p-16 sm:rp-p-8 sm:rp-pt-24 sm:rp-pb-40 rp-text-center rp-flex-center rp-flex-col">
+    <div className="rp-m-auto rp-mt-50 rp-p-16 sm:rp-p-8 sm:rp-pt-24 sm:rp-pb-40 rp-text-center rp-flex rp-items-center rp-justify-center rp-flex-col">
       <p className="rp-text-6xl rp-font-semibold">404</p>
       <h1 className="rp-leading-5 rp-pt-3 rp-text-xl rp-font-bold">
         PAGE NOT FOUND

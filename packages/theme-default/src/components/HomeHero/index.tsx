@@ -88,7 +88,7 @@ export function HomeHero({
         </div>
 
         {hasImage ? (
-          <div className="rspress-home-hero-image md:rp-flex-center rp-m-auto rp-order-1 md:rp-order-2 sm:rp-flex md:rp-none lg:rp-flex">
+          <div className="rspress-home-hero-image md:rp-flex md:rp-items-center md:rp-justify-center rp-m-auto rp-order-1 md:rp-order-2 sm:rp-flex md:rp-none lg:rp-flex">
             <img
               src={normalizeImagePath(imageSrc.light)}
               alt={hero.image?.alt}

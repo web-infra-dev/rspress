@@ -122,12 +122,12 @@ export function NavMenuGroup(item: NavMenuGroupItem) {
   };
   return (
     <div
-      className="rp-relative rp-flex-center rp-h-14"
+      className="rp-relative rp-flex rp-items-center rp-justify-center rp-h-14"
       onMouseLeave={handleMouseLeave}
     >
       <button
         onMouseEnter={handleMouseEnter}
-        className="rspress-nav-menu-group-button rp-flex-center rp-items-center rp-font-medium rp-text-sm rp-text-text-1 hover:rp-text-text-2 rp-transition-colors rp-duration-200"
+        className="rspress-nav-menu-group-button rp-flex rp-justify-center rp-items-center rp-font-medium rp-text-sm rp-text-text-1 hover:rp-text-text-2 rp-transition-colors rp-duration-200"
       >
         {link ? (
           // @ts-expect-error item.text may be ReactElement

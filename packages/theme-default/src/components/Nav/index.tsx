@@ -54,7 +54,7 @@ export function Nav(props: NavProps) {
 
   const NavMenu = ({ menuItems }: { menuItems: NavItem[] }) => {
     return (
-      <div className="rspress-nav-menu rp-menu rp-h-14">
+      <div className="rspress-nav-menu rp-flex rp-justify-around rp-items-center rp-text-sm rp-font-bold rp-h-14">
         {menuItems.map(item => {
           return 'items' in item || Array.isArray(item) ? (
             <div key={item.text} className="rp-mx-3 last:rp-mr-0">
@@ -112,7 +112,7 @@ export function Nav(props: NavProps) {
           </div>
         )}
         <NavMenu menuItems={rightMenuItems} />
-        <div className="rp-flex-center rp-flex-row">
+        <div className="rp-flex rp-items-center rp-justify-center rp-flex-row">
           {hasMultiLanguage && <NavTranslations />}
           {hasMultiVersion && <NavVersions />}
           {hasAppearanceSwitch && (

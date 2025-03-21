@@ -14,7 +14,7 @@ export const ShownLinks = (props: IShownLinksProps) => {
 
   return (
     <>
-      <div className="rp-flex-center rp-h-full rp-gap-x-4 rp-transition-colors rp-duration-300 md:rp-mr-2">
+      <div className="rp-flex rp-items-center rp-justify-center rp-h-full rp-gap-x-4 rp-transition-colors rp-duration-300 md:rp-mr-2">
         {links.map((item, index) => (
           <LinkContent
             key={index}

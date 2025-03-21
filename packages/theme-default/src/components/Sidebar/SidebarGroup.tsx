@@ -137,7 +137,7 @@ export function SidebarGroup(props: SidebarItemProps) {
         >
           <Tag tag={item.tag} />
           <span
-            className="rp-flex-center"
+            className="rp-flex rp-items-center rp-justify-center"
             style={{
               fontSize: depth === 0 ? '14px' : '13px',
             }}

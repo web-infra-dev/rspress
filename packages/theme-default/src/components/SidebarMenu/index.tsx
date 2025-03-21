@@ -75,7 +75,7 @@ export function SidebarMenu({
             <button
               type="button"
               onClick={openSidebar}
-              className="rp-flex-center rp-mr-auto"
+              className="rp-flex rp-items-center rp-justify-center rp-mr-auto"
             >
               <div className="rp-text-md rp-mr-2">
                 <SvgWrapper icon={MenuIcon} />
@@ -98,7 +98,7 @@ export function SidebarMenu({
             <button
               type="button"
               onClick={() => setIsTocOpen(tocOpened => !tocOpened)}
-              className="rp-flex-center rp-ml-auto"
+              className="rp-flex rp-items-center rp-justify-center rp-ml-auto"
               ref={outlineButtonRef}
             >
               <span className="rp-text-sm">{outlineTitle}</span>

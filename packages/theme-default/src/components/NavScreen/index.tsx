@@ -132,7 +132,7 @@ export function NavScreen(props: Props) {
           pathname={pathname}
           toggleScreen={toggleScreen}
         />
-        <div className="rp-flex-center rp-flex-col rp-gap-2">
+        <div className="rp-flex rp-items-center rp-justify-center rp-flex-col rp-gap-2">
           {hasAppearanceSwitch && <NavScreenAppearance />}
           {hasMultiLanguage && <NavScreenTranslations />}
           {hasMultiVersion && <NavScreenVersions />}

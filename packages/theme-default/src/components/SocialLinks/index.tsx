@@ -24,7 +24,7 @@ export const SocialLinks = ({ socialLinks }: { socialLinks: SocialLink[] }) => {
 
   return (
     <div
-      className={`social-links ${styles.menuItem} rp-flex-center rp-relative`}
+      className={`social-links ${styles.menuItem} rp-flex rp-items-center rp-justify-center rp-relative`}
       onMouseLeave={hide}
     >
       <ShownLinks

@@ -55,14 +55,6 @@ p {
   visibility: hidden;
 }
 
-.flex-center {
-  @apply rp-flex rp-items-center rp-justify-center;
-}
-
-.menu {
-  @apply rp-flex rp-justify-around rp-items-center rp-text-sm rp-font-bold;
-}
-
 .rspress-logo {
   height: 1.6rem;
 }
