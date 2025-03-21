@@ -24,8 +24,8 @@ interface Props {
 const NavScreenTranslations = () => {
   const translationMenuData = useTranslationMenuData();
   return (
-    <div className="flex text-sm font-bold justify-center">
-      <div className="mx-1.5 my-1">
+    <div className="rp-flex rp-text-sm rp-font-bold rp-justify-center">
+      <div className="rp-mx-1.5 rp-my-1">
         <NavScreenMenuGroup {...translationMenuData} />
       </div>
     </div>
@@ -35,8 +35,8 @@ const NavScreenTranslations = () => {
 const NavScreenVersions = () => {
   const versionMenuData = useVersionMenuData();
   return (
-    <div className={'flex text-sm font-bold justify-center'}>
-      <div className="mx-1.5 my-1">
+    <div className={'rp-flex rp-text-sm rp-font-bold rp-justify-center'}>
+      <div className="rp-mx-1.5 rp-my-1">
         <NavScreenMenuGroup {...versionMenuData} />
       </div>
     </div>
@@ -45,7 +45,9 @@ const NavScreenVersions = () => {
 
 const NavScreenAppearance = () => {
   return (
-    <div className={`mt-2 ${styles.navAppearance} flex justify-center`}>
+    <div
+      className={`rp-mt-2 ${styles.navAppearance} rp-flex rp-justify-center`}
+    >
       <NoSSR>
         <SwitchAppearance />
       </NoSSR>
@@ -70,7 +72,7 @@ const NavScreenMenu = ({
     <div className={styles.navMenu}>
       {menuItems.map(item => {
         return (
-          <div key={item.text} className={`${styles.navMenuItem} w-full`}>
+          <div key={item.text} className={`${styles.navMenuItem} rp-w-full`}>
             {'link' in item ? (
               <NavMenuSingleItem
                 pathname={pathname}
@@ -81,7 +83,7 @@ const NavScreenMenu = ({
                 {...item}
               />
             ) : (
-              <div key={item.text} className="mx-3 last:mr-0">
+              <div key={item.text} className="rp-mx-3 last:rp-mr-0">
                 <NavScreenMenuGroup
                   {...item}
                   items={'items' in item ? item.items : item}
@@ -130,7 +132,7 @@ export function NavScreen(props: Props) {
           pathname={pathname}
           toggleScreen={toggleScreen}
         />
-        <div className="flex-center flex-col gap-2">
+        <div className="rp-flex-center rp-flex-col rp-gap-2">
           {hasAppearanceSwitch && <NavScreenAppearance />}
           {hasMultiLanguage && <NavScreenTranslations />}
           {hasMultiVersion && <NavScreenVersions />}
