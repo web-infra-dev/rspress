@@ -7,7 +7,7 @@ import { glob } from 'tinyglobby';
 import type { PluginDriver } from '../PluginDriver';
 import { PUBLIC_DIR } from '../constants';
 import { getPageKey, normalizePath } from '../utils';
-import { normalizeRoutePath } from './normalizeRoutePath';
+import { getRoutePathParts, normalizeRoutePath } from './normalizeRoutePath';
 
 export interface Route {
   path: string;
@@ -73,6 +73,10 @@ export class RouteService {
       this.#defaultVersion = userConfig.multiVersion.default || '';
       this.#versions = userConfig.multiVersion.versions || [];
     }
+  }
+
+  get extensions(): readonly string[] {
+    return this.#extensions;
   }
 
   async init() {
@@ -232,6 +236,16 @@ ${routeMeta
   .join(',\n')}
 ];
 `;
+  }
+
+  getRoutePathParts(routePath: string) {
+    return getRoutePathParts(
+      routePath,
+      this.#defaultLang,
+      this.#defaultVersion,
+      this.#langs,
+      this.#versions,
+    );
   }
 
   normalizeRoutePath(routePath: string) {

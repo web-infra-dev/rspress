@@ -18,6 +18,7 @@ export default defineConfig({
   icon: 'https://assets.rspack.dev/rspress/rspress-logo-480x480.png',
   markdown: {
     checkDeadLinks: true,
+    mdxRs: false,
   },
   ssg: {
     strict: true,

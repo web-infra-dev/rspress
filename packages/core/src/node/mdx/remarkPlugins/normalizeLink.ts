@@ -1,20 +1,33 @@
 import path from 'node:path';
-import { isExternalUrl, normalizeHref, parseUrl, slash } from '@rspress/shared';
+import {
+  addLeadingSlash,
+  isExternalUrl,
+  normalizeHref,
+  parseUrl,
+  slash,
+} from '@rspress/shared';
 import { getNodeAttribute } from '@rspress/shared/node-utils';
 import type { Root } from 'mdast';
 import type { MdxjsEsm } from 'mdast-util-mdxjs-esm';
 import type { Plugin } from 'unified';
 import { visit } from 'unist-util-visit';
+import type { RouteService } from '../../route/RouteService';
 import { getASTNodeImport } from '../../utils';
 
 /**
  * Remark plugin to normalize a link href
  */
 export const remarkPluginNormalizeLink: Plugin<
-  [{ root: string; cleanUrls: boolean }],
+  [
+    {
+      root: string;
+      cleanUrls: boolean;
+      routeService: RouteService;
+    },
+  ],
   Root
 > =
-  ({ root, cleanUrls }) =>
+  ({ root, cleanUrls, routeService }) =>
   (tree, file) => {
     const images: MdxjsEsm[] = [];
     visit(tree, 'link', node => {
@@ -36,13 +49,29 @@ export const remarkPluginNormalizeLink: Plugin<
 
       const extname = path.extname(url);
 
-      if (extname === '.md' || extname === '.mdx') {
+      if (routeService.extensions.includes(extname)) {
         url = url.replace(extname, '');
       }
 
       const relativePath = path.relative(root, file.path);
+
       if (url.startsWith('.')) {
         url = path.posix.join(slash(path.dirname(relativePath)), url);
+      } else {
+        url = addLeadingSlash(url);
+
+        const [pathVersion, pathLang] = routeService.getRoutePathParts(
+          slash(relativePath),
+        );
+        const [urlVersion, urlLang] = routeService.getRoutePathParts(url);
+
+        if (!urlLang && pathLang) {
+          url = `/${pathLang}${url}`;
+        }
+
+        if (!urlVersion && pathVersion) {
+          url = `/${pathVersion}${url}`;
+        }
       }
 
       url = normalizeHref(url, cleanUrls);
