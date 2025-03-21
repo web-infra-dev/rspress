@@ -62,18 +62,19 @@ export const remarkPluginNormalizeLink: Plugin<
       if (url.startsWith('.')) {
         url = path.posix.join(slash(path.dirname(relativePath)), url);
       } else if (routeService) {
-        url = addLeadingSlash(url);
-
         const [pathVersion, pathLang] = routeService.getRoutePathParts(
           slash(relativePath),
         );
-        const [urlVersion, urlLang] = routeService.getRoutePathParts(url);
+        const [urlVersion, urlLang, urlPath] =
+          routeService.getRoutePathParts(url);
 
-        if (!urlLang && pathLang) {
+        url = addLeadingSlash(urlPath);
+
+        if (pathLang && urlLang !== pathLang) {
           url = `/${pathLang}${url}`;
         }
 
-        if (!urlVersion && pathVersion) {
+        if (pathVersion && urlVersion !== pathVersion) {
           url = `/${pathVersion}${url}`;
         }
       }

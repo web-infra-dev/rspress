@@ -8,6 +8,8 @@ export const getRoutePathParts = (
   langs: string[],
   versions: string[],
 ) => {
+  const hasTrailSlash = routePath.endsWith('/');
+
   let versionPart = '';
   let langPart = '';
   let purePathPart = '';
@@ -36,7 +38,12 @@ export const getRoutePathParts = (
 
   purePathPart = parts.join('/');
 
-  return [versionPart, langPart, purePathPart] as const;
+  return [
+    versionPart,
+    langPart,
+    // restore the trail slash
+    hasTrailSlash ? addTrailingSlash(purePathPart) : purePathPart,
+  ] as const;
 };
 
 export const normalizeRoutePath = (
@@ -48,7 +55,6 @@ export const normalizeRoutePath = (
   versions: string[],
   extensions: string[] = DEFAULT_PAGE_EXTENSIONS,
 ) => {
-  const hasTrailSlash = routePath.endsWith('/');
   const [versionPart, langPart, purePathPart] = getRoutePathParts(
     routePath,
     lang,
@@ -62,18 +68,14 @@ export const normalizeRoutePath = (
     'i',
   );
 
-  let normalizedRoutePath = addLeadingSlash(
-    [versionPart, langPart, purePathPart].filter(Boolean).join('/'),
+  const normalizedRoutePath = addLeadingSlash(
+    [versionPart, langPart].filter(Boolean).join('/') +
+      addLeadingSlash(purePathPart),
   )
     // remove the extension
     .replace(cleanExtensionPattern, '')
     .replace(/\.html$/, '')
     .replace(/\/index$/, '/');
-
-  // restore the trail slash
-  if (hasTrailSlash) {
-    normalizedRoutePath = addTrailingSlash(normalizedRoutePath);
-  }
 
   return {
     routePath: withBase(normalizedRoutePath, base),
