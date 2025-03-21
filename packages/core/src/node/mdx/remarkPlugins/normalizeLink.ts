@@ -6,11 +6,13 @@ import {
   parseUrl,
   slash,
 } from '@rspress/shared';
+import { DEFAULT_PAGE_EXTENSIONS } from '@rspress/shared/constants';
 import { getNodeAttribute } from '@rspress/shared/node-utils';
 import type { Root } from 'mdast';
 import type { MdxjsEsm } from 'mdast-util-mdxjs-esm';
 import type { Plugin } from 'unified';
 import { visit } from 'unist-util-visit';
+
 import type { RouteService } from '../../route/RouteService';
 import { getASTNodeImport } from '../../utils';
 
@@ -22,7 +24,7 @@ export const remarkPluginNormalizeLink: Plugin<
     {
       root: string;
       cleanUrls: boolean;
-      routeService: RouteService;
+      routeService?: RouteService;
     },
   ],
   Root
@@ -49,7 +51,9 @@ export const remarkPluginNormalizeLink: Plugin<
 
       const extname = path.extname(url);
 
-      if (routeService.extensions.includes(extname)) {
+      if (
+        (routeService?.extensions ?? DEFAULT_PAGE_EXTENSIONS).includes(extname)
+      ) {
         url = url.replace(extname, '');
       }
 
@@ -57,7 +61,7 @@ export const remarkPluginNormalizeLink: Plugin<
 
       if (url.startsWith('.')) {
         url = path.posix.join(slash(path.dirname(relativePath)), url);
-      } else {
+      } else if (routeService) {
         url = addLeadingSlash(url);
 
         const [pathVersion, pathLang] = routeService.getRoutePathParts(
