@@ -48,7 +48,7 @@ export const LinkContent = (props: ILinkContentComp) => {
   if (mode === 'text') {
     return (
       <div
-        className={`${styles.socialLinksIcon} cursor-pointer relative mx-3`}
+        className={`${styles.socialLinksIcon} rp-cursor-pointer rp-relative rp-mx-3`}
         onMouseEnter={mouseEnterIcon}
         onMouseLeave={mouseLeavePopper}
       >
@@ -60,9 +60,9 @@ export const LinkContent = (props: ILinkContentComp) => {
               border: '1px solid var(--rp-c-divider-light)',
               ...popperStyle,
             }}
-            className="z-[1] p-3 w-50 absolute right-0 bg-white dark:bg-dark"
+            className="rp-z-[1] rp-p-3 rp-w-50 rp-absolute rp-right-0 rp-bg-white dark:rp-bg-dark"
           >
-            <div className="text-md">{content}</div>
+            <div className="rp-text-md">{content}</div>
           </div>
         ) : null}
       </div>
@@ -71,14 +71,14 @@ export const LinkContent = (props: ILinkContentComp) => {
   if (mode === 'img') {
     return (
       <div
-        className={`${styles.socialLinksIcon} cursor-pointer relative`}
+        className={`${styles.socialLinksIcon} rp-cursor-pointer rp-relative`}
         onMouseEnter={mouseEnterIcon}
         onMouseLeave={mouseLeavePopper}
       >
         {IconComp}
         {contentVisible ? (
           <div
-            className="break-all z-[1] p-3 w-[50px] h-[50px] absolute right-0 bg-white dark:bg-dark rounded-xl"
+            className="rp-break-all rp-z-[1] rp-p-3 rp-w-[50px] rp-h-[50px] rp-absolute rp-right-0 rp-bg-white dark:rp-bg-dark rp-rounded-xl"
             style={{
               boxShadow: 'var(--rp-shadow-3)',
               ...popperStyle,
@@ -93,14 +93,14 @@ export const LinkContent = (props: ILinkContentComp) => {
   if (mode === 'dom') {
     return (
       <div
-        className={`${styles.socialLinksIcon} cursor-pointer relative`}
+        className={`${styles.socialLinksIcon} rp-cursor-pointer rp-relative`}
         onMouseEnter={mouseEnterIcon}
         onMouseLeave={mouseLeavePopper}
       >
         {IconComp}
         {contentVisible ? (
           <div
-            className="break-all z-[1] p-3 absolute right-0 bg-white dark:bg-dark rounded-xl"
+            className="rp-break-all rp-z-[1] rp-p-3 rp-absolute rp-right-0 rp-bg-white dark:rp-bg-dark rp-rounded-xl"
             style={{
               boxShadow: 'var(--rp-shadow-3)',
               ...popperStyle,

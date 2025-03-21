@@ -88,7 +88,7 @@ export function DocLayout(props: DocLayoutProps) {
 
   return (
     <div
-      className={`${styles.docLayout} pt-0`}
+      className={`${styles.docLayout} rp-pt-0`}
       style={{
         ...(uiSwitch?.showNavbar ? {} : { marginTop: 0 }),
       }}
@@ -103,15 +103,17 @@ export function DocLayout(props: DocLayoutProps) {
           navTitle={navTitle}
         />
       )}
-      <div className="flex-1 relative min-w-0">
+      <div className="rp-flex-1 rp-relative rp-min-w-0">
         <SidebarMenu
           isSidebarOpen={isSidebarOpen}
           onIsSidebarOpenChange={setIsSidebarOpen}
           outlineTitle={outlineTitle}
           uiSwitch={uiSwitch}
         />
-        <div className={`${styles.content} rspress-doc-container flex`}>
-          <div className={`flex-1 ${isOverviewPage ? '' : 'overflow-x-auto'}`}>
+        <div className={`${styles.content} rspress-doc-container rp-flex`}>
+          <div
+            className={`rp-flex-1 ${isOverviewPage ? '' : 'rp-overflow-x-auto'}`}
+          >
             {isOverviewPage ? (
               <>
                 {beforeDocContent}

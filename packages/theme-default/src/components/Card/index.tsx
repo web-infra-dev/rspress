@@ -19,12 +19,15 @@ interface CardProps {
 
 export function Card({ content, title, icon, style }: CardProps) {
   return (
-    <div className="border border-gray-400 rounded-lg p-6" style={style}>
-      <p className="flex items-center gap-2 mb-4">
+    <div
+      className="rp-border rp-border-gray-400 rp-rounded-lg rp-p-6"
+      style={style}
+    >
+      <p className="rp-flex rp-items-center rp-gap-2 rp-mb-4">
         {icon && <div>{icon}</div>}
-        {title && <span className="text-2xl font-bold">{title}</span>}
+        {title && <span className="rp-text-2xl rp-font-bold">{title}</span>}
       </p>
-      <div className="text-base overflow-auto">{content}</div>
+      <div className="rp-text-base rp-overflow-auto">{content}</div>
     </div>
   );
 }

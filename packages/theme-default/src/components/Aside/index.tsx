@@ -22,7 +22,7 @@ const TocItem = ({
       <a
         href={`#${header.id}`}
         title={parseInlineMarkdownText(header.text)}
-        className="aside-link transition-all duration-300 hover:text-text-1 text-text-2 block"
+        className="aside-link rp-transition-all rp-duration-300 hover:rp-text-text-1 rp-text-text-2 rp-block"
         style={{
           marginLeft: (header.depth - baseHeaderLevel) * 12,
           fontWeight: 'semibold',
@@ -32,7 +32,7 @@ const TocItem = ({
           window.location.hash = header.id;
         }}
       >
-        <span className="aside-link-text block">
+        <span className="aside-link-text rp-block">
           {renderInlineMarkdown(header.text)}
         </span>
       </a>
@@ -79,13 +79,16 @@ export function Aside(props: { headers: Header[]; outlineTitle: string }) {
   }, [decodedHash, headers, pathname]);
 
   return (
-    <div className="flex flex-col">
-      <div id="aside-container" className="relative text-sm font-medium">
-        <div className="leading-7 block text-sm font-semibold pl-3">
+    <div className="rp-flex rp-flex-col">
+      <div
+        id="aside-container"
+        className="rp-relative rp-text-sm rp-font-medium"
+      >
+        <div className="rp-leading-7 rp-block rp-text-sm rp-font-semibold rp-pl-3">
           {props.outlineTitle}
         </div>
-        <nav className="mt-1">
-          <ul className="relative">
+        <nav className="rp-mt-1">
+          <ul className="rp-relative">
             {headers.map(header => (
               <TocItem
                 key={`${pathname}#${header.id}`}

@@ -15,7 +15,7 @@ const TocItem = ({
     <li>
       <Link
         href={`#${header.id}`}
-        className={'rspress-toc-link sm:text-normal text-sm'}
+        className={'rspress-toc-link sm:rp-text-normal rp-text-sm'}
         style={{
           marginLeft: (header.depth - 2) * 12,
         }}
@@ -23,7 +23,7 @@ const TocItem = ({
           onItemClick?.(header);
         }}
       >
-        <span className={'rspress-toc-link-text block'}>
+        <span className={'rspress-toc-link-text rp-block'}>
           {renderInlineMarkdown(header.text)}
         </span>
       </Link>

@@ -9,10 +9,10 @@ export function HomeFooter() {
   }
 
   return (
-    <footer className="absolute bottom-0 mt-12 py-8 px-6 sm:p-8 w-full border-t border-solid border-divider-light">
-      <div className="m-auto w-full text-center">
+    <footer className="rp-absolute rp-bottom-0 rp-mt-12 rp-py-8 rp-px-6 sm:rp-p-8 rp-w-full rp-border-t rp-border-solid rp-border-divider-light">
+      <div className="rp-m-auto rp-w-full rp-text-center">
         <div
-          className="font-medium text-sm text-text-2"
+          className="rp-font-medium rp-text-sm rp-text-text-2"
           dangerouslySetInnerHTML={{
             __html: message,
           }}

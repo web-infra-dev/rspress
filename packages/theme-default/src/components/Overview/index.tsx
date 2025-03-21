@@ -52,7 +52,7 @@ const SearchInput = ({
   filterPlaceholderText: string;
 }) => {
   return (
-    <div className="flex items-center justify-start gap-4">
+    <div className="rp-flex rp-items-center rp-justify-start rp-gap-4">
       <label htmlFor="api-filter">{filterNameText}</label>
       <input
         ref={searchRef}
@@ -61,7 +61,7 @@ const SearchInput = ({
         id="api-filter"
         value={query}
         onChange={e => setQuery(e.target.value)}
-        className="border border-gray-300 dark:border-gray-700 rounded-lg px-3 py-2 transition-shadow duration-250 ease-in-out focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-opacity-50"
+        className="rp-border rp-border-gray-300 dark:rp-border-gray-700 rp-rounded-lg rp-px-3 rp-py-2 rp-transition-shadow rp-duration-250 rp-ease-in-out focus:rp-outline-none focus:rp-ring-2 focus:rp-ring-green-500 focus:rp-ring-opacity-50"
       />
     </div>
   );
@@ -75,25 +75,25 @@ const GroupRenderer = ({
   group: Group;
   styles: Record<string, string>;
 }) => (
-  <div className="mb-16" key={group.name}>
+  <div className="rp-mb-16" key={group.name}>
     <h2>{renderInlineMarkdown(group.name)}</h2>
     <div className={styles.overviewGroups}>
       {group.items.map(item => (
         <div className={styles.overviewGroup} key={item.link}>
-          <div className="flex">
+          <div className="rp-flex">
             <h3 style={{ marginBottom: 8 }}>
               <Link href={normalizeHref(item.link)}>
                 {renderInlineMarkdown(item.text)}
               </Link>
             </h3>
           </div>
-          <ul className="list-none">
+          <ul className="rp-list-none">
             {item.headers?.map(header => (
               <li
                 key={header.id}
                 className={`${styles.overviewGroupLi} ${
                   styles[`level${header.depth}`]
-                } first:mt-2`}
+                } first:rp-mt-2`}
               >
                 <Link href={`${normalizeHref(item.link)}#${header.id}`}>
                   {renderInlineMarkdown(header.text)}
@@ -290,10 +290,11 @@ export function Overview(props: {
   const overviewTitle = title || 'Overview';
 
   return (
-    <div className="overview-index mx-auto">
-      <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between mb-10">
-        <h1 className="text-3xl leading-10 tracking-tight">{overviewTitle}</h1>
-        {/* Added search input */}
+    <div className="overview-index rp-mx-auto">
+      <div className="rp-flex rp-flex-col sm:rp-flex-row rp-items-start sm:rp-items-center rp-justify-between rp-mb-10">
+        <h1 className="rp-text-3xl rp-leading-10 rp-tracking-tight">
+          {overviewTitle}
+        </h1>
         <SearchInput
           query={query}
           setQuery={setQuery}
@@ -308,7 +309,7 @@ export function Overview(props: {
           <GroupRenderer key={group?.name} group={group} styles={styles} />
         ))
       ) : (
-        <div className="text-lg text-gray-500 text-center mt-9 pt-9 border-t border-gray-200 dark:border-gray-800">
+        <div className="rp-text-lg rp-text-gray-500 rp-text-center rp-mt-9 rp-pt-9 rp-border-t rp-border-gray-200 dark:rp-border-gray-800">
           {`${filterNoResultText}: ${query}`}
         </div>
       )}

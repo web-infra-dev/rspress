@@ -39,7 +39,7 @@ export function SidebarItem(props: SidebarItemProps) {
         ref={ref}
         className={`${
           active ? styles.menuItemActive : styles.menuItem
-        } mt-0.5 py-2 px-3 font-medium flex`}
+        } rp-mt-0.5 rp-py-2 rp-px-3 rp-font-medium rp-flex`}
         style={{
           // The first level menu item will have the same font size as the sidebar group
           fontSize: depth === 0 ? '14px' : '13px',

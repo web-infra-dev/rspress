@@ -52,9 +52,9 @@ export function Badge({
 
   return (
     <span
-      className={`inline-flex items-center justify-center rounded-full border border-solid ${
-        outline ? 'border-current' : 'border-transparent'
-      } font-semibold align-middle px-2.5 h-6 gap-1 text-xs ${styles.badge} ${styles[type]} ${
+      className={`rp-inline-flex rp-items-center rp-justify-center rp-rounded-full rp-border rp-border-solid ${
+        outline ? 'rp-border-current' : 'rp-border-transparent'
+      } rp-font-semibold rp-align-middle rp-px-2.5 rp-h-6 rp-gap-1 rp-text-xs ${styles.badge} ${styles[type]} ${
         outline ? styles.outline : ''
       }`}
     >

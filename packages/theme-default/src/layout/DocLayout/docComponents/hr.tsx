@@ -4,7 +4,7 @@ export const Hr = (props: ComponentProps<'hr'>) => {
   return (
     <hr
       {...props}
-      className="my-12 border-t border-solid border-divider-light"
+      className="rp-my-12 rp-border-t rp-border-solid rp-border-divider-light"
     />
   );
 };

@@ -17,13 +17,13 @@ export function HomeLayout(props: HomeLayoutProps) {
 
   return (
     <div
-      className="relative"
+      className="rp-relative"
       style={{
         minHeight: 'calc(100vh - var(--rp-nav-height))',
         paddingBottom: '80px',
       }}
     >
-      <div className="pb-12">
+      <div className="rp-pb-12">
         {beforeHero}
         <HomeHero frontmatter={frontmatter} routePath={routePath} />
         {afterHero}

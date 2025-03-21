@@ -178,7 +178,7 @@ export function Tab({
 }: ComponentPropsWithRef<'div'> &
   Pick<TabItem, 'label' | 'value'>): ReactElement {
   return (
-    <div {...props} className="rounded px-2">
+    <div {...props} className="rp-rounded rp-px-2">
       {children}
     </div>
   );

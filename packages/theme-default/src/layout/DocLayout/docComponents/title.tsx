@@ -5,7 +5,7 @@ export const H1 = (props: React.ComponentProps<'h1'>) => {
   return (
     <h1
       {...props}
-      className={`rspress-doc-title text-3xl mb-10 leading-10 tracking-tight ${styles.title}`}
+      className={`rspress-doc-title rp-text-3xl rp-mb-10 rp-leading-10 rp-tracking-tight ${styles.title}`}
     />
   );
 };
@@ -14,19 +14,27 @@ export const H2 = (props: React.ComponentProps<'h2'>) => {
   return (
     <h2
       {...props}
-      className={`mt-12 mb-6 pt-8 text-2xl tracking-tight border-t-[1px] border-divider-light ${styles.title}`}
+      className={`rp-mt-12 rp-mb-6 rp-pt-8 rp-text-2xl rp-tracking-tight rp-border-t rp-border-divider-light ${styles.title}`}
     />
   );
 };
 
 export const H3 = (props: React.ComponentProps<'h3'>) => {
   return (
-    <h3 {...props} className={`mt-10 mb-2 leading-7 text-xl ${styles.title}`} />
+    <h3
+      {...props}
+      className={`rp-mt-10 rp-mb-2 rp-leading-7 rp-text-xl ${styles.title}`}
+    />
   );
 };
 
 export const H4 = (props: React.ComponentProps<'h4'>) => {
-  return <h4 {...props} className={`mt-8 leading-6 text-lg ${styles.title}`} />;
+  return (
+    <h4
+      {...props}
+      className={`rp-mt-8 rp-leading-6 rp-text-lg ${styles.title}`}
+    />
+  );
 };
 
 export const H5 = (props: React.ComponentProps<'h5'>) => {
