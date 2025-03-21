@@ -54,7 +54,9 @@ export Button = () => <button />;
 
 ## Front matter
 
-你可以在 Markdown 文件的开头添加 Front Matter，它是一个 YAML 格式的对象，用于定义一些元数据。例如：
+你可以在 Markdown 文件的顶部添加 front matter，它是一个特殊部分，使用 [YAML](https://yaml.org/) 格式来定义元数据，被包含在文件顶部的三个连字符 `---` 之间。
+
+例如使用 [title](/api/config/config-frontmatter#title) 来指定页面的标题：
 
 ```yaml
 ---
@@ -62,9 +64,7 @@ title: Hello world
 ---
 ```
 
-> 注意：默认情况下，Rspress 使用 h1 标题作为 html 的标题。
-
-你还可以在正文中访问 Front Matter 中定义的属性，例如：
+你还可以在正文中访问 front matter 中定义的属性，例如：
 
 ```mdx
 ---
@@ -79,6 +79,10 @@ title: Hello world
 ```html
 <h1>Hello world</h1>
 ```
+
+:::tip
+查看 [Front matter 配置](/api/config/config-frontmatter) 了解可用的 front matter 配置。
+:::
 
 ## 自定义容器
 
