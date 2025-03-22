@@ -19,6 +19,7 @@ export async function hintThemeBreakingChange(customThemeDir: string) {
       if (THEME_DEFAULT_EXPORT_PATTERN.test(content)) {
         useDefaultExportFilePath = filePath;
       }
+      break;
     }
   }
   if (useDefaultExportFilePath) {
