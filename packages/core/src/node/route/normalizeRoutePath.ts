@@ -1,19 +1,19 @@
 import { addLeadingSlash, addTrailingSlash, withBase } from '@rspress/shared';
 import { DEFAULT_PAGE_EXTENSIONS } from '@rspress/shared/constants';
 
-export const normalizeRoutePath = (
+export const getRoutePathParts = (
   routePath: string,
-  base: string,
   lang: string,
   version: string,
   langs: string[],
   versions: string[],
-  extensions: string[] = DEFAULT_PAGE_EXTENSIONS,
 ) => {
   const hasTrailSlash = routePath.endsWith('/');
+
   let versionPart = '';
   let langPart = '';
   let purePathPart = '';
+
   const parts: string[] = routePath.split('/').filter(Boolean);
 
   if (version) {
@@ -35,28 +35,47 @@ export const normalizeRoutePath = (
       parts.shift();
     }
   }
+
   purePathPart = parts.join('/');
 
-  const extensionsWithoutDot = extensions.map(i => {
-    return i.slice(1);
-  });
+  return [
+    versionPart,
+    langPart,
+    // restore the trail slash
+    hasTrailSlash ? addTrailingSlash(purePathPart) : purePathPart,
+  ] as const;
+};
+
+export const normalizeRoutePath = (
+  routePath: string,
+  base: string,
+  lang: string,
+  version: string,
+  langs: string[],
+  versions: string[],
+  extensions: string[] = DEFAULT_PAGE_EXTENSIONS,
+) => {
+  const [versionPart, langPart, purePathPart] = getRoutePathParts(
+    routePath,
+    lang,
+    version,
+    langs,
+    versions,
+  );
+  const extensionsWithoutDot = extensions.map(i => i.slice(1));
   const cleanExtensionPattern = new RegExp(
     `\\.(${extensionsWithoutDot.join('|')})$`,
     'i',
   );
 
-  let normalizedRoutePath = addLeadingSlash(
-    [versionPart, langPart, purePathPart].filter(Boolean).join('/'),
+  const normalizedRoutePath = addLeadingSlash(
+    [versionPart, langPart].filter(Boolean).join('/') +
+      addLeadingSlash(purePathPart),
   )
     // remove the extension
     .replace(cleanExtensionPattern, '')
     .replace(/\.html$/, '')
     .replace(/\/index$/, '/');
-
-  // restore the trail slash
-  if (hasTrailSlash) {
-    normalizedRoutePath = addTrailingSlash(normalizedRoutePath);
-  }
 
   return {
     routePath: withBase(normalizedRoutePath, base),
