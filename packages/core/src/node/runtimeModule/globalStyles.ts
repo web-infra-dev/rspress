@@ -8,7 +8,7 @@ export async function globalStylesVMPlugin(context: FactoryContext) {
     await Promise.all(
       [config?.globalStyles || '', ...globalStylesByPlugins]
         .filter(source => source.length > 0)
-        .map(async source => {
+        .map(source => {
           return `import ${JSON.stringify(source)};`;
         }),
     )

@@ -38,8 +38,7 @@ export const collectHeaderText = (node: Element) => {
       child.value = textPart;
       text += textPart;
       id = idPart;
-    }
-    if (child.type === 'element') {
+    } else if (child.type === 'element') {
       child.children.forEach(c => {
         if (c.type === 'text') {
           text += c.value;
