@@ -1,4 +1,4 @@
-import { useLocation, usePageData } from '@rspress/runtime';
+import { useI18n, useLocation, usePageData } from '@rspress/runtime';
 import ArrowRight from '@theme-assets/arrow-right';
 import MenuIcon from '@theme-assets/menu';
 import { useCallback, useEffect, useRef, useState } from 'react';
@@ -22,6 +22,7 @@ export function SidebarMenu({
   const { page } = usePageData();
   const tocContainerRef = useRef<HTMLDivElement>(null);
   const outlineButtonRef = useRef<HTMLButtonElement>(null);
+  const t = useI18n();
 
   const [isTocOpen, setIsTocOpen] = useState<boolean>(false);
 
@@ -80,7 +81,7 @@ export function SidebarMenu({
               <div className="text-md mr-2">
                 <SvgWrapper icon={MenuIcon} />
               </div>
-              <span className="text-sm">Menu</span>
+              <span className="text-sm">{t('menuText')}</span>
             </button>
             {isSidebarOpen && (
               <div

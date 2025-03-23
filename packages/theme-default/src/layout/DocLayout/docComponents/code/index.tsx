@@ -1,4 +1,4 @@
-import { usePageData } from '@rspress/runtime';
+import { useI18n, usePageData } from '@rspress/runtime';
 import IconWrap from '@theme-assets/wrap';
 import IconWrapped from '@theme-assets/wrapped';
 import { useRef, useState } from 'react';
@@ -22,6 +22,7 @@ export function Code(props: CodeProps) {
   const [codeWrap, setCodeWrap] = useState(defaultWrapCode);
   const wrapButtonRef = useRef<HTMLButtonElement>(null);
   const codeBlockRef = useRef<HTMLDivElement>(null);
+  const t = useI18n();
 
   const { className } = props;
   const language = className?.replace(/language-/, '');
@@ -69,7 +70,7 @@ export function Code(props: CodeProps) {
         <button
           ref={wrapButtonRef}
           onClick={() => toggleCodeWrap(wrapButtonRef.current)}
-          title="Toggle code wrap"
+          title={t('toggleCodeWrap')}
         >
           <SvgWrapper icon={IconWrapped} className={styles.iconWrapped} />
           <SvgWrapper icon={IconWrap} className={styles.iconWrap} />
