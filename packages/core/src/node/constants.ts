@@ -17,6 +17,7 @@ export const inlineThemeScript = `{
   const preferDark = window.matchMedia('(prefers-color-scheme: dark)').matches
   const isDark = !saved || saved === 'auto' ? preferDark : saved === 'dark'
   document.documentElement.classList.toggle('dark', isDark)
+  document.documentElement.classList.toggle('rp-dark', isDark)
   document.documentElement.style.colorScheme = isDark ? 'dark' : 'light'
 }`
   .replace(/\n/g, ';')
