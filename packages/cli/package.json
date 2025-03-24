@@ -50,10 +50,10 @@
   },
   "devDependencies": {
     "@microsoft/api-extractor": "^7.52.1",
-    "@rslib/core": "0.5.4",
+    "@rslib/core": "0.5.5",
     "@types/jest": "~29.5.14",
     "@types/node": "^18.11.17",
-    "@types/react": "^18.3.18",
+    "@types/react": "^18.3.19",
     "rimraf": "^6.0.1",
     "typescript": "^5.8.2"
   },
