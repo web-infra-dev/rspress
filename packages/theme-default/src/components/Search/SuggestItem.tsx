@@ -77,13 +77,13 @@ export function SuggestItem({
     if (suggestion.type === 'header' || suggestion.type === 'title') {
       const { header, highlightInfoList } = suggestion;
       return (
-        <div className="font-medium">
+        <div className="rp-font-medium">
           {getHighlightedFragments(header, highlightInfoList)}
         </div>
       );
     }
 
-    return <div className="font-medium">{suggestion.header}</div>;
+    return <div className="rp-font-medium">{suggestion.header}</div>;
   };
 
   const renderStatementMatch = () => {
@@ -92,7 +92,7 @@ export function SuggestItem({
     }
     const { statement, highlightInfoList } = suggestion;
     return (
-      <div className="text-sm text-gray-light w-full">
+      <div className="rp-text-sm rp-text-gray-light rp-w-full">
         {getHighlightedFragments(statement, highlightInfoList)}
       </div>
     );

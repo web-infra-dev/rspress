@@ -33,7 +33,7 @@ export function HomeFeature({
   const features = frontmatter?.features;
 
   return (
-    <div className="overflow-hidden m-auto flex flex-wrap max-w-6xl">
+    <div className="rp-overflow-hidden rp-m-auto rp-flex rp-flex-wrap rp-max-w-6xl">
       {features?.map(feature => {
         const { icon, title, details, link: rawLink } = feature;
 
@@ -47,14 +47,12 @@ export function HomeFeature({
         return (
           <div
             key={title}
-            className={`${getGridClass(
-              feature,
-            )} rounded hover:var(--rp-c-brand)`}
+            className={`${getGridClass(feature)} rp-rounded hover:rp-var(--rp-c-brand)`}
           >
-            <div className="h-full p-2">
+            <div className="rp-h-full rp-p-2">
               <article
                 key={title}
-                className={`rspress-home-feature-card ${styles.featureCard} h-full p-8 rounded-4xl border-transparent`}
+                className={`rspress-home-feature-card ${styles.featureCard} rp-h-full rp-p-8 rp-rounded-4xl rp-border-transparent`}
                 style={{
                   cursor: link ? 'pointer' : 'auto',
                 }}
@@ -65,17 +63,17 @@ export function HomeFeature({
                 }}
               >
                 {icon ? (
-                  <div className="flex-center">
-                    <div className="rspress-home-feature-icon w-12 h-12 text-3xl text-center">
+                  <div className="rp-flex rp-items-center rp-justify-center">
+                    <div className="rspress-home-feature-icon rp-w-12 rp-h-12 rp-text-3xl rp-text-center">
                       {renderHtmlOrText(icon)}
                     </div>
                   </div>
                 ) : null}
 
-                <h2 className="rspress-home-feature-title font-bold text-center">
+                <h2 className="rspress-home-feature-title rp-font-bold rp-text-center">
                   {title}
                 </h2>
-                <p className="rspress-home-feature-detail leading-6 pt-2 text-sm text-text-2 font-medium">
+                <p className="rspress-home-feature-detail rp-leading-6 rp-pt-2 rp-text-sm rp-text-text-2 rp-font-medium">
                   {renderHtmlOrText(details)}
                 </p>
               </article>

@@ -25,17 +25,17 @@ export function LinkCard(props: LinkCardProps) {
 
   return (
     <div
-      className={`relative border border-gray-400 rounded-lg p-6 flex justify-between items-start hover:border-gray-500 transition-all duration-300 ${styles.linkCard}`}
+      className={`rp-relative rp-border rp-border-gray-400 rp-rounded-lg rp-p-6 rp-flex rp-justify-between rp-items-start hover:rp-border-gray-500 rp-transition-all rp-duration-300 ${styles.linkCard}`}
       style={style}
     >
-      <div className="flex flex-col">
+      <div className="rp-flex rp-flex-col">
         <a
           href={href}
-          className={`flex items-center gap-2 mb-4 ${styles.link}`}
+          className={`rp-flex rp-items-center rp-gap-2 rp-mb-4 ${styles.link}`}
         >
-          {title && <span className="text-2xl font-bold">{title}</span>}
+          {title && <span className="rp-text-2xl rp-font-bold">{title}</span>}
         </a>
-        <span className="text-base overflow-auto">{description}</span>
+        <span className="rp-text-base rp-overflow-auto">{description}</span>
       </div>
       <ArrowRight />
     </div>

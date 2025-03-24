@@ -151,7 +151,7 @@ export function Sidebar(props: Props) {
         <div className={styles.navTitleMask}>{navTitle || <NavBarTitle />}</div>
       )}
       <div className={`rspress-scrollbar ${styles.sidebarContent}`}>
-        <nav className="pb-2">
+        <nav className="rp-pb-2">
           {beforeSidebar}
           <SidebarList
             sidebarData={sidebarData}
