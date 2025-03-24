@@ -1,6 +1,6 @@
 {
   "name": "@rspress/plugin-shiki",
-  "version": "2.0.0-alpha.5",
+  "version": "2.0.0-alpha.6",
   "description": "A plugin for rspress to record the last updated time of the doc.",
   "bugs": "https://github.com/web-infra-dev/rspress/issues",
   "repository": {
