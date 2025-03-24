@@ -29,8 +29,7 @@ export async function launchDoc({
   let previewMode = pluginOptions?.previewMode;
   if (previewMode === 'web') {
     previewMode = 'internal';
-  }
-  if (previewMode === 'mobile') {
+  } else if (previewMode === 'mobile') {
     previewMode = 'iframe';
   }
   const json = JSON.parse(
