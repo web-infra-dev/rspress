@@ -16,7 +16,7 @@ export default function Redirect(props: RedirectsOptions = {}) {
   const { pathname, hash } = useLocation();
   const { redirects } = props;
 
-  // 使用useMemo预处理重定向规则，避免每次渲染都重新创建RegExp对象
+  // Use useMemo to preprocess redirect rules to avoid recreating RegExp objects every time you render
   const processedRedirects = useMemo(() => {
     if (!redirects?.length) return [];
 
@@ -27,19 +27,17 @@ export default function Redirect(props: RedirectsOptions = {}) {
   }, [redirects]);
 
   useEffect(() => {
-    // 如果没有重定向规则或者不在浏览器环境，则直接返回
+    // If there is no redirect rule or if it is not in the browser environment, it will be returned
     if (!processedRedirects.length || typeof window === 'undefined') {
       return;
     }
 
-    // 尝试查找匹配的重定向规则
     for (const { patterns, to } of processedRedirects) {
       for (const pattern of patterns) {
         try {
           const regex = new RegExp(pattern);
 
           if (regex.test(pathname)) {
-            // 找到匹配规则，执行重定向
             if (isExternalUrl(to)) {
               window.location.replace(to);
             } else {
@@ -48,7 +46,6 @@ export default function Redirect(props: RedirectsOptions = {}) {
             return;
           }
         } catch (error) {
-          // 处理无效的正则表达式
           console.warn(`Invalid redirect pattern: ${pattern}`, error);
         }
       }
