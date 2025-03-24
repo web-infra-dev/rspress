@@ -1,4 +1,46 @@
-import { normalizeRoutePath } from './normalizeRoutePath';
+import { getRoutePathParts, normalizeRoutePath } from './normalizeRoutePath';
+
+test('getRoutePathParts', () => {
+  expect(
+    getRoutePathParts('/v1/en/foo/bar', 'en', 'v1', ['zh', 'en'], ['v1', 'v2']),
+  ).toEqual(['', '', 'foo/bar']);
+  expect(
+    getRoutePathParts('/v1/zh/foo/bar', 'en', 'v1', ['zh', 'en'], ['v1', 'v2']),
+  ).toEqual(['', 'zh', 'foo/bar']);
+  expect(
+    getRoutePathParts('/v2/en/foo/bar', 'en', 'v1', ['zh', 'en'], ['v1', 'v2']),
+  ).toEqual(['v2', '', 'foo/bar']);
+  expect(
+    getRoutePathParts('/v2/zh/foo/bar', 'en', 'v1', ['zh', 'en'], ['v1', 'v2']),
+  ).toEqual(['v2', 'zh', 'foo/bar']);
+  expect(
+    getRoutePathParts('/v2/en/api/', 'en', 'v1', ['zh', 'en'], ['v1', 'v2']),
+  ).toEqual(['v2', '', 'api/']);
+
+  expect(
+    getRoutePathParts('/foo/bar', 'en', 'v1', ['zh', 'en'], ['v1', 'v2']),
+  ).toEqual(['', '', 'foo/bar']);
+
+  expect(
+    getRoutePathParts(
+      '/foo/bar/baz.xyz',
+      'en',
+      'v1',
+      ['zh', 'en'],
+      ['v1', 'v2'],
+    ),
+  ).toEqual(['', '', 'foo/bar/baz.xyz']);
+
+  expect(
+    getRoutePathParts(
+      '/foo/bar/baz.xyz',
+      'en',
+      'v1',
+      ['zh', 'en'],
+      ['v1', 'v2'],
+    ),
+  ).toEqual(['', '', 'foo/bar/baz.xyz']);
+});
 
 test('normalizeRoutePath', () => {
   expect(

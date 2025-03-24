@@ -1,20 +1,35 @@
 import path from 'node:path';
-import { isExternalUrl, normalizeHref, parseUrl, slash } from '@rspress/shared';
+import {
+  addLeadingSlash,
+  isExternalUrl,
+  normalizeHref,
+  parseUrl,
+  slash,
+} from '@rspress/shared';
+import { DEFAULT_PAGE_EXTENSIONS } from '@rspress/shared/constants';
 import { getNodeAttribute } from '@rspress/shared/node-utils';
 import type { Root } from 'mdast';
 import type { MdxjsEsm } from 'mdast-util-mdxjs-esm';
 import type { Plugin } from 'unified';
 import { visit } from 'unist-util-visit';
+
+import type { RouteService } from '../../route/RouteService';
 import { getASTNodeImport } from '../../utils';
 
 /**
  * Remark plugin to normalize a link href
  */
 export const remarkPluginNormalizeLink: Plugin<
-  [{ root: string; cleanUrls: boolean }],
+  [
+    {
+      root: string;
+      cleanUrls: boolean;
+      routeService?: RouteService;
+    },
+  ],
   Root
 > =
-  ({ root, cleanUrls }) =>
+  ({ root, cleanUrls, routeService }) =>
   (tree, file) => {
     const images: MdxjsEsm[] = [];
     visit(tree, 'link', node => {
@@ -36,13 +51,32 @@ export const remarkPluginNormalizeLink: Plugin<
 
       const extname = path.extname(url);
 
-      if (extname === '.md' || extname === '.mdx') {
-        url = url.replace(extname, '');
+      if (
+        (routeService?.extensions ?? DEFAULT_PAGE_EXTENSIONS).includes(extname)
+      ) {
+        url = url.replace(new RegExp(`\\${extname}$`), '');
       }
 
       const relativePath = path.relative(root, file.path);
+
       if (url.startsWith('.')) {
         url = path.posix.join(slash(path.dirname(relativePath)), url);
+      } else if (routeService) {
+        const [pathVersion, pathLang] = routeService.getRoutePathParts(
+          slash(relativePath),
+        );
+        const [urlVersion, urlLang, urlPath] =
+          routeService.getRoutePathParts(url);
+
+        url = addLeadingSlash(urlPath);
+
+        if (pathLang && urlLang !== pathLang) {
+          url = `/${pathLang}${url}`;
+        }
+
+        if (pathVersion && urlVersion !== pathVersion) {
+          url = `/${pathVersion}${url}`;
+        }
       }
 
       url = normalizeHref(url, cleanUrls);
