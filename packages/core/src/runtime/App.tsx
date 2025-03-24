@@ -37,17 +37,14 @@ export async function initPageData(routePath: string): Promise<PageData> {
     // Preload route component
     const mod = await matchedRoute.preload();
     const pagePath = cleanUrl(matchedRoute.filePath);
-    const extractPageInfo: BaseRuntimePageInfo = siteData.pages.find(page => {
-      const normalize = (p: string) =>
-        // compat the path that has no / suffix and ignore case
-        p
-          .replace(/\/$/, '')
-          .toLowerCase();
-      return isEqualPath(
-        normalize(page.routePath),
-        normalize(matchedRoute.path),
-      );
-    })!;
+    const normalize = (p: string) =>
+      // compat the path that has no / suffix and ignore case
+      p
+        .replace(/\/$/, '')
+        .toLowerCase();
+    const extractPageInfo: BaseRuntimePageInfo = siteData.pages.find(page =>
+      isEqualPath(normalize(page.routePath), normalize(matchedRoute.path)),
+    )!;
 
     // FIXME: when sidebar item is configured as link string, the sidebar text won't updated when page title changed
     // Reason: The sidebar item text depends on pageData, which is not updated when page title changed, because the pageData is computed once when build
