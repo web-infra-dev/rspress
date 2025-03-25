@@ -26,7 +26,7 @@ export function NavHamburger(props: Props) {
         aria-label="mobile hamburger"
         className={`${isScreenOpen ? styles.active : ''} rspress-mobile-hamburger ${
           styles.navHamburger
-        } text-gray-500`}
+        } rp-text-gray-500`}
       >
         <SvgWrapper icon={SmallMenu} fill="currentColor" />
       </button>
