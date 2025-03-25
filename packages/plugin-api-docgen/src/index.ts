@@ -51,7 +51,7 @@ export function pluginApiDocgen(options?: PluginOptions): RspressPlugin {
         pages.map(async page => {
           const { _filepath, lang } = page;
           let content = await fs.promises.readFile(_filepath, 'utf-8');
-          let matchResult = new RegExp(apiCompRegExp).exec(content);
+          let matchResult = apiCompRegExp.exec(content);
           if (!matchResult) {
             return;
           }
@@ -68,7 +68,7 @@ export function pluginApiDocgen(options?: PluginOptions): RspressPlugin {
               );
             }
             content = content.replace(matchContent, apiDoc);
-            matchResult = new RegExp(apiCompRegExp).exec(content);
+            matchResult = apiCompRegExp.exec(content);
           }
           page.content = content;
         }),
