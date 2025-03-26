@@ -444,7 +444,7 @@ export function SearchPanel({ focused, setFocused }: SearchPanelProps) {
     // if isSearching, show loading svg
     if (isSearching) {
       return (
-        <div className="flex flex-col items-center">
+        <div className="rp-flex rp-flex-col rp-items-center">
           <SvgWrapper icon={LoadingSvg} className="m-8 opacity-80" />
         </div>
       );
@@ -464,7 +464,7 @@ export function SearchPanel({ focused, setFocused }: SearchPanelProps) {
           const groupSuggestions = normalizedSuggestions[group] || [];
           return (
             <li key={group}>
-              <ul className="pb-2">
+              <ul className="rp-pb-2">
                 {groupSuggestions.map(suggestion => {
                   accumulateIndex++;
                   const suggestionIndex = accumulateIndex;
@@ -523,7 +523,7 @@ export function SearchPanel({ focused, setFocused }: SearchPanelProps) {
                 e.stopPropagation();
               }}
             >
-              <div className="flex items-center">
+              <div className="rp-flex rp-items-center">
                 <div className={styles.inputForm}>
                   <label>
                     <SvgWrapper icon={SearchSvg} />
@@ -556,7 +556,7 @@ export function SearchPanel({ focused, setFocused }: SearchPanelProps) {
                   </label>
                 </div>
                 <h2
-                  className="text-brand ml-2 sm:hidden cursor-pointer"
+                  className="rp-text-brand rp-ml-2 sm:rp-hidden rp-cursor-pointer"
                   onClick={e => {
                     e.stopPropagation();
                     clearSearchState();

@@ -3,6 +3,7 @@
 import fs from 'node:fs';
 import path from 'node:path';
 import type { RspressPlugin } from '@rspress/shared';
+import { logger } from '@rspress/shared/logger';
 import { apiDocMap } from './constants';
 import { docgen } from './docgen';
 import type { PluginOptions, SupportLanguages } from './types';
@@ -26,9 +27,10 @@ export function pluginApiDocgen(options?: PluginOptions): RspressPlugin {
     },
     async beforeBuild(config, isProd) {
       // only support zh , en and ru
-      const languages = (
+      const languages: SupportLanguages[] = (
         config.themeConfig?.locales?.map(locale => locale.lang) ||
-        config.locales?.map(locale => locale.lang) || [config.lang || 'en']
+        config.locales?.map(locale => locale.lang) ||
+        []
       ).filter((lang): lang is SupportLanguages =>
         ['zh', 'en', 'ru'].includes(lang),
       ) as SupportLanguages[];
@@ -49,7 +51,7 @@ export function pluginApiDocgen(options?: PluginOptions): RspressPlugin {
         pages.map(async page => {
           const { _filepath, lang } = page;
           let content = await fs.promises.readFile(_filepath, 'utf-8');
-          let matchResult = new RegExp(apiCompRegExp).exec(content);
+          let matchResult = apiCompRegExp.exec(content);
           if (!matchResult) {
             return;
           }
@@ -57,9 +59,16 @@ export function pluginApiDocgen(options?: PluginOptions): RspressPlugin {
             const matchContent = matchResult[0];
             const moduleName = matchResult[2] ?? matchResult[5] ?? '';
             const apiDoc =
-              apiDocMap[moduleName] ?? apiDocMap[`${moduleName}-${lang}`] ?? '';
+              apiDocMap[moduleName] ??
+              apiDocMap[`${moduleName}-${lang ? lang : 'en'}`] ??
+              '';
+            if (matchContent && !apiDoc) {
+              logger.warn(
+                `No api doc found for module: ${moduleName} in lang: ${lang ?? 'en'}`,
+              );
+            }
             content = content.replace(matchContent, apiDoc);
-            matchResult = new RegExp(apiCompRegExp).exec(content);
+            matchResult = apiCompRegExp.exec(content);
           }
           page.content = content;
         }),

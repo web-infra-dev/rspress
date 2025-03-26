@@ -14,14 +14,14 @@ export function SourceCode(props: SourceCodeProps) {
   const { sourceCodeText = 'Source' } = useLocaleSiteData();
   return (
     <div
-      className={`inline-block rounded border border-solid border-gray-light-3 dark:border-divider text-gray-400 ${styles.sourceCode}`}
+      className={`rp-inline-block rp-rounded rp-border rp-border-solid rp-border-gray-light-3 dark:rp-border-divider rp-text-gray-400 ${styles.sourceCode}`}
     >
       <a
         href={href}
         target="_blank"
-        className="flex items-center content-center transition-all duration-300 text-xs px-2 py-1 "
+        className="rp-flex rp-items-center rp-content-center rp-transition-all rp-duration-300 rp-text-xs rp-px-2 rp-py-1"
       >
-        <span className="mr-2 inline-flex w-4 h-4">
+        <span className="rp-mr-2 rp-inline-flex rp-w-4 rp-h-4">
           {<SvgWrapper icon={platform === 'gitlab' ? Gitlab : Github} />}
         </span>
         <span>{sourceCodeText}</span>

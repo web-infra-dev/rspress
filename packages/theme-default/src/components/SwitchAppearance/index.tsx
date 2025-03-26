@@ -86,17 +86,17 @@ export function SwitchAppearance({ onClick }: { onClick?: () => void }) {
   };
 
   return (
-    <div onClick={handleClick} className="md:mr-2 rspress-nav-appearance">
-      <div className="p-1 border border-solid border-gray-300 text-gray-400  cursor-pointer rounded-md hover:border-gray-600 hover:text-gray-600 dark:hover:border-gray-200 dark:hover:text-gray-200 transition-all duration-300 w-7 h-7">
+    <div onClick={handleClick} className="md:rp-mr-2 rspress-nav-appearance">
+      <div className="rp-p-1 rp-border rp-border-solid rp-border-gray-300 rp-text-gray-400 rp-cursor-pointer rp-rounded-md hover:rp-border-gray-600 hover:rp-text-gray-600 dark:hover:rp-border-gray-200 dark:hover:rp-text-gray-200 rp-transition-all rp-duration-300 rp-w-7 rp-h-7">
         <SvgWrapper
-          className="dark:hidden"
+          className="dark:rp-hidden"
           icon={SunSvg}
           width="18"
           height="18"
           fill="currentColor"
         />
         <SvgWrapper
-          className="hidden dark:block"
+          className="rp-hidden dark:rp-block"
           icon={MoonSvg}
           width="18"
           height="18"

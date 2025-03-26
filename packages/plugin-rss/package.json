@@ -1,6 +1,6 @@
 {
   "name": "@rspress/plugin-rss",
-  "version": "2.0.0-alpha.5",
+  "version": "2.0.0-alpha.7",
   "description": "A plugin for rss generation for rspress",
   "bugs": "https://github.com/web-infra-dev/rspress/issues",
   "repository": {
@@ -34,16 +34,16 @@
     "feed": "^4.2.2"
   },
   "devDependencies": {
-    "@rslib/core": "0.5.4",
+    "@rslib/core": "0.5.5",
     "@rspress/runtime": "workspace:*",
     "@types/node": "^18.11.17",
-    "@types/react": "^18.3.18",
+    "@types/react": "^18.3.19",
     "react": "^18.3.1",
     "typescript": "^5.8.2"
   },
   "peerDependencies": {
     "react": ">=17.0.0",
-    "rspress": "workspace:^2.0.0-alpha.5"
+    "rspress": "workspace:^2.0.0-alpha.7"
   },
   "engines": {
     "node": ">=14.17.6"

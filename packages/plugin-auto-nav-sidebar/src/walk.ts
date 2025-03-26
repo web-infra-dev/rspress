@@ -321,16 +321,19 @@ export async function walk(
   ).filter(Boolean) as string[];
   // Every sub dir will represent a group of sidebar
   const sidebarConfig: Sidebar = {};
-  for (const subDir of subDirs) {
-    const sidebarGroupKey = `${routePrefix}${subDir}`;
-    sidebarConfig[sidebarGroupKey] = await scanSideMeta(
-      path.join(workDir, subDir),
-      workDir,
-      docsDir,
-      routePrefix,
-      extensions,
-    );
-  }
+
+  await Promise.all(
+    subDirs.map(async subDir => {
+      const sidebarGroupKey = `${routePrefix}${subDir}`;
+      sidebarConfig[sidebarGroupKey] = await scanSideMeta(
+        path.join(workDir, subDir),
+        workDir,
+        docsDir,
+        routePrefix,
+        extensions,
+      );
+    }),
+  );
   return {
     nav: navConfig as NavItem[],
     sidebar: sidebarConfig,

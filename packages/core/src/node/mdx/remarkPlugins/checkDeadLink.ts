@@ -64,7 +64,7 @@ export const remarkCheckDeadLinks: Plugin<
         return;
       }
 
-      if (!url.startsWith('http') && !url.startsWith('https')) {
+      if (!url.startsWith('http://') && !url.startsWith('https://')) {
         const { routePath: normalizeUrl } = routeService.normalizeRoutePath(
           // fix: windows path
           url.split(path.sep).join('/')?.split('#')[0],

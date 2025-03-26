@@ -54,10 +54,10 @@ export function Nav(props: NavProps) {
 
   const NavMenu = ({ menuItems }: { menuItems: NavItem[] }) => {
     return (
-      <div className="rspress-nav-menu menu h-14">
+      <div className="rspress-nav-menu rp-flex rp-justify-around rp-items-center rp-text-sm rp-font-bold rp-h-14">
         {menuItems.map(item => {
           return 'items' in item || Array.isArray(item) ? (
-            <div key={item.text} className="mx-3 last:mr-0">
+            <div key={item.text} className="rp-mx-3 last:rp-mr-0">
               <NavMenuGroup
                 {...item}
                 base={base}
@@ -107,16 +107,16 @@ export function Nav(props: NavProps) {
     return (
       <div className={styles.rightNav}>
         {hasSearch && (
-          <div className="flex sm:flex-1 items-center sm:pl-4 sm:pr-2">
+          <div className="rp-flex sm:rp-flex-1 rp-items-center sm:rp-pl-4 sm:rp-pr-2">
             <Search />
           </div>
         )}
         <NavMenu menuItems={rightMenuItems} />
-        <div className="flex-center flex-row">
+        <div className="rp-flex rp-items-center rp-justify-center rp-flex-row">
           {hasMultiLanguage && <NavTranslations />}
           {hasMultiVersion && <NavVersions />}
           {hasAppearanceSwitch && (
-            <div className="mx-2">
+            <div className="rp-mx-2">
               <SwitchAppearance />
             </div>
           )}
@@ -138,18 +138,18 @@ export function Nav(props: NavProps) {
     <>
       {beforeNav}
       <div
-        className={`${styles.navContainer} rspress-nav px-6 ${
+        className={`${styles.navContainer} rspress-nav rp-px-6 ${
           // Only hidden when it's not mobile
           hiddenNav && !isMobile ? styles.hidden : ''
         } ${computeNavPosition()}`}
       >
         <div
-          className={`${styles.container} flex justify-between items-center h-full`}
+          className={`${styles.container} rp-flex rp-justify-between rp-items-center rp-h-full`}
         >
           {beforeNavTitle}
           {navTitle || <NavBarTitle />}
           {afterNavTitle}
-          <div className="flex flex-1 justify-end items-center">
+          <div className="rp-flex rp-flex-1 rp-justify-end rp-items-center">
             {leftNav()}
             {rightNav()}
             {afterNavMenu}

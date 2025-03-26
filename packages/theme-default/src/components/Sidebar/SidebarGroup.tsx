@@ -104,14 +104,14 @@ export function SidebarGroup(props: SidebarItemProps) {
   return (
     <section
       key={id}
-      className="rspress-sidebar-section mt-0.5 block"
+      className="rspress-sidebar-section rp-mt-0.5 rp-block"
       data-context={item.context}
       style={{
         marginLeft: depth === 0 ? 0 : '18px',
       }}
     >
       <div
-        className={`rspress-sidebar-collapse flex justify-between items-center ${
+        className={`rspress-sidebar-collapse rp-flex rp-justify-between rp-items-center ${
           active ? styles.menuItemActive : styles.menuItem
         }`}
         data-context={item.context}
@@ -130,14 +130,14 @@ export function SidebarGroup(props: SidebarItemProps) {
         }}
       >
         <h2
-          className="py-2 px-3 text-sm font-medium flex"
+          className="rp-py-2 rp-px-3 rp-text-sm rp-font-medium rp-flex"
           style={{
             ...(depth === 0 ? highlightTitleStyle : {}),
           }}
         >
           <Tag tag={item.tag} />
           <span
-            className="flex-center"
+            className="rp-flex rp-items-center rp-justify-center"
             style={{
               fontSize: depth === 0 ? '14px' : '13px',
             }}
@@ -147,7 +147,7 @@ export function SidebarGroup(props: SidebarItemProps) {
         </h2>
         {collapsible && (
           <div
-            className={`${styles.collapseContainer} p-2 rounded-xl`}
+            className={`${styles.collapseContainer} rp-p-2 rp-rounded-xl`}
             onClick={toggleCollapse}
           >
             {collapsibleIcon}
@@ -156,7 +156,7 @@ export function SidebarGroup(props: SidebarItemProps) {
       </div>
       <div
         ref={containerRef}
-        className="transition-all duration-300 ease-in-out"
+        className="rp-transition-all rp-duration-300 rp-ease-in-out"
         style={{
           overflow: 'hidden',
           maxHeight: initialState.current ? 0 : undefined,
@@ -164,7 +164,7 @@ export function SidebarGroup(props: SidebarItemProps) {
       >
         <div
           ref={innerRef}
-          className="rspress-sidebar-group transition-opacity duration-500 ease-in-out"
+          className="rspress-sidebar-group rp-transition-opacity rp-duration-500 rp-ease-in-out"
           style={{
             opacity: initialState.current ? 0 : 1,
             marginLeft: depth === 0 ? '12px' : 0,

@@ -14,7 +14,7 @@ export function LastUpdated() {
     themeConfig?.lastUpdatedText || localesLastUpdatedText;
 
   return (
-    <div className="flex text-sm text-text-2 leading-6 sm:leading-8 font-medium">
+    <div className="rp-flex rp-text-sm rp-text-text-2 rp-leading-6 sm:rp-leading-8 rp-font-medium">
       <p>
         {lastUpdatedText}: <span>{lastUpdatedTime}</span>
       </p>

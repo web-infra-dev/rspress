@@ -1,6 +1,7 @@
 import type { Config } from 'tailwindcss';
 
 export default {
+  prefix: 'rp-',
   content: ['./src/**/*.{js,ts,jsx,tsx}'],
   darkMode: 'class',
   theme: {

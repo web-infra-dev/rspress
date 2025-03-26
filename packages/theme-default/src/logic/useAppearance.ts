@@ -68,6 +68,7 @@ export const useThemeState = () => {
 
   useEffect(() => {
     document.documentElement.classList.toggle('dark', theme === 'dark');
+    document.documentElement.classList.toggle('rp-dark', theme === 'dark');
     document.documentElement.style.colorScheme = theme;
   }, [theme]);
 

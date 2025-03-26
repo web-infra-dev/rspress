@@ -1,6 +1,6 @@
 {
   "name": "@rspress/docs",
-  "version": "2.0.0-alpha.5",
+  "version": "2.0.0-alpha.7",
   "repository": {
     "type": "git",
     "url": "https://github.com/web-infra-dev/rspress",
@@ -19,7 +19,7 @@
     "@rsbuild/plugin-sass": "~1.2.2",
     "@rspress/plugin-algolia": "workspace:*",
     "@rstack-dev/doc-ui": "1.6.0",
-    "@types/react": "^18.3.18",
+    "@types/react": "^18.3.19",
     "framer-motion": "12.0.6",
     "rsbuild-plugin-google-analytics": "^1.0.3",
     "rsbuild-plugin-open-graph": "^1.0.2",
