@@ -98,7 +98,7 @@
     "@types/react-dom": "^18.3.5",
     "memfs": "^4.17.0",
     "postcss": "8.5.3",
-    "rehype-stringify": "^9.0.4",
+    "rehype-stringify": "^10.0.1",
     "remark-mdx": "2.3.0",
     "remark-parse": "^10.0.2",
     "remark-rehype": "^10.1.0",
