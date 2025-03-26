@@ -10,6 +10,7 @@ import {
 import { loadFrontMatter } from '@rspress/shared/node-utils';
 import { htmlToText } from 'html-to-text';
 import { importStatementRegex } from '../../constants';
+import { mdxToMd } from '../../mdx/mdxToMd';
 import type { RouteService } from '../../route/RouteService';
 import { flattenMdxContent } from '../../utils';
 import { applyReplaceRules } from '../../utils/applyReplaceRules';
@@ -40,7 +41,8 @@ export async function extractPageData(
   routeService: RouteService,
   highlighterLangs: Set<string>,
   searchCodeBlocks: boolean,
-): Promise<PageIndexInfo[]> {
+): Promise<{ pageData: PageIndexInfo[]; mdContents: Record<string, string> }> {
+  const mdContents: Record<string, string> = {};
   const pageData = await Promise.all(
     routeService
       .getRoutes()
@@ -82,6 +84,20 @@ export async function extractPageData(
         );
 
         content = flattenContent.replace(importStatementRegex, '');
+
+        // #region Emit .md file
+        const filepath = route.absolutePath;
+        const docDirectory = root;
+        const isMD = path.extname(filepath).slice(1) === 'md';
+        let mdContent: string | Buffer;
+        if (isMD) {
+          mdContent = content;
+        } else {
+          mdContent = (await mdxToMd(content, filepath, docDirectory)).value;
+        }
+        const outFilePath = `${route.routePath}.md`;
+        mdContents[outFilePath] = mdContent.toString();
+        // #endregion
 
         const {
           html: rawHtml,
@@ -188,5 +204,5 @@ export async function extractPageData(
         } satisfies PageIndexInfo;
       }),
   );
-  return pageData.filter(Boolean) as PageIndexInfo[];
+  return { pageData: pageData.filter(Boolean) as PageIndexInfo[], mdContents };
 }

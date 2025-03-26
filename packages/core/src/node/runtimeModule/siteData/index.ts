@@ -53,7 +53,7 @@ export async function siteDataVMPlugin(context: FactoryContext) {
   const searchCodeBlocks =
     'codeBlocks' in searchConfig ? Boolean(searchConfig.codeBlocks) : true;
 
-  const pages = await extractPageData(
+  const { pageData: pages, mdContents } = await extractPageData(
     replaceRules,
     alias,
     domain,
@@ -84,6 +84,18 @@ export async function siteDataVMPlugin(context: FactoryContext) {
   delete groupedPages.noindex;
 
   const indexHashByGroup = {} as Record<string, string>;
+
+  await Promise.all(
+    Object.entries(mdContents).map(async ([key, value]) => {
+      if (key.endsWith('/.md')) {
+        return;
+      }
+      const filepath = path.join(TEMP_DIR, '../.rspress-llm', `.${key}`);
+
+      await fs.mkdir(path.dirname(filepath), { recursive: true });
+      await fs.writeFile(filepath, value, 'utf-8');
+    }),
+  );
 
   // Generate search index by different versions & languages, file name is {SEARCH_INDEX_NAME}.{version}.{lang}.{hash}.json
   await Promise.all(
