@@ -1,4 +1,4 @@
-import type { RsbuildConfig, RsbuildPlugin } from '@rsbuild/core';
+import type { RsbuildConfig, RsbuildPlugins } from '@rsbuild/core';
 import type { loadConfig } from '@rsbuild/core';
 import type { ZoomOptions } from 'medium-zoom';
 import type { PluggableList } from 'unified';
@@ -169,7 +169,7 @@ export interface UserConfig<ThemeConfig = DefaultThemeConfig> {
   /**
    * Add some extra builder plugins
    */
-  builderPlugins?: RsbuildPlugin[];
+  builderPlugins?: RsbuildPlugins;
   /**
    * Multi version config
    */
