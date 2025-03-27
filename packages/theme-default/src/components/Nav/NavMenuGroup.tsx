@@ -125,10 +125,9 @@ export function NavMenuGroup(item: NavMenuGroupItem) {
       className="rp-relative rp-flex rp-items-center rp-justify-center rp-h-14"
       onMouseLeave={handleMouseLeave}
     >
-      <button
-        aria-label="change-lang"
+      <div
         onMouseEnter={handleMouseEnter}
-        className="rspress-nav-menu-group-button rp-flex rp-justify-center rp-items-center rp-font-medium rp-text-sm rp-text-text-1 hover:rp-text-text-2 rp-transition-colors rp-duration-200"
+        className="rspress-nav-menu-group-button rp-flex rp-justify-center rp-items-center rp-font-medium rp-text-sm rp-text-text-1 hover:rp-text-text-2 rp-transition-colors rp-duration-200 rp-cursor-pointer"
       >
         {link ? (
           // @ts-expect-error item.text may be ReactElement
@@ -147,7 +146,7 @@ export function NavMenuGroup(item: NavMenuGroupItem) {
             <SvgWrapper icon={Down} />
           </>
         )}
-      </button>
+      </div>
       <div
         className="rspress-nav-menu-group-content rp-absolute rp-mx-0.8 rp-transition-opacity rp-duration-300"
         style={{
