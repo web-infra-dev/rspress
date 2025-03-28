@@ -19,9 +19,6 @@ export default defineConfig({
   markdown: {
     checkDeadLinks: true,
   },
-  ssg: {
-    strict: true,
-  },
   plugins: [
     pluginFontOpenSans(),
     pluginSitemap({

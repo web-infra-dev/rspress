@@ -51,7 +51,7 @@ export interface Locale {
   description?: string;
 }
 
-export type SSGConfig = boolean | { strict?: boolean };
+export type SSGConfig = boolean | { fallback?: false | 'csr' };
 
 export interface UserConfig<ThemeConfig = DefaultThemeConfig> {
   /**

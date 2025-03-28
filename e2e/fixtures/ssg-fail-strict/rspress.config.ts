@@ -4,6 +4,6 @@ import { defineConfig } from 'rspress/config';
 export default defineConfig({
   root: path.join(__dirname, 'doc'),
   ssg: {
-    strict: true,
+    fallback: false,
   },
 });

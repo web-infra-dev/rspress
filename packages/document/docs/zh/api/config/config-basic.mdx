@@ -467,10 +467,12 @@ export default defineConfig({
 
 ## ssg
 
-- Type: `boolean | { strict?: boolean }`
+- Type: `boolean | { fallback?: false | 'csr' }`
 - Default: `true`
 
-是否开启静态站点生成。默认开启，你可以通过设置 `ssg` 为 `false` 来关闭。
+是否开启静态站点生成。Rspress 默认开启该功能，生成 CSR 产物和 SSG 产物。
+
+如果你的文档站只要求在 CSR 场景下使用，你可以设置 `ssg` 为 `false`，此时 Rspress 会仅生成 CSR 产物。
 
 ```ts title="rspress.config.ts"
 import { defineConfig } from 'rspress/config';
@@ -480,12 +482,12 @@ export default defineConfig({
 });
 ```
 
-当 SSG 失败时，默认会 fallback 到 CSR。你可以通过设置 `ssg` 为 `{ strict: true }` 来严格要求 SSG 必须成功，否则抛出错误。
+如果你的场景中不严格要求必须生成 SSG 产物，可以设置 `ssg` 为 `{ fallback: 'csr' }`。当 SSG 失败时，会 fallback 到仅生成 CSR 产物。
 
 ```ts title="rspress.config.ts"
 export default {
   ssg: {
-    strict: true,
+    fallback: 'csr',
   },
 };
 ```
