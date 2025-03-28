@@ -26,7 +26,7 @@ export async function hintThemeBreakingChange(customThemeDir: string) {
   }
   if (useDefaultExportFilePath) {
     logger.warn(
-      `[Rspress 2.0] breaking change: The theme/index is now using namedExports instead of defaultExports, please update your config file in ${picocolors.greenBright(useDefaultExportFilePath)} (https://github.com/web-infra-dev/rspress/discussions/1891#discussioncomment-12422737).\n`,
+      `[Rspress v2] Breaking Change: The "theme/index.tsx" is now using named export instead of default export, please update ${picocolors.greenBright(useDefaultExportFilePath)} (https://github.com/web-infra-dev/rspress/discussions/1891#discussioncomment-12422737).\n`,
       picocolors.redBright(`
 - import Theme from '@rspress/theme-default';
 - export default {
