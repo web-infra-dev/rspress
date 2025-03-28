@@ -96,8 +96,6 @@ export async function renderPages(
         ({ render } = ssrExports as SSRBundleExports);
       } catch (e) {
         // skip fallback to CSR if ssg config is strict
-        // TODO: strict by default in v2
-        // see: https://github.com/web-infra-dev/rspress/issues/1317
         if (typeof ssgConfig === 'object' && ssgConfig.strict) {
           logger.error(
             `Failed to load SSG bundle: ${picocolors.yellow(ssrBundlePath)}.`,
@@ -236,7 +234,7 @@ export async function build(options: BuildOptions) {
   const modifiedConfig = await pluginDriver.modifyConfig();
 
   await pluginDriver.beforeBuild();
-  const ssgConfig = modifiedConfig.ssg ?? true;
+  const ssgConfig = modifiedConfig.ssg ?? { strict: true };
 
   // empty temp dir before build
   await emptyDir(TEMP_DIR);
