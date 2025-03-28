@@ -36,6 +36,10 @@ interface BuildOptions {
   config: UserConfig;
 }
 
+function isCSRFallback(ssgConfig: SSGConfig) {
+  return typeof ssgConfig === 'object' && ssgConfig.fallback === 'csr';
+}
+
 export async function bundle(
   docDirectory: string,
   config: UserConfig,
@@ -95,19 +99,18 @@ export async function renderPages(
         );
         ({ render } = ssrExports as SSRBundleExports);
       } catch (e) {
-        // skip fallback to CSR if ssg config is strict
-        if (typeof ssgConfig === 'object' && ssgConfig.strict) {
+        if (isCSRFallback(ssgConfig)) {
+          // fallback to CSR
+          logger.error(e);
+          logger.warn(
+            `Failed to load SSG bundle: ${picocolors.yellow(ssrBundlePath)}, fallback to CSR.`,
+          );
+        } else {
           logger.error(
             `Failed to load SSG bundle: ${picocolors.yellow(ssrBundlePath)}.`,
           );
           throw e;
         }
-
-        // fallback to CSR
-        logger.error(e);
-        logger.warn(
-          `Failed to load SSG bundle: ${picocolors.yellow(ssrBundlePath)}, fallback to CSR.`,
-        );
       }
     }
 
@@ -143,18 +146,18 @@ export async function renderPages(
             try {
               ({ appHtml } = await render(routePath, helmetContext.context));
             } catch (e) {
-              if (typeof ssgConfig === 'object' && ssgConfig.strict) {
+              if (isCSRFallback(ssgConfig)) {
+                // fallback to CSR
+                logger.warn(
+                  `Page "${picocolors.yellow(routePath)}" SSG rendering error, fallback to CSR.`,
+                  e,
+                );
+              } else {
                 logger.error(
                   `Page "${picocolors.yellow(routePath)}" SSG rendering failed.`,
                 );
                 throw e;
               }
-
-              // fallback to CSR
-              logger.warn(
-                `Page "${picocolors.yellow(routePath)}" SSG rendering error, fallback to CSR.`,
-                e,
-              );
             }
           }
 
@@ -234,7 +237,7 @@ export async function build(options: BuildOptions) {
   const modifiedConfig = await pluginDriver.modifyConfig();
 
   await pluginDriver.beforeBuild();
-  const ssgConfig = modifiedConfig.ssg ?? { strict: true };
+  const ssgConfig = modifiedConfig.ssg ?? true;
 
   // empty temp dir before build
   await emptyDir(TEMP_DIR);
