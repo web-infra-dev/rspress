@@ -1,13 +1,15 @@
 import { readFile } from 'node:fs/promises';
 import { join } from 'node:path';
-import { logger } from '@rsbuild/core';
+import { logger } from '@rspress/shared/logger';
 import picocolors from 'picocolors';
 import { pathExists } from '../utils';
 
-const THEME_DEFAULT_EXPORT_PATTERN = /export default \{(.*?)\}/m;
+const THEME_DEFAULT_EXPORT_PATTERN = /export\s+default\s+\{/;
 
 /**
- * breaking change
+ * breaking change hint of theme
+ * @see https://github.com/web-infra-dev/rspress/discussions/1891#discussioncomment-12422737
+ *
  */
 export async function hintThemeBreakingChange(customThemeDir: string) {
   const fileList = ['index.ts', 'index.tsx', 'index.js', 'index.mjs'];
@@ -24,15 +26,16 @@ export async function hintThemeBreakingChange(customThemeDir: string) {
   }
   if (useDefaultExportFilePath) {
     logger.warn(
-      `[Rspress] Theme breaking change: The theme/index is now using namedExports instead of defaultExports, please update your config file in ${useDefaultExportFilePath}`,
-      picocolors.red(`
+      `[Rspress v2] Breaking Change: The "theme/index.tsx" is now using named export instead of default export, please update ${picocolors.greenBright(useDefaultExportFilePath)} (https://github.com/web-infra-dev/rspress/discussions/1891#discussioncomment-12422737).\n`,
+      picocolors.redBright(`
 - import Theme from '@rspress/theme-default';
 - export default {
 -  ...Theme,
 -  Layout,
 - };
 - export * from 'rspress/theme';`) +
-        picocolors.green(`+ import { Layout } from '@rspress/theme-default';
+        picocolors.greenBright(`
++ import { Layout } from '@rspress/theme-default';
 
 + export { Layout };
 + export * from 'rspress/theme';
