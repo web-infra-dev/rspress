@@ -1,17 +1,17 @@
 import type { Header } from '@rspress/shared';
-import { useEffect, useMemo } from 'react';
+import { useLocation } from '@rspress/runtime';
+import { useEffect, useMemo, useState } from 'react';
 import {
   DEFAULT_NAV_HEIGHT,
   bindingAsideScroll,
   scrollToTarget,
 } from '../../logic/sideEffects';
-import './index.scss';
-import { useLocation } from '@rspress/runtime';
 import { useHiddenNav } from '../../logic/useHiddenNav';
 import {
   parseInlineMarkdownText,
   renderInlineMarkdown,
 } from '../../logic/utils';
+import './index.scss';
 
 const TocItem = ({
   header,
@@ -40,9 +40,40 @@ const TocItem = ({
   );
 };
 
-export function Aside(props: { headers: Header[]; outlineTitle: string }) {
-  const { headers } = props;
-  // For outline text highlight
+const useDynamicToc = () => {
+  const [headers, setHeaders] = useState<Header[]>([]);
+
+  useEffect(() => {
+    const observer = new MutationObserver(() => {
+    const collectedHeaders: Header[] = [];
+    const elements = target?.querySelectorAll('h1, h2, h3, h4');
+    elements?.forEach(el => {
+      if (el.id) {
+        collectedHeaders.push({
+          id: el.id,
+          text: el.innerHTML,
+          depth: parseInt(el.tagName[1]),
+        });
+      }
+    });
+    setHeaders(collectedHeaders);
+    });
+
+    const target = document.querySelector('.rspress-doc');
+    if (target) {
+      observer.observe(target, { childList: true, subtree: true });
+    }
+
+    return () => {
+      observer.disconnect();
+    };
+  }, []);
+
+  return headers;
+};
+
+export function Aside(props: { outlineTitle: string }) {
+  const headers = useDynamicToc();
   const baseHeaderLevel = headers[0]?.depth || 2;
   const hiddenNav = useHiddenNav();
 
@@ -65,8 +96,6 @@ export function Aside(props: { headers: Header[]; outlineTitle: string }) {
     };
   }, [headers]);
 
-  // why window.scrollTo(0, 0)?
-  // when using history.scrollRestoration = 'auto' ref: "useUISwitch.ts", we scroll to the last page's position when navigating to nextPage
   useEffect(() => {
     if (decodedHash.length === 0) {
       window.scrollTo(0, 0);
