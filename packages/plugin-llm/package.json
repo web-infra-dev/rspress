@@ -1,0 +1,44 @@
+{
+  "name": "@rspress/plugin-llm",
+  "version": "2.0.0-alpha.7",
+  "description": "A plugin for rspress to zoom images in docs.",
+  "bugs": "https://github.com/web-infra-dev/rspress/issues",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/web-infra-dev/rspress",
+    "directory": "packages/plugin-llm"
+  },
+  "license": "MIT",
+  "type": "module",
+  "main": "./dist/index.js",
+  "module": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "files": [
+    "dist",
+    "static"
+  ],
+  "scripts": {
+    "build": "rslib build",
+    "dev": "rslib build -w",
+    "reset": "rimraf ./**/node_modules"
+  },
+  "devDependencies": {
+    "@microsoft/api-extractor": "^7.52.1",
+    "@rslib/core": "0.5.5",
+    "@rspress/config": "workspace:*",
+    "@rspress/shared": "workspace:*",
+    "@types/node": "^18.11.17",
+    "typescript": "^5.8.2"
+  },
+  "peerDependencies": {
+    "@rspress/runtime": "workspace:^2.0.0-alpha.7"
+  },
+  "engines": {
+    "node": ">=14.17.6"
+  },
+  "publishConfig": {
+    "access": "public",
+    "provenance": true,
+    "registry": "https://registry.npmjs.org/"
+  }
+}
