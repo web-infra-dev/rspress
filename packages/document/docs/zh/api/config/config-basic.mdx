@@ -482,7 +482,7 @@ export default defineConfig({
 });
 ```
 
-如果你的场景中不严格要求必须生成 SSG，可以设置 `ssg` 为 `{ fallback: 'csr' }`， SSG 失败时，会 fallback 到仅生成 CSR 产物。
+如果你的场景中不严格要求必须生成 SSG 产物，可以设置 `ssg` 为 `{ fallback: 'csr' }`。当 SSG 失败时，会 fallback 到仅生成 CSR 产物。
 
 ```ts title="rspress.config.ts"
 export default {
