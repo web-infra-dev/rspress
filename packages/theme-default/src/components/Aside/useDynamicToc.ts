@@ -33,7 +33,7 @@ export const useDynamicToc = () => {
     function updateHeaders() {
       const collectedHeaders: Header[] = [];
       const elements = target?.querySelectorAll(
-        '.rspress-doc h1.rspress-doc-outline, h2.rspress-doc-outline, h3.rspress-doc-outline, h4.rspress-doc-outline',
+        '.rspress-doc h2.rspress-doc-outline, h3.rspress-doc-outline, h4.rspress-doc-outline',
       );
       elements?.forEach(el => {
         if (el.id) {
@@ -61,7 +61,7 @@ export const useDynamicToc = () => {
             const node = _node as HTMLTitleElement;
             if (
               'tagName' in node &&
-              ['H1', 'H2', 'H3', 'H4'].includes(node?.tagName)
+              ['H2', 'H3', 'H4'].includes(node?.tagName)
             ) {
               needUpdate = true;
             }
@@ -70,7 +70,7 @@ export const useDynamicToc = () => {
             const node = _node as HTMLTitleElement;
             if (
               'tagName' in node &&
-              ['H1', 'H2', 'H3', 'H4'].includes(node?.tagName)
+              ['H2', 'H3', 'H4'].includes(node?.tagName)
             ) {
               needUpdate = true;
             }
