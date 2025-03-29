@@ -62,5 +62,17 @@
   "toolStackDesc": {
     "zh": "围绕 Rspack 打造的高性能工具链，助力现代 Web 开发",
     "en": "High-performance toolchain built around Rspack to boost modern web development"
+  },
+  "menuText": {
+    "zh": "菜单",
+    "en": "Menu"
+  },
+  "copyCode": {
+    "zh": "复制代码",
+    "en": "Copy code"
+  },
+  "toggleCodeWrap": {
+    "zh": "切换代码换行",
+    "en": "Toggle code wrap"
   }
 }
