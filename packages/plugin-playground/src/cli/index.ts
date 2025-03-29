@@ -6,9 +6,7 @@ import type {
 } from '@monaco-editor/react';
 import type { RouteMeta, RspressPlugin } from '@rspress/shared';
 import { getNodeAttribute } from '@rspress/shared/node-utils';
-import type { Root } from 'mdast';
 import { RspackVirtualModulePlugin } from 'rspack-plugin-virtual-module';
-import type { Processor } from 'unified';
 import { DEFAULT_BABEL_URL, DEFAULT_MONACO_URL } from '../web/constant';
 import { normalizeUrl } from '../web/utils';
 import { staticPath } from './constant';
@@ -98,7 +96,7 @@ export function pluginPlayground(
             const processor = createProcessor({
               format: path.extname(filepath).slice(1) as 'mdx' | 'md',
               remarkPlugins: [remarkGFM],
-            }) as Processor<Root>;
+            });
             const source = await fs.promises.readFile(filepath, 'utf-8');
             const ast = processor.parse(source);
 

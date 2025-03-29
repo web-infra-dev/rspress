@@ -1,8 +1,9 @@
 import path from 'node:path';
-import type { Options } from '@mdx-js/loader';
+import type { ProcessorOptions } from '@mdx-js/mdx';
 import type { UserConfig } from '@rspress/shared';
 import rehypePluginExternalLinks from 'rehype-external-links';
 import remarkGFM from 'remark-gfm';
+
 import type { PluggableList } from 'unified';
 import { rehypePluginCodeMeta } from './rehypePlugins/codeMeta';
 import { rehypeHeaderAnchor } from './rehypePlugins/headerAnchor';
@@ -21,7 +22,7 @@ export async function createMDXOptions(
   routeService: RouteService,
   filepath: string,
   pluginDriver: PluginDriver,
-): Promise<Options> {
+): Promise<ProcessorOptions> {
   const cleanUrls = config?.route?.cleanUrls ?? false;
   const {
     remarkPlugins: remarkPluginsFromConfig = [],

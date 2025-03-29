@@ -167,14 +167,14 @@ export default async function mdxLoader(
       );
       const compiler = createProcessor(mdxOptions);
 
-      compiler.data('pageMeta', { toc: [], title: '' });
+      compiler.data('pageMeta' as any, { toc: [], title: '' });
       const vFile = await compiler.process({
         value: preprocessedContent,
         path: filepath,
       });
 
       compileResult = String(vFile);
-      const compilationMeta = compiler.data('pageMeta') as {
+      const compilationMeta = compiler.data('pageMeta' as any) as {
         toc: Header[];
         title: string;
       };
