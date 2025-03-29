@@ -151,7 +151,7 @@ export function DocLayout(props: DocLayoutProps) {
               }
             >
               {beforeOutline}
-              <Aside headers={headers} outlineTitle={outlineTitle} />
+              <Aside outlineTitle={outlineTitle} />
               {afterOutline}
             </div>
           )}

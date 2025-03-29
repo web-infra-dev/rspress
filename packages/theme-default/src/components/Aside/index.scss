@@ -3,6 +3,10 @@
   margin-bottom: 1px;
   border-radius: var(--rp-radius-small) 0 0 var(--rp-radius-small);
 
+  .header-anchor {
+    display: none;
+  }
+
   &:hover {
     background-color: var(--rp-c-bg-mute);
   }

@@ -57,4 +57,4 @@ export { Steps } from './components/Steps';
 export { SwitchAppearance } from './components/SwitchAppearance';
 export { Tab, Tabs } from './components/Tabs';
 export { Tag } from './components/Tag';
-export { Toc } from './components/Toc';
+export { AsideMobile as Toc } from './components/AsideMobile';

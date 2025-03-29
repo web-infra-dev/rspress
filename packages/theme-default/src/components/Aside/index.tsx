@@ -1,3 +1,4 @@
+import { useLocation } from '@rspress/runtime';
 import type { Header } from '@rspress/shared';
 import { useEffect, useMemo } from 'react';
 import {
@@ -5,13 +6,13 @@ import {
   bindingAsideScroll,
   scrollToTarget,
 } from '../../logic/sideEffects';
-import './index.scss';
-import { useLocation } from '@rspress/runtime';
 import { useHiddenNav } from '../../logic/useHiddenNav';
 import {
   parseInlineMarkdownText,
   renderInlineMarkdown,
 } from '../../logic/utils';
+import './index.scss';
+import { useDynamicToc } from './useDynamicToc';
 
 const TocItem = ({
   header,
@@ -40,9 +41,8 @@ const TocItem = ({
   );
 };
 
-export function Aside(props: { headers: Header[]; outlineTitle: string }) {
-  const { headers } = props;
-  // For outline text highlight
+export function Aside(props: { outlineTitle: string }) {
+  const headers = useDynamicToc();
   const baseHeaderLevel = headers[0]?.depth || 2;
   const hiddenNav = useHiddenNav();
 
@@ -65,8 +65,6 @@ export function Aside(props: { headers: Header[]; outlineTitle: string }) {
     };
   }, [headers]);
 
-  // why window.scrollTo(0, 0)?
-  // when using history.scrollRestoration = 'auto' ref: "useUISwitch.ts", we scroll to the last page's position when navigating to nextPage
   useEffect(() => {
     if (decodedHash.length === 0) {
       window.scrollTo(0, 0);
