@@ -174,7 +174,7 @@ export default async function mdxLoader(
       });
 
       compileResult = String(vFile);
-      const compilationMeta = compiler.data('pageMeta') as {
+      const compilationMeta = compiler.data('pageMeta' as any) as {
         toc: Header[];
         title: string;
       };

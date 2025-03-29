@@ -15,12 +15,12 @@
 /// <reference types="remark-directive" />
 import type {
   BlockContent,
-  Content,
   Literal,
   Paragraph,
   Parent,
   PhrasingContent,
   Root,
+  RootContent,
 } from 'mdast';
 import type { Plugin } from 'unified';
 
@@ -90,6 +90,7 @@ const createContainer = (
       {
         type: 'paragraph',
         data: {
+          // @ts-ignore
           hName: titleHName,
           hProperties: {
             class: 'rspress-directive-title',
@@ -100,6 +101,7 @@ const createContainer = (
       {
         type: 'paragraph',
         data: {
+          // @ts-ignore
           hName: 'div',
           hProperties: { class: 'rspress-directive-content' },
         },
@@ -135,7 +137,7 @@ function transformer(tree: Parent) {
               type,
               node.attributes?.title ?? type.toUpperCase(),
               node.children as BlockContent[],
-            ) as Content,
+            ) as RootContent,
           );
         }
       } else if (
@@ -179,7 +181,7 @@ function transformer(tree: Parent) {
               ? node.children.slice(0)
               : node.children.slice(1)) as BlockContent[],
           );
-          tree.children.splice(i, 1, newChild as Content);
+          tree.children.splice(i, 1, newChild as RootContent);
         }
       }
 
@@ -238,7 +240,7 @@ function transformer(tree: Parent) {
           ],
         });
         const newChild = createContainer(type, title, wrappedChildren);
-        tree.children.splice(i, 1, newChild as Content);
+        tree.children.splice(i, 1, newChild as RootContent);
       } else {
         // 2.2 case: with newline before the end of container, for example:
         // ::: tip
@@ -288,7 +290,7 @@ function transformer(tree: Parent) {
             });
           }
           const newChild = createContainer(type, title, wrappedChildren);
-          tree.children.splice(i, 1, newChild as Content);
+          tree.children.splice(i, 1, newChild as RootContent);
           i++;
           continue;
         }
@@ -352,7 +354,7 @@ function transformer(tree: Parent) {
               });
             }
             const newChild = createContainer(type, title, wrappedChildren);
-            tree.children.splice(i, j - i + 1, newChild as Content);
+            tree.children.splice(i, j - i + 1, newChild as RootContent);
             break;
           }
         }

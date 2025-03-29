@@ -1,4 +1,3 @@
-import type { Processor } from '@mdx-js/mdx/lib/core';
 import { extractTextAndId } from '@rspress/shared/node-utils';
 import Slugger from 'github-slugger';
 import type { Root } from 'hast';
@@ -77,7 +76,7 @@ export const parseToc = (tree: Root) => {
   };
 };
 
-export const remarkPluginToc: Plugin<[], Root> = function (this: Processor) {
+export const remarkPluginToc: Plugin<[], Root> = function () {
   const data = this.data() as {
     pageMeta: PageMeta;
   };
