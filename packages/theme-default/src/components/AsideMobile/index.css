@@ -4,6 +4,10 @@
   transition: all 0.3s;
 }
 
+.rspress-toc-link .header-anchor {
+  display: none;
+}
+
 .rspress-toc-link-text {
   padding: 6px 12px;
   white-space: nowrap;
