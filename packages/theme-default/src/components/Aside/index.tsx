@@ -1,5 +1,5 @@
-import type { Header } from '@rspress/shared';
 import { useLocation } from '@rspress/runtime';
+import type { Header } from '@rspress/shared';
 import { useEffect, useMemo, useState } from 'react';
 import {
   DEFAULT_NAV_HEIGHT,
@@ -44,28 +44,59 @@ const useDynamicToc = () => {
   const [headers, setHeaders] = useState<Header[]>([]);
 
   useEffect(() => {
-    const observer = new MutationObserver(() => {
-    const collectedHeaders: Header[] = [];
-    const elements = target?.querySelectorAll('h1, h2, h3, h4');
-    elements?.forEach(el => {
-      if (el.id) {
-        collectedHeaders.push({
-          id: el.id,
-          text: el.innerHTML,
-          depth: parseInt(el.tagName[1]),
-        });
-      }
-    });
-    setHeaders(collectedHeaders);
-    });
-
     const target = document.querySelector('.rspress-doc');
+    let observer: null | MutationObserver = null;
+
+    function updateHeaders() {
+      const collectedHeaders: Header[] = [];
+      const elements = target?.querySelectorAll(
+        '.rspress-doc h1.rspress-doc-outline, h2.rspress-doc-outline, h3.rspress-doc-outline, h4.rspress-doc-outline',
+      );
+      elements?.forEach(el => {
+        if (el.id) {
+          collectedHeaders.push({
+            id: el.id,
+            text: el.innerHTML,
+            depth: Number.parseInt(el.tagName[1]),
+            charIndex: 0,
+          });
+        }
+      });
+      setHeaders(collectedHeaders);
+    }
+
+    updateHeaders();
+
     if (target) {
+      observer = new MutationObserver(mutationList => {
+        let needUpdate: boolean = false;
+        for (const mutation of mutationList) {
+          mutation.addedNodes.forEach(_node => {
+            const node = _node as HTMLTitleElement;
+            if (
+              'tagName' in node &&
+              ['H1', 'H2', 'H3', 'H4'].includes(node?.tagName)
+            ) {
+              needUpdate = true;
+            }
+          });
+          mutation.removedNodes.forEach(_node => {
+            const node = _node as HTMLTitleElement;
+            if (
+              'tagName' in node &&
+              ['H1', 'H2', 'H3', 'H4'].includes(node?.tagName)
+            ) {
+              needUpdate = true;
+            }
+          });
+        }
+        needUpdate && updateHeaders();
+      });
       observer.observe(target, { childList: true, subtree: true });
     }
 
     return () => {
-      observer.disconnect();
+      observer?.disconnect();
     };
   }, []);
 
