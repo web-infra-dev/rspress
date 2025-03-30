@@ -27,7 +27,7 @@
     "chokidar": "^3.6.0",
     "documentation": "14.0.3",
     "react-docgen-typescript": "2.2.2",
-    "react-markdown": "8.0.7",
+    "react-markdown": "^10.1.0",
     "remark-gfm": "^4.0.1"
   },
   "devDependencies": {
