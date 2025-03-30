@@ -9,7 +9,7 @@ import { version } from '../package.json';
 import { loadConfigFile, resolveDocRoot } from './config/loadConfigFile';
 import update from './update';
 
-const CONFIG_FILES = ['rspress.config.ts', 'rspress.config.js', 'i18n.json'];
+const CONFIG_FILES = ['rspress.config.ts', 'rspress.config.js'];
 
 const META_FILE = '_meta.json';
 
