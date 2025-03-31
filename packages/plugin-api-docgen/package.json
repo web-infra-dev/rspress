@@ -31,11 +31,11 @@
     "remark-gfm": "3.0.1"
   },
   "devDependencies": {
-    "@microsoft/api-extractor": "^7.52.1",
+    "@microsoft/api-extractor": "^7.52.2",
     "@rslib/core": "0.5.5",
     "@types/mdast": "^3.0.15",
     "@types/node": "^18.11.17",
-    "@types/react": "^18.3.19",
+    "@types/react": "^18.3.20",
     "@types/react-dom": "^18.3.5",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
