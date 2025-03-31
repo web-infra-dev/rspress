@@ -33,12 +33,12 @@
     "tinyglobby": "^0.2.12"
   },
   "devDependencies": {
-    "@microsoft/api-extractor": "^7.52.1",
+    "@microsoft/api-extractor": "^7.52.2",
     "@modern-js/module-tools": "2.64.0",
     "@rslib/core": "0.5.5",
     "@types/lodash": "^4.17.16",
     "@types/node": "^18.11.17",
-    "@types/react": "^18.3.19",
+    "@types/react": "^18.3.20",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
     "typescript": "^5.8.2"
