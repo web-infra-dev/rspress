@@ -92,7 +92,7 @@
     "@types/html-to-text": "^9.0.4",
     "@types/jest": "~29.5.14",
     "@types/lodash-es": "^4.17.12",
-    "@types/mdast": "^3.0.15",
+    "@types/mdast": "^4.0.4",
     "@types/node": "^18.11.17",
     "@types/react": "^18.3.20",
     "@types/react-dom": "^18.3.5",
