@@ -7,6 +7,7 @@ export {
   usePageData,
   useVersion,
   useViewTransition,
+  useWindowSize,
 } from './hooks';
 export { Content } from './Content';
 export {

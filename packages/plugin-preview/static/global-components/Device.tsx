@@ -1,4 +1,9 @@
-import { NoSSR, usePageData, withBase } from '@rspress/core/runtime';
+import {
+  NoSSR,
+  usePageData,
+  useWindowSize,
+  withBase,
+} from '@rspress/core/runtime';
 import { useCallback, useEffect, useState } from 'react';
 // @ts-ignore
 import { normalizeId } from '../../dist/utils';
@@ -22,10 +27,8 @@ export default () => {
     // Do nothing in ssr
     return '';
   };
-  const initialInnerWidth =
-    typeof window !== 'undefined' ? window.innerWidth : 0;
   const [asideWidth, setAsideWidth] = useState('0px');
-  const [innerWidth, setInnerWidth] = useState(initialInnerWidth);
+  const { width: innerWidth } = useWindowSize();
   const [iframeKey, setIframeKey] = useState(0);
   const refresh = useCallback(() => {
     setIframeKey(Math.random());
@@ -40,11 +43,6 @@ export default () => {
         getComputedStyle(root).getPropertyValue('--rp-aside-width');
       setAsideWidth(defaultAsideWidth);
     }
-    const handleResize = () => {
-      setInnerWidth(window.innerWidth);
-    };
-    window.addEventListener('resize', handleResize);
-    return () => window.removeEventListener('resize', handleResize);
   }, []);
 
   useEffect(() => {

@@ -1,9 +1,5 @@
 import htmr from 'htmr';
 
-export function isMobileDevice() {
-  return window.innerWidth < 1280;
-}
-
 export function renderHtmlOrText(str?: string | number | null) {
   if (!str) {
     return '';

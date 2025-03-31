@@ -12,7 +12,9 @@ html {
   line-height: 1.7;
   font-size: 16px;
   -webkit-text-size-adjust: 100%;
-  scroll-padding-top: var(--rp-nav-height);
+  scroll-padding-top: calc(
+    var(--rp-nav-height) + var(--rp-sidebar-menu-height)
+  );
 }
 
 html.dark {

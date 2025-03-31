@@ -1,17 +1,14 @@
+import { useLocation } from '@rspress/runtime';
 import type { Header } from '@rspress/shared';
 import { useEffect, useMemo } from 'react';
-import {
-  DEFAULT_NAV_HEIGHT,
-  bindingAsideScroll,
-  scrollToTarget,
-} from '../../logic/sideEffects';
-import './index.scss';
-import { useLocation } from '@rspress/runtime';
-import { useHiddenNav } from '../../logic/useHiddenNav';
+import { useUISwitch } from '#theme/logic/useUISwitch.js';
+import { scrollToTarget, useBindingAsideScroll } from '../../logic/sideEffects';
 import {
   parseInlineMarkdownText,
   renderInlineMarkdown,
 } from '../../logic/utils';
+
+import './index.scss';
 
 const TocItem = ({
   header,
@@ -40,30 +37,22 @@ const TocItem = ({
   );
 };
 
-export function Aside(props: { headers: Header[]; outlineTitle: string }) {
-  const { headers } = props;
+export function Aside({
+  headers,
+  outlineTitle,
+}: { headers: Header[]; outlineTitle: string }) {
+  const { scrollPaddingTop } = useUISwitch();
+
   // For outline text highlight
   const baseHeaderLevel = headers[0]?.depth || 2;
-  const hiddenNav = useHiddenNav();
 
   const { hash: locationHash = '', pathname } = useLocation();
-  const decodedHash: string = useMemo(() => {
-    return decodeURIComponent(locationHash);
-  }, [locationHash]);
+  const decodedHash: string = useMemo(
+    () => decodeURIComponent(locationHash),
+    [locationHash],
+  );
 
-  useEffect(() => {
-    let unbinding: (() => void) | undefined;
-
-    setTimeout(() => {
-      unbinding = bindingAsideScroll();
-    }, 100);
-
-    return () => {
-      if (unbinding) {
-        unbinding();
-      }
-    };
-  }, [headers]);
+  useBindingAsideScroll(headers);
 
   // why window.scrollTo(0, 0)?
   // when using history.scrollRestoration = 'auto' ref: "useUISwitch.ts", we scroll to the last page's position when navigating to nextPage
@@ -73,7 +62,7 @@ export function Aside(props: { headers: Header[]; outlineTitle: string }) {
     } else {
       const target = document.getElementById(decodedHash.slice(1));
       if (target) {
-        scrollToTarget(target, false, hiddenNav ? 0 : DEFAULT_NAV_HEIGHT);
+        scrollToTarget(target, false, scrollPaddingTop);
       }
     }
   }, [decodedHash, headers, pathname]);
@@ -85,7 +74,7 @@ export function Aside(props: { headers: Header[]; outlineTitle: string }) {
         className="rp-relative rp-text-sm rp-font-medium"
       >
         <div className="rp-leading-7 rp-block rp-text-sm rp-font-semibold rp-pl-3">
-          {props.outlineTitle}
+          {outlineTitle}
         </div>
         <nav className="rp-mt-1">
           <ul className="rp-relative">
