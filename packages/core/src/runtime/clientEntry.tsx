@@ -1,6 +1,6 @@
 import { BrowserRouter, DataContext, ThemeContext } from '@rspress/runtime';
 import { isProduction } from '@rspress/shared';
-import { setup, useThemeState } from '@theme';
+import { useThemeState } from '@theme';
 import { useMemo, useState } from 'react';
 import siteData from 'virtual-site-data';
 import { App, initPageData } from './App';
@@ -51,6 +51,4 @@ export async function renderInBrowser() {
   }
 }
 
-renderInBrowser().then(() => {
-  setup();
-});
+renderInBrowser();

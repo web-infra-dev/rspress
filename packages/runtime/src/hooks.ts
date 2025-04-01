@@ -99,3 +99,30 @@ export function useViewTransition(dom: ReactElement) {
    */
   return element;
 }
+
+export function useWindowSize(initialWidth?: number, initialHeight?: number) {
+  const [size, setSize] = useState({
+    width:
+      initialWidth ??
+      (typeof window === 'undefined'
+        ? Number.POSITIVE_INFINITY
+        : window.innerWidth),
+    height:
+      initialHeight ??
+      (typeof window === 'undefined'
+        ? Number.POSITIVE_INFINITY
+        : window.innerHeight),
+  });
+
+  useLayoutEffect(() => {
+    const handleResize = () => {
+      setSize({ width: window.innerWidth, height: window.innerHeight });
+    };
+    window.addEventListener('resize', handleResize);
+    return () => {
+      window.removeEventListener('resize', handleResize);
+    };
+  }, []);
+
+  return size;
+}

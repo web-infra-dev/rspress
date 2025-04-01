@@ -10,12 +10,15 @@ export { useEditLink } from './logic/useEditLink';
 export { useSidebarData } from './logic/useSidebarData';
 export { useHiddenNav, useEnableNav } from './logic/useHiddenNav';
 export { useLocaleSiteData } from './logic/useLocaleSiteData';
-export { setup, bindingAsideScroll, scrollToTarget } from './logic/sideEffects';
+export {
+  useSetup,
+  useBindingAsideScroll as bindingAsideScroll,
+  scrollToTarget,
+} from './logic/sideEffects';
 export { useFullTextSearch } from './logic/useFullTextSearch';
 export { useRedirect4FirstVisit } from './logic/useRedirect4FirstVisit';
 export { useThemeState } from './logic/useAppearance';
 export {
-  isMobileDevice,
   renderHtmlOrText,
   parseInlineMarkdownText,
   renderInlineMarkdown,

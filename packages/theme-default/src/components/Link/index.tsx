@@ -10,17 +10,18 @@ import nprogress from 'nprogress';
 import type React from 'react';
 import { type ComponentProps, useMemo } from 'react';
 import { isActive } from '../../logic/getSidebarDataGroup';
-import { DEFAULT_NAV_HEIGHT, scrollToTarget } from '../../logic/sideEffects';
+import { scrollToTarget } from '../../logic/sideEffects';
+import { useUISwitch } from '../../logic/useUISwitch.js';
 import { preloadLink } from '../Sidebar/utils';
 import * as styles from './index.module.scss';
 
-const scrollToAnchor = (smooth: boolean) => {
+const scrollToAnchor = (smooth: boolean, scrollPaddingTop: number) => {
   const currentUrl = window.location;
   const { hash: rawHash } = currentUrl;
   const hash = decodeURIComponent(rawHash);
   const target = hash.length > 1 && document.getElementById(hash.slice(1));
   if (hash && target) {
-    scrollToTarget(target, smooth, DEFAULT_NAV_HEIGHT);
+    scrollToTarget(target, smooth, scrollPaddingTop);
   }
 };
 
@@ -49,6 +50,8 @@ export function Link(props: LinkProps) {
   const navigate = useNavigate();
 
   const { pathname } = useLocation();
+
+  const { scrollPaddingTop } = useUISwitch();
 
   const withBaseUrl = useMemo(() => {
     return withBase(normalizeHref(href));
@@ -113,7 +116,7 @@ export function Link(props: LinkProps) {
     onNavigate?.();
     navigate(withBaseUrl, { replace: false });
     setTimeout(() => {
-      scrollToAnchor(false);
+      scrollToAnchor(false, scrollPaddingTop);
     }, 100);
   };
 
