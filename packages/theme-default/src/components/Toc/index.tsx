@@ -31,7 +31,7 @@ const TocItem = ({
   );
 };
 
-export function AsideMobile({
+export function Toc({
   onItemClick,
 }: {
   onItemClick?: (header: Header) => void;

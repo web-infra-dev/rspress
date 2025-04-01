@@ -25,7 +25,7 @@ const useSubScribe = () => {
 let observer: null | MutationObserver = null;
 let headers: Header[] = [] satisfies Header[];
 export const useDynamicToc = () => {
-  // use the same data between Aside and AsideMobile, and use publisher and subscriber to avoid useContext
+  // use the same data between Aside and Toc, and use publisher and subscriber to avoid useContext
   useSubScribe();
 
   useEffect(() => {

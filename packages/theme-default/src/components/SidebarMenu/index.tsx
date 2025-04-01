@@ -3,8 +3,8 @@ import ArrowRight from '@theme-assets/arrow-right';
 import MenuIcon from '@theme-assets/menu';
 import { useCallback, useEffect, useRef, useState } from 'react';
 import type { UISwitchResult } from '../../logic/useUISwitch';
-import { AsideMobile } from '../AsideMobile';
 import { SvgWrapper } from '../SvgWrapper';
+import { Toc } from '../Toc';
 import './index.scss';
 
 /* Top Menu, only displayed on <1280px screen width */
@@ -117,7 +117,7 @@ export function SidebarMenu({
             <div
               className={`rspress-local-toc-container ${isTocOpen ? 'rspress-local-toc-container-show' : ''}`}
             >
-              <AsideMobile onItemClick={toggleTocItem} />
+              <Toc onItemClick={toggleTocItem} />
             </div>
           </>
         )}

@@ -28,7 +28,7 @@ export * from './components/Search/logic/types';
 
 // components
 export { Aside } from './components/Aside';
-export { AsideMobile } from './components/AsideMobile';
+export { Toc } from './components/Toc';
 export { Badge } from './components/Badge';
 export { Button } from './components/Button';
 export { Card } from './components/Card';
