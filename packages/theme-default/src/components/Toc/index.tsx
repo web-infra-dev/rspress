@@ -1,6 +1,8 @@
 import { usePageData } from '@rspress/runtime';
 import type { Header } from '@rspress/shared';
 import { renderInlineMarkdown, scrollToTarget } from '../../logic';
+import { useUISwitch } from '../../logic/useUISwitch.js';
+
 import './index.css';
 
 const TocItem = ({
@@ -10,6 +12,7 @@ const TocItem = ({
   header: Header;
   onItemClick?: (header: Header) => void;
 }) => {
+  const { scrollPaddingTop } = useUISwitch();
   return (
     <li key={header.id}>
       <a
@@ -23,7 +26,7 @@ const TocItem = ({
           window.location.hash = header.id;
           const target = document.getElementById(header.id);
           if (target) {
-            scrollToTarget(target, false);
+            scrollToTarget(target, false, scrollPaddingTop);
           }
           onItemClick?.(header);
         }}

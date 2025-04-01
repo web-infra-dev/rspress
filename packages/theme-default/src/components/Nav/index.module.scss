@@ -80,9 +80,6 @@
 }
 
 @media (max-width: 768px) {
-  html:root {
-    --rp-nav-height: 56px;
-  }
   .menu-item:before {
     display: none;
   }

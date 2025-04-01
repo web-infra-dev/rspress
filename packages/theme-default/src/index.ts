@@ -2,13 +2,14 @@ import { DocLayout } from './layout/DocLayout';
 import { HomeLayout } from './layout/HomeLayout';
 import { Layout } from './layout/Layout';
 import { NotFoundLayout } from './layout/NotFountLayout';
-import { setup } from './logic';
+import { useBindingAsideScroll, useSetup } from './logic';
 
 export default {
   Layout,
   NotFoundLayout,
   HomeLayout,
-  setup,
+  useBindingAsideScroll,
+  useSetup,
 };
 
 export { getCustomMDXComponent } from './layout/DocLayout/docComponents';

@@ -3,7 +3,7 @@ export { useEditLink } from './useEditLink';
 export { useSidebarData } from './useSidebarData';
 export { useHiddenNav, useEnableNav } from './useHiddenNav';
 export { useLocaleSiteData } from './useLocaleSiteData';
-export { setup, bindingAsideScroll, scrollToTarget } from './sideEffects';
+export { useSetup, useBindingAsideScroll, scrollToTarget } from './sideEffects';
 export { usePathUtils } from './usePathUtils';
 export { useFullTextSearch } from './useFullTextSearch';
 export { useRedirect4FirstVisit } from './useRedirect4FirstVisit';
