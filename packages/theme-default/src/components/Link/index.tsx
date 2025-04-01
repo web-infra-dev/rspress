@@ -10,7 +10,8 @@ import { isExternalUrl } from '@rspress/shared';
 import nprogress from 'nprogress';
 import type React from 'react';
 import type { ComponentProps } from 'react';
-import { scrollToTarget } from '../../logic';
+import { scrollToTarget } from '../../logic/sideEffects';
+import { useUISwitch } from '../../logic/useUISwitch.js';
 import styles from './index.module.scss';
 
 export interface LinkProps extends ComponentProps<'a'> {
@@ -33,12 +34,14 @@ export function Link(props: LinkProps) {
     keepCurrentParams = false,
     ...rest
   } = props;
+
   const isExternal = isExternalUrl(href);
   const target = isExternal ? '_blank' : '';
   const rel = isExternal ? 'noopener noreferrer' : undefined;
   const withBaseUrl = isExternal ? href : withBase(normalizeHref(href));
   const navigate = useNavigate();
   const { pathname, search } = useLocation();
+  const { scrollPaddingTop } = useUISwitch();
   const withQueryUrl = keepCurrentParams ? withBaseUrl + search : withBaseUrl;
   const inCurrentPage = isEqualPath(pathname, withBaseUrl);
   const handleNavigate = async (
@@ -63,7 +66,7 @@ export function Link(props: LinkProps) {
     if (!isExternal && inCurrentPage && hash) {
       const el = document.getElementById(hash);
       if (el) {
-        scrollToTarget(el, true);
+        scrollToTarget(el, true, scrollPaddingTop);
         navigate(withQueryUrl, { replace: false });
       }
       return;

@@ -1,7 +1,7 @@
-import { useLocation, usePageData } from '@rspress/runtime';
+import { useLocation, usePageData, useWindowSize } from '@rspress/runtime';
 import { inBrowser } from '@rspress/shared';
 import { useEffect, useState } from 'react';
-import { useEnableNav } from './useHiddenNav';
+import { useEnableNav, useHiddenNav } from './useHiddenNav';
 import { useLocaleSiteData } from './useLocaleSiteData';
 
 export enum QueryStatus {
@@ -12,8 +12,12 @@ export enum QueryStatus {
 export interface UISwitchResult {
   showNavbar: boolean;
   showSidebar: boolean;
+  showSidebarMenu: boolean;
   showAside: boolean;
   showDocFooter: boolean;
+  navbarHeight: number;
+  sidebarMenuHeight: number;
+  scrollPaddingTop: number;
 }
 
 export function useUISwitch(): UISwitchResult {
@@ -33,9 +37,10 @@ export function useUISwitch(): UISwitchResult {
     );
   };
   const [showNavbar, setShowNavbar] = useEnableNav();
+  const hiddenNav = useHiddenNav();
   const [showAside, setShowAside] = useState(getShowAside());
   const [showDocFooter, setShowDocFooter] = useState(
-    (frontmatter?.footer as boolean) ?? true,
+    frontmatter?.footer ?? true,
   );
 
   const sidebar = localesData.sidebar || {};
@@ -45,6 +50,12 @@ export function useUISwitch(): UISwitchResult {
   // 3. themeConfig.sidebar
   const showSidebar =
     frontmatter?.sidebar !== false && Object.keys(sidebar).length > 0;
+
+  const { width } = useWindowSize();
+
+  const showSidebarMenu =
+    width <= 960 || (width <= 1280 && page.toc.length > 0);
+
   useEffect(() => {
     setShowAside(getShowAside());
   }, [page, siteData]);
@@ -101,10 +112,18 @@ export function useUISwitch(): UISwitchResult {
     }
   }, [!location.hash.length]);
 
+  const navbarHeight = hiddenNav ? 0 : width <= 768 ? 56 : 72;
+  const sidebarMenuHeight = showSidebarMenu ? 46 : 0;
+  const scrollPaddingTop = navbarHeight + sidebarMenuHeight;
+
   return {
     showAside,
     showNavbar,
     showSidebar,
+    showSidebarMenu,
     showDocFooter,
+    navbarHeight,
+    sidebarMenuHeight,
+    scrollPaddingTop,
   };
 }

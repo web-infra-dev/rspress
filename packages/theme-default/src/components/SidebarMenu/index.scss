@@ -53,6 +53,10 @@
   .rspress-sidebar-menu-container.no-toc {
     display: none;
   }
+
+  html:root:has(.rspress-sidebar-menu-container.no-toc) {
+    --rp-sidebar-menu-height: 0px;
+  }
 }
 
 .rspress-local-toc-container {
