@@ -9,6 +9,7 @@ import {
 } from '../../logic/utils';
 
 import './index.scss';
+import { useDynamicToc } from './useDynamicToc';
 
 const TocItem = ({
   header,
@@ -38,10 +39,10 @@ const TocItem = ({
 };
 
 export function Aside({
-  headers,
   outlineTitle,
 }: { headers: Header[]; outlineTitle: string }) {
   const { scrollPaddingTop } = useUISwitch();
+  const headers = useDynamicToc();
 
   // For outline text highlight
   const baseHeaderLevel = headers[0]?.depth || 2;
