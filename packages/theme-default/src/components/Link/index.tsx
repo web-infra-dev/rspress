@@ -9,9 +9,9 @@ import { isExternalUrl } from '@rspress/shared';
 import nprogress from 'nprogress';
 import type React from 'react';
 import { type ComponentProps, useMemo } from 'react';
-import { useUISwitch } from '#theme/logic/useUISwitch.js';
 import { isActive } from '../../logic/getSidebarDataGroup';
 import { scrollToTarget } from '../../logic/sideEffects';
+import { useUISwitch } from '../../logic/useUISwitch.js';
 import { preloadLink } from '../Sidebar/utils';
 import * as styles from './index.module.scss';
 
