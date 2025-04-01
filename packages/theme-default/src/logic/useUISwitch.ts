@@ -4,7 +4,7 @@ import { useEffect, useState } from 'react';
 import { useEnableNav, useHiddenNav } from './useHiddenNav';
 import { useLocaleSiteData } from './useLocaleSiteData';
 
-export enum QueryStatus {
+enum QueryStatus {
   Show = '1',
   Hide = '0',
 }
