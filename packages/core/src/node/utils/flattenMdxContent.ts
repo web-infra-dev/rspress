@@ -6,15 +6,13 @@ import { MDX_OR_MD_REGEXP } from '@rspress/shared';
 import { logger } from '@rspress/shared/logger';
 import type { Resolver } from 'enhanced-resolve';
 import enhancedResolve from 'enhanced-resolve';
-import type { Root } from 'hast';
-import type { Processor } from 'unified';
-
+import type { Root } from 'mdast';
 import { importStatementRegex } from '../constants';
 
 let resolver: Resolver;
 let startFlatten = false;
 
-const processor = createProcessor() as Processor<Root>;
+const processor = createProcessor();
 const { CachedInputFileSystem, ResolverFactory } = enhancedResolve;
 
 const fileSystem =
