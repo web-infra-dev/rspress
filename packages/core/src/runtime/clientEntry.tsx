@@ -1,6 +1,6 @@
 import { isProduction } from '@rspress/shared';
 import siteData from 'virtual-site-data';
-import { RootApp } from './ClientApp';
+import { ClientApp } from './ClientApp';
 
 const enableSSG = siteData.ssg;
 
@@ -12,16 +12,16 @@ export async function renderInBrowser() {
   if (process.env.__REACT_GTE_18__) {
     const { createRoot, hydrateRoot } = require('react-dom/client');
     if (isProduction() && enableSSG) {
-      hydrateRoot(container, <RootApp />);
+      hydrateRoot(container, <ClientApp />);
     } else {
-      createRoot(container).render(<RootApp />);
+      createRoot(container).render(<ClientApp />);
     }
   } else {
     const ReactDOM = require('react-dom');
     if (isProduction()) {
-      ReactDOM.hydrate(<RootApp />, container);
+      ReactDOM.hydrate(<ClientApp />, container);
     } else {
-      ReactDOM.render(<RootApp />, container);
+      ReactDOM.render(<ClientApp />, container);
     }
   }
 }

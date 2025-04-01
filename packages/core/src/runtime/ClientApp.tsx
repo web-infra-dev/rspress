@@ -5,7 +5,7 @@ import { useEffect, useMemo, useState } from 'react';
 import { App } from './App';
 import { initPageData } from './initPageData';
 
-export function RootApp() {
+export function ClientApp() {
   const [data, setData] = useState<PageData>(null as any);
   const [theme, setTheme] = useThemeState();
 
