@@ -4,8 +4,8 @@ import { useEffect, useRef } from 'react';
 import { type SidebarItemProps, highlightTitleStyle } from '.';
 import { renderInlineMarkdown } from '../../logic';
 import { SidebarGroup } from './SidebarGroup';
+
 import styles from './index.module.scss';
-import { preloadLink } from './utils';
 
 export function SidebarItem(props: SidebarItemProps) {
   const { item, depth = 0, activeMatcher, id, setSidebarData } = props;
@@ -38,7 +38,6 @@ export function SidebarItem(props: SidebarItemProps) {
     <Link href={normalizeHref(item.link)} className={styles.menuLink}>
       <div
         ref={ref}
-        onMouseEnter={() => preloadLink(item.link)}
         className={`${
           active ? styles.menuItemActive : styles.menuItem
         } mt-0.5 py-2 px-3 font-medium flex`}

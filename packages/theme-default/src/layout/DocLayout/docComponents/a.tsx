@@ -7,8 +7,12 @@ import {
   withBase,
 } from '@rspress/runtime';
 import { isExternalUrl } from '@rspress/shared';
+import { Link } from '@theme';
+import type { ComponentProps } from 'react';
 
-export function usePathUtils() {
+import styles from './index.module.scss';
+
+function usePathUtils() {
   const currentLang = useLang();
   const currentVersion = useVersion();
   const pageData = usePageData();
@@ -71,3 +75,16 @@ export function usePathUtils() {
     normalizeLinkHref,
   };
 }
+
+export const A = (props: ComponentProps<'a'>) => {
+  const { href = '', className = '' } = props;
+  const { normalizeLinkHref } = usePathUtils();
+
+  return (
+    <Link
+      {...props}
+      className={`${className} ${styles.link} ${styles.inlineLink}`}
+      href={normalizeLinkHref(href)}
+    />
+  );
+};

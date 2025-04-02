@@ -1,5 +1,4 @@
 import {
-  isEqualPath,
   normalizeHrefInRuntime as normalizeHref,
   pathnameToRouteService,
   useLocation,
@@ -9,10 +8,23 @@ import {
 import { isExternalUrl } from '@rspress/shared';
 import nprogress from 'nprogress';
 import type React from 'react';
-import type { ComponentProps } from 'react';
+import { type ComponentProps, useMemo } from 'react';
+import { isActive } from '../../logic/getSidebarDataGroup';
 import { scrollToTarget } from '../../logic/sideEffects';
 import { useUISwitch } from '../../logic/useUISwitch.js';
+import { preloadLink } from '../Sidebar/utils';
+
 import styles from './index.module.scss';
+
+const scrollToAnchor = (smooth: boolean, scrollPaddingTop: number) => {
+  const currentUrl = window.location;
+  const { hash: rawHash } = currentUrl;
+  const hash = decodeURIComponent(rawHash);
+  const target = hash.length > 1 && document.getElementById(hash.slice(1));
+  if (hash && target) {
+    scrollToTarget(target, smooth, scrollPaddingTop);
+  }
+};
 
 export interface LinkProps extends ComponentProps<'a'> {
   href?: string;
@@ -25,25 +37,52 @@ export interface LinkProps extends ComponentProps<'a'> {
 
 nprogress.configure({ showSpinner: false });
 
+/**
+ * What's the difference between <Link> and <a>?
+ * Link can tell whether it's in current site or external site.
+ * 1. If external, open a new page and navigate to it.
+ * 2. If inCurrentPage, scroll to anchor.
+ * 3. If inCurrentSite, it will navigate and scroll to anchor, preload the asyncChunk onHover the link
+ * 4. Link is styled.
+ */
 export function Link(props: LinkProps) {
-  const {
-    href = '/',
-    children,
-    className = '',
-    onNavigate,
-    keepCurrentParams = false,
-    ...rest
-  } = props;
+  const { href = '/', children, className = '', onNavigate, onClick } = props;
+
+  const navigate = useNavigate();
+
+  const { pathname } = useLocation();
+
+  const { scrollPaddingTop } = useUISwitch();
+
+  const withBaseUrl = useMemo(() => {
+    return withBase(normalizeHref(href));
+  }, [href]);
 
   const isExternal = isExternalUrl(href);
-  const target = isExternal ? '_blank' : '';
-  const rel = isExternal ? 'noopener noreferrer' : undefined;
-  const withBaseUrl = isExternal ? href : withBase(normalizeHref(href));
-  const navigate = useNavigate();
-  const { pathname, search } = useLocation();
-  const { scrollPaddingTop } = useUISwitch();
-  const withQueryUrl = keepCurrentParams ? withBaseUrl + search : withBaseUrl;
-  const inCurrentPage = isEqualPath(pathname, withBaseUrl);
+  const isHashOnlyLink = href.startsWith('#');
+
+  if (isExternal) {
+    return (
+      <a
+        {...props}
+        href={href}
+        target="_blank"
+        rel="noopener noreferrer"
+        className={`${styles.link} ${className}`}
+      >
+        {children}
+      </a>
+    );
+  }
+
+  if (isHashOnlyLink) {
+    return (
+      <a {...props} href={href} className={`${styles.link} ${className}`}>
+        {children}
+      </a>
+    );
+  }
+
   const handleNavigate = async (
     e: React.MouseEvent<HTMLAnchorElement, MouseEvent>,
   ) => {
@@ -61,18 +100,9 @@ export function Link(props: LinkProps) {
       return;
     }
     e.preventDefault();
-    // handle hash link in current page
-    const hash = withBaseUrl.split('#')[1];
-    if (!isExternal && inCurrentPage && hash) {
-      const el = document.getElementById(hash);
-      if (el) {
-        scrollToTarget(el, true, scrollPaddingTop);
-        navigate(withQueryUrl, { replace: false });
-      }
-      return;
-    }
 
     // handle normal link
+    const inCurrentPage = isActive(withBaseUrl, pathname);
     if (!process.env.__SSR__ && !inCurrentPage) {
       const matchedRoute = pathnameToRouteService(withBaseUrl);
       if (matchedRoute) {
@@ -83,36 +113,24 @@ export function Link(props: LinkProps) {
         clearTimeout(timer);
         nprogress.done();
       }
-      onNavigate?.();
-      navigate(withQueryUrl, { replace: false });
     }
+    onNavigate?.();
+    navigate(withBaseUrl, { replace: false });
+    setTimeout(() => {
+      scrollToAnchor(false, scrollPaddingTop);
+    }, 100);
   };
-
-  if (!isExternal) {
-    return (
-      <a
-        {...rest}
-        className={`${styles.link} ${className} cursor-pointer`}
-        rel={rel}
-        target={target}
-        onClick={event => {
-          rest.onClick?.(event);
-          handleNavigate(event);
-        }}
-        href={withBaseUrl}
-      >
-        {children}
-      </a>
-    );
-  }
 
   return (
     <a
-      {...rest}
+      {...props}
       href={withBaseUrl}
-      target={target}
-      rel={rel}
       className={`${styles.link} ${className}`}
+      onMouseEnter={() => preloadLink(withBaseUrl)}
+      onClick={event => {
+        onClick?.(event);
+        handleNavigate(event);
+      }}
     >
       {children}
     </a>

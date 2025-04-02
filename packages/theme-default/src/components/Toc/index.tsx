@@ -1,7 +1,7 @@
 import { usePageData } from '@rspress/runtime';
 import type { Header } from '@rspress/shared';
-import { renderInlineMarkdown, scrollToTarget } from '../../logic';
-import { useUISwitch } from '../../logic/useUISwitch.js';
+import { renderInlineMarkdown } from '../../logic';
+import { Link } from '../Link';
 
 import './index.css';
 
@@ -12,29 +12,22 @@ const TocItem = ({
   header: Header;
   onItemClick?: (header: Header) => void;
 }) => {
-  const { scrollPaddingTop } = useUISwitch();
   return (
-    <li key={header.id}>
-      <a
+    <li>
+      <Link
         href={`#${header.id}`}
         className={'rspress-toc-link sm:text-normal text-sm'}
         style={{
           marginLeft: (header.depth - 2) * 12,
         }}
-        onClick={e => {
-          e.preventDefault();
-          window.location.hash = header.id;
-          const target = document.getElementById(header.id);
-          if (target) {
-            scrollToTarget(target, false, scrollPaddingTop);
-          }
+        onClick={() => {
           onItemClick?.(header);
         }}
       >
         <span className={'rspress-toc-link-text block'}>
           {renderInlineMarkdown(header.text)}
         </span>
-      </a>
+      </Link>
     </li>
   );
 };

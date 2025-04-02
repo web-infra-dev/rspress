@@ -10,7 +10,7 @@ import { SidebarMenu } from '../../components/SidebarMenu';
 import { useLocaleSiteData } from '../../logic';
 import { TabDataContext } from '../../logic/TabDataContext';
 import type { UISwitchResult } from '../../logic/useUISwitch';
-import { A } from './docComponents/link';
+import { A } from './docComponents/a';
 import { H1 } from './docComponents/title';
 import styles from './index.module.scss';
 
