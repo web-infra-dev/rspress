@@ -5,7 +5,6 @@ import type { PluginDriver } from '../PluginDriver';
 import type { RouteService } from '../route/RouteService';
 import { globalStylesVMPlugin } from './globalStyles';
 import { globalUIComponentsVMPlugin } from './globalUIComponents';
-import { i18nVMPlugin } from './i18n';
 import { routeVMPlugin } from './routeData';
 import { searchHookVMPlugin } from './searchHooks';
 import { siteDataVMPlugin } from './siteData/index';
@@ -42,10 +41,6 @@ export const runtimeModuleFactory: RuntimeModuleFactory[] = [
    * Generate global styles from config and plugins
    */
   globalStylesVMPlugin,
-  /**
-   * Generate i18n text for client runtime
-   */
-  i18nVMPlugin,
   /**
    * Generate search hook module
    */
