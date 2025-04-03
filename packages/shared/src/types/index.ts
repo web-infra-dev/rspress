@@ -248,6 +248,7 @@ export interface PageIndexInfo {
   routePath: string;
   toc: Header[];
   content: string;
+  flattenContent?: string;
   /* html content is too large to be written to index file */
   _html: string;
   frontmatter: FrontMatterMeta;
