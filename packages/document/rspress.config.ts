@@ -1,5 +1,6 @@
 import { pluginSass } from '@rsbuild/plugin-sass';
 import { pluginAlgolia } from '@rspress/plugin-algolia';
+import { pluginLlms } from '@rspress/plugin-llms';
 import { pluginGoogleAnalytics } from 'rsbuild-plugin-google-analytics';
 import { pluginOpenGraph } from 'rsbuild-plugin-open-graph';
 import { pluginFontOpenSans } from 'rspress-plugin-font-open-sans';
@@ -27,6 +28,7 @@ export default defineConfig({
     pluginAlgolia({
       verificationContent: '0F854AB11EB1D255',
     }),
+    pluginLlms(),
   ],
   builderConfig: {
     dev: {
@@ -47,6 +49,9 @@ export default defineConfig({
         },
       }),
     ],
+    output: {
+      cleanDistPath: false,
+    },
   },
   search: false,
   route: {

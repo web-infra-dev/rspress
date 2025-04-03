@@ -1,0 +1,75 @@
+import { Tab, Tabs } from 'rspress/theme';
+
+# h1
+
+## h2 Tab
+
+some content
+
+<Tabs>
+
+<Tab>
+
+```js
+const tab1 = tab;
+```
+
+</Tab>
+<Tab>
+
+```js
+const tab2 = tab;
+```
+
+</Tab>
+<Tab>
+
+```js
+const tab3 = tab;
+```
+
+</Tab>
+
+</Tabs>
+
+## h2 div
+
+<div>
+  outer
+  <div>inner</div>
+</div>
+
+## h2 nested Tab
+
+<Tabs>
+
+<Tab>
+
+<Tabs>
+
+<Tab>
+
+```js
+const tab1 = tab;
+```
+
+</Tab>
+<Tab>
+
+```js
+const tab2 = tab;
+```
+
+</Tab>
+
+</Tabs>
+
+</Tab>
+
+<Tab>
+
+second Tab
+
+</Tab>
+
+</Tabs>

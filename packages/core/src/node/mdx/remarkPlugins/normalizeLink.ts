@@ -23,7 +23,7 @@ export const remarkPluginNormalizeLink: Plugin<
   [
     {
       root: string;
-      cleanUrls: boolean;
+      cleanUrls: boolean | string;
       routeService?: RouteService;
     },
   ],
@@ -79,7 +79,12 @@ export const remarkPluginNormalizeLink: Plugin<
         }
       }
 
-      url = normalizeHref(url, cleanUrls);
+      if (typeof cleanUrls === 'boolean') {
+        url = normalizeHref(url, cleanUrls);
+      } else {
+        url = normalizeHref(url, false);
+        url = url.replace(/\.html$/, cleanUrls);
+      }
 
       if (hash) {
         url += `#${hash}`;
