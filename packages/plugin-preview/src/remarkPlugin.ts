@@ -10,7 +10,7 @@ import { visit } from 'unist-util-visit';
 import { getASTNodeImport, getExternalDemoContent } from './ast-helpers';
 import { demoBlockComponentPath, virtualDir } from './constant';
 import type { DemoInfo, RemarkPluginOptions } from './types';
-import { generateId, injectDemoBlockImport } from './utils';
+import { generateId, getLangFileExt, injectDemoBlockImport } from './utils';
 
 export const demos: DemoInfo = {};
 
@@ -199,7 +199,10 @@ export const remarkCodeToDemo: Plugin<[RemarkPluginOptions], Root> = function ({
             previewMode === 'iframe');
 
         const id = generateId(pageName, index++);
-        const virtualModulePath = join(virtualDir, `${id}.${node.lang}`);
+        const virtualModulePath = join(
+          virtualDir,
+          `${id}.${getLangFileExt(node.lang)}`,
+        );
         constructDemoNode(id, virtualModulePath, node, isMobileMode);
         // Only when the content of the file changes, the file will be written
         // Avoid to trigger the hmr indefinitely

@@ -33,3 +33,15 @@ export const injectDemoBlockImport = (str: string, path: string): string => {
     ${str}
   `;
 };
+
+export const getLangFileExt = (lang: string): string => {
+  switch (lang) {
+    case 'jsx':
+    case 'tsx':
+      return 'tsx';
+    case 'json':
+      return 'tsx';
+    default:
+      return lang;
+  }
+};
