@@ -15,6 +15,12 @@ describe('remark-container', () => {
     .use(remarkRehype)
     .use(rehypeStringify);
 
+  const processorWithoutDirective = unified()
+    .use(remarkParse)
+    .use(remarkPluginContainer)
+    .use(remarkRehype)
+    .use(rehypeStringify);
+
   const mdxProcessor = processor().use(remarkMdx);
 
   test('No newline', () => {
@@ -287,5 +293,23 @@ This is a details block.
 `);
 
     expect(result.value).toMatchSnapshot();
+  });
+
+  test('start with a link', () => {
+    const result = processor.processSync(`
+:::tip
+[link](https://example.com) is a link
+:::
+`);
+
+    expect(result.value).toMatchSnapshot();
+
+    const resultWithoutDirective = processorWithoutDirective.processSync(`
+:::tip
+[link](https://example.com) is a link
+:::
+`);
+
+    expect(resultWithoutDirective.value).toMatchSnapshot();
   });
 });
