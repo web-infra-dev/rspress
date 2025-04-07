@@ -1648,8 +1648,8 @@ importers:
         specifier: ^7.52.3
         version: 7.52.3(@types/node@22.10.2)
       '@modern-js/tsconfig':
-        specifier: 2.64.0
-        version: 2.64.0
+        specifier: 2.67.0
+        version: 2.67.0
       '@rsbuild/plugin-react':
         specifier: ~1.1.1
         version: 1.1.1(@rsbuild/core@1.3.4)
@@ -2613,8 +2613,8 @@ packages:
   '@microsoft/tsdoc@0.15.1':
     resolution: {integrity: sha512-4aErSrCR/On/e5G2hDP0wjooqDdauzEbIq8hIkIe5pXV0rtWJZvdCEKL0ykZxex+IxIwBp0eGeV48hQN07dXtw==}
 
-  '@modern-js/tsconfig@2.64.0':
-    resolution: {integrity: sha512-ez3unNeWDGXv5o/1U+bIA5SfoGD0RpRkUoQOrCYm8EshuK+tPuLPUHjoFSQfM98YcWaMG8wb+hgWHEKL2tTfnA==}
+  '@modern-js/tsconfig@2.67.0':
+    resolution: {integrity: sha512-BktgLUjtLZ4nHnm9dVveNxJRc925UsJ9IyE2/hXDbiPNdz8CRJTXJKfUyN4nltHrHPmdFSd+1WWjf2mMFD8mRg==}
 
   '@module-federation/error-codes@0.11.1':
     resolution: {integrity: sha512-N1cs1qwrO8cU/OzfnBbr+3FaVbrJk6QEAsQ8H+YxGRrh/kHsR2BKpZCX79jTG27oDbz45FLjQ98YucMMXC24EA==}
@@ -8133,7 +8133,7 @@ snapshots:
 
   '@microsoft/tsdoc@0.15.1': {}
 
-  '@modern-js/tsconfig@2.64.0': {}
+  '@modern-js/tsconfig@2.67.0': {}
 
   '@module-federation/error-codes@0.11.1': {}
 
