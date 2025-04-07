@@ -32,12 +32,12 @@
     "typedoc-plugin-markdown": "3.17.1"
   },
   "devDependencies": {
-    "@microsoft/api-extractor": "^7.52.2",
-    "@rslib/core": "0.6.0",
+    "@microsoft/api-extractor": "^7.52.3",
+    "@rslib/core": "0.6.1",
     "@rspress/config": "workspace:*",
     "@types/node": "^18.11.17",
     "@types/react": "^18.3.20",
-    "@types/react-dom": "^18.3.5",
+    "@types/react-dom": "^18.3.6",
     "react": "^18.3.1",
     "typescript": "^5.8.2"
   },
