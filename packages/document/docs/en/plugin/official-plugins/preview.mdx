@@ -169,6 +169,8 @@ Configure the buildConfig of the iframe, such as adding some global code.
 
 Configure custom entry to support other `Web` frameworks, such as `Vue`.
 
+Use customEntry only `iframeOptions.position = follow`.
+
 ```ts
 import { defineConfig } from 'rspress/config';
 import { pluginPreview } from '@rspress/plugin-preview';
@@ -181,7 +183,7 @@ export default defineConfig({
       previewMode: 'iframe',
       previewLanguages: ['vue'],
       iframeOptions: {
-        position: 'follow', // customFramework only supports follow mode
+        position: 'follow',
         customEntry: (entryCssPath: string, demoPath: string) => {
           return `
       import { createApp } from 'vue';

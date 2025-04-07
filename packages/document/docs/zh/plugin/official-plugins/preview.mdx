@@ -165,6 +165,8 @@ export default App;
 
 配置自定义入口支持其他 `Web` 框架，例如 `Vue`。
 
+仅设置 `iframeOptions.position = follow` 时可使用 customEntry。
+
 ```ts
 import { defineConfig } from 'rspress/config';
 import { pluginPreview } from '@rspress/plugin-preview';
@@ -177,7 +179,7 @@ export default defineConfig({
       previewMode: 'iframe',
       previewLanguages: ['vue'],
       iframeOptions: {
-        position: 'follow', // customFramework 仅支持 follow 模式
+        position: 'follow',
         customEntry: (entryCssPath: string, demoPath: string) => {
           return `
       import { createApp } from 'vue';
