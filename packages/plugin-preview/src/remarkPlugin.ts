@@ -176,13 +176,19 @@ export const remarkCodeToDemo: Plugin<[RemarkPluginOptions], Root> = function ({
         ) {
           return;
         }
-        const value = injectDemoBlockImport(
-          previewCodeTransform({
-            language: node.lang,
-            code: node.value,
-          }),
-          demoBlockComponentPath,
-        );
+        const isJsx = node.lang === 'jsx' || node.lang === 'tsx';
+        const value = isJsx
+          ? injectDemoBlockImport(
+              previewCodeTransform({
+                language: node.lang,
+                code: node.value,
+              }),
+              demoBlockComponentPath,
+            )
+          : previewCodeTransform({
+              language: node.lang,
+              code: node.value,
+            });
 
         // every code block can change their preview mode by meta
         const isMobileMode =
@@ -193,7 +199,7 @@ export const remarkCodeToDemo: Plugin<[RemarkPluginOptions], Root> = function ({
             previewMode === 'iframe');
 
         const id = generateId(pageName, index++);
-        const virtualModulePath = join(virtualDir, `${id}.tsx`);
+        const virtualModulePath = join(virtualDir, `${id}.${node.lang}`);
         constructDemoNode(id, virtualModulePath, node, isMobileMode);
         // Only when the content of the file changes, the file will be written
         // Avoid to trigger the hmr indefinitely

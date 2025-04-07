@@ -161,6 +161,40 @@ export default App;
 
 配置 iframe 的构建配置，例如添加一些全局代码逻辑。
 
+### iframeOptions.customEntry
+
+配置自定义入口支持其他 `Web` 框架，例如 `Vue`。
+
+```ts
+import { defineConfig } from 'rspress/config';
+import { pluginPreview } from '@rspress/plugin-preview';
+import { pluginVue } from '@rsbuild/plugin-vue';
+
+export default defineConfig({
+  // ...
+  plugins: [
+    pluginPreview({
+      previewMode: 'iframe',
+      previewLanguages: ['vue'],
+      iframeOptions: {
+        position: 'follow', // customFramework 仅支持 follow 模式
+        customEntry: (entryCssPath: string, demoPath: string) => {
+          return `
+      import { createApp } from 'vue';
+      import App from '${demoPath}';
+      import '${entryCssPath}';
+      createApp(App).mount('#root');
+      `;
+        },
+        builderConfig: {
+          plugins: [pluginVue()],
+        },
+      },
+    }),
+  ],
+});
+```
+
 ### deprecated: isMobile
 
 从 1.12.0 版本开始，请使用 [previewMode](#previewmode) 配置预览模式。

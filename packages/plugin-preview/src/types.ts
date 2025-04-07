@@ -58,6 +58,10 @@ export type IframeOptions = {
    */
   devPort?: number;
   builderConfig?: RsbuildConfig;
+  /**
+   * custom support for other web frameworks
+   */
+  customEntry?: (entryCssPath: string, demoPath: string) => string;
 };
 
 export type RemarkPluginOptions = Required<
