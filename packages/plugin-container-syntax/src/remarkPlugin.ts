@@ -271,7 +271,7 @@ function transformer(tree: Parent) {
           REGEX_END.test(lastChildInNode.value)
         ) {
           const lastChildInNodeText = lastChildInNode.value;
-          const matchedEndContent = lastChildInNodeText.slice(0, -3).trim();
+          const matchedEndContent = lastChildInNodeText.slice(0, -3).trimEnd();
           // eslint-disable-next-line max-depth
           if (wrappedChildren.length) {
             (wrappedChildren[0] as Paragraph).children.push({
