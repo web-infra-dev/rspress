@@ -40,12 +40,8 @@ exports[`remark-container > With link, inlineCode, img, list in container 1`] = 
 
 exports[`remark-container > With link, inlineCode, img, spread list in container 1`] = `
 "<div class="rspress-directive tip"><div class="rspress-directive-title">TIP</div><div class="rspress-directive-content"><p>This is a tip with <code>code</code> and <a href="foo">link</a> some text</p><ul>
-<li>
-<p>list 1</p>
-</li>
-<li>
-<p>list 2</p>
-</li>
+<li>list 1</li>
+<li>list 2</li>
 </ul><p><img src="foo" alt="img"></p></div></div>"
 `;
 
@@ -128,4 +124,11 @@ exports[`remark-container > nested in unordered list inside mdx component 1`] = 
 <p>Title2</p>
 </li>
 </ul></div></div></div>"
+`;
+
+exports[`remark-container > start with a link 1`] = `"<div class="rspress-directive tip"><div class="rspress-directive-title">TIP</div><div class="rspress-directive-content"><p><a href="https://example.com">link</a> is a link</p></div></div>"`;
+
+exports[`remark-container > start with a link 2`] = `
+"<div class="rspress-directive tip"><div class="rspress-directive-title">TIP</div><div class="rspress-directive-content"><p>
+<a href="https://example.com">link</a> is a link</p></div></div>"
 `;

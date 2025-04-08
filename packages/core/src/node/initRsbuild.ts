@@ -14,6 +14,7 @@ import {
   removeLeadingSlash,
   removeTrailingSlash,
 } from '@rspress/shared';
+import { pluginVirtualModule } from 'rsbuild-plugin-virtual-module';
 import type { PluginDriver } from './PluginDriver';
 import {
   CLIENT_ENTRY,
@@ -28,7 +29,8 @@ import {
 import { hintThemeBreakingChange } from './logger/hint';
 import type { RouteService } from './route/RouteService';
 import { initRouteService } from './route/init';
-import { rsbuildPluginDocVM } from './runtimeModule';
+import { type FactoryContext, rsbuildPluginDocVM } from './runtimeModule';
+import { i18nVMPlugin } from './runtimeModule/i18n';
 import { serveSearchIndexMiddleware } from './searchIndex';
 import { detectReactVersion, resolveReactAlias } from './utils';
 import { detectCustomIcon } from './utils/detectCustomIcon';
@@ -95,15 +97,21 @@ async function createInternalBuildConfig(
       enableSSG ? resolveReactAlias(reactVersion, true) : Promise.resolve({}),
     ]);
 
+  const context: Omit<FactoryContext, 'isSSR' | 'alias'> = {
+    userDocRoot,
+    config,
+    runtimeTempDir,
+    routeService,
+    pluginDriver,
+  };
   return {
     plugins: [
       ...(isPluginIncluded(config, PLUGIN_REACT_NAME) ? [] : [pluginReact()]),
-      rsbuildPluginDocVM({
-        userDocRoot,
-        config,
-        runtimeTempDir,
-        routeService,
-        pluginDriver,
+      rsbuildPluginDocVM(context),
+      pluginVirtualModule({
+        virtualModules: {
+          ...i18nVMPlugin(context),
+        },
       }),
     ],
     server: {

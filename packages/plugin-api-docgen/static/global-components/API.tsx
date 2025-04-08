@@ -16,13 +16,16 @@ export default (props: { moduleName: string }) => {
   const apiDoc =
     apiDocMap?.[moduleName] || apiDocMap?.[`${moduleName}-${lang}`] || '';
   return (
-    <ReactMarkdown
-      remarkPlugins={[[remarkGfm]]}
-      components={getCustomMDXComponent() as Record<string, React.ElementType>}
-      skipHtml={true}
-      className="rspress-plugin-api-docgen"
-    >
-      {apiDoc}
-    </ReactMarkdown>
+    <div className="rspress-plugin-api-docgen">
+      <ReactMarkdown
+        remarkPlugins={[[remarkGfm]]}
+        components={
+          getCustomMDXComponent() as Record<string, React.ElementType>
+        }
+        skipHtml={true}
+      >
+        {apiDoc}
+      </ReactMarkdown>
+    </div>
   );
 };

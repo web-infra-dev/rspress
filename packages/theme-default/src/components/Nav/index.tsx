@@ -1,10 +1,8 @@
-import { useLocation, usePageData } from '@rspress/runtime';
+import { useLocation, usePageData, useWindowSize } from '@rspress/runtime';
 import type { NavItem } from '@rspress/shared';
 import { Search } from '@theme';
-import { useCallback, useEffect, useState } from 'react';
 import { useHiddenNav } from '../../logic/useHiddenNav';
 import { useNavData } from '../../logic/useNav';
-import { isMobileDevice } from '../../logic/utils';
 import { NavHamburger } from '../NavHamburger';
 import { SocialLinks } from '../SocialLinks';
 import { SwitchAppearance } from '../SwitchAppearance';
@@ -31,8 +29,9 @@ export function Nav(props: NavProps) {
   const { siteData, page } = usePageData();
   const { base } = siteData;
   const { pathname } = useLocation();
-  const [isMobile, setIsMobile] = useState(false);
+  const { width } = useWindowSize();
   const hiddenNav = useHiddenNav();
+  const isMobile = width < 1280;
   const localeLanguages = Object.values(
     siteData.locales || siteData.themeConfig.locales || {},
   );
@@ -41,16 +40,6 @@ export function Nav(props: NavProps) {
   const socialLinks = siteData.themeConfig.socialLinks || [];
   const hasSocialLinks = socialLinks.length > 0;
   const langs = localeLanguages.map(item => item.lang || '') || [];
-  const updateIsMobile = useCallback(() => {
-    setIsMobile(isMobileDevice());
-  }, []);
-  useEffect(() => {
-    window.addEventListener('resize', updateIsMobile);
-    setIsMobile(isMobileDevice());
-    return () => {
-      window.removeEventListener('resize', updateIsMobile);
-    };
-  }, [updateIsMobile]);
 
   const NavMenu = ({ menuItems }: { menuItems: NavItem[] }) => {
     return (

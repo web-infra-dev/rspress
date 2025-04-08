@@ -47,38 +47,36 @@
   content: '+';
   position: absolute;
   left: 10px;
-  color: #3dd68c;
+  color: #4fb74d;
 }
 
 .diff.remove::after {
   content: '-';
   position: absolute;
   left: 10px;
-  color: #cb7676;
+  color: #f47481;
 }
 
 .has-diff div[class*='language-'] .diff.add {
-  background-color: rgba(16, 185, 129, 0.16);
-  border-left: 1px solid #10b981;
+  background-color: rgba(16, 185, 129, 0.1);
   padding: 0 20px 0 19px;
 }
 
 div[class*='language-'] code .diff.remove {
-  background-color: rgba(244, 63, 94, 0.16);
-  border-left: 1px solid #f43f5e;
+  background-color: rgba(244, 63, 94, 0.1);
   padding: 0 20px 0 19px;
 }
 
 .has-highlight div[class*='language-'] .line.highlighted {
-  background-color: rgba(101, 117, 133, 0.16);
+  background-color: rgba(101, 117, 133, 0.1);
 }
 
 .has-highlight div[class*='language-'] .line.highlighted.error {
-  background-color: rgba(244, 63, 94, 0.16);
+  background-color: rgba(244, 63, 94, 0.1);
 }
 
 .has-highlight div[class*='language-'] .line.highlighted.warning {
-  background-color: rgba(234, 179, 8, 0.16);
+  background-color: rgba(234, 179, 8, 0.1);
 }
 
 .has-focused div[class*='language-'] .line:not(.focused) {
