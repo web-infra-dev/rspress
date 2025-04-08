@@ -186,11 +186,11 @@ export default defineConfig({
         position: 'follow',
         customEntry: (entryCssPath: string, demoPath: string) => {
           return `
-      import { createApp } from 'vue';
-      import App from '${demoPath}';
-      import '${entryCssPath}';
-      createApp(App).mount('#root');
-      `;
+          import { createApp } from 'vue';
+          import App from ${JSON.stringify(demoPath)};
+          import ${JSON.stringify(entryCssPath)};
+          createApp(App).mount('#root');
+          `;
         },
         builderConfig: {
           plugins: [pluginVue()],
