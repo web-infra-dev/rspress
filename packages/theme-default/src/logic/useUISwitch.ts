@@ -1,5 +1,4 @@
 import { useLocation, usePageData, useWindowSize } from '@rspress/runtime';
-import { inBrowser } from '@rspress/shared';
 import { useEffect, useState } from 'react';
 import { useEnableNav, useHiddenNav } from './useHiddenNav';
 import { useLocaleSiteData } from './useLocaleSiteData';
