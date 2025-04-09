@@ -312,4 +312,72 @@ This is a details block.
 
     expect(resultWithoutDirective.value).toMatchSnapshot();
   });
+
+  test('end with a link', () => {
+    const result = processor.processSync(`
+:::tip
+Line 1.
+
+Line 2 with [link](http://example.com).
+:::
+`);
+
+    expect(result.value).toMatchSnapshot();
+
+    const resultWithoutDirective = processorWithoutDirective.processSync(`
+:::tip
+Line 1.
+
+Line 2 with [link](http://example.com).
+:::
+`);
+
+    expect(resultWithoutDirective.value).toMatchSnapshot();
+  });
+
+  test('end with an inline code', () => {
+    const result = processor.processSync(`
+:::tip
+Line 1.
+
+Line 2 with \`code\`.
+:::
+`);
+
+    expect(result.value).toMatchSnapshot();
+
+    const resultWithoutDirective = processorWithoutDirective.processSync(`
+:::tip
+Line 1.
+
+Line 2 with \`code\`.
+:::
+`);
+
+    expect(resultWithoutDirective.value).toMatchSnapshot();
+  });
+
+  test('end with a new line', () => {
+    const result = processor.processSync(`
+:::tip
+Line 1.
+
+Line 2 with [link](http://example.com).
+
+:::
+`);
+
+    expect(result.value).toMatchSnapshot();
+
+    const resultWithoutDirective = processorWithoutDirective.processSync(`
+:::tip
+Line 1.
+
+Line 2 with [link](http://example.com).
+
+:::
+`);
+
+    expect(resultWithoutDirective.value).toMatchSnapshot();
+  });
 });

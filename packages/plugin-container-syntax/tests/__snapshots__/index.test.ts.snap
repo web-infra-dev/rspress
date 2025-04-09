@@ -54,6 +54,27 @@ exports[`remark-container > details 1`] = `
 This is a details block.</p></div></details>"
 `;
 
+exports[`remark-container > end with a link 1`] = `"<div class="rspress-directive tip"><div class="rspress-directive-title">TIP</div><div class="rspress-directive-content"><p>Line 1.</p><p>Line 2 with <a href="http://example.com">link</a>.</p></div></div>"`;
+
+exports[`remark-container > end with a link 2`] = `
+"<div class="rspress-directive tip"><div class="rspress-directive-title">TIP</div><div class="rspress-directive-content"><p>
+Line 1.</p><p>Line 2 with <a href="http://example.com">link</a>.</p></div></div>"
+`;
+
+exports[`remark-container > end with a new line 1`] = `"<div class="rspress-directive tip"><div class="rspress-directive-title">TIP</div><div class="rspress-directive-content"><p>Line 1.</p><p>Line 2 with <a href="http://example.com">link</a>.</p></div></div>"`;
+
+exports[`remark-container > end with a new line 2`] = `
+"<div class="rspress-directive tip"><div class="rspress-directive-title">TIP</div><div class="rspress-directive-content"><p>
+Line 1.</p><p>Line 2 with <a href="http://example.com">link</a>.</p></div></div>"
+`;
+
+exports[`remark-container > end with an inline code 1`] = `"<div class="rspress-directive tip"><div class="rspress-directive-title">TIP</div><div class="rspress-directive-content"><p>Line 1.</p><p>Line 2 with <code>code</code>.</p></div></div>"`;
+
+exports[`remark-container > end with an inline code 2`] = `
+"<div class="rspress-directive tip"><div class="rspress-directive-title">TIP</div><div class="rspress-directive-content"><p>
+Line 1.</p><p>Line 2 with <code>code</code>.</p></div></div>"
+`;
+
 exports[`remark-container > github alerts ~ caution 1`] = `
 "<div class="rspress-directive caution"><div class="rspress-directive-title">CAUTION</div><div class="rspress-directive-content"><p>Use this code:-</p><pre><code class="language-javascript">console.log(69);
 </code></pre></div></div>"
