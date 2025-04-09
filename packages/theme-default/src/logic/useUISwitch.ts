@@ -105,13 +105,6 @@ export function useUISwitch(): UISwitchResult {
     };
   }, [location.search]);
 
-  // Control the scroll behavior of the browser when location hash changed
-  useEffect(() => {
-    if (inBrowser() && history.scrollRestoration) {
-      history.scrollRestoration = 'manual';
-    }
-  }, []);
-
   const navbarHeight = hiddenNav ? 0 : width <= 768 ? 56 : 72;
   const sidebarMenuHeight = showSidebarMenu ? 46 : 0;
   const scrollPaddingTop = navbarHeight + sidebarMenuHeight;
