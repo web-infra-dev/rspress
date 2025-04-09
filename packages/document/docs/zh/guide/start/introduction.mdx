@@ -142,7 +142,7 @@ export default defineConfig({
 });
 ```
 
-```
+```txt
 // 目录结构
 docs
 ├── v1
@@ -167,18 +167,12 @@ Rspress 支持两种自定义主题的方式：
 
 1.  基于默认主题扩展。在默认主题的各个组件中，提供了许多插槽让你能添加自定义的布局内容，比如
 
-```ts
+```tsx
 // theme/index.tsx
 import Theme from 'rspress/theme';
 import { NoSSR } from 'rspress/runtime';
 
-const Layout = () => (
-  <Theme.Layout
-    beforeNavTitle={
-      <p>Custom Block</p>
-    }
-  />
-);
+const Layout = () => <Theme.Layout beforeNavTitle={<p>Custom Block</p>} />;
 
 export default {
   ...Theme,

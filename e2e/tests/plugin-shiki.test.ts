@@ -28,21 +28,22 @@ test.describe('plugin shiki test', async () => {
     await page.goto(`http://localhost:${appPort}`, {
       waitUntil: 'networkidle',
     });
-    const shikiDoms = await page.$$('.shiki');
+    const shikiDoms = await page.$$('.rspress-code-content');
     expect(shikiDoms.length).toBe(4);
 
     const firstShikiDom = shikiDoms[0];
-    expect(await firstShikiDom.$eval('pre', node => node.style.overflowX)).toBe(
-      'auto',
-    );
 
     expect(
-      await firstShikiDom.$eval('code', node => node.style.whiteSpace),
+      await firstShikiDom.$eval('code', node =>
+        node.computedStyleMap().get('white-space')?.toString(),
+      ),
     ).toBe('pre');
 
     await firstShikiDom.$eval('button', btn => btn.click());
     expect(
-      await firstShikiDom.$eval('code', node => node.style.whiteSpace),
+      await firstShikiDom.$eval('code', node =>
+        node.computedStyleMap().get('white-space')?.toString(),
+      ),
     ).toBe('pre-wrap');
   });
 });

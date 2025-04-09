@@ -10,7 +10,7 @@ Automated navbar/sidebar will only work if there are no `nav` and `sidebar` conf
 
 First, `_meta.json` can be divided into two categories: navbar level and sidebar level. The difference between the two is that the navigation-level `_meta.json` lives in the document root, while the sidebar-level `_meta.json` lives in a subdirectory of the document root. for example:
 
-```js
+```txt
 docs
 ├── _meta.json // navigation bar level
 └── guides
@@ -23,7 +23,7 @@ docs
 
 If your document supports i18n, then `_meta.json` at the navigation bar level will be placed in the corresponding language directory, for example:
 
-```js
+```txt
 docs
 ├── en
 │   ├── _meta.json // navigation bar level
@@ -178,7 +178,7 @@ When `dashed` is set to `true`, it indicates that the divider line is dashed. Ot
 
 If you want to display a document when clicking on the sidebar directory, you can create an `md(x)` file with the same name at the same level as the current directory, for example:
 
-```bash
+```txt
 docs
 ├── advanced.mdx
 └── advanced
@@ -290,7 +290,7 @@ Here is a complete example using the three types above:
 
 In some directories, you don't need to configure `_meta.json` and let Rspress automatically generate the sidebar. This requires ensuring that the directory contains only documents, not subdirectories, and you have no requirements for the order of documents. For example, there is now the following document structure:
 
-```bash
+```txt
 docs
 ├── _meta.json
 └── guides
@@ -317,7 +317,7 @@ In the guides directory you can configure `_meta.json` as follows:
 
 In `basic` directory, you may not configure `_meta.json`, and then Rspress will automatically generate a sidebar for you, the default is sorted alphabetically according to the file name. If you want to customize the order, you can prefix the file name with a number, such as:
 
-```bash
+```txt
 basic
   ├── 1-introduction.mdx
   ├── 2-install.mdx

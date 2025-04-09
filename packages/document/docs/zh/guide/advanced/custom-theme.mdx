@@ -14,7 +14,7 @@
 
 默认情况下，你需要在项目根目录下创建一个 `theme` 目录，然后在 `theme` 目录下创建一个 `index.ts` 或者 `index.tsx` 文件，该文件用于导出主题配置。
 
-```bash
+```txt
 └── theme
     └── index.tsx
 ```
@@ -133,7 +133,7 @@ export * from 'rspress/theme';
 
 如果想要单独修改默认主题组件里用到的图标，只需要将同名图标放在 theme/assets 目录下即可。
 
-```bash
+```txt
 └── theme
     └── assets
         └── logo.svg
@@ -149,14 +149,14 @@ export * from 'rspress/theme';
 
 默认情况下，你需要在项目根目录下创建一个 `theme` 目录，然后在 `theme` 目录下创建一个 `index.ts` 或者 `index.tsx` 文件，该文件用于导出主题配置。
 
-```bash
+```txt
 ├── theme
 │   └── index.tsx
 ```
 
 在 `theme/index.tsx` 文件中，你需要导出一个 Layout 组件，这个组件就是你的主题的入口组件:
 
-```ts
+```tsx
 // theme/index.tsx
 function Layout() {
   return <div>Custom Theme Layout</div>;
@@ -174,7 +174,7 @@ export * from 'rspress/theme';
 
 这个 Layout 组件会被用来渲染整个文档站点的布局，你可以在这个组件中引入你的自定义组件，比如:
 
-```ts
+```tsx
 // theme/index.tsx
 import { Navbar } from './Navbar';
 

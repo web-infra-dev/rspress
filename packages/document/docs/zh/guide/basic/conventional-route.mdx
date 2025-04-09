@@ -10,7 +10,7 @@ Rspress 使用的是文件系统路由，页面的文件路径会简单的映射
 
 Rspress 会自动扫描根目录和所有子目录，并将文件路径映射到路由路径。例如，如果你有以下的文件结构：
 
-```bash
+```txt
 docs
 ├── foo
 │   └── bar.md
@@ -71,7 +71,7 @@ export default defineConfig({
 
 我们推荐你将文档文件放在 `docs` 目录下，这样可以让你的项目更加清晰。而对于非文档内容，比如自定义组件、工具函数等，可以放到 `docs` 目录之外进行维护。比如：
 
-```bash
+```txt
 docs
 └── foo.mdx
 src

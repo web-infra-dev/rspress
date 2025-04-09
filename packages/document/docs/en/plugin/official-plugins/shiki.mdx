@@ -36,27 +36,12 @@ export default defineConfig({
 This plugin supports passing in an object configuration. The properties of this object configuration are as follows:
 
 ```ts
-import type {
-  BuiltinLanguage,
-  BuiltinTheme,
-  ShikiTransformer,
-  SpecialLanguage,
-} from 'shiki';
+import type { RehypeShikiOptions } from '@shikijs/rehype';
 
-export interface PluginShikiOptions {
-  /**
-   * Code highlighting theme, @see https://shiki.style/themes
-   */
-  theme: BuiltinTheme | 'css-variables';
-  /**
-   * Code highlighting language, @see https://shiki.style/languages
-   */
-  langs: Array<BuiltinLanguage | SpecialLanguage>;
-  /**
-   * Custom shiki transformer, @see https://shiki.style/guide/transformers
-   */
-  transformers: ShikiTransformer[];
-}
+/**
+ * @see https://github.com/shikijs/shiki/blob/main/packages/rehype/src/types.ts
+ */
+export type PluginShikiOptions = RehypeShikiOptions;
 ```
 
 The code highlighting theme uses `css-variables`. You can also choose your favorite theme, refer to the [Shiki theme list documentation](https://github.com/shikijs/shiki/blob/main/docs/themes.md) for details.
@@ -71,13 +56,13 @@ Transformer is a concept in this plugin, its function is to transform specific s
 
 A few Transformers are built into this plugin, including:
 
-- `createTransformerLineNumber`: Implement the display of the line number of the code block.
+- `transformerLineNumber`: Implement the display of the line number of the code block.
 
 You can enable these Transformers by configuring the `transformers` attribute, such as:
 
 ```ts title="rspress.config.ts"
 import { defineConfig } from 'rspress/config';
-import { pluginShiki, createTransformerDiff } from '@rspress/plugin-shiki';
+import { pluginShiki, transformerLineNumber } from '@rspress/plugin-shiki';
 import {
   transformerNotationDiff,
   transformerNotationErrorLevel,
@@ -90,7 +75,7 @@ export default defineConfig({
     pluginShiki({
       transformers: [
         // Add as needed
-        createTransformerLineNumber(),
+        transformerLineNumber(),
         // transformerNotationDiff(),
         // transformerNotationErrorLevel(),
         // transformerNotationHighlight(),

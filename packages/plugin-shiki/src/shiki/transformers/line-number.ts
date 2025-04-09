@@ -7,7 +7,7 @@ export interface ITransformerLineNumberOptions {
 
 export const SHIKI_TRANSFORMER_LINE_NUMBER = 'shiki-transformer:line-number';
 
-export function createTransformerLineNumber(
+export function transformerLineNumber(
   options: ITransformerLineNumberOptions = {},
 ): ShikiTransformer {
   const {

@@ -1,37 +1,21 @@
 import { dirname, join } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import type { RspressPlugin } from '@rspress/shared';
-import {
-  type BuiltinLanguage,
-  type BuiltinTheme,
-  type ShikiTransformer,
-  type SpecialLanguage,
-  createCssVariablesTheme,
-} from 'shiki';
-import { getHighlighter } from './highlighter';
-import { rehypePluginShiki } from './rehypePlugin';
+import rehypePluginShiki from '@shikijs/rehype';
+import type { RehypeShikiOptions } from '@shikijs/rehype';
+import { type BuiltinLanguage, createCssVariablesTheme } from 'shiki';
 import {
   SHIKI_TRANSFORMER_LINE_NUMBER,
-  createTransformerLineNumber,
+  transformerLineNumber,
 } from './transformers';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
 
-export interface PluginShikiOptions {
-  /**
-   * Code highlighting theme, @see https://shiki.style/themes
-   */
-  theme: BuiltinTheme | 'css-variables';
-  /**
-   * Code highlighting language, @see https://shiki.style/languages
-   */
-  langs: Array<BuiltinLanguage | SpecialLanguage>;
-  /**
-   * Custom shiki transformer, @see https://shiki.style/guide/transformers
-   */
-  transformers: ShikiTransformer[];
-}
+/**
+ * @see https://github.com/shikijs/shiki/blob/main/packages/rehype/src/types.ts
+ */
+export type PluginShikiOptions = RehypeShikiOptions;
 
 export const SHIKI_DEFAULT_HIGHLIGHT_LANGUAGES: BuiltinLanguage[] = [
   'js',
@@ -63,16 +47,13 @@ const cssVariablesTheme = createCssVariablesTheme({
 export function pluginShiki(
   options?: Partial<PluginShikiOptions>,
 ): RspressPlugin {
-  const {
-    theme = 'css-variables',
-    langs = [],
-    transformers = [],
-  } = options || {};
+  const { langs = [], transformers = [], ...restOptions } = options || {};
 
   return {
     name: '@rspress/plugin-shiki',
 
     async config(config) {
+      const newTransformers = [...transformers];
       config.markdown = config.markdown || {};
       // Shiki will be integrated by rehype plugin, so we should use the javascript version markdown compiler.
       config.markdown.mdxRs = false;
@@ -80,25 +61,27 @@ export function pluginShiki(
       config.markdown.rehypePlugins = config.markdown.rehypePlugins || [];
       if (
         config.markdown.showLineNumbers &&
-        !transformers.some(
+        !newTransformers.some(
           transformerItem =>
             transformerItem.name === SHIKI_TRANSFORMER_LINE_NUMBER,
         )
       ) {
-        transformers.push(createTransformerLineNumber());
+        newTransformers.push(transformerLineNumber());
       }
-      const highlighter = await getHighlighter({
-        themes: [cssVariablesTheme],
-        langs: [...SHIKI_DEFAULT_HIGHLIGHT_LANGUAGES, ...langs],
-        transformers,
-      });
 
       config.markdown.rehypePlugins.push([
         rehypePluginShiki,
-        { highlighter, theme },
+        {
+          ...restOptions,
+          transformers: newTransformers,
+          theme: cssVariablesTheme,
+          addLanguageClass: true,
+          langs: [...SHIKI_DEFAULT_HIGHLIGHT_LANGUAGES, ...langs],
+          defaultLanguage: 'txt',
+        } satisfies RehypeShikiOptions,
       ]);
       return config;
     },
-    globalStyles: join(__dirname, '../shiki.css'),
+    globalStyles: join(__dirname, './shiki.css'),
   };
 }
