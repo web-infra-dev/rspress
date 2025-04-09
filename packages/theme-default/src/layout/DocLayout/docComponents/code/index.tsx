@@ -30,6 +30,10 @@ export function Code(props: CodeProps) {
     return <code {...props}></code>;
   }
 
+  if (codeHighlighter === 'shiki') {
+    return <code {...props}></code>;
+  }
+
   const toggleCodeWrap = (wrapButtonElement: HTMLButtonElement | null) => {
     if (codeWrap) {
       wrapButtonElement?.classList.remove(styles.wrappedBtn);
@@ -39,32 +43,16 @@ export function Code(props: CodeProps) {
     setCodeWrap(!codeWrap);
   };
 
-  const getHighlighter = () => {
-    switch (codeHighlighter) {
-      case 'prism':
-        return (
-          <PrismSyntaxHighlighter
-            {...props}
-            language={language}
-            codeWrap={codeWrap}
-          />
-        );
-      case 'shiki':
-      default:
-        return (
-          <pre {...props} style={{ overflowX: 'auto' }}>
-            <code style={{ whiteSpace: codeWrap ? 'pre-wrap' : 'pre' }}>
-              {props.children}
-            </code>
-          </pre>
-        );
-    }
-  };
-
   return (
     <>
       {/* Use prism.js to highlight code by default */}
-      <div ref={codeBlockRef}>{getHighlighter()}</div>
+      <div ref={codeBlockRef}>
+        <PrismSyntaxHighlighter
+          {...props}
+          language={language}
+          codeWrap={codeWrap}
+        />
+      </div>
       <div className={styles.codeButtonGroup}>
         <button
           ref={wrapButtonRef}

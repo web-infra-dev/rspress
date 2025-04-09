@@ -47,6 +47,7 @@
   content: '+';
   position: absolute;
   left: 10px;
+  top: 0px;
   color: #4fb74d;
 }
 
@@ -54,55 +55,69 @@
   content: '-';
   position: absolute;
   left: 10px;
+  top: 0px;
   color: #f47481;
 }
 
-.has-diff div[class*='language-'] .diff.add {
+.has-diff [class*='language-'] .diff.add {
   background-color: rgba(16, 185, 129, 0.1);
   padding: 0 20px 0 19px;
 }
 
-div[class*='language-'] code .diff.remove {
+[class*='language-'] code .diff.remove {
   background-color: rgba(244, 63, 94, 0.1);
   padding: 0 20px 0 19px;
 }
 
-.has-highlight div[class*='language-'] .line.highlighted {
-  background-color: rgba(101, 117, 133, 0.1);
+.rspress-code-content {
+  .has-highlighted [class*='language-'] {
+    .line.highlighted {
+      width: 100%;
+      position: static;
+      display: inline-block;
+      background-color: rgba(101, 117, 133, 0.1);
+    }
+    .line.highlighted.error {
+      background-color: rgba(244, 63, 94, 0.1);
+    }
+    .line.highlighted.warning {
+      background-color: rgba(234, 179, 8, 0.1);
+    }
+  }
 }
 
-.has-highlight div[class*='language-'] .line.highlighted.error {
-  background-color: rgba(244, 63, 94, 0.1);
-}
-
-.has-highlight div[class*='language-'] .line.highlighted.warning {
-  background-color: rgba(234, 179, 8, 0.1);
-}
-
-.has-focused div[class*='language-'] .line:not(.focused) {
-  filter: blur(0.095rem);
-  opacity: 0.4;
-  transition:
-    filter 0.35s,
-    opacity 0.35s;
-}
-
-.has-focused:hover div[class*='language-'] .line:not(.focused) {
-  filter: blur(0);
-  opacity: 1;
+.has-focused [class*='language-'] {
+  .line:not(.focused) {
+    filter: blur(0.095rem);
+    opacity: 0.4;
+    transition:
+      filter 0.35s,
+      opacity 0.35s;
+  }
+  &:hover {
+    .line:not(.focused) {
+      filter: blur(0);
+      opacity: 1;
+    }
+  }
 }
 
 .has-line-number code {
   counter-reset: step;
   counter-increment: step 0;
+  & .line-number::before {
+    content: counter(step);
+    counter-increment: step;
+    width: 15px;
+    margin-right: 15px;
+    display: inline-block;
+    text-align: right;
+    color: rgba(115, 138, 148, 0.4);
+  }
 }
 
-.has-line-number code .line-number::before {
-  content: counter(step);
-  counter-increment: step;
-  width: 15px;
-  margin-right: 15px;
-  display: inline-block;
-  text-align: right;
-  color: rgba(115, 138, 148, 0.4);
+.rp-force-wrap {
+  code {
+    white-space: pre-wrap !important;
+  }
 }

@@ -142,7 +142,7 @@ export default defineConfig({
 });
 ```
 
-```
+```txt
 // Directory structure
 docs
 ├── v1
@@ -166,18 +166,12 @@ Rspress supports two ways to customize themes:
 
 1. Extend from the default theme. In each component of the default theme, many slots are provided for you to add custom layout content, for example:
 
-```ts
+```tsx
 // theme/index.tsx
 import Theme from 'rspress/theme';
 import { NoSSR } from 'rspress/runtime';
 
-const Layout = () => (
-  <Theme.Layout
-    beforeNavTitle={
-      <p>Custom Block</p>
-    }
-  />
-);
+const Layout = () => <Theme.Layout beforeNavTitle={<p>Custom Block</p>} />;
 
 export default {
   ...Theme,

@@ -10,7 +10,7 @@
 
 首先，`_meta.json` 可以分为两类：导航栏级别和侧边栏级别。两者的区别在于，导航级别的 `_meta.json` 位于文档根目录中，而侧边栏级别的 `_meta.json` 位于文档根目录的子目录中。比如:
 
-```js
+```txt
 docs
 ├── _meta.json // 导航栏级别
 └── guides
@@ -23,7 +23,7 @@ docs
 
 如果你的文档使用了国际化，那么导航栏级别的 `_meta.json` 会放置在对应语言目录下，比如：
 
-```js
+```txt
 docs
 ├── en
 │   ├── _meta.json // 导航栏级别
@@ -178,7 +178,7 @@ export type SideMetaItem =
 
 如果想要点击侧边栏目录显示某篇文档，你可以在当前目录同级创建一个同名的 `md(x)` 文件，比如：
 
-```bash
+```txt
 docs
 ├── advanced.mdx
 └── advanced
@@ -290,7 +290,7 @@ docs
 
 某些目录下你可以不配置 `_meta.json`，让 Rspress 自动帮你生成侧边栏。这需要保证目录下**仅包含文档，而不包含子目录**，并且你对**文档的顺序**没有要求。比如现在有如下的文档结构:
 
-```bash
+```txt
 docs
 ├── _meta.json
 └── guides
@@ -317,7 +317,7 @@ docs
 
 而在 `basic` 目录中，你可以不配置 `_meta.json`，Rspress 会自动帮你生成侧边栏，默认按照文件名的字母顺序排序。如果你想要自定义顺序，可以在文件名前加上数字前缀，比如:
 
-```bash
+```txt
 basic
   ├── 1-introduction.mdx
   ├── 2-install.mdx

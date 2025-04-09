@@ -1,8 +1,5 @@
 import path from 'node:path';
-import {
-  createTransformerLineNumber,
-  pluginShiki,
-} from '@rspress/plugin-shiki';
+import { pluginShiki, transformerLineNumber } from '@rspress/plugin-shiki';
 import {
   transformerNotationDiff,
   transformerNotationErrorLevel,
@@ -16,11 +13,11 @@ export default defineConfig({
   plugins: [
     pluginShiki({
       transformers: [
+        transformerLineNumber(),
         transformerNotationDiff(),
         transformerNotationErrorLevel(),
         transformerNotationHighlight(),
         transformerNotationFocus(),
-        createTransformerLineNumber(),
       ],
     }),
   ],

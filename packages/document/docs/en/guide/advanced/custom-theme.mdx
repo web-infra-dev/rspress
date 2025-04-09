@@ -14,7 +14,7 @@ If you want to develop a custom theme from scratch, you can go to [Redevelop a c
 
 By default, you need to create a `theme` directory under the project root directory, and then create an `index.ts` or `index.tsx` file under the `theme` directory, which is used to export the theme content.
 
-```bash
+```txt
 └── theme
     └── index.tsx
 ```
@@ -133,7 +133,7 @@ Of course, you may need to use page data during the development process, you can
 
 If you want to modify the icons used in the default theme component individually, just put the icons with the same name in the theme/assets directory.
 
-```bash
+```txt
 └── theme
     └── assets
         └── logo.svg
@@ -149,14 +149,14 @@ If you're developing a custom theme from scratch, you need to understand the bas
 
 By default, you need to create a `theme` directory under the project root directory, and then create an `index.ts` or `index.tsx` file under the `theme` directory, which is used to export the theme content.
 
-```bash
+```txt
 ├── theme
 │   └── index.tsx
 ```
 
 In the `theme/index.tsx` file, you need to export a Layout component, which is the entry component of your theme:
 
-```ts
+```tsx
 // theme/index.tsx
 function Layout() {
   return <div>Custom Theme Layout</div>;
@@ -173,7 +173,7 @@ export * from 'rspress/theme';
 
 Layout component will be used to render the layout of the entire document site, you can introduce your custom components in this component, for example:
 
-```ts
+```tsx
 // theme/index.tsx
 import { Navbar } from './Navbar';
 
@@ -248,7 +248,7 @@ function Layout() {
 
 [react-router-dom](https://reactrouter.com/) is used inside Rspress to implement routing, so you can directly use the Hook of `react-router-dom`, for example:
 
-```ts
+```tsx
 import { useLocation } from 'rspress/runtime';
 
 function Layout() {
