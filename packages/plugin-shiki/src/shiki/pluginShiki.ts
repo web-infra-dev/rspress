@@ -8,6 +8,7 @@ import {
   SHIKI_TRANSFORMER_LINE_NUMBER,
   transformerLineNumber,
 } from './transformers';
+import { transformerAddTitle } from './transformers/add-title';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
@@ -53,7 +54,7 @@ export function pluginShiki(
     name: '@rspress/plugin-shiki',
 
     async config(config) {
-      const newTransformers = [...transformers];
+      const newTransformers = [transformerAddTitle(), ...transformers];
       config.markdown = config.markdown || {};
       // Shiki will be integrated by rehype plugin, so we should use the javascript version markdown compiler.
       config.markdown.mdxRs = false;
@@ -72,12 +73,12 @@ export function pluginShiki(
       config.markdown.rehypePlugins.push([
         rehypePluginShiki,
         {
-          ...restOptions,
-          transformers: newTransformers,
           theme: cssVariablesTheme,
-          addLanguageClass: true,
-          langs: [...SHIKI_DEFAULT_HIGHLIGHT_LANGUAGES, ...langs],
           defaultLanguage: 'txt',
+          ...restOptions,
+          addLanguageClass: true,
+          transformers: newTransformers,
+          langs: [...SHIKI_DEFAULT_HIGHLIGHT_LANGUAGES, ...langs],
         } satisfies RehypeShikiOptions,
       ]);
       return config;

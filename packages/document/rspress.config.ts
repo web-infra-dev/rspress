@@ -1,6 +1,12 @@
 import { pluginSass } from '@rsbuild/plugin-sass';
 import { pluginAlgolia } from '@rspress/plugin-algolia';
 import { pluginShiki } from '@rspress/plugin-shiki';
+import {
+  transformerNotationDiff,
+  transformerNotationErrorLevel,
+  transformerNotationFocus,
+  transformerNotationHighlight,
+} from '@shikijs/transformers';
 import { pluginGoogleAnalytics } from 'rsbuild-plugin-google-analytics';
 import { pluginOpenGraph } from 'rsbuild-plugin-open-graph';
 import { pluginFontOpenSans } from 'rspress-plugin-font-open-sans';
@@ -29,7 +35,13 @@ export default defineConfig({
       verificationContent: '0F854AB11EB1D255',
     }),
     pluginShiki({
-      langs: ['mdx', 'html'],
+      langs: ['mdx', 'html', 'toml'],
+      transformers: [
+        transformerNotationDiff(),
+        transformerNotationErrorLevel(),
+        transformerNotationHighlight(),
+        transformerNotationFocus(),
+      ],
     }),
   ],
   builderConfig: {
