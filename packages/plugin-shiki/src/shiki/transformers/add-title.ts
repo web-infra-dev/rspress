@@ -20,10 +20,13 @@ export function transformerAddTitle(): ShikiTransformer {
   return {
     name: SHIKI_TRANSFORMER_ADD_TITLE,
     pre(pre) {
-      pre.properties = {
-        ...pre.properties,
-        title: parseTitleFromMeta(this.options.meta?.__raw),
-      };
+      const title = parseTitleFromMeta(this.options.meta?.__raw);
+      if (title.length > 0) {
+        pre.properties = {
+          ...pre.properties,
+          title,
+        };
+      }
       return pre;
     },
   };
