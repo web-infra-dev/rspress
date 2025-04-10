@@ -29,7 +29,7 @@ export default defineConfig({
       verificationContent: '0F854AB11EB1D255',
     }),
     pluginShiki({
-      langs: ['mdx', 'html'],
+      langs: ['mdx', 'html', 'toml'],
     }),
   ],
   builderConfig: {
