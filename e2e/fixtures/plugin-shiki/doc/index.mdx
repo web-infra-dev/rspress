@@ -2,7 +2,7 @@
 
 ## transformers
 
-{/* transformerDiff */}
+{/* transformerNotationDiff */}
 
 ```ts
 export function foo() {
@@ -19,7 +19,7 @@ export function foo() {
 }
 ```
 
-{/* transformerErrorLevel */}
+{/* transformerNotationErrorLevel */}
 
 ```ts
 export function foo() {
@@ -33,4 +33,13 @@ export function foo() {
 export function foo() {
   console.log('Focus'); // [!code focus]
 }
+```
+
+{/* transformerNotationHighlight */}
+
+```js
+console.log('1'); // [!code highlight]
+console.log('2');
+console.log('3'); // [!code highlight]
+console.log('4'); // [!code highlight]
 ```
