@@ -71,7 +71,7 @@ const parseTitle = (rawTitle = '', isMDX = false) => {
 const createContainer = (
   type: DirectiveType | string,
   title: string | undefined,
-  children: BlockContent[],
+  children: (BlockContent | PhrasingContent)[],
 ): Parent => {
   const isDetails = type === 'details';
 
@@ -223,7 +223,7 @@ function transformer(tree: Parent) {
         continue;
       }
       // 2. If it is, we remove the paragraph and create a container directive
-      const wrappedChildren: BlockContent[] = [];
+      const wrappedChildren: (BlockContent | PhrasingContent)[] = [];
       // 2.1 case: with no newline between `:::` and `:::`, for example
       // ::: tip
       // This is a tip
@@ -335,24 +335,26 @@ function transformer(tree: Parent) {
             // Then create the container directive, and remove the original paragraphs
             // Finally, we insert the new container directive and break the loop
             const lastChildText = lastChild.value;
-            const matchedEndContent = lastChildText.slice(0, -3).trim();
-            wrappedChildren.push(
-              ...(currentParagraph.children.filter(
-                child => child !== firstTextNode && child !== lastChild,
-              ) as BlockContent[]),
+            const matchedEndContent = lastChildText.slice(0, -3).trimEnd();
+            const filteredChildren = currentParagraph.children.filter(
+              child => child !== firstTextNode && child !== lastChild,
             );
 
             if (matchedEndContent) {
               wrappedChildren.push({
                 type: 'paragraph',
                 children: [
+                  ...filteredChildren,
                   {
                     type: 'text',
                     value: matchedEndContent,
                   },
                 ],
               });
+            } else {
+              wrappedChildren.push(...filteredChildren);
             }
+
             const newChild = createContainer(type, title, wrappedChildren);
             tree.children.splice(i, j - i + 1, newChild as RootContent);
             break;
