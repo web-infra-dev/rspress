@@ -28,7 +28,7 @@ function ShikiPre({
   ...otherProps
 }: {
   codeElementClassName: string | undefined;
-  codeTitle: string;
+  codeTitle: string | undefined;
   child: React.ReactElement;
   preElementRef: React.RefObject<HTMLPreElement>;
   className: string | undefined;
@@ -42,7 +42,9 @@ function ShikiPre({
         <div>
           <pre
             ref={preElementRef}
-            className={`${codeWrap ? 'rp-force-wrap' : ''} ${className || ''}`}
+            className={[codeWrap ? 'rp-force-wrap' : '', className || '']
+              .filter(Boolean)
+              .join(' ')}
             {...otherProps}
           >
             {child}
@@ -61,10 +63,12 @@ function ShikiPre({
 export function Pre({
   children,
   className,
+  title,
   ...otherProps
 }: {
   children: React.ReactElement[] | React.ReactElement;
   className?: string;
+  title?: string;
   [key: string]: any;
 }) {
   const { siteData } = usePageData();
@@ -73,7 +77,6 @@ export function Pre({
 
   const renderChild = (child: React.ReactElement) => {
     const { className: codeElementClassName, meta } = child.props as CodeProps;
-    const codeTitle = parseTitleFromMeta(meta);
 
     if (codeHighlighter === 'shiki') {
       return (
@@ -81,15 +84,16 @@ export function Pre({
           child={child}
           className={className}
           codeElementClassName={codeElementClassName}
-          codeTitle={codeTitle}
+          codeTitle={title}
           preElementRef={preElementRef}
           {...otherProps}
         />
       );
     }
 
+    const codeTitle = parseTitleFromMeta(meta);
     return (
-      <div className={`${codeElementClassName || DEFAULT_LANGUAGE_CLASS}`}>
+      <div className={codeElementClassName || DEFAULT_LANGUAGE_CLASS}>
         {codeTitle && <div className="rspress-code-title">{codeTitle}</div>}
         <div className="rspress-code-content rspress-scrollbar">{child}</div>
       </div>
