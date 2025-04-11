@@ -59,6 +59,8 @@ export const remarkPluginNormalizeLink: Plugin<
 
       const relativePath = path.relative(root, file.path);
 
+      console.log('relativePath:', relativePath);
+
       if (url.startsWith('.')) {
         url = path.posix.join(slash(path.dirname(relativePath)), url);
       } else if (routeService) {
