@@ -141,7 +141,7 @@ export function DocLayout(props: DocLayoutProps) {
               <ScrollToTop />
             </NoSSR>
           )}
-          {uiSwitch?.showAside && headers.length > 0 && (
+          {uiSwitch?.showAside && (
             <div
               className={styles.asideContainer}
               style={
@@ -150,9 +150,15 @@ export function DocLayout(props: DocLayoutProps) {
                   : { marginTop: 0, paddingTop: '32px' }
               }
             >
-              {beforeOutline}
-              <Aside headers={headers} outlineTitle={outlineTitle} />
-              {afterOutline}
+              {headers.length === 0 ? (
+                <></>
+              ) : (
+                <>
+                  {beforeOutline}
+                  <Aside headers={headers} outlineTitle={outlineTitle} />
+                  {afterOutline}
+                </>
+              )}
             </div>
           )}
         </div>
