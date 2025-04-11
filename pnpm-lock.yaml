@@ -1221,6 +1221,9 @@ importers:
       '@rspress/core':
         specifier: workspace:^2.0.0-alpha.8
         version: link:../core
+      '@rspress/runtime':
+        specifier: workspace:^2.0.0-alpha.9
+        version: link:../runtime
       unified:
         specifier: ^11.0.5
         version: 11.0.5

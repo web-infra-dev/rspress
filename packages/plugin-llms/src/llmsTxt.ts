@@ -1,0 +1,3 @@
+function llmsTxt() {}
+
+export { llmsTxt };
