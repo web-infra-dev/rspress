@@ -18,6 +18,7 @@
     "virtual-global-styles",
     "./src/theme-default/styles/index.ts"
   ],
+  "type": "module",
   "exports": {
     ".": {
       "types": "./dist/index.d.ts",

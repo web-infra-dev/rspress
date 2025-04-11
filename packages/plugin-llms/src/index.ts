@@ -9,6 +9,7 @@ import type {
   Sidebar,
 } from '@rspress/shared';
 import type { NavItemWithLink } from '@rspress/shared';
+import { generateLlmsTxt } from './llmsTxt';
 import { mdxToMd } from './mdxToMd';
 
 interface Options {
@@ -72,6 +73,17 @@ const rsbuildPluginLlms = ({
         obj.others.push(pageData);
       }
     });
+
+    if (llmsTxt) {
+      const llmsTxtContent = generateLlmsTxt(obj, navList);
+      api.processAssets(
+        { targets: ['web'], stage: 'additional' },
+        async ({ compilation, sources }) => {
+          const source = new sources.RawSource(llmsTxtContent);
+          compilation.emitAsset('llms.txt', source);
+        },
+      );
+    }
 
     await Promise.all(
       newPageDataList.values().map(async pageData => {
