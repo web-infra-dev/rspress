@@ -6,7 +6,7 @@ const enableSSG = siteData.ssg;
 
 // eslint-disable-next-line import/no-commonjs
 
-export async function renderInBrowser() {
+async function renderInBrowser() {
   const container = document.getElementById('root')!;
 
   if (process.env.__REACT_GTE_18__) {
