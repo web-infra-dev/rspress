@@ -9,7 +9,12 @@ export interface CommandOptions {
   env: Record<string, string>;
 }
 
-export type Command = 'dev' | `dev -- -c ${string}` | 'build' | 'preview';
+export type Command =
+  | 'dev'
+  | `dev -- -c ${string}`
+  | 'build'
+  | `build -- -c ${string}`
+  | 'preview';
 
 export function sleep(ms: number) {
   return new Promise(resolve => setTimeout(resolve, ms));
@@ -94,8 +99,8 @@ export async function runDevCommand(
   });
 }
 
-export async function runBuildCommand(appDir: string) {
-  return runNpmScript('build', {
+export async function runBuildCommand(appDir: string, configFile?: string) {
+  return runNpmScript(configFile ? `build -- -c ${configFile}` : 'build', {
     appDir,
     env: {},
   });
