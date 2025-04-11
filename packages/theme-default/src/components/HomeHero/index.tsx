@@ -14,13 +14,19 @@ const DEFAULT_HERO = {
   image: undefined,
 } satisfies FrontMatterMeta['hero'];
 
-export function HomeHero({
-  frontmatter,
-  routePath,
-}: {
+interface HomeHeroProps {
   frontmatter: FrontMatterMeta;
   routePath: string;
-}) {
+  beforeHeroActions?: React.ReactNode;
+  afterHeroActions?: React.ReactNode;
+}
+
+function HomeHero({
+  beforeHeroActions,
+  afterHeroActions,
+  frontmatter,
+  routePath,
+}: HomeHeroProps) {
   const hero = frontmatter?.hero || DEFAULT_HERO;
   const hasImage = hero.image !== undefined;
   const textMaxWidth = hasImage ? 'sm:max-w-xl' : 'sm:max-w-4xl';
@@ -65,6 +71,7 @@ export function HomeHero({
           >
             {renderHtmlOrText(hero.tagline)}
           </p>
+          {beforeHeroActions}
           {hero.actions?.length ? (
             <div className="rp-grid md:rp-flex md:rp-flex-wrap md:rp-justify-center rp-gap-3 rp-pt-6 sm:rp-pt-8 rp-z-10">
               {hero.actions.map(action => {
@@ -85,6 +92,7 @@ export function HomeHero({
               })}
             </div>
           ) : null}
+          {afterHeroActions}
         </div>
 
         {hasImage ? (
@@ -120,3 +128,6 @@ function normalizeSrcsetAndSizes(
   const r = (Array.isArray(field) ? field : [field]).filter(Boolean).join(', ');
   return r || undefined;
 }
+
+export { HomeHero };
+export type { HomeHeroProps };

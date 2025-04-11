@@ -5,12 +5,21 @@ import './index.css';
 export interface HomeLayoutProps {
   beforeHero?: React.ReactNode;
   afterHero?: React.ReactNode;
+  beforeHeroActions?: React.ReactNode;
+  afterHeroActions?: React.ReactNode;
   beforeFeatures?: React.ReactNode;
   afterFeatures?: React.ReactNode;
 }
 
 export function HomeLayout(props: HomeLayoutProps) {
-  const { beforeHero, afterHero, beforeFeatures, afterFeatures } = props;
+  const {
+    beforeHero,
+    afterHero,
+    beforeFeatures,
+    afterFeatures,
+    beforeHeroActions,
+    afterHeroActions,
+  } = props;
   const {
     page: { frontmatter, routePath },
   } = usePageData();
@@ -25,7 +34,12 @@ export function HomeLayout(props: HomeLayoutProps) {
     >
       <div className="rp-pb-12">
         {beforeHero}
-        <HomeHero frontmatter={frontmatter} routePath={routePath} />
+        <HomeHero
+          frontmatter={frontmatter}
+          routePath={routePath}
+          beforeHeroActions={beforeHeroActions}
+          afterHeroActions={afterHeroActions}
+        />
         {afterHero}
         {beforeFeatures}
         <HomeFeature frontmatter={frontmatter} routePath={routePath} />
