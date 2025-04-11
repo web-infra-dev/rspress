@@ -1,5 +1,4 @@
 import { useLocation, usePageData, useWindowSize } from '@rspress/runtime';
-import { inBrowser } from '@rspress/shared';
 import { useEffect, useState } from 'react';
 import { useEnableNav, useHiddenNav } from './useHiddenNav';
 import { useLocaleSiteData } from './useLocaleSiteData';
@@ -104,13 +103,6 @@ export function useUISwitch(): UISwitchResult {
       setShowDocFooter(originDocFooter);
     };
   }, [location.search]);
-
-  // Control the scroll behavior of the browser when location hash changed
-  useEffect(() => {
-    if (inBrowser() && history.scrollRestoration) {
-      history.scrollRestoration = 'manual';
-    }
-  }, []);
 
   const navbarHeight = hiddenNav ? 0 : width <= 768 ? 56 : 72;
   const sidebarMenuHeight = showSidebarMenu ? 46 : 0;
