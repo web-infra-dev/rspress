@@ -4,11 +4,11 @@ import { staticPath, virtualDir } from './constant';
 import type { DemoInfo } from './types';
 import { toValidVarName } from './utils';
 
-// TODO: Support custom entry template files
 export function generateEntry(
   demos: DemoInfo,
   framework: 'react' | 'solid',
   position: 'follow' | 'fixed',
+  customEntry?: (entryCssPath: string, demoPath: string) => string,
 ) {
   const sourceEntry: Record<string, string> = {};
   const entryCssPath = join(staticPath, 'global-styles', 'entry.css');
@@ -30,7 +30,11 @@ export function generateEntry(
         import Demo from ${JSON.stringify(demoPath)};
         render(<Demo />, document.getElementById('root'));
         `;
-        const entryContent = framework === 'react' ? reactEntry : solidEntry;
+        const entryContent = customEntry
+          ? customEntry(entryCssPath, demoPath)
+          : framework === 'react'
+            ? reactEntry
+            : solidEntry;
         writeFileSync(entry, entryContent);
         sourceEntry[id] = entry;
       });

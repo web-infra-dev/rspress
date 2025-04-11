@@ -44,6 +44,7 @@ export function pluginPreview(options?: Options): RspressPlugin {
     framework = 'react',
     position = iframePosition,
     builderConfig = {},
+    customEntry,
   } = iframeOptions;
   const globalUIComponents =
     position === 'fixed'
@@ -99,7 +100,12 @@ export function pluginPreview(options?: Options): RspressPlugin {
       lastDemos = cloneDeep(demos);
       await devServer?.server?.close();
       devServer = undefined;
-      const sourceEntry = generateEntry(demos, framework, position);
+      const sourceEntry = generateEntry(
+        demos,
+        framework,
+        position,
+        customEntry,
+      );
       const outDir = join(config.outDir ?? 'doc_build', '~demo');
       if (Object.keys(sourceEntry).length === 0) {
         return;

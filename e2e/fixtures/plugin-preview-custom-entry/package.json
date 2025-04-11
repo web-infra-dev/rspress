@@ -1,0 +1,22 @@
+{
+  "name": "@rspress-fixture/plugin-preview-custom-entry",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "build": "rspress build",
+    "dev": "rspress dev",
+    "preview": "rspress preview"
+  },
+  "dependencies": {
+    "@rsbuild/plugin-vue": "^1.0.7",
+    "@rspress/plugin-preview": "workspace:*",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1",
+    "rspress": "workspace:*",
+    "solid-js": "^1.9.5",
+    "vue": "^3.5.13"
+  },
+  "devDependencies": {
+    "@types/node": "^18.11.17"
+  }
+}
