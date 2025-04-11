@@ -3,7 +3,6 @@ import { dirname, join } from 'node:path';
 import { pathToFileURL } from 'node:url';
 import {
   type PageData,
-  type SSGConfig,
   type UserConfig,
   isDebugMode,
   normalizeSlash,
@@ -24,6 +23,7 @@ import {
   TEMP_DIR,
 } from './constants';
 import { initRsbuild } from './initRsbuild';
+import { hintSSGFailed, hintSSGFalse } from './logger/hint';
 import type { Route } from './route/RouteService';
 import { routeService } from './route/init';
 import { writeSearchIndex } from './searchIndex';
@@ -34,10 +34,6 @@ interface BuildOptions {
   appDirectory: string;
   docDirectory: string;
   config: UserConfig;
-}
-
-function isCSRFallback(ssgConfig: SSGConfig) {
-  return typeof ssgConfig === 'object' && ssgConfig.fallback === 'csr';
 }
 
 export async function bundle(
@@ -79,41 +75,29 @@ export async function renderPages(
   appDirectory: string,
   config: UserConfig,
   pluginDriver: PluginDriver,
-  ssgConfig: SSGConfig,
 ) {
   logger.info('Rendering pages...');
   const startTime = Date.now();
   const outputPath = config?.outDir ?? join(appDirectory, OUTPUT_DIR);
   const ssrBundlePath = join(outputPath, 'ssr', 'main.cjs');
 
+  let render: SSRBundleExports['render'];
   try {
-    // There are two cases where we will fallback to CSR:
-    // 1. ssr bundle load failed
-    // 2. ssr bundle render failed
-    // 3. ssg is disabled
-    let render: SSRBundleExports['render'];
-    if (ssgConfig) {
-      try {
-        const { default: ssrExports } = await import(
-          pathToFileURL(ssrBundlePath).toString()
-        );
-        ({ render } = ssrExports as SSRBundleExports);
-      } catch (e) {
-        if (isCSRFallback(ssgConfig)) {
-          // fallback to CSR
-          logger.error(e);
-          logger.warn(
-            `Failed to load SSG bundle: ${picocolors.yellow(ssrBundlePath)}, fallback to CSR.`,
-          );
-        } else {
-          logger.error(
-            `Failed to load SSG bundle: ${picocolors.yellow(ssrBundlePath)}.`,
-          );
-          throw e;
-        }
-      }
+    const { default: ssrExports } = await import(
+      pathToFileURL(ssrBundlePath).toString()
+    );
+    ({ render } = ssrExports as SSRBundleExports);
+  } catch (e) {
+    if (e instanceof Error) {
+      logger.error(
+        `Failed to load SSG bundle: ${picocolors.yellow(ssrBundlePath)}: ${e.message}`,
+      );
+      hintSSGFailed();
     }
+    throw e;
+  }
 
+  try {
     const routes = routeService!.getRoutes();
     const base = config?.base ?? '';
 
@@ -146,18 +130,10 @@ export async function renderPages(
             try {
               ({ appHtml } = await render(routePath, helmetContext.context));
             } catch (e) {
-              if (isCSRFallback(ssgConfig)) {
-                // fallback to CSR
-                logger.warn(
-                  `Page "${picocolors.yellow(routePath)}" SSG rendering error, fallback to CSR.`,
-                  e,
-                );
-              } else {
-                logger.error(
-                  `Page "${picocolors.yellow(routePath)}" SSG rendering failed.`,
-                );
-                throw e;
-              }
+              logger.error(
+                `Page "${picocolors.yellow(routePath)}" SSG rendering failed.`,
+              );
+              throw e;
             }
           }
 
@@ -224,7 +200,8 @@ export async function renderPages(
     logger.success(`Pages rendered in ${picocolors.yellow(totalTime)} ms.`);
   } catch (e: unknown) {
     if (e instanceof Error) {
-      logger.error(`Pages render error: ${e.stack}`);
+      logger.error(`Pages render error: ${e.message}`);
+      hintSSGFailed();
     }
     throw e;
   }
@@ -244,6 +221,11 @@ export async function build(options: BuildOptions) {
 
   await bundle(docDirectory, modifiedConfig, pluginDriver, Boolean(ssgConfig));
 
-  await renderPages(appDirectory, modifiedConfig, pluginDriver, ssgConfig);
+  if (ssgConfig) {
+    await renderPages(appDirectory, modifiedConfig, pluginDriver);
+  } else {
+    hintSSGFalse();
+  }
+
   await pluginDriver.afterBuild();
 }

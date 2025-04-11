@@ -468,7 +468,7 @@ export default defineConfig({
 
 ## ssg
 
-- Type: `boolean | { fallback?: false | 'csr' }`
+- Type: `boolean`
 - Default: `true`
 
 Whether to enable static site generation. Rspress enable it by default to generate CSR outputs and SSG outputs.
@@ -483,15 +483,15 @@ export default defineConfig({
 });
 ```
 
-If you do not strictly require SSG generation in your scenario, you can set `ssg` to `{ fallback: 'csr' }`. When SSG fails, it will fallback to generate only CSR outputs.
+:::tips
 
-```ts title="rspress.config.ts"
-export default {
-  ssg: {
-    fallback: 'csr',
-  },
-};
-```
+SSG requires the source code to support SSR. If the code is not compatible to SSR, the build process will fail. You can try:
+
+1. Fix code to make it SSR-compatible.
+
+2. Set `ssg: false`, but the SSG feature will be lost.
+
+:::
 
 ## replaceRules
 

@@ -43,3 +43,13 @@ export async function hintThemeBreakingChange(customThemeDir: string) {
     );
   }
 }
+
+export function hintSSGFailed() {
+  logger.info(`[Rspress v2] \`ssg: true\` requires the source code to support SSR. If the code is not compatible to SSR, the build process will fail. You can try:
+    1. Fix code to make it SSR-compatible.
+    2. Set \`ssg: false\`, but the SSG feature will be lost.`);
+}
+
+export function hintSSGFalse() {
+  logger.info('`ssg: false` detected, SSG will be disabled.');
+}

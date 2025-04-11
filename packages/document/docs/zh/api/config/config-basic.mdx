@@ -467,12 +467,12 @@ export default defineConfig({
 
 ## ssg
 
-- Type: `boolean | { fallback?: false | 'csr' }`
+- Type: `boolean`
 - Default: `true`
 
-是否开启静态站点生成。Rspress 默认开启该功能，生成 CSR 产物和 SSG 产物。
+是否开启静态站点生成。Rspress 默认开启该功能，生成 SSG 产物。
 
-如果你的文档站只要求在 CSR 场景下使用，你可以设置 `ssg` 为 `false`，此时 Rspress 会仅生成 CSR 产物。
+如果你的文档站只要求在 CSR 场景下使用，你可以设置 `ssg` 为 `false`，此时 Rspress 会生成 CSR 产物。
 
 ```ts title="rspress.config.ts"
 import { defineConfig } from 'rspress/config';
@@ -482,15 +482,15 @@ export default defineConfig({
 });
 ```
 
-如果你的场景中不严格要求必须生成 SSG 产物，可以设置 `ssg` 为 `{ fallback: 'csr' }`。当 SSG 失败时，会 fallback 到仅生成 CSR 产物。
+:::tips
 
-```ts title="rspress.config.ts"
-export default {
-  ssg: {
-    fallback: 'csr',
-  },
-};
-```
+SSG 要求源码支持在 SSR 下编译，如果使用了不兼容 SSR 场景下的代码，会导致编译失败。你可以尝试：
+
+1. 修复不兼容 SSR 场景下的代码，使其兼容 SSR。
+
+2. 设置 `ssg` 为 `false`，但是会失去 SSG 功能。
+
+:::
 
 ## replaceRules
 

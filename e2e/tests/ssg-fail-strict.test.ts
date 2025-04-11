@@ -12,3 +12,8 @@ test('ssg-fail-strict test', async () => {
     expect(err).toBeInstanceOf(Error);
   }
 });
+
+test('csr should be successful', async () => {
+  const appDir = path.join(fixtureDir, 'ssg-fail-strict');
+  await runBuildCommand(appDir, 'rspress-csr.config.ts');
+});
