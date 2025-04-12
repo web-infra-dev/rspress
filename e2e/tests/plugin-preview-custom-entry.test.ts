@@ -44,6 +44,6 @@ test.describe('plugin test', async () => {
     expect(codeBlockElements.length).toBe(3);
     expect(internalDemoCodePreview).toBe('Hello World JSX');
     expect(externalDemoCodePreview).toBe('Hello World TSX');
-    expect(transformedCodePreview).toBe('Hello World VSX');
+    expect(transformedCodePreview).toBe('Hello World VUE');
   });
 });
