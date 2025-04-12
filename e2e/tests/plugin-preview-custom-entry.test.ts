@@ -23,9 +23,7 @@ test.describe('plugin test', async () => {
     await page.goto(`http://localhost:${appPort}/`, {
       waitUntil: 'networkidle',
     });
-    const codeBlockElements = await page.$$(
-      '.rspress-doc > div[class*=language-]',
-    );
+    const codeBlockElements = await page.$$('.rspress-doc > .rspress-preview');
 
     const internalDemoCodePreview = await page
       .frameLocator('iframe')
