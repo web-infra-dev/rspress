@@ -13,6 +13,7 @@ test.describe('plugin test', async () => {
     const appDir = path.join(fixtureDir, 'plugin-preview');
     appPort = await getPort();
     app = await runDevCommand(appDir, appPort);
+
     const customEntryAppDir = path.join(
       fixtureDir,
       'plugin-preview-custom-entry',
