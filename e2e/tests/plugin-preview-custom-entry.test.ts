@@ -29,14 +29,17 @@ test.describe('plugin test', async () => {
 
     const internalDemoCodePreview = await page
       .frameLocator('iframe')
+      .first()
       .getByText('JSX')
       .innerText();
     const externalDemoCodePreview = await page
       .frameLocator('iframe')
+      .nth(1)
       .getByText('TSX')
       .innerText();
     const transformedCodePreview = await page
       .frameLocator('iframe')
+      .nth(2)
       .getByText('VUE')
       .innerText();
 
