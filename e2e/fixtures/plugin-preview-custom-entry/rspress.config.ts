@@ -8,7 +8,7 @@ export default defineConfig({
   plugins: [
     pluginPreview({
       iframeOptions: {
-        customEntry: (entryCssPath: string, demoPath: string) => {
+        customEntry: ({ entryCssPath, demoPath }) => {
           if (demoPath.endsWith('.vue')) {
             return `
 import { createApp } from 'vue';

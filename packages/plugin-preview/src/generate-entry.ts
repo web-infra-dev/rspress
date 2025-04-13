@@ -1,14 +1,14 @@
 import { writeFileSync } from 'node:fs';
 import { join } from 'node:path';
 import { staticPath, virtualDir } from './constant';
-import type { DemoInfo } from './types';
+import type { CustomEntry, DemoInfo } from './types';
 import { toValidVarName } from './utils';
 
 export function generateEntry(
   demos: DemoInfo,
   framework: 'react' | 'solid',
   position: 'follow' | 'fixed',
-  customEntry?: (entryCssPath: string, demoPath: string) => string,
+  customEntry?: (meta: CustomEntry) => string,
 ) {
   const sourceEntry: Record<string, string> = {};
   const entryCssPath = join(staticPath, 'global-styles', 'entry.css');
@@ -31,7 +31,10 @@ export function generateEntry(
         render(<Demo />, document.getElementById('root'));
         `;
         const entryContent = customEntry
-          ? customEntry(entryCssPath, demoPath)
+          ? customEntry({
+              entryCssPath,
+              demoPath,
+            })
           : framework === 'react'
             ? reactEntry
             : solidEntry;

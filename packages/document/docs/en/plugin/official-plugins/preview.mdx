@@ -184,7 +184,7 @@ export default defineConfig({
       previewLanguages: ['vue'],
       iframeOptions: {
         position: 'follow',
-        customEntry: (entryCssPath: string, demoPath: string) => {
+        customEntry: ({ entryCssPath, demoPath }) => {
           return `
           import { createApp } from 'vue';
           import App from ${JSON.stringify(demoPath)};

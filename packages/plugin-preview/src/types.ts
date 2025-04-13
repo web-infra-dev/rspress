@@ -61,8 +61,13 @@ export type IframeOptions = {
   /**
    * custom support for other web frameworks
    */
-  customEntry?: (entryCssPath: string, demoPath: string) => string;
+  customEntry?: (meta: CustomEntry) => string;
 };
+
+export interface CustomEntry {
+  entryCssPath: string;
+  demoPath: string;
+}
 
 export type RemarkPluginOptions = Required<
   Pick<
