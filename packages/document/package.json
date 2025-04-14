@@ -19,7 +19,7 @@
     "@rsbuild/plugin-sass": "~1.3.1",
     "@rspress/plugin-algolia": "workspace:*",
     "@rspress/plugin-shiki": "workspace:*",
-    "@rstack-dev/doc-ui": "1.7.3",
+    "@rstack-dev/doc-ui": "1.7.4",
     "@shikijs/transformers": "^3.2.2",
     "@types/react": "^18.3.20",
     "framer-motion": "12.0.6",
