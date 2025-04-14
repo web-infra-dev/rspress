@@ -10,7 +10,6 @@ import {
   MDX_OR_MD_REGEXP,
   RSPRESS_TEMP_DIR,
   type UserConfig,
-  isDebugMode,
   removeLeadingSlash,
   removeTrailingSlash,
 } from '@rspress/shared';
@@ -23,6 +22,7 @@ import {
   PACKAGE_ROOT,
   PUBLIC_DIR,
   SSR_ENTRY,
+  TEMPLATE_PATH,
   inlineThemeScript,
   isProduction,
 } from './constants';
@@ -32,6 +32,7 @@ import { initRouteService } from './route/init';
 import { type FactoryContext, rsbuildPluginDocVM } from './runtimeModule';
 import { i18nVMPlugin } from './runtimeModule/i18n';
 import { serveSearchIndexMiddleware } from './searchIndex';
+import { NODE_SSR_BUNDLE_NAME, rsbuildPluginSSG } from './ssg/rsbuildPluginSSG';
 import { detectReactVersion, resolveReactAlias } from './utils';
 import { detectCustomIcon } from './utils/detectCustomIcon';
 import { getSocialIcons } from './utils/getSocialIcons';
@@ -63,9 +64,7 @@ async function createInternalBuildConfig(
   const cwd = process.cwd();
   const CUSTOM_THEME_DIR =
     config?.themeDir ?? path.join(process.cwd(), 'theme');
-  const baseOutDir = config?.outDir ?? OUTPUT_DIR;
-  const csrOutDir = baseOutDir;
-  const ssrOutDir = path.join(baseOutDir, 'ssr');
+  const outDir = config?.outDir ?? OUTPUT_DIR;
 
   const DEFAULT_THEME = require.resolve('@rspress/theme-default');
   const base = config?.base ?? '';
@@ -113,6 +112,15 @@ async function createInternalBuildConfig(
           ...i18nVMPlugin(context),
         },
       }),
+      ...(enableSSG
+        ? [
+            rsbuildPluginSSG({
+              routeService,
+              config,
+              pluginDriver,
+            }),
+          ]
+        : []),
     ],
     server: {
       port:
@@ -142,7 +150,7 @@ async function createInternalBuildConfig(
     html: {
       title: config?.title ?? DEFAULT_TITLE,
       favicon: normalizeIcon(config?.icon),
-      template: path.join(PACKAGE_ROOT, 'index.html'),
+      template: TEMPLATE_PATH,
       tags: [
         config.themeConfig?.darkMode !== false
           ? {
@@ -157,7 +165,7 @@ async function createInternalBuildConfig(
       assetPrefix,
       distPath: {
         // just for rsbuild preview
-        root: csrOutDir,
+        root: outDir,
       },
     },
     resolve: {
@@ -256,7 +264,7 @@ async function createInternalBuildConfig(
           .merge({ sideEffects: true });
 
         if (isServer) {
-          chain.output.filename('main.cjs');
+          chain.output.filename(NODE_SSR_BUNDLE_NAME);
         }
 
         const enableIncremental =
@@ -282,7 +290,7 @@ async function createInternalBuildConfig(
         output: {
           target: 'web',
           distPath: {
-            root: csrOutDir,
+            root: outDir,
           },
         },
       },
@@ -304,14 +312,13 @@ async function createInternalBuildConfig(
                 },
               },
               performance: {
-                printFileSize: isDebugMode(),
+                printFileSize: {
+                  compressed: true,
+                },
               },
               output: {
                 emitAssets: false,
                 target: 'node',
-                distPath: {
-                  root: ssrOutDir,
-                },
                 minify: false,
               },
             },

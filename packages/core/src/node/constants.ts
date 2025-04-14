@@ -1,6 +1,9 @@
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { APPEARANCE_KEY, RSPRESS_TEMP_DIR } from '@rspress/shared';
+import { version } from '../../package.json';
+
+export const RSPRESS_VERSION = version;
 
 export const isProduction = () => process.env.NODE_ENV === 'production';
 
@@ -26,6 +29,7 @@ export const inlineThemeScript = `{
 const dirname = path.dirname(fileURLToPath(new URL(import.meta.url)));
 
 export const PACKAGE_ROOT = path.join(dirname, '..');
+export const TEMPLATE_PATH = path.join(PACKAGE_ROOT, 'index.html');
 
 export const CLIENT_ENTRY = path.join(
   PACKAGE_ROOT,

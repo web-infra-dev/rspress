@@ -46,9 +46,9 @@ export async function runNpmScript(
     async function handleStdout(data) {
       const message = data.toString();
       const markers = {
-        dev: /Built/i,
+        dev: /built in/i,
         preview: /Network:/i,
-        build: /Pages rendered/,
+        build: /File (web)/,
       };
 
       if (markers[command].test(message)) {
