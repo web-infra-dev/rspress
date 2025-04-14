@@ -163,6 +163,42 @@ In the iframe preview mode, you can configure the dev server port of the preview
 
 Configure the buildConfig of the iframe, such as adding some global code.
 
+### iframeOptions.customEntry
+
+Configure custom entry to support other `Web` frameworks, such as `Vue`.
+
+Use customEntry only `iframeOptions.position = follow`.
+
+```ts
+import { defineConfig } from 'rspress/config';
+import { pluginPreview } from '@rspress/plugin-preview';
+import { pluginVue } from '@rsbuild/plugin-vue';
+
+export default defineConfig({
+  // ...
+  plugins: [
+    pluginPreview({
+      previewMode: 'iframe',
+      previewLanguages: ['vue'],
+      iframeOptions: {
+        position: 'follow',
+        customEntry: ({ entryCssPath, demoPath }) => {
+          return `
+          import { createApp } from 'vue';
+          import App from ${JSON.stringify(demoPath)};
+          import ${JSON.stringify(entryCssPath)};
+          createApp(App).mount('#root');
+          `;
+        },
+        builderConfig: {
+          plugins: [pluginVue()],
+        },
+      },
+    }),
+  ],
+});
+```
+
 ### deprecated: isMobile
 
 From v1.12.0, please use [previewMode](#previewmode) instead.

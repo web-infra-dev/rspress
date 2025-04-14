@@ -58,7 +58,16 @@ export type IframeOptions = {
    */
   devPort?: number;
   builderConfig?: RsbuildConfig;
+  /**
+   * custom support for other web frameworks
+   */
+  customEntry?: (meta: CustomEntry) => string;
 };
+
+export interface CustomEntry {
+  entryCssPath: string;
+  demoPath: string;
+}
 
 export type RemarkPluginOptions = Required<
   Pick<
