@@ -1,30 +1,21 @@
 import { BrowserRouter, DataContext, ThemeContext } from '@rspress/runtime';
 import type { PageData } from '@rspress/shared';
 import { useThemeState } from '@theme';
-import { useEffect, useMemo, useState } from 'react';
+import { useMemo, useState } from 'react';
 import { App } from './App';
-import { initPageData } from './initPageData';
 
-export function ClientApp() {
-  const [data, setData] = useState<PageData>(null as any);
+// eslint-disable-next-line import/no-commonjs
+
+export function ClientApp({ initialPageData }: { initialPageData: PageData }) {
+  const [data, setData] = useState(initialPageData);
   const [theme, setTheme] = useThemeState();
-
-  useEffect(() => {
-    initPageData(window.location.pathname).then(pageData => {
-      setData(pageData);
-    });
-  }, []);
-
-  const themeValue = useMemo(() => ({ theme, setTheme }), [theme, setTheme]);
-  const dataValue = useMemo(() => ({ data, setData }), [data, setData]);
-
-  if (!data) {
-    return <></>;
-  }
-
   return (
-    <ThemeContext.Provider value={themeValue}>
-      <DataContext.Provider value={dataValue}>
+    <ThemeContext.Provider
+      value={useMemo(() => ({ theme, setTheme }), [theme, setTheme])}
+    >
+      <DataContext.Provider
+        value={useMemo(() => ({ data, setData }), [data, setData])}
+      >
         <BrowserRouter>
           <App />
         </BrowserRouter>
