@@ -26,6 +26,11 @@ export function App({ helmetContext }: { helmetContext?: object }) {
     refetchData();
   }, [pathname, setPageData]);
 
+  // during csr, data can be null because of using useLayoutEffect to update data
+  if (!data) {
+    return <></>;
+  }
+
   const frontmatter = data.page.frontmatter || {};
   const GLOBAL_COMPONENTS_KEY = 'globalUIComponents';
 

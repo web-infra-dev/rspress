@@ -12,10 +12,6 @@ export function ClientApp({
   const [data, setData] = useState(initialPageData);
   const [theme, setTheme] = useThemeState();
 
-  if (!data) {
-    return <></>;
-  }
-
   return (
     <ThemeContext.Provider
       value={useMemo(() => ({ theme, setTheme }), [theme, setTheme])}
