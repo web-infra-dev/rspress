@@ -6,9 +6,12 @@ import { App } from './App';
 
 // eslint-disable-next-line import/no-commonjs
 
-export function ClientApp({ initialPageData }: { initialPageData: PageData }) {
+export function ClientApp({
+  initialPageData = null as unknown as PageData,
+}: { initialPageData?: PageData }) {
   const [data, setData] = useState(initialPageData);
   const [theme, setTheme] = useThemeState();
+
   return (
     <ThemeContext.Provider
       value={useMemo(() => ({ theme, setTheme }), [theme, setTheme])}

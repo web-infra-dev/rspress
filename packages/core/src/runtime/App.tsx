@@ -13,14 +13,7 @@ enum QueryStatus {
 
 export function App({ helmetContext }: { helmetContext?: object }) {
   const { setData: setPageData, data } = useContext(DataContext);
-  const frontmatter = data.page.frontmatter || {};
   const { pathname, search } = useLocation();
-  const query = new URLSearchParams(search);
-  const GLOBAL_COMPONENTS_KEY = 'globalUIComponents';
-  const hideGlobalUIComponents =
-    // Disable global components in frontmatter or query
-    frontmatter[GLOBAL_COMPONENTS_KEY] === false ||
-    query.get(GLOBAL_COMPONENTS_KEY) === QueryStatus.Hide;
   useLayoutEffect(() => {
     async function refetchData() {
       try {
@@ -32,6 +25,20 @@ export function App({ helmetContext }: { helmetContext?: object }) {
     }
     refetchData();
   }, [pathname, setPageData]);
+
+  // during csr, data can be null because of using useLayoutEffect to update data
+  if (!data) {
+    return <></>;
+  }
+
+  const frontmatter = data.page.frontmatter || {};
+  const GLOBAL_COMPONENTS_KEY = 'globalUIComponents';
+
+  const query = new URLSearchParams(search);
+  const hideGlobalUIComponents =
+    // Disable global components in frontmatter or query
+    frontmatter[GLOBAL_COMPONENTS_KEY] === false ||
+    query.get(GLOBAL_COMPONENTS_KEY) === QueryStatus.Hide;
 
   return (
     <HelmetProvider context={helmetContext}>
