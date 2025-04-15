@@ -303,6 +303,13 @@ async function createInternalBuildConfig(
                   __VIRTUAL_ROUTES__: 'virtual-routes-ssr',
                 },
               },
+              tools: {
+                rspack: {
+                  output: {
+                    asyncChunks: false, // Ensure that only one cjs bundle is generated.
+                  },
+                },
+              },
               source: {
                 entry: {
                   index: SSR_ENTRY,
