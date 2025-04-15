@@ -1,10 +1,9 @@
 import fs from 'node:fs/promises';
-import type { PageData, UserConfig } from '@rspress/shared';
+import type { UserConfig } from '@rspress/shared';
 import { PluginDriver } from './PluginDriver';
 import { TEMP_DIR } from './constants';
 import { initRsbuild } from './initRsbuild';
 import { hintSSGFalse } from './logger/hint';
-import type { Route } from './route/RouteService';
 import { writeSearchIndex } from './searchIndex';
 import { checkLanguageParity } from './utils/checkLanguageParity';
 
@@ -38,14 +37,6 @@ export async function bundle(
 
 function emptyDir(path: string): Promise<void> {
   return fs.rm(path, { force: true, recursive: true });
-}
-
-export interface SSRBundleExports {
-  render: (
-    url: string,
-    helmetContext: object,
-  ) => Promise<{ appHtml: string; pageData: PageData }>;
-  routes: Route[];
 }
 
 export async function build(options: BuildOptions) {

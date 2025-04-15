@@ -27,17 +27,17 @@ export async function dev(options: DevOptions): Promise<ServerInstance> {
     await pluginDriver.beforeBuild();
 
     // empty temp dir before build
-    const builder = await initRsbuild(
+    const rsbuild = await initRsbuild(
       docDirectory,
       modifiedConfig,
       pluginDriver,
       false,
       extraBuilderConfig,
     );
-    builder.onDevCompileDone(async () => {
+    rsbuild.onDevCompileDone(async () => {
       await pluginDriver.afterBuild();
     });
-    const { server } = await builder.startDevServer({
+    const { server } = await rsbuild.startDevServer({
       // We will support the following options in the future
       getPortSilently: true,
     });

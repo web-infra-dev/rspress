@@ -1,7 +1,13 @@
 import type { PluginDriver } from '../PluginDriver';
 
 import { pathToFileURL } from 'node:url';
-import { type UserConfig, normalizeSlash, withBase } from '@rspress/shared';
+import {
+  type PageData,
+  type Route,
+  type UserConfig,
+  normalizeSlash,
+  withBase,
+} from '@rspress/shared';
 import { logger } from '@rspress/shared/logger';
 import picocolors from 'picocolors';
 import { default as ReactHelmetAsync } from 'react-helmet-async';
@@ -14,10 +20,17 @@ import {
   RSPRESS_VERSION,
 } from '../constants';
 
-import type { SSRBundleExports } from '../build';
 import { hintSSGFailed } from '../logger/hint';
 import type { RouteService } from '../route/RouteService';
 import { renderConfigHead, renderFrontmatterHead } from './renderHead';
+
+interface SSRBundleExports {
+  render: (
+    url: string,
+    helmetContext: object,
+  ) => Promise<{ appHtml: string; pageData: PageData }>;
+  routes: Route[];
+}
 
 export async function renderPages(
   routeService: RouteService,
