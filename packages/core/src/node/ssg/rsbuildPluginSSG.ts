@@ -42,7 +42,7 @@ export const rsbuildPluginSSG = ({
         },
       ).catch(() => {
         const message =
-          'SSG requires `index.html`, but `index.html` is not emitted in web target';
+          'SSG requires an `index.html` as entry, but this file is not emitted successfully in the web target.';
         logger.error(message);
         const error = new Error(message);
         throw error;
