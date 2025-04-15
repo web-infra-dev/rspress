@@ -102,16 +102,8 @@ export function useViewTransition(dom: ReactElement) {
 
 export function useWindowSize(initialWidth?: number, initialHeight?: number) {
   const [size, setSize] = useState({
-    width:
-      initialWidth ??
-      (typeof window === 'undefined'
-        ? Number.POSITIVE_INFINITY
-        : window.innerWidth),
-    height:
-      initialHeight ??
-      (typeof window === 'undefined'
-        ? Number.POSITIVE_INFINITY
-        : window.innerHeight),
+    width: initialWidth ?? Number.POSITIVE_INFINITY,
+    height: initialHeight ?? Number.POSITIVE_INFINITY,
   });
 
   useLayoutEffect(() => {
