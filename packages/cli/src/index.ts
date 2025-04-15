@@ -112,7 +112,6 @@ cli.command('build [root]').action(async (root, options) => {
 
   try {
     await build({
-      appDirectory: cwd,
       docDirectory,
       config,
     });

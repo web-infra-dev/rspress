@@ -1,6 +1,7 @@
 # Custom Dictionary Words
 algoliasearch
 alinks
+analyse
 antd
 apng
 applescript
