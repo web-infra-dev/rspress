@@ -16,12 +16,13 @@ import {
 import { pluginVirtualModule } from 'rsbuild-plugin-virtual-module';
 import type { PluginDriver } from './PluginDriver';
 import {
-  CLIENT_ENTRY,
+  CSR_CLIENT_ENTRY,
   DEFAULT_TITLE,
   OUTPUT_DIR,
   PACKAGE_ROOT,
   PUBLIC_DIR,
-  SSR_ENTRY,
+  SSR_CLIENT_ENTRY,
+  SSR_SERVER_ENTRY,
   TEMPLATE_PATH,
   inlineThemeScript,
   isProduction,
@@ -281,7 +282,8 @@ async function createInternalBuildConfig(
         },
         source: {
           entry: {
-            index: CLIENT_ENTRY,
+            index:
+              enableSSG && isProduction() ? SSR_CLIENT_ENTRY : CSR_CLIENT_ENTRY,
           },
           define: {
             'process.env.__SSR__': JSON.stringify(false),
@@ -312,7 +314,7 @@ async function createInternalBuildConfig(
               },
               source: {
                 entry: {
-                  index: SSR_ENTRY,
+                  index: SSR_SERVER_ENTRY,
                 },
                 define: {
                   'process.env.__SSR__': JSON.stringify(true),

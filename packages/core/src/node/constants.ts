@@ -31,18 +31,25 @@ const dirname = path.dirname(fileURLToPath(new URL(import.meta.url)));
 export const PACKAGE_ROOT = path.join(dirname, '..');
 export const TEMPLATE_PATH = path.join(PACKAGE_ROOT, 'index.html');
 
-export const CLIENT_ENTRY = path.join(
+export const CSR_CLIENT_ENTRY = path.join(
   PACKAGE_ROOT,
   'dist',
   'runtime',
-  'clientEntry.js',
+  'csrClientEntry.js',
 );
 
-export const SSR_ENTRY = path.join(
+export const SSR_CLIENT_ENTRY = path.join(
   PACKAGE_ROOT,
   'dist',
   'runtime',
-  'ssrEntry.js',
+  'ssrClientEntry.js',
+);
+
+export const SSR_SERVER_ENTRY = path.join(
+  PACKAGE_ROOT,
+  'dist',
+  'runtime',
+  'ssrServerEntry.js',
 );
 
 export const OUTPUT_DIR = 'doc_build';
