@@ -104,9 +104,14 @@ export default async function mdxLoader(
 
   const options = this.getOptions();
   const filepath = this.resourcePath;
-  const { alias } = this._compiler.options.resolve;
-  const { config, docDirectory, checkDeadLinks, routeService, pluginDriver } =
-    options;
+  const { alias = {} } = this._compiler.options?.resolve ?? {};
+  const {
+    // config,
+    docDirectory,
+    // checkDeadLinks,
+    // routeService,
+    // pluginDriver,
+  } = options;
 
   // Separate frontmatter and content in MDX source
   const { frontmatter, content } = loadFrontMatter(
@@ -129,7 +134,7 @@ export default async function mdxLoader(
   // Perhaps this problem should be solved within flattenMdxContent?
   const replacedContent = applyReplaceRules(
     flattenContent,
-    config.replaceRules,
+    [], // config.replaceRules,
   );
 
   // Support custom id like `#hello world {#custom-id}`.
@@ -138,7 +143,7 @@ export default async function mdxLoader(
 
   // Whether to use the Rust version of the MDX compiler.
   let enableMdxRs: boolean;
-  const mdxRs = config?.markdown?.mdxRs ?? true;
+  const mdxRs = false;
   if (typeof mdxRs === 'object') {
     enableMdxRs =
       typeof mdxRs?.include === 'function' ? mdxRs.include(filepath) : true;
@@ -157,15 +162,15 @@ export default async function mdxLoader(
     const frontmatterTitle = extractTextAndId(frontmatter.title)[0];
 
     if (!enableMdxRs) {
-      const mdxOptions = await createMDXOptions(
-        docDirectory,
-        config,
-        checkDeadLinks,
-        routeService,
-        filepath,
-        pluginDriver,
-      );
-      const compiler = createProcessor(mdxOptions);
+      // const mdxOptions = await createMDXOptions(
+      // docDirectory,
+      // config,
+      // checkDeadLinks,
+      // routeService,
+      // filepath,
+      // pluginDriver,
+      // );
+      const compiler = createProcessor({});
 
       compiler.data('pageMeta' as any, { toc: [], title: '' });
       const vFile = await compiler.process({
@@ -203,9 +208,9 @@ export default async function mdxLoader(
         frontmatter,
       };
       // We should check dead links in mdx-rs mode
-      if (checkDeadLinks) {
-        checkLinks(links, filepath, docDirectory, routeService);
-      }
+      // if (checkDeadLinks) {
+      //   checkLinks(links, filepath, docDirectory, routeService);
+      // }
     }
 
     // If page meta changed, we trigger page reload to ensure the page is up to date.

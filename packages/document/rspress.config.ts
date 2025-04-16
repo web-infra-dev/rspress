@@ -20,6 +20,7 @@ export default defineConfig({
   title: 'Rspress',
   description: 'Rspack based static site generator',
   lang: 'en',
+  ssg: false,
   logo: 'https://assets.rspack.dev/rspress/rspress-logo-480x480.png',
   logoText: 'Rspress',
   icon: 'https://assets.rspack.dev/rspress/rspress-logo-480x480.png',
@@ -28,9 +29,9 @@ export default defineConfig({
   },
   plugins: [
     pluginFontOpenSans(),
-    pluginSitemap({
-      domain: siteUrl,
-    }),
+    // pluginSitemap({
+    //   domain: siteUrl,
+    // }),
     pluginAlgolia({
       verificationContent: '0F854AB11EB1D255',
     }),

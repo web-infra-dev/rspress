@@ -210,6 +210,14 @@ async function createInternalBuildConfig(
       },
     },
     tools: {
+      rspack: {
+        experiments: {
+          parallelLoader: true,
+        },
+        module: {
+          rules: [],
+        },
+      },
       bundlerChain(chain, { CHAIN_ID, target }) {
         const isServer = target === 'node';
         const jsModuleRule = chain.module.rule(CHAIN_ID.RULE.JS);
@@ -221,7 +229,7 @@ async function createInternalBuildConfig(
         const checkDeadLinks =
           (config?.markdown?.checkDeadLinks && !isServer) ?? false;
 
-        chain.module
+        const rule = chain.module
           .rule('MDX')
           .type('javascript/auto')
           .test(MDX_OR_MD_REGEXP)
@@ -229,20 +237,23 @@ async function createInternalBuildConfig(
             conditionNames: jsModuleRule.resolve.conditionNames.values(),
             mainFields: jsModuleRule.resolve.mainFields.values(),
           })
-          .end()
+          .end();
+
+        rule
           .oneOf('MDXCompile')
           .use('builtin:swc-loader')
           .loader('builtin:swc-loader')
           .options(swcLoaderOptions)
           .end()
           .use('mdx-loader')
+          .set('parallel', true)
           .loader(require.resolve('./loader.js'))
           .options({
-            config,
+            // config,
             docDirectory: userDocRoot,
-            checkDeadLinks,
-            routeService,
-            pluginDriver,
+            // checkDeadLinks,
+            // routeService,
+            // pluginDriver,
           })
           .end();
 
