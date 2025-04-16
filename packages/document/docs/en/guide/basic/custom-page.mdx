@@ -219,8 +219,13 @@ For example, if you want to add `<meta name="description" content="This is descr
 
 ```md title="example.mdx"
 ---
-title: This is title
-description: This is description
+head:
+  - - meta
+    - name: title
+      content: This is title
+  - - meta
+    - name: description
+      content: This is description
 ---
 ```
 
