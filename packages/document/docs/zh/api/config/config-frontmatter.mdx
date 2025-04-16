@@ -80,17 +80,27 @@ titleSuffix: '| 基于 Rsbuild 的静态站点生成器'
 head:
   - - meta
     - property: og:title
-      content: The Rock
+      content: My Home Page
   - - meta
     - property: og:url
-      content: https://www.imdb.com/title/tt0117500/
+      content: https://example.com/foo/
   - - meta
     - property: og:image
-      content: https://ia.media-imdb.com/images/rock.jpg
+      content: https://example.com/bar.jpg
 # - - [htmlTag]
 #   - [attributeName]: [attributeValue]
 #     [attributeName]: [attributeValue]
 ---
+```
+
+生成的 head 标签如下：
+
+```html
+<head>
+  <meta property="og:title" content="My Home Page" />
+  <meta property="og:url" content="https://example.com/foo/" />
+  <meta property="og:image" content="https://example.com/bar.jpg" />
+</head>
 ```
 
 ::: tip Note
