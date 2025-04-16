@@ -103,15 +103,10 @@ head:
 </head>
 ```
 
-::: tip Note
+::: tip
 
-确保正确定义 head 的标签（tag）名称及其属性（attribute）名称。
-
-对于包含连字符（`-`）的标签和属性名称，请使用驼峰式大小写格式。
-
-例如，`http-equiv="refresh"` 应定义为 `httpEquiv: refresh`。
-
-这是因为 headers 在底层由 React 和 react-helmet-async 处理。
+- `head` 仅在生产构建时生效，Rspress 会将标签注入到 SSG 生成的 HTML 中。你可以运行 `rspress build && rspress preview` 来查看效果。
+- 请确保为 head 标签和属性名称使用正确的格式。对于包含连字符（-）的标签或属性名，需要采用驼峰式命名法。例如，HTML 中的 `http-equiv="refresh"` 在配置中应写为 `httpEquiv: refresh`。这是因为 Rspress 底层使用 React 和 `react-helmet-async` 处理这些 headers。
 
 :::
 
