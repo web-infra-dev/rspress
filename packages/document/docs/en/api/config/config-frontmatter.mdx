@@ -76,27 +76,33 @@ For example, you can use these headers to specify custom meta tags for [Open Gra
 head:
   - - meta
     - property: og:title
-      content: The Rock
+      content: My Home Page
   - - meta
     - property: og:url
-      content: https://www.imdb.com/title/tt0117500/
+      content: https://example.com/foo/
   - - meta
     - property: og:image
-      content: https://ia.media-imdb.com/images/rock.jpg
+      content: https://example.com/bar.jpg
 # - - [htmlTag]
 #   - [attributeName]: [attributeValue]
 #     [attributeName]: [attributeValue]
 ---
 ```
 
+The generated head tags are as follows:
+
+```html
+<head>
+  <meta property="og:title" content="My Home Page" />
+  <meta property="og:url" content="https://example.com/foo/" />
+  <meta property="og:image" content="https://example.com/bar.jpg" />
+</head>
+```
+
 ::: tip Note
 
-Make sure to correctly define the header tag names and their attribute names.
-
-For tags and attribute names that contain a hyphen (`-`), use the camelCase format.
-For example, `http-equiv="refresh"` should be defined as `httpEquiv: refresh`.
-
-This is because under the hood, headers are handled by React and react-helmet-async.
+- `head` only works in the production build, Rspress will inject the tags into the SSG generated HTML. You can run `rspress build && rspress preview` to see the effect.
+- Make sure to correctly define the header tag names and their attribute names. For tags and attribute names that contain a hyphen (`-`), use the camelCase format. For example, `http-equiv="refresh"` should be defined as `httpEquiv: refresh`. This is because under the hood, headers are handled by React and `react-helmet-async`.
 
 :::
 

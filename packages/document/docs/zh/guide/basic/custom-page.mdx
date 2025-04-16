@@ -224,8 +224,13 @@ http://YOUR_DOMAIN/foo?navbar=0&outline=0
 
 ```md title="example.mdx"
 ---
-title: This is title
-description: This is description
+head:
+  - - meta
+    - name: title
+      content: This is title
+  - - meta
+    - name: description
+      content: This is description
 ---
 ```
 
