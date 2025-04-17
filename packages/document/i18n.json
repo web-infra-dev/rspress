@@ -31,18 +31,6 @@
     "zh": "命令",
     "en": "Commands"
   },
-  "guide": {
-    "zh": "指南",
-    "en": "Guide"
-  },
-  "api": {
-    "zh": "API",
-    "en": "API"
-  },
-  "plugin": {
-    "zh": "插件",
-    "en": "Plugin"
-  },
   "pluginSystem": {
     "zh": "插件机制",
     "en": "Plugin System"
