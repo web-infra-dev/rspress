@@ -75,15 +75,14 @@ const rsbuildPluginLlms = ({
         for (let i = 0; i < pageArray.length; i++) {
           const pageArrayItem = pageArray[i];
           const navItem = navList[i];
-
           if (
             matchSidebar(navItem.activeMatch ?? navItem.link, routePath, base)
           ) {
             pageArrayItem.push(pageData);
             return;
           }
-          others.push(pageData);
         }
+        others.push(pageData);
       });
 
       if (llmsTxt) {
