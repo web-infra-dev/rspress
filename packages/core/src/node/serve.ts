@@ -35,12 +35,12 @@ export async function serve(
 
   const modifiedConfig = await pluginDriver.modifyConfig();
 
-  const builder = await initRsbuild(
+  const rsbuild = await initRsbuild(
     config.root!,
     modifiedConfig,
     pluginDriver,
     false,
   );
 
-  return builder.preview();
+  return rsbuild.preview();
 }
