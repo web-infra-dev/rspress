@@ -1,8 +1,7 @@
 import { join } from 'node:path';
-import type { TransformHandler } from '@rsbuild/core';
 import type { UserConfig } from '@rspress/shared';
 import { logger } from '@rspress/shared/logger';
-import { type FactoryContext, RuntimeModuleID } from '.';
+import { RuntimeModuleID, type VirtualModulePlugin } from './types';
 
 const DEFAULT_I18N_SOURCE = join(process.cwd(), 'i18n.json');
 
@@ -23,9 +22,7 @@ export function getI18nData(docConfig: UserConfig) {
 /**
  * Generate i18n text for client runtime
  */
-export function i18nVMPlugin(
-  context: Omit<FactoryContext, 'isSSR' | 'alias'>,
-): Record<string, TransformHandler> {
+export const i18nVMPlugin: VirtualModulePlugin = context => {
   const { config } = context;
   return {
     [RuntimeModuleID.I18nText]: ({ addDependency, addMissingDependency }) => {
@@ -36,4 +33,4 @@ export function i18nVMPlugin(
       return `export default ${JSON.stringify(i18nData, null, 2)}`;
     },
   };
-}
+};

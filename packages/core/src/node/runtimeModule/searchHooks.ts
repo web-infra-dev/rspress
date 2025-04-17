@@ -1,19 +1,17 @@
-import path from 'node:path';
-import { type FactoryContext, RuntimeModuleID } from '.';
+import { RuntimeModuleID, type VirtualModulePlugin } from './types';
 
-export async function searchHookVMPlugin(context: FactoryContext) {
-  const { config } = context;
-  let content = 'export const onSearch = () => {};';
-  let extname = '';
-  if (
-    typeof config.search === 'object' &&
-    typeof config.search.searchHooks === 'string'
-  ) {
-    content = `export * from '${config.search.searchHooks}'`;
-    extname = path.extname(config.search.searchHooks);
-  }
-
+export const searchHookVMPlugin: VirtualModulePlugin = context => {
   return {
-    [`${RuntimeModuleID.SearchHooks}${extname}`]: content,
+    [`${RuntimeModuleID.SearchHooks}`]: () => {
+      const { config } = context;
+      let content = 'export const onSearch = () => {};';
+      if (
+        typeof config.search === 'object' &&
+        typeof config.search.searchHooks === 'string'
+      ) {
+        content = `export * from '${config.search.searchHooks}'`;
+      }
+      return content;
+    },
   };
-}
+};

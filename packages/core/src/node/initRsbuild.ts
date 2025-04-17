@@ -30,8 +30,12 @@ import {
 import { hintThemeBreakingChange } from './logger/hint';
 import type { RouteService } from './route/RouteService';
 import { initRouteService } from './route/init';
-import { type FactoryContext, rsbuildPluginDocVM } from './runtimeModule';
+import { rsbuildPluginDocVM } from './runtimeModule';
+import { globalStylesVMPlugin } from './runtimeModule/globalStyles';
+import { globalUIComponentsVMPlugin } from './runtimeModule/globalUIComponents';
 import { i18nVMPlugin } from './runtimeModule/i18n';
+import { searchHookVMPlugin } from './runtimeModule/searchHooks';
+import type { FactoryContext } from './runtimeModule/types';
 import { serveSearchIndexMiddleware } from './searchIndex';
 import { NODE_SSR_BUNDLE_NAME, rsbuildPluginSSG } from './ssg/rsbuildPluginSSG';
 import { detectReactVersion, resolveReactAlias } from './utils';
@@ -111,6 +115,18 @@ async function createInternalBuildConfig(
       pluginVirtualModule({
         virtualModules: {
           ...i18nVMPlugin(context),
+          /**
+           * Generate global components from config and plugins
+           */
+          ...globalUIComponentsVMPlugin(context),
+          /**
+           * Generate global styles from config and plugins
+           */
+          ...globalStylesVMPlugin(context),
+          /**
+           * Generate search hook module
+           */
+          ...searchHookVMPlugin(context),
         },
       }),
       ...(enableSSG

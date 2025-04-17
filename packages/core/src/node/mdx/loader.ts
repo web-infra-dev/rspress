@@ -17,7 +17,7 @@ import { extractTextAndId, loadFrontMatter } from '@rspress/shared/node-utils';
 import type { PluginDriver } from '../PluginDriver';
 import { TEMP_DIR } from '../constants';
 import type { RouteService } from '../route/RouteService';
-import { RuntimeModuleID } from '../runtimeModule';
+import { RuntimeModuleID } from '../runtimeModule/types';
 import {
   applyReplaceRules,
   escapeMarkdownHeadingIds,
