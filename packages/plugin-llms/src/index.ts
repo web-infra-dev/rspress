@@ -63,23 +63,31 @@ const rsbuildPluginLlms = ({
             .filter(i => i.activeMatch || i.link)
         : [];
 
-      const pageArray: PageIndexInfo[][] = new Array(navList.length).fill([]);
+      const others: PageIndexInfo[] = [];
+
+      const pageArray: PageIndexInfo[][] = new Array(navList.length)
+        .fill(0)
+        .map(() => []);
 
       newPageDataList.forEach(pageData => {
         const { routePath } = pageData;
 
-        pageArray.forEach((pageArrayItem, index) => {
-          const navItem = navList[index];
+        for (let i = 0; i < pageArray.length; i++) {
+          const pageArrayItem = pageArray[i];
+          const navItem = navList[i];
+
           if (
             matchSidebar(navItem.activeMatch ?? navItem.link, routePath, base)
           ) {
             pageArrayItem.push(pageData);
+            return;
           }
-        });
+          others.push(pageData);
+        }
       });
 
       if (llmsTxt) {
-        const llmsTxtContent = generateLlmsTxt(pageArray, navList);
+        const llmsTxtContent = generateLlmsTxt(pageArray, navList, others);
         api.processAssets(
           { targets: ['node'], stage: 'additional' },
           async ({ compilation, sources }) => {
@@ -140,7 +148,11 @@ const rsbuildPluginLlms = ({
       }
 
       if (llmsFullTxt) {
-        const llmsFullTxtContent = generateLlmsFullTxt(pageArray, navList);
+        const llmsFullTxtContent = generateLlmsFullTxt(
+          pageArray,
+          navList,
+          others,
+        );
         api.processAssets(
           { targets: ['node'], stage: 'additional' },
           async ({ compilation, sources }) => {

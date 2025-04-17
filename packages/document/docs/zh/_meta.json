@@ -2,16 +2,16 @@
   {
     "text": "指南",
     "link": "/guide/start/introduction",
-    "activeMatch": "/guide/"
+    "activeMatch": "/zh/guide/"
   },
   {
     "text": "插件",
     "link": "/plugin/system/introduction",
-    "activeMatch": "/plugin/"
+    "activeMatch": "/zh/plugin/"
   },
   {
     "text": "API",
     "link": "/api/",
-    "activeMatch": "/api/"
+    "activeMatch": "/zh/api/"
   }
 ]

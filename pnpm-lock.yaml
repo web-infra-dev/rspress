@@ -952,6 +952,9 @@ importers:
       '@rspress/plugin-algolia':
         specifier: workspace:*
         version: link:../plugin-algolia
+      '@rspress/plugin-llms':
+        specifier: workspace:*
+        version: link:../plugin-llms
       '@rspress/plugin-shiki':
         specifier: workspace:*
         version: link:../plugin-shiki

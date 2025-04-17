@@ -64,6 +64,8 @@ describe('extractPageData', async () => {
           "_relativePath": "a.mdx",
           "content": "#",
           "domain": "http://localhost:3000",
+          "flattenContent": "# Page a
+      ",
           "frontmatter": {
             "__content": undefined,
           },
@@ -80,6 +82,8 @@ describe('extractPageData', async () => {
           "_relativePath": "guide/b.mdx",
           "content": "#",
           "domain": "http://localhost:3000",
+          "flattenContent": "# Page b
+      ",
           "frontmatter": {
             "__content": undefined,
           },
@@ -96,6 +100,7 @@ describe('extractPageData', async () => {
           "_relativePath": "guide/c.tsx",
           "content": "",
           "domain": "http://localhost:3000",
+          "flattenContent": "",
           "frontmatter": {},
           "id": 2,
           "lang": "",
@@ -110,6 +115,8 @@ describe('extractPageData', async () => {
           "_relativePath": "index.mdx",
           "content": "#",
           "domain": "http://localhost:3000",
+          "flattenContent": "# homePage
+      ",
           "frontmatter": {
             "__content": undefined,
           },

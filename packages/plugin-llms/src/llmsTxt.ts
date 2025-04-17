@@ -3,6 +3,7 @@ import type { NavItemWithLink, PageIndexInfo } from '@rspress/shared';
 function generateLlmsTxt(
   pageDataArray: PageIndexInfo[][],
   navList: NavItemWithLink[],
+  others: PageIndexInfo[],
 ): string {
   const lines: string[] = [];
 
@@ -25,12 +26,19 @@ function generateLlmsTxt(
     }
   }
 
+  lines.push('# Others\n');
+  for (const page of others) {
+    lines.push(`[${page.title}](${page.routePath.replace(/\.html$/, '.md')})`);
+    lines.push('');
+  }
+
   return lines.join('\n');
 }
 
 function generateLlmsFullTxt(
   pageDataArray: PageIndexInfo[][],
   navList: NavItemWithLink[],
+  others: PageIndexInfo[],
 ): string {
   const lines: string[] = [];
   // generate llms.txt with obj
@@ -49,6 +57,12 @@ function generateLlmsFullTxt(
       lines.push('\n');
     }
   }
+  lines.push('# Others\n');
+  for (const page of others) {
+    lines.push((page as any).mdContent ?? page.flattenContent ?? page.content);
+    lines.push('\n');
+  }
+
   return lines.join('\n');
 }
 
