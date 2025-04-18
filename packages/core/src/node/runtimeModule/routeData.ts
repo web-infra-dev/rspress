@@ -1,4 +1,4 @@
-import { type FactoryContext, RuntimeModuleID } from '.';
+import { type FactoryContext, RuntimeModuleID } from './types';
 
 export async function routeVMPlugin(context: FactoryContext) {
   const { routeService, isSSR } = context;

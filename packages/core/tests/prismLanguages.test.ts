@@ -2,11 +2,11 @@ import path from 'node:path';
 import type { PluginDriver } from 'src/node/PluginDriver';
 import type { RouteService } from 'src/node/route/RouteService';
 import { describe, expect, it } from 'vitest';
+import { siteDataVMPlugin } from '../src/node/runtimeModule/siteData';
 import {
   type FactoryContext,
   RuntimeModuleID,
-} from '../src/node/runtimeModule';
-import { siteDataVMPlugin } from '../src/node/runtimeModule/siteData';
+} from '../src/node/runtimeModule/types';
 
 describe('automatic import of prism languages', () => {
   const userDocRoot = path.join(__dirname, 'prismLanguages');

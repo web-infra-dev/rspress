@@ -1,15 +1,16 @@
-import { type FactoryContext, RuntimeModuleID } from '.';
+import { RuntimeModuleID, type VirtualModulePlugin } from './types';
 
-export async function globalStylesVMPlugin(context: FactoryContext) {
-  const { config, pluginDriver } = context;
-  const globalStylesByPlugins = pluginDriver.globalStyles();
-
-  const moduleContent = [config?.globalStyles, ...globalStylesByPlugins]
-    .filter(Boolean)
-    .map(source => `import ${JSON.stringify(source)};`)
-    .join('');
-
+export const globalStylesVMPlugin: VirtualModulePlugin = context => {
   return {
-    [RuntimeModuleID.GlobalStyles]: moduleContent,
+    [RuntimeModuleID.GlobalStyles]: () => {
+      const { config, pluginDriver } = context;
+      const globalStylesByPlugins = pluginDriver.globalStyles();
+
+      const moduleContent = [config?.globalStyles, ...globalStylesByPlugins]
+        .filter(Boolean)
+        .map(source => `import ${JSON.stringify(source)};`)
+        .join('');
+      return moduleContent;
+    },
   };
-}
+};
