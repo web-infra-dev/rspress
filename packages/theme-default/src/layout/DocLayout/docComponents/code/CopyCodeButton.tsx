@@ -1,3 +1,4 @@
+import { useI18n } from '@rspress/runtime';
 import IconCopy from '@theme-assets/copy';
 import IconSuccess from '@theme-assets/success';
 import copy from 'copy-to-clipboard';
@@ -48,13 +49,14 @@ export function CopyCodeButton({
   codeBlockRef: React.RefObject<HTMLDivElement>;
 }) {
   const copyButtonRef = useRef<HTMLButtonElement>(null);
+  const t = useI18n();
 
   return (
     <button
       className={styles.codeCopyButton}
       onClick={() => copyCode(codeBlockRef.current, copyButtonRef.current!)}
       ref={copyButtonRef}
-      title="Copy code"
+      title={t('copyCode')}
     >
       <SvgWrapper icon={IconCopy} className={styles.iconCopy} />
       <SvgWrapper icon={IconSuccess} className={styles.iconSuccess} />
