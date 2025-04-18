@@ -38,7 +38,6 @@ jobs:
           filters: |
             changed:
               - "packages/**"
-              - "pnpm-lock.yaml"
               - "!packages/document/**"
 
       - name: Setup Node.js
