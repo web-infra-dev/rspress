@@ -3,40 +3,15 @@ import {
   matchPath as reactRouterDomMatchPath,
   withBase,
 } from '@rspress/runtime';
-import {
-  type NormalizedSidebar,
-  type NormalizedSidebarGroup,
-  type SidebarDivider,
-  type SidebarItem,
-  addTrailingSlash,
+import type {
+  NormalizedSidebar,
+  NormalizedSidebarGroup,
+  SidebarDivider,
+  SidebarItem,
 } from '@rspress/shared';
+import { matchSidebar } from '@rspress/shared';
+import siteData from 'virtual-site-data';
 import type { SidebarData } from '../components/Sidebar';
-
-/**
- * match the sidebar key in user config
- * @param pattern /zh/guide
- * @param currentPathname /base/zh/guide/getting-started
- */
-export const matchPath = (
-  pattern: string,
-  currentPathname: string,
-): boolean => {
-  const prefix = withBase(pattern);
-  if (prefix === currentPathname) {
-    return true;
-  }
-  const prefixWithTrailingSlash = addTrailingSlash(prefix);
-  if (currentPathname.startsWith(prefixWithTrailingSlash)) {
-    return true;
-  }
-
-  // be compatible with api-extractor
-  // '/api/react': [
-  //   { link: '/api/react.use' }
-  // ]
-  const prefixWithDot = `${prefix}.`;
-  return currentPathname.startsWith(prefixWithDot);
-};
 
 /**
  * link: /api/config
@@ -126,7 +101,7 @@ export const getSidebarDataGroup = (
    */
   const navRoutes = Object.keys(sidebar).sort((a, b) => b.length - a.length);
   for (const name of navRoutes) {
-    if (matchPath(name, currentPathname)) {
+    if (matchSidebar(name, currentPathname, siteData.base)) {
       const sidebarGroup = sidebar[name];
       return sidebarGroup;
     }

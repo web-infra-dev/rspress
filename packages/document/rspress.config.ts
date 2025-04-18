@@ -1,5 +1,6 @@
 import { pluginSass } from '@rsbuild/plugin-sass';
 import { pluginAlgolia } from '@rspress/plugin-algolia';
+import { pluginLlms } from '@rspress/plugin-llms';
 import { pluginShiki } from '@rspress/plugin-shiki';
 import {
   transformerNotationDiff,
@@ -43,6 +44,7 @@ export default defineConfig({
         transformerNotationFocus(),
       ],
     }),
+    pluginLlms(),
   ],
   builderConfig: {
     dev: {
@@ -63,6 +65,9 @@ export default defineConfig({
         },
       }),
     ],
+    output: {
+      cleanDistPath: false,
+    },
   },
   search: false,
   route: {

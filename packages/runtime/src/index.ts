@@ -33,6 +33,9 @@ export {
   createPortal,
   flushSync,
 } from 'react-dom';
-export { pathnameToRouteService, normalizeRoutePath } from './route';
+export {
+  pathnameToRouteService,
+  normalizeRoutePath,
+} from './route';
 export { Helmet } from 'react-helmet-async';
 export { NoSSR } from './NoSSR';

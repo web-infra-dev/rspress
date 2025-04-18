@@ -1,0 +1,218 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`Markdown > remark-complex 1`] = `
+"***
+
+## sidebar: false
+
+
+
+# Integrating Lynx DevTool
+
+When encountering issues during Lynx page development, you can use [DevTool](guide/debugging/lynx-devtool.mdx) for debugging.
+However, you need to follow these steps to integrate DevTool first.
+
+:::info
+
+It is recommended to integrate DevTool in non-production environments to keep your production builds lightweight.
+All code examples in this documentation can be found in the [integrating-lynx-demo-projects](https://github.com/lynx-family/integrating-lynx-demo-projects/tree/release/3.1).
+
+:::
+
+### Adding Dependencies
+
+You need to add two components: \`LynxDevTool\` and the \`Devtool\` sub component of \`LynxService\`.
+
+\`\`\`ruby title="PodFile" {8,11}
+# Ensure Lynx DevTool version matches the Lynx version when integrating
+target 'YourTarget' do
+  pod 'LynxService', '3.2.0-rc.0', :sub specs => [
+      'Devtool',
+  ]
+  pod 'LynxDevtool', '3.2.0-rc.0'
+end
+\`\`\`
+
+### Enabling DevTool
+
+DevTool provides several debugging switches.
+Here are three important switches:
+
+* \`Lynx Debug\` is the switch that controls all DevTool debugging.
+* \`Lynx DevTool\` controls main debugging features: element inspection and JavaScript debugging.
+* \`Lynx LogBox\` manages the [LogBox](guide/debugging/handle-errors.html).
+
+- When debugging Lynx pages with the DevTool Desktop, both \`Lynx Debug\` and
+  \`Lynx DevTool\` need be enabled
+- LogBox helps you quickly identify and diagnose issues
+
+You can configure these switches during [Lynx Environment Initialization](guide/start/integrate-with-existing-apps.html):
+
+\`\`\`objective-c title=AppDelegate.m {5-10}
+@implementation AppDelegate
+
+- (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
+  // ...
+  // Enable Lynx Debug
+  lynxEnv.lynxDebugEnabled = YES;
+  // Enable Lynx DevTool
+  lynxEnv.devtoolEnabled = YES;
+  // Enable Lynx LogBox
+  lynxEnv.logBoxEnabled = YES;
+  return YES;
+}
+\`\`\`
+
+\`\`\`swift title=AppDelegate.swift {5-10}
+class AppDelegate: UIResponder, UIApplicationDelegate {
+
+  func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
+    // ...
+    // Enable Lynx Debug
+    lynxEnv.lynxDebugEnabled = true
+    // Enable Lynx DevTool
+    lynxEnv.devtoolEnabled = true
+    // Enable Lynx LogBox
+    lynxEnv.logBoxEnabled = true
+    return true
+  }
+}
+\`\`\`
+
+:::info
+In addition to the three switches introduced earlier, there are more switches that can help you control the behavior of DevTool. Please refer to the [Lynx DevTool Switch Page](/guide/start/integrate-lynx-devtool-advanced.html#debugging-devtool-switch).
+:::
+
+### Adding Dependencies
+
+You need to integrate these two components: \`lynx-service-devtool\` and \`lynx-devtool\`
+
+\`\`\`groovy
+// Ensure Lynx DevTool version matches the Lynx version when integrating
+dependencies {
+  implementation "org.lynx.lynx:lynx-devtool:3.2.0-rc.0"
+  implementation "org.lynx.lynx:lynx-service-devtool:3.2.0-rc.0"
+}
+\`\`\`
+
+\`\`\`kotlin
+// Ensure Lynx DevTool version matches the Lynx version when integrating
+dependencies {
+  implementation ("org.lynx.lynx:lynx-devtool:3.2.0-rc.0")
+  implementation ("org.lynx.lynx:lynx-service-devtool:3.2.0-rc.0")
+}
+\`\`\`
+
+:::info
+It is recommended to use the latest [Lynx version](https://github.com/lynx-family/lynx/releases) when integrating
+:::
+
+### Registering DevTool Service
+
+\`\`\`java title=YourApplication.java {3-4}
+private void initLynxService() {
+  // ...
+  // register DevTool service
+  LynxServiceCenter.inst().registerService(LynxDevToolService.INSTANCE);
+}
+
+\`\`\`
+
+\`\`\`kotlin title=YourApplication.kt {3-4}
+private fun initLynxService() {
+  // ...
+  // register DevTool service
+  LynxServiceCenter.inst().registerService(LynxDevToolService)
+}
+\`\`\`
+
+### Enabling DevTool
+
+DevTool provides several debugging switches.
+Here are three important switches:
+
+* \`Lynx Debug\` is the switch that controls all DevTool debugging.
+* \`Lynx DevTool\` controls main debugging features: element inspection and JavaScript debugging.
+* \`Lynx LogBox\` manages the [LogBox](guide/debugging/handle-errors.html).
+
+- When debugging Lynx pages with the DevTool Desktop, both \`Lynx Debug\` and
+  \`Lynx DevTool\` switches need be enabled
+- LogBox helps you quickly identify and diagnose issues
+
+You can configure these switches during [Lynx Environment Initialization](guide/start/integrate-with-existing-apps.html):
+
+\`\`\`java title=YourApplication.java {3-8}
+private void initLynxEnv() {
+  LynxEnv.inst().init(this, null, null, null);
+  // Enable Lynx Debug
+  LynxEnv.inst().enableLynxDebug(true);
+  // Enable Lynx DevTool
+  LynxEnv.inst().enableDevtool(true);
+  // Enable Lynx LogBox
+  LynxEnv.inst().enableLogBox(true);
+}
+
+\`\`\`
+
+\`\`\`kotlin title=YourApplication.kt {3-8}
+private fun initLynxEnv() {
+  LynxEnv.inst().init(this, null, null, null)
+  // Enable Lynx Debug
+  LynxEnv.inst().enableLynxDebug(true)
+  // Enable Lynx DevTool
+  LynxEnv.inst().enableDevtool(true)
+  // Enable Lynx LogBox
+  LynxEnv.inst().enableLogBox(true)
+}
+\`\`\`
+
+:::info
+In addition to the three switches introduced earlier, there are more that can help you control the behavior of DevTool. Please refer to the [DevTool Switch Page](/guide/start/integrate-lynx-devtool-advanced.html#debugging-devtool-switch).
+:::
+
+Congratulations! You have completed the DevTool integration. Now, you may launch the Lynx DevTool Desktop and
+connect your app via USB to start debugging.
+
+## Next Step
+"
+`;
+
+exports[`Markdown > remark-simple 1`] = `
+"
+
+# h1
+
+## h2 Tab
+
+some content
+
+\`\`\`js
+const tab1 = tab;
+\`\`\`
+
+\`\`\`js
+const tab2 = tab;
+\`\`\`
+
+\`\`\`js
+const tab3 = tab;
+\`\`\`
+
+## h2 div
+
+outer
+inner
+
+## h2 nested Tab
+
+\`\`\`js
+const tab1 = tab;
+\`\`\`
+
+\`\`\`js
+const tab2 = tab;
+\`\`\`
+
+second Tab
+"
+`;
