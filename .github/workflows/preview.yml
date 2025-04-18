@@ -1,0 +1,56 @@
+# https://github.com/stackblitz-labs/pkg.pr.new
+name: Preview Release
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+    inputs:
+      branch:
+        description: 'Branch to release'
+        required: true
+        default: 'main'
+
+permissions:
+  contents: read
+
+jobs:
+  preview:
+    if: github.repository == 'web-infra-dev/rspress'
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4.2.2
+        with:
+          fetch-depth: 1
+          ref: ${{ github.event.inputs.branch }}
+
+      - name: Install pnpm
+        run: |
+          npm install -g corepack@latest --force
+          corepack enable
+
+      - uses: dorny/paths-filter@de90cc6fb38fc0963ad72b210f1f284cd68cea36 # v3.0.2
+        id: changes
+        with:
+          filters: |
+            changed:
+              - "packages/**"
+              - "!packages/document/**"
+              - "pnpm-lock.yaml"
+
+      - name: Setup Node.js
+        if: steps.changes.outputs.changed == 'true'
+        uses: actions/setup-node@cdca7365b2dadb8aad0a33bc7601856ffabcc48e # v4
+        with:
+          node-version: 22.x
+          cache: 'pnpm'
+
+      - name: Install Dependencies
+        if: steps.changes.outputs.changed == 'true'
+        run: pnpm install
+
+      - name: Publish Preview
+        if: steps.changes.outputs.changed == 'true'
+        run: pnpx pkg-pr-new publish --compact --pnpm ./packages/*
