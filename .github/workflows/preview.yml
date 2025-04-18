@@ -37,8 +37,8 @@ jobs:
           filters: |
             changed:
               - "packages/**"
-              - "!packages/document/**"
               - "pnpm-lock.yaml"
+              - "!packages/document/**"
 
       - name: Setup Node.js
         if: steps.changes.outputs.changed == 'true'
