@@ -42,8 +42,8 @@
   },
   "dependencies": {
     "@rspress/shared": "workspace:*",
-    "react": "^18.3.1",
-    "react-dom": "^18.3.1",
+    "react": "^19.1.0",
+    "react-dom": "^19.1.0",
     "react-helmet-async": "^2.0.5",
     "react-router-dom": "^6.29.0"
   },
