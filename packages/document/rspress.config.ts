@@ -32,7 +32,7 @@ export default defineConfig({
       domain: siteUrl,
     }),
     pluginAlgolia({
-      verificationContent: '0F854AB11EB1D255',
+      verificationContent: '8F5BFE50E65777F1',
     }),
     pluginShiki({
       langs: ['mdx', 'html', 'toml'],
