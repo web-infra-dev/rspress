@@ -25,6 +25,7 @@
   "scripts": {
     "build": "rslib build",
     "dev": "rslib build -w",
+    "prepare": "ts-json-schema-generator --path ./src/types.ts --type SideMeta > meta.json.meta",
     "reset": "rimraf ./**/node_modules"
   },
   "dependencies": {
@@ -38,6 +39,7 @@
     "@types/react": "^18.3.20",
     "@types/react-dom": "^18.3.6",
     "react": "^18.3.1",
+    "ts-json-schema-generator": "^2.4.0",
     "typescript": "^5.8.2"
   },
   "engines": {
