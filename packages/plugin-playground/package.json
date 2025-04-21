@@ -37,12 +37,14 @@
     "@oxidation-compiler/napi": "^0.2.0",
     "@rspress/shared": "workspace:*",
     "remark-gfm": "^4.0.1",
-    "rspack-plugin-virtual-module": "0.1.13"
+    "rspack-plugin-virtual-module": "0.1.13",
+    "unist-util-visit": "^5.0.0"
   },
   "devDependencies": {
     "@babel/types": "^7.27.0",
     "@rsbuild/plugin-react": "~1.1.1",
     "@rslib/core": "0.6.5",
+    "@rspress/plugin-playground": "workspace:*",
     "@types/babel__core": "^7.20.5",
     "@types/babel__standalone": "^7.1.9",
     "@types/babel__traverse": "^7.20.7",
@@ -56,8 +58,7 @@
     "react-router-dom": "^6.29.0",
     "rsbuild-plugin-publint": "^0.3.0",
     "typescript": "^5.8.2",
-    "unified": "^11.0.5",
-    "unist-util-visit": "^5.0.0"
+    "unified": "^11.0.5"
   },
   "peerDependencies": {
     "@rspress/core": "workspace:^2.0.0-beta.0",

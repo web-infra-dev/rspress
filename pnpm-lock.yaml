@@ -1076,6 +1076,9 @@ importers:
       remark-gfm:
         specifier: ^4.0.1
         version: 4.0.1
+      unified:
+        specifier: ^11.0.5
+        version: 11.0.5
     devDependencies:
       '@microsoft/api-extractor':
         specifier: ^7.52.4
@@ -1110,12 +1113,6 @@ importers:
       typescript:
         specifier: ^5.8.2
         version: 5.8.2
-      unified:
-        specifier: ^11.0.5
-        version: 11.0.5
-      unist-util-visit:
-        specifier: ^5.0.0
-        version: 5.0.0
 
   packages/plugin-auto-nav-sidebar:
     dependencies:
@@ -1331,6 +1328,9 @@ importers:
       rspack-plugin-virtual-module:
         specifier: 0.1.13
         version: 0.1.13
+      unist-util-visit:
+        specifier: ^5.0.0
+        version: 5.0.0
     devDependencies:
       '@babel/types':
         specifier: ^7.27.0
@@ -1341,6 +1341,9 @@ importers:
       '@rslib/core':
         specifier: 0.6.5
         version: 0.6.5(@microsoft/api-extractor@7.52.4(@types/node@18.11.17))(typescript@5.8.2)
+      '@rspress/plugin-playground':
+        specifier: workspace:*
+        version: 'link:'
       '@types/babel__core':
         specifier: ^7.20.5
         version: 7.20.5
@@ -1383,9 +1386,6 @@ importers:
       unified:
         specifier: ^11.0.5
         version: 11.0.5
-      unist-util-visit:
-        specifier: ^5.0.0
-        version: 5.0.0
 
   packages/plugin-preview:
     dependencies:
@@ -1517,9 +1517,6 @@ importers:
       shiki:
         specifier: ^3.2.2
         version: 3.2.2
-      unist-util-visit:
-        specifier: ^5.0.0
-        version: 5.0.0
     devDependencies:
       '@microsoft/api-extractor':
         specifier: ^7.52.4
@@ -1554,9 +1551,6 @@ importers:
       typescript:
         specifier: ^5.8.2
         version: 5.8.2
-      unified:
-        specifier: ^11.0.5
-        version: 11.0.5
 
   packages/plugin-typedoc:
     dependencies:
