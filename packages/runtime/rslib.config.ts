@@ -1,5 +1,6 @@
 import { pluginReact } from '@rsbuild/plugin-react';
 import { defineConfig } from '@rslib/core';
+import { pluginPublint } from 'rsbuild-plugin-publint';
 
 const CJS_COMMON_EXTERNALS = ['virtual-routes-ssr', 'virtual-routes'];
 
@@ -40,5 +41,5 @@ export default defineConfig({
       },
     },
   ],
-  plugins: [pluginReact()],
+  plugins: [pluginReact(), pluginPublint()],
 });

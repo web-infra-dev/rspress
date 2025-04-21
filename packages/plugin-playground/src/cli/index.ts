@@ -9,9 +9,11 @@ import { getNodeAttribute } from '@rspress/shared/node-utils';
 import { RspackVirtualModulePlugin } from 'rspack-plugin-virtual-module';
 import { DEFAULT_BABEL_URL, DEFAULT_MONACO_URL } from '../web/constant';
 import { normalizeUrl } from '../web/utils';
-import { staticPath } from './constant';
 import { remarkPlugin } from './remarkPlugin';
 import { parseImports } from './utils';
+
+const pkgRootPath = path.join(__dirname, '../../');
+const staticPath = path.join(pkgRootPath, 'static');
 
 interface PlaygroundOptions {
   render: string;
@@ -207,7 +209,7 @@ export function pluginPlayground(
           __PLAYGROUND_MONACO_OPTIONS__: JSON.stringify(monacoOptions),
           __PLAYGROUND_BABEL_URL__: JSON.stringify(babelUrl),
         },
-        include: [join(__dirname, '..', '..', '..')],
+        include: [pkgRootPath],
       },
       html: {
         tags: preloads.map(url => ({

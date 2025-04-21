@@ -5,25 +5,23 @@
   "bugs": "https://github.com/web-infra-dev/rspress/issues",
   "repository": {
     "type": "git",
-    "url": "https://github.com/web-infra-dev/rspress",
+    "url": "git+https://github.com/web-infra-dev/rspress.git",
     "directory": "packages/plugin-preview"
   },
   "license": "MIT",
+  "type": "module",
   "exports": {
     ".": {
-      "types": "./dist/cli/esm/index.d.ts",
-      "import": "./dist/cli/esm/index.mjs",
-      "default": "./dist/cli/cjs/index.js"
+      "types": "./dist/cli/index.d.ts",
+      "default": "./dist/cli/index.js"
     },
     "./web": {
-      "types": "./dist/web/esm/index.d.ts",
-      "import": "./dist/web/esm/index.mjs",
-      "default": "./dist/web/cjs/index.js"
+      "types": "./dist/web/index.d.ts",
+      "default": "./dist/web/index.js"
     }
   },
-  "main": "./dist/cli/cjs/index.js",
-  "module": "./dist/cli/esm/index.js",
-  "types": "./dist/cli/esm/index.d.ts",
+  "module": "./dist/cli/index.js",
+  "types": "./dist/cli/index.d.ts",
   "files": [
     "dist",
     "static"
@@ -39,12 +37,14 @@
     "@oxidation-compiler/napi": "^0.2.0",
     "@rspress/shared": "workspace:*",
     "remark-gfm": "^4.0.1",
-    "rspack-plugin-virtual-module": "0.1.13"
+    "rspack-plugin-virtual-module": "0.1.13",
+    "unist-util-visit": "^5.0.0"
   },
   "devDependencies": {
     "@babel/types": "^7.27.0",
     "@rsbuild/plugin-react": "~1.1.1",
     "@rslib/core": "0.6.5",
+    "@rspress/plugin-playground": "workspace:*",
     "@types/babel__core": "^7.20.5",
     "@types/babel__standalone": "^7.1.9",
     "@types/babel__traverse": "^7.20.7",
@@ -56,9 +56,9 @@
     "react": "^19.1.0",
     "react-dom": "^19.1.0",
     "react-router-dom": "^6.29.0",
+    "rsbuild-plugin-publint": "^0.3.0",
     "typescript": "^5.8.2",
-    "unified": "^11.0.5",
-    "unist-util-visit": "^5.0.0"
+    "unified": "^11.0.5"
   },
   "peerDependencies": {
     "@rspress/core": "workspace:^2.0.0-beta.0",

@@ -1,6 +1,8 @@
 import { defineConfig } from '@rslib/core';
+import { pluginPublint } from 'rsbuild-plugin-publint';
 
 export default defineConfig({
+  plugins: [pluginPublint()],
   lib: [
     {
       dts: {
@@ -12,15 +14,6 @@ export default defineConfig({
       output: {
         distPath: {
           root: './dist/es',
-        },
-      },
-    },
-    {
-      format: 'cjs',
-      syntax: 'es2015',
-      output: {
-        distPath: {
-          root: './dist/lib',
         },
       },
     },

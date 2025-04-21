@@ -5,7 +5,7 @@
   "bugs": "https://github.com/web-infra-dev/rspress/issues",
   "repository": {
     "type": "git",
-    "url": "https://github.com/web-infra-dev/rspress",
+    "url": "git+https://github.com/web-infra-dev/rspress.git",
     "directory": "packages/plugin-last-updated"
   },
   "license": "MIT",
@@ -40,8 +40,7 @@
     "@rspress/shared": "workspace:*",
     "@shikijs/rehype": "^3.2.2",
     "hast-util-from-html": "^2.0.3",
-    "shiki": "^3.2.2",
-    "unist-util-visit": "^5.0.0"
+    "shiki": "^3.2.2"
   },
   "devDependencies": {
     "@microsoft/api-extractor": "^7.52.4",
@@ -53,8 +52,8 @@
     "@types/react": "^18.3.20",
     "@types/react-dom": "^18.3.6",
     "react": "^19.1.0",
-    "typescript": "^5.8.2",
-    "unified": "^11.0.5"
+    "rsbuild-plugin-publint": "^0.3.0",
+    "typescript": "^5.8.2"
   },
   "engines": {
     "node": ">=14.17.6"

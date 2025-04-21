@@ -5,20 +5,19 @@
   "bugs": "https://github.com/web-infra-dev/rspress/issues",
   "repository": {
     "type": "git",
-    "url": "https://github.com/web-infra-dev/rspress",
+    "url": "git+https://github.com/web-infra-dev/rspress.git",
     "directory": "packages/plugin-rss"
   },
   "license": "MIT",
+  "type": "module",
   "exports": {
     ".": {
       "types": "./dist/index.d.ts",
-      "import": "./dist/index.mjs",
-      "default": "./dist/index.cjs"
+      "default": "./dist/index.js"
     },
-    "./FeedsAnnotations": "./static/global-components/FeedsAnnotations"
+    "./FeedsAnnotations": "./static/global-components/FeedsAnnotations.tsx"
   },
-  "main": "./dist/index.cjs",
-  "module": "./dist/index.mjs",
+  "module": "./dist/index.js",
   "types": "./dist/index.d.ts",
   "files": [
     "dist",
@@ -39,6 +38,7 @@
     "@types/node": "^18.11.17",
     "@types/react": "^18.3.20",
     "react": "^19.1.0",
+    "rsbuild-plugin-publint": "^0.3.0",
     "typescript": "^5.8.2"
   },
   "peerDependencies": {
