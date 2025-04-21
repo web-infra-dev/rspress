@@ -32,8 +32,8 @@
     "@rspress/shared": "workspace:*"
   },
   "devDependencies": {
-    "@microsoft/api-extractor": "^7.52.3",
-    "@rslib/core": "0.6.3",
+    "@microsoft/api-extractor": "^7.52.4",
+    "@rslib/core": "0.6.5",
     "@types/mdast": "^4.0.4",
     "mdast-util-mdx-expression": "^2.0.1",
     "mdast-util-mdx-jsx": "^3.2.0",
