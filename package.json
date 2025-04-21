@@ -44,7 +44,7 @@
     "cspell": "^8.17.5",
     "cspell-ban-words": "^0.0.4",
     "get-port": "5.1.1",
-    "heading-case": "^0.1.4",
+    "heading-case": "^0.1.6",
     "husky": "^9.1.7",
     "lint-staged": "~15.4.3",
     "nx": "20.4.6",

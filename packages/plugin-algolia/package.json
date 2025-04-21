@@ -41,15 +41,15 @@
   "dependencies": {
     "@docsearch/css": "^3.9.0",
     "@docsearch/react": "^3.9.0",
-    "algoliasearch": "^5.23.3",
+    "algoliasearch": "^5.23.4",
     "instantsearch.css": "^8.5.1",
     "instantsearch.js": "^4.78.1",
     "react-instantsearch": "^7.15.5"
   },
   "devDependencies": {
-    "@microsoft/api-extractor": "^7.52.3",
+    "@microsoft/api-extractor": "^7.52.4",
     "@rsbuild/plugin-react": "~1.1.1",
-    "@rslib/core": "0.6.3",
+    "@rslib/core": "0.6.5",
     "@rspress/config": "workspace:*",
     "@rspress/shared": "workspace:*",
     "@types/node": "^18.11.17",
