@@ -5,17 +5,22 @@
   "bugs": "https://github.com/web-infra-dev/rspress/issues",
   "repository": {
     "type": "git",
-    "url": "https://github.com/web-infra-dev/rspress",
+    "url": "git+https://github.com/web-infra-dev/rspress.git",
     "directory": "packages/plugin-api-docgen"
   },
   "license": "MIT",
-  "main": "./dist/index.js",
+  "type": "module",
+  "exports": {
+    ".": {
+      "types": "./index.d.ts",
+      "default": "./dist/index.js"
+    }
+  },
   "types": "./index.d.ts",
   "files": [
     "dist",
     "static",
-    "index.d.ts",
-    "mdx-meta-loader.cjs"
+    "index.d.ts"
   ],
   "scripts": {
     "build": "rslib build",
@@ -40,6 +45,7 @@
     "react": "^19.1.0",
     "react-dom": "^19.1.0",
     "react-router-dom": "^6.29.0",
+    "rsbuild-plugin-publint": "^0.3.0",
     "typescript": "^5.8.2",
     "unified": "^11.0.5",
     "unist-util-visit": "^5.0.0"

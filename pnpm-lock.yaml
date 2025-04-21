@@ -740,6 +740,9 @@ importers:
       rimraf:
         specifier: ^6.0.1
         version: 6.0.1
+      rsbuild-plugin-publint:
+        specifier: ^0.3.0
+        version: 0.3.0(@rsbuild/core@1.3.9)
       typescript:
         specifier: ^5.8.2
         version: 5.8.2
@@ -912,6 +915,9 @@ importers:
       rimraf:
         specifier: ^6.0.1
         version: 6.0.1
+      rsbuild-plugin-publint:
+        specifier: ^0.3.0
+        version: 0.3.0(@rsbuild/core@1.3.9)
       rsbuild-plugin-virtual-module:
         specifier: 0.1.1
         version: 0.1.1(@rsbuild/core@1.3.9)
@@ -940,6 +946,9 @@ importers:
       '@types/node':
         specifier: ^18.11.17
         version: 18.11.17
+      rsbuild-plugin-publint:
+        specifier: ^0.3.0
+        version: 0.3.0(@rsbuild/core@1.3.9)
       typescript:
         specifier: ^5.8.2
         version: 5.8.2
@@ -1037,6 +1046,9 @@ importers:
       react:
         specifier: ^19.1.0
         version: 19.1.0
+      rsbuild-plugin-publint:
+        specifier: ^0.3.0
+        version: 0.3.0(@rsbuild/core@1.3.9)
       typescript:
         specifier: ^5.8.2
         version: 5.8.2
@@ -1092,6 +1104,9 @@ importers:
       react-router-dom:
         specifier: ^6.29.0
         version: 6.29.0(react-dom@19.1.0(react@19.1.0))(react@19.1.0)
+      rsbuild-plugin-publint:
+        specifier: ^0.3.0
+        version: 0.3.0(@rsbuild/core@1.3.9)
       typescript:
         specifier: ^5.8.2
         version: 5.8.2
@@ -1129,6 +1144,9 @@ importers:
       react:
         specifier: ^19.1.0
         version: 19.1.0
+      rsbuild-plugin-publint:
+        specifier: ^0.3.0
+        version: 0.3.0(@rsbuild/core@1.3.9)
       typescript:
         specifier: ^5.8.2
         version: 5.8.2
@@ -1163,6 +1181,9 @@ importers:
       react:
         specifier: ^19.1.0
         version: 19.1.0
+      rsbuild-plugin-publint:
+        specifier: ^0.3.0
+        version: 0.3.0(@rsbuild/core@1.3.9)
       typescript:
         specifier: ^5.8.2
         version: 5.8.2
@@ -1203,6 +1224,9 @@ importers:
       remark-rehype:
         specifier: ^11.1.2
         version: 11.1.2
+      rsbuild-plugin-publint:
+        specifier: ^0.3.0
+        version: 0.3.0(@rsbuild/core@1.3.9)
       unified:
         specifier: ^11.0.5
         version: 11.0.5
@@ -1237,6 +1261,9 @@ importers:
       react:
         specifier: ^19.1.0
         version: 19.1.0
+      rsbuild-plugin-publint:
+        specifier: ^0.3.0
+        version: 0.3.0(@rsbuild/core@1.3.9)
       typescript:
         specifier: ^5.8.2
         version: 5.8.2
@@ -1274,6 +1301,9 @@ importers:
       react:
         specifier: ^19.1.0
         version: 19.1.0
+      rsbuild-plugin-publint:
+        specifier: ^0.3.0
+        version: 0.3.0(@rsbuild/core@1.3.9)
       typescript:
         specifier: ^5.8.2
         version: 5.8.2
@@ -1344,6 +1374,9 @@ importers:
       react-router-dom:
         specifier: ^6.29.0
         version: 6.29.0(react-dom@19.1.0(react@19.1.0))(react@19.1.0)
+      rsbuild-plugin-publint:
+        specifier: ^0.3.0
+        version: 0.3.0(@rsbuild/core@1.3.9)
       typescript:
         specifier: ^5.8.2
         version: 5.8.2
@@ -1423,6 +1456,9 @@ importers:
       react-router-dom:
         specifier: ^6.29.0
         version: 6.29.0(react-dom@19.1.0(react@19.1.0))(react@19.1.0)
+      rsbuild-plugin-publint:
+        specifier: ^0.3.0
+        version: 0.3.0(@rsbuild/core@1.3.9)
       typescript:
         specifier: ^5.8.2
         version: 5.8.2
@@ -1460,6 +1496,9 @@ importers:
       react:
         specifier: ^19.1.0
         version: 19.1.0
+      rsbuild-plugin-publint:
+        specifier: ^0.3.0
+        version: 0.3.0(@rsbuild/core@1.3.9)
       typescript:
         specifier: ^5.8.2
         version: 5.8.2
@@ -1509,6 +1548,9 @@ importers:
       react:
         specifier: ^19.1.0
         version: 19.1.0
+      rsbuild-plugin-publint:
+        specifier: ^0.3.0
+        version: 0.3.0(@rsbuild/core@1.3.9)
       typescript:
         specifier: ^5.8.2
         version: 5.8.2
@@ -1552,6 +1594,9 @@ importers:
       react:
         specifier: ^19.1.0
         version: 19.1.0
+      rsbuild-plugin-publint:
+        specifier: ^0.3.0
+        version: 0.3.0(@rsbuild/core@1.3.9)
       typescript:
         specifier: ^5.8.2
         version: 5.8.2
@@ -1592,6 +1637,9 @@ importers:
       '@types/react-dom':
         specifier: ^18.3.6
         version: 18.3.6(@types/react@18.3.20)
+      rsbuild-plugin-publint:
+        specifier: ^0.3.0
+        version: 0.3.0(@rsbuild/core@1.3.9)
       typescript:
         specifier: ^5.8.2
         version: 5.8.2
@@ -1635,6 +1683,9 @@ importers:
       rimraf:
         specifier: ^6.0.1
         version: 6.0.1
+      rsbuild-plugin-publint:
+        specifier: ^0.3.0
+        version: 0.3.0(@rsbuild/core@1.3.9)
       typescript:
         specifier: ^5.8.2
         version: 5.8.2
@@ -1732,6 +1783,9 @@ importers:
       gray-matter:
         specifier: 4.0.3
         version: 4.0.3
+      rsbuild-plugin-publint:
+        specifier: ^0.3.0
+        version: 0.3.0(@rsbuild/core@1.3.9)
       tailwindcss:
         specifier: ^3.4.17
         version: 3.4.17(ts-node@10.9.2(@types/node@22.10.2)(typescript@5.8.2))
@@ -2857,6 +2911,10 @@ packages:
     resolution: {integrity: sha512-jTXRsoSPONAs8Za9QEQdyjFn+0ZQFjCiIztAIF6bi1HqhBzG9Ma7g1WotyiGqFSBRZjIEqMdT8RUlbk1QVhzCQ==}
     engines: {node: '>=18'}
     hasBin: true
+
+  '@publint/pack@0.1.2':
+    resolution: {integrity: sha512-S+9ANAvUmjutrshV4jZjaiG8XQyuJIZ8a4utWmN/vW1sgQ9IfBnPndwkmQYw53QmouOIytT874u65HEmu6H5jw==}
+    engines: {node: '>=18'}
 
   '@remix-run/router@1.22.0':
     resolution: {integrity: sha512-MBOl8MeOzpK0HQQQshKB7pABXbmyHizdTpqnrIseTbsv0nAepwC2ENZa1aaBExNQcpLoXmWthhak8SABLzvGPw==}
@@ -5689,6 +5747,9 @@ packages:
   package-manager-detector@0.2.0:
     resolution: {integrity: sha512-E385OSk9qDcXhcM9LNSe4sdhx8a9mAPrZ4sMLW+tmxl5ZuGtPUcdFu+MPP2jbgiWAZ6Pfe5soGFMd+0Db5Vrog==}
 
+  package-manager-detector@1.2.0:
+    resolution: {integrity: sha512-PutJepsOtsqVfUsxCzgTTpyXmiAgvKptIgY4th5eq5UXXFhj5PxfQ9hnGkypMeovpAvVshFRItoFHYO18TCOqA==}
+
   parent-module@1.0.1:
     resolution: {integrity: sha512-GQ2EWRpQV8/o+Aw8YqtfZZPfNRWZYkbidE9k5rpl/hC3vtHHBfGm2Ifi6qWV+coDGkrUKZAxE3Lot5kcsRlh+g==}
     engines: {node: '>=6'}
@@ -5916,6 +5977,11 @@ packages:
 
   proxy-from-env@1.1.0:
     resolution: {integrity: sha512-D+zkORCbA9f1tdWRK0RaCR3GPv50cMxcrz4X8k5LTSUD1Dkw47mKJEZQNunItRTkWwgtaUSo1RVFRIG9ZXiFYg==}
+
+  publint@0.3.12:
+    resolution: {integrity: sha512-1w3MMtL9iotBjm1mmXtG3Nk06wnq9UhGNRpQ2j6n1Zq7YAD6gnxMMZMIxlRPAydVjVbjSm+n0lhwqsD1m4LD5w==}
+    engines: {node: '>=18'}
+    hasBin: true
 
   punycode@2.3.1:
     resolution: {integrity: sha512-vYt7UD1U9Wg6138shLtLOvdAu+8DsC/ilFtEVHcH+wydcSpNE20AfSOduf6MkRFahL5FY7X1oU7nKVZFtfq8Fg==}
@@ -6204,6 +6270,14 @@ packages:
     resolution: {integrity: sha512-JGBMM9T7GNX47Y3jiSJkhoK2rT1bb7+TOO6yYpMHW+/3PLD9i0vv2S4qfdskTnVo8kTNEAYzTZrd+k+XuWxcNA==}
     peerDependencies:
       '@rsbuild/core': 0.x || 1.x || ^1.0.1-beta.0
+    peerDependenciesMeta:
+      '@rsbuild/core':
+        optional: true
+
+  rsbuild-plugin-publint@0.3.0:
+    resolution: {integrity: sha512-7EV68plBBXiTF4FB5HiyK9TfYOVG8OUckEZKsu6YJqZDojpDU1WSf8HMbJa225xP4JeOtwchPC8SQPwSFSCvBg==}
+    peerDependencies:
+      '@rsbuild/core': 1.x
     peerDependenciesMeta:
       '@rsbuild/core':
         optional: true
@@ -8498,6 +8572,8 @@ snapshots:
   '@playwright/test@1.47.2':
     dependencies:
       playwright: 1.47.2
+
+  '@publint/pack@0.1.2': {}
 
   '@remix-run/router@1.22.0': {}
 
@@ -12132,6 +12208,8 @@ snapshots:
 
   package-manager-detector@0.2.0: {}
 
+  package-manager-detector@1.2.0: {}
+
   parent-module@1.0.1:
     dependencies:
       callsites: 3.1.0
@@ -12336,6 +12414,13 @@ snapshots:
   protocols@2.0.1: {}
 
   proxy-from-env@1.1.0: {}
+
+  publint@0.3.12:
+    dependencies:
+      '@publint/pack': 0.1.2
+      package-manager-detector: 1.2.0
+      picocolors: 1.1.1
+      sade: 1.8.1
 
   punycode@2.3.1: {}
 
@@ -12757,6 +12842,13 @@ snapshots:
       '@rsbuild/core': 1.3.9
 
   rsbuild-plugin-open-graph@1.0.2(@rsbuild/core@1.3.9):
+    optionalDependencies:
+      '@rsbuild/core': 1.3.9
+
+  rsbuild-plugin-publint@0.3.0(@rsbuild/core@1.3.9):
+    dependencies:
+      picocolors: 1.1.1
+      publint: 0.3.12
     optionalDependencies:
       '@rsbuild/core': 1.3.9
 

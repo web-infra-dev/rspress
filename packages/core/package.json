@@ -5,7 +5,7 @@
   "bugs": "https://github.com/web-infra-dev/rspress/issues",
   "repository": {
     "type": "git",
-    "url": "https://github.com/web-infra-dev/rspress",
+    "url": "git+https://github.com/web-infra-dev/rspress.git",
     "directory": "packages/cli/core"
   },
   "license": "MIT",
@@ -104,6 +104,7 @@
     "remark-rehype": "^11.1.2",
     "remark-stringify": "^11.0.0",
     "rimraf": "^6.0.1",
+    "rsbuild-plugin-publint": "^0.3.0",
     "rsbuild-plugin-virtual-module": "0.1.1",
     "tailwindcss": "^3.4.17",
     "typescript": "^5.8.2",

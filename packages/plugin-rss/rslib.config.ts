@@ -1,22 +1,9 @@
-import { type LibConfig, defineConfig } from '@rslib/core';
-
-const base = {
-  bundle: true,
-  format: 'cjs',
-  syntax: 'es2020',
-} satisfies LibConfig;
+import { defineConfig } from '@rslib/core';
+import { pluginPublint } from 'rsbuild-plugin-publint';
 
 export default defineConfig({
+  plugins: [pluginPublint()],
   lib: [
-    {
-      ...base,
-      format: 'cjs',
-      output: {
-        filename: {
-          js: '[name].cjs',
-        },
-      },
-    },
-    { ...base, format: 'esm', dts: { bundle: true } },
+    { bundle: true, syntax: 'es2020', format: 'esm', dts: { bundle: true } },
   ],
 });

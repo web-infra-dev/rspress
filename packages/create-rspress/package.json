@@ -5,7 +5,7 @@
   "homepage": "https://rspress.dev",
   "repository": {
     "type": "git",
-    "url": "https://github.com/web-infra-dev/rspress",
+    "url": "git+https://github.com/web-infra-dev/rspress.git",
     "directory": "packages/create-rspress"
   },
   "license": "MIT",
@@ -34,6 +34,7 @@
     "@microsoft/api-extractor": "^7.52.4",
     "@rslib/core": "0.6.5",
     "@types/node": "^18.11.17",
+    "rsbuild-plugin-publint": "^0.3.0",
     "typescript": "^5.8.2"
   },
   "engines": {

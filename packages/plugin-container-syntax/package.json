@@ -5,7 +5,7 @@
   "bugs": "https://github.com/web-infra-dev/rspress/issues",
   "repository": {
     "type": "git",
-    "url": "https://github.com/web-infra-dev/rspress",
+    "url": "git+https://github.com/web-infra-dev/rspress.git",
     "directory": "packages/plugin-container-syntax"
   },
   "license": "MIT",
@@ -16,8 +16,13 @@
     "*.scss"
   ],
   "type": "module",
-  "main": "./dist/index.js",
-  "module": "./dist/index.mjs",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "default": "./dist/index.js"
+    }
+  },
+  "module": "./dist/index.js",
   "types": "./dist/index.d.ts",
   "files": [
     "dist",
@@ -42,6 +47,7 @@
     "remark-mdx": "^3.1.0",
     "remark-parse": "^11.0.0",
     "remark-rehype": "^11.1.2",
+    "rsbuild-plugin-publint": "^0.3.0",
     "unified": "^11.0.5"
   },
   "engines": {

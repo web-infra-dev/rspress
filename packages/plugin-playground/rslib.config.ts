@@ -1,20 +1,10 @@
 import { pluginReact } from '@rsbuild/plugin-react';
 import { defineConfig } from '@rslib/core';
+import { pluginPublint } from 'rsbuild-plugin-publint';
 
 export default defineConfig({
+  plugins: [pluginPublint()],
   lib: [
-    {
-      format: 'cjs',
-      source: {
-        entry: { index: 'src/cli/index.ts' },
-      },
-      output: {
-        distPath: {
-          root: 'dist/cli/cjs',
-        },
-      },
-      syntax: 'es2020',
-    },
     {
       format: 'esm',
       source: {
@@ -27,24 +17,12 @@ export default defineConfig({
       },
       output: {
         distPath: {
-          root: 'dist/cli/esm',
+          root: 'dist/cli',
         },
         externals: ['@types/react'],
       },
       syntax: 'es2020',
       dts: { bundle: true },
-    },
-    {
-      format: 'cjs',
-      source: {
-        entry: { index: 'src/web/index.ts' },
-      },
-      output: {
-        distPath: {
-          root: 'dist/web/cjs',
-        },
-      },
-      syntax: 'es2020',
     },
     {
       format: 'esm',
@@ -55,7 +33,7 @@ export default defineConfig({
       output: {
         externals: ['@types/react'],
         distPath: {
-          root: 'dist/web/esm',
+          root: 'dist/web',
         },
       },
       syntax: 'es2020',

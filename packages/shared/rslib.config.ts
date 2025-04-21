@@ -1,4 +1,5 @@
 import { defineConfig } from '@rslib/core';
+import { pluginPublint } from 'rsbuild-plugin-publint';
 
 export default defineConfig({
   lib: [
@@ -6,10 +7,6 @@ export default defineConfig({
       dts: {
         bundle: true,
       },
-      format: 'cjs',
-      syntax: 'esnext',
-    },
-    {
       format: 'esm',
       syntax: 'esnext',
     },
@@ -22,6 +19,7 @@ export default defineConfig({
       constants: 'src/constants.ts',
     },
   },
+  plugins: [pluginPublint()],
   output: {
     externals: ['mdast-util-mdx-jsx'],
   },

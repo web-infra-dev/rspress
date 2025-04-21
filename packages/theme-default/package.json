@@ -5,7 +5,7 @@
   "bugs": "https://github.com/web-infra-dev/rspress/issues",
   "repository": {
     "type": "git",
-    "url": "https://github.com/web-infra-dev/rspress",
+    "url": "git+https://github.com/web-infra-dev/rspress.git",
     "directory": "packages/theme-default"
   },
   "license": "MIT",
@@ -76,6 +76,7 @@
     "@types/react-dom": "^18.3.6",
     "@types/react-syntax-highlighter": "^15.5.13",
     "gray-matter": "4.0.3",
+    "rsbuild-plugin-publint": "^0.3.0",
     "tailwindcss": "^3.4.17",
     "typescript": "^5.8.2"
   },
