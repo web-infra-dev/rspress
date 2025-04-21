@@ -197,8 +197,6 @@ export function pluginPlayground(
         'export default getImport;',
       ].join('\n');
 
-      // console.log('playground-imports', code);
-
       playgroundVirtualModule.writeModule('_rspress_playground_imports', code);
     },
     builderConfig: {

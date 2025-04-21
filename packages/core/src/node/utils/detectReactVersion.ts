@@ -8,23 +8,25 @@ import { pathExists, readJson } from './fs';
 // TODO: replace enhanced-resolve with this.getResolver
 const { CachedInputFileSystem, ResolverFactory } = enhancedResolve;
 
-const DEFAULT_REACT_VERSION = 18;
-
-export async function detectReactVersion(): Promise<number> {
-  // Detect react version from current cwd
-  // return the major version of react
-  // if not found, return 18
+async function detectPackageMajorVersion(
+  name: string,
+): Promise<number | undefined> {
   const cwd = process.cwd();
-  const reactPath = path.join(cwd, 'node_modules', 'react');
-  if (await pathExists(reactPath)) {
-    const reactPkg = await readJson<{ version?: string }>(
-      path.join(reactPath, 'package.json'),
+  const pkgPath = path.join(cwd, 'node_modules', name);
+  if (await pathExists(pkgPath)) {
+    const pkgJson = await readJson<{ version?: string }>(
+      path.join(pkgPath, 'package.json'),
     );
-    const version = Number(reactPkg.version?.split('.')[0]);
+    const version = Number(pkgJson.version?.split('.')[0]);
     return version;
   }
 
-  return DEFAULT_REACT_VERSION;
+  return undefined;
+}
+
+const DEFAULT_REACT_VERSION = 19;
+export async function detectReactVersion(): Promise<number> {
+  return (await detectPackageMajorVersion('react')) ?? DEFAULT_REACT_VERSION;
 }
 
 export async function resolveReactAlias(reactVersion: number, isSSR: boolean) {
@@ -37,7 +39,7 @@ export async function resolveReactAlias(reactVersion: number, isSSR: boolean) {
     'react-dom',
     'react-dom/server',
   ];
-  if (reactVersion >= DEFAULT_REACT_VERSION) {
+  if (reactVersion >= 18) {
     libPaths.push('react-dom/client');
   }
   const alias: Record<string, string> = {};

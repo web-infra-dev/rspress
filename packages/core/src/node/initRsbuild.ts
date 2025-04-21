@@ -294,7 +294,12 @@ async function createInternalBuildConfig(
     environments: {
       web: {
         resolve: {
-          alias: { ...reactCSRAlias, __VIRTUAL_ROUTES__: 'virtual-routes' },
+          alias: {
+            ...reactCSRAlias,
+            // FIXME: currently in Rspress we only support ^6.29.0
+            'react-router-dom': require.resolve('react-router-dom'),
+            __VIRTUAL_ROUTES__: 'virtual-routes',
+          },
         },
         source: {
           entry: {
@@ -318,6 +323,8 @@ async function createInternalBuildConfig(
               resolve: {
                 alias: {
                   ...reactSSRAlias,
+                  // FIXME: currently in Rspress we only support react-router-dom ^6.29.0
+                  'react-router-dom': require.resolve('react-router-dom'),
                   __VIRTUAL_ROUTES__: 'virtual-routes-ssr',
                 },
               },
