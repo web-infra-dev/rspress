@@ -23,7 +23,7 @@ test.describe('api-docgen test', async () => {
 
   test('Index page', async ({ page }) => {
     await page.goto(`http://localhost:${appPort}`);
-    const table = await page.$('table');
+    const table = page.locator('table');
     const tableContent = await page.evaluate(table => table?.innerHTML, table);
 
     // Property
