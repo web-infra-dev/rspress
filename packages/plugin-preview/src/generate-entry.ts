@@ -25,10 +25,11 @@ export function generateEntry(
         `;
 
         const reactEntry = `
-        import { render } from 'react-dom';
+        import { createRoot } from 'react-dom/client';
         import ${JSON.stringify(entryCssPath)};
         import Demo from ${JSON.stringify(demoPath)};
-        render(<Demo />, document.getElementById('root'));
+        const container = document.getElementById('root');
+        createRoot(container).render(<Demo />);
         `;
         const entryContent = customEntry
           ? customEntry({
@@ -48,7 +49,7 @@ export function generateEntry(
         return;
       }
       const reactContent = `
-        import { render } from 'react-dom';
+        import { createRoot } from 'react-dom/client';
         import ${JSON.stringify(entryCssPath)};
         ${routes
           .map((demo, index) => {
@@ -67,7 +68,8 @@ export function generateEntry(
             </div>
           )
         }
-        render(<App /> , document.getElementById('root'));
+        const container = document.getElementById('root');
+        createRoot(container).render(<App />);
       `;
       const solidContent = `
         import { render } from 'solid-js/web';

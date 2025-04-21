@@ -18,10 +18,11 @@ createApp(App).mount('#root');
 `;
           }
           return `
-import { render } from 'react-dom';
+import { createRoot } from 'react-dom/client';
 import ${JSON.stringify(entryCssPath)};
 import Demo from ${JSON.stringify(demoPath)};
-render(<Demo />, document.getElementById('root'));
+const container = document.getElementById('root');
+createRoot(container).render(<Demo />);
 `;
         },
         builderConfig: {
