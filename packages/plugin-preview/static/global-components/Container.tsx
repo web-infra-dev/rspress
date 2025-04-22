@@ -45,7 +45,7 @@ const Container: React.FC<ContainerProps> = props => {
     <NoSSR>
       <div className="rspress-preview">
         {isMobile === 'true' ? (
-          <div className="rspress-preview-wrapper flex">
+          <div className="rspress-preview-wrapper rp-flex">
             <div className="rspress-preview-code">{children?.[0]}</div>
             <div className="rspress-preview-device">
               <iframe src={getPageUrl()} key={iframeKey}></iframe>
