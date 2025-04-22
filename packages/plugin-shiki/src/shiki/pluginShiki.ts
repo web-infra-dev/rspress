@@ -57,7 +57,6 @@ export function pluginShiki(
       const newTransformers = [transformerAddTitle(), ...transformers];
       config.markdown = config.markdown || {};
       // Shiki will be integrated by rehype plugin, so we should use the javascript version markdown compiler.
-      config.markdown.mdxRs = false;
       config.markdown.codeHighlighter = 'shiki';
       config.markdown.rehypePlugins = config.markdown.rehypePlugins || [];
       if (

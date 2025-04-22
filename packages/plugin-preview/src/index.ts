@@ -59,7 +59,6 @@ export function pluginPreview(options?: Options): RspressPlugin {
     name: '@rspress/plugin-preview',
     config(config) {
       config.markdown = config.markdown || {};
-      config.markdown.mdxRs = false;
       return config;
     },
     routeGenerated(routes: RouteMeta[]) {
