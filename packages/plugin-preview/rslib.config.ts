@@ -12,7 +12,7 @@ export default defineConfig({
           utils: 'src/utils.ts',
         },
       },
-      syntax: 'es2020',
+      syntax: 'es2022',
       dts: {
         bundle: true,
       },

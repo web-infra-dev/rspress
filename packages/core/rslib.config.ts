@@ -10,7 +10,7 @@ export default defineConfig({
       dts: {
         bundle: true,
       },
-      syntax: 'es2020',
+      syntax: 'es2022',
       shims: {
         esm: {
           require: true,
@@ -30,7 +30,7 @@ export default defineConfig({
     },
     {
       format: 'esm',
-      syntax: 'es2020',
+      syntax: 'es2022',
       dts: {
         bundle: true,
       },
@@ -54,7 +54,7 @@ export default defineConfig({
       bundle: false,
       dts: true,
       format: 'esm',
-      syntax: 'es2020',
+      syntax: 'es2022',
       source: {
         entry: {
           index: './src/runtime/*',

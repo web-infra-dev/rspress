@@ -83,7 +83,7 @@ export default defineConfig({
         },
       },
       format: 'esm',
-      syntax: 'es2020',
+      syntax: 'es2022',
       output: {
         distPath: {
           root: 'dist/node',
@@ -94,7 +94,7 @@ export default defineConfig({
     // pre-built svg files
     {
       format: 'esm',
-      syntax: 'es2020',
+      syntax: 'es2022',
       bundle: false,
       plugins: [
         pluginReact(),

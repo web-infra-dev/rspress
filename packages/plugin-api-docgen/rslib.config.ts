@@ -9,7 +9,7 @@ export default defineConfig({
         bundle: true,
       },
       format: 'esm',
-      syntax: 'es2020',
+      syntax: 'es2022',
     },
   ],
 });
