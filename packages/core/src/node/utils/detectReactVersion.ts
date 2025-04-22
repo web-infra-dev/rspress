@@ -29,6 +29,44 @@ export async function detectReactVersion(): Promise<number> {
   return (await detectPackageMajorVersion('react')) ?? DEFAULT_REACT_VERSION;
 }
 
+export async function resolveReactRouterDomAlias(): Promise<
+  Record<string, string>
+> {
+  const alias: Record<string, string> = {};
+  const resolver = ResolverFactory.createResolver({
+    fileSystem: new CachedInputFileSystem(
+      fs as unknown as enhancedResolve.CachedInputFileSystem['fileSystem'],
+      0,
+    ),
+    mainFields: ['browser', 'module', 'main'],
+    extensions: ['.js'],
+    alias,
+  });
+
+  try {
+    const pkgPath = await new Promise<string>((resolve, reject) => {
+      resolver.resolve(
+        { importer: PACKAGE_ROOT },
+        PACKAGE_ROOT,
+        'react-router-dom',
+        {},
+        (err, filePath) => {
+          if (err || !filePath) {
+            return reject(err);
+          }
+          return resolve(filePath);
+        },
+      );
+    });
+    return {
+      'react-router-dom': pkgPath,
+    };
+  } catch (e) {
+    logger.warn('react-router-dom not found: \n', e);
+  }
+  return {};
+}
+
 export async function resolveReactAlias(reactVersion: number, isSSR: boolean) {
   const basedir =
     reactVersion === DEFAULT_REACT_VERSION ? PACKAGE_ROOT : process.cwd();

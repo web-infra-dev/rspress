@@ -38,7 +38,11 @@ import { searchHookVMPlugin } from './runtimeModule/searchHooks';
 import type { FactoryContext } from './runtimeModule/types';
 import { serveSearchIndexMiddleware } from './searchIndex';
 import { NODE_SSR_BUNDLE_NAME, rsbuildPluginSSG } from './ssg/rsbuildPluginSSG';
-import { detectReactVersion, resolveReactAlias } from './utils';
+import {
+  detectReactVersion,
+  resolveReactAlias,
+  resolveReactRouterDomAlias,
+} from './utils';
 import { detectCustomIcon } from './utils/detectCustomIcon';
 import { getSocialIcons } from './utils/getSocialIcons';
 
@@ -94,12 +98,17 @@ async function createInternalBuildConfig(
 
   await hintThemeBreakingChange(CUSTOM_THEME_DIR);
 
-  const [detectCustomIconAlias, reactCSRAlias, reactSSRAlias] =
-    await Promise.all([
-      detectCustomIcon(CUSTOM_THEME_DIR),
-      resolveReactAlias(reactVersion, false),
-      enableSSG ? resolveReactAlias(reactVersion, true) : Promise.resolve({}),
-    ]);
+  const [
+    detectCustomIconAlias,
+    reactCSRAlias,
+    reactSSRAlias,
+    reactRouterDomAlias,
+  ] = await Promise.all([
+    detectCustomIcon(CUSTOM_THEME_DIR),
+    resolveReactAlias(reactVersion, false),
+    enableSSG ? resolveReactAlias(reactVersion, true) : Promise.resolve({}),
+    resolveReactRouterDomAlias(),
+  ]);
 
   const context: Omit<FactoryContext, 'isSSR' | 'alias'> = {
     userDocRoot,
@@ -297,7 +306,7 @@ async function createInternalBuildConfig(
           alias: {
             ...reactCSRAlias,
             // FIXME: currently in Rspress we only support ^6.29.0
-            'react-router-dom': require.resolve('react-router-dom'),
+            ...reactRouterDomAlias,
             __VIRTUAL_ROUTES__: 'virtual-routes',
           },
         },
@@ -324,7 +333,7 @@ async function createInternalBuildConfig(
                 alias: {
                   ...reactSSRAlias,
                   // FIXME: currently in Rspress we only support react-router-dom ^6.29.0
-                  'react-router-dom': require.resolve('react-router-dom'),
+                  ...reactRouterDomAlias,
                   __VIRTUAL_ROUTES__: 'virtual-routes-ssr',
                 },
               },
