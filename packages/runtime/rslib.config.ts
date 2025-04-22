@@ -24,7 +24,7 @@ export default defineConfig({
       },
       dts: true,
       format: 'esm',
-      syntax: 'es2020',
+      syntax: 'es2022',
       output: {
         externals: [
           ...COMMON_EXTERNALS,

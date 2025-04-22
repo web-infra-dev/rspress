@@ -21,7 +21,7 @@ export default defineConfig({
         },
         externals: ['@types/react'],
       },
-      syntax: 'es2020',
+      syntax: 'es2022',
       dts: { bundle: true },
     },
     {
@@ -36,7 +36,7 @@ export default defineConfig({
           root: 'dist/web',
         },
       },
-      syntax: 'es2020',
+      syntax: 'es2022',
       dts: { bundle: true },
     },
   ],
