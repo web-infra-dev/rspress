@@ -60,6 +60,8 @@ describe('extractPageData', async () => {
       [
         {
           "_filepath": "<ROOT>/packages/core/src/node/route/fixtures/basic/a.mdx",
+          "_flattenContent": "# Page a
+      ",
           "_html": "<h1 id="page-a">Page a<a aria-hidden="true" href="#page-a">#</a></h1>",
           "_relativePath": "a.mdx",
           "content": "#",
@@ -76,6 +78,8 @@ describe('extractPageData', async () => {
         },
         {
           "_filepath": "<ROOT>/packages/core/src/node/route/fixtures/basic/guide/b.mdx",
+          "_flattenContent": "# Page b
+      ",
           "_html": "<h1 id="page-b">Page b<a aria-hidden="true" href="#page-b">#</a></h1>",
           "_relativePath": "guide/b.mdx",
           "content": "#",
@@ -92,6 +96,7 @@ describe('extractPageData', async () => {
         },
         {
           "_filepath": "<ROOT>/packages/core/src/node/route/fixtures/basic/guide/c.tsx",
+          "_flattenContent": "",
           "_html": "",
           "_relativePath": "guide/c.tsx",
           "content": "",
@@ -106,6 +111,8 @@ describe('extractPageData', async () => {
         },
         {
           "_filepath": "<ROOT>/packages/core/src/node/route/fixtures/basic/index.mdx",
+          "_flattenContent": "# homePage
+      ",
           "_html": "<h1 id="homepage">homePage<a aria-hidden="true" href="#homepage">#</a></h1>",
           "_relativePath": "index.mdx",
           "content": "#",

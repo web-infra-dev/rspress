@@ -1,5 +1,6 @@
 import { pluginSass } from '@rsbuild/plugin-sass';
 import { pluginAlgolia } from '@rspress/plugin-algolia';
+import { pluginLlms } from '@rspress/plugin-llms';
 import { pluginShiki } from '@rspress/plugin-shiki';
 import {
   transformerNotationDiff,
@@ -18,7 +19,7 @@ const siteUrl = 'https://rspress.dev';
 export default defineConfig({
   root: 'docs',
   title: 'Rspress',
-  description: 'Rspack based static site generator',
+  description: 'Rsbuild based static site generator',
   lang: 'en',
   logo: 'https://assets.rspack.dev/rspress/rspress-logo-480x480.png',
   logoText: 'Rspress',
@@ -43,6 +44,7 @@ export default defineConfig({
         transformerNotationFocus(),
       ],
     }),
+    pluginLlms(),
   ],
   builderConfig: {
     dev: {
@@ -56,13 +58,16 @@ export default defineConfig({
         type: 'website',
         url: siteUrl,
         image: 'https://rspress.dev/og-image.png',
-        description: 'Rspack based static site generator',
+        description: 'Rsbuild based static site generator',
         twitter: {
           site: '@rspack_dev',
           card: 'summary_large_image',
         },
       }),
     ],
+    output: {
+      cleanDistPath: false,
+    },
   },
   search: false,
   route: {

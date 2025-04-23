@@ -1,0 +1,148 @@
+# @rspress/plugin-llms
+
+import { SourceCode } from 'rspress/theme';
+
+<SourceCode href="https://github.com/web-infra-dev/rspress/tree/main/packages/plugin-llms" />
+
+为 Rspress 站点生成 [llms.txt](https://llmstxt.org/) 相关文件，使大模型可以更好地理解你的文档站。
+
+## 安装
+
+import { PackageManagerTabs } from '@theme';
+
+<PackageManagerTabs command="add @rspress/plugin-llms -D" />
+
+## 使用
+
+在配置文件中写入以下的配置：
+
+```ts
+// rspress.config.ts
+import path from 'path';
+import { defineConfig } from 'rspress';
+import { pluginLlms } from '@rspress/plugin-llms';
+
+export default defineConfig({
+  plugins: [pluginLlms()],
+});
+```
+
+之后执行 `rspress build` 命令，在生成产物的同时，会在产物目录下根据导航栏生成 `llms.txt` `llms.full.txt` 和对应路由的 markdown 文件。
+
+## 配置
+
+这个插件接受一个对象参数，类型如下:
+
+```ts
+export interface Options {
+  llmsTxt?: boolean | LlmsTxt;
+  mdFiles?: boolean;
+  llmsFullTxt?: boolean;
+  exclude?: (context: { page: PageIndexInfo }) => boolean;
+}
+```
+
+### llmsTxt
+
+- 类型: `boolean | LlmsTxt`
+
+```ts
+import type { PageIndexInfo } from '@rspress/shared';
+
+export interface LlmsTxt {
+  onTitleGenerate?: (context: {
+    title: string | undefined;
+    description: string | undefined;
+  }) => string;
+  onLineGenerate?: (page: PageIndexInfo) => string;
+  onAfterLlmsTxtGenerate?: (llmsTxtContent: string) => string;
+}
+```
+
+- 默认值: `true`
+
+是否生成 llms.txt 文件，或者通过 hooks 自定义生成 llms.txt 文件。
+
+一个 llms.txt 文件的默认格式如下：
+
+```markdown
+# {title}
+
+> {description}
+
+## {nav1.title}
+
+- [{page.title}]({ page.routePath }): {page.frontmatter.description}
+
+## {nav2.title}
+
+- [{page.title}]({ page.routePath }): {page.frontmatter.description}
+```
+
+你可以通过 hook 对指定部分进行修改。
+
+- `onTitleGenerate`: 自定义生成 title 和 description 部分。
+- `onLineGenerate`: 自定义生成 md 文件的每一行。
+- `onAfterLlmsTxtGenerate`: 最后修改 llms.txt 文件的内容。
+
+例如：
+
+```ts
+pluginLlms({
+  llmsTxt: {
+    onTitleGenerate: ({ title, description }) => {
+      return `# ${title} - llms.txt
+
+> ${description}
+
+Rspress is a static site generator based on Rsbuild and it can generate llms.txt with @rspress/plugin-llms.
+`;
+    },
+  },
+});
+```
+
+对应的生成结果为：
+
+```markdown
+# Rspress - llms.txt
+
+> Rsbuild based static site generator
+
+Rspress is a static site generator based on Rsbuild and it can generate llms.txt with @rspress/plugin-llms.
+
+## guide
+
+- [foo](/foo.md)
+```
+
+### mdFiles
+
+- 类型: `boolean`
+- 默认值: `true`
+
+是否生成对应路由的 markdown 文件，当设置为 `false` 时，不会生成对应路由的 markdown 文件。
+
+### llmsFullTxt
+
+- 类型: `boolean`
+- 默认值: `true`
+
+是否生成 llms.full.txt 文件，当设置为 `false` 时，不会生成 `llms.full.txt` 文件。
+
+### exclude
+
+- 类型: `(context: { page: PageIndexInfo }) => boolean`
+- 默认值: `undefined`
+
+是否生成时排除某些路由，一般用于精简 llms.txt。
+
+- 示例：
+
+```ts
+pluginLlms({
+  exclude: ({ page }) => {
+    return page.routePath.includes('foo');
+  },
+});
+```

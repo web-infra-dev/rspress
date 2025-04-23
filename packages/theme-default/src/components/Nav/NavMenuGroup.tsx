@@ -3,7 +3,7 @@ import {
   type NavItemWithChildren,
   type NavItemWithLink,
   type NavItemWithLinkAndChildren,
-  withoutBase,
+  matchNavbar,
 } from '@rspress/shared';
 import { Link, Tag } from '@theme';
 import Down from '@theme-assets/down';
@@ -96,9 +96,7 @@ export function NavMenuGroup(item: NavMenuGroupItem) {
   };
 
   const renderLinkItem = (item: NavItemWithLink) => {
-    const isLinkActive = new RegExp(item.activeMatch || item.link).test(
-      withoutBase(pathname, base),
-    );
+    const isLinkActive = matchNavbar(item, pathname, base);
     if (activeValue === item.text || (!activeValue && isLinkActive)) {
       return <ActiveGroupItem key={item.link} item={item} />;
     }

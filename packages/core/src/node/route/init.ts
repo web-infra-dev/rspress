@@ -23,5 +23,6 @@ export async function initRouteService(
     pluginDriver,
   );
   await routeService.init();
+  await pluginDriver.routeServiceGenerated(routeService);
   return routeService;
 }

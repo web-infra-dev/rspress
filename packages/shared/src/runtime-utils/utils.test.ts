@@ -8,7 +8,7 @@ import {
   withBase,
   withoutBase,
   withoutLang,
-} from '.';
+} from './utils';
 
 describe('test shared utils', () => {
   test('withoutLang', () => {
