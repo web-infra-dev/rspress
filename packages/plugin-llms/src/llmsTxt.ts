@@ -54,7 +54,7 @@ function generateLlmsTxt(
   // handle others
   let hasOthers = false;
   const otherLines = [];
-  otherLines.push('\n## Others\n');
+  otherLines.push('\n## Other\n');
   for (const page of others) {
     const { routePath, lang, title, frontmatter } = page;
     if (routePath === '/' || routePath === `/${lang}/`) {
@@ -83,22 +83,26 @@ function generateLlmsFullTxt(
   const lines: string[] = [];
   // generate llms.txt with obj
   for (let i = 0; i < navList.length; i++) {
-    const nav = navList[i];
     const pages = pageDataArray[i];
     if (pages.length === 0) {
       continue;
     }
-    const title = nav.text;
-    lines.push(`# ${title}\n`);
     for (const page of pages) {
+      lines.push(`---
+url: ${routePathToMdPath(page.routePath)}
+---
+`);
       lines.push(
         (page as any).mdContent ?? page._flattenContent ?? page.content,
       );
       lines.push('\n');
     }
   }
-  lines.push('# Others\n');
   for (const page of others) {
+    lines.push(`---
+url: ${routePathToMdPath(page.routePath)}
+---
+`);
     lines.push((page as any).mdContent ?? page._flattenContent ?? page.content);
     lines.push('\n');
   }
