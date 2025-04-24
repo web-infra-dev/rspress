@@ -1,6 +1,6 @@
 {
   "name": "@rspress/plugin-algolia",
-  "version": "2.0.0-beta.1",
+  "version": "2.0.0-beta.2",
   "description": "A plugin for rspress to search with algolia in docs.",
   "bugs": "https://github.com/web-infra-dev/rspress/issues",
   "repository": {
@@ -56,7 +56,7 @@
     "typescript": "^5.8.2"
   },
   "peerDependencies": {
-    "@rspress/runtime": "workspace:^2.0.0-beta.1"
+    "@rspress/runtime": "workspace:^2.0.0-beta.2"
   },
   "engines": {
     "node": ">=18.0.0"
