@@ -26,7 +26,7 @@ export default defineConfig({
 });
 ```
 
-Then execute the `rspress build` command. While generating the output, the plugin will also generate `llms.txt`, `llms.full.txt`, and corresponding markdown files for each route in the output directory based on the navigation bar.
+Then execute the `rspress build` command. While generating the output, the plugin will also generate `llms.txt`, `llms-full.txt`, and corresponding markdown files for each route in the output directory based on the navigation bar.
 
 ## Configuration
 
@@ -127,16 +127,37 @@ Whether to generate a markdown file for the corresponding route, when set to `fa
 - Type: `boolean`
 - Default: `true`
 
-Whether to generate the llms.full.txt file, the `llms.full.txt` file will not be generated when set to `false`.
+Whether to generate the llms-full.txt file, the `llms-full.txt` file will not be generated when set to `false`.
+
+### include
+
+- Type: `(context: { page: PageIndexInfo }) => boolean`
+- Default: `(context) => context.page.lang === config.lang`
+
+Whether to include certain pages when generated will only include pages corresponding to the default language by default, which is generally used to simplify llms.txt.
+
+- Example:
+
+Generate `llms.txt` and other related files for pages whose language is English only:
+
+```ts
+pluginLlms({
+  include: ({ page }) => {
+    return page.lang === 'en';
+  },
+});
+```
 
 ### exclude
 
 - Type: `(context: { page: PageIndexInfo }) => boolean`
 - Default: `undefined`
 
-Whether to exclude certain routes when generating, it is generally used to streamline llms.txt.
+Whether to exclude certain pages, it will be executed after `include`.
 
 - Example:
+
+Exclude a single page under the `/foo` route:
 
 ```ts
 pluginLlms({
