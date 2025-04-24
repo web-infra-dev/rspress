@@ -6,6 +6,7 @@ import type {
   UserConfig,
 } from '@rspress/shared';
 import { isDevDebugMode } from '@rspress/shared';
+import type { RouteService } from './route/RouteService';
 
 type RspressPluginHookKeys =
   | 'beforeBuild'
@@ -13,6 +14,7 @@ type RspressPluginHookKeys =
   | 'addPages'
   | 'addRuntimeModules'
   | 'routeGenerated'
+  | 'routeServiceGenerated'
   | 'addSSGRoutes'
   | 'extendPageData'
   | 'modifySearchIndexData';
@@ -184,6 +186,14 @@ export class PluginDriver {
 
   async routeGenerated(routes: RouteMeta[]) {
     return this._runParallelAsyncHook('routeGenerated', routes, this.#isProd);
+  }
+
+  async routeServiceGenerated(routeService: RouteService) {
+    return this._runParallelAsyncHook(
+      'routeServiceGenerated',
+      routeService,
+      this.#isProd,
+    );
   }
 
   async addRuntimeModules() {

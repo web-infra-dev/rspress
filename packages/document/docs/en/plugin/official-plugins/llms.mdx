@@ -1,0 +1,147 @@
+# @rspress/plugin-llms
+
+import { SourceCode } from 'rspress/theme';
+
+<SourceCode href="https://github.com/web-infra-dev/rspress/tree/main/packages/plugin-llms" />
+
+Generate [llms.txt](https://llmstxt.org/) related files for your Rspress site, allowing large language models to better understand your documentation site.
+
+## Installation
+
+import { PackageManagerTabs } from '@theme';
+
+<PackageManagerTabs command="add @rspress/plugin-llms -D" />
+
+## Usage
+
+Add the following configuration to your configuration file:
+
+```ts
+// rspress.config.ts
+import { defineConfig } from 'rspress';
+import { pluginLlms } from '@rspress/plugin-llms';
+
+export default defineConfig({
+  plugins: [pluginLlms()],
+});
+```
+
+Then execute the `rspress build` command. While generating the output, the plugin will also generate `llms.txt`, `llms.full.txt`, and corresponding markdown files for each route in the output directory based on the navigation bar.
+
+## Configuration
+
+This plugin accepts an object parameter with the following type:
+
+```ts
+export interface Options {
+  llmsTxt?: boolean | LlmsTxt;
+  mdFiles?: boolean;
+  llmsFullTxt?: boolean;
+  exclude?: (context: { page: PageIndexInfo }) => boolean;
+}
+```
+
+### llmsTxt
+
+- Type: `boolean | LlmsTxt`
+
+```ts
+import type { PageIndexInfo } from '@rspress/shared';
+
+export interface LlmsTxt {
+  onTitleGenerate?: (context: {
+    title: string | undefined;
+    description: string | undefined;
+  }) => string;
+  onLineGenerate?: (page: PageIndexInfo) => string;
+  onAfterLlmsTxtGenerate?: (llmsTxtContent: string) => string;
+}
+```
+
+- Default: `true`
+
+Whether to generate the llms.txt file, or to customize the llms.txt file through hooks.
+
+The default format of an llms.txt file is as follows:
+
+```markdown
+# {title}
+
+> {description}
+
+## {nav1.title}
+
+- [{page.title}]({ page.routePath }): {page.frontmatter.description}
+
+## {nav2.title}
+
+- [{page.title}]({ page.routePath }): {page.frontmatter.description}
+```
+
+You can modify the specified part through hook.
+
+- `onTitleGenerate`: Customize the generated title and description sections.
+- `onLineGenerate`: Customize each line of the md file.
+- `onAfterLlmsTxtGenerate`: Finally modify the contents of the llms.txt file.
+
+For example:
+
+```ts
+pluginLlms({
+  llmsTxt: {
+    onTitleGenerate: ({ title, description }) => {
+      return `# ${title} - llms.txt
+
+> ${description}
+
+Rspress is a static site generator based on Rsbuild and it can generate llms.txt with @rspress/plugin-llms.
+`;
+    },
+  },
+});
+```
+
+The corresponding generation results are:
+
+```markdown
+# Rspress - llms.txt
+
+> Rsbuild based static site generator
+
+Rspress is a static site generator based on Rsbuild and it can generate llms.txt with @rspress/plugin-llms.
+
+## guide
+
+- [foo](/foo.md)
+```
+
+### mdFiles
+
+- Type: `boolean`
+- Default: `true`
+
+Whether to generate a markdown file for the corresponding route, when set to `false`, the markdown file for the corresponding route will not be generated.
+
+### llmsFullTxt
+
+- Type: `boolean`
+- Default: `true`
+
+Whether to generate the llms.full.txt file, the `llms.full.txt` file will not be generated when set to `false`.
+
+### exclude
+
+- Type: `(context: { page: PageIndexInfo }) => boolean`
+- Default: `undefined`
+
+Whether to exclude certain routes when generating, it is generally used to streamline llms.txt.
+
+- Example:
+
+```ts
+pluginLlms({
+  exclude: ({ page }) => {
+    return page.routePath.includes('foo');
+  },
+});
+```

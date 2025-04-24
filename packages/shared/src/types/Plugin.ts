@@ -86,6 +86,13 @@ export interface RspressPlugin {
     isProd: boolean,
   ) => Promise<void> | void;
   /**
+   * Callback after routeService generated
+   */
+  routeServiceGenerated?: (
+    routeService: any,
+    isProd: boolean,
+  ) => Promise<void> | void;
+  /**
    * Add addition ssg routes, for dynamic routes.
    */
   addSSGRoutes?: (

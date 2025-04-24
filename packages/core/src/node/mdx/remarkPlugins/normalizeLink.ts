@@ -16,6 +16,72 @@ import { visit } from 'unist-util-visit';
 import type { RouteService } from '../../route/RouteService';
 import { getASTNodeImport } from '../../utils';
 
+function normalizeLink(
+  nodeUrl: string,
+  routeService: RouteService | undefined,
+  relativePath: string,
+  cleanUrls: boolean | string,
+): string {
+  if (!nodeUrl) {
+    return '';
+  }
+  if (nodeUrl.startsWith('#')) {
+    return `#${nodeUrl.slice(1)}`;
+  }
+
+  // eslint-disable-next-line prefer-const
+  let { url, hash } = parseUrl(nodeUrl);
+
+  if (isExternalUrl(url)) {
+    return url + (hash ? `#${hash}` : '');
+  }
+
+  const extname = path.extname(url);
+
+  if ((routeService?.extensions ?? DEFAULT_PAGE_EXTENSIONS).includes(extname)) {
+    url = url.replace(new RegExp(`\\${extname}$`), '');
+  }
+
+  if (url.startsWith('.')) {
+    url = path.posix.join(slash(path.dirname(relativePath)), url);
+  } else if (routeService) {
+    const [pathVersion, pathLang] = routeService.getRoutePathParts(
+      slash(relativePath),
+    );
+    const [urlVersion, urlLang, urlPath] = routeService.getRoutePathParts(url);
+
+    url = addLeadingSlash(urlPath);
+
+    if (pathLang && urlLang !== pathLang) {
+      url = `/${pathLang}${url}`;
+    }
+
+    if (pathVersion && urlVersion !== pathVersion) {
+      url = `/${pathVersion}${url}`;
+    }
+  }
+
+  if (typeof cleanUrls === 'boolean') {
+    url = normalizeHref(url, cleanUrls);
+  } else {
+    url = normalizeHref(url, false);
+    url = url.replace(/\.html$/, cleanUrls);
+  }
+
+  if (hash) {
+    url += `#${hash}`;
+  }
+  return url;
+}
+
+const normalizeImageUrl = (imageUrl: string): string => {
+  if (isExternalUrl(imageUrl) || imageUrl.startsWith('/')) {
+    return '';
+  }
+
+  return imageUrl;
+};
+
 /**
  * Remark plugin to normalize a link href
  */
@@ -23,7 +89,7 @@ export const remarkPluginNormalizeLink: Plugin<
   [
     {
       root: string;
-      cleanUrls: boolean;
+      cleanUrls: boolean | string;
       routeService?: RouteService;
     },
   ],
@@ -33,67 +99,10 @@ export const remarkPluginNormalizeLink: Plugin<
   (tree, file) => {
     const images: MdxjsEsm[] = [];
     visit(tree, 'link', node => {
-      if (!node.url) {
-        return;
-      }
-      if (node.url.startsWith('#')) {
-        node.url = `#${node.url.slice(1)}`;
-        return;
-      }
-
-      // eslint-disable-next-line prefer-const
-      let { url, hash } = parseUrl(node.url);
-
-      if (isExternalUrl(url)) {
-        node.url = url + (hash ? `#${hash}` : '');
-        return;
-      }
-
-      const extname = path.extname(url);
-
-      if (
-        (routeService?.extensions ?? DEFAULT_PAGE_EXTENSIONS).includes(extname)
-      ) {
-        url = url.replace(new RegExp(`\\${extname}$`), '');
-      }
-
+      const { url: nodeUrl } = node;
       const relativePath = path.relative(root, file.path);
-
-      if (url.startsWith('.')) {
-        url = path.posix.join(slash(path.dirname(relativePath)), url);
-      } else if (routeService) {
-        const [pathVersion, pathLang] = routeService.getRoutePathParts(
-          slash(relativePath),
-        );
-        const [urlVersion, urlLang, urlPath] =
-          routeService.getRoutePathParts(url);
-
-        url = addLeadingSlash(urlPath);
-
-        if (pathLang && urlLang !== pathLang) {
-          url = `/${pathLang}${url}`;
-        }
-
-        if (pathVersion && urlVersion !== pathVersion) {
-          url = `/${pathVersion}${url}`;
-        }
-      }
-
-      url = normalizeHref(url, cleanUrls);
-
-      if (hash) {
-        url += `#${hash}`;
-      }
-      node.url = url;
+      node.url = normalizeLink(nodeUrl, routeService, relativePath, cleanUrls);
     });
-
-    const normalizeImageUrl = (imageUrl: string): string => {
-      if (isExternalUrl(imageUrl) || imageUrl.startsWith('/')) {
-        return '';
-      }
-
-      return imageUrl;
-    };
 
     const getMdxSrcAttribute = (tempVar: string) => {
       return {

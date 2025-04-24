@@ -1,4 +1,5 @@
 import path from 'node:path';
+import type { PageIndexInfo } from 'src';
 import type { PluginDriver } from 'src/node/PluginDriver';
 import type { RouteService } from 'src/node/route/RouteService';
 import { describe, expect, it } from 'vitest';
@@ -32,7 +33,7 @@ describe('automatic import of prism languages', () => {
       },
     } as RouteService,
     pluginDriver: {
-      extendPageData(pageData) {
+      extendPageData(pageData: PageIndexInfo) {
         pageData.extraHighlightLanguages = ['jsx', 'tsx'];
       },
       modifySearchIndexData() {},

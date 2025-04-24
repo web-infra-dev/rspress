@@ -49,6 +49,7 @@ export async function extractPageData(
           id: index,
           title: '',
           content: '',
+          _flattenContent: '',
           _html: '',
           routePath: route.routePath,
           lang: route.lang,
@@ -66,17 +67,14 @@ export async function extractPageData(
           return defaultIndexInfo;
         }
         let content: string = await fs.readFile(route.absolutePath, 'utf8');
-        const { frontmatter, content: strippedFrontMatter } = loadFrontMatter(
-          content,
-          route.absolutePath,
-          root,
-        );
+        const { frontmatter, content: contentWithoutFrontMatter } =
+          loadFrontMatter(content, route.absolutePath, root);
 
         // 1. Replace rules for frontmatter & content
         applyReplaceRulesToNestedObject(frontmatter, replaceRules);
 
         const { flattenContent } = await flattenMdxContent(
-          applyReplaceRules(strippedFrontMatter, replaceRules),
+          applyReplaceRules(contentWithoutFrontMatter, replaceRules),
           route.absolutePath,
           alias,
         );
@@ -180,6 +178,7 @@ export async function extractPageData(
           toc,
           // for search index
           content,
+          _flattenContent: flattenContent,
           _html: html,
           frontmatter: {
             ...frontmatter,
