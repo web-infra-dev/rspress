@@ -54,7 +54,7 @@ function generateLlmsTxt(
   // handle others
   let hasOthers = false;
   const otherLines = [];
-  otherLines.push('\n## Others\n');
+  otherLines.push('\n## Other\n');
   for (const page of others) {
     const { routePath, lang, title, frontmatter } = page;
     if (routePath === '/' || routePath === `/${lang}/`) {
