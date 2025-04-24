@@ -26,7 +26,7 @@ export default defineConfig({
 });
 ```
 
-之后执行 `rspress build` 命令，在生成产物的同时，会在产物目录下根据导航栏生成 `llms.txt` `llms.full.txt` 和对应路由的 markdown 文件。
+之后执行 `rspress build` 命令，在生成产物的同时，会在产物目录下根据导航栏生成 `llms.txt` `llms-full.txt` 和对应路由的 markdown 文件。
 
 ## 选项
 
@@ -37,6 +37,7 @@ export interface Options {
   llmsTxt?: boolean | LlmsTxt;
   mdFiles?: boolean;
   llmsFullTxt?: boolean;
+  include?: (context: { page: PageIndexInfo }) => boolean;
   exclude?: (context: { page: PageIndexInfo }) => boolean;
 }
 ```
@@ -127,21 +128,42 @@ Rspress is a static site generator based on Rsbuild and it can generate llms.txt
 - 类型: `boolean`
 - 默认值: `true`
 
-是否生成 llms.full.txt 文件，当设置为 `false` 时，不会生成 `llms.full.txt` 文件。
+是否生成 llms-full.txt 文件，当设置为 `false` 时，不会生成 `llms-full.txt` 文件。
+
+### include
+
+- 类型: `(context: { page: PageIndexInfo }) => boolean`
+- 默认值: `(context) => context.page.lang === config.lang`
+
+是否生成时包含某些页面，默认只会包含默认语言对应的页面，一般用于精简 llms.txt。
+
+- 示例：
+
+只为语言为英文的页面生成 `llms.txt` 等相关文件：
+
+```ts
+pluginLlms({
+  include: ({ page }) => {
+    return page.lang === 'en';
+  },
+});
+```
 
 ### exclude
 
 - 类型: `(context: { page: PageIndexInfo }) => boolean`
 - 默认值: `undefined`
 
-是否生成时排除某些路由，一般用于精简 llms.txt。
+是否生成时排除某些页面，会在 `include` 之后执行。
 
 - 示例：
+
+排除 `/foo` 路由下的单个页面：
 
 ```ts
 pluginLlms({
   exclude: ({ page }) => {
-    return page.routePath.includes('foo');
+    return page.routePath === '/foo';
   },
 });
 ```

@@ -22,21 +22,29 @@ export interface Options {
    */
   mdFiles?: boolean;
   /**
-   * Whether to generate llms.full.txt.
+   * Whether to generate llms-full.txt.
    * @default true
    */
   llmsFullTxt?: boolean;
   /**
+   * Whether to include some routes from llms.txt.
+   * @param context
+   * @default (context) => context.page.lang === config.lang
+   */
+  include?: (context: { page: PageIndexInfo }) => boolean;
+  /**
    * Whether to exclude some routes from llms.txt.
+   * exclude will trigger after include
    * @default undefined
    */
   exclude?: (context: { page: PageIndexInfo }) => boolean;
 }
 
-export interface rsbuildPluginLlmsOptions extends Options {
+export interface rsbuildPluginLlmsOptions {
   docDirectoryRef: { current: string };
   titleRef: { current: string | undefined };
   descriptionRef: { current: string | undefined };
+  langRef: { current: string | undefined };
   baseRef: { current: string };
   pageDataList: PageIndexInfo[];
   routeServiceRef: { current: RouteService | undefined };

@@ -24,6 +24,7 @@ const rsbuildPluginLlms = ({
   routes,
   titleRef,
   descriptionRef,
+  langRef,
   sidebar,
   baseRef,
   docDirectoryRef,
@@ -37,6 +38,7 @@ const rsbuildPluginLlms = ({
       llmsTxt = true,
       mdFiles = true,
       llmsFullTxt = true,
+      include,
       exclude,
     } = rspressPluginOptions;
 
@@ -47,6 +49,8 @@ const rsbuildPluginLlms = ({
       const newPageDataList = mergeRouteMetaWithPageData(
         routes,
         pageDataList,
+        langRef.current,
+        include,
         exclude,
       );
 
@@ -175,7 +179,7 @@ const rsbuildPluginLlms = ({
           { targets: ['node'], stage: 'additional' },
           async ({ compilation, sources }) => {
             const source = new sources.RawSource(llmsFullTxtContent);
-            compilation.emitAsset('llms.full.txt', source);
+            compilation.emitAsset('llms-full.txt', source);
           },
         );
       }
@@ -186,13 +190,24 @@ const rsbuildPluginLlms = ({
 function mergeRouteMetaWithPageData(
   routeMetaList: RouteMeta[],
   pageDataList: PageIndexInfo[],
+  lang: string | undefined,
+  include: Options['include'],
   exclude: Options['exclude'],
 ): Map<string, PageIndexInfo> {
   const m = new Map<string, PageIndexInfo>(
     pageDataList
       .filter(pageData => {
+        if (include) {
+          return include({ page: pageData });
+        }
+        if (lang) {
+          return pageData.lang === lang;
+        }
+        return true;
+      })
+      .filter(pageData => {
         if (exclude) {
-          return !exclude?.({ page: pageData });
+          return !exclude({ page: pageData });
         }
         return true;
       })
@@ -272,6 +287,7 @@ export function pluginLlms(options: Options = {}): RspressPlugin {
   const docDirectoryRef: { current: string } = { current: '' };
   const titleRef: { current: string | undefined } = { current: '' };
   const descriptionRef: { current: string | undefined } = { current: '' };
+  const langRef: { current: string | undefined } = { current: '' };
   const pageDataList: PageIndexInfo[] = [];
   const routes: RouteMeta[] = [];
   const sidebar: Sidebar = {};
@@ -321,6 +337,7 @@ export function pluginLlms(options: Options = {}): RspressPlugin {
 
       titleRef.current = config.title;
       descriptionRef.current = config.description;
+      langRef.current = config.lang;
       baseRef.current = config.base ?? '/';
       docDirectoryRef.current = config.root ?? 'docs';
     },
@@ -332,6 +349,7 @@ export function pluginLlms(options: Options = {}): RspressPlugin {
           routes,
           titleRef,
           descriptionRef,
+          langRef,
           sidebar,
           docDirectoryRef,
           routeServiceRef,
