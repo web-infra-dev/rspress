@@ -13,5 +13,18 @@
     "text": "api",
     "link": "/api/",
     "activeMatch": "/api/"
+  },
+  {
+    "text": "版本",
+    "items": [
+      {
+        "text": "更新日志",
+        "link": "https://github.com/web-infra-dev/rspress/releases"
+      },
+      {
+        "text": "Rspress 2.x 文档",
+        "link": "http://v2.rspress.dev/zh/"
+      }
+    ]
   }
 ]
