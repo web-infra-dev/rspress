@@ -1,16 +1,16 @@
 [
   {
-    "text": "guide",
+    "text": "Guide",
     "link": "/guide/start/introduction",
     "activeMatch": "/guide/"
   },
   {
-    "text": "plugin",
+    "text": "Plugin",
     "link": "/plugin/system/introduction",
     "activeMatch": "/plugin/"
   },
   {
-    "text": "api",
+    "text": "API",
     "link": "/api/",
     "activeMatch": "/api/"
   }
