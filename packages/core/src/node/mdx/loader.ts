@@ -21,7 +21,6 @@ import { RuntimeModuleID } from '../runtimeModule/types';
 import {
   applyReplaceRules,
   escapeMarkdownHeadingIds,
-  flattenMdxContent,
   normalizePath,
 } from '../utils';
 import { createMDXOptions } from './options';
@@ -103,7 +102,6 @@ export default async function mdxLoader(
 
   const options = this.getOptions();
   const filepath = this.resourcePath;
-  const { alias } = this._compiler.options.resolve;
   const { config, docDirectory, checkDeadLinks, routeService, pluginDriver } =
     options;
 
@@ -115,21 +113,9 @@ export default async function mdxLoader(
     true,
   );
 
-  // Replace imported built-in MDX content
-  const { flattenContent, deps } = await flattenMdxContent(
-    content,
-    filepath,
-    alias as Record<string, string>,
-  );
-
-  deps.forEach(dep => this.addDependency(dep));
-
   // Resolve side effects caused by flattenMdxContent.
   // Perhaps this problem should be solved within flattenMdxContent?
-  const replacedContent = applyReplaceRules(
-    flattenContent,
-    config.replaceRules,
-  );
+  const replacedContent = applyReplaceRules(content, config.replaceRules);
 
   // Support custom id like `#hello world {#custom-id}`.
   // TODO > issue: `#hello world {#custom-id}` will also be replaced.
