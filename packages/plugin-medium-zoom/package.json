@@ -37,15 +37,15 @@
     "medium-zoom": "1.1.0"
   },
   "devDependencies": {
-    "@microsoft/api-extractor": "^7.52.4",
-    "@rslib/core": "0.6.5",
+    "@microsoft/api-extractor": "^7.52.5",
+    "@rslib/core": "0.6.7",
     "@rspress/config": "workspace:*",
     "@rspress/shared": "workspace:*",
     "@types/node": "^18.11.17",
     "@types/react": "^18.3.20",
     "@types/react-dom": "^18.3.6",
     "react": "^19.1.0",
-    "rsbuild-plugin-publint": "^0.3.0",
+    "rsbuild-plugin-publint": "^0.3.1",
     "typescript": "^5.8.2"
   },
   "peerDependencies": {
