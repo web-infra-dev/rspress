@@ -429,7 +429,7 @@ importers:
     dependencies:
       '@rsbuild/plugin-vue':
         specifier: ^1.0.7
-        version: 1.0.7(@rsbuild/core@1.3.9)(vue@3.5.13(typescript@5.8.2))
+        version: 1.0.7(@rsbuild/core@1.3.13)(vue@3.5.13(typescript@5.8.2))
       '@rspress/plugin-preview':
         specifier: workspace:*
         version: link:../../../packages/plugin-preview
@@ -674,8 +674,8 @@ importers:
   packages/cli:
     dependencies:
       '@rsbuild/core':
-        specifier: 1.3.9
-        version: 1.3.9
+        specifier: 1.3.13
+        version: 1.3.13
       '@rspress/core':
         specifier: workspace:*
         version: link:../core
@@ -693,11 +693,11 @@ importers:
         version: 1.1.1
     devDependencies:
       '@microsoft/api-extractor':
-        specifier: ^7.52.4
-        version: 7.52.4(@types/node@18.11.17)
+        specifier: ^7.52.5
+        version: 7.52.5(@types/node@18.11.17)
       '@rslib/core':
-        specifier: 0.6.5
-        version: 0.6.5(@microsoft/api-extractor@7.52.4(@types/node@18.11.17))(typescript@5.8.2)
+        specifier: 0.6.7
+        version: 0.6.7(@microsoft/api-extractor@7.52.5(@types/node@18.11.17))(typescript@5.8.2)
       '@types/jest':
         specifier: ~29.5.14
         version: 29.5.14
@@ -711,8 +711,8 @@ importers:
         specifier: ^6.0.1
         version: 6.0.1
       rsbuild-plugin-publint:
-        specifier: ^0.3.0
-        version: 0.3.0(@rsbuild/core@1.3.9)
+        specifier: ^0.3.1
+        version: 0.3.1(@rsbuild/core@1.3.13)
       typescript:
         specifier: ^5.8.2
         version: 5.8.2
@@ -729,11 +729,11 @@ importers:
         specifier: ^3.1.0
         version: 3.1.0(@types/react@18.3.20)(react@19.1.0)
       '@rsbuild/core':
-        specifier: 1.3.9
-        version: 1.3.9
+        specifier: 1.3.13
+        version: 1.3.13
       '@rsbuild/plugin-react':
         specifier: ~1.1.1
-        version: 1.1.1(@rsbuild/core@1.3.9)
+        version: 1.1.1(@rsbuild/core@1.3.13)
       '@rspress/mdx-rs':
         specifier: 0.6.6
         version: 0.6.6
@@ -826,11 +826,11 @@ importers:
         version: 3.0.0
     devDependencies:
       '@microsoft/api-extractor':
-        specifier: ^7.52.4
-        version: 7.52.4(@types/node@18.11.17)
+        specifier: ^7.52.5
+        version: 7.52.5(@types/node@18.11.17)
       '@rslib/core':
-        specifier: 0.6.5
-        version: 0.6.5(@microsoft/api-extractor@7.52.4(@types/node@18.11.17))(typescript@5.8.2)
+        specifier: 0.6.7
+        version: 0.6.7(@microsoft/api-extractor@7.52.5(@types/node@18.11.17))(typescript@5.8.2)
       '@rspress-dev/plugin-preview':
         specifier: link:../plugin-preview
         version: link:../plugin-preview
@@ -886,11 +886,11 @@ importers:
         specifier: ^6.0.1
         version: 6.0.1
       rsbuild-plugin-publint:
-        specifier: ^0.3.0
-        version: 0.3.0(@rsbuild/core@1.3.9)
+        specifier: ^0.3.1
+        version: 0.3.1(@rsbuild/core@1.3.13)
       rsbuild-plugin-virtual-module:
         specifier: 0.1.1
-        version: 0.1.1(@rsbuild/core@1.3.9)
+        version: 0.1.1(@rsbuild/core@1.3.13)
       tailwindcss:
         specifier: ^3.4.17
         version: 3.4.17(ts-node@10.9.2(@types/node@18.11.17)(typescript@5.8.2))
@@ -908,17 +908,17 @@ importers:
         version: 1.3.1
     devDependencies:
       '@microsoft/api-extractor':
-        specifier: ^7.52.4
-        version: 7.52.4(@types/node@18.11.17)
+        specifier: ^7.52.5
+        version: 7.52.5(@types/node@18.11.17)
       '@rslib/core':
-        specifier: 0.6.5
-        version: 0.6.5(@microsoft/api-extractor@7.52.4(@types/node@18.11.17))(typescript@5.8.2)
+        specifier: 0.6.7
+        version: 0.6.7(@microsoft/api-extractor@7.52.5(@types/node@18.11.17))(typescript@5.8.2)
       '@types/node':
         specifier: ^18.11.17
         version: 18.11.17
       rsbuild-plugin-publint:
-        specifier: ^0.3.0
-        version: 0.3.0(@rsbuild/core@1.3.9)
+        specifier: ^0.3.1
+        version: 0.3.1(@rsbuild/core@1.3.13)
       typescript:
         specifier: ^5.8.2
         version: 5.8.2
@@ -927,7 +927,7 @@ importers:
     devDependencies:
       '@rsbuild/plugin-sass':
         specifier: ~1.3.1
-        version: 1.3.1(@rsbuild/core@1.3.9)
+        version: 1.3.1(@rsbuild/core@1.3.13)
       '@rspress/plugin-algolia':
         specifier: workspace:*
         version: link:../plugin-algolia
@@ -951,10 +951,10 @@ importers:
         version: 12.0.6(react-dom@19.1.0(react@19.1.0))(react@19.1.0)
       rsbuild-plugin-google-analytics:
         specifier: ^1.0.3
-        version: 1.0.3(@rsbuild/core@1.3.9)
+        version: 1.0.3(@rsbuild/core@1.3.13)
       rsbuild-plugin-open-graph:
         specifier: ^1.0.2
-        version: 1.0.2(@rsbuild/core@1.3.9)
+        version: 1.0.2(@rsbuild/core@1.3.13)
       rspress:
         specifier: workspace:*
         version: link:../cli
@@ -981,14 +981,14 @@ importers:
         version: link:../runtime
     devDependencies:
       '@microsoft/api-extractor':
-        specifier: ^7.52.4
-        version: 7.52.4(@types/node@18.11.17)
+        specifier: ^7.52.5
+        version: 7.52.5(@types/node@18.11.17)
       '@rsbuild/plugin-react':
         specifier: ~1.1.1
-        version: 1.1.1(@rsbuild/core@1.3.9)
+        version: 1.1.1(@rsbuild/core@1.3.13)
       '@rslib/core':
-        specifier: 0.6.5
-        version: 0.6.5(@microsoft/api-extractor@7.52.4(@types/node@18.11.17))(typescript@5.8.2)
+        specifier: 0.6.7
+        version: 0.6.7(@microsoft/api-extractor@7.52.5(@types/node@18.11.17))(typescript@5.8.2)
       '@rspress/config':
         specifier: workspace:*
         version: link:../../scripts/config
@@ -1008,8 +1008,8 @@ importers:
         specifier: ^19.1.0
         version: 19.1.0
       rsbuild-plugin-publint:
-        specifier: ^0.3.0
-        version: 0.3.0(@rsbuild/core@1.3.9)
+        specifier: ^0.3.1
+        version: 0.3.1(@rsbuild/core@1.3.13)
       typescript:
         specifier: ^5.8.2
         version: 5.8.2
@@ -1042,11 +1042,11 @@ importers:
         version: 11.0.5
     devDependencies:
       '@microsoft/api-extractor':
-        specifier: ^7.52.4
-        version: 7.52.4(@types/node@18.11.17)
+        specifier: ^7.52.5
+        version: 7.52.5(@types/node@18.11.17)
       '@rslib/core':
-        specifier: 0.6.5
-        version: 0.6.5(@microsoft/api-extractor@7.52.4(@types/node@18.11.17))(typescript@5.8.2)
+        specifier: 0.6.7
+        version: 0.6.7(@microsoft/api-extractor@7.52.5(@types/node@18.11.17))(typescript@5.8.2)
       '@types/mdast':
         specifier: ^4.0.4
         version: 4.0.4
@@ -1069,8 +1069,8 @@ importers:
         specifier: ^6.29.0
         version: 6.29.0(react-dom@19.1.0(react@19.1.0))(react@19.1.0)
       rsbuild-plugin-publint:
-        specifier: ^0.3.0
-        version: 0.3.0(@rsbuild/core@1.3.9)
+        specifier: ^0.3.1
+        version: 0.3.1(@rsbuild/core@1.3.13)
       typescript:
         specifier: ^5.8.2
         version: 5.8.2
@@ -1082,11 +1082,11 @@ importers:
         version: link:../shared
     devDependencies:
       '@microsoft/api-extractor':
-        specifier: ^7.52.4
-        version: 7.52.4(@types/node@18.11.17)
+        specifier: ^7.52.5
+        version: 7.52.5(@types/node@18.11.17)
       '@rslib/core':
-        specifier: 0.6.5
-        version: 0.6.5(@microsoft/api-extractor@7.52.4(@types/node@18.11.17))(typescript@5.8.2)
+        specifier: 0.6.7
+        version: 0.6.7(@microsoft/api-extractor@7.52.5(@types/node@18.11.17))(typescript@5.8.2)
       '@rspress/config':
         specifier: workspace:*
         version: link:../../scripts/config
@@ -1103,8 +1103,8 @@ importers:
         specifier: ^19.1.0
         version: 19.1.0
       rsbuild-plugin-publint:
-        specifier: ^0.3.0
-        version: 0.3.0(@rsbuild/core@1.3.9)
+        specifier: ^0.3.1
+        version: 0.3.1(@rsbuild/core@1.3.13)
       typescript:
         specifier: ^5.8.2
         version: 5.8.2
@@ -1119,11 +1119,11 @@ importers:
         version: link:../shared
     devDependencies:
       '@microsoft/api-extractor':
-        specifier: ^7.52.4
-        version: 7.52.4(@types/node@18.11.17)
+        specifier: ^7.52.5
+        version: 7.52.5(@types/node@18.11.17)
       '@rslib/core':
-        specifier: 0.6.5
-        version: 0.6.5(@microsoft/api-extractor@7.52.4(@types/node@18.11.17))(typescript@5.8.2)
+        specifier: 0.6.7
+        version: 0.6.7(@microsoft/api-extractor@7.52.5(@types/node@18.11.17))(typescript@5.8.2)
       '@rspress/config':
         specifier: workspace:*
         version: link:../../scripts/config
@@ -1140,8 +1140,8 @@ importers:
         specifier: ^19.1.0
         version: 19.1.0
       rsbuild-plugin-publint:
-        specifier: ^0.3.0
-        version: 0.3.0(@rsbuild/core@1.3.9)
+        specifier: ^0.3.1
+        version: 0.3.1(@rsbuild/core@1.3.13)
       typescript:
         specifier: ^5.8.2
         version: 5.8.2
@@ -1153,11 +1153,11 @@ importers:
         version: link:../shared
     devDependencies:
       '@microsoft/api-extractor':
-        specifier: ^7.52.4
-        version: 7.52.4(@types/node@22.10.2)
+        specifier: ^7.52.5
+        version: 7.52.5(@types/node@22.10.2)
       '@rslib/core':
-        specifier: 0.6.5
-        version: 0.6.5(@microsoft/api-extractor@7.52.4(@types/node@22.10.2))(typescript@5.8.2)
+        specifier: 0.6.7
+        version: 0.6.7(@microsoft/api-extractor@7.52.5(@types/node@22.10.2))(typescript@5.8.2)
       '@types/mdast':
         specifier: ^4.0.4
         version: 4.0.4
@@ -1183,8 +1183,8 @@ importers:
         specifier: ^11.1.2
         version: 11.1.2
       rsbuild-plugin-publint:
-        specifier: ^0.3.0
-        version: 0.3.0(@rsbuild/core@1.3.9)
+        specifier: ^0.3.1
+        version: 0.3.1(@rsbuild/core@1.3.13)
       unified:
         specifier: ^11.0.5
         version: 11.0.5
@@ -1196,11 +1196,11 @@ importers:
         version: link:../shared
     devDependencies:
       '@microsoft/api-extractor':
-        specifier: ^7.52.4
-        version: 7.52.4(@types/node@18.11.17)
+        specifier: ^7.52.5
+        version: 7.52.5(@types/node@18.11.17)
       '@rslib/core':
-        specifier: 0.6.5
-        version: 0.6.5(@microsoft/api-extractor@7.52.4(@types/node@18.11.17))(typescript@5.8.2)
+        specifier: 0.6.7
+        version: 0.6.7(@microsoft/api-extractor@7.52.5(@types/node@18.11.17))(typescript@5.8.2)
       '@rspress/config':
         specifier: workspace:*
         version: link:../../scripts/config
@@ -1220,8 +1220,8 @@ importers:
         specifier: ^19.1.0
         version: 19.1.0
       rsbuild-plugin-publint:
-        specifier: ^0.3.0
-        version: 0.3.0(@rsbuild/core@1.3.9)
+        specifier: ^0.3.1
+        version: 0.3.1(@rsbuild/core@1.3.13)
       typescript:
         specifier: ^5.8.2
         version: 5.8.2
@@ -1245,14 +1245,14 @@ importers:
         version: 3.0.0
     devDependencies:
       '@microsoft/api-extractor':
-        specifier: ^7.52.4
-        version: 7.52.4(@types/node@18.11.17)
+        specifier: ^7.52.5
+        version: 7.52.5(@types/node@18.11.17)
       '@rsbuild/core':
-        specifier: 1.3.0
-        version: 1.3.0
+        specifier: 1.3.13
+        version: 1.3.13
       '@rslib/core':
-        specifier: 0.6.5
-        version: 0.6.5(@microsoft/api-extractor@7.52.4(@types/node@18.11.17))(typescript@5.8.2)
+        specifier: 0.6.7
+        version: 0.6.7(@microsoft/api-extractor@7.52.5(@types/node@18.11.17))(typescript@5.8.2)
       '@rspress/config':
         specifier: workspace:*
         version: link:../../scripts/config
@@ -1291,11 +1291,11 @@ importers:
         version: 1.1.0
     devDependencies:
       '@microsoft/api-extractor':
-        specifier: ^7.52.4
-        version: 7.52.4(@types/node@18.11.17)
+        specifier: ^7.52.5
+        version: 7.52.5(@types/node@18.11.17)
       '@rslib/core':
-        specifier: 0.6.5
-        version: 0.6.5(@microsoft/api-extractor@7.52.4(@types/node@18.11.17))(typescript@5.8.2)
+        specifier: 0.6.7
+        version: 0.6.7(@microsoft/api-extractor@7.52.5(@types/node@18.11.17))(typescript@5.8.2)
       '@rspress/config':
         specifier: workspace:*
         version: link:../../scripts/config
@@ -1315,8 +1315,8 @@ importers:
         specifier: ^19.1.0
         version: 19.1.0
       rsbuild-plugin-publint:
-        specifier: ^0.3.0
-        version: 0.3.0(@rsbuild/core@1.3.9)
+        specifier: ^0.3.1
+        version: 0.3.1(@rsbuild/core@1.3.13)
       typescript:
         specifier: ^5.8.2
         version: 5.8.2
@@ -1353,10 +1353,10 @@ importers:
         version: 7.27.0
       '@rsbuild/plugin-react':
         specifier: ~1.1.1
-        version: 1.1.1(@rsbuild/core@1.3.9)
+        version: 1.1.1(@rsbuild/core@1.3.13)
       '@rslib/core':
-        specifier: 0.6.5
-        version: 0.6.5(@microsoft/api-extractor@7.52.4(@types/node@18.11.17))(typescript@5.8.2)
+        specifier: 0.6.7
+        version: 0.6.7(@microsoft/api-extractor@7.52.5(@types/node@18.11.17))(typescript@5.8.2)
       '@rspress/plugin-playground':
         specifier: workspace:*
         version: 'link:'
@@ -1394,8 +1394,8 @@ importers:
         specifier: ^6.29.0
         version: 6.29.0(react-dom@19.1.0(react@19.1.0))(react@19.1.0)
       rsbuild-plugin-publint:
-        specifier: ^0.3.0
-        version: 0.3.0(@rsbuild/core@1.3.9)
+        specifier: ^0.3.1
+        version: 0.3.1(@rsbuild/core@1.3.13)
       typescript:
         specifier: ^5.8.2
         version: 5.8.2
@@ -1406,23 +1406,23 @@ importers:
   packages/plugin-preview:
     dependencies:
       '@rsbuild/core':
-        specifier: 1.3.9
-        version: 1.3.9
+        specifier: 1.3.13
+        version: 1.3.13
       '@rsbuild/plugin-babel':
         specifier: ~1.0.5
-        version: 1.0.5(@rsbuild/core@1.3.9)
+        version: 1.0.5(@rsbuild/core@1.3.13)
       '@rsbuild/plugin-less':
         specifier: ~1.2.2
-        version: 1.2.2(@rsbuild/core@1.3.9)
+        version: 1.2.2(@rsbuild/core@1.3.13)
       '@rsbuild/plugin-react':
         specifier: ~1.1.1
-        version: 1.1.1(@rsbuild/core@1.3.9)
+        version: 1.1.1(@rsbuild/core@1.3.13)
       '@rsbuild/plugin-sass':
         specifier: ~1.3.1
-        version: 1.3.1(@rsbuild/core@1.3.9)
+        version: 1.3.1(@rsbuild/core@1.3.13)
       '@rsbuild/plugin-solid':
         specifier: ~1.0.5
-        version: 1.0.5(@babel/core@7.26.9)(@rsbuild/core@1.3.9)(solid-js@1.9.5)
+        version: 1.0.5(@babel/core@7.26.9)(@rsbuild/core@1.3.13)(solid-js@1.9.5)
       '@rspress/core':
         specifier: workspace:^2.0.0-beta.2
         version: link:../core
@@ -1440,8 +1440,8 @@ importers:
         version: 4.2.0(react@19.1.0)
     devDependencies:
       '@rslib/core':
-        specifier: 0.6.5
-        version: 0.6.5(@microsoft/api-extractor@7.52.4(@types/node@18.11.17))(typescript@5.8.2)
+        specifier: 0.6.7
+        version: 0.6.7(@microsoft/api-extractor@7.52.5(@types/node@18.11.17))(typescript@5.8.2)
       '@types/lodash':
         specifier: ^4.17.16
         version: 4.17.16
@@ -1473,8 +1473,8 @@ importers:
         specifier: ^6.29.0
         version: 6.29.0(react-dom@19.1.0(react@19.1.0))(react@19.1.0)
       rsbuild-plugin-publint:
-        specifier: ^0.3.0
-        version: 0.3.0(@rsbuild/core@1.3.9)
+        specifier: ^0.3.1
+        version: 0.3.1(@rsbuild/core@1.3.13)
       typescript:
         specifier: ^5.8.2
         version: 5.8.2
@@ -1498,8 +1498,8 @@ importers:
         version: link:../cli
     devDependencies:
       '@rslib/core':
-        specifier: 0.6.5
-        version: 0.6.5(@microsoft/api-extractor@7.52.4(@types/node@18.11.17))(typescript@5.8.2)
+        specifier: 0.6.7
+        version: 0.6.7(@microsoft/api-extractor@7.52.5(@types/node@18.11.17))(typescript@5.8.2)
       '@rspress/runtime':
         specifier: workspace:*
         version: link:../runtime
@@ -1513,8 +1513,8 @@ importers:
         specifier: ^19.1.0
         version: 19.1.0
       rsbuild-plugin-publint:
-        specifier: ^0.3.0
-        version: 0.3.0(@rsbuild/core@1.3.9)
+        specifier: ^0.3.1
+        version: 0.3.1(@rsbuild/core@1.3.13)
       typescript:
         specifier: ^5.8.2
         version: 5.8.2
@@ -1535,14 +1535,14 @@ importers:
         version: 3.2.2
     devDependencies:
       '@microsoft/api-extractor':
-        specifier: ^7.52.4
-        version: 7.52.4(@types/node@18.11.17)
+        specifier: ^7.52.5
+        version: 7.52.5(@types/node@18.11.17)
       '@rsbuild/plugin-sass':
         specifier: ~1.3.1
-        version: 1.3.1(@rsbuild/core@1.3.9)
+        version: 1.3.1(@rsbuild/core@1.3.13)
       '@rslib/core':
-        specifier: 0.6.5
-        version: 0.6.5(@microsoft/api-extractor@7.52.4(@types/node@18.11.17))(typescript@5.8.2)
+        specifier: 0.6.7
+        version: 0.6.7(@microsoft/api-extractor@7.52.5(@types/node@18.11.17))(typescript@5.8.2)
       '@rspress/config':
         specifier: workspace:*
         version: link:../../scripts/config
@@ -1562,8 +1562,8 @@ importers:
         specifier: ^19.1.0
         version: 19.1.0
       rsbuild-plugin-publint:
-        specifier: ^0.3.0
-        version: 0.3.0(@rsbuild/core@1.3.9)
+        specifier: ^0.3.1
+        version: 0.3.1(@rsbuild/core@1.3.13)
       typescript:
         specifier: ^5.8.2
         version: 5.8.2
@@ -1584,11 +1584,11 @@ importers:
         version: 3.17.1(typedoc@0.24.8(typescript@5.8.2))
     devDependencies:
       '@microsoft/api-extractor':
-        specifier: ^7.52.4
-        version: 7.52.4(@types/node@18.11.17)
+        specifier: ^7.52.5
+        version: 7.52.5(@types/node@18.11.17)
       '@rslib/core':
-        specifier: 0.6.5
-        version: 0.6.5(@microsoft/api-extractor@7.52.4(@types/node@18.11.17))(typescript@5.8.2)
+        specifier: 0.6.7
+        version: 0.6.7(@microsoft/api-extractor@7.52.5(@types/node@18.11.17))(typescript@5.8.2)
       '@rspress/config':
         specifier: workspace:*
         version: link:../../scripts/config
@@ -1605,8 +1605,8 @@ importers:
         specifier: ^19.1.0
         version: 19.1.0
       rsbuild-plugin-publint:
-        specifier: ^0.3.0
-        version: 0.3.0(@rsbuild/core@1.3.9)
+        specifier: ^0.3.1
+        version: 0.3.1(@rsbuild/core@1.3.13)
       typescript:
         specifier: ^5.8.2
         version: 5.8.2
@@ -1631,10 +1631,10 @@ importers:
     devDependencies:
       '@rsbuild/plugin-react':
         specifier: ~1.1.1
-        version: 1.1.1(@rsbuild/core@1.3.9)
+        version: 1.1.1(@rsbuild/core@1.3.13)
       '@rslib/core':
-        specifier: 0.6.5
-        version: 0.6.5(@microsoft/api-extractor@7.52.4(@types/node@22.10.2))(typescript@5.8.2)
+        specifier: 0.6.7
+        version: 0.6.7(@microsoft/api-extractor@7.52.5(@types/node@22.10.2))(typescript@5.8.2)
       '@rspress/config':
         specifier: workspace:*
         version: link:../../scripts/config
@@ -1648,8 +1648,8 @@ importers:
         specifier: ^18.3.6
         version: 18.3.6(@types/react@18.3.20)
       rsbuild-plugin-publint:
-        specifier: ^0.3.0
-        version: 0.3.0(@rsbuild/core@1.3.9)
+        specifier: ^0.3.1
+        version: 0.3.1(@rsbuild/core@1.3.13)
       typescript:
         specifier: ^5.8.2
         version: 5.8.2
@@ -1657,8 +1657,8 @@ importers:
   packages/shared:
     dependencies:
       '@rsbuild/core':
-        specifier: 1.3.9
-        version: 1.3.9
+        specifier: 1.3.13
+        version: 1.3.13
       gray-matter:
         specifier: 4.0.3
         version: 4.0.3
@@ -1670,8 +1670,8 @@ importers:
         version: 11.0.5
     devDependencies:
       '@rslib/core':
-        specifier: 0.6.5
-        version: 0.6.5(@microsoft/api-extractor@7.52.4(@types/node@18.11.17))(typescript@5.8.2)
+        specifier: 0.6.7
+        version: 0.6.7(@microsoft/api-extractor@7.52.5(@types/node@18.11.17))(typescript@5.8.2)
       '@types/jest':
         specifier: ~29.5.14
         version: 29.5.14
@@ -1694,8 +1694,8 @@ importers:
         specifier: ^6.0.1
         version: 6.0.1
       rsbuild-plugin-publint:
-        specifier: ^0.3.0
-        version: 0.3.0(@rsbuild/core@1.3.9)
+        specifier: ^0.3.1
+        version: 0.3.1(@rsbuild/core@1.3.13)
       typescript:
         specifier: ^5.8.2
         version: 5.8.2
@@ -1746,23 +1746,23 @@ importers:
         version: 15.6.1(react@19.1.0)
     devDependencies:
       '@microsoft/api-extractor':
-        specifier: ^7.52.4
-        version: 7.52.4(@types/node@22.10.2)
+        specifier: ^7.52.5
+        version: 7.52.5(@types/node@22.10.2)
       '@rsbuild/plugin-react':
         specifier: ~1.1.1
-        version: 1.1.1(@rsbuild/core@1.3.9)
+        version: 1.1.1(@rsbuild/core@1.3.13)
       '@rsbuild/plugin-sass':
         specifier: ~1.3.1
-        version: 1.3.1(@rsbuild/core@1.3.9)
+        version: 1.3.1(@rsbuild/core@1.3.13)
       '@rsbuild/plugin-svgr':
         specifier: ^1.0.7
-        version: 1.0.7(@rsbuild/core@1.3.9)(typescript@5.8.2)
+        version: 1.0.7(@rsbuild/core@1.3.13)(typescript@5.8.2)
       '@rsbuild/plugin-typed-css-modules':
         specifier: ~1.0.2
-        version: 1.0.2(@rsbuild/core@1.3.9)
+        version: 1.0.2(@rsbuild/core@1.3.13)
       '@rslib/core':
-        specifier: 0.6.5
-        version: 0.6.5(@microsoft/api-extractor@7.52.4(@types/node@22.10.2))(typescript@5.8.2)
+        specifier: 0.6.7
+        version: 0.6.7(@microsoft/api-extractor@7.52.5(@types/node@22.10.2))(typescript@5.8.2)
       '@types/body-scroll-lock':
         specifier: ^3.1.2
         version: 3.1.2
@@ -1794,8 +1794,8 @@ importers:
         specifier: 4.0.3
         version: 4.0.3
       rsbuild-plugin-publint:
-        specifier: ^0.3.0
-        version: 0.3.0(@rsbuild/core@1.3.9)
+        specifier: ^0.3.1
+        version: 0.3.1(@rsbuild/core@1.3.13)
       tailwindcss:
         specifier: ^3.4.17
         version: 3.4.17(ts-node@10.9.2(@types/node@22.10.2)(typescript@5.8.2))
@@ -2760,8 +2760,8 @@ packages:
   '@microsoft/api-extractor-model@7.30.5':
     resolution: {integrity: sha512-0ic4rcbcDZHz833RaTZWTGu+NpNgrxVNjVaor0ZDUymfDFzjA/Uuk8hYziIUIOEOSTfmIQqyzVwlzxZxPe7tOA==}
 
-  '@microsoft/api-extractor@7.52.4':
-    resolution: {integrity: sha512-mIEcqgx877CFwNrTuCdPnlIGak8FjlayZb8sSBwWXX+i4gxkZRpMsb5BQcFW3v1puuJB3jYMqQ08kyAc4Vldhw==}
+  '@microsoft/api-extractor@7.52.5':
+    resolution: {integrity: sha512-6WWgjjg6FkoDWpF/O3sjB05OkszpI5wtKJqd8fUIR/JJUv8IqNCGr1lJUZJnc1HegcT9gAvyf98KfH0wFncU0w==}
     hasBin: true
 
   '@microsoft/tsdoc-config@0.17.1':
@@ -2770,41 +2770,41 @@ packages:
   '@microsoft/tsdoc@0.15.1':
     resolution: {integrity: sha512-4aErSrCR/On/e5G2hDP0wjooqDdauzEbIq8hIkIe5pXV0rtWJZvdCEKL0ykZxex+IxIwBp0eGeV48hQN07dXtw==}
 
-  '@module-federation/error-codes@0.11.1':
-    resolution: {integrity: sha512-N1cs1qwrO8cU/OzfnBbr+3FaVbrJk6QEAsQ8H+YxGRrh/kHsR2BKpZCX79jTG27oDbz45FLjQ98YucMMXC24EA==}
-
   '@module-federation/error-codes@0.11.2':
     resolution: {integrity: sha512-ik1Qnn0I+WyEdprTck9WGlH41vGsVdUg8cfO+ZM02qOb2cZm5Vu3SlxGAobj6g7uAj0g8yINnd7h7Dci40BxQA==}
 
-  '@module-federation/runtime-core@0.11.1':
-    resolution: {integrity: sha512-6KxLfkCl05Ey69Xg/dsjf7fPit9qGXZ0lpwaG2agiCqC3JCDxYjT7tgGvnWhTXCcztb/ThpT+bHrRD4Kw8SMhA==}
+  '@module-federation/error-codes@0.13.0':
+    resolution: {integrity: sha512-4soAMLr7qcVWuvCsyRmBbiBfuhxmnDeyl+qzjMx8VurQgL+XQDQJapM9RXngNGT4g8FoCq9o7rM5YWNgFFNUiw==}
 
   '@module-federation/runtime-core@0.11.2':
     resolution: {integrity: sha512-dia5kKybi6MFU0s5PgglJwN27k7n9Sf69Cy5xZ4BWaP0qlaXTsxHKO0PECHNt2Pt8jDdyU29sQ4DwAQfxpnXJQ==}
 
-  '@module-federation/runtime-tools@0.11.1':
-    resolution: {integrity: sha512-8UqMbHJSdkEvKlnlXpR/OjMA77bUbhtmv0I4UO+PA1zBga4y3/St6NOjD66NTINKeWEgsCt1aepXHspduXp33w==}
+  '@module-federation/runtime-core@0.13.0':
+    resolution: {integrity: sha512-Oj/1p0mfxZ+8EbU7ND4gMvRmikFpIvPCbblOgat9N8ZIVAKYpTimCgMhzg4yRqAwzlGCVwnnW7XZ8UlA+Zqrvg==}
 
   '@module-federation/runtime-tools@0.11.2':
     resolution: {integrity: sha512-4MJTGAxVq6vxQRkTtTlH7Mm9AVqgn0X9kdu+7RsL7T/qU+jeYsbrntN2CWG3GVVA8r5JddXyTI1iJ0VXQZLV1w==}
 
-  '@module-federation/runtime@0.11.1':
-    resolution: {integrity: sha512-yxxa/TRXaNggb34N+oL82J7r9+GZ3gYTCDyGibYqtsC5j7+9oB4tmc0UyhjrGMhg+fF8TAWFZjNKo7ZnyN9LcQ==}
+  '@module-federation/runtime-tools@0.13.0':
+    resolution: {integrity: sha512-6ECWX18yGrQKcmkrQoNPd5VEpxZP1SMaB/Bp55xlpEhsrpn4zHnriQluxDw6xldjSOLl1qbokfxwCwjS2OaEbg==}
 
   '@module-federation/runtime@0.11.2':
     resolution: {integrity: sha512-Ya9u/L6z2LvhgpqxuKCB7LcigIIRf1BbaxAZIH7mzbq/A7rZtTP7v+73E433jvgiAlbAfPSZkeoYGele6hfRwA==}
 
-  '@module-federation/sdk@0.11.1':
-    resolution: {integrity: sha512-QS6zevdQYLCGF6NFf0LysMGARh+dZxMeoRKKDUW5PYi3XOk+tjJ7QsDKybfcBZBNgBJfIuwxh4Oei6WOFJEfRg==}
+  '@module-federation/runtime@0.13.0':
+    resolution: {integrity: sha512-Ne/3AEVWz6LL6G/i41O5MC6YYlg0SatNNqG/0XbuMAfyGM+llRmB6VKt0o2+JR4isxWuPNp97TbUkkfORit6Eg==}
 
   '@module-federation/sdk@0.11.2':
     resolution: {integrity: sha512-SBFe5xOamluT900J4AGBx+2/kCH/JbfqXoUwPSAC6PRzb8Y7LB0posnOGzmqYsLZXT37vp3d6AmJDsVoajDqxw==}
 
-  '@module-federation/webpack-bundler-runtime@0.11.1':
-    resolution: {integrity: sha512-XlVegGyCBBLId8Jr6USjPOFYViQ0CCtoYjHpC8y1FOGtuXLGrvnEdFcl4XHlFlp3MY3Rxhr8QigrdZhYe5bRWg==}
+  '@module-federation/sdk@0.13.0':
+    resolution: {integrity: sha512-JdMZaPD+EQvMJYS+/8/8QjaAHQ3qljogvioXBsAuedcStu/msn5e1Fswc0G34kXY9ixs2hUPZU2cAllfSKWIBQ==}
 
   '@module-federation/webpack-bundler-runtime@0.11.2':
     resolution: {integrity: sha512-WdwIE6QF+MKs/PdVu0cKPETF743JB9PZ62/qf7Uo3gU4fjsUMc37RnbJZ/qB60EaHHfjwp1v6NnhZw1r4eVsnw==}
+
+  '@module-federation/webpack-bundler-runtime@0.13.0':
+    resolution: {integrity: sha512-ycgAsFeCTo+3GR8JxkhCyg2UZm6Au98ISdLTdVXYphO4UDcO/KjqyJen1LXEslkpCEohDj68Prei2fUHRruK6g==}
 
   '@monaco-editor/loader@1.5.0':
     resolution: {integrity: sha512-hKoGSM+7aAc7eRTRjpqAZucPmoNOC4UUbknb/VNoTkEIkCPhqV8LfbsgM1webRM7S/z21eHEx9Fkwx8Z/C/+Xw==}
@@ -3025,13 +3025,8 @@ packages:
     cpu: [x64]
     os: [win32]
 
-  '@rsbuild/core@1.3.0':
-    resolution: {integrity: sha512-+b+qJ0lOHji6JYSsmtiz/u/KasaD5AmGHahtgWDhNQ4dqCl2lqyn9hta2FeK7ic0Gb3RDItMpOpHreC4+WJ8xA==}
-    engines: {node: '>=16.7.0'}
-    hasBin: true
-
-  '@rsbuild/core@1.3.8':
-    resolution: {integrity: sha512-J3WfY7XH5RRswfXFFUYizhrsEe/ueufALBSYfNyXpDnzTWgO/NGcjtB7iRgOsXs5z1WLRBMukiFUdDFf0iTcMQ==}
+  '@rsbuild/core@1.3.13':
+    resolution: {integrity: sha512-FIRV1ncOYYLCEGJDL8ZPKyH4J15lJS54KfeGf3Eacy5zUhT+dAkI2+0ZWH/s9NlaXA/vlRq6SJF9Z2Y96dO13Q==}
     engines: {node: '>=16.10.0'}
     hasBin: true
 
@@ -3088,8 +3083,8 @@ packages:
     peerDependencies:
       '@rsbuild/core': 1.x
 
-  '@rslib/core@0.6.5':
-    resolution: {integrity: sha512-hsNgKlm/a7wxVXC+POMNP9bwCbCtO0ujKJXdi6oBNiDMmiAfgZs2Zz5+bHfirZiPCsX7IcNG+BgY7IpyTYHegA==}
+  '@rslib/core@0.6.7':
+    resolution: {integrity: sha512-ti/vE9IVyWXo1QuwtFgK3Enl7mBNKEAUtBJkGZljQgOaJkXWTM0DeHWhpxk2sK4KP9XgaI+7fYsNR/OCcwqqHg==}
     engines: {node: '>=16.7.0'}
     hasBin: true
     peerDependencies:
@@ -3101,19 +3096,14 @@ packages:
       typescript:
         optional: true
 
-  '@rspack/binding-darwin-arm64@1.3.0':
-    resolution: {integrity: sha512-AexGJ+PBTIURvXzMG/aQILTCB+D5HocmwWLw5jNq1DFVpgb7GX+3ZW3s2MBa8K+3JNeNgRiGcHyYcSV0l1dIfQ==}
-    cpu: [arm64]
-    os: [darwin]
-
   '@rspack/binding-darwin-arm64@1.3.5':
     resolution: {integrity: sha512-bhqi9nZ0jrlQc/YgTklzD02y0E8Emdrov6HLcxt/Dzwq5SZryl4Ik8yc/8E1M0PWNkr09+TO8i1Zc51z0Gfu2g==}
     cpu: [arm64]
     os: [darwin]
 
-  '@rspack/binding-darwin-x64@1.3.0':
-    resolution: {integrity: sha512-LPzsI2VVwhn9Y88BOE4a0lICH4Jp3zLpNzJjDwMeDANJJ6MLmGbEBAxxRxo0adPG2sWhW7/RKU+ISVhu09aZtw==}
-    cpu: [x64]
+  '@rspack/binding-darwin-arm64@1.3.7':
+    resolution: {integrity: sha512-/5k4H0M7vvu7uorhc0OQKdQ7ybcjcJA//ptfYB646Ca/XY8FI1T/H88prPNrLNu97FGqUT4QWo5AHj01XymfDw==}
+    cpu: [arm64]
     os: [darwin]
 
   '@rspack/binding-darwin-x64@1.3.5':
@@ -3121,18 +3111,18 @@ packages:
     cpu: [x64]
     os: [darwin]
 
-  '@rspack/binding-linux-arm64-gnu@1.3.0':
-    resolution: {integrity: sha512-acj5ikpIvkjy1sEV818RL+tK+EYvj1/g0jBqfttuCdczMMDzb1ciGEOHIuqONCMNdoCpieYnGt65rRwSS7NVHQ==}
-    cpu: [arm64]
-    os: [linux]
+  '@rspack/binding-darwin-x64@1.3.7':
+    resolution: {integrity: sha512-/eNcZFDHxo5RVmIxgVM5zxCXmufeWpvviWJMDjhycS175nJb6103YWpu6H0lHgbj0GnHM/Q2VjVRFNhaGbXqdA==}
+    cpu: [x64]
+    os: [darwin]
 
   '@rspack/binding-linux-arm64-gnu@1.3.5':
     resolution: {integrity: sha512-oEfPjYx3RVsMeHG/kI9k96nLJUQhYfQS9HUKS37Ko3RWC84qTuzMAAdWIXE9ys8GHwpks7pL953AfYNK5PLhPw==}
     cpu: [arm64]
     os: [linux]
 
-  '@rspack/binding-linux-arm64-musl@1.3.0':
-    resolution: {integrity: sha512-8BVoZTmxreQXSoSfUObydaVjVxYUReTZMpdmLTaewBs2KaoZEC8RvddLbEupiLie23Wwz02WDAiSUG1+zuCi5Q==}
+  '@rspack/binding-linux-arm64-gnu@1.3.7':
+    resolution: {integrity: sha512-bSxA4MgGOdSvf/nTqNMuLeeyWS4Okh1iPskGuyAv/Sdf7cGbflUyZe6+w7A9BZEFR0CVTfj3f8kt73N+lu72Kg==}
     cpu: [arm64]
     os: [linux]
 
@@ -3141,9 +3131,9 @@ packages:
     cpu: [arm64]
     os: [linux]
 
-  '@rspack/binding-linux-x64-gnu@1.3.0':
-    resolution: {integrity: sha512-8QC553EczUmeVtr5Dqc+TocStYoKHbT6CFRb52sqaLOhka6r/zgchvKYmji+51gohfD5f0gtqjkb2pLWGPHE7w==}
-    cpu: [x64]
+  '@rspack/binding-linux-arm64-musl@1.3.7':
+    resolution: {integrity: sha512-i6QK6YodCA5R8/ShRylkyunwvNcRx/Q7af14jSCa7TPOi6pPoDUL2pmwGcJBk1uPc2wjQwAMZzfJjTWNjEyW2Q==}
+    cpu: [arm64]
     os: [linux]
 
   '@rspack/binding-linux-x64-gnu@1.3.5':
@@ -3151,8 +3141,8 @@ packages:
     cpu: [x64]
     os: [linux]
 
-  '@rspack/binding-linux-x64-musl@1.3.0':
-    resolution: {integrity: sha512-Zi4vUONm94iN5oO6k8yc7a7AP4H24qesG8J4wNnByZIcSuhFeXhQbkEF+45BY/Kw4HB5K2gU/Oqd+kVlRwqIuQ==}
+  '@rspack/binding-linux-x64-gnu@1.3.7':
+    resolution: {integrity: sha512-6AmOHLOv4XAK7Y5cFDBtnetIZ44MqG8Q6wZ20zjql/khTxsRZa/edis/eUppGb8fy5gzi+qqSAznEZ+Qj3LMrQ==}
     cpu: [x64]
     os: [linux]
 
@@ -3161,19 +3151,19 @@ packages:
     cpu: [x64]
     os: [linux]
 
-  '@rspack/binding-win32-arm64-msvc@1.3.0':
-    resolution: {integrity: sha512-H6Q3WgLxkHFxxdasQ1MtlbWesyLGT+lr6gMW7Hc3nIl5QOJEcLvwF8OBOR8Di092uvDOyIRSwkUtnkI/tQV8UA==}
-    cpu: [arm64]
-    os: [win32]
+  '@rspack/binding-linux-x64-musl@1.3.7':
+    resolution: {integrity: sha512-rPt0c9UHp5AxWHhjziEtd2uwiWyzM4UZLFJV6hawBWOoIQf2uLSl3fp0HTqxpslfTh3uo5ymhHN/bV48m5THzg==}
+    cpu: [x64]
+    os: [linux]
 
   '@rspack/binding-win32-arm64-msvc@1.3.5':
     resolution: {integrity: sha512-k9vf/WgEwxtXzV4la1H6eL07GIlvNjdPdvo1AJZdu0Zcnm600Kv5NSBjySJCp3zUHIKkCE9A0+ibifqbliG0fw==}
     cpu: [arm64]
     os: [win32]
 
-  '@rspack/binding-win32-ia32-msvc@1.3.0':
-    resolution: {integrity: sha512-oQEtxVylcKLNFPlzegPkyuBwXg8bKMD4FGrUOwE7Tp/NtI42uhD9kIY+W/U4tLFhIz1bGApdYRdJH71Kl+jBpw==}
-    cpu: [ia32]
+  '@rspack/binding-win32-arm64-msvc@1.3.7':
+    resolution: {integrity: sha512-+Db7NGBzad1dCcSm94uARkIIhbVv1+BXAl1duLBnYQMfqsu/pirsInE9wbp7WVUbSl2hmdRi9MYgWACjoReo4g==}
+    cpu: [arm64]
     os: [win32]
 
   '@rspack/binding-win32-ia32-msvc@1.3.5':
@@ -3181,9 +3171,9 @@ packages:
     cpu: [ia32]
     os: [win32]
 
-  '@rspack/binding-win32-x64-msvc@1.3.0':
-    resolution: {integrity: sha512-vND1d0sAbEfYjkW2H9eOfgO49dYFPTbkN4M7va+SSOI+Gqa4zMqHNg1kcoC5jWEvek6RFSheD1100RiJliLPBg==}
-    cpu: [x64]
+  '@rspack/binding-win32-ia32-msvc@1.3.7':
+    resolution: {integrity: sha512-VPqqC0U6FolGoonmZYBBiFyWjQ4+X+e/l/t4QZP2DRonlpE418+MdCxq2ldVGgvtxwERNlz61zxEX9yh/8KOfw==}
+    cpu: [ia32]
     os: [win32]
 
   '@rspack/binding-win32-x64-msvc@1.3.5':
@@ -3191,23 +3181,16 @@ packages:
     cpu: [x64]
     os: [win32]
 
-  '@rspack/binding@1.3.0':
-    resolution: {integrity: sha512-MqXxbU5ei/xem+Ier48x0/IfJSpfBVbmB/FlziM59wF+mP8DYsMskr7sapN5YfeBhcfelKOtr9hERXRv/p1k2Q==}
+  '@rspack/binding-win32-x64-msvc@1.3.7':
+    resolution: {integrity: sha512-zi9tKxlq85lSYTb1sbEluLjZlkbjuoJoy2TaNzVlfNkmiJ6EiqBbyCWoPPBJRP6HQ9pG25W0y4NWKp7iVhiBvg==}
+    cpu: [x64]
+    os: [win32]
 
   '@rspack/binding@1.3.5':
     resolution: {integrity: sha512-2oluCT+iBnTg0w7XfR8AmfkvgMPSuqEndzhrlHY//qgyyI04CW1lCMgsh+9wcSOUWUKYSOMCiGiVlYFtae5Lcg==}
 
-  '@rspack/core@1.3.0':
-    resolution: {integrity: sha512-7WZdw8EaEy/TlySn46Xgg9qMPoZBA4uTQR+nxgomAA0u9s/31VYFDpPsLIc/uT8OGemGU2kydgAgu9A6Gyp0GQ==}
-    engines: {node: '>=16.0.0'}
-    peerDependencies:
-      '@rspack/tracing': ^1.x
-      '@swc/helpers': '>=0.5.1'
-    peerDependenciesMeta:
-      '@rspack/tracing':
-        optional: true
-      '@swc/helpers':
-        optional: true
+  '@rspack/binding@1.3.7':
+    resolution: {integrity: sha512-jSXLktIGmNNZssxT+fjZ31IyUO7lRoFrFO+XuqKlMpbnHE8yCrpaHE6rLyDPVO4Vnl6xx/df8usUXtZwIc4jrw==}
 
   '@rspack/core@1.3.5':
     resolution: {integrity: sha512-PwIpzXj9wjHM0Ohq6geIKPoh3yNb5oSK74gqzs0plR7pTYLbhrjG/1DSV/JLFF4C5WCpLHHiDEX5E0IYm2Aqeg==}
@@ -3218,6 +3201,15 @@ packages:
     peerDependenciesMeta:
       '@rspack/tracing':
         optional: true
+      '@swc/helpers':
+        optional: true
+
+  '@rspack/core@1.3.7':
+    resolution: {integrity: sha512-InXnEmImLKkxzkY7XaAozycjMvS5myf/o3zu1rw5tNq3ONxWvW0QOHVTcrF0FbeKQ/jCOFSfdaoFjbXjdUs38w==}
+    engines: {node: '>=16.0.0'}
+    peerDependencies:
+      '@swc/helpers': '>=0.5.1'
+    peerDependenciesMeta:
       '@swc/helpers':
         optional: true
 
@@ -3307,8 +3299,8 @@ packages:
       '@types/node':
         optional: true
 
-  '@rushstack/ts-command-line@4.23.7':
-    resolution: {integrity: sha512-Gr9cB7DGe6uz5vq2wdr89WbVDKz0UeuFEn5H2CfWDe7JvjFFaiV15gi6mqDBTbHhHCWS7w8mF1h3BnIfUndqdA==}
+  '@rushstack/ts-command-line@5.0.0':
+    resolution: {integrity: sha512-SW6nqZVxH26Rxz25+lJQRlnXI/YCrNH7NfDEWPPm9i0rwkSE6Rgtmzw96cuZgQjacOh0sw77d6V4SvgarAfr8g==}
 
   '@selderee/plugin-htmlparser2@0.11.0':
     resolution: {integrity: sha512-P33hHGdldxGabLFjPPpaTxVolMrzrcegejx+0GxjrIb9Zv48D8yAIA/QTDR2dFl7Uz7urX8aX6+5bCZslr+gWQ==}
@@ -3936,6 +3928,9 @@ packages:
 
   caniuse-lite@1.0.30001707:
     resolution: {integrity: sha512-3qtRjw/HQSMlDWf+X79N206fepf4SOOU6SQLMaq/0KkZLmSjPxAkBOQQ+FxbHKfHmYLZFfdWsO3KA90ceHPSnw==}
+
+  caniuse-lite@1.0.30001715:
+    resolution: {integrity: sha512-7ptkFGMm2OAOgvZpwgA4yjQ5SQbrNVGdRjzH0pBdy1Fasvcr+KAeECmbCAECzTuDuoX0FCY8KzUxjf9+9kfZEw==}
 
   ccount@2.0.1:
     resolution: {integrity: sha512-eyrF0jiFpY+3drT6383f1qhkbGsLSifNAjA61IUjZjmLCWjItY6LB9ft9YhoDgwfmclB2zhu51Lc7+95b8NRAg==}
@@ -6269,8 +6264,8 @@ packages:
     engines: {node: '>=18.0.0', npm: '>=8.0.0'}
     hasBin: true
 
-  rsbuild-plugin-dts@0.6.5:
-    resolution: {integrity: sha512-MykzmOKhtjHxjLUVEUQVYeK+kJyBFvQ0DHOluzR+gvHyF50ysSbkScRdtWp85Tz0cdkt+ckHZPpKqfCuznH24Q==}
+  rsbuild-plugin-dts@0.6.7:
+    resolution: {integrity: sha512-uvGYychYBks67VM7ttXfOvcY2lXSLGrV5uFZ2zJK/O+s4DJ/+oyJ1j6IhIPH191J8zMCaOd/3ftrlq/izVsheA==}
     engines: {node: '>=16.7.0'}
     peerDependencies:
       '@microsoft/api-extractor': ^7
@@ -6298,8 +6293,8 @@ packages:
       '@rsbuild/core':
         optional: true
 
-  rsbuild-plugin-publint@0.3.0:
-    resolution: {integrity: sha512-7EV68plBBXiTF4FB5HiyK9TfYOVG8OUckEZKsu6YJqZDojpDU1WSf8HMbJa225xP4JeOtwchPC8SQPwSFSCvBg==}
+  rsbuild-plugin-publint@0.3.1:
+    resolution: {integrity: sha512-oBeem58KQa9LDWjRAsUZjoOzmw53X/EeIOKE+swG8pudVRSR0a9FSGNvLMJdZCmB3iw1d+brmGeJlnDi81mthQ==}
     peerDependencies:
       '@rsbuild/core': 1.x
     peerDependenciesMeta:
@@ -8425,7 +8420,7 @@ snapshots:
     transitivePeerDependencies:
       - '@types/node'
 
-  '@microsoft/api-extractor@7.52.4(@types/node@18.11.17)':
+  '@microsoft/api-extractor@7.52.5(@types/node@18.11.17)':
     dependencies:
       '@microsoft/api-extractor-model': 7.30.5(@types/node@18.11.17)
       '@microsoft/tsdoc': 0.15.1
@@ -8433,7 +8428,7 @@ snapshots:
       '@rushstack/node-core-library': 5.13.0(@types/node@18.11.17)
       '@rushstack/rig-package': 0.5.3
       '@rushstack/terminal': 0.15.2(@types/node@18.11.17)
-      '@rushstack/ts-command-line': 4.23.7(@types/node@18.11.17)
+      '@rushstack/ts-command-line': 5.0.0(@types/node@18.11.17)
       lodash: 4.17.21
       minimatch: 3.0.8
       resolve: 1.22.8
@@ -8443,7 +8438,7 @@ snapshots:
     transitivePeerDependencies:
       - '@types/node'
 
-  '@microsoft/api-extractor@7.52.4(@types/node@22.10.2)':
+  '@microsoft/api-extractor@7.52.5(@types/node@22.10.2)':
     dependencies:
       '@microsoft/api-extractor-model': 7.30.5(@types/node@22.10.2)
       '@microsoft/tsdoc': 0.15.1
@@ -8451,7 +8446,7 @@ snapshots:
       '@rushstack/node-core-library': 5.13.0(@types/node@22.10.2)
       '@rushstack/rig-package': 0.5.3
       '@rushstack/terminal': 0.15.2(@types/node@22.10.2)
-      '@rushstack/ts-command-line': 4.23.7(@types/node@22.10.2)
+      '@rushstack/ts-command-line': 5.0.0(@types/node@22.10.2)
       lodash: 4.17.21
       minimatch: 3.0.8
       resolve: 1.22.8
@@ -8470,35 +8465,29 @@ snapshots:
 
   '@microsoft/tsdoc@0.15.1': {}
 
-  '@module-federation/error-codes@0.11.1': {}
-
   '@module-federation/error-codes@0.11.2': {}
 
-  '@module-federation/runtime-core@0.11.1':
-    dependencies:
-      '@module-federation/error-codes': 0.11.1
-      '@module-federation/sdk': 0.11.1
+  '@module-federation/error-codes@0.13.0': {}
 
   '@module-federation/runtime-core@0.11.2':
     dependencies:
       '@module-federation/error-codes': 0.11.2
       '@module-federation/sdk': 0.11.2
 
-  '@module-federation/runtime-tools@0.11.1':
+  '@module-federation/runtime-core@0.13.0':
     dependencies:
-      '@module-federation/runtime': 0.11.1
-      '@module-federation/webpack-bundler-runtime': 0.11.1
+      '@module-federation/error-codes': 0.13.0
+      '@module-federation/sdk': 0.13.0
 
   '@module-federation/runtime-tools@0.11.2':
     dependencies:
       '@module-federation/runtime': 0.11.2
       '@module-federation/webpack-bundler-runtime': 0.11.2
 
-  '@module-federation/runtime@0.11.1':
+  '@module-federation/runtime-tools@0.13.0':
     dependencies:
-      '@module-federation/error-codes': 0.11.1
-      '@module-federation/runtime-core': 0.11.1
-      '@module-federation/sdk': 0.11.1
+      '@module-federation/runtime': 0.13.0
+      '@module-federation/webpack-bundler-runtime': 0.13.0
 
   '@module-federation/runtime@0.11.2':
     dependencies:
@@ -8506,19 +8495,25 @@ snapshots:
       '@module-federation/runtime-core': 0.11.2
       '@module-federation/sdk': 0.11.2
 
-  '@module-federation/sdk@0.11.1': {}
+  '@module-federation/runtime@0.13.0':
+    dependencies:
+      '@module-federation/error-codes': 0.13.0
+      '@module-federation/runtime-core': 0.13.0
+      '@module-federation/sdk': 0.13.0
 
   '@module-federation/sdk@0.11.2': {}
 
-  '@module-federation/webpack-bundler-runtime@0.11.1':
-    dependencies:
-      '@module-federation/runtime': 0.11.1
-      '@module-federation/sdk': 0.11.1
+  '@module-federation/sdk@0.13.0': {}
 
   '@module-federation/webpack-bundler-runtime@0.11.2':
     dependencies:
       '@module-federation/runtime': 0.11.2
       '@module-federation/sdk': 0.11.2
+
+  '@module-federation/webpack-bundler-runtime@0.13.0':
+    dependencies:
+      '@module-federation/runtime': 0.13.0
+      '@module-federation/sdk': 0.13.0
 
   '@monaco-editor/loader@1.5.0':
     dependencies:
@@ -8667,25 +8662,13 @@ snapshots:
   '@rollup/rollup-win32-x64-msvc@4.20.0':
     optional: true
 
-  '@rsbuild/core@1.3.0':
+  '@rsbuild/core@1.3.13':
     dependencies:
-      '@rspack/core': 1.3.0(@swc/helpers@0.5.17)
+      '@rspack/core': 1.3.7(@swc/helpers@0.5.17)
       '@rspack/lite-tapable': 1.0.1
       '@swc/helpers': 0.5.17
       core-js: 3.41.0
       jiti: 2.4.2
-    transitivePeerDependencies:
-      - '@rspack/tracing'
-
-  '@rsbuild/core@1.3.8':
-    dependencies:
-      '@rspack/core': 1.3.5(@swc/helpers@0.5.17)
-      '@rspack/lite-tapable': 1.0.1
-      '@swc/helpers': 0.5.17
-      core-js: 3.41.0
-      jiti: 2.4.2
-    transitivePeerDependencies:
-      - '@rspack/tracing'
 
   '@rsbuild/core@1.3.9':
     dependencies:
@@ -8697,13 +8680,13 @@ snapshots:
     transitivePeerDependencies:
       - '@rspack/tracing'
 
-  '@rsbuild/plugin-babel@1.0.4(@rsbuild/core@1.3.9)':
+  '@rsbuild/plugin-babel@1.0.4(@rsbuild/core@1.3.13)':
     dependencies:
       '@babel/core': 7.26.9
       '@babel/plugin-proposal-decorators': 7.25.9(@babel/core@7.26.9)
       '@babel/plugin-transform-class-properties': 7.25.9(@babel/core@7.26.9)
       '@babel/preset-typescript': 7.26.0(@babel/core@7.26.9)
-      '@rsbuild/core': 1.3.9
+      '@rsbuild/core': 1.3.13
       '@types/babel__core': 7.20.5
       deepmerge: 4.3.1
       reduce-configs: 1.1.0
@@ -8711,13 +8694,13 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
-  '@rsbuild/plugin-babel@1.0.5(@rsbuild/core@1.3.9)':
+  '@rsbuild/plugin-babel@1.0.5(@rsbuild/core@1.3.13)':
     dependencies:
       '@babel/core': 7.26.10
       '@babel/plugin-proposal-decorators': 7.25.9(@babel/core@7.26.10)
       '@babel/plugin-transform-class-properties': 7.25.9(@babel/core@7.26.10)
       '@babel/preset-typescript': 7.27.0(@babel/core@7.26.10)
-      '@rsbuild/core': 1.3.9
+      '@rsbuild/core': 1.3.13
       '@types/babel__core': 7.20.5
       deepmerge: 4.3.1
       reduce-configs: 1.1.0
@@ -8725,31 +8708,31 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
-  '@rsbuild/plugin-less@1.2.2(@rsbuild/core@1.3.9)':
+  '@rsbuild/plugin-less@1.2.2(@rsbuild/core@1.3.13)':
     dependencies:
-      '@rsbuild/core': 1.3.9
+      '@rsbuild/core': 1.3.13
       deepmerge: 4.3.1
       reduce-configs: 1.1.0
 
-  '@rsbuild/plugin-react@1.1.1(@rsbuild/core@1.3.9)':
+  '@rsbuild/plugin-react@1.1.1(@rsbuild/core@1.3.13)':
     dependencies:
-      '@rsbuild/core': 1.3.9
+      '@rsbuild/core': 1.3.13
       '@rspack/plugin-react-refresh': 1.0.1(react-refresh@0.16.0)
       react-refresh: 0.16.0
 
-  '@rsbuild/plugin-sass@1.3.1(@rsbuild/core@1.3.9)':
+  '@rsbuild/plugin-sass@1.3.1(@rsbuild/core@1.3.13)':
     dependencies:
-      '@rsbuild/core': 1.3.9
+      '@rsbuild/core': 1.3.13
       deepmerge: 4.3.1
       loader-utils: 2.0.4
       postcss: 8.5.3
       reduce-configs: 1.1.0
       sass-embedded: 1.86.0
 
-  '@rsbuild/plugin-solid@1.0.5(@babel/core@7.26.9)(@rsbuild/core@1.3.9)(solid-js@1.9.5)':
+  '@rsbuild/plugin-solid@1.0.5(@babel/core@7.26.9)(@rsbuild/core@1.3.13)(solid-js@1.9.5)':
     dependencies:
-      '@rsbuild/core': 1.3.9
-      '@rsbuild/plugin-babel': 1.0.4(@rsbuild/core@1.3.9)
+      '@rsbuild/core': 1.3.13
+      '@rsbuild/plugin-babel': 1.0.4(@rsbuild/core@1.3.13)
       babel-preset-solid: 1.9.3(@babel/core@7.26.9)
       solid-refresh: 0.6.3(solid-js@1.9.5)
     transitivePeerDependencies:
@@ -8757,10 +8740,10 @@ snapshots:
       - solid-js
       - supports-color
 
-  '@rsbuild/plugin-svgr@1.0.7(@rsbuild/core@1.3.9)(typescript@5.8.2)':
+  '@rsbuild/plugin-svgr@1.0.7(@rsbuild/core@1.3.13)(typescript@5.8.2)':
     dependencies:
-      '@rsbuild/core': 1.3.9
-      '@rsbuild/plugin-react': 1.1.1(@rsbuild/core@1.3.9)
+      '@rsbuild/core': 1.3.13
+      '@rsbuild/plugin-react': 1.1.1(@rsbuild/core@1.3.13)
       '@svgr/core': 8.1.0(typescript@5.8.2)
       '@svgr/plugin-jsx': 8.1.0(@svgr/core@8.1.0(typescript@5.8.2))
       '@svgr/plugin-svgo': 8.1.0(@svgr/core@8.1.0(typescript@5.8.2))(typescript@5.8.2)
@@ -8770,13 +8753,13 @@ snapshots:
       - supports-color
       - typescript
 
-  '@rsbuild/plugin-typed-css-modules@1.0.2(@rsbuild/core@1.3.9)':
+  '@rsbuild/plugin-typed-css-modules@1.0.2(@rsbuild/core@1.3.13)':
     optionalDependencies:
-      '@rsbuild/core': 1.3.9
+      '@rsbuild/core': 1.3.13
 
-  '@rsbuild/plugin-vue@1.0.7(@rsbuild/core@1.3.9)(vue@3.5.13(typescript@5.8.2))':
+  '@rsbuild/plugin-vue@1.0.7(@rsbuild/core@1.3.13)(vue@3.5.13(typescript@5.8.2))':
     dependencies:
-      '@rsbuild/core': 1.3.9
+      '@rsbuild/core': 1.3.13
       vue-loader: 17.4.2(vue@3.5.13(typescript@5.8.2))(webpack@5.99.3)
       webpack: 5.99.3
     transitivePeerDependencies:
@@ -8787,93 +8770,81 @@ snapshots:
       - vue
       - webpack-cli
 
-  '@rslib/core@0.6.5(@microsoft/api-extractor@7.52.4(@types/node@18.11.17))(typescript@5.8.2)':
+  '@rslib/core@0.6.7(@microsoft/api-extractor@7.52.5(@types/node@18.11.17))(typescript@5.8.2)':
     dependencies:
-      '@rsbuild/core': 1.3.8
-      rsbuild-plugin-dts: 0.6.5(@microsoft/api-extractor@7.52.4(@types/node@18.11.17))(@rsbuild/core@1.3.8)(typescript@5.8.2)
+      '@rsbuild/core': 1.3.9
+      rsbuild-plugin-dts: 0.6.7(@microsoft/api-extractor@7.52.5(@types/node@18.11.17))(@rsbuild/core@1.3.9)(typescript@5.8.2)
       tinyglobby: 0.2.13
     optionalDependencies:
-      '@microsoft/api-extractor': 7.52.4(@types/node@18.11.17)
+      '@microsoft/api-extractor': 7.52.5(@types/node@18.11.17)
       typescript: 5.8.2
     transitivePeerDependencies:
       - '@rspack/tracing'
 
-  '@rslib/core@0.6.5(@microsoft/api-extractor@7.52.4(@types/node@22.10.2))(typescript@5.8.2)':
+  '@rslib/core@0.6.7(@microsoft/api-extractor@7.52.5(@types/node@22.10.2))(typescript@5.8.2)':
     dependencies:
-      '@rsbuild/core': 1.3.8
-      rsbuild-plugin-dts: 0.6.5(@microsoft/api-extractor@7.52.4(@types/node@22.10.2))(@rsbuild/core@1.3.8)(typescript@5.8.2)
+      '@rsbuild/core': 1.3.9
+      rsbuild-plugin-dts: 0.6.7(@microsoft/api-extractor@7.52.5(@types/node@22.10.2))(@rsbuild/core@1.3.9)(typescript@5.8.2)
       tinyglobby: 0.2.13
     optionalDependencies:
-      '@microsoft/api-extractor': 7.52.4(@types/node@22.10.2)
+      '@microsoft/api-extractor': 7.52.5(@types/node@22.10.2)
       typescript: 5.8.2
     transitivePeerDependencies:
       - '@rspack/tracing'
-
-  '@rspack/binding-darwin-arm64@1.3.0':
-    optional: true
 
   '@rspack/binding-darwin-arm64@1.3.5':
     optional: true
 
-  '@rspack/binding-darwin-x64@1.3.0':
+  '@rspack/binding-darwin-arm64@1.3.7':
     optional: true
 
   '@rspack/binding-darwin-x64@1.3.5':
     optional: true
 
-  '@rspack/binding-linux-arm64-gnu@1.3.0':
+  '@rspack/binding-darwin-x64@1.3.7':
     optional: true
 
   '@rspack/binding-linux-arm64-gnu@1.3.5':
     optional: true
 
-  '@rspack/binding-linux-arm64-musl@1.3.0':
+  '@rspack/binding-linux-arm64-gnu@1.3.7':
     optional: true
 
   '@rspack/binding-linux-arm64-musl@1.3.5':
     optional: true
 
-  '@rspack/binding-linux-x64-gnu@1.3.0':
+  '@rspack/binding-linux-arm64-musl@1.3.7':
     optional: true
 
   '@rspack/binding-linux-x64-gnu@1.3.5':
     optional: true
 
-  '@rspack/binding-linux-x64-musl@1.3.0':
+  '@rspack/binding-linux-x64-gnu@1.3.7':
     optional: true
 
   '@rspack/binding-linux-x64-musl@1.3.5':
     optional: true
 
-  '@rspack/binding-win32-arm64-msvc@1.3.0':
+  '@rspack/binding-linux-x64-musl@1.3.7':
     optional: true
 
   '@rspack/binding-win32-arm64-msvc@1.3.5':
     optional: true
 
-  '@rspack/binding-win32-ia32-msvc@1.3.0':
+  '@rspack/binding-win32-arm64-msvc@1.3.7':
     optional: true
 
   '@rspack/binding-win32-ia32-msvc@1.3.5':
     optional: true
 
-  '@rspack/binding-win32-x64-msvc@1.3.0':
+  '@rspack/binding-win32-ia32-msvc@1.3.7':
     optional: true
 
   '@rspack/binding-win32-x64-msvc@1.3.5':
     optional: true
 
-  '@rspack/binding@1.3.0':
-    optionalDependencies:
-      '@rspack/binding-darwin-arm64': 1.3.0
-      '@rspack/binding-darwin-x64': 1.3.0
-      '@rspack/binding-linux-arm64-gnu': 1.3.0
-      '@rspack/binding-linux-arm64-musl': 1.3.0
-      '@rspack/binding-linux-x64-gnu': 1.3.0
-      '@rspack/binding-linux-x64-musl': 1.3.0
-      '@rspack/binding-win32-arm64-msvc': 1.3.0
-      '@rspack/binding-win32-ia32-msvc': 1.3.0
-      '@rspack/binding-win32-x64-msvc': 1.3.0
+  '@rspack/binding-win32-x64-msvc@1.3.7':
+    optional: true
 
   '@rspack/binding@1.3.5':
     optionalDependencies:
@@ -8887,14 +8858,17 @@ snapshots:
       '@rspack/binding-win32-ia32-msvc': 1.3.5
       '@rspack/binding-win32-x64-msvc': 1.3.5
 
-  '@rspack/core@1.3.0(@swc/helpers@0.5.17)':
-    dependencies:
-      '@module-federation/runtime-tools': 0.11.1
-      '@rspack/binding': 1.3.0
-      '@rspack/lite-tapable': 1.0.1
-      caniuse-lite: 1.0.30001707
+  '@rspack/binding@1.3.7':
     optionalDependencies:
-      '@swc/helpers': 0.5.17
+      '@rspack/binding-darwin-arm64': 1.3.7
+      '@rspack/binding-darwin-x64': 1.3.7
+      '@rspack/binding-linux-arm64-gnu': 1.3.7
+      '@rspack/binding-linux-arm64-musl': 1.3.7
+      '@rspack/binding-linux-x64-gnu': 1.3.7
+      '@rspack/binding-linux-x64-musl': 1.3.7
+      '@rspack/binding-win32-arm64-msvc': 1.3.7
+      '@rspack/binding-win32-ia32-msvc': 1.3.7
+      '@rspack/binding-win32-x64-msvc': 1.3.7
 
   '@rspack/core@1.3.5(@swc/helpers@0.5.17)':
     dependencies:
@@ -8902,6 +8876,15 @@ snapshots:
       '@rspack/binding': 1.3.5
       '@rspack/lite-tapable': 1.0.1
       caniuse-lite: 1.0.30001707
+    optionalDependencies:
+      '@swc/helpers': 0.5.17
+
+  '@rspack/core@1.3.7(@swc/helpers@0.5.17)':
+    dependencies:
+      '@module-federation/runtime-tools': 0.13.0
+      '@rspack/binding': 1.3.7
+      '@rspack/lite-tapable': 1.0.1
+      caniuse-lite: 1.0.30001715
     optionalDependencies:
       '@swc/helpers': 0.5.17
 
@@ -9002,7 +8985,7 @@ snapshots:
     optionalDependencies:
       '@types/node': 22.10.2
 
-  '@rushstack/ts-command-line@4.23.7(@types/node@18.11.17)':
+  '@rushstack/ts-command-line@5.0.0(@types/node@18.11.17)':
     dependencies:
       '@rushstack/terminal': 0.15.2(@types/node@18.11.17)
       '@types/argparse': 1.0.38
@@ -9011,7 +8994,7 @@ snapshots:
     transitivePeerDependencies:
       - '@types/node'
 
-  '@rushstack/ts-command-line@4.23.7(@types/node@22.10.2)':
+  '@rushstack/ts-command-line@5.0.0(@types/node@22.10.2)':
     dependencies:
       '@rushstack/terminal': 0.15.2(@types/node@22.10.2)
       '@types/argparse': 1.0.38
@@ -9756,6 +9739,8 @@ snapshots:
   camelcase@6.3.0: {}
 
   caniuse-lite@1.0.30001707: {}
+
+  caniuse-lite@1.0.30001715: {}
 
   ccount@2.0.1: {}
 
@@ -12840,48 +12825,48 @@ snapshots:
       '@rollup/rollup-win32-x64-msvc': 4.20.0
       fsevents: 2.3.3
 
-  rsbuild-plugin-dts@0.6.5(@microsoft/api-extractor@7.52.4(@types/node@18.11.17))(@rsbuild/core@1.3.8)(typescript@5.8.2):
+  rsbuild-plugin-dts@0.6.7(@microsoft/api-extractor@7.52.5(@types/node@18.11.17))(@rsbuild/core@1.3.9)(typescript@5.8.2):
     dependencies:
       '@ast-grep/napi': 0.37.0
-      '@rsbuild/core': 1.3.8
+      '@rsbuild/core': 1.3.9
       magic-string: 0.30.17
       picocolors: 1.1.1
       tinyglobby: 0.2.13
       tsconfig-paths: 4.2.0
     optionalDependencies:
-      '@microsoft/api-extractor': 7.52.4(@types/node@18.11.17)
+      '@microsoft/api-extractor': 7.52.5(@types/node@18.11.17)
       typescript: 5.8.2
 
-  rsbuild-plugin-dts@0.6.5(@microsoft/api-extractor@7.52.4(@types/node@22.10.2))(@rsbuild/core@1.3.8)(typescript@5.8.2):
+  rsbuild-plugin-dts@0.6.7(@microsoft/api-extractor@7.52.5(@types/node@22.10.2))(@rsbuild/core@1.3.9)(typescript@5.8.2):
     dependencies:
       '@ast-grep/napi': 0.37.0
-      '@rsbuild/core': 1.3.8
+      '@rsbuild/core': 1.3.9
       magic-string: 0.30.17
       picocolors: 1.1.1
       tinyglobby: 0.2.13
       tsconfig-paths: 4.2.0
     optionalDependencies:
-      '@microsoft/api-extractor': 7.52.4(@types/node@22.10.2)
+      '@microsoft/api-extractor': 7.52.5(@types/node@22.10.2)
       typescript: 5.8.2
 
-  rsbuild-plugin-google-analytics@1.0.3(@rsbuild/core@1.3.9):
+  rsbuild-plugin-google-analytics@1.0.3(@rsbuild/core@1.3.13):
     optionalDependencies:
-      '@rsbuild/core': 1.3.9
+      '@rsbuild/core': 1.3.13
 
-  rsbuild-plugin-open-graph@1.0.2(@rsbuild/core@1.3.9):
+  rsbuild-plugin-open-graph@1.0.2(@rsbuild/core@1.3.13):
     optionalDependencies:
-      '@rsbuild/core': 1.3.9
+      '@rsbuild/core': 1.3.13
 
-  rsbuild-plugin-publint@0.3.0(@rsbuild/core@1.3.9):
+  rsbuild-plugin-publint@0.3.1(@rsbuild/core@1.3.13):
     dependencies:
       picocolors: 1.1.1
       publint: 0.3.12
     optionalDependencies:
-      '@rsbuild/core': 1.3.9
+      '@rsbuild/core': 1.3.13
 
-  rsbuild-plugin-virtual-module@0.1.1(@rsbuild/core@1.3.9):
+  rsbuild-plugin-virtual-module@0.1.1(@rsbuild/core@1.3.13):
     optionalDependencies:
-      '@rsbuild/core': 1.3.9
+      '@rsbuild/core': 1.3.13
 
   rspack-plugin-virtual-module@0.1.13:
     dependencies:
