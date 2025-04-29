@@ -1,7 +1,7 @@
+import { HelmetProvider } from '@dr.pogodin/react-helmet';
 import { DataContext, useLocation } from '@rspress/runtime';
 import { Layout } from '@theme';
 import React, { useContext, useLayoutEffect } from 'react';
-import { HelmetProvider } from 'react-helmet-async';
 import globalComponents from 'virtual-global-components';
 import 'virtual-global-styles';
 import { initPageData } from './initPageData';

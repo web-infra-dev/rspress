@@ -1,6 +1,7 @@
 import type { PluginDriver } from '../PluginDriver';
 
 import { pathToFileURL } from 'node:url';
+import { HelmetData } from '@dr.pogodin/react-helmet';
 import {
   type PageData,
   type Route,
@@ -10,7 +11,6 @@ import {
 } from '@rspress/shared';
 import { logger } from '@rspress/shared/logger';
 import picocolors from 'picocolors';
-import { default as ReactHelmetAsync } from 'react-helmet-async';
 import {
   APP_HTML_MARKER,
   BODY_START_TAG,
@@ -84,7 +84,7 @@ export async function renderPages(
           return !route.routePath.includes(':');
         })
         .map(async route => {
-          const helmetContext = new ReactHelmetAsync.HelmetData({});
+          const helmetContext = new HelmetData({});
           const { routePath } = route;
           let appHtml = '';
           if (render) {

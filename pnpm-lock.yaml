@@ -719,6 +719,9 @@ importers:
 
   packages/core:
     dependencies:
+      '@dr.pogodin/react-helmet':
+        specifier: 2.0.4
+        version: 2.0.4(react@19.1.0)
       '@mdx-js/loader':
         specifier: ^3.1.0
         version: 3.1.0(acorn@8.14.0)(webpack@5.99.3)
@@ -788,9 +791,6 @@ importers:
       react-dom:
         specifier: ^19.1.0
         version: 19.1.0(react@19.1.0)
-      react-helmet-async:
-        specifier: ^2.0.5
-        version: 2.0.5(react@19.1.0)
       react-lazy-with-preload:
         specifier: ^2.2.1
         version: 2.2.1
@@ -1613,6 +1613,9 @@ importers:
 
   packages/runtime:
     dependencies:
+      '@dr.pogodin/react-helmet':
+        specifier: 2.0.4
+        version: 2.0.4(react@19.1.0)
       '@rspress/shared':
         specifier: workspace:*
         version: link:../shared
@@ -1622,9 +1625,6 @@ importers:
       react-dom:
         specifier: ^19.1.0
         version: 19.1.0(react@19.1.0)
-      react-helmet-async:
-        specifier: ^2.0.5
-        version: 2.0.5(react@19.1.0)
       react-router-dom:
         specifier: ^6.29.0
         version: 6.29.0(react-dom@19.1.0(react@19.1.0))(react@19.1.0)
@@ -1702,6 +1702,9 @@ importers:
 
   packages/theme-default:
     dependencies:
+      '@dr.pogodin/react-helmet':
+        specifier: 2.0.4
+        version: 2.0.4(react@19.1.0)
       '@mdx-js/react':
         specifier: 2.3.0
         version: 2.3.0(react@19.1.0)
@@ -1738,9 +1741,6 @@ importers:
       react-dom:
         specifier: ^19.1.0
         version: 19.1.0(react@19.1.0)
-      react-helmet-async:
-        specifier: ^2.0.5
-        version: 2.0.5(react@19.1.0)
       react-syntax-highlighter:
         specifier: ^15.6.1
         version: 15.6.1(react@19.1.0)
@@ -2523,6 +2523,11 @@ packages:
         optional: true
       search-insights:
         optional: true
+
+  '@dr.pogodin/react-helmet@2.0.4':
+    resolution: {integrity: sha512-NXSgzBKiyvHF4UvR40fKRB0gTIlezfnyvmTqJKZy5Gbtv23SXMuneZbtovvG/sKxbOYPVn1lZl211bTKhd5g4w==}
+    peerDependencies:
+      react: '19'
 
   '@emnapi/core@1.3.0':
     resolution: {integrity: sha512-9hRqVlhwqBqCoToZ3hFcNVqL+uyHV06Y47ax4UB8L6XgVRqYz7MFnfessojo6+5TK89pKwJnpophwjTMOeKI9Q==}
@@ -6055,11 +6060,6 @@ packages:
   react-fast-compare@3.2.2:
     resolution: {integrity: sha512-nsO+KSNgo1SbJqJEYRE9ERzo7YtYbou/OqjSQKxV7jcKox7+usiUVZOAC+XnDOABXggQTno0Y1CpVnuWEc1boQ==}
 
-  react-helmet-async@2.0.5:
-    resolution: {integrity: sha512-rYUYHeus+i27MvFE+Jaa4WsyBKGkL6qVgbJvSBoX8mbsWoABJXdEO0bZyi0F6i+4f0NuIb8AvqPMj3iXFHkMwg==}
-    peerDependencies:
-      react: ^16.6.0 || ^17.0.0 || ^18.0.0
-
   react-is@18.2.0:
     resolution: {integrity: sha512-xWGDIW6x921xtzPkhiULtthJHoJvBbF3q26fzloPCK0hsvxtPVelvftw3zjbHWSkR2km9Z+4uxbDDK/6Zw9B8w==}
 
@@ -8183,6 +8183,13 @@ snapshots:
       search-insights: 2.17.3
     transitivePeerDependencies:
       - '@algolia/client-search'
+
+  '@dr.pogodin/react-helmet@2.0.4(react@19.1.0)':
+    dependencies:
+      invariant: 2.2.4
+      react: 19.1.0
+      react-fast-compare: 3.2.2
+      shallowequal: 1.1.0
 
   '@emnapi/core@1.3.0':
     dependencies:
@@ -12486,13 +12493,6 @@ snapshots:
       scheduler: 0.26.0
 
   react-fast-compare@3.2.2: {}
-
-  react-helmet-async@2.0.5(react@19.1.0):
-    dependencies:
-      invariant: 2.2.4
-      react: 19.1.0
-      react-fast-compare: 3.2.2
-      shallowequal: 1.1.0
 
   react-is@18.2.0: {}
 

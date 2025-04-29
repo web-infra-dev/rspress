@@ -1,5 +1,6 @@
 import 'nprogress/nprogress.css';
 import '../../styles';
+import { Helmet } from '@dr.pogodin/react-helmet';
 import { Content, usePageData } from '@rspress/runtime';
 import {
   HomeLayout as DefaultHomeLayout,
@@ -7,7 +8,6 @@ import {
   Nav,
 } from '@theme';
 import type React from 'react';
-import { Helmet } from 'react-helmet-async';
 import type { NavProps } from '../../components/Nav';
 import { useSetup } from '../../logic/sideEffects';
 import { useLocaleSiteData } from '../../logic/useLocaleSiteData';
