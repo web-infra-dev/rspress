@@ -41,10 +41,10 @@
     "reset": "rimraf ./**/node_modules"
   },
   "dependencies": {
+    "@dr.pogodin/react-helmet": "2.0.4",
     "@rspress/shared": "workspace:*",
     "react": "^19.1.0",
     "react-dom": "^19.1.0",
-    "react-helmet-async": "^2.0.5",
     "react-router-dom": "^6.29.0"
   },
   "devDependencies": {
