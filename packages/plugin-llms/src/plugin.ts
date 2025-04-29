@@ -15,6 +15,7 @@ import type {
   SidebarSectionHeader,
 } from '@rspress/shared';
 import type { NavItemWithLink } from '@rspress/shared';
+import { logger } from '@rspress/shared/logger';
 import { generateLlmsFullTxt, generateLlmsTxt } from './llmsTxt';
 import { mdxToMd } from './mdxToMd';
 import type { Options, rsbuildPluginLlmsOptions } from './types';
@@ -124,7 +125,7 @@ const rsbuildPluginLlms = ({
         [...newPageDataList.values()].map(async pageData => {
           const content = pageData._flattenContent ?? pageData.content;
           const filepath = pageData._filepath;
-          const isMD = path.extname(filepath).slice(1) === 'md';
+          const isMD = path.extname(filepath).slice(1) !== 'mdx';
           let mdContent: string | Buffer;
           if (isMD) {
             mdContent = content;
@@ -139,7 +140,8 @@ const rsbuildPluginLlms = ({
                 )
               ).toString();
             } catch (e) {
-              console.error(e);
+              // flatten might have some edge cases, fallback to no flatten and plain mdx
+              logger.debug(e);
               mdContent = content;
               return;
             }
