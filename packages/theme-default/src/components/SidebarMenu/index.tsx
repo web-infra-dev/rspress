@@ -1,4 +1,4 @@
-import { useLocation, usePageData } from '@rspress/runtime';
+import { useLocation } from '@rspress/runtime';
 import ArrowRight from '@theme-assets/arrow-right';
 import MenuIcon from '@theme-assets/menu';
 import { useCallback, useEffect, useRef, useState } from 'react';
@@ -6,6 +6,7 @@ import type { UISwitchResult } from '../../logic/useUISwitch';
 import { SvgWrapper } from '../SvgWrapper';
 import { Toc } from '../Toc';
 import './index.scss';
+import { useDynamicToc } from '../Aside/useDynamicToc';
 
 /* Top Menu, only displayed on <1280px screen width */
 export function SidebarMenu({
@@ -19,7 +20,6 @@ export function SidebarMenu({
   outlineTitle: string;
   uiSwitch?: UISwitchResult;
 }) {
-  const { page } = usePageData();
   const tocContainerRef = useRef<HTMLDivElement>(null);
   const outlineButtonRef = useRef<HTMLButtonElement>(null);
 
@@ -65,7 +65,9 @@ export function SidebarMenu({
     setIsTocOpen(false);
   }, []);
 
-  const hasToc = page.toc.length > 0;
+  const toc = useDynamicToc();
+
+  const hasToc = toc.length > 0;
 
   return (
     <div className={`rspress-sidebar-menu-container ${hasToc ? '' : 'no-toc'}`}>

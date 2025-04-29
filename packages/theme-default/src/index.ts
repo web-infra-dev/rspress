@@ -28,6 +28,7 @@ export * from './components/Search/logic/types';
 
 // components
 export { Aside } from './components/Aside';
+export { Toc } from './components/Toc';
 export { Badge } from './components/Badge';
 export { Button } from './components/Button';
 export { Card } from './components/Card';
@@ -60,4 +61,3 @@ export { Steps } from './components/Steps';
 export { SwitchAppearance } from './components/SwitchAppearance';
 export { Tab, Tabs } from './components/Tabs';
 export { Tag } from './components/Tag';
-export { Toc } from './components/Toc';

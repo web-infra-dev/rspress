@@ -47,9 +47,8 @@ export function DocLayout(props: DocLayoutProps) {
     components,
   } = props;
   const { siteData, page } = usePageData();
-  const { headingTitle, title, toc = [], frontmatter } = page;
+  const { headingTitle, title, frontmatter } = page;
   const [tabData, setTabData] = useState({});
-  const headers = toc;
   const { themeConfig } = siteData;
   const enableScrollToTop = themeConfig.enableScrollToTop ?? false;
   const localesData = useLocaleSiteData();
@@ -141,7 +140,7 @@ export function DocLayout(props: DocLayoutProps) {
               <ScrollToTop />
             </NoSSR>
           )}
-          {uiSwitch?.showAside && headers.length > 0 && (
+          {uiSwitch?.showAside && (
             <div
               className={styles.asideContainer}
               style={
@@ -151,7 +150,7 @@ export function DocLayout(props: DocLayoutProps) {
               }
             >
               {beforeOutline}
-              <Aside headers={headers} outlineTitle={outlineTitle} />
+              <Aside outlineTitle={outlineTitle} />
               {afterOutline}
             </div>
           )}

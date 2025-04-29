@@ -9,6 +9,7 @@ import {
 } from '../../logic/utils';
 
 import './index.scss';
+import { useDynamicToc } from './useDynamicToc';
 
 const TocItem = ({
   header,
@@ -37,11 +38,9 @@ const TocItem = ({
   );
 };
 
-export function Aside({
-  headers,
-  outlineTitle,
-}: { headers: Header[]; outlineTitle: string }) {
+export function Aside({ outlineTitle }: { outlineTitle: string }) {
   const { scrollPaddingTop } = useUISwitch();
+  const headers = useDynamicToc();
 
   // For outline text highlight
   const baseHeaderLevel = headers[0]?.depth || 2;
@@ -67,6 +66,10 @@ export function Aside({
     }
   }, [decodedHash, headers, pathname]);
 
+  if (headers.length === 0) {
+    return <></>;
+  }
+
   return (
     <div className="rp-flex rp-flex-col">
       <div
@@ -80,7 +83,7 @@ export function Aside({
           <ul className="rp-relative">
             {headers.map(header => (
               <TocItem
-                key={`${pathname}#${header.id}`}
+                key={`${header.depth}_${header.text}_${header.id}`}
                 baseHeaderLevel={baseHeaderLevel}
                 header={header}
               />
