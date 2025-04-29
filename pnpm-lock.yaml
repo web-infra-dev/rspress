@@ -1231,9 +1231,18 @@ importers:
       '@rspress/core':
         specifier: workspace:^2.0.0-beta.2
         version: link:../core
-      '@rspress/runtime':
-        specifier: workspace:^2.0.0-beta.2
-        version: link:../runtime
+      '@rspress/shared':
+        specifier: workspace:*
+        version: link:../shared
+      remark-mdx:
+        specifier: ^3.1.0
+        version: 3.1.0
+      remark-parse:
+        specifier: ^11.0.0
+        version: 11.0.0
+      remark-stringify:
+        specifier: ^11.0.0
+        version: 11.0.0
       unified:
         specifier: ^11.0.5
         version: 11.0.5
@@ -1256,24 +1265,15 @@ importers:
       '@rspress/config':
         specifier: workspace:*
         version: link:../../scripts/config
-      '@rspress/shared':
+      '@rspress/runtime':
         specifier: workspace:*
-        version: link:../shared
+        version: link:../runtime
       '@types/hast':
         specifier: ^3.0.4
         version: 3.0.4
       '@types/node':
         specifier: ^18.11.17
         version: 18.11.17
-      remark-mdx:
-        specifier: ^3.1.0
-        version: 3.1.0
-      remark-parse:
-        specifier: ^11.0.0
-        version: 11.0.0
-      remark-stringify:
-        specifier: ^11.0.0
-        version: 11.0.0
       typescript:
         specifier: ^5.8.2
         version: 5.8.2
