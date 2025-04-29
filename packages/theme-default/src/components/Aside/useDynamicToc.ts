@@ -7,7 +7,10 @@ export const useDynamicToc = () => {
   const [headers, setHeaders] = useState<Header[]>([]);
 
   // use the same data between Aside and Toc, and use publisher and subscriber to avoid useContext
-  const target = document.querySelector('.rspress-doc');
+  const target =
+    typeof document === 'undefined'
+      ? null
+      : document?.querySelector('.rspress-doc');
   useEffect(() => {
     let observer: null | MutationObserver = null;
     function updateHeaders() {
@@ -27,7 +30,14 @@ export const useDynamicToc = () => {
             charIndex: 0,
           });
           collectedHeaderIds.push(el.id);
-          ele && el.appendChild(ele);
+          const firstChild = el.firstChild;
+          if (ele) {
+            if (firstChild) {
+              el.insertBefore(firstChild, ele);
+            } else {
+              el.appendChild(ele);
+            }
+          }
         }
       });
 

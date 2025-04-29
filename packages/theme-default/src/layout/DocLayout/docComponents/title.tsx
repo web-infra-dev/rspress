@@ -1,5 +1,4 @@
 import type React from 'react';
-import { useRef } from 'react';
 import * as styles from './index.module.scss';
 
 export const H1 = (props: React.ComponentProps<'h1'>) => {
