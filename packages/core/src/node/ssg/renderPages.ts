@@ -1,7 +1,7 @@
 import type { PluginDriver } from '../PluginDriver';
 
 import { pathToFileURL } from 'node:url';
-import ReactHelmetAsync from '@dr.pogodin/react-helmet';
+import { HelmetData } from '@dr.pogodin/react-helmet';
 import {
   type PageData,
   type Route,
@@ -84,7 +84,7 @@ export async function renderPages(
           return !route.routePath.includes(':');
         })
         .map(async route => {
-          const helmetContext = new ReactHelmetAsync.HelmetData({});
+          const helmetContext = new HelmetData({});
           const { routePath } = route;
           let appHtml = '';
           if (render) {
