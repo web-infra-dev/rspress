@@ -1,17 +1,15 @@
 import type { Header } from '@rspress/shared';
-import { useEffect } from 'react';
-import { distributeUpdate, useSubScribe } from './useSubscribeUpdate';
-
-let observer: null | MutationObserver = null;
-const headers: Header[] = [] satisfies Header[];
-const headerIds: string[] = [];
+import { useEffect, useState } from 'react';
 
 export const useDynamicToc = () => {
-  // use the same data between Aside and Toc, and use publisher and subscriber to avoid useContext
-  useSubScribe();
+  // const headers: Header[] = [] satisfies Header[];
+  // const headerIds: string[] = [];
+  const [headers, setHeaders] = useState<Header[]>([]);
 
+  // use the same data between Aside and Toc, and use publisher and subscriber to avoid useContext
   const target = document.querySelector('.rspress-doc');
   useEffect(() => {
+    let observer: null | MutationObserver = null;
     function updateHeaders() {
       const collectedHeaders: Header[] = [];
       const collectedHeaderIds: string[] = [];
@@ -33,11 +31,7 @@ export const useDynamicToc = () => {
         }
       });
 
-      headers.length = 0;
-      headers.push(...collectedHeaders);
-      headerIds.length = 0;
-      headerIds.push(...collectedHeaderIds);
-      distributeUpdate();
+      setHeaders(collectedHeaders);
     }
 
     if (target) {
@@ -89,7 +83,7 @@ export const useDynamicToc = () => {
     }
 
     return () => {
-      if (observerHasNotBeenCreated) {
+      if (target && observerHasNotBeenCreated) {
         observer?.disconnect();
         observer = null;
       }
