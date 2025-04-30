@@ -1,6 +1,6 @@
 {
   "name": "@rspress/plugin-api-docgen",
-  "version": "2.0.0-beta.2",
+  "version": "2.0.0-beta.3",
   "description": "A plugin for rspress to generate api doc.",
   "bugs": "https://github.com/web-infra-dev/rspress/issues",
   "repository": {
@@ -50,7 +50,7 @@
     "typescript": "^5.8.2"
   },
   "peerDependencies": {
-    "@rspress/core": "workspace:^2.0.0-beta.2",
+    "@rspress/core": "workspace:^2.0.0-beta.3",
     "typescript": "^5.8.2"
   },
   "peerDependenciesMeta": {
