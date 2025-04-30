@@ -24,7 +24,7 @@ test.describe('title-number test', async () => {
     const h3 = await page.$$('h3');
     const textList = await page.evaluate(h3 => h3.map(h => h.textContent), h3);
 
-    expect(textList).toEqual(['-22222222#', '-1111111111#', '-1111111111#']);
+    expect(textList).toEqual(['#-22222222', '#-1111111111', '#-1111111111']);
 
     const h3A = await page.$$('h3 a');
     const hrefList = await page.evaluate(
@@ -32,6 +32,6 @@ test.describe('title-number test', async () => {
       h3A,
     );
 
-    expect(hrefList).toEqual(['-22222222#', '-1111111111#', '-1111111111-1#']);
+    expect(hrefList).toEqual(['#-22222222', '#-1111111111', '#-1111111111-1']);
   });
 });
