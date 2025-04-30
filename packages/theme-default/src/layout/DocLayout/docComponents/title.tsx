@@ -5,7 +5,7 @@ export const H1 = (props: React.ComponentProps<'h1'>) => {
   return (
     <h1
       {...props}
-      className={`rspress-doc-title rspress-doc-outline rp-text-3xl rp-mb-10 rp-leading-10 rp-tracking-tight ${styles.title}`}
+      className={`rspress-doc-title rp-text-3xl rp-mb-10 rp-leading-10 rp-tracking-tight ${styles.title}`}
     />
   );
 };
