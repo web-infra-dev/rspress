@@ -1,5 +1,5 @@
 import type { Header } from '@rspress/shared';
-import { useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 
 const updateFns: Record<string, () => void> = {};
 const useForceUpdate = () => {
@@ -11,6 +11,8 @@ const distributeUpdate = () => {
     fn();
   }
 };
+
+// use the same data between Aside(desktop) and Toc(mobile), and use publisher and subscriber to avoid useContext
 const useSubScribe = () => {
   const forceUpdate = useForceUpdate();
   useEffect(() => {
@@ -22,19 +24,21 @@ const useSubScribe = () => {
   }, [forceUpdate]);
 };
 
-let observer: null | MutationObserver = null;
 const headers: Header[] = [] satisfies Header[];
-const headerIds: string[] = [];
 
 export const useDynamicToc = () => {
-  // use the same data between Aside and Toc, and use publisher and subscriber to avoid useContext
   useSubScribe();
+  return headers;
+};
 
+export const useWatchToc = () => {
+  const [innerRef, setRef] = useState<HTMLDivElement | null>(null);
   useEffect(() => {
-    const target = document.querySelector('.rspress-doc');
+    let observer: null | MutationObserver = null;
+
+    const target = innerRef;
     function updateHeaders() {
       const collectedHeaders: Header[] = [];
-      const collectedHeaderIds: string[] = [];
       const elements = target?.querySelectorAll(
         '.rspress-doc h2.rspress-doc-outline, h3.rspress-doc-outline, h4.rspress-doc-outline',
       );
@@ -49,7 +53,6 @@ export const useDynamicToc = () => {
               depth: Number.parseInt(el.tagName[1]),
               charIndex: 0,
             });
-            collectedHeaderIds.push(el.id);
             const firstChild = el.firstChild;
             el.insertBefore(ele, firstChild);
           } else {
@@ -59,15 +62,12 @@ export const useDynamicToc = () => {
               depth: Number.parseInt(el.tagName[1]),
               charIndex: 0,
             });
-            collectedHeaderIds.push(el.id);
           }
         }
       });
 
       headers.length = 0;
       headers.push(...collectedHeaders);
-      headerIds.length = 0;
-      headerIds.push(...collectedHeaderIds);
       distributeUpdate();
     }
 
@@ -116,12 +116,18 @@ export const useDynamicToc = () => {
       });
       observer.observe(target, { childList: true, subtree: true });
     }
-
     return () => {
       observer?.disconnect();
       observer = null;
     };
-  }, []);
+  }, [innerRef]);
 
-  return headers;
+  const ref = useCallback(
+    (ref: HTMLDivElement | null) => {
+      setRef(ref);
+    },
+    [setRef],
+  );
+
+  return ref;
 };

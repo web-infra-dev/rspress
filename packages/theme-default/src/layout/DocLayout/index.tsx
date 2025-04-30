@@ -4,6 +4,7 @@ import { Overview, ScrollToTop, getCustomMDXComponent } from '@theme';
 import { slug } from 'github-slugger';
 import { useMemo, useState } from 'react';
 import { Aside } from '../../components/Aside';
+import { useWatchToc } from '../../components/Aside/useDynamicToc';
 import { DocFooter } from '../../components/DocFooter';
 import { Sidebar } from '../../components/Sidebar';
 import { SidebarMenu } from '../../components/SidebarMenu';
@@ -85,6 +86,8 @@ export function DocLayout(props: DocLayoutProps) {
 
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
 
+  const rspressDocRef = useWatchToc();
+
   return (
     <div
       className={`${styles.docLayout} rp-pt-0`}
@@ -121,7 +124,7 @@ export function DocLayout(props: DocLayoutProps) {
               </>
             ) : (
               <>
-                <div className="rspress-doc">
+                <div className="rspress-doc" ref={rspressDocRef}>
                   {beforeDocContent}
                   {fallbackTitle}
                   {docContent}
