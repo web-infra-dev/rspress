@@ -1,7 +1,7 @@
-import { usePageData } from '@rspress/runtime';
 import type { Header } from '@rspress/shared';
 import './index.css';
 import { renderInlineMarkdown } from '../../logic/utils';
+import { useDynamicToc } from '../Aside/useDynamicToc';
 import { Link } from '../Link';
 
 const TocItem = ({
@@ -36,11 +36,11 @@ export function Toc({
 }: {
   onItemClick?: (header: Header) => void;
 }) {
-  const { page } = usePageData();
+  const headers = useDynamicToc();
   return (
-    page.toc.length > 0 && (
+    headers.length > 0 && (
       <ul>
-        {page.toc.map(item => (
+        {headers.map(item => (
           <TocItem key={item.id} header={item} onItemClick={onItemClick} />
         ))}
       </ul>

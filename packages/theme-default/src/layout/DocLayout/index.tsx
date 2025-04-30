@@ -4,6 +4,7 @@ import { Overview, ScrollToTop, getCustomMDXComponent } from '@theme';
 import { slug } from 'github-slugger';
 import { useMemo, useState } from 'react';
 import { Aside } from '../../components/Aside';
+import { useWatchToc } from '../../components/Aside/useDynamicToc';
 import { DocFooter } from '../../components/DocFooter';
 import { Sidebar } from '../../components/Sidebar';
 import { SidebarMenu } from '../../components/SidebarMenu';
@@ -47,9 +48,8 @@ export function DocLayout(props: DocLayoutProps) {
     components,
   } = props;
   const { siteData, page } = usePageData();
-  const { headingTitle, title, toc = [], frontmatter } = page;
+  const { headingTitle, title, frontmatter } = page;
   const [tabData, setTabData] = useState({});
-  const headers = toc;
   const { themeConfig } = siteData;
   const enableScrollToTop = themeConfig.enableScrollToTop ?? false;
   const localesData = useLocaleSiteData();
@@ -85,6 +85,8 @@ export function DocLayout(props: DocLayoutProps) {
   }, [headingTitle, title, siteData.themeConfig.fallbackHeadingTitle]);
 
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
+
+  const rspressDocRef = useWatchToc();
 
   return (
     <div
@@ -122,7 +124,7 @@ export function DocLayout(props: DocLayoutProps) {
               </>
             ) : (
               <>
-                <div className="rspress-doc">
+                <div className="rspress-doc" ref={rspressDocRef}>
                   {beforeDocContent}
                   {fallbackTitle}
                   {docContent}
@@ -141,7 +143,7 @@ export function DocLayout(props: DocLayoutProps) {
               <ScrollToTop />
             </NoSSR>
           )}
-          {uiSwitch?.showAside && headers.length > 0 && (
+          {uiSwitch?.showAside && (
             <div
               className={styles.asideContainer}
               style={
@@ -151,7 +153,7 @@ export function DocLayout(props: DocLayoutProps) {
               }
             >
               {beforeOutline}
-              <Aside headers={headers} outlineTitle={outlineTitle} />
+              <Aside outlineTitle={outlineTitle} />
               {afterOutline}
             </div>
           )}
