@@ -1,18 +1,37 @@
 import type { Header } from '@rspress/shared';
 import { useEffect, useState } from 'react';
 
-export const useDynamicToc = () => {
-  // const headers: Header[] = [] satisfies Header[];
-  // const headerIds: string[] = [];
-  const [headers, setHeaders] = useState<Header[]>([]);
-
-  // use the same data between Aside and Toc, and use publisher and subscriber to avoid useContext
-  const target =
-    typeof document === 'undefined'
-      ? null
-      : document?.querySelector('.rspress-doc');
+const updateFns: Record<string, () => void> = {};
+const useForceUpdate = () => {
+  const [, setTick] = useState(0);
+  return () => setTick(tick => tick + 1);
+};
+const distributeUpdate = () => {
+  for (const fn of Object.values(updateFns)) {
+    fn();
+  }
+};
+const useSubScribe = () => {
+  const forceUpdate = useForceUpdate();
   useEffect(() => {
-    let observer: null | MutationObserver = null;
+    const id = Math.random().toString(36).slice(2);
+    updateFns[id] = forceUpdate;
+    return () => {
+      delete updateFns[id];
+    };
+  }, [forceUpdate]);
+};
+
+let observer: null | MutationObserver = null;
+const headers: Header[] = [] satisfies Header[];
+const headerIds: string[] = [];
+
+export const useDynamicToc = () => {
+  // use the same data between Aside and Toc, and use publisher and subscriber to avoid useContext
+  useSubScribe();
+
+  useEffect(() => {
+    const target = document.querySelector('.rspress-doc');
     function updateHeaders() {
       const collectedHeaders: Header[] = [];
       const collectedHeaderIds: string[] = [];
@@ -22,35 +41,41 @@ export const useDynamicToc = () => {
       elements?.forEach(el => {
         if (el) {
           const ele = el.querySelector('.header-anchor');
-          ele && el.removeChild(ele);
-          collectedHeaders.push({
-            id: el.id,
-            text: el.innerHTML,
-            depth: Number.parseInt(el.tagName[1]),
-            charIndex: 0,
-          });
-          collectedHeaderIds.push(el.id);
-          const firstChild = el.firstChild;
           if (ele) {
-            if (firstChild) {
-              el.insertBefore(firstChild, ele);
-            } else {
-              el.appendChild(ele);
-            }
+            el.removeChild(ele);
+            collectedHeaders.push({
+              id: el.id,
+              text: el.innerHTML,
+              depth: Number.parseInt(el.tagName[1]),
+              charIndex: 0,
+            });
+            collectedHeaderIds.push(el.id);
+            const firstChild = el.firstChild;
+            el.insertBefore(ele, firstChild);
+          } else {
+            collectedHeaders.push({
+              id: el.id,
+              text: el.innerHTML,
+              depth: Number.parseInt(el.tagName[1]),
+              charIndex: 0,
+            });
+            collectedHeaderIds.push(el.id);
           }
         }
       });
 
-      setHeaders(collectedHeaders);
+      headers.length = 0;
+      headers.push(...collectedHeaders);
+      headerIds.length = 0;
+      headerIds.push(...collectedHeaderIds);
+      distributeUpdate();
     }
 
     if (target) {
       updateHeaders();
     }
 
-    const observerHasNotBeenCreated = !observer;
-
-    if (target && observerHasNotBeenCreated) {
+    if (target && !observer) {
       observer = new MutationObserver(mutationList => {
         let needUpdate: boolean = false;
         for (const mutation of mutationList) {
@@ -93,12 +118,10 @@ export const useDynamicToc = () => {
     }
 
     return () => {
-      if (target && observerHasNotBeenCreated) {
-        observer?.disconnect();
-        observer = null;
-      }
+      observer?.disconnect();
+      observer = null;
     };
-  }, [target]);
+  }, []);
 
   return headers;
 };
