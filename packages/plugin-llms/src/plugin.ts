@@ -336,7 +336,7 @@ export function pluginLlms(options: Options = {}): RspressPlugin {
           ? locales
               .filter(i => Boolean(i.nav))
               .map(i => ({ nav: i.nav, lang: i.lang }))
-          : [{ nav: config.themeConfig?.nav, lang: config.lang }]
+          : [{ nav: config.themeConfig?.nav, lang: config.lang ?? '' }]
       ) as {
         nav: Nav;
         lang: string;
@@ -345,7 +345,7 @@ export function pluginLlms(options: Options = {}): RspressPlugin {
 
       titleRef.current = config.title;
       descriptionRef.current = config.description;
-      langRef.current = config.lang;
+      langRef.current = config.lang ?? '';
       baseRef.current = config.base ?? '/';
       docDirectoryRef.current = config.root ?? 'docs';
     },
