@@ -90,7 +90,10 @@ test.describe('custom headers', async () => {
 
     const htmlContent = await page.content();
     expect(htmlContent).toContain(
-      '<meta name="custom-meta" content="custom-meta-content"><meta name="custom-meta-2" content="custom-meta-content-2">',
+      '<meta name="custom-meta" content="custom-meta-content">',
+    );
+    expect(htmlContent).toContain(
+      '<meta name="custom-meta-2" content="custom-meta-content-2">',
     );
   });
 });
