@@ -37,12 +37,12 @@
     "@rspress/shared": "workspace:*"
   },
   "devDependencies": {
-    "@microsoft/api-extractor": "^7.52.5",
-    "@rslib/core": "0.6.7",
+    "@microsoft/api-extractor": "^7.52.7",
+    "@rslib/core": "0.6.8",
     "@rspress/config": "workspace:*",
     "@types/node": "^18.11.17",
-    "@types/react": "^18.3.20",
-    "@types/react-dom": "^18.3.6",
+    "@types/react": "^18.3.21",
+    "@types/react-dom": "^18.3.7",
     "execa": "8.0.1",
     "react": "^19.1.0",
     "rsbuild-plugin-publint": "^0.3.1",
