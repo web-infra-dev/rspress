@@ -285,12 +285,6 @@ async function createInternalBuildConfig(
         if (isServer) {
           chain.output.filename(NODE_SSR_BUNDLE_NAME);
         }
-
-        const enableIncremental =
-          !isProduction() && !process.env.DISABLE_RSPACK_INCREMENTAL;
-        if (enableIncremental) {
-          chain.merge({ experiments: { incremental: true } });
-        }
       },
     },
     environments: {
