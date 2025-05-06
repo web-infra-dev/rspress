@@ -22,11 +22,11 @@ export function ClientApp({
       <DataContext.Provider
         value={useMemo(() => ({ data, setData }), [data, setData])}
       >
-        <UnheadProvider head={head}>
-          <BrowserRouter>
+        <BrowserRouter>
+          <UnheadProvider head={head}>
             <App />
-          </BrowserRouter>
-        </UnheadProvider>
+          </UnheadProvider>
+        </BrowserRouter>
       </DataContext.Provider>
     </ThemeContext.Provider>
   );
