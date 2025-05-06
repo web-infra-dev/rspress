@@ -41,7 +41,7 @@
     "check-dependency-version-consistency": "^5.0.0",
     "cross-env": "^7.0.3",
     "cross-spawn": "^7.0.6",
-    "cspell": "^8.17.5",
+    "cspell": "^8.19.4",
     "cspell-ban-words": "^0.0.4",
     "get-port": "5.1.1",
     "heading-case": "^0.1.6",
