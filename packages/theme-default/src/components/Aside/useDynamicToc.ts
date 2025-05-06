@@ -26,53 +26,83 @@ const useSubScribe = () => {
 
 const headers: Header[] = [] satisfies Header[];
 
+function isElementOnlyVisible(element: Element): boolean {
+  const style = window.getComputedStyle(element);
+  return (
+    style.display !== 'none' &&
+    style.opacity !== '0' &&
+    style.visibility !== 'hidden'
+  );
+}
+
+/**
+ * edge case: for users who use `display: none` to hide the element
+ */
+function isElementVisible(element: Element): boolean {
+  let currentElement: Element | null = element;
+  const rootElement = document.querySelector('.rspress-doc');
+  while (currentElement) {
+    if (isElementOnlyVisible(currentElement)) {
+      currentElement = currentElement.parentElement;
+      if (currentElement === rootElement) {
+        return true;
+      }
+    } else {
+      return false;
+    }
+  }
+  return true;
+}
+
 export const useDynamicToc = () => {
   useSubScribe();
   return headers;
 };
 
+function updateHeaders(target: Element) {
+  const collectedHeaders: Header[] = [];
+  const elements = target?.querySelectorAll(
+    '.rspress-doc h2.rspress-doc-outline, h3.rspress-doc-outline, h4.rspress-doc-outline',
+  );
+  elements?.forEach(el => {
+    if (el && isElementVisible(el)) {
+      const ele = el.querySelector('.header-anchor');
+      if (ele) {
+        el.removeChild(ele);
+        collectedHeaders.push({
+          id: el.id,
+          text: el.innerHTML,
+          depth: Number.parseInt(el.tagName[1]),
+          charIndex: 0,
+        });
+        const firstChild = el.firstChild;
+        el.insertBefore(ele, firstChild);
+      } else {
+        collectedHeaders.push({
+          id: el.id,
+          text: el.innerHTML,
+          depth: Number.parseInt(el.tagName[1]),
+          charIndex: 0,
+        });
+      }
+    }
+  });
+
+  headers.length = 0;
+  headers.push(...collectedHeaders);
+  distributeUpdate();
+}
+
 export const useWatchToc = () => {
   const [innerRef, setRef] = useState<HTMLDivElement | null>(null);
+
   useEffect(() => {
     let observer: null | MutationObserver = null;
 
     const target = innerRef;
-    function updateHeaders() {
-      const collectedHeaders: Header[] = [];
-      const elements = target?.querySelectorAll(
-        '.rspress-doc h2.rspress-doc-outline, h3.rspress-doc-outline, h4.rspress-doc-outline',
-      );
-      elements?.forEach(el => {
-        if (el) {
-          const ele = el.querySelector('.header-anchor');
-          if (ele) {
-            el.removeChild(ele);
-            collectedHeaders.push({
-              id: el.id,
-              text: el.innerHTML,
-              depth: Number.parseInt(el.tagName[1]),
-              charIndex: 0,
-            });
-            const firstChild = el.firstChild;
-            el.insertBefore(ele, firstChild);
-          } else {
-            collectedHeaders.push({
-              id: el.id,
-              text: el.innerHTML,
-              depth: Number.parseInt(el.tagName[1]),
-              charIndex: 0,
-            });
-          }
-        }
-      });
-
-      headers.length = 0;
-      headers.push(...collectedHeaders);
-      distributeUpdate();
-    }
 
     if (target) {
-      updateHeaders();
+      updateHeaders(target);
     }
 
     if (target && !observer) {
@@ -82,7 +112,7 @@ export const useWatchToc = () => {
           mutation.addedNodes.forEach(node => {
             if (
               'tagName' in node &&
-              ['H2', 'H3', 'H4'].includes((node as HTMLHeadingElement)?.tagName)
+              ['H2', 'H3', 'H4'].includes((node as HTMLHeadingElement).tagName)
             ) {
               needUpdate = true;
             }
@@ -98,7 +128,7 @@ export const useWatchToc = () => {
           mutation.removedNodes.forEach(node => {
             if (
               'tagName' in node &&
-              ['H2', 'H3', 'H4'].includes((node as HTMLHeadingElement)?.tagName)
+              ['H2', 'H3', 'H4'].includes((node as HTMLHeadingElement).tagName)
             ) {
               needUpdate = true;
             }
@@ -112,7 +142,7 @@ export const useWatchToc = () => {
             });
           });
         }
-        needUpdate && updateHeaders();
+        needUpdate && updateHeaders(target);
       });
       observer.observe(target, { childList: true, subtree: true });
     }
