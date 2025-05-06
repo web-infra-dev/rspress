@@ -42,7 +42,7 @@
   },
   "devDependencies": {
     "@babel/types": "^7.27.1",
-    "@rsbuild/plugin-react": "~1.1.1",
+    "@rsbuild/plugin-react": "~1.3.0",
     "@rslib/core": "0.6.8",
     "@rspress/plugin-playground": "workspace:*",
     "@types/babel__core": "^7.20.5",
