@@ -41,8 +41,8 @@
     "reset": "rimraf ./**/node_modules"
   },
   "dependencies": {
-    "@dr.pogodin/react-helmet": "2.0.4",
     "@rspress/shared": "workspace:*",
+    "@unhead/react": "^2.0.0",
     "react": "^19.1.0",
     "react-dom": "^19.1.0",
     "react-router-dom": "^6.29.0"

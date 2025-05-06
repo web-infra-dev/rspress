@@ -1,12 +1,13 @@
 import 'nprogress/nprogress.css';
 import '../../styles';
-import { Helmet } from '@dr.pogodin/react-helmet';
 import { Content, usePageData } from '@rspress/runtime';
 import {
   HomeLayout as DefaultHomeLayout,
   NotFoundLayout as DefaultNotFoundLayout,
   Nav,
 } from '@theme';
+import { useHead } from '@unhead/react';
+import { Head } from '@unhead/react';
 import type React from 'react';
 import type { NavProps } from '../../components/Nav';
 import { useSetup } from '../../logic/sideEffects';
@@ -155,16 +156,18 @@ export function Layout(props: LayoutProps) {
     }
   };
 
+  useHead({
+    htmlAttrs: {
+      lang: currentLang || 'en',
+    },
+  });
+
   return (
     <>
-      <Helmet
-        htmlAttributes={{
-          lang: currentLang || 'en',
-        }}
-      >
+      <Head>
         {title ? <title>{title}</title> : null}
         {description ? <meta name="description" content={description} /> : null}
-      </Helmet>
+      </Head>
       {top}
 
       {pageType !== 'blank' && uiSwitch.showNavbar && (

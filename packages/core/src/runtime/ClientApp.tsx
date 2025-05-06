@@ -1,8 +1,11 @@
 import { BrowserRouter, DataContext, ThemeContext } from '@rspress/runtime';
 import type { PageData } from '@rspress/shared';
 import { useThemeState } from '@theme';
+import { UnheadProvider, createHead } from '@unhead/react/client';
 import { useMemo, useState } from 'react';
 import { App } from './App';
+
+const head = createHead();
 
 // eslint-disable-next-line import/no-commonjs
 
@@ -19,9 +22,11 @@ export function ClientApp({
       <DataContext.Provider
         value={useMemo(() => ({ data, setData }), [data, setData])}
       >
-        <BrowserRouter>
-          <App />
-        </BrowserRouter>
+        <UnheadProvider head={head}>
+          <BrowserRouter>
+            <App />
+          </BrowserRouter>
+        </UnheadProvider>
       </DataContext.Provider>
     </ThemeContext.Provider>
   );

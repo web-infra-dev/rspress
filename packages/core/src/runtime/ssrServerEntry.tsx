@@ -1,7 +1,9 @@
 import { DataContext, ThemeContext } from '@rspress/runtime';
 import { StaticRouter } from '@rspress/runtime/server';
 import type { PageData } from '@rspress/shared';
+import { type Unhead, UnheadProvider } from '@unhead/react/server';
 import { renderToString } from 'react-dom/server';
+
 import { App } from './App';
 import { initPageData } from './initPageData';
 
@@ -9,7 +11,7 @@ const DEFAULT_THEME = 'light';
 
 export async function render(
   pagePath: string,
-  helmetContext: object,
+  head: Unhead,
 ): Promise<{ appHtml: string; pageData: PageData }> {
   const initialPageData = await initPageData(pagePath);
 
@@ -17,7 +19,9 @@ export async function render(
     <ThemeContext.Provider value={{ theme: DEFAULT_THEME }}>
       <DataContext.Provider value={{ data: initialPageData }}>
         <StaticRouter location={pagePath}>
-          <App helmetContext={helmetContext} />
+          <UnheadProvider value={head}>
+            <App />
+          </UnheadProvider>
         </StaticRouter>
       </DataContext.Provider>
     </ThemeContext.Provider>,

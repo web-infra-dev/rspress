@@ -37,5 +37,5 @@ export {
   pathnameToRouteService,
   normalizeRoutePath,
 } from './route';
-export { Helmet } from '@dr.pogodin/react-helmet';
+export { Head } from '@unhead/react';
 export { NoSSR } from './NoSSR';
