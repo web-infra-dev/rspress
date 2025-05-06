@@ -319,19 +319,25 @@ export function pluginLlms(options: Options = {}): RspressPlugin {
       }
     },
     beforeBuild(config) {
-      const configSidebar = config?.themeConfig?.locales
-        ?.map(i => i.sidebar)
-        .reduce((prev: Sidebar, curr) => {
-          Object.assign(prev, curr);
-          return prev;
-        }, {} as Sidebar);
+      const locales = config.themeConfig?.locales;
+      const isMultiLang = locales && locales.length > 0;
+      const sidebars = isMultiLang
+        ? locales.map(i => i.sidebar)
+        : [config.themeConfig?.sidebar];
+
+      const configSidebar = sidebars.reduce((prev: Sidebar, curr) => {
+        Object.assign(prev, curr);
+        return prev;
+      }, {} as Sidebar);
       Object.assign(sidebar, configSidebar);
 
-      const configNav = config.themeConfig?.locales
-        ?.filter(i => Boolean(i.nav))
-        ?.map(i => {
-          return { nav: i.nav, lang: i.lang };
-        }) as {
+      const configNav = (
+        isMultiLang
+          ? locales
+              .filter(i => Boolean(i.nav))
+              .map(i => ({ nav: i.nav, lang: i.lang }))
+          : [{ nav: config.themeConfig?.nav, lang: config.lang ?? '' }]
+      ) as {
         nav: Nav;
         lang: string;
       }[];
@@ -339,7 +345,7 @@ export function pluginLlms(options: Options = {}): RspressPlugin {
 
       titleRef.current = config.title;
       descriptionRef.current = config.description;
-      langRef.current = config.lang;
+      langRef.current = config.lang ?? '';
       baseRef.current = config.base ?? '/';
       docDirectoryRef.current = config.root ?? 'docs';
     },
