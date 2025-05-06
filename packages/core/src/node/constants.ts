@@ -57,8 +57,6 @@ export const OUTPUT_DIR = 'doc_build';
 export const APP_HTML_MARKER = '<!--<?- DOC_CONTENT ?>-->';
 export const HEAD_MARKER = '<!--<?- HEAD ?>-->';
 export const META_GENERATOR = '<!--<?- GENERATOR ?>-->';
-export const HTML_START_TAG = '<html';
-export const BODY_START_TAG = '<body';
 
 export const DEFAULT_TITLE = 'Rspress';
 

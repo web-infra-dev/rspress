@@ -10,12 +10,12 @@ test('title suffix', async () => {
   expect(
     (
       await readFile(path.join(appDir, 'doc_build/index.html'), 'utf-8')
-    ).includes('<title data-rh="true">Default Title - Index Suffix</title>'),
+    ).includes('<title>Default Title - Index Suffix</title>'),
   ).toBeTruthy();
 
   expect(
     (await readFile(path.join(appDir, 'doc_build/foo.html'), 'utf-8')).includes(
-      '<title data-rh="true">Foo | Foo Suffix</title>',
+      '<title>Foo | Foo Suffix</title>',
     ),
   ).toBeTruthy();
 });

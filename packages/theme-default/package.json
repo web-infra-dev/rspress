@@ -44,10 +44,10 @@
     "reset": "rimraf ./**/node_modules"
   },
   "dependencies": {
-    "@dr.pogodin/react-helmet": "2.0.4",
     "@mdx-js/react": "2.3.0",
     "@rspress/runtime": "workspace:*",
     "@rspress/shared": "workspace:*",
+    "@unhead/react": "^2.0.0",
     "body-scroll-lock": "4.0.0-beta.0",
     "copy-to-clipboard": "^3.3.3",
     "flexsearch": "0.7.43",

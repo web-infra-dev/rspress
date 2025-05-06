@@ -1,4 +1,3 @@
-import { HelmetProvider } from '@dr.pogodin/react-helmet';
 import { DataContext, useLocation } from '@rspress/runtime';
 import { Layout } from '@theme';
 import React, { useContext, useLayoutEffect } from 'react';
@@ -11,7 +10,7 @@ enum QueryStatus {
   Hide = '0',
 }
 
-export function App({ helmetContext }: { helmetContext?: object }) {
+export function App() {
   const { setData: setPageData, data } = useContext(DataContext);
   const { pathname, search } = useLocation();
   useLayoutEffect(() => {
@@ -41,7 +40,7 @@ export function App({ helmetContext }: { helmetContext?: object }) {
     query.get(GLOBAL_COMPONENTS_KEY) === QueryStatus.Hide;
 
   return (
-    <HelmetProvider context={helmetContext}>
+    <>
       <Layout />
       {
         // Global UI
@@ -64,6 +63,6 @@ export function App({ helmetContext }: { helmetContext?: object }) {
             });
           })
       }
-    </HelmetProvider>
+    </>
   );
 }

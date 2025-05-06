@@ -1,7 +1,12 @@
 import type { PluginDriver } from '../PluginDriver';
 
 import { pathToFileURL } from 'node:url';
-import { HelmetData } from '@dr.pogodin/react-helmet';
+import {
+  type Unhead,
+  createHead,
+  transformHtmlTemplate,
+} from '@unhead/react/server';
+
 import {
   type PageData,
   type Route,
@@ -13,9 +18,7 @@ import { logger } from '@rspress/shared/logger';
 import picocolors from 'picocolors';
 import {
   APP_HTML_MARKER,
-  BODY_START_TAG,
   HEAD_MARKER,
-  HTML_START_TAG,
   META_GENERATOR,
   RSPRESS_VERSION,
 } from '../constants';
@@ -26,8 +29,8 @@ import { renderConfigHead, renderFrontmatterHead } from './renderHead';
 
 interface SSRBundleExports {
   render: (
-    url: string,
-    helmetContext: object,
+    pagePath: string,
+    head: Unhead,
   ) => Promise<{ appHtml: string; pageData: PageData }>;
   routes: Route[];
 }
@@ -84,12 +87,12 @@ export async function renderPages(
           return !route.routePath.includes(':');
         })
         .map(async route => {
-          const helmetContext = new HelmetData({});
+          const head = createHead();
           const { routePath } = route;
           let appHtml = '';
           if (render) {
             try {
-              ({ appHtml } = await render(routePath, helmetContext.context));
+              ({ appHtml } = await render(routePath, head));
             } catch (e) {
               logger.error(
                 `Page "${picocolors.yellow(routePath)}" SSG rendering failed.`,
@@ -99,8 +102,7 @@ export async function renderPages(
             }
           }
 
-          const { helmet } = helmetContext.context;
-          let html = htmlTemplate
+          const replacedHtmlTemplate = htmlTemplate
             // During ssr, we already have the title in react-helmet
             .replace(/<title>(.*?)<\/title>/gi, '')
             // Don't use `string` as second param
@@ -115,27 +117,10 @@ export async function renderPages(
               HEAD_MARKER,
               [
                 await renderConfigHead(config, route),
-                helmet.title.toString(),
-                helmet.meta.toString(),
-                helmet.link.toString(),
-                helmet.style.toString(),
-                helmet.script.toString(),
                 await renderFrontmatterHead(route),
               ].join(''),
             );
-          if (helmet.htmlAttributes) {
-            html = html.replace(
-              HTML_START_TAG,
-              `${HTML_START_TAG} ${helmet.htmlAttributes?.toString()}`,
-            );
-          }
-
-          if (helmet.bodyAttributes) {
-            html = html.replace(
-              BODY_START_TAG,
-              `${BODY_START_TAG} ${helmet.bodyAttributes?.toString()}`,
-            );
-          }
+          const html = await transformHtmlTemplate(head, replacedHtmlTemplate);
 
           const normalizeHtmlFilePath = (path: string) => {
             const normalizedBase = `${normalizeSlash(config?.base || '/')}/`;
