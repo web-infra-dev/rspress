@@ -43,7 +43,7 @@ export function Aside({ outlineTitle }: { outlineTitle: string }) {
   const headers = useDynamicToc();
 
   // For outline text highlight
-  const baseHeaderLevel = headers[0]?.depth || 2;
+  const baseHeaderLevel = 2;
 
   const { hash: locationHash = '', pathname } = useLocation();
   const decodedHash: string = useMemo(
@@ -81,9 +81,9 @@ export function Aside({ outlineTitle }: { outlineTitle: string }) {
         </div>
         <nav className="rp-mt-1">
           <ul className="rp-relative">
-            {headers.map(header => (
+            {headers.map((header, index) => (
               <TocItem
-                key={`${header.depth}_${header.text}_${header.id}`}
+                key={`${header.depth}_${header.text}_${header.id}_${index}`}
                 baseHeaderLevel={baseHeaderLevel}
                 header={header}
               />
