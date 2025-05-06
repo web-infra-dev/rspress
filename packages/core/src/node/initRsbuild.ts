@@ -154,6 +154,7 @@ async function createInternalBuildConfig(
       },
     },
     dev: {
+      lazyCompilation: true,
       progressBar: false,
       // Serve static files
       setupMiddlewares: [
