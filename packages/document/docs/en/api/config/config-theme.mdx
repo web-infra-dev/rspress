@@ -736,10 +736,10 @@ export default defineConfig({
 
 ## localeRedirect
 
-- Type: `'auto' | 'never'`
+- Type: `'auto' | 'never' | 'only-default-lang'`
 - Default: `'auto'`
 
-Whether to redirect to the locale closest to `window.navigator.language` when the user visits the site, the default is `auto`, which means that the user will be redirected on the first visit. If you set it to `never`, the user will not be redirected. For example:
+Whether to redirect to the locale closest to `window.navigator.language` when the user visits the site, the default is `auto`, which means that the user will be redirected on the first visit. If you set it to `never`, the user will not be redirected. If you set it to `only-default-lang`, the user will only be redirected when visiting the default locale. For example:
 
 ```ts title="rspress.config.ts"
 import { defineConfig } from 'rspress/config';

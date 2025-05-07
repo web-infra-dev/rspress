@@ -13,7 +13,7 @@ export function useRedirect4FirstVisit() {
 
   useEffect(() => {
     const localeRedirect = siteData.themeConfig.localeRedirect ?? 'auto';
-    if (localeRedirect !== 'auto') {
+    if (localeRedirect === 'never') {
       return;
     }
 
@@ -50,15 +50,15 @@ export function useRedirect4FirstVisit() {
     if (targetLang === currentLang) {
       return;
     }
-    let newPath: string;
+    let newPath: string | undefined;
     if (targetLang === defaultLang) {
       // Redirect to the default language
       newPath = pathname.replace(`/${currentLang}`, '');
     } else if (currentLang === defaultLang) {
-      // Redirect to the current language
+      // Redirect to the target language
       newPath = withBase(`/${targetLang}${cleanPathname}`);
-    } else {
-      // Redirect to the current language
+    } else if (localeRedirect === 'auto') {
+      // Redirect to the target language
       newPath = pathname.replace(`/${currentLang}`, `/${targetLang}`);
     }
     if (newPath) {
