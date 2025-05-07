@@ -758,6 +758,9 @@ importers:
       '@rspress/theme-default':
         specifier: workspace:*
         version: link:../theme-default
+      '@types/unist':
+        specifier: ^3.0.0
+        version: 3.0.2
       '@unhead/react':
         specifier: ^2.0.0
         version: 2.0.8(react@19.1.0)

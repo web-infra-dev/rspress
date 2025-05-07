@@ -57,7 +57,7 @@ export default defineConfig({
       syntax: 'es2022',
       source: {
         entry: {
-          index: './src/runtime/*',
+          index: './src/runtime/*.{tsx,ts}',
         },
         tsconfigPath: './src/runtime/tsconfig.json',
       },
