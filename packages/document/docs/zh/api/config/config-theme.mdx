@@ -663,10 +663,10 @@ export default defineConfig({
 
 ## localeRedirect
 
-- Type: `'auto' | 'never'`
+- Type: `'auto' | 'never' | 'only-default-lang'`
 - Default: `'auto'`
 
-是否在访问网站时重定向到最接近 `window.navigator.language` 的语言，默认为 `auto` 表示首次访问时将重定向，`never` 表示不重定向。比如:
+是否在访问网站时重定向到最接近 `window.navigator.language` 的语言，默认为 `auto` 表示首次访问时将重定向，`never` 表示不重定向，`only-default-lang` 表示仅在访问默认语言时重定向。比如:
 
 ```ts title="rspress.config.ts"
 import { defineConfig } from 'rspress/config';
