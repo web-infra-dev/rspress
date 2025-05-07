@@ -114,7 +114,7 @@ export interface Config {
    * Whether to redirect to the closest locale when the user visits the site
    * @default 'auto'
    */
-  localeRedirect?: 'auto' | 'never';
+  localeRedirect?: 'auto' | 'never' | 'only-default-lang';
   /**
    * Whether to show the fallback heading title when the heading title is not presented but `frontmatter.title` exists
    * @default true
