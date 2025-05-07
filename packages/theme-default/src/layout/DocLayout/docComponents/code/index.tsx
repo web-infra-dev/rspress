@@ -14,7 +14,7 @@ export interface CodeProps {
   meta?: string;
 }
 
-export function Code(props: CodeProps) {
+export function Code(props: CodeProps & React.HTMLProps<HTMLElement>) {
   const { siteData } = usePageData();
   const codeHighlighter =
     props.codeHighlighter ?? siteData.markdown.codeHighlighter;

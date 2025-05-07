@@ -6,8 +6,18 @@ import { SvgWrapper } from '../../../../components/SvgWrapper';
 import { CopyCodeButton } from './CopyCodeButton';
 import * as styles from './index.module.scss';
 
-interface CodeButtonGroupProps extends ReturnType<typeof useCodeButtonGroup> {
+export interface CodeButtonGroupProps
+  extends ReturnType<typeof useCodeButtonGroup> {
   preElementRef: React.RefObject<HTMLPreElement>;
+
+  /**
+   * @default true
+   */
+  showCodeWrapButton?: boolean;
+  /**
+   * @default true
+   */
+  showCopyButton?: boolean;
 }
 
 export const useCodeButtonGroup = () => {
@@ -29,19 +39,25 @@ export function CodeButtonGroup({
   codeWrap,
   toggleCodeWrap,
   preElementRef,
+  showCodeWrapButton = true,
+  showCopyButton = true,
 }: CodeButtonGroupProps) {
   return (
     <>
       <div className={styles.codeButtonGroup}>
-        <button
-          className={codeWrap ? styles.wrappedBtn : ''}
-          onClick={() => toggleCodeWrap()}
-          title="Toggle code wrap"
-        >
-          <SvgWrapper icon={IconWrapped} className={styles.iconWrapped} />
-          <SvgWrapper icon={IconWrap} className={styles.iconWrap} />
-        </button>
-        <CopyCodeButton codeBlockRef={preElementRef as any} />
+        {showCodeWrapButton && (
+          <button
+            className={codeWrap ? styles.wrappedBtn : ''}
+            onClick={() => toggleCodeWrap()}
+            title="Toggle code wrap"
+          >
+            <SvgWrapper icon={IconWrapped} className={styles.iconWrapped} />
+            <SvgWrapper icon={IconWrap} className={styles.iconWrap} />
+          </button>
+        )}
+        {showCopyButton && (
+          <CopyCodeButton codeBlockRef={preElementRef as any} />
+        )}
       </div>
     </>
   );

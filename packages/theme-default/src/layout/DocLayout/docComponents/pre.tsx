@@ -1,7 +1,11 @@
 import { usePageData } from '@rspress/runtime';
 import { useRef } from 'react';
 import type { CodeProps } from './code';
-import { CodeButtonGroup, useCodeButtonGroup } from './code/CodeButtonGroup';
+import {
+  CodeButtonGroup,
+  type CodeButtonGroupProps,
+  useCodeButtonGroup,
+} from './code/CodeButtonGroup';
 
 const DEFAULT_LANGUAGE_CLASS = 'language-bash';
 
@@ -19,21 +23,24 @@ export function parseTitleFromMeta(meta: string | undefined): string {
   return result?.replace(/["'`]/g, '');
 }
 
+type ShikiPreProps = {
+  codeElementClassName: string | undefined;
+  codeTitle: string | undefined;
+  child: React.ReactElement;
+  preElementRef: React.RefObject<HTMLPreElement>;
+  className: string | undefined;
+  codeButtonGroupProps?: CodeButtonGroupProps;
+} & React.HTMLProps<HTMLPreElement>;
+
 function ShikiPre({
   child,
   codeElementClassName,
   preElementRef,
   codeTitle,
   className,
+  codeButtonGroupProps,
   ...otherProps
-}: {
-  codeElementClassName: string | undefined;
-  codeTitle: string | undefined;
-  child: React.ReactElement;
-  preElementRef: React.RefObject<HTMLPreElement>;
-  className: string | undefined;
-  [key: string]: any;
-}) {
+}: ShikiPreProps) {
   const { codeWrap, toggleCodeWrap } = useCodeButtonGroup();
   return (
     <div className={codeElementClassName ?? ''}>
@@ -54,6 +61,7 @@ function ShikiPre({
           preElementRef={preElementRef}
           codeWrap={codeWrap}
           toggleCodeWrap={toggleCodeWrap}
+          {...codeButtonGroupProps}
         />
       </div>
     </div>
@@ -64,15 +72,17 @@ export function Pre({
   children,
   className,
   title,
+  codeHighlighter: codeHighlighterFromProps,
   ...otherProps
 }: {
   children: React.ReactElement[] | React.ReactElement;
   className?: string;
   title?: string;
-  [key: string]: any;
-}) {
+  codeHighlighter?: string;
+} & ShikiPreProps) {
   const { siteData } = usePageData();
-  const codeHighlighter = siteData.markdown.codeHighlighter;
+  const codeHighlighter =
+    codeHighlighterFromProps ?? siteData.markdown.codeHighlighter;
   const preElementRef = useRef<HTMLPreElement>(null);
 
   const renderChild = (child: React.ReactElement) => {
@@ -81,12 +91,12 @@ export function Pre({
     if (codeHighlighter === 'shiki') {
       return (
         <ShikiPre
-          child={child}
           className={className}
+          {...otherProps}
+          child={child}
           codeElementClassName={codeElementClassName}
           codeTitle={title}
           preElementRef={preElementRef}
-          {...otherProps}
         />
       );
     }
