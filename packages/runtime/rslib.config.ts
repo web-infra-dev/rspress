@@ -39,6 +39,11 @@ export default defineConfig({
           js: '[name].js',
         },
       },
+      redirect: {
+        dts: {
+          extension: true,
+        },
+      },
     },
   ],
   plugins: [pluginReact(), pluginPublint()],

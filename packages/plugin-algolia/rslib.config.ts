@@ -14,6 +14,11 @@ export default defineConfig({
       dts: true,
       format: 'esm',
       syntax: 'esnext',
+      redirect: {
+        dts: {
+          extension: true,
+        },
+      },
     },
     {
       source: {

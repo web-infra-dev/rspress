@@ -60,6 +60,7 @@
     "@rspress/runtime": "workspace:*",
     "@rspress/shared": "workspace:*",
     "@rspress/theme-default": "workspace:*",
+    "@types/unist": "^3.0.0",
     "@unhead/react": "^2.0.0",
     "enhanced-resolve": "5.18.1",
     "github-slugger": "^2.0.0",
