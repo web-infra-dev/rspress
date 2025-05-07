@@ -8,7 +8,7 @@ import * as styles from './index.module.scss';
 const timeoutIdMap: Map<HTMLElement, NodeJS.Timeout> = new Map();
 
 function copyCode(
-  codeBlockElement: HTMLDivElement | null,
+  codeBlockElement: HTMLElement | null,
   copyButtonElement: HTMLButtonElement | null,
 ) {
   let text = '';
@@ -45,7 +45,7 @@ function copyCode(
 export function CopyCodeButton({
   codeBlockRef,
 }: {
-  codeBlockRef: React.RefObject<HTMLDivElement>;
+  codeBlockRef: React.RefObject<HTMLElement>;
 }) {
   const copyButtonRef = useRef<HTMLButtonElement>(null);
 
