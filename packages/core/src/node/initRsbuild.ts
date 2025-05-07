@@ -154,7 +154,7 @@ async function createInternalBuildConfig(
       },
     },
     dev: {
-      lazyCompilation: true,
+      lazyCompilation: process.env.RSPRESS_LAZY_COMPILATION !== 'false', // This is an escape hatch for playwright test, playwright does not support lazyCompilation
       progressBar: false,
       // Serve static files
       setupMiddlewares: [

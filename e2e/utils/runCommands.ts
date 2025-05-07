@@ -95,6 +95,8 @@ export async function runDevCommand(
     appDir,
     env: {
       PORT: port.toString(),
+      // This is an escape hatch for playwright test, playwright does not support lazyCompilation
+      RSPRESS_LAZY_COMPILATION: 'false',
     },
   });
 }
