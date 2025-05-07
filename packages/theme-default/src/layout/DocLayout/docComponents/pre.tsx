@@ -29,7 +29,10 @@ type ShikiPreProps = {
   child: React.ReactElement;
   preElementRef: React.RefObject<HTMLPreElement>;
   className: string | undefined;
-  codeButtonGroupProps?: CodeButtonGroupProps;
+  codeButtonGroupProps?: Omit<
+    CodeButtonGroupProps,
+    'preElementRef' | 'codeWrap' | 'toggleCodeWrap'
+  >;
 } & React.HTMLProps<HTMLPreElement>;
 
 function ShikiPre({
@@ -58,10 +61,10 @@ function ShikiPre({
           </pre>
         </div>
         <CodeButtonGroup
+          {...codeButtonGroupProps}
           preElementRef={preElementRef}
           codeWrap={codeWrap}
           toggleCodeWrap={toggleCodeWrap}
-          {...codeButtonGroupProps}
         />
       </div>
     </div>

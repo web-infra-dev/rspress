@@ -2,6 +2,7 @@ import {
   Search as PluginAlgoliaSearch,
   ZH_LOCALES,
 } from '@rspress/plugin-algolia/runtime';
+import { Announcement } from '@rstack-dev/doc-ui/announcement';
 import { NavIcon } from '@rstack-dev/doc-ui/nav-icon';
 import {
   HomeLayout as BasicHomeLayout,
@@ -11,7 +12,7 @@ import {
 import { ToolStack } from './components/ToolStack';
 
 import './index.css';
-import { useLang } from 'rspress/runtime';
+import { NoSSR, useLang } from 'rspress/runtime';
 
 function HomeLayout() {
   const { pre: Pre, code: Code } = getCustomMDXComponent();
@@ -44,7 +45,25 @@ function HomeLayout() {
 }
 
 const Layout = () => {
-  return <BasicLayout beforeNavTitle={<NavIcon />} />;
+  const lang = useLang();
+  return (
+    <BasicLayout
+      beforeNavTitle={<NavIcon />}
+      beforeNav={
+        <NoSSR>
+          <Announcement
+            href="/"
+            message={
+              lang === 'en'
+                ? '🚧 Rspress 2.0 document is under development'
+                : '🚧 Rspress 2.0 文档还在开发中'
+            }
+            localStorageKey="rspress-announcement-closed"
+          />
+        </NoSSR>
+      }
+    />
+  );
 };
 
 const Search = () => {
