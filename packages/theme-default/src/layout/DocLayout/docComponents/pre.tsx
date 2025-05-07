@@ -79,7 +79,7 @@ export function Pre({
   className?: string;
   title?: string;
   codeHighlighter?: string;
-} & ShikiPreProps) {
+} & Partial<ShikiPreProps>) {
   const { siteData } = usePageData();
   const codeHighlighter =
     codeHighlighterFromProps ?? siteData.markdown.codeHighlighter;
