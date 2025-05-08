@@ -110,6 +110,8 @@ export function useWindowSize(initialWidth?: number, initialHeight?: number) {
     const handleResize = () => {
       setSize({ width: window.innerWidth, height: window.innerHeight });
     };
+    // first initialization
+    handleResize();
     window.addEventListener('resize', handleResize);
     return () => {
       window.removeEventListener('resize', handleResize);

@@ -71,9 +71,9 @@ const Search = () => {
   return (
     <PluginAlgoliaSearch
       docSearchProps={{
-        appId: '4K97EBF08L',
-        apiKey: '1ed3abb77cf42427a1ceeef2d5ca83fd',
-        indexName: 'doc_search_rspress_pages',
+        appId: 'DIDX9ZTSBM',
+        apiKey: 'd33cfed9ffae0e79412cfc3785d3a67f',
+        indexName: 'rspress-v2-website-crawler',
         searchParameters: {
           facetFilters: [`lang:${lang}`],
         },

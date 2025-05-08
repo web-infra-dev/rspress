@@ -114,6 +114,7 @@ export function Nav(props: NavProps) {
       </div>
     );
   };
+  console.log('isMobile', isMobile);
 
   const computeNavPosition = () => {
     // On doc page we have the menu bar that is already sticky
@@ -129,7 +130,7 @@ export function Nav(props: NavProps) {
       <div
         className={`${styles.navContainer} rspress-nav rp-px-6 ${
           // Only hidden when it's not mobile
-          hiddenNav && !isMobile ? styles.hidden : ''
+          hiddenNav ? styles.hidden : ''
         } ${computeNavPosition()}`}
       >
         <div
@@ -143,7 +144,7 @@ export function Nav(props: NavProps) {
             {rightNav()}
             {afterNavMenu}
             <div className={styles.mobileNavMenu}>
-              {isMobile && hasSearch && <Search />}
+              {hasSearch && <Search />}
               <NavHamburger siteData={siteData} pathname={pathname} />
             </div>
           </div>

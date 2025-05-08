@@ -2,10 +2,12 @@
   background-color: transparent;
 }
 
-.hidden {
-  transform: translate3d(0, calc(-100%), 0);
-  background: transparent;
-  opacity: 0;
+@media (min-width: 1280px) {
+  .hidden {
+    transform: translate3d(0, calc(-100%), 0);
+    background: transparent;
+    opacity: 0;
+  }
 }
 
 .container {
