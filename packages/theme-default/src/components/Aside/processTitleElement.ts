@@ -13,13 +13,17 @@ export function processTitleElement(element: Element): Element {
     elementClone.removeChild(anchorElement);
   }
 
-  // 2. replace a elements with their text content
+  // 2. skip a element, replace a elements with their children
   const anchorElements = elementClone.querySelectorAll('a');
 
   anchorElements.forEach(anchor => {
-    const textContent = anchor.textContent || '';
-    const textNode = document.createTextNode(textContent);
-    anchor.replaceWith(textNode);
+    const tempContainer = document.createDocumentFragment();
+
+    while (anchor.firstChild) {
+      tempContainer.appendChild(anchor.firstChild);
+    }
+
+    anchor.replaceWith(tempContainer);
   });
 
   return elementClone;
