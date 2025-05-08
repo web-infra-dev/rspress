@@ -32,9 +32,7 @@ export default defineConfig({
     pluginSitemap({
       domain: siteUrl,
     }),
-    pluginAlgolia({
-      verificationContent: '8F5BFE50E65777F1',
-    }),
+    pluginAlgolia(),
     pluginShiki({
       langs: ['mdx', 'html', 'toml'],
       transformers: [

@@ -1,6 +1,31 @@
 .DocSearch {
   align-self: center;
+}
+
+:not(:has(.rp-dark)) {
+  [class*='DocSearch'] {
+    --docsearch-searchbox-background: var(--rp-c-bg-mute);
+    --docsearch-primary-color: var(--rp-c-brand);
+  }
+}
+
+.rp-dark [class*='DocSearch'] {
   --docsearch-searchbox-background: var(--rp-c-bg-mute);
+  --docsearch-searchbox-focus-background: var(--rp-c-bg-mute);
+  --docsearch-modal-shadow: none;
+  --docsearch-footer-shadow: none;
+  --docsearch-logo-color: var(--rp-c-text-2);
+  --docsearch-hit-background: var(--rp-c-dark-light-1);
+  --docsearch-hit-color: var(--rp-c-text-2);
+  --docsearch-hit-shadow: none;
+  --docsearch-modal-background: var(--rp-c-bg);
+  --docsearch-footer-background: var(--rp-c-bg);
+
+  --docsearch-key-gradient: var(--rp-c-bg);
+  --docsearch-key-shadow: var(--rp-c-bg-mute);
+  --docsearch-text-color: var(--rp-c-text-2);
+  --docsearch-muted-color: var(--rp-c-text-2);
+  --docsearch-key-pressed-shadow: none;
 }
 
 @media (max-width: 768px) {
