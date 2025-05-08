@@ -114,7 +114,6 @@ export function Nav(props: NavProps) {
       </div>
     );
   };
-  console.log('isMobile', isMobile);
 
   const computeNavPosition = () => {
     // On doc page we have the menu bar that is already sticky
