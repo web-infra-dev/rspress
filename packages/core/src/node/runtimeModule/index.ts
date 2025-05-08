@@ -16,7 +16,6 @@ export const runtimeModuleFactory: RuntimeModuleFactory[] = [
   routeVMPlugin,
   /**
    * Generate search index and site data for client runtime
-   * Also responsible for automatically importing prism languages
    */
   siteDataVMPlugin,
 ];

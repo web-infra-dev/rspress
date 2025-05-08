@@ -1,5 +1,6 @@
 import type { RsbuildConfig, RsbuildPlugin } from '@rsbuild/core';
 import type { loadConfig } from '@rsbuild/core';
+import type { RehypeShikiOptions } from '@shikijs/rehype';
 import type { ZoomOptions } from 'medium-zoom';
 import type { PluggableList } from 'unified';
 import type { AdditionalPage, RspressPlugin } from './Plugin';
@@ -209,6 +210,8 @@ export type BaseRuntimePageInfo = Omit<
   'id' | 'content' | 'domain'
 >;
 
+type PluginShikiOptions = RehypeShikiOptions;
+
 export interface SiteData<ThemeConfig = NormalizedDefaultThemeConfig> {
   root: string;
   base: string;
@@ -227,7 +230,7 @@ export interface SiteData<ThemeConfig = NormalizedDefaultThemeConfig> {
   markdown: {
     showLineNumbers: boolean;
     defaultWrapCode: boolean;
-    codeHighlighter: 'prism' | 'shiki';
+    shiki: Partial<PluginShikiOptions>;
   };
   multiVersion: {
     default: string;
@@ -409,13 +412,9 @@ export interface MarkdownOptions {
    */
   globalComponents?: string[];
   /**
-   * Code highlighter, default is prism for performance reason
+   * @type import('@shikijs/rehype').RehypeShikiOptions
    */
-  codeHighlighter?: 'prism' | 'shiki';
-  /**
-   * Register prism languages
-   */
-  highlightLanguages?: (string | [string, string])[];
+  shiki?: Partial<PluginShikiOptions>;
 }
 
 export type Config =

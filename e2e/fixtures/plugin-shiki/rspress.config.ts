@@ -1,5 +1,4 @@
 import path from 'node:path';
-import { pluginShiki, transformerLineNumber } from '@rspress/plugin-shiki';
 import {
   transformerNotationDiff,
   transformerNotationErrorLevel,
@@ -10,15 +9,15 @@ import { defineConfig } from 'rspress/config';
 
 export default defineConfig({
   root: path.join(__dirname, 'doc'),
-  plugins: [
-    pluginShiki({
+  markdown: {
+    showLineNumbers: true,
+    shiki: {
       transformers: [
-        transformerLineNumber(),
         transformerNotationDiff(),
         transformerNotationErrorLevel(),
         transformerNotationHighlight(),
         transformerNotationFocus(),
       ],
-    }),
-  ],
+    },
+  },
 });

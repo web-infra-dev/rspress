@@ -57,6 +57,7 @@
     "@rspress/plugin-container-syntax": "workspace:*",
     "@rspress/plugin-last-updated": "workspace:*",
     "@rspress/plugin-medium-zoom": "workspace:*",
+    "@rspress/plugin-shiki": "workspace:*",
     "@rspress/runtime": "workspace:*",
     "@rspress/shared": "workspace:*",
     "@rspress/theme-default": "workspace:*",

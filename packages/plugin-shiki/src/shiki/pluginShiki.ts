@@ -23,6 +23,7 @@ export const SHIKI_DEFAULT_HIGHLIGHT_LANGUAGES: BuiltinLanguage[] = [
   'ts',
   'jsx',
   'tsx',
+  'vue',
   'json',
   'css',
   'scss',
@@ -57,7 +58,6 @@ export function pluginShiki(
       const newTransformers = [transformerAddTitle(), ...transformers];
       config.markdown = config.markdown || {};
       // Shiki will be integrated by rehype plugin, so we should use the javascript version markdown compiler.
-      config.markdown.codeHighlighter = 'shiki';
       config.markdown.rehypePlugins = config.markdown.rehypePlugins || [];
       if (
         config.markdown.showLineNumbers &&

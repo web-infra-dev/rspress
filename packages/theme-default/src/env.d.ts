@@ -32,11 +32,6 @@ declare module 'virtual-search-hooks' {
   export const render: RenderSearchFunction;
 }
 
-declare module 'virtual-prism-languages' {
-  export const aliases: Record<string, string[]>;
-  export const languages: Record<string, unknown>;
-}
-
 declare module 'virtual-search-index-hash' {
   const hash: Record<string, string>;
   export default hash;

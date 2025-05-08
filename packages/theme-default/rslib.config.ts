@@ -17,7 +17,6 @@ const COMMON_EXTERNALS = [
   '@theme',
   /@theme-assets\//,
   'virtual-i18n-text',
-  'virtual-prism-languages',
   // To be externalized when bundling d.ts.
   '@types/react',
 ];

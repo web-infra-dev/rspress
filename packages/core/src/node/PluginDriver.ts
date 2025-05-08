@@ -37,6 +37,7 @@ export class PluginDriver {
     // Clear RspressPlugins first, for the watch mode
     this.clearPlugins();
     const config = this.#config;
+    const markdownConfig = config.markdown || {};
     const themeConfig = config?.themeConfig || {};
     const enableLastUpdated =
       themeConfig?.lastUpdated ||
@@ -79,9 +80,12 @@ export class PluginDriver {
       }
     }
 
+    const { pluginShiki } = await import('@rspress/plugin-shiki');
+
     (config.plugins || []).forEach(plugin => {
       this.addPlugin(plugin);
     });
+    this.addPlugin(pluginShiki(markdownConfig.shiki));
 
     // read _meta.json in the final, allow user's plugin to modify _meta.json
     if (!haveNavSidebarConfig) {
