@@ -106,7 +106,7 @@
 }
 
 .rspress-doc [class^='language-'] code {
-  display: block;
+  display: inline-block;
   padding: 16px 0;
   width: fit-content;
   min-width: 100%;

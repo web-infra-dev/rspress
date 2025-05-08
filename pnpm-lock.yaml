@@ -508,16 +508,6 @@ importers:
         specifier: ^18.11.17
         version: 18.11.17
 
-  e2e/fixtures/prism-syntax-highlighter:
-    dependencies:
-      rspress:
-        specifier: workspace:*
-        version: link:../../../packages/cli
-    devDependencies:
-      '@types/node':
-        specifier: ^18.11.17
-        version: 18.11.17
-
   e2e/fixtures/production:
     dependencies:
       rspress:
@@ -749,6 +739,9 @@ importers:
       '@rspress/plugin-medium-zoom':
         specifier: workspace:*
         version: link:../plugin-medium-zoom
+      '@rspress/plugin-shiki':
+        specifier: workspace:*
+        version: link:../plugin-shiki
       '@rspress/runtime':
         specifier: workspace:*
         version: link:../runtime
@@ -1662,6 +1655,9 @@ importers:
       '@rsbuild/core':
         specifier: 1.3.16
         version: 1.3.16
+      '@shikijs/rehype':
+        specifier: ^3.2.2
+        version: 3.2.2
       gray-matter:
         specifier: 4.0.3
         version: 4.0.3

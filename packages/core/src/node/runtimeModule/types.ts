@@ -26,5 +26,4 @@ export enum RuntimeModuleID {
   SearchIndexHash = 'virtual-search-index-hash',
   I18nText = 'virtual-i18n-text',
   SearchHooks = 'virtual-search-hooks',
-  PrismLanguages = 'virtual-prism-languages',
 }

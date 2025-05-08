@@ -1,7 +1,7 @@
 import fs from 'node:fs';
 import { dirname, join, resolve } from 'node:path';
 import { normalizePosixPath } from '@rspress/shared';
-import { getNodeAttribute } from '@rspress/shared/node-utils';
+// import { getNodeAttribute } from '@rspress/shared/node-utils';
 import type { Code, Root } from 'mdast';
 import type { MdxJsxFlowElement } from 'mdast-util-mdx-jsx';
 import type { MdxjsEsm } from 'mdast-util-mdxjs-esm';
@@ -45,7 +45,6 @@ export const remarkCodeToDemo: Plugin<[RemarkPluginOptions], Root> = function ({
     demos[pageName] = [];
     let title = pageName;
     let index = 1;
-    let externalDemoIndex = 0;
 
     function constructDemoNode(
       demoId: string,
@@ -126,41 +125,42 @@ export const remarkCodeToDemo: Plugin<[RemarkPluginOptions], Root> = function ({
     });
 
     // 1. External demo , use <code src="foo" /> to declare demo
-    visit(tree, 'mdxJsxFlowElement', node => {
-      if (node.name === 'code') {
-        const src = getNodeAttribute(node, 'src');
+    // FIXME: support External demo
+    // visit(tree, 'mdxJsxFlowElement', node => {
+    //   if (node.name === 'code') {
+    //     const src = getNodeAttribute(node, 'src');
 
-        if (typeof src !== 'string') {
-          return;
-        }
+    //     if (typeof src !== 'string') {
+    //       return;
+    //     }
 
-        // don't support expression syntax
-        const currentMode =
-          getNodeAttribute(node, 'previewMode') ?? previewMode;
+    //     // don't support expression syntax
+    //     const currentMode =
+    //       getNodeAttribute(node, 'previewMode') ?? previewMode;
 
-        // TODO: remove isMobile attribute
-        const isMobileAttr = getNodeAttribute(node, 'isMobile');
-        let isMobileMode = false;
-        if (isMobileAttr === undefined) {
-          // isMobile is not specified, eg: <code />
-          isMobileMode = currentMode === 'iframe';
-        } else if (isMobileAttr === null) {
-          // true by default, eg: <code isMobile />
-          isMobileMode = true;
-        } else if (typeof isMobileAttr === 'object') {
-          // jsx value, isMobileMode.value now must be string, even if input is
-          // any complex struct rather than primitive type
-          // eg: <code isMobile={ anyOfOrOther([true, false, 'true', 'false', {}]) } />
-          isMobileMode = isMobileAttr.value !== 'false';
-        } else {
-          // string value, eg: <code isMobile="true" />
-          isMobileMode = isMobileAttr !== 'false';
-        }
+    //     // TODO: remove isMobile attribute
+    //     const isMobileAttr = getNodeAttribute(node, 'isMobile');
+    //     let isMobileMode = false;
+    //     if (isMobileAttr === undefined) {
+    //       // isMobile is not specified, eg: <code />
+    //       isMobileMode = currentMode === 'iframe';
+    //     } else if (isMobileAttr === null) {
+    //       // true by default, eg: <code isMobile />
+    //       isMobileMode = true;
+    //     } else if (typeof isMobileAttr === 'object') {
+    //       // jsx value, isMobileMode.value now must be string, even if input is
+    //       // any complex struct rather than primitive type
+    //       // eg: <code isMobile={ anyOfOrOther([true, false, 'true', 'false', {}]) } />
+    //       isMobileMode = isMobileAttr.value !== 'false';
+    //     } else {
+    //       // string value, eg: <code isMobile="true" />
+    //       isMobileMode = isMobileAttr !== 'false';
+    //     }
 
-        const id = generateId(pageName, index++);
-        constructDemoNode(id, src, node, isMobileMode, externalDemoIndex++);
-      }
-    });
+    //     const id = generateId(pageName, index++);
+    //     constructDemoNode(id, src, node, isMobileMode, externalDemoIndex++);
+    //   }
+    // });
 
     // 2. Internal demo, such as using ```jsx to declare demo
     visit(tree, 'code', node => {

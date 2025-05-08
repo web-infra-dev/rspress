@@ -25,12 +25,12 @@ test.describe('plugin test', async () => {
     });
     const codeBlockElements = await page.$$('.rspress-doc > .rspress-preview');
 
-    const internalDemoCodePreview = await page
+    const internalIframeJsxDemoCodePreview = await page
       .frameLocator('iframe')
       .first()
       .getByText('JSX')
       .innerText();
-    const externalDemoCodePreview = await page
+    const internalIframeTsxDemoCodePreview = await page
       .frameLocator('iframe')
       .nth(1)
       .getByText('TSX')
@@ -42,8 +42,8 @@ test.describe('plugin test', async () => {
       .innerText();
 
     expect(codeBlockElements.length).toBe(3);
-    expect(internalDemoCodePreview).toBe('Hello World JSX');
-    expect(externalDemoCodePreview).toBe('Hello World TSX');
+    expect(internalIframeJsxDemoCodePreview).toBe('Hello World JSX');
+    expect(internalIframeTsxDemoCodePreview).toBe('Hello World TSX');
     expect(transformedCodePreview).toBe('Hello World VUE');
   });
 });

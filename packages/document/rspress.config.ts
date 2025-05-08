@@ -1,7 +1,6 @@
 import { pluginSass } from '@rsbuild/plugin-sass';
 import { pluginAlgolia } from '@rspress/plugin-algolia';
 import { pluginLlms } from '@rspress/plugin-llms';
-import { pluginShiki } from '@rspress/plugin-shiki';
 import {
   transformerNotationDiff,
   transformerNotationErrorLevel,
@@ -26,14 +25,7 @@ export default defineConfig({
   icon: 'https://assets.rspack.dev/rspress/rspress-logo-480x480.png',
   markdown: {
     checkDeadLinks: true,
-  },
-  plugins: [
-    pluginFontOpenSans(),
-    pluginSitemap({
-      domain: siteUrl,
-    }),
-    pluginAlgolia(),
-    pluginShiki({
+    shiki: {
       langs: ['mdx', 'html', 'toml'],
       transformers: [
         transformerNotationDiff(),
@@ -41,6 +33,15 @@ export default defineConfig({
         transformerNotationHighlight(),
         transformerNotationFocus(),
       ],
+    },
+  },
+  plugins: [
+    pluginFontOpenSans(),
+    pluginSitemap({
+      domain: siteUrl,
+    }),
+    pluginAlgolia({
+      verificationContent: '8F5BFE50E65777F1',
     }),
     pluginLlms(),
   ],

@@ -1,5 +1,4 @@
 import { Tab, Tabs } from '@theme';
-import { Code } from '../../layout/DocLayout/docComponents/code';
 import { Pre } from '../../layout/DocLayout/docComponents/pre';
 import { Bun } from './icons/Bun';
 import { Npm } from './icons/Npm';
@@ -100,10 +99,12 @@ export function PackageManagerTabs({
       {Object.entries(commandInfo).map(([key, value]) => (
         <Tab key={key}>
           <Pre>
-            {/* For this case, we can specify to highlight the code in runtime instead of compile time */}
-            <Code className="language-js" codeHighlighter="prism">
-              {value}
-            </Code>
+            {/* For this case, we has no highlight */}
+            <code className="language-bash" style={{ whiteSpace: 'pre' }}>
+              <span style={{ display: 'block', padding: '0px 1.25rem' }}>
+                <span>{value}</span>
+              </span>
+            </code>
           </Pre>
         </Tab>
       ))}

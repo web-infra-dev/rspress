@@ -8,7 +8,6 @@ import { TEMP_DIR, isProduction } from '../../constants';
 import { createHash } from '../../utils';
 import { type FactoryContext, RuntimeModuleID } from '../types';
 import { extractPageData } from './extractPageData';
-import { handleHighlightLanguages } from './highlightLanguages';
 import { normalizeThemeConfig } from './normalizeThemeConfig';
 
 // How can we let the client runtime access the `indexHash`?
@@ -150,11 +149,9 @@ export async function siteDataVMPlugin(context: FactoryContext) {
     markdown: {
       showLineNumbers: userConfig?.markdown?.showLineNumbers ?? false,
       defaultWrapCode: userConfig?.markdown?.defaultWrapCode ?? false,
-      codeHighlighter: userConfig?.markdown?.codeHighlighter || 'prism',
+      shiki: {},
     },
   };
-
-  const { highlightLanguages: defaultLanguages = [] } = config.markdown || {};
 
   // this field is extended in "plugin-preview"
   if (Array.isArray(siteData.pages[0]?.extraHighlightLanguages)) {
@@ -162,13 +159,6 @@ export async function siteDataVMPlugin(context: FactoryContext) {
       highlightLanguages.add(lang),
     );
   }
-
-  const aliases = handleHighlightLanguages(
-    highlightLanguages,
-    defaultLanguages,
-  );
-  const sortedAliases = Object.fromEntries(Object.entries(aliases).sort());
-  const sortedHighlightLanguages = Array.from(highlightLanguages).sort();
 
   return {
     [`${RuntimeModuleID.SiteData}.mjs`]: `export default ${JSON.stringify(
@@ -181,17 +171,5 @@ export async function siteDataVMPlugin(context: FactoryContext) {
       null,
       2,
     )}`,
-    [RuntimeModuleID.PrismLanguages]: `export const aliases = ${JSON.stringify(
-      sortedAliases,
-      null,
-      2,
-    )};
-    export const languages = {
-      ${sortedHighlightLanguages.map(lang => {
-        return `"${lang}": require(
-          "react-syntax-highlighter/dist/cjs/languages/prism/${lang}"
-        ).default`;
-      })}
-    }`,
   };
 }

@@ -1,13 +1,9 @@
-import { usePageData } from '@rspress/runtime';
 import { useRef } from 'react';
-import type { CodeProps } from './code';
 import {
   CodeButtonGroup,
   type CodeButtonGroupProps,
   useCodeButtonGroup,
 } from './code/CodeButtonGroup';
-
-const DEFAULT_LANGUAGE_CLASS = 'language-bash';
 
 export function parseTitleFromMeta(meta: string | undefined): string {
   if (!meta) {
@@ -75,41 +71,26 @@ export function Pre({
   children,
   className,
   title,
-  codeHighlighter: codeHighlighterFromProps,
   ...otherProps
 }: {
   children: React.ReactElement[] | React.ReactElement;
   className?: string;
   title?: string;
-  codeHighlighter?: string;
 } & Partial<ShikiPreProps>) {
-  const { siteData } = usePageData();
-  const codeHighlighter =
-    codeHighlighterFromProps ?? siteData.markdown.codeHighlighter;
   const preElementRef = useRef<HTMLPreElement>(null);
 
   const renderChild = (child: React.ReactElement) => {
-    const { className: codeElementClassName, meta } = child.props as CodeProps;
+    const { className: codeElementClassName } = child.props;
 
-    if (codeHighlighter === 'shiki') {
-      return (
-        <ShikiPre
-          className={className}
-          {...otherProps}
-          child={child}
-          codeElementClassName={codeElementClassName}
-          codeTitle={title}
-          preElementRef={preElementRef}
-        />
-      );
-    }
-
-    const codeTitle = parseTitleFromMeta(meta);
     return (
-      <div className={codeElementClassName || DEFAULT_LANGUAGE_CLASS}>
-        {codeTitle && <div className="rspress-code-title">{codeTitle}</div>}
-        <div className="rspress-code-content rspress-scrollbar">{child}</div>
-      </div>
+      <ShikiPre
+        child={child}
+        className={className}
+        codeElementClassName={codeElementClassName}
+        codeTitle={title}
+        preElementRef={preElementRef}
+        {...otherProps}
+      />
     );
   };
 
