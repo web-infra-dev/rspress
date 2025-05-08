@@ -1,5 +1,6 @@
 import type { Header } from '@rspress/shared';
 import { useCallback, useEffect, useState } from 'react';
+import { processTitleElement } from './processTitleElement';
 
 const updateFns: Record<string, () => void> = {};
 const useForceUpdate = () => {
@@ -66,25 +67,12 @@ function updateHeaders(target: Element) {
   );
   elements?.forEach(el => {
     if (el && isElementVisible(el)) {
-      const ele = el.querySelector('.header-anchor');
-      if (ele) {
-        el.removeChild(ele);
-        collectedHeaders.push({
-          id: el.id,
-          text: el.innerHTML,
-          depth: Number.parseInt(el.tagName[1]),
-          charIndex: 0,
-        });
-        const firstChild = el.firstChild;
-        el.insertBefore(ele, firstChild);
-      } else {
-        collectedHeaders.push({
-          id: el.id,
-          text: el.innerHTML,
-          depth: Number.parseInt(el.tagName[1]),
-          charIndex: 0,
-        });
-      }
+      collectedHeaders.push({
+        id: el.id,
+        text: processTitleElement(el).innerHTML,
+        depth: Number.parseInt(el.tagName[1]),
+        charIndex: 0,
+      });
     }
   });
 
