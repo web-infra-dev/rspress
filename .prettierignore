@@ -5,6 +5,7 @@ doc_build
 
 # ignore all JS/TS files, use Biome
 **/*.js
+**/*.mjs
 **/*.ts
 **/*.jsx
 **/*.tsx

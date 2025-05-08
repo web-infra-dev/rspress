@@ -58,3 +58,6 @@ e2e/fixtures/plugin-typedoc/multi/doc/api
 
 # ignore typed css module
 *.scss.d.ts
+
+# ignore generated schema.json
+meta-json-schema.json

@@ -12,7 +12,7 @@ import {
   withBase,
 } from '@rspress/shared';
 import { logger } from '@rspress/shared/logger';
-import type { SideMeta } from './type';
+import type { SideMeta, SideMetaItem } from './type';
 import {
   detectFilePath,
   extractInfoFromFrontmatter,
@@ -72,7 +72,7 @@ async function scanSideMeta(
     });
     sideMeta = (
       await Promise.all(
-        subItems.map(async item => {
+        subItems.map<Promise<SideMetaItem | null>>(async item => {
           // Fix https://github.com/web-infra-dev/rspress/issues/346
           if (item === '_meta.json') {
             return null;
@@ -85,7 +85,7 @@ async function scanSideMeta(
               type: 'dir',
               name: item,
               label: `${DEFAULT_DIRNAME_PREFIX}${item}`, // if no _meta.json, use the dir name as default
-            };
+            } satisfies SideMetaItem;
           }
           return extensions.some(ext => item.endsWith(ext)) ? item : null;
         }),
@@ -117,21 +117,12 @@ async function scanSideMeta(
         } satisfies SidebarItem;
       }
 
-      const {
-        type = 'file',
-        name,
-        label,
-        collapsible,
-        collapsed,
-        link,
-        tag,
-        dashed,
-        overviewHeaders,
-        context,
-      } = metaItem;
+      const { type } = metaItem;
       // when type is divider, name maybe undefined, and link is not used
-      const pureLink = `${relativePath}/${name?.replace(/\.mdx?$/, '')}`;
       if (type === 'file') {
+        const { name, context, label, overviewHeaders, tag } = metaItem;
+        const pureLink = `${relativePath}/${name?.replace(/\.mdx?$/, '')}`;
+
         const info = await extractInfoFromFrontmatter(
           path.resolve(workDir, name),
           rootDir,
@@ -152,6 +143,16 @@ async function scanSideMeta(
       }
 
       if (type === 'dir') {
+        const {
+          name,
+          collapsed,
+          collapsible,
+          context,
+          label,
+          overviewHeaders,
+          tag,
+        } = metaItem;
+        const pureLink = `${relativePath}/${name?.replace(/\.mdx?$/, '')}`;
         const subDir = path.resolve(workDir, name);
         const subSidebar = await scanSideMeta(
           subDir,
@@ -245,18 +246,22 @@ async function scanSideMeta(
       }
 
       if (type === 'divider') {
+        const { dashed } = metaItem;
         return {
           dividerType: dashed ? 'dashed' : 'solid',
         } satisfies SidebarDivider;
       }
 
       if (type === 'section-header') {
+        const { label, tag } = metaItem;
         return {
           sectionHeaderText: label ?? '',
           tag,
         } satisfies SidebarSectionHeader;
       }
 
+      // type === 'custom-link'
+      const { label, link, context, tag } = metaItem;
       return {
         text: label ?? '',
         link:
@@ -288,7 +293,11 @@ export async function walk(
   // Get the nav config from the `_meta.json` file
   try {
     navConfig = await readJson<NavItem[]>(rootMetaFile);
-  } catch (_e) {
+  } catch (e) {
+    logger.error(
+      '[plugin-auto-nav-sidebar]',
+      `Generate nav meta error: ${rootMetaFile} not exists`,
+    );
     navConfig = [];
   }
 
