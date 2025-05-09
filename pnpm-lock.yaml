@@ -664,7 +664,7 @@ importers:
   packages/cli:
     dependencies:
       '@rsbuild/core':
-        specifier: 1.3.18
+        specifier: ~1.3.18
         version: 1.3.18
       '@rspress/core':
         specifier: workspace:*
@@ -722,7 +722,7 @@ importers:
         specifier: ^3.1.0
         version: 3.1.0(@types/react@18.3.21)(react@19.1.0)
       '@rsbuild/core':
-        specifier: 1.3.18
+        specifier: ~1.3.18
         version: 1.3.18
       '@rsbuild/plugin-react':
         specifier: ~1.3.1
@@ -1253,7 +1253,7 @@ importers:
         specifier: ^7.52.7
         version: 7.52.7(@types/node@18.11.17)
       '@rsbuild/core':
-        specifier: 1.3.18
+        specifier: ~1.3.18
         version: 1.3.18
       '@rslib/core':
         specifier: 0.6.8
@@ -1402,7 +1402,7 @@ importers:
   packages/plugin-preview:
     dependencies:
       '@rsbuild/core':
-        specifier: 1.3.18
+        specifier: ~1.3.18
         version: 1.3.18
       '@rsbuild/plugin-babel':
         specifier: ~1.0.5
@@ -1653,7 +1653,7 @@ importers:
   packages/shared:
     dependencies:
       '@rsbuild/core':
-        specifier: 1.3.18
+        specifier: ~1.3.18
         version: 1.3.18
       '@shikijs/rehype':
         specifier: ^3.2.2
