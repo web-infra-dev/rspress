@@ -196,9 +196,6 @@ async function createInternalBuildConfig(
         '@theme-assets': path.join(DEFAULT_THEME, '../assets'),
         '@rspress/core': PACKAGE_ROOT,
         'react-lazy-with-preload': require.resolve('react-lazy-with-preload'),
-        'react-syntax-highlighter': path.dirname(
-          require.resolve('react-syntax-highlighter/package.json'),
-        ),
       },
     },
     source: {
