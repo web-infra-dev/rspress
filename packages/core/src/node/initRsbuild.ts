@@ -348,6 +348,7 @@ export async function initRsbuild(
   );
 
   const rsbuild = await createRsbuild({
+    callerName: 'rspress',
     rsbuildConfig: mergeRsbuildConfig(
       internalRsbuildConfig,
       ...(pluginDriver
