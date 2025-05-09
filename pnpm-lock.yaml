@@ -429,7 +429,7 @@ importers:
     dependencies:
       '@rsbuild/plugin-vue':
         specifier: ^1.0.7
-        version: 1.0.7(@rsbuild/core@1.3.17)(vue@3.5.13(typescript@5.8.2))
+        version: 1.0.7(@rsbuild/core@1.3.18)(vue@3.5.13(typescript@5.8.2))
       '@rspress/plugin-preview':
         specifier: workspace:*
         version: link:../../../packages/plugin-preview
@@ -664,8 +664,8 @@ importers:
   packages/cli:
     dependencies:
       '@rsbuild/core':
-        specifier: 1.3.17
-        version: 1.3.17
+        specifier: ~1.3.18
+        version: 1.3.18
       '@rspress/core':
         specifier: workspace:*
         version: link:../core
@@ -702,7 +702,7 @@ importers:
         version: 6.0.1
       rsbuild-plugin-publint:
         specifier: ^0.3.1
-        version: 0.3.1(@rsbuild/core@1.3.17)
+        version: 0.3.1(@rsbuild/core@1.3.18)
       ts-json-schema-generator:
         specifier: ^2.4.0
         version: 2.4.0
@@ -722,11 +722,11 @@ importers:
         specifier: ^3.1.0
         version: 3.1.0(@types/react@18.3.21)(react@19.1.0)
       '@rsbuild/core':
-        specifier: 1.3.17
-        version: 1.3.17
+        specifier: ~1.3.18
+        version: 1.3.18
       '@rsbuild/plugin-react':
-        specifier: ~1.3.0
-        version: 1.3.0(@rsbuild/core@1.3.17)
+        specifier: ~1.3.1
+        version: 1.3.1(@rsbuild/core@1.3.18)
       '@rspress/mdx-rs':
         specifier: 0.6.6
         version: 0.6.6
@@ -806,8 +806,8 @@ importers:
         specifier: ^4.0.1
         version: 4.0.1
       rspack-plugin-virtual-module:
-        specifier: 0.1.13
-        version: 0.1.13
+        specifier: 1.0.0
+        version: 1.0.0
       tinyglobby:
         specifier: ^0.2.13
         version: 0.2.13
@@ -883,10 +883,10 @@ importers:
         version: 6.0.1
       rsbuild-plugin-publint:
         specifier: ^0.3.1
-        version: 0.3.1(@rsbuild/core@1.3.17)
+        version: 0.3.1(@rsbuild/core@1.3.18)
       rsbuild-plugin-virtual-module:
         specifier: 0.1.1
-        version: 0.1.1(@rsbuild/core@1.3.17)
+        version: 0.1.1(@rsbuild/core@1.3.18)
       tailwindcss:
         specifier: ^3.4.17
         version: 3.4.17(ts-node@10.9.2(@types/node@18.11.17)(typescript@5.8.2))
@@ -914,7 +914,7 @@ importers:
         version: 18.11.17
       rsbuild-plugin-publint:
         specifier: ^0.3.1
-        version: 0.3.1(@rsbuild/core@1.3.17)
+        version: 0.3.1(@rsbuild/core@1.3.18)
       typescript:
         specifier: ^5.8.2
         version: 5.8.2
@@ -923,7 +923,7 @@ importers:
     devDependencies:
       '@rsbuild/plugin-sass':
         specifier: ~1.3.1
-        version: 1.3.1(@rsbuild/core@1.3.17)
+        version: 1.3.1(@rsbuild/core@1.3.18)
       '@rspress/plugin-algolia':
         specifier: workspace:*
         version: link:../plugin-algolia
@@ -947,10 +947,10 @@ importers:
         version: 12.0.6(react-dom@19.1.0(react@19.1.0))(react@19.1.0)
       rsbuild-plugin-google-analytics:
         specifier: ^1.0.3
-        version: 1.0.3(@rsbuild/core@1.3.17)
+        version: 1.0.3(@rsbuild/core@1.3.18)
       rsbuild-plugin-open-graph:
         specifier: ^1.0.2
-        version: 1.0.2(@rsbuild/core@1.3.17)
+        version: 1.0.2(@rsbuild/core@1.3.18)
       rspress:
         specifier: workspace:*
         version: link:../cli
@@ -980,8 +980,8 @@ importers:
         specifier: ^7.52.7
         version: 7.52.7(@types/node@18.11.17)
       '@rsbuild/plugin-react':
-        specifier: ~1.3.0
-        version: 1.3.0(@rsbuild/core@1.3.17)
+        specifier: ~1.3.1
+        version: 1.3.1(@rsbuild/core@1.3.18)
       '@rslib/core':
         specifier: 0.6.8
         version: 0.6.8(@microsoft/api-extractor@7.52.7(@types/node@18.11.17))(typescript@5.8.2)
@@ -1005,7 +1005,7 @@ importers:
         version: 19.1.0
       rsbuild-plugin-publint:
         specifier: ^0.3.1
-        version: 0.3.1(@rsbuild/core@1.3.17)
+        version: 0.3.1(@rsbuild/core@1.3.18)
       typescript:
         specifier: ^5.8.2
         version: 5.8.2
@@ -1066,7 +1066,7 @@ importers:
         version: 6.29.0(react-dom@19.1.0(react@19.1.0))(react@19.1.0)
       rsbuild-plugin-publint:
         specifier: ^0.3.1
-        version: 0.3.1(@rsbuild/core@1.3.17)
+        version: 0.3.1(@rsbuild/core@1.3.18)
       typescript:
         specifier: ^5.8.2
         version: 5.8.2
@@ -1100,7 +1100,7 @@ importers:
         version: 19.1.0
       rsbuild-plugin-publint:
         specifier: ^0.3.1
-        version: 0.3.1(@rsbuild/core@1.3.17)
+        version: 0.3.1(@rsbuild/core@1.3.18)
       typescript:
         specifier: ^5.8.2
         version: 5.8.2
@@ -1137,7 +1137,7 @@ importers:
         version: 19.1.0
       rsbuild-plugin-publint:
         specifier: ^0.3.1
-        version: 0.3.1(@rsbuild/core@1.3.17)
+        version: 0.3.1(@rsbuild/core@1.3.18)
       typescript:
         specifier: ^5.8.2
         version: 5.8.2
@@ -1180,7 +1180,7 @@ importers:
         version: 11.1.2
       rsbuild-plugin-publint:
         specifier: ^0.3.1
-        version: 0.3.1(@rsbuild/core@1.3.17)
+        version: 0.3.1(@rsbuild/core@1.3.18)
       unified:
         specifier: ^11.0.5
         version: 11.0.5
@@ -1217,7 +1217,7 @@ importers:
         version: 19.1.0
       rsbuild-plugin-publint:
         specifier: ^0.3.1
-        version: 0.3.1(@rsbuild/core@1.3.17)
+        version: 0.3.1(@rsbuild/core@1.3.18)
       typescript:
         specifier: ^5.8.2
         version: 5.8.2
@@ -1253,8 +1253,8 @@ importers:
         specifier: ^7.52.7
         version: 7.52.7(@types/node@18.11.17)
       '@rsbuild/core':
-        specifier: 1.3.17
-        version: 1.3.17
+        specifier: ~1.3.18
+        version: 1.3.18
       '@rslib/core':
         specifier: 0.6.8
         version: 0.6.8(@microsoft/api-extractor@7.52.7(@types/node@18.11.17))(typescript@5.8.2)
@@ -1312,7 +1312,7 @@ importers:
         version: 19.1.0
       rsbuild-plugin-publint:
         specifier: ^0.3.1
-        version: 0.3.1(@rsbuild/core@1.3.17)
+        version: 0.3.1(@rsbuild/core@1.3.18)
       typescript:
         specifier: ^5.8.2
         version: 5.8.2
@@ -1338,8 +1338,8 @@ importers:
         specifier: ^4.0.1
         version: 4.0.1
       rspack-plugin-virtual-module:
-        specifier: 0.1.13
-        version: 0.1.13
+        specifier: 1.0.0
+        version: 1.0.0
       unist-util-visit:
         specifier: ^5.0.0
         version: 5.0.0
@@ -1348,8 +1348,8 @@ importers:
         specifier: ^7.27.1
         version: 7.27.1
       '@rsbuild/plugin-react':
-        specifier: ~1.3.0
-        version: 1.3.0(@rsbuild/core@1.3.17)
+        specifier: ~1.3.1
+        version: 1.3.1(@rsbuild/core@1.3.18)
       '@rslib/core':
         specifier: 0.6.8
         version: 0.6.8(@microsoft/api-extractor@7.52.7(@types/node@18.11.17))(typescript@5.8.2)
@@ -1391,7 +1391,7 @@ importers:
         version: 6.29.0(react-dom@19.1.0(react@19.1.0))(react@19.1.0)
       rsbuild-plugin-publint:
         specifier: ^0.3.1
-        version: 0.3.1(@rsbuild/core@1.3.17)
+        version: 0.3.1(@rsbuild/core@1.3.18)
       typescript:
         specifier: ^5.8.2
         version: 5.8.2
@@ -1402,23 +1402,23 @@ importers:
   packages/plugin-preview:
     dependencies:
       '@rsbuild/core':
-        specifier: 1.3.17
-        version: 1.3.17
+        specifier: ~1.3.18
+        version: 1.3.18
       '@rsbuild/plugin-babel':
         specifier: ~1.0.5
-        version: 1.0.5(@rsbuild/core@1.3.17)
+        version: 1.0.5(@rsbuild/core@1.3.18)
       '@rsbuild/plugin-less':
-        specifier: ~1.2.3
-        version: 1.2.3(@rsbuild/core@1.3.17)
+        specifier: ~1.2.4
+        version: 1.2.4(@rsbuild/core@1.3.18)
       '@rsbuild/plugin-react':
-        specifier: ~1.3.0
-        version: 1.3.0(@rsbuild/core@1.3.17)
+        specifier: ~1.3.1
+        version: 1.3.1(@rsbuild/core@1.3.18)
       '@rsbuild/plugin-sass':
         specifier: ~1.3.1
-        version: 1.3.1(@rsbuild/core@1.3.17)
+        version: 1.3.1(@rsbuild/core@1.3.18)
       '@rsbuild/plugin-solid':
         specifier: ~1.0.5
-        version: 1.0.5(@babel/core@7.26.10)(@rsbuild/core@1.3.17)(solid-js@1.9.6)
+        version: 1.0.5(@babel/core@7.26.10)(@rsbuild/core@1.3.18)(solid-js@1.9.6)
       '@rspress/core':
         specifier: workspace:^2.0.0-beta.5
         version: link:../core
@@ -1470,7 +1470,7 @@ importers:
         version: 6.29.0(react-dom@19.1.0(react@19.1.0))(react@19.1.0)
       rsbuild-plugin-publint:
         specifier: ^0.3.1
-        version: 0.3.1(@rsbuild/core@1.3.17)
+        version: 0.3.1(@rsbuild/core@1.3.18)
       typescript:
         specifier: ^5.8.2
         version: 5.8.2
@@ -1510,7 +1510,7 @@ importers:
         version: 19.1.0
       rsbuild-plugin-publint:
         specifier: ^0.3.1
-        version: 0.3.1(@rsbuild/core@1.3.17)
+        version: 0.3.1(@rsbuild/core@1.3.18)
       typescript:
         specifier: ^5.8.2
         version: 5.8.2
@@ -1535,7 +1535,7 @@ importers:
         version: 7.52.7(@types/node@18.11.17)
       '@rsbuild/plugin-sass':
         specifier: ~1.3.1
-        version: 1.3.1(@rsbuild/core@1.3.17)
+        version: 1.3.1(@rsbuild/core@1.3.18)
       '@rslib/core':
         specifier: 0.6.8
         version: 0.6.8(@microsoft/api-extractor@7.52.7(@types/node@18.11.17))(typescript@5.8.2)
@@ -1559,7 +1559,7 @@ importers:
         version: 19.1.0
       rsbuild-plugin-publint:
         specifier: ^0.3.1
-        version: 0.3.1(@rsbuild/core@1.3.17)
+        version: 0.3.1(@rsbuild/core@1.3.18)
       typescript:
         specifier: ^5.8.2
         version: 5.8.2
@@ -1602,7 +1602,7 @@ importers:
         version: 19.1.0
       rsbuild-plugin-publint:
         specifier: ^0.3.1
-        version: 0.3.1(@rsbuild/core@1.3.17)
+        version: 0.3.1(@rsbuild/core@1.3.18)
       typescript:
         specifier: ^5.8.2
         version: 5.8.2
@@ -1626,8 +1626,8 @@ importers:
         version: 6.29.0(react-dom@19.1.0(react@19.1.0))(react@19.1.0)
     devDependencies:
       '@rsbuild/plugin-react':
-        specifier: ~1.3.0
-        version: 1.3.0(@rsbuild/core@1.3.17)
+        specifier: ~1.3.1
+        version: 1.3.1(@rsbuild/core@1.3.18)
       '@rslib/core':
         specifier: 0.6.8
         version: 0.6.8(@microsoft/api-extractor@7.52.7(@types/node@22.10.2))(typescript@5.8.2)
@@ -1645,7 +1645,7 @@ importers:
         version: 18.3.7(@types/react@18.3.21)
       rsbuild-plugin-publint:
         specifier: ^0.3.1
-        version: 0.3.1(@rsbuild/core@1.3.17)
+        version: 0.3.1(@rsbuild/core@1.3.18)
       typescript:
         specifier: ^5.8.2
         version: 5.8.2
@@ -1653,8 +1653,8 @@ importers:
   packages/shared:
     dependencies:
       '@rsbuild/core':
-        specifier: 1.3.17
-        version: 1.3.17
+        specifier: ~1.3.18
+        version: 1.3.18
       '@shikijs/rehype':
         specifier: ^3.2.2
         version: 3.2.2
@@ -1694,7 +1694,7 @@ importers:
         version: 6.0.1
       rsbuild-plugin-publint:
         specifier: ^0.3.1
-        version: 0.3.1(@rsbuild/core@1.3.17)
+        version: 0.3.1(@rsbuild/core@1.3.18)
       typescript:
         specifier: ^5.8.2
         version: 5.8.2
@@ -1745,17 +1745,17 @@ importers:
         specifier: ^7.52.7
         version: 7.52.7(@types/node@22.10.2)
       '@rsbuild/plugin-react':
-        specifier: ~1.3.0
-        version: 1.3.0(@rsbuild/core@1.3.17)
+        specifier: ~1.3.1
+        version: 1.3.1(@rsbuild/core@1.3.18)
       '@rsbuild/plugin-sass':
         specifier: ~1.3.1
-        version: 1.3.1(@rsbuild/core@1.3.17)
+        version: 1.3.1(@rsbuild/core@1.3.18)
       '@rsbuild/plugin-svgr':
         specifier: ^1.2.0
-        version: 1.2.0(@rsbuild/core@1.3.17)(typescript@5.8.2)
+        version: 1.2.0(@rsbuild/core@1.3.18)(typescript@5.8.2)
       '@rsbuild/plugin-typed-css-modules':
         specifier: ~1.0.2
-        version: 1.0.2(@rsbuild/core@1.3.17)
+        version: 1.0.2(@rsbuild/core@1.3.18)
       '@rslib/core':
         specifier: 0.6.8
         version: 0.6.8(@microsoft/api-extractor@7.52.7(@types/node@22.10.2))(typescript@5.8.2)
@@ -1788,7 +1788,7 @@ importers:
         version: 4.0.3
       rsbuild-plugin-publint:
         specifier: ^0.3.1
-        version: 0.3.1(@rsbuild/core@1.3.17)
+        version: 0.3.1(@rsbuild/core@1.3.18)
       tailwindcss:
         specifier: ^3.4.17
         version: 3.4.17(ts-node@10.9.2(@types/node@22.10.2)(typescript@5.8.2))
@@ -2956,8 +2956,8 @@ packages:
     engines: {node: '>=16.10.0'}
     hasBin: true
 
-  '@rsbuild/core@1.3.17':
-    resolution: {integrity: sha512-vDRUjPws7vUcdn2uXOSOknGRF9Jt0wQRH6AU0G7O0GsX8liUmE/I7+EpYvhuQIRp2ekOz1cmmSTrRntEjp7WoQ==}
+  '@rsbuild/core@1.3.18':
+    resolution: {integrity: sha512-ocnz3pVapMTeuoP3zZ1shYcxnAQtRf6RzLl8n7acNi8Hu+ku6SiDGR65foclwcubWF6e9nZPohH94rXnmEVfrw==}
     engines: {node: '>=16.10.0'}
     hasBin: true
 
@@ -2971,13 +2971,13 @@ packages:
     peerDependencies:
       '@rsbuild/core': 1.x
 
-  '@rsbuild/plugin-less@1.2.3':
-    resolution: {integrity: sha512-QPsmJmHQ1mEXLs+8+UMTVaKNPdu8rjvSXJfiLXmZCHIYbV9VPoIYkEhAbI8TtdtwFkwJgxfLm8Sz3mMYeaQiMQ==}
+  '@rsbuild/plugin-less@1.2.4':
+    resolution: {integrity: sha512-fanvE5K7DyncrbXaP6BohLBRDi0mizN9lknKhaHBNJQCD7J/yHfbXCxG1lWjReEwxyyUip6UOAypVnWIAmt4Ow==}
     peerDependencies:
       '@rsbuild/core': 1.x
 
-  '@rsbuild/plugin-react@1.3.0':
-    resolution: {integrity: sha512-3LxUoRTGDH9KB5ol5+4792DFJU5w3PKCcbF9QVRbL2Ma31WP/cEETTN7m5uZYyUZN/hOwrxU+ueRNNKD3XtaYQ==}
+  '@rsbuild/plugin-react@1.3.1':
+    resolution: {integrity: sha512-1PfE0CZDwiSIUFaMFOEprwsHK6oo29zU6DdtFH2D49uLcpUdOUvU1u2p00RCVO1CIgnAjRajLS7dnPdQUwFOuQ==}
     peerDependencies:
       '@rsbuild/core': 1.x
 
@@ -3140,8 +3140,8 @@ packages:
     resolution: {integrity: sha512-VynGOEsVw2s8TAlLf/uESfrgfrq2+rcXB1muPJYBWbsm1Oa6r5qVQhjA5ggM6z/coYPrsVMgovl3Ff7Q7OCp1w==}
     engines: {node: '>=16.0.0'}
 
-  '@rspack/plugin-react-refresh@1.4.1':
-    resolution: {integrity: sha512-bRALP4qEauvrB7RcMQ95rUHu1dw19V6c6uYukUTpA2OZDyMHTQ9cpEe28kaDwH/xsAuDNuYqnUZOW3NdLO/q3A==}
+  '@rspack/plugin-react-refresh@1.4.2':
+    resolution: {integrity: sha512-SZetmR5PdWbBal9ln4U0MAWaZyAsZlZ2u+EGkZcVtKklW7Bil77QQs00cwS303JsXWnxyeTHDAAf0fzaWbltgQ==}
     peerDependencies:
       react-refresh: '>=0.10.0 <1.0.0'
       webpack-hot-middleware: 2.x
@@ -6121,8 +6121,8 @@ packages:
       '@rsbuild/core':
         optional: true
 
-  rspack-plugin-virtual-module@0.1.13:
-    resolution: {integrity: sha512-VC0HiVHH6dtGfTgfpbDgVTt6LlYv+uAg9CWGWAR5lBx9FbKPEZeGz7iRUUP8vMymx+PGI8ps0u4a25dne0rtuQ==}
+  rspack-plugin-virtual-module@1.0.0:
+    resolution: {integrity: sha512-v5MDtNEcDwV36gsHf5iIYyH1rYuC2TP3D+xE1Z+pqIWjFR9dpQ4DF4OzGtrBQSPKVhOyL0VW5UyeIbfdFxELmw==}
 
   rspress-plugin-font-open-sans@1.0.0:
     resolution: {integrity: sha512-4GP0pd7h3W8EWdqE0VkA62nzUJZNy4ZnYK7be8+lOKHQKsQ5nZ+22A/VurNssi1eZFx3kjwbmIuoAkgb5W8S9Q==}
@@ -8296,7 +8296,7 @@ snapshots:
       core-js: 3.41.0
       jiti: 2.4.2
 
-  '@rsbuild/core@1.3.17':
+  '@rsbuild/core@1.3.18':
     dependencies:
       '@rspack/core': 1.3.9(@swc/helpers@0.5.17)
       '@rspack/lite-tapable': 1.0.1
@@ -8304,13 +8304,13 @@ snapshots:
       core-js: 3.42.0
       jiti: 2.4.2
 
-  '@rsbuild/plugin-babel@1.0.4(@rsbuild/core@1.3.17)':
+  '@rsbuild/plugin-babel@1.0.4(@rsbuild/core@1.3.18)':
     dependencies:
       '@babel/core': 7.26.10
       '@babel/plugin-proposal-decorators': 7.25.9(@babel/core@7.26.10)
       '@babel/plugin-transform-class-properties': 7.25.9(@babel/core@7.26.10)
       '@babel/preset-typescript': 7.27.0(@babel/core@7.26.10)
-      '@rsbuild/core': 1.3.17
+      '@rsbuild/core': 1.3.18
       '@types/babel__core': 7.20.5
       deepmerge: 4.3.1
       reduce-configs: 1.1.0
@@ -8318,13 +8318,13 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
-  '@rsbuild/plugin-babel@1.0.5(@rsbuild/core@1.3.17)':
+  '@rsbuild/plugin-babel@1.0.5(@rsbuild/core@1.3.18)':
     dependencies:
       '@babel/core': 7.26.10
       '@babel/plugin-proposal-decorators': 7.25.9(@babel/core@7.26.10)
       '@babel/plugin-transform-class-properties': 7.25.9(@babel/core@7.26.10)
       '@babel/preset-typescript': 7.27.0(@babel/core@7.26.10)
-      '@rsbuild/core': 1.3.17
+      '@rsbuild/core': 1.3.18
       '@types/babel__core': 7.20.5
       deepmerge: 4.3.1
       reduce-configs: 1.1.0
@@ -8332,33 +8332,33 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
-  '@rsbuild/plugin-less@1.2.3(@rsbuild/core@1.3.17)':
+  '@rsbuild/plugin-less@1.2.4(@rsbuild/core@1.3.18)':
     dependencies:
-      '@rsbuild/core': 1.3.17
+      '@rsbuild/core': 1.3.18
       deepmerge: 4.3.1
       reduce-configs: 1.1.0
 
-  '@rsbuild/plugin-react@1.3.0(@rsbuild/core@1.3.17)':
+  '@rsbuild/plugin-react@1.3.1(@rsbuild/core@1.3.18)':
     dependencies:
-      '@rsbuild/core': 1.3.17
-      '@rspack/plugin-react-refresh': 1.4.1(react-refresh@0.17.0)
+      '@rsbuild/core': 1.3.18
+      '@rspack/plugin-react-refresh': 1.4.2(react-refresh@0.17.0)
       react-refresh: 0.17.0
     transitivePeerDependencies:
       - webpack-hot-middleware
 
-  '@rsbuild/plugin-sass@1.3.1(@rsbuild/core@1.3.17)':
+  '@rsbuild/plugin-sass@1.3.1(@rsbuild/core@1.3.18)':
     dependencies:
-      '@rsbuild/core': 1.3.17
+      '@rsbuild/core': 1.3.18
       deepmerge: 4.3.1
       loader-utils: 2.0.4
       postcss: 8.5.3
       reduce-configs: 1.1.0
       sass-embedded: 1.86.0
 
-  '@rsbuild/plugin-solid@1.0.5(@babel/core@7.26.10)(@rsbuild/core@1.3.17)(solid-js@1.9.6)':
+  '@rsbuild/plugin-solid@1.0.5(@babel/core@7.26.10)(@rsbuild/core@1.3.18)(solid-js@1.9.6)':
     dependencies:
-      '@rsbuild/core': 1.3.17
-      '@rsbuild/plugin-babel': 1.0.4(@rsbuild/core@1.3.17)
+      '@rsbuild/core': 1.3.18
+      '@rsbuild/plugin-babel': 1.0.4(@rsbuild/core@1.3.18)
       babel-preset-solid: 1.9.3(@babel/core@7.26.10)
       solid-refresh: 0.6.3(solid-js@1.9.6)
     transitivePeerDependencies:
@@ -8366,10 +8366,10 @@ snapshots:
       - solid-js
       - supports-color
 
-  '@rsbuild/plugin-svgr@1.2.0(@rsbuild/core@1.3.17)(typescript@5.8.2)':
+  '@rsbuild/plugin-svgr@1.2.0(@rsbuild/core@1.3.18)(typescript@5.8.2)':
     dependencies:
-      '@rsbuild/core': 1.3.17
-      '@rsbuild/plugin-react': 1.3.0(@rsbuild/core@1.3.17)
+      '@rsbuild/core': 1.3.18
+      '@rsbuild/plugin-react': 1.3.1(@rsbuild/core@1.3.18)
       '@svgr/core': 8.1.0(typescript@5.8.2)
       '@svgr/plugin-jsx': 8.1.0(@svgr/core@8.1.0(typescript@5.8.2))
       '@svgr/plugin-svgo': 8.1.0(@svgr/core@8.1.0(typescript@5.8.2))(typescript@5.8.2)
@@ -8380,13 +8380,13 @@ snapshots:
       - typescript
       - webpack-hot-middleware
 
-  '@rsbuild/plugin-typed-css-modules@1.0.2(@rsbuild/core@1.3.17)':
+  '@rsbuild/plugin-typed-css-modules@1.0.2(@rsbuild/core@1.3.18)':
     optionalDependencies:
-      '@rsbuild/core': 1.3.17
+      '@rsbuild/core': 1.3.18
 
-  '@rsbuild/plugin-vue@1.0.7(@rsbuild/core@1.3.17)(vue@3.5.13(typescript@5.8.2))':
+  '@rsbuild/plugin-vue@1.0.7(@rsbuild/core@1.3.18)(vue@3.5.13(typescript@5.8.2))':
     dependencies:
-      '@rsbuild/core': 1.3.17
+      '@rsbuild/core': 1.3.18
       vue-loader: 17.4.2(vue@3.5.13(typescript@5.8.2))(webpack@5.99.3)
       webpack: 5.99.3
     transitivePeerDependencies:
@@ -8513,7 +8513,7 @@ snapshots:
 
   '@rspack/lite-tapable@1.0.1': {}
 
-  '@rspack/plugin-react-refresh@1.4.1(react-refresh@0.17.0)':
+  '@rspack/plugin-react-refresh@1.4.2(react-refresh@0.17.0)':
     dependencies:
       error-stack-parser: 2.1.4
       html-entities: 2.6.0
@@ -12326,26 +12326,26 @@ snapshots:
       '@microsoft/api-extractor': 7.52.7(@types/node@22.10.2)
       typescript: 5.8.2
 
-  rsbuild-plugin-google-analytics@1.0.3(@rsbuild/core@1.3.17):
+  rsbuild-plugin-google-analytics@1.0.3(@rsbuild/core@1.3.18):
     optionalDependencies:
-      '@rsbuild/core': 1.3.17
+      '@rsbuild/core': 1.3.18
 
-  rsbuild-plugin-open-graph@1.0.2(@rsbuild/core@1.3.17):
+  rsbuild-plugin-open-graph@1.0.2(@rsbuild/core@1.3.18):
     optionalDependencies:
-      '@rsbuild/core': 1.3.17
+      '@rsbuild/core': 1.3.18
 
-  rsbuild-plugin-publint@0.3.1(@rsbuild/core@1.3.17):
+  rsbuild-plugin-publint@0.3.1(@rsbuild/core@1.3.18):
     dependencies:
       picocolors: 1.1.1
       publint: 0.3.12
     optionalDependencies:
-      '@rsbuild/core': 1.3.17
+      '@rsbuild/core': 1.3.18
 
-  rsbuild-plugin-virtual-module@0.1.1(@rsbuild/core@1.3.17):
+  rsbuild-plugin-virtual-module@0.1.1(@rsbuild/core@1.3.18):
     optionalDependencies:
-      '@rsbuild/core': 1.3.17
+      '@rsbuild/core': 1.3.18
 
-  rspack-plugin-virtual-module@0.1.13:
+  rspack-plugin-virtual-module@1.0.0:
     dependencies:
       fs-extra: 11.3.0
 
