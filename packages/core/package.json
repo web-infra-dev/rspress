@@ -75,7 +75,6 @@
     "react-dom": "^19.1.0",
     "react-lazy-with-preload": "^2.2.1",
     "react-router-dom": "^6.29.0",
-    "react-syntax-highlighter": "^15.6.1",
     "rehype-external-links": "^3.0.0",
     "remark": "^15.0.1",
     "remark-gfm": "^4.0.1",
