@@ -26,6 +26,7 @@
     "@rspress/shared": "workspace:*",
     "chokidar": "^3.6.0",
     "documentation": "14.0.3",
+    "github-slugger": "^2.0.0",
     "react-docgen-typescript": "2.2.2",
     "react-markdown": "8.0.7",
     "remark-gfm": "3.0.1"
@@ -33,6 +34,7 @@
   "devDependencies": {
     "@microsoft/api-extractor": "^7.49.2",
     "@rslib/core": "0.5.2",
+    "@types/hast": "^2.3.10",
     "@types/mdast": "^3.0.15",
     "@types/node": "^18.11.17",
     "@types/react": "^18.3.18",

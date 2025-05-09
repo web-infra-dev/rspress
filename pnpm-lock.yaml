@@ -1018,6 +1018,9 @@ importers:
       documentation:
         specifier: 14.0.3
         version: 14.0.3
+      github-slugger:
+        specifier: ^2.0.0
+        version: 2.0.0
       react-docgen-typescript:
         specifier: 2.2.2
         version: 2.2.2(typescript@5.8.2)
@@ -1034,6 +1037,9 @@ importers:
       '@rslib/core':
         specifier: 0.5.2
         version: 0.5.2(@microsoft/api-extractor@7.49.2(@types/node@18.11.17))(typescript@5.8.2)
+      '@types/hast':
+        specifier: ^2.3.10
+        version: 2.3.10
       '@types/mdast':
         specifier: ^3.0.15
         version: 3.0.15
