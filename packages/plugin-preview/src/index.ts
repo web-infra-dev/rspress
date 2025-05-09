@@ -145,6 +145,7 @@ export function pluginPreview(options?: Options): RspressPlugin {
         builderConfig,
       );
       const rsbuildInstance = await createRsbuild({
+        callerName: 'rspress',
         rsbuildConfig,
       });
 

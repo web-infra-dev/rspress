@@ -37,12 +37,12 @@
     "@oxidation-compiler/napi": "^0.2.0",
     "@rspress/shared": "workspace:*",
     "remark-gfm": "^4.0.1",
-    "rspack-plugin-virtual-module": "0.1.13",
+    "rspack-plugin-virtual-module": "1.0.0",
     "unist-util-visit": "^5.0.0"
   },
   "devDependencies": {
     "@babel/types": "^7.27.1",
-    "@rsbuild/plugin-react": "~1.3.0",
+    "@rsbuild/plugin-react": "~1.3.1",
     "@rslib/core": "0.6.8",
     "@rspress/plugin-playground": "workspace:*",
     "@types/babel__core": "^7.20.5",
