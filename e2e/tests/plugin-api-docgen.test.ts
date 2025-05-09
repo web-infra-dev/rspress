@@ -23,6 +23,9 @@ test.describe('api-docgen test', async () => {
 
   test('Index page', async ({ page }) => {
     await page.goto(`http://localhost:${appPort}`);
+    const tableH3 = await page.$('#button');
+    expect(tableH3).toBeTruthy();
+
     const table = await page.$('table');
     const tableContent = await page.evaluate(table => table?.innerHTML, table);
 
