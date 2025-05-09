@@ -1030,6 +1030,9 @@ importers:
       remark-gfm:
         specifier: 3.0.1
         version: 3.0.1
+      unist-util-visit:
+        specifier: ^4.1.2
+        version: 4.1.2
     devDependencies:
       '@microsoft/api-extractor':
         specifier: ^7.49.2
@@ -1067,9 +1070,6 @@ importers:
       unified:
         specifier: ^10.1.2
         version: 10.1.2
-      unist-util-visit:
-        specifier: ^4.1.2
-        version: 4.1.2
 
   packages/plugin-auto-nav-sidebar:
     dependencies:
