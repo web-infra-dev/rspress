@@ -434,16 +434,16 @@ export default defineConfig({
 ### route.extensions
 
 - Type: `string[]`
-- Default: `['.js', '.jsx', '.ts', '.tsx', '.md', '.mdx']`
+- Default: `['.md', '.mdx']`
 
-将包含在路由中的文件的扩展名。默认情况下，Rspress 会在路由中包含所有 `'js'、'jsx'、'ts'、'tsx'、'md'、'mdx' 文件。如果你想自定义扩展名，你可以使用这个选项。例如：
+将包含在路由中的文件的扩展名。默认情况下，Rspress 会扫描在 [`base`](#base) 下的所有 `.md`、`.mdx` 文件。如果你想自定义扩展名，你可以使用这个选项。例如：
 
 ```js title="rspress.config.ts"
 import { defineConfig } from 'rspress/config';
 
 export default defineConfig({
   route: {
-    extensions: ['.md', '.mdx'],
+    extensions: ['.md', '.mdx', '.markdown', '.MD'],
   },
 });
 ```
