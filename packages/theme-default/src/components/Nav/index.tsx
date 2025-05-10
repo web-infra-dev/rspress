@@ -1,10 +1,15 @@
 import { useLocation, usePageData, useWindowSize } from '@rspress/runtime';
 import type { NavItem } from '@rspress/shared';
 import { Search } from '@theme';
+import PanelLeftClose from '@theme-assets/panel-left-close';
+import PanelLeftOpen from '@theme-assets/panel-left-open';
 import { useHiddenNav } from '../../logic/useHiddenNav';
+import { useMediaQuery } from '../../logic/useMediaQuery';
 import { useNavData } from '../../logic/useNav';
+import { useUISwitch } from '../../logic/useUISwitch';
 import { NavHamburger } from '../NavHamburger';
 import { SocialLinks } from '../SocialLinks';
+import { SvgWrapper } from '../SvgWrapper';
 import { SwitchAppearance } from '../SwitchAppearance';
 import { NavBarTitle } from './NavBarTitle';
 import { NavMenuGroup } from './NavMenuGroup';
@@ -19,13 +24,23 @@ export interface NavProps {
   navTitle?: React.ReactNode;
   afterNavTitle?: React.ReactNode;
   afterNavMenu?: React.ReactNode;
+  showSidebar?: boolean;
+  toggleShowSidebar?: () => void;
 }
 
 const DEFAULT_NAV_POSITION = 'right';
 
 export function Nav(props: NavProps) {
-  const { beforeNavTitle, afterNavTitle, beforeNav, afterNavMenu, navTitle } =
-    props;
+  const {
+    beforeNavTitle,
+    afterNavTitle,
+    beforeNav,
+    afterNavMenu,
+    navTitle,
+    showSidebar,
+    toggleShowSidebar,
+  } = props;
+  const uiSwitch = useUISwitch();
   const { siteData, page } = usePageData();
   const { base } = siteData;
   const { pathname } = useLocation();
@@ -122,6 +137,11 @@ export function Nav(props: NavProps) {
     }
     return styles.relative;
   };
+  // sync opacity with sidebar
+  const is960 = useMediaQuery('(min-width: 960px)');
+  const showToggleBtn =
+    uiSwitch.showSidebar && page.pageType === 'doc' && is960;
+  const toggleSidebarIcon = showSidebar ? PanelLeftClose : PanelLeftOpen;
 
   return (
     <>
@@ -133,11 +153,23 @@ export function Nav(props: NavProps) {
         } ${computeNavPosition()}`}
       >
         <div
-          className={`${styles.container} rp-flex rp-justify-between rp-items-center rp-h-full`}
+          className={`${styles.container} rp-flex rp-justify-between rp-items-center rp-h-full rp-gap-x-4`}
         >
           {beforeNavTitle}
           {navTitle || <NavBarTitle />}
           {afterNavTitle}
+
+          {showToggleBtn ? (
+            <SvgWrapper
+              icon={toggleSidebarIcon}
+              style={{
+                width: '18px',
+                height: '18px',
+              }}
+              onClick={toggleShowSidebar}
+            />
+          ) : null}
+
           <div className="rp-flex rp-flex-1 rp-justify-end rp-items-center">
             {leftNav()}
             {rightNav()}
