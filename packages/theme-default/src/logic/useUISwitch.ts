@@ -47,10 +47,14 @@ export function useUISwitch(): UISwitchResult {
   // 1. frontmatter.sidebar
   // 2. themeConfig.locales.sidebar
   // 3. themeConfig.sidebar
-  const initShowSidebar =
+  const calcShowSidebar =
     frontmatter?.sidebar !== false && Object.keys(sidebar).length > 0;
 
-  const [showSidebar, setShowSidebar] = useState(initShowSidebar);
+  const [showSidebar, setShowSidebar] = useState(calcShowSidebar);
+
+  useEffect(() => {
+    setShowSidebar(calcShowSidebar);
+  }, [calcShowSidebar]);
 
   const { width } = useWindowSize();
 

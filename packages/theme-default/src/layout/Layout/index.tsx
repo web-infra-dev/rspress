@@ -9,7 +9,7 @@ import {
 import { useHead } from '@unhead/react';
 import { Head } from '@unhead/react';
 import type React from 'react';
-import { useState } from 'react';
+import { useMemo, useState } from 'react';
 import type { NavProps } from '../../components/Nav';
 import { useSetup } from '../../logic/sideEffects';
 import { useLocaleSiteData } from '../../logic/useLocaleSiteData';
@@ -138,11 +138,16 @@ export function Layout(props: LayoutProps) {
 
   // Control whether or not to display the navbar, sidebar, outline and footer
   // `props.uiSwitch` has higher priority and allows user to override the default value
-  const uiSwitch = {
-    ...useUISwitch(),
-    showSidebar,
-    ...props.uiSwitch,
-  };
+  const defaultUiSwitch = useUISwitch();
+
+  const uiSwitch = useMemo(
+    () => ({
+      ...defaultUiSwitch,
+      showSidebar: defaultUiSwitch.showSidebar !== false && showSidebar,
+      ...props.uiSwitch,
+    }),
+    [defaultUiSwitch, showSidebar, props.uiSwitch],
+  );
 
   // Use doc layout by default
   const getContentLayout = () => {
@@ -185,7 +190,7 @@ export function Layout(props: LayoutProps) {
           navTitle={navTitle}
           beforeNav={beforeNav}
           afterNavMenu={afterNavMenu}
-          showSidebar={showSidebar}
+          showSidebar={uiSwitch.showSidebar}
           toggleShowSidebar={toggleShowSideBar}
         />
       )}
