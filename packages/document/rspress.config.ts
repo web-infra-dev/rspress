@@ -26,7 +26,6 @@ export default defineConfig({
   markdown: {
     checkDeadLinks: true,
     shiki: {
-      langs: ['mdx', 'html', 'toml'],
       transformers: [
         transformerNotationDiff(),
         transformerNotationErrorLevel(),
