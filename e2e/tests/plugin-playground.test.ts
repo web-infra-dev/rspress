@@ -32,7 +32,7 @@ test.describe('plugin test', async () => {
 
     const internalDemoCodePreviewDefaultTsx = await page
       .locator('.rspress-playground > .rspress-playground-runner > div')
-      .getByText('Hello World Internal (default) (tsx) 1');
+      .getByText('Hello World Internal (tsx) 1');
 
     const internalDemoCodePreviewVertical = await page
       .locator('.rspress-playground > .rspress-playground-runner > div')
@@ -42,7 +42,7 @@ test.describe('plugin test', async () => {
       .locator('.rspress-playground > .rspress-playground-runner > div')
       .getByText('Hello World External');
 
-    expect(playgroundElements.length).toBe(3);
+    expect(playgroundElements.length).toBe(4);
     expect(await internalDemoCodePreviewDefault.count()).toBe(1);
     expect(await internalDemoCodePreviewDefaultTsx.count()).toBe(1);
     expect(await internalDemoCodePreviewVertical.count()).toBe(1);
