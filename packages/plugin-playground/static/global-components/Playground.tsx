@@ -92,6 +92,13 @@ export default function Playground(props: PlaygroundProps) {
         value={code}
         onChange={handleCodeChange}
         language={monacoLanguage}
+        beforeMount={monaco => {
+          monaco.languages.typescript.typescriptDefaults.setDiagnosticsOptions({
+            noSemanticValidation: true,
+            noSyntaxValidation: true,
+            noSuggestionDiagnostics: true,
+          });
+        }}
       />
       {renderChildren?.(props, code, direction)}
     </div>
