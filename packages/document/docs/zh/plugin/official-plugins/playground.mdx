@@ -31,10 +31,6 @@ export default defineConfig({
 
 ### 内部组件
 
-:::tip 提示
-建议使用 js 或 jsx 编写示例代码，避免编辑器中出现 ts 类型报错问题。
-:::
-
 内部组件的组件代码声明在 mdx 文件内。支持 jsx 或 tsx。你可以在 mdx 文件中声明如下的代码块：
 
 ````mdx
@@ -48,6 +44,12 @@ function App() {
 export default App;
 ```
 ````
+
+:::tip 提示
+
+在 tsx 格式下，类型检查会被禁用，以减少噪音。
+
+:::
 
 另外，你可以通过 `direction` 参数，指定编辑器与预览区域的布局；支持 `horizontal` 或 `vertical`：
 

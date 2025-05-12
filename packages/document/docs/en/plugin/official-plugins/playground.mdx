@@ -33,10 +33,6 @@ This plugin will set `markdown.mdxRs` to `false`. In the future, the Rspress tea
 
 ### Internal components
 
-:::tip Note
-It is recommended to use js or jsx to write sample code to avoid ts type errors in the editor.
-:::
-
 The component code of internal components is declared in the mdx file. This plugin supports jsx and tsx. You can declare the following code block in the mdx file:
 
 ````mdx
@@ -50,6 +46,12 @@ function App() {
 export default App;
 ```
 ````
+
+:::tip Note
+
+In the tsx format, type checking will be disabled for reducing noise.
+
+:::
 
 Otherwise, You can use `direction` parameter to specify the playground layout, `horizontal` and `vertical` are supported:
 
