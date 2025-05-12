@@ -128,6 +128,8 @@ export class RouteService {
           '**/node_modules/**',
           '**/.eslintrc.js',
           '**/.nx/**',
+          // partial mdx components and code samples, e.g: _d.mdx
+          '**/_*',
           `./${PUBLIC_DIR}/**`,
         ],
       })
