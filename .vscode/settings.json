@@ -8,7 +8,8 @@
     "**/compiled": true,
     "**/doc_build": true,
     "**/node_modules": true,
-    "**/tsconfig.tsbuildinfo": true
+    "**/tsconfig.tsbuildinfo": true,
+    "**/.rslib": true
   },
   "files.exclude": {
     "**/.DS_Store": true
