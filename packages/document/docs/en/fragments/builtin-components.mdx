@@ -178,19 +178,19 @@ interface LinkCardProps {
 }
 ```
 
-## Helmet
+## Head
 
-It is generally used to set custom head content in documents (based on [react-helmet-async](https://www.npmjs.com/package/react-helmet-async)). The usage is as follows:
+It is generally used to set custom head content in documents (based on [unhead](https://www.npmjs.com/package/unhead)). The usage is as follows:
 
 ```tsx title="index.tsx"
 // Below is a custom component, you can import it into your document
-import { Helmet } from 'rspress/runtime';
+import { Head } from 'rspress/runtime';
 
 function App() {
   return (
-    <Helmet>
+    <Head>
       <meta property="og:description" content="Out-of-box Rspack build tools" />
-    </Helmet>
+    </Head>
   );
 }
 ```
