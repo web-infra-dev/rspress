@@ -47,8 +47,10 @@ test.describe('tabs-component test', async () => {
       npmSpanElements.map(element => element.textContent()),
     );
     expect(npmCode).toEqual([
-      'npm create rspress@latest',
-      'npm install rspress -D',
+      'npm',
+      ' create rspress@latest',
+      'npm',
+      ' install rspress -D',
     ]);
 
     await clickTabs[1].click();
@@ -56,7 +58,12 @@ test.describe('tabs-component test', async () => {
     const yarnCode = await Promise.all(
       yarnSpanElements.map(element => element.textContent()),
     );
-    expect(yarnCode).toEqual(['yarn create rspress', 'yarn add rspress -D']);
+    expect(yarnCode).toEqual([
+      'yarn',
+      ' create rspress',
+      'yarn',
+      ' add rspress -D',
+    ]);
 
     await clickTabs[2].click();
     const pnpmSpanElements = await page.$$('code > span > span');
@@ -64,8 +71,10 @@ test.describe('tabs-component test', async () => {
       pnpmSpanElements.map(element => element.textContent()),
     );
     expect(pnpmCode).toEqual([
-      'pnpm create rspress@latest',
-      'pnpm install rspress -D',
+      'pnpm',
+      ' create rspress@latest',
+      'pnpm',
+      ' install rspress -D',
     ]);
 
     await clickTabs[3].click();
@@ -74,8 +83,10 @@ test.describe('tabs-component test', async () => {
       bunSpanElements.map(element => element.textContent()),
     );
     expect(bunCode).toEqual([
-      'bun create rspress@latest',
-      'bun add rspress -D',
+      'bun',
+      ' create rspress@latest',
+      'bun',
+      ' add rspress -D',
     ]);
   });
 });
