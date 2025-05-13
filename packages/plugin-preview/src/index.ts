@@ -45,10 +45,6 @@ export function pluginPreview(options?: Options): RspressPlugin {
     position = iframePosition,
     builderConfig = {},
   } = iframeOptions;
-  const globalUIComponents =
-    position === 'fixed'
-      ? [join(staticPath, 'global-components', 'Device.tsx')]
-      : [];
   const getRouteMeta = () => routeMeta;
   let lastDemos: typeof demos;
   let devServer: StartServerResult | undefined;
@@ -227,9 +223,13 @@ export function pluginPreview(options?: Options): RspressPlugin {
       ],
       globalComponents: [
         join(staticPath, 'global-components', 'Container.tsx'),
+        join(staticPath, 'global-components', 'ContainerFixedPerComp.tsx'),
       ],
     },
-    globalUIComponents,
+    globalUIComponents:
+      position === 'fixed-with-per-comp' || position === 'fixed'
+        ? [join(staticPath, 'global-components', 'Device.tsx')]
+        : [],
     globalStyles: join(staticPath, 'global-styles', `${previewMode}.css`),
   };
 }

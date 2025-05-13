@@ -84,7 +84,10 @@ export const remarkCodeToDemo: Plugin<[RemarkPluginOptions], Root> = function ({
         // Use container to show the code and view
         Object.assign(currentNode, {
           type: 'mdxJsxFlowElement',
-          name: 'Container',
+          name:
+            position === 'fixed-with-per-comp'
+              ? 'ContainerFixedPerComp'
+              : 'Container',
           attributes: [
             {
               type: 'mdxJsxAttribute',
