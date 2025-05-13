@@ -44,6 +44,16 @@ function normalizeCommand(command: string): string {
   return command.replace('install', 'add');
 }
 
+/**
+ * 'npm install foo@latest' -> ['npm', ' install foo@latest']
+ */
+function splitTo2Parts(command: string): [string, string] {
+  const parts = command.split(' ');
+  const firstPart = parts[0];
+  const secondPart = command.slice(firstPart.length);
+  return [firstPart, secondPart];
+}
+
 export function PackageManagerTabs({
   command,
   additionalTabs = [],
@@ -96,18 +106,27 @@ export function PackageManagerTabs({
         </div>
       ))}
     >
-      {Object.entries(commandInfo).map(([key, value]) => (
-        <Tab key={key}>
-          <Pre>
-            {/* For this case, we has no highlight */}
-            <code className="language-bash" style={{ whiteSpace: 'pre' }}>
-              <span style={{ display: 'block', padding: '0px 1.25rem' }}>
-                <span>{value}</span>
-              </span>
-            </code>
-          </Pre>
-        </Tab>
-      ))}
+      {Object.entries(commandInfo).map(([key, value]) => {
+        const [packageManager, command] = splitTo2Parts(value);
+
+        return (
+          <Tab key={key}>
+            <Pre>
+              {/* For this case, we highlight the command manually */}
+              <code className="language-bash" style={{ whiteSpace: 'pre' }}>
+                <span style={{ display: 'block', padding: '0px 1.25rem' }}>
+                  <span style={{ color: 'var(--shiki-token-function)' }}>
+                    {packageManager}
+                  </span>
+                  <span style={{ color: 'var(--shiki-token-string)' }}>
+                    {command}
+                  </span>
+                </span>
+              </code>
+            </Pre>
+          </Tab>
+        );
+      })}
     </Tabs>
   );
 }
