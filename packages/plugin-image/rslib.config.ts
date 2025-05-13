@@ -6,7 +6,7 @@ export default defineConfig({
   plugins: [pluginPublint()],
   lib: [
     {
-      format: 'esm',
+      format: 'cjs',
       source: {
         entry: { index: 'src/index.ts' },
       },

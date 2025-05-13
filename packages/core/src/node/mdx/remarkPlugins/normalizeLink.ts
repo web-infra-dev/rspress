@@ -147,6 +147,7 @@ export const remarkPluginNormalizeLink: Plugin<
         type: 'mdxJsxFlowElement',
         name: 'img',
         children: [],
+        from: 'mark',
         attributes: [
           alt && {
             type: 'mdxJsxAttribute',

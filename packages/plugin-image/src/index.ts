@@ -1,20 +1,18 @@
+import { pluginImage as builderPluginImage } from '@rsbuild-image/core';
+import type { PluginImageOptions as CoreOptions } from '@rsbuild-image/core';
 import type { RouteMeta, RspressPlugin } from '@rspress/shared';
 import { remarkPlugin } from './remarkPlugin';
 
 // const pkgRootPath = path.join(__dirname, '../../');
 // const staticPath = path.join(pkgRootPath, 'static');
 
-export interface PlaygroundOptions {
-  foo?: boolean;
-}
+export interface PluginImageOptions extends CoreOptions {}
 
 // eslint-disable-next-line import/no-mutable-exports
 export let routeMeta: RouteMeta[];
 
-export function pluginImage(
-  options: Partial<PlaygroundOptions> = {},
-): RspressPlugin {
-  const { foo } = options;
+export function pluginImage(options: PluginImageOptions = {}): RspressPlugin {
+  const { ...coreOpts } = options;
 
   return {
     name: '@rspress/plugin-image',
@@ -24,9 +22,11 @@ export function pluginImage(
       // removePlugin('@rspress/plugin-preview');
       return config;
     },
-    builderConfig: {},
+    builderConfig: {
+      plugins: [builderPluginImage(coreOpts)],
+    },
     markdown: {
-      remarkPlugins: [[remarkPlugin, { foo }]],
+      remarkPlugins: [[remarkPlugin, {}]],
     },
   };
 }

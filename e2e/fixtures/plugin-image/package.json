@@ -8,6 +8,7 @@
     "preview": "rspress preview"
   },
   "dependencies": {
+    "@rsbuild-image/react": "^0.0.1-next.31",
     "@rspress/plugin-image": "workspace:*",
     "rspress": "workspace:*"
   },
