@@ -102,7 +102,7 @@ interface PreviewOptions {
 
 interface IframeOptions {
   framework?: 'react' | 'solid';
-  position?: 'fixed' | 'follow';
+  position?: 'fixed' | 'follow' | 'fixed-with-per-comp';
   devPort?: number;
 }
 ```
@@ -148,6 +148,8 @@ export default App;
 `fixed` 模式效果如下：
 
 ![](https://lf3-static.bytednsdoc.com/obj/eden-cn/uhbfnupenuhf/rspress/demo-preview-mobile-fixed.png)
+
+`fixed-with-per-comp` 会在 `fixed` 模式的基础上，给每个代码块增加一个独立的 html 文件，当点击代码块时会将右侧 iframe 切换至只展示单个组件。
 
 ### iframeOptions.framework
 
