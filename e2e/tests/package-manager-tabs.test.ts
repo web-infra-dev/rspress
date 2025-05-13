@@ -58,7 +58,12 @@ test.describe('tabs-component test', async () => {
     const yarnCode = await Promise.all(
       yarnSpanElements.map(element => element.textContent()),
     );
-    expect(yarnCode).toEqual(['yarn create rspress', 'yarn add rspress -D']);
+    expect(yarnCode).toEqual([
+      'yarn',
+      ' create rspress',
+      'yarn',
+      ' add rspress -D',
+    ]);
 
     await clickTabs[2].click();
     const pnpmSpanElements = await page.$$('code > span > span');
