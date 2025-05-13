@@ -31,7 +31,7 @@ const cssVariablesTheme = createCssVariablesTheme({
 export function pluginShiki(
   options?: Partial<PluginShikiOptions>,
 ): RspressPlugin {
-  const { langs, transformers = [], ...restOptions } = options || {};
+  const { langs = [], transformers = [], ...restOptions } = options || {};
 
   return {
     name: '@rspress/plugin-shiki',
@@ -56,14 +56,11 @@ export function pluginShiki(
         {
           theme: cssVariablesTheme,
           defaultLanguage: 'txt',
+          lazy: true, // lazy load the langs, @seehttps://github.com/fuma-nama/fumadocs/blob/9b38baf2e66d7bc6f88d24b90a3857730a15fe3c/packages/core/src/mdx-plugins/rehype-code.ts#L169
+          langs: ['tsx', 'ts', 'js'],
           ...restOptions,
           addLanguageClass: true,
           transformers: newTransformers,
-          ...(langs
-            ? {
-                langs,
-              }
-            : {}),
         } satisfies RehypeShikiOptions,
       ]);
       return config;
