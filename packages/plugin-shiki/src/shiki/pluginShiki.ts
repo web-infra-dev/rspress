@@ -31,7 +31,7 @@ const cssVariablesTheme = createCssVariablesTheme({
 export function pluginShiki(
   options?: Partial<PluginShikiOptions>,
 ): RspressPlugin {
-  const { langs = [], transformers = [], ...restOptions } = options || {};
+  const { langs, transformers = [], ...restOptions } = options || {};
 
   return {
     name: '@rspress/plugin-shiki',
