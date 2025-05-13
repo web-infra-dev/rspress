@@ -34,7 +34,7 @@ test.describe('modern-js module doc test', async () => {
       waitUntil: 'networkidle',
     });
 
-    const iframe = await page.$('.fixed-device');
+    const iframe = await page.$('.rspress-fixed-device');
     const previewPadding = await iframe?.evaluate(el => {
       return window
         .getComputedStyle(el)

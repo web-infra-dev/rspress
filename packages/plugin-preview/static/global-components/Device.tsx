@@ -72,18 +72,18 @@ export default () => {
   }, [haveDemos, asideWidth, innerWidth]);
 
   return haveDemos ? (
-    <div className="fixed-device">
+    <div className="rspress-fixed-device">
       <NoSSR>
         <iframe
           // refresh when load the iframe, then remove NoSSR
           src={getPageUrl(url)}
-          className="fixed-iframe"
+          className="rspress-fixed-iframe"
           key={iframeKey}
         ></iframe>
       </NoSSR>
       <MobileOperation
         url={getPageUrl(url)}
-        className="fixed-operation"
+        className="rspress-fixed-operation"
         refresh={refresh}
       />
     </div>

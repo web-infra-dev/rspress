@@ -12,6 +12,7 @@
   padding: 16px 0;
 
   &-wrapper {
+    display: flex;
     border: 1px solid var(--rp-container-details-border);
     border-radius: var(--rp-radius-small);
   }

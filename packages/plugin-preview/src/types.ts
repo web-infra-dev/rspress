@@ -51,7 +51,7 @@ export type IframeOptions = {
    * position of the iframe
    * @default 'follow'
    */
-  position?: 'fixed' | 'follow';
+  position?: 'fixed' | 'follow' | 'fixed-with-per-comp';
   /**
    * dev server port for the iframe
    * @default 7890

@@ -104,7 +104,7 @@ interface PreviewOptions {
 
 interface IframeOptions {
   framework?: 'react' | 'solid';
-  position?: 'fixed' | 'follow';
+  position?: 'fixed' | 'follow' | 'fixed-with-per-comp';
   devPort?: number;
 }
 ```
@@ -150,6 +150,8 @@ The effect of `follow` mode is as follows:
 The effect of `fixed` mode is as follows:
 
 ![](https://lf3-static.bytednsdoc.com/obj/eden-cn/uhbfnupenuhf/rspress/demo-preview-mobile-fixed.png)
+
+`fixed-with-per-comp` will add an independent html file to each code block based on the `fixed` mode. When clicking on the code block, the right iframe will be switched to display only a single component.
 
 ### iframeOptions.framework
 
