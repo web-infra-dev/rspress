@@ -102,14 +102,14 @@ In order to get Tailwind CSS working with Rspress, you can use the following ste
 
 1. Install Tailwind CSS:
 
-<PackageManagerTabs command="install tailwindcss -D" />
+<PackageManagerTabs command="install tailwindcss @tailwindcss/postcss -D" />
 
 2. Create a `postcss.config.js` file containing `tailwindcss` plugin:
 
 ```js title="postcss.config.js"
 module.exports = {
   plugins: {
-    tailwindcss: {},
+    '@tailwindcss/postcss': {},
   },
 };
 ```
@@ -129,9 +129,7 @@ module.exports = {
 4. Include the Tailwind directives in your CSS styles file from [Custom Styles](#custom-styles):
 
 ```css title=styles/index.css
-@import 'tailwindcss/base';
-@import 'tailwindcss/components';
-@import 'tailwindcss/utilities';
+@import 'tailwindcss';
 ```
 
 > For most up to date configuration, please refer to the official [Tailwind CSS documentation](https://tailwindcss.com/docs/installation/using-postcss).
