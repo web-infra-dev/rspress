@@ -561,7 +561,7 @@ importers:
         version: 0.0.1-next.33(@rsbuild-image/core@0.0.1-next.33(ipx@3.0.3)(react-dom@19.1.0(react@19.1.0))(react@19.1.0)(sharp@0.33.5))(ipx@3.0.3)(react-dom@19.1.0(react@19.1.0))(react@19.1.0)(sharp@0.33.5)
       '@rsbuild-image/rspress':
         specifier: ^0.0.1-next.33
-        version: 0.0.1-next.33(@rsbuild-image/react@0.0.1-next.33(@rsbuild-image/core@0.0.1-next.33(ipx@3.0.3)(react-dom@19.1.0(react@19.1.0))(react@19.1.0)(sharp@0.33.5))(ipx@3.0.3)(react-dom@19.1.0(react@19.1.0))(react@19.1.0)(sharp@0.33.5))(react-dom@19.1.0(react@19.1.0))(react@19.1.0)
+        version: 0.0.1-next.33(@rsbuild-image/react@0.0.1-next.33(@rsbuild-image/core@0.0.1-next.33(ipx@3.0.3)(react-dom@19.1.0(react@19.1.0))(react@19.1.0)(sharp@0.33.5))(ipx@3.0.3)(react-dom@19.1.0(react@19.1.0))(react@19.1.0)(sharp@0.33.5))(acorn@8.14.0)(react-dom@19.1.0(react@19.1.0))(react@19.1.0)
       rspress:
         specifier: workspace:*
         version: link:../../../packages/cli
@@ -942,7 +942,7 @@ importers:
         version: 0.0.1-next.33(@rsbuild-image/core@0.0.1-next.33(ipx@3.0.3)(react-dom@19.1.0(react@19.1.0))(react@19.1.0)(sharp@0.33.5))(ipx@3.0.3)(react-dom@19.1.0(react@19.1.0))(react@19.1.0)(sharp@0.33.5)
       '@rsbuild-image/rspress':
         specifier: ^0.0.1-next.33
-        version: 0.0.1-next.33(@rsbuild-image/react@0.0.1-next.33(@rsbuild-image/core@0.0.1-next.33(ipx@3.0.3)(react-dom@19.1.0(react@19.1.0))(react@19.1.0)(sharp@0.33.5))(ipx@3.0.3)(react-dom@19.1.0(react@19.1.0))(react@19.1.0)(sharp@0.33.5))(react-dom@19.1.0(react@19.1.0))(react@19.1.0)
+        version: 0.0.1-next.33(@rsbuild-image/react@0.0.1-next.33(@rsbuild-image/core@0.0.1-next.33(ipx@3.0.3)(react-dom@19.1.0(react@19.1.0))(react@19.1.0)(sharp@0.33.5))(ipx@3.0.3)(react-dom@19.1.0(react@19.1.0))(react@19.1.0)(sharp@0.33.5))(acorn@8.14.0)(react-dom@19.1.0(react@19.1.0))(react@19.1.0)
       '@rsbuild/plugin-sass':
         specifier: ~1.3.1
         version: 1.3.1(@rsbuild/core@1.3.18)
@@ -960,7 +960,7 @@ importers:
         version: 1.8.0(react-dom@19.1.0(react@19.1.0))(react@19.1.0)
       '@rstack/resource':
         specifier: git://github.com/rspack-contrib/rstack-design-resources.git
-        version: rstack-design-resources.git@https://codeload.github.com/rspack-contrib/rstack-design-resources/tar.gz/765f9631b417653ea301781babd7c0b252239865
+        version: rstack-design-resources.git@https://codeload.github.com/rspack-contrib/rstack-design-resources/tar.gz/a148953936d81088b69fa7c929c2bfafe15c6df4
       '@shikijs/transformers':
         specifier: ^3.2.2
         version: 3.2.2
@@ -2725,6 +2725,7 @@ packages:
   '@img/sharp-wasm32@0.33.5':
     resolution: {integrity: sha512-ykUW4LVGaMcU9lu9thv85CbRMAwfeadCJHRsg2GmeRa/cJxsVY9Rbd57JcMxBkKHag5U/x7TSBpScF4U8ElVzg==}
     engines: {node: ^18.17.0 || ^20.3.0 || >=21.0.0}
+    cpu: [wasm32]
 
   '@img/sharp-win32-ia32@0.33.5':
     resolution: {integrity: sha512-T36PblLaTwuVJ/zw/LaH0PdZkRz5rd3SmMHX8GSmR7vtNSP5Z6bQkExdSK7xGWyxLw4sUknBuugTelgw2faBbQ==}
@@ -6468,8 +6469,8 @@ packages:
   rspress-plugin-sitemap@1.1.2:
     resolution: {integrity: sha512-dvmEbBUnyU3qkapjBz4WcpP0BIkJdljORFiuJ92wr0Vt/b/ff7cFlaRcAYtKq/g1y7JAdA+qzy3gjnNg0TqNow==}
 
-  rstack-design-resources.git@https://codeload.github.com/rspack-contrib/rstack-design-resources/tar.gz/765f9631b417653ea301781babd7c0b252239865:
-    resolution: {tarball: https://codeload.github.com/rspack-contrib/rstack-design-resources/tar.gz/765f9631b417653ea301781babd7c0b252239865}
+  rstack-design-resources.git@https://codeload.github.com/rspack-contrib/rstack-design-resources/tar.gz/a148953936d81088b69fa7c929c2bfafe15c6df4:
+    resolution: {tarball: https://codeload.github.com/rspack-contrib/rstack-design-resources/tar.gz/a148953936d81088b69fa7c929c2bfafe15c6df4}
     version: 0.0.0
 
   run-parallel@1.2.0:
@@ -8866,7 +8867,7 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
-  '@rsbuild-image/rspress@0.0.1-next.33(@rsbuild-image/react@0.0.1-next.33(@rsbuild-image/core@0.0.1-next.33(ipx@3.0.3)(react-dom@19.1.0(react@19.1.0))(react@19.1.0)(sharp@0.33.5))(ipx@3.0.3)(react-dom@19.1.0(react@19.1.0))(react@19.1.0)(sharp@0.33.5))(react-dom@19.1.0(react@19.1.0))(react@19.1.0)':
+  '@rsbuild-image/rspress@0.0.1-next.33(@rsbuild-image/react@0.0.1-next.33(@rsbuild-image/core@0.0.1-next.33(ipx@3.0.3)(react-dom@19.1.0(react@19.1.0))(react@19.1.0)(sharp@0.33.5))(ipx@3.0.3)(react-dom@19.1.0(react@19.1.0))(react@19.1.0)(sharp@0.33.5))(acorn@8.14.0)(react-dom@19.1.0(react@19.1.0))(react@19.1.0)':
     dependencies:
       '@img/sharp-wasm32': 0.33.5
       '@mdx-js/mdx': 3.1.0(acorn@8.14.0)
@@ -13112,7 +13113,7 @@ snapshots:
 
   rspress-plugin-sitemap@1.1.2: {}
 
-  rstack-design-resources.git@https://codeload.github.com/rspack-contrib/rstack-design-resources/tar.gz/765f9631b417653ea301781babd7c0b252239865: {}
+  rstack-design-resources.git@https://codeload.github.com/rspack-contrib/rstack-design-resources/tar.gz/a148953936d81088b69fa7c929c2bfafe15c6df4: {}
 
   run-parallel@1.2.0:
     dependencies:
