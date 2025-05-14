@@ -2,7 +2,7 @@
 
 ## Contributing
 
-Currently Rslib provides documentation in English and Chinese. If you can use Chinese, please update both documents at the same time. Otherwise, just update the English documentation.
+Currently Rspress provides documentation in English and Chinese. If you can use Chinese, please update both documents at the same time. Otherwise, just update the English documentation.
 
 ## Writing style guide
 
