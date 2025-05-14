@@ -40,7 +40,7 @@ export function SidebarItem(props: SidebarItemProps) {
         className={`${
           active
             ? `${styles.menuItemActive} rspress-sidebar-item-active`
-            : `${styles.menuItem}`
+            : styles.menuItem
         } rp-mt-0.5 rp-py-2 rp-px-3 rp-font-medium rp-flex`}
         style={{
           // The first level menu item will have the same font size as the sidebar group
