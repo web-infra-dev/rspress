@@ -1,5 +1,5 @@
 import * as path from 'node:path';
-import { pluginImage } from '@rspress/plugin-image';
+import { pluginImage } from '@rsbuild-image/rspress';
 import { defineConfig } from 'rspress/config';
 
 export default defineConfig({

@@ -1,3 +1,4 @@
+import { pluginImage } from '@rsbuild-image/rspress';
 import { pluginSass } from '@rsbuild/plugin-sass';
 import { pluginAlgolia } from '@rspress/plugin-algolia';
 import { pluginLlms } from '@rspress/plugin-llms';
@@ -44,6 +45,7 @@ export default defineConfig({
       verificationContent: '8F5BFE50E65777F1',
     }),
     pluginLlms(),
+    pluginImage({ ipx: {} }),
   ],
   builderConfig: {
     dev: {
