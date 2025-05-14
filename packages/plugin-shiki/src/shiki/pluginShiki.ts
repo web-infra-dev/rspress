@@ -3,7 +3,7 @@ import { fileURLToPath } from 'node:url';
 import type { RspressPlugin } from '@rspress/shared';
 import rehypePluginShiki from '@shikijs/rehype';
 import type { RehypeShikiOptions } from '@shikijs/rehype';
-import { type BuiltinLanguage, createCssVariablesTheme } from 'shiki';
+import { createCssVariablesTheme } from 'shiki';
 import {
   SHIKI_TRANSFORMER_LINE_NUMBER,
   transformerLineNumber,
@@ -18,24 +18,6 @@ const __dirname = dirname(__filename);
  */
 export type PluginShikiOptions = RehypeShikiOptions;
 
-export const SHIKI_DEFAULT_HIGHLIGHT_LANGUAGES: BuiltinLanguage[] = [
-  'js',
-  'ts',
-  'jsx',
-  'tsx',
-  'vue',
-  'json',
-  'css',
-  'scss',
-  'less',
-  'xml',
-  'diff',
-  'yaml',
-  'md',
-  'mdx',
-  'bash',
-];
-
 const cssVariablesTheme = createCssVariablesTheme({
   name: 'css-variables',
   variablePrefix: '--shiki-',
@@ -49,7 +31,7 @@ const cssVariablesTheme = createCssVariablesTheme({
 export function pluginShiki(
   options?: Partial<PluginShikiOptions>,
 ): RspressPlugin {
-  const { langs = [], transformers = [], ...restOptions } = options || {};
+  const { transformers = [], ...restOptions } = options || {};
 
   return {
     name: '@rspress/plugin-shiki',
@@ -57,7 +39,6 @@ export function pluginShiki(
     async config(config) {
       const newTransformers = [transformerAddTitle(), ...transformers];
       config.markdown = config.markdown || {};
-      // Shiki will be integrated by rehype plugin, so we should use the javascript version markdown compiler.
       config.markdown.rehypePlugins = config.markdown.rehypePlugins || [];
       if (
         config.markdown.showLineNumbers &&
@@ -74,10 +55,11 @@ export function pluginShiki(
         {
           theme: cssVariablesTheme,
           defaultLanguage: 'txt',
+          lazy: true, // Lazy loading all langs except ['tsx', 'ts', 'js'] , @see https://github.com/fuma-nama/fumadocs/blob/9b38baf2e66d7bc6f88d24b90a3857730a15fe3c/packages/core/src/mdx-plugins/rehype-code.ts#L169
+          langs: ['tsx', 'ts', 'js'],
           ...restOptions,
           addLanguageClass: true,
           transformers: newTransformers,
-          langs: [...SHIKI_DEFAULT_HIGHLIGHT_LANGUAGES, ...langs],
         } satisfies RehypeShikiOptions,
       ]);
       return config;

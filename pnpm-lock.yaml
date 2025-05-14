@@ -1049,6 +1049,9 @@ importers:
       documentation:
         specifier: 14.0.3
         version: 14.0.3
+      github-slugger:
+        specifier: ^2.0.0
+        version: 2.0.0
       react-docgen-typescript:
         specifier: 2.2.2
         version: 2.2.2(typescript@5.8.2)
@@ -1061,6 +1064,9 @@ importers:
       unified:
         specifier: ^11.0.5
         version: 11.0.5
+      unist-util-visit:
+        specifier: ^5.0.0
+        version: 5.0.0
     devDependencies:
       '@microsoft/api-extractor':
         specifier: ^7.52.7
@@ -1068,6 +1074,9 @@ importers:
       '@rslib/core':
         specifier: 0.6.9
         version: 0.6.9(@microsoft/api-extractor@7.52.7(@types/node@18.11.17))(typescript@5.8.2)
+      '@types/hast':
+        specifier: ^3.0.4
+        version: 3.0.4
       '@types/mdast':
         specifier: ^4.0.4
         version: 4.0.4
