@@ -269,7 +269,7 @@ importers:
         specifier: ^18.11.17
         version: 18.11.17
 
-  e2e/fixtures/link:
+  e2e/fixtures/markdown-link:
     dependencies:
       rspress:
         specifier: workspace:*
@@ -280,6 +280,16 @@ importers:
         version: 18.11.17
 
   e2e/fixtures/multi-version:
+    dependencies:
+      rspress:
+        specifier: workspace:*
+        version: link:../../../packages/cli
+    devDependencies:
+      '@types/node':
+        specifier: ^18.11.17
+        version: 18.11.17
+
+  e2e/fixtures/nav-link:
     dependencies:
       rspress:
         specifier: workspace:*

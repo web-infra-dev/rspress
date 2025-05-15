@@ -16,6 +16,8 @@ import { visit } from 'unist-util-visit';
 import type { RouteService } from '../../route/RouteService';
 import { getASTNodeImport } from '../../utils';
 
+// TODO: support relative path [subfolder](subfolder) equal to [subfolder](./subfolder)
+
 function normalizeLink(
   nodeUrl: string,
   routeService: RouteService | undefined,
@@ -99,6 +101,12 @@ export const remarkPluginNormalizeLink: Plugin<
   (tree, file) => {
     const images: MdxjsEsm[] = [];
     visit(tree, 'link', node => {
+      const { url: nodeUrl } = node;
+      const relativePath = path.relative(root, file.path);
+      node.url = normalizeLink(nodeUrl, routeService, relativePath, cleanUrls);
+    });
+
+    visit(tree, 'definition', node => {
       const { url: nodeUrl } = node;
       const relativePath = path.relative(root, file.path);
       node.url = normalizeLink(nodeUrl, routeService, relativePath, cleanUrls);
