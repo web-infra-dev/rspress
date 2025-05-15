@@ -1,5 +1,5 @@
 {
-  "name": "@rspress-fixture/rspress-link",
+  "name": "@rspress-fixture/nav-link",
   "version": "1.0.0",
   "private": true,
   "scripts": {
