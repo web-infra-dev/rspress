@@ -1,0 +1,18 @@
+{
+  "name": "@rspress-fixture/rsbuild-image",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "build": "rspress build",
+    "dev": "rspress dev",
+    "preview": "rspress preview"
+  },
+  "dependencies": {
+    "@rsbuild-image/react": "^0.0.1-next.33",
+    "@rsbuild-image/rspress": "^0.0.1-next.33",
+    "rspress": "workspace:*"
+  },
+  "devDependencies": {
+    "@types/node": "^18.11.17"
+  }
+}
