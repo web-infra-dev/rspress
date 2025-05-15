@@ -1,5 +1,6 @@
 import fs from 'node:fs/promises';
 import path from 'node:path';
+import { fileURLToPath } from 'node:url';
 import type {
   RsbuildConfig,
   RsbuildInstance,
@@ -77,12 +78,16 @@ async function createInternalBuildConfig(
     : '';
   const reactVersion = await detectReactVersion();
 
-  const normalizeIcon = (icon: string | undefined) => {
+  const normalizeIcon = (icon: string | URL | undefined) => {
     if (!icon) {
       return undefined;
     }
 
-    if (path.isAbsolute(icon)) {
+    icon = icon.toString();
+
+    if (icon.startsWith('file://')) {
+      icon = fileURLToPath(icon);
+    } else if (path.isAbsolute(icon)) {
       return path.join(userDocRoot, PUBLIC_DIR, icon);
     }
 

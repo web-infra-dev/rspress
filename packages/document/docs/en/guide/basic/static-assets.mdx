@@ -73,11 +73,12 @@ export default defineConfig({
 });
 ```
 
-The icon field supports string config, with the following specific ways:
+The icon field supports string or URL config, with the following specific ways:
 
 - Configured as an **external link**, like the above example.
 - Configured as an **absolute path**, such as `/favicon.ico`. In this case, Rspress will automatically find the `favicon.ico` icon in the `public directory` of your **document root directory** and display it.
 - Configured as a **relative path**, such as `./docs/public/favicon.ico`. In this case, Rspress will find the `favicon.ico` icon based on the project root directory and display it.
+- Configured as a `file://` protocol or `URL`, such as `file:///local_path/favicon.ico`. In this case, Rspress will use the local absolute path `/local_path/favicon.ico` icon directly and display it.
 
 ## Homepage logo
 
