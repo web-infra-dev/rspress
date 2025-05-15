@@ -67,7 +67,7 @@ function ShikiPre({
   );
 }
 
-export function Pre({
+export function PreWithCodeButtonGroup({
   children,
   className,
   title,
