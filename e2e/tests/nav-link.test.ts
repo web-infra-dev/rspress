@@ -34,7 +34,7 @@ test.describe('Navigation with <Link>', async () => {
   const gotoPage = (suffix: string) => `http://localhost:${appPort}${suffix}`;
 
   test.beforeAll(async () => {
-    const appDir = path.join(fixtureDir, 'link');
+    const appDir = path.join(fixtureDir, 'nav-link');
     appPort = await getPort();
     app = await runDevCommand(appDir, appPort);
   });

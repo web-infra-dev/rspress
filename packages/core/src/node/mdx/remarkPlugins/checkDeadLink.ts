@@ -7,6 +7,7 @@ import { visit } from 'unist-util-visit';
 import type { RouteService } from '../../route/RouteService';
 import { normalizePath } from '../../utils';
 
+// TODO: this should be added to remark-normalize-links in ./normalizeLink.ts
 export interface DeadLinkCheckOptions {
   root: string;
   base: string;
