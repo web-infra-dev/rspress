@@ -15,7 +15,7 @@ import './index.css';
 import { NoSSR, useLang } from 'rspress/runtime';
 
 function HomeLayout() {
-  const { pre: Pre, code: Code } = getCustomMDXComponent();
+  const { pre: PreWithCodeButtonGroup, code: Code } = getCustomMDXComponent();
   return (
     <BasicHomeLayout
       afterFeatures={<ToolStack />}
@@ -24,20 +24,15 @@ function HomeLayout() {
           className="rspress-doc"
           style={{ minHeight: 'auto', width: '100%', maxWidth: 400 }}
         >
-          <Pre
-            codeHighlighter="shiki"
+          <PreWithCodeButtonGroup
             codeButtonGroupProps={{
               showCodeWrapButton: false,
             }}
           >
-            <Code
-              className="language-bash"
-              codeHighlighter="shiki"
-              style={{ textAlign: 'center' }}
-            >
+            <Code className="language-bash" style={{ textAlign: 'center' }}>
               npm create rspress@beta
             </Code>
-          </Pre>
+          </PreWithCodeButtonGroup>
         </div>
       }
     />

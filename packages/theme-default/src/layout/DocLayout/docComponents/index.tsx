@@ -4,7 +4,7 @@ import { Hr } from './hr';
 import { Img } from './img';
 import { Li, Ol, Ul } from './list';
 import { Blockquote, P, Strong } from './paragraph';
-import { Pre } from './pre';
+import { PreWithCodeButtonGroup } from './pre';
 import { Table, Td, Th, Tr } from './table';
 import { H1, H2, H3, H4, H5, H6 } from './title';
 
@@ -29,7 +29,7 @@ export function getCustomMDXComponent() {
     strong: Strong,
     a: A,
     code: Code,
-    pre: Pre,
+    pre: PreWithCodeButtonGroup,
     img: Img,
   };
 }
