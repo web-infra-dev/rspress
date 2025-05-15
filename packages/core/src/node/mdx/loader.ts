@@ -1,23 +1,12 @@
-import fs from 'node:fs/promises';
 import path from 'node:path';
-import { pathToFileURL } from 'node:url';
 import { createProcessor } from '@mdx-js/mdx';
 import type { Rspack } from '@rsbuild/core';
-import type {
-  FrontMatterMeta,
-  Header,
-  PageIndexInfo,
-  SiteData,
-  UserConfig,
-} from '@rspress/shared';
-import { isProduction } from '@rspress/shared';
+import type { FrontMatterMeta, Header, UserConfig } from '@rspress/shared';
 import { logger } from '@rspress/shared/logger';
 import { extractTextAndId, loadFrontMatter } from '@rspress/shared/node-utils';
 
 import type { PluginDriver } from '../PluginDriver';
-import { TEMP_DIR } from '../constants';
 import type { RouteService } from '../route/RouteService';
-import { RuntimeModuleID } from '../runtimeModule/types';
 import {
   applyReplaceRules,
   escapeMarkdownHeadingIds,
@@ -41,58 +30,6 @@ export interface PageMeta {
   frontmatter?: FrontMatterMeta;
 }
 
-export async function updateSiteDataRuntimeModule(
-  modulePath: string,
-  pageMeta: PageMeta,
-) {
-  const siteDataModulePath = path.join(
-    TEMP_DIR,
-    'runtime',
-    `${RuntimeModuleID.SiteData}.mjs`,
-  );
-  const { default: siteData } = (await import(
-    pathToFileURL(siteDataModulePath).href
-  )) as { default: SiteData };
-  await fs.writeFile(
-    siteDataModulePath,
-    `export default ${JSON.stringify(
-      {
-        ...siteData,
-        timestamp: Date.now().toString(),
-        // in node side, "_file" "_relativePath" underscore fields exist
-        pages: (siteData.pages as PageIndexInfo[]).map(page =>
-          // Update page meta if the page is updated
-          page._filepath === modulePath ? { ...page, ...pageMeta } : page,
-        ),
-      },
-      null,
-      2,
-    )}`,
-  );
-}
-
-export function createCheckPageMetaUpdateFn() {
-  const pageMetaMap = new Map<string, string>();
-  return (modulePath: string, pageMeta: PageMeta) => {
-    const prevMeta = pageMetaMap.get(modulePath);
-    const deserializedMeta = JSON.stringify(pageMeta);
-    pageMetaMap.set(modulePath, deserializedMeta);
-
-    if (!prevMeta) {
-      return;
-    }
-
-    if (prevMeta !== deserializedMeta) {
-      setTimeout(async () => {
-        logger.info('Page metadata changed, page reloading...');
-        await updateSiteDataRuntimeModule(modulePath, pageMeta);
-      });
-    }
-  };
-}
-
-const checkPageMetaUpdate = createCheckPageMetaUpdateFn();
-
 export default async function mdxLoader(
   this: Rspack.LoaderContext<LoaderOptions>,
   source: string,
@@ -106,20 +43,22 @@ export default async function mdxLoader(
     options;
 
   // Separate frontmatter and content in MDX source
-  const { frontmatter, content } = loadFrontMatter(
+  const { frontmatter, emptyLinesSource } = loadFrontMatter(
     source,
     filepath,
     docDirectory,
     true,
   );
 
-  // Resolve side effects caused by flattenMdxContent.
-  // Perhaps this problem should be solved within flattenMdxContent?
-  const replacedContent = applyReplaceRules(content, config.replaceRules);
+  // For loader error stack, so we use the source with frontmatter @see https://github.com/web-infra-dev/rspress/issues/2010
+  const replacedSource = applyReplaceRules(
+    emptyLinesSource,
+    config.replaceRules,
+  );
 
   // Support custom id like `#hello world {#custom-id}`.
   // TODO > issue: `#hello world {#custom-id}` will also be replaced.
-  const preprocessedContent = escapeMarkdownHeadingIds(replacedContent);
+  const preprocessedContent = escapeMarkdownHeadingIds(replacedSource);
 
   try {
     let pageMeta: PageMeta = {
@@ -158,11 +97,6 @@ export default async function mdxLoader(
       headingTitle,
       frontmatter,
     } as PageMeta;
-
-    // If page meta changed, we trigger page reload to ensure the page is up to date.
-    if (!isProduction()) {
-      checkPageMetaUpdate(filepath, pageMeta);
-    }
 
     const result = `const frontmatter = ${JSON.stringify(frontmatter)};
 ${compileResult}
