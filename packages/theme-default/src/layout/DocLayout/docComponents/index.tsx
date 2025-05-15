@@ -8,6 +8,8 @@ import { Pre } from './pre';
 import { Table, Td, Th, Tr } from './table';
 import { H1, H2, H3, H4, H5, H6 } from './title';
 
+export type { CodeProps } from './code';
+
 export function getCustomMDXComponent() {
   return {
     h1: H1,

@@ -12,7 +12,10 @@ export default {
   useSetup,
 };
 
-export { getCustomMDXComponent } from './layout/DocLayout/docComponents';
+export {
+  getCustomMDXComponent,
+  type CodeProps,
+} from './layout/DocLayout/docComponents';
 
 export * from './logic';
 
