@@ -73,7 +73,7 @@ const Search = () => {
       docSearchProps={{
         appId: 'DIDX9ZTSBM', // cspell:disable-line
         apiKey: 'd33cfed9ffae0e79412cfc3785d3a67f', // cspell:disable-line
-        indexName: 'rspress-v2-website-crawler',
+        indexName: 'rspress-v2-crawler-doc_search_rspress_v2_pages',
         searchParameters: {
           facetFilters: [`lang:${lang}`],
         },
