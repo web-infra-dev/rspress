@@ -24,12 +24,6 @@ export const Content = ({ fallback = <></> }: { fallback?: ReactNode }) => {
     return <div></div>;
   }
   const routesElement = matched.element;
-
-  // React 17 Suspense SSR is not supported
-  if (!process.env.__REACT_GTE_18__ && process.env.__SSR__) {
-    return routesElement;
-  }
-
   return (
     <Suspense fallback={fallback}>
       <TransitionContent el={routesElement} />
