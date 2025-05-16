@@ -29,7 +29,7 @@ test.describe('plugin shiki test', async () => {
       waitUntil: 'networkidle',
     });
     const shikiDoms = await page.$$('.rspress-code-content');
-    expect(shikiDoms.length).toBe(5);
+    expect(shikiDoms.length).toBe(6);
 
     const firstShikiDom = shikiDoms[0];
 

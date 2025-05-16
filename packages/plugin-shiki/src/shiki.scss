@@ -3,7 +3,7 @@
  * reference: https://github.com/shikijs/shiki/blob/main/docs/themes.md
  * -------------------------------------------------------------------------- */
 
-:root {
+html:not(.rp-dark) {
   --shiki-foreground: #414141;
   --shiki-background: transparent;
   --shiki-token-constant: #1976d2;
@@ -15,9 +15,13 @@
   --shiki-token-string-expression: #218438;
   --shiki-token-punctuation: #242323;
   --shiki-token-link: #22863a;
+
+  // diff language
+  --shiki-token-deleted: #d32828;
+  --shiki-token-inserted: #22863a;
 }
 
-.dark {
+html.rp-dark {
   --shiki-foreground: #cac7c7;
   --shiki-token-constant: #6fb0fa;
   --shiki-token-string: #f9a86e;
@@ -28,6 +32,10 @@
   --shiki-token-string-expression: #4fb74d;
   --shiki-token-punctuation: #bbbbbb;
   --shiki-token-link: #f9a76d;
+
+  // diff language
+  --shiki-token-deleted: #ee6d7a;
+  --shiki-token-inserted: #36c47f;
 }
 
 .rspress-doc span.line {
@@ -75,7 +83,7 @@
       width: 100%;
       position: static;
       display: inline-block;
-      background-color: rgba(101, 117, 133, 0.1);
+      background-color: rgba(0, 99, 199, 0.1);
     }
     .line.highlighted.error {
       background-color: rgba(244, 63, 94, 0.1);
