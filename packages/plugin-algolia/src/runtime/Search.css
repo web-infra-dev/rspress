@@ -2,14 +2,14 @@
   align-self: center;
 }
 
-:not(:has(.rp-dark)) {
+html:not(.rp-dark) {
   [class*='DocSearch'] {
     --docsearch-searchbox-background: var(--rp-c-bg-mute);
     --docsearch-primary-color: var(--rp-c-brand);
   }
 }
 
-.rp-dark [class*='DocSearch'] {
+html.rp-dark [class*='DocSearch'] {
   --docsearch-searchbox-background: var(--rp-c-bg-mute);
   --docsearch-searchbox-focus-background: var(--rp-c-bg-mute);
   --docsearch-modal-shadow: none;

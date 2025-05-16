@@ -1,23 +1,22 @@
 /** Define code style */
-:root {
+html:not(.rp-dark) {
   --rp-code-font-size: 14px;
   --rp-code-block-color: rgb(46, 52, 64);
   --rp-code-title-bg: rgba(0, 99, 199, 0.05);
   --rp-code-block-bg: #f6f8fa;
 
-  --rp-code-line-highlight-color: rgba(0, 99, 199, 0.1);
-  --rp-code-line-number-color: rgba(235, 235, 235, 0.38);
-
   --rp-code-copy-code-hover-bg: rgba(255, 255, 255, 0.05);
   --rp-code-wrap-code-hover-bg: rgba(255, 255, 255, 0.05);
 }
 
-.dark {
+html.rp-dark {
+  --rp-code-font-size: 14px;
   --rp-code-block-color: rgb(229, 231, 235);
   --rp-code-block-bg: #242424;
   --rp-code-title-bg: rgba(255, 255, 255, 0.04);
-  --rp-code-line-highlight-color: rgba(255, 255, 255, 0.1);
-  --rp-code-line-number-color: rgba(60, 60, 60, 0.33);
+
+  --rp-code-copy-code-hover-bg: rgba(255, 255, 255, 0.05);
+  --rp-code-wrap-code-hover-bg: rgba(255, 255, 255, 0.05);
 }
 
 .rspress-doc :not(pre, h1, h2, h3, h4, h5, h6) > code {
