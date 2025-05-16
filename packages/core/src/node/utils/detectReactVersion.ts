@@ -75,11 +75,10 @@ export async function resolveReactAlias(reactVersion: number, isSSR: boolean) {
     'react/jsx-runtime',
     'react/jsx-dev-runtime',
     'react-dom',
+    'react-dom/client',
     'react-dom/server',
   ];
-  if (reactVersion >= 18) {
-    libPaths.push('react-dom/client');
-  }
+
   const alias: Record<string, string> = {};
   const resolver = ResolverFactory.createResolver({
     fileSystem: new CachedInputFileSystem(
@@ -90,6 +89,7 @@ export async function resolveReactAlias(reactVersion: number, isSSR: boolean) {
     alias,
     conditionNames: isSSR ? ['...'] : ['browser', '...'],
   });
+
   await Promise.all(
     libPaths.map(async lib => {
       try {

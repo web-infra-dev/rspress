@@ -1,3 +1,4 @@
+import { hydrateRoot } from 'react-dom/client';
 import { ClientApp } from './ClientApp';
 import { initPageData } from './initPageData';
 
@@ -8,17 +9,7 @@ import { initPageData } from './initPageData';
 async function renderInBrowser() {
   const container = document.getElementById('root')!;
   const initialPageData = await initPageData(window.location.pathname);
-
-  if (process.env.__REACT_GTE_18__) {
-    const { hydrateRoot } = await import('react-dom/client');
-    hydrateRoot(container, <ClientApp initialPageData={initialPageData} />);
-  } else {
-    const ReactDOM = await import('react-dom');
-    ReactDOM.hydrate(
-      <ClientApp initialPageData={initialPageData} />,
-      container,
-    );
-  }
+  hydrateRoot(container, <ClientApp initialPageData={initialPageData} />);
 }
 
 renderInBrowser();
