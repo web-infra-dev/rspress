@@ -71,7 +71,7 @@ export default defineConfig({
 
 ## icon
 
-- Type: `string`
+- Type: `string | URL`
 - Default: `""`
 
 Site icon. This path will be used as the icon path for the HTML page. For example:
@@ -84,7 +84,7 @@ export default defineConfig({
 });
 ```
 
-The framework will find your icon in the `public` directory, of course you can also set it to a CDN address.
+For normal path, Rspress will find your icon in the `public` directory, of course you can also set it to a CDN address, or use the `file://` protocol or `URL` to use local absolute path.
 
 ## lang
 

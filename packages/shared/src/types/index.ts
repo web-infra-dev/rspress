@@ -76,7 +76,7 @@ export interface UserConfig<ThemeConfig = DefaultThemeConfig> {
   /**
    * Path to html icon file.
    */
-  icon?: string;
+  icon?: string | URL;
   /**
    * Default language of the site.
    */

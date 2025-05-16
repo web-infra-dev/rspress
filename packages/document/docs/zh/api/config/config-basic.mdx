@@ -71,7 +71,7 @@ export default defineConfig({
 
 ## icon
 
-- Type: `string`
+- Type: `string | URL`
 - Default: `""`
 
 站点图标。这个路径将用作 HTML 页面的图标路径。例如：
@@ -84,7 +84,7 @@ export default defineConfig({
 });
 ```
 
-框架会在 `public` 目录中找到你的图标，当然你也可以设置成一个 CDN 地址。
+对于普通路径，Rspress 会在 `public` 目录中找到你的图标，当然你也可以设置成一个 CDN 地址，或使用 `file://` 协议或 `URL` 来使用本地文件绝对路径。
 
 ## lang
 
