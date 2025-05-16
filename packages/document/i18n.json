@@ -42,13 +42,5 @@
   "communityPlugins": {
     "zh": "社区插件",
     "en": "Community Plugins"
-  },
-  "toolStackTitle": {
-    "zh": "Rstack",
-    "en": "Rstack"
-  },
-  "toolStackDesc": {
-    "zh": "围绕 Rspack 打造的高性能工具链，助力现代 Web 开发",
-    "en": "High-performance toolchain built around Rspack to boost modern web development"
   }
 }
