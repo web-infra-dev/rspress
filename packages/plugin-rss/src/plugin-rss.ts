@@ -3,10 +3,11 @@
 import NodePath from 'node:path';
 import { resolve as resolveUrl } from 'node:url';
 import type { PageIndexInfo, RspressPlugin, UserConfig } from '@rspress/shared';
+import { getIconUrlPath } from '@rspress/shared/node-utils';
 import { Feed } from 'feed';
+
 import { createFeed, generateFeedItem } from './createFeed';
 import { PluginComponents, PluginName } from './exports';
-
 import { type ResolvedOutput, concatArray, writeFile } from './internals';
 import { getDefaultFeedOption, getOutputInfo, testPage } from './options';
 import type { FeedChannel, FeedItem, PluginRssOptions } from './type';
@@ -23,7 +24,7 @@ class FeedsSet {
     ).map(options => ({
       title: config.title || '',
       description: config.description || '',
-      favicon: config.icon && resolveUrl(siteUrl, config.icon),
+      favicon: config.icon && resolveUrl(siteUrl, getIconUrlPath(config.icon)),
       copyright: config.themeConfig?.footer?.message || '',
       link: siteUrl,
       docs: '',

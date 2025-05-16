@@ -74,11 +74,12 @@ export default defineConfig({
 });
 ```
 
-icon 字段支持字符串配置，具体配置方式如下：
+icon 字段支持字符串或 URL 配置，具体配置方式如下：
 
 - 配置为**外链**，如上面的例子。
 - 配置为**绝对路径**，如 `/favicon.ico`，这样 Rspress 在内部会自动在你的**文档根目录**的 `public 目录`中找到 `favicon.ico` 图标并进行展示。
 - 配置为**相对路径**，如 `./docs/public/favicon.ico`，这样 Rspress 基于项目根目录寻找到 `favicon.ico` 图标并进行展示。
+- 配置为 `file://` 协议或 `URL`，如 `file:///local_path/favicon.ico`，这样 Rspress 直接使用本地绝对路径 `/local_path/favicon.ico` 图标并进行展示。
 
 ## 主页 logo
 
