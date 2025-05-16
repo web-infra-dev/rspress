@@ -12,11 +12,16 @@ export function loadFrontMatter<
   outputWarning = false,
 ): {
   frontmatter: TFrontmatter;
-  content: string;
+  content: string; // without frontmatter
+  emptyLinesSource: string; // replace frontmatter with empty lines
 } {
   try {
     const { content, data } = grayMatter(source);
-    return { content, frontmatter: data as TFrontmatter };
+    const rawFrontMatter = source.slice(0, source.length - content.length);
+    const emptyLinesSource = rawFrontMatter.length
+      ? `${rawFrontMatter.replace(/[^\n]/g, '')}${content}`
+      : content;
+    return { content, frontmatter: data as TFrontmatter, emptyLinesSource };
   } catch (e) {
     if (outputWarning) {
       logger.warn(
@@ -26,5 +31,9 @@ export function loadFrontMatter<
     }
   }
 
-  return { content: '', frontmatter: {} as TFrontmatter };
+  return {
+    content: '',
+    frontmatter: {} as TFrontmatter,
+    emptyLinesSource: source,
+  };
 }
