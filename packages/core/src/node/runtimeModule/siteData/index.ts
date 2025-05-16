@@ -3,6 +3,7 @@
 import fs from 'node:fs/promises';
 import path from 'node:path';
 import { SEARCH_INDEX_NAME, type SiteData } from '@rspress/shared';
+import { getIconUrlPath } from '@rspress/shared/node-utils';
 import { groupBy } from 'lodash-es';
 import { type FactoryContext, RuntimeModuleID } from '..';
 import { TEMP_DIR, isProduction } from '../../constants';
@@ -118,7 +119,7 @@ export async function siteDataVMPlugin(context: FactoryContext) {
   const siteData: Omit<SiteData, 'root'> = {
     title: userConfig?.title || '',
     description: userConfig?.description || '',
-    icon: userConfig?.icon || '',
+    icon: getIconUrlPath(userConfig?.icon) || '',
     route: userConfig?.route || {},
     themeConfig: normalizeThemeConfig(userConfig, pages),
     base: userConfig?.base || '/',
