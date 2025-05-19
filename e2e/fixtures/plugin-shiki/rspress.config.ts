@@ -12,6 +12,9 @@ export default defineConfig({
   markdown: {
     showLineNumbers: true,
     shiki: {
+      langAlias: {
+        ejs: 'js', // 'js' is in the langs array
+      },
       transformers: [
         transformerNotationDiff(),
         transformerNotationErrorLevel(),

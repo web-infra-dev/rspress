@@ -38,9 +38,9 @@
   },
   "dependencies": {
     "@rspress/shared": "workspace:*",
-    "@shikijs/rehype": "^3.2.2",
+    "@shikijs/rehype": "^3.4.2",
     "hast-util-from-html": "^2.0.3",
-    "shiki": "^3.2.2"
+    "shiki": "^3.4.2"
   },
   "devDependencies": {
     "@microsoft/api-extractor": "^7.52.7",

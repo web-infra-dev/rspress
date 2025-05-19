@@ -46,4 +46,12 @@ test.describe('plugin shiki test', async () => {
       ),
     ).toBe('pre-wrap');
   });
+
+  test('langAlias', async ({ page }) => {
+    await page.goto(`http://localhost:${appPort}/langAlias`, {
+      waitUntil: 'networkidle',
+    });
+    const shikiDoms = await page.$$('.rspress-code-content');
+    expect(shikiDoms.length).toBe(1);
+  });
 });
