@@ -954,8 +954,8 @@ importers:
         specifier: workspace:*
         version: link:../plugin-shiki
       '@rstack-dev/doc-ui':
-        specifier: 1.10.0
-        version: 1.10.0(react-dom@19.1.0(react@19.1.0))(react@19.1.0)
+        specifier: 1.10.1
+        version: 1.10.1(react-dom@19.1.0(react@19.1.0))(react@19.1.0)
       '@shikijs/transformers':
         specifier: ^3.2.2
         version: 3.2.2
@@ -3150,8 +3150,8 @@ packages:
     resolution: {integrity: sha512-NpNhTKBIlV3O6ADhoZkgHvBFvXMW2TYlIWmIT1ysJESUBqDpaN9H3Teve5fugjU2pQ2ORBZO6SQGKliMw/8m/Q==}
     engines: {node: '>= 10'}
 
-  '@rstack-dev/doc-ui@1.10.0':
-    resolution: {integrity: sha512-PRACISyGl8vnqQ1occngpVIfDT0ShKtpi+Tb/HIG7KK+WBV4DaZeNsN1JC5+LHWObEgYsyemCTwxHA9+i3PKIw==}
+  '@rstack-dev/doc-ui@1.10.1':
+    resolution: {integrity: sha512-ouJaW5yA9/un69/uAO3/vjsgG+imzkrgPe0nyS68uxJ3Xau4FF5nLZmsql2q56GrxrtW1JR+nMX9nZGZFWI4/w==}
 
   '@rushstack/node-core-library@5.13.1':
     resolution: {integrity: sha512-5yXhzPFGEkVc9Fu92wsNJ9jlvdwz4RNb2bMso+/+TH0nMm1jDDDsOIf4l8GAkPxGuwPw5DH24RliWVfSPhlW/Q==}
@@ -8390,7 +8390,7 @@ snapshots:
       '@rspress/mdx-rs-win32-arm64-msvc': 0.6.6
       '@rspress/mdx-rs-win32-x64-msvc': 0.6.6
 
-  '@rstack-dev/doc-ui@1.10.0(react-dom@19.1.0(react@19.1.0))(react@19.1.0)':
+  '@rstack-dev/doc-ui@1.10.1(react-dom@19.1.0(react@19.1.0))(react@19.1.0)':
     dependencies:
       framer-motion: 12.11.4(react-dom@19.1.0(react@19.1.0))(react@19.1.0)
     transitivePeerDependencies:
