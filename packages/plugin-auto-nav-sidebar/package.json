@@ -39,7 +39,7 @@
     "@microsoft/api-extractor": "^7.52.7",
     "@rslib/core": "0.6.9",
     "@rspress/config": "workspace:*",
-    "@types/node": "^18.11.17",
+    "@types/node": "^22.8.1",
     "@types/react": "^18.3.21",
     "@types/react-dom": "^18.3.7",
     "react": "^19.1.0",

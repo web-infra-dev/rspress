@@ -35,7 +35,7 @@
   "devDependencies": {
     "@rslib/core": "0.6.9",
     "@rspress/runtime": "workspace:*",
-    "@types/node": "^18.11.17",
+    "@types/node": "^22.8.1",
     "@types/react": "^18.3.21",
     "react": "^19.1.0",
     "rsbuild-plugin-publint": "^0.3.2",

@@ -38,7 +38,7 @@
     "@rspress/config": "workspace:*",
     "@rspress/runtime": "workspace:*",
     "@types/hast": "^3.0.4",
-    "@types/node": "^18.11.17",
+    "@types/node": "^22.8.1",
     "typescript": "^5.8.2",
     "vfile": "^6.0.3"
   },

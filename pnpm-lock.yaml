@@ -24,8 +24,8 @@ importers:
         specifier: ^6.0.6
         version: 6.0.6
       '@types/node':
-        specifier: ^18.11.17
-        version: 18.11.17
+        specifier: ^22.8.1
+        version: 22.10.2
       check-dependency-version-consistency:
         specifier: ^5.0.0
         version: 5.0.0
@@ -73,7 +73,7 @@ importers:
         version: 1.2.2
       vitest:
         specifier: 2.1.9
-        version: 2.1.9(@types/node@18.11.17)(sass-embedded@1.86.0)(terser@5.31.6)
+        version: 2.1.9(@types/node@22.10.2)(sass-embedded@1.86.0)(terser@5.31.6)
       zx:
         specifier: ^8.3.2
         version: 8.3.2
@@ -85,8 +85,8 @@ importers:
         version: link:../../../packages/cli
     devDependencies:
       '@types/node':
-        specifier: ^18.11.17
-        version: 18.11.17
+        specifier: ^22.8.1
+        version: 22.10.2
 
   e2e/fixtures/auto-nav-sidebar-dir-convention:
     dependencies:
@@ -95,8 +95,8 @@ importers:
         version: link:../../../packages/cli
     devDependencies:
       '@types/node':
-        specifier: ^18.11.17
-        version: 18.11.17
+        specifier: ^22.8.1
+        version: 22.10.2
 
   e2e/fixtures/auto-nav-sidebar-issue-1682:
     dependencies:
@@ -105,8 +105,8 @@ importers:
         version: link:../../../packages/cli
     devDependencies:
       '@types/node':
-        specifier: ^18.11.17
-        version: 18.11.17
+        specifier: ^22.8.1
+        version: 22.10.2
 
   e2e/fixtures/auto-nav-sidebar-no-meta:
     dependencies:
@@ -115,8 +115,8 @@ importers:
         version: link:../../../packages/cli
     devDependencies:
       '@types/node':
-        specifier: ^18.11.17
-        version: 18.11.17
+        specifier: ^22.8.1
+        version: 22.10.2
 
   e2e/fixtures/basic:
     dependencies:
@@ -125,8 +125,8 @@ importers:
         version: link:../../../packages/cli
     devDependencies:
       '@types/node':
-        specifier: ^18.11.17
-        version: 18.11.17
+        specifier: ^22.8.1
+        version: 22.10.2
 
   e2e/fixtures/client-redirects:
     dependencies:
@@ -138,8 +138,8 @@ importers:
         version: link:../../../packages/cli
     devDependencies:
       '@types/node':
-        specifier: ^18.11.17
-        version: 18.11.17
+        specifier: ^22.8.1
+        version: 22.10.2
 
   e2e/fixtures/custom-headers:
     dependencies:
@@ -148,8 +148,8 @@ importers:
         version: link:../../../packages/cli
     devDependencies:
       '@types/node':
-        specifier: ^18.11.17
-        version: 18.11.17
+        specifier: ^22.8.1
+        version: 22.10.2
 
   e2e/fixtures/custom-home-footer:
     dependencies:
@@ -158,8 +158,8 @@ importers:
         version: link:../../../packages/cli
     devDependencies:
       '@types/node':
-        specifier: ^18.11.17
-        version: 18.11.17
+        specifier: ^22.8.1
+        version: 22.10.2
 
   e2e/fixtures/custom-icon:
     dependencies:
@@ -168,8 +168,8 @@ importers:
         version: link:../../../packages/cli
     devDependencies:
       '@types/node':
-        specifier: ^18.11.17
-        version: 18.11.17
+        specifier: ^22.8.1
+        version: 22.10.2
 
   e2e/fixtures/custom-layout-ui-switch:
     dependencies:
@@ -178,8 +178,8 @@ importers:
         version: link:../../../packages/cli
     devDependencies:
       '@types/node':
-        specifier: ^18.11.17
-        version: 18.11.17
+        specifier: ^22.8.1
+        version: 22.10.2
 
   e2e/fixtures/custom-plugin:
     dependencies:
@@ -206,8 +206,8 @@ importers:
         version: 1.9.6
     devDependencies:
       '@types/node':
-        specifier: ^18.11.17
-        version: 18.11.17
+        specifier: ^22.8.1
+        version: 22.10.2
 
   e2e/fixtures/github-alert-mdxjs:
     dependencies:
@@ -216,8 +216,8 @@ importers:
         version: link:../../../packages/cli
     devDependencies:
       '@types/node':
-        specifier: ^18.11.17
-        version: 18.11.17
+        specifier: ^22.8.1
+        version: 22.10.2
 
   e2e/fixtures/heading-title:
     dependencies:
@@ -226,8 +226,8 @@ importers:
         version: link:../../../packages/cli
     devDependencies:
       '@types/node':
-        specifier: ^18.11.17
-        version: 18.11.17
+        specifier: ^22.8.1
+        version: 22.10.2
 
   e2e/fixtures/hide-nav-bar:
     dependencies:
@@ -236,8 +236,8 @@ importers:
         version: link:../../../packages/cli
     devDependencies:
       '@types/node':
-        specifier: ^18.11.17
-        version: 18.11.17
+        specifier: ^22.8.1
+        version: 22.10.2
 
   e2e/fixtures/i18n:
     dependencies:
@@ -246,8 +246,8 @@ importers:
         version: link:../../../packages/cli
     devDependencies:
       '@types/node':
-        specifier: ^18.11.17
-        version: 18.11.17
+        specifier: ^22.8.1
+        version: 22.10.2
 
   e2e/fixtures/icon-file-url:
     dependencies:
@@ -256,8 +256,8 @@ importers:
         version: link:../../../packages/cli
     devDependencies:
       '@types/node':
-        specifier: ^18.11.17
-        version: 18.11.17
+        specifier: ^22.8.1
+        version: 22.10.2
 
   e2e/fixtures/inline-markdown:
     dependencies:
@@ -266,8 +266,8 @@ importers:
         version: link:../../../packages/cli
     devDependencies:
       '@types/node':
-        specifier: ^18.11.17
-        version: 18.11.17
+        specifier: ^22.8.1
+        version: 22.10.2
 
   e2e/fixtures/issue-1309:
     dependencies:
@@ -276,8 +276,8 @@ importers:
         version: link:../../../packages/cli
     devDependencies:
       '@types/node':
-        specifier: ^18.11.17
-        version: 18.11.17
+        specifier: ^22.8.1
+        version: 22.10.2
 
   e2e/fixtures/markdown-link:
     dependencies:
@@ -286,8 +286,8 @@ importers:
         version: link:../../../packages/cli
     devDependencies:
       '@types/node':
-        specifier: ^18.11.17
-        version: 18.11.17
+        specifier: ^22.8.1
+        version: 22.10.2
 
   e2e/fixtures/multi-version:
     dependencies:
@@ -296,8 +296,8 @@ importers:
         version: link:../../../packages/cli
     devDependencies:
       '@types/node':
-        specifier: ^18.11.17
-        version: 18.11.17
+        specifier: ^22.8.1
+        version: 22.10.2
 
   e2e/fixtures/nav-link:
     dependencies:
@@ -306,8 +306,8 @@ importers:
         version: link:../../../packages/cli
     devDependencies:
       '@types/node':
-        specifier: ^18.11.17
-        version: 18.11.17
+        specifier: ^22.8.1
+        version: 22.10.2
 
   e2e/fixtures/nav-link-item-with-hash:
     dependencies:
@@ -316,8 +316,8 @@ importers:
         version: link:../../../packages/cli
     devDependencies:
       '@types/node':
-        specifier: ^18.11.17
-        version: 18.11.17
+        specifier: ^22.8.1
+        version: 22.10.2
 
   e2e/fixtures/nav-link-items:
     dependencies:
@@ -326,8 +326,8 @@ importers:
         version: link:../../../packages/cli
     devDependencies:
       '@types/node':
-        specifier: ^18.11.17
-        version: 18.11.17
+        specifier: ^22.8.1
+        version: 22.10.2
 
   e2e/fixtures/nav-link-items-without-suffix:
     dependencies:
@@ -336,8 +336,8 @@ importers:
         version: link:../../../packages/cli
     devDependencies:
       '@types/node':
-        specifier: ^18.11.17
-        version: 18.11.17
+        specifier: ^22.8.1
+        version: 22.10.2
 
   e2e/fixtures/nested-overview:
     dependencies:
@@ -346,8 +346,8 @@ importers:
         version: link:../../../packages/cli
     devDependencies:
       '@types/node':
-        specifier: ^18.11.17
-        version: 18.11.17
+        specifier: ^22.8.1
+        version: 22.10.2
 
   e2e/fixtures/no-config-root:
     dependencies:
@@ -356,8 +356,8 @@ importers:
         version: link:../../../packages/cli
     devDependencies:
       '@types/node':
-        specifier: ^18.11.17
-        version: 18.11.17
+        specifier: ^22.8.1
+        version: 22.10.2
 
   e2e/fixtures/package-manager-tabs:
     dependencies:
@@ -366,8 +366,8 @@ importers:
         version: link:../../../packages/cli
     devDependencies:
       '@types/node':
-        specifier: ^18.11.17
-        version: 18.11.17
+        specifier: ^22.8.1
+        version: 22.10.2
 
   e2e/fixtures/page-type-home:
     dependencies:
@@ -376,8 +376,8 @@ importers:
         version: link:../../../packages/cli
     devDependencies:
       '@types/node':
-        specifier: ^18.11.17
-        version: 18.11.17
+        specifier: ^22.8.1
+        version: 22.10.2
 
   e2e/fixtures/plugin-api-docgen:
     dependencies:
@@ -389,8 +389,8 @@ importers:
         version: link:../../../packages/cli
     devDependencies:
       '@types/node':
-        specifier: ^18.11.17
-        version: 18.11.17
+        specifier: ^22.8.1
+        version: 22.10.2
 
   e2e/fixtures/plugin-playground:
     dependencies:
@@ -414,8 +414,8 @@ importers:
         version: 1.9.6
     devDependencies:
       '@types/node':
-        specifier: ^18.11.17
-        version: 18.11.17
+        specifier: ^22.8.1
+        version: 22.10.2
 
   e2e/fixtures/plugin-preview:
     dependencies:
@@ -442,8 +442,8 @@ importers:
         version: 1.9.6
     devDependencies:
       '@types/node':
-        specifier: ^18.11.17
-        version: 18.11.17
+        specifier: ^22.8.1
+        version: 22.10.2
 
   e2e/fixtures/plugin-preview-custom-entry:
     dependencies:
@@ -470,8 +470,8 @@ importers:
         version: 3.5.13(typescript@5.8.2)
     devDependencies:
       '@types/node':
-        specifier: ^18.11.17
-        version: 18.11.17
+        specifier: ^22.8.1
+        version: 22.10.2
 
   e2e/fixtures/plugin-rss:
     dependencies:
@@ -483,8 +483,8 @@ importers:
         version: link:../../../packages/cli
     devDependencies:
       '@types/node':
-        specifier: ^18.11.17
-        version: 18.11.17
+        specifier: ^22.8.1
+        version: 22.10.2
 
   e2e/fixtures/plugin-shiki:
     dependencies:
@@ -499,8 +499,8 @@ importers:
         version: link:../../../packages/cli
     devDependencies:
       '@types/node':
-        specifier: ^18.11.17
-        version: 18.11.17
+        specifier: ^22.8.1
+        version: 22.10.2
 
   e2e/fixtures/plugin-typedoc/multi:
     dependencies:
@@ -512,8 +512,8 @@ importers:
         version: link:../../../../packages/cli
     devDependencies:
       '@types/node':
-        specifier: ^18.11.17
-        version: 18.11.17
+        specifier: ^22.8.1
+        version: 22.10.2
 
   e2e/fixtures/plugin-typedoc/single:
     dependencies:
@@ -525,8 +525,8 @@ importers:
         version: link:../../../../packages/cli
     devDependencies:
       '@types/node':
-        specifier: ^18.11.17
-        version: 18.11.17
+        specifier: ^22.8.1
+        version: 22.10.2
 
   e2e/fixtures/production:
     dependencies:
@@ -535,8 +535,8 @@ importers:
         version: link:../../../packages/cli
     devDependencies:
       '@types/node':
-        specifier: ^18.11.17
-        version: 18.11.17
+        specifier: ^22.8.1
+        version: 22.10.2
 
   e2e/fixtures/public-dir:
     dependencies:
@@ -545,8 +545,8 @@ importers:
         version: link:../../../packages/cli
     devDependencies:
       '@types/node':
-        specifier: ^18.11.17
-        version: 18.11.17
+        specifier: ^22.8.1
+        version: 22.10.2
 
   e2e/fixtures/react-19:
     dependencies:
@@ -561,8 +561,8 @@ importers:
         version: link:../../../packages/cli
     devDependencies:
       '@types/node':
-        specifier: ^18.11.17
-        version: 18.11.17
+        specifier: ^22.8.1
+        version: 22.10.2
 
   e2e/fixtures/replace-rules:
     dependencies:
@@ -571,8 +571,8 @@ importers:
         version: link:../../../packages/cli
     devDependencies:
       '@types/node':
-        specifier: ^18.11.17
-        version: 18.11.17
+        specifier: ^22.8.1
+        version: 22.10.2
 
   e2e/fixtures/search-algolia:
     dependencies:
@@ -587,8 +587,8 @@ importers:
         specifier: workspace:*
         version: link:../../../packages/plugin-algolia
       '@types/node':
-        specifier: ^18.11.17
-        version: 18.11.17
+        specifier: ^22.8.1
+        version: 22.10.2
       '@types/react':
         specifier: ^18.3.21
         version: 18.3.21
@@ -600,8 +600,8 @@ importers:
         version: link:../../../packages/cli
     devDependencies:
       '@types/node':
-        specifier: ^18.11.17
-        version: 18.11.17
+        specifier: ^22.8.1
+        version: 22.10.2
 
   e2e/fixtures/search-i18n:
     dependencies:
@@ -616,8 +616,8 @@ importers:
         version: link:../../../packages/cli
     devDependencies:
       '@types/node':
-        specifier: ^18.11.17
-        version: 18.11.17
+        specifier: ^22.8.1
+        version: 22.10.2
 
   e2e/fixtures/tabs-component:
     dependencies:
@@ -626,8 +626,8 @@ importers:
         version: link:../../../packages/cli
     devDependencies:
       '@types/node':
-        specifier: ^18.11.17
-        version: 18.11.17
+        specifier: ^22.8.1
+        version: 22.10.2
 
   e2e/fixtures/title-number:
     dependencies:
@@ -636,8 +636,8 @@ importers:
         version: link:../../../packages/cli
     devDependencies:
       '@types/node':
-        specifier: ^18.11.17
-        version: 18.11.17
+        specifier: ^22.8.1
+        version: 22.10.2
 
   e2e/fixtures/title-suffix:
     dependencies:
@@ -646,8 +646,8 @@ importers:
         version: link:../../../packages/cli
     devDependencies:
       '@types/node':
-        specifier: ^18.11.17
-        version: 18.11.17
+        specifier: ^22.8.1
+        version: 22.10.2
 
   e2e/fixtures/toc-id-mdxjs:
     dependencies:
@@ -656,8 +656,8 @@ importers:
         version: link:../../../packages/cli
     devDependencies:
       '@types/node':
-        specifier: ^18.11.17
-        version: 18.11.17
+        specifier: ^22.8.1
+        version: 22.10.2
 
   e2e/fixtures/view-transition:
     dependencies:
@@ -669,14 +669,14 @@ importers:
         specifier: ~29.5.14
         version: 29.5.14
       '@types/node':
-        specifier: ^18.11.17
-        version: 18.11.17
+        specifier: ^22.8.1
+        version: 22.10.2
 
   e2e/fixtures/with-base:
     devDependencies:
       '@types/node':
-        specifier: ^18.11.17
-        version: 18.11.17
+        specifier: ^22.8.1
+        version: 22.10.2
       rspress:
         specifier: workspace:*
         version: link:../../../packages/cli
@@ -704,16 +704,16 @@ importers:
     devDependencies:
       '@microsoft/api-extractor':
         specifier: ^7.52.7
-        version: 7.52.7(@types/node@18.11.17)
+        version: 7.52.7(@types/node@22.10.2)
       '@rslib/core':
         specifier: 0.6.9
-        version: 0.6.9(@microsoft/api-extractor@7.52.7(@types/node@18.11.17))(typescript@5.8.2)
+        version: 0.6.9(@microsoft/api-extractor@7.52.7(@types/node@22.10.2))(typescript@5.8.2)
       '@types/jest':
         specifier: ~29.5.14
         version: 29.5.14
       '@types/node':
-        specifier: ^18.11.17
-        version: 18.11.17
+        specifier: ^22.8.1
+        version: 22.10.2
       '@types/react':
         specifier: ^18.3.21
         version: 18.3.21
@@ -843,10 +843,10 @@ importers:
     devDependencies:
       '@microsoft/api-extractor':
         specifier: ^7.52.7
-        version: 7.52.7(@types/node@18.11.17)
+        version: 7.52.7(@types/node@22.10.2)
       '@rslib/core':
         specifier: 0.6.9
-        version: 0.6.9(@microsoft/api-extractor@7.52.7(@types/node@18.11.17))(typescript@5.8.2)
+        version: 0.6.9(@microsoft/api-extractor@7.52.7(@types/node@22.10.2))(typescript@5.8.2)
       '@rspress-dev/plugin-preview':
         specifier: link:../plugin-preview
         version: link:../plugin-preview
@@ -869,8 +869,8 @@ importers:
         specifier: ^4.0.4
         version: 4.0.4
       '@types/node':
-        specifier: ^18.11.17
-        version: 18.11.17
+        specifier: ^22.8.1
+        version: 22.10.2
       '@types/react':
         specifier: ^18.3.21
         version: 18.3.21
@@ -909,7 +909,7 @@ importers:
         version: 0.1.1(@rsbuild/core@1.3.18)
       tailwindcss:
         specifier: ^3.4.17
-        version: 3.4.17(ts-node@10.9.2(@types/node@18.11.17)(typescript@5.8.2))
+        version: 3.4.17(ts-node@10.9.2(@types/node@22.10.2)(typescript@5.8.2))
       typescript:
         specifier: ^5.8.2
         version: 5.8.2
@@ -925,13 +925,13 @@ importers:
     devDependencies:
       '@microsoft/api-extractor':
         specifier: ^7.52.7
-        version: 7.52.7(@types/node@18.11.17)
+        version: 7.52.7(@types/node@22.10.2)
       '@rslib/core':
         specifier: 0.6.9
-        version: 0.6.9(@microsoft/api-extractor@7.52.7(@types/node@18.11.17))(typescript@5.8.2)
+        version: 0.6.9(@microsoft/api-extractor@7.52.7(@types/node@22.10.2))(typescript@5.8.2)
       '@types/node':
-        specifier: ^18.11.17
-        version: 18.11.17
+        specifier: ^22.8.1
+        version: 22.10.2
       rsbuild-plugin-publint:
         specifier: ^0.3.2
         version: 0.3.2(@rsbuild/core@1.3.18)
@@ -998,13 +998,13 @@ importers:
     devDependencies:
       '@microsoft/api-extractor':
         specifier: ^7.52.7
-        version: 7.52.7(@types/node@18.11.17)
+        version: 7.52.7(@types/node@22.10.2)
       '@rsbuild/plugin-react':
         specifier: ~1.3.1
         version: 1.3.1(@rsbuild/core@1.3.18)
       '@rslib/core':
         specifier: 0.6.9
-        version: 0.6.9(@microsoft/api-extractor@7.52.7(@types/node@18.11.17))(typescript@5.8.2)
+        version: 0.6.9(@microsoft/api-extractor@7.52.7(@types/node@22.10.2))(typescript@5.8.2)
       '@rspress/config':
         specifier: workspace:*
         version: link:../../scripts/config
@@ -1012,8 +1012,8 @@ importers:
         specifier: workspace:*
         version: link:../shared
       '@types/node':
-        specifier: ^18.11.17
-        version: 18.11.17
+        specifier: ^22.8.1
+        version: 22.10.2
       '@types/react':
         specifier: ^18.3.21
         version: 18.3.21
@@ -1065,10 +1065,10 @@ importers:
     devDependencies:
       '@microsoft/api-extractor':
         specifier: ^7.52.7
-        version: 7.52.7(@types/node@18.11.17)
+        version: 7.52.7(@types/node@22.10.2)
       '@rslib/core':
         specifier: 0.6.9
-        version: 0.6.9(@microsoft/api-extractor@7.52.7(@types/node@18.11.17))(typescript@5.8.2)
+        version: 0.6.9(@microsoft/api-extractor@7.52.7(@types/node@22.10.2))(typescript@5.8.2)
       '@types/hast':
         specifier: ^3.0.4
         version: 3.0.4
@@ -1076,8 +1076,8 @@ importers:
         specifier: ^4.0.4
         version: 4.0.4
       '@types/node':
-        specifier: ^18.11.17
-        version: 18.11.17
+        specifier: ^22.8.1
+        version: 22.10.2
       '@types/react':
         specifier: ^18.3.21
         version: 18.3.21
@@ -1108,16 +1108,16 @@ importers:
     devDependencies:
       '@microsoft/api-extractor':
         specifier: ^7.52.7
-        version: 7.52.7(@types/node@18.11.17)
+        version: 7.52.7(@types/node@22.10.2)
       '@rslib/core':
         specifier: 0.6.9
-        version: 0.6.9(@microsoft/api-extractor@7.52.7(@types/node@18.11.17))(typescript@5.8.2)
+        version: 0.6.9(@microsoft/api-extractor@7.52.7(@types/node@22.10.2))(typescript@5.8.2)
       '@rspress/config':
         specifier: workspace:*
         version: link:../../scripts/config
       '@types/node':
-        specifier: ^18.11.17
-        version: 18.11.17
+        specifier: ^22.8.1
+        version: 22.10.2
       '@types/react':
         specifier: ^18.3.21
         version: 18.3.21
@@ -1145,16 +1145,16 @@ importers:
     devDependencies:
       '@microsoft/api-extractor':
         specifier: ^7.52.7
-        version: 7.52.7(@types/node@18.11.17)
+        version: 7.52.7(@types/node@22.10.2)
       '@rslib/core':
         specifier: 0.6.9
-        version: 0.6.9(@microsoft/api-extractor@7.52.7(@types/node@18.11.17))(typescript@5.8.2)
+        version: 0.6.9(@microsoft/api-extractor@7.52.7(@types/node@22.10.2))(typescript@5.8.2)
       '@rspress/config':
         specifier: workspace:*
         version: link:../../scripts/config
       '@types/node':
-        specifier: ^18.11.17
-        version: 18.11.17
+        specifier: ^22.8.1
+        version: 22.10.2
       '@types/react':
         specifier: ^18.3.21
         version: 18.3.21
@@ -1222,16 +1222,16 @@ importers:
     devDependencies:
       '@microsoft/api-extractor':
         specifier: ^7.52.7
-        version: 7.52.7(@types/node@18.11.17)
+        version: 7.52.7(@types/node@22.10.2)
       '@rslib/core':
         specifier: 0.6.9
-        version: 0.6.9(@microsoft/api-extractor@7.52.7(@types/node@18.11.17))(typescript@5.8.2)
+        version: 0.6.9(@microsoft/api-extractor@7.52.7(@types/node@22.10.2))(typescript@5.8.2)
       '@rspress/config':
         specifier: workspace:*
         version: link:../../scripts/config
       '@types/node':
-        specifier: ^18.11.17
-        version: 18.11.17
+        specifier: ^22.8.1
+        version: 22.10.2
       '@types/react':
         specifier: ^18.3.21
         version: 18.3.21
@@ -1280,13 +1280,13 @@ importers:
     devDependencies:
       '@microsoft/api-extractor':
         specifier: ^7.52.7
-        version: 7.52.7(@types/node@18.11.17)
+        version: 7.52.7(@types/node@22.10.2)
       '@rsbuild/core':
         specifier: ~1.3.18
         version: 1.3.18
       '@rslib/core':
         specifier: 0.6.9
-        version: 0.6.9(@microsoft/api-extractor@7.52.7(@types/node@18.11.17))(typescript@5.8.2)
+        version: 0.6.9(@microsoft/api-extractor@7.52.7(@types/node@22.10.2))(typescript@5.8.2)
       '@rspress/config':
         specifier: workspace:*
         version: link:../../scripts/config
@@ -1297,8 +1297,8 @@ importers:
         specifier: ^3.0.4
         version: 3.0.4
       '@types/node':
-        specifier: ^18.11.17
-        version: 18.11.17
+        specifier: ^22.8.1
+        version: 22.10.2
       typescript:
         specifier: ^5.8.2
         version: 5.8.2
@@ -1317,10 +1317,10 @@ importers:
     devDependencies:
       '@microsoft/api-extractor':
         specifier: ^7.52.7
-        version: 7.52.7(@types/node@18.11.17)
+        version: 7.52.7(@types/node@22.10.2)
       '@rslib/core':
         specifier: 0.6.9
-        version: 0.6.9(@microsoft/api-extractor@7.52.7(@types/node@18.11.17))(typescript@5.8.2)
+        version: 0.6.9(@microsoft/api-extractor@7.52.7(@types/node@22.10.2))(typescript@5.8.2)
       '@rspress/config':
         specifier: workspace:*
         version: link:../../scripts/config
@@ -1328,8 +1328,8 @@ importers:
         specifier: workspace:*
         version: link:../shared
       '@types/node':
-        specifier: ^18.11.17
-        version: 18.11.17
+        specifier: ^22.8.1
+        version: 22.10.2
       '@types/react':
         specifier: ^18.3.21
         version: 18.3.21
@@ -1381,7 +1381,7 @@ importers:
         version: 1.3.1(@rsbuild/core@1.3.18)
       '@rslib/core':
         specifier: 0.6.9
-        version: 0.6.9(@microsoft/api-extractor@7.52.7(@types/node@18.11.17))(typescript@5.8.2)
+        version: 0.6.9(@microsoft/api-extractor@7.52.7(@types/node@22.10.2))(typescript@5.8.2)
       '@rspress/plugin-playground':
         specifier: workspace:*
         version: 'link:'
@@ -1398,8 +1398,8 @@ importers:
         specifier: ^4.0.4
         version: 4.0.4
       '@types/node':
-        specifier: ^18.11.17
-        version: 18.11.17
+        specifier: ^22.8.1
+        version: 22.10.2
       '@types/react':
         specifier: ^18.3.21
         version: 18.3.21
@@ -1466,7 +1466,7 @@ importers:
     devDependencies:
       '@rslib/core':
         specifier: 0.6.9
-        version: 0.6.9(@microsoft/api-extractor@7.52.7(@types/node@18.11.17))(typescript@5.8.2)
+        version: 0.6.9(@microsoft/api-extractor@7.52.7(@types/node@22.10.2))(typescript@5.8.2)
       '@types/lodash':
         specifier: ^4.17.16
         version: 4.17.16
@@ -1474,8 +1474,8 @@ importers:
         specifier: ^4.0.4
         version: 4.0.4
       '@types/node':
-        specifier: ^18.11.17
-        version: 18.11.17
+        specifier: ^22.8.1
+        version: 22.10.2
       '@types/react':
         specifier: ^18.3.21
         version: 18.3.21
@@ -1524,13 +1524,13 @@ importers:
     devDependencies:
       '@rslib/core':
         specifier: 0.6.9
-        version: 0.6.9(@microsoft/api-extractor@7.52.7(@types/node@18.11.17))(typescript@5.8.2)
+        version: 0.6.9(@microsoft/api-extractor@7.52.7(@types/node@22.10.2))(typescript@5.8.2)
       '@rspress/runtime':
         specifier: workspace:*
         version: link:../runtime
       '@types/node':
-        specifier: ^18.11.17
-        version: 18.11.17
+        specifier: ^22.8.1
+        version: 22.10.2
       '@types/react':
         specifier: ^18.3.21
         version: 18.3.21
@@ -1561,13 +1561,13 @@ importers:
     devDependencies:
       '@microsoft/api-extractor':
         specifier: ^7.52.7
-        version: 7.52.7(@types/node@18.11.17)
+        version: 7.52.7(@types/node@22.10.2)
       '@rsbuild/plugin-sass':
         specifier: ~1.3.1
         version: 1.3.1(@rsbuild/core@1.3.18)
       '@rslib/core':
         specifier: 0.6.9
-        version: 0.6.9(@microsoft/api-extractor@7.52.7(@types/node@18.11.17))(typescript@5.8.2)
+        version: 0.6.9(@microsoft/api-extractor@7.52.7(@types/node@22.10.2))(typescript@5.8.2)
       '@rspress/config':
         specifier: workspace:*
         version: link:../../scripts/config
@@ -1575,8 +1575,8 @@ importers:
         specifier: ^3.0.4
         version: 3.0.4
       '@types/node':
-        specifier: ^18.11.17
-        version: 18.11.17
+        specifier: ^22.8.1
+        version: 22.10.2
       '@types/react':
         specifier: ^18.3.21
         version: 18.3.21
@@ -1610,16 +1610,16 @@ importers:
     devDependencies:
       '@microsoft/api-extractor':
         specifier: ^7.52.7
-        version: 7.52.7(@types/node@18.11.17)
+        version: 7.52.7(@types/node@22.10.2)
       '@rslib/core':
         specifier: 0.6.9
-        version: 0.6.9(@microsoft/api-extractor@7.52.7(@types/node@18.11.17))(typescript@5.8.2)
+        version: 0.6.9(@microsoft/api-extractor@7.52.7(@types/node@22.10.2))(typescript@5.8.2)
       '@rspress/config':
         specifier: workspace:*
         version: link:../../scripts/config
       '@types/node':
-        specifier: ^18.11.17
-        version: 18.11.17
+        specifier: ^22.8.1
+        version: 22.10.2
       '@types/react':
         specifier: ^18.3.21
         version: 18.3.21
@@ -1699,7 +1699,7 @@ importers:
     devDependencies:
       '@rslib/core':
         specifier: 0.6.9
-        version: 0.6.9(@microsoft/api-extractor@7.52.7(@types/node@18.11.17))(typescript@5.8.2)
+        version: 0.6.9(@microsoft/api-extractor@7.52.7(@types/node@22.10.2))(typescript@5.8.2)
       '@types/jest':
         specifier: ~29.5.14
         version: 29.5.14
@@ -1707,8 +1707,8 @@ importers:
         specifier: ^4.17.12
         version: 4.17.12
       '@types/node':
-        specifier: ^18.11.17
-        version: 18.11.17
+        specifier: ^22.8.1
+        version: 22.10.2
       '@types/react':
         specifier: ^18.3.21
         version: 18.3.21
@@ -1828,8 +1828,8 @@ importers:
   scripts/config:
     devDependencies:
       '@types/node':
-        specifier: ^18.11.17
-        version: 18.11.17
+        specifier: ^22.8.1
+        version: 22.10.2
       typescript:
         specifier: ^5.8.2
         version: 5.8.2
@@ -3412,9 +3412,6 @@ packages:
 
   '@types/node@12.20.55':
     resolution: {integrity: sha512-J8xLz7q2OFulZ2cyGTLE1TbbZcjpno7FaN6zdJNrgAdrJ+DZzh/uFR6YrTb4C+nXakvud8Q4+rbhoIWlYQbUFQ==}
-
-  '@types/node@18.11.17':
-    resolution: {integrity: sha512-HJSUJmni4BeDHhfzn6nF0sVmd1SMezP7/4F0Lq+aXzmp2xm9O7WXrUtHW/CHlYVtZUbByEvWidHqRtcJXGF2Ng==}
 
   '@types/node@22.10.2':
     resolution: {integrity: sha512-Xxr6BBRCAOQixvonOye19wnzyDiUtTeqldOOmj3CkeblonbccA12PFwlufvRdrpjXxqnmUaeiU5EOA+7s5diUQ==}
@@ -7869,7 +7866,7 @@ snapshots:
       '@jest/schemas': 29.6.3
       '@types/istanbul-lib-coverage': 2.0.4
       '@types/istanbul-reports': 3.0.1
-      '@types/node': 18.11.17
+      '@types/node': 22.10.2
       '@types/yargs': 17.0.24
       chalk: 4.1.2
 
@@ -7985,37 +7982,11 @@ snapshots:
       '@types/react': 18.3.21
       react: 19.1.0
 
-  '@microsoft/api-extractor-model@7.30.6(@types/node@18.11.17)':
-    dependencies:
-      '@microsoft/tsdoc': 0.15.1
-      '@microsoft/tsdoc-config': 0.17.1
-      '@rushstack/node-core-library': 5.13.1(@types/node@18.11.17)
-    transitivePeerDependencies:
-      - '@types/node'
-
   '@microsoft/api-extractor-model@7.30.6(@types/node@22.10.2)':
     dependencies:
       '@microsoft/tsdoc': 0.15.1
       '@microsoft/tsdoc-config': 0.17.1
       '@rushstack/node-core-library': 5.13.1(@types/node@22.10.2)
-    transitivePeerDependencies:
-      - '@types/node'
-
-  '@microsoft/api-extractor@7.52.7(@types/node@18.11.17)':
-    dependencies:
-      '@microsoft/api-extractor-model': 7.30.6(@types/node@18.11.17)
-      '@microsoft/tsdoc': 0.15.1
-      '@microsoft/tsdoc-config': 0.17.1
-      '@rushstack/node-core-library': 5.13.1(@types/node@18.11.17)
-      '@rushstack/rig-package': 0.5.3
-      '@rushstack/terminal': 0.15.3(@types/node@18.11.17)
-      '@rushstack/ts-command-line': 5.0.1(@types/node@18.11.17)
-      lodash: 4.17.21
-      minimatch: 3.0.8
-      resolve: 1.22.8
-      semver: 7.5.4
-      source-map: 0.6.1
-      typescript: 5.8.2
     transitivePeerDependencies:
       - '@types/node'
 
@@ -8319,15 +8290,6 @@ snapshots:
       - vue
       - webpack-cli
 
-  '@rslib/core@0.6.9(@microsoft/api-extractor@7.52.7(@types/node@18.11.17))(typescript@5.8.2)':
-    dependencies:
-      '@rsbuild/core': 1.3.18
-      rsbuild-plugin-dts: 0.6.9(@microsoft/api-extractor@7.52.7(@types/node@18.11.17))(@rsbuild/core@1.3.18)(typescript@5.8.2)
-      tinyglobby: 0.2.13
-    optionalDependencies:
-      '@microsoft/api-extractor': 7.52.7(@types/node@18.11.17)
-      typescript: 5.8.2
-
   '@rslib/core@0.6.9(@microsoft/api-extractor@7.52.7(@types/node@22.10.2))(typescript@5.8.2)':
     dependencies:
       '@rsbuild/core': 1.3.18
@@ -8436,19 +8398,6 @@ snapshots:
       - react
       - react-dom
 
-  '@rushstack/node-core-library@5.13.1(@types/node@18.11.17)':
-    dependencies:
-      ajv: 8.13.0
-      ajv-draft-04: 1.0.0(ajv@8.13.0)
-      ajv-formats: 3.0.1(ajv@8.13.0)
-      fs-extra: 11.3.0
-      import-lazy: 4.0.0
-      jju: 1.4.0
-      resolve: 1.22.8
-      semver: 7.5.4
-    optionalDependencies:
-      '@types/node': 18.11.17
-
   '@rushstack/node-core-library@5.13.1(@types/node@22.10.2)':
     dependencies:
       ajv: 8.13.0
@@ -8467,28 +8416,12 @@ snapshots:
       resolve: 1.22.8
       strip-json-comments: 3.1.1
 
-  '@rushstack/terminal@0.15.3(@types/node@18.11.17)':
-    dependencies:
-      '@rushstack/node-core-library': 5.13.1(@types/node@18.11.17)
-      supports-color: 8.1.1
-    optionalDependencies:
-      '@types/node': 18.11.17
-
   '@rushstack/terminal@0.15.3(@types/node@22.10.2)':
     dependencies:
       '@rushstack/node-core-library': 5.13.1(@types/node@22.10.2)
       supports-color: 8.1.1
     optionalDependencies:
       '@types/node': 22.10.2
-
-  '@rushstack/ts-command-line@5.0.1(@types/node@18.11.17)':
-    dependencies:
-      '@rushstack/terminal': 0.15.3(@types/node@18.11.17)
-      '@types/argparse': 1.0.38
-      argparse: 1.0.10
-      string-argv: 0.3.2
-    transitivePeerDependencies:
-      - '@types/node'
 
   '@rushstack/ts-command-line@5.0.1(@types/node@22.10.2)':
     dependencies:
@@ -8704,7 +8637,7 @@ snapshots:
 
   '@types/cross-spawn@6.0.6':
     dependencies:
-      '@types/node': 18.11.17
+      '@types/node': 22.10.2
 
   '@types/debug@4.1.8':
     dependencies:
@@ -8733,7 +8666,7 @@ snapshots:
   '@types/fs-extra@11.0.4':
     dependencies:
       '@types/jsonfile': 6.1.1
-      '@types/node': 18.11.17
+      '@types/node': 22.10.2
     optional: true
 
   '@types/hast@2.3.10':
@@ -8767,7 +8700,7 @@ snapshots:
 
   '@types/jsonfile@6.1.1':
     dependencies:
-      '@types/node': 18.11.17
+      '@types/node': 22.10.2
     optional: true
 
   '@types/lodash-es@4.17.12':
@@ -8790,12 +8723,9 @@ snapshots:
 
   '@types/node@12.20.55': {}
 
-  '@types/node@18.11.17': {}
-
   '@types/node@22.10.2':
     dependencies:
       undici-types: 6.20.0
-    optional: true
 
   '@types/normalize-package-data@2.4.1': {}
 
@@ -8842,13 +8772,13 @@ snapshots:
       chai: 5.1.2
       tinyrainbow: 1.2.0
 
-  '@vitest/mocker@2.1.9(vite@5.4.0(@types/node@18.11.17)(sass-embedded@1.86.0)(terser@5.31.6))':
+  '@vitest/mocker@2.1.9(vite@5.4.0(@types/node@22.10.2)(sass-embedded@1.86.0)(terser@5.31.6))':
     dependencies:
       '@vitest/spy': 2.1.9
       estree-walker: 3.0.3
       magic-string: 0.30.17
     optionalDependencies:
-      vite: 5.4.0(@types/node@18.11.17)(sass-embedded@1.86.0)(terser@5.31.6)
+      vite: 5.4.0(@types/node@22.10.2)(sass-embedded@1.86.0)(terser@5.31.6)
 
   '@vitest/pretty-format@2.1.9':
     dependencies:
@@ -9811,7 +9741,7 @@ snapshots:
   expect@29.6.2:
     dependencies:
       '@jest/expect-utils': 29.6.2
-      '@types/node': 18.11.17
+      '@types/node': 22.10.2
       jest-get-type: 29.6.3
       jest-matcher-utils: 29.6.2
       jest-message-util: 29.6.2
@@ -10474,7 +10404,7 @@ snapshots:
   jest-util@29.6.2:
     dependencies:
       '@jest/types': 29.6.1
-      '@types/node': 18.11.17
+      '@types/node': 22.10.2
       chalk: 4.1.2
       ci-info: 3.8.0
       graceful-fs: 4.2.11
@@ -10482,7 +10412,7 @@ snapshots:
 
   jest-worker@27.5.1:
     dependencies:
-      '@types/node': 18.11.17
+      '@types/node': 22.10.2
       merge-stream: 2.0.0
       supports-color: 8.1.1
 
@@ -11785,14 +11715,6 @@ snapshots:
       camelcase-css: 2.0.1
       postcss: 8.5.3
 
-  postcss-load-config@4.0.2(postcss@8.5.3)(ts-node@10.9.2(@types/node@18.11.17)(typescript@5.8.2)):
-    dependencies:
-      lilconfig: 3.1.3
-      yaml: 2.7.1
-    optionalDependencies:
-      postcss: 8.5.3
-      ts-node: 10.9.2(@types/node@18.11.17)(typescript@5.8.2)
-
   postcss-load-config@4.0.2(postcss@8.5.3)(ts-node@10.9.2(@types/node@22.10.2)(typescript@5.8.2)):
     dependencies:
       lilconfig: 3.1.3
@@ -12188,18 +12110,6 @@ snapshots:
       '@rollup/rollup-win32-ia32-msvc': 4.20.0
       '@rollup/rollup-win32-x64-msvc': 4.20.0
       fsevents: 2.3.3
-
-  rsbuild-plugin-dts@0.6.9(@microsoft/api-extractor@7.52.7(@types/node@18.11.17))(@rsbuild/core@1.3.18)(typescript@5.8.2):
-    dependencies:
-      '@ast-grep/napi': 0.37.0
-      '@rsbuild/core': 1.3.18
-      magic-string: 0.30.17
-      picocolors: 1.1.1
-      tinyglobby: 0.2.13
-      tsconfig-paths: 4.2.0
-    optionalDependencies:
-      '@microsoft/api-extractor': 7.52.7(@types/node@18.11.17)
-      typescript: 5.8.2
 
   rsbuild-plugin-dts@0.6.9(@microsoft/api-extractor@7.52.7(@types/node@22.10.2))(@rsbuild/core@1.3.18)(typescript@5.8.2):
     dependencies:
@@ -12631,33 +12541,6 @@ snapshots:
       string-width: 4.2.3
       strip-ansi: 6.0.1
 
-  tailwindcss@3.4.17(ts-node@10.9.2(@types/node@18.11.17)(typescript@5.8.2)):
-    dependencies:
-      '@alloc/quick-lru': 5.2.0
-      arg: 5.0.2
-      chokidar: 3.6.0
-      didyoumean: 1.2.2
-      dlv: 1.1.3
-      fast-glob: 3.3.3
-      glob-parent: 6.0.2
-      is-glob: 4.0.3
-      jiti: 1.21.6
-      lilconfig: 3.1.3
-      micromatch: 4.0.8
-      normalize-path: 3.0.0
-      object-hash: 3.0.0
-      picocolors: 1.1.1
-      postcss: 8.5.3
-      postcss-import: 15.1.0(postcss@8.5.3)
-      postcss-js: 4.0.1(postcss@8.5.3)
-      postcss-load-config: 4.0.2(postcss@8.5.3)(ts-node@10.9.2(@types/node@18.11.17)(typescript@5.8.2))
-      postcss-nested: 6.2.0(postcss@8.5.3)
-      postcss-selector-parser: 6.1.2
-      resolve: 1.22.8
-      sucrase: 3.35.0
-    transitivePeerDependencies:
-      - ts-node
-
   tailwindcss@3.4.17(ts-node@10.9.2(@types/node@22.10.2)(typescript@5.8.2)):
     dependencies:
       '@alloc/quick-lru': 5.2.0
@@ -12777,25 +12660,6 @@ snapshots:
       tslib: 2.8.1
       typescript: 5.8.2
 
-  ts-node@10.9.2(@types/node@18.11.17)(typescript@5.8.2):
-    dependencies:
-      '@cspotcode/source-map-support': 0.8.1
-      '@tsconfig/node10': 1.0.9
-      '@tsconfig/node12': 1.0.11
-      '@tsconfig/node14': 1.0.3
-      '@tsconfig/node16': 1.0.4
-      '@types/node': 18.11.17
-      acorn: 8.14.0
-      acorn-walk: 8.2.0
-      arg: 4.1.3
-      create-require: 1.1.1
-      diff: 4.0.2
-      make-error: 1.3.6
-      typescript: 5.8.2
-      v8-compile-cache-lib: 3.0.1
-      yn: 3.1.1
-    optional: true
-
   ts-node@10.9.2(@types/node@22.10.2)(typescript@5.8.2):
     dependencies:
       '@cspotcode/source-map-support': 0.8.1
@@ -12847,8 +12711,7 @@ snapshots:
 
   unc-path-regex@0.1.2: {}
 
-  undici-types@6.20.0:
-    optional: true
+  undici-types@6.20.0: {}
 
   unhead@2.0.8:
     dependencies:
@@ -13026,13 +12889,13 @@ snapshots:
       '@types/unist': 3.0.3
       vfile-message: 4.0.2
 
-  vite-node@2.1.9(@types/node@18.11.17)(sass-embedded@1.86.0)(terser@5.31.6):
+  vite-node@2.1.9(@types/node@22.10.2)(sass-embedded@1.86.0)(terser@5.31.6):
     dependencies:
       cac: 6.7.14
       debug: 4.4.0
       es-module-lexer: 1.5.4
       pathe: 1.1.2
-      vite: 5.4.0(@types/node@18.11.17)(sass-embedded@1.86.0)(terser@5.31.6)
+      vite: 5.4.0(@types/node@22.10.2)(sass-embedded@1.86.0)(terser@5.31.6)
     transitivePeerDependencies:
       - '@types/node'
       - less
@@ -13044,21 +12907,21 @@ snapshots:
       - supports-color
       - terser
 
-  vite@5.4.0(@types/node@18.11.17)(sass-embedded@1.86.0)(terser@5.31.6):
+  vite@5.4.0(@types/node@22.10.2)(sass-embedded@1.86.0)(terser@5.31.6):
     dependencies:
       esbuild: 0.21.5
       postcss: 8.5.3
       rollup: 4.20.0
     optionalDependencies:
-      '@types/node': 18.11.17
+      '@types/node': 22.10.2
       fsevents: 2.3.3
       sass-embedded: 1.86.0
       terser: 5.31.6
 
-  vitest@2.1.9(@types/node@18.11.17)(sass-embedded@1.86.0)(terser@5.31.6):
+  vitest@2.1.9(@types/node@22.10.2)(sass-embedded@1.86.0)(terser@5.31.6):
     dependencies:
       '@vitest/expect': 2.1.9
-      '@vitest/mocker': 2.1.9(vite@5.4.0(@types/node@18.11.17)(sass-embedded@1.86.0)(terser@5.31.6))
+      '@vitest/mocker': 2.1.9(vite@5.4.0(@types/node@22.10.2)(sass-embedded@1.86.0)(terser@5.31.6))
       '@vitest/pretty-format': 2.1.9
       '@vitest/runner': 2.1.9
       '@vitest/snapshot': 2.1.9
@@ -13074,11 +12937,11 @@ snapshots:
       tinyexec: 0.3.1
       tinypool: 1.0.1
       tinyrainbow: 1.2.0
-      vite: 5.4.0(@types/node@18.11.17)(sass-embedded@1.86.0)(terser@5.31.6)
-      vite-node: 2.1.9(@types/node@18.11.17)(sass-embedded@1.86.0)(terser@5.31.6)
+      vite: 5.4.0(@types/node@22.10.2)(sass-embedded@1.86.0)(terser@5.31.6)
+      vite-node: 2.1.9(@types/node@22.10.2)(sass-embedded@1.86.0)(terser@5.31.6)
       why-is-node-running: 2.3.0
     optionalDependencies:
-      '@types/node': 18.11.17
+      '@types/node': 22.10.2
     transitivePeerDependencies:
       - less
       - lightningcss
