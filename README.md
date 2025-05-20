@@ -10,7 +10,7 @@ A fast Rsbuild-based static site generator.
   <a href="https://discord.gg/mkVw5zPAtf"><img src="https://img.shields.io/badge/chat-discord-blue?logo=discord&colorA=564341&colorB=EDED91" alt="discord channel" /></a>
   <a href="https://npmjs.com/package/rspress?activeTab=readme"><img src="https://img.shields.io/npm/v/rspress?style=flat-square&colorA=564341&colorB=EDED91" alt="npm version" /></a>
   <a href="https://npmcharts.com/compare/rspress?minimal=true"><img src="https://img.shields.io/npm/dm/rspress.svg?style=flat-square&colorA=564341&colorB=EDED91" alt="downloads" /></a>
-  <a href="https://github.com/web-infra-dev/rsbuild/blob/main/LICENSE"><img src="https://img.shields.io/npm/l/rspress?style=flat-square&colorA=564341&colorB=EDED91" alt="license" /></a>
+  <a href="https://github.com/web-infra-dev/rspress/blob/main/LICENSE"><img src="https://img.shields.io/npm/l/rspress?style=flat-square&colorA=564341&colorB=EDED91" alt="license" /></a>
 </p>
 
 ## 🔥 Features
@@ -26,6 +26,19 @@ A fast Rsbuild-based static site generator.
 
 Go to the [Quick start](https://rspress.dev/guide/start/getting-started.html) to get started.
 
+## 🦀 Rstack
+
+Rstack is a unified JavaScript toolchain built around Rspack, with high performance and consistent architecture.
+
+| Name                                                  | Description              |
+| ----------------------------------------------------- | ------------------------ |
+| [Rspack](https://github.com/web-infra-dev/rspack)     | Bundler                  |
+| [Rsbuild](https://github.com/web-infra-dev/rspress)   | Build tool               |
+| [Rslib](https://github.com/web-infra-dev/rslib)       | Library development tool |
+| [Rspress](https://github.com/web-infra-dev/rspress)   | Static site generator    |
+| [Rsdoctor](https://github.com/web-infra-dev/rsdoctor) | Build analyzer           |
+| [Rstest](https://github.com/web-infra-dev/rstest)     | Testing framework        |
+
 ## 🤝 Contribution
 
 Please read the [contributing guide](./CONTRIBUTING.md) and let's build Rspress together.
@@ -35,63 +48,16 @@ If you have any questions, you can open an issue or go to [Discord](https://disc
 ### Contributors
 
 <a href="https://github.com/web-infra-dev/rspress/graphs/contributors" target="_blank">
-  <table>
-    <tr>
-      <th colspan="2">
-        <br/>
-        <img src="https://contrib.rocks/image?repo=web-infra-dev/rspress&columns=16&max=96"><br/><br/>
-      </th>
-    </tr>
-    <tr>
-      <td>
-        <picture>
-          <source
-            media="(prefers-color-scheme: dark)"
-            srcset="https://next.ossinsight.io/widgets/official/compose-org-active-contributors/thumbnail.png?activity=active&period=past_90_days&owner_id=87694465&repo_ids=659104635&image_size=2x3&color_scheme=dark"
-          />
-          <img
-            alt="Contributors of web-infra-dev/rspress"
-            src="https://next.ossinsight.io/widgets/official/compose-org-active-contributors/thumbnail.png?activity=active&period=past_90_days&owner_id=87694465&repo_ids=659104635&image_size=2x3&color_scheme=light"
-          />
-        </picture>
-      </td>
-      <td rowspan="2">
-       <picture>
-        <source media="(prefers-color-scheme: dark)" srcset="https://next.ossinsight.io/widgets/official/compose-org-participants-growth/thumbnail.png?activity=new&period=past_90_days&owner_id=87694465&repo_ids=659104635&image_size=4x7&color_scheme=dark">
-        <img alt="New trends of web-infra-dev" src="https://next.ossinsight.io/widgets/official/compose-org-participants-growth/thumbnail.png?activity=new&period=past_90_days&owner_id=87694465&repo_ids=659104635&image_size=4x7&color_scheme=light">
-      </picture>
-      </td>
-    </tr>
-    <tr>
-      <td>
-        <picture>
-          <source
-            media="(prefers-color-scheme: dark)"
-            srcset="https://next.ossinsight.io/widgets/official/compose-org-active-contributors/thumbnail.png?activity=new&period=past_90_days&owner_id=87694465&repo_ids=659104635&image_size=2x3&color_scheme=dark"
-          />
-          <img
-            alt="Contributors of web-infra-dev/rspress"
-            src="https://next.ossinsight.io/widgets/official/compose-org-active-contributors/thumbnail.png?activity=new&period=past_90_days&owner_id=87694465&repo_ids=659104635&image_size=2x3&color_scheme=light"
-          />
-        </picture>
-      </td>
-    </tr>
-  </table>
+  <img src="https://contrib.rocks/image?repo=web-infra-dev/rspress&columns=24">
 </a>
 
 ### Code of conduct
 
 This repo has adopted the ByteDance Open Source Code of Conduct. Please check [Code of Conduct](./CODE_OF_CONDUCT.md) for more details.
 
-## 🦀 Links
+## 🧑‍💻 Community
 
-| Name                                                       | Description                                       |
-| ---------------------------------------------------------- | ------------------------------------------------- |
-| [@rspress/mdx-rs](https://github.com/web-infra-dev/mdx-rs) | Rust MDX compiler for Rspress.                    |
-| [Rspack](https://github.com/web-infra-dev/rspack)          | A fast Rust-based web bundler.                    |
-| [Rsbuild](https://github.com/web-infra-dev/rsbuild)        | An Rspack-based build tool for the web.           |
-| [Rslib](https://github.com/web-infra-dev/rslib)            | A library development tool powered by Rsbuild.    |
-| [Rsdoctor](https://github.com/web-infra-dev/rsdoctor)      | A one-stop build analyzer for Rspack and webpack. |
+Come and chat with us on [Discord](https://discord.gg/XsaKEEk4mW)! The Rstack team and users are active there, and we're always looking for contributions.
 
 ## 🌟 Quality
 

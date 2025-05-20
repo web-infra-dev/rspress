@@ -119,6 +119,7 @@ rslog
 rspack
 rspress
 rstack
+rstest
 Rustify
 selfsign
 shiki
