@@ -36,7 +36,7 @@
     "@playwright/test": "1.52.0",
     "@rspress/config": "workspace:*",
     "@types/cross-spawn": "^6.0.6",
-    "@types/node": "^18.11.17",
+    "@types/node": "^22.8.1",
     "check-dependency-version-consistency": "^5.0.0",
     "cross-env": "^7.0.3",
     "cross-spawn": "^7.0.6",

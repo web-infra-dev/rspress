@@ -49,7 +49,7 @@
     "@types/babel__standalone": "^7.1.9",
     "@types/babel__traverse": "^7.20.7",
     "@types/mdast": "^4.0.4",
-    "@types/node": "^18.11.17",
+    "@types/node": "^22.8.1",
     "@types/react": "^18.3.21",
     "@types/react-dom": "^18.3.7",
     "mdast-util-mdx-jsx": "^3.2.0",
