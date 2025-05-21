@@ -1,6 +1,7 @@
 import { NoSSR, useLang, usePageData, withBase } from '@rspress/core/runtime';
 import { type MouseEvent, useCallback, useState } from 'react';
 import IconCode from './icons/Code';
+import { publishIframeUrl } from './useIframeUrlPerComp';
 
 type ContainerProps = {
   children: React.ReactNode[];
@@ -25,11 +26,17 @@ const MobileContainerFixedPerComp: React.FC<ContainerProps> = props => {
   };
 
   const setIframeUrl = () => {
+    const url = getPageUrl();
     const fixedIframe = document.querySelector('.rspress-fixed-iframe');
-    fixedIframe?.setAttribute('src', getPageUrl());
+    fixedIframe?.setAttribute('src', url);
+    publishIframeUrl(url);
   };
 
-  return <div onClick={setIframeUrl}>{children}</div>;
+  return (
+    <div className="rspress-preview-code" onClick={setIframeUrl}>
+      {children}
+    </div>
+  );
 };
 
 const ContainerFixedPerComp = (props: ContainerProps) => {
