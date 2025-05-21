@@ -8,7 +8,7 @@ test.describe('plugin test', async () => {
   let appPort;
   let app;
   test.beforeAll(async () => {
-    const appDir = path.join(fixtureDir, 'plugin-preview');
+    const appDir = path.join(fixtureDir, 'plugin-preview-fixed-with-per-comp');
     appPort = await getPort();
     app = await runDevCommand(appDir, appPort);
   });
@@ -23,8 +23,9 @@ test.describe('plugin test', async () => {
     await page.goto(`http://localhost:${appPort}/`, {
       waitUntil: 'networkidle',
     });
+    // FIXME: ContainerFixedPerComp add a additional div structure, so we use `.rspress-doc div[class*=language-]` rather than '.rspress-doc > div[class*=language-]'
     const codeBlockElements = await page.$$(
-      '.rspress-doc > div[class*=language-]',
+      '.rspress-doc div[class*=language-]',
     );
 
     const internalDemoCodePreview = await page

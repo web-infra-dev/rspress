@@ -9,7 +9,7 @@ export default defineConfig({
       isMobile: true,
       iframeOptions: {
         framework: 'react',
-        position: 'fixed',
+        position: 'fixed-with-per-comp',
       },
       previewLanguages: ['jsx', 'tsx', 'json'],
       previewCodeTransform(codeInfo) {

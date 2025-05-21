@@ -486,6 +486,34 @@ importers:
         specifier: ^18.11.17
         version: 18.11.17
 
+  e2e/fixtures/plugin-preview-fixed-with-per-comp:
+    dependencies:
+      '@rspress/plugin-playground':
+        specifier: workspace:*
+        version: link:../../../packages/plugin-playground
+      '@rspress/plugin-preview':
+        specifier: workspace:*
+        version: link:../../../packages/plugin-preview
+      '@rspress/shared':
+        specifier: workspace:*
+        version: link:../../../packages/shared
+      react:
+        specifier: ^18.3.1
+        version: 18.3.1
+      react-dom:
+        specifier: ^18.3.1
+        version: 18.3.1(react@18.3.1)
+      rspress:
+        specifier: workspace:*
+        version: link:../../../packages/cli
+      solid-js:
+        specifier: ^1.9.4
+        version: 1.9.6
+    devDependencies:
+      '@types/node':
+        specifier: ^18.11.17
+        version: 18.11.17
+
   e2e/fixtures/plugin-rss:
     dependencies:
       '@rspress/plugin-rss':

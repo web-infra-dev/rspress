@@ -227,9 +227,11 @@ export function pluginPreview(options?: Options): RspressPlugin {
       ],
     },
     globalUIComponents:
-      position === 'fixed-with-per-comp' || position === 'fixed'
-        ? [join(staticPath, 'global-components', 'Device.tsx')]
-        : [],
+      position === 'fixed-with-per-comp'
+        ? [join(staticPath, 'global-components', 'DeviceFixedPerComp.tsx')]
+        : position === 'fixed'
+          ? [join(staticPath, 'global-components', 'Device.tsx')]
+          : [],
     globalStyles: join(staticPath, 'global-styles', `${previewMode}.css`),
   };
 }

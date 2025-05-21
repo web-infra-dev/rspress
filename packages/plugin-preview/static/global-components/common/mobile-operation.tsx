@@ -7,6 +7,7 @@ import {
   useRef,
   useState,
 } from 'react';
+import IconBack from '../icons/Back';
 import IconLaunch from '../icons/Launch';
 import IconQrcode from '../icons/Qrcode';
 import IconRefresh from '../icons/Refresh';
@@ -15,21 +16,24 @@ import './index.scss';
 const locales = {
   zh: {
     refresh: '刷新页面',
+    goBack: '返回',
     open: '在新页面打开',
   },
   en: {
     refresh: 'Refresh',
+    goBack: 'Go back',
     open: 'Open in new page',
   },
 };
 
-export default (props: {
+const MobileOperation = (props: {
   url: string;
   className?: string;
-  refresh: () => void;
+  refresh?: () => void;
+  goBack?: () => void;
 }) => {
+  const { url, className = '', refresh, goBack } = props;
   const [showQRCode, setShowQRCode] = useState(false);
-  const { url, className = '', refresh } = props;
   const lang = useLang();
   const triggerRef = useRef(null);
   const t = lang === 'zh' ? locales.zh : locales.en;
@@ -80,22 +84,46 @@ export default (props: {
 
   return (
     <div className={`rspress-preview-operations mobile ${className}`}>
-      <button onClick={refresh} aria-label={t.refresh}>
-        <IconRefresh />
-      </button>
+      {goBack && (
+        <button
+          onClick={goBack}
+          aria-label={t.goBack}
+          className="rspress-preview-operations-back"
+        >
+          <IconBack />
+        </button>
+      )}
+      {refresh && (
+        <button
+          onClick={refresh}
+          aria-label={t.refresh}
+          className="rspress-preview-operations-refresh"
+        >
+          <IconRefresh />
+        </button>
+      )}
       <div className="relative" ref={triggerRef}>
         {showQRCode && (
           <div className="rspress-preview-qrcode">
             <QRCodeSVG value={url} size={96} />
           </div>
         )}
-        <button onClick={toggleQRCode}>
+        <button
+          onClick={toggleQRCode}
+          className="rspress-preview-operations-qrcode"
+        >
           <IconQrcode />
         </button>
       </div>
-      <button onClick={openNewPage} aria-label={t.open}>
+      <button
+        onClick={openNewPage}
+        aria-label={t.open}
+        className="rspress-preview-operations-open"
+      >
         <IconLaunch />
       </button>
     </div>
   );
 };
+
+export default MobileOperation;
