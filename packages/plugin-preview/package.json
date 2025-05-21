@@ -1,6 +1,6 @@
 {
   "name": "@rspress/plugin-preview",
-  "version": "1.44.0",
+  "version": "0.0.0-canary-20250521",
   "description": "A plugin for rspress to preview the code block in markdown/mdx file.",
   "bugs": "https://github.com/web-infra-dev/rspress/issues",
   "repository": {
