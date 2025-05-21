@@ -24,25 +24,12 @@ const MobileContainerFixedPerComp: React.FC<ContainerProps> = props => {
     return '';
   };
 
-  return (
-    <NoSSR>
-      <div className="rspress-preview">
-        <div className="rspress-preview-wrapper">
-          <div
-            className="rspress-preview-code"
-            onClick={() => {
-              const fixedIframe = document.querySelector(
-                '.rspress-fixed-iframe',
-              );
-              fixedIframe?.setAttribute('src', getPageUrl());
-            }}
-          >
-            {children?.[0]}
-          </div>
-        </div>
-      </div>
-    </NoSSR>
-  );
+  const setIframeUrl = () => {
+    const fixedIframe = document.querySelector('.rspress-fixed-iframe');
+    fixedIframe?.setAttribute('src', getPageUrl());
+  };
+
+  return <div onClick={setIframeUrl}>{children}</div>;
 };
 
 const ContainerFixedPerComp = (props: ContainerProps) => {
