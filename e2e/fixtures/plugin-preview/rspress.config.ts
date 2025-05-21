@@ -9,8 +9,8 @@ export default defineConfig({
       isMobile: true,
       iframeOptions: {
         framework: 'react',
+        position: 'fixed',
       },
-      iframePosition: 'fixed',
       previewLanguages: ['jsx', 'tsx', 'json'],
       previewCodeTransform(codeInfo) {
         if (codeInfo.language === 'json') {
