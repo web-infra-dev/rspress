@@ -1,7 +1,7 @@
 {
   "name": "@rspress/plugin-shiki",
   "version": "1.44.0",
-  "description": "A plugin for rspress to record the last updated time of the doc.",
+  "description": "A plugin for rspress to use shiki to highlight code.",
   "bugs": "https://github.com/web-infra-dev/rspress/issues",
   "repository": {
     "type": "git",

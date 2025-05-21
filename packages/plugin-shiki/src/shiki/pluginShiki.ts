@@ -47,9 +47,6 @@ export const SHIKI_DEFAULT_HIGHLIGHT_LANGUAGES = [
   'bash',
 ];
 
-/**
- * The plugin is used to add the last updated time to the page.
- */
 export function pluginShiki(options?: PluginShikiOptions): RspressPlugin {
   const {
     theme = 'css-variables',
