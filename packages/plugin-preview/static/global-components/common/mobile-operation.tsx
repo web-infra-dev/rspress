@@ -85,12 +85,20 @@ const MobileOperation = (props: {
   return (
     <div className={`rspress-preview-operations mobile ${className}`}>
       {goBack && (
-        <button onClick={goBack} aria-label={t.refresh}>
+        <button
+          onClick={goBack}
+          aria-label={t.goBack}
+          className="rspress-preview-operations-back"
+        >
           <IconBack />
         </button>
       )}
       {refresh && (
-        <button onClick={refresh} aria-label={t.refresh}>
+        <button
+          onClick={refresh}
+          aria-label={t.refresh}
+          className="rspress-preview-operations-refresh"
+        >
           <IconRefresh />
         </button>
       )}
@@ -100,11 +108,18 @@ const MobileOperation = (props: {
             <QRCodeSVG value={url} size={96} />
           </div>
         )}
-        <button onClick={toggleQRCode}>
+        <button
+          onClick={toggleQRCode}
+          className="rspress-preview-operations-qrcode"
+        >
           <IconQrcode />
         </button>
       </div>
-      <button onClick={openNewPage} aria-label={t.open}>
+      <button
+        onClick={openNewPage}
+        aria-label={t.open}
+        className="rspress-preview-operations-open"
+      >
         <IconLaunch />
       </button>
     </div>
