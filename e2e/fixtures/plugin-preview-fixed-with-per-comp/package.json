@@ -1,5 +1,5 @@
 {
-  "name": "@rspress-fixture/plugin-preview",
+  "name": "@rspress-fixture/plugin-preview-with-per-comp",
   "version": "1.0.0",
   "private": true,
   "scripts": {
