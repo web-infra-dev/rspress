@@ -19,7 +19,7 @@ export function parseTitleFromMeta(meta: string | undefined): string {
   return result?.replace(/["'`]/g, '');
 }
 
-type ShikiPreProps = {
+export type ShikiPreProps = {
   codeElementClassName: string | undefined;
   codeTitle: string | undefined;
   child: React.ReactElement;

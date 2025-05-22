@@ -4,6 +4,8 @@ export { HomeLayout } from './layout/HomeLayout';
 export { Layout } from './layout/Layout';
 export { NotFoundLayout } from './layout/NotFountLayout';
 export { getCustomMDXComponent } from './layout/DocLayout/docComponents';
+export type { ShikiPreProps } from './layout/DocLayout/docComponents/pre';
+export type { CodeButtonGroupProps } from './layout/DocLayout/docComponents/code/CodeButtonGroup';
 // logic
 export { usePrevNextPage } from './logic/usePrevNextPage';
 export { useEditLink } from './logic/useEditLink';
