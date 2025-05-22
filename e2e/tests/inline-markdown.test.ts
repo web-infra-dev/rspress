@@ -91,11 +91,11 @@ test.describe('Inline markdown test', async () => {
       [
         'Class: Component&lt;P, S&gt;',
         'Class: Component&lt;P, S&gt;',
-        '<strong>bold</strong>',
-        '<em>emphasis</em>',
-        '<code>&lt;foo&gt;</code>',
+        '<span><strong>bold</strong></span>',
+        '<span><em>emphasis</em></span>',
+        '<span><code>&lt;foo&gt;</code></span>',
         '-m &lt;number&gt;',
-        '<del>delete</del>',
+        '<span><del>delete</del></span>',
       ].join(','),
     );
 
@@ -118,11 +118,11 @@ test.describe('Inline markdown test', async () => {
     const expectedH3InnerHtml = [
       'Class: Component&lt;P, S&gt;</a>',
       'Class: Component&lt;P, S&gt;</a>',
-      '<strong>bold</strong></a>',
-      '<em>emphasis</em></a>',
-      '<code>&lt;foo&gt;</code></a>',
+      '<span><strong>bold</strong></span></a>',
+      '<span><em>emphasis</em></span></a>',
+      '<span><code>&lt;foo&gt;</code></span></a>',
       '-m &lt;number&gt;</a>',
-      '<del>delete</del></a>',
+      '<span><del>delete</del></span></a>',
     ];
     for (const [index, html] of h3InnerHtml.entries()) {
       expect(html).toContain(expectedH3InnerHtml[index]);
@@ -148,11 +148,11 @@ test.describe('Inline markdown test', async () => {
       'Class: Component&lt;P, S&gt;',
       'Class: Component&lt;P, S&gt;',
       '-m &lt;number&gt;',
-      '<code>&lt;foo&gt;</code>',
-      '<code>foo &lt;bar&gt; baz</code>',
-      '<strong>bold</strong>',
-      '<em>emphasis</em>',
-      '<del>delete</del>',
+      '<span><code>&lt;foo&gt;</code></span>',
+      '<span><code>foo &lt;bar&gt; baz</code></span>',
+      '<span><strong>bold</strong></span>',
+      '<span><em>emphasis</em></span>',
+      '<span><del>delete</del></span>',
       '<code>This is a long string to test regex performance</code>',
     ];
     for (const [index, html] of aInnerHtml.entries()) {
@@ -190,12 +190,12 @@ test.describe('Inline markdown test', async () => {
         'Class: Component&lt;P, S&gt;',
         'Class: Component&lt;P, S&gt;',
         '-m &lt;number&gt;',
-        '<code>&lt;foo&gt;</code>',
-        '<code>foo &lt;bar&gt; baz</code>',
-        '<strong class="rp-font-semibold">bold</strong>',
-        '<em>emphasis</em>',
-        '<del>delete</del>',
-        '<code>This is a long string to test regex performance</code>',
+        '<span><code>&lt;foo&gt;</code></span>',
+        '<span><code>foo &lt;bar&gt; baz</code></span>',
+        '<span><strong class="rp-font-semibold">bold</strong></span>',
+        '<span><em>emphasis</em></span>',
+        '<span><del>delete</del></span>',
+        '<span><code>This is a long string to test regex performance</code></span>',
       ].join(','),
     );
   });
