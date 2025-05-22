@@ -48,7 +48,6 @@
     "flexsearch": "0.7.43",
     "github-slugger": "^2.0.0",
     "hast-util-to-jsx-runtime": "^2.3.6",
-    "htmr": "^1.0.2",
     "lodash-es": "^4.17.21",
     "nprogress": "^0.2.0",
     "react": "^19.1.0",
