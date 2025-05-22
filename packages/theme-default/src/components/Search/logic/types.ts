@@ -1,4 +1,5 @@
 import type { LocalSearchOptions, RemoteSearchOptions } from '@rspress/shared';
+import type { JSX } from 'react';
 
 export const enum RenderType {
   Default = 'default',

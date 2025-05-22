@@ -47,7 +47,7 @@ const SearchInput = ({
 }: {
   query: string;
   setQuery: (query: string) => void;
-  searchRef: React.RefObject<HTMLInputElement>;
+  searchRef: React.RefObject<HTMLInputElement | null>;
   filterNameText: string;
   filterPlaceholderText: string;
 }) => {

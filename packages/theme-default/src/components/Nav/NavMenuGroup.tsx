@@ -70,12 +70,12 @@ export function NavMenuGroup(item: NavMenuGroupItem) {
     pathname = '',
   } = item;
   const [isOpen, setIsOpen] = useState(false);
-  const closeTimerRef = useRef<number>();
+  const closeTimerRef = useRef<number>(null);
 
   const clearCloseTimer = () => {
     if (closeTimerRef.current) {
       clearTimeout(closeTimerRef.current);
-      closeTimerRef.current = undefined;
+      closeTimerRef.current = null;
     }
   };
 

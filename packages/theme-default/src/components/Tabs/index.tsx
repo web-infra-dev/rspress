@@ -67,10 +67,10 @@ export const Tabs = forwardRef(
 
     if (tabValues.length === 0) {
       tabValues = Children.map(children, child => {
-        if (isValidElement(child)) {
+        if (isValidElement<{ label?: string; value?: string }>(child)) {
           return {
-            label: child.props?.label,
-            value: child.props?.value || child.props?.label,
+            label: child.props.label,
+            value: child.props.value || child.props.label,
           };
         }
 

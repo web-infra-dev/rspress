@@ -23,7 +23,7 @@ export type ShikiPreProps = {
   codeElementClassName: string | undefined;
   codeTitle: string | undefined;
   child: React.ReactElement;
-  preElementRef: React.RefObject<HTMLPreElement>;
+  preElementRef: React.RefObject<HTMLPreElement | null>;
   className: string | undefined;
   codeButtonGroupProps?: Omit<
     CodeButtonGroupProps,
@@ -73,13 +73,15 @@ export function PreWithCodeButtonGroup({
   title,
   ...otherProps
 }: {
-  children: React.ReactElement[] | React.ReactElement;
+  children:
+    | React.ReactElement<{ className?: string }>[]
+    | React.ReactElement<{ className?: string }>;
   className?: string;
   title?: string;
 } & Partial<ShikiPreProps>) {
   const preElementRef = useRef<HTMLPreElement>(null);
 
-  const renderChild = (child: React.ReactElement) => {
+  const renderChild = (child: React.ReactElement<{ className?: string }>) => {
     const { className: codeElementClassName } = child.props;
 
     return (

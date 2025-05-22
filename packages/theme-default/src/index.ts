@@ -34,6 +34,7 @@ export { Toc } from './components/Toc';
 export { Badge } from './components/Badge';
 export { Button } from './components/Button';
 export { Card } from './components/Card';
+export { CodeBlockRuntime } from './components/CodeBlockRuntime';
 export { DocFooter } from './components/DocFooter';
 export { EditLink } from './components/EditLink';
 export { HomeFeature } from './components/HomeFeature';
