@@ -120,6 +120,11 @@ export interface Config {
    * @default true
    */
   fallbackHeadingTitle?: boolean;
+  /**
+   * Whether to save the language when user switch the language
+   * @default 'auto'
+   */
+  saveUserPreferredLanguage?: 'auto' | 'never' | 'only-home-page';
 }
 
 /**
@@ -176,6 +181,7 @@ export type NavItemWithLink = {
   tag?: string;
   activeMatch?: string;
   position?: 'left' | 'right';
+  onClick?: () => void;
 };
 
 export interface NavItemWithChildren {

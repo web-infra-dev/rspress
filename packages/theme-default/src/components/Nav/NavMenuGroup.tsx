@@ -43,7 +43,11 @@ function ActiveGroupItem({ item }: { item: NavItemWithLink }) {
 
 function NormalGroupItem({ item }: { item: NavItemWithLink }) {
   return (
-    <div key={item.link} className="rp-font-medium rp-my-1">
+    <div
+      key={item.link}
+      className="rp-font-medium rp-my-1"
+      onClick={item?.onClick}
+    >
       <Link href={item.link}>
         <div
           className="rp-rounded-2xl hover:rp-bg-mute"

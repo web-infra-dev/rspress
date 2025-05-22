@@ -1,6 +1,7 @@
 import { useLocation, usePageData, useVersion } from '@rspress/runtime';
 import { replaceLang, replaceVersion } from '@rspress/shared';
 import Translator from '@theme-assets/translator';
+import { usePreferredLanguage } from '../../logic/usePreferredLanguage';
 import { SvgWrapper } from '../SvgWrapper';
 import type { NavMenuGroupItem } from './NavMenuGroup';
 
@@ -17,6 +18,8 @@ export function useTranslationMenuData(): NavMenuGroupItem {
   const hasMultiLanguage = localeLanguages.length > 1;
   const { lang: currentLang, pageType } = page;
   const { base } = siteData;
+
+  const { setPreferredLanguage } = usePreferredLanguage();
 
   const translationMenuData = hasMultiLanguage
     ? {
@@ -46,6 +49,9 @@ export function useTranslationMenuData(): NavMenuGroupItem {
             cleanUrls,
             pageType === '404',
           ),
+          onClick: () => {
+            setPreferredLanguage(item.lang);
+          },
         })),
         activeValue: localeLanguages.find(item => currentLang === item.lang)
           ?.label,
