@@ -20,7 +20,7 @@ export function SidebarGroup(props: SidebarItemProps) {
   const { item, depth = 0, activeMatcher, id, setSidebarData } = props;
   const navigate = useNavigate();
   const containerRef = useRef<HTMLDivElement>(null);
-  const transitionRef = useRef<number>(null);
+  const transitionRef = useRef<number>();
   const innerRef = useRef<HTMLDivElement>(null);
   const initialRender = useRef(true);
   const initialState = useRef('collapsed' in item && item.collapsed);

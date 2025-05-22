@@ -69,9 +69,6 @@
       "core-js",
       "esbuild",
       "nx"
-    ],
-    "patchedDependencies": {
-      "htmr": "patches/htmr.patch"
-    }
+    ]
   }
 }

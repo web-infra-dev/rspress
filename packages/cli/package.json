@@ -55,7 +55,7 @@
     "@rslib/core": "0.6.9",
     "@types/jest": "~29.5.14",
     "@types/node": "^22.8.1",
-    "@types/react": "^19.1.5",
+    "@types/react": "^18.3.21",
     "rimraf": "^6.0.1",
     "rsbuild-plugin-publint": "^0.3.2",
     "ts-json-schema-generator": "^2.4.0",
