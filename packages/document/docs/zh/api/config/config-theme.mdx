@@ -753,3 +753,20 @@ export default defineConfig({
   },
 });
 ```
+
+## saveUserPreferredLanguage
+
+- Type: `'auto' | 'never' | 'only-home-page'`
+- Default: `'auto'`
+
+是否在访问网站时重定向到用户上一次切换的语言，默认为 `auto` 表示始终将重定向，`never` 表示不重定向，`only-home-page` 表示仅在访问首页时 ( `pageType === 'home'` ) 重定向。比如:
+
+```ts title="rspress.config.ts"
+import { defineConfig } from 'rspress/config';
+
+export default defineConfig({
+  themeConfig: {
+    saveUserPreferredLanguage: 'never',
+  },
+});
+```

@@ -767,3 +767,20 @@ export default defineConfig({
   },
 });
 ```
+
+## saveUserPreferredLanguage
+
+- Type: `'auto' | 'never' | 'only-home-page'`
+- Default: `'auto'`
+
+Whether to redirect to the user's previously selected language when visiting the site. The default is `auto`, which means always redirect, `never` means no redirection, and `only-home-page` means redirection only occurs when accessing the homepage ( `pageType === 'home'` ). For example:
+
+```ts title="rspress.config.ts"
+import { defineConfig } from 'rspress/config';
+
+export default defineConfig({
+  themeConfig: {
+    saveUserPreferredLanguage: 'never',
+  },
+});
+```
