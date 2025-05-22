@@ -34,7 +34,11 @@ export function SidebarItem(props: SidebarItemProps) {
   }
 
   return (
-    <Link href={normalizeHref(item.link)} className={styles.menuLink}>
+    <Link
+      data-context={item.context}
+      href={normalizeHref(item.link)}
+      className={styles.menuLink}
+    >
       <div
         ref={ref}
         className={`${
