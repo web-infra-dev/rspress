@@ -38,8 +38,9 @@ html.rp-dark {
   --shiki-token-inserted: #36c47f;
 }
 
-.rspress-doc span.line {
+.shiki span.line {
   padding: 0 1.25rem;
+  display: inline-block;
 }
 
 .diff,
