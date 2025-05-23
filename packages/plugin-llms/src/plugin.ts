@@ -39,6 +39,7 @@ const rsbuildPluginLlms = ({
       llmsTxt = true,
       mdFiles = true,
       llmsFullTxt = true,
+      targets = ['node'],
       include,
       exclude,
     } = rspressPluginOptions;
@@ -112,7 +113,7 @@ const rsbuildPluginLlms = ({
           descriptionRef.current,
         );
         api.processAssets(
-          { targets: ['node'], stage: 'additional' },
+          { targets, stage: 'additional' },
           async ({ compilation, sources }) => {
             const source = new sources.RawSource(llmsTxtContent);
             compilation.emitAsset('llms.txt', source);
@@ -159,7 +160,7 @@ const rsbuildPluginLlms = ({
 
       if (mdFiles) {
         api.processAssets(
-          { targets: ['node'], stage: 'additional' },
+          { targets, stage: 'additional' },
           async ({ compilation, sources }) => {
             if (mdFiles) {
               Object.entries(mdContents).forEach(([outFilePath, content]) => {
@@ -178,7 +179,7 @@ const rsbuildPluginLlms = ({
           others,
         );
         api.processAssets(
-          { targets: ['node'], stage: 'additional' },
+          { targets, stage: 'additional' },
           async ({ compilation, sources }) => {
             const source = new sources.RawSource(llmsFullTxtContent);
             compilation.emitAsset('llms-full.txt', source);

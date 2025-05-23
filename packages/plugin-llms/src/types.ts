@@ -38,6 +38,10 @@ export interface Options {
    * @default undefined
    */
   exclude?: (context: { page: PageIndexInfo }) => boolean;
+  /**
+   * The default configuration of Rsbuild
+   */
+  targets?: string[];
 }
 
 export interface rsbuildPluginLlmsOptions {
