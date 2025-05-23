@@ -4,7 +4,10 @@ export { HomeLayout } from './layout/HomeLayout';
 export { Layout } from './layout/Layout';
 export { NotFoundLayout } from './layout/NotFountLayout';
 export { getCustomMDXComponent } from './layout/DocLayout/docComponents';
-export type { ShikiPreProps } from './layout/DocLayout/docComponents/pre';
+export type {
+  ShikiPreProps,
+  PreWithCodeButtonGroupProps,
+} from './layout/DocLayout/docComponents/pre';
 export type { CodeButtonGroupProps } from './layout/DocLayout/docComponents/code/CodeButtonGroup';
 // logic
 export { usePrevNextPage } from './logic/usePrevNextPage';
@@ -34,7 +37,10 @@ export { Toc } from './components/Toc';
 export { Badge } from './components/Badge';
 export { Button } from './components/Button';
 export { Card } from './components/Card';
-export { CodeBlockRuntime } from './components/CodeBlockRuntime';
+export {
+  CodeBlockRuntime,
+  type CodeBlockRuntimeProps,
+} from './components/CodeBlockRuntime';
 export { DocFooter } from './components/DocFooter';
 export { EditLink } from './components/EditLink';
 export { HomeFeature } from './components/HomeFeature';

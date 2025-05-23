@@ -55,9 +55,7 @@ export function CodeButtonGroup({
             <SvgWrapper icon={IconWrap} className={styles.iconWrap} />
           </button>
         )}
-        {showCopyButton && (
-          <CopyCodeButton codeBlockRef={preElementRef as any} />
-        )}
+        {showCopyButton && <CopyCodeButton codeBlockRef={preElementRef} />}
       </div>
     </>
   );

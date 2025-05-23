@@ -1,9 +1,13 @@
 import { useEffect, useState } from 'react';
 import { codeToHtml, createCssVariablesTheme } from 'shiki';
 
-export interface CodeBlockRuntimeProps {
+import {
+  PreWithCodeButtonGroup,
+  type PreWithCodeButtonGroupProps,
+} from '../../layout/DocLayout/docComponents/pre';
+
+export interface CodeBlockRuntimeProps extends PreWithCodeButtonGroupProps {
   lang: string;
-  title?: string;
   code: string;
 }
 
@@ -31,14 +35,9 @@ export function CodeBlockRuntime({ lang, title, code }: CodeBlockRuntimeProps) {
 
   return (
     <div className={`language-${lang}`}>
-      {title && <div className="rspress-code-title">{title}</div>}
-      <div
-        className="rspress-code-content rspress-scrollbar"
-        // biome-ignore lint/security/noDangerouslySetInnerHtml: intended
-        dangerouslySetInnerHTML={{
-          __html: html,
-        }}
-      />
+      <PreWithCodeButtonGroup title={title}>
+        <div dangerouslySetInnerHTML={{ __html: html }} />
+      </PreWithCodeButtonGroup>
     </div>
   );
 }
