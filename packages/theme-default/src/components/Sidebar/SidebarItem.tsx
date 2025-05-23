@@ -35,7 +35,7 @@ export function SidebarItem(props: SidebarItemProps) {
 
   return (
     <Link
-      data-context={item.context}
+      {...(depth === 0 ? { 'data-context': 'foo' } : {})}
       href={normalizeHref(item.link)}
       className={styles.menuLink}
     >

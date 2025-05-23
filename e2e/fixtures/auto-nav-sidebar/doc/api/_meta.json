@@ -2,7 +2,8 @@
   {
     "type": "file",
     "name": "index",
-    "label": "API Overview"
+    "label": "API Overview",
+    "context": "api-overview"
   },
   {
     "type": "dir",
