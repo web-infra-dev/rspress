@@ -6,7 +6,6 @@ import type { RouteService } from '../route/RouteService';
 export interface FactoryContext {
   userDocRoot: string;
   config: UserConfig;
-  isSSR: boolean;
   runtimeTempDir: string;
   alias: Record<string, string | string[]>;
   routeService: RouteService;
@@ -14,7 +13,7 @@ export interface FactoryContext {
 }
 
 export type VirtualModulePlugin = (
-  context: Omit<FactoryContext, 'isSSR' | 'alias'>,
+  context: Omit<FactoryContext, 'alias'>,
 ) => Record<string, TransformHandler>;
 
 export enum RuntimeModuleID {
