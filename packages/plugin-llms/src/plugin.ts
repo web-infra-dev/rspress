@@ -21,6 +21,7 @@ import { mdxToMd } from './mdxToMd';
 import type { Options, rsbuildPluginLlmsOptions } from './types';
 
 const rsbuildPluginLlms = ({
+  disableSSGRef,
   pageDataList,
   routes,
   titleRef,
@@ -46,6 +47,7 @@ const rsbuildPluginLlms = ({
     api.onBeforeBuild(async () => {
       const base = baseRef.current;
       const docDirectory = docDirectoryRef.current;
+      const disableSSG = disableSSGRef.current;
 
       const newPageDataList = mergeRouteMetaWithPageData(
         routes,
@@ -112,7 +114,7 @@ const rsbuildPluginLlms = ({
           descriptionRef.current,
         );
         api.processAssets(
-          { targets: ['node'], stage: 'additional' },
+          { targets: disableSSG ? ['web'] : ['node'], stage: 'additional' },
           async ({ compilation, sources }) => {
             const source = new sources.RawSource(llmsTxtContent);
             compilation.emitAsset('llms.txt', source);
@@ -159,7 +161,7 @@ const rsbuildPluginLlms = ({
 
       if (mdFiles) {
         api.processAssets(
-          { targets: ['node'], stage: 'additional' },
+          { targets: disableSSG ? ['web'] : ['node'], stage: 'additional' },
           async ({ compilation, sources }) => {
             if (mdFiles) {
               Object.entries(mdContents).forEach(([outFilePath, content]) => {
@@ -293,6 +295,7 @@ export function pluginLlms(options: Options = {}): RspressPlugin {
   const pageDataList: PageIndexInfo[] = [];
   const routes: RouteMeta[] = [];
   const sidebar: Sidebar = {};
+  const disableSSGRef: { current: boolean } = { current: false };
   const nav: {
     nav: Nav;
     lang: string;
@@ -319,6 +322,8 @@ export function pluginLlms(options: Options = {}): RspressPlugin {
       }
     },
     beforeBuild(config) {
+      disableSSGRef.current = config.ssg === false;
+
       const locales = config.themeConfig?.locales;
       const isMultiLang = locales && locales.length > 0;
       const sidebars = isMultiLang
@@ -363,6 +368,7 @@ export function pluginLlms(options: Options = {}): RspressPlugin {
           routeServiceRef,
           nav,
           baseRef,
+          disableSSGRef,
           rspressPluginOptions: options,
         }),
       ],
