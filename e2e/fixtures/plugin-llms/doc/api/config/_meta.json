@@ -1,0 +1,20 @@
+[
+  "config-basic",
+  "config-theme",
+  "config-frontmatter",
+  {
+    "type": "file",
+    "name": "config-build",
+    "overviewHeaders": [2, 3],
+    "context": "config-build"
+  },
+  {
+    "type": "file",
+    "name": "config-extname.json"
+  },
+  {
+    "type": "dir",
+    "name": "nested",
+    "label": "Nested"
+  }
+]

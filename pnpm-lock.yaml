@@ -392,6 +392,19 @@ importers:
         specifier: ^22.8.1
         version: 22.10.2
 
+  e2e/fixtures/plugin-llms:
+    dependencies:
+      '@rspress/plugin-llms':
+        specifier: workspace:*
+        version: link:../../../packages/plugin-llms
+      rspress:
+        specifier: workspace:*
+        version: link:../../../packages/cli
+    devDependencies:
+      '@types/node':
+        specifier: ^22.8.1
+        version: 22.10.2
+
   e2e/fixtures/plugin-playground:
     dependencies:
       '@rspress/plugin-playground':

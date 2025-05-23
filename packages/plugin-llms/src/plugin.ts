@@ -180,7 +180,7 @@ const rsbuildPluginLlms = ({
           others,
         );
         api.processAssets(
-          { targets: ['node'], stage: 'additional' },
+          { targets: disableSSG ? ['web'] : ['node'], stage: 'additional' },
           async ({ compilation, sources }) => {
             const source = new sources.RawSource(llmsFullTxtContent);
             compilation.emitAsset('llms-full.txt', source);
