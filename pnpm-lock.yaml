@@ -141,6 +141,16 @@ importers:
         specifier: ^22.8.1
         version: 22.10.2
 
+  e2e/fixtures/code-block-runtime:
+    dependencies:
+      rspress:
+        specifier: workspace:*
+        version: link:../../../packages/cli
+    devDependencies:
+      '@types/node':
+        specifier: ^22.8.1
+        version: 22.10.2
+
   e2e/fixtures/custom-headers:
     dependencies:
       rspress:
@@ -1782,6 +1792,9 @@ importers:
       react-dom:
         specifier: ^19.1.0
         version: 19.1.0(react@19.1.0)
+      shiki:
+        specifier: ^3.4.2
+        version: 3.4.2
     devDependencies:
       '@microsoft/api-extractor':
         specifier: ^7.52.7

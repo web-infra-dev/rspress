@@ -67,16 +67,18 @@ function ShikiPre({
   );
 }
 
+export interface PreWithCodeButtonGroupProps extends Partial<ShikiPreProps> {
+  children: React.ReactElement[] | React.ReactElement;
+  className?: string;
+  title?: string;
+}
+
 export function PreWithCodeButtonGroup({
   children,
   className,
   title,
   ...otherProps
-}: {
-  children: React.ReactElement[] | React.ReactElement;
-  className?: string;
-  title?: string;
-} & Partial<ShikiPreProps>) {
+}: PreWithCodeButtonGroupProps) {
   const preElementRef = useRef<HTMLPreElement>(null);
 
   const renderChild = (child: React.ReactElement) => {
@@ -95,7 +97,8 @@ export function PreWithCodeButtonGroup({
   };
 
   if (Array.isArray(children)) {
-    return <div>{children.map(child => renderChild(child))}</div>;
+    return <>{children.map(child => renderChild(child))}</>;
   }
+
   return renderChild(children);
 }

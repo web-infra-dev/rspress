@@ -555,3 +555,29 @@ function App() {
 import { Toc } from '@theme';
 
 <Toc />
+
+## CodeBlockRuntime
+
+运行时渲染代码块
+
+```tsx title="index.mdx"
+import { CodeBlockRuntime } from '@theme';
+
+function App() {
+  return (
+    <CodeBlockRuntime
+      lang="js"
+      title="index.js"
+      code={`console.log('Hello World!')`}
+    />
+  );
+}
+```
+
+import { CodeBlockRuntime } from '@theme';
+
+<CodeBlockRuntime
+  lang="js"
+  title="index.js"
+  code={`console.log('Hello World!')`}
+/>
