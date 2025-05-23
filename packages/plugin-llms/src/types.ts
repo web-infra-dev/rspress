@@ -41,6 +41,7 @@ export interface Options {
 }
 
 export interface rsbuildPluginLlmsOptions {
+  disableSSGRef: { current: boolean };
   docDirectoryRef: { current: string };
   titleRef: { current: string | undefined };
   descriptionRef: { current: string | undefined };
