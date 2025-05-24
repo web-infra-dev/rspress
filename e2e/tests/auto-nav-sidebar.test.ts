@@ -203,6 +203,12 @@ test.describe('Auto nav and sidebar test', async () => {
       ['config', null, 'client-api', null].join(','),
     );
 
+    // Find sidebar elements with data-context="api-overview"
+    const overviewItems = await page.$$('[data-context="api-overview"]');
+
+    // Assert that there is at least one api-overview marker and the content is correct
+    expect(overviewItems.length).toEqual(1);
+
     const sidebarGroupCollapses = await page.$$('.rspress-sidebar-collapse');
     const c2 = await page.evaluate(
       sidebars =>
