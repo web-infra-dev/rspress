@@ -3,7 +3,8 @@ import { Fragment, type ReactNode, useEffect, useState } from 'react';
 import { jsx, jsxs } from 'react/jsx-runtime';
 import { codeToHast, createCssVariablesTheme } from 'shiki';
 
-import { getCustomMDXComponent } from '../../layout/DocLayout/docComponents';
+import { getCustomMDXComponent } from '@theme';
+import { Code } from '../../layout/DocLayout/docComponents/code';
 import {
   PreWithCodeButtonGroup,
   type PreWithCodeButtonGroupProps,
@@ -45,6 +46,15 @@ export function CodeBlockRuntime({ lang, title, code }: CodeBlockRuntimeProps) {
             >
               {children}
             </PreWithCodeButtonGroup>
+          ),
+          // addLanguageClass: true,
+          code: ({ className, ...otherProps }) => (
+            <Code
+              {...otherProps}
+              className={[className, `language-${lang}`]
+                .filter(Boolean)
+                .join(' ')}
+            />
           ),
         },
         Fragment,
