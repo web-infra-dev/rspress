@@ -104,7 +104,7 @@ test.describe('Auto nav and sidebar dir convention', async () => {
       sidebarGroupItems,
     );
     // added container `div.rspress-sidebar-item` to ( depth=0 & type=file )'s sidebar item
-    // so have to modifiy this test result
+    // so have to modify this test result
     expect(contexts3.join(',')).toEqual(
       ['', 'context-index-in-meta'].join(','),
     );
