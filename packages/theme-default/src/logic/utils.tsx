@@ -1,5 +1,3 @@
-import htmr from 'htmr';
-
 export function renderHtmlOrText(str?: string | number | null) {
   if (!str) {
     return '';
@@ -20,7 +18,8 @@ export function renderHtmlOrText(str?: string | number | null) {
   );
 
   if (hasValidHtmlElements) {
-    return htmr(str);
+    // biome-ignore lint/security/noDangerouslySetInnerHtml: intended
+    return <span dangerouslySetInnerHTML={{ __html: str }} />;
   }
 
   return str
