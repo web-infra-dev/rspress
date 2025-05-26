@@ -6,7 +6,8 @@ import {
   type PreWithCodeButtonGroupProps,
 } from '../../layout/DocLayout/docComponents/pre';
 
-export interface CodeBlockRuntimeProps extends PreWithCodeButtonGroupProps {
+export interface CodeBlockRuntimeProps
+  extends Omit<PreWithCodeButtonGroupProps, 'children'> {
   lang: string;
   code: string;
 }
