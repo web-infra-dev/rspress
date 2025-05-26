@@ -52,7 +52,7 @@
   },
   "devDependencies": {
     "@microsoft/api-extractor": "^7.52.8",
-    "@rslib/core": "0.6.9",
+    "@rslib/core": "0.8.0",
     "@types/jest": "~29.5.14",
     "@types/node": "^22.8.1",
     "@types/react": "^18.3.22",
