@@ -1777,6 +1777,9 @@ importers:
       github-slugger:
         specifier: ^2.0.0
         version: 2.0.0
+      hast-util-to-jsx-runtime:
+        specifier: ^2.3.6
+        version: 2.3.6
       htmr:
         specifier: ^1.0.2
         version: 1.0.2(react@19.1.0)

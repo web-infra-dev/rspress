@@ -26,7 +26,9 @@ test.describe('<CodeBlockRuntime />', async () => {
       waitUntil: 'networkidle',
     });
     const containers = await page.$$('.language-js');
-    expect(containers.length).toBe(1);
+    expect(containers.length).toBe(2);
+
+    // CodeBlockRuntime should render the same result with compile-time code block
     const container = containers[0];
     const title = await container.$('.rspress-code-title');
     expect(await title!.textContent()).toBe('test.js');

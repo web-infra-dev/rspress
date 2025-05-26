@@ -1,4 +1,4 @@
-import { useRef } from 'react';
+import { isValidElement, useRef } from 'react';
 import {
   CodeButtonGroup,
   type CodeButtonGroupProps,
@@ -21,21 +21,23 @@ export function parseTitleFromMeta(meta: string | undefined): string {
 
 export type ShikiPreProps = {
   codeElementClassName: string | undefined;
-  codeTitle: string | undefined;
-  child: React.ReactElement;
-  preElementRef: React.RefObject<HTMLPreElement>;
+  title: string | undefined;
   className: string | undefined;
   codeButtonGroupProps?: Omit<
     CodeButtonGroupProps,
     'preElementRef' | 'codeWrap' | 'toggleCodeWrap'
   >;
+
+  // private
+  preElementRef: React.RefObject<HTMLPreElement>;
+  child: React.ReactElement;
 } & React.HTMLProps<HTMLPreElement>;
 
 function ShikiPre({
   child,
   codeElementClassName,
   preElementRef,
-  codeTitle,
+  title,
   className,
   codeButtonGroupProps,
   ...otherProps
@@ -43,7 +45,7 @@ function ShikiPre({
   const { codeWrap, toggleCodeWrap } = useCodeButtonGroup();
   return (
     <div className={codeElementClassName ?? ''}>
-      {codeTitle && <div className="rspress-code-title">{codeTitle}</div>}
+      {title && <div className="rspress-code-title">{title}</div>}
       <div className="rspress-code-content rspress-scrollbar">
         <div>
           <pre
@@ -67,16 +69,22 @@ function ShikiPre({
   );
 }
 
-export interface PreWithCodeButtonGroupProps extends Partial<ShikiPreProps> {
-  children: React.ReactElement[] | React.ReactElement;
+export interface PreWithCodeButtonGroupProps
+  extends React.HTMLProps<HTMLPreElement> {
+  codeElementClassName?: string;
   className?: string;
   title?: string;
+  codeButtonGroupProps?: Omit<
+    CodeButtonGroupProps,
+    'preElementRef' | 'codeWrap' | 'toggleCodeWrap'
+  >;
 }
 
 export function PreWithCodeButtonGroup({
   children,
   className,
   title,
+  codeButtonGroupProps,
   ...otherProps
 }: PreWithCodeButtonGroupProps) {
   const preElementRef = useRef<HTMLPreElement>(null);
@@ -89,8 +97,9 @@ export function PreWithCodeButtonGroup({
         child={child}
         className={className}
         codeElementClassName={codeElementClassName}
-        codeTitle={title}
+        title={title}
         preElementRef={preElementRef}
+        codeButtonGroupProps={codeButtonGroupProps}
         {...otherProps}
       />
     );
@@ -99,6 +108,8 @@ export function PreWithCodeButtonGroup({
   if (Array.isArray(children)) {
     return <>{children.map(child => renderChild(child))}</>;
   }
+
+  if (!isValidElement(children)) return null;
 
   return renderChild(children);
 }
