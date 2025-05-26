@@ -180,18 +180,13 @@ export function SidebarGroup(props: SidebarItemProps) {
               />
             ) : (
               // eslint-disable-next-line react/no-array-index-key
-              <div
-                className="rspress-sidebar-item"
+              <SidebarItemComp
+                {...props}
                 key={index}
-                data-context={item.context}
-              >
-                <SidebarItemComp
-                  {...props}
-                  item={item}
-                  depth={depth + 1}
-                  id={`${id}-${index}`}
-                />
-              </div>
+                item={item}
+                depth={depth + 1}
+                id={`${id}-${index}`}
+              />
             ),
           )}
         </div>

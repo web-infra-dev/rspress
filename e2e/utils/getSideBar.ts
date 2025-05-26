@@ -16,7 +16,7 @@ export async function getSidebar(page: Page) {
   // take the sidebar, properly a section or a tag
   const sidebar = await page.$$(
     `.rspress-sidebar .rspress-scrollbar > nav > section,
-     .rspress-sidebar .rspress-scrollbar > nav > a`,
+     .rspress-sidebar .rspress-scrollbar > nav > div.rspress-sidebar-item > a`,
   );
   return sidebar;
 }

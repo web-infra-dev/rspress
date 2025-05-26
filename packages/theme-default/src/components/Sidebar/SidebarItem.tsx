@@ -33,30 +33,63 @@ export function SidebarItem(props: SidebarItemProps) {
     );
   }
 
+  // add the div.rspress-sidebar-item in an unified place
   return (
-    <Link
-      {...(depth === 0 ? { 'data-context': item.context } : {})}
-      href={normalizeHref(item.link)}
-      className={styles.menuLink}
+    <LinkContextContainer
+      context={item.context}
+      className={props.contextContainerClassName}
     >
-      <div
-        ref={ref}
-        className={`${
-          active
-            ? `${styles.menuItemActive} rspress-sidebar-item-active`
-            : styles.menuItem
-        } rp-mt-0.5 rp-py-2 rp-px-3 rp-font-medium rp-flex`}
-        style={{
-          // The first level menu item will have the same font size as the sidebar group
-          fontSize: depth === 0 ? '14px' : '13px',
-          marginLeft: depth === 0 ? 0 : '18px',
-          borderRadius: '0 var(--rp-radius) var(--rp-radius) 0',
-          ...(depth === 0 ? highlightTitleStyle : {}),
-        }}
+      <Link
+        // {...(depth === 0 ? { 'data-context': item.context } : {})}
+        href={normalizeHref(item.link)}
+        className={styles.menuLink}
       >
-        <Tag tag={item.tag} />
-        <span>{renderInlineMarkdown(item.text)}</span>
-      </div>
-    </Link>
+        <div
+          ref={ref}
+          className={`${
+            active
+              ? `${styles.menuItemActive} rspress-sidebar-item-active`
+              : styles.menuItem
+          } rp-mt-0.5 rp-py-2 rp-px-3 rp-font-medium rp-flex`}
+          style={{
+            // The first level menu item will have the same font size as the sidebar group
+            fontSize: depth === 0 ? '14px' : '13px',
+            marginLeft: depth === 0 ? 0 : '18px',
+            borderRadius: '0 var(--rp-radius) var(--rp-radius) 0',
+            ...(depth === 0 ? highlightTitleStyle : {}),
+          }}
+        >
+          <Tag tag={item.tag} />
+          <span>{renderInlineMarkdown(item.text)}</span>
+        </div>
+      </Link>
+    </LinkContextContainer>
+  );
+}
+
+/**
+ * A container component for sidebar link items that conditionally wraps its children
+ * with a <div> element, adding contextual data and custom class names as needed.
+ *
+ * This design helps maintain sidebar structure stability and minimizes disruption to historical tests
+ * and user code.
+ *
+ * @param props - The component props.
+ * @param props.context - Optional context string to be added as a `data-context` attribute.
+ * @param props.className - Optional additional class name(s) for the container div.
+ * @param props.children - The content to be rendered inside the container.
+ */
+function LinkContextContainer(
+  props: React.PropsWithChildren<{ context?: string; className?: string }>,
+) {
+  return (
+    <div
+      className={['rspress-sidebar-item', props.className]
+        .filter(Boolean)
+        .join(' ')}
+      {...(props.context ? { 'data-context': props.context } : {})}
+    >
+      {props.children}
+    </div>
   );
 }

@@ -34,6 +34,7 @@ export interface SidebarItemProps {
       (NormalizedSidebarGroup | ISidebarItem | ISidebarDivider)[]
     >
   >;
+  contextContainerClassName?: string;
 }
 
 interface Props {
@@ -218,21 +219,16 @@ function SidebarListItem(props: {
 
   if (isSideBarCustomLink(item)) {
     return (
-      <div
-        className="rspress-sidebar-item rspress-sidebar-custom-link"
+      <SidebarItem
+        id={String(index)}
+        item={item}
+        depth={0}
         key={index}
-        data-context={item.context}
-      >
-        <SidebarItem
-          id={String(index)}
-          item={item}
-          depth={0}
-          key={index}
-          collapsed={(item as NormalizedSidebarGroup).collapsed ?? true}
-          setSidebarData={setSidebarData}
-          activeMatcher={activeMatcher}
-        />
-      </div>
+        collapsed={(item as NormalizedSidebarGroup).collapsed ?? true}
+        setSidebarData={setSidebarData}
+        activeMatcher={activeMatcher}
+        contextContainerClassName="rspress-sidebar-custom-link"
+      />
     );
   }
 

@@ -221,8 +221,10 @@ test.describe('Auto nav and sidebar test', async () => {
 
     const sidebarGroupItems = await page.$$('.rspress-sidebar-item');
     const c3 = await getDataContextFromElements(sidebarGroupItems);
-    expect(c3?.[2]).toEqual('front-matter');
-    expect(c3?.[3]).toEqual('config-build');
+    // added the `depth=0 type=file` sidebar item with div.rspress-sidebar-item container
+    // so modifiy this to update test case
+    expect(c3?.[3]).toEqual('front-matter');
+    expect(c3?.[4]).toEqual('config-build');
 
     // custom link should work
     const customLinkItems = await page.$$(

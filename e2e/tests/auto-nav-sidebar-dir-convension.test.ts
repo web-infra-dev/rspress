@@ -103,7 +103,11 @@ test.describe('Auto nav and sidebar dir convention', async () => {
         ),
       sidebarGroupItems,
     );
-    expect(contexts3.join(',')).toEqual(['context-index-in-meta'].join(','));
+    // added container `div.rspress-sidebar-item` to ( depth=0 & type=file )'s sidebar item
+    // so have to modifiy this test result
+    expect(contexts3.join(',')).toEqual(
+      ['', 'context-index-in-meta'].join(','),
+    );
   });
 
   test('/api/config/index.html /api/config/index /api/config should be the same page', async ({
