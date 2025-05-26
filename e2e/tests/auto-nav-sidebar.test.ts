@@ -203,6 +203,12 @@ test.describe('Auto nav and sidebar test', async () => {
       ['config', null, 'client-api', null].join(','),
     );
 
+    // Find sidebar elements with data-context="api-overview"
+    const overviewItems = await page.$$('[data-context="api-overview"]');
+
+    // Assert that there is at least one api-overview marker and the content is correct
+    expect(overviewItems.length).toEqual(1);
+
     const sidebarGroupCollapses = await page.$$('.rspress-sidebar-collapse');
     const c2 = await page.evaluate(
       sidebars =>
@@ -215,8 +221,10 @@ test.describe('Auto nav and sidebar test', async () => {
 
     const sidebarGroupItems = await page.$$('.rspress-sidebar-item');
     const c3 = await getDataContextFromElements(sidebarGroupItems);
-    expect(c3?.[2]).toEqual('front-matter');
-    expect(c3?.[3]).toEqual('config-build');
+    // added the `depth=0 type=file` sidebar item with div.rspress-sidebar-item container
+    // so modify this to update test case
+    expect(c3?.[3]).toEqual('front-matter');
+    expect(c3?.[4]).toEqual('config-build');
 
     // custom link should work
     const customLinkItems = await page.$$(

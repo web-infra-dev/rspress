@@ -161,7 +161,7 @@ test.describe('i18n test', async () => {
     await page.goto(`http://localhost:${appPort}/guide/basic/quick-start`, {
       waitUntil: 'networkidle',
     });
-    const customLinkZh = await page.$('nav > a');
+    const customLinkZh = await page.$('nav > div.rspress-sidebar-item > a');
     const hrefZh = await page.evaluate(
       customLinkZh => customLinkZh?.getAttribute('href'),
       customLinkZh,
@@ -171,7 +171,7 @@ test.describe('i18n test', async () => {
     await page.goto(`http://localhost:${appPort}/en/guide/basic/quick-start`, {
       waitUntil: 'networkidle',
     });
-    const customLinkEn = await page.$('nav > a');
+    const customLinkEn = await page.$('nav > div.rspress-sidebar-item > a');
     const hrefEn = await page.evaluate(
       customLinkEn => customLinkEn?.getAttribute('href'),
       customLinkEn,
