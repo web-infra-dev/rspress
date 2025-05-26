@@ -13,7 +13,7 @@
     "react": "^19.1.0",
     "react-dom": "^19.1.0",
     "rspress": "workspace:*",
-    "solid-js": "^1.9.6"
+    "solid-js": "^1.9.7"
   },
   "devDependencies": {
     "@types/node": "^22.8.1"

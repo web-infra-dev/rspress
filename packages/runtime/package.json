@@ -42,7 +42,7 @@
   },
   "dependencies": {
     "@rspress/shared": "workspace:*",
-    "@unhead/react": "^2.0.8",
+    "@unhead/react": "^2.0.10",
     "react": "^19.1.0",
     "react-dom": "^19.1.0",
     "react-router-dom": "^6.29.0"
@@ -52,7 +52,7 @@
     "@rslib/core": "0.6.9",
     "@rspress/config": "workspace:*",
     "@types/jest": "~29.5.14",
-    "@types/react": "^18.3.21",
+    "@types/react": "^18.3.22",
     "@types/react-dom": "^18.3.7",
     "rsbuild-plugin-publint": "^0.3.2",
     "typescript": "^5.8.2"
