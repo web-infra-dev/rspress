@@ -44,7 +44,7 @@ function ShikiPre({
 }: ShikiPreProps) {
   const { codeWrap, toggleCodeWrap } = useCodeButtonGroup();
   return (
-    <div className={containerElementClassName ?? ''}>
+    <div className={containerElementClassName}>
       {title && <div className="rspress-code-title">{title}</div>}
       <div className="rspress-code-content rspress-scrollbar">
         <div>

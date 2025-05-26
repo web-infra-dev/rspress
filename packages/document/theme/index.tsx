@@ -25,6 +25,7 @@ function HomeLayout() {
           style={{ minHeight: 'auto', width: '100%', maxWidth: 400 }}
         >
           <PreWithCodeButtonGroup
+            containerElementClassName="language-bash"
             codeButtonGroupProps={{
               showCodeWrapButton: false,
             }}
