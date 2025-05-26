@@ -5,20 +5,6 @@ import {
   useCodeButtonGroup,
 } from './code/CodeButtonGroup';
 
-export function parseTitleFromMeta(meta: string | undefined): string {
-  if (!meta) {
-    return '';
-  }
-  let result = meta;
-  const highlightReg = /{[\d,-]*}/i;
-  const highlightMeta = highlightReg.exec(meta)?.[0];
-  if (highlightMeta) {
-    result = meta.replace(highlightReg, '').trim();
-  }
-  result = result.split('=')[1] ?? '';
-  return result?.replace(/["'`]/g, '');
-}
-
 export type ShikiPreProps = {
   containerElementClassName: string | undefined;
   title: string | undefined;
