@@ -37,7 +37,7 @@
     "@oxidation-compiler/napi": "^0.2.0",
     "@rspress/shared": "workspace:*",
     "remark-gfm": "^4.0.1",
-    "rspack-plugin-virtual-module": "1.0.0",
+    "rspack-plugin-virtual-module": "1.0.1",
     "unist-util-visit": "^5.0.0"
   },
   "devDependencies": {
@@ -50,7 +50,7 @@
     "@types/babel__traverse": "^7.20.7",
     "@types/mdast": "^4.0.4",
     "@types/node": "^22.8.1",
-    "@types/react": "^18.3.21",
+    "@types/react": "^18.3.22",
     "@types/react-dom": "^18.3.7",
     "mdast-util-mdx-jsx": "^3.2.0",
     "react": "^19.1.0",
