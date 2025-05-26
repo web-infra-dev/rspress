@@ -1,6 +1,5 @@
 import type { RsbuildPlugin } from '@rsbuild/core';
 import { RspackVirtualModulePlugin } from 'rspack-plugin-virtual-module';
-import { routeVMPlugin } from './routeData';
 import { siteDataVMPlugin } from './siteData/index';
 import type { FactoryContext } from './types';
 
@@ -10,10 +9,6 @@ type RuntimeModuleFactory = (
 ) => Record<string, string> | Promise<Record<string, string>>;
 
 export const runtimeModuleFactory: RuntimeModuleFactory[] = [
-  /**
-   * Generate route data for client and server runtime
-   */
-  routeVMPlugin,
   /**
    * Generate search index and site data for client runtime
    */
@@ -28,8 +23,7 @@ export function rsbuildPluginDocVM(
   return {
     name: 'rsbuild-plugin-doc-vm',
     setup(api) {
-      api.modifyBundlerChain(async (bundlerChain, { target }) => {
-        const isServer = target === 'node';
+      api.modifyBundlerChain(async bundlerChain => {
         // The order should be sync
         const alias = bundlerChain.resolve.alias.entries();
         const runtimeModule: Record<string, string> = {};
@@ -37,7 +31,6 @@ export function rsbuildPluginDocVM(
         for (const factory of runtimeModuleFactory) {
           const moduleResult = await factory({
             ...factoryContext,
-            isSSR: isServer,
             alias: alias as Record<string, string>,
           });
           Object.assign(runtimeModule, moduleResult);

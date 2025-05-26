@@ -35,6 +35,7 @@ import { rsbuildPluginDocVM } from './runtimeModule';
 import { globalStylesVMPlugin } from './runtimeModule/globalStyles';
 import { globalUIComponentsVMPlugin } from './runtimeModule/globalUIComponents';
 import { i18nVMPlugin } from './runtimeModule/i18n';
+import { routeListVMPlugin } from './runtimeModule/routeList';
 import { searchHookVMPlugin } from './runtimeModule/searchHooks';
 import type { FactoryContext } from './runtimeModule/types';
 import { serveSearchIndexMiddleware } from './searchIndex';
@@ -108,7 +109,7 @@ async function createInternalBuildConfig(
     resolveReactRouterDomAlias(),
   ]);
 
-  const context: Omit<FactoryContext, 'isSSR' | 'alias'> = {
+  const context: Omit<FactoryContext, 'alias'> = {
     userDocRoot,
     config,
     runtimeTempDir,
@@ -121,6 +122,9 @@ async function createInternalBuildConfig(
       rsbuildPluginDocVM(context),
       pluginVirtualModule({
         virtualModules: {
+          /**
+           * Load i18n.json to runtime
+           */
           ...i18nVMPlugin(context),
           /**
            * Generate global components from config and plugins
@@ -134,6 +138,10 @@ async function createInternalBuildConfig(
            * Generate search hook module
            */
           ...searchHookVMPlugin(context),
+          /**
+           * Generate route list for client and server runtime
+           */
+          ...routeListVMPlugin(context),
         },
       }),
       ...(enableSSG
