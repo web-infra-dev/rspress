@@ -87,6 +87,7 @@ export interface PreWithCodeButtonGroupProps
  *```
  */
 export function PreWithCodeButtonGroup({
+  containerElementClassName,
   children,
   className,
   title,
@@ -100,13 +101,15 @@ export function PreWithCodeButtonGroup({
 
     return (
       <ShikiPre
+        {...otherProps}
         child={child}
         className={className}
-        containerElementClassName={codeElementClassName}
         title={title}
         preElementRef={preElementRef}
         codeButtonGroupProps={codeButtonGroupProps}
-        {...otherProps}
+        containerElementClassName={
+          containerElementClassName ?? codeElementClassName
+        }
       />
     );
   };

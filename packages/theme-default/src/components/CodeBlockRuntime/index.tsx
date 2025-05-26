@@ -38,14 +38,12 @@ export function CodeBlockRuntime({ lang, title, code }: CodeBlockRuntimeProps) {
         development: false,
         components: {
           ...getCustomMDXComponent(),
-          pre: ({ children, ...otherProps }) => (
+          pre: props => (
             <PreWithCodeButtonGroup
               title={title}
               containerElementClassName={`language-${lang}`}
-              {...otherProps}
-            >
-              {children}
-            </PreWithCodeButtonGroup>
+              {...props}
+            />
           ),
           // addLanguageClass: true,
           code: ({ className, ...otherProps }) => (
