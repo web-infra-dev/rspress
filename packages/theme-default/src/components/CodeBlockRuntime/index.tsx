@@ -40,7 +40,7 @@ export function CodeBlockRuntime({ lang, title, code }: CodeBlockRuntimeProps) {
           pre: ({ children, ...otherProps }) => (
             <PreWithCodeButtonGroup
               title={title}
-              codeElementClassName={`language-${lang}`}
+              containerElementClassName={`language-${lang}`}
               {...otherProps}
             >
               {children}

@@ -20,7 +20,7 @@ export function parseTitleFromMeta(meta: string | undefined): string {
 }
 
 export type ShikiPreProps = {
-  codeElementClassName: string | undefined;
+  containerElementClassName: string | undefined;
   title: string | undefined;
   className: string | undefined;
   codeButtonGroupProps?: Omit<
@@ -35,7 +35,7 @@ export type ShikiPreProps = {
 
 function ShikiPre({
   child,
-  codeElementClassName,
+  containerElementClassName,
   preElementRef,
   title,
   className,
@@ -44,7 +44,7 @@ function ShikiPre({
 }: ShikiPreProps) {
   const { codeWrap, toggleCodeWrap } = useCodeButtonGroup();
   return (
-    <div className={codeElementClassName ?? ''}>
+    <div className={containerElementClassName ?? ''}>
       {title && <div className="rspress-code-title">{title}</div>}
       <div className="rspress-code-content rspress-scrollbar">
         <div>
@@ -71,7 +71,7 @@ function ShikiPre({
 
 export interface PreWithCodeButtonGroupProps
   extends React.HTMLProps<HTMLPreElement> {
-  codeElementClassName?: string;
+  containerElementClassName?: string;
   className?: string;
   title?: string;
   codeButtonGroupProps?: Omit<
@@ -80,6 +80,24 @@ export interface PreWithCodeButtonGroupProps
   >;
 }
 
+/**
+ * expected dom pre:
+ *<div class="language-js">
+ *  <div class="rspress-code-title">test.js</div>
+ *  <div class="rspress-code-content rspress-scrollbar">
+ *    <div>
+ *      <pre class="shiki css-variables" tabindex="0">
+ *        <code class="language-js">
+ *        </code>
+ *      </pre>
+ *    </div>
+ *    <div class="code-button-group_fb445">
+ *      <button class="" title="Toggle code wrap"></button>
+ *      <button class="code-copy-button_c5089" title="Copy code"></button>
+ *    </div>
+ *  </div>
+ *</div>
+ */
 export function PreWithCodeButtonGroup({
   children,
   className,
@@ -96,7 +114,7 @@ export function PreWithCodeButtonGroup({
       <ShikiPre
         child={child}
         className={className}
-        codeElementClassName={codeElementClassName}
+        containerElementClassName={codeElementClassName}
         title={title}
         preElementRef={preElementRef}
         codeButtonGroupProps={codeButtonGroupProps}
