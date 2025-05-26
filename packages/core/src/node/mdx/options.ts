@@ -1,7 +1,8 @@
 import path from 'node:path';
-import type { ProcessorOptions } from '@mdx-js/mdx';
+import { type ProcessorOptions, nodeTypes } from '@mdx-js/mdx';
 import type { UserConfig } from '@rspress/shared';
 import rehypePluginExternalLinks from 'rehype-external-links';
+import rehypeRaw from 'rehype-raw';
 import remarkGFM from 'remark-gfm';
 
 import type { PluggableList } from 'unified';
@@ -83,6 +84,7 @@ export async function createMDXOptions(
           rel: 'noopener noreferrer',
         },
       ],
+      [rehypeRaw, { passThrough: nodeTypes }],
       ...rehypePluginsFromConfig,
       ...rehypePluginsFromPlugins,
     ],
