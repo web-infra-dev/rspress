@@ -6,11 +6,17 @@ html:not(.rp-dark) {
   [class*='DocSearch'] {
     --docsearch-searchbox-background: var(--rp-c-bg-mute);
     --docsearch-primary-color: var(--rp-c-brand);
+    --docsearch-highlight-color: var(--docsearch-primary-color);
+    --docsearch-searchbox-shadow: inset 0 0 0 2px var(--docsearch-primary-color);
   }
 }
 
 html.rp-dark [class*='DocSearch'] {
   --docsearch-searchbox-background: var(--rp-c-bg-mute);
+  --docsearch-primary-color: var(--rp-c-brand);
+  --docsearch-highlight-color: var(--docsearch-primary-color);
+  --docsearch-searchbox-shadow: inset 0 0 0 2px var(--docsearch-primary-color);
+
   --docsearch-searchbox-focus-background: var(--rp-c-bg-mute);
   --docsearch-modal-shadow: none;
   --docsearch-footer-shadow: none;
