@@ -81,7 +81,8 @@ export interface PreWithCodeButtonGroupProps
 }
 
 /**
- * expected dom pre:
+ * expected wrapped pre element is:
+ * ```html
  *<div class="language-js">
  *  <div class="rspress-code-title">test.js</div>
  *  <div class="rspress-code-content rspress-scrollbar">
@@ -97,6 +98,7 @@ export interface PreWithCodeButtonGroupProps
  *    </div>
  *  </div>
  *</div>
+ *```
  */
 export function PreWithCodeButtonGroup({
   children,
