@@ -53,7 +53,8 @@ export function CodeBlockRuntime({
         ...shikiOptions,
       });
 
-      // for async race condition, only set child if the code is still the same
+      // 1. for async race condition, only set child if the code is still the same
+      // 2. string comparison consumes too much performance, so only comparing the string length
       if (codeRef.current.length !== code.length) {
         return;
       }
