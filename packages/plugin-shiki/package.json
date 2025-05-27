@@ -6,7 +6,7 @@
   "repository": {
     "type": "git",
     "url": "git+https://github.com/web-infra-dev/rspress.git",
-    "directory": "packages/plugin-last-updated"
+    "directory": "packages/plugin-shiki"
   },
   "license": "MIT",
   "sideEffects": [
@@ -20,6 +20,10 @@
     ".": {
       "types": "./dist/index.d.ts",
       "default": "./dist/index.js"
+    },
+    "./transformers": {
+      "types": "./dist/transformers.d.ts",
+      "default": "./dist/transformers.js"
     },
     "./shiki.css": {
       "default": "./dist/shiki.css"
