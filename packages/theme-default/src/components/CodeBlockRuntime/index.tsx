@@ -19,7 +19,10 @@ import {
 export interface CodeBlockRuntimeProps extends PreWithCodeButtonGroupProps {
   lang: string;
   code: string;
-  shikiOptions?: CodeToHastOptions<BundledLanguage, BundledTheme>;
+  shikiOptions?: Omit<
+    CodeToHastOptions<BundledLanguage, BundledTheme>,
+    'lang' | 'theme'
+  >;
 }
 
 const cssVariablesTheme = createCssVariablesTheme({
