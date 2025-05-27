@@ -11,6 +11,23 @@ export default defineConfig({
       },
       format: 'esm',
       syntax: 'es2021',
+      source: {
+        entry: {
+          transformers: 'src/transformers/index.ts',
+        },
+      },
+    },
+    {
+      dts: {
+        bundle: true,
+      },
+      format: 'esm',
+      syntax: 'es2021',
+      source: {
+        entry: {
+          index: 'src/index.ts',
+        },
+      },
     },
     {
       bundle: false,
