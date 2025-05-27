@@ -36,7 +36,7 @@ function ShikiPre({
         <div>
           <pre
             ref={preElementRef}
-            className={[codeWrap ? 'rp-force-wrap' : '', className || '']
+            className={[codeWrap ? 'rp-force-wrap' : '', className]
               .filter(Boolean)
               .join(' ')}
             {...otherProps}
