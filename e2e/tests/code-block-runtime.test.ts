@@ -29,41 +29,20 @@ test.describe('<CodeBlockRuntime />', async () => {
     expect(containers.length).toBe(2);
 
     // CodeBlockRuntime should render the same result with compile-time code block
-    const container = containers[0];
-    const title = await container.$('.rspress-code-title');
-    expect(await title!.textContent()).toBe('test.js');
-    const content = await container.$('.rspress-code-content');
-    expect(
-      await content!.evaluate(el => el.classList.contains('rspress-scrollbar')),
-    ).toBe(true);
-    const shikiContainer = await page.waitForSelector('.shiki.css-variables');
-    expect(await shikiContainer.evaluate(el => el.tagName)).toBe('PRE');
-    expect(await shikiContainer.$eval('code', el => el.textContent)).toBe(
-      "console.log('Hello CodeBlockRuntime!');",
-    );
-  });
-
-  test('compile-time code block should render code with correct className', async ({
-    page,
-  }) => {
-    await page.goto(`http://localhost:${appPort}`, {
-      waitUntil: 'networkidle',
-    });
-    const containers = await page.$$('div.language-js');
-    expect(containers.length).toBe(2);
-
-    // compile-time code block
-    const container = containers[1];
-    const title = await container.$('.rspress-code-title');
-    expect(await title!.textContent()).toBe('test.js');
-    const content = await container.$('.rspress-code-content');
-    expect(
-      await content!.evaluate(el => el.classList.contains('rspress-scrollbar')),
-    ).toBe(true);
-    const shikiContainer = await content?.$('.shiki.css-variables');
-    expect(await shikiContainer?.evaluate(el => el.tagName)).toBe('PRE');
-    expect(await shikiContainer?.$eval('code', el => el.textContent)).toBe(
-      "console.log('Hello CodeBlock!');",
-    );
+    for (const container of containers) {
+      const title = await container.$('.rspress-code-title');
+      expect(await title!.textContent()).toBe('test.js');
+      const content = await container.$('.rspress-code-content');
+      expect(
+        await content!.evaluate(el =>
+          el.classList.contains('rspress-scrollbar'),
+        ),
+      ).toBe(true);
+      const shikiContainer = await content?.$('.shiki.css-variables');
+      expect(await shikiContainer?.evaluate(el => el.tagName)).toBe('PRE');
+      expect(await shikiContainer?.$eval('code', el => el.textContent)).toBe(
+        "console.log('Hello CodeBlock!');",
+      );
+    }
   });
 });
