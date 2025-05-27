@@ -25,6 +25,7 @@ export interface CodeBlockRuntimeProps extends PreWithCodeButtonGroupProps {
   >;
   /**
    * Callback when the code block is rendered.
+   * For some DOM operations, such as scroll operations.
    */
   onRendered?: () => void;
 }
