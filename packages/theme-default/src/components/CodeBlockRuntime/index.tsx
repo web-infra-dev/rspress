@@ -23,6 +23,11 @@ export interface CodeBlockRuntimeProps extends PreWithCodeButtonGroupProps {
     CodeToHastOptions<BundledLanguage, BundledTheme>,
     'lang' | 'theme'
   >;
+  /**
+   * Callback when the code block is rendered.
+   * For some DOM operations, such as scroll operations.
+   */
+  onRendered?: () => void;
 }
 
 const cssVariablesTheme = createCssVariablesTheme({
@@ -43,9 +48,10 @@ export function CodeBlockRuntime({
   title,
   code,
   shikiOptions,
+  onRendered,
   ...otherProps
 }: CodeBlockRuntimeProps) {
-  const [child, setChild] = useState<ReactNode>('');
+  const [child, setChild] = useState<ReactNode | null>(null);
   const codeRef = useLatest(code);
 
   useEffect(() => {
@@ -93,6 +99,12 @@ export function CodeBlockRuntime({
     };
     void highlightCode();
   }, [lang, code, shikiOptions]);
+
+  useEffect(() => {
+    if (child) {
+      onRendered?.();
+    }
+  }, [child]);
 
   return child;
 }
