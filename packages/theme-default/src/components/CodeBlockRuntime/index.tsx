@@ -1,13 +1,16 @@
-import { useEffect, useState } from 'react';
-import { codeToHtml, createCssVariablesTheme } from 'shiki';
+import { toJsxRuntime } from 'hast-util-to-jsx-runtime';
+import { Fragment, type ReactNode, useEffect, useState } from 'react';
+import { jsx, jsxs } from 'react/jsx-runtime';
+import { codeToHast, createCssVariablesTheme } from 'shiki';
 
+import { getCustomMDXComponent } from '@theme';
+import { Code } from '../../layout/DocLayout/docComponents/code';
 import {
   PreWithCodeButtonGroup,
   type PreWithCodeButtonGroupProps,
 } from '../../layout/DocLayout/docComponents/pre';
 
-export interface CodeBlockRuntimeProps
-  extends Omit<PreWithCodeButtonGroupProps, 'children'> {
+export interface CodeBlockRuntimeProps extends PreWithCodeButtonGroupProps {
   lang: string;
   code: string;
 }
@@ -20,25 +23,45 @@ const cssVariablesTheme = createCssVariablesTheme({
 });
 
 export function CodeBlockRuntime({ lang, title, code }: CodeBlockRuntimeProps) {
-  const [html, setHtml] = useState<string>('');
+  const [child, setChild] = useState<ReactNode>('');
 
   useEffect(() => {
     const highlightCode = async () => {
-      setHtml(
-        await codeToHtml(code, {
-          lang,
-          theme: cssVariablesTheme,
-        }),
-      );
+      const hast = await codeToHast(code, {
+        lang,
+        theme: cssVariablesTheme,
+      });
+
+      const reactNode = toJsxRuntime(hast, {
+        jsx,
+        jsxs,
+        development: false,
+        components: {
+          ...getCustomMDXComponent(),
+          pre: props => (
+            <PreWithCodeButtonGroup
+              title={title}
+              containerElementClassName={`language-${lang}`}
+              {...props}
+            />
+          ),
+          // addLanguageClass: true,
+          code: ({ className, ...otherProps }) => (
+            <Code
+              {...otherProps}
+              className={[className, `language-${lang}`]
+                .filter(Boolean)
+                .join(' ')}
+            />
+          ),
+        },
+        Fragment,
+      });
+
+      setChild(reactNode);
     };
     void highlightCode();
   }, [lang, code]);
 
-  return (
-    <div className={`language-${lang}`}>
-      <PreWithCodeButtonGroup title={title}>
-        <div dangerouslySetInnerHTML={{ __html: html }} />
-      </PreWithCodeButtonGroup>
-    </div>
-  );
+  return child;
 }

@@ -60,6 +60,7 @@ jfif
 jiti
 jscpuprofile
 jsesc
+jsxs
 juejin
 katex
 Kinsta
