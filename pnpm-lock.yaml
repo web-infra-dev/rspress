@@ -147,6 +147,9 @@ importers:
         specifier: workspace:*
         version: link:../../../packages/cli
     devDependencies:
+      '@shikijs/transformers':
+        specifier: ^3.2.2
+        version: 3.2.2
       '@types/node':
         specifier: ^22.8.1
         version: 22.10.2
