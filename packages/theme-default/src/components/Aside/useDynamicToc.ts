@@ -66,7 +66,7 @@ function updateHeaders(target: Element) {
     '.rspress-doc h2.rspress-doc-outline, h3.rspress-doc-outline, h4.rspress-doc-outline',
   );
   elements?.forEach(el => {
-    if (el && isElementVisible(el)) {
+    if (!el.closest('.rspress-toc-exclude') && isElementVisible(el)) {
       collectedHeaders.push({
         id: el.id,
         text: processTitleElement(el).innerHTML,
