@@ -1,7 +1,8 @@
 import path from 'node:path';
-import type { ProcessorOptions } from '@mdx-js/mdx';
+import { type ProcessorOptions, nodeTypes } from '@mdx-js/mdx';
 import type { UserConfig } from '@rspress/shared';
 import rehypePluginExternalLinks from 'rehype-external-links';
+import rehypeRaw from 'rehype-raw';
 import remarkGFM from 'remark-gfm';
 
 import type { PluggableList } from 'unified';
@@ -22,6 +23,7 @@ export async function createMDXOptions(
   filepath: string,
   pluginDriver: PluginDriver,
 ): Promise<ProcessorOptions> {
+  const format = path.extname(filepath).slice(1) as 'mdx' | 'md';
   const cleanUrls = config?.route?.cleanUrls ?? false;
   const {
     remarkPlugins: remarkPluginsFromConfig = [],
@@ -41,9 +43,10 @@ export async function createMDXOptions(
     ),
     ...globalComponentsFromConfig,
   ];
+
   return {
     providerImportSource: '@mdx-js/react',
-    format: path.extname(filepath).slice(1) as 'mdx' | 'md',
+    format,
     remarkPlugins: [
       remarkGFM,
       remarkPluginToc,
@@ -83,6 +86,10 @@ export async function createMDXOptions(
       ],
       ...rehypePluginsFromConfig,
       ...rehypePluginsFromPlugins,
-    ],
+      // This is what permits to embed HTML elements with format 'md'
+      // See https://github.com/facebook/docusaurus/pull/8960
+      // See https://github.com/mdx-js/mdx/pull/2295#issuecomment-1540085960
+      format === 'md' && [rehypeRaw, { passThrough: nodeTypes }],
+    ].filter(Boolean) as PluggableList,
   };
 }
