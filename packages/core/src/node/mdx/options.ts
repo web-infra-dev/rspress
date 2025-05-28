@@ -5,7 +5,6 @@ import rehypePluginExternalLinks from 'rehype-external-links';
 import remarkGFM from 'remark-gfm';
 
 import type { PluggableList } from 'unified';
-import { rehypePluginCodeMeta } from './rehypePlugins/codeMeta';
 import { rehypeHeaderAnchor } from './rehypePlugins/headerAnchor';
 import { remarkBuiltin } from './remarkPlugins/builtin';
 import { remarkCheckDeadLinks } from './remarkPlugins/checkDeadLink';
@@ -75,7 +74,6 @@ export async function createMDXOptions(
     ].filter(Boolean) as PluggableList,
     rehypePlugins: [
       rehypeHeaderAnchor,
-      rehypePluginCodeMeta,
       [
         rehypePluginExternalLinks,
         {
