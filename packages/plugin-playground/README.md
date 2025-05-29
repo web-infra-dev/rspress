@@ -2,4 +2,4 @@
 
 > Playground plugin for rspress
 
-[Documentation](https://rspress.dev/plugin/official-plugins/playground)
+[Documentation](https://rspress.rs/plugin/official-plugins/playground)

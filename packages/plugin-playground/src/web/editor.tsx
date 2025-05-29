@@ -7,7 +7,7 @@ import { useMemo } from 'react';
 import { DEFAULT_MONACO_URL } from './constant';
 
 // inject by Rsbuild in cli/index.ts
-// see: https://rsbuild.dev/config/source/define
+// see: https://rsbuild.rs/config/source/define
 declare global {
   const __PLAYGROUND_MONACO_LOADER__: Parameters<typeof loader.config>[0];
   const __PLAYGROUND_MONACO_OPTIONS__: MonacoEditorProps['options'];

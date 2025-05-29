@@ -19,7 +19,7 @@
   {
     "type": "custom-link",
     "label": "Rspack Official Docsite",
-    "link": "https://rspack.dev/",
+    "link": "https://rspack.rs/",
     "context": "rspack-official-docsite-custom-link"
   },
   {

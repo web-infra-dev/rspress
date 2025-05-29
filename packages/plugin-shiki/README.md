@@ -2,4 +2,4 @@
 
 > Shiki plugin for rspress
 
-[Documentation](https://rspress.dev/plugin/official-plugins/shiki)
+[Documentation](https://rspress.rs/plugin/official-plugins/shiki)

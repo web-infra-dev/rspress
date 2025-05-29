@@ -245,7 +245,7 @@ test.describe('Inline markdown test', async () => {
     const img = await page.$('img');
     expect(img).not.toBeNull();
     expect(await img?.getAttribute('src')).toBe(
-      'https://assets.rspack.dev/rspress/rspress-logo-480x480.png',
+      'https://assets.rspack.rs/rspress/rspress-logo-480x480.png',
     );
   });
 });

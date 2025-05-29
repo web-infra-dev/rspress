@@ -4,9 +4,9 @@
 
 - Type: `RsbuildConfig`
 
-Used to customize the configurations of Rsbuild. For detailed configurations, please refer to [Rsbuild - Config](https://rsbuild.dev/config/).
+Used to customize the configurations of Rsbuild. For detailed configurations, please refer to [Rsbuild - Config](https://rsbuild.rs/config/).
 
-- Example: Use [resolve.alias](https://rsbuild.dev/config/resolve/alias) to configure path aliases:
+- Example: Use [resolve.alias](https://rsbuild.rs/config/resolve/alias) to configure path aliases:
 
 ```ts title="rspress.config.ts"
 export default defineConfig({
@@ -20,7 +20,7 @@ export default defineConfig({
 });
 ```
 
-- Example: Use [tools.rspack](https://rsbuild.dev/config/tools/rspack) to modify the Rspack configuration, such as registering a webpack or Rspack plugin:
+- Example: Use [tools.rspack](https://rsbuild.rs/config/tools/rspack) to modify the Rspack configuration, such as registering a webpack or Rspack plugin:
 
 ```ts title="rspress.config.ts"
 export default defineConfig({
@@ -46,11 +46,11 @@ If you want to modify the output directory, please use [outDir](/api/config/conf
 
 - Type: `RsbuildPlugin[]`
 
-To register [Rsbuild plugins](https://rsbuild.dev/plugins/list/).
+To register [Rsbuild plugins](https://rsbuild.rs/plugins/list/).
 
 You can leverage Rsbuild's extensive plugin ecosystem to enhance and extend your build capabilities.
 
-- Example: Support Vue SFC through [@rsbuild/plugin-vue](https://rsbuild.dev/plugins/list/plugin-vue)
+- Example: Support Vue SFC through [@rsbuild/plugin-vue](https://rsbuild.rs/plugins/list/plugin-vue)
 
 ```ts title="rspress.config.ts"
 import { defineConfig } from 'rspress/config';
@@ -94,7 +94,7 @@ export default defineConfig({
 });
 ```
 
-You can also override the built-in plugin [@rsbuild/plugin-react](https://rsbuild.dev/plugins/list/plugin-react) and customize the plugin options.
+You can also override the built-in plugin [@rsbuild/plugin-react](https://rsbuild.rs/plugins/list/plugin-react) and customize the plugin options.
 
 For example:
 
@@ -121,7 +121,7 @@ DEBUG=rsbuild rspress dev
 
 After execution, the `rsbuild.config.js` file is created in the `doc_build` directory, which contains the complete `builderConfig`.
 
-> Please refer to [Rsbuild - Debug Mode](https://rsbuild.dev/guide/debug/debug-mode) for more information on how to debug the Rsbuild.
+> Please refer to [Rsbuild - Debug Mode](https://rsbuild.rs/guide/debug/debug-mode) for more information on how to debug the Rsbuild.
 
 ## markdown
 

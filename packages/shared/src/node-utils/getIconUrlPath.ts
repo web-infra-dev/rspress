@@ -28,6 +28,6 @@ export function getIconUrlPath(icon: string | URL | undefined) {
     return icon;
   }
 
-  // https://rsbuild.dev/config/html/favicon#example
+  // https://rsbuild.rs/config/html/favicon#example
   return `/${path.basename(icon)}`;
 }

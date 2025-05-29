@@ -19,7 +19,7 @@ npx create-rspress -d my-project
 
 ## Documentation
 
-https://rspress.dev/
+https://rspress.rs/
 
 ## Contributing
 

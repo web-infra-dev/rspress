@@ -2,4 +2,4 @@
 
 > RSS plugin for rspress
 
-[Documentation](https://rspress.dev/plugin/official-plugins/rss)
+[Documentation](https://rspress.rs/plugin/official-plugins/rss)

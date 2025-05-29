@@ -194,13 +194,13 @@ new Crawler({
   apiKey: 'YOUR_API_KEY',
   rateLimit: 8,
   maxDepth: 10,
-  startUrls: ['https://rspress.dev'],
-  sitemaps: ['https://rspress.dev/sitemap.xml'],
-  discoveryPatterns: ['https://rspress.dev/**'],
+  startUrls: ['https://rspress.rs'],
+  sitemaps: ['https://rspress.rs/sitemap.xml'],
+  discoveryPatterns: ['https://rspress.rs/**'],
   actions: [
     {
       indexName: 'doc_search_rspress_pages',
-      pathsToMatch: ['https://rspress.dev/**'],
+      pathsToMatch: ['https://rspress.rs/**'],
       recordExtractor: ({ $, helpers }) => {
         return helpers.docsearch({
           recordProps: {
