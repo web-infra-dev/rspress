@@ -1,4 +1,11 @@
-import { type ReactElement, type ReactNode, Suspense, memo } from 'react';
+import { inBrowser } from '@rspress/shared';
+import {
+  type ReactElement,
+  type ReactNode,
+  Suspense,
+  memo,
+  useMemo,
+} from 'react';
 import { useLocation } from 'react-router-dom';
 import siteData from 'virtual-site-data';
 import { useViewTransition } from './hooks';
@@ -17,16 +24,28 @@ const TransitionContent = memo(
   (prevProps, nextProps) => prevProps.el === nextProps.el,
 );
 
+// TODO: fallback should be a loading spinner
 export const Content = ({ fallback = <></> }: { fallback?: ReactNode }) => {
   const { pathname } = useLocation();
-  const matched = pathnameToRouteService(pathname);
-  if (!matched) {
+  const matchedElement = useMemo(() => {
+    const route = pathnameToRouteService(pathname);
+    return route?.element;
+  }, [pathname]);
+
+  if (!matchedElement) {
     return <div></div>;
   }
-  const routesElement = matched.element;
+
+  // why no Suspense during SSG?
+  // 1. Suspense will hide the error
+  // 2. during SSG, we use sync component instead of async component via `React.lazy`, so we do not need Suspense
+  if (!inBrowser()) {
+    return <TransitionContent el={matchedElement} />;
+  }
+
   return (
     <Suspense fallback={fallback}>
-      <TransitionContent el={routesElement} />
+      <TransitionContent el={matchedElement} />
     </Suspense>
   );
 };
