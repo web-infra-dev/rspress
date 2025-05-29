@@ -1,9 +1,15 @@
 :root {
-  --rp-iframe-bg: var(--rp-code-block-bg);
+  --rp-iframe-bg: #f6f8fa;
+  --rp-iframe-nav-bg: #ffffff;
+}
+
+.dark {
+  --rp-iframe-bg: #242424;
+  --rp-iframe-nav-bg: #191d24;
 }
 
 body {
-  background-color: var(--rp-iframe-bg);
+  background-color: var(--rp-iframe-bg) !important;
 }
 
 .preview-nav {
@@ -12,7 +18,7 @@ body {
   align-items: center;
   justify-content: center;
   height: 56px;
-  background-color: var(--rp-c-bg);
+  background-color: var(--rp-iframe-nav-bg);
   font-weight: 600;
   font-size: 17px;
 }
