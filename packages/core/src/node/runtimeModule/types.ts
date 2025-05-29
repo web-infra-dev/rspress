@@ -6,7 +6,6 @@ import type { RouteService } from '../route/RouteService';
 export interface FactoryContext {
   userDocRoot: string;
   config: UserConfig;
-  runtimeTempDir: string;
   alias: Record<string, string | string[]>;
   routeService: RouteService;
   pluginDriver: PluginDriver;
@@ -19,8 +18,7 @@ export type VirtualModulePlugin = (
 export enum RuntimeModuleID {
   GlobalStyles = 'virtual-global-styles',
   GlobalComponents = 'virtual-global-components',
-  RouteForClient = 'virtual-routes',
-  RouteForSSR = 'virtual-routes-ssr',
+  Routes = 'virtual-routes',
   SiteData = 'virtual-site-data',
   SearchIndexHash = 'virtual-search-index-hash',
   I18nText = 'virtual-i18n-text',

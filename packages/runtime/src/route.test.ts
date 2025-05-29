@@ -1,7 +1,7 @@
 import { describe, expect, it, vi } from 'vitest';
 import { pathnameToRouteService } from './route';
 
-vi.mock('__VIRTUAL_ROUTES__', () => {
+vi.mock('virtual-routes', () => {
   const element = vi.fn();
   const routes = [
     {

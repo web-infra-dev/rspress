@@ -33,4 +33,4 @@ export async function render(
   };
 }
 
-export { routes } from 'virtual-routes-ssr';
+export { routes } from 'virtual-routes';

@@ -1,6 +1,6 @@
 import type { Route } from '@rspress/shared';
-import { routes } from '__VIRTUAL_ROUTES__';
 import { matchRoutes } from 'react-router-dom';
+import { routes } from 'virtual-routes';
 
 export function normalizeRoutePath(routePath: string) {
   return decodeURIComponent(routePath)

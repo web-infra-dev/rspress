@@ -13,7 +13,7 @@ vi.mock('virtual-site-data', () => {
   };
 });
 
-vi.mock('__VIRTUAL_ROUTES__', () => {
+vi.mock('virtual-routes', () => {
   return { routes: [] };
 });
 

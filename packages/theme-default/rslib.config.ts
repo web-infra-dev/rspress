@@ -6,7 +6,6 @@ import { defineConfig } from '@rslib/core';
 import { pluginPublint } from 'rsbuild-plugin-publint';
 
 const COMMON_EXTERNALS = [
-  'virtual-routes-ssr',
   'virtual-routes',
   'virtual-search-index-hash',
   'virtual-site-data',

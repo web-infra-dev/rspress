@@ -2,18 +2,6 @@ import { pluginReact } from '@rsbuild/plugin-react';
 import { defineConfig } from '@rslib/core';
 import { pluginPublint } from 'rsbuild-plugin-publint';
 
-const CJS_COMMON_EXTERNALS = ['virtual-routes-ssr', 'virtual-routes'];
-
-const COMMON_EXTERNALS = [
-  '@theme',
-  'virtual-search-index-hash',
-  'virtual-site-data',
-  'virtual-global-styles',
-  'virtual-global-components',
-  'virtual-search-hooks',
-  'virtual-i18n-text',
-];
-
 export default defineConfig({
   lib: [
     {
@@ -26,13 +14,14 @@ export default defineConfig({
       syntax: 'es2022',
       output: {
         externals: [
-          ...COMMON_EXTERNALS,
-          Object.fromEntries(
-            CJS_COMMON_EXTERNALS.map(external => [
-              external,
-              `commonjs ${external}`,
-            ]),
-          ),
+          '@theme',
+          'virtual-routes',
+          'virtual-search-index-hash',
+          'virtual-site-data',
+          'virtual-global-styles',
+          'virtual-global-components',
+          'virtual-search-hooks',
+          'virtual-i18n-text',
         ],
         filename: {
           js: '[name].js',

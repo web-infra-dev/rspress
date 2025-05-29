@@ -47,12 +47,7 @@ export function rsbuildPluginDocVM(
         });
         bundlerChain
           .plugin('rspress-runtime-module')
-          .use(
-            new RspackVirtualModulePlugin(
-              runtimeModule,
-              factoryContext.runtimeTempDir,
-            ),
-          );
+          .use(new RspackVirtualModulePlugin(runtimeModule));
       });
     },
   };

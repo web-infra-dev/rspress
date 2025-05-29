@@ -1,4 +1,4 @@
-declare module 'virtual-routes-ssr' {
+declare module 'virtual-routes' {
   export { Route } from '@rspress/shared';
 
   export const routes: Route[];
