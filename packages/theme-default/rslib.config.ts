@@ -26,10 +26,11 @@ export default defineConfig({
   lib: [
     {
       format: 'esm',
+      bundle: false,
       dts: { bundle: true },
       plugins: [
         pluginReact(),
-        pluginSvgr(),
+        pluginSvgr({ svgrOptions: { exportType: 'default' } }),
         pluginSass(),
         pluginTypedCSSModules(),
       ],
@@ -38,7 +39,7 @@ export default defineConfig({
           __WEBPACK_PUBLIC_PATH__: '__webpack_public_path__',
         },
         entry: {
-          bundle: './src/index.ts',
+          index: ['./src/**'],
         },
       },
       tools: {
@@ -58,55 +59,6 @@ export default defineConfig({
           localIdentName: '[local]_[hash:hex:5]',
           namedExport: true,
           exportLocalsConvention: 'camelCaseOnly',
-        },
-        copy: {
-          patterns: [
-            {
-              from: './.theme-entry.js',
-              to: './index.js',
-              context: __dirname,
-            },
-            {
-              from: './.theme-entry.d.ts',
-              to: './index.d.ts',
-              context: __dirname,
-            },
-          ],
-        },
-      },
-    },
-    {
-      source: {
-        entry: {
-          'source-build-plugin': './src/node/source-build-plugin.ts',
-        },
-      },
-      format: 'esm',
-      syntax: 'es2022',
-      output: {
-        distPath: {
-          root: 'dist/node',
-        },
-        externals: ['tailwindcss'],
-      },
-    },
-    // pre-built svg files
-    {
-      format: 'esm',
-      syntax: 'es2022',
-      bundle: false,
-      plugins: [
-        pluginReact(),
-        pluginSvgr({ svgrOptions: { exportType: 'default' } }),
-      ],
-      source: {
-        entry: {
-          assets: ['src/assets'],
-        },
-      },
-      output: {
-        distPath: {
-          root: 'dist/assets',
         },
       },
     },

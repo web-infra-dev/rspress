@@ -1,5 +1,5 @@
 import 'nprogress/nprogress.css';
-import '../../styles';
+import '../../styles/index';
 import { Content, usePageData } from '@rspress/runtime';
 import {
   HomeLayout as DefaultHomeLayout,
