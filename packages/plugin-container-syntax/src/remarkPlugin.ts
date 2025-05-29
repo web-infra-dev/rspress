@@ -156,7 +156,10 @@ function transformer(tree: Parent) {
          * </div>
          */
         node.type === 'blockquote' &&
+        node.children[0] &&
         node.children[0].type === 'paragraph' &&
+        node.children[0].children &&
+        node.children[0].children[0] &&
         'value' in node.children[0].children[0]
       ) {
         const initiatorTag = node.children[0].children[0].value;
