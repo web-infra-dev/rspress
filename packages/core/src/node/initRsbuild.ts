@@ -63,7 +63,6 @@ async function createInternalBuildConfig(
   enableSSG: boolean,
   routeService: RouteService,
   pluginDriver: PluginDriver,
-  runtimeTempDir: string,
 ): Promise<RsbuildConfig> {
   const cwd = process.cwd();
   const CUSTOM_THEME_DIR =
@@ -112,7 +111,6 @@ async function createInternalBuildConfig(
   const context: Omit<FactoryContext, 'alias'> = {
     userDocRoot,
     config,
-    runtimeTempDir,
     routeService,
     pluginDriver,
   };
@@ -304,7 +302,6 @@ async function createInternalBuildConfig(
             ...reactCSRAlias,
             // FIXME: currently in Rspress we only support ^6.29.0
             ...reactRouterDomAlias,
-            __VIRTUAL_ROUTES__: 'virtual-routes',
           },
         },
         source: {
@@ -331,7 +328,6 @@ async function createInternalBuildConfig(
                   ...reactSSRAlias,
                   // FIXME: currently in Rspress we only support react-router-dom ^6.29.0
                   ...reactRouterDomAlias,
-                  __VIRTUAL_ROUTES__: 'virtual-routes-ssr',
                 },
               },
               tools: {
@@ -378,6 +374,7 @@ export async function initRsbuild(
   const builderPlugins = config?.builderPlugins ?? [];
   // We use a temp dir to store runtime files, so we can separate client and server build
   // and we should empty temp dir before build
+  // TODO: remove all the temp dir
   const runtimeTempDir = path.join(RSPRESS_TEMP_DIR, 'runtime');
   const runtimeAbsTempDir = path.join(cwd, 'node_modules', runtimeTempDir);
   await fs.mkdir(runtimeAbsTempDir, { recursive: true });
@@ -396,7 +393,6 @@ export async function initRsbuild(
     enableSSG,
     routeService,
     pluginDriver,
-    runtimeTempDir,
   );
 
   const rsbuild = await createRsbuild({

@@ -4,14 +4,11 @@ import { RuntimeModuleID, type VirtualModulePlugin } from './types';
 export const routeListVMPlugin: VirtualModulePlugin = context => {
   const { routeService } = context;
 
-  // client: The components of route is lazy loaded
   return {
-    [RuntimeModuleID.RouteForClient]: () =>
-      routeService.generateRoutesCode(false),
-    [RuntimeModuleID.RouteForSSR]: ({ environment }) => {
+    [RuntimeModuleID.Routes]: ({ environment }) => {
       return environment.name === 'node'
         ? routeService.generateRoutesCode(true)
-        : '';
+        : routeService.generateRoutesCode(false);
     },
   };
 };
