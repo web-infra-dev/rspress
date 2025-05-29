@@ -2,4 +2,4 @@
 
 > Medium zoom plugin for rspress
 
-[Documentation](https://rspress.dev/plugin/official-plugins/medium-zoom)
+[Documentation](https://rspress.rs/plugin/official-plugins/medium-zoom)

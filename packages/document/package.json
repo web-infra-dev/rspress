@@ -20,7 +20,7 @@
     "@rspress/plugin-algolia": "workspace:*",
     "@rspress/plugin-llms": "workspace:*",
     "@rspress/plugin-shiki": "workspace:*",
-    "@rstack-dev/doc-ui": "1.10.3",
+    "@rstack-dev/doc-ui": "1.10.5",
     "@shikijs/transformers": "^3.2.2",
     "@types/react": "^18.3.22",
     "framer-motion": "12.0.6",

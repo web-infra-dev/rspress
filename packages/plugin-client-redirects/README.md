@@ -2,4 +2,4 @@
 
 > Client redirects plugin for rspress
 
-[Documentation](https://rspress.dev/plugin/official-plugins/client-redirects)
+[Documentation](https://rspress.rs/plugin/official-plugins/client-redirects)

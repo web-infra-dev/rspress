@@ -2,7 +2,7 @@
   {
     "type": "custom-link",
     "label": "Inner SideBar Rspack Official Docsite",
-    "link": "https://rspack.dev/",
+    "link": "https://rspack.rs/",
     "context": "rspack-official-docsite-custom-link"
   }
 ]

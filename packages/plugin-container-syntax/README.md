@@ -2,4 +2,4 @@
 
 > Container syntax plugin for rspress
 
-[Documentation](https://rspress.dev/plugin/official-plugins/container-syntax)
+[Documentation](https://rspress.rs/plugin/official-plugins/container-syntax)

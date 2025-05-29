@@ -4,9 +4,9 @@
 
 - Type: `RsbuildConfig`
 
-用于自定义 Rsbuild 的配置项，完整配置项请查看 [Rsbuild - 配置](https://rsbuild.dev/zh/config/)。
+用于自定义 Rsbuild 的配置项，完整配置项请查看 [Rsbuild - 配置](https://rsbuild.rs/zh/config/)。
 
-- 示例：使用 [source.alias](https://rsbuild.dev/zh/config/resolve/alias) 配置路径别名：
+- 示例：使用 [source.alias](https://rsbuild.rs/zh/config/resolve/alias) 配置路径别名：
 
 ```ts title="rspress.config.ts"
 export default defineConfig({
@@ -20,7 +20,7 @@ export default defineConfig({
 });
 ```
 
-- 示例：使用 [tools.rspack](https://rsbuild.dev/zh/config/tools/rspack) 修改 Rspack 配置，比如注册一个 webpack 或 Rspack 插件。比如：
+- 示例：使用 [tools.rspack](https://rsbuild.rs/zh/config/tools/rspack) 修改 Rspack 配置，比如注册一个 webpack 或 Rspack 插件。比如：
 
 ```ts title="rspress.config.ts"
 export default defineConfig({
@@ -46,11 +46,11 @@ export default defineConfig({
 
 - Type: `RsbuildPlugin[]`
 
-用于注册 [Rsbuild 插件](https://rsbuild.dev/zh/plugins/list/)。
+用于注册 [Rsbuild 插件](https://rsbuild.rs/zh/plugins/list/)。
 
 你可以利用 Rsbuild 丰富的插件生态来增强和扩展构建能力。
 
-- 示例：通过 [@rsbuild/plugin-vue](https://rsbuild.dev/plugins/list/plugin-vue) 支持 Vue SFC。
+- 示例：通过 [@rsbuild/plugin-vue](https://rsbuild.rs/plugins/list/plugin-vue) 支持 Vue SFC。
 
 ```ts title="rspress.config.ts"
 import { defineConfig } from 'rspress/config';
@@ -94,7 +94,7 @@ export default defineConfig({
 });
 ```
 
-你也可以覆盖内置的 [@rsbuild/plugin-react](https://rsbuild.dev/zh/plugins/list/plugin-react) 并自定义插件的选项。
+你也可以覆盖内置的 [@rsbuild/plugin-react](https://rsbuild.rs/zh/plugins/list/plugin-react) 并自定义插件的选项。
 
 比如：
 
@@ -121,7 +121,7 @@ DEBUG=rsbuild rspress dev
 
 在执行后，`doc_build` 目录下会生成 `rsbuild.config.js` 文件，里面包含了完整的 `builderConfig`。
 
-> 请查看 [Rsbuild - 调试模式](https://rsbuild.dev/zh/guide/debug/debug-mode) 来了解更多调试 Rsbuild 的方法。
+> 请查看 [Rsbuild - 调试模式](https://rsbuild.rs/zh/guide/debug/debug-mode) 来了解更多调试 Rsbuild 的方法。
 
 ## markdown
 

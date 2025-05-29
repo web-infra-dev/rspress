@@ -2,4 +2,4 @@
 
 > Preview plugin for rspress
 
-[Documentation](https://rspress.dev/plugin/official-plugins/preview)
+[Documentation](https://rspress.rs/plugin/official-plugins/preview)

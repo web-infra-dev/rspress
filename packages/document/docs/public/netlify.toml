@@ -1,3 +1,17 @@
+# Redirect rspress.dev to rspress.rs
+[[redirects]]
+from = "https://rspress.dev/*"
+to = "https://rspress.rs/:splat"
+status = 301
+force = true
+
+# Redirect v2.rspress.dev to v2.rspress.rs
+[[redirects]]
+from = "https://v2.rspress.dev/*"
+to = "https://v2.rspress.rs/:splat"
+status = 301
+force = true
+
 [[redirects]]
 from = "/*"
 to = "/404.html"

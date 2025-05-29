@@ -2,4 +2,4 @@
 
 > Last updated plugin for rspress
 
-[Documentation](https://rspress.dev/plugin/official-plugins/last-updated)
+[Documentation](https://rspress.rs/plugin/official-plugins/last-updated)

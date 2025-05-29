@@ -13,16 +13,16 @@ import { pluginFontOpenSans } from 'rspress-plugin-font-open-sans';
 import pluginSitemap from 'rspress-plugin-sitemap';
 import { defineConfig } from 'rspress/config';
 
-const siteUrl = 'https://rspress.dev';
+const siteUrl = 'https://rspress.rs';
 
 export default defineConfig({
   root: 'docs',
   title: 'Rspress',
   description: 'Rsbuild based static site generator',
   lang: 'en',
-  logo: 'https://assets.rspack.dev/rspress/rspress-logo-480x480.png',
+  logo: 'https://assets.rspack.rs/rspress/rspress-logo-480x480.png',
   logoText: 'Rspress',
-  icon: 'https://assets.rspack.dev/rspress/rspress-logo-480x480.png',
+  icon: 'https://assets.rspack.rs/rspress/rspress-logo-480x480.png',
   markdown: {
     checkDeadLinks: true,
     shiki: {
@@ -55,7 +55,7 @@ export default defineConfig({
         title: 'Rspress',
         type: 'website',
         url: siteUrl,
-        image: 'https://rspress.dev/og-image.png',
+        image: 'https://rspress.rs/og-image.png',
         description: 'Rsbuild based static site generator',
         twitter: {
           site: '@rspack_dev',

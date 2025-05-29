@@ -10,7 +10,7 @@ Rspress 整体分为**Node 端**和**浏览器运行时**两部分。通过插�
 
 - [**Markdown/MDX** 编译功能](/plugin/system/plugin-api#markdown)。你可以通过添加 [`remark`](https://github.com/remarkjs/remark)/[`rehype`](https://github.com/rehypejs/rehype) 插件，扩展 Markdown/MDX 的语法和功能。
 - [**添加自定义页面**](/plugin/system/plugin-api#addpages)。在约定式路由的基础上，你也可以通过插件，添加新路由，比如添加一个 `/blog` 路由，用于展示博客列表，内容由你自己定义。
-- [**定制构建工具的行为**](/plugin/system/plugin-api#builderconfig)。在 Rspress 插件中，你可以自定义底层构建工具 [Rsbuild](https://rsbuild.dev) 的配置，也可以添加一些 Rspack 或 Rsbuild 插件。
+- [**定制构建工具的行为**](/plugin/system/plugin-api#builderconfig)。在 Rspress 插件中，你可以自定义底层构建工具 [Rsbuild](https://rsbuild.rs) 的配置，也可以添加一些 Rspack 或 Rsbuild 插件。
 - [**扩展页面元数据**](/plugin/system/plugin-api#extendpagedata)。针对每个页面，Rspress 内部会计算出一些元数据，如 `title`、`description` 等等，你可以通过插件，扩展这些元数据的计算逻辑，并在运行时通过 [usePageData](/api/client-api/api-runtime.html#usepagedata) hook 访问到。
 - 在构建流程前后插入一些[**自定义逻辑**](/plugin/system/plugin-api#beforebuild/afterbuild)。如在构建流程结束后关闭一些事件监听器。
 - [**添加全局组件**](/plugin/system/plugin-api#globaluicomponents)。Rspress 内部使用 React 进行渲染，你可以通过定义全局 React 组件来灵活地扩展`页面运行时`的功能，比如`添加全局的 BackToTop(返回顶部) 组件`、`添加全局副作用逻辑`。
