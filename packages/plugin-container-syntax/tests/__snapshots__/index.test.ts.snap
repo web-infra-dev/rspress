@@ -54,6 +54,11 @@ exports[`remark-container > details 1`] = `
 This is a details block.</p></div></details>"
 `;
 
+exports[`remark-container > empty blockquote 1`] = `
+"<blockquote>
+</blockquote>"
+`;
+
 exports[`remark-container > end with a link 1`] = `"<div class="rspress-directive tip"><div class="rspress-directive-title">TIP</div><div class="rspress-directive-content"><p>Line 1.</p><p>Line 2 with <a href="http://example.com">link</a>.</p></div></div>"`;
 
 exports[`remark-container > end with a link 2`] = `

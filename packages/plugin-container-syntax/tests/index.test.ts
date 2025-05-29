@@ -380,4 +380,13 @@ Line 2 with [link](http://example.com).
 
     expect(resultWithoutDirective.value).toMatchSnapshot();
   });
+
+  test('empty blockquote', () => {
+    const result = processor.processSync(`
+
+>
+
+  `);
+    expect(result.value).toMatchSnapshot();
+  });
 });
