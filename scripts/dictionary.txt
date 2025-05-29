@@ -76,6 +76,7 @@ mdast
 Mdxjs
 mdxrs
 menlo
+metastring
 modularly
 napi
 networkidle
