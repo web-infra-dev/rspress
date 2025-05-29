@@ -3,10 +3,11 @@
   --rp-iframe-nav-bg: #ffffff;
 }
 
-.dark {
+/* TODO: support dark mode */
+/* .dark {
   --rp-iframe-bg: #242424;
   --rp-iframe-nav-bg: #191d24;
-}
+} */
 
 body {
   background-color: var(--rp-iframe-bg) !important;
@@ -18,7 +19,7 @@ body {
   align-items: center;
   justify-content: center;
   height: 56px;
-  background-color: var(--rp-iframe-nav-bg);
+  background-color: var(--rp-iframe-nav-bg) !important;
   font-weight: 600;
   font-size: 17px;
 }
