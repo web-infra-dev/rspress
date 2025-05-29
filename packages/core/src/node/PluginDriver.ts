@@ -5,7 +5,6 @@ import type {
   RspressPlugin,
   UserConfig,
 } from '@rspress/shared';
-import { isDevDebugMode } from '@rspress/shared';
 import type { RouteService } from './route/RouteService';
 
 type RspressPluginHookKeys =
@@ -65,20 +64,6 @@ export class PluginDriver {
 
     // Support the container syntax in markdown/mdx, such as :::tip
     this.addPlugin(pluginContainerSyntax());
-
-    if (isDevDebugMode()) {
-      const SourceBuildPlugin = await import(
-        // @ts-ignore just for local dev, so we do not need type
-        '@rspress/theme-default/node/source-build-plugin.js'
-      ).then(
-        r => r.SourceBuildPlugin,
-        () => null as never,
-      );
-
-      if (SourceBuildPlugin) {
-        this.addPlugin(SourceBuildPlugin());
-      }
-    }
 
     const { pluginShiki } = await import('@rspress/plugin-shiki');
 

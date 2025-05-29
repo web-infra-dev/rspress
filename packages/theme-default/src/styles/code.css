@@ -12,8 +12,8 @@ html:not(.rp-dark) {
 html.rp-dark {
   --rp-code-font-size: 14px;
   --rp-code-block-color: rgb(229, 231, 235);
-  --rp-code-block-bg: #242424;
   --rp-code-title-bg: rgba(255, 255, 255, 0.04);
+  --rp-code-block-bg: #242424;
 
   --rp-code-copy-code-hover-bg: rgba(255, 255, 255, 0.05);
   --rp-code-wrap-code-hover-bg: rgba(255, 255, 255, 0.05);

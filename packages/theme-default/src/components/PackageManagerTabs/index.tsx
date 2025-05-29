@@ -130,5 +130,3 @@ export function PackageManagerTabs({
     </Tabs>
   );
 }
-
-export { Tab } from '@theme';
