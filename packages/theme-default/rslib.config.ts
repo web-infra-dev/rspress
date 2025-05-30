@@ -59,6 +59,16 @@ export default defineConfig({
           namedExport: true,
           exportLocalsConvention: 'camelCaseOnly',
         },
+        copy: {
+          patterns: [
+            {
+              from: './index-barrel.js',
+              to: './index.js',
+              context: __dirname,
+              force: true,
+            },
+          ],
+        },
       },
     },
   ],

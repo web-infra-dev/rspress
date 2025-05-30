@@ -1,9 +1,9 @@
 // layout
-export { DocLayout } from './layout/DocLayout';
-export { HomeLayout } from './layout/HomeLayout';
-export { Layout } from './layout/Layout';
-export { NotFoundLayout } from './layout/NotFountLayout';
-export { getCustomMDXComponent } from './layout/DocLayout/docComponents';
+export { DocLayout } from './layout/DocLayout/index';
+export { HomeLayout } from './layout/HomeLayout/index';
+export { Layout } from './layout/Layout/index';
+export { NotFoundLayout } from './layout/NotFountLayout/index';
+export { getCustomMDXComponent } from './layout/DocLayout/docComponents/index';
 export type {
   ShikiPreProps,
   PreWithCodeButtonGroupProps,
@@ -32,29 +32,29 @@ export {
 export * from './components/Search/logic/types';
 
 // components
-export { Aside } from './components/Aside';
-export { Toc } from './components/Toc';
-export { Badge } from './components/Badge';
-export { Button } from './components/Button';
-export { Card } from './components/Card';
+export { Aside } from './components/Aside/index';
+export { Toc } from './components/Toc/index';
+export { Badge } from './components/Badge/index';
+export { Button } from './components/Button/index';
+export { Card } from './components/Card/index';
 export {
   CodeBlockRuntime,
   type CodeBlockRuntimeProps,
-} from './components/CodeBlockRuntime';
-export { DocFooter } from './components/DocFooter';
-export { EditLink } from './components/EditLink';
-export { HomeFeature } from './components/HomeFeature';
-export { HomeFooter } from './components/HomeFooter';
-export { HomeHero, type HomeHeroProps } from './components/HomeHero';
-export { LastUpdated } from './components/LastUpdated';
-export { Link, type LinkProps } from './components/Link';
-export { LinkCard } from './components/LinkCard';
-export { Nav } from './components/Nav';
-export { Overview } from './components/Overview';
-export { PackageManagerTabs } from './components/PackageManagerTabs';
-export { PrevNextPage } from './components/PrevNextPage';
-export { ScrollToTop } from './components/ScrollToTop';
-export { Search } from './components/Search';
+} from './components/CodeBlockRuntime/index';
+export { DocFooter } from './components/DocFooter/index';
+export { EditLink } from './components/EditLink/index';
+export { HomeFeature } from './components/HomeFeature/index';
+export { HomeFooter } from './components/HomeFooter/index';
+export { HomeHero, type HomeHeroProps } from './components/HomeHero/index';
+export { LastUpdated } from './components/LastUpdated/index';
+export { Link, type LinkProps } from './components/Link/index';
+export { LinkCard } from './components/LinkCard/index';
+export { Nav } from './components/Nav/index';
+export { Overview } from './components/Overview/index';
+export { PackageManagerTabs } from './components/PackageManagerTabs/index';
+export { PrevNextPage } from './components/PrevNextPage/index';
+export { ScrollToTop } from './components/ScrollToTop/index';
+export { Search } from './components/Search/index';
 export {
   SearchButton,
   type SearchButtonProps,
@@ -63,10 +63,14 @@ export {
   SearchPanel,
   type SearchPanelProps,
 } from './components/Search/SearchPanel';
-export { Sidebar, SidebarList, type SidebarData } from './components/Sidebar';
-export { SocialLinks } from './components/SocialLinks';
-export { SourceCode } from './components/SourceCode';
-export { Steps } from './components/Steps';
-export { SwitchAppearance } from './components/SwitchAppearance';
-export { Tab, Tabs } from './components/Tabs';
-export { Tag } from './components/Tag';
+export {
+  Sidebar,
+  SidebarList,
+  type SidebarData,
+} from './components/Sidebar/index';
+export { SocialLinks } from './components/SocialLinks/index';
+export { SourceCode } from './components/SourceCode/index';
+export { Steps } from './components/Steps/index';
+export { SwitchAppearance } from './components/SwitchAppearance/index';
+export { Tab, Tabs } from './components/Tabs/index';
+export { Tag } from './components/Tag/index';
