@@ -4,8 +4,6 @@ import path from 'node:path';
 import { defineConfig, moduleTools } from '@modern-js/module-tools';
 import tailwindConfig from './tailwind.config';
 
-const require = createRequire(import.meta.url);
-
 const COMMON_EXTERNALS = [
   'virtual-routes',
   'virtual-search-index-hash',
@@ -27,7 +25,7 @@ export default defineConfig({
     buildType: 'bundleless',
     format: 'esm',
     sourceDir: 'src',
-    input: ['src/**/*.{tsx,ts,svg}'],
+    input: ['src/**/*.{tsx,ts,svg}', '!src/**/*.test.{tsx,ts}'],
     outDir: 'dist',
     externals: COMMON_EXTERNALS,
     style: {
