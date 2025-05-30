@@ -13,9 +13,7 @@
     "*.css",
     "*.less",
     "*.sass",
-    "*.scss",
-    "**/virtual-global-styles.js",
-    "virtual-global-styles"
+    "*.scss"
   ],
   "type": "module",
   "exports": {
