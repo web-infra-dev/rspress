@@ -288,7 +288,7 @@ async function createInternalBuildConfig(
 
         chain.module
           .rule('css-virtual-module')
-          .test(/\.rspress[\\/]runtime[\\/]virtual-global-styles/)
+          .test(/\.rspress[\\/]virtual-global-styles/)
           .merge({ sideEffects: true });
 
         if (isServer) {
