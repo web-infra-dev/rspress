@@ -6,3 +6,4 @@ import './base.css';
 import './code.css';
 import './scrollbar.scss';
 import 'nprogress/nprogress.css';
+import 'virtual-global-styles';
