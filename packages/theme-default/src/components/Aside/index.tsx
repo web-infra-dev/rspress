@@ -2,7 +2,7 @@ import { useLocation } from '@rspress/runtime';
 import type { Header } from '@rspress/shared';
 import { useEffect, useMemo } from 'react';
 import { scrollToTarget, useBindingAsideScroll } from '../../logic/sideEffects';
-import { useUISwitch } from '../../logic/useUISwitch.js';
+import { useUISwitch } from '../../logic/useUISwitch';
 import {
   parseInlineMarkdownText,
   renderInlineMarkdown,

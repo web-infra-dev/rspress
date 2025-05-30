@@ -3,7 +3,7 @@ import { pluginSass } from '@rsbuild/plugin-sass';
 import { pluginSvgr } from '@rsbuild/plugin-svgr';
 import { pluginTypedCSSModules } from '@rsbuild/plugin-typed-css-modules';
 import { defineConfig } from '@rslib/core';
-import { pluginPublint } from 'rsbuild-plugin-publint';
+// import { pluginPublint } from 'rsbuild-plugin-publint';
 
 const COMMON_EXTERNALS = [
   'virtual-routes',
@@ -21,12 +21,15 @@ const COMMON_EXTERNALS = [
 ];
 
 export default defineConfig({
-  plugins: [pluginPublint()],
+  // plugins: [pluginPublint()],
+  output: {
+    cleanDistPath: false,
+  },
   lib: [
     {
       format: 'esm',
       bundle: false,
-      dts: { bundle: true },
+      // dts: { bundle: true },
       plugins: [
         pluginReact(),
         pluginSvgr({ svgrOptions: { exportType: 'default' } }),
@@ -38,7 +41,8 @@ export default defineConfig({
           __WEBPACK_PUBLIC_PATH__: '__webpack_public_path__',
         },
         entry: {
-          index: ['./src/**'],
+          // index: ['./src/**'],
+          index: ['./src/**/*.{scss,css}'],
         },
       },
       tools: {
