@@ -645,6 +645,16 @@ importers:
         specifier: ^22.8.1
         version: 22.10.2
 
+  e2e/fixtures/symlink:
+    dependencies:
+      rspress:
+        specifier: workspace:*
+        version: link:../../../packages/cli
+    devDependencies:
+      '@types/node':
+        specifier: ^18.11.17
+        version: 18.11.17
+
   e2e/fixtures/tabs-component:
     dependencies:
       rspress:
