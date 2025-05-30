@@ -23,11 +23,11 @@
   "exports": {
     ".": {
       "types": "./dist/index.d.ts",
-      "default": "./dist/index-barrel.js"
+      "default": "./dist/index.js"
     },
     "./package.json": "./package.json"
   },
-  "main": "./dist/index-barrel.js",
+  "main": "./dist/index.js",
   "types": "./dist/index.d.ts",
   "files": [
     "dist"

@@ -63,8 +63,9 @@ export default defineConfig({
           patterns: [
             {
               from: './index-barrel.js',
-              to: './index-barrel.js',
+              to: './index.js',
               context: __dirname,
+              force: true,
             },
           ],
         },
