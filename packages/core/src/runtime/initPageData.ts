@@ -7,7 +7,6 @@ import {
   type PageData,
   cleanUrl,
 } from '@rspress/shared';
-import 'virtual-global-styles';
 import siteData from 'virtual-site-data';
 
 type PageMeta = {

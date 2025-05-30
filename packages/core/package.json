@@ -107,7 +107,7 @@
     "remark-stringify": "^11.0.0",
     "rimraf": "^6.0.1",
     "rsbuild-plugin-publint": "^0.3.2",
-    "rsbuild-plugin-virtual-module": "0.1.1",
+    "rsbuild-plugin-virtual-module": "0.2.0",
     "tailwindcss": "^3.4.17",
     "typescript": "^5.8.2",
     "vfile": "^6.0.3"

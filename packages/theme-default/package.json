@@ -14,8 +14,6 @@
     "*.less",
     "*.sass",
     "*.scss",
-    "**/virtual-global-styles.js",
-    "virtual-global-styles",
     "./dist/styles/index.js"
   ],
   "type": "module",

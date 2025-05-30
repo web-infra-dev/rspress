@@ -119,6 +119,7 @@ async function createInternalBuildConfig(
       ...(isPluginIncluded(config, PLUGIN_REACT_NAME) ? [] : [pluginReact()]),
       rsbuildPluginDocVM(context),
       pluginVirtualModule({
+        tempDir: '.rspress/runtime',
         virtualModules: {
           /**
            * Load i18n.json to runtime

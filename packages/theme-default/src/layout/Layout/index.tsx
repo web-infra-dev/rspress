@@ -1,4 +1,3 @@
-import 'nprogress/nprogress.css';
 import '../../styles/index';
 import { Content, usePageData } from '@rspress/runtime';
 import {

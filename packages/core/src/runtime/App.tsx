@@ -2,7 +2,6 @@ import { DataContext, useLocation } from '@rspress/runtime';
 import { Layout } from '@theme';
 import React, { useContext, useLayoutEffect } from 'react';
 import globalComponents from 'virtual-global-components';
-import 'virtual-global-styles';
 import { initPageData } from './initPageData';
 
 enum QueryStatus {
