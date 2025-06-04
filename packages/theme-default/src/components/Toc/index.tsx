@@ -23,9 +23,10 @@ const TocItem = ({
           onItemClick?.(header);
         }}
       >
-        <span className={'rspress-toc-link-text rp-block'}>
-          {renderInlineMarkdown(header.text)}
-        </span>
+        <span
+          className={'rspress-toc-link-text rp-block'}
+          {...renderInlineMarkdown(header.text)}
+        ></span>
       </Link>
     </li>
   );

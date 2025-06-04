@@ -51,9 +51,11 @@ function HomeHero({
       <div className="rp-m-auto rp-flex rp-flex-col md:rp-flex-row rp-max-w-6xl rp-min-h-[50vh] rp-mt-12 sm:rp-mt-0">
         <div className="rp-flex rp-flex-col rp-justify-center rp-items-center rp-text-center rp-max-w-xl sm:rp-max-w-4xl rp-m-auto rp-order-2 md:rp-order-1">
           <h1 className="rp-font-bold rp-text-3xl rp-pb-2 sm:rp-text-6xl md:rp-text-7xl rp-m-auto sm:rp-m-4 md:rp-m-0 md:rp-pb-3 lg:rp-pb-2 rp-leading-tight rp-z-10">
-            <span className={styles.clip} style={{ lineHeight: '1.3' }}>
-              {renderHtmlOrText(hero.name)}
-            </span>
+            <span
+              className={styles.clip}
+              style={{ lineHeight: '1.3' }}
+              {...renderHtmlOrText(hero.name)}
+            />
           </h1>
           {multiHeroText.length !== 0 &&
             multiHeroText.map(heroText => (
@@ -61,16 +63,14 @@ function HomeHero({
                 key={heroText}
                 className={`rspress-home-hero-text rp-mx-auto md:rp-m-0 rp-text-3xl sm:rp-text-5xl md:rp-text-6xl sm:rp-pb-2 rp-font-bold rp-z-10 ${textMaxWidth}`}
                 style={{ lineHeight: '1.2' }}
-              >
-                {renderHtmlOrText(heroText)}
-              </p>
+                {...renderHtmlOrText(heroText)}
+              ></p>
             ))}
 
           <p
             className={`rspress-home-hero-tagline rp-whitespace-pre-wrap rp-pt-4 rp-m-auto md:rp-m-0 rp-text-sm sm:rp-tex-xl md:rp-text-[1.5rem] rp-text-text-2 rp-font-medium rp-z-10 ${textMaxWidth}`}
-          >
-            {renderHtmlOrText(hero.tagline)}
-          </p>
+            {...renderHtmlOrText(hero.tagline)}
+          ></p>
           {beforeHeroActions}
           {hero.actions?.length ? (
             <div className="rp-grid md:rp-flex md:rp-flex-wrap md:rp-justify-center rp-gap-3 rp-pt-6 sm:rp-pt-8 rp-z-10">

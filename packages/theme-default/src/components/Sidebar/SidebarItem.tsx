@@ -60,7 +60,7 @@ export function SidebarItem(props: SidebarItemProps) {
           }}
         >
           <Tag tag={item.tag} />
-          <span>{renderInlineMarkdown(item.text)}</span>
+          <span {...renderInlineMarkdown(item.text)}></span>
         </div>
       </Link>
     </LinkContextContainer>

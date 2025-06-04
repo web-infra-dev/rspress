@@ -64,18 +64,20 @@ export function HomeFeature({
               >
                 {icon ? (
                   <div className="rp-flex rp-items-center rp-justify-center">
-                    <div className="rspress-home-feature-icon rp-w-12 rp-h-12 rp-text-3xl rp-text-center">
-                      {renderHtmlOrText(icon)}
-                    </div>
+                    <div
+                      className="rspress-home-feature-icon rp-w-12 rp-h-12 rp-text-3xl rp-text-center"
+                      {...renderHtmlOrText(icon)}
+                    ></div>
                   </div>
                 ) : null}
 
                 <h2 className="rspress-home-feature-title rp-font-bold rp-text-center">
                   {title}
                 </h2>
-                <p className="rspress-home-feature-detail rp-leading-6 rp-pt-2 rp-text-sm rp-text-text-2 rp-font-medium">
-                  {renderHtmlOrText(details)}
-                </p>
+                <p
+                  className="rspress-home-feature-detail rp-leading-6 rp-pt-2 rp-text-sm rp-text-text-2 rp-font-medium"
+                  {...renderHtmlOrText(details)}
+                ></p>
               </article>
             </div>
           </div>
