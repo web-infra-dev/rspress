@@ -301,7 +301,6 @@ async function createInternalBuildConfig(
         resolve: {
           alias: {
             ...reactCSRAlias,
-            // FIXME: currently in Rspress we only support ^6.29.0
             ...reactRouterDomAlias,
           },
         },
@@ -327,7 +326,6 @@ async function createInternalBuildConfig(
               resolve: {
                 alias: {
                   ...reactSSRAlias,
-                  // FIXME: currently in Rspress we only support react-router-dom ^6.29.0
                   ...reactRouterDomAlias,
                 },
               },

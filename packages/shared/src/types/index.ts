@@ -372,7 +372,7 @@ export type LocalSearchOptions = SearchHooks & {
   versioned?: boolean;
   /**
    * If enabled, the search index will include code block content, which allows users to search code blocks.
-   * @default false
+   * @default true
    */
   codeBlocks?: boolean;
 };

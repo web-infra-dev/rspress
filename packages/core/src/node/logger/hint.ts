@@ -9,7 +9,6 @@ const THEME_DEFAULT_EXPORT_PATTERN = /export\s+default\s+\{/;
 /**
  * breaking change hint of theme
  * @see https://github.com/web-infra-dev/rspress/discussions/1891#discussioncomment-12422737
- *
  */
 export async function hintThemeBreakingChange(customThemeDir: string) {
   const fileList = ['index.ts', 'index.tsx', 'index.js', 'index.mjs'];
@@ -44,12 +43,24 @@ export async function hintThemeBreakingChange(customThemeDir: string) {
   }
 }
 
+/**
+ * Possible reasons for printing "ssg: false" and some troubleshooting guidelines for users.
+ */
 export function hintSSGFailed() {
   logger.info(`[Rspress v2] \`ssg: true\` requires the source code to support SSR. If the code is not compatible to SSR, the build process will fail. You can try:
     1. Fix code to make it SSR-compatible.
     2. Set \`ssg: false\`, but the SSG feature will be lost.`);
 }
 
+/**
+ * Print "ssg: false" explicitly to give users a clear perception.
+ */
 export function hintSSGFalse() {
   logger.info('`ssg: false` detected, SSG will be disabled.');
+}
+
+export function hintReactVersion() {
+  logger.info(
+    '[Rspress v2] Rspress support React 18 and 19, please confirm that both react and react-dom are installed in package.json with the same version. ',
+  );
 }
