@@ -83,9 +83,9 @@ function HomeHero({
                     <Button
                       type="a"
                       href={link}
-                      text={renderHtmlOrText(action.text)}
                       theme={action.theme}
                       className="rp-w-full"
+                      {...renderHtmlOrText(action.text)}
                     />
                   </div>
                 );

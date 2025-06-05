@@ -39,4 +39,6 @@ declare module 'virtual-search-index-hash' {
 
 declare const __WEBPACK_PUBLIC_PATH__: string;
 
-declare module '@theme';
+declare module '@theme' {
+  export * from '@rspress/theme-default';
+};
