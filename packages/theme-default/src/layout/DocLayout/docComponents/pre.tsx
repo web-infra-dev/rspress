@@ -119,7 +119,5 @@ export function PreWithCodeButtonGroup({
 
   if (!isValidElement(children)) return null;
 
-  return renderChild(
-    children as React.ReactElement<{ className?: string }>, // Ensure children is a valid React element,
-  );
+  return renderChild(children as React.ReactElement<{ className?: string }>);
 }
