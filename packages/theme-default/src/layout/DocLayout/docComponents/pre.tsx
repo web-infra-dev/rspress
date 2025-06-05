@@ -96,10 +96,8 @@ export function PreWithCodeButtonGroup({
 }: PreWithCodeButtonGroupProps) {
   const preElementRef = useRef<HTMLPreElement>(null);
 
-  const renderChild = (child: React.ReactElement) => {
-    const { className: codeElementClassName } = child.props as {
-      className: string;
-    };
+  const renderChild = (child: React.ReactElement<{ className?: string }>) => {
+    const { className: codeElementClassName } = child.props;
 
     return (
       <ShikiPre
