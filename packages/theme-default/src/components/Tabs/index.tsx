@@ -61,24 +61,30 @@ export const Tabs = forwardRef(
     // remove "\n" character when write JSX element in multiple lines, use Children.toArray for Tabs with no Tab element
     const children = Children.toArray(rawChildren).filter(
       child => !(typeof child === 'string' && child.trim() === ''),
-    );
+    ) as unknown as ReactElement<TabProps>[];
 
     let tabValues = values || [];
 
     if (tabValues.length === 0) {
-      tabValues = Children.map(children, child => {
-        if (isValidElement(child)) {
-          return {
-            label: child.props?.label,
-            value: child.props?.value || child.props?.label,
-          };
-        }
+      tabValues = Children.map<TabItem, ReactElement<TabProps>>(
+        children,
+        child => {
+          if (isValidElement(child)) {
+            return {
+              label: child.props?.label || undefined,
+              value:
+                child.props?.value ||
+                (child.props?.label as string) ||
+                undefined,
+            };
+          }
 
-        return {
-          label: undefined,
-          value: undefined,
-        };
-      });
+          return {
+            label: undefined,
+            value: undefined,
+          };
+        },
+      );
     }
 
     const { tabData, setTabData } = useContext(TabDataContext);
@@ -172,11 +178,10 @@ export const Tabs = forwardRef(
   },
 );
 
-export function Tab({
-  children,
-  ...props
-}: ComponentPropsWithRef<'div'> &
-  Pick<TabItem, 'label' | 'value'>): ReactElement {
+export type TabProps = ComponentPropsWithRef<'div'> &
+  Pick<TabItem, 'label' | 'value'>;
+
+export function Tab({ children, ...props }: TabProps): ReactElement {
   return (
     <div {...props} className="rp-rounded rp-px-2">
       {children}

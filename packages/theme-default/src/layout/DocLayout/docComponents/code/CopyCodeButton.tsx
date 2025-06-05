@@ -45,7 +45,7 @@ function copyCode(
 export function CopyCodeButton({
   codeBlockRef,
 }: {
-  codeBlockRef: React.RefObject<HTMLElement>;
+  codeBlockRef: React.RefObject<HTMLElement | null>;
 }) {
   const copyButtonRef = useRef<HTMLButtonElement>(null);
 
