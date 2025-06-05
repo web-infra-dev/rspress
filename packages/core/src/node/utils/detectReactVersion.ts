@@ -2,7 +2,9 @@ import fs from 'node:fs';
 import path from 'node:path';
 import { logger } from '@rspress/shared/logger';
 import enhancedResolve from 'enhanced-resolve';
+import picocolors from 'picocolors';
 import { PACKAGE_ROOT } from '../constants';
+import { hintReactVersion } from '../logger/hint';
 import { pathExists, readJson } from './fs';
 
 // TODO: replace enhanced-resolve with this.getResolver
@@ -29,6 +31,7 @@ export async function detectReactVersion(): Promise<number> {
   return (await detectPackageMajorVersion('react')) ?? DEFAULT_REACT_VERSION;
 }
 
+// FIXME: currently in Rspress we only support react-router-dom ^6.29.0
 export async function resolveReactRouterDomAlias(): Promise<
   Record<string, string>
 > {
@@ -108,7 +111,12 @@ export async function resolveReactAlias(reactVersion: number, isSSR: boolean) {
           );
         });
       } catch (e) {
-        logger.warn(`${lib} not found: \n`, e);
+        if (e instanceof Error) {
+          logger.warn(
+            `${lib} not found: \n    ${picocolors.gray(e.toString())}`,
+          );
+          hintReactVersion();
+        }
       }
     }),
   );
