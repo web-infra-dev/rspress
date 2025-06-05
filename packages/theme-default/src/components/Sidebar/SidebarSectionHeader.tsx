@@ -11,7 +11,7 @@ export function SidebarSectionHeader({
   return (
     <div className="rspress-sidebar-section-header">
       <Tag tag={tag} />
-      <span>{renderInlineMarkdown(sectionHeaderText)}</span>
+      <span {...renderInlineMarkdown(sectionHeaderText)}></span>
     </div>
   );
 }

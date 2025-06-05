@@ -6,10 +6,13 @@ interface ButtonProps {
   type?: string;
   size?: 'medium' | 'big';
   theme?: 'brand' | 'alt';
-  text: string | React.ReactNode;
   href?: string;
   external?: boolean;
   className?: string;
+  children?: React.ReactNode;
+  dangerouslySetInnerHTML?: {
+    __html: string;
+  };
 }
 
 export function Button(props: ButtonProps) {
@@ -19,6 +22,8 @@ export function Button(props: ButtonProps) {
     href = '/',
     external = false,
     className = '',
+    children,
+    dangerouslySetInnerHTML,
   } = props;
   let type: string | typeof Link | null = null;
 
@@ -34,7 +39,8 @@ export function Button(props: ButtonProps) {
     {
       className: `${styles.button} ${styles[theme]} ${styles[size]} ${className}`,
       href,
+      ...(dangerouslySetInnerHTML ?? {}),
     },
-    props.text,
+    children,
   );
 }

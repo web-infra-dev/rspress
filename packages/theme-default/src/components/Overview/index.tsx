@@ -76,15 +76,16 @@ const GroupRenderer = ({
   styles: Record<string, string>;
 }) => (
   <div className="rp-mb-16" key={group.name}>
-    <h2>{renderInlineMarkdown(group.name)}</h2>
+    <h2 {...renderInlineMarkdown(group.name)}></h2>
     <div className={styles.overviewGroups}>
       {group.items.map(item => (
         <div className={styles.overviewGroup} key={item.link}>
           <div className="rp-flex">
             <h3 style={{ marginBottom: 8 }}>
-              <Link href={normalizeHref(item.link)}>
-                {renderInlineMarkdown(item.text)}
-              </Link>
+              <Link
+                href={normalizeHref(item.link)}
+                {...renderInlineMarkdown(item.text)}
+              ></Link>
             </h3>
           </div>
           <ul className="rp-list-none">
@@ -95,9 +96,10 @@ const GroupRenderer = ({
                   styles[`level${header.depth}`]
                 } first:rp-mt-2`}
               >
-                <Link href={`${normalizeHref(item.link)}#${header.id}`}>
-                  {renderInlineMarkdown(header.text)}
-                </Link>
+                <Link
+                  href={`${normalizeHref(item.link)}#${header.id}`}
+                  {...renderInlineMarkdown(header.text)}
+                ></Link>
               </li>
             ))}
           </ul>

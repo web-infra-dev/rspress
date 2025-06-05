@@ -30,9 +30,10 @@ const TocItem = ({
           window.location.hash = header.id;
         }}
       >
-        <span className="aside-link-text rp-block">
-          {renderInlineMarkdown(header.text)}
-        </span>
+        <span
+          className="aside-link-text rp-block"
+          {...renderInlineMarkdown(header.text)}
+        ></span>
       </a>
     </li>
   );

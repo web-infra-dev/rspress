@@ -1,12 +1,14 @@
-import htmr from 'htmr';
-
-export function renderHtmlOrText(str?: string | number | null) {
+export function renderHtmlOrText(
+  str?: string | number | null,
+):
+  | { children: string | null }
+  | { dangerouslySetInnerHTML: { __html: string } } {
   if (!str) {
-    return '';
+    return { children: null };
   }
 
   if (typeof str === 'number') {
-    return str;
+    return { children: str.toString() };
   }
 
   // Parse the HTML to check for validity
@@ -20,14 +22,16 @@ export function renderHtmlOrText(str?: string | number | null) {
   );
 
   if (hasValidHtmlElements) {
-    return htmr(str);
+    return { dangerouslySetInnerHTML: { __html: str } };
   }
 
-  return str
-    .replace(/\\</g, '<')
-    .replace(/\\>/g, '>')
-    .replace(/&lt;/g, '<')
-    .replace(/&gt;/g, '>');
+  return {
+    children: str
+      .replace(/\\</g, '<')
+      .replace(/\\>/g, '>')
+      .replace(/&lt;/g, '<')
+      .replace(/&gt;/g, '>'),
+  };
 }
 
 // This doesn’t handle all nested complexities

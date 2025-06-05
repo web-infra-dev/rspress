@@ -141,9 +141,8 @@ export function SidebarGroup(props: SidebarItemProps) {
             style={{
               fontSize: depth === 0 ? '14px' : '13px',
             }}
-          >
-            {renderInlineMarkdown(item.text)}
-          </span>
+            {...renderInlineMarkdown(item.text)}
+          ></span>
         </h2>
         {collapsible && (
           <div
