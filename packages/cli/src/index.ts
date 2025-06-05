@@ -7,7 +7,6 @@ import picocolors from 'picocolors';
 // Rslib(Rspack) will optimize the json module, the only one point that we need to concern is to bump the package.json version first then run build command
 import { version } from '../package.json';
 import { loadConfigFile, resolveDocRoot } from './config/loadConfigFile';
-import update from './update';
 
 const CONFIG_FILES = ['rspress.config.ts', 'rspress.config.js'];
 
@@ -145,7 +144,5 @@ cli
       });
     },
   );
-
-cli.command('update', 'update relevant packages about rspress').action(update);
 
 cli.parse();
