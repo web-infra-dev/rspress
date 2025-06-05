@@ -98,7 +98,6 @@ export function PreWithCodeButtonGroup({
 
   const renderChild = (child: React.ReactElement<{ className?: string }>) => {
     const { className: codeElementClassName } = child.props;
-
     return (
       <ShikiPre
         {...otherProps}
@@ -120,5 +119,7 @@ export function PreWithCodeButtonGroup({
 
   if (!isValidElement(children)) return null;
 
-  return renderChild(children);
+  return renderChild(
+    children as React.ReactElement<{ className?: string }>, // Ensure children is a valid React element,
+  );
 }
