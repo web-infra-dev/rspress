@@ -38,7 +38,7 @@ The component code of internal components is declared in the mdx file. You can d
 ````md
 ```tsx
 function App() {
-  return <div>Hello World</div>;
+  return &lt;div>Hello World&lt;/div>;
 }
 
 export default App;
@@ -52,7 +52,7 @@ But if you want to keep the style of the code block instead of rendering it as a
 ````md
 ```tsx pure
 function App() {
-  return <div>Hello World</div>;
+  return &lt;div>Hello World&lt;/div>;
 }
 export default App;
 ```
@@ -63,7 +63,7 @@ If you have set `defaultRenderMode` to `'pure'`, Rspress will not render this co
 ````md
 ```tsx preview
 function App() {
-  return <div>Hello World</div>;
+  return &lt;div>Hello World&lt;/div>;
 }
 export default App;
 ```
@@ -131,7 +131,7 @@ You can also set it for each individual code block:
 ````md title="example.mdx"
 ```tsx iframe
 function App() {
-  return <div>Hello World</div>;
+  return &lt;div>Hello World&lt;/div>;
 }
 export default App;
 ```
