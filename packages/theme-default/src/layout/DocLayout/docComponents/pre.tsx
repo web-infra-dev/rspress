@@ -15,7 +15,7 @@ export type ShikiPreProps = {
   >;
 
   // private
-  preElementRef: React.RefObject<HTMLPreElement>;
+  preElementRef: React.RefObject<HTMLPreElement | null>;
   child: React.ReactElement;
 } & React.HTMLProps<HTMLPreElement>;
 
@@ -96,9 +96,8 @@ export function PreWithCodeButtonGroup({
 }: PreWithCodeButtonGroupProps) {
   const preElementRef = useRef<HTMLPreElement>(null);
 
-  const renderChild = (child: React.ReactElement) => {
+  const renderChild = (child: React.ReactElement<{ className?: string }>) => {
     const { className: codeElementClassName } = child.props;
-
     return (
       <ShikiPre
         {...otherProps}
@@ -118,7 +117,7 @@ export function PreWithCodeButtonGroup({
     return <>{children.map(child => renderChild(child))}</>;
   }
 
-  if (!isValidElement(children)) return null;
+  if (!isValidElement<{ className?: string }>(children)) return null;
 
   return renderChild(children);
 }

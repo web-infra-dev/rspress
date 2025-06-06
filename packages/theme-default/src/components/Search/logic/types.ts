@@ -1,4 +1,5 @@
 import type { LocalSearchOptions, RemoteSearchOptions } from '@rspress/shared';
+import type { ReactNode } from 'react';
 
 export const enum RenderType {
   Default = 'default',
@@ -73,4 +74,4 @@ export type AfterSearch = (
   matchedResult: MatchResult,
 ) => void | Promise<void>;
 
-export type RenderSearchFunction<T = unknown> = (result: T) => JSX.Element;
+export type RenderSearchFunction<T = unknown> = (result: T) => ReactNode;

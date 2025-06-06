@@ -8,7 +8,7 @@ import * as styles from './index.module.scss';
 
 export interface CodeButtonGroupProps
   extends ReturnType<typeof useCodeButtonGroup> {
-  preElementRef: React.RefObject<HTMLPreElement>;
+  preElementRef: React.RefObject<HTMLPreElement | null>;
 
   /**
    * @default true
