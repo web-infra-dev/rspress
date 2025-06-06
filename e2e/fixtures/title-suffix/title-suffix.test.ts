@@ -3,7 +3,7 @@ import path from 'node:path';
 import { expect, test } from '@playwright/test';
 import { runBuildCommand } from '../../utils/runCommands';
 
-const appDir = path.resolve(__dirname, '../fixtures/title-suffix');
+const appDir = __dirname;
 
 test('title suffix', async () => {
   await runBuildCommand(appDir);

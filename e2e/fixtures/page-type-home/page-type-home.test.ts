@@ -2,7 +2,7 @@ import path from 'node:path';
 import { expect, test } from '@playwright/test';
 import { getPort, killProcess, runDevCommand } from '../../utils/runCommands';
 
-const appDir = path.resolve(__dirname, '../fixtures/page-type-home');
+const appDir = __dirname;
 
 test.describe('home pageType', async () => {
   let appPort: number;

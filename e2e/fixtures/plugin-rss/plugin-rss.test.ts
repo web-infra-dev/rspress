@@ -8,7 +8,7 @@ import {
 } from '../../utils/runCommands';
 import fixture from './fixture.json';
 
-const appDir = path.resolve(__dirname, '../fixtures/plugin-rss');
+const appDir = __dirname;
 const { siteUrl } = fixture;
 
 test.describe('plugin rss test', async () => {

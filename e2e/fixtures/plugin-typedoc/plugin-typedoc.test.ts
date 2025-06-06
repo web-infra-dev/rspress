@@ -7,7 +7,7 @@ test.describe('plugin-typedoc single entry', async () => {
   let appPort;
   let app;
   test.beforeAll(async () => {
-    const appDir = __dirname;
+    const appDir = path.join(__dirname, 'single');
     appPort = await getPort();
     app = await runDevCommand(appDir, appPort);
   });
@@ -41,7 +41,7 @@ test.describe('plugin-typedoc multi entries', async () => {
   let appPort;
   let app;
   test.beforeAll(async () => {
-    const appDir = __dirname;
+    const appDir = path.join(__dirname, 'multi');
     appPort = await getPort();
     app = await runDevCommand(appDir, appPort);
   });
