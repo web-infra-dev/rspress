@@ -7,12 +7,11 @@ import {
   runPreviewCommand,
 } from '../../utils/runCommands';
 
-const fixtureDir = path.resolve(__dirname, '../fixtures');
 test.describe('plugin shiki test', async () => {
   let appPort: number;
   let app: unknown;
   test.beforeAll(async () => {
-    const appDir = path.join(fixtureDir, 'plugin-shiki');
+    const appDir = __dirname;
     appPort = await getPort();
     await runBuildCommand(appDir);
     app = await runPreviewCommand(appDir, appPort);

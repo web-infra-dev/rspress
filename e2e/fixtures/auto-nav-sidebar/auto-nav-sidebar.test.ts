@@ -3,13 +3,11 @@ import { type ElementHandle, expect, test } from '@playwright/test';
 import { getNavbar, getSidebar } from '../../utils/getSideBar';
 import { getPort, killProcess, runDevCommand } from '../../utils/runCommands';
 
-const fixtureDir = path.resolve(__dirname, '../fixtures');
-
 test.describe('Auto nav and sidebar test', async () => {
   let appPort;
   let app;
   test.beforeAll(async () => {
-    const appDir = path.join(fixtureDir, 'auto-nav-sidebar');
+    const appDir = __dirname;
     appPort = await getPort();
     app = await runDevCommand(appDir, appPort);
   });

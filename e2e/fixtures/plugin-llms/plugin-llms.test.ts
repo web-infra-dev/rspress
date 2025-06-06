@@ -3,8 +3,6 @@ import path from 'node:path';
 import { expect, test } from '@playwright/test';
 import { runBuildCommand } from '../../utils/runCommands';
 
-const fixtureDir = path.resolve(__dirname, '../fixtures');
-
 async function pathExists(path: string): Promise<boolean> {
   try {
     await access(path);
@@ -16,7 +14,7 @@ async function pathExists(path: string): Promise<boolean> {
 
 test.describe('plugin-llms', async () => {
   test('should generate llms.txt llms-full.txt mdFiles', async () => {
-    const appDir = path.join(fixtureDir, 'plugin-llms');
+    const appDir = __dirname;
     await runBuildCommand(appDir);
 
     expect(

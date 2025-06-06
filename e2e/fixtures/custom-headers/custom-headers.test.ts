@@ -7,13 +7,11 @@ import {
   runPreviewCommand,
 } from '../../utils/runCommands';
 
-const fixtureDir = path.resolve(__dirname, '../fixtures');
-
 test.describe('custom headers', async () => {
   let appPort;
   let app;
   test.beforeAll(async () => {
-    const appDir = path.join(fixtureDir, 'custom-headers');
+    const appDir = __dirname;
     appPort = await getPort();
     await runBuildCommand(appDir);
     app = await runPreviewCommand(appDir, appPort);

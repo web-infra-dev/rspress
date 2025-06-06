@@ -3,13 +3,11 @@ import { expect, test } from '@playwright/test';
 import { getNavbar, getSidebar } from '../../utils/getSideBar';
 import { getPort, killProcess, runDevCommand } from '../../utils/runCommands';
 
-const fixtureDir = path.resolve(__dirname, '../fixtures');
-
 test.describe('issue-1309', async () => {
   let appPort;
   let app;
   test.beforeAll(async () => {
-    const appDir = path.join(fixtureDir, 'issue-1309');
+    const appDir = __dirname;
     appPort = await getPort();
     app = await runDevCommand(appDir, appPort);
   });

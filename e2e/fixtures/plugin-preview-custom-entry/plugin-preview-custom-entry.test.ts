@@ -2,13 +2,11 @@ import path from 'node:path';
 import { expect, test } from '@playwright/test';
 import { getPort, killProcess, runDevCommand } from '../../utils/runCommands';
 
-const fixtureDir = path.resolve(__dirname, '../fixtures');
-
 test.describe('plugin test', async () => {
   let appPort;
   let app;
   test.beforeAll(async () => {
-    const appDir = path.join(fixtureDir, 'plugin-preview-custom-entry');
+    const appDir = __dirname;
     appPort = await getPort();
     app = await runDevCommand(appDir, appPort);
   });

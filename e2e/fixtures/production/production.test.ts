@@ -8,13 +8,11 @@ import {
   runPreviewCommand,
 } from '../../utils/runCommands';
 
-const fixtureDir = path.resolve(__dirname, '../fixtures');
-
 test.describe('basic test', async () => {
   let appPort;
   let app;
   test.beforeAll(async () => {
-    const appDir = path.join(fixtureDir, 'production');
+    const appDir = __dirname;
     appPort = await getPort();
     await runBuildCommand(appDir);
     app = await runPreviewCommand(appDir, appPort);

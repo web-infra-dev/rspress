@@ -2,7 +2,6 @@ import path from 'node:path';
 import { type Page, expect, test } from '@playwright/test';
 import { getPort, killProcess, runDevCommand } from '../../utils/runCommands';
 
-const fixtureDir = path.resolve(__dirname, '../fixtures');
 async function isNavBarVisible(page: Page): Promise<boolean> {
   const nav = await page.$('.rspress-nav');
   const className: string = await nav?.evaluate(el => el.className);
@@ -21,7 +20,7 @@ test.describe('basic test', async () => {
   let appPort;
   let app;
   async function launchApp(configFile: string) {
-    const appDir = path.join(fixtureDir, 'hide-nav-bar');
+    const appDir = __dirname;
     appPort = await getPort();
     app = await runDevCommand(appDir, appPort, configFile);
   }

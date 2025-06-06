@@ -6,8 +6,6 @@ import os from 'node:os';
 import type { Locator, Page } from '@playwright/test';
 import { getShouldOpenNewPage } from '../../utils/newPage';
 
-const fixtureDir = path.resolve(__dirname, '../fixtures');
-
 test.describe('Navigation with <Link>', async () => {
   let appPort: number;
   let app: unknown;
@@ -34,7 +32,7 @@ test.describe('Navigation with <Link>', async () => {
   const gotoPage = (suffix: string) => `http://localhost:${appPort}${suffix}`;
 
   test.beforeAll(async () => {
-    const appDir = path.join(fixtureDir, 'nav-link');
+    const appDir = __dirname;
     appPort = await getPort();
     app = await runDevCommand(appDir, appPort);
   });

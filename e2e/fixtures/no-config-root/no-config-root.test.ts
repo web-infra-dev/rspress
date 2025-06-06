@@ -8,13 +8,11 @@ import {
   runPreviewCommand,
 } from '../../utils/runCommands';
 
-const fixtureDir = path.resolve(__dirname, '../fixtures');
-
 test.describe('no config.root dev test', async () => {
   let appPort;
   let app;
   test.beforeAll(async () => {
-    const appDir = path.join(fixtureDir, 'no-config-root');
+    const appDir = __dirname;
     appPort = await getPort();
     app = await runDevCommand(appDir, appPort);
   });
@@ -37,7 +35,7 @@ test.describe('no config.root build and preview test', async () => {
   let appPort;
   let app;
   test.beforeAll(async () => {
-    const appDir = path.join(fixtureDir, 'no-config-root');
+    const appDir = __dirname;
     appPort = await getPort();
     await runBuildCommand(appDir);
     app = await runPreviewCommand(appDir, appPort);

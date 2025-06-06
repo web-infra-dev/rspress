@@ -4,8 +4,6 @@ import { getPort, killProcess, runDevCommand } from '../../utils/runCommands';
 
 import type { Locator, Page } from '@playwright/test';
 
-const fixtureDir = path.resolve(__dirname, '../fixtures');
-
 test.describe('Nav should functions well', async () => {
   let appPort: number;
   let app: unknown;
@@ -51,7 +49,7 @@ test.describe('Nav should functions well', async () => {
   const gotoPage = (suffix: string) => `http://localhost:${appPort}${suffix}`;
 
   test.beforeAll(async () => {
-    const appDir = path.join(fixtureDir, 'nav-link-items');
+    const appDir = __dirname;
     appPort = await getPort();
     app = await runDevCommand(appDir, appPort);
   });

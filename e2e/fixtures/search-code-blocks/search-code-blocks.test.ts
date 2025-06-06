@@ -3,14 +3,12 @@ import { expect, test } from '@playwright/test';
 import { getPort, killProcess, runDevCommand } from '../../utils/runCommands';
 import { searchInPage } from '../../utils/search';
 
-const fixtureDir = path.resolve(__dirname, '../fixtures');
-
 test.describe('search code blocks test', async () => {
   let appPort;
   let app;
 
   test.beforeAll(async () => {
-    const appDir = path.join(fixtureDir, 'search-code-blocks');
+    const appDir = __dirname;
     appPort = await getPort();
     app = await runDevCommand(appDir, appPort);
   });

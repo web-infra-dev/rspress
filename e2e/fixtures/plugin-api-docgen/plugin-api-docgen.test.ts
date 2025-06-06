@@ -3,14 +3,12 @@ import { expect, test } from '@playwright/test';
 import { getPort, killProcess, runDevCommand } from '../../utils/runCommands';
 import { searchInPage } from '../../utils/search';
 
-const fixtureDir = path.resolve(__dirname, '../fixtures');
-
 test.describe('api-docgen test', async () => {
   let appPort;
   let app;
 
   test.beforeAll(async () => {
-    const appDir = path.join(fixtureDir, 'plugin-api-docgen');
+    const appDir = __dirname;
     appPort = await getPort();
     app = await runDevCommand(appDir, appPort);
   });
