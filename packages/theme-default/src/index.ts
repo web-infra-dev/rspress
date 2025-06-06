@@ -23,6 +23,12 @@ export {
 export { useFullTextSearch } from './logic/useFullTextSearch';
 export { useRedirect4FirstVisit } from './logic/useRedirect4FirstVisit';
 export { useThemeState } from './logic/useAppearance';
+export {
+  renderHtmlOrText,
+  parseInlineMarkdownText,
+  renderInlineMarkdown,
+} from './logic/utils';
+
 export * from './components/Search/logic/types';
 
 // components
