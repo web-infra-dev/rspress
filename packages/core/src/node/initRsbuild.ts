@@ -212,6 +212,8 @@ async function createInternalBuildConfig(
     },
     source: {
       include: [PACKAGE_ROOT, path.join(cwd, 'node_modules', RSPRESS_TEMP_DIR)],
+      // load Rspress theme CSS firstly
+      preEntry: path.join(DEFAULT_THEME, '../styles/index.js'),
       define: {
         'process.env.TEST': JSON.stringify(process.env.TEST),
         'process.env.RSPRESS_SOCIAL_ICONS': JSON.stringify(
