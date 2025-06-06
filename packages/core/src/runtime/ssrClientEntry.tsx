@@ -1,3 +1,4 @@
+import { startTransition } from 'react';
 import { hydrateRoot } from 'react-dom/client';
 import { ClientApp } from './ClientApp';
 import { initPageData } from './initPageData';
@@ -10,12 +11,16 @@ import { initPageData } from './initPageData';
 async function renderInBrowser() {
   const container = document.getElementById('root')!;
   const initialPageData = await initPageData(window.location.pathname);
-  hydrateRoot(container, <ClientApp initialPageData={initialPageData} />, {
-    onRecoverableError(error, errorInfo) {
-      if (error instanceof Error) {
-        console.warn('hydrateRoot recoverable error:', error, errorInfo);
-      }
-    },
+  // why startTransition?
+  // https://github.com/facebook/docusaurus/pull/9051
+  startTransition(() => {
+    hydrateRoot(container, <ClientApp initialPageData={initialPageData} />, {
+      onRecoverableError(error, errorInfo) {
+        if (error instanceof Error) {
+          console.warn('hydrateRoot recoverable error:', error, errorInfo);
+        }
+      },
+    });
   });
 }
 
