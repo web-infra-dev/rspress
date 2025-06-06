@@ -1,0 +1,4 @@
+/* this should be overriden by theme/index.css */
+:root {
+  --rp-c-brand: green;
+}
