@@ -4,14 +4,14 @@
   border-radius: var(--rp-radius);
   margin: 1rem 0;
 
-  :global(div[class^='language-']) {
-    margin: 0 -0.5rem;
-    border-radius: 0;
-    font-size: 13px;
+  :global(div[class*='language-']) {
+    margin: 0 -0.5rem !important;
+    border-radius: 0 !important;
+    font-size: 13px !important;
   }
 
   :global(.rspress-code-title) {
-    padding: 8px 16px;
+    padding: 8px 16px !important;
   }
 }
 
