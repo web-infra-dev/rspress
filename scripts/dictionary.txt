@@ -97,6 +97,7 @@ pathinfo
 perfetto
 picocolors
 pinkpurple
+Pipeable
 pjpeg
 pluggable
 pmmmwh

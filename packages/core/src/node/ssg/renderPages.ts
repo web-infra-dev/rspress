@@ -15,6 +15,7 @@ import {
   withBase,
 } from '@rspress/shared';
 import { logger } from '@rspress/shared/logger';
+import pMap from 'p-map';
 import picocolors from 'picocolors';
 import {
   APP_HTML_MARKER,
@@ -80,61 +81,71 @@ export async function renderPages(
         routePath: '/404',
       });
     }
-    await Promise.all(
-      allRoutes
-        .filter(route => {
-          // filter the route including dynamic params
-          return !route.routePath.includes(':');
-        })
-        .map(async route => {
-          const head = createHead();
-          const { routePath } = route;
-          let appHtml = '';
-          if (render) {
-            try {
-              ({ appHtml } = await render(routePath, head));
-            } catch (e) {
-              if (e instanceof Error) {
-                logger.error(
-                  `Page "${picocolors.yellow(routePath)}" SSG rendering failed.\n    ${picocolors.gray(e.toString())}`,
-                );
-                throw e;
-              }
+    const filteredRoutes = allRoutes.filter(route => {
+      // filter the route including dynamic params
+      return !route.routePath.includes(':');
+    });
+
+    await pMap(
+      filteredRoutes,
+      async route => {
+        const head = createHead();
+        const { routePath } = route;
+        let appHtml = '';
+        if (render) {
+          try {
+            ({ appHtml } = await render(routePath, head));
+          } catch (e) {
+            if (e instanceof Error) {
+              logger.error(
+                `Page "${picocolors.yellow(routePath)}" SSG rendering failed.\n    ${picocolors.gray(e.toString())}`,
+              );
+              throw e;
             }
           }
+        }
 
-          const replacedHtmlTemplate = htmlTemplate
-            // During ssr, we already have the title in react-helmet
-            .replace(/<title>(.*?)<\/title>/gi, '')
-            // Don't use `string` as second param
-            // To avoid some special characters transformed to the marker, such as `$&`, etc.
-            .replace(APP_HTML_MARKER, () => appHtml)
-            .replace(
-              META_GENERATOR,
-              () =>
-                `<meta name="generator" content="Rspress v${RSPRESS_VERSION}">`,
-            )
-            .replace(
-              HEAD_MARKER,
-              [
-                await renderConfigHead(config, route),
-                await renderFrontmatterHead(route),
-              ].join(''),
-            );
-          const html = await transformHtmlTemplate(head, replacedHtmlTemplate);
+        const replacedHtmlTemplate = htmlTemplate
+          // During ssr, we already have the title in react-helmet
+          .replace(/<title>(.*?)<\/title>/gi, '')
+          // Don't use `string` as second param
+          // To avoid some special characters transformed to the marker, such as `$&`, etc.
+          .replace(APP_HTML_MARKER, () => appHtml)
+          .replace(
+            META_GENERATOR,
+            () =>
+              `<meta name="generator" content="Rspress v${RSPRESS_VERSION}">`,
+          )
+          .replace(
+            HEAD_MARKER,
+            [
+              await renderConfigHead(config, route),
+              await renderFrontmatterHead(route),
+            ].join(''),
+          );
+        const html = await transformHtmlTemplate(head, replacedHtmlTemplate);
 
-          const normalizeHtmlFilePath = (path: string) => {
-            const normalizedBase = `${normalizeSlash(config?.base || '/')}/`;
+        const normalizeHtmlFilePath = (path: string) => {
+          const normalizedBase = `${normalizeSlash(config?.base || '/')}/`;
 
-            if (path.endsWith('/')) {
-              return `${path}index.html`.replace(normalizedBase, '');
-            }
+          if (path.endsWith('/')) {
+            return `${path}index.html`.replace(normalizedBase, '');
+          }
 
-            return `${path}.html`.replace(normalizedBase, '');
-          };
-          const fileName = normalizeHtmlFilePath(routePath);
-          emitAsset(fileName, html);
-        }),
+          return `${path}.html`.replace(normalizedBase, '');
+        };
+        const fileName = normalizeHtmlFilePath(routePath);
+        emitAsset(fileName, html);
+      },
+      // https://github.com/facebook/docusaurus/blob/45065e8d2b5831117b8d69fec1be28f5520cf105/packages/docusaurus/src/ssg/ssgEnv.ts#L11
+      {
+        concurrency: process.env.RSPRESS_SSG_CONCURRENCY
+          ? Number.parseInt(process.env.RSPRESS_SSG_CONCURRENCY, 10)
+          : // Not easy to define a reasonable option default
+            // Will still be better than Infinity
+            // See also https://github.com/sindresorhus/p-map/issues/24
+            32,
+      },
     );
 
     const totalTime = Date.now() - startTime;
