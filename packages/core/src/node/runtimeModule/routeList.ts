@@ -5,10 +5,8 @@ export const routeListVMPlugin: VirtualModulePlugin = context => {
   const { routeService } = context;
 
   return {
-    [RuntimeModuleID.Routes]: ({ environment }) => {
-      return environment.name === 'node'
-        ? routeService.generateRoutesCode(true)
-        : routeService.generateRoutesCode(false);
+    [RuntimeModuleID.Routes]: () => {
+      return routeService.generateRoutesCode();
     },
   };
 };

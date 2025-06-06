@@ -1,6 +1,6 @@
 import type { PageData } from '@rspress/shared';
 import {
-  type ReactElement,
+  type ReactNode,
   createContext,
   useCallback,
   useContext,
@@ -56,7 +56,7 @@ export function useI18n<T = Record<string, Record<string, string>>>() {
   return useCallback((key: keyof T) => i18nTextData[key][lang], [lang]);
 }
 
-export function useViewTransition(dom: ReactElement) {
+export function useViewTransition(dom: ReactNode) {
   /**
    * use a pseudo element to hold the actual JSX element so we can schedule the
    * update later in sync
