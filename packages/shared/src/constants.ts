@@ -9,11 +9,4 @@ export const DEFAULT_CONFIG_EXTENSIONS = [
   '.cts',
 ] as const;
 
-export const DEFAULT_PAGE_EXTENSIONS = [
-  '.js',
-  '.jsx',
-  '.ts',
-  '.tsx',
-  '.md',
-  '.mdx',
-];
+export const DEFAULT_PAGE_EXTENSIONS = ['.md', '.mdx'];
