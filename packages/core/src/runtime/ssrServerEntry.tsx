@@ -1,4 +1,8 @@
-import { DataContext, ThemeContext } from '@rspress/runtime';
+import {
+  DataContext,
+  ThemeContext,
+  pathnameToRouteService,
+} from '@rspress/runtime';
 import { StaticRouter } from '@rspress/runtime/server';
 import type { PageData } from '@rspress/shared';
 import { type Unhead, UnheadProvider } from '@unhead/react/server';
@@ -11,6 +15,11 @@ import { App } from './App';
 import { initPageData } from './initPageData';
 
 const DEFAULT_THEME = 'light';
+
+async function preloadRoute(pathname: string) {
+  const route = pathnameToRouteService(pathname);
+  await route?.preload();
+}
 
 function renderToHtml(app: ReactNode): Promise<string> {
   return new Promise((resolve, reject) => {
@@ -32,6 +41,7 @@ export async function render(
   head: Unhead,
 ): Promise<{ appHtml: string; pageData: PageData }> {
   const initialPageData = await initPageData(pagePath);
+  await preloadRoute(pagePath);
 
   const appHtml = await renderToHtml(
     <ThemeContext.Provider value={{ theme: DEFAULT_THEME }}>

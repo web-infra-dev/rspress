@@ -183,50 +183,31 @@ export class RouteService {
     return this.routeData.size === 0;
   }
 
-  generateRoutesCode(isStaticImport = false): string {
-    return this.generateRoutesCodeByRouteMeta(this.getRoutes(), isStaticImport);
+  generateRoutesCode(): string {
+    return this.generateRoutesCodeByRouteMeta(this.getRoutes());
   }
 
-  generateRoutesCodeByRouteMeta(
-    routeMeta: RouteMeta[],
-    isStaticImport: boolean,
-  ) {
+  generateRoutesCodeByRouteMeta(routeMeta: RouteMeta[]) {
     return `
 import React from 'react';
 import { lazyWithPreload } from "react-lazy-with-preload";
 ${routeMeta
   .map((route, index) => {
-    return isStaticImport
-      ? `import * as Route${index} from '${route.absolutePath}';`
-      : `const Route${index} = lazyWithPreload(() => import('${route.absolutePath}'))`;
+    return `const Route${index} = lazyWithPreload(() => import('${route.absolutePath}'))`;
   })
   .join('\n')}
 export const routes = [
 ${routeMeta
   .map((route, index) => {
-    // In ssr, we don't need to import component dynamically.
-    const preload = isStaticImport
-      ? `() => Route${index}`
-      : `async () => {
+    const preload = `async () => {
         await Route${index}.preload();
         return import("${route.absolutePath}");
       }`;
-    const component = isStaticImport
-      ? `Route${index}.default`
-      : `Route${index}`;
+    const component = `Route${index}`;
     /**
-     * For SSR, example:
      * {
      *   route: '/',
      *   element: jsx(Route0),
-     *   preload: Route0.preload,
-     *   filePath: '/Users/foo/bar/index.md'
-     * }
-     *
-     * For client render, example:
-     * {
-     *   route: '/',
-     *   element: jsx(Route0.default),
      *   preload: Route0.preload,
      *   filePath: '/Users/foo/bar/index.md'
      * }
