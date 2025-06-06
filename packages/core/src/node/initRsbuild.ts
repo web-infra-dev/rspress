@@ -212,8 +212,6 @@ async function createInternalBuildConfig(
     },
     source: {
       include: [PACKAGE_ROOT, path.join(cwd, 'node_modules', RSPRESS_TEMP_DIR)],
-      // load Rspress theme CSS firstly
-      preEntry: path.join(DEFAULT_THEME, '../styles/index.js'),
       define: {
         'process.env.TEST': JSON.stringify(process.env.TEST),
         'process.env.RSPRESS_SOCIAL_ICONS': JSON.stringify(
@@ -311,6 +309,7 @@ async function createInternalBuildConfig(
             index:
               enableSSG && isProduction() ? SSR_CLIENT_ENTRY : CSR_CLIENT_ENTRY,
           },
+          preEntry: path.join(DEFAULT_THEME, '../styles/index.js'),
           define: {
             'process.env.__SSR__': JSON.stringify(false),
           },
