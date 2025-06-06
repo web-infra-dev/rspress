@@ -309,7 +309,10 @@ async function createInternalBuildConfig(
             index:
               enableSSG && isProduction() ? SSR_CLIENT_ENTRY : CSR_CLIENT_ENTRY,
           },
-          preEntry: path.join(DEFAULT_THEME, '../styles/index.js'),
+          preEntry: [
+            path.join(DEFAULT_THEME, '../styles/index.js'),
+            'virtual-global-styles',
+          ],
           define: {
             'process.env.__SSR__': JSON.stringify(false),
           },
