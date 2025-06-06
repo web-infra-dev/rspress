@@ -117,7 +117,7 @@ export function PreWithCodeButtonGroup({
     return <>{children.map(child => renderChild(child))}</>;
   }
 
-  if (!isValidElement(children)) return null;
+  if (!isValidElement<{ className?: string }>(children)) return null;
 
-  return renderChild(children as React.ReactElement<{ className?: string }>);
+  return renderChild(children);
 }
