@@ -1,4 +1,8 @@
 /* this should be overriden by theme/index.css */
 :root {
   --rp-c-brand: green;
+  --rp-c-brand-dark: green;
+  --rp-c-brand-darker: green;
+  --rp-c-brand-light: green;
+  --rp-c-brand-lighter: green;
 }
