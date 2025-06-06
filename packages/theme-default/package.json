@@ -25,10 +25,7 @@
       "types": "./dist/index.d.ts",
       "default": "./dist/index.js"
     },
-    "./styles": {
-      "types": "./dist/styles/index.d.ts",
-      "default": "./dist/styles/index.js"
-    },
+    "./styles": "./dist/styles/index.js",
     "./package.json": "./package.json"
   },
   "main": "./dist/index.js",
