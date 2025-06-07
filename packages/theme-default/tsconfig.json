@@ -7,7 +7,7 @@
     "rootDir": "src",
     "baseUrl": ".",
     "paths": {
-      "#theme/*": ["./src/*"]
+      "@theme": ["./src/index.ts"]
     }
   },
   "include": ["src"],

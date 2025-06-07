@@ -23,7 +23,26 @@ export {
 export { useFullTextSearch } from './logic/useFullTextSearch';
 export { useRedirect4FirstVisit } from './logic/useRedirect4FirstVisit';
 export { useThemeState } from './logic/useAppearance';
-export * from './components/Search/logic/types';
+export {
+  renderHtmlOrText,
+  parseInlineMarkdownText,
+  renderInlineMarkdown,
+} from './logic/utils';
+export type {
+  BeforeSearch,
+  OnSearch,
+  AfterSearch,
+  RenderSearchFunction,
+  CustomMatchResult,
+  DefaultMatchResult,
+  DefaultMatchResultItem,
+  HighlightInfo,
+  MatchResult,
+  PageSearcherConfig,
+  RenderType,
+  SearchOptions,
+  UserMatchResultItem,
+} from './components/Search/logic/types';
 
 // components
 export { Aside } from './components/Aside/index';
