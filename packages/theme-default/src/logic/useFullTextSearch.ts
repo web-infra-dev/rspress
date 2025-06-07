@@ -1,7 +1,7 @@
 import { usePageData } from '@rspress/runtime';
 import { useEffect, useRef, useState } from 'react';
-import type { MatchResult } from '..';
 import { PageSearcher } from '../components/Search/logic/search';
+import type { MatchResult } from '../components/Search/logic/types';
 
 export function useFullTextSearch(): {
   initialized: boolean;

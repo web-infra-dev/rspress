@@ -24,7 +24,7 @@ declare module 'virtual-search-hooks' {
     OnSearch,
     AfterSearch,
     RenderSearchFunction,
-  } from '#theme/components/Search/logic/types';
+  } from '@rspress/theme-default';
 
   export const beforeSearch: BeforeSearch;
   export const onSearch: OnSearch;
@@ -38,7 +38,3 @@ declare module 'virtual-search-index-hash' {
 }
 
 declare const __WEBPACK_PUBLIC_PATH__: string;
-
-declare module '@theme' {
-  export * from '@rspress/theme-default';
-};

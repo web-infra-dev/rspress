@@ -26,7 +26,9 @@ export default defineConfig({
     {
       format: 'esm',
       bundle: false,
-      dts: { bundle: true },
+      dts: {
+        bundle: true,
+      },
       plugins: [
         pluginReact(),
         pluginSvgr({ svgrOptions: { exportType: 'default' } }),
@@ -58,16 +60,6 @@ export default defineConfig({
           localIdentName: '[local]_[hash:hex:5]',
           namedExport: true,
           exportLocalsConvention: 'camelCaseOnly',
-        },
-        copy: {
-          patterns: [
-            {
-              from: './index-barrel.js',
-              to: './index.js',
-              context: __dirname,
-              force: true,
-            },
-          ],
         },
       },
     },
