@@ -1,5 +1,5 @@
 import { Link } from '@theme';
-import React from 'react';
+import React, { type JSX } from 'react';
 import * as styles from './index.module.scss';
 
 interface ButtonProps {
@@ -15,7 +15,7 @@ interface ButtonProps {
   };
 }
 
-export function Button(props: ButtonProps) {
+export function Button(props: ButtonProps): JSX.Element {
   const {
     theme = 'brand',
     size = 'big',
@@ -39,7 +39,7 @@ export function Button(props: ButtonProps) {
     {
       className: `${styles.button} ${styles[theme]} ${styles[size]} ${className}`,
       href,
-      ...(dangerouslySetInnerHTML ?? {}),
+      ...dangerouslySetInnerHTML,
     },
     children,
   );
