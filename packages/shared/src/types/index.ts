@@ -415,6 +415,12 @@ export interface MarkdownOptions {
    * @type import('@shikijs/rehype').RehypeShikiOptions
    */
   shiki?: Partial<PluginShikiOptions>;
+
+  /**
+   * Speed up build time by caching mdx parsing result in `rspress build`
+   * @default true
+   */
+  crossCompilerCache?: boolean;
 }
 
 export type Config =

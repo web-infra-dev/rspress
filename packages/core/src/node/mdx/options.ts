@@ -16,14 +16,22 @@ import type { PluginDriver } from '../PluginDriver';
 import type { RouteService } from '../route/RouteService';
 import { rehypeCodeMeta } from './rehypePlugins/codeMeta';
 
-export async function createMDXOptions(
-  docDirectory: string,
-  config: UserConfig,
-  checkDeadLinks: boolean,
-  routeService: RouteService,
-  filepath: string,
-  pluginDriver: PluginDriver,
-): Promise<ProcessorOptions> {
+export async function createMDXOptions(options: {
+  docDirectory: string;
+  config: UserConfig;
+  checkDeadLinks: boolean;
+  routeService: RouteService;
+  filepath: string;
+  pluginDriver: PluginDriver;
+}): Promise<ProcessorOptions> {
+  const {
+    docDirectory,
+    config,
+    checkDeadLinks,
+    routeService,
+    filepath,
+    pluginDriver,
+  } = options;
   const format = path.extname(filepath).slice(1) as 'mdx' | 'md';
   const cleanUrls = config?.route?.cleanUrls ?? false;
   const {

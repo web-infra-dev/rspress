@@ -3,7 +3,7 @@ import Slugger from 'github-slugger';
 import type { Root } from 'hast';
 import type { Plugin } from 'unified';
 import { visitChildren } from 'unist-util-visit-children';
-import type { PageMeta } from '../loader';
+import type { PageMeta } from '../types';
 
 export interface TocItem {
   id: string;
