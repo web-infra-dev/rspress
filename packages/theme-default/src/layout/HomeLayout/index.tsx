@@ -1,6 +1,5 @@
 import { usePageData } from '@rspress/runtime';
 import { HomeFeature, HomeFooter, HomeHero } from '@theme';
-import './index.css';
 
 export interface HomeLayoutProps {
   beforeHero?: React.ReactNode;
