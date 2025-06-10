@@ -10,8 +10,8 @@ export function NotFoundLayout() {
   if (defaultLang && typeof window !== 'undefined') {
     const regexp = new RegExp(`/${defaultLang}(\\/|$)`);
     if (regexp.test(location.pathname)) {
-      const redirectUrl = location.pathname.replace(regexp, '');
-      window.location.replace(redirectUrl || '/');
+      const redirectUrl = location.pathname.replace(regexp, '/');
+      window.location.replace(redirectUrl);
       return null;
     }
   }
