@@ -7,14 +7,13 @@ export function NotFoundLayout() {
   // Consider the existing sites include the defaultLang in some links, such as '/zh/guide/quick-start'
   // We need to redirect them to '/guide/quick-start'
   // In the meanwhile, we will not show the 404 page for the user experience
-  if (
-    defaultLang &&
-    typeof window !== 'undefined' &&
-    new RegExp(`/${defaultLang}(\\/|$)`).test(location.pathname)
-  ) {
-    const redirectUrl = location.pathname.replace(`/${defaultLang}`, '');
-    window.location.replace(redirectUrl || '/');
-    return <></>;
+  if (defaultLang && typeof window !== 'undefined') {
+    const regexp = new RegExp(`/${defaultLang}(\\/|$)`);
+    if (regexp.test(location.pathname)) {
+      const redirectUrl = location.pathname.replace(regexp, '');
+      window.location.replace(redirectUrl || '/');
+      return null;
+    }
   }
 
   let root = '/';
