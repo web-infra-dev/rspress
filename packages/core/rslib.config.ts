@@ -43,10 +43,35 @@ export default defineConfig({
         distPath: {
           root: './dist',
         },
+        externals: {
+          './processor': 'module ./processor.js',
+        },
       },
       source: {
         entry: {
           loader: './src/node/mdx/loader.ts',
+        },
+      },
+    },
+    {
+      format: 'esm',
+      syntax: 'es2022',
+      dts: {
+        bundle: true,
+      },
+      shims: {
+        esm: {
+          require: true,
+        },
+      },
+      output: {
+        distPath: {
+          root: './dist',
+        },
+      },
+      source: {
+        entry: {
+          processor: './src/node/mdx/processor.ts',
         },
       },
     },
