@@ -41,7 +41,6 @@ export async function siteDataVMPlugin(context: FactoryContext) {
     tempSearchObj.searchHooks = undefined;
   }
 
-  const highlightLanguages: Set<string> = new Set();
   const replaceRules = userConfig?.replaceRules || [];
 
   const searchConfig = userConfig?.search || {};
@@ -59,7 +58,6 @@ export async function siteDataVMPlugin(context: FactoryContext) {
     domain,
     userDocRoot,
     routeService,
-    highlightLanguages,
     searchCodeBlocks,
   );
   // modify page index by plugins
@@ -153,13 +151,6 @@ export async function siteDataVMPlugin(context: FactoryContext) {
       shiki: {},
     },
   };
-
-  // this field is extended in "plugin-preview"
-  if (Array.isArray(siteData.pages[0]?.extraHighlightLanguages)) {
-    siteData.pages[0].extraHighlightLanguages.forEach(lang =>
-      highlightLanguages.add(lang),
-    );
-  }
 
   return {
     [`${RuntimeModuleID.SiteData}.mjs`]: `export default ${JSON.stringify(
