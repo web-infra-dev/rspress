@@ -52,7 +52,7 @@ export async function renderPages(
     const { default: ssrExports } = await import(
       pathToFileURL(ssrBundlePath).toString()
     );
-    ({ render } = ssrExports as SSRBundleExports);
+    render = await ssrExports.render;
   } catch (e) {
     if (e instanceof Error) {
       logger.error(
