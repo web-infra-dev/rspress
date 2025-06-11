@@ -18,11 +18,11 @@ import { rehypeCodeMeta } from './rehypePlugins/codeMeta';
 
 export async function createMDXOptions(options: {
   docDirectory: string;
-  config: UserConfig;
-  checkDeadLinks: boolean;
-  routeService: RouteService;
   filepath: string;
-  pluginDriver: PluginDriver;
+  checkDeadLinks: boolean;
+  config: UserConfig | null;
+  routeService: RouteService | null;
+  pluginDriver: PluginDriver | null;
 }): Promise<ProcessorOptions> {
   const {
     docDirectory,
@@ -39,7 +39,7 @@ export async function createMDXOptions(options: {
     rehypePlugins: rehypePluginsFromConfig = [],
     globalComponents: globalComponentsFromConfig = [],
   } = config?.markdown || {};
-  const rspressPlugins = pluginDriver.getPlugins();
+  const rspressPlugins = pluginDriver?.getPlugins() ?? [];
   const remarkPluginsFromPlugins = rspressPlugins.flatMap(
     plugin => plugin.markdown?.remarkPlugins || [],
   ) as PluggableList;
@@ -67,14 +67,15 @@ export async function createMDXOptions(options: {
           routeService,
         },
       ],
-      checkDeadLinks && [
-        remarkCheckDeadLinks,
-        {
-          root: docDirectory,
-          base: config?.base || '',
-          routeService,
-        },
-      ],
+      checkDeadLinks &&
+        routeService && [
+          remarkCheckDeadLinks,
+          {
+            root: docDirectory,
+            base: config?.base || '',
+            routeService,
+          },
+        ],
       globalComponents.length && [
         remarkBuiltin,
         {
