@@ -53,7 +53,6 @@ describe('extractPageData', async () => {
             },
           }),
       } as RouteService,
-      new Set(),
       false,
     );
     expect(pageData).toMatchInlineSnapshot(`
