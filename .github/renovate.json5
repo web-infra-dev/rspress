@@ -37,6 +37,5 @@
     // align Node.js version minimum requirements
     '@types/node',
     'node',
-    'pnpm',
   ],
 }
