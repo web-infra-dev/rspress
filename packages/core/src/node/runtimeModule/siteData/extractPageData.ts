@@ -38,7 +38,6 @@ export async function extractPageData(
   domain: string,
   root: string,
   routeService: RouteService,
-  highlighterLangs: Set<string>,
   searchCodeBlocks: boolean,
 ): Promise<PageIndexInfo[]> {
   const pageData = await Promise.all(
@@ -85,7 +84,6 @@ export async function extractPageData(
           html: rawHtml,
           title,
           toc: rawToc,
-          languages,
         } = await compile({
           value: content,
           filepath: route.absolutePath,
@@ -147,8 +145,6 @@ export async function extractPageData(
           // Remove the title from the content
           content = content.slice(title.length);
         }
-
-        languages.forEach(lang => highlighterLangs.add(lang));
 
         // rawToc comes from mdx compile and it uses `-number` to unique toc of same id
         // We need to find the character index position of each toc in the content thus benefiting for search engines
