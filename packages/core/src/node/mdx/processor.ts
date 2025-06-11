@@ -22,9 +22,9 @@ interface CompileOptions {
 
   // assume that the below instances are singleton, it will not change.
   docDirectory: string;
-  config: UserConfig;
-  routeService: RouteService;
-  pluginDriver: PluginDriver;
+  config: UserConfig | null;
+  routeService: RouteService | null;
+  pluginDriver: PluginDriver | null;
 }
 
 async function compile(options: CompileOptions): Promise<string> {
@@ -37,8 +37,6 @@ async function compile(options: CompileOptions): Promise<string> {
     routeService,
     pluginDriver,
   } = options;
-
-  config.root;
 
   const mdxOptions = await createMDXOptions({
     checkDeadLinks,
@@ -57,10 +55,8 @@ async function compile(options: CompileOptions): Promise<string> {
   );
 
   // For loader error stack, so we use the source with frontmatter @see https://github.com/web-infra-dev/rspress/issues/2010
-  const replacedSource = applyReplaceRules(
-    emptyLinesSource,
-    config.replaceRules,
-  );
+  const { replaceRules } = config ?? {};
+  const replacedSource = applyReplaceRules(emptyLinesSource, replaceRules);
 
   // Support custom id like `#hello world {#custom-id}`.
   // TODO > issue: `#hello world {#custom-id}` will also be replaced.

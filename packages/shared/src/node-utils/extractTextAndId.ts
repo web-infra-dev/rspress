@@ -8,7 +8,10 @@ export const extractTextAndId = (
     return ['', ''];
   }
   const customIdReg = /\\?{#.*}/;
-  const text = title.replace(customIdReg, '').trimEnd();
-  const customId = title.match(customIdReg)?.[0]?.slice(2, -1) || '';
-  return [text, customId];
+  if (customIdReg.test(title)) {
+    const text = title.replace(customIdReg, '').trimEnd();
+    const customId = title.match(customIdReg)?.[0]?.slice(2, -1) || '';
+    return [text, customId];
+  }
+  return [title, ''];
 };
