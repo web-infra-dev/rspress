@@ -31,7 +31,10 @@ import {
 import { hintThemeBreakingChange } from './logger/hint';
 import type { RouteService } from './route/RouteService';
 import { initRouteService } from './route/init';
-import { rsbuildPluginDocVM } from './runtimeModule';
+import {
+  getVirtualModulesFromPlugins,
+  rsbuildPluginDocVM,
+} from './runtimeModule';
 import { globalStylesVMPlugin } from './runtimeModule/globalStyles';
 import { globalUIComponentsVMPlugin } from './runtimeModule/globalUIComponents';
 import { i18nVMPlugin } from './runtimeModule/i18n';
@@ -141,6 +144,10 @@ async function createInternalBuildConfig(
            * Generate route list for client and server runtime
            */
           ...routeListVMPlugin(context),
+          /**
+           *  Get virtual modules from plugins
+           */
+          ...(await getVirtualModulesFromPlugins(pluginDriver)),
         },
       }),
       ...(enableSSG
