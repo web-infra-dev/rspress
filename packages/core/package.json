@@ -29,7 +29,7 @@
       "default": "./theme.ts"
     },
     "./shiki-transformers": {
-      "types": "./dist/index.d.ts",
+      "types": "./dist/shiki-transformers.d.ts",
       "default": "./dist/shiki-transformers.js"
     },
     "./runtime": {
