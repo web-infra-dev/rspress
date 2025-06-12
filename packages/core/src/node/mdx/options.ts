@@ -12,9 +12,11 @@ import { remarkCheckDeadLinks } from './remarkPlugins/checkDeadLink';
 import { remarkPluginNormalizeLink } from './remarkPlugins/normalizeLink';
 import { remarkPluginToc } from './remarkPlugins/toc';
 
+import rehypeShiki from '@shikijs/rehype';
 import type { PluginDriver } from '../PluginDriver';
 import type { RouteService } from '../route/RouteService';
 import { rehypeCodeMeta } from './rehypePlugins/codeMeta';
+import { createRehypeShikiOptions } from './rehypePlugins/shiki';
 
 export async function createMDXOptions(options: {
   docDirectory: string;
@@ -38,6 +40,8 @@ export async function createMDXOptions(options: {
     remarkPlugins: remarkPluginsFromConfig = [],
     rehypePlugins: rehypePluginsFromConfig = [],
     globalComponents: globalComponentsFromConfig = [],
+    showLineNumbers = false,
+    shiki,
   } = config?.markdown || {};
   const rspressPlugins = pluginDriver?.getPlugins() ?? [];
   const remarkPluginsFromPlugins = rspressPlugins.flatMap(
@@ -98,6 +102,7 @@ export async function createMDXOptions(options: {
             [rehypeRaw, { passThrough: nodeTypes }],
           ]
         : []),
+      [rehypeShiki, createRehypeShikiOptions(showLineNumbers, shiki)],
       [
         rehypePluginExternalLinks,
         {

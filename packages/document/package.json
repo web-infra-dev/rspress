@@ -19,7 +19,6 @@
     "@rsbuild/plugin-sass": "~1.3.2",
     "@rspress/plugin-algolia": "workspace:*",
     "@rspress/plugin-llms": "workspace:*",
-    "@rspress/plugin-shiki": "workspace:*",
     "@rstack-dev/doc-ui": "1.10.6",
     "@shikijs/transformers": "^3.2.2",
     "@types/react": "^19.1.6",

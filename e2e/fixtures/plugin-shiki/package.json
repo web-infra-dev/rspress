@@ -8,7 +8,6 @@
     "preview": "rspress preview"
   },
   "dependencies": {
-    "@rspress/plugin-shiki": "workspace:*",
     "@shikijs/transformers": "^3.2.2",
     "rspress": "workspace:*"
   },
