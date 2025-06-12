@@ -76,6 +76,29 @@ export default defineConfig({
       },
     },
     {
+      format: 'esm',
+      syntax: 'es2022',
+      dts: {
+        bundle: true,
+      },
+      shims: {
+        esm: {
+          require: true,
+        },
+      },
+      output: {
+        distPath: {
+          root: './dist',
+        },
+      },
+      source: {
+        entry: {
+          'shiki-transformers':
+            './src/node/mdx/rehypePlugins/transformers/index.ts',
+        },
+      },
+    },
+    {
       bundle: false,
       dts: true,
       format: 'esm',

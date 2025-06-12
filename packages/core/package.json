@@ -28,6 +28,10 @@
     "./theme": {
       "default": "./theme.ts"
     },
+    "./shiki-transformers": {
+      "types": "./dist/index.d.ts",
+      "default": "./dist/shiki-transformers.js"
+    },
     "./runtime": {
       "default": "./runtime.ts"
     }
@@ -57,10 +61,10 @@
     "@rspress/plugin-container-syntax": "workspace:*",
     "@rspress/plugin-last-updated": "workspace:*",
     "@rspress/plugin-medium-zoom": "workspace:*",
-    "@rspress/plugin-shiki": "workspace:*",
     "@rspress/runtime": "workspace:*",
     "@rspress/shared": "workspace:*",
     "@rspress/theme-default": "workspace:*",
+    "@shikijs/rehype": "^3.4.2",
     "@types/unist": "^3.0.3",
     "@unhead/react": "^2.0.10",
     "enhanced-resolve": "5.18.1",
@@ -80,6 +84,7 @@
     "remark": "^15.0.1",
     "remark-gfm": "^4.0.1",
     "rspack-plugin-virtual-module": "1.0.1",
+    "shiki": "^3.4.2",
     "tinyglobby": "^0.2.14",
     "unified": "^11.0.5",
     "unist-util-visit": "^5.0.0",

@@ -5,4 +5,5 @@ import './vars.css';
 import './base.css';
 import './code.css';
 import './scrollbar.scss';
+import './shiki.scss';
 import 'nprogress/nprogress.css';

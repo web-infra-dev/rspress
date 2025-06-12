@@ -20,6 +20,9 @@
     },
     "./config": {
       "default": "./config.ts"
+    },
+    "./shiki-transformers": {
+      "default": "./shiki-transformers.ts"
     }
   },
   "main": "./dist/index.js",

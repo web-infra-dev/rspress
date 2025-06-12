@@ -3,7 +3,7 @@
  * reference: https://github.com/shikijs/shiki/blob/main/docs/themes.md
  * -------------------------------------------------------------------------- */
 
-html:not(.rp-dark) {
+:root {
   --shiki-foreground: #414141;
   --shiki-background: transparent;
   --shiki-token-constant: #1976d2;
