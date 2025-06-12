@@ -1,5 +1,6 @@
 import type { RsbuildPlugin } from '@rsbuild/core';
 import { RspackVirtualModulePlugin } from 'rspack-plugin-virtual-module';
+import type { PluginDriver } from '../PluginDriver';
 import { siteDataVMPlugin } from './siteData/index';
 import type { FactoryContext } from './types';
 
@@ -19,7 +20,6 @@ export const runtimeModuleFactory: RuntimeModuleFactory[] = [
 export function rsbuildPluginDocVM(
   factoryContext: Omit<FactoryContext, 'alias' | 'isSSR'>,
 ): RsbuildPlugin {
-  const { pluginDriver } = factoryContext;
   return {
     name: 'rsbuild-plugin-doc-vm',
     setup(api) {
@@ -35,20 +35,26 @@ export function rsbuildPluginDocVM(
           });
           Object.assign(runtimeModule, moduleResult);
         }
-        // Add runtime module from outer plugins
-        const modulesByPlugin = await pluginDriver.addRuntimeModules();
-        Object.keys(modulesByPlugin).forEach(key => {
-          if (runtimeModule[key]) {
-            throw new Error(
-              `The runtime module ${key} is duplicated, please check your plugin`,
-            );
-          }
-          runtimeModule[key] = modulesByPlugin[key];
-        });
         bundlerChain
           .plugin('rspress-runtime-module')
           .use(new RspackVirtualModulePlugin(runtimeModule));
       });
     },
   };
+}
+
+export async function getVirtualModulesFromPlugins(
+  pluginDriver: PluginDriver,
+): Promise<Record<string, () => string>> {
+  const runtimeModule: Record<string, () => string> = {};
+  const modulesByPlugin = await pluginDriver.addRuntimeModules();
+  Object.keys(modulesByPlugin).forEach(key => {
+    if (runtimeModule[key]) {
+      throw new Error(
+        `The runtime module ${key} is duplicated, please check your plugin`,
+      );
+    }
+    runtimeModule[key] = () => modulesByPlugin[key];
+  });
+  return runtimeModule;
 }
