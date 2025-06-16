@@ -22,7 +22,6 @@
     "@rstack-dev/doc-ui": "1.10.6",
     "@shikijs/transformers": "^3.2.2",
     "@types/react": "^19.1.8",
-    "framer-motion": "12.0.6",
     "rsbuild-plugin-google-analytics": "^1.0.3",
     "rsbuild-plugin-open-graph": "^1.0.2",
     "rspress": "workspace:*",
