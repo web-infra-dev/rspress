@@ -26,7 +26,7 @@ import {
 
 import { hintSSGFailed } from '../logger/hint';
 import type { RouteService } from '../route/RouteService';
-import { renderConfigHead, renderFrontmatterHead } from './renderHead';
+import { renderConfigHead } from './renderHead';
 
 interface SSRBundleExports {
   render: (
@@ -118,10 +118,7 @@ export async function renderPages(
           )
           .replace(
             HEAD_MARKER,
-            [
-              await renderConfigHead(config, route),
-              await renderFrontmatterHead(route),
-            ].join(''),
+            [await renderConfigHead(config, route)].join(''),
           );
         const html = await transformHtmlTemplate(head, replacedHtmlTemplate);
 
