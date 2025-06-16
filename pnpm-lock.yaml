@@ -57,8 +57,8 @@ importers:
         specifier: 20.8.2
         version: 20.8.2
       path-serializer:
-        specifier: 0.3.4
-        version: 0.3.4
+        specifier: 0.5.0
+        version: 0.5.0
       playwright:
         specifier: 1.52.0
         version: 1.52.0
@@ -5728,8 +5728,8 @@ packages:
     resolution: {integrity: sha512-ypGJsmGtdXUOeM5u93TyeIEfEhM6s+ljAhrk5vAvSx8uyY/02OvrZnA0YNGUrPXfpJMgI1ODd3nwz8Npx4O4cg==}
     engines: {node: 20 || >=22}
 
-  path-serializer@0.3.4:
-    resolution: {integrity: sha512-bqNF6KKbFn2hrTgybBTqAqjKOneLvpFmvYx43ppm8IcmfgYLh4aMmR35+GnnKYdd0l6gtBlaok+aRR0PSwtGaQ==}
+  path-serializer@0.5.0:
+    resolution: {integrity: sha512-ILXU4FE4G1U55EqHfQwE3S6R2ssB+3SKRrHLzNFHPV82kzG9wYgKEH6E9ZdEDwNYvLj/LB8eA91M9ENHT/Jyyw==}
 
   path-type@4.0.0:
     resolution: {integrity: sha512-gDKb8aZMDeD/tZWs9P6+q0J9Mwkdl6xMV8TjnGP3qJVJ06bdMgkbBlLU8IdfOsIsFz2BW1rNVT3XuNEl8zPAvw==}
@@ -11863,7 +11863,7 @@ snapshots:
       lru-cache: 11.0.2
       minipass: 7.1.2
 
-  path-serializer@0.3.4: {}
+  path-serializer@0.5.0: {}
 
   path-type@4.0.0: {}
 
