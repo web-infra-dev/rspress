@@ -1,6 +1,11 @@
 import path from 'node:path';
 import { expect, test } from '@playwright/test';
-import { getPort, killProcess, runDevCommand } from '../../utils/runCommands';
+import {
+  getPort,
+  killProcess,
+  runBuildCommand,
+  runPreviewCommand,
+} from '../../utils/runCommands';
 
 test.describe('custom headers', async () => {
   let appPort;
@@ -8,7 +13,8 @@ test.describe('custom headers', async () => {
   test.beforeAll(async () => {
     const appDir = __dirname;
     appPort = await getPort();
-    app = await runDevCommand(appDir, appPort);
+    await runBuildCommand(appDir);
+    app = await runPreviewCommand(appDir, appPort);
   });
 
   test.afterAll(async () => {
