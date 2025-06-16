@@ -1,11 +1,30 @@
 import { describe, it } from 'vitest';
-import { compile } from './processor';
+import { compile } from '../processor';
 
-describe('mdx', () => {
+describe('rehypeHeadAnchor', () => {
   it('basic', async () => {
     const result = await compile({
       source: `
-# Hello World
+# Guide
+
+## title 1 {#custom-id}
+
+## title 1 \{#custom-id}
+
+## title 2
+
+## title 2
+
+## \`title\` 2
+
+## Title 2
+
+## **title** 2
+
+{/* prettier-ignore-start */}
+## *title* 2
+{/* prettier-ignore-end */}
+
 `,
       checkDeadLinks: false,
       docDirectory: '/usr/rspress-project/docs',
@@ -32,7 +51,7 @@ describe('mdx', () => {
     expect(result).toMatchSnapshot();
   });
 
-  it('should allow custom id', async () => {
+  it('should support custom id', async () => {
     const result = await compile({
       source: `
 # Hello World \`inline code\` \\{#custom-id}
@@ -44,6 +63,20 @@ describe('mdx', () => {
       pluginDriver: null,
       routeService: null,
     });
+
+    // This is actually a wrong usage, but we need to be compatible.
+    const resultWithoutBackslash = await compile({
+      source: `
+# Hello World \`inline code\` {#custom-id}
+`,
+      checkDeadLinks: false,
+      docDirectory: '/usr/rspress-project/docs',
+      filepath: '/usr/rspress-project/docs/inline-code.mdx',
+      config: null,
+      pluginDriver: null,
+      routeService: null,
+    });
+    expect(resultWithoutBackslash).toEqual(result);
     expect(result).toMatchSnapshot();
   });
 });
