@@ -50,7 +50,7 @@
     "@types/babel__traverse": "^7.20.7",
     "@types/mdast": "^4.0.4",
     "@types/node": "^22.8.1",
-    "@types/react": "^19.1.6",
+    "@types/react": "^19.1.8",
     "@types/react-dom": "^19.1.6",
     "mdast-util-mdx-jsx": "^3.2.0",
     "react": "^19.1.0",
