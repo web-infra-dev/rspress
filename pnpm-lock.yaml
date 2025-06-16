@@ -834,6 +834,9 @@ importers:
       mdast-util-mdxjs-esm:
         specifier: ^2.0.1
         version: 2.0.1
+      mdast-util-to-string:
+        specifier: ^4.0.0
+        version: 4.0.0
       picocolors:
         specifier: ^1.1.1
         version: 1.1.1
@@ -855,12 +858,18 @@ importers:
       rehype-raw:
         specifier: ^7.0.0
         version: 7.0.0
+      rehype-stringify:
+        specifier: ^9.0.3
+        version: 9.0.4
       remark:
         specifier: ^15.0.1
         version: 15.0.1
       remark-gfm:
         specifier: ^4.0.1
         version: 4.0.1
+      remark-rehype:
+        specifier: ^11.1.2
+        version: 11.1.2
       rspack-plugin-virtual-module:
         specifier: 1.0.1
         version: 1.0.1
@@ -925,18 +934,12 @@ importers:
       postcss:
         specifier: 8.5.4
         version: 8.5.4
-      rehype-stringify:
-        specifier: ^10.0.1
-        version: 10.0.1
       remark-mdx:
         specifier: ^3.1.0
         version: 3.1.0
       remark-parse:
         specifier: ^11.0.0
         version: 11.0.0
-      remark-rehype:
-        specifier: ^11.1.2
-        version: 11.1.2
       remark-stringify:
         specifier: ^11.0.0
         version: 11.0.0
@@ -6016,6 +6019,9 @@ packages:
 
   rehype-stringify@10.0.1:
     resolution: {integrity: sha512-k9ecfXHmIPuFVI61B9DeLPN0qFHfawM6RsuX48hoqlaKSF61RskNjSm1lI8PhBEM0MRdLxVVm4WmTqJQccH9mA==}
+
+  rehype-stringify@9.0.4:
+    resolution: {integrity: sha512-Uk5xu1YKdqobe5XpSskwPvo1XeHUUucWEQSl8hTrXt5selvca1e8K1EZ37E6YoZ4BT8BCqCdVfQW7OfHfthtVQ==}
 
   remark-directive@4.0.0:
     resolution: {integrity: sha512-7sxn4RfF1o3izevPV1DheyGDD6X4c9hrGpfdUpm7uC++dqrnJxIZVkk7CoKqcLm0VUMAuOol7Mno3m6g8cfMuA==}
@@ -12176,6 +12182,12 @@ snapshots:
       '@types/hast': 3.0.4
       hast-util-to-html: 9.0.5
       unified: 11.0.5
+
+  rehype-stringify@9.0.4:
+    dependencies:
+      '@types/hast': 2.3.10
+      hast-util-to-html: 8.0.4
+      unified: 10.1.2
 
   remark-directive@4.0.0:
     dependencies:

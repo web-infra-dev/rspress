@@ -71,16 +71,16 @@ async function compile(options: CompileOptions): Promise<string> {
 
     const frontmatterTitle = extractTextAndId(frontmatter.title)[0];
 
-    const compiler = createProcessor(mdxOptions);
+    const processor = createProcessor(mdxOptions);
 
-    compiler.data('pageMeta' as any, { toc: [], title: '' });
-    const vFile = await compiler.process({
+    processor.data('pageMeta' as any, { toc: [], title: '' });
+    const vFile = await processor.process({
       value: preprocessedContent,
       path: filepath,
     });
 
     const compileResult = String(vFile);
-    const compilationMeta = compiler.data('pageMeta' as any) as {
+    const compilationMeta = processor.data('pageMeta' as any) as {
       toc: Header[];
       title: string;
     };
