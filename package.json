@@ -45,7 +45,7 @@
     "get-port": "5.1.1",
     "heading-case": "^0.1.6",
     "husky": "^9.1.7",
-    "lint-staged": "~15.4.3",
+    "lint-staged": "~15.5.2",
     "nx": "20.4.6",
     "path-serializer": "0.3.4",
     "playwright": "1.52.0",
