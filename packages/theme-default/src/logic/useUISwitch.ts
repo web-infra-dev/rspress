@@ -47,8 +47,14 @@ export function useUISwitch(): UISwitchResult {
   // 1. frontmatter.sidebar
   // 2. themeConfig.locales.sidebar
   // 3. themeConfig.sidebar
-  const showSidebar =
+  const calcShowSidebar =
     frontmatter?.sidebar !== false && Object.keys(sidebar).length > 0;
+
+  const [showSidebar, setShowSidebar] = useState(calcShowSidebar);
+
+  useEffect(() => {
+    setShowSidebar(calcShowSidebar);
+  }, [calcShowSidebar]);
 
   const { width } = useWindowSize();
 
@@ -80,6 +86,7 @@ export function useUISwitch(): UISwitchResult {
 
     if (sidebar === QueryStatus.Hide) {
       document.documentElement.style.setProperty('--rp-sidebar-width', '0px');
+      setShowSidebar(false);
     }
 
     if (aside === QueryStatus.Hide) {
