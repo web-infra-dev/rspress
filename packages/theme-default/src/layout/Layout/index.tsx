@@ -53,11 +53,6 @@ const HeadTags = memo(
     lang?: string;
   }) => {
     const { lang, frontmatter, description, title } = props;
-    useHead({
-      htmlAttrs: {
-        lang: lang || 'en',
-      },
-    });
 
     const head = frontmatter.head;
     const frontmatterTags = useMemo(() => {
@@ -66,13 +61,22 @@ const HeadTags = memo(
       });
     }, [head]);
 
-    return (
-      <Head>
-        {title ? <title>{title}</title> : null}
-        {description ? <meta name="description" content={description} /> : null}
-        {frontmatterTags ?? null}
-      </Head>
-    );
+    useHead({
+      htmlAttrs: {
+        lang: lang || 'en',
+      },
+      title: title || undefined,
+      meta: [
+        description
+          ? {
+              name: 'description',
+              content: description,
+            }
+          : undefined,
+      ],
+    });
+
+    return <Head>{frontmatterTags ?? null}</Head>;
   },
 );
 
