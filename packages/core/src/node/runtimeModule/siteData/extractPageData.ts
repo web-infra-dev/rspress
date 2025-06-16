@@ -1,6 +1,6 @@
 import fs from 'node:fs/promises';
 import path from 'node:path';
-import { compile } from '@rspress/mdx-rs';
+import { compile as compileMdxRs } from '@rspress/mdx-rs';
 import {
   type Header,
   MDX_OR_MD_REGEXP,
@@ -10,11 +10,12 @@ import {
 import { loadFrontMatter } from '@rspress/shared/node-utils';
 import { htmlToText } from 'html-to-text';
 import { importStatementRegex } from '../../constants';
+import { compile } from '../../mdx/siteDataProcessor';
 import type { RouteService } from '../../route/RouteService';
 import { flattenMdxContent } from '../../utils';
 import { applyReplaceRules } from '../../utils/applyReplaceRules';
 
-export function applyReplaceRulesToNestedObject(
+function applyReplaceRulesToNestedObject(
   obj: Record<string, unknown>,
   replaceRules: ReplaceRule[],
 ) {
@@ -30,6 +31,60 @@ export function applyReplaceRulesToNestedObject(
   }
 
   return obj;
+}
+
+function htmlToString(rawHtml: string, searchCodeBlocks: boolean): string {
+  /**
+   * Escape JSX elements in code block to allow them to be searched
+   * @link https://github.com/sindresorhus/escape-goat/blob/eab4a382fcf5c977f7195e20d92ab1b25e6040a7/index.js#L3
+   */
+  function encodeHtml(html: string): string {
+    return html.replace(
+      /<code>([\s\S]*?)<\/\s?code>/gm,
+      function (_match: string, innerContent: string) {
+        return `<code>${innerContent
+          .replace(/&/g, '&amp;') // Must happen first or else it will escape other just-escaped characters.
+          .replace(/"/g, '&quot;')
+          .replace(/'/g, '&#39;')
+          .replace(/</g, '&lt;')
+          .replace(/>/g, '&gt;')}</code>`;
+      },
+    );
+  }
+
+  const html = encodeHtml(String(rawHtml));
+  const content = htmlToText(html, {
+    // decodeEntities: true, // default value of decodeEntities is `true`, so that htmlToText can decode &lt; &gt;
+    wordwrap: 80,
+    selectors: [
+      {
+        selector: 'a',
+        options: {
+          ignoreHref: true,
+        },
+      },
+      {
+        selector: 'img',
+        format: 'skip',
+      },
+      {
+        // Skip code blocks
+        selector: 'pre > code',
+        format: searchCodeBlocks ? 'block' : 'skip',
+      },
+      ...['h1', 'h2', 'h3', 'h4', 'h5', 'h6'].map(tag => ({
+        selector: tag,
+        options: {
+          uppercase: false,
+        },
+      })),
+    ],
+    tables: true,
+    longWordSplit: {
+      forceWrapOnLimit: true,
+    },
+  });
+  return content;
 }
 
 export async function extractPageData(
@@ -79,68 +134,34 @@ export async function extractPageData(
         );
 
         content = flattenContent.replace(importStatementRegex, '');
-
         const {
           html: rawHtml,
-          title,
-          toc: rawToc,
-        } = await compile({
+          title: _rawTitle,
+          toc: _rawToc,
+        } = await compileMdxRs({
           value: content,
           filepath: route.absolutePath,
           development: process.env.NODE_ENV !== 'production',
           root,
         });
 
-        /**
-         * Escape JSX elements in code block to allow them to be searched
-         * @link https://github.com/sindresorhus/escape-goat/blob/eab4a382fcf5c977f7195e20d92ab1b25e6040a7/index.js#L3
-         */
-        function encodeHtml(html: string): string {
-          return html.replace(
-            /<code>([\s\S]*?)<\/\s?code>/gm,
-            function (_match: string, innerContent: string) {
-              return `<code>${innerContent
-                .replace(/&/g, '&amp;') // Must happen first or else it will escape other just-escaped characters.
-                .replace(/"/g, '&quot;')
-                .replace(/'/g, '&#39;')
-                .replace(/</g, '&lt;')
-                .replace(/>/g, '&gt;')}</code>`;
-            },
-          );
-        }
-
-        const html = encodeHtml(String(rawHtml));
-        content = htmlToText(html, {
-          // decodeEntities: true, // default value of decodeEntities is `true`, so that htmlToText can decode &lt; &gt;
-          wordwrap: 80,
-          selectors: [
-            {
-              selector: 'a',
-              options: {
-                ignoreHref: true,
-              },
-            },
-            {
-              selector: 'img',
-              format: 'skip',
-            },
-            {
-              // Skip code blocks
-              selector: 'pre > code',
-              format: searchCodeBlocks ? 'block' : 'skip',
-            },
-            ...['h1', 'h2', 'h3', 'h4', 'h5', 'h6'].map(tag => ({
-              selector: tag,
-              options: {
-                uppercase: false,
-              },
-            })),
-          ],
-          tables: true,
-          longWordSplit: {
-            forceWrapOnLimit: true,
-          },
+        const {
+          html,
+          title,
+          toc: rawToc,
+        } = await compile({
+          source: content,
+          root,
+          routeService,
         });
+
+        const str1 = htmlToString(html, searchCodeBlocks);
+        const str2 = htmlToString(rawHtml, searchCodeBlocks);
+
+        console.log('-----------js', str1, '--------');
+        console.log('-----------rs', str2, '--------');
+        content = str1;
+
         if (content.startsWith(title)) {
           // Remove the title from the content
           content = content.slice(title.length);
@@ -154,7 +175,7 @@ export async function extractPageData(
           if (match) {
             for (let i = 0; i < Number(match[1]); i++) {
               // When text is repeated, the position needs to be determined based on -number
-              position = content.indexOf(`\n${item.text}#\n\n`, position + 1);
+              position = content.indexOf(`\n#${item.text}\n\n`, position + 1);
 
               // If the positions don't match, it means the text itself may exist -number
               if (position === -1) {
@@ -164,15 +185,15 @@ export async function extractPageData(
           }
           return {
             ...item,
-            charIndex: content.indexOf(`\n${item.text}#\n\n`, position + 1),
+            charIndex: content.indexOf(`\n#${item.text}\n\n`, position + 1),
           };
         });
 
         return {
           ...defaultIndexInfo,
           title: frontmatter.title || title,
-          toc,
           // for search index
+          toc,
           content,
           _flattenContent: flattenContent,
           _html: html,
