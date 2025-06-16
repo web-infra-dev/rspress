@@ -1,0 +1,205 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`rehypeHeadAnchor > basic 1`] = `
+"const frontmatter = {};
+/*prettier-ignore-start*/
+/*prettier-ignore-end*/
+import {Fragment as _Fragment, jsx as _jsx, jsxs as _jsxs} from "react/jsx-runtime";
+import {useMDXComponents as _provideComponents} from "@mdx-js/react";
+function _createMdxContent(props) {
+  const _components = {
+    a: "a",
+    code: "code",
+    em: "em",
+    h1: "h1",
+    h2: "h2",
+    strong: "strong",
+    ..._provideComponents(),
+    ...props.components
+  };
+  return _jsxs(_Fragment, {
+    children: [_jsxs(_components.h1, {
+      id: "guide",
+      children: [_jsx(_components.a, {
+        className: "header-anchor",
+        "aria-hidden": "true",
+        href: "#guide",
+        children: "#"
+      }), "Guide"]
+    }), "\\n", _jsxs(_components.h2, {
+      id: "custom-id",
+      children: [_jsx(_components.a, {
+        className: "header-anchor",
+        "aria-hidden": "true",
+        href: "#custom-id",
+        children: "#"
+      }), "title 1"]
+    }), "\\n", _jsxs(_components.h2, {
+      id: "custom-id",
+      children: [_jsx(_components.a, {
+        className: "header-anchor",
+        "aria-hidden": "true",
+        href: "#custom-id",
+        children: "#"
+      }), "title 1"]
+    }), "\\n", _jsxs(_components.h2, {
+      id: "title-2",
+      children: [_jsx(_components.a, {
+        className: "header-anchor",
+        "aria-hidden": "true",
+        href: "#title-2",
+        children: "#"
+      }), "title 2"]
+    }), "\\n", _jsxs(_components.h2, {
+      id: "title-2-1",
+      children: [_jsx(_components.a, {
+        className: "header-anchor",
+        "aria-hidden": "true",
+        href: "#title-2-1",
+        children: "#"
+      }), "title 2"]
+    }), "\\n", _jsxs(_components.h2, {
+      id: "title-2-2",
+      children: [_jsx(_components.a, {
+        className: "header-anchor",
+        "aria-hidden": "true",
+        href: "#title-2-2",
+        children: "#"
+      }), _jsx(_components.code, {
+        children: "title"
+      }), " 2"]
+    }), "\\n", _jsxs(_components.h2, {
+      id: "title-2-3",
+      children: [_jsx(_components.a, {
+        className: "header-anchor",
+        "aria-hidden": "true",
+        href: "#title-2-3",
+        children: "#"
+      }), "Title 2"]
+    }), "\\n", _jsxs(_components.h2, {
+      id: "title-2-4",
+      children: [_jsx(_components.a, {
+        className: "header-anchor",
+        "aria-hidden": "true",
+        href: "#title-2-4",
+        children: "#"
+      }), _jsx(_components.strong, {
+        children: "title"
+      }), " 2"]
+    }), "\\n", "\\n", _jsxs(_components.h2, {
+      id: "title-2-5",
+      children: [_jsx(_components.a, {
+        className: "header-anchor",
+        "aria-hidden": "true",
+        href: "#title-2-5",
+        children: "#"
+      }), _jsx(_components.em, {
+        children: "title"
+      }), " 2"]
+    }), "\\n"]
+  });
+}
+export default function MDXContent(props = {}) {
+  const {wrapper: MDXLayout} = {
+    ..._provideComponents(),
+    ...props.components
+  };
+  return MDXLayout ? _jsx(MDXLayout, {
+    ...props,
+    children: _jsx(_createMdxContent, {
+      ...props
+    })
+  }) : _createMdxContent(props);
+}
+
+MDXContent.__RSPRESS_PAGE_META = {};
+
+MDXContent.__RSPRESS_PAGE_META["index.mdx"] = {"toc":[{"id":"custom-id","text":"title 1","depth":2},{"id":"custom-id","text":"title 1","depth":2},{"id":"title-2","text":"title 2","depth":2},{"id":"title-2-1","text":"title 2","depth":2},{"id":"title-2-2","text":"\`title\` 2","depth":2},{"id":"title-2-3","text":"Title 2","depth":2},{"id":"title-2-4","text":"**title** 2","depth":2},{"id":"title-2-5","text":"*title* 2","depth":2}],"title":"Guide","headingTitle":"Guide","frontmatter":{}};
+"
+`;
+
+exports[`rehypeHeadAnchor > should render inline code in title 1`] = `
+"const frontmatter = {};
+import {jsx as _jsx, jsxs as _jsxs} from "react/jsx-runtime";
+import {useMDXComponents as _provideComponents} from "@mdx-js/react";
+function _createMdxContent(props) {
+  const _components = {
+    a: "a",
+    code: "code",
+    h1: "h1",
+    ..._provideComponents(),
+    ...props.components
+  };
+  return _jsxs(_components.h1, {
+    id: "hello-world-inline-code",
+    children: [_jsx(_components.a, {
+      className: "header-anchor",
+      "aria-hidden": "true",
+      href: "#hello-world-inline-code",
+      children: "#"
+    }), "Hello World ", _jsx(_components.code, {
+      children: "inline code"
+    })]
+  });
+}
+export default function MDXContent(props = {}) {
+  const {wrapper: MDXLayout} = {
+    ..._provideComponents(),
+    ...props.components
+  };
+  return MDXLayout ? _jsx(MDXLayout, {
+    ...props,
+    children: _jsx(_createMdxContent, {
+      ...props
+    })
+  }) : _createMdxContent(props);
+}
+
+MDXContent.__RSPRESS_PAGE_META = {};
+
+MDXContent.__RSPRESS_PAGE_META["inline-code.mdx"] = {"toc":[],"title":"Hello World \`inline code\`","headingTitle":"Hello World \`inline code\`","frontmatter":{}};
+"
+`;
+
+exports[`rehypeHeadAnchor > should support custom id 1`] = `
+"const frontmatter = {};
+import {jsx as _jsx, jsxs as _jsxs} from "react/jsx-runtime";
+import {useMDXComponents as _provideComponents} from "@mdx-js/react";
+function _createMdxContent(props) {
+  const _components = {
+    a: "a",
+    code: "code",
+    h1: "h1",
+    ..._provideComponents(),
+    ...props.components
+  };
+  return _jsxs(_components.h1, {
+    id: "custom-id",
+    children: [_jsx(_components.a, {
+      className: "header-anchor",
+      "aria-hidden": "true",
+      href: "#custom-id",
+      children: "#"
+    }), "Hello World ", _jsx(_components.code, {
+      children: "inline code"
+    })]
+  });
+}
+export default function MDXContent(props = {}) {
+  const {wrapper: MDXLayout} = {
+    ..._provideComponents(),
+    ...props.components
+  };
+  return MDXLayout ? _jsx(MDXLayout, {
+    ...props,
+    children: _jsx(_createMdxContent, {
+      ...props
+    })
+  }) : _createMdxContent(props);
+}
+
+MDXContent.__RSPRESS_PAGE_META = {};
+
+MDXContent.__RSPRESS_PAGE_META["inline-code.mdx"] = {"toc":[],"title":"Hello World \`inline code\`","headingTitle":"Hello World \`inline code\`","frontmatter":{}};
+"
+`;
