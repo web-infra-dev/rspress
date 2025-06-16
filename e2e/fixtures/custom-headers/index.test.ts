@@ -1,11 +1,6 @@
 import path from 'node:path';
 import { expect, test } from '@playwright/test';
-import {
-  getPort,
-  killProcess,
-  runBuildCommand,
-  runPreviewCommand,
-} from '../../utils/runCommands';
+import { getPort, killProcess, runDevCommand } from '../../utils/runCommands';
 
 test.describe('custom headers', async () => {
   let appPort;
@@ -13,8 +8,7 @@ test.describe('custom headers', async () => {
   test.beforeAll(async () => {
     const appDir = __dirname;
     appPort = await getPort();
-    await runBuildCommand(appDir);
-    app = await runPreviewCommand(appDir, appPort);
+    app = await runDevCommand(appDir, appPort);
   });
 
   test.afterAll(async () => {
@@ -86,6 +80,12 @@ test.describe('custom headers', async () => {
     );
     expect(customMetaContent2).toEqual('custom-meta-content-2');
 
+    const customHttpEquiv = await page.$eval(
+      'meta[http-equiv="refresh"]',
+      customMeta => customMeta.getAttribute('content'),
+    );
+    expect(customHttpEquiv).toEqual('300');
+
     const htmlContent = await page.content();
     expect(htmlContent).toContain(
       '<meta name="custom-meta" content="custom-meta-content">',
@@ -93,5 +93,6 @@ test.describe('custom headers', async () => {
     expect(htmlContent).toContain(
       '<meta name="custom-meta-2" content="custom-meta-content-2">',
     );
+    expect(htmlContent).toContain('<meta http-equiv="refresh" content="300">');
   });
 });

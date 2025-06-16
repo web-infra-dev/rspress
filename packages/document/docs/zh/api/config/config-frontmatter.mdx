@@ -103,13 +103,6 @@ head:
 </head>
 ```
 
-::: tip
-
-- `head` 仅在生产构建时生效，Rspress 会将标签注入到 SSG 生成的 HTML 中。你可以运行 `rspress build && rspress preview` 来查看效果。
-- 请确保为 head 标签和属性名称使用正确的格式。对于包含连字符（-）的标签或属性名，需要采用驼峰式命名法。例如，HTML 中的 `http-equiv="refresh"` 在配置中应写为 `httpEquiv: refresh`。这是因为 Rspress 底层使用 React 和 `unhead` 处理这些 headers。
-
-:::
-
 ## hero
 
 - Type: `Object`
