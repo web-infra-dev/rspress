@@ -29,8 +29,7 @@ import {
   isProduction,
 } from './constants';
 import { hintThemeBreakingChange } from './logger/hint';
-import type { RouteService } from './route/RouteService';
-import { initRouteService } from './route/init';
+import { RouteService } from './route/RouteService';
 import {
   getVirtualModulesFromPlugins,
   rsbuildPluginDocVM,
@@ -389,7 +388,7 @@ export async function initRsbuild(
   const runtimeAbsTempDir = path.join(cwd, 'node_modules', runtimeTempDir);
   await fs.mkdir(runtimeAbsTempDir, { recursive: true });
 
-  const routeService = await initRouteService({
+  const routeService = await RouteService.create({
     config,
     runtimeTempDir: runtimeAbsTempDir,
     scanDir: userDocRoot,

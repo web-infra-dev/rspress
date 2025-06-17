@@ -17,7 +17,7 @@ import type { FeedChannel, FeedItem } from './type';
 export function generateFeedItem(page: PageIndexInfo, siteUrl: string) {
   const { frontmatter: fm } = page;
   return {
-    id: selectNonNullishProperty(fm.slug, fm.id, page.id) || '',
+    id: selectNonNullishProperty(fm.slug, fm.id, page.routePath) || '',
     title: selectNonNullishProperty(fm.title, page.title) || '',
     author: toAuthors(fm.author),
     link: resolveUrl(

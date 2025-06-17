@@ -7,16 +7,14 @@ import { RouteService } from './RouteService';
 
 async function initRouteService(config: UserConfig) {
   const testDir = normalizePath(path.join(__dirname, 'fixtures', 'basic'));
-  const routeService = new RouteService(
-    testDir,
+  const routeService = await RouteService.create({
     config,
-    '',
-    new PluginDriver(config, false),
-  );
-  await routeService.init();
+    pluginDriver: new PluginDriver(config, false),
+    runtimeTempDir: '.rsbuild',
+    scanDir: testDir,
+  });
 
   const { routeData } = routeService;
-
   const routeMeta = routeService.getRoutes();
   const routeCode = routeService.generateRoutesCodeByRouteMeta(routeMeta);
 
@@ -31,37 +29,45 @@ describe('RouteService', async () => {
     const { routeData, routeCode } = await initRouteService({});
     expect(routeData).toMatchInlineSnapshot(`
       Map {
-        "/a" => {
-          "absolutePath": "<ROOT>/packages/core/src/node/route/fixtures/basic/a.mdx",
-          "lang": "",
-          "pageName": "a",
-          "relativePath": "a.mdx",
-          "routePath": "/a",
-          "version": "",
+        "/a" => RoutePage {
+          "routeMeta": {
+            "absolutePath": "<ROOT>/packages/core/src/node/route/fixtures/basic/a.mdx",
+            "lang": "",
+            "pageName": "a",
+            "relativePath": "a.mdx",
+            "routePath": "/a",
+            "version": "",
+          },
         },
-        "/guide/b" => {
-          "absolutePath": "<ROOT>/packages/core/src/node/route/fixtures/basic/guide/b.mdx",
-          "lang": "",
-          "pageName": "guide_b",
-          "relativePath": "guide/b.mdx",
-          "routePath": "/guide/b",
-          "version": "",
+        "/guide/b" => RoutePage {
+          "routeMeta": {
+            "absolutePath": "<ROOT>/packages/core/src/node/route/fixtures/basic/guide/b.mdx",
+            "lang": "",
+            "pageName": "guide_b",
+            "relativePath": "guide/b.mdx",
+            "routePath": "/guide/b",
+            "version": "",
+          },
         },
-        "/guide/c" => {
-          "absolutePath": "<ROOT>/packages/core/src/node/route/fixtures/basic/guide/c.tsx",
-          "lang": "",
-          "pageName": "guide_c",
-          "relativePath": "guide/c.tsx",
-          "routePath": "/guide/c",
-          "version": "",
+        "/guide/c" => RoutePage {
+          "routeMeta": {
+            "absolutePath": "<ROOT>/packages/core/src/node/route/fixtures/basic/guide/c.tsx",
+            "lang": "",
+            "pageName": "guide_c",
+            "relativePath": "guide/c.tsx",
+            "routePath": "/guide/c",
+            "version": "",
+          },
         },
-        "/" => {
-          "absolutePath": "<ROOT>/packages/core/src/node/route/fixtures/basic/index.mdx",
-          "lang": "",
-          "pageName": "index",
-          "relativePath": "index.mdx",
-          "routePath": "/",
-          "version": "",
+        "/" => RoutePage {
+          "routeMeta": {
+            "absolutePath": "<ROOT>/packages/core/src/node/route/fixtures/basic/index.mdx",
+            "lang": "",
+            "pageName": "index",
+            "relativePath": "index.mdx",
+            "routePath": "/",
+            "version": "",
+          },
         },
       }
     `);
@@ -104,29 +110,35 @@ describe('RouteService', async () => {
     });
     expect(routeData).toMatchInlineSnapshot(`
       Map {
-        "/a" => {
-          "absolutePath": "<ROOT>/packages/core/src/node/route/fixtures/basic/a.mdx",
-          "lang": "",
-          "pageName": "a",
-          "relativePath": "a.mdx",
-          "routePath": "/a",
-          "version": "",
+        "/a" => RoutePage {
+          "routeMeta": {
+            "absolutePath": "<ROOT>/packages/core/src/node/route/fixtures/basic/a.mdx",
+            "lang": "",
+            "pageName": "a",
+            "relativePath": "a.mdx",
+            "routePath": "/a",
+            "version": "",
+          },
         },
-        "/guide/c" => {
-          "absolutePath": "<ROOT>/packages/core/src/node/route/fixtures/basic/guide/c.tsx",
-          "lang": "",
-          "pageName": "guide_c",
-          "relativePath": "guide/c.tsx",
-          "routePath": "/guide/c",
-          "version": "",
+        "/guide/c" => RoutePage {
+          "routeMeta": {
+            "absolutePath": "<ROOT>/packages/core/src/node/route/fixtures/basic/guide/c.tsx",
+            "lang": "",
+            "pageName": "guide_c",
+            "relativePath": "guide/c.tsx",
+            "routePath": "/guide/c",
+            "version": "",
+          },
         },
-        "/" => {
-          "absolutePath": "<ROOT>/packages/core/src/node/route/fixtures/basic/index.mdx",
-          "lang": "",
-          "pageName": "index",
-          "relativePath": "index.mdx",
-          "routePath": "/",
-          "version": "",
+        "/" => RoutePage {
+          "routeMeta": {
+            "absolutePath": "<ROOT>/packages/core/src/node/route/fixtures/basic/index.mdx",
+            "lang": "",
+            "pageName": "index",
+            "relativePath": "index.mdx",
+            "routePath": "/",
+            "version": "",
+          },
         },
       }
     `);
@@ -163,29 +175,35 @@ describe('RouteService', async () => {
     });
     expect(routeData).toMatchInlineSnapshot(`
       Map {
-        "/a" => {
-          "absolutePath": "<ROOT>/packages/core/src/node/route/fixtures/basic/a.mdx",
-          "lang": "",
-          "pageName": "a",
-          "relativePath": "a.mdx",
-          "routePath": "/a",
-          "version": "",
+        "/a" => RoutePage {
+          "routeMeta": {
+            "absolutePath": "<ROOT>/packages/core/src/node/route/fixtures/basic/a.mdx",
+            "lang": "",
+            "pageName": "a",
+            "relativePath": "a.mdx",
+            "routePath": "/a",
+            "version": "",
+          },
         },
-        "/guide/b" => {
-          "absolutePath": "<ROOT>/packages/core/src/node/route/fixtures/basic/guide/b.mdx",
-          "lang": "",
-          "pageName": "guide_b",
-          "relativePath": "guide/b.mdx",
-          "routePath": "/guide/b",
-          "version": "",
+        "/guide/b" => RoutePage {
+          "routeMeta": {
+            "absolutePath": "<ROOT>/packages/core/src/node/route/fixtures/basic/guide/b.mdx",
+            "lang": "",
+            "pageName": "guide_b",
+            "relativePath": "guide/b.mdx",
+            "routePath": "/guide/b",
+            "version": "",
+          },
         },
-        "/" => {
-          "absolutePath": "<ROOT>/packages/core/src/node/route/fixtures/basic/index.mdx",
-          "lang": "",
-          "pageName": "index",
-          "relativePath": "index.mdx",
-          "routePath": "/",
-          "version": "",
+        "/" => RoutePage {
+          "routeMeta": {
+            "absolutePath": "<ROOT>/packages/core/src/node/route/fixtures/basic/index.mdx",
+            "lang": "",
+            "pageName": "index",
+            "relativePath": "index.mdx",
+            "routePath": "/",
+            "version": "",
+          },
         },
       }
     `);

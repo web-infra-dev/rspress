@@ -244,9 +244,10 @@ export interface SiteData<ThemeConfig = NormalizedDefaultThemeConfig> {
  * and should not be used in the runtime (usePageData).
  */
 export interface PageIndexInfo {
-  id: number;
-  title: string;
+  // can be used as id
   routePath: string;
+
+  title: string;
   toc: Header[];
   content: string;
   _flattenContent?: string;
