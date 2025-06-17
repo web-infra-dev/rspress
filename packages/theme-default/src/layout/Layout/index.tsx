@@ -1,4 +1,5 @@
 import { Content, usePageData } from '@rspress/runtime';
+import type { FrontMatterMeta } from '@rspress/shared';
 import {
   HomeLayout as DefaultHomeLayout,
   NotFoundLayout as DefaultNotFoundLayout,
@@ -6,7 +7,8 @@ import {
 } from '@theme';
 import { useHead } from '@unhead/react';
 import { Head } from '@unhead/react';
-import type React from 'react';
+import React, { memo } from 'react';
+import { useMemo } from 'react';
 import type { NavProps } from '../../components/Nav';
 import { useSetup } from '../../logic/sideEffects';
 import { useLocaleSiteData } from '../../logic/useLocaleSiteData';
@@ -42,6 +44,41 @@ const concatTitle = (title: string, suffix?: string) => {
 
   return `${title} ${suffix}`;
 };
+
+const HeadTags = memo(
+  (props: {
+    title: string | undefined;
+    description: string | undefined;
+    frontmatter: FrontMatterMeta;
+    lang?: string;
+  }) => {
+    const { lang, frontmatter, description, title } = props;
+
+    const head = frontmatter.head;
+    const frontmatterTags = useMemo(() => {
+      return head?.map(([tagName, attrs]) => {
+        return tagName ? React.createElement(tagName, { ...attrs }) : null;
+      });
+    }, [head]);
+
+    useHead({
+      htmlAttrs: {
+        lang: lang || 'en',
+      },
+      title: title || undefined,
+      meta: [
+        description
+          ? {
+              name: 'description',
+              content: description,
+            }
+          : undefined,
+      ],
+    });
+
+    return <Head>{frontmatterTags ?? null}</Head>;
+  },
+);
 
 export function Layout(props: LayoutProps) {
   const {
@@ -154,18 +191,15 @@ export function Layout(props: LayoutProps) {
     }
   };
 
-  useHead({
-    htmlAttrs: {
-      lang: currentLang || 'en',
-    },
-  });
-
   return (
     <>
-      <Head>
-        {title ? <title>{title}</title> : null}
-        {description ? <meta name="description" content={description} /> : null}
-      </Head>
+      <HeadTags
+        lang={currentLang}
+        title={title}
+        description={description}
+        frontmatter={frontmatter}
+      />
+
       {top}
 
       {pageType !== 'blank' && uiSwitch.showNavbar && (

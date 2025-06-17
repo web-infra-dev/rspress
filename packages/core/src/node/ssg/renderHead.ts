@@ -1,19 +1,4 @@
-import fs from 'node:fs/promises';
 import type { RouteMeta, UserConfig } from '@rspress/shared';
-import { loadFrontMatter } from '@rspress/shared/node-utils';
-
-export async function renderFrontmatterHead(route: unknown): Promise<string> {
-  if (!isRouteMeta(route)) return '';
-  const content = await fs.readFile(route.absolutePath, {
-    encoding: 'utf-8',
-  });
-  const {
-    frontmatter: { head },
-  } = loadFrontMatter(content, route.absolutePath, '', true);
-  if (!head || head.length === 0) return '';
-
-  return head.map(([tag, attrs]) => `<${tag} ${renderAttrs(attrs)}>`).join('');
-}
 
 export async function renderConfigHead(
   config: UserConfig,
