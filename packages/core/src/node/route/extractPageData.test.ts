@@ -161,17 +161,17 @@ describe('extractPageData', async () => {
 
 
 
-      ## h2 Comp in Comp
+      ## H2 comp in comp
 
-      CompComp content \`code\`
+      Comp in Comp content \`code\`
 
 
       ",
         "_html": "<h1 id="recursive-comp-test">Recursive comp test<a aria-hidden="true" href="#recursive-comp-test">#</a></h1>
       <h2 id="h2-comp">h2 Comp<a aria-hidden="true" href="#h2-comp">#</a></h2>
       <p>Comp content</p>
-      <h2 id="h2-comp-in-comp">h2 Comp in Comp<a aria-hidden="true" href="#h2-comp-in-comp">#</a></h2>
-      <p>CompComp content <code>code</code></p>",
+      <h2 id="h2-comp-in-comp">H2 comp in comp<a aria-hidden="true" href="#h2-comp-in-comp">#</a></h2>
+      <p>Comp in Comp content <code>code</code></p>",
         "_relativePath": "index.mdx",
         "content": "#
 
@@ -181,9 +181,9 @@ describe('extractPageData', async () => {
       Comp content
 
 
-      h2 Comp in Comp#
+      H2 comp in comp#
 
-      CompComp content code",
+      Comp in Comp content code",
         "domain": "http://localhost:3000",
         "frontmatter": {
           "__content": undefined,
@@ -202,7 +202,7 @@ describe('extractPageData', async () => {
             "charIndex": 28,
             "depth": 2,
             "id": "h2-comp-in-comp",
-            "text": "h2 Comp in Comp",
+            "text": "H2 comp in comp",
           },
         ],
         "version": "",
