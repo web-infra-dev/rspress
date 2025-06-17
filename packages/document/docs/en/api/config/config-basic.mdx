@@ -435,16 +435,16 @@ export default defineConfig({
 ### route.extensions
 
 - Type: `string[]`
-- Default: `['.js', '.jsx', '.ts', '.tsx', '.md', '.mdx']`
+- Default: `['.md', '.mdx']`
 
-The extensions of the files that will be included in the route. By default, Rspress will include all `'js'`, `'jsx'`, `'ts'`, `'tsx'`, `'md'`, `'mdx'` files in the route. If you want to customize the extensions, you can use this option. For example:
+The extensions of the files that will be included in the route. By default, Rspress will include all `.md`, `.mdx` files in the route. If you want to customize the extensions, you can use this option. For example:
 
 ```js
 import { defineConfig } from 'rspress/config';
 
 export default defineConfig({
   route: {
-    extensions: ['.md', '.mdx'],
+    extensions: ['.md', '.mdx', '.markdown', '.MD'],
   },
 });
 ```
