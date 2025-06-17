@@ -26,7 +26,11 @@ export const rsbuildPluginSSG = ({
         (resolve, reject) => {
           api.processAssets(
             { stage: 'report', targets: ['web'] },
-            ({ assets, compilation }) => {
+            ({ assets, compilation, environment }) => {
+              if (environment.name !== 'web') {
+                return;
+              }
+
               for (const [assetName, assetSource] of Object.entries(assets)) {
                 if (assetName === 'index.html') {
                   htmlTemplate = assetSource.source().toString();
@@ -35,7 +39,6 @@ export const rsbuildPluginSSG = ({
                   break;
                 }
               }
-
               reject();
             },
           );
@@ -51,21 +54,26 @@ export const rsbuildPluginSSG = ({
       api.processAssets(
         { stage: 'optimize-transfer', targets: ['node'] },
         async ({ assets, compilation, environment, compiler }) => {
-          const distPath = environment.distPath;
-          await mkdir(distPath, { recursive: true });
-
-          let mainCjsAbsolutePath = '';
-          for (const [assetName, assetSource] of Object.entries(assets)) {
-            if (assetName.includes(NODE_SSR_BUNDLE_NAME)) {
-              mainCjsAbsolutePath = join(distPath, assetName);
-              await writeFile(
-                mainCjsAbsolutePath,
-                assetSource.source().toString(),
-              );
-              compilation.deleteAsset(assetName);
-              break;
-            }
+          if (environment.name !== 'node') {
+            return;
           }
+          const distPath = environment.distPath;
+          const ssgFolderPath = join(distPath, 'ssg');
+          const mainCjsAbsolutePath = join(ssgFolderPath, NODE_SSR_BUNDLE_NAME);
+
+          await mkdir(ssgFolderPath, { recursive: true });
+          await Promise.all(
+            Object.entries(assets).map(async ([assetName, assetSource]) => {
+              if (assetName.startsWith('ssg/')) {
+                const fileAbsolutePath = join(distPath, assetName);
+                await writeFile(
+                  fileAbsolutePath,
+                  assetSource.source().toString(),
+                );
+                compilation.deleteAsset(assetName);
+              }
+            }),
+          );
 
           const emitAsset: (assetName: string, content: string) => void = (
             assetName: string,
@@ -88,7 +96,7 @@ export const rsbuildPluginSSG = ({
           );
 
           if (!isDebugMode()) {
-            await rm(mainCjsAbsolutePath);
+            await rm(ssgFolderPath, { recursive: true });
           }
         },
       );
