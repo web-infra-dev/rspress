@@ -98,8 +98,8 @@ export function pluginRss(pluginRssOptions: PluginRssOptions): RspressPlugin {
 
       // rspress run `extendPageData` for each page
       //   - let's cache rss items within a complete rspress build
-      _rssWorkaround[pageData.id] =
-        _rssWorkaround[pageData.id] ||
+      _rssWorkaround[pageData.routePath] =
+        _rssWorkaround[pageData.routePath] ||
         getRssItems(
           feedsSet.get(),
           pageData,
@@ -107,7 +107,7 @@ export function pluginRss(pluginRssOptions: PluginRssOptions): RspressPlugin {
           pluginRssOptions.siteUrl,
         );
 
-      const feeds = await _rssWorkaround[pageData.id];
+      const feeds = await _rssWorkaround[pageData.routePath];
       const showRssList = new Set(
         concatArray(pageData.frontmatter['link-rss'] as string[] | string),
       );

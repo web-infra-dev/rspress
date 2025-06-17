@@ -1,9 +1,9 @@
 import { join } from 'node:path';
 import { describe, expect, it } from 'vitest';
-import type { RouteService } from '../../route/RouteService';
+import type { RouteService } from './RouteService';
 import { extractPageData } from './extractPageData';
 
-const fixtureBasicDir = join(__dirname, '../../route/fixtures/basic');
+const fixtureBasicDir = join(__dirname, './fixtures/basic');
 
 const absolutize = (relativePath: string) => {
   return join(fixtureBasicDir, `.${relativePath}`);
@@ -12,10 +12,6 @@ const absolutize = (relativePath: string) => {
 describe('extractPageData', async () => {
   it('basic', async () => {
     const pageData = await extractPageData(
-      [],
-      {},
-      'http://localhost:3000',
-      fixtureBasicDir,
       {
         getRoutes: () =>
           Object.values({
@@ -53,7 +49,13 @@ describe('extractPageData', async () => {
             },
           }),
       } as RouteService,
-      false,
+      {
+        alias: {},
+        domain: 'http://localhost:3000',
+        replaceRules: [],
+        root: fixtureBasicDir,
+        searchCodeBlocks: false,
+      },
     );
     expect(pageData).toMatchInlineSnapshot(`
       [
@@ -68,7 +70,6 @@ describe('extractPageData', async () => {
           "frontmatter": {
             "__content": undefined,
           },
-          "id": 0,
           "lang": "",
           "routePath": "/a",
           "title": "Page a",
@@ -86,7 +87,6 @@ describe('extractPageData', async () => {
           "frontmatter": {
             "__content": undefined,
           },
-          "id": 1,
           "lang": "",
           "routePath": "/guide/b",
           "title": "Page b",
@@ -101,7 +101,6 @@ describe('extractPageData', async () => {
           "content": "",
           "domain": "http://localhost:3000",
           "frontmatter": {},
-          "id": 2,
           "lang": "",
           "routePath": "/guide/c",
           "title": "",
@@ -119,7 +118,6 @@ describe('extractPageData', async () => {
           "frontmatter": {
             "__content": undefined,
           },
-          "id": 3,
           "lang": "",
           "routePath": "/",
           "title": "homePage",

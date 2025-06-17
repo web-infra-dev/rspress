@@ -7,7 +7,15 @@ import { glob } from 'tinyglobby';
 import type { PluginDriver } from '../PluginDriver';
 import { PUBLIC_DIR } from '../constants';
 import { getPageKey, normalizePath } from '../utils';
+import { RoutePage } from './RoutePage';
 import { getRoutePathParts, normalizeRoutePath } from './normalizeRoutePath';
+
+interface InitOptions {
+  scanDir: string;
+  config: UserConfig;
+  runtimeTempDir: string;
+  pluginDriver: PluginDriver;
+}
 
 export interface Route {
   path: string;
@@ -24,7 +32,7 @@ export interface RouteOptions {
 }
 
 export class RouteService {
-  routeData = new Map<string, RouteMeta>();
+  routeData = new Map<string, RoutePage>();
 
   #scanDir: string;
 
@@ -47,6 +55,20 @@ export class RouteService {
   #tempDir: string = '';
 
   #pluginDriver: PluginDriver;
+
+  // The factory to create route service instance
+  static async create(options: InitOptions) {
+    const { scanDir, config, runtimeTempDir, pluginDriver } = options;
+    const routeService = new RouteService(
+      scanDir,
+      config,
+      runtimeTempDir,
+      pluginDriver,
+    );
+    await routeService.#init();
+    await pluginDriver.routeServiceGenerated(routeService);
+    return routeService;
+  }
 
   constructor(
     scanDir: string,
@@ -79,7 +101,7 @@ export class RouteService {
     return this.#extensions;
   }
 
-  async init() {
+  async #init() {
     // 1. internal pages
     const extensions = this.#extensions.map(i => {
       // .mdx -> mdx, .tsx -> tsx
@@ -108,7 +130,7 @@ export class RouteService {
         this.normalizeRoutePath(fileRelativePath);
       const absolutePath = path.join(this.#scanDir, fileRelativePath);
 
-      const routeInfo = {
+      const routeMeta = {
         routePath,
         absolutePath: normalizePath(absolutePath),
         relativePath: fileRelativePath,
@@ -116,7 +138,7 @@ export class RouteService {
         lang,
         version,
       };
-      this.addRoute(routeInfo);
+      this.addRoute(routeMeta);
     });
     // 2. external pages added by plugins
     const externalPages = await this.#pluginDriver.addPages();
@@ -126,15 +148,15 @@ export class RouteService {
         const { routePath, content, filepath } = route;
         // case1: specify the filepath
         if (filepath) {
-          const routeInfo = this.#generateRouteInfo(routePath, filepath);
-          this.addRoute(routeInfo);
+          const routeMeta = this.#generateRouteMeta(routePath, filepath);
+          this.addRoute(routeMeta);
           return;
         }
         // case2: specify the content
         if (content) {
           const filepath = await this.#writeTempFile(index, content);
-          const routeInfo = this.#generateRouteInfo(routePath, filepath);
-          this.addRoute(routeInfo);
+          const routeMeta = this.#generateRouteMeta(routePath, filepath);
+          this.addRoute(routeMeta);
         }
       }),
     );
@@ -142,26 +164,14 @@ export class RouteService {
     await this.#pluginDriver.routeGenerated(this.getRoutes());
   }
 
-  addRoute(routeInfo: RouteMeta) {
-    const { routePath, absolutePath } = routeInfo;
+  async addRoute(routeMeta: RouteMeta) {
+    const { routePath } = routeMeta;
     if (this.routeData.has(routePath)) {
-      // apply the one with the extension listed first in the array and skip the rest.
-      const preRouteExtIndex = this.#extensions.indexOf(
-        path.extname(this.routeData.get(routePath)!.absolutePath),
-      );
-      const currRouteExtIndex = this.#extensions.indexOf(
-        path.extname(absolutePath),
-      );
-
-      if (
-        currRouteExtIndex !== -1 &&
-        (currRouteExtIndex < preRouteExtIndex || preRouteExtIndex === -1)
-      ) {
-        this.routeData.set(routePath, routeInfo);
-      }
-    } else {
-      this.routeData.set(routePath, routeInfo);
+      throw new Error(`routePath ${routePath} has already been added`);
     }
+
+    const routePage = RoutePage.create(routeMeta);
+    this.routeData.set(routePath, routePage);
   }
 
   removeRoute(filePath: string): void {
@@ -171,16 +181,16 @@ export class RouteService {
   }
 
   getRoutes(): RouteMeta[] {
+    return Array.from(this.routeData.values()).map(i => i.routeMeta);
+  }
+
+  getRoutePages(): RoutePage[] {
     return Array.from(this.routeData.values());
   }
 
   isExistRoute(routePath: string): boolean {
     const { routePath: normalizedRoute } = this.normalizeRoutePath(routePath);
     return Boolean(this.routeData.get(normalizedRoute));
-  }
-
-  isEmpty(): boolean {
-    return this.routeData.size === 0;
   }
 
   generateRoutesCode(): string {
@@ -247,7 +257,7 @@ ${routeMeta
     return tempFilePath;
   }
 
-  #generateRouteInfo(routePath: string, filepath: string): RouteMeta {
+  #generateRouteMeta(routePath: string, filepath: string): RouteMeta {
     const {
       routePath: normalizedPath,
       lang,
@@ -261,5 +271,9 @@ ${routeMeta
       lang,
       version,
     };
+  }
+
+  getRoutePageByRoutePath(routePath: string) {
+    return this.routeData.get(routePath);
   }
 }

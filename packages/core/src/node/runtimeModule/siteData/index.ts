@@ -6,9 +6,9 @@ import { SEARCH_INDEX_NAME, type SiteData } from '@rspress/shared';
 import { getIconUrlPath } from '@rspress/shared/node-utils';
 import { groupBy } from 'lodash-es';
 import { TEMP_DIR, isProduction } from '../../constants';
+import { extractPageData } from '../../route/extractPageData';
 import { createHash } from '../../utils';
 import { type FactoryContext, RuntimeModuleID } from '../types';
-import { extractPageData } from './extractPageData';
 import { normalizeThemeConfig } from './normalizeThemeConfig';
 
 // How can we let the client runtime access the `indexHash`?
@@ -52,14 +52,13 @@ export async function siteDataVMPlugin(context: FactoryContext) {
   const searchCodeBlocks =
     'codeBlocks' in searchConfig ? Boolean(searchConfig.codeBlocks) : true;
 
-  const pages = await extractPageData(
+  const pages = await extractPageData(routeService, {
     replaceRules,
     alias,
     domain,
-    userDocRoot,
-    routeService,
+    root: userDocRoot,
     searchCodeBlocks,
-  );
+  });
   // modify page index by plugins
   await pluginDriver.modifySearchIndexData(pages);
 
@@ -132,15 +131,8 @@ export async function siteDataVMPlugin(context: FactoryContext) {
     search: tempSearchObj ?? { mode: 'local' },
     pages: pages.map(page => {
       // omit some fields for runtime size
-      const {
-        content,
-        id,
-        domain,
-        _filepath,
-        _html,
-        _flattenContent,
-        ...rest
-      } = page;
+      const { content, domain, _filepath, _html, _flattenContent, ...rest } =
+        page;
       // FIXME: should not have differences from development
       // In production, we cannot expose the complete filepath for security reasons
       return isProduction() ? rest : { ...rest, _filepath };
