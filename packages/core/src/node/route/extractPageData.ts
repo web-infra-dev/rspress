@@ -196,7 +196,7 @@ async function extractPageData(
       return getPageIndexInfoByRoute(routeMeta, options);
     }),
   );
-  return pageData.filter(Boolean) as PageIndexInfo[];
+  return pageData;
 }
 
 export type { ExtractPageDataOptions };

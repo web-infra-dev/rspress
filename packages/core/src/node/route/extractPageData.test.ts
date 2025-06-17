@@ -1,16 +1,14 @@
 import { join } from 'node:path';
 import { describe, expect, it } from 'vitest';
 import type { RouteService } from './RouteService';
-import { extractPageData } from './extractPageData';
-
-const fixtureBasicDir = join(__dirname, './fixtures/basic');
-
-const absolutize = (relativePath: string) => {
-  return join(fixtureBasicDir, `.${relativePath}`);
-};
+import { extractPageData, getPageIndexInfoByRoute } from './extractPageData';
 
 describe('extractPageData', async () => {
   it('basic', async () => {
+    const fixtureBasicDir = join(__dirname, './fixtures/basic');
+    const absolutize = (relativePath: string) => {
+      return join(fixtureBasicDir, `.${relativePath}`);
+    };
     const pageData = await extractPageData(
       {
         getRoutes: () =>
@@ -125,6 +123,89 @@ describe('extractPageData', async () => {
           "version": "",
         },
       ]
+    `);
+  });
+
+  it('getPageIndexInfoByRoute - recursive', async () => {
+    const fixtureRecursiveDir = join(__dirname, './fixtures/recursive');
+    const absolutize = (relativePath: string) => {
+      return join(fixtureRecursiveDir, `.${relativePath}`);
+    };
+    const pageIndexInfo = await getPageIndexInfoByRoute(
+      {
+        absolutePath: absolutize('/index.mdx'),
+        lang: '',
+        pageName: 'index',
+        relativePath: 'index.mdx',
+        routePath: '/',
+        version: '',
+      },
+      {
+        alias: {},
+        domain: 'http://localhost:3000',
+        replaceRules: [],
+        root: fixtureRecursiveDir,
+        searchCodeBlocks: false,
+      },
+    );
+    expect(pageIndexInfo).toMatchInlineSnapshot(`
+      {
+        "_filepath": "<ROOT>/packages/core/src/node/route/fixtures/recursive/index.mdx",
+        "_flattenContent": "# Recursive comp test
+
+
+
+      ## h2 Comp
+
+      Comp content
+
+
+
+      ## h2 in CompComp
+
+      CompComp content \`code\`
+
+      ",
+        "_html": "<h1 id="recursive-comp-test">Recursive comp test<a aria-hidden="true" href="#recursive-comp-test">#</a></h1>
+      <h2 id="h2-comp">h2 Comp<a aria-hidden="true" href="#h2-comp">#</a></h2>
+      <p>Comp content</p>
+      <h2 id="h2-in-compcomp">h2 in CompComp<a aria-hidden="true" href="#h2-in-compcomp">#</a></h2>
+      <p>CompComp content <code>code</code></p>",
+        "_relativePath": "index.mdx",
+        "content": "#
+
+
+      h2 Comp#
+
+      Comp content
+
+
+      h2 in CompComp#
+
+      CompComp content code",
+        "domain": "http://localhost:3000",
+        "frontmatter": {
+          "__content": undefined,
+        },
+        "lang": "",
+        "routePath": "/",
+        "title": "Recursive comp test",
+        "toc": [
+          {
+            "charIndex": 3,
+            "depth": 2,
+            "id": "h2-comp",
+            "text": "h2 Comp",
+          },
+          {
+            "charIndex": 28,
+            "depth": 2,
+            "id": "h2-in-compcomp",
+            "text": "h2 in CompComp",
+          },
+        ],
+        "version": "",
+      }
     `);
   });
 });
