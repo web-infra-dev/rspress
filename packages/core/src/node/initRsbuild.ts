@@ -298,7 +298,9 @@ async function createInternalBuildConfig(
           .merge({ sideEffects: true });
 
         if (isServer) {
-          chain.output.filename(NODE_SSR_BUNDLE_NAME);
+          chain.output.filename(`ssg/${NODE_SSR_BUNDLE_NAME}`);
+          chain.output.chunkFilename('ssg/[name].cjs');
+          chain.target('async-node');
         }
       },
     },
@@ -337,13 +339,6 @@ async function createInternalBuildConfig(
                 alias: {
                   ...reactSSRAlias,
                   ...reactRouterDomAlias,
-                },
-              },
-              tools: {
-                rspack: {
-                  output: {
-                    asyncChunks: false, // Ensure that only one cjs bundle is generated.
-                  },
                 },
               },
               source: {
