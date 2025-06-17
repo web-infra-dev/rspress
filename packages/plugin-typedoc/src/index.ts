@@ -24,14 +24,6 @@ export function pluginTypeDoc(options: PluginTypeDocOptions): RspressPlugin {
   const apiPageRoute = `/${outDir.replace(/(^\/)|(\/$)/, '')}/`; // e.g: /api/
   return {
     name: '@rspress/plugin-typedoc',
-    async addPages() {
-      return [
-        {
-          routePath: apiPageRoute,
-          filepath: path.join(docRoot!, outDir, 'README.md'),
-        },
-      ];
-    },
     async config(config) {
       const app = new Application();
       docRoot = config.root;
