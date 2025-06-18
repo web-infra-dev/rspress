@@ -211,7 +211,7 @@ export interface SidebarGroup {
   text: string;
   link?: string;
   tag?: string;
-  items: (SidebarItem | SidebarDivider | SidebarGroup | string)[];
+  items: (SidebarGroup | SidebarItem | SidebarDivider | SidebarSectionHeader)[];
   collapsible?: boolean;
   collapsed?: boolean;
   /**
