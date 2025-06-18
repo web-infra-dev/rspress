@@ -19,6 +19,8 @@ import type { PluginDriver } from './PluginDriver';
 import {
   CSR_CLIENT_ENTRY,
   DEFAULT_TITLE,
+  NODE_SSG_BUNDLE_FOLDER,
+  NODE_SSG_BUNDLE_NAME,
   OUTPUT_DIR,
   PACKAGE_ROOT,
   PUBLIC_DIR,
@@ -41,7 +43,7 @@ import { routeListVMPlugin } from './runtimeModule/routeList';
 import { searchHookVMPlugin } from './runtimeModule/searchHooks';
 import type { FactoryContext } from './runtimeModule/types';
 import { serveSearchIndexMiddleware } from './searchIndex';
-import { NODE_SSR_BUNDLE_NAME, rsbuildPluginSSG } from './ssg/rsbuildPluginSSG';
+import { rsbuildPluginSSG } from './ssg/rsbuildPluginSSG';
 import {
   detectReactVersion,
   resolveReactAlias,
@@ -298,9 +300,11 @@ async function createInternalBuildConfig(
           .merge({ sideEffects: true });
 
         if (isServer) {
-          chain.output.filename(`ssg/${NODE_SSR_BUNDLE_NAME}`);
-          chain.output.chunkFilename('ssg/[name].cjs');
-          chain.target('async-node');
+          chain.output.filename(
+            `${NODE_SSG_BUNDLE_FOLDER}/${NODE_SSG_BUNDLE_NAME}`,
+          );
+          chain.output.chunkFilename(`${NODE_SSG_BUNDLE_FOLDER}/[name].cjs`);
+          chain.target('async-node'); // For MF support
         }
       },
     },

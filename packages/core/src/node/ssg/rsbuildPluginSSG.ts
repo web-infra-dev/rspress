@@ -4,10 +4,9 @@ import type { RsbuildPlugin } from '@rsbuild/core';
 import { type UserConfig, isDebugMode } from '@rspress/shared';
 import { logger } from '@rspress/shared/logger';
 import type { PluginDriver } from '../PluginDriver';
+import { NODE_SSG_BUNDLE_FOLDER, NODE_SSG_BUNDLE_NAME } from '../constants';
 import type { RouteService } from '../route/RouteService';
 import { renderPages } from './renderPages';
-
-export const NODE_SSR_BUNDLE_NAME = 'rspress-ssg-entry.cjs';
 
 export const rsbuildPluginSSG = ({
   routeService,
@@ -58,8 +57,8 @@ export const rsbuildPluginSSG = ({
             return;
           }
           const distPath = environment.distPath;
-          const ssgFolderPath = join(distPath, 'ssg');
-          const mainCjsAbsolutePath = join(ssgFolderPath, NODE_SSR_BUNDLE_NAME);
+          const ssgFolderPath = join(distPath, NODE_SSG_BUNDLE_FOLDER);
+          const mainCjsAbsolutePath = join(ssgFolderPath, NODE_SSG_BUNDLE_NAME);
 
           await mkdir(ssgFolderPath, { recursive: true });
           await Promise.all(
