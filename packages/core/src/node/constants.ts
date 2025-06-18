@@ -66,3 +66,7 @@ export const TEMP_DIR = path.join(
   'node_modules',
   RSPRESS_TEMP_DIR,
 );
+
+// Prevent the risk of naming conflicts with the user's folders
+export const NODE_SSG_BUNDLE_FOLDER = '__ssg__';
+export const NODE_SSG_BUNDLE_NAME = 'rspress-ssg-entry.cjs';
