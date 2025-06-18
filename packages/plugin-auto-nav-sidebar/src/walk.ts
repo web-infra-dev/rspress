@@ -21,16 +21,6 @@ import {
   readJson,
 } from './utils';
 
-function getHmrFileKey(realPath: string | undefined, docsDir: string) {
-  return realPath
-    ? path
-        .relative(docsDir, realPath)
-        .replace(path.extname(realPath), '')
-        .split(path.sep)
-        .join('/')
-    : '';
-}
-
 const DEFAULT_DIRNAME_PREFIX = 'rspress-dir-default-';
 async function scanSideMeta(
   workDir: string,
@@ -101,7 +91,7 @@ async function scanSideMeta(
   )[] = await Promise.all(
     sideMeta.map(async metaItem => {
       if (typeof metaItem === 'string') {
-        const { title, overviewHeaders, context, realPath } =
+        const { title, overviewHeaders, context } =
           await extractInfoFromFrontmatter(
             path.resolve(workDir, metaItem),
             rootDir,
@@ -113,7 +103,6 @@ async function scanSideMeta(
           link: addRoutePrefix(pureLink),
           overviewHeaders,
           context,
-          _fileKey: getHmrFileKey(realPath, docsDir),
         } satisfies SidebarItem;
       }
 
@@ -129,7 +118,6 @@ async function scanSideMeta(
           extensions,
         );
         const title = label || info.title;
-        const realPath = info.realPath;
         return {
           text: title,
           link: addRoutePrefix(pureLink),
@@ -138,7 +126,6 @@ async function scanSideMeta(
             ? info.overviewHeaders
             : overviewHeaders,
           context: info.context ? info.context : context,
-          _fileKey: getHmrFileKey(realPath, docsDir),
         } satisfies SidebarItem;
       }
 
@@ -168,11 +155,9 @@ async function scanSideMeta(
         // 1. sameName /api, /api.md or /api.mdx, (this should be removed in Rspress 2.0)
         let realPath = await detectFilePath(subDir, extensions);
         let link: string;
-        let _fileKey: string;
 
         if (realPath) {
           link = addRoutePrefix(pureLink);
-          _fileKey = getHmrFileKey(realPath, docsDir);
         } else {
           // 2. index /api, /api/index.md, /api/index.mdx
           const indexFileRealPath = await detectFilePath(
@@ -180,14 +165,26 @@ async function scanSideMeta(
             extensions,
           );
           link = indexFileRealPath ? addRoutePrefix(pureLink) : '';
-          _fileKey = getHmrFileKey(indexFileRealPath, docsDir);
           realPath = indexFileRealPath;
 
           // 3. if "index.mdx" or "index.md" or "index" is in _meta.json, index page should be placed to child sidebar
           const indexItemIndex = subSidebar.findIndex(i => {
-            return (
-              (i as { _fileKey: string | undefined })._fileKey === _fileKey
-            );
+            if (typeof i === 'string') {
+              return i === 'index' || i === 'index.md' || i === 'index.mdx';
+            }
+            if (
+              typeof i === 'object' &&
+              'name' in i &&
+              'type' in i &&
+              i.type === 'file'
+            ) {
+              return (
+                i.name === 'index' ||
+                i.name === 'index.md' ||
+                i.name === 'index.mdx'
+              );
+            }
+            return false;
           });
           const isIndexFileInMetaItems = indexItemIndex !== -1;
 
@@ -197,7 +194,6 @@ async function scanSideMeta(
             );
             if (isMetaJsonExist) {
               link = '';
-              _fileKey = getHmrFileKey(indexFileRealPath, docsDir);
               realPath = undefined;
             } else {
               // 4. if _meta.json not exist, index page should be placed to dir sidebar
@@ -241,7 +237,6 @@ async function scanSideMeta(
           tag,
           overviewHeaders,
           context: frontmatterContext,
-          _fileKey,
         } as SidebarGroup;
       }
 

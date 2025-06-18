@@ -21,17 +21,21 @@ describe('walk', () => {
         "sidebar": {
           "/guide": [
             {
-              "_fileKey": "guide/test-dir/index",
               "collapsed": undefined,
               "collapsible": undefined,
               "context": undefined,
               "items": [
                 {
-                  "_fileKey": "guide/test-dir/getting-started",
                   "context": undefined,
                   "link": "/guide/test-dir/getting-started",
                   "overviewHeaders": undefined,
                   "text": "Getting started",
+                },
+                {
+                  "context": undefined,
+                  "link": "/guide/test-dir/index",
+                  "overviewHeaders": undefined,
+                  "text": "Test dir",
                 },
               ],
               "link": "/guide/test-dir",
@@ -40,21 +44,18 @@ describe('walk', () => {
               "text": "Test dir",
             },
             {
-              "_fileKey": "guide/a",
               "context": undefined,
               "link": "/guide/a",
               "overviewHeaders": undefined,
               "text": "Page a",
             },
             {
-              "_fileKey": "guide/b",
               "context": undefined,
               "link": "/guide/b",
               "overviewHeaders": undefined,
               "text": "Page b",
             },
             {
-              "_fileKey": "guide/c",
               "context": undefined,
               "link": "/guide/c",
               "overviewHeaders": undefined,
