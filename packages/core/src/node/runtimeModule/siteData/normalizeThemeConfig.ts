@@ -1,4 +1,3 @@
-import path from 'node:path';
 import {
   type DefaultThemeConfig,
   type NavItem,
@@ -124,10 +123,6 @@ export function normalizeThemeConfig(
         return {
           text: applyReplaceRules(page?.title || '', replaceRules),
           link: normalizedItem,
-          _fileKey: page?._relativePath.replace(
-            path.extname(page._relativePath),
-            '',
-          ),
         };
       }
 

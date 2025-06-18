@@ -244,7 +244,6 @@ export function Overview(props: {
                   link: sidebarGroup.link,
                   text: sidebarGroup.text || '',
                   tag: sidebarGroup.tag,
-                  _fileKey: sidebarGroup._fileKey,
                   overviewHeaders: sidebarGroup.overviewHeaders,
                 } as SidebarItem,
                 undefined,
