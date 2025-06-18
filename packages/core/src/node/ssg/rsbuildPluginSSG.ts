@@ -63,7 +63,7 @@ export const rsbuildPluginSSG = ({
           await mkdir(ssgFolderPath, { recursive: true });
           await Promise.all(
             Object.entries(assets).map(async ([assetName, assetSource]) => {
-              if (assetName.startsWith('ssg/')) {
+              if (assetName.startsWith(`${NODE_SSG_BUNDLE_FOLDER}/`)) {
                 const fileAbsolutePath = join(distPath, assetName);
                 await writeFile(
                   fileAbsolutePath,
