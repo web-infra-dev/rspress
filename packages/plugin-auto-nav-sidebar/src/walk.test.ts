@@ -40,6 +40,25 @@ describe('walk', () => {
               "text": "Test dir",
             },
             {
+              "_fileKey": "guide/test-same-name-dir",
+              "collapsed": undefined,
+              "collapsible": undefined,
+              "context": undefined,
+              "items": [
+                {
+                  "_fileKey": "guide/test-same-name-dir/index",
+                  "context": undefined,
+                  "link": "/guide/test-same-name-dir/index",
+                  "overviewHeaders": undefined,
+                  "text": "Test same name dir",
+                },
+              ],
+              "link": "/guide/test-same-name-dir",
+              "overviewHeaders": undefined,
+              "tag": undefined,
+              "text": "Test same name dir in file",
+            },
+            {
               "_fileKey": "guide/a",
               "context": undefined,
               "link": "/guide/a",
