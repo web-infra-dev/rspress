@@ -3,6 +3,10 @@
     "type": "dir",
     "name": "test-dir"
   },
+  {
+    "type": "dir",
+    "name": "test-same-name-dir"
+  },
   "a",
   "b",
   "c"
