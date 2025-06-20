@@ -331,10 +331,8 @@ async function metaFileItemToSidebarItem(
     text: title,
     link,
     tag,
-    overviewHeaders: info.overviewHeaders
-      ? info.overviewHeaders
-      : overviewHeaders,
-    context: info.context ? info.context : context,
+    overviewHeaders: info.overviewHeaders || overviewHeaders,
+    context: info.context || context,
     _fileKey: getHmrFileKey(absolutePathWithExt, docsDir),
   } satisfies SidebarItem;
 }
