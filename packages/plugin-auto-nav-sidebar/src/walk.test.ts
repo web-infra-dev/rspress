@@ -3,12 +3,10 @@ import { DEFAULT_PAGE_EXTENSIONS } from '@rspress/shared/constants';
 import { describe, expect, it } from 'vitest';
 import { walk } from './walk';
 
-const workDir = path.join(__dirname, './fixtures/docs');
-const docsDir = path.join(__dirname, './fixtures/docs');
-
 describe('walk', () => {
   it('basic', async () => {
-    const sidebar = await walk(workDir, '/', docsDir, DEFAULT_PAGE_EXTENSIONS);
+    const docsDir = path.join(__dirname, './fixtures/docs');
+    const sidebar = await walk(docsDir, '/', docsDir, DEFAULT_PAGE_EXTENSIONS);
     expect(sidebar).toMatchInlineSnapshot(`
       {
         "nav": [
@@ -31,10 +29,11 @@ describe('walk', () => {
                   "context": undefined,
                   "link": "/guide/test-dir/getting-started",
                   "overviewHeaders": undefined,
+                  "tag": undefined,
                   "text": "Getting started",
                 },
               ],
-              "link": "/guide/test-dir",
+              "link": "/guide/test-dir/index",
               "overviewHeaders": undefined,
               "tag": undefined,
               "text": "Test dir",
@@ -50,6 +49,7 @@ describe('walk', () => {
                   "context": undefined,
                   "link": "/guide/test-same-name-dir/index",
                   "overviewHeaders": undefined,
+                  "tag": undefined,
                   "text": "Test same name dir",
                 },
               ],
@@ -63,6 +63,7 @@ describe('walk', () => {
               "context": undefined,
               "link": "/guide/a",
               "overviewHeaders": undefined,
+              "tag": undefined,
               "text": "Page a",
             },
             {
@@ -70,6 +71,7 @@ describe('walk', () => {
               "context": undefined,
               "link": "/guide/b",
               "overviewHeaders": undefined,
+              "tag": undefined,
               "text": "Page b",
             },
             {
@@ -77,7 +79,57 @@ describe('walk', () => {
               "context": undefined,
               "link": "/guide/c",
               "overviewHeaders": undefined,
+              "tag": undefined,
               "text": "c",
+            },
+          ],
+        },
+      }
+    `);
+  });
+  it('no meta', async () => {
+    const docsDir = path.join(__dirname, './fixtures/docs-no-meta');
+    const sidebar = await walk(docsDir, '/', docsDir, DEFAULT_PAGE_EXTENSIONS);
+    expect(sidebar).toMatchInlineSnapshot(`
+      {
+        "nav": [],
+        "sidebar": {
+          "/api": [
+            {
+              "_fileKey": "api/api",
+              "context": undefined,
+              "link": "/api/api",
+              "overviewHeaders": undefined,
+              "tag": undefined,
+              "text": "Api",
+            },
+            {
+              "_fileKey": "api/guide/index",
+              "collapsed": undefined,
+              "collapsible": undefined,
+              "context": undefined,
+              "items": [
+                {
+                  "_fileKey": "api/guide/getting-started",
+                  "context": undefined,
+                  "link": "/api/guide/getting-started",
+                  "overviewHeaders": undefined,
+                  "tag": undefined,
+                  "text": "Getting started",
+                },
+              ],
+              "link": "/api/guide/index",
+              "overviewHeaders": undefined,
+              "tag": undefined,
+              "text": "Guide",
+            },
+            {
+              "_fileKey": "api/index",
+              "context": undefined,
+              "link": "/api/index",
+              "overviewHeaders": undefined,
+              "tag": undefined,
+              "text": "No meta",
             },
           ],
         },

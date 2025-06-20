@@ -117,7 +117,7 @@ export async function siteDataVMPlugin(context: FactoryContext) {
     description: userConfig?.description || '',
     icon: getIconUrlPath(userConfig?.icon) || '',
     route: userConfig?.route || {},
-    themeConfig: normalizeThemeConfig(userConfig, pages),
+    themeConfig: normalizeThemeConfig(userConfig),
     base: userConfig?.base || '/',
     lang: userConfig?.lang || '',
     locales: userConfig?.locales || userConfig.themeConfig?.locales || [],

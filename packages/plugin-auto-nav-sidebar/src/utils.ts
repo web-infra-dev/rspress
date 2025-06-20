@@ -1,7 +1,6 @@
 import fs from 'node:fs/promises';
 import path from 'node:path';
 import type { NavItem, Sidebar } from '@rspress/shared';
-import { logger } from '@rspress/shared/logger';
 import { extractTextAndId, loadFrontMatter } from '@rspress/shared/node-utils';
 
 export async function pathExists(path: string): Promise<boolean> {
@@ -18,97 +17,22 @@ export async function readJson<T = unknown>(path: string): Promise<T> {
   return JSON.parse(raw);
 }
 
-/**
- * @param rawPathWithExtension /usr/rspress-demo/docs/api.md
- * @returns /usr/rspress-demo/docs/api.md or undefined
- */
-export async function detectFilePathWithExtension(
-  rawPathWithExtension: string,
-): Promise<string | undefined> {
-  const exist = await pathExists(rawPathWithExtension);
-  if (!exist) {
-    return undefined;
-  }
-  const stat = await fs.stat(rawPathWithExtension);
-  if (!stat.isFile()) {
-    return undefined;
-  }
-  return rawPathWithExtension;
-}
-
-/**
- *
- * @param rawPath e.g: /usr/rspress-demo/docs/api.md or /usr/rspress-demo/docs/api
- * @param extensions e.g: [".md"]
- * @returns
- */
-export async function detectFilePath(
-  rawPath: string,
-  extensions: string[],
-): Promise<string | undefined> {
-  // 1.  rawPath: /usr/rspress-demo/docs/api.md
-  const realPath = await detectFilePathWithExtension(rawPath);
-  if (realPath) {
-    const ext = path.extname(realPath);
-    if (extensions.includes(ext)) {
-      return realPath;
-    }
-  }
-
-  // 2. rawPath: /usr/rspress-demo/docs/api
-  // The params doesn't have extension name, so we need to try to find the file with the extension name.
-  const pathWithExtension = extensions.map(ext => `${rawPath}${ext}`);
-  const realPaths = await Promise.all(
-    pathWithExtension.map(p => detectFilePathWithExtension(p)),
+export async function extractInfoFromFrontmatterWithAbsolutePath(
+  absolutePath: string,
+  rootDir: string,
+): Promise<{
+  title: string;
+  overviewHeaders: number[] | undefined;
+  context: string | undefined;
+}> {
+  const content = await fs.readFile(absolutePath, 'utf-8');
+  const fileNameWithoutExt = path.basename(
+    absolutePath,
+    path.extname(absolutePath),
   );
-  const findPath = pathWithExtension.find((_, i) => realPaths[i]);
-  return findPath;
-}
-
-export async function extractInfoFromFrontmatter(
-  filePath: string,
-  rootDir: string,
-  extensions: string[],
-): Promise<{
-  realPath: string | undefined;
-  title: string;
-  overviewHeaders: number[] | undefined;
-  context: string | undefined;
-}> {
-  const realPath = await detectFilePath(filePath, extensions);
-  if (!realPath) {
-    logger.warn(
-      `Can't find the file: ${filePath}, please check it in "${path.join(
-        path.dirname(filePath),
-        '_meta.json',
-      )}".`,
-    );
-    return {
-      realPath,
-      title: '',
-      overviewHeaders: undefined,
-      context: undefined,
-    };
-  }
-  return {
-    ...(await extractInfoFromFrontmatterWithRealPath(realPath, rootDir)),
-    realPath,
-  };
-}
-
-export async function extractInfoFromFrontmatterWithRealPath(
-  realPath: string,
-  rootDir: string,
-): Promise<{
-  title: string;
-  overviewHeaders: number[] | undefined;
-  context: string | undefined;
-}> {
-  const content = await fs.readFile(realPath, 'utf-8');
-  const fileNameWithoutExt = path.basename(realPath, path.extname(realPath));
   const h1RegExp = /^#\s+(.*)$/m;
   const match = content.match(h1RegExp);
-  const { frontmatter } = loadFrontMatter(content, realPath, rootDir);
+  const { frontmatter } = loadFrontMatter(content, absolutePath, rootDir);
   return {
     title: extractTextAndId(
       frontmatter.title || match?.[1] || fileNameWithoutExt,

@@ -48,7 +48,7 @@ test.describe('Auto nav and sidebar dir convention', async () => {
     });
     await page.click('.rspress-scrollbar nav section div');
     expect(page.url()).toBe(
-      `http://localhost:${appPort}/guide/index-md-convention.html`,
+      `http://localhost:${appPort}/guide/index-md-convention/index.html`,
     );
   });
 

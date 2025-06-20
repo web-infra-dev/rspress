@@ -1,11 +1,9 @@
-import path from 'node:path';
 import {
   type DefaultThemeConfig,
   type NavItem,
   type NavItemWithLink,
   type NormalizedDefaultThemeConfig,
   type NormalizedSidebarGroup,
-  type PageIndexInfo,
   type Sidebar,
   type SidebarDivider,
   type SidebarGroup,
@@ -15,7 +13,6 @@ import {
   addLeadingSlash,
   isExternalUrl,
   slash,
-  withBase,
   withoutBase,
 } from '@rspress/shared';
 import { applyReplaceRules } from '../../utils/applyReplaceRules';
@@ -23,7 +20,6 @@ import { getI18nData } from '../i18n';
 
 export function normalizeThemeConfig(
   docConfig: UserConfig,
-  pages: PageIndexInfo[] = [],
 ): NormalizedDefaultThemeConfig {
   const {
     locales: siteLocales,
@@ -72,12 +68,7 @@ export function normalizeThemeConfig(
       return {};
     }
     const normalizeSidebarItem = (
-      item:
-        | SidebarGroup
-        | SidebarItem
-        | SidebarDivider
-        | SidebarSectionHeader
-        | string,
+      item: SidebarGroup | SidebarItem | SidebarDivider | SidebarSectionHeader,
     ):
       | NormalizedSidebarGroup
       | SidebarItem
@@ -113,21 +104,6 @@ export function normalizeThemeConfig(
               | NormalizedSidebarGroup
               | SidebarItem;
           }),
-        };
-      }
-
-      if (typeof item === 'string') {
-        const normalizedItem = normalizeLinkPrefix(item, currentLang);
-        const page = pages.find(
-          page => page.routePath === withBase(normalizedItem, base),
-        );
-        return {
-          text: applyReplaceRules(page?.title || '', replaceRules),
-          link: normalizedItem,
-          _fileKey: page?._relativePath.replace(
-            path.extname(page._relativePath),
-            '',
-          ),
         };
       }
 

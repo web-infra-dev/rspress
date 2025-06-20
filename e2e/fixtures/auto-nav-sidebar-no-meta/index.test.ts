@@ -48,7 +48,7 @@ test.describe('Auto nav and sidebar test', async () => {
     expect(await configDir.textContent()).toBe('config');
     await configDir.click();
     expect(page.url()).toBe(
-      `http://localhost:${appPort}/api/rspress-config.html`,
+      `http://localhost:${appPort}/api/rspress-config/index.html`,
     );
   });
 });

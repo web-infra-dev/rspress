@@ -1,6 +1,6 @@
 import type { NavItem } from '@rspress/shared';
 
-type FileSideMeta = {
+export type FileSideMeta = {
   type: 'file';
   name: string;
   label?: string;
@@ -9,7 +9,7 @@ type FileSideMeta = {
   context?: string;
 };
 
-type DirSideMeta = {
+export type DirSideMeta = {
   type: 'dir';
   name: string;
   label?: string;
@@ -20,18 +20,18 @@ type DirSideMeta = {
   context?: string;
 };
 
-type DividerSideMeta = {
+export type DividerSideMeta = {
   type: 'divider';
   dashed?: boolean;
 };
 
-type SectionHeaderMeta = {
+export type SectionHeaderMeta = {
   type: 'section-header';
   label: string;
   tag?: string;
 };
 
-type CustomLinkMeta = {
+export type CustomLinkMeta = {
   type: 'custom-link';
   label: string;
   link: string;
