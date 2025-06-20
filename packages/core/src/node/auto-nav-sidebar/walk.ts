@@ -14,7 +14,7 @@ import { readJson } from './utils';
 // and generate the nav and sidebar config
 export async function walk(
   workDir: string,
-  routePrefix = '/',
+  normalizeRoutePath: (link: string) => string,
   docsDir: string,
   extensions: string[],
 ) {

@@ -2,6 +2,7 @@ import path from 'node:path';
 import { type RspressPlugin, addTrailingSlash } from '@rspress/shared';
 import { DEFAULT_PAGE_EXTENSIONS } from '@rspress/shared/constants';
 import { logger } from '@rspress/shared/logger';
+import { RouteService } from '../route/RouteService';
 import { combineWalkResult } from './utils';
 import { walk } from './walk';
 
@@ -9,6 +10,7 @@ function processLocales(
   langs: string[],
   versions: string[],
   root: string,
+  normalizeRoutePath
   defaultLang: string,
   defaultVersion: string,
   extensions: string[],
@@ -18,11 +20,6 @@ function processLocales(
       const walks = versions.length
         ? await Promise.all(
             versions.map(version => {
-              const routePrefix = addTrailingSlash(
-                `${version === defaultVersion ? '' : `/${version}`}${
-                  lang === defaultLang ? '' : `/${lang}`
-                }`,
-              );
               return walk(
                 path.join(root, version, lang),
                 routePrefix,
@@ -34,7 +31,6 @@ function processLocales(
         : [
             await walk(
               path.join(root, lang),
-              addTrailingSlash(lang === defaultLang ? '' : `/${lang}`),
               root,
               extensions,
             ),
@@ -45,9 +41,19 @@ function processLocales(
 }
 
 export function pluginAutoNavSidebar(): RspressPlugin {
+  const routeServiceRef: { current: RouteService | null } = { current: null };
   return {
     name: 'auto-nav-sidebar',
+    routeServiceGenerated(routeService: RouteService) {
+      routeServiceRef.current = routeService;
+    },
     async config(config) {
+      const routeService = routeServiceRef.current!;
+
+      const normalizeRoutePath = (link: string): string => {
+        return routeService.normalizeRoutePath(link).routePath;
+      };
+
       config.themeConfig = config.themeConfig || {};
       config.themeConfig.locales =
         config.themeConfig.locales || config.locales || [];
@@ -87,18 +93,22 @@ export function pluginAutoNavSidebar(): RspressPlugin {
         const walks = versions.length
           ? await Promise.all(
               versions.map(version => {
-                const routePrefix = addTrailingSlash(
-                  version === defaultVersion ? '' : `/${version}`,
-                );
                 return walk(
                   path.join(config.root!, version),
-                  routePrefix,
+                  normalizeRoutePath,
                   config.root!,
                   extensions,
                 );
               }),
             )
-          : [await walk(config.root!, '/', config.root!, extensions)];
+          : [
+              await walk(
+                config.root!,
+                normalizeRoutePath,
+                config.root!,
+                extensions,
+              ),
+            ];
 
         const combined = combineWalkResult(walks, versions);
 
