@@ -190,20 +190,8 @@ async function metaItemToSidebarItem(
         (await pathExists(join(dirAbsolutePath, 'index.md')));
 
       if ((isMetaJsonExist && isIndexInMetaJsonIndex) || !isIndexFileExists) {
-        function getDirLabelName(): string {
-          const dirName = name;
-
-          // 1. { "label": "DIR", type: "dir" } in _meta.json
-          if (!dirName && label) {
-            return label;
-          }
-
-          // 2. fallback to fs dirname
-          return dirName ?? '';
-        }
-
         return {
-          text: getDirLabelName(),
+          text: label || name,
           collapsible,
           collapsed,
           items: await getItems(false),
@@ -227,24 +215,8 @@ async function metaItemToSidebarItem(
 
         const { link, text, _fileKey, context, overviewHeaders, tag } =
           indexFile;
-
-        function getDirLabelName(): string {
-          const dirName = name;
-
-          // 1. { "label": "DIR", type: "dir" } in _meta.json
-          if (label) {
-            return label;
-          }
-          // 2. H1 or frontmatter title in md
-          if (text) {
-            return text;
-          }
-          // 3. fallback to fs dirname
-          return dirName ?? '';
-        }
-
         return {
-          text: getDirLabelName(),
+          text: label || text || name,
           collapsible,
           collapsed,
           items: await getItems(true),
