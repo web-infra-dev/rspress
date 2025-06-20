@@ -1,12 +1,8 @@
 import fs from 'node:fs/promises';
 import path from 'node:path';
-import {
-  type NavItem,
-  type Sidebar,
-  isExternalUrl,
-  withBase,
-} from '@rspress/shared';
+import { type NavItem, type Sidebar, isExternalUrl } from '@rspress/shared';
 import { logger } from '@rspress/shared/logger';
+import { absolutePathToLink } from '../utils';
 import { scanSideMeta } from './normalize';
 import { readJson } from './utils';
 
@@ -14,7 +10,6 @@ import { readJson } from './utils';
 // and generate the nav and sidebar config
 export async function walk(
   workDir: string,
-  routePrefix = '/',
   docsDir: string,
   extensions: string[],
 ) {
@@ -32,16 +27,20 @@ export async function walk(
     navConfig = [];
   }
 
+  const routePrefix = absolutePathToLink(workDir, docsDir);
+  const addRoutePrefix = (link: string): string =>
+    `${routePrefix.replace(/\/$/, '')}/${link.replace(/^\//, '')}`;
+
   navConfig.forEach(navItem => {
     if ('items' in navItem) {
       navItem.items.forEach(item => {
         if ('link' in item && !isExternalUrl(item.link)) {
-          item.link = withBase(item.link, routePrefix);
+          item.link = addRoutePrefix(item.link);
         }
       });
     }
     if ('link' in navItem && !isExternalUrl(navItem.link)) {
-      navItem.link = withBase(navItem.link, routePrefix);
+      navItem.link = addRoutePrefix(navItem.link);
     }
   });
   // find the `_meta.json` file in the subdirectory
@@ -64,11 +63,10 @@ export async function walk(
 
   await Promise.all(
     subDirs.map(async subDir => {
-      const sidebarGroupKey = `${routePrefix}${subDir}`;
+      const sidebarGroupKey = addRoutePrefix(subDir);
       sidebarConfig[sidebarGroupKey] = await scanSideMeta(
         path.join(workDir, subDir),
         docsDir,
-        routePrefix,
         extensions,
       );
     }),

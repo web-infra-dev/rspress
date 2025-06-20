@@ -1,6 +1,5 @@
 import fs from 'node:fs/promises';
 import path from 'node:path';
-import type { NavItem, Sidebar } from '@rspress/shared';
 import { extractTextAndId, loadFrontMatter } from '@rspress/shared/node-utils';
 
 export async function pathExists(path: string): Promise<boolean> {
@@ -40,23 +39,4 @@ export async function extractInfoFromFrontmatterWithAbsolutePath(
     overviewHeaders: frontmatter.overviewHeaders,
     context: frontmatter.context,
   };
-}
-
-export function combineWalkResult(
-  walks: { nav: NavItem[]; sidebar: Sidebar }[],
-  versions: string[],
-) {
-  return walks.reduce(
-    (acc, cur, curIndex) => ({
-      nav: {
-        ...acc.nav,
-        [versions[curIndex] || 'default']: cur.nav,
-      },
-      sidebar: { ...acc.sidebar, ...cur.sidebar },
-    }),
-    {
-      nav: {},
-      sidebar: {},
-    },
-  );
 }

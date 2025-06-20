@@ -7,9 +7,12 @@ import {
   type SidebarSectionHeader,
   isExternalUrl,
   slash,
-  withBase,
 } from '@rspress/shared';
 import { logger } from '@rspress/shared/logger';
+import {
+  absolutePathToLink,
+  absolutePathToRoutePrefix,
+} from '../utils/normalizePath';
 import type {
   CustomLinkMeta,
   DividerSideMeta,
@@ -27,17 +30,6 @@ function getHmrFileKey(realPath: string | undefined, docsDir: string) {
   return realPath
     ? slash(relative(docsDir, realPath).replace(extname(realPath), ''))
     : '';
-}
-
-function absolutePathToLink(
-  absolutePath: string,
-  docsDir: string,
-  routePrefix: string,
-): string {
-  const relativePath = slash(
-    relative(docsDir, absolutePath.replace(extname(absolutePath), '')),
-  );
-  return `${routePrefix}${relativePath}`;
 }
 
 async function fsDirToMetaItems(
@@ -85,28 +77,15 @@ async function metaItemToSidebarItem(
   workDir: string,
   docsDir: string,
   extensions: string[],
-  routePrefix: string,
   isFirstDir: boolean = false, // TODO: removed in the future, single-page mode
 ): Promise<SidebarItem | SidebarGroup | SidebarDivider | SidebarSectionHeader> {
   if (typeof metaItem === 'string') {
-    return metaFileItemToSidebarItem(
-      metaItem,
-      workDir,
-      docsDir,
-      extensions,
-      routePrefix,
-    );
+    return metaFileItemToSidebarItem(metaItem, workDir, docsDir, extensions);
   }
 
   const { type } = metaItem;
   if (type === 'file') {
-    return metaFileItemToSidebarItem(
-      metaItem,
-      workDir,
-      docsDir,
-      extensions,
-      routePrefix,
-    );
+    return metaFileItemToSidebarItem(metaItem, workDir, docsDir, extensions);
   }
 
   if (type === 'dir') {
@@ -146,13 +125,7 @@ async function metaItemToSidebarItem(
             })
           : dirMetaJson
         ).map(item =>
-          metaItemToSidebarItem(
-            item,
-            dirAbsolutePath,
-            docsDir,
-            extensions,
-            routePrefix,
-          ),
+          metaItemToSidebarItem(item, dirAbsolutePath, docsDir, extensions),
         ),
       );
       return items;
@@ -168,7 +141,6 @@ async function metaItemToSidebarItem(
         workDir,
         docsDir,
         extensions,
-        routePrefix,
       );
 
       const { link, text, _fileKey, context, overviewHeaders, tag } =
@@ -218,7 +190,6 @@ async function metaItemToSidebarItem(
           dirAbsolutePath,
           docsDir,
           extensions,
-          routePrefix,
         );
 
         const { link, text, _fileKey, context, overviewHeaders, tag } =
@@ -239,7 +210,7 @@ async function metaItemToSidebarItem(
   }
 
   if (type === 'custom-link') {
-    return metaCustomLinkItemToSidebarItem(metaItem, routePrefix);
+    return metaCustomLinkItemToSidebarItem(metaItem, workDir, docsDir);
   }
   if (type === 'divider' || type === 'section-header') {
     return metaDividerToSidebarItem(metaItem);
@@ -273,7 +244,6 @@ async function metaFileItemToSidebarItem(
   workDir: string,
   docsDir: string,
   extensions: string[],
-  routePrefix: string,
 ): Promise<SidebarItem> {
   let metaItem: FileSideMeta | null = null;
   if (typeof metaItemRaw === 'string') {
@@ -297,7 +267,7 @@ async function metaFileItemToSidebarItem(
     );
   }
 
-  const link = absolutePathToLink(absolutePathWithExt, docsDir, routePrefix);
+  const link = absolutePathToLink(absolutePathWithExt, docsDir);
   const info = await extractInfoFromFrontmatterWithAbsolutePath(
     absolutePathWithExt,
     docsDir,
@@ -315,20 +285,35 @@ async function metaFileItemToSidebarItem(
 
 function metaCustomLinkItemToSidebarItem(
   metaItem: CustomLinkMeta,
-  routePrefix: string,
+  workDir: string,
+  docsDir: string,
 ): SidebarItem {
   const { label, link, context, tag } = metaItem;
+  if (typeof link === 'undefined') {
+    throw new Error(
+      `The custom link "${label}" does not have a link, please check it in "${join(workDir, '_meta.json')}".`,
+    );
+  }
+
+  if (isExternalUrl(link)) {
+    return {
+      text: label ?? link,
+      link,
+      tag,
+      context,
+    };
+  }
+
+  const routePrefix = absolutePathToRoutePrefix(workDir, docsDir);
+
+  const addRoutePrefix = (link: string): string =>
+    `${routePrefix.replace(/\/$/, '')}/${link.replace(/^\//, '')}`;
   return {
-    text: label ?? '',
-    link:
-      typeof link === 'undefined'
-        ? ''
-        : isExternalUrl(link)
-          ? link
-          : withBase(link, routePrefix),
+    text: label ?? link,
+    link: addRoutePrefix(link),
     tag,
     context,
-  } satisfies SidebarItem;
+  };
 }
 
 function metaDividerToSidebarItem(
@@ -353,7 +338,6 @@ function metaDividerToSidebarItem(
 async function scanSideMeta(
   workDir: string,
   docsDir: string,
-  routePrefix: string,
   extensions: string[],
 ) {
   const dir = (await metaItemToSidebarItem(
@@ -364,7 +348,6 @@ async function scanSideMeta(
     workDir,
     docsDir,
     extensions,
-    routePrefix,
     true,
   )) as SidebarGroup;
   return dir.items;
