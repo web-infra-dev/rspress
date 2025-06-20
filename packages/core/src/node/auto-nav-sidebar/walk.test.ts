@@ -1,12 +1,24 @@
 import path from 'node:path';
 import { DEFAULT_PAGE_EXTENSIONS } from '@rspress/shared/constants';
 import { describe, expect, it } from 'vitest';
+import { normalizeRoutePath } from '../route/normalizeRoutePath';
 import { walk } from './walk';
+
+const mockNormalizeRoutePath = (link: string) => {
+  return normalizeRoutePath(link, '/', '', '', [], [], ['.md', '.mdx', '.tsx'])
+    .routePath;
+};
 
 describe('walk', () => {
   it('basic', async () => {
     const docsDir = path.join(__dirname, './fixtures/docs');
-    const sidebar = await walk(docsDir, '/', docsDir, DEFAULT_PAGE_EXTENSIONS);
+
+    const sidebar = await walk(
+      docsDir,
+      mockNormalizeRoutePath,
+      docsDir,
+      DEFAULT_PAGE_EXTENSIONS,
+    );
     expect(sidebar).toMatchInlineSnapshot(`
       {
         "nav": [
@@ -33,7 +45,7 @@ describe('walk', () => {
                   "text": "Getting started",
                 },
               ],
-              "link": "/guide/test-dir/index",
+              "link": "/guide/test-dir/",
               "overviewHeaders": undefined,
               "tag": undefined,
               "text": "Test dir",
@@ -47,7 +59,7 @@ describe('walk', () => {
                 {
                   "_fileKey": "guide/test-same-name-dir/index",
                   "context": undefined,
-                  "link": "/guide/test-same-name-dir/index",
+                  "link": "/guide/test-same-name-dir/",
                   "overviewHeaders": undefined,
                   "tag": undefined,
                   "text": "Test same name dir",
@@ -89,7 +101,12 @@ describe('walk', () => {
   });
   it('no meta', async () => {
     const docsDir = path.join(__dirname, './fixtures/docs-no-meta');
-    const sidebar = await walk(docsDir, '/', docsDir, DEFAULT_PAGE_EXTENSIONS);
+    const sidebar = await walk(
+      docsDir,
+      mockNormalizeRoutePath,
+      docsDir,
+      DEFAULT_PAGE_EXTENSIONS,
+    );
     expect(sidebar).toMatchInlineSnapshot(`
       {
         "nav": [],
@@ -118,7 +135,7 @@ describe('walk', () => {
                   "text": "Getting started",
                 },
               ],
-              "link": "/api/guide/index",
+              "link": "/api/guide/",
               "overviewHeaders": undefined,
               "tag": undefined,
               "text": "Guide",
@@ -126,7 +143,7 @@ describe('walk', () => {
             {
               "_fileKey": "api/index",
               "context": undefined,
-              "link": "/api/index",
+              "link": "/api/",
               "overviewHeaders": undefined,
               "tag": undefined,
               "text": "No meta",

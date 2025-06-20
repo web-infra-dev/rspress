@@ -10,6 +10,7 @@ import {
   withBase,
 } from '@rspress/shared';
 import { logger } from '@rspress/shared/logger';
+import { absolutePathToLink } from '../utils/normalizePath';
 import type {
   CustomLinkMeta,
   DividerSideMeta,
@@ -27,17 +28,6 @@ function getHmrFileKey(realPath: string | undefined, docsDir: string) {
   return realPath
     ? slash(relative(docsDir, realPath).replace(extname(realPath), ''))
     : '';
-}
-
-function absolutePathToLink(
-  absolutePath: string,
-  docsDir: string,
-  routePrefix: string,
-): string {
-  const relativePath = slash(
-    relative(docsDir, absolutePath.replace(extname(absolutePath), '')),
-  );
-  return `${routePrefix}${relativePath}`;
 }
 
 async function fsDirToMetaItems(
@@ -85,7 +75,7 @@ async function metaItemToSidebarItem(
   workDir: string,
   docsDir: string,
   extensions: string[],
-  routePrefix: string,
+  normalizeRoutePath: (link: string) => string,
   isFirstDir: boolean = false, // TODO: removed in the future, single-page mode
 ): Promise<SidebarItem | SidebarGroup | SidebarDivider | SidebarSectionHeader> {
   if (typeof metaItem === 'string') {
@@ -94,7 +84,7 @@ async function metaItemToSidebarItem(
       workDir,
       docsDir,
       extensions,
-      routePrefix,
+      normalizeRoutePath,
     );
   }
 
@@ -105,7 +95,7 @@ async function metaItemToSidebarItem(
       workDir,
       docsDir,
       extensions,
-      routePrefix,
+      normalizeRoutePath,
     );
   }
 
@@ -151,7 +141,7 @@ async function metaItemToSidebarItem(
             dirAbsolutePath,
             docsDir,
             extensions,
-            routePrefix,
+            normalizeRoutePath,
           ),
         ),
       );
@@ -168,7 +158,7 @@ async function metaItemToSidebarItem(
         workDir,
         docsDir,
         extensions,
-        routePrefix,
+        normalizeRoutePath,
       );
 
       const { link, text, _fileKey, context, overviewHeaders, tag } =
@@ -218,7 +208,7 @@ async function metaItemToSidebarItem(
           dirAbsolutePath,
           docsDir,
           extensions,
-          routePrefix,
+          normalizeRoutePath,
         );
 
         const { link, text, _fileKey, context, overviewHeaders, tag } =
@@ -239,7 +229,7 @@ async function metaItemToSidebarItem(
   }
 
   if (type === 'custom-link') {
-    return metaCustomLinkItemToSidebarItem(metaItem, routePrefix);
+    return metaCustomLinkItemToSidebarItem(metaItem, normalizeRoutePath);
   }
   if (type === 'divider' || type === 'section-header') {
     return metaDividerToSidebarItem(metaItem);
@@ -273,7 +263,7 @@ async function metaFileItemToSidebarItem(
   workDir: string,
   docsDir: string,
   extensions: string[],
-  routePrefix: string,
+  normalizeRoutePath: (link: string) => string,
 ): Promise<SidebarItem> {
   let metaItem: FileSideMeta | null = null;
   if (typeof metaItemRaw === 'string') {
@@ -297,7 +287,11 @@ async function metaFileItemToSidebarItem(
     );
   }
 
-  const link = absolutePathToLink(absolutePathWithExt, docsDir, routePrefix);
+  const link = absolutePathToLink(
+    absolutePathWithExt,
+    docsDir,
+    normalizeRoutePath,
+  );
   const info = await extractInfoFromFrontmatterWithAbsolutePath(
     absolutePathWithExt,
     docsDir,
@@ -315,7 +309,7 @@ async function metaFileItemToSidebarItem(
 
 function metaCustomLinkItemToSidebarItem(
   metaItem: CustomLinkMeta,
-  routePrefix: string,
+  normalizeRoutePath: (link: string) => string,
 ): SidebarItem {
   const { label, link, context, tag } = metaItem;
   return {
@@ -325,7 +319,7 @@ function metaCustomLinkItemToSidebarItem(
         ? ''
         : isExternalUrl(link)
           ? link
-          : withBase(link, routePrefix),
+          : withBase(link, normalizeRoutePath('/')),
     tag,
     context,
   } satisfies SidebarItem;
@@ -353,7 +347,7 @@ function metaDividerToSidebarItem(
 async function scanSideMeta(
   workDir: string,
   docsDir: string,
-  routePrefix: string,
+  normalizeRoutePath: (link: string) => string,
   extensions: string[],
 ) {
   const dir = (await metaItemToSidebarItem(
@@ -364,7 +358,7 @@ async function scanSideMeta(
     workDir,
     docsDir,
     extensions,
-    routePrefix,
+    normalizeRoutePath,
     true,
   )) as SidebarGroup;
   return dir.items;
