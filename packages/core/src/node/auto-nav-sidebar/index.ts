@@ -2,13 +2,17 @@ import path from 'node:path';
 import type { UserConfig } from '@rspress/shared';
 import { DEFAULT_PAGE_EXTENSIONS } from '@rspress/shared/constants';
 import { logger } from '@rspress/shared/logger';
-import type { RouteService } from '../route/RouteService';
 import { combineWalkResult, processLocales } from './locales';
 import { walk } from './walk';
 
+export type NormalizeRoutePathFn = (routePath: string) => {
+  routePath: string;
+  lang: string;
+  version: string;
+};
+
 export async function modifyConfigWithAutoNavSide(
   config: UserConfig,
-  routeService: RouteService,
 ): Promise<UserConfig> {
   const themeConfig = config.themeConfig || {};
 
@@ -21,10 +25,6 @@ export async function modifyConfigWithAutoNavSide(
   if (haveNavSidebarConfig) {
     return config;
   }
-
-  const normalizeRoutePath = (link: string): string => {
-    return routeService.normalizeRoutePath(link).routePath;
-  };
 
   config.themeConfig = config.themeConfig || {};
   config.themeConfig.locales =
@@ -40,7 +40,6 @@ export async function modifyConfigWithAutoNavSide(
       langs,
       versions,
       config.root!,
-      normalizeRoutePath,
       extensions,
     );
     config.themeConfig.locales = config.themeConfig.locales.map(
@@ -64,20 +63,12 @@ export async function modifyConfigWithAutoNavSide(
           versions.map(version => {
             return walk(
               path.join(config.root!, version),
-              normalizeRoutePath,
               config.root!,
               extensions,
             );
           }),
         )
-      : [
-          await walk(
-            config.root!,
-            normalizeRoutePath,
-            config.root!,
-            extensions,
-          ),
-        ];
+      : [await walk(config.root!, config.root!, extensions)];
 
     const combined = combineWalkResult(walks, versions);
 

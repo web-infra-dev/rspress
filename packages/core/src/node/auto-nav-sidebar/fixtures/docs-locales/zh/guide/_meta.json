@@ -9,5 +9,10 @@
   },
   "a",
   "b",
-  "c"
+  "c",
+  {
+    "type": "custom-link",
+    "label": "My Link",
+    "link": "/guide/test-dir"
+  }
 ]

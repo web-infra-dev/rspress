@@ -56,6 +56,12 @@ export class RouteService {
 
   #pluginDriver: PluginDriver;
 
+  static __instance__: RouteService | null = null;
+
+  static getInstance(): RouteService {
+    return RouteService.__instance__!;
+  }
+
   // The factory to create route service instance
   static async create(options: InitOptions) {
     const { scanDir, config, runtimeTempDir, pluginDriver } = options;
@@ -67,6 +73,7 @@ export class RouteService {
     );
     await routeService.#init();
     await pluginDriver.routeServiceGenerated(routeService);
+    RouteService.__instance__ = routeService;
     return routeService;
   }
 
@@ -232,6 +239,7 @@ ${routeMeta
   getRoutePathParts(routePath: string) {
     return getRoutePathParts(
       routePath,
+      this.#base,
       this.#defaultLang,
       this.#defaultVersion,
       this.#langs,

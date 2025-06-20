@@ -25,7 +25,6 @@ export function processLocales(
   langs: string[],
   versions: string[],
   root: string,
-  normalizeRoutePath: (link: string) => string,
   extensions: string[],
 ) {
   return Promise.all(
@@ -33,22 +32,10 @@ export function processLocales(
       const walks = versions.length
         ? await Promise.all(
             versions.map(version => {
-              return walk(
-                path.join(root, version, lang),
-                normalizeRoutePath,
-                root,
-                extensions,
-              );
+              return walk(path.join(root, version, lang), root, extensions);
             }),
           )
-        : [
-            await walk(
-              path.join(root, lang),
-              normalizeRoutePath,
-              root,
-              extensions,
-            ),
-          ];
+        : [await walk(path.join(root, lang), root, extensions)];
       return combineWalkResult(walks, versions);
     }),
   );

@@ -1,5 +1,6 @@
-import os from 'node:os';
+import os, { version } from 'node:os';
 import path from 'node:path';
+import { RouteService } from '../route/RouteService';
 
 export const isWindows = os.platform() === 'win32';
 
@@ -18,7 +19,6 @@ export function normalizePath(id: string): string {
 export function absolutePathToLink(
   absolutePath: string,
   docsDir: string,
-  normalizeRoutePath: (link: string) => string, // routeService.normalizeRoutePath
 ): string {
   const relativePath = slash(
     path.relative(
@@ -26,5 +26,22 @@ export function absolutePathToLink(
       absolutePath.replace(path.extname(absolutePath), ''),
     ),
   );
-  return normalizeRoutePath(relativePath);
+  const routeService = RouteService.getInstance();
+  return routeService.normalizeRoutePath(relativePath).routePath;
+}
+
+export function absolutePathToRoutePrefix(
+  absolutePath: string,
+  docsDir: string,
+): string {
+  const relativePath = slash(
+    path.relative(
+      docsDir,
+      absolutePath.replace(path.extname(absolutePath), ''),
+    ),
+  );
+  const routeService = RouteService.getInstance();
+  const [basePrefix, versionPrefix, langPrefix] =
+    routeService.getRoutePathParts(relativePath);
+  return `${basePrefix}${versionPrefix ? `/${versionPrefix}` : ''}${langPrefix ? `/${langPrefix}` : ''}`;
 }

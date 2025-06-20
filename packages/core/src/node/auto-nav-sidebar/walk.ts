@@ -10,7 +10,6 @@ import { readJson } from './utils';
 // and generate the nav and sidebar config
 export async function walk(
   workDir: string,
-  normalizeRoutePath: (link: string) => string,
   docsDir: string,
   extensions: string[],
 ) {
@@ -28,7 +27,7 @@ export async function walk(
     navConfig = [];
   }
 
-  const routePrefix = absolutePathToLink(workDir, docsDir, normalizeRoutePath);
+  const routePrefix = absolutePathToLink(workDir, docsDir);
   const addRoutePrefix = (link: string): string =>
     `${routePrefix.replace(/\/$/, '')}/${link.replace(/^\//, '')}`;
 
@@ -68,7 +67,6 @@ export async function walk(
       sidebarConfig[sidebarGroupKey] = await scanSideMeta(
         path.join(workDir, subDir),
         docsDir,
-        normalizeRoutePath,
         extensions,
       );
     }),

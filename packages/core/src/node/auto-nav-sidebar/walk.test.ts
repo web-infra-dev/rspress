@@ -1,24 +1,30 @@
 import path from 'node:path';
 import { DEFAULT_PAGE_EXTENSIONS } from '@rspress/shared/constants';
 import { describe, expect, it } from 'vitest';
-import { normalizeRoutePath } from '../route/normalizeRoutePath';
+import { RouteService } from '../route/RouteService';
+import {
+  getRoutePathParts,
+  normalizeRoutePath,
+} from '../route/normalizeRoutePath';
 import { walk } from './walk';
 
 const mockNormalizeRoutePath = (link: string) => {
-  return normalizeRoutePath(link, '/', '', '', [], [], ['.md', '.mdx', '.tsx'])
-    .routePath;
+  return normalizeRoutePath(link, '/', '', '', [], [], ['.md', '.mdx', '.tsx']);
 };
+
+const mockGetRoutePathParts = (link: string) => {
+  return getRoutePathParts(link, '/', '', '', [], []);
+};
+
+RouteService.__instance__ = {
+  normalizeRoutePath: mockNormalizeRoutePath,
+  getRoutePathParts: mockGetRoutePathParts,
+} as RouteService;
 
 describe('walk', () => {
   it('basic', async () => {
     const docsDir = path.join(__dirname, './fixtures/docs');
-
-    const sidebar = await walk(
-      docsDir,
-      mockNormalizeRoutePath,
-      docsDir,
-      DEFAULT_PAGE_EXTENSIONS,
-    );
+    const sidebar = await walk(docsDir, docsDir, DEFAULT_PAGE_EXTENSIONS);
     expect(sidebar).toMatchInlineSnapshot(`
       {
         "nav": [
@@ -94,6 +100,12 @@ describe('walk', () => {
               "tag": undefined,
               "text": "c",
             },
+            {
+              "context": undefined,
+              "link": "/guide/test-dir",
+              "tag": undefined,
+              "text": "My Link",
+            },
           ],
         },
       }
@@ -101,12 +113,7 @@ describe('walk', () => {
   });
   it('no meta', async () => {
     const docsDir = path.join(__dirname, './fixtures/docs-no-meta');
-    const sidebar = await walk(
-      docsDir,
-      mockNormalizeRoutePath,
-      docsDir,
-      DEFAULT_PAGE_EXTENSIONS,
-    );
+    const sidebar = await walk(docsDir, docsDir, DEFAULT_PAGE_EXTENSIONS);
     expect(sidebar).toMatchInlineSnapshot(`
       {
         "nav": [],
