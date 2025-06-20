@@ -86,6 +86,7 @@ async function metaItemToSidebarItem(
   docsDir: string,
   extensions: string[],
   routePrefix: string,
+  isFirstDir: boolean = false, // TODO: removed in the future, single-page mode
 ): Promise<SidebarItem | SidebarGroup | SidebarDivider | SidebarSectionHeader> {
   if (typeof metaItem === 'string') {
     return metaFileItemToSidebarItem(
@@ -115,8 +116,8 @@ async function metaItemToSidebarItem(
       collapsible,
       collapsed,
       tag,
-      context,
-      overviewHeaders,
+      context: metaJsonContext,
+      overviewHeaders: metaJsonOverviewHeaders,
     } = metaItem;
     const dirAbsolutePath = join(workDir, name);
     const dirMetaJsonPath = join(dirAbsolutePath, '_meta.json');
@@ -132,9 +133,17 @@ async function metaItemToSidebarItem(
     async function getItems(withoutIndex: boolean = false) {
       const items = await Promise.all(
         (withoutIndex
-          ? dirMetaJson.filter(
-              i => i !== 'index.md' && i !== 'index.mdx' && i !== 'index',
-            )
+          ? dirMetaJson.filter(i => {
+              let name: string;
+              if (typeof i === 'object' && 'type' in i && i.type === 'file') {
+                name = i.name;
+              } else if (typeof i === 'string') {
+                name = i;
+              } else {
+                return true;
+              }
+              return name !== 'index.md' && i !== 'index.mdx' && i !== 'index';
+            })
           : dirMetaJson
         ).map(item =>
           metaItemToSidebarItem(
@@ -168,11 +177,11 @@ async function metaItemToSidebarItem(
         text: label || text || name,
         collapsible,
         collapsed,
-        items: await getItems(false),
+        items: await getItems(),
         link,
         tag,
-        overviewHeaders,
-        context,
+        overviewHeaders: metaJsonOverviewHeaders || overviewHeaders,
+        context: metaJsonContext || context,
         _fileKey,
       } satisfies SidebarGroup;
     } catch (e) {
@@ -194,17 +203,16 @@ async function metaItemToSidebarItem(
           text: label || name,
           collapsible,
           collapsed,
-          items: await getItems(false),
+          items: await getItems(),
           link: undefined,
           tag,
-          overviewHeaders,
-          context,
+          overviewHeaders: metaJsonOverviewHeaders,
+          context: metaJsonContext,
           _fileKey: getHmrFileKey(dirAbsolutePath, docsDir),
         } satisfies SidebarGroup;
-      }
-
-      // 3. if not, index page should be placed to child sidebar, the directory itself is not clickable
-      try {
+        // biome-ignore lint/style/noUselessElse: <explanation>
+      } else {
+        // 3. if not, index page should be placed to child sidebar, the directory itself is not clickable
         const indexFile = await metaFileItemToSidebarItem(
           'index',
           dirAbsolutePath,
@@ -219,15 +227,13 @@ async function metaItemToSidebarItem(
           text: label || text || name,
           collapsible,
           collapsed,
-          items: await getItems(true),
+          items: await getItems(!isFirstDir),
           link,
           tag,
-          overviewHeaders,
-          context,
+          overviewHeaders: metaJsonOverviewHeaders || overviewHeaders,
+          context: metaJsonContext || context,
           _fileKey,
         } satisfies SidebarGroup;
-      } catch (e) {
-        logger.debug(e);
       }
     }
   }
@@ -292,8 +298,6 @@ async function metaFileItemToSidebarItem(
   }
 
   const link = absolutePathToLink(absolutePathWithExt, docsDir, routePrefix);
-  console.log(absolutePathWithExt, 'absolutePathWithExt');
-
   const info = await extractInfoFromFrontmatterWithAbsolutePath(
     absolutePathWithExt,
     docsDir,
@@ -361,6 +365,7 @@ async function scanSideMeta(
     docsDir,
     extensions,
     routePrefix,
+    true,
   )) as SidebarGroup;
   return dir.items;
 }
