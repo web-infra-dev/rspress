@@ -165,7 +165,7 @@ async function metaItemToSidebarItem(
       const { link, text, _fileKey, context, overviewHeaders, tag } =
         sameNameFile;
       return {
-        text,
+        text: label || text || name,
         collapsible,
         collapsed,
         items: await getItems(false),
@@ -232,7 +232,7 @@ async function metaItemToSidebarItem(
           const dirName = name;
 
           // 1. { "label": "DIR", type: "dir" } in _meta.json
-          if (!dirName && label) {
+          if (label) {
             return label;
           }
           // 2. H1 or frontmatter title in md
