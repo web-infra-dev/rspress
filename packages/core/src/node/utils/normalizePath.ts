@@ -1,4 +1,4 @@
-import os, { version } from 'node:os';
+import os from 'node:os';
 import path from 'node:path';
 import { RouteService } from '../route/RouteService';
 

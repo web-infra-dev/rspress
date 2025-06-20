@@ -395,7 +395,7 @@ export async function initRsbuild(
     pluginDriver,
   });
 
-  const config = await modifyConfigWithAutoNavSide(_config, routeService);
+  const config = await modifyConfigWithAutoNavSide(_config);
 
   const { createRsbuild, mergeRsbuildConfig } = await import('@rsbuild/core');
 
