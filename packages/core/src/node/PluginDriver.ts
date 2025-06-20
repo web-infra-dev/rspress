@@ -9,6 +9,7 @@ import type { RouteService } from './route/RouteService';
 
 type RspressPluginHookKeys =
   | 'beforeBuild'
+  | 'config'
   | 'afterBuild'
   | 'addPages'
   | 'addRuntimeModules'
@@ -41,11 +42,6 @@ export class PluginDriver {
       themeConfig?.lastUpdated ||
       themeConfig?.locales?.some(locale => locale.lastUpdated);
     const mediumZoomConfig = config?.mediumZoom ?? true;
-    const haveNavSidebarConfig =
-      themeConfig.nav ||
-      themeConfig.sidebar ||
-      themeConfig.locales?.[0]?.nav ||
-      themeConfig.locales?.[0]?.sidebar;
     if (enableLastUpdated) {
       const { pluginLastUpdated } = await import(
         '@rspress/plugin-last-updated'
@@ -67,12 +63,6 @@ export class PluginDriver {
     (config.plugins || []).forEach(plugin => {
       this.addPlugin(plugin);
     });
-
-    // read _meta.json in the final, allow user's plugin to modify _meta.json
-    if (!haveNavSidebarConfig) {
-      const { pluginAutoNavSidebar } = await import('./auto-nav-sidebar/index');
-      this.addPlugin(pluginAutoNavSidebar());
-    }
   }
 
   addPlugin(plugin: RspressPlugin) {

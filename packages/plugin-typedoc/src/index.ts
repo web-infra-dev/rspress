@@ -1,5 +1,5 @@
 import path from 'node:path';
-import type { NavItem, RspressPlugin } from '@rspress/shared';
+import type { RspressPlugin } from '@rspress/shared';
 import { Application, TSConfigReader } from 'typedoc';
 import { load } from 'typedoc-plugin-markdown';
 import { API_DIR } from './constants';
@@ -21,7 +21,6 @@ export interface PluginTypeDocOptions {
 export function pluginTypeDoc(options: PluginTypeDocOptions): RspressPlugin {
   let docRoot: string | undefined;
   const { entryPoints = [], outDir = API_DIR } = options;
-  const apiPageRoute = `/${outDir.replace(/(^\/)|(\/$)/, '')}/`; // e.g: /api/
   return {
     name: '@rspress/plugin-typedoc',
     async config(config) {
@@ -50,44 +49,6 @@ export function pluginTypeDoc(options: PluginTypeDocOptions): RspressPlugin {
         const absoluteApiDir = path.join(docRoot!, outDir);
         await app.generateDocs(project, absoluteApiDir);
         await patchGeneratedApiDocs(absoluteApiDir);
-
-        // 2. Generate "api" nav bar
-        config.themeConfig = config.themeConfig || {};
-        config.themeConfig.nav = config.themeConfig.nav || [];
-        const { nav } = config.themeConfig;
-
-        // avoid that user config "api" in doc/_meta.json
-        function isApiAlreadyInNav(navList: NavItem[]) {
-          return navList.some(item => {
-            if (
-              'link' in item &&
-              typeof item.link === 'string' &&
-              item.link.startsWith(
-                apiPageRoute.slice(0, apiPageRoute.length - 1), // /api
-              )
-            ) {
-              return true;
-            }
-            return false;
-          });
-        }
-
-        // Note: TypeDoc does not support i18n
-        if (Array.isArray(nav)) {
-          if (!isApiAlreadyInNav(nav)) {
-            nav.push({
-              text: 'API',
-              link: apiPageRoute,
-            });
-          }
-        } else if ('default' in nav) {
-          if (!isApiAlreadyInNav(nav.default)) {
-            nav.default.push({
-              text: 'API',
-              link: apiPageRoute,
-            });
-          }
-        }
       }
       return config;
     },
