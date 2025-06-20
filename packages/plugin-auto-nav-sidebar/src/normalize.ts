@@ -382,18 +382,17 @@ async function scanSideMeta(
   routePrefix: string,
   extensions: string[],
 ) {
-  const metaJson = await readJson<SideMetaItem[]>(join(workDir, '_meta.json'));
-  return Promise.all(
-    metaJson.map(item => {
-      return metaItemToSidebarItem(
-        item,
-        workDir,
-        docsDir,
-        extensions,
-        routePrefix,
-      );
-    }),
-  );
+  const dir = (await metaItemToSidebarItem(
+    {
+      type: 'dir',
+      name: '',
+    },
+    workDir,
+    docsDir,
+    extensions,
+    routePrefix,
+  )) as SidebarGroup;
+  return dir.items;
 }
 
 export { scanSideMeta };
