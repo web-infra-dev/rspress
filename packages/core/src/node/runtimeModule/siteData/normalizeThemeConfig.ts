@@ -42,7 +42,7 @@ export function normalizeThemeConfig(
       !link ||
       withoutBase(normalizedLink, base).startsWith(`/${currentLang}`) ||
       isExternalUrl(normalizedLink) ||
-      // In multi version case, we have got the complete link prefix in `plugin-auto-nav-sidebar` and does not need to add the lang prefix
+      // In multi version case, we have got the complete link prefix in `auto-nav-sidebar` and does not need to add the lang prefix
       hasMultiVersion
     ) {
       return normalizedLink;

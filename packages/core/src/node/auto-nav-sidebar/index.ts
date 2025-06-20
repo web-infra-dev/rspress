@@ -78,7 +78,7 @@ export function pluginAutoNavSidebar(): RspressPlugin {
         if (hasLang) {
           logger.error(
             '`lang` is configured but `locales` not, ' +
-              'thus `@rspress/plugin-auto-nav-sidebar` can not auto generate ' +
+              'thus `auto-nav-sidebar` can not auto generate ' +
               'navbar level config correctly!\n' +
               'please check your config file',
           );

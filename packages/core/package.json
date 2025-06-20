@@ -55,7 +55,6 @@
     "@rsbuild/core": "~1.3.22",
     "@rsbuild/plugin-react": "~1.3.2",
     "@rspress/mdx-rs": "0.6.6",
-    "@rspress/plugin-auto-nav-sidebar": "workspace:*",
     "@rspress/plugin-container-syntax": "workspace:*",
     "@rspress/plugin-last-updated": "workspace:*",
     "@rspress/plugin-medium-zoom": "workspace:*",

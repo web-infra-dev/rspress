@@ -3,12 +3,9 @@ import tsj from 'ts-json-schema-generator';
 
 /** @type {import('ts-json-schema-generator/dist/src/Config').Config} */
 const config = {
-  path: new URL('../../plugin-auto-nav-sidebar/src/type.ts', import.meta.url)
+  path: new URL('../../core/src/node/auto-nav-sidebar/type.ts', import.meta.url)
     .pathname,
-  tsconfig: new URL(
-    '../../plugin-auto-nav-sidebar/tsconfig.json',
-    import.meta.url,
-  ).pathname,
+  tsconfig: new URL('../../core/tsconfig.json', import.meta.url).pathname,
   type: 'MetaJson', // Or <type-name> if you want to generate schema for that one type only
 };
 

@@ -26,7 +26,7 @@ export async function walk(
     navConfig = await readJson<NavItem[]>(rootMetaFile);
   } catch (e) {
     logger.error(
-      '[plugin-auto-nav-sidebar]',
+      '[auto-nav-sidebar]',
       `Generate nav meta error: ${rootMetaFile} not exists`,
     );
     navConfig = [];
