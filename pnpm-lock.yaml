@@ -773,9 +773,6 @@ importers:
       '@rspress/mdx-rs':
         specifier: 0.6.6
         version: 0.6.6
-      '@rspress/plugin-auto-nav-sidebar':
-        specifier: workspace:*
-        version: link:../plugin-auto-nav-sidebar
       '@rspress/plugin-container-syntax':
         specifier: workspace:*
         version: link:../plugin-container-syntax
@@ -1119,40 +1116,6 @@ importers:
       react-router-dom:
         specifier: ^6.29.0
         version: 6.29.0(react-dom@19.1.0(react@19.1.0))(react@19.1.0)
-      rsbuild-plugin-publint:
-        specifier: ^0.3.2
-        version: 0.3.2(@rsbuild/core@1.3.22)
-      typescript:
-        specifier: ^5.8.2
-        version: 5.8.2
-
-  packages/plugin-auto-nav-sidebar:
-    dependencies:
-      '@rspress/shared':
-        specifier: workspace:*
-        version: link:../shared
-    devDependencies:
-      '@microsoft/api-extractor':
-        specifier: ^7.52.8
-        version: 7.52.8(@types/node@22.10.2)
-      '@rslib/core':
-        specifier: 0.10.0
-        version: 0.10.0(@microsoft/api-extractor@7.52.8(@types/node@22.10.2))(typescript@5.8.2)
-      '@rspress/config':
-        specifier: workspace:*
-        version: link:../../scripts/config
-      '@types/node':
-        specifier: ^22.8.1
-        version: 22.10.2
-      '@types/react':
-        specifier: ^19.1.8
-        version: 19.1.8
-      '@types/react-dom':
-        specifier: ^19.1.6
-        version: 19.1.6(@types/react@19.1.8)
-      react:
-        specifier: ^19.1.0
-        version: 19.1.0
       rsbuild-plugin-publint:
         specifier: ^0.3.2
         version: 0.3.2(@rsbuild/core@1.3.22)

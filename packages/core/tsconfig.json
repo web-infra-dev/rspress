@@ -10,9 +10,6 @@
   "include": ["src"],
   "references": [
     {
-      "path": "../plugin-auto-nav-sidebar"
-    },
-    {
       "path": "../plugin-last-updated"
     },
     {
