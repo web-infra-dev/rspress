@@ -188,13 +188,13 @@ You can deploy your Rspress site on [Kinsta](https://kinsta.com/static-site-host
 
 [Zephyr Cloud](https://zephyr-cloud.io) is a deployment orchestration platform allowing users to deploy applications bundled by major build tools such as Rspack, Rspress, Vite, webpack, Rollup, Rolldown, Parcel, Re.Pack and Metro with exceptional support for Micro-frontends. It enables users to bring their own cloud includes but not limited to: Cloudflare, Netlify, Fastly, etc.
 
-You can find more information about Zephyr Cloud [in their documentation](https://docs.zephyr-cloud.io).
+You can find more information about Zephyr Cloud and how to deploy with differrent build tools [in their documentation](https://docs.zephyr-cloud.io).
 
 #### How to deploy
 
 1. You will need to register an account on [Zephyr Cloud](https://app.zephyr-cloud.io) first.
 
-2. Install `zephyr-rspack-plugin` in your project.
+2. Install `zephyr-rspack-plugin` in your Rspress project.
 
 <PackageManagerTabs command="install zephyr-rspack-plugin@latest" />
 
@@ -229,11 +229,13 @@ export default defineConfig({
 });
 ```
 
-Their documentation is also built with Rspress and deployed to Zephyr Cloud, you can find the build configuration's source code [here](https://github.com/ZephyrCloudIO/zephyr-documentation/blob/main/rspress.config.ts).
+:::info
+Zephyr Cloud's documentation is also written with Rspress and deployed to Zephyr Cloud, you can find the build configuration's source code [here](https://github.com/ZephyrCloudIO/zephyr-documentation/blob/main/rspress.config.ts).
+:::
 
 4. Run `npm run build`
 
-After the build is complete, you will find the `doc_build` directory in the project root directory. Your documentation site will be deployed automatically after the build is completed with a preview URL in your terminal output.
+After the build is complete, you will find the `doc_build` directory in the project root directory. Your documentation site will be deployed automatically (requires authentication from terminal) after the build is completed with a preview URL in your terminal output.
 
 You can also find the preview URL in your Zephyr Cloud dashboard and modify a custom domain for your site. Read more about how to do it in their [environment guide](https://docs.zephyr-cloud.io/features/environments).
 
