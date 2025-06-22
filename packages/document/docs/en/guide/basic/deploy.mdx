@@ -213,9 +213,6 @@ const zephyrRsbuildPlugin = () => ({
     modifyRspackConfig: (arg0: (config: any) => Promise<void>) => void;
   }) {
     api.modifyRspackConfig(async (config) => {
-      let searchIndexExists = false;
-      searchIndexExists = fs.existsSync(TEMP_SEARCH_INDEX_PATH);
-
       config.name === 'web' && (await withZephyr()(config));
     });
   },
