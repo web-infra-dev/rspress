@@ -1,3 +1,5 @@
+import { PackageManagerTabs } from '@theme';
+
 # Deployment
 
 In this section, we will discuss the deployment of the project. We assume that you have completed the development of the project and now need to deploy the project online. You need to consider the following aspects:
@@ -181,6 +183,59 @@ You can deploy your Rspress site on [Kinsta](https://kinsta.com/static-site-host
    - Publish directory: `doc_build`
 
 6. Click the **Create site**.
+
+### Deploy to Zephyr Cloud
+
+[Zephyr Cloud](https://zephyr-cloud.io) is a deployment orchestration platform allowing users to deploy applications bundled by major build tools such as Rspack, Rspress, Vite, webpack, Rollup, Rolldown, Parcel, Re.Pack and Metro with exceptional support for Micro-frontends. It enables users to bring their own cloud includes but not limited to: Cloudflare, Netlify, Fastly, etc.
+
+You can find more information about Zephyr Cloud [in their documentation](https://docs.zephyr-cloud.io).
+
+#### How to deploy
+
+1. You will need to register an account on [Zephyr Cloud](https://app.zephyr-cloud.io) first.
+
+2. Install `zephyr-rspack-plugin` in your project.
+
+<PackageManagerTabs command="install zephyr-rspack-plugin@latest" />
+
+3. Add the following configuration to your `rspress.config.ts` file:
+
+```ts title="rspress.config.ts"
+/** Rest of your imports */
+import { withZephyr } from 'zephyr-rspack-plugin';
+
+/** Create a small plugin to add to the rspress config */
+
+const zephyrRsbuildPlugin = () => ({
+  name: 'zephyr-rsbuild-plugin',
+  setup(api: {
+    // biome-ignore lint/suspicious/noExplicitAny: `modifyRspackConfig` is a valid method
+    modifyRspackConfig: (arg0: (config: any) => Promise<void>) => void;
+  }) {
+    api.modifyRspackConfig(async (config) => {
+      let searchIndexExists = false;
+      searchIndexExists = fs.existsSync(TEMP_SEARCH_INDEX_PATH);
+
+      config.name === 'web' && (await withZephyr()(config));
+    });
+  },
+});
+
+export default defineConfig({
+  /** Rest of your config */
+  builderConfig: {
+    plugins: [zephyrRsbuildPlugin()],
+  },
+});
+```
+
+Their documentation is also built with Rspress and deployed to Zephyr Cloud, you can find the build configuration's source code [here](https://github.com/ZephyrCloudIO/zephyr-documentation/blob/main/rspress.config.ts).
+
+4. Run `npm run build`
+
+After the build is complete, you will find the `doc_build` directory in the project root directory. Your documentation site will be deployed automatically after the build is completed with a preview URL in your terminal output.
+
+You can also find the preview URL in your Zephyr Cloud dashboard and modify a custom domain for your site. Read more about how to do it in their [environment guide](https://docs.zephyr-cloud.io/features/environments).
 
 ### Deploy to Zeabur
 
