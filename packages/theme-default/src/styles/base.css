@@ -68,8 +68,9 @@ p {
   * Custom font family
 */
 :root {
-  --rp-font-family-base: 'Inter var experimental', 'Inter var', -apple-system,
-    BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell,
-    'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif;
+  --rp-font-family-base:
+    'Inter var experimental', 'Inter var', -apple-system, BlinkMacSystemFont,
+    'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Fira Sans', 'Droid Sans',
+    'Helvetica Neue', sans-serif;
   --rp-font-family-mono: Menlo, Monaco, Consolas, 'Courier New', monospace;
 }

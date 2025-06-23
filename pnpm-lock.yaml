@@ -63,11 +63,11 @@ importers:
         specifier: 1.52.0
         version: 1.52.0
       prettier:
-        specifier: 3.4.2
-        version: 3.4.2
+        specifier: 3.6.0
+        version: 3.6.0
       prettier-plugin-packagejson:
         specifier: ^2.5.15
-        version: 2.5.15(prettier@3.4.2)
+        version: 2.5.15(prettier@3.6.0)
       tree-kill:
         specifier: ^1.2.2
         version: 1.2.2
@@ -5818,8 +5818,8 @@ packages:
     engines: {node: '>=10.13.0'}
     hasBin: true
 
-  prettier@3.4.2:
-    resolution: {integrity: sha512-e9MewbtFo+Fevyuxn/4rrcDAaq0IYxPGLvObpQjiZBMAzB9IGmzlnG9RZy3FFas+eBMu2vA0CszMeduow5dIuQ==}
+  prettier@3.6.0:
+    resolution: {integrity: sha512-ujSB9uXHJKzM/2GBuE0hBOUgC77CN3Bnpqa+g80bkv3T3A93wL/xlzDATHhnhkzifz/UE2SNOvmbTz5hSkDlHw==}
     engines: {node: '>=14'}
     hasBin: true
 
@@ -11943,16 +11943,16 @@ snapshots:
       picocolors: 1.1.1
       source-map-js: 1.2.1
 
-  prettier-plugin-packagejson@2.5.15(prettier@3.4.2):
+  prettier-plugin-packagejson@2.5.15(prettier@3.6.0):
     dependencies:
       sort-package-json: 3.2.1
       synckit: 0.11.8
     optionalDependencies:
-      prettier: 3.4.2
+      prettier: 3.6.0
 
   prettier@2.8.1: {}
 
-  prettier@3.4.2: {}
+  prettier@3.6.0: {}
 
   pretty-format@29.7.0:
     dependencies:
