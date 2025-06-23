@@ -44,7 +44,7 @@
     "unified": "^11.0.5"
   },
   "devDependencies": {
-    "@rslib/core": "0.10.0",
+    "@rslib/core": "0.10.2",
     "@types/jest": "~29.5.14",
     "@types/lodash-es": "^4.17.12",
     "@types/node": "^22.8.1",

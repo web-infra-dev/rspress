@@ -40,8 +40,8 @@
     "qrcode.react": "^4.2.0"
   },
   "devDependencies": {
-    "@rslib/core": "0.10.0",
-    "@types/lodash": "^4.17.17",
+    "@rslib/core": "0.10.2",
+    "@types/lodash": "^4.17.18",
     "@types/mdast": "^4.0.4",
     "@types/node": "^22.8.1",
     "@types/react": "^19.1.8",
