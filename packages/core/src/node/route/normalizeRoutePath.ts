@@ -3,6 +3,7 @@ import { DEFAULT_PAGE_EXTENSIONS } from '@rspress/shared/constants';
 
 export const getRoutePathParts = (
   routePath: string,
+  base: string,
   lang: string,
   version: string,
   langs: string[],
@@ -39,6 +40,7 @@ export const getRoutePathParts = (
   purePathPart = parts.join('/');
 
   return [
+    base,
     versionPart,
     langPart,
     // restore the trail slash
@@ -55,8 +57,9 @@ export const normalizeRoutePath = (
   versions: string[],
   extensions: string[] = DEFAULT_PAGE_EXTENSIONS,
 ) => {
-  const [versionPart, langPart, purePathPart] = getRoutePathParts(
+  const [_, versionPart, langPart, purePathPart] = getRoutePathParts(
     routePath,
+    base,
     lang,
     version,
     langs,

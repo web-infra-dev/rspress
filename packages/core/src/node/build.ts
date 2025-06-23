@@ -28,11 +28,13 @@ export async function bundle(
       enableSSG,
     );
 
+    await pluginDriver.beforeBuild();
     await rsbuild.build();
   } finally {
     await writeSearchIndex(config);
     await checkLanguageParity(config);
   }
+  await pluginDriver.afterBuild();
 }
 
 function emptyDir(path: string): Promise<void> {
@@ -45,7 +47,6 @@ export async function build(options: BuildOptions) {
   await pluginDriver.init();
   const modifiedConfig = await pluginDriver.modifyConfig();
 
-  await pluginDriver.beforeBuild();
   const ssgConfig = modifiedConfig.ssg ?? true;
 
   // empty temp dir before build
@@ -56,6 +57,4 @@ export async function build(options: BuildOptions) {
   if (!ssgConfig) {
     hintSSGFalse();
   }
-
-  await pluginDriver.afterBuild();
 }
