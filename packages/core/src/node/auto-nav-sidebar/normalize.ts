@@ -9,10 +9,7 @@ import {
   slash,
 } from '@rspress/shared';
 import { logger } from '@rspress/shared/logger';
-import {
-  absolutePathToLink,
-  absolutePathToRoutePrefix,
-} from '../utils/normalizePath';
+import { absolutePathToLink, addRoutePrefix } from '../utils/normalizePath';
 import type {
   CustomLinkMeta,
   DividerSideMeta,
@@ -304,13 +301,9 @@ function metaCustomLinkItemToSidebarItem(
     };
   }
 
-  const routePrefix = absolutePathToRoutePrefix(workDir, docsDir);
-
-  const addRoutePrefix = (link: string): string =>
-    `${routePrefix.replace(/\/$/, '')}/${link.replace(/^\//, '')}`;
   return {
     text: label ?? link,
-    link: addRoutePrefix(link),
+    link: addRoutePrefix(workDir, docsDir, link),
     tag,
     context,
   };

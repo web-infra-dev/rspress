@@ -50,4 +50,5 @@ export type SideMetaItem =
 export type SideMeta = SideMetaItem[];
 
 // this type is used to generate schema
-export type MetaJson = SideMetaItem[] | NavItem[];
+export type MetaJson = SideMeta;
+export type NavJson = NavItem[];
