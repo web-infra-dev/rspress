@@ -85,7 +85,7 @@ export function hintNavJsonChangeThenPanic(
     })
   ) {
     const error = new Error(
-      '[Rspress v2] Detected that you are still using `_meta.json` to configure the nav, but it has been changed to `_nav.json` in Rspress v2. Please rename the file to `_nav.json` accordingly.',
+      '[Rspress v2] Detected that you are still using top level `_meta.json` to configure the nav, but it has been changed to `_nav.json` in Rspress v2. Please rename the top level `_meta.json` to `_nav.json` accordingly.',
     );
     logger.error(error);
 
