@@ -19,7 +19,7 @@ test.describe('Auto nav and sidebar test', async () => {
   });
 
   test('Should render sidebar correctly', async ({ page }) => {
-    await page.goto(`http://localhost:${appPort}/api/`, {
+    await page.goto(`http://localhost:${appPort}/`, {
       waitUntil: 'networkidle',
     });
 
@@ -31,6 +31,7 @@ test.describe('Auto nav and sidebar test', async () => {
         'pluginPlugin aPlugin b',
         'Commands',
         'configBasic configBuild configFront matter configTheme config',
+        'HomePage',
       ].join(','),
     );
   });
