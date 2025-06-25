@@ -95,8 +95,6 @@ export async function runDevCommand(
     appDir,
     env: {
       PORT: port.toString(),
-      // This is an escape hatch for playwright test, playwright does not support lazyCompilation
-      RSPRESS_LAZY_COMPILATION: 'false',
       // FIXME: Rspack's buildDependencies should collected the dependencies of rspress.config.ts, plugins change can not trigger the cache invalidate now
       RSPRESS_PERSISTENT_CACHE: 'false',
     },
