@@ -18,7 +18,7 @@ export async function readJson<T = unknown>(path: string): Promise<T> {
 
 export async function extractInfoFromFrontmatterWithAbsolutePath(
   absolutePath: string,
-  rootDir: string,
+  docsDir: string,
 ): Promise<{
   title: string;
   overviewHeaders: number[] | undefined;
@@ -31,7 +31,7 @@ export async function extractInfoFromFrontmatterWithAbsolutePath(
   );
   const h1RegExp = /^#\s+(.*)$/m;
   const match = content.match(h1RegExp);
-  const { frontmatter } = loadFrontMatter(content, absolutePath, rootDir);
+  const { frontmatter } = loadFrontMatter(content, absolutePath, docsDir);
   return {
     title: extractTextAndId(
       frontmatter.title || match?.[1] || fileNameWithoutExt,

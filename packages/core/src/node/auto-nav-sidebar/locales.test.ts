@@ -46,13 +46,13 @@ describe('walk', () => {
             "default": [
               {
                 "activeMatch": "^/guide/",
-                "link": "/base/zh/guide/",
+                "link": "/zh/guide/",
                 "text": "Guide",
               },
             ],
           },
           "sidebar": {
-            "/base/zh/guide": [
+            "/zh/guide": [
               {
                 "_fileKey": "zh/guide/test-dir/index",
                 "collapsed": undefined,
@@ -119,7 +119,7 @@ describe('walk', () => {
               },
               {
                 "context": undefined,
-                "link": "/base/zh/guide/test-dir",
+                "link": "/zh/guide/test-dir",
                 "tag": undefined,
                 "text": "My Link",
               },
@@ -131,13 +131,13 @@ describe('walk', () => {
             "default": [
               {
                 "activeMatch": "^/guide/",
-                "link": "/base/guide/",
+                "link": "/guide/",
                 "text": "Guide",
               },
             ],
           },
           "sidebar": {
-            "/base/guide": [
+            "/guide": [
               {
                 "_fileKey": "en/guide/test-dir/index",
                 "collapsed": undefined,
@@ -204,7 +204,7 @@ describe('walk', () => {
               },
               {
                 "context": undefined,
-                "link": "/base/guide/test-dir",
+                "link": "/guide/test-dir",
                 "tag": undefined,
                 "text": "My Link",
               },
