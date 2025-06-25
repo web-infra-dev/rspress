@@ -33,10 +33,6 @@ export function normalizeHrefInRuntime(a: string) {
 }
 
 export function normalizeImagePath(imagePath: string) {
-  const isProd = isProduction();
-  if (!isProd) {
-    return imagePath;
-  }
   if (isAbsoluteUrl(imagePath)) {
     return imagePath;
   }
