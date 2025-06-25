@@ -9,10 +9,7 @@ import {
   slash,
 } from '@rspress/shared';
 import { logger } from '@rspress/shared/logger';
-import {
-  absolutePathToLink,
-  absolutePathToRoutePrefix,
-} from '../utils/normalizePath';
+import { absolutePathToLink, addRoutePrefix } from '../utils/normalizePath';
 import type {
   CustomLinkMeta,
   DividerSideMeta,
@@ -256,6 +253,13 @@ async function metaFileItemToSidebarItem(
   }
 
   const { name, context, label, overviewHeaders, tag } = metaItem;
+
+  if (typeof name !== 'string') {
+    throw new Error(
+      `The file name "${name}" is not a string, please check it in "${join(workDir, '_meta.json')}".`,
+    );
+  }
+
   const absolutePath = join(workDir, name);
 
   let absolutePathWithExt: string;
@@ -304,13 +308,9 @@ function metaCustomLinkItemToSidebarItem(
     };
   }
 
-  const routePrefix = absolutePathToRoutePrefix(workDir, docsDir);
-
-  const addRoutePrefix = (link: string): string =>
-    `${routePrefix.replace(/\/$/, '')}/${link.replace(/^\//, '')}`;
   return {
     text: label ?? link,
-    link: addRoutePrefix(link),
+    link: addRoutePrefix(workDir, docsDir, link),
     tag,
     context,
   };

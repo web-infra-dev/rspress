@@ -61,3 +61,4 @@ e2e/fixtures/plugin-typedoc/multi/doc/api
 
 # ignore generated schema.json
 meta-json-schema.json
+nav-json-schema.json

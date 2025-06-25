@@ -19,19 +19,20 @@ test.describe('Auto nav and sidebar test', async () => {
   });
 
   test('Should render sidebar correctly', async ({ page }) => {
-    await page.goto(`http://localhost:${appPort}/api/`, {
+    await page.goto(`http://localhost:${appPort}/`, {
       waitUntil: 'networkidle',
     });
 
     const sidebarTexts = await getSidebarTexts(page);
-    expect(sidebarTexts.length).toBe(4);
+    expect(sidebarTexts.length).toBe(2);
     expect(sidebarTexts.join(',')).toEqual(
       [
         'API',
         'pluginPlugin aPlugin b',
         'Commands',
-        'configBasic configBuild configFront matter configTheme config',
-      ].join(','),
+        'configBasic configBuild configFront matter configTheme config,',
+        'HomePage',
+      ].join(''),
     );
   });
 
@@ -43,8 +44,9 @@ test.describe('Auto nav and sidebar test', async () => {
     });
 
     const elements = await page.$$('h2 span');
+    expect(elements.length).toBe(3);
 
-    const configDir = elements[1];
+    const configDir = elements[2];
     expect(await configDir.textContent()).toBe('config');
     await configDir.click();
     expect(page.url()).toBe(

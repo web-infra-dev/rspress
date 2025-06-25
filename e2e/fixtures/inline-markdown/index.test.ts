@@ -33,7 +33,7 @@ test.describe('Inline markdown test', async () => {
     );
     expect(sidebarTexts.join(',')).toEqual(
       [
-        'index',
+        'Overview',
         'Class: Component<P, S>',
         'Class: Component<P, S>',
         'bold',
@@ -48,7 +48,7 @@ test.describe('Inline markdown test', async () => {
       sidebar.map(element => element.innerHTML()),
     );
     const expectedSidebarInnerHtml = [
-      '<span>index</span>',
+      '<span>Overview</span>',
       '<span>Class: Component&lt;P, S&gt;</span>',
       '<span>Class: Component&lt;P, S&gt;</span>',
       '<span><strong>bold</strong></span>',

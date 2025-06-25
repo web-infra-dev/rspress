@@ -1,7 +1,8 @@
 import { readFile } from 'node:fs/promises';
-import { join } from 'node:path';
+import { join, relative } from 'node:path';
 import { logger } from '@rspress/shared/logger';
 import picocolors from 'picocolors';
+import type { NavJson } from '../auto-nav-sidebar/type';
 import { pathExists } from '../utils';
 
 const THEME_DEFAULT_EXPORT_PATTERN = /export\s+default\s+\{/;
@@ -63,4 +64,36 @@ export function hintReactVersion() {
   logger.info(
     '[Rspress v2] Rspress support React 18 and 19, please confirm that both react and react-dom are installed in package.json with the same version. ',
   );
+}
+
+export function hintNavJsonChangeThenPanic(
+  metaJson: NavJson,
+  metaJsonDir: string,
+  docsDir: string,
+): void {
+  if (
+    metaJson.some(i => {
+      return (
+        typeof i === 'object' &&
+        ('activeMatch' in i ||
+          'text' in i ||
+          'link' in i ||
+          'items' in i ||
+          'icon' in i ||
+          'ariaLabel' in i ||
+          'target' in i)
+      );
+    })
+  ) {
+    const error = new Error(
+      '[Rspress v2] Detected that you are still using top level `_meta.json` to configure the nav, but it has been changed to `_nav.json` in Rspress v2. Please rename the top level `_meta.json` to `_nav.json` accordingly.',
+    );
+    logger.error(error);
+
+    const dir = relative(docsDir, metaJsonDir);
+    logger.info(
+      `Please rename "${picocolors.greenBright(join(dir, '_meta.json'))}" to  "${picocolors.greenBright(join(dir, '_nav.json'))}".`,
+    );
+    process.exit(1);
+  }
 }

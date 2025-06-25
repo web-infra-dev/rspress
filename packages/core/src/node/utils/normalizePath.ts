@@ -30,7 +30,7 @@ export function absolutePathToLink(
   return routeService.normalizeRoutePath(relativePath).routePath;
 }
 
-export function absolutePathToRoutePrefix(
+function absolutePathToRoutePrefix(
   absolutePath: string,
   docsDir: string,
 ): string {
@@ -44,4 +44,13 @@ export function absolutePathToRoutePrefix(
   const [basePrefix, versionPrefix, langPrefix] =
     routeService.getRoutePathParts(relativePath);
   return `${basePrefix}${versionPrefix ? `/${versionPrefix}` : ''}${langPrefix ? `/${langPrefix}` : ''}`;
+}
+
+export function addRoutePrefix(
+  workDir: string,
+  docsDir: string,
+  link: string,
+): string {
+  const routePrefix = absolutePathToRoutePrefix(workDir, docsDir);
+  return `${routePrefix.replace(/\/$/, '')}/${link.replace(/^\//, '')}`;
 }

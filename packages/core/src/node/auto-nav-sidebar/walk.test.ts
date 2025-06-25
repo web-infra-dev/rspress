@@ -111,13 +111,130 @@ describe('walk', () => {
       }
     `);
   });
-  it('no meta', async () => {
+  it('both _meta.json and _nav.json do not exist', async () => {
     const docsDir = path.join(__dirname, './fixtures/docs-no-meta');
     const sidebar = await walk(docsDir, docsDir, DEFAULT_PAGE_EXTENSIONS);
     expect(sidebar).toMatchInlineSnapshot(`
       {
         "nav": [],
         "sidebar": {
+          "/": [
+            {
+              "_fileKey": "api/index",
+              "collapsed": undefined,
+              "collapsible": undefined,
+              "context": undefined,
+              "items": [
+                {
+                  "_fileKey": "api/api",
+                  "context": undefined,
+                  "link": "/api/api",
+                  "overviewHeaders": undefined,
+                  "tag": undefined,
+                  "text": "Api",
+                },
+                {
+                  "_fileKey": "api/guide/index",
+                  "collapsed": undefined,
+                  "collapsible": undefined,
+                  "context": undefined,
+                  "items": [
+                    {
+                      "_fileKey": "api/guide/getting-started",
+                      "context": undefined,
+                      "link": "/api/guide/getting-started",
+                      "overviewHeaders": undefined,
+                      "tag": undefined,
+                      "text": "Getting started",
+                    },
+                  ],
+                  "link": "/api/guide/",
+                  "overviewHeaders": undefined,
+                  "tag": undefined,
+                  "text": "Guide",
+                },
+              ],
+              "link": "/api/",
+              "overviewHeaders": undefined,
+              "tag": undefined,
+              "text": "No meta",
+            },
+            {
+              "_fileKey": "index",
+              "context": undefined,
+              "link": "/",
+              "overviewHeaders": undefined,
+              "tag": undefined,
+              "text": "HomePage",
+            },
+          ],
+        },
+      }
+    `);
+  });
+
+  it('both _meta.json and _nav.json exist', async () => {
+    const docsDir = path.join(__dirname, './fixtures/docs-meta-nav');
+    const sidebar = await walk(docsDir, docsDir, DEFAULT_PAGE_EXTENSIONS);
+    expect(sidebar).toMatchInlineSnapshot(`
+      {
+        "nav": [
+          {
+            "link": "/api",
+            "text": "API",
+          },
+        ],
+        "sidebar": {
+          "/": [
+            {
+              "_fileKey": "index",
+              "context": undefined,
+              "link": "/",
+              "overviewHeaders": undefined,
+              "tag": undefined,
+              "text": "HomePage",
+            },
+            {
+              "_fileKey": "api/index",
+              "collapsed": undefined,
+              "collapsible": undefined,
+              "context": undefined,
+              "items": [
+                {
+                  "_fileKey": "api/api",
+                  "context": undefined,
+                  "link": "/api/api",
+                  "overviewHeaders": undefined,
+                  "tag": undefined,
+                  "text": "Api",
+                },
+                {
+                  "_fileKey": "api/guide/index",
+                  "collapsed": undefined,
+                  "collapsible": undefined,
+                  "context": undefined,
+                  "items": [
+                    {
+                      "_fileKey": "api/guide/getting-started",
+                      "context": undefined,
+                      "link": "/api/guide/getting-started",
+                      "overviewHeaders": undefined,
+                      "tag": undefined,
+                      "text": "Getting started",
+                    },
+                  ],
+                  "link": "/api/guide/",
+                  "overviewHeaders": undefined,
+                  "tag": undefined,
+                  "text": "Guide",
+                },
+              ],
+              "link": "/api/",
+              "overviewHeaders": undefined,
+              "tag": undefined,
+              "text": "No meta",
+            },
+          ],
           "/api": [
             {
               "_fileKey": "api/api",
