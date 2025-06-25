@@ -161,11 +161,8 @@ export function replaceLang(
     purePathPart = cleanUrls ? 'index' : 'index.html';
   }
 
-  return withBase(
-    addLeadingSlash(
-      [versionPart, langPart, purePathPart].filter(Boolean).join('/'),
-    ),
-    base,
+  return addLeadingSlash(
+    [versionPart, langPart, purePathPart].filter(Boolean).join('/'),
   );
 }
 
@@ -204,10 +201,7 @@ export function replaceVersion(
     restPart = cleanUrls ? 'index' : 'index.html';
   }
 
-  return withBase(
-    addLeadingSlash([versionPart, restPart].filter(Boolean).join('/')),
-    base,
-  );
+  return addLeadingSlash([versionPart, restPart].filter(Boolean).join('/'));
 }
 
 export const parseUrl = (
@@ -262,10 +256,6 @@ export function normalizeHref(url?: string, cleanUrls = false) {
 export function withoutLang(path: string, langs: string[]) {
   const langRegexp = new RegExp(`^\\/(${langs.join('|')})`);
   return addLeadingSlash(path.replace(langRegexp, ''));
-}
-
-export function withoutBase(path: string, base: string) {
-  return addLeadingSlash(path).replace(normalizeSlash(base), '');
 }
 
 export function withBase(url: string, base: string): string {

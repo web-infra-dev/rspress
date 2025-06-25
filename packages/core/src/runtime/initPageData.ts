@@ -7,6 +7,7 @@ import {
   type PageData,
   cleanUrl,
 } from '@rspress/shared';
+import { base } from 'virtual-runtime-config';
 import siteData from 'virtual-site-data';
 
 type PageMeta = {
@@ -68,10 +69,7 @@ export async function initPageData(routePath: string): Promise<PageData> {
   let version = siteData.multiVersion?.default || '';
 
   if (siteData.lang && typeof window !== 'undefined') {
-    const path = location.pathname
-      .replace(siteData.base, '')
-      .split('/')
-      .slice(0, 2);
+    const path = location.pathname.replace(base, '').split('/').slice(0, 2);
 
     if (siteData.locales.length) {
       const result = siteData.locales.find(({ lang }) => path.includes(lang));

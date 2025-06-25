@@ -3,6 +3,7 @@ import type { DefaultThemeConfig, NavItem } from '@rspress/shared';
 import type { SiteData } from '@rspress/shared';
 import { clearAllBodyScrollLocks, disableBodyScroll } from 'body-scroll-lock';
 import { useEffect, useRef } from 'react';
+import { base } from 'virtual-runtime-config';
 import { useNavData } from '../../logic/useNav';
 import { NavMenuSingleItem } from '../Nav/NavMenuSingleItem';
 import {
@@ -108,7 +109,6 @@ export function NavScreen(props: Props) {
   const socialLinks = siteData?.themeConfig?.socialLinks || [];
   const hasSocialLinks = socialLinks.length > 0;
   const langs = localesData.map(item => item.lang || 'zh') || [];
-  const { base } = siteData;
 
   useEffect(() => {
     screen.current &&

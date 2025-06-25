@@ -62,13 +62,7 @@ function NormalGroupItem({ item }: { item: NavItemWithLink }) {
 }
 
 export function NavMenuGroup(item: NavMenuGroupItem) {
-  const {
-    activeValue,
-    items: groupItems,
-    base = '',
-    link = '',
-    pathname = '',
-  } = item;
+  const { activeValue, items: groupItems, link = '', pathname = '' } = item;
   const [isOpen, setIsOpen] = useState(false);
   const closeTimerRef = useRef<number>(null);
 
@@ -96,7 +90,7 @@ export function NavMenuGroup(item: NavMenuGroupItem) {
   };
 
   const renderLinkItem = (item: NavItemWithLink) => {
-    const isLinkActive = matchNavbar(item, pathname, base);
+    const isLinkActive = matchNavbar(item, pathname);
     if (activeValue === item.text || (!activeValue && isLinkActive)) {
       return <ActiveGroupItem key={item.link} item={item} />;
     }

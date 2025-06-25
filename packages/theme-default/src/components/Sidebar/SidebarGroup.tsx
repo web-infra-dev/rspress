@@ -1,7 +1,6 @@
 import {
   normalizeHrefInRuntime as normalizeHref,
   useNavigate,
-  withBase,
 } from '@rspress/runtime';
 import type { NormalizedSidebarGroup } from '@rspress/shared';
 import { Tag } from '@theme';
@@ -119,7 +118,7 @@ export function SidebarGroup(props: SidebarItemProps) {
         onMouseEnter={() => item.link && preloadLink(item.link)}
         onClick={e => {
           if (item.link) {
-            navigate(withBase(normalizeHref(item.link)));
+            navigate(normalizeHref(item.link));
           }
           collapsible && toggleCollapse(e);
         }}

@@ -1,8 +1,7 @@
 import { normalizeHrefInRuntime as normalizeHref } from '@rspress/runtime';
-import {
-  type NavItemWithLink,
-  type NavItemWithLinkAndChildren,
-  withoutBase,
+import type {
+  NavItemWithLink,
+  NavItemWithLinkAndChildren,
 } from '@rspress/shared';
 import { Link, Tag } from '@theme';
 import * as styles from './index.module.scss';
@@ -18,10 +17,8 @@ interface Props {
 export function NavMenuSingleItem(
   item: (NavItemWithLink | NavItemWithLinkAndChildren) & Props,
 ) {
-  const { pathname, base } = item;
-  const isActive = new RegExp(item.activeMatch || item.link).test(
-    withoutBase(pathname, base),
-  );
+  const { pathname } = item;
+  const isActive = new RegExp(item.activeMatch || item.link).test(pathname);
 
   return (
     <Link href={normalizeHref(item.link)} onClick={item.onClick}>

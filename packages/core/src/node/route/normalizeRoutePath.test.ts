@@ -2,85 +2,45 @@ import { getRoutePathParts, normalizeRoutePath } from './normalizeRoutePath';
 
 test('getRoutePathParts', () => {
   expect(
-    getRoutePathParts(
-      '/v1/en/foo/bar',
-      '/',
-      'en',
-      'v1',
-      ['zh', 'en'],
-      ['v1', 'v2'],
-    ),
+    getRoutePathParts('/v1/en/foo/bar', 'en', 'v1', ['zh', 'en'], ['v1', 'v2']),
   ).toMatchInlineSnapshot(`
     [
-      "/",
       "",
       "",
       "foo/bar",
     ]
   `);
   expect(
-    getRoutePathParts(
-      '/v1/zh/foo/bar',
-      '/',
-      'en',
-      'v1',
-      ['zh', 'en'],
-      ['v1', 'v2'],
-    ),
+    getRoutePathParts('/v1/zh/foo/bar', 'en', 'v1', ['zh', 'en'], ['v1', 'v2']),
   ).toMatchInlineSnapshot(`
     [
-      "/",
       "",
       "zh",
       "foo/bar",
     ]
   `);
   expect(
-    getRoutePathParts(
-      '/v2/en/foo/bar',
-      '/',
-      'en',
-      'v1',
-      ['zh', 'en'],
-      ['v1', 'v2'],
-    ),
+    getRoutePathParts('/v2/en/foo/bar', 'en', 'v1', ['zh', 'en'], ['v1', 'v2']),
   ).toMatchInlineSnapshot(`
     [
-      "/",
       "v2",
       "",
       "foo/bar",
     ]
   `);
   expect(
-    getRoutePathParts(
-      '/v2/zh/foo/bar',
-      '/',
-      'en',
-      'v1',
-      ['zh', 'en'],
-      ['v1', 'v2'],
-    ),
+    getRoutePathParts('/v2/zh/foo/bar', 'en', 'v1', ['zh', 'en'], ['v1', 'v2']),
   ).toMatchInlineSnapshot(`
     [
-      "/",
       "v2",
       "zh",
       "foo/bar",
     ]
   `);
   expect(
-    getRoutePathParts(
-      '/v2/en/api/',
-      '/',
-      'en',
-      'v1',
-      ['zh', 'en'],
-      ['v1', 'v2'],
-    ),
+    getRoutePathParts('/v2/en/api/', 'en', 'v1', ['zh', 'en'], ['v1', 'v2']),
   ).toMatchInlineSnapshot(`
     [
-      "/",
       "v2",
       "",
       "api/",
@@ -88,10 +48,9 @@ test('getRoutePathParts', () => {
   `);
 
   expect(
-    getRoutePathParts('/foo/bar', '/', 'en', 'v1', ['zh', 'en'], ['v1', 'v2']),
+    getRoutePathParts('/foo/bar', 'en', 'v1', ['zh', 'en'], ['v1', 'v2']),
   ).toMatchInlineSnapshot(`
     [
-      "/",
       "",
       "",
       "foo/bar",
@@ -101,7 +60,7 @@ test('getRoutePathParts', () => {
   expect(
     getRoutePathParts(
       '/foo/bar/baz.xyz',
-      '/',
+
       'en',
       'v1',
       ['zh', 'en'],
@@ -109,7 +68,6 @@ test('getRoutePathParts', () => {
     ),
   ).toMatchInlineSnapshot(`
     [
-      "/",
       "",
       "",
       "foo/bar/baz.xyz",
@@ -119,7 +77,6 @@ test('getRoutePathParts', () => {
   expect(
     getRoutePathParts(
       '/foo/bar/baz.xyz',
-      '/',
       'en',
       'v1',
       ['zh', 'en'],
@@ -127,7 +84,6 @@ test('getRoutePathParts', () => {
     ),
   ).toMatchInlineSnapshot(`
     [
-      "/",
       "",
       "",
       "foo/bar/baz.xyz",
@@ -139,7 +95,6 @@ test('normalizeRoutePath', () => {
   expect(
     normalizeRoutePath(
       '/v1/en/foo/bar',
-      '/',
       'en',
       'v1',
       ['zh', 'en'],
@@ -153,7 +108,6 @@ test('normalizeRoutePath', () => {
   expect(
     normalizeRoutePath(
       '/v1/zh/foo/bar',
-      '/',
       'en',
       'v1',
       ['zh', 'en'],
@@ -167,7 +121,6 @@ test('normalizeRoutePath', () => {
   expect(
     normalizeRoutePath(
       '/v2/en/foo/bar',
-      '/',
       'en',
       'v1',
       ['zh', 'en'],
@@ -181,7 +134,6 @@ test('normalizeRoutePath', () => {
   expect(
     normalizeRoutePath(
       '/v2/zh/foo/bar',
-      '/',
       'en',
       'v1',
       ['zh', 'en'],
@@ -193,14 +145,7 @@ test('normalizeRoutePath', () => {
     routePath: '/v2/zh/foo/bar',
   });
   expect(
-    normalizeRoutePath(
-      '/v2/en/api/',
-      '/',
-      'en',
-      'v1',
-      ['zh', 'en'],
-      ['v1', 'v2'],
-    ),
+    normalizeRoutePath('/v2/en/api/', 'en', 'v1', ['zh', 'en'], ['v1', 'v2']),
   ).toEqual({
     lang: 'en',
     version: 'v2',
@@ -208,7 +153,7 @@ test('normalizeRoutePath', () => {
   });
 
   expect(
-    normalizeRoutePath('/foo/bar', '/', 'en', 'v1', ['zh', 'en'], ['v1', 'v2']),
+    normalizeRoutePath('/foo/bar', 'en', 'v1', ['zh', 'en'], ['v1', 'v2']),
   ).toEqual({
     lang: 'en',
     version: 'v1',
@@ -218,7 +163,6 @@ test('normalizeRoutePath', () => {
   expect(
     normalizeRoutePath(
       '/foo/bar/baz.xyz',
-      '/',
       'en',
       'v1',
       ['zh', 'en'],
@@ -233,7 +177,6 @@ test('normalizeRoutePath', () => {
   expect(
     normalizeRoutePath(
       '/foo/bar/baz.xyz',
-      '/',
       'en',
       'v1',
       ['zh', 'en'],

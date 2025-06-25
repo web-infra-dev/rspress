@@ -40,6 +40,7 @@ import { globalStylesVMPlugin } from './runtimeModule/globalStyles';
 import { globalUIComponentsVMPlugin } from './runtimeModule/globalUIComponents';
 import { i18nVMPlugin } from './runtimeModule/i18n';
 import { routeListVMPlugin } from './runtimeModule/routeList';
+import { runtimeConfigVMPlugin } from './runtimeModule/runtimeConfig';
 import { searchHookVMPlugin } from './runtimeModule/searchHooks';
 import type { FactoryContext } from './runtimeModule/types';
 import { serveSearchIndexMiddleware } from './searchIndex';
@@ -149,6 +150,11 @@ async function createInternalBuildConfig(
            *  Get virtual modules from plugins
            */
           ...(await getVirtualModulesFromPlugins(pluginDriver)),
+
+          /**
+           * Serialize rspress.config.ts to runtime
+           */
+          ...runtimeConfigVMPlugin(context),
         },
       }),
       ...(enableSSG

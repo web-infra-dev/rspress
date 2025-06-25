@@ -13,7 +13,6 @@ import {
   addLeadingSlash,
   isExternalUrl,
   slash,
-  withoutBase,
 } from '@rspress/shared';
 import { applyReplaceRules } from '../../utils/applyReplaceRules';
 import { getI18nData } from '../i18n';
@@ -23,7 +22,6 @@ export function normalizeThemeConfig(
 ): NormalizedDefaultThemeConfig {
   const {
     locales: siteLocales,
-    base = '',
     lang,
     replaceRules = [],
     multiVersion,
@@ -40,9 +38,8 @@ export function normalizeThemeConfig(
     if (
       !currentLang ||
       !link ||
-      withoutBase(normalizedLink, base).startsWith(`/${currentLang}`) ||
+      normalizedLink.startsWith(`/${currentLang}`) ||
       isExternalUrl(normalizedLink) ||
-      // In multi version case, we have got the complete link prefix in `auto-nav-sidebar` and does not need to add the lang prefix
       hasMultiVersion
     ) {
       return normalizedLink;

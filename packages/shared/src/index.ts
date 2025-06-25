@@ -34,6 +34,5 @@ export {
   replaceVersion,
   slash,
   withBase,
-  withoutBase,
   withoutLang,
 } from './runtime-utils/utils';

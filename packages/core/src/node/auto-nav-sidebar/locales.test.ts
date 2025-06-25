@@ -12,7 +12,6 @@ describe('walk', () => {
     const mockNormalizeRoutePath = (link: string) => {
       return normalizeRoutePath(
         link,
-        '/base',
         'en',
         '',
         ['zh', 'en'],
@@ -23,7 +22,6 @@ describe('walk', () => {
     const mockGetRoutePathParts = (link: string) => {
       return getRoutePathParts(
         link,
-        '/base',
         'en',
         '',
         ['zh', 'en'],
@@ -46,13 +44,13 @@ describe('walk', () => {
             "default": [
               {
                 "activeMatch": "^/guide/",
-                "link": "/base/zh/guide/",
+                "link": "/zh/guide/",
                 "text": "Guide",
               },
             ],
           },
           "sidebar": {
-            "/base/zh/guide": [
+            "/zh/guide": [
               {
                 "_fileKey": "zh/guide/test-dir/index",
                 "collapsed": undefined,
@@ -62,13 +60,13 @@ describe('walk', () => {
                   {
                     "_fileKey": "zh/guide/test-dir/getting-started",
                     "context": undefined,
-                    "link": "/base/zh/guide/test-dir/getting-started",
+                    "link": "/zh/guide/test-dir/getting-started",
                     "overviewHeaders": undefined,
                     "tag": undefined,
                     "text": "Getting started 页面",
                   },
                 ],
-                "link": "/base/zh/guide/test-dir/",
+                "link": "/zh/guide/test-dir/",
                 "overviewHeaders": undefined,
                 "tag": undefined,
                 "text": "Test dir 页面",
@@ -82,13 +80,13 @@ describe('walk', () => {
                   {
                     "_fileKey": "zh/guide/test-same-name-dir/index",
                     "context": undefined,
-                    "link": "/base/zh/guide/test-same-name-dir/",
+                    "link": "/zh/guide/test-same-name-dir/",
                     "overviewHeaders": undefined,
                     "tag": undefined,
                     "text": "Test same name dir 页面",
                   },
                 ],
-                "link": "/base/zh/guide/test-same-name-dir",
+                "link": "/zh/guide/test-same-name-dir",
                 "overviewHeaders": undefined,
                 "tag": undefined,
                 "text": "Test same name dir in file 页面",
@@ -96,7 +94,7 @@ describe('walk', () => {
               {
                 "_fileKey": "zh/guide/a",
                 "context": undefined,
-                "link": "/base/zh/guide/a",
+                "link": "/zh/guide/a",
                 "overviewHeaders": undefined,
                 "tag": undefined,
                 "text": "Page a 页面",
@@ -104,7 +102,7 @@ describe('walk', () => {
               {
                 "_fileKey": "zh/guide/b",
                 "context": undefined,
-                "link": "/base/zh/guide/b",
+                "link": "/zh/guide/b",
                 "overviewHeaders": undefined,
                 "tag": undefined,
                 "text": "Page b 页面",
@@ -112,14 +110,14 @@ describe('walk', () => {
               {
                 "_fileKey": "zh/guide/c",
                 "context": undefined,
-                "link": "/base/zh/guide/c",
+                "link": "/zh/guide/c",
                 "overviewHeaders": undefined,
                 "tag": undefined,
                 "text": "c",
               },
               {
                 "context": undefined,
-                "link": "/base/zh/guide/test-dir",
+                "link": "/zh/guide/test-dir",
                 "tag": undefined,
                 "text": "My Link",
               },
@@ -131,13 +129,13 @@ describe('walk', () => {
             "default": [
               {
                 "activeMatch": "^/guide/",
-                "link": "/base/guide/",
+                "link": "/guide/",
                 "text": "Guide",
               },
             ],
           },
           "sidebar": {
-            "/base/guide": [
+            "/guide": [
               {
                 "_fileKey": "en/guide/test-dir/index",
                 "collapsed": undefined,
@@ -147,13 +145,13 @@ describe('walk', () => {
                   {
                     "_fileKey": "en/guide/test-dir/getting-started",
                     "context": undefined,
-                    "link": "/base/guide/test-dir/getting-started",
+                    "link": "/guide/test-dir/getting-started",
                     "overviewHeaders": undefined,
                     "tag": undefined,
                     "text": "Getting started",
                   },
                 ],
-                "link": "/base/guide/test-dir/",
+                "link": "/guide/test-dir/",
                 "overviewHeaders": undefined,
                 "tag": undefined,
                 "text": "Test dir",
@@ -167,13 +165,13 @@ describe('walk', () => {
                   {
                     "_fileKey": "en/guide/test-same-name-dir/index",
                     "context": undefined,
-                    "link": "/base/guide/test-same-name-dir/",
+                    "link": "/guide/test-same-name-dir/",
                     "overviewHeaders": undefined,
                     "tag": undefined,
                     "text": "Test same name dir",
                   },
                 ],
-                "link": "/base/guide/test-same-name-dir",
+                "link": "/guide/test-same-name-dir",
                 "overviewHeaders": undefined,
                 "tag": undefined,
                 "text": "Test same name dir in file",
@@ -181,7 +179,7 @@ describe('walk', () => {
               {
                 "_fileKey": "en/guide/a",
                 "context": undefined,
-                "link": "/base/guide/a",
+                "link": "/guide/a",
                 "overviewHeaders": undefined,
                 "tag": undefined,
                 "text": "Page a",
@@ -189,7 +187,7 @@ describe('walk', () => {
               {
                 "_fileKey": "en/guide/b",
                 "context": undefined,
-                "link": "/base/guide/b",
+                "link": "/guide/b",
                 "overviewHeaders": undefined,
                 "tag": undefined,
                 "text": "Page b",
@@ -197,14 +195,14 @@ describe('walk', () => {
               {
                 "_fileKey": "en/guide/c",
                 "context": undefined,
-                "link": "/base/guide/c",
+                "link": "/guide/c",
                 "overviewHeaders": undefined,
                 "tag": undefined,
                 "text": "c",
               },
               {
                 "context": undefined,
-                "link": "/base/guide/test-dir",
+                "link": "/guide/test-dir",
                 "tag": undefined,
                 "text": "My Link",
               },

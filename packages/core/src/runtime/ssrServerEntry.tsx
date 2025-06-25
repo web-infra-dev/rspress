@@ -11,6 +11,7 @@ import { renderToPipeableStream } from 'react-dom/server';
 import { PassThrough } from 'node:stream';
 import { text } from 'node:stream/consumers';
 import type { ReactNode } from 'react';
+import { base } from 'virtual-runtime-config';
 import { App } from './App';
 import { initPageData } from './initPageData';
 
@@ -46,7 +47,7 @@ export async function render(
   const appHtml = await renderToHtml(
     <ThemeContext.Provider value={{ theme: DEFAULT_THEME }}>
       <DataContext.Provider value={{ data: initialPageData }}>
-        <StaticRouter location={pagePath}>
+        <StaticRouter location={pagePath} basename={base}>
           <UnheadProvider value={head}>
             <App />
           </UnheadProvider>

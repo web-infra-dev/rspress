@@ -1,6 +1,7 @@
 import { useLocation, usePageData, useVersion } from '@rspress/runtime';
 import { replaceLang, replaceVersion } from '@rspress/shared';
 import Translator from '@theme-assets/translator';
+import { base } from 'virtual-runtime-config';
 import { SvgWrapper } from '../SvgWrapper';
 import type { NavMenuGroupItem } from './NavMenuGroup';
 
@@ -16,7 +17,6 @@ export function useTranslationMenuData(): NavMenuGroupItem {
   const cleanUrls = siteData.route?.cleanUrls || false;
   const hasMultiLanguage = localeLanguages.length > 1;
   const { lang: currentLang, pageType } = page;
-  const { base } = siteData;
 
   const translationMenuData = hasMultiLanguage
     ? {
@@ -61,7 +61,6 @@ export function useVersionMenuData() {
   const cleanUrls = siteData.route?.cleanUrls || false;
   const defaultVersion = siteData.multiVersion.default || '';
   const versions = siteData.multiVersion.versions || [];
-  const { base } = siteData;
   const versionsMenuData = {
     items: versions.map(version => ({
       text: version,

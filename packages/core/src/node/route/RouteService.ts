@@ -50,8 +50,6 @@ export class RouteService {
 
   #exclude: string[] = [];
 
-  #base: string = '';
-
   #tempDir: string = '';
 
   #pluginDriver: PluginDriver;
@@ -94,7 +92,6 @@ export class RouteService {
       userConfig?.themeConfig?.locales ??
       []
     ).map(item => item.lang);
-    this.#base = userConfig?.base || '';
     this.#tempDir = tempDir;
     this.#pluginDriver = pluginDriver;
 
@@ -239,7 +236,6 @@ ${routeMeta
   getRoutePathParts(routePath: string) {
     return getRoutePathParts(
       routePath,
-      this.#base,
       this.#defaultLang,
       this.#defaultVersion,
       this.#langs,
@@ -250,7 +246,6 @@ ${routeMeta
   normalizeRoutePath(routePath: string) {
     return normalizeRoutePath(
       routePath,
-      this.#base,
       this.#defaultLang,
       this.#defaultVersion,
       this.#langs,

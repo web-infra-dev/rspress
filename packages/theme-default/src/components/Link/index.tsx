@@ -1,6 +1,7 @@
 import {
   normalizeHrefInRuntime as normalizeHref,
   pathnameToRouteService,
+  removeBase,
   useLocation,
   useNavigate,
   withBase,
@@ -57,6 +58,10 @@ export function Link(props: LinkProps) {
     return withBase(normalizeHref(href));
   }, [href]);
 
+  const withoutBaseUrl = useMemo(() => {
+    return removeBase(normalizeHref(href));
+  }, [href]);
+
   const isExternal = isExternalUrl(href);
   const isHashOnlyLink = href.startsWith('#');
 
@@ -101,9 +106,9 @@ export function Link(props: LinkProps) {
     e.preventDefault();
 
     // handle normal link
-    const inCurrentPage = isActive(withBaseUrl, pathname);
+    const inCurrentPage = isActive(withoutBaseUrl, pathname);
     if (!process.env.__SSR__ && !inCurrentPage) {
-      const matchedRoute = pathnameToRouteService(withBaseUrl);
+      const matchedRoute = pathnameToRouteService(withoutBaseUrl);
       if (matchedRoute) {
         const timer = setTimeout(() => {
           nprogress.start();
@@ -114,7 +119,7 @@ export function Link(props: LinkProps) {
       }
     }
     onNavigate?.();
-    navigate(withBaseUrl, { replace: false });
+    navigate(withoutBaseUrl, { replace: false });
     setTimeout(() => {
       scrollToAnchor(false, scrollPaddingTop);
     }, 100);
@@ -125,7 +130,7 @@ export function Link(props: LinkProps) {
       {...props}
       href={withBaseUrl}
       className={`${styles.link} ${className}`}
-      onMouseEnter={() => preloadLink(withBaseUrl)}
+      onMouseEnter={() => preloadLink(withoutBaseUrl)}
       onClick={event => {
         onClick?.(event);
         handleNavigate(event);
