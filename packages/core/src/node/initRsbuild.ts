@@ -11,7 +11,6 @@ import {
   MDX_OR_MD_REGEXP,
   RSPRESS_TEMP_DIR,
   type UserConfig,
-  removeLeadingSlash,
   removeTrailingSlash,
 } from '@rspress/shared';
 import { pluginVirtualModule } from 'rsbuild-plugin-virtual-module';
@@ -167,12 +166,10 @@ async function createInternalBuildConfig(
         !isProduction() && process.env.PORT
           ? Number(process.env.PORT)
           : undefined,
-      printUrls: ({ urls }) => {
-        return urls.map(url => `${url}/${removeLeadingSlash(base)}`);
-      },
       publicDir: {
         name: path.join(userDocRoot, PUBLIC_DIR),
       },
+      ...(base.length > 0 ? { base: removeTrailingSlash(base) } : {}),
     },
     dev: {
       lazyCompilation: process.env.RSPRESS_LAZY_COMPILATION !== 'false', // This is an escape hatch for playwright test, playwright does not support lazyCompilation
