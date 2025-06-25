@@ -253,6 +253,13 @@ async function metaFileItemToSidebarItem(
   }
 
   const { name, context, label, overviewHeaders, tag } = metaItem;
+
+  if (typeof name !== 'string') {
+    throw new Error(
+      `The file name "${name}" is not a string, please check it in "${join(workDir, '_meta.json')}".`,
+    );
+  }
+
   const absolutePath = join(workDir, name);
 
   let absolutePathWithExt: string;
