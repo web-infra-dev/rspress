@@ -22,7 +22,12 @@ export function ClientApp({
       <DataContext.Provider
         value={useMemo(() => ({ data, setData }), [data, setData])}
       >
-        <BrowserRouter>
+        <BrowserRouter
+          future={{
+            v7_relativeSplatPath: true,
+            v7_startTransition: true,
+          }}
+        >
           <UnheadProvider head={head}>
             <App />
           </UnheadProvider>
