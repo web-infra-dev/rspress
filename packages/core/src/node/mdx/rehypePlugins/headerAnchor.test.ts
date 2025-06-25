@@ -79,4 +79,33 @@ describe('rehypeHeadAnchor', () => {
     expect(resultWithoutBackslash).toEqual(result);
     expect(result).toMatchSnapshot();
   });
+
+  it('should support mdx component with trim', async () => {
+    const result = await compile({
+      source: `
+# Hello World <Badge text={"WARNING"} />
+`,
+      checkDeadLinks: false,
+      docDirectory: '/usr/rspress-project/docs',
+      filepath: '/usr/rspress-project/docs/inline-code.mdx',
+      config: null,
+      pluginDriver: null,
+      routeService: null,
+    });
+
+    // This is actually a wrong usage, but we need to be compatible.
+    const resultWithoutBackslash = await compile({
+      source: `
+# Hello World <Badge text={"WARNING"} />
+`,
+      checkDeadLinks: false,
+      docDirectory: '/usr/rspress-project/docs',
+      filepath: '/usr/rspress-project/docs/inline-code.mdx',
+      config: null,
+      pluginDriver: null,
+      routeService: null,
+    });
+    expect(resultWithoutBackslash).toEqual(result);
+    expect(result).toMatchSnapshot();
+  });
 });

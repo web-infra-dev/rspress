@@ -203,3 +203,49 @@ MDXContent.__RSPRESS_PAGE_META = {};
 MDXContent.__RSPRESS_PAGE_META["inline-code.mdx"] = {"toc":[],"title":"Hello World \`inline code\`","headingTitle":"Hello World \`inline code\`","frontmatter":{}};
 "
 `;
+
+exports[`rehypeHeadAnchor > should support mdx component with trim 1`] = `
+"const frontmatter = {};
+import {jsx as _jsx, jsxs as _jsxs} from "react/jsx-runtime";
+import {useMDXComponents as _provideComponents} from "@mdx-js/react";
+function _createMdxContent(props) {
+  const _components = {
+    a: "a",
+    h1: "h1",
+    ..._provideComponents(),
+    ...props.components
+  }, {Badge} = _components;
+  if (!Badge) _missingMdxReference("Badge", true);
+  return _jsxs(_components.h1, {
+    id: "hello-world",
+    children: [_jsx(_components.a, {
+      className: "header-anchor",
+      "aria-hidden": "true",
+      href: "#hello-world",
+      children: "#"
+    }), "Hello World ", _jsx(Badge, {
+      text: "WARNING"
+    })]
+  });
+}
+export default function MDXContent(props = {}) {
+  const {wrapper: MDXLayout} = {
+    ..._provideComponents(),
+    ...props.components
+  };
+  return MDXLayout ? _jsx(MDXLayout, {
+    ...props,
+    children: _jsx(_createMdxContent, {
+      ...props
+    })
+  }) : _createMdxContent(props);
+}
+function _missingMdxReference(id, component) {
+  throw new Error("Expected " + (component ? "component" : "object") + " \`" + id + "\` to be defined: you likely forgot to import, pass, or provide it.");
+}
+
+MDXContent.__RSPRESS_PAGE_META = {};
+
+MDXContent.__RSPRESS_PAGE_META["inline-code.mdx"] = {"toc":[],"title":"Hello World ","headingTitle":"Hello World ","frontmatter":{}};
+"
+`;
