@@ -74,13 +74,14 @@ export function hintNavJsonChangeThenPanic(
   if (
     metaJson.some(i => {
       return (
-        'activeMatch' in i ||
-        'text' in i ||
-        'link' in i ||
-        'items' in i ||
-        'icon' in i ||
-        'ariaLabel' in i ||
-        'target' in i
+        typeof i === 'object' &&
+        ('activeMatch' in i ||
+          'text' in i ||
+          'link' in i ||
+          'items' in i ||
+          'icon' in i ||
+          'ariaLabel' in i ||
+          'target' in i)
       );
     })
   ) {
