@@ -6,7 +6,7 @@
     "build:website": "cross-env NX_DAEMON=false nx run @rspress/docs:build",
     "change": "changeset",
     "changeset": "changeset",
-    "check-dependency-version": "check-dependency-version-consistency . --dep-type devDependencies",
+    "check-dependency-version": "check-dependency-version-consistency . --dep-type devDependencies && echo 0",
     "check-spell": "pnpm cspell && heading-case",
     "dev": "cross-env NX_DAEMON=false NX_REJECT_UNKNOWN_LOCAL_CACHE=0 nx run-many -t dev --exclude @rspress-fixture/* --exclude @rspress/docs",
     "dev:website": "cross-env NX_DAEMON=false NX_REJECT_UNKNOWN_LOCAL_CACHE=0 nx run @rspress/docs:dev",
