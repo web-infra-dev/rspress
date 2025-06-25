@@ -112,9 +112,6 @@ export function pluginPreview(options?: Options): RspressPlugin {
       const { html, source, output, performance } = clientConfig ?? {};
       const rsbuildConfig = mergeRsbuildConfig(
         {
-          dev: {
-            progressBar: false,
-          },
           server: {
             port: devPort,
             printUrls: () => undefined,
