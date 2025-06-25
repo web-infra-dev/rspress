@@ -64,7 +64,7 @@ export const parseToc = (tree: Root) => {
       if (node.depth === 1) {
         if (!title) title = text;
       } else {
-        const id = customId ? customId : slugger.slug(text);
+        const id = customId ? customId : slugger.slug(text.trim());
         const { depth } = node;
         toc.push({ id, text, depth });
       }

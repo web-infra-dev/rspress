@@ -36,7 +36,7 @@ const rehypeHeaderAnchor: Plugin<[], Root> = () => {
       if (!node.properties?.id) {
         const text = collectHeaderText(node);
         node.properties ??= {};
-        node.properties.id = slugger.slug(text);
+        node.properties.id = slugger.slug(text.trim());
       }
       // apply to headings
       node.children.unshift(create(node));
