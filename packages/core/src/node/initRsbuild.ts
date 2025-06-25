@@ -169,7 +169,7 @@ async function createInternalBuildConfig(
       publicDir: {
         name: path.join(userDocRoot, PUBLIC_DIR),
       },
-      base: removeTrailingSlash(base),
+      ...(base.length > 0 ? { base: removeTrailingSlash(base) } : {}),
     },
     dev: {
       lazyCompilation: process.env.RSPRESS_LAZY_COMPILATION !== 'false', // This is an escape hatch for playwright test, playwright does not support lazyCompilation

@@ -47,7 +47,7 @@ export async function runNpmScript(
       const message = data.toString();
       const markers = {
         dev: /built in/i,
-        preview: /Network:/i,
+        preview: /Local:/i,
         build: /File (web)/,
       };
 
