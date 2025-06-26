@@ -2,6 +2,7 @@ import {
   DataContext,
   ThemeContext,
   pathnameToRouteService,
+  withBase,
 } from '@rspress/runtime';
 import { StaticRouter } from '@rspress/runtime/server';
 import type { PageData } from '@rspress/shared';
@@ -38,16 +39,16 @@ function renderToHtml(app: ReactNode): Promise<string> {
 }
 
 export async function render(
-  pagePath: string,
+  routePath: string,
   head: Unhead,
 ): Promise<{ appHtml: string; pageData: PageData }> {
-  const initialPageData = await initPageData(pagePath);
-  await preloadRoute(pagePath);
+  const initialPageData = await initPageData(routePath);
+  await preloadRoute(routePath);
 
   const appHtml = await renderToHtml(
     <ThemeContext.Provider value={{ theme: DEFAULT_THEME }}>
       <DataContext.Provider value={{ data: initialPageData }}>
-        <StaticRouter location={pagePath} basename={base}>
+        <StaticRouter location={withBase(routePath)} basename={base}>
           <UnheadProvider value={head}>
             <App />
           </UnheadProvider>
