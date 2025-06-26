@@ -9,7 +9,7 @@ import { useHead } from '@unhead/react';
 import { Head } from '@unhead/react';
 import React, { memo } from 'react';
 import { useMemo } from 'react';
-import type { NavProps } from '../../components/Nav';
+import type { NavProps } from '../../components/OldNav';
 import { useSetup } from '../../logic/sideEffects';
 import { useLocaleSiteData } from '../../logic/useLocaleSiteData';
 import { useRedirect4FirstVisit } from '../../logic/useRedirect4FirstVisit';

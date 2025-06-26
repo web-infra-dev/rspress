@@ -9,7 +9,7 @@ import {
 import { useEffect, useState } from 'react';
 
 import type { UISwitchResult } from '../../logic/useUISwitch';
-import { NavBarTitle } from '../Nav/NavBarTitle';
+import { NavBarTitle } from '../OldNav/NavBarTitle';
 import { SidebarDivider } from './SidebarDivider';
 import { SidebarItem } from './SidebarItem';
 import { SidebarSectionHeader } from './SidebarSectionHeader';
