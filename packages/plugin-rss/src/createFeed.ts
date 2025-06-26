@@ -22,7 +22,10 @@ export function generateFeedItem(page: PageIndexInfo, siteUrl: string) {
     author: toAuthors(fm.author),
     link: resolveUrl(
       siteUrl,
-      selectNonNullishProperty(fm.permalink, page.routePath) || '',
+      selectNonNullishProperty(fm.permalink, page.routePath)?.replace(
+        /^\//,
+        '',
+      ) || '',
     ),
     description: selectNonNullishProperty(fm.description) || '',
     content: selectNonNullishProperty(fm.summary, page._html) || '',
