@@ -19,9 +19,9 @@ export function usePrevNextPage(): {
         });
       }
       sidebarItem.items.forEach(item => {
-        !('dividerType' in item) && walk(item);
+        !('dividerType' in item || 'sectionHeaderText' in item) && walk(item);
       });
-    } else {
+    } else if ('link' in sidebarItem && sidebarItem.link) {
       flattenTitles.push(sidebarItem);
     }
   };

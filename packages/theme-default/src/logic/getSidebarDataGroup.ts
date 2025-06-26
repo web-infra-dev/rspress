@@ -7,6 +7,7 @@ import type {
   NormalizedSidebarGroup,
   SidebarDivider,
   SidebarItem,
+  SidebarSectionHeader,
 } from '@rspress/shared';
 import { matchSidebar } from '@rspress/shared';
 import type { SidebarData } from '../components/Sidebar';
@@ -40,7 +41,11 @@ export function isActive(itemLink: string, currentPathname: string): boolean {
  * @returns
  */
 const match = (
-  item: NormalizedSidebarGroup | SidebarItem | SidebarDivider,
+  item:
+    | NormalizedSidebarGroup
+    | SidebarItem
+    | SidebarDivider
+    | SidebarSectionHeader,
   currentPathname: string,
 ): NormalizedSidebarGroup | SidebarItem | undefined => {
   const isLink = 'link' in item && item.link !== '';

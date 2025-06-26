@@ -320,7 +320,12 @@ export interface LocaleLink {
 
 // normalized config ---------------------------------------------------------
 export interface NormalizedSidebarGroup extends Omit<SidebarGroup, 'items'> {
-  items: (SidebarDivider | SidebarItem | NormalizedSidebarGroup)[];
+  items: (
+    | SidebarDivider
+    | SidebarItem
+    | SidebarSectionHeader
+    | NormalizedSidebarGroup
+  )[];
   collapsible: boolean;
   collapsed: boolean;
 }
