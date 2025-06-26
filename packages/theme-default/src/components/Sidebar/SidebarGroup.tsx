@@ -12,8 +12,9 @@ import { renderInlineMarkdown } from '../../logic/utils';
 import { SvgWrapper } from '../SvgWrapper';
 import { SidebarDivider } from './SidebarDivider';
 import { SidebarItem as SidebarItemComp } from './SidebarItem';
+import { SidebarSectionHeader } from './SidebarSectionHeader';
 import * as styles from './index.module.scss';
-import { isSidebarDivider, preloadLink } from './utils';
+import { isSidebarDivider, isSidebarSectionHeader, preloadLink } from './utils';
 
 export function SidebarGroup(props: SidebarItemProps) {
   const { item, depth = 0, activeMatcher, id, setSidebarData } = props;
@@ -175,6 +176,11 @@ export function SidebarGroup(props: SidebarItemProps) {
                 key={index}
                 depth={depth + 1}
                 dividerType={item.dividerType}
+              />
+            ) : isSidebarSectionHeader(item) ? (
+              <SidebarSectionHeader
+                sectionHeaderText={item.sectionHeaderText}
+                key={index}
               />
             ) : (
               // eslint-disable-next-line react/no-array-index-key

@@ -1,5 +1,10 @@
 import { isEqualPath, useLocation } from '@rspress/runtime';
-import type { NormalizedSidebarGroup, SidebarItem } from '@rspress/shared';
+import type {
+  NormalizedSidebarGroup,
+  SidebarDivider,
+  SidebarItem,
+  SidebarSectionHeader,
+} from '@rspress/shared';
 import { useSidebarData } from './useSidebarData';
 
 export function usePrevNextPage(): {
@@ -10,7 +15,13 @@ export function usePrevNextPage(): {
   const items = useSidebarData();
   const flattenTitles: SidebarItem[] = [];
 
-  const walk = (sidebarItem: NormalizedSidebarGroup | SidebarItem) => {
+  const walk = (
+    sidebarItem:
+      | SidebarItem
+      | NormalizedSidebarGroup
+      | SidebarDivider
+      | SidebarSectionHeader,
+  ) => {
     if ('items' in sidebarItem) {
       if (sidebarItem.link) {
         flattenTitles.push({
@@ -26,7 +37,7 @@ export function usePrevNextPage(): {
     }
   };
 
-  items.forEach(item => !('dividerType' in item) && walk(item));
+  items.forEach(item => walk(item));
 
   const pageIndex = flattenTitles.findIndex(item =>
     isEqualPath(item.link, pathname),

@@ -31,7 +31,12 @@ export interface SidebarItemProps {
   collapsed?: boolean;
   setSidebarData: React.Dispatch<
     React.SetStateAction<
-      (NormalizedSidebarGroup | ISidebarItem | ISidebarDivider)[]
+      (
+        | NormalizedSidebarGroup
+        | ISidebarItem
+        | ISidebarDivider
+        | ISidebarSectionHeader
+      )[]
     >
   >;
   contextContainerClassName?: string;
@@ -48,6 +53,7 @@ interface Props {
 export type SidebarData = (
   | ISidebarDivider
   | ISidebarItem
+  | ISidebarSectionHeader
   | NormalizedSidebarGroup
 )[];
 
