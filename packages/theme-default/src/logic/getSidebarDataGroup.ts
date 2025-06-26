@@ -1,7 +1,6 @@
 import {
   normalizeRoutePath,
   matchPath as reactRouterDomMatchPath,
-  withBase,
 } from '@rspress/runtime';
 import type {
   NormalizedSidebar,
@@ -10,7 +9,6 @@ import type {
   SidebarItem,
 } from '@rspress/shared';
 import { matchSidebar } from '@rspress/shared';
-import siteData from 'virtual-site-data';
 import type { SidebarData } from '../components/Sidebar';
 
 /**
@@ -26,7 +24,7 @@ import type { SidebarData } from '../components/Sidebar';
  * @returns
  */
 export function isActive(itemLink: string, currentPathname: string): boolean {
-  const normalizedItemLink = normalizeRoutePath(withBase(itemLink));
+  const normalizedItemLink = normalizeRoutePath(itemLink);
   const normalizedCurrentPathname = normalizeRoutePath(currentPathname);
   const linkMatched = reactRouterDomMatchPath(
     normalizedItemLink,
@@ -101,7 +99,7 @@ export const getSidebarDataGroup = (
    */
   const navRoutes = Object.keys(sidebar).sort((a, b) => b.length - a.length);
   for (const name of navRoutes) {
-    if (matchSidebar(name, currentPathname, siteData.base)) {
+    if (matchSidebar(name, currentPathname)) {
       const sidebarGroup = sidebar[name];
       return sidebarGroup;
     }

@@ -9,11 +9,11 @@ import {
 import { walk } from './walk';
 
 const mockNormalizeRoutePath = (link: string) => {
-  return normalizeRoutePath(link, '/', '', '', [], [], ['.md', '.mdx', '.tsx']);
+  return normalizeRoutePath(link, '', '', [], [], ['.md', '.mdx', '.tsx']);
 };
 
 const mockGetRoutePathParts = (link: string) => {
-  return getRoutePathParts(link, '/', '', '', [], []);
+  return getRoutePathParts(link, '', '', [], []);
 };
 
 RouteService.__instance__ = {

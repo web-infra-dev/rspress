@@ -2,7 +2,7 @@ import path from 'node:path';
 import type { RsbuildPlugin } from '@rsbuild/core';
 import type { RouteService } from '@rspress/core';
 import { matchPath } from '@rspress/runtime/server';
-import { getSidebarDataGroup, removeBase } from '@rspress/shared';
+import { getSidebarDataGroup } from '@rspress/shared';
 import type {
   Nav,
   PageIndexInfo,
@@ -28,7 +28,6 @@ const rsbuildPluginLlms = ({
   descriptionRef,
   langRef,
   sidebar,
-  baseRef,
   docDirectoryRef,
   routeServiceRef,
   nav,
@@ -45,7 +44,6 @@ const rsbuildPluginLlms = ({
     } = rspressPluginOptions;
 
     api.onBeforeBuild(async () => {
-      const base = baseRef.current;
       const docDirectory = docDirectoryRef.current;
       const disableSSG = disableSSGRef.current;
 
@@ -89,9 +87,7 @@ const rsbuildPluginLlms = ({
           const navItem = navList[i];
           if (
             lang === navItem.lang &&
-            new RegExp(navItem.activeMatch ?? navItem.link).test(
-              removeBase(routePath, base),
-            )
+            new RegExp(navItem.activeMatch ?? navItem.link).test(routePath)
           ) {
             pageArrayItem.push(pageData);
             return;
@@ -101,7 +97,7 @@ const rsbuildPluginLlms = ({
       });
 
       for (const array of pageArray) {
-        organizeBySidebar(sidebar, array, base);
+        organizeBySidebar(sidebar, array);
       }
 
       if (llmsTxt) {
@@ -256,20 +252,12 @@ function flatSidebar(
     .filter(Boolean) as string[];
 }
 
-function organizeBySidebar(
-  sidebar: Sidebar,
-  pages: PageIndexInfo[],
-  base: string,
-) {
+function organizeBySidebar(sidebar: Sidebar, pages: PageIndexInfo[]) {
   if (pages.length === 0) {
     return;
   }
   const pageItem = pages[0];
-  const currSidebar = getSidebarDataGroup(
-    sidebar as any,
-    pageItem.routePath,
-    base,
-  );
+  const currSidebar = getSidebarDataGroup(sidebar as any, pageItem.routePath);
 
   if (currSidebar.length === 0) {
     return;

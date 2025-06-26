@@ -41,9 +41,9 @@ function absolutePathToRoutePrefix(
     ),
   );
   const routeService = RouteService.getInstance();
-  const [basePrefix, versionPrefix, langPrefix] =
+  const [versionPrefix, langPrefix] =
     routeService.getRoutePathParts(relativePath);
-  return `${basePrefix}${versionPrefix ? `/${versionPrefix}` : ''}${langPrefix ? `/${langPrefix}` : ''}`;
+  return `${versionPrefix ? `/${versionPrefix}` : ''}${langPrefix ? `/${langPrefix}` : ''}`;
 }
 
 export function addRoutePrefix(

@@ -1,9 +1,8 @@
-import { addLeadingSlash, addTrailingSlash, withBase } from '@rspress/shared';
+import { addLeadingSlash, addTrailingSlash } from '@rspress/shared';
 import { DEFAULT_PAGE_EXTENSIONS } from '@rspress/shared/constants';
 
 export const getRoutePathParts = (
   routePath: string,
-  base: string,
   lang: string,
   version: string,
   langs: string[],
@@ -40,7 +39,6 @@ export const getRoutePathParts = (
   purePathPart = parts.join('/');
 
   return [
-    base,
     versionPart,
     langPart,
     // restore the trail slash
@@ -50,16 +48,14 @@ export const getRoutePathParts = (
 
 export const normalizeRoutePath = (
   routePath: string,
-  base: string,
   lang: string,
   version: string,
   langs: string[],
   versions: string[],
   extensions: string[] = DEFAULT_PAGE_EXTENSIONS,
 ) => {
-  const [_, versionPart, langPart, purePathPart] = getRoutePathParts(
+  const [versionPart, langPart, purePathPart] = getRoutePathParts(
     routePath,
-    base,
     lang,
     version,
     langs,
@@ -81,7 +77,7 @@ export const normalizeRoutePath = (
     .replace(/\/index$/, '/');
 
   return {
-    routePath: withBase(normalizedRoutePath, base),
+    routePath: normalizedRoutePath,
     lang: langPart || lang,
     version: versionPart || version,
   };

@@ -1,6 +1,7 @@
 import { useLocation, usePageData, useWindowSize } from '@rspress/runtime';
 import type { NavItem } from '@rspress/shared';
 import { Search } from '@theme';
+import { base } from 'virtual-runtime-config';
 import { useHiddenNav } from '../../logic/useHiddenNav';
 import { useNavData } from '../../logic/useNav';
 import { NavHamburger } from '../NavHamburger';
@@ -27,7 +28,6 @@ export function Nav(props: NavProps) {
   const { beforeNavTitle, afterNavTitle, beforeNav, afterNavMenu, navTitle } =
     props;
   const { siteData, page } = usePageData();
-  const { base } = siteData;
   const { pathname } = useLocation();
   const { width } = useWindowSize();
   const hiddenNav = useHiddenNav();

@@ -5,12 +5,14 @@ vi.mock('virtual-i18n-text', () => {
   return { default: {} };
 });
 
-vi.mock('virtual-site-data', () => {
+vi.mock('virtual-runtime-config', () => {
   return {
-    default: {
-      base: '/',
-    },
+    base: '/',
   };
+});
+
+vi.mock('virtual-site-data', () => {
+  return {};
 });
 
 vi.mock('virtual-routes', () => {

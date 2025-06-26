@@ -7,18 +7,15 @@ import type { FeedChannel, FeedOutputType, PluginRssOptions } from './type';
 export function testPage(
   test: FeedChannel['test'],
   page: PageIndexInfo,
-  base = '/',
 ): boolean {
   if (Array.isArray(test)) {
-    return test.some(item => testPage(item, page, base));
+    return test.some(item => testPage(item, page));
   }
   if (typeof test === 'function') {
-    return test(page, base);
+    return test(page);
   }
   const routePath = page.routePath;
-  const pureRoutePath = `/${
-    routePath.startsWith(base) ? routePath.slice(base.length) : routePath
-  }`.replace(/^\/+/, '/');
+  const pureRoutePath = `/${routePath}`.replace(/^\/+/, '/');
   if (typeof test === 'string') {
     return [routePath, pureRoutePath].some(path => path.startsWith(test));
   }
@@ -27,7 +24,7 @@ export function testPage(
   }
 
   throw new Error(
-    'test must be of `RegExp` or `string` or `(page: PageIndexInfo, base: string) => boolean`',
+    'test must be of `RegExp` or `string` or `(page: PageIndexInfo) => boolean`',
   );
 }
 

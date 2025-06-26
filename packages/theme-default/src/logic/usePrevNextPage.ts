@@ -1,4 +1,4 @@
-import { isEqualPath, useLocation, withBase } from '@rspress/runtime';
+import { isEqualPath, useLocation } from '@rspress/runtime';
 import type { NormalizedSidebarGroup, SidebarItem } from '@rspress/shared';
 import { useSidebarData } from './useSidebarData';
 
@@ -29,7 +29,7 @@ export function usePrevNextPage(): {
   items.forEach(item => !('dividerType' in item) && walk(item));
 
   const pageIndex = flattenTitles.findIndex(item =>
-    isEqualPath(withBase(item.link), pathname),
+    isEqualPath(item.link, pathname),
   );
 
   const prevPage = flattenTitles[pageIndex - 1] || null;

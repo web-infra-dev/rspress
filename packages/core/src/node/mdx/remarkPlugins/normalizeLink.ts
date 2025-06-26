@@ -47,11 +47,10 @@ function normalizeLink(
   if (url.startsWith('.')) {
     url = path.posix.join(slash(path.dirname(relativePath)), url);
   } else if (routeService) {
-    const [_, pathVersion, pathLang] = routeService.getRoutePathParts(
+    const [pathVersion, pathLang] = routeService.getRoutePathParts(
       slash(relativePath),
     );
-    const [__, urlVersion, urlLang, urlPath] =
-      routeService.getRoutePathParts(url);
+    const [urlVersion, urlLang, urlPath] = routeService.getRoutePathParts(url);
 
     url = addLeadingSlash(urlPath);
 

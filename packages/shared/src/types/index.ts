@@ -214,7 +214,6 @@ type PluginShikiOptions = RehypeShikiOptions;
 
 export interface SiteData<ThemeConfig = NormalizedDefaultThemeConfig> {
   root: string;
-  base: string;
   lang: string;
   route: RouteOptions;
   locales: { lang: string; label: string }[];
@@ -236,6 +235,11 @@ export interface SiteData<ThemeConfig = NormalizedDefaultThemeConfig> {
     default: string;
     versions: string[];
   };
+}
+
+// TODO: migrate more SiteData to NormalizedRuntimeConfig, and rename "SiteData" to "PageData" or "Pages"
+export interface NormalizedRuntimeConfig {
+  base: string;
 }
 
 /**

@@ -1,6 +1,4 @@
 import type { NavItemWithLink, NormalizedSidebar } from '../types/defaultTheme';
-import { withBase, withoutBase } from './utils';
-import { addTrailingSlash } from './utils';
 
 /**
  * match the sidebar key in user config
@@ -10,14 +8,12 @@ import { addTrailingSlash } from './utils';
 export const matchSidebar = (
   pattern: string,
   currentPathname: string,
-  base: string,
 ): boolean => {
-  const prefix = withBase(pattern, base);
-  if (prefix === currentPathname) {
+  if (pattern === currentPathname) {
     return true;
   }
-  const prefixWithTrailingSlash = addTrailingSlash(prefix);
-  if (currentPathname.startsWith(prefixWithTrailingSlash)) {
+
+  if (currentPathname.startsWith(pattern)) {
     return true;
   }
 
@@ -25,7 +21,7 @@ export const matchSidebar = (
   // '/api/react': [
   //   { link: '/api/react.use' }
   // ]
-  const prefixWithDot = `${prefix}.`;
+  const prefixWithDot = `${pattern}.`;
   return currentPathname.startsWith(prefixWithDot);
 };
 
@@ -38,7 +34,6 @@ export const matchSidebar = (
 export const getSidebarDataGroup = (
   sidebar: NormalizedSidebar,
   currentPathname: string,
-  base: string,
 ): NormalizedSidebar[string] => {
   /**
    * why sort?
@@ -54,7 +49,7 @@ export const getSidebarDataGroup = (
    */
   const navRoutes = Object.keys(sidebar).sort((a, b) => b.length - a.length);
   for (const name of navRoutes) {
-    if (matchSidebar(name, currentPathname, base)) {
+    if (matchSidebar(name, currentPathname)) {
       const sidebarGroup = sidebar[name];
       return sidebarGroup;
     }
@@ -65,9 +60,6 @@ export const getSidebarDataGroup = (
 export const matchNavbar = (
   item: NavItemWithLink,
   currentPathname: string,
-  base: string,
 ): boolean => {
-  return new RegExp(item.activeMatch || item.link).test(
-    withoutBase(currentPathname, base),
-  );
+  return new RegExp(item.activeMatch || item.link).test(currentPathname);
 };

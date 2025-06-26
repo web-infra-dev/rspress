@@ -10,20 +10,21 @@ import {
   removeHash,
   removeTrailingSlash,
 } from '@rspress/shared';
+import { base } from 'virtual-runtime-config';
 import siteData from 'virtual-site-data';
 
 export function withBase(url = '/'): string {
-  return rawWithBase(url, siteData.base);
+  return rawWithBase(url, base);
 }
 
 export function removeBase(url: string): string {
-  return rawRemoveBase(url, siteData.base);
+  return rawRemoveBase(url, base);
 }
 
 export function isEqualPath(a: string, b: string) {
   return (
-    withBase(normalizeHrefInRuntime(removeHash(a))) ===
-    withBase(normalizeHrefInRuntime(removeHash(b)))
+    removeBase(normalizeHrefInRuntime(removeHash(a))) ===
+    removeBase(normalizeHrefInRuntime(removeHash(b)))
   );
 }
 

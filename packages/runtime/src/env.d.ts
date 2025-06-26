@@ -10,3 +10,9 @@ declare module 'virtual-site-data' {
 }
 
 declare module 'virtual-i18n-text';
+
+declare module 'virtual-runtime-config' {
+  import type { NormalizedRuntimeConfig } from '@rspress/shared';
+
+  export const base: NormalizedRuntimeConfig['base'];
+}

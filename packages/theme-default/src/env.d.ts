@@ -38,3 +38,9 @@ declare module 'virtual-search-index-hash' {
 }
 
 declare const __WEBPACK_PUBLIC_PATH__: string;
+
+declare module 'virtual-runtime-config' {
+  import type { NormalizedRuntimeConfig } from '@rspress/shared';
+
+  export const base: NormalizedRuntimeConfig['base'];
+}

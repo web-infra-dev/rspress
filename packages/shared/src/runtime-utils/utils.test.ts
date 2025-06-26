@@ -3,10 +3,10 @@ import {
   normalizeHref,
   normalizePosixPath,
   parseUrl,
+  removeBase,
   replaceLang,
   replaceVersion,
   withBase,
-  withoutBase,
   withoutLang,
 } from './utils';
 
@@ -29,10 +29,10 @@ describe('test shared utils', () => {
     expect(secondResult).toBe('/my-base/guide/');
   });
 
-  test('withoutBase', () => {
-    expect(withoutBase('/zh/guide/', '/zh/')).toBe('/guide/');
-    expect(withoutBase('/guide/', '/')).toBe('/guide/');
-    expect(withoutBase('/guide/', '')).toBe('/guide/');
+  test('removeBase', () => {
+    expect(removeBase('/zh/guide/', '/zh/')).toBe('/guide/');
+    expect(removeBase('/guide/', '/')).toBe('/guide/');
+    expect(removeBase('/guide/', '')).toBe('/guide/');
   });
 
   test('normalizePosix', () => {

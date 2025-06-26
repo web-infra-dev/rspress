@@ -2,7 +2,6 @@ import {
   isEqualPath,
   normalizeHrefInRuntime as normalizeHref,
   usePageData,
-  withBase,
 } from '@rspress/runtime';
 import type {
   Header,
@@ -137,8 +136,8 @@ export function Overview(props: {
   const subFilter = (link: string) =>
     // sidebar items link without base path
     // pages route path with base path
-    withBase(link).startsWith(routePath.replace(/overview$/, '')) &&
-    !isEqualPath(withBase(link), routePath);
+    link.startsWith(routePath.replace(/overview$/, '')) &&
+    !isEqualPath(link, routePath);
   const getChildLink = (
     traverseItem: SidebarDivider | SidebarItem | NormalizedSidebarGroup,
   ): string => {
@@ -182,10 +181,7 @@ export function Overview(props: {
       return false;
     }
     // do not display overview title in sub pages overview
-    if (
-      withBase(item.link) === `${routePath}index` &&
-      frontmatter?.overview === true
-    ) {
+    if (item.link === `${routePath}index` && frontmatter?.overview === true) {
       return false;
     }
     // props > frontmatter in single file > _meta.json config in a file > frontmatter in overview page > _meta.json config in sidebar
@@ -195,7 +191,7 @@ export function Overview(props: {
       sidebarGroup?.overviewHeaders ?? [2];
     // sidebar items link without base path
     const pageModule = overviewModules.find(m =>
-      isEqualPath(m.routePath, withBase(item.link || '')),
+      isEqualPath(m.routePath, item.link || ''),
     );
     const link = getChildLink(item);
     return {
