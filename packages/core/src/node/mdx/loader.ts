@@ -45,7 +45,9 @@ export default async function mdxLoader(
     }
   } catch (e) {
     if (e instanceof Error) {
-      logger.error(`MDX compile error: ${e.message} in ${filepath}`);
+      if (!e.message.includes('Dead link found')) {
+        logger.error(`MDX compile error: ${e.message} in ${filepath}`);
+      }
       logger.debug(e);
       callback({ message: e.message, name: `${filepath} compile error` });
     }

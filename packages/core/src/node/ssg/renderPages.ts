@@ -95,9 +95,6 @@ export async function renderPages(
             ({ appHtml } = await render(routePath, head));
           } catch (e) {
             if (e instanceof Error) {
-              logger.error(
-                `Page "${picocolors.yellow(routePath)}" SSG rendering failed.\n    ${picocolors.gray(e.toString())}`,
-              );
               throw e;
             }
           }
