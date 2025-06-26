@@ -773,9 +773,6 @@ importers:
       '@rspress/mdx-rs':
         specifier: 0.6.6
         version: 0.6.6
-      '@rspress/plugin-container-syntax':
-        specifier: workspace:*
-        version: link:../plugin-container-syntax
       '@rspress/plugin-last-updated':
         specifier: workspace:*
         version: link:../plugin-last-updated
@@ -903,6 +900,9 @@ importers:
       '@types/react-dom':
         specifier: ^19.1.6
         version: 19.1.6(@types/react@19.1.8)
+      mdast-util-mdx-expression:
+        specifier: ^2.0.1
+        version: 2.0.1
       memfs:
         specifier: ^4.17.2
         version: 4.17.2
@@ -915,6 +915,9 @@ importers:
       rehype-stringify:
         specifier: ^10.0.1
         version: 10.0.1
+      remark-directive:
+        specifier: ^4.0.0
+        version: 4.0.0
       remark-mdx:
         specifier: ^3.1.0
         version: 3.1.0
@@ -1159,49 +1162,6 @@ importers:
       typescript:
         specifier: ^5.8.2
         version: 5.8.2
-
-  packages/plugin-container-syntax:
-    dependencies:
-      '@rspress/shared':
-        specifier: workspace:*
-        version: link:../shared
-    devDependencies:
-      '@microsoft/api-extractor':
-        specifier: ^7.52.8
-        version: 7.52.8(@types/node@22.10.2)
-      '@rslib/core':
-        specifier: 0.10.3
-        version: 0.10.3(@microsoft/api-extractor@7.52.8(@types/node@22.10.2))(typescript@5.8.2)
-      '@types/mdast':
-        specifier: ^4.0.4
-        version: 4.0.4
-      mdast-util-mdx-expression:
-        specifier: ^2.0.1
-        version: 2.0.1
-      mdast-util-mdx-jsx:
-        specifier: ^3.2.0
-        version: 3.2.0
-      rehype-stringify:
-        specifier: ^10.0.1
-        version: 10.0.1
-      remark-directive:
-        specifier: ^4.0.0
-        version: 4.0.0
-      remark-mdx:
-        specifier: ^3.1.0
-        version: 3.1.0
-      remark-parse:
-        specifier: ^11.0.0
-        version: 11.0.0
-      remark-rehype:
-        specifier: ^11.1.2
-        version: 11.1.2
-      rsbuild-plugin-publint:
-        specifier: ^0.3.2
-        version: 0.3.2(@rsbuild/core@1.3.22)
-      unified:
-        specifier: ^11.0.5
-        version: 11.0.5
 
   packages/plugin-last-updated:
     dependencies:

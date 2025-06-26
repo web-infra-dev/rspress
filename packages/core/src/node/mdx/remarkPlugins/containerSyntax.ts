@@ -370,8 +370,6 @@ function transformer(tree: Parent) {
   }
 }
 
-export const remarkPluginContainer: Plugin<[], Root> = () => {
+export const remarkContainerSyntax: Plugin<[], Root> = () => {
   return transformer;
 };
-
-export default remarkPluginContainer;
