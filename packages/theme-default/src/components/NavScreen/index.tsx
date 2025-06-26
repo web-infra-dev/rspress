@@ -5,11 +5,11 @@ import { clearAllBodyScrollLocks, disableBodyScroll } from 'body-scroll-lock';
 import { useEffect, useRef } from 'react';
 import { base } from 'virtual-runtime-config';
 import { useNavData } from '../../logic/useNav';
-import { NavMenuSingleItem } from '../Nav/NavMenuSingleItem';
+import { NavMenuSingleItem } from '../OldNav/NavMenuSingleItem';
 import {
   useTranslationMenuData,
   useVersionMenuData,
-} from '../Nav/menuDataHooks';
+} from '../OldNav/menuDataHooks';
 import { SocialLinks } from '../SocialLinks';
 import { SwitchAppearance } from '../SwitchAppearance';
 import { NavScreenMenuGroup } from './NavScreenMenuGroup';
