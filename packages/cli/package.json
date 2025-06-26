@@ -23,7 +23,8 @@
     },
     "./shiki-transformers": {
       "default": "./shiki-transformers.ts"
-    }
+    },
+    "./package.json": "./package.json"
   },
   "main": "./dist/index.js",
   "module": "./dist/index.js",
