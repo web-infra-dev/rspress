@@ -58,7 +58,7 @@
     "@rsbuild/plugin-sass": "~1.3.2",
     "@rsbuild/plugin-svgr": "^1.2.0",
     "@rsbuild/plugin-typed-css-modules": "~1.0.2",
-    "@rslib/core": "0.10.2",
+    "@rslib/core": "0.10.3",
     "@types/body-scroll-lock": "^3.1.2",
     "@types/hast": "^3.0.4",
     "@types/jest": "~29.5.14",
