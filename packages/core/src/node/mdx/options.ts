@@ -17,6 +17,7 @@ import type { PluginDriver } from '../PluginDriver';
 import type { RouteService } from '../route/RouteService';
 import { rehypeCodeMeta } from './rehypePlugins/codeMeta';
 import { createRehypeShikiOptions } from './rehypePlugins/shiki';
+import { remarkContainerSyntax } from './remarkPlugins/containerSyntax';
 
 export async function createMDXOptions(options: {
   docDirectory: string;
@@ -63,6 +64,7 @@ export async function createMDXOptions(options: {
     remarkPlugins: [
       remarkGFM,
       remarkPluginToc,
+      remarkContainerSyntax,
       [
         remarkPluginNormalizeLink,
         {

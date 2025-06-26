@@ -1,0 +1,1479 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`remark-container > Has space before ::: 1`] = `
+"const frontmatter = {};
+import {jsx as _jsx, jsxs as _jsxs} from "react/jsx-runtime";
+import {useMDXComponents as _provideComponents} from "@mdx-js/react";
+function _createMdxContent(props) {
+  const _components = {
+    div: "div",
+    p: "p",
+    ..._provideComponents(),
+    ...props.components
+  };
+  return _jsxs(_components.div, {
+    className: "rspress-directive tip",
+    children: [_jsx(_components.div, {
+      className: "rspress-directive-title",
+      children: "title"
+    }), _jsx(_components.div, {
+      className: "rspress-directive-content",
+      children: _jsx(_components.p, {
+        children: "\\nsss"
+      })
+    })]
+  });
+}
+export default function MDXContent(props = {}) {
+  const {wrapper: MDXLayout} = {
+    ..._provideComponents(),
+    ...props.components
+  };
+  return MDXLayout ? _jsx(MDXLayout, {
+    ...props,
+    children: _jsx(_createMdxContent, {
+      ...props
+    })
+  }) : _createMdxContent(props);
+}
+
+MDXContent.__RSPRESS_PAGE_META = {};
+
+MDXContent.__RSPRESS_PAGE_META["index.mdx"] = {"toc":[],"title":"","headingTitle":"","frontmatter":{}};
+"
+`;
+
+exports[`remark-container > Has space before type 1`] = `
+"const frontmatter = {};
+import {jsx as _jsx, jsxs as _jsxs} from "react/jsx-runtime";
+import {useMDXComponents as _provideComponents} from "@mdx-js/react";
+function _createMdxContent(props) {
+  const _components = {
+    div: "div",
+    p: "p",
+    ..._provideComponents(),
+    ...props.components
+  };
+  return _jsxs(_components.div, {
+    className: "rspress-directive tip",
+    children: [_jsx(_components.div, {
+      className: "rspress-directive-title",
+      children: "TIP"
+    }), _jsx(_components.div, {
+      className: "rspress-directive-content",
+      children: _jsx(_components.p, {
+        children: "This is a tip."
+      })
+    })]
+  });
+}
+export default function MDXContent(props = {}) {
+  const {wrapper: MDXLayout} = {
+    ..._provideComponents(),
+    ...props.components
+  };
+  return MDXLayout ? _jsx(MDXLayout, {
+    ...props,
+    children: _jsx(_createMdxContent, {
+      ...props
+    })
+  }) : _createMdxContent(props);
+}
+
+MDXContent.__RSPRESS_PAGE_META = {};
+
+MDXContent.__RSPRESS_PAGE_META["index.mdx"] = {"toc":[],"title":"","headingTitle":"","frontmatter":{}};
+"
+`;
+
+exports[`remark-container > No newline 1`] = `
+"const frontmatter = {};
+import {Fragment as _Fragment, jsx as _jsx, jsxs as _jsxs} from "react/jsx-runtime";
+import {useMDXComponents as _provideComponents} from "@mdx-js/react";
+function _createMdxContent(props) {
+  const _components = {
+    div: "div",
+    p: "p",
+    ..._provideComponents(),
+    ...props.components
+  };
+  return _jsxs(_Fragment, {
+    children: [_jsxs(_components.div, {
+      className: "rspress-directive tip",
+      children: [_jsx(_components.div, {
+        className: "rspress-directive-title",
+        children: "TIP"
+      }), _jsx(_components.div, {
+        className: "rspress-directive-content",
+        children: _jsx(_components.p, {
+          children: "\\nThis is a tip"
+        })
+      })]
+    }), "\\n", _jsx(_components.p, {
+      children: "12312"
+    })]
+  });
+}
+export default function MDXContent(props = {}) {
+  const {wrapper: MDXLayout} = {
+    ..._provideComponents(),
+    ...props.components
+  };
+  return MDXLayout ? _jsx(MDXLayout, {
+    ...props,
+    children: _jsx(_createMdxContent, {
+      ...props
+    })
+  }) : _createMdxContent(props);
+}
+
+MDXContent.__RSPRESS_PAGE_META = {};
+
+MDXContent.__RSPRESS_PAGE_META["index.mdx"] = {"toc":[],"title":"","headingTitle":"","frontmatter":{}};
+"
+`;
+
+exports[`remark-container > Use \\{title="foo"} as title 1`] = `
+"const frontmatter = {};
+import {jsx as _jsx, jsxs as _jsxs} from "react/jsx-runtime";
+import {useMDXComponents as _provideComponents} from "@mdx-js/react";
+function _createMdxContent(props) {
+  const _components = {
+    div: "div",
+    p: "p",
+    ..._provideComponents(),
+    ...props.components
+  };
+  return _jsxs(_components.div, {
+    className: "rspress-directive tip",
+    children: [_jsx(_components.div, {
+      className: "rspress-directive-title",
+      children: "Custom title"
+    }), _jsx(_components.div, {
+      className: "rspress-directive-content",
+      children: _jsx(_components.p, {
+        children: "This is a tip."
+      })
+    })]
+  });
+}
+export default function MDXContent(props = {}) {
+  const {wrapper: MDXLayout} = {
+    ..._provideComponents(),
+    ...props.components
+  };
+  return MDXLayout ? _jsx(MDXLayout, {
+    ...props,
+    children: _jsx(_createMdxContent, {
+      ...props
+    })
+  }) : _createMdxContent(props);
+}
+
+MDXContent.__RSPRESS_PAGE_META = {};
+
+MDXContent.__RSPRESS_PAGE_META["index.mdx"] = {"toc":[],"title":"","headingTitle":"","frontmatter":{}};
+"
+`;
+
+exports[`remark-container > Use \\{title='foo'} as title 1`] = `
+"const frontmatter = {};
+import {jsx as _jsx, jsxs as _jsxs} from "react/jsx-runtime";
+import {useMDXComponents as _provideComponents} from "@mdx-js/react";
+function _createMdxContent(props) {
+  const _components = {
+    div: "div",
+    p: "p",
+    ..._provideComponents(),
+    ...props.components
+  };
+  return _jsxs(_components.div, {
+    className: "rspress-directive tip",
+    children: [_jsx(_components.div, {
+      className: "rspress-directive-title",
+      children: "Custom title"
+    }), _jsx(_components.div, {
+      className: "rspress-directive-content",
+      children: _jsx(_components.p, {
+        children: "This is a tip."
+      })
+    })]
+  });
+}
+export default function MDXContent(props = {}) {
+  const {wrapper: MDXLayout} = {
+    ..._provideComponents(),
+    ...props.components
+  };
+  return MDXLayout ? _jsx(MDXLayout, {
+    ...props,
+    children: _jsx(_createMdxContent, {
+      ...props
+    })
+  }) : _createMdxContent(props);
+}
+
+MDXContent.__RSPRESS_PAGE_META = {};
+
+MDXContent.__RSPRESS_PAGE_META["index.mdx"] = {"toc":[],"title":"","headingTitle":"","frontmatter":{}};
+"
+`;
+
+exports[`remark-container > Use \\{title=foo} as title 1`] = `
+"const frontmatter = {};
+import {jsx as _jsx, jsxs as _jsxs} from "react/jsx-runtime";
+import {useMDXComponents as _provideComponents} from "@mdx-js/react";
+function _createMdxContent(props) {
+  const _components = {
+    div: "div",
+    p: "p",
+    ..._provideComponents(),
+    ...props.components
+  };
+  return _jsxs(_components.div, {
+    className: "rspress-directive tip",
+    children: [_jsx(_components.div, {
+      className: "rspress-directive-title",
+      children: "Custom title"
+    }), _jsx(_components.div, {
+      className: "rspress-directive-content",
+      children: _jsx(_components.p, {
+        children: "This is a tip."
+      })
+    })]
+  });
+}
+export default function MDXContent(props = {}) {
+  const {wrapper: MDXLayout} = {
+    ..._provideComponents(),
+    ...props.components
+  };
+  return MDXLayout ? _jsx(MDXLayout, {
+    ...props,
+    children: _jsx(_createMdxContent, {
+      ...props
+    })
+  }) : _createMdxContent(props);
+}
+
+MDXContent.__RSPRESS_PAGE_META = {};
+
+MDXContent.__RSPRESS_PAGE_META["index.mdx"] = {"toc":[],"title":"","headingTitle":"","frontmatter":{}};
+"
+`;
+
+exports[`remark-container > With a new line after the start position of container 1`] = `
+"const frontmatter = {};
+import {jsx as _jsx, jsxs as _jsxs} from "react/jsx-runtime";
+import {useMDXComponents as _provideComponents} from "@mdx-js/react";
+function _createMdxContent(props) {
+  const _components = {
+    div: "div",
+    p: "p",
+    ..._provideComponents(),
+    ...props.components
+  };
+  return _jsxs(_components.div, {
+    className: "rspress-directive tip",
+    children: [_jsx(_components.div, {
+      className: "rspress-directive-title",
+      children: "TIP"
+    }), _jsx(_components.div, {
+      className: "rspress-directive-content",
+      children: _jsx(_components.p, {
+        children: "This is a tip"
+      })
+    })]
+  });
+}
+export default function MDXContent(props = {}) {
+  const {wrapper: MDXLayout} = {
+    ..._provideComponents(),
+    ...props.components
+  };
+  return MDXLayout ? _jsx(MDXLayout, {
+    ...props,
+    children: _jsx(_createMdxContent, {
+      ...props
+    })
+  }) : _createMdxContent(props);
+}
+
+MDXContent.__RSPRESS_PAGE_META = {};
+
+MDXContent.__RSPRESS_PAGE_META["index.mdx"] = {"toc":[],"title":"","headingTitle":"","frontmatter":{}};
+"
+`;
+
+exports[`remark-container > With block quote in container 1`] = `
+"const frontmatter = {};
+import {jsx as _jsx, jsxs as _jsxs} from "react/jsx-runtime";
+import {useMDXComponents as _provideComponents} from "@mdx-js/react";
+function _createMdxContent(props) {
+  const _components = {
+    a: "a",
+    blockquote: "blockquote",
+    code: "code",
+    div: "div",
+    p: "p",
+    ..._provideComponents(),
+    ...props.components
+  };
+  return _jsxs(_components.div, {
+    className: "rspress-directive tip",
+    children: [_jsx(_components.div, {
+      className: "rspress-directive-title",
+      children: "TIP"
+    }), _jsxs(_components.div, {
+      className: "rspress-directive-content",
+      children: [_jsxs(_components.p, {
+        children: ["This is a tip with ", _jsx(_components.code, {
+          children: "code"
+        }), " and ", _jsx(_components.a, {
+          href: "/foo.html",
+          children: "link"
+        }), " some text"]
+      }), _jsxs(_components.blockquote, {
+        children: ["\\n", _jsx(_components.p, {
+          children: "This is a quote"
+        }), "\\n"]
+      })]
+    })]
+  });
+}
+export default function MDXContent(props = {}) {
+  const {wrapper: MDXLayout} = {
+    ..._provideComponents(),
+    ...props.components
+  };
+  return MDXLayout ? _jsx(MDXLayout, {
+    ...props,
+    children: _jsx(_createMdxContent, {
+      ...props
+    })
+  }) : _createMdxContent(props);
+}
+
+MDXContent.__RSPRESS_PAGE_META = {};
+
+MDXContent.__RSPRESS_PAGE_META["index.mdx"] = {"toc":[],"title":"","headingTitle":"","frontmatter":{}};
+"
+`;
+
+exports[`remark-container > With code block in container 1`] = `
+"const frontmatter = {};
+import {Fragment as _Fragment, jsx as _jsx, jsxs as _jsxs} from "react/jsx-runtime";
+import {useMDXComponents as _provideComponents} from "@mdx-js/react";
+function _createMdxContent(props) {
+  const _components = {
+    a: "a",
+    code: "code",
+    div: "div",
+    p: "p",
+    pre: "pre",
+    span: "span",
+    ..._provideComponents(),
+    ...props.components
+  };
+  return _jsxs(_components.div, {
+    className: "rspress-directive tip",
+    children: [_jsx(_components.div, {
+      className: "rspress-directive-title",
+      children: "TIP"
+    }), _jsxs(_components.div, {
+      className: "rspress-directive-content",
+      children: [_jsxs(_components.p, {
+        children: ["This is a tip with ", _jsx(_components.code, {
+          children: "code"
+        }), " and ", _jsx(_components.a, {
+          href: "/foo.html",
+          children: "link"
+        }), " some text"]
+      }), _jsx(_Fragment, {
+        children: _jsx(_components.pre, {
+          className: "shiki css-variables",
+          style: {
+            backgroundColor: "var(--shiki-background)",
+            color: "var(--shiki-foreground)"
+          },
+          tabIndex: "0",
+          children: _jsx(_components.code, {
+            className: "language-js",
+            children: _jsxs(_components.span, {
+              className: "line",
+              children: [_jsx(_components.span, {
+                style: {
+                  color: "var(--shiki-token-keyword)"
+                },
+                children: "const"
+              }), _jsx(_components.span, {
+                style: {
+                  color: "var(--shiki-token-constant)"
+                },
+                children: " a"
+              }), _jsx(_components.span, {
+                style: {
+                  color: "var(--shiki-token-keyword)"
+                },
+                children: " ="
+              }), _jsx(_components.span, {
+                style: {
+                  color: "var(--shiki-token-constant)"
+                },
+                children: " 1"
+              }), _jsx(_components.span, {
+                style: {
+                  color: "var(--shiki-foreground)"
+                },
+                children: ";"
+              })]
+            })
+          })
+        })
+      })]
+    })]
+  });
+}
+export default function MDXContent(props = {}) {
+  const {wrapper: MDXLayout} = {
+    ..._provideComponents(),
+    ...props.components
+  };
+  return MDXLayout ? _jsx(MDXLayout, {
+    ...props,
+    children: _jsx(_createMdxContent, {
+      ...props
+    })
+  }) : _createMdxContent(props);
+}
+
+MDXContent.__RSPRESS_PAGE_META = {};
+
+MDXContent.__RSPRESS_PAGE_META["index.mdx"] = {"toc":[],"title":"","headingTitle":"","frontmatter":{}};
+"
+`;
+
+exports[`remark-container > With link, inlineCode, img, list in container 1`] = `
+"const frontmatter = {};
+import {jsx as _jsx, jsxs as _jsxs} from "react/jsx-runtime";
+import {useMDXComponents as _provideComponents} from "@mdx-js/react";
+import image0 from "foo";
+function _createMdxContent(props) {
+  const _components = {
+    a: "a",
+    code: "code",
+    div: "div",
+    img: "img",
+    li: "li",
+    p: "p",
+    ul: "ul",
+    ..._provideComponents(),
+    ...props.components
+  };
+  return _jsxs(_components.div, {
+    className: "rspress-directive tip",
+    children: [_jsx(_components.div, {
+      className: "rspress-directive-title",
+      children: "TIP"
+    }), _jsxs(_components.div, {
+      className: "rspress-directive-content",
+      children: [_jsxs(_components.p, {
+        children: ["This is a tip with ", _jsx(_components.code, {
+          children: "code"
+        }), " and ", _jsx(_components.a, {
+          href: "/foo.html",
+          children: "link"
+        }), " some text"]
+      }), _jsxs(_components.ul, {
+        children: ["\\n", _jsx(_components.li, {
+          children: "list 1"
+        }), "\\n", _jsx(_components.li, {
+          children: "list 2"
+        }), "\\n"]
+      }), _jsx(_components.p, {
+        children: _jsx(_components.img, {
+          alt: "img",
+          src: image0
+        })
+      })]
+    })]
+  });
+}
+export default function MDXContent(props = {}) {
+  const {wrapper: MDXLayout} = {
+    ..._provideComponents(),
+    ...props.components
+  };
+  return MDXLayout ? _jsx(MDXLayout, {
+    ...props,
+    children: _jsx(_createMdxContent, {
+      ...props
+    })
+  }) : _createMdxContent(props);
+}
+
+MDXContent.__RSPRESS_PAGE_META = {};
+
+MDXContent.__RSPRESS_PAGE_META["index.mdx"] = {"toc":[],"title":"","headingTitle":"","frontmatter":{}};
+"
+`;
+
+exports[`remark-container > With link, inlineCode, img, spread list in container 1`] = `
+"const frontmatter = {};
+import {jsx as _jsx, jsxs as _jsxs} from "react/jsx-runtime";
+import {useMDXComponents as _provideComponents} from "@mdx-js/react";
+import image0 from "foo";
+function _createMdxContent(props) {
+  const _components = {
+    a: "a",
+    code: "code",
+    div: "div",
+    img: "img",
+    li: "li",
+    p: "p",
+    ul: "ul",
+    ..._provideComponents(),
+    ...props.components
+  };
+  return _jsxs(_components.div, {
+    className: "rspress-directive tip",
+    children: [_jsx(_components.div, {
+      className: "rspress-directive-title",
+      children: "TIP"
+    }), _jsxs(_components.div, {
+      className: "rspress-directive-content",
+      children: [_jsxs(_components.p, {
+        children: ["This is a tip with ", _jsx(_components.code, {
+          children: "code"
+        }), " and ", _jsx(_components.a, {
+          href: "/foo.html",
+          children: "link"
+        }), " some text"]
+      }), _jsxs(_components.ul, {
+        children: ["\\n", _jsx(_components.li, {
+          children: "list 1"
+        }), "\\n", _jsx(_components.li, {
+          children: "list 2"
+        }), "\\n"]
+      }), _jsx(_components.p, {
+        children: _jsx(_components.img, {
+          alt: "img",
+          src: image0
+        })
+      })]
+    })]
+  });
+}
+export default function MDXContent(props = {}) {
+  const {wrapper: MDXLayout} = {
+    ..._provideComponents(),
+    ...props.components
+  };
+  return MDXLayout ? _jsx(MDXLayout, {
+    ...props,
+    children: _jsx(_createMdxContent, {
+      ...props
+    })
+  }) : _createMdxContent(props);
+}
+
+MDXContent.__RSPRESS_PAGE_META = {};
+
+MDXContent.__RSPRESS_PAGE_META["index.mdx"] = {"toc":[],"title":"","headingTitle":"","frontmatter":{}};
+"
+`;
+
+exports[`remark-container > With new line before the end position of container 1`] = `
+"const frontmatter = {};
+import {jsx as _jsx, jsxs as _jsxs} from "react/jsx-runtime";
+import {useMDXComponents as _provideComponents} from "@mdx-js/react";
+function _createMdxContent(props) {
+  const _components = {
+    div: "div",
+    p: "p",
+    ..._provideComponents(),
+    ...props.components
+  };
+  return _jsxs(_components.div, {
+    className: "rspress-directive tip",
+    children: [_jsx(_components.div, {
+      className: "rspress-directive-title",
+      children: "TIP"
+    }), _jsx(_components.div, {
+      className: "rspress-directive-content",
+      children: _jsx(_components.p, {
+        children: "\\nThis is a tip"
+      })
+    })]
+  });
+}
+export default function MDXContent(props = {}) {
+  const {wrapper: MDXLayout} = {
+    ..._provideComponents(),
+    ...props.components
+  };
+  return MDXLayout ? _jsx(MDXLayout, {
+    ...props,
+    children: _jsx(_createMdxContent, {
+      ...props
+    })
+  }) : _createMdxContent(props);
+}
+
+MDXContent.__RSPRESS_PAGE_META = {};
+
+MDXContent.__RSPRESS_PAGE_META["index.mdx"] = {"toc":[],"title":"","headingTitle":"","frontmatter":{}};
+"
+`;
+
+exports[`remark-container > With new line in all case 1`] = `
+"const frontmatter = {};
+import {jsx as _jsx, jsxs as _jsxs} from "react/jsx-runtime";
+import {useMDXComponents as _provideComponents} from "@mdx-js/react";
+function _createMdxContent(props) {
+  const _components = {
+    div: "div",
+    p: "p",
+    ..._provideComponents(),
+    ...props.components
+  };
+  return _jsxs(_components.div, {
+    className: "rspress-directive tip",
+    children: [_jsx(_components.div, {
+      className: "rspress-directive-title",
+      children: "TIP"
+    }), _jsx(_components.div, {
+      className: "rspress-directive-content",
+      children: _jsx(_components.p, {
+        children: "This is a tip"
+      })
+    })]
+  });
+}
+export default function MDXContent(props = {}) {
+  const {wrapper: MDXLayout} = {
+    ..._provideComponents(),
+    ...props.components
+  };
+  return MDXLayout ? _jsx(MDXLayout, {
+    ...props,
+    children: _jsx(_createMdxContent, {
+      ...props
+    })
+  }) : _createMdxContent(props);
+}
+
+MDXContent.__RSPRESS_PAGE_META = {};
+
+MDXContent.__RSPRESS_PAGE_META["index.mdx"] = {"toc":[],"title":"","headingTitle":"","frontmatter":{}};
+"
+`;
+
+exports[`remark-container > details 1`] = `
+"const frontmatter = {};
+import {jsx as _jsx, jsxs as _jsxs} from "react/jsx-runtime";
+import {useMDXComponents as _provideComponents} from "@mdx-js/react";
+function _createMdxContent(props) {
+  const _components = {
+    details: "details",
+    div: "div",
+    p: "p",
+    summary: "summary",
+    ..._provideComponents(),
+    ...props.components
+  };
+  return _jsxs(_components.details, {
+    className: "rspress-directive details",
+    children: [_jsx(_components.summary, {
+      className: "rspress-directive-title",
+      children: "DETAILS"
+    }), _jsx(_components.div, {
+      className: "rspress-directive-content",
+      children: _jsx(_components.p, {
+        children: "\\nThis is a details block."
+      })
+    })]
+  });
+}
+export default function MDXContent(props = {}) {
+  const {wrapper: MDXLayout} = {
+    ..._provideComponents(),
+    ...props.components
+  };
+  return MDXLayout ? _jsx(MDXLayout, {
+    ...props,
+    children: _jsx(_createMdxContent, {
+      ...props
+    })
+  }) : _createMdxContent(props);
+}
+
+MDXContent.__RSPRESS_PAGE_META = {};
+
+MDXContent.__RSPRESS_PAGE_META["index.mdx"] = {"toc":[],"title":"","headingTitle":"","frontmatter":{}};
+"
+`;
+
+exports[`remark-container > empty blockquote 1`] = `
+"const frontmatter = {};
+import {jsx as _jsx} from "react/jsx-runtime";
+import {useMDXComponents as _provideComponents} from "@mdx-js/react";
+function _createMdxContent(props) {
+  const _components = {
+    blockquote: "blockquote",
+    ..._provideComponents(),
+    ...props.components
+  };
+  return _jsx(_components.blockquote, {
+    children: "\\n"
+  });
+}
+export default function MDXContent(props = {}) {
+  const {wrapper: MDXLayout} = {
+    ..._provideComponents(),
+    ...props.components
+  };
+  return MDXLayout ? _jsx(MDXLayout, {
+    ...props,
+    children: _jsx(_createMdxContent, {
+      ...props
+    })
+  }) : _createMdxContent(props);
+}
+
+MDXContent.__RSPRESS_PAGE_META = {};
+
+MDXContent.__RSPRESS_PAGE_META["index.mdx"] = {"toc":[],"title":"","headingTitle":"","frontmatter":{}};
+"
+`;
+
+exports[`remark-container > end with a link 1`] = `
+"const frontmatter = {};
+import {jsx as _jsx, jsxs as _jsxs} from "react/jsx-runtime";
+import {useMDXComponents as _provideComponents} from "@mdx-js/react";
+function _createMdxContent(props) {
+  const _components = {
+    a: "a",
+    div: "div",
+    p: "p",
+    ..._provideComponents(),
+    ...props.components
+  };
+  return _jsxs(_components.div, {
+    className: "rspress-directive tip",
+    children: [_jsx(_components.div, {
+      className: "rspress-directive-title",
+      children: "TIP"
+    }), _jsxs(_components.div, {
+      className: "rspress-directive-content",
+      children: [_jsx(_components.p, {
+        children: "\\nLine 1."
+      }), _jsxs(_components.p, {
+        children: ["Line 2 with ", _jsx(_components.a, {
+          href: "http://example.com",
+          rel: "noopener noreferrer",
+          target: "_blank",
+          children: "link"
+        }), "."]
+      })]
+    })]
+  });
+}
+export default function MDXContent(props = {}) {
+  const {wrapper: MDXLayout} = {
+    ..._provideComponents(),
+    ...props.components
+  };
+  return MDXLayout ? _jsx(MDXLayout, {
+    ...props,
+    children: _jsx(_createMdxContent, {
+      ...props
+    })
+  }) : _createMdxContent(props);
+}
+
+MDXContent.__RSPRESS_PAGE_META = {};
+
+MDXContent.__RSPRESS_PAGE_META["index.mdx"] = {"toc":[],"title":"","headingTitle":"","frontmatter":{}};
+"
+`;
+
+exports[`remark-container > end with a new line 1`] = `
+"const frontmatter = {};
+import {jsx as _jsx, jsxs as _jsxs} from "react/jsx-runtime";
+import {useMDXComponents as _provideComponents} from "@mdx-js/react";
+function _createMdxContent(props) {
+  const _components = {
+    a: "a",
+    div: "div",
+    p: "p",
+    ..._provideComponents(),
+    ...props.components
+  };
+  return _jsxs(_components.div, {
+    className: "rspress-directive tip",
+    children: [_jsx(_components.div, {
+      className: "rspress-directive-title",
+      children: "TIP"
+    }), _jsxs(_components.div, {
+      className: "rspress-directive-content",
+      children: [_jsx(_components.p, {
+        children: "\\nLine 1."
+      }), _jsxs(_components.p, {
+        children: ["Line 2 with ", _jsx(_components.a, {
+          href: "http://example.com",
+          rel: "noopener noreferrer",
+          target: "_blank",
+          children: "link"
+        }), "."]
+      })]
+    })]
+  });
+}
+export default function MDXContent(props = {}) {
+  const {wrapper: MDXLayout} = {
+    ..._provideComponents(),
+    ...props.components
+  };
+  return MDXLayout ? _jsx(MDXLayout, {
+    ...props,
+    children: _jsx(_createMdxContent, {
+      ...props
+    })
+  }) : _createMdxContent(props);
+}
+
+MDXContent.__RSPRESS_PAGE_META = {};
+
+MDXContent.__RSPRESS_PAGE_META["index.mdx"] = {"toc":[],"title":"","headingTitle":"","frontmatter":{}};
+"
+`;
+
+exports[`remark-container > end with an inline code 1`] = `
+"const frontmatter = {};
+import {jsx as _jsx, jsxs as _jsxs} from "react/jsx-runtime";
+import {useMDXComponents as _provideComponents} from "@mdx-js/react";
+function _createMdxContent(props) {
+  const _components = {
+    code: "code",
+    div: "div",
+    p: "p",
+    ..._provideComponents(),
+    ...props.components
+  };
+  return _jsxs(_components.div, {
+    className: "rspress-directive tip",
+    children: [_jsx(_components.div, {
+      className: "rspress-directive-title",
+      children: "TIP"
+    }), _jsxs(_components.div, {
+      className: "rspress-directive-content",
+      children: [_jsx(_components.p, {
+        children: "\\nLine 1."
+      }), _jsxs(_components.p, {
+        children: ["Line 2 with ", _jsx(_components.code, {
+          children: "code"
+        }), "."]
+      })]
+    })]
+  });
+}
+export default function MDXContent(props = {}) {
+  const {wrapper: MDXLayout} = {
+    ..._provideComponents(),
+    ...props.components
+  };
+  return MDXLayout ? _jsx(MDXLayout, {
+    ...props,
+    children: _jsx(_createMdxContent, {
+      ...props
+    })
+  }) : _createMdxContent(props);
+}
+
+MDXContent.__RSPRESS_PAGE_META = {};
+
+MDXContent.__RSPRESS_PAGE_META["index.mdx"] = {"toc":[],"title":"","headingTitle":"","frontmatter":{}};
+"
+`;
+
+exports[`remark-container > github alerts ~ caution 1`] = `
+"const frontmatter = {};
+import {Fragment as _Fragment, jsx as _jsx, jsxs as _jsxs} from "react/jsx-runtime";
+import {useMDXComponents as _provideComponents} from "@mdx-js/react";
+function _createMdxContent(props) {
+  const _components = {
+    code: "code",
+    div: "div",
+    p: "p",
+    pre: "pre",
+    span: "span",
+    ..._provideComponents(),
+    ...props.components
+  };
+  return _jsxs(_components.div, {
+    className: "rspress-directive caution",
+    children: [_jsx(_components.div, {
+      className: "rspress-directive-title",
+      children: "CAUTION"
+    }), _jsxs(_components.div, {
+      className: "rspress-directive-content",
+      children: [_jsx(_components.p, {
+        children: "Use this code:-"
+      }), _jsx(_Fragment, {
+        children: _jsx(_components.pre, {
+          className: "shiki css-variables",
+          style: {
+            backgroundColor: "var(--shiki-background)",
+            color: "var(--shiki-foreground)"
+          },
+          tabIndex: "0",
+          children: _jsx(_components.code, {
+            className: "language-javascript",
+            children: _jsxs(_components.span, {
+              className: "line",
+              children: [_jsx(_components.span, {
+                style: {
+                  color: "var(--shiki-token-constant)"
+                },
+                children: "console"
+              }), _jsx(_components.span, {
+                style: {
+                  color: "var(--shiki-token-function)"
+                },
+                children: ".log"
+              }), _jsx(_components.span, {
+                style: {
+                  color: "var(--shiki-foreground)"
+                },
+                children: "("
+              }), _jsx(_components.span, {
+                style: {
+                  color: "var(--shiki-token-constant)"
+                },
+                children: "69"
+              }), _jsx(_components.span, {
+                style: {
+                  color: "var(--shiki-foreground)"
+                },
+                children: ");"
+              })]
+            })
+          })
+        })
+      })]
+    })]
+  });
+}
+export default function MDXContent(props = {}) {
+  const {wrapper: MDXLayout} = {
+    ..._provideComponents(),
+    ...props.components
+  };
+  return MDXLayout ? _jsx(MDXLayout, {
+    ...props,
+    children: _jsx(_createMdxContent, {
+      ...props
+    })
+  }) : _createMdxContent(props);
+}
+
+MDXContent.__RSPRESS_PAGE_META = {};
+
+MDXContent.__RSPRESS_PAGE_META["index.mdx"] = {"toc":[],"title":"","headingTitle":"","frontmatter":{}};
+"
+`;
+
+exports[`remark-container > github alerts ~ note 1`] = `
+"const frontmatter = {};
+import {jsx as _jsx, jsxs as _jsxs} from "react/jsx-runtime";
+import {useMDXComponents as _provideComponents} from "@mdx-js/react";
+function _createMdxContent(props) {
+  const _components = {
+    a: "a",
+    div: "div",
+    h1: "h1",
+    ..._provideComponents(),
+    ...props.components
+  };
+  return _jsxs(_components.div, {
+    className: "rspress-directive note",
+    children: [_jsx(_components.div, {
+      className: "rspress-directive-title",
+      children: "NOTE"
+    }), _jsx(_components.div, {
+      className: "rspress-directive-content",
+      children: _jsxs(_components.h1, {
+        id: "please-read-this-note",
+        children: [_jsx(_components.a, {
+          className: "header-anchor",
+          "aria-hidden": "true",
+          href: "#please-read-this-note",
+          children: "#"
+        }), "Please read this note!"]
+      })
+    })]
+  });
+}
+export default function MDXContent(props = {}) {
+  const {wrapper: MDXLayout} = {
+    ..._provideComponents(),
+    ...props.components
+  };
+  return MDXLayout ? _jsx(MDXLayout, {
+    ...props,
+    children: _jsx(_createMdxContent, {
+      ...props
+    })
+  }) : _createMdxContent(props);
+}
+
+MDXContent.__RSPRESS_PAGE_META = {};
+
+MDXContent.__RSPRESS_PAGE_META["index.mdx"] = {"toc":[],"title":"","headingTitle":"","frontmatter":{}};
+"
+`;
+
+exports[`remark-container > github alerts ~ tip 1`] = `
+"const frontmatter = {};
+import {jsx as _jsx, jsxs as _jsxs} from "react/jsx-runtime";
+import {useMDXComponents as _provideComponents} from "@mdx-js/react";
+function _createMdxContent(props) {
+  const _components = {
+    div: "div",
+    p: "p",
+    strong: "strong",
+    ..._provideComponents(),
+    ...props.components
+  };
+  return _jsxs(_components.div, {
+    className: "rspress-directive tip",
+    children: [_jsx(_components.div, {
+      className: "rspress-directive-title",
+      children: "TIP"
+    }), _jsx(_components.div, {
+      className: "rspress-directive-content",
+      children: _jsx(_components.p, {
+        children: _jsx(_components.strong, {
+          children: "Helpful advice for doing things better or more easily."
+        })
+      })
+    })]
+  });
+}
+export default function MDXContent(props = {}) {
+  const {wrapper: MDXLayout} = {
+    ..._provideComponents(),
+    ...props.components
+  };
+  return MDXLayout ? _jsx(MDXLayout, {
+    ...props,
+    children: _jsx(_createMdxContent, {
+      ...props
+    })
+  }) : _createMdxContent(props);
+}
+
+MDXContent.__RSPRESS_PAGE_META = {};
+
+MDXContent.__RSPRESS_PAGE_META["index.mdx"] = {"toc":[],"title":"","headingTitle":"","frontmatter":{}};
+"
+`;
+
+exports[`remark-container > github alerts ~ warning 1`] = `
+"const frontmatter = {};
+import {jsx as _jsx, jsxs as _jsxs} from "react/jsx-runtime";
+import {useMDXComponents as _provideComponents} from "@mdx-js/react";
+function _createMdxContent(props) {
+  const _components = {
+    code: "code",
+    div: "div",
+    p: "p",
+    ..._provideComponents(),
+    ...props.components
+  };
+  return _jsxs(_components.div, {
+    className: "rspress-directive warning",
+    children: [_jsx(_components.div, {
+      className: "rspress-directive-title",
+      children: "WARNING"
+    }), _jsx(_components.div, {
+      className: "rspress-directive-content",
+      children: _jsxs(_components.p, {
+        children: ["Use ", _jsx(_components.code, {
+          children: "dummy"
+        }), " instead of ", _jsx(_components.code, {
+          children: "demo"
+        })]
+      })
+    })]
+  });
+}
+export default function MDXContent(props = {}) {
+  const {wrapper: MDXLayout} = {
+    ..._provideComponents(),
+    ...props.components
+  };
+  return MDXLayout ? _jsx(MDXLayout, {
+    ...props,
+    children: _jsx(_createMdxContent, {
+      ...props
+    })
+  }) : _createMdxContent(props);
+}
+
+MDXContent.__RSPRESS_PAGE_META = {};
+
+MDXContent.__RSPRESS_PAGE_META["index.mdx"] = {"toc":[],"title":"","headingTitle":"","frontmatter":{}};
+"
+`;
+
+exports[`remark-container > nested in list - github alerts 1`] = `
+"const frontmatter = {};
+import {Fragment as _Fragment, jsx as _jsx, jsxs as _jsxs} from "react/jsx-runtime";
+import {useMDXComponents as _provideComponents} from "@mdx-js/react";
+function _createMdxContent(props) {
+  const _components = {
+    div: "div",
+    li: "li",
+    ol: "ol",
+    p: "p",
+    ul: "ul",
+    ..._provideComponents(),
+    ...props.components
+  };
+  return _jsxs(_Fragment, {
+    children: [_jsxs(_components.ul, {
+      children: ["\\n", _jsxs(_components.li, {
+        children: ["\\n", _jsx(_components.p, {
+          children: "Title"
+        }), "\\n", _jsxs(_components.div, {
+          className: "rspress-directive tip",
+          children: [_jsx(_components.div, {
+            className: "rspress-directive-title",
+            children: "TIP"
+          }), _jsx(_components.div, {
+            className: "rspress-directive-content",
+            children: _jsx(_components.p, {
+              children: "This is a 'tip' style block."
+            })
+          })]
+        }), "\\n"]
+      }), "\\n"]
+    }), "\\n", _jsxs(_components.ol, {
+      children: ["\\n", _jsx(_components.li, {
+        children: "Title"
+      }), "\\n"]
+    }), "\\n", _jsxs(_components.div, {
+      className: "rspress-directive tip",
+      children: [_jsx(_components.div, {
+        className: "rspress-directive-title",
+        children: "TIP"
+      }), _jsx(_components.div, {
+        className: "rspress-directive-content",
+        children: _jsx(_components.p, {
+          children: "This is a 'tip' style block."
+        })
+      })]
+    })]
+  });
+}
+export default function MDXContent(props = {}) {
+  const {wrapper: MDXLayout} = {
+    ..._provideComponents(),
+    ...props.components
+  };
+  return MDXLayout ? _jsx(MDXLayout, {
+    ...props,
+    children: _jsx(_createMdxContent, {
+      ...props
+    })
+  }) : _createMdxContent(props);
+}
+
+MDXContent.__RSPRESS_PAGE_META = {};
+
+MDXContent.__RSPRESS_PAGE_META["index.mdx"] = {"toc":[],"title":"","headingTitle":"","frontmatter":{}};
+"
+`;
+
+exports[`remark-container > nested in ordered list 1`] = `
+"const frontmatter = {};
+import {jsx as _jsx, jsxs as _jsxs} from "react/jsx-runtime";
+import {useMDXComponents as _provideComponents} from "@mdx-js/react";
+function _createMdxContent(props) {
+  const _components = {
+    div: "div",
+    li: "li",
+    ol: "ol",
+    p: "p",
+    ..._provideComponents(),
+    ...props.components
+  };
+  return _jsxs(_components.ol, {
+    children: ["\\n", _jsxs(_components.li, {
+      children: ["\\n", _jsx(_components.p, {
+        children: "Title1"
+      }), "\\n", _jsxs(_components.div, {
+        className: "rspress-directive tip",
+        children: [_jsx(_components.div, {
+          className: "rspress-directive-title",
+          children: "TIP"
+        }), _jsx(_components.div, {
+          className: "rspress-directive-content",
+          children: _jsx(_components.p, {
+            children: "\\nThis is a tip."
+          })
+        })]
+      }), "\\n"]
+    }), "\\n", _jsxs(_components.li, {
+      children: ["\\n", _jsx(_components.p, {
+        children: "Title2"
+      }), "\\n"]
+    }), "\\n"]
+  });
+}
+export default function MDXContent(props = {}) {
+  const {wrapper: MDXLayout} = {
+    ..._provideComponents(),
+    ...props.components
+  };
+  return MDXLayout ? _jsx(MDXLayout, {
+    ...props,
+    children: _jsx(_createMdxContent, {
+      ...props
+    })
+  }) : _createMdxContent(props);
+}
+
+MDXContent.__RSPRESS_PAGE_META = {};
+
+MDXContent.__RSPRESS_PAGE_META["index.mdx"] = {"toc":[],"title":"","headingTitle":"","frontmatter":{}};
+"
+`;
+
+exports[`remark-container > nested in ordered list inside mdx component 1`] = `
+"const frontmatter = {};
+import {jsx as _jsx, jsxs as _jsxs} from "react/jsx-runtime";
+import {useMDXComponents as _provideComponents} from "@mdx-js/react";
+function _createMdxContent(props) {
+  const _components = {
+    div: "div",
+    li: "li",
+    ol: "ol",
+    p: "p",
+    ..._provideComponents(),
+    ...props.components
+  };
+  return _jsx("div", {
+    children: _jsx("div", {
+      children: _jsx("div", {
+        children: _jsxs(_components.ol, {
+          children: ["\\n", _jsxs(_components.li, {
+            children: ["\\n", _jsx(_components.p, {
+              children: "Title1"
+            }), "\\n", _jsxs(_components.div, {
+              className: "rspress-directive tip",
+              children: [_jsx(_components.div, {
+                className: "rspress-directive-title",
+                children: "TIP"
+              }), _jsx(_components.div, {
+                className: "rspress-directive-content",
+                children: _jsx(_components.p, {
+                  children: "\\nThis is a tip."
+                })
+              })]
+            }), "\\n"]
+          }), "\\n", _jsxs(_components.li, {
+            children: ["\\n", _jsx(_components.p, {
+              children: "Title2"
+            }), "\\n"]
+          }), "\\n"]
+        })
+      })
+    })
+  });
+}
+export default function MDXContent(props = {}) {
+  const {wrapper: MDXLayout} = {
+    ..._provideComponents(),
+    ...props.components
+  };
+  return MDXLayout ? _jsx(MDXLayout, {
+    ...props,
+    children: _jsx(_createMdxContent, {
+      ...props
+    })
+  }) : _createMdxContent(props);
+}
+
+MDXContent.__RSPRESS_PAGE_META = {};
+
+MDXContent.__RSPRESS_PAGE_META["index.mdx"] = {"toc":[],"title":"","headingTitle":"","frontmatter":{}};
+"
+`;
+
+exports[`remark-container > nested in unordered list 1`] = `
+"const frontmatter = {};
+import {jsx as _jsx, jsxs as _jsxs} from "react/jsx-runtime";
+import {useMDXComponents as _provideComponents} from "@mdx-js/react";
+function _createMdxContent(props) {
+  const _components = {
+    div: "div",
+    li: "li",
+    p: "p",
+    ul: "ul",
+    ..._provideComponents(),
+    ...props.components
+  };
+  return _jsxs(_components.ul, {
+    children: ["\\n", _jsxs(_components.li, {
+      children: ["\\n", _jsx(_components.p, {
+        children: "Title1"
+      }), "\\n", _jsxs(_components.div, {
+        className: "rspress-directive tip",
+        children: [_jsx(_components.div, {
+          className: "rspress-directive-title",
+          children: "TIP"
+        }), _jsx(_components.div, {
+          className: "rspress-directive-content",
+          children: _jsx(_components.p, {
+            children: "\\nThis is a tip."
+          })
+        })]
+      }), "\\n"]
+    }), "\\n", _jsxs(_components.li, {
+      children: ["\\n", _jsx(_components.p, {
+        children: "Title2"
+      }), "\\n"]
+    }), "\\n"]
+  });
+}
+export default function MDXContent(props = {}) {
+  const {wrapper: MDXLayout} = {
+    ..._provideComponents(),
+    ...props.components
+  };
+  return MDXLayout ? _jsx(MDXLayout, {
+    ...props,
+    children: _jsx(_createMdxContent, {
+      ...props
+    })
+  }) : _createMdxContent(props);
+}
+
+MDXContent.__RSPRESS_PAGE_META = {};
+
+MDXContent.__RSPRESS_PAGE_META["index.mdx"] = {"toc":[],"title":"","headingTitle":"","frontmatter":{}};
+"
+`;
+
+exports[`remark-container > nested in unordered list inside mdx component 1`] = `
+"const frontmatter = {};
+import {jsx as _jsx, jsxs as _jsxs} from "react/jsx-runtime";
+import {useMDXComponents as _provideComponents} from "@mdx-js/react";
+function _createMdxContent(props) {
+  const _components = {
+    div: "div",
+    li: "li",
+    p: "p",
+    ul: "ul",
+    ..._provideComponents(),
+    ...props.components
+  };
+  return _jsx("div", {
+    children: _jsx("div", {
+      children: _jsx("div", {
+        children: _jsxs(_components.ul, {
+          children: ["\\n", _jsxs(_components.li, {
+            children: ["\\n", _jsx(_components.p, {
+              children: "Title1"
+            }), "\\n", _jsxs(_components.div, {
+              className: "rspress-directive tip",
+              children: [_jsx(_components.div, {
+                className: "rspress-directive-title",
+                children: "TIP"
+              }), _jsx(_components.div, {
+                className: "rspress-directive-content",
+                children: _jsx(_components.p, {
+                  children: "\\nThis is a tip."
+                })
+              })]
+            }), "\\n"]
+          }), "\\n", _jsxs(_components.li, {
+            children: ["\\n", _jsx(_components.p, {
+              children: "Title2"
+            }), "\\n"]
+          }), "\\n"]
+        })
+      })
+    })
+  });
+}
+export default function MDXContent(props = {}) {
+  const {wrapper: MDXLayout} = {
+    ..._provideComponents(),
+    ...props.components
+  };
+  return MDXLayout ? _jsx(MDXLayout, {
+    ...props,
+    children: _jsx(_createMdxContent, {
+      ...props
+    })
+  }) : _createMdxContent(props);
+}
+
+MDXContent.__RSPRESS_PAGE_META = {};
+
+MDXContent.__RSPRESS_PAGE_META["index.mdx"] = {"toc":[],"title":"","headingTitle":"","frontmatter":{}};
+"
+`;
+
+exports[`remark-container > start with a link 1`] = `
+"const frontmatter = {};
+import {jsx as _jsx, jsxs as _jsxs} from "react/jsx-runtime";
+import {useMDXComponents as _provideComponents} from "@mdx-js/react";
+function _createMdxContent(props) {
+  const _components = {
+    a: "a",
+    div: "div",
+    p: "p",
+    ..._provideComponents(),
+    ...props.components
+  };
+  return _jsxs(_components.div, {
+    className: "rspress-directive tip",
+    children: [_jsx(_components.div, {
+      className: "rspress-directive-title",
+      children: "TIP"
+    }), _jsx(_components.div, {
+      className: "rspress-directive-content",
+      children: _jsxs(_components.p, {
+        children: ["\\n", _jsx(_components.a, {
+          href: "https://example.com",
+          rel: "noopener noreferrer",
+          target: "_blank",
+          children: "link"
+        }), " is a link"]
+      })
+    })]
+  });
+}
+export default function MDXContent(props = {}) {
+  const {wrapper: MDXLayout} = {
+    ..._provideComponents(),
+    ...props.components
+  };
+  return MDXLayout ? _jsx(MDXLayout, {
+    ...props,
+    children: _jsx(_createMdxContent, {
+      ...props
+    })
+  }) : _createMdxContent(props);
+}
+
+MDXContent.__RSPRESS_PAGE_META = {};
+
+MDXContent.__RSPRESS_PAGE_META["index.mdx"] = {"toc":[],"title":"","headingTitle":"","frontmatter":{}};
+"
+`;

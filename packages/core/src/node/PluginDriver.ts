@@ -1,4 +1,3 @@
-import { pluginContainerSyntax } from '@rspress/plugin-container-syntax';
 import type {
   PageIndexInfo,
   RouteMeta,
@@ -56,9 +55,6 @@ export class PluginDriver {
         ),
       );
     }
-
-    // Support the container syntax in markdown/mdx, such as :::tip
-    this.addPlugin(pluginContainerSyntax());
 
     (config.plugins || []).forEach(plugin => {
       this.addPlugin(plugin);
