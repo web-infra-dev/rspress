@@ -38,7 +38,8 @@
     "theme.ts",
     "config.ts",
     "shiki-transformers.ts",
-    "meta-json-schema.json"
+    "meta-json-schema.json",
+    "nav-json-schema.json"
   ],
   "scripts": {
     "build": "rslib build",
