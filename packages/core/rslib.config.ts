@@ -81,12 +81,8 @@ export default defineConfig({
       dts: {
         bundle: true,
       },
-      shims: {
-        esm: {
-          require: true,
-        },
-      },
       output: {
+        target: 'web',
         distPath: {
           root: './dist',
         },
@@ -110,6 +106,7 @@ export default defineConfig({
         tsconfigPath: './src/runtime/tsconfig.json',
       },
       output: {
+        target: 'web',
         distPath: {
           root: './dist/runtime',
         },
