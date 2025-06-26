@@ -2,8 +2,9 @@ import type {
   NormalizedSidebarGroup,
   SidebarDivider,
   SidebarItem,
+  SidebarSectionHeader,
 } from '@rspress/shared';
-import { isSidebarDivider } from '../Sidebar/utils';
+import { isSidebarDivider, isSidebarSectionHeader } from '../Sidebar/utils';
 
 function removeIndex(link: string) {
   if (link.endsWith('/index')) {
@@ -17,13 +18,25 @@ function removeIndex(link: string) {
  * @example
  */
 export function findItemByRoutePath(
-  items: (SidebarItem | NormalizedSidebarGroup | SidebarDivider)[],
+  items: (
+    | SidebarItem
+    | NormalizedSidebarGroup
+    | SidebarDivider
+    | SidebarSectionHeader
+  )[],
   routePath: string,
 ): (SidebarItem | NormalizedSidebarGroup)[] {
   function isRoutePathMatch(
-    item: SidebarItem | NormalizedSidebarGroup | SidebarDivider,
+    item:
+      | SidebarItem
+      | NormalizedSidebarGroup
+      | SidebarDivider
+      | SidebarSectionHeader,
   ) {
     if (isSidebarDivider(item)) {
+      return false;
+    }
+    if (isSidebarSectionHeader(item)) {
       return false;
     }
     const removeIndexUrl = removeIndex(item.link || '/');

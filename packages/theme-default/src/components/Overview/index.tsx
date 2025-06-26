@@ -8,13 +8,18 @@ import type {
   NormalizedSidebarGroup,
   SidebarDivider,
   SidebarItem,
+  SidebarSectionHeader,
 } from '@rspress/shared';
 import { Link } from '@theme';
 import { useEffect, useMemo, useRef, useState } from 'react';
 import { useLocaleSiteData } from '../../logic/useLocaleSiteData';
 import { useSidebarData } from '../../logic/useSidebarData';
 import { renderInlineMarkdown } from '../../logic/utils';
-import { isSidebarDivider, isSidebarSingleFile } from '../Sidebar/utils';
+import {
+  isSidebarDivider,
+  isSidebarSectionHeader,
+  isSidebarSingleFile,
+} from '../Sidebar/utils';
 import * as styles from './index.module.scss';
 import { findItemByRoutePath } from './utils';
 
@@ -139,7 +144,11 @@ export function Overview(props: {
     link.startsWith(routePath.replace(/overview$/, '')) &&
     !isEqualPath(link, routePath);
   const getChildLink = (
-    traverseItem: SidebarDivider | SidebarItem | NormalizedSidebarGroup,
+    traverseItem:
+      | SidebarDivider
+      | SidebarItem
+      | NormalizedSidebarGroup
+      | SidebarSectionHeader,
   ): string => {
     if ('link' in traverseItem && traverseItem.link) {
       return traverseItem.link;
@@ -173,11 +182,18 @@ export function Overview(props: {
   }
 
   function normalizeSidebarItem(
-    item: SidebarItem | SidebarDivider | NormalizedSidebarGroup,
+    item:
+      | SidebarItem
+      | SidebarDivider
+      | NormalizedSidebarGroup
+      | SidebarSectionHeader,
     sidebarGroup?: NormalizedSidebarGroup,
     frontmatter?: Record<string, unknown>,
   ): GroupItem | false {
     if (isSidebarDivider(item)) {
+      return false;
+    }
+    if (isSidebarSectionHeader(item)) {
       return false;
     }
     // do not display overview title in sub pages overview

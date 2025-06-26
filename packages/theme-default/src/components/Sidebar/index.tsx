@@ -31,7 +31,12 @@ export interface SidebarItemProps {
   collapsed?: boolean;
   setSidebarData: React.Dispatch<
     React.SetStateAction<
-      (NormalizedSidebarGroup | ISidebarItem | ISidebarDivider)[]
+      (
+        | NormalizedSidebarGroup
+        | ISidebarItem
+        | ISidebarDivider
+        | ISidebarSectionHeader
+      )[]
     >
   >;
   contextContainerClassName?: string;
@@ -48,6 +53,7 @@ interface Props {
 export type SidebarData = (
   | ISidebarDivider
   | ISidebarItem
+  | ISidebarSectionHeader
   | NormalizedSidebarGroup
 )[];
 
@@ -62,7 +68,10 @@ export let bodyStyleOverflow: string;
 // Note: the cache object won't be reassign in other module
 // eslint-disable-next-line import/no-mutable-exports
 export let matchCache: WeakMap<
-  NormalizedSidebarGroup | ISidebarItem | ISidebarDivider,
+  | NormalizedSidebarGroup
+  | ISidebarItem
+  | ISidebarDivider
+  | ISidebarSectionHeader,
   boolean
 > = new WeakMap();
 
@@ -104,11 +113,18 @@ export function Sidebar(props: Props) {
     // 2. For current active item, expand its parent group
     // Cache, Avoid redundant calculation
     matchCache = new WeakMap<
-      NormalizedSidebarGroup | ISidebarItem | ISidebarDivider,
+      | NormalizedSidebarGroup
+      | ISidebarItem
+      | ISidebarDivider
+      | ISidebarSectionHeader,
       boolean
     >();
     const match = (
-      item: NormalizedSidebarGroup | ISidebarItem | ISidebarDivider,
+      item:
+        | NormalizedSidebarGroup
+        | ISidebarItem
+        | ISidebarDivider
+        | ISidebarSectionHeader,
     ) => {
       if (matchCache.has(item)) {
         return matchCache.get(item);
@@ -128,7 +144,11 @@ export function Sidebar(props: Props) {
       return false;
     };
     const traverse = (
-      item: NormalizedSidebarGroup | ISidebarItem | ISidebarDivider,
+      item:
+        | NormalizedSidebarGroup
+        | ISidebarItem
+        | ISidebarDivider
+        | ISidebarSectionHeader,
     ) => {
       if ('items' in item) {
         item.items.forEach(traverse);
