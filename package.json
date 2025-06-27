@@ -62,13 +62,5 @@
   "publishConfig": {
     "access": "public",
     "registry": "https://registry.npmjs.org/"
-  },
-  "pnpm": {
-    "onlyBuiltDependencies": [
-      "@biomejs/biome",
-      "core-js",
-      "esbuild",
-      "nx"
-    ]
   }
 }

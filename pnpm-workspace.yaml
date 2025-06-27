@@ -5,3 +5,9 @@ packages:
   - '!**/compiled/**'
   - '!**/tests/**'
   - '!packages/create-rspress/template-basic'
+
+onlyBuiltDependencies:
+  - "@biomejs/biome"
+  - "core-js"
+  - "esbuild"
+  - "nx"
