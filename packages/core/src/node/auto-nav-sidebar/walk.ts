@@ -3,7 +3,8 @@ import path from 'node:path';
 import { type NavItem, type Sidebar, isExternalUrl } from '@rspress/shared';
 import { logger } from '@rspress/shared/logger';
 import { hintNavJsonChangeThenPanic } from '../logger/hint';
-import { addRoutePrefix, pathExists } from '../utils';
+import { addRoutePrefix } from '../route/RoutePage';
+import { pathExists } from '../utils';
 import { scanSideMeta } from './normalize';
 import { readJson } from './utils';
 

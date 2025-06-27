@@ -2,19 +2,19 @@ import { addLeadingSlash, addTrailingSlash } from '@rspress/shared';
 import { DEFAULT_PAGE_EXTENSIONS } from '@rspress/shared/constants';
 
 export const getRoutePathParts = (
-  routePath: string,
+  relativePath: string,
   lang: string,
   version: string,
   langs: string[],
   versions: string[],
 ) => {
-  const hasTrailSlash = routePath.endsWith('/');
+  const hasTrailSlash = relativePath.endsWith('/');
 
   let versionPart = '';
   let langPart = '';
   let purePathPart = '';
 
-  const parts: string[] = routePath.split('/').filter(Boolean);
+  const parts: string[] = relativePath.split('/').filter(Boolean);
 
   if (version) {
     const versionToMatch = parts[0];
@@ -47,7 +47,7 @@ export const getRoutePathParts = (
 };
 
 export const normalizeRoutePath = (
-  routePath: string,
+  relativePath: string,
   lang: string,
   version: string,
   langs: string[],
@@ -55,7 +55,7 @@ export const normalizeRoutePath = (
   extensions: string[] = DEFAULT_PAGE_EXTENSIONS,
 ) => {
   const [versionPart, langPart, purePathPart] = getRoutePathParts(
-    routePath,
+    relativePath,
     lang,
     version,
     langs,

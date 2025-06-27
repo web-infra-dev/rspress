@@ -9,7 +9,7 @@ import {
   slash,
 } from '@rspress/shared';
 import { logger } from '@rspress/shared/logger';
-import { absolutePathToLink, addRoutePrefix } from '../utils/normalizePath';
+import { absolutePathToRoutePath, addRoutePrefix } from '../route/RoutePage';
 import type {
   CustomLinkMeta,
   DividerSideMeta,
@@ -271,7 +271,7 @@ async function metaFileItemToSidebarItem(
     );
   }
 
-  const link = absolutePathToLink(absolutePathWithExt, docsDir);
+  const link = absolutePathToRoutePath(absolutePathWithExt, docsDir);
   const info = await extractInfoFromFrontmatterWithAbsolutePath(
     absolutePathWithExt,
     docsDir,
