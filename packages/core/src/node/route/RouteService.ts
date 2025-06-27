@@ -6,7 +6,6 @@ import type { ComponentType } from 'react';
 import { glob } from 'tinyglobby';
 import type { PluginDriver } from '../PluginDriver';
 import { PUBLIC_DIR } from '../constants';
-import { getPageKey, normalizePath } from '../utils';
 import { RoutePage } from './RoutePage';
 import { getRoutePathParts, normalizeRoutePath } from './normalizeRoutePath';
 
@@ -69,13 +68,13 @@ export class RouteService {
       runtimeTempDir,
       pluginDriver,
     );
+    RouteService.__instance__ = routeService;
     await routeService.#init();
     await pluginDriver.routeServiceGenerated(routeService);
-    RouteService.__instance__ = routeService;
     return routeService;
   }
 
-  constructor(
+  private constructor(
     scanDir: string,
     userConfig: UserConfig,
     tempDir: string,
@@ -127,23 +126,10 @@ export class RouteService {
     ).sort();
 
     files.forEach(filePath => {
-      const fileRelativePath = normalizePath(
-        path.relative(this.#scanDir, filePath),
-      );
-      const { routePath, lang, version } =
-        this.normalizeRoutePath(fileRelativePath);
-      const absolutePath = path.join(this.#scanDir, fileRelativePath);
-
-      const routeMeta = {
-        routePath,
-        absolutePath: normalizePath(absolutePath),
-        relativePath: fileRelativePath,
-        pageName: getPageKey(fileRelativePath),
-        lang,
-        version,
-      };
-      this.addRoute(routeMeta);
+      const routePage = RoutePage.create(filePath, this.#scanDir);
+      this.addRoute(routePage);
     });
+
     // 2. external pages added by plugins
     const externalPages = await this.#pluginDriver.addPages();
 
@@ -152,15 +138,23 @@ export class RouteService {
         const { routePath, content, filepath } = route;
         // case1: specify the filepath
         if (filepath) {
-          const routeMeta = this.#generateRouteMeta(routePath, filepath);
-          this.addRoute(routeMeta);
+          const routePage = RoutePage.createFromExternal(
+            routePath,
+            filepath,
+            this.#scanDir,
+          );
+          this.addRoute(routePage);
           return;
         }
         // case2: specify the content
         if (content) {
           const filepath = await this.#writeTempFile(index, content);
-          const routeMeta = this.#generateRouteMeta(routePath, filepath);
-          this.addRoute(routeMeta);
+          const routePage = RoutePage.createFromExternal(
+            routePath,
+            filepath,
+            this.#scanDir,
+          );
+          this.addRoute(routePage);
         }
       }),
     );
@@ -168,20 +162,14 @@ export class RouteService {
     await this.#pluginDriver.routeGenerated(this.getRoutes());
   }
 
-  async addRoute(routeMeta: RouteMeta) {
-    const { routePath } = routeMeta;
+  async addRoute(routePage: RoutePage): Promise<void> {
+    const {
+      routeMeta: { routePath },
+    } = routePage;
     if (this.routeData.has(routePath)) {
       throw new Error(`routePath ${routePath} has already been added`);
     }
-
-    const routePage = RoutePage.create(routeMeta);
     this.routeData.set(routePath, routePage);
-  }
-
-  removeRoute(filePath: string): void {
-    const fileRelativePath = path.relative(this.#scanDir, filePath);
-    const { routePath } = this.normalizeRoutePath(fileRelativePath);
-    this.routeData.delete(routePath);
   }
 
   getRoutes(): RouteMeta[] {
@@ -258,22 +246,6 @@ ${routeMeta
     const tempFilePath = path.join(this.#tempDir, `temp-${index}.mdx`);
     await fs.writeFile(tempFilePath, content);
     return tempFilePath;
-  }
-
-  #generateRouteMeta(routePath: string, filepath: string): RouteMeta {
-    const {
-      routePath: normalizedPath,
-      lang,
-      version,
-    } = this.normalizeRoutePath(routePath);
-    return {
-      routePath: normalizedPath,
-      absolutePath: normalizePath(filepath),
-      relativePath: normalizePath(path.relative(this.#scanDir, filepath)),
-      pageName: getPageKey(routePath),
-      lang,
-      version,
-    };
   }
 
   getRoutePageByRoutePath(routePath: string) {
