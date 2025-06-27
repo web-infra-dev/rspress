@@ -180,9 +180,14 @@ export class RouteService {
     return Array.from(this.routeData.values());
   }
 
-  isExistRoute(routePath: string): boolean {
-    const { routePath: normalizedRoute } = this.normalizeRoutePath(routePath);
-    return Boolean(this.routeData.get(normalizedRoute));
+  isExistRoute(link: string): boolean {
+    function cleanRoutePath(routePath: string) {
+      return decodeURIComponent(routePath.split('#')[0])
+        .replace(/\.html$/, '')
+        .replace(/\/index$/, '/');
+    }
+    const routePath = cleanRoutePath(link);
+    return Boolean(this.routeData.get(routePath));
   }
 
   generateRoutesCode(): string {
