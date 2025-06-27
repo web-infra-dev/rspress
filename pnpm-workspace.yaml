@@ -7,7 +7,7 @@ packages:
   - '!packages/create-rspress/template-basic'
 
 onlyBuiltDependencies:
-  - "@biomejs/biome"
-  - "core-js"
-  - "esbuild"
-  - "nx"
+  - '@biomejs/biome'
+  - 'core-js'
+  - 'esbuild'
+  - 'nx'
