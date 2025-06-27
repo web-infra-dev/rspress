@@ -21,12 +21,17 @@ export const rsbuildPluginSSG = ({
   async setup(api) {
     api.onBeforeBuild(() => {
       let htmlTemplate: string = '';
+      let hasError: boolean = false;
       const indexHtmlEmittedInWeb: Promise<void> = new Promise<void>(
         (resolve, reject) => {
           api.processAssets(
             { stage: 'report', targets: ['web'] },
             ({ assets, compilation, environment }) => {
               if (environment.name !== 'web') {
+                return;
+              }
+              if (compilation.errors.length > 0) {
+                hasError = true;
                 return;
               }
 
@@ -54,6 +59,10 @@ export const rsbuildPluginSSG = ({
         { stage: 'optimize-transfer', targets: ['node'] },
         async ({ assets, compilation, environment, compiler }) => {
           if (environment.name !== 'node') {
+            return;
+          }
+          if (compilation.errors.length > 0) {
+            hasError = true;
             return;
           }
           const distPath = environment.distPath;
@@ -85,14 +94,19 @@ export const rsbuildPluginSSG = ({
           };
 
           await indexHtmlEmittedInWeb;
-          await renderPages(
-            routeService,
-            config,
-            pluginDriver,
-            mainCjsAbsolutePath,
-            htmlTemplate,
-            emitAsset,
-          );
+
+          // If user has encountered a compile time error at the web/node output, user needs to first debug the error in this stage.
+          // we will not do ssg for better debugging
+          if (!hasError) {
+            await renderPages(
+              routeService,
+              config,
+              pluginDriver,
+              mainCjsAbsolutePath,
+              htmlTemplate,
+              emitAsset,
+            );
+          }
 
           if (!isDebugMode()) {
             await rm(ssgFolderPath, { recursive: true });

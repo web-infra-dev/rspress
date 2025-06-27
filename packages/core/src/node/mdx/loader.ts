@@ -1,5 +1,4 @@
-import type { Rspack } from '@rsbuild/core';
-import { logger } from '@rspress/shared/logger';
+import { type Rspack, logger } from '@rsbuild/core';
 
 import { compile, compileWithCrossCompilerCache } from './processor';
 import type { MdxLoaderOptions } from './types';
@@ -45,9 +44,11 @@ export default async function mdxLoader(
     }
   } catch (e) {
     if (e instanceof Error) {
-      logger.error(`MDX compile error: ${e.message} in ${filepath}`);
       logger.debug(e);
-      callback({ message: e.message, name: `${filepath} compile error` });
+      callback({
+        message: `MDX compile error: ${e.message} in ${filepath}`,
+        name: `${filepath} compile error`,
+      });
     }
   }
 }
