@@ -65,6 +65,13 @@ export const rsbuildPluginSSG = ({
             hasError = true;
             return;
           }
+
+          // If user has encountered a compile time error at the web/node output, user needs to first debug the error in this stage.
+          // we will not do ssg for better debugging
+          if (hasError) {
+            return;
+          }
+
           const distPath = environment.distPath;
           const ssgFolderPath = join(distPath, NODE_SSG_BUNDLE_FOLDER);
           const mainCjsAbsolutePath = join(ssgFolderPath, NODE_SSG_BUNDLE_NAME);
@@ -95,18 +102,14 @@ export const rsbuildPluginSSG = ({
 
           await indexHtmlEmittedInWeb;
 
-          // If user has encountered a compile time error at the web/node output, user needs to first debug the error in this stage.
-          // we will not do ssg for better debugging
-          if (!hasError) {
-            await renderPages(
-              routeService,
-              config,
-              pluginDriver,
-              mainCjsAbsolutePath,
-              htmlTemplate,
-              emitAsset,
-            );
-          }
+          await renderPages(
+            routeService,
+            config,
+            pluginDriver,
+            mainCjsAbsolutePath,
+            htmlTemplate,
+            emitAsset,
+          );
 
           if (!isDebugMode()) {
             await rm(ssgFolderPath, { recursive: true });
