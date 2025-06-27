@@ -1,4 +1,8 @@
-import { addLeadingSlash, addTrailingSlash } from '@rspress/shared';
+import {
+  addLeadingSlash,
+  addTrailingSlash,
+  removeTrailingSlash,
+} from '@rspress/shared';
 import { DEFAULT_PAGE_EXTENSIONS } from '@rspress/shared/constants';
 
 export const getRoutePathParts = (
@@ -69,7 +73,9 @@ export const normalizeRoutePath = (
 
   const normalizedRoutePath = addLeadingSlash(
     [versionPart, langPart].filter(Boolean).join('/') +
-      addLeadingSlash(purePathPart),
+      removeTrailingSlash(
+        addLeadingSlash(purePathPart.replace(/\/index/, '/')),
+      ),
   )
     // remove the extension
     .replace(cleanExtensionPattern, '')

@@ -1,10 +1,10 @@
 import path from 'node:path';
 import {
-  addLeadingSlash,
   isExternalUrl,
   isProduction,
   normalizeHref,
   parseUrl,
+  removeTrailingSlash,
   slash,
 } from '@rspress/shared';
 import { DEFAULT_PAGE_EXTENSIONS } from '@rspress/shared/constants';
@@ -26,15 +26,16 @@ import { getASTNodeImport } from '../../utils';
  */
 function normalizeLink(
   nodeUrl: string,
-  routeService: RouteService | undefined,
-  relativePath: string,
+  routeService: RouteService,
+  absolutePath: string,
   cleanUrls: boolean | string,
+  root: string,
 ): string {
   if (!nodeUrl) {
     return '';
   }
   if (nodeUrl.startsWith('#')) {
-    return `#${nodeUrl.slice(1)}`;
+    return nodeUrl;
   }
 
   // eslint-disable-next-line prefer-const
@@ -51,21 +52,29 @@ function normalizeLink(
   }
 
   if (url.startsWith('.')) {
-    url = path.posix.join(slash(path.dirname(relativePath)), url);
-  } else if (routeService) {
-    const [pathVersion, pathLang] = routeService.getRoutePathParts(
-      slash(relativePath),
+    const anotherFileAbsolutePath = path.posix.join(
+      path.dirname(absolutePath),
+      url,
     );
-    const [urlVersion, urlLang, urlPath] = routeService.getRoutePathParts(url);
+    url = routeService.normalizeRoutePath(
+      path.relative(root, anotherFileAbsolutePath),
+    ).routePath;
+  } else {
+    url = url.replace(/\/index\.html$/, '/');
+    url = url.replace(/\/index$/, '/');
+    url = removeTrailingSlash(url);
+    const [pathVersion, pathLang] = routeService.getRoutePathParts(
+      slash(absolutePath),
+    );
 
-    url = addLeadingSlash(urlPath);
+    const [_, __, urlPath] = routeService.getRoutePathParts(url);
 
-    if (pathLang && urlLang !== pathLang) {
-      url = `/${pathLang}${url}`;
+    url = urlPath;
+    if (pathLang) {
+      url = `${pathLang}/${url}`;
     }
-
-    if (pathVersion && urlVersion !== pathVersion) {
-      url = `/${pathVersion}${url}`;
+    if (pathVersion) {
+      url = `${pathVersion}/${url}`;
     }
   }
 
@@ -82,6 +91,10 @@ function normalizeLink(
   return url;
 }
 
+function toRoutePath(routePath: string) {
+  return decodeURIComponent(routePath.split('#')[0]).replace(/\.html$/, '');
+}
+
 function _checkDeadLinks(
   links: string[],
   filepath: string,
@@ -93,11 +106,16 @@ function _checkDeadLinks(
     if (isExternalUrl(link)) {
       return;
     }
-    const relativePath = path.relative(root, filepath);
 
-    if (!routeService.isExistRoute(link)) {
+    const cleanLinkPath = toRoutePath(link);
+    if (!cleanLinkPath) {
+      return;
+    }
+
+    const relativePath = path.relative(root, filepath);
+    if (!routeService.isExistRoute(cleanLinkPath)) {
       errorInfos.push(
-        `Internal link to "${link}" is dead, check it in "${relativePath}"`,
+        `Internal link to "${link}" which points to "${cleanLinkPath}" is dead, check it in "${relativePath}"`,
       );
     }
   });
@@ -128,7 +146,7 @@ export const remarkPluginNormalizeLink: Plugin<
     {
       root: string;
       cleanUrls: boolean | string;
-      routeService?: RouteService;
+      routeService: RouteService;
       checkDeadLinks?: boolean;
     },
   ],
@@ -139,12 +157,12 @@ export const remarkPluginNormalizeLink: Plugin<
     const internalLinks = new Set<string>();
     visit(tree, 'link', node => {
       const { url: nodeUrl } = node;
-      const relativePath = path.relative(root, file.path);
       const link = normalizeLink(
         nodeUrl,
         routeService,
-        relativePath,
+        file.path,
         cleanUrls,
+        root,
       );
       node.url = link;
       internalLinks.add(link);
@@ -152,12 +170,12 @@ export const remarkPluginNormalizeLink: Plugin<
 
     visit(tree, 'definition', node => {
       const { url: nodeUrl } = node;
-      const relativePath = path.relative(root, file.path);
       const link = normalizeLink(
         nodeUrl,
         routeService,
-        relativePath,
+        file.path,
         cleanUrls,
+        root,
       );
       node.url = link;
       internalLinks.add(link);

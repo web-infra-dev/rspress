@@ -180,14 +180,8 @@ export class RouteService {
     return Array.from(this.routeData.values());
   }
 
-  isExistRoute(link: string): boolean {
-    function cleanRoutePath(routePath: string) {
-      return decodeURIComponent(routePath.split('#')[0])
-        .replace(/\.html$/, '')
-        .replace(/\/index$/, '/');
-    }
-    const routePath = cleanRoutePath(link);
-    return Boolean(this.routeData.get(routePath));
+  isExistRoute(routePath: string): boolean {
+    return this.routeData.has(routePath);
   }
 
   generateRoutesCode(): string {
@@ -226,9 +220,9 @@ ${routeMeta
 `;
   }
 
-  getRoutePathParts(routePath: string) {
+  getRoutePathParts(relativePath: string) {
     return getRoutePathParts(
-      routePath,
+      relativePath,
       this.#defaultLang,
       this.#defaultVersion,
       this.#langs,
@@ -236,9 +230,9 @@ ${routeMeta
     );
   }
 
-  normalizeRoutePath(routePath: string) {
+  normalizeRoutePath(relativePath: string) {
     return normalizeRoutePath(
-      routePath,
+      relativePath,
       this.#defaultLang,
       this.#defaultVersion,
       this.#langs,
