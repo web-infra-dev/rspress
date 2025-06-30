@@ -181,8 +181,7 @@ export class RouteService {
   }
 
   isExistRoute(routePath: string): boolean {
-    const { routePath: normalizedRoute } = this.normalizeRoutePath(routePath);
-    return Boolean(this.routeData.get(normalizedRoute));
+    return this.routeData.has(routePath);
   }
 
   generateRoutesCode(): string {
@@ -221,9 +220,9 @@ ${routeMeta
 `;
   }
 
-  getRoutePathParts(routePath: string) {
+  getRoutePathParts(relativePath: string) {
     return getRoutePathParts(
-      routePath,
+      relativePath,
       this.#defaultLang,
       this.#defaultVersion,
       this.#langs,
@@ -231,9 +230,9 @@ ${routeMeta
     );
   }
 
-  normalizeRoutePath(routePath: string) {
+  normalizeRoutePath(relativePath: string) {
     return normalizeRoutePath(
-      routePath,
+      relativePath,
       this.#defaultLang,
       this.#defaultVersion,
       this.#langs,
