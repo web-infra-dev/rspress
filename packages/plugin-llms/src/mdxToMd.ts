@@ -39,7 +39,7 @@ function mdxToMd(
   content: string,
   filepath: string,
   docDirectory: string,
-  routeService?: RouteService,
+  routeService: RouteService,
 ): Promise<VFile> {
   return unified()
     .use(remarkParse)

@@ -330,7 +330,7 @@ function _createMdxContent(props) {
         children: ["This is a tip with ", _jsx(_components.code, {
           children: "code"
         }), " and ", _jsx(_components.a, {
-          href: "/foo.html",
+          href: "foo",
           children: "link"
         }), " some text"]
       }), _jsxs(_components.blockquote, {
@@ -386,7 +386,7 @@ function _createMdxContent(props) {
         children: ["This is a tip with ", _jsx(_components.code, {
           children: "code"
         }), " and ", _jsx(_components.a, {
-          href: "/foo.html",
+          href: "foo",
           children: "link"
         }), " some text"]
       }), _jsx(_Fragment, {
@@ -481,7 +481,7 @@ function _createMdxContent(props) {
         children: ["This is a tip with ", _jsx(_components.code, {
           children: "code"
         }), " and ", _jsx(_components.a, {
-          href: "/foo.html",
+          href: "foo",
           children: "link"
         }), " some text"]
       }), _jsxs(_components.ul, {
@@ -546,7 +546,7 @@ function _createMdxContent(props) {
         children: ["This is a tip with ", _jsx(_components.code, {
           children: "code"
         }), " and ", _jsx(_components.a, {
-          href: "/foo.html",
+          href: "foo",
           children: "link"
         }), " some text"]
       }), _jsxs(_components.ul, {

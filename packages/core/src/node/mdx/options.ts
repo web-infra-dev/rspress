@@ -8,7 +8,6 @@ import remarkGFM from 'remark-gfm';
 import type { PluggableList } from 'unified';
 import { rehypeHeaderAnchor } from './rehypePlugins/headerAnchor';
 import { remarkBuiltin } from './remarkPlugins/builtin';
-import { remarkCheckDeadLinks } from './remarkPlugins/checkDeadLink';
 import { remarkPluginNormalizeLink } from './remarkPlugins/normalizeLink';
 import { remarkPluginToc } from './remarkPlugins/toc';
 
@@ -71,17 +70,9 @@ export async function createMDXOptions(options: {
           cleanUrls,
           root: docDirectory,
           routeService,
+          checkDeadLinks,
         },
       ],
-      checkDeadLinks &&
-        routeService && [
-          remarkCheckDeadLinks,
-          {
-            root: docDirectory,
-            base: config?.base || '',
-            routeService,
-          },
-        ],
       globalComponents.length && [
         remarkBuiltin,
         {

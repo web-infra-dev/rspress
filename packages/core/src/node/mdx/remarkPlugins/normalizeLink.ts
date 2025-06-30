@@ -1,10 +1,12 @@
 import path from 'node:path';
 import {
-  addLeadingSlash,
+  addTrailingSlash,
   isExternalUrl,
+  isProduction,
   normalizeHref,
   parseUrl,
-  slash,
+  removeLeadingSlash,
+  removeTrailingSlash,
 } from '@rspress/shared';
 import { DEFAULT_PAGE_EXTENSIONS } from '@rspress/shared/constants';
 import { getNodeAttribute } from '@rspress/shared/node-utils';
@@ -13,22 +15,27 @@ import type { MdxjsEsm } from 'mdast-util-mdxjs-esm';
 import type { Plugin } from 'unified';
 import { visit } from 'unist-util-visit';
 
+import { logger } from '@rspress/shared/logger';
 import type { RouteService } from '../../route/RouteService';
 import { getASTNodeImport } from '../../utils';
 
 // TODO: support relative path [subfolder](subfolder) equal to [subfolder](./subfolder)
 
+/**
+ *
+ * @returns url without base e.g: '/en/guide/getting-started#section-1'
+ */
 function normalizeLink(
   nodeUrl: string,
-  routeService: RouteService | undefined,
-  relativePath: string,
+  routeService: RouteService | null,
+  filePath: string,
   cleanUrls: boolean | string,
 ): string {
   if (!nodeUrl) {
     return '';
   }
   if (nodeUrl.startsWith('#')) {
-    return `#${nodeUrl.slice(1)}`;
+    return nodeUrl;
   }
 
   // eslint-disable-next-line prefer-const
@@ -38,6 +45,10 @@ function normalizeLink(
     return url + (hash ? `#${hash}` : '');
   }
 
+  if (!routeService) {
+    return nodeUrl;
+  }
+
   const extname = path.extname(url);
 
   if ((routeService?.extensions ?? DEFAULT_PAGE_EXTENSIONS).includes(extname)) {
@@ -45,22 +56,22 @@ function normalizeLink(
   }
 
   if (url.startsWith('.')) {
-    url = path.posix.join(slash(path.dirname(relativePath)), url);
-  } else if (routeService) {
-    const [pathVersion, pathLang] = routeService.getRoutePathParts(
-      slash(relativePath),
+    const anotherFileAbsolutePath = path.posix.join(
+      path.dirname(filePath),
+      url,
     );
-    const [urlVersion, urlLang, urlPath] = routeService.getRoutePathParts(url);
+    url = routeService.absolutePathToRoutePath(anotherFileAbsolutePath);
+  } else {
+    url = url.replace(/\/index\.html$/, '/');
+    url = url.replace(/\/index$/, '/');
+    const [pathVersion, pathLang] = routeService.getRoutePathParts(
+      routeService.absolutePathToRelativePath(filePath),
+    );
 
-    url = addLeadingSlash(urlPath);
+    const [_, __, urlPath] = routeService.getRoutePathParts(url);
 
-    if (pathLang && urlLang !== pathLang) {
-      url = `/${pathLang}${url}`;
-    }
-
-    if (pathVersion && urlVersion !== pathVersion) {
-      url = `/${pathVersion}${url}`;
-    }
+    url = removeLeadingSlash(urlPath);
+    url = [pathVersion, pathLang, url].filter(Boolean).join('/');
   }
 
   if (typeof cleanUrls === 'boolean') {
@@ -74,6 +85,47 @@ function normalizeLink(
     url += `#${hash}`;
   }
   return url;
+}
+
+function toRoutePath(routePath: string) {
+  return decodeURIComponent(routePath.split('#')[0]);
+}
+
+function checkDeadLinks(
+  internalLinks: Map<string, string>,
+  filePath: string,
+  routeService: RouteService,
+) {
+  const errorInfos: string[] = [];
+  internalLinks.entries().forEach(([nodeUrl, link]) => {
+    if (isExternalUrl(link)) {
+      return;
+    }
+
+    const cleanLinkPath = toRoutePath(link);
+    if (!cleanLinkPath) {
+      return;
+    }
+
+    // allow fuzzy matching, e.g: /guide/ and /guide is equal
+    if (
+      !routeService.isExistRoute(removeTrailingSlash(cleanLinkPath)) &&
+      !routeService.isExistRoute(addTrailingSlash(cleanLinkPath))
+    ) {
+      errorInfos.push(
+        `Internal link to "${nodeUrl}" which points to "${cleanLinkPath}" is dead, check it in "${filePath}"`,
+      );
+    }
+  });
+  // output error info
+  if (errorInfos.length > 0) {
+    errorInfos?.forEach(err => {
+      logger.error(err);
+    });
+    if (isProduction()) {
+      throw new Error('Dead link found');
+    }
+  }
 }
 
 const normalizeImageUrl = (imageUrl: string): string => {
@@ -90,28 +142,35 @@ const normalizeImageUrl = (imageUrl: string): string => {
 export const remarkPluginNormalizeLink: Plugin<
   [
     {
-      root: string;
       cleanUrls: boolean | string;
-      routeService?: RouteService;
+      routeService: RouteService | null;
+      checkDeadLinks?: boolean;
     },
   ],
   Root
 > =
-  ({ root, cleanUrls, routeService }) =>
+  ({ cleanUrls, routeService, checkDeadLinks: shouldCheckDeadLinks = false }) =>
   (tree, file) => {
-    const images: MdxjsEsm[] = [];
+    const internalLinks = new Map<string, string>();
     visit(tree, 'link', node => {
       const { url: nodeUrl } = node;
-      const relativePath = path.relative(root, file.path);
-      node.url = normalizeLink(nodeUrl, routeService, relativePath, cleanUrls);
+      const link = normalizeLink(nodeUrl, routeService, file.path, cleanUrls);
+      node.url = link;
+      internalLinks.set(nodeUrl, link);
     });
 
     visit(tree, 'definition', node => {
       const { url: nodeUrl } = node;
-      const relativePath = path.relative(root, file.path);
-      node.url = normalizeLink(nodeUrl, routeService, relativePath, cleanUrls);
+      const link = normalizeLink(nodeUrl, routeService, file.path, cleanUrls);
+      node.url = link;
+      internalLinks.set(nodeUrl, link);
     });
 
+    if (shouldCheckDeadLinks && routeService) {
+      checkDeadLinks(internalLinks, file.path, routeService);
+    }
+
+    const images: MdxjsEsm[] = [];
     const getMdxSrcAttribute = (tempVar: string) => {
       return {
         type: 'mdxJsxAttribute',

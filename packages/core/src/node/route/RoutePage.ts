@@ -13,7 +13,11 @@ export class RoutePage {
   // pageIndexInfo: PageIndexInfo;
 
   static create(absolutePath: string, docsDir: string): RoutePage {
-    const routeMeta = absolutePathToRouteMeta(absolutePath, docsDir);
+    const routeMeta = absolutePathToRouteMeta(
+      absolutePath,
+      docsDir,
+      RouteService.getInstance(),
+    );
     return new RoutePage(routeMeta, docsDir);
   }
 
@@ -45,7 +49,7 @@ export class RoutePage {
     return {
       routePath: normalizedPath,
       absolutePath: normalizePath(filepath),
-      relativePath: normalizePath(path.relative(docDir, filepath)),
+      relativePath: absolutePathToRelativePath(filepath, docDir),
       pageName: getPageKey(routePath),
       lang,
       version,
@@ -53,16 +57,22 @@ export class RoutePage {
   }
 }
 
+export function absolutePathToRelativePath(
+  absolutePath: string,
+  docsDir: string,
+): string {
+  return slash(path.relative(docsDir, absolutePath));
+}
+
 function absolutePathToRouteMeta(
   absolutePath: string,
   docsDir: string,
+  routeService: RouteService = RouteService.getInstance(),
 ): RouteMeta {
-  const relativePath = slash(path.relative(docsDir, absolutePath));
-  const routeService = RouteService.getInstance();
+  const relativePath = absolutePathToRelativePath(absolutePath, docsDir);
 
-  const { lang, routePath, version } = routeService.normalizeRoutePath(
-    relativePath.replace(path.extname(relativePath), ''),
-  );
+  const { lang, routePath, version } =
+    routeService.normalizeRoutePath(relativePath);
   return {
     pageName: getPageKey(relativePath),
     absolutePath,
@@ -80,8 +90,9 @@ function absolutePathToRouteMeta(
 export function absolutePathToRoutePath(
   absolutePath: string,
   docsDir: string,
+  routeService = RouteService.getInstance(),
 ): string {
-  return absolutePathToRouteMeta(absolutePath, docsDir).routePath;
+  return absolutePathToRouteMeta(absolutePath, docsDir, routeService).routePath;
 }
 
 function absolutePathToRoutePrefix(

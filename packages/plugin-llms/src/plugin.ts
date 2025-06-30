@@ -134,7 +134,7 @@ const rsbuildPluginLlms = ({
                   content,
                   filepath,
                   docDirectory,
-                  routeServiceRef.current,
+                  routeServiceRef.current!,
                 )
               ).toString();
             } catch (e) {
