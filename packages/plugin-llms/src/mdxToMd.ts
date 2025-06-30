@@ -38,8 +38,8 @@ const mdxToMdPlugin: Plugin<[], Root> = () => {
 function mdxToMd(
   content: string,
   filepath: string,
-  docDirectory: string,
   routeService: RouteService,
+  base: string,
 ): Promise<VFile> {
   return unified()
     .use(remarkParse)
@@ -47,8 +47,8 @@ function mdxToMd(
     .use(mdxToMdPlugin)
     .use(remarkPluginNormalizeLink, {
       cleanUrls: '.md',
-      root: docDirectory,
       routeService,
+      __base: base,
     } satisfies Parameters<typeof remarkPluginNormalizeLink>[0])
     .use(remarkStringify)
     .process({

@@ -2,14 +2,15 @@ import {
   type NavItemWithLink,
   type PageIndexInfo,
   normalizeHref,
+  withBase,
 } from '@rspress/shared';
 import type { LlmsTxt } from './types';
 
-function routePathToMdPath(routePath: string): string {
+function routePathToMdPath(routePath: string, base: string): string {
   let url: string = routePath;
   url = normalizeHref(url, false);
   url = url.replace(/\.html$/, '.md');
-  return url;
+  return withBase(url, base);
 }
 
 function generateLlmsTxt(
@@ -19,6 +20,7 @@ function generateLlmsTxt(
   llmsTxtOptions: LlmsTxt | boolean,
   title: string | undefined,
   description: string | undefined,
+  base: string,
 ): string {
   const lines: string[] = [];
   const { onAfterLlmsTxtGenerate, onLineGenerate, onTitleGenerate } =
@@ -46,7 +48,7 @@ function generateLlmsTxt(
 
       const line = onLineGenerate
         ? onLineGenerate(page)
-        : `- [${title}](${routePathToMdPath(routePath)})${frontmatter.description ? `: ${frontmatter.description}` : ''}`;
+        : `- [${title}](${routePathToMdPath(routePath, base)})${frontmatter.description ? `: ${frontmatter.description}` : ''}`;
       lines.push(line);
     }
   }
@@ -62,7 +64,7 @@ function generateLlmsTxt(
     }
     const line = onLineGenerate
       ? onLineGenerate(page)
-      : `- [${title}](${routePathToMdPath(routePath)})${frontmatter.description ? `: ${frontmatter.description}` : ''}`;
+      : `- [${title}](${routePathToMdPath(routePath, base)})${frontmatter.description ? `: ${frontmatter.description}` : ''}`;
     otherLines.push(line);
     hasOthers = true;
   }
@@ -79,6 +81,7 @@ function generateLlmsFullTxt(
   pageDataArray: PageIndexInfo[][],
   navList: (NavItemWithLink & { lang: string })[],
   others: PageIndexInfo[],
+  base: string,
 ): string {
   const lines: string[] = [];
   // generate llms.txt with obj
@@ -89,7 +92,7 @@ function generateLlmsFullTxt(
     }
     for (const page of pages) {
       lines.push(`---
-url: ${routePathToMdPath(page.routePath)}
+url: ${routePathToMdPath(page.routePath, base)}
 ---
 `);
       lines.push(
@@ -100,7 +103,7 @@ url: ${routePathToMdPath(page.routePath)}
   }
   for (const page of others) {
     lines.push(`---
-url: ${routePathToMdPath(page.routePath)}
+url: ${routePathToMdPath(page.routePath, base)}
 ---
 `);
     lines.push((page as any).mdContent ?? page._flattenContent ?? page.content);

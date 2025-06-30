@@ -7,6 +7,7 @@ import {
   parseUrl,
   removeLeadingSlash,
   removeTrailingSlash,
+  withBase,
 } from '@rspress/shared';
 import { DEFAULT_PAGE_EXTENSIONS } from '@rspress/shared/constants';
 import { getNodeAttribute } from '@rspress/shared/node-utils';
@@ -21,6 +22,39 @@ import { getASTNodeImport } from '../../utils';
 
 // TODO: support relative path [subfolder](subfolder) equal to [subfolder](./subfolder)
 
+function checkDeadLinks(
+  internalLinks: Map<string, string>,
+  filePath: string,
+  routeService: RouteService,
+) {
+  const errorInfos: string[] = [];
+  internalLinks.entries().forEach(([nodeUrl, link]) => {
+    const cleanLinkPath = linkToRoutePath(link);
+    if (!cleanLinkPath) {
+      return;
+    }
+
+    // allow fuzzy matching, e.g: /guide/ and /guide is equal
+    if (
+      !routeService.isExistRoute(removeTrailingSlash(cleanLinkPath)) &&
+      !routeService.isExistRoute(addTrailingSlash(cleanLinkPath))
+    ) {
+      errorInfos.push(
+        `Internal link to "${nodeUrl}" which points to "${cleanLinkPath}" is dead, check it in "${filePath}"`,
+      );
+    }
+  });
+  // output error info
+  if (errorInfos.length > 0) {
+    errorInfos?.forEach(err => {
+      logger.error(err);
+    });
+    if (isProduction()) {
+      throw new Error('Dead link found');
+    }
+  }
+}
+
 /**
  *
  * @returns url without base e.g: '/en/guide/getting-started#section-1'
@@ -30,6 +64,8 @@ function normalizeLink(
   routeService: RouteService | null,
   filePath: string,
   cleanUrls: boolean | string,
+  internalLinks: Map<string, string>,
+  __base?: string,
 ): string {
   if (!nodeUrl) {
     return '';
@@ -81,8 +117,13 @@ function normalizeLink(
     url = url.replace(/\.html$/, cleanUrls);
   }
 
+  internalLinks.set(nodeUrl, url);
+
   if (hash) {
     url += `#${hash}`;
+  }
+  if (__base) {
+    url = withBase(url, __base);
   }
   return url;
 }
@@ -91,43 +132,6 @@ function linkToRoutePath(routePath: string) {
   return decodeURIComponent(routePath.split('#')[0])
     .replace(/\.html$/, '')
     .replace(/\/index$/, '/');
-}
-
-function checkDeadLinks(
-  internalLinks: Map<string, string>,
-  filePath: string,
-  routeService: RouteService,
-) {
-  const errorInfos: string[] = [];
-  internalLinks.entries().forEach(([nodeUrl, link]) => {
-    if (isExternalUrl(link)) {
-      return;
-    }
-
-    const cleanLinkPath = linkToRoutePath(link);
-    if (!cleanLinkPath) {
-      return;
-    }
-
-    // allow fuzzy matching, e.g: /guide/ and /guide is equal
-    if (
-      !routeService.isExistRoute(removeTrailingSlash(cleanLinkPath)) &&
-      !routeService.isExistRoute(addTrailingSlash(cleanLinkPath))
-    ) {
-      errorInfos.push(
-        `Internal link to "${nodeUrl}" which points to "${cleanLinkPath}" is dead, check it in "${filePath}"`,
-      );
-    }
-  });
-  // output error info
-  if (errorInfos.length > 0) {
-    errorInfos?.forEach(err => {
-      logger.error(err);
-    });
-    if (isProduction()) {
-      throw new Error('Dead link found');
-    }
-  }
 }
 
 const normalizeImageUrl = (imageUrl: string): string => {
@@ -147,25 +151,43 @@ export const remarkPluginNormalizeLink: Plugin<
       cleanUrls: boolean | string;
       routeService: RouteService | null;
       checkDeadLinks?: boolean;
+      __base?: string;
     },
   ],
   Root
 > =
-  ({ cleanUrls, routeService, checkDeadLinks: shouldCheckDeadLinks = false }) =>
+  ({
+    cleanUrls,
+    routeService,
+    checkDeadLinks: shouldCheckDeadLinks = false,
+    __base,
+  }) =>
   (tree, file) => {
     const internalLinks = new Map<string, string>();
     visit(tree, 'link', node => {
       const { url: nodeUrl } = node;
-      const link = normalizeLink(nodeUrl, routeService, file.path, cleanUrls);
+      const link = normalizeLink(
+        nodeUrl,
+        routeService,
+        file.path,
+        cleanUrls,
+        internalLinks,
+        __base,
+      );
       node.url = link;
-      internalLinks.set(nodeUrl, link);
     });
 
     visit(tree, 'definition', node => {
       const { url: nodeUrl } = node;
-      const link = normalizeLink(nodeUrl, routeService, file.path, cleanUrls);
+      const link = normalizeLink(
+        nodeUrl,
+        routeService,
+        file.path,
+        cleanUrls,
+        internalLinks,
+        __base,
+      );
       node.url = link;
-      internalLinks.set(nodeUrl, link);
     });
 
     if (shouldCheckDeadLinks && routeService) {
