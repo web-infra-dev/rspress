@@ -75,8 +75,8 @@ importers:
         specifier: 2.1.9
         version: 2.1.9(@types/node@22.10.2)(sass-embedded@1.89.0)(terser@5.31.6)
       zx:
-        specifier: ^8.3.2
-        version: 8.3.2
+        specifier: ^8.6.0
+        version: 8.6.0
 
   e2e/fixtures/auto-nav-sidebar:
     dependencies:
@@ -3289,9 +3289,6 @@ packages:
   '@types/extend@3.0.1':
     resolution: {integrity: sha512-R1g/VyKFFI2HLC1QGAeTtCBWCo6n75l41OnsVYNbmKG+kempOESaodf6BeJyUM3Q0rKa/NQcTHbB2+66lNnxLw==}
 
-  '@types/fs-extra@11.0.4':
-    resolution: {integrity: sha512-yTbItCNreRooED33qjunPthRcSjERP1r4MqCZc7wv0u2sUkzTFp45tgUfS5+r7FrZPdmCCNflLhVSP/o+SemsQ==}
-
   '@types/hast@2.3.10':
     resolution: {integrity: sha512-McWspRw8xx8J9HurkVBfYj0xKoE25tOFlHGdx4MJ5xORQrMGZNqJhVQWaIbm6Oyla5kYOXtDiopzKRJzEOkwJw==}
 
@@ -3318,9 +3315,6 @@ packages:
 
   '@types/json-schema@7.0.15':
     resolution: {integrity: sha512-5+fP8P8MFNC+AyZCDxrB2pkZFPGzqQWUzpSeuuVLvm8VMcorNYavBqoFcxK8bQz4Qsbn4oUEEem4wDLfcysGHA==}
-
-  '@types/jsonfile@6.1.1':
-    resolution: {integrity: sha512-GSgiRCVeapDN+3pqA35IkQwasaCh/0YFH5dEF6S88iDvEn901DjOeH3/QPY+XYP1DFzDZPvIvfeEgk+7br5png==}
 
   '@types/lodash-es@4.17.12':
     resolution: {integrity: sha512-0NgftHUcV4v34VhXm8QBSftKVXtbkBG3ViCjs6+eJ5a6y6Mi/jiFGPc1sC7QK+9BFhWrURE3EOggmWaSxL9OzQ==}
@@ -6897,8 +6891,8 @@ packages:
   zwitch@2.0.4:
     resolution: {integrity: sha512-bXE4cR/kVZhKZX/RjPEflHaKVhUVl85noU3v6b8apfQEc1x4A+zBxjZ4lN8LqGd6WZ3dl98pY4o717VFmoPp+A==}
 
-  zx@8.3.2:
-    resolution: {integrity: sha512-qjTunv1NClO05jDaUjrNZfpqC9yvNCchge/bzOcQevsh1aM5qE3TG6MY24kuQKlOWx+7vNuhqO2wa9nQCIGvZA==}
+  zx@8.6.0:
+    resolution: {integrity: sha512-CpOskNj7nNW19z5DkOTHX24Yh1qnnx1oANn8EnD3QbCUBnZpuennJaYkb4zea5GJCxT6/IdxeiA5nweQ1S2YtA==}
     engines: {node: '>= 12.17.0'}
     hasBin: true
 
@@ -8622,12 +8616,6 @@ snapshots:
 
   '@types/extend@3.0.1': {}
 
-  '@types/fs-extra@11.0.4':
-    dependencies:
-      '@types/jsonfile': 6.1.1
-      '@types/node': 22.10.2
-    optional: true
-
   '@types/hast@2.3.10':
     dependencies:
       '@types/unist': 2.0.7
@@ -8656,11 +8644,6 @@ snapshots:
   '@types/js-yaml@4.0.5': {}
 
   '@types/json-schema@7.0.15': {}
-
-  '@types/jsonfile@6.1.1':
-    dependencies:
-      '@types/node': 22.10.2
-    optional: true
 
   '@types/lodash-es@4.17.12':
     dependencies:
@@ -13080,7 +13063,4 @@ snapshots:
 
   zwitch@2.0.4: {}
 
-  zx@8.3.2:
-    optionalDependencies:
-      '@types/fs-extra': 11.0.4
-      '@types/node': 22.10.2
+  zx@8.6.0: {}
