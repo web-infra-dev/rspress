@@ -22,13 +22,13 @@ import type { Options, rsbuildPluginLlmsOptions } from './types';
 
 const rsbuildPluginLlms = ({
   disableSSGRef,
+  baseRef,
   pageDataList,
   routes,
   titleRef,
   descriptionRef,
   langRef,
   sidebar,
-  docDirectoryRef,
   routeServiceRef,
   nav,
   rspressPluginOptions,
@@ -44,7 +44,6 @@ const rsbuildPluginLlms = ({
     } = rspressPluginOptions;
 
     api.onBeforeBuild(async () => {
-      const docDirectory = docDirectoryRef.current;
       const disableSSG = disableSSGRef.current;
 
       const newPageDataList = mergeRouteMetaWithPageData(
@@ -108,6 +107,7 @@ const rsbuildPluginLlms = ({
           rspressPluginOptions.llmsTxt ?? {},
           titleRef.current,
           descriptionRef.current,
+          baseRef.current,
         );
         api.processAssets(
           { targets: disableSSG ? ['web'] : ['node'], stage: 'additional' },
@@ -133,8 +133,8 @@ const rsbuildPluginLlms = ({
                 await mdxToMd(
                   content,
                   filepath,
-                  docDirectory,
-                  routeServiceRef.current,
+                  routeServiceRef.current!,
+                  baseRef.current,
                 )
               ).toString();
             } catch (e) {
@@ -174,6 +174,7 @@ const rsbuildPluginLlms = ({
           pageArray,
           navList,
           others,
+          baseRef.current,
         );
         api.processAssets(
           { targets: disableSSG ? ['web'] : ['node'], stage: 'additional' },
@@ -352,7 +353,6 @@ export function pluginLlms(options: Options = {}): RspressPlugin {
           descriptionRef,
           langRef,
           sidebar,
-          docDirectoryRef,
           routeServiceRef,
           nav,
           baseRef,

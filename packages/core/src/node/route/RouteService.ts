@@ -6,7 +6,7 @@ import type { ComponentType } from 'react';
 import { glob } from 'tinyglobby';
 import type { PluginDriver } from '../PluginDriver';
 import { PUBLIC_DIR } from '../constants';
-import { RoutePage } from './RoutePage';
+import { RoutePage, absolutePathToRoutePath } from './RoutePage';
 import { getRoutePathParts, normalizeRoutePath } from './normalizeRoutePath';
 
 interface InitOptions {
@@ -181,8 +181,7 @@ export class RouteService {
   }
 
   isExistRoute(routePath: string): boolean {
-    const { routePath: normalizedRoute } = this.normalizeRoutePath(routePath);
-    return Boolean(this.routeData.get(normalizedRoute));
+    return this.routeData.has(routePath);
   }
 
   generateRoutesCode(): string {
@@ -221,9 +220,9 @@ ${routeMeta
 `;
   }
 
-  getRoutePathParts(routePath: string) {
+  getRoutePathParts(relativePath: string) {
     return getRoutePathParts(
-      routePath,
+      relativePath,
       this.#defaultLang,
       this.#defaultVersion,
       this.#langs,
@@ -231,15 +230,23 @@ ${routeMeta
     );
   }
 
-  normalizeRoutePath(routePath: string) {
+  normalizeRoutePath(relativePath: string) {
     return normalizeRoutePath(
-      routePath,
+      relativePath,
       this.#defaultLang,
       this.#defaultVersion,
       this.#langs,
       this.#versions,
       this.#extensions,
     );
+  }
+
+  absolutePathToRoutePath(absolutePath: string): string {
+    return absolutePathToRoutePath(absolutePath, this.#scanDir, this);
+  }
+
+  absolutePathToRelativePath(absolutePath: string): string {
+    return absolutePathToRoutePath(absolutePath, this.#scanDir, this);
   }
 
   async #writeTempFile(index: number, content: string) {

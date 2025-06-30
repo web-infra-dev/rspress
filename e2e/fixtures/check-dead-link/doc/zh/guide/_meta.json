@@ -1,0 +1,19 @@
+[
+  {
+    "type": "dir",
+    "name": "basic",
+    "label": "基本"
+  },
+  {
+    "type": "divider"
+  },
+  {
+    "type": "section-header",
+    "label": "成长"
+  },
+  {
+    "type": "custom-link",
+    "label": "My Link",
+    "link": "/guide/basic/install"
+  }
+]

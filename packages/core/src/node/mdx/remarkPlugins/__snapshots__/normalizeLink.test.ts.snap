@@ -18,7 +18,7 @@ function _createMdxContent(props) {
   return _jsxs(_Fragment, {
     children: [_jsx(_components.p, {
       children: _jsx(_components.a, {
-        href: "/test1.html",
+        href: "./test1.md",
         children: "link1"
       })
     }), "\\n", "\\n", _jsx("a", {
