@@ -87,8 +87,10 @@ function normalizeLink(
   return url;
 }
 
-function toRoutePath(routePath: string) {
-  return decodeURIComponent(routePath.split('#')[0]);
+function linkToRoutePath(routePath: string) {
+  return decodeURIComponent(routePath.split('#')[0])
+    .replace(/\.html$/, '')
+    .replace(/\/index$/, '/');
 }
 
 function checkDeadLinks(
@@ -102,7 +104,7 @@ function checkDeadLinks(
       return;
     }
 
-    const cleanLinkPath = toRoutePath(link);
+    const cleanLinkPath = linkToRoutePath(link);
     if (!cleanLinkPath) {
       return;
     }
