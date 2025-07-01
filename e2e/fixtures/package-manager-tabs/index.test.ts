@@ -35,6 +35,10 @@ test.describe('tabs-component test', async () => {
       'yarn',
       'pnpm',
       'bun',
+      'npm',
+      'yarn',
+      'pnpm',
+      'bun',
     ]);
 
     const clickTabs = await page.$$('[class^="tab_"]');
@@ -49,6 +53,8 @@ test.describe('tabs-component test', async () => {
       ' create rspress@latest',
       'npm',
       ' install rspress -D',
+      'npx',
+      ' example-cli-tool --yes',
     ]);
 
     await clickTabs[1].click();
@@ -61,6 +67,8 @@ test.describe('tabs-component test', async () => {
       ' create rspress',
       'yarn',
       ' add rspress -D',
+      'yarn',
+      ' example-cli-tool --yes',
     ]);
 
     await clickTabs[2].click();
@@ -73,6 +81,8 @@ test.describe('tabs-component test', async () => {
       ' create rspress@latest',
       'pnpm',
       ' install rspress -D',
+      'pnpm',
+      ' example-cli-tool --yes',
     ]);
 
     await clickTabs[3].click();
@@ -85,6 +95,8 @@ test.describe('tabs-component test', async () => {
       ' create rspress@latest',
       'bun',
       ' add rspress -D',
+      'bun',
+      ' example-cli-tool --yes',
     ]);
   });
 });
