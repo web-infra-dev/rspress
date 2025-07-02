@@ -41,6 +41,9 @@ test.describe('check dead links', async () => {
       '/base/guide/basic/install.html',
       '/base/guide/basic/install.html',
       '/base/guide/basic/install.html',
+      '/base/api/index.html',
+      '/base/api.html',
+      '/base/api.html',
     ]);
   });
 
@@ -70,6 +73,9 @@ test.describe('check dead links', async () => {
       '/base/guide/basic/install',
       '/base/guide/basic/install',
       '/base/guide/basic/install',
+      '/base/api',
+      '/base/api',
+      '/base/api',
     ]);
   });
 });
