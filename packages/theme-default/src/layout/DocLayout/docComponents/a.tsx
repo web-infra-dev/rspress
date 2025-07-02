@@ -1,6 +1,6 @@
 import { Link } from '@theme';
 import type { ComponentProps } from 'react';
-import * as styles from './index.module.scss';
+import { inlineLink, link } from './index.module.scss';
 
 import {
   normalizeHrefInRuntime as normalizeHref,
@@ -83,7 +83,7 @@ export const A = (props: ComponentProps<'a'>) => {
   return (
     <Link
       {...props}
-      className={`${className} ${styles.link} ${styles.inlineLink}`}
+      className={`${className} ${link} ${inlineLink}`}
       href={normalizeLinkHref(href)}
     />
   );

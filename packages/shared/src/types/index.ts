@@ -236,6 +236,7 @@ export interface SiteData<ThemeConfig = NormalizedDefaultThemeConfig> {
 // TODO: migrate more SiteData to NormalizedRuntimeConfig, and rename "SiteData" to "PageData" or "Pages"
 export interface NormalizedRuntimeConfig {
   base: string;
+  themeConfig: NormalizedDefaultThemeConfig;
 }
 
 /**
