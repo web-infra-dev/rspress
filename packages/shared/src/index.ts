@@ -29,8 +29,6 @@ export {
   removeHash,
   removeLeadingSlash,
   removeTrailingSlash,
-  replaceLang,
-  replaceVersion,
   slash,
   withBase,
   withoutLang,
