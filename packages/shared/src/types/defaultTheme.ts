@@ -15,9 +15,9 @@ export interface Config {
    */
   outline?: boolean;
   /**
-   * The nav items. When it's an object, the key is the version of current doc.
+   * The nav items.
    */
-  nav?: NavItem[] | { [key: string]: NavItem[] };
+  nav?: NavItem[];
 
   /**
    * The sidebar items.
@@ -162,7 +162,7 @@ export interface FilterConfig {
 }
 
 // nav -----------------------------------------------------------------------
-export type Nav = NavItem[] | { [key: string]: NavItem[] };
+export type Nav = NavItem[];
 
 // TODO combine below nav item types into one
 export type NavItem =

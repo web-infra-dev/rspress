@@ -34,6 +34,7 @@
   "scripts": {
     "build": "rslib build",
     "build:watch": "rslib build -w",
+    "dev": "npm run build:watch",
     "reset": "rimraf ./**/node_modules"
   },
   "dependencies": {

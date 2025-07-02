@@ -40,7 +40,7 @@ import { globalStylesVMPlugin } from './runtimeModule/globalStyles';
 import { globalUIComponentsVMPlugin } from './runtimeModule/globalUIComponents';
 import { i18nVMPlugin } from './runtimeModule/i18n';
 import { routeListVMPlugin } from './runtimeModule/routeList';
-import { runtimeConfigVMPlugin } from './runtimeModule/runtimeConfig';
+import { runtimeConfigVMPlugin } from './runtimeModule/runtimeConfig/runtimeConfig';
 import { searchHookVMPlugin } from './runtimeModule/searchHooks';
 import type { FactoryContext } from './runtimeModule/types';
 import { serveSearchIndexMiddleware } from './searchIndex';

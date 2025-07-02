@@ -1,0 +1,41 @@
+.navMenu {
+  display: inline-flex;
+  justify-content: flex-end;
+  align-items: center;
+  gap: 32px;
+
+  .navMenuItem {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    .navMenuItemContainer {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 6px;
+
+      // text
+      color: rgba(0, 0, 0, 0.9);
+      text-align: center;
+      font-size: 14px;
+      font-style: normal;
+      font-weight: 400;
+      line-height: 22px; /* 157.143% */
+
+      .svgDown {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        width: 15px;
+        height: 15px;
+      }
+    }
+  }
+
+  .navMenuDivider {
+    width: 1px;
+    height: 14.884px;
+    background: #e5e6eb;
+  }
+}

@@ -1,0 +1,27 @@
+.navContainer {
+  display: flex;
+  height: 64px;
+  flex-shrink: 0;
+  border-bottom: 1px solid #f2f3f5;
+  background: #fff;
+  padding: 0 20px 0 20px;
+  justify-content: space-between;
+  align-items: center;
+
+  position: sticky;
+
+  .leftNav {
+    display: flex;
+    .navBarTitle {
+      flex-shrink: 0;
+    }
+  }
+
+  .rightNav {
+    // background: pink;
+    height: 24px;
+    gap: 32px;
+    display: flex;
+    align-items: center;
+  }
+}

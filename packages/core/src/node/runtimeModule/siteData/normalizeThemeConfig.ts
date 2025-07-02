@@ -1,7 +1,5 @@
 import {
   type DefaultThemeConfig,
-  type NavItem,
-  type NavItemWithLink,
   type NormalizedDefaultThemeConfig,
   type NormalizedSidebarGroup,
   type Sidebar,
@@ -130,60 +128,6 @@ export function normalizeThemeConfig(
     return normalizedSidebar;
   };
 
-  const normalizeNav = (
-    nav?: DefaultThemeConfig['nav'],
-    currentLang?: string,
-  ) => {
-    if (!nav) {
-      return [];
-    }
-    const transformNavItem = (navItem: NavItem): NavItem => {
-      const text = applyReplaceRules(
-        getI18nText(navItem.text, currentLang),
-        replaceRules,
-      );
-      if ('link' in navItem) {
-        return {
-          ...navItem,
-          text,
-          link: normalizeLinkPrefix(navItem.link, currentLang),
-        };
-      }
-
-      if ('items' in navItem) {
-        return {
-          ...navItem,
-          text,
-          items: navItem.items.map((item: NavItemWithLink) => {
-            return {
-              ...item,
-              text: applyReplaceRules(
-                getI18nText(item.text, currentLang),
-                replaceRules,
-              ),
-              link: normalizeLinkPrefix(item.link, currentLang),
-            };
-          }),
-        };
-      }
-
-      return navItem;
-    };
-
-    if (Array.isArray(nav)) {
-      return nav.map(transformNavItem);
-    }
-
-    // Multi version case
-    return Object.entries<NavItem[]>(nav).reduce(
-      (acc, [key, value]) => {
-        acc[key] = value.map(transformNavItem);
-        return acc;
-      },
-      {} as Record<string, NavItem[]>,
-    );
-  };
-
   /**
    * There are two place the user will define the locales:
    * 1. in the `doc.locales` (the site config)
@@ -205,15 +149,10 @@ export function normalizeThemeConfig(
           localeInThemeConfig?.sidebar ?? themeConfig.sidebar,
           currentLang,
         ),
-        nav: normalizeNav(
-          localeInThemeConfig?.nav ?? themeConfig.nav,
-          currentLang,
-        ),
       };
     });
   } else {
     themeConfig.sidebar = normalizeSidebar(themeConfig?.sidebar);
-    themeConfig.nav = normalizeNav(themeConfig?.nav);
   }
   return themeConfig as NormalizedDefaultThemeConfig;
 }

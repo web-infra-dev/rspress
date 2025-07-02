@@ -59,12 +59,12 @@ function checkDeadLinks(
  *
  * @returns url without base e.g: '/en/guide/getting-started#section-1'
  */
-function normalizeLink(
+export function normalizeLink(
   nodeUrl: string,
   routeService: RouteService | null,
   filePath: string,
   cleanUrls: boolean | string,
-  internalLinks: Map<string, string>,
+  internalLinks?: Map<string, string>,
   __base?: string,
 ): string {
   if (!nodeUrl) {
@@ -117,7 +117,7 @@ function normalizeLink(
     url = url.replace(/\.html$/, cleanUrls);
   }
 
-  internalLinks.set(nodeUrl, url);
+  internalLinks?.set(nodeUrl, url);
 
   if (hash) {
     url += `#${hash}`;
