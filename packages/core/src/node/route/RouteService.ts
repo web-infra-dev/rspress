@@ -6,7 +6,11 @@ import type { ComponentType } from 'react';
 import { glob } from 'tinyglobby';
 import type { PluginDriver } from '../PluginDriver';
 import { PUBLIC_DIR } from '../constants';
-import { RoutePage, absolutePathToRoutePath } from './RoutePage';
+import {
+  RoutePage,
+  absolutePathToRelativePath,
+  absolutePathToRoutePath,
+} from './RoutePage';
 import { getRoutePathParts, normalizeRoutePath } from './normalizeRoutePath';
 
 interface InitOptions {
@@ -246,7 +250,7 @@ ${routeMeta
   }
 
   absolutePathToRelativePath(absolutePath: string): string {
-    return absolutePathToRoutePath(absolutePath, this.#scanDir, this);
+    return absolutePathToRelativePath(absolutePath, this.#scanDir);
   }
 
   async #writeTempFile(index: number, content: string) {
