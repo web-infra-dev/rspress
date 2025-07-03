@@ -17,14 +17,14 @@ function generateLlmsTxt(
   pageDataArray: PageIndexInfo[][],
   navList: (NavItemWithLink & { lang: string })[],
   others: PageIndexInfo[],
-  llmsTxtOptions: LlmsTxt | boolean,
+  llmsTxtOptions: LlmsTxt,
   title: string | undefined,
   description: string | undefined,
   base: string,
 ): string {
   const lines: string[] = [];
   const { onAfterLlmsTxtGenerate, onLineGenerate, onTitleGenerate } =
-    typeof llmsTxtOptions === 'boolean' ? {} : llmsTxtOptions;
+    llmsTxtOptions;
 
   const summary = onTitleGenerate
     ? onTitleGenerate({ title, description })

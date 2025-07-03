@@ -2,6 +2,10 @@ import type { RouteService } from '@rspress/core';
 import type { Nav, PageIndexInfo, RouteMeta, Sidebar } from '@rspress/shared';
 
 export interface LlmsTxt {
+  /**
+   * @default "llms.txt"
+   */
+  name: string;
   onTitleGenerate?: (context: {
     title: string | undefined;
     description: string | undefined;
@@ -10,22 +14,33 @@ export interface LlmsTxt {
   onAfterLlmsTxtGenerate?: (llmsTxtContent: string) => string;
 }
 
+export interface MdFiles {
+  /**
+   * @default true
+   */
+  mdxToMd: boolean;
+}
+
+export interface LlmsFullTxt {
+  /**
+   * @default "llms-full.txt"
+   */
+  name: string;
+}
+
 export interface Options {
   /**
    * Whether to generate llms.txt.
-   * @default true
    */
-  llmsTxt?: boolean | LlmsTxt;
+  llmsTxt?: false | LlmsTxt;
   /**
    * Whether to generate llms.txt related md files for each route.
-   * @default true
    */
-  mdFiles?: boolean;
+  mdFiles?: false | MdFiles;
   /**
    * Whether to generate llms-full.txt.
-   * @default true
    */
-  llmsFullTxt?: boolean;
+  llmsFullTxt?: false | LlmsFullTxt;
   /**
    * Whether to include some routes from llms.txt.
    * @param context
@@ -39,6 +54,8 @@ export interface Options {
    */
   exclude?: (context: { page: PageIndexInfo }) => boolean;
 }
+
+export type RspressPluginLlmsOptions = Options | Options[];
 
 export interface rsbuildPluginLlmsOptions {
   disableSSGRef: { current: boolean };
@@ -55,4 +72,5 @@ export interface rsbuildPluginLlmsOptions {
     lang: string;
   }[];
   rspressPluginOptions: Options;
+  index?: number;
 }
