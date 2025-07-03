@@ -58,7 +58,7 @@ function NavMenuItem({ menuItem }: { menuItem: NavItemWithLink }) {
   );
 
   return (
-    <li className={cls(navMenuItem, navMenuItemLink)}>
+    <li className={navMenuItem}>
       <Link
         href={menuItem.link}
         className={cls(navMenuItemLink, isActive ? active : '')}

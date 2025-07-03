@@ -17,7 +17,6 @@
 
   .navMenuItemContainer {
     display: flex;
-    min-width: 40px;
     justify-content: center;
     align-items: center;
     gap: 6px;
@@ -54,12 +53,11 @@
   &.active {
     .navMenuItemContainer {
       // text
-      font-weight: 600;
+      font-weight: 400;
       color: #007bff;
       text-align: center;
       font-size: 14px;
       font-style: normal;
-      font-weight: 600;
     }
   }
 }
