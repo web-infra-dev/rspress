@@ -46,6 +46,11 @@ export const getRoutePathParts = (
   ] as const;
 };
 
+/**
+ *
+ * @param relativePath "/v3/en/guide/getting-started.mdx" or "/v3/guide/getting-started.mdx" or "/en/guide/getting-started.mdx" or "/guide/getting-started.mdx"
+ * @returns
+ */
 export const normalizeRoutePath = (
   relativePath: string,
   lang: string,
@@ -54,16 +59,14 @@ export const normalizeRoutePath = (
   versions: string[],
   extensions: string[] = DEFAULT_PAGE_EXTENSIONS,
 ) => {
-  // /v3/en/guide/getting-started.html
-  let routePath = relativePath;
-
   // 1. remove extension
   const extensionsWithoutDot = extensions.map(i => i.slice(1));
   const cleanExtensionPattern = new RegExp(
     `\\.(${extensionsWithoutDot.join('|')})$`,
     'i',
   );
-  routePath = routePath
+
+  let routePath = relativePath
     .replace(cleanExtensionPattern, '')
     .replace(/\.html$/, '');
 
