@@ -1,8 +1,4 @@
-import {
-  addLeadingSlash,
-  addTrailingSlash,
-  removeLeadingSlash,
-} from '@rspress/shared';
+import { addLeadingSlash, addTrailingSlash } from '@rspress/shared';
 import { DEFAULT_PAGE_EXTENSIONS } from '@rspress/shared/constants';
 
 export const getRoutePathParts = (
@@ -71,10 +67,7 @@ export const normalizeRoutePath = (
     .replace(cleanExtensionPattern, '')
     .replace(/\.html$/, '');
 
-  // 2. remove /index
-  routePath = routePath.replace(/\/index$/, '/');
-
-  // 3. remove /v3/en
+  // 2. remove /v3/en
   const [versionPart, langPart, purePathPart] = getRoutePathParts(
     routePath,
     lang,
@@ -83,14 +76,14 @@ export const normalizeRoutePath = (
     versions,
   );
 
-  routePath = removeLeadingSlash(purePathPart);
-
+  // 3. remove index
+  routePath = purePathPart.replace(/\/index$/, '/');
   if (routePath === 'index') {
     routePath = '';
   }
 
   const normalizedRoutePath = addLeadingSlash(
-    [versionPart, langPart, routePath].filter(Boolean).join('/'),
+    [...[versionPart, langPart].filter(Boolean), routePath].join('/'),
   );
 
   return {

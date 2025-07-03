@@ -375,13 +375,13 @@ describe('RouteService with i18n', async () => {
             "version": "",
           },
         },
-        "/zh" => RoutePage {
+        "/zh/" => RoutePage {
           "routeMeta": {
             "absolutePath": "<ROOT>/packages/core/src/node/route/fixtures/locales/zh/index.mdx",
             "lang": "zh",
             "pageName": "zh_index",
             "relativePath": "zh/index.mdx",
-            "routePath": "/zh",
+            "routePath": "/zh/",
             "version": "",
           },
         },
