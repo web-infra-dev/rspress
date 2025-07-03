@@ -35,5 +35,14 @@ export function processTitleElement(element: Element): Element {
     anchor.replaceWith(tempContainer);
   });
 
+  // 4. remove <!-- -> elements,
+  // case: `## Title {props.title}` will generate a comment node `<!-- -->` for replace in SSG
+  const commentNodes = elementClone.childNodes;
+  commentNodes.forEach(node => {
+    if (node.nodeType === Node.COMMENT_NODE) {
+      node.remove();
+    }
+  });
+
   return elementClone;
 }
