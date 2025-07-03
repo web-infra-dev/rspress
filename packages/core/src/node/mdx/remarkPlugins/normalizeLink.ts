@@ -92,10 +92,7 @@ function normalizeLink(
   }
 
   if (url.startsWith('.')) {
-    const anotherFileAbsolutePath = path.posix.join(
-      path.dirname(filePath),
-      url,
-    );
+    const anotherFileAbsolutePath = path.join(path.dirname(filePath), url);
     url = routeService.absolutePathToRoutePath(anotherFileAbsolutePath);
   } else {
     url = url.replace(/\/index\.html$/, '/');
