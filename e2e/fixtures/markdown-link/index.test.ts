@@ -27,35 +27,36 @@ test.describe('basic test', async () => {
       }),
     );
 
-    const snapshot = urls.join('\n');
-
-    expect(snapshot).toEqual(`/guide/installation.html
-/guide/installation.html
-/guide/installation.html
-/guide/installation.html
-/guide/installation.html
-/installation.html
-/guide/installation.html
-/installation.html
-/guide/installation.html
-/installation.html
-/guide/installation.html
-/installation.html
-/guide/subfolder/foo.html
-/subfolder/foo.html
-/guide/subfolder/foo.html
-/subfolder/foo.html
-/guide/subfolder/foo.html
-/subfolder/foo.html
-/guide/subfolder/foo.html
-/subfolder/foo.html
-/guide/subfolder.html
-/subfolder.html
-/guide/subfolder/index.html
-/subfolder/index.html
-/guide/subfolder.html
-/subfolder.html
-/guide/subfolder/index.html
-/subfolder/index.html`);
+    expect(urls).toEqual([
+      '/guide/installation.html',
+      '/guide/installation.html',
+      '/guide/installation.html',
+      '/guide/installation.html',
+      '/guide/installation.html',
+      '/guide/installation.html',
+      '/guide/installation.html',
+      '/guide/installation.html',
+      '/guide/installation.html',
+      '/guide/installation.html',
+      '/guide/installation.html',
+      //
+      '/guide/subfolder/foo.html',
+      '/guide/subfolder/foo.html',
+      '/guide/subfolder/foo.html',
+      '/guide/subfolder/foo.html',
+      '/guide/subfolder/foo.html',
+      '/guide/subfolder/foo.html',
+      '/guide/subfolder/foo.html',
+      '/guide/subfolder/foo.html',
+      //
+      '/guide/subfolder.html',
+      '/guide/subfolder.html',
+      '/guide/subfolder/index.html',
+      '/guide/subfolder/index.html',
+      '/guide/subfolder.html',
+      '/guide/subfolder.html',
+      '/guide/subfolder/index.html',
+      '/guide/subfolder/index.html',
+    ]);
   });
 });
