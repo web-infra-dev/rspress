@@ -30,7 +30,7 @@ test.describe('plugin-llms', async () => {
     ).toBeTruthy();
   });
 
-  test('should generate llms.txt llms-full.txt mdFiles', async () => {
+  test('multiple configuration - should generate llms.txt llms-full.txt mdFiles', async () => {
     const appDir = __dirname;
     await runBuildCommand(appDir, 'rspress-i18n.config.ts');
 
