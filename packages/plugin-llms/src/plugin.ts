@@ -18,7 +18,11 @@ import type { NavItemWithLink } from '@rspress/shared';
 import { logger } from '@rspress/shared/logger';
 import { generateLlmsFullTxt, generateLlmsTxt } from './llmsTxt';
 import { mdxToMd } from './mdxToMd';
-import type { Options, rsbuildPluginLlmsOptions } from './types';
+import type {
+  Options,
+  RspressPluginLlmsOptions,
+  rsbuildPluginLlmsOptions,
+} from './types';
 
 const rsbuildPluginLlms = ({
   disableSSGRef,
@@ -32,13 +36,20 @@ const rsbuildPluginLlms = ({
   routeServiceRef,
   nav,
   rspressPluginOptions,
+  index = 0,
 }: rsbuildPluginLlmsOptions): RsbuildPlugin => ({
-  name: 'rsbuild-plugin-llms',
+  name: `rsbuild-plugin-llms-${index}`,
   async setup(api) {
     const {
-      llmsTxt = true,
-      mdFiles = true,
-      llmsFullTxt = true,
+      llmsTxt = {
+        name: 'llms.txt',
+      },
+      mdFiles = {
+        mdxToMd: true,
+      },
+      llmsFullTxt = {
+        name: 'llms-full.txt',
+      },
       include,
       exclude,
     } = rspressPluginOptions;
@@ -100,11 +111,12 @@ const rsbuildPluginLlms = ({
       }
 
       if (llmsTxt) {
+        const { name } = llmsTxt;
         const llmsTxtContent = generateLlmsTxt(
           pageArray,
           navList,
           others,
-          rspressPluginOptions.llmsTxt ?? {},
+          llmsTxt,
           titleRef.current,
           descriptionRef.current,
           baseRef.current,
@@ -113,7 +125,7 @@ const rsbuildPluginLlms = ({
           { targets: disableSSG ? ['web'] : ['node'], stage: 'additional' },
           async ({ compilation, sources }) => {
             const source = new sources.RawSource(llmsTxtContent);
-            compilation.emitAsset('llms.txt', source);
+            compilation.emitAsset(name, source);
           },
         );
       }
@@ -125,7 +137,7 @@ const rsbuildPluginLlms = ({
           const filepath = pageData._filepath;
           const isMD = path.extname(filepath).slice(1) !== 'mdx';
           let mdContent: string | Buffer;
-          if (isMD) {
+          if (isMD || (mdFiles && mdFiles.mdxToMd === false)) {
             mdContent = content;
           } else {
             try {
@@ -170,6 +182,7 @@ const rsbuildPluginLlms = ({
       }
 
       if (llmsFullTxt) {
+        const { name } = llmsFullTxt;
         const llmsFullTxtContent = generateLlmsFullTxt(
           pageArray,
           navList,
@@ -180,7 +193,7 @@ const rsbuildPluginLlms = ({
           { targets: disableSSG ? ['web'] : ['node'], stage: 'additional' },
           async ({ compilation, sources }) => {
             const source = new sources.RawSource(llmsFullTxtContent);
-            compilation.emitAsset('llms-full.txt', source);
+            compilation.emitAsset(name, source);
           },
         );
       }
@@ -275,7 +288,9 @@ function organizeBySidebar(sidebar: Sidebar, pages: PageIndexInfo[]) {
 /**
  * A plugin for rspress to generate llms.txt, llms-full.txt, md files to let llm understand your website.
  */
-export function pluginLlms(options: Options = {}): RspressPlugin {
+export function pluginLlms(
+  options: RspressPluginLlmsOptions = {},
+): RspressPlugin {
   const baseRef: { current: string } = { current: '' };
   const docDirectoryRef: { current: string } = { current: '' };
   const titleRef: { current: string | undefined } = { current: '' };
@@ -345,20 +360,38 @@ export function pluginLlms(options: Options = {}): RspressPlugin {
     },
     builderConfig: {
       plugins: [
-        rsbuildPluginLlms({
-          ...options,
-          pageDataList,
-          routes,
-          titleRef,
-          descriptionRef,
-          langRef,
-          sidebar,
-          routeServiceRef,
-          nav,
-          baseRef,
-          disableSSGRef,
-          rspressPluginOptions: options,
-        }),
+        ...[
+          Array.isArray(options)
+            ? options.map((item, index) => {
+                return rsbuildPluginLlms({
+                  pageDataList,
+                  routes,
+                  titleRef,
+                  descriptionRef,
+                  langRef,
+                  sidebar,
+                  routeServiceRef,
+                  nav,
+                  baseRef,
+                  disableSSGRef,
+                  rspressPluginOptions: item,
+                  index,
+                });
+              })
+            : rsbuildPluginLlms({
+                pageDataList,
+                routes,
+                titleRef,
+                descriptionRef,
+                langRef,
+                sidebar,
+                routeServiceRef,
+                nav,
+                baseRef,
+                disableSSGRef,
+                rspressPluginOptions: options,
+              }),
+        ],
       ],
     },
   };
