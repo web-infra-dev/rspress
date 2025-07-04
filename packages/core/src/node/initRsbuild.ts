@@ -229,6 +229,7 @@ async function createInternalBuildConfig(
       },
     },
     performance: {
+      buildCache: true,
       chunkSplit: {
         override: {
           cacheGroups: {
