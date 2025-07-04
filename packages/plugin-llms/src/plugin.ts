@@ -137,7 +137,7 @@ const rsbuildPluginLlms = ({
           const filepath = pageData._filepath;
           const isMD = path.extname(filepath).slice(1) !== 'mdx';
           let mdContent: string | Buffer;
-          if (isMD || !mdxToMd) {
+          if (isMD || (mdFiles && mdFiles.mdxToMd === false)) {
             mdContent = content;
           } else {
             try {
