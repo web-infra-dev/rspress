@@ -15,19 +15,29 @@ import type { Plugin } from 'unified';
 import { visit } from 'unist-util-visit';
 
 import { logger } from '@rspress/shared/logger';
+import picocolors from 'picocolors';
+import { hintRelativeMarkdownLink } from '../../logger/hint';
 import type { RouteService } from '../../route/RouteService';
 import { getASTNodeImport } from '../../utils';
 
+// TODO: checkDeadLinks support external links and anchor hash links
 function checkDeadLinks(
   internalLinks: Map<string, string>,
   filePath: string,
   routeService: RouteService,
 ) {
-  const errorInfos: string[] = [];
-  internalLinks.entries().forEach(([nodeUrl, link]) => {
+  const errorInfos: [string, string][] = [];
+
+  let possibleBreakingChange = false;
+
+  [...internalLinks.entries()].forEach(([nodeUrl, link]) => {
     const cleanLinkPath = linkToRoutePath(link);
     if (!cleanLinkPath) {
       return;
+    }
+
+    if (!nodeUrl.startsWith('/') && /^\w/.test(nodeUrl)) {
+      possibleBreakingChange = true;
     }
 
     // allow fuzzy matching, e.g: /guide/ and /guide is equal
@@ -36,16 +46,18 @@ function checkDeadLinks(
       !routeService.isExistRoute(removeTrailingSlash(cleanLinkPath)) &&
       !routeService.isExistRoute(addTrailingSlash(cleanLinkPath))
     ) {
-      errorInfos.push(
-        `Internal link to "${nodeUrl}" which points to "${cleanLinkPath}" is dead, check it in "${filePath}"`,
-      );
+      errorInfos.push([nodeUrl, link]);
     }
   });
   // output error info
   if (errorInfos.length > 0) {
-    errorInfos?.forEach(err => {
-      logger.error(err);
-    });
+    if (possibleBreakingChange) {
+      hintRelativeMarkdownLink();
+    }
+
+    logger.error(`Dead links found in ${picocolors.cyan(filePath)}:
+${errorInfos.map(([nodeUrl, link]) => `  ${picocolors.green(`"[..](${nodeUrl})"`)} ${picocolors.gray(link)}`).join('\n')}`);
+
     if (isProduction()) {
       throw new Error('Dead link found');
     }
