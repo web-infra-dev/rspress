@@ -1,8 +1,4 @@
-import {
-  addLeadingSlash,
-  addTrailingSlash,
-  removeLeadingSlash,
-} from '@rspress/shared';
+import { addLeadingSlash, addTrailingSlash } from '@rspress/shared';
 import { DEFAULT_PAGE_EXTENSIONS } from '@rspress/shared/constants';
 
 export const getRoutePathParts = (
@@ -50,6 +46,11 @@ export const getRoutePathParts = (
   ] as const;
 };
 
+/**
+ *
+ * @param relativePath "/v3/en/guide/getting-started.mdx" or "/v3/guide/getting-started.mdx" or "/en/guide/getting-started.mdx" or "/guide/getting-started.mdx"
+ * @returns
+ */
 export const normalizeRoutePath = (
   relativePath: string,
   lang: string,
@@ -58,23 +59,18 @@ export const normalizeRoutePath = (
   versions: string[],
   extensions: string[] = DEFAULT_PAGE_EXTENSIONS,
 ) => {
-  // /v3/en/guide/getting-started.html
-  let routePath = relativePath;
-
   // 1. remove extension
   const extensionsWithoutDot = extensions.map(i => i.slice(1));
   const cleanExtensionPattern = new RegExp(
     `\\.(${extensionsWithoutDot.join('|')})$`,
     'i',
   );
-  routePath = routePath
+
+  let routePath = relativePath
     .replace(cleanExtensionPattern, '')
     .replace(/\.html$/, '');
 
-  // 2. remove /index
-  routePath = routePath.replace(/\/index$/, '/');
-
-  // 3. remove /v3/en
+  // 2. remove /v3/en
   const [versionPart, langPart, purePathPart] = getRoutePathParts(
     routePath,
     lang,
@@ -83,14 +79,14 @@ export const normalizeRoutePath = (
     versions,
   );
 
-  routePath = removeLeadingSlash(purePathPart);
-
+  // 3. remove index
+  routePath = purePathPart.replace(/\/index$/, '/');
   if (routePath === 'index') {
     routePath = '';
   }
 
   const normalizedRoutePath = addLeadingSlash(
-    [versionPart, langPart, routePath].filter(Boolean).join('/'),
+    [...[versionPart, langPart].filter(Boolean), routePath].join('/'),
   );
 
   return {

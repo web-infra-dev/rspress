@@ -5,11 +5,9 @@ import {
   isProduction,
   normalizeHref,
   parseUrl,
-  removeLeadingSlash,
   removeTrailingSlash,
   withBase,
 } from '@rspress/shared';
-import { DEFAULT_PAGE_EXTENSIONS } from '@rspress/shared/constants';
 import { getNodeAttribute } from '@rspress/shared/node-utils';
 import type { Root } from 'mdast';
 import type { MdxjsEsm } from 'mdast-util-mdxjs-esm';
@@ -19,8 +17,6 @@ import { visit } from 'unist-util-visit';
 import { logger } from '@rspress/shared/logger';
 import type { RouteService } from '../../route/RouteService';
 import { getASTNodeImport } from '../../utils';
-
-// TODO: support relative path [subfolder](subfolder) equal to [subfolder](./subfolder)
 
 function checkDeadLinks(
   internalLinks: Map<string, string>,
@@ -35,6 +31,7 @@ function checkDeadLinks(
     }
 
     // allow fuzzy matching, e.g: /guide/ and /guide is equal
+    // This is a simple judgment, the performance will be better than "matchPath" in react-router-dom
     if (
       !routeService.isExistRoute(removeTrailingSlash(cleanLinkPath)) &&
       !routeService.isExistRoute(addTrailingSlash(cleanLinkPath))
@@ -85,26 +82,14 @@ function normalizeLink(
     return nodeUrl;
   }
 
-  const extname = path.extname(url);
-
-  if ((routeService?.extensions ?? DEFAULT_PAGE_EXTENSIONS).includes(extname)) {
-    url = url.replace(new RegExp(`\\${extname}$`), '');
-  }
-
-  if (url.startsWith('.')) {
+  // 1. [](/api/getting-started)) or [](/en/api/getting-started))
+  if (url.startsWith('/')) {
+    const { routePath } = routeService.normalizeRoutePath(url);
+    url = routePath;
+  } else {
+    // 2. [getting-started](getting-started) or [getting-started](./getting-started) or [getting-started](../getting-started)
     const anotherFileAbsolutePath = path.join(path.dirname(filePath), url);
     url = routeService.absolutePathToRoutePath(anotherFileAbsolutePath);
-  } else {
-    url = url.replace(/\/index\.html$/, '/');
-    url = url.replace(/\/index$/, '/');
-    const [pathVersion, pathLang] = routeService.getRoutePathParts(
-      routeService.absolutePathToRelativePath(filePath),
-    );
-
-    const [_, __, urlPath] = routeService.getRoutePathParts(url);
-
-    url = removeLeadingSlash(urlPath);
-    url = [pathVersion, pathLang, url].filter(Boolean).join('/');
   }
 
   if (typeof cleanUrls === 'boolean') {
