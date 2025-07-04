@@ -18,7 +18,7 @@ test.describe('basic test', async () => {
   });
 
   test('all links should be normalized', async ({ page }) => {
-    await page.goto(`http://localhost:${appPort}/guide`);
+    await page.goto(`http://localhost:${appPort}/base/guide`);
     const links = await page.$$('.rspress-doc ul li a');
     const urls = await Promise.all(
       links.map(async link => {
@@ -28,35 +28,37 @@ test.describe('basic test', async () => {
     );
 
     expect(urls).toEqual([
-      '/guide/installation.html',
-      '/guide/installation.html',
-      '/guide/installation.html',
-      '/guide/installation.html',
-      '/guide/installation.html',
-      '/guide/installation.html',
-      '/guide/installation.html',
-      '/guide/installation.html',
-      '/guide/installation.html',
-      '/guide/installation.html',
-      '/guide/installation.html',
+      '/base/guide/installation.html',
+      '/base/guide/installation.html',
+      '/base/guide/installation.html',
+      '/base/guide/installation.html',
       //
-      '/guide/subfolder/foo.html',
-      '/guide/subfolder/foo.html',
-      '/guide/subfolder/foo.html',
-      '/guide/subfolder/foo.html',
-      '/guide/subfolder/foo.html',
-      '/guide/subfolder/foo.html',
-      '/guide/subfolder/foo.html',
-      '/guide/subfolder/foo.html',
+      '/base/guide/installation.html',
+      '/base/guide/installation.html',
+      '/base/guide/installation.html',
+      '/base/guide/installation.html',
+      '/base/guide/installation.html',
+      '/base/guide/installation.html',
+      '/base/guide/installation.html',
+      '/base/guide/installation.html',
       //
-      '/guide/subfolder.html',
-      '/guide/subfolder.html',
-      '/guide/subfolder/index.html',
-      '/guide/subfolder/index.html',
-      '/guide/subfolder.html',
-      '/guide/subfolder.html',
-      '/guide/subfolder/index.html',
-      '/guide/subfolder/index.html',
+      '/base/guide/subfolder/foo.html',
+      '/base/guide/subfolder/foo.html',
+      '/base/guide/subfolder/foo.html',
+      '/base/guide/subfolder/foo.html',
+      '/base/guide/subfolder/foo.html',
+      '/base/guide/subfolder/foo.html',
+      '/base/guide/subfolder/foo.html',
+      '/base/guide/subfolder/foo.html',
+      //
+      '/base/guide/subfolder.html',
+      '/base/guide/subfolder.html',
+      '/base/guide/subfolder/index.html',
+      '/base/guide/subfolder/index.html',
+      '/base/guide/subfolder.html',
+      '/base/guide/subfolder.html',
+      '/base/guide/subfolder/index.html',
+      '/base/guide/subfolder/index.html',
     ]);
   });
 });
