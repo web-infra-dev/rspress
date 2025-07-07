@@ -484,8 +484,8 @@ importers:
   e2e/fixtures/plugin-preview-custom-entry:
     dependencies:
       '@rsbuild/plugin-vue':
-        specifier: ^1.0.7
-        version: 1.0.7(@rsbuild/core@1.4.3)(vue@3.5.17(typescript@5.8.2))
+        specifier: ^1.1.0
+        version: 1.1.0(@rsbuild/core@1.4.3)(vue@3.5.17(typescript@5.8.2))
       '@rspress/plugin-preview':
         specifier: workspace:*
         version: link:../../../packages/plugin-preview
@@ -767,7 +767,7 @@ importers:
     dependencies:
       '@mdx-js/loader':
         specifier: ^3.1.0
-        version: 3.1.0(acorn@8.14.0)(webpack@5.99.3)
+        version: 3.1.0(acorn@8.14.0)(webpack@5.99.9)
       '@mdx-js/mdx':
         specifier: ^3.1.0
         version: 3.1.0(acorn@8.14.0)
@@ -2946,8 +2946,8 @@ packages:
       '@rsbuild/core':
         optional: true
 
-  '@rsbuild/plugin-vue@1.0.7':
-    resolution: {integrity: sha512-VIXFIU2gcpRjDxZNR9QUZjFqWu3oPZ5a5AUe8cyv2moJBQzRPJ18VtPnIIcdlQB36Q8lm2Do0SSVqkXAuui65g==}
+  '@rsbuild/plugin-vue@1.1.0':
+    resolution: {integrity: sha512-SQ8CoS7qUTQUYcMxWgMLQcukE/fQ5pIzMDkvpqqoV4zQyWcw0kJ5z34ctCIaIA4vvOhXwuEi2XLwQalvGQI8Tg==}
     peerDependencies:
       '@rsbuild/core': 1.x
 
@@ -6150,8 +6150,8 @@ packages:
   scheduler@0.26.0:
     resolution: {integrity: sha512-NlHwttCI/l5gCPR3D1nNXtWABUmBwvZpEQiD4IXSbIDq8BzLIK/7Ir5gTFSGZDUu37K5cMNp0hFtzO38sC7gWA==}
 
-  schema-utils@4.3.0:
-    resolution: {integrity: sha512-Gf9qqc58SpCA/xdziiHz35F4GNIWYWZrEshUc/G/r5BnLph6xpKuLeoJoQuj5WfBIx/eQLf+hmVPYHaxJu7V2g==}
+  schema-utils@4.3.2:
+    resolution: {integrity: sha512-Gn/JaSk/Mt9gYubxTtSn/QCV4em9mpAPiR1rqy/Ocu19u/G9J5WWdNoUT4SiV6mFC3y6cxyFcFwdzPM3FgxGAQ==}
     engines: {node: '>= 10.13.0'}
 
   search-insights@2.17.3:
@@ -6821,8 +6821,8 @@ packages:
     resolution: {integrity: sha512-/DyMEOrDgLKKIG0fmvtz+4dUX/3Ghozwgm6iPp8KRhvn+eQf9+Q7GWxVNMk3+uCPWfdXYC4ExGBckIXdFEfH1w==}
     engines: {node: '>=10.13.0'}
 
-  webpack@5.99.3:
-    resolution: {integrity: sha512-Sb8csGqLL9kY7nqHyJq9Yw1sx+/mpBLXuqM6edfjFOpODiFjzkLUKF08s5WxDxWg9akMklrbTsVsoj7jBULhfw==}
+  webpack@5.99.9:
+    resolution: {integrity: sha512-brOPwM3JnmOa+7kd3NsmOUOwbDAj8FT9xDsG3IW0MgbN9yZV7Oi/s/+MNQ/EcSMqw7qfoRyXPoeEWT8zLVdVGg==}
     engines: {node: '>=10.13.0'}
     hasBin: true
     peerDependencies:
@@ -7881,12 +7881,12 @@ snapshots:
       globby: 11.1.0
       read-yaml-file: 1.1.0
 
-  '@mdx-js/loader@3.1.0(acorn@8.14.0)(webpack@5.99.3)':
+  '@mdx-js/loader@3.1.0(acorn@8.14.0)(webpack@5.99.9)':
     dependencies:
       '@mdx-js/mdx': 3.1.0(acorn@8.14.0)
       source-map: 0.7.4
     optionalDependencies:
-      webpack: 5.99.3
+      webpack: 5.99.9
     transitivePeerDependencies:
       - acorn
       - supports-color
@@ -8235,11 +8235,11 @@ snapshots:
     optionalDependencies:
       '@rsbuild/core': 1.4.3
 
-  '@rsbuild/plugin-vue@1.0.7(@rsbuild/core@1.4.3)(vue@3.5.17(typescript@5.8.2))':
+  '@rsbuild/plugin-vue@1.1.0(@rsbuild/core@1.4.3)(vue@3.5.17(typescript@5.8.2))':
     dependencies:
       '@rsbuild/core': 1.4.3
-      vue-loader: 17.4.2(vue@3.5.17(typescript@5.8.2))(webpack@5.99.3)
-      webpack: 5.99.3
+      vue-loader: 17.4.2(vue@3.5.17(typescript@5.8.2))(webpack@5.99.9)
+      webpack: 5.99.9
     transitivePeerDependencies:
       - '@swc/core'
       - '@vue/compiler-sfc'
@@ -12238,7 +12238,7 @@ snapshots:
 
   scheduler@0.26.0: {}
 
-  schema-utils@4.3.0:
+  schema-utils@4.3.2:
     dependencies:
       '@types/json-schema': 7.0.15
       ajv: 8.13.0
@@ -12553,14 +12553,14 @@ snapshots:
 
   term-size@2.2.1: {}
 
-  terser-webpack-plugin@5.3.14(webpack@5.99.3):
+  terser-webpack-plugin@5.3.14(webpack@5.99.9):
     dependencies:
       '@jridgewell/trace-mapping': 0.3.25
       jest-worker: 27.5.1
-      schema-utils: 4.3.0
+      schema-utils: 4.3.2
       serialize-javascript: 6.0.2
       terser: 5.31.6
-      webpack: 5.99.3
+      webpack: 5.99.9
 
   terser@5.31.6:
     dependencies:
@@ -12939,12 +12939,12 @@ snapshots:
 
   vscode-uri@3.1.0: {}
 
-  vue-loader@17.4.2(vue@3.5.17(typescript@5.8.2))(webpack@5.99.3):
+  vue-loader@17.4.2(vue@3.5.17(typescript@5.8.2))(webpack@5.99.9):
     dependencies:
       chalk: 4.1.2
       hash-sum: 2.0.0
       watchpack: 2.4.2
-      webpack: 5.99.3
+      webpack: 5.99.9
     optionalDependencies:
       vue: 3.5.17(typescript@5.8.2)
 
@@ -12979,10 +12979,11 @@ snapshots:
 
   webpack-sources@3.2.3: {}
 
-  webpack@5.99.3:
+  webpack@5.99.9:
     dependencies:
       '@types/eslint-scope': 3.7.7
       '@types/estree': 1.0.6
+      '@types/json-schema': 7.0.15
       '@webassemblyjs/ast': 1.14.1
       '@webassemblyjs/wasm-edit': 1.14.1
       '@webassemblyjs/wasm-parser': 1.14.1
@@ -12999,9 +13000,9 @@ snapshots:
       loader-runner: 4.3.0
       mime-types: 2.1.35
       neo-async: 2.6.2
-      schema-utils: 4.3.0
+      schema-utils: 4.3.2
       tapable: 2.2.1
-      terser-webpack-plugin: 5.3.14(webpack@5.99.3)
+      terser-webpack-plugin: 5.3.14(webpack@5.99.9)
       watchpack: 2.4.2
       webpack-sources: 3.2.3
     transitivePeerDependencies:
