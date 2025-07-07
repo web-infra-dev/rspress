@@ -40,7 +40,9 @@ cli
       let devServer: Awaited<ReturnType<typeof dev>>;
       const startDevServer = async () => {
         const { port, host } = options || {};
-        const config = await loadConfigFile(options?.config);
+        const { config, configFilePath } = await loadConfigFile(
+          options?.config,
+        );
 
         config.root = resolveDocRoot(cwd, root, config.root);
 
@@ -50,6 +52,7 @@ cli
           appDirectory: cwd,
           docDirectory,
           config,
+          configFilePath,
           extraBuilderConfig: { server: { port, host } },
         });
 
@@ -104,7 +107,7 @@ cli
 cli.command('build [root]').action(async (root, options) => {
   setNodeEnv('production');
   const cwd = process.cwd();
-  const config = await loadConfigFile(options.config);
+  const { config, configFilePath } = await loadConfigFile(options.config);
 
   config.root = resolveDocRoot(cwd, root, config.root);
   const docDirectory = config.root;
@@ -113,6 +116,7 @@ cli.command('build [root]').action(async (root, options) => {
     await build({
       docDirectory,
       config,
+      configFilePath,
     });
   } catch (err) {
     logger.error(err);
@@ -133,7 +137,7 @@ cli
       setNodeEnv('production');
       const cwd = process.cwd();
       const { port, host } = options || {};
-      const config = await loadConfigFile(options?.config);
+      const { config, configFilePath } = await loadConfigFile(options?.config);
 
       config.root = resolveDocRoot(cwd, root, config.root);
 
@@ -141,6 +145,7 @@ cli
         config,
         host,
         port,
+        configFilePath,
       });
     },
   );

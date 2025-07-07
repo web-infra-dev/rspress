@@ -15,7 +15,7 @@ const findConfig = (basePath: string): string | undefined => {
 
 export async function loadConfigFile(
   customConfigFile?: string,
-): Promise<UserConfig> {
+): Promise<{ config: UserConfig; configFilePath: string }> {
   const baseDir = process.cwd();
   let configFilePath = '';
   if (customConfigFile) {
@@ -29,7 +29,7 @@ export async function loadConfigFile(
   }
   if (!configFilePath) {
     logger.info(`No config file found in ${baseDir}`);
-    return {};
+    return { config: {}, configFilePath: '' };
   }
 
   const { loadConfig } = await import('@rsbuild/core');
@@ -38,7 +38,10 @@ export async function loadConfigFile(
     path: configFilePath,
   });
 
-  return content as UserConfig;
+  return {
+    config: content as UserConfig,
+    configFilePath,
+  };
 }
 
 export function resolveDocRoot(

@@ -12,7 +12,7 @@ async function initRouteService(
 ) {
   const routeService = await RouteService.create({
     config,
-    pluginDriver: new PluginDriver(config, false),
+    pluginDriver: new PluginDriver(config, '', false),
     runtimeTempDir: '.rsbuild',
     scanDir: fixtureDir,
   });

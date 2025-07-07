@@ -20,15 +20,21 @@ type RspressPluginHookKeys =
 
 export class PluginDriver {
   #config: UserConfig;
+  #configFilePath: string;
 
   #plugins: RspressPlugin[];
 
   #isProd: boolean;
 
-  constructor(config: UserConfig, isProd: boolean) {
+  constructor(config: UserConfig, configFilePath: string, isProd: boolean) {
     this.#config = config;
+    this.#configFilePath = configFilePath;
     this.#isProd = isProd;
     this.#plugins = [];
+  }
+
+  getConfigFilePath() {
+    return this.#configFilePath;
   }
 
   // The init function is used to initialize the doc plugins and will execute before the build process.

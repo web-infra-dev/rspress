@@ -5,6 +5,7 @@ import { initRsbuild } from './initRsbuild';
 
 interface ServeOptions {
   config: UserConfig;
+  configFilePath: string;
   port?: number;
   host?: string;
 }
@@ -13,7 +14,7 @@ interface ServeOptions {
 export async function serve(
   options: ServeOptions,
 ): Promise<ReturnType<RsbuildInstance['preview']>> {
-  const { config, port: userPort, host: userHost } = options;
+  const { config, port: userPort, host: userHost, configFilePath } = options;
   const envPort = process.env.PORT;
   const envHost = process.env.HOST;
   const { builderConfig } = config;
@@ -30,7 +31,7 @@ export async function serve(
     },
   });
 
-  const pluginDriver = new PluginDriver(config, true);
+  const pluginDriver = new PluginDriver(config, configFilePath, true);
   await pluginDriver.init();
 
   const modifiedConfig = await pluginDriver.modifyConfig();

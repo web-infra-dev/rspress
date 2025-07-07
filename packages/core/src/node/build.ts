@@ -10,6 +10,7 @@ import { checkLanguageParity } from './utils/checkLanguageParity';
 interface BuildOptions {
   docDirectory: string;
   config: UserConfig;
+  configFilePath: string;
 }
 
 export async function bundle(
@@ -42,8 +43,8 @@ function emptyDir(path: string): Promise<void> {
 }
 
 export async function build(options: BuildOptions) {
-  const { docDirectory, config } = options;
-  const pluginDriver = new PluginDriver(config, true);
+  const { docDirectory, config, configFilePath } = options;
+  const pluginDriver = new PluginDriver(config, configFilePath, true);
   await pluginDriver.init();
   const modifiedConfig = await pluginDriver.modifyConfig();
 
