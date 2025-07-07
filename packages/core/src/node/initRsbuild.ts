@@ -229,6 +229,9 @@ async function createInternalBuildConfig(
       },
     },
     performance: {
+      buildCache: {
+        buildDependencies: [pluginDriver.getConfigFilePath()],
+      },
       chunkSplit: {
         override: {
           cacheGroups: {
