@@ -7,14 +7,20 @@ async function patchLinks(outputDir: string) {
   // replace
   // 1. [foo](bar) -> [foo](./bar)
   // 2. [foo](./bar) -> [foo](./bar) no change
+  // 3. [foo](http(s)://...) -> [foo](http(s)://...) no change
   const normalizeLinksInFile = async (filePath: string) => {
     const content = await fs.readFile(filePath, 'utf-8');
     // 1. [foo](bar) -> [foo](./bar)
     const newContent = content.replace(
       /\[([^\]]+)\]\(([^)]+)\)/g,
       (_match, p1, p2) => {
-        // 2. [foo](./bar) -> [foo](./bar) no change
-        if (['/', '.'].includes(p2[0])) {
+        if (
+          // 2. [foo](./bar) -> [foo](./bar) no change
+          ['/', '.'].includes(p2[0]) ||
+          // 3. [foo](http(s)://...) -> [foo](http(s)://...) no change
+          p2.startsWith('http://') ||
+          p2.startsWith('https://')
+        ) {
           return `[${p1}](${p2})`;
         }
         return `[${p1}](./${p2})`;
