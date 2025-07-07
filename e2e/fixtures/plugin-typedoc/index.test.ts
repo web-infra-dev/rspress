@@ -64,10 +64,24 @@ test.describe('plugin-typedoc multi entries', async () => {
     expect(sidebarTexts.join(',')).toEqual(
       [
         '@rspress-fixture/rspress-plugin-typedoc-multi',
-        'FunctionsFunction: createMiddlewareFunction: mergeMiddlewares',
-        'ModulesModule: middleware',
+        'FunctionsFunction: createMiddlewareFunction: mergeMiddlewaresFunction: getRspressUrl',
+        'ModulesModule: middlewareModule: raw-link',
         'TypesType alias: Middleware',
       ].join(','),
     );
+  });
+
+  test('Should render raw link correctly', async ({ page }) => {
+    await page.goto(
+      `http://localhost:${appPort}/api/functions/raw_link.getRspressUrl.html`,
+      {
+        waitUntil: 'networkidle',
+      },
+    );
+    const rspressUrl = await page.$eval(
+      'a[href="https://rspress.rs"]',
+      el => el.textContent,
+    );
+    expect(rspressUrl).toBe('Rspress site');
   });
 });

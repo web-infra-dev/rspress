@@ -9,6 +9,7 @@ export default defineConfig({
       entryPoints: [
         path.join('./src/index.ts'),
         path.join('./src/middleware.ts'),
+        path.join('./src/raw-link.ts'),
       ],
     }),
   ],
