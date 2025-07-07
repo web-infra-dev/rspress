@@ -40,7 +40,7 @@
     "@mdx-js/react": "2.3.0",
     "@rspress/runtime": "workspace:*",
     "@rspress/shared": "workspace:*",
-    "@unhead/react": "^2.0.11",
+    "@unhead/react": "^2.0.12",
     "body-scroll-lock": "4.0.0-beta.0",
     "copy-to-clipboard": "^3.3.3",
     "flexsearch": "0.7.43",
@@ -54,7 +54,7 @@
   },
   "devDependencies": {
     "@microsoft/api-extractor": "^7.52.8",
-    "@rsbuild/plugin-react": "~1.3.2",
+    "@rsbuild/plugin-react": "~1.3.3",
     "@rsbuild/plugin-sass": "~1.3.2",
     "@rsbuild/plugin-svgr": "^1.2.0",
     "@rsbuild/plugin-typed-css-modules": "~1.0.2",
