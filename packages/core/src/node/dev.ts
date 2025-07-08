@@ -13,13 +13,14 @@ interface DevOptions {
   appDirectory: string;
   docDirectory: string;
   config: UserConfig;
+  configFilePath: string;
   extraBuilderConfig?: RsbuildConfig;
 }
 
 export async function dev(options: DevOptions): Promise<ServerInstance> {
-  const { docDirectory, config, extraBuilderConfig } = options;
+  const { docDirectory, config, extraBuilderConfig, configFilePath } = options;
   const isProd = false;
-  const pluginDriver = new PluginDriver(config, isProd);
+  const pluginDriver = new PluginDriver(config, configFilePath, isProd);
   await pluginDriver.init();
   const modifiedConfig = await pluginDriver.modifyConfig();
 
