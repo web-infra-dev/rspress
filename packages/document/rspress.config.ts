@@ -83,7 +83,6 @@ export default defineConfig({
       cleanDistPath: false,
     },
   },
-  search: false,
   route: {
     cleanUrls: true,
     exclude: ['**/fragments/**'],
