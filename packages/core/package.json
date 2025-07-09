@@ -39,6 +39,7 @@
   "types": "./dist/index.d.ts",
   "files": [
     "dist",
+    "static",
     "index.html",
     "runtime.ts",
     "theme.ts"
