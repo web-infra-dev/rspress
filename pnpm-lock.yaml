@@ -783,12 +783,6 @@ importers:
       '@rspress/mdx-rs':
         specifier: 0.6.6
         version: 0.6.6
-      '@rspress/plugin-last-updated':
-        specifier: workspace:*
-        version: link:../plugin-last-updated
-      '@rspress/plugin-medium-zoom':
-        specifier: workspace:*
-        version: link:../plugin-medium-zoom
       '@rspress/runtime':
         specifier: workspace:*
         version: link:../runtime
@@ -828,6 +822,9 @@ importers:
       mdast-util-mdxjs-esm:
         specifier: ^2.0.1
         version: 2.0.1
+      medium-zoom:
+        specifier: 1.1.0
+        version: 1.1.0
       picocolors:
         specifier: ^1.1.1
         version: 1.1.1
@@ -910,6 +907,9 @@ importers:
       '@types/react-dom':
         specifier: ^19.1.6
         version: 19.1.6(@types/react@19.1.8)
+      execa:
+        specifier: 8.0.1
+        version: 8.0.1
       mdast-util-mdx-expression:
         specifier: ^2.0.1
         version: 2.0.1
@@ -1173,43 +1173,6 @@ importers:
         specifier: ^5.8.2
         version: 5.8.2
 
-  packages/plugin-last-updated:
-    dependencies:
-      '@rspress/shared':
-        specifier: workspace:*
-        version: link:../shared
-    devDependencies:
-      '@microsoft/api-extractor':
-        specifier: ^7.52.8
-        version: 7.52.8(@types/node@22.10.2)
-      '@rslib/core':
-        specifier: 0.10.4
-        version: 0.10.4(@microsoft/api-extractor@7.52.8(@types/node@22.10.2))(typescript@5.8.2)
-      '@rspress/config':
-        specifier: workspace:*
-        version: link:../../scripts/config
-      '@types/node':
-        specifier: ^22.8.1
-        version: 22.10.2
-      '@types/react':
-        specifier: ^19.1.8
-        version: 19.1.8
-      '@types/react-dom':
-        specifier: ^19.1.6
-        version: 19.1.6(@types/react@19.1.8)
-      execa:
-        specifier: 8.0.1
-        version: 8.0.1
-      react:
-        specifier: ^19.1.0
-        version: 19.1.0
-      rsbuild-plugin-publint:
-        specifier: ^0.3.2
-        version: 0.3.2(@rsbuild/core@1.4.3)
-      typescript:
-        specifier: ^5.8.2
-        version: 5.8.2
-
   packages/plugin-llms:
     dependencies:
       '@rspress/core':
@@ -1264,46 +1227,6 @@ importers:
       vfile:
         specifier: ^6.0.3
         version: 6.0.3
-
-  packages/plugin-medium-zoom:
-    dependencies:
-      '@rspress/runtime':
-        specifier: workspace:^2.0.0-beta.20
-        version: link:../runtime
-      medium-zoom:
-        specifier: 1.1.0
-        version: 1.1.0
-    devDependencies:
-      '@microsoft/api-extractor':
-        specifier: ^7.52.8
-        version: 7.52.8(@types/node@22.10.2)
-      '@rslib/core':
-        specifier: 0.10.4
-        version: 0.10.4(@microsoft/api-extractor@7.52.8(@types/node@22.10.2))(typescript@5.8.2)
-      '@rspress/config':
-        specifier: workspace:*
-        version: link:../../scripts/config
-      '@rspress/shared':
-        specifier: workspace:*
-        version: link:../shared
-      '@types/node':
-        specifier: ^22.8.1
-        version: 22.10.2
-      '@types/react':
-        specifier: ^19.1.8
-        version: 19.1.8
-      '@types/react-dom':
-        specifier: ^19.1.6
-        version: 19.1.6(@types/react@19.1.8)
-      react:
-        specifier: ^19.1.0
-        version: 19.1.0
-      rsbuild-plugin-publint:
-        specifier: ^0.3.2
-        version: 0.3.2(@rsbuild/core@1.4.3)
-      typescript:
-        specifier: ^5.8.2
-        version: 5.8.2
 
   packages/plugin-playground:
     dependencies:
