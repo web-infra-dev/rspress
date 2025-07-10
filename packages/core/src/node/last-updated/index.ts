@@ -1,5 +1,3 @@
-/// <reference path="../index.d.ts" />
-
 import type { RspressPlugin } from '@rspress/shared';
 import { execa } from 'execa';
 
@@ -33,6 +31,8 @@ export function pluginLastUpdated(): RspressPlugin {
       const { _filepath, lang } = pageData;
       const lastUpdated = await getGitLastUpdatedTimeStamp(_filepath);
       if (lastUpdated) {
+        // Property 'lastUpdatedTime' does not exist on type 'PageIndexInfo'.
+        // @ts-ignore
         pageData.lastUpdatedTime = transform(lastUpdated, lang);
       }
     },

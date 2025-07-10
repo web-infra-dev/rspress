@@ -48,13 +48,11 @@ export class PluginDriver {
       themeConfig?.locales?.some(locale => locale.lastUpdated);
     const mediumZoomConfig = config?.mediumZoom ?? true;
     if (enableLastUpdated) {
-      const { pluginLastUpdated } = await import(
-        '@rspress/plugin-last-updated'
-      );
+      const { pluginLastUpdated } = await import('./last-updated/index');
       this.addPlugin(pluginLastUpdated());
     }
     if (mediumZoomConfig) {
-      const { pluginMediumZoom } = await import('@rspress/plugin-medium-zoom');
+      const { pluginMediumZoom } = await import('./medium-zoom/index');
       this.addPlugin(
         pluginMediumZoom(
           typeof mediumZoomConfig === 'object' ? mediumZoomConfig : undefined,
