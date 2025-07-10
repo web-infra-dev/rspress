@@ -47,7 +47,11 @@ function normalizeCommand(command: string): string {
     .split(' ')
     .filter(item => !item.startsWith('-') && !item.startsWith('--'))
     .join(' ');
-  if (pureCommand === 'yarn install' || pureCommand === 'bun install') {
+  if (
+    pureCommand === 'yarn install' ||
+    pureCommand === 'pnpm install' ||
+    pureCommand === 'bun install'
+  ) {
     return command;
   }
 
@@ -96,8 +100,9 @@ export function PackageManagerTabs({
     commandInfo = command;
   }
 
-  // Normalize yarn/bun command
+  // Normalize yarn/pnpm/bun command
   commandInfo.yarn && (commandInfo.yarn = normalizeCommand(commandInfo.yarn));
+  commandInfo.pnpm && (commandInfo.pnpm = normalizeCommand(commandInfo.pnpm));
   commandInfo.bun && (commandInfo.bun = normalizeCommand(commandInfo.bun));
 
   return (
