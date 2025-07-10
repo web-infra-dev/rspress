@@ -59,12 +59,9 @@ this usage is not allowed, please use below:
             node.value = fileContent;
           })
           .catch(e => {
-            throw new Error(
-              `${ERROR_PREFIX} The file does not exist.
-  \`file="${file}"\` is resolved to ${resolvedFilePath}"
-  
-  ${e}`,
-            );
+            logger.error(`${ERROR_PREFIX} The file does not exist.
+  \`file="${file}"\` is resolved to ${resolvedFilePath}"`);
+            throw e;
           });
 
         promiseList.push(promise);
