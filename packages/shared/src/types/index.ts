@@ -260,7 +260,6 @@ export interface PageIndexInfo {
   frontmatter: FrontMatterMeta;
   lang: string;
   version: string;
-  domain: string;
   _filepath: string;
   _relativePath: string;
 }
@@ -382,23 +381,7 @@ export type LocalSearchOptions = SearchHooks & {
   codeBlocks?: boolean;
 };
 
-export type RemoteSearchIndexInfo =
-  | string
-  | {
-      value: string;
-      label: string;
-    };
-
-export type RemoteSearchOptions = SearchHooks & {
-  mode: 'remote';
-  apiUrl: string;
-  domain?: string;
-  indexName: string;
-  searchIndexes?: RemoteSearchIndexInfo[];
-  searchLoading?: boolean;
-};
-
-export type SearchOptions = LocalSearchOptions | RemoteSearchOptions | false;
+export type SearchOptions = LocalSearchOptions | false;
 
 export interface MarkdownOptions {
   remarkPlugins?: PluggableList;

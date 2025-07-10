@@ -45,7 +45,7 @@ export function normalizeImagePath(imagePath: string) {
   return withBase(imagePath);
 }
 
-export function isAbsoluteUrl(path: string) {
+function isAbsoluteUrl(path: string) {
   return isExternalUrl(path) || isDataUrl(path) || path.startsWith('//');
 }
 

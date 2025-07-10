@@ -15,8 +15,6 @@ export const DEFAULT_HIGHLIGHT_LANGUAGES = [
 ];
 
 // TODO: these utils should be divided into node and runtime
-export const isSCM = () => Boolean(process.env.BUILD_VERSION);
-
 export const isProduction = () => process.env.NODE_ENV === 'production';
 
 export const isDebugMode = () => {

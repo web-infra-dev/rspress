@@ -2,10 +2,8 @@ import { createReadStream } from 'node:fs';
 import fs from 'node:fs/promises';
 import type { IncomingMessage, ServerResponse } from 'node:http';
 import { join } from 'node:path';
-import { SEARCH_INDEX_NAME, type UserConfig, isSCM } from '@rspress/shared';
-import { logger } from '@rspress/shared/logger';
-import picocolors from 'picocolors';
-import { OUTPUT_DIR, TEMP_DIR, isProduction } from './constants';
+import { SEARCH_INDEX_NAME, type UserConfig } from '@rspress/shared';
+import { OUTPUT_DIR, TEMP_DIR } from './constants';
 
 export async function writeSearchIndex(config: UserConfig) {
   if (config?.search === false) {
@@ -42,29 +40,6 @@ export async function writeSearchIndex(config: UserConfig) {
     }${searchIndex.slice(1)}`;
     await fs.rename(source, target);
     scanning = true;
-  }
-
-  if (isProduction() && isSCM() && config?.search?.mode === 'remote') {
-    const { apiUrl, indexName } = config.search;
-    try {
-      await fetch(`${apiUrl}?index=${indexName}`, {
-        method: 'PUT',
-        body: searchIndexData,
-        headers: { 'Content-Type': 'application/json' },
-      });
-
-      logger.info(
-        picocolors.green(
-          `[doc-tools] Search index uploaded to ${apiUrl}, indexName: ${indexName}`,
-        ),
-      );
-    } catch (e) {
-      logger.info(
-        picocolors.red(
-          `[doc-tools] Upload search index \`${indexName}\` failed:\n ${e}`,
-        ),
-      );
-    }
   }
 }
 
