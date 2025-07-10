@@ -24,24 +24,30 @@ test.describe('plugin test', async () => {
     const codeBlockElements = await page.$$('.rspress-doc > .rspress-preview');
 
     const internalIframeJsxDemoCodePreview = await page
-      .frameLocator('iframe')
+      .locator('iframe')
       .first()
       .getByText('JSX')
       .innerText();
     const internalIframeTsxDemoCodePreview = await page
-      .frameLocator('iframe')
+      .locator('iframe')
       .nth(1)
       .getByText('TSX')
       .innerText();
-    const transformedCodePreview = await page
-      .frameLocator('iframe')
+    const externalIframeJsxDemoCodePreview = await page
+      .locator('iframe')
       .nth(2)
+      .getByText('EXTERNAL')
+      .innerText();
+    const transformedCodePreview = await page
+      .locator('iframe')
+      .nth(3)
       .getByText('VUE')
       .innerText();
 
     expect(codeBlockElements.length).toBe(3);
     expect(internalIframeJsxDemoCodePreview).toBe('Hello World JSX');
     expect(internalIframeTsxDemoCodePreview).toBe('Hello World TSX');
+    expect(externalIframeJsxDemoCodePreview).toBe('Hello World JSX');
     expect(transformedCodePreview).toBe('Hello World VUE');
   });
 });

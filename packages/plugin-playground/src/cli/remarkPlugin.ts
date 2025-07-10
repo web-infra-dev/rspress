@@ -1,7 +1,5 @@
-import fs from 'node:fs';
-import { dirname, join, resolve } from 'node:path';
+import { resolve } from 'node:path';
 import type { RouteMeta } from '@rspress/shared';
-import { getNodeAttribute } from '@rspress/shared/node-utils';
 import type { Code, Root } from 'mdast';
 import type {
   MdxJsxAttributeValueExpression,
@@ -51,32 +49,7 @@ export const remarkPlugin: Plugin<[RemarkPluginProps], Root> = ({
       return;
     }
 
-    // 1. External demo , use <code src="foo" /> to declare demo
-    visit(tree, 'mdxJsxFlowElement', node => {
-      if (node.name === 'code') {
-        const src = getNodeAttribute(node, 'src');
-        if (typeof src !== 'string') {
-          return;
-        }
-        const demoPath = join(dirname(route.absolutePath), src);
-        if (!fs.existsSync(demoPath)) {
-          return;
-        }
-        const direction = getNodeAttribute(node, 'direction') || '';
-        const code = fs.readFileSync(demoPath, {
-          encoding: 'utf8',
-        });
-        const language = src.slice(src.lastIndexOf('.') + 1);
-        createPlaygroundNode(node, [
-          ['code', code],
-          ['language', language],
-          ['direction', direction],
-          ['editorPosition', editorPosition],
-        ]);
-      }
-    });
-
-    // 2. Internal demo, use ```j/tsx to declare demo
+    // Internal demo, use ```j/tsx to declare demo
     visit(tree, 'code', node => {
       if (node.lang === 'jsx' || node.lang === 'tsx') {
         const hasPureMeta = node.meta?.includes('pure');

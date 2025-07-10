@@ -33,7 +33,7 @@ export const getNodeMeta = (
   const meta = node.meta.split(' ');
   const item = meta.find((x: string) => x.startsWith(metaName));
   if (item?.startsWith(`${metaName}=`)) {
-    return item.slice(metaName.length + 1);
+    return item.slice(metaName.length + 1).replace(/'"`/g, '');
   }
   return item;
 };
