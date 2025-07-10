@@ -1,4 +1,4 @@
-import { existsSync, readFileSync } from 'node:fs';
+import { readFile } from 'node:fs/promises';
 import path from 'node:path';
 import { logger } from '@rspress/shared/logger';
 import type { Root } from 'mdast';
@@ -25,6 +25,7 @@ export const remarkFileCodeBlock: Plugin<[{ filepath: string }], Root> = ({
   filepath,
 }) => {
   return async tree => {
+    const promiseList: Promise<void>[] = [];
     visit(tree, 'code', node => {
       const { meta, value } = node;
       const file = parseFileFromMeta(meta ?? '');
@@ -53,18 +54,15 @@ this usage is not allowed, please use below:
           );
         }
 
-        const isExist = existsSync(resolvedFilePath);
+        const promise = readFile(resolvedFilePath, 'utf-8')
+          .then(fileContent => {
+            node.value = fileContent;
+          })
+          .catch(e => {
+            throw e;
+          });
 
-        if (!isExist) {
-          throw new Error(
-            `${ERROR_PREFIX} The file does not exist.
-\`file="${file}"\` is resolved to ${resolvedFilePath}"`,
-          );
-        }
-
-        // TODO: not support async api for perf
-        const newContent = readFileSync(resolvedFilePath, 'utf-8');
-        node.value = newContent;
+        promiseList.push(promise);
         return;
       }
 
@@ -73,5 +71,7 @@ this usage is not allowed, please use below:
         `${ERROR_PREFIX} The file path should use relative path "./" or "../"`,
       );
     });
+
+    await Promise.all(promiseList);
   };
 };
