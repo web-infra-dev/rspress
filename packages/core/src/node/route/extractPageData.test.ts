@@ -49,7 +49,6 @@ describe('extractPageData', async () => {
       } as RouteService,
       {
         alias: {},
-        domain: 'http://localhost:3000',
         replaceRules: [],
         root: fixtureBasicDir,
         searchCodeBlocks: false,
@@ -64,7 +63,6 @@ describe('extractPageData', async () => {
           "_html": "<h1 id="page-a">Page a<a aria-hidden="true" href="#page-a">#</a></h1>",
           "_relativePath": "a.mdx",
           "content": "#",
-          "domain": "http://localhost:3000",
           "frontmatter": {
             "__content": undefined,
           },
@@ -81,7 +79,6 @@ describe('extractPageData', async () => {
           "_html": "<h1 id="page-b">Page b<a aria-hidden="true" href="#page-b">#</a></h1>",
           "_relativePath": "guide/b.mdx",
           "content": "#",
-          "domain": "http://localhost:3000",
           "frontmatter": {
             "__content": undefined,
           },
@@ -97,7 +94,6 @@ describe('extractPageData', async () => {
           "_html": "",
           "_relativePath": "guide/c.tsx",
           "content": "",
-          "domain": "http://localhost:3000",
           "frontmatter": {},
           "lang": "",
           "routePath": "/guide/c",
@@ -112,7 +108,6 @@ describe('extractPageData', async () => {
           "_html": "<h1 id="homepage">homePage<a aria-hidden="true" href="#homepage">#</a></h1>",
           "_relativePath": "index.mdx",
           "content": "#",
-          "domain": "http://localhost:3000",
           "frontmatter": {
             "__content": undefined,
           },
@@ -142,7 +137,6 @@ describe('extractPageData', async () => {
       },
       {
         alias: {},
-        domain: 'http://localhost:3000',
         replaceRules: [],
         root: fixtureRecursiveDir,
         searchCodeBlocks: false,
@@ -184,7 +178,6 @@ describe('extractPageData', async () => {
       H2 comp in comp#
 
       Comp in Comp content code",
-        "domain": "http://localhost:3000",
         "frontmatter": {
           "__content": undefined,
         },
