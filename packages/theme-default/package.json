@@ -67,6 +67,7 @@
     "@types/nprogress": "^0.2.3",
     "@types/react": "^19.1.8",
     "@types/react-dom": "^19.1.6",
+    "@types/web": "^0.0.246",
     "rsbuild-plugin-publint": "^0.3.2",
     "tailwindcss": "^3.4.17",
     "typescript": "^5.8.2"
