@@ -80,7 +80,7 @@ test.describe('tabs-component test', async () => {
       'pnpm',
       ' create rspress@latest',
       'pnpm',
-      ' install rspress -D',
+      ' add rspress -D',
       'pnpm',
       ' example-cli-tool --yes',
     ]);
