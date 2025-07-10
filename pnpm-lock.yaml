@@ -232,6 +232,22 @@ importers:
         specifier: ^22.8.1
         version: 22.10.2
 
+  e2e/fixtures/dynamic-toc:
+    dependencies:
+      react:
+        specifier: ^19.1.0
+        version: 19.1.0
+      rspress:
+        specifier: workspace:*
+        version: link:../../../packages/cli
+    devDependencies:
+      '@types/node':
+        specifier: ^22.8.1
+        version: 22.10.2
+      '@types/react':
+        specifier: ^19.1.8
+        version: 19.1.8
+
   e2e/fixtures/github-alert-mdxjs:
     dependencies:
       rspress:
@@ -1648,6 +1664,9 @@ importers:
       '@types/react-dom':
         specifier: ^19.1.6
         version: 19.1.6(@types/react@19.1.8)
+      '@types/web':
+        specifier: ^0.0.246
+        version: 0.0.246
       rsbuild-plugin-publint:
         specifier: ^0.3.2
         version: 0.3.2(@rsbuild/core@1.4.3)
@@ -3304,6 +3323,9 @@ packages:
 
   '@types/unist@3.0.3':
     resolution: {integrity: sha512-ko/gIFJRv177XgZsZcBwnqJN5x/Gien8qNOn0D5bQU/zAzVf9Zt3BlcUiLqhV9y4ARk0GbT3tnUiPNgnTXzc/Q==}
+
+  '@types/web@0.0.246':
+    resolution: {integrity: sha512-TCeVQAgAophSXiipdERUYPbYIOn2sfhqEN/Zmr+rJGdWsBkEbYbzqNjOxS0GabsJyAOuZcoHOd7N6QX4zNlq0A==}
 
   '@types/yargs-parser@21.0.0':
     resolution: {integrity: sha512-iO9ZQHkZxHn4mSakYV0vFHAVDyEOIJQrV2uZ06HxEPcx+mt8swXoZHIbaaJ2crJYFfErySgktuTZ3BeLz+XmFA==}
@@ -8625,6 +8647,8 @@ snapshots:
   '@types/unist@2.0.7': {}
 
   '@types/unist@3.0.3': {}
+
+  '@types/web@0.0.246': {}
 
   '@types/yargs-parser@21.0.0': {}
 

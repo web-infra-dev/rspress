@@ -81,6 +81,8 @@ function updateHeaders(target: Element) {
   distributeUpdate();
 }
 
+const TOC_HEADING_TAGS = new Set(['H2', 'H3', 'H4']);
+
 export const useWatchToc = () => {
   const [innerRef, setRef] = useState<HTMLDivElement | null>(null);
 
@@ -96,39 +98,26 @@ export const useWatchToc = () => {
     if (target && !observer) {
       observer = new MutationObserver(mutationList => {
         let needUpdate: boolean = false;
-        for (const mutation of mutationList) {
-          mutation.addedNodes.forEach(node => {
-            if (
-              'tagName' in node &&
-              ['H2', 'H3', 'H4'].includes((node as HTMLHeadingElement).tagName)
-            ) {
-              needUpdate = true;
-            }
-            node.childNodes.forEach((child: any) => {
+        check: for (const mutation of mutationList) {
+          for (const nodes of [mutation.addedNodes, mutation.removedNodes]) {
+            for (const node of nodes) {
               if (
-                'tagName' in child &&
-                ['H2', 'H3', 'H4'].includes(child?.tagName)
+                TOC_HEADING_TAGS.has((node as HTMLHeadingElement).tagName) ||
+                node.parentElement?.closest('h2,h3,h4')
               ) {
                 needUpdate = true;
+                break check;
               }
-            });
-          });
-          mutation.removedNodes.forEach(node => {
-            if (
-              'tagName' in node &&
-              ['H2', 'H3', 'H4'].includes((node as HTMLHeadingElement).tagName)
-            ) {
-              needUpdate = true;
+              for (const child of node.childNodes) {
+                if (
+                  TOC_HEADING_TAGS.has((child as HTMLHeadingElement).tagName)
+                ) {
+                  needUpdate = true;
+                  break check;
+                }
+              }
             }
-            node.childNodes.forEach((child: any) => {
-              if (
-                'tagName' in child &&
-                ['H2', 'H3', 'H4'].includes(child?.tagName)
-              ) {
-                needUpdate = true;
-              }
-            });
-          });
+          }
         }
         needUpdate && updateHeaders(target);
       });
