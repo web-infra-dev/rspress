@@ -90,7 +90,7 @@ export default defineConfig({
   themeConfig: {
     enableAppearanceAnimation: false,
     footer: {
-      message: '© 2024 Bytedance Inc. All Rights Reserved.',
+      message: '© 2023-present ByteDance Inc.',
     },
     hideNavbar: 'auto',
     socialLinks: [
