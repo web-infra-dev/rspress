@@ -19,6 +19,7 @@ module.exports = {
     'node_modules',
     'pnpm-lock.yaml',
   ],
+  words: ['Rolldown', 'frontends', 'Zephyr Cloud', 'Micro-frontends', 'Fastly'],
   flagWords: banWords,
   dictionaries: ['dictionary'],
   dictionaryDefinitions: [
