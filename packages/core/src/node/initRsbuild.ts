@@ -229,9 +229,13 @@ async function createInternalBuildConfig(
       },
     },
     performance: {
-      buildCache: {
-        buildDependencies: [pluginDriver.getConfigFilePath()],
-      },
+      ...(process.env.RSPRESS_PERSISTENT_CACHE !== 'false'
+        ? {
+            buildCache: {
+              buildDependencies: [pluginDriver.getConfigFilePath()],
+            },
+          }
+        : {}),
       chunkSplit: {
         override: {
           cacheGroups: {
