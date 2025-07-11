@@ -33,9 +33,6 @@
     "dev": "rslib build -w",
     "reset": "rimraf ./**/node_modules"
   },
-  "dependencies": {
-    "@rspress/shared": "workspace:*"
-  },
   "devDependencies": {
     "@microsoft/api-extractor": "^7.52.8",
     "@rslib/core": "0.10.4",
@@ -48,7 +45,7 @@
     "typescript": "^5.8.2"
   },
   "peerDependencies": {
-    "@rspress/runtime": "workspace:^2.0.0-beta.20"
+    "rspress": "workspace:^2.0.0-beta.20"
   },
   "engines": {
     "node": ">=18.0.0"

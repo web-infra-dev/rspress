@@ -33,7 +33,6 @@
     "reset": "rimraf ./**/node_modules"
   },
   "dependencies": {
-    "@rspress/shared": "workspace:*",
     "typedoc": "0.24.8",
     "typedoc-plugin-markdown": "3.17.1"
   },

@@ -1,5 +1,5 @@
 import path from 'node:path';
-import type { RspressPlugin } from '@rspress/shared';
+import type { RspressPlugin } from 'rspress/core';
 import type { RedirectsOptions } from './types';
 
 /**

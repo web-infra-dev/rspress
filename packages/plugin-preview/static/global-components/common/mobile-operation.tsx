@@ -1,4 +1,3 @@
-import { useLang } from '@rspress/core/runtime';
 import { QRCodeSVG } from 'qrcode.react';
 import {
   type MouseEventHandler,
@@ -7,6 +6,7 @@ import {
   useRef,
   useState,
 } from 'react';
+import { useLang } from 'rspress/runtime';
 import IconLaunch from '../icons/Launch';
 import IconQrcode from '../icons/Qrcode';
 import IconRefresh from '../icons/Refresh';

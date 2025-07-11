@@ -212,9 +212,6 @@ importers:
       '@rspress/plugin-preview':
         specifier: workspace:*
         version: link:../../../packages/plugin-preview
-      '@rspress/shared':
-        specifier: workspace:*
-        version: link:../../../packages/shared
       react:
         specifier: ^19.1.0
         version: 19.1.0
@@ -449,9 +446,6 @@ importers:
       '@rspress/plugin-playground':
         specifier: workspace:*
         version: link:../../../packages/plugin-playground
-      '@rspress/shared':
-        specifier: workspace:*
-        version: link:../../../packages/shared
       react:
         specifier: ^19.1.0
         version: 19.1.0
@@ -477,9 +471,6 @@ importers:
       '@rspress/plugin-preview':
         specifier: workspace:*
         version: link:../../../packages/plugin-preview
-      '@rspress/shared':
-        specifier: workspace:*
-        version: link:../../../packages/shared
       react:
         specifier: ^19.1.0
         version: 19.1.0
@@ -1044,9 +1035,9 @@ importers:
       '@docsearch/react':
         specifier: ^3.9.0
         version: 3.9.0(@algolia/client-search@5.23.4)(@types/react@19.1.8)(react-dom@19.1.0(react@19.1.0))(react@19.1.0)(search-insights@2.17.3)
-      '@rspress/runtime':
+      rspress:
         specifier: workspace:^2.0.0-beta.20
-        version: link:../runtime
+        version: link:../cli
     devDependencies:
       '@microsoft/api-extractor':
         specifier: ^7.52.8
@@ -1060,9 +1051,6 @@ importers:
       '@rspress/config':
         specifier: workspace:*
         version: link:../../scripts/config
-      '@rspress/shared':
-        specifier: workspace:*
-        version: link:../shared
       '@types/node':
         specifier: ^22.8.1
         version: 22.10.2
@@ -1084,12 +1072,6 @@ importers:
 
   packages/plugin-api-docgen:
     dependencies:
-      '@rspress/core':
-        specifier: workspace:^2.0.0-beta.20
-        version: link:../core
-      '@rspress/shared':
-        specifier: workspace:*
-        version: link:../shared
       chokidar:
         specifier: ^3.6.0
         version: 3.6.0
@@ -1108,6 +1090,9 @@ importers:
       remark-gfm:
         specifier: ^4.0.1
         version: 4.0.1
+      rspress:
+        specifier: workspace:^2.0.0-beta.20
+        version: link:../cli
       unified:
         specifier: ^11.0.5
         version: 11.0.5
@@ -1154,12 +1139,9 @@ importers:
 
   packages/plugin-client-redirects:
     dependencies:
-      '@rspress/runtime':
+      rspress:
         specifier: workspace:^2.0.0-beta.20
-        version: link:../runtime
-      '@rspress/shared':
-        specifier: workspace:*
-        version: link:../shared
+        version: link:../cli
     devDependencies:
       '@microsoft/api-extractor':
         specifier: ^7.52.8
@@ -1191,12 +1173,6 @@ importers:
 
   packages/plugin-llms:
     dependencies:
-      '@rspress/core':
-        specifier: workspace:^2.0.0-beta.20
-        version: link:../core
-      '@rspress/shared':
-        specifier: workspace:*
-        version: link:../shared
       remark-mdx:
         specifier: ^3.1.0
         version: 3.1.0
@@ -1206,6 +1182,9 @@ importers:
       remark-stringify:
         specifier: ^11.0.0
         version: 11.0.0
+      rspress:
+        specifier: workspace:^2.0.0-beta.20
+        version: link:../cli
       unified:
         specifier: ^11.0.5
         version: 11.0.5
@@ -1255,18 +1234,15 @@ importers:
       '@oxidation-compiler/napi':
         specifier: ^0.2.0
         version: 0.2.0
-      '@rspress/core':
-        specifier: workspace:^2.0.0-beta.20
-        version: link:../core
-      '@rspress/shared':
-        specifier: workspace:*
-        version: link:../shared
       remark-gfm:
         specifier: ^4.0.1
         version: 4.0.1
       rspack-plugin-virtual-module:
         specifier: 1.0.1
         version: 1.0.1
+      rspress:
+        specifier: workspace:^2.0.0-beta.20
+        version: link:../cli
       unist-util-visit:
         specifier: ^5.0.0
         version: 5.0.0
@@ -1346,12 +1322,6 @@ importers:
       '@rsbuild/plugin-solid':
         specifier: ~1.0.5
         version: 1.0.5(@babel/core@7.26.10)(@rsbuild/core@1.4.3)(solid-js@1.9.7)
-      '@rspress/core':
-        specifier: workspace:^2.0.0-beta.20
-        version: link:../core
-      '@rspress/shared':
-        specifier: workspace:*
-        version: link:../shared
       '@rspress/theme-default':
         specifier: workspace:*
         version: link:../theme-default
@@ -1361,6 +1331,9 @@ importers:
       qrcode.react:
         specifier: ^4.2.0
         version: 4.2.0(react@19.1.0)
+      rspress:
+        specifier: workspace:^2.0.0-beta.20
+        version: link:../cli
     devDependencies:
       '@rslib/core':
         specifier: 0.10.4
@@ -1410,9 +1383,6 @@ importers:
 
   packages/plugin-rss:
     dependencies:
-      '@rspress/shared':
-        specifier: workspace:*
-        version: link:../shared
       feed:
         specifier: ^4.2.2
         version: 4.2.2
@@ -1423,9 +1393,6 @@ importers:
       '@rslib/core':
         specifier: 0.10.4
         version: 0.10.4(@microsoft/api-extractor@7.52.8(@types/node@22.10.2))(typescript@5.8.2)
-      '@rspress/runtime':
-        specifier: workspace:*
-        version: link:../runtime
       '@types/node':
         specifier: ^22.8.1
         version: 22.10.2
@@ -1444,9 +1411,6 @@ importers:
 
   packages/plugin-typedoc:
     dependencies:
-      '@rspress/shared':
-        specifier: workspace:*
-        version: link:../shared
       rspress:
         specifier: workspace:^2.0.0-beta.20
         version: link:../cli

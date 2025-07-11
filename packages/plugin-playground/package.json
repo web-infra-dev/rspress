@@ -35,7 +35,6 @@
     "@mdx-js/mdx": "^3.1.0",
     "@monaco-editor/react": "~4.7.0",
     "@oxidation-compiler/napi": "^0.2.0",
-    "@rspress/shared": "workspace:*",
     "remark-gfm": "^4.0.1",
     "rspack-plugin-virtual-module": "1.0.1",
     "unist-util-visit": "^5.0.0"
@@ -61,9 +60,9 @@
     "unified": "^11.0.5"
   },
   "peerDependencies": {
-    "@rspress/core": "workspace:^2.0.0-beta.20",
     "react": ">=18.0.0",
-    "react-router-dom": "^6.8.1"
+    "react-router-dom": "^6.8.1",
+    "rspress": "workspace:^2.0.0-beta.20"
   },
   "engines": {
     "node": ">=18.0.0"

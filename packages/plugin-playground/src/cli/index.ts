@@ -4,9 +4,9 @@ import type {
   EditorProps as MonacoEditorProps,
   loader,
 } from '@monaco-editor/react';
-import type { RouteMeta, RspressPlugin } from '@rspress/shared';
-import { getNodeAttribute } from '@rspress/shared/node-utils';
 import { RspackVirtualModulePlugin } from 'rspack-plugin-virtual-module';
+import { getNodeAttribute } from 'rspress/core';
+import type { RouteMeta, RspressPlugin } from 'rspress/core';
 import { DEFAULT_BABEL_URL, DEFAULT_MONACO_URL } from '../web/constant';
 import { normalizeUrl } from '../web/utils';
 import { remarkPlugin } from './remarkPlugin';

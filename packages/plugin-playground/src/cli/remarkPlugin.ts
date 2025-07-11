@@ -1,10 +1,10 @@
 import { resolve } from 'node:path';
-import type { RouteMeta } from '@rspress/shared';
 import type { Code, Root } from 'mdast';
 import type {
   MdxJsxAttributeValueExpression,
   MdxJsxFlowElement,
 } from 'mdast-util-mdx-jsx';
+import type { RouteMeta } from 'rspress/core';
 import type { Plugin } from 'unified';
 import { visit } from 'unist-util-visit';
 import { getNodeMeta } from './utils';

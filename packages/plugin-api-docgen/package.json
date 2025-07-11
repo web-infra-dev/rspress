@@ -12,11 +12,11 @@
   "type": "module",
   "exports": {
     ".": {
-      "types": "./index.d.ts",
+      "types": "./dist/index.d.ts",
       "default": "./dist/index.js"
     }
   },
-  "types": "./index.d.ts",
+  "types": "./dist/index.d.ts",
   "files": [
     "dist",
     "static",
@@ -28,7 +28,6 @@
     "reset": "rimraf ./**/node_modules"
   },
   "dependencies": {
-    "@rspress/shared": "workspace:*",
     "chokidar": "^3.6.0",
     "documentation": "14.0.3",
     "github-slugger": "^2.0.0",
@@ -53,7 +52,7 @@
     "typescript": "^5.8.2"
   },
   "peerDependencies": {
-    "@rspress/core": "workspace:^2.0.0-beta.20",
+    "rspress": "workspace:^2.0.0-beta.20",
     "typescript": "^5.8.2"
   },
   "peerDependenciesMeta": {

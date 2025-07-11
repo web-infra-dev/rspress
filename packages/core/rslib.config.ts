@@ -1,10 +1,30 @@
+import path from 'node:path';
 import { pluginReact } from '@rsbuild/plugin-react';
 import { defineConfig } from '@rslib/core';
 import { pluginPublint } from 'rsbuild-plugin-publint';
 
+function generateEntry(entryPath: string) {
+  const entryName = path
+    .basename(entryPath)
+    .replace(path.extname(entryPath), '');
+  return {
+    dts: { bundle: true },
+    source: {
+      entry: {
+        [entryName]: entryPath,
+      },
+    },
+    format: 'esm',
+    syntax: 'esnext',
+  } as const;
+}
+
 export default defineConfig({
   plugins: [pluginPublint()],
   lib: [
+    generateEntry('./src/runtime.ts'),
+    generateEntry('./src/runtime-server.ts'),
+    generateEntry('./src/theme.ts'),
     {
       format: 'esm',
       dts: {

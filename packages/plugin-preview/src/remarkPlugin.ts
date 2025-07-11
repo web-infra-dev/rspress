@@ -1,10 +1,9 @@
 import fs from 'node:fs';
 import { dirname, join, resolve } from 'node:path';
-import { normalizePosixPath } from '@rspress/shared';
-// import { getNodeAttribute } from '@rspress/shared/node-utils';
 import type { Code, Root } from 'mdast';
 import type { MdxJsxFlowElement } from 'mdast-util-mdx-jsx';
 import type { MdxjsEsm } from 'mdast-util-mdxjs-esm';
+import { normalizePosixPath } from 'rspress/core';
 import type { Plugin } from 'unified';
 import { visit } from 'unist-util-visit';
 import { getASTNodeImport, getExternalDemoContent } from './ast-helpers';

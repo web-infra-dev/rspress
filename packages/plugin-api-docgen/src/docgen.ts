@@ -1,7 +1,5 @@
 import fs from 'node:fs';
 import path from 'node:path';
-import { RSPRESS_TEMP_DIR } from '@rspress/shared';
-import { logger } from '@rspress/shared/logger';
 import chokidar from 'chokidar';
 import type { ComponentDoc, PropItem } from 'react-docgen-typescript';
 import {
@@ -9,6 +7,8 @@ import {
   withCustomConfig,
   withDefaultConfig,
 } from 'react-docgen-typescript';
+import { logger } from 'rspress/core';
+import { RSPRESS_TEMP_DIR } from 'rspress/core';
 import { apiDocMap } from './constants';
 import { locales } from './locales';
 import type {

@@ -1,4 +1,4 @@
-declare module '@rspress/shared' {
+declare module 'rspress/core' {
   interface PageIndexInfo {
     devPort?: number;
   }
