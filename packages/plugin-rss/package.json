@@ -12,16 +12,17 @@
   "type": "module",
   "exports": {
     ".": {
-      "types": "./dist/index.d.ts",
+      "types": "./index.d.ts",
       "default": "./dist/index.js"
     },
     "./FeedsAnnotations": "./static/global-components/FeedsAnnotations.tsx"
   },
   "module": "./dist/index.js",
-  "types": "./dist/index.d.ts",
+  "types": "./index.d.ts",
   "files": [
     "dist",
-    "static"
+    "static",
+    "index.d.ts"
   ],
   "scripts": {
     "build": "rslib build",

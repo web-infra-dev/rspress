@@ -42,9 +42,7 @@
   "files": [
     "dist",
     "static",
-    "index.html",
-    "runtime.ts",
-    "theme.ts"
+    "index.html"
   ],
   "scripts": {
     "build": "rslib build",
