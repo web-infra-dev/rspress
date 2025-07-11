@@ -1207,9 +1207,6 @@ importers:
       '@rspress/config':
         specifier: workspace:*
         version: link:../../scripts/config
-      '@rspress/runtime':
-        specifier: workspace:*
-        version: link:../runtime
       '@types/hast':
         specifier: ^3.0.4
         version: 3.0.4
