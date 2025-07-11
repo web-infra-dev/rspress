@@ -18,8 +18,7 @@ async function initRouteService(
   });
 
   const { routeData } = routeService;
-  const routeMeta = routeService.getRoutes();
-  const routeCode = routeService.generateRoutesCodeByRouteMeta(routeMeta);
+  const routeCode = routeService.generateRoutesCode();
 
   return {
     routeData,

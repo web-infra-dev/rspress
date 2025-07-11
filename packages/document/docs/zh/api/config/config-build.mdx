@@ -42,7 +42,7 @@ export default defineConfig({
 
 :::
 
-## builderPlugins
+## builderConfig.plugins
 
 - Type: `RsbuildPlugin[]`
 
@@ -57,7 +57,9 @@ import { defineConfig } from 'rspress/config';
 import { pluginVue } from '@rsbuild/plugin-vue';
 
 export default defineConfig({
-  builderPlugins: [pluginVue()],
+  builderConfig: {
+    plugins: [pluginVue()],
+  },
 });
 ```
 
@@ -68,12 +70,14 @@ import { defineConfig } from 'rspress/config';
 import { pluginGoogleAnalytics } from 'rsbuild-plugin-google-analytics';
 
 export default defineConfig({
-  builderPlugins: [
-    pluginGoogleAnalytics({
-      // replace this with your Google tag ID
-      id: 'G-xxxxxxxxxx',
-    }),
-  ],
+  builderConfig: {
+    plugins: [
+      pluginGoogleAnalytics({
+        // replace this with your Google tag ID
+        id: 'G-xxxxxxxxxx',
+      }),
+    ],
+  },
 });
 ```
 
@@ -84,13 +88,15 @@ import { defineConfig } from 'rspress/config';
 import { pluginOpenGraph } from 'rsbuild-plugin-open-graph';
 
 export default defineConfig({
-  builderPlugins: [
-    pluginOpenGraph({
-      title: 'My Website',
-      type: 'website',
-      // ...options
-    }),
-  ],
+  builderConfig: {
+    plugins: [
+      pluginOpenGraph({
+        title: 'My Website',
+        type: 'website',
+        // ...options
+      }),
+    ],
+  },
 });
 ```
 
@@ -103,11 +109,13 @@ import { defineConfig } from 'rspress/config';
 import { pluginReact } from '@rsbuild/plugin-react';
 
 export default defineConfig({
-  builderPlugins: [
-    pluginReact({
-      // ...options
-    }),
-  ],
+  builderConfig: {
+    plugins: [
+      pluginReact({
+        // ...options
+      }),
+    ],
+  },
 });
 ```
 
@@ -194,15 +202,6 @@ export default defineConfig({
 ```
 
 开启这个配置后，Rspress 会基于约定式路由表对文档中的链接进行检查，若出现无法访问的链接，构建会抛出错误并退出。
-
-### markdown.mdxRs
-
-- Type: `boolean | { include: (filepath: string) => boolean }`
-- Default: `true`
-
-import MdxRs from '../../fragments/mdx-rs';
-
-<MdxRs />
 
 ### markdown.showLineNumbers
 
