@@ -1,6 +1,6 @@
 {
   "name": "@rspress/theme-default",
-  "version": "2.0.0-beta.17",
+  "version": "2.0.0-beta.20",
   "description": "The Default Theme of Rspress Documentation Framework",
   "bugs": "https://github.com/web-infra-dev/rspress/issues",
   "repository": {
@@ -40,7 +40,7 @@
     "@mdx-js/react": "2.3.0",
     "@rspress/runtime": "workspace:*",
     "@rspress/shared": "workspace:*",
-    "@unhead/react": "^2.0.10",
+    "@unhead/react": "^2.0.12",
     "body-scroll-lock": "4.0.0-beta.0",
     "copy-to-clipboard": "^3.3.3",
     "flexsearch": "0.7.43",
@@ -55,11 +55,11 @@
   },
   "devDependencies": {
     "@microsoft/api-extractor": "^7.52.8",
-    "@rsbuild/plugin-react": "~1.3.2",
+    "@rsbuild/plugin-react": "~1.3.3",
     "@rsbuild/plugin-sass": "~1.3.2",
     "@rsbuild/plugin-svgr": "^1.2.0",
     "@rsbuild/plugin-typed-css-modules": "~1.0.2",
-    "@rslib/core": "0.10.3",
+    "@rslib/core": "0.10.4",
     "@types/body-scroll-lock": "^3.1.2",
     "@types/hast": "^3.0.4",
     "@types/jest": "~29.5.14",
@@ -68,6 +68,7 @@
     "@types/nprogress": "^0.2.3",
     "@types/react": "^19.1.8",
     "@types/react-dom": "^19.1.6",
+    "@types/web": "^0.0.246",
     "rsbuild-plugin-publint": "^0.3.2",
     "tailwindcss": "^3.4.17",
     "typescript": "^5.8.2"

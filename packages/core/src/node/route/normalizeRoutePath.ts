@@ -2,19 +2,19 @@ import { addLeadingSlash, addTrailingSlash } from '@rspress/shared';
 import { DEFAULT_PAGE_EXTENSIONS } from '@rspress/shared/constants';
 
 export const getRoutePathParts = (
-  routePath: string,
+  relativePath: string,
   lang: string,
   version: string,
   langs: string[],
   versions: string[],
 ) => {
-  const hasTrailSlash = routePath.endsWith('/');
+  const hasTrailSlash = relativePath.endsWith('/');
 
   let versionPart = '';
   let langPart = '';
   let purePathPart = '';
 
-  const parts: string[] = routePath.split('/').filter(Boolean);
+  const parts: string[] = relativePath.split('/').filter(Boolean);
 
   if (version) {
     const versionToMatch = parts[0];
@@ -46,14 +46,31 @@ export const getRoutePathParts = (
   ] as const;
 };
 
+/**
+ *
+ * @param relativePath "/v3/en/guide/getting-started.mdx" or "/v3/guide/getting-started.mdx" or "/en/guide/getting-started.mdx" or "/guide/getting-started.mdx"
+ * @returns
+ */
 export const normalizeRoutePath = (
-  routePath: string,
+  relativePath: string,
   lang: string,
   version: string,
   langs: string[],
   versions: string[],
   extensions: string[] = DEFAULT_PAGE_EXTENSIONS,
 ) => {
+  // 1. remove extension
+  const extensionsWithoutDot = extensions.map(i => i.slice(1));
+  const cleanExtensionPattern = new RegExp(
+    `\\.(${extensionsWithoutDot.join('|')})$`,
+    'i',
+  );
+
+  let routePath = relativePath
+    .replace(cleanExtensionPattern, '')
+    .replace(/\.html$/, '');
+
+  // 2. remove /v3/en
   const [versionPart, langPart, purePathPart] = getRoutePathParts(
     routePath,
     lang,
@@ -61,22 +78,19 @@ export const normalizeRoutePath = (
     langs,
     versions,
   );
-  const extensionsWithoutDot = extensions.map(i => i.slice(1));
-  const cleanExtensionPattern = new RegExp(
-    `\\.(${extensionsWithoutDot.join('|')})$`,
-    'i',
-  );
+
+  // 3. remove index
+  routePath = purePathPart.replace(/\/index$/, '/');
+  if (routePath === 'index') {
+    routePath = '';
+  }
 
   const normalizedRoutePath = addLeadingSlash(
-    [versionPart, langPart].filter(Boolean).join('/') +
-      addLeadingSlash(purePathPart),
-  )
-    // remove the extension
-    .replace(cleanExtensionPattern, '')
-    .replace(/\.html$/, '')
-    .replace(/\/index$/, '/');
+    [...[versionPart, langPart].filter(Boolean), routePath].join('/'),
+  );
 
   return {
+    pureRoutePath: `/${routePath}`,
     routePath: normalizedRoutePath,
     lang: langPart || lang,
     version: versionPart || version,

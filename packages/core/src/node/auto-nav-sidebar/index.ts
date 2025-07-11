@@ -5,12 +5,6 @@ import { logger } from '@rspress/shared/logger';
 import { combineWalkResult, processLocales } from './locales';
 import { walk } from './walk';
 
-export type NormalizeRoutePathFn = (routePath: string) => {
-  routePath: string;
-  lang: string;
-  version: string;
-};
-
 export async function modifyConfigWithAutoNavSide(
   config: UserConfig,
 ): Promise<UserConfig> {

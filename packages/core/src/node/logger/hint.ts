@@ -97,3 +97,14 @@ export function hintNavJsonChangeThenPanic(
     process.exit(1);
   }
 }
+
+let isLogged = false;
+export function hintRelativeMarkdownLink() {
+  if (isLogged) {
+    return;
+  }
+  isLogged = true;
+  logger.info(
+    '[Rspress v2] Markdown links without "./" prefix are now relative links, e.g: [](guide/getting-started) is equal to [](./guide/getting-started). You can rewrite it to [](/guide/getting-started) to always use absolute links, or use [](./getting-started.md)',
+  );
+}

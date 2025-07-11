@@ -96,11 +96,13 @@ export default App;
 
 ### 外部组件
 
-除了将组件代码写在 mdx 文件的代码块中，你还可以将组件代码写在外部文件中，然后在 mdx 文件中通过 code 标签引入。比如
+除了将组件代码写在 mdx 文件的代码块中，你还可以将组件代码写在外部文件中，然后在 mdx 文件中通过 `file="./filename"` 的 meta 标记引入。比如
 
-```md title="example.mdx"
-<code src="./Demo.jsx" />
+````md title="example.mdx"
+```jsx file="./Demo.jsx"
+
 ```
+````
 
 ```jsx title="Demo.jsx"
 import React from 'react';
@@ -112,9 +114,11 @@ export default function App() {
 
 同样的，外部组件也支持 `direction` 属性：
 
-```md title="example.mdx"
-<code src="./Demo.jsx" direction="vertical" />
+````md title="example.mdx"
+```jsx file="./Demo.jsx" direction=vertical
+
 ```
+````
 
 外部组件中同样需要将组件作为 default 导出。而通过 code 标签的 src 属性，你可以指定外部组件的路径，该插件同时支持相对路径以及别名路径(alias)。
 

@@ -1,4 +1,4 @@
-import type { Header, RemoteSearchIndexInfo } from '@rspress/shared';
+import type { Header } from '@rspress/shared';
 
 const MAX_TITLE_LENGTH = 20;
 const kRegex = /[\u3131-\u314e|\u314f-\u3163|\uac00-\ud7a3]/u;
@@ -66,19 +66,6 @@ function getCharByteCount(char: string) {
 
   return 1;
 }
-
-export const normalizeSearchIndexes = (
-  items: RemoteSearchIndexInfo[],
-): { value: string; label: string }[] => {
-  return items.map(item =>
-    typeof item === 'string'
-      ? {
-          value: item,
-          label: item,
-        }
-      : item,
-  );
-};
 
 export function substrByBytes(str: string, start: number, len: number): string {
   let resultStr = '';

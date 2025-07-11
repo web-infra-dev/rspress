@@ -42,12 +42,28 @@ export default defineConfig({
     pluginAlgolia({
       verificationContent: '8F5BFE50E65777F1',
     }),
-    pluginLlms(),
+    pluginLlms([
+      {
+        llmsTxt: {
+          name: 'llms.txt',
+        },
+        llmsFullTxt: {
+          name: 'llms-full.txt',
+        },
+        include: ({ page }) => page.lang === 'en',
+      },
+      {
+        llmsTxt: {
+          name: 'zh/llms.txt',
+        },
+        llmsFullTxt: {
+          name: 'zh/llms-full.txt',
+        },
+        include: ({ page }) => page.lang === 'zh',
+      },
+    ]),
   ],
   builderConfig: {
-    dev: {
-      lazyCompilation: true,
-    },
     plugins: [
       pluginSass(),
       pluginGoogleAnalytics({ id: 'G-66B2Z6KG0J' }),
@@ -67,7 +83,6 @@ export default defineConfig({
       cleanDistPath: false,
     },
   },
-  search: false,
   route: {
     cleanUrls: true,
     exclude: ['**/fragments/**'],
@@ -75,7 +90,7 @@ export default defineConfig({
   themeConfig: {
     enableAppearanceAnimation: false,
     footer: {
-      message: '© 2024 Bytedance Inc. All Rights Reserved.',
+      message: '© 2023-present ByteDance Inc.',
     },
     hideNavbar: 'auto',
     socialLinks: [

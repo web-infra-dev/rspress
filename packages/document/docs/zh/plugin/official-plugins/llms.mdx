@@ -44,12 +44,13 @@ export interface Options {
 
 ### llmsTxt
 
-- 类型: `boolean | LlmsTxt`
+- 类型: `false | LlmsTxt`
 
 ```ts
 import type { PageIndexInfo } from '@rspress/shared';
 
 export interface LlmsTxt {
+  name: string;
   onTitleGenerate?: (context: {
     title: string | undefined;
     description: string | undefined;
@@ -59,7 +60,7 @@ export interface LlmsTxt {
 }
 ```
 
-- 默认值: `true`
+- 默认值: `{ name: 'llms.txt' }`
 
 是否生成 llms.txt 文件，或者通过 hooks 自定义生成 llms.txt 文件。
 
@@ -118,15 +119,36 @@ Rspress is a static site generator based on Rsbuild and it can generate llms.txt
 
 ### mdFiles
 
-- 类型: `boolean`
-- 默认值: `true`
+- 类型: `false | MdFiles`
+
+```ts
+export interface MdFiles {
+  mdxToMd: boolean;
+}
+```
+
+- 默认值: `{ mdxToMd: true }`
 
 是否生成对应路由的 markdown 文件，当设置为 `false` 时，不会生成对应路由的 markdown 文件。
 
-### llmsFullTxt
+#### mdxToMd
 
 - 类型: `boolean`
 - 默认值: `true`
+
+是否将 mdx 文件转换为 md 文件，默认会将 mdx 文件通过一组默认策略转换为 md 文件。
+
+### llmsFullTxt
+
+- 类型: `false | LlmsFullTxt`
+
+```ts
+export interface LlmsFullTxt {
+  name: string;
+}
+```
+
+- 默认值: `{ name: 'llms-full.txt' }`
 
 是否生成 llms-full.txt 文件，当设置为 `false` 时，不会生成 `llms-full.txt` 文件。
 
@@ -165,5 +187,43 @@ pluginLlms({
   exclude: ({ page }) => {
     return page.routePath === '/foo';
   },
+});
+```
+
+## 同时生成多组 `llms.txt`
+
+由于大模型只需要一组 `llms.txt` 即可理解你网站，所以默认只会包含默认语言对应的页面。但某些情况下，你可能生成多组 `llms.txt`，例如多语言站点。
+
+此时，你可以通过传入一个数组来实现：
+
+- 示例：
+
+```ts
+// rspress.config.ts
+import { defineConfig } from 'rspress/config';
+defineConfig({
+  lang: 'en',
+  plugins: [
+    pluginLlms([
+      {
+        llmsTxt: {
+          name: 'llms.txt',
+        },
+        llmsFullTxt: {
+          name: 'llms-full.txt',
+        },
+        include: ({ page }) => page.lang === 'en',
+      },
+      {
+        llmsTxt: {
+          name: 'zh/llms.txt',
+        },
+        llmsFullTxt: {
+          name: 'zh/llms-full.txt',
+        },
+        include: ({ page }) => page.lang === 'zh',
+      },
+    ]),
+  ],
 });
 ```

@@ -124,45 +124,7 @@ export const remarkCodeToDemo: Plugin<[RemarkPluginOptions], Root> = function ({
       }
     });
 
-    // 1. External demo , use <code src="foo" /> to declare demo
-    // FIXME: support External demo
-    // visit(tree, 'mdxJsxFlowElement', node => {
-    //   if (node.name === 'code') {
-    //     const src = getNodeAttribute(node, 'src');
-
-    //     if (typeof src !== 'string') {
-    //       return;
-    //     }
-
-    //     // don't support expression syntax
-    //     const currentMode =
-    //       getNodeAttribute(node, 'previewMode') ?? previewMode;
-
-    //     // TODO: remove isMobile attribute
-    //     const isMobileAttr = getNodeAttribute(node, 'isMobile');
-    //     let isMobileMode = false;
-    //     if (isMobileAttr === undefined) {
-    //       // isMobile is not specified, eg: <code />
-    //       isMobileMode = currentMode === 'iframe';
-    //     } else if (isMobileAttr === null) {
-    //       // true by default, eg: <code isMobile />
-    //       isMobileMode = true;
-    //     } else if (typeof isMobileAttr === 'object') {
-    //       // jsx value, isMobileMode.value now must be string, even if input is
-    //       // any complex struct rather than primitive type
-    //       // eg: <code isMobile={ anyOfOrOther([true, false, 'true', 'false', {}]) } />
-    //       isMobileMode = isMobileAttr.value !== 'false';
-    //     } else {
-    //       // string value, eg: <code isMobile="true" />
-    //       isMobileMode = isMobileAttr !== 'false';
-    //     }
-
-    //     const id = generateId(pageName, index++);
-    //     constructDemoNode(id, src, node, isMobileMode, externalDemoIndex++);
-    //   }
-    // });
-
-    // 2. Internal demo, such as using ```jsx to declare demo
+    // Internal demo, such as using ```jsx to declare demo
     visit(tree, 'code', node => {
       // hasVisited is a custom property
       if ('hasVisited' in node) {

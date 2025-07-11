@@ -6,14 +6,14 @@ function parseTitleFromMeta(meta: string | undefined): string {
   if (!meta) {
     return '';
   }
-  let result = meta;
-  const highlightReg = /{[\d,-]*}/i;
-  const highlightMeta = highlightReg.exec(meta)?.[0];
-  if (highlightMeta) {
-    result = meta.replace(highlightReg, '').trim();
+  const kvList = meta.split(' ').filter(Boolean) as string[];
+  for (const item of kvList) {
+    const [k, v] = item.split('=');
+    if (k === 'title' && v.length > 0) {
+      return v.replace(/["'`]/g, '');
+    }
   }
-  result = result.split('=')[1] ?? '';
-  return result?.replace(/["'`]/g, '');
+  return '';
 }
 
 export function transformerAddTitle(): ShikiTransformer {

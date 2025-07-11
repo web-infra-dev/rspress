@@ -1,4 +1,3 @@
-import path from 'node:path';
 import { expect, test } from '@playwright/test';
 import { getPort, killProcess, runDevCommand } from '../../utils/runCommands';
 
@@ -29,20 +28,18 @@ test.describe('plugin test', async () => {
       .frameLocator('iframe')
       .getByText('Internal')
       .innerText();
-    // FIXME: support this usage of plugin-preview
-    // const externalDemoCodePreview = await page
-    //   .frameLocator('iframe')
-    //   .getByText('External')
-    //   .innerText();
+    const externalDemoCodePreview = await page
+      .frameLocator('iframe')
+      .getByText('External')
+      .innerText();
     const transformedCodePreview = await page
       .frameLocator('iframe')
       .getByText('JSON')
       .innerText();
 
-    // expect(codeBlockElements.length).toBe(3);
-    expect(codeBlockElements.length).toBe(2);
+    expect(codeBlockElements.length).toBe(3);
     expect(internalDemoCodePreview).toBe('Hello World Internal');
-    // expect(externalDemoCodePreview).toBe('Hello World External');
+    expect(externalDemoCodePreview).toBe('Hello World External');
     expect(transformedCodePreview).toBe('Render from JSON');
   });
 });

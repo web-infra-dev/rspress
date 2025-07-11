@@ -1,6 +1,6 @@
 {
   "name": "@rspress/runtime",
-  "version": "2.0.0-beta.17",
+  "version": "2.0.0-beta.20",
   "description": "The Runtime of Rspress Documentation Framework",
   "bugs": "https://github.com/web-infra-dev/rspress/issues",
   "repository": {
@@ -39,14 +39,14 @@
   },
   "dependencies": {
     "@rspress/shared": "workspace:*",
-    "@unhead/react": "^2.0.10",
+    "@unhead/react": "^2.0.12",
     "react": "^19.1.0",
     "react-dom": "^19.1.0",
     "react-router-dom": "^6.29.0"
   },
   "devDependencies": {
-    "@rsbuild/plugin-react": "~1.3.2",
-    "@rslib/core": "0.10.3",
+    "@rsbuild/plugin-react": "~1.3.3",
+    "@rslib/core": "0.10.4",
     "@rspress/config": "workspace:*",
     "@types/jest": "~29.5.14",
     "@types/react": "^19.1.8",

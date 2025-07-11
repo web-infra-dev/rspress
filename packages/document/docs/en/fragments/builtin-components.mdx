@@ -322,31 +322,43 @@ import { PackageManagerTabs } from '@theme';
 The types of props included are as follows:
 
 ```ts
-interface PackageManagerTabsProps {
-  command:
-    | string
-    | {
+type PackageManagerTabProps = (
+  | {
+      command: string;
+      /**
+       * If true, the command will be interpreted as a shell command and prefixed with npx for npm,
+       * or the package manager binary for others.
+       */
+      exec?: boolean;
+    }
+  | {
+      command: {
         // Used to set commands for different package managers
         npm?: string;
         yarn?: string;
         pnpm?: string;
         bun?: string;
       };
+      exec?: never;
+    }
+) &
   // Used to set additional tabs
-  additionalTabs: {
-    // Used to set additional package managers
-    tool: string;
-    // Used to set the icon of the additional package manager
-    icon?: React.ReactNode;
-  }[];
-}
+  {
+    additionalTabs?: {
+      // Used to set additional package managers
+      tool: string;
+      // Used to set the icon of the additional package manager
+      icon?: ReactNode;
+    }[];
+  };
 ```
 
 When `command` is set to a string, it will default to displaying three tabs: npm, yarn, pnpm and bun, and the component will automatically add the corresponding package manager command before the command. If you need to display additional tabs, you can achieve this through `additionalTabs`.
+For the `string` variant of the `command` prop, an optional `exec` prop can be used for presenting binary execution usage (by changing the NPM tab's command prefix to `npx`).
 
 :::tip
 
-In the install command, special processing has been done for yarn and bun. If your command is `install some-packages`, the install will be automatically replaced with add in the yarn/bun tab.
+In the install command, special processing has been done for yarn, pnpm and bun. If your command is `install some-packages`, the install will be automatically replaced with add in the yarn/pnpm/bun tab.
 
 :::
 

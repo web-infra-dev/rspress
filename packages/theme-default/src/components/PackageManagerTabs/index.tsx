@@ -7,20 +7,30 @@ import { Yarn } from './icons/Yarn';
 import './index.scss';
 import type { ReactNode } from 'react';
 
-export interface PackageManagerTabProps {
-  command:
-    | string
-    | {
+export type PackageManagerTabProps = (
+  | {
+      command: string;
+      /**
+       * If true, the command will be interpreted as a shell command and prefixed with npx for npm,
+       * or the package manager binary for others.
+       */
+      exec?: boolean;
+    }
+  | {
+      command: {
         npm?: string;
         yarn?: string;
         pnpm?: string;
         bun?: string;
       };
+      exec?: never;
+    }
+) & {
   additionalTabs?: {
     tool: string;
     icon?: ReactNode;
   }[];
-}
+};
 
 function normalizeCommand(command: string): string {
   // If command is yarn create foo@latest, remove `@latest`
@@ -37,7 +47,11 @@ function normalizeCommand(command: string): string {
     .split(' ')
     .filter(item => !item.startsWith('-') && !item.startsWith('--'))
     .join(' ');
-  if (pureCommand === 'yarn install' || pureCommand === 'bun install') {
+  if (
+    pureCommand === 'yarn install' ||
+    pureCommand === 'pnpm install' ||
+    pureCommand === 'bun install'
+  ) {
     return command;
   }
 
@@ -56,6 +70,7 @@ function splitTo2Parts(command: string): [string, string] {
 
 export function PackageManagerTabs({
   command,
+  exec,
   additionalTabs = [],
 }: PackageManagerTabProps) {
   let commandInfo: Record<string, string>;
@@ -73,7 +88,7 @@ export function PackageManagerTabs({
   // Init Command
   if (typeof command === 'string') {
     commandInfo = {
-      npm: `npm ${command}`,
+      npm: `${exec ? 'npx' : 'npm'} ${command}`,
       yarn: `yarn ${command}`,
       pnpm: `pnpm ${command}`,
       bun: `bun ${command}`,
@@ -85,8 +100,9 @@ export function PackageManagerTabs({
     commandInfo = command;
   }
 
-  // Normalize yarn/bun command
+  // Normalize yarn/pnpm/bun command
   commandInfo.yarn && (commandInfo.yarn = normalizeCommand(commandInfo.yarn));
+  commandInfo.pnpm && (commandInfo.pnpm = normalizeCommand(commandInfo.pnpm));
   commandInfo.bun && (commandInfo.bun = normalizeCommand(commandInfo.bun));
 
   return (

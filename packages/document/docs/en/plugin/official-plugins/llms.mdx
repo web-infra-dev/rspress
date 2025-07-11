@@ -43,12 +43,13 @@ export interface Options {
 
 ### llmsTxt
 
-- Type: `boolean | LlmsTxt`
+- Type: `false | LlmsTxt`
 
 ```ts
 import type { PageIndexInfo } from '@rspress/shared';
 
 export interface LlmsTxt {
+  name: string;
   onTitleGenerate?: (context: {
     title: string | undefined;
     description: string | undefined;
@@ -58,7 +59,7 @@ export interface LlmsTxt {
 }
 ```
 
-- Default: `true`
+- Default: `{ name: 'llms.txt' }`
 
 Whether to generate the llms.txt file, or to customize the llms.txt file through hooks.
 
@@ -117,15 +118,36 @@ Rspress is a static site generator based on Rsbuild and it can generate llms.txt
 
 ### mdFiles
 
-- Type: `boolean`
-- Default: `true`
+- Type: `false | MdFiles`
+
+```ts
+export interface MdFiles {
+  mdxToMd: boolean;
+}
+```
+
+- Default: `{ mdxToMd: true }`
 
 Whether to generate a markdown file for the corresponding route, when set to `false`, the markdown file for the corresponding route will not be generated.
 
-### llmsFullTxt
+#### mdxToMd
 
 - Type: `boolean`
 - Default: `true`
+
+Whether to convert mdx files to md files, by default, mdx files will be converted to md files through a set of default strategies.
+
+### llmsFullTxt
+
+- Type: `false | LlmsFullTxt`
+
+```ts
+export interface LlmsFullTxt {
+  name: string;
+}
+```
+
+- Default: `{ name: 'llms-full.txt' }`
 
 Whether to generate the llms-full.txt file, the `llms-full.txt` file will not be generated when set to `false`.
 
@@ -164,5 +186,43 @@ pluginLlms({
   exclude: ({ page }) => {
     return page.routePath.includes('foo');
   },
+});
+```
+
+## Generate multiple groups of `llms.txt` at the same time
+
+Since the llms only requires a set of `llms.txt` to understand your website, it will only contain pages corresponding to the default language by default. But in some cases, you may generate multiple groups of `llms.txt`, such as multilingual sites.
+
+At this point, you can do it by passing in an array:
+
+- Example：
+
+```ts
+// rspress.config.ts
+import { defineConfig } from 'rspress/config';
+defineConfig({
+  lang: 'en',
+  plugins: [
+    pluginLlms([
+      {
+        llmsTxt: {
+          name: 'llms.txt',
+        },
+        llmsFullTxt: {
+          name: 'llms-full.txt',
+        },
+        include: ({ page }) => page.lang === 'en',
+      },
+      {
+        llmsTxt: {
+          name: 'zh/llms.txt',
+        },
+        llmsFullTxt: {
+          name: 'zh/llms-full.txt',
+        },
+        include: ({ page }) => page.lang === 'zh',
+      },
+    ]),
+  ],
 });
 ```

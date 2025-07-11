@@ -21,12 +21,17 @@ export const rsbuildPluginSSG = ({
   async setup(api) {
     api.onBeforeBuild(() => {
       let htmlTemplate: string = '';
+      let hasError: boolean = false;
       const indexHtmlEmittedInWeb: Promise<void> = new Promise<void>(
         (resolve, reject) => {
           api.processAssets(
             { stage: 'report', targets: ['web'] },
             ({ assets, compilation, environment }) => {
               if (environment.name !== 'web') {
+                return;
+              }
+              if (compilation.errors.length > 0) {
+                hasError = true;
                 return;
               }
 
@@ -56,6 +61,17 @@ export const rsbuildPluginSSG = ({
           if (environment.name !== 'node') {
             return;
           }
+          if (compilation.errors.length > 0) {
+            hasError = true;
+            return;
+          }
+
+          // If user has encountered a compile time error at the web/node output, user needs to first debug the error in this stage.
+          // we will not do ssg for better debugging
+          if (hasError) {
+            return;
+          }
+
           const distPath = environment.distPath;
           const ssgFolderPath = join(distPath, NODE_SSG_BUNDLE_FOLDER);
           const mainCjsAbsolutePath = join(ssgFolderPath, NODE_SSG_BUNDLE_NAME);
@@ -85,6 +101,7 @@ export const rsbuildPluginSSG = ({
           };
 
           await indexHtmlEmittedInWeb;
+
           await renderPages(
             routeService,
             config,

@@ -21,7 +21,6 @@ export {
   isDevDebugMode,
   isExternalUrl,
   isProduction,
-  isSCM,
   normalizeHref,
   normalizePosixPath,
   normalizeSlash,

@@ -1,4 +1,3 @@
-import path from 'node:path';
 import { expect, test } from '@playwright/test';
 import { runBuildCommand } from '../../utils/runCommands';
 

@@ -1,7 +1,6 @@
 import path from 'node:path';
 import { createProcessor } from '@mdx-js/mdx';
 import type { Header, UserConfig } from '@rspress/shared';
-import { logger } from '@rspress/shared/logger';
 import { extractTextAndId, loadFrontMatter } from '@rspress/shared/node-utils';
 
 import type { PluginDriver } from '../PluginDriver';
@@ -106,7 +105,6 @@ MDXContent.__RSPRESS_PAGE_META["${encodeURIComponent(
     if (e instanceof Error) {
       throw e;
     }
-    logger.error(`MDX compile error: ${e} in ${filepath}`);
     throw new Error(`MDX compile error: ${e} in ${filepath}`);
   }
 }

@@ -100,11 +100,14 @@ test('normalizeRoutePath', () => {
       ['zh', 'en'],
       ['v1', 'v2'],
     ),
-  ).toEqual({
-    lang: 'en',
-    version: 'v1',
-    routePath: '/foo/bar',
-  });
+  ).toMatchInlineSnapshot(`
+    {
+      "lang": "en",
+      "pureRoutePath": "/foo/bar",
+      "routePath": "/foo/bar",
+      "version": "v1",
+    }
+  `);
   expect(
     normalizeRoutePath(
       '/v1/zh/foo/bar',
@@ -113,11 +116,16 @@ test('normalizeRoutePath', () => {
       ['zh', 'en'],
       ['v1', 'v2'],
     ),
-  ).toEqual({
-    lang: 'zh',
-    version: 'v1',
-    routePath: '/zh/foo/bar',
-  });
+  ).toMatchInlineSnapshot(
+    `
+    {
+      "lang": "zh",
+      "pureRoutePath": "/foo/bar",
+      "routePath": "/zh/foo/bar",
+      "version": "v1",
+    }
+  `,
+  );
   expect(
     normalizeRoutePath(
       '/v2/en/foo/bar',
@@ -126,11 +134,16 @@ test('normalizeRoutePath', () => {
       ['zh', 'en'],
       ['v1', 'v2'],
     ),
-  ).toEqual({
-    lang: 'en',
-    version: 'v2',
-    routePath: '/v2/foo/bar',
-  });
+  ).toMatchInlineSnapshot(
+    `
+    {
+      "lang": "en",
+      "pureRoutePath": "/foo/bar",
+      "routePath": "/v2/foo/bar",
+      "version": "v2",
+    }
+  `,
+  );
   expect(
     normalizeRoutePath(
       '/v2/zh/foo/bar',
@@ -139,26 +152,37 @@ test('normalizeRoutePath', () => {
       ['zh', 'en'],
       ['v1', 'v2'],
     ),
-  ).toEqual({
-    lang: 'zh',
-    version: 'v2',
-    routePath: '/v2/zh/foo/bar',
-  });
+  ).toMatchInlineSnapshot(
+    `
+    {
+      "lang": "zh",
+      "pureRoutePath": "/foo/bar",
+      "routePath": "/v2/zh/foo/bar",
+      "version": "v2",
+    }
+  `,
+  );
   expect(
     normalizeRoutePath('/v2/en/api/', 'en', 'v1', ['zh', 'en'], ['v1', 'v2']),
-  ).toEqual({
-    lang: 'en',
-    version: 'v2',
-    routePath: '/v2/api/',
-  });
+  ).toMatchInlineSnapshot(`
+    {
+      "lang": "en",
+      "pureRoutePath": "/api/",
+      "routePath": "/v2/api/",
+      "version": "v2",
+    }
+  `);
 
   expect(
     normalizeRoutePath('/foo/bar', 'en', 'v1', ['zh', 'en'], ['v1', 'v2']),
-  ).toEqual({
-    lang: 'en',
-    version: 'v1',
-    routePath: '/foo/bar',
-  });
+  ).toMatchInlineSnapshot(`
+    {
+      "lang": "en",
+      "pureRoutePath": "/foo/bar",
+      "routePath": "/foo/bar",
+      "version": "v1",
+    }
+  `);
 
   expect(
     normalizeRoutePath(
@@ -168,11 +192,14 @@ test('normalizeRoutePath', () => {
       ['zh', 'en'],
       ['v1', 'v2'],
     ),
-  ).toEqual({
-    lang: 'en',
-    version: 'v1',
-    routePath: '/foo/bar/baz.xyz',
-  });
+  ).toMatchInlineSnapshot(`
+    {
+      "lang": "en",
+      "pureRoutePath": "/foo/bar/baz.xyz",
+      "routePath": "/foo/bar/baz.xyz",
+      "version": "v1",
+    }
+  `);
 
   expect(
     normalizeRoutePath(
@@ -183,9 +210,12 @@ test('normalizeRoutePath', () => {
       ['v1', 'v2'],
       ['.xyz'],
     ),
-  ).toEqual({
-    lang: 'en',
-    version: 'v1',
-    routePath: '/foo/bar/baz',
-  });
+  ).toMatchInlineSnapshot(`
+    {
+      "lang": "en",
+      "pureRoutePath": "/foo/bar/baz",
+      "routePath": "/foo/bar/baz",
+      "version": "v1",
+    }
+  `);
 });

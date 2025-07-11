@@ -98,11 +98,13 @@ Make sure the document ends with `.mdx`.
 
 ### External components
 
-In addition to writing the component code in the code block of the mdx file, you can also write the component code in an external file, and then import it in the mdx file through the code tag. For example
+In addition to writing component code in the code block of the mdx file, you can also write component code in an external file and then import it in the mdx file through the meta tag of `file="./filename"`. For example
 
-```md title="example.mdx"
-<code src="./Demo.jsx" />
+````md title="example.mdx"
+```jsx file="./Demo.jsx"
+
 ```
+````
 
 ```jsx title="Demo.jsx"
 import React from 'react';
@@ -114,9 +116,11 @@ export default function App() {
 
 Same as internal components, external components also support `direction` attribute:
 
-```md title="example.mdx"
-<code src="./Demo.jsx" direction="vertical" />
+````md title="example.mdx"
+```jsx file="./Demo.jsx" direction=vertical
+
 ```
+````
 
 External components also need to export the component as default. Through the src attribute of the code tag, you can specify the path of the external component. This plugin supports both relative paths and alias paths(alias).
 

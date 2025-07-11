@@ -1,4 +1,3 @@
-import path from 'node:path';
 import { expect, test } from '@playwright/test';
 import { getPort, killProcess, runDevCommand } from '../../utils/runCommands';
 
@@ -33,15 +32,21 @@ test.describe('plugin test', async () => {
       .nth(1)
       .getByText('TSX')
       .innerText();
-    const transformedCodePreview = await page
+    const externalIframeJsxDemoCodePreview = await page
       .frameLocator('iframe')
       .nth(2)
+      .getByText('EXTERNAL')
+      .innerText();
+    const transformedCodePreview = await page
+      .frameLocator('iframe')
+      .nth(3)
       .getByText('VUE')
       .innerText();
 
-    expect(codeBlockElements.length).toBe(3);
+    expect(codeBlockElements.length).toBe(4);
     expect(internalIframeJsxDemoCodePreview).toBe('Hello World JSX');
     expect(internalIframeTsxDemoCodePreview).toBe('Hello World TSX');
+    expect(externalIframeJsxDemoCodePreview).toBe('Hello World External');
     expect(transformedCodePreview).toBe('Hello World VUE');
   });
 });

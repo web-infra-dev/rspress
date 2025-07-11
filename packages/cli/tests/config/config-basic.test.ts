@@ -8,7 +8,7 @@ const TEST_TITLE = 'my-title';
 describe('Should load config file', () => {
   test('Load config.cjs', async () => {
     const fixtureDir = path.join(__dirname, 'cjs');
-    const config = await loadConfigFile(
+    const { config } = await loadConfigFile(
       path.join(fixtureDir, 'rspress.config.cjs'),
     );
 
@@ -20,7 +20,7 @@ describe('Should load config file', () => {
 
   test('Load config.mjs', async () => {
     const fixtureDir = path.join(__dirname, 'esm');
-    const config = await loadConfigFile(
+    const { config } = await loadConfigFile(
       path.join(fixtureDir, 'rspress.config.mjs'),
     );
 
@@ -33,7 +33,7 @@ describe('Should load config file', () => {
 
   test('Load config.js/config.ts in cjs project', async () => {
     const fixtureDir = path.join(__dirname, 'cjs');
-    let config = await loadConfigFile(
+    const { config } = await loadConfigFile(
       path.join(fixtureDir, 'rspress.config.js'),
     );
 
@@ -42,8 +42,10 @@ describe('Should load config file', () => {
       title: TEST_TITLE,
     });
 
-    config = await loadConfigFile(path.join(fixtureDir, 'rspress.config.ts'));
-    expect(config).toMatchObject({
+    const { config: config2 } = await loadConfigFile(
+      path.join(fixtureDir, 'rspress.config.ts'),
+    );
+    expect(config2).toMatchObject({
       root: normalizePath(fixtureDir),
       title: TEST_TITLE,
     });
@@ -51,7 +53,7 @@ describe('Should load config file', () => {
 
   test('Load config.js/config.ts in esm project', async () => {
     const fixtureDir = path.join(__dirname, 'esm');
-    let config = await loadConfigFile(
+    const { config } = await loadConfigFile(
       path.join(fixtureDir, 'rspress.config.js'),
     );
 
@@ -61,7 +63,9 @@ describe('Should load config file', () => {
     };
     expect(config).toMatchObject(expectConfig);
 
-    config = await loadConfigFile(path.join(fixtureDir, 'rspress.config.ts'));
-    expect(config).toMatchObject(expectConfig);
+    const { config: config2 } = await loadConfigFile(
+      path.join(fixtureDir, 'rspress.config.ts'),
+    );
+    expect(config2).toMatchObject(expectConfig);
   });
 });

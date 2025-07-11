@@ -8,7 +8,6 @@ import remarkGFM from 'remark-gfm';
 import type { PluggableList } from 'unified';
 import { rehypeHeaderAnchor } from './rehypePlugins/headerAnchor';
 import { remarkBuiltin } from './remarkPlugins/builtin';
-import { remarkCheckDeadLinks } from './remarkPlugins/checkDeadLink';
 import { remarkPluginNormalizeLink } from './remarkPlugins/normalizeLink';
 import { remarkPluginToc } from './remarkPlugins/toc';
 
@@ -18,6 +17,7 @@ import type { RouteService } from '../route/RouteService';
 import { rehypeCodeMeta } from './rehypePlugins/codeMeta';
 import { createRehypeShikiOptions } from './rehypePlugins/shiki';
 import { remarkContainerSyntax } from './remarkPlugins/containerSyntax';
+import { remarkFileCodeBlock } from './remarkPlugins/fileCodeBlock';
 
 export async function createMDXOptions(options: {
   docDirectory: string;
@@ -65,23 +65,16 @@ export async function createMDXOptions(options: {
       remarkGFM,
       remarkPluginToc,
       remarkContainerSyntax,
+      [remarkFileCodeBlock, { filepath }],
       [
         remarkPluginNormalizeLink,
         {
           cleanUrls,
           root: docDirectory,
           routeService,
+          checkDeadLinks,
         },
       ],
-      checkDeadLinks &&
-        routeService && [
-          remarkCheckDeadLinks,
-          {
-            root: docDirectory,
-            base: config?.base || '',
-            routeService,
-          },
-        ],
       globalComponents.length && [
         remarkBuiltin,
         {
