@@ -55,10 +55,9 @@ import { getSocialIcons } from './utils/getSocialIcons';
 
 function isPluginIncluded(config: UserConfig, pluginName: string): boolean {
   return Boolean(
-    config.builderPlugins?.some(plugin => plugin.name === pluginName) ||
-      config.builderConfig?.plugins?.some(
-        plugin => plugin && (plugin as RsbuildPlugin).name === pluginName,
-      ),
+    config.builderConfig?.plugins?.some(
+      plugin => plugin && (plugin as RsbuildPlugin).name === pluginName,
+    ),
   );
 }
 
@@ -380,14 +379,13 @@ async function createInternalBuildConfig(
 
 export async function initRsbuild(
   rootDir: string,
-  _config: UserConfig,
+  config: UserConfig,
   pluginDriver: PluginDriver,
   enableSSG: boolean,
   extraRsbuildConfig?: RsbuildConfig,
 ): Promise<RsbuildInstance> {
   const cwd = process.cwd();
-  const userDocRoot = path.resolve(rootDir || _config?.root || cwd);
-  const builderPlugins = _config?.builderPlugins ?? [];
+  const userDocRoot = path.resolve(rootDir || config?.root || cwd);
   // We use a temp dir to store runtime files, so we can separate client and server build
   // and we should empty temp dir before build
   // TODO: remove all the temp dir
@@ -396,19 +394,19 @@ export async function initRsbuild(
   await fs.mkdir(runtimeAbsTempDir, { recursive: true });
 
   const routeService = await RouteService.create({
-    config: _config,
+    config: config,
     runtimeTempDir: runtimeAbsTempDir,
     scanDir: userDocRoot,
     pluginDriver,
   });
 
-  const config = await modifyConfigWithAutoNavSide(_config);
+  const mergedConfig = await modifyConfigWithAutoNavSide(config);
 
   const { createRsbuild, mergeRsbuildConfig } = await import('@rsbuild/core');
 
   const internalRsbuildConfig = await createInternalBuildConfig(
     userDocRoot,
-    config,
+    mergedConfig,
     enableSSG,
     routeService,
     pluginDriver,
@@ -421,12 +419,10 @@ export async function initRsbuild(
       ...(pluginDriver
         .getPlugins()
         ?.map(plugin => plugin.builderConfig ?? {}) || []),
-      config?.builderConfig || {},
+      mergedConfig.builderConfig || {},
       extraRsbuildConfig || {},
     ),
   });
-
-  rsbuild.addPlugins(builderPlugins);
 
   return rsbuild;
 }

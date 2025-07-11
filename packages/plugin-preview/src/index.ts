@@ -141,7 +141,6 @@ export function pluginPreview(options?: Options): RspressPlugin {
             // not copy files again
             copy: undefined,
           },
-          plugins: config?.builderPlugins,
         },
         builderConfig,
       );

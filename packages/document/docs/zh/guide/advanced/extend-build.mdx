@@ -24,7 +24,7 @@ export default defineConfig({
 });
 ```
 
-Rspress 还提供了 [builderPlugins](/api/config/config-build#builderplugins) 配置项来注册 Rsbuild 插件。你可以利用 Rsbuild 丰富的插件生态来增强和扩展构建能力。
+Rspress 还提供了 [builderConfig.plugins](/api/config/config-build#builderconfigplugins) 配置项来注册 Rsbuild 插件。你可以利用 Rsbuild 丰富的插件生态来增强和扩展构建能力。
 
 比如通过 [rsbuild-plugin-google-analytics](https://github.com/rspack-contrib/rsbuild-plugin-google-analytics) 添加 Google analytics：
 
@@ -33,12 +33,14 @@ import { defineConfig } from 'rspress/config';
 import { pluginGoogleAnalytics } from 'rsbuild-plugin-google-analytics';
 
 export default defineConfig({
-  builderPlugins: [
-    pluginGoogleAnalytics({
-      // replace this with your Google tag ID
-      id: 'G-xxxxxxxxxx',
-    }),
-  ],
+  builderConfig: {
+    plugins: [
+      pluginGoogleAnalytics({
+        // replace this with your Google tag ID
+        id: 'G-xxxxxxxxxx',
+      }),
+    ],
+  },
 });
 ```
 
