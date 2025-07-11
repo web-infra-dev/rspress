@@ -25,21 +25,21 @@ test.describe('dynamic toc', async () => {
     });
 
     let h2 = await page.$('h2');
-    let text = await page.evaluate(h2 => h2?.textContent.trim(), h2);
+    let text = await page.evaluate(h2 => h2?.textContent!.trim(), h2);
     expect(text).toBe('#Term');
 
     let toc = await page.$('.aside-link');
-    let tocText = await page.evaluate(toc => toc?.textContent.trim(), toc);
+    let tocText = await page.evaluate(toc => toc?.textContent!.trim(), toc);
     expect(tocText).toBe('Term');
 
     await setTimeout(1000); // Wait for dynamic TOC to update
 
     h2 = await page.$('h2');
-    text = await page.evaluate(h2 => h2?.textContent.trim(), h2);
+    text = await page.evaluate(h2 => h2?.textContent!.trim(), h2);
     expect(text).toBe('#Term dynamic content');
 
     toc = await page.$('.aside-link');
-    tocText = await page.evaluate(toc => toc?.textContent.trim(), toc);
+    tocText = await page.evaluate(toc => toc?.textContent!.trim(), toc);
     expect(tocText).toBe('Term dynamic content');
   });
 });
