@@ -23,7 +23,6 @@ export default defineConfig({
   plugins: [pluginPublint()],
   lib: [
     generateEntry('./src/runtime.ts'),
-    generateEntry('./src/runtime-server.ts'),
     generateEntry('./src/theme.ts'),
     {
       format: 'esm',
