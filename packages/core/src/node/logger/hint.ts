@@ -47,11 +47,9 @@ export async function hintThemeBreakingChange(customThemeDir: string) {
 
 export function hintBuilderPluginsBreakingChange(config: UserConfig) {
   if (
-    // @ts-ignore config.builderPlugins is removed in V2
-    config.builderPlugins &&
-    // @ts-ignore
+    // config.builderPlugins is removed in V2
+    'builderPlugins' in config &&
     Array.isArray(config.builderPlugins) &&
-    // @ts-ignore
     config.builderPlugins.length > 0
   ) {
     logger.error(
