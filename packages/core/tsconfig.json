@@ -18,6 +18,5 @@
     {
       "path": "../runtime"
     }
-  ],
-  "exclude": ["runtime.ts", "theme.ts", "node_modules"]
+  ]
 }

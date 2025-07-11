@@ -12,16 +12,17 @@
   "type": "module",
   "exports": {
     ".": {
-      "types": "./dist/index.d.ts",
+      "types": "./index.d.ts",
       "default": "./dist/index.js"
     },
     "./FeedsAnnotations": "./static/global-components/FeedsAnnotations.tsx"
   },
   "module": "./dist/index.js",
-  "types": "./dist/index.d.ts",
+  "types": "./index.d.ts",
   "files": [
     "dist",
-    "static"
+    "static",
+    "index.d.ts"
   ],
   "scripts": {
     "build": "rslib build",
@@ -29,12 +30,10 @@
     "reset": "rimraf ./**/node_modules"
   },
   "dependencies": {
-    "@rspress/shared": "workspace:*",
     "feed": "^4.2.2"
   },
   "devDependencies": {
     "@rslib/core": "0.10.4",
-    "@rspress/runtime": "workspace:*",
     "@types/node": "^22.8.1",
     "@types/react": "^19.1.8",
     "react": "^19.1.0",

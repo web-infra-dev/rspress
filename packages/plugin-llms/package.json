@@ -23,7 +23,6 @@
     "reset": "rimraf ./**/node_modules"
   },
   "dependencies": {
-    "@rspress/shared": "workspace:*",
     "remark-mdx": "^3.1.0",
     "remark-parse": "^11.0.0",
     "remark-stringify": "^11.0.0",
@@ -36,14 +35,13 @@
     "@rsbuild/core": "~1.4.3",
     "@rslib/core": "0.10.4",
     "@rspress/config": "workspace:*",
-    "@rspress/runtime": "workspace:*",
     "@types/hast": "^3.0.4",
     "@types/node": "^22.8.1",
     "typescript": "^5.8.2",
     "vfile": "^6.0.3"
   },
   "peerDependencies": {
-    "@rspress/core": "workspace:^2.0.0-beta.20"
+    "rspress": "workspace:^2.0.0-beta.20"
   },
   "engines": {
     "node": ">=18.0.0"

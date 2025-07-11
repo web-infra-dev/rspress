@@ -1,5 +1,10 @@
-import type { RouteService } from '@rspress/core';
-import type { Nav, PageIndexInfo, RouteMeta, Sidebar } from '@rspress/shared';
+import type {
+  Nav,
+  PageIndexInfo,
+  RouteMeta,
+  RouteService,
+  Sidebar,
+} from 'rspress/core';
 
 export interface LlmsTxt {
   /**

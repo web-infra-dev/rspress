@@ -24,14 +24,16 @@
     "./dist/*": "./dist/*",
     "./package.json": "./package.json",
     "./theme": {
-      "default": "./theme.ts"
+      "types": "./dist/theme.d.ts",
+      "default": "./dist/theme.js"
+    },
+    "./runtime": {
+      "types": "./dist/runtime.d.ts",
+      "default": "./dist/runtime.js"
     },
     "./shiki-transformers": {
       "types": "./dist/shiki-transformers.d.ts",
       "default": "./dist/shiki-transformers.js"
-    },
-    "./runtime": {
-      "default": "./runtime.ts"
     }
   },
   "main": "./dist/index.js",
@@ -40,9 +42,7 @@
   "files": [
     "dist",
     "static",
-    "index.html",
-    "runtime.ts",
-    "theme.ts"
+    "index.html"
   ],
   "scripts": {
     "build": "rslib build",

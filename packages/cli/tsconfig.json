@@ -7,8 +7,7 @@
     "baseUrl": "src",
     "rootDir": "."
   },
-  "include": ["src", "rslib.config.ts", "runtime.ts", "theme.ts"],
-  "exclude": ["**/node_modules"],
+  "include": ["src"],
   "references": [
     {
       "path": "../core"
