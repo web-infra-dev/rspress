@@ -1,4 +1,3 @@
-import path from 'node:path';
 import { type Page, expect, test } from '@playwright/test';
 import { getPort, killProcess, runDevCommand } from '../../utils/runCommands';
 
