@@ -1,4 +1,3 @@
-import path from 'node:path';
 import { type ElementHandle, expect, test } from '@playwright/test';
 import { getNavbar, getSidebar } from '../../utils/getSideBar';
 import { getPort, killProcess, runDevCommand } from '../../utils/runCommands';
