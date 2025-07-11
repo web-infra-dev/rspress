@@ -117,9 +117,13 @@ export function pluginPreview(options?: Options): RspressPlugin {
             printUrls: () => undefined,
             strictPort: true,
           },
+          dev: {
+            lazyCompilation: false,
+          },
           performance: {
             ...performance,
             printFileSize: false,
+            buildCache: false,
           },
           html,
           source: {

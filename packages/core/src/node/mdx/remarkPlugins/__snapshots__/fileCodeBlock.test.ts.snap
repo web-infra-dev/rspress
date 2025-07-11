@@ -1,0 +1,120 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`remarkFileCodeBlock > basic 1`] = `
+"const frontmatter = {};
+import {Fragment as _Fragment, jsx as _jsx, jsxs as _jsxs} from "react/jsx-runtime";
+import {useMDXComponents as _provideComponents} from "@mdx-js/react";
+function _createMdxContent(props) {
+  const _components = {
+    code: "code",
+    pre: "pre",
+    span: "span",
+    ..._provideComponents(),
+    ...props.components
+  };
+  return _jsx(_Fragment, {
+    children: _jsx(_Fragment, {
+      children: _jsx(_components.pre, {
+        className: "shiki css-variables",
+        style: {
+          backgroundColor: "var(--shiki-background)",
+          color: "var(--shiki-foreground)"
+        },
+        tabIndex: "0",
+        children: _jsxs(_components.code, {
+          className: "language-jsx",
+          children: [_jsxs(_components.span, {
+            className: "line",
+            children: [_jsx(_components.span, {
+              style: {
+                color: "var(--shiki-token-keyword)"
+              },
+              children: "export"
+            }), _jsx(_components.span, {
+              style: {
+                color: "var(--shiki-token-keyword)"
+              },
+              children: " default"
+            }), _jsx(_components.span, {
+              style: {
+                color: "var(--shiki-foreground)"
+              },
+              children: " () "
+            }), _jsx(_components.span, {
+              style: {
+                color: "var(--shiki-token-keyword)"
+              },
+              children: "=>"
+            }), _jsx(_components.span, {
+              style: {
+                color: "var(--shiki-foreground)"
+              },
+              children: " {"
+            })]
+          }), "\\n", _jsxs(_components.span, {
+            className: "line",
+            children: [_jsx(_components.span, {
+              style: {
+                color: "var(--shiki-token-keyword)"
+              },
+              children: "  return"
+            }), _jsx(_components.span, {
+              style: {
+                color: "var(--shiki-foreground)"
+              },
+              children: " <"
+            }), _jsx(_components.span, {
+              style: {
+                color: "var(--shiki-token-string-expression)"
+              },
+              children: "div"
+            }), _jsx(_components.span, {
+              style: {
+                color: "var(--shiki-foreground)"
+              },
+              children: ">hello world</"
+            }), _jsx(_components.span, {
+              style: {
+                color: "var(--shiki-token-string-expression)"
+              },
+              children: "div"
+            }), _jsx(_components.span, {
+              style: {
+                color: "var(--shiki-foreground)"
+              },
+              children: ">;"
+            })]
+          }), "\\n", _jsx(_components.span, {
+            className: "line",
+            children: _jsx(_components.span, {
+              style: {
+                color: "var(--shiki-foreground)"
+              },
+              children: "}"
+            })
+          }), "\\n", _jsx(_components.span, {
+            className: "line"
+          })]
+        })
+      })
+    })
+  });
+}
+export default function MDXContent(props = {}) {
+  const {wrapper: MDXLayout} = {
+    ..._provideComponents(),
+    ...props.components
+  };
+  return MDXLayout ? _jsx(MDXLayout, {
+    ...props,
+    children: _jsx(_createMdxContent, {
+      ...props
+    })
+  }) : _createMdxContent(props);
+}
+
+MDXContent.__RSPRESS_PAGE_META = {};
+
+MDXContent.__RSPRESS_PAGE_META["index.mdx"] = {"toc":[],"title":"","headingTitle":"","frontmatter":{}};
+"
+`;
