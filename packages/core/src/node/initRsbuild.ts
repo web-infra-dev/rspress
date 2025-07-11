@@ -30,7 +30,10 @@ import {
   inlineThemeScript,
   isProduction,
 } from './constants';
-import { hintThemeBreakingChange } from './logger/hint';
+import {
+  hintBuilderPluginsBreakingChange,
+  hintThemeBreakingChange,
+} from './logger/hint';
 import { RouteService } from './route/RouteService';
 import {
   getVirtualModulesFromPlugins,
@@ -401,6 +404,7 @@ export async function initRsbuild(
   });
 
   const mergedConfig = await modifyConfigWithAutoNavSide(config);
+  hintBuilderPluginsBreakingChange(mergedConfig);
 
   const { createRsbuild, mergeRsbuildConfig } = await import('@rsbuild/core');
 
