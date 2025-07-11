@@ -29,6 +29,7 @@ export {
   withBase,
   removeTrailingSlash,
 } from '@rspress/shared';
+export { matchPath } from '@rspress/runtime/server';
 export { getNodeAttribute, getIconUrlPath } from '@rspress/shared/node-utils';
 
 export { logger } from '@rspress/shared/logger';

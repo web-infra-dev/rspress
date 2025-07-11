@@ -15,7 +15,7 @@ import type {
   SidebarSectionHeader,
 } from 'rspress/core';
 import type { RouteService } from 'rspress/core';
-import { matchPath } from 'rspress/runtime';
+import { matchPath } from 'rspress/core';
 import { generateLlmsFullTxt, generateLlmsTxt } from './llmsTxt';
 import { mdxToMd } from './mdxToMd';
 import type {

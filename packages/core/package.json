@@ -31,10 +31,6 @@
       "types": "./dist/runtime.d.ts",
       "default": "./dist/runtime.js"
     },
-    "./runtime/server": {
-      "types": "./dist/runtime-server.d.ts",
-      "default": "./dist/runtime-server.js"
-    },
     "./shiki-transformers": {
       "types": "./dist/shiki-transformers.d.ts",
       "default": "./dist/shiki-transformers.js"
