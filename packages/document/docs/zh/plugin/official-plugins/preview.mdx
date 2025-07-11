@@ -73,11 +73,13 @@ export default App;
 
 ### 外部组件
 
-除了将组件代码写在 mdx 文件的代码块中，你还可以将组件代码写在外部文件中，然后在 mdx 文件中通过 code 标签引入。比如
+除了将组件代码写在 mdx 文件的代码块中，你还可以将组件代码写在外部文件中，然后在 mdx 文件中通过 `file="./filename"` 的 meta 标记引入。比如
 
-```md title="example.mdx"
-<code src="./Demo.tsx" />
+````md title="example.mdx"
+```tsx file="./Demo.tsx"
+
 ```
+````
 
 ```tsx title="Demo.tsx"
 export default function App() {
@@ -122,9 +124,11 @@ interface IframeOptions {
 
 你也可以针对单个代码块设置，例如
 
-```md title="example.mdx"
-<code src="./Demo.tsx" previewMode="iframe"/>
+````md title="example.mdx"
+```tsx file="./Demo.tsx" iframe
+
 ```
+````
 
 ````md title="example.mdx"
 ```tsx iframe

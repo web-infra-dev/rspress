@@ -75,11 +75,13 @@ Make sure the document ends with `.mdx`.
 
 ### External components
 
-In addition to writing the component code in the code block of the mdx file, you can also write the component code in an external file, and then import it in the mdx file through the code tag. For example
+In addition to writing component code in the code block of the mdx file, you can also write component code in an external file and then import it in the mdx file through the meta tag of `file="./filename"`. For example
 
-```md title="example.mdx"
-<code src="./Demo.tsx" />
+````md title="example.mdx"
+```tsx file="./Demo.tsx"
+
 ```
+````
 
 ```tsx title="Demo.tsx"
 export default function App() {
@@ -124,16 +126,18 @@ The `previewMode` parameter is used to specify whether the preview mode is inter
 
 You can also set it for each individual code block:
 
-```md title="example.mdx"
-<code src="./Demo.tsx" previewMode="iframe"/>
-```
-
 ````md title="example.mdx"
 ```tsx iframe
 function App() {
   return <div>Hello World</div>;
 }
 export default App;
+```
+````
+
+````md title="example.mdx"
+```tsx file="./demo.tsx" iframe
+
 ```
 ````
 

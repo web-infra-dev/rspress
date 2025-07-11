@@ -17,6 +17,7 @@ import type { RouteService } from '../route/RouteService';
 import { rehypeCodeMeta } from './rehypePlugins/codeMeta';
 import { createRehypeShikiOptions } from './rehypePlugins/shiki';
 import { remarkContainerSyntax } from './remarkPlugins/containerSyntax';
+import { remarkFileCodeBlock } from './remarkPlugins/fileCodeBlock';
 
 export async function createMDXOptions(options: {
   docDirectory: string;
@@ -64,6 +65,7 @@ export async function createMDXOptions(options: {
       remarkGFM,
       remarkPluginToc,
       remarkContainerSyntax,
+      [remarkFileCodeBlock, { filepath }],
       [
         remarkPluginNormalizeLink,
         {
