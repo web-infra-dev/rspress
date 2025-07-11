@@ -46,16 +46,12 @@ export async function siteDataVMPlugin(context: FactoryContext) {
   const searchConfig = userConfig?.search || {};
 
   // If the dev server restart when config file, we will reuse the siteData instead of extracting the siteData from source files again.
-  const domain =
-    searchConfig?.mode === 'remote' ? (searchConfig.domain ?? '') : '';
-
   const searchCodeBlocks =
     'codeBlocks' in searchConfig ? Boolean(searchConfig.codeBlocks) : true;
 
   const pages = await extractPageData(routeService, {
     replaceRules,
     alias,
-    domain,
     root: userDocRoot,
     searchCodeBlocks,
   });
@@ -63,9 +59,7 @@ export async function siteDataVMPlugin(context: FactoryContext) {
   await pluginDriver.modifySearchIndexData(pages);
 
   const versioned =
-    userConfig.search &&
-    userConfig.search.mode !== 'remote' &&
-    userConfig.search.versioned;
+    typeof userConfig.search !== 'boolean' && userConfig.search?.versioned;
 
   const groupedPages = groupBy(pages, page => {
     if (page.frontmatter?.pageType === 'home') {
@@ -130,8 +124,7 @@ export async function siteDataVMPlugin(context: FactoryContext) {
     search: tempSearchObj ?? { mode: 'local' },
     pages: pages.map(page => {
       // omit some fields for runtime size
-      const { content, domain, _filepath, _html, _flattenContent, ...rest } =
-        page;
+      const { content, _filepath, _html, _flattenContent, ...rest } = page;
       // FIXME: should not have differences from development
       // In production, we cannot expose the complete filepath for security reasons
       return isProduction() ? rest : { ...rest, _filepath };

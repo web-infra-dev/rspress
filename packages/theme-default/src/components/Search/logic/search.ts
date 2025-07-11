@@ -6,7 +6,6 @@ import {
   type Provider,
 } from './Provider';
 import { LocalProvider } from './providers/LocalProvider';
-import { RemoteProvider } from './providers/RemoteProvider';
 import {
   type DefaultMatchResultItem,
   type MatchResult,
@@ -32,14 +31,7 @@ export class PageSearcher {
   constructor(options: SearchOptions & { indexName?: string }) {
     this.#options = options;
     this.#indexName = options.indexName ?? LOCAL_INDEX;
-    switch (options.mode) {
-      case 'remote':
-        this.#provider = new RemoteProvider();
-        break;
-      default:
-        this.#provider = new LocalProvider();
-        break;
-    }
+    this.#provider = new LocalProvider();
   }
 
   async init() {
@@ -116,7 +108,7 @@ export class PageSearcher {
         type: 'title',
         title,
         header: title,
-        link: `${item.domain}${normalizeHref(item.routePath)}`,
+        link: item.routePath,
         query,
         highlightInfoList: [
           {
@@ -139,7 +131,7 @@ export class PageSearcher {
      * 记录当前匹配到的 header，用于过滤后续的 content 匹配
      */
     const matchHeaderSet = new WeakSet<Header>();
-    const { toc = [], domain = '', title = '' } = item;
+    const { toc = [], title = '' } = item;
     for (const [index, header] of toc.entries()) {
       const normalizedHeader = normalizeTextCase(header.text);
       if (normalizedHeader.includes(query)) {
@@ -161,7 +153,7 @@ export class PageSearcher {
               length: getStrByteLength(query),
             },
           ],
-          link: `${domain}${normalizeHref(item.routePath)}#${header.id}`,
+          link: `${normalizeHref(item.routePath)}#${header.id}`,
           query,
         });
         matchHeaderSet.add(header);
@@ -176,7 +168,7 @@ export class PageSearcher {
     matchedResult: DefaultMatchResultItem[],
     matchHeaderSet?: WeakSet<Header>,
   ) {
-    const { content, toc, domain } = item;
+    const { content, toc } = item;
     if (!content.length) {
       return;
     }
@@ -245,7 +237,7 @@ export class PageSearcher {
         type: 'content',
         title: item.title,
         header: currentHeader?.text ?? item.title,
-        link: `${domain}${normalizeHref(item.routePath)}${
+        link: `${normalizeHref(item.routePath)}${
           currentHeader ? `#${currentHeader.id}` : ''
         }`,
         query,
@@ -281,7 +273,7 @@ export class PageSearcher {
           header: currentHeader?.text ?? item.title,
           statement,
           highlightInfoList,
-          link: `${domain}${normalizeHref(item.routePath)}${
+          link: `${normalizeHref(item.routePath)}${
             currentHeader ? `#${currentHeader.id}` : ''
           }`,
           query,

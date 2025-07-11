@@ -1,10 +1,5 @@
-import { usePageData } from '@rspress/runtime';
-import { createPortal } from '@rspress/runtime';
-import {
-  type AnyFunction,
-  type SearchOptions,
-  isProduction,
-} from '@rspress/shared';
+import { createPortal, usePageData } from '@rspress/runtime';
+import { type AnyFunction, isProduction } from '@rspress/shared';
 import CloseSvg from '@theme-assets/close';
 import LoadingSvg from '@theme-assets/loading';
 import SearchSvg from '@theme-assets/search';
@@ -26,7 +21,7 @@ import type {
   PageSearcherConfig,
 } from './logic/types';
 import { RenderType } from './logic/types';
-import { normalizeSearchIndexes, removeDomain } from './logic/util';
+import { removeDomain } from './logic/util';
 
 const KEY_CODE = {
   ARROW_UP: 'ArrowUp',
@@ -118,8 +113,7 @@ export function SearchPanel({ focused, setFocused }: SearchPanelProps) {
   } = usePageData();
   const { searchPlaceholderText = 'Search docs' } = useLocaleSiteData();
   const { search, title: siteTitle } = siteData;
-  const versionedSearch =
-    search && search.mode !== 'remote' && search.versioned;
+  const versionedSearch = typeof search !== 'boolean' && search?.versioned;
   const DEFAULT_RESULT = [
     { group: siteTitle, result: [], renderType: RenderType.Default },
   ];
@@ -240,9 +234,9 @@ export function SearchPanel({ focused, setFocused }: SearchPanelProps) {
             currentRenderType === RenderType.Default
           ) {
             // the ResultItem has been normalized to display
-            const flatSuggestions = [
-              ...Object.values(normalizeSuggestions(currentSuggestions)),
-            ].flat();
+            const flatSuggestions = Object.values(
+              normalizeSuggestions(currentSuggestions),
+            ).flat();
             const suggestion = flatSuggestions[currentSuggestionIndex];
             const isCurrent = resultTabIndex === 0;
             if (isCurrent) {
@@ -312,9 +306,6 @@ export function SearchPanel({ focused, setFocused }: SearchPanelProps) {
   const handleQueryChangedImpl = async (value: string) => {
     let newQuery = value;
     setQuery(newQuery);
-    if (search && search.mode === 'remote' && search.searchLoading) {
-      setIsSearching(true);
-    }
     if (newQuery) {
       const searchResult: MatchResult = [];
 
@@ -384,11 +375,7 @@ export function SearchPanel({ focused, setFocused }: SearchPanelProps) {
     );
   };
 
-  const renderSearchResult = (
-    result: MatchResult,
-    searchOptions: SearchOptions,
-    isSearching: boolean,
-  ) => {
+  const renderSearchResult = (result: MatchResult, isSearching: boolean) => {
     if (result.length === 1) {
       const currentSearchResult = result[0]
         .result as DefaultMatchResult['result'];
@@ -403,13 +390,7 @@ export function SearchPanel({ focused, setFocused }: SearchPanelProps) {
     }
 
     const tabValues = result.map(item => {
-      if (!searchOptions || searchOptions.mode !== 'remote') {
-        return item.group;
-      }
-      const indexItem = normalizeSearchIndexes(
-        searchOptions.searchIndexes || [],
-      ).find(indexInfo => indexInfo.value === item.group);
-      return indexItem!.label;
+      return item.group;
     });
 
     const renderKey = 'render' as const;
@@ -571,7 +552,7 @@ export function SearchPanel({ focused, setFocused }: SearchPanelProps) {
                   className={`${styles.searchHits}  rspress-scrollbar`}
                   ref={searchResultRef}
                 >
-                  {renderSearchResult(searchResult, search, isSearching)}
+                  {renderSearchResult(searchResult, isSearching)}
                 </div>
               ) : null}
             </div>
