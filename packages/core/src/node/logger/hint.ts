@@ -46,8 +46,14 @@ export async function hintThemeBreakingChange(customThemeDir: string) {
 }
 
 export function hintBuilderPluginsBreakingChange(config: UserConfig) {
-  // @ts-ignore
-  if (config.builderPlugins && Array.isArray(config.builderPlugins)) {
+  if (
+    // @ts-ignore config.builderPlugins is removed in V2
+    config.builderPlugins &&
+    // @ts-ignore
+    Array.isArray(config.builderPlugins) &&
+    // @ts-ignore
+    config.builderPlugins.length > 0
+  ) {
     logger.error(
       `[Rspress v2] The "builderPlugins" option has been renamed to "builderConfig.plugins", please update your config accordingly (https://rspress.rs/api/config/config-build#builderconfigplugins).\n`,
       `
