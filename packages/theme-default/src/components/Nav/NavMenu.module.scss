@@ -39,7 +39,7 @@
   }
 }
 
-.navMenuItemLink {
+.navMenuItemHoverAndActive {
   &:hover {
     .navMenuItemContainer {
       // text
@@ -48,6 +48,10 @@
       font-size: 14px;
       font-style: normal;
       font-weight: 400;
+    }
+    .svgDown {
+      transform: rotate(180deg);
+      transition: transform 0.3s ease-in-out;
     }
   }
   &.active {

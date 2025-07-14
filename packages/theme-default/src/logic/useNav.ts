@@ -50,5 +50,5 @@ export function useNavData() {
     return nav;
   }
 
-  return;
+  return [];
 }

@@ -12,15 +12,12 @@ import {
   navMenuDivider,
   navMenuItem,
   navMenuItemContainer,
-  navMenuItemLink,
+  navMenuItemHoverAndActive,
+  // navMenuItemLink,
   navMenuOthers,
   svgDown,
 } from './NavMenu.module.scss';
-import { SvgDown } from './SvgDown';
-
-function NavMenuDivider() {
-  return <div className={navMenuDivider}></div>;
-}
+import { SvgDown } from './icons/SvgDown';
 
 function cls(...args: string[]) {
   return Array.from(args).filter(Boolean).join(' ');
@@ -31,7 +28,7 @@ function NavMenuItemWithChildren({
 }: { menuItem: NavItemWithChildren | NavItemWithLinkAndChildren }) {
   if ('link' in menuItem) {
     return (
-      <li className={navMenuItem}>
+      <li className={cls(navMenuItem, navMenuItemHoverAndActive)}>
         <Link href={menuItem.link}>
           <div className={navMenuItemContainer}>
             {menuItem.text}
@@ -42,31 +39,48 @@ function NavMenuItemWithChildren({
     );
   }
   return (
-    <li className={navMenuItem}>
-      <div className={navMenuItemContainer}>
-        {menuItem.text}
-        <SvgDown className={svgDown} />
+    <li className={cls(navMenuItem, navMenuItemHoverAndActive)}>
+      <div className={navMenuItemHoverAndActive}>
+        <div className={cls(navMenuItemContainer)}>
+          {menuItem.text}
+          <SvgDown className={svgDown} />
+        </div>
       </div>
     </li>
   );
 }
 
-function NavMenuItem({ menuItem }: { menuItem: NavItemWithLink }) {
+function NavMenuItemWithLink({ menuItem }: { menuItem: NavItemWithLink }) {
   const { pathname } = useLocation();
   const isActive = new RegExp(menuItem.activeMatch || menuItem.link).test(
     pathname,
   );
 
   return (
-    <li className={navMenuItem}>
-      <Link
-        href={menuItem.link}
-        className={cls(navMenuItemLink, isActive ? active : '')}
-      >
+    <li
+      className={cls(
+        navMenuItem,
+        navMenuItemHoverAndActive,
+        isActive ? active : '',
+      )}
+    >
+      <Link href={menuItem.link}>
         <div className={navMenuItemContainer}>{menuItem.text}</div>
       </Link>
     </li>
   );
+}
+
+function NavMenuItem({ menuItem: item }: { menuItem: NavItem }) {
+  if ('items' in item && Array.isArray(item.items)) {
+    return <NavMenuItemWithChildren menuItem={item} />;
+  }
+
+  return <NavMenuItemWithLink menuItem={item as NavItemWithLink} />;
+}
+
+function NavMenuDivider() {
+  return <div className={navMenuDivider}></div>;
 }
 
 export function NavMenu({ menuItems }: { menuItems: NavItem[] }) {
@@ -74,17 +88,12 @@ export function NavMenu({ menuItems }: { menuItems: NavItem[] }) {
     <>
       <ul className={navMenu}>
         {menuItems.map((item, index) => {
-          if ('items' in item && Array.isArray(item.items)) {
-            return <NavMenuItemWithChildren menuItem={item} key={index} />;
-          }
-          if ('link' in item) {
-            return <NavMenuItem menuItem={item} key={index} />;
-          }
+          return <NavMenuItem key={index} menuItem={item} />;
         })}
       </ul>
       <ul className={navMenuOthers}>
         <NavMenuDivider />
-        <NavMenuItemWithChildren menuItem={{ items: [] }} />
+        <NavMenuItem menuItem={{ items: [] }} />
       </ul>
     </>
   );

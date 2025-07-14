@@ -79,6 +79,9 @@ export default defineConfig({
         },
       }),
     ],
+    performance: {
+      buildCache: false,
+    },
     output: {
       cleanDistPath: false,
     },
