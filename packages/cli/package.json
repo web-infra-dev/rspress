@@ -54,7 +54,7 @@
     "reset": "rimraf ./**/node_modules"
   },
   "dependencies": {
-    "@rsbuild/core": "~1.4.3",
+    "@rsbuild/core": "~1.4.6",
     "@rspress/core": "workspace:*",
     "@rspress/shared": "workspace:*",
     "cac": "^6.7.14",
@@ -63,7 +63,7 @@
   },
   "devDependencies": {
     "@microsoft/api-extractor": "^7.52.8",
-    "@rslib/core": "0.10.4",
+    "@rslib/core": "0.10.5",
     "@types/jest": "~29.5.14",
     "@types/node": "^22.8.1",
     "@types/react": "^19.1.8",
