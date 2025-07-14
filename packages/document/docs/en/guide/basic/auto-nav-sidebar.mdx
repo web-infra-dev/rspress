@@ -8,7 +8,7 @@ Automated navbar/sidebar will only work if there are no `nav` and `sidebar` conf
 
 ## Basic concept
 
-First, `_meta.json` can be divided into two categories: navbar level and sidebar level. The difference between the two is that the navigation-level `_meta.json` lives in the document root, while the sidebar-level `_meta.json` lives in a subdirectory of the document root. for example:
+Rspress generates the nav through `_nav.json` and the sidebar through `_meta.json`. The `_nav.json` at the navigation bar level is located in the root directory of the document, while the `_meta.json` at the sidebar level is located in the subdirectories of the document root. For example:
 
 ```txt
 docs
@@ -21,7 +21,7 @@ docs
         └── plugin-development.md
 ```
 
-If your document supports i18n, then `_meta.json` at the navigation bar level will be placed in the corresponding language directory, for example:
+If your document supports i18n, then `_nav.json` at the navigation bar level will be placed in the corresponding language directory, for example:
 
 ```txt
 docs
