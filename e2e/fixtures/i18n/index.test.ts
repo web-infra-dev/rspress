@@ -187,8 +187,9 @@ test.describe('i18n test', async () => {
     expect(overviewContentZh).toContain('zh');
     expect(overviewContentZh).not.toContain('en');
     await page.click('.rspress-nav-menu-group-button');
+    await page.waitForTimeout(100);
     await page.click('.rspress-nav-menu-group-content a');
-    await page.waitForLoadState();
+    await page.waitForTimeout(100);
     const content = await page.textContent('#root');
     expect(content).not.toEqual('');
     const overviewContentEn = await page.textContent('.overview-index');
