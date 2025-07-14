@@ -75,8 +75,8 @@ importers:
         specifier: 2.1.9
         version: 2.1.9(@types/node@22.10.2)(sass-embedded@1.89.2)(terser@5.31.6)
       zx:
-        specifier: ^8.6.1
-        version: 8.6.1
+        specifier: ^8.7.0
+        version: 8.7.0
 
   e2e/fixtures/auto-nav-sidebar:
     dependencies:
@@ -6783,8 +6783,8 @@ packages:
   zwitch@2.0.4:
     resolution: {integrity: sha512-bXE4cR/kVZhKZX/RjPEflHaKVhUVl85noU3v6b8apfQEc1x4A+zBxjZ4lN8LqGd6WZ3dl98pY4o717VFmoPp+A==}
 
-  zx@8.6.1:
-    resolution: {integrity: sha512-ig4Gn2e3L9QaQq3OsyDyGKvXFiq7wYvLCPmFJgcneHsr5vTeJefe0SXtDE7qaur9ysv7giAc0CmEtQcS71UA5Q==}
+  zx@8.7.0:
+    resolution: {integrity: sha512-pArftqj5JV/er8p+czFZwF+k6SbCldl7kcfCR+rIiDIh3gUsLB0F3Xh05diP8PzToZ39D/GWeFoVFimjHQkbAg==}
     engines: {node: '>= 12.17.0'}
     hasBin: true
 
@@ -12942,4 +12942,4 @@ snapshots:
 
   zwitch@2.0.4: {}
 
-  zx@8.6.1: {}
+  zx@8.7.0: {}
