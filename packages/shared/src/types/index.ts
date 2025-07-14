@@ -1,4 +1,4 @@
-import type { RsbuildConfig, RsbuildPlugin } from '@rsbuild/core';
+import type { RsbuildConfig } from '@rsbuild/core';
 import type { loadConfig } from '@rsbuild/core';
 import type { RehypeShikiOptions } from '@shikijs/rehype';
 import type { ZoomOptions } from 'medium-zoom';
@@ -165,10 +165,6 @@ export interface UserConfig<ThemeConfig = DefaultThemeConfig> {
         selector?: string;
         options?: ZoomOptions;
       };
-  /**
-   * Add some extra builder plugins
-   */
-  builderPlugins?: RsbuildPlugin[];
   /**
    * Multi version config
    */

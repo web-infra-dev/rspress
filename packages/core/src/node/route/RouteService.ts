@@ -192,7 +192,7 @@ export class RouteService {
     return this.generateRoutesCodeByRouteMeta(this.getRoutes());
   }
 
-  generateRoutesCodeByRouteMeta(routeMeta: RouteMeta[]) {
+  private generateRoutesCodeByRouteMeta(routeMeta: RouteMeta[]) {
     return `
 import React from 'react';
 import { lazyWithPreload } from "react-lazy-with-preload";

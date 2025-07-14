@@ -42,7 +42,7 @@ If you want to modify the output directory, please use [outDir](/api/config/conf
 
 :::
 
-## builderPlugins
+## builderConfig.plugins
 
 - Type: `RsbuildPlugin[]`
 
@@ -57,7 +57,9 @@ import { defineConfig } from 'rspress/config';
 import { pluginVue } from '@rsbuild/plugin-vue';
 
 export default defineConfig({
-  builderPlugins: [pluginVue()],
+  builderConfig: {
+    plugins: [pluginVue()],
+  },
 });
 ```
 
@@ -68,12 +70,14 @@ import { defineConfig } from 'rspress/config';
 import { pluginGoogleAnalytics } from 'rsbuild-plugin-google-analytics';
 
 export default defineConfig({
-  builderPlugins: [
-    pluginGoogleAnalytics({
-      // replace this with your Google tag ID
-      id: 'G-xxxxxxxxxx',
-    }),
-  ],
+  builderConfig: {
+    plugins: [
+      pluginGoogleAnalytics({
+        // replace this with your Google tag ID
+        id: 'G-xxxxxxxxxx',
+      }),
+    ],
+  },
 });
 ```
 
@@ -84,13 +88,15 @@ import { defineConfig } from 'rspress/config';
 import { pluginOpenGraph } from 'rsbuild-plugin-open-graph';
 
 export default defineConfig({
-  builderPlugins: [
-    pluginOpenGraph({
-      title: 'My Website',
-      type: 'website',
-      // ...options
-    }),
-  ],
+  builderConfig: {
+    plugins: [
+      pluginOpenGraph({
+        title: 'My Website',
+        type: 'website',
+        // ...options
+      }),
+    ],
+  },
 });
 ```
 
@@ -103,11 +109,13 @@ import { defineConfig } from 'rspress/config';
 import { pluginReact } from '@rsbuild/plugin-react';
 
 export default defineConfig({
-  builderPlugins: [
-    pluginReact({
-      // ...options
-    }),
-  ],
+  builderConfig: {
+    plugins: [
+      pluginReact({
+        // ...options
+      }),
+    ],
+  },
 });
 ```
 
@@ -194,15 +202,6 @@ export default defineConfig({
 ```
 
 After enabling this config, Rspress will check the links in the document based on the conventional routing table. If there is an unreachable link, the build will throw an error and exit.
-
-### markdown.mdxRs
-
-- Type: `boolean | { include: (filepath: string) => boolean }`
-- Default: `true`
-
-import MdxRs from '../../fragments/mdx-rs';
-
-<MdxRs />
 
 ### markdown.showLineNumbers
 
