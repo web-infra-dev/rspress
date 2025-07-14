@@ -1,6 +1,6 @@
 # 自动生成导航
 
-在 Rspress 中，除了在配置文件中通过 `themeConfig` 声明 [nav](/api/config/config-theme.html#nav) 和 [sidebar](/api/config/config-theme.html#sidebar)， 你也可以通过声明 `_meta.json` 描述文件来自动化生成导航栏和侧边栏，我们更加推荐后者，因为可以使配置文件更加简洁和清晰。
+在 Rspress 中，除了在配置文件中通过 `themeConfig` 声明 [nav](/api/config/config-theme.html#nav) 和 [sidebar](/api/config/config-theme.html#sidebar)， 你也可以通过声明 `_nav.json` 和 `_meta.json` 描述文件来分别自动化生成导航栏和侧边栏，我们更加推荐后者，因为可以使配置文件更加简洁和清晰。
 
 :::tip 提示
 当配置文件 `rspress.config.ts` 中没有 `nav` 和 `sidebar` 配置的情况下，自动化导航栏/侧边栏才会生效。
@@ -8,11 +8,11 @@
 
 ## 基础概念
 
-首先，`_meta.json` 可以分为两类：导航栏级别和侧边栏级别。两者的区别在于，导航级别的 `_meta.json` 位于文档根目录中，而侧边栏级别的 `_meta.json` 位于文档根目录的子目录中。比如:
+Rspress 通过 `_nav.json` 生成导航栏，通过 `_meta.json` 生成侧边栏。导航级别的 `_nav.json` 位于文档根目录中，而侧边栏级别的 `_meta.json` 位于文档根目录的子目录中。比如:
 
 ```txt
 docs
-├── _meta.json // 导航栏级别
+├── _nav.json // 导航栏级别
 └── guides
     ├── _meta.json // 侧边栏级别
     ├── introduction.mdx
@@ -21,12 +21,12 @@ docs
         └── plugin-development.md
 ```
 
-如果你的文档使用了国际化，那么导航栏级别的 `_meta.json` 会放置在对应语言目录下，比如：
+如果你的文档使用了国际化，那么导航栏级别的 `_nav.json` 会放置在对应语言目录下，比如：
 
 ```txt
 docs
 ├── en
-│   ├── _meta.json // 导航栏级别
+│   ├── _nav.json // 导航栏级别
 │   └── guides
 │       ├── _meta.json // 侧边栏级别
 │       ├── introduction.mdx
@@ -35,7 +35,7 @@ docs
 │           ├── _meta.json // 侧边栏级别
 │           └── plugin-development.md
 └── zh
-    ├── _meta.json // 导航栏级别
+    ├── _nav.json // 导航栏级别
     └── guides
         ├── _meta.json // 侧边栏级别
         ├── introduction.mdx
@@ -45,11 +45,36 @@ docs
             └── plugin-development.md
 ```
 
+## JSON schema 类型提示
+
+为了更好的编辑 `_nav.json` 和 `_meta.json` 文件，Rspress V2 中, 提供了 `rspress/meta-json-schema.json` 和 `rspress/nav-json-schema.json` 两个 schema 文件用于类型提示。
+
+以 VSCode 为例，可以在 `.vscode/settings.json` 中添加如下配置:
+
+```json title=".vscode/settings.json"
+{
+  //...
+  "json.schemas": [
+    {
+      "fileMatch": ["**/_meta.json"],
+      "url": "./node_modules/rspress/meta-json-schema.json"
+      // 或者 "url": "https://unpkg.com/rspress@2.0.0-beta.21/meta-json-schema.json"
+    },
+    {
+      "fileMatch": ["**/_nav.json"],
+      "url": "./node_modules/rspress/nav-json-schema.json"
+      // 或者 "url": "https://unpkg.com/rspress@2.0.0-beta.21/nav-json-schema.json"
+    }
+  ]
+  // ...
+}
+```
+
 ## 导航栏级别配置
 
-在导航栏级别的情况中，你可以在 `_meta.json` 中填入一个数组，其类型跟默认主题的 nav 配置完全一致，详情可以参考 [nav 配置](/api/config/config-theme.html#nav)。比如:
+在导航栏级别的情况中，你可以在 `_nav.json` 中填入一个数组，其类型跟默认主题的 nav 配置完全一致，详情可以参考 [nav 配置](/api/config/config-theme.html#nav)。比如:
 
-```json
+```json title="docs/_nav.json"
 [
   {
     "text": "Guide",
@@ -64,46 +89,58 @@ docs
 在侧边栏级别的情况中，你可以在 `_meta.json` 中填入一个数组，数组每一项的类型如下:
 
 ```ts
+export type FileSideMeta = {
+  type: 'file';
+  name: string;
+  label?: string;
+  tag?: string;
+  overviewHeaders?: number[];
+  context?: string;
+};
+
+export type DirSideMeta = {
+  type: 'dir';
+  name: string;
+  label?: string;
+  collapsible?: boolean;
+  collapsed?: boolean;
+  tag?: string;
+  overviewHeaders?: number[];
+  context?: string;
+};
+
+export type DividerSideMeta = {
+  type: 'divider';
+  dashed?: boolean;
+};
+
+export type SectionHeaderMeta = {
+  type: 'section-header';
+  label: string;
+  tag?: string;
+};
+
+export type CustomLinkMeta = {
+  type: 'custom-link';
+  label: string;
+  link?: string;
+  context?: string;
+  tag?: string;
+  items?: CustomLinkMeta[];
+};
+
 export type SideMetaItem =
-  | string
-  | {
-      type: 'file';
-      name: string;
-      label?: string;
-      tag?: string;
-      overviewHeaders?: number[];
-      context?: string;
-    }
-  | {
-      type: 'dir';
-      name: string;
-      label?: string;
-      collapsible?: boolean;
-      collapsed?: boolean;
-      tag?: string;
-      overviewHeaders?: number[];
-      context?: string;
-    }
-  | {
-      type: 'divider';
-      dashed?: boolean;
-    }
-  | {
-      type: 'section-header';
-      label: string;
-      tag?: string;
-    }
-  | {
-      type: 'custom-link';
-      label: string;
-      link: string;
-      context?: string;
-    };
+  | FileSideMeta
+  | DirSideMeta
+  | DividerSideMeta
+  | SectionHeaderMeta
+  | CustomLinkMeta
+  | string;
 ```
 
-### string
+### file
 
-当类型为 `string` 时，表示该项是一个文件，文件名为该字符串，比如:
+- 当类型为 `string` 时，表示该项是一个文件，文件名为该字符串，比如:
 
 ```json
 ["introduction"]
@@ -111,20 +148,19 @@ export type SideMetaItem =
 
 其中文件名可以带后缀，也可以不带后缀，比如 `introduction` 会被解析为 `introduction.mdx`。
 
-### object
-
-当类型为对象形式时，你可以描述为一个文件、目录或者自定义链接。
+- 当类型为对象形式时，你可以描述为一个文件、目录或者自定义链接。
 
 在描述**文件**的情况下，类型如下:
 
 ```ts
-{
+export type FileSideMeta = {
   type: 'file';
   name: string;
   label?: string;
+  tag?: string;
   overviewHeaders?: number[];
   context?: string;
-}
+};
 ```
 
 其中，`name` 表示文件名，同时支持`带`/`不带`后缀，`label` 表示该文件在侧边栏中的显示名称，为可选值，如果未填则会自动取文档中的 h1 标题。`overviewHeaders` 表示该文件在预览页中展示的标题级别，为可选值，默认为 `[2]`。`context` 表示在生成侧边栏时在所在的 DOM 节点添加 `data-context` 属性的值。为可选值，默认不会添加。比如:
@@ -137,18 +173,21 @@ export type SideMetaItem =
 }
 ```
 
+### dir
+
 在描述**目录**的情况下，类型如下:
 
 ```ts
-{
+export type DirSideMeta = {
   type: 'dir';
   name: string;
-  label: string;
+  label?: string;
   collapsible?: boolean;
   collapsed?: boolean;
+  tag?: string;
   overviewHeaders?: number[];
   context?: string;
-}
+};
 ```
 
 其中，`name` 表示目录名，`label` 表示该目录在侧边栏中的显示名称，`collapsible` 表示该目录是否可以折叠，`collapsed` 表示该目录是否默认折叠，`overviewHeaders` 表示该目录下的文件在预览页中展示的标题级别，为可选值，默认为 `[2]`。`context` 表示在生成侧边栏时在所在的 DOM 节点添加 `data-context` 属性的值。为可选值，默认不会添加。比如:
@@ -163,13 +202,15 @@ export type SideMetaItem =
 }
 ```
 
+### divider
+
 在描述**分割线**的情况下，类型如下：
 
 ```ts
-{
+export type DividerSideMeta = {
   type: 'divider';
   dashed?: boolean;
-}
+};
 ```
 
 `dashed` 为 `true` 时表示该分割线是虚线，否则是实线。
@@ -190,13 +231,16 @@ docs
 
 :::
 
+### section-header
+
 在描述**分组标题**的情况下，类型如下:
 
 ```ts
-{
+export type SectionHeaderMeta = {
   type: 'section-header';
   label: string;
-}
+  tag?: string;
+};
 ```
 
 其中，`label` 表示该分组标题在侧边栏中的显示名称，比如:
@@ -228,15 +272,19 @@ docs
 ]
 ```
 
+### custom-link
+
 在描述**自定义链接**的情况下，类型如下:
 
 ```ts
-{
+export type CustomLinkMeta = {
   type: 'custom-link';
   label: string;
-  link: string;
+  link?: string;
   context?: string;
-}
+  tag?: string;
+  items?: CustomLinkMeta[];
+};
 ```
 
 其中，`label` 表示该链接在侧边栏中的显示名称，`link` 表示该链接的跳转地址，比如:
@@ -256,6 +304,27 @@ docs
   "type": "custom-link",
   "link": "https://github.com",
   "label": "GitHub"
+}
+```
+
+同时 custom-link 也支持嵌套链接，比如:
+
+```json
+{
+  "type": "custom-link",
+  "label": "My Link",
+  "items": [
+    {
+      "type": "custom-link",
+      "label": "Sub Link 1",
+      "link": "/sub-link-1"
+    },
+    {
+      "type": "custom-link",
+      "label": "Sub Link 2",
+      "link": "/sub-link-2"
+    }
+  ]
 }
 ```
 

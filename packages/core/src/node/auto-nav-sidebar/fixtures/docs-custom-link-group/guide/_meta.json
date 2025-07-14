@@ -1,0 +1,18 @@
+[
+  {
+    "type": "custom-link",
+    "label": "Guide",
+    "items": [
+      {
+        "type": "custom-link",
+        "label": "Foo",
+        "link": "/guide/foo.html"
+      },
+      {
+        "type": "custom-link",
+        "label": "Bar",
+        "link": "/guide/bar.html"
+      }
+    ]
+  }
+]

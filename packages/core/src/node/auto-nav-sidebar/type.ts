@@ -34,9 +34,10 @@ export type SectionHeaderMeta = {
 export type CustomLinkMeta = {
   type: 'custom-link';
   label: string;
-  link: string;
+  link?: string;
   context?: string;
   tag?: string;
+  items?: CustomLinkMeta[]; // for nested custom links, e.g. dropdowns
 };
 
 export type SideMetaItem =

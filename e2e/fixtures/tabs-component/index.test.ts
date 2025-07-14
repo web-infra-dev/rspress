@@ -19,6 +19,7 @@ test.describe('tabs-component test', async () => {
 
   test('Index page', async ({ page }) => {
     await page.goto(`http://localhost:${appPort}`);
+    await page.waitForSelector('.tabs-a');
 
     // Tab A
     const tabA = await page.$('.tabs-a');

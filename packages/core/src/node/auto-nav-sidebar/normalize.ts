@@ -33,7 +33,15 @@ async function fsDirToMetaItems(
   workDir: string,
   extensions: string[],
 ): Promise<SideMetaItem[]> {
-  let subItems = await readdir(workDir);
+  let subItems: string[];
+  try {
+    subItems = await readdir(workDir);
+  } catch (e) {
+    logger.error(
+      `Failed to read directory: ${workDir}, maybe it does not exist. Please check it in "_meta.json".`,
+    );
+    throw e;
+  }
   // If there exists a file with the same name of the directory folder
   // we don't need to generate SideMeta for this single file
   subItems = subItems.filter(item => {
@@ -291,29 +299,47 @@ function metaCustomLinkItemToSidebarItem(
   metaItem: CustomLinkMeta,
   workDir: string,
   docsDir: string,
-): SidebarItem {
-  const { label, link, context, tag } = metaItem;
-  if (typeof link === 'undefined') {
-    throw new Error(
-      `The custom link "${label}" does not have a link, please check it in "${join(workDir, '_meta.json')}".`,
-    );
-  }
-
-  if (isExternalUrl(link)) {
+): SidebarItem | SidebarGroup {
+  if (
+    'items' in metaItem &&
+    Array.isArray(metaItem.items) &&
+    metaItem.items.length > 0
+  ) {
+    const { label, link, context, items, tag } = metaItem;
     return {
       text: label ?? link,
-      link,
-      tag,
       context,
+      tag,
+      link,
+      items: items.map(subItem =>
+        metaCustomLinkItemToSidebarItem(subItem, workDir, docsDir),
+      ),
     };
   }
+  if ('link' in metaItem && typeof metaItem.link === 'string') {
+    const { label, link, context, tag } = metaItem;
 
-  return {
-    text: label ?? link,
-    link: addRoutePrefix(workDir, docsDir, link),
-    tag,
-    context,
-  };
+    if (isExternalUrl(link)) {
+      return {
+        text: label ?? link,
+        link,
+        tag,
+        context,
+      } satisfies SidebarItem;
+    }
+
+    return {
+      text: label ?? link,
+      link: addRoutePrefix(workDir, docsDir, link),
+      tag,
+      context,
+    } satisfies SidebarItem;
+  }
+
+  const { label } = metaItem;
+  throw new Error(
+    `The custom link "${label}" does not have a link, please check it in "${join(workDir, '_meta.json')}".`,
+  );
 }
 
 function metaDividerToSidebarItem(
