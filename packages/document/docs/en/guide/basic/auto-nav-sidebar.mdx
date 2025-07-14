@@ -12,7 +12,7 @@ First, `_meta.json` can be divided into two categories: navbar level and sidebar
 
 ```txt
 docs
-├── _meta.json // navigation bar level
+├── _nav.json // navigation bar level
 └── guides
     ├── _meta.json // sidebar level
     ├── introduction.mdx
@@ -26,7 +26,7 @@ If your document supports i18n, then `_meta.json` at the navigation bar level wi
 ```txt
 docs
 ├── en
-│   ├── _meta.json // navigation bar level
+│   ├── _nav.json // navigation bar level
 │   └── guides
 │       ├── _meta.json // sidebar level
 │       ├── introduction.mdx
@@ -35,7 +35,7 @@ docs
 │           ├── _meta.json // sidebar level
 │           └── plugin-development.md
 └── zh
-    ├── _meta.json // navigation bar level
+    ├── _nav.json // navigation bar level
     └── guides
         ├── _meta.json // sidebar level
         ├── introduction.mdx
@@ -64,46 +64,58 @@ In the case of the navigation bar level, you can fill in an array in `_meta.json
 In the case of the sidebar level, you can fill in `_meta.json` an array with each item of the following type:
 
 ```ts
+export type FileSideMeta = {
+  type: 'file';
+  name: string;
+  label?: string;
+  tag?: string;
+  overviewHeaders?: number[];
+  context?: string;
+};
+
+export type DirSideMeta = {
+  type: 'dir';
+  name: string;
+  label?: string;
+  collapsible?: boolean;
+  collapsed?: boolean;
+  tag?: string;
+  overviewHeaders?: number[];
+  context?: string;
+};
+
+export type DividerSideMeta = {
+  type: 'divider';
+  dashed?: boolean;
+};
+
+export type SectionHeaderMeta = {
+  type: 'section-header';
+  label: string;
+  tag?: string;
+};
+
+export type CustomLinkMeta = {
+  type: 'custom-link';
+  label: string;
+  link?: string;
+  context?: string;
+  tag?: string;
+  items?: CustomLinkMeta[];
+};
+
 export type SideMetaItem =
-  | string
-  | {
-      type: 'file';
-      name: string;
-      label?: string;
-      tag?: string;
-      overviewHeaders?: number[];
-      context?: string;
-    }
-  | {
-      type: 'dir';
-      name: string;
-      label?: string;
-      collapsible?: boolean;
-      collapsed?: boolean;
-      tag?: string;
-      overviewHeaders?: number[];
-      context?: string;
-    }
-  | {
-      type: 'divider';
-      dashed?: boolean;
-    }
-  | {
-      type: 'section-header';
-      label: string;
-      tag?: string;
-    }
-  | {
-      type: 'custom-link';
-      label: string;
-      link: string;
-      context?: string;
-    };
+  | FileSideMeta
+  | DirSideMeta
+  | DividerSideMeta
+  | SectionHeaderMeta
+  | CustomLinkMeta
+  | string;
 ```
 
-### string
+### file
 
-When the type is `string`, it means that the item is a file, and the file name is the string, for example:
+- When the type is `string`, it means that the item is a file, and the file name is the string, for example:
 
 ```json
 ["introduction"]
@@ -111,20 +123,19 @@ When the type is `string`, it means that the item is a file, and the file name i
 
 The file name may or may not have a suffix, for example `introduction` will be parsed as `introduction.mdx`.
 
-### object
-
-When the type is an object, you can describe it as a file, a directory or a custom link.
+- When the type is an object, you can describe it as a file, a directory or a custom link.
 
 In the case of describing **file**, the types are as follows:
 
 ```ts
-{
+export type FileSideMeta = {
   type: 'file';
   name: string;
   label?: string;
+  tag?: string;
   overviewHeaders?: number[];
   context?: string;
-}
+};
 ```
 
 Among them, `name` means the file name, `with`/`without` suffix is ​​supported, `label` means the display name of the file in the sidebar.`label` is an optional value, if it is not filled, it will automatically take the h1 title in the document. `overviewHeaders` means the headers displayed in the overview page of the file. It is an optional value and the default value is `[2]`. `context` means adding the value of the `data-context` attribute to the DOM node when generating the sidebar, it is an optional value and will not be added by default. For example:
@@ -137,18 +148,21 @@ Among them, `name` means the file name, `with`/`without` suffix is ​​support
 }
 ```
 
+### dir
+
 In the case of describing **directories**, the types are as follows:
 
 ```ts
-{
+export type DirSideMeta = {
   type: 'dir';
   name: string;
   label?: string;
   collapsible?: boolean;
   collapsed?: boolean;
+  tag?: string;
   overviewHeaders?: number[];
   context?: string;
-}
+};
 ```
 
 Among them, `name` indicates the directory name, `label` indicates the display name of the directory in the sidebar, `collapsible` indicates whether the directory can be collapsed, `collapsed` indicates whether the directory is collapsed by default, and `overviewHeaders` indicates the headers displayed on the overview page for files in this directory. It is an optional value and the default value is `[2]`. `context` means adding the value of the `data-context` attribute to the DOM node when generating the sidebar, it is an optional value and will not be added by default. For example:
@@ -166,10 +180,10 @@ Among them, `name` indicates the directory name, `label` indicates the display n
 In the case of describing **divider**, the types are as follows:
 
 ```ts
-{
+export type DividerSideMeta = {
   type: 'divider';
   dashed?: boolean;
-}
+};
 ```
 
 When `dashed` is set to `true`, it indicates that the divider line is dashed. Otherwise, it is solid.
@@ -190,13 +204,16 @@ In this way, when you click on the `Advanced` directory, the content of the `adv
 
 :::
 
+### section-header
+
 In the case of describing **section header**, the type is as follows:
 
 ```ts
-{
+export type SectionHeaderMeta = {
   type: 'section-header';
   label: string;
-}
+  tag?: string;
+};
 ```
 
 Here, `label` represents the display name of this section header in the sidebar, for example:
@@ -228,15 +245,19 @@ This way, you can add section headers to the sidebar, which makes it easier to g
 ]
 ```
 
+### custom-link
+
 In the case of describing **custom link**, the types are as follows:
 
 ```ts
-{
+export type CustomLinkMeta = {
   type: 'custom-link';
   label: string;
-  link: string;
+  link?: string;
   context?: string;
-}
+  tag?: string;
+  items?: CustomLinkMeta[];
+};
 ```
 
 Among them, `link` indicates the link address, `label` indicates the display name of the link in the sidebar, for example:
@@ -256,6 +277,22 @@ Among them, `link` indicates the link address, `label` indicates the display nam
   "type": "custom-link",
   "link": "https://github.com",
   "label": "GitHub"
+}
+```
+
+You can also use `items` to create a nested custom link, for example:
+
+```json
+{
+  "type": "custom-link",
+  "label": "My Link",
+  "items": [
+    {
+      "type": "custom-link",
+      "label": "Sub Link",
+      "link": "/sub-link"
+    }
+  ]
 }
 ```
 
