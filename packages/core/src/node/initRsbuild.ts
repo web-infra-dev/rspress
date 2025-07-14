@@ -238,13 +238,13 @@ async function createInternalBuildConfig(
               cacheDigest: [
                 // other configuration files which are not included in rspress.config.ts should be added to cacheDigest
                 // 1. routeService glob
-                routeService
-                  .getRoutes()
-                  .map(i => i.absolutePath + i.routePath)
-                  .join('\n'),
+                routeService.generateRoutesCode(),
                 // 2. auto-nav-sidebar _nav.json or _meta.json
                 JSON.stringify(
-                  config.themeConfig?.locales ?? {
+                  config.themeConfig?.locales?.map(i => ({
+                    nav: i.nav,
+                    sidebar: i.sidebar,
+                  })) ?? {
                     nav: config.themeConfig?.nav,
                     sidebar: config.themeConfig?.sidebar,
                   },
