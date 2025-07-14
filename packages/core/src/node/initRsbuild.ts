@@ -235,6 +235,21 @@ async function createInternalBuildConfig(
         ? {
             buildCache: {
               buildDependencies: [pluginDriver.getConfigFilePath()],
+              cacheDigest: [
+                // other configuration files which are not included in rspress.config.ts should be added to cacheDigest
+                // 1. routeService glob
+                routeService
+                  .getRoutes()
+                  .map(i => i.absolutePath + i.routePath)
+                  .join('\n'),
+                // 2. auto-nav-sidebar _nav.json or _meta.json
+                JSON.stringify(
+                  config.themeConfig?.locales ?? {
+                    nav: config.themeConfig?.nav,
+                    sidebar: config.themeConfig?.sidebar,
+                  },
+                ),
+              ],
             },
           }
         : {}),
