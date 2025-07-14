@@ -1,5 +1,9 @@
-import { normalizeHrefInRuntime, normalizeImagePath } from '@rspress/runtime';
-import { isExternalUrl, withBase } from '@rspress/shared';
+import {
+  normalizeHrefInRuntime,
+  normalizeImagePath,
+  withBase,
+} from '@rspress/runtime';
+import { isExternalUrl } from '@rspress/shared';
 import type { FrontMatterMeta } from '@rspress/shared';
 import { Button } from '@theme';
 
@@ -25,7 +29,6 @@ function HomeHero({
   beforeHeroActions,
   afterHeroActions,
   frontmatter,
-  routePath,
 }: HomeHeroProps) {
   const hero = frontmatter?.hero || DEFAULT_HERO;
   const hasImage = hero.image !== undefined;
@@ -77,7 +80,7 @@ function HomeHero({
               {hero.actions.map(action => {
                 const link = isExternalUrl(action.link)
                   ? action.link
-                  : normalizeHrefInRuntime(withBase(action.link, routePath));
+                  : normalizeHrefInRuntime(withBase(action.link));
                 return (
                   <div className="rp-flex rp-flex-shrink-0 rp-p-1" key={link}>
                     <Button
