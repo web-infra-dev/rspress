@@ -277,4 +277,44 @@ describe('walk', () => {
       }
     `);
   });
+
+  it('custom link group', async () => {
+    const docsDir = path.join(__dirname, './fixtures/docs-custom-link-group');
+    const sidebar = await walk(docsDir, docsDir, DEFAULT_PAGE_EXTENSIONS);
+    expect(sidebar).toMatchInlineSnapshot(`
+      {
+        "nav": [
+          {
+            "activeMatch": "^/guide/",
+            "link": "/guide/",
+            "text": "Guide",
+          },
+        ],
+        "sidebar": {
+          "/guide": [
+            {
+              "context": undefined,
+              "items": [
+                {
+                  "context": undefined,
+                  "link": "/guide/foo.html",
+                  "tag": undefined,
+                  "text": "Foo",
+                },
+                {
+                  "context": undefined,
+                  "link": "/guide/bar.html",
+                  "tag": undefined,
+                  "text": "Bar",
+                },
+              ],
+              "link": undefined,
+              "tag": undefined,
+              "text": "Guide",
+            },
+          ],
+        },
+      }
+    `);
+  });
 });
