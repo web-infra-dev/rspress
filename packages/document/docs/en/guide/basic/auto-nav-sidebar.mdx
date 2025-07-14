@@ -45,11 +45,35 @@ docs
             └── plugin-development.md
 ```
 
+## JSON schema type hint
+
+To better edit `_nav.json` and `_meta.json` files, Rspress V2 provides two schema files `rspress/meta-json-schema.json` and `rspress/nav-json-schema.json` for type hinting.
+
+For example, in VSCode, you can add the following configuration in `.vscode/settings.json`:
+
+```json title=".vscode/settings.json"
+{
+  //...
+  "json.schemas": [
+    {
+      "fileMatch": ["**/_meta.json"],
+      "url": "./node_modules/rspress/meta-json-schema.json"
+      // or "url": "https://unpkg.com/rspress@2.0.0-beta.21/meta-json-schema.json"
+    },
+    {
+      "fileMatch": ["**/_nav.json"],
+      "url": "./node_modules/rspress/nav-json-schema.json"
+      // or "url": "https://unpkg.com/rspress@2.0.0-beta.21/nav-json-schema.json"
+    }
+  ]
+}
+```
+
 ## Navbar level config
 
-In the case of the navigation bar level, you can fill in an array in `_meta.json`, and its type is exactly the same as the nav config of the default theme. For details, please refer to [nav config](/api/config/config-theme.html#nav). for example:
+In the case of the navigation bar level, you can fill in an array in `_nav.json`, and its type is exactly the same as the nav config of the default theme. For details, please refer to [nav config](/api/config/config-theme.html#nav). for example:
 
-```json
+```json title="docs/_nav.json"
 [
   {
     "text": "Guide",
