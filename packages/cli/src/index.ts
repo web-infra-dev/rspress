@@ -70,7 +70,7 @@ cli
             eventName === 'unlink' ||
             (eventName === 'change' &&
               (CONFIG_FILES.includes(basename) ||
-                META_FILES.includes(path.basename(filepath))))
+                META_FILES.includes(basename)))
           ) {
             if (isRestarting) {
               return;
