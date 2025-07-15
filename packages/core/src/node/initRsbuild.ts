@@ -226,6 +226,14 @@ async function createInternalBuildConfig(
         'process.env.RSPRESS_SOCIAL_ICONS': JSON.stringify(
           getSocialIcons(config.themeConfig?.socialLinks),
         ),
+        'process.env.MEDIUM_ZOOM':
+          typeof config.mediumZoom === 'object'
+            ? config.mediumZoom.isZoom
+            : !!config.mediumZoom,
+        'process.env.MEDIUM_ZOOM_OPTIONS':
+          typeof config.mediumZoom === 'object'
+            ? JSON.stringify(config.mediumZoom.options)
+            : '',
       },
     },
     performance: {

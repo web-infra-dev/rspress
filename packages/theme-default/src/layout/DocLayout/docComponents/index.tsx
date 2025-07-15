@@ -30,7 +30,6 @@ export function getCustomMDXComponent() {
     a: A,
     code: Code,
     pre: PreWithCodeButtonGroup,
-    img: Img,
-    imgZoom: ImgZoom,
+    img: process.env.MEDIUM_ZOOM ? ImgZoom : Img,
   };
 }

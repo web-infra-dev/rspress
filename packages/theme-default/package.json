@@ -47,10 +47,10 @@
     "github-slugger": "^2.0.0",
     "hast-util-to-jsx-runtime": "^2.3.6",
     "lodash-es": "^4.17.21",
-    "medium-zoom": "1.1.0",
     "nprogress": "^0.2.0",
     "react": "^19.1.0",
     "react-dom": "^19.1.0",
+    "react-medium-image-zoom": "^5.2.14",
     "shiki": "^3.4.2"
   },
   "devDependencies": {
