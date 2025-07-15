@@ -321,7 +321,11 @@ function metaCustomLinkItemToSidebarItem(
       tag,
       link,
       items: items.map(subItem =>
-        metaCustomLinkItemToSidebarItem(subItem, workDir, docsDir),
+        metaCustomLinkItemToSidebarItem(
+          Object.assign(subItem, { type: 'custom-link' }),
+          workDir,
+          docsDir,
+        ),
       ),
       collapsed,
       collapsible,
