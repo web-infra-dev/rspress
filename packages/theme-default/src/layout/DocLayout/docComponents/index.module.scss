@@ -63,11 +63,6 @@
   }
 }
 
-.medium-zoom-overlay,
-.medium-zoom-image--opened {
-  z-index: 999;
-}
-
 :global(.header-anchor) {
   color: var(--rp-c-brand);
 }
