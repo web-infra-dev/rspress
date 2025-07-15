@@ -49,7 +49,7 @@ type _CustomLinkMetaWithoutTypeField =
       tag?: string;
       overviewHeaders?: number[];
       context?: string;
-      link: string;
+      link?: string;
       collapsible?: boolean;
       collapsed?: boolean;
       items?: _CustomLinkMetaWithoutTypeField[];
@@ -74,7 +74,7 @@ export type CustomLinkMeta =
       overviewHeaders?: number[];
       context?: string;
       // custom link
-      link: string;
+      link?: string;
       // DirSideMeta
       collapsible?: boolean;
       collapsed?: boolean;
