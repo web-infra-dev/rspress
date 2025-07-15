@@ -2,11 +2,21 @@
   {
     "type": "custom-link",
     "label": "Guide",
+    "collapsible": true,
+    "collapsed": true,
     "items": [
       {
         "type": "custom-link",
         "label": "Foo",
-        "link": "/guide/foo.html"
+        "collapsible": true,
+        "collapsed": false,
+        "items": [
+          {
+            "type": "custom-link",
+            "label": "Foo Real",
+            "link": "/guide/foo.html"
+          }
+        ]
       },
       {
         "type": "custom-link",

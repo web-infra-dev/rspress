@@ -305,16 +305,32 @@ function metaCustomLinkItemToSidebarItem(
     Array.isArray(metaItem.items) &&
     metaItem.items.length > 0
   ) {
-    const { label, link, context, items, tag } = metaItem;
+    const {
+      label,
+      link,
+      context,
+      items,
+      tag,
+      collapsed,
+      collapsible,
+      overviewHeaders,
+    } = metaItem;
     return {
       text: label ?? link,
       context,
       tag,
       link,
       items: items.map(subItem =>
-        metaCustomLinkItemToSidebarItem(subItem, workDir, docsDir),
+        metaCustomLinkItemToSidebarItem(
+          Object.assign(subItem, { type: 'custom-link' }),
+          workDir,
+          docsDir,
+        ),
       ),
-    };
+      collapsed,
+      collapsible,
+      overviewHeaders,
+    } satisfies SidebarGroup;
   }
   if ('link' in metaItem && typeof metaItem.link === 'string') {
     const { label, link, context, tag } = metaItem;

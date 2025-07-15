@@ -293,11 +293,24 @@ describe('walk', () => {
         "sidebar": {
           "/guide": [
             {
+              "collapsed": true,
+              "collapsible": true,
               "context": undefined,
               "items": [
                 {
+                  "collapsed": false,
+                  "collapsible": true,
                   "context": undefined,
-                  "link": "/guide/foo.html",
+                  "items": [
+                    {
+                      "context": undefined,
+                      "link": "/guide/foo.html",
+                      "tag": undefined,
+                      "text": "Foo Real",
+                    },
+                  ],
+                  "link": undefined,
+                  "overviewHeaders": undefined,
                   "tag": undefined,
                   "text": "Foo",
                 },
@@ -309,6 +322,7 @@ describe('walk', () => {
                 },
               ],
               "link": undefined,
+              "overviewHeaders": undefined,
               "tag": undefined,
               "text": "Guide",
             },
