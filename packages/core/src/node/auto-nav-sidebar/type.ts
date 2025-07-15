@@ -13,11 +13,12 @@ export type DirSideMeta = {
   type: 'dir';
   name: string;
   label?: string;
-  collapsible?: boolean;
-  collapsed?: boolean;
   tag?: string;
   overviewHeaders?: number[];
   context?: string;
+
+  collapsible?: boolean;
+  collapsed?: boolean;
 };
 
 export type DividerSideMeta = {
@@ -31,14 +32,31 @@ export type SectionHeaderMeta = {
   tag?: string;
 };
 
-export type CustomLinkMeta = {
-  type: 'custom-link';
-  label: string;
-  link?: string;
-  context?: string;
-  tag?: string;
-  items?: CustomLinkMeta[]; // for nested custom links, e.g. dropdowns
-};
+export type CustomLinkMeta =
+  | {
+      // file link
+      type: 'custom-link';
+      label?: string;
+      tag?: string;
+      overviewHeaders?: number[];
+      context?: string;
+      // custom link
+      link: string;
+    }
+  | {
+      // dir link
+      type: 'custom-link';
+      label?: string;
+      tag?: string;
+      overviewHeaders?: number[];
+      context?: string;
+      // custom link
+      link: string;
+      // DirSideMeta
+      collapsible?: boolean;
+      collapsed?: boolean;
+      items?: (Omit<CustomLinkMeta, 'type'> & { type?: 'custom-link' })[];
+    };
 
 export type SideMetaItem =
   | FileSideMeta

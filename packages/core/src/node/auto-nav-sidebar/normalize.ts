@@ -305,7 +305,16 @@ function metaCustomLinkItemToSidebarItem(
     Array.isArray(metaItem.items) &&
     metaItem.items.length > 0
   ) {
-    const { label, link, context, items, tag } = metaItem;
+    const {
+      label,
+      link,
+      context,
+      items,
+      tag,
+      collapsed,
+      collapsible,
+      overviewHeaders,
+    } = metaItem;
     return {
       text: label ?? link,
       context,
@@ -314,7 +323,10 @@ function metaCustomLinkItemToSidebarItem(
       items: items.map(subItem =>
         metaCustomLinkItemToSidebarItem(subItem, workDir, docsDir),
       ),
-    };
+      collapsed,
+      collapsible,
+      overviewHeaders,
+    } satisfies SidebarGroup;
   }
   if ('link' in metaItem && typeof metaItem.link === 'string') {
     const { label, link, context, tag } = metaItem;
