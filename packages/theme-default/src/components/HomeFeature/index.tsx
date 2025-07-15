@@ -1,5 +1,5 @@
-import { normalizeHrefInRuntime } from '@rspress/runtime';
-import { isExternalUrl, withBase } from '@rspress/shared';
+import { normalizeHrefInRuntime, withBase } from '@rspress/runtime';
+import { isExternalUrl } from '@rspress/shared';
 import type { Feature, FrontMatterMeta } from '@rspress/shared';
 
 import { renderHtmlOrText } from '../../logic/utils';
@@ -25,7 +25,6 @@ const getGridClass = (feature: Feature): string => {
 
 export function HomeFeature({
   frontmatter,
-  routePath,
 }: {
   frontmatter: FrontMatterMeta;
   routePath: string;
@@ -41,7 +40,7 @@ export function HomeFeature({
         if (rawLink) {
           link = isExternalUrl(rawLink)
             ? rawLink
-            : normalizeHrefInRuntime(withBase(rawLink, routePath));
+            : normalizeHrefInRuntime(withBase(rawLink));
         }
 
         return (

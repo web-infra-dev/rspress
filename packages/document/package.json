@@ -1,6 +1,6 @@
 {
   "name": "@rspress/docs",
-  "version": "2.0.0-beta.20",
+  "version": "2.0.0-beta.21",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/web-infra-dev/rspress.git",
@@ -16,7 +16,7 @@
     "preview": "rspress preview"
   },
   "devDependencies": {
-    "@rsbuild/plugin-sass": "~1.3.2",
+    "@rsbuild/plugin-sass": "~1.3.3",
     "@rspress/plugin-algolia": "workspace:*",
     "@rspress/plugin-llms": "workspace:*",
     "@rstack-dev/doc-ui": "1.10.6",

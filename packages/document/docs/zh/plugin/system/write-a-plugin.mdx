@@ -2,14 +2,10 @@
 
 我们以注入一个全局组件为例，来看看如何定义和使用插件。
 
-:::tip 提示
-为了获得更好的类型提示，你可以在项目中安装 `@rspress/shared`，然后通过 `import type { RspressPlugin } from '@rspress/shared'` 来引入 `RspressPlugin` 类型。
-:::
-
 ### 1. 定义插件
 
 ```tsx title="plugin.ts"
-import type { RspressPlugin } from '@rspress/shared';
+import type { RspressPlugin } from 'rspress/core';
 
 export function pluginExample(slug: string): RspressPlugin {
   // 组件路径，组件的内容你需要自己实现

@@ -2,14 +2,10 @@
 
 Let's inject a global component as an example to see how to define and use plugins.
 
-:::tip TIP
-In order to get better type hints, you can install `@rspress/shared` in the project, and then import the `RspressPlugin` type through `import type { RspressPlugin } from '@rspress/shared'`.
-:::
-
 ### 1. Define a plugin
 
 ```tsx title="plugin.ts"
-import type { RspressPlugin } from '@rspress/shared';
+import type { RspressPlugin } from 'rspress/core';
 
 export function pluginExample(slug: string): RspressPlugin {
   // Component path, you need to implement the content of the component yourself

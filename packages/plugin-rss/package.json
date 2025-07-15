@@ -1,6 +1,6 @@
 {
   "name": "@rspress/plugin-rss",
-  "version": "2.0.0-beta.20",
+  "version": "2.0.0-beta.21",
   "description": "A plugin for rss generation for rspress",
   "bugs": "https://github.com/web-infra-dev/rspress/issues",
   "repository": {
@@ -12,16 +12,17 @@
   "type": "module",
   "exports": {
     ".": {
-      "types": "./dist/index.d.ts",
+      "types": "./index.d.ts",
       "default": "./dist/index.js"
     },
     "./FeedsAnnotations": "./static/global-components/FeedsAnnotations.tsx"
   },
   "module": "./dist/index.js",
-  "types": "./dist/index.d.ts",
+  "types": "./index.d.ts",
   "files": [
     "dist",
-    "static"
+    "static",
+    "index.d.ts"
   ],
   "scripts": {
     "build": "rslib build",
@@ -29,12 +30,10 @@
     "reset": "rimraf ./**/node_modules"
   },
   "dependencies": {
-    "@rspress/shared": "workspace:*",
     "feed": "^4.2.2"
   },
   "devDependencies": {
-    "@rslib/core": "0.10.4",
-    "@rspress/runtime": "workspace:*",
+    "@rslib/core": "0.10.5",
     "@types/node": "^22.8.1",
     "@types/react": "^19.1.8",
     "react": "^19.1.0",
@@ -42,7 +41,7 @@
     "typescript": "^5.8.2"
   },
   "peerDependencies": {
-    "rspress": "workspace:^2.0.0-beta.20"
+    "rspress": "workspace:^2.0.0-beta.21"
   },
   "engines": {
     "node": ">=18.0.0"

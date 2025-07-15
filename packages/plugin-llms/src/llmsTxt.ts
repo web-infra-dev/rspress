@@ -3,7 +3,7 @@ import {
   type PageIndexInfo,
   normalizeHref,
   withBase,
-} from '@rspress/shared';
+} from 'rspress/core';
 import type { LlmsTxt } from './types';
 
 function routePathToMdPath(routePath: string, base: string): string {

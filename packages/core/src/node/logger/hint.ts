@@ -1,5 +1,6 @@
 import { readFile } from 'node:fs/promises';
 import { join, relative } from 'node:path';
+import type { UserConfig } from '@rspress/shared';
 import { logger } from '@rspress/shared/logger';
 import picocolors from 'picocolors';
 import type { NavJson } from '../auto-nav-sidebar/type';
@@ -41,6 +42,33 @@ export async function hintThemeBreakingChange(customThemeDir: string) {
 + export * from 'rspress/theme';
 `),
     );
+  }
+}
+
+export function hintBuilderPluginsBreakingChange(config: UserConfig) {
+  if (
+    // config.builderPlugins is removed in V2
+    'builderPlugins' in config &&
+    Array.isArray(config.builderPlugins) &&
+    config.builderPlugins.length > 0
+  ) {
+    logger.error(
+      `[Rspress v2] The "builderPlugins" option has been renamed to "builderConfig.plugins", please update your config accordingly (https://rspress.rs/api/config/config-build#builderconfigplugins).\n`,
+      `
+export default defineConfig({
+${picocolors.redBright(
+  `  builderPlugins: [
+    pluginFoo()
+  ],`,
+)}
+${picocolors.greenBright(`  builderConfig: {
+    plugins: [
+      pluginFoo()
+    ],
+  },`)}
+});`,
+    );
+    process.exit(1);
   }
 }
 

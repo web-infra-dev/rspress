@@ -1,4 +1,5 @@
 import ArrowRight from '@theme-assets/arrow-right';
+import { SvgWrapper } from '../SvgWrapper';
 import * as styles from './index.module.scss';
 
 interface LinkCardProps {
@@ -37,7 +38,7 @@ export function LinkCard(props: LinkCardProps) {
         </a>
         <span className="rp-text-base rp-overflow-auto">{description}</span>
       </div>
-      <ArrowRight />
+      <SvgWrapper icon={ArrowRight} />
     </div>
   );
 }

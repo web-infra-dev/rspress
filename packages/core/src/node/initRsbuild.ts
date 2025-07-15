@@ -30,7 +30,10 @@ import {
   inlineThemeScript,
   isProduction,
 } from './constants';
-import { hintThemeBreakingChange } from './logger/hint';
+import {
+  hintBuilderPluginsBreakingChange,
+  hintThemeBreakingChange,
+} from './logger/hint';
 import { RouteService } from './route/RouteService';
 import {
   getVirtualModulesFromPlugins,
@@ -55,10 +58,9 @@ import { getSocialIcons } from './utils/getSocialIcons';
 
 function isPluginIncluded(config: UserConfig, pluginName: string): boolean {
   return Boolean(
-    config.builderPlugins?.some(plugin => plugin.name === pluginName) ||
-      config.builderConfig?.plugins?.some(
-        plugin => plugin && (plugin as RsbuildPlugin).name === pluginName,
-      ),
+    config.builderConfig?.plugins?.some(
+      plugin => plugin && (plugin as RsbuildPlugin).name === pluginName,
+    ),
   );
 }
 
@@ -237,9 +239,28 @@ async function createInternalBuildConfig(
       },
     },
     performance: {
-      buildCache: {
-        buildDependencies: [pluginDriver.getConfigFilePath()],
-      },
+      ...(process.env.RSPRESS_PERSISTENT_CACHE !== 'false'
+        ? {
+            buildCache: {
+              buildDependencies: [pluginDriver.getConfigFilePath()],
+              cacheDigest: [
+                // other configuration files which are not included in rspress.config.ts should be added to cacheDigest
+                // 1. routeService glob
+                routeService.generateRoutesCode(),
+                // 2. auto-nav-sidebar _nav.json or _meta.json
+                JSON.stringify(
+                  config.themeConfig?.locales?.map(i => ({
+                    nav: i.nav,
+                    sidebar: i.sidebar,
+                  })) ?? {
+                    nav: config.themeConfig?.nav,
+                    sidebar: config.themeConfig?.sidebar,
+                  },
+                ),
+              ],
+            },
+          }
+        : {}),
       chunkSplit: {
         override: {
           cacheGroups: {
@@ -384,14 +405,13 @@ async function createInternalBuildConfig(
 
 export async function initRsbuild(
   rootDir: string,
-  _config: UserConfig,
+  config: UserConfig,
   pluginDriver: PluginDriver,
   enableSSG: boolean,
   extraRsbuildConfig?: RsbuildConfig,
 ): Promise<RsbuildInstance> {
   const cwd = process.cwd();
-  const userDocRoot = path.resolve(rootDir || _config?.root || cwd);
-  const builderPlugins = _config?.builderPlugins ?? [];
+  const userDocRoot = path.resolve(rootDir || config?.root || cwd);
   // We use a temp dir to store runtime files, so we can separate client and server build
   // and we should empty temp dir before build
   // TODO: remove all the temp dir
@@ -400,19 +420,20 @@ export async function initRsbuild(
   await fs.mkdir(runtimeAbsTempDir, { recursive: true });
 
   const routeService = await RouteService.create({
-    config: _config,
+    config: config,
     runtimeTempDir: runtimeAbsTempDir,
     scanDir: userDocRoot,
     pluginDriver,
   });
 
-  const config = await modifyConfigWithAutoNavSide(_config);
+  const mergedConfig = await modifyConfigWithAutoNavSide(config);
+  hintBuilderPluginsBreakingChange(mergedConfig);
 
   const { createRsbuild, mergeRsbuildConfig } = await import('@rsbuild/core');
 
   const internalRsbuildConfig = await createInternalBuildConfig(
     userDocRoot,
-    config,
+    mergedConfig,
     enableSSG,
     routeService,
     pluginDriver,
@@ -425,12 +446,10 @@ export async function initRsbuild(
       ...(pluginDriver
         .getPlugins()
         ?.map(plugin => plugin.builderConfig ?? {}) || []),
-      config?.builderConfig || {},
+      mergedConfig.builderConfig || {},
       extraRsbuildConfig || {},
     ),
   });
-
-  rsbuild.addPlugins(builderPlugins);
 
   return rsbuild;
 }

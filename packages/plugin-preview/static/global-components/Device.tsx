@@ -1,10 +1,5 @@
-import {
-  NoSSR,
-  usePageData,
-  useWindowSize,
-  withBase,
-} from '@rspress/core/runtime';
 import { useCallback, useEffect, useState } from 'react';
+import { NoSSR, usePageData, useWindowSize, withBase } from 'rspress/runtime';
 // @ts-ignore
 import { normalizeId } from '../../dist/utils';
 import MobileOperation from './common/mobile-operation';

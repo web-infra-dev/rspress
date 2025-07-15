@@ -1,5 +1,5 @@
 import path from 'node:path';
-import type { RspressPlugin } from '@rspress/shared';
+import type { RspressPlugin } from 'rspress/core';
 import { Application, TSConfigReader } from 'typedoc';
 import { load } from 'typedoc-plugin-markdown';
 import { API_DIR } from './constants';

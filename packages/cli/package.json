@@ -1,6 +1,6 @@
 {
   "name": "rspress",
-  "version": "2.0.0-beta.20",
+  "version": "2.0.0-beta.21",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/web-infra-dev/rspress.git",
@@ -10,19 +10,28 @@
   "type": "module",
   "exports": {
     ".": {
+      "types": "./dist/index.d.ts",
       "default": "./dist/index.js"
     },
+    "./core": {
+      "types": "./dist/core.d.ts",
+      "default": "./dist/core.js"
+    },
     "./runtime": {
-      "default": "./runtime.ts"
+      "types": "./dist/runtime.d.ts",
+      "default": "./dist/runtime.js"
     },
     "./theme": {
-      "default": "./theme.ts"
+      "types": "./dist/theme.d.ts",
+      "default": "./dist/theme.js"
     },
     "./config": {
-      "default": "./config.ts"
+      "types": "./dist/config.d.ts",
+      "default": "./dist/config.js"
     },
     "./shiki-transformers": {
-      "default": "./shiki-transformers.ts"
+      "types": "./dist/shiki-transformers.d.ts",
+      "default": "./dist/shiki-transformers.js"
     },
     "./package.json": "./package.json"
   },
@@ -35,10 +44,6 @@
   "files": [
     "bin",
     "dist",
-    "runtime.ts",
-    "theme.ts",
-    "config.ts",
-    "shiki-transformers.ts",
     "meta-json-schema.json",
     "nav-json-schema.json"
   ],
@@ -49,7 +54,7 @@
     "reset": "rimraf ./**/node_modules"
   },
   "dependencies": {
-    "@rsbuild/core": "~1.4.3",
+    "@rsbuild/core": "~1.4.6",
     "@rspress/core": "workspace:*",
     "@rspress/shared": "workspace:*",
     "cac": "^6.7.14",
@@ -58,7 +63,7 @@
   },
   "devDependencies": {
     "@microsoft/api-extractor": "^7.52.8",
-    "@rslib/core": "0.10.4",
+    "@rslib/core": "0.10.5",
     "@types/jest": "~29.5.14",
     "@types/node": "^22.8.1",
     "@types/react": "^19.1.8",

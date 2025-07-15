@@ -22,7 +22,7 @@ export default defineConfig({
 });
 ```
 
-Rspress also provides the [builderPlugins](/api/config/config-build#builderplugins) config to register Rsbuild plugins. You can leverage Rsbuild's extensive plugin ecosystem to enhance and extend your build capabilities.
+Rspress also provides the [builderConfig.plugins](/api/config/config-build#builderconfigplugins) config to register Rsbuild plugins. You can leverage Rsbuild's extensive plugin ecosystem to enhance and extend your build capabilities.
 
 For example, add Google analytics through [rsbuild-plugin-google-analytics](https://github.com/rspack-contrib/rsbuild-plugin-google-analytics):
 
@@ -31,12 +31,14 @@ import { defineConfig } from 'rspress/config';
 import { pluginGoogleAnalytics } from 'rsbuild-plugin-google-analytics';
 
 export default defineConfig({
-  builderPlugins: [
-    pluginGoogleAnalytics({
-      // replace this with your Google tag ID
-      id: 'G-xxxxxxxxxx',
-    }),
-  ],
+  builderConfig: {
+    plugins: [
+      pluginGoogleAnalytics({
+        // replace this with your Google tag ID
+        id: 'G-xxxxxxxxxx',
+      }),
+    ],
+  },
 });
 ```
 

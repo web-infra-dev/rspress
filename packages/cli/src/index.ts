@@ -10,7 +10,7 @@ import { loadConfigFile, resolveDocRoot } from './config/loadConfigFile';
 
 const CONFIG_FILES = ['rspress.config.ts', 'rspress.config.js'];
 
-const META_FILE = '_meta.json';
+const META_FILES = ['_meta.json', '_nav.json'];
 
 const cli = cac('rspress').version(version).help();
 
@@ -64,12 +64,13 @@ cli
           },
         );
         cliWatcher.on('all', async (eventName, filepath) => {
+          const basename = path.basename(filepath);
           if (
             eventName === 'add' ||
             eventName === 'unlink' ||
             (eventName === 'change' &&
-              (CONFIG_FILES.includes(path.basename(filepath)) ||
-                path.basename(filepath) === META_FILE))
+              (CONFIG_FILES.includes(basename) ||
+                META_FILES.includes(basename)))
           ) {
             if (isRestarting) {
               return;

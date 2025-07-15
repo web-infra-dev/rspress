@@ -9,12 +9,12 @@ import {
 import { pluginBabel } from '@rsbuild/plugin-babel';
 import { pluginReact } from '@rsbuild/plugin-react';
 import { pluginSolid } from '@rsbuild/plugin-solid';
+import { cloneDeep, isEqual } from 'lodash';
 import {
   type RouteMeta,
   type RspressPlugin,
   removeTrailingSlash,
-} from '@rspress/shared';
-import { cloneDeep, isEqual } from 'lodash';
+} from 'rspress/core';
 import { staticPath } from './constant';
 import { generateEntry } from './generate-entry';
 import { demos, remarkCodeToDemo } from './remarkPlugin';
@@ -141,7 +141,6 @@ export function pluginPreview(options?: Options): RspressPlugin {
             // not copy files again
             copy: undefined,
           },
-          plugins: config?.builderPlugins,
         },
         builderConfig,
       );
@@ -212,6 +211,8 @@ export function pluginPreview(options?: Options): RspressPlugin {
     },
     extendPageData(pageData, isProd) {
       if (!isProd) {
+        // Property 'devPort' does not exist on type 'PageIndexInfo'.
+        // @ts-ignore
         pageData.devPort = port;
       }
     },

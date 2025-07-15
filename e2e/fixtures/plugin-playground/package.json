@@ -9,7 +9,6 @@
   },
   "dependencies": {
     "@rspress/plugin-playground": "workspace:*",
-    "@rspress/shared": "workspace:*",
     "react": "^19.1.0",
     "react-dom": "^19.1.0",
     "rspress": "workspace:*",

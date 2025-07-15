@@ -1,4 +1,4 @@
-import type { RsbuildConfig, RsbuildPlugin } from '@rsbuild/core';
+import type { RsbuildConfig } from '@rsbuild/core';
 import type { loadConfig } from '@rsbuild/core';
 import type { RehypeShikiOptions } from '@shikijs/rehype';
 import type { UncontrolledProps } from 'react-medium-image-zoom';
@@ -165,10 +165,6 @@ export interface UserConfig<ThemeConfig = DefaultThemeConfig> {
         isZoom: boolean;
         options?: UncontrolledProps;
       };
-  /**
-   * Add some extra builder plugins
-   */
-  builderPlugins?: RsbuildPlugin[];
   /**
    * Multi version config
    */
