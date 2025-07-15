@@ -52,7 +52,7 @@ type _CustomLinkMetaWithoutTypeField =
       link?: string;
       collapsible?: boolean;
       collapsed?: boolean;
-      items?: _CustomLinkMetaWithoutTypeField[];
+      items: _CustomLinkMetaWithoutTypeField[];
     };
 
 export type CustomLinkMeta =
@@ -78,7 +78,7 @@ export type CustomLinkMeta =
       // DirSideMeta
       collapsible?: boolean;
       collapsed?: boolean;
-      items?: _CustomLinkMetaWithoutTypeField[];
+      items: _CustomLinkMetaWithoutTypeField[];
     };
 
 export type SideMetaItem =
