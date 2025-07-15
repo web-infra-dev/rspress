@@ -32,6 +32,29 @@ export type SectionHeaderMeta = {
   tag?: string;
 };
 
+// just copied from CustomLinkMeta, but without type field, to avoid circular reference in json schema
+type _CustomLinkMetaWithoutTypeField =
+  | {
+      type?: 'custom-link';
+      label?: string;
+      tag?: string;
+      overviewHeaders?: number[];
+      context?: string;
+      // custom link
+      link: string;
+    }
+  | {
+      type?: 'custom-link';
+      label?: string;
+      tag?: string;
+      overviewHeaders?: number[];
+      context?: string;
+      link: string;
+      collapsible?: boolean;
+      collapsed?: boolean;
+      items?: _CustomLinkMetaWithoutTypeField[];
+    };
+
 export type CustomLinkMeta =
   | {
       // file link
@@ -55,7 +78,7 @@ export type CustomLinkMeta =
       // DirSideMeta
       collapsible?: boolean;
       collapsed?: boolean;
-      items?: (Omit<CustomLinkMeta, 'type'> & { type?: 'custom-link' })[];
+      items?: _CustomLinkMetaWithoutTypeField[];
     };
 
 export type SideMetaItem =
