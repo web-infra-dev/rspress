@@ -119,14 +119,28 @@ export type SectionHeaderMeta = {
   tag?: string;
 };
 
-export type CustomLinkMeta = {
-  type: 'custom-link';
-  label: string;
-  link?: string;
-  context?: string;
-  tag?: string;
-  items?: CustomLinkMeta[];
-};
+export type CustomLinkMeta =
+  | {
+      // file link
+      type: 'custom-link';
+      label: string;
+      tag?: string;
+      overviewHeaders?: number[];
+      context?: string;
+      link: string;
+    }
+  | {
+      // dir link
+      type: 'custom-link';
+      label: string;
+      tag?: string;
+      overviewHeaders?: number[];
+      context?: string;
+      link?: string;
+      collapsible?: boolean;
+      collapsed?: boolean;
+      items?: _CustomLinkMetaWithoutTypeField[];
+    };
 
 export type SideMetaItem =
   | FileSideMeta
@@ -278,24 +292,23 @@ export type CustomLinkMeta =
   | {
       // file link
       type: 'custom-link';
-      label?: string;
+      label: string;
       tag?: string;
       overviewHeaders?: number[];
       context?: string;
-      // custom link
       link: string;
     }
   | {
       // dir link
       type: 'custom-link';
-      label?: string;
+      label: string;
       tag?: string;
       overviewHeaders?: number[];
       context?: string;
-      link: string;
+      link?: string;
       collapsible?: boolean;
       collapsed?: boolean;
-      items?: CustomLinkMeta[]; // for nested custom links, e.g. dropdowns
+      items?: _CustomLinkMetaWithoutTypeField[];
     };
 ```
 
