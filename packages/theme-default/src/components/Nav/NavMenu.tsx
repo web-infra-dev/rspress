@@ -1,11 +1,14 @@
 import { useLocation } from '@rspress/runtime';
-import type {
-  NavItem,
-  NavItemWithChildren,
-  NavItemWithLink,
-  NavItemWithLinkAndChildren,
+import {
+  type NavItem,
+  type NavItemWithChildren,
+  type NavItemWithLink,
+  type NavItemWithLinkAndChildren,
+  matchNavbar,
 } from '@rspress/shared';
 import { Link } from '@theme';
+import cls from 'clsx';
+import { useMemo } from 'react';
 import {
   active,
   navMenu,
@@ -13,19 +16,17 @@ import {
   navMenuItem,
   navMenuItemContainer,
   navMenuItemHoverAndActive,
-  // navMenuItemLink,
   navMenuOthers,
   svgDown,
 } from './NavMenu.module.scss';
+import { useHoverGroup } from './components/useHoverGroup';
 import { SvgDown } from './icons/SvgDown';
-
-function cls(...args: string[]) {
-  return Array.from(args).filter(Boolean).join(' ');
-}
 
 function NavMenuItemWithChildren({
   menuItem,
-}: { menuItem: NavItemWithChildren | NavItemWithLinkAndChildren }) {
+}: {
+  menuItem: NavItemWithChildren | NavItemWithLinkAndChildren;
+}) {
   if ('link' in menuItem) {
     return (
       <li className={cls(navMenuItem, navMenuItemHoverAndActive)}>
@@ -38,23 +39,34 @@ function NavMenuItemWithChildren({
       </li>
     );
   }
+
+  const { handleMouseEnter, handleMouseLeave, hoverGroup } = useHoverGroup(
+    menuItem.items,
+  );
+
   return (
-    <li className={cls(navMenuItem, navMenuItemHoverAndActive)}>
-      <div className={navMenuItemHoverAndActive}>
+    <li
+      className={cls(navMenuItem, navMenuItemHoverAndActive)}
+      onMouseEnter={handleMouseEnter}
+      onMouseLeave={handleMouseLeave}
+      onClick={handleMouseEnter}
+    >
+      <div>
         <div className={cls(navMenuItemContainer)}>
           {menuItem.text}
           <SvgDown className={svgDown} />
         </div>
       </div>
+      {hoverGroup}
     </li>
   );
 }
 
 function NavMenuItemWithLink({ menuItem }: { menuItem: NavItemWithLink }) {
   const { pathname } = useLocation();
-  const isActive = new RegExp(menuItem.activeMatch || menuItem.link).test(
-    pathname,
-  );
+  const isActive = useMemo(() => {
+    return matchNavbar(menuItem, pathname);
+  }, [menuItem, pathname]);
 
   return (
     <li

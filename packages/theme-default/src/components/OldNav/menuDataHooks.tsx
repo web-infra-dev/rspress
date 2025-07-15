@@ -17,6 +17,8 @@ export function useTranslationMenuData(): NavMenuGroupItem {
   const hasMultiLanguage = localeLanguages.length > 1;
   const { lang: currentLang, pageType } = page;
 
+  const replaceLang: any = 1 as any;
+
   const translationMenuData = hasMultiLanguage
     ? {
         text: (

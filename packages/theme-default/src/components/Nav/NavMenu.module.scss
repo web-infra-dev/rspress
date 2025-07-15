@@ -1,6 +1,7 @@
 .navMenu {
   display: inline-flex;
   align-items: center;
+  height: 100%;
   gap: 32px;
 }
 
@@ -12,8 +13,10 @@
 
 .navMenuItem {
   display: flex;
+  height: 100%;
   justify-content: center;
   align-items: center;
+  position: relative;
 
   .navMenuItemContainer {
     display: flex;
@@ -35,6 +38,7 @@
       align-items: center;
       width: 15px;
       height: 15px;
+      transition: transform 0.3s ease-in-out;
     }
   }
 }
@@ -51,7 +55,6 @@
     }
     .svgDown {
       transform: rotate(180deg);
-      transition: transform 0.3s ease-in-out;
     }
   }
   &.active {
