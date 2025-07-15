@@ -36,7 +36,7 @@ export type SectionHeaderMeta = {
 type _CustomLinkMetaWithoutTypeField =
   | {
       type?: 'custom-link';
-      label?: string;
+      label: string;
       tag?: string;
       overviewHeaders?: number[];
       context?: string;
@@ -45,7 +45,7 @@ type _CustomLinkMetaWithoutTypeField =
     }
   | {
       type?: 'custom-link';
-      label?: string;
+      label: string;
       tag?: string;
       overviewHeaders?: number[];
       context?: string;
@@ -59,7 +59,7 @@ export type CustomLinkMeta =
   | {
       // file link
       type: 'custom-link';
-      label?: string;
+      label: string;
       tag?: string;
       overviewHeaders?: number[];
       context?: string;
@@ -69,7 +69,7 @@ export type CustomLinkMeta =
   | {
       // dir link
       type: 'custom-link';
-      label?: string;
+      label: string;
       tag?: string;
       overviewHeaders?: number[];
       context?: string;
