@@ -7,6 +7,7 @@ import type {
 import { Link } from '@theme';
 import Down from '@theme-assets/down';
 import { useState } from 'react';
+import { SvgWrapper } from '../SvgWrapper';
 import * as styles from './index.module.scss';
 
 export interface NavScreenMenuGroupItem {
@@ -76,7 +77,10 @@ export function NavScreenMenuGroup(item: NavScreenMenuGroupItem) {
         }}
       >
         <span className={styles.buttonSpan}>{item.text}</span>
-        <Down className={`${isOpen ? styles.open : ''} ${styles.down} `} />
+        <SvgWrapper
+          icon={Down}
+          className={`${isOpen ? styles.open : ''} ${styles.down} `}
+        />
       </button>
       <div>
         <div className={styles.items}>
