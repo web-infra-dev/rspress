@@ -1,7 +1,5 @@
-import type { UserConfig } from '@rspress/core';
+import type { UserConfig } from '@rspress/shared';
 
 export function defineConfig(config: UserConfig): UserConfig {
   return config;
 }
-
-export type { UserConfig };

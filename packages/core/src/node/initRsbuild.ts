@@ -217,7 +217,6 @@ async function createInternalBuildConfig(
         '@mdx-js/react': require.resolve('@mdx-js/react'),
         '@theme': [CUSTOM_THEME_DIR, DEFAULT_THEME],
         '@theme-assets': path.join(DEFAULT_THEME, '../assets'),
-        '@rspress/core': PACKAGE_ROOT,
         'react-lazy-with-preload': require.resolve('react-lazy-with-preload'),
       },
     },

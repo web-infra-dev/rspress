@@ -253,7 +253,7 @@ export function pluginForDoc(): RspressPlugin {
 After extending the page data, you can access the page data through the `usePageData` hook in the theme.
 
 ```tsx
-import { usePageData } from 'rspress';
+import { usePageData } from '@rspress/core/runtime';
 
 export function MyComponent() {
   const { page } = usePageData();

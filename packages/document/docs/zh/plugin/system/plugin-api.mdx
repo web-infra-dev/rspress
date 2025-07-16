@@ -261,7 +261,7 @@ export function pluginForDoc(): RspressPlugin {
 在扩展页面数据之后，你可以在主题中通过 `usePageData` 这个 hook 来访问页面数据。
 
 ```tsx
-import { usePageData } from 'rspress';
+import { usePageData } from '@rspress/core/runtime';
 
 export function MyComponent() {
   const { page } = usePageData();

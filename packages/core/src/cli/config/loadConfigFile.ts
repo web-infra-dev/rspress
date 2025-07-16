@@ -1,11 +1,11 @@
 import fs from 'node:fs';
 import path from 'node:path';
-import type { UserConfig } from '@rspress/core';
-import { logger } from '@rspress/core';
+import type { UserConfig } from '@rspress/shared';
 import {
   DEFAULT_CONFIG_EXTENSIONS,
   DEFAULT_CONFIG_NAME,
 } from '@rspress/shared/constants';
+import { logger } from '@rspress/shared/logger';
 
 const findConfig = (basePath: string): string | undefined => {
   return DEFAULT_CONFIG_EXTENSIONS.map(ext => basePath + ext).find(

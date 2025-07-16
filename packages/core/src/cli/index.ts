@@ -1,11 +1,11 @@
 import path from 'node:path';
-import { build, dev, serve } from '@rspress/core';
+// Rslib(Rspack) will optimize the json module, the only one point that we need to concern is to bump the package.json version first then run build command
+import { version } from '@rspress/core/package.json';
 import { logger } from '@rspress/shared/logger';
 import { cac } from 'cac';
 import chokidar from 'chokidar';
 import picocolors from 'picocolors';
-// Rslib(Rspack) will optimize the json module, the only one point that we need to concern is to bump the package.json version first then run build command
-import { version } from '../package.json';
+import { build, dev, serve } from '../node/index';
 import { loadConfigFile, resolveDocRoot } from './config/loadConfigFile';
 
 const CONFIG_FILES = ['rspress.config.ts', 'rspress.config.js'];

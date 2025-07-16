@@ -1,7 +1,7 @@
 import path from 'node:path';
 import { describe, expect, test } from 'vitest';
-import { normalizePath } from '../../../core/src/node/utils/normalizePath';
-import { loadConfigFile } from '../../src/config/loadConfigFile';
+import { loadConfigFile } from '../../src/cli/config/loadConfigFile';
+import { normalizePath } from '../../src/node/utils/normalizePath';
 
 const TEST_TITLE = 'my-title';
 
