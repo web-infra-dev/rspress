@@ -62,9 +62,9 @@ this usage is not allowed, please use below:
             node.value = fileContent;
           })
           .catch(e => {
-            logger.error(
-              `${ERROR_PREFIX} ${originalMetaForErrorInfo} introduces another file in "${resolvedFilePath}", but the file does not exist`,
-            );
+            const message = `${ERROR_PREFIX} ${originalMetaForErrorInfo} introduces another file in "${resolvedFilePath}", but the file does not exist.`;
+            logger.error(message);
+            e.message = `${message}\n${e.message}`;
             throw e;
           });
 
@@ -72,15 +72,15 @@ this usage is not allowed, please use below:
         return;
       }
 
-      // TODO: support resolve.alias with rspack-resolver
-      logger.error(`${ERROR_PREFIX} ${originalMetaForErrorInfo} Syntax error of file code block:
+      // TODO: support resolve.alias and npm package with rspack-resolver
+      logger.error(`${ERROR_PREFIX} ${originalMetaForErrorInfo} syntax error of file code block:
 Please use below:
 
 \`\`\`tsx file="./filename"
 \`\`\`
 `);
       throw new Error(
-        `${ERROR_PREFIX} ${originalMetaForErrorInfo} Syntax error of file code block`,
+        `${ERROR_PREFIX} ${originalMetaForErrorInfo} syntax error of file code block`,
       );
     });
 
