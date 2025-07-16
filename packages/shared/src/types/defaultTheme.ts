@@ -127,7 +127,7 @@ export interface Config {
  */
 export interface LocaleConfig {
   /**
-   * Site i18n config, which will recover the locales config in the site level.
+   * Site i18n config, which will cover the locales config in the site level.
    */
   lang: string;
   title?: string;

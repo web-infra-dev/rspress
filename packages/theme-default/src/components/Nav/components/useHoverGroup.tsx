@@ -1,7 +1,10 @@
 import { useCallback, useMemo, useRef, useState } from 'react';
 import { HoverGroup, type Items } from './HoverGroup';
 
-function useHoverGroup(items: Items) {
+function useHoverGroup(
+  items: Items,
+  activeMatcher?: (item: Items[number]) => boolean,
+) {
   const closeTimerRef = useRef<number>(null);
   const [isOpen, setIsOpen] = useState(false);
 
@@ -29,8 +32,10 @@ function useHoverGroup(items: Items) {
   }, [setIsOpen]);
 
   const hoverGroup = useMemo(() => {
-    return <HoverGroup items={items} isOpen={isOpen} />;
-  }, [items, isOpen]);
+    return (
+      <HoverGroup items={items} isOpen={isOpen} activeMatcher={activeMatcher} />
+    );
+  }, [items, isOpen, activeMatcher]);
 
   return {
     hoverGroup,

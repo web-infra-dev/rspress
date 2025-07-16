@@ -39,9 +39,9 @@ export default defineConfig({
     pluginSitemap({
       domain: siteUrl,
     }),
-    pluginAlgolia({
-      verificationContent: '8F5BFE50E65777F1',
-    }),
+    // pluginAlgolia({
+    //   verificationContent: '8F5BFE50E65777F1',
+    // }),
     pluginLlms([
       {
         llmsTxt: {
@@ -116,7 +116,7 @@ export default defineConfig({
     locales: [
       {
         lang: 'zh',
-        label: '简体中文',
+        label: '中文',
         editLink: {
           docRepoBaseUrl:
             'https://github.com/web-infra-dev/rspress/tree/main/packages/document/docs',

@@ -16,21 +16,26 @@ import {
   navMenuItem,
   navMenuItemContainer,
   navMenuItemHoverAndActive,
+  navMenuItemLink,
   navMenuOthers,
   svgDown,
 } from './NavMenu.module.scss';
+import type { HoverGroupProps } from './components/HoverGroup';
 import { useHoverGroup } from './components/useHoverGroup';
+import { useLangsMenu, useVersionMenu } from './hooks';
 import { SvgDown } from './icons/SvgDown';
 
 function NavMenuItemWithChildren({
   menuItem,
+  activeMatcher,
 }: {
   menuItem: NavItemWithChildren | NavItemWithLinkAndChildren;
+  activeMatcher?: HoverGroupProps['activeMatcher'];
 }) {
   if ('link' in menuItem) {
     return (
-      <li className={cls(navMenuItem, navMenuItemHoverAndActive)}>
-        <Link href={menuItem.link}>
+      <li className={cls(navMenuItem, navMenuItemHoverAndActive, {})}>
+        <Link href={menuItem.link} className={navMenuItemLink}>
           <div className={navMenuItemContainer}>
             {menuItem.text}
             <SvgDown className={svgDown} />
@@ -42,6 +47,7 @@ function NavMenuItemWithChildren({
 
   const { handleMouseEnter, handleMouseLeave, hoverGroup } = useHoverGroup(
     menuItem.items,
+    activeMatcher,
   );
 
   return (
@@ -51,7 +57,7 @@ function NavMenuItemWithChildren({
       onMouseLeave={handleMouseLeave}
       onClick={handleMouseEnter}
     >
-      <div>
+      <div className={navMenuItemLink}>
         <div className={cls(navMenuItemContainer)}>
           {menuItem.text}
           <SvgDown className={svgDown} />
@@ -84,7 +90,7 @@ function NavMenuItemWithLink({ menuItem }: { menuItem: NavItemWithLink }) {
 }
 
 function NavMenuItem({ menuItem: item }: { menuItem: NavItem }) {
-  if ('items' in item && Array.isArray(item.items)) {
+  if ('items' in item && Array.isArray(item.items) && item.items.length > 0) {
     return <NavMenuItemWithChildren menuItem={item} />;
   }
 
@@ -93,6 +99,28 @@ function NavMenuItem({ menuItem: item }: { menuItem: NavItem }) {
 
 function NavMenuDivider() {
   return <div className={navMenuDivider}></div>;
+}
+
+function NavLangs() {
+  const { items, activeValue } = useLangsMenu();
+
+  return items.length > 1 ? (
+    <NavMenuItemWithChildren
+      menuItem={{ text: activeValue, items }}
+      activeMatcher={item => item.text === activeValue}
+    />
+  ) : null;
+}
+
+function NavVersions() {
+  const { activeValue, items } = useVersionMenu();
+
+  return items.length > 1 ? (
+    <NavMenuItemWithChildren
+      menuItem={{ items }}
+      activeMatcher={item => item.text === activeValue}
+    />
+  ) : null;
 }
 
 export function NavMenu({ menuItems }: { menuItems: NavItem[] }) {
@@ -105,7 +133,8 @@ export function NavMenu({ menuItems }: { menuItems: NavItem[] }) {
       </ul>
       <ul className={navMenuOthers}>
         <NavMenuDivider />
-        <NavMenuItem menuItem={{ items: [] }} />
+        <NavLangs />
+        <NavVersions />
       </ul>
     </>
   );

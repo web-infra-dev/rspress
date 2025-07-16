@@ -1,3 +1,4 @@
+import { Search } from '@theme';
 import { NavTitle } from './NarTitle';
 import { NavMenu } from './NavMenu';
 import { leftNav, navContainer, rightNav } from './index.module.scss';
@@ -35,6 +36,7 @@ export function Nav(props: NavProps) {
 
         <div className={rightNav}>
           {beforeNavMenu}
+          <Search />
           <NavMenu menuItems={navList} />
           {afterNavMenu}
         </div>

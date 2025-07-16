@@ -3,13 +3,13 @@ import {
   pathnameToRouteService,
   removeBase,
   useLocation,
-  useNavigate,
+  useNavigate as useNavigateRuntime,
   withBase,
 } from '@rspress/runtime';
 import { isExternalUrl } from '@rspress/shared';
 import nprogress from 'nprogress';
 import type React from 'react';
-import { type ComponentProps, useMemo } from 'react';
+import { type ComponentProps, useCallback, useMemo } from 'react';
 import { isActive } from '../../logic/getSidebarDataGroup';
 import { scrollToTarget } from '../../logic/sideEffects';
 import { useUISwitch } from '../../logic/useUISwitch.js';
@@ -37,6 +37,15 @@ export interface LinkProps extends ComponentProps<'a'> {
 
 nprogress.configure({ showSpinner: false });
 
+export function useNavigate() {
+  const navigate = useNavigateRuntime();
+  return useCallback(
+    (url: string) =>
+      isExternalUrl(url) ? window.open(url, '_blank') : navigate(url),
+    [navigate],
+  );
+}
+
 /**
  * What's the difference between <Link> and <a>?
  * Link can tell whether it's in current site or external site.
@@ -48,7 +57,7 @@ nprogress.configure({ showSpinner: false });
 export function Link(props: LinkProps) {
   const { href = '/', children, className = '', onNavigate, onClick } = props;
 
-  const navigate = useNavigate();
+  const navigate = useNavigateRuntime();
 
   const { pathname } = useLocation();
 

@@ -1,26 +1,44 @@
 import type { NavItemWithChildren } from '@rspress/shared';
-import { Link } from '@theme';
 import cls from 'clsx';
-import { container, hidden, item } from './HoverGroup.module.scss';
+import { useNavigate } from '../../Link/index';
+import {
+  active,
+  container,
+  hidden,
+  item as itemClass,
+} from './HoverGroup.module.scss';
 
 type Items = NavItemWithChildren['items'];
 
-interface HoverGroupRawProps {
+interface HoverGroupProps {
   items: Items;
   isOpen: boolean;
+  activeMatcher?: (item: Items[number]) => boolean;
 }
 
-function HoverGroup({ items, isOpen }: HoverGroupRawProps) {
+function HoverGroup({ items, isOpen, activeMatcher }: HoverGroupProps) {
+  const navigate = useNavigate();
   return (
     <ul className={cls(container, { [hidden]: !isOpen })}>
-      {items.map(({ link, text }) => (
-        <li key={text + link} className={cls(item)}>
-          <Link href={link}>{text}</Link>
-        </li>
-      ))}
+      {items.map(item => {
+        const { text, link } = item;
+        const isActiveItem = activeMatcher ? activeMatcher(item) : false;
+
+        return (
+          <li
+            key={text + link}
+            className={cls(itemClass, { [active]: isActiveItem })}
+            onClick={() => {
+              navigate(link);
+            }}
+          >
+            {text}
+          </li>
+        );
+      })}
     </ul>
   );
 }
 
 export { HoverGroup };
-export type { HoverGroupRawProps, Items };
+export type { HoverGroupProps, Items };
