@@ -11,7 +11,7 @@ import {
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
 
-import type { RspressPlugin } from '@rspress/shared';
+import type { RspressPlugin } from 'rspress/core';
 import type { Lang, Theme as shikiTheme } from 'shiki';
 import type { ITransformer } from './types';
 

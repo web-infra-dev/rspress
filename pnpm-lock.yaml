@@ -1476,12 +1476,12 @@ importers:
 
   packages/plugin-shiki:
     dependencies:
-      '@rspress/shared':
-        specifier: workspace:*
-        version: link:../shared
       hast-util-from-html:
         specifier: ^1.0.2
         version: 1.0.2
+      rspress:
+        specifier: workspace:^1.44.0
+        version: link:../cli
       shiki:
         specifier: ^0.14.7
         version: 0.14.7
