@@ -2,7 +2,6 @@ import { readFile } from 'node:fs/promises';
 import path from 'node:path';
 import { logger } from '@rspress/shared/logger';
 import type { Root } from 'mdast';
-import picocolors from 'picocolors';
 import type { Plugin } from 'unified';
 import { visit } from 'unist-util-visit';
 
@@ -12,9 +11,9 @@ function parseFileFromMeta(meta: string | undefined): string {
   if (!meta) {
     return '';
   }
-  const kvList = meta.split(' ').filter(Boolean);
+  const kvList = meta.split(' ').filter(Boolean) as string[];
   for (const item of kvList) {
-    const [k, v = ''] = item.split('=');
+    const [k, v] = item.split('=');
     if (k === 'file' && v.length > 0) {
       return v.replace(/["'`]/g, '');
     }
@@ -28,14 +27,12 @@ export const remarkFileCodeBlock: Plugin<[{ filepath: string }], Root> = ({
   return async tree => {
     const promiseList: Promise<void>[] = [];
     visit(tree, 'code', node => {
-      const { meta, value, lang } = node;
+      const { meta, value } = node;
       const file = parseFileFromMeta(meta ?? '');
 
       if (!file) {
         return;
       }
-
-      const originalMetaForErrorInfo = picocolors.cyan(`\`\`\`${lang} ${meta}`);
 
       if (file.startsWith('./') || file.startsWith('../')) {
         const resolvedFilePath = path.join(path.dirname(filepath), file);
@@ -53,7 +50,7 @@ this usage is not allowed, please use below:
 \`\`\`
 `);
           throw new Error(
-            `${ERROR_PREFIX} ${originalMetaForErrorInfo} The content of file code block should be empty.`,
+            `${ERROR_PREFIX} The content of file code block should be empty.`,
           );
         }
 
@@ -63,7 +60,7 @@ this usage is not allowed, please use below:
           })
           .catch(e => {
             logger.error(`${ERROR_PREFIX} The file does not exist.
-  ${originalMetaForErrorInfo} is resolved to ${resolvedFilePath}"`);
+  \`file="${file}"\` is resolved to ${resolvedFilePath}"`);
             throw e;
           });
 
@@ -73,7 +70,7 @@ this usage is not allowed, please use below:
 
       // TODO: support resolve.alias with rspack-resolver
       throw new Error(
-        `${ERROR_PREFIX} ${originalMetaForErrorInfo}The file path should use relative path "./" or "../"`,
+        `${ERROR_PREFIX} The file path should use relative path "./" or "../"`,
       );
     });
 

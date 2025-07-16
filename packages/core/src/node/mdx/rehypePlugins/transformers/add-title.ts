@@ -8,7 +8,7 @@ function parseTitleFromMeta(meta: string | undefined): string {
   }
   const kvList = meta.split(' ').filter(Boolean) as string[];
   for (const item of kvList) {
-    const [k, v = ''] = item.split('=').filter(Boolean);
+    const [k, v] = item.split('=');
     if (k === 'title' && v.length > 0) {
       return v.replace(/["'`]/g, '');
     }
