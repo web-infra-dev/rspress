@@ -1,6 +1,6 @@
 {
   "name": "@rspress/plugin-typedoc",
-  "version": "1.44.0",
+  "version": "1.45.0",
   "description": "A plugin for rspress to integrate typedoc",
   "bugs": "https://github.com/web-infra-dev/rspress/issues",
   "repository": {
@@ -42,7 +42,7 @@
     "typescript": "^5.5.3"
   },
   "peerDependencies": {
-    "rspress": "workspace:^1.44.0"
+    "rspress": "workspace:^1.45.0"
   },
   "engines": {
     "node": ">=14.17.6"
