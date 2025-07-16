@@ -1,6 +1,6 @@
 {
   "name": "@rspress/plugin-container-syntax",
-  "version": "1.44.0",
+  "version": "1.45.0",
   "description": "A remark plugin to support container syntax",
   "bugs": "https://github.com/web-infra-dev/rspress/issues",
   "repository": {
