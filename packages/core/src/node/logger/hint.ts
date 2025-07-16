@@ -78,7 +78,7 @@ ${picocolors.greenBright(`  builderConfig: {
 export function hintSSGFailed() {
   logger.info(`[Rspress v2] \`ssg: true\` requires the source code to support SSR. If the code is not compatible to SSR, the build process will fail. You can try:
     1. Fix code to make it SSR-compatible.
-    2. Set \`ssg: false\` if the code may be difficult to fix in node_modules, but the SSG feature will be lost.`);
+    2. Set \`ssg: false\`, but the SSG feature will be lost.`);
 }
 
 /**
