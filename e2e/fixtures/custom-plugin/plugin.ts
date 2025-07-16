@@ -1,5 +1,5 @@
 import path from 'node:path';
-import type { RspressPlugin } from 'rspress/core';
+import type { RspressPlugin } from '@rspress/core';
 
 export function docPluginDemo(): RspressPlugin {
   return {

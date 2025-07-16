@@ -3,7 +3,7 @@
 主题配置位于 `doc` 配置中的 `themeConfig` 下。例如：
 
 ```ts title="rspress.config.ts"
-import { defineConfig } from 'rspress/config';
+import { defineConfig } from '@rspress/core';
 
 export default defineConfig({
   themeConfig: {
@@ -37,7 +37,7 @@ interface NavItem {
 比如:
 
 ```ts title="rspress.config.ts"
-import { defineConfig } from 'rspress/config';
+import { defineConfig } from '@rspress/core';
 
 export default defineConfig({
   themeConfig: {
@@ -71,7 +71,7 @@ interface NavGroup {
 例如下面的配置:
 
 ```ts title="rspress.config.ts"
-import { defineConfig } from 'rspress/config';
+import { defineConfig } from '@rspress/core';
 
 export default defineConfig({
   themeConfig: {
@@ -138,7 +138,7 @@ type SidebarItem =
 比如:
 
 ```ts title="rspress.config.ts"
-import { defineConfig } from 'rspress/config';
+import { defineConfig } from '@rspress/core';
 
 export default defineConfig({
   themeConfig: {
@@ -192,7 +192,7 @@ export interface Footer {
 比如：
 
 ```ts title="rspress.config.ts"
-import { defineConfig } from 'rspress/config';
+import { defineConfig } from '@rspress/core';
 
 export default defineConfig({
   themeConfig: {
@@ -214,7 +214,7 @@ export default defineConfig({
 比如:
 
 ```ts title="rspress.config.ts"
-import { defineConfig } from 'rspress/config';
+import { defineConfig } from '@rspress/core';
 
 export default defineConfig({
   themeConfig: {
@@ -233,7 +233,7 @@ export default defineConfig({
 比如:
 
 ```ts title="rspress.config.ts"
-import { defineConfig } from 'rspress/config';
+import { defineConfig } from '@rspress/core';
 
 export default defineConfig({
   themeConfig: {
@@ -256,7 +256,7 @@ export default defineConfig({
 比如:
 
 ```ts title="rspress.config.ts"
-import { defineConfig } from 'rspress/config';
+import { defineConfig } from '@rspress/core';
 
 export default defineConfig({
   themeConfig: {
@@ -275,7 +275,7 @@ export default defineConfig({
 比如:
 
 ```ts title="rspress.config.ts"
-import { defineConfig } from 'rspress/config';
+import { defineConfig } from '@rspress/core';
 
 export default defineConfig({
   themeConfig: {
@@ -292,7 +292,7 @@ export default defineConfig({
 上一页的文本。比如:
 
 ```ts title="rspress.config.ts"
-import { defineConfig } from 'rspress/config';
+import { defineConfig } from '@rspress/core';
 
 export default defineConfig({
   themeConfig: {
@@ -309,7 +309,7 @@ export default defineConfig({
 搜索框的占位符文本。比如:
 
 ```ts title="rspress.config.ts"
-import { defineConfig } from 'rspress/config';
+import { defineConfig } from '@rspress/core';
 
 export default defineConfig({
   themeConfig: {
@@ -326,7 +326,7 @@ export default defineConfig({
 没有搜索结果时的显示文本。比如:
 
 ```ts title="rspress.config.ts"
-import { defineConfig } from 'rspress/config';
+import { defineConfig } from '@rspress/core';
 
 export default defineConfig({
   themeConfig: {
@@ -343,7 +343,7 @@ export default defineConfig({
 没有搜索结果时的建议查询提示文本。比如:
 
 ```ts title="rspress.config.ts"
-import { defineConfig } from 'rspress/config';
+import { defineConfig } from '@rspress/core';
 
 export default defineConfig({
   themeConfig: {
@@ -369,7 +369,7 @@ interface FilterConfig {
 For example:
 
 ```ts title="rspress.config.ts"
-import { defineConfig } from 'rspress/config';
+import { defineConfig } from '@rspress/core';
 
 export default defineConfig({
   themeConfig: {
@@ -391,7 +391,7 @@ export default defineConfig({
 相关链接支持四种模式：`链接模式link` `文本模式text` `图片模式img` `自定义模式dom`，相关例子如下：
 
 ```ts title="rspress.config.ts"
-import { defineConfig } from 'rspress/config';
+import { defineConfig } from '@rspress/core';
 
 export default defineConfig({
   themeConfig: {
@@ -455,7 +455,7 @@ export type SocialLinkIcon =
 如果需要自定义 icon，可以通过传入一个带有 `svg 属性` 的对象，svg 的值为自定义图标内容即可，比如：
 
 ```js
-import { defineConfig } from 'rspress/config';
+import { defineConfig } from '@rspress/core';
 
 export default defineConfig({
   themeConfig: {
@@ -480,7 +480,7 @@ export default defineConfig({
 下一页的文本。比如:
 
 ```ts title="rspress.config.ts"
-import { defineConfig } from 'rspress/config';
+import { defineConfig } from '@rspress/core';
 
 export default defineConfig({
   themeConfig: {
@@ -543,7 +543,7 @@ export interface LocaleConfig {
 是否出现暗黑模式/白天模式切换按钮。比如：
 
 ```ts title="rspress.config.ts"
-import { defineConfig } from 'rspress/config';
+import { defineConfig } from '@rspress/core';
 
 export default defineConfig({
   themeConfig: {
@@ -555,7 +555,7 @@ export default defineConfig({
 同时，你也可以通过在 HTML 中注入如下的全局变量来指定默认的主题模式：
 
 ```ts title="rspress.config.ts"
-import { defineConfig } from 'rspress/config';
+import { defineConfig } from '@rspress/core';
 
 export default defineConfig({
   builderConfig: {
@@ -582,7 +582,7 @@ export default defineConfig({
 。比如：
 
 ```ts title="rspress.config.ts"
-import { defineConfig } from 'rspress/config';
+import { defineConfig } from '@rspress/core';
 
 export default defineConfig({
   themeConfig: {
@@ -618,7 +618,7 @@ interface EditLink {
 比如：
 
 ```ts title="rspress.config.ts"
-import { defineConfig } from 'rspress/config';
+import { defineConfig } from '@rspress/core';
 
 export default defineConfig({
   themeConfig: {
@@ -641,7 +641,7 @@ export default defineConfig({
 > 转场动画暂时不能配置。
 
 ```ts title="rspress.config.ts"
-import { defineConfig } from 'rspress/config';
+import { defineConfig } from '@rspress/core';
 
 export default defineConfig({
   themeConfig: {
@@ -660,7 +660,7 @@ export default defineConfig({
 > 切换动画暂时不能配置。
 
 ```ts title="rspress.config.ts"
-import { defineConfig } from 'rspress/config';
+import { defineConfig } from '@rspress/core';
 
 export default defineConfig({
   themeConfig: {
@@ -677,7 +677,7 @@ export default defineConfig({
 是否显示搜索框。比如：
 
 ```ts title="rspress.config.ts"
-import { defineConfig } from 'rspress/config';
+import { defineConfig } from '@rspress/core';
 
 export default defineConfig({
   themeConfig: {
@@ -694,7 +694,7 @@ export default defineConfig({
 源代码按钮的文本。比如：
 
 ```ts title="rspress.config.ts"
-import { defineConfig } from 'rspress/config';
+import { defineConfig } from '@rspress/core';
 
 export default defineConfig({
   themeConfig: {
@@ -711,7 +711,7 @@ export default defineConfig({
 启用文档上的滚动到顶部按钮. 比如:
 
 ```ts title="rspress.config.ts"
-import { defineConfig } from 'rspress/config';
+import { defineConfig } from '@rspress/core';
 
 export default defineConfig({
   themeConfig: {
@@ -728,7 +728,7 @@ export default defineConfig({
 是否在访问网站时重定向到最接近 `window.navigator.language` 的语言，默认为 `auto` 表示首次访问时将重定向，`never` 表示不重定向，`only-default-lang` 表示仅在访问默认语言时重定向。比如:
 
 ```ts title="rspress.config.ts"
-import { defineConfig } from 'rspress/config';
+import { defineConfig } from '@rspress/core';
 
 export default defineConfig({
   themeConfig: {
@@ -745,7 +745,7 @@ export default defineConfig({
 是否在文档标题未提供时将 [`frontmatter.title`](./config-frontmatter#title) 作为后备内容。比如:
 
 ```ts title="rspress.config.ts"
-import { defineConfig } from 'rspress/config';
+import { defineConfig } from '@rspress/core';
 
 export default defineConfig({
   themeConfig: {

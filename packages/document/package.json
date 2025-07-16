@@ -17,6 +17,7 @@
   },
   "devDependencies": {
     "@rsbuild/plugin-sass": "~1.3.3",
+    "@rspress/core": "workspace:*",
     "@rspress/plugin-algolia": "workspace:*",
     "@rspress/plugin-llms": "workspace:*",
     "@rstack-dev/doc-ui": "1.10.6",
@@ -24,7 +25,6 @@
     "@types/react": "^19.1.8",
     "rsbuild-plugin-google-analytics": "^1.0.3",
     "rsbuild-plugin-open-graph": "^1.0.2",
-    "rspress": "workspace:*",
     "rspress-plugin-font-open-sans": "^1.0.0",
     "rspress-plugin-sitemap": "^1.2.0",
     "typescript": "^5.8.2"

@@ -9,7 +9,7 @@ Rspress builds documents based on [Rsbuild](https://github.com/web-infra-dev/rsb
 Rsbuild provides a rich set of build configurations. You can customize these configurations through [builderConfig](/api/config/config-build.html#builderconfig). For example, change the output directory to `doc_dist`:
 
 ```ts title="rspress.config.ts"
-import { defineConfig } from 'rspress/config';
+import { defineConfig } from '@rspress/core';
 
 export default defineConfig({
   builderConfig: {
@@ -27,7 +27,7 @@ Rspress also provides the [builderConfig.plugins](/api/config/config-build#build
 For example, add Google analytics through [rsbuild-plugin-google-analytics](https://github.com/rspack-contrib/rsbuild-plugin-google-analytics):
 
 ```ts title="rspress.config.ts"
-import { defineConfig } from 'rspress/config';
+import { defineConfig } from '@rspress/core';
 import { pluginGoogleAnalytics } from 'rsbuild-plugin-google-analytics';
 
 export default defineConfig({
@@ -51,7 +51,7 @@ You can learn more about the configuration options through [Rsbuild - Config](ht
 You can configure Rspack through the [tools.rspack](https://rsbuild.rs/config/tools/rspack) option provided by Rsbuild:
 
 ```ts title="rspress.config.ts"
-import { defineConfig } from 'rspress/config';
+import { defineConfig } from '@rspress/core';
 
 export default defineConfig({
   builderConfig: {
@@ -70,7 +70,7 @@ The compilation of MDX in Rspress is based on [unified](https://github.com/unifi
 :
 
 ```ts title="rspress.config.ts"
-import { defineConfig } from 'rspress/config';
+import { defineConfig } from '@rspress/core';
 
 export default defineConfig({
   markdown: {

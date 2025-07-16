@@ -63,7 +63,7 @@ export interface I18n {
 - `themeConfig.locales`，用于配置主题的`语言`、`大纲栏标题`、`上一页/下一页文本`等信息，主要进行主题相关的配置。
 
 ```ts title="rspress.config.ts"
-import { defineConfig } from 'rspress/config';
+import { defineConfig } from '@rspress/core';
 
 export default defineConfig({
   // locales 为一个对象数组
@@ -108,7 +108,7 @@ export default defineConfig({
 在配置完 `locales` 之后，你需要通过 [lang](/api/config/config-basic#lang) 配置文档的默认语言，如下例子所示:
 
 ```ts title="rspress.config.ts"
-import { defineConfig } from 'rspress/config';
+import { defineConfig } from '@rspress/core';
 
 export default defineConfig({
   lang: 'en',

@@ -1,6 +1,6 @@
 # @rspress/plugin-algolia
 
-import { SourceCode } from 'rspress/theme';
+import { SourceCode } from '@rspress/core/theme';
 
 <SourceCode href="https://github.com/web-infra-dev/rspress/tree/main/packages/plugin-algolia" />
 
@@ -45,7 +45,7 @@ const Search = () => {
   );
 };
 export { Search };
-export * from 'rspress/theme';
+export * from '@rspress/core/theme';
 ```
 
 ## Configuration
@@ -293,7 +293,7 @@ Here's an example using `docSearchProps.searchParameters`:
 
 ```tsx
 // theme/index.tsx
-import { useLang } from 'rspress/runtime';
+import { useLang } from '@rspress/core/runtime';
 import { Search as PluginAlgoliaSearch } from '@rspress/plugin-algolia/runtime';
 
 const Search = () => {
@@ -312,5 +312,5 @@ const Search = () => {
   );
 };
 export { Search };
-export * from 'rspress/theme';
+export * from '@rspress/core/theme';
 ```

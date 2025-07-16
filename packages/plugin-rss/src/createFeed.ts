@@ -1,6 +1,6 @@
 import { resolve as resolveUrl } from 'node:url';
+import type { PageIndexInfo, UserConfig } from '@rspress/core';
 import type { Author, FeedOptions } from 'feed';
-import type { PageIndexInfo, UserConfig } from 'rspress/core';
 import {
   type ResolvedOutput,
   concatArray,

@@ -56,9 +56,9 @@
     "unist-util-visit": "^5.0.0"
   },
   "peerDependencies": {
+    "@rspress/core": "workspace:^2.0.0-beta.21",
     "react": ">=18.0.0",
-    "react-router-dom": "^6.8.1",
-    "rspress": "workspace:^2.0.0-beta.21"
+    "react-router-dom": "^6.8.1"
   },
   "engines": {
     "node": ">=18.0.0"

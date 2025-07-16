@@ -17,7 +17,7 @@ Rspress 提供了多种方式能让你自定义页面的内容，包括：
 在 `rspress.config.ts` 中添加以下配置：
 
 ```ts title="rspress.config.ts"
-import { defineConfig } from 'rspress/config';
+import { defineConfig } from '@rspress/core';
 import path from 'path';
 
 export default defineConfig({
@@ -28,7 +28,7 @@ export default defineConfig({
 `globalUIComponents` 的每一项可以是一个字符串，代表组件的文件路径；也可以是一个数组，第一项为组件的文件路径，第二项为组件的 props 对象，比如：
 
 ```ts title="rspress.config.ts"
-import { defineConfig } from 'rspress/config';
+import { defineConfig } from '@rspress/core';
 
 export default defineConfig({
   globalUIComponents: [
@@ -55,7 +55,7 @@ import GlobalUIComponents from '@zh/fragments/global-ui-components';
 在 `rspress.config.ts` 中添加以下配置：
 
 ```ts title="rspress.config.ts"
-import { defineConfig } from 'rspress/config';
+import { defineConfig } from '@rspress/core';
 import path from 'path';
 
 export default defineConfig({

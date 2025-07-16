@@ -1,7 +1,7 @@
 /// <reference path="../../index.d.ts" />
 
+import { Head, usePageData } from '@rspress/core/runtime';
 import type { LinkHTMLAttributes } from 'react';
-import { Head, usePageData } from 'rspress/runtime';
 
 export default function FeedsAnnotations() {
   const { page } = usePageData();

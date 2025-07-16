@@ -8,8 +8,8 @@
     "preview": "rspress preview"
   },
   "dependencies": {
-    "react": "^19.1.0",
-    "rspress": "workspace:*"
+    "@rspress/core": "workspace:*",
+    "react": "^19.1.0"
   },
   "devDependencies": {
     "@rspress/plugin-algolia": "workspace:*",

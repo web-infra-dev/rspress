@@ -1,12 +1,12 @@
-import type { Root } from 'hast';
-import remarkMdx from 'remark-mdx';
-import remarkParse from 'remark-parse';
-import remarkStringify from 'remark-stringify';
 import {
   type RouteService,
   remarkFileCodeBlock,
   remarkPluginNormalizeLink,
-} from 'rspress/core';
+} from '@rspress/core';
+import type { Root } from 'hast';
+import remarkMdx from 'remark-mdx';
+import remarkParse from 'remark-parse';
+import remarkStringify from 'remark-stringify';
 import { type Plugin, unified } from 'unified';
 import { SKIP, visit } from 'unist-util-visit';
 import type { VFile } from 'vfile';

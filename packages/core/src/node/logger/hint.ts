@@ -29,17 +29,17 @@ export async function hintThemeBreakingChange(customThemeDir: string) {
     logger.warn(
       `[Rspress v2] Breaking Change: The "theme/index.tsx" is now using named export instead of default export, please update ${picocolors.greenBright(useDefaultExportFilePath)} (https://github.com/web-infra-dev/rspress/discussions/1891#discussioncomment-12422737).\n`,
       picocolors.redBright(`
-- import Theme from '@rspress/theme-default';
+- import Theme from '@rspress/core/theme';
 - export default {
 -  ...Theme,
 -  Layout,
 - };
-- export * from 'rspress/theme';`) +
+- export * from '@rspress/core/theme';`) +
         picocolors.greenBright(`
-+ import { Layout } from '@rspress/theme-default';
++ import { Layout } from '@rspress/core/theme';
 
 + export { Layout };
-+ export * from 'rspress/theme';
++ export * from '@rspress/core/theme';
 `),
     );
   }
@@ -78,7 +78,7 @@ ${picocolors.greenBright(`  builderConfig: {
 export function hintSSGFailed() {
   logger.info(`[Rspress v2] \`ssg: true\` requires the source code to support SSR. If the code is not compatible to SSR, the build process will fail. You can try:
     1. Fix code to make it SSR-compatible.
-    2. Set \`ssg: false\`, but the SSG feature will be lost.`);
+    2. Set \`ssg: false\` if the code may be difficult to fix in node_modules, but the SSG feature will be lost.`);
 }
 
 /**

@@ -1,3 +1,3 @@
 import './index.css';
 
-export * from 'rspress/theme';
+export * from '@rspress/core/theme';

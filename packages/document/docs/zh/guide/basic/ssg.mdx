@@ -32,7 +32,7 @@ doc_build
 通过 `builderConfig.html.tags`，你可以自定义站点 HTML 内容，比如添加统计代码、添加脚本和样式等。
 
 ```js title="rspress.config.ts"
-import { defineConfig } from 'rspress/config';
+import { defineConfig } from '@rspress/core';
 
 export default defineConfig({
   // ...
@@ -75,7 +75,7 @@ Preview server running at http://localhost:4173/
 如果你不想使用静态站点生成，可以通过 `ssg` 配置来关闭它。
 
 ```js title="rspress.config.ts"
-import { defineConfig } from 'rspress/config';
+import { defineConfig } from '@rspress/core';
 
 export default defineConfig({
   // ...

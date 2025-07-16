@@ -1,6 +1,6 @@
 # @rspress/plugin-last-updated
 
-import { SourceCode, PackageManagerTabs } from 'rspress/theme';
+import { SourceCode, PackageManagerTabs } from '@rspress/core/theme';
 
 <SourceCode href="https://github.com/web-infra-dev/rspress/tree/main/packages/plugin-last-updated" />
 
@@ -25,7 +25,7 @@ import { SourceCode, PackageManagerTabs } from 'rspress/theme';
 
 ```ts title="rspress.config.ts"
 import { pluginLastUpdated } from '@rspress/plugin-last-updated';
-import { defineConfig } from 'rspress/config';
+import { defineConfig } from '@rspress/core';
 
 export default defineConfig({
   plugins: [pluginLastUpdated()],
@@ -37,7 +37,7 @@ export default defineConfig({
 注册插件后，你就可以在运行时拿到文章的最后更新时间戳了。示例如下：
 
 ```ts
-import { usePageData } from 'rspress/runtime';
+import { usePageData } from '@rspress/core/runtime';
 
 function MyComponent() {
   const pageData = usePageData();

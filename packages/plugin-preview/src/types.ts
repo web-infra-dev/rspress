@@ -1,5 +1,5 @@
 import type { RsbuildConfig } from '@rsbuild/core';
-import type { RouteMeta } from 'rspress/core';
+import type { RouteMeta } from '@rspress/core';
 
 export type Options = {
   /**

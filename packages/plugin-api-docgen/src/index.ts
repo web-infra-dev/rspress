@@ -2,8 +2,8 @@
 
 import fs from 'node:fs';
 import path from 'node:path';
-import { logger } from 'rspress/core';
-import type { RspressPlugin } from 'rspress/core';
+import { logger } from '@rspress/core';
+import type { RspressPlugin } from '@rspress/core';
 import { apiDocMap } from './constants';
 import { docgen } from './docgen';
 import type { PluginOptions, SupportLanguages } from './types';

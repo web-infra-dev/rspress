@@ -1,6 +1,6 @@
 # @rspress/plugin-client-redirects
 
-import { SourceCode, PackageManagerTabs } from 'rspress/theme';
+import { SourceCode, PackageManagerTabs } from '@rspress/core/theme';
 
 <SourceCode href="https://github.com/web-infra-dev/rspress/tree/main/packages/plugin-client-redirects" />
 
@@ -35,7 +35,7 @@ status = 404
 
 ```ts title="rspress.config.ts"
 import { pluginClientRedirects } from '@rspress/plugin-client-redirects';
-import { defineConfig } from 'rspress/config';
+import { defineConfig } from '@rspress/core';
 
 export default defineConfig({
   pluginClientRedirects({
@@ -78,7 +78,7 @@ type RedirectsOptions = {
 
 ```ts
 import path from 'node:path';
-import { defineConfig } from 'rspress/config';
+import { defineConfig } from '@rspress/core';
 import { pluginClientRedirects } from '@rspress/plugin-client-redirects';
 
 export default defineConfig({

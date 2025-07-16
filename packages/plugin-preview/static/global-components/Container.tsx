@@ -1,5 +1,5 @@
+import { NoSSR, useLang, usePageData, withBase } from '@rspress/core/runtime';
 import { type MouseEvent, useCallback, useState } from 'react';
-import { NoSSR, useLang, usePageData, withBase } from 'rspress/runtime';
 import MobileOperation from './common/mobile-operation';
 import IconCode from './icons/Code';
 

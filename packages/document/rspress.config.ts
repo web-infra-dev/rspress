@@ -1,4 +1,5 @@
 import { pluginSass } from '@rsbuild/plugin-sass';
+import { defineConfig } from '@rspress/core';
 import { pluginAlgolia } from '@rspress/plugin-algolia';
 import { pluginLlms } from '@rspress/plugin-llms';
 import {
@@ -11,7 +12,6 @@ import { pluginGoogleAnalytics } from 'rsbuild-plugin-google-analytics';
 import { pluginOpenGraph } from 'rsbuild-plugin-open-graph';
 import { pluginFontOpenSans } from 'rspress-plugin-font-open-sans';
 import pluginSitemap from 'rspress-plugin-sitemap';
-import { defineConfig } from 'rspress/config';
 
 const siteUrl = 'https://rspress.rs';
 

@@ -32,7 +32,7 @@ Considering the cost of static site generation, Rspress only pre-renders during 
 Through `builderConfig.html.tags`, you can customize the site HTML content, such as adding statistical code, adding scripts and styles, etc.
 
 ```js title="rspress.config.ts"
-import { defineConfig } from 'rspress/config';
+import { defineConfig } from '@rspress/core';
 
 export default defineConfig({
   // ...
@@ -75,7 +75,7 @@ Preview server running at http://localhost:4173/
 If you do not want to use Static Site Generation, you can disable it through the `ssg` config.
 
 ```js title="rspress.config.ts"
-import { defineConfig } from 'rspress/config';
+import { defineConfig } from '@rspress/core';
 
 export default defineConfig({
   // ...

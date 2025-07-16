@@ -4,7 +4,7 @@ import type {
   RouteMeta,
   RouteService,
   Sidebar,
-} from 'rspress/core';
+} from '@rspress/core';
 
 export interface LlmsTxt {
   /**

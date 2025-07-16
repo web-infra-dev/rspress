@@ -16,7 +16,7 @@ Faced with these flexible custom requirements, we provide corresponding interfac
 In the Rspress config, we provide a `search.searchHooks` config item for configuring the hook functions of the search components, as follows:
 
 ```js
-import { defineConfig } from 'rspress/config';
+import { defineConfig } from '@rspress/core';
 import path from 'path';
 
 export default defineConfig({
@@ -47,7 +47,7 @@ The `beforeSearch` hook function will be executed before the search starts, you 
 Here is an example of usage:
 
 ```ts
-import type { BeforeSearch } from 'rspress/theme';
+import type { BeforeSearch } from '@rspress/core/theme';
 
 const beforeSearch: BeforeSearch = (query: string) => {
   // Some operations before search can be done here
@@ -68,8 +68,8 @@ The `onSearch` hook function will be executed after the default full-text search
 Here is an example of how to use it:
 
 ```ts
-import type { OnSearch } from 'rspress/theme';
-import { RenderType } from 'rspress/theme';
+import type { OnSearch } from '@rspress/core/theme';
+import { RenderType } from '@rspress/core/theme';
 
 const onSearch: OnSearch = async (query, defaultSearchResult) => {
   // Can request data based on query
@@ -126,7 +126,7 @@ The `afterSearch` hook function will be executed after the search result is rend
 Here is an example of usage:
 
 ```ts
-import type { AfterSearch } from 'rspress/theme';
+import type { AfterSearch } from '@rspress/core/theme';
 
 const afterSearch: AfterSearch = async (query, searchResult) => {
   // Search keyword
@@ -143,7 +143,7 @@ export { afterSearch };
 The `render` function will render the custom search source data in your `onSearch` hook. Therefore, it generally needs to be used together with `onSearch`. Here's how to use it:
 
 ```ts
-import type { RenderSearchFunction } from 'rspress/theme';
+import type { RenderSearchFunction } from '@rspress/core/theme';
 
 // The above OnSearch hook implementation is skipped
 

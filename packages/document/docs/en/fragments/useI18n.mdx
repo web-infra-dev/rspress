@@ -1,7 +1,7 @@
 Rspress provides `useI18n` this hook to get the internationalized text, the usage is as follows:
 
 ```tsx
-import { useI18n } from 'rspress/runtime';
+import { useI18n } from '@rspress/core/runtime';
 
 const MyComponent = () => {
   const t = useI18n();
@@ -25,7 +25,7 @@ For better type hinting, you can configure `paths` in tsconfig.json:
 Then use it like this in the component:
 
 ```tsx
-import { useI18n } from 'rspress/runtime';
+import { useI18n } from '@rspress/core/runtime';
 
 const MyComponent = () => {
   const t = useI18n<typeof import('i18n')>();

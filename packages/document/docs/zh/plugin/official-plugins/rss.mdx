@@ -1,6 +1,6 @@
 # @rspress/plugin-rss
 
-import { SourceCode, PackageManagerTabs } from 'rspress/theme';
+import { SourceCode, PackageManagerTabs } from '@rspress/core/theme';
 
 <SourceCode href="https://github.com/web-infra-dev/rspress/tree/main/packages/plugin-rss" />
 
@@ -15,7 +15,7 @@ import { SourceCode, PackageManagerTabs } from 'rspress/theme';
 修改 `rspress.config.ts` 引入插件
 
 ```ts title="rspress.config.ts"
-import { defineConfig } from 'rspress/config';
+import { defineConfig } from '@rspress/core';
 import { pluginRss } from '@rspress/plugin-rss';
 
 export default defineConfig({

@@ -17,7 +17,7 @@ Next, we will introduce how to use these static assets one by one.
 The `document root directory` mentioned below refers to the directory specified by the `root` field in `rspress.config.ts`:
 
 ```ts title="rspress.config.ts"
-import { defineConfig } from 'rspress/config';
+import { defineConfig } from '@rspress/core';
 
 export default defineConfig({
   root: 'docs',
@@ -31,7 +31,7 @@ export default defineConfig({
 In Rspress, you can specify the logo image at the top left corner through the `logo` field. For example:
 
 ```ts title="rspress.config.ts"
-import { defineConfig } from 'rspress/config';
+import { defineConfig } from '@rspress/core';
 
 export default defineConfig({
   logo: 'https://avatars.githubusercontent.com/u/56892468?s=200&v=4',
@@ -49,7 +49,7 @@ When the logo is a string, there are the following config situations:
 If your website needs to adapt to dark mode, you can also use the object configuration of the logo, such as:
 
 ```ts title="rspress.config.ts"
-import { defineConfig } from 'rspress/config';
+import { defineConfig } from '@rspress/core';
 
 export default defineConfig({
   logo: {
@@ -66,7 +66,7 @@ Here, `light` represents the logo address in light mode, and `dark` represents t
 In Rspress, you can specify the site's favicon icon through the `icon` field. For example:
 
 ```ts title="rspress.config.ts"
-import { defineConfig } from 'rspress/config';
+import { defineConfig } from '@rspress/core';
 
 export default defineConfig({
   icon: 'https://avatars.githubusercontent.com/u/56892468?s=200&v=4',
@@ -142,7 +142,7 @@ Or use an absolute path to reference:
 **A special case to note is that**, when your site is configured with a `base` path, if you want to use the `img` tag to introduce an absolute path, you need to use `normalizeImagePath` provided by `rspress/runtime` to manually add the `base` path to its src. Here is an example:
 
 ```tsx title="guide.mdx"
-import { normalizeImagePath } from 'rspress/runtime';
+import { normalizeImagePath } from '@rspress/core/runtime';
 
 <img src={normalizeImagePath('/demo.png')} />;
 ```

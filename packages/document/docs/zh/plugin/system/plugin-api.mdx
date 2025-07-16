@@ -9,7 +9,7 @@
 用于添加全局样式，传入一个样式文件的绝对路径，使用方式如下：
 
 ```tsx title="plugin.ts"
-import type { RspressPlugin } from 'rspress/core';
+import type { RspressPlugin } from '@rspress/core';
 import path from 'path';
 
 export function pluginForDoc(): RspressPlugin {
@@ -43,7 +43,7 @@ export function pluginForDoc(): RspressPlugin {
 用于添加全局组件，传入一个数组，数组中的每一项都是一个组件的绝对路径，使用方式如下：
 
 ```tsx title="plugin.ts"
-import type { RspressPlugin } from 'rspress/core';
+import type { RspressPlugin } from '@rspress/core';
 
 export function pluginForDoc(): RspressPlugin {
   // 组件路径
@@ -60,8 +60,8 @@ export function pluginForDoc(): RspressPlugin {
 `globalUIComponents` 的每一项可以是一个字符串，代表组件的文件路径；也可以是一个数组，第一项为组件的文件路径，第二项为组件的 props 对象，比如：
 
 ```ts title="rspress.config.ts"
-import { defineConfig } from 'rspress/config';
-import type { RspressPlugin } from 'rspress/core';
+import { defineConfig } from '@rspress/core';
+import type { RspressPlugin } from '@rspress/core';
 
 export function pluginForDoc(): RspressPlugin {
   // component path
@@ -94,7 +94,7 @@ Rspress 使用 [Rsbuild](https://github.com/web-infra-dev/rsbuild) 作为构建�
 > 当然，如果你想要直接配置 Rspack，也可以通过 `builderConfig.tools.rspack` 进行配置。
 
 ```tsx title="plugin.ts"
-import type { RspressPlugin } from 'rspress/core';
+import type { RspressPlugin } from '@rspress/core';
 
 export function pluginForDoc(slug: string): RspressPlugin {
   return {
@@ -135,7 +135,7 @@ interface ConfigUtils {
 用于修改 Rspress 本身的配置，比如你想要修改文档的标题，可以通过 `config` 来实现：
 
 ```tsx title="plugin.ts"
-import type { RspressPlugin } from 'rspress/core';
+import type { RspressPlugin } from '@rspress/core';
 
 export function pluginForDoc(): RspressPlugin {
   return {
@@ -155,7 +155,7 @@ export function pluginForDoc(): RspressPlugin {
 如果涉及到添加和删除插件，需要通过 `addPlugin` 和 `removePlugin` 来实现：
 
 ```tsx title="plugin.ts"
-import type { RspressPlugin } from 'rspress/core';
+import type { RspressPlugin } from '@rspress/core';
 
 export function pluginForDoc(): RspressPlugin {
   return {
@@ -183,7 +183,7 @@ export function pluginForDoc(): RspressPlugin {
 用于在文档构建之前/之后执行一些操作，第一个参数是文档的配置，第二个参数是当前是否是生产环境。使用方式如下：
 
 ```tsx title="plugin.ts"
-import type { RspressPlugin } from 'rspress/core';
+import type { RspressPlugin } from '@rspress/core';
 
 export function pluginForDoc(): RspressPlugin {
   return {
@@ -212,7 +212,7 @@ export function pluginForDoc(): RspressPlugin {
 用于扩展 Markdown/MDX 的编译能力，如果你想要添加自定义的 remark/rehype 插件以及 MDX 里的全局组件，可以通过 `markdown` 配置来实现：
 
 ```tsx title="plugin.ts"
-import type { RspressPlugin } from 'rspress/core';
+import type { RspressPlugin } from '@rspress/core';
 
 export function pluginForDoc(): RspressPlugin {
   return {
@@ -243,7 +243,7 @@ export function pluginForDoc(): RspressPlugin {
 用于扩展页面数据，比如你想要在页面数据中添加一些自定义的属性，可以通过 `extendPageData` 来实现：
 
 ```tsx title="plugin.ts"
-import type { RspressPlugin } from 'rspress/core';
+import type { RspressPlugin } from '@rspress/core';
 
 export function pluginForDoc(): RspressPlugin {
   return {
@@ -288,7 +288,7 @@ interface AdditionalPage {
 
 ```tsx
 import path from 'path';
-import type { RspressPlugin } from 'rspress/core';
+import type { RspressPlugin } from '@rspress/core';
 
 export function docPluginDemo(): RspressPlugin {
   return {
@@ -335,7 +335,7 @@ export interface RouteMeta {
 例子:
 
 ```tsx title="plugin.ts"
-import type { RspressPlugin } from 'rspress/core';
+import type { RspressPlugin } from '@rspress/core';
 
 export function pluginForDoc(): RspressPlugin {
   return {
@@ -356,7 +356,7 @@ export function pluginForDoc(): RspressPlugin {
 用于添加额外的运行时模块，比如你想要在文档中使用到某些编译时的信息，可以通过 `addRuntimeModules` 来实现：
 
 ```tsx title="plugin.ts"
-import type { RspressPlugin } from 'rspress/core';
+import type { RspressPlugin } from '@rspress/core';
 
 export function pluginForDoc(): RspressPlugin {
   return {

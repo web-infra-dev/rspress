@@ -53,7 +53,7 @@ export default defineConfig({
 - 示例：通过 [@rsbuild/plugin-vue](https://rsbuild.rs/plugins/list/plugin-vue) 支持 Vue SFC。
 
 ```ts title="rspress.config.ts"
-import { defineConfig } from 'rspress/config';
+import { defineConfig } from '@rspress/core';
 import { pluginVue } from '@rsbuild/plugin-vue';
 
 export default defineConfig({
@@ -66,7 +66,7 @@ export default defineConfig({
 - 示例：通过 [rsbuild-plugin-google-analytics](https://github.com/rspack-contrib/rsbuild-plugin-google-analytics) 添加 Google analytics。
 
 ```ts title="rspress.config.ts"
-import { defineConfig } from 'rspress/config';
+import { defineConfig } from '@rspress/core';
 import { pluginGoogleAnalytics } from 'rsbuild-plugin-google-analytics';
 
 export default defineConfig({
@@ -84,7 +84,7 @@ export default defineConfig({
 - 示例：通过 [rsbuild-plugin-open-graph](https://github.com/rspack-contrib/rsbuild-plugin-open-graph) 添加 Open Graph meta 标签。
 
 ```ts title="rspress.config.ts"
-import { defineConfig } from 'rspress/config';
+import { defineConfig } from '@rspress/core';
 import { pluginOpenGraph } from 'rsbuild-plugin-open-graph';
 
 export default defineConfig({
@@ -105,7 +105,7 @@ export default defineConfig({
 比如：
 
 ```ts title="rspress.config.ts"
-import { defineConfig } from 'rspress/config';
+import { defineConfig } from '@rspress/core';
 import { pluginReact } from '@rsbuild/plugin-react';
 
 export default defineConfig({
@@ -145,7 +145,7 @@ DEBUG=rsbuild rspress dev
 配置 remark 插件。比如：
 
 ```ts title="rspress.config.ts"
-import { defineConfig } from 'rspress/config';
+import { defineConfig } from '@rspress/core';
 
 export default defineConfig({
   markdown: {
@@ -168,7 +168,7 @@ export default defineConfig({
 配置 rehype 插件。比如：
 
 ```ts title="rspress.config.ts"
-import { defineConfig } from 'rspress/config';
+import { defineConfig } from '@rspress/core';
 
 export default defineConfig({
   markdown: {
@@ -192,7 +192,7 @@ export default defineConfig({
 是否检查死链。比如：
 
 ```ts title="rspress.config.ts"
-import { defineConfig } from 'rspress/config';
+import { defineConfig } from '@rspress/core';
 
 export default defineConfig({
   markdown: {
@@ -222,7 +222,7 @@ export default defineConfig({
 注册全局组件，无需通过导入声明，就可以在每个 MDX 文件中使用。比如：
 
 ```ts title="rspress.config.ts"
-import { defineConfig } from 'rspress/config';
+import { defineConfig } from '@rspress/core';
 import path from 'path';
 
 export default defineConfig({

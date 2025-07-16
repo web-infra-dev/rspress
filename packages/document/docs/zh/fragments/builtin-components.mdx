@@ -184,7 +184,7 @@ interface LinkCardProps {
 
 ```tsx title="index.tsx"
 // 以下为一个自定义组件，你可以将其引入到文档中
-import { Head } from 'rspress/runtime';
+import { Head } from '@rspress/core/runtime';
 
 function App() {
   return (
@@ -200,7 +200,7 @@ function App() {
 Home 页面 Feature 组件，查看[本站的效果](/zh/)
 
 ```tsx
-import { HomeFeature } from 'rspress/theme';
+import { HomeFeature } from '@rspress/core/theme';
 
 interface Feature {
   title: string;
@@ -220,7 +220,7 @@ export type Features = Feature[];
 Home 页面 Hero 组件
 
 ```tsx
-import { HomeHero } from 'rspress/theme';
+import { HomeHero } from '@rspress/core/theme';
 
 interface Hero {
   name: string;
@@ -261,7 +261,7 @@ function App() {
 用于在服务端渲染时不渲染某些组件。使用方法如下：
 
 ```tsx
-import { NoSSR } from 'rspress/runtime';
+import { NoSSR } from '@rspress/core/runtime';
 
 const Component = () => {
   return (
@@ -277,7 +277,7 @@ const Component = () => {
 预览组件，查看[本站的效果](/zh/api/)
 
 ```tsx
-import { Overview } from 'rspress/theme';
+import { Overview } from '@rspress/core/theme';
 
 interface GroupItem {
   text?: string;
@@ -449,7 +449,7 @@ import { Steps } from '@theme';
 你可以在文档中使用 `Tab` 和 `Tabs` 组件来实现标签页切换的效果。比如：
 
 ```mdx title="index.mdx"
-import { Tab, Tabs } from 'rspress/theme';
+import { Tab, Tabs } from '@rspress/core/theme';
 
 <Tabs>
   <Tab label="Tab 1">Tab 1 content</Tab>
@@ -469,7 +469,7 @@ import { Tab, Tabs } from '@theme';
 使用 `Tabs` 组件来切换多个代码块。
 
 ````mdx title="index.mdx"
-import { Tab, Tabs } from 'rspress/theme';
+import { Tab, Tabs } from '@rspress/core/theme';
 
 <Tabs>
   <Tab label="Tab 1">

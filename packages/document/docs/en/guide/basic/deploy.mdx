@@ -35,7 +35,7 @@ We can divide the deployment output into two parts: HTML files and static resour
 The so-called static resources refer to the `static` directory in the output directory, which contains the JavaScript, CSS, images and other static resources required by the project. When deploying, if you want to put these static resources on the CDN to ensure better access performance, instead of directly putting them on the server like HTML, then you need to configure the prefix of the static resources so that the project can correctly reference these static resources. You can complete it through `builderConfig.output.assetPrefix`:
 
 ```ts title="rspress.config.ts"
-import { defineConfig } from 'rspress/config';
+import { defineConfig } from '@rspress/core';
 
 export default defineConfig({
   builderConfig: {
@@ -57,7 +57,7 @@ In this way, when referencing static resources in HTML, the prefix will be autom
 When deploying, we may need to deploy the project to a subpath. For example, if you plan to deploy your site to `https://foo.github.io/bar/`, then you should set the `base` parameter to `"/bar/"`:
 
 ```ts title="rspress.config.ts"
-import { defineConfig } from 'rspress/config';
+import { defineConfig } from '@rspress/core';
 
 export default defineConfig({
   base: '/bar/',

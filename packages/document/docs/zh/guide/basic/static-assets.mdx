@@ -17,7 +17,7 @@
 下文提到的 `文档根目录` 指的是 `rspress.config.ts` 中的 `root` 字段指定的目录：
 
 ```ts title="rspress.config.ts"
-import { defineConfig } from 'rspress/config';
+import { defineConfig } from '@rspress/core';
 
 export default defineConfig({
   // 同时支持相对路径和绝对路径
@@ -32,7 +32,7 @@ export default defineConfig({
 在 Rspress 中，你可以通过 `logo` 字段来指定左上角的 logo 图片。例如：
 
 ```ts title="rspress.config.ts"
-import { defineConfig } from 'rspress/config';
+import { defineConfig } from '@rspress/core';
 
 export default defineConfig({
   logo: 'https://avatars.githubusercontent.com/u/56892468?s=200&v=4',
@@ -50,7 +50,7 @@ logo 字段支持字符串和对象两种配置方式。
 如果你的网站需要适配暗黑模式，那么也可以使用 logo 的对象配置，如：
 
 ```ts title="rspress.config.ts"
-import { defineConfig } from 'rspress/config';
+import { defineConfig } from '@rspress/core';
 
 export default defineConfig({
   logo: {
@@ -67,7 +67,7 @@ export default defineConfig({
 在 Rspress 中，你可以通过 `icon` 字段来指定站点的 favicon 图标。例如：
 
 ```ts title="rspress.config.ts"
-import { defineConfig } from 'rspress/config';
+import { defineConfig } from '@rspress/core';
 
 export default defineConfig({
   icon: 'https://avatars.githubusercontent.com/u/56892468?s=200&v=4',
@@ -143,7 +143,7 @@ docs
 **需要注意的一种特殊情况是**，当你的站点配置了 `base` 路径，那么如果你要使用 `img` 标签的方式来引入绝对路径，你需要使用 `rspress/runtime` 提供的 `normalizeImagePath` 来手动为其 src 添加 `base` 路径。示例如下：
 
 ```tsx title="guide.mdx"
-import { normalizeImagePath } from 'rspress/runtime';
+import { normalizeImagePath } from '@rspress/core/runtime';
 
 <img src={normalizeImagePath('/demo.png')} />;
 ```
