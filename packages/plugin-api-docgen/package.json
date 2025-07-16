@@ -52,7 +52,7 @@
     "typescript": "^5.8.2"
   },
   "peerDependencies": {
-    "rspress": "workspace:^2.0.0-beta.21",
+    "@rspress/core": "workspace:^2.0.0-beta.21",
     "typescript": "^5.8.2"
   },
   "peerDependenciesMeta": {

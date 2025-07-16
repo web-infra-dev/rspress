@@ -1,10 +1,10 @@
 /// <reference path="../../index.d.ts" />
 
+import { useLang, usePageData } from '@rspress/core/runtime';
 // @ts-ignore @theme is overridden by alias in @rspress/core
 import { getCustomMDXComponent } from '@theme';
 import ReactMarkdown from 'react-markdown';
 import remarkGfm from 'remark-gfm';
-import { useLang, usePageData } from 'rspress/runtime';
 import './API.css';
 import GithubSlugger from 'github-slugger';
 import type { Content, Element, Root } from 'hast';

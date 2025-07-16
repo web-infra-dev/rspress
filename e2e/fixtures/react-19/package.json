@@ -8,9 +8,9 @@
     "preview": "rspress preview"
   },
   "dependencies": {
+    "@rspress/core": "workspace:*",
     "react": "^19.1.0",
-    "react-dom": "^19.1.0",
-    "rspress": "workspace:*"
+    "react-dom": "^19.1.0"
   },
   "devDependencies": {
     "@types/node": "^22.8.1"

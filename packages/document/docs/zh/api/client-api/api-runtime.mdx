@@ -9,7 +9,7 @@ Rspress 暴露一些运行时 API，方便你做一些自定义的逻辑。
 获取当前页面的数据，返回值为一个对象，包含了当前页面的所有数据。
 
 ```js
-import { usePageData } from 'rspress/runtime';
+import { usePageData } from '@rspress/core/runtime';
 
 function MyComponent() {
   const pageData = usePageData();
@@ -24,7 +24,7 @@ function MyComponent() {
 获取当前语言，返回值为一个字符串，即当前语言。
 
 ```js
-import { useLang } from 'rspress/runtime';
+import { useLang } from '@rspress/core/runtime';
 
 function MyComponent() {
   const lang = useLang();
@@ -40,7 +40,7 @@ function MyComponent() {
 在多版本文档的场景下，获取当前文档版本，返回值为一个字符串，即当前版本。
 
 ```tsx
-import { useVersion } from 'rspress/runtime';
+import { useVersion } from '@rspress/core/runtime';
 
 export default () => {
   const version = useVersion();
@@ -55,7 +55,7 @@ export default () => {
 当前主题是否为暗黑模式，返回值为一个布尔值。
 
 ```js
-import { useDark } from 'rspress/runtime';
+import { useDark } from '@rspress/core/runtime';
 
 function MyComponent() {
   const dark = useDark();
@@ -94,7 +94,7 @@ import UseI18n from '../../fragments/useI18n';
 Rspress 内部使用并重导出了 `react-router-dom` 的所有 API，你可以这样来使用:
 
 ```ts
-import { useLocation } from 'rspress/runtime';
+import { useLocation } from '@rspress/core/runtime';
 
 function MyComponent() {
   const location = useLocation();

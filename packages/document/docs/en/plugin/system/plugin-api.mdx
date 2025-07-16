@@ -9,7 +9,7 @@ In the previous section, we introduced the basic structure of the plugin. In thi
 It is used to add a global style, and the absolute path of a style file is passed in, and the usage is as follows:
 
 ```tsx title="plugin.ts"
-import type { RspressPlugin } from 'rspress/core';
+import type { RspressPlugin } from '@rspress/core';
 import path from 'path';
 
 export function pluginForDoc(): RspressPlugin {
@@ -42,7 +42,7 @@ For example, if you want to modify the theme color, you can do so by adding a gl
 It is used to add global components, passing in an array, each item in the array is the absolute path of a component, the usage is as follows:
 
 ```tsx title="plugin.ts"
-import type { RspressPlugin } from 'rspress/core';
+import type { RspressPlugin } from '@rspress/core';
 
 export function pluginForDoc(): RspressPlugin {
   // component path
@@ -59,8 +59,8 @@ export function pluginForDoc(): RspressPlugin {
 The item of `globalUIComponents` can be a string, which is the path of the component file, or an array, the first item is the path of the component file, and the second item is the component props, for example:
 
 ```ts title="rspress.config.ts"
-import { defineConfig } from 'rspress/config';
-import type { RspressPlugin } from 'rspress/core';
+import { defineConfig } from '@rspress/core';
+import type { RspressPlugin } from '@rspress/core';
 
 export function pluginForDoc(): RspressPlugin {
   // component path
@@ -93,7 +93,7 @@ Rspress uses [Rsbuild](https://github.com/web-infra-dev/rsbuild) as the build to
 > Of course, if you want to configure Rspack directly, you can also configure it through `builderConfig.tools.rspack`.
 
 ```tsx title="plugin.ts"
-import type { RspressPlugin } from 'rspress/core';
+import type { RspressPlugin } from '@rspress/core';
 
 export function pluginForDoc(slug: string): RspressPlugin {
   return {
@@ -133,7 +133,7 @@ interface ConfigUtils {
 It is used to modify/extend the configuration of Rspress itself. For example, if you want to modify the title of the document, you can do it through `config`:
 
 ```tsx title="plugin.ts"
-import type { RspressPlugin } from 'rspress/core';
+import type { RspressPlugin } from '@rspress/core';
 
 export function pluginForDoc(): RspressPlugin {
   return {
@@ -153,7 +153,7 @@ export function pluginForDoc(): RspressPlugin {
 If it involves adding and removing a plugin, you need to implement it through `addPlugin` and `removePlugin`:
 
 ```tsx title="plugin.ts"
-import type { RspressPlugin } from 'rspress/core';
+import type { RspressPlugin } from '@rspress/core';
 
 export function pluginForDoc(): RspressPlugin {
   return {
@@ -181,7 +181,7 @@ export function pluginForDoc(): RspressPlugin {
 It is used to perform some operations before/after the document is built. The first parameter is the config of the document, and the second parameter is whether it is currently a production environment. The usage is as follows:
 
 ```tsx title="plugin.ts"
-import type { RspressPlugin } from 'rspress/core';
+import type { RspressPlugin } from '@rspress/core';
 
 export function pluginForDoc(): RspressPlugin {
   return {
@@ -209,7 +209,7 @@ When the `beforeBuild` hook is executed, the `config` plugins of all plugins hav
 It is used to extend the compilation ability of Markdown/MDX. If you want to add custom remark/rehype plugins or MDX globalComponents, you can use `markdown` options to achieve:
 
 ```tsx title="plugin.ts"
-import type { RspressPlugin } from 'rspress/core';
+import type { RspressPlugin } from '@rspress/core';
 
 export function pluginForDoc(): RspressPlugin {
   return {
@@ -236,7 +236,7 @@ export function pluginForDoc(): RspressPlugin {
 - Type: `(pageData: PageData) => void | Promise<void>`
 
 ```tsx title="plugin.ts"
-import type { RspressPlugin } from 'rspress/core';
+import type { RspressPlugin } from '@rspress/core';
 
 export function pluginForDoc(): RspressPlugin {
   return {
@@ -253,7 +253,7 @@ export function pluginForDoc(): RspressPlugin {
 After extending the page data, you can access the page data through the `usePageData` hook in the theme.
 
 ```tsx
-import { usePageData } from 'rspress';
+import { usePageData } from '@rspress/core/runtime';
 
 export function MyComponent() {
   const { page } = usePageData();
@@ -280,7 +280,7 @@ Used to add additional pages, you can return an array in the `addPages` function
 
 ```tsx
 import path from 'path';
-import type { RspressPlugin } from 'rspress/core';
+import type { RspressPlugin } from '@rspress/core';
 
 export function docPluginDemo(): RspressPlugin {
   return {
@@ -327,7 +327,7 @@ export interface RouteMeta {
 例子:
 
 ```tsx title="plugin.ts"
-import type { RspressPlugin } from 'rspress/core';
+import type { RspressPlugin } from '@rspress/core';
 
 export function pluginForDoc(): RspressPlugin {
   return {
@@ -348,7 +348,7 @@ export function pluginForDoc(): RspressPlugin {
 Used to add additional runtime modules. For example, if you want to use some compile-time information in the document, you can achieve this through `addRuntimeModules`:
 
 ```tsx title="plugin.ts"
-import type { RspressPlugin } from 'rspress/core';
+import type { RspressPlugin } from '@rspress/core';
 
 export function pluginForDoc(): RspressPlugin {
   return {

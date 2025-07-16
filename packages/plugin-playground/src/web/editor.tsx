@@ -2,8 +2,8 @@ import MonacoEditor, {
   loader,
   type EditorProps as MonacoEditorProps,
 } from '@monaco-editor/react';
+import { useDark } from '@rspress/core/runtime';
 import { useMemo } from 'react';
-import { useDark } from 'rspress/runtime';
 import { DEFAULT_MONACO_URL } from './constant';
 
 // inject by Rsbuild in cli/index.ts

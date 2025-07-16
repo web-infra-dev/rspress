@@ -1,6 +1,6 @@
+import { isExternalUrl } from '@rspress/core/runtime';
+import { useLocation } from '@rspress/core/runtime';
 import { useEffect, useMemo } from 'react';
-import { isExternalUrl } from 'rspress/runtime';
-import { useLocation } from 'rspress/runtime';
 
 // these are types copied from src/types.ts
 type RedirectRule = {

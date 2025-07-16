@@ -1,6 +1,6 @@
 # @rspress/plugin-shiki
 
-import { SourceCode } from 'rspress/theme';
+import { SourceCode } from '@rspress/core/theme';
 
 <SourceCode href="https://github.com/web-infra-dev/rspress/tree/main/packages/plugin-shiki" />
 
@@ -23,7 +23,7 @@ import { PackageManagerTabs } from '@theme';
 First, write the following configuration in the configuration file:
 
 ```ts title="rspress.config.ts"
-import { defineConfig } from 'rspress/config';
+import { defineConfig } from '@rspress/core';
 import { pluginShiki } from '@rspress/plugin-shiki';
 
 export default defineConfig({
@@ -61,7 +61,7 @@ A few Transformers are built into this plugin, including:
 You can enable these Transformers by configuring the `transformers` attribute, such as:
 
 ```ts title="rspress.config.ts"
-import { defineConfig } from 'rspress/config';
+import { defineConfig } from '@rspress/core';
 import { pluginShiki, transformerLineNumber } from '@rspress/plugin-shiki';
 import {
   transformerNotationDiff,

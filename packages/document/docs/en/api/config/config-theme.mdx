@@ -3,7 +3,7 @@
 Theme config is located under `themeConfig` in the `doc` param. For example:
 
 ```ts title="rspress.config.ts"
-import { defineConfig } from 'rspress/config';
+import { defineConfig } from '@rspress/core';
 
 export default defineConfig({
   themeConfig: {
@@ -37,7 +37,7 @@ interface NavItem {
 For example:
 
 ```ts title="rspress.config.ts"
-import { defineConfig } from 'rspress/config';
+import { defineConfig } from '@rspress/core';
 
 export default defineConfig({
   themeConfig: {
@@ -70,7 +70,7 @@ interface NavGroup {
 For example the following configuration:
 
 ```ts title="rspress.config.ts"
-import { defineConfig } from 'rspress/config';
+import { defineConfig } from '@rspress/core';
 
 export default defineConfig({
   themeConfig: {
@@ -151,7 +151,7 @@ type SidebarItem =
 For example:
 
 ```ts title="rspress.config.ts"
-import { defineConfig } from 'rspress/config';
+import { defineConfig } from '@rspress/core';
 
 export default defineConfig({
   themeConfig: {
@@ -206,7 +206,7 @@ export interface Footer {
 For example:
 
 ```ts title="rspress.config.ts"
-import { defineConfig } from 'rspress/config';
+import { defineConfig } from '@rspress/core';
 
 export default defineConfig({
   themeConfig: {
@@ -228,7 +228,7 @@ Whether to show the sidebar in right position.
 For example:
 
 ```ts title="rspress.config.ts"
-import { defineConfig } from 'rspress/config';
+import { defineConfig } from '@rspress/core';
 
 export default defineConfig({
   themeConfig: {
@@ -247,7 +247,7 @@ Configure the title of the outline in the outline panel.
 For example:
 
 ```ts title="rspress.config.ts"
-import { defineConfig } from 'rspress/config';
+import { defineConfig } from '@rspress/core';
 
 export default defineConfig({
   themeConfig: {
@@ -270,7 +270,7 @@ You need to commit the markdown file to see the updated time.
 For example:
 
 ```ts title="rspress.config.ts"
-import { defineConfig } from 'rspress/config';
+import { defineConfig } from '@rspress/core';
 
 export default defineConfig({
   themeConfig: {
@@ -289,7 +289,7 @@ The text of the last update time.
 For example:
 
 ```ts title="rspress.config.ts"
-import { defineConfig } from 'rspress/config';
+import { defineConfig } from '@rspress/core';
 
 export default defineConfig({
   themeConfig: {
@@ -306,7 +306,7 @@ export default defineConfig({
 The text of the previous page. for example:
 
 ```ts title="rspress.config.ts"
-import { defineConfig } from 'rspress/config';
+import { defineConfig } from '@rspress/core';
 
 export default defineConfig({
   themeConfig: {
@@ -323,7 +323,7 @@ export default defineConfig({
 The placeholder text of the search box. For example:
 
 ```ts title="rspress.config.ts"
-import { defineConfig } from 'rspress/config';
+import { defineConfig } from '@rspress/core';
 
 export default defineConfig({
   themeConfig: {
@@ -340,7 +340,7 @@ export default defineConfig({
 The text of no search result. For example:
 
 ```ts title="rspress.config.ts"
-import { defineConfig } from 'rspress/config';
+import { defineConfig } from '@rspress/core';
 
 export default defineConfig({
   themeConfig: {
@@ -357,7 +357,7 @@ export default defineConfig({
 The text of suggested query text when no search result. For example:
 
 ```ts title="rspress.config.ts"
-import { defineConfig } from 'rspress/config';
+import { defineConfig } from '@rspress/core';
 
 export default defineConfig({
   themeConfig: {
@@ -383,7 +383,7 @@ interface FilterConfig {
 For example:
 
 ```ts title="rspress.config.ts"
-import { defineConfig } from 'rspress/config';
+import { defineConfig } from '@rspress/core';
 
 export default defineConfig({
   themeConfig: {
@@ -405,7 +405,7 @@ You can add related links through the following config, such as `github` links, 
 Related links support four modes: `link mode` `text mode` `image mode` `dom mode`, for example:
 
 ```ts title="rspress.config.ts"
-import { defineConfig } from 'rspress/config';
+import { defineConfig } from '@rspress/core';
 
 export default defineConfig({
   themeConfig: {
@@ -469,7 +469,7 @@ export type SocialLinkIcon =
 If you need to customize the icon, you can pass in an object with `svg attribute`, and the value of svg is the content of the custom icon, for example:
 
 ```js
-import { defineConfig } from 'rspress/config';
+import { defineConfig } from '@rspress/core';
 
 export default defineConfig({
   themeConfig: {
@@ -494,7 +494,7 @@ export default defineConfig({
 Text for the next page. for example:
 
 ```ts title="rspress.config.ts"
-import { defineConfig } from 'rspress/config';
+import { defineConfig } from '@rspress/core';
 
 export default defineConfig({
   themeConfig: {
@@ -557,7 +557,7 @@ export interface LocaleConfig {
 Whether a Dark/Light mode toggle button appears. for example:
 
 ```ts title="rspress.config.ts"
-import { defineConfig } from 'rspress/config';
+import { defineConfig } from '@rspress/core';
 
 export default defineConfig({
   themeConfig: {
@@ -569,7 +569,7 @@ export default defineConfig({
 You can also specify the default theme mode through inject global variable into html template, for example:
 
 ```ts title="rspress.config.ts"
-import { defineConfig } from 'rspress/config';
+import { defineConfig } from '@rspress/core';
 
 export default defineConfig({
   builderConfig: {
@@ -596,7 +596,7 @@ Control the behavior of the hidden navigation bar. By default, the navigation ba
 For example:
 
 ```ts title="rspress.config.ts"
-import { defineConfig } from 'rspress/config';
+import { defineConfig } from '@rspress/core';
 
 export default defineConfig({
   themeConfig: {
@@ -632,7 +632,7 @@ Display a link to edit the page on Git management services such as GitHub, or Gi
 For example:
 
 ```ts title="rspress.config.ts"
-import { defineConfig } from 'rspress/config';
+import { defineConfig } from '@rspress/core';
 
 export default defineConfig({
   themeConfig: {
@@ -655,7 +655,7 @@ Whether there is animation effect when switching between pages. It is implemente
 > The animation is not configurable for now.
 
 ```ts title="rspress.config.ts"
-import { defineConfig } from 'rspress/config';
+import { defineConfig } from '@rspress/core';
 
 export default defineConfig({
   themeConfig: {
@@ -674,7 +674,7 @@ Whether there is animation effect when switching between light and dark theme. I
 > The animation is not configurable for now.
 
 ```ts title="rspress.config.ts"
-import { defineConfig } from 'rspress/config';
+import { defineConfig } from '@rspress/core';
 
 export default defineConfig({
   themeConfig: {
@@ -691,7 +691,7 @@ export default defineConfig({
 Whether to display the search box. For example:
 
 ```ts title="rspress.config.ts"
-import { defineConfig } from 'rspress/config';
+import { defineConfig } from '@rspress/core';
 
 export default defineConfig({
   themeConfig: {
@@ -708,7 +708,7 @@ export default defineConfig({
 The text of the source code button. For example:
 
 ```ts title="rspress.config.ts"
-import { defineConfig } from 'rspress/config';
+import { defineConfig } from '@rspress/core';
 
 export default defineConfig({
   themeConfig: {
@@ -725,7 +725,7 @@ export default defineConfig({
 Enable scroll to top button on documentation. For example:
 
 ```ts title="rspress.config.ts"
-import { defineConfig } from 'rspress/config';
+import { defineConfig } from '@rspress/core';
 
 export default defineConfig({
   themeConfig: {
@@ -742,7 +742,7 @@ export default defineConfig({
 Whether to redirect to the locale closest to `window.navigator.language` when the user visits the site, the default is `auto`, which means that the user will be redirected on the first visit. If you set it to `never`, the user will not be redirected. If you set it to `only-default-lang`, the user will only be redirected when visiting the default locale. For example:
 
 ```ts title="rspress.config.ts"
-import { defineConfig } from 'rspress/config';
+import { defineConfig } from '@rspress/core';
 
 export default defineConfig({
   themeConfig: {
@@ -759,7 +759,7 @@ export default defineConfig({
 Whether to display [`frontmatter.title`](./config-frontmatter#title) as fallback when the heading title is not presented. For example:
 
 ```ts title="rspress.config.ts"
-import { defineConfig } from 'rspress/config';
+import { defineConfig } from '@rspress/core';
 
 export default defineConfig({
   themeConfig: {

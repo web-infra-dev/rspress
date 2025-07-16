@@ -1,6 +1,6 @@
 # @rspress/plugin-preview
 
-import { SourceCode, PackageManagerTabs } from 'rspress/theme';
+import { SourceCode, PackageManagerTabs } from '@rspress/core/theme';
 
 <SourceCode href="https://github.com/web-infra-dev/rspress/tree/main/packages/plugin-preview" />
 
@@ -17,7 +17,7 @@ import { SourceCode, PackageManagerTabs } from 'rspress/theme';
 首先在配置文件中写入以下的配置：
 
 ```ts title="rspress.config.ts"
-import { defineConfig } from 'rspress/config';
+import { defineConfig } from '@rspress/core';
 import { pluginPreview } from '@rspress/plugin-preview';
 
 export default defineConfig({
@@ -172,7 +172,7 @@ export default App;
 仅设置 `iframeOptions.position = follow` 时可使用 customEntry。
 
 ```ts
-import { defineConfig } from 'rspress/config';
+import { defineConfig } from '@rspress/core';
 import { pluginPreview } from '@rspress/plugin-preview';
 import { pluginVue } from '@rsbuild/plugin-vue';
 

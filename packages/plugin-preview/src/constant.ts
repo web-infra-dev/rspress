@@ -1,5 +1,5 @@
 import path from 'node:path';
-import { RSPRESS_TEMP_DIR } from 'rspress/core';
+import { RSPRESS_TEMP_DIR } from '@rspress/core';
 
 export const staticPath = path.join(__dirname, '..', 'static');
 

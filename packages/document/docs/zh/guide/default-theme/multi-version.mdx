@@ -7,7 +7,7 @@ Rspress 的默认主题中支持多版本文档管理，接下来，我们将介
 通过 `multiVersion` 配置版本列表和默认版本，比如：
 
 ```ts title="rspress.config.ts"
-import { defineConfig } from 'rspress/config';
+import { defineConfig } from '@rspress/core';
 
 export default defineConfig({
   multiVersion: {
@@ -48,7 +48,7 @@ docs
 在组件中，你可以通过 `useVersion` 获取当前版本，比如：
 
 ```tsx
-import { useVersion } from 'rspress/runtime';
+import { useVersion } from '@rspress/core/runtime';
 
 export default () => {
   const version = useVersion();
@@ -61,7 +61,7 @@ export default () => {
 可以配置 `search.versioned` 来仅搜索当前版本的文档。
 
 ```ts title="rspress.config.ts"
-import { defineConfig } from 'rspress/config';
+import { defineConfig } from '@rspress/core';
 
 export default defineConfig({
   multiVersion: {

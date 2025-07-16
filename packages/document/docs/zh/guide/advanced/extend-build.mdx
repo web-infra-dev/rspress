@@ -11,7 +11,7 @@ Rsbuild 提供了丰富的构建配置，你可以使用 [builderConfig](/api/co
 比如，将产物目录修改为 `doc_dist`：
 
 ```ts title="rspress.config.ts"
-import { defineConfig } from 'rspress/config';
+import { defineConfig } from '@rspress/core';
 
 export default defineConfig({
   builderConfig: {
@@ -29,7 +29,7 @@ Rspress 还提供了 [builderConfig.plugins](/api/config/config-build#buildercon
 比如通过 [rsbuild-plugin-google-analytics](https://github.com/rspack-contrib/rsbuild-plugin-google-analytics) 添加 Google analytics：
 
 ```ts title="rspress.config.ts"
-import { defineConfig } from 'rspress/config';
+import { defineConfig } from '@rspress/core';
 import { pluginGoogleAnalytics } from 'rsbuild-plugin-google-analytics';
 
 export default defineConfig({
@@ -53,7 +53,7 @@ export default defineConfig({
 你可以通过 Rsbuild 提供的 [tools.rspack](https://rsbuild.rs/config/tools/rspack) 选项来修改 Rspack 的配置：
 
 ```ts title="rspress.config.ts"
-import { defineConfig } from 'rspress/config';
+import { defineConfig } from '@rspress/core';
 
 export default defineConfig({
   builderConfig: {
@@ -71,7 +71,7 @@ export default defineConfig({
 在 Rspress 中，MDX 的编译基于 [unified](https://github.com/unifiedjs/unified) 完成，你可以通过 `markdown` 配置来添加相关的编译插件。比如
 
 ```ts title="rspress.config.ts"
-import { defineConfig } from 'rspress/config';
+import { defineConfig } from '@rspress/core';
 
 export default defineConfig({
   markdown: {

@@ -1,6 +1,6 @@
 # @rspress/plugin-last-updated
 
-import { SourceCode, PackageManagerTabs } from 'rspress/theme';
+import { SourceCode, PackageManagerTabs } from '@rspress/core/theme';
 
 <SourceCode href="https://github.com/web-infra-dev/rspress/tree/main/packages/plugin-last-updated" />
 
@@ -25,7 +25,7 @@ import { SourceCode, PackageManagerTabs } from 'rspress/theme';
 
 ```ts title="rspress.config.ts"
 import { pluginLastUpdated } from '@rspress/plugin-last-updated';
-import { defineConfig } from 'rspress/config';
+import { defineConfig } from '@rspress/core';
 
 export default defineConfig({
   plugins: [pluginLastUpdated()],
@@ -37,7 +37,7 @@ export default defineConfig({
 After registering the plugin, you can get the last updated timestamp of the article at runtime. Here's an example:
 
 ```ts
-import { usePageData } from 'rspress/runtime';
+import { usePageData } from '@rspress/core/runtime';
 
 function MyComponent() {
   const pageData = usePageData();

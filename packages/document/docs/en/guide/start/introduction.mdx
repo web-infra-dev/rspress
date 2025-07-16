@@ -132,7 +132,7 @@ In some scenarios, we need to manage multi-version documents, and Rspress has bu
 
 ```ts
 // config file
-import { defineConfig } from 'rspress/config';
+import { defineConfig } from '@rspress/core';
 
 export default defineConfig({
   multiVersion: {
@@ -168,8 +168,8 @@ Rspress supports two ways to customize themes:
 
 ```tsx
 // theme/index.tsx
-import Theme from 'rspress/theme';
-import { NoSSR } from 'rspress/runtime';
+import Theme from '@rspress/core/theme';
+import { NoSSR } from '@rspress/core/runtime';
 
 const Layout = () => <Theme.Layout beforeNavTitle={<p>Custom Block</p>} />;
 
@@ -178,7 +178,7 @@ export default {
   Layout,
 };
 
-export * from 'rspress/theme';
+export * from '@rspress/core/theme';
 ```
 
 2.  Fully customized theme. If you want to develop a custom theme from scratch, you can customize the content of Layout and use various Runtime APIs provided by Rspress (such as `usePageData`) to obtain compile-time data, routing information, etc.

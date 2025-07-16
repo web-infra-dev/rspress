@@ -1,5 +1,5 @@
+import type { PageIndexInfo } from '@rspress/core';
 import type { FeedOptions, Item } from 'feed';
-import type { PageIndexInfo } from 'rspress/core';
 import type { PartialPartial } from './internals';
 
 /**

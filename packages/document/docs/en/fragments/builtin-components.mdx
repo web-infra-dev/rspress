@@ -184,7 +184,7 @@ It is generally used to set custom head content in documents (based on [unhead](
 
 ```tsx title="index.tsx"
 // Below is a custom component, you can import it into your document
-import { Head } from 'rspress/runtime';
+import { Head } from '@rspress/core/runtime';
 
 function App() {
   return (
@@ -200,7 +200,7 @@ function App() {
 Feature component in Hero page, look [the effect in this website](/).
 
 ```tsx
-import { HomeFeature } from 'rspress/theme';
+import { HomeFeature } from '@rspress/core/theme';
 
 interface Feature {
   title: string;
@@ -219,7 +219,7 @@ export type Features = Feature[];
 Hero component in Hero page.
 
 ```tsx
-import { HomeHero } from 'rspress/theme';
+import { HomeHero } from '@rspress/core/theme';
 
 interface Hero {
   name: string;
@@ -260,7 +260,7 @@ If `lastUpdated: true` is not configured in the default theme, you need to insta
 Used to skip the ssr for some components. For example:
 
 ```tsx
-import { NoSSR } from 'rspress/runtime';
+import { NoSSR } from '@rspress/core/runtime';
 
 const Component = () => {
   return (
@@ -276,7 +276,7 @@ const Component = () => {
 Overview component, look [the effect in this website](/api/)
 
 ```tsx
-import { Overview } from 'rspress/theme';
+import { Overview } from '@rspress/core/theme';
 
 interface GroupItem {
   text?: string;
@@ -462,7 +462,7 @@ Body for Step 1.
 You can use the `Tab` and `Tabs` component in the document to achieve the effect of tab switching. For example:
 
 ```mdx title="index.mdx"
-import { Tab, Tabs } from 'rspress/theme';
+import { Tab, Tabs } from '@rspress/core/theme';
 
 <Tabs>
   <Tab label="Tab 1">Tab 1 content</Tab>
@@ -482,7 +482,7 @@ import { Tab, Tabs } from '@theme';
 Using `Tabs` component to switch multiple code blocks.
 
 ````mdx title="index.mdx"
-import { Tab, Tabs } from 'rspress/theme';
+import { Tab, Tabs } from '@rspress/core/theme';
 
 <Tabs>
   <Tab label="Tab 1">

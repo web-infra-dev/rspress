@@ -63,7 +63,7 @@ In `rspress.config.ts`, you can configure `locales` data in two places:
 - `themeConfig.locales`, used to configure the theme's `lang`, `outline title`, `previous page/next page text` and other information, mainly for theme-related config.
 
 ```ts title="rspress.config.ts"
-import { defineConfig } from 'rspress/config';
+import { defineConfig } from '@rspress/core';
 
 export default defineConfig({
   locales: [
@@ -107,7 +107,7 @@ For other international theme parameters, please refer to [API type](/api/config
 After configure `locales` data, you need configure the default language of the document via [lang](/api/config/config-basic#lang), as shown in the following example:
 
 ```ts title="rspress.config.ts"
-import { defineConfig } from 'rspress/config';
+import { defineConfig } from '@rspress/core';
 
 export default defineConfig({
   lang: 'en',

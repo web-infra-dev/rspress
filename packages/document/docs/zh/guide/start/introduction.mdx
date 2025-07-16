@@ -132,7 +132,7 @@ Rspress 已经为你支持了这些需求场景，你可以根据 [I18n 教程](
 
 ```ts
 // 配置文件
-import { defineConfig } from 'rspress/config';
+import { defineConfig } from '@rspress/core';
 
 export default defineConfig({
   multiVersion: {
@@ -169,8 +169,8 @@ Rspress 支持两种自定义主题的方式：
 
 ```tsx
 // theme/index.tsx
-import Theme from 'rspress/theme';
-import { NoSSR } from 'rspress/runtime';
+import Theme from '@rspress/core/theme';
+import { NoSSR } from '@rspress/core/runtime';
 
 const Layout = () => <Theme.Layout beforeNavTitle={<p>Custom Block</p>} />;
 
@@ -179,7 +179,7 @@ export default {
   Layout,
 };
 
-export * from 'rspress/theme';
+export * from '@rspress/core/theme';
 ```
 
 2.  完全自定义主题。如果你想从头开发一套自定义主题，可以重新自定义 Layout 的内容，并借助 Rspress 提供的各个 Runtime API （如 `usePageData`）来获取编译时数据、路由等信息。

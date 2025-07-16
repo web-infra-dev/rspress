@@ -7,7 +7,7 @@ Rspress's default theme supports multi-version document management. Next, we wil
 Configure the version list and default version through `multiVersion`, for example:
 
 ```ts title="rspress.config.ts"
-import { defineConfig } from 'rspress/config';
+import { defineConfig } from '@rspress/core';
 
 export default defineConfig({
   multiVersion: {
@@ -48,7 +48,7 @@ For links in the document, you do not need to manually add the version prefix. R
 In components, you can get the current version through `useVersion`, for example:
 
 ```tsx
-import { useVersion } from 'rspress/runtime';
+import { useVersion } from '@rspress/core/runtime';
 
 export default () => {
   const version = useVersion();
@@ -61,7 +61,7 @@ export default () => {
 You can configure `search.versioned` to only search through the current version's documents.
 
 ```ts title="rspress.config.ts"
-import { defineConfig } from 'rspress/config';
+import { defineConfig } from '@rspress/core';
 
 export default defineConfig({
   multiVersion: {

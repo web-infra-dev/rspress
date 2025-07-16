@@ -36,3 +36,6 @@ export { logger } from '@rspress/shared/logger';
 
 export { mergeDocConfig } from '@rspress/shared/node-utils';
 export type { RouteService } from './node/route/RouteService';
+
+// cli
+export { defineConfig } from './cli/config';

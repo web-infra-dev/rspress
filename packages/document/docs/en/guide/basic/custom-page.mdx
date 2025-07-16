@@ -17,7 +17,7 @@ In some scenarios, you may need to add some custom global components to the page
 Add the following config in `rspress.config.ts`:
 
 ```ts title="rspress.config.ts"
-import { defineConfig } from 'rspress/config';
+import { defineConfig } from '@rspress/core';
 import path from 'path';
 
 export default defineConfig({
@@ -28,7 +28,7 @@ export default defineConfig({
 Each item of `globalUIComponents` can be a string, representing the file path of the component; or it can be an array, the first item is the file path of the component, and the second item is the props object of the component, such as:
 
 ```ts title="rspress.config.ts"
-import { defineConfig } from 'rspress/config';
+import { defineConfig } from '@rspress/core';
 
 export default defineConfig({
   globalUIComponents: [
@@ -55,7 +55,7 @@ In some scenarios, you may need to add some global styles on top of the theme UI
 Add the following configuration in `rspress.config.ts`:
 
 ```ts title="rspress.config.ts"
-import { defineConfig } from 'rspress/config';
+import { defineConfig } from '@rspress/core';
 import path from 'path';
 
 export default defineConfig({

@@ -9,7 +9,7 @@ Rspress exposes some runtime APIs, which is convenient for you to do some custom
 Get the data of the current page, and the return value is an object, which contains all the data of the current page.
 
 ```js
-import { usePageData } from 'rspress/runtime';
+import { usePageData } from '@rspress/core/runtime';
 
 function MyComponent() {
   const pageData = usePageData();
@@ -24,7 +24,7 @@ function MyComponent() {
 Get the current language, the return value is a string, which is the current language.
 
 ```js
-import { useLang } from 'rspress/runtime';
+import { useLang } from '@rspress/core/runtime';
 
 function MyComponent() {
   const lang = useLang();
@@ -40,7 +40,7 @@ function MyComponent() {
 Get the current version, the return value is a string, which is the current version.
 
 ```tsx
-import { useVersion } from 'rspress/runtime';
+import { useVersion } from '@rspress/core/runtime';
 
 export default () => {
   const version = useVersion();
@@ -55,7 +55,7 @@ export default () => {
 Whether it is dark mode currently, the return value is a boolean value.
 
 ```js
-import { useDark } from 'rspress/runtime';
+import { useDark } from '@rspress/core/runtime';
 
 function MyComponent() {
   const dark = useDark();
@@ -94,7 +94,7 @@ import UseI18n from '../../fragments/useI18n';
 Rspress internally uses and re-exports all APIs of `react-router-dom`, you can use it like this:
 
 ```ts
-import { useLocation } from 'rspress/runtime';
+import { useLocation } from '@rspress/core/runtime';
 
 function MyComponent() {
   const location = useLocation();

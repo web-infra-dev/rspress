@@ -39,14 +39,21 @@
   "main": "./dist/index.js",
   "module": "./dist/index.js",
   "types": "./dist/index.d.ts",
+  "bin": {
+    "rspress": "./bin/rspress.js"
+  },
   "files": [
+    "bin",
     "dist",
+    "meta-json-schema.json",
+    "nav-json-schema.json",
     "static",
     "index.html"
   ],
   "scripts": {
     "build": "rslib build",
     "dev": "rslib build -w",
+    "prepare": "node ./scripts/generateJsonSchema.mjs",
     "reset": "rimraf ./**/node_modules"
   },
   "dependencies": {
@@ -62,6 +69,8 @@
     "@shikijs/rehype": "^3.4.2",
     "@types/unist": "^3.0.3",
     "@unhead/react": "^2.0.12",
+    "cac": "^6.7.14",
+    "chokidar": "^3.6.0",
     "enhanced-resolve": "5.18.2",
     "github-slugger": "^2.0.0",
     "hast-util-from-html": "^2.0.3",
@@ -114,6 +123,7 @@
     "rsbuild-plugin-publint": "^0.3.2",
     "rsbuild-plugin-virtual-module": "0.3.0",
     "tailwindcss": "^3.4.17",
+    "ts-json-schema-generator": "^2.4.0",
     "typescript": "^5.8.2",
     "vfile": "^6.0.3"
   },

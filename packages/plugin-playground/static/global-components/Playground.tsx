@@ -1,3 +1,4 @@
+import { usePageData } from '@rspress/core/runtime';
 import { Editor, Runner } from '@rspress/plugin-playground/web';
 // @ts-ignore Cannot find module _rspress_playground_imports
 import getImport from '_rspress_playground_imports';
@@ -7,7 +8,6 @@ import React, {
   useCallback,
   useState,
 } from 'react';
-import { usePageData } from 'rspress/runtime';
 
 // inject by builder in cli/index.ts
 declare global {

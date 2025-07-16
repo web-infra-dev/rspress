@@ -8,8 +8,8 @@
     "preview": "rspress preview"
   },
   "dependencies": {
-    "@rspress/plugin-typedoc": "workspace:*",
-    "rspress": "workspace:*"
+    "@rspress/core": "workspace:*",
+    "@rspress/plugin-typedoc": "workspace:*"
   },
   "devDependencies": {
     "@types/node": "^22.8.1"

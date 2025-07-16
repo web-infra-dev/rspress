@@ -80,9 +80,9 @@ importers:
 
   e2e/fixtures/auto-nav-sidebar:
     dependencies:
-      rspress:
+      '@rspress/core':
         specifier: workspace:*
-        version: link:../../../packages/cli
+        version: link:../../../packages/core
     devDependencies:
       '@types/node':
         specifier: ^22.8.1
@@ -90,9 +90,9 @@ importers:
 
   e2e/fixtures/auto-nav-sidebar-dir-convention:
     dependencies:
-      rspress:
+      '@rspress/core':
         specifier: workspace:*
-        version: link:../../../packages/cli
+        version: link:../../../packages/core
     devDependencies:
       '@types/node':
         specifier: ^22.8.1
@@ -100,9 +100,9 @@ importers:
 
   e2e/fixtures/auto-nav-sidebar-issue-1682:
     dependencies:
-      rspress:
+      '@rspress/core':
         specifier: workspace:*
-        version: link:../../../packages/cli
+        version: link:../../../packages/core
     devDependencies:
       '@types/node':
         specifier: ^22.8.1
@@ -110,9 +110,9 @@ importers:
 
   e2e/fixtures/auto-nav-sidebar-no-meta:
     dependencies:
-      rspress:
+      '@rspress/core':
         specifier: workspace:*
-        version: link:../../../packages/cli
+        version: link:../../../packages/core
     devDependencies:
       '@types/node':
         specifier: ^22.8.1
@@ -120,9 +120,9 @@ importers:
 
   e2e/fixtures/basic:
     dependencies:
-      rspress:
+      '@rspress/core':
         specifier: workspace:*
-        version: link:../../../packages/cli
+        version: link:../../../packages/core
     devDependencies:
       '@types/node':
         specifier: ^22.8.1
@@ -130,9 +130,9 @@ importers:
 
   e2e/fixtures/check-dead-link:
     dependencies:
-      rspress:
+      '@rspress/core':
         specifier: workspace:*
-        version: link:../../../packages/cli
+        version: link:../../../packages/core
     devDependencies:
       '@types/node':
         specifier: ^22.8.1
@@ -140,12 +140,12 @@ importers:
 
   e2e/fixtures/client-redirects:
     dependencies:
+      '@rspress/core':
+        specifier: workspace:*
+        version: link:../../../packages/core
       '@rspress/plugin-client-redirects':
         specifier: workspace:*
         version: link:../../../packages/plugin-client-redirects
-      rspress:
-        specifier: workspace:*
-        version: link:../../../packages/cli
     devDependencies:
       '@types/node':
         specifier: ^22.8.1
@@ -153,9 +153,9 @@ importers:
 
   e2e/fixtures/code-block-runtime:
     dependencies:
-      rspress:
+      '@rspress/core':
         specifier: workspace:*
-        version: link:../../../packages/cli
+        version: link:../../../packages/core
     devDependencies:
       '@shikijs/transformers':
         specifier: ^3.2.2
@@ -166,9 +166,9 @@ importers:
 
   e2e/fixtures/custom-headers:
     dependencies:
-      rspress:
+      '@rspress/core':
         specifier: workspace:*
-        version: link:../../../packages/cli
+        version: link:../../../packages/core
     devDependencies:
       '@types/node':
         specifier: ^22.8.1
@@ -176,9 +176,9 @@ importers:
 
   e2e/fixtures/custom-home-footer:
     dependencies:
-      rspress:
+      '@rspress/core':
         specifier: workspace:*
-        version: link:../../../packages/cli
+        version: link:../../../packages/core
     devDependencies:
       '@types/node':
         specifier: ^22.8.1
@@ -186,9 +186,9 @@ importers:
 
   e2e/fixtures/custom-icon:
     dependencies:
-      rspress:
+      '@rspress/core':
         specifier: workspace:*
-        version: link:../../../packages/cli
+        version: link:../../../packages/core
     devDependencies:
       '@types/node':
         specifier: ^22.8.1
@@ -196,9 +196,9 @@ importers:
 
   e2e/fixtures/custom-layout-ui-switch:
     dependencies:
-      rspress:
+      '@rspress/core':
         specifier: workspace:*
-        version: link:../../../packages/cli
+        version: link:../../../packages/core
     devDependencies:
       '@types/node':
         specifier: ^22.8.1
@@ -206,6 +206,9 @@ importers:
 
   e2e/fixtures/custom-plugin:
     dependencies:
+      '@rspress/core':
+        specifier: workspace:*
+        version: link:../../../packages/core
       '@rspress/plugin-playground':
         specifier: workspace:*
         version: link:../../../packages/plugin-playground
@@ -218,9 +221,6 @@ importers:
       react-dom:
         specifier: ^19.1.0
         version: 19.1.0(react@19.1.0)
-      rspress:
-        specifier: workspace:*
-        version: link:../../../packages/cli
       solid-js:
         specifier: ^1.9.7
         version: 1.9.7
@@ -231,12 +231,12 @@ importers:
 
   e2e/fixtures/dynamic-toc:
     dependencies:
+      '@rspress/core':
+        specifier: workspace:*
+        version: link:../../../packages/core
       react:
         specifier: ^19.1.0
         version: 19.1.0
-      rspress:
-        specifier: workspace:*
-        version: link:../../../packages/cli
     devDependencies:
       '@types/node':
         specifier: ^22.8.1
@@ -247,9 +247,9 @@ importers:
 
   e2e/fixtures/github-alert-mdxjs:
     dependencies:
-      rspress:
+      '@rspress/core':
         specifier: workspace:*
-        version: link:../../../packages/cli
+        version: link:../../../packages/core
     devDependencies:
       '@types/node':
         specifier: ^22.8.1
@@ -257,9 +257,9 @@ importers:
 
   e2e/fixtures/heading-title:
     dependencies:
-      rspress:
+      '@rspress/core':
         specifier: workspace:*
-        version: link:../../../packages/cli
+        version: link:../../../packages/core
     devDependencies:
       '@types/node':
         specifier: ^22.8.1
@@ -267,9 +267,9 @@ importers:
 
   e2e/fixtures/hide-nav-bar:
     dependencies:
-      rspress:
+      '@rspress/core':
         specifier: workspace:*
-        version: link:../../../packages/cli
+        version: link:../../../packages/core
     devDependencies:
       '@types/node':
         specifier: ^22.8.1
@@ -277,9 +277,9 @@ importers:
 
   e2e/fixtures/i18n:
     dependencies:
-      rspress:
+      '@rspress/core':
         specifier: workspace:*
-        version: link:../../../packages/cli
+        version: link:../../../packages/core
     devDependencies:
       '@types/node':
         specifier: ^22.8.1
@@ -287,9 +287,9 @@ importers:
 
   e2e/fixtures/icon-file-url:
     dependencies:
-      rspress:
+      '@rspress/core':
         specifier: workspace:*
-        version: link:../../../packages/cli
+        version: link:../../../packages/core
     devDependencies:
       '@types/node':
         specifier: ^22.8.1
@@ -297,9 +297,9 @@ importers:
 
   e2e/fixtures/inline-markdown:
     dependencies:
-      rspress:
+      '@rspress/core':
         specifier: workspace:*
-        version: link:../../../packages/cli
+        version: link:../../../packages/core
     devDependencies:
       '@types/node':
         specifier: ^22.8.1
@@ -307,9 +307,9 @@ importers:
 
   e2e/fixtures/issue-1309:
     dependencies:
-      rspress:
+      '@rspress/core':
         specifier: workspace:*
-        version: link:../../../packages/cli
+        version: link:../../../packages/core
     devDependencies:
       '@types/node':
         specifier: ^22.8.1
@@ -317,9 +317,9 @@ importers:
 
   e2e/fixtures/markdown-link:
     dependencies:
-      rspress:
+      '@rspress/core':
         specifier: workspace:*
-        version: link:../../../packages/cli
+        version: link:../../../packages/core
     devDependencies:
       '@types/node':
         specifier: ^22.8.1
@@ -327,9 +327,9 @@ importers:
 
   e2e/fixtures/multi-version:
     dependencies:
-      rspress:
+      '@rspress/core':
         specifier: workspace:*
-        version: link:../../../packages/cli
+        version: link:../../../packages/core
     devDependencies:
       '@types/node':
         specifier: ^22.8.1
@@ -337,9 +337,9 @@ importers:
 
   e2e/fixtures/nav-link:
     dependencies:
-      rspress:
+      '@rspress/core':
         specifier: workspace:*
-        version: link:../../../packages/cli
+        version: link:../../../packages/core
     devDependencies:
       '@types/node':
         specifier: ^22.8.1
@@ -347,9 +347,9 @@ importers:
 
   e2e/fixtures/nav-link-item-with-hash:
     dependencies:
-      rspress:
+      '@rspress/core':
         specifier: workspace:*
-        version: link:../../../packages/cli
+        version: link:../../../packages/core
     devDependencies:
       '@types/node':
         specifier: ^22.8.1
@@ -357,9 +357,9 @@ importers:
 
   e2e/fixtures/nav-link-items:
     dependencies:
-      rspress:
+      '@rspress/core':
         specifier: workspace:*
-        version: link:../../../packages/cli
+        version: link:../../../packages/core
     devDependencies:
       '@types/node':
         specifier: ^22.8.1
@@ -367,9 +367,9 @@ importers:
 
   e2e/fixtures/nav-link-items-without-suffix:
     dependencies:
-      rspress:
+      '@rspress/core':
         specifier: workspace:*
-        version: link:../../../packages/cli
+        version: link:../../../packages/core
     devDependencies:
       '@types/node':
         specifier: ^22.8.1
@@ -377,9 +377,9 @@ importers:
 
   e2e/fixtures/nested-overview:
     dependencies:
-      rspress:
+      '@rspress/core':
         specifier: workspace:*
-        version: link:../../../packages/cli
+        version: link:../../../packages/core
     devDependencies:
       '@types/node':
         specifier: ^22.8.1
@@ -387,9 +387,9 @@ importers:
 
   e2e/fixtures/no-config-root:
     dependencies:
-      rspress:
+      '@rspress/core':
         specifier: workspace:*
-        version: link:../../../packages/cli
+        version: link:../../../packages/core
     devDependencies:
       '@types/node':
         specifier: ^22.8.1
@@ -397,9 +397,9 @@ importers:
 
   e2e/fixtures/package-manager-tabs:
     dependencies:
-      rspress:
+      '@rspress/core':
         specifier: workspace:*
-        version: link:../../../packages/cli
+        version: link:../../../packages/core
     devDependencies:
       '@types/node':
         specifier: ^22.8.1
@@ -407,9 +407,9 @@ importers:
 
   e2e/fixtures/page-type-home:
     dependencies:
-      rspress:
+      '@rspress/core':
         specifier: workspace:*
-        version: link:../../../packages/cli
+        version: link:../../../packages/core
     devDependencies:
       '@types/node':
         specifier: ^22.8.1
@@ -417,12 +417,12 @@ importers:
 
   e2e/fixtures/plugin-api-docgen:
     dependencies:
+      '@rspress/core':
+        specifier: workspace:*
+        version: link:../../../packages/core
       '@rspress/plugin-api-docgen':
         specifier: workspace:*
         version: link:../../../packages/plugin-api-docgen
-      rspress:
-        specifier: workspace:*
-        version: link:../../../packages/cli
     devDependencies:
       '@types/node':
         specifier: ^22.8.1
@@ -430,12 +430,12 @@ importers:
 
   e2e/fixtures/plugin-llms:
     dependencies:
+      '@rspress/core':
+        specifier: workspace:*
+        version: link:../../../packages/core
       '@rspress/plugin-llms':
         specifier: workspace:*
         version: link:../../../packages/plugin-llms
-      rspress:
-        specifier: workspace:*
-        version: link:../../../packages/cli
     devDependencies:
       '@types/node':
         specifier: ^22.8.1
@@ -443,6 +443,9 @@ importers:
 
   e2e/fixtures/plugin-playground:
     dependencies:
+      '@rspress/core':
+        specifier: workspace:*
+        version: link:../../../packages/core
       '@rspress/plugin-playground':
         specifier: workspace:*
         version: link:../../../packages/plugin-playground
@@ -452,9 +455,6 @@ importers:
       react-dom:
         specifier: ^19.1.0
         version: 19.1.0(react@19.1.0)
-      rspress:
-        specifier: workspace:*
-        version: link:../../../packages/cli
       solid-js:
         specifier: ^1.9.7
         version: 1.9.7
@@ -465,6 +465,9 @@ importers:
 
   e2e/fixtures/plugin-preview:
     dependencies:
+      '@rspress/core':
+        specifier: workspace:*
+        version: link:../../../packages/core
       '@rspress/plugin-playground':
         specifier: workspace:*
         version: link:../../../packages/plugin-playground
@@ -477,9 +480,6 @@ importers:
       react-dom:
         specifier: ^19.1.0
         version: 19.1.0(react@19.1.0)
-      rspress:
-        specifier: workspace:*
-        version: link:../../../packages/cli
       solid-js:
         specifier: ^1.9.7
         version: 1.9.7
@@ -493,6 +493,9 @@ importers:
       '@rsbuild/plugin-vue':
         specifier: ^1.1.0
         version: 1.1.0(@rsbuild/core@1.4.6)(vue@3.5.17(typescript@5.8.2))
+      '@rspress/core':
+        specifier: workspace:*
+        version: link:../../../packages/core
       '@rspress/plugin-preview':
         specifier: workspace:*
         version: link:../../../packages/plugin-preview
@@ -502,9 +505,6 @@ importers:
       react-dom:
         specifier: ^19.1.0
         version: 19.1.0(react@19.1.0)
-      rspress:
-        specifier: workspace:*
-        version: link:../../../packages/cli
       solid-js:
         specifier: ^1.9.7
         version: 1.9.7
@@ -518,12 +518,12 @@ importers:
 
   e2e/fixtures/plugin-rss:
     dependencies:
+      '@rspress/core':
+        specifier: workspace:*
+        version: link:../../../packages/core
       '@rspress/plugin-rss':
         specifier: workspace:*
         version: link:../../../packages/plugin-rss
-      rspress:
-        specifier: workspace:*
-        version: link:../../../packages/cli
     devDependencies:
       '@types/node':
         specifier: ^22.8.1
@@ -531,12 +531,12 @@ importers:
 
   e2e/fixtures/plugin-shiki:
     dependencies:
+      '@rspress/core':
+        specifier: workspace:*
+        version: link:../../../packages/core
       '@shikijs/transformers':
         specifier: ^3.2.2
         version: 3.2.2
-      rspress:
-        specifier: workspace:*
-        version: link:../../../packages/cli
     devDependencies:
       '@types/node':
         specifier: ^22.8.1
@@ -544,12 +544,12 @@ importers:
 
   e2e/fixtures/plugin-typedoc/multi:
     dependencies:
+      '@rspress/core':
+        specifier: workspace:*
+        version: link:../../../../packages/core
       '@rspress/plugin-typedoc':
         specifier: workspace:*
         version: link:../../../../packages/plugin-typedoc
-      rspress:
-        specifier: workspace:*
-        version: link:../../../../packages/cli
     devDependencies:
       '@types/node':
         specifier: ^22.8.1
@@ -557,12 +557,12 @@ importers:
 
   e2e/fixtures/plugin-typedoc/single:
     dependencies:
+      '@rspress/core':
+        specifier: workspace:*
+        version: link:../../../../packages/core
       '@rspress/plugin-typedoc':
         specifier: workspace:*
         version: link:../../../../packages/plugin-typedoc
-      rspress:
-        specifier: workspace:*
-        version: link:../../../../packages/cli
     devDependencies:
       '@types/node':
         specifier: ^22.8.1
@@ -570,9 +570,9 @@ importers:
 
   e2e/fixtures/production:
     dependencies:
-      rspress:
+      '@rspress/core':
         specifier: workspace:*
-        version: link:../../../packages/cli
+        version: link:../../../packages/core
     devDependencies:
       '@types/node':
         specifier: ^22.8.1
@@ -580,9 +580,9 @@ importers:
 
   e2e/fixtures/public-dir:
     dependencies:
-      rspress:
+      '@rspress/core':
         specifier: workspace:*
-        version: link:../../../packages/cli
+        version: link:../../../packages/core
     devDependencies:
       '@types/node':
         specifier: ^22.8.1
@@ -590,15 +590,15 @@ importers:
 
   e2e/fixtures/react-19:
     dependencies:
+      '@rspress/core':
+        specifier: workspace:*
+        version: link:../../../packages/core
       react:
         specifier: ^19.1.0
         version: 19.1.0
       react-dom:
         specifier: ^19.1.0
         version: 19.1.0(react@19.1.0)
-      rspress:
-        specifier: workspace:*
-        version: link:../../../packages/cli
     devDependencies:
       '@types/node':
         specifier: ^22.8.1
@@ -606,9 +606,9 @@ importers:
 
   e2e/fixtures/replace-rules:
     dependencies:
-      rspress:
+      '@rspress/core':
         specifier: workspace:*
-        version: link:../../../packages/cli
+        version: link:../../../packages/core
     devDependencies:
       '@types/node':
         specifier: ^22.8.1
@@ -616,12 +616,12 @@ importers:
 
   e2e/fixtures/search-algolia:
     dependencies:
+      '@rspress/core':
+        specifier: workspace:*
+        version: link:../../../packages/core
       react:
         specifier: ^19.1.0
         version: 19.1.0
-      rspress:
-        specifier: workspace:*
-        version: link:../../../packages/cli
     devDependencies:
       '@rspress/plugin-algolia':
         specifier: workspace:*
@@ -635,9 +635,9 @@ importers:
 
   e2e/fixtures/search-code-blocks:
     dependencies:
-      rspress:
+      '@rspress/core':
         specifier: workspace:*
-        version: link:../../../packages/cli
+        version: link:../../../packages/core
     devDependencies:
       '@types/node':
         specifier: ^22.8.1
@@ -645,15 +645,15 @@ importers:
 
   e2e/fixtures/search-i18n:
     dependencies:
-      rspress:
+      '@rspress/core':
         specifier: workspace:*
-        version: link:../../../packages/cli
+        version: link:../../../packages/core
 
   e2e/fixtures/ssg-fail-strict:
     dependencies:
-      rspress:
+      '@rspress/core':
         specifier: workspace:*
-        version: link:../../../packages/cli
+        version: link:../../../packages/core
     devDependencies:
       '@types/node':
         specifier: ^22.8.1
@@ -661,9 +661,9 @@ importers:
 
   e2e/fixtures/tabs-component:
     dependencies:
-      rspress:
+      '@rspress/core':
         specifier: workspace:*
-        version: link:../../../packages/cli
+        version: link:../../../packages/core
     devDependencies:
       '@types/node':
         specifier: ^22.8.1
@@ -671,9 +671,9 @@ importers:
 
   e2e/fixtures/theme-css:
     dependencies:
-      rspress:
+      '@rspress/core':
         specifier: workspace:*
-        version: link:../../../packages/cli
+        version: link:../../../packages/core
     devDependencies:
       '@types/node':
         specifier: ^22.8.1
@@ -681,9 +681,9 @@ importers:
 
   e2e/fixtures/title-number:
     dependencies:
-      rspress:
+      '@rspress/core':
         specifier: workspace:*
-        version: link:../../../packages/cli
+        version: link:../../../packages/core
     devDependencies:
       '@types/node':
         specifier: ^22.8.1
@@ -691,9 +691,9 @@ importers:
 
   e2e/fixtures/title-suffix:
     dependencies:
-      rspress:
+      '@rspress/core':
         specifier: workspace:*
-        version: link:../../../packages/cli
+        version: link:../../../packages/core
     devDependencies:
       '@types/node':
         specifier: ^22.8.1
@@ -701,9 +701,9 @@ importers:
 
   e2e/fixtures/view-transition:
     dependencies:
-      rspress:
+      '@rspress/core':
         specifier: workspace:*
-        version: link:../../../packages/cli
+        version: link:../../../packages/core
     devDependencies:
       '@types/jest':
         specifier: ~29.5.14
@@ -714,61 +714,12 @@ importers:
 
   e2e/fixtures/with-base:
     devDependencies:
-      '@types/node':
-        specifier: ^22.8.1
-        version: 22.10.2
-      rspress:
-        specifier: workspace:*
-        version: link:../../../packages/cli
-
-  packages/cli:
-    dependencies:
-      '@rsbuild/core':
-        specifier: ~1.4.6
-        version: 1.4.6
       '@rspress/core':
         specifier: workspace:*
-        version: link:../core
-      '@rspress/shared':
-        specifier: workspace:*
-        version: link:../shared
-      cac:
-        specifier: ^6.7.14
-        version: 6.7.14
-      chokidar:
-        specifier: ^3.6.0
-        version: 3.6.0
-      picocolors:
-        specifier: ^1.1.1
-        version: 1.1.1
-    devDependencies:
-      '@microsoft/api-extractor':
-        specifier: ^7.52.8
-        version: 7.52.8(@types/node@22.10.2)
-      '@rslib/core':
-        specifier: 0.10.5
-        version: 0.10.5(@microsoft/api-extractor@7.52.8(@types/node@22.10.2))(typescript@5.8.2)
-      '@types/jest':
-        specifier: ~29.5.14
-        version: 29.5.14
+        version: link:../../../packages/core
       '@types/node':
         specifier: ^22.8.1
         version: 22.10.2
-      '@types/react':
-        specifier: ^19.1.8
-        version: 19.1.8
-      rimraf:
-        specifier: ^6.0.1
-        version: 6.0.1
-      rsbuild-plugin-publint:
-        specifier: ^0.3.2
-        version: 0.3.2(@rsbuild/core@1.4.6)
-      ts-json-schema-generator:
-        specifier: ^2.4.0
-        version: 2.4.0
-      typescript:
-        specifier: ^5.8.2
-        version: 5.8.2
 
   packages/core:
     dependencies:
@@ -808,6 +759,12 @@ importers:
       '@unhead/react':
         specifier: ^2.0.12
         version: 2.0.12(react@19.1.0)
+      cac:
+        specifier: ^6.7.14
+        version: 6.7.14
+      chokidar:
+        specifier: ^3.6.0
+        version: 3.6.0
       enhanced-resolve:
         specifier: 5.18.2
         version: 5.18.2
@@ -959,6 +916,9 @@ importers:
       tailwindcss:
         specifier: ^3.4.17
         version: 3.4.17(ts-node@10.9.2(@types/node@22.10.2)(typescript@5.8.2))
+      ts-json-schema-generator:
+        specifier: ^2.4.0
+        version: 2.4.0
       typescript:
         specifier: ^5.8.2
         version: 5.8.2
@@ -993,6 +953,9 @@ importers:
       '@rsbuild/plugin-sass':
         specifier: ~1.3.3
         version: 1.3.3(@rsbuild/core@1.4.6)
+      '@rspress/core':
+        specifier: workspace:*
+        version: link:../core
       '@rspress/plugin-algolia':
         specifier: workspace:*
         version: link:../plugin-algolia
@@ -1014,9 +977,6 @@ importers:
       rsbuild-plugin-open-graph:
         specifier: ^1.0.2
         version: 1.0.2(@rsbuild/core@1.4.6)
-      rspress:
-        specifier: workspace:*
-        version: link:../cli
       rspress-plugin-font-open-sans:
         specifier: ^1.0.0
         version: 1.0.0
@@ -1035,9 +995,9 @@ importers:
       '@docsearch/react':
         specifier: ^3.9.0
         version: 3.9.0(@algolia/client-search@5.23.4)(@types/react@19.1.8)(react-dom@19.1.0(react@19.1.0))(react@19.1.0)(search-insights@2.17.3)
-      rspress:
+      '@rspress/core':
         specifier: workspace:^2.0.0-beta.21
-        version: link:../cli
+        version: link:../core
     devDependencies:
       '@microsoft/api-extractor':
         specifier: ^7.52.8
@@ -1072,6 +1032,9 @@ importers:
 
   packages/plugin-api-docgen:
     dependencies:
+      '@rspress/core':
+        specifier: workspace:^2.0.0-beta.21
+        version: link:../core
       chokidar:
         specifier: ^3.6.0
         version: 3.6.0
@@ -1090,9 +1053,6 @@ importers:
       remark-gfm:
         specifier: ^4.0.1
         version: 4.0.1
-      rspress:
-        specifier: workspace:^2.0.0-beta.21
-        version: link:../cli
       unified:
         specifier: ^11.0.5
         version: 11.0.5
@@ -1139,9 +1099,9 @@ importers:
 
   packages/plugin-client-redirects:
     dependencies:
-      rspress:
+      '@rspress/core':
         specifier: workspace:^2.0.0-beta.21
-        version: link:../cli
+        version: link:../core
     devDependencies:
       '@microsoft/api-extractor':
         specifier: ^7.52.8
@@ -1173,6 +1133,9 @@ importers:
 
   packages/plugin-llms:
     dependencies:
+      '@rspress/core':
+        specifier: workspace:^2.0.0-beta.21
+        version: link:../core
       remark-mdx:
         specifier: ^3.1.0
         version: 3.1.0
@@ -1182,9 +1145,6 @@ importers:
       remark-stringify:
         specifier: ^11.0.0
         version: 11.0.0
-      rspress:
-        specifier: workspace:^2.0.0-beta.21
-        version: link:../cli
       unified:
         specifier: ^11.0.5
         version: 11.0.5
@@ -1231,15 +1191,15 @@ importers:
       '@oxidation-compiler/napi':
         specifier: ^0.2.0
         version: 0.2.0
+      '@rspress/core':
+        specifier: workspace:^2.0.0-beta.21
+        version: link:../core
       remark-gfm:
         specifier: ^4.0.1
         version: 4.0.1
       rspack-plugin-virtual-module:
         specifier: 1.0.1
         version: 1.0.1
-      rspress:
-        specifier: workspace:^2.0.0-beta.21
-        version: link:../cli
       unist-util-visit:
         specifier: ^5.0.0
         version: 5.0.0
@@ -1319,6 +1279,9 @@ importers:
       '@rsbuild/plugin-solid':
         specifier: ~1.0.5
         version: 1.0.5(@babel/core@7.26.10)(@rsbuild/core@1.4.6)(solid-js@1.9.7)
+      '@rspress/core':
+        specifier: workspace:^2.0.0-beta.21
+        version: link:../core
       '@rspress/theme-default':
         specifier: workspace:*
         version: link:../theme-default
@@ -1328,9 +1291,6 @@ importers:
       qrcode.react:
         specifier: ^4.2.0
         version: 4.2.0(react@19.1.0)
-      rspress:
-        specifier: workspace:^2.0.0-beta.21
-        version: link:../cli
     devDependencies:
       '@rslib/core':
         specifier: 0.10.5
@@ -1380,12 +1340,12 @@ importers:
 
   packages/plugin-rss:
     dependencies:
+      '@rspress/core':
+        specifier: workspace:^2.0.0-beta.21
+        version: link:../core
       feed:
         specifier: ^4.2.2
         version: 4.2.2
-      rspress:
-        specifier: workspace:^2.0.0-beta.21
-        version: link:../cli
     devDependencies:
       '@rslib/core':
         specifier: 0.10.5
@@ -1408,9 +1368,9 @@ importers:
 
   packages/plugin-typedoc:
     dependencies:
-      rspress:
+      '@rspress/core':
         specifier: workspace:^2.0.0-beta.21
-        version: link:../cli
+        version: link:../core
       typedoc:
         specifier: 0.24.8
         version: 0.24.8(typescript@5.8.2)

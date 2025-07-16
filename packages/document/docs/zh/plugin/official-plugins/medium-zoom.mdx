@@ -1,6 +1,6 @@
 # @rspress/plugin-medium-zoom
 
-import { SourceCode } from 'rspress/theme';
+import { SourceCode } from '@rspress/core/theme';
 
 <SourceCode href="https://github.com/web-infra-dev/rspress/tree/main/packages/plugin-medium-zoom" />
 
@@ -11,7 +11,7 @@ import { SourceCode } from 'rspress/theme';
 由于该插件是内置插件，所以不需要在配置文件手动注册，只需要在 `mediumZoom` 字段中配置即可。比如：
 
 ```ts title="rspress.config.ts"
-import { defineConfig } from 'rspress/config';
+import { defineConfig } from '@rspress/core';
 
 export default defineConfig({
   mediumZoom: {

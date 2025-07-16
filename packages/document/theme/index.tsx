@@ -1,18 +1,18 @@
 import {
+  HomeLayout as BasicHomeLayout,
+  Layout as BasicLayout,
+  getCustomMDXComponent,
+} from '@rspress/core/theme';
+import {
   Search as PluginAlgoliaSearch,
   ZH_LOCALES,
 } from '@rspress/plugin-algolia/runtime';
 import { Announcement } from '@rstack-dev/doc-ui/announcement';
 import { NavIcon } from '@rstack-dev/doc-ui/nav-icon';
-import {
-  HomeLayout as BasicHomeLayout,
-  Layout as BasicLayout,
-  getCustomMDXComponent,
-} from 'rspress/theme';
 import { ToolStack } from './components/ToolStack';
 
 import './index.css';
-import { NoSSR, useLang } from 'rspress/runtime';
+import { NoSSR, useLang } from '@rspress/core/runtime';
 
 function HomeLayout() {
   const { pre: PreWithCodeButtonGroup, code: Code } = getCustomMDXComponent();
@@ -80,4 +80,4 @@ const Search = () => {
 };
 
 export { Layout, HomeLayout, Search };
-export * from 'rspress/theme';
+export * from '@rspress/core/theme';

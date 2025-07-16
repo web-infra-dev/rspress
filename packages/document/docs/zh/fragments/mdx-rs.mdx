@@ -1,7 +1,7 @@
 是否使用 MDX 的 Rust 版本编译器，默认开启。比如：
 
 ```ts title="rspress.config.ts"
-import { defineConfig } from 'rspress/config';
+import { defineConfig } from '@rspress/core';
 
 export default defineConfig({
   markdown: {
@@ -14,7 +14,7 @@ export default defineConfig({
 你也可以提供函数来决定哪些文件使用 MDX 的 Rust 版本编译器。比如：
 
 ```ts title="rspress.config.ts"
-import { defineConfig } from 'rspress/config';
+import { defineConfig } from '@rspress/core';
 
 export default defineConfig({
   markdown: {

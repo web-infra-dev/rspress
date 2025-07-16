@@ -9,12 +9,12 @@ import {
 import { pluginBabel } from '@rsbuild/plugin-babel';
 import { pluginReact } from '@rsbuild/plugin-react';
 import { pluginSolid } from '@rsbuild/plugin-solid';
-import { cloneDeep, isEqual } from 'lodash';
 import {
   type RouteMeta,
   type RspressPlugin,
   removeTrailingSlash,
-} from 'rspress/core';
+} from '@rspress/core';
+import { cloneDeep, isEqual } from 'lodash';
 import { staticPath } from './constant';
 import { generateEntry } from './generate-entry';
 import { demos, remarkCodeToDemo } from './remarkPlugin';

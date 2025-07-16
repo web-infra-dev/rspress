@@ -16,7 +16,7 @@
 在 Rspress 配置中，我们提供了 `search.searchHooks` 配置项，用于配置搜索组件的钩子函数，如下：
 
 ```js
-import { defineConfig } from 'rspress/config';
+import { defineConfig } from '@rspress/core';
 import path from 'path';
 
 export default defineConfig({
@@ -47,7 +47,7 @@ export default defineConfig({
 使用示例如下：
 
 ```ts
-import type { BeforeSearch } from 'rspress/theme';
+import type { BeforeSearch } from '@rspress/core/theme';
 
 const beforeSearch: BeforeSearch = (query: string) => {
   // 可以在这里做一些搜索前的操作
@@ -68,8 +68,8 @@ export { beforeSearch };
 使用示例如下：
 
 ```ts
-import type { OnSearch } from 'rspress/theme';
-import { RenderType } from 'rspress/theme';
+import type { OnSearch } from '@rspress/core/theme';
+import { RenderType } from '@rspress/core/theme';
 
 const onSearch: OnSearch = async (query, defaultSearchResult) => {
   // 可根据 query 请求数据
@@ -126,7 +126,7 @@ export { onSearch };
 使用示例如下：
 
 ```ts
-import type { AfterSearch } from 'rspress/theme';
+import type { AfterSearch } from '@rspress/core/theme';
 
 const afterSearch: AfterSearch = async (query, searchResult) => {
   // 搜索关键词
@@ -143,7 +143,7 @@ export { afterSearch };
 `render` 函数会对你在 `onSearch` 钩子中自定义的搜索源数据进行渲染，因此一般需要和 `onSearch` 一起使用。使用方式如下：
 
 ```ts
-import type { RenderSearchFunction } from 'rspress/theme';
+import type { RenderSearchFunction } from '@rspress/core/theme';
 
 // 上述的 OnSearch 钩子实现省略
 

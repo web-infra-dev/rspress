@@ -1,6 +1,6 @@
 # @rspress/plugin-shiki
 
-import { SourceCode } from 'rspress/theme';
+import { SourceCode } from '@rspress/core/theme';
 
 <SourceCode href="https://github.com/web-infra-dev/rspress/tree/main/packages/plugin-shiki" />
 
@@ -23,7 +23,7 @@ import { PackageManagerTabs } from '@theme';
 首先在配置文件中写入以下的配置：
 
 ```ts title="rspress.config.ts"
-import { defineConfig } from 'rspress/config';
+import { defineConfig } from '@rspress/core';
 import { pluginShiki } from '@rspress/plugin-shiki';
 
 export default defineConfig({
@@ -61,7 +61,7 @@ Transformer 是本插件中的一个概念，它的作用是对代码块的特�
 你可以通过配置 `transformers` 属性来启用这些 Transformer，比如：
 
 ```ts title="rspress.config.ts"
-import { defineConfig } from 'rspress/config';
+import { defineConfig } from '@rspress/core';
 import { pluginShiki, transformerLineNumber } from '@rspress/plugin-shiki';
 import {
   transformerNotationDiff,
