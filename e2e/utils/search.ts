@@ -10,9 +10,6 @@ async function getSearchButton(page: Page) {
  * @returns suggestItems domList
  */
 export async function searchInPage(page: Page, searchText: string) {
-  await page.waitForSelector('.rspress-search-panel-input', {
-    state: 'attached',
-  });
   let searchInput = await page.$('.rspress-search-panel-input');
   if (!searchInput) {
     const searchButton = await getSearchButton(page);
