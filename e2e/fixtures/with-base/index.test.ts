@@ -1,5 +1,10 @@
 import { expect, test } from '@playwright/test';
-import { getPort, killProcess, runDevCommand } from '../../utils/runCommands';
+import {
+  getPort,
+  killProcess,
+  runBuildCommand,
+  runPreviewCommand,
+} from '../../utils/runCommands';
 
 test.describe('plugin test', async () => {
   let appPort;
@@ -7,7 +12,8 @@ test.describe('plugin test', async () => {
   test.beforeAll(async () => {
     const appDir = __dirname;
     appPort = await getPort();
-    app = await runDevCommand(appDir, appPort);
+    await runBuildCommand(appDir);
+    app = await runPreviewCommand(appDir, appPort);
   });
 
   test.afterAll(async () => {
