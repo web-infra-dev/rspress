@@ -76,6 +76,7 @@ test.describe('Nav should functions well', async () => {
     const navItems = await page.locator('footer a').all();
     await navItems[0].click();
     await page.waitForURL('**/child-2');
+    await page.waitForSelector('.rspress-doc');
     const content = await page.innerText('.rspress-doc');
     expect(content).toContain('child-2');
   });

@@ -18,6 +18,7 @@ test.describe('home footer test', async () => {
 
   test('custom home footer', async ({ page }) => {
     await page.goto(`http://localhost:${appPort}`);
+    await page.waitForSelector('footer');
     const footer = await page.$('footer');
     expect(footer).not.toBeNull();
     if (!footer) {
