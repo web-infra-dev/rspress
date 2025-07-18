@@ -3,7 +3,6 @@ import { join } from 'node:path';
 import type { RsbuildPlugin } from '@rsbuild/core';
 import { type UserConfig, isDebugMode } from '@rspress/shared';
 import { logger } from '@rspress/shared/logger';
-import type { PluginDriver } from '../PluginDriver';
 import { NODE_SSG_BUNDLE_FOLDER, NODE_SSG_BUNDLE_NAME } from '../constants';
 import type { RouteService } from '../route/RouteService';
 import { renderPages } from './renderPages';
@@ -11,11 +10,9 @@ import { renderPages } from './renderPages';
 export const rsbuildPluginSSG = ({
   routeService,
   config,
-  pluginDriver,
 }: {
   routeService: RouteService;
   config: UserConfig;
-  pluginDriver: PluginDriver;
 }): RsbuildPlugin => ({
   name: 'rspress-inner-rsbuild-plugin-ssg',
   async setup(api) {
@@ -25,11 +22,8 @@ export const rsbuildPluginSSG = ({
       const indexHtmlEmittedInWeb: Promise<void> = new Promise<void>(
         (resolve, reject) => {
           api.processAssets(
-            { stage: 'report', targets: ['web'] },
-            ({ assets, compilation, environment }) => {
-              if (environment.name !== 'web') {
-                return;
-              }
+            { stage: 'report', environments: ['web'] },
+            ({ assets, compilation }) => {
               if (compilation.errors.length > 0) {
                 hasError = true;
                 return;
@@ -56,11 +50,8 @@ export const rsbuildPluginSSG = ({
       });
 
       api.processAssets(
-        { stage: 'optimize-transfer', targets: ['node'] },
+        { stage: 'additional', environments: ['node'] },
         async ({ assets, compilation, environment, compiler }) => {
-          if (environment.name !== 'node') {
-            return;
-          }
           if (compilation.errors.length > 0) {
             hasError = true;
             return;
@@ -71,6 +62,16 @@ export const rsbuildPluginSSG = ({
           if (hasError) {
             return;
           }
+
+          const emitAsset: (assetName: string, content: string) => void = (
+            assetName: string,
+            content: string,
+          ) => {
+            compilation.emitAsset(
+              assetName,
+              new compiler.webpack.sources.RawSource(content),
+            );
+          };
 
           const distPath = environment.distPath;
           const ssgFolderPath = join(distPath, NODE_SSG_BUNDLE_FOLDER);
@@ -90,22 +91,10 @@ export const rsbuildPluginSSG = ({
             }),
           );
 
-          const emitAsset: (assetName: string, content: string) => void = (
-            assetName: string,
-            content: string,
-          ) => {
-            compilation.emitAsset(
-              assetName,
-              new compiler.webpack.sources.RawSource(content),
-            );
-          };
-
           await indexHtmlEmittedInWeb;
-
           await renderPages(
             routeService,
             config,
-            pluginDriver,
             mainCjsAbsolutePath,
             htmlTemplate,
             emitAsset,

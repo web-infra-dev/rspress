@@ -122,7 +122,10 @@ const rsbuildPluginLlms = ({
           baseRef.current,
         );
         api.processAssets(
-          { targets: disableSSG ? ['web'] : ['node'], stage: 'additional' },
+          {
+            environments: disableSSG ? ['web'] : ['node'],
+            stage: 'additional',
+          },
           async ({ compilation, sources }) => {
             const source = new sources.RawSource(llmsTxtContent);
             compilation.emitAsset(name, source);
@@ -169,7 +172,10 @@ const rsbuildPluginLlms = ({
 
       if (mdFiles) {
         api.processAssets(
-          { targets: disableSSG ? ['web'] : ['node'], stage: 'additional' },
+          {
+            environments: disableSSG ? ['web'] : ['node'],
+            stage: 'additional',
+          },
           async ({ compilation, sources }) => {
             if (mdFiles) {
               Object.entries(mdContents).forEach(([outFilePath, content]) => {

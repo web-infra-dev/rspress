@@ -2,7 +2,7 @@ import type { RouteMeta, UserConfig } from '@rspress/shared';
 
 export async function renderConfigHead(
   config: UserConfig,
-  route: unknown,
+  route: RouteMeta,
 ): Promise<string> {
   if (!isRouteMeta(route)) return '';
   if (!config.head || config.head.length === 0) return '';
