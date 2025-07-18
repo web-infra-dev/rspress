@@ -1,12 +1,10 @@
 import { useLocation, usePageData, useWindowSize } from '@rspress/runtime';
 import type { NavItem } from '@rspress/shared';
-import { Search } from '@theme';
+import { Search, SocialLinks, SwitchAppearance } from '@theme';
 import { base } from 'virtual-runtime-config';
 import { useHiddenNav } from '../../logic/useHiddenNav';
 import { useNavData } from '../../logic/useNav';
 import { NavHamburger } from '../NavHamburger';
-import { SocialLinks } from '../SocialLinks';
-import { SwitchAppearance } from '../SwitchAppearance';
 import { NavBarTitle } from './NavBarTitle';
 import { NavMenuGroup } from './NavMenuGroup';
 import { NavMenuSingleItem } from './NavMenuSingleItem';

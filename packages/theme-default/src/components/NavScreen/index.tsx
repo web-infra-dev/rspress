@@ -1,6 +1,7 @@
 import { NoSSR } from '@rspress/runtime';
 import type { DefaultThemeConfig, NavItem } from '@rspress/shared';
 import type { SiteData } from '@rspress/shared';
+import { SocialLinks, SwitchAppearance } from '@theme';
 import { clearAllBodyScrollLocks, disableBodyScroll } from 'body-scroll-lock';
 import { useEffect, useRef } from 'react';
 import { base } from 'virtual-runtime-config';
@@ -10,8 +11,6 @@ import {
   useTranslationMenuData,
   useVersionMenuData,
 } from '../Nav/menuDataHooks';
-import { SocialLinks } from '../SocialLinks';
-import { SwitchAppearance } from '../SwitchAppearance';
 import { NavScreenMenuGroup } from './NavScreenMenuGroup';
 import * as styles from './index.module.scss';
 
