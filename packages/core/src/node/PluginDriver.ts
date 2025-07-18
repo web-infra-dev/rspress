@@ -14,7 +14,6 @@ type RspressPluginHookKeys =
   | 'addRuntimeModules'
   | 'routeGenerated'
   | 'routeServiceGenerated'
-  | 'addSSGRoutes'
   | 'extendPageData'
   | 'modifySearchIndexData';
 
@@ -182,15 +181,6 @@ export class PluginDriver {
         ...current,
       };
     }, {});
-  }
-
-  async addSSGRoutes() {
-    const result = await this._runParallelAsyncHook<'addSSGRoutes'>(
-      'addSSGRoutes',
-      this.#config || {},
-      this.#isProd,
-    );
-    return result.flat();
   }
 
   globalUIComponents() {

@@ -47,6 +47,7 @@ import { runtimeConfigVMPlugin } from './runtimeModule/runtimeConfig';
 import { searchHookVMPlugin } from './runtimeModule/searchHooks';
 import type { FactoryContext } from './runtimeModule/types';
 import { serveSearchIndexMiddleware } from './searchIndex';
+import { rsbuildPluginCSR } from './ssg/rsbuildPluginCSR';
 import { rsbuildPluginSSG } from './ssg/rsbuildPluginSSG';
 import {
   detectReactVersion,
@@ -159,15 +160,15 @@ async function createInternalBuildConfig(
           ...runtimeConfigVMPlugin(context),
         },
       }),
-      ...(enableSSG
-        ? [
-            rsbuildPluginSSG({
-              routeService,
-              config,
-              pluginDriver,
-            }),
-          ]
-        : []),
+      enableSSG
+        ? rsbuildPluginSSG({
+            routeService,
+            config,
+          })
+        : rsbuildPluginCSR({
+            routeService,
+            config,
+          }),
     ],
     server: {
       port:
