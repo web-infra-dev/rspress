@@ -20,10 +20,10 @@ export const rsbuildPluginCSR = ({
             return;
           }
 
-          const emitAsset: (assetName: string, content: string) => void = (
+          const emitAsset = (
             assetName: string,
-            content: string,
-          ) => {
+            content: string | Buffer,
+          ): void => {
             compilation.emitAsset(
               assetName,
               new compiler.webpack.sources.RawSource(content),
