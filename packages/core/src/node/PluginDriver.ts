@@ -45,18 +45,9 @@ export class PluginDriver {
     const enableLastUpdated =
       themeConfig?.lastUpdated ||
       themeConfig?.locales?.some(locale => locale.lastUpdated);
-    const mediumZoomConfig = config?.mediumZoom ?? true;
     if (enableLastUpdated) {
       const { pluginLastUpdated } = await import('./last-updated/index');
       this.addPlugin(pluginLastUpdated());
-    }
-    if (mediumZoomConfig) {
-      const { pluginMediumZoom } = await import('./medium-zoom/index');
-      this.addPlugin(
-        pluginMediumZoom(
-          typeof mediumZoomConfig === 'object' ? mediumZoomConfig : undefined,
-        ),
-      );
     }
 
     (config.plugins || []).forEach(plugin => {

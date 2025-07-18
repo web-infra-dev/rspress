@@ -1,7 +1,7 @@
 import type { RsbuildConfig } from '@rsbuild/core';
 import type { loadConfig } from '@rsbuild/core';
 import type { RehypeShikiOptions } from '@shikijs/rehype';
-import type { ZoomOptions } from 'medium-zoom';
+import type { UncontrolledProps } from 'react-medium-image-zoom';
 import type { PluggableList } from 'unified';
 import type { AdditionalPage, RspressPlugin } from './Plugin';
 import type {
@@ -162,8 +162,8 @@ export interface UserConfig<ThemeConfig = DefaultThemeConfig> {
   mediumZoom?:
     | boolean
     | {
-        selector?: string;
-        options?: ZoomOptions;
+        isZoom: boolean;
+        options?: UncontrolledProps;
       };
   /**
    * Multi version config
