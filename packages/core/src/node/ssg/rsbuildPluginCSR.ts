@@ -14,7 +14,7 @@ export const rsbuildPluginCSR = ({
   async setup(api) {
     api.onBeforeBuild(() => {
       api.processAssets(
-        { stage: 'additional', environments: ['web'] },
+        { stage: 'report', environments: ['web'] },
         async ({ assets, compilation, compiler }) => {
           if (compilation.errors.length > 0) {
             return;

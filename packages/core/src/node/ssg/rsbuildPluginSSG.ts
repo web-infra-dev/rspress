@@ -50,7 +50,7 @@ export const rsbuildPluginSSG = ({
       });
 
       api.processAssets(
-        { stage: 'additional', environments: ['node'] },
+        { stage: 'optimize-transfer', environments: ['node'] },
         async ({ assets, compilation, environment, compiler }) => {
           if (compilation.errors.length > 0) {
             hasError = true;
