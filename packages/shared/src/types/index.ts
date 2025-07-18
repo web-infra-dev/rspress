@@ -154,8 +154,17 @@ export interface UserConfig<ThemeConfig = DefaultThemeConfig> {
   search?: SearchOptions;
   /**
    * Whether to enable ssg, default is true
+   * @default true
    */
-  ssg?: boolean;
+  ssg?:
+    | boolean
+    | {
+        /**
+         * Using tinypool to perform ssg rendering in parallel can significantly reduce memory usage and build time in large document sites.
+         * @default false
+         */
+        experimentalWorker?: boolean;
+      };
   /**
    * Whether to enable medium-zoom, default is true
    */
