@@ -164,6 +164,11 @@ export interface UserConfig<ThemeConfig = DefaultThemeConfig> {
          * @default false
          */
         experimentalWorker?: boolean;
+        /**
+         * ignore some error via Suspense
+         * @default false
+         */
+        experimentalLoose?: boolean;
       };
   /**
    * Whether to enable medium-zoom, default is true
@@ -230,7 +235,6 @@ export interface SiteData<ThemeConfig = NormalizedDefaultThemeConfig> {
   logoText: string;
   pages: BaseRuntimePageInfo[];
   search: SearchOptions;
-  ssg: boolean;
   markdown: {
     showLineNumbers: boolean;
     defaultWrapCode: boolean;
@@ -245,6 +249,7 @@ export interface SiteData<ThemeConfig = NormalizedDefaultThemeConfig> {
 // TODO: migrate more SiteData to NormalizedRuntimeConfig, and rename "SiteData" to "PageData" or "Pages"
 export interface NormalizedRuntimeConfig {
   base: string;
+  ssg: boolean | { experimentalWorker?: boolean; experimentalLoose?: boolean };
 }
 
 /**

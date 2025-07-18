@@ -12,7 +12,7 @@ import { renderToPipeableStream } from 'react-dom/server';
 import { PassThrough } from 'node:stream';
 import { text } from 'node:stream/consumers';
 import type { ReactNode } from 'react';
-import { base } from 'virtual-runtime-config';
+import { base, ssg } from 'virtual-runtime-config';
 import { App } from './App';
 import { initPageData } from './initPageData';
 
@@ -28,6 +28,9 @@ function renderToHtml(app: ReactNode): Promise<string> {
     const passThrough = new PassThrough();
     const { pipe } = renderToPipeableStream(app, {
       onError(error) {
+        if (typeof ssg === 'object' && ssg.experimentalLoose) {
+          return;
+        }
         reject(error);
       },
       onAllReady() {
