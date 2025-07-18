@@ -1,32 +1,12 @@
-import { pathToFileURL } from 'node:url';
-import {
-  type Unhead,
-  createHead,
-  transformHtmlTemplate,
-} from '@unhead/react/server';
-
-import type { PageData, Route, RouteMeta, UserConfig } from '@rspress/shared';
+import type { UserConfig } from '@rspress/shared';
 import { logger } from '@rspress/shared/logger';
 import pMap from 'p-map';
 import picocolors from 'picocolors';
-import {
-  APP_HTML_MARKER,
-  HEAD_MARKER,
-  META_GENERATOR,
-  RSPRESS_VERSION,
-} from '../constants';
 
 import { hintSSGFailed } from '../logger/hint';
 import type { RouteService } from '../route/RouteService';
-import { renderConfigHead } from './renderHead';
-
-interface SSRBundleExports {
-  render: (
-    pagePath: string,
-    head: Unhead,
-  ) => Promise<{ appHtml: string; pageData: PageData }>;
-  routes: Route[];
-}
+import { renderHtmlTemplate } from './renderHtmlTemplate';
+import { renderPage } from './renderPage';
 
 const routePath2HtmlFileName = (routePath: string) => {
   let fileName = routePath;
@@ -39,24 +19,6 @@ const routePath2HtmlFileName = (routePath: string) => {
   return fileName.replace(/^\/+/, '');
 };
 
-async function getReplacedHtml(
-  htmlTemplate: string,
-  config: UserConfig,
-  route: RouteMeta,
-  appHtml: string = '',
-) {
-  const replacedHtmlTemplate = htmlTemplate
-    // Don't use `string` as second param
-    // To avoid some special characters transformed to the marker, such as `$&`, etc.
-    .replace(APP_HTML_MARKER, () => appHtml)
-    .replace(
-      META_GENERATOR,
-      () => `<meta name="generator" content="Rspress v${RSPRESS_VERSION}">`,
-    )
-    .replace(HEAD_MARKER, [await renderConfigHead(config, route)].join(''));
-  return replacedHtmlTemplate;
-}
-
 export async function renderPages(
   routeService: RouteService,
   config: UserConfig,
@@ -67,23 +29,6 @@ export async function renderPages(
   logger.info('Rendering pages...');
   const startTime = Date.now();
 
-  let render: SSRBundleExports['render'];
-  try {
-    const { default: ssrExports } = await import(
-      pathToFileURL(ssrBundlePath).toString()
-    );
-    render = await ssrExports.render;
-  } catch (e) {
-    if (e instanceof Error) {
-      logger.error(
-        `Failed to load SSG bundle: ${picocolors.yellow(ssrBundlePath)}: ${e.message}`,
-      );
-      logger.debug(e);
-      hintSSGFailed();
-    }
-    throw e;
-  }
-
   try {
     const routes = routeService.getRoutes();
     if (!routeService.isExistRoute('/404')) {
@@ -93,32 +38,14 @@ export async function renderPages(
     await pMap(
       routes,
       async route => {
-        const head = createHead();
-        const { routePath } = route;
-        let appHtml = '';
-        if (render) {
-          try {
-            ({ appHtml } = await render(routePath, head));
-          } catch (e) {
-            if (e instanceof Error) {
-              logger.error(
-                `Page "${picocolors.yellow(routePath)}" SSG rendering failed.\n    ${picocolors.gray(e.toString())}`,
-              );
-              throw e;
-            }
-          }
-        }
-
-        const replacedHtmlTemplate = await getReplacedHtml(
+        const html = await renderPage(
+          route,
           htmlTemplate,
           config,
-          route,
-          appHtml,
+          ssrBundlePath,
         );
 
-        const html = await transformHtmlTemplate(head, replacedHtmlTemplate);
-
-        const fileName = routePath2HtmlFileName(routePath);
+        const fileName = routePath2HtmlFileName(route.routePath);
         emitAsset(fileName, html);
       },
       // https://github.com/facebook/docusaurus/blob/45065e8d2b5831117b8d69fec1be28f5520cf105/packages/docusaurus/src/ssg/ssgEnv.ts#L11
@@ -158,7 +85,7 @@ export async function renderCSRPages(
 
   await Promise.all(
     routes.map(async route => {
-      const html = await getReplacedHtml(htmlTemplate, config, route, '');
+      const html = await renderHtmlTemplate(htmlTemplate, config, route, '');
       const fileName = routePath2HtmlFileName(route.routePath);
       emitAsset(fileName, html);
     }),

@@ -1,6 +1,13 @@
 import type { RouteMeta, UserConfig } from '@rspress/shared';
 
-export async function renderConfigHead(
+import {
+  APP_HTML_MARKER,
+  HEAD_MARKER,
+  META_GENERATOR,
+  RSPRESS_VERSION,
+} from '../constants';
+
+async function renderConfigHead(
   config: UserConfig,
   route: RouteMeta,
 ): Promise<string> {
@@ -19,6 +26,24 @@ export async function renderConfigHead(
       return `<${head[0]} ${renderAttrs(head[1])}>`;
     })
     .join('');
+}
+
+export async function renderHtmlTemplate(
+  htmlTemplate: string,
+  config: UserConfig,
+  route: RouteMeta,
+  appHtml: string = '',
+) {
+  const replacedHtmlTemplate = htmlTemplate
+    // Don't use `string` as second param
+    // To avoid some special characters transformed to the marker, such as `$&`, etc.
+    .replace(APP_HTML_MARKER, () => appHtml)
+    .replace(
+      META_GENERATOR,
+      () => `<meta name="generator" content="Rspress v${RSPRESS_VERSION}">`,
+    )
+    .replace(HEAD_MARKER, [await renderConfigHead(config, route)].join(''));
+  return replacedHtmlTemplate;
 }
 
 function renderAttrs(attrs: Record<string, string>): string {
