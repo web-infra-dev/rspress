@@ -8,13 +8,13 @@ import {
 } from '../constants';
 
 async function renderConfigHead(
-  config: UserConfig,
+  head: UserConfig['head'],
   route: RouteMeta,
 ): Promise<string> {
   if (!isRouteMeta(route)) return '';
-  if (!config.head || config.head.length === 0) return '';
+  if (!head || head.length === 0) return '';
 
-  return config.head
+  return head
     .map(head => {
       if (typeof head === 'string') return head;
       if (typeof head === 'function') {
@@ -30,7 +30,7 @@ async function renderConfigHead(
 
 export async function renderHtmlTemplate(
   htmlTemplate: string,
-  config: UserConfig,
+  head: UserConfig['head'],
   route: RouteMeta,
   appHtml: string = '',
 ) {
@@ -42,7 +42,7 @@ export async function renderHtmlTemplate(
       META_GENERATOR,
       () => `<meta name="generator" content="Rspress v${RSPRESS_VERSION}">`,
     )
-    .replace(HEAD_MARKER, [await renderConfigHead(config, route)].join(''));
+    .replace(HEAD_MARKER, [await renderConfigHead(head, route)].join(''));
   return replacedHtmlTemplate;
 }
 

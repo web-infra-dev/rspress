@@ -26,6 +26,15 @@ export default defineConfig({
     generateEntry('./src/theme.ts'),
     {
       format: 'esm',
+      syntax: 'es2022',
+      source: {
+        entry: {
+          renderPageWorker: './src/node/ssg/renderPageWorker.ts',
+        },
+      },
+    },
+    {
+      format: 'esm',
       dts: {
         bundle: true,
       },

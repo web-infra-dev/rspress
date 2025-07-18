@@ -48,7 +48,7 @@ export async function build(options: BuildOptions) {
   await pluginDriver.init();
   const modifiedConfig = await pluginDriver.modifyConfig();
 
-  const ssgConfig = modifiedConfig.ssg ?? true;
+  const ssgConfig = Boolean(modifiedConfig.ssg ?? true);
 
   // empty temp dir before build
   await emptyDir(TEMP_DIR);
