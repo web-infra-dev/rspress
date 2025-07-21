@@ -50,7 +50,7 @@
     "nprogress": "^0.2.0",
     "react": "^19.1.0",
     "react-dom": "^19.1.0",
-    "shiki": "^3.4.2"
+    "shiki": "^3.8.1"
   },
   "devDependencies": {
     "@microsoft/api-extractor": "^7.52.8",
