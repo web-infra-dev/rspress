@@ -154,8 +154,22 @@ export interface UserConfig<ThemeConfig = DefaultThemeConfig> {
   search?: SearchOptions;
   /**
    * Whether to enable ssg, default is true
+   * @default true
    */
-  ssg?: boolean;
+  ssg?:
+    | boolean
+    | {
+        /**
+         * Using tinypool to perform ssg rendering in parallel can significantly reduce memory usage and build time in large document sites.
+         * @default false
+         */
+        experimentalWorker?: boolean;
+        /**
+         * ignore some error via Suspense
+         * @default false
+         */
+        experimentalLoose?: boolean;
+      };
   /**
    * Whether to enable medium-zoom, default is true
    */
@@ -221,7 +235,6 @@ export interface SiteData<ThemeConfig = NormalizedDefaultThemeConfig> {
   logoText: string;
   pages: BaseRuntimePageInfo[];
   search: SearchOptions;
-  ssg: boolean;
   markdown: {
     showLineNumbers: boolean;
     defaultWrapCode: boolean;
@@ -236,6 +249,7 @@ export interface SiteData<ThemeConfig = NormalizedDefaultThemeConfig> {
 // TODO: migrate more SiteData to NormalizedRuntimeConfig, and rename "SiteData" to "PageData" or "Pages"
 export interface NormalizedRuntimeConfig {
   base: string;
+  ssg: boolean | { experimentalWorker?: boolean; experimentalLoose?: boolean };
 }
 
 /**

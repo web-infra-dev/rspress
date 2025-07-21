@@ -79,9 +79,6 @@ export default defineConfig({
         },
       }),
     ],
-    output: {
-      cleanDistPath: false,
-    },
   },
   route: {
     cleanUrls: true,

@@ -234,12 +234,13 @@ async function createInternalBuildConfig(
       ...(process.env.RSPRESS_PERSISTENT_CACHE !== 'false'
         ? {
             buildCache: {
+              // 1. config file: rspress.config.ts
               buildDependencies: [pluginDriver.getConfigFilePath()],
               cacheDigest: [
-                // other configuration files which are not included in rspress.config.ts should be added to cacheDigest
-                // 1. routeService glob
+                // 2.other configuration files which are not included in rspress.config.ts should be added to cacheDigest
+                // 2.1 routeService glob
                 routeService.generateRoutesCode(),
-                // 2. auto-nav-sidebar _nav.json or _meta.json
+                // 2.2. auto-nav-sidebar _nav.json or _meta.json
                 JSON.stringify(
                   config.themeConfig?.locales?.map(i => ({
                     nav: i.nav,
@@ -249,6 +250,12 @@ async function createInternalBuildConfig(
                     sidebar: config.themeConfig?.sidebar,
                   },
                 ),
+                // TODO: remove the configuration track after rspack upgrading the import analysis of rspress.config.ts
+                JSON.stringify({
+                  base: config.base,
+                  ssg: config.ssg,
+                  pluginLength: config.plugins?.length ?? 0,
+                }),
               ],
             },
           }

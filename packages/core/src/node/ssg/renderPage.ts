@@ -23,7 +23,7 @@ interface SSRBundleExports {
 export async function renderPage(
   route: RouteMeta,
   htmlTemplate: string,
-  config: UserConfig,
+  configHead: UserConfig['head'],
   ssrBundlePath: string,
 ) {
   let render: SSRBundleExports['render'];
@@ -60,7 +60,7 @@ export async function renderPage(
 
   const replacedHtmlTemplate = await renderHtmlTemplate(
     htmlTemplate,
-    config,
+    configHead,
     route,
     appHtml,
   );
