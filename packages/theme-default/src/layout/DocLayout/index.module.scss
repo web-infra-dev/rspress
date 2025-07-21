@@ -1,15 +1,13 @@
 .aside-container {
   position: sticky;
   display: none;
-  top: 0;
+  top: var(--rp-nav-height);
   padding-top: var(--rp-content-padding-y);
   overflow-x: hidden;
   overflow-y: auto;
   scrollbar-width: none;
   width: 0;
-  max-height: calc(
-    100vh - var(--rp-nav-height) + var(--rp-content-padding-y) * 2
-  );
+  max-height: calc(100vh - var(--rp-nav-height) - var(--rp-content-padding-y));
 }
 
 .aside-container::-webkit-scrollbar {
