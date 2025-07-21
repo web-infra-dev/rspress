@@ -2,8 +2,8 @@
   position: sticky;
   display: none;
   top: 0;
-  margin-top: calc(var(--rp-nav-height) * -1 - var(--rp-content-padding-y));
-  padding-top: calc(var(--rp-nav-height) + var(--rp-content-padding-y));
+  margin-top: calc(-1 * var(--rp-content-padding-y));
+  padding-top: var(--rp-content-padding-y);
   overflow-x: hidden;
   overflow-y: auto;
   scrollbar-width: none;
