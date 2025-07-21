@@ -1,7 +1,7 @@
 import { A } from './a';
 import { Code } from './code';
 import { Hr } from './hr';
-import { Img } from './img';
+import { Img, ImgZoom } from './img';
 import { Li, Ol, Ul } from './list';
 import { Blockquote, P, Strong } from './paragraph';
 import { PreWithCodeButtonGroup } from './pre';
@@ -30,6 +30,6 @@ export function getCustomMDXComponent() {
     a: A,
     code: Code,
     pre: PreWithCodeButtonGroup,
-    img: Img,
+    img: process.env.MEDIUM_ZOOM ? ImgZoom : Img,
   };
 }
