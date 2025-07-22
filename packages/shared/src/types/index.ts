@@ -153,7 +153,7 @@ export interface UserConfig<ThemeConfig = DefaultThemeConfig> {
    */
   search?: SearchOptions;
   /**
-   * Whether to enable ssg, default is true
+   * Whether to enable ssg
    * @default true
    */
   ssg?:
@@ -165,13 +165,14 @@ export interface UserConfig<ThemeConfig = DefaultThemeConfig> {
          */
         experimentalWorker?: boolean;
         /**
-         * After enabled, some errors in the SSG process will be ignored and other pages will continue to be generated, but the SSG of some pages will be missing. It is suitable for SSG errors that are used by large document sites to bypass a small number of pages. It is not recommended to actively enable them.
-         * @default false
+         * After enabled, some pages will not be rendered by SSG, and they will directly use html under CSR. This is suitable for SSG errors in large document sites bypassing a small number of pages. It is not recommended to enable this option actively.
+         * @default []
          */
         experimentalIgnoreRoutePaths?: (string | RegExp)[];
       };
   /**
-   * Whether to enable medium-zoom, default is true
+   * Whether to enable medium-zoom
+   * @default true
    */
   mediumZoom?:
     | boolean
@@ -366,6 +367,7 @@ export interface RouteOptions {
   exclude?: string[];
   /**
    * use links without .html files
+   * @default false
    */
   cleanUrls?: boolean;
 }
@@ -396,12 +398,14 @@ export interface MarkdownOptions {
   remarkPlugins?: PluggableList;
   rehypePlugins?: PluggableList;
   /**
-   * Whether to enable check dead links, default is false
+   * Whether to enable check dead links
+   * @default false
    */
   checkDeadLinks?: boolean;
   showLineNumbers?: boolean;
   /**
-   * Whether to wrap code by default, default is false
+   * Whether to wrap code by default
+   * @default false
    */
   defaultWrapCode?: boolean;
   /**
