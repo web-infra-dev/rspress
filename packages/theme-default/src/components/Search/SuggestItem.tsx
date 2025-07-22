@@ -1,4 +1,4 @@
-import { isProduction } from '@rspress/runtime';
+import { isProduction, withBase } from '@rspress/runtime';
 import FileSvg from '@theme-assets/file';
 import HeaderSvg from '@theme-assets/header';
 import JumpSvg from '@theme-assets/jump';
@@ -35,10 +35,11 @@ export function SuggestItem({
   scrollTo: (top: number, height: number) => void;
 }) {
   const HitIcon = ICON_MAP[suggestion.type];
-  const link =
+  const link = withBase(
     inCurrentDocIndex && !isProduction()
       ? removeDomain(suggestion.link)
-      : suggestion.link;
+      : suggestion.link,
+  );
   const selfRef = useRef<HTMLLIElement>(null);
   if (isCurrent && selfRef.current?.offsetTop) {
     scrollTo(selfRef.current?.offsetTop, selfRef.current?.offsetHeight);
