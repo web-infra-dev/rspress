@@ -53,17 +53,17 @@ export async function renderPages(
 
     if (
       typeof ssg === 'object' &&
-      Array.isArray(ssg?.experimentalIgnoreRoutePaths) &&
-      ssg.experimentalIgnoreRoutePaths.length > 0
+      Array.isArray(ssg?.experimentalExcludeRoutePaths) &&
+      ssg.experimentalExcludeRoutePaths.length > 0
     ) {
       const shouldIgnoreRoutePaths: Set<string> = new Set();
       const shouldIgnoreRoutePathsRegExp: RegExp[] = [];
 
-      for (const path of ssg.experimentalIgnoreRoutePaths) {
-        if (typeof path === 'string') {
-          shouldIgnoreRoutePaths.add(path);
-        } else if (path instanceof RegExp) {
-          shouldIgnoreRoutePathsRegExp.push(path);
+      for (const routePath of ssg.experimentalExcludeRoutePaths) {
+        if (typeof routePath === 'string') {
+          shouldIgnoreRoutePaths.add(routePath);
+        } else if (routePath instanceof RegExp) {
+          shouldIgnoreRoutePathsRegExp.push(routePath);
         }
       }
 
@@ -83,15 +83,16 @@ export async function renderPages(
           ssgRoutes.push(route);
         }
       }
-      logger.warn(
-        `Some routes are ignored in SSG and fallback to CSR via \`ssg.experimentalIgnoreRoutePaths\`: ${picocolors.yellow(
-          csrRoutes.map(r => r.routePath).join(', '),
-        )}`,
-      );
-
-      await Promise.all(promiseList);
-      routes.length = 0;
-      routes.push(...ssgRoutes);
+      if (csrRoutes.length > 0) {
+        logger.warn(
+          `Some routes are ignored in SSG and fallback to CSR via \`ssg.experimentalExcludeRoutePaths\`: ${picocolors.yellow(
+            csrRoutes.map(r => r.routePath).join(', '),
+          )}`,
+        );
+        await Promise.all(promiseList);
+        routes.length = 0;
+        routes.push(...ssgRoutes);
+      }
     }
 
     if (typeof ssg === 'object' && ssg?.experimentalWorker) {

@@ -168,7 +168,7 @@ export interface UserConfig<ThemeConfig = DefaultThemeConfig> {
          * After enabled, some pages will not be rendered by SSG, and they will directly use html under CSR. This is suitable for SSG errors in large document sites bypassing a small number of pages. It is not recommended to enable this option actively.
          * @default []
          */
-        experimentalIgnoreRoutePaths?: (string | RegExp)[];
+        experimentalExcludeRoutePaths?: (string | RegExp)[];
       };
   /**
    * Whether to enable medium-zoom
