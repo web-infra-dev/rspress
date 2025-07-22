@@ -500,12 +500,12 @@ SSG requires the source code to support SSR. If the code is not compatible to SS
 
 After enabled, you can use worker to accelerate the SSG process and reduce memory usage. It is suitable for large document sites and is based on [tinypool](https://github.com/tinylibs/tinypool).
 
-### experimentalLoose
+### experimentalIgnoreRoutePaths
 
-- Type: `boolean`
-- Default: `false`
+- Type: `(string | RegExp)[]`
+- Default: `[]`
 
-After enabled, some errors in the SSG process will be ignored and other pages will continue to be generated, but the SSG of some pages will be missing. It is suitable for SSG errors that are used by large document sites to bypass a small number of pages. It is not recommended to actively enable them.
+After enabled, some pages will not be rendered by SSG, and they will directly use html under CSR. This is suitable for SSG errors in large document sites bypassing a small number of pages. It is not recommended to enable this option actively.
 
 ## replaceRules
 

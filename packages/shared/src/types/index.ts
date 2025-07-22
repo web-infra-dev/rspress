@@ -160,15 +160,15 @@ export interface UserConfig<ThemeConfig = DefaultThemeConfig> {
     | boolean
     | {
         /**
-         * Using tinypool to perform ssg rendering in parallel can significantly reduce memory usage and build time in large document sites.
+         * After enabled, you can use worker to accelerate the SSG process and reduce memory usage. It is suitable for large document sites and is based on [tinypool](https://github.com/tinylibs/tinypool).
          * @default false
          */
         experimentalWorker?: boolean;
         /**
-         * ignore some error via Suspense
+         * After enabled, some errors in the SSG process will be ignored and other pages will continue to be generated, but the SSG of some pages will be missing. It is suitable for SSG errors that are used by large document sites to bypass a small number of pages. It is not recommended to actively enable them.
          * @default false
          */
-        experimentalLoose?: boolean;
+        experimentalIgnoreRoutePaths?: (string | RegExp)[];
       };
   /**
    * Whether to enable medium-zoom, default is true
@@ -249,7 +249,6 @@ export interface SiteData<ThemeConfig = NormalizedDefaultThemeConfig> {
 // TODO: migrate more SiteData to NormalizedRuntimeConfig, and rename "SiteData" to "PageData" or "Pages"
 export interface NormalizedRuntimeConfig {
   base: string;
-  ssg: boolean | { experimentalWorker?: boolean; experimentalLoose?: boolean };
 }
 
 /**

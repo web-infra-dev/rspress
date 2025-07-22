@@ -103,6 +103,7 @@ export interface Config {
   enableContentAnimation?: boolean;
   /**
    * Whether to enable view transition animation for the theme
+   * @default false
    */
   enableAppearanceAnimation?: boolean;
   /**

@@ -14,8 +14,7 @@ export const runtimeConfigVMPlugin: VirtualModulePlugin = context => {
       // TODO: base can be normalized in compile time side in an earlier stage
       const normalizedBase = normalizeSlash(base ?? '/');
       // Use named export for better tree-shaking support
-      return `export const base = ${JSON.stringify(normalizedBase)};
-export const ssg = ${JSON.stringify(config.ssg ?? true)};`;
+      return `export const base = ${JSON.stringify(normalizedBase)};`;
     },
   };
 };
