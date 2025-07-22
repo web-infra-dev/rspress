@@ -1,4 +1,4 @@
-import type { UserConfig } from '@rspress/shared';
+import type { RouteMeta, UserConfig } from '@rspress/shared';
 import { logger } from '@rspress/shared/logger';
 import { chunk } from 'lodash-es';
 import pMap from 'p-map';
@@ -8,6 +8,12 @@ import { hintSSGFailed } from '../logger/hint';
 import type { RouteService } from '../route/RouteService';
 import { renderHtmlTemplate } from './renderHtmlTemplate';
 import { renderPage } from './renderPage';
+import {
+  SSGConcurrency,
+  SSGWorkerThreadRecyclerMaxMemory,
+  SSGWorkerThreadTaskSize,
+  getNumberOfThreads,
+} from './ssgEnv';
 
 const routePath2HtmlFileName = (routePath: string) => {
   let fileName = routePath;
@@ -20,19 +26,6 @@ const routePath2HtmlFileName = (routePath: string) => {
   return fileName.replace(/^\/+/, '');
 };
 
-function getConcurrencyNum() {
-  /**
-   * https://github.com/facebook/docusaurus/blob/45065e8d2b5831117b8d69fec1be28f5520cf105/packages/docusaurus/src/ssg/ssgEnv.ts#L11
-   *
-   */
-  return process.env.RSPRESS_SSG_CONCURRENCY
-    ? Number.parseInt(process.env.RSPRESS_SSG_CONCURRENCY, 10)
-    : // Not easy to define a reasonable option default
-      // Will still be better than Infinity
-      // See also https://github.com/sindresorhus/p-map/issues/24
-      32;
-}
-
 export async function renderPages(
   routeService: RouteService,
   config: UserConfig,
@@ -42,6 +35,7 @@ export async function renderPages(
 ) {
   logger.info('Rendering pages...');
   const startTime = Date.now();
+  const ssg = config.ssg || true;
 
   try {
     const routes = routeService.getRoutes();
@@ -50,17 +44,64 @@ export async function renderPages(
       routes.push({ routePath: '/404' });
     }
 
-    if (typeof config.ssg === 'object' && config.ssg?.experimentalWorker) {
+    if (
+      typeof ssg === 'object' &&
+      Array.isArray(ssg?.experimentalExcludeRoutePaths) &&
+      ssg.experimentalExcludeRoutePaths.length > 0
+    ) {
+      const shouldIgnoreRoutePaths: Set<string> = new Set();
+      const shouldIgnoreRoutePathsRegExp: RegExp[] = [];
+
+      for (const routePath of ssg.experimentalExcludeRoutePaths) {
+        if (typeof routePath === 'string') {
+          shouldIgnoreRoutePaths.add(routePath);
+        } else if (routePath instanceof RegExp) {
+          shouldIgnoreRoutePathsRegExp.push(routePath);
+        }
+      }
+
+      const promiseList: Promise<void>[] = [];
+      const csrRoutes: RouteMeta[] = [];
+      const ssgRoutes: RouteMeta[] = [];
+      for (const route of routes) {
+        if (
+          shouldIgnoreRoutePaths.has(route.routePath) ||
+          shouldIgnoreRoutePathsRegExp.some(reg => reg.test(route.routePath))
+        ) {
+          csrRoutes.push(route);
+          promiseList.push(
+            renderCSRPage(config.head, route, htmlTemplate, emitAsset),
+          );
+        } else {
+          ssgRoutes.push(route);
+        }
+      }
+      if (csrRoutes.length > 0) {
+        logger.warn(
+          `Some routes are ignored in SSG and fallback to CSR via \`ssg.experimentalExcludeRoutePaths\`: ${picocolors.yellow(
+            csrRoutes.map(r => r.routePath).join(', '),
+          )}`,
+        );
+        await Promise.all(promiseList);
+        routes.length = 0;
+        routes.push(...ssgRoutes);
+      }
+    }
+
+    if (typeof ssg === 'object' && ssg?.experimentalWorker) {
+      const numberOfThreads = getNumberOfThreads(routes.length);
       const Tinypool = await import('tinypool').then(m => m.default);
       const pool = new Tinypool({
         filename: new URL('./renderPageWorker.js', import.meta.url).href,
         // chunk tasks manually
         concurrentTasksPerWorker: 1,
+        minThreads: numberOfThreads,
+        maxThreads: numberOfThreads,
         /**
          * https://github.com/facebook/docusaurus/blob/0306d182407bb98f140cd5ec7481fa9608fe0297/packages/docusaurus/src/ssg/ssgExecutor.ts#L123
          * @license MIT
          */
-        maxMemoryLimitBeforeRecycle: 1_000_000_000,
+        maxMemoryLimitBeforeRecycle: SSGWorkerThreadRecyclerMaxMemory(),
         isolateWorkers: false,
         workerData: {
           params: {
@@ -72,7 +113,7 @@ export async function renderPages(
       });
 
       await Promise.all(
-        chunk(routes, 10).map(async routes => {
+        chunk(routes, SSGWorkerThreadTaskSize()).map(async routes => {
           const htmlList = await pool.run({ routes });
           for (let i = 0; i < routes.length; i++) {
             const route = routes[i];
@@ -99,7 +140,7 @@ export async function renderPages(
           emitAsset(fileName, html);
         },
         {
-          concurrency: getConcurrencyNum(),
+          concurrency: SSGConcurrency(),
         },
       );
     }
@@ -116,6 +157,17 @@ export async function renderPages(
   }
 }
 
+async function renderCSRPage(
+  head: UserConfig['head'],
+  route: RouteMeta,
+  htmlTemplate: string,
+  emitAsset: (assetName: string, content: string | Buffer) => void,
+) {
+  const html = await renderHtmlTemplate(htmlTemplate, head, route, '');
+  const fileName = routePath2HtmlFileName(route.routePath);
+  emitAsset(fileName, html);
+}
+
 export async function renderCSRPages(
   routeService: RouteService,
   config: UserConfig,
@@ -124,20 +176,13 @@ export async function renderCSRPages(
 ) {
   const routes = routeService.getRoutes();
   if (!routeService.isExistRoute('/404')) {
-    // @ts-expect-error 404 page
+    // @ts-expect-error 404 page is special
     routes.push({ routePath: '/404' });
   }
 
   await Promise.all(
-    routes.map(async route => {
-      const html = await renderHtmlTemplate(
-        htmlTemplate,
-        config.head,
-        route,
-        '',
-      );
-      const fileName = routePath2HtmlFileName(route.routePath);
-      emitAsset(fileName, html);
+    routes.map(route => {
+      return renderCSRPage(config.head, route, htmlTemplate, emitAsset);
     }),
   );
 }

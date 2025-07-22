@@ -85,7 +85,7 @@ export default defineConfig({
     exclude: ['**/fragments/**'],
   },
   themeConfig: {
-    enableAppearanceAnimation: false,
+    lastUpdated: true,
     footer: {
       message: '© 2023-present ByteDance Inc.',
     },

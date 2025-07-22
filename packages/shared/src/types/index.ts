@@ -153,25 +153,26 @@ export interface UserConfig<ThemeConfig = DefaultThemeConfig> {
    */
   search?: SearchOptions;
   /**
-   * Whether to enable ssg, default is true
+   * Whether to enable ssg
    * @default true
    */
   ssg?:
     | boolean
     | {
         /**
-         * Using tinypool to perform ssg rendering in parallel can significantly reduce memory usage and build time in large document sites.
+         * After enabled, you can use worker to accelerate the SSG process and reduce memory usage. It is suitable for large document sites and is based on [tinypool](https://github.com/tinylibs/tinypool).
          * @default false
          */
         experimentalWorker?: boolean;
         /**
-         * ignore some error via Suspense
-         * @default false
+         * After enabled, some pages will not be rendered by SSG, and they will directly use html under CSR. This is suitable for SSG errors in large document sites bypassing a small number of pages. It is not recommended to enable this option actively.
+         * @default []
          */
-        experimentalLoose?: boolean;
+        experimentalExcludeRoutePaths?: (string | RegExp)[];
       };
   /**
-   * Whether to enable medium-zoom, default is true
+   * Whether to enable medium-zoom
+   * @default true
    */
   mediumZoom?:
     | boolean
@@ -249,7 +250,6 @@ export interface SiteData<ThemeConfig = NormalizedDefaultThemeConfig> {
 // TODO: migrate more SiteData to NormalizedRuntimeConfig, and rename "SiteData" to "PageData" or "Pages"
 export interface NormalizedRuntimeConfig {
   base: string;
-  ssg: boolean | { experimentalWorker?: boolean; experimentalLoose?: boolean };
 }
 
 /**
@@ -367,6 +367,7 @@ export interface RouteOptions {
   exclude?: string[];
   /**
    * use links without .html files
+   * @default false
    */
   cleanUrls?: boolean;
 }
@@ -397,12 +398,14 @@ export interface MarkdownOptions {
   remarkPlugins?: PluggableList;
   rehypePlugins?: PluggableList;
   /**
-   * Whether to enable check dead links, default is false
+   * Whether to enable check dead links
+   * @default false
    */
   checkDeadLinks?: boolean;
   showLineNumbers?: boolean;
   /**
-   * Whether to wrap code by default, default is false
+   * Whether to wrap code by default
+   * @default false
    */
   defaultWrapCode?: boolean;
   /**

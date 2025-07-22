@@ -499,12 +499,12 @@ SSG 要求源码支持在 SSR 下编译，如果使用了不兼容 SSR 场景下
 
 开启后可以使用 Worker 来加速 SSG 过程并降低内存占用，适合大型文档站点，底层基于 [tinypool](https://github.com/tinylibs/tinypool)。
 
-### experimentalLoose
+### experimentalExcludeRoutePaths
 
-- Type: `boolean`
-- Default: `false`
+- Type: `(string | RegExp)[]`
+- Default: `[]`
 
-开启后将忽略一些 SSG 过程中的错误，继续生成其他页面，但部分页面的 SSG 会缺失，适合用于大型文档站点绕过一小部分页面的 SSG 错误，不建议主动开启。
+开启后一部分页面将不进行 SSG 渲染，直接使用 CSR 下的 html，适合用于大型文档站点绕过一小部分页面的 SSG 错误，不建议主动开启。
 
 ## replaceRules
 
