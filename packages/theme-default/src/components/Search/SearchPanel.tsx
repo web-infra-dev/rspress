@@ -1,4 +1,4 @@
-import { createPortal, usePageData } from '@rspress/runtime';
+import { createPortal, usePageData, withBase } from '@rspress/runtime';
 import { type AnyFunction, isProduction } from '@rspress/shared';
 import CloseSvg from '@theme-assets/close';
 import LoadingSvg from '@theme-assets/loading';
@@ -239,12 +239,13 @@ export function SearchPanel({ focused, setFocused }: SearchPanelProps) {
             ).flat();
             const suggestion = flatSuggestions[currentSuggestionIndex];
             const isCurrent = resultTabIndex === 0;
+            const link = withBase(
+              isProduction() ? suggestion.link : removeDomain(suggestion.link),
+            );
             if (isCurrent) {
-              window.location.href = isProduction()
-                ? suggestion.link
-                : removeDomain(suggestion.link);
+              window.location.href = link;
             } else {
-              window.open(suggestion.link);
+              window.open(link);
             }
             clearSearchState();
           }
