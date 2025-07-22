@@ -844,9 +844,6 @@ importers:
       '@rslib/core':
         specifier: 0.10.6
         version: 0.10.6(@microsoft/api-extractor@7.52.8(@types/node@22.10.2))(typescript@5.8.2)
-      '@rspress-dev/plugin-preview':
-        specifier: link:../plugin-preview
-        version: link:../plugin-preview
       '@rspress/config':
         specifier: workspace:*
         version: link:../../scripts/config
