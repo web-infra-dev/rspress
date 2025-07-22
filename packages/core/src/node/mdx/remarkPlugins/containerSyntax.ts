@@ -12,7 +12,6 @@
  * So the plugin is used to solve the problem and support both syntaxes in above cases.
  */
 /// <reference types="mdast-util-mdx-expression" />
-/// <reference types="remark-directive" />
 import type {
   BlockContent,
   Literal,
@@ -22,6 +21,7 @@ import type {
   Root,
   RootContent,
 } from 'mdast';
+import type { ContainerDirective } from 'mdast-util-directive';
 import type { Plugin } from 'unified';
 
 export const DIRECTIVE_TYPES = [
@@ -72,7 +72,7 @@ const createContainer = (
   type: DirectiveType | string,
   title: string | undefined,
   children: (BlockContent | PhrasingContent)[],
-): Parent => {
+): ContainerDirective => {
   const isDetails = type === 'details';
 
   const rootHName = isDetails ? 'details' : 'div';
@@ -80,6 +80,7 @@ const createContainer = (
 
   return {
     type: 'containerDirective',
+    name: type,
     data: {
       hName: rootHName,
       hProperties: {
@@ -90,7 +91,6 @@ const createContainer = (
       {
         type: 'paragraph',
         data: {
-          // @ts-ignore
           hName: titleHName,
           hProperties: {
             class: 'rspress-directive-title',
@@ -101,7 +101,6 @@ const createContainer = (
       {
         type: 'paragraph',
         data: {
-          // @ts-ignore
           hName: 'div',
           hProperties: { class: 'rspress-directive-content' },
         },
