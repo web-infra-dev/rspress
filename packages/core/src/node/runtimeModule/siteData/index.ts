@@ -1,5 +1,3 @@
-/// <reference types="@rspress-dev/plugin-preview" />
-
 import fs from 'node:fs/promises';
 import path from 'node:path';
 import { SEARCH_INDEX_NAME, type SiteData } from '@rspress/shared';
