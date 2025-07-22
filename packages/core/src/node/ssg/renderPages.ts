@@ -8,6 +8,12 @@ import { hintSSGFailed } from '../logger/hint';
 import type { RouteService } from '../route/RouteService';
 import { renderHtmlTemplate } from './renderHtmlTemplate';
 import { renderPage } from './renderPage';
+import {
+  SSGConcurrency,
+  SSGWorkerThreadRecyclerMaxMemory,
+  SSGWorkerThreadTaskSize,
+  getNumberOfThreads,
+} from './ssgEnv';
 
 const routePath2HtmlFileName = (routePath: string) => {
   let fileName = routePath;
@@ -19,19 +25,6 @@ const routePath2HtmlFileName = (routePath: string) => {
 
   return fileName.replace(/^\/+/, '');
 };
-
-function getConcurrencyNum() {
-  /**
-   * https://github.com/facebook/docusaurus/blob/45065e8d2b5831117b8d69fec1be28f5520cf105/packages/docusaurus/src/ssg/ssgEnv.ts#L11
-   *
-   */
-  return process.env.RSPRESS_SSG_CONCURRENCY
-    ? Number.parseInt(process.env.RSPRESS_SSG_CONCURRENCY, 10)
-    : // Not easy to define a reasonable option default
-      // Will still be better than Infinity
-      // See also https://github.com/sindresorhus/p-map/issues/24
-      32;
-}
 
 export async function renderPages(
   routeService: RouteService,
@@ -96,16 +89,19 @@ export async function renderPages(
     }
 
     if (typeof ssg === 'object' && ssg?.experimentalWorker) {
+      const numberOfThreads = getNumberOfThreads(routes.length);
       const Tinypool = await import('tinypool').then(m => m.default);
       const pool = new Tinypool({
         filename: new URL('./renderPageWorker.js', import.meta.url).href,
         // chunk tasks manually
         concurrentTasksPerWorker: 1,
+        minThreads: numberOfThreads,
+        maxThreads: numberOfThreads,
         /**
          * https://github.com/facebook/docusaurus/blob/0306d182407bb98f140cd5ec7481fa9608fe0297/packages/docusaurus/src/ssg/ssgExecutor.ts#L123
          * @license MIT
          */
-        maxMemoryLimitBeforeRecycle: 1_000_000_000,
+        maxMemoryLimitBeforeRecycle: SSGWorkerThreadRecyclerMaxMemory(),
         isolateWorkers: false,
         workerData: {
           params: {
@@ -117,7 +113,7 @@ export async function renderPages(
       });
 
       await Promise.all(
-        chunk(routes, 10).map(async routes => {
+        chunk(routes, SSGWorkerThreadTaskSize()).map(async routes => {
           const htmlList = await pool.run({ routes });
           for (let i = 0; i < routes.length; i++) {
             const route = routes[i];
@@ -144,7 +140,7 @@ export async function renderPages(
           emitAsset(fileName, html);
         },
         {
-          concurrency: getConcurrencyNum(),
+          concurrency: SSGConcurrency(),
         },
       );
     }
