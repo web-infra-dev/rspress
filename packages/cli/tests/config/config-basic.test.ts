@@ -1,5 +1,5 @@
 import path from 'node:path';
-import { describe, expect, test } from 'vitest';
+import { describe, expect, test } from '@rstest/core';
 import { normalizePath } from '../../../core/src/node/utils/normalizePath';
 import { loadConfigFile } from '../../src/config/loadConfigFile';
 

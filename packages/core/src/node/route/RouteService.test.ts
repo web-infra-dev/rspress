@@ -1,6 +1,6 @@
 import path from 'node:path';
 import type { UserConfig } from '@rspress/shared';
-import { describe, expect, it } from 'vitest';
+import { describe, expect, it } from '@rstest/core';
 import { PluginDriver } from '../PluginDriver';
 import { RouteService } from './RouteService';
 

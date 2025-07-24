@@ -1,25 +1,25 @@
 import type { UserConfig } from '@rspress/shared';
 import { logger } from '@rspress/shared/logger';
+import { beforeEach, describe, expect, it, rs } from '@rstest/core';
 import { fs, vol } from 'memfs';
-import { beforeEach, describe, expect, it, vi } from 'vitest';
 import { checkLanguageParity } from './checkLanguageParity';
 
-vi.mock('node:fs/promises', () => {
+rs.mock('node:fs/promises', () => {
   return { default: fs.promises };
 });
-vi.mock('@rspress/shared/logger', () => ({
+rs.mock('@rspress/shared/logger', () => ({
   logger: {
-    info: vi.fn(),
-    warn: vi.fn(),
-    error: vi.fn(),
-    success: vi.fn(),
+    info: rs.fn(),
+    warn: rs.fn(),
+    error: rs.fn(),
+    success: rs.fn(),
   },
 }));
 
 describe('checkLanguageParity', () => {
   beforeEach(() => {
     vol.reset();
-    vi.clearAllMocks();
+    rs.clearAllMocks();
   });
 
   // base config

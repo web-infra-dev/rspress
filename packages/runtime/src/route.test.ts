@@ -1,8 +1,8 @@
-import { describe, expect, it, vi } from 'vitest';
+import { describe, expect, it, rs } from '@rstest/core';
 import { pathnameToRouteService } from './route';
 
-vi.mock('virtual-routes', () => {
-  const element = vi.fn();
+rs.mock('virtual-routes', () => {
+  const element = rs.fn();
   const routes = [
     {
       path: '/api/config',

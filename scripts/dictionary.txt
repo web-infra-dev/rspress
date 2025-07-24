@@ -155,7 +155,6 @@ unpatch
 unplugin
 unshift
 upath
-vitest
 watchpack
 webm
 webp

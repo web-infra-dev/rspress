@@ -1,6 +1,6 @@
 import path from 'node:path';
 import { DEFAULT_PAGE_EXTENSIONS } from '@rspress/shared/constants';
-import { describe, expect, it } from 'vitest';
+import { describe, expect, it } from '@rstest/core';
 import { RouteService } from '../route/RouteService';
 import {
   getRoutePathParts,

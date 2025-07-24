@@ -1,21 +1,21 @@
-import { describe, expect, it, vi } from 'vitest';
+import { describe, expect, it, rs } from '@rstest/core';
 import { getSidebarDataGroup, isActive } from './getSidebarDataGroup';
 
-vi.mock('virtual-i18n-text', () => {
+rs.mock('virtual-i18n-text', () => {
   return { default: {} };
 });
 
-vi.mock('virtual-runtime-config', () => {
+rs.mock('virtual-runtime-config', () => {
   return {
     base: '/',
   };
 });
 
-vi.mock('virtual-site-data', () => {
+rs.mock('virtual-site-data', () => {
   return {};
 });
 
-vi.mock('virtual-routes', () => {
+rs.mock('virtual-routes', () => {
   return { routes: [] };
 });
 
