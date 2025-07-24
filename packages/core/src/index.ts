@@ -35,7 +35,7 @@ export {
   build,
   dev,
   remarkFileCodeBlock,
-  remarkPluginNormalizeLink,
+  remarkNormalizeLink,
   serve,
 } from './node';
 export type { RouteService } from './node/route/RouteService';

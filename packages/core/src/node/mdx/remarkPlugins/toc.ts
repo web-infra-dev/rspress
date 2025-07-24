@@ -76,7 +76,7 @@ export const parseToc = (tree: Root) => {
   };
 };
 
-export const remarkPluginToc: Plugin<[], Root> = function () {
+export const remarkToc: Plugin<[], Root> = function () {
   const data = this.data() as {
     pageMeta: PageMeta;
   };

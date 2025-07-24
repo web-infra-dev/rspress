@@ -2,7 +2,7 @@ import path from 'node:path';
 import { nodeTypes, type ProcessorOptions } from '@mdx-js/mdx';
 import type { UserConfig } from '@rspress/shared';
 import rehypeShiki from '@shikijs/rehype';
-import rehypePluginExternalLinks from 'rehype-external-links';
+import rehypeExternalLinks from 'rehype-external-links';
 import rehypeRaw from 'rehype-raw';
 import remarkGFM from 'remark-gfm';
 import type { PluggableList } from 'unified';
@@ -14,8 +14,9 @@ import { createRehypeShikiOptions } from './rehypePlugins/shiki';
 import { remarkBuiltin } from './remarkPlugins/builtin';
 import { remarkContainerSyntax } from './remarkPlugins/containerSyntax';
 import { remarkFileCodeBlock } from './remarkPlugins/fileCodeBlock';
-import { remarkPluginNormalizeLink } from './remarkPlugins/normalizeLink';
-import { remarkPluginToc } from './remarkPlugins/toc';
+import { remarkImage } from './remarkPlugins/image';
+import { remarkNormalizeLink } from './remarkPlugins/normalizeLink';
+import { remarkToc } from './remarkPlugins/toc';
 
 export async function createMDXOptions(options: {
   docDirectory: string;
@@ -61,11 +62,11 @@ export async function createMDXOptions(options: {
     format,
     remarkPlugins: [
       remarkGFM,
-      remarkPluginToc,
+      remarkToc,
       remarkContainerSyntax,
       [remarkFileCodeBlock, { filepath }],
       [
-        remarkPluginNormalizeLink,
+        remarkNormalizeLink,
         {
           cleanUrls,
           root: docDirectory,
@@ -73,6 +74,7 @@ export async function createMDXOptions(options: {
           checkDeadLinks,
         },
       ],
+      remarkImage,
       globalComponents.length && [
         remarkBuiltin,
         {
@@ -97,7 +99,7 @@ export async function createMDXOptions(options: {
         : []),
       [rehypeShiki, createRehypeShikiOptions(showLineNumbers, shiki)],
       [
-        rehypePluginExternalLinks,
+        rehypeExternalLinks,
         {
           target: '_blank',
           rel: 'noopener noreferrer',
