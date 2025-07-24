@@ -1,7 +1,7 @@
 import {
   type RouteService,
   remarkFileCodeBlock,
-  remarkPluginNormalizeLink,
+  remarkNormalizeLink,
 } from '@rspress/core';
 import type { Root } from 'hast';
 import remarkMdx from 'remark-mdx';
@@ -50,11 +50,11 @@ function mdxToMd(
     .use(remarkMdx)
     .use(remarkFileCodeBlock, { filepath })
     .use(mdxToMdPlugin)
-    .use(remarkPluginNormalizeLink, {
+    .use(remarkNormalizeLink, {
       cleanUrls: '.md',
       routeService,
       __base: base,
-    } satisfies Parameters<typeof remarkPluginNormalizeLink>[0])
+    } satisfies Parameters<typeof remarkNormalizeLink>[0])
     .use(remarkStringify)
     .process({
       value: content,

@@ -1,5 +1,6 @@
 import path from 'node:path';
 import {
+  addLeadingSlash,
   addTrailingSlash,
   isExternalUrl,
   isProduction,
@@ -9,15 +10,12 @@ import {
   withBase,
 } from '@rspress/shared';
 import { logger } from '@rspress/shared/logger';
-import { getNodeAttribute } from '@rspress/shared/node-utils';
 import type { Root } from 'mdast';
-import type { MdxjsEsm } from 'mdast-util-mdxjs-esm';
 import picocolors from 'picocolors';
 import type { Plugin } from 'unified';
 import { visit } from 'unist-util-visit';
 import { hintRelativeMarkdownLink } from '../../logger/hint';
 import type { RouteService } from '../../route/RouteService';
-import { getASTNodeImport } from '../../utils';
 
 // TODO: checkDeadLinks support external links and anchor hash links
 function checkDeadLinks(
@@ -73,7 +71,7 @@ function normalizeLink(
   filePath: string,
   cleanUrls: boolean | string,
   internalLinks: Map<string, string>,
-  __base?: string,
+  __base?: string, // just for plugin-llms, we should normalize the link with base
 ): string {
   if (!nodeUrl) {
     return '';
@@ -93,12 +91,19 @@ function normalizeLink(
     return nodeUrl;
   }
 
-  // 1. [](/api/getting-started)) or [](/en/api/getting-started))
+  // 1. [](/api/getting-started) or [](/en/api/getting-started)
   if (url.startsWith('/')) {
+    const relativePath = routeService.absolutePathToRelativePath(filePath);
+
+    // TODO: add a option for disable loose mode
+    // loose mode: add version and lang prefix to the link
+    const [version, lang] = routeService.getRoutePathParts(relativePath);
+    url = addLeadingSlash([version, lang, url].filter(Boolean).join('/'));
+
     const { routePath } = routeService.normalizeRoutePath(url);
     url = routePath;
   } else {
-    // 2. [getting-started](getting-started) or [getting-started](./getting-started) or [getting-started](../getting-started)
+    // 2. [](getting-started) or [](./getting-started.md) or [](../getting-started.md)
     const anotherFileAbsolutePath = path.join(path.dirname(filePath), url);
     url = routeService.absolutePathToRoutePath(anotherFileAbsolutePath);
   }
@@ -127,18 +132,12 @@ function linkToRoutePath(routePath: string) {
     .replace(/\/index$/, '/');
 }
 
-const normalizeImageUrl = (imageUrl: string): string => {
-  if (isExternalUrl(imageUrl) || imageUrl.startsWith('/')) {
-    return '';
-  }
-
-  return imageUrl;
-};
-
 /**
  * Remark plugin to normalize a link href
+ * 1. add version and lang prefix to the link
+ * 2. checkDeadLinks
  */
-export const remarkPluginNormalizeLink: Plugin<
+export const remarkNormalizeLink: Plugin<
   [
     {
       cleanUrls: boolean | string;
@@ -186,92 +185,4 @@ export const remarkPluginNormalizeLink: Plugin<
     if (shouldCheckDeadLinks && routeService) {
       checkDeadLinks(internalLinks, file.path, routeService);
     }
-
-    const images: MdxjsEsm[] = [];
-    const getMdxSrcAttribute = (tempVar: string) => {
-      return {
-        type: 'mdxJsxAttribute',
-        name: 'src',
-        value: {
-          type: 'mdxJsxAttributeValueExpression',
-          value: tempVar,
-          data: {
-            estree: {
-              type: 'Program',
-              sourceType: 'module',
-              body: [
-                {
-                  type: 'ExpressionStatement',
-                  expression: {
-                    type: 'Identifier',
-                    name: tempVar,
-                  },
-                },
-              ],
-            },
-          },
-        },
-      };
-    };
-
-    visit(tree, 'image', node => {
-      const { alt, url } = node;
-      if (!url) {
-        return;
-      }
-
-      const imagePath = normalizeImageUrl(url);
-      if (!imagePath) {
-        return;
-      }
-      // relative path
-      const tempVariableName = `image${images.length}`;
-
-      Object.assign(node, {
-        type: 'mdxJsxFlowElement',
-        name: 'img',
-        children: [],
-        attributes: [
-          alt && {
-            type: 'mdxJsxAttribute',
-            name: 'alt',
-            value: alt,
-          },
-          getMdxSrcAttribute(tempVariableName),
-        ].filter(Boolean),
-      });
-
-      images.push(getASTNodeImport(tempVariableName, imagePath));
-    });
-
-    visit(tree, node => {
-      if (
-        (node.type !== 'mdxJsxFlowElement' &&
-          node.type !== 'mdxJsxTextElement') ||
-        // get all img src
-        node.name !== 'img'
-      ) {
-        return;
-      }
-
-      const srcAttr = getNodeAttribute(node, 'src', true);
-
-      if (typeof srcAttr?.value !== 'string') {
-        return;
-      }
-
-      const imagePath = normalizeImageUrl(srcAttr.value);
-
-      if (!imagePath) {
-        return;
-      }
-
-      const tempVariableName = `image${images.length}`;
-
-      Object.assign(srcAttr, getMdxSrcAttribute(tempVariableName));
-
-      images.push(getASTNodeImport(tempVariableName, imagePath));
-    });
-
-    tree.children.unshift(...images);
   };
