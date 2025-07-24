@@ -41,7 +41,7 @@ export function renderHtmlOrText(
 const CODE_TEXT_PATTERN = /`(.*?)`/g;
 const STRONG_TEXT_PATTERN = /\*{2}(?!\*)(.*?)\*{2}(?!\*)/g;
 const EMPHASIS_TEXT_PATTERN = /\*(?!\*)(.*?)\*(?!\*)/g;
-const DELETE_TEXT_PATTERN = /\~{2}(.*?)\~{2}/g;
+const DELETE_TEXT_PATTERN = /~{2}(.*?)~{2}/g;
 
 /**
  * In this method, we will render the markdown text to inline html and support basic markdown syntax, including the following:

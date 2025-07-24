@@ -1,11 +1,11 @@
 import { isEqualPath, pathnameToRouteService } from '@rspress/runtime';
 import {
   type BaseRuntimePageInfo,
+  cleanUrl,
   type FrontMatterMeta,
   type Header,
   MDX_OR_MD_REGEXP,
   type PageData,
-  cleanUrl,
 } from '@rspress/shared';
 import { base } from 'virtual-runtime-config';
 import siteData from 'virtual-site-data';

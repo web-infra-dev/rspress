@@ -1,7 +1,7 @@
 import { join } from 'node:path';
 import { describe, expect, it } from 'vitest';
-import type { RouteService } from './RouteService';
 import { extractPageData, getPageIndexInfoByRoute } from './extractPageData';
+import type { RouteService } from './RouteService';
 
 describe('extractPageData', async () => {
   it('basic', async () => {

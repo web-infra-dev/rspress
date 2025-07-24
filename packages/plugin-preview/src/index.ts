@@ -1,10 +1,10 @@
 import net from 'node:net';
 import { join } from 'node:path';
 import {
-  type RsbuildConfig,
-  type RsbuildPluginAPI,
   createRsbuild,
   mergeRsbuildConfig,
+  type RsbuildConfig,
+  type RsbuildPluginAPI,
 } from '@rsbuild/core';
 import { pluginBabel } from '@rsbuild/plugin-babel';
 import { pluginReact } from '@rsbuild/plugin-react';

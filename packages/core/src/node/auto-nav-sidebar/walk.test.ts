@@ -1,11 +1,11 @@
 import path from 'node:path';
 import { DEFAULT_PAGE_EXTENSIONS } from '@rspress/shared/constants';
 import { describe, expect, it } from 'vitest';
-import { RouteService } from '../route/RouteService';
 import {
   getRoutePathParts,
   normalizeRoutePath,
 } from '../route/normalizeRoutePath';
+import { RouteService } from '../route/RouteService';
 import { walk } from './walk';
 
 const mockNormalizeRoutePath = (link: string) => {

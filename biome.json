@@ -1,7 +1,11 @@
 {
-  "$schema": "https://biomejs.dev/schemas/1.9.4/schema.json",
-  "organizeImports": {
-    "enabled": true
+  "$schema": "https://biomejs.dev/schemas/2.1.2/schema.json",
+  "assist": {
+    "actions": {
+      "source": {
+        "organizeImports": "on"
+      }
+    }
   },
   "vcs": {
     "enabled": true,
@@ -10,27 +14,25 @@
     "useIgnoreFile": true
   },
   "files": {
-    "include": [
-      "packages/**/*.ts",
-      "packages/**/*.tsx",
-      "packages/**/*.js",
-      "packages/**/*.mjs",
-      "packages/**/*.jsx",
-      "scripts/**/*.js",
-      "scripts/**/*.ts",
-      "e2e/**/*.js",
-      "e2e/**/*.ts"
-    ],
-    "ignore": [
-      "*.d.ts",
-      "dist-*/**/*",
-      "compiled/**/*",
-      "create-rspress/template/rspress.config.ts"
+    "includes": [
+      "**/packages/**/*.ts",
+      "**/packages/**/*.tsx",
+      "**/packages/**/*.js",
+      "**/packages/**/*.mjs",
+      "**/packages/**/*.jsx",
+      "**/scripts/**/*.js",
+      "**/scripts/**/*.ts",
+      "**/e2e/**/*.js",
+      "**/e2e/**/*.ts",
+      "!**/*.d.ts",
+      "!**/dist-*/**/*",
+      "!**/compiled/**/*",
+      "!**/create-rspress/template/rspress.config.ts"
     ],
     "ignoreUnknown": true
   },
   "formatter": {
-    "ignore": ["**/.rslib/*"],
+    "includes": ["**", "!**/.rslib/**/*"],
     "indentStyle": "space"
   },
   "javascript": {
@@ -62,7 +64,8 @@
         "useDefaultParameterLast": "off"
       },
       "security": {
-        "noDangerouslySetInnerHtml": "off"
+        "noDangerouslySetInnerHtml": "off",
+        "noBlankTarget": "off"
       },
       "suspicious": {
         "noConstEnum": "off",
@@ -73,22 +76,24 @@
         "noAssignInExpressions": "off"
       },
       "correctness": {
-        "useExhaustiveDependencies": "off"
+        "useExhaustiveDependencies": "off",
+        "useHookAtTopLevel": "off"
       },
       "complexity": {
         "noForEach": "off",
         "useFlatMap": "off",
         "useArrowFunction": "off",
-        "noUselessSwitchCase": "off"
+        "noUselessSwitchCase": "off",
+        "noUselessFragments": "off"
       },
       "performance": {
         "noDelete": "off",
-        "noAccumulatingSpread": "off"
+        "noAccumulatingSpread": "off",
+        "noDynamicNamespaceImportAccess": "off"
       },
       "a11y": {
         "useAltText": "off",
         "noAutofocus": "off",
-        "noBlankTarget": "off",
         "useButtonType": "off",
         "useIframeTitle": "off",
         "useValidAnchor": "off",
@@ -96,7 +101,11 @@
         "useHeadingContent": "off",
         "useKeyWithClickEvents": "off",
         "noLabelWithoutControl": "off",
-        "noAriaHiddenOnFocusable": "off"
+        "noAriaHiddenOnFocusable": "off",
+        "noStaticElementInteractions": "off"
+      },
+      "nursery": {
+        "useUniqueElementIds": "off"
       }
     }
   }

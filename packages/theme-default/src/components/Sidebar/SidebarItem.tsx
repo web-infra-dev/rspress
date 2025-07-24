@@ -1,10 +1,10 @@
 import { normalizeHrefInRuntime as normalizeHref } from '@rspress/runtime';
 import { Link, Tag } from '@theme';
 import { useEffect, useRef } from 'react';
-import { type SidebarItemProps, highlightTitleStyle } from '.';
 import { renderInlineMarkdown } from '../../logic/utils';
-import { SidebarGroup } from './SidebarGroup';
+import { highlightTitleStyle, type SidebarItemProps } from '.';
 import * as styles from './index.module.scss';
+import { SidebarGroup } from './SidebarGroup';
 
 export function SidebarItem(props: SidebarItemProps) {
   const { item, depth = 0, activeMatcher, id, setSidebarData } = props;

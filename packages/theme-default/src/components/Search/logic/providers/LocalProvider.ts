@@ -5,8 +5,8 @@
 
 import {
   type PageIndexInfo,
-  SEARCH_INDEX_NAME,
   removeTrailingSlash,
+  SEARCH_INDEX_NAME,
 } from '@rspress/shared';
 // https://github.com/nextapps-de/flexsearch/issues/438
 import Index, {

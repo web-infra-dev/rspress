@@ -1,7 +1,7 @@
 import type { PageData } from '@rspress/shared';
 import {
-  type ReactNode,
   createContext,
+  type ReactNode,
   useCallback,
   useContext,
   useLayoutEffect,

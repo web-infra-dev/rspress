@@ -1,11 +1,11 @@
 import { stat as fsStat, readdir } from 'node:fs/promises';
 import { extname, join, relative } from 'node:path';
 import {
+  isExternalUrl,
   type SidebarDivider,
   type SidebarGroup,
   type SidebarItem,
   type SidebarSectionHeader,
-  isExternalUrl,
   slash,
 } from '@rspress/shared';
 import { logger } from '@rspress/shared/logger';
@@ -187,7 +187,6 @@ async function metaItemToSidebarItem(
           context: metaJsonContext,
           _fileKey: getHmrFileKey(dirAbsolutePath, docsDir),
         } satisfies SidebarGroup;
-        // biome-ignore lint/style/noUselessElse: <explanation>
       } else {
         // 3. if not, index page should be placed to child sidebar, the directory itself is not clickable
         const indexFile = await metaFileItemToSidebarItem(

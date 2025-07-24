@@ -1,7 +1,7 @@
 import { mkdir, rm, writeFile } from 'node:fs/promises';
 import { join } from 'node:path';
 import type { RsbuildPlugin } from '@rsbuild/core';
-import { type UserConfig, isDebugMode } from '@rspress/shared';
+import { isDebugMode, type UserConfig } from '@rspress/shared';
 import { logger } from '@rspress/shared/logger';
 import { NODE_SSG_BUNDLE_FOLDER, NODE_SSG_BUNDLE_NAME } from '../constants';
 import type { RouteService } from '../route/RouteService';

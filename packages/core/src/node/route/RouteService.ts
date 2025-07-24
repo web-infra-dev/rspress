@@ -4,14 +4,14 @@ import type { PageModule, RouteMeta, UserConfig } from '@rspress/shared';
 import { DEFAULT_PAGE_EXTENSIONS } from '@rspress/shared/constants';
 import type { ComponentType } from 'react';
 import { glob } from 'tinyglobby';
-import type { PluginDriver } from '../PluginDriver';
 import { PUBLIC_DIR } from '../constants';
+import type { PluginDriver } from '../PluginDriver';
+import { getRoutePathParts, normalizeRoutePath } from './normalizeRoutePath';
 import {
-  RoutePage,
   absolutePathToRelativePath,
   absolutePathToRoutePath,
+  RoutePage,
 } from './RoutePage';
-import { getRoutePathParts, normalizeRoutePath } from './normalizeRoutePath';
 
 interface InitOptions {
   scanDir: string;

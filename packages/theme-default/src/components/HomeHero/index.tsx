@@ -3,8 +3,8 @@ import {
   normalizeImagePath,
   withBase,
 } from '@rspress/runtime';
-import { isExternalUrl } from '@rspress/shared';
 import type { FrontMatterMeta } from '@rspress/shared';
+import { isExternalUrl } from '@rspress/shared';
 import { Button } from '@theme';
 
 import { renderHtmlOrText } from '../../logic/utils';

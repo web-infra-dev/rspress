@@ -1,7 +1,6 @@
 import fs from 'node:fs';
 import path from 'node:path';
-import { logger } from '@rspress/core';
-import { RSPRESS_TEMP_DIR } from '@rspress/core';
+import { logger, RSPRESS_TEMP_DIR } from '@rspress/core';
 import chokidar from 'chokidar';
 import type { ComponentDoc, PropItem } from 'react-docgen-typescript';
 import {

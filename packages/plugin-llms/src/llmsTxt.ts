@@ -1,7 +1,7 @@
 import {
   type NavItemWithLink,
-  type PageIndexInfo,
   normalizeHref,
+  type PageIndexInfo,
   withBase,
 } from '@rspress/core';
 import type { LlmsTxt } from './types';

@@ -1,5 +1,4 @@
-import { isExternalUrl } from '@rspress/core/runtime';
-import { useLocation } from '@rspress/core/runtime';
+import { isExternalUrl, useLocation } from '@rspress/core/runtime';
 import { useEffect, useMemo } from 'react';
 
 // these are types copied from src/types.ts

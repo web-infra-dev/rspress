@@ -1,7 +1,7 @@
 import type { RsbuildConfig } from '@rsbuild/core';
 import type { UserConfig } from '@rspress/shared';
-import { PluginDriver } from './PluginDriver';
 import { initRsbuild } from './initRsbuild';
+import { PluginDriver } from './PluginDriver';
 import { writeSearchIndex } from './searchIndex';
 import { checkLanguageParity } from './utils/checkLanguageParity';
 

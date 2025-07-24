@@ -9,8 +9,6 @@ import * as userSearchHooks from 'virtual-search-hooks';
 import { useLocaleSiteData } from '../../logic/useLocaleSiteData';
 import { SvgWrapper } from '../SvgWrapper';
 import { Tab, Tabs } from '../Tabs';
-import { NoSearchResult } from './NoSearchResult';
-import { SuggestItem } from './SuggestItem';
 import * as styles from './index.module.scss';
 import { PageSearcher } from './logic/search';
 import type {
@@ -22,6 +20,8 @@ import type {
 } from './logic/types';
 import { RenderType } from './logic/types';
 import { removeDomain } from './logic/util';
+import { NoSearchResult } from './NoSearchResult';
+import { SuggestItem } from './SuggestItem';
 
 const KEY_CODE = {
   ARROW_UP: 'ArrowUp',

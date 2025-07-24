@@ -1,6 +1,6 @@
-import { NavMenuGroup } from './NavMenuGroup';
 import * as styles from './index.module.scss';
 import { useVersionMenuData } from './menuDataHooks';
+import { NavMenuGroup } from './NavMenuGroup';
 
 export function NavVersions() {
   const versionsMenuData = useVersionMenuData();

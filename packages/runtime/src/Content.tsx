@@ -1,4 +1,4 @@
-import { type ReactNode, Suspense, memo, useMemo } from 'react';
+import { memo, type ReactNode, Suspense, useMemo } from 'react';
 import { useLocation } from 'react-router-dom';
 import siteData from 'virtual-site-data';
 import { useViewTransition } from './hooks';

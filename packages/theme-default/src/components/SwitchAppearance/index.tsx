@@ -1,5 +1,4 @@
-import { ThemeContext } from '@rspress/runtime';
-import { flushSync } from '@rspress/runtime';
+import { flushSync, ThemeContext } from '@rspress/runtime';
 import MoonSvg from '@theme-assets/moon';
 import SunSvg from '@theme-assets/sun';
 import { type MouseEvent, useContext } from 'react';

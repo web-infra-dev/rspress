@@ -10,15 +10,16 @@ import { PLUGIN_REACT_NAME, pluginReact } from '@rsbuild/plugin-react';
 import {
   MDX_OR_MD_REGEXP,
   RSPRESS_TEMP_DIR,
-  type UserConfig,
   removeTrailingSlash,
+  type UserConfig,
 } from '@rspress/shared';
 import { pluginVirtualModule } from 'rsbuild-plugin-virtual-module';
-import type { PluginDriver } from './PluginDriver';
 import { modifyConfigWithAutoNavSide } from './auto-nav-sidebar';
 import {
   CSR_CLIENT_ENTRY,
   DEFAULT_TITLE,
+  inlineThemeScript,
+  isProduction,
   NODE_SSG_BUNDLE_FOLDER,
   NODE_SSG_BUNDLE_NAME,
   OUTPUT_DIR,
@@ -27,13 +28,12 @@ import {
   SSR_CLIENT_ENTRY,
   SSR_SERVER_ENTRY,
   TEMPLATE_PATH,
-  inlineThemeScript,
-  isProduction,
 } from './constants';
 import {
   hintBuilderPluginsBreakingChange,
   hintThemeBreakingChange,
 } from './logger/hint';
+import type { PluginDriver } from './PluginDriver';
 import { RouteService } from './route/RouteService';
 import {
   getVirtualModulesFromPlugins,

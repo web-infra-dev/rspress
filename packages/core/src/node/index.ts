@@ -1,6 +1,6 @@
-export { dev } from './dev';
 export { build } from './build';
-export { serve } from './serve';
+export { dev } from './dev';
+export { remarkFileCodeBlock } from './mdx/remarkPlugins/fileCodeBlock';
 
 export { remarkPluginNormalizeLink } from './mdx/remarkPlugins/normalizeLink';
-export { remarkFileCodeBlock } from './mdx/remarkPlugins/fileCodeBlock';
+export { serve } from './serve';

@@ -7,13 +7,13 @@ import { Tag } from '@theme';
 import ArrowRight from '@theme-assets/arrow-right';
 import type React from 'react';
 import { useEffect, useRef } from 'react';
-import { type SidebarItemProps, highlightTitleStyle } from '.';
 import { renderInlineMarkdown } from '../../logic/utils';
 import { SvgWrapper } from '../SvgWrapper';
+import { highlightTitleStyle, type SidebarItemProps } from '.';
+import * as styles from './index.module.scss';
 import { SidebarDivider } from './SidebarDivider';
 import { SidebarItem as SidebarItemComp } from './SidebarItem';
 import { SidebarSectionHeader } from './SidebarSectionHeader';
-import * as styles from './index.module.scss';
 import { isSidebarDivider, isSidebarSectionHeader, preloadLink } from './utils';
 
 export function SidebarGroup(props: SidebarItemProps) {

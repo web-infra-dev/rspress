@@ -1,6 +1,6 @@
 import fs from 'node:fs/promises';
 import path from 'node:path';
-import { type NavItem, type Sidebar, isExternalUrl } from '@rspress/shared';
+import { isExternalUrl, type NavItem, type Sidebar } from '@rspress/shared';
 import { logger } from '@rspress/shared/logger';
 import { hintNavJsonChangeThenPanic } from '../logger/hint';
 import { addRoutePrefix } from '../route/RoutePage';
@@ -14,7 +14,7 @@ async function scanNav(workDir: string, docsDir: string) {
   // Get the nav config from the `_meta.json` file
   try {
     navConfig = await readJson<NavItem[]>(rootNavJson);
-  } catch (e) {
+  } catch (_e) {
     logger.error(
       '[auto-nav-sidebar]',
       `Generate nav meta error: ${rootNavJson} failed`,

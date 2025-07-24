@@ -1,11 +1,11 @@
 import fs from 'node:fs';
 import path, { join } from 'node:path';
 import type {
-  EditorProps as MonacoEditorProps,
   loader,
+  EditorProps as MonacoEditorProps,
 } from '@monaco-editor/react';
-import { getNodeAttribute } from '@rspress/core';
 import type { RouteMeta, RspressPlugin } from '@rspress/core';
+import { getNodeAttribute } from '@rspress/core';
 import { RspackVirtualModulePlugin } from 'rspack-plugin-virtual-module';
 import { DEFAULT_BABEL_URL, DEFAULT_MONACO_URL } from '../web/constant';
 import { normalizeUrl } from '../web/utils';

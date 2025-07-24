@@ -1,13 +1,12 @@
-import type { RsbuildConfig } from '@rsbuild/core';
-import type { loadConfig } from '@rsbuild/core';
+import type { loadConfig, RsbuildConfig } from '@rsbuild/core';
 import type { RehypeShikiOptions } from '@shikijs/rehype';
 import type { ZoomOptions } from 'medium-zoom';
 import type { PluggableList } from 'unified';
-import type { AdditionalPage, RspressPlugin } from './Plugin';
 import type {
   Config as DefaultThemeConfig,
   NormalizedConfig as NormalizedDefaultThemeConfig,
 } from './defaultTheme';
+import type { AdditionalPage, RspressPlugin } from './Plugin';
 
 export type { DefaultThemeConfig, NormalizedDefaultThemeConfig };
 export * from './defaultTheme';

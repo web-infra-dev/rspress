@@ -1,7 +1,3 @@
-import { Link } from '@theme';
-import type { ComponentProps } from 'react';
-import * as styles from './index.module.scss';
-
 import {
   normalizeHrefInRuntime as normalizeHref,
   removeBase,
@@ -11,6 +7,9 @@ import {
   withBase,
 } from '@rspress/runtime';
 import { isExternalUrl } from '@rspress/shared';
+import { Link } from '@theme';
+import type { ComponentProps } from 'react';
+import * as styles from './index.module.scss';
 
 function usePathUtils() {
   const currentLang = useLang();

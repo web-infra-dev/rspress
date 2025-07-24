@@ -8,14 +8,13 @@ import {
   removeTrailingSlash,
   withBase,
 } from '@rspress/shared';
+import { logger } from '@rspress/shared/logger';
 import { getNodeAttribute } from '@rspress/shared/node-utils';
 import type { Root } from 'mdast';
 import type { MdxjsEsm } from 'mdast-util-mdxjs-esm';
+import picocolors from 'picocolors';
 import type { Plugin } from 'unified';
 import { visit } from 'unist-util-visit';
-
-import { logger } from '@rspress/shared/logger';
-import picocolors from 'picocolors';
 import { hintRelativeMarkdownLink } from '../../logger/hint';
 import type { RouteService } from '../../route/RouteService';
 import { getASTNodeImport } from '../../utils';
