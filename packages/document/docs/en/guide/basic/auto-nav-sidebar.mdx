@@ -47,7 +47,7 @@ docs
 
 ## JSON schema type hint
 
-To better edit `_nav.json` and `_meta.json` files, Rspress V2 provides two schema files `rspress/meta-json-schema.json` and `rspress/nav-json-schema.json` for type hinting.
+To better edit `_nav.json` and `_meta.json` files, Rspress V2 provides two schema files `@rspress/core/meta-json-schema.json` and `@rspress/core/nav-json-schema.json` for ide type hinting.
 
 For example, in VSCode, you can add the following configuration in `.vscode/settings.json`:
 
@@ -57,13 +57,13 @@ For example, in VSCode, you can add the following configuration in `.vscode/sett
   "json.schemas": [
     {
       "fileMatch": ["**/_meta.json"],
-      "url": "./node_modules/rspress/meta-json-schema.json"
-      // or "url": "https://unpkg.com/rspress@2.0.0-beta.21/meta-json-schema.json"
+      "url": "./node_modules/@rspress/core/meta-json-schema.json"
+      // or "url": "https://unpkg.com/@rspress/core@2.0.0-beta.21/meta-json-schema.json"
     },
     {
       "fileMatch": ["**/_nav.json"],
-      "url": "./node_modules/rspress/nav-json-schema.json"
-      // or "url": "https://unpkg.com/rspress@2.0.0-beta.21/nav-json-schema.json"
+      "url": "./node_modules/@rspress/core/nav-json-schema.json"
+      // or "url": "https://unpkg.com/@rspress/core@2.0.0-beta.22/nav-json-schema.json"
     }
   ]
 }
