@@ -47,7 +47,7 @@ docs
 
 ## JSON schema 类型提示
 
-为了更好的编辑 `_nav.json` 和 `_meta.json` 文件，Rspress V2 中, 提供了 `rspress/meta-json-schema.json` 和 `rspress/nav-json-schema.json` 两个 schema 文件用于类型提示。
+为了更好的编辑 `_nav.json` 和 `_meta.json` 文件，Rspress V2 中, 提供了 `@rspress/core/meta-json-schema.json` 和 `@rspress/core/nav-json-schema.json` 两个 schema 文件用于 ide 的类型提示。
 
 以 VSCode 为例，可以在 `.vscode/settings.json` 中添加如下配置:
 
@@ -57,13 +57,13 @@ docs
   "json.schemas": [
     {
       "fileMatch": ["**/_meta.json"],
-      "url": "./node_modules/rspress/meta-json-schema.json"
-      // 或者 "url": "https://unpkg.com/rspress@2.0.0-beta.21/meta-json-schema.json"
+      "url": "./node_modules/@rspress/core/meta-json-schema.json"
+      // 或者 "url": "https://unpkg.com/@rspress/core@2.0.0-beta.21/meta-json-schema.json"
     },
     {
       "fileMatch": ["**/_nav.json"],
-      "url": "./node_modules/rspress/nav-json-schema.json"
-      // 或者 "url": "https://unpkg.com/rspress@2.0.0-beta.21/nav-json-schema.json"
+      "url": "./node_modules/@rspress/core/nav-json-schema.json"
+      // 或者 "url": "https://unpkg.com/@rspress/core@2.0.0-beta.21/nav-json-schema.json"
     }
   ]
   // ...
