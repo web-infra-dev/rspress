@@ -1,5 +1,3 @@
-// layout
-
 // components
 export { Aside } from './components/Aside/index';
 export { Badge } from './components/Badge/index';
@@ -58,6 +56,8 @@ export { SwitchAppearance } from './components/SwitchAppearance/index';
 export { Tab, Tabs } from './components/Tabs/index';
 export { Tag } from './components/Tag/index';
 export { Toc } from './components/Toc/index';
+
+// layout
 export type { CodeButtonGroupProps } from './layout/DocLayout/docComponents/code/CodeButtonGroup';
 export { getCustomMDXComponent } from './layout/DocLayout/docComponents/index';
 export type {

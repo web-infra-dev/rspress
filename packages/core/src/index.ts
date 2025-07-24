@@ -1,5 +1,3 @@
-// TODO: do not expose remarkPluginNormalizeLink as publicAPI
-
 export { matchPath } from '@rspress/runtime/server';
 
 // TODO: do not expose so much pubic API
@@ -32,6 +30,7 @@ export {
 } from '@rspress/shared/node-utils';
 // cli
 export { defineConfig } from './cli/config';
+// TODO: do not expose remarkPluginNormalizeLink as publicAPI
 export {
   build,
   dev,
