@@ -70,8 +70,8 @@ interface CustomMaps {
   [prop: string]: Sitemap;
 }
 
-export interface Options {
-  domain?: string;
+export interface PluginSitemapOptions {
+  siteUrl?: string;
   customMaps?: CustomMaps;
   defaultPriority?: Priority;
   defaultChangeFreq?: ChangeFreq;

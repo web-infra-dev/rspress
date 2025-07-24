@@ -71,9 +71,6 @@ export function pluginSitemap(options: PluginSitemapOptions): RspressPlugin {
   const set = new Set();
   return {
     name: '@rspress/plugin-sitemap',
-    config(config) {
-      return config;
-    },
     async extendPageData(pageData, isProd) {
       if (isProd) {
         if (!set.has(pageData.routePath)) {
