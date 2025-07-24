@@ -1,5 +1,5 @@
 import { usePageData } from '@rspress/runtime';
-import { type NormalizedLocales, addTrailingSlash } from '@rspress/shared';
+import { addTrailingSlash, type NormalizedLocales } from '@rspress/shared';
 
 export function useLocaleSiteData(): NormalizedLocales {
   const pageData = usePageData();

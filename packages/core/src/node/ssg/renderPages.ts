@@ -9,10 +9,10 @@ import type { RouteService } from '../route/RouteService';
 import { renderHtmlTemplate } from './renderHtmlTemplate';
 import { renderPage } from './renderPage';
 import {
+  getNumberOfThreads,
   SSGConcurrency,
   SSGWorkerThreadRecyclerMaxMemory,
   SSGWorkerThreadTaskSize,
-  getNumberOfThreads,
 } from './ssgEnv';
 
 const routePath2HtmlFileName = (routePath: string) => {

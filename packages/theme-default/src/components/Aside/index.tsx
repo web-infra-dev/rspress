@@ -14,7 +14,10 @@ import { useDynamicToc } from './useDynamicToc';
 const TocItem = ({
   header,
   baseHeaderLevel,
-}: { header: Header; baseHeaderLevel: number }) => {
+}: {
+  header: Header;
+  baseHeaderLevel: number;
+}) => {
   return (
     <li>
       <a

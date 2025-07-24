@@ -1,9 +1,9 @@
 import {
+  matchNavbar,
   type NavItem,
   type NavItemWithChildren,
   type NavItemWithLink,
   type NavItemWithLinkAndChildren,
-  matchNavbar,
 } from '@rspress/shared';
 import { Link, Tag } from '@theme';
 import Down from '@theme-assets/down';

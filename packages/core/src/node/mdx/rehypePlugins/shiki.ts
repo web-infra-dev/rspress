@@ -1,5 +1,5 @@
-import rehypeShiki from '@shikijs/rehype';
 import type { RehypeShikiOptions } from '@shikijs/rehype';
+import rehypeShiki from '@shikijs/rehype';
 import { createCssVariablesTheme } from 'shiki';
 import {
   SHIKI_TRANSFORMER_LINE_NUMBER,

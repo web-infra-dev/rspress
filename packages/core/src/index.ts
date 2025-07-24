@@ -1,41 +1,42 @@
 // TODO: do not expose remarkPluginNormalizeLink as publicAPI
-export {
-  dev,
-  build,
-  serve,
-  remarkPluginNormalizeLink,
-  remarkFileCodeBlock,
-} from './node';
+
+export { matchPath } from '@rspress/runtime/server';
 
 // TODO: do not expose so much pubic API
 export type {
-  RspressPlugin,
-  UserConfig,
   Nav,
+  NavItemWithLink,
   PageIndexInfo,
   RouteMeta,
+  RspressPlugin,
   Sidebar,
   SidebarDivider,
   SidebarGroup,
   SidebarItem,
-  NavItemWithLink,
   SidebarSectionHeader,
+  UserConfig,
 } from '@rspress/shared';
 export {
-  normalizePosixPath,
   getSidebarDataGroup,
-  RSPRESS_TEMP_DIR,
   normalizeHref,
-  withBase,
+  normalizePosixPath,
+  RSPRESS_TEMP_DIR,
   removeTrailingSlash,
+  withBase,
 } from '@rspress/shared';
-export { matchPath } from '@rspress/runtime/server';
-export { getNodeAttribute, getIconUrlPath } from '@rspress/shared/node-utils';
-
 export { logger } from '@rspress/shared/logger';
-
-export { mergeDocConfig } from '@rspress/shared/node-utils';
-export type { RouteService } from './node/route/RouteService';
-
+export {
+  getIconUrlPath,
+  getNodeAttribute,
+  mergeDocConfig,
+} from '@rspress/shared/node-utils';
 // cli
 export { defineConfig } from './cli/config';
+export {
+  build,
+  dev,
+  remarkFileCodeBlock,
+  remarkPluginNormalizeLink,
+  serve,
+} from './node';
+export type { RouteService } from './node/route/RouteService';

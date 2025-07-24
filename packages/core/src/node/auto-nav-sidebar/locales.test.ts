@@ -1,9 +1,9 @@
 import path from 'node:path';
-import { RouteService } from '../route/RouteService';
 import {
   getRoutePathParts,
   normalizeRoutePath,
 } from '../route/normalizeRoutePath';
+import { RouteService } from '../route/RouteService';
 import { processLocales } from './locales';
 
 describe('walk', () => {

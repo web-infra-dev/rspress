@@ -1,12 +1,11 @@
 import { pathToFileURL } from 'node:url';
-import {
-  type Unhead,
-  createHead,
-  transformHtmlTemplate,
-} from '@unhead/react/server';
-
 import type { PageData, Route, RouteMeta, UserConfig } from '@rspress/shared';
 import { logger } from '@rspress/shared/logger';
+import {
+  createHead,
+  transformHtmlTemplate,
+  type Unhead,
+} from '@unhead/react/server';
 import picocolors from 'picocolors';
 
 import { hintSSGFailed } from '../logger/hint';

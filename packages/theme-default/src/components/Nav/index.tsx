@@ -5,12 +5,12 @@ import { base } from 'virtual-runtime-config';
 import { useHiddenNav } from '../../logic/useHiddenNav';
 import { useNavData } from '../../logic/useNav';
 import { NavHamburger } from '../NavHamburger';
+import * as styles from './index.module.scss';
 import { NavBarTitle } from './NavBarTitle';
 import { NavMenuGroup } from './NavMenuGroup';
 import { NavMenuSingleItem } from './NavMenuSingleItem';
 import { NavTranslations } from './NavTranslations';
 import { NavVersions } from './NavVersions';
-import * as styles from './index.module.scss';
 
 export interface NavProps {
   beforeNav?: React.ReactNode;

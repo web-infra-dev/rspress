@@ -1,17 +1,16 @@
+import { PassThrough } from 'node:stream';
+import { text } from 'node:stream/consumers';
 import {
   DataContext,
-  ThemeContext,
   pathnameToRouteService,
+  ThemeContext,
   withBase,
 } from '@rspress/runtime';
 import { StaticRouter } from '@rspress/runtime/server';
 import type { PageData } from '@rspress/shared';
 import { type Unhead, UnheadProvider } from '@unhead/react/server';
-import { renderToPipeableStream } from 'react-dom/server';
-
-import { PassThrough } from 'node:stream';
-import { text } from 'node:stream/consumers';
 import type { ReactNode } from 'react';
+import { renderToPipeableStream } from 'react-dom/server';
 import { base } from 'virtual-runtime-config';
 import { App } from './App';
 import { initPageData } from './initPageData';

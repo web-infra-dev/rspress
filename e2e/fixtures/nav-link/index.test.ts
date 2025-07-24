@@ -1,9 +1,8 @@
-import { expect, test } from '@playwright/test';
-import { getPort, killProcess, runDevCommand } from '../../utils/runCommands';
-
 import os from 'node:os';
 import type { Locator, Page } from '@playwright/test';
+import { expect, test } from '@playwright/test';
 import { getShouldOpenNewPage } from '../../utils/newPage';
+import { getPort, killProcess, runDevCommand } from '../../utils/runCommands';
 
 test.describe('Navigation with <Link>', async () => {
   let appPort: number;

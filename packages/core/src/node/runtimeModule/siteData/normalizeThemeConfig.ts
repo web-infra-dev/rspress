@@ -1,5 +1,7 @@
 import {
+  addLeadingSlash,
   type DefaultThemeConfig,
+  isExternalUrl,
   type NavItem,
   type NavItemWithLink,
   type NormalizedDefaultThemeConfig,
@@ -9,10 +11,8 @@ import {
   type SidebarGroup,
   type SidebarItem,
   type SidebarSectionHeader,
-  type UserConfig,
-  addLeadingSlash,
-  isExternalUrl,
   slash,
+  type UserConfig,
 } from '@rspress/shared';
 import { applyReplaceRules } from '../../utils/applyReplaceRules';
 import { getI18nData } from '../i18n';

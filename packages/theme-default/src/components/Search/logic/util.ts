@@ -45,7 +45,6 @@ export function normalizeTextCase(text: string | number) {
     return textNormalized.normalize('NFC');
   }
 
-  // biome-ignore lint/suspicious/noMisleadingCharacterClass: temporarily ignore
   const resultWithoutAccents = textNormalized.replace(/[\u0300-\u036f]/g, '');
   if (kRegex.test(String(text))) {
     return resultWithoutAccents.normalize('NFC');

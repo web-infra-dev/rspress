@@ -5,10 +5,8 @@ import {
   NotFoundLayout as DefaultNotFoundLayout,
   Nav,
 } from '@theme';
-import { useHead } from '@unhead/react';
-import { Head } from '@unhead/react';
-import React, { memo } from 'react';
-import { useMemo } from 'react';
+import { Head, useHead } from '@unhead/react';
+import React, { memo, useMemo } from 'react';
 import type { NavProps } from '../../components/Nav';
 import { useSetup } from '../../logic/sideEffects';
 import { useLocaleSiteData } from '../../logic/useLocaleSiteData';

@@ -1,12 +1,11 @@
 import path from 'node:path';
 import type { RsbuildPlugin } from '@rsbuild/core';
-import { getSidebarDataGroup } from '@rspress/core';
-import { logger } from '@rspress/core';
 import type {
   Nav,
   NavItemWithLink,
   PageIndexInfo,
   RouteMeta,
+  RouteService,
   RspressPlugin,
   Sidebar,
   SidebarDivider,
@@ -14,8 +13,7 @@ import type {
   SidebarItem,
   SidebarSectionHeader,
 } from '@rspress/core';
-import type { RouteService } from '@rspress/core';
-import { matchPath } from '@rspress/core';
+import { getSidebarDataGroup, logger, matchPath } from '@rspress/core';
 import { generateLlmsFullTxt, generateLlmsTxt } from './llmsTxt';
 import { mdxToMd } from './mdxToMd';
 import type {

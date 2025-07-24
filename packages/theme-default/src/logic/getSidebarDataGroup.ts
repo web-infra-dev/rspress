@@ -40,7 +40,7 @@ export function isActive(itemLink: string, currentPathname: string): boolean {
  * @param currentPathname
  * @returns
  */
-const match = (
+const _match = (
   item:
     | NormalizedSidebarGroup
     | SidebarItem
@@ -70,7 +70,7 @@ const match = (
     }
     // 2.2 dir recursive
     for (const childItem of item.items) {
-      const matched = match(childItem, currentPathname);
+      const matched = _match(childItem, currentPathname);
       if (matched) {
         return matched;
       }

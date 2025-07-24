@@ -2,8 +2,8 @@ import { resolve as resolveUrl } from 'node:url';
 import type { PageIndexInfo, UserConfig } from '@rspress/core';
 import type { Author, FeedOptions } from 'feed';
 import {
-  type ResolvedOutput,
   concatArray,
+  type ResolvedOutput,
   selectNonNullishProperty,
   toDate,
 } from './internals';
@@ -44,7 +44,7 @@ export function createFeed(
   },
   config: UserConfig,
 ): FeedOptions {
-  const { output, item, id, title, ..._options } = options;
+  const { output, item: _item, id, title, ..._options } = options;
   return {
     id,
     copyright: config.themeConfig?.footer?.message || '',

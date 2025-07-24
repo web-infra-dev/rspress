@@ -1,3 +1,4 @@
+import { getCustomMDXComponent } from '@theme';
 import { toJsxRuntime } from 'hast-util-to-jsx-runtime';
 import { Fragment, type ReactNode, useEffect, useRef, useState } from 'react';
 import { jsx, jsxs } from 'react/jsx-runtime';
@@ -8,8 +9,6 @@ import {
   codeToHast,
   createCssVariablesTheme,
 } from 'shiki';
-
-import { getCustomMDXComponent } from '@theme';
 import { Code } from '../../layout/DocLayout/docComponents/code';
 import {
   PreWithCodeButtonGroup,

@@ -1,3 +1,17 @@
+export { Head } from '@unhead/react';
+export {
+  createPortal,
+  flushSync,
+} from 'react-dom';
+export {
+  BrowserRouter,
+  matchPath,
+  matchRoutes,
+  useLocation,
+  useNavigate,
+  useSearchParams,
+} from 'react-router-dom';
+export { Content } from './Content';
 export {
   DataContext,
   ThemeContext,
@@ -9,33 +23,19 @@ export {
   useViewTransition,
   useWindowSize,
 } from './hooks';
-export { Content } from './Content';
+export { NoSSR } from './NoSSR';
 export {
+  normalizeRoutePath,
+  pathnameToRouteService,
+} from './route';
+export {
+  addLeadingSlash,
+  isEqualPath,
+  isProduction,
   normalizeHrefInRuntime,
   normalizeImagePath,
-  withBase,
-  removeBase,
-  addLeadingSlash,
-  removeTrailingSlash,
   normalizeSlash,
-  isProduction,
-  isEqualPath,
+  removeBase,
+  removeTrailingSlash,
+  withBase,
 } from './utils';
-export {
-  useLocation,
-  useNavigate,
-  matchRoutes,
-  BrowserRouter,
-  useSearchParams,
-  matchPath,
-} from 'react-router-dom';
-export {
-  createPortal,
-  flushSync,
-} from 'react-dom';
-export {
-  pathnameToRouteService,
-  normalizeRoutePath,
-} from './route';
-export { Head } from '@unhead/react';
-export { NoSSR } from './NoSSR';

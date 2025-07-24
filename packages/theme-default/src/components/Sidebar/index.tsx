@@ -3,19 +3,17 @@ import {
   type SidebarDivider as ISidebarDivider,
   type SidebarItem as ISidebarItem,
   type SidebarSectionHeader as ISidebarSectionHeader,
-  type NormalizedSidebarGroup,
   inBrowser,
+  type NormalizedSidebarGroup,
 } from '@rspress/shared';
 import { useEffect, useState } from 'react';
-
+import { useSidebarData } from '../../logic/useSidebarData';
 import type { UISwitchResult } from '../../logic/useUISwitch';
 import { NavBarTitle } from '../Nav/NavBarTitle';
+import * as styles from './index.module.scss';
 import { SidebarDivider } from './SidebarDivider';
 import { SidebarItem } from './SidebarItem';
 import { SidebarSectionHeader } from './SidebarSectionHeader';
-
-import { useSidebarData } from '../../logic/useSidebarData';
-import * as styles from './index.module.scss';
 import {
   isSideBarCustomLink,
   isSidebarDivider,

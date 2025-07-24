@@ -1,6 +1,6 @@
 import { MDXProvider } from '@mdx-js/react';
 import { Content, NoSSR, usePageData } from '@rspress/runtime';
-import { Overview, ScrollToTop, getCustomMDXComponent } from '@theme';
+import { getCustomMDXComponent, Overview, ScrollToTop } from '@theme';
 import { slug } from 'github-slugger';
 import { useMemo, useState } from 'react';
 import { Aside } from '../../components/Aside';
