@@ -1,6 +1,5 @@
 import path from 'node:path';
 import {
-  addLeadingSlash,
   addTrailingSlash,
   isExternalUrl,
   isProduction,
@@ -62,6 +61,41 @@ ${errorInfos.map(([nodeUrl, link]) => `  ${picocolors.green(`"[..](${nodeUrl})"`
 }
 
 /**
+ * normalize
+ * 1. `[](/api/getting-started)`
+ * 2. `[](/en/api/getting-started)`
+ * 3. `[](/v3/en/api/getting-started.md)`
+ * to `/v3/en/api/getting-started`
+ */
+function looseMarkdownLink(
+  url: string,
+  routeService: RouteService,
+  filePath: string,
+): string {
+  const relativePath = routeService.absolutePathToRelativePath(filePath);
+  const [version, lang] = routeService.getRoutePathParts(relativePath);
+  const langPrefix = lang ? `/${lang}` : '';
+  const versionPrefix = version ? `/${version}` : '';
+  const prefix = `${versionPrefix}${langPrefix}`;
+
+  if (url.startsWith(prefix)) {
+    return url;
+  }
+
+  if (langPrefix && url.startsWith(langPrefix)) {
+    url.replace(langPrefix, prefix);
+    return url;
+  }
+
+  if (versionPrefix && url.startsWith(versionPrefix)) {
+    url.replace(versionPrefix, prefix);
+    return url;
+  }
+
+  return `${prefix}${url}`;
+}
+
+/**
  *
  * @returns url without base e.g: '/en/guide/getting-started#section-1'
  */
@@ -93,12 +127,9 @@ function normalizeLink(
 
   // 1. [](/api/getting-started) or [](/en/api/getting-started)
   if (url.startsWith('/')) {
-    const relativePath = routeService.absolutePathToRelativePath(filePath);
-
     // TODO: add a option for disable loose mode
     // loose mode: add version and lang prefix to the link
-    const [version, lang] = routeService.getRoutePathParts(relativePath);
-    url = addLeadingSlash([version, lang, url].filter(Boolean).join('/'));
+    url = looseMarkdownLink(url, routeService, filePath);
 
     const { routePath } = routeService.normalizeRoutePath(url);
     url = routePath;
