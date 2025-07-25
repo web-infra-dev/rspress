@@ -24,7 +24,6 @@ export default defineConfig({
   logoText: 'Rspress',
   icon: 'https://assets.rspack.rs/rspress/rspress-logo-480x480.png',
   markdown: {
-    checkDeadLinks: true,
     shiki: {
       transformers: [
         transformerNotationDiff(),

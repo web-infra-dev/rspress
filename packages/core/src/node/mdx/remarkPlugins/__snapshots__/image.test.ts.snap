@@ -1,0 +1,45 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`mdx > basic 1`] = `
+"const frontmatter = {};
+import {Fragment as _Fragment, jsx as _jsx, jsxs as _jsxs} from "react/jsx-runtime";
+import {useMDXComponents as _provideComponents} from "@mdx-js/react";
+import image0 from "./test3.jpg";
+import image1 from "./test4.png";
+function _createMdxContent(props) {
+  const _components = {
+    img: "img",
+    p: "p",
+    ..._provideComponents(),
+    ...props.components
+  };
+  return _jsxs(_Fragment, {
+    children: [_jsx(_components.p, {
+      children: _jsx(_components.img, {
+        alt: "alt1",
+        src: image0
+      })
+    }), "\\n", _jsx("img", {
+      src: image1,
+      alt: "alt2"
+    })]
+  });
+}
+export default function MDXContent(props = {}) {
+  const {wrapper: MDXLayout} = {
+    ..._provideComponents(),
+    ...props.components
+  };
+  return MDXLayout ? _jsx(MDXLayout, {
+    ...props,
+    children: _jsx(_createMdxContent, {
+      ...props
+    })
+  }) : _createMdxContent(props);
+}
+
+MDXContent.__RSPRESS_PAGE_META = {};
+
+MDXContent.__RSPRESS_PAGE_META["index.mdx"] = {"toc":[],"title":"","headingTitle":"","frontmatter":{}};
+"
+`;

@@ -220,8 +220,6 @@ export type BaseRuntimePageInfo = Omit<
   'id' | 'content' | 'domain'
 >;
 
-type PluginShikiOptions = RehypeShikiOptions;
-
 export interface SiteData<ThemeConfig = NormalizedDefaultThemeConfig> {
   root: string;
   lang: string;
@@ -238,7 +236,7 @@ export interface SiteData<ThemeConfig = NormalizedDefaultThemeConfig> {
   markdown: {
     showLineNumbers: boolean;
     defaultWrapCode: boolean;
-    shiki: Partial<PluginShikiOptions>;
+    shiki: Partial<RehypeShikiOptions>;
   };
   multiVersion: {
     default: string;
@@ -393,14 +391,25 @@ export type LocalSearchOptions = SearchHooks & {
 
 export type SearchOptions = LocalSearchOptions | false;
 
+export type RemarkLinkOptions = {
+  /**
+   * Whether to enable check dead links
+   * @default true
+   */
+  checkDeadLinks?:
+    | boolean
+    | { excludes: string[] | ((url: string) => boolean) };
+  /**
+   * [](/v3/zh/guide) [](/zh/guide) [](/guide) will be regarded as the same [](/v3/zh/guide) according to the directory.
+   * @default true
+   */
+  loosePrefix?: boolean;
+};
+
 export interface MarkdownOptions {
   remarkPlugins?: PluggableList;
   rehypePlugins?: PluggableList;
-  /**
-   * Whether to enable check dead links
-   * @default false
-   */
-  checkDeadLinks?: boolean;
+  link?: RemarkLinkOptions;
   showLineNumbers?: boolean;
   /**
    * Whether to wrap code by default
@@ -414,7 +423,7 @@ export interface MarkdownOptions {
   /**
    * @type import('@shikijs/rehype').RehypeShikiOptions
    */
-  shiki?: Partial<PluginShikiOptions>;
+  shiki?: Partial<RehypeShikiOptions>;
 
   /**
    * Speed up build time by caching mdx parsing result in `rspress build`

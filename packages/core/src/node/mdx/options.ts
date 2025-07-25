@@ -2,7 +2,7 @@ import path from 'node:path';
 import { nodeTypes, type ProcessorOptions } from '@mdx-js/mdx';
 import type { UserConfig } from '@rspress/shared';
 import rehypeShiki from '@shikijs/rehype';
-import rehypePluginExternalLinks from 'rehype-external-links';
+import rehypeExternalLinks from 'rehype-external-links';
 import rehypeRaw from 'rehype-raw';
 import remarkGFM from 'remark-gfm';
 import type { PluggableList } from 'unified';
@@ -14,25 +14,20 @@ import { createRehypeShikiOptions } from './rehypePlugins/shiki';
 import { remarkBuiltin } from './remarkPlugins/builtin';
 import { remarkContainerSyntax } from './remarkPlugins/containerSyntax';
 import { remarkFileCodeBlock } from './remarkPlugins/fileCodeBlock';
-import { remarkPluginNormalizeLink } from './remarkPlugins/normalizeLink';
-import { remarkPluginToc } from './remarkPlugins/toc';
+import { remarkImage } from './remarkPlugins/image';
+import { remarkLink } from './remarkPlugins/link';
+import { remarkToc } from './remarkPlugins/toc';
 
 export async function createMDXOptions(options: {
   docDirectory: string;
   filepath: string;
-  checkDeadLinks: boolean;
   config: UserConfig | null;
   routeService: RouteService | null;
   pluginDriver: PluginDriver | null;
 }): Promise<ProcessorOptions> {
-  const {
-    docDirectory,
-    config,
-    checkDeadLinks,
-    routeService,
-    filepath,
-    pluginDriver,
-  } = options;
+  const { docDirectory, config, routeService, filepath, pluginDriver } =
+    options;
+  const remarkLinkOptions = config?.markdown?.link;
   const format = path.extname(filepath).slice(1) as 'mdx' | 'md';
   const cleanUrls = config?.route?.cleanUrls ?? false;
   const {
@@ -61,18 +56,19 @@ export async function createMDXOptions(options: {
     format,
     remarkPlugins: [
       remarkGFM,
-      remarkPluginToc,
+      remarkToc,
       remarkContainerSyntax,
       [remarkFileCodeBlock, { filepath }],
       [
-        remarkPluginNormalizeLink,
+        remarkLink,
         {
           cleanUrls,
           root: docDirectory,
           routeService,
-          checkDeadLinks,
+          remarkLinkOptions,
         },
       ],
+      remarkImage,
       globalComponents.length && [
         remarkBuiltin,
         {
@@ -97,7 +93,7 @@ export async function createMDXOptions(options: {
         : []),
       [rehypeShiki, createRehypeShikiOptions(showLineNumbers, shiki)],
       [
-        rehypePluginExternalLinks,
+        rehypeExternalLinks,
         {
           target: '_blank',
           rel: 'noopener noreferrer',

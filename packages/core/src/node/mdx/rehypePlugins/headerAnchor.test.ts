@@ -26,7 +26,7 @@ describe('rehypeHeadAnchor', () => {
 {/* prettier-ignore-end */}
 
 `,
-      checkDeadLinks: false,
+
       docDirectory: '/usr/rspress-project/docs',
       filepath: '/usr/rspress-project/docs/index.mdx',
       config: null,
@@ -41,7 +41,7 @@ describe('rehypeHeadAnchor', () => {
       source: `
 # Hello World \`inline code\`
 `,
-      checkDeadLinks: false,
+
       docDirectory: '/usr/rspress-project/docs',
       filepath: '/usr/rspress-project/docs/inline-code.mdx',
       config: null,
@@ -56,7 +56,7 @@ describe('rehypeHeadAnchor', () => {
       source: `
 # Hello World \`inline code\` \\{#custom-id}
 `,
-      checkDeadLinks: false,
+
       docDirectory: '/usr/rspress-project/docs',
       filepath: '/usr/rspress-project/docs/inline-code.mdx',
       config: null,
@@ -69,7 +69,7 @@ describe('rehypeHeadAnchor', () => {
       source: `
 # Hello World \`inline code\` {#custom-id}
 `,
-      checkDeadLinks: false,
+
       docDirectory: '/usr/rspress-project/docs',
       filepath: '/usr/rspress-project/docs/inline-code.mdx',
       config: null,
@@ -85,7 +85,7 @@ describe('rehypeHeadAnchor', () => {
       source: `
 # Hello World <Badge text={"WARNING"} />
 `,
-      checkDeadLinks: false,
+
       docDirectory: '/usr/rspress-project/docs',
       filepath: '/usr/rspress-project/docs/inline-code.mdx',
       config: null,
@@ -98,7 +98,7 @@ describe('rehypeHeadAnchor', () => {
       source: `
 # Hello World <Badge text={"WARNING"} />
 `,
-      checkDeadLinks: false,
+
       docDirectory: '/usr/rspress-project/docs',
       filepath: '/usr/rspress-project/docs/inline-code.mdx',
       config: null,
