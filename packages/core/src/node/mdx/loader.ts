@@ -12,8 +12,7 @@ export default async function mdxLoader(
 
   const options = this.getOptions();
   const filepath = this.resourcePath;
-  const { config, docDirectory, checkDeadLinks, routeService, pluginDriver } =
-    options;
+  const { config, docDirectory, routeService, pluginDriver } = options;
 
   const crossCompilerCache = config?.markdown?.crossCompilerCache ?? true;
 
@@ -24,7 +23,6 @@ export default async function mdxLoader(
         source,
         filepath,
         docDirectory,
-        checkDeadLinks,
         config,
         pluginDriver,
         routeService,
@@ -35,7 +33,6 @@ export default async function mdxLoader(
         source,
         filepath,
         docDirectory,
-        checkDeadLinks,
         config,
         pluginDriver,
         routeService,

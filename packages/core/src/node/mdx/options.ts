@@ -15,25 +15,19 @@ import { remarkBuiltin } from './remarkPlugins/builtin';
 import { remarkContainerSyntax } from './remarkPlugins/containerSyntax';
 import { remarkFileCodeBlock } from './remarkPlugins/fileCodeBlock';
 import { remarkImage } from './remarkPlugins/image';
-import { remarkNormalizeLink } from './remarkPlugins/normalizeLink';
+import { remarkLink } from './remarkPlugins/link';
 import { remarkToc } from './remarkPlugins/toc';
 
 export async function createMDXOptions(options: {
   docDirectory: string;
   filepath: string;
-  checkDeadLinks: boolean;
   config: UserConfig | null;
   routeService: RouteService | null;
   pluginDriver: PluginDriver | null;
 }): Promise<ProcessorOptions> {
-  const {
-    docDirectory,
-    config,
-    checkDeadLinks,
-    routeService,
-    filepath,
-    pluginDriver,
-  } = options;
+  const { docDirectory, config, routeService, filepath, pluginDriver } =
+    options;
+  const remarkLinkOptions = config?.markdown?.link;
   const format = path.extname(filepath).slice(1) as 'mdx' | 'md';
   const cleanUrls = config?.route?.cleanUrls ?? false;
   const {
@@ -66,12 +60,12 @@ export async function createMDXOptions(options: {
       remarkContainerSyntax,
       [remarkFileCodeBlock, { filepath }],
       [
-        remarkNormalizeLink,
+        remarkLink,
         {
           cleanUrls,
           root: docDirectory,
           routeService,
-          checkDeadLinks,
+          remarkLinkOptions,
         },
       ],
       remarkImage,

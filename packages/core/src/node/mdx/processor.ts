@@ -17,7 +17,6 @@ import type { PageMeta } from './types';
 interface CompileOptions {
   source: string;
   filepath: string;
-  checkDeadLinks: boolean;
 
   // assume that the below instances are singleton, it will not change.
   docDirectory: string;
@@ -27,18 +26,10 @@ interface CompileOptions {
 }
 
 async function compile(options: CompileOptions): Promise<string> {
-  const {
-    source,
-    filepath,
-    docDirectory,
-    checkDeadLinks,
-    config,
-    routeService,
-    pluginDriver,
-  } = options;
+  const { source, filepath, docDirectory, config, routeService, pluginDriver } =
+    options;
 
   const mdxOptions = await createMDXOptions({
-    checkDeadLinks,
     config,
     docDirectory,
     filepath,

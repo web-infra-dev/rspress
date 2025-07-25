@@ -249,6 +249,11 @@ ${routeMeta
     return absolutePathToRoutePath(absolutePath, this.#scanDir, this);
   }
 
+  isInDocsDir(absolutePath: string): boolean {
+    const relativePath = path.relative(this.#scanDir, absolutePath);
+    return !relativePath.startsWith('..') && !path.isAbsolute(relativePath);
+  }
+
   absolutePathToRelativePath(absolutePath: string): string {
     return absolutePathToRelativePath(absolutePath, this.#scanDir);
   }

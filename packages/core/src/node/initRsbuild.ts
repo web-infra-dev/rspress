@@ -285,9 +285,6 @@ async function createInternalBuildConfig(
           .use(CHAIN_ID.USE.SWC)
           .get('options');
 
-        const checkDeadLinks =
-          (config?.markdown?.checkDeadLinks && !isServer) ?? false;
-
         chain.module
           .rule('MDX')
           .type('javascript/auto')
@@ -307,7 +304,6 @@ async function createInternalBuildConfig(
           .options({
             config,
             docDirectory: userDocRoot,
-            checkDeadLinks,
             routeService,
             pluginDriver,
           })
