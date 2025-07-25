@@ -23,6 +23,7 @@ export default defineConfig({
   logo: 'https://assets.rspack.rs/rspress/rspress-logo-480x480.png',
   logoText: 'Rspress',
   icon: 'https://assets.rspack.rs/rspress/rspress-logo-480x480.png',
+  ssg: false,
   markdown: {
     checkDeadLinks: true,
     shiki: {
