@@ -3,6 +3,7 @@ import {
   addTrailingSlash,
   isExternalUrl,
   isProduction,
+  type MarkdownOptions,
   normalizeHref,
   parseUrl,
   removeTrailingSlash,
@@ -18,15 +19,28 @@ import type { RouteService } from '../../route/RouteService';
 
 // TODO: checkDeadLinks support external links and anchor hash links
 function checkDeadLinks(
+  checkDeadLinks: boolean | { excludes: string[] | ((url: string) => boolean) },
   internalLinks: Map<string, string>,
   filePath: string,
   routeService: RouteService,
 ) {
   const errorInfos: [string, string][] = [];
+  const excludes =
+    typeof checkDeadLinks === 'object' ? checkDeadLinks.excludes : undefined;
+  const excludesUrl = Array.isArray(excludes) ? new Set(excludes) : undefined;
+  const excludesFn = typeof excludes === 'function' ? excludes : undefined;
 
   let possibleBreakingChange = false;
 
   [...internalLinks.entries()].forEach(([nodeUrl, link]) => {
+    if (excludesUrl?.has(nodeUrl)) {
+      return;
+    }
+
+    if (excludesFn?.(nodeUrl)) {
+      return;
+    }
+
     const cleanLinkPath = linkToRoutePath(link);
     if (!cleanLinkPath) {
       return;
@@ -72,6 +86,9 @@ function looseMarkdownLink(
   routeService: RouteService,
   filePath: string,
 ): string {
+  if (!routeService.isInDocsDir(filePath)) {
+    return url;
+  }
   const relativePath = routeService.absolutePathToRelativePath(filePath);
   const [version, lang] = routeService.getRoutePathParts(relativePath);
   const langPrefix = lang ? `/${lang}` : '';
@@ -104,6 +121,7 @@ function normalizeLink(
   routeService: RouteService | null,
   filePath: string,
   cleanUrls: boolean | string,
+  loosePrefix: boolean,
   internalLinks: Map<string, string>,
   __base?: string, // just for plugin-llms, we should normalize the link with base
 ): string {
@@ -129,7 +147,9 @@ function normalizeLink(
   if (url.startsWith('/')) {
     // TODO: add a option for disable loose mode
     // loose mode: add version and lang prefix to the link
-    url = looseMarkdownLink(url, routeService, filePath);
+    if (loosePrefix) {
+      url = looseMarkdownLink(url, routeService, filePath);
+    }
 
     const { routePath } = routeService.normalizeRoutePath(url);
     url = routePath;
@@ -168,24 +188,21 @@ function linkToRoutePath(routePath: string) {
  * 1. add version and lang prefix to the link
  * 2. checkDeadLinks
  */
-export const remarkNormalizeLink: Plugin<
+export const remarkLink: Plugin<
   [
     {
       cleanUrls: boolean | string;
       routeService: RouteService | null;
-      checkDeadLinks?: boolean;
+      remarkLinkOptions?: MarkdownOptions['link'];
       __base?: string;
     },
   ],
   Root
 > =
-  ({
-    cleanUrls,
-    routeService,
-    checkDeadLinks: shouldCheckDeadLinks = false,
-    __base,
-  }) =>
+  ({ cleanUrls, routeService, remarkLinkOptions, __base }) =>
   (tree, file) => {
+    const { checkDeadLinks: shouldCheckDeadLinks = true, loosePrefix = true } =
+      remarkLinkOptions ?? {};
     const internalLinks = new Map<string, string>();
     visit(tree, 'link', node => {
       const { url: nodeUrl } = node;
@@ -194,6 +211,7 @@ export const remarkNormalizeLink: Plugin<
         routeService,
         file.path,
         cleanUrls,
+        loosePrefix,
         internalLinks,
         __base,
       );
@@ -207,6 +225,7 @@ export const remarkNormalizeLink: Plugin<
         routeService,
         file.path,
         cleanUrls,
+        loosePrefix,
         internalLinks,
         __base,
       );
@@ -214,6 +233,11 @@ export const remarkNormalizeLink: Plugin<
     });
 
     if (shouldCheckDeadLinks && routeService) {
-      checkDeadLinks(internalLinks, file.path, routeService);
+      checkDeadLinks(
+        shouldCheckDeadLinks,
+        internalLinks,
+        file.path,
+        routeService,
+      );
     }
   };

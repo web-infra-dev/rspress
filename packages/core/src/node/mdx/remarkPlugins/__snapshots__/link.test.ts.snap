@@ -5,12 +5,9 @@ exports[`mdx > basic 1`] = `
 /*jsx link will not be transformed*/
 import {Fragment as _Fragment, jsx as _jsx, jsxs as _jsxs} from "react/jsx-runtime";
 import {useMDXComponents as _provideComponents} from "@mdx-js/react";
-import image0 from "./test3.jpg";
-import image1 from "./test4.png";
 function _createMdxContent(props) {
   const _components = {
     a: "a",
-    img: "img",
     p: "p",
     ..._provideComponents(),
     ...props.components
@@ -24,14 +21,6 @@ function _createMdxContent(props) {
     }), "\\n", "\\n", _jsx("a", {
       href: "./test2",
       children: "link2"
-    }), "\\n", _jsx(_components.p, {
-      children: _jsx(_components.img, {
-        alt: "alt1",
-        src: image0
-      })
-    }), "\\n", _jsx("img", {
-      src: image1,
-      alt: "alt2"
     })]
   });
 }

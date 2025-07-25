@@ -11,10 +11,9 @@ describe('mdx', () => {
 
 <a href="./test2">link2</a>
 `,
-      checkDeadLinks: false,
       docDirectory: '/usr/rspress-project/docs',
       filepath: '/usr/rspress-project/docs/index.mdx',
-      config: null,
+      config: {},
       pluginDriver: null,
       routeService: null,
     });
