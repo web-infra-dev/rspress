@@ -965,6 +965,9 @@ importers:
       '@rspress/plugin-llms':
         specifier: workspace:*
         version: link:../plugin-llms
+      '@rspress/plugin-sitemap':
+        specifier: workspace:*
+        version: link:../plugin-sitemap
       '@rstack-dev/doc-ui':
         specifier: 1.10.7
         version: 1.10.7(react-dom@19.1.0(react@19.1.0))(react@19.1.0)
@@ -1368,6 +1371,25 @@ importers:
       typescript:
         specifier: ^5.8.2
         version: 5.8.2
+
+  packages/plugin-sitemap:
+    dependencies:
+      '@rspress/core':
+        specifier: workspace:^2.0.0-beta.22
+        version: link:../core
+    devDependencies:
+      '@microsoft/api-extractor':
+        specifier: ^7.52.8
+        version: 7.52.8(@types/node@22.10.2)
+      '@rslib/core':
+        specifier: 0.10.6
+        version: 0.10.6(@microsoft/api-extractor@7.52.8(@types/node@22.10.2))(typescript@5.8.2)
+      '@rspress/config':
+        specifier: workspace:*
+        version: link:../../scripts/config
+      rsbuild-plugin-publint:
+        specifier: ^0.3.2
+        version: 0.3.2(@rsbuild/core@1.4.8)
 
   packages/plugin-typedoc:
     dependencies:

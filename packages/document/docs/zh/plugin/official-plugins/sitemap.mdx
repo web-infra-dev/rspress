@@ -1,0 +1,145 @@
+# @rspress/plugin-sitemap
+
+import { SourceCode } from '@rspress/core/theme';
+
+<SourceCode href="https://github.com/web-infra-dev/rspress/tree/main/packages/plugin-sitemap" />
+
+自动生成用于 SEO 的 [站点地图 (sitemap)](https://developers.google.com/search/docs/crawling-indexing/sitemaps/overview)，有利于搜索引擎抓取。
+
+## 安装
+
+import { PackageManagerTabs } from '@theme';
+
+<PackageManagerTabs command="add @rspress/plugin-sitemap -D" />
+
+## 使用
+
+在 `rspress.config.ts` 中写入以下的配置：
+
+```ts
+// rspress.config.ts
+import path from 'path';
+import { defineConfig } from '@rspress/core';
+import { pluginSitemap } from '@rspress/plugin-sitemap';
+
+export default defineConfig({
+  plugins: [
+    pluginSitemap({
+      siteUrl: 'https://example.com', // 替换为你的网站 URL
+    }),
+  ],
+});
+```
+
+## 配置
+
+这个插件接受一个对象参数，类型如下:
+
+```ts
+type ChangeFreq =
+  | 'always'
+  | 'hourly'
+  | 'daily'
+  | 'weekly'
+  | 'monthly'
+  | 'yearly'
+  | 'never';
+
+type Priority =
+  | '0.0'
+  | '0.1'
+  | '0.2'
+  | '0.3'
+  | '0.4'
+  | '0.5'
+  | '0.6'
+  | '0.7'
+  | '0.8'
+  | '0.9'
+  | '1.0';
+
+// https://www.sitemaps.org/protocol.html
+interface Sitemap {
+  loc: string;
+  lastmod?: string;
+  changefreq?: ChangeFreq;
+  priority?: Priority;
+}
+
+interface CustomMaps {
+  [routePath: string]: Sitemap;
+}
+
+export interface PluginSitemapOptions {
+  siteUrl?: string;
+  customMaps?: CustomMaps;
+  defaultPriority?: Priority;
+  defaultChangeFreq?: ChangeFreq;
+}
+```
+
+### siteUrl
+
+- **类型**： `string`
+- **必填**
+
+部署访问的站点 URL，例如 `https://example.com`。
+
+当存在 `base` 配置时，`siteUrl` 需要包含 `base` 的路径。例如：
+
+```ts
+// rspress.config.ts
+import path from 'path';
+import { defineConfig } from '@rspress/core';
+import { pluginSitemap } from '@rspress/plugin-sitemap';
+
+export default defineConfig({
+  base: '/base/',
+  plugins: [
+    pluginSitemap({
+      siteUrl: 'https://example.com/base/',
+    }),
+  ],
+});
+```
+
+### customMaps
+
+- **类型**：
+
+```ts
+interface Sitemap {
+  loc: string;
+  lastmod?: string;
+  changefreq?: ChangeFreq;
+  priority?: Priority;
+}
+
+interface CustomMaps {
+  [routePath: string]: Sitemap;
+}
+```
+
+- **默认值**：`{}`
+
+用于给某些重要页面单独设置自定义的 sitemap 值。
+
+### defaultChangeFreq
+
+- **类型**：`ChangeFreq`
+- **默认值**：`'monthly'`
+- **可选值**：`"always" | "hourly" | "daily" | "weekly" | "monthly" | "yearly" | "never"`
+
+> changefreq: 页面可能更改的频率。此值提供一般信息给搜索引擎，可能并不完全与它们爬取页面的频率相对应。
+
+设置生成的 sitemap 文件中，每个页面默认的 [changefreq](https://www.sitemaps.org/protocol.html) 值。
+
+### defaultPriority
+
+- **类型**：`Priority`
+- **默认值**：`'0.5'`
+- **可选值**：`"0.0" | "0.1" | "0.2" | "0.3" | "0.4" | "0.5" | "0.6" | "0.7" | "0.8" | "0.9" | "1.0"`
+
+> priority: 此 URL 相对于网站上其他 URL 的优先级。
+
+设置生成的 sitemap 文件中，每个页面默认的 [priority](https://www.sitemaps.org/protocol.html) 值。

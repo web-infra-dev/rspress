@@ -156,12 +156,30 @@ export interface PluginRssOptions {
 
 The site URL of the current document site. It will be used in the RSS file.
 
+When there is a `base` configuration, `siteUrl` needs to include the `base` path. For example:
+
+```ts
+// rspress.config.ts
+import path from 'path';
+import { defineConfig } from '@rspress/core';
+import { pluginRss } from '@rspress/plugin-rss';
+
+export default defineConfig({
+  base: '/base/',
+  plugins: [
+    pluginRss({
+      siteUrl: 'https://example.com/base/',
+    }),
+  ],
+});
+```
+
 #### `feed`
 
 - **Type**: `FeedChannel | FeedChannel[]`
 - **Default**: `{ id: 'blog', test: '/blog/' }`
 
-Options for RSS file(s). Provide an array to generate multiple RSS files.
+RSS configuration, multiple value array can generate multiple RSS files.
 
 See [FeedChannel](#feedchannel) for more information.
 

@@ -6,9 +6,5 @@
     "rootDir": "."
   },
   "include": ["src"],
-  "references": [
-    { "path": "./tsconfig.runtime.json" },
-    { "path": "./tsconfig.tools.json" },
-    { "path": "../core" }
-  ]
+  "references": [{ "path": "../core" }]
 }
