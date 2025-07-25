@@ -1,5 +1,6 @@
 import path from 'node:path';
 import {
+  addLeadingSlash,
   addTrailingSlash,
   isExternalUrl,
   isProduction,
@@ -89,27 +90,24 @@ function looseMarkdownLink(
   if (!routeService.isInDocsDir(filePath)) {
     return url;
   }
+  const [versionPart, langPart, pureRoute] =
+    routeService.splitRoutePathParts(url);
   const relativePath = routeService.absolutePathToRelativePath(filePath);
-  const [version, lang] = routeService.getRoutePathParts(relativePath);
-  const langPrefix = lang ? `/${lang}` : '';
-  const versionPrefix = version ? `/${version}` : '';
-  const prefix = `${versionPrefix}${langPrefix}`;
+  const [versionPartCurrFile, langPartCurrFile] =
+    routeService.getRoutePathParts(relativePath);
 
-  if (url.startsWith(prefix)) {
-    return url;
+  if (versionPart === '') {
+    if (langPart === '') {
+      return addLeadingSlash(
+        `${[versionPartCurrFile, langPartCurrFile].filter(Boolean).join('/')}${addLeadingSlash(pureRoute.replace(/\/*^/, ''))}`,
+      );
+    }
+    return addLeadingSlash(
+      `${[versionPartCurrFile, langPart].filter(Boolean).join('/')}${addLeadingSlash(pureRoute.replace(/\/*^/, ''))}`,
+    );
   }
 
-  if (langPrefix && url.startsWith(langPrefix)) {
-    url.replace(langPrefix, prefix);
-    return url;
-  }
-
-  if (versionPrefix && url.startsWith(versionPrefix)) {
-    url.replace(versionPrefix, prefix);
-    return url;
-  }
-
-  return `${prefix}${url}`;
+  return url;
 }
 
 /**

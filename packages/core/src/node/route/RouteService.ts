@@ -6,7 +6,11 @@ import type { ComponentType } from 'react';
 import { glob } from 'tinyglobby';
 import { PUBLIC_DIR } from '../constants';
 import type { PluginDriver } from '../PluginDriver';
-import { getRoutePathParts, normalizeRoutePath } from './normalizeRoutePath';
+import {
+  getRoutePathParts,
+  normalizeRoutePath,
+  splitRoutePathParts,
+} from './normalizeRoutePath';
 import {
   absolutePathToRelativePath,
   absolutePathToRoutePath,
@@ -226,6 +230,16 @@ ${routeMeta
 
   getRoutePathParts(relativePath: string) {
     return getRoutePathParts(
+      relativePath,
+      this.#defaultLang,
+      this.#defaultVersion,
+      this.#langs,
+      this.#versions,
+    );
+  }
+
+  splitRoutePathParts(relativePath: string) {
+    return splitRoutePathParts(
       relativePath,
       this.#defaultLang,
       this.#defaultVersion,
