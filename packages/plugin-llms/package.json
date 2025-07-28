@@ -31,8 +31,8 @@
     "unist-util-visit-children": "^3.0.0"
   },
   "devDependencies": {
-    "@microsoft/api-extractor": "^7.52.8",
-    "@rsbuild/core": "~1.4.8",
+    "@microsoft/api-extractor": "^7.52.9",
+    "@rsbuild/core": "~1.4.11",
     "@rslib/core": "0.10.6",
     "@rspress/config": "workspace:*",
     "@types/hast": "^3.0.4",
