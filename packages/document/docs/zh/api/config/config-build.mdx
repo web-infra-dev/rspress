@@ -206,7 +206,7 @@ export type RemarkLinkOptions = {
 - **类型**: `boolean | { excludes: string[] | ((url: string) => boolean) }`
 - **默认值**: `true`
 
-开启这个配置后，Rspress 会基于约定式路由对文档中的链接进行检查，若出现无法访问的链接，构建会抛出错误并退出。
+开启这个配置后，会基于约定式路由对文档中的链接进行检查，若出现无法访问的链接，构建会抛出错误并退出。
 
 如果存在误判链接的情况，可以通过 `excludes` 配置忽略该错误：
 
@@ -229,9 +229,9 @@ export default defineConfig({
 - **类型**: `boolean`
 - **默认值**: `true`
 
-开启这个配置后，Rspress 会基于约定式路由表对文档中的链接自动增加前缀。
+开启这个配置后，会基于约定式路由对文档中的链接自动增加关于 [国际化](/guide/default-theme/i18n) 和 [多版本](/guide/default-theme/multi-version) 前缀。
 
-如果用户在 `docs/zh/guide/index.md` 中写了一个链接 `[](/guide/getting-started)`，Rspress 会自动将其转换为 `[](/zh/guide/getting-started)`。
+比如，用户在 `docs/zh/guide/index.md` 中写了一个链接 `[](/guide/getting-started)`，Rspress 会自动将其转换为 `[](/zh/guide/getting-started)`。
 
 ### markdown.showLineNumbers
 
