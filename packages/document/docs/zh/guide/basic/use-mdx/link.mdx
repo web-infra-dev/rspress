@@ -1,5 +1,7 @@
 # 链接
 
+## 链接形式
+
 Rspress 支持两种形式的链接：**文件路径形式** 和 **URL 形式**。它们的渲染结果完全相同，仅是在代码风格上有所区分。
 
 import { Tabs, Tab } from '@theme';
@@ -28,7 +30,7 @@ import { Tabs, Tab } from '@theme';
 在同一个 Rspress 项目中，推荐只使用一种形式的链接，保持代码风格统一。
 :::
 
-## 文件路径形式
+### 文件路径形式
 
 文件路径形式的特点是使用 **绝对文件路径** 或者 **相对文件路径** 来引用到具体的 `.md` 或 `.mdx` 文件。
 
@@ -84,7 +86,7 @@ import { Tabs, Tab } from '@theme';
 
 3. 相比 URL 形式，无需考虑 [`cleanUrls`](/api/config/config-basic#routecleanurls) 配置项的影响。
 
-## URL 形式
+### URL 形式
 
 URL 形式的特点是使用完整的 URL 地址来引用到具体的页面。
 
@@ -148,9 +150,9 @@ URL 形式与文件路径形不同的一点是，Rspress 会根据 [`cleanUrls`]
 
 - [Rsbuild 文档](https://rsbuild.rs/)
 
-## 链接 definition 语法
+## definition 语法链接
 
-Rspress 也支持 markdown 链接的另一 `definition` 语法，当链接较多时可以用该语法来简化链接书写。
+Rspress 也支持 markdown 链接的另一 definition 语法，当链接较多时可以用该语法来简化链接书写。
 
 <Tabs>
 <Tab label="语法">
@@ -172,6 +174,29 @@ Rspress 支持 [相对文件路径] 和 [绝对文件路径路径]。
 
 </Tab>
 
+</Tabs>
+
+## 锚点链接
+
+Rspress 支持在链接中添加锚点跳转，使用 `#` 符号来指定跳转到页面中的特定位置。
+
+<Tabs>
+<Tab label="语法">
+
+```mdx
+[跳转到 #文件路径形式](#文件路径形式)
+
+[跳转到 快速开始#1-初始化项目](../../start/getting-started.mdx#1-初始化项目)
+```
+
+</Tab>
+<Tab label="渲染结果">
+
+[跳转到 #文件路径形式](#文件路径形式)
+
+[跳转到 快速开始#1-初始化项目](../../start/getting-started.mdx#1-初始化项目)
+
+</Tab>
 </Tabs>
 
 ## 死链检查

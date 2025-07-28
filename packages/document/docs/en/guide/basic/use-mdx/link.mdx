@@ -1,6 +1,8 @@
 # Links
 
-Rspress supports two types of links: **file path format** and **URL format**. They render exactly the same results, differing only in code style.
+## Link format
+
+Rspress supports two formats of links: **file path format** and **URL format**. They render exactly the same results, differing only in code style.
 
 import { Tabs, Tab } from '@theme';
 
@@ -140,13 +142,13 @@ Both will point to the same page.
 
 The difference between URL format and file path format is that Rspress will automatically add the `.html` suffix based on the [`cleanUrls`](/api/config/config-basic#routecleanurls) configuration, so you don't need to consider the `.html` suffix in links - both with and without it will have consistent rendering results.
 
-## External link
+## External links
 
 External links that are not in this docsite will automatically add `target="_blank" rel="noreferrer"`:
 
--[Rspack Document](https://rspack.rs/)
+- [Rspack Documentation](https://rspack.rs/)
 
--[Rsbuild Document](https://rsbuild.rs/)
+- [Rsbuild Documentation](https://rsbuild.rs/)
 
 ## Link definition syntax
 
@@ -174,11 +176,34 @@ Rspress supports [relative file paths] and [absolute file paths].
 
 </Tabs>
 
-## Dead link checking
+## Anchor Links
+
+Rspress supports adding anchor navigation in links, using the `#` symbol to specify jumping to a specific position on the page.
+
+<Tabs>
+<Tab label="Syntax">
+
+```mdx
+[Jump to #File Path Format](#file-path-format)
+
+[Jump to Getting Started#1-Initialize Project](../../start/getting-started.mdx#1-initialize-project)
+```
+
+</Tab>
+<Tab label="Rendered result">
+
+[Jump to #file-path-format](#file-path-format)
+
+[Jump to Getting Started#1-initialize-the-project](../../start/getting-started.mdx#1-initialize-the-project)
+
+</Tab>
+</Tabs>
+
+## Dead Link Checking
 
 During the maintenance of documentation sites, broken links often occur. Rspress provides a dead link checking feature to specifically address this troublesome maintenance issue.
 
-Configure the invalid links automatically by using the [markdown.link.checkDeadLinks](/api/config/config-build#markdownlinkcheckdeadlinks) configuration.
+Configure through [markdown.link.checkDeadLinks](/api/config/config-build#markdownlinkcheckdeadlinks) to automatically check for invalid links.
 
 ```ts title="rspress.config.ts"
 import { defineConfig } from '@rspress/core';
