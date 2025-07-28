@@ -1,5 +1,6 @@
 import { readFile } from 'node:fs/promises';
 import path from 'node:path';
+import type { Rspack } from '@rsbuild/core';
 import { logger } from '@rspress/shared/logger';
 import type { Root } from 'mdast';
 import picocolors from 'picocolors';
@@ -22,9 +23,10 @@ function parseFileFromMeta(meta: string | undefined): string {
   return '';
 }
 
-export const remarkFileCodeBlock: Plugin<[{ filepath: string }], Root> = ({
-  filepath,
-}) => {
+export const remarkFileCodeBlock: Plugin<
+  [{ filepath: string; addDependency?: Rspack.LoaderContext['addDependency'] }],
+  Root
+> = ({ filepath, addDependency }) => {
   return async tree => {
     const promiseList: Promise<void>[] = [];
     visit(tree, 'code', node => {
@@ -60,6 +62,8 @@ this usage is not allowed, please use below:
         const promise = readFile(resolvedFilePath, 'utf-8')
           .then(fileContent => {
             node.value = fileContent;
+            // hmr in dev
+            addDependency?.(resolvedFilePath);
           })
           .catch(e => {
             const message = `${ERROR_PREFIX} ${originalMetaForErrorInfo} introduces another file in "${resolvedFilePath}", but the file does not exist.`;
