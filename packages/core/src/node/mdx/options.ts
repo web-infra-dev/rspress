@@ -1,5 +1,6 @@
 import path from 'node:path';
 import { nodeTypes, type ProcessorOptions } from '@mdx-js/mdx';
+import type { Rspack } from '@rsbuild/core';
 import type { UserConfig } from '@rspress/shared';
 import rehypeShiki from '@shikijs/rehype';
 import rehypeExternalLinks from 'rehype-external-links';
@@ -24,9 +25,16 @@ export async function createMDXOptions(options: {
   config: UserConfig | null;
   routeService: RouteService | null;
   pluginDriver: PluginDriver | null;
+  addDependency?: Rspack.LoaderContext['addDependency'];
 }): Promise<ProcessorOptions> {
-  const { docDirectory, config, routeService, filepath, pluginDriver } =
-    options;
+  const {
+    docDirectory,
+    config,
+    routeService,
+    filepath,
+    pluginDriver,
+    addDependency,
+  } = options;
   const remarkLinkOptions = config?.markdown?.link;
   const format = path.extname(filepath).slice(1) as 'mdx' | 'md';
   const cleanUrls = config?.route?.cleanUrls ?? false;
@@ -58,7 +66,7 @@ export async function createMDXOptions(options: {
       remarkGFM,
       remarkToc,
       remarkContainerSyntax,
-      [remarkFileCodeBlock, { filepath }],
+      [remarkFileCodeBlock, { filepath, addDependency }],
       [
         remarkLink,
         {

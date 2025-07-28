@@ -29,8 +29,15 @@ interface CompileOptions {
 }
 
 async function compile(options: CompileOptions): Promise<string> {
-  const { source, filepath, docDirectory, config, routeService, pluginDriver } =
-    options;
+  const {
+    source,
+    filepath,
+    docDirectory,
+    config,
+    routeService,
+    pluginDriver,
+    addDependency,
+  } = options;
 
   const mdxOptions = await createMDXOptions({
     config,
@@ -38,6 +45,7 @@ async function compile(options: CompileOptions): Promise<string> {
     filepath,
     pluginDriver,
     routeService,
+    addDependency,
   });
   // Separate frontmatter and content in MDX source
   const { frontmatter, emptyLinesSource } = loadFrontMatter(

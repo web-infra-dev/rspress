@@ -61,9 +61,9 @@ this usage is not allowed, please use below:
 
         const promise = readFile(resolvedFilePath, 'utf-8')
           .then(fileContent => {
-            node.value = fileContent;
             // hmr in dev
             addDependency?.(resolvedFilePath);
+            node.value = fileContent;
           })
           .catch(e => {
             const message = `${ERROR_PREFIX} ${originalMetaForErrorInfo} introduces another file in "${resolvedFilePath}", but the file does not exist.`;
