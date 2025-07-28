@@ -36,6 +36,7 @@ export default async function mdxLoader(
         config,
         pluginDriver,
         routeService,
+        addDependency: this.addDependency,
       });
       callback(null, compileResult);
     }

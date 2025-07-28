@@ -1,5 +1,6 @@
 import path from 'node:path';
 import { createProcessor } from '@mdx-js/mdx';
+import type { Rspack } from '@rsbuild/core';
 import type { Header, UserConfig } from '@rspress/shared';
 import { extractTextAndId, loadFrontMatter } from '@rspress/shared/node-utils';
 
@@ -23,6 +24,8 @@ interface CompileOptions {
   config: UserConfig | null;
   routeService: RouteService | null;
   pluginDriver: PluginDriver | null;
+
+  addDependency?: Rspack.LoaderContext['addDependency']; // remarkFileCodeBlock hmr
 }
 
 async function compile(options: CompileOptions): Promise<string> {
