@@ -119,7 +119,7 @@ function normalizeLink(
   routeService: RouteService | null,
   filePath: string,
   cleanUrls: boolean | string,
-  loosePrefix: boolean,
+  autoPrefix: boolean,
   internalLinks: Map<string, string>,
   __base?: string, // just for plugin-llms, we should normalize the link with base
 ): string {
@@ -145,7 +145,7 @@ function normalizeLink(
   if (url.startsWith('/')) {
     // TODO: add a option for disable loose mode
     // loose mode: add version and lang prefix to the link
-    if (loosePrefix) {
+    if (autoPrefix) {
       url = looseMarkdownLink(url, routeService, filePath);
     }
 
@@ -199,7 +199,7 @@ export const remarkLink: Plugin<
 > =
   ({ cleanUrls, routeService, remarkLinkOptions, __base }) =>
   (tree, file) => {
-    const { checkDeadLinks: shouldCheckDeadLinks = true, loosePrefix = true } =
+    const { checkDeadLinks: shouldCheckDeadLinks = true, autoPrefix = true } =
       remarkLinkOptions ?? {};
     const internalLinks = new Map<string, string>();
     visit(tree, 'link', node => {
@@ -209,7 +209,7 @@ export const remarkLink: Plugin<
         routeService,
         file.path,
         cleanUrls,
-        loosePrefix,
+        autoPrefix,
         internalLinks,
         __base,
       );
@@ -223,7 +223,7 @@ export const remarkLink: Plugin<
         routeService,
         file.path,
         cleanUrls,
-        loosePrefix,
+        autoPrefix,
         internalLinks,
         __base,
       );

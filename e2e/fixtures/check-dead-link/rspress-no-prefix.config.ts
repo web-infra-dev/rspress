@@ -7,7 +7,7 @@ export default defineConfig({
   base: '/base',
   markdown: {
     link: {
-      loosePrefix: false,
+      autoPrefix: false,
     },
   },
   themeConfig: {

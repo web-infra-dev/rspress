@@ -55,7 +55,7 @@ function mdxToMd(
       routeService,
       remarkLinkOptions: {
         checkDeadLinks: false,
-        loosePrefix: true,
+        autoPrefix: true,
       },
       __base: base,
     } satisfies Parameters<typeof remarkLink>[0])

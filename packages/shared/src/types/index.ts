@@ -403,7 +403,7 @@ export type RemarkLinkOptions = {
    * [](/v3/zh/guide) [](/zh/guide) [](/guide) will be regarded as the same [](/v3/zh/guide) according to the directory.
    * @default true
    */
-  loosePrefix?: boolean;
+  autoPrefix?: boolean;
 };
 
 export interface MarkdownOptions {

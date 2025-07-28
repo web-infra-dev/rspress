@@ -193,11 +193,11 @@ export type RemarkLinkOptions = {
   checkDeadLinks?:
     | boolean
     | { excludes: string[] | ((url: string) => boolean) };
-  loosePrefix?: boolean;
+  autoPrefix?: boolean;
 };
 ```
 
-- **默认值**: `{ checkDeadLinks: true, loosePrefix: true }`
+- **默认值**: `{ checkDeadLinks: true, autoPrefix: true }`
 
 配置链接相关的配置。
 
@@ -224,7 +224,7 @@ export default defineConfig({
 });
 ```
 
-#### markdown.link.loosePrefix
+#### markdown.link.autoPrefix
 
 - **类型**: `boolean`
 - **默认值**: `true`
