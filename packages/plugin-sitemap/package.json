@@ -29,7 +29,7 @@
     "reset": "rimraf ./**/node_modules"
   },
   "devDependencies": {
-    "@microsoft/api-extractor": "^7.52.8",
+    "@microsoft/api-extractor": "^7.52.9",
     "@rslib/core": "0.10.6",
     "@rspress/config": "workspace:*",
     "rsbuild-plugin-publint": "^0.3.2"
