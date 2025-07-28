@@ -140,6 +140,14 @@ Both will point to the same page.
 
 The difference between URL format and file path format is that Rspress will automatically add the `.html` suffix based on the [`cleanUrls`](/api/config/config-basic#routecleanurls) configuration, so you don't need to consider the `.html` suffix in links - both with and without it will have consistent rendering results.
 
+## External link
+
+External links that are not in this docsite will automatically add `target="_blank" rel="noreferrer"`:
+
+-[Rspack Document](https://rspack.rs/)
+
+-[Rsbuild Document](https://rsbuild.rs/)
+
 ## Link Definition Syntax
 
 Rspress also supports markdown's alternative `definition` syntax for links, which can simplify link writing when there are many links.

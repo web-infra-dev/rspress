@@ -140,6 +140,14 @@ URL 形式的特点是使用完整的 URL 地址来引用到具体的页面。
 
 URL 形式与文件路径形不同的一点是，Rspress 会根据 [`cleanUrls`](/api/config/config-basic#routecleanurls) 配置项自动添加 `.html` 后缀，所以在链接中无需考虑 `.html` 后缀，含有或不含有都将有一致的渲染结果。
 
+## 外部链接
+
+非本文档站的外部链接会自动添加 `target="_blank" rel="noreferrer"`:
+
+- [Rspack 文档](https://rspack.rs/)
+
+- [Rsbuild 文档](https://rsbuild.rs/)
+
 ## 链接 definition 语法
 
 Rspress 也支持 markdown 链接的另一 `definition` 语法，当链接较多时可以用该语法来简化链接书写。
