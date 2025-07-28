@@ -1,7 +1,10 @@
 [
   "conventional-route",
   "auto-nav-sidebar",
-  "use-mdx",
+  {
+    "type": "dir",
+    "name": "use-mdx"
+  },
   "static-assets",
   "custom-page",
   "ssg",

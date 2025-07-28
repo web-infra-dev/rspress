@@ -1,0 +1,185 @@
+# 链接
+
+Rspress 支持两种形式的链接：**文件路径形式** 和 **URL 形式**。它们的渲染结果完全相同，仅是在代码风格上有所区分。
+
+import { Tabs, Tab } from '@theme';
+
+<Tabs>
+<Tab label="语法">
+
+```mdx
+[文件路径形式 - ../../start/getting-started.mdx](../../start/getting-started.mdx)
+
+[URL 形式 - /guide/start/getting-started](/guide/start/getting-started)
+```
+
+</Tab>
+
+<Tab label="渲染结果">
+
+[文件路径形式 - ../../start/getting-started.mdx](../../start/getting-started.mdx)
+
+[URL 形式 - /guide/start/getting-started](/guide/start/getting-started)
+
+</Tab>
+</Tabs>
+
+:::tip
+在同一个 Rspress 项目中，推荐只使用一种形式的链接，保持代码风格统一。
+:::
+
+## 文件路径形式
+
+文件路径形式的特点是使用 **绝对文件路径** 或者 **相对文件路径** 来引用到具体的 `.md` 或 `.mdx` 文件。
+
+以下是在这个网站中的示例：
+
+<Tabs>
+<Tab label="语法">
+
+```mdx
+[相对路径 - ../../start/getting-started.mdx](../../start/getting-started.mdx)
+
+[绝对路径 - /guide/start/getting-started.mdx](/guide/start/getting-started.mdx)
+
+[包含语言的绝对路径 - /zh/guide/start/getting-started.mdx](/zh/guide/start/getting-started.mdx)
+
+[另一语言该页面的绝对路径 - /en/guide/start/getting-started.mdx](/en/guide/start/getting-started.mdx)
+```
+
+</Tab>
+
+<Tab label="渲染结果">
+
+[相对路径 - ../../start/getting-started.mdx](../../start/getting-started.mdx)
+
+[绝对路径 - /guide/start/getting-started.mdx](/guide/start/getting-started.mdx)
+
+[包含语言的绝对路径 - /zh/guide/start/getting-started.mdx](/zh/guide/start/getting-started.mdx)
+
+[另一语言该页面的绝对路径 - /en/guide/start/getting-started.mdx](/en/guide/start/getting-started.mdx)
+
+</Tab>
+</Tabs>
+
+:::tip
+
+当使用绝对路径时，根路径为 [`docs`](/api/config/config-basic#root) 目录。如果项目中使用了 [国际化](/guide/default-theme/i18n) 或 [多版本](/guide/default-theme/multi-version)，[`markdown.link.loosePrefix`](/api/config/config-build#markdownlinklooseprefix) 配置项会自动添加前缀，所以在链接中可以省略语言目录。
+
+比如：
+
+[绝对路径 - /guide/start/getting-started.mdx](/guide/start/getting-started.mdx)
+
+[包含语言的绝对路径 - /zh/guide/start/getting-started.mdx](/zh/guide/start/getting-started.mdx)
+
+均会指向同一页面。
+
+:::
+
+我们更推荐相对文件路径的形式，它具有以下优点：
+
+1. ide 中可以直接跳转到对应的文件，在移动文件时可能会自动更新文件链接。
+
+2. 被 Github 界面或者其他 Markdown 编辑器所支持。
+
+3. 相比 URL 形式，无需考虑 [`cleanUrls`](/api/config/config-basic#routecleanurls) 配置项的影响。
+
+## URL 形式
+
+URL 形式的特点是使用完整的 URL 地址来引用到具体的页面。
+
+以下是在这个网站中的示例：
+
+<Tabs>
+<Tab label="语法">
+
+```mdx
+[相对路径 - ../../start/getting-started](../../start/getting-started)
+
+[绝对路径 - /guide/start/getting-started](/guide/start/getting-started)
+
+[绝对路径 - /guide/start/getting-started.html](/guide/start/getting-started.html)
+
+[包含语言的绝对路径 - /zh/guide/start/getting-started.html](/zh/guide/start/getting-started.html)
+
+[另一语言该页面的绝对路径 - /en/guide/start/getting-started.html](/en/guide/start/getting-started.html)
+```
+
+</Tab>
+
+<Tab label="渲染结果">
+
+[相对路径 - ../../start/getting-started](../../start/getting-started)
+
+[相对路径 - ../../start/getting-started.html](../../start/getting-started.html)
+
+[绝对路径 - /guide/start/getting-started](/guide/start/getting-started)
+
+[绝对路径 - /guide/start/getting-started.html](/guide/start/getting-started.html)
+
+[包含语言的绝对路径 - /zh/guide/start/getting-started.html](/zh/guide/start/getting-started.html)
+
+[另一语言该页面的绝对路径 - /en/guide/start/getting-started.html](/en/guide/start/getting-started.html)
+
+</Tab>
+</Tabs>
+
+:::tip
+
+当使用绝对路径时，根路径为 [`docs`](/api/config/config-basic#root) 目录。如果项目中使用了 [国际化](/guide/default-theme/i18n) 或 [多版本](/guide/default-theme/multi-version)，[`markdown.link.loosePrefix`](/api/config/config-build#markdownlinklooseprefix) 配置项会自动添加前缀，所以在链接中可以省略语言目录。
+
+比如：
+
+[绝对路径 - /guide/start/getting-started](/guide/start/getting-started)
+
+[包含语言的绝对路径 - /zh/guide/start/getting-started](/zh/guide/start/getting-started)
+
+均会指向同一页面。
+
+:::
+
+URL 形式与文件路径形不同的一点是，Rspress 会根据 [`cleanUrls`](/api/config/config-basic#routecleanurls) 配置项自动添加 `.html` 后缀，所以在链接中无需考虑 `.html` 后缀，含有或不含有都将有一致的渲染结果。
+
+## 链接 definition 语法
+
+Rspress 也支持 markdown 链接的另一 `definition` 语法，当链接较多时可以用该语法来简化链接书写。
+
+<Tabs>
+<Tab label="语法">
+
+```mdx
+Rspress 支持 [相对文件路径] 和 [绝对文件路径路径]。
+
+[相对文件路径]: ../../start/getting-started.mdx
+[绝对文件路径路径]: /guide/start/getting-started.mdx
+```
+
+</Tab>
+
+<Tab label="渲染结果">
+Rspress 支持 [相对文件路径] 和 [绝对文件路径路径]。
+
+[相对文件路径]: ../../start/getting-started.mdx
+[绝对文件路径路径]: /guide/start/getting-started.mdx
+
+</Tab>
+
+</Tabs>
+
+## 死链检查
+
+在文档站维护过程中，经常出现链接失效的情况。对此 Rspress 提供了死链检查功能，专门处理这一维护中让人头疼的问题。
+
+通过 [markdown.link.checkDeadLinks](/api/config/config-build#markdownlinkcheckdeadlinks) 配置进行配置，自动对失效的链接进行检查。
+
+```ts title="rspress.config.ts"
+import { defineConfig } from '@rspress/core';
+
+export default defineConfig({
+  markdown: {
+    link: {
+      checkDeadLinks: true,
+    },
+  },
+});
+```

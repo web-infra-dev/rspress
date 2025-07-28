@@ -204,9 +204,9 @@ Configure link-related options.
 - **Type**: `boolean | { excludes: string[] | ((url: string) => boolean) }`
 - **Default**: `true`
 
-After enabling this config, Rspress will check the links in the document based on the conventional routing table. If there is an unreachable link, the build will throw an error and exit.
+After enabling this configuration, Rspress will check the links in the document based on convention routing. If an inaccessible link occurs, the build will throw an error and exit.
 
-When Rspress is misjudged, the error can be ignored through the `excludes` configuration:
+If there is a misjudgment of links, you can ignore the error through the `excludes` configuration:
 
 ```ts title="rspress.config.ts"
 import { defineConfig } from '@rspress/core';

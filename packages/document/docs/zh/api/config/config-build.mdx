@@ -206,9 +206,9 @@ export type RemarkLinkOptions = {
 - **类型**: `boolean | { excludes: string[] | ((url: string) => boolean) }`
 - **默认值**: `true`
 
-开启这个配置后，Rspress 会基于约定式路由表对文档中的链接进行检查，若出现无法访问的链接，构建会抛出错误并退出。
+开启这个配置后，Rspress 会基于约定式路由对文档中的链接进行检查，若出现无法访问的链接，构建会抛出错误并退出。
 
-当 Rspress 误判时，可以通过 `excludes` 配置忽略该错误：
+如果存在误判链接的情况，可以通过 `excludes` 配置忽略该错误：
 
 ```ts title="rspress.config.ts"
 import { defineConfig } from '@rspress/core';
