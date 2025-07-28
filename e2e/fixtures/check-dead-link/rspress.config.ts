@@ -5,11 +5,9 @@ export default defineConfig({
   root: path.join(__dirname, 'doc'),
   lang: 'zh',
   base: '/base',
-  markdown: {
-    checkDeadLinks: true,
-  },
   themeConfig: {
     darkMode: false,
+    localeRedirect: 'never',
     locales: [
       {
         lang: 'zh',

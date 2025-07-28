@@ -5,8 +5,10 @@ export default defineConfig({
   root: path.join(__dirname, 'doc'),
   lang: 'zh',
   base: '/base',
-  route: {
-    cleanUrls: true,
+  markdown: {
+    link: {
+      autoPrefix: false,
+    },
   },
   themeConfig: {
     darkMode: false,

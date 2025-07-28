@@ -6,7 +6,11 @@ import type { ComponentType } from 'react';
 import { glob } from 'tinyglobby';
 import { PUBLIC_DIR } from '../constants';
 import type { PluginDriver } from '../PluginDriver';
-import { getRoutePathParts, normalizeRoutePath } from './normalizeRoutePath';
+import {
+  getRoutePathParts,
+  normalizeRoutePath,
+  splitRoutePathParts,
+} from './normalizeRoutePath';
 import {
   absolutePathToRelativePath,
   absolutePathToRoutePath,
@@ -234,6 +238,16 @@ ${routeMeta
     );
   }
 
+  splitRoutePathParts(relativePath: string) {
+    return splitRoutePathParts(
+      relativePath,
+      this.#defaultLang,
+      this.#defaultVersion,
+      this.#langs,
+      this.#versions,
+    );
+  }
+
   normalizeRoutePath(relativePath: string) {
     return normalizeRoutePath(
       relativePath,
@@ -247,6 +261,11 @@ ${routeMeta
 
   absolutePathToRoutePath(absolutePath: string): string {
     return absolutePathToRoutePath(absolutePath, this.#scanDir, this);
+  }
+
+  isInDocsDir(absolutePath: string): boolean {
+    const relativePath = path.relative(this.#scanDir, absolutePath);
+    return !relativePath.startsWith('..') && !path.isAbsolute(relativePath);
   }
 
   absolutePathToRelativePath(absolutePath: string): string {

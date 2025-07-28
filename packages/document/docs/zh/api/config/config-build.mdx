@@ -2,11 +2,11 @@
 
 ## builderConfig
 
-- Type: `RsbuildConfig`
+- **类型**: `RsbuildConfig`
 
 用于自定义 Rsbuild 的配置项，完整配置项请查看 [Rsbuild - 配置](https://rsbuild.rs/zh/config/)。
 
-- 示例：使用 [source.alias](https://rsbuild.rs/zh/config/resolve/alias) 配置路径别名：
+- 示例：使用 [resolve.alias](https://rsbuild.rs/zh/config/resolve/alias) 配置路径别名：
 
 ```ts title="rspress.config.ts"
 export default defineConfig({
@@ -44,7 +44,7 @@ export default defineConfig({
 
 ## builderConfig.plugins
 
-- Type: `RsbuildPlugin[]`
+- **类型**: `RsbuildPlugin[]`
 
 用于注册 [Rsbuild 插件](https://rsbuild.rs/zh/plugins/list/)。
 
@@ -133,25 +133,24 @@ DEBUG=rsbuild rspress dev
 
 ## markdown
 
-- Type: `Object`
-
 配置 MDX 相关的编译能力。
 
 ### markdown.remarkPlugins
 
-- Type: `Array`
-- Default: `[]`
+- **类型**: `Array`
+- **默认值**: `[]`
 
-配置 remark 插件。比如：
+用于增加一些自定义 remark 插件。比如：
 
 ```ts title="rspress.config.ts"
 import { defineConfig } from '@rspress/core';
+import remarkAutolinkHeadings from 'remark-autolink-headings';
 
 export default defineConfig({
   markdown: {
     remarkPlugins: [
       [
-        require('remark-autolink-headings'),
+        remarkAutolinkHeadings,
         {
           behavior: 'wrap',
         },
@@ -163,18 +162,19 @@ export default defineConfig({
 
 ### markdown.rehypePlugins
 
-- Type: `Array`
+- **类型**: `Array`
 
-配置 rehype 插件。比如：
+用于增加一些自定义的 rehype 插件。比如：
 
 ```ts title="rspress.config.ts"
 import { defineConfig } from '@rspress/core';
+import rehypeAutoLinkHeadings from 'rehype-autolink-headings';
 
 export default defineConfig({
   markdown: {
     rehypePlugins: [
       [
-        require('rehype-autolink-headings'),
+        rehypeAutoLinkHeadings,
         {
           behavior: 'wrap',
         },
@@ -184,42 +184,72 @@ export default defineConfig({
 });
 ```
 
-### markdown.checkDeadLinks
+### markdown.link
 
-- Type: `boolean`
-- Default: `false`
+- **类型**:
 
-是否检查死链。比如：
+```ts
+export type RemarkLinkOptions = {
+  checkDeadLinks?:
+    | boolean
+    | { excludes: string[] | ((url: string) => boolean) };
+  autoPrefix?: boolean;
+};
+```
+
+- **默认值**: `{ checkDeadLinks: true, autoPrefix: true }`
+
+配置链接相关的配置。
+
+#### markdown.link.checkDeadLinks
+
+- **类型**: `boolean | { excludes: string[] | ((url: string) => boolean) }`
+- **默认值**: `true`
+
+开启这个配置后，会基于约定式路由对文档中的链接进行检查，若出现无法访问的链接，构建会抛出错误并退出。
+
+如果存在误判链接的情况，可以通过 `excludes` 配置忽略该错误：
 
 ```ts title="rspress.config.ts"
 import { defineConfig } from '@rspress/core';
 
 export default defineConfig({
   markdown: {
-    checkDeadLinks: true,
+    link: {
+      checkDeadLinks: {
+        excludes: ['/guide/getting-started', '/llms.txt'],
+      },
+    },
   },
 });
 ```
 
-开启这个配置后，Rspress 会基于约定式路由表对文档中的链接进行检查，若出现无法访问的链接，构建会抛出错误并退出。
+#### markdown.link.autoPrefix
+
+- **类型**: `boolean`
+- **默认值**: `true`
+
+开启这个配置后，会基于约定式路由对文档中的链接自动增加关于 [国际化](/guide/default-theme/i18n) 和 [多版本](/guide/default-theme/multi-version) 前缀。
+
+比如，用户在 `docs/zh/guide/index.md` 中写了一个链接 `[](/guide/getting-started)`，Rspress 会自动将其转换为 `[](/zh/guide/getting-started)`。
 
 ### markdown.showLineNumbers
 
-- Type: `boolean`
+- **类型**: `boolean`
 
 是否显示代码块的行号。默认为 `false`。
 
 ### markdown.defaultWrapCode
 
-- Type: `boolean`
+- **类型**: `boolean`
 
 是否默认启用长代码换行展示。默认为 `false`。
 
 ### markdown.globalComponents
 
-- Type: `string[]`
+- **类型**: `string[]`
 
-注册全局组件，无需通过导入声明，就可以在每个 MDX 文件中使用。比如：
+注册全局组件，无需 import 语句，就可以在每个 MDX 文件中使用。比如：
 
 ```ts title="rspress.config.ts"
 import { defineConfig } from '@rspress/core';
@@ -237,7 +267,3 @@ export default defineConfig({
 ```mdx title="test.mdx"
 <Alert type="info">This is a info alert</Alert>
 ```
-
-:::danger 警告
-请在配置 `globalComponents` 时设置 `markdown.mdxRs` 为 `false` 以开启 JS 版本的编译器，否则会导致全局组件不生效。
-:::

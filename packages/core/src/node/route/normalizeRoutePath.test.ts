@@ -219,3 +219,59 @@ test('normalizeRoutePath', () => {
     }
   `);
 });
+
+test('normalizeRoutePath real world cases - [](/zh/guide/getting-started) [](/en/guide/getting-started) [](/guide/getting-started)', () => {
+  expect(
+    normalizeRoutePath(
+      '/zh/guide/getting-started',
+      'en',
+      'v1',
+      ['zh', 'en'],
+      ['v1', 'v2'],
+      ['.xyz'],
+    ),
+  ).toMatchInlineSnapshot(`
+    {
+      "lang": "zh",
+      "pureRoutePath": "/guide/getting-started",
+      "routePath": "/zh/guide/getting-started",
+      "version": "v1",
+    }
+  `);
+
+  expect(
+    normalizeRoutePath(
+      '/en/guide/getting-started',
+      'en',
+      'v1',
+      ['zh', 'en'],
+      ['v1', 'v2'],
+      ['.xyz'],
+    ),
+  ).toMatchInlineSnapshot(`
+    {
+      "lang": "en",
+      "pureRoutePath": "/guide/getting-started",
+      "routePath": "/guide/getting-started",
+      "version": "v1",
+    }
+  `);
+
+  expect(
+    normalizeRoutePath(
+      '/guide/getting-started',
+      'en',
+      'v1',
+      ['zh', 'en'],
+      ['v1', 'v2'],
+      ['.xyz'],
+    ),
+  ).toMatchInlineSnapshot(`
+    {
+      "lang": "en",
+      "pureRoutePath": "/guide/getting-started",
+      "routePath": "/guide/getting-started",
+      "version": "v1",
+    }
+  `);
+});
