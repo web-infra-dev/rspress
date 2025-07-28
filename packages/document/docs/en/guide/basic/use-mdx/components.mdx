@@ -1,0 +1,123 @@
+# MDX and React components
+
+## Componentization
+
+In MDX, all `.mdx` files are compiled into React components, which means they can be used as React components and can freely use React components. For example:
+
+import { Tabs, Tab } from '@theme';
+import { Border } from './_Border';
+
+<Tabs>
+<Tab label="docs/index.mdx">
+
+```mdx
+import MdxFragment from './_mdx-fragment.mdx';
+import TsxComponent from './_tsx-component';
+
+Testing the use of MDX fragments and React components.
+
+<MdxFragment />
+
+<TsxComponent />
+```
+
+</Tab>
+
+<Tab label="docs/_mdx-fragment.mdx">
+
+```mdx file="./_mdx-fragment.mdx"
+
+```
+
+</Tab>
+
+<Tab label="docs/_tsx-component.tsx">
+
+```tsx file="./_tsx-component.tsx"
+
+```
+
+</Tab>
+
+</Tabs>
+
+It will be rendered as:
+
+import MdxFragment from './_mdx-fragment.mdx';
+import TsxComponent from './_tsx-component';
+
+<Border>
+Testing the use of MDX fragments and React components.
+
+<MdxFragment />
+
+<TsxComponent />
+</Border>
+
+You can use [built-in components](/guide/default-theme/components) provided by Rspress or install some React component libraries to enrich your documentation in `.mdx` files.
+
+## Routing convention
+
+In the [docs directory](/api/config/config-basic#root), MDX fragments or React components need to be excluded from routing through the [route.exclude](/api/config/config-basic#routeexclude) configuration. For convenience, we agree that files starting with "\_" will be excluded by default.
+
+You can also place components in adjacent directories outside the docs directory, for example:
+
+<Tabs>
+<Tab label="docsite/docs/index.mdx">
+
+```mdx
+import ButtonFragment from './_button.mdx';
+
+<ButtonFragment />
+<Button />
+```
+
+</Tab>
+<Tab label="docsite/docs/_button.mdx">
+
+```mdx file="./_button.mdx"
+
+```
+
+</Tab>
+<Tab label="docsite/components/button.tsx">
+
+```tsx
+export Button = () => <button>Button</button>;
+```
+
+</Tab>
+</Tabs>
+
+It will be rendered as:
+
+<Border>
+
+import Button from './_button.mdx';
+
+<Button />
+<button>Button</button>
+
+</Border>
+
+## Escape Hatch: using MDX styles in TSX components
+
+```tsx file="./_escape-hatch.tsx" title="_escape-hatch.tsx"
+
+```
+
+import EscapeHatch from './_escape-hatch';
+
+It will be rendered as:
+
+<Border>
+  <EscapeHatch />
+</Border>
+
+:::warning
+
+`.tsx` components can make it difficult to extract some static information, such as local search indexes.
+
+It is more recommended to use `.mdx` files to write document content and use `.tsx` files to write interactive dynamic content.
+
+:::

@@ -10,48 +10,6 @@ MDX 是 Markdown 的超集，这意味着你可以像往常一样编写 Markdown
 # Hello world
 ```
 
-## 使用组件
-
-当你想在 Markdown 文件中使用 React 组件时，你应该使用 `.mdx` 扩展名来命名你的文件。例如：
-
-```mdx title="index.mdx"
-import { CustomComponent } from './custom';
-
-# Hello world
-
-<CustomComponent />
-```
-
-所有的 mdx 文件也被视为组件，它们可以被互相引用：
-
-```mdx
-import Foo from './shared/foo.mdx';
-
-# Hello world
-
-<Foo />
-```
-
-::: tip
-
-相关组件需要通过 [route.exclude](/api/config/config-basic#routeexclude) 配置从路由信息中排除。
-
-你也可以将组件放到 [root](/api/config/config-basic#root) 以外的相邻目录，例如：
-
-```mdx
-// <cwd>/docs/index.mdx
-import { Button } from '../components/button';
-
-# Button
-
-<Button />
-
-// <cwd>/components/button.mdx
-export Button = () => <button />;
-```
-
-:::
-
 ## Front matter
 
 你可以在 Markdown 文件的顶部添加 front matter，它是一个特殊部分，使用 [YAML](https://yaml.org/) 格式来定义元数据，被包含在文件顶部的三个连字符 `---` 之间。

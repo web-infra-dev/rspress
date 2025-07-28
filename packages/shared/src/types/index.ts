@@ -356,12 +356,19 @@ export interface RouteOptions {
   extensions?: string[];
   /**
    * Include extra files from being converted to routes
+   * @default []
    */
   include?: string[];
   /**
    * Exclude files from being converted to routes
+   * @default []
    */
   exclude?: string[];
+  /**
+   * Exclude convention files from being converted to routes
+   * @default ['**\/_[^_]*']
+   */
+  excludeConvention?: string[];
   /**
    * use links without .html files
    * @default false

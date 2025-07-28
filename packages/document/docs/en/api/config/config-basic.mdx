@@ -2,8 +2,8 @@
 
 ## root
 
-- Type: `string`
-- Default: `docs`
+- **Type**: `string`
+- **Default**: `docs`
 
 Specifies the document root directory. For example:
 
@@ -26,8 +26,8 @@ rspress build docs
 
 ## base
 
-- Type: `string`
-- Default: `/`
+- **Type**: `string`
+- **Default**: `/`
 
 Deployment base path. For example, if you plan to deploy your site to `https://foo.github.io/bar/`, then you should set `base` to `"/bar/"`:
 
@@ -41,8 +41,8 @@ export default defineConfig({
 
 ## title
 
-- Type: `string`
-- Default: `"Rspress"`
+- **Type**: `string`
+- **Default**: `"Rspress"`
 
 Site title. This parameter will be used as the title of the HTML page. For example:
 
@@ -56,8 +56,8 @@ export default defineConfig({
 
 ## description
 
-- Type: `string`
-- Default: `""`
+- **Type**: `string`
+- **Default**: `""`
 
 Site description. This will be used as the description of the HTML page. For example:
 
@@ -71,8 +71,8 @@ export default defineConfig({
 
 ## icon
 
-- Type: `string | URL`
-- Default: `""`
+- **Type**: `string | URL`
+- **Default**: `""`
 
 Site icon. This path will be used as the icon path for the HTML page. For example:
 
@@ -88,8 +88,8 @@ For normal path, Rspress will find your icon in the `public` directory, of cours
 
 ## lang
 
-- Type: `string`
-- Default: `""`
+- **Type**: `string`
+- **Default**: `""`
 
 Default language of the site. See [Internationalization](/guide/default-theme/i18n) for more details.
 
@@ -113,8 +113,8 @@ export default defineConfig({
 
 ## logo \{#logo-1}
 
-- Type: `string | { dark: string; light: string }`
-- Default: `""`
+- **Type**: `string | { dark: string; light: string }`
+- **Default**: `""`
 
 Site logo. This path will be used as the logo path in the upper left corner of the navbar. For example:
 
@@ -143,8 +143,8 @@ export default defineConfig({
 
 ## logoText
 
-- Type: `string`
-- Default: `""`
+- **Type**: `string`
+- **Default**: `""`
 
 Site logo Text. This text will be used as the logo text in the upper left corner of the navbar. For example:
 
@@ -158,8 +158,8 @@ export default defineConfig({
 
 ## outDir
 
-- Type: `string`
-- Default: `doc_build`
+- **Type**: `string`
+- **Default**: `doc_build`
 
 Custom output directory for built sites. for example:
 
@@ -173,7 +173,7 @@ export default defineConfig({
 
 ## locales
 
-- Type: `Locale[]`
+- **Type**: `Locale[]`
 
 ```ts
 export interface Locale {
@@ -209,7 +209,7 @@ export default defineConfig({
 
 ## head
 
-- Type: `string` | `[string, Record<string, string>]` | `(route) => string | [string, Record<string, string>] | undefined`
+- **Type**: `string` | `[string, Record<string, string>]` | `(route) => string | [string, Record<string, string>] | undefined`
 - Can be appended per page via [frontmatter](./config-frontmatter.mdx#head)
 
 Used to set additional elements rendered in the `<head>` tag of the page's HTML in production mode.
@@ -237,8 +237,8 @@ export default defineConfig({
 
 ## mediumZoom
 
-- Type: `boolean` | `{ selector?: string }`
-- Default: `true`
+- **Type**: `boolean` | `{ selector?: string }`
+- **Default**: `true`
 
 Whether to enable the image zoom function. It is enabled by default, you can disable it by setting `mediumZoom` to `false`.
 
@@ -261,7 +261,7 @@ export default defineConfig({
 
 ## search
 
-- Type:
+- **Type**:
 
 ```ts
 type SearchOptions = {
@@ -273,8 +273,8 @@ type SearchOptions = {
 
 ### searchHooks
 
-- Type: `string`
-- Default: `undefined`
+- **Type**: `string`
+- **Default**: `undefined`
 
 You can add search runtime hooks logic through the `searchHooks` parameter, for example:
 
@@ -293,8 +293,8 @@ For specific hook logic, you can read [Customize Search Functions](/guide/advanc
 
 ### versioned
 
-- Type: `boolean`
-- Default: `false`
+- **Type**: `boolean`
+- **Default**: `false`
 
 If you are using `multiVersion`, the `versioned` parameter allows you to create a separate search index for each version of your documentation.
 When enabled, the search will only query the index corresponding to the currently selected version.
@@ -311,8 +311,8 @@ export default defineConfig({
 
 ### codeBlocks
 
-- Type: `boolean`
-- Default: `true`
+- **Type**: `boolean`
+- **Default**: `true`
 
 Whether to include code block content in the search index, which allows users to search code blocks.
 
@@ -328,8 +328,8 @@ export default defineConfig({
 
 ## globalUIComponents
 
-- Type: `(string | [string, object])[]`
-- Default: `[]`
+- **Type**: `(string | [string, object])[]`
+- **Default**: `[]`
 
 You can register global UI components through the `globalUIComponents` parameter, for example:
 
@@ -365,7 +365,7 @@ import GlobalUIComponents from '../../fragments/global-ui-components.mdx';
 
 ## multiVersion
 
-- Type: `{ default: string; versions: string[] }`
+- **Type**: `{ default: string; versions: string[] }`
 
 You can enable multi-version support through the `multiVersion` parameter, for example:
 
@@ -384,14 +384,14 @@ The `default` parameter is the default version, and the `versions` parameter is 
 
 ## route
 
-- Type: `Object`
+- **Type**: `Object`
 
 Custom route config.
 
 ### route.include
 
-- Type: `string[]`
-- Default: `[]`
+- **Type**: `string[]`
+- **Default**: `[]`
 
 Add some extra files in the route. By default, only the files in the document root directory will be included in the route. If you want to add some extra files to the route, you can use this option. For example:
 
@@ -415,8 +415,8 @@ We recommend using [addPages hook](/plugin/system/plugin-api.html#addpages) in a
 
 ### route.exclude
 
-- Type: `string[]`
-- Default: `[]`
+- **Type**: `string[]`
+- **Default**: `[]`
 
 Exclude some files from the route. For example:
 
@@ -432,10 +432,29 @@ export default defineConfig({
 
 > Note: The strings in the array support glob patterns, the glob expression should be based on the `root` directory of the document.
 
+### route.excludeConvention
+
+- **Type**: `string[]`
+- **Default**: `['**/_[^_]*']`
+
+A [routing convention](../../../guide/basic/use-mdx/components.mdx) set for the convenience of users to use components in the [docs directory](/api/config/config-basic#root), which excludes files starting with `_` by default.
+
+If you really need some routes starting with `_`, you can adjust this rule, for example, set it to exclude only files starting with `_fragment-`:
+
+```js title="rspress.config.ts"
+import { defineConfig } from '@rspress/core';
+
+export default defineConfig({
+  route: {
+    excludeConvention: ['**/_fragment-*'],
+  },
+});
+```
+
 ### route.extensions
 
-- Type: `string[]`
-- Default: `['.js', '.jsx', '.ts', '.tsx', '.md', '.mdx']`
+- **Type**: `string[]`
+- **Default**: `['.js', '.jsx', '.ts', '.tsx', '.md', '.mdx']`
 
 The extensions of the files that will be included in the route. By default, Rspress will include all `'js'`, `'jsx'`, `'ts'`, `'tsx'`, `'md'`, `'mdx'` files in the route. If you want to customize the extensions, you can use this option. For example:
 
@@ -451,8 +470,8 @@ export default defineConfig({
 
 ### route.cleanUrls
 
-- Type: `Boolean`
-- Default: `false`
+- **Type**: `Boolean`
+- **Default**: `false`
 
 Generate url without suffix when `cleanUrls` is `true` for shorter url link.
 
@@ -468,8 +487,8 @@ export default defineConfig({
 
 ## ssg
 
-- Type: `boolean | { experimentalWorker?: boolean; experimentalLoose?: boolean; }`
-- Default: `true`
+- **Type**: `boolean | { experimentalWorker?: boolean; experimentalLoose?: boolean; }`
+- **Default**: `true`
 
 Whether to enable static site generation. Rspress enable it by default to generate CSR outputs and SSG outputs.
 
@@ -495,22 +514,22 @@ SSG requires the source code to support SSR. If the code is not compatible to SS
 
 ### experimentalWorker
 
-- Type: `boolean`
-- Default: `false`
+- **Type**: `boolean`
+- **Default**: `false`
 
 After enabled, you can use worker to accelerate the SSG process and reduce memory usage. It is suitable for large document sites and is based on [tinypool](https://github.com/tinylibs/tinypool).
 
 ### experimentalExcludeRoutePaths
 
-- Type: `(string | RegExp)[]`
-- Default: `[]`
+- **Type**: `(string | RegExp)[]`
+- **Default**: `[]`
 
 After enabled, some pages will not be rendered by SSG, and they will directly use html under CSR. This is suitable for SSG errors in large document sites bypassing a small number of pages. It is not recommended to enable this option actively.
 
 ## replaceRules
 
-- Type: `{ search: string | RegExp; replace: string; }[]`
-- Default: `[]`
+- **Type**: `{ search: string | RegExp; replace: string; }[]`
+- **Default**: `[]`
 
 You can set text replacement rules for the entire site through `replaceRules`. The rules will apply to everything including `_meta.json` files, frontmatter configurations, and document content and titles.
 
@@ -527,14 +546,14 @@ export default {
 
 ## languageParity
 
-- Type: `Object`
+- **Type**: `Object`
 
 Scans the `md` and `mdx` files in the document root directory to detect missing language versions, protect language parity.
 
 ### languageParity.enable
 
-- Type: `boolean`
-- Default: `false`
+- **Type**: `boolean`
+- **Default**: `false`
 
 Whether to enable language parity checks.
 
@@ -550,8 +569,8 @@ export default defineConfig({
 
 ### languageParity.include
 
-- Type: `string[]`
-- Default: `[]`
+- **Type**: `string[]`
+- **Default**: `[]`
 
 Specifies the folders to be checked, defaulting to all files in the document root directory. Paths should be relative to each language directory. For example:
 
@@ -568,8 +587,8 @@ export default defineConfig({
 
 ### languageParity.exclude
 
-- Type: `string[]`
-- Default: `[]`
+- **Type**: `string[]`
+- **Default**: `[]`
 
 Excludes certain folders and files from the checks.
 
