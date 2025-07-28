@@ -7,6 +7,7 @@ export default defineConfig({
   base: '/base',
   themeConfig: {
     darkMode: false,
+    localeRedirect: 'never',
     locales: [
       {
         lang: 'zh',
