@@ -1,0 +1,102 @@
+# MDX 和 React 组件
+
+## 组件化
+
+在 MDX 中，所有 `.mdx` 文件都会编译为 React 组件，这意味着它们可以被当做 React 组件使用，也可以自由使用 React 组件。例如：
+
+import { Tabs, Tab } from '@theme';
+
+<Tabs>
+<Tab label="docs/index.mdx">
+
+```mdx
+import MdxFragment from './_mdx-fragment.mdx';
+import TsxComponent from './_tsx-component';
+
+测试 MDX 片段和 React 组件的使用。
+
+<MdxFragment />
+
+<TsxComponent />
+```
+
+</Tab>
+
+<Tab label="docs/_mdx-fragment.mdx">
+
+```mdx file="./_mdx-fragment.mdx"
+
+```
+
+</Tab>
+
+<Tab label="docs/_tsx-component.tsx">
+
+```tsx file="./_tsx-component.tsx"
+
+```
+
+</Tab>
+
+</Tabs>
+
+它将被渲染为：
+
+import MdxFragment from './_mdx-fragment.mdx';
+import TsxComponent from './_tsx-component';
+
+<div style={{ border: '1px solid #ddd', padding: '10px' }}>
+测试 MDX 片段和 React 组件的使用。
+
+<MdxFragment />
+
+<TsxComponent />
+</div>
+
+你可以在 `.mdx` 文件中使用 Rspress 提供的 [内置组件](/guide/default-theme/components) 或安装一些 React 组件库来丰富你的文档。
+
+## 路由约定
+
+在 [docs 目录](/api/config/config-basic#root) 中，使用 MDX 片段或 React 组件要通过 [route.exclude](/api/config/config-basic#routeexclude) 配置从路由中排除。为了使用方便，我们约定以 "\_" 开头的文件会被默认排除。
+
+你也可以将组件放到 docs 目录以外的相邻目录，例如：
+
+<Tabs>
+<Tab label="docsite/docs/index.mdx">
+
+```mdx
+import ButtonFragment from './_button.mdx';
+
+<ButtonFragment />
+<Button />
+```
+
+</Tab>
+<Tab label="docsite/docs/_button.mdx">
+
+```mdx
+#### button
+
+这是一段文本
+```
+
+</Tab>
+<Tab label="docsite/components/button.tsx">
+
+```tsx
+export Button = () => <button>按钮</button>;
+```
+
+</Tab>
+</Tabs>
+
+它将被渲染为：
+
+<div style={{ border: '1px solid #ddd', padding: '10px' }}>
+
+import Button from './_button.mdx';
+
+<Button />
+<button>按钮</button>
+
+</div>

@@ -1,0 +1,102 @@
+# MDX and React Components
+
+## Componentization
+
+In MDX, all `.mdx` files are compiled into React components, which means they can be used as React components and can freely use React components. For example:
+
+import { Tabs, Tab } from '@theme';
+
+<Tabs>
+<Tab label="docs/index.mdx">
+
+```mdx
+import MdxFragment from './_mdx-fragment.mdx';
+import TsxComponent from './_tsx-component';
+
+Testing the use of MDX fragments and React components.
+
+<MdxFragment />
+
+<TsxComponent />
+```
+
+</Tab>
+
+<Tab label="docs/_mdx-fragment.mdx">
+
+```mdx file="./_mdx-fragment.mdx"
+
+```
+
+</Tab>
+
+<Tab label="docs/_tsx-component.tsx">
+
+```tsx file="./_tsx-component.tsx"
+
+```
+
+</Tab>
+
+</Tabs>
+
+It will be rendered as:
+
+import MdxFragment from './_mdx-fragment.mdx';
+import TsxComponent from './_tsx-component';
+
+<div style={{ border: '1px solid #ddd', padding: '10px' }}>
+Testing the use of MDX fragments and React components.
+
+<MdxFragment />
+
+<TsxComponent />
+</div>
+
+You can use [built-in components](/guide/default-theme/components) provided by Rspress or install some React component libraries to enrich your documentation in `.mdx` files.
+
+## Routing Convention
+
+In the [docs directory](/api/config/config-basic#root), MDX fragments or React components need to be excluded from routing through the [route.exclude](/api/config/config-basic#routeexclude) configuration. For convenience, we agree that files starting with "\_" will be excluded by default.
+
+You can also place components in adjacent directories outside the docs directory, for example:
+
+<Tabs>
+<Tab label="docsite/docs/index.mdx">
+
+```mdx
+import ButtonFragment from './_button.mdx';
+
+<ButtonFragment />
+<Button />
+```
+
+</Tab>
+<Tab label="docsite/docs/_button.mdx">
+
+```mdx
+#### button
+
+This is some text
+```
+
+</Tab>
+<Tab label="docsite/components/button.tsx">
+
+```tsx
+export Button = () => <button>Button</button>;
+```
+
+</Tab>
+</Tabs>
+
+It will be rendered as:
+
+<div style={{ border: '1px solid #ddd', padding: '10px' }}>
+
+import Button from './_button.mdx';
+
+<Button />
+<button>Button</button>
+
+</div>

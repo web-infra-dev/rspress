@@ -45,19 +45,21 @@ export class RouteService {
 
   #defaultLang: string;
 
-  #defaultVersion: string = '';
+  #defaultVersion: string;
 
-  #extensions: string[] = [];
+  #extensions: string[];
 
-  #langs: string[] = [];
+  #langs: string[];
 
-  #versions: string[] = [];
+  #versions: string[];
 
-  #include: string[] = [];
+  #include: string[];
 
-  #exclude: string[] = [];
+  #exclude: string[];
 
-  #tempDir: string = '';
+  #excludeConvention: string[];
+
+  #tempDir: string;
 
   #pluginDriver: PluginDriver;
 
@@ -92,7 +94,8 @@ export class RouteService {
     this.#scanDir = scanDir;
     this.#extensions = routeOptions.extensions || DEFAULT_PAGE_EXTENSIONS;
     this.#include = routeOptions.include || [];
-    this.#exclude = routeOptions.exclude || [];
+    this.#exclude = routeOptions.exclude || []; // partial mdx components and code samples, e.g: _d.mdx
+    this.#excludeConvention = routeOptions.excludeConvention || ['**/_[^_]*']; // partial mdx components and code samples, e.g: _d.mdx
     this.#defaultLang = userConfig?.lang || '';
     this.#langs = (
       userConfig?.locales ??
@@ -105,6 +108,9 @@ export class RouteService {
     if (userConfig.multiVersion) {
       this.#defaultVersion = userConfig.multiVersion.default || '';
       this.#versions = userConfig.multiVersion.versions || [];
+    } else {
+      this.#defaultVersion = '';
+      this.#versions = [];
     }
   }
 
@@ -125,12 +131,12 @@ export class RouteService {
         onlyFiles: true,
         ignore: [
           ...this.#exclude,
+          ...this.#excludeConvention,
           '**/node_modules/**',
           '**/.eslintrc.js',
           '**/.nx/**',
-          // partial mdx components and code samples, e.g: _d.mdx
-          '**/_*',
           `./${PUBLIC_DIR}/**`,
+          '**/*.d.ts',
         ],
       })
     ).sort();

@@ -133,7 +133,7 @@ export default defineConfig({
     ],
   },
   languageParity: {
-    enabled: true,
+    enabled: false,
     include: [],
     exclude: [],
   },

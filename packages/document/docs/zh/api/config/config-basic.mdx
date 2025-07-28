@@ -2,8 +2,8 @@
 
 ## root
 
-- Type: `string`
-- Default: `docs`
+- **类型**： `string`
+- **默认值**： `docs`
 
 指定文档根目录。比如：
 
@@ -26,8 +26,8 @@ rspress build docs
 
 ## base
 
-- Type: `string`
-- Default: `/`
+- **类型**： `string`
+- **默认值**： `/`
 
 部署基础路径。比如，如果你计划将你的站点部署到 `https://foo.github.io/bar/`，那么你应该将 `base` 设置为 `"/bar/"`：
 
@@ -41,8 +41,8 @@ export default defineConfig({
 
 ## title
 
-- Type: `string`
-- Default: `"Rspress"`
+- **类型**： `string`
+- **默认值**： `"Rspress"`
 
 站点标题。这个参数将被用作 HTML 页面的标题。例如：
 
@@ -56,8 +56,8 @@ export default defineConfig({
 
 ## description
 
-- Type: `string`
-- Default: `""`
+- **类型**： `string`
+- **默认值**： `""`
 
 站点描述。这将用作 HTML 页面的描述。例如：
 
@@ -71,8 +71,8 @@ export default defineConfig({
 
 ## icon
 
-- Type: `string | URL`
-- Default: `""`
+- **类型**： `string | URL`
+- **默认值**： `""`
 
 站点图标。这个路径将用作 HTML 页面的图标路径。例如：
 
@@ -88,8 +88,8 @@ export default defineConfig({
 
 ## lang
 
-- Type: `string`
-- Default: `""`
+- **类型**： `string`
+- **默认值**： `""`
 
 站点默认使用的语言。查看 [国际化](/guide/default-theme/i18n) 了解更多。
 
@@ -113,8 +113,8 @@ export default defineConfig({
 
 ## logo \{#logo-1}
 
-- Type: `string | { dark: string; light: string }`
-- Default: `""`
+- **类型**： `string | { dark: string; light: string }`
+- **默认值**： `""`
 
 站点 logo。这个路径将用作导航栏左上角的 logo 路径。例如：
 
@@ -143,8 +143,8 @@ export default defineConfig({
 
 ## logoText
 
-- Type: `string`
-- Default: `""`
+- **类型**： `string`
+- **默认值**： `""`
 
 站点 logo 文字。这个文字将用作导航栏左上角的 logo 文字。例如：
 
@@ -158,8 +158,8 @@ export default defineConfig({
 
 ## outDir
 
-- Type: `string`
-- Default: `doc_build`
+- **类型**： `string`
+- **默认值**： `doc_build`
 
 自定义构建站点的输出目录。比如:
 
@@ -173,7 +173,7 @@ export default defineConfig({
 
 ## locales
 
-- Type: `Locale[]`
+- **类型**： `Locale[]`
 
 ```ts
 export interface Locale {
@@ -209,7 +209,7 @@ export default defineConfig({
 
 ## head
 
-- Type: `string` | `[string, Record<string, string>]` | `(route) => string | [string, Record<string, string>] | undefined`
+- **类型**： `string` | `[string, Record<string, string>]` | `(route) => string | [string, Record<string, string>] | undefined`
 - 也可以通过 [frontmatter](./config-frontmatter.mdx#head) 针对每个页面设置
 
 用于设置生产模式下页面 HTML 的 `<head>` 标签中呈现的附加元素。
@@ -237,8 +237,8 @@ export default defineConfig({
 
 ## mediumZoom
 
-- Type: `boolean` | `{ selector?: string }`
-- Default: `true`
+- **类型**： `boolean` | `{ selector?: string }`
+- **默认值**： `true`
 
 是否开启图片放大功能。默认开启，你可以通过设置 `mediumZoom` 为 `false` 来关闭。
 
@@ -261,7 +261,7 @@ export default defineConfig({
 
 ## search
 
-- Type:
+- **类型**：
 
 ```ts
 type SearchOptions = {
@@ -273,8 +273,8 @@ type SearchOptions = {
 
 ### searchHooks
 
-- Type: `string`
-- Default: `undefined`
+- **类型**： `string`
+- **默认值**： `undefined`
 
 你可以通过 `searchHooks` 参数来增加搜索运行时钩子逻辑，比如：
 
@@ -293,8 +293,8 @@ export default defineConfig({
 
 ### versioned
 
-- Type: `boolean`
-- Default: `false`
+- **类型**： `boolean`
+- **默认值**： `false`
 
 如果你配置了 `multiVersion`，可以使用 `versioned` 参数为文档的每个版本创建单独的搜索索引。开启该选项后，搜索将仅会查询当前所选版本对应的索引。
 
@@ -310,8 +310,8 @@ export default defineConfig({
 
 ### codeBlocks
 
-- Type: `boolean`
-- Default: `true`
+- **类型**： `boolean`
+- **默认值**： `true`
 
 是否在搜索的索引中包含代码块的内容，这可以让用户搜索代码块。
 
@@ -327,8 +327,8 @@ export default defineConfig({
 
 ## globalUIComponents
 
-- Type: `(string | object)[]`
-- Default: `[]`
+- **类型**： `(string | object)[]`
+- **默认值**： `[]`
 
 你可以通过 `globalUIComponents` 参数来增加全局 UI 组件，比如：
 
@@ -364,7 +364,7 @@ import GlobalUIComponents from '../../fragments/global-ui-components.mdx';
 
 ## multiVersion
 
-- Type: `{ default: string; versions: string[] }`
+- **类型**： `{ default: string; versions: string[] }`
 
 你可以通过 `multiVersion` 参数来增加多版本文档支持，比如：
 
@@ -383,14 +383,14 @@ export default defineConfig({
 
 ## route
 
-- Type: `Object`
+- **类型**： `Object`
 
 自定义路由配置。
 
 ### route.include
 
-- Type: `string[]`
-- Default: `[]`
+- **类型**： `string[]`
+- **默认值**： `[]`
 
 在路由中添加一些额外的文件。默认情况下，只有文档根目录中的文件才会包含在路由中。如果你想在路由中添加一些额外的文件，你可以使用这个选项。例如：
 
@@ -414,8 +414,8 @@ export default defineConfig({
 
 ### route.exclude
 
-- Type: `string[]`
-- Default: `[]`
+- **类型**： `string[]`
+- **默认值**： `[]`
 
 从路由中排除一些文件。例如：
 
@@ -431,10 +431,29 @@ export default defineConfig({
 
 > 注意：数组中的字符串支持 glob 模式，填写的 glob 表达式应基于文档的 `root` 目录。
 
+### route.excludeConvention
+
+- **类型**： `string[]`
+- **默认值**： `['**/_[^_]*']`
+
+为方便用户在 [docs 目录](/api/config/config-basic#root) 中使用组件，而设置的 [路由约定](../../../guide/basic/use-mdx/components.mdx)，默认排除以 `_` 开头的文件。
+
+如果你确实需要一些 `_` 开的路由时，你可以调整这个规则，例如设置为以 `_fragment-` 开头才会被排除：
+
+```js title="rspress.config.ts"
+import { defineConfig } from '@rspress/core';
+
+export default defineConfig({
+  route: {
+    excludeConvention: ['**/_fragment-*'],
+  },
+});
+```
+
 ### route.extensions
 
-- Type: `string[]`
-- Default: `['.js', '.jsx', '.ts', '.tsx', '.md', '.mdx']`
+- **类型**： `string[]`
+- **默认值**： `['.js', '.jsx', '.ts', '.tsx', '.md', '.mdx']`
 
 将包含在路由中的文件的扩展名。默认情况下，Rspress 会在路由中包含所有 `'js'、'jsx'、'ts'、'tsx'、'md'、'mdx' 文件。如果你想自定义扩展名，你可以使用这个选项。例如：
 
@@ -450,8 +469,8 @@ export default defineConfig({
 
 ### route.cleanUrls
 
-- Type: `boolean`
-- Default: `false`
+- **类型**： `boolean`
+- **默认值**： `false`
 
 开启后可以生成无 `.html` 后缀的链接，URL 可以更加简洁。
 
@@ -467,8 +486,8 @@ export default defineConfig({
 
 ## ssg
 
-- Type: `boolean | { experimentalWorker?: boolean; experimentalLoose?: boolean; }`
-- Default: `true`
+- **类型**： `boolean | { experimentalWorker?: boolean; experimentalLoose?: boolean; }`
+- **默认值**： `true`
 
 是否开启静态站点生成。Rspress 默认开启该功能，生成 SSG 产物。
 
@@ -494,22 +513,22 @@ SSG 要求源码支持在 SSR 下编译，如果使用了不兼容 SSR 场景下
 
 ### experimentalWorker
 
-- Type: `boolean`
-- Default: `false`
+- **类型**： `boolean`
+- **默认值**： `false`
 
 开启后可以使用 Worker 来加速 SSG 过程并降低内存占用，适合大型文档站点，底层基于 [tinypool](https://github.com/tinylibs/tinypool)。
 
 ### experimentalExcludeRoutePaths
 
-- Type: `(string | RegExp)[]`
-- Default: `[]`
+- **类型**： `(string | RegExp)[]`
+- **默认值**： `[]`
 
 开启后一部分页面将不进行 SSG 渲染，直接使用 CSR 下的 html，适合用于大型文档站点绕过一小部分页面的 SSG 错误，不建议主动开启。
 
 ## replaceRules
 
-- Type: `{ search: string | RegExp; replace: string; }[]`
-- Default: `[]`
+- **类型**： `{ search: string | RegExp; replace: string; }[]`
+- **默认值**： `[]`
 
 你可以通过 `replaceRules` 来对整个站点设置文本替换规则，规则会作用于包括 `_meta.json` 文件、frontmatter 配置以及文档内容和标题等所有内容。
 
@@ -526,14 +545,14 @@ export default {
 
 ## languageParity
 
-- Type: `Object`
+- **类型**： `Object`
 
 对文档根目录的 md 和 mdx 文件进行扫描，检测是否存在某些语言版本缺失的情况，保证语言一致性。
 
 ### languageParity.enable
 
-- Type: `boolean`
-- Default: `false`
+- **类型**： `boolean`
+- **默认值**： `false`
 
 是否启用语言一致性检查。
 
@@ -549,8 +568,8 @@ export default defineConfig({
 
 ### languageParity.include
 
-- Type: `string[]`
-- Default: `[]`
+- **类型**： `string[]`
+- **默认值**： `[]`
 
 需要检查的文件夹，默认为文档根目录下所有文件。填写路径时，相对于文档各语言目录。例如：
 
@@ -567,8 +586,8 @@ export default defineConfig({
 
 ### languageParity.exclude
 
-- Type: `string[]`
-- Default: `[]`
+- **类型**： `string[]`
+- **默认值**： `[]`
 
 从文档目录排除一些文件夹和文件，不进行检查。
 
