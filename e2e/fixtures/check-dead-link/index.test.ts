@@ -92,7 +92,7 @@ test.describe('check dead links', async () => {
   test('should link the correct page - autoPrefix: false', async ({ page }) => {
     const appDir = __dirname;
     appPort = await getPort();
-    await runBuildCommand(appDir, 'rspress-no-loose.config.ts');
+    await runBuildCommand(appDir, 'rspress-no-prefix.config.ts');
     app = await runPreviewCommand(appDir, appPort);
 
     {
