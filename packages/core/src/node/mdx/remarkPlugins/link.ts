@@ -99,11 +99,11 @@ function looseMarkdownLink(
   if (versionPart === '') {
     if (langPart === '') {
       return addLeadingSlash(
-        `${[versionPartCurrFile, langPartCurrFile].filter(Boolean).join('/')}${addLeadingSlash(pureRoute.replace(/\/*^/, ''))}`,
+        `${[versionPartCurrFile, langPartCurrFile].filter(Boolean).join('/')}${addLeadingSlash(pureRoute.replace(/^\/*/, ''))}`,
       );
     }
     return addLeadingSlash(
-      `${[versionPartCurrFile, langPart].filter(Boolean).join('/')}${addLeadingSlash(pureRoute.replace(/\/*^/, ''))}`,
+      `${[versionPartCurrFile, langPart].filter(Boolean).join('/')}${addLeadingSlash(pureRoute.replace(/^\/*/, ''))}`,
     );
   }
 
