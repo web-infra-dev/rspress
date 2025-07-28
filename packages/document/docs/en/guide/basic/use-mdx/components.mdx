@@ -5,6 +5,7 @@
 In MDX, all `.mdx` files are compiled into React components, which means they can be used as React components and can freely use React components. For example:
 
 import { Tabs, Tab } from '@theme';
+import { Border } from './_Border';
 
 <Tabs>
 <Tab label="docs/index.mdx">
@@ -45,13 +46,13 @@ It will be rendered as:
 import MdxFragment from './_mdx-fragment.mdx';
 import TsxComponent from './_tsx-component';
 
-<div style={{ border: '1px solid #ddd', padding: '10px' }}>
+<Border>
 Testing the use of MDX fragments and React components.
 
 <MdxFragment />
 
 <TsxComponent />
-</div>
+</Border>
 
 You can use [built-in components](/guide/default-theme/components) provided by Rspress or install some React component libraries to enrich your documentation in `.mdx` files.
 
@@ -74,10 +75,8 @@ import ButtonFragment from './_button.mdx';
 </Tab>
 <Tab label="docsite/docs/_button.mdx">
 
-```mdx
-#### button
+```mdx file="./_button.mdx"
 
-This is some text
 ```
 
 </Tab>
@@ -92,11 +91,33 @@ export Button = () => <button>Button</button>;
 
 It will be rendered as:
 
-<div style={{ border: '1px solid #ddd', padding: '10px' }}>
+<Border>
 
 import Button from './_button.mdx';
 
 <Button />
 <button>Button</button>
 
-</div>
+</Border>
+
+## Escape Hatch: Using MDX Styles in TSX Components
+
+```tsx file="./_escape-hatch.tsx" title="_escape-hatch.tsx"
+
+```
+
+import EscapeHatch from './_escape-hatch';
+
+It will be rendered as:
+
+<Border>
+  <EscapeHatch />
+</Border>
+
+:::warning
+
+`.tsx` components can make it difficult to extract some static information, such as local search indexes.
+
+It is more recommended to use `.mdx` files to write document content and use `.tsx` files to write interactive dynamic content.
+
+:::

@@ -5,6 +5,7 @@
 在 MDX 中，所有 `.mdx` 文件都会编译为 React 组件，这意味着它们可以被当做 React 组件使用，也可以自由使用 React 组件。例如：
 
 import { Tabs, Tab } from '@theme';
+import { Border } from './_Border';
 
 <Tabs>
 <Tab label="docs/index.mdx">
@@ -45,13 +46,13 @@ import TsxComponent from './_tsx-component';
 import MdxFragment from './_mdx-fragment.mdx';
 import TsxComponent from './_tsx-component';
 
-<div style={{ border: '1px solid #ddd', padding: '10px' }}>
+<Border>
 测试 MDX 片段和 React 组件的使用。
 
 <MdxFragment />
 
 <TsxComponent />
-</div>
+</Border>
 
 你可以在 `.mdx` 文件中使用 Rspress 提供的 [内置组件](/guide/default-theme/components) 或安装一些 React 组件库来丰富你的文档。
 
@@ -74,10 +75,8 @@ import ButtonFragment from './_button.mdx';
 </Tab>
 <Tab label="docsite/docs/_button.mdx">
 
-```mdx
-#### button
+```mdx file="./_button.mdx"
 
-这是一段文本
 ```
 
 </Tab>
@@ -92,11 +91,33 @@ export Button = () => <button>按钮</button>;
 
 它将被渲染为：
 
-<div style={{ border: '1px solid #ddd', padding: '10px' }}>
+<Border>
 
 import Button from './_button.mdx';
 
 <Button />
 <button>按钮</button>
 
-</div>
+</Border>
+
+## 逃生舱：TSX 组件中使用 MDX 样式
+
+```tsx file="./_escape-hatch.tsx" title="_escape-hatch.tsx"
+
+```
+
+import EscapeHatch from './_escape-hatch';
+
+它将被渲染为：
+
+<Border>
+  <EscapeHatch />
+</Border>
+
+:::warning
+
+`.tsx` 组件会导致一些静态信息难以提取，比如本地搜索索引。
+
+更推荐使用 `.mdx` 文件来编写文档内容，使用 `.tsx` 文件来编写需交互的动态内容。
+
+:::
