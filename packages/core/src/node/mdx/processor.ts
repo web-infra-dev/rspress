@@ -109,19 +109,22 @@ MDXContent.__RSPRESS_PAGE_META["${encodeURIComponent(
   }
 }
 
-// TODO: free the memory
 const cache = new Map<string, Promise<string>>();
 
 async function compileWithCrossCompilerCache(
   options: CompileOptions,
 ): Promise<string> {
-  const task = cache.get(options.filepath);
+  const filepath = options.filepath;
+  const task = cache.get(filepath);
   if (task) {
+    // only for web and node, one write and one read
+    // free the memory after one read
+    cache.delete(filepath);
     return task;
   }
 
   const promise = compile(options);
-  cache.set(options.filepath, promise);
+  cache.set(filepath, promise);
   return promise;
 }
 
