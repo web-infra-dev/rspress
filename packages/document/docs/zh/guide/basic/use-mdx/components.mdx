@@ -58,7 +58,7 @@ import TsxComponent from './_tsx-component';
 
 ## 路由约定
 
-在 [docs 目录](/api/config/config-basic#root) 中，使用 MDX 片段或 React 组件要通过 [route.exclude](/api/config/config-basic#routeexclude) 配置从路由中排除。为了使用方便，我们约定以 "\_" 开头的文件会被默认排除。
+在 [docs 目录](/api/config/config-basic#root) 中，使用 MDX 片段或 React 组件要通过 [route.exclude](/api/config/config-basic#routeexclude) 配置从路由中排除。为了使用方便，我们约定以 "\_" 开头的文件会被默认排除，通过 [route.excludeConvention](/api/config/config-basic#routeexcludeconvention)。
 
 你也可以将组件放到 docs 目录以外的相邻目录，例如：
 
@@ -67,6 +67,7 @@ import TsxComponent from './_tsx-component';
 
 ```mdx
 import ButtonFragment from './_button.mdx';
+import Button from '../../components/button';
 
 <ButtonFragment />
 <Button />
@@ -83,7 +84,8 @@ import ButtonFragment from './_button.mdx';
 <Tab label="docsite/components/button.tsx">
 
 ```tsx
-export Button = () => <button>按钮</button>;
+const Button = () => <button>按钮</button>;
+export default Button;
 ```
 
 </Tab>
