@@ -999,7 +999,7 @@ importers:
         specifier: ^3.9.0
         version: 3.9.0(@algolia/client-search@5.23.4)(@types/react@19.1.8)(react-dom@19.1.0(react@19.1.0))(react@19.1.0)(search-insights@2.17.3)
       '@rspress/core':
-        specifier: workspace:^2.0.0-beta.22
+        specifier: workspace:^2.0.0-beta.23
         version: link:../core
     devDependencies:
       '@microsoft/api-extractor':
@@ -1036,7 +1036,7 @@ importers:
   packages/plugin-api-docgen:
     dependencies:
       '@rspress/core':
-        specifier: workspace:^2.0.0-beta.22
+        specifier: workspace:^2.0.0-beta.23
         version: link:../core
       chokidar:
         specifier: ^3.6.0
@@ -1103,7 +1103,7 @@ importers:
   packages/plugin-client-redirects:
     dependencies:
       '@rspress/core':
-        specifier: workspace:^2.0.0-beta.22
+        specifier: workspace:^2.0.0-beta.23
         version: link:../core
     devDependencies:
       '@microsoft/api-extractor':
@@ -1137,7 +1137,7 @@ importers:
   packages/plugin-llms:
     dependencies:
       '@rspress/core':
-        specifier: workspace:^2.0.0-beta.22
+        specifier: workspace:^2.0.0-beta.23
         version: link:../core
       remark-mdx:
         specifier: ^3.1.0
@@ -1195,7 +1195,7 @@ importers:
         specifier: ^0.2.0
         version: 0.2.0
       '@rspress/core':
-        specifier: workspace:^2.0.0-beta.22
+        specifier: workspace:^2.0.0-beta.23
         version: link:../core
       remark-gfm:
         specifier: ^4.0.1
@@ -1283,7 +1283,7 @@ importers:
         specifier: ~1.0.5
         version: 1.0.5(@babel/core@7.26.10)(@rsbuild/core@1.4.11)(solid-js@1.9.7)
       '@rspress/core':
-        specifier: workspace:^2.0.0-beta.22
+        specifier: workspace:^2.0.0-beta.23
         version: link:../core
       '@rspress/theme-default':
         specifier: workspace:*
@@ -1344,7 +1344,7 @@ importers:
   packages/plugin-rss:
     dependencies:
       '@rspress/core':
-        specifier: workspace:^2.0.0-beta.22
+        specifier: workspace:^2.0.0-beta.23
         version: link:../core
       feed:
         specifier: ^4.2.2
@@ -1372,7 +1372,7 @@ importers:
   packages/plugin-sitemap:
     dependencies:
       '@rspress/core':
-        specifier: workspace:^2.0.0-beta.22
+        specifier: workspace:^2.0.0-beta.23
         version: link:../core
     devDependencies:
       '@microsoft/api-extractor':
@@ -1391,7 +1391,7 @@ importers:
   packages/plugin-typedoc:
     dependencies:
       '@rspress/core':
-        specifier: workspace:^2.0.0-beta.22
+        specifier: workspace:^2.0.0-beta.23
         version: link:../core
       typedoc:
         specifier: 0.24.8
