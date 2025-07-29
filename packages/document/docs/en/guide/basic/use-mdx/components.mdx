@@ -58,7 +58,7 @@ You can use [built-in components](/guide/default-theme/components) provided by R
 
 ## Routing convention
 
-In the [docs directory](/api/config/config-basic#root), MDX fragments or React components need to be excluded from routing through the [route.exclude](/api/config/config-basic#routeexclude) configuration. For convenience, we agree that files starting with "\_" will be excluded by default.
+In the [docs directory](/api/config/config-basic#root), MDX fragments or React components need to be excluded from routing through the [route.exclude](/api/config/config-basic#routeexclude) configuration. For convenience, we agree that files starting with "\_" will be excluded by default via [route.excludeConvention](/api/config/config-basic#routeexcludeconvention).
 
 You can also place components in adjacent directories outside the docs directory, for example:
 
@@ -67,6 +67,7 @@ You can also place components in adjacent directories outside the docs directory
 
 ```mdx
 import ButtonFragment from './_button.mdx';
+import Button from '../../components/button';
 
 <ButtonFragment />
 <Button />
@@ -83,7 +84,8 @@ import ButtonFragment from './_button.mdx';
 <Tab label="docsite/components/button.tsx">
 
 ```tsx
-export Button = () => <button>Button</button>;
+const Button = () => <button>按钮</button>;
+export default Button;
 ```
 
 </Tab>
