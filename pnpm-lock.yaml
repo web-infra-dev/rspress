@@ -1164,6 +1164,12 @@ importers:
       '@rsbuild/core':
         specifier: ~1.4.11
         version: 1.4.11
+      '@rsbuild/plugin-react':
+        specifier: ~1.3.4
+        version: 1.3.4(@rsbuild/core@1.4.11)
+      '@rsbuild/plugin-sass':
+        specifier: ~1.3.3
+        version: 1.3.3(@rsbuild/core@1.4.11)
       '@rslib/core':
         specifier: 0.11.0
         version: 0.11.0(@microsoft/api-extractor@7.52.9(@types/node@22.10.2))(typescript@5.8.2)
@@ -1176,6 +1182,15 @@ importers:
       '@types/node':
         specifier: ^22.8.1
         version: 22.10.2
+      '@types/react':
+        specifier: ^19.1.8
+        version: 19.1.8
+      react:
+        specifier: ^19.1.0
+        version: 19.1.0
+      rsbuild-plugin-publint:
+        specifier: ^0.3.2
+        version: 0.3.2(@rsbuild/core@1.4.11)
       typescript:
         specifier: ^5.8.2
         version: 5.8.2
