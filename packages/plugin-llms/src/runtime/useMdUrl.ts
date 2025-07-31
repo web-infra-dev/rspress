@@ -15,7 +15,7 @@ export function useMdUrl() {
   const { page } = usePageData();
   const mdPath = useMemo(() => {
     const pathname = routePathToMdPath(page.routePath);
-    return { fullPath: `${window.origin}/${pathname}`, pathname };
+    return { pathname };
   }, [page.routePath]);
   return mdPath;
 }
