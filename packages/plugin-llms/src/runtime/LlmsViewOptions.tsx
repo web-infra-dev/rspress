@@ -85,8 +85,8 @@ const IconExternalLink = () => {
         d="M14 9.82457V13C14 13.5523 13.5523 14 13 14H3C2.44772 14 2 13.5523 2 13V3C2 2.44772 2.44772 2 3 2H6"
         stroke="#808080"
         strokeWidth="1.33333"
-        stroke-linecap="round"
-        stroke-linejoin="round"
+        strokeLinecap="round"
+        strokeLinejoin="round"
       />
       <path
         d="M8.59961 7.39996L13.6996 2.29996"
