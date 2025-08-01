@@ -1,3 +1,8 @@
+/**
+ * Inspired from fumadocs docsite
+ * @from https://github.com/fuma-nama/fumadocs/blob/5723bbe58ef805a5421a780abf235a10b251be2f/apps/docs/app/docs/%5B...slug%5D/page.client.tsx#L11
+ * @license MIT
+ */
 import { useLang } from '@rspress/core/runtime';
 import type React from 'react';
 import { useEffect, useMemo, useRef, useState } from 'react';
