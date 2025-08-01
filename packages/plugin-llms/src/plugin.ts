@@ -138,25 +138,26 @@ const rsbuildPluginLlms = ({
           const filepath = pageData._filepath;
           const isMD = path.extname(filepath).slice(1) !== 'mdx';
           let mdContent: string | Buffer;
-          if (isMD) {
+          try {
+            mdContent = (
+              await normalizeMdFile(
+                content,
+                filepath,
+                routeServiceRef.current!,
+                baseRef.current,
+                isMD
+                  ? false
+                  : typeof mdFiles !== 'boolean'
+                    ? mdFiles?.mdxToMd
+                    : false,
+                isMD,
+              )
+            ).toString();
+          } catch (e) {
+            // normalizeMdFile might have some edge cases, fallback to no flatten and plain mdx
+            logger.debug(e);
             mdContent = content;
-          } else {
-            try {
-              mdContent = (
-                await normalizeMdFile(
-                  content,
-                  filepath,
-                  routeServiceRef.current!,
-                  baseRef.current,
-                  typeof mdFiles !== 'boolean' ? mdFiles?.mdxToMd : false,
-                )
-              ).toString();
-            } catch (e) {
-              // flatten might have some edge cases, fallback to no flatten and plain mdx
-              logger.debug(e);
-              mdContent = content;
-              return;
-            }
+            return;
           }
           // @ts-ignore
           pageData.mdContent = mdContent;

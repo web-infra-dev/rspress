@@ -45,10 +45,11 @@ function normalizeMdFile(
   routeService: RouteService,
   base: string,
   mdxToMd: boolean,
+  isMd: boolean,
 ): Promise<VFile> {
   return unified()
     .use(remarkParse)
-    .use(remarkMdx)
+    .use(isMd ? () => {} : remarkMdx)
     .use(remarkFileCodeBlock, { filepath })
     .use(mdxToMd ? mdxToMdPlugin : () => {})
     .use(remarkLink, {
