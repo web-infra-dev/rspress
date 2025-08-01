@@ -1,12 +1,17 @@
 import {
   HomeLayout as BasicHomeLayout,
   Layout as BasicLayout,
-  getCustomMDXComponent,
+  getCustomMDXComponent as basicGetCustomMDXComponent,
 } from '@rspress/core/theme';
 import {
   Search as PluginAlgoliaSearch,
   ZH_LOCALES,
 } from '@rspress/plugin-algolia/runtime';
+import {
+  LlmsContainer,
+  LlmsCopyButton,
+  LlmsViewOptions,
+} from '@rspress/plugin-llms/runtime';
 import { Announcement } from '@rstack-dev/doc-ui/announcement';
 import { NavIcon } from '@rstack-dev/doc-ui/nav-icon';
 import { ToolStack } from './components/ToolStack';
@@ -15,7 +20,8 @@ import './index.css';
 import { NoSSR, useLang } from '@rspress/core/runtime';
 
 function HomeLayout() {
-  const { pre: PreWithCodeButtonGroup, code: Code } = getCustomMDXComponent();
+  const { pre: PreWithCodeButtonGroup, code: Code } =
+    basicGetCustomMDXComponent();
   return (
     <BasicHomeLayout
       afterFeatures={<ToolStack />}
@@ -79,5 +85,25 @@ const Search = () => {
   );
 };
 
-export { Layout, HomeLayout, Search };
+function getCustomMDXComponent() {
+  const { h1: H1, ...components } = basicGetCustomMDXComponent();
+
+  const MyH1 = ({ ...props }) => {
+    return (
+      <>
+        <H1 {...props} />
+        <LlmsContainer>
+          <LlmsCopyButton />
+          <LlmsViewOptions />
+        </LlmsContainer>
+      </>
+    );
+  };
+  return {
+    ...components,
+    h1: MyH1,
+  };
+}
+
+export { Layout, HomeLayout, Search, getCustomMDXComponent };
 export * from '@rspress/core/theme';

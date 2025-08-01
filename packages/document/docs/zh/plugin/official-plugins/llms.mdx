@@ -1,8 +1,6 @@
-# @rspress/plugin-llms
+# @rspress/plugin-llms <SourceCode href="https://github.com/web-infra-dev/rspress/tree/main/packages/plugin-llms" />
 
 import { SourceCode } from '@rspress/core/theme';
-
-<SourceCode href="https://github.com/web-infra-dev/rspress/tree/main/packages/plugin-llms" />
 
 为 Rspress 站点生成 [llms.txt](https://llmstxt.org/) 相关文件，使大模型可以更好地理解你的文档站。
 
@@ -13,6 +11,8 @@ import { PackageManagerTabs } from '@theme';
 <PackageManagerTabs command="add @rspress/plugin-llms -D" />
 
 ## 使用
+
+### 1. 安装插件
 
 在配置文件中写入以下的配置：
 
@@ -26,7 +26,59 @@ export default defineConfig({
 });
 ```
 
-之后执行 `rspress build` 命令，在生成产物的同时，会在产物目录下根据导航栏生成 `llms.txt` `llms-full.txt` 和对应路由的 markdown 文件。
+之后执行 `rspress build` 命令，在生成产物的同时，会在产物目录下根据导航栏、侧边栏生成 `llms.txt` `llms-full.txt` 和对应路由的 markdown 文件。
+
+### 2. UI 展示
+
+如果你希望阅读文档站的用户可以更多地调用大模型来阅读文档，可以通过 [自定义主题](/guide/advanced/custom-theme) 在页面顶部增加一个复制 Markdown 按钮，效果与本网站相同。
+
+为所有页面增加顶部复制按钮，示例：
+
+```tsx title="theme/index.tsx"
+import { getCustomMDXComponent as basicGetCustomMDXComponent } from '@rspress/core/theme';
+import {
+  LlmsContainer,
+  LlmsCopyButton,
+  LlmsViewOptions,
+} from '@rspress/plugin-llms/runtime';
+
+function getCustomMDXComponent() {
+  const { h1: H1, ...mdxComponents } = basicGetCustomMDXComponent();
+
+  const MyH1 = ({ ...props }) => {
+    return (
+      <>
+        <H1 {...props} />
+        {/* [!code highlight:4] */}
+        <LlmsContainer>
+          <LlmsCopyButton />
+          <LlmsViewOptions /> {/* LlmsViewOptions 组件可根据需要添加  */}
+        </LlmsContainer>
+      </>
+    );
+  };
+  return {
+    ...mdxComponents,
+    h1: MyH1,
+  };
+}
+
+export { getCustomMDXComponent };
+export * from '@rspress/core/theme';
+```
+
+为指定页面增加复制按钮，示例：
+
+```mdx title="docs/hello-world.mdx"
+# Hello world
+
+<LlmsContainer>
+  <LlmsCopyButton />
+  <LlmsViewOptions /> {/* LlmsViewOptions 组件可根据需要添加  */}
+</LlmsContainer>
+
+这是一个示例文档。
+```
 
 ## 选项
 
@@ -189,6 +241,82 @@ pluginLlms({
   },
 });
 ```
+
+## UI 组件选项
+
+### LlmsCopyButtonProps
+
+- **类型**：`LlmsCopyButtonProps`
+
+```ts
+interface LlmsCopyButtonProps
+  extends React.ButtonHTMLAttributes<HTMLButtonElement> {
+  textByLang?: Record<string, string>;
+  text?: string;
+}
+```
+
+#### textByLang
+
+- **类型**：`Record<string, string>`
+- **默认值**：`{ en: 'Copy Markdown', zh: '复制 Markdown' }`
+
+根据对应语言替换按钮上的文本。
+
+- **示例**：
+
+```mdx
+<LlmsCopyButton textByLang={{ en: 'Copy MD' }} />
+```
+
+#### text
+
+- **类型**：`string`
+- **默认值**：`''`
+
+复制按钮上的文本，优先级比 `textByLang` 高。
+
+### LlmsViewOptionsProps
+
+- **类型**：`LlmsViewOptionsProps`
+
+```ts
+interface LlmsViewOptionsProps
+  extends React.ButtonHTMLAttributes<HTMLButtonElement> {
+  options?: Array<
+    | {
+        title: string;
+        href: string;
+        icon: React.ReactNode;
+      }
+    | 'claude'
+    | 'chatgpt'
+  >;
+  textByLang?: Record<string, string>;
+  text?: string;
+}
+```
+
+#### options
+
+- **类型**：`Array<{ title: string; href: string; icon: React.ReactNode } | 'claude' | 'chatgpt'>`
+- **默认值**：`['chatgpt', 'claude']`
+
+自定义下拉菜单中的选项，默认支持 [Chatgpt](https://chatgpt.com/) 和 [Claude](https://claude.ai)。
+
+#### textByLang
+
+- **类型**：`Record<string, string>`
+- **默认值**：`{ en: 'Open', zh: '打开' }`
+
+根据对应语言替换按钮上的文本。
+
+#### text
+
+- **类型**：`string`
+- **默认值**：`''`
+
+按钮上的文本，优先级比 `textByLang` 高。
 
 ## 同时生成多组 `llms.txt`
 

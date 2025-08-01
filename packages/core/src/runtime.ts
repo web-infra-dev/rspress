@@ -1,3 +1,3 @@
 export * from '@rspress/runtime';
 
-export { isExternalUrl } from '@rspress/shared';
+export { isExternalUrl, normalizeHref } from '@rspress/shared';
