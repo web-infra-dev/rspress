@@ -39,6 +39,8 @@ const mdxToMdPlugin: Plugin<[], Root> = () => {
   };
 };
 
+function noopPlugin() {}
+
 function normalizeMdFile(
   content: string,
   filepath: string,
@@ -49,9 +51,9 @@ function normalizeMdFile(
 ): Promise<VFile> {
   return unified()
     .use(remarkParse)
-    .use(isMd ? () => {} : remarkMdx)
+    .use(isMd ? noopPlugin : remarkMdx)
     .use(remarkFileCodeBlock, { filepath })
-    .use(mdxToMd ? mdxToMdPlugin : () => {})
+    .use(mdxToMd ? mdxToMdPlugin : noopPlugin)
     .use(remarkLink, {
       cleanUrls: '.md',
       routeService,
