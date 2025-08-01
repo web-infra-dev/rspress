@@ -178,9 +178,10 @@ You can also apply line highlighting and code block title at the same time, for 
 **Input:**
 
 ````md
-```js title="hello.js" {1,3-5}
-console.log('Hello World');
+```js title="hello.js"
+console.log('Hello World'); // [\!code highlight]
 
+// [\!code highlight:3]
 const a = 1;
 
 console.log(a);
@@ -193,9 +194,10 @@ console.log(b);
 
 **Output:**
 
-```js title="hello.js" {1,3-5}
-console.log('Hello World');
+```js title="hello.js"
+console.log('Hello World'); // [!code highlight]
 
+// [!code highlight:3]
 const a = 1;
 
 console.log(a);
