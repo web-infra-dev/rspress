@@ -53,7 +53,7 @@ function normalizeMdFile(
     .use(remarkParse)
     .use(isMd ? noopPlugin : remarkMdx)
     .use(remarkFileCodeBlock, { filepath })
-    .use(mdxToMd ? mdxToMdPlugin : noopPlugin)
+    .use(!isMd && mdxToMd ? mdxToMdPlugin : noopPlugin)
     .use(remarkLink, {
       cleanUrls: '.md',
       routeService,
