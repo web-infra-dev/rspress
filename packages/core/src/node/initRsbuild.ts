@@ -1,4 +1,5 @@
 import fs from 'node:fs/promises';
+import { createRequire } from 'node:module';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import type {
@@ -65,6 +66,7 @@ function isPluginIncluded(config: UserConfig, pluginName: string): boolean {
   );
 }
 
+const require = createRequire(import.meta.url);
 async function createInternalBuildConfig(
   userDocRoot: string,
   config: UserConfig,
@@ -235,7 +237,10 @@ async function createInternalBuildConfig(
         ? {
             buildCache: {
               // 1. config file: rspress.config.ts
-              buildDependencies: [pluginDriver.getConfigFilePath()],
+              buildDependencies: [
+                new URL(import.meta.url).href, // this file
+                pluginDriver.getConfigFilePath(), // rspress.config.ts
+              ],
               cacheDigest: [
                 // 2.other configuration files which are not included in rspress.config.ts should be added to cacheDigest
                 // 2.1 routeService glob
@@ -250,12 +255,6 @@ async function createInternalBuildConfig(
                     sidebar: config.themeConfig?.sidebar,
                   },
                 ),
-                // TODO: remove the configuration track after rspack upgrading the import analysis of rspress.config.ts
-                JSON.stringify({
-                  base: config.base,
-                  ssg: config.ssg,
-                  pluginLength: config.plugins?.length ?? 0,
-                }),
               ],
             },
           }
