@@ -15,7 +15,7 @@ import type {
 } from '@rspress/core';
 import { getSidebarDataGroup, logger, matchPath } from '@rspress/core';
 import { generateLlmsFullTxt, generateLlmsTxt } from './llmsTxt';
-import { mdxToMd } from './mdxToMd';
+import { normalizeMdFile } from './normalizeMdFile';
 import type {
   Options,
   RspressPluginLlmsOptions,
@@ -43,7 +43,7 @@ const rsbuildPluginLlms = ({
         name: 'llms.txt',
       },
       mdFiles = {
-        mdxToMd: true,
+        mdxToMd: false,
       },
       llmsFullTxt = {
         name: 'llms-full.txt',
@@ -138,16 +138,17 @@ const rsbuildPluginLlms = ({
           const filepath = pageData._filepath;
           const isMD = path.extname(filepath).slice(1) !== 'mdx';
           let mdContent: string | Buffer;
-          if (isMD || (mdFiles && mdFiles.mdxToMd === false)) {
+          if (isMD) {
             mdContent = content;
           } else {
             try {
               mdContent = (
-                await mdxToMd(
+                await normalizeMdFile(
                   content,
                   filepath,
                   routeServiceRef.current!,
                   baseRef.current,
+                  typeof mdFiles !== 'boolean' ? mdFiles?.mdxToMd : false,
                 )
               ).toString();
             } catch (e) {

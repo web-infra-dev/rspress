@@ -39,17 +39,18 @@ const mdxToMdPlugin: Plugin<[], Root> = () => {
   };
 };
 
-function mdxToMd(
+function normalizeMdFile(
   content: string,
   filepath: string,
   routeService: RouteService,
   base: string,
+  mdxToMd: boolean,
 ): Promise<VFile> {
   return unified()
     .use(remarkParse)
     .use(remarkMdx)
     .use(remarkFileCodeBlock, { filepath })
-    .use(mdxToMdPlugin)
+    .use(mdxToMd ? mdxToMdPlugin : () => {})
     .use(remarkLink, {
       cleanUrls: '.md',
       routeService,
@@ -66,4 +67,4 @@ function mdxToMd(
     });
 }
 
-export { mdxToMd };
+export { normalizeMdFile };
