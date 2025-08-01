@@ -14,7 +14,7 @@ import {
   dropdownMenu,
   externalIcon,
   githubIcon,
-  llmsCopyButtonContainer,
+  llmsViewOptionsContainer,
   rotated,
 } from './LlmsViewOptions.module.scss';
 import { useMdUrl } from './useMdUrl';
@@ -188,7 +188,13 @@ const LlmsViewOptions = ({
     <>
       <button
         ref={dropdownRef}
-        className={`${dropdownButton} ${llmsCopyButtonContainer} ${isOpen ? active : ''}`}
+        className={[
+          dropdownButton,
+          llmsViewOptionsContainer,
+          isOpen ? active : '',
+        ]
+          .filter(Boolean)
+          .join(' ')}
         type="button"
         onClick={toggleDropdown}
       >

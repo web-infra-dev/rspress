@@ -9,7 +9,8 @@ import {
   iconContainer,
   iconCopy,
   iconSuccess,
-  llmsTxtCopyButtonContainer,
+  llmsCopyButtonContainer,
+  loading,
   success,
 } from './LlmsCopyButton.module.scss';
 import { useMdUrl } from './useMdUrl';
@@ -119,7 +120,11 @@ function LlmsCopyButton(props: LlmsCopyButtonProps) {
     <button
       {...otherProps}
       disabled={isLoading}
-      className={[llmsTxtCopyButtonContainer, isFinished ? success : '']
+      className={[
+        llmsCopyButtonContainer,
+        isLoading ? loading : '',
+        isFinished ? success : '',
+      ]
         .filter(Boolean)
         .join(' ')}
       onClick={onClick ?? handleClick}

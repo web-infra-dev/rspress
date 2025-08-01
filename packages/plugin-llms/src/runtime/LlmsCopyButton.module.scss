@@ -1,4 +1,4 @@
-.llmsTxtCopyButtonContainer {
+.llmsCopyButtonContainer {
   display: inline-flex;
   padding: 8px 12px;
   height: 40px;
@@ -17,12 +17,27 @@
 
   transition:
     background 0.3s ease,
-    border 0.3s ease;
+    border 0.3s ease,
+    opacity 0.3s ease;
   &:hover {
-    border-radius: 8px;
-    border: 1px solid #e5e6eb;
-
     background: #f5f5f5;
+    border: 1px solid #e5e6eb;
+  }
+  &.loading {
+    background: #f5f5f5;
+    border: 1px solid #e5e6eb;
+    opacity: 0.5;
+  }
+  &.success {
+    .iconCopy {
+      display: none;
+    }
+
+    .iconSuccess {
+      opacity: 1;
+      visibility: inherit;
+      transition-delay: 0.075s;
+    }
   }
 }
 
@@ -54,16 +69,4 @@
   visibility: hidden;
   opacity: 0;
   transform: translate(-50%, -50%);
-}
-
-.success {
-  .iconCopy {
-    display: none;
-  }
-
-  .iconSuccess {
-    opacity: 1;
-    visibility: inherit;
-    transition-delay: 0.075s;
-  }
 }
