@@ -102,12 +102,12 @@ function LlmsCopyButton(props: LlmsCopyButtonProps) {
       setFinished(true);
       if (timer.current) {
         clearTimeout(timer.current);
-      } else {
-        timer.current = window.setTimeout(() => {
-          setFinished(false);
-          timer.current = null;
-        }, 500);
+        timer.current = null;
       }
+      timer.current = window.setTimeout(() => {
+        setFinished(false);
+        timer.current = null;
+      }, 500);
     }
   }, [pathname]);
 
