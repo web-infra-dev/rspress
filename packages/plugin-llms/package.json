@@ -1,6 +1,6 @@
 {
   "name": "@rspress/plugin-llms",
-  "version": "2.0.0-beta.23",
+  "version": "2.0.0-beta.24",
   "description": "A plugin for rspress to generate llms.txt, llms-full.txt, md files to let llm understand your website.",
   "bugs": "https://github.com/web-infra-dev/rspress/issues",
   "repository": {
@@ -56,7 +56,7 @@
     "vfile": "^6.0.3"
   },
   "peerDependencies": {
-    "@rspress/core": "workspace:^2.0.0-beta.23"
+    "@rspress/core": "workspace:^2.0.0-beta.24"
   },
   "engines": {
     "node": ">=18.0.0"
