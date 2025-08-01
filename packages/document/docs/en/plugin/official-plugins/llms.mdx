@@ -12,6 +12,8 @@ import { PackageManagerTabs } from '@theme';
 
 ## Usage
 
+### 1. Install plugin
+
 Add the following configuration to your configuration file:
 
 ```ts
@@ -24,7 +26,9 @@ export default defineConfig({
 });
 ```
 
-Then execute the `rspress build` command. While generating the output, the plugin will also generate `llms.txt`, `llms-full.txt`, and corresponding markdown files for each route in the output directory based on the navigation bar.
+Then execute the `rspress build` command. While generating the output, the plugin will also generate `llms.txt`, `llms-full.txt`, and corresponding markdown files for each route in the output directory based on the navigation bar and sidebar.
+
+### 2. UI display
 
 If you want users reading your documentation site to better utilize large language models to read the documentation, you can add a copy Markdown button at the top of the page through [custom theme](/guide/advanced/custom-theme), with the same effect as this website.
 

@@ -12,6 +12,8 @@ import { PackageManagerTabs } from '@theme';
 
 ## 使用
 
+### 1. 安装插件
+
 在配置文件中写入以下的配置：
 
 ```ts
@@ -24,9 +26,11 @@ export default defineConfig({
 });
 ```
 
-之后执行 `rspress build` 命令，在生成产物的同时，会在产物目录下根据导航栏生成 `llms.txt` `llms-full.txt` 和对应路由的 markdown 文件。
+之后执行 `rspress build` 命令，在生成产物的同时，会在产物目录下根据导航栏、侧边栏生成 `llms.txt` `llms-full.txt` 和对应路由的 markdown 文件。
 
-如果你希望阅读文档站的用户可以更好地调用大模型来阅读文档，可以通过 [自定义主题](/guide/advanced/custom-theme) 在页面顶部增加一个复制 Markdown 按钮，效果与本网站相同。
+### 2. UI 展示
+
+如果你希望阅读文档站的用户可以更多地调用大模型来阅读文档，可以通过 [自定义主题](/guide/advanced/custom-theme) 在页面顶部增加一个复制 Markdown 按钮，效果与本网站相同。
 
 为所有页面增加顶部复制按钮，示例：
 
