@@ -1,6 +1,6 @@
+import { useLang } from '@rspress/core/runtime';
 import type React from 'react';
 import { useEffect, useMemo, useRef, useState } from 'react';
-
 import {
   active,
   dropdownArrow,
@@ -14,7 +14,14 @@ import {
 } from './LlmsViewOptions.module.scss';
 import { useMdUrl } from './useMdUrl';
 
-type LlmsViewOptionsProps = {
+interface LlmsViewOptionsProps
+  extends React.ButtonHTMLAttributes<HTMLButtonElement> {
+  /**
+   * Default options for the dropdown.
+   * @default ['chatgpt', 'claude']
+   * - 'chatgpt': Open in ChatGPT
+   * - 'claude': Open in Claude
+   */
   options?: Array<
     | {
         title: string;
@@ -24,7 +31,18 @@ type LlmsViewOptionsProps = {
     | 'claude'
     | 'chatgpt'
   >;
-};
+  /**
+   * Button text by language, used with `useLang`.
+   * @default en: 'Open', zh: '打开'
+   */
+  textByLang?: Record<string, string>;
+  /**
+   * Button text.
+   * Priority is higher than textByLang
+   * @default ''
+   */
+  text?: string;
+}
 
 const IconArrow = ({ className }: { className: string }) => {
   return (
@@ -83,6 +101,8 @@ const IconExternalLink = () => {
 
 const LlmsViewOptions = ({
   options = ['chatgpt', 'claude'],
+  text,
+  textByLang = { en: 'Open', zh: '打开' },
 }: LlmsViewOptionsProps) => {
   const [isOpen, setIsOpen] = useState(false);
   const dropdownRef = useRef<HTMLButtonElement>(null);
@@ -110,6 +130,8 @@ const LlmsViewOptions = ({
   };
 
   const { pathname } = useMdUrl();
+  const lang = useLang();
+  const isEn = !lang || lang === 'en';
 
   const items = useMemo(() => {
     const fullMarkdownUrl =
@@ -120,7 +142,7 @@ const LlmsViewOptions = ({
 
     return {
       chatgpt: {
-        title: 'Open in ChatGPT',
+        title: isEn ? 'Open in ChatGPT' : '在 ChatGPT 中打开',
         href: `https://chatgpt.com/?${new URLSearchParams({
           hints: 'search',
           q,
@@ -138,7 +160,7 @@ const LlmsViewOptions = ({
         ),
       },
       claude: {
-        title: 'Open in Claude',
+        title: isEn ? 'Open in Claude' : '在 Claude 中打开',
         href: `https://claude.ai/new?${new URLSearchParams({
           q,
         })}`,
@@ -155,16 +177,17 @@ const LlmsViewOptions = ({
         ),
       },
     };
-  }, [pathname]);
+  }, [pathname, isEn]);
 
   return (
     <>
       <button
         ref={dropdownRef}
         className={`${dropdownButton} ${llmsCopyButtonContainer} ${isOpen ? active : ''}`}
+        type="button"
         onClick={toggleDropdown}
       >
-        Open
+        {text ?? textByLang[lang] ?? 'Open'}
         <IconArrow className={`${dropdownArrow} ${isOpen ? rotated : ''}`} />
         {isOpen && (
           <div className={dropdownMenu}>
@@ -175,9 +198,9 @@ const LlmsViewOptions = ({
                 icon: React.ReactNode;
               };
               if (item === 'chatgpt') {
-                displayItem = items['chatgpt'];
+                displayItem = items.chatgpt;
               } else if (item === 'claude') {
-                displayItem = items['claude'];
+                displayItem = items.claude;
               }
               return (
                 <a
@@ -203,3 +226,4 @@ const LlmsViewOptions = ({
 };
 
 export { LlmsViewOptions };
+export type { LlmsViewOptionsProps };

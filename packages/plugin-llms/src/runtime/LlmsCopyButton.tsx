@@ -52,7 +52,8 @@ function IconSuccess() {
   );
 }
 
-type LlmsTxtCopyButtonProps = {
+interface LlmsCopyButtonProps
+  extends React.ButtonHTMLAttributes<HTMLButtonElement> {
   /**
    * Text by language, used with `useLang`.
    * @default en: 'Copy Markdown', zh: '复制 Markdown'
@@ -63,12 +64,21 @@ type LlmsTxtCopyButtonProps = {
    * @default ''
    */
   text?: string;
-  onClick?: () => void;
-};
+  /**
+   * Overrides the default click handler.
+   * If provided, the default copy to clipboard functionality will not be executed.
+   */
+  onClick?: React.MouseEventHandler<HTMLButtonElement>;
+}
 
 const cache = new Map<string, string>();
-function LlmsCopyButton(props: LlmsTxtCopyButtonProps) {
-  const { onClick, text, textByLang } = props;
+function LlmsCopyButton(props: LlmsCopyButtonProps) {
+  const {
+    onClick,
+    text,
+    textByLang = { zh: '复制 Markdown', en: 'Copy Markdown' },
+    ...otherProps
+  } = props;
   const lang = useLang();
 
   const { pathname } = useMdUrl();
@@ -107,6 +117,7 @@ function LlmsCopyButton(props: LlmsTxtCopyButtonProps) {
 
   return (
     <button
+      {...otherProps}
       disabled={isLoading}
       className={[llmsTxtCopyButtonContainer, isFinished ? success : '']
         .filter(Boolean)
@@ -123,3 +134,4 @@ function LlmsCopyButton(props: LlmsTxtCopyButtonProps) {
 }
 
 export { LlmsCopyButton };
+export type { LlmsCopyButtonProps };

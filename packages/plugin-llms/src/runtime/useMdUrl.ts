@@ -11,7 +11,7 @@ function routePathToMdPath(routePath: string): string {
   return withBase(url);
 }
 
-export function useMdUrl() {
+export function useMdUrl(): { pathname: string } {
   const { page } = usePageData();
   const mdPath = useMemo(() => {
     const pathname = routePathToMdPath(page.routePath);
