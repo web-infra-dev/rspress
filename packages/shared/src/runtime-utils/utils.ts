@@ -217,8 +217,8 @@ export const parseUrl = (
 
 // decodeURIComponent will throw error if the url is not valid
 // this function will replace the invalid characters with %25
-export function safeDecodeURIComponent(url: string) {
-  return decodeURIComponent(url.replace(/%(?![0-9A-Fa-f]{2})/g, '%25'));
+export function safeDecodeURIComponent(uri: string) {
+  return decodeURIComponent(uri.replace(/%/g, '%25'));
 }
 
 export function normalizeHref(url?: string, cleanUrls = false) {
