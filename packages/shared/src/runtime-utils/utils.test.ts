@@ -51,6 +51,7 @@ describe('test shared utils', () => {
     expect(normalizeHref('/guide')).toBe('/guide.html');
     expect(normalizeHref('/guide/index.html')).toBe('/guide/index.html');
     expect(normalizeHref('/guide/index')).toBe('/guide/index.html');
+    expect(normalizeHref('/guide/in%dex')).toBe('/guide/in%dex.html');
     expect(normalizeHref('https://example.com/foo')).toBe(
       'https://example.com/foo',
     );
