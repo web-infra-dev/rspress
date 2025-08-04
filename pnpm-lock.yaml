@@ -325,6 +325,16 @@ importers:
         specifier: ^22.8.1
         version: 22.10.2
 
+  e2e/fixtures/markdown-link-asset:
+    dependencies:
+      '@rspress/core':
+        specifier: workspace:*
+        version: link:../../../packages/core
+    devDependencies:
+      '@types/node':
+        specifier: ^22.8.1
+        version: 22.10.2
+
   e2e/fixtures/multi-version:
     dependencies:
       '@rspress/core':
