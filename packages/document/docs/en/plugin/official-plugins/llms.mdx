@@ -287,11 +287,17 @@ interface LlmsViewOptionsProps
   options?: Array<
     | {
         title: string;
-        href: string;
-        icon: React.ReactNode;
+        icon?: React.ReactNode;
+        onClick?: () => void;
       }
-    | 'claude'
+    | {
+        title: string;
+        icon?: React.ReactNode;
+        href: string;
+      }
+    | 'markdownLink'
     | 'chatgpt'
+    | 'claude'
   >;
   textByLang?: Record<string, string>;
   text?: string;
@@ -300,10 +306,28 @@ interface LlmsViewOptionsProps
 
 #### options
 
-- **Type**: `Array<{ title: string; href: string; icon: React.ReactNode } | 'claude' | 'chatgpt'>`
-- **Default**: `['chatgpt', 'claude']`
+- **Type**: `Option[]`
 
-Customize the options in the dropdown menu, supports [ChatGPT](https://chatgpt.com/) and [Claude](https://claude.ai) by default.
+```ts
+type Option =
+  | {
+      title: string;
+      icon?: React.ReactNode;
+      onClick?: () => void;
+    }
+  | {
+      title: string;
+      href: string;
+      icon?: React.ReactNode;
+    }
+  | 'markdownLink'
+  | 'chatgpt'
+  | 'claude';
+```
+
+- **Default**: `['markdownLink', 'chatgpt', 'claude']`
+
+Customize the options in the dropdown menu, supports "Copy Markdown Link", [ChatGPT](https://chatgpt.com/) and [Claude](https://claude.ai) by default.
 
 #### textByLang
 
