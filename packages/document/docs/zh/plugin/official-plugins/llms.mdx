@@ -282,23 +282,24 @@ interface LlmsCopyButtonProps
 - **类型**：`LlmsViewOptionsProps`
 
 ```ts
+type Option =
+  | {
+      title: string;
+      icon?: React.ReactNode;
+      onClick?: () => void;
+    }
+  | {
+      title: string;
+      href: string;
+      icon?: React.ReactNode;
+    }
+  | 'markdownLink'
+  | 'chatgpt'
+  | 'claude';
+
 interface LlmsViewOptionsProps
   extends React.ButtonHTMLAttributes<HTMLButtonElement> {
-  options?: Array<
-    | {
-        title: string;
-        icon?: React.ReactNode;
-        onClick?: () => void;
-      }
-    | {
-        title: string;
-        icon?: React.ReactNode;
-        href: string;
-      }
-    | 'markdownLink'
-    | 'chatgpt'
-    | 'claude'
-  >;
+  options?: Option[];
   textByLang?: Record<string, string>;
   text?: string;
 }
@@ -306,7 +307,25 @@ interface LlmsViewOptionsProps
 
 #### options
 
-- **类型**：`Array<{ title: string; href: string; icon: React.ReactNode } | 'claude' | 'chatgpt'>`
+- **类型**：`Option[]`
+
+```ts
+type Option =
+  | {
+      title: string;
+      icon?: React.ReactNode;
+      onClick?: () => void;
+    }
+  | {
+      title: string;
+      href: string;
+      icon?: React.ReactNode;
+    }
+  | 'markdownLink'
+  | 'chatgpt'
+  | 'claude';
+```
+
 - **默认值**：`['markdownLink', 'chatgpt', 'claude']`
 
 自定义下拉菜单中的选项，默认支持 “复制 Markdown 链接”、[Chatgpt](https://chatgpt.com/) 和 [Claude](https://claude.ai)。

@@ -306,7 +306,25 @@ interface LlmsViewOptionsProps
 
 #### options
 
-- **Type**: `Array<{ title: string; href: string; icon: React.ReactNode } | 'claude' | 'chatgpt'>`
+- **Type**: `Option[]`
+
+```ts
+type Option =
+  | {
+      title: string;
+      icon?: React.ReactNode;
+      onClick?: () => void;
+    }
+  | {
+      title: string;
+      href: string;
+      icon?: React.ReactNode;
+    }
+  | 'markdownLink'
+  | 'chatgpt'
+  | 'claude';
+```
+
 - **Default**: `['markdownLink', 'chatgpt', 'claude']`
 
 Customize the options in the dropdown menu, supports "Copy Markdown Link", [ChatGPT](https://chatgpt.com/) and [Claude](https://claude.ai) by default.

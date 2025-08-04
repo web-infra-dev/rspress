@@ -19,29 +19,30 @@ import {
 } from './LlmsViewOptions.module.scss';
 import { useMdUrl } from './useMdUrl';
 
+type Option =
+  | {
+      title: string;
+      icon?: React.ReactNode;
+      onClick?: () => void;
+    }
+  | {
+      title: string;
+      href: string;
+      icon?: React.ReactNode;
+    }
+  | 'markdownLink'
+  | 'chatgpt'
+  | 'claude';
+
 interface LlmsViewOptionsProps
   extends React.ButtonHTMLAttributes<HTMLButtonElement> {
   /**
    * Default options for the dropdown.
-   * @default ['chatgpt', 'claude']
+   * @default ['markdownLink', 'chatgpt', 'claude']
    * - 'chatgpt': Open in ChatGPT
    * - 'claude': Open in Claude
    */
-  options?: Array<
-    | {
-        title: string;
-        icon?: React.ReactNode;
-        onClick?: () => void;
-      }
-    | {
-        title: string;
-        href: string;
-        icon?: React.ReactNode;
-      }
-    | 'markdownLink'
-    | 'chatgpt'
-    | 'claude'
-  >;
+  options?: Option[];
   /**
    * Button text by language, used with `useLang`.
    * @default en: 'Open', zh: '打开'
