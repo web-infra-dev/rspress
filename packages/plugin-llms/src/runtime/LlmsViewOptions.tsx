@@ -13,7 +13,7 @@ import {
   dropdownItem,
   dropdownMenu,
   externalIcon,
-  githubIcon,
+  leftIcon,
   llmsViewOptionsContainer,
   rotated,
 } from './LlmsViewOptions.module.scss';
@@ -33,8 +33,9 @@ interface LlmsViewOptionsProps
         href: string;
         icon: React.ReactNode;
       }
-    | 'claude'
+    | 'markdownLink'
     | 'chatgpt'
+    | 'claude'
   >;
   /**
    * Button text by language, used with `useLang`.
@@ -105,14 +106,13 @@ const IconExternalLink = () => {
 };
 
 const LlmsViewOptions = ({
-  options = ['chatgpt', 'claude'],
+  options = ['markdownLink', 'chatgpt', 'claude'],
   text,
   textByLang = { en: 'Open', zh: '打开' },
 }: LlmsViewOptionsProps) => {
   const [isOpen, setIsOpen] = useState(false);
   const dropdownRef = useRef<HTMLButtonElement>(null);
 
-  // Close dropdown when clicking outside
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
       if (
@@ -141,11 +141,36 @@ const LlmsViewOptions = ({
   const items = useMemo(() => {
     const fullMarkdownUrl =
       typeof window !== 'undefined'
-        ? new URL(pathname, window.location.origin)
+        ? new URL(pathname, window.location.origin).toString()
         : 'loading';
     const q = `Read ${fullMarkdownUrl}, I want to ask questions about it.`;
 
     return {
+      markdownLink: {
+        title: isEn ? 'Copy Markdown link' : '复制 Markdown 链接',
+        icon: (
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            viewBox="0 0 24 24"
+            width="24"
+            height="24"
+          >
+            <g
+              fill="none"
+              stroke="black"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+            >
+              <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71" />
+              <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71" />
+            </g>
+          </svg>
+        ),
+        onClick: () => {
+          return navigator.clipboard.writeText(fullMarkdownUrl);
+        },
+      },
       chatgpt: {
         title: isEn ? 'Open in ChatGPT' : '在 ChatGPT 中打开',
         href: `https://chatgpt.com/?${new URLSearchParams({
@@ -205,10 +230,23 @@ const LlmsViewOptions = ({
             {options.map(item => {
               let displayItem = item as {
                 title: string;
-                href: string;
+                href?: string;
                 icon: React.ReactNode;
+                onClick?: () => void;
               };
-              if (item === 'chatgpt') {
+              if (item === 'markdownLink') {
+                displayItem = items.markdownLink;
+                return (
+                  <div
+                    key={displayItem.title}
+                    className={dropdownItem}
+                    onClick={displayItem.onClick}
+                  >
+                    <span className={leftIcon}>{displayItem.icon}</span>
+                    <span>{displayItem.title}</span>
+                  </div>
+                );
+              } else if (item === 'chatgpt') {
                 displayItem = items.chatgpt;
               } else if (item === 'claude') {
                 displayItem = items.claude;
@@ -221,7 +259,7 @@ const LlmsViewOptions = ({
                   target="_blank"
                   rel="noopener noreferrer"
                 >
-                  <span className={githubIcon}>{displayItem.icon}</span>
+                  <span className={leftIcon}>{displayItem.icon}</span>
                   <span>{displayItem.title}</span>
                   <span className={externalIcon}>
                     <IconExternalLink />
