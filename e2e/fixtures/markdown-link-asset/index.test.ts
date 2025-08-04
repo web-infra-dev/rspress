@@ -38,7 +38,7 @@ test.describe('basic test', async () => {
       } else if (url.includes('plain.txt')) {
         expect(content).toContain('# Rspress');
       } else if (url.includes('hello.html')) {
-        expect(content).toContain(' <h1 id="hello-world">Hello world</h1>');
+        expect(content).toContain('<h1 id="hello-world">Hello world</h1>');
       }
       await page.goBack();
     }
