@@ -287,11 +287,17 @@ interface LlmsViewOptionsProps
   options?: Array<
     | {
         title: string;
-        href: string;
-        icon: React.ReactNode;
+        icon?: React.ReactNode;
+        onClick?: () => void;
       }
-    | 'claude'
+    | {
+        title: string;
+        icon?: React.ReactNode;
+        href: string;
+      }
+    | 'markdownLink'
     | 'chatgpt'
+    | 'claude'
   >;
   textByLang?: Record<string, string>;
   text?: string;
@@ -301,9 +307,9 @@ interface LlmsViewOptionsProps
 #### options
 
 - **类型**：`Array<{ title: string; href: string; icon: React.ReactNode } | 'claude' | 'chatgpt'>`
-- **默认值**：`['chatgpt', 'claude']`
+- **默认值**：`['markdownLink', 'chatgpt', 'claude']`
 
-自定义下拉菜单中的选项，默认支持 [Chatgpt](https://chatgpt.com/) 和 [Claude](https://claude.ai)。
+自定义下拉菜单中的选项，默认支持 “复制 Markdown 链接”、[Chatgpt](https://chatgpt.com/) 和 [Claude](https://claude.ai)。
 
 #### textByLang
 

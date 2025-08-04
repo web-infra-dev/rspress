@@ -30,8 +30,13 @@ interface LlmsViewOptionsProps
   options?: Array<
     | {
         title: string;
+        icon?: React.ReactNode;
+        onClick?: () => void;
+      }
+    | {
+        title: string;
         href: string;
-        icon: React.ReactNode;
+        icon?: React.ReactNode;
       }
     | 'markdownLink'
     | 'chatgpt'
@@ -231,40 +236,42 @@ const LlmsViewOptions = ({
               let displayItem = item as {
                 title: string;
                 href?: string;
-                icon: React.ReactNode;
+                icon?: React.ReactNode;
                 onClick?: () => void;
               };
               if (item === 'markdownLink') {
                 displayItem = items.markdownLink;
-                return (
-                  <div
-                    key={displayItem.title}
-                    className={dropdownItem}
-                    onClick={displayItem.onClick}
-                  >
-                    <span className={leftIcon}>{displayItem.icon}</span>
-                    <span>{displayItem.title}</span>
-                  </div>
-                );
               } else if (item === 'chatgpt') {
                 displayItem = items.chatgpt;
               } else if (item === 'claude') {
                 displayItem = items.claude;
               }
+              if (displayItem.href) {
+                return (
+                  <a
+                    key={displayItem.title}
+                    className={dropdownItem}
+                    href={displayItem.href}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    <span className={leftIcon}>{displayItem.icon}</span>
+                    <span>{displayItem.title}</span>
+                    <span className={externalIcon}>
+                      <IconExternalLink />
+                    </span>
+                  </a>
+                );
+              }
               return (
-                <a
+                <div
                   key={displayItem.title}
                   className={dropdownItem}
-                  href={displayItem.href}
-                  target="_blank"
-                  rel="noopener noreferrer"
+                  onClick={displayItem.onClick}
                 >
                   <span className={leftIcon}>{displayItem.icon}</span>
                   <span>{displayItem.title}</span>
-                  <span className={externalIcon}>
-                    <IconExternalLink />
-                  </span>
-                </a>
+                </div>
               );
             })}
           </div>
