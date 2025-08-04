@@ -216,9 +216,12 @@ export const parseUrl = (
 };
 
 // decodeURIComponent will throw error if the url is not valid
-// this function will replace the invalid characters with %25
+// this function will replace invalid % characters with %25
 export function safeDecodeURIComponent(uri: string) {
-  return decodeURIComponent(uri.replace(/%/g, '%25'));
+  // Replace invalid % characters with %25
+  // Only replace % that are not followed by two valid hex digits
+  const processedUri = uri.replace(/%(?![0-9A-Fa-f]{2})/g, '%25');
+  return decodeURIComponent(processedUri);
 }
 
 export function normalizeHref(url?: string, cleanUrls = false) {
