@@ -38,15 +38,15 @@
     "unist-util-visit": "^5.0.0"
   },
   "devDependencies": {
-    "@microsoft/api-extractor": "^7.52.9",
-    "@rslib/core": "0.11.0",
+    "@microsoft/api-extractor": "^7.52.10",
+    "@rslib/core": "0.11.1",
     "@types/hast": "^3.0.4",
     "@types/mdast": "^4.0.4",
     "@types/node": "^22.8.1",
-    "@types/react": "^19.1.8",
-    "@types/react-dom": "^19.1.6",
-    "react": "^19.1.0",
-    "react-dom": "^19.1.0",
+    "@types/react": "^19.1.9",
+    "@types/react-dom": "^19.1.7",
+    "react": "^19.1.1",
+    "react-dom": "^19.1.1",
     "react-router-dom": "^6.29.0",
     "rsbuild-plugin-publint": "^0.3.2",
     "typescript": "^5.8.2"
