@@ -51,7 +51,16 @@ describe('test shared utils', () => {
     expect(normalizeHref('/guide')).toBe('/guide.html');
     expect(normalizeHref('/guide/index.html')).toBe('/guide/index.html');
     expect(normalizeHref('/guide/index')).toBe('/guide/index.html');
+    expect(normalizeHref('/guide/in%20')).toBe('/guide/in .html');
+    expect(normalizeHref('/guide/in%2')).toBe('/guide/in%2.html');
+    expect(normalizeHref('/guide/in%de')).toBe('/guide/in%de.html');
+    expect(normalizeHref('/guide/in%d')).toBe('/guide/in%d.html');
+    expect(normalizeHref('/guide/in%20dex')).toBe('/guide/in dex.html');
+    expect(normalizeHref('/guide/in%2dex')).toBe('/guide/in-ex.html');
     expect(normalizeHref('/guide/in%dex')).toBe('/guide/in%dex.html');
+    expect(normalizeHref('/guide/in%dx')).toBe('/guide/in%dx.html');
+    expect(normalizeHref('/guide/%20dex')).toBe('/guide/ dex.html');
+    expect(normalizeHref('/guide/%2dex')).toBe('/guide/-ex.html');
     expect(normalizeHref('https://example.com/foo')).toBe(
       'https://example.com/foo',
     );

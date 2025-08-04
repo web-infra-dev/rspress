@@ -215,13 +215,89 @@ export const parseUrl = (
   };
 };
 
-// decodeURIComponent will throw error if the url is not valid
-// this function will replace invalid % characters with %25
+/**
+ * Safe URI decoding function
+ *
+ * decodeURIComponent throws errors when encountering invalid URI encoding.
+ * This function ensures successful decoding by intelligently identifying and fixing invalid % encodings.
+ *
+ * @param uri - The URI string to decode
+ * @returns The decoded string
+ *
+ * @example
+ * ```typescript
+ * // Valid URI encoding - decode directly
+ * safeDecodeURIComponent('/guide/%E4%B8%AD%E6%96%87') // '/guide/中文'
+ * safeDecodeURIComponent('/guide/hello%20world') // '/guide/hello world'
+ *
+ * // Invalid % encoding - smart fix then decode
+ * safeDecodeURIComponent('/guide/in%dex') // '/guide/in%25dex' -> '/guide/in%dex'
+ * safeDecodeURIComponent('/guide/in%de') // '/guide/in%25de' -> '/guide/in%de'
+ * safeDecodeURIComponent('/guide/test%') // '/guide/test%25' -> '/guide/test%'
+ * ```
+ *
+ * Processing strategy:
+ * 1. First attempt direct decoding, return result if successful
+ * 2. If failed, check each %xx sequence individually:
+ *    - Check if it's a valid hexadecimal format
+ *    - Try to decode the specific %xx sequence
+ *    - If decoding fails (e.g., invalid UTF-8 sequence), replace with %25xx
+ *    - If format is incorrect, replace % with %25
+ * 3. Finally decode the fixed string
+ */
 export function safeDecodeURIComponent(uri: string) {
-  // Replace invalid % characters with %25
-  // Only replace % that are not followed by two valid hex digits
-  const processedUri = uri.replace(/%(?![0-9A-Fa-f]{2})/g, '%25');
-  return decodeURIComponent(processedUri);
+  try {
+    // Step 1: Attempt direct decoding - this handles all valid URI encodings
+    return decodeURIComponent(uri);
+  } catch {
+    // Step 2: Direct decoding failed, need to identify and fix problematic sequences
+    // Split the URI by '%' to process each potential encoding sequence separately
+    const parts = uri.split('%');
+
+    if (parts.length === 1) {
+      // Edge case: No '%' found in string (shouldn't happen in normal flow)
+      return uri;
+    }
+
+    // Start with the first part (before any '%' character)
+    let result = parts[0];
+
+    // Process each part that comes after a '%' character
+    for (let i = 1; i < parts.length; i++) {
+      const part = parts[i];
+
+      if (part.length >= 2) {
+        // Extract potential hex digits (first 2 characters)
+        const hexPart = part.substring(0, 2);
+        // Extract remaining characters after the hex part
+        const remaining = part.substring(2);
+
+        // Validate if the hex part contains exactly 2 valid hexadecimal characters
+        if (/^[0-9A-Fa-f]{2}$/.test(hexPart)) {
+          // Valid hex format found, test if this specific sequence can be decoded
+          try {
+            // Attempt to decode just this %xx sequence
+            decodeURIComponent('%' + hexPart);
+            // Success: this is a valid encoding, keep it unchanged
+            result += '%' + hexPart + remaining;
+          } catch {
+            // Failure: valid hex format but invalid UTF-8 sequence (e.g., %de)
+            // Replace the '%' with '%25' to escape it properly
+            result += '%25' + hexPart + remaining;
+          }
+        } else {
+          // Invalid hex format (e.g., %dx, %1g), escape the '%' character
+          result += '%25' + part;
+        }
+      } else {
+        // Less than 2 characters after '%' (e.g., %x, %), escape the '%' character
+        result += '%25' + part;
+      }
+    }
+
+    // Step 3: Decode the fixed string (should now be safe)
+    return decodeURIComponent(result);
+  }
 }
 
 export function normalizeHref(url?: string, cleanUrls = false) {
