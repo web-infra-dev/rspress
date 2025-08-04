@@ -8,7 +8,7 @@
     "preview": "rspress preview"
   },
   "dependencies": {
-    "@rspress/core": "^2.0.0-beta.22"
+    "@rspress/core": "^2.0.0-beta.24"
   },
   "devDependencies": {
     "@types/node": "^22.8.1"
