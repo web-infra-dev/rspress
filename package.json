@@ -55,7 +55,7 @@
     "vitest": "2.1.9",
     "zx": "^8.7.2"
   },
-  "packageManager": "pnpm@10.13.1",
+  "packageManager": "pnpm@10.14.0",
   "engines": {
     "node": ">=18.0.0"
   },
