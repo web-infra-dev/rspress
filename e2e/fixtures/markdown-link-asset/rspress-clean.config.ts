@@ -5,6 +5,11 @@ export default defineConfig({
   base: '/base/',
   root: path.join(__dirname, 'doc'),
   route: {
-    cleanUrls: false,
+    cleanUrls: true,
+  },
+  markdown: {
+    link: {
+      checkDeadLinks: false,
+    },
   },
 });

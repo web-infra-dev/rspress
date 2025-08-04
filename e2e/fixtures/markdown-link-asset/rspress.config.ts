@@ -7,4 +7,9 @@ export default defineConfig({
   route: {
     cleanUrls: false,
   },
+  markdown: {
+    link: {
+      checkDeadLinks: false,
+    },
+  },
 });

@@ -117,7 +117,7 @@ export function Link(props: LinkProps) {
         clearTimeout(timer);
         nprogress.done();
       } else {
-        window.location.href = withBaseUrl;
+        window.location.assign(withBaseUrl);
         return;
       }
     }

@@ -231,7 +231,8 @@ export function normalizeHref(url?: string, cleanUrls = false) {
 
   // 1. cleanUrls: false
   if (!cleanUrls) {
-    if (!cleanUrl.endsWith('.html')) {
+    const hasExt = /\.\w+$/.test(cleanUrl);
+    if (!hasExt) {
       if (cleanUrl.endsWith('/')) {
         cleanUrl += 'index.html';
       } else {
