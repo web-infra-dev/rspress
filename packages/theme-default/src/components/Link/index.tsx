@@ -116,6 +116,9 @@ export function Link(props: LinkProps) {
         await matchedRoute.preload();
         clearTimeout(timer);
         nprogress.done();
+      } else {
+        window.location.href = withBaseUrl;
+        return;
       }
     }
     onNavigate?.();
