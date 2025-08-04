@@ -46,7 +46,7 @@
     "@rspress/plugin-playground": "workspace:*",
     "@types/babel__core": "^7.20.5",
     "@types/babel__standalone": "^7.1.9",
-    "@types/babel__traverse": "^7.20.7",
+    "@types/babel__traverse": "^7.28.0",
     "@types/mdast": "^4.0.4",
     "@types/node": "^22.8.1",
     "@types/react": "^19.1.9",
