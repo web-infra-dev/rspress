@@ -6,10 +6,10 @@ import type {
   Sidebar,
 } from '@rspress/core';
 
+/**
+ * @default { name: "llms.txt" }
+ */
 export interface LlmsTxt {
-  /**
-   * @default "llms.txt"
-   */
   name: string;
   onTitleGenerate?: (context: {
     title: string | undefined;
@@ -21,15 +21,15 @@ export interface LlmsTxt {
 
 export interface MdFiles {
   /**
-   * @default true
+   * @default false
    */
   mdxToMd: boolean;
 }
 
+/**
+ * @default { name: 'llms-full.txt' }
+ */
 export interface LlmsFullTxt {
-  /**
-   * @default "llms-full.txt"
-   */
   name: string;
 }
 

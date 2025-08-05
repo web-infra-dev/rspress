@@ -284,12 +284,45 @@ function organizeBySidebar(sidebar: Sidebar, pages: PageIndexInfo[]) {
   });
 }
 
+function getDefaultOptions(
+  lang: string | undefined,
+  langs: string[],
+): RspressPluginLlmsOptions {
+  if (!lang || langs.length === 0) {
+    return {};
+  }
+  return langs.map(l => {
+    if (l === lang) {
+      return {
+        llmsTxt: {
+          name: 'llms.txt',
+        },
+        llmsFullTxt: {
+          name: 'llms-full.txt',
+        },
+        include({ page }) {
+          return page.lang === l;
+        },
+      };
+    }
+    return {
+      llmsTxt: {
+        name: `${l}/llms.txt`,
+      },
+      llmsFullTxt: {
+        name: `${l}/llms-full.txt`,
+      },
+      include({ page }) {
+        return page.lang === l;
+      },
+    };
+  });
+}
+
 /**
  * A plugin for rspress to generate llms.txt, llms-full.txt, md files to let llm understand your website.
  */
-export function pluginLlms(
-  options: RspressPluginLlmsOptions = {},
-): RspressPlugin {
+export function pluginLlms(options?: RspressPluginLlmsOptions): RspressPlugin {
   const baseRef: { current: string } = { current: '' };
   const docDirectoryRef: { current: string } = { current: '' };
   const titleRef: { current: string | undefined } = { current: '' };
@@ -324,6 +357,62 @@ export function pluginLlms(
         routes.push(..._routes);
       }
     },
+    config(config) {
+      config.themeConfig = config.themeConfig || {};
+      config.themeConfig.locales =
+        config.themeConfig.locales || config.locales || [];
+
+      const langs = config.themeConfig.locales.map(locale => locale.lang);
+      let mergedOptions: RspressPluginLlmsOptions;
+      if (options === undefined) {
+        mergedOptions = getDefaultOptions(config.lang, langs);
+      } else {
+        mergedOptions = options;
+      }
+
+      if (!config.builderConfig) {
+        config.builderConfig = {};
+      }
+      if (!config.builderConfig.plugins) {
+        config.builderConfig.plugins = [];
+      }
+
+      config.builderConfig.plugins.push(
+        ...(Array.isArray(mergedOptions)
+          ? mergedOptions.map((item, index) => {
+              return rsbuildPluginLlms({
+                pageDataList,
+                routes,
+                titleRef,
+                descriptionRef,
+                langRef,
+                sidebar,
+                routeServiceRef,
+                nav,
+                baseRef,
+                disableSSGRef,
+                rspressPluginOptions: item,
+                index,
+              });
+            })
+          : [
+              rsbuildPluginLlms({
+                pageDataList,
+                routes,
+                titleRef,
+                descriptionRef,
+                langRef,
+                sidebar,
+                routeServiceRef,
+                nav,
+                baseRef,
+                disableSSGRef,
+                rspressPluginOptions: mergedOptions,
+              }),
+            ]),
+      );
+      return config;
+    },
     beforeBuild(config) {
       disableSSGRef.current = config.ssg === false;
 
@@ -356,42 +445,6 @@ export function pluginLlms(
       langRef.current = config.lang ?? '';
       baseRef.current = config.base ?? '/';
       docDirectoryRef.current = config.root ?? 'docs';
-    },
-    builderConfig: {
-      plugins: [
-        ...[
-          Array.isArray(options)
-            ? options.map((item, index) => {
-                return rsbuildPluginLlms({
-                  pageDataList,
-                  routes,
-                  titleRef,
-                  descriptionRef,
-                  langRef,
-                  sidebar,
-                  routeServiceRef,
-                  nav,
-                  baseRef,
-                  disableSSGRef,
-                  rspressPluginOptions: item,
-                  index,
-                });
-              })
-            : rsbuildPluginLlms({
-                pageDataList,
-                routes,
-                titleRef,
-                descriptionRef,
-                langRef,
-                sidebar,
-                routeServiceRef,
-                nav,
-                baseRef,
-                disableSSGRef,
-                rspressPluginOptions: options,
-              }),
-        ],
-      ],
     },
   };
 }

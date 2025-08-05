@@ -49,7 +49,7 @@ function getCustomMDXComponent() {
     return (
       <>
         <H1 {...props} />
-        {/* [!code highlight:4] */}
+        {/* [!code highlight:5] */}
         <LlmsContainer>
           <LlmsCopyButton />
           {/* LlmsViewOptions 组件可根据需要添加  */}
@@ -85,19 +85,75 @@ export * from '@rspress/core/theme';
 
 这个插件接受一个对象参数，类型如下:
 
+- **类型**:
+
+<details>
+
 ```ts
+interface LlmsTxt {
+  name: string;
+  onTitleGenerate?: (context: {
+    title: string | undefined;
+    description: string | undefined;
+  }) => string;
+  onLineGenerate?: (page: PageIndexInfo) => string;
+  onAfterLlmsTxtGenerate?: (llmsTxtContent: string) => string;
+}
+
+interface MdFiles {
+  mdxToMd: boolean;
+}
+
+interface LlmsFullTxt {
+  name: string;
+}
 export interface Options {
-  llmsTxt?: boolean | LlmsTxt;
-  mdFiles?: boolean;
-  llmsFullTxt?: boolean;
+  llmsTxt?: false | LlmsTxt;
+  mdFiles?: false | MdFiles;;
+  llmsFullTxt?: false | LlmsFullTxt;
   include?: (context: { page: PageIndexInfo }) => boolean;
   exclude?: (context: { page: PageIndexInfo }) => boolean;
 }
 ```
 
+</details>
+
+- **默认值**:
+
+当未开启 [国际化](/guide/default-theme/i18n) 时，默认值为:
+
+```ts
+{
+  llmsTxt: { name: 'llms.txt' },
+  llmsFullTxt: { name: 'llms-full.txt' },
+  mdFiles: true
+}
+```
+
+当开启 [国际化](/guide/default-theme/i18n) 时，会使用[多组配置](#group)，默认值为:
+
+```ts
+[
+  {
+    llmsTxt: { name: 'llms.txt' },
+    llmsFullTxt: { name: 'llms-full.txt' },
+    mdFiles: true,
+    include: ({ page }) => page.lang === config.lang,
+  },
+  // 根据 locales 配置自动生成其他语言
+  {
+    llmsTxt: { name: `${lang}/llms.txt` },
+    llmsFullTxt: { name: `${lang}/llms-full.txt` },
+    mdFiles: true,
+    include: ({ page }) => page.lang === lang,
+  },
+  // ...
+];
+```
+
 ### llmsTxt
 
-- 类型: `false | LlmsTxt`
+- **类型**: `false | LlmsTxt`
 
 ```ts
 import type { PageIndexInfo } from '@rspress/core';
@@ -113,7 +169,7 @@ export interface LlmsTxt {
 }
 ```
 
-- 默认值: `{ name: 'llms.txt' }`
+- **默认值**: `{ name: 'llms.txt' }`
 
 是否生成 llms.txt 文件，或者通过 hooks 自定义生成 llms.txt 文件。
 
@@ -172,7 +228,7 @@ Rspress is a static site generator based on Rsbuild and it can generate llms.txt
 
 ### mdFiles
 
-- 类型: `false | MdFiles`
+- **类型**: `false | MdFiles`
 
 ```ts
 export interface MdFiles {
@@ -180,20 +236,20 @@ export interface MdFiles {
 }
 ```
 
-- 默认值: `{ mdxToMd: true }`
+- **默认值**: `{ mdxToMd: false }`
 
 是否生成对应路由的 markdown 文件，当设置为 `false` 时，不会生成对应路由的 markdown 文件。
 
 #### mdxToMd
 
-- 类型: `boolean`
-- 默认值: `false`
+- **类型**: `boolean`
+- **默认值**: `false`
 
 是否将 mdx 内容转换为 md 内容，如果启用，会将 mdx 文件通过一组默认策略转换为 md 文件，但可能会有一定的信息丢失。
 
 ### llmsFullTxt
 
-- 类型: `false | LlmsFullTxt`
+- **类型**: `false | LlmsFullTxt`
 
 ```ts
 export interface LlmsFullTxt {
@@ -201,16 +257,15 @@ export interface LlmsFullTxt {
 }
 ```
 
-- 默认值: `{ name: 'llms-full.txt' }`
+- **默认值**: `{ name: 'llms-full.txt' }`
 
 是否生成 llms-full.txt 文件，当设置为 `false` 时，不会生成 `llms-full.txt` 文件。
 
 ### include
 
-- 类型: `(context: { page: PageIndexInfo }) => boolean`
-- 默认值: `(context) => context.page.lang === config.lang`
+- **类型**: `(context: { page: PageIndexInfo }) => boolean`
 
-是否生成时包含某些页面，默认只会包含默认语言对应的页面，一般用于精简 llms.txt。
+是否生成时包含某些页面，一般用于精简 llms.txt。
 
 - 示例：
 
@@ -218,6 +273,12 @@ export interface LlmsFullTxt {
 
 ```ts
 pluginLlms({
+  llmsTxt: {
+    name: 'llms.txt',
+  },
+  llmsFullTxt: {
+    name: 'llms-full.txt',
+  },
   include: ({ page }) => {
     return page.lang === 'en';
   },
@@ -226,8 +287,7 @@ pluginLlms({
 
 ### exclude
 
-- 类型: `(context: { page: PageIndexInfo }) => boolean`
-- 默认值: `undefined`
+- **类型**: `(context: { page: PageIndexInfo }) => boolean`
 
 是否生成时排除某些页面，会在 `include` 之后执行。
 
@@ -237,6 +297,12 @@ pluginLlms({
 
 ```ts
 pluginLlms({
+  llmsTxt: {
+    name: 'llms.txt',
+  },
+  llmsFullTxt: {
+    name: 'llms-full.txt',
+  },
   exclude: ({ page }) => {
     return page.routePath === '/foo';
   },
@@ -344,11 +410,9 @@ type Option =
 
 按钮上的文本，优先级比 `textByLang` 高。
 
-## 同时生成多组 `llms.txt`
+## 同时生成多组 `llms.txt` \{#group}
 
-由于大模型只需要一组 `llms.txt` 即可理解你网站，所以默认只会包含默认语言对应的页面。但某些情况下，你可能生成多组 `llms.txt`，例如多语言站点。
-
-此时，你可以通过传入一个数组来实现：
+某些情况下，你可能生成多组 `llms.txt`，例如多语言站点。此时，你可以通过传入一个数组来实现。
 
 - 示例：
 
