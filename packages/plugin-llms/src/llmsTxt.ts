@@ -113,4 +113,4 @@ url: ${routePathToMdPath(page.routePath, base)}
   return lines.join('\n');
 }
 
-export { generateLlmsTxt, generateLlmsFullTxt };
+export { routePathToMdPath, generateLlmsTxt, generateLlmsFullTxt };
