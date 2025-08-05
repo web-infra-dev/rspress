@@ -1,5 +1,5 @@
 {
-  "name": "rspress-doc-template",
+  "name": "@rspress-fixture/markdown-link-asset",
   "version": "1.0.0",
   "private": true,
   "scripts": {
@@ -8,7 +8,7 @@
     "preview": "rspress preview"
   },
   "dependencies": {
-    "@rspress/core": "^2.0.0-beta.24"
+    "@rspress/core": "workspace:*"
   },
   "devDependencies": {
     "@types/node": "^22.8.1"
