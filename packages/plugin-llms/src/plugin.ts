@@ -364,7 +364,7 @@ export function pluginLlms(options?: RspressPluginLlmsOptions): RspressPlugin {
 
       const langs = config.themeConfig.locales.map(locale => locale.lang);
       let mergedOptions: RspressPluginLlmsOptions;
-      if (typeof options === 'undefined') {
+      if (options === undefined) {
         mergedOptions = getDefaultOptions(config.lang, langs);
       } else {
         mergedOptions = options;
