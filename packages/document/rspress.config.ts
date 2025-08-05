@@ -41,26 +41,7 @@ export default defineConfig({
     pluginAlgolia({
       verificationContent: '8F5BFE50E65777F1',
     }),
-    pluginLlms([
-      {
-        llmsTxt: {
-          name: 'llms.txt',
-        },
-        llmsFullTxt: {
-          name: 'llms-full.txt',
-        },
-        include: ({ page }) => page.lang === 'en',
-      },
-      {
-        llmsTxt: {
-          name: 'zh/llms.txt',
-        },
-        llmsFullTxt: {
-          name: 'zh/llms-full.txt',
-        },
-        include: ({ page }) => page.lang === 'zh',
-      },
-    ]),
+    pluginLlms(),
   ],
   builderConfig: {
     plugins: [
