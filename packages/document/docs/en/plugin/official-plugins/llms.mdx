@@ -85,19 +85,72 @@ This is a sample document.
 
 This plugin accepts an object parameter with the following type:
 
+- **Type**:
+
 ```ts
+interface LlmsTxt {
+  name: string;
+  onTitleGenerate?: (context: {
+    title: string | undefined;
+    description: string | undefined;
+  }) => string;
+  onLineGenerate?: (page: PageIndexInfo) => string;
+  onAfterLlmsTxtGenerate?: (llmsTxtContent: string) => string;
+}
+
+interface MdFiles {
+  mdxToMd: boolean;
+}
+
+interface LlmsFullTxt {
+  name: string;
+}
+
 export interface Options {
-  llmsTxt?: boolean | LlmsTxt;
-  mdFiles?: boolean;
-  llmsFullTxt?: boolean;
+  llmsTxt?: false | LlmsTxt;
+  mdFiles?: false | MdFiles;
+  llmsFullTxt?: false | LlmsFullTxt;
   include?: (context: { page: PageIndexInfo }) => boolean;
   exclude?: (context: { page: PageIndexInfo }) => boolean;
 }
 ```
 
+- **Default**:
+
+When [internationalization](/guide/default-theme/i18n) is not enabled, the default value is:
+
+```ts
+{
+  llmsTxt: { name: 'llms.txt' },
+  llmsFullTxt: { name: 'llms-full.txt' },
+  mdFiles: true
+}
+```
+
+When [internationalization](/guide/default-theme/i18n) is enabled, it will use [multiple configurations](#group), with the default value being:
+
+```ts
+[
+  {
+    llmsTxt: { name: 'llms.txt' },
+    llmsFullTxt: { name: 'llms-full.txt' },
+    mdFiles: true,
+    include: ({ page }) => page.lang === config.lang,
+  },
+  // Automatically generate other languages based on locales configuration
+  {
+    llmsTxt: { name: `${lang}/llms.txt` },
+    llmsFullTxt: { name: `${lang}/llms-full.txt` },
+    mdFiles: true,
+    include: ({ page }) => page.lang === lang,
+  },
+  // ...
+];
+```
+
 ### llmsTxt
 
-- Type: `false | LlmsTxt`
+- **Type**: `false | LlmsTxt`
 
 ```ts
 import type { PageIndexInfo } from '@rspress/core';
@@ -113,7 +166,7 @@ export interface LlmsTxt {
 }
 ```
 
-- Default: `{ name: 'llms.txt' }`
+- **Default**: `{ name: 'llms.txt' }`
 
 Whether to generate the llms.txt file, or to customize the llms.txt file through hooks.
 
@@ -172,7 +225,7 @@ Rspress is a static site generator based on Rsbuild and it can generate llms.txt
 
 ### mdFiles
 
-- Type: `false | MdFiles`
+- **Type**: `false | MdFiles`
 
 ```ts
 export interface MdFiles {
@@ -180,7 +233,7 @@ export interface MdFiles {
 }
 ```
 
-- Default: `{ mdxToMd: true }`
+- **Default**: `{ mdxToMd: false }`
 
 Whether to generate a markdown file for the corresponding route, when set to `false`, the markdown file for the corresponding route will not be generated.
 
@@ -193,7 +246,7 @@ Whether to convert mdx content to md content. If enabled, mdx files will be conv
 
 ### llmsFullTxt
 
-- Type: `false | LlmsFullTxt`
+- **Type**: `false | LlmsFullTxt`
 
 ```ts
 export interface LlmsFullTxt {
@@ -201,16 +254,15 @@ export interface LlmsFullTxt {
 }
 ```
 
-- Default: `{ name: 'llms-full.txt' }`
+- **Default**: `{ name: 'llms-full.txt' }`
 
 Whether to generate the llms-full.txt file, the `llms-full.txt` file will not be generated when set to `false`.
 
 ### include
 
-- Type: `(context: { page: PageIndexInfo }) => boolean`
-- Default: `(context) => context.page.lang === config.lang`
+- **Type**: `(context: { page: PageIndexInfo }) => boolean`
 
-Whether to include certain pages when generated will only include pages corresponding to the default language by default, which is generally used to simplify llms.txt.
+Whether to include certain pages when generated, generally used to simplify llms.txt.
 
 - Example:
 
@@ -218,6 +270,12 @@ Generate `llms.txt` and other related files for pages whose language is English 
 
 ```ts
 pluginLlms({
+  llmsTxt: {
+    name: 'llms.txt',
+  },
+  llmsFullTxt: {
+    name: 'llms-full.txt',
+  },
   include: ({ page }) => {
     return page.lang === 'en';
   },
@@ -226,8 +284,7 @@ pluginLlms({
 
 ### exclude
 
-- Type: `(context: { page: PageIndexInfo }) => boolean`
-- Default: `undefined`
+- **Type**: `(context: { page: PageIndexInfo }) => boolean`
 
 Whether to exclude certain pages, it will be executed after `include`.
 
@@ -237,6 +294,12 @@ Exclude a single page under the `/foo` route:
 
 ```ts
 pluginLlms({
+  llmsTxt: {
+    name: 'llms.txt',
+  },
+  llmsFullTxt: {
+    name: 'llms-full.txt',
+  },
   exclude: ({ page }) => {
     return page.routePath === '/foo';
   },
@@ -343,7 +406,7 @@ Replace the text on the button according to the corresponding language.
 
 Text on the button, has higher priority than `textByLang`.
 
-## Generate multiple groups of `llms.txt` at the same time
+## Generate multiple groups of `llms.txt` at the same time \{#group}
 
 Since the llms only requires a set of `llms.txt` to understand your website, it will only contain pages corresponding to the default language by default. But in some cases, you may generate multiple groups of `llms.txt`, such as multilingual sites.
 
