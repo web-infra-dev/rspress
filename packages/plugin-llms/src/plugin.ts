@@ -14,7 +14,11 @@ import type {
   SidebarSectionHeader,
 } from '@rspress/core';
 import { getSidebarDataGroup, logger, matchPath } from '@rspress/core';
-import { generateLlmsFullTxt, generateLlmsTxt } from './llmsTxt';
+import {
+  generateLlmsFullTxt,
+  generateLlmsTxt,
+  routePathToMdPath,
+} from './llmsTxt';
 import { normalizeMdFile } from './normalizeMdFile';
 import type {
   Options,
@@ -151,17 +155,10 @@ const rsbuildPluginLlms = ({
             ).toString();
           } catch (e) {
             // normalizeMdFile might have some edge cases, fallback to no flatten and plain mdx
-            logger.debug(e);
+            logger.debug('normalizeMdFile failed', pageData.routePath, e);
             mdContent = content;
-            return;
           }
-          // @ts-ignore
-          pageData.mdContent = mdContent;
-          const outFilePath = `${
-            pageData.routePath.endsWith('/')
-              ? `${pageData.routePath}index`
-              : pageData.routePath
-          }.md`;
+          const outFilePath = routePathToMdPath(pageData.routePath, '');
           mdContents[outFilePath] = mdContent.toString();
         }) ?? [],
       );
