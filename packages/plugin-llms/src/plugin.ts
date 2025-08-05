@@ -289,7 +289,7 @@ function getDefaultOptions(
   langs: string[],
 ): RspressPluginLlmsOptions {
   if (!lang || langs.length === 0) {
-    return [];
+    return {};
   }
   return langs.map(l => {
     if (l === lang) {
