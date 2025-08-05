@@ -49,7 +49,7 @@ function getCustomMDXComponent() {
     return (
       <>
         <H1 {...props} />
-        {/* [!code highlight:4] */}
+        {/* [!code highlight:5] */}
         <LlmsContainer>
           <LlmsCopyButton />
           {/* LlmsViewOptions 组件可根据需要添加  */}
@@ -73,6 +73,8 @@ export * from '@rspress/core/theme';
 ```mdx title="docs/hello-world.mdx"
 # Hello world
 
+<!-- [!code highlight:4] -->
+
 <LlmsContainer>
   <LlmsCopyButton />
   <LlmsViewOptions /> {/* LlmsViewOptions 组件可根据需要添加  */}
@@ -86,6 +88,8 @@ export * from '@rspress/core/theme';
 这个插件接受一个对象参数，类型如下:
 
 - **类型**:
+
+<details>
 
 ```ts
 interface LlmsTxt {
@@ -113,6 +117,8 @@ export interface Options {
   exclude?: (context: { page: PageIndexInfo }) => boolean;
 }
 ```
+
+</details>
 
 - **默认值**:
 

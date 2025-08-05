@@ -49,7 +49,7 @@ function getCustomMDXComponent() {
     return (
       <>
         <H1 {...props} />
-        {/* [!code highlight:4] */}
+        {/* [!code highlight:5] */}
         <LlmsContainer>
           <LlmsCopyButton />
           {/* LlmsViewOptions component can be added as needed  */}
@@ -73,6 +73,8 @@ Add a copy button to specific pages, example:
 ```mdx title="docs/hello-world.mdx"
 # Hello world
 
+<!-- [!code highlight:4] -->
+
 <LlmsContainer>
   <LlmsCopyButton />
   <LlmsViewOptions /> {/* LlmsViewOptions component can be added as needed  */}
@@ -86,6 +88,8 @@ This is a sample document.
 This plugin accepts an object parameter with the following type:
 
 - **Type**:
+
+<details>
 
 ```ts
 interface LlmsTxt {
@@ -114,6 +118,8 @@ export interface Options {
   exclude?: (context: { page: PageIndexInfo }) => boolean;
 }
 ```
+
+</details>
 
 - **Default**:
 
