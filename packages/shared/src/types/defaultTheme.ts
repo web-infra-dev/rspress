@@ -299,6 +299,7 @@ export type SocialLinkIcon =
   | 'gitlab'
   | 'X'
   | 'bluesky'
+  | 'npm'
   | { svg: string };
 
 // footer --------------------------------------------------------------------
