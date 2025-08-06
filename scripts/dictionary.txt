@@ -121,6 +121,7 @@ rsfamily
 rslib
 rslog
 rspack
+rslint
 rspress
 rstack
 rstest
