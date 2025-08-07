@@ -56,6 +56,18 @@ export async function walk(
     hintNavJsonChangeThenPanic(metaConfig, workDir, docsDir);
   }
 
+  // 0. both `_nav.json` and `_meta.json` exist
+  if (isRootMetaJsonExist && isRootNavJsonExist) {
+    const navConfig = await scanNav(workDir, docsDir);
+    return {
+      nav: navConfig,
+      sidebar: {
+        '/': await scanSideMeta(workDir, docsDir, extensions),
+      },
+    };
+  }
+
+  // 1. only `_nav.json` exist (normal)
   if (isRootNavJsonExist) {
     const navConfig = await scanNav(workDir, docsDir);
     // find the `_meta.json` file in the subdirectory
@@ -87,17 +99,14 @@ export async function walk(
       }),
     );
 
-    if (isRootMetaJsonExist) {
-      const rootMetaConfig = await scanSideMeta(workDir, docsDir, extensions);
-      sidebarConfig['/'] = rootMetaConfig;
-    }
-
     return {
-      nav: navConfig as NavItem[],
+      nav: navConfig,
       sidebar: sidebarConfig,
     };
   }
 
+  // 2. only `_meta.json` exist
+  // 3. both `_nav.json` and `_meta.json` do not exist
   return {
     nav: [],
     sidebar: {

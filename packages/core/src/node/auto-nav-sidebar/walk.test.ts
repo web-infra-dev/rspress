@@ -235,44 +235,6 @@ describe('walk', () => {
               "text": "No meta",
             },
           ],
-          "/api": [
-            {
-              "_fileKey": "api/api",
-              "context": undefined,
-              "link": "/api/api",
-              "overviewHeaders": undefined,
-              "tag": undefined,
-              "text": "Api",
-            },
-            {
-              "_fileKey": "api/guide/index",
-              "collapsed": undefined,
-              "collapsible": undefined,
-              "context": undefined,
-              "items": [
-                {
-                  "_fileKey": "api/guide/getting-started",
-                  "context": undefined,
-                  "link": "/api/guide/getting-started",
-                  "overviewHeaders": undefined,
-                  "tag": undefined,
-                  "text": "Getting started",
-                },
-              ],
-              "link": "/api/guide/",
-              "overviewHeaders": undefined,
-              "tag": undefined,
-              "text": "Guide",
-            },
-            {
-              "_fileKey": "api/index",
-              "context": undefined,
-              "link": "/api/",
-              "overviewHeaders": undefined,
-              "tag": undefined,
-              "text": "No meta",
-            },
-          ],
         },
       }
     `);
