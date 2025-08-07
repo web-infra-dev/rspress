@@ -1,8 +1,7 @@
 // Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
 exports[`rehypeHeadAnchor > basic 1`] = `
-"const frontmatter = {};
-/*prettier-ignore-start*/
+"/*prettier-ignore-start*/
 /*prettier-ignore-end*/
 import {Fragment as _Fragment, jsx as _jsx, jsxs as _jsxs} from "react/jsx-runtime";
 import {useMDXComponents as _provideComponents} from "@mdx-js/react";
@@ -112,15 +111,14 @@ export default function MDXContent(props = {}) {
   }) : _createMdxContent(props);
 }
 
-MDXContent.__RSPRESS_PAGE_META = {};
 
+MDXContent.__RSPRESS_PAGE_META = {};
 MDXContent.__RSPRESS_PAGE_META["index.mdx"] = {"toc":[{"id":"custom-id","text":"title 1","depth":2},{"id":"custom-id","text":"title 1","depth":2},{"id":"title-2","text":"title 2","depth":2},{"id":"title-2-1","text":"title 2","depth":2},{"id":"title-2-2","text":"\`title\` 2","depth":2},{"id":"title-2-3","text":"Title 2","depth":2},{"id":"title-2-4","text":"**title** 2","depth":2},{"id":"title-2-5","text":"*title* 2","depth":2}],"title":"Guide","headingTitle":"Guide","frontmatter":{}};
 "
 `;
 
 exports[`rehypeHeadAnchor > should render inline code in title 1`] = `
-"const frontmatter = {};
-import {jsx as _jsx, jsxs as _jsxs} from "react/jsx-runtime";
+"import {jsx as _jsx, jsxs as _jsxs} from "react/jsx-runtime";
 import {useMDXComponents as _provideComponents} from "@mdx-js/react";
 function _createMdxContent(props) {
   const _components = {
@@ -155,15 +153,14 @@ export default function MDXContent(props = {}) {
   }) : _createMdxContent(props);
 }
 
-MDXContent.__RSPRESS_PAGE_META = {};
 
+MDXContent.__RSPRESS_PAGE_META = {};
 MDXContent.__RSPRESS_PAGE_META["inline-code.mdx"] = {"toc":[],"title":"Hello World \`inline code\`","headingTitle":"Hello World \`inline code\`","frontmatter":{}};
 "
 `;
 
 exports[`rehypeHeadAnchor > should support custom id 1`] = `
-"const frontmatter = {};
-import {jsx as _jsx, jsxs as _jsxs} from "react/jsx-runtime";
+"import {jsx as _jsx, jsxs as _jsxs} from "react/jsx-runtime";
 import {useMDXComponents as _provideComponents} from "@mdx-js/react";
 function _createMdxContent(props) {
   const _components = {
@@ -198,15 +195,14 @@ export default function MDXContent(props = {}) {
   }) : _createMdxContent(props);
 }
 
-MDXContent.__RSPRESS_PAGE_META = {};
 
+MDXContent.__RSPRESS_PAGE_META = {};
 MDXContent.__RSPRESS_PAGE_META["inline-code.mdx"] = {"toc":[],"title":"Hello World \`inline code\`","headingTitle":"Hello World \`inline code\`","frontmatter":{}};
 "
 `;
 
 exports[`rehypeHeadAnchor > should support mdx component with trim 1`] = `
-"const frontmatter = {};
-import {jsx as _jsx, jsxs as _jsxs} from "react/jsx-runtime";
+"import {jsx as _jsx, jsxs as _jsxs} from "react/jsx-runtime";
 import {useMDXComponents as _provideComponents} from "@mdx-js/react";
 function _createMdxContent(props) {
   const _components = {
@@ -244,8 +240,8 @@ function _missingMdxReference(id, component) {
   throw new Error("Expected " + (component ? "component" : "object") + " \`" + id + "\` to be defined: you likely forgot to import, pass, or provide it.");
 }
 
-MDXContent.__RSPRESS_PAGE_META = {};
 
+MDXContent.__RSPRESS_PAGE_META = {};
 MDXContent.__RSPRESS_PAGE_META["inline-code.mdx"] = {"toc":[],"title":"Hello World ","headingTitle":"Hello World ","frontmatter":{}};
 "
 `;

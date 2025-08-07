@@ -1,8 +1,7 @@
 // Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
 exports[`remark-container > Has space before ::: 1`] = `
-"const frontmatter = {};
-import {jsx as _jsx, jsxs as _jsxs} from "react/jsx-runtime";
+"import {jsx as _jsx, jsxs as _jsxs} from "react/jsx-runtime";
 import {useMDXComponents as _provideComponents} from "@mdx-js/react";
 function _createMdxContent(props) {
   const _components = {
@@ -37,15 +36,14 @@ export default function MDXContent(props = {}) {
   }) : _createMdxContent(props);
 }
 
-MDXContent.__RSPRESS_PAGE_META = {};
 
+MDXContent.__RSPRESS_PAGE_META = {};
 MDXContent.__RSPRESS_PAGE_META["index.mdx"] = {"toc":[],"title":"","headingTitle":"","frontmatter":{}};
 "
 `;
 
 exports[`remark-container > Has space before type 1`] = `
-"const frontmatter = {};
-import {jsx as _jsx, jsxs as _jsxs} from "react/jsx-runtime";
+"import {jsx as _jsx, jsxs as _jsxs} from "react/jsx-runtime";
 import {useMDXComponents as _provideComponents} from "@mdx-js/react";
 function _createMdxContent(props) {
   const _components = {
@@ -80,15 +78,14 @@ export default function MDXContent(props = {}) {
   }) : _createMdxContent(props);
 }
 
-MDXContent.__RSPRESS_PAGE_META = {};
 
+MDXContent.__RSPRESS_PAGE_META = {};
 MDXContent.__RSPRESS_PAGE_META["index.mdx"] = {"toc":[],"title":"","headingTitle":"","frontmatter":{}};
 "
 `;
 
 exports[`remark-container > No newline 1`] = `
-"const frontmatter = {};
-import {Fragment as _Fragment, jsx as _jsx, jsxs as _jsxs} from "react/jsx-runtime";
+"import {Fragment as _Fragment, jsx as _jsx, jsxs as _jsxs} from "react/jsx-runtime";
 import {useMDXComponents as _provideComponents} from "@mdx-js/react";
 function _createMdxContent(props) {
   const _components = {
@@ -127,15 +124,14 @@ export default function MDXContent(props = {}) {
   }) : _createMdxContent(props);
 }
 
-MDXContent.__RSPRESS_PAGE_META = {};
 
+MDXContent.__RSPRESS_PAGE_META = {};
 MDXContent.__RSPRESS_PAGE_META["index.mdx"] = {"toc":[],"title":"","headingTitle":"","frontmatter":{}};
 "
 `;
 
 exports[`remark-container > Use \\{title="foo"} as title 1`] = `
-"const frontmatter = {};
-import {jsx as _jsx, jsxs as _jsxs} from "react/jsx-runtime";
+"import {jsx as _jsx, jsxs as _jsxs} from "react/jsx-runtime";
 import {useMDXComponents as _provideComponents} from "@mdx-js/react";
 function _createMdxContent(props) {
   const _components = {
@@ -170,15 +166,14 @@ export default function MDXContent(props = {}) {
   }) : _createMdxContent(props);
 }
 
-MDXContent.__RSPRESS_PAGE_META = {};
 
+MDXContent.__RSPRESS_PAGE_META = {};
 MDXContent.__RSPRESS_PAGE_META["index.mdx"] = {"toc":[],"title":"","headingTitle":"","frontmatter":{}};
 "
 `;
 
 exports[`remark-container > Use \\{title='foo'} as title 1`] = `
-"const frontmatter = {};
-import {jsx as _jsx, jsxs as _jsxs} from "react/jsx-runtime";
+"import {jsx as _jsx, jsxs as _jsxs} from "react/jsx-runtime";
 import {useMDXComponents as _provideComponents} from "@mdx-js/react";
 function _createMdxContent(props) {
   const _components = {
@@ -213,15 +208,14 @@ export default function MDXContent(props = {}) {
   }) : _createMdxContent(props);
 }
 
-MDXContent.__RSPRESS_PAGE_META = {};
 
+MDXContent.__RSPRESS_PAGE_META = {};
 MDXContent.__RSPRESS_PAGE_META["index.mdx"] = {"toc":[],"title":"","headingTitle":"","frontmatter":{}};
 "
 `;
 
 exports[`remark-container > Use \\{title=foo} as title 1`] = `
-"const frontmatter = {};
-import {jsx as _jsx, jsxs as _jsxs} from "react/jsx-runtime";
+"import {jsx as _jsx, jsxs as _jsxs} from "react/jsx-runtime";
 import {useMDXComponents as _provideComponents} from "@mdx-js/react";
 function _createMdxContent(props) {
   const _components = {
@@ -256,15 +250,14 @@ export default function MDXContent(props = {}) {
   }) : _createMdxContent(props);
 }
 
-MDXContent.__RSPRESS_PAGE_META = {};
 
+MDXContent.__RSPRESS_PAGE_META = {};
 MDXContent.__RSPRESS_PAGE_META["index.mdx"] = {"toc":[],"title":"","headingTitle":"","frontmatter":{}};
 "
 `;
 
 exports[`remark-container > With a new line after the start position of container 1`] = `
-"const frontmatter = {};
-import {jsx as _jsx, jsxs as _jsxs} from "react/jsx-runtime";
+"import {jsx as _jsx, jsxs as _jsxs} from "react/jsx-runtime";
 import {useMDXComponents as _provideComponents} from "@mdx-js/react";
 function _createMdxContent(props) {
   const _components = {
@@ -299,15 +292,14 @@ export default function MDXContent(props = {}) {
   }) : _createMdxContent(props);
 }
 
-MDXContent.__RSPRESS_PAGE_META = {};
 
+MDXContent.__RSPRESS_PAGE_META = {};
 MDXContent.__RSPRESS_PAGE_META["index.mdx"] = {"toc":[],"title":"","headingTitle":"","frontmatter":{}};
 "
 `;
 
 exports[`remark-container > With block quote in container 1`] = `
-"const frontmatter = {};
-import {jsx as _jsx, jsxs as _jsxs} from "react/jsx-runtime";
+"import {jsx as _jsx, jsxs as _jsxs} from "react/jsx-runtime";
 import {useMDXComponents as _provideComponents} from "@mdx-js/react";
 function _createMdxContent(props) {
   const _components = {
@@ -354,15 +346,14 @@ export default function MDXContent(props = {}) {
   }) : _createMdxContent(props);
 }
 
-MDXContent.__RSPRESS_PAGE_META = {};
 
+MDXContent.__RSPRESS_PAGE_META = {};
 MDXContent.__RSPRESS_PAGE_META["index.mdx"] = {"toc":[],"title":"","headingTitle":"","frontmatter":{}};
 "
 `;
 
 exports[`remark-container > With code block in container 1`] = `
-"const frontmatter = {};
-import {Fragment as _Fragment, jsx as _jsx, jsxs as _jsxs} from "react/jsx-runtime";
+"import {Fragment as _Fragment, jsx as _jsx, jsxs as _jsxs} from "react/jsx-runtime";
 import {useMDXComponents as _provideComponents} from "@mdx-js/react";
 function _createMdxContent(props) {
   const _components = {
@@ -447,15 +438,14 @@ export default function MDXContent(props = {}) {
   }) : _createMdxContent(props);
 }
 
-MDXContent.__RSPRESS_PAGE_META = {};
 
+MDXContent.__RSPRESS_PAGE_META = {};
 MDXContent.__RSPRESS_PAGE_META["index.mdx"] = {"toc":[],"title":"","headingTitle":"","frontmatter":{}};
 "
 `;
 
 exports[`remark-container > With link, inlineCode, img, list in container 1`] = `
-"const frontmatter = {};
-import {jsx as _jsx, jsxs as _jsxs} from "react/jsx-runtime";
+"import {jsx as _jsx, jsxs as _jsxs} from "react/jsx-runtime";
 import {useMDXComponents as _provideComponents} from "@mdx-js/react";
 import image0 from "foo";
 function _createMdxContent(props) {
@@ -512,15 +502,14 @@ export default function MDXContent(props = {}) {
   }) : _createMdxContent(props);
 }
 
-MDXContent.__RSPRESS_PAGE_META = {};
 
+MDXContent.__RSPRESS_PAGE_META = {};
 MDXContent.__RSPRESS_PAGE_META["index.mdx"] = {"toc":[],"title":"","headingTitle":"","frontmatter":{}};
 "
 `;
 
 exports[`remark-container > With link, inlineCode, img, spread list in container 1`] = `
-"const frontmatter = {};
-import {jsx as _jsx, jsxs as _jsxs} from "react/jsx-runtime";
+"import {jsx as _jsx, jsxs as _jsxs} from "react/jsx-runtime";
 import {useMDXComponents as _provideComponents} from "@mdx-js/react";
 import image0 from "foo";
 function _createMdxContent(props) {
@@ -577,15 +566,14 @@ export default function MDXContent(props = {}) {
   }) : _createMdxContent(props);
 }
 
-MDXContent.__RSPRESS_PAGE_META = {};
 
+MDXContent.__RSPRESS_PAGE_META = {};
 MDXContent.__RSPRESS_PAGE_META["index.mdx"] = {"toc":[],"title":"","headingTitle":"","frontmatter":{}};
 "
 `;
 
 exports[`remark-container > With new line before the end position of container 1`] = `
-"const frontmatter = {};
-import {jsx as _jsx, jsxs as _jsxs} from "react/jsx-runtime";
+"import {jsx as _jsx, jsxs as _jsxs} from "react/jsx-runtime";
 import {useMDXComponents as _provideComponents} from "@mdx-js/react";
 function _createMdxContent(props) {
   const _components = {
@@ -620,15 +608,14 @@ export default function MDXContent(props = {}) {
   }) : _createMdxContent(props);
 }
 
-MDXContent.__RSPRESS_PAGE_META = {};
 
+MDXContent.__RSPRESS_PAGE_META = {};
 MDXContent.__RSPRESS_PAGE_META["index.mdx"] = {"toc":[],"title":"","headingTitle":"","frontmatter":{}};
 "
 `;
 
 exports[`remark-container > With new line in all case 1`] = `
-"const frontmatter = {};
-import {jsx as _jsx, jsxs as _jsxs} from "react/jsx-runtime";
+"import {jsx as _jsx, jsxs as _jsxs} from "react/jsx-runtime";
 import {useMDXComponents as _provideComponents} from "@mdx-js/react";
 function _createMdxContent(props) {
   const _components = {
@@ -663,15 +650,14 @@ export default function MDXContent(props = {}) {
   }) : _createMdxContent(props);
 }
 
-MDXContent.__RSPRESS_PAGE_META = {};
 
+MDXContent.__RSPRESS_PAGE_META = {};
 MDXContent.__RSPRESS_PAGE_META["index.mdx"] = {"toc":[],"title":"","headingTitle":"","frontmatter":{}};
 "
 `;
 
 exports[`remark-container > details 1`] = `
-"const frontmatter = {};
-import {jsx as _jsx, jsxs as _jsxs} from "react/jsx-runtime";
+"import {jsx as _jsx, jsxs as _jsxs} from "react/jsx-runtime";
 import {useMDXComponents as _provideComponents} from "@mdx-js/react";
 function _createMdxContent(props) {
   const _components = {
@@ -708,15 +694,14 @@ export default function MDXContent(props = {}) {
   }) : _createMdxContent(props);
 }
 
-MDXContent.__RSPRESS_PAGE_META = {};
 
+MDXContent.__RSPRESS_PAGE_META = {};
 MDXContent.__RSPRESS_PAGE_META["index.mdx"] = {"toc":[],"title":"","headingTitle":"","frontmatter":{}};
 "
 `;
 
 exports[`remark-container > empty blockquote 1`] = `
-"const frontmatter = {};
-import {jsx as _jsx} from "react/jsx-runtime";
+"import {jsx as _jsx} from "react/jsx-runtime";
 import {useMDXComponents as _provideComponents} from "@mdx-js/react";
 function _createMdxContent(props) {
   const _components = {
@@ -741,15 +726,14 @@ export default function MDXContent(props = {}) {
   }) : _createMdxContent(props);
 }
 
-MDXContent.__RSPRESS_PAGE_META = {};
 
+MDXContent.__RSPRESS_PAGE_META = {};
 MDXContent.__RSPRESS_PAGE_META["index.mdx"] = {"toc":[],"title":"","headingTitle":"","frontmatter":{}};
 "
 `;
 
 exports[`remark-container > end with a link 1`] = `
-"const frontmatter = {};
-import {jsx as _jsx, jsxs as _jsxs} from "react/jsx-runtime";
+"import {jsx as _jsx, jsxs as _jsxs} from "react/jsx-runtime";
 import {useMDXComponents as _provideComponents} from "@mdx-js/react";
 function _createMdxContent(props) {
   const _components = {
@@ -792,15 +776,14 @@ export default function MDXContent(props = {}) {
   }) : _createMdxContent(props);
 }
 
-MDXContent.__RSPRESS_PAGE_META = {};
 
+MDXContent.__RSPRESS_PAGE_META = {};
 MDXContent.__RSPRESS_PAGE_META["index.mdx"] = {"toc":[],"title":"","headingTitle":"","frontmatter":{}};
 "
 `;
 
 exports[`remark-container > end with a new line 1`] = `
-"const frontmatter = {};
-import {jsx as _jsx, jsxs as _jsxs} from "react/jsx-runtime";
+"import {jsx as _jsx, jsxs as _jsxs} from "react/jsx-runtime";
 import {useMDXComponents as _provideComponents} from "@mdx-js/react";
 function _createMdxContent(props) {
   const _components = {
@@ -843,15 +826,14 @@ export default function MDXContent(props = {}) {
   }) : _createMdxContent(props);
 }
 
-MDXContent.__RSPRESS_PAGE_META = {};
 
+MDXContent.__RSPRESS_PAGE_META = {};
 MDXContent.__RSPRESS_PAGE_META["index.mdx"] = {"toc":[],"title":"","headingTitle":"","frontmatter":{}};
 "
 `;
 
 exports[`remark-container > end with an inline code 1`] = `
-"const frontmatter = {};
-import {jsx as _jsx, jsxs as _jsxs} from "react/jsx-runtime";
+"import {jsx as _jsx, jsxs as _jsxs} from "react/jsx-runtime";
 import {useMDXComponents as _provideComponents} from "@mdx-js/react";
 function _createMdxContent(props) {
   const _components = {
@@ -891,15 +873,14 @@ export default function MDXContent(props = {}) {
   }) : _createMdxContent(props);
 }
 
-MDXContent.__RSPRESS_PAGE_META = {};
 
+MDXContent.__RSPRESS_PAGE_META = {};
 MDXContent.__RSPRESS_PAGE_META["index.mdx"] = {"toc":[],"title":"","headingTitle":"","frontmatter":{}};
 "
 `;
 
 exports[`remark-container > github alerts ~ caution 1`] = `
-"const frontmatter = {};
-import {Fragment as _Fragment, jsx as _jsx, jsxs as _jsxs} from "react/jsx-runtime";
+"import {Fragment as _Fragment, jsx as _jsx, jsxs as _jsxs} from "react/jsx-runtime";
 import {useMDXComponents as _provideComponents} from "@mdx-js/react";
 function _createMdxContent(props) {
   const _components = {
@@ -978,15 +959,14 @@ export default function MDXContent(props = {}) {
   }) : _createMdxContent(props);
 }
 
-MDXContent.__RSPRESS_PAGE_META = {};
 
+MDXContent.__RSPRESS_PAGE_META = {};
 MDXContent.__RSPRESS_PAGE_META["index.mdx"] = {"toc":[],"title":"","headingTitle":"","frontmatter":{}};
 "
 `;
 
 exports[`remark-container > github alerts ~ note 1`] = `
-"const frontmatter = {};
-import {jsx as _jsx, jsxs as _jsxs} from "react/jsx-runtime";
+"import {jsx as _jsx, jsxs as _jsxs} from "react/jsx-runtime";
 import {useMDXComponents as _provideComponents} from "@mdx-js/react";
 function _createMdxContent(props) {
   const _components = {
@@ -1028,15 +1008,14 @@ export default function MDXContent(props = {}) {
   }) : _createMdxContent(props);
 }
 
-MDXContent.__RSPRESS_PAGE_META = {};
 
+MDXContent.__RSPRESS_PAGE_META = {};
 MDXContent.__RSPRESS_PAGE_META["index.mdx"] = {"toc":[],"title":"","headingTitle":"","frontmatter":{}};
 "
 `;
 
 exports[`remark-container > github alerts ~ tip 1`] = `
-"const frontmatter = {};
-import {jsx as _jsx, jsxs as _jsxs} from "react/jsx-runtime";
+"import {jsx as _jsx, jsxs as _jsxs} from "react/jsx-runtime";
 import {useMDXComponents as _provideComponents} from "@mdx-js/react";
 function _createMdxContent(props) {
   const _components = {
@@ -1074,15 +1053,14 @@ export default function MDXContent(props = {}) {
   }) : _createMdxContent(props);
 }
 
-MDXContent.__RSPRESS_PAGE_META = {};
 
+MDXContent.__RSPRESS_PAGE_META = {};
 MDXContent.__RSPRESS_PAGE_META["index.mdx"] = {"toc":[],"title":"","headingTitle":"","frontmatter":{}};
 "
 `;
 
 exports[`remark-container > github alerts ~ warning 1`] = `
-"const frontmatter = {};
-import {jsx as _jsx, jsxs as _jsxs} from "react/jsx-runtime";
+"import {jsx as _jsx, jsxs as _jsxs} from "react/jsx-runtime";
 import {useMDXComponents as _provideComponents} from "@mdx-js/react";
 function _createMdxContent(props) {
   const _components = {
@@ -1122,15 +1100,14 @@ export default function MDXContent(props = {}) {
   }) : _createMdxContent(props);
 }
 
-MDXContent.__RSPRESS_PAGE_META = {};
 
+MDXContent.__RSPRESS_PAGE_META = {};
 MDXContent.__RSPRESS_PAGE_META["index.mdx"] = {"toc":[],"title":"","headingTitle":"","frontmatter":{}};
 "
 `;
 
 exports[`remark-container > nested in list - github alerts 1`] = `
-"const frontmatter = {};
-import {Fragment as _Fragment, jsx as _jsx, jsxs as _jsxs} from "react/jsx-runtime";
+"import {Fragment as _Fragment, jsx as _jsx, jsxs as _jsxs} from "react/jsx-runtime";
 import {useMDXComponents as _provideComponents} from "@mdx-js/react";
 function _createMdxContent(props) {
   const _components = {
@@ -1191,15 +1168,14 @@ export default function MDXContent(props = {}) {
   }) : _createMdxContent(props);
 }
 
-MDXContent.__RSPRESS_PAGE_META = {};
 
+MDXContent.__RSPRESS_PAGE_META = {};
 MDXContent.__RSPRESS_PAGE_META["index.mdx"] = {"toc":[],"title":"","headingTitle":"","frontmatter":{}};
 "
 `;
 
 exports[`remark-container > nested in ordered list 1`] = `
-"const frontmatter = {};
-import {jsx as _jsx, jsxs as _jsxs} from "react/jsx-runtime";
+"import {jsx as _jsx, jsxs as _jsxs} from "react/jsx-runtime";
 import {useMDXComponents as _provideComponents} from "@mdx-js/react";
 function _createMdxContent(props) {
   const _components = {
@@ -1246,15 +1222,14 @@ export default function MDXContent(props = {}) {
   }) : _createMdxContent(props);
 }
 
-MDXContent.__RSPRESS_PAGE_META = {};
 
+MDXContent.__RSPRESS_PAGE_META = {};
 MDXContent.__RSPRESS_PAGE_META["index.mdx"] = {"toc":[],"title":"","headingTitle":"","frontmatter":{}};
 "
 `;
 
 exports[`remark-container > nested in ordered list inside mdx component 1`] = `
-"const frontmatter = {};
-import {jsx as _jsx, jsxs as _jsxs} from "react/jsx-runtime";
+"import {jsx as _jsx, jsxs as _jsxs} from "react/jsx-runtime";
 import {useMDXComponents as _provideComponents} from "@mdx-js/react";
 function _createMdxContent(props) {
   const _components = {
@@ -1307,15 +1282,14 @@ export default function MDXContent(props = {}) {
   }) : _createMdxContent(props);
 }
 
-MDXContent.__RSPRESS_PAGE_META = {};
 
+MDXContent.__RSPRESS_PAGE_META = {};
 MDXContent.__RSPRESS_PAGE_META["index.mdx"] = {"toc":[],"title":"","headingTitle":"","frontmatter":{}};
 "
 `;
 
 exports[`remark-container > nested in unordered list 1`] = `
-"const frontmatter = {};
-import {jsx as _jsx, jsxs as _jsxs} from "react/jsx-runtime";
+"import {jsx as _jsx, jsxs as _jsxs} from "react/jsx-runtime";
 import {useMDXComponents as _provideComponents} from "@mdx-js/react";
 function _createMdxContent(props) {
   const _components = {
@@ -1362,15 +1336,14 @@ export default function MDXContent(props = {}) {
   }) : _createMdxContent(props);
 }
 
-MDXContent.__RSPRESS_PAGE_META = {};
 
+MDXContent.__RSPRESS_PAGE_META = {};
 MDXContent.__RSPRESS_PAGE_META["index.mdx"] = {"toc":[],"title":"","headingTitle":"","frontmatter":{}};
 "
 `;
 
 exports[`remark-container > nested in unordered list inside mdx component 1`] = `
-"const frontmatter = {};
-import {jsx as _jsx, jsxs as _jsxs} from "react/jsx-runtime";
+"import {jsx as _jsx, jsxs as _jsxs} from "react/jsx-runtime";
 import {useMDXComponents as _provideComponents} from "@mdx-js/react";
 function _createMdxContent(props) {
   const _components = {
@@ -1423,15 +1396,14 @@ export default function MDXContent(props = {}) {
   }) : _createMdxContent(props);
 }
 
-MDXContent.__RSPRESS_PAGE_META = {};
 
+MDXContent.__RSPRESS_PAGE_META = {};
 MDXContent.__RSPRESS_PAGE_META["index.mdx"] = {"toc":[],"title":"","headingTitle":"","frontmatter":{}};
 "
 `;
 
 exports[`remark-container > start with a link 1`] = `
-"const frontmatter = {};
-import {jsx as _jsx, jsxs as _jsxs} from "react/jsx-runtime";
+"import {jsx as _jsx, jsxs as _jsxs} from "react/jsx-runtime";
 import {useMDXComponents as _provideComponents} from "@mdx-js/react";
 function _createMdxContent(props) {
   const _components = {
@@ -1472,8 +1444,8 @@ export default function MDXContent(props = {}) {
   }) : _createMdxContent(props);
 }
 
-MDXContent.__RSPRESS_PAGE_META = {};
 
+MDXContent.__RSPRESS_PAGE_META = {};
 MDXContent.__RSPRESS_PAGE_META["index.mdx"] = {"toc":[],"title":"","headingTitle":"","frontmatter":{}};
 "
 `;
