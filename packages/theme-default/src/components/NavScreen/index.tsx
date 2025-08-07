@@ -1,10 +1,9 @@
-import { NoSSR } from '@rspress/runtime';
+import { NoSSR, useNav } from '@rspress/runtime';
 import type { DefaultThemeConfig, NavItem, SiteData } from '@rspress/shared';
 import { SocialLinks, SwitchAppearance } from '@theme';
 import { clearAllBodyScrollLocks, disableBodyScroll } from 'body-scroll-lock';
 import { useEffect, useRef } from 'react';
 import { base } from 'virtual-runtime-config';
-import { useNavData } from '../../logic/useNav';
 import {
   useTranslationMenuData,
   useVersionMenuData,
@@ -102,7 +101,7 @@ export function NavScreen(props: Props) {
   const localesData = siteData.themeConfig.locales || [];
   const hasMultiLanguage = localesData.length > 1;
   const hasMultiVersion = siteData.multiVersion.versions.length > 1;
-  const menuItems = useNavData();
+  const menuItems = useNav();
   const hasAppearanceSwitch = siteData.themeConfig.darkMode !== false;
   const socialLinks = siteData?.themeConfig?.socialLinks || [];
   const hasSocialLinks = socialLinks.length > 0;

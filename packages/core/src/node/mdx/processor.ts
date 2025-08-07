@@ -94,10 +94,9 @@ async function compile(options: CompileOptions): Promise<string> {
       frontmatter,
     } as PageMeta;
 
-    const result = `const frontmatter = ${JSON.stringify(frontmatter)};
-${compileResult}
-MDXContent.__RSPRESS_PAGE_META = {};
+    const result = `${compileResult}
 
+MDXContent.__RSPRESS_PAGE_META = {};
 MDXContent.__RSPRESS_PAGE_META["${encodeURIComponent(
       normalizePath(path.relative(docDirectory, filepath)),
     )}"] = ${JSON.stringify(pageMeta)};

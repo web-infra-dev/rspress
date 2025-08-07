@@ -1,6 +1,6 @@
 import { usePageData } from './usePageData';
 
-export function useSiteData() {
+export function useSite() {
   const { siteData } = usePageData();
   return { site: siteData };
 }

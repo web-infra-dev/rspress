@@ -46,7 +46,6 @@ export {
 } from './components/Search/SearchPanel';
 export {
   Sidebar,
-  type SidebarData,
   SidebarList,
 } from './components/Sidebar/index';
 export { SocialLinks } from './components/SocialLinks/index';
@@ -77,11 +76,9 @@ export { useThemeState } from './logic/useAppearance';
 export { useEditLink } from './logic/useEditLink';
 export { useFullTextSearch } from './logic/useFullTextSearch';
 export { useEnableNav, useHiddenNav } from './logic/useHiddenNav';
-export { useLocaleSiteData } from './logic/useLocaleSiteData';
 // logic
 export { usePrevNextPage } from './logic/usePrevNextPage';
 export { useRedirect4FirstVisit } from './logic/useRedirect4FirstVisit';
-export { useSidebarData } from './logic/useSidebarData';
 export {
   parseInlineMarkdownText,
   renderHtmlOrText,

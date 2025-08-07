@@ -1,9 +1,12 @@
 import { addTrailingSlash, type NormalizedLocales } from '@rspress/shared';
 import { useLang } from './useLang';
-import { useSiteData } from './useSiteData';
+import { useSite } from './useSite';
 
+/**
+ * @deprecated
+ */
 export function useLocaleSiteData(): NormalizedLocales {
-  const { site } = useSiteData();
+  const { site } = useSite();
   const lang = useLang();
 
   const themeConfig = site?.themeConfig ?? {};

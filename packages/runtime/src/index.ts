@@ -13,17 +13,21 @@ export {
 } from 'react-router-dom';
 export { Content } from './Content';
 export { ThemeContext, useDark } from './hooks/useDark';
+export { useFrontmatter } from './hooks/useFrontmatter';
 export { useI18n } from './hooks/useI18n';
 export { useLang } from './hooks/useLang';
 export { useLocaleSiteData } from './hooks/useLocaleSiteData';
+export { useNav } from './hooks/useNav';
 export { DataContext, usePageData } from './hooks/usePageData';
-export { useSiteData } from './hooks/useSiteData';
+export { getSidebarDataGroup, useSidebar } from './hooks/useSidebar';
+export { useSite as useSiteData } from './hooks/useSite';
+
 export { useVersion } from './hooks/useVersion';
 export { useViewTransition } from './hooks/useViewTransition';
 export { useWindowSize } from './hooks/useWindowSize';
 export { NoSSR } from './NoSSR';
 export {
-  normalizeRoutePath,
+  isActive,
   pathnameToRouteService,
 } from './route';
 export {

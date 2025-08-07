@@ -3,6 +3,7 @@ import {
   normalizeHrefInRuntime as normalizeHref,
   useLocaleSiteData,
   usePageData,
+  useSidebar,
 } from '@rspress/runtime';
 import type {
   Header,
@@ -13,7 +14,6 @@ import type {
 } from '@rspress/shared';
 import { Link } from '@theme';
 import { useEffect, useMemo, useRef, useState } from 'react';
-import { useSidebarData } from '../../logic/useSidebarData';
 import { renderInlineMarkdown } from '../../logic/utils';
 import {
   isSidebarDivider,
@@ -161,7 +161,7 @@ export function Overview(props: {
 
   const { pages } = siteData;
   const overviewModules = pages.filter(page => subFilter(page.routePath));
-  let overviewSidebarGroups = useSidebarData() as (
+  let overviewSidebarGroups = useSidebar() as (
     | NormalizedSidebarGroup
     | SidebarItem
   )[];

@@ -1,13 +1,13 @@
-import { useLocation } from '@rspress/runtime';
+import { useLocation, useSidebar } from '@rspress/runtime';
 import {
   type SidebarDivider as ISidebarDivider,
   type SidebarItem as ISidebarItem,
   type SidebarSectionHeader as ISidebarSectionHeader,
   inBrowser,
   type NormalizedSidebarGroup,
+  type SidebarData,
 } from '@rspress/shared';
 import { useEffect, useState } from 'react';
-import { useSidebarData } from '../../logic/useSidebarData';
 import type { UISwitchResult } from '../../logic/useUISwitch';
 import { NavBarTitle } from '../Nav/NavBarTitle';
 import * as styles from './index.module.scss';
@@ -48,13 +48,6 @@ interface Props {
   navTitle?: React.ReactNode;
 }
 
-export type SidebarData = (
-  | ISidebarDivider
-  | ISidebarItem
-  | ISidebarSectionHeader
-  | NormalizedSidebarGroup
-)[];
-
 export const highlightTitleStyle = {
   fontSize: '14px',
   paddingLeft: '24px',
@@ -78,7 +71,7 @@ export function Sidebar(props: Props) {
     props;
 
   const { pathname: rawPathname } = useLocation();
-  const rawSidebarData = useSidebarData();
+  const rawSidebarData = useSidebar();
   const [sidebarData, setSidebarData] = useState<SidebarData>(() => {
     return rawSidebarData.filter(Boolean).flat();
   });
