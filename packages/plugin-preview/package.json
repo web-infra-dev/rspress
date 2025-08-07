@@ -49,7 +49,7 @@
     "mdast-util-mdxjs-esm": "^2.0.1",
     "react": "^19.1.1",
     "react-dom": "^19.1.1",
-    "react-router-dom": "^6.29.0",
+    "react-router-dom": "^7.8.0",
     "rsbuild-plugin-publint": "^0.3.2",
     "typescript": "^5.8.2",
     "unified": "^11.0.5",
