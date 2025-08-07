@@ -212,4 +212,72 @@ describe('walk', () => {
       ]
     `);
   });
+  it('multiVersion', async () => {
+    const docsDir = path.join(__dirname, './fixtures/docs-multi-version');
+    const result = await processLocales(['zh', 'en'], ['v1', 'v2'], docsDir, [
+      '.md',
+      '.mdx',
+      '.tsx',
+    ]);
+    expect(result).toMatchInlineSnapshot(`
+      [
+        {
+          "nav": {
+            "v1": [
+              {
+                "link": "/guide",
+                "text": "指引",
+              },
+            ],
+            "v2": [
+              {
+                "link": "/guide",
+                "text": "指引",
+              },
+            ],
+          },
+          "sidebar": {
+            "/guide": [
+              {
+                "_fileKey": "v2/zh/guide/feature",
+                "context": undefined,
+                "link": "/v2/zh/guide/feature",
+                "overviewHeaders": undefined,
+                "tag": undefined,
+                "text": "功能 V2",
+              },
+            ],
+          },
+        },
+        {
+          "nav": {
+            "v1": [
+              {
+                "link": "/guide",
+                "text": "Guide",
+              },
+            ],
+            "v2": [
+              {
+                "link": "/guide",
+                "text": "Guide",
+              },
+            ],
+          },
+          "sidebar": {
+            "/guide": [
+              {
+                "_fileKey": "v2/en/guide/feature",
+                "context": undefined,
+                "link": "/v2/en/guide/feature",
+                "overviewHeaders": undefined,
+                "tag": undefined,
+                "text": "Feature V2",
+              },
+            ],
+          },
+        },
+      ]
+    `);
+  });
 });
