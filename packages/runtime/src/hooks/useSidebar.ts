@@ -1,10 +1,11 @@
-import { useLocaleSiteData, useLocation } from '@rspress/runtime';
 import {
   matchSidebar,
   type NormalizedSidebar,
   type SidebarData,
 } from '@rspress/shared';
 import { useMemo } from 'react';
+import { useLocation } from 'react-router-dom';
+import { useLocaleSiteData } from './useLocaleSiteData';
 
 /**
  * get the sidebar group for the current page
