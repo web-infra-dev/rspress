@@ -1,4 +1,9 @@
-import { createPortal, usePageData, withBase } from '@rspress/runtime';
+import {
+  createPortal,
+  useLocaleSiteData,
+  usePageData,
+  withBase,
+} from '@rspress/runtime';
 import { type AnyFunction, isProduction } from '@rspress/shared';
 import CloseSvg from '@theme-assets/close';
 import LoadingSvg from '@theme-assets/loading';
@@ -6,7 +11,6 @@ import SearchSvg from '@theme-assets/search';
 import { debounce } from 'lodash-es';
 import { useCallback, useEffect, useRef, useState } from 'react';
 import * as userSearchHooks from 'virtual-search-hooks';
-import { useLocaleSiteData } from '../../logic/useLocaleSiteData';
 import { SvgWrapper } from '../SvgWrapper';
 import { Tab, Tabs } from '../Tabs';
 import * as styles from './index.module.scss';

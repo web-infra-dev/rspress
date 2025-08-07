@@ -1,8 +1,7 @@
-import { useLocation } from '@rspress/runtime';
+import { useLocaleSiteData, useLocation } from '@rspress/runtime';
 import { useMemo } from 'react';
 import type { SidebarData } from '../components/Sidebar';
 import { getSidebarDataGroup } from './getSidebarDataGroup';
-import { useLocaleSiteData } from './useLocaleSiteData';
 
 export function useSidebarData(): SidebarData {
   const { sidebar } = useLocaleSiteData();

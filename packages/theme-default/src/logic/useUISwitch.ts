@@ -1,7 +1,11 @@
-import { useLocation, usePageData, useWindowSize } from '@rspress/runtime';
+import {
+  useLocaleSiteData,
+  useLocation,
+  usePageData,
+  useWindowSize,
+} from '@rspress/runtime';
 import { useEffect, useState } from 'react';
 import { useEnableNav, useHiddenNav } from './useHiddenNav';
-import { useLocaleSiteData } from './useLocaleSiteData';
 
 enum QueryStatus {
   Show = '1',

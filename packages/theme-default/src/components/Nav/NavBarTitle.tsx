@@ -1,14 +1,17 @@
-import { normalizeImagePath, usePageData } from '@rspress/runtime';
+import {
+  normalizeImagePath,
+  useLocaleSiteData,
+  useSiteData,
+} from '@rspress/runtime';
 import { Link } from '@theme';
 import { useMemo } from 'react';
-import { useLocaleSiteData } from '../../logic/useLocaleSiteData';
 import * as styles from './index.module.scss';
 
 export const NavBarTitle = () => {
-  const { siteData } = usePageData();
+  const { site } = useSiteData();
   const localeData = useLocaleSiteData();
-  const { logo: rawLogo, logoText } = siteData;
-  const title = localeData.title ?? siteData.title;
+  const { logo: rawLogo, logoText } = site;
+  const title = localeData.title ?? site.title;
   const logo = useMemo(() => {
     if (!rawLogo) {
       return null;

@@ -1,5 +1,5 @@
+import { useLocaleSiteData } from '@rspress/runtime';
 import { Link } from '@theme';
-import { useLocaleSiteData } from '../../logic/useLocaleSiteData';
 import * as styles from './index.module.scss';
 
 interface PrevNextPageProps {

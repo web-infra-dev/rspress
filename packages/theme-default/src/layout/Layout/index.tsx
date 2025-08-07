@@ -1,4 +1,4 @@
-import { Content, usePageData } from '@rspress/runtime';
+import { Content, useLocaleSiteData, usePageData } from '@rspress/runtime';
 import type { FrontMatterMeta } from '@rspress/shared';
 import {
   HomeLayout as DefaultHomeLayout,
@@ -9,7 +9,6 @@ import { Head, useHead } from '@unhead/react';
 import React, { memo, useMemo } from 'react';
 import type { NavProps } from '../../components/Nav';
 import { useSetup } from '../../logic/sideEffects';
-import { useLocaleSiteData } from '../../logic/useLocaleSiteData';
 import { useRedirect4FirstVisit } from '../../logic/useRedirect4FirstVisit';
 import { type UISwitchResult, useUISwitch } from '../../logic/useUISwitch';
 import { DocLayout, type DocLayoutProps } from '../DocLayout';

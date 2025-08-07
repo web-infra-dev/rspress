@@ -1,6 +1,7 @@
 import {
   isEqualPath,
   normalizeHrefInRuntime as normalizeHref,
+  useLocaleSiteData,
   usePageData,
 } from '@rspress/runtime';
 import type {
@@ -12,7 +13,6 @@ import type {
 } from '@rspress/shared';
 import { Link } from '@theme';
 import { useEffect, useMemo, useRef, useState } from 'react';
-import { useLocaleSiteData } from '../../logic/useLocaleSiteData';
 import { useSidebarData } from '../../logic/useSidebarData';
 import { renderInlineMarkdown } from '../../logic/utils';
 import {

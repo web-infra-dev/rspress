@@ -1,5 +1,10 @@
 import { MDXProvider } from '@mdx-js/react';
-import { Content, NoSSR, usePageData } from '@rspress/runtime';
+import {
+  Content,
+  NoSSR,
+  useLocaleSiteData,
+  usePageData,
+} from '@rspress/runtime';
 import { getCustomMDXComponent, Overview, ScrollToTop } from '@theme';
 import { slug } from 'github-slugger';
 import { useMemo, useState } from 'react';
@@ -9,7 +14,6 @@ import { DocFooter } from '../../components/DocFooter';
 import { Sidebar } from '../../components/Sidebar';
 import { SidebarMenu } from '../../components/SidebarMenu';
 import { TabDataContext } from '../../logic/TabDataContext';
-import { useLocaleSiteData } from '../../logic/useLocaleSiteData';
 import type { UISwitchResult } from '../../logic/useUISwitch';
 import { A } from './docComponents/a';
 import { H1 } from './docComponents/title';

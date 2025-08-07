@@ -1,6 +1,6 @@
+import { useLocaleSiteData } from '@rspress/runtime';
 import Github from '@theme-assets/github';
 import Gitlab from '@theme-assets/gitlab';
-import { useLocaleSiteData } from '../../logic/useLocaleSiteData';
 import { SvgWrapper } from '../SvgWrapper';
 import * as styles from './index.module.scss';
 
