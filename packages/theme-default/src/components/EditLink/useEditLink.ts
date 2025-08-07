@@ -1,5 +1,4 @@
-import { usePageData } from '@rspress/runtime';
-import { useLocaleSiteData } from './useLocaleSiteData';
+import { useLocaleSiteData, usePageData } from '@rspress/runtime';
 
 interface EditLink {
   docRepoBaseUrl?: string;

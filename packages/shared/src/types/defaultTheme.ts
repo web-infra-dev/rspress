@@ -321,13 +321,15 @@ export interface LocaleLink {
 }
 
 // normalized config ---------------------------------------------------------
+export type SidebarData = (
+  | SidebarDivider
+  | SidebarItem
+  | SidebarSectionHeader
+  | NormalizedSidebarGroup
+)[];
+
 export interface NormalizedSidebarGroup extends Omit<SidebarGroup, 'items'> {
-  items: (
-    | SidebarDivider
-    | SidebarItem
-    | SidebarSectionHeader
-    | NormalizedSidebarGroup
-  )[];
+  items: SidebarData;
   collapsible: boolean;
   collapsed: boolean;
 }

@@ -1,5 +1,5 @@
+import { useLocaleSiteData } from '@rspress/runtime';
 import Empty from '@theme-assets/empty';
-import { useLocaleSiteData } from '../../logic/useLocaleSiteData';
 import { SvgWrapper } from '../SvgWrapper';
 
 export function NoSearchResult({ query }: { query: string }) {

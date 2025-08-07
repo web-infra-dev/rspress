@@ -1,4 +1,5 @@
 import {
+  isActive,
   normalizeHrefInRuntime as normalizeHref,
   pathnameToRouteService,
   removeBase,
@@ -10,7 +11,6 @@ import { isExternalUrl } from '@rspress/shared';
 import nprogress from 'nprogress';
 import type React from 'react';
 import { type ComponentProps, useMemo } from 'react';
-import { isActive } from '../../logic/getSidebarDataGroup';
 import { scrollToTarget } from '../../logic/sideEffects';
 import { useUISwitch } from '../../logic/useUISwitch.js';
 import { preloadLink } from '../Sidebar/utils';

@@ -1,13 +1,16 @@
-import { usePageData } from '@rspress/runtime';
 import { addTrailingSlash, type NormalizedLocales } from '@rspress/shared';
+import { useLang } from './useLang';
+import { useSite } from './useSite';
 
+/**
+ * @deprecated
+ */
 export function useLocaleSiteData(): NormalizedLocales {
-  const pageData = usePageData();
-  const {
-    page: { lang },
-  } = pageData;
-  const themeConfig = pageData?.siteData?.themeConfig ?? {};
-  const defaultLang = pageData.siteData.lang ?? '';
+  const { site } = useSite();
+  const lang = useLang();
+
+  const themeConfig = site?.themeConfig ?? {};
+  const defaultLang = site.lang ?? '';
   const locales = themeConfig?.locales;
   if (!locales || locales.length === 0) {
     return {

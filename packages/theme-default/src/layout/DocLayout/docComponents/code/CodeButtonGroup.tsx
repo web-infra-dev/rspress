@@ -1,4 +1,4 @@
-import { usePageData } from '@rspress/runtime';
+import { useSiteData } from '@rspress/runtime';
 import IconWrap from '@theme-assets/wrap';
 import IconWrapped from '@theme-assets/wrapped';
 import { useState } from 'react';
@@ -21,8 +21,8 @@ export interface CodeButtonGroupProps
 }
 
 export const useCodeButtonGroup = () => {
-  const { siteData } = usePageData();
-  const { defaultWrapCode } = siteData.markdown;
+  const { site } = useSiteData();
+  const { defaultWrapCode } = site.markdown;
   const [codeWrap, setCodeWrap] = useState(defaultWrapCode);
 
   const toggleCodeWrap = () => {

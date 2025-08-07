@@ -1,17 +1,17 @@
 import {
   normalizeHrefInRuntime as normalizeHref,
-  usePageData,
+  useLocaleSiteData,
+  useSiteData,
 } from '@rspress/runtime';
 import { EditLink, LastUpdated, PrevNextPage } from '@theme';
-import { useLocaleSiteData } from '../../logic/useLocaleSiteData';
 import { usePrevNextPage } from '../../logic/usePrevNextPage';
 import * as styles from './index.module.scss';
 
 export function DocFooter() {
   const { prevPage, nextPage } = usePrevNextPage();
   const { lastUpdated: localesLastUpdated = false } = useLocaleSiteData();
-  const { siteData } = usePageData();
-  const { themeConfig } = siteData;
+  const { site } = useSiteData();
+  const { themeConfig } = site;
   const showLastUpdated = themeConfig.lastUpdated || localesLastUpdated;
 
   return (

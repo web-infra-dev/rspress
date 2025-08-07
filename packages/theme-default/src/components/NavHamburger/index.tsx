@@ -1,9 +1,9 @@
 import type { DefaultThemeConfig, SiteData } from '@rspress/shared';
 import SmallMenu from '@theme-assets/small-menu';
-import { useNavScreen } from '../../logic/useNav';
 import { NavScreen } from '../NavScreen';
 import { SvgWrapper } from '../SvgWrapper';
 import * as styles from './index.module.scss';
+import { useNavScreen } from './useNavScreen';
 
 interface Props {
   siteData: SiteData<DefaultThemeConfig>;

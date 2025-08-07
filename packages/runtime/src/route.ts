@@ -1,8 +1,8 @@
 import type { Route } from '@rspress/shared';
-import { matchRoutes } from 'react-router-dom';
+import { matchPath, matchRoutes } from 'react-router-dom';
 import { routes } from 'virtual-routes';
 
-export function normalizeRoutePath(routePath: string) {
+function normalizeRoutePath(routePath: string) {
   return decodeURIComponent(routePath)
     .replace(/\.html$/, '')
     .replace(/\/index$/, '/');
@@ -25,4 +25,23 @@ export function pathnameToRouteService(pathname: string): Route | undefined {
     cache.set(pathname, route);
   }
   return route;
+}
+
+/**
+ * link: /api/config
+ * currentPathname:
+ *  0. /api/config
+ *  1. /api/config.html
+ *  2. /api/config/
+ *  3. /api/config/index
+ *  4. /api/config/index.html
+ * @param itemLink
+ * @param currentPathname
+ * @returns
+ */
+export function isActive(itemLink: string, currentPathname: string): boolean {
+  const normalizedItemLink = normalizeRoutePath(itemLink);
+  const normalizedCurrentPathname = normalizeRoutePath(currentPathname);
+  const linkMatched = matchPath(normalizedItemLink, normalizedCurrentPathname);
+  return linkMatched !== null;
 }

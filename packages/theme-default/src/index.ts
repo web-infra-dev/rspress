@@ -9,6 +9,7 @@ export {
 } from './components/CodeBlockRuntime/index';
 export { DocFooter } from './components/DocFooter/index';
 export { EditLink } from './components/EditLink/index';
+export { useEditLink } from './components/EditLink/useEditLink';
 export { HomeFeature } from './components/HomeFeature/index';
 export { HomeFooter } from './components/HomeFooter/index';
 export { HomeHero, type HomeHeroProps } from './components/HomeHero/index';
@@ -46,7 +47,6 @@ export {
 } from './components/Search/SearchPanel';
 export {
   Sidebar,
-  type SidebarData,
   SidebarList,
 } from './components/Sidebar/index';
 export { SocialLinks } from './components/SocialLinks/index';
@@ -56,7 +56,6 @@ export { SwitchAppearance } from './components/SwitchAppearance/index';
 export { Tab, Tabs } from './components/Tabs/index';
 export { Tag } from './components/Tag/index';
 export { Toc } from './components/Toc/index';
-
 // layout
 export type { CodeButtonGroupProps } from './layout/DocLayout/docComponents/code/CodeButtonGroup';
 export { getCustomMDXComponent } from './layout/DocLayout/docComponents/index';
@@ -74,14 +73,11 @@ export {
   useSetup,
 } from './logic/sideEffects';
 export { useThemeState } from './logic/useAppearance';
-export { useEditLink } from './logic/useEditLink';
 export { useFullTextSearch } from './logic/useFullTextSearch';
 export { useEnableNav, useHiddenNav } from './logic/useHiddenNav';
-export { useLocaleSiteData } from './logic/useLocaleSiteData';
 // logic
 export { usePrevNextPage } from './logic/usePrevNextPage';
 export { useRedirect4FirstVisit } from './logic/useRedirect4FirstVisit';
-export { useSidebarData } from './logic/useSidebarData';
 export {
   parseInlineMarkdownText,
   renderHtmlOrText,

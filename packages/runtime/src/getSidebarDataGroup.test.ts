@@ -1,5 +1,6 @@
 import { describe, expect, it, vi } from 'vitest';
-import { getSidebarDataGroup, isActive } from './getSidebarDataGroup';
+import { getSidebarDataGroup } from './hooks/useSidebar';
+import { isActive } from './route';
 
 vi.mock('virtual-i18n-text', () => {
   return { default: {} };
