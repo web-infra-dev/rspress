@@ -160,7 +160,6 @@ const LlmsViewOptions = ({
             viewBox="0 0 24 24"
             width="24"
             height="24"
-            fill="currentColor"
           >
             <g
               fill="none"
