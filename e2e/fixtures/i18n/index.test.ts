@@ -190,7 +190,7 @@ test.describe('i18n test', async () => {
     await page.waitForTimeout(100);
     await page.click('.rspress-nav-menu-group-content a');
     await page.waitForTimeout(100);
-    const content = await page.textContent('#root');
+    const content = await page.textContent('#__rspress_root');
     expect(content).not.toEqual('');
     const overviewContentEn = await page.textContent('.overview-index');
     expect(overviewContentEn).toContain('Overview');

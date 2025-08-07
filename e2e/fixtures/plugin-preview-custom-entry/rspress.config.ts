@@ -14,14 +14,14 @@ export default defineConfig({
 import { createApp } from 'vue';
 import App from ${JSON.stringify(demoPath)};
 import ${JSON.stringify(entryCssPath)};
-createApp(App).mount('#root');
+createApp(App).mount('#__rspress_root');
 `;
           }
           return `
 import { createRoot } from 'react-dom/client';
 import ${JSON.stringify(entryCssPath)};
 import Demo from ${JSON.stringify(demoPath)};
-const container = document.getElementById('root');
+const container = document.getElementById('__rspress_root');
 createRoot(container).render(<Demo />);
 `;
         },
