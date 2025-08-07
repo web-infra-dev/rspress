@@ -23,7 +23,6 @@ export { getSidebarDataGroup, useSidebar } from './hooks/useSidebar';
 export { useSite as useSiteData } from './hooks/useSite';
 
 export { useVersion } from './hooks/useVersion';
-export { useViewTransition } from './hooks/useViewTransition';
 export { useWindowSize } from './hooks/useWindowSize';
 export { NoSSR } from './NoSSR';
 export {
