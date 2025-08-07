@@ -20,6 +20,7 @@ test.describe('tabs-component test', async () => {
   test('Index page', async ({ page }) => {
     await page.goto(`http://localhost:${appPort}`);
 
+    await page.waitForSelector('[class^="tab_"] > div > span');
     const tabs = await page.$$('[class^="tab_"] > div > span');
     const tabsText = await Promise.all(
       tabs.map(element => element.textContent()),

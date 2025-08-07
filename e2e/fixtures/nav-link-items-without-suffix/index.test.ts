@@ -22,6 +22,8 @@ test.describe('Nav should functions well', async () => {
     // ElementHandler is currently discouraged by official
     // use Locator instead
     // Please refer to https://playwright.dev/docs/api/class-elementhandle
+    await page.waitForSelector('.rspress-nav-menu');
+
     _navMenu = page.locator('.rspress-nav-menu');
     navMenuItems = await page.locator('.rspress-nav-menu > *').all();
 

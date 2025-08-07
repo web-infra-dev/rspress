@@ -163,7 +163,7 @@ const LlmsViewOptions = ({
           >
             <g
               fill="none"
-              stroke="black"
+              stroke="currentColor"
               strokeLinecap="round"
               strokeLinejoin="round"
               strokeWidth="2"
