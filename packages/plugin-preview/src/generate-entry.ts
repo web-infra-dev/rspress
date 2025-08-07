@@ -21,14 +21,14 @@ export function generateEntry(
         import { render } from 'solid-js/web';
         import ${JSON.stringify(entryCssPath)};
         import Demo from ${JSON.stringify(demoPath)};
-        render(() => <Demo />, document.getElementById('root'));
+        render(() => <Demo />, document.getElementById('__rspress_root'));
         `;
 
         const reactEntry = `
         import { createRoot } from 'react-dom/client';
         import ${JSON.stringify(entryCssPath)};
         import Demo from ${JSON.stringify(demoPath)};
-        const container = document.getElementById('root');
+        const container = document.getElementById('__rspress_root');
         createRoot(container).render(<Demo />);
         `;
         const entryContent = customEntry
@@ -68,7 +68,7 @@ export function generateEntry(
             </div>
           )
         }
-        const container = document.getElementById('root');
+        const container = document.getElementById('__rspress_root');
         createRoot(container).render(<App />);
       `;
       const solidContent = `
@@ -91,7 +91,7 @@ export function generateEntry(
             </div>
           )
         }
-        render(() => <App /> , document.getElementById('root'));
+        render(() => <App /> , document.getElementById('__rspress_root'));
       `;
       const renderContent = framework === 'solid' ? solidContent : reactContent;
       const id = `_${toValidVarName(key)}`;
