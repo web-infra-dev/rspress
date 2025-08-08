@@ -37,6 +37,10 @@ export interface LinkProps extends ComponentProps<'a'> {
 
 nprogress.configure({ showSpinner: false });
 
+function isAbsoluteUrl(url: string): boolean {
+  return url.startsWith('/');
+}
+
 /**
  * What's the difference between <Link> and <a>?
  * Link can tell whether it's in current site or external site.
@@ -84,6 +88,12 @@ export function Link(props: LinkProps) {
       <a {...props} href={href} className={`${styles.link} ${className}`}>
         {children}
       </a>
+    );
+  }
+
+  if (!isAbsoluteUrl(href)) {
+    return (
+      <a href={href} {...props} className={`${styles.link} ${className}`}></a>
     );
   }
 

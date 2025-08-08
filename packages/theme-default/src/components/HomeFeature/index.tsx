@@ -57,7 +57,7 @@ export function HomeFeature({
                 }}
                 onClick={() => {
                   if (link) {
-                    window.location.href = link;
+                    window.location.assign(link);
                   }
                 }}
               >
