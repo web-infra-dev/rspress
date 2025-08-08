@@ -1,5 +1,6 @@
-import { useNavigate } from '@rspress/runtime';
+import { normalizeHrefInRuntime, withBase } from '@rspress/runtime';
 import type { Feature, FrontMatterMeta } from '@rspress/shared';
+import { isExternalUrl } from '@rspress/shared';
 
 import { renderHtmlOrText } from '../../logic/utils';
 import * as styles from './index.module.scss';
@@ -29,12 +30,18 @@ export function HomeFeature({
   routePath: string;
 }) {
   const features = frontmatter?.features;
-  const navigate = useNavigate();
 
   return (
     <div className="rp-overflow-hidden rp-m-auto rp-flex rp-flex-wrap rp-max-w-6xl">
       {features?.map(feature => {
-        const { icon, title, details, link } = feature;
+        const { icon, title, details, link: rawLink } = feature;
+
+        let link = rawLink;
+        if (rawLink) {
+          link = isExternalUrl(rawLink)
+            ? rawLink
+            : normalizeHrefInRuntime(withBase(rawLink));
+        }
 
         return (
           <div
@@ -50,7 +57,7 @@ export function HomeFeature({
                 }}
                 onClick={() => {
                   if (link) {
-                    navigate(link);
+                    window.location.assign(link);
                   }
                 }}
               >
