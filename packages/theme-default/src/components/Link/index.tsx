@@ -65,6 +65,12 @@ export function Link(props: LinkProps) {
   const isExternal = isExternalUrl(href);
   const isHashOnlyLink = href.startsWith('#');
 
+  if (!href.startsWith('/')) {
+    return (
+      <a href={href} {...props} className={`${styles.link} ${className}`}></a>
+    );
+  }
+
   if (isExternal) {
     return (
       <a
