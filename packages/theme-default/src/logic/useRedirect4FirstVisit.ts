@@ -3,6 +3,7 @@ import { useEffect } from 'react';
 
 /**
  * Redirect to current locale for first visit
+ * FIXME: remove this
  */
 export function useRedirect4FirstVisit() {
   const { siteData, page } = usePageData();
