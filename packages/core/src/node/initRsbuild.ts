@@ -67,6 +67,9 @@ function isPluginIncluded(config: UserConfig, pluginName: string): boolean {
 }
 
 const require = createRequire(import.meta.url);
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+
 async function createInternalBuildConfig(
   userDocRoot: string,
   config: UserConfig,
@@ -221,6 +224,13 @@ async function createInternalBuildConfig(
         '@theme': [CUSTOM_THEME_DIR, DEFAULT_THEME],
         '@theme-assets': path.join(DEFAULT_THEME, '../assets'),
         'react-lazy-with-preload': require.resolve('react-lazy-with-preload'),
+        // single runtime
+        '@rspress/core/theme': path.join(__dirname, 'theme.js'),
+        '@rspress/core/runtime': path.join(__dirname, 'runtime.js'),
+        '@rspress/core/shiki-transformers': path.join(
+          __dirname,
+          'shiki-transformers.js',
+        ),
       },
     },
     source: {
@@ -238,7 +248,7 @@ async function createInternalBuildConfig(
             buildCache: {
               // 1. config file: rspress.config.ts
               buildDependencies: [
-                fileURLToPath(import.meta.url), // this file,  __filename
+                __filename, // this file,  __filename
                 pluginDriver.getConfigFilePath(), // rspress.config.ts
               ],
               cacheDigest: [
