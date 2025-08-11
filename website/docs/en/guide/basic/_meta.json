@@ -3,7 +3,8 @@
   "auto-nav-sidebar",
   {
     "type": "dir",
-    "name": "use-mdx"
+    "name": "use-mdx",
+    "tag": "new"
   },
   "static-assets",
   "custom-page",

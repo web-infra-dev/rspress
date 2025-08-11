@@ -16,7 +16,8 @@ export { HomeHero, type HomeHeroProps } from './components/HomeHero/index';
 export { LastUpdated } from './components/LastUpdated/index';
 export { Link, type LinkProps } from './components/Link/index';
 export { LinkCard } from './components/LinkCard/index';
-export { Nav } from './components/Nav/index';
+// export { Nav } from './components/OldNav/index';
+export { Nav } from './components/NewNav/index';
 export { Overview } from './components/Overview/index';
 export { PackageManagerTabs } from './components/PackageManagerTabs/index';
 export { PrevNextPage } from './components/PrevNextPage/index';
@@ -57,12 +58,12 @@ export { Tab, Tabs } from './components/Tabs/index';
 export { Tag } from './components/Tag/index';
 export { Toc } from './components/Toc/index';
 // layout
-export type { CodeButtonGroupProps } from './layout/DocLayout/docComponents/code/CodeButtonGroup';
-export { getCustomMDXComponent } from './layout/DocLayout/docComponents/index';
+export type { CodeButtonGroupProps } from './layout/DocLayout/docComponents/codeblock/CodeButtonGroup';
 export type {
   PreWithCodeButtonGroupProps,
   ShikiPreProps,
-} from './layout/DocLayout/docComponents/pre';
+} from './layout/DocLayout/docComponents/codeblock/pre';
+export { getCustomMDXComponent } from './layout/DocLayout/docComponents/index';
 export { DocLayout } from './layout/DocLayout/index';
 export { HomeLayout } from './layout/HomeLayout/index';
 export { Layout } from './layout/Layout/index';

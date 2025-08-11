@@ -1,0 +1,12 @@
+.paragraph {
+  margin: 20px 0 20px 0;
+}
+
+.blockquote,
+:global(summary) .blockquote {
+  :global(p) {
+    margin: 0;
+    font-size: 16px;
+    color: var(--rp-c-text-2);
+  }
+}

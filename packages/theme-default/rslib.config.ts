@@ -24,9 +24,9 @@ export default defineConfig({
     {
       format: 'esm',
       bundle: false,
-      dts: {
-        bundle: true,
-      },
+      // dts: {
+      //   bundle: true,
+      // },
       plugins: [
         pluginReact(),
         pluginSvgr({ svgrOptions: { exportType: 'default' } }),
