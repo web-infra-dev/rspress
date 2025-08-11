@@ -21,6 +21,8 @@ export { useNav } from './hooks/useNav';
 export { DataContext, usePageData } from './hooks/usePageData';
 export { getSidebarDataGroup, useSidebar } from './hooks/useSidebar';
 export { useSite as useSiteData } from './hooks/useSite';
+export { useSite } from './hooks/useSite';
+export { usePage } from './hooks/usePage';
 
 export { useVersion } from './hooks/useVersion';
 export { useWindowSize } from './hooks/useWindowSize';
