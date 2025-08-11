@@ -96,11 +96,7 @@ export function useNavigate(): (href: string) => Promise<void> {
           return;
         }
       }
-      if (linkType === 'relative') {
-        navigate(href, { replace: false });
-      } else {
-        navigate(removeBaseHref, { replace: false });
-      }
+      navigate(removeBaseHref, { replace: false });
       setTimeout(() => {
         scrollToAnchor(false, scrollPaddingTop);
       }, 100);
