@@ -1,5 +1,6 @@
 import { Tag } from '@theme';
 import { renderInlineMarkdown } from '../../logic/utils';
+import { sectionHeader } from './SidebarSectionHeader.module.scss';
 
 export function SidebarSectionHeader({
   sectionHeaderText,
@@ -9,9 +10,9 @@ export function SidebarSectionHeader({
   tag?: string;
 }) {
   return (
-    <div className="rspress-sidebar-section-header">
-      <Tag tag={tag} />
+    <div className={`rspress-sidebar-section-header ${sectionHeader}`}>
       <span {...renderInlineMarkdown(sectionHeaderText)}></span>
+      <Tag tag={tag} />
     </div>
   );
 }

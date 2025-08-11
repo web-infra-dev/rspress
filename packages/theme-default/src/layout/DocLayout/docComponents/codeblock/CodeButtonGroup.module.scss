@@ -37,30 +37,6 @@
   }
 }
 
-.code-copy-button {
-  .icon-success {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%) scale(0);
-    opacity: 0;
-    color: #00d600;
-  }
-}
-
-.code-copied {
-  .icon-copy {
-    transform: scale(0.33);
-    opacity: 0;
-  }
-
-  .icon-success {
-    transform: translate(-50%, -50%) scale(1);
-    opacity: 1;
-    transition-delay: 0.075s;
-  }
-}
-
 .icon-wrapped {
   position: absolute;
   top: 50%;

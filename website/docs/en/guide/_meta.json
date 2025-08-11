@@ -11,7 +11,8 @@
   },
   {
     "type": "dir",
-    "name": "use-mdx"
+    "name": "use-mdx",
+    "tag": "new"
   },
   {
     "type": "dir",
