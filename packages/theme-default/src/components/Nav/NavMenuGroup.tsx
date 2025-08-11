@@ -1,14 +1,13 @@
 import {
   matchNavbar,
   type NavItem,
-  type NavItemWithChildren,
   type NavItemWithLink,
-  type NavItemWithLinkAndChildren,
 } from '@rspress/shared';
 import { Link, Tag } from '@theme';
 import Down from '@theme-assets/down';
 import { useRef, useState } from 'react';
 import { SvgWrapper } from '../SvgWrapper';
+import * as styles from './index.module.scss';
 import { NavMenuSingleItem } from './NavMenuSingleItem';
 
 export interface NavMenuGroupItem {
@@ -42,21 +41,26 @@ function ActiveGroupItem({ item }: { item: NavItemWithLink }) {
 }
 
 function NormalGroupItem({ item }: { item: NavItemWithLink }) {
+  const content = (
+    <div
+      className={`rp-rounded-2xl ${item.link ? 'hover:rp-bg-mute' : ''}`}
+      style={{
+        padding: '0.4rem 1.5rem 0.4rem 0.75rem',
+      }}
+    >
+      <div className="rp-flex">
+        {item.tag && <Tag tag={item.tag} />}
+        <span>{item.text}</span>
+      </div>
+    </div>
+  );
   return (
     <div key={item.link} className="rp-font-medium rp-my-1">
-      <Link href={item.link}>
-        <div
-          className="rp-rounded-2xl hover:rp-bg-mute"
-          style={{
-            padding: '0.4rem 1.5rem 0.4rem 0.75rem',
-          }}
-        >
-          <div className="rp-flex">
-            {item.tag && <Tag tag={item.tag} />}
-            <span>{item.text}</span>
-          </div>
-        </div>
-      </Link>
+      {item.link ? (
+        <Link href={item.link}>{content}</Link>
+      ) : (
+        <div style={{ padding: ' 0 0 0 0.4rem' }}>{content}</div>
+      )}
     </div>
   );
 }
@@ -96,21 +100,21 @@ export function NavMenuGroup(item: NavMenuGroupItem) {
     }
     return <NormalGroupItem key={item.link} item={item} />;
   };
-  const renderGroup = (
-    item: NavItemWithChildren | NavItemWithLinkAndChildren,
-  ) => {
-    return (
-      <div>
-        {'link' in item ? (
-          renderLinkItem(item as NavItemWithLink)
-        ) : (
-          <p className="rp-font-bold rp-text-gray-400 rp-my-1 not:first:rp-border">
-            {item.text}
-          </p>
-        )}
-        {item.items.map(renderLinkItem)}
-      </div>
-    );
+  const renderGroup = (items: NavItem[]) => {
+    return items.map(item => {
+      return (
+        <div className={styles.navGroup} key={item.text}>
+          {'items' in item ? (
+            <>
+              {renderLinkItem(item as NavItemWithLink)}
+              {renderGroup(item.items)}
+            </>
+          ) : (
+            renderLinkItem(item)
+          )}
+        </div>
+      );
+    });
   };
   return (
     <div
@@ -163,7 +167,14 @@ export function NavMenuGroup(item: NavMenuGroupItem) {
           {groupItems.map(item => {
             return (
               <div key={item.text}>
-                {'items' in item ? renderGroup(item) : renderLinkItem(item)}
+                {'items' in item ? (
+                  <>
+                    {renderLinkItem(item as NavItemWithLink)}
+                    {renderGroup(item.items)}
+                  </>
+                ) : (
+                  renderLinkItem(item)
+                )}
               </div>
             );
           })}
