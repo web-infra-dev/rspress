@@ -1,4 +1,5 @@
-import { usePageData, withBase } from '@rspress/runtime';
+import { usePageData } from '@rspress/runtime';
+import { Link } from '@theme';
 
 export function NotFoundLayout() {
   const { siteData, page } = usePageData();
@@ -37,13 +38,13 @@ export function NotFoundLayout() {
       />
 
       <div className="rp-pt-5">
-        <a
+        <Link
           className="rp-py-2 rp-px-4 rp-rounded-2xl rp-inline-block rp-border-solid rp-border-brand rp-text-brand rp-font-medium hover:rp-border-brand-dark hover:rp-text-brand-dark rp-transition-colors rp-duration-300"
-          href={withBase(root)}
+          href={root}
           aria-label="go to home"
         >
           Take me home
-        </a>
+        </Link>
       </div>
     </div>
   );

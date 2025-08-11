@@ -7,7 +7,6 @@ interface ButtonProps {
   size?: 'medium' | 'big';
   theme?: 'brand' | 'alt';
   href?: string;
-  external?: boolean;
   className?: string;
   children?: React.ReactNode;
   dangerouslySetInnerHTML?: {
@@ -20,7 +19,6 @@ export function Button(props: ButtonProps): JSX.Element {
     theme = 'brand',
     size = 'big',
     href = '/',
-    external = false,
     className = '',
     children,
     dangerouslySetInnerHTML,
@@ -30,8 +28,7 @@ export function Button(props: ButtonProps): JSX.Element {
   if (props.type === 'button') {
     type = 'button';
   } else if (props.type === 'a') {
-    // Will be tree shaking in production in modern mode.
-    type = external ? 'a' : Link;
+    type = Link;
   }
 
   return React.createElement(

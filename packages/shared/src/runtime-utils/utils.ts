@@ -225,6 +225,9 @@ export function normalizeHref(url?: string, cleanUrls = false) {
   if (url.startsWith('#')) {
     return url;
   }
+  if (!url.startsWith('/')) {
+    return url;
+  }
 
   // eslint-disable-next-line prefer-const
   let { url: cleanUrl, hash } = parseUrl(decodeURIComponent(url));

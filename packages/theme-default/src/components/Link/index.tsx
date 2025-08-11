@@ -1,38 +1,17 @@
-import {
-  isActive,
-  normalizeHrefInRuntime as normalizeHref,
-  pathnameToRouteService,
-  removeBase,
-  useLocation,
-  useNavigate,
-  withBase,
-} from '@rspress/runtime';
-import { isExternalUrl } from '@rspress/shared';
 import nprogress from 'nprogress';
 import type React from 'react';
-import { type ComponentProps, useMemo } from 'react';
-import { scrollToTarget } from '../../logic/sideEffects';
-import { useUISwitch } from '../../logic/useUISwitch.js';
+import type { ComponentProps } from 'react';
 import { preloadLink } from '../Sidebar/utils';
 import * as styles from './index.module.scss';
-
-const scrollToAnchor = (smooth: boolean, scrollPaddingTop: number) => {
-  const currentUrl = window.location;
-  const { hash: rawHash } = currentUrl;
-  const hash = decodeURIComponent(rawHash);
-  const target = hash.length > 1 && document.getElementById(hash.slice(1));
-  if (hash && target) {
-    scrollToTarget(target, smooth, scrollPaddingTop);
-  }
-};
+import { getHref, useNavigate } from './useNavigate';
 
 export interface LinkProps extends ComponentProps<'a'> {
   href?: string;
   children?: React.ReactNode;
   className?: string;
-  onNavigate?: () => void;
-  // keep current url parameters when href is internal
-  keepCurrentParams?: boolean;
+  onMouseEnter?: (
+    event: React.MouseEvent<HTMLAnchorElement, MouseEvent>,
+  ) => void;
 }
 
 nprogress.configure({ showSpinner: false });
@@ -46,26 +25,12 @@ nprogress.configure({ showSpinner: false });
  * 4. Link is styled.
  */
 export function Link(props: LinkProps) {
-  const { href = '/', children, className = '', onNavigate, onClick } = props;
+  const { href = '/', children, className = '', onClick, onMouseEnter } = props;
 
+  const { linkType, removeBaseHref, withBaseHref } = getHref(href);
   const navigate = useNavigate();
 
-  const { pathname } = useLocation();
-
-  const { scrollPaddingTop } = useUISwitch();
-
-  const withBaseUrl = useMemo(() => {
-    return withBase(normalizeHref(href));
-  }, [href]);
-
-  const withoutBaseUrl = useMemo(() => {
-    return removeBase(normalizeHref(href));
-  }, [href]);
-
-  const isExternal = isExternalUrl(href);
-  const isHashOnlyLink = href.startsWith('#');
-
-  if (isExternal) {
+  if (linkType === 'external') {
     return (
       <a
         {...props}
@@ -79,7 +44,7 @@ export function Link(props: LinkProps) {
     );
   }
 
-  if (isHashOnlyLink) {
+  if (linkType === 'hashOnly') {
     return (
       <a {...props} href={href} className={`${styles.link} ${className}`}>
         {children}
@@ -87,56 +52,66 @@ export function Link(props: LinkProps) {
     );
   }
 
-  const handleNavigate = async (
-    e: React.MouseEvent<HTMLAnchorElement, MouseEvent>,
-  ) => {
-    if (
-      // left click only
-      e.button !== 0 ||
-      // `target` are usually used for open link in new window/tab
-      (e.currentTarget.target && e.currentTarget.target !== '_self') ||
-      // modifier keys are usually used for open link in new window/tab
-      e.metaKey ||
-      e.shiftKey ||
-      e.altKey ||
-      e.ctrlKey
-    ) {
-      return;
-    }
-    e.preventDefault();
-
-    // handle normal link
-    const inCurrentPage = isActive(withoutBaseUrl, pathname);
-    if (!process.env.__SSR__ && !inCurrentPage) {
-      const matchedRoute = pathnameToRouteService(withoutBaseUrl);
-      if (matchedRoute) {
-        const timer = setTimeout(() => {
-          nprogress.start();
-        }, 200);
-        await matchedRoute.preload();
-        clearTimeout(timer);
-        nprogress.done();
-      } else {
-        window.location.assign(withBaseUrl);
-        return;
-      }
-    }
-    onNavigate?.();
-    navigate(withoutBaseUrl, { replace: false });
-    setTimeout(() => {
-      scrollToAnchor(false, scrollPaddingTop);
-    }, 100);
-  };
+  if (linkType === 'relative') {
+    return (
+      <a
+        {...props}
+        href={href}
+        className={`${styles.link} ${className}`}
+        onMouseEnter={event => {
+          onMouseEnter?.(event);
+          preloadLink(removeBaseHref);
+        }}
+        onClick={e => {
+          onClick?.(e);
+          if (
+            // left click only
+            e.button !== 0 ||
+            // `target` are usually used for open link in new window/tab
+            (e.currentTarget.target && e.currentTarget.target !== '_self') ||
+            // modifier keys are usually used for open link in new window/tab
+            e.metaKey ||
+            e.shiftKey ||
+            e.altKey ||
+            e.ctrlKey
+          ) {
+            return;
+          }
+          e.preventDefault();
+          navigate(href);
+        }}
+      >
+        {children}
+      </a>
+    );
+  }
 
   return (
     <a
       {...props}
-      href={withBaseUrl}
+      href={withBaseHref}
       className={`${styles.link} ${className}`}
-      onMouseEnter={() => preloadLink(withoutBaseUrl)}
-      onClick={event => {
-        onClick?.(event);
-        handleNavigate(event);
+      onMouseEnter={event => {
+        onMouseEnter?.(event);
+        preloadLink(removeBaseHref);
+      }}
+      onClick={e => {
+        onClick?.(e);
+        if (
+          // left click only
+          e.button !== 0 ||
+          // `target` are usually used for open link in new window/tab
+          (e.currentTarget.target && e.currentTarget.target !== '_self') ||
+          // modifier keys are usually used for open link in new window/tab
+          e.metaKey ||
+          e.shiftKey ||
+          e.altKey ||
+          e.ctrlKey
+        ) {
+          return;
+        }
+        e.preventDefault();
+        navigate(removeBaseHref);
       }}
     >
       {children}

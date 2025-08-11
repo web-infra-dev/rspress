@@ -6,9 +6,9 @@ hero:
   tagline: E2E case tagline
   actions:
     - text: Action 1
-      link: /action-1
+      link: /guide/action-1.html
     - text: Action 2
-      link: /action-2
+      link: /guide/action-2.html
       theme: brand
     - text: External
       link: https://example.com/

@@ -1,4 +1,5 @@
 import {
+  addLeadingSlash,
   normalizeImagePath,
   useLocaleSiteData,
   useSiteData,
@@ -47,7 +48,7 @@ export const NavBarTitle = () => {
   return (
     <div className={`${styles.navBarTitle}`}>
       <Link
-        href={localeData.langRoutePrefix}
+        href={addLeadingSlash(localeData.langRoutePrefix ?? '/')}
         className="rp-flex rp-items-center rp-w-full rp-h-full rp-text-base rp-font-semibold rp-transition-opacity rp-duration-300 hover:rp-opacity-60"
       >
         {logo && <div className="rp-mr-1 rp-min-w-8">{logo}</div>}

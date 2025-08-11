@@ -1,10 +1,5 @@
-import {
-  normalizeHrefInRuntime,
-  normalizeImagePath,
-  withBase,
-} from '@rspress/runtime';
+import { normalizeImagePath } from '@rspress/runtime';
 import type { FrontMatterMeta } from '@rspress/shared';
-import { isExternalUrl } from '@rspress/shared';
 import { Button } from '@theme';
 
 import { renderHtmlOrText } from '../../logic/utils';
@@ -76,16 +71,16 @@ function HomeHero({
           ></p>
           {beforeHeroActions}
           {hero.actions?.length ? (
-            <div className="rp-grid md:rp-flex md:rp-flex-wrap md:rp-justify-center rp-gap-3 rp-pt-6 sm:rp-pt-8 rp-z-10">
+            <div className="rspress-home-hero-actions rp-grid md:rp-flex md:rp-flex-wrap md:rp-justify-center rp-gap-3 rp-pt-6 sm:rp-pt-8 rp-z-10">
               {hero.actions.map(action => {
-                const link = isExternalUrl(action.link)
-                  ? action.link
-                  : normalizeHrefInRuntime(withBase(action.link));
                 return (
-                  <div className="rp-flex rp-flex-shrink-0 rp-p-1" key={link}>
+                  <div
+                    className="rp-flex rp-flex-shrink-0 rp-p-1"
+                    key={action.link}
+                  >
                     <Button
                       type="a"
-                      href={link}
+                      href={action.link}
                       theme={action.theme}
                       className="rp-w-full"
                       {...renderHtmlOrText(action.text)}
