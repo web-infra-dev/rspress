@@ -30,7 +30,11 @@ export default defineConfig({
       plugins: [
         pluginReact(),
         pluginSvgr({ svgrOptions: { exportType: 'default' } }),
-        pluginSass(),
+        pluginSass({
+          sassLoaderOptions: {
+            additionalData: `$prefix: 'rp-';`,
+          },
+        }),
       ],
       source: {
         define: {

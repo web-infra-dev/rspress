@@ -1,9 +1,11 @@
+import clsx from 'clsx';
 import { isValidElement, useRef } from 'react';
 import {
   CodeButtonGroup,
   type CodeButtonGroupProps,
-  useCodeButtonGroup,
-} from './code/CodeButtonGroup';
+  useCodeWrap,
+} from './CodeButtonGroup';
+import { forceWrap } from './pre.module.scss';
 
 export type ShikiPreProps = {
   containerElementClassName: string | undefined;
@@ -28,7 +30,7 @@ function ShikiPre({
   codeButtonGroupProps,
   ...otherProps
 }: ShikiPreProps) {
-  const { codeWrap, toggleCodeWrap } = useCodeButtonGroup();
+  const { codeWrap, toggleCodeWrap } = useCodeWrap();
   return (
     <div className={containerElementClassName}>
       {title && <div className="rspress-code-title">{title}</div>}
@@ -36,9 +38,13 @@ function ShikiPre({
         <div>
           <pre
             ref={preElementRef}
-            className={[codeWrap ? 'rp-force-wrap' : '', className]
-              .filter(Boolean)
-              .join(' ')}
+            className={clsx(
+              'rspress-code-content-pre',
+              {
+                [forceWrap]: codeWrap,
+              },
+              className,
+            )}
             {...otherProps}
           >
             {child}

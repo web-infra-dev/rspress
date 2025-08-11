@@ -1,0 +1,18 @@
+.tocItem {
+  display: flex;
+  line-height: 24px;
+  justify-content: flex-start;
+  align-items: flex-start;
+  gap: 10px;
+  align-self: stretch;
+  border-radius: 6px;
+
+  // text
+  color: var(--rp-c-text-2);
+  font-weight: 400;
+  font-size: 14px;
+
+  &.active {
+    color: var(--rp-c-link);
+  }
+}
