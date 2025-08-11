@@ -11,10 +11,10 @@ hero:
   actions:
     - theme: brand
       text: Introduction
-      link: /guide/start/introduction
+      link: ./guide/start/introduction
     - theme: alt
       text: Quick Start
-      link: /guide/start/getting-started
+      link: ./guide/start/getting-started
   image:
     src: /rspress-logo.webp
     alt: Rspress Logo
