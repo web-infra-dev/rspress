@@ -18,7 +18,7 @@ test.describe('home pageType', async () => {
   });
 
   test('Hero', async ({ page }) => {
-    await page.goto(`http://localhost:${appPort}`);
+    await page.goto(`http://localhost:${appPort}/base/`);
     await expect(page.locator('h1').textContent()).resolves.toBe(
       'E2E case title',
     );
@@ -30,7 +30,7 @@ test.describe('home pageType', async () => {
     ).resolves.toBe('E2E case tagline');
 
     const img = page.locator('.rspress-home-hero-image img').first();
-    await expect(img.getAttribute('src')).resolves.toBe('/brand.png');
+    await expect(img.getAttribute('src')).resolves.toBe('/base/brand.png');
     await expect(img.getAttribute('alt')).resolves.toBe('E2E case brand image');
     await expect(img.getAttribute('srcset')).resolves.toBe(
       '/brand.png, /brand@2x.png 2x',
@@ -47,11 +47,12 @@ test.describe('home pageType', async () => {
     // click the first action
     const url1 = page.url();
     await actions.nth(0).click();
+    await page.waitForSelector('.rspress-doc');
     expect(page.url()).toBe(`${url1}guide/action-1.html`);
   });
 
   test('Hero - zh', async ({ page }) => {
-    await page.goto(`http://localhost:${appPort}/zh/`);
+    await page.goto(`http://localhost:${appPort}/base/zh/`);
     await expect(page.locator('h1').textContent()).resolves.toBe(
       'E2E 用例 title',
     );
@@ -63,7 +64,7 @@ test.describe('home pageType', async () => {
     ).resolves.toBe('E2E 用例 tagline');
 
     const img = page.locator('.rspress-home-hero-image img').first();
-    await expect(img.getAttribute('src')).resolves.toBe('/brand.png');
+    await expect(img.getAttribute('src')).resolves.toBe('/base/brand.png');
     await expect(img.getAttribute('alt')).resolves.toBe('E2E 用例 brand image');
     await expect(img.getAttribute('srcset')).resolves.toBe(
       '/brand.png, /brand@2x.png 2x',
@@ -80,11 +81,12 @@ test.describe('home pageType', async () => {
     // click the first action
     const url1 = page.url();
     await actions.nth(0).click();
+    await page.waitForSelector('.rspress-doc');
     expect(page.url()).toBe(`${url1}guide/action-1.html`);
   });
 
   test('Features', async ({ page }) => {
-    await page.goto(`http://localhost:${appPort}`);
+    await page.goto(`http://localhost:${appPort}/base/`);
     const features = await page.$$('.rspress-home-feature-card');
     expect(features).toHaveLength(2);
 
