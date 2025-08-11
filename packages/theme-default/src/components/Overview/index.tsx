@@ -5,33 +5,21 @@ import {
   useSidebar,
 } from '@rspress/runtime';
 import type {
-  Header,
   NormalizedSidebarGroup,
   SidebarDivider,
   SidebarItem,
   SidebarSectionHeader,
 } from '@rspress/shared';
-import { Link } from '@theme';
 import { useEffect, useMemo, useRef, useState } from 'react';
-import { renderInlineMarkdown } from '../../logic/utils';
+import { H1 } from '../../layout/DocLayout/docComponents/title';
 import {
   isSidebarDivider,
   isSidebarSectionHeader,
   isSidebarSingleFile,
 } from '../Sidebar/utils';
-import * as styles from './index.module.scss';
+import { type Group, type GroupItem, OverviewGroup } from './OverviewGroup';
 import { findItemByRoutePath } from './utils';
-
-interface GroupItem {
-  text: string;
-  link: string;
-  headers?: Header[];
-}
-
-interface Group {
-  name: string;
-  items: GroupItem[];
-}
+import './index.scss';
 
 // Utility function to normalize text for search
 const normalizeText = (s: string) => s.toLowerCase().replace(/-/g, ' ');
@@ -41,7 +29,7 @@ const matchesQuery = (text: string, query: string) =>
   normalizeText(text).includes(normalizeText(query));
 
 // JSX fragment for the search input
-const SearchInput = ({
+const OverviewSearchInput = ({
   query,
   setQuery,
   searchRef,
@@ -71,46 +59,6 @@ const SearchInput = ({
 };
 
 // JSX fragment for rendering a group
-const GroupRenderer = ({
-  group,
-  styles,
-}: {
-  group: Group;
-  styles: Record<string, string>;
-}) => (
-  <div className="rp-mb-16" key={group.name}>
-    <h2 {...renderInlineMarkdown(group.name)}></h2>
-    <div className={styles.overviewGroups}>
-      {group.items.map(item => (
-        <div className={styles.overviewGroup} key={item.link}>
-          <div className="rp-flex">
-            <h3 style={{ marginBottom: 8 }}>
-              <Link
-                href={item.link}
-                {...renderInlineMarkdown(item.text)}
-              ></Link>
-            </h3>
-          </div>
-          <ul className="rp-list-none">
-            {item.headers?.map(header => (
-              <li
-                key={header.id}
-                className={`${styles.overviewGroupLi} ${
-                  styles[`level${header.depth}`]
-                } first:rp-mt-2`}
-              >
-                <Link
-                  href={`${item.link}#${header.id}`}
-                  {...renderInlineMarkdown(header.text)}
-                ></Link>
-              </li>
-            ))}
-          </ul>
-        </div>
-      ))}
-    </div>
-  </div>
-);
 
 export function Overview(props: {
   content?: React.ReactNode;
@@ -301,28 +249,20 @@ export function Overview(props: {
   const overviewTitle = title || 'Overview';
 
   return (
-    <div className="overview-index rp-mx-auto">
-      <div className="rp-flex rp-flex-col sm:rp-flex-row rp-items-start sm:rp-items-center rp-justify-between rp-mb-10">
-        <h1 className="rp-text-3xl rp-leading-10 rp-tracking-tight">
-          {overviewTitle}
-        </h1>
-        <SearchInput
-          query={query}
-          setQuery={setQuery}
-          searchRef={searchRef}
-          filterNameText={filterNameText}
-          filterPlaceholderText={filterPlaceholderText}
-        />
-      </div>
+    <div className="rspress-overview rp-mx-auto">
+      <H1>{overviewTitle}</H1>
+      <OverviewSearchInput
+        query={query}
+        setQuery={setQuery}
+        searchRef={searchRef}
+        filterNameText={filterNameText}
+        filterPlaceholderText={filterPlaceholderText}
+      />
       {content}
       {filtered.length > 0 ? (
-        filtered.map(group => (
-          <GroupRenderer key={group?.name} group={group} styles={styles} />
-        ))
+        filtered.map(group => <OverviewGroup key={group?.name} group={group} />)
       ) : (
-        <div className="rp-text-lg rp-text-gray-500 rp-text-center rp-mt-9 rp-pt-9 rp-border-t rp-border-gray-200 dark:rp-border-gray-800">
-          {`${filterNoResultText}: ${query}`}
-        </div>
+        <div className="overview__empty">{`${filterNoResultText}: ${query}`}</div>
       )}
     </div>
   );
