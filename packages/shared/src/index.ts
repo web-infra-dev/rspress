@@ -8,7 +8,6 @@ export {
   addLeadingSlash,
   addTrailingSlash,
   cleanUrl,
-  DEFAULT_HIGHLIGHT_LANGUAGES,
   HASH_REGEXP,
   inBrowser,
   isDataUrl,
