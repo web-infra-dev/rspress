@@ -39,7 +39,7 @@
   },
   "devDependencies": {
     "@microsoft/api-extractor": "^7.52.10",
-    "@rslib/core": "0.11.1",
+    "@rslib/core": "0.11.2",
     "@types/hast": "^3.0.4",
     "@types/mdast": "^4.0.4",
     "@types/node": "^22.8.1",
@@ -48,7 +48,7 @@
     "react": "^19.1.1",
     "react-dom": "^19.1.1",
     "react-router-dom": "^6.29.0",
-    "rsbuild-plugin-publint": "^0.3.2",
+    "rsbuild-plugin-publint": "^0.3.3",
     "typescript": "^5.8.2"
   },
   "peerDependencies": {
