@@ -71,7 +71,7 @@ function HomeHero({
           ></p>
           {beforeHeroActions}
           {hero.actions?.length ? (
-            <div className="rp-grid md:rp-flex md:rp-flex-wrap md:rp-justify-center rp-gap-3 rp-pt-6 sm:rp-pt-8 rp-z-10">
+            <div className="rspress-home-hero-actions rp-grid md:rp-flex md:rp-flex-wrap md:rp-justify-center rp-gap-3 rp-pt-6 sm:rp-pt-8 rp-z-10">
               {hero.actions.map(action => {
                 return (
                   <div
