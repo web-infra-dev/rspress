@@ -1,12 +1,13 @@
 import {
   isActive,
+  normalizeHrefInRuntime,
   pathnameToRouteService,
   removeBase,
   useLocation,
   useNavigate as useNavigateInner,
   withBase,
 } from '@rspress/runtime';
-import { isExternalUrl, normalizeHref } from '@rspress/shared';
+import { isExternalUrl } from '@rspress/shared';
 import nprogress from 'nprogress';
 import { useCallback } from 'react';
 import { scrollToTarget } from '../../logic/sideEffects';
@@ -60,7 +61,7 @@ export function getHref(href: string): {
   if (linkType === 'relative' && !process.env.__SSR__) {
     withBaseHref = new URL(href, window.location.href).pathname;
   } else {
-    withBaseHref = withBase(normalizeHref(href));
+    withBaseHref = withBase(normalizeHrefInRuntime(href));
   }
   const removeBaseHref = removeBase(withBaseHref);
 
