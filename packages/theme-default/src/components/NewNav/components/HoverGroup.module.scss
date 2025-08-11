@@ -1,0 +1,62 @@
+.container {
+  // layout
+  display: flex;
+  width: auto;
+  min-width: 100px;
+  padding: 8px;
+  flex-direction: column;
+  align-items: flex-start;
+
+  // style
+  border-radius: 8px;
+  border: var(--rp-code-block-border);
+  background: var(--rp-c-bg);
+  box-shadow: 0px 4px 16px 0px rgba(0, 0, 0, 0.04);
+
+  position: absolute;
+  top: calc(100% - 10px);
+  left: 50%;
+  transform: translateX(-50%);
+
+  transition: opacity 0.3s ease-in-out;
+
+  .item {
+    height: 32px;
+    flex: 1;
+    align-self: stretch;
+    display: block;
+    white-space: nowrap;
+
+    padding-left: 8px;
+    padding-right: 8px;
+
+    // style
+    border-radius: 8px;
+    transition: background-color 0.3s ease-in-out;
+
+    // text
+    color: var(--rp-c-text-1);
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: 32px; /* 228.571% */
+
+    cursor: pointer;
+
+    // TODO: discusstion
+    // &:hover {
+    //   background-color: (in oklab, var(--color-white) 5%, gray);
+    // }
+
+    &.active {
+      font-weight: 600;
+      color: #007bff;
+      cursor: auto;
+    }
+  }
+}
+
+.hidden {
+  visibility: hidden;
+  opacity: 0;
+}

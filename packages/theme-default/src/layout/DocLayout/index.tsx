@@ -1,13 +1,14 @@
 import { MDXProvider } from '@mdx-js/react';
 import {
   Content,
-  NoSSR,
+  useFrontmatter,
   useLocaleSiteData,
-  usePageData,
+  usePage,
+  useSite,
 } from '@rspress/runtime';
-import { getCustomMDXComponent, Overview, ScrollToTop } from '@theme';
+import { getCustomMDXComponent, Overview } from '@theme';
 import { slug } from 'github-slugger';
-import { useMemo, useState } from 'react';
+import { useState } from 'react';
 import { Aside } from '../../components/Aside';
 import { useWatchToc } from '../../components/Aside/useDynamicToc';
 import { DocFooter } from '../../components/DocFooter';
@@ -34,6 +35,39 @@ export interface DocLayoutProps {
   components?: Record<string, React.FC>;
 }
 
+function DocContent({
+  components,
+}: {
+  components: Record<string, React.FC<{}>> | undefined;
+}) {
+  const mdxComponents = { ...getCustomMDXComponent(), ...components };
+
+  return (
+      <MDXProvider components={mdxComponents}>
+        <Content />
+      </MDXProvider>
+  );
+}
+
+function FallbackTitle() {
+  const { site } = useSite();
+  const { page } = usePage();
+  const { headingTitle, title } = page;
+  const titleSlug = title && slug(title);
+  return (
+    site.themeConfig.fallbackHeadingTitle !== false &&
+    !headingTitle &&
+    titleSlug && (
+      <H1 id={titleSlug}>
+        {title}
+        <A className="header-anchor" href={`#${titleSlug}`} aria-hidden>
+          #
+        </A>
+      </H1>
+    )
+  );
+}
+
 export function DocLayout(props: DocLayoutProps) {
   const {
     beforeDocFooter,
@@ -50,39 +84,14 @@ export function DocLayout(props: DocLayoutProps) {
     navTitle,
     components,
   } = props;
-  const { siteData, page } = usePageData();
-  const { headingTitle, title, frontmatter } = page;
+  const { site: siteData } = useSite();
+  const { frontmatter } = useFrontmatter();
   const { themeConfig } = siteData;
-  const enableScrollToTop = themeConfig.enableScrollToTop ?? false;
+  // const enableScrollToTop = themeConfig.enableScrollToTop ?? false;
   const localesData = useLocaleSiteData();
-
   const outlineTitle =
     localesData?.outlineTitle || themeConfig?.outlineTitle || 'ON THIS PAGE';
   const isOverviewPage = frontmatter?.overview ?? false;
-
-  const mdxComponents = { ...getCustomMDXComponent(), ...components };
-
-  const docContent = (
-    <MDXProvider components={mdxComponents}>
-      <Content />
-    </MDXProvider>
-  );
-
-  const fallbackTitle = useMemo(() => {
-    const titleSlug = title && slug(title);
-    return (
-      siteData.themeConfig.fallbackHeadingTitle !== false &&
-      !headingTitle &&
-      titleSlug && (
-        <H1 id={titleSlug}>
-          {title}
-          <A className="header-anchor" href={`#${titleSlug}`} aria-hidden>
-            #
-          </A>
-        </H1>
-      )
-    );
-  }, [headingTitle, title, siteData.themeConfig.fallbackHeadingTitle]);
 
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
 
@@ -113,21 +122,19 @@ export function DocLayout(props: DocLayoutProps) {
           uiSwitch={uiSwitch}
         />
         <div className={`${styles.content} rspress-doc-container rp-flex`}>
-          <div
-            className={`rp-flex-1 ${isOverviewPage ? '' : 'rp-overflow-x-auto'}`}
-          >
+          <div className={`rp-flex-1 rp-overflow-x-auto`}>
             {isOverviewPage ? (
-              <>
+              <div className="rspress-overview-container">
                 {beforeDocContent}
-                <Overview content={docContent} />
+                <Overview content={<DocContent components={components} />} />
                 {afterDocContent}
-              </>
+              </div>
             ) : (
               <>
                 <div className="rspress-doc rp-doc" ref={rspressDocRef}>
                   {beforeDocContent}
-                  {fallbackTitle}
-                  {docContent}
+                  <FallbackTitle />
+                  <DocContent components={components} />
                   {afterDocContent}
                 </div>
                 <div className="rspress-doc-footer">
@@ -138,11 +145,6 @@ export function DocLayout(props: DocLayoutProps) {
               </>
             )}
           </div>
-          {enableScrollToTop && (
-            <NoSSR>
-              <ScrollToTop />
-            </NoSSR>
-          )}
           {uiSwitch?.showAside && (
             <div
               className={styles.asideContainer}

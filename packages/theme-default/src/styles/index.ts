@@ -11,5 +11,5 @@ import './code.scss';
 import './doc.scss';
 import './scrollbar.scss';
 import './shiki.scss';
-import './container.css';
+import './container.scss';
 import 'nprogress/nprogress.css';

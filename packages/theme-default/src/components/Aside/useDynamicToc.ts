@@ -25,7 +25,7 @@ const useSubScribe = () => {
   }, [forceUpdate]);
 };
 
-const headers: Header[] = [] satisfies Header[];
+let headers: Header[] = [] satisfies Header[];
 
 function isElementOnlyVisible(element: Element): boolean {
   const style = window.getComputedStyle(element);
@@ -76,8 +76,7 @@ function updateHeaders(target: Element) {
     }
   });
 
-  headers.length = 0;
-  headers.push(...collectedHeaders);
+  headers = [...collectedHeaders];
   distributeUpdate();
 }
 

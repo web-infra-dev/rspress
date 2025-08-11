@@ -107,11 +107,6 @@ export interface Config {
    */
   enableAppearanceAnimation?: boolean;
   /**
-   * Enable scroll to top button on documentation
-   * @default false
-   */
-  enableScrollToTop?: boolean;
-  /**
    * Whether to redirect to the closest locale when the user visits the site
    * @default 'auto'
    */
