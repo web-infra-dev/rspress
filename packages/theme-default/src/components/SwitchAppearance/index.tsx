@@ -1,10 +1,11 @@
-import { flushSync, ThemeContext } from '@rspress/runtime';
+import { flushSync, ThemeContext, useSite } from '@rspress/runtime';
 import MoonSvg from '@theme-assets/moon';
 import SunSvg from '@theme-assets/sun';
 import { type MouseEvent, useContext } from 'react';
-import siteData from 'virtual-site-data';
 import { SvgWrapper } from '../SvgWrapper';
-import './index.scss';
+import './global.scss';
+import { cls } from '../../utils';
+import * as styles from './index.module.scss';
 
 const supportAppearanceTransition = () => {
   return (
@@ -29,10 +30,11 @@ const removeClipViewTransition = () => {
 
 export function SwitchAppearance({ onClick }: { onClick?: () => void }) {
   const { theme, setTheme = () => {} } = useContext(ThemeContext);
+  const { site } = useSite();
 
   const handleClick = (event: MouseEvent) => {
     const supported = supportAppearanceTransition();
-    const enabled = siteData?.themeConfig?.enableAppearanceAnimation;
+    const enabled = site?.themeConfig?.enableAppearanceAnimation;
 
     const nextTheme = theme === 'dark' ? 'light' : 'dark';
     const isDark = nextTheme === 'dark';
@@ -85,23 +87,20 @@ export function SwitchAppearance({ onClick }: { onClick?: () => void }) {
   };
 
   return (
-    <div onClick={handleClick} className="md:rp-mr-2 rspress-nav-appearance">
-      <div className="rp-p-1 rp-border rp-border-solid rp-border-gray-300 rp-text-gray-400 rp-cursor-pointer rp-rounded-md hover:rp-border-gray-600 hover:rp-text-gray-600 dark:hover:rp-border-gray-200 dark:hover:rp-text-gray-200 rp-transition-all rp-duration-300 rp-w-7 rp-h-7">
-        <SvgWrapper
-          className="dark:rp-hidden"
-          icon={SunSvg}
-          width="18"
-          height="18"
-          fill="currentColor"
-        />
-        <SvgWrapper
-          className="rp-hidden dark:rp-block"
-          icon={MoonSvg}
-          width="18"
-          height="18"
-          fill="currentColor"
-        />
-      </div>
+    <div
+      onClick={handleClick}
+      className={cls('rspress-nav-appearance', styles.switchAppearance)}
+    >
+      <SvgWrapper
+        className="dark:rp-hidden"
+        icon={SunSvg}
+        fill="currentColor"
+      />
+      <SvgWrapper
+        className="rp-hidden dark:rp-block"
+        icon={MoonSvg}
+        fill="currentColor"
+      />
     </div>
   );
 }

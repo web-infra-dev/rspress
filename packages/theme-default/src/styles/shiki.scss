@@ -9,10 +9,10 @@
   --shiki-token-constant: #1976d2;
   --shiki-token-string: #31a94d;
   --shiki-token-comment: rgb(182, 180, 180);
-  --shiki-token-keyword: #cf2727;
+  --shiki-token-keyword: #d22010;
   --shiki-token-parameter: #f59403;
   --shiki-token-function: #7041c8;
-  --shiki-token-string-expression: #218438;
+  --shiki-token-string-expression: #008555;
   --shiki-token-punctuation: #242323;
   --shiki-token-link: #22863a;
 
@@ -122,11 +122,5 @@ html.rp-dark {
     display: inline-block;
     text-align: right;
     color: rgba(115, 138, 148, 0.4);
-  }
-}
-
-.rp-force-wrap {
-  code {
-    white-space: pre-wrap !important;
   }
 }
