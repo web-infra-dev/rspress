@@ -1,8 +1,8 @@
-import type { SocialLink } from '@rspress/shared';
-import { LinkContent } from './LinkContent';
+import type { SocialLink as SocialLinkType } from '@rspress/shared';
+import { SocialLink } from './SocialLink';
 
 interface IHiddenLinksProps {
-  links: SocialLink[];
+  links: SocialLinkType[];
 }
 
 export const HiddenLinks = (props: IHiddenLinksProps) => {
@@ -19,11 +19,7 @@ export const HiddenLinks = (props: IHiddenLinksProps) => {
       className="rp-absolute rp-top-8 rp-right-0 rp-z-1 rp-p-3 rp-w-32 rp-rounded-2xl rp-flex rp-flex-wrap rp-gap-4"
     >
       {links.map(item => (
-        <LinkContent
-          key={item.content}
-          link={item}
-          popperStyle={{ top: '1.25rem' }}
-        />
+        <SocialLink key={item.content} link={item} />
       ))}
     </div>
   );

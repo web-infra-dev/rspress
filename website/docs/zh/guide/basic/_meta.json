@@ -3,7 +3,9 @@
   "auto-nav-sidebar",
   {
     "type": "dir",
-    "name": "use-mdx"
+    "name": "use-mdx",
+    "tag": "new",
+    "collapsed": true
   },
   "static-assets",
   "custom-page",
