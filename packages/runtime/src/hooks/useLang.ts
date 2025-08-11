@@ -1,6 +1,6 @@
-import { usePageData } from './usePageData';
+import { usePage } from './usePage';
 
 export function useLang(): string {
-  const { page } = usePageData();
+  const { page } = usePage();
   return page.lang || '';
 }
