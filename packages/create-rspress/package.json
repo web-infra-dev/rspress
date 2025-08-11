@@ -28,13 +28,13 @@
     "start": "node ./dist/index.js"
   },
   "dependencies": {
-    "create-rstack": "1.5.5"
+    "create-rstack": "1.5.6"
   },
   "devDependencies": {
     "@microsoft/api-extractor": "^7.52.10",
-    "@rslib/core": "0.11.1",
+    "@rslib/core": "0.11.2",
     "@types/node": "^22.8.1",
-    "rsbuild-plugin-publint": "^0.3.2",
+    "rsbuild-plugin-publint": "^0.3.3",
     "typescript": "^5.8.2"
   },
   "engines": {
