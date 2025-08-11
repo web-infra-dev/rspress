@@ -337,7 +337,7 @@ export interface FrontMatterMeta {
 }
 
 export interface PageData {
-  site: SiteData<DefaultThemeConfig>;
+  siteData: SiteData<DefaultThemeConfig>;
   page: BaseRuntimePageInfo & {
     headingTitle?: string;
     pagePath: string;

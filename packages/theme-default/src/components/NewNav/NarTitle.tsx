@@ -1,14 +1,18 @@
-import { normalizeImagePath, usePageData } from '@rspress/runtime';
+import {
+  addLeadingSlash,
+  normalizeImagePath,
+  useLocaleSiteData,
+  useSite,
+} from '@rspress/runtime';
 import { Link } from '@theme';
 import { useMemo } from 'react';
-import { useLocaleSiteData } from '@rspress/runtime';
 import * as styles from './index.module.scss';
 
 export const NavTitle = () => {
-  const { siteData } = usePageData();
+  const { site } = useSite();
   const localeData = useLocaleSiteData();
-  const { logo: rawLogo, logoText } = siteData;
-  const title = localeData.title ?? siteData.title;
+  const { logo: rawLogo, logoText } = site;
+  const title = localeData.title ?? site.title;
   const logo = useMemo(() => {
     if (!rawLogo) {
       return null;
@@ -44,7 +48,7 @@ export const NavTitle = () => {
   return (
     <div className={`${styles.navBarTitle}`}>
       <Link
-        href={localeData.langRoutePrefix}
+        href={addLeadingSlash(localeData.langRoutePrefix ?? '/')}
         className="rp-flex rp-items-center rp-w-full rp-h-full rp-text-base rp-font-semibold rp-transition-opacity rp-duration-300 hover:rp-opacity-60"
       >
         {logo && <div className="rp-mr-1 rp-min-w-8">{logo}</div>}

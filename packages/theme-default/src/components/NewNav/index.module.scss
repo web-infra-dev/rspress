@@ -2,8 +2,9 @@
   display: flex;
   height: 64px;
   flex-shrink: 0;
-  border-bottom: 1px solid #f2f3f5;
-  background: #fff;
+  border-bottom: 1px solid var(--rp-c-divider-light);
+  background: var(--rp-c-bg);
+  color: var(--rp-c-text-1);
   padding: 0 20px 0 20px;
   justify-content: space-between;
   align-items: center;

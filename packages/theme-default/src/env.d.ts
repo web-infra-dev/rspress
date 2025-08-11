@@ -43,5 +43,4 @@ declare module 'virtual-runtime-config' {
   import type { NormalizedRuntimeConfig } from '@rspress/shared';
 
   export const base: NormalizedRuntimeConfig['base'];
-  export const nav: NormalizedRuntimeConfig['themeConfig']['nav'];
 }

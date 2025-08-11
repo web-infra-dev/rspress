@@ -90,7 +90,7 @@ export default defineConfig({
     locales: [
       {
         lang: 'zh',
-        label: '简体中文',
+        label: '中文',
         editLink: {
           docRepoBaseUrl:
             'https://github.com/web-infra-dev/rspress/tree/main/packages/document/docs',

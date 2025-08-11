@@ -1,14 +1,18 @@
 import { useLocation } from '@rspress/runtime';
 import {
+  matchNavbar,
   type NavItem,
   type NavItemWithChildren,
   type NavItemWithLink,
   type NavItemWithLinkAndChildren,
-  matchNavbar,
 } from '@rspress/shared';
-import { Link } from '@theme';
+import { Link, SocialLinks, SwitchAppearance } from '@theme';
 import cls from 'clsx';
 import { useMemo } from 'react';
+import type { HoverGroupProps } from './components/HoverGroup';
+import { useHoverGroup } from './components/useHoverGroup';
+import { useLangsMenu, useVersionMenu } from './hooks';
+import { SvgDown } from './icons/SvgDown';
 import {
   active,
   navMenu,
@@ -20,10 +24,6 @@ import {
   navMenuOthers,
   svgDown,
 } from './NavMenu.module.scss';
-import type { HoverGroupProps } from './components/HoverGroup';
-import { useHoverGroup } from './components/useHoverGroup';
-import { useLangsMenu, useVersionMenu } from './hooks';
-import { SvgDown } from './icons/SvgDown';
 
 function NavMenuItemWithChildren({
   menuItem,
@@ -135,6 +135,8 @@ export function NavMenu({ menuItems }: { menuItems: NavItem[] }) {
         <NavMenuDivider />
         <NavLangs />
         <NavVersions />
+        <SwitchAppearance />
+        <SocialLinks />
       </ul>
     </>
   );

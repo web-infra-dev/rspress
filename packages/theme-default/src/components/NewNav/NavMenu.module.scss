@@ -26,7 +26,6 @@
     gap: 6px;
 
     // text
-    color: rgba(0, 0, 0, 0.9);
     text-align: center;
     font-size: 14px;
     font-style: normal;
@@ -81,5 +80,5 @@
 .navMenuDivider {
   width: 1px;
   height: 14.884px;
-  background: #e5e6eb;
+  background: var(--rp-c-divider);
 }
