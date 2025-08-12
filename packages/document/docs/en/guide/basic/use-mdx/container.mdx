@@ -1,0 +1,161 @@
+# Container
+
+Containers are a great way to mark important information and provide hints to users.
+
+:::tip
+Rspress provides two styles of syntax, [`:::` syntax](#three-colon-syntax) and [GitHub Markdown Alerts](#github-markdown-alerts-syntax) syntax.
+:::
+
+## `:::` Syntax \{#three-colon-syntax}
+
+You can use the `:::` syntax to create custom containers and support custom titles. For example:
+
+import { Tabs, Tab } from '@theme';
+
+<Tabs>
+
+<Tab label="Rendered Result">
+
+:::note
+This is a `block` of type `note`
+:::
+
+:::tip
+This is a `block` of type `tip`
+:::
+
+:::info
+This is a `block` of type `info`
+:::
+
+:::warning
+This is a `block` of type `warning`
+:::
+
+:::danger
+This is a `block` of type `danger`
+:::
+
+:::details
+This is a `block` of type `details`
+:::
+
+:::tip Custom Title
+This is a `block` of `Custom Title`
+:::
+
+:::tip\{title="Custom Title"}
+This is a `block` of `Custom Title`
+:::
+
+</Tab>
+
+<Tab label="Syntax">
+
+```markdown
+:::note
+This is a `block` of type `note`
+:::
+
+:::tip
+This is a `block` of type `tip`
+:::
+
+:::info
+This is a `block` of type `info`
+:::
+
+:::warning
+This is a `block` of type `warning`
+:::
+
+:::danger
+This is a `block` of type `danger`
+:::
+
+:::details
+This is a `block` of type `details`
+:::
+
+:::tip Custom Title
+This is a `block` of `Custom Title`
+:::
+
+:::tip{title="Custom Title"}
+This is a `block` of `Custom Title`
+:::
+```
+
+</Tab>
+
+</Tabs>
+
+:::warning
+
+We recommend using the syntax `:::tip Custom Title` directly.
+
+When using the `:::` syntax in `.mdx` files and customizing headings with curly braces syntax, be aware of escaping.
+
+```mdx
+:::tip\{title="Custom Title"}
+
+This is a `block` of `Custom Title
+
+::;
+```
+
+:::
+
+## GitHub Markdown alerts syntax \{#github-markdown-alerts-syntax}
+
+You can use [GitHub Markdown Alerts Syntax](https://docs.github.com/en/get-started/writing-on-github/getting-started-with-writing-and-formatting-on-github/basic-writing-and-formatting-syntax#alerts) to create custom containers.
+
+<Tabs>
+
+<Tab label="Rendered Result">
+
+> [!NOTE]
+> This is a `block` of type `note`
+
+> [!TIP]
+> This is a `block` of type `tip`
+
+> [!INFO]
+> This is a `block` of type `info`
+
+> [!WARNING]
+> This is a `block` of type `warning`
+
+> [!DANGER]
+> This is a `block` of type `danger`
+
+> [!DETAILS]
+> This is a `block` of type `details`
+
+</Tab>
+
+<Tab label="Syntax">
+
+```markdown
+> [!NOTE]
+> This is a `block` of type `note`
+
+> [!TIP]
+> This is a `block` of type `tip`
+
+> [!INFO]
+> This is a `block` of type `info`
+
+> [!WARNING]
+> This is a `block` of type `warning`
+
+> [!DANGER]
+> This is a `block` of type `danger`
+
+> [!DETAILS]
+> This is a `block` of type `details`
+```
+
+</Tab>
+
+</Tabs>
