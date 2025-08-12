@@ -2,10 +2,12 @@
   contain: content;
   border-radius: var(--rp-radius);
   margin: 1rem 0;
+  border: var(--rp-code-block-border);
 
   :global(div[class*='language-']) {
     margin: 0 -0.5rem !important;
     border-radius: 0 !important;
+    border: none !important;
     font-size: 13px !important;
   }
 

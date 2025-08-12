@@ -104,6 +104,7 @@
   border-bottom: 1px solid currentColor;
 }
 
+// note
 .rspress-doc .rspress-directive.note {
   border-color: var(--rp-container-note-border);
   background-color: var(--rp-container-note-bg);
@@ -111,6 +112,9 @@
 
 .rspress-doc .rspress-directive.note .rspress-directive-title {
   color: var(--rp-container-note-text);
+  &::before {
+    background-color: var(--rp-container-tip-text);
+  }
 }
 
 .rspress-doc .rspress-directive.note code {

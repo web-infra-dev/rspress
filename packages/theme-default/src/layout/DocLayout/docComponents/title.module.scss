@@ -15,6 +15,12 @@
   margin-bottom: 1.25rem; // 20px
 }
 
+.h4Title {
+  font-size: 1.25rem; // 20px
+  margin-top: 1.5rem; // 24px
+  margin-bottom: 1rem; // 16px
+}
+
 :global(.rspress-doc) {
   .h2Title:first-of-type::before {
     content: '';

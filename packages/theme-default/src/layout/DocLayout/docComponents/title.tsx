@@ -1,5 +1,5 @@
 import type React from 'react';
-import { h1Title, h2Title, title } from './title.module.scss';
+import { h1Title, h2Title, h3Title, h4Title, title } from './title.module.scss';
 
 export const H1 = (props: React.ComponentProps<'h1'>) => {
   return <h1 {...props} className={`rspress-doc-title ${h1Title} ${title}`} />;
@@ -13,19 +13,13 @@ export const H2 = (props: React.ComponentProps<'h2'>) => {
 
 export const H3 = (props: React.ComponentProps<'h3'>) => {
   return (
-    <h3
-      {...props}
-      className={`rspress-doc-outline rp-mt-10 rp-mb-2 rp-leading-7 rp-text-xl ${title}`}
-    />
+    <h3 {...props} className={`rspress-doc-outline ${h3Title} ${title}`} />
   );
 };
 
 export const H4 = (props: React.ComponentProps<'h4'>) => {
   return (
-    <h4
-      {...props}
-      className={`rspress-doc-outline rp-mt-8 rp-leading-6 rp-text-lg ${title}`}
-    />
+    <h4 {...props} className={`rspress-doc-outline ${h4Title} ${title}`} />
   );
 };
 
