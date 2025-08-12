@@ -1,19 +1,25 @@
 /** Define code style */
 html:not(.rp-dark) {
-  --rp-code-font-size: 14px;
+  --rp-code-font-size: 0.875rem;
+  --rp-code-title-bg: #f8f8f9;
+
   --rp-code-block-color: rgb(46, 52, 64);
-  --rp-code-title-bg: rgba(0, 99, 199, 0.05);
-  --rp-code-block-bg: #f6f8fa;
+  --rp-code-block-bg: transparent;
+  --rp-code-block-border: 1px solid #e5e6eb;
+  --rp-code-block-scroll-bar-bg: #e5e6eb;
 
   --rp-code-copy-code-hover-bg: rgba(255, 255, 255, 0.05);
   --rp-code-wrap-code-hover-bg: rgba(255, 255, 255, 0.05);
 }
 
 html.rp-dark {
-  --rp-code-font-size: 14px;
+  --rp-code-font-size: 0.875rem;
+  --rp-code-title-bg: #191919;
+
   --rp-code-block-color: rgb(229, 231, 235);
-  --rp-code-title-bg: rgba(255, 255, 255, 0.04);
-  --rp-code-block-bg: #242424;
+  --rp-code-block-bg: transparent;
+  --rp-code-block-border: 1px solid #363636;
+  --rp-code-block-scroll-bar-bg: #363636;
 
   --rp-code-copy-code-hover-bg: rgba(255, 255, 255, 0.05);
   --rp-code-wrap-code-hover-bg: rgba(255, 255, 255, 0.05);
@@ -51,17 +57,28 @@ html.rp-dark {
 
 .rspress-doc div[class^='language-'] {
   position: relative;
-  margin: 16px 0;
+  margin: 20px 0;
   background-color: var(--rp-code-block-bg);
+  border: var(--rp-code-block-border);
   overflow-x: auto;
   transition: none;
 }
 
 .rspress-doc .rspress-code-title {
-  padding: 12px 16px;
+  padding: 1rem 1.25rem;
   font-size: var(--rp-code-font-size);
   background-color: var(--rp-code-title-bg);
-  transition: background-color 0.5s;
+  color: var(--rp-c-text-1);
+  font-weight: 400;
+  font-family:
+    ui-monospace,
+    SFMono-Regular,
+    Menlo,
+    Monaco,
+    Consolas,
+    Liberation Mono,
+    Courier New,
+    monospace;
 }
 
 @media (min-width: 640px) {
@@ -118,6 +135,20 @@ html.rp-dark {
 
 .rspress-doc [class^='language-'] .rspress-code-content {
   position: relative;
+}
+
+.rspress-doc [class^='language-'] .rspress-code-content-pre {
+  &::-webkit-scrollbar {
+    height: 5px;
+    width: 5px;
+  }
+  &::-webkit-scrollbar-corner {
+    display: none;
+  }
+  &::-webkit-scrollbar-thumb {
+    background-color: var(--rp-code-block-scroll-bar-bg);
+    border-radius: 10px;
+  }
 }
 
 .rspress-doc [class^='language-'] .rspress-code-content span.highlighted {

@@ -1,27 +1,3 @@
-.title {
-  position: relative;
-  font-weight: 600;
-  outline: none;
-  :global(.header-anchor) {
-    float: left;
-    margin-left: -0.8em;
-    font-weight: 500;
-    opacity: 0;
-    font-size: inherit;
-    transition:
-      color 0.25s,
-      opacity 0.25s;
-  }
-  &:hover {
-    :global(.header-anchor) {
-      opacity: 1;
-    }
-  }
-  & :global(.header-anchor:focus) {
-    opacity: 1;
-  }
-}
-
 .blockquote,
 :global(summary) .blockquote {
   :global(p) {

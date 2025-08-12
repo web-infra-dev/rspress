@@ -30,7 +30,7 @@
   --rp-c-divider: rgba(60, 60, 60, 0.29);
   --rp-c-divider-light: rgba(60, 60, 60, 0.1);
 
-  --rp-c-text-1: #213547;
+  --rp-c-text-1: rgba(0, 0, 0, 0.8);
   --rp-c-text-2: rgba(60, 60, 60, 0.66);
   --rp-c-text-3: rgba(60, 60, 60, 0.33);
   --rp-c-text-4: rgba(60, 60, 60, 0.18);
@@ -38,11 +38,11 @@
   --rp-c-text-code: #476573;
   --rp-c-text-code-bg: rgb(153 161 179/ 0.1);
 
-  --rp-c-brand: #0095ff; /* hsl(204deg 100% 50%) */
-  --rp-c-brand-light: #33adff; /* hsl(204deg 100% 60%) */
-  --rp-c-brand-lighter: #66c2ff; /* hsl(204deg 100% 70%) */
-  --rp-c-brand-dark: #0077ff; /* hsl(212deg 100% 50%) */
-  --rp-c-brand-darker: #005fcc; /* hsl(212deg 100% 40%) */
+  --rp-c-brand: #007bff;
+  --rp-c-brand-light: #33adff;
+  --rp-c-brand-lighter: #66c2ff;
+  --rp-c-brand-dark: #0077ff;
+  --rp-c-brand-darker: #005fcc;
   --rp-c-brand-tint: rgba(127, 163, 255, 0.16);
 
   --rp-c-gray: #8e8e8e;
@@ -67,7 +67,7 @@
 }
 
 .dark {
-  --rp-c-bg: #191d24;
+  --rp-c-bg: #121212;
   --rp-c-bg-soft: #292e37;
   --rp-c-bg-mute: #343a46;
   --rp-c-bg-alt: #000;

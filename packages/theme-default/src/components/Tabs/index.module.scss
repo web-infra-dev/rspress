@@ -1,5 +1,4 @@
 .container {
-  background-color: var(--rp-code-block-bg);
   contain: content;
   border-radius: var(--rp-radius);
   margin: 1rem 0;
@@ -21,6 +20,7 @@
   display: flex;
   min-width: 100%;
   overflow: scroll hidden;
+  background-color: var(--rp-code-title-bg);
 }
 
 .tab {
@@ -30,7 +30,7 @@
   box-sizing: border-box;
   margin-right: 10px;
   padding: 6px 12px;
-  margin-bottom: -1px;
+  margin-bottom: -2px;
   user-select: none;
   transition: all 0.2s ease-in-out;
   cursor: pointer;
@@ -43,10 +43,9 @@
     content: '';
     position: absolute;
     bottom: 0;
-    left: 25%;
-    width: 50%;
-    height: 2px;
-    border-radius: 2px;
+    left: 5%;
+    width: 90%;
+    height: 1px;
     background-color: transparent;
   }
 }
@@ -56,8 +55,9 @@
 }
 
 .selected {
-  color: var(--rp-c-link);
-  font-weight: 500;
+  // TODO: discussed
+  color: var(--rp-c-text-1);
+  // color: var(--rp-c-link);
 
   &:after {
     background-color: currentColor;

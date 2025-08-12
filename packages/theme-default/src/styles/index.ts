@@ -3,7 +3,7 @@
  */
 import './vars.css';
 import './base.css';
-import './code.css';
+import './code.scss';
 import './scrollbar.scss';
 import './shiki.scss';
 import './container.css';

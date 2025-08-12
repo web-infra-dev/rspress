@@ -9,8 +9,8 @@
 
   // style
   border-radius: 8px;
-  border: 1px solid #e5e6eb;
-  background: #fff;
+  border: var(--rp-code-block-border);
+  background: var(--rp-c-bg);
   box-shadow: 0px 4px 16px 0px rgba(0, 0, 0, 0.04);
 
   position: absolute;
@@ -35,7 +35,7 @@
     transition: background-color 0.3s ease-in-out;
 
     // text
-    color: rgba(0, 0, 0, 0.65);
+    color: var(--rp-c-text-1);
     font-size: 14px;
     font-style: normal;
     font-weight: 500;
@@ -43,9 +43,10 @@
 
     cursor: pointer;
 
-    &:hover {
-      background-color: (in oklab, var(--color-white) 5%, gray);
-    }
+    // TODO: discusstion
+    // &:hover {
+    //   background-color: (in oklab, var(--color-white) 5%, gray);
+    // }
 
     &.active {
       font-weight: 600;
