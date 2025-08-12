@@ -8,9 +8,9 @@
   --rp-container-note-code-bg: rgba(128, 128, 128, 0.1);
   --rp-container-note-link: var(--rp-c-link);
 
-  --rp-container-tip-border: rgba(7, 156, 112, 0.2);
-  --rp-container-tip-text: #278359;
-  --rp-container-tip-bg: rgba(7, 156, 112, 0.06);
+  --rp-container-tip-border: #c5e8dd;
+  --rp-container-tip-text: #008555;
+  --rp-container-tip-bg: #f2f9f7;
   --rp-container-tip-code-bg: rgba(7, 156, 112, 0.1);
 
   --rp-container-info-border: rgba(0, 149, 255, 0.2);
@@ -54,17 +54,28 @@
 .rspress-doc .rspress-directive {
   border: 1px solid transparent;
   border-radius: var(--rp-radius);
-  padding: 20px 24px 12px;
-  line-height: 1.7;
+  padding: 20px 24px 12px 24px;
   font-size: 14px;
   font-weight: 400;
   margin: 24px 0;
+  // overflow: hidden;
 }
 
 .rspress-doc .rspress-directive .rspress-directive-title {
   margin-bottom: 8px;
   font-weight: 600;
   font-size: 16px;
+
+  position: relative;
+  &::before {
+    content: '';
+    position: absolute;
+    top: -5%;
+    left: -24px;
+    width: 4px;
+    height: 110%;
+    border-radius: 0 20px 20px 0;
+  }
 }
 
 .rspress-doc .rspress-directive .rspress-directive-content p {
@@ -111,6 +122,7 @@
   color: var(--rp-container-note-text);
 }
 
+// tip
 .rspress-doc .rspress-directive.tip {
   border-color: var(--rp-container-tip-border);
   background-color: var(--rp-container-tip-bg);
@@ -118,6 +130,9 @@
 
 .rspress-doc .rspress-directive.tip .rspress-directive-title {
   color: var(--rp-container-tip-text);
+  &::before {
+    background-color: var(--rp-container-tip-text);
+  }
 }
 
 .rspress-doc .rspress-directive.tip code {
@@ -129,6 +144,7 @@
   color: var(--rp-container-tip-text);
 }
 
+// info
 .rspress-doc .rspress-directive.info {
   border-color: var(--rp-container-info-border);
   background-color: var(--rp-container-info-bg);
@@ -136,6 +152,9 @@
 
 .rspress-doc .rspress-directive.info .rspress-directive-title {
   color: var(--rp-container-info-text);
+  &::before {
+    background-color: var(--rp-container-info-text);
+  }
 }
 
 .rspress-doc .rspress-directive.info code {
@@ -147,6 +166,7 @@
   color: var(--rp-container-info-text);
 }
 
+// warning
 .rspress-doc .rspress-directive.warning {
   border-color: var(--rp-container-warning-border);
   background-color: var(--rp-container-warning-bg);
@@ -154,6 +174,9 @@
 
 .rspress-doc .rspress-directive.warning .rspress-directive-title {
   color: var(--rp-container-warning-text);
+  &::before {
+    background-color: var(--rp-container-warning-text);
+  }
 }
 
 .rspress-doc .rspress-directive.warning code {
@@ -165,6 +188,7 @@
   color: var(--rp-container-warning-text);
 }
 
+// caution danger
 .rspress-doc .rspress-directive.caution,
 .rspress-doc .rspress-directive.danger {
   border-color: var(--rp-container-danger-border);
@@ -174,6 +198,9 @@
 .rspress-doc .rspress-directive.caution .rspress-directive-title,
 .rspress-doc .rspress-directive.danger .rspress-directive-title {
   color: var(--rp-container-danger-text);
+  &::before {
+    background-color: var(--rp-container-danger-text);
+  }
 }
 
 .rspress-doc .rspress-directive.caution code,
@@ -187,6 +214,7 @@
   color: var(--rp-container-danger-text);
 }
 
+// details
 .rspress-doc .rspress-directive.details {
   border-color: var(--rp-container-details-border);
   background-color: var(--rp-container-details-bg);
@@ -194,6 +222,9 @@
 
 .rspress-doc .rspress-directive.details .rspress-directive-title {
   color: var(--rp-container-details-text);
+  &::before {
+    background-color: var(--rp-container-details-text);
+  }
 }
 
 .rspress-doc .rspress-directive.details code {

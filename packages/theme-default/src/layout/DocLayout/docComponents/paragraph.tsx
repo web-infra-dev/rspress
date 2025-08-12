@@ -1,8 +1,8 @@
 import type { ComponentProps } from 'react';
-import * as styles from './index.module.scss';
+import * as styles from './paragraph.module.scss';
 
 export const P = (props: ComponentProps<'p'>) => {
-  return <p {...props} className="rp-my-4 rp-leading-7" />;
+  return <p {...props} className={styles.paragraph} />;
 };
 
 export const Blockquote = (props: ComponentProps<'blockquote'>) => {
