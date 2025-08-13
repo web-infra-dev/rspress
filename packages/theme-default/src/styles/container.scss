@@ -8,7 +8,7 @@
   --rp-container-note-code-bg: rgba(128, 128, 128, 0.1);
   --rp-container-note-link: var(--rp-c-link);
 
-  --rp-container-tip-border: #c5e8dd;
+  --rp-container-tip-border: rgba(7, 156, 112, 0.2);
   --rp-container-tip-text: #008555;
   --rp-container-tip-bg: #f2f9f7;
   --rp-container-tip-code-bg: rgba(7, 156, 112, 0.1);
@@ -58,7 +58,6 @@
   font-size: 14px;
   font-weight: 400;
   margin: 24px 0;
-  // overflow: hidden;
 }
 
 .rspress-doc .rspress-directive .rspress-directive-title {
@@ -113,7 +112,7 @@
 .rspress-doc .rspress-directive.note .rspress-directive-title {
   color: var(--rp-container-note-text);
   &::before {
-    background-color: var(--rp-container-tip-text);
+    background-color: var(--rp-container-note-text);
   }
 }
 
