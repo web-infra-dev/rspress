@@ -1,0 +1,23 @@
+.sidebarGroup {
+  font-weight: 600 !important;
+  // font-weight: 600;
+  color: var(--rp-c-text-1);
+
+  // TODO: discussion
+  padding: 8px;
+
+  // margin-top: 8px;
+}
+
+.sidebarGroupItem {
+  &::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 4px;
+    width: 3px;
+    height: 5px;
+    background-color: var(--rp-c-brand);
+    transition: all 0.2s ease;
+  }
+}

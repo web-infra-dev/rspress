@@ -209,7 +209,6 @@ function SidebarListItem(props: {
         key={`${item.text}-${index}`}
         item={item}
         depth={0}
-        collapsed={item.collapsed}
         setSidebarData={setSidebarData}
       />
     );
@@ -220,8 +219,8 @@ function SidebarListItem(props: {
       <SidebarItem
         item={item}
         key={index}
-        // collapsed={(item as NormalizedSidebarGroup).collapsed ?? true}
         activeMatcher={activeMatcher}
+        depth={0}
       />
     );
   }
@@ -231,7 +230,7 @@ function SidebarListItem(props: {
       item={item}
       key={index}
       activeMatcher={activeMatcher}
-      // collapsed={(item as NormalizedSidebarGroup).collapsed ?? true}
+      depth={0}
     />
   );
 }

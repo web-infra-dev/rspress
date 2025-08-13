@@ -5,10 +5,12 @@ import type {
   SidebarSectionHeader as SidebarSectionHeaderType,
 } from '@rspress/shared';
 import ArrowRight from '@theme-assets/arrow-right';
+import clsx from 'clsx';
 import type React from 'react';
 import { useEffect, useRef } from 'react';
 import { SvgWrapper } from '../SvgWrapper';
 import { SidebarDivider } from './SidebarDivider';
+import * as styles from './SidebarGroup.module.scss';
 import { SidebarItem as SidebarItemComp, SidebarItemRaw } from './SidebarItem';
 import { SidebarSectionHeader } from './SidebarSectionHeader';
 import {
@@ -31,7 +33,7 @@ const CollapsibleIcon = ({ collapsed }: { collapsed: boolean }) => (
 
 export interface SidebarGroupProps {
   id: string;
-  item: SidebarItemType | NormalizedSidebarGroup;
+  item: NormalizedSidebarGroup;
   depth: number;
   activeMatcher: (link: string) => boolean;
   setSidebarData: React.Dispatch<
@@ -123,13 +125,16 @@ export function SidebarGroup(props: SidebarGroupProps) {
   };
 
   return (
-    <section key={id} className="rspress-sidebar-section rp-mt-0.5 rp-block">
+    // <section key={id} className="rspress-sidebar-section rp-mt-0.5 rp-block">
+    <>
       <SidebarItemRaw
         active={Boolean(active)}
         link={item.link}
         tag={item.tag}
         text={item.text}
         context={item.context}
+        className={clsx('rspress-sidebar-group', styles.sidebarGroup)}
+        depth={depth}
         onClick={e => {
           collapsible && toggleCollapse(e);
         }}
@@ -149,10 +154,9 @@ export function SidebarGroup(props: SidebarGroupProps) {
           className="rspress-sidebar-group rp-transition-opacity rp-duration-500 rp-ease-in-out"
           style={{
             opacity: initialState.current ? 0 : 1,
-            // marginLeft: depth === 0 ? '12px' : 0,
           }}
         >
-          {(item as NormalizedSidebarGroup)?.items?.map((item, index) =>
+          {item.items?.map((item, index) =>
             isSidebarGroup(item) ? (
               <SidebarGroup
                 id={`${id}-${index}`}
@@ -179,12 +183,13 @@ export function SidebarGroup(props: SidebarGroupProps) {
               <SidebarItemComp
                 key={index}
                 item={item}
+                depth={depth + 1}
                 activeMatcher={activeMatcher}
               />
             ),
           )}
         </div>
       </div>
-    </section>
+    </>
   );
 }

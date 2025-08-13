@@ -19,6 +19,7 @@ export function SidebarItemRaw({
   left,
   right,
   onClick,
+  depth = 0,
 }: {
   className?: string;
   active: boolean;
@@ -29,6 +30,7 @@ export function SidebarItemRaw({
   left?: React.ReactNode;
   right?: React.ReactNode;
   onClick?: React.MouseEventHandler<HTMLDivElement | HTMLAnchorElement>;
+  depth?: number;
 }) {
   const ref = useRef<HTMLDivElement>(null);
 
@@ -40,25 +42,40 @@ export function SidebarItemRaw({
     }
   }, []);
 
+  const innerContent = (
+    <>
+      <div className={styles.menuItemLeft} ref={ref}>
+        <span {...renderInlineMarkdown(text)}></span>
+        {left}
+      </div>
+      <div className={styles.menuItemRight}>
+        <Tag tag={tag} />
+        {right}
+      </div>
+    </>
+  );
+
   if (link) {
     return (
       <Link
         href={link}
         onClick={onClick}
-        className={clsx('rspress-sidebar-item', styles.menuItem, className, {
-          [styles.active]: active,
-          ['rspress-sidebar-item-active']: active,
-        })}
+        className={clsx(
+          'rspress-sidebar-item',
+          styles.menuItem,
+          {
+            [styles.active]: active,
+            ['rspress-sidebar-item-active']: active,
+          },
+          className,
+        )}
+        style={{
+          paddingLeft: depth === 0 ? 0 : `calc(12px * ${depth})`,
+        }}
+        {...{ 'data-depth': depth }}
         {...(context ? { 'data-context': context } : {})}
       >
-        <div className={styles.menuItemLeft} ref={ref}>
-          <span {...renderInlineMarkdown(text)}></span>
-          {left}
-        </div>
-        <div className={styles.menuItemRight}>
-          <Tag tag={tag} />
-          {right}
-        </div>
+        {innerContent}
       </Link>
     );
   }
@@ -66,18 +83,20 @@ export function SidebarItemRaw({
   return (
     <div
       ref={ref}
-      className={clsx('rspress-sidebar-item', styles.menuItem, className, {
-        [styles.active]: active,
-        ['rspress-sidebar-item-active']: active,
-      })}
+      className={clsx(
+        'rspress-sidebar-item',
+        styles.menuItem,
+        {
+          [styles.active]: active,
+          ['rspress-sidebar-item-active']: active,
+        },
+        className,
+      )}
+      {...{ 'data-depth': depth }}
       {...(context ? { 'data-context': context } : {})}
       onClick={onClick}
     >
-      <div className={styles.menuItemLeft} ref={ref}>
-        <span {...renderInlineMarkdown(text)}></span>
-        <Tag tag={tag} />
-      </div>
-      <div className={styles.menuItemRight}></div>
+      {innerContent}
     </div>
   );
 }
@@ -85,10 +104,12 @@ export function SidebarItemRaw({
 export interface SidebarItemProps {
   item: SidebarItemType | NormalizedSidebarGroup;
   activeMatcher: (link: string) => boolean;
+  depth: number;
+  className?: string;
 }
 
 export function SidebarItem(props: SidebarItemProps) {
-  const { item, activeMatcher } = props;
+  const { item, activeMatcher, depth, className } = props;
 
   const active = Boolean(
     'link' in item && item.link && activeMatcher(item.link),
@@ -97,11 +118,13 @@ export function SidebarItem(props: SidebarItemProps) {
   // add the div.rspress-sidebar-item in an unified place
   return (
     <SidebarItemRaw
+      className={className}
       active={active}
       link={item.link}
       tag={item.tag}
       text={item.text}
       context={item.context}
+      depth={depth}
     />
   );
 }

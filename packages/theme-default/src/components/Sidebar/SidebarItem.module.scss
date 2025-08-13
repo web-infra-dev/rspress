@@ -2,6 +2,7 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
+  cursor: pointer;
   padding: 0.5rem 0.75rem 0.5rem 0.75rem;
 
   margin-top: 2px;
@@ -16,7 +17,7 @@
   transition:
     color 0.2s,
     background-color 0.2s;
-  font-weight: 500;
+  font-weight: 400;
 
   &:hover {
     color: var(--rp-c-text-1);
@@ -24,11 +25,10 @@
   }
 
   &.active {
-    font-weight: 500;
+    // font-weight: bolder;
 
     background-color: var(--rp-c-brand-tint);
     color: var(--rp-c-link);
-    font-weight: bolder;
     position: relative;
   }
 }
@@ -53,7 +53,7 @@
 //   transition: all 0.2s;
 // }
 
-// .menuItemActive::before {
+// .menuItem::before {
 //   content: '';
 //   position: absolute;
 //   top: 0;
