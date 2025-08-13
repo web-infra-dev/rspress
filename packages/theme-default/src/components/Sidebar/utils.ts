@@ -36,7 +36,7 @@ export const isSidebarSectionHeader = (
   return 'sectionHeaderText' in item;
 };
 
-export const isSideBarCustomLink = (
+export const isSidebarCustomLink = (
   item:
     | NormalizedSidebarGroup
     | ISidebarItem
@@ -44,6 +44,16 @@ export const isSideBarCustomLink = (
     | ISidebarSectionHeader,
 ) => {
   return 'link' in item && isExternalUrl(item.link);
+};
+
+export const isSidebarGroup = (
+  item:
+    | NormalizedSidebarGroup
+    | ISidebarItem
+    | ISidebarDivider
+    | ISidebarSectionHeader,
+): item is NormalizedSidebarGroup => {
+  return 'link' in item && 'items' in item && Array.isArray(item.items);
 };
 
 export const preloadLink = (link: string) => {

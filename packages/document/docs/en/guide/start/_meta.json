@@ -1,1 +1,1 @@
-["introduction", "getting-started"]
+["introduction", { "type": "divider" }, "getting-started"]

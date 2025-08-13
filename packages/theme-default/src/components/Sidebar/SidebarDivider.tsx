@@ -1,3 +1,5 @@
+import { divider, dividerDashed } from './SidebarDivider.module.scss';
+
 export type SidebarDividerProps = {
   depth: number;
   dividerType: 'dashed' | 'solid';
@@ -5,13 +7,13 @@ export type SidebarDividerProps = {
 
 export function SidebarDivider(props: SidebarDividerProps) {
   const { depth, dividerType } = props;
-  const borderTypeStyle =
-    dividerType === 'dashed' ? 'rp-border-dashed' : 'rp-border-solid';
+  const borderTypeClassName =
+    dividerType === 'dashed' ? dividerDashed : divider;
 
   return (
     <div
-      className={`${borderTypeStyle} rp-border-t rp-border-divider-light rp-my-3`}
-      style={{ marginLeft: depth === 0 ? 0 : '18px' }}
+      className={`${borderTypeClassName}`}
+      // style={{ marginLeft: depth === 0 ? 0 : '18px' }}
     />
   );
 }

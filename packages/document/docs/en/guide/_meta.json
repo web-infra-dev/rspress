@@ -4,6 +4,7 @@
     "name": "start",
     "label": "gettingStarted"
   },
+  { "type": "divider" },
   {
     "type": "dir",
     "name": "basic",

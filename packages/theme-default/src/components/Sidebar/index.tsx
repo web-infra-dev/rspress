@@ -12,33 +12,16 @@ import type { UISwitchResult } from '../../logic/useUISwitch';
 import { NavBarTitle } from '../Nav/NavBarTitle';
 import * as styles from './index.module.scss';
 import { SidebarDivider } from './SidebarDivider';
+import { SidebarGroup } from './SidebarGroup';
 import { SidebarItem } from './SidebarItem';
 import { SidebarSectionHeader } from './SidebarSectionHeader';
 import {
-  isSideBarCustomLink,
+  isSidebarCustomLink,
   isSidebarDivider,
+  isSidebarGroup,
   isSidebarSectionHeader,
   useActiveMatcher,
 } from './utils';
-
-export interface SidebarItemProps {
-  id: string;
-  item: ISidebarItem | NormalizedSidebarGroup;
-  depth: number;
-  activeMatcher: (link: string) => boolean;
-  collapsed?: boolean;
-  setSidebarData: React.Dispatch<
-    React.SetStateAction<
-      (
-        | NormalizedSidebarGroup
-        | ISidebarItem
-        | ISidebarDivider
-        | ISidebarSectionHeader
-      )[]
-    >
-  >;
-  contextContainerClassName?: string;
-}
 
 interface Props {
   isSidebarOpen?: boolean;
@@ -47,12 +30,6 @@ interface Props {
   uiSwitch?: UISwitchResult;
   navTitle?: React.ReactNode;
 }
-
-export const highlightTitleStyle = {
-  fontSize: '14px',
-  paddingLeft: '24px',
-  fontWeight: 'bold',
-};
 
 export let bodyStyleOverflow: string;
 
@@ -154,16 +131,12 @@ export function Sidebar(props: Props) {
   }, [rawSidebarData, pathname]);
 
   return (
-    <aside
-      className={`${styles.sidebar} rspress-sidebar ${
-        isSidebarOpen ? styles.open : ''
-      }`}
-    >
+    <aside className={`${styles.sidebar} ${isSidebarOpen ? styles.open : ''}`}>
       {!uiSwitch?.showNavbar ? null : (
         <div className={styles.navTitleMask}>{navTitle || <NavBarTitle />}</div>
       )}
-      <div className={`rspress-scrollbar ${styles.sidebarContent}`}>
-        <nav className="rp-pb-2">
+      <div className={`${styles.sidebarContainer} rspress-scrollbar`}>
+        <nav>
           {beforeSidebar}
           <SidebarList
             sidebarData={sidebarData}
@@ -228,30 +201,37 @@ function SidebarListItem(props: {
     );
   }
 
-  if (isSideBarCustomLink(item)) {
+  if (isSidebarGroup(item)) {
     return (
-      <SidebarItem
+      <SidebarGroup
         id={String(index)}
+        activeMatcher={activeMatcher}
+        key={`${item.text}-${index}`}
         item={item}
         depth={0}
-        key={index}
-        collapsed={(item as NormalizedSidebarGroup).collapsed ?? true}
+        collapsed={item.collapsed}
         setSidebarData={setSidebarData}
+      />
+    );
+  }
+
+  if (isSidebarCustomLink(item)) {
+    return (
+      <SidebarItem
+        item={item}
+        key={index}
+        // collapsed={(item as NormalizedSidebarGroup).collapsed ?? true}
         activeMatcher={activeMatcher}
-        contextContainerClassName="rspress-sidebar-custom-link"
       />
     );
   }
 
   return (
     <SidebarItem
-      id={String(index)}
       item={item}
-      depth={0}
       key={index}
       activeMatcher={activeMatcher}
-      collapsed={(item as NormalizedSidebarGroup).collapsed ?? true}
-      setSidebarData={setSidebarData}
+      // collapsed={(item as NormalizedSidebarGroup).collapsed ?? true}
     />
   );
 }

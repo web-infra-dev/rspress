@@ -1,1 +1,1 @@
-["link", "components", "container"]
+["link", { "type": "divider" }, "components", "container"]
