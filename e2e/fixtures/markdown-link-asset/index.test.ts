@@ -43,28 +43,21 @@ test.describe('basic test', async () => {
         expect(content).toContain('Plain Text');
         count++;
       }
-
-      if (!isI18n) {
-        if (url.includes('hello.html')) {
-          expect(url).toBe(`http://localhost:${appPort}/base/hello.html`);
-          const content = await page.content();
-          expect(content).toContain('<h1 id="hello-world">Hello world</h1>');
-          count++;
-        } else if (url.includes('test.md')) {
-          expect(url).toBe(`http://localhost:${appPort}/base/test.md`);
-          const content = await page.content();
-          expect(content).toContain('# Test');
-          count++;
-        }
-      }
+      // Do not support .md or .html public folder asset
+      // else if (url.includes('hello.html')) {
+      //   expect(url).toBe(`http://localhost:${appPort}/base/hello.html`);
+      //   const content = await page.content();
+      //   expect(content).toContain('<h1 id="hello-world">Hello world</h1>');
+      //   count++;
+      // } else if (url.includes('test.md')) {
+      //   expect(url).toBe(`http://localhost:${appPort}/base/test.md`);
+      //   const content = await page.content();
+      //   expect(content).toContain('# Test');
+      //   count++;
+      // }
       await page.goBack();
     }
-    if (isI18n) {
-      // not support .md or .html public folder asset
-      expect(count).toBe(2);
-    } else {
-      expect(count).toBe(4);
-    }
+    expect(count).toBe(2);
   }
 
   test('should support asset link', async ({ page }) => {
