@@ -60,6 +60,7 @@ test.describe('basic test', async () => {
       await page.goBack();
     }
     if (isI18n) {
+      // not support .md or .html public folder asset
       expect(count).toBe(2);
     } else {
       expect(count).toBe(4);
