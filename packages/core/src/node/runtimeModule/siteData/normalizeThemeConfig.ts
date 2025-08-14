@@ -6,6 +6,7 @@ import {
   type NavItemWithLink,
   type NormalizedDefaultThemeConfig,
   type NormalizedSidebarGroup,
+  normalizeHref,
   type Sidebar,
   type SidebarDivider,
   type SidebarGroup,
@@ -55,6 +56,15 @@ export function normalizeThemeConfig(
     const text = i18nTextData[key]?.[currentLang];
     return text || key;
   };
+
+  const transformer = (link: string, currentLang?: string) => {
+    return normalizeHref(normalizeLinkPrefix(link, currentLang), false);
+  };
+
+  const textReplace = (text: string, currentLang?: string) => {
+    return applyReplaceRules(getI18nText(text, currentLang), replaceRules);
+  };
+
   // Normalize sidebar
   const normalizeSidebar = (
     sidebar?: DefaultThemeConfig['sidebar'],
@@ -92,11 +102,13 @@ export function normalizeThemeConfig(
             getI18nText(item.text, currentLang),
             replaceRules,
           ),
-          link: normalizeLinkPrefix(item.link),
+          ...('link' in item && item.link
+            ? { link: transformer(item.link, currentLang) }
+            : {}),
           collapsed: item.collapsed ?? false,
           collapsible: item.collapsible ?? true,
           tag: item.tag,
-          items: item.items.map(subItem => {
+          items: item.items.map((subItem) => {
             return normalizeSidebarItem(subItem) as
               | NormalizedSidebarGroup
               | SidebarItem;
@@ -116,7 +128,7 @@ export function normalizeThemeConfig(
     };
 
     const normalizeSidebar = (sidebar: Sidebar) => {
-      Object.keys(sidebar).forEach(key => {
+      Object.keys(sidebar).forEach((key) => {
         const value = sidebar[key];
         normalizedSidebar[key] = value.map(normalizeSidebarItem) as (
           | NormalizedSidebarGroup
@@ -137,37 +149,23 @@ export function normalizeThemeConfig(
     if (!nav) {
       return [];
     }
-    const transformNavItem = (navItem: NavItem): NavItem => {
-      const text = applyReplaceRules(
-        getI18nText(navItem.text, currentLang),
-        replaceRules,
-      );
-      if ('link' in navItem) {
-        return {
-          ...navItem,
-          text,
-          link: normalizeLinkPrefix(navItem.link, currentLang),
-        };
-      }
-
-      if ('items' in navItem) {
-        return {
-          ...navItem,
-          text,
-          items: navItem.items.map((item: NavItemWithLink) => {
-            return {
-              ...item,
-              text: applyReplaceRules(
-                getI18nText(item.text, currentLang),
-                replaceRules,
-              ),
-              link: normalizeLinkPrefix(item.link, currentLang),
-            };
-          }),
-        };
-      }
-
-      return navItem;
+    const transformNavItem = <T extends NavItem>(navItem: T): T => {
+      return {
+        ...navItem,
+        ...(navItem.text
+          ? { text: textReplace(navItem.text, currentLang) }
+          : {}),
+        ...('link' in navItem
+          ? { link: transformer(navItem.link, currentLang) }
+          : {}),
+        ...('items' in navItem
+          ? {
+              items: navItem.items.map((item: NavItemWithLink) => {
+                return transformNavItem(item);
+              }),
+            }
+          : {}),
+      };
     };
 
     if (Array.isArray(nav)) {
@@ -195,7 +193,7 @@ export function normalizeThemeConfig(
   if (locales.length) {
     themeConfig.locales = locales.map(({ lang: currentLang, label }) => {
       const localeInThemeConfig = themeConfig.locales?.find(
-        locale => locale.lang === currentLang,
+        (locale) => locale.lang === currentLang,
       );
       return {
         lang: currentLang,

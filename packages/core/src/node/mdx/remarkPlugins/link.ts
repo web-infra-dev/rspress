@@ -130,20 +130,28 @@ function normalizeLink(
     return nodeUrl;
   }
 
-  // eslint-disable-next-line prefer-const
-  let { url, hash } = parseUrl(nodeUrl);
-
-  if (isExternalUrl(url)) {
-    return url + (hash ? `#${hash}` : '');
+  if (isExternalUrl(nodeUrl)) {
+    return nodeUrl;
   }
 
+  // eslint-disable-next-line prefer-const
   if (!routeService) {
     return nodeUrl;
   }
 
-  // 1. [](/api/getting-started) or [](/en/api/getting-started)
+  let { url, hash } = parseUrl(nodeUrl);
+
+  const ext = path.extname(url);
+
+  // 0. [](/asset.svg) or [](/asset.png)
+  const isAsset =
+    Boolean(ext) && !routeService.extensions.includes(ext) && ext !== '.html'; // not good enough in cases [](/asset.html) or [](/asset.md)
+  if (isAsset) {
+    return nodeUrl;
+  }
+
   if (url.startsWith('/')) {
-    // TODO: add a option for disable loose mode
+    // 1. [](/api/getting-started) or [](/en/api/getting-started)
     // loose mode: add version and lang prefix to the link
     if (autoPrefix) {
       url = looseMarkdownLink(url, routeService, filePath);
@@ -158,7 +166,7 @@ function normalizeLink(
   }
 
   if (typeof cleanUrls === 'boolean') {
-    url = normalizeHref(url, cleanUrls);
+    url = normalizeHref(url, false); // todo
   } else {
     url = normalizeHref(url, false);
     url = url.replace(/\.html$/, cleanUrls);
@@ -202,7 +210,7 @@ export const remarkLink: Plugin<
     const { checkDeadLinks: shouldCheckDeadLinks = true, autoPrefix = true } =
       remarkLinkOptions ?? {};
     const internalLinks = new Map<string, string>();
-    visit(tree, 'link', node => {
+    visit(tree, 'link', (node) => {
       const { url: nodeUrl } = node;
       const link = normalizeLink(
         nodeUrl,
@@ -216,7 +224,7 @@ export const remarkLink: Plugin<
       node.url = link;
     });
 
-    visit(tree, 'definition', node => {
+    visit(tree, 'definition', (node) => {
       const { url: nodeUrl } = node;
       const link = normalizeLink(
         nodeUrl,
