@@ -6,6 +6,7 @@ import {
   type NavItemWithLink,
   type NormalizedDefaultThemeConfig,
   type NormalizedSidebarGroup,
+  normalizeHref,
   type Sidebar,
   type SidebarDivider,
   type SidebarGroup,
@@ -138,30 +139,48 @@ export function normalizeThemeConfig(
       return [];
     }
     const transformNavItem = (navItem: NavItem): NavItem => {
-      const text = applyReplaceRules(
-        getI18nText(navItem.text, currentLang),
-        replaceRules,
-      );
-      if ('link' in navItem) {
-        return {
-          ...navItem,
-          text,
-          link: normalizeLinkPrefix(navItem.link, currentLang),
-        };
-      }
+      const transformer = (link: string) => {
+        return normalizeHref(
+          normalizeLinkPrefix(link, currentLang),
+          docConfig.route?.cleanUrls ?? false,
+        );
+      };
 
-      if ('items' in navItem) {
+      const textReplace = (text: string) => {
+        return applyReplaceRules(getI18nText(text, currentLang), replaceRules);
+      };
+
+      if ('link' in navItem && 'items' in navItem) {
         return {
           ...navItem,
-          text,
+          ...(navItem.text ? { text: textReplace(navItem.text) } : {}),
+          link: transformer(navItem.link),
           items: navItem.items.map((item: NavItemWithLink) => {
             return {
               ...item,
-              text: applyReplaceRules(
-                getI18nText(item.text, currentLang),
-                replaceRules,
-              ),
-              link: normalizeLinkPrefix(item.link, currentLang),
+              text: textReplace(item.text),
+              link: transformer(item.link),
+            };
+          }),
+        };
+      }
+
+      if ('link' in navItem) {
+        return {
+          ...navItem,
+          text: textReplace(navItem.text),
+          link: transformer(navItem.link),
+        };
+      }
+      if ('items' in navItem) {
+        return {
+          ...navItem,
+          ...(navItem.text ? { text: textReplace(navItem.text) } : {}),
+          items: navItem.items.map((item: NavItemWithLink) => {
+            return {
+              ...item,
+              text: textReplace(item.text),
+              link: transformer(item.link),
             };
           }),
         };
