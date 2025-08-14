@@ -51,7 +51,7 @@ export function getHref(href: string): {
   removeBaseHref: string;
   linkType: LinkType;
 } {
-  let withBaseHref;
+  let withBaseHref: string;
   const linkType = getLinkType(href);
 
   if (linkType === 'external' || linkType === 'hashOnly') {
@@ -61,8 +61,9 @@ export function getHref(href: string): {
   if (linkType === 'relative' && !process.env.__SSR__) {
     withBaseHref = new URL(href, window.location.href).pathname;
   } else {
-    withBaseHref = withBase(normalizeHrefInRuntime(href));
+    withBaseHref = withBase(normalizeHrefInRuntime(href, true));
   }
+
   const removeBaseHref = removeBase(withBaseHref);
 
   return { withBaseHref, removeBaseHref, linkType };

@@ -206,7 +206,11 @@ export const parseUrl = (
   };
 };
 
-export function normalizeHref(url?: string, cleanUrls = false) {
+export function normalizeHref(
+  url: string,
+  cleanUrls: boolean,
+  exact: boolean = false,
+) {
   if (!url) {
     return '/';
   }
@@ -225,12 +229,14 @@ export function normalizeHref(url?: string, cleanUrls = false) {
 
   // 1. cleanUrls: false
   if (!cleanUrls) {
-    const hasExt = /\.[a-zA-Z]\w*$/.test(cleanUrl);
-    if (!hasExt) {
-      if (cleanUrl.endsWith('/')) {
-        cleanUrl += 'index.html';
-      } else {
-        cleanUrl += '.html';
+    if (!exact) {
+      const hasHtmlExt = cleanUrl.endsWith('.html');
+      if (!hasHtmlExt) {
+        if (cleanUrl.endsWith('/')) {
+          cleanUrl += 'index.html';
+        } else {
+          cleanUrl += '.html';
+        }
       }
     }
   } else {

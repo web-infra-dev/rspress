@@ -28,9 +28,9 @@ export function isEqualPath(a: string, b: string) {
   );
 }
 
-export function normalizeHrefInRuntime(a: string) {
+export function normalizeHrefInRuntime(a: string, exact: boolean = false) {
   const cleanUrls = Boolean(siteData?.route?.cleanUrls);
-  return normalizeHref(a, cleanUrls);
+  return normalizeHref(a, cleanUrls, exact);
 }
 
 export function normalizeImagePath(imagePath: string) {

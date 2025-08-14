@@ -1,6 +1,5 @@
 import {
   isEqualPath,
-  normalizeHrefInRuntime as normalizeHref,
   useLocaleSiteData,
   usePageData,
   useSidebar,
@@ -87,7 +86,7 @@ const GroupRenderer = ({
           <div className="rp-flex">
             <h3 style={{ marginBottom: 8 }}>
               <Link
-                href={normalizeHref(item.link)}
+                href={item.link}
                 {...renderInlineMarkdown(item.text)}
               ></Link>
             </h3>
@@ -101,7 +100,7 @@ const GroupRenderer = ({
                 } first:rp-mt-2`}
               >
                 <Link
-                  href={`${normalizeHref(item.link)}#${header.id}`}
+                  href={`${item.link}#${header.id}`}
                   {...renderInlineMarkdown(header.text)}
                 ></Link>
               </li>
