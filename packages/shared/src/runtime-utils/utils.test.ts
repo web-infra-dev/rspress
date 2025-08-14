@@ -46,28 +46,30 @@ describe('test shared utils', () => {
   });
 
   test('normalizeHref', () => {
-    expect(normalizeHref()).toEqual('/');
-    expect(normalizeHref('/guide/')).toBe('/guide/index.html');
-    expect(normalizeHref('/guide')).toBe('/guide.html');
-    expect(normalizeHref('/guide/index.html')).toBe('/guide/index.html');
-    expect(normalizeHref('/guide/index')).toBe('/guide/index.html');
-    expect(normalizeHref('https://example.com/foo')).toBe(
+    expect(normalizeHref('/', false)).toEqual('/');
+    expect(normalizeHref('/guide/', false)).toBe('/guide/index.html');
+    expect(normalizeHref('/guide', false)).toBe('/guide.html');
+    expect(normalizeHref('/guide/index.html', false)).toBe('/guide/index.html');
+    expect(normalizeHref('/guide/index', false)).toBe('/guide/index.html');
+    expect(normalizeHref('https://example.com/foo', false)).toBe(
       'https://example.com/foo',
     );
-    expect(normalizeHref('mailto:bluth@example.com')).toBe(
+    expect(normalizeHref('mailto:bluth@example.com', false)).toBe(
       'mailto:bluth@example.com',
     );
-    expect(normalizeHref('tel:123456789')).toBe('tel:123456789');
+    expect(normalizeHref('tel:123456789', false)).toBe('tel:123456789');
     expect(normalizeHref('/guide', true)).toBe('/guide');
     expect(normalizeHref('/guide/', true)).toBe('/guide/');
     expect(normalizeHref('/guide.html', true)).toBe('/guide');
     expect(normalizeHref('/guide/index', true)).toBe('/guide/');
     expect(normalizeHref('/guide/index.html', true)).toBe('/guide/');
-    expect(normalizeHref('/guide/version-0.1')).toBe('/guide/version-0.1.html');
-    expect(normalizeHref('/guide/version-0.1.html')).toBe(
+    expect(normalizeHref('/guide/version-0.1', false)).toBe(
       '/guide/version-0.1.html',
     );
-    expect(normalizeHref('/guide/version-0.1/')).toBe(
+    expect(normalizeHref('/guide/version-0.1.html', false)).toBe(
+      '/guide/version-0.1.html',
+    );
+    expect(normalizeHref('/guide/version-0.1/', false)).toBe(
       '/guide/version-0.1/index.html',
     );
     expect(normalizeHref('/guide/version-0.1/', true)).toBe(

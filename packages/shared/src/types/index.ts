@@ -411,6 +411,11 @@ export type RemarkLinkOptions = {
    * @default true
    */
   autoPrefix?: boolean;
+  /**
+   * @default []
+   * @example [llms.txt](/llms.txt)
+   */
+  externals?: string[] | ((url: string) => boolean);
 };
 
 export interface MarkdownOptions {

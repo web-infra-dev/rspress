@@ -206,7 +206,7 @@ export const parseUrl = (
   };
 };
 
-export function normalizeHref(url?: string, cleanUrls = false) {
+export function normalizeHref(url: string, cleanUrls: boolean) {
   if (!url) {
     return '/';
   }
@@ -222,11 +222,11 @@ export function normalizeHref(url?: string, cleanUrls = false) {
 
   // eslint-disable-next-line prefer-const
   let { url: cleanUrl, hash } = parseUrl(decodeURIComponent(url));
+  const hasHtmlExt = cleanUrl.endsWith('.html');
 
   // 1. cleanUrls: false
   if (!cleanUrls) {
-    const hasExt = /\.[a-zA-Z]\w*$/.test(cleanUrl);
-    if (!hasExt) {
+    if (!hasHtmlExt) {
       if (cleanUrl.endsWith('/')) {
         cleanUrl += 'index.html';
       } else {

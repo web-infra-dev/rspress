@@ -130,20 +130,28 @@ function normalizeLink(
     return nodeUrl;
   }
 
-  // eslint-disable-next-line prefer-const
-  let { url, hash } = parseUrl(nodeUrl);
-
-  if (isExternalUrl(url)) {
-    return url + (hash ? `#${hash}` : '');
+  if (isExternalUrl(nodeUrl)) {
+    return nodeUrl;
   }
 
+  // eslint-disable-next-line prefer-const
   if (!routeService) {
     return nodeUrl;
   }
 
-  // 1. [](/api/getting-started) or [](/en/api/getting-started)
+  let { url, hash } = parseUrl(nodeUrl);
+
+  const ext = path.extname(url);
+
+  // 0. [](/asset.svg) or [](/asset.png)
+  const isAsset =
+    Boolean(ext) && !routeService.extensions.includes(ext) && ext !== '.html'; // not good enough for now in [](/asset.html) or [](/asset.md) cases, however, this is acceptable.
+  if (isAsset) {
+    return nodeUrl;
+  }
+
   if (url.startsWith('/')) {
-    // TODO: add a option for disable loose mode
+    // 1. [](/api/getting-started) or [](/en/api/getting-started)
     // loose mode: add version and lang prefix to the link
     if (autoPrefix) {
       url = looseMarkdownLink(url, routeService, filePath);

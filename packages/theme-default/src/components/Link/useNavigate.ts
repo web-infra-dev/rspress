@@ -1,6 +1,5 @@
 import {
   isActive,
-  normalizeHrefInRuntime,
   pathnameToRouteService,
   removeBase,
   useLocation,
@@ -61,7 +60,7 @@ export function getHref(href: string): {
   if (linkType === 'relative' && !process.env.__SSR__) {
     withBaseHref = new URL(href, window.location.href).pathname;
   } else {
-    withBaseHref = withBase(normalizeHrefInRuntime(href));
+    withBaseHref = withBase(href);
   }
   const removeBaseHref = removeBase(withBaseHref);
 
