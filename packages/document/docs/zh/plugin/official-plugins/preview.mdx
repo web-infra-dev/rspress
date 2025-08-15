@@ -187,7 +187,7 @@ export default defineConfig({
           import { createApp } from 'vue';
           import App from ${JSON.stringify(demoPath)};
           import ${JSON.stringify(entryCssPath)};
-          createApp(App).mount('#root');
+          createApp(App).mount('#__rspress_root');
           `;
         },
         builderConfig: {
