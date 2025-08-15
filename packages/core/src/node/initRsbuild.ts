@@ -318,6 +318,11 @@ async function createInternalBuildConfig(
           })
           .end();
 
+        chain.experiments({
+          ...chain.toConfig().experiments,
+          nativeWatcher: process.env.RSPRESS_NATIVE_WATCHER !== 'false',
+        });
+
         if (chain.plugins.has(CHAIN_ID.PLUGIN.REACT_FAST_REFRESH)) {
           chain.plugin(CHAIN_ID.PLUGIN.REACT_FAST_REFRESH).tap(options => {
             options[0] ??= {};
