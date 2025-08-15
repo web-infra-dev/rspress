@@ -38,7 +38,6 @@ jobs:
           filters: |
             changed:
               - "packages/**"
-              - "!packages/document/**"
 
       - name: Setup Node.js
         if: steps.changes.outputs.changed == 'true'

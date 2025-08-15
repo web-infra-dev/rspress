@@ -1,6 +1,6 @@
-# 主题配置
+# Theme config
 
-主题配置位于 `doc` 配置中的 `themeConfig` 下。例如：
+Theme config is located under `themeConfig` in the `doc` param. For example:
 
 ```ts title="rspress.config.ts"
 import { defineConfig } from '@rspress/core';
@@ -17,24 +17,24 @@ export default defineConfig({
 - Type: `Array`
 - Default: `[]`
 
-网站的导航栏。 `nav` 配置是 `NavItem` 的数组，具有以下类型：
+The `nav` configuration is an array of `NavItem` with the following types:
 
 ```ts
 interface NavItem {
-  // 导航栏文本
+  // Navbar text
   text: string;
-  // 导航栏链接
+  // Navbar link
   link: '/';
-  // 导航栏链接的激活规则
+  // Activation rules for navbar links
   activeMatch: '^/$|^/';
-  // 图标配置(可选)，填入 svg 标签内容或者图片 URL
+  // svg tag string or image URL(optional)
   tag?: string;
 }
 ```
 
-`activeMatch` 用于匹配当前路由，当路由匹配 `activeMatch` 规则时，nav 项会高亮显示。默认情况下，`activeMatch` 是 nav 项的 `link`。
+`activeMatch` is used to match the current route, when the route matches the `activeMatch` rule, the nav item will be highlighted. By default, `activeMatch` is the `link` of the nav item.
 
-比如:
+For example:
 
 ```ts title="rspress.config.ts"
 import { defineConfig } from '@rspress/core';
@@ -55,20 +55,19 @@ export default defineConfig({
 });
 ```
 
-当然 `nav` 数组中也可以配置多级菜单，类型如下:
+Of course, multi-level menus can also be configured in the `nav` array with the following types:
 
 ```ts
 interface NavGroup {
-  // 导航栏文本
   text: string;
-  // 子菜单
+  // submenu
   items: NavItem[];
-  // 图标配置(可选)，填入 svg 标签内容或者图片 URL
+  // svg tag string or image URL(optional)
   tag?: string;
 }
 ```
 
-例如下面的配置:
+For example the following configuration:
 
 ```ts title="rspress.config.ts"
 import { defineConfig } from '@rspress/core';
@@ -91,6 +90,20 @@ export default defineConfig({
             text: 'Advanced',
             link: '/guide/advanced',
           },
+          // Also support sub group menu
+          {
+            text: 'Group',
+            items: [
+              {
+                text: 'Personal',
+                link: 'http://example.com/',
+              },
+              {
+                text: 'Company',
+                link: 'http://example.com/',
+              },
+            ],
+          },
         ],
       },
     ],
@@ -102,40 +115,40 @@ export default defineConfig({
 
 - Type: `Object`
 
-网站的侧边栏。配置为一个对象，类型如下：
+The sidebar of the website. The config is an object with the following types:
 
 ```ts
-// key 为 SidebarGroup 的路径
-// value 为 SidebarGroup 的数组
+// The key is the path of SidebarGroup
+// value is an array of SidebarGroup
 type Sidebar = Record<string, SidebarGroup[]>;
 
 interface SidebarGroup {
   text: string;
   link?: string;
   items: SidebarItem[];
-  // 是否可折叠
+  // whether to be collapsible
   collapsible?: boolean;
-  // 是否默认折叠
+  // Whether to be collapsed by default
   collapsed?: boolean;
-  // 图标配置(可选)，填入 svg 标签内容或者图片 URL
+  // svg tag string or image URL(optional)
   tag?: string;
 }
 
-// 可填入一个对象，也可以填入一个字符串
-// 填入字符串时，内部会转换成一个对象，字符串会被当做 link，text 值会自动取对应文档的标题
+// An object can be filled in, or a string can be filled in
+// When filling in a string, it will be converted into an object internally, the string will be used as a link, and the text value will automatically take the title of the corresponding document
 type SidebarItem =
   | {
-      // 侧边栏文本
+      // sidebar text
       text: string;
-      // 侧边栏链接
+      // sidebar link
       link: string;
-      // 图标配置(可选)，填入 svg 标签内容或者图片 URL
+      // svg tag string or image URL(optional)
       tag?: string;
     }
   | string;
 ```
 
-比如:
+For example:
 
 ```ts title="rspress.config.ts"
 import { defineConfig } from '@rspress/core';
@@ -147,7 +160,7 @@ export default defineConfig({
         {
           text: 'Getting Started',
           items: [
-            // 填入一个对象
+            // Fill in an object
             {
               text: 'Introduction',
               link: '/guide/getting-started/introduction',
@@ -161,7 +174,7 @@ export default defineConfig({
         {
           text: 'Advanced',
           items: [
-            // 直接填入链接字符串
+            // Fill in the link string directly
             '/guide/advanced/customization',
             '/guide/advanced/markdown',
           ],
@@ -177,19 +190,20 @@ export default defineConfig({
 - Type: `Object`
 - Default: `{}`
 
-主页的页脚。
+The footer of the home page.
 
-`footer` 配置是 `Footer` 的一个对象，它具有以下类型：
+The `footer` config is an object of `Footer`, which has the following types:
 
 ```ts
 export interface Footer {
   message?: string;
+  copyright?: string;
 }
 ```
 
-`message` 是一个可以包含 HTML 内容的字符串。这个字符串将使用 `dangerouslySetInnerHTML` 插入到页脚中，因此你可以传入 HTML 模板标签来设计你的页脚。
+`message` is a string that can contain HTML content. This string will be inserted into the footer using `dangerouslySetInnerHTML`, allowing you to pass in HTML template tags to design your footer.
 
-比如：
+For example:
 
 ```ts title="rspress.config.ts"
 import { defineConfig } from '@rspress/core';
@@ -198,7 +212,7 @@ export default defineConfig({
   themeConfig: {
     footer: {
       message:
-        '<p>这是一个包含<a href="https://example.com">链接</a>的<strong>页脚</strong></p>',
+        '<p>This is a footer with a <a href="https://example.com">link</a> and <strong>bold text</strong></p>',
     },
   },
 });
@@ -209,9 +223,9 @@ export default defineConfig({
 - Type: `boolean`
 - Default: `true`
 
-是否显示右侧大纲。
+Whether to show the sidebar in right position.
 
-比如:
+For example:
 
 ```ts title="rspress.config.ts"
 import { defineConfig } from '@rspress/core';
@@ -226,11 +240,11 @@ export default defineConfig({
 ## outlineTitle
 
 - Type: `string`
-- Default: `'ON THIS PAGE'`
+- Default: 'ON THIS PAGE'
 
-在右侧边栏中配置大纲的标题。
+Configure the title of the outline in the outline panel.
 
-比如:
+For example:
 
 ```ts title="rspress.config.ts"
 import { defineConfig } from '@rspress/core';
@@ -247,13 +261,13 @@ export default defineConfig({
 - Type: `boolean`
 - Default: `false`
 
-是否显示最后更新时间，默认情况下不显示。
+Whether to display the last update time, it is not displayed by default.
 
 :::info
-你必须提交 markdown 文件才能看到最后更新时间。
+You need to commit the markdown file to see the updated time.
 :::
 
-比如:
+For example:
 
 ```ts title="rspress.config.ts"
 import { defineConfig } from '@rspress/core';
@@ -270,9 +284,9 @@ export default defineConfig({
 - Type: `string`
 - Default: `Last Updated`
 
-最后更新时间的文本。
+The text of the last update time.
 
-比如:
+For example:
 
 ```ts title="rspress.config.ts"
 import { defineConfig } from '@rspress/core';
@@ -289,7 +303,7 @@ export default defineConfig({
 - Type: `string`
 - Default: `Previous Page`
 
-上一页的文本。比如:
+The text of the previous page. for example:
 
 ```ts title="rspress.config.ts"
 import { defineConfig } from '@rspress/core';
@@ -306,7 +320,7 @@ export default defineConfig({
 - Type: `string`
 - Default: `Search`
 
-搜索框的占位符文本。比如:
+The placeholder text of the search box. For example:
 
 ```ts title="rspress.config.ts"
 import { defineConfig } from '@rspress/core';
@@ -323,7 +337,7 @@ export default defineConfig({
 - Type: `string`
 - Default: `No results for`
 
-没有搜索结果时的显示文本。比如:
+The text of no search result. For example:
 
 ```ts title="rspress.config.ts"
 import { defineConfig } from '@rspress/core';
@@ -340,7 +354,7 @@ export default defineConfig({
 - Type: `string`
 - Default: `Please try again with a different keyword`
 
-没有搜索结果时的建议查询提示文本。比如:
+The text of suggested query text when no search result. For example:
 
 ```ts title="rspress.config.ts"
 import { defineConfig } from '@rspress/core';
@@ -356,7 +370,7 @@ export default defineConfig({
 
 - Type: `Object`
 
-预览页/组件的配置项。配置为一个对象，类型如下：
+The config of overview page/component. The config is an object with the following types:
 
 ```ts
 interface FilterConfig {
@@ -387,8 +401,8 @@ export default defineConfig({
 - Type: `Array`
 - Default: `[]`
 
-你可以通过如下的配置添加相关链接，比如 `github` 链接、`x` 链接等。
-相关链接支持四种模式：`链接模式link` `文本模式text` `图片模式img` `自定义模式dom`，相关例子如下：
+You can add related links through the following config, such as `github` links, `x` links, etc.
+Related links support four modes: `link mode` `text mode` `image mode` `dom mode`, for example:
 
 ```ts title="rspress.config.ts"
 import { defineConfig } from '@rspress/core';
@@ -404,7 +418,7 @@ export default defineConfig({
       {
         icon: 'wechat',
         mode: 'text',
-        content: '微信号 foo',
+        content: 'wechat: foo',
       },
       {
         icon: 'qq',
@@ -422,12 +436,12 @@ export default defineConfig({
 });
 ```
 
-- 当`link`模式时，点击 icon 即可跳转链接。
-- 当`text`模式时，鼠标移到 icon 上会显示弹框，弹框内容是输入的文本。
-- 当`img`模式时，鼠标移到 icon 上会显示弹框，弹框内容是指定的图片，需要注意的是，图片需要放在`public`目录下。
-- 当`dom`模式时，可以直接在 content 字段中传入需要自定义html。使用''进行包裹。
+- When in `link` mode, click the icon to jump to the link.
+- When in `text` mode, when the mouse moves over the icon, a pop-up box will be displayed, and the content of the pop-up box is the entered text
+- When in the `img` mode, moving the mouse over the icon will display a bullet box, and the content of the bullet box is the specified picture. It should be noted that the picture needs to be placed in the `public` directory.
+- When in dom mode, html to render can be passed directly into the content field. Use '' for wrapping
 
-相关链接支持以下几种图片，通过 icon 属性来选择：
+Related links support the following types of images, which can be selected through the icon attribute:
 
 ```ts
 export type SocialLinkIcon =
@@ -453,7 +467,7 @@ export type SocialLinkIcon =
   | { svg: string };
 ```
 
-如果需要自定义 icon，可以通过传入一个带有 `svg 属性` 的对象，svg 的值为自定义图标内容即可，比如：
+If you need to customize the icon, you can pass in an object with `svg attribute`, and the value of svg is the content of the custom icon, for example:
 
 ```js
 import { defineConfig } from '@rspress/core';
@@ -478,7 +492,7 @@ export default defineConfig({
 - Type: `string`
 - Default: `Next Page`
 
-下一页的文本。比如:
+Text for the next page. for example:
 
 ```ts title="rspress.config.ts"
 import { defineConfig } from '@rspress/core';
@@ -495,53 +509,53 @@ export default defineConfig({
 - Type: `Array<LocaleConfig>`
 - Default: `undefined`
 
-国际化配置。此配置为一个数组，数组中的每一项都是一个 `LocaleConfig` 对象，它具有以下类型：
+I18n config. This config is an array, and every item of it is `LocaleConfig`, and the types are as follows:
 
 ```ts
 export interface LocaleConfig {
   /**
-   * 通用站点信息，优先级高于 `locales` 中的配置
+   * General locale config for site, which will have a higher priority than `locales`
    */
-  // 语言名称
+  // language name
   lang?: string;
-  // HTML 标题，优先于 `themeConfig.title`
+  // HTML title, takes precedence over `themeConfig.title
   title?: string;
-  // HTML 描述，优先于 `themeConfig.description`
+  // HTML description, takes precedence over `themeConfig.description`
   description?: string;
-  // 对应语言的显示文本
+  // Display text for the corresponding language
   label: string;
   /**
-   * 主题相关信息
+   * Locale config for theme.
    */
-  // 右侧大纲标题
+  // Right outline title
   outlineTitle?: string;
-  // 最后更新时间文本
-  lastUpdatedText?: string;
-  // 是否显示最后更新时间
+  // Whether to display the last update time
   lastUpdated?: boolean;
-  // 上一页文本
+  // Last update time text
+  lastUpdatedText?: string;
+  // Previous text
   prevPageText?: string;
-  // 下一页文本
+  // Next page text
   nextPageText?: string;
-  // 搜索框占位符文本
+  // Search box placeholder text
   searchPlaceholderText?: string;
-  // 没有搜索结果时的显示文本
+  // The text of no search result
   searchNoResultsText?: string;
-  // 没有搜索结果时的建议查询提示文本
+  // The text of suggested query text when no search result
   searchSuggestedQueryText?: string;
-  // 配置编辑链接
+  // Info for the edit link.
   editLink?: EditLink;
 }
 ```
 
-`LocaleConfig` 中包含许多与主题配置中相同的配置项，但它的优先级会更高。
+`LocaleConfig` contains many of the same configuration options as the theme config, but the former will have a higher priority.
 
 ## darkMode
 
 - Type: `boolean`
 - Default: `true`
 
-是否出现暗黑模式/白天模式切换按钮。比如：
+Whether a Dark/Light mode toggle button appears. for example:
 
 ```ts title="rspress.config.ts"
 import { defineConfig } from '@rspress/core';
@@ -553,7 +567,7 @@ export default defineConfig({
 });
 ```
 
-同时，你也可以通过在 HTML 中注入如下的全局变量来指定默认的主题模式：
+You can also specify the default theme mode through inject global variable into html template, for example:
 
 ```ts title="rspress.config.ts"
 import { defineConfig } from '@rspress/core';
@@ -564,7 +578,7 @@ export default defineConfig({
       tags: [
         {
           tag: 'script',
-          // 通过 window.RSPRESS_THEME 变量来指定默认的主题模式，可选值为 'dark' 和 'light'
+          // Specify the default theme mode, which can be `dark` or `light`
           children: "window.RSPRESS_THEME = 'dark';",
         },
       ],
@@ -578,16 +592,16 @@ export default defineConfig({
 - Type: `"always" | "auto" | "never"`
 - Default: `never`
 
-控制隐藏导航栏行为。默认情况下，导航栏总是显示。你可以设置为 `auto` 来实现页面向下滚动时导航栏自动隐藏，或者设置为 `always` 来总是**隐藏导航栏**。
+Control the behavior of the hidden navigation bar. By default, the navigation bar will always display. You can set it to `auto` to **automatically hide when the page scrolls down**, or set it to `always` to hidden it all the time.
 
-。比如：
+For example:
 
 ```ts title="rspress.config.ts"
 import { defineConfig } from '@rspress/core';
 
 export default defineConfig({
   themeConfig: {
-    hideNavbar: 'never',
+    hideNavbar: 'auto',
   },
 });
 ```
@@ -599,12 +613,12 @@ export default defineConfig({
 ```ts
 interface EditLink {
   /**
-   * 自定义编辑链接的 URL
+   * Custom repository url for edit link.
    */
   docRepoBaseUrl: string;
 
   /**
-   * 自定义编辑链接的文本
+   * Custom text for edit link.
    *
    * @default 'Edit this page'
    */
@@ -614,9 +628,9 @@ interface EditLink {
 
 - Default: `undefined`
 
-用于配置编辑链接，以在 GitHub 或 GitLab 等 Git 管理服务上编辑页面。
+Display a link to edit the page on Git management services such as GitHub, or GitLab.
 
-比如：
+For example:
 
 ```ts title="rspress.config.ts"
 import { defineConfig } from '@rspress/core';
@@ -625,8 +639,8 @@ export default defineConfig({
   themeConfig: {
     editLink: {
       docRepoBaseUrl:
-        'https://github.com/web-infra-dev/rspress/tree/main/packages/document/docs',
-      text: '📝 在 GitHub 上编辑此页',
+        'https://github.com/web-infra-dev/rspress/tree/main/website/docs',
+      text: '📝 Edit this page on GitHub',
     },
   },
 });
@@ -637,9 +651,9 @@ export default defineConfig({
 - Type: `boolean`
 - Default: `false`
 
-在页面切换的时候是否显示转场动画，使用 [View Transition API](https://developer.mozilla.org/docs/Web/API/View_Transitions_API) 实现。例如：
+Whether there is animation effect when switching between pages. It is implemented with [View Transition API](https://developer.mozilla.org/docs/Web/API/View_Transitions_API). For example:
 
-> 转场动画暂时不能配置。
+> The animation is not configurable for now.
 
 ```ts title="rspress.config.ts"
 import { defineConfig } from '@rspress/core';
@@ -656,9 +670,9 @@ export default defineConfig({
 - Type: `boolean`
 - Default: `false`
 
-在浅色和深色主题之间切换时是否有动画效果，使用 [View Transition API](https://developer.mozilla.org/docs/Web/API/View_Transitions_API) 实现。例如：
+Whether there is animation effect when switching between light and dark theme. It is implemented with [View Transition API](https://developer.mozilla.org/docs/Web/API/View_Transitions_API). For example:
 
-> 切换动画暂时不能配置。
+> The animation is not configurable for now.
 
 ```ts title="rspress.config.ts"
 import { defineConfig } from '@rspress/core';
@@ -675,7 +689,7 @@ export default defineConfig({
 - Type: `boolean`
 - Default: `true`
 
-是否显示搜索框。比如：
+Whether to display the search box. For example:
 
 ```ts title="rspress.config.ts"
 import { defineConfig } from '@rspress/core';
@@ -692,7 +706,7 @@ export default defineConfig({
 - Type: `string`
 - Default: `Source`
 
-源代码按钮的文本。比如：
+The text of the source code button. For example:
 
 ```ts title="rspress.config.ts"
 import { defineConfig } from '@rspress/core';
@@ -709,7 +723,7 @@ export default defineConfig({
 - Type: `boolean`
 - Default: `false`
 
-启用文档上的滚动到顶部按钮. 比如:
+Enable scroll to top button on documentation. For example:
 
 ```ts title="rspress.config.ts"
 import { defineConfig } from '@rspress/core';
@@ -726,7 +740,7 @@ export default defineConfig({
 - Type: `'auto' | 'never' | 'only-default-lang'`
 - Default: `'auto'`
 
-是否在访问网站时重定向到最接近 `window.navigator.language` 的语言，默认为 `auto` 表示首次访问时将重定向，`never` 表示不重定向，`only-default-lang` 表示仅在访问默认语言时重定向。比如:
+Whether to redirect to the locale closest to `window.navigator.language` when the user visits the site, the default is `auto`, which means that the user will be redirected on the first visit. If you set it to `never`, the user will not be redirected. If you set it to `only-default-lang`, the user will only be redirected when visiting the default locale. For example:
 
 ```ts title="rspress.config.ts"
 import { defineConfig } from '@rspress/core';
@@ -743,7 +757,7 @@ export default defineConfig({
 - Type: `boolean`
 - Default: `true`
 
-是否在文档标题未提供时将 [`frontmatter.title`](./config-frontmatter#title) 作为后备内容。比如:
+Whether to display [`frontmatter.title`](./config-frontmatter#title) as fallback when the heading title is not presented. For example:
 
 ```ts title="rspress.config.ts"
 import { defineConfig } from '@rspress/core';

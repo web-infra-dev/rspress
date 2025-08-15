@@ -1,15 +1,7 @@
 {
   "name": "@rspress/docs",
   "version": "2.0.0-beta.26",
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/web-infra-dev/rspress.git",
-    "directory": "packages/document"
-  },
-  "license": "MIT",
-  "files": [
-    "docs"
-  ],
+  "private": true,
   "scripts": {
     "build": "rspress build",
     "dev": "rspress dev",
@@ -28,9 +20,5 @@
     "rsbuild-plugin-open-graph": "^1.1.0",
     "rspress-plugin-font-open-sans": "^1.0.3",
     "typescript": "^5.8.2"
-  },
-  "publishConfig": {
-    "access": "public",
-    "registry": "https://registry.npmjs.org/"
   }
 }
