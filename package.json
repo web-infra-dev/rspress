@@ -14,7 +14,7 @@
     "generate-release-pr": "zx scripts/generateReleasePr.mjs",
     "lint": "biome check . --diagnostic-level=warn && prettier . --check && pnpm run check-spell",
     "prepare": "pnpm run build && husky",
-    "preview:website": "cd packages/document && npm run preview",
+    "preview:website": "cd website && npm run preview",
     "test": "pnpm test:unit && pnpm test:e2e",
     "test:e2e": "playwright test",
     "test:unit": "vitest run",
