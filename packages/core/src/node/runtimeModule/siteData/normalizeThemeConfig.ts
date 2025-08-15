@@ -6,6 +6,7 @@ import {
   type NavItemWithLink,
   type NormalizedDefaultThemeConfig,
   type NormalizedSidebarGroup,
+  normalizeHref,
   type Sidebar,
   type SidebarDivider,
   type SidebarGroup,
@@ -33,7 +34,7 @@ export function normalizeThemeConfig(
   const locales = siteLocales ?? (themeConfig?.locales || []);
   const i18nTextData = getI18nData(docConfig);
   // In following code, we will normalize the theme config reference to the pages data extracted from mdx files
-  const normalizeLinkPrefix = (link = '', currentLang = '') => {
+  const normalizeLinkPrefix = (link: string, currentLang: string) => {
     const normalizedLink = slash(link);
     if (
       !currentLang ||
@@ -51,14 +52,24 @@ export function normalizeThemeConfig(
       : `/${currentLang}${addLeadingSlash(normalizedLink)}`;
   };
 
-  const getI18nText = (key = '', currentLang = '') => {
+  const getI18nText = (key: string, currentLang: string) => {
     const text = i18nTextData[key]?.[currentLang];
     return text || key;
   };
+
+  const cleanUrls = docConfig.route?.cleanUrls ?? false;
+  const transformLink = (link: string, currentLang: string) => {
+    return normalizeHref(normalizeLinkPrefix(link, currentLang), cleanUrls);
+  };
+
+  const textReplace = (text: string, currentLang: string) => {
+    return applyReplaceRules(getI18nText(text, currentLang), replaceRules);
+  };
+
   // Normalize sidebar
   const normalizeSidebar = (
-    sidebar?: DefaultThemeConfig['sidebar'],
-    currentLang = '',
+    sidebar: DefaultThemeConfig['sidebar'],
+    currentLang: string,
   ): NormalizedDefaultThemeConfig['sidebar'] => {
     const normalizedSidebar: NormalizedDefaultThemeConfig['sidebar'] = {};
     if (!sidebar) {
@@ -78,9 +89,9 @@ export function normalizeThemeConfig(
 
       // Meet the section header, return i18n text
       if (typeof item === 'object' && 'sectionHeaderText' in item) {
-        item.sectionHeaderText = applyReplaceRules(
-          getI18nText(item.sectionHeaderText, currentLang),
-          replaceRules,
+        item.sectionHeaderText = textReplace(
+          item.sectionHeaderText,
+          currentLang,
         );
         return item;
       }
@@ -88,14 +99,12 @@ export function normalizeThemeConfig(
       if (typeof item === 'object' && 'items' in item) {
         return {
           ...item,
-          text: applyReplaceRules(
-            getI18nText(item.text, currentLang),
-            replaceRules,
-          ),
-          link: normalizeLinkPrefix(item.link),
+          text: textReplace(item.text, currentLang),
+          ...('link' in item && item.link
+            ? { link: transformLink(item.link, currentLang) }
+            : {}),
           collapsed: item.collapsed ?? false,
           collapsible: item.collapsible ?? true,
-          tag: item.tag,
           items: item.items.map(subItem => {
             return normalizeSidebarItem(subItem) as
               | NormalizedSidebarGroup
@@ -106,12 +115,8 @@ export function normalizeThemeConfig(
 
       return {
         ...item,
-        text: applyReplaceRules(
-          getI18nText(item.text, currentLang),
-          replaceRules,
-        ),
-        link: normalizeLinkPrefix(item.link),
-        tag: item.tag,
+        text: textReplace(item.text, currentLang),
+        link: transformLink(item.link, currentLang),
       };
     };
 
@@ -131,43 +136,29 @@ export function normalizeThemeConfig(
   };
 
   const normalizeNav = (
-    nav?: DefaultThemeConfig['nav'],
-    currentLang?: string,
+    nav: DefaultThemeConfig['nav'] | undefined,
+    currentLang: string,
   ) => {
     if (!nav) {
       return [];
     }
-    const transformNavItem = (navItem: NavItem): NavItem => {
-      const text = applyReplaceRules(
-        getI18nText(navItem.text, currentLang),
-        replaceRules,
-      );
-      if ('link' in navItem) {
-        return {
-          ...navItem,
-          text,
-          link: normalizeLinkPrefix(navItem.link, currentLang),
-        };
-      }
-
-      if ('items' in navItem) {
-        return {
-          ...navItem,
-          text,
-          items: navItem.items.map((item: NavItemWithLink) => {
-            return {
-              ...item,
-              text: applyReplaceRules(
-                getI18nText(item.text, currentLang),
-                replaceRules,
-              ),
-              link: normalizeLinkPrefix(item.link, currentLang),
-            };
-          }),
-        };
-      }
-
-      return navItem;
+    const transformNavItem = <T extends NavItem>(navItem: T): T => {
+      return {
+        ...navItem,
+        ...(navItem.text
+          ? { text: textReplace(navItem.text, currentLang) }
+          : {}),
+        ...('link' in navItem
+          ? { link: transformLink(navItem.link, currentLang) }
+          : {}),
+        ...('items' in navItem
+          ? {
+              items: navItem.items.map((item: NavItemWithLink) => {
+                return transformNavItem(item);
+              }),
+            }
+          : {}),
+      };
     };
 
     if (Array.isArray(nav)) {
@@ -200,7 +191,7 @@ export function normalizeThemeConfig(
       return {
         lang: currentLang,
         label,
-        ...(localeInThemeConfig || {}),
+        ...localeInThemeConfig,
         sidebar: normalizeSidebar(
           localeInThemeConfig?.sidebar ?? themeConfig.sidebar,
           currentLang,
@@ -212,8 +203,8 @@ export function normalizeThemeConfig(
       };
     });
   } else {
-    themeConfig.sidebar = normalizeSidebar(themeConfig?.sidebar);
-    themeConfig.nav = normalizeNav(themeConfig?.nav);
+    themeConfig.sidebar = normalizeSidebar(themeConfig?.sidebar, '');
+    themeConfig.nav = normalizeNav(themeConfig?.nav, '');
   }
   return themeConfig as NormalizedDefaultThemeConfig;
 }
