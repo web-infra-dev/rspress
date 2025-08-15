@@ -7,7 +7,9 @@ import { RuntimeModuleID, type VirtualModulePlugin } from './types';
 const require = createRequire(import.meta.url);
 const DEFAULT_I18N_SOURCE = join(process.cwd(), 'i18n.json');
 
-export function getI18nData(docConfig: UserConfig) {
+export function getI18nData(
+  docConfig: UserConfig,
+): Record<string, Record<string, string>> {
   const { i18nSourcePath = DEFAULT_I18N_SOURCE } = docConfig;
   try {
     // require.cache is an API in Rslib.

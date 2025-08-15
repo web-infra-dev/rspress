@@ -1,16 +1,14 @@
-import type {
-  NormalizedSidebarGroup,
-  SidebarDivider,
-  SidebarItem,
-  SidebarSectionHeader,
+import {
+  type NormalizedSidebarGroup,
+  normalizeHref,
+  type SidebarDivider,
+  type SidebarItem,
+  type SidebarSectionHeader,
 } from '@rspress/shared';
 import { isSidebarDivider, isSidebarSectionHeader } from '../Sidebar/utils';
 
 function removeIndex(link: string) {
-  if (link.endsWith('/index')) {
-    return link.slice(0, -5);
-  }
-  return link;
+  return normalizeHref(link, true);
 }
 
 /**

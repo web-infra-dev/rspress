@@ -138,8 +138,6 @@ export function Overview(props: {
   }, []);
 
   const subFilter = (link: string) =>
-    // sidebar items link without base path
-    // pages route path with base path
     link.startsWith(routePath.replace(/overview$/, '')) &&
     !isEqualPath(link, routePath);
   const getChildLink = (
