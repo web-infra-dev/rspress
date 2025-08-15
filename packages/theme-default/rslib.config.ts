@@ -1,7 +1,6 @@
 import { pluginReact } from '@rsbuild/plugin-react';
 import { pluginSass } from '@rsbuild/plugin-sass';
 import { pluginSvgr } from '@rsbuild/plugin-svgr';
-import { pluginTypedCSSModules } from '@rsbuild/plugin-typed-css-modules';
 import { defineConfig } from '@rslib/core';
 import { pluginPublint } from 'rsbuild-plugin-publint';
 
@@ -33,7 +32,6 @@ export default defineConfig({
         pluginReact(),
         pluginSvgr({ svgrOptions: { exportType: 'default' } }),
         pluginSass(),
-        pluginTypedCSSModules(),
       ],
       source: {
         define: {
