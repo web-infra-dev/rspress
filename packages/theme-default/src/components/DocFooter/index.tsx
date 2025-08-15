@@ -1,8 +1,4 @@
-import {
-  normalizeHrefInRuntime as normalizeHref,
-  useLocaleSiteData,
-  useSite,
-} from '@rspress/runtime';
+import { useLocaleSiteData, useSite } from '@rspress/runtime';
 import { EditLink, LastUpdated, PrevNextPage } from '@theme';
 import { usePrevNextPage } from '../../logic/usePrevNextPage';
 import * as styles from './index.module.scss';
@@ -28,7 +24,7 @@ export function DocFooter() {
             <PrevNextPage
               type="prev"
               text={prevPage.text}
-              href={normalizeHref(prevPage.link)}
+              href={prevPage.link}
             />
           ) : null}
         </div>
@@ -37,7 +33,7 @@ export function DocFooter() {
             <PrevNextPage
               type="next"
               text={nextPage.text}
-              href={normalizeHref(nextPage.link)}
+              href={nextPage.link}
             />
           ) : null}
         </div>

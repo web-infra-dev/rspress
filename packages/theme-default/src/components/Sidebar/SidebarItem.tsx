@@ -1,4 +1,3 @@
-import { normalizeHrefInRuntime as normalizeHref } from '@rspress/runtime';
 import { Link, Tag } from '@theme';
 import { useEffect, useRef } from 'react';
 import { renderInlineMarkdown } from '../../logic/utils';
@@ -41,7 +40,7 @@ export function SidebarItem(props: SidebarItemProps) {
     >
       <Link
         // {...(depth === 0 ? { 'data-context': item.context } : {})}
-        href={normalizeHref(item.link)}
+        href={item.link}
         className={styles.menuLink}
       >
         <div

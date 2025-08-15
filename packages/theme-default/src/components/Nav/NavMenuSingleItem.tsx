@@ -1,4 +1,3 @@
-import { normalizeHrefInRuntime as normalizeHref } from '@rspress/runtime';
 import type {
   NavItemWithLink,
   NavItemWithLinkAndChildren,
@@ -21,7 +20,7 @@ export function NavMenuSingleItem(
   const isActive = new RegExp(item.activeMatch || item.link).test(pathname);
 
   return (
-    <Link href={normalizeHref(item.link)} onClick={item.onClick}>
+    <Link href={item.link} onClick={item.onClick}>
       <div
         key={item.text}
         className={`rspress-nav-menu-item ${styles.singleItem} ${
