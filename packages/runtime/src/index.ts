@@ -18,6 +18,7 @@ export { useI18n } from './hooks/useI18n';
 export { useLang } from './hooks/useLang';
 export { useLocaleSiteData } from './hooks/useLocaleSiteData';
 export { useNav } from './hooks/useNav';
+export { usePage } from './hooks/usePage';
 export { DataContext, usePageData } from './hooks/usePageData';
 export { getSidebarDataGroup, useSidebar } from './hooks/useSidebar';
 export { useSite as useSiteData } from './hooks/useSite';
