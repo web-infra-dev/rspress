@@ -1,4 +1,3 @@
-import { normalizeHrefInRuntime as normalizeHref } from '@rspress/runtime';
 import type { Header, PageIndexInfo, RemotePageInfo } from '@rspress/shared';
 import {
   LOCAL_INDEX,
@@ -153,7 +152,7 @@ export class PageSearcher {
               length: getStrByteLength(query),
             },
           ],
-          link: `${normalizeHref(item.routePath)}#${header.id}`,
+          link: `${item.routePath}#${header.id}`,
           query,
         });
         matchHeaderSet.add(header);
@@ -237,9 +236,7 @@ export class PageSearcher {
         type: 'content',
         title: item.title,
         header: currentHeader?.text ?? item.title,
-        link: `${normalizeHref(item.routePath)}${
-          currentHeader ? `#${currentHeader.id}` : ''
-        }`,
+        link: `${item.routePath}${currentHeader ? `#${currentHeader.id}` : ''}`,
         query,
         highlightInfoList,
         statement: `...${statement}...`,
@@ -273,7 +270,7 @@ export class PageSearcher {
           header: currentHeader?.text ?? item.title,
           statement,
           highlightInfoList,
-          link: `${normalizeHref(item.routePath)}${
+          link: `${item.routePath}${
             currentHeader ? `#${currentHeader.id}` : ''
           }`,
           query,
