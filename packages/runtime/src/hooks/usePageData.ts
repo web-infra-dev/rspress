@@ -8,8 +8,9 @@ interface IDataContext {
 
 export const DataContext = createContext({} as IDataContext);
 
+// TODO: mark this as deprecated after V2 theme refactoring
 /**
- * @deprecated should use `usePage` instead
+ * should use `usePage` and `useSite` instead
  */
 export function usePageData(): PageData {
   const ctx = useContext(DataContext);

@@ -3,7 +3,7 @@ import {
   useFrontmatter,
   useLocaleSiteData,
   usePageData,
-  useSiteData,
+  useSite,
 } from '@rspress/runtime';
 import type { FrontMatterMeta } from '@rspress/shared';
 import {
@@ -130,7 +130,7 @@ export function Layout(props: LayoutProps) {
     afterFeatures,
   };
   const { page } = usePageData();
-  const { site } = useSiteData();
+  const { site } = useSite();
   const { frontmatter } = useFrontmatter();
   const {
     pageType,

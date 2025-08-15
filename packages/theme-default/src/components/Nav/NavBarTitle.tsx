@@ -2,14 +2,14 @@ import {
   addLeadingSlash,
   normalizeImagePath,
   useLocaleSiteData,
-  useSiteData,
+  useSite,
 } from '@rspress/runtime';
 import { Link } from '@theme';
 import { useMemo } from 'react';
 import * as styles from './index.module.scss';
 
 export const NavBarTitle = () => {
-  const { site } = useSiteData();
+  const { site } = useSite();
   const localeData = useLocaleSiteData();
   const { logo: rawLogo, logoText } = site;
   const title = localeData.title ?? site.title;

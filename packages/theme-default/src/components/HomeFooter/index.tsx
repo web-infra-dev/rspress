@@ -1,7 +1,7 @@
-import { useSiteData } from '@rspress/runtime';
+import { useSite } from '@rspress/runtime';
 
 export function HomeFooter() {
-  const { site } = useSiteData();
+  const { site } = useSite();
   const { message } = site.themeConfig.footer || {};
 
   if (!message) {

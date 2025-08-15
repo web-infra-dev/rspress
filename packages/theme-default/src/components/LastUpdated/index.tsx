@@ -1,13 +1,13 @@
-import { useLocaleSiteData, usePageData, useSiteData } from '@rspress/runtime';
+import { useLocaleSiteData, usePage, useSite } from '@rspress/runtime';
 
 export function LastUpdated() {
   const { lastUpdatedText: localesLastUpdatedText = 'Last Updated' } =
     useLocaleSiteData();
   const {
     page: { lastUpdatedTime },
-  } = usePageData();
+  } = usePage();
 
-  const { site } = useSiteData();
+  const { site } = useSite();
 
   const { themeConfig } = site;
   const lastUpdatedText =
