@@ -320,7 +320,7 @@ async function createInternalBuildConfig(
 
         chain.experiments({
           // Enable native watcher by default unless RSPRESS_NATIVE_WATCHER is set to 'false'
-          ...chain.toConfig().experiments,
+          ...chain.get('experiments'),
           nativeWatcher: process.env.RSPRESS_NATIVE_WATCHER !== 'false',
         });
 
