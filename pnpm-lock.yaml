@@ -1602,9 +1602,6 @@ importers:
       '@rsbuild/plugin-svgr':
         specifier: ^1.2.2
         version: 1.2.2(@rsbuild/core@1.4.15)(typescript@5.8.2)
-      '@rsbuild/plugin-typed-css-modules':
-        specifier: ~1.0.3
-        version: 1.0.3(@rsbuild/core@1.4.15)
       '@rslib/core':
         specifier: 0.11.2
         version: 0.11.2(@microsoft/api-extractor@7.52.10(@types/node@22.10.2))(typescript@5.8.2)
@@ -2993,14 +2990,6 @@ packages:
     resolution: {integrity: sha512-zd1efqsd0mDWe6B6dAKmubMvvaGrD4lPKXUZObynROvPZBSeaZxY2y2Ddrwc1yCyWL6X4WdBd1WIfShGGGKDxg==}
     peerDependencies:
       '@rsbuild/core': 1.x
-
-  '@rsbuild/plugin-typed-css-modules@1.0.3':
-    resolution: {integrity: sha512-eW1NyAbTU88KzXDU/YJj0/KLgq1KCtF0yUnPZ+E3OQ+jrFDV4h4rwcZWyElaHxO3zb7WaAY9xOkhPvlC2o4VGw==}
-    peerDependencies:
-      '@rsbuild/core': 1.x
-    peerDependenciesMeta:
-      '@rsbuild/core':
-        optional: true
 
   '@rsbuild/plugin-vue@1.1.1':
     resolution: {integrity: sha512-rRW/fCmz8DhXWbvGkl9YkDkve9lKyYTsiXLQDo3n5DIo9Bzg2Lyvjb+URaew+/klCUr5zZegkf4yS6HvxurVaw==}
@@ -8495,10 +8484,6 @@ snapshots:
       - supports-color
       - typescript
       - webpack-hot-middleware
-
-  '@rsbuild/plugin-typed-css-modules@1.0.3(@rsbuild/core@1.4.15)':
-    optionalDependencies:
-      '@rsbuild/core': 1.4.15
 
   '@rsbuild/plugin-vue@1.1.1(@rsbuild/core@1.4.15)(vue@3.5.18(typescript@5.8.2))':
     dependencies:
