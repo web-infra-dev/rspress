@@ -8,12 +8,10 @@ export default defineConfig({
   // 3 min for each test
   timeout: 60 * 5 * 1000,
   quiet: true,
-  workers: '50%',
-  // It is very important to upload artifacts so that we can trace the test failure
-  reporter: [['html', { open: 'never' }]],
+  reporter: 'list',
   use: {
     trace: 'on',
     video: 'on',
   },
-  retries: 3,
+  retries: process.env.CI ? 3 : 0,
 });
