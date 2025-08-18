@@ -1,19 +1,11 @@
-import fs from 'node:fs/promises';
-import path from 'node:path';
 import { SEARCH_INDEX_NAME, type SiteData } from '@rspress/shared';
 import { getIconUrlPath } from '@rspress/shared/node-utils';
 import { groupBy } from 'lodash-es';
-import { isProduction, TEMP_DIR } from '../../constants';
+import { isProduction } from '../../constants';
 import { extractPageData } from '../../route/extractPageData';
 import { createHash } from '../../utils';
-import { type FactoryContext, RuntimeModuleID } from '../types';
+import type { FactoryContext } from '../types';
 import { normalizeThemeConfig } from './normalizeThemeConfig';
-
-// How can we let the client runtime access the `indexHash`?
-// We can only do something after the Rspack build process because the index hash is generated within Rspack build process.There are two ways to do this:
-// 1. insert window.__INDEX_HASH__ = 'foo' into the html template manually
-// 2. replace the `__INDEX_HASH__` placeholder in the html template with the real index hash after Rspack build
-export const indexHash = '';
 
 function deletePrivateField<T>(obj: T): T {
   if (typeof obj !== 'object' || obj === null) {
@@ -28,7 +20,11 @@ function deletePrivateField<T>(obj: T): T {
   return newObj;
 }
 
-export async function siteDataVMPlugin(context: FactoryContext) {
+export async function createSiteData(context: FactoryContext): Promise<{
+  siteData: Omit<SiteData, 'root'>;
+  searchIndex: Record<string, string>;
+  indexHashByGroup: Record<string, string>;
+}> {
   const { config, alias, userDocRoot, routeService, pluginDriver } = context;
   const userConfig = config;
   // prevent modify the origin config object
@@ -74,6 +70,7 @@ export async function siteDataVMPlugin(context: FactoryContext) {
 
   const indexHashByGroup = {} as Record<string, string>;
 
+  const searchIndex = {} as Record<string, string>;
   // Generate search index by different versions & languages, file name is {SEARCH_INDEX_NAME}.{version}.{lang}.{hash}.json
   await Promise.all(
     Object.keys(groupedPages).map(async group => {
@@ -88,14 +85,8 @@ export async function siteDataVMPlugin(context: FactoryContext) {
       const indexVersion = version ? `.${version.replace('.', '_')}` : '';
       const indexLang = lang ? `.${lang}` : '';
 
-      await fs.mkdir(TEMP_DIR, { recursive: true });
-      await fs.writeFile(
-        path.join(
-          TEMP_DIR,
-          `${SEARCH_INDEX_NAME}${indexVersion}${indexLang}.${indexHash}.json`,
-        ),
-        stringifiedIndex,
-      );
+      const filename = `${SEARCH_INDEX_NAME}${indexVersion}${indexLang}.${indexHash}.json`;
+      searchIndex[filename] = stringifiedIndex;
     }),
   );
 
@@ -140,15 +131,8 @@ export async function siteDataVMPlugin(context: FactoryContext) {
   };
 
   return {
-    [`${RuntimeModuleID.SiteData}.mjs`]: `export default ${JSON.stringify(
-      siteData,
-      null,
-      2,
-    )}`,
-    [RuntimeModuleID.SearchIndexHash]: `export default ${JSON.stringify(
-      indexHashByGroup,
-      null,
-      2,
-    )}`,
+    siteData,
+    searchIndex,
+    indexHashByGroup,
   };
 }
