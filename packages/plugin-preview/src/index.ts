@@ -212,7 +212,7 @@ export function pluginPreview(options?: Options): RspressPlugin {
     extendPageData(pageData, isProd) {
       if (!isProd) {
         // Property 'devPort' does not exist on type 'PageIndexInfo'.
-        // @ts-ignore
+        // @ts-expect-error
         pageData.devPort = port;
       }
     },
