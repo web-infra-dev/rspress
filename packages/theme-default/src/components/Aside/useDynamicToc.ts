@@ -70,7 +70,7 @@ function updateHeaders(target: Element) {
       collectedHeaders.push({
         id: el.id,
         text: processTitleElement(el).innerHTML,
-        depth: Number.parseInt(el.tagName[1]),
+        depth: Number.parseInt(el.tagName[1], 10),
         charIndex: 0,
       });
     }

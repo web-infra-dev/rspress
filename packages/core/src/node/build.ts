@@ -4,7 +4,6 @@ import { TEMP_DIR } from './constants';
 import { initRsbuild } from './initRsbuild';
 import { hintSSGFalse } from './logger/hint';
 import { PluginDriver } from './PluginDriver';
-import { writeSearchIndex } from './searchIndex';
 import { checkLanguageParity } from './utils/checkLanguageParity';
 
 interface BuildOptions {
@@ -32,7 +31,6 @@ export async function bundle(
     await pluginDriver.beforeBuild();
     await rsbuild.build();
   } finally {
-    await writeSearchIndex(config);
     await checkLanguageParity(config);
   }
   await pluginDriver.afterBuild();

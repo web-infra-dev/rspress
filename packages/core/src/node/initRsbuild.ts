@@ -36,18 +36,14 @@ import {
 } from './logger/hint';
 import type { PluginDriver } from './PluginDriver';
 import { RouteService } from './route/RouteService';
-import {
-  getVirtualModulesFromPlugins,
-  rsbuildPluginDocVM,
-} from './runtimeModule';
 import { globalStylesVMPlugin } from './runtimeModule/globalStyles';
 import { globalUIComponentsVMPlugin } from './runtimeModule/globalUIComponents';
 import { i18nVMPlugin } from './runtimeModule/i18n';
 import { routeListVMPlugin } from './runtimeModule/routeList';
 import { runtimeConfigVMPlugin } from './runtimeModule/runtimeConfig';
 import { searchHookVMPlugin } from './runtimeModule/searchHooks';
+import { rsbuildPluginDocVM } from './runtimeModule/siteData/rsbuildPlugin';
 import type { FactoryContext } from './runtimeModule/types';
-import { serveSearchIndexMiddleware } from './searchIndex';
 import { rsbuildPluginCSR } from './ssg/rsbuildPluginCSR';
 import { rsbuildPluginSSG } from './ssg/rsbuildPluginSSG';
 import {
@@ -69,6 +65,22 @@ function isPluginIncluded(config: UserConfig, pluginName: string): boolean {
 const require = createRequire(import.meta.url);
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
+
+async function getVirtualModulesFromPlugins(
+  pluginDriver: PluginDriver,
+): Promise<Record<string, () => string>> {
+  const runtimeModule: Record<string, () => string> = {};
+  const modulesByPlugin = await pluginDriver.addRuntimeModules();
+  Object.keys(modulesByPlugin).forEach(key => {
+    if (runtimeModule[key]) {
+      throw new Error(
+        `The runtime module ${key} is duplicated, please check your plugin`,
+      );
+    }
+    runtimeModule[key] = () => modulesByPlugin[key];
+  });
+  return runtimeModule;
+}
 
 async function createInternalBuildConfig(
   userDocRoot: string,
@@ -130,7 +142,12 @@ async function createInternalBuildConfig(
   return {
     plugins: [
       ...(isPluginIncluded(config, PLUGIN_REACT_NAME) ? [] : [pluginReact()]),
-      rsbuildPluginDocVM(context),
+      rsbuildPluginDocVM({
+        config,
+        pluginDriver,
+        routeService,
+        userDocRoot,
+      }),
       pluginVirtualModule({
         tempDir: '.rspress/runtime',
         virtualModules: {
@@ -187,10 +204,6 @@ async function createInternalBuildConfig(
     },
     dev: {
       lazyCompilation: process.env.RSPRESS_LAZY_COMPILATION !== 'false', // This is an escape hatch for playwright test, playwright does not support lazyCompilation
-      // Serve static files
-      setupMiddlewares: middlewares => {
-        middlewares.unshift(serveSearchIndexMiddleware(config));
-      },
       cliShortcuts: {
         // does not support restart server yet
         custom: shortcuts => shortcuts.filter(({ key }) => key !== 'r'),

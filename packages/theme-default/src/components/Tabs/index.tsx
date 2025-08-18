@@ -115,7 +115,7 @@ export const Tabs = forwardRef(
           return tabData[groupId];
         }
 
-        return Number.parseInt(storageIndex);
+        return Number.parseInt(storageIndex, 10);
       }
 
       return activeIndex;
@@ -124,7 +124,7 @@ export const Tabs = forwardRef(
     // sync when other browser page trigger update
     useEffect(() => {
       if (groupId) {
-        const correctIndex = Number.parseInt(storageIndex);
+        const correctIndex = Number.parseInt(storageIndex, 10);
 
         if (syncIndex !== correctIndex) {
           setTabData({ ...tabData, [groupId]: correctIndex });
