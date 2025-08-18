@@ -1,6 +1,6 @@
 import { usePageData } from '@rspress/core/runtime';
 import { Editor, Runner } from '@rspress/plugin-playground/web';
-// @ts-ignore Cannot find module _rspress_playground_imports
+// @ts-expect-error Cannot find module _rspress_playground_imports
 import getImport from '_rspress_playground_imports';
 import {
   type HTMLAttributes,

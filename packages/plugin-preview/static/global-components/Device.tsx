@@ -5,7 +5,7 @@ import {
   withBase,
 } from '@rspress/core/runtime';
 import { useCallback, useEffect, useState } from 'react';
-// @ts-ignore
+// @ts-expect-error
 import { normalizeId } from '../../dist/utils';
 import MobileOperation from './common/mobile-operation';
 import './Device.css';

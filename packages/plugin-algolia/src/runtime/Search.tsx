@@ -1,7 +1,7 @@
 import type { DocSearchProps } from '@docsearch/react';
 import { DocSearch } from '@docsearch/react';
 import { useLang, useNavigate } from '@rspress/core/runtime';
-// @ts-ignore @theme is not typed
+// @ts-expect-error @theme is not typed
 import { Link } from '@theme';
 import '@docsearch/css';
 import './Search.css';
