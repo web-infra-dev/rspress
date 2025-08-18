@@ -9,7 +9,7 @@
   box-sizing: border-box; /* 1 */
   border-width: 0; /* 2 */
   border-style: solid; /* 2 */
-  border-color: theme('borderColor.DEFAULT', currentColor); /* 2 */
+  /* border-color: theme('borderColor.DEFAULT', currentColor); 2 */
 }
 
 ::before,
@@ -33,7 +33,7 @@ html,
   -webkit-text-size-adjust: 100%; /* 2 */
   -moz-tab-size: 4; /* 3 */
   tab-size: 4; /* 3 */
-  font-family: theme(
+  /* font-family: theme(
     'fontFamily.sans',
     ui-sans-serif,
     system-ui,
@@ -42,15 +42,18 @@ html,
     'Segoe UI Emoji',
     'Segoe UI Symbol',
     'Noto Color Emoji'
-  ); /* 4 */
-  font-feature-settings: theme(
+  ); */
+  /* 4 */
+  /* font-feature-settings: theme(
     'fontFamily.sans[1].fontFeatureSettings',
     normal
-  ); /* 5 */
-  font-variation-settings: theme(
+  );  */
+  /* 5 */
+  /* font-variation-settings: theme(
     'fontFamily.sans[1].fontVariationSettings',
     normal
-  ); /* 6 */
+  );  */
+  /* 6 */
   -webkit-tap-highlight-color: transparent; /* 7 */
 }
 
@@ -127,7 +130,7 @@ code,
 kbd,
 samp,
 pre {
-  font-family: theme(
+  /* font-family: theme(
     'fontFamily.mono',
     ui-monospace,
     SFMono-Regular,
@@ -137,15 +140,18 @@ pre {
     'Liberation Mono',
     'Courier New',
     monospace
-  ); /* 1 */
-  font-feature-settings: theme(
+  );  */
+  /* 1 */
+  /* font-feature-settings: theme(
     'fontFamily.mono[1].fontFeatureSettings',
     normal
-  ); /* 2 */
-  font-variation-settings: theme(
+  );  */
+  /* 2 */
+  /* font-variation-settings: theme(
     'fontFamily.mono[1].fontVariationSettings',
     normal
-  ); /* 3 */
+  );  */
+  /* 3 */
   font-size: 1em; /* 4 */
 }
 
@@ -153,15 +159,15 @@ pre {
 Add the correct font size in all browsers.
 */
 
-small {
+/* small {
   font-size: 80%;
-}
+} */
 
 /*
 Prevent `sub` and `sup` elements from affecting the line height in all browsers.
 */
 
-sub,
+/* sub,
 sup {
   font-size: 75%;
   line-height: 0;
@@ -175,7 +181,7 @@ sub {
 
 sup {
   top: -0.5em;
-}
+} */
 
 /*
 1. Remove text indentation from table contents in Chrome and Safari. (https://bugs.chromium.org/p/chromium/issues/detail?id=999088, https://bugs.webkit.org/show_bug.cgi?id=201297)
@@ -200,14 +206,22 @@ input,
 optgroup,
 select,
 textarea {
-  font-family: inherit; /* 1 */
-  font-feature-settings: inherit; /* 1 */
-  font-variation-settings: inherit; /* 1 */
-  font-size: 100%; /* 1 */
-  font-weight: inherit; /* 1 */
-  line-height: inherit; /* 1 */
-  letter-spacing: inherit; /* 1 */
-  color: inherit; /* 1 */
+  /* font-family: inherit;  */
+  /* 1 */
+  /* font-feature-settings: inherit; */
+  /* 1 */
+  /* font-variation-settings: inherit;  */
+  /* 1 */
+  /* font-size: 100%;  */
+  /* 1 */
+  /* font-weight: inherit;  */
+  /* 1 */
+  /* line-height: inherit;  */
+  /* 1 */
+  /* letter-spacing: inherit;  */
+  /* 1 */
+  /* color: inherit;  */
+  /* 1 */
   margin: 0; /* 2 */
   padding: 0; /* 3 */
 }
@@ -365,24 +379,25 @@ textarea {
 input::placeholder,
 textarea::placeholder {
   opacity: 1; /* 1 */
-  color: theme('colors.gray.400', #9ca3af); /* 2 */
+  /* color: theme('colors.gray.400', #9ca3af);  */
+  /* 2 */
 }
 
 /*
 Set the default cursor for buttons.
 */
 
-button,
+/* button,
 [role='button'] {
   cursor: pointer;
-}
+} */
 
 /*
 Make sure disabled buttons don't get the pointer cursor.
 */
-:disabled {
+/* :disabled {
   cursor: default;
-}
+} */
 
 /*
 1. Make replaced elements `display: block` by default. (https://github.com/mozdevs/cssremedy/issues/14)
@@ -413,6 +428,6 @@ video {
 }
 
 /* Make elements with the HTML hidden attribute stay hidden by default */
-[hidden] {
+/* [hidden] {
   display: none;
-}
+} */
