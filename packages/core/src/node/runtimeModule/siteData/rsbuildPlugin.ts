@@ -15,7 +15,7 @@ export const rsbuildPluginDocVM = async ({
     searchIndex: Record<string, string> | null;
     indexHashByGroup: Record<string, string> | null;
   } = { siteData: null, searchIndex: null, indexHashByGroup: null };
-  const foo: RsbuildPlugin = {
+  const searchIndexRsbuildPlugin: RsbuildPlugin = {
     name: 'rsbuild-plugin-searchIndex',
     async setup(api) {
       api.modifyBundlerChain(async bundlerChain => {
@@ -49,7 +49,7 @@ export const rsbuildPluginDocVM = async ({
   };
 
   return [
-    foo,
+    searchIndexRsbuildPlugin,
     pluginVirtualModule({
       tempDir: '.rspress',
       virtualModules: {
