@@ -3,7 +3,7 @@ import type { PageData } from '@rspress/shared';
 import { useThemeState } from '@theme';
 import { createHead, UnheadProvider } from '@unhead/react/client';
 import { useMemo, useState } from 'react';
-import { base } from 'virtual-runtime-config';
+import siteData from 'virtual-site-data';
 import { App } from './App';
 
 const head = createHead();
@@ -30,7 +30,7 @@ export function ClientApp({
             v7_relativeSplatPath: true,
             v7_startTransition: true,
           }}
-          basename={base}
+          basename={siteData.base}
         >
           <UnheadProvider head={head}>
             <App />

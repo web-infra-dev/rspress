@@ -220,8 +220,12 @@ export type BaseRuntimePageInfo = Omit<
   'id' | 'content' | 'domain'
 >;
 
+export interface PageData {
+  pages: BaseRuntimePageInfo[];
+}
+
 export interface SiteData<ThemeConfig = NormalizedDefaultThemeConfig> {
-  root: string;
+  base: string;
   lang: string;
   route: RouteOptions;
   locales: { lang: string; label: string }[];
@@ -231,7 +235,6 @@ export interface SiteData<ThemeConfig = NormalizedDefaultThemeConfig> {
   themeConfig: ThemeConfig;
   logo: string | { dark: string; light: string };
   logoText: string;
-  pages: BaseRuntimePageInfo[];
   search: SearchOptions;
   markdown: {
     showLineNumbers: boolean;
@@ -242,11 +245,6 @@ export interface SiteData<ThemeConfig = NormalizedDefaultThemeConfig> {
     default: string;
     versions: string[];
   };
-}
-
-// TODO: migrate more SiteData to NormalizedRuntimeConfig, and rename "SiteData" to "PageData" or "Pages"
-export interface NormalizedRuntimeConfig {
-  base: string;
 }
 
 /**
@@ -334,18 +332,6 @@ export interface FrontMatterMeta {
   context?: string;
   footer?: boolean;
   [key: string]: unknown;
-}
-
-export interface PageData {
-  siteData: SiteData<DefaultThemeConfig>;
-  page: BaseRuntimePageInfo & {
-    headingTitle?: string;
-    pagePath: string;
-    lastUpdatedTime?: string;
-    description?: string;
-    pageType: PageType;
-    [key: string]: unknown;
-  };
 }
 
 export interface RouteOptions {
