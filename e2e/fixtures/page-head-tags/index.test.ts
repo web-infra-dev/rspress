@@ -6,7 +6,7 @@ import {
   runPreviewCommand,
 } from '../../utils/runCommands';
 
-test.describe('page title', async () => {
+test.describe('page head tags', async () => {
   let appPort;
   let app;
   test.beforeAll(async () => {

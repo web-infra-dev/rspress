@@ -234,4 +234,13 @@ head:
 ---
 ```
 
-更多关于如何自定义 **open graph 图像（og:image）** 和 **open graph 标题（og:title）** 的详细信息可以在 [frontmatter 配置](/api/config/config-frontmatter#head) 中查看。
+### Open Graph 标签
+
+[Open Graph](https://ogp.me/) 是一种网页元数据协议，用于控制页面在社交媒体平台上分享时的显示效果。
+
+Rspress 会自动为每个页面注入以下 Open Graph meta 标签：
+
+- `og:type`：固定值为 `website`
+- `og:title`：自动使用当前页面的标题
+
+如果你需要自定义更多 Open Graph 标签（如 `og:image`、`og:title` 等），请参考 [frontmatter 配置](/api/config/config-frontmatter#head)。
