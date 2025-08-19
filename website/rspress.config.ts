@@ -75,6 +75,11 @@ export default defineConfig({
         content: 'https://github.com/web-infra-dev/rspress',
       },
       {
+        icon: 'npm',
+        mode: 'link',
+        content: 'https://www.npmjs.com/package/@rspress/core',
+      },
+      {
         icon: 'discord',
         mode: 'link',
         content: 'https://discord.gg/mkVw5zPAtf',
