@@ -48,7 +48,6 @@
     "lodash-es": "^4.17.21",
     "nprogress": "^0.2.0",
     "react": "^19.1.1",
-    "react-dom": "^19.1.1",
     "shiki": "^3.9.2"
   },
   "devDependencies": {
@@ -64,7 +63,6 @@
     "@types/mdast": "^4.0.4",
     "@types/nprogress": "^0.2.3",
     "@types/react": "^19.1.10",
-    "@types/react-dom": "^19.1.7",
     "@types/web": "^0.0.262",
     "rsbuild-plugin-publint": "^0.3.3",
     "tailwindcss": "^3.4.17",

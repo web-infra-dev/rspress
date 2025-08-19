@@ -743,9 +743,6 @@ importers:
 
   packages/core:
     dependencies:
-      '@mdx-js/loader':
-        specifier: ^3.1.0
-        version: 3.1.0(acorn@8.14.0)(webpack@5.101.0)
       '@mdx-js/mdx':
         specifier: ^3.1.0
         version: 3.1.0(acorn@8.14.0)
@@ -791,9 +788,6 @@ importers:
       github-slugger:
         specifier: ^2.0.0
         version: 2.0.0
-      hast-util-from-html:
-        specifier: ^2.0.3
-        version: 2.0.3
       hast-util-heading-rank:
         specifier: ^3.0.0
         version: 3.0.0
@@ -830,9 +824,6 @@ importers:
       rehype-raw:
         specifier: ^7.0.0
         version: 7.0.0
-      remark:
-        specifier: ^15.0.1
-        version: 15.0.1
       remark-gfm:
         specifier: ^4.0.1
         version: 4.0.1
@@ -1132,9 +1123,6 @@ importers:
       unist-util-visit:
         specifier: ^5.0.0
         version: 5.0.0
-      unist-util-visit-children:
-        specifier: ^3.0.0
-        version: 3.0.0
     devDependencies:
       '@microsoft/api-extractor':
         specifier: ^7.52.10
@@ -1278,9 +1266,6 @@ importers:
       '@rspress/core':
         specifier: workspace:^2.0.0-beta.27
         version: link:../core
-      '@rspress/theme-default':
-        specifier: workspace:*
-        version: link:../theme-default
       lodash:
         specifier: 4.17.21
         version: 4.17.21
@@ -1551,9 +1536,6 @@ importers:
       react:
         specifier: ^19.1.1
         version: 19.1.1
-      react-dom:
-        specifier: ^19.1.1
-        version: 19.1.1(react@19.1.1)
       shiki:
         specifier: ^3.9.2
         version: 3.9.2
@@ -1594,9 +1576,6 @@ importers:
       '@types/react':
         specifier: ^19.1.10
         version: 19.1.10
-      '@types/react-dom':
-        specifier: ^19.1.7
-        version: 19.1.7(@types/react@19.1.10)
       '@types/web':
         specifier: ^0.0.262
         version: 0.0.262
@@ -2614,14 +2593,6 @@ packages:
 
   '@manypkg/get-packages@1.1.3':
     resolution: {integrity: sha512-fo+QhuU3qE/2TQMQmbVMqaQ6EWbMhi4ABWP+O4AM1NqPBuy0OrApV5LO6BrrgnhtAHS2NH6RrVk9OL181tTi8A==}
-
-  '@mdx-js/loader@3.1.0':
-    resolution: {integrity: sha512-xU/lwKdOyfXtQGqn3VnJjlDrmKXEvMi1mgYxVmukEUtVycIz1nh7oQ40bKTd4cA7rLStqu0740pnhGYxGoqsCg==}
-    peerDependencies:
-      webpack: '>=5'
-    peerDependenciesMeta:
-      webpack:
-        optional: true
 
   '@mdx-js/mdx@3.1.0':
     resolution: {integrity: sha512-/QxEhPAvGwbQmy1Px8F899L5Uc2KZ6JtXwlCgJmjSTBedwOZkByYcBG4GceIGPXRDsmfxhHazuS+hlOShRLeDw==}
@@ -4645,9 +4616,6 @@ packages:
   hash-sum@2.0.0:
     resolution: {integrity: sha512-WdZTbAByD+pHfl/g9QSsBIIwy8IT+EsPiKDs0KNX+zSHhdDLFKdZu0BQHljvO+0QI/BasbMSUa8wYNCZTvhslg==}
 
-  hast-util-from-html@2.0.3:
-    resolution: {integrity: sha512-CUSRHXyKjzHov8yKsQjGOElXy/3EKpyX56ELnkHH34vDVw1N1XSQ1ZcAvTyAPtGqLTuKP/uxM+aLkSPqF/EtMw==}
-
   hast-util-from-parse5@7.1.2:
     resolution: {integrity: sha512-Nz7FfPBuljzsN3tCQ4kCBKqdNhQE2l0Tn+X1ubgKBPRoiDIu1mL08Cfw4k7q71+Duyaw7DXDN+VTAp4Vh3oCOw==}
 
@@ -6040,9 +6008,6 @@ packages:
 
   remark@14.0.3:
     resolution: {integrity: sha512-bfmJW1dmR2LvaMJuAnE88pZP9DktIFYXazkTfOIKZzi3Knk9lT0roItIA24ydOucI3bV/g/tXBA6hzqq3FV9Ew==}
-
-  remark@15.0.1:
-    resolution: {integrity: sha512-Eht5w30ruCXgFmxVUSlNWQ9iiimq07URKeFS3hNc8cUWy1llX4KDWfyEDZRycMc+znsN9Ux5/tJ/BFdgdOwA3A==}
 
   repeat-string@1.6.1:
     resolution: {integrity: sha512-PV0dzCYDNfRi1jCDbJzpW7jNNDRuCOG/jI5ctQcGKt/clZD+YcPS3yIlWuTJMmESC8aevCFmWJy5wjAFgNqN6w==}
@@ -8136,16 +8101,6 @@ snapshots:
       fs-extra: 8.1.0
       globby: 11.1.0
       read-yaml-file: 1.1.0
-
-  '@mdx-js/loader@3.1.0(acorn@8.14.0)(webpack@5.101.0)':
-    dependencies:
-      '@mdx-js/mdx': 3.1.0(acorn@8.14.0)
-      source-map: 0.7.4
-    optionalDependencies:
-      webpack: 5.101.0
-    transitivePeerDependencies:
-      - acorn
-      - supports-color
 
   '@mdx-js/mdx@3.1.0(acorn@8.14.0)':
     dependencies:
@@ -10389,15 +10344,6 @@ snapshots:
 
   hash-sum@2.0.0: {}
 
-  hast-util-from-html@2.0.3:
-    dependencies:
-      '@types/hast': 3.0.4
-      devlop: 1.1.0
-      hast-util-from-parse5: 8.0.1
-      parse5: 7.1.2
-      vfile: 6.0.3
-      vfile-message: 4.0.2
-
   hast-util-from-parse5@7.1.2:
     dependencies:
       '@types/hast': 2.3.10
@@ -12444,15 +12390,6 @@ snapshots:
       remark-parse: 10.0.2
       remark-stringify: 10.0.3
       unified: 10.1.2
-    transitivePeerDependencies:
-      - supports-color
-
-  remark@15.0.1:
-    dependencies:
-      '@types/mdast': 4.0.4
-      remark-parse: 11.0.0
-      remark-stringify: 11.0.0
-      unified: 11.0.5
     transitivePeerDependencies:
       - supports-color
 
