@@ -48,11 +48,9 @@ export default defineConfig({
       pluginSass(),
       pluginGoogleAnalytics({ id: 'G-66B2Z6KG0J' }),
       pluginOpenGraph({
-        title: 'Rspress',
         type: 'website',
         url: siteUrl,
         image: 'https://rspress.rs/og-image.png',
-        description: 'Rsbuild based static site generator',
         twitter: {
           site: '@rspack_dev',
           card: 'summary_large_image',
