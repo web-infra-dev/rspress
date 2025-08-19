@@ -1,5 +1,23 @@
 @import url(./preflight.css) layer(rp-base);
 
+/* all the tag select except html and body should be added to rp-base layer */
+@layer rp-base {
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6,
+  li,
+  p {
+    overflow-wrap: break-word;
+  }
+  button:focus,
+  button:focus-visible {
+    outline: none;
+  }
+}
+
 html {
   line-height: 1.7;
   font-size: 16px;
@@ -27,22 +45,6 @@ body {
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-}
-
-button:focus,
-button:focus-visible {
-  outline: none;
-}
-
-h1,
-h2,
-h3,
-h4,
-h5,
-h6,
-li,
-p {
-  overflow-wrap: break-word;
 }
 
 /**
