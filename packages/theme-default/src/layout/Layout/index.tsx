@@ -70,6 +70,16 @@ const HeadTags = memo(
       },
       title: title || undefined,
       meta: [
+        {
+          property: 'og:type',
+          content: 'website',
+        },
+        title
+          ? {
+              property: 'og:title',
+              content: title,
+            }
+          : undefined,
         description
           ? {
               name: 'description',

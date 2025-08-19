@@ -79,9 +79,6 @@ titleSuffix: '| 基于 Rsbuild 的静态站点生成器'
 ---
 head:
   - - meta
-    - property: og:title
-      content: My Home Page
-  - - meta
     - property: og:url
       content: https://example.com/foo/
   - - meta
@@ -97,11 +94,14 @@ head:
 
 ```html
 <head>
-  <meta property="og:title" content="My Home Page" />
   <meta property="og:url" content="https://example.com/foo/" />
   <meta property="og:image" content="https://example.com/bar.jpg" />
 </head>
 ```
+
+:::tip
+Rspress 默认会注入 `og:type` 和 `og:title` meta 标签。
+:::
 
 ## hero
 
