@@ -229,4 +229,13 @@ head:
 ---
 ```
 
-Read more details on how to customize **open graph images (og:image)** and **open graph title (og:title)** can be seen here in [frontmatter config](/api/config/config-frontmatter#head).
+### Open Graph tags
+
+[Open Graph](https://ogp.me/) is a web metadata protocol used to control how pages are displayed when shared on social media platforms.
+
+Rspress automatically injects the following Open Graph meta tags for each page:
+
+- `og:type`: Fixed value of `website`
+- `og:title`: Automatically uses the current page's title
+
+If you need to customize more Open Graph tags (such as `og:image`, `og:title`, etc.), please refer to [frontmatter configuration](/api/config/config-frontmatter#head).

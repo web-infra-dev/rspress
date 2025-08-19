@@ -79,9 +79,6 @@ For example, you can use these headers to specify custom meta tags for [Open Gra
 ---
 head:
   - - meta
-    - property: og:title
-      content: My Home Page
-  - - meta
     - property: og:url
       content: https://example.com/foo/
   - - meta
@@ -97,7 +94,6 @@ The generated head tags are as follows:
 
 ```html
 <head>
-  <meta property="og:title" content="My Home Page" />
   <meta property="og:url" content="https://example.com/foo/" />
   <meta property="og:image" content="https://example.com/bar.jpg" />
 </head>

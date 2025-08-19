@@ -43,7 +43,7 @@
     "cspell": "^8.19.4",
     "cspell-ban-words": "^0.0.4",
     "get-port": "5.1.1",
-    "heading-case": "^0.1.6",
+    "heading-case": "^1.0.1",
     "husky": "^9.1.7",
     "lint-staged": "~15.5.2",
     "nx": "20.8.2",
