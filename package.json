@@ -62,5 +62,13 @@
   "publishConfig": {
     "access": "public",
     "registry": "https://registry.npmjs.org/"
+  },
+  "pnpm": {
+    "overrides": {
+      "@rspack/core": "1.5.0-beta.1"
+    },
+    "patchedDependencies": {
+      "@rspack/core": "patches/@rspack__core.patch"
+    }
   }
 }

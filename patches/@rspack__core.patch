@@ -1,0 +1,60 @@
+diff --git a/dist/index.js b/dist/index.js
+index 4bb49c855ca84dbbffaf96d7e0ddf2527276538b..e3b5475593791486977517680cadbec4c0c47dab 100644
+--- a/dist/index.js
++++ b/dist/index.js
+@@ -10293,17 +10293,26 @@ Help:
+             if ("function" != typeof callback) throw Error("Invalid arguments: 'callback'");
+             if ("object" != typeof options) throw Error("Invalid arguments: 'options'");
+             if ("function" != typeof callbackUndelayed && callbackUndelayed) throw Error("Invalid arguments: 'callbackUndelayed'");
+-            let nativeWatcher = this.getNativeWatcher(options);
+-            return nativeWatcher.watch([
++            let [nativeWatcher, initialized] = this.getNativeWatcher(options), watchFiles = initialized ? [
++                Array.from(files),
++                []
++            ] : [
+                 Array.from(files.added),
+                 Array.from(files.removed)
+-            ], [
++            ], watchDirectories = initialized ? [
++                Array.from(directories),
++                []
++            ] : [
+                 Array.from(directories.added),
+                 Array.from(directories.removed)
+-            ], [
++            ], watchMissing = initialized ? [
++                Array.from(missing),
++                []
++            ] : [
+                 Array.from(missing.added),
+                 Array.from(missing.removed)
+-            ], (err, result)=>{
++            ];
++            return nativeWatcher.watch(watchFiles, watchDirectories, watchMissing, (err, result)=>{
+                 if (err) return void callback(err, new Map(), new Map(), new Set(), new Set());
+                 nativeWatcher.pause();
+                 let changedFiles = result.changedFiles, removedFiles = result.removedFiles;
+@@ -10335,7 +10344,10 @@ Help:
+             };
+         }
+         getNativeWatcher(options) {
+-            if (this.#inner) return this.#inner;
++            if (this.#inner) return [
++                this.#inner,
++                !1
++            ];
+             let nativeWatcherOptions = {
+                 followSymlinks: options.followSymlinks,
+                 aggregateTimeout: options.aggregateTimeout,
+@@ -10345,7 +10357,10 @@ Help:
+                     if ("function" == typeof ignored) throw Error("NativeWatcher does not support using a function for the 'ignored' option");
+                 })(options.ignored)
+             }, nativeWatcher = new (binding_default()).NativeWatcher(nativeWatcherOptions);
+-            return this.#inner = nativeWatcher, nativeWatcher;
++            return this.#inner = nativeWatcher, [
++                nativeWatcher,
++                !0
++            ];
+         }
+         triggerEvent(kind, path) {
+             this.#inner?.triggerEvent(kind, path);
