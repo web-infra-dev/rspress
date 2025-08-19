@@ -415,7 +415,7 @@ importers:
         specifier: ^22.8.1
         version: 22.10.2
 
-  e2e/fixtures/page-title:
+  e2e/fixtures/page-head-tags:
     dependencies:
       '@rspress/core':
         specifier: workspace:*
