@@ -1,12 +1,7 @@
 import type { SocialLink } from '@rspress/shared';
 import { useState } from 'react';
+import iconMap from 'virtual-social-links';
 import * as styles from './index.module.scss';
-
-declare const process: {
-  env: {
-    RSPRESS_SOCIAL_ICONS: Record<string, string>;
-  };
-};
 
 interface ILinkContentComp {
   link: SocialLink;
@@ -19,7 +14,6 @@ export const LinkContent = (props: ILinkContentComp) => {
 
   let IconComp: React.ReactElement = <></>;
   if (icon) {
-    const iconMap = process.env.RSPRESS_SOCIAL_ICONS;
     const html = typeof icon === 'string' ? iconMap[icon] : icon.svg;
     IconComp = <div dangerouslySetInnerHTML={{ __html: html }}></div>;
   }
