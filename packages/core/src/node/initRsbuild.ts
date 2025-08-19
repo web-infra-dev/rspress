@@ -43,6 +43,7 @@ import { routeListVMPlugin } from './runtimeModule/routeList';
 import { runtimeConfigVMPlugin } from './runtimeModule/runtimeConfig';
 import { searchHookVMPlugin } from './runtimeModule/searchHooks';
 import { rsbuildPluginDocVM } from './runtimeModule/siteData/rsbuildPlugin';
+import { socialLinksVMPlugin } from './runtimeModule/socialLinks';
 import type { FactoryContext } from './runtimeModule/types';
 import { rsbuildPluginCSR } from './ssg/rsbuildPluginCSR';
 import { rsbuildPluginSSG } from './ssg/rsbuildPluginSSG';
@@ -150,6 +151,10 @@ async function createInternalBuildConfig(
       pluginVirtualModule({
         tempDir: '.rspress/runtime',
         virtualModules: {
+          /**
+           * Load social links in compile time for treeshaking
+           */
+          ...socialLinksVMPlugin(context),
           /**
            * Load i18n.json to runtime
            */
