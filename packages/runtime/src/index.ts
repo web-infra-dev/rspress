@@ -1,8 +1,5 @@
 export { Head } from '@unhead/react';
-export {
-  createPortal,
-  flushSync,
-} from 'react-dom';
+export { createPortal, flushSync } from 'react-dom';
 export {
   BrowserRouter,
   matchPath,
@@ -18,18 +15,16 @@ export { useI18n } from './hooks/useI18n';
 export { useLang } from './hooks/useLang';
 export { useLocaleSiteData } from './hooks/useLocaleSiteData';
 export { useNav } from './hooks/useNav';
-export { usePage } from './hooks/usePage';
-export { DataContext, usePageData } from './hooks/usePageData';
+export { PageContext, usePage } from './hooks/usePage';
+export { usePageData } from './hooks/usePageData';
+export { PagesContext, usePages } from './hooks/usePages';
 export { getSidebarDataGroup, useSidebar } from './hooks/useSidebar';
 export { useSite } from './hooks/useSite';
 
 export { useVersion } from './hooks/useVersion';
 export { useWindowSize } from './hooks/useWindowSize';
 export { NoSSR } from './NoSSR';
-export {
-  isActive,
-  pathnameToRouteService,
-} from './route';
+export { isActive, pathnameToRouteService } from './route';
 export {
   addLeadingSlash,
   isEqualPath,

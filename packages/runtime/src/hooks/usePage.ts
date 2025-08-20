@@ -1,6 +1,11 @@
-import { usePageData } from './usePageData';
+import type { PageDataLegacy } from '@rspress/shared';
+import { createContext, useContext } from 'react';
 
-export function usePage() {
-  const { page } = usePageData();
-  return { page };
+export const PageContext = createContext({} as PageDataLegacy['page']);
+
+export function usePage(): { page: PageDataLegacy['page'] } {
+  const ctx = useContext(PageContext);
+  return {
+    page: ctx,
+  };
 }

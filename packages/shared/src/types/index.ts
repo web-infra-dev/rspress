@@ -222,6 +222,19 @@ export type BaseRuntimePageInfo = Omit<
 
 export interface PageData {
   pages: BaseRuntimePageInfo[];
+  currIndex: number;
+}
+
+export interface PageDataLegacy {
+  siteData: SiteData<DefaultThemeConfig> & { pages: BaseRuntimePageInfo[] };
+  page: BaseRuntimePageInfo & {
+    headingTitle?: string;
+    pagePath: string;
+    lastUpdatedTime?: string;
+    description?: string;
+    pageType: PageType;
+    [key: string]: unknown;
+  };
 }
 
 export interface SiteData<ThemeConfig = NormalizedDefaultThemeConfig> {
