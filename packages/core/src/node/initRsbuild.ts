@@ -43,6 +43,7 @@ import { routeListVMPlugin } from './runtimeModule/routeList';
 import { runtimeConfigVMPlugin } from './runtimeModule/runtimeConfig';
 import { searchHookVMPlugin } from './runtimeModule/searchHooks';
 import { rsbuildPluginDocVM } from './runtimeModule/siteData/rsbuildPlugin';
+import { socialLinksVMPlugin } from './runtimeModule/socialLinks';
 import type { FactoryContext } from './runtimeModule/types';
 import { rsbuildPluginCSR } from './ssg/rsbuildPluginCSR';
 import { rsbuildPluginSSG } from './ssg/rsbuildPluginSSG';
@@ -52,7 +53,6 @@ import {
   resolveReactRouterDomAlias,
 } from './utils';
 import { detectCustomIcon } from './utils/detectCustomIcon';
-import { getSocialIcons } from './utils/getSocialIcons';
 
 function isPluginIncluded(config: UserConfig, pluginName: string): boolean {
   return Boolean(
@@ -152,6 +152,10 @@ async function createInternalBuildConfig(
         tempDir: '.rspress/runtime',
         virtualModules: {
           /**
+           * Load social links in compile time for treeshaking
+           */
+          ...socialLinksVMPlugin(context),
+          /**
            * Load i18n.json to runtime
            */
           ...i18nVMPlugin(context),
@@ -250,9 +254,6 @@ async function createInternalBuildConfig(
       include: [PACKAGE_ROOT, path.join(cwd, 'node_modules', RSPRESS_TEMP_DIR)],
       define: {
         'process.env.TEST': JSON.stringify(process.env.TEST),
-        'process.env.RSPRESS_SOCIAL_ICONS': JSON.stringify(
-          getSocialIcons(config.themeConfig?.socialLinks),
-        ),
       },
     },
     performance: {

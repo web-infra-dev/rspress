@@ -32,6 +32,10 @@ declare module 'virtual-search-hooks' {
   export const render: RenderSearchFunction;
 }
 
+declare module 'virtual-social-links' {
+  export default Record<string, string>;
+}
+
 declare module 'virtual-search-index-hash' {
   const hash: Record<string, string>;
   export default hash;

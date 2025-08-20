@@ -21,6 +21,7 @@ export enum RuntimeModuleID {
   Routes = 'virtual-routes',
   SiteData = 'virtual-site-data',
   SearchIndexHash = 'virtual-search-index-hash',
+  socialLinks = 'virtual-social-links',
   I18nText = 'virtual-i18n-text',
   SearchHooks = 'virtual-search-hooks',
   RuntimeConfig = 'virtual-runtime-config',
