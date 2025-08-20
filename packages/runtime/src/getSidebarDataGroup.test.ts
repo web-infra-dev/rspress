@@ -6,14 +6,12 @@ vi.mock('virtual-i18n-text', () => {
   return { default: {} };
 });
 
-vi.mock('virtual-runtime-config', () => {
-  return {
-    base: '/',
-  };
-});
-
 vi.mock('virtual-site-data', () => {
-  return {};
+  return {
+    default: {
+      base: '/',
+    },
+  };
 });
 
 vi.mock('virtual-routes', () => {

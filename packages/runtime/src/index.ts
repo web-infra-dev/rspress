@@ -17,7 +17,7 @@ export { useLocaleSiteData } from './hooks/useLocaleSiteData';
 export { useNav } from './hooks/useNav';
 export { PageContext, usePage } from './hooks/usePage';
 export { usePageData } from './hooks/usePageData';
-export { PagesContext, usePages } from './hooks/usePages';
+export { usePages } from './hooks/usePages';
 export { getSidebarDataGroup, useSidebar } from './hooks/useSidebar';
 export { useSite } from './hooks/useSite';
 

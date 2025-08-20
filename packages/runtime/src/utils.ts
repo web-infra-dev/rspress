@@ -10,15 +10,14 @@ import {
   removeHash,
   removeTrailingSlash,
 } from '@rspress/shared';
-import { base } from 'virtual-runtime-config';
 import siteData from 'virtual-site-data';
 
 export function withBase(url = '/'): string {
-  return rawWithBase(url, base);
+  return rawWithBase(url, siteData.base);
 }
 
 export function removeBase(url: string): string {
-  return rawRemoveBase(url, base);
+  return rawRemoveBase(url, siteData.base);
 }
 
 export function isEqualPath(a: string, b: string) {

@@ -51,10 +51,3 @@ declare module '*.svg' {
 declare module '@theme' {
   export * from '@rspress/theme-default';
 }
-
-declare module 'virtual-runtime-config' {
-  import type { NormalizedRuntimeConfig } from '@rspress/shared';
-
-  export const base: NormalizedRuntimeConfig['base'];
-  export const ssg: NormalizedRuntimeConfig['ssg'];
-}

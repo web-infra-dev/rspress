@@ -1,17 +1,16 @@
 import { PassThrough } from 'node:stream';
 import { text } from 'node:stream/consumers';
 import {
-  DataContext,
+  PageContext,
   pathnameToRouteService,
   ThemeContext,
   withBase,
 } from '@rspress/runtime';
 import { StaticRouter } from '@rspress/runtime/server';
-import type { PageData } from '@rspress/shared';
 import { type Unhead, UnheadProvider } from '@unhead/react/server';
 import type { ReactNode } from 'react';
 import { renderToPipeableStream } from 'react-dom/server';
-import { base } from 'virtual-runtime-config';
+import siteData from 'virtual-site-data';
 import { App } from './App';
 import { initPageData } from './initPageData';
 
@@ -40,25 +39,24 @@ function renderToHtml(app: ReactNode): Promise<string> {
 export async function render(
   routePath: string,
   head: Unhead,
-): Promise<{ appHtml: string; pageData: PageData }> {
+): Promise<{ appHtml: string }> {
   const initialPageData = await initPageData(routePath);
   await preloadRoute(routePath);
 
   const appHtml = await renderToHtml(
     <ThemeContext.Provider value={{ theme: DEFAULT_THEME }}>
-      <DataContext.Provider value={{ data: initialPageData }}>
-        <StaticRouter location={withBase(routePath)} basename={base}>
+      <PageContext.Provider value={{ data: initialPageData }}>
+        <StaticRouter location={withBase(routePath)} basename={siteData.base}>
           <UnheadProvider value={head}>
             <App />
           </UnheadProvider>
         </StaticRouter>
-      </DataContext.Provider>
+      </PageContext.Provider>
     </ThemeContext.Provider>,
   );
 
   return {
     appHtml,
-    pageData: initialPageData,
   };
 }
 

@@ -20,8 +20,6 @@ export interface NavMenuGroupItem {
   activeValue?: string;
   // Current pathname.
   pathname?: string;
-  // Base path.
-  base?: string;
   // Locales
   langs?: string[];
 }

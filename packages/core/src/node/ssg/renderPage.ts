@@ -1,5 +1,5 @@
 import { pathToFileURL } from 'node:url';
-import type { PageData, Route, RouteMeta, UserConfig } from '@rspress/shared';
+import type { Route, RouteMeta, UserConfig } from '@rspress/shared';
 import { logger } from '@rspress/shared/logger';
 import {
   createHead,
@@ -12,10 +12,7 @@ import { hintSSGFailed } from '../logger/hint';
 import { renderHtmlTemplate } from './renderHtmlTemplate';
 
 interface SSRBundleExports {
-  render: (
-    pagePath: string,
-    head: Unhead,
-  ) => Promise<{ appHtml: string; pageData: PageData }>;
+  render: (pagePath: string, head: Unhead) => Promise<{ appHtml: string }>;
   routes: Route[];
 }
 

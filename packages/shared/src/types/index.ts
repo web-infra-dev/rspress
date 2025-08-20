@@ -222,7 +222,6 @@ export type BaseRuntimePageInfo = Omit<
 
 export interface PageData {
   pages: BaseRuntimePageInfo[];
-  currIndex: number;
 }
 
 export interface PageDataLegacy {
