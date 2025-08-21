@@ -4,7 +4,6 @@ import { searchInPage } from '../../utils/search';
 
 function proxyConsole(page: Page) {
   const infoList: string[] = [];
-  // 代理 console 输出
   page.on('console', async msg => {
     if (msg.type() === 'info') {
       const values = await Promise.all(msg.args().map(i => i.jsonValue()));
