@@ -1,4 +1,8 @@
-import { type BeforeSearch, type OnSearch } from '@rspress/core/theme';
+import {
+  RenderType,
+  type BeforeSearch,
+  type OnSearch,
+} from '@rspress/core/theme';
 import type { RenderSearchFunction } from '@rspress/core/theme';
 
 const onSearch: OnSearch = async (query, _defaultSearchResult) => {
@@ -18,7 +22,7 @@ const onSearch: OnSearch = async (query, _defaultSearchResult) => {
           },
         ],
       },
-      renderType: 'custom' as any,
+      renderType: RenderType.Custom,
     },
   ];
 };
@@ -43,7 +47,9 @@ const render: RenderSearchFunction<ResultData> = (item) => {
     <div>
       {item.list.map((i) => (
         <div>
-          <a id={i.path} href={i.path}>{i.title}</a>
+          <a id={i.path} href={i.path}>
+            {i.title}
+          </a>
         </div>
       ))}
     </div>
