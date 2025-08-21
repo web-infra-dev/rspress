@@ -142,7 +142,7 @@ export { afterSearch };
 
 The `render` function will render the custom search source data in your `onSearch` hook. Therefore, it generally needs to be used together with `onSearch`. Here's how to use it:
 
-```ts
+```tsx
 import type { RenderSearchFunction } from '@rspress/core/theme';
 
 // The above OnSearch hook implementation is skipped
@@ -155,10 +155,10 @@ interface ResultData {
 }
 
 // The render function for each search source
-const render: RenderSearchFunction<ResultData> = item => {
+const render: RenderSearchFunction<ResultData> = (item) => {
   return (
     <div>
-      {item.list.map(i => (
+      {item.list.map((i) => (
         <div>
           <a href={i.path}>{i.title}</a>
         </div>
