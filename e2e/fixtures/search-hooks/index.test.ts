@@ -15,7 +15,7 @@ function proxyConsole(page: Page) {
   };
 }
 
-test.describe('search code blocks test', async () => {
+test.describe('search hooks', async () => {
   let appPort;
   let app;
 
@@ -32,10 +32,10 @@ test.describe('search code blocks test', async () => {
   });
 
   test('search-hooks should work', async ({ page }) => {
-    await page.goto(`http://localhost:${appPort}`);
+    await page.goto(`http://localhost:${appPort}/base/`);
     const { infoList } = proxyConsole(page);
-    const suggestItems0 = await searchInPage(page, 'Sear');
+    const suggestItems0 = await searchInPage(page, 'Foo');
     expect(suggestItems0.length).toBe(1);
-    expect(infoList).toEqual(['beforeSearch', 'Sear', 'onSearch', 'Sear']);
+    expect(infoList).toEqual(['beforeSearch', 'Foo', 'onSearch', 'Foo']);
   });
 });
