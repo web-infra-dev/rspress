@@ -5,9 +5,15 @@ import {
 } from '@rspress/core/theme';
 import type { RenderSearchFunction } from '@rspress/core/theme';
 
-const onSearch: OnSearch = async (query, _defaultSearchResult) => {
+const onSearch: OnSearch = async (query, defaultSearchResult) => {
+  const { result } = defaultSearchResult[0]; 
   console.info('onSearch', query);
   return [
+    {
+      group: 'All',
+      result,
+      renderType: RenderType.Default,
+    },
     {
       group: 'Custom',
       result: {

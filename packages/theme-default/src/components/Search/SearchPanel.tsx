@@ -1,16 +1,12 @@
-import {
-  createPortal,
-  useLocaleSiteData,
-  usePageData,
-  withBase,
-} from '@rspress/runtime';
-import { type AnyFunction, isProduction } from '@rspress/shared';
+import { createPortal, useLocaleSiteData, usePageData } from '@rspress/runtime';
+import type { AnyFunction } from '@rspress/shared';
 import CloseSvg from '@theme-assets/close';
 import LoadingSvg from '@theme-assets/loading';
 import SearchSvg from '@theme-assets/search';
 import { debounce } from 'lodash-es';
 import { useCallback, useEffect, useRef, useState } from 'react';
 import * as userSearchHooks from 'virtual-search-hooks';
+import { useNavigate } from '../Link/useNavigate';
 import { SvgWrapper } from '../SvgWrapper';
 import { Tab, Tabs } from '../Tabs';
 import * as styles from './index.module.scss';
@@ -23,7 +19,6 @@ import type {
   PageSearcherConfig,
 } from './logic/types';
 import { RenderType } from './logic/types';
-import { removeDomain } from './logic/util';
 import { NoSearchResult } from './NoSearchResult';
 import { SuggestItem } from './SuggestItem';
 
@@ -116,6 +111,7 @@ export function SearchPanel({ focused, setFocused }: SearchPanelProps) {
     page: { lang, version },
   } = usePageData();
   const { searchPlaceholderText = 'Search docs' } = useLocaleSiteData();
+  const navigate = useNavigate();
   const { search, title: siteTitle } = siteData;
   const versionedSearch = typeof search !== 'boolean' && search?.versioned;
   const DEFAULT_RESULT = [
@@ -242,15 +238,7 @@ export function SearchPanel({ focused, setFocused }: SearchPanelProps) {
               normalizeSuggestions(currentSuggestions),
             ).flat();
             const suggestion = flatSuggestions[currentSuggestionIndex];
-            const isCurrent = resultTabIndex === 0;
-            const link = withBase(
-              isProduction() ? suggestion.link : removeDomain(suggestion.link),
-            );
-            if (isCurrent) {
-              window.location.href = link;
-            } else {
-              window.open(link);
-            }
+            navigate(suggestion.link);
             clearSearchState();
           }
           break;
