@@ -16,7 +16,6 @@ import { SidebarGroup } from './SidebarGroup';
 import { SidebarItem } from './SidebarItem';
 import { SidebarSectionHeader } from './SidebarSectionHeader';
 import {
-  isSidebarCustomLink,
   isSidebarDivider,
   isSidebarGroup,
   isSidebarSectionHeader,
@@ -210,17 +209,6 @@ function SidebarListItem(props: {
         item={item}
         depth={0}
         setSidebarData={setSidebarData}
-      />
-    );
-  }
-
-  if (isSidebarCustomLink(item)) {
-    return (
-      <SidebarItem
-        item={item}
-        key={index}
-        activeMatcher={activeMatcher}
-        depth={0}
       />
     );
   }
