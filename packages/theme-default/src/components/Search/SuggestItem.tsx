@@ -1,4 +1,4 @@
-import { isProduction, withBase } from '@rspress/runtime';
+import { Link } from '@theme';
 import FileSvg from '@theme-assets/file';
 import HeaderSvg from '@theme-assets/header';
 import JumpSvg from '@theme-assets/jump';
@@ -7,7 +7,7 @@ import { useRef } from 'react';
 import { SvgWrapper } from '../SvgWrapper';
 import * as styles from './index.module.scss';
 import type { DefaultMatchResultItem, HighlightInfo } from './logic/types';
-import { getSlicedStrByByteLength, removeDomain } from './logic/util';
+import { getSlicedStrByByteLength } from './logic/util';
 
 const ICON_MAP = {
   title: TitleSvg,
@@ -20,7 +20,6 @@ export function SuggestItem({
   closeSearch,
   isCurrent,
   setCurrentSuggestionIndex,
-  inCurrentDocIndex,
   scrollTo,
   onMouseMove,
 }: {
@@ -35,11 +34,6 @@ export function SuggestItem({
   scrollTo: (top: number, height: number) => void;
 }) {
   const HitIcon = ICON_MAP[suggestion.type];
-  const link = withBase(
-    inCurrentDocIndex && !isProduction()
-      ? removeDomain(suggestion.link)
-      : suggestion.link,
-  );
   const selfRef = useRef<HTMLLIElement>(null);
   if (isCurrent && selfRef.current?.offsetTop) {
     scrollTo(selfRef.current?.offsetTop, selfRef.current?.offsetHeight);
@@ -126,13 +120,12 @@ export function SuggestItem({
       onMouseMove={onMouseMove}
       ref={selfRef}
     >
-      <a
-        href={link}
+      <Link
+        href={suggestion.link}
         onClick={e => {
           closeSearch();
           e.stopPropagation();
         }}
-        target={inCurrentDocIndex ? '_self' : '_blank'}
       >
         <div className={styles.suggestItemContainer}>
           <div>
@@ -145,7 +138,7 @@ export function SuggestItem({
             <SvgWrapper icon={JumpSvg} />
           </div>
         </div>
-      </a>
+      </Link>
     </li>
   );
 }

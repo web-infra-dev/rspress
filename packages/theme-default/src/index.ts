@@ -33,10 +33,10 @@ export type {
   OnSearch,
   PageSearcherConfig,
   RenderSearchFunction,
-  RenderType,
   SearchOptions,
   UserMatchResultItem,
 } from './components/Search/logic/types';
+export { RenderType } from './components/Search/logic/types';
 export {
   SearchButton,
   type SearchButtonProps,
