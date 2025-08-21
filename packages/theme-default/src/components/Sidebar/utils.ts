@@ -3,12 +3,11 @@ import {
   pathnameToRouteService,
   useLocation,
 } from '@rspress/runtime';
-import {
-  type SidebarDivider as ISidebarDivider,
-  type SidebarItem as ISidebarItem,
-  type SidebarSectionHeader as ISidebarSectionHeader,
-  isExternalUrl,
-  type NormalizedSidebarGroup,
+import type {
+  SidebarDivider as ISidebarDivider,
+  SidebarItem as ISidebarItem,
+  SidebarSectionHeader as ISidebarSectionHeader,
+  NormalizedSidebarGroup,
 } from '@rspress/shared';
 import { useCallback } from 'react';
 
@@ -36,16 +35,6 @@ export const isSidebarSectionHeader = (
   return 'sectionHeaderText' in item;
 };
 
-export const isSidebarCustomLink = (
-  item:
-    | NormalizedSidebarGroup
-    | ISidebarItem
-    | ISidebarDivider
-    | ISidebarSectionHeader,
-) => {
-  return 'link' in item && isExternalUrl(item.link);
-};
-
 export const isSidebarGroup = (
   item:
     | NormalizedSidebarGroup
@@ -53,7 +42,7 @@ export const isSidebarGroup = (
     | ISidebarDivider
     | ISidebarSectionHeader,
 ): item is NormalizedSidebarGroup => {
-  return 'link' in item && 'items' in item && Array.isArray(item.items);
+  return 'items' in item && Array.isArray(item.items);
 };
 
 export const preloadLink = (link: string) => {
