@@ -7,7 +7,9 @@ function proxyConsole(page: Page) {
   page.on('console', async msg => {
     if (msg.type() === 'info') {
       const values = await Promise.all(msg.args().map(i => i.jsonValue()));
-      infoList.push(...values);
+      if (values[0] === 'beforeSearch' || values[0] === 'onSearch') {
+        infoList.push(...values);
+      }
     }
   });
   return {
