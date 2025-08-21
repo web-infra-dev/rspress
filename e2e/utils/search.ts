@@ -9,7 +9,11 @@ async function getSearchButton(page: Page) {
 /**
  * @returns suggestItems domList
  */
-export async function searchInPage(page: Page, searchText: string) {
+export async function searchInPage(
+  page: Page,
+  searchText: string,
+  reset = true,
+) {
   let searchInput = await page.$('.rspress-search-panel-input');
   if (!searchInput) {
     const searchButton = await getSearchButton(page);
@@ -26,8 +30,10 @@ export async function searchInPage(page: Page, searchText: string) {
   const elements = await page.$$('.rspress-search-suggest-item');
 
   // reset
-  for (let i = 0; i < searchText.length; i++) {
-    await page.keyboard.press('Backspace');
+  if (reset) {
+    for (let i = 0; i < searchText.length; i++) {
+      await page.keyboard.press('Backspace');
+    }
   }
   return elements;
 }
