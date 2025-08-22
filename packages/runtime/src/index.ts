@@ -27,6 +27,7 @@ export { NoSSR } from './NoSSR';
 export { isActive, pathnameToRouteService } from './route';
 export {
   addLeadingSlash,
+  cleanUrlByConfig,
   isEqualPath,
   isProduction,
   normalizeHrefInRuntime,

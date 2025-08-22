@@ -37,7 +37,6 @@ export async function createMDXOptions(options: {
   } = options;
   const remarkLinkOptions = config?.markdown?.link;
   const format = path.extname(filepath).slice(1) as 'mdx' | 'md';
-  const cleanUrls = config?.route?.cleanUrls ?? false;
   const {
     remarkPlugins: remarkPluginsFromConfig = [],
     rehypePlugins: rehypePluginsFromConfig = [],
@@ -70,7 +69,8 @@ export async function createMDXOptions(options: {
       [
         remarkLink,
         {
-          cleanUrls,
+          // we do cleanUrls in runtime side
+          cleanUrls: false,
           root: docDirectory,
           routeService,
           remarkLinkOptions,
