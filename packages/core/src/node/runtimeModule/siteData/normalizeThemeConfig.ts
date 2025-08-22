@@ -57,7 +57,8 @@ export function normalizeThemeConfig(
     return text || key;
   };
 
-  const cleanUrls = docConfig.route?.cleanUrls ?? false;
+  // we do cleanUrls in runtime side
+  const cleanUrls = false;
   const transformLink = (link: string, currentLang: string) => {
     return normalizeHref(normalizeLinkPrefix(link, currentLang), cleanUrls);
   };

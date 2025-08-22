@@ -22,14 +22,24 @@ export function removeBase(url: string): string {
 
 export function isEqualPath(a: string, b: string) {
   return (
-    removeBase(normalizeHrefInRuntime(removeHash(a))) ===
-    removeBase(normalizeHrefInRuntime(removeHash(b)))
+    removeBase(normalizeHref(removeHash(a), true)) ===
+    removeBase(normalizeHref(removeHash(b), true))
   );
 }
 
-export function normalizeHrefInRuntime(a: string) {
+export function normalizeHrefInRuntime(link: string) {
   const cleanUrls = Boolean(siteData?.route?.cleanUrls);
-  return normalizeHref(a, cleanUrls);
+  return normalizeHref(link, cleanUrls);
+}
+
+/**
+ * we do cleanUrls in runtime side
+ */
+export function cleanUrlByConfig(link: string) {
+  if (siteData?.route?.cleanUrls) {
+    return normalizeHref(link, true);
+  }
+  return link;
 }
 
 export function normalizeImagePath(imagePath: string) {

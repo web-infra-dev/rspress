@@ -1,6 +1,12 @@
 import fs from 'node:fs/promises';
 import path from 'node:path';
-import type { PageModule, RouteMeta, UserConfig } from '@rspress/shared';
+import {
+  addTrailingSlash,
+  type PageModule,
+  type RouteMeta,
+  removeTrailingSlash,
+  type UserConfig,
+} from '@rspress/shared';
 import { DEFAULT_PAGE_EXTENSIONS } from '@rspress/shared/constants';
 import type { ComponentType } from 'react';
 import { glob } from 'tinyglobby';
@@ -196,8 +202,23 @@ export class RouteService {
     return Array.from(this.routeData.values());
   }
 
-  isExistRoute(routePath: string): boolean {
-    return this.routeData.has(routePath);
+  isExistRoute(link: string): boolean {
+    function linkToRoutePath(routePath: string) {
+      return decodeURIComponent(routePath.split('#')[0])
+        .replace(/\.html$/, '')
+        .replace(/\/index$/, '/');
+    }
+
+    const cleanLinkPath = linkToRoutePath(link);
+    // allow fuzzy matching, e.g: /guide/ and /guide is equal
+    // This is a simple judgment, the performance will be better than "matchPath" in react-router-dom
+    if (
+      !this.routeData.has(removeTrailingSlash(cleanLinkPath)) &&
+      !this.routeData.has(addTrailingSlash(cleanLinkPath))
+    ) {
+      return false;
+    }
+    return true;
   }
 
   generateRoutesCode(): string {

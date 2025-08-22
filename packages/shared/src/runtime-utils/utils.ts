@@ -206,7 +206,11 @@ export const parseUrl = (
   };
 };
 
-export function normalizeHref(url?: string, cleanUrls = false) {
+export function normalizeHref(
+  url?: string,
+  cleanUrls = false,
+  assetExtensions: string[] = [],
+): string {
   if (!url) {
     return '/';
   }
@@ -225,7 +229,10 @@ export function normalizeHref(url?: string, cleanUrls = false) {
 
   // 1. cleanUrls: false
   if (!cleanUrls) {
-    const hasExt = cleanUrl.endsWith('.html');
+    const hasExt =
+      cleanUrl.endsWith('.html') ||
+      assetExtensions.some(i => cleanUrl.endsWith(i));
+
     if (!hasExt) {
       if (cleanUrl.endsWith('/')) {
         cleanUrl += 'index.html';

@@ -1,13 +1,11 @@
 import path from 'node:path';
 import {
   addLeadingSlash,
-  addTrailingSlash,
   isExternalUrl,
   isProduction,
   type MarkdownOptions,
   normalizeHref,
   parseUrl,
-  removeTrailingSlash,
   withBase,
 } from '@rspress/shared';
 import { logger } from '@rspress/shared/logger';
@@ -23,7 +21,6 @@ function checkDeadLinks(
   checkDeadLinks: boolean | { excludes: string[] | ((url: string) => boolean) },
   internalLinks: Map<string, string>,
   filePath: string,
-  routeService: RouteService,
 ) {
   const errorInfos: [string, string][] = [];
   const excludes =
@@ -42,23 +39,11 @@ function checkDeadLinks(
       return;
     }
 
-    const cleanLinkPath = linkToRoutePath(link);
-    if (!cleanLinkPath) {
-      return;
-    }
-
     if (!nodeUrl.startsWith('/') && /^\w/.test(nodeUrl)) {
       possibleBreakingChange = true;
     }
 
-    // allow fuzzy matching, e.g: /guide/ and /guide is equal
-    // This is a simple judgment, the performance will be better than "matchPath" in react-router-dom
-    if (
-      !routeService.isExistRoute(removeTrailingSlash(cleanLinkPath)) &&
-      !routeService.isExistRoute(addTrailingSlash(cleanLinkPath))
-    ) {
-      errorInfos.push([nodeUrl, link]);
-    }
+    errorInfos.push([nodeUrl, link]);
   });
   // output error info
   if (errorInfos.length > 0) {
@@ -120,7 +105,7 @@ function normalizeLink(
   filePath: string,
   cleanUrls: boolean | string,
   autoPrefix: boolean,
-  internalLinks: Map<string, string>,
+  deadLinks: Map<string, string>,
   __base?: string, // just for plugin-llms, we should normalize the link with base
 ): string {
   if (!nodeUrl) {
@@ -164,7 +149,11 @@ function normalizeLink(
     url = url.replace(/\.html$/, cleanUrls);
   }
 
-  internalLinks.set(nodeUrl, url);
+  // preserve dead links
+  if (!routeService.isExistRoute(url)) {
+    deadLinks.set(nodeUrl, url);
+    return nodeUrl;
+  }
 
   if (hash) {
     url += `#${hash}`;
@@ -173,12 +162,6 @@ function normalizeLink(
     url = withBase(url, __base);
   }
   return url;
-}
-
-function linkToRoutePath(routePath: string) {
-  return decodeURIComponent(routePath.split('#')[0])
-    .replace(/\.html$/, '')
-    .replace(/\/index$/, '/');
 }
 
 /**
@@ -201,7 +184,7 @@ export const remarkLink: Plugin<
   (tree, file) => {
     const { checkDeadLinks: shouldCheckDeadLinks = true, autoPrefix = true } =
       remarkLinkOptions ?? {};
-    const internalLinks = new Map<string, string>();
+    const deadLinks = new Map<string, string>();
     visit(tree, 'link', node => {
       const { url: nodeUrl } = node;
       const link = normalizeLink(
@@ -210,7 +193,7 @@ export const remarkLink: Plugin<
         file.path,
         cleanUrls,
         autoPrefix,
-        internalLinks,
+        deadLinks,
         __base,
       );
       node.url = link;
@@ -224,18 +207,13 @@ export const remarkLink: Plugin<
         file.path,
         cleanUrls,
         autoPrefix,
-        internalLinks,
+        deadLinks,
         __base,
       );
       node.url = link;
     });
 
     if (shouldCheckDeadLinks && routeService) {
-      checkDeadLinks(
-        shouldCheckDeadLinks,
-        internalLinks,
-        file.path,
-        routeService,
-      );
+      checkDeadLinks(shouldCheckDeadLinks, deadLinks, file.path);
     }
   };
