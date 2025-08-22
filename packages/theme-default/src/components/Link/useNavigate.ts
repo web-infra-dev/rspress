@@ -64,7 +64,6 @@ export function getHref(href: string): {
     withBaseHref = withBase(cleanUrlByConfig(href));
   }
   const removeBaseHref = removeBase(withBaseHref);
-  console.log(cleanUrlByConfig, removeBaseHref, 22222, href, 111111);
 
   return { withBaseHref, removeBaseHref, linkType };
 }
