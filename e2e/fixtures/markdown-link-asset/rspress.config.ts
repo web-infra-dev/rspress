@@ -30,7 +30,7 @@ export default defineConfig({
   markdown: {
     link: {
       checkDeadLinks: {
-        excludes: ['/hello.html', '/test.md'],
+        excludes: ['/hello.html', '/test.md', '/arrow-down.svg', '/plain.txt'],
       },
     },
   },

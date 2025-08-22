@@ -15,7 +15,11 @@ test.describe('basic test', async () => {
     }
   });
 
-  async function testAssetLink(page: Page, isI18n: boolean) {
+  async function testAssetLink(
+    page: Page,
+    isI18n: boolean,
+    cleanUrls: boolean,
+  ) {
     if (isI18n) {
       await page.goto(`http://localhost:${appPort}/base/zh/public-asset-test`);
     } else {
@@ -42,22 +46,24 @@ test.describe('basic test', async () => {
         const content = await page.content();
         expect(content).toContain('Plain Text');
         count++;
+      } else if (url.includes('hello')) {
+        if (cleanUrls) {
+          expect(url).toBe(`http://localhost:${appPort}/base/hello`);
+        } else {
+          expect(url).toBe(`http://localhost:${appPort}/base/hello.html`);
+        }
+        const content = await page.content();
+        expect(content).toContain('<h1 id="hello-world">Hello world</h1>');
+        count++;
+      } else if (url.includes('test.md')) {
+        expect(url).toBe(`http://localhost:${appPort}/base/test.md`);
+        const content = await page.content();
+        expect(content).toContain('# Test');
+        count++;
       }
-      // Do not support .md or .html public folder asset
-      // else if (url.includes('hello.html')) {
-      //   expect(url).toBe(`http://localhost:${appPort}/base/hello.html`);
-      //   const content = await page.content();
-      //   expect(content).toContain('<h1 id="hello-world">Hello world</h1>');
-      //   count++;
-      // } else if (url.includes('test.md')) {
-      //   expect(url).toBe(`http://localhost:${appPort}/base/test.md`);
-      //   const content = await page.content();
-      //   expect(content).toContain('# Test');
-      //   count++;
-      // }
       await page.goBack();
     }
-    expect(count).toBe(2);
+    expect(count).toBe(4);
   }
 
   test('should support asset link', async ({ page }) => {
@@ -65,7 +71,7 @@ test.describe('basic test', async () => {
     appPort = await getPort();
     await runBuildCommand(appDir);
     app = await runPreviewCommand(appDir, appPort);
-    await testAssetLink(page, false);
+    await testAssetLink(page, false, false);
   });
 
   test('should support asset link - i18n', async ({ page }) => {
@@ -73,7 +79,7 @@ test.describe('basic test', async () => {
     appPort = await getPort();
     await runBuildCommand(appDir);
     app = await runPreviewCommand(appDir, appPort);
-    await testAssetLink(page, true);
+    await testAssetLink(page, true, false);
   });
 
   test('should support asset link - cleanUrls: false', async ({ page }) => {
@@ -81,7 +87,7 @@ test.describe('basic test', async () => {
     appPort = await getPort();
     await runBuildCommand(appDir, 'rspress-clean.config.ts');
     app = await runPreviewCommand(appDir, appPort);
-    await testAssetLink(page, false);
+    await testAssetLink(page, false, true);
   });
 
   test('should support asset link - cleanUrls: false - i18n', async ({
@@ -91,6 +97,6 @@ test.describe('basic test', async () => {
     appPort = await getPort();
     await runBuildCommand(appDir, 'rspress-clean.config.ts');
     app = await runPreviewCommand(appDir, appPort);
-    await testAssetLink(page, true);
+    await testAssetLink(page, true, true);
   });
 });
