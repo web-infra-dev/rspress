@@ -12,6 +12,7 @@ import {
 import { pluginGoogleAnalytics } from 'rsbuild-plugin-google-analytics';
 import { pluginOpenGraph } from 'rsbuild-plugin-open-graph';
 import { pluginFontOpenSans } from 'rspress-plugin-font-open-sans';
+import { transformerCompatibleMetaHighlight } from '@rspress/core/shiki-transformers';
 
 const siteUrl = 'https://v2.rspress.rs';
 
@@ -30,6 +31,7 @@ export default defineConfig({
         transformerNotationErrorLevel(),
         transformerNotationHighlight(),
         transformerNotationFocus(),
+        transformerCompatibleMetaHighlight(),
       ],
     },
     link: {

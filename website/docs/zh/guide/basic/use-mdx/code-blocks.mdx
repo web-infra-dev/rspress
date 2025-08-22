@@ -1,0 +1,205 @@
+# 代码块
+
+Rspress 在 V2 中，使用 [Shiki](https://shiki.style) 进行编译时的代码高亮，提供了灵活的代码块能力，便于进行更加丰富的技术创作。
+
+## 代码块标题
+
+你可以使用 `title="..."` 属性为代码块添加标题。
+
+import { Tabs, Tab } from '@theme';
+
+````mdx
+```jsx title="src/components/HelloCodeBlockTitle.tsx"
+const HelloCodeBlockTitle = (props) => {
+  return <h1>Hello CodeBlock Title</h1>;
+};
+```
+````
+
+它将被渲染为：
+
+```jsx title="src/components/HelloCodeBlockTitle.tsx"
+const HelloCodeBlockTitle = (props) => {
+  return <h1>Hello CodeBlock Title</h1>;
+};
+```
+
+## 外部文件代码块
+
+你可以使用 `file="./path/to/file"` 属性并不书写任何代码块内容，来引用外部文件中的文本。
+
+````mdx
+```tsx file="./_tsx-component.tsx"
+
+```
+````
+
+它将被渲染为：
+
+```mdx file="./_tsx-component.tsx"
+
+```
+
+:::tip
+
+在使用外部文件代码块时，经常配合 [路由约定](./components.mdx#路由约定) 一起使用。将文件命名为 `_` 开头。
+
+:::
+
+## Notation 行高亮
+
+你可以使用 [Shiki transformers](#shiki-trasnformers) 中的 `transformerNotationHighlight` 配合 `// [!code highlight]` 注释来高亮代码行。
+
+<Tabs>
+<Tab label="代码">
+
+````mdx
+```ts
+console.log('Highlighted'); // [\!code highlight]
+console.log('Not highlighted');
+// [\!code highlight:2]
+console.log('Highlighted');
+console.log('Highlighted');
+```
+````
+
+</Tab>
+<Tab label="rspress.config.ts">
+
+```ts
+import { defineConfig } from '@rspress/core';
+import { transformerNotationHighlight } from '@shikijs/transformers';
+
+export default defineConfig({
+  markdown: {
+    shiki: {
+      transformers: [transformerNotationHighlight()],
+    },
+  },
+});
+```
+
+</Tab>
+</Tabs>
+
+它将被渲染为：
+
+```ts title="highlight.ts"
+console.log('Highlighted'); // [!code highlight]
+console.log('Not highlighted');
+// [!code highlight:2]
+console.log('Highlighted');
+console.log('Highlighted');
+```
+
+## Meta 行高亮
+
+:::warning
+使用 meta 信息行高亮，需注意格式化工具可能会导致行号改变。
+:::
+
+你可以使用 Rspress 内置 [Shiki transformers](#shiki-trasnformers) 中的 `transformerCompatibleMetaHighlight` 配合 meta 信息注释来高亮代码行。
+
+<Tabs>
+<Tab label="代码">
+
+````mdx
+```ts {1,3-4}
+console.log('Highlighted');
+console.log('Not highlighted');
+console.log('Highlighted');
+console.log('Highlighted');
+```
+````
+
+</Tab>
+<Tab label="rspress.config.ts">
+
+```ts
+import { defineConfig } from '@rspress/core';
+import { transformerCompatibleMetaHighlight } from '@rspress/core/shiki-transformers';
+
+export default defineConfig({
+  markdown: {
+    shiki: {
+      transformers: [transformerCompatibleMetaHighlight()],
+    },
+  },
+});
+```
+
+</Tab>
+</Tabs>
+
+它将被渲染为：
+
+```ts {1,3-4}
+console.log('Highlighted');
+console.log('Not highlighted');
+console.log('Highlighted');
+console.log('Highlighted');
+```
+
+## Shiki 扩展
+
+Rspress V2 默认使用 [Shiki](https://shiki.style) 提供编译时语法高亮。
+
+### Shiki transformers
+
+你可以使用 `markdown.shiki.transformers` 配置 Shiki 的 [@shikijs/transformers](https://shiki.style/guide/transformers.html) 来实现更加丰富的代码块效果。
+
+```ts title="rspress.config.ts"
+import { defineConfig } from '@rspress/core';
+import { transformerNotationHighlight } from '@shikijs/transformers';
+
+export default defineConfig({
+  markdown: {
+    shiki: {
+      transformers: [
+        transformerNotationHighlight(),
+        // transformerNotationDiff(),
+        // transformerNotationErrorLevel(),
+        // transformerNotationFocus(),
+      ],
+    },
+  },
+});
+```
+
+## 运行时语法高亮
+
+:::warning
+
+:::
+
+```tsx
+import { CodeBlockRuntime } from '@theme';
+import { transformerNotationHighlight } from '@shikijs/transformers';
+
+<CodeBlockRuntime
+  lang="ts"
+  title="highlight.ts"
+  code={`console.log('Highlighted'); // [!code highlight]
+// [!code highlight:1]
+console.log('Highlighted');
+console.log('Not highlighted');`}
+  shikiOptions={{
+    transformers: [transformerNotationHighlight()],
+  }}
+/>;
+```
+
+import { CodeBlockRuntime } from '@theme';
+import { transformerNotationHighlight } from '@shikijs/transformers';
+
+<CodeBlockRuntime
+  lang="ts"
+  title="highlight.ts"
+  code={`console.log('Highlighted'); // [!code highlight]
+// [!code highlight:1]
+console.log('Highlighted');
+console.log('Not highlighted');`}
+  shikiOptions={{
+    transformers: [transformerNotationHighlight()],
+  }}
+/>
