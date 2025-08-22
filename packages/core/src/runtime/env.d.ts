@@ -11,6 +11,13 @@ declare module 'virtual-site-data' {
   export default data;
 }
 
+declare module 'virtual-page-data' {
+  import { PageData } from '@rspress/shared';
+
+  const data: PageData;
+  export default data;
+}
+
 declare module 'virtual-search-index-hash' {
   const hash: string;
   export default hash;
@@ -43,11 +50,4 @@ declare module '*.svg' {
 
 declare module '@theme' {
   export * from '@rspress/theme-default';
-}
-
-declare module 'virtual-runtime-config' {
-  import type { NormalizedRuntimeConfig } from '@rspress/shared';
-
-  export const base: NormalizedRuntimeConfig['base'];
-  export const ssg: NormalizedRuntimeConfig['ssg'];
 }

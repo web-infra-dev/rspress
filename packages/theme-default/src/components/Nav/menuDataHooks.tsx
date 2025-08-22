@@ -1,7 +1,7 @@
 import { useLocation, usePageData, useVersion } from '@rspress/runtime';
 import { replaceLang, replaceVersion } from '@rspress/shared';
 import Translator from '@theme-assets/translator';
-import { base } from 'virtual-runtime-config';
+import site from 'virtual-site-data';
 import { SvgWrapper } from '../SvgWrapper';
 import type { NavMenuGroupItem } from './NavMenuGroup';
 
@@ -42,7 +42,7 @@ export function useTranslationMenuData(): NavMenuGroupItem {
               current: currentVersion,
               default: defaultVersion,
             },
-            base,
+            site.base,
             cleanUrls,
             pageType === '404',
           ),
@@ -71,7 +71,7 @@ export function useVersionMenuData() {
           target: version,
           default: defaultVersion,
         },
-        base,
+        site.base,
         cleanUrls,
         page.pageType === '404',
       ),

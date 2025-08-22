@@ -39,10 +39,10 @@ import { RouteService } from './route/RouteService';
 import { globalStylesVMPlugin } from './runtimeModule/globalStyles';
 import { globalUIComponentsVMPlugin } from './runtimeModule/globalUIComponents';
 import { i18nVMPlugin } from './runtimeModule/i18n';
+import { rsbuildPluginDocVM } from './runtimeModule/pageData/rsbuildPlugin';
 import { routeListVMPlugin } from './runtimeModule/routeList';
-import { runtimeConfigVMPlugin } from './runtimeModule/runtimeConfig';
 import { searchHookVMPlugin } from './runtimeModule/searchHooks';
-import { rsbuildPluginDocVM } from './runtimeModule/siteData/rsbuildPlugin';
+import { siteDataVMPlugin } from './runtimeModule/siteData/rsbuildPlugin';
 import { socialLinksVMPlugin } from './runtimeModule/socialLinks';
 import type { FactoryContext } from './runtimeModule/types';
 import { rsbuildPluginCSR } from './ssg/rsbuildPluginCSR';
@@ -179,11 +179,10 @@ async function createInternalBuildConfig(
            *  Get virtual modules from plugins
            */
           ...(await getVirtualModulesFromPlugins(pluginDriver)),
-
           /**
-           * Serialize rspress.config.ts to runtime
+           * Serialize site data (rspress.config.ts) to runtime
            */
-          ...runtimeConfigVMPlugin(context),
+          ...siteDataVMPlugin(context),
         },
       }),
       enableSSG

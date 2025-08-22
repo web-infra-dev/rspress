@@ -1,19 +1,19 @@
-import { BrowserRouter, DataContext, ThemeContext } from '@rspress/runtime';
-import type { PageData } from '@rspress/shared';
+import { BrowserRouter, PageContext, ThemeContext } from '@rspress/runtime';
 import { useThemeState } from '@theme';
 import { createHead, UnheadProvider } from '@unhead/react/client';
 import { useMemo, useState } from 'react';
-import { base } from 'virtual-runtime-config';
+import siteData from 'virtual-site-data';
 import { App } from './App';
+import type { Page } from './initPageData';
 
 const head = createHead();
 
 // eslint-disable-next-line import/no-commonjs
 
 export function ClientApp({
-  initialPageData = null as unknown as PageData,
+  initialPageData = null as unknown as Page,
 }: {
-  initialPageData?: PageData;
+  initialPageData?: Page;
 }) {
   const [data, setData] = useState(initialPageData);
   const [theme, setTheme] = useThemeState();
@@ -22,7 +22,7 @@ export function ClientApp({
     <ThemeContext.Provider
       value={useMemo(() => ({ theme, setTheme }), [theme, setTheme])}
     >
-      <DataContext.Provider
+      <PageContext.Provider
         value={useMemo(() => ({ data, setData }), [data, setData])}
       >
         <BrowserRouter
@@ -30,13 +30,13 @@ export function ClientApp({
             v7_relativeSplatPath: true,
             v7_startTransition: true,
           }}
-          basename={base}
+          basename={siteData.base}
         >
           <UnheadProvider head={head}>
             <App />
           </UnheadProvider>
         </BrowserRouter>
-      </DataContext.Provider>
+      </PageContext.Provider>
     </ThemeContext.Provider>
   );
 }

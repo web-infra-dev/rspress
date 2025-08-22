@@ -3,7 +3,6 @@ import type { DefaultThemeConfig, NavItem, SiteData } from '@rspress/shared';
 import { SocialLinks, SwitchAppearance } from '@theme';
 import { clearAllBodyScrollLocks, disableBodyScroll } from 'body-scroll-lock';
 import { useEffect, useRef } from 'react';
-import { base } from 'virtual-runtime-config';
 import {
   useTranslationMenuData,
   useVersionMenuData,
@@ -56,13 +55,11 @@ const NavScreenAppearance = () => {
 const NavScreenMenu = ({
   menuItems,
   pathname,
-  base,
   langs,
   toggleScreen,
 }: {
   menuItems: NavItem[];
   pathname: string;
-  base: string;
   langs: string[];
   toggleScreen: () => void;
 }) => {
@@ -75,7 +72,6 @@ const NavScreenMenu = ({
               <NavMenuSingleItem
                 pathname={pathname}
                 key={item.text}
-                base={base}
                 langs={langs}
                 onClick={toggleScreen}
                 {...item}
@@ -124,7 +120,6 @@ export function NavScreen(props: Props) {
       <div className={styles.container}>
         <NavScreenMenu
           menuItems={menuItems}
-          base={base}
           langs={langs}
           pathname={pathname}
           toggleScreen={toggleScreen}

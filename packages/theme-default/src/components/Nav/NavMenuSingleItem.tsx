@@ -8,7 +8,6 @@ import * as styles from './index.module.scss';
 interface Props {
   pathname: string;
   langs?: string[];
-  base: string;
   rightIcon?: React.ReactNode;
   onClick?: () => void;
 }

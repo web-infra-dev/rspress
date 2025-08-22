@@ -1,32 +1,15 @@
-import { SEARCH_INDEX_NAME, type SiteData } from '@rspress/shared';
+import {
+  addLeadingSlash,
+  addTrailingSlash,
+  type SiteData,
+  type UserConfig,
+} from '@rspress/shared';
 import { getIconUrlPath } from '@rspress/shared/node-utils';
-import { groupBy } from 'lodash-es';
-import { isProduction } from '../../constants';
-import { extractPageData } from '../../route/extractPageData';
-import { createHash } from '../../utils';
-import type { FactoryContext } from '../types';
 import { normalizeThemeConfig } from './normalizeThemeConfig';
 
-function deletePrivateField<T>(obj: T): T {
-  if (typeof obj !== 'object' || obj === null) {
-    return obj;
-  }
-  const newObj: T = { ...obj };
-  for (const key in newObj) {
-    if (key.startsWith('_')) {
-      delete newObj[key];
-    }
-  }
-  return newObj;
-}
-
-export async function createSiteData(context: FactoryContext): Promise<{
-  siteData: Omit<SiteData, 'root'>;
-  searchIndex: Record<string, string>;
-  indexHashByGroup: Record<string, string>;
+export async function createSiteData(userConfig: UserConfig): Promise<{
+  siteData: Omit<SiteData, 'root' | 'pages'>;
 }> {
-  const { config, alias, userDocRoot, routeService, pluginDriver } = context;
-  const userConfig = config;
   // prevent modify the origin config object
   const tempSearchObj = Object.assign({}, userConfig.search);
 
@@ -35,67 +18,13 @@ export async function createSiteData(context: FactoryContext): Promise<{
     tempSearchObj.searchHooks = undefined;
   }
 
-  const replaceRules = userConfig?.replaceRules || [];
+  const { base } = userConfig;
 
-  const searchConfig = userConfig?.search || {};
+  // TODO: base can be normalized in compile time side in an earlier stage
+  const normalizedBase = addTrailingSlash(addLeadingSlash(base ?? '/'));
 
-  // If the dev server restart when config file, we will reuse the siteData instead of extracting the siteData from source files again.
-  const searchCodeBlocks =
-    'codeBlocks' in searchConfig ? Boolean(searchConfig.codeBlocks) : true;
-
-  const pages = await extractPageData(routeService, {
-    replaceRules,
-    alias,
-    root: userDocRoot,
-    searchCodeBlocks,
-  });
-  // modify page index by plugins
-  await pluginDriver.modifySearchIndexData(pages);
-
-  const versioned =
-    typeof userConfig.search !== 'boolean' && userConfig.search?.versioned;
-
-  const groupedPages = groupBy(pages, page => {
-    if (page.frontmatter?.pageType === 'home') {
-      return 'noindex';
-    }
-
-    const version = versioned ? page.version : '';
-    const lang = page.lang || '';
-
-    return `${version}###${lang}`;
-  });
-  // remove the pages marked as noindex
-  delete groupedPages.noindex;
-
-  const indexHashByGroup = {} as Record<string, string>;
-
-  const searchIndex = {} as Record<string, string>;
-  // Generate search index by different versions & languages, file name is {SEARCH_INDEX_NAME}.{version}.{lang}.{hash}.json
-  await Promise.all(
-    Object.keys(groupedPages).map(async group => {
-      // Avoid writing filepath in compile-time
-      const stringifiedIndex = JSON.stringify(
-        groupedPages[group].map(deletePrivateField),
-      );
-      const indexHash = createHash(stringifiedIndex);
-      indexHashByGroup[group] = indexHash;
-
-      const [version, lang] = group.split('###');
-      const indexVersion = version ? `.${version.replace('.', '_')}` : '';
-      const indexLang = lang ? `.${lang}` : '';
-
-      const filename = `${SEARCH_INDEX_NAME}${indexVersion}${indexLang}.${indexHash}.json`;
-      searchIndex[filename] = stringifiedIndex;
-    }),
-  );
-
-  // Run extendPageData hook in plugins
-  await Promise.all(
-    pages.map(async pageData => pluginDriver.extendPageData(pageData)),
-  );
-
-  const siteData: Omit<SiteData, 'root'> = {
+  const siteData: Omit<SiteData, 'root' | 'pages'> = {
+    base: normalizedBase,
     title: userConfig?.title || '',
     description: userConfig?.description || '',
     icon: getIconUrlPath(userConfig?.icon) || '',
@@ -110,19 +39,6 @@ export async function createSiteData(context: FactoryContext): Promise<{
       versions: userConfig?.multiVersion?.versions || [],
     },
     search: tempSearchObj ?? { mode: 'local' },
-    pages: pages.map(page => {
-      // omit some fields for runtime size
-      const {
-        content: _content,
-        _filepath,
-        _html,
-        _flattenContent,
-        ...rest
-      } = page;
-      // FIXME: should not have differences from development
-      // In production, we cannot expose the complete filepath for security reasons
-      return isProduction() ? rest : { ...rest, _filepath };
-    }),
     markdown: {
       showLineNumbers: userConfig?.markdown?.showLineNumbers ?? false,
       defaultWrapCode: userConfig?.markdown?.defaultWrapCode ?? false,
@@ -132,7 +48,5 @@ export async function createSiteData(context: FactoryContext): Promise<{
 
   return {
     siteData,
-    searchIndex,
-    indexHashByGroup,
   };
 }

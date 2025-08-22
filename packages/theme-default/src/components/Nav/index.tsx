@@ -6,7 +6,6 @@ import {
 } from '@rspress/runtime';
 import type { NavItem } from '@rspress/shared';
 import { Search, SocialLinks, SwitchAppearance } from '@theme';
-import { base } from 'virtual-runtime-config';
 import { useHiddenNav } from '../../logic/useHiddenNav';
 import { NavHamburger } from '../NavHamburger';
 import * as styles from './index.module.scss';
@@ -51,7 +50,6 @@ export function Nav(props: NavProps) {
             <div key={item.text} className="rp-mx-3 last:rp-mr-0">
               <NavMenuGroup
                 {...item}
-                base={base}
                 pathname={pathname}
                 langs={langs}
                 items={'items' in item ? item.items : item}
@@ -61,7 +59,6 @@ export function Nav(props: NavProps) {
             <NavMenuSingleItem
               pathname={pathname}
               langs={langs}
-              base={base}
               key={item.link}
               {...item}
             />
