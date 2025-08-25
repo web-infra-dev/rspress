@@ -36,7 +36,7 @@ const HelloCodeBlockTitle = (props) => {
 
 它将被渲染为：
 
-```mdx file="./_tsx-component.tsx"
+```tsx file="./_tsx-component.tsx"
 
 ```
 
@@ -95,10 +95,10 @@ console.log('Highlighted');
 ## Meta 行高亮
 
 :::warning
-使用 meta 信息行高亮，需注意格式化工具可能会导致行号改变。
+使用 meta 信息行高亮，需注意格式化工具可能会导致行号改变。可维护性上更推荐使用 [Notation 行高亮](#notation-行高亮)。
 :::
 
-你可以使用 Rspress 内置 [Shiki transformers](#shiki-trasnformers) 中的 `transformerCompatibleMetaHighlight` 配合 meta 信息注释来高亮代码行。
+你可以使用 `@rspress/core/shiki-transformers` 中的 `transformerCompatibleMetaHighlight` 配合 meta 信息注释来高亮代码行。
 
 <Tabs>
 <Tab label="代码">
@@ -140,39 +140,142 @@ console.log('Highlighted');
 console.log('Highlighted');
 ```
 
-## Shiki 扩展
+## Shiki
 
-Rspress V2 默认使用 [Shiki](https://shiki.style) 提供编译时语法高亮。
+Rspress V2 默认使用 [Shiki](https://shiki.style) 提供语法高亮，高亮计算都在编译期完成，这意味着运行时会有更高的性能。
+
+在使用多种语言代码块的时候，会在编译时自动获取对应语言，也不会增大运行时包体，支持的编程语言可参考 [Shiki 支持的语言列表](https://shiki.style/languages)。
 
 ### Shiki transformers
 
-你可以使用 `markdown.shiki.transformers` 配置 Shiki 的 [@shikijs/transformers](https://shiki.style/guide/transformers.html) 来实现更加丰富的代码块效果。
+可以通过配置 `markdown.shiki.transformers` 添加自定义 [shiki transformers](https://shiki.style/guide/transformers.html) 来实现更加丰富的代码块效果。
 
-```ts title="rspress.config.ts"
+除了上文中的 [transformerNotationHighlight](#notation-行高亮)，Rspress 默认支持 [@shikijs/transformers](https://shiki.style/packages/transformers) 中的以下 transformers。
+
+### transformerNotationDiff
+
+<Tabs>
+<Tab label="语法">
+
+````mdx
+```ts
+console.log('deleted'); // [\!code --]
+console.log('added'); // [\!code ++]
+console.log('unchanged');
+```
+````
+
+</Tab>
+<Tab label="rspress.config.ts">
+
+```ts
 import { defineConfig } from '@rspress/core';
-import { transformerNotationHighlight } from '@shikijs/transformers';
-
+import { transformerNotationDiff } from '@shikijs/transformers';
 export default defineConfig({
   markdown: {
     shiki: {
-      transformers: [
-        transformerNotationHighlight(),
-        // transformerNotationDiff(),
-        // transformerNotationErrorLevel(),
-        // transformerNotationFocus(),
-      ],
+      transformers: [transformerNotationDiff()],
     },
   },
 });
 ```
 
+</Tab>
+</Tabs>
+
+它将被渲染为：
+
+```ts
+console.log('deleted'); // [!code --]
+console.log('added'); // [!code ++]
+console.log('unchanged');
+```
+
+### transformerNotationErrorLevel
+
+<Tabs>
+<Tab label="语法">
+
+````mdx
+```ts
+console.log('No errors or warnings');
+console.error('Error'); // [\!code error]
+console.warn('Warning'); // [\!code warning]
+```
+````
+
+</Tab>
+<Tab label="rspress.config.ts">
+
+```ts
+import { defineConfig } from '@rspress/core';
+import { transformerNotationErrorLevel } from '@shikijs/transformers';
+export default defineConfig({
+  markdown: {
+    shiki: {
+      transformers: [transformerNotationErrorLevel()],
+    },
+  },
+});
+```
+
+</Tab>
+</Tabs>
+
+它将被渲染为：
+
+```ts
+console.log('No errors or warnings');
+console.error('Error'); // [!code error]
+console.warn('Warning'); // [!code warning]
+```
+
+### transformerNotationFocus
+
+<Tabs>
+<Tab label="语法">
+
+````mdx
+```ts
+console.log('Not focused');
+console.log('Focused'); // [\!code focus]
+console.log('Not focused');
+```
+````
+
+</Tab>
+<Tab label="rspress.config.ts">
+
+```ts
+import { defineConfig } from '@rspress/core';
+import { transformerNotationFocus } from '@shikijs/transformers';
+export default defineConfig({
+  markdown: {
+    shiki: {
+      transformers: [transformerNotationFocus()],
+    },
+  },
+});
+```
+
+</Tab>
+</Tabs>
+
+它将被渲染为：
+
+```ts
+console.log('Not focused');
+console.log('Focused'); // [!code focus]
+console.log('Not focused');
+```
+
 ## 运行时语法高亮
 
-:::warning
+当需要在运行时动态渲染代码块，比如在交互式文档中，或者需要远程拉取代码块内容。Rspress 提供了 `CodeBlockRuntime` 组件。
 
-:::
+以下是一个示例：
 
-```tsx
+```mdx title="foo.mdx"
 import { CodeBlockRuntime } from '@theme';
 import { transformerNotationHighlight } from '@shikijs/transformers';
 
@@ -186,7 +289,8 @@ console.log('Not highlighted');`}
   shikiOptions={{
     transformers: [transformerNotationHighlight()],
   }}
-/>;
+/>
+;
 ```
 
 import { CodeBlockRuntime } from '@theme';
@@ -203,3 +307,7 @@ console.log('Not highlighted');`}
     transformers: [transformerNotationHighlight()],
   }}
 />
+
+:::warning
+建议仅在必要条件下使用 `CodeBlockRuntime`，因为它会增加运行时的包体积，并且无法享受编译时高亮带来的性能优势。
+:::
