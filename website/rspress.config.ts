@@ -1,5 +1,6 @@
 import { pluginSass } from '@rsbuild/plugin-sass';
 import { defineConfig } from '@rspress/core';
+import { transformerCompatibleMetaHighlight } from '@rspress/core/shiki-transformers';
 import { pluginAlgolia } from '@rspress/plugin-algolia';
 import { pluginLlms } from '@rspress/plugin-llms';
 import { pluginSitemap } from '@rspress/plugin-sitemap';
@@ -12,7 +13,6 @@ import {
 import { pluginGoogleAnalytics } from 'rsbuild-plugin-google-analytics';
 import { pluginOpenGraph } from 'rsbuild-plugin-open-graph';
 import { pluginFontOpenSans } from 'rspress-plugin-font-open-sans';
-import { transformerCompatibleMetaHighlight } from '@rspress/core/shiki-transformers';
 
 const siteUrl = 'https://v2.rspress.rs';
 
