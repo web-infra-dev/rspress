@@ -1,0 +1,313 @@
+# 代码块
+
+Rspress 在 V2 中，使用 [Shiki](https://shiki.style) 进行编译时的代码高亮，提供了灵活的代码块能力，便于进行更加丰富的技术创作。
+
+## 代码块标题
+
+你可以使用 `title="..."` 属性为代码块添加标题。
+
+import { Tabs, Tab } from '@theme';
+
+````mdx
+```jsx title="src/components/HelloCodeBlockTitle.tsx"
+const HelloCodeBlockTitle = (props) => {
+  return <h1>Hello CodeBlock Title</h1>;
+};
+```
+````
+
+它将被渲染为：
+
+```jsx title="src/components/HelloCodeBlockTitle.tsx"
+const HelloCodeBlockTitle = (props) => {
+  return <h1>Hello CodeBlock Title</h1>;
+};
+```
+
+## 外部文件代码块
+
+你可以使用 `file="./path/to/file"` 属性并不书写任何代码块内容，来引用外部文件中的文本。
+
+````mdx
+```tsx file="./_tsx-component.tsx"
+
+```
+````
+
+它将被渲染为：
+
+```tsx file="./_tsx-component.tsx"
+
+```
+
+:::tip
+
+在使用外部文件代码块时，经常配合 [路由约定](./components.mdx#路由约定) 一起使用。将文件命名为 `_` 开头。
+
+:::
+
+## Notation 行高亮
+
+你可以使用 [Shiki transformers](#shiki-trasnformers) 中的 `transformerNotationHighlight` 配合 `// [!code highlight]` 注释来高亮代码行。
+
+<Tabs>
+<Tab label="代码">
+
+````mdx
+```ts
+console.log('Highlighted'); // [\!code highlight]
+console.log('Not highlighted');
+// [\!code highlight:2]
+console.log('Highlighted');
+console.log('Highlighted');
+```
+````
+
+</Tab>
+<Tab label="rspress.config.ts">
+
+```ts
+import { defineConfig } from '@rspress/core';
+import { transformerNotationHighlight } from '@shikijs/transformers';
+
+export default defineConfig({
+  markdown: {
+    shiki: {
+      transformers: [transformerNotationHighlight()],
+    },
+  },
+});
+```
+
+</Tab>
+</Tabs>
+
+它将被渲染为：
+
+```ts title="highlight.ts"
+console.log('Highlighted'); // [!code highlight]
+console.log('Not highlighted');
+// [!code highlight:2]
+console.log('Highlighted');
+console.log('Highlighted');
+```
+
+## Meta 行高亮
+
+:::warning
+使用 meta 信息行高亮，需注意格式化工具可能会导致行号改变。可维护性上更推荐使用 [Notation 行高亮](#notation-行高亮)。
+:::
+
+你可以使用 `@rspress/core/shiki-transformers` 中的 `transformerCompatibleMetaHighlight` 配合 meta 信息注释来高亮代码行。
+
+<Tabs>
+<Tab label="代码">
+
+````mdx
+```ts {1,3-4}
+console.log('Highlighted');
+console.log('Not highlighted');
+console.log('Highlighted');
+console.log('Highlighted');
+```
+````
+
+</Tab>
+<Tab label="rspress.config.ts">
+
+```ts
+import { defineConfig } from '@rspress/core';
+import { transformerCompatibleMetaHighlight } from '@rspress/core/shiki-transformers';
+
+export default defineConfig({
+  markdown: {
+    shiki: {
+      transformers: [transformerCompatibleMetaHighlight()],
+    },
+  },
+});
+```
+
+</Tab>
+</Tabs>
+
+它将被渲染为：
+
+```ts {1,3-4}
+console.log('Highlighted');
+console.log('Not highlighted');
+console.log('Highlighted');
+console.log('Highlighted');
+```
+
+## Shiki
+
+Rspress V2 默认使用 [Shiki](https://shiki.style) 提供语法高亮，高亮计算都在编译期完成，这意味着运行时会有更高的性能。
+
+在使用多种语言代码块的时候，会在编译时自动获取对应语言，也不会增大运行时包体，支持的编程语言可参考 [Shiki 支持的语言列表](https://shiki.style/languages)。
+
+### Shiki transformers
+
+可以通过配置 [`markdown.shiki.transformers`](../../../api/config/config-build.mdx#markdownshiki) 添加自定义 [shiki transformers](https://shiki.style/guide/transformers.html) 来实现更加丰富的代码块效果。
+
+除了上文中的 [transformerNotationHighlight](#notation-行高亮)，Rspress 默认支持 [@shikijs/transformers](https://shiki.style/packages/transformers) 中的以下 transformers。
+
+### transformerNotationDiff
+
+<Tabs>
+<Tab label="语法">
+
+````mdx
+```ts
+console.log('deleted'); // [\!code --]
+console.log('added'); // [\!code ++]
+console.log('unchanged');
+```
+````
+
+</Tab>
+<Tab label="rspress.config.ts">
+
+```ts
+import { defineConfig } from '@rspress/core';
+import { transformerNotationDiff } from '@shikijs/transformers';
+export default defineConfig({
+  markdown: {
+    shiki: {
+      transformers: [transformerNotationDiff()],
+    },
+  },
+});
+```
+
+</Tab>
+</Tabs>
+
+它将被渲染为：
+
+```ts
+console.log('deleted'); // [!code --]
+console.log('added'); // [!code ++]
+console.log('unchanged');
+```
+
+### transformerNotationErrorLevel
+
+<Tabs>
+<Tab label="语法">
+
+````mdx
+```ts
+console.log('No errors or warnings');
+console.error('Error'); // [\!code error]
+console.warn('Warning'); // [\!code warning]
+```
+````
+
+</Tab>
+<Tab label="rspress.config.ts">
+
+```ts
+import { defineConfig } from '@rspress/core';
+import { transformerNotationErrorLevel } from '@shikijs/transformers';
+export default defineConfig({
+  markdown: {
+    shiki: {
+      transformers: [transformerNotationErrorLevel()],
+    },
+  },
+});
+```
+
+</Tab>
+</Tabs>
+
+它将被渲染为：
+
+```ts
+console.log('No errors or warnings');
+console.error('Error'); // [!code error]
+console.warn('Warning'); // [!code warning]
+```
+
+### transformerNotationFocus
+
+<Tabs>
+<Tab label="语法">
+
+````mdx
+```ts
+console.log('Not focused');
+console.log('Focused'); // [\!code focus]
+console.log('Not focused');
+```
+````
+
+</Tab>
+<Tab label="rspress.config.ts">
+
+```ts
+import { defineConfig } from '@rspress/core';
+import { transformerNotationFocus } from '@shikijs/transformers';
+export default defineConfig({
+  markdown: {
+    shiki: {
+      transformers: [transformerNotationFocus()],
+    },
+  },
+});
+```
+
+</Tab>
+</Tabs>
+
+它将被渲染为：
+
+```ts
+console.log('Not focused');
+console.log('Focused'); // [!code focus]
+console.log('Not focused');
+```
+
+## 运行时语法高亮
+
+当需要在运行时动态渲染代码块，比如在交互式文档中，或者需要远程拉取代码块内容。Rspress 提供了 `CodeBlockRuntime` 组件。
+
+以下是一个示例：
+
+```mdx title="foo.mdx"
+import { CodeBlockRuntime } from '@theme';
+import { transformerNotationHighlight } from '@shikijs/transformers';
+
+<CodeBlockRuntime
+  lang="ts"
+  title="highlight.ts"
+  code={`console.log('Highlighted'); // [!code highlight]
+// [!code highlight:1]
+console.log('Highlighted');
+console.log('Not highlighted');`}
+  shikiOptions={{
+    transformers: [transformerNotationHighlight()],
+  }}
+/>
+;
+```
+
+import { CodeBlockRuntime } from '@theme';
+import { transformerNotationHighlight } from '@shikijs/transformers';
+
+<CodeBlockRuntime
+  lang="ts"
+  title="highlight.ts"
+  code={`console.log('Highlighted'); // [!code highlight]
+// [!code highlight:1]
+console.log('Highlighted');
+console.log('Not highlighted');`}
+  shikiOptions={{
+    transformers: [transformerNotationHighlight()],
+  }}
+/>
+
+:::warning
+建议仅在必要条件下使用 `CodeBlockRuntime`，因为它会增加运行时的包体积，并且无法享受编译时高亮带来的性能优势。
+:::

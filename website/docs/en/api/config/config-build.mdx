@@ -182,6 +182,30 @@ export default defineConfig({
 });
 ```
 
+### markdown.shiki
+
+- **Type**: `import('@shikijs/rehype').RehypeShikiOptions`
+
+- **Default**:
+
+```ts
+const cssVariablesTheme = createCssVariablesTheme({
+  name: 'css-variables',
+  variablePrefix: '--shiki-',
+  variableDefaults: {},
+  fontStyle: true,
+});
+const shikiOptions = {
+  theme: cssVariablesTheme,
+  defaultLanguage: 'txt',
+  lazy: true,
+  langs: ['tsx', 'ts', 'js'],
+  addLanguageClass: true,
+};
+```
+
+Configure Shiki-related options. For details, see [RehypeShikiOptions](https://github.com/shikijs/shiki/blob/main/packages/rehype/src/types.ts).
+
 ### markdown.link
 
 - **Type**:

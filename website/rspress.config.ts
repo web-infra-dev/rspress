@@ -1,5 +1,6 @@
 import { pluginSass } from '@rsbuild/plugin-sass';
 import { defineConfig } from '@rspress/core';
+import { transformerCompatibleMetaHighlight } from '@rspress/core/shiki-transformers';
 import { pluginAlgolia } from '@rspress/plugin-algolia';
 import { pluginLlms } from '@rspress/plugin-llms';
 import { pluginSitemap } from '@rspress/plugin-sitemap';
@@ -30,6 +31,7 @@ export default defineConfig({
         transformerNotationErrorLevel(),
         transformerNotationHighlight(),
         transformerNotationFocus(),
+        transformerCompatibleMetaHighlight(),
       ],
     },
     link: {

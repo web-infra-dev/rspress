@@ -1,0 +1,313 @@
+# Code blocks
+
+Rspress V2 uses [Shiki](https://shiki.style) for compile-time code highlighting, providing flexible code block capabilities for richer technical writing.
+
+## Code block title
+
+You can use the `title="..."` attribute to add a title to a code block.
+
+import { Tabs, Tab } from '@theme';
+
+````mdx
+```jsx title="src/components/HelloCodeBlockTitle.tsx"
+const HelloCodeBlockTitle = (props) => {
+  return <h1>Hello CodeBlock Title</h1>;
+};
+```
+````
+
+It will be rendered as:
+
+```jsx title="src/components/HelloCodeBlockTitle.tsx"
+const HelloCodeBlockTitle = (props) => {
+  return <h1>Hello CodeBlock Title</h1>;
+};
+```
+
+## External file code block
+
+You can use the `file="./path/to/file"` attribute without writing any code block content to reference the text from an external file.
+
+````mdx
+```tsx file="./_tsx-component.tsx"
+
+```
+````
+
+It will be rendered as:
+
+```tsx file="./_tsx-component.tsx"
+
+```
+
+:::tip
+
+When using external file code blocks, it's common to use them together with [route conventions](./components.mdx#route-convention). Name files starting with `_`.
+
+:::
+
+## Notation line highlight
+
+You can use [Shiki transformers](#shiki-transformers) with the `transformerNotationHighlight` and `// [!code highlight]` comments to highlight code lines.
+
+<Tabs>
+<Tab label="Code">
+
+````mdx
+```ts
+console.log('Highlighted'); // [\!code highlight]
+console.log('Not highlighted');
+// [\!code highlight:2]
+console.log('Highlighted');
+console.log('Highlighted');
+```
+````
+
+</Tab>
+<Tab label="rspress.config.ts">
+
+```ts
+import { defineConfig } from '@rspress/core';
+import { transformerNotationHighlight } from '@shikijs/transformers';
+
+export default defineConfig({
+  markdown: {
+    shiki: {
+      transformers: [transformerNotationHighlight()],
+    },
+  },
+});
+```
+
+</Tab>
+</Tabs>
+
+It will be rendered as:
+
+```ts title="highlight.ts"
+console.log('Highlighted'); // [!code highlight]
+console.log('Not highlighted');
+// [!code highlight:2]
+console.log('Highlighted');
+console.log('Highlighted');
+```
+
+## Meta line highlight
+
+:::warning
+When using meta info for line highlighting, be aware that formatting tools may change line numbers. For maintainability, [Notation Line Highlight](#notation-line-highlight) is recommended.
+:::
+
+You can use Rspress built-in [Shiki transformers](#shiki-transformers) with `transformerCompatibleMetaHighlight` and meta info comments to highlight code lines.
+
+<Tabs>
+<Tab label="Code">
+
+````mdx
+```ts {1,3-4}
+console.log('Highlighted');
+console.log('Not highlighted');
+console.log('Highlighted');
+console.log('Highlighted');
+```
+````
+
+</Tab>
+<Tab label="rspress.config.ts">
+
+```ts
+import { defineConfig } from '@rspress/core';
+import { transformerCompatibleMetaHighlight } from '@rspress/core/shiki-transformers';
+
+export default defineConfig({
+  markdown: {
+    shiki: {
+      transformers: [transformerCompatibleMetaHighlight()],
+    },
+  },
+});
+```
+
+</Tab>
+</Tabs>
+
+It will be rendered as:
+
+```ts {1,3-4}
+console.log('Highlighted');
+console.log('Not highlighted');
+console.log('Highlighted');
+console.log('Highlighted');
+```
+
+## Shiki
+
+Rspress V2 uses [Shiki](https://shiki.style) for compile-time syntax highlighting by default. All highlighting is done at compile time, which means better runtime performance.
+
+When using code blocks in multiple languages, the corresponding language is automatically detected at compile time, and the runtime bundle size does not increase. For supported programming languages, refer to the [Shiki supported languages list](https://shiki.style/languages).
+
+### Shiki transformers
+
+You can add custom [shiki transformers](https://shiki.style/guide/transformers.html) via [`markdown.shiki.transformers`](../../../api/config/config-build.mdx#markdownshiki) for richer code block effects.
+
+In addition to the [transformerNotationHighlight](#notation-line-highlight) mentioned above, Rspress defaults to supporting the following transformers from [@shikijs/transformers](https://shiki.style/packages/transformers).
+
+### transformerNotationDiff
+
+<Tabs>
+<Tab label="Syntax">
+
+````mdx
+```ts
+console.log('deleted'); // [\!code --]
+console.log('added'); // [\!code ++]
+console.log('unchanged');
+```
+````
+
+</Tab>
+<Tab label="rspress.config.ts">
+
+```ts
+import { defineConfig } from '@rspress/core';
+import { transformerNotationDiff } from '@shikijs/transformers';
+export default defineConfig({
+  markdown: {
+    shiki: {
+      transformers: [transformerNotationDiff()],
+    },
+  },
+});
+```
+
+</Tab>
+</Tabs>
+
+It will be rendered as:
+
+```ts
+console.log('deleted'); // [!code --]
+console.log('added'); // [!code ++]
+console.log('unchanged');
+```
+
+### transformerNotationErrorLevel
+
+<Tabs>
+<Tab label="Syntax">
+
+````mdx
+```ts
+console.log('No errors or warnings');
+console.error('Error'); // [\!code error]
+console.warn('Warning'); // [\!code warning]
+```
+````
+
+</Tab>
+<Tab label="rspress.config.ts">
+
+```ts
+import { defineConfig } from '@rspress/core';
+import { transformerNotationErrorLevel } from '@shikijs/transformers';
+export default defineConfig({
+  markdown: {
+    shiki: {
+      transformers: [transformerNotationErrorLevel()],
+    },
+  },
+});
+```
+
+</Tab>
+</Tabs>
+
+It will be rendered as:
+
+```ts
+console.log('No errors or warnings');
+console.error('Error'); // [!code error]
+console.warn('Warning'); // [!code warning]
+```
+
+### transformerNotationFocus
+
+<Tabs>
+<Tab label="Syntax">
+
+````mdx
+```ts
+console.log('Not focused');
+console.log('Focused'); // [\!code focus]
+console.log('Not focused');
+```
+````
+
+</Tab>
+<Tab label="rspress.config.ts">
+
+```ts
+import { defineConfig } from '@rspress/core';
+import { transformerNotationFocus } from '@shikijs/transformers';
+export default defineConfig({
+  markdown: {
+    shiki: {
+      transformers: [transformerNotationFocus()],
+    },
+  },
+});
+```
+
+</Tab>
+</Tabs>
+
+It will be rendered as:
+
+```ts
+console.log('Not focused');
+console.log('Focused'); // [!code focus]
+console.log('Not focused');
+```
+
+## Runtime syntax highlighting
+
+When you need to render code blocks dynamically at runtime, such as in interactive docs or fetching code remotely, Rspress provides the `CodeBlockRuntime` component.
+
+Here is an example:
+
+```mdx title="foo.mdx"
+import { CodeBlockRuntime } from '@theme';
+import { transformerNotationHighlight } from '@shikijs/transformers';
+
+<CodeBlockRuntime
+  lang="ts"
+  title="highlight.ts"
+  code={`console.log('Highlighted'); // [!code highlight]
+// [!code highlight:1]
+console.log('Highlighted');
+console.log('Not highlighted');`}
+  shikiOptions={{
+    transformers: [transformerNotationHighlight()],
+  }}
+/>
+;
+```
+
+import { CodeBlockRuntime } from '@theme';
+import { transformerNotationHighlight } from '@shikijs/transformers';
+
+<CodeBlockRuntime
+  lang="ts"
+  title="highlight.ts"
+  code={`console.log('Highlighted'); // [!code highlight]
+// [!code highlight:1]
+console.log('Highlighted');
+console.log('Not highlighted');`}
+  shikiOptions={{
+    transformers: [transformerNotationHighlight()],
+  }}
+/>
+
+:::warning
+It is recommended to use `CodeBlockRuntime` only when necessary, as it increases runtime bundle size and cannot benefit from compile-time highlighting performance.
+:::
