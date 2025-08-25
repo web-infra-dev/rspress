@@ -295,15 +295,14 @@ import { transformerNotationHighlight } from '@shikijs/transformers';
 <CodeBlockRuntime
   lang="ts"
   title="highlight.ts"
-  code={`console.log('Highlighted'); // [!code highlight]
-// [!code highlight:1]
+  code={`console.log('Highlighted'); // [\!code highlight]
+// [\!code highlight:1]
 console.log('Highlighted');
 console.log('Not highlighted');`}
   shikiOptions={{
     transformers: [transformerNotationHighlight()],
   }}
 />
-;
 ```
 
 import { CodeBlockRuntime } from '@theme';
