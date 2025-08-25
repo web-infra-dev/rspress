@@ -13,7 +13,7 @@
     "@rspress/plugin-algolia": "workspace:*",
     "@rspress/plugin-llms": "workspace:*",
     "@rspress/plugin-sitemap": "workspace:*",
-    "@rstack-dev/doc-ui": "^1.10.10",
+    "@rstack-dev/doc-ui": "^1.11.0",
     "@shikijs/transformers": "^3.9.2",
     "@types/react": "^19.1.11",
     "rsbuild-plugin-google-analytics": "^1.0.4",
