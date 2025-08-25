@@ -14,7 +14,7 @@
     "@rspress/plugin-llms": "workspace:*",
     "@rspress/plugin-sitemap": "workspace:*",
     "@rstack-dev/doc-ui": "^1.11.0",
-    "@shikijs/transformers": "^3.9.2",
+    "@shikijs/transformers": "^3.11.0",
     "@types/react": "^19.1.11",
     "rsbuild-plugin-google-analytics": "^1.0.4",
     "rsbuild-plugin-open-graph": "^1.1.0",
