@@ -1,8 +1,8 @@
-# Code Blocks
+# Code blocks
 
 Rspress V2 uses [Shiki](https://shiki.style) for compile-time code highlighting, providing flexible code block capabilities for richer technical writing.
 
-## Code Block Title
+## Code block title
 
 You can use the `title="..."` attribute to add a title to a code block.
 
@@ -24,7 +24,7 @@ const HelloCodeBlockTitle = (props) => {
 };
 ```
 
-## External File Code Block
+## External file code block
 
 You can use the `file="./path/to/file"` attribute without writing any code block content to reference the text from an external file.
 
@@ -46,7 +46,7 @@ When using external file code blocks, it's common to use them together with [rou
 
 :::
 
-## Notation Line Highlight
+## Notation line highlight
 
 You can use [Shiki transformers](#shiki-transformers) with the `transformerNotationHighlight` and `// [!code highlight]` comments to highlight code lines.
 
@@ -92,7 +92,7 @@ console.log('Highlighted');
 console.log('Highlighted');
 ```
 
-## Meta Line Highlight
+## Meta line highlight
 
 :::warning
 When using meta info for line highlighting, be aware that formatting tools may change line numbers. For maintainability, [Notation Line Highlight](#notation-line-highlight) is recommended.
@@ -269,7 +269,7 @@ console.log('Focused'); // [!code focus]
 console.log('Not focused');
 ```
 
-## Runtime Syntax Highlighting
+## Runtime syntax highlighting
 
 When you need to render code blocks dynamically at runtime, such as in interactive docs or fetching code remotely, Rspress provides the `CodeBlockRuntime` component.
 
