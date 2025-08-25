@@ -32,6 +32,11 @@ export default defineConfig({
         transformerNotationFocus(),
       ],
     },
+    link: {
+      checkDeadLinks: {
+        excludes: ['/og-image.png', '/llms-full.txt'],
+      },
+    },
   },
   plugins: [
     pluginFontOpenSans(),

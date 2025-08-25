@@ -1,4 +1,4 @@
-import path from 'path';
+import path from 'node:path';
 import { RuntimeModuleID, type VirtualModulePlugin } from './types';
 
 export const searchHookVMPlugin: VirtualModulePlugin = context => {

@@ -1,12 +1,12 @@
+import type { RenderSearchFunction } from '@rspress/core/theme';
 import {
-  RenderType,
   type BeforeSearch,
   type OnSearch,
+  RenderType,
 } from '@rspress/core/theme';
-import type { RenderSearchFunction } from '@rspress/core/theme';
 
 const onSearch: OnSearch = async (query, defaultSearchResult) => {
-  const { result } = defaultSearchResult[0]; 
+  const { result } = defaultSearchResult[0];
   console.info('onSearch', query);
   return [
     {
@@ -48,11 +48,11 @@ interface ResultData {
   }[];
 }
 
-const render: RenderSearchFunction<ResultData> = (item) => {
+const render: RenderSearchFunction<ResultData> = item => {
   return (
     <div>
-      {item.list.map((i) => (
-        <div>
+      {item.list.map(i => (
+        <div key={i.path}>
           <a id={i.path} href={i.path}>
             {i.title}
           </a>
