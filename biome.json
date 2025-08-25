@@ -1,5 +1,5 @@
 {
-  "$schema": "https://biomejs.dev/schemas/2.2.0/schema.json",
+  "$schema": "https://biomejs.dev/schemas/2.2.2/schema.json",
   "assist": {
     "actions": {
       "source": {
@@ -53,6 +53,7 @@
     "rules": {
       "recommended": true,
       "style": {
+        "noDescendingSpecificity": "off",
         "noParameterAssign": "off",
         "noInferrableTypes": "off",
         "noNonNullAssertion": "off",
@@ -71,7 +72,8 @@
         "noConfusingVoidType": "off",
         "noAssignInExpressions": "off",
         "useIterableCallbackReturn": "off",
-        "noUselessEscapeInString": "off"
+        "noUselessEscapeInString": "off",
+        "noUnknownAtRules": "off"
       },
       "correctness": {
         "useExhaustiveDependencies": "off",
@@ -80,6 +82,7 @@
         "noNestedComponentDefinitions": "off"
       },
       "complexity": {
+        "noImportantStyles": "off",
         "noForEach": "off",
         "useFlatMap": "off",
         "useArrowFunction": "off",
