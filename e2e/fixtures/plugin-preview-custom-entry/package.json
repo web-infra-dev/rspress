@@ -8,13 +8,13 @@
     "preview": "rspress preview"
   },
   "dependencies": {
-    "@rsbuild/plugin-vue": "^1.1.1",
+    "@rsbuild/plugin-vue": "^1.1.2",
     "@rspress/core": "workspace:*",
     "@rspress/plugin-preview": "workspace:*",
     "react": "^19.1.1",
     "react-dom": "^19.1.1",
     "solid-js": "^1.9.9",
-    "vue": "^3.5.18"
+    "vue": "^3.5.19"
   },
   "devDependencies": {
     "@types/node": "^22.8.1"
