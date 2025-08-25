@@ -28,11 +28,24 @@ const HelloCodeBlockTitle = (props) => {
 
 You can use the `file="./path/to/file"` attribute without writing any code block content to reference the text from an external file.
 
+<Tabs>
+<Tab label="foo.mdx">
+
 ````mdx
 ```tsx file="./_tsx-component.tsx"
 
 ```
 ````
+
+</Tab>
+<Tab label="_tsx-component.tsx">
+
+```tsx file="./_tsx-component.tsx"
+
+```
+
+</Tab>
+</Tabs>
 
 It will be rendered as:
 
@@ -282,15 +295,14 @@ import { transformerNotationHighlight } from '@shikijs/transformers';
 <CodeBlockRuntime
   lang="ts"
   title="highlight.ts"
-  code={`console.log('Highlighted'); // [!code highlight]
-// [!code highlight:1]
+  code={`console.log('Highlighted'); // [\!code highlight]
+// [\!code highlight:1]
 console.log('Highlighted');
 console.log('Not highlighted');`}
   shikiOptions={{
     transformers: [transformerNotationHighlight()],
   }}
 />
-;
 ```
 
 import { CodeBlockRuntime } from '@theme';

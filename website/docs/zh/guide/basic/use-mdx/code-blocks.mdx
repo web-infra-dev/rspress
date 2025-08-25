@@ -28,11 +28,24 @@ const HelloCodeBlockTitle = (props) => {
 
 你可以使用 `file="./path/to/file"` 属性并不书写任何代码块内容，来引用外部文件中的文本。
 
+<Tabs>
+<Tab label="foo.mdx">
+
 ````mdx
 ```tsx file="./_tsx-component.tsx"
 
 ```
 ````
+
+</Tab>
+<Tab label="_tsx-component.tsx">
+
+```tsx file="./_tsx-component.tsx"
+
+```
+
+</Tab>
+</Tabs>
 
 它将被渲染为：
 
@@ -282,15 +295,14 @@ import { transformerNotationHighlight } from '@shikijs/transformers';
 <CodeBlockRuntime
   lang="ts"
   title="highlight.ts"
-  code={`console.log('Highlighted'); // [!code highlight]
-// [!code highlight:1]
+  code={`console.log('Highlighted'); // [\!code highlight]
+// [\!code highlight:1]
 console.log('Highlighted');
 console.log('Not highlighted');`}
   shikiOptions={{
     transformers: [transformerNotationHighlight()],
   }}
 />
-;
 ```
 
 import { CodeBlockRuntime } from '@theme';
