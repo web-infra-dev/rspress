@@ -1,14 +1,6 @@
-import { useEffect, useState } from 'react';
 import * as styles from './ScrollToTop.module.scss';
 
 export function ScrollToTop() {
-  const [isVisible, setIsVisible] = useState(false);
-
-  const handleScroll = () => {
-    const scrollTop = window.scrollY || document.documentElement.scrollTop;
-    setIsVisible(scrollTop > 0);
-  };
-
   const scrollToTop = () => {
     window.scrollTo({
       top: 0,
@@ -16,27 +8,48 @@ export function ScrollToTop() {
     });
   };
 
-  useEffect(() => {
-    window.addEventListener('scroll', handleScroll);
-  }, []);
-
   return (
-    <button
-      className={`${styles.scrollToTop} ${isVisible ? styles.entered : ''}`}
-      onClick={scrollToTop}
-    >
+    <button className={`${styles.scrollToTop}`} onClick={scrollToTop}>
       <svg
+        width="16"
+        height="16"
+        viewBox="0 0 16 16"
+        fill="none"
         xmlns="http://www.w3.org/2000/svg"
-        viewBox="0 0 24 24"
-        fill="currentColor"
-        className="rp-w-6 rp-h-6"
       >
-        <path
-          fillRule="evenodd"
-          d="M11.47 2.47a.75.75 0 0 1 1.06 0l7.5 7.5a.75.75 0 1 1-1.06 1.06l-6.22-6.22V21a.75.75 0 0 1-1.5 0V4.81l-6.22 6.22a.75.75 0 1 1-1.06-1.06l7.5-7.5Z"
-          clipRule="evenodd"
-        />
+        <g clip-path="url(#clip0_95_330)">
+          <path
+            fill-rule="evenodd"
+            clip-rule="evenodd"
+            d="M7.99967 14.6667C11.6816 14.6667 14.6663 11.6819 14.6663 8.00001C14.6663 4.31811 11.6816 1.33334 7.99967 1.33334C4.31777 1.33334 1.33301 4.31811 1.33301 8.00001C1.33301 11.6819 4.31777 14.6667 7.99967 14.6667Z"
+            stroke="currentColor"
+            stroke-opacity="0.8"
+            stroke-width="1.33333"
+          />
+          <path
+            d="M7.99967 14.6667C11.6816 14.6667 14.6663 11.6819 14.6663 8.00001C14.6663 4.31811 11.6816 1.33334 7.99967 1.33334C4.31777 1.33334 1.33301 4.31811 1.33301 8.00001C1.33301 11.6819 4.31777 14.6667 7.99967 14.6667Z"
+            stroke="currentColor"
+            stroke-opacity="0.8"
+            stroke-width="1.33333"
+            stroke-linejoin="round"
+          />
+          <path
+            d="M11 9L8 6L5 9"
+            stroke="currentColor"
+            stroke-opacity="0.8"
+            stroke-width="1.33333"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          />
+        </g>
+        <defs>
+          <clipPath id="clip0_95_330">
+            <rect width="16" height="16" fill="white" />
+          </clipPath>
+        </defs>
       </svg>
+
+      <span>back to top</span>
     </button>
   );
 }
