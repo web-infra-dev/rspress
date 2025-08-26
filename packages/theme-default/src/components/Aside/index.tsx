@@ -4,6 +4,7 @@ import { scrollToTarget } from '../../logic/sideEffects';
 import { type UISwitchResult, useUISwitch } from '../../logic/useUISwitch.js';
 
 import * as styles from './index.module.scss';
+import { ScrollToTop } from './ScrollToTop';
 import { TocItem } from './TocItem';
 import { useActiveAnchor } from './useActiveAnchor';
 import { useDynamicToc } from './useDynamicToc';
@@ -65,6 +66,11 @@ export function Aside({ outlineTitle }: { outlineTitle: string }) {
             ))}
           </ul>
         </nav>
+      </div>
+
+      <div style={{ display: readPercent !== 0 ? '' : 'none' }}>
+        <div className={styles.divider} />
+        <ScrollToTop />
       </div>
     </div>
   );
