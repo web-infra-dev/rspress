@@ -7,7 +7,7 @@ import {
   type SidebarItem,
   type SidebarSectionHeader,
 } from '@rspress/shared';
-import { useMemo, useState } from 'react';
+import { useLayoutEffect, useMemo, useState } from 'react';
 import { useLocation } from 'react-router-dom';
 import { useActiveMatcher } from './useActiveMatcher';
 import { useLocaleSiteData } from './useLocaleSiteData';
@@ -56,6 +56,60 @@ export function useSidebar(): SidebarData {
   return sidebarData;
 }
 
+function createInitialSidebar(
+  rawSidebarData: SidebarData,
+  activeMatcher: (link: string) => boolean,
+) {
+  const matchCache = new WeakMap<
+    | NormalizedSidebarGroup
+    | SidebarItem
+    | SidebarDivider
+    | SidebarSectionHeader,
+    boolean
+  >();
+  const match = (
+    item:
+      | NormalizedSidebarGroup
+      | SidebarItem
+      | SidebarDivider
+      | SidebarSectionHeader,
+  ) => {
+    if (matchCache.has(item)) {
+      return matchCache.get(item);
+    }
+    if ('link' in item && item.link && activeMatcher(item.link)) {
+      matchCache.set(item, true);
+      return true;
+    }
+    if ('items' in item) {
+      const result = item.items.some(child => match(child));
+      if (result) {
+        matchCache.set(item, true);
+        return true;
+      }
+    }
+    matchCache.set(item, false);
+    return false;
+  };
+  const traverse = (
+    item:
+      | NormalizedSidebarGroup
+      | SidebarItem
+      | SidebarDivider
+      | SidebarSectionHeader,
+  ) => {
+    if ('items' in item) {
+      item.items.forEach(traverse);
+      if (match(item)) {
+        item.collapsed = false;
+      }
+    }
+  };
+  const newSidebarData = rawSidebarData.filter(Boolean).flat();
+  newSidebarData.forEach(traverse);
+  return newSidebarData;
+}
+
 /**
  * handle the collapsed state of the sidebar groups
  */
@@ -66,56 +120,13 @@ export function useSidebarDynamic(): [
   const rawSidebarData = useSidebar();
   const activeMatcher = useActiveMatcher();
 
-  const [sidebar, setSidebar] = useState<SidebarData>(() => {
-    const matchCache = new WeakMap<
-      | NormalizedSidebarGroup
-      | SidebarItem
-      | SidebarDivider
-      | SidebarSectionHeader,
-      boolean
-    >();
-    const match = (
-      item:
-        | NormalizedSidebarGroup
-        | SidebarItem
-        | SidebarDivider
-        | SidebarSectionHeader,
-    ) => {
-      if (matchCache.has(item)) {
-        return matchCache.get(item);
-      }
-      if ('link' in item && item.link && activeMatcher(item.link)) {
-        matchCache.set(item, true);
-        return true;
-      }
-      if ('items' in item) {
-        const result = item.items.some(child => match(child));
-        if (result) {
-          matchCache.set(item, true);
-          return true;
-        }
-      }
-      matchCache.set(item, false);
-      return false;
-    };
-    const traverse = (
-      item:
-        | NormalizedSidebarGroup
-        | SidebarItem
-        | SidebarDivider
-        | SidebarSectionHeader,
-    ) => {
-      if ('items' in item) {
-        item.items.forEach(traverse);
-        if (match(item)) {
-          item.collapsed = false;
-        }
-      }
-    };
-    const newSidebarData = rawSidebarData.filter(Boolean).flat();
-    newSidebarData.forEach(traverse);
-    return newSidebarData;
-  });
+  const [sidebar, setSidebar] = useState<SidebarData>(() =>
+    createInitialSidebar(rawSidebarData, activeMatcher),
+  );
+
+  useLayoutEffect(() => {
+    setSidebar(createInitialSidebar(rawSidebarData, activeMatcher));
+  }, [rawSidebarData]);
 
   return [sidebar, setSidebar];
 }
