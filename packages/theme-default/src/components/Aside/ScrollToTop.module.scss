@@ -1,23 +1,15 @@
-.scroll-to-top {
-  z-index: 1;
-  position: fixed;
-  right: 1rem;
-  bottom: 1rem;
-  padding: 0.5rem;
-  border-radius: 9999px;
-  color: var(--rp-c-text-1);
-  border-color: var(--rp-c-text-3);
-  border-width: 0.1px;
-  background-color: var(--rp-c-bg-soft);
-  box-shadow:
-    0 1px 3px 0 var(--rp-shadow-1),
-    0 1px 2px 0 var(--rp-shadow-2);
-  transform: scale(0);
-  transition-property: transform;
-  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
-  transition-duration: 75ms;
-}
+.scrollToTop {
+  cursor: pointer;
 
-.scroll-to-top.entered {
-  transform: scale(1) !important;
+  font-size: 0.875rem;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 20px;
+  color: var(--rp-c-text-2);
+
+  background: transparent;
+
+  display: flex;
+  align-items: center;
+  gap: 8px;
 }
