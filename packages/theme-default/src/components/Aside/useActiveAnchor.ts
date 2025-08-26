@@ -1,5 +1,5 @@
 import type { Header } from '@rspress/shared';
-import { useEffect, useMemo, useState } from 'react';
+import { useEffect, useMemo, useRef, useState } from 'react';
 
 const useVisibleAnchors = (headers: Header[]): string[] => {
   const [visibleAnchors, setVisibleAnchors] = useState<string[]>([]);
@@ -14,7 +14,7 @@ const useVisibleAnchors = (headers: Header[]): string[] => {
       });
 
       const visible = offsets
-        .filter(offset => offset.top >= 0 && offset.top < window.innerHeight)
+        .filter(offset => offset.top >= 64 && offset.top < window.innerHeight)
         .map(offset => offset.id);
 
       setVisibleAnchors(visible);
@@ -34,9 +34,12 @@ const useVisibleAnchors = (headers: Header[]): string[] => {
 export const useActiveAnchor = (headers: Header[], isBottom: boolean) => {
   const anchors = useVisibleAnchors(headers);
 
+  const anchorDirty = useRef<string>(null);
+
   const activeAnchor = useMemo(() => {
+    // If there are no anchors on the entire screen, use the before value.
     if (anchors.length === 0) {
-      return headers[0]?.id;
+      return anchorDirty.current;
     }
     const lastHeader = headers[headers.length - 1];
     if (isBottom) {
@@ -44,6 +47,8 @@ export const useActiveAnchor = (headers: Header[], isBottom: boolean) => {
     }
     return anchors[0];
   }, [headers, anchors, isBottom]);
+
+  anchorDirty.current = activeAnchor;
 
   return activeAnchor;
 };
