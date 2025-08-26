@@ -8,7 +8,7 @@ import type {
 import ArrowRight from '@theme-assets/arrow-right';
 import clsx from 'clsx';
 import type React from 'react';
-import { startTransition, useCallback, useRef } from 'react';
+import { useCallback, useRef } from 'react';
 import { useNavigate } from '../Link/useNavigate';
 import { SvgWrapper } from '../SvgWrapper';
 import { SidebarDivider } from './SidebarDivider';
@@ -78,30 +78,25 @@ export function SidebarGroup(props: SidebarGroupProps) {
       if (collapsed) {
         // fold
         container.style.maxHeight = `${contentHeight}px`;
-        container.style.transition = 'none';
         container.style.opacity = '0';
+        container.style.transition = 'all .15s ease-in-out';
 
         transitionRef.current = window.setTimeout(() => {
-          startTransition(() => {
-            if (containerRef.current) {
-              containerRef.current.style.maxHeight = '0px';
-            }
-          });
+          if (containerRef.current) {
+            containerRef.current.style.maxHeight = '0px';
+          }
         }, 150);
       } else {
         // unfold
         container.style.maxHeight = `${contentHeight}px`;
-        container.style.transition =
-          'height 0.3s ease-in-out, opacity 0.3s ease-in-out';
-        container.style.opacity = '1';
+        container.style.transition = 'all .15s ease-in-out';
+        container.style.opacity = '0';
 
         transitionRef.current = window.setTimeout(() => {
-          startTransition(() => {
-            if (containerRef.current) {
-              // containerRef.current.style.maxHeight = '0';
-              containerRef.current.style.removeProperty('max-height');
-            }
-          });
+          if (containerRef.current) {
+            container.style.opacity = '1';
+            containerRef.current.style.removeProperty('max-height');
+          }
         }, 150);
       }
     },
@@ -166,7 +161,7 @@ export function SidebarGroup(props: SidebarGroupProps) {
             <SidebarGroup
               id={`${id}-${index}`}
               depth={depth + 1}
-              key={index}
+              key={id}
               item={item}
               setSidebarData={setSidebarData}
               className={sidebarGroupItem}
