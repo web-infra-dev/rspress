@@ -161,7 +161,7 @@ export function SidebarGroup(props: SidebarGroupProps) {
             <SidebarGroup
               id={`${id}-${index}`}
               depth={depth + 1}
-              key={id}
+              key={`${id}-${index}`}
               item={item}
               setSidebarData={setSidebarData}
               className={sidebarGroupItem}

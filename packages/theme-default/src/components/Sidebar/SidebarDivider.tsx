@@ -13,7 +13,9 @@ export function SidebarDivider(props: SidebarDividerProps) {
   return (
     <div
       className={`${borderTypeClassName}`}
-      // style={{ marginLeft: depth === 0 ? 0 : '18px' }}
+      style={{
+        paddingLeft: depth === 0 ? '12px' : `calc(12px * ${depth} + 12px)`,
+      }}
     />
   );
 }

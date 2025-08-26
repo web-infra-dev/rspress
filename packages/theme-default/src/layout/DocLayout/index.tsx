@@ -1,11 +1,6 @@
 import { MDXProvider } from '@mdx-js/react';
-import {
-  Content,
-  NoSSR,
-  useLocaleSiteData,
-  usePageData,
-} from '@rspress/runtime';
-import { getCustomMDXComponent, Overview, ScrollToTop } from '@theme';
+import { Content, useLocaleSiteData, usePageData } from '@rspress/runtime';
+import { getCustomMDXComponent, Overview } from '@theme';
 import { slug } from 'github-slugger';
 import { useMemo, useState } from 'react';
 import { Aside } from '../../components/Aside';
@@ -55,7 +50,7 @@ export function DocLayout(props: DocLayoutProps) {
   const { headingTitle, title, frontmatter } = page;
   const [tabData, setTabData] = useState({});
   const { themeConfig } = siteData;
-  const enableScrollToTop = themeConfig.enableScrollToTop ?? false;
+  // const enableScrollToTop = themeConfig.enableScrollToTop ?? false;
   const localesData = useLocaleSiteData();
 
   const outlineTitle =
@@ -142,11 +137,6 @@ export function DocLayout(props: DocLayoutProps) {
               </>
             )}
           </div>
-          {enableScrollToTop && (
-            <NoSSR>
-              <ScrollToTop />
-            </NoSSR>
-          )}
           {uiSwitch?.showAside && (
             <div
               className={styles.asideContainer}
