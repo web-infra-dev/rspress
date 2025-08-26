@@ -4,7 +4,8 @@
   {
     "type": "dir",
     "name": "use-mdx",
-    "tag": "new"
+    "tag": "new",
+    "collapsed": true
   },
   "static-assets",
   "custom-page",

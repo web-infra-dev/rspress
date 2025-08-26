@@ -1,15 +1,9 @@
-import {
-  isActive,
-  pathnameToRouteService,
-  useLocation,
-} from '@rspress/runtime';
 import type {
   SidebarDivider as ISidebarDivider,
   SidebarItem as ISidebarItem,
   SidebarSectionHeader as ISidebarSectionHeader,
   NormalizedSidebarGroup,
 } from '@rspress/shared';
-import { useCallback } from 'react';
 
 export const isSidebarDivider = (
   item:
@@ -43,25 +37,4 @@ export const isSidebarGroup = (
     | ISidebarSectionHeader,
 ): item is NormalizedSidebarGroup => {
   return 'items' in item && Array.isArray(item.items);
-};
-
-export const preloadLink = (link: string) => {
-  const route = pathnameToRouteService(link);
-  if (route) {
-    route.preload();
-  }
-};
-
-export const useActiveMatcher = () => {
-  const { pathname: rawPathname } = useLocation();
-
-  const activeMatcher = useCallback(
-    (link: string) => {
-      const pathname = decodeURIComponent(rawPathname);
-      return isActive(link, pathname);
-    },
-    [rawPathname],
-  );
-
-  return activeMatcher;
 };

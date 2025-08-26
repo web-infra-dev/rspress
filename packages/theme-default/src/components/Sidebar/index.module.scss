@@ -37,7 +37,7 @@
   overflow-x: hidden;
   max-height: calc(100% - var(--rp-nav-height));
 
-  padding: 20px;
+  padding: 10px; // TODO: discussion
 }
 
 @media (min-width: 960px) {
