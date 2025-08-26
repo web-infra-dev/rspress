@@ -21,7 +21,6 @@ export { Nav } from './components/NewNav/index';
 export { Overview } from './components/Overview/index';
 export { PackageManagerTabs } from './components/PackageManagerTabs/index';
 export { PrevNextPage } from './components/PrevNextPage/index';
-export { ScrollToTop } from './components/ScrollToTop/index';
 export { Search } from './components/Search/index';
 export type {
   AfterSearch,
@@ -70,7 +69,6 @@ export { Layout } from './layout/Layout/index';
 export { NotFoundLayout } from './layout/NotFountLayout/index';
 export {
   scrollToTarget,
-  useBindingAsideScroll as bindingAsideScroll,
   useSetup,
 } from './logic/sideEffects';
 export { useThemeState } from './logic/useAppearance';

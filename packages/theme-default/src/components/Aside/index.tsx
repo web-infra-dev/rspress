@@ -1,50 +1,24 @@
 import { useLocation } from '@rspress/runtime';
-import type { Header } from '@rspress/shared';
 import { useEffect, useMemo } from 'react';
-import { scrollToTarget, useBindingAsideScroll } from '../../logic/sideEffects';
-import { useUISwitch } from '../../logic/useUISwitch.js';
-import {
-  parseInlineMarkdownText,
-  renderInlineMarkdown,
-} from '../../logic/utils';
+import { scrollToTarget } from '../../logic/sideEffects';
+import { type UISwitchResult, useUISwitch } from '../../logic/useUISwitch.js';
 
-import './index.scss';
+import * as styles from './index.module.scss';
+import { TocItem } from './TocItem';
+import { useActiveAnchor } from './useActiveAnchor';
 import { useDynamicToc } from './useDynamicToc';
+import { useReadPercent } from './useReadPercent';
 
-const TocItem = ({
-  header,
-  baseHeaderLevel,
-}: {
-  header: Header;
-  baseHeaderLevel: number;
-}) => {
-  return (
-    <li>
-      <a
-        href={`#${header.id}`}
-        title={parseInlineMarkdownText(header.text)}
-        className="aside-link rp-transition-all rp-duration-300 hover:rp-text-text-1 rp-text-text-2 rp-block"
-        style={{
-          marginLeft: (header.depth - baseHeaderLevel) * 12,
-          fontWeight: 'semibold',
-        }}
-        onClick={e => {
-          e.preventDefault();
-          window.location.hash = header.id;
-        }}
-      >
-        <span
-          className="aside-link-text rp-block"
-          {...renderInlineMarkdown(header.text)}
-        ></span>
-      </a>
-    </li>
-  );
-};
+export interface AsideProps {
+  outlineTitle: string;
+  uiSwitch?: UISwitchResult;
+}
 
 export function Aside({ outlineTitle }: { outlineTitle: string }) {
   const { scrollPaddingTop } = useUISwitch();
   const headers = useDynamicToc();
+  const [readPercent] = useReadPercent();
+  console.log(readPercent, 'readPercent');
 
   // For outline text highlight
   const baseHeaderLevel = 2;
@@ -55,10 +29,8 @@ export function Aside({ outlineTitle }: { outlineTitle: string }) {
     [locationHash],
   );
 
-  useBindingAsideScroll(headers);
+  const activeAnchorId = useActiveAnchor(headers, readPercent === 100);
 
-  // why window.scrollTo(0, 0)?
-  // when using history.scrollRestoration = 'auto' ref: "useUISwitch.ts", we scroll to the last page's position when navigating to nextPage
   useEffect(() => {
     if (decodedHash.length === 0) {
       window.scrollTo(0, 0);
@@ -80,9 +52,7 @@ export function Aside({ outlineTitle }: { outlineTitle: string }) {
         id="aside-container"
         className="rp-relative rp-text-sm rp-font-medium"
       >
-        <div className="rp-leading-7 rp-block rp-text-sm rp-font-semibold rp-pl-3">
-          {outlineTitle}
-        </div>
+        <div className={styles.outlineTitle}>{outlineTitle}</div>
         <nav className="rp-mt-1">
           <ul className="rp-relative">
             {headers.map((header, index) => (
@@ -90,6 +60,7 @@ export function Aside({ outlineTitle }: { outlineTitle: string }) {
                 key={`${header.depth}_${header.text}_${header.id}_${index}`}
                 baseHeaderLevel={baseHeaderLevel}
                 header={header}
+                active={activeAnchorId === header.id}
               />
             ))}
           </ul>
