@@ -1,9 +1,10 @@
 import { useLocation } from '@rspress/runtime';
-import { useEffect, useMemo } from 'react';
+import { memo, useEffect, useMemo } from 'react';
 import { scrollToTarget } from '../../logic/sideEffects';
 import { type UISwitchResult, useUISwitch } from '../../logic/useUISwitch.js';
 
 import * as styles from './index.module.scss';
+import { ProgressCircle } from './ProgressCircle';
 import { ScrollToTop } from './ScrollToTop';
 import { TocItem } from './TocItem';
 import { useActiveAnchor } from './useActiveAnchor';
@@ -15,11 +16,10 @@ export interface AsideProps {
   uiSwitch?: UISwitchResult;
 }
 
-export function Aside({ outlineTitle }: { outlineTitle: string }) {
+export const Aside = memo(({ outlineTitle }: { outlineTitle: string }) => {
   const { scrollPaddingTop } = useUISwitch();
   const headers = useDynamicToc();
   const [readPercent] = useReadPercent();
-  console.log(readPercent, 'readPercent');
 
   // For outline text highlight
   const baseHeaderLevel = 2;
@@ -48,13 +48,13 @@ export function Aside({ outlineTitle }: { outlineTitle: string }) {
   }
 
   return (
-    <div className="rp-flex rp-flex-col">
-      <div
-        id="aside-container"
-        className="rp-relative rp-text-sm rp-font-medium"
-      >
-        <div className={styles.outlineTitle}>{outlineTitle}</div>
-        <nav className="rp-mt-1">
+    <div className={styles.asideContainer}>
+      <div id="aside-container">
+        <div className={styles.outlineTitle}>
+          {outlineTitle}
+          <ProgressCircle percent={readPercent} size={14} strokeWidth={2} />
+        </div>
+        <nav>
           <ul className="rp-relative">
             {headers.map((header, index) => (
               <TocItem
@@ -74,4 +74,6 @@ export function Aside({ outlineTitle }: { outlineTitle: string }) {
       </div>
     </div>
   );
-}
+});
+
+Aside.displayName = 'Aside';

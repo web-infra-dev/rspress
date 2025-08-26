@@ -57,6 +57,8 @@ export function SidebarGroup(props: SidebarGroupProps) {
   const navigate = useNavigate();
   const initialState = useRef('collapsed' in item && item.collapsed);
   const containerRef = useRef<HTMLDivElement>(null);
+  const containerHeightRef = useRef<number>(0);
+
   const transitionRef = useRef<number>(null);
   const active = item.link && activeMatcher(item.link);
   const { collapsed = false, collapsible = true } =
@@ -74,12 +76,14 @@ export function SidebarGroup(props: SidebarGroupProps) {
         return;
       }
 
-      const contentHeight = container.clientHeight;
       if (collapsed) {
         // fold
+        const contentHeight = container.clientHeight;
+        containerHeightRef.current = contentHeight;
+
         container.style.maxHeight = `${contentHeight}px`;
         container.style.opacity = '0';
-        container.style.transition = 'all .15s ease-in-out';
+        container.style.transition = 'all .15s ease-in';
 
         transitionRef.current = window.setTimeout(() => {
           if (containerRef.current) {
@@ -88,13 +92,13 @@ export function SidebarGroup(props: SidebarGroupProps) {
         }, 150);
       } else {
         // unfold
-        container.style.maxHeight = `${contentHeight}px`;
+        const contentHeight = containerHeightRef.current;
         container.style.transition = 'all .15s ease-in-out';
-        container.style.opacity = '0';
+        container.style.maxHeight = `${contentHeight}px`;
+        container.style.opacity = '1';
 
         transitionRef.current = window.setTimeout(() => {
           if (containerRef.current) {
-            container.style.opacity = '1';
             containerRef.current.style.removeProperty('max-height');
           }
         }, 150);

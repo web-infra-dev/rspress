@@ -1,3 +1,7 @@
+import clsx from 'clsx';
+import type React from 'react';
+import * as styles from './ProgressCircle.module.scss';
+
 interface CircleProgressProps {
   percent: number;
   size?: number;
@@ -11,8 +15,8 @@ export const ProgressCircle: React.FC<CircleProgressProps> = ({
   percent,
   size = 100,
   strokeWidth = 8,
-  strokeColor = 'currentColor',
-  backgroundColor = 'hsl(var(--background))',
+  strokeColor = 'var(--rp-c-brand)',
+  backgroundColor = 'var(--rp-c-divider-light)',
   className,
 }) => {
   const normalizedPercent = Math.min(100, Math.max(0, percent));
@@ -21,7 +25,11 @@ export const ProgressCircle: React.FC<CircleProgressProps> = ({
   const offset = circumference - (normalizedPercent / 100) * circumference;
 
   return (
-    <svg width={size} height={size} className={className}>
+    <svg
+      width={size}
+      height={size}
+      className={clsx(styles.progressCircle, className)}
+    >
       <circle
         cx={size / 2}
         cy={size / 2}
