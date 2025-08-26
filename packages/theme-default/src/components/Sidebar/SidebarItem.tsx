@@ -1,3 +1,4 @@
+import { useActiveMatcher } from '@rspress/runtime';
 import type {
   NormalizedSidebarGroup,
   SidebarItem as SidebarItemType,
@@ -19,18 +20,18 @@ export function SidebarItemRaw({
   left,
   right,
   onClick,
-  depth = 0,
+  depth,
 }: {
   className?: string;
   active: boolean;
   text: string;
   tag: SidebarItemType['tag'];
   link: string | undefined;
+  depth: number;
   context?: string;
   left?: React.ReactNode;
   right?: React.ReactNode;
   onClick?: React.MouseEventHandler<HTMLDivElement | HTMLAnchorElement>;
-  depth?: number;
 }) {
   const ref = useRef<HTMLDivElement>(null);
 
@@ -65,12 +66,12 @@ export function SidebarItemRaw({
           styles.menuItem,
           {
             [styles.active]: active,
-            ['rspress-sidebar-item-active']: active,
+            'rspress-sidebar-item-active': active,
           },
           className,
         )}
         style={{
-          paddingLeft: depth === 0 ? 0 : `calc(12px * ${depth})`,
+          paddingLeft: depth === 0 ? '12px' : `calc(12px * ${depth} + 12px)`,
         }}
         {...{ 'data-depth': depth }}
         {...(context ? { 'data-context': context } : {})}
@@ -88,10 +89,13 @@ export function SidebarItemRaw({
         styles.menuItem,
         {
           [styles.active]: active,
-          ['rspress-sidebar-item-active']: active,
+          'rspress-sidebar-item-active': active,
         },
         className,
       )}
+      style={{
+        paddingLeft: depth === 0 ? '12px' : `calc(12px * ${depth} + 12px)`,
+      }}
       {...{ 'data-depth': depth }}
       {...(context ? { 'data-context': context } : {})}
       onClick={onClick}
@@ -103,19 +107,18 @@ export function SidebarItemRaw({
 
 export interface SidebarItemProps {
   item: SidebarItemType | NormalizedSidebarGroup;
-  activeMatcher: (link: string) => boolean;
   depth: number;
   className?: string;
 }
 
 export function SidebarItem(props: SidebarItemProps) {
-  const { item, activeMatcher, depth, className } = props;
+  const { item, depth, className } = props;
+  const activeMatcher = useActiveMatcher();
 
   const active = Boolean(
     'link' in item && item.link && activeMatcher(item.link),
   );
 
-  // add the div.rspress-sidebar-item in an unified place
   return (
     <SidebarItemRaw
       className={className}
