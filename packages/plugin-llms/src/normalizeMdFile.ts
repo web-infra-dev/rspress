@@ -7,7 +7,7 @@ import type { Root } from 'hast';
 import remarkMdx from 'remark-mdx';
 import remarkParse from 'remark-parse';
 import remarkStringify from 'remark-stringify';
-import { type Plugin, unified } from 'unified';
+import { type PluggableList, type Plugin, unified } from 'unified';
 import { SKIP, visit } from 'unist-util-visit';
 import type { VFile } from 'vfile';
 
@@ -48,8 +48,9 @@ function normalizeMdFile(
   base: string,
   mdxToMd: boolean,
   isMd: boolean,
+  remarkPlugins: PluggableList,
 ): Promise<VFile> {
-  return unified()
+  const compiler = unified()
     .use(remarkParse)
     .use(isMd ? noopPlugin : remarkMdx)
     .use(remarkFileCodeBlock, { filepath })
@@ -63,11 +64,13 @@ function normalizeMdFile(
       },
       __base: base,
     } satisfies Parameters<typeof remarkLink>[0])
-    .use(remarkStringify)
-    .process({
-      value: content,
-      path: filepath,
-    });
+    .use(remarkPlugins)
+    .use(remarkStringify);
+
+  return compiler.process({
+    value: content,
+    path: filepath,
+  });
 }
 
 export { normalizeMdFile };

@@ -101,7 +101,8 @@ interface LlmsTxt {
 }
 
 interface MdFiles {
-  mdxToMd: boolean;
+  mdxToMd?: boolean;
+  remarkPlugins?: PluggableList;
 }
 
 interface LlmsFullTxt {
@@ -232,11 +233,12 @@ Rspress is a static site generator based on Rsbuild and it can generate llms.txt
 
 ```ts
 export interface MdFiles {
-  mdxToMd: boolean;
+  mdxToMd?: boolean;
+  remarkPlugins?: PluggableList;
 }
 ```
 
-- **默认值**: `{ mdxToMd: false }`
+- **默认值**: `{ mdxToMd: false, remarkPlugins: [] }`
 
 是否生成对应路由的 markdown 文件，当设置为 `false` 时，不会生成对应路由的 markdown 文件。
 
@@ -246,6 +248,13 @@ export interface MdFiles {
 - **默认值**: `false`
 
 是否将 mdx 内容转换为 md 内容，如果启用，会将 mdx 文件通过一组默认策略转换为 md 文件，但可能会有一定的信息丢失。
+
+#### remarkPlugins
+
+- **类型**: `PluggableList`
+- **默认值**: `[]`
+
+用户可以传入自定义的 remark plugins 来对 Markdown 的内容做一些修改。
 
 ### llmsFullTxt
 

@@ -101,7 +101,8 @@ interface LlmsTxt {
 }
 
 interface MdFiles {
-  mdxToMd: boolean;
+  mdxToMd?: boolean;
+  remarkPlugins?: PluggableList;
 }
 
 interface LlmsFullTxt {
@@ -233,20 +234,28 @@ Rspress is a static site generator based on Rsbuild and it can generate llms.txt
 
 ```ts
 export interface MdFiles {
-  mdxToMd: boolean;
+  mdxToMd?: boolean;
+  remarkPlugins?: PluggableList;
 }
 ```
 
-- **Default**: `{ mdxToMd: false }`
+- **Default**: `{ mdxToMd: false, remarkPlugins: [] }`
 
-Whether to generate a markdown file for the corresponding route, when set to `false`, the markdown file for the corresponding route will not be generated.
+Whether to generate a markdown file for the corresponding route. When set to `false`, the markdown file for the corresponding route will not be generated.
 
 #### mdxToMd
 
-- Type: `boolean`
-- Default: `false`
+- **Type**: `boolean`
+- **Default**: `false`
 
 Whether to convert mdx content to md content. If enabled, mdx files will be converted to md files through a set of default strategies, but there may be some information loss.
+
+#### remarkPlugins
+
+- **Type**: `PluggableList`
+- **Default**: `[]`
+
+You can pass in custom remark plugins to modify the Markdown content.
 
 ### llmsFullTxt
 
@@ -349,23 +358,24 @@ Text on the copy button, has higher priority than `textByLang`.
 - **Type**: `LlmsViewOptionsProps`
 
 ```ts
+type Option =
+  | {
+      title: string;
+      icon?: React.ReactNode;
+      onClick?: () => void;
+    }
+  | {
+      title: string;
+      href: string;
+      icon?: React.ReactNode;
+    }
+  | 'markdownLink'
+  | 'chatgpt'
+  | 'claude';
+
 interface LlmsViewOptionsProps
   extends React.ButtonHTMLAttributes<HTMLButtonElement> {
-  options?: Array<
-    | {
-        title: string;
-        icon?: React.ReactNode;
-        onClick?: () => void;
-      }
-    | {
-        title: string;
-        icon?: React.ReactNode;
-        href: string;
-      }
-    | 'markdownLink'
-    | 'chatgpt'
-    | 'claude'
-  >;
+  options?: Option[];
   textByLang?: Record<string, string>;
   text?: string;
 }
@@ -394,7 +404,7 @@ type Option =
 
 - **Default**: `['markdownLink', 'chatgpt', 'claude']`
 
-Customize the options in the dropdown menu, supports "Copy Markdown Link", [ChatGPT](https://chatgpt.com/) and [Claude](https://claude.ai) by default.
+Customize the options in the dropdown menu. By default, supports "Copy Markdown Link", [ChatGPT](https://chatgpt.com/) and [Claude](https://claude.ai).
 
 #### textByLang
 
