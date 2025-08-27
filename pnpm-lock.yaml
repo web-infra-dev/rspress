@@ -1379,6 +1379,28 @@ importers:
         specifier: ^0.3.3
         version: 0.3.3(@rsbuild/core@1.5.0)
 
+  packages/plugin-twoslash:
+    dependencies:
+      '@rspress/core':
+        specifier: workspace:^2.0.0-beta.28
+        version: link:../core
+    devDependencies:
+      '@microsoft/api-extractor':
+        specifier: ^7.52.11
+        version: 7.52.11(@types/node@22.10.2)
+      '@rslib/core':
+        specifier: 0.12.2
+        version: 0.12.2(@microsoft/api-extractor@7.52.11(@types/node@22.10.2))(typescript@5.8.2)
+      '@rspress/config':
+        specifier: workspace:*
+        version: link:../../scripts/config
+      rsbuild-plugin-publint:
+        specifier: ^0.3.3
+        version: 0.3.3(@rsbuild/core@1.5.0-beta.4)
+      typescript:
+        specifier: ^5.8.2
+        version: 5.8.2
+
   packages/plugin-typedoc:
     dependencies:
       '@rspress/core':
@@ -4115,9 +4137,6 @@ packages:
 
   copy-to-clipboard@3.3.3:
     resolution: {integrity: sha512-2KV8NhB5JqC3ky0r9PMCAZKbUHSwtEo4CwCs0KXgruG43gX5PMqDEBbVU4OUzw2MuAWUfsuFmWvEKG5QRfSnJA==}
-
-  core-js@3.45.0:
-    resolution: {integrity: sha512-c2KZL9lP4DjkN3hk/an4pWn5b5ZefhRJnAc42n6LJ19kSnbeRbdQZE5dSeE2LBol1OwJD3X1BQvFTAsa8ReeDA==}
 
   core-js@3.45.1:
     resolution: {integrity: sha512-L4NPsJlCfZsPeXukyzHFlg/i7IIVwHSItR0wg0FLNqYClJ4MQYTYLbC7EkjKYRLZF2iof2MUgN0EGy7MdQFChg==}
@@ -8614,7 +8633,7 @@ snapshots:
       '@rspack/core': 1.5.0-beta.1(@swc/helpers@0.5.17)
       '@rspack/lite-tapable': 1.0.1
       '@swc/helpers': 0.5.17
-      core-js: 3.45.0
+      core-js: 3.45.1
       jiti: 2.5.1
 
   '@rsbuild/plugin-babel@1.0.6(@rsbuild/core@1.4.16)':
@@ -9835,8 +9854,6 @@ snapshots:
   copy-to-clipboard@3.3.3:
     dependencies:
       toggle-selection: 1.0.6
-
-  core-js@3.45.0: {}
 
   core-js@3.45.1: {}
 
@@ -12682,6 +12699,13 @@ snapshots:
       publint: 0.3.12
     optionalDependencies:
       '@rsbuild/core': 1.5.0
+
+  rsbuild-plugin-publint@0.3.3(@rsbuild/core@1.5.0-beta.4):
+    dependencies:
+      picocolors: 1.1.1
+      publint: 0.3.12
+    optionalDependencies:
+      '@rsbuild/core': 1.5.0-beta.4
 
   rsbuild-plugin-virtual-module@0.3.1(@rsbuild/core@1.4.16):
     optionalDependencies:
