@@ -149,11 +149,6 @@ export function pluginPreview(options?: Options): RspressPlugin {
         rsbuildConfig,
       });
 
-      const { pluginSass } = await import('@rsbuild/plugin-sass');
-      const { pluginLess } = await import('@rsbuild/plugin-less');
-
-      rsbuildInstance.addPlugins([pluginSass(), pluginLess()]);
-
       if (framework === 'solid') {
         rsbuildInstance.addPlugins([
           pluginBabel({
