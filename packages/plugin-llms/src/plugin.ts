@@ -150,10 +150,12 @@ const rsbuildPluginLlms = ({
                 filepath,
                 routeServiceRef.current!,
                 baseRef.current,
-                typeof mdFiles !== 'boolean' ? mdFiles?.mdxToMd : false,
+                typeof mdFiles !== 'boolean'
+                  ? (mdFiles?.mdxToMd ?? false)
+                  : false,
                 isMD,
-                mdFiles && typeof mdFiles !== 'boolean'
-                  ? mdFiles.remarkPlugins
+                typeof mdFiles !== 'boolean'
+                  ? (mdFiles?.remarkPlugins ?? [])
                   : [],
               )
             ).toString();
@@ -282,8 +284,15 @@ function organizeBySidebar(sidebar: Sidebar, pages: PageIndexInfo[]) {
   const orderList = flatSidebar(currSidebar);
 
   pages.sort((a, b) => {
-    const aIndex = orderList.findIndex(order => matchPath(order, a.routePath));
-    const bIndex = orderList.findIndex(order => matchPath(order, b.routePath));
+    let aIndex = orderList.findIndex(order => matchPath(order, a.routePath));
+    // if not in sidebar, put it to last
+    if (aIndex === -1) {
+      aIndex = Number.MAX_SAFE_INTEGER;
+    }
+    let bIndex = orderList.findIndex(order => matchPath(order, b.routePath));
+    if (bIndex === -1) {
+      bIndex = Number.MAX_SAFE_INTEGER;
+    }
     return aIndex - bIndex;
   });
 }

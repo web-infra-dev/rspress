@@ -101,7 +101,7 @@ interface LlmsTxt {
 }
 
 interface MdFiles {
-  mdxToMd: boolean;
+  mdxToMd?: boolean;
   remarkPlugins?: PluggableList;
 }
 
@@ -233,8 +233,8 @@ Rspress is a static site generator based on Rsbuild and it can generate llms.txt
 
 ```ts
 export interface MdFiles {
-  mdxToMd: boolean;
-  remarkPlugins: PluggableList;
+  mdxToMd?: boolean;
+  remarkPlugins?: PluggableList;
 }
 ```
 

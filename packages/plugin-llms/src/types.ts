@@ -25,12 +25,12 @@ export interface MdFiles {
    * Whether to convert mdx to md.
    * @default false
    */
-  mdxToMd: boolean;
+  mdxToMd?: boolean;
   /**
    * Allow users to customize remarkPlugins and edit the content of generated md files.
    * @default []
    */
-  remarkPlugins: PluggableList;
+  remarkPlugins?: PluggableList;
 }
 
 /**
