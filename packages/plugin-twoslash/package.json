@@ -28,6 +28,9 @@
     "dev": "rslib build -w",
     "reset": "rimraf ./**/node_modules"
   },
+  "dependencies": {
+    "@shikijs/twoslash": "^3.12.0"
+  },
   "devDependencies": {
     "@microsoft/api-extractor": "^7.52.11",
     "@rslib/core": "0.12.4",
