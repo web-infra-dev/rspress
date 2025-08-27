@@ -5,6 +5,7 @@ import type {
   RouteService,
   Sidebar,
 } from '@rspress/core';
+import type { PluggableList } from 'unified';
 
 /**
  * @default { name: "llms.txt" }
@@ -21,9 +22,15 @@ export interface LlmsTxt {
 
 export interface MdFiles {
   /**
+   * Whether to convert mdx to md.
    * @default false
    */
   mdxToMd: boolean;
+  /**
+   * Allow users to customize remarkPlugins and edit the content of generated md files.
+   * @default []
+   */
+  remarkPlugins: PluggableList;
 }
 
 /**
@@ -48,8 +55,7 @@ export interface Options {
   llmsFullTxt?: false | LlmsFullTxt;
   /**
    * Whether to include some routes from llms.txt.
-   * @param context
-   * @default (context) => context.page.lang === config.lang
+   * @default undefined
    */
   include?: (context: { page: PageIndexInfo }) => boolean;
   /**

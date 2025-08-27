@@ -48,6 +48,7 @@ const rsbuildPluginLlms = ({
       },
       mdFiles = {
         mdxToMd: false,
+        remarkPlugins: [],
       },
       llmsFullTxt = {
         name: 'llms-full.txt',
@@ -151,6 +152,9 @@ const rsbuildPluginLlms = ({
                 baseRef.current,
                 typeof mdFiles !== 'boolean' ? mdFiles?.mdxToMd : false,
                 isMD,
+                mdFiles && typeof mdFiles !== 'boolean'
+                  ? mdFiles.remarkPlugins
+                  : [],
               )
             ).toString();
           } catch (e) {
@@ -299,9 +303,6 @@ function getDefaultOptions(
         },
         llmsFullTxt: {
           name: 'llms-full.txt',
-        },
-        include({ page }) {
-          return page.lang === l;
         },
       };
     }
