@@ -1,12 +1,30 @@
+import { Tabs, Tab } from '@theme';
+
 # 代码块
 
-Rspress 在 V2 中，使用 [Shiki](https://shiki.style) 进行编译时的代码高亮，提供了灵活的代码块能力，便于进行更加丰富的技术创作。
+Rspress V2 默认使用 [Shiki](https://shiki.style) 提供语法高亮，高亮计算都在编译期完成，这意味着运行时会有更高的性能。
+
+在使用多种语言代码块的时候，会在编译时自动获取对应语言，也不会增大运行时包体，支持的编程语言可参考 [Shiki 支持的语言列表](https://shiki.style/languages)。
+
+## 基本使用
+
+你可以使用 \`\`\` 语法来创建代码块。例如：
+
+````mdx
+```js
+console.log('Hello World');
+```
+````
+
+它将被渲染为：
+
+```js
+console.log('Hello World');
+```
 
 ## 代码块标题
 
 你可以使用 `title="..."` 属性为代码块添加标题。
-
-import { Tabs, Tab } from '@theme';
 
 ````mdx
 ```jsx title="src/components/HelloCodeBlockTitle.tsx"
@@ -105,6 +123,10 @@ console.log('Highlighted');
 console.log('Highlighted');
 ```
 
+:::warning
+在 `[\!code highlight]` 中的反斜杠（`\`）是为了在 Markdown 中转义以显示原始语法。在实际使用该语法时，请不要包含此反斜杠。
+:::
+
 ## Meta 行高亮
 
 :::warning
@@ -153,15 +175,37 @@ console.log('Highlighted');
 console.log('Highlighted');
 ```
 
-## Shiki
+### 显示代码行号
 
-Rspress V2 默认使用 [Shiki](https://shiki.style) 提供语法高亮，高亮计算都在编译期完成，这意味着运行时会有更高的性能。
+如果你想要显示代码行号，你可以在配置文件中开启 `showLineNumbers` 选项:
 
-在使用多种语言代码块的时候，会在编译时自动获取对应语言，也不会增大运行时包体，支持的编程语言可参考 [Shiki 支持的语言列表](https://shiki.style/languages)。
+```ts title="rspress.config.ts"
+export default {
+  // ...
+  markdown: {
+    showLineNumbers: true,
+  },
+};
+```
 
-### Shiki transformers
+### Wrap code
 
-可以通过配置 [`markdown.shiki.transformers`](../../../api/config/config-build.mdx#markdownshiki) 添加自定义 [shiki transformers](https://shiki.style/guide/transformers.html) 来实现更加丰富的代码块效果。
+如果你想要默认启用长代码换行展示，你可以在配置文件中开启 `defaultWrapCode` 选项:
+
+```ts title="rspress.config.ts"
+export default {
+  // ...
+  markdown: {
+    defaultWrapCode: true,
+  },
+};
+```
+
+## Shiki transformers
+
+Rspress 在 V2 中，使用 [Shiki](https://shiki.style) 进行编译时的代码高亮，提供了灵活扩展的代码块能力。
+
+通过配置 [`markdown.shiki.transformers`](../../../api/config/config-build.mdx#markdownshiki) 添加自定义 [shiki transformers](https://shiki.style/guide/transformers.html) 来实现更加丰富的代码块效果。
 
 除了上文中的 [transformerNotationHighlight](#notation-行高亮)，Rspress 默认支持 [@shikijs/transformers](https://shiki.style/packages/transformers) 中的以下 transformers。
 

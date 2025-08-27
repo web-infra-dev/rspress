@@ -1,12 +1,30 @@
+import { Tabs, Tab } from '@theme';
+
 # Code blocks
 
-Rspress V2 uses [Shiki](https://shiki.style) for compile-time code highlighting, providing flexible code block capabilities for richer technical writing.
+Rspress V2 uses [Shiki](https://shiki.style) for syntax highlighting at compile time, which means better runtime performance.
+
+When using code blocks in multiple languages, the corresponding language is automatically detected at compile time, and the runtime bundle size does not increase. For supported programming languages, refer to the [Shiki supported languages list](https://shiki.style/languages).
+
+## Basic usage
+
+You can use the \`\`\` syntax to create code blocks. For example:
+
+````mdx
+```js
+console.log('Hello World');
+```
+````
+
+It will be rendered as:
+
+```js
+console.log('Hello World');
+```
 
 ## Code block title
 
 You can use the `title="..."` attribute to add a title to a code block.
-
-import { Tabs, Tab } from '@theme';
 
 ````mdx
 ```jsx title="src/components/HelloCodeBlockTitle.tsx"
@@ -105,13 +123,17 @@ console.log('Highlighted');
 console.log('Highlighted');
 ```
 
+:::warning
+The backslash (`\`) in `[\!code highlight]` is for escaping in Markdown to show the original syntax. Do not include the backslash when actually using this syntax.
+:::
+
 ## Meta line highlight
 
 :::warning
 When using meta info for line highlighting, be aware that formatting tools may change line numbers. For maintainability, [Notation Line Highlight](#notation-line-highlight) is recommended.
 :::
 
-You can use Rspress built-in [Shiki transformers](#shiki-transformers) with `transformerCompatibleMetaHighlight` and meta info comments to highlight code lines.
+You can use `@rspress/core/shiki-transformers` with `transformerCompatibleMetaHighlight` and meta info comments to highlight code lines.
 
 <Tabs>
 <Tab label="Code">
@@ -153,13 +175,35 @@ console.log('Highlighted');
 console.log('Highlighted');
 ```
 
-## Shiki
+### Show code line numbers
 
-Rspress V2 uses [Shiki](https://shiki.style) for compile-time syntax highlighting by default. All highlighting is done at compile time, which means better runtime performance.
+If you want to show code line numbers, you can enable the `showLineNumbers` option in the config file:
 
-When using code blocks in multiple languages, the corresponding language is automatically detected at compile time, and the runtime bundle size does not increase. For supported programming languages, refer to the [Shiki supported languages list](https://shiki.style/languages).
+```ts title="rspress.config.ts"
+export default {
+  // ...
+  markdown: {
+    showLineNumbers: true,
+  },
+};
+```
 
-### Shiki transformers
+### Wrap code
+
+If you want to enable long code wrapping by default, you can enable the `defaultWrapCode` option in the config file:
+
+```ts title="rspress.config.ts"
+export default {
+  // ...
+  markdown: {
+    defaultWrapCode: true,
+  },
+};
+```
+
+## Shiki transformers
+
+Rspress V2 uses [Shiki](https://shiki.style) for compile-time code highlighting, providing flexible code block capabilities.
 
 You can add custom [shiki transformers](https://shiki.style/guide/transformers.html) via [`markdown.shiki.transformers`](../../../api/config/config-build.mdx#markdownshiki) for richer code block effects.
 
