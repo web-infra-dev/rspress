@@ -1379,6 +1379,28 @@ importers:
         specifier: ^0.3.3
         version: 0.3.3(@rsbuild/core@1.5.2)
 
+  packages/plugin-twoslash:
+    dependencies:
+      '@rspress/core':
+        specifier: workspace:^2.0.0-beta.28
+        version: link:../core
+    devDependencies:
+      '@microsoft/api-extractor':
+        specifier: ^7.52.11
+        version: 7.52.11(@types/node@22.10.2)
+      '@rslib/core':
+        specifier: 0.12.4
+        version: 0.12.4(@microsoft/api-extractor@7.52.11(@types/node@22.10.2))(typescript@5.8.2)
+      '@rspress/config':
+        specifier: workspace:*
+        version: link:../../scripts/config
+      rsbuild-plugin-publint:
+        specifier: ^0.3.3
+        version: 0.3.3(@rsbuild/core@1.5.2)
+      typescript:
+        specifier: ^5.8.2
+        version: 5.8.2
+
   packages/plugin-typedoc:
     dependencies:
       '@rspress/core':
@@ -8012,7 +8034,7 @@ snapshots:
 
   '@jridgewell/gen-mapping@0.3.12':
     dependencies:
-      '@jridgewell/sourcemap-codec': 1.5.0
+      '@jridgewell/sourcemap-codec': 1.5.5
       '@jridgewell/trace-mapping': 0.3.29
 
   '@jridgewell/gen-mapping@0.3.5':
@@ -8037,12 +8059,12 @@ snapshots:
   '@jridgewell/trace-mapping@0.3.25':
     dependencies:
       '@jridgewell/resolve-uri': 3.1.2
-      '@jridgewell/sourcemap-codec': 1.5.0
+      '@jridgewell/sourcemap-codec': 1.5.5
 
   '@jridgewell/trace-mapping@0.3.29':
     dependencies:
       '@jridgewell/resolve-uri': 3.1.2
-      '@jridgewell/sourcemap-codec': 1.5.0
+      '@jridgewell/sourcemap-codec': 1.5.5
 
   '@jridgewell/trace-mapping@0.3.9':
     dependencies:
