@@ -22,7 +22,10 @@ function copyCode(
   );
   let node = walk.nextNode();
   while (node) {
-    if (!node.parentElement!.classList.contains('linenumber')) {
+    if (
+      !node.parentElement!.classList.contains('linenumber') &&
+      !node.parentElement!.closest('.rp-copy-ignore')
+    ) {
       text += node.nodeValue;
     }
     node = walk.nextNode();
