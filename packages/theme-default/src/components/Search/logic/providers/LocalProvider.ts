@@ -13,7 +13,7 @@ import Index, {
   type EnrichedDocumentSearchResultSetUnit,
   type IndexOptionsForDocumentSearch,
 } from 'flexsearch';
-import searchIndexHash from 'virtual-search-index-hash';
+import { searchIndexHash } from 'virtual-page-data';
 import { LOCAL_INDEX, type Provider, type SearchQuery } from '../Provider';
 import type { SearchOptions } from '../types';
 import { normalizeTextCase } from '../util';

@@ -13,14 +13,9 @@ declare module 'virtual-site-data' {
 
 declare module 'virtual-page-data' {
   import { PageData } from '@rspress/shared';
-
-  const data: PageData;
-  export default data;
-}
-
-declare module 'virtual-search-index-hash' {
-  const hash: string;
-  export default hash;
+  const searchIndexHash: Record<string, string>;
+  const pageData: PageData;
+  export { pageData, searchIndexHash };
 }
 
 declare module 'virtual-global-components' {

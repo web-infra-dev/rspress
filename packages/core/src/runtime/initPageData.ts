@@ -7,7 +7,7 @@ import {
   MDX_OR_MD_REGEXP,
   type PageDataLegacy,
 } from '@rspress/shared';
-import pageData from 'virtual-page-data';
+import { pageData } from 'virtual-page-data';
 import siteData from 'virtual-site-data';
 
 type PageMeta = {
