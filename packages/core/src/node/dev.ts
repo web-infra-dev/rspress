@@ -21,10 +21,11 @@ export async function dev(options: DevOptions): Promise<ServerInstance> {
   const isProd = false;
   const pluginDriver = new PluginDriver(config, configFilePath, isProd);
   await pluginDriver.init();
-  const modifiedConfig = await pluginDriver.modifyConfig();
+  await pluginDriver.modifyConfig();
 
+  const modifiedConfig = pluginDriver.sealConfig();
   try {
-    // empty temp dir before build
+    await pluginDriver.beforeBuild();
     const rsbuild = await initRsbuild(
       docDirectory,
       modifiedConfig,
@@ -32,7 +33,6 @@ export async function dev(options: DevOptions): Promise<ServerInstance> {
       false,
       extraBuilderConfig,
     );
-    await pluginDriver.beforeBuild();
     rsbuild.onDevCompileDone(async () => {
       await pluginDriver.afterBuild();
     });

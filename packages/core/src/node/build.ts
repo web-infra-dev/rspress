@@ -19,6 +19,7 @@ export async function bundle(
   enableSSG: boolean,
 ) {
   try {
+    await pluginDriver.beforeBuild(); // This is to prevent some Rspress plugins from modifying the config during beforeBuild.
     // if enableSSG, build both client and server bundle
     // else only build client bundle
     const rsbuild = await initRsbuild(
@@ -28,7 +29,6 @@ export async function bundle(
       enableSSG,
     );
 
-    await pluginDriver.beforeBuild();
     await rsbuild.build();
   } finally {
     await checkLanguageParity(config);
@@ -44,7 +44,9 @@ export async function build(options: BuildOptions) {
   const { docDirectory, config, configFilePath } = options;
   const pluginDriver = new PluginDriver(config, configFilePath, true);
   await pluginDriver.init();
-  const modifiedConfig = await pluginDriver.modifyConfig();
+  await pluginDriver.modifyConfig();
+
+  const modifiedConfig = pluginDriver.sealConfig();
 
   const ssgConfig = Boolean(modifiedConfig.ssg ?? true);
 
