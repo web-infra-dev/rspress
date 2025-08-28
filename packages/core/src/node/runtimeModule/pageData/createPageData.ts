@@ -1,6 +1,5 @@
 import { type PageData, SEARCH_INDEX_NAME } from '@rspress/shared';
 import { groupBy } from 'lodash-es';
-import { isProduction } from '../../constants';
 import { extractPageData } from '../../route/extractPageData';
 import { createHash } from '../../utils';
 import type { FactoryContext } from '../types';
@@ -106,9 +105,7 @@ export async function createPageData(context: FactoryContext): Promise<{
         ...rest
       } = page;
       filepaths.push(_filepath);
-      // FIXME: should not have differences from development
-      // In production, we cannot expose the complete filepath for security reasons
-      return isProduction() ? rest : { ...rest, _filepath };
+      return rest;
     }),
   };
 
