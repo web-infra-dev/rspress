@@ -19,7 +19,9 @@ export async function bundle(
   enableSSG: boolean,
 ) {
   try {
-    await pluginDriver.beforeBuild(); // This is to prevent some Rspress plugins from modifying the config during beforeBuild.
+    // beforeBuild is executed before initRsbuild
+    // This is to prevent some Rspress plugins from modifying the config during beforeBuild.
+    await pluginDriver.beforeBuild();
     // if enableSSG, build both client and server bundle
     // else only build client bundle
     const rsbuild = await initRsbuild(
