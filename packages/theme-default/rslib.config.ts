@@ -6,7 +6,6 @@ import { pluginPublint } from 'rsbuild-plugin-publint';
 
 const COMMON_EXTERNALS = [
   'virtual-routes',
-  'virtual-search-index-hash',
   'virtual-site-data',
   'virtual-global-styles',
   'virtual-global-components',

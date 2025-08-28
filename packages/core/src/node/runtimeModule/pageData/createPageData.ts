@@ -19,6 +19,7 @@ function deletePrivateField<T>(obj: T): T {
 }
 
 export async function createPageData(context: FactoryContext): Promise<{
+  filepaths: string[]; // for addDependencies
   pageData: PageData;
   searchIndex: Record<string, string>;
   indexHashByGroup: Record<string, string>;
@@ -93,6 +94,7 @@ export async function createPageData(context: FactoryContext): Promise<{
     pages.map(async pageData => pluginDriver.extendPageData(pageData)),
   );
 
+  const filepaths: string[] = [];
   const pageData: PageData = {
     pages: pages.map(page => {
       // omit some fields for runtime size
@@ -103,6 +105,7 @@ export async function createPageData(context: FactoryContext): Promise<{
         _flattenContent,
         ...rest
       } = page;
+      filepaths.push(_filepath);
       // FIXME: should not have differences from development
       // In production, we cannot expose the complete filepath for security reasons
       return isProduction() ? rest : { ...rest, _filepath };
@@ -110,6 +113,7 @@ export async function createPageData(context: FactoryContext): Promise<{
   };
 
   return {
+    filepaths,
     pageData,
     searchIndex,
     indexHashByGroup,

@@ -14,13 +14,19 @@ export const rsbuildPluginDocVM = async ({
     pageData: PageData | null;
     searchIndex: Record<string, string> | null;
     indexHashByGroup: Record<string, string> | null;
-  } = { pageData: null, searchIndex: null, indexHashByGroup: null };
+    filepaths: string[];
+  } = {
+    pageData: null,
+    searchIndex: null,
+    indexHashByGroup: null,
+    filepaths: [],
+  };
   const searchIndexRsbuildPlugin: RsbuildPlugin = {
     name: 'rsbuild-plugin-searchIndex',
     async setup(api) {
       api.modifyBundlerChain(async bundlerChain => {
         const alias = bundlerChain.resolve.alias.entries();
-        const { pageData, indexHashByGroup, searchIndex } =
+        const { pageData, indexHashByGroup, searchIndex, filepaths } =
           await createPageData({
             config,
             alias: alias as Record<string, string>,
@@ -32,6 +38,8 @@ export const rsbuildPluginDocVM = async ({
         ref.pageData = pageData;
         ref.searchIndex = searchIndex;
         ref.indexHashByGroup = indexHashByGroup;
+        ref.filepaths = filepaths;
+
         api.processAssets(
           { stage: 'report', environments: ['web'] },
           ({ compilation, compiler }) => {
@@ -54,10 +62,16 @@ export const rsbuildPluginDocVM = async ({
     pluginVirtualModule({
       tempDir: '.rspress',
       virtualModules: {
-        [RuntimeModuleID.PageData]: () =>
-          `export default ${JSON.stringify(ref.pageData, null, 2)}`,
-        [RuntimeModuleID.SearchIndexHash]: () =>
-          `export default ${JSON.stringify(ref.indexHashByGroup, null, 2)}`,
+        [RuntimeModuleID.PageData]: async ({ addDependency }) => {
+          // TODO: support hmr
+          // This place needs to obtain the specific file that has been modified and update the file information.
+          for (const file of ref.filepaths) {
+            addDependency(file);
+          }
+
+          return `export const pageData = ${JSON.stringify(ref.pageData, null, 2)};
+          export const searchIndexHash = ${JSON.stringify(ref.indexHashByGroup, null, 2)};`;
+        },
       },
     }),
   ];

@@ -11,9 +11,9 @@ declare module 'virtual-site-data' {
 
 declare module 'virtual-page-data' {
   import { PageData } from '@rspress/shared';
-
-  const data: PageData;
-  export default data;
+  const searchIndexHash: Record<string, string>;
+  const pageData: PageData;
+  export { pageData, searchIndexHash };
 }
 
 declare module 'virtual-i18n-text';

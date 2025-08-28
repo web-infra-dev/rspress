@@ -36,11 +36,6 @@ declare module 'virtual-social-links' {
   export default Record<string, string>;
 }
 
-declare module 'virtual-search-index-hash' {
-  const hash: Record<string, string>;
-  export default hash;
-}
-
 declare const __WEBPACK_PUBLIC_PATH__: string;
 
 declare module 'virtual-runtime-config' {
@@ -48,3 +43,11 @@ declare module 'virtual-runtime-config' {
 
   export const base: NormalizedRuntimeConfig['base'];
 }
+
+declare module 'virtual-page-data' {
+  import { PageData } from '@rspress/shared';
+  const searchIndexHash: Record<string, string>;
+  const pageData: PageData;
+  export { pageData, searchIndexHash };
+}
+
