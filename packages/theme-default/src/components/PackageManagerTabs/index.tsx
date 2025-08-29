@@ -96,14 +96,14 @@ export function PackageManagerTabs({
     additionalTabs.forEach(tab => {
       commandInfo[tab.tool] = `${tab.tool} ${command}`;
     });
+    // Normalize yarn/pnpm/bun command
+    commandInfo.yarn = normalizeCommand(commandInfo.yarn);
+    commandInfo.pnpm = normalizeCommand(commandInfo.pnpm);
+    commandInfo.bun = normalizeCommand(commandInfo.bun);
   } else {
+    // When using { "yarn": "", "pnpm": "", "bun": "" } as command we don't normalize anything
     commandInfo = command;
   }
-
-  // Normalize yarn/pnpm/bun command
-  commandInfo.yarn && (commandInfo.yarn = normalizeCommand(commandInfo.yarn));
-  commandInfo.pnpm && (commandInfo.pnpm = normalizeCommand(commandInfo.pnpm));
-  commandInfo.bun && (commandInfo.bun = normalizeCommand(commandInfo.bun));
 
   return (
     <Tabs
