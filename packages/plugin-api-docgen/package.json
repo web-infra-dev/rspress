@@ -19,8 +19,7 @@
   "types": "./dist/index.d.ts",
   "files": [
     "dist",
-    "static",
-    "index.d.ts"
+    "static"
   ],
   "scripts": {
     "build": "rslib build",
