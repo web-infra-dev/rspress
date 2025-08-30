@@ -10,19 +10,19 @@
 
 /* ===== Basic ===== */
 :root {
-  --twoslash-border-color: #8888;
+  --twoslash-border-color: var(--rp-c-divider);
   --twoslash-underline-color: currentColor;
   --twoslash-highlighted-border: #c37d0d50;
   --twoslash-highlighted-bg: #c37d0d20;
-  --twoslash-popup-bg: #f8f8f8;
-  --twoslash-popup-color: inherit;
+  --twoslash-popup-bg: var(--rp-c-bg, inherit);
+  --twoslash-popup-color: var(--rp-c-text-1);
   --twoslash-popup-shadow: rgba(0, 0, 0, 0.08) 0px 1px 4px;
-  --twoslash-docs-color: #888;
-  --twoslash-docs-font: sans-serif;
-  --twoslash-code-font: inherit;
-  --twoslash-code-font-size: 1em;
-  --twoslash-matched-color: inherit;
-  --twoslash-unmatched-color: #888;
+  --twoslash-docs-color: var(--rp-c-text-1);
+  --twoslash-docs-font: var(--rp-font-family-base);
+  --twoslash-code-font: var(--rp-font-family-mono);
+  --twoslash-code-font-size: var(--rp-code-font-size);
+  --twoslash-matched-color: var(--rp-c-brand);
+  --twoslash-unmatched-color: var(--rp-c-text-2);
   --twoslash-cursor-color: #8888;
   --twoslash-error-color: #d45656;
   --twoslash-error-bg: #d4565620;
