@@ -8,6 +8,8 @@ import { fromMarkdown } from 'mdast-util-from-markdown';
 import { gfmFromMarkdown } from 'mdast-util-gfm';
 import { defaultHandlers, toHast } from 'mdast-util-to-hast';
 
+const staticPath = path.join(__dirname, '../static');
+
 function renderMarkdown(
   this: ShikiTransformerContextCommon,
   markdown: string,
@@ -77,7 +79,9 @@ function renderMarkdownInline(
 export function pluginTwoslash(): RspressPlugin {
   return {
     name: '@rspress/plugin-twoslash',
-    globalUIComponents: [path.join(__dirname, '../static/TwoslashPopup.tsx')],
+    globalUIComponents: [
+      path.join(staticPath, 'global-components', 'TwoslashPopup.tsx'),
+    ],
     config(config) {
       config.markdown ??= {};
       config.markdown.shiki ??= {};
@@ -87,6 +91,95 @@ export function pluginTwoslash(): RspressPlugin {
           rendererRich: {
             renderMarkdown,
             renderMarkdownInline,
+            hast: {
+              completionToken: {
+                tagName: 'twoslash-popup-trigger',
+                properties: {
+                  class: 'twoslash-popup-trigger',
+                },
+              },
+              completionPopup: {
+                properties: {
+                  class: 'twoslash-popup-inner',
+                },
+              },
+              completionCompose: ({ cursor, popup }) => [
+                cursor,
+                <Element>{
+                  type: 'element',
+                  tagName: 'twoslash-popup-container',
+                  properties: {
+                    class: 'twoslash-popup-container',
+                    'data-always': 'true',
+                  },
+                  children: [
+                    {
+                      type: 'element',
+                      tagName: 'twoslash-popup-arrow',
+                      properties: { class: 'twoslash-popup-arrow' },
+                      children: [],
+                    },
+                    {
+                      type: 'element',
+                      tagName: 'div',
+                      properties: { class: 'twoslash-popup-inner' },
+                      children: [popup],
+                    },
+                  ],
+                },
+              ],
+              hoverToken: {
+                tagName: 'twoslash-popup-trigger',
+                properties: {
+                  class: 'twoslash-popup-trigger',
+                },
+              },
+              hoverPopup: {
+                tagName: 'twoslash-popup-container',
+                children: elements => [
+                  {
+                    type: 'element',
+                    tagName: 'twoslash-popup-arrow',
+                    properties: { class: 'twoslash-popup-arrow' },
+                    children: [],
+                  },
+                  {
+                    type: 'element',
+                    tagName: 'div',
+                    properties: { class: 'twoslash-popup-inner' },
+                    children: elements,
+                  },
+                ],
+              },
+              queryToken: {
+                tagName: 'twoslash-popup-trigger',
+                properties: {
+                  class: 'twoslash-popup-trigger',
+                },
+              },
+              queryPopup: {
+                tagName: 'twoslash-popup-container',
+                properties: {
+                  'data-always': 'true',
+                },
+                children: elements => [
+                  {
+                    type: 'element',
+                    tagName: 'twoslash-popup-arrow',
+                    properties: { class: 'twoslash-popup-arrow' },
+                    children: [],
+                  },
+                  {
+                    type: 'element',
+                    tagName: 'div',
+                    properties: { class: 'twoslash-popup-inner' },
+                    // First element is an arrow, so exclude it
+                    // See: https://github.com/shikijs/shiki/blob/9260f3fd109eca7bece80c92196f627ccae202d0/packages/twoslash/src/renderer-rich.ts#L396-L401
+                    children: elements.slice(1),
+                  },
+                ],
+              },
+            },
           },
         }),
       );
