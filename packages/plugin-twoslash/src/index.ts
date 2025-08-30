@@ -1,3 +1,4 @@
+import path from 'node:path';
 import type { RspressPlugin } from '@rspress/core';
 import { transformerTwoslash } from '@shikijs/twoslash';
 import type { ShikiTransformerContextCommon } from '@shikijs/types';
@@ -76,6 +77,7 @@ function renderMarkdownInline(
 export function pluginTwoslash(): RspressPlugin {
   return {
     name: '@rspress/plugin-twoslash',
+    globalUIComponents: [path.join(__dirname, '../static/TwoslashPopup.tsx')],
     config(config) {
       config.markdown ??= {};
       config.markdown.shiki ??= {};
