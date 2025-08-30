@@ -82,6 +82,7 @@ export function pluginTwoslash(): RspressPlugin {
     globalUIComponents: [
       path.join(staticPath, 'global-components', 'TwoslashPopup.tsx'),
     ],
+    globalStyles: path.join(staticPath, 'global-styles', 'twoslash.css'),
     config(config) {
       config.markdown ??= {};
       config.markdown.shiki ??= {};
