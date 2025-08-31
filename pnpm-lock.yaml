@@ -562,6 +562,19 @@ importers:
         specifier: ^22.8.1
         version: 22.10.2
 
+  e2e/fixtures/plugin-twoslash:
+    dependencies:
+      '@rspress/core':
+        specifier: workspace:*
+        version: link:../../../packages/core
+      '@rspress/plugin-twoslash':
+        specifier: workspace:*
+        version: link:../../../packages/plugin-twoslash
+    devDependencies:
+      '@types/node':
+        specifier: ^22.8.1
+        version: 22.10.2
+
   e2e/fixtures/plugin-typedoc/multi:
     dependencies:
       '@rspress/core':
