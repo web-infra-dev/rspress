@@ -55,7 +55,7 @@ export const Aside = memo(({ outlineTitle }: { outlineTitle: string }) => {
           <ProgressCircle percent={readPercent} size={14} strokeWidth={2} />
         </div>
         <nav>
-          <ul className="rp-relative">
+          <ul className={styles.tocContainer}>
             {headers.map((header, index) => (
               <TocItem
                 key={`${header.depth}_${header.text}_${header.id}_${index}`}

@@ -19,27 +19,27 @@ export function ScrollToTop() {
       >
         <g clip-path="url(#clip0_95_330)">
           <path
-            fill-rule="evenodd"
-            clip-rule="evenodd"
+            fillRule="evenodd"
+            clipRule="evenodd"
             d="M7.99967 14.6667C11.6816 14.6667 14.6663 11.6819 14.6663 8.00001C14.6663 4.31811 11.6816 1.33334 7.99967 1.33334C4.31777 1.33334 1.33301 4.31811 1.33301 8.00001C1.33301 11.6819 4.31777 14.6667 7.99967 14.6667Z"
             stroke="currentColor"
-            stroke-opacity="0.8"
-            stroke-width="1.33333"
+            strokeOpacity="0.8"
+            strokeWidth="1.33333"
           />
           <path
             d="M7.99967 14.6667C11.6816 14.6667 14.6663 11.6819 14.6663 8.00001C14.6663 4.31811 11.6816 1.33334 7.99967 1.33334C4.31777 1.33334 1.33301 4.31811 1.33301 8.00001C1.33301 11.6819 4.31777 14.6667 7.99967 14.6667Z"
             stroke="currentColor"
-            stroke-opacity="0.8"
-            stroke-width="1.33333"
-            stroke-linejoin="round"
+            strokeOpacity="0.8"
+            strokeWidth="1.33333"
+            strokeLinejoin="round"
           />
           <path
             d="M11 9L8 6L5 9"
             stroke="currentColor"
-            stroke-opacity="0.8"
-            stroke-width="1.33333"
-            stroke-linecap="round"
-            stroke-linejoin="round"
+            strokeOpacity="0.8"
+            strokeWidth="1.33333"
+            strokeLinecap="round"
+            strokeLinejoin="round"
           />
         </g>
         <defs>
