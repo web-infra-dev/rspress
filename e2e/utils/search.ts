@@ -2,7 +2,7 @@ import assert from 'node:assert';
 import type { Page } from '@playwright/test';
 
 async function getSearchButton(page: Page) {
-  const searchButton = await page.$('.rspress-nav-search-button');
+  const searchButton = await page.$('.rp-flex > .rspress-nav-search-button');
   return searchButton;
 }
 
@@ -14,14 +14,17 @@ export async function searchInPage(
   searchText: string,
   reset = true,
 ) {
-  let searchInput = await page.$('.rspress-search-panel-input');
-  if (!searchInput) {
+  const searchInputLoc = page.locator('.rspress-search-panel-input');
+  const isSearchInputVisible = await searchInputLoc.isVisible();
+  if (!isSearchInputVisible) {
     const searchButton = await getSearchButton(page);
     assert(searchButton);
     await searchButton.click();
-    searchInput = await page.$('.rspress-search-panel-input');
+    const searchInput = await page.$('.rspress-search-panel-input');
     assert(searchInput);
   }
+  const searchInput = await page.$('.rspress-search-panel-input');
+  assert(searchInput);
   const isEditable = await searchInput.isEditable();
   assert(isEditable);
   await searchInput.focus();
