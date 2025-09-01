@@ -1,4 +1,4 @@
-.llmsViewOptionsContainer {
+.dropdownButton {
   display: inline-flex;
   padding: 8px 12px;
   height: 40px;
@@ -14,7 +14,7 @@
   font-size: 14px;
   font-style: normal;
   font-weight: 400;
-  line-height: 22px; /* 157.143% */
+  line-height: 22px;
 
   transition:
     background 0.3s ease,
@@ -25,9 +25,6 @@
   &.active {
     background: var(--rp-c-bg-mute);
   }
-}
-
-.dropdownButton {
   position: relative;
   cursor: pointer;
 }
@@ -59,6 +56,19 @@
   color: var(--rp-c-text-1);
 
   box-shadow: 0 4px 16px 0 rgba(0, 0, 0, 0.04);
+  animation: fadeIn 0.15s ease-in-out;
+}
+
+// fadeIn
+@keyframes fadeIn {
+  0% {
+    opacity: 0;
+    transform: translateY(-4px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 .dropdownItem {

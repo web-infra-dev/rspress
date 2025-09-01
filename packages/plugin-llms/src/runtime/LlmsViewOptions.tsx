@@ -14,7 +14,6 @@ import {
   dropdownMenu,
   externalIcon,
   leftIcon,
-  llmsViewOptionsContainer,
   rotated,
 } from './LlmsViewOptions.module.scss';
 import { useMdUrl } from './useMdUrl';
@@ -219,11 +218,7 @@ const LlmsViewOptions = ({
     <>
       <button
         ref={dropdownRef}
-        className={[
-          dropdownButton,
-          llmsViewOptionsContainer,
-          isOpen ? active : '',
-        ]
+        className={[dropdownButton, isOpen ? active : '']
           .filter(Boolean)
           .join(' ')}
         type="button"
