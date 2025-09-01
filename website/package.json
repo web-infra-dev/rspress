@@ -8,7 +8,7 @@
     "preview": "rspress preview"
   },
   "devDependencies": {
-    "@rsbuild/plugin-sass": "~1.3.5",
+    "@rsbuild/plugin-sass": "~1.4.0",
     "@rspress/core": "workspace:*",
     "@rspress/plugin-algolia": "workspace:*",
     "@rspress/plugin-llms": "workspace:*",
