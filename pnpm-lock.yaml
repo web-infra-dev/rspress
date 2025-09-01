@@ -1432,7 +1432,7 @@ importers:
         specifier: ^4.0.4
         version: 4.0.4
       '@types/react':
-        specifier: ^19.1.11
+        specifier: ^19.1.12
         version: 19.1.12
       react:
         specifier: ^19.1.1
@@ -1699,6 +1699,9 @@ importers:
       '@rspress/plugin-sitemap':
         specifier: workspace:*
         version: link:../packages/plugin-sitemap
+      '@rspress/plugin-twoslash':
+        specifier: workspace:*
+        version: link:../packages/plugin-twoslash
       '@rstack-dev/doc-ui':
         specifier: ^1.11.0
         version: 1.11.0(react-dom@19.1.1(react@19.1.1))(react@19.1.1)

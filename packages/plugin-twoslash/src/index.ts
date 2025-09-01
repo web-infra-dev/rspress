@@ -1,9 +1,6 @@
 import path from 'node:path';
 import type { RspressPlugin } from '@rspress/core';
-import {
-  type TransformerTwoslashIndexOptions,
-  transformerTwoslash,
-} from '@shikijs/twoslash';
+import { transformerTwoslash } from '@shikijs/twoslash';
 import type { ShikiTransformerContextCommon } from '@shikijs/types';
 import type { Element, ElementContent } from 'hast';
 import type { Code } from 'mdast';
