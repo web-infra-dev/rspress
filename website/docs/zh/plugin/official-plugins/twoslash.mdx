@@ -1,0 +1,77 @@
+# @rspress/plugin-twoslash <SourceCode href="https://github.com/web-infra-dev/rspress/tree/main/packages/plugin-twoslash" />
+
+import { SourceCode, PackageManagerTabs } from '@rspress/core/theme';
+
+集成 [Twoslash](https://github.com/twoslashes/twoslash) 的 Rspress 插件，用于自动生成带有类型信息的丰富代码块。
+
+## 安装
+
+<PackageManagerTabs command="add @rspress/plugin-twoslash -D" />
+
+## 使用
+
+### 1. 注册插件
+
+```ts title="rspress.config.ts"
+import { defineConfig } from '@rspress/core';
+import { pluginTwoslash } from '@rspress/plugin-twoslash';
+
+export default defineConfig({
+  plugins: [pluginTwoslash()],
+});
+```
+
+### 2. 使用 Twoslash 编写代码块
+
+在 TypeScript 代码块中使用特殊注释来启用 Twoslash 功能。
+
+更详细的用法，请参考 [Twoslash 文档](https://twoslash.netlify.app/guide/)。
+
+#### 提取类型
+
+```ts
+const hi = 'Hello';
+const msg = `${hi}, world`;
+//    ^?
+```
+
+#### 自动补全
+
+```ts
+// @noErrors
+console.e;
+//       ^|
+```
+
+#### 高亮显示
+
+```ts
+function add(a: number, b: number) {
+  //     ^^^
+  return a + b;
+}
+```
+
+#### 错误提示
+
+```ts
+// @noErrorValidation
+const str: string = 1;
+```
+
+## 配置
+
+该插件接受一个对象，具有以下类型：
+
+```ts
+export interface PluginTwoslashOptions {
+  explicitTrigger?: boolean;
+}
+```
+
+### explicitTrigger
+
+`explicitTrigger` 用于配置是否显式触发 twoslash 功能。默认值为 `true`。
+
+- 如果设置为 `false`，默认情况下所有 TypeScript 代码块都将被处理。
+- 如果设置为 `true`，只有带有 `twoslash` 标签的代码块才会被处理。

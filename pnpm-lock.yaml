@@ -562,6 +562,19 @@ importers:
         specifier: ^22.8.1
         version: 22.10.2
 
+  e2e/fixtures/plugin-twoslash:
+    dependencies:
+      '@rspress/core':
+        specifier: workspace:*
+        version: link:../../../packages/core
+      '@rspress/plugin-twoslash':
+        specifier: workspace:*
+        version: link:../../../packages/plugin-twoslash
+    devDependencies:
+      '@types/node':
+        specifier: ^22.8.1
+        version: 22.10.2
+
   e2e/fixtures/plugin-typedoc/multi:
     dependencies:
       '@rspress/core':
@@ -1379,6 +1392,58 @@ importers:
         specifier: ^0.3.3
         version: 0.3.3(@rsbuild/core@1.5.2)
 
+  packages/plugin-twoslash:
+    dependencies:
+      '@floating-ui/dom':
+        specifier: ^1.7.4
+        version: 1.7.4
+      '@rspress/core':
+        specifier: workspace:^2.0.0-beta.28
+        version: link:../core
+      '@shikijs/twoslash':
+        specifier: ^3.12.0
+        version: 3.12.0(typescript@5.8.2)
+      mdast-util-from-markdown:
+        specifier: ^2.0.2
+        version: 2.0.2
+      mdast-util-gfm:
+        specifier: ^3.1.0
+        version: 3.1.0
+      mdast-util-to-hast:
+        specifier: ^13.2.0
+        version: 13.2.0
+    devDependencies:
+      '@microsoft/api-extractor':
+        specifier: ^7.52.11
+        version: 7.52.11(@types/node@22.10.2)
+      '@rslib/core':
+        specifier: 0.12.4
+        version: 0.12.4(@microsoft/api-extractor@7.52.11(@types/node@22.10.2))(typescript@5.8.2)
+      '@rspress/config':
+        specifier: workspace:*
+        version: link:../../scripts/config
+      '@shikijs/types':
+        specifier: ^3.12.0
+        version: 3.12.0
+      '@types/hast':
+        specifier: ^3.0.4
+        version: 3.0.4
+      '@types/mdast':
+        specifier: ^4.0.4
+        version: 4.0.4
+      '@types/react':
+        specifier: ^19.1.12
+        version: 19.1.12
+      react:
+        specifier: ^19.1.1
+        version: 19.1.1
+      rsbuild-plugin-publint:
+        specifier: ^0.3.3
+        version: 0.3.3(@rsbuild/core@1.5.2)
+      typescript:
+        specifier: ^5.8.2
+        version: 5.8.2
+
   packages/plugin-typedoc:
     dependencies:
       '@rspress/core':
@@ -1634,6 +1699,9 @@ importers:
       '@rspress/plugin-sitemap':
         specifier: workspace:*
         version: link:../packages/plugin-sitemap
+      '@rspress/plugin-twoslash':
+        specifier: workspace:*
+        version: link:../packages/plugin-twoslash
       '@rstack-dev/doc-ui':
         specifier: ^1.11.0
         version: 1.11.0(react-dom@19.1.1(react@19.1.1))(react@19.1.1)
@@ -2531,6 +2599,15 @@ packages:
     cpu: [x64]
     os: [win32]
 
+  '@floating-ui/core@1.7.3':
+    resolution: {integrity: sha512-sGnvb5dmrJaKEZ+LDIpguvdX3bDlEllmv4/ClQ9awcmCZrlx5jQyyMWFM5kBI+EyNOCDDiKk8il0zeuX3Zlg/w==}
+
+  '@floating-ui/dom@1.7.4':
+    resolution: {integrity: sha512-OOchDgh4F2CchOX94cRVqhvy7b3AFb+/rQXyswmzmGakRfkMgoWVjfnLWkRirfLEfuD4ysVW16eXzwt3jHIzKA==}
+
+  '@floating-ui/utils@0.2.10':
+    resolution: {integrity: sha512-aGTxbpbg8/b5JfU1HXSrbH3wXZuLPJcNEcZQFMxLs3oSzgtVu6nFPkbbGGUvBcUjKV2YyB9Wxxabo+HEH9tcRQ==}
+
   '@inquirer/external-editor@1.0.1':
     resolution: {integrity: sha512-Oau4yL24d2B5IL4ma4UpbQigkVhzPDXLoqy1ggK4gnHg/stmkffJE4oOXHXF3uz0UEpywG68KcyXsyYpA1Re/Q==}
     engines: {node: '>=18'}
@@ -3211,6 +3288,11 @@ packages:
   '@shikijs/transformers@3.12.0':
     resolution: {integrity: sha512-HcJwlvMAyZzOY+ayEAGE891BdJ7Vtio+qdWUTF9ki4d0LIkDb6DBz8ynOWGAEglHv6eQs/WcAWf/h6ina6IgCw==}
 
+  '@shikijs/twoslash@3.12.0':
+    resolution: {integrity: sha512-gO8u8ZYs7MginBaIFZf4nDX46gZZNcbtLwjy4bdPxw/uG6GKAWhvLSh5jMLnjA+7++K3UpuylAe+vqF9doAJgA==}
+    peerDependencies:
+      typescript: '>=5.5.0'
+
   '@shikijs/types@3.12.0':
     resolution: {integrity: sha512-jsFzm8hCeTINC3OCmTZdhR9DOl/foJWplH2Px0bTi4m8z59fnsueLsweX82oGcjRQ7mfQAluQYKGoH2VzsWY4A==}
 
@@ -3462,6 +3544,11 @@ packages:
 
   '@types/yargs@17.0.24':
     resolution: {integrity: sha512-6i0aC7jV6QzQB8ne1joVZ0eSFIstHsCrobmOtghM11yGlH0j43FKL2UhWdELkyps0zuf7qVTUVCCR+tgSlyLLw==}
+
+  '@typescript/vfs@1.6.1':
+    resolution: {integrity: sha512-JwoxboBh7Oz1v38tPbkrZ62ZXNHAk9bJ7c9x0eI5zBfBnBYGhURdbnh7Z4smN/MV48Y5OCcZb58n972UtbazsA==}
+    peerDependencies:
+      typescript: '*'
 
   '@ungap/structured-clone@1.2.0':
     resolution: {integrity: sha512-zuVdFrMJiuCDQUMCzQaD6KL28MjnqqN8XnAqiEq9PNm/hCPTSGfrXCOfwj1ow4LFb/tNymJPwsNbVePc1xFqrQ==}
@@ -6628,6 +6715,14 @@ packages:
   tslib@2.8.1:
     resolution: {integrity: sha512-oJFu94HQb+KVduSUQL7wnpmqnfmLsOA/nAh6b6EH0wCEoK0/mPeXU6c3wKDV83MkOuHPRHtSXKKU99IBazS/2w==}
 
+  twoslash-protocol@0.3.4:
+    resolution: {integrity: sha512-HHd7lzZNLUvjPzG/IE6js502gEzLC1x7HaO1up/f72d8G8ScWAs9Yfa97igelQRDl5h9tGcdFsRp+lNVre1EeQ==}
+
+  twoslash@0.3.4:
+    resolution: {integrity: sha512-RtJURJlGRxrkJmTcZMjpr7jdYly1rfgpujJr1sBM9ch7SKVht/SjFk23IOAyvwT1NLCk+SJiMrvW4rIAUM2Wug==}
+    peerDependencies:
+      typescript: ^5.5.0
+
   type-fest@2.19.0:
     resolution: {integrity: sha512-RAH822pAdBgcNMAfWnCBU3CFZcfZ/i1eZjwFU/dsLKumyuuP3niueg2UAukXYF0E2AAoc82ZSSf9J0WQBinzHA==}
     engines: {node: '>=12.20'}
@@ -7971,6 +8066,17 @@ snapshots:
   '@esbuild/win32-x64@0.21.5':
     optional: true
 
+  '@floating-ui/core@1.7.3':
+    dependencies:
+      '@floating-ui/utils': 0.2.10
+
+  '@floating-ui/dom@1.7.4':
+    dependencies:
+      '@floating-ui/core': 1.7.3
+      '@floating-ui/utils': 0.2.10
+
+  '@floating-ui/utils@0.2.10': {}
+
   '@inquirer/external-editor@1.0.1(@types/node@22.10.2)':
     dependencies:
       chardet: 2.1.0
@@ -8012,7 +8118,7 @@ snapshots:
 
   '@jridgewell/gen-mapping@0.3.12':
     dependencies:
-      '@jridgewell/sourcemap-codec': 1.5.0
+      '@jridgewell/sourcemap-codec': 1.5.5
       '@jridgewell/trace-mapping': 0.3.29
 
   '@jridgewell/gen-mapping@0.3.5':
@@ -8037,12 +8143,12 @@ snapshots:
   '@jridgewell/trace-mapping@0.3.25':
     dependencies:
       '@jridgewell/resolve-uri': 3.1.2
-      '@jridgewell/sourcemap-codec': 1.5.0
+      '@jridgewell/sourcemap-codec': 1.5.5
 
   '@jridgewell/trace-mapping@0.3.29':
     dependencies:
       '@jridgewell/resolve-uri': 3.1.2
-      '@jridgewell/sourcemap-codec': 1.5.0
+      '@jridgewell/sourcemap-codec': 1.5.5
 
   '@jridgewell/trace-mapping@0.3.9':
     dependencies:
@@ -8687,6 +8793,15 @@ snapshots:
       '@shikijs/core': 3.12.0
       '@shikijs/types': 3.12.0
 
+  '@shikijs/twoslash@3.12.0(typescript@5.8.2)':
+    dependencies:
+      '@shikijs/core': 3.12.0
+      '@shikijs/types': 3.12.0
+      twoslash: 0.3.4(typescript@5.8.2)
+      typescript: 5.8.2
+    transitivePeerDependencies:
+      - supports-color
+
   '@shikijs/types@3.12.0':
     dependencies:
       '@shikijs/vscode-textmate': 10.0.2
@@ -8952,6 +9067,13 @@ snapshots:
   '@types/yargs@17.0.24':
     dependencies:
       '@types/yargs-parser': 21.0.0
+
+  '@typescript/vfs@1.6.1(typescript@5.8.2)':
+    dependencies:
+      debug: 4.4.0
+      typescript: 5.8.2
+    transitivePeerDependencies:
+      - supports-color
 
   '@ungap/structured-clone@1.2.0': {}
 
@@ -12911,6 +13033,16 @@ snapshots:
       strip-bom: 3.0.0
 
   tslib@2.8.1: {}
+
+  twoslash-protocol@0.3.4: {}
+
+  twoslash@0.3.4(typescript@5.8.2):
+    dependencies:
+      '@typescript/vfs': 1.6.1(typescript@5.8.2)
+      twoslash-protocol: 0.3.4
+      typescript: 5.8.2
+    transitivePeerDependencies:
+      - supports-color
 
   type-fest@2.19.0: {}
 

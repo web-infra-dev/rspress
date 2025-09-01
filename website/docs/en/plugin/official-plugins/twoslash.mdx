@@ -1,0 +1,77 @@
+# @rspress/plugin-twoslash <SourceCode href="https://github.com/web-infra-dev/rspress/tree/main/packages/plugin-twoslash" />
+
+import { SourceCode, PackageManagerTabs } from '@rspress/core/theme';
+
+Integration of [Twoslash](https://github.com/twoslashes/twoslash)'s Rspress Plugin for Automatically Generating Rich Code Blocks with Type Information.
+
+## Installation
+
+<PackageManagerTabs command="add @rspress/plugin-twoslash -D" />
+
+## Usage
+
+### 1. Register the plugin
+
+```ts title="rspress.config.ts"
+import { defineConfig } from '@rspress/core';
+import { pluginTwoslash } from '@rspress/plugin-twoslash';
+
+export default defineConfig({
+  plugins: [pluginTwoslash()],
+});
+```
+
+### 2. Write code blocks with twoslash
+
+Use the special comments within TypeScript code blocks enables Twoslash features.
+
+For more detailed usage, please refer to the [Twoslash documentation](https://twoslash.netlify.app/guide/).
+
+#### Extract type
+
+```ts
+const hi = 'Hello';
+const msg = `${hi}, world`;
+//    ^?
+```
+
+#### Completions
+
+```ts
+// @noErrors
+console.e;
+//       ^|
+```
+
+#### Highlighting
+
+```ts
+function add(a: number, b: number) {
+  //     ^^^
+  return a + b;
+}
+```
+
+#### Error
+
+```ts
+// @noErrorValidation
+const str: string = 1;
+```
+
+## Config
+
+The plugin accepts an object, which has the following types:
+
+```ts
+export interface PluginTwoslashOptions {
+  explicitTrigger?: boolean;
+}
+```
+
+### explicitTrigger
+
+`explicitTrigger` is used to configure whether to explicitly trigger the twoslash feature. Default is `true`.
+
+- If set to `false`, all TypeScript code blocks will be processed by default.
+- If set to `true`, only code blocks with the `twoslash` tag will be processed.

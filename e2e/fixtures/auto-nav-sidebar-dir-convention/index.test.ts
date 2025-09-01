@@ -46,6 +46,7 @@ test.describe('Auto nav and sidebar dir convention', async () => {
       waitUntil: 'networkidle',
     });
     await page.click('.rspress-scrollbar nav section div');
+    await page.waitForURL('**/index-md-convention/**');
     expect(page.url()).toBe(
       `http://localhost:${appPort}/guide/index-md-convention/index.html`,
     );

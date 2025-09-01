@@ -4,6 +4,7 @@ import { transformerCompatibleMetaHighlight } from '@rspress/core/shiki-transfor
 import { pluginAlgolia } from '@rspress/plugin-algolia';
 import { pluginLlms } from '@rspress/plugin-llms';
 import { pluginSitemap } from '@rspress/plugin-sitemap';
+import { pluginTwoslash } from '@rspress/plugin-twoslash';
 import {
   transformerNotationDiff,
   transformerNotationErrorLevel,
@@ -41,6 +42,7 @@ export default defineConfig({
     },
   },
   plugins: [
+    pluginTwoslash(),
     pluginFontOpenSans(),
     pluginSitemap({
       siteUrl,
