@@ -1,8 +1,13 @@
-import { BrowserRouter, PageContext, ThemeContext } from '@rspress/runtime';
+import {
+  BrowserRouter,
+  PageContext,
+  removeTrailingSlash,
+  ThemeContext,
+  withBase,
+} from '@rspress/runtime';
 import { useThemeState } from '@theme';
 import { createHead, UnheadProvider } from '@unhead/react/client';
 import { useMemo, useState } from 'react';
-import siteData from 'virtual-site-data';
 import { App } from './App';
 import type { Page } from './initPageData';
 
@@ -30,7 +35,7 @@ export function ClientApp({
             v7_relativeSplatPath: true,
             v7_startTransition: true,
           }}
-          basename={siteData.base}
+          basename={removeTrailingSlash(withBase('/'))}
         >
           <UnheadProvider head={head}>
             <App />

@@ -18,7 +18,6 @@ export {
   MDX_OR_MD_REGEXP,
   normalizeHref,
   normalizePosixPath,
-  normalizeSlash,
   parseUrl,
   QUERY_REGEXP,
   RSPRESS_TEMP_DIR,

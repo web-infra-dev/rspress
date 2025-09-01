@@ -3,6 +3,7 @@ import { text } from 'node:stream/consumers';
 import {
   PageContext,
   pathnameToRouteService,
+  removeTrailingSlash,
   ThemeContext,
   withBase,
 } from '@rspress/runtime';
@@ -10,7 +11,6 @@ import { StaticRouter } from '@rspress/runtime/server';
 import { type Unhead, UnheadProvider } from '@unhead/react/server';
 import type { ReactNode } from 'react';
 import { renderToPipeableStream } from 'react-dom/server';
-import siteData from 'virtual-site-data';
 import { App } from './App';
 import { initPageData } from './initPageData';
 
@@ -46,7 +46,10 @@ export async function render(
   const appHtml = await renderToHtml(
     <ThemeContext.Provider value={{ theme: DEFAULT_THEME }}>
       <PageContext.Provider value={{ data: initialPageData }}>
-        <StaticRouter location={withBase(routePath)} basename={siteData.base}>
+        <StaticRouter
+          location={withBase(routePath)}
+          basename={removeTrailingSlash(withBase('/'))}
+        >
           <UnheadProvider value={head}>
             <App />
           </UnheadProvider>

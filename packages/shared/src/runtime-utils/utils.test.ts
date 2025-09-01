@@ -20,11 +20,14 @@ describe('test shared utils', () => {
     expect(withBase('/guide/', '/zh/')).toBe('/zh/guide/');
     expect(withBase('/guide/', '/')).toBe('/guide/');
     expect(withBase('/guide/', '')).toBe('/guide/');
-  });
+    expect(withBase('/', '/')).toBe('/');
+    expect(withBase('/base/', '/base/')).toBe('/base/');
+    expect(withBase('/base', '/base/')).toBe('/base/');
 
-  test('multiple withBase', () => {
+    // multiple withBase
     const base = '/my-base/';
     const firstResult = withBase('/guide/', base);
+    expect(firstResult).toBe('/my-base/guide/');
     const secondResult = withBase(firstResult, base);
     expect(secondResult).toBe('/my-base/guide/');
   });
@@ -33,6 +36,16 @@ describe('test shared utils', () => {
     expect(removeBase('/zh/guide/', '/zh/')).toBe('/guide/');
     expect(removeBase('/guide/', '/')).toBe('/guide/');
     expect(removeBase('/guide/', '')).toBe('/guide/');
+    expect(removeBase('/', '/')).toBe('/');
+    expect(removeBase('/base/', '/base/')).toBe('/');
+    expect(removeBase('/base', '/base/')).toBe('/');
+
+    // multiple removeBase
+    const base = '/my-base/';
+    const firstResult = removeBase('/my-base/guide/', base);
+    expect(firstResult).toBe('/guide/');
+    const secondResult = removeBase(firstResult, base);
+    expect(secondResult).toBe('/guide/');
   });
 
   test('normalizePosix', () => {
