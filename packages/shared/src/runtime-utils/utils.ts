@@ -81,10 +81,6 @@ export function removeTrailingSlash(url: string) {
   return url.charAt(url.length - 1) === '/' ? url.slice(0, -1) : url;
 }
 
-export function normalizeSlash(url: string) {
-  return removeTrailingSlash(addLeadingSlash(normalizePosixPath(url)));
-}
-
 export function isExternalUrl(url = '') {
   return (
     url.startsWith('http://') ||
@@ -258,18 +254,35 @@ export function withoutLang(path: string, langs: string[]) {
   return addLeadingSlash(path.replace(langRegexp, ''));
 }
 
+function normalizeSlash(url: string) {
+  return removeTrailingSlash(addLeadingSlash(normalizePosixPath(url)));
+}
+
 export function withBase(url: string, base: string): string {
   const normalizedUrl = addLeadingSlash(url);
   const normalizedBase = normalizeSlash(base);
-  // Avoid adding base path repeatedly
-  return normalizedUrl.startsWith(normalizedBase)
-    ? normalizedUrl
-    : `${normalizedBase}${normalizedUrl}`;
+
+  const hasBase = normalizedUrl.startsWith(normalizedBase);
+  if (hasBase) {
+    // normalizedUrl => '/base' base => '/base/'
+    if (normalizedUrl + '/' === base) {
+      return base;
+    }
+    return normalizedUrl;
+  }
+
+  return `${normalizedBase}${normalizedUrl}`;
 }
 
 export function removeBase(url: string, base: string) {
-  return addLeadingSlash(url).replace(
-    new RegExp(`^${normalizeSlash(base)}`),
+  const normalizedUrl = addLeadingSlash(url);
+  const normalizedBase = normalizeSlash(base);
+  const removedBaseUrl = normalizedUrl.replace(
+    new RegExp(`^${normalizedBase}`),
     '',
   );
+  if (removedBaseUrl === '') {
+    return '/';
+  }
+  return removedBaseUrl;
 }

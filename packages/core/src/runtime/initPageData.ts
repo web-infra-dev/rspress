@@ -68,7 +68,7 @@ export async function initPageData(routePath: string): Promise<Page> {
   let version = siteData.multiVersion?.default || '';
 
   if (siteData.lang && typeof window !== 'undefined') {
-    const path = location.pathname
+    const path = window.location.pathname
       .replace(siteData.base, '')
       .split('/')
       .slice(0, 2);

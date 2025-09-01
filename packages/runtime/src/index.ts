@@ -32,7 +32,6 @@ export {
   isProduction,
   normalizeHrefInRuntime,
   normalizeImagePath,
-  normalizeSlash,
   removeBase,
   removeTrailingSlash,
   withBase,

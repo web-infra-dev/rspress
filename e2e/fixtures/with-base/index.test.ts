@@ -43,4 +43,22 @@ test.describe('plugin test', async () => {
     const href = await page.evaluate(a => a?.getAttribute('href'), a);
     expect(href).toBe('/base/en/guide/install.html');
   });
+
+  test('Should render the homepage - "/base"', async ({ page }) => {
+    await page.goto(`http://localhost:${appPort}/base`, {
+      waitUntil: 'networkidle',
+    });
+    const docContent = await page.$('.rspress-doc');
+    const text = await docContent?.textContent();
+    expect(text?.includes('This is the index page')).toBeTruthy();
+  });
+
+  test('Should render the homepage - "/base/"', async ({ page }) => {
+    await page.goto(`http://localhost:${appPort}/base/`, {
+      waitUntil: 'networkidle',
+    });
+    const docContent = await page.$('.rspress-doc');
+    const text = await docContent?.textContent();
+    expect(text?.includes('This is the index page')).toBeTruthy();
+  });
 });
