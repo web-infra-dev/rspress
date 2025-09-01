@@ -19,6 +19,8 @@
     background 0.3s ease,
     border 0.3s ease,
     opacity 0.3s ease;
+
+  cursor: pointer;
   &:hover {
     background: var(--rp-c-bg-mute);
   }
