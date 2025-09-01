@@ -45,11 +45,11 @@
     "unified": "^11.0.5"
   },
   "devDependencies": {
-    "@rslib/core": "0.12.2",
+    "@rslib/core": "0.12.4",
     "@types/jest": "~29.5.14",
     "@types/lodash-es": "^4.17.12",
     "@types/node": "^22.8.1",
-    "@types/react": "^19.1.11",
+    "@types/react": "^19.1.12",
     "mdast-util-mdx-jsx": "^3.2.0",
     "medium-zoom": "1.1.0",
     "rimraf": "^6.0.1",

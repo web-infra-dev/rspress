@@ -36,12 +36,12 @@
     "qrcode.react": "^4.2.0"
   },
   "devDependencies": {
-    "@rslib/core": "0.12.2",
+    "@rslib/core": "0.12.4",
     "@types/lodash": "^4.17.20",
     "@types/mdast": "^4.0.4",
     "@types/node": "^22.8.1",
-    "@types/react": "^19.1.11",
-    "@types/react-dom": "^19.1.7",
+    "@types/react": "^19.1.12",
+    "@types/react-dom": "^19.1.9",
     "mdast-util-mdx-jsx": "^3.2.0",
     "mdast-util-mdxjs-esm": "^2.0.1",
     "react": "^19.1.1",
