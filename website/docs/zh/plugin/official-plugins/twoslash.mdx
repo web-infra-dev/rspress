@@ -58,3 +58,20 @@ function add(a: number, b: number) {
 // @noErrorValidation
 const str: string = 1;
 ```
+
+## 配置
+
+该插件接受一个对象，具有以下类型：
+
+```ts
+export interface PluginTwoslashOptions {
+  explicitTrigger?: boolean;
+}
+```
+
+### explicitTrigger
+
+`explicitTrigger` 用于配置是否显式触发 twoslash 功能。默认值为 `true`。
+
+- 如果设置为 `false`，默认情况下所有 TypeScript 代码块都将被处理。
+- 如果设置为 `true`，只有带有 `twoslash` 标签的代码块才会被处理。

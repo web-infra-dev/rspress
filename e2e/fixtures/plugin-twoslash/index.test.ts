@@ -100,4 +100,20 @@ test.describe('plugin twoslash test', async () => {
     const errorLine = await codeBlock?.$('.twoslash-error-line');
     expect(errorLine).not.toBeNull();
   });
+
+  test('should not apply twoslash to code blocks without twoslash', async ({
+    page,
+  }) => {
+    await page.goto(`http://localhost:${appPort}`, {
+      waitUntil: 'networkidle',
+    });
+
+    const codeBlock = await page.$(
+      'h2:has-text("Disable twoslash") + .language-ts',
+    );
+    expect(codeBlock).not.toBeNull();
+
+    const triggers = await codeBlock?.$$('twoslash-popup-trigger');
+    expect(triggers.length).toBe(0);
+  });
 });

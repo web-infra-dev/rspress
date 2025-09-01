@@ -1,6 +1,9 @@
 import path from 'node:path';
 import type { RspressPlugin } from '@rspress/core';
-import { transformerTwoslash } from '@shikijs/twoslash';
+import {
+  type TransformerTwoslashIndexOptions,
+  transformerTwoslash,
+} from '@shikijs/twoslash';
 import type { ShikiTransformerContextCommon } from '@shikijs/types';
 import type { Element, ElementContent } from 'hast';
 import type { Code } from 'mdast';
@@ -73,10 +76,20 @@ function renderMarkdownInline(
   return children;
 }
 
+export interface PluginTwoslashOptions {
+  /**
+   * Requires twoslash to be presented in the code block meta to apply this transformer
+   * @default true
+   */
+  explicitTrigger?: boolean;
+}
+
 /**
  * Plugin to applies Twoslash transformations to code blocks.
  */
-export function pluginTwoslash(): RspressPlugin {
+export function pluginTwoslash(options?: PluginTwoslashOptions): RspressPlugin {
+  const { explicitTrigger = true } = options || {};
+
   return {
     name: '@rspress/plugin-twoslash',
     globalUIComponents: [
@@ -89,6 +102,7 @@ export function pluginTwoslash(): RspressPlugin {
       config.markdown.shiki.transformers ??= [];
       config.markdown.shiki.transformers.push(
         transformerTwoslash({
+          explicitTrigger,
           rendererRich: {
             renderMarkdown,
             renderMarkdownInline,

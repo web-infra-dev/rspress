@@ -58,3 +58,20 @@ function add(a: number, b: number) {
 // @noErrorValidation
 const str: string = 1;
 ```
+
+## Config
+
+The plugin accepts an object, which has the following types:
+
+```ts
+export interface PluginTwoslashOptions {
+  explicitTrigger?: boolean;
+}
+```
+
+### explicitTrigger
+
+`explicitTrigger` is used to configure whether to explicitly trigger the twoslash feature. Default is `true`.
+
+- If set to `false`, all TypeScript code blocks will be processed by default.
+- If set to `true`, only code blocks with the `twoslash` tag will be processed.

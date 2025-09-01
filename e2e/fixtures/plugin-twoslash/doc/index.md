@@ -2,7 +2,7 @@
 
 ## Extract type
 
-```ts
+```ts twoslash
 const hi = 'Hello';
 const msg = `${hi}, world`;
 //    ^?
@@ -10,7 +10,7 @@ const msg = `${hi}, world`;
 
 ## Completions
 
-```ts
+```ts twoslash
 // @noErrors
 console.e;
 //       ^|
@@ -18,7 +18,7 @@ console.e;
 
 ## Highlighting
 
-```ts
+```ts twoslash
 function add(a: number, b: number) {
   //     ^^^
   return a + b;
@@ -27,7 +27,13 @@ function add(a: number, b: number) {
 
 ## Error
 
-```ts
+```ts twoslash
 // @noErrorValidation
 const str: string = 1;
+```
+
+## Disable twoslash
+
+```ts
+const hi = 'Hello';
 ```
