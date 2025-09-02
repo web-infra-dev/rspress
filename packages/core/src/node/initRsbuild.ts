@@ -340,6 +340,7 @@ async function createInternalBuildConfig(
         if (chain.plugins.has(CHAIN_ID.PLUGIN.REACT_FAST_REFRESH)) {
           chain.plugin(CHAIN_ID.PLUGIN.REACT_FAST_REFRESH).tap(options => {
             options[0] ??= {};
+            options[0].test = [/\.([cm]js|[jt]sx?|flow)$/i, MDX_OR_MD_REGEXP];
             options[0].include = [
               /\.([cm]js|[jt]sx?|flow)$/i,
               MDX_OR_MD_REGEXP,
