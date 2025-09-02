@@ -326,6 +326,17 @@ console.log('Focused'); // [!code focus]
 console.log('Not focused');
 ```
 
+## Twoslash
+
+> [TwoSlash](https://twoslash.netlify.app/guide/) 是一种用于 TypeScript 代码的标记格式，适合创建自包含的代码示例，并让 TypeScript 编译器自动补充类型信息和提示，广泛应用于 TypeScript 官网。
+
+Rspress 提供了 `@rspress/core/plugin-twoslash` 插件，它可以在 Rspress 中使用 Twoslash 功能。详见 [@rspress/plugin-twoslash 文档](../../../plugin/official-plugins/twoslash.mdx)
+
+```ts twoslash
+// @noErrorValidation
+const str: string = 1;
+```
+
 ## 运行时语法高亮
 
 当需要在运行时动态渲染代码块，比如在交互式文档中，或者需要远程拉取代码块内容。Rspress 提供了 `CodeBlockRuntime` 组件。
