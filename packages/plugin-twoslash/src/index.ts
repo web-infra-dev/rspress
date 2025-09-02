@@ -142,9 +142,10 @@ export function pluginTwoslash(options?: PluginTwoslashOptions): RspressPlugin {
               ],
               hoverToken: {
                 tagName: 'twoslash-popup-trigger',
-                properties: {
-                  class: 'twoslash-popup-trigger',
-                },
+                // TODO: css changes
+                // properties: {
+                //   class: 'twoslash-popup-trigger',
+                // },
               },
               hoverPopup: {
                 tagName: 'twoslash-popup-container',
