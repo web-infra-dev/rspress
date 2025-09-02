@@ -12,7 +12,7 @@ import { SourceCode, PackageManagerTabs } from '@rspress/core/theme';
 
 ### 1. 注册插件
 
-```ts title="rspress.config.ts"
+```ts twoslash title="rspress.config.ts"
 import { defineConfig } from '@rspress/core';
 import { pluginTwoslash } from '@rspress/plugin-twoslash';
 
@@ -29,7 +29,7 @@ export default defineConfig({
 
 #### 提取类型
 
-```ts
+```ts twoslash
 const hi = 'Hello';
 const msg = `${hi}, world`;
 //    ^?
@@ -37,7 +37,7 @@ const msg = `${hi}, world`;
 
 #### 自动补全
 
-```ts
+```ts twoslash
 // @noErrors
 console.e;
 //       ^|
@@ -45,7 +45,7 @@ console.e;
 
 #### 高亮显示
 
-```ts
+```ts twoslash
 function add(a: number, b: number) {
   //     ^^^
   return a + b;
@@ -54,7 +54,7 @@ function add(a: number, b: number) {
 
 #### 错误提示
 
-```ts
+```ts twoslash
 // @noErrorValidation
 const str: string = 1;
 ```
@@ -63,7 +63,7 @@ const str: string = 1;
 
 该插件接受一个对象，具有以下类型：
 
-```ts
+```ts twoslash
 export interface PluginTwoslashOptions {
   explicitTrigger?: boolean;
 }
