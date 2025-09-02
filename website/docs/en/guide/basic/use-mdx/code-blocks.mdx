@@ -326,6 +326,17 @@ console.log('Focused'); // [!code focus]
 console.log('Not focused');
 ```
 
+## Twoslash
+
+> [Twoslash](https://twoslash.netlify.app/guide/) is a markup format for TypeScript code, suitable for creating self-contained code samples and letting the TypeScript compiler automatically supplement type information and hints. It is widely used on the official TypeScript website.
+
+Rspress provides the `@rspress/core/plugin-twoslash` plugin, which enables Twoslash features in Rspress. See [@rspress/plugin-twoslash documentation](../../../plugin/official-plugins/twoslash.mdx) for details.
+
+```ts twoslash
+// @noErrorValidation
+const str: string = 1;
+```
+
 ## Runtime syntax highlighting
 
 When you need to render code blocks dynamically at runtime, such as in interactive docs or fetching code remotely, Rspress provides the `CodeBlockRuntime` component.

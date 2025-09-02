@@ -1,6 +1,6 @@
 # @rspress/plugin-twoslash <SourceCode href="https://github.com/web-infra-dev/rspress/tree/main/packages/plugin-twoslash" />
 
-import { SourceCode, PackageManagerTabs } from '@rspress/core/theme';
+import { SourceCode, PackageManagerTabs, Tabs, Tab } from '@theme';
 
 集成 [Twoslash](https://github.com/twoslashes/twoslash) 的 Rspress 插件，用于自动生成带有类型信息的丰富代码块。
 
@@ -29,13 +29,37 @@ export default defineConfig({
 
 #### 提取类型
 
+<Tabs>
+
+<Tab label="渲染结果">
+
+````mdx
+```ts twoslash
+const hi = 'Hello';
+const msg = `${hi}, world`;
+//    ^?
+```
+````
+
+</Tab>
+
+<Tab label="语法">
+
 ```ts twoslash
 const hi = 'Hello';
 const msg = `${hi}, world`;
 //    ^?
 ```
 
+</Tab>
+
+</Tabs>
+
 #### 自动补全
+
+<Tabs>
+
+<Tab label="渲染结果">
 
 ```ts twoslash
 // @noErrors
@@ -43,7 +67,27 @@ console.e;
 //       ^|
 ```
 
+</Tab>
+
+<Tab label="语法">
+
+````mdx
+```ts twoslash
+// @noErrors
+console.e;
+//       ^|
+```
+````
+
+</Tab>
+
+</Tabs>
+
 #### 高亮显示
+
+<Tabs>
+
+<Tab label="渲染结果">
 
 ```ts twoslash
 function add(a: number, b: number) {
@@ -52,12 +96,46 @@ function add(a: number, b: number) {
 }
 ```
 
+</Tab>
+
+<Tab label="语法">
+````mdx
+```ts twoslash
+function add(a: number, b: number) {
+  //     ^^^
+  return a + b;
+}
+```
+````
+
+</Tab>
+
+</Tabs>
+
 #### 错误提示
+
+<Tabs>
+
+<Tab label="渲染结果">
 
 ```ts twoslash
 // @noErrorValidation
 const str: string = 1;
 ```
+
+</Tab>
+
+<Tab label="语法">
+````mdx
+```ts twoslash
+// @noErrorValidation
+const str: string = 1;
+```
+````
+
+</Tab>
+
+</Tabs>
 
 ## 配置
 

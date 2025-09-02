@@ -1,8 +1,8 @@
 # @rspress/plugin-twoslash <SourceCode href="https://github.com/web-infra-dev/rspress/tree/main/packages/plugin-twoslash" />
 
-import { SourceCode, PackageManagerTabs } from '@rspress/core/theme';
+import { SourceCode, PackageManagerTabs, Tabs, Tab } from '@theme';
 
-Integration of [Twoslash](https://github.com/twoslashes/twoslash)'s Rspress Plugin for Automatically Generating Rich Code Blocks with Type Information.
+Integration of [Twoslash](https://github.com/twoslashes/twoslash)'s Rspress Plugin for automatically generating rich code blocks with type information.
 
 ## Installation
 
@@ -23,11 +23,14 @@ export default defineConfig({
 
 ### 2. Write code blocks with twoslash
 
-Use the special comments within TypeScript code blocks enables Twoslash features.
+Use special comments within TypeScript code blocks to enable Twoslash features.
 
 For more detailed usage, please refer to the [Twoslash documentation](https://twoslash.netlify.app/guide/).
 
 #### Extract type
+
+<Tabs>
+<Tab label="Rendered">
 
 ```ts twoslash
 const hi = 'Hello';
@@ -35,7 +38,35 @@ const msg = `${hi}, world`;
 //    ^?
 ```
 
+</Tab>
+<Tab label="Syntax">
+
+````mdx
+```ts twoslash
+const hi = 'Hello';
+const msg = `${hi}, world`;
+//    ^?
+```
+````
+
+</Tab>
+</Tabs>
+
 #### Completions
+
+<Tabs>
+<Tab label="Rendered">
+
+````mdx
+```ts twoslash
+// @noErrors
+console.e;
+//       ^|
+```
+````
+
+</Tab>
+<Tab label="Syntax">
 
 ```ts twoslash
 // @noErrors
@@ -43,7 +74,13 @@ console.e;
 //       ^|
 ```
 
+</Tab>
+</Tabs>
+
 #### Highlighting
+
+<Tabs>
+<Tab label="Rendered">
 
 ```ts twoslash
 function add(a: number, b: number) {
@@ -52,18 +89,49 @@ function add(a: number, b: number) {
 }
 ```
 
+</Tab>
+<Tab label="Syntax">
+
+````mdx
+```ts twoslash
+function add(a: number, b: number) {
+  //     ^^^
+  return a + b;
+}
+```
+````
+
+</Tab>
+</Tabs>
+
 #### Error
+
+<Tabs>
+<Tab label="Rendered">
 
 ```ts twoslash
 // @noErrorValidation
 const str: string = 1;
 ```
 
+</Tab>
+<Tab label="Syntax">
+
+````mdx
+```ts twoslash
+// @noErrorValidation
+const str: string = 1;
+```
+````
+
+</Tab>
+</Tabs>
+
 ## Config
 
-The plugin accepts an object, which has the following types:
+The plugin accepts an object with the following type:
 
-```ts
+```ts twoslash
 export interface PluginTwoslashOptions {
   explicitTrigger?: boolean;
 }
@@ -71,7 +139,7 @@ export interface PluginTwoslashOptions {
 
 ### explicitTrigger
 
-`explicitTrigger` is used to configure whether to explicitly trigger the twoslash feature. Default is `true`.
+`explicitTrigger` is used to configure whether to explicitly trigger the Twoslash feature. Default is `true`.
 
 - If set to `false`, all TypeScript code blocks will be processed by default.
 - If set to `true`, only code blocks with the `twoslash` tag will be processed.
