@@ -31,7 +31,17 @@ export default defineConfig({
 
 <Tabs>
 
-<Tab label="渲染结果">
+<Tab label="结果">
+
+```ts twoslash
+const hi = 'Hello';
+const msg = `${hi}, world`;
+//    ^?
+```
+
+</Tab>
+
+<Tab label="语法">
 
 ````mdx
 ```ts twoslash
@@ -43,23 +53,13 @@ const msg = `${hi}, world`;
 
 </Tab>
 
-<Tab label="语法">
-
-```ts twoslash
-const hi = 'Hello';
-const msg = `${hi}, world`;
-//    ^?
-```
-
-</Tab>
-
 </Tabs>
 
 #### 自动补全
 
 <Tabs>
 
-<Tab label="渲染结果">
+<Tab label="结果">
 
 ```ts twoslash
 // @noErrors
@@ -87,7 +87,7 @@ console.e;
 
 <Tabs>
 
-<Tab label="渲染结果">
+<Tab label="结果">
 
 ```ts twoslash
 function add(a: number, b: number) {
@@ -116,7 +116,7 @@ function add(a: number, b: number) {
 
 <Tabs>
 
-<Tab label="渲染结果">
+<Tab label="结果">
 
 ```ts twoslash
 // @noErrorValidation
