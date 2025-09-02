@@ -121,7 +121,7 @@ export function pluginTwoslash(options?: PluginTwoslashOptions): RspressPlugin {
                   type: 'element',
                   tagName: 'twoslash-popup-container',
                   properties: {
-                    class: 'twoslash-popup-container',
+                    class: 'twoslash-popup-container rp-copy-ignore',
                     'data-always': 'true',
                   },
                   children: [
@@ -148,6 +148,9 @@ export function pluginTwoslash(options?: PluginTwoslashOptions): RspressPlugin {
               },
               hoverPopup: {
                 tagName: 'twoslash-popup-container',
+                properties: {
+                  class: 'twoslash-popup-container rp-copy-ignore',
+                },
                 children: elements => [
                   {
                     type: 'element',
@@ -172,6 +175,7 @@ export function pluginTwoslash(options?: PluginTwoslashOptions): RspressPlugin {
               queryPopup: {
                 tagName: 'twoslash-popup-container',
                 properties: {
+                  class: 'twoslash-popup-container rp-copy-ignore',
                   'data-always': 'true',
                 },
                 children: elements => [
