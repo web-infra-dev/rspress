@@ -1398,7 +1398,7 @@ importers:
         specifier: ^1.7.4
         version: 1.7.4
       '@rspress/core':
-        specifier: workspace:^2.0.0-beta.28
+        specifier: workspace:^2.0.0-beta.30
         version: link:../core
       '@shikijs/twoslash':
         specifier: ^3.12.0

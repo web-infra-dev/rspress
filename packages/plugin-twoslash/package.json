@@ -48,7 +48,7 @@
     "typescript": "^5.8.2"
   },
   "peerDependencies": {
-    "@rspress/core": "workspace:^2.0.0-beta.28",
+    "@rspress/core": "workspace:^2.0.0-beta.30",
     "react": ">=18.0.0"
   },
   "engines": {
