@@ -28,7 +28,7 @@
     "reset": "rimraf ./**/node_modules"
   },
   "dependencies": {
-    "@rsbuild/core": "~1.5.2",
+    "@rsbuild/core": "~1.5.3",
     "@rsbuild/plugin-babel": "~1.0.6",
     "@rsbuild/plugin-react": "~1.4.0",
     "@rsbuild/plugin-solid": "~1.0.6",
