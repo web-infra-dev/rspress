@@ -12,7 +12,7 @@ Integration of [Twoslash](https://github.com/twoslashes/twoslash)'s Rspress Plug
 
 ### 1. Register the plugin
 
-```ts title="rspress.config.ts"
+```ts twoslash title="rspress.config.ts"
 import { defineConfig } from '@rspress/core';
 import { pluginTwoslash } from '@rspress/plugin-twoslash';
 
@@ -29,7 +29,7 @@ For more detailed usage, please refer to the [Twoslash documentation](https://tw
 
 #### Extract type
 
-```ts
+```ts twoslash
 const hi = 'Hello';
 const msg = `${hi}, world`;
 //    ^?
@@ -37,7 +37,7 @@ const msg = `${hi}, world`;
 
 #### Completions
 
-```ts
+```ts twoslash
 // @noErrors
 console.e;
 //       ^|
@@ -45,7 +45,7 @@ console.e;
 
 #### Highlighting
 
-```ts
+```ts twoslash
 function add(a: number, b: number) {
   //     ^^^
   return a + b;
@@ -54,7 +54,7 @@ function add(a: number, b: number) {
 
 #### Error
 
-```ts
+```ts twoslash
 // @noErrorValidation
 const str: string = 1;
 ```
