@@ -43,7 +43,7 @@ const msg = `${hi}, world`;
 
 </Tab>
 
-<Tab label="源码">
+<Tab label="语法">
 
 ```ts twoslash
 const hi = 'Hello';
@@ -61,6 +61,16 @@ const msg = `${hi}, world`;
 
 <Tab label="渲染结果">
 
+```ts twoslash
+// @noErrors
+console.e;
+//       ^|
+```
+
+</Tab>
+
+<Tab label="语法">
+
 ````mdx
 ```ts twoslash
 // @noErrors
@@ -68,16 +78,6 @@ console.e;
 //       ^|
 ```
 ````
-
-</Tab>
-
-<Tab label="源码">
-
-```ts twoslash
-// @noErrors
-console.e;
-//       ^|
-```
 
 </Tab>
 
@@ -89,6 +89,16 @@ console.e;
 
 <Tab label="渲染结果">
 
+```ts twoslash
+function add(a: number, b: number) {
+  //     ^^^
+  return a + b;
+}
+```
+
+</Tab>
+
+<Tab label="语法">
 ````mdx
 ```ts twoslash
 function add(a: number, b: number) {
@@ -97,17 +107,6 @@ function add(a: number, b: number) {
 }
 ```
 ````
-
-</Tab>
-
-<Tab label="源码">
-
-```ts twoslash
-function add(a: number, b: number) {
-  //     ^^^
-  return a + b;
-}
-```
 
 </Tab>
 
@@ -119,21 +118,20 @@ function add(a: number, b: number) {
 
 <Tab label="渲染结果">
 
+```ts twoslash
+// @noErrorValidation
+const str: string = 1;
+```
+
+</Tab>
+
+<Tab label="语法">
 ````mdx
 ```ts twoslash
 // @noErrorValidation
 const str: string = 1;
 ```
 ````
-
-</Tab>
-
-<Tab label="源码">
-
-```ts twoslash
-// @noErrorValidation
-const str: string = 1;
-```
 
 </Tab>
 

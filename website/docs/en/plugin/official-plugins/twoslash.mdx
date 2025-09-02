@@ -32,6 +32,15 @@ For more detailed usage, please refer to the [Twoslash documentation](https://tw
 <Tabs>
 <Tab label="Rendered">
 
+```ts twoslash
+const hi = 'Hello';
+const msg = `${hi}, world`;
+//    ^?
+```
+
+</Tab>
+<Tab label="Syntax">
+
 ````mdx
 ```ts twoslash
 const hi = 'Hello';
@@ -39,15 +48,6 @@ const msg = `${hi}, world`;
 //    ^?
 ```
 ````
-
-</Tab>
-<Tab label="Source">
-
-```ts twoslash
-const hi = 'Hello';
-const msg = `${hi}, world`;
-//    ^?
-```
 
 </Tab>
 </Tabs>
@@ -66,7 +66,7 @@ console.e;
 ````
 
 </Tab>
-<Tab label="Source">
+<Tab label="Syntax">
 
 ```ts twoslash
 // @noErrors
@@ -82,6 +82,16 @@ console.e;
 <Tabs>
 <Tab label="Rendered">
 
+```ts twoslash
+function add(a: number, b: number) {
+  //     ^^^
+  return a + b;
+}
+```
+
+</Tab>
+<Tab label="Syntax">
+
 ````mdx
 ```ts twoslash
 function add(a: number, b: number) {
@@ -90,16 +100,6 @@ function add(a: number, b: number) {
 }
 ```
 ````
-
-</Tab>
-<Tab label="Source">
-
-```ts twoslash
-function add(a: number, b: number) {
-  //     ^^^
-  return a + b;
-}
-```
 
 </Tab>
 </Tabs>
@@ -109,20 +109,20 @@ function add(a: number, b: number) {
 <Tabs>
 <Tab label="Rendered">
 
+```ts twoslash
+// @noErrorValidation
+const str: string = 1;
+```
+
+</Tab>
+<Tab label="Syntax">
+
 ````mdx
 ```ts twoslash
 // @noErrorValidation
 const str: string = 1;
 ```
 ````
-
-</Tab>
-<Tab label="Source">
-
-```ts twoslash
-// @noErrorValidation
-const str: string = 1;
-```
 
 </Tab>
 </Tabs>
