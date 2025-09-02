@@ -2,6 +2,7 @@ import { createRequire } from 'node:module';
 import { join } from 'node:path';
 import type { UserConfig } from '@rspress/shared';
 import { logger } from '@rspress/shared/logger';
+import { pathExists } from '../utils';
 import { RuntimeModuleID, type VirtualModulePlugin } from './types';
 
 const require = createRequire(import.meta.url);
@@ -29,9 +30,18 @@ export function getI18nData(
 export const i18nVMPlugin: VirtualModulePlugin = context => {
   const { config } = context;
   return {
-    [RuntimeModuleID.I18nText]: ({ addDependency, addMissingDependency }) => {
-      addDependency(config.i18nSourcePath || DEFAULT_I18N_SOURCE);
-      addMissingDependency(config.i18nSourcePath || DEFAULT_I18N_SOURCE);
+    [RuntimeModuleID.I18nText]: async ({
+      addDependency,
+      addMissingDependency,
+    }) => {
+      const configPath = config.i18nSourcePath || DEFAULT_I18N_SOURCE;
+
+      const isExist = await pathExists(configPath);
+      if (isExist) {
+        addDependency(configPath);
+      } else {
+        addMissingDependency(configPath);
+      }
       const i18nData = getI18nData(config);
 
       return `export default ${JSON.stringify(i18nData, null, 2)}`;
