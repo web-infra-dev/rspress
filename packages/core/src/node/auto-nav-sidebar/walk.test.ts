@@ -21,10 +21,20 @@ RouteService.__instance__ = {
   getRoutePathParts: mockGetRoutePathParts,
 } as RouteService;
 
+function orderStringSet(input: Set<string>) {
+  return Array.from(input).sort().join('\n');
+}
+
 describe('walk', () => {
   it('basic', async () => {
     const docsDir = path.join(__dirname, './fixtures/docs');
-    const sidebar = await walk(docsDir, docsDir, DEFAULT_PAGE_EXTENSIONS);
+    const metaFileSet = new Set<string>();
+    const sidebar = await walk(
+      docsDir,
+      docsDir,
+      DEFAULT_PAGE_EXTENSIONS,
+      metaFileSet,
+    );
     expect(sidebar).toMatchInlineSnapshot(`
       {
         "nav": [
@@ -110,10 +120,21 @@ describe('walk', () => {
         },
       }
     `);
+
+    expect(orderStringSet(metaFileSet)).toMatchInlineSnapshot(`
+      "<ROOT>/packages/core/src/node/auto-nav-sidebar/fixtures/docs/_nav.json
+      <ROOT>/packages/core/src/node/auto-nav-sidebar/fixtures/docs/guide/_meta.json"
+    `);
   });
   it('both _meta.json and _nav.json do not exist', async () => {
     const docsDir = path.join(__dirname, './fixtures/docs-no-meta');
-    const sidebar = await walk(docsDir, docsDir, DEFAULT_PAGE_EXTENSIONS);
+    const metaFileSet = new Set<string>();
+    const sidebar = await walk(
+      docsDir,
+      docsDir,
+      DEFAULT_PAGE_EXTENSIONS,
+      metaFileSet,
+    );
     expect(sidebar).toMatchInlineSnapshot(`
       {
         "nav": [],
@@ -171,11 +192,18 @@ describe('walk', () => {
         },
       }
     `);
+    expect(orderStringSet(metaFileSet)).toMatchInlineSnapshot(`""`);
   });
 
   it('both _meta.json and _nav.json exist', async () => {
     const docsDir = path.join(__dirname, './fixtures/docs-meta-nav');
-    const sidebar = await walk(docsDir, docsDir, DEFAULT_PAGE_EXTENSIONS);
+    const metaFileSet = new Set<string>();
+    const sidebar = await walk(
+      docsDir,
+      docsDir,
+      DEFAULT_PAGE_EXTENSIONS,
+      metaFileSet,
+    );
     expect(sidebar).toMatchInlineSnapshot(`
       {
         "nav": [
@@ -238,11 +266,21 @@ describe('walk', () => {
         },
       }
     `);
+    expect(orderStringSet(metaFileSet)).toMatchInlineSnapshot(`
+      "<ROOT>/packages/core/src/node/auto-nav-sidebar/fixtures/docs-meta-nav/_meta.json
+      <ROOT>/packages/core/src/node/auto-nav-sidebar/fixtures/docs-meta-nav/_nav.json"
+    `);
   });
 
   it('custom link group', async () => {
     const docsDir = path.join(__dirname, './fixtures/docs-custom-link-group');
-    const sidebar = await walk(docsDir, docsDir, DEFAULT_PAGE_EXTENSIONS);
+    const metaFileSet = new Set<string>();
+    const sidebar = await walk(
+      docsDir,
+      docsDir,
+      DEFAULT_PAGE_EXTENSIONS,
+      metaFileSet,
+    );
     expect(sidebar).toMatchInlineSnapshot(`
       {
         "nav": [
@@ -291,6 +329,10 @@ describe('walk', () => {
           ],
         },
       }
+    `);
+    expect(orderStringSet(metaFileSet)).toMatchInlineSnapshot(`
+      "<ROOT>/packages/core/src/node/auto-nav-sidebar/fixtures/docs-custom-link-group/_nav.json
+      <ROOT>/packages/core/src/node/auto-nav-sidebar/fixtures/docs-custom-link-group/guide/_meta.json"
     `);
   });
 });

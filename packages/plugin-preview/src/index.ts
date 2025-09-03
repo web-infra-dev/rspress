@@ -99,7 +99,7 @@ export function pluginPreview(options?: Options): RspressPlugin {
       lastDemos = cloneDeep(demos);
       await devServer?.server?.close();
       devServer = undefined;
-      const sourceEntry = generateEntry(
+      const sourceEntry = await generateEntry(
         demos,
         framework,
         position,

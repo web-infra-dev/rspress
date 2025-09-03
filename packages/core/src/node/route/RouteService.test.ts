@@ -1,7 +1,6 @@
 import path from 'node:path';
 import type { UserConfig } from '@rspress/shared';
 import { describe, expect, it } from 'vitest';
-import { PluginDriver } from '../PluginDriver';
 import { RouteService } from './RouteService';
 
 const BASIC_DIR = path.join(__dirname, 'fixtures', 'basic');
@@ -12,9 +11,8 @@ async function initRouteService(
 ) {
   const routeService = await RouteService.create({
     config,
-    pluginDriver: new PluginDriver(config, '', false),
-    runtimeTempDir: '.rsbuild',
     scanDir: fixtureDir,
+    externalPages: [],
   });
 
   const { routeData } = routeService;
