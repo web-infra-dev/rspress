@@ -1,5 +1,6 @@
 import path from 'node:path';
 import type { RspressPlugin } from '@rspress/core';
+import { logger } from '@rspress/core';
 import { transformerTwoslash } from '@shikijs/twoslash';
 import type { ShikiTransformerContextCommon } from '@shikijs/types';
 import type { Element, ElementContent } from 'hast';
@@ -7,8 +8,38 @@ import type { Code } from 'mdast';
 import { fromMarkdown } from 'mdast-util-from-markdown';
 import { gfmFromMarkdown } from 'mdast-util-gfm';
 import { defaultHandlers, toHast } from 'mdast-util-to-hast';
+import picocolors from 'picocolors';
+import { removeTwoslashNotations } from 'twoslash';
 
 const staticPath = path.join(__dirname, '../static');
+
+const loggerPrefix = picocolors.dim('[@rspress/plugin-twoslash]');
+
+function prettyPrintCode(code: string): string {
+  return code
+    .split(/\n/g)
+    .slice(0, 15) // Show only first 15 lines of code
+    .map((line, index) => {
+      return `${picocolors.dim(String(index + 1).padStart(2))} | ${line}`;
+    })
+    .join('\n')
+    .trim();
+}
+
+function onError(error: unknown, code: string): string {
+  logger.error(
+    loggerPrefix,
+    'Twoslash error in code:\n' + prettyPrintCode(code),
+    `\n${picocolors.dim(String(error))}`,
+  );
+
+  // Ignore the error during development to avoid stopping the build, and return the original code
+  const isDevelopment = process.env.NODE_ENV === 'development';
+  if (!isDevelopment) {
+    throw error;
+  }
+  return removeTwoslashNotations(code);
+}
 
 function renderMarkdown(
   this: ShikiTransformerContextCommon,
@@ -100,6 +131,8 @@ export function pluginTwoslash(options?: PluginTwoslashOptions): RspressPlugin {
       config.markdown.shiki.transformers.push(
         transformerTwoslash({
           explicitTrigger,
+          onShikiError: onError,
+          onTwoslashError: onError,
           rendererRich: {
             renderMarkdown,
             renderMarkdownInline,

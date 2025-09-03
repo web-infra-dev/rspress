@@ -1422,6 +1422,12 @@ importers:
       mdast-util-to-hast:
         specifier: ^13.2.0
         version: 13.2.0
+      picocolors:
+        specifier: ^1.1.1
+        version: 1.1.1
+      twoslash:
+        specifier: ^0.3.4
+        version: 0.3.4(typescript@5.8.2)
     devDependencies:
       '@microsoft/api-extractor':
         specifier: ^7.52.11

@@ -265,7 +265,7 @@ export function withBase(url: string, base: string): string {
   const hasBase = normalizedUrl.startsWith(normalizedBase);
   if (hasBase) {
     // normalizedUrl => '/base' base => '/base/'
-    if (normalizedUrl + '/' === base) {
+    if (`${normalizedUrl}/` === base) {
       return base;
     }
     return normalizedUrl;
