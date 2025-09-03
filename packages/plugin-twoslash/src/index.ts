@@ -3,7 +3,6 @@ import type { RspressPlugin } from '@rspress/core';
 import { logger } from '@rspress/core';
 import { transformerTwoslash } from '@shikijs/twoslash';
 import type { ShikiTransformerContextCommon } from '@shikijs/types';
-import boxen from 'boxen';
 import type { Element, ElementContent } from 'hast';
 import type { Code } from 'mdast';
 import { fromMarkdown } from 'mdast-util-from-markdown';
@@ -16,15 +15,21 @@ const staticPath = path.join(__dirname, '../static');
 
 const loggerPrefix = picocolors.dim('[@rspress/plugin-twoslash]');
 
+function prettyPrintCode(code: string): string {
+  return code
+    .split(/\n/g)
+    .slice(0, 15) // Show only first 15 lines of code
+    .map((line, index) => {
+      return `${picocolors.dim(String(index + 1).padStart(2))} | ${line}`;
+    })
+    .join('\n')
+    .trim();
+}
+
 function onError(error: unknown, code: string): string {
   logger.error(
     loggerPrefix,
-    'Twoslash error in code:\n' +
-      // Show only first 15 lines of code
-      boxen(code.split(/\n/g).slice(0, 15).join('\n').trim(), {
-        padding: 1,
-        borderStyle: 'round',
-      }),
+    'Twoslash error in code:\n' + prettyPrintCode(code),
     `\n${picocolors.dim(String(error))}`,
   );
 
