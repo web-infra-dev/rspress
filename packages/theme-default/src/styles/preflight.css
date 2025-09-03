@@ -206,6 +206,7 @@ input,
 optgroup,
 select,
 textarea {
+  font: inherit;
   /* font-family: inherit;  */
   /* 1 */
   /* font-feature-settings: inherit; */
@@ -220,7 +221,7 @@ textarea {
   /* 1 */
   /* letter-spacing: inherit;  */
   /* 1 */
-  /* color: inherit;  */
+  color: inherit;
   /* 1 */
   margin: 0; /* 2 */
   padding: 0; /* 3 */
