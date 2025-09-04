@@ -83,17 +83,17 @@ export function SidebarGroup(props: SidebarGroupProps) {
 
         container.style.maxHeight = `${contentHeight}px`;
         container.style.opacity = '0';
-        container.style.transition = 'all .15s ease-in';
+        container.style.transition = 'all .2s ease-out';
 
         transitionRef.current = window.setTimeout(() => {
           if (containerRef.current) {
             containerRef.current.style.maxHeight = '0px';
           }
-        }, 150);
+        }, 200);
       } else {
         // unfold
         const contentHeight = containerHeightRef.current;
-        container.style.transition = 'all .15s ease-in-out';
+        container.style.transition = 'all .2s ease-in';
         container.style.maxHeight = `${contentHeight}px`;
         container.style.opacity = '1';
 
@@ -101,7 +101,7 @@ export function SidebarGroup(props: SidebarGroupProps) {
           if (containerRef.current) {
             containerRef.current.style.removeProperty('max-height');
           }
-        }, 150);
+        }, 200);
       }
     },
     [],
@@ -151,7 +151,11 @@ export function SidebarGroup(props: SidebarGroupProps) {
             return;
           }
           if (item.link) {
-            navigate(item.link);
+            navigate(item.link).then(() => {
+              collapsible && toggleCollapse(e);
+              collapsible && handleClickCollapsedTransition(!collapsed);
+            });
+            return;
           }
           collapsible && toggleCollapse(e);
           collapsible && handleClickCollapsedTransition(!collapsed);
