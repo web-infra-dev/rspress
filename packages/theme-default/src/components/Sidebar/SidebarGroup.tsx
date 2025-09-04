@@ -57,7 +57,7 @@ export function SidebarGroup(props: SidebarGroupProps) {
   const navigate = useNavigate();
   const initialState = useRef('collapsed' in item && item.collapsed);
   const containerRef = useRef<HTMLDivElement>(null);
-  const containerHeightRef = useRef<number>(0);
+  const containerHeightRef = useRef<number>(item.items.length * 40);
 
   const transitionRef = useRef<number>(null);
   const active = item.link && activeMatcher(item.link);
@@ -107,10 +107,7 @@ export function SidebarGroup(props: SidebarGroupProps) {
     [],
   );
 
-  const toggleCollapse: React.MouseEventHandler<
-    HTMLDivElement | HTMLAnchorElement
-  > = (e): void => {
-    e.stopPropagation();
+  const toggleCollapse = (): void => {
     // update collapsed state
     setSidebarData(sidebarData => {
       const newSidebarData = [...sidebarData];
@@ -151,13 +148,15 @@ export function SidebarGroup(props: SidebarGroupProps) {
             return;
           }
           if (item.link) {
+            e.stopPropagation();
             navigate(item.link).then(() => {
-              collapsible && toggleCollapse(e);
+              collapsible && toggleCollapse();
               collapsible && handleClickCollapsedTransition(!collapsed);
             });
             return;
           }
-          collapsible && toggleCollapse(e);
+          e.stopPropagation();
+          collapsible && toggleCollapse();
           collapsible && handleClickCollapsedTransition(!collapsed);
         }}
         right={collapsible && <CollapsibleIcon collapsed={collapsed} />}

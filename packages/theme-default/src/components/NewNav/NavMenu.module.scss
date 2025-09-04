@@ -59,7 +59,7 @@
       text-align: center;
       font-size: 14px;
       font-style: normal;
-      font-weight: 400;
+      // font-weight: 400; // TODO: discussion
     }
     .svgDown {
       transform: rotate(180deg);
@@ -68,7 +68,7 @@
   &.active {
     .navMenuItemContainer {
       // text
-      font-weight: 400;
+      // font-weight: 400; // TODO: discussion
       color: #007bff;
       text-align: center;
       font-size: 14px;
