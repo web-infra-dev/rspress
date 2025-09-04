@@ -18,10 +18,10 @@
     display: inline-flex;
     font-size: 1rem;
   }
-
-  // &:hover {
-  //   background-color: var(--rp-c-bg-mute);
-  // }
+  &:hover {
+    opacity: 0.7;
+    background-color: var(--rp-c-bg-mute);
+  }
 }
 
 .prev {
