@@ -201,6 +201,28 @@ export default {
 };
 ```
 
+## Diff code block
+
+````mdx
+```diff
+function test() {
+- console.log('deleted');
++ console.log('added');
+  console.log('unchanged');
+}
+```
+````
+
+It will be rendered as:
+
+```diff
+function test() {
+- console.log('deleted');
++ console.log('added');
+  console.log('unchanged');
+}
+```
+
 ## Shiki transformers
 
 Rspress V2 uses [Shiki](https://shiki.style) for compile-time code highlighting, providing flexible code block capabilities.

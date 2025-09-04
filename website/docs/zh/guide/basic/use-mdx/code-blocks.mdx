@@ -201,6 +201,28 @@ export default {
 };
 ```
 
+## Diff 代码块
+
+````mdx
+```diff
+function test() {
+- console.log('deleted');
++ console.log('added');
+  console.log('unchanged');
+}
+```
+````
+
+它将被渲染为：
+
+```diff
+function test() {
+- console.log('deleted');
++ console.log('added');
+  console.log('unchanged');
+}
+```
+
 ## Shiki transformers
 
 Rspress 在 V2 中，使用 [Shiki](https://shiki.style) 进行编译时的代码高亮，提供了灵活扩展的代码块能力。
