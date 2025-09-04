@@ -34,7 +34,8 @@ export async function serve(
   const pluginDriver = new PluginDriver(config, configFilePath, true);
   await pluginDriver.init();
 
-  const modifiedConfig = await pluginDriver.modifyConfig();
+  await pluginDriver.modifyConfig();
+  const modifiedConfig = pluginDriver.sealConfig();
 
   const rsbuild = await initRsbuild(
     config.root!,

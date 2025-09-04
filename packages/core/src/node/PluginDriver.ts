@@ -21,6 +21,8 @@ export class PluginDriver {
   #config: UserConfig;
   #configFilePath: string;
 
+  #isSealed: boolean = false;
+
   #plugins: RspressPlugin[];
 
   #isProd: boolean;
@@ -92,6 +94,9 @@ export class PluginDriver {
   }
 
   async modifyConfig() {
+    if (this.#isSealed) {
+      throw new Error('Config has been sealed, cannot call beforeBuild again.');
+    }
     let config = this.#config;
 
     for (let i = 0; i < this.#plugins.length; i++) {
@@ -116,6 +121,10 @@ export class PluginDriver {
       }
     }
     this.#config = config;
+  }
+
+  sealConfig() {
+    this.#isSealed = true;
     return this.#config;
   }
 
