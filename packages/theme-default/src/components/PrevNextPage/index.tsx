@@ -12,7 +12,7 @@ export function PrevNextPage() {
 
   return (
     <div className={styles.prevNextPage}>
-      {prevPage && (
+      {prevPage ? (
         <Link
           href={prevPage.link}
           className={clsx(styles.prevNextPageItem, styles.prev)}
@@ -23,8 +23,10 @@ export function PrevNextPage() {
             <span {...renderInlineMarkdown(prevPage.text)} />
           </span>
         </Link>
+      ) : (
+        <div className={styles.placeHolder} />
       )}
-      {nextPage && (
+      {nextPage ? (
         <Link
           href={nextPage.link}
           className={clsx(styles.prevNextPageItem, styles.next)}
@@ -35,6 +37,8 @@ export function PrevNextPage() {
             <SvgWrapper icon={ArrowRight} className={styles.icon} />
           </span>
         </Link>
+      ) : (
+        <div className={styles.placeHolder} />
       )}
     </div>
   );
