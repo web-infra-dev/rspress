@@ -29,9 +29,12 @@ export async function build(options: BuildOptions) {
   await pluginDriver.routeGenerated(routeService.getRoutes());
   await pluginDriver.routeServiceGenerated(routeService);
 
+  // FIXME: for plugin-llms to obtain the sidebar config in beforeBuild hook
   await modifyConfigWithAutoNavSide(modifiedConfig);
 
   try {
+    // 3. rsbuild build
+    await pluginDriver.beforeBuild();
     // if enableSSG, build both client and server bundle
     // else only build client bundle
     const rsbuild = await initRsbuild(
@@ -41,8 +44,6 @@ export async function build(options: BuildOptions) {
       routeService,
       ssgConfig,
     );
-
-    await pluginDriver.beforeBuild();
     await rsbuild.build();
   } finally {
     await checkLanguageParity(config);

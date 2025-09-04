@@ -1,6 +1,5 @@
 import type { RsbuildConfig } from '@rsbuild/core';
 import type { UserConfig } from '@rspress/shared';
-import { modifyConfigWithAutoNavSide } from './auto-nav-sidebar';
 import { initRsbuild } from './initRsbuild';
 import { PluginDriver } from './PluginDriver';
 import { RouteService } from './route/RouteService';
@@ -39,9 +38,6 @@ export async function dev(options: DevOptions): Promise<ServerInstance> {
     });
     await pluginDriver.routeGenerated(routeService.getRoutes());
     await pluginDriver.routeServiceGenerated(routeService);
-
-    await modifyConfigWithAutoNavSide(modifiedConfig);
-    console.log(modifiedConfig.themeConfig?.locales, 111111);
 
     // 3. rsbuild.dev
     await pluginDriver.beforeBuild();
