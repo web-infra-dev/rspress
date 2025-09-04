@@ -71,6 +71,7 @@ export function SidebarItemRaw({
           className,
         )}
         style={{
+          // paddingLeft: depth <= 1 ? '12px' : `calc(12px * ${depth - 1} + 12px)`, // TODO: discussion
           paddingLeft: depth === 0 ? '12px' : `calc(12px * ${depth} + 12px)`,
         }}
         {...{ 'data-depth': depth }}
@@ -95,6 +96,7 @@ export function SidebarItemRaw({
       )}
       style={{
         paddingLeft: depth === 0 ? '12px' : `calc(12px * ${depth} + 12px)`,
+        // paddingLeft: depth <= 1 ? '12px' : `calc(12px * ${depth - 1} + 12px)`, // TODO: discussion
       }}
       {...{ 'data-depth': depth }}
       {...(context ? { 'data-context': context } : {})}

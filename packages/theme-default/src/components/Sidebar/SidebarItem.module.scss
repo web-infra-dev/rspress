@@ -14,7 +14,7 @@
   // text
   line-height: 32px;
   font-size: 14px;
-  font-weight: 400;
+  font-weight: 400; // TODO: discussion
   color: var(--rp-c-text-2);
 
   transition:
@@ -29,6 +29,7 @@
   &.active {
     background-color: var(--rp-c-brand-tint);
     color: var(--rp-c-link);
+    font-weight: 600; // TODO: discussion
   }
 
   &.sidebarGroupItem::before {
