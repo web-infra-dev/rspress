@@ -1,7 +1,6 @@
 import path from 'node:path';
 import type { NavItem, Sidebar, UserConfig } from '@rspress/shared';
 import { DEFAULT_PAGE_EXTENSIONS } from '@rspress/shared/constants';
-import { logger } from '@rspress/shared/logger';
 import { combineWalkResult, processLocales } from './locales';
 import { walk } from './walk';
 
@@ -14,14 +13,12 @@ async function runAutoNavSide(
       nav: Record<string, NavItem[]>;
       sidebar: Sidebar;
     }
-  | null
 > {
   config.themeConfig = config.themeConfig || {};
   config.themeConfig.locales =
     config.themeConfig.locales || config.locales || [];
   const langs = config.themeConfig.locales.map(locale => locale.lang);
   const hasLocales = langs.length > 0;
-  const hasLang = Boolean(config.lang);
   const versions = config.multiVersion?.versions || [];
   const { extensions = DEFAULT_PAGE_EXTENSIONS } = config?.route || {};
 
@@ -36,15 +33,6 @@ async function runAutoNavSide(
     return metaInfo;
   }
 
-  if (hasLang) {
-    logger.error(
-      '`lang` is configured but `locales` not, ' +
-        'thus `auto-nav-sidebar` can not auto generate ' +
-        'navbar level config correctly!\n' +
-        'please check your config file',
-    );
-    return null;
-  }
   const walks = versions.length
     ? await Promise.all(
         versions.map(version => {
@@ -77,13 +65,13 @@ export async function modifyConfigWithAutoNavSide(
   config: UserConfig,
   metaFileSet: Set<string> = new Set<string>(),
   force: boolean = false,
-): Promise<Set<string> | null> {
+): Promise<void> {
   if (haveNavSidebarConfig(config) && !force) {
-    return null;
+    return;
   }
   const autoNavSide = await runAutoNavSide(config, metaFileSet);
   if (autoNavSide === null) {
-    return null;
+    return;
   }
 
   if (Array.isArray(autoNavSide)) {
@@ -95,11 +83,11 @@ export async function modifyConfigWithAutoNavSide(
         ...autoNavSide[index],
       }),
     );
-    return metaFileSet;
+    return;
   }
 
   config.themeConfig = config.themeConfig || {};
   config.themeConfig.nav = autoNavSide.nav;
   config.themeConfig.sidebar = autoNavSide.sidebar;
-  return metaFileSet;
+  return;
 }

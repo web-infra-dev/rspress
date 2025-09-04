@@ -78,20 +78,33 @@ export class RouteService {
   // The factory to create route service instance
   static async create(options: InitOptions) {
     const { scanDir, config, externalPages } = options;
-    const routeService = new RouteService(scanDir, config, externalPages || []);
+    const runtimeAbsTempDir = path.join(
+      process.cwd(),
+      'node_modules',
+      RSPRESS_TEMP_DIR,
+      'runtime',
+    );
+    await fs.mkdir(runtimeAbsTempDir, { recursive: true });
+    const routeService = new RouteService(
+      scanDir,
+      config,
+      externalPages || [],
+      runtimeAbsTempDir,
+    );
     RouteService.__instance__ = routeService;
     await routeService.#init();
     return routeService;
   }
 
   static async createSimple() {
-    return new RouteService('', {}, []);
+    return new RouteService('', {}, [], '');
   }
 
   private constructor(
     scanDir: string,
     userConfig: UserConfig,
     externalPages: AdditionalPage[],
+    runtimeAbsTempDir: string,
   ) {
     const routeOptions = userConfig?.route || {};
     this.#scanDir = scanDir;
@@ -105,12 +118,7 @@ export class RouteService {
       userConfig?.themeConfig?.locales ??
       []
     ).map(item => item.lang);
-    const runtimeAbsTempDir = path.join(
-      process.cwd(),
-      'node_modules',
-      RSPRESS_TEMP_DIR,
-      'runtime',
-    );
+
     this.#tempDir = runtimeAbsTempDir;
     this.#externalPages = externalPages;
 
