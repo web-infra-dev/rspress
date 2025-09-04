@@ -1,10 +1,10 @@
-import { writeFileSync } from 'node:fs';
+import { mkdir, writeFile } from 'node:fs/promises';
 import { join } from 'node:path';
 import { staticPath, virtualDir } from './constant';
 import type { CustomEntry, DemoInfo } from './types';
 import { toValidVarName } from './utils';
 
-export function generateEntry(
+export async function generateEntry(
   demos: DemoInfo,
   framework: 'react' | 'solid',
   position: 'follow' | 'fixed',
@@ -12,43 +12,51 @@ export function generateEntry(
 ) {
   const sourceEntry: Record<string, string> = {};
   const entryCssPath = join(staticPath, 'global-styles', 'entry.css');
+
+  await mkdir(virtualDir, { recursive: true });
+
   if (position === 'follow') {
-    Object.values(demos).forEach(routes => {
-      routes.forEach(route => {
-        const { id, path: demoPath } = route;
-        const entry = join(virtualDir, `${id}.entry.tsx`);
-        const solidEntry = `
+    await Promise.all(
+      Object.values(demos)
+        .map(routes =>
+          routes.map(async route => {
+            const { id, path: demoPath } = route;
+            const entry = join(virtualDir, `${id}.entry.tsx`);
+            const solidEntry = `
         import { render } from 'solid-js/web';
         import ${JSON.stringify(entryCssPath)};
         import Demo from ${JSON.stringify(demoPath)};
         render(() => <Demo />, document.getElementById('root'));
         `;
 
-        const reactEntry = `
+            const reactEntry = `
         import { createRoot } from 'react-dom/client';
         import ${JSON.stringify(entryCssPath)};
         import Demo from ${JSON.stringify(demoPath)};
         const container = document.getElementById('root');
         createRoot(container).render(<Demo />);
         `;
-        const entryContent = customEntry
-          ? customEntry({
-              entryCssPath,
-              demoPath,
-            })
-          : framework === 'react'
-            ? reactEntry
-            : solidEntry;
-        writeFileSync(entry, entryContent);
-        sourceEntry[id] = entry;
-      });
-    });
+            const entryContent = customEntry
+              ? customEntry({
+                  entryCssPath,
+                  demoPath,
+                })
+              : framework === 'react'
+                ? reactEntry
+                : solidEntry;
+            await writeFile(entry, entryContent);
+            sourceEntry[id] = entry;
+          }),
+        )
+        .flat(),
+    );
   } else {
-    Object.entries(demos).forEach(([key, routes]) => {
-      if (routes.length === 0) {
-        return;
-      }
-      const reactContent = `
+    await Promise.all(
+      Object.entries(demos).map(async ([key, routes]) => {
+        if (routes.length === 0) {
+          return;
+        }
+        const reactContent = `
         import { createRoot } from 'react-dom/client';
         import ${JSON.stringify(entryCssPath)};
         ${routes
@@ -71,7 +79,7 @@ export function generateEntry(
         const container = document.getElementById('root');
         createRoot(container).render(<App />);
       `;
-      const solidContent = `
+        const solidContent = `
         import { render } from 'solid-js/web';
         import ${JSON.stringify(entryCssPath)};
         ${routes
@@ -93,12 +101,14 @@ export function generateEntry(
         }
         render(() => <App /> , document.getElementById('root'));
       `;
-      const renderContent = framework === 'solid' ? solidContent : reactContent;
-      const id = `_${toValidVarName(key)}`;
-      const entry = join(virtualDir, `${id}.entry.tsx`);
-      writeFileSync(entry, renderContent);
-      sourceEntry[id] = entry;
-    });
+        const renderContent =
+          framework === 'solid' ? solidContent : reactContent;
+        const id = `_${toValidVarName(key)}`;
+        const entry = join(virtualDir, `${id}.entry.tsx`);
+        await writeFile(entry, renderContent);
+        sourceEntry[id] = entry;
+      }),
+    );
   }
   return sourceEntry;
 }

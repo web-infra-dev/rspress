@@ -6,6 +6,10 @@ import {
 import { RouteService } from '../route/RouteService';
 import { processLocales } from './locales';
 
+function orderStringSet(input: Set<string>) {
+  return Array.from(input).sort().join('\n');
+}
+
 describe('walk', () => {
   it('basic', async () => {
     const docsDir = path.join(__dirname, './fixtures/docs-locales');
@@ -32,11 +36,14 @@ describe('walk', () => {
       normalizeRoutePath: mockNormalizeRoutePath,
       getRoutePathParts: mockGetRoutePathParts,
     } as RouteService;
-    const result = await processLocales(['zh', 'en'], [], docsDir, [
-      '.md',
-      '.mdx',
-      '.tsx',
-    ]);
+    const metaFileSet = new Set<string>();
+    const result = await processLocales(
+      ['zh', 'en'],
+      [],
+      docsDir,
+      ['.md', '.mdx', '.tsx'],
+      metaFileSet,
+    );
     expect(result).toMatchInlineSnapshot(`
       [
         {
@@ -211,14 +218,23 @@ describe('walk', () => {
         },
       ]
     `);
+    expect(orderStringSet(metaFileSet)).toMatchInlineSnapshot(`
+      "<ROOT>/packages/core/src/node/auto-nav-sidebar/fixtures/docs-locales/en/_nav.json
+      <ROOT>/packages/core/src/node/auto-nav-sidebar/fixtures/docs-locales/en/guide/_meta.json
+      <ROOT>/packages/core/src/node/auto-nav-sidebar/fixtures/docs-locales/zh/_nav.json
+      <ROOT>/packages/core/src/node/auto-nav-sidebar/fixtures/docs-locales/zh/guide/_meta.json"
+    `);
   });
   it('multiVersion', async () => {
     const docsDir = path.join(__dirname, './fixtures/docs-multi-version');
-    const result = await processLocales(['zh', 'en'], ['v1', 'v2'], docsDir, [
-      '.md',
-      '.mdx',
-      '.tsx',
-    ]);
+    const metaFileSet = new Set<string>();
+    const result = await processLocales(
+      ['zh', 'en'],
+      ['v1', 'v2'],
+      docsDir,
+      ['.md', '.mdx', '.tsx'],
+      metaFileSet,
+    );
     expect(result).toMatchInlineSnapshot(`
       [
         {
@@ -278,6 +294,16 @@ describe('walk', () => {
           },
         },
       ]
+    `);
+    expect(orderStringSet(metaFileSet)).toMatchInlineSnapshot(`
+      "<ROOT>/packages/core/src/node/auto-nav-sidebar/fixtures/docs-multi-version/v1/en/_nav.json
+      <ROOT>/packages/core/src/node/auto-nav-sidebar/fixtures/docs-multi-version/v1/en/guide/_meta.json
+      <ROOT>/packages/core/src/node/auto-nav-sidebar/fixtures/docs-multi-version/v1/zh/_nav.json
+      <ROOT>/packages/core/src/node/auto-nav-sidebar/fixtures/docs-multi-version/v1/zh/guide/_meta.json
+      <ROOT>/packages/core/src/node/auto-nav-sidebar/fixtures/docs-multi-version/v2/en/_nav.json
+      <ROOT>/packages/core/src/node/auto-nav-sidebar/fixtures/docs-multi-version/v2/en/guide/_meta.json
+      <ROOT>/packages/core/src/node/auto-nav-sidebar/fixtures/docs-multi-version/v2/zh/_nav.json
+      <ROOT>/packages/core/src/node/auto-nav-sidebar/fixtures/docs-multi-version/v2/zh/guide/_meta.json"
     `);
   });
 });

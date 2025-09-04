@@ -1,9 +1,11 @@
 import fs from 'node:fs/promises';
 import path from 'node:path';
 import {
+  type AdditionalPage,
   addTrailingSlash,
   type PageModule,
   type RouteMeta,
+  RSPRESS_TEMP_DIR,
   removeTrailingSlash,
   type UserConfig,
 } from '@rspress/shared';
@@ -11,7 +13,6 @@ import { DEFAULT_PAGE_EXTENSIONS } from '@rspress/shared/constants';
 import type { ComponentType } from 'react';
 import { glob } from 'tinyglobby';
 import { PUBLIC_DIR } from '../constants';
-import type { PluginDriver } from '../PluginDriver';
 import {
   getRoutePathParts,
   normalizeRoutePath,
@@ -26,8 +27,7 @@ import {
 interface InitOptions {
   scanDir: string;
   config: UserConfig;
-  runtimeTempDir: string;
-  pluginDriver: PluginDriver;
+  externalPages: AdditionalPage[];
 }
 
 export interface Route {
@@ -67,7 +67,7 @@ export class RouteService {
 
   #tempDir: string;
 
-  #pluginDriver: PluginDriver;
+  #externalPages: AdditionalPage[];
 
   static __instance__: RouteService | null = null;
 
@@ -77,24 +77,34 @@ export class RouteService {
 
   // The factory to create route service instance
   static async create(options: InitOptions) {
-    const { scanDir, config, runtimeTempDir, pluginDriver } = options;
+    const { scanDir, config, externalPages } = options;
+    const runtimeAbsTempDir = path.join(
+      process.cwd(),
+      'node_modules',
+      RSPRESS_TEMP_DIR,
+      'runtime',
+    );
+    await fs.mkdir(runtimeAbsTempDir, { recursive: true });
     const routeService = new RouteService(
       scanDir,
       config,
-      runtimeTempDir,
-      pluginDriver,
+      externalPages || [],
+      runtimeAbsTempDir,
     );
     RouteService.__instance__ = routeService;
     await routeService.#init();
-    await pluginDriver.routeServiceGenerated(routeService);
     return routeService;
+  }
+
+  static async createSimple() {
+    return new RouteService('', {}, [], '');
   }
 
   private constructor(
     scanDir: string,
     userConfig: UserConfig,
-    tempDir: string,
-    pluginDriver: PluginDriver,
+    externalPages: AdditionalPage[],
+    runtimeAbsTempDir: string,
   ) {
     const routeOptions = userConfig?.route || {};
     this.#scanDir = scanDir;
@@ -108,8 +118,9 @@ export class RouteService {
       userConfig?.themeConfig?.locales ??
       []
     ).map(item => item.lang);
-    this.#tempDir = tempDir;
-    this.#pluginDriver = pluginDriver;
+
+    this.#tempDir = runtimeAbsTempDir;
+    this.#externalPages = externalPages;
 
     if (userConfig.multiVersion) {
       this.#defaultVersion = userConfig.multiVersion.default || '';
@@ -153,7 +164,7 @@ export class RouteService {
     });
 
     // 2. external pages added by plugins
-    const externalPages = await this.#pluginDriver.addPages();
+    const externalPages = this.#externalPages;
 
     await Promise.all(
       externalPages.map(async (route, index) => {
@@ -180,8 +191,6 @@ export class RouteService {
         }
       }),
     );
-
-    await this.#pluginDriver.routeGenerated(this.getRoutes());
   }
 
   async addRoute(routePage: RoutePage): Promise<void> {

@@ -1,6 +1,6 @@
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
-import { APPEARANCE_KEY, RSPRESS_TEMP_DIR } from '@rspress/shared';
+import { APPEARANCE_KEY } from '@rspress/shared';
 import { version } from '../../package.json';
 
 export const RSPRESS_VERSION = version;
@@ -61,12 +61,6 @@ export const META_GENERATOR = '<!--<?- GENERATOR ?>-->';
 export const DEFAULT_TITLE = 'Rspress';
 
 export const PUBLIC_DIR = 'public';
-export const TEMP_DIR = path.join(
-  process.cwd(),
-  'node_modules',
-  RSPRESS_TEMP_DIR,
-);
-
 // Prevent the risk of naming conflicts with the user's folders
 export const NODE_SSG_BUNDLE_FOLDER = '__ssg__';
 export const NODE_SSG_BUNDLE_NAME = 'rspress-ssg-entry.cjs';

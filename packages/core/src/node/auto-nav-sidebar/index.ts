@@ -1,31 +1,24 @@
 import path from 'node:path';
-import type { UserConfig } from '@rspress/shared';
+import type { NavItem, Sidebar, UserConfig } from '@rspress/shared';
 import { DEFAULT_PAGE_EXTENSIONS } from '@rspress/shared/constants';
-import { logger } from '@rspress/shared/logger';
 import { combineWalkResult, processLocales } from './locales';
 import { walk } from './walk';
 
-export async function modifyConfigWithAutoNavSide(
+async function runAutoNavSide(
   config: UserConfig,
-): Promise<UserConfig> {
-  const themeConfig = config.themeConfig || {};
-
-  const haveNavSidebarConfig =
-    themeConfig.nav ||
-    themeConfig.sidebar ||
-    themeConfig.locales?.[0]?.nav ||
-    themeConfig.locales?.[0]?.sidebar;
-
-  if (haveNavSidebarConfig) {
-    return config;
-  }
-
+  metaFileSet: Set<string>,
+): Promise<
+  | { nav: Record<string, NavItem[]>; sidebar: Sidebar }[]
+  | {
+      nav: Record<string, NavItem[]>;
+      sidebar: Sidebar;
+    }
+> {
   config.themeConfig = config.themeConfig || {};
   config.themeConfig.locales =
     config.themeConfig.locales || config.locales || [];
   const langs = config.themeConfig.locales.map(locale => locale.lang);
   const hasLocales = langs.length > 0;
-  const hasLang = Boolean(config.lang);
   const versions = config.multiVersion?.versions || [];
   const { extensions = DEFAULT_PAGE_EXTENSIONS } = config?.route || {};
 
@@ -35,39 +28,66 @@ export async function modifyConfigWithAutoNavSide(
       versions,
       config.root!,
       extensions,
+      metaFileSet,
     );
+    return metaInfo;
+  }
+
+  const walks = versions.length
+    ? await Promise.all(
+        versions.map(version => {
+          return walk(
+            path.join(config.root!, version),
+            config.root!,
+            extensions,
+            metaFileSet,
+          );
+        }),
+      )
+    : [await walk(config.root!, config.root!, extensions, metaFileSet)];
+
+  const combined = combineWalkResult(walks, versions);
+
+  return combined;
+}
+
+export function haveNavSidebarConfig(config: UserConfig) {
+  const themeConfig = config.themeConfig || {};
+  const haveNavSidebarConfig =
+    themeConfig.nav ||
+    themeConfig.sidebar ||
+    themeConfig.locales?.[0]?.nav ||
+    themeConfig.locales?.[0]?.sidebar;
+  return Boolean(haveNavSidebarConfig);
+}
+
+export async function modifyConfigWithAutoNavSide(
+  config: UserConfig,
+  metaFileSet: Set<string> = new Set<string>(),
+  force: boolean = false,
+): Promise<void> {
+  if (haveNavSidebarConfig(config) && !force) {
+    return;
+  }
+  const autoNavSide = await runAutoNavSide(config, metaFileSet);
+  if (autoNavSide === null) {
+    return;
+  }
+
+  if (Array.isArray(autoNavSide)) {
+    config.themeConfig = config.themeConfig || {};
+    config.themeConfig.locales = config.themeConfig.locales || [];
     config.themeConfig.locales = config.themeConfig.locales.map(
       (item, index) => ({
         ...item,
-        ...metaInfo[index],
+        ...autoNavSide[index],
       }),
     );
-  } else {
-    if (hasLang) {
-      logger.error(
-        '`lang` is configured but `locales` not, ' +
-          'thus `auto-nav-sidebar` can not auto generate ' +
-          'navbar level config correctly!\n' +
-          'please check your config file',
-      );
-      return config;
-    }
-    const walks = versions.length
-      ? await Promise.all(
-          versions.map(version => {
-            return walk(
-              path.join(config.root!, version),
-              config.root!,
-              extensions,
-            );
-          }),
-        )
-      : [await walk(config.root!, config.root!, extensions)];
-
-    const combined = combineWalkResult(walks, versions);
-
-    config.themeConfig = { ...config.themeConfig, ...combined };
+    return;
   }
 
-  return config;
+  config.themeConfig = config.themeConfig || {};
+  config.themeConfig.nav = autoNavSide.nav;
+  config.themeConfig.sidebar = autoNavSide.sidebar;
+  return;
 }

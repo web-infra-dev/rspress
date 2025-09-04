@@ -1,9 +1,9 @@
-import fs from 'node:fs/promises';
 import type { UserConfig } from '@rspress/shared';
-import { TEMP_DIR } from './constants';
+import { modifyConfigWithAutoNavSide } from './auto-nav-sidebar';
 import { initRsbuild } from './initRsbuild';
 import { hintSSGFalse } from './logger/hint';
 import { PluginDriver } from './PluginDriver';
+import { RouteService } from './route/RouteService';
 import { checkLanguageParity } from './utils/checkLanguageParity';
 
 interface BuildOptions {
@@ -12,46 +12,43 @@ interface BuildOptions {
   configFilePath: string;
 }
 
-export async function bundle(
-  docDirectory: string,
-  config: UserConfig,
-  pluginDriver: PluginDriver,
-  enableSSG: boolean,
-) {
+export async function build(options: BuildOptions) {
+  const { docDirectory, config, configFilePath } = options;
+  // 1. create PluginDriver
+  const pluginDriver = await PluginDriver.create(config, configFilePath, true);
+  const modifiedConfig = await pluginDriver.modifyConfig();
+  const ssgConfig = Boolean(modifiedConfig.ssg ?? true);
+
+  // 2. create RouteService
+  const additionalPages = await pluginDriver.addPages();
+  const routeService = await RouteService.create({
+    config: modifiedConfig,
+    scanDir: docDirectory,
+    externalPages: additionalPages,
+  });
+  await pluginDriver.routeGenerated(routeService.getRoutes());
+  await pluginDriver.routeServiceGenerated(routeService);
+
+  // FIXME: for plugin-llms to obtain the sidebar config in beforeBuild hook
+  await modifyConfigWithAutoNavSide(modifiedConfig);
+
   try {
+    // 3. rsbuild build
+    await pluginDriver.beforeBuild();
     // if enableSSG, build both client and server bundle
     // else only build client bundle
     const rsbuild = await initRsbuild(
       docDirectory,
-      config,
+      modifiedConfig,
       pluginDriver,
-      enableSSG,
+      routeService,
+      ssgConfig,
     );
-
-    await pluginDriver.beforeBuild();
     await rsbuild.build();
   } finally {
     await checkLanguageParity(config);
   }
   await pluginDriver.afterBuild();
-}
-
-function emptyDir(path: string): Promise<void> {
-  return fs.rm(path, { force: true, recursive: true });
-}
-
-export async function build(options: BuildOptions) {
-  const { docDirectory, config, configFilePath } = options;
-  const pluginDriver = new PluginDriver(config, configFilePath, true);
-  await pluginDriver.init();
-  const modifiedConfig = await pluginDriver.modifyConfig();
-
-  const ssgConfig = Boolean(modifiedConfig.ssg ?? true);
-
-  // empty temp dir before build
-  await emptyDir(TEMP_DIR);
-
-  await bundle(docDirectory, modifiedConfig, pluginDriver, ssgConfig);
 
   if (!ssgConfig) {
     hintSSGFalse();

@@ -82,6 +82,7 @@ async function metaItemToSidebarItem(
   workDir: string,
   docsDir: string,
   extensions: string[],
+  metaFileSet: Set<string>,
   isFirstDir: boolean = false, // TODO: removed in the future, single-page mode
 ): Promise<SidebarItem | SidebarGroup | SidebarDivider | SidebarSectionHeader> {
   if (typeof metaItem === 'string') {
@@ -109,6 +110,7 @@ async function metaItemToSidebarItem(
 
     let dirMetaJson: SideMetaItem[] = [];
     if (isMetaJsonExist) {
+      metaFileSet.add(dirMetaJsonPath);
       dirMetaJson = await readJson<SideMetaItem[]>(dirMetaJsonPath);
     } else {
       dirMetaJson = await fsDirToMetaItems(dirAbsolutePath, extensions);
@@ -130,7 +132,13 @@ async function metaItemToSidebarItem(
             })
           : dirMetaJson
         ).map(item =>
-          metaItemToSidebarItem(item, dirAbsolutePath, docsDir, extensions),
+          metaItemToSidebarItem(
+            item,
+            dirAbsolutePath,
+            docsDir,
+            extensions,
+            metaFileSet,
+          ),
         ),
       );
       return items;
@@ -380,6 +388,7 @@ async function scanSideMeta(
   workDir: string,
   docsDir: string,
   extensions: string[],
+  metaFileSet: Set<string>,
 ) {
   const dir = (await metaItemToSidebarItem(
     {
@@ -389,6 +398,7 @@ async function scanSideMeta(
     workDir,
     docsDir,
     extensions,
+    metaFileSet,
     true,
   )) as SidebarGroup;
   return dir.items;

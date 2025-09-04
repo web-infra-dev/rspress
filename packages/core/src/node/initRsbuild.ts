@@ -1,4 +1,3 @@
-import fs from 'node:fs/promises';
 import { createRequire } from 'node:module';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
@@ -10,12 +9,10 @@ import type {
 import { PLUGIN_REACT_NAME, pluginReact } from '@rsbuild/plugin-react';
 import {
   MDX_OR_MD_REGEXP,
-  RSPRESS_TEMP_DIR,
   removeTrailingSlash,
   type UserConfig,
 } from '@rspress/shared';
 import { pluginVirtualModule } from 'rsbuild-plugin-virtual-module';
-import { modifyConfigWithAutoNavSide } from './auto-nav-sidebar';
 import {
   CSR_CLIENT_ENTRY,
   DEFAULT_TITLE,
@@ -35,7 +32,7 @@ import {
   hintThemeBreakingChange,
 } from './logger/hint';
 import type { PluginDriver } from './PluginDriver';
-import { RouteService } from './route/RouteService';
+import type { RouteService } from './route/RouteService';
 import { globalStylesVMPlugin } from './runtimeModule/globalStyles';
 import { globalUIComponentsVMPlugin } from './runtimeModule/globalUIComponents';
 import { i18nVMPlugin } from './runtimeModule/i18n';
@@ -89,7 +86,6 @@ async function createInternalBuildConfig(
   routeService: RouteService,
   pluginDriver: PluginDriver,
 ): Promise<RsbuildConfig> {
-  const cwd = process.cwd();
   const CUSTOM_THEME_DIR =
     config?.themeDir ?? path.join(process.cwd(), 'theme');
   const outDir = config?.outDir ?? OUTPUT_DIR;
@@ -250,7 +246,7 @@ async function createInternalBuildConfig(
       },
     },
     source: {
-      include: [PACKAGE_ROOT, path.join(cwd, 'node_modules', RSPRESS_TEMP_DIR)],
+      include: [PACKAGE_ROOT],
       define: {
         'process.env.TEST': JSON.stringify(process.env.TEST),
       },
@@ -431,33 +427,20 @@ export async function initRsbuild(
   rootDir: string,
   config: UserConfig,
   pluginDriver: PluginDriver,
+  routeService: RouteService,
   enableSSG: boolean,
   extraRsbuildConfig?: RsbuildConfig,
 ): Promise<RsbuildInstance> {
   const cwd = process.cwd();
   const userDocRoot = path.resolve(rootDir || config?.root || cwd);
-  // We use a temp dir to store runtime files, so we can separate client and server build
-  // and we should empty temp dir before build
-  // TODO: remove all the temp dir
-  const runtimeTempDir = path.join(RSPRESS_TEMP_DIR, 'runtime');
-  const runtimeAbsTempDir = path.join(cwd, 'node_modules', runtimeTempDir);
-  await fs.mkdir(runtimeAbsTempDir, { recursive: true });
 
-  const routeService = await RouteService.create({
-    config: config,
-    runtimeTempDir: runtimeAbsTempDir,
-    scanDir: userDocRoot,
-    pluginDriver,
-  });
-
-  const mergedConfig = await modifyConfigWithAutoNavSide(config);
-  hintBuilderPluginsBreakingChange(mergedConfig);
+  hintBuilderPluginsBreakingChange(config);
 
   const { createRsbuild, mergeRsbuildConfig } = await import('@rsbuild/core');
 
   const internalRsbuildConfig = await createInternalBuildConfig(
     userDocRoot,
-    mergedConfig,
+    config,
     enableSSG,
     routeService,
     pluginDriver,
@@ -470,7 +453,7 @@ export async function initRsbuild(
       ...(pluginDriver
         .getPlugins()
         ?.map(plugin => plugin.builderConfig ?? {}) || []),
-      mergedConfig.builderConfig || {},
+      config.builderConfig || {},
       extraRsbuildConfig || {},
     ),
   });

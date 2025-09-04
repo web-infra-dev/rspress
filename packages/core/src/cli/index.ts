@@ -65,12 +65,14 @@ cli
         );
         cliWatcher.on('all', async (eventName, filepath) => {
           const basename = path.basename(filepath);
+          if (eventName === 'change' && META_FILES.includes(basename)) {
+            return;
+          }
+
           if (
             eventName === 'add' ||
             eventName === 'unlink' ||
-            (eventName === 'change' &&
-              (CONFIG_FILES.includes(basename) ||
-                META_FILES.includes(basename)))
+            (eventName === 'change' && CONFIG_FILES.includes(basename))
           ) {
             if (isRestarting) {
               return;

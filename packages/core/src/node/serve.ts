@@ -2,6 +2,7 @@ import { mergeRsbuildConfig, type RsbuildInstance } from '@rsbuild/core';
 import type { UserConfig } from '@rspress/shared';
 import { initRsbuild } from './initRsbuild';
 import { PluginDriver } from './PluginDriver';
+import { RouteService } from './route/RouteService';
 
 interface ServeOptions {
   config: UserConfig;
@@ -31,8 +32,7 @@ export async function serve(
     },
   });
 
-  const pluginDriver = new PluginDriver(config, configFilePath, true);
-  await pluginDriver.init();
+  const pluginDriver = await PluginDriver.create(config, configFilePath, true);
 
   const modifiedConfig = await pluginDriver.modifyConfig();
 
@@ -40,6 +40,7 @@ export async function serve(
     config.root!,
     modifiedConfig,
     pluginDriver,
+    await RouteService.createSimple(),
     false,
   );
 
