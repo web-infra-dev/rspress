@@ -4,10 +4,12 @@ import { LiveCodeEditor } from './LiveCodeEditor';
 export interface CssLiveCodeEditorProps {
   initialCode: string;
   styleId?: string;
+  value?: string;
 }
 
 export function CssLiveCodeEditor({
   initialCode,
+  value,
   styleId = 'live-css-editor-style',
 }: CssLiveCodeEditorProps) {
   const [code, setCode] = useState(initialCode);
@@ -18,11 +20,14 @@ export function CssLiveCodeEditor({
   }, [initialCode]);
 
   useEffect(() => {
-    const styleEl = styleElement.current || document.getElementById(styleId);
+    let styleEl: HTMLStyleElement | null = document.getElementById(
+      styleId,
+    ) as HTMLStyleElement;
     if (!styleEl) {
-      styleElement.current = document.createElement('style');
-      styleElement.current.id = styleId;
-      document.head.appendChild(styleElement.current);
+      styleEl = document.createElement('style') as HTMLStyleElement;
+      styleEl.id = styleId;
+      document.head.appendChild(styleEl);
+      styleElement.current = styleEl;
     } else {
       styleEl.textContent = initialCode;
     }
@@ -31,16 +36,20 @@ export function CssLiveCodeEditor({
     };
   }, []);
 
+  useEffect(() => {
+    if (styleElement.current) {
+      styleElement.current.textContent = code;
+    }
+  }, [code]);
+
   return (
     <LiveCodeEditor
       lang="css"
-      value={code}
+      value={value ?? code}
       onChange={code => {
         setCode(code);
-        const styleEl =
-          styleElement.current || document.getElementById(styleId);
-        if (styleEl) {
-          styleEl.textContent = code;
+        if (styleElement.current) {
+          styleElement.current.textContent = code;
         }
       }}
     />
