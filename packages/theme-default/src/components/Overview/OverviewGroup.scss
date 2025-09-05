@@ -1,12 +1,21 @@
 .overviewGroup {
+  column-count: 2;
+  column-gap: 20px;
+  width: 100%;
+
   &__item {
+    width: 100%;
+
+    margin-bottom: 20px;
+
+    break-inside: avoid;
     display: flex;
     flex-direction: column;
     align-items: flex-start;
-    align-self: stretch;
+    align-self: flex-start;
 
     position: relative;
-    margin: 20px 0;
+    // margin: 20px 0;
     background-color: var(--rp-code-block-bg);
     border: var(--rp-code-block-border);
     overflow-x: auto;
@@ -22,6 +31,8 @@
       background-color: var(--rp-code-title-bg);
       color: var(--rp-c-text-1);
       font-weight: 600;
+
+      border-bottom: 1px solid var(--rp-code-block-border);
     }
 
     &__content {
@@ -44,18 +55,29 @@
       }
 
       // 2 columns
-      @media (max-width: 1200px) {
+      @media (max-width: 1280px) {
         &__item {
-          flex: 1 1 calc(50% - 12px);
+          flex: 1 1 calc(50% - 20px);
         }
       }
 
       // 1 column
-      @media (max-width: 700px) {
+      @media (max-width: 768px) {
         &__item {
           flex: 1 1 100%;
         }
       }
+    }
+  }
+  @media (max-width: 768px) {
+    & {
+      columns: 1;
+    }
+  }
+
+  @media (max-width: 1280px) {
+    & {
+      columns: 1;
     }
   }
 }
