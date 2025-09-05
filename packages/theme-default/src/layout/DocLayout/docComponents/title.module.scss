@@ -32,6 +32,17 @@
   }
 }
 
+:global(.rspress-overview) {
+  .h2Title:first-of-type::before {
+    content: '';
+    display: block;
+    height: 1px;
+    width: 100%;
+    background: var(--rp-c-divider-light);
+    margin-bottom: 3rem;
+  }
+}
+
 .title {
   font-weight: 600;
   position: relative;
