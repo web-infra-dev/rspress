@@ -1,0 +1,29 @@
+@layer rp-vars {
+  :root {
+    --rp-nav-height: 72px;
+    --rp-sidebar-width: 320px;
+    --rp-sidebar-menu-height: 46px;
+    --rp-aside-width: 268px;
+    --rp-content-padding-x: 24px;
+    --rp-content-padding-y: 48px;
+  }
+
+  @media (max-width: 768px) {
+    html:root {
+      --rp-nav-height: 56px;
+    }
+  }
+
+  @media (min-width: 1280px) {
+    html:root {
+      --rp-sidebar-menu-height: 0px;
+    }
+  }
+
+  :root {
+    --rp-z-index-local-nav: 10;
+    --rp-z-index-nav: 20;
+    --rp-z-index-backdrop: 30;
+    --rp-z-index-sidebar: 40;
+  }
+}

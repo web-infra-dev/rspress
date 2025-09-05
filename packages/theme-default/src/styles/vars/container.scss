@@ -1,54 +1,55 @@
 /*
   * Container Style
  */
-:root {
-  --rp-container-note-border: var(--rp-c-divider-light);
-  --rp-container-note-text: var(--rp-c-text-1);
-  --rp-container-note-bg: var(--rp-c-bg-soft);
-  --rp-container-note-code-bg: rgba(128, 128, 128, 0.1);
-  --rp-container-note-link: var(--rp-c-link);
+@layer rp-vars {
+  html {
+    --rp-container-note-border: var(--rp-c-divider-light);
+    --rp-container-note-text: var(--rp-c-text-1);
+    --rp-container-note-bg: var(--rp-c-bg-soft);
+    --rp-container-note-code-bg: rgba(128, 128, 128, 0.1);
+    --rp-container-note-link: var(--rp-c-link);
 
-  --rp-container-tip-border: rgba(7, 156, 112, 0.2);
-  --rp-container-tip-text: #278359;
-  --rp-container-tip-bg: rgba(7, 156, 112, 0.06);
-  --rp-container-tip-code-bg: rgba(7, 156, 112, 0.1);
+    --rp-container-tip-border: rgba(7, 156, 112, 0.2);
+    --rp-container-tip-text: #278359;
+    --rp-container-tip-bg: rgba(7, 156, 112, 0.06);
+    --rp-container-tip-code-bg: rgba(7, 156, 112, 0.1);
 
-  --rp-container-info-border: rgba(0, 149, 255, 0.2);
-  --rp-container-info-text: #07f;
-  --rp-container-info-bg: rgba(0, 149, 255, 0.06);
-  --rp-container-info-code-bg: rgba(0, 149, 255, 0.1);
+    --rp-container-info-border: rgba(0, 149, 255, 0.2);
+    --rp-container-info-text: #07f;
+    --rp-container-info-bg: rgba(0, 149, 255, 0.06);
+    --rp-container-info-code-bg: rgba(0, 149, 255, 0.1);
 
-  --rp-container-warning-border: rgba(255, 197, 23, 0.4);
-  --rp-container-warning-text: #887233;
-  --rp-container-warning-bg: rgba(255, 197, 23, 0.1);
-  --rp-container-warning-code-bg: rgba(255, 197, 23, 0.1);
+    --rp-container-warning-border: rgba(255, 197, 23, 0.4);
+    --rp-container-warning-text: #887233;
+    --rp-container-warning-bg: rgba(255, 197, 23, 0.1);
+    --rp-container-warning-code-bg: rgba(255, 197, 23, 0.1);
 
-  --rp-container-danger-border: rgba(237, 60, 80, 0.2);
-  --rp-container-danger-text: #ab2131;
-  --rp-container-danger-bg: rgba(237, 60, 80, 0.08);
-  --rp-container-danger-code-bg: rgba(237, 60, 80, 0.1);
+    --rp-container-danger-border: rgba(237, 60, 80, 0.2);
+    --rp-container-danger-text: #ab2131;
+    --rp-container-danger-bg: rgba(237, 60, 80, 0.08);
+    --rp-container-danger-code-bg: rgba(237, 60, 80, 0.1);
 
-  --rp-container-details-border: var(--rp-c-divider-light);
-  --rp-container-details-text: var(--rp-c-text-1);
-  --rp-container-details-bg: var(--rp-c-bg-soft);
-  --rp-container-details-code-bg: rgba(128, 128, 128, 0.1);
-  --rp-container-details-link: var(--rp-c-link);
-}
+    --rp-container-details-border: var(--rp-c-divider-light);
+    --rp-container-details-text: var(--rp-c-text-1);
+    --rp-container-details-bg: var(--rp-c-bg-soft);
+    --rp-container-details-code-bg: rgba(128, 128, 128, 0.1);
+    --rp-container-details-link: var(--rp-c-link);
+  }
+  html.rp-dark {
+    --rp-container-tip-text: #3ec480;
+    --rp-container-tip-bg: rgba(7, 156, 112, 0.1);
 
-.dark {
-  --rp-container-tip-text: #3ec480;
-  --rp-container-tip-bg: rgba(7, 156, 112, 0.1);
+    --rp-container-info-text: #66c2ff;
+    --rp-container-info-bg: rgba(0, 149, 255, 0.1);
 
-  --rp-container-info-text: #66c2ff;
-  --rp-container-info-bg: rgba(0, 149, 255, 0.1);
+    --rp-container-warning-text: rgb(251, 180, 81);
+    --rp-container-warning-border: rgba(255, 197, 23, 0.25);
+    --rp-container-warning-bg: rgba(255, 197, 23, 0.12);
 
-  --rp-container-warning-text: rgb(251, 180, 81);
-  --rp-container-warning-border: rgba(255, 197, 23, 0.25);
-  --rp-container-warning-bg: rgba(255, 197, 23, 0.12);
-
-  --rp-container-danger-text: rgb(247, 110, 133);
-  --rp-container-danger-border: rgba(237, 60, 80, 0.3);
-  --rp-container-danger-bg: rgba(237, 60, 80, 0.12);
+    --rp-container-danger-text: rgb(247, 110, 133);
+    --rp-container-danger-border: rgba(237, 60, 80, 0.3);
+    --rp-container-danger-bg: rgba(237, 60, 80, 0.12);
+  }
 }
 
 .rspress-doc .rspress-directive {
