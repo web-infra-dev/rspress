@@ -15,6 +15,11 @@
     "activeMatch": "/api/"
   },
   {
+    "text": "UI",
+    "link": "/theme/vars",
+    "activeMatch": "/theme/"
+  },
+  {
     "text": "版本",
     "items": [
       {

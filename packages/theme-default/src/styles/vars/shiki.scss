@@ -1,0 +1,154 @@
+/**
+ * Custom shiki code block theme
+ * reference: https://github.com/shikijs/shiki/blob/main/docs/themes.md
+ * -------------------------------------------------------------------------- */
+
+@layer rp-vars {
+  html:not(.rp-dark) {
+    --shiki-foreground: #414141;
+    --shiki-background: transparent;
+    --shiki-token-constant: #1976d2;
+    --shiki-token-string: #31a94d;
+    --shiki-token-comment: rgb(182, 180, 180);
+    --shiki-token-keyword: #cf2727;
+    --shiki-token-parameter: #f59403;
+    --shiki-token-function: #7041c8;
+    --shiki-token-string-expression: #218438;
+    --shiki-token-punctuation: #242323;
+    --shiki-token-link: #22863a;
+
+    // diff language
+    --shiki-token-deleted: #d32828;
+    --shiki-token-inserted: #22863a;
+
+    // additional transformers colors (not officialnal)
+    --shiki-diff-add-marker-color: #4fb74d;
+    --shiki-diff-remove-marker-color: #f47481;
+    --shiki-diff-add-bg-color: rgba(16, 185, 129, 0.1);
+    --shiki-diff-remove-bg-color: rgba(244, 63, 94, 0.1);
+    --shiki-highlight-bg-color: rgba(0, 99, 199, 0.1);
+    --shiki-highlight-error-bg-color: rgba(244, 63, 94, 0.1);
+    --shiki-highlight-warning-bg-color: rgba(234, 179, 8, 0.1);
+    --shiki-line-number-color: rgba(115, 138, 148, 0.4);
+  }
+
+  html.rp-dark {
+    --shiki-foreground: #cac7c7;
+    --shiki-token-constant: #6fb0fa;
+    --shiki-token-string: #f9a86e;
+    --shiki-token-comment: #6a727b;
+    --shiki-token-keyword: #f47481;
+    --shiki-token-parameter: #ff9800;
+    --shiki-token-function: #ae8eeb;
+    --shiki-token-string-expression: #4fb74d;
+    --shiki-token-punctuation: #bbbbbb;
+    --shiki-token-link: #f9a76d;
+
+    // diff language
+    --shiki-token-deleted: #ee6d7a;
+    --shiki-token-inserted: #36c47f;
+
+    // additional transformers colors (not officialnal)
+    --shiki-diff-add-marker-color: #4fb74d;
+    --shiki-diff-remove-marker-color: #f47481;
+    --shiki-diff-add-bg-color: rgba(16, 185, 129, 0.1);
+    --shiki-diff-remove-bg-color: rgba(244, 63, 94, 0.1);
+    --shiki-highlight-bg-color: rgba(0, 99, 199, 0.1);
+    --shiki-highlight-error-bg-color: rgba(244, 63, 94, 0.1);
+    --shiki-highlight-warning-bg-color: rgba(234, 179, 8, 0.1);
+    --shiki-line-number-color: rgba(115, 138, 148, 0.4);
+  }
+}
+
+.shiki span.line {
+  padding: 0 1.25rem;
+  display: inline-block;
+}
+
+.diff,
+.code-line-highlighted {
+  transition: background-color 0.5s;
+  padding: 0 20px;
+  width: 100%;
+  display: inline-block;
+  position: relative;
+}
+
+.diff.add::after {
+  content: '+';
+  position: absolute;
+  left: 10px;
+  top: 0px;
+  color: var(--shiki-diff-add-marker-color);
+}
+
+.diff.remove::after {
+  content: '-';
+  position: absolute;
+  left: 10px;
+  top: 0px;
+  color: var(--shiki-diff-remove-marker-color);
+}
+
+.has-diff [class*='language-'] .diff.add {
+  background-color: var(--shiki-diff-add-bg-color);
+  padding: 0 20px 0 19px;
+}
+
+[class*='language-'] code .diff.remove {
+  background-color: var(--shiki-diff-remove-bg-color);
+  padding: 0 20px 0 19px;
+}
+
+.rspress-code-content {
+  .has-highlighted [class*='language-'] {
+    .line.highlighted {
+      width: 100%;
+      position: static;
+      display: inline-block;
+      background-color: var(--shiki-highlight-bg-color);
+    }
+    .line.highlighted.error {
+      background-color: var(--shiki-highlight-error-bg-color);
+    }
+    .line.highlighted.warning {
+      background-color: var(--shiki-highlight-warning-bg-color);
+    }
+  }
+}
+
+.has-focused [class*='language-'] {
+  .line:not(.focused) {
+    filter: blur(0.095rem);
+    opacity: 0.4;
+    transition:
+      filter 0.35s,
+      opacity 0.35s;
+  }
+  &:hover {
+    .line:not(.focused) {
+      filter: blur(0);
+      opacity: 1;
+    }
+  }
+}
+
+.has-line-number code {
+  counter-reset: step;
+  counter-increment: step 0;
+  & .line-number::before {
+    content: counter(step);
+    counter-increment: step;
+    width: 15px;
+    margin-right: 15px;
+    display: inline-block;
+    text-align: right;
+    color: var(--shiki-line-number-color);
+  }
+}
+
+.rp-force-wrap {
+  code {
+    white-space: pre-wrap !important;
+  }
+}

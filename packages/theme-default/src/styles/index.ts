@@ -1,11 +1,11 @@
-/**
- * The theme code will be bundled by Modern.js Module Tools, but it will ignore the `@import` in css file. So we need to import the css file in js/ts file to make sure the css file will be bundled.
- */
-import './vars.css';
+// load all the styles through js file
+import './vars/calculation.scss';
+import './vars/colors.scss';
+import './vars/shiki.scss';
+import './vars/container.scss';
+import './vars/code.scss';
+
 import './base.css';
 import './tailwind.css';
-import './code.css';
 import './scrollbar.scss';
-import './shiki.scss';
-import './container.css';
 import 'nprogress/nprogress.css';
