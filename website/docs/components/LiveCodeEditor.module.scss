@@ -37,10 +37,10 @@
   font-size: var(--rp-code-font-size);
   line-height: inherit;
 
-  /* 让 textarea 不显示自己的滚动条，跟随外层滚动 */
   overflow: hidden;
-  /* 禁止 textarea 滚动，始终和代码块重叠 */
-  // pointer-events: auto;
+  pointer-events: auto;
+
+  caret-color: rgba(156, 163, 175, 0.7);
 }
 
 .codeInput::selection {
