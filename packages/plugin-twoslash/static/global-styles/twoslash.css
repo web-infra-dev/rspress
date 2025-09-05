@@ -46,19 +46,23 @@
 
 /* ===== Hover Info ===== */
 .twoslash:hover .twoslash-hover::after {
-  content: '';
-  position: absolute;
-  bottom: -3px;
-  left: 0;
-  right: 0;
   opacity: 0.4;
-  border-bottom: 1px dotted var(--twoslash-underline-color);
 }
 
 .twoslash .twoslash-hover {
-  transition: border-color 0.3s;
-  transition-timing-function: ease;
   position: relative;
+
+  &::after {
+    content: '';
+    position: absolute;
+    bottom: -3px;
+    left: 0;
+    right: 0;
+    opacity: 0;
+    border-bottom: 1px dotted var(--twoslash-underline-color);
+    transition: opacity 0.3s;
+    transition-timing-function: ease;
+  }
 }
 
 .twoslash .twoslash-popup-trigger {
