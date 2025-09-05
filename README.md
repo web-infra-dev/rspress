@@ -68,3 +68,17 @@ Rspress uses [Web Infra QoS](https://web-infra-qos.netlify.app?product=rspress) 
 ## 📖 License
 
 Rspress is licensed under the [MIT License](./LICENSE).
+
+## Deploy with Zephyr Cloud
+
+<img alt="Zephyr Cloud Logo" src=".github/static/zephyr.svg" height="250px" width="400px">
+
+[Zephyr Cloud](https://zephyr-cloud.io) is a cloud deployment provider that integrates directly into your Rspress build with zero config.
+
+- Automatically deploys your Rspress documentation sites during the build process - simply save your code and get a URL in seconds.
+- Native support for Rspack-based builds including Rspress static sites.
+- Deploy using BYOC to any cloud provider with global edge distribution.
+- Manages complex multi-artifact deployments across different release cadences, handles micro frontend dependency management automatically, and provides version rollback and roll-forward capabilities.
+
+Start for free today at [zephyr-cloud.io](https://zephyr-cloud.io).
+
