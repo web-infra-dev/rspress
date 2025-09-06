@@ -45,15 +45,24 @@
 }
 
 /* ===== Hover Info ===== */
-.twoslash:hover .twoslash-hover {
-  border-color: var(--twoslash-underline-color);
+.twoslash:hover .twoslash-hover::after {
+  opacity: 0.4;
 }
 
 .twoslash .twoslash-hover {
-  border-bottom: 1px dotted transparent;
-  transition: border-color 0.3s;
-  transition-timing-function: ease;
   position: relative;
+
+  &::after {
+    content: '';
+    position: absolute;
+    bottom: -3px;
+    left: 0;
+    right: 0;
+    opacity: 0;
+    border-bottom: 1px dotted var(--twoslash-underline-color);
+    transition: opacity 0.3s;
+    transition-timing-function: ease;
+  }
 }
 
 .twoslash .twoslash-popup-trigger {
@@ -149,7 +158,7 @@
 .twoslash .twoslash-popup-docs {
   color: var(--twoslash-docs-color);
   font-family: var(--twoslash-docs-font);
-  font-size: 0.8em;
+  font-size: 0.85em;
   border-top: 1px solid var(--twoslash-border-color);
 }
 
