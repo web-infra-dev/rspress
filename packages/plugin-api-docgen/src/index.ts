@@ -1,5 +1,3 @@
-/// <reference path="../index.d.ts" />
-
 import fs from 'node:fs';
 import path from 'node:path';
 import type { RspressPlugin } from '@rspress/core';
@@ -41,6 +39,12 @@ export function pluginApiDocgen(options?: PluginOptions): RspressPlugin {
         parseToolOptions,
         isProd,
       });
+      config.builderConfig = config.builderConfig || {};
+      config.builderConfig.source = config.builderConfig.source || {};
+      config.builderConfig.source.define = {
+        ...config.builderConfig.source.define,
+        RSPRESS_PLUGIN_API_DOCGEN_MAP: JSON.stringify(apiDocMap),
+      };
     },
     async modifySearchIndexData(pages) {
       // Update the search index of module doc which includes `<API moduleName="foo" />` and `<API moduleName="foo" ></API>
@@ -72,9 +76,6 @@ export function pluginApiDocgen(options?: PluginOptions): RspressPlugin {
           page.content = content;
         }),
       );
-    },
-    extendPageData(pageData) {
-      pageData.apiDocMap = { ...apiDocMap };
     },
     markdown: {
       globalComponents: [
