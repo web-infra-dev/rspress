@@ -30,8 +30,8 @@ importers:
         specifier: ^5.0.1
         version: 5.0.1
       cross-env:
-        specifier: ^7.0.3
-        version: 7.0.3
+        specifier: ^10.0.0
+        version: 10.0.0
       cross-spawn:
         specifier: ^7.0.6
         version: 7.0.6
@@ -45,8 +45,8 @@ importers:
         specifier: 5.1.1
         version: 5.1.1
       heading-case:
-        specifier: ^1.0.1
-        version: 1.0.1
+        specifier: ^1.0.2
+        version: 1.0.2
       husky:
         specifier: ^9.1.7
         version: 9.1.7
@@ -2387,6 +2387,9 @@ packages:
   '@emnapi/wasi-threads@1.0.4':
     resolution: {integrity: sha512-PJR+bOmMOPH8AtcTGAyYNiuJ3/Fcoj2XN/gBEWzDIKh254XO+mM9XoXHk5GNEhodxeMznbg7BlRojVbKN+gC6g==}
 
+  '@epic-web/invariant@1.0.0':
+    resolution: {integrity: sha512-lrTPqgvfFQtR/eY/qkIzp98OGdNJu0m5ji3q/nJI8v3SXkRKEnWiOxMmbvcSoAIzv/cGiuvRy57k4suKQSAdwA==}
+
   '@esbuild/aix-ppc64@0.21.5':
     resolution: {integrity: sha512-1SDgH6ZSPTlggy1yI6+Dbkiz8xzpHJEVAlF/AM1tHPLsf5STom9rwtjE4hKAF20FfXXNTFqEYXyJNWh1GiZedQ==}
     engines: {node: '>=12'}
@@ -3957,9 +3960,9 @@ packages:
   create-rstack@1.5.6:
     resolution: {integrity: sha512-ZJpD6klOdBv4Vvh58I7xdgU4wJMx6GZeCvPAywPL1zlMSvaQDtCYLBFBZXAizasO8H/hGlo10rYHJz6eDS9cQg==}
 
-  cross-env@7.0.3:
-    resolution: {integrity: sha512-+/HKd6EgcQCJGh2PSjZuUitQBQynKor4wrFbRg4DtAgS1aWO+gU52xpH7M9ScGgXSYmAVS9bIJ8EzuaGw0oNAw==}
-    engines: {node: '>=10.14', npm: '>=6', yarn: '>=1'}
+  cross-env@10.0.0:
+    resolution: {integrity: sha512-aU8qlEK/nHYtVuN4p7UQgAwVljzMg8hB4YK5ThRqD2l/ziSnryncPNn7bMLt5cFYsKVKBh8HqLqyCoTupEUu7Q==}
+    engines: {node: '>=20'}
     hasBin: true
 
   cross-spawn@7.0.6:
@@ -4608,8 +4611,8 @@ packages:
     resolution: {integrity: sha512-F/1DnUGPopORZi0ni+CvrCgHQ5FyEAHRLSApuYWMmrbSwoN2Mn/7k+Gl38gJnR7yyDZk6WLXwiGod1JOWNDKGw==}
     hasBin: true
 
-  heading-case@1.0.1:
-    resolution: {integrity: sha512-CTs1K2eJy+BrwG35AmPH80Jd15BD6waTEOhex0WWirylAWfdoPYD/gv5H+TXXGFsR9DyOWNWUMLU8JRsZctkcQ==}
+  heading-case@1.0.2:
+    resolution: {integrity: sha512-/auUg52lwuEOlb3IhtTj5UQvqdr3J/e07ibuK+YU/JI8QI+FVWsMbxGbYbwSpD5qLXXUAs2MzdiBt1/K/Q0fTw==}
     hasBin: true
 
   highlight.js@11.8.0:
@@ -7733,6 +7736,8 @@ snapshots:
     dependencies:
       tslib: 2.8.1
 
+  '@epic-web/invariant@1.0.0': {}
+
   '@esbuild/aix-ppc64@0.21.5':
     optional: true
 
@@ -9341,8 +9346,9 @@ snapshots:
 
   create-rstack@1.5.6: {}
 
-  cross-env@7.0.3:
+  cross-env@10.0.0:
     dependencies:
+      '@epic-web/invariant': 1.0.0
       cross-spawn: 7.0.6
 
   cross-spawn@7.0.6:
@@ -10202,7 +10208,7 @@ snapshots:
   he@1.2.0:
     optional: true
 
-  heading-case@1.0.1: {}
+  heading-case@1.0.2: {}
 
   highlight.js@11.8.0: {}
 
