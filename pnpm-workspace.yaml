@@ -12,3 +12,7 @@ onlyBuiltDependencies:
   - 'core-js'
   - 'esbuild'
   - 'nx'
+
+hoistPattern: []
+linkWorkspacePackages: true
+strictPeerDependencies: true
