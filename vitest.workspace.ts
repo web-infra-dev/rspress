@@ -12,7 +12,7 @@ export default defineWorkspace([
   {
     test: {
       name: 'node',
-      globals: true,
+      globals: false,
       environment: 'node',
       testTimeout: 30000,
       // restoreMocks: true,
