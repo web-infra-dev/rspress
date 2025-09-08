@@ -1,3 +1,4 @@
+import { expect, test } from 'vitest';
 import { getRoutePathParts, normalizeRoutePath } from './normalizeRoutePath';
 
 test('getRoutePathParts', () => {

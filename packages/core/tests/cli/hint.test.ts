@@ -1,6 +1,6 @@
 import { logger } from '@rspress/shared/logger';
 import { fs, vol } from 'memfs';
-import { describe, it, vi } from 'vitest';
+import { describe, expect, it, vi } from 'vitest';
 import { hintThemeBreakingChange } from '../../src/node/logger/hint';
 
 vi.mock('node:fs/promises', () => {
