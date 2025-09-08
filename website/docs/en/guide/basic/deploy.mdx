@@ -1,5 +1,7 @@
 # Deployment
 
+import { PackageManagerTabs } from '@theme';
+
 In this section, we will discuss the deployment of the project. We assume that you have completed the development of the project and now need to deploy the project online. You need to consider the following aspects:
 
 - Production build and preview of the project.
@@ -76,9 +78,7 @@ After completing the above configuration, we can deploy the output to the server
 
 1. Install the [zephyr-rspress-plugin](https://www.npmjs.com/package/zephyr-rspress-plugin):
 
-```bash
-npm install zephyr-rspress-plugin --save-dev
-```
+<PackageManagerTabs command="install zephyr-rspress-plugin " />
 
 2. Add the plugin to your `rspress.config.ts`:
 
@@ -87,19 +87,13 @@ import { defineConfig } from '@rspress/core';
 import { withZephyr } from 'zephyr-rspress-plugin';
 
 export default defineConfig({
-  builderConfig: {
-    plugins: [
-      withZephyr()
-    ],
-  },
+  plugins: [withZephyr()],
 });
 ```
 
 3. Build your project as usual:
 
-```bash
-npm run build
-```
+<PackageManagerTabs command="run build" />
 
 During the build process, your Rspress documentation site will be automatically deployed and you'll receive a deployment URL. Zephyr Cloud handles asset optimization, global CDN distribution, and provides automatic rollback capabilities for your documentation sites.
 
