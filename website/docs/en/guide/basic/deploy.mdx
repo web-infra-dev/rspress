@@ -70,32 +70,17 @@ export default defineConfig({
 
 After completing the above configuration, we can deploy the output to the server. You have many choices, such as `Zephyr`, `GitHub Pages`, `Netlify`, `Vercel`, etc. Here we take `Zephyr`, `GitHub Pages` and `Netlify` as examples to explain how to deploy.
 
-## Deploy with Zephyr Cloud
+### Deploy with Zephyr Cloud
 
 [Zephyr Cloud](https://zephyr-cloud.io) is a zero-config deployment platform that integrates directly into your build process and provides global edge distribution.
 
 #### How to deploy
 
-1. Install the [zephyr-rspress-plugin](https://www.npmjs.com/package/zephyr-rspress-plugin):
+Follow the steps in [zephyr-rspress-plugin](https://www.npmjs.com/package/zephyr-rspress-plugin)
 
-<PackageManagerTabs command="install zephyr-rspress-plugin " />
+During the build process, your Rspress documentation site will be automatically deployed and you'll receive a deployment URL.
 
-2. Add the plugin to your `rspress.config.ts`:
-
-```ts title="rspress.config.ts"
-import { defineConfig } from '@rspress/core';
-import { withZephyr } from 'zephyr-rspress-plugin';
-
-export default defineConfig({
-  plugins: [withZephyr()],
-});
-```
-
-3. Build your project as usual:
-
-<PackageManagerTabs command="run build" />
-
-During the build process, your Rspress documentation site will be automatically deployed and you'll receive a deployment URL. Zephyr Cloud handles asset optimization, global CDN distribution, and provides automatic rollback capabilities for your documentation sites.
+Zephyr Cloud handles asset optimization, global CDN distribution, and provides automatic rollback capabilities for your documentation sites.
 
 ### Deploy via GitHub actions
 
