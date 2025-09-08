@@ -31,7 +31,7 @@
     ]
   },
   "devDependencies": {
-    "@biomejs/biome": "^2.2.2",
+    "@biomejs/biome": "^2.2.3",
     "@changesets/cli": "^2.29.6",
     "@playwright/test": "1.55.0",
     "@rspress/config": "workspace:*",
@@ -55,7 +55,7 @@
     "vitest": "2.1.9",
     "zx": "^8.8.1"
   },
-  "packageManager": "pnpm@10.15.0",
+  "packageManager": "pnpm@10.15.1",
   "engines": {
     "node": ">=18.0.0"
   },
