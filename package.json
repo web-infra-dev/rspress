@@ -31,7 +31,7 @@
     ]
   },
   "devDependencies": {
-    "@biomejs/biome": "^2.2.2",
+    "@biomejs/biome": "^2.2.3",
     "@changesets/cli": "^2.29.6",
     "@playwright/test": "1.55.0",
     "@rspress/config": "workspace:*",
@@ -40,7 +40,7 @@
     "check-dependency-version-consistency": "^5.0.1",
     "cross-env": "^7.0.3",
     "cross-spawn": "^7.0.6",
-    "cspell": "^8.19.4",
+    "cspell": "^9.2.1",
     "cspell-ban-words": "^0.0.4",
     "get-port": "5.1.1",
     "heading-case": "^1.0.1",
@@ -55,7 +55,7 @@
     "vitest": "2.1.9",
     "zx": "^8.8.1"
   },
-  "packageManager": "pnpm@10.15.0",
+  "packageManager": "pnpm@10.15.1",
   "engines": {
     "node": ">=18.0.0"
   },

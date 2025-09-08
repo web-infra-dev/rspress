@@ -70,7 +70,6 @@ export function Editor(props: EditorProps) {
           lineNumbersMinChars: 7,
           scrollBeyondLastLine: false,
           automaticLayout: true,
-          // @ts-expect-error - FIXME: seems upstream typing issue
           wordBasedSuggestions: true,
           quickSuggestions: true,
           scrollbar: {
