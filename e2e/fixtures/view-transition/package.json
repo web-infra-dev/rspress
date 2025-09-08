@@ -11,7 +11,7 @@
     "@rspress/core": "workspace:*"
   },
   "devDependencies": {
-    "@types/jest": "~29.5.14",
+    "@types/jest": "~30.0.0",
     "@types/node": "^22.8.1"
   }
 }

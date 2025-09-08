@@ -46,7 +46,7 @@
   },
   "devDependencies": {
     "@rslib/core": "0.12.4",
-    "@types/jest": "~29.5.14",
+    "@types/jest": "~30.0.0",
     "@types/lodash-es": "^4.17.12",
     "@types/node": "^22.8.1",
     "@types/react": "^19.1.12",
