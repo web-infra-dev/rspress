@@ -63,7 +63,7 @@ export function pluginPlayground(
 
   const preloads: string[] = [];
   const monacoPrefix = (monacoLoader.paths?.vs || DEFAULT_MONACO_URL).replace(
-    /\/*$/g,
+    /\/+$/,
     '',
   );
   preloads.push(`${monacoPrefix}/loader.js`);
