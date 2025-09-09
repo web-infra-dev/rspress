@@ -77,7 +77,7 @@ test.describe('hmr test', async () => {
     await expect(
       page.locator('.rspress-sidebar-item :text("Test")'),
     ).toBeVisible();
-    await fs.writeFile(TEST_META_FILE, '["Foo"]');
+    await fs.writeFile(TEST_META_FILE, '["foo"]');
     await expect(
       page.locator('.rspress-sidebar-item :text("Foo")'),
     ).toBeVisible();
