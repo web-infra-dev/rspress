@@ -10,7 +10,6 @@ import type { Root } from 'mdast';
 import { RspackVirtualModulePlugin } from 'rspack-plugin-virtual-module';
 import type { Processor } from 'unified';
 import { DEFAULT_BABEL_URL, DEFAULT_MONACO_URL } from '../web/constant';
-import { normalizeUrl } from '../web/utils';
 import { staticPath } from './constant';
 import { remarkPlugin } from './remarkPlugin';
 import { parseImports } from './utils';
@@ -63,9 +62,12 @@ export function pluginPlayground(
   }
 
   const preloads: string[] = [];
-  const monacoPrefix = monacoLoader.paths?.vs || DEFAULT_MONACO_URL;
-  preloads.push(normalizeUrl(`${monacoPrefix}/loader.js`));
-  preloads.push(normalizeUrl(`${monacoPrefix}/editor/editor.main.js`));
+  const monacoPrefix = (monacoLoader.paths?.vs || DEFAULT_MONACO_URL).replace(
+    /\/*$/g,
+    '',
+  );
+  preloads.push(`${monacoPrefix}/loader.js`);
+  preloads.push(`${monacoPrefix}/editor/editor.main.js`);
 
   return {
     name: '@rspress/plugin-playground',
