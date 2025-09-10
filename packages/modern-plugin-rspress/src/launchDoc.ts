@@ -84,7 +84,9 @@ export async function launchDoc({
 
       // dir --> SidebarGroup[]
       const directoryItems = await Promise.all(
-        directories.map(async (directory: string) => {
+        directories.map(async (directoryRaw: string) => {
+          const directory = directoryRaw.replace(/\/+$/, ''); // tinyglob ends with /
+
           const directoryCwd = join(cwd, directory);
           const hasIndex =
             (
