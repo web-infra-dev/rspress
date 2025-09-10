@@ -24,7 +24,7 @@ export function NavMenuSingleItem(
         key={item.text}
         className={`rspress-nav-menu-item ${styles.singleItem} ${
           isActive ? `${styles.activeItem} rspress-nav-menu-item-active` : ''
-        } rp-text-sm rp-font-medium rp-mx-0.5 rp-px-3 rp-py-2 rp-flex rp-items-center`}
+        } rp-text-sm rp-font-medium rp-mx-0.5 rp-px-3 rp-py-2 rp-flex rp-items-center rp-break-keep`}
       >
         <Tag tag={item.tag} />
         {item.text}
