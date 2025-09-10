@@ -124,26 +124,25 @@ p {
 }
 
 /* #region keep the html syntax in markdown original style e.g: <ul></ul> */
-/* why ".rspress-doc > ul"? Because not to affect the component library of users */
-.rspress-doc > ul {
+.rspress-doc ul {
   list-style: disc;
 }
-.rspress-doc > ol {
+.rspress-doc ol {
   list-style: decimal;
 }
 
-.rspress-doc > ul,
-.rspress-doc > ol {
+.rspress-doc ul,
+.rspress-doc ol {
   /* @apply pl-5 my-4 lefting-7; */
   padding-left: 1.25rem;
   margin-top: 1rem;
   margin-bottom: 1rem;
   line-height: 1.75rem;
 }
-.rspress-doc > ul li:not(:first-child) {
+.rspress-doc ul li:not(:first-child) {
   margin-top: 0.5rem;
 }
-.rspress-doc > ol li:not(:first-child) {
+.rspress-doc ol li:not(:first-child) {
   margin-top: 0.5rem;
 }
 /* #endregion */
