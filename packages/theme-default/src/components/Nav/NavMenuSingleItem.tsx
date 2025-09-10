@@ -30,7 +30,7 @@ export function NavMenuSingleItem(
         key={item.text}
         className={`rspress-nav-menu-item ${styles.singleItem} ${
           isActive ? styles.activeItem : ''
-        } text-sm font-medium ${item.compact ? 'mx-0.5' : 'mx-1.5'} px-3 py-2 flex items-center`}
+        } text-sm font-medium ${item.compact ? 'mx-0.5' : 'mx-1.5'} px-3 py-2 flex items-center break-keep`}
       >
         <Tag tag={item.tag} />
         {item.text}

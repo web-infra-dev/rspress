@@ -8,7 +8,7 @@ import styles from './index.module.scss';
 export function Search() {
   const [focused, setFocused] = useState(false);
   const [metaKey, setMetaKey] = useState<null | string>(null);
-  const { searchPlaceholderText = 'Search Docs' } = useLocaleSiteData();
+  const { searchPlaceholderText = 'Search' } = useLocaleSiteData();
   useEffect(() => {
     setMetaKey(
       /(Mac|iPhone|iPod|iPad)/i.test(navigator.platform) ? '⌘' : 'Ctrl',
