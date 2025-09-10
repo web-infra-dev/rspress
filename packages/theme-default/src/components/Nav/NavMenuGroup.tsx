@@ -41,7 +41,13 @@ function ActiveGroupItem({ item }: { item: NavItemWithLink }) {
   );
 }
 
-function NormalGroupItem({ item }: { item: NavItemWithLink }) {
+function NormalGroupItem({
+  item,
+  isGroupItem,
+}: {
+  item: NavItemWithLink;
+  isGroupItem: boolean;
+}) {
   return (
     <div key={item.link} className="font-medium my-1">
       <Link href={item.link}>
@@ -49,6 +55,7 @@ function NormalGroupItem({ item }: { item: NavItemWithLink }) {
           className="rounded-2xl hover:bg-mute"
           style={{
             padding: '0.4rem 1.5rem 0.4rem 0.75rem',
+            ...(isGroupItem ? { color: 'var(--rp-c-text-2)' } : {}),
           }}
         >
           <div className="flex">
@@ -95,28 +102,38 @@ export function NavMenuGroup(item: NavMenuGroupItem) {
     setIsOpen(true);
   };
 
-  const renderLinkItem = (item: NavItemWithLink) => {
+  const renderLinkItem = (
+    item: NavItemWithLink,
+    isGroupItem: boolean = false,
+  ) => {
     const isLinkActive = new RegExp(item.activeMatch || item.link).test(
       withoutBase(pathname, base),
     );
     if (activeValue === item.text || (!activeValue && isLinkActive)) {
       return <ActiveGroupItem key={item.link} item={item} />;
     }
-    return <NormalGroupItem key={item.link} item={item} />;
+    return (
+      <NormalGroupItem key={item.link} item={item} isGroupItem={isGroupItem} />
+    );
   };
   const renderGroup = (
     item: NavItemWithChildren | NavItemWithLinkAndChildren,
   ) => {
     return (
-      <div>
-        {'link' in item ? (
-          renderLinkItem(item as NavItemWithLink)
+      <div className="my-2">
+        {'link' in item && item.link.length > 1 ? (
+          renderLinkItem(item as NavItemWithLink, true)
         ) : (
-          <p className="font-bold text-gray-400 my-1 not:first:border">
+          <p
+            className="font-sm text-gray-400 my-3 not:first:border px-2"
+            style={{
+              color: 'var(--rp-c-text-1)',
+            }}
+          >
             {item.text}
           </p>
         )}
-        {item.items.map(renderLinkItem)}
+        {item.items.map(item => renderLinkItem(item, true))}
       </div>
     );
   };
@@ -132,7 +149,7 @@ export function NavMenuGroup(item: NavMenuGroupItem) {
         ) : (
           <>
             <span
-              className="text-sm font-medium flex"
+              className="text-sm font-medium flex break-keep"
               style={{
                 marginRight: '2px',
               }}

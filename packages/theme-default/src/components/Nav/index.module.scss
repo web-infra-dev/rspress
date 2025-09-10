@@ -79,16 +79,17 @@
   margin: 0 8px;
 }
 
-@media (max-width: 768px) {
+@media (max-width: 960px) {
   .menu-item:before {
     display: none;
   }
   .mobileNavMenu {
     display: flex;
+    align-items: center;
   }
 }
 
-@media (min-width: 768px) {
+@media (min-width: 960px) {
   .menu-item {
     display: flex;
   }
