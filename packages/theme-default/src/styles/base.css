@@ -122,3 +122,21 @@ p {
     'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif;
   --rp-font-family-mono: Menlo, Monaco, Consolas, 'Courier New', monospace;
 }
+
+/* #region keep the html syntax in markdown original style e.g: <ul></ul> */
+.rspress-doc ul {
+  list-style: disc;
+}
+.rspress-doc ol {
+  list-style: decimal;
+}
+
+.rspress-doc ul,
+.rspress-doc ol {
+  /* @apply pl-5 my-4 lefting-7; */
+  padding-left: 1.25rem;
+  margin-top: 1rem;
+  margin-bottom: 1rem;
+  line-height: 1.75rem;
+}
+/* #endregion */
