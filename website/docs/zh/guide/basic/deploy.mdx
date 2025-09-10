@@ -66,7 +66,19 @@ export default defineConfig({
 
 ## 选择部署平台进行部署
 
-在完成了上面的配置之后，我们就可以将产物部署到服务器上了。你有很多种选择，比如 `GitHub Pages`、`Netlify`、`Vercel` 等等。这里我们以 `GitHub Pages` 和 `Netlify` 为例，来讲解如何部署。
+在完成了上面的配置之后，我们就可以将构建产物部署到服务器上了。你有很多种选择，比如 `Zephyr`、`GitHub Pages`、`Netlify`、`Vercel` 等等。这里我们以 `Zephyr`、`GitHub Pages` 和 `Netlify` 为例，来讲解如何部署。
+
+### 通过 Zephyr Cloud 部署
+
+[Zephyr Cloud](https://zephyr-cloud.io) 是一个零配置的部署平台，它可以直接集成到你的构建流程中，并提供全球边缘分发能力。
+
+#### 如何部署
+
+请按照 [zephyr-rspress-plugin](https://www.npmjs.com/package/zephyr-rspress-plugin) 中的步骤进行操作。
+
+在构建过程中，你的 Rspress 文档站点将会被自动部署，并生成一个可访问的部署 URL。
+
+Zephyr Cloud 会处理资源优化、全球 CDN 分发，并为你的文档站点提供自动回滚功能。
 
 ### 通过 GitHub Actions 部署
 
