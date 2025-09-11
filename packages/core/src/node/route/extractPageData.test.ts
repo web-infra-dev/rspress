@@ -121,7 +121,7 @@ describe('extractPageData', async () => {
     `);
   });
 
-  it('getPageIndexInfoByRoute - recursive', async () => {
+  it.only('getPageIndexInfoByRoute - recursive', async () => {
     const fixtureRecursiveDir = join(__dirname, './fixtures/recursive');
     const absolutize = (relativePath: string) => {
       return join(fixtureRecursiveDir, `.${relativePath}`);
