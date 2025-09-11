@@ -1,6 +1,6 @@
+import fs from 'node:fs/promises';
+import path from 'node:path';
 import { expect, test } from '@playwright/test';
-import fs from 'fs/promises';
-import path from 'path';
 import { getPort, killProcess, runDevCommand } from '../../utils/runCommands';
 
 const TEST_FILE = path.resolve(__dirname, 'doc/guide/test.mdx');

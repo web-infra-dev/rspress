@@ -29,7 +29,7 @@ function prettyPrintCode(code: string): string {
 function onError(error: unknown, code: string): string {
   logger.error(
     loggerPrefix,
-    'Twoslash error in code:\n' + prettyPrintCode(code),
+    `Twoslash error in code:\n${prettyPrintCode(code)}`,
     `\n${picocolors.dim(String(error))}`,
   );
 
