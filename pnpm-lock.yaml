@@ -1004,7 +1004,7 @@ importers:
         specifier: ^3.9.0
         version: 3.9.0(@algolia/client-search@5.23.4)(@types/react@19.1.12)(react-dom@19.1.1(react@19.1.1))(react@19.1.1)(search-insights@2.17.3)
       '@rspress/core':
-        specifier: workspace:^2.0.0-beta.31
+        specifier: workspace:^2.0.0-beta.32
         version: link:../core
     devDependencies:
       '@microsoft/api-extractor':
@@ -1041,7 +1041,7 @@ importers:
   packages/plugin-api-docgen:
     dependencies:
       '@rspress/core':
-        specifier: workspace:^2.0.0-beta.31
+        specifier: workspace:^2.0.0-beta.32
         version: link:../core
       chokidar:
         specifier: ^3.6.0
@@ -1108,7 +1108,7 @@ importers:
   packages/plugin-client-redirects:
     dependencies:
       '@rspress/core':
-        specifier: workspace:^2.0.0-beta.31
+        specifier: workspace:^2.0.0-beta.32
         version: link:../core
     devDependencies:
       '@microsoft/api-extractor':
@@ -1142,7 +1142,7 @@ importers:
   packages/plugin-llms:
     dependencies:
       '@rspress/core':
-        specifier: workspace:^2.0.0-beta.31
+        specifier: workspace:^2.0.0-beta.32
         version: link:../core
       remark-mdx:
         specifier: ^3.1.1
@@ -1212,7 +1212,7 @@ importers:
         specifier: ^0.2.0
         version: 0.2.0
       '@rspress/core':
-        specifier: workspace:^2.0.0-beta.31
+        specifier: workspace:^2.0.0-beta.32
         version: link:../core
       remark-gfm:
         specifier: ^4.0.1
@@ -1294,7 +1294,7 @@ importers:
         specifier: ~1.0.6
         version: 1.0.6(@babel/core@7.28.0)(@rsbuild/core@1.5.4)(solid-js@1.9.9)
       '@rspress/core':
-        specifier: workspace:^2.0.0-beta.31
+        specifier: workspace:^2.0.0-beta.32
         version: link:../core
       lodash:
         specifier: 4.17.21
@@ -1352,7 +1352,7 @@ importers:
   packages/plugin-rss:
     dependencies:
       '@rspress/core':
-        specifier: workspace:^2.0.0-beta.31
+        specifier: workspace:^2.0.0-beta.32
         version: link:../core
       feed:
         specifier: ^4.2.2
@@ -1380,7 +1380,7 @@ importers:
   packages/plugin-sitemap:
     dependencies:
       '@rspress/core':
-        specifier: workspace:^2.0.0-beta.31
+        specifier: workspace:^2.0.0-beta.32
         version: link:../core
     devDependencies:
       '@microsoft/api-extractor':
@@ -1402,7 +1402,7 @@ importers:
         specifier: ^1.7.4
         version: 1.7.4
       '@rspress/core':
-        specifier: workspace:^2.0.0-beta.31
+        specifier: workspace:^2.0.0-beta.32
         version: link:../core
       '@shikijs/twoslash':
         specifier: ^3.12.2
@@ -1457,7 +1457,7 @@ importers:
   packages/plugin-typedoc:
     dependencies:
       '@rspress/core':
-        specifier: workspace:^2.0.0-beta.31
+        specifier: workspace:^2.0.0-beta.32
         version: link:../core
       typedoc:
         specifier: 0.24.8
@@ -5633,10 +5633,6 @@ packages:
   picomatch@2.3.1:
     resolution: {integrity: sha512-JU3teHTNjmE2VCGFzuY8EXzCDVwEqB2a8fsIvwaStHhAWJEeVd1o1QD80CU6+ZdEXXSLbSsuLwJjkCBWqRQUVA==}
     engines: {node: '>=8.6'}
-
-  picomatch@4.0.2:
-    resolution: {integrity: sha512-M7BAV6Rlcy5u+m6oPhAPFgJTzAioX/6B0DxyvDlo9l8+T3nLKbrczg2WLUyzd45L8RqfUMyGPzekbMvX2Ldkwg==}
-    engines: {node: '>=12'}
 
   picomatch@4.0.3:
     resolution: {integrity: sha512-5gTmgEY/sqK6gFXLIsQNH19lWb4ebPDLA4SdLP7dsWkIXHWlG66oPuVvXSGFPppYZz8ZDZq0dYYrbHfBCVUb1Q==}
@@ -11655,8 +11651,6 @@ snapshots:
   picocolors@1.1.1: {}
 
   picomatch@2.3.1: {}
-
-  picomatch@4.0.2: {}
 
   picomatch@4.0.3: {}
 
