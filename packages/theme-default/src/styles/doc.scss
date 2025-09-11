@@ -88,7 +88,7 @@
     /* table */
     /* #regison */
     &:where(table) {
-      border-color: var(--divider, #3c3c3c);
+      border-color: var(--rp-c-divider);
     }
 
     &:where(table tr) {
