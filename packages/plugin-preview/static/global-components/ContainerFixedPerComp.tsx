@@ -60,7 +60,7 @@ const ContainerFixedPerComp = (props: ContainerProps) => {
         <MobileContainerFixedPerComp {...props} />
       ) : (
         <NoSSR>
-          <div className="rspress-preview">
+          <div className="rspress-preview rp-not-doc">
             <div>
               <div className="rspress-preview-card">
                 <div

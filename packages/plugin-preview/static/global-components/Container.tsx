@@ -43,7 +43,7 @@ const Container: React.FC<ContainerProps> = props => {
 
   return (
     <NoSSR>
-      <div className="rspress-preview">
+      <div className="rspress-preview rp-not-doc">
         {isMobile === 'true' ? (
           <div className="rspress-preview-wrapper">
             <div className="rspress-preview-code">{children?.[0]}</div>
