@@ -1,0 +1,106 @@
+/* keep the html syntax in markdown original style e.g: <ul></ul> */
+.rspress-doc {
+  :not(:where(.rp-not-doc *)) {
+    // escape hatch like <div className="rp-not-doc"></div>
+    /* why ":where"? For css priority, <<equal to className priority>>, to be easy to overrides by className */
+    /* list */
+    /* #region */
+    &:where(ul) {
+      list-style: disc;
+      padding-left: 1.25rem;
+      margin-top: 1rem;
+      margin-bottom: 1rem;
+      line-height: 1.75rem;
+    }
+
+    &:where(ol) {
+      list-style: decimal;
+      padding-left: 1.25rem;
+      margin-top: 1rem;
+      margin-bottom: 1rem;
+      line-height: 1.75rem;
+    }
+
+    &:where(ul li):not(:first-child) {
+      margin-top: 0.5rem;
+    }
+
+    &:where(ol li):not(:first-child) {
+      margin-top: 0.5rem;
+    }
+    /* #endregion */
+
+    /* table */
+    /* #regison */
+    &:where(table) {
+      display: block;
+      border-collapse: collapse;
+      font-size: 1rem;
+      margin-top: 1.25rem;
+      margin-bottom: 1.25rem;
+      overflow-x: auto;
+      line-height: 1.75rem;
+      border: 1px solid var(--rp-c-border);
+    }
+
+    &:where(table tr) {
+      border: 1px solid;
+      border-style: solid;
+      transition-property: color, background-color, border-color;
+      transition-duration: 500ms;
+      border-color: var(--rp-c-gray-light-3);
+    }
+
+    &:where(table tr):nth-child(even) {
+      background-color: var(--rp-c-bg-soft);
+    }
+
+    &:where(table td) {
+      border: 1px solid;
+      border-style: solid;
+      padding-left: 1rem;
+      padding-right: 1rem;
+      padding-top: 0.5rem;
+      padding-bottom: 0.5rem;
+      border-color: var(--rp-c-gray-light-3);
+    }
+
+    &:where(table th) {
+      border: 1px solid;
+      border-style: solid;
+      padding-left: 1rem;
+      padding-right: 1rem;
+      padding-top: 0.5rem;
+      padding-bottom: 0.5rem;
+      color: var(--rp-c-text-1);
+      font-size: 1rem;
+      font-weight: 600;
+      border-color: var(--rp-c-gray-light-3);
+    }
+  }
+
+  /* #endregison */
+}
+
+/* Dark mode styles */
+:where(.dark) .rspress-doc {
+  :not(:where(.rp-not-doc *)) {
+    /* table */
+    /* #regison */
+    &:where(table) {
+      border-color: var(--rp-c-divider);
+    }
+
+    &:where(table tr) {
+      border-color: var(--rp-c-divider);
+    }
+
+    &:where(table td) {
+      border-color: var(--rp-c-divider);
+    }
+
+    &:where(table th) {
+      border-color: var(--rp-c-divider);
+    }
+  }
+}
