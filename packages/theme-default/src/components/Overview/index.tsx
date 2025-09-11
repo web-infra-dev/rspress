@@ -249,7 +249,7 @@ export function Overview(props: {
   const overviewTitle = title || 'Overview';
 
   return (
-    <div className="rspress-overview rp-mx-auto">
+    <div className="rspress-doc rspress-overview rp-mx-auto">
       <H1>{overviewTitle}</H1>
       <OverviewSearchInput
         query={query}

@@ -30,31 +30,7 @@
   }
 }
 
-:global(.header-anchor) {
-  color: var(--rp-c-brand);
-}
-
-:global(.rspress-doc details) {
-  margin: 16px 0;
-  padding: 8px;
-  font-size: normal;
-  cursor: pointer;
-  transition: all 0.3s;
-  p {
-    margin: 8px 0;
-  }
-}
-
-:global(.rspress-doc details:hover) {
-  background-color: var(--rp-c-bg-mute);
-}
-
 .inline-link {
   display: inline;
   overflow-wrap: break-word;
-}
-
-// For the className injected by shiki rehype plugin
-:global(span.code-line-highlighted) {
-  background-color: var(--rp-code-line-highlight-color);
 }
