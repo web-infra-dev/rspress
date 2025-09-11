@@ -77,9 +77,10 @@ class TwoslashPopupContainer extends HTMLElement {
           }),
           // When edge-aligned placements, the flip middleware must take precedence over the shift middleware.
           // See: https://floating-ui.com/docs/flip#combining-with-shift
-          flip({
-            fallbackStrategy: 'initialPlacement',
-          }),
+          popup.dataset.always !== 'true' &&
+            flip({
+              fallbackStrategy: 'initialPlacement',
+            }),
           shift({ padding: 16 }),
           // Arrow must be the last middleware.
           // See: https://floating-ui.com/docs/arrow#order
