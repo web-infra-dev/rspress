@@ -2,6 +2,7 @@ import {
   HomeLayout as BasicHomeLayout,
   Layout as BasicLayout,
   getCustomMDXComponent as basicGetCustomMDXComponent,
+  PackageManagerTabs,
 } from '@rspress/core/theme';
 import {
   Search as PluginAlgoliaSearch,
@@ -20,8 +21,6 @@ import './index.css';
 import { NoSSR, useLang } from '@rspress/core/runtime';
 
 function HomeLayout() {
-  const { pre: PreWithCodeButtonGroup, code: Code } =
-    basicGetCustomMDXComponent();
   return (
     <BasicHomeLayout
       afterFeatures={<ToolStack />}
@@ -30,16 +29,7 @@ function HomeLayout() {
           className="rspress-doc"
           style={{ minHeight: 'auto', width: '100%', maxWidth: 400 }}
         >
-          <PreWithCodeButtonGroup
-            containerElementClassName="language-bash"
-            codeButtonGroupProps={{
-              showCodeWrapButton: false,
-            }}
-          >
-            <Code className="language-bash" style={{ textAlign: 'center' }}>
-              npm create rspress@beta
-            </Code>
-          </PreWithCodeButtonGroup>
+          <PackageManagerTabs command="create rspress@beta" />
         </div>
       }
     />
