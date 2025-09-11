@@ -299,7 +299,6 @@
 }
 
 /* Dark mode styles */
-:where(.rp-dark) .rspress-doc,
 :where(.rp-dark) .rp-doc {
   :not(:where(.rp-not-doc, .rp-not-doc *)) {
     /* table */

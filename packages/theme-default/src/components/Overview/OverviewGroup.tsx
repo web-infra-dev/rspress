@@ -18,7 +18,7 @@ export const OverviewGroup = ({ group }: { group: Group }) => {
   return (
     <>
       <H2 {...renderInlineMarkdown(group.name)} />
-      <div className="rp-overviewGroup">
+      <div className="rp-overviewGroup rp-not-doc">
         {group.items.map(item => (
           <div className="rp-overviewGroup__item" key={item.link}>
             <div className="rp-overviewGroup__item__title">
