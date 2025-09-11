@@ -354,17 +354,17 @@ export function SearchPanel({ focused, setFocused }: SearchPanelProps) {
 
   const normalizeSuggestions = (
     suggestions: DefaultMatchResult['result'],
-  ): Record<string, DefaultMatchResultItem[]> => {
+  ): Map<string, DefaultMatchResultItem[]> => {
     return suggestions.reduce(
       (groups, item) => {
         const group = item.title;
-        if (!groups[group]) {
-          groups[group] = [];
+        if (!groups.has(group)) {
+          groups.set(group, []);
         }
-        groups[group].push(item);
+        groups.get(group)?.push(item);
         return groups;
       },
-      {} as Record<string, DefaultMatchResult['result']>,
+      new Map() as Map<string, DefaultMatchResult['result']>,
     );
   };
 
@@ -434,8 +434,8 @@ export function SearchPanel({ focused, setFocused }: SearchPanelProps) {
     let accumulateIndex = -1;
     return (
       <ul>
-        {Object.keys(normalizedSuggestions).map(group => {
-          const groupSuggestions = normalizedSuggestions[group] || [];
+        {Array.from(normalizedSuggestions.keys()).map(group => {
+          const groupSuggestions = normalizedSuggestions.get(group) || [];
           return (
             <li key={group}>
               <ul className="rp-pb-2">
