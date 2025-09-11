@@ -16,7 +16,7 @@ type RspackResolveFactory = RspackExperiments['resolver']['ResolverFactory'];
 
 let startFlatten = false;
 
-let resolver: any;
+let resolver: InstanceType<RspackResolveFactory>;
 
 const processor = createProcessor();
 
@@ -26,37 +26,11 @@ export async function resolveDepPath(
   alias: Record<string, string | string[]>,
 ) {
   if (!resolver) {
-    // @ts-expect-error
     resolver = new RspackResolveFactory({
       extensions: ['.mdx', '.md'],
       alias,
     });
   }
-
-  // const resolveResult = await new Promise<string>((resolve, reject) => {
-  //   resolver.resolve(
-  //     {
-  //       importer,
-  //     },
-  //     importer,
-  //     importPath,
-  //     {},
-  //     (err, filePath) => {
-  //       if (err) {
-  //         return reject(err);
-  //       }
-  //       if (!filePath) {
-  //         return reject(
-  //           new Error(
-  //             `Empty result when resolving ${importPath} from ${importer}`,
-  //           ),
-  //         );
-  //       }
-  //       return resolve(filePath);
-  //     },
-  //   );
-  //
-  // });
 
   const resolved = await resolver.async(importer, moduleSpecifier);
 
