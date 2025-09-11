@@ -7,6 +7,7 @@ import type {
   RsbuildPlugin,
 } from '@rsbuild/core';
 import { PLUGIN_REACT_NAME, pluginReact } from '@rsbuild/plugin-react';
+import { version as rspressVersion } from '@rspress/core/package.json';
 import {
   MDX_OR_MD_REGEXP,
   removeTrailingSlash,
@@ -274,6 +275,9 @@ async function createInternalBuildConfig(
                     sidebar: config.themeConfig?.sidebar,
                   },
                 ),
+
+                // add rspress version to persistent cache digest to make it more safe
+                rspressVersion,
               ],
             },
           }
