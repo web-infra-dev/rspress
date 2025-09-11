@@ -15,4 +15,4 @@ onlyBuiltDependencies:
 
 hoistPattern: []
 linkWorkspacePackages: true
-strictPeerDependencies: true
+strictPeerDependencies: false
