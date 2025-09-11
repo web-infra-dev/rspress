@@ -2,58 +2,71 @@ import fs from 'node:fs';
 import path from 'node:path';
 
 import { createProcessor } from '@mdx-js/mdx';
+import { rspack } from '@rsbuild/core';
 import { MDX_OR_MD_REGEXP } from '@rspress/shared';
 import { logger } from '@rspress/shared/logger';
-import type { Resolver } from 'enhanced-resolve';
-import enhancedResolve from 'enhanced-resolve';
 import type { Root } from 'mdast';
 import { importStatementRegex } from '../constants';
 
-let resolver: Resolver;
+const RspackResolveFactory = rspack.experiments.resolver.ResolverFactory;
+
+type RspackExperiments = typeof rspack.experiments;
+
+type RspackResolveFactory = RspackExperiments['resolver']['ResolverFactory'];
+
 let startFlatten = false;
 
-const processor = createProcessor();
-const { CachedInputFileSystem, ResolverFactory } = enhancedResolve;
+let resolver: any;
 
-const fileSystem =
-  fs as unknown as enhancedResolve.CachedInputFileSystem['fileSystem'];
+const processor = createProcessor();
 
 export async function resolveDepPath(
-  importPath: string,
+  moduleSpecifier: string,
   importer: string,
   alias: Record<string, string | string[]>,
 ) {
   if (!resolver) {
-    resolver = ResolverFactory.createResolver({
-      fileSystem: new CachedInputFileSystem(fileSystem, 0),
+    // @ts-expect-error
+    resolver = new RspackResolveFactory({
       extensions: ['.mdx', '.md'],
       alias,
     });
   }
-  const resolveResult = await new Promise<string>((resolve, reject) => {
-    resolver.resolve(
-      {
-        importer,
-      },
-      importer,
-      importPath,
-      {},
-      (err, filePath) => {
-        if (err) {
-          return reject(err);
-        }
-        if (!filePath) {
-          return reject(
-            new Error(
-              `Empty result when resolving ${importPath} from ${importer}`,
-            ),
-          );
-        }
-        return resolve(filePath);
-      },
+
+  // const resolveResult = await new Promise<string>((resolve, reject) => {
+  //   resolver.resolve(
+  //     {
+  //       importer,
+  //     },
+  //     importer,
+  //     importPath,
+  //     {},
+  //     (err, filePath) => {
+  //       if (err) {
+  //         return reject(err);
+  //       }
+  //       if (!filePath) {
+  //         return reject(
+  //           new Error(
+  //             `Empty result when resolving ${importPath} from ${importer}`,
+  //           ),
+  //         );
+  //       }
+  //       return resolve(filePath);
+  //     },
+  //   );
+  //
+  // });
+
+  const resolved = await resolver.async(importer, moduleSpecifier);
+
+  if (resolved.path) {
+    return resolved.path;
+  } else {
+    throw new Error(
+      `Empty result when resolving ${moduleSpecifier} from ${importer}`,
     );
-  });
-  return resolveResult;
+  }
 }
 
 export async function flattenMdxContent(
@@ -75,8 +88,7 @@ export async function flattenMdxContent(
   // We should update the resolver instanceof because the alias should be passed to it
   // If we reuse the resolver instance in `detectReactVersion` method, the resolver will lose the alias info and cannot resolve path correctly in mdx files.
   if (!startFlatten) {
-    resolver = ResolverFactory.createResolver({
-      fileSystem: new CachedInputFileSystem(fileSystem, 0),
+    resolver = new RspackResolveFactory({
       extensions: ['.mdx', '.md', '.js'],
       alias,
     });
