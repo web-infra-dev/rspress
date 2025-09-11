@@ -361,7 +361,7 @@ export function SearchPanel({ focused, setFocused }: SearchPanelProps) {
         if (!groups.has(group)) {
           groups.set(group, []);
         }
-        groups.get(group)?.push(item);
+        groups.get(group)!.push(item);
         return groups;
       },
       new Map() as Map<string, DefaultMatchResult['result']>,
