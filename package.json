@@ -31,8 +31,8 @@
     ]
   },
   "devDependencies": {
-    "@biomejs/biome": "^2.2.3",
-    "@changesets/cli": "^2.29.6",
+    "@biomejs/biome": "^2.2.4",
+    "@changesets/cli": "^2.29.7",
     "@playwright/test": "1.55.0",
     "@rspress/config": "workspace:*",
     "@types/cross-spawn": "^6.0.6",
