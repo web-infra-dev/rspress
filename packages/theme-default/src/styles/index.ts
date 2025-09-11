@@ -3,5 +3,6 @@
  */
 import './vars.css';
 import './base.css';
+import './doc.scss';
 import './code.css';
 import './scrollbar.scss';
