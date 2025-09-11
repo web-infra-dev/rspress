@@ -82,8 +82,11 @@ export default function Playground(props: PlaygroundProps) {
     'rspress-playground',
     `rspress-playground-${direction}`,
     `rspress-playground-reverse-${useReverseLayout ? 'y' : 'n'}`,
+    'rp-not-doc',
     className,
-  ].join(' ');
+  ]
+    .filter(Boolean)
+    .join(' ');
 
   return (
     <div className={classNames} {...rest}>
