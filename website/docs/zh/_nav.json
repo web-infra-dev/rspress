@@ -10,6 +10,11 @@
     "activeMatch": "/plugin/"
   },
   {
+    "text": "UI",
+    "link": "/ui/vars",
+    "activeMatch": "/ui/"
+  },
+  {
     "text": "API",
     "link": "/api/",
     "activeMatch": "/api/"
