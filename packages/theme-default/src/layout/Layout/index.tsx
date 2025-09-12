@@ -12,9 +12,10 @@ import {
   Nav,
 } from '@theme';
 import { Head, useHead } from '@unhead/react';
-import React, { memo, useMemo } from 'react';
+import React, { memo, useMemo, useState } from 'react';
 import type { NavProps } from '../../components/Nav';
 import { useSetup } from '../../logic/sideEffects';
+import { TabDataContext } from '../../logic/TabDataContext';
 import { useRedirect4FirstVisit } from '../../logic/useRedirect4FirstVisit';
 import { type UISwitchResult, useUISwitch } from '../../logic/useUISwitch';
 import { DocLayout, type DocLayoutProps } from '../DocLayout';
@@ -154,6 +155,8 @@ export function Layout(props: LayoutProps) {
 
   useRedirect4FirstVisit();
 
+  const [tabData, setTabData] = useState({});
+
   // Always show sidebar by default
   // Priority: front matter title > h1 title
   let title = (frontmatter.title as string) ?? articleTitle;
@@ -206,7 +209,7 @@ export function Layout(props: LayoutProps) {
   };
 
   return (
-    <>
+    <TabDataContext.Provider value={{ tabData, setTabData }}>
       <HeadTags
         lang={currentLang}
         title={title}
@@ -228,6 +231,6 @@ export function Layout(props: LayoutProps) {
 
       <section>{getContentLayout()}</section>
       {bottom}
-    </>
+    </TabDataContext.Provider>
   );
 }

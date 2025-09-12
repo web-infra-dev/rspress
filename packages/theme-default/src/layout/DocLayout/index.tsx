@@ -13,7 +13,6 @@ import { useWatchToc } from '../../components/Aside/useDynamicToc';
 import { DocFooter } from '../../components/DocFooter';
 import { Sidebar } from '../../components/Sidebar';
 import { SidebarMenu } from '../../components/SidebarMenu';
-import { TabDataContext } from '../../logic/TabDataContext';
 import type { UISwitchResult } from '../../logic/useUISwitch';
 import { A } from './docComponents/a';
 import { H1 } from './docComponents/title';
@@ -53,7 +52,6 @@ export function DocLayout(props: DocLayoutProps) {
   } = props;
   const { siteData, page } = usePageData();
   const { headingTitle, title, frontmatter } = page;
-  const [tabData, setTabData] = useState({});
   const { themeConfig } = siteData;
   const enableScrollToTop = themeConfig.enableScrollToTop ?? false;
   const localesData = useLocaleSiteData();
@@ -65,11 +63,9 @@ export function DocLayout(props: DocLayoutProps) {
   const mdxComponents = { ...getCustomMDXComponent(), ...components };
 
   const docContent = (
-    <TabDataContext.Provider value={{ tabData, setTabData }}>
-      <MDXProvider components={mdxComponents}>
-        <Content />
-      </MDXProvider>
-    </TabDataContext.Provider>
+    <MDXProvider components={mdxComponents}>
+      <Content />
+    </MDXProvider>
   );
 
   const fallbackTitle = useMemo(() => {
