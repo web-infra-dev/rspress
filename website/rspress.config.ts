@@ -69,7 +69,7 @@ export default defineConfig({
   },
   route: {
     cleanUrls: true,
-    exclude: ['**/fragments/**'],
+    exclude: ['**/fragments/**', 'components/**'],
   },
   themeConfig: {
     lastUpdated: true,

@@ -38,13 +38,6 @@
   --rp-c-text-code: #476573;
   --rp-c-text-code-bg: rgb(153 161 179/ 0.1);
 
-  --rp-c-brand: #0095ff; /* hsl(204deg 100% 50%) */
-  --rp-c-brand-light: #33adff; /* hsl(204deg 100% 60%) */
-  --rp-c-brand-lighter: #66c2ff; /* hsl(204deg 100% 70%) */
-  --rp-c-brand-dark: #0077ff; /* hsl(212deg 100% 50%) */
-  --rp-c-brand-darker: #005fcc; /* hsl(212deg 100% 40%) */
-  --rp-c-brand-tint: rgba(127, 163, 255, 0.16);
-
   --rp-c-gray: #8e8e8e;
   --rp-c-gray-light-1: #aeaeae;
   --rp-c-gray-light-2: #c7c7c7;
