@@ -96,7 +96,7 @@ function getBrandColors(hex: string) {
   const { h, s, l } = hexToHsl(hex);
   return {
     brand: { hex, hsl: hslString(h, s, l) },
-    brandDark: adjustLightness(hex, 0),
+    brandDark: adjustLightness(hex, -5),
     brandDarker: adjustLightness(hex, -10),
     brandLight: adjustLightness(hex, 10),
     brandLighter: adjustLightness(hex, 20),
