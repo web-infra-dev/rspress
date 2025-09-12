@@ -2,24 +2,26 @@ import { useEffect, useRef, useState } from 'react';
 import { LiveCodeEditor } from './LiveCodeEditor';
 
 export interface CssLiveCodeEditorProps {
-  initialCode: string;
   styleId?: string;
-  value?: string;
+  value: string;
+  onChange?: (code: string) => void; // New prop to notify parent of changes
+  disabled?: boolean; // New prop to disable editing
 }
 
 export function CssLiveCodeEditor({
-  initialCode,
   value,
   styleId = 'live-css-editor-style',
+  onChange,
+  disabled = false, // Default to false
 }: CssLiveCodeEditorProps) {
-  const [code, setCode] = useState(initialCode);
+  const [code, setCode] = useState(value);
   const styleElement = useRef<HTMLStyleElement>(null);
 
   useEffect(() => {
-    setCode(initialCode);
-  }, [initialCode]);
+    setCode(value);
+  }, [value]);
 
-  useEffect(() => {
+  function setStyleElement(content: string) {
     let styleEl: HTMLStyleElement | null = document.getElementById(
       styleId,
     ) as HTMLStyleElement;
@@ -29,10 +31,19 @@ export function CssLiveCodeEditor({
       document.head.appendChild(styleEl);
       styleElement.current = styleEl;
     } else {
-      styleEl.textContent = initialCode;
+      styleEl.textContent = content;
     }
+  }
+
+  useEffect(() => {
+    setStyleElement(value);
     return () => {
-      styleEl && (styleEl.textContent = '');
+      const styleEl: HTMLStyleElement | null = document.getElementById(
+        styleId,
+      ) as HTMLStyleElement;
+      if (styleEl) {
+        styleEl.textContent = '';
+      }
     };
   }, []);
 
@@ -46,11 +57,11 @@ export function CssLiveCodeEditor({
     <LiveCodeEditor
       lang="css"
       value={value ?? code}
+      disabled={disabled}
       onChange={code => {
-        setCode(code);
-        if (styleElement.current) {
-          styleElement.current.textContent = code;
-        }
+        setStyleElement(code);
+        // Call the onChange callback if provided
+        onChange?.(code);
       }}
     />
   );

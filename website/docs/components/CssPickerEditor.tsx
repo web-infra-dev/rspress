@@ -1,5 +1,26 @@
 import { useMemo, useState } from 'react';
-import { CssLiveCodeEditor } from './CssLiveCodeEditor';
+import INITIAL_CONTENT from '../../../packages/theme-default/dist/styles/vars/brand.css?raw';
+import {
+  CssLiveCodeEditorWithTabs,
+  type Tab,
+} from './CssLiveCodeEditorWithTabs';
+
+// Predefined colors
+const PREDEFINED_COLORS = {
+  RED: '#FF0000',
+  ORANGE: '#FFA500',
+  BLUE: '#0095FF',
+  GREEN: '#00AA55',
+};
+
+// Tab definitions
+const TABS = [
+  { id: 'custom', label: 'Custom' },
+  { id: 'red', label: 'Red', color: PREDEFINED_COLORS.RED },
+  { id: 'orange', label: 'Orange', color: PREDEFINED_COLORS.ORANGE },
+  { id: 'blue', label: 'Blue', color: PREDEFINED_COLORS.BLUE },
+  { id: 'green', label: 'Green', color: PREDEFINED_COLORS.GREEN },
+];
 
 function hslString(h: number, s: number, l: number) {
   return `hsl(${Math.round(h)}deg ${Math.round(s)}% ${Math.round(l)}%)`;
@@ -141,30 +162,39 @@ function genCssCode(hex: string) {
 
 export function CssPickerEditor() {
   const [color, setColor] = useState('#0095ff');
-  const cssCode = useMemo(() => genCssCode(color), [color]);
+
+  // Generate tabs with predefined colors and their CSS
+  const cssTabs: Tab[] = useMemo(() => {
+    return TABS.slice(1).map(tab => ({
+      label: tab.label,
+      code: genCssCode(tab.color!),
+    }));
+  }, []);
 
   return (
     <div>
-      <label>
-        Theme Color:{' '}
-        <input
-          type="color"
-          value={color}
-          onChange={e => setColor(e.target.value)}
-          style={{
-            verticalAlign: 'middle',
-            width: 32,
-            height: 32,
-            border: 'none',
-            background: 'none',
-            cursor: 'pointer',
-          }}
-        />
-        <span style={{ marginLeft: 8 }}>{color}</span>
-      </label>
-      <div style={{ marginTop: 16 }}>
-        <CssLiveCodeEditor value={cssCode} initialCode={cssCode} />
+      {/* Color picker for custom tab */}
+      <div style={{ marginBottom: 16 }}>
+        <label>
+          Theme Color:{' '}
+          <input
+            type="color"
+            value={color}
+            onChange={e => setColor(e.target.value)}
+            style={{
+              verticalAlign: 'middle',
+              width: 32,
+              height: 32,
+              border: 'none',
+              background: 'none',
+              cursor: 'pointer',
+            }}
+          />
+          <span style={{ marginLeft: 8 }}>{color}</span>
+        </label>
       </div>
+
+      <CssLiveCodeEditorWithTabs tabs={cssTabs} initialCode={INITIAL_CONTENT} />
     </div>
   );
 }
