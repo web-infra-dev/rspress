@@ -1,8 +1,8 @@
+import { useNav } from '@rspress/runtime';
 import { Search } from '@theme';
 import { leftNav, navContainer, rightNav } from './index.module.scss';
 import { NavTitle } from './NarTitle';
 import { NavMenu } from './NavMenu';
-import { useNav } from '@rspress/runtime';
 
 export interface NavProps {
   beforeNav?: React.ReactNode;

@@ -3,9 +3,9 @@ import {
   normalizeHrefInRuntime,
   removeBase,
   useLocation,
-  useVersion,
   usePage,
   useSite,
+  useVersion,
 } from '@rspress/runtime';
 
 function replaceLang(
@@ -78,7 +78,7 @@ export function useLangsMenu() {
 
   const translationMenuData = hasMultiLanguage
     ? {
-        items: localeLanguages.map((item) => ({
+        items: localeLanguages.map(item => ({
           text: item?.label,
           link: replaceLang(
             pathname + search,
@@ -95,7 +95,7 @@ export function useLangsMenu() {
             pageType === '404',
           ),
         })),
-        activeValue: localeLanguages.find((item) => currentLang === item.lang)
+        activeValue: localeLanguages.find(item => currentLang === item.lang)
           ?.label,
       }
     : { items: [] };
@@ -148,7 +148,7 @@ export function useVersionMenu() {
   const defaultVersion = site.multiVersion.default || '';
   const versions = site.multiVersion.versions || [];
   const versionsMenuData = {
-    items: versions.map((version) => ({
+    items: versions.map(version => ({
       text: version,
       link: replaceVersion(
         pathname,
