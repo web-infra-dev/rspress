@@ -143,11 +143,12 @@ export function pluginTwoslash(options?: PluginTwoslashOptions): RspressPlugin {
                   class: 'twoslash-popup-trigger',
                 },
               },
-              completionPopup: {
-                properties: {
-                  class: 'twoslash-popup-inner',
-                },
-              },
+              // TODO: css changes
+              // completionPopup: {
+              //   properties: {
+              //     class: 'twoslash-popup-inner',
+              //   },
+              // },
               completionCompose: ({ cursor, popup }) => [
                 cursor,
                 <Element>{
