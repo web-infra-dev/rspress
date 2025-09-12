@@ -1,8 +1,13 @@
+import { isDataUrl, isExternalUrl } from '@rspress/shared';
+import { Badge } from '../Badge';
+
 export const Tag = ({ tag }: { tag?: string }) => {
   if (!tag) {
     return null;
   }
-  const isSvgTagString = tag.trim().startsWith('<svg');
+  const normalizeTag = tag.trim();
+  const isSvgTagString = normalizeTag.startsWith('<svg');
+  const isPic = isExternalUrl(normalizeTag) || isDataUrl(normalizeTag);
 
   if (isSvgTagString) {
     return (
@@ -14,5 +19,9 @@ export const Tag = ({ tag }: { tag?: string }) => {
     );
   }
 
-  return <img src={tag} />;
+  if (isPic) {
+    return <img src={tag} />;
+  }
+
+  return <Badge text={normalizeTag} type="info" />;
 };

@@ -3,11 +3,10 @@ import IconWrap from '@theme-assets/wrap';
 import IconWrapped from '@theme-assets/wrapped';
 import { useState } from 'react';
 import { SvgWrapper } from '../../../../components/SvgWrapper';
+import * as styles from './CodeButtonGroup.module.scss';
 import { CopyCodeButton } from './CopyCodeButton';
-import * as styles from './index.module.scss';
 
-export interface CodeButtonGroupProps
-  extends ReturnType<typeof useCodeButtonGroup> {
+export interface CodeButtonGroupProps extends ReturnType<typeof useCodeWrap> {
   preElementRef: React.RefObject<HTMLPreElement | null>;
 
   /**
@@ -20,7 +19,7 @@ export interface CodeButtonGroupProps
   showCopyButton?: boolean;
 }
 
-export const useCodeButtonGroup = () => {
+export const useCodeWrap = () => {
   const { site } = useSite();
   const { defaultWrapCode } = site.markdown;
   const [codeWrap, setCodeWrap] = useState(defaultWrapCode);

@@ -1,86 +1,113 @@
-import type { NormalizedSidebarGroup } from '@rspress/shared';
-import { Tag } from '@theme';
+import { useActiveMatcher } from '@rspress/runtime';
+import type {
+  NormalizedSidebarGroup,
+  SidebarDivider as SidebarDividerType,
+  SidebarItem as SidebarItemType,
+  SidebarSectionHeader as SidebarSectionHeaderType,
+} from '@rspress/shared';
 import ArrowRight from '@theme-assets/arrow-right';
+import clsx from 'clsx';
 import type React from 'react';
-import { useEffect, useRef } from 'react';
-import { renderInlineMarkdown } from '../../logic/utils';
+import { useCallback, useRef } from 'react';
 import { useNavigate } from '../Link/useNavigate';
 import { SvgWrapper } from '../SvgWrapper';
-import { highlightTitleStyle, type SidebarItemProps } from '.';
-import * as styles from './index.module.scss';
 import { SidebarDivider } from './SidebarDivider';
-import { SidebarItem as SidebarItemComp } from './SidebarItem';
+import { sidebarGroup, sidebarGroupTopLevel } from './SidebarGroup.module.scss';
+import { SidebarItem as SidebarItemComp, SidebarItemRaw } from './SidebarItem';
+import { sidebarGroupItem } from './SidebarItem.module.scss';
 import { SidebarSectionHeader } from './SidebarSectionHeader';
-import { isSidebarDivider, isSidebarSectionHeader, preloadLink } from './utils';
+import {
+  isSidebarDivider,
+  isSidebarGroup,
+  isSidebarSectionHeader,
+} from './utils';
 
-export function SidebarGroup(props: SidebarItemProps) {
-  const { item, depth = 0, activeMatcher, id, setSidebarData } = props;
-  const navigate = useNavigate();
-  const containerRef = useRef<HTMLDivElement>(null);
-  const transitionRef = useRef<number>(null);
-  const innerRef = useRef<HTMLDivElement>(null);
-  const initialRender = useRef(true);
-  const initialState = useRef('collapsed' in item && item.collapsed);
-  const active = item.link && activeMatcher(item.link);
-  const { collapsed, collapsible = true } = item as NormalizedSidebarGroup;
-  const collapsibleIcon = (
-    <div
-      style={{
-        cursor: 'pointer',
-        transition: 'transform 0.2s ease-out',
-        transform: collapsed ? 'rotate(0deg)' : 'rotate(90deg)',
-      }}
+const CollapsibleIcon = ({ collapsed }: { collapsed: boolean }) => (
+  <div
+    style={{
+      cursor: 'pointer',
+      transition: 'transform 0.2s ease-out',
+      transform: collapsed ? 'rotate(0deg)' : 'rotate(90deg)',
+    }}
+  >
+    <SvgWrapper icon={ArrowRight} />
+  </div>
+);
+
+export interface SidebarGroupProps {
+  id: string;
+  item: NormalizedSidebarGroup;
+  depth: number;
+  className?: string;
+  setSidebarData: React.Dispatch<
+    React.SetStateAction<
+      (
+        | NormalizedSidebarGroup
+        | SidebarItemType
+        | SidebarDividerType
+        | SidebarSectionHeaderType
+      )[]
     >
-      <SvgWrapper icon={ArrowRight} />
-    </div>
+  >;
+}
+
+export function SidebarGroup(props: SidebarGroupProps) {
+  const activeMatcher = useActiveMatcher();
+  const { item, depth, id, setSidebarData, className } = props;
+  const navigate = useNavigate();
+  const initialState = useRef('collapsed' in item && item.collapsed);
+  const containerRef = useRef<HTMLDivElement>(null);
+  const containerHeightRef = useRef<number>(item.items.length * 40);
+
+  const transitionRef = useRef<number>(null);
+  const active = item.link && activeMatcher(item.link);
+  const { collapsed = false, collapsible = true } =
+    item as NormalizedSidebarGroup;
+
+  const handleClickCollapsedTransition = useCallback(
+    (collapsed: boolean /*target value */) => {
+      if (transitionRef.current) {
+        clearTimeout(transitionRef.current);
+      }
+
+      const container = containerRef.current;
+
+      if (!container) {
+        return;
+      }
+
+      if (collapsed) {
+        // fold
+        const contentHeight = container.clientHeight;
+        containerHeightRef.current = contentHeight;
+
+        container.style.maxHeight = `${contentHeight}px`;
+        container.style.opacity = '0';
+        container.style.transition = 'all .2s ease-out';
+
+        transitionRef.current = window.setTimeout(() => {
+          if (containerRef.current) {
+            containerRef.current.style.maxHeight = '0px';
+          }
+        }, 200);
+      } else {
+        // unfold
+        const contentHeight = containerHeightRef.current;
+        container.style.transition = 'all .2s ease-in';
+        container.style.maxHeight = `${contentHeight}px`;
+        container.style.opacity = '1';
+
+        transitionRef.current = window.setTimeout(() => {
+          if (containerRef.current) {
+            containerRef.current.style.removeProperty('max-height');
+          }
+        }, 200);
+      }
+    },
+    [],
   );
 
-  useEffect(() => {
-    if (initialRender.current) {
-      return;
-    }
-
-    if (!containerRef.current || !innerRef.current) {
-      return;
-    }
-
-    if (transitionRef.current) {
-      clearTimeout(transitionRef.current);
-    }
-
-    const container = containerRef.current;
-    const inner = innerRef.current;
-    // We should add the margin-top(4px) of first item in list, which is a part of the height of the container
-    const contentHeight = inner.clientHeight + 4;
-    if (collapsed) {
-      container.style.maxHeight = `${contentHeight}px`;
-      container.style.transitionDuration = '0.5s';
-      inner.style.opacity = '0';
-
-      transitionRef.current = window.setTimeout(() => {
-        if (containerRef.current) {
-          containerRef.current.style.maxHeight = '0px';
-        }
-      }, 0);
-    } else {
-      container.style.maxHeight = `${contentHeight}px`;
-      container.style.transitionDuration = '0.3s';
-      inner.style.opacity = '1';
-
-      transitionRef.current = window.setTimeout(() => {
-        if (containerRef.current) {
-          containerRef.current.style.removeProperty('max-height');
-        }
-      }, 300);
-    }
-  }, [collapsed]);
-
-  useEffect(() => {
-    initialRender.current = false;
-  }, []);
-
-  const toggleCollapse: React.MouseEventHandler<HTMLDivElement> = (e): void => {
-    e.stopPropagation();
+  const toggleCollapse = (): void => {
     // update collapsed state
     setSidebarData(sidebarData => {
       const newSidebarData = [...sidebarData];
@@ -99,99 +126,83 @@ export function SidebarGroup(props: SidebarItemProps) {
   };
 
   return (
-    <section
-      key={id}
-      className="rspress-sidebar-section rp-mt-0.5 rp-block"
-      data-context={item.context}
-      style={{
-        marginLeft: depth === 0 ? 0 : '18px',
-      }}
-    >
-      <div
-        className={`rspress-sidebar-collapse rp-flex rp-justify-between rp-items-center ${
-          active ? styles.menuItemActive : styles.menuItem
-        }`}
-        data-context={item.context}
-        // we use div instead of Link, so preloadLink manually
-        onMouseEnter={() => item.link && preloadLink(item.link)}
-        onClick={e => {
-          if (item.link) {
-            navigate(item.link);
-          }
-          collapsible && toggleCollapse(e);
-        }}
-        style={{
-          borderRadius:
-            depth === 0 ? '0 var(--rp-radius) var(--rp-radius) 0' : undefined,
-          cursor: collapsible || item.link ? 'pointer' : 'normal',
-        }}
-      >
-        <h2
-          className="rp-py-2 rp-px-3 rp-text-sm rp-font-medium rp-flex"
-          style={{
-            ...(depth === 0 ? highlightTitleStyle : {}),
-          }}
-        >
-          <Tag tag={item.tag} />
-          <span
-            className="rp-flex rp-items-center rp-justify-center"
-            style={{
-              fontSize: depth === 0 ? '14px' : '13px',
-            }}
-            {...renderInlineMarkdown(item.text)}
-          ></span>
-        </h2>
-        {collapsible && (
-          <div
-            className={`${styles.collapseContainer} rp-p-2 rp-rounded-xl`}
-            onClick={toggleCollapse}
-          >
-            {collapsibleIcon}
-          </div>
+    <>
+      <SidebarItemRaw
+        active={Boolean(active)}
+        link={item.link}
+        tag={item.tag}
+        text={item.text}
+        context={item.context}
+        className={clsx(
+          'rspress-sidebar-group',
+          sidebarGroup,
+          {
+            [sidebarGroupTopLevel]: depth === 0,
+          },
+          className,
         )}
-      </div>
+        depth={depth}
+        onClick={e => {
+          if (!active && item.link && !collapsed) {
+            navigate(item.link);
+            return;
+          }
+          if (item.link) {
+            e.stopPropagation();
+            navigate(item.link).then(() => {
+              collapsible && toggleCollapse();
+              collapsible && handleClickCollapsedTransition(!collapsed);
+            });
+            return;
+          }
+          e.stopPropagation();
+          collapsible && toggleCollapse();
+          collapsible && handleClickCollapsedTransition(!collapsed);
+        }}
+        right={collapsible && <CollapsibleIcon collapsed={collapsed} />}
+      />
+
       <div
         ref={containerRef}
-        className="rp-transition-all rp-duration-300 rp-ease-in-out"
         style={{
           overflow: 'hidden',
-          maxHeight: initialState.current ? 0 : undefined,
+          maxHeight: initialState.current ? '0px' : undefined,
+          opacity: initialState.current ? 0 : 1,
         }}
       >
-        <div
-          ref={innerRef}
-          className="rspress-sidebar-group rp-transition-opacity rp-duration-500 rp-ease-in-out"
-          style={{
-            opacity: initialState.current ? 0 : 1,
-            marginLeft: depth === 0 ? '12px' : 0,
-          }}
-        >
-          {(item as NormalizedSidebarGroup)?.items?.map((item, index) =>
-            isSidebarDivider(item) ? (
-              <SidebarDivider
-                // eslint-disable-next-line react/no-array-index-key
-                key={index}
-                depth={depth + 1}
-                dividerType={item.dividerType}
-              />
-            ) : isSidebarSectionHeader(item) ? (
-              <SidebarSectionHeader
-                sectionHeaderText={item.sectionHeaderText}
-                key={index}
-              />
-            ) : (
-              // eslint-disable-next-line react/no-array-index-key
-              <SidebarItemComp
-                {...props}
-                key={index}
-                item={item}
-                depth={depth + 1}
-                id={`${id}-${index}`}
-              />
-            ),
-          )}
-        </div>
+        {item.items?.map((item, index) =>
+          isSidebarGroup(item) ? (
+            <SidebarGroup
+              id={`${id}-${index}`}
+              depth={depth + 1}
+              key={`${id}-${index}`}
+              item={item}
+              setSidebarData={setSidebarData}
+              // className={depth === 0 ? '' : sidebarGroupItem} // TODO: discussion
+              className={sidebarGroupItem}
+            />
+          ) : isSidebarDivider(item) ? (
+            <SidebarDivider
+              key={index}
+              depth={depth + 1}
+              dividerType={item.dividerType}
+            />
+          ) : isSidebarSectionHeader(item) ? (
+            <SidebarSectionHeader
+              sectionHeaderText={item.sectionHeaderText}
+              key={index}
+            />
+          ) : (
+            <SidebarItemComp
+              key={index}
+              item={item}
+              depth={depth + 1}
+              // className={depth === 0 ? '' : sidebarGroupItem} // TODO: discussion
+              className={sidebarGroupItem}
+            />
+          ),
+        )}
       </div>
-    </section>
+    </>
   );
 }

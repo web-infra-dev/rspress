@@ -1,0 +1,16 @@
+.rspress-overview-container {
+  // background: pink;
+  padding: var(--rp-content-padding-y) var(--rp-content-padding-x);
+}
+
+.overviewSearchInput {
+}
+
+.overview__empty {
+  font-size: 1.125rem;
+  color: var(--rp-c-text-2);
+  text-align: center;
+  margin-top: 3rem;
+  padding-top: 2.25rem;
+  border-top: 1px solid var(--rp-c-divider-light);
+}
