@@ -38,14 +38,14 @@ export interface DocLayoutProps {
 function DocContent({
   components,
 }: {
-  components: Record<string, React.FC<{}>> | undefined;
+  components: Record<string, React.FC<any>> | undefined;
 }) {
   const mdxComponents = { ...getCustomMDXComponent(), ...components };
 
   return (
-      <MDXProvider components={mdxComponents}>
-        <Content />
-      </MDXProvider>
+    <MDXProvider components={mdxComponents}>
+      <Content />
+    </MDXProvider>
   );
 }
 
