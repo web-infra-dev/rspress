@@ -27,7 +27,7 @@ export function PrevNextPage() {
           </span>
         </Link>
       ) : (
-        <div className="rp-prevNextPage__placeHolder" />
+        <div className="rp-prevNextPage__placeholder" />
       )}
       {nextPage ? (
         <Link
@@ -41,7 +41,7 @@ export function PrevNextPage() {
           </span>
         </Link>
       ) : (
-        <div className="rp-prevNextPage__placeHolder" />
+        <div className="rp-prevNextPage__placeholder" />
       )}
     </div>
   );
