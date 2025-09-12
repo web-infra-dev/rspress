@@ -72,8 +72,9 @@ function adjustAlpha(hex: string, alpha: number) {
 }
 
 function getBrandColors(hex: string) {
+  const { h, s, l } = hexToHsl(hex);
   return {
-    brand: { hex, hsl: hslString(...Object.values(hexToHsl(hex))) },
+    brand: { hex, hsl: hslString(h, s, l) },
     brandDark: adjustLightness(hex, 0),
     brandDarker: adjustLightness(hex, -10),
     brandLight: adjustLightness(hex, 10),

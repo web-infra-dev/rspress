@@ -10,14 +10,14 @@
     "activeMatch": "/plugin/"
   },
   {
+    "text": "UI",
+    "link": "/ui/vars",
+    "activeMatch": "/ui/"
+  },
+  {
     "text": "API",
     "link": "/api/",
     "activeMatch": "/api/"
-  },
-  {
-    "text": "UI",
-    "link": "/theme/vars",
-    "activeMatch": "/theme/"
   },
   {
     "text": "版本",

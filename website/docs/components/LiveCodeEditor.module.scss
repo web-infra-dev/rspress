@@ -6,7 +6,6 @@
 .codeBlockWrapper {
   position: relative;
   width: 100%;
-  /* 让两个元素滚动条同步，overflow 由外层控制 */
   overflow: auto;
   div[class^='language-'] {
     margin: 0;
@@ -16,7 +15,6 @@
 .codeInput {
   position: absolute;
   display: block;
-  background-color: pink;
   top: 0px;
   left: 0px;
   width: 100%;
