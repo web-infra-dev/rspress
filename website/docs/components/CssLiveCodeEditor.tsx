@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useRef } from 'react';
 import { LiveCodeEditor } from './LiveCodeEditor';
 
 export interface CssLiveCodeEditorProps {
@@ -14,14 +14,9 @@ export function CssLiveCodeEditor({
   onChange,
   disabled = false, // Default to false
 }: CssLiveCodeEditorProps) {
-  const [code, setCode] = useState(value);
   const styleElement = useRef<HTMLStyleElement>(null);
 
-  useEffect(() => {
-    setCode(value);
-  }, [value]);
-
-  function setStyleElement(content: string) {
+  function applyCssToStyleDom(content: string) {
     let styleEl: HTMLStyleElement | null = document.getElementById(
       styleId,
     ) as HTMLStyleElement;
@@ -30,37 +25,20 @@ export function CssLiveCodeEditor({
       styleEl.id = styleId;
       document.head.appendChild(styleEl);
       styleElement.current = styleEl;
-    } else {
-      styleEl.textContent = content;
     }
+    styleEl.textContent = content;
   }
 
   useEffect(() => {
-    setStyleElement(value);
-    return () => {
-      const styleEl: HTMLStyleElement | null = document.getElementById(
-        styleId,
-      ) as HTMLStyleElement;
-      if (styleEl) {
-        styleEl.textContent = '';
-      }
-    };
-  }, []);
-
-  useEffect(() => {
-    if (styleElement.current) {
-      styleElement.current.textContent = code;
-    }
-  }, [code]);
+    applyCssToStyleDom(value);
+  }, [value]);
 
   return (
     <LiveCodeEditor
       lang="css"
-      value={value ?? code}
+      value={value}
       disabled={disabled}
       onChange={code => {
-        setStyleElement(code);
-        // Call the onChange callback if provided
         onChange?.(code);
       }}
     />

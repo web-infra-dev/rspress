@@ -1,4 +1,4 @@
-import { useMemo, useState } from 'react';
+import { useMemo } from 'react';
 import INITIAL_CONTENT from '../../../packages/theme-default/dist/styles/vars/brand.css?raw';
 import {
   CssLiveCodeEditorWithTabs,
@@ -161,8 +161,6 @@ function genCssCode(hex: string) {
 }
 
 export function CssPickerEditor() {
-  const [color, setColor] = useState('#0095ff');
-
   // Generate tabs with predefined colors and their CSS
   const cssTabs: Tab[] = useMemo(() => {
     return TABS.slice(1).map(tab => ({
@@ -172,29 +170,6 @@ export function CssPickerEditor() {
   }, []);
 
   return (
-    <div>
-      {/* Color picker for custom tab */}
-      <div style={{ marginBottom: 16 }}>
-        <label>
-          Theme Color:{' '}
-          <input
-            type="color"
-            value={color}
-            onChange={e => setColor(e.target.value)}
-            style={{
-              verticalAlign: 'middle',
-              width: 32,
-              height: 32,
-              border: 'none',
-              background: 'none',
-              cursor: 'pointer',
-            }}
-          />
-          <span style={{ marginLeft: 8 }}>{color}</span>
-        </label>
-      </div>
-
-      <CssLiveCodeEditorWithTabs tabs={cssTabs} initialCode={INITIAL_CONTENT} />
-    </div>
+    <CssLiveCodeEditorWithTabs tabs={cssTabs} initialCode={INITIAL_CONTENT} />
   );
 }

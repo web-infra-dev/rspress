@@ -36,6 +36,9 @@ export function CssLiveCodeEditorWithTabs({
   const handleCodeChange = (code: string) => {
     if (isCustomTab) {
       setCustomCode(code);
+    } else {
+      setActiveTab(0);
+      setCustomCode(code);
     }
   };
 
@@ -66,7 +69,6 @@ export function CssLiveCodeEditorWithTabs({
         value={currentCode}
         styleId={styleId}
         onChange={handleCodeChange}
-        disabled={!isCustomTab}
       />
     </div>
   );
