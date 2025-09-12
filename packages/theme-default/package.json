@@ -52,7 +52,7 @@
     "shiki": "^3.12.2"
   },
   "devDependencies": {
-    "@microsoft/api-extractor": "^7.52.11",
+    "@microsoft/api-extractor": "^7.52.12",
     "@rsbuild/plugin-react": "~1.4.0",
     "@rsbuild/plugin-sass": "~1.4.0",
     "@rsbuild/plugin-svgr": "^1.2.2",
@@ -64,7 +64,7 @@
     "@types/nprogress": "^0.2.3",
     "@types/react": "^19.1.12",
     "@types/react-dom": "^19.1.9",
-    "@types/web": "^0.0.265",
+    "@types/web": "^0.0.266",
     "rsbuild-plugin-publint": "^0.3.3",
     "tailwindcss": "^3.4.17",
     "typescript": "^5.8.2"
