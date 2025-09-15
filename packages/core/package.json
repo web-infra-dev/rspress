@@ -94,7 +94,7 @@
   },
   "devDependencies": {
     "@microsoft/api-extractor": "^7.52.13",
-    "@rslib/core": "0.12.4",
+    "@rslib/core": "0.13.2",
     "@rspress/config": "workspace:*",
     "@types/hast": "^3.0.4",
     "@types/html-to-text": "^9.0.4",
