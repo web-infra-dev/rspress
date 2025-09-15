@@ -9,7 +9,7 @@ const tokenScopes: Record<string, string[]> = {
     'constant.other',
     'entity.name.constant',
     'variable.other.constant',
-    'variable.other.enummember',
+    'variable.other.enummember', // cspell:disable-line
     'variable.language',
     'support.constant',
   ],
@@ -198,13 +198,13 @@ const THEMES = [
   'dark-plus',
   'one-light',
   'one-dark-pro',
-  'nord',
+  'nord', // cspell:disable-line
   'material-theme',
   'material-theme-darker',
   'material-theme-ocean',
-  'vitesse-light',
-  'vitesse-dark',
-  'andromeeda',
+  'vitesse-light', // cspell:disable-line
+  'vitesse-dark', // cspell:disable-line
+  'andromeeda', // cspell:disable-line
   'ayu-dark',
 ] as const;
 
