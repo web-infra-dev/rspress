@@ -84,8 +84,15 @@ const tokenScopes: Record<string, string[]> = {
   ],
 };
 
+interface TokenColor {
+  scope?: string | string[];
+  settings?: {
+    foreground?: string;
+  };
+}
+
 function getColorForScope(
-  tokenColors: any[],
+  tokenColors: TokenColor[],
   scopes: string[],
 ): string | undefined {
   let bestMatch: string | undefined;
