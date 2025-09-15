@@ -80,7 +80,7 @@ export async function renderPages(
   logger.info('Rendering pages...');
   const startTime = Date.now();
   const outputPath = config?.outDir ?? join(appDirectory, OUTPUT_DIR);
-  const ssrBundlePath = join(outputPath, 'ssr', 'main.cjs');
+  const ssrBundlePath = join(outputPath, '__ssr__', 'main.cjs');
 
   try {
     // There are two cases where we will fallback to CSR:
@@ -215,7 +215,7 @@ export async function renderPages(
     );
     // Remove ssr bundle
     if (!isDebugMode()) {
-      await emptyDir(join(outputPath, 'ssr'));
+      await emptyDir(join(outputPath, '__ssr__'));
     }
     await emptyDir(join(outputPath, 'html'));
 
