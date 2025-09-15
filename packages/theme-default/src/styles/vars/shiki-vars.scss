@@ -1,6 +1,7 @@
 :where(html:not(.rp-dark)) {
   --shiki-foreground: #414141;
   --shiki-background: var(--rp-code-block-bg);
+
   --shiki-token-constant: #1976d2;
   --shiki-token-string: #31a94d;
   --shiki-token-comment: rgb(182, 180, 180);
