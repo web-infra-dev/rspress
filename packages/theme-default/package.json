@@ -36,7 +36,7 @@
     "reset": "rimraf ./**/node_modules"
   },
   "dependencies": {
-    "@mdx-js/react": "3.1.1",
+    "@mdx-js/react": "^3.1.1",
     "@rspress/runtime": "workspace:*",
     "@rspress/shared": "workspace:*",
     "@unhead/react": "^2.0.14",

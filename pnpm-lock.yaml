@@ -1583,7 +1583,7 @@ importers:
   packages/theme-default:
     dependencies:
       '@mdx-js/react':
-        specifier: 3.1.1
+        specifier: ^3.1.1
         version: 3.1.1(@types/react@19.1.13)(react@19.1.1)
       '@rspress/runtime':
         specifier: workspace:*
