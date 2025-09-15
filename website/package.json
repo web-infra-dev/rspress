@@ -20,6 +20,7 @@
     "rsbuild-plugin-google-analytics": "^1.0.4",
     "rsbuild-plugin-open-graph": "^1.1.0",
     "rspress-plugin-font-open-sans": "^1.0.3",
+    "tm-themes": "1.10.9",
     "typescript": "^5.8.2"
   }
 }

@@ -1721,6 +1721,9 @@ importers:
       rspress-plugin-font-open-sans:
         specifier: ^1.0.3
         version: 1.0.3(@rspress/core@packages+core)
+      tm-themes:
+        specifier: 1.10.9
+        version: 1.10.9
       typescript:
         specifier: ^5.8.2
         version: 5.8.2
@@ -6616,6 +6619,9 @@ packages:
   tinyspy@3.0.2:
     resolution: {integrity: sha512-n1cw8k1k0x4pgA2+9XrOkFydTerNcJ1zWCO5Nn9scWHTD+5tp8dghT2x1uduQePZTZgd3Tupf+x9BxJjeJi77Q==}
     engines: {node: '>=14.0.0'}
+
+  tm-themes@1.10.9:
+    resolution: {integrity: sha512-2pBK8ZHXFibHOoKmi1aE2VF1ISsMpqTU+RS3+YS8LGNEm4WSkmnDqdylbtsmZIfFTxy/8KbsiBKbrmnHYVTZFw==}
 
   tmp@0.2.1:
     resolution: {integrity: sha512-76SUhtfqR2Ijn+xllcI5P1oyannHNHByD80W1q447gU3mp9G9PSpGdWmjUOHRDPiHYacIk66W7ubDTuPF3BEtQ==}
@@ -12833,6 +12839,8 @@ snapshots:
   tinyrainbow@1.2.0: {}
 
   tinyspy@3.0.2: {}
+
+  tm-themes@1.10.9: {}
 
   tmp@0.2.1:
     dependencies:

@@ -52,7 +52,7 @@ html.rp-dark {
 .rspress-doc div[class^='language-'] {
   position: relative;
   margin: 16px 0;
-  background-color: var(--rp-code-block-bg);
+  /* background-color: var(--rp-code-block-bg); */
   overflow-x: auto;
   transition: none;
 }
@@ -112,7 +112,7 @@ html.rp-dark {
   line-height: 1.7;
   font-size: var(--rp-code-font-size);
   color: var(--rp-code-block-color);
-  background-color: var(--rp-code-block-bg);
+  /* background-color: var(--rp-code-block-bg); */
   transition: color 0.5s;
 }
 

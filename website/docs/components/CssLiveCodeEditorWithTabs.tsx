@@ -21,6 +21,7 @@ export function CssLiveCodeEditorWithTabs({
   const [customCode, setCustomCode] = useState(initialCode);
 
   const allTabs = [{ label: 'Custom', code: initialCode }, ...tabs];
+  const shouldUseDropdown = allTabs.length > 6; // Use dropdown if more than 6 tabs
 
   const currentCode =
     activeTab === 0 ? customCode : tabs[activeTab - 1]?.code || '';
@@ -44,25 +45,69 @@ export function CssLiveCodeEditorWithTabs({
 
   return (
     <div>
-      {/* Tabs */}
-      <div style={{ display: 'flex', marginBottom: 16 }}>
-        {allTabs.map((tab, index) => (
-          <button
-            key={index}
-            onClick={() => handleTabChange(index)}
+      {/* Tabs or Dropdown */}
+      {shouldUseDropdown ? (
+        <div style={{ marginBottom: 16 }}>
+          <select
+            value={activeTab}
+            onChange={e => handleTabChange(Number(e.target.value))}
             style={{
-              padding: '8px 16px',
-              backgroundColor: activeTab === index ? '#e0e0e0' : 'transparent',
+              padding: '8px 12px',
               border: '1px solid #ccc',
               borderRadius: '4px',
+              backgroundColor: '#fff',
               cursor: 'pointer',
-              marginRight: 8,
+              fontSize: '14px',
+              minWidth: '200px',
             }}
           >
-            {tab.label}
-          </button>
-        ))}
-      </div>
+            {allTabs.map((tab, index) => (
+              <option key={index} value={index}>
+                {tab.label}
+              </option>
+            ))}
+          </select>
+        </div>
+      ) : (
+        <div
+          style={{
+            display: 'flex',
+            flexWrap: 'wrap',
+            gap: '8px',
+            marginBottom: 16,
+          }}
+        >
+          {allTabs.map((tab, index) => (
+            <button
+              key={index}
+              onClick={() => handleTabChange(index)}
+              style={{
+                padding: '8px 16px',
+                backgroundColor:
+                  activeTab === index
+                    ? index === 0
+                      ? '#0095ff'
+                      : 'var(--rp-c-brand)'
+                    : '#fff',
+                color: activeTab === index ? '#fff' : '#333',
+                border:
+                  activeTab === index
+                    ? '1px solid var(--rp-c-brand)'
+                    : '1px solid #ddd',
+                borderRadius: '6px',
+                cursor: 'pointer',
+                fontSize: '14px',
+                fontWeight: activeTab === index ? '500' : '400',
+                transition: 'all 0.2s ease',
+                whiteSpace: 'nowrap',
+                outline: 'none',
+              }}
+            >
+              {tab.label}
+            </button>
+          ))}
+        </div>
+      )}
 
       {/* CSS Editor */}
       <CssLiveCodeEditor
