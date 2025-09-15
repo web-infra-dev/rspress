@@ -1,5 +1,5 @@
 import { useMemo } from 'react';
-import INITIAL_CONTENT from '../../../packages/theme-default/dist/styles/vars/brand.css?raw';
+import INITIAL_CONTENT from '../../../packages/theme-default/dist/styles/vars/brand-vars.css?raw';
 import {
   CssLiveCodeEditorWithTabs,
   type Tab,
