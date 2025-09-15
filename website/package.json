@@ -16,7 +16,7 @@
     "@rspress/plugin-twoslash": "workspace:*",
     "@rstack-dev/doc-ui": "^1.11.0",
     "@shikijs/transformers": "^3.12.2",
-    "@types/react": "^19.1.12",
+    "@types/react": "^19.1.13",
     "rsbuild-plugin-google-analytics": "^1.0.4",
     "rsbuild-plugin-open-graph": "^1.1.0",
     "rspress-plugin-font-open-sans": "^1.0.3",

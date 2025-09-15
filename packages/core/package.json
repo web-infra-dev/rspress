@@ -93,7 +93,7 @@
     "unist-util-visit-children": "^3.0.0"
   },
   "devDependencies": {
-    "@microsoft/api-extractor": "^7.52.12",
+    "@microsoft/api-extractor": "^7.52.13",
     "@rslib/core": "0.12.4",
     "@rspress/config": "workspace:*",
     "@types/hast": "^3.0.4",
@@ -101,7 +101,7 @@
     "@types/lodash-es": "^4.17.12",
     "@types/mdast": "^4.0.4",
     "@types/node": "^22.8.1",
-    "@types/react": "^19.1.12",
+    "@types/react": "^19.1.13",
     "@types/react-dom": "^19.1.9",
     "execa": "8.0.1",
     "mdast-util-directive": "^3.1.0",
