@@ -65,7 +65,7 @@ async function createInternalBuildConfig(
     config?.themeDir ?? path.join(process.cwd(), 'theme');
   const baseOutDir = config?.outDir ?? OUTPUT_DIR;
   const csrOutDir = baseOutDir;
-  const ssrOutDir = path.join(baseOutDir, '__ssr__');
+  const ssrOutDir = path.join(baseOutDir, '__ssg__');
 
   const DEFAULT_THEME = require.resolve('@rspress/theme-default');
   const base = config?.base ?? '';
