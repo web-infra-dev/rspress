@@ -2,8 +2,8 @@ import nprogress from 'nprogress';
 import type React from 'react';
 import type { ComponentProps } from 'react';
 import { preloadLink } from '../Sidebar/utils';
-import * as styles from './index.module.scss';
 import { getHref, useNavigate } from './useNavigate';
+import './index.scss';
 
 export interface LinkProps extends ComponentProps<'a'> {
   href?: string;
@@ -37,7 +37,7 @@ export function Link(props: LinkProps) {
         href={href}
         target="_blank"
         rel="noopener noreferrer"
-        className={`${styles.link} ${className}`}
+        className={`rp-link ${className}`}
       >
         {children}
       </a>
@@ -46,7 +46,7 @@ export function Link(props: LinkProps) {
 
   if (linkType === 'hashOnly') {
     return (
-      <a {...props} href={href} className={`${styles.link} ${className}`}>
+      <a {...props} href={href} className={`rp-link ${className}`}>
         {children}
       </a>
     );
@@ -57,7 +57,7 @@ export function Link(props: LinkProps) {
       <a
         {...props}
         href={href}
-        className={`${styles.link} ${className}`}
+        className={`rp-link ${className}`}
         onMouseEnter={event => {
           onMouseEnter?.(event);
           preloadLink(removeBaseHref);
@@ -90,7 +90,7 @@ export function Link(props: LinkProps) {
     <a
       {...props}
       href={withBaseHref}
-      className={`${styles.link} ${className}`}
+      className={`rp-link ${className}`}
       onMouseEnter={event => {
         onMouseEnter?.(event);
         preloadLink(removeBaseHref);

@@ -189,7 +189,7 @@ test.describe('Inline markdown test', async () => {
         '-m &lt;number&gt;',
         '<code>&lt;foo&gt;</code>',
         '<code>foo &lt;bar&gt; baz</code>',
-        '<strong class="rp-font-semibold">bold</strong>',
+        '<strong>bold</strong>',
         '<em>emphasis</em>',
         '<del>delete</del>',
         '<code>This is a long string to test regex performance</code>',
