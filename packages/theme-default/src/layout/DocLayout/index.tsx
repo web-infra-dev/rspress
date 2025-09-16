@@ -124,7 +124,7 @@ export function DocLayout(props: DocLayoutProps) {
               </>
             ) : (
               <>
-                <div className="rspress-doc" ref={rspressDocRef}>
+                <div className="rspress-doc rp-doc" ref={rspressDocRef}>
                   {beforeDocContent}
                   {fallbackTitle}
                   {docContent}

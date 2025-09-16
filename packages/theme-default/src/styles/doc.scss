@@ -1,5 +1,4 @@
 /* keep the html syntax in markdown original style e.g: <ul></ul> */
-.rspress-doc,
 .rp-doc {
   :not(:where(.rp-not-doc, .rp-not-doc *)) {
     // escape hatch like <div className="rp-not-doc"></div>
@@ -11,7 +10,7 @@
       margin-top: 1.25rem; /* 20px */
       margin-bottom: 1.25rem;
     }
-    &:where(p strong) {
+    &:where(strong, b) {
       font-weight: 600;
     }
     &:where(hr) {
@@ -204,9 +203,99 @@
       font-weight: 600;
       border-color: var(--rp-c-gray-light-3);
     }
-  }
+    /* #endregion */
 
-  /* #endregion */
+    /* code block */
+    /* #region */
+
+    // #region inline code
+    &:where(:not(pre, h1, h2, h3, h4, h5, h6) > code) {
+      font-size: var(--rp-code-font-size);
+    }
+    &:where(:not(pre, div) > code) {
+      padding: 3px 6px;
+      border-radius: var(--rp-radius-small);
+      background-color: var(--rp-c-text-code-bg);
+      overflow-wrap: break-word;
+    }
+    &:where(:not(pre, div, a) > code) {
+      color: var(--rp-c-text-code);
+    }
+    &:where(h1 code, h2 code, h3 code) {
+      font-size: 0.9em;
+    }
+    &:where(a > code) {
+      color: var(--rp-c-brand-dark);
+      transition: color 0.25s;
+    }
+    &:where(a:hover > code) {
+      color: var(--rp-c-brand);
+    }
+    // #endregion inline code
+
+    &:where(div[class^='language-']) {
+      position: relative;
+      margin: 16px 0;
+      background-color: var(--rp-code-block-bg);
+      overflow-x: auto;
+      transition: none;
+      @media (min-width: 641px) {
+        border-radius: var(--rp-radius);
+      }
+
+      @media (max-width: 640px) {
+        border-radius: var(--rp-radius-small);
+        margin: 24px 0;
+        contain: content;
+      }
+
+      & :where(pre, code) {
+        text-align: left;
+        white-space: pre;
+        word-spacing: normal;
+        word-break: normal;
+        word-wrap: normal;
+        -moz-tab-size: 4;
+        -o-tab-size: 4;
+        tab-size: 4;
+        -webkit-hyphens: none;
+        -moz-hyphens: none;
+        -ms-hyphens: none;
+        hyphens: none;
+      }
+
+      & :where(pre) {
+        position: relative;
+        z-index: 1;
+        margin: 0;
+        background: transparent;
+        overflow-x: auto;
+      }
+
+      & :where(code) {
+        display: inline-block;
+        padding: 16px 0;
+        width: fit-content;
+        min-width: 100%;
+        line-height: 1.7;
+        font-size: var(--rp-code-font-size);
+        color: var(--rp-code-block-color);
+        transition: color 0.5s;
+      }
+    }
+
+    &:where(.rspress-code-title) {
+      padding: 12px 16px;
+      font-size: var(--rp-code-font-size);
+      background-color: var(--rp-code-title-bg);
+      transition: background-color 0.5s;
+    }
+
+    &:where(.rspress-code-content) {
+      position: relative;
+    }
+    /* #endregion */
+  }
 }
 
 /* Dark mode styles */
