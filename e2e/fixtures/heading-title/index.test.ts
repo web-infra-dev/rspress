@@ -26,7 +26,7 @@ test.describe('heading-title test', async () => {
     const fontSize = await h1.evaluate(node => {
       return window.getComputedStyle(node).fontSize;
     });
-    expect(fontSize).toBe('2rem');
+    expect(fontSize).toBe('32px');
 
     // check anchor #heading-title should be in h1
     const anchor = h1.locator('a.header-anchor');
