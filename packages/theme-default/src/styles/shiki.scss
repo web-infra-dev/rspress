@@ -7,6 +7,10 @@
   display: inline-block;
 }
 
+.code-line-highlighted {
+  background-color: var(--rp-code-line-highlight-color);
+}
+
 .diff,
 .code-line-highlighted {
   transition: background-color 0.5s;

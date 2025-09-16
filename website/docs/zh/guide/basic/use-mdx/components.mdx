@@ -102,7 +102,7 @@ import Button from './_button.mdx';
 
 </Border>
 
-## 逃生舱：TSX 组件中使用 MDX 样式
+## 逃生舱：使用 tsx 或 html 编写文档内容
 
 ```tsx file="./_escape-hatch.tsx" title="_escape-hatch.tsx"
 
@@ -118,7 +118,7 @@ import EscapeHatch from './_escape-hatch';
 
 :::warning
 
-`.tsx` 组件会导致一些静态信息难以提取，比如本地搜索索引。
+tsx 和 html 语法会导致静态信息难以提取，比如本地搜索索引。
 
 更推荐使用 `.mdx` 文件来编写文档内容，使用 `.tsx` 文件来编写需交互的动态内容。
 

@@ -204,3 +204,17 @@
 .rspress-doc .rspress-directive.details a {
   color: var(--rp-container-details-link);
 }
+
+.rspress-doc details {
+  margin: 16px 0;
+  padding: 8px;
+  font-size: normal;
+  cursor: pointer;
+  transition: all 0.3s;
+  p {
+    margin: 8px 0;
+  }
+  &:hover {
+    background-color: var(--rp-c-bg-mute);
+  }
+}

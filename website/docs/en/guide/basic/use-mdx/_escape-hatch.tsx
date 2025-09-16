@@ -1,10 +1,12 @@
-import { getCustomMDXComponent } from '@theme';
-
 export default () => {
-  const { code: Code, p: P } = getCustomMDXComponent();
   return (
-    <P>
-      This is content in tsx, but you can use <Code>code block</Code> styles.
-    </P>
+    <p className="rp-doc">
+      This is content in tsx, but the styles are the same as in the
+      documentation, such as <code>@rspress/core</code>. However,{' '}
+      <strong className="rp-not-doc">
+        this text with className="rp-not-doc"
+      </strong>{' '}
+      will not take effect
+    </p>
   );
 };
