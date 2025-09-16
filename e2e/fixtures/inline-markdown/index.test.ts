@@ -25,7 +25,7 @@ test.describe('Inline markdown test', async () => {
     });
 
     const sidebar = await getSidebar(page);
-    expect(sidebar?.length).toBe(8);
+    expect(sidebar?.length).toBe(9);
 
     const sidebarTexts = await Promise.all(
       sidebar.map(element => element.textContent()),
@@ -40,6 +40,7 @@ test.describe('Inline markdown test', async () => {
         '<foo>',
         '-m <number>',
         'delete',
+        'link',
       ].join(','),
     );
 
@@ -55,6 +56,7 @@ test.describe('Inline markdown test', async () => {
       '<span><code>&lt;foo&gt;</code></span>',
       '<span>-m &lt;number&gt;</span>',
       '<span><del>delete</del></span>',
+      '<span>link</span>',
     ];
     for (const [index, html] of sidebarInnerHtml.entries()) {
       expect(html).toContain(expectedSidebarInnerHtml[index]);
@@ -79,6 +81,7 @@ test.describe('Inline markdown test', async () => {
         '<foo>',
         '-m <number>',
         'delete',
+        'link',
       ].join(','),
     );
     const h2InnerHtml = await Promise.all(
@@ -93,6 +96,7 @@ test.describe('Inline markdown test', async () => {
         '<code>&lt;foo&gt;</code>',
         '-m &lt;number&gt;',
         '<del>delete</del>',
+        'link',
       ].join(','),
     );
 
@@ -107,6 +111,7 @@ test.describe('Inline markdown test', async () => {
         '<foo>',
         '-m <number>',
         'delete',
+        'link',
       ].join(','),
     );
     const h3InnerHtml = await Promise.all(
@@ -120,6 +125,7 @@ test.describe('Inline markdown test', async () => {
       '<code>&lt;foo&gt;</code></a>',
       '-m &lt;number&gt;</a>',
       '<del>delete</del></a>',
+      `<a href=\"/inline/link.html\" class=\"rp-link \">link</a>`,
     ];
     for (const [index, html] of h3InnerHtml.entries()) {
       expect(html).toContain(expectedH3InnerHtml[index]);
@@ -138,6 +144,10 @@ test.describe('Inline markdown test', async () => {
         'emphasis',
         'delete',
         'This is a long string to test regex performance',
+        'this is link rsbuild',
+        'this is bold link', // FIXME: should be 'this is bold link rsbuild'
+        'this is code link',
+        'this is bold code link',
       ].join(','),
     );
     const aInnerHtml = await Promise.all(a.map(element => element.innerHTML()));
@@ -151,6 +161,10 @@ test.describe('Inline markdown test', async () => {
       '<em>emphasis</em>',
       '<del>delete</del>',
       '<code>This is a long string to test regex performance</code>',
+      `this is link rsbuild`,
+      `this is bold link`, // FIXME: should be 'this is bold link rsbuild'
+      `this is code link`,
+      `this is bold code link`,
     ];
     for (const [index, html] of aInnerHtml.entries()) {
       expect(html).toContain(expectedAInnerHtml[index]);
