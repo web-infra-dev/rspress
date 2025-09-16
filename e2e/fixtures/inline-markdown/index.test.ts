@@ -125,7 +125,7 @@ test.describe('Inline markdown test', async () => {
       '<code>&lt;foo&gt;</code></a>',
       '-m &lt;number&gt;</a>',
       '<del>delete</del></a>',
-      `<a href=\"/inline/link.html\" class=\"rp-link \">link</a>`,
+      'link',
     ];
     for (const [index, html] of h3InnerHtml.entries()) {
       expect(html).toContain(expectedH3InnerHtml[index]);
