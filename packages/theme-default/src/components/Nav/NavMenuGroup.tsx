@@ -115,7 +115,7 @@ export function NavMenuGroup(item: NavMenuGroupItem) {
           renderLinkItem(item as NavItemWithLink, true)
         ) : (
           <p
-            className="rp-font-bold rp-text-gray-400 rp-my-1 not:first:rp-border"
+            className="rp-font-bold rp-text-gray-400 rp-my-1 not:first:rp-border rp-px-2"
             style={{
               color: 'var(--rp-c-text-1)',
             }}
