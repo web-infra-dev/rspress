@@ -40,7 +40,7 @@ export function Toc({
   const headers = useDynamicToc();
   return (
     headers.length > 0 && (
-      <ul>
+      <ul className="rp-not-doc">
         {headers.map(item => (
           <TocItem key={item.id} header={item} onItemClick={onItemClick} />
         ))}

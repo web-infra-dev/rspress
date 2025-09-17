@@ -1,5 +1,5 @@
 import { useLocaleSiteData } from '@rspress/runtime';
-import { Link } from '@theme';
+import { Link, renderInlineMarkdown } from '@theme';
 import * as styles from './index.module.scss';
 
 interface PrevNextPageProps {
@@ -19,7 +19,7 @@ export function PrevNextPage(props: PrevNextPageProps) {
   return (
     <Link href={href} className={linkClassName}>
       <span className={styles.desc}>{pageText}</span>
-      <span className={styles.title}>{text}</span>
+      <span className={styles.title} {...renderInlineMarkdown(text)} />
     </Link>
   );
 }
