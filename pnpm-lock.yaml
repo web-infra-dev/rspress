@@ -958,8 +958,8 @@ importers:
         specifier: ^0.3.3
         version: 0.3.3(@rsbuild/core@1.5.6)
       rsbuild-plugin-virtual-module:
-        specifier: 0.3.1
-        version: 0.3.1(@rsbuild/core@1.5.6)
+        specifier: 0.4.1
+        version: 0.4.1(@rsbuild/core@1.5.6)
       tailwindcss:
         specifier: ^3.4.17
         version: 3.4.17(ts-node@10.9.2(@types/node@22.10.2)(typescript@5.8.2))
@@ -6125,8 +6125,8 @@ packages:
       '@rsbuild/core':
         optional: true
 
-  rsbuild-plugin-virtual-module@0.3.1:
-    resolution: {integrity: sha512-a+xRyY3UzsbYSBum/Q3mMkb10/d/XEBlkmUWWtY9IKuUwC4aOLqeWy5kYmj32HK36Aj32YCEZLp9gkjn8LgXdA==}
+  rsbuild-plugin-virtual-module@0.4.1:
+    resolution: {integrity: sha512-4ifO+yPlcjkjroNNVWaixDhFxX+mveaAiX1lVtIlm/f8q+9yELKWoeSNedlJ6vKtwGNjwBglje/ISKfUMT4Q9A==}
     peerDependencies:
       '@rsbuild/core': 1.x
     peerDependenciesMeta:
@@ -12351,7 +12351,7 @@ snapshots:
     optionalDependencies:
       '@rsbuild/core': 1.5.6
 
-  rsbuild-plugin-virtual-module@0.3.1(@rsbuild/core@1.5.6):
+  rsbuild-plugin-virtual-module@0.4.1(@rsbuild/core@1.5.6):
     optionalDependencies:
       '@rsbuild/core': 1.5.6
 
