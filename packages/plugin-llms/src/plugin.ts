@@ -68,12 +68,14 @@ const rsbuildPluginLlms = ({
         exclude,
       );
 
-      // currently we do not support multi version
+      // TODO: currently we do not support multi version
       const navList: (NavItemWithLink & { lang: string })[] = Array.isArray(nav)
         ? (
             nav
               .map(i => {
-                const nav = (i.nav as any).default as NavItemWithLink[];
+                i.nav;
+                const nav = ((i.nav as any).default ||
+                  i.nav) as NavItemWithLink[];
                 const lang = i.lang;
                 return nav.map(i => {
                   return {
