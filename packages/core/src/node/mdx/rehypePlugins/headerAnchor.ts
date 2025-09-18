@@ -64,7 +64,7 @@ function create(node: Element): Element {
     properties: {
       class: 'header-anchor',
       ariaHidden: 'true',
-      href: `#${node.properties!.id}`,
+      href: `#${node.properties.id}`,
     },
     children: [
       {
