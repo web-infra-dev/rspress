@@ -237,7 +237,8 @@
     &:where(div[class^='language-']) {
       position: relative;
       margin: 16px 0;
-      background-color: var(--rp-code-block-bg);
+      // background-color: var(--rp-code-block-bg);
+      border: var(--rp-code-block-border);
       overflow-x: auto;
       transition: none;
       @media (min-width: 641px) {
@@ -271,6 +272,17 @@
         margin: 0;
         background: transparent;
         overflow-x: auto;
+        &::-webkit-scrollbar {
+          height: 5px;
+          width: 5px;
+        }
+        &::-webkit-scrollbar-corner {
+          display: none;
+        }
+        &::-webkit-scrollbar-thumb {
+          background-color: var(--rp-code-block-scroll-bar-bg);
+          border-radius: 10px;
+        }
       }
 
       & :where(code) {
