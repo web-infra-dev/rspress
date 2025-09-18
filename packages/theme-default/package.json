@@ -42,7 +42,7 @@
     "@unhead/react": "^2.0.14",
     "body-scroll-lock": "4.0.0-beta.0",
     "copy-to-clipboard": "^3.3.3",
-    "flexsearch": "0.7.43",
+    "flexsearch": "0.8.212",
     "github-slugger": "^2.0.0",
     "hast-util-to-jsx-runtime": "^2.3.6",
     "lodash-es": "^4.17.21",
