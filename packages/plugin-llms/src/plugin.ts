@@ -68,12 +68,13 @@ const rsbuildPluginLlms = ({
         exclude,
       );
 
-      // currently we do not support multi version
+      // TODO: currently we do not support multi version
       const navList: (NavItemWithLink & { lang: string })[] = Array.isArray(nav)
         ? (
             nav
               .map(i => {
-                const nav = (i.nav as any).default as NavItemWithLink[];
+                const nav = ((i.nav as any).default ||
+                  i.nav) as NavItemWithLink[];
                 const lang = i.lang;
                 return nav.map(i => {
                   return {
@@ -144,21 +145,19 @@ const rsbuildPluginLlms = ({
           const isMD = path.extname(filepath).slice(1) !== 'mdx';
           let mdContent: string | Buffer;
           try {
-            mdContent = (
-              await normalizeMdFile(
-                content,
-                filepath,
-                routeServiceRef.current!,
-                baseRef.current,
-                typeof mdFiles !== 'boolean'
-                  ? (mdFiles?.mdxToMd ?? false)
-                  : false,
-                isMD,
-                typeof mdFiles !== 'boolean'
-                  ? (mdFiles?.remarkPlugins ?? [])
-                  : [],
-              )
-            ).toString();
+            mdContent = await normalizeMdFile(
+              content,
+              filepath,
+              routeServiceRef.current!,
+              baseRef.current,
+              typeof mdFiles !== 'boolean'
+                ? (mdFiles?.mdxToMd ?? false)
+                : false,
+              isMD,
+              typeof mdFiles !== 'boolean'
+                ? (mdFiles?.remarkPlugins ?? [])
+                : [],
+            );
           } catch (e) {
             // normalizeMdFile might have some edge cases, fallback to no flatten and plain mdx
             logger.debug('normalizeMdFile failed', pageData.routePath, e);
