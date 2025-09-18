@@ -25,7 +25,8 @@
   ],
   "mdx.validate.validateFileLinks": "ignore",
   "editor.codeActionsOnSave": {
-    "source.organizeImports.biome": "explicit"
+    "source.organizeImports.biome": "explicit",
+    "source.fixAll.rslint": "explicit"
   },
   "[javascript]": {
     "editor.defaultFormatter": "biomejs.biome"
