@@ -9,7 +9,7 @@ describe('rehypeHeadAnchor', () => {
 
 ## title 1 {#custom-id}
 
-## title 1 \{#custom-id}
+## title 1 \\{#custom-id}
 
 ## title 2
 

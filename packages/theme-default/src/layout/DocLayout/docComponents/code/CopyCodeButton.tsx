@@ -55,7 +55,7 @@ export function CopyCodeButton({
   return (
     <button
       className={styles.codeCopyButton}
-      onClick={() => copyCode(codeBlockRef.current, copyButtonRef.current!)}
+      onClick={() => copyCode(codeBlockRef.current, copyButtonRef.current)}
       ref={copyButtonRef}
       title="Copy code"
     >
