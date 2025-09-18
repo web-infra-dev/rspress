@@ -73,7 +73,6 @@ const rsbuildPluginLlms = ({
         ? (
             nav
               .map(i => {
-                i.nav;
                 const nav = ((i.nav as any).default ||
                   i.nav) as NavItemWithLink[];
                 const lang = i.lang;
