@@ -9,7 +9,6 @@ import remarkParse from 'remark-parse';
 import remarkStringify from 'remark-stringify';
 import { type PluggableList, type Plugin, unified } from 'unified';
 import { SKIP, visit } from 'unist-util-visit';
-import type { VFile } from 'vfile';
 
 // TODO: currently skip mdxElement, expose the remarkPlugin to users
 const mdxToMdPlugin: Plugin<[], Root> = () => {
@@ -41,7 +40,7 @@ const mdxToMdPlugin: Plugin<[], Root> = () => {
 
 function noopPlugin() {}
 
-function normalizeMdFile(
+async function normalizeMdFile(
   content: string,
   filepath: string,
   routeService: RouteService,
@@ -49,7 +48,7 @@ function normalizeMdFile(
   mdxToMd: boolean,
   isMd: boolean,
   remarkPlugins: PluggableList,
-): Promise<VFile> {
+): Promise<string> {
   const compiler = unified()
     .use(remarkParse)
     .use(isMd ? noopPlugin : remarkMdx)
@@ -67,10 +66,15 @@ function normalizeMdFile(
     .use(remarkPlugins)
     .use(remarkStringify);
 
-  return compiler.process({
+  const vfile = await compiler.process({
     value: content,
     path: filepath,
   });
+  const result = vfile.toString();
+  if (result.trim() === '') {
+    return '\n';
+  }
+  return result;
 }
 
 export { normalizeMdFile };
