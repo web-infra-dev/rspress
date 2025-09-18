@@ -6,7 +6,7 @@ import {
   runPreviewCommand,
 } from '../../utils/runCommands';
 
-test.describe('basic test', async () => {
+test.describe('production build test', async () => {
   let appPort;
   let app;
   test.beforeAll(async () => {
@@ -23,19 +23,26 @@ test.describe('basic test', async () => {
   });
 
   test('check whether the page can be interacted', async ({ page }) => {
-    await page.goto(`http://localhost:${appPort}`, {
-      waitUntil: 'networkidle',
-    });
-    const darkModeButton = await page.$('.rspress-nav-appearance');
-    const html = await page.$('html');
-    let htmlClass = await page.evaluate(
-      html => html?.getAttribute('class'),
-      html,
-    );
-    const defaultMode = htmlClass?.includes('dark') ? 'dark' : 'light';
-    await darkModeButton?.click();
-    // check the class in html
-    htmlClass = await page.evaluate(html => html?.getAttribute('class'), html);
-    expect(htmlClass?.includes('dark')).toBe(defaultMode !== 'dark');
+    await page.goto(`http://localhost:${appPort}`);
+    await page.waitForLoadState('networkidle');
+
+    const darkModeButton = page.locator('.rspress-nav-appearance');
+    const htmlElement = page.locator('html');
+
+    // Get initial theme mode
+    const initialClass = await htmlElement.getAttribute('class');
+    const defaultMode = initialClass?.includes('dark') ? 'dark' : 'light';
+
+    // Toggle dark mode and verify the change
+    await darkModeButton.click();
+
+    // Verify theme has changed using modern assertion patterns
+    if (defaultMode === 'dark') {
+      // Should no longer have dark class
+      await expect(htmlElement).toHaveClass(/^(?!.*dark).*$/);
+    } else {
+      // Should now have dark class
+      await expect(htmlElement).toHaveClass(/.*dark.*/);
+    }
   });
 });
