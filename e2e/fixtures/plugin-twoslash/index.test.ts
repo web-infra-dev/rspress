@@ -27,20 +27,20 @@ test.describe('plugin twoslash test', async () => {
       waitUntil: 'networkidle',
     });
 
-    const triggers = await page.$$('twoslash-popup-trigger');
-    expect(triggers.length).toBe(10);
+    const triggers = page.locator('twoslash-popup-trigger');
+    await expect(triggers).toHaveCount(10);
 
-    for (const trigger of triggers) {
-      const container = await trigger.$('twoslash-popup-container');
-      expect(container).not.toBeNull();
+    for (const trigger of await triggers.all()) {
+      const container = trigger.locator('twoslash-popup-container');
+      await expect(container).toBeVisible();
 
-      const initialized = await container?.getAttribute('data-initialized');
-      expect(initialized).toBeNull();
+      await expect(container).not.toHaveAttribute('data-initialized');
 
-      const inner = await container.$('.twoslash-popup-inner');
-      expect(inner).not.toBeNull();
-      const arrow = await container.$('.twoslash-popup-arrow');
-      expect(arrow).not.toBeNull();
+      const inner = container.locator('.twoslash-popup-inner');
+      await expect(inner).toBeVisible();
+
+      const arrow = container.locator('.twoslash-popup-arrow');
+      await expect(arrow).toBeVisible();
     }
   });
 
@@ -49,26 +49,23 @@ test.describe('plugin twoslash test', async () => {
       waitUntil: 'networkidle',
     });
 
-    const portal = await page.$('twoslash-popup-portal');
-    expect(portal).not.toBeNull();
+    const portal = page.locator('twoslash-popup-portal');
+    await expect(portal).toBeVisible();
 
-    const containers = await portal.$$('twoslash-popup-container');
-    expect(containers.length).toBe(10);
+    const containers = portal.locator('twoslash-popup-container');
+    await expect(containers).toHaveCount(10);
 
-    const extractTypeAlways = await containers[1].getAttribute('data-always');
-    expect(extractTypeAlways).toBe('true');
+    await expect(containers.nth(1)).toHaveAttribute('data-always', 'true');
+    await expect(containers.nth(4)).toHaveAttribute('data-always', 'true');
 
-    const completionsAlways = await containers[4].getAttribute('data-always');
-    expect(completionsAlways).toBe('true');
+    for (const container of await containers.all()) {
+      await expect(container).toHaveAttribute('data-initialized');
 
-    for (const container of containers) {
-      const initialized = await container.getAttribute('data-initialized');
-      expect(initialized).not.toBeNull();
+      const inner = container.locator('.twoslash-popup-inner');
+      await expect(inner).toBeVisible();
 
-      const inner = await container.$('.twoslash-popup-inner');
-      expect(inner).not.toBeNull();
-      const arrow = await container.$('.twoslash-popup-arrow');
-      expect(arrow).not.toBeNull();
+      const arrow = container.locator('.twoslash-popup-arrow');
+      await expect(arrow).toBeVisible();
     }
   });
 
@@ -77,13 +74,13 @@ test.describe('plugin twoslash test', async () => {
       waitUntil: 'networkidle',
     });
 
-    const codeBlock = await page.$(
+    const codeBlock = page.locator(
       'h2:has-text("Highlighting") + .language-ts',
     );
-    expect(codeBlock).not.toBeNull();
+    await expect(codeBlock).toBeVisible();
 
-    const highlighted = await codeBlock?.$('.twoslash-highlighted');
-    expect(highlighted).not.toBeNull();
+    const highlighted = codeBlock.locator('.twoslash-highlighted');
+    await expect(highlighted).toBeVisible();
   });
 
   test('should show errors in code blocks with twoslash', async ({ page }) => {
@@ -91,14 +88,14 @@ test.describe('plugin twoslash test', async () => {
       waitUntil: 'networkidle',
     });
 
-    const codeBlock = await page.$('h2:has-text("Error") + .language-ts');
-    expect(codeBlock).not.toBeNull();
+    const codeBlock = page.locator('h2:has-text("Error") + .language-ts');
+    await expect(codeBlock).toBeVisible();
 
-    const error = await codeBlock?.$('.twoslash-error');
-    expect(error).not.toBeNull();
+    const error = codeBlock.locator('.twoslash-error');
+    await expect(error).toBeVisible();
 
-    const errorLine = await codeBlock?.$('.twoslash-error-line');
-    expect(errorLine).not.toBeNull();
+    const errorLine = codeBlock.locator('.twoslash-error-line');
+    await expect(errorLine).toBeVisible();
   });
 
   test('should not apply twoslash to code blocks without twoslash', async ({
@@ -108,12 +105,12 @@ test.describe('plugin twoslash test', async () => {
       waitUntil: 'networkidle',
     });
 
-    const codeBlock = await page.$(
+    const codeBlock = page.locator(
       'h2:has-text("Disable twoslash") + .language-ts',
     );
-    expect(codeBlock).not.toBeNull();
+    await expect(codeBlock).toBeVisible();
 
-    const triggers = await codeBlock?.$$('twoslash-popup-trigger');
-    expect(triggers.length).toBe(0);
+    const triggers = codeBlock.locator('twoslash-popup-trigger');
+    await expect(triggers).toHaveCount(0);
   });
 });

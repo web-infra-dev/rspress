@@ -20,34 +20,34 @@ test.describe('api-docgen test', async () => {
 
   test('Index page', async ({ page }) => {
     await page.goto(`http://localhost:${appPort}`);
-    await page.waitForSelector('table');
-    const tableH3 = await page.$('#button');
-    expect(tableH3).toBeTruthy();
 
-    const table = await page.$('table');
-    const tableContent = await page.evaluate(table => table?.innerHTML, table);
+    const tableH3 = page.locator('#button');
+    await expect(tableH3).toBeVisible();
 
-    // Property
-    expect(tableContent).toContain('Property');
-    expect(tableContent).toContain('disabled');
-    expect(tableContent).toContain('size');
+    const table = page.locator('table');
+    await expect(table).toBeVisible();
 
-    // Description
-    expect(tableContent).toContain('Description');
-    expect(tableContent).toContain('Whether to disable the button');
-    expect(tableContent).toContain('- This is extra line a');
-    expect(tableContent).toContain('- This is extra line b');
-    expect(tableContent).toContain('Type of Button');
+    // Property columns
+    await expect(table).toContainText('Property');
+    await expect(table).toContainText('disabled');
+    await expect(table).toContainText('size');
 
-    // Type
-    expect(tableContent).toContain('Type');
-    expect(tableContent).toContain('boolean');
-    expect(tableContent).toContain('"mini" | "small" | "default" | "large"');
+    // Description columns
+    await expect(table).toContainText('Description');
+    await expect(table).toContainText('Whether to disable the button');
+    await expect(table).toContainText('- This is extra line a');
+    await expect(table).toContainText('- This is extra line b');
+    await expect(table).toContainText('Type of Button');
 
-    // Default Value
-    expect(tableContent).toContain('Default Value');
-    expect(tableContent).toContain('-');
-    expect(tableContent).toContain("'default'");
+    // Type columns
+    await expect(table).toContainText('Type');
+    await expect(table).toContainText('boolean');
+    await expect(table).toContainText('"mini" | "small" | "default" | "large"');
+
+    // Default Value columns
+    await expect(table).toContainText('Default Value');
+    await expect(table).toContainText('-');
+    await expect(table).toContainText("'default'");
   });
 
   test('search index should include api-docgen result', async ({ page }) => {

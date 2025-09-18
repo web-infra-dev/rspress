@@ -26,16 +26,20 @@ test.describe('basic test', async () => {
     await page.goto(`http://localhost:${appPort}`, {
       waitUntil: 'networkidle',
     });
-    const darkModeButton = await page.$('.rspress-nav-appearance');
-    const html = await page.$('html');
-    let htmlClass = await page.evaluate(
-      html => html?.getAttribute('class'),
-      html,
+
+    const darkModeButton = page.locator('.rspress-nav-appearance');
+    const htmlElement = page.locator('html');
+
+    // Get initial mode
+    const initialClass = await htmlElement.getAttribute('class');
+    const defaultMode = initialClass?.includes('dark') ? 'dark' : 'light';
+
+    // Click dark mode button
+    await darkModeButton.click();
+
+    // Verify the mode has toggled
+    await expect(htmlElement).toHaveClass(
+      defaultMode === 'dark' ? /^(?!.*dark).*$/ : /.*dark.*/,
     );
-    const defaultMode = htmlClass?.includes('dark') ? 'dark' : 'light';
-    await darkModeButton?.click();
-    // check the class in html
-    htmlClass = await page.evaluate(html => html?.getAttribute('class'), html);
-    expect(htmlClass?.includes('dark')).toBe(defaultMode !== 'dark');
   });
 });
