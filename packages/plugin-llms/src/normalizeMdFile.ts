@@ -72,7 +72,7 @@ async function normalizeMdFile(
   });
   const result = vfile.toString();
   if (result.trim() === '') {
-    return '\n';
+    return '\n'; // avoid empty file
   }
   return result;
 }
