@@ -33,13 +33,14 @@ function ShikiPre({
   const { codeWrap, toggleCodeWrap } = useCodeWrap();
   return (
     <div className={containerElementClassName}>
-      {title && <div className="rspress-code-title">{title}</div>}
-      <div className="rspress-code-content rspress-scrollbar">
+      {title && (
+        <div className="rspress-code-title rp-codeblock_content">{title}</div>
+      )}
+      <div className="rspress-code-content rp-codeblock_content">
         <div>
           <pre
             ref={preElementRef}
             className={clsx(
-              'rspress-code-content-pre',
               {
                 [forceWrap]: codeWrap,
               },
@@ -76,8 +77,8 @@ export interface PreWithCodeButtonGroupProps
  * expected wrapped pre element is:
  * ```html
  *<div class="language-js">
- *  <div class="rspress-code-title">test.js</div>
- *  <div class="rspress-code-content rspress-scrollbar">
+ *  <div class="rp-pre__title">test.js</div>
+ *  <div class="rp-pre__content rp-pre__content--scrollbar">
  *    <div>
  *      <pre class="shiki css-variables" tabindex="0">
  *        <code class="language-js">
