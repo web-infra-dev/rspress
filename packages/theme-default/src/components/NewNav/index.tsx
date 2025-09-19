@@ -3,8 +3,8 @@ import { Search } from '@theme';
 import './index.scss';
 import type { NavItem } from '@rspress/shared';
 import { useMemo } from 'react';
-import { NavTitle } from './NarTitle';
 import { NavMenu, NavMenuDivider, NavMenuOthers } from './NavMenu';
+import { NavTitle } from './NavTitle';
 
 export interface NavProps {
   beforeNav?: React.ReactNode;
