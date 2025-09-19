@@ -163,47 +163,53 @@
     /* table */
     /* #region */
     &:where(table) {
-      display: block;
-      border-collapse: collapse;
-      font-size: 1rem;
-      margin-top: 1.25rem;
-      margin-bottom: 1.25rem;
-      overflow-x: auto;
-      line-height: 1.75rem;
-      border: 1px solid var(--rp-c-border);
+      display: inline-block;
+      border-radius: var(--rp-radius);
+      overflow: hidden;
+      border: 1px solid var(--rp-c-divider-light);
     }
 
-    &:where(table tr) {
-      border: 1px solid;
-      transition-property: color, background-color, border-color;
-      transition-duration: 500ms;
-      border-color: var(--rp-c-gray-light-3);
+    /* thead */
+    &:where(thead) {
+      color: var(--rp-c-text-0);
+      background: var(--rp-c-bg-soft);
+      border-bottom: 1px solid var(--rp-c-divider-light);
     }
 
-    &:where(table tr):nth-child(even) {
-      background-color: var(--rp-c-bg-soft);
-    }
-
-    &:where(table td) {
-      border: 1px solid;
-      padding-left: 1rem;
-      padding-right: 1rem;
-      padding-top: 0.5rem;
-      padding-bottom: 0.5rem;
-      border-color: var(--rp-c-gray-light-3);
-    }
-
-    &:where(table th) {
-      border: 1px solid;
-      padding-left: 1rem;
-      padding-right: 1rem;
-      padding-top: 0.5rem;
-      padding-bottom: 0.5rem;
-      color: var(--rp-c-text-1);
-      font-size: 1rem;
+    &:where(th) {
+      flex: 1;
+      padding: 1rem 2rem;
       font-weight: 600;
-      border-color: var(--rp-c-gray-light-3);
+      font-size: 0.875rem;
+      text-align: left;
+      border-bottom: 1px solid var(--rp-c-divider-light);
+      position: relative;
     }
+
+    /* tbody */
+    &:where(tbody) {
+      background: transparent;
+    }
+
+    &:where(td) {
+      padding: 1rem 1.5rem;
+      color: rgba(75, 85, 99, 0.9);
+      font-size: 0.875rem;
+      transition: all 0.2s ease;
+      border-bottom: 1px solid var(--rp-c-divider-light);
+    }
+
+    &:where(tr) {
+      transition: background-color 0.2s ease;
+      &:hover {
+        background: var(--rp-c-bg-soft);
+      }
+    }
+
+    &:where(tr:last-child td) {
+      border-bottom: none;
+    }
+
     /* #endregion */
 
     /* code block */
