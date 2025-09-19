@@ -21,7 +21,11 @@ export function renderHtmlOrText(
     str,
   );
 
-  if (hasValidHtmlElements) {
+  const hasValidHtmlEntities = /&(?:[a-z][0-9a-z]*|#(?:\d+|x[0-9a-f]+));/i.test(
+    str,
+  );
+
+  if (hasValidHtmlElements || hasValidHtmlEntities) {
     return { dangerouslySetInnerHTML: { __html: str } };
   }
 
