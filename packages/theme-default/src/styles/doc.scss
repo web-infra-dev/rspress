@@ -237,10 +237,12 @@
     &:where(div[class^='language-']) {
       position: relative;
       margin: 16px 0;
-      // background-color: var(--rp-code-block-bg);
+      background-color: var(--rp-code-block-bg);
+      color: var(--rp-code-block-color);
       border: var(--rp-code-block-border);
       overflow-x: auto;
       transition: none;
+
       @media (min-width: 641px) {
         border-radius: var(--rp-radius);
       }
@@ -292,7 +294,6 @@
         min-width: 100%;
         line-height: 1.7;
         font-size: var(--rp-code-font-size);
-        color: var(--rp-code-block-color);
         transition: color 0.5s;
       }
     }
