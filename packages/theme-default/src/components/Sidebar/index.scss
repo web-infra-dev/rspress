@@ -1,13 +1,5 @@
-.navTitleMask {
-  padding-left: 1.5rem;
-  height: var(--rp-nav-height);
-  display: flex;
-  align-items: center;
-}
-
-.sidebar {
+.rp-sidebar {
   position: fixed;
-  // top: var(--rp-nav-height);
   top: 0;
   bottom: 0;
   left: 0;
@@ -22,7 +14,8 @@
     opacity 0.5s,
     transform 0.25s ease;
   background: var(--rp-c-bg);
-  &.open {
+
+  &--open {
     opacity: 1;
     visibility: visible;
     transform: translate3d(0, 0, 0);
@@ -30,19 +23,24 @@
       opacity 0.25s,
       transform 0.5s cubic-bezier(0.19, 1, 0.22, 1);
   }
-}
 
-.sidebarContainer {
-  overflow-y: auto;
-  overflow-x: hidden;
-  max-height: calc(100% - var(--rp-nav-height));
+  &__nav-title {
+    padding-left: 1.5rem;
+    height: var(--rp-nav-height);
+    display: flex;
+    align-items: center;
+  }
 
-  padding: 20px; // TODO: discussion
+  &__container {
+    overflow-y: auto;
+    overflow-x: hidden;
+    max-height: calc(100% - var(--rp-nav-height));
+    padding: 20px;
+  }
 }
 
 @media (min-width: 960px) {
-  .sidebar {
-    // Lower than z-index of nav
+  .rp-sidebar {
     z-index: 5;
     opacity: 1;
     visibility: visible;
@@ -59,40 +57,26 @@
   }
 }
 
-.collapseContainer:hover {
-  background-color: rgba(229, 229, 229, 0.4);
-  transition: all 0.2s;
-}
-
-:global(.dark) .collapseContainer:hover {
-  background-color: var(--rp-c-bg-mute);
-  transition: all 0.2s;
-}
-
-.menuGroupActive {
-  background-color: var(--rp-c-bg-mute);
-}
-
-:global(.rspress-sidebar-group) {
+.rp-sidebar-group {
   position: relative;
-  // &::before {
-  //   content: '';
-  //   position: absolute;
-  //   top: 0;
-  //   // left: 18px;
-  //   left: 0;
-  //   width: 1px;
-  //   height: 100%;
-  //   background-color: var(--rp-c-gray-light-4);
-  // }
-}
 
-:global(.dark) {
-  :global(.rspress-sidebar-group)::before {
+  &--active {
     background-color: var(--rp-c-bg-mute);
   }
 
-  .sidebar {
+  &:hover {
+    background-color: rgba(229, 229, 229, 0.4);
+    transition: all 0.2s;
+  }
+}
+
+:global(.dark) {
+  .rp-sidebar-group:hover {
+    background-color: var(--rp-c-bg-mute);
+    transition: all 0.2s;
+  }
+
+  .rp-sidebar {
     box-shadow: var(--rp-shadow-1);
   }
 }

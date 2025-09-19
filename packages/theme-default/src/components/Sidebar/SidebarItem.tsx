@@ -8,7 +8,7 @@ import clsx from 'clsx';
 import type React from 'react';
 import { useEffect, useRef } from 'react';
 import { renderInlineMarkdown } from '../../logic/utils';
-import * as styles from './SidebarItem.module.scss';
+import './SidebarItem.scss';
 
 export function SidebarItemRaw({
   active,
@@ -45,11 +45,11 @@ export function SidebarItemRaw({
 
   const innerContent = (
     <>
-      <div className={styles.menuItemLeft} ref={ref}>
+      <div className="rp-sidebar-item__left" ref={ref}>
         <span {...renderInlineMarkdown(text)}></span>
         {left}
       </div>
-      <div className={styles.menuItemRight}>
+      <div className="rp-sidebar-item__right">
         <Tag tag={tag} />
         {right}
       </div>
@@ -62,11 +62,9 @@ export function SidebarItemRaw({
         href={link}
         onClick={onClick}
         className={clsx(
-          'rspress-sidebar-item',
-          styles.menuItem,
+          'rp-sidebar-item',
           {
-            [styles.active]: active,
-            'rspress-sidebar-item-active': active,
+            'rp-sidebar-item--active': active,
           },
           className,
         )}
@@ -86,11 +84,9 @@ export function SidebarItemRaw({
     <div
       ref={ref}
       className={clsx(
-        'rspress-sidebar-item',
-        styles.menuItem,
+        'rp-sidebar-item',
         {
-          [styles.active]: active,
-          'rspress-sidebar-item-active': active,
+          'rp-sidebar-item--active': active,
         },
         className,
       )}

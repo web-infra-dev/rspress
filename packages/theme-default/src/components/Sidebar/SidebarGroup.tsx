@@ -12,9 +12,8 @@ import { useCallback, useRef } from 'react';
 import { useNavigate } from '../Link/useNavigate';
 import { SvgWrapper } from '../SvgWrapper';
 import { SidebarDivider } from './SidebarDivider';
-import { sidebarGroup, sidebarGroupTopLevel } from './SidebarGroup.module.scss';
+import './SidebarGroup.scss';
 import { SidebarItem as SidebarItemComp, SidebarItemRaw } from './SidebarItem';
-import { sidebarGroupItem } from './SidebarItem.module.scss';
 import { SidebarSectionHeader } from './SidebarSectionHeader';
 import {
   isSidebarDivider,
@@ -135,9 +134,9 @@ export function SidebarGroup(props: SidebarGroupProps) {
         context={item.context}
         className={clsx(
           'rspress-sidebar-group',
-          sidebarGroup,
+          'rp-sidebar-group',
           {
-            [sidebarGroupTopLevel]: depth === 0,
+            'rp-sidebar-group--top-level': depth === 0,
           },
           className,
         )}
@@ -178,8 +177,7 @@ export function SidebarGroup(props: SidebarGroupProps) {
               key={`${id}-${index}`}
               item={item}
               setSidebarData={setSidebarData}
-              // className={depth === 0 ? '' : sidebarGroupItem} // TODO: discussion
-              className={sidebarGroupItem}
+              className="rp-sidebar-item--group-item"
             />
           ) : isSidebarDivider(item) ? (
             <SidebarDivider
@@ -197,8 +195,7 @@ export function SidebarGroup(props: SidebarGroupProps) {
               key={index}
               item={item}
               depth={depth + 1}
-              // className={depth === 0 ? '' : sidebarGroupItem} // TODO: discussion
-              className={sidebarGroupItem}
+              className="rp-sidebar-item--group-item"
             />
           ),
         )}

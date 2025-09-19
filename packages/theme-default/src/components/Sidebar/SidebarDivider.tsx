@@ -1,4 +1,4 @@
-import { divider, dividerDashed } from './SidebarDivider.module.scss';
+import './SidebarDivider.scss';
 
 export type SidebarDividerProps = {
   depth: number;
@@ -7,12 +7,14 @@ export type SidebarDividerProps = {
 
 export function SidebarDivider(props: SidebarDividerProps) {
   const { depth, dividerType } = props;
-  const borderTypeClassName =
-    dividerType === 'dashed' ? dividerDashed : divider;
+  const className =
+    dividerType === 'dashed'
+      ? 'rp-sidebar-divider--dashed'
+      : 'rp-sidebar-divider';
 
   return (
     <div
-      className={`${borderTypeClassName}`}
+      className={className}
       style={{
         paddingLeft: depth === 0 ? '12px' : `calc(12px * ${depth} + 12px)`,
       }}
