@@ -43,8 +43,10 @@ const OverviewSearchInput = ({
   filterPlaceholderText: string;
 }) => {
   return (
-    <div className="rp-flex rp-items-center rp-justify-start rp-gap-4">
-      <label htmlFor="api-filter">{filterNameText}</label>
+    <div className="rp-overview-search">
+      <label htmlFor="api-filter" className="rp-overview-search__label">
+        {filterNameText}
+      </label>
       <input
         ref={searchRef}
         type="search"
@@ -52,7 +54,7 @@ const OverviewSearchInput = ({
         id="api-filter"
         value={query}
         onChange={e => setQuery(e.target.value)}
-        className="rp-border rp-border-gray-300 dark:rp-border-gray-700 rp-rounded-lg rp-px-3 rp-py-2 rp-transition-shadow rp-duration-250 rp-ease-in-out focus:rp-outline-none focus:rp-ring-2 focus:rp-ring-green-500 focus:rp-ring-opacity-50"
+        className="rp-overview-search__input"
       />
     </div>
   );
@@ -249,7 +251,7 @@ export function Overview(props: {
   const overviewTitle = title || 'Overview';
 
   return (
-    <div className="rspress-doc rspress-overview rp-mx-auto">
+    <div className="rspress-doc rp-doc rspress-overview rp-overview">
       <H1>{overviewTitle}</H1>
       <OverviewSearchInput
         query={query}
@@ -262,7 +264,7 @@ export function Overview(props: {
       {filtered.length > 0 ? (
         filtered.map(group => <OverviewGroup key={group?.name} group={group} />)
       ) : (
-        <div className="overview__empty">{`${filterNoResultText}: ${query}`}</div>
+        <div className="rp-overview__empty">{`${filterNoResultText}: ${query}`}</div>
       )}
     </div>
   );
