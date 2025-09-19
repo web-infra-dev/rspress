@@ -21,7 +21,6 @@ node_modules/
 .nyc_output
 *.tsbuildinfo
 .eslintcache
-.rslint_cache
 .sonarlint
 
 dist/
