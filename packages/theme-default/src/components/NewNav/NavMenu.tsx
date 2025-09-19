@@ -97,7 +97,7 @@ function NavMenuItem({ menuItem: item }: { menuItem: NavItem }) {
   return <NavMenuItemWithLink menuItem={item as NavItemWithLink} />;
 }
 
-function NavMenuDivider() {
+export function NavMenuDivider() {
   return <div className={navMenuDivider}></div>;
 }
 
@@ -125,19 +125,21 @@ function NavVersions() {
 
 export function NavMenu({ menuItems }: { menuItems: NavItem[] }) {
   return (
-    <>
-      <ul className={navMenu}>
-        {menuItems.map((item, index) => {
-          return <NavMenuItem key={index} menuItem={item} />;
-        })}
-      </ul>
-      <ul className={navMenuOthers}>
-        <NavMenuDivider />
-        <NavLangs />
-        <NavVersions />
-        <SwitchAppearance />
-        <SocialLinks />
-      </ul>
-    </>
+    <div className={navMenu}>
+      {menuItems.map((item, index) => {
+        return <NavMenuItem key={index} menuItem={item} />;
+      })}
+    </div>
+  );
+}
+
+export function NavMenuOthers() {
+  return (
+    <div className={navMenuOthers}>
+      <NavLangs />
+      <NavVersions />
+      <SwitchAppearance />
+      <SocialLinks />
+    </div>
   );
 }

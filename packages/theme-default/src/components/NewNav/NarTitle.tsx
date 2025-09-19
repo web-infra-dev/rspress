@@ -6,7 +6,6 @@ import {
 } from '@rspress/runtime';
 import { Link } from '@theme';
 import { useMemo } from 'react';
-import * as styles from './index.module.scss';
 
 export const NavTitle = () => {
   const { site } = useSite();
@@ -46,12 +45,12 @@ export const NavTitle = () => {
   }, [rawLogo]);
 
   return (
-    <div className={`${styles.navBarTitle}`}>
+    <div className="rp-nav__title">
       <Link
         href={addLeadingSlash(localeData.langRoutePrefix ?? '/')}
-        className="rp-flex rp-items-center rp-w-full rp-h-full rp-text-base rp-font-semibold rp-transition-opacity rp-duration-300 hover:rp-opacity-60"
+        className="rp-nav__title__link"
       >
-        {logo && <div className="rp-mr-1 rp-min-w-8">{logo}</div>}
+        {logo && <div className="rp-nav__title__logo">{logo}</div>}
         {logoText && <span>{logoText}</span>}
         {!logo && !logoText && <span>{title}</span>}
       </Link>
