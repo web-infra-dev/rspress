@@ -36,10 +36,10 @@ test.describe('dynamic toc', async () => {
 
     h2 = await page.$('h2');
     text = await page.evaluate(h2 => h2?.textContent!.trim(), h2);
-    expect(text).toBe('#Term dynamic content');
+    expect(text).toBe('#Term dynamic & content');
 
     toc = await page.$('.aside-link');
     tocText = await page.evaluate(toc => toc?.textContent!.trim(), toc);
-    expect(tocText).toBe('Term dynamic content');
+    expect(tocText).toBe('Term dynamic & content');
   });
 });
