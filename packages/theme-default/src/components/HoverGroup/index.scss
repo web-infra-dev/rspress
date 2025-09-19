@@ -1,4 +1,7 @@
-.container {
+.rp-hover-group {
+  // base
+  list-style: none;
+
   // layout
   display: flex;
   width: auto;
@@ -20,7 +23,12 @@
 
   transition: opacity 0.3s ease-in-out;
 
-  .item {
+  &--hidden {
+    visibility: hidden;
+    opacity: 0;
+  }
+
+  &__item {
     height: 32px;
     flex: 1;
     align-self: stretch;
@@ -39,24 +47,14 @@
     font-size: 14px;
     font-style: normal;
     font-weight: 500;
-    line-height: 32px; /* 228.571% */
+    line-height: 32px;
 
     cursor: pointer;
 
-    // TODO: discusstion
-    // &:hover {
-    //   background-color: (in oklab, var(--color-white) 5%, gray);
-    // }
-
-    &.active {
+    &--active {
       font-weight: 600;
       color: #007bff;
       cursor: auto;
     }
   }
-}
-
-.hidden {
-  visibility: hidden;
-  opacity: 0;
 }
