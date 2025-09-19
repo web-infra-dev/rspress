@@ -95,6 +95,7 @@ function LlmsCopyButton(props: LlmsCopyButtonProps) {
       {...otherProps}
       disabled={isLoading}
       className={[
+        'rp-not-doc',
         llmsCopyButtonContainer,
         isLoading ? loading : '',
         isFinished ? success : '',

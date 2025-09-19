@@ -26,7 +26,8 @@
 
     /* link */
     /* #region */
-    &:where(a):not(:where(.header-anchor)) {
+    // we do not style all the <a> links, only the links with class "rp-link" because there are too many usages of <a> tag in user custom components
+    &:where(a.rp-link):not(:where(.header-anchor)) {
       font-weight: 500;
       color: var(--rp-c-link);
       transition: color 0.25s;

@@ -218,7 +218,7 @@ const LlmsViewOptions = ({
     <>
       <button
         ref={dropdownRef}
-        className={[dropdownButton, isOpen ? active : '']
+        className={['rp-not-doc', dropdownButton, isOpen ? active : '']
           .filter(Boolean)
           .join(' ')}
         type="button"
