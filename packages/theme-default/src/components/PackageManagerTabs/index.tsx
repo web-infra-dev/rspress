@@ -173,6 +173,10 @@ export function PackageManagerTabs({
             <PreWithCodeButtonGroup
               containerElementClassName="language-bash"
               className="shiki css-variables"
+              style={{
+                backgroundColor: 'var(--shiki-background)',
+                color: 'var(--shiki-foreground)',
+              }}
             >
               {/* For this case, we highlight the command manually */}
               <code className="language-bash" style={{ whiteSpace: 'pre' }}>
