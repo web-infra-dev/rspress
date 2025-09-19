@@ -14,7 +14,7 @@ import {
 } from 'react';
 import { TabDataContext } from '../../logic/TabDataContext';
 import { useStorageValue } from '../../logic/useStorageValue';
-import * as styles from './index.module.scss';
+import './index.scss';
 
 type TabItem = {
   value?: string;
@@ -136,10 +136,10 @@ export const Tabs = forwardRef(
     const currentIndex = groupId ? syncIndex : activeIndex;
 
     return (
-      <div className={clsx(styles.container, tabContainerClassName)} ref={ref}>
+      <div className={clsx('rp-tabs', tabContainerClassName)} ref={ref}>
         {tabValues.length ? (
           <div
-            className={`${styles.tabList} ${styles.noScrollbar}`}
+            className="rp-tabs__list rp-tabs__list--no-scrollbar"
             style={{
               justifyContent:
                 tabPosition === 'center' ? 'center' : 'flex-start',
@@ -148,13 +148,13 @@ export const Tabs = forwardRef(
             {tabValues.map((item, index) => {
               return (
                 <div
-                  // eslint-disable-next-line react/no-array-index-key
                   key={index}
-                  className={`${styles.tab} ${
+                  className={clsx(
+                    'rp-tabs__tab',
                     currentIndex === index
-                      ? styles.selected
-                      : styles.notSelected
-                  }`}
+                      ? 'rp-tabs__tab--selected'
+                      : 'rp-tabs__tab--not-selected',
+                  )}
                   onClick={() => {
                     onChange?.(index);
                     if (groupId) {

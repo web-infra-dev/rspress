@@ -170,7 +170,10 @@ export function PackageManagerTabs({
 
         return (
           <Tab key={key}>
-            <PreWithCodeButtonGroup>
+            <PreWithCodeButtonGroup
+              containerElementClassName="language-bash"
+              className="shiki css-variables"
+            >
               {/* For this case, we highlight the command manually */}
               <code className="language-bash" style={{ whiteSpace: 'pre' }}>
                 <span style={{ display: 'block', padding: '0px 1.25rem' }}>
