@@ -1,5 +1,5 @@
 import { useCallback, useMemo, useRef, useState } from 'react';
-import { HoverGroup, type Items } from './HoverGroup';
+import { HoverGroup, type Items } from '.';
 
 function useHoverGroup(
   items: Items,
