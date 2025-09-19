@@ -6,24 +6,13 @@ import {
   type NavItemWithLink,
   type NavItemWithLinkAndChildren,
 } from '@rspress/shared';
-import { Link, SocialLinks, SwitchAppearance } from '@theme';
+import type { HoverGroupProps } from '@theme';
+import { Link, SocialLinks, SwitchAppearance, useHoverGroup } from '@theme';
 import cls from 'clsx';
 import { useMemo } from 'react';
-import type { HoverGroupProps } from './components/HoverGroup';
-import { useHoverGroup } from './components/useHoverGroup';
 import { useLangsMenu, useVersionMenu } from './hooks';
 import { SvgDown } from './icons/SvgDown';
-import {
-  active,
-  navMenu,
-  navMenuDivider,
-  navMenuItem,
-  navMenuItemContainer,
-  navMenuItemHoverAndActive,
-  navMenuItemLink,
-  navMenuOthers,
-  svgDown,
-} from './NavMenu.module.scss';
+import './NavMenu.scss';
 
 function NavMenuItemWithChildren({
   menuItem,
@@ -34,12 +23,10 @@ function NavMenuItemWithChildren({
 }) {
   if ('link' in menuItem) {
     return (
-      <li className={cls(navMenuItem, navMenuItemHoverAndActive, {})}>
-        <Link href={menuItem.link} className={navMenuItemLink}>
-          <div className={navMenuItemContainer}>
-            {menuItem.text}
-            <SvgDown className={svgDown} />
-          </div>
+      <li className="rp-nav-menu__item">
+        <Link href={menuItem.link} className="rp-nav-menu__item__container">
+          {menuItem.text}
+          <SvgDown className="rp-nav-menu__item__icon" />
         </Link>
       </li>
     );
@@ -52,16 +39,14 @@ function NavMenuItemWithChildren({
 
   return (
     <li
-      className={cls(navMenuItem, navMenuItemHoverAndActive)}
+      className="rp-nav-menu__item"
       onMouseEnter={handleMouseEnter}
       onMouseLeave={handleMouseLeave}
       onClick={handleMouseEnter}
     >
-      <div className={navMenuItemLink}>
-        <div className={cls(navMenuItemContainer)}>
-          {menuItem.text}
-          <SvgDown className={svgDown} />
-        </div>
+      <div className="rp-nav-menu__item__container">
+        {menuItem.text}
+        <SvgDown className="rp-nav-menu__item__icon" />
       </div>
       {hoverGroup}
     </li>
@@ -77,13 +62,12 @@ function NavMenuItemWithLink({ menuItem }: { menuItem: NavItemWithLink }) {
   return (
     <li
       className={cls(
-        navMenuItem,
-        navMenuItemHoverAndActive,
-        isActive ? active : '',
+        'rp-nav-menu__item',
+        isActive ? 'rp-nav-menu__item--active' : '',
       )}
     >
       <Link href={menuItem.link}>
-        <div className={navMenuItemContainer}>{menuItem.text}</div>
+        <div className="rp-nav-menu__item__container">{menuItem.text}</div>
       </Link>
     </li>
   );
@@ -98,7 +82,7 @@ function NavMenuItem({ menuItem: item }: { menuItem: NavItem }) {
 }
 
 export function NavMenuDivider() {
-  return <div className={navMenuDivider}></div>;
+  return <div className="rp-nav-menu__divider"></div>;
 }
 
 function NavLangs() {
@@ -125,21 +109,21 @@ function NavVersions() {
 
 export function NavMenu({ menuItems }: { menuItems: NavItem[] }) {
   return (
-    <div className={navMenu}>
+    <ul className="rp-nav-menu">
       {menuItems.map((item, index) => {
         return <NavMenuItem key={index} menuItem={item} />;
       })}
-    </div>
+    </ul>
   );
 }
 
 export function NavMenuOthers() {
   return (
-    <div className={navMenuOthers}>
+    <ul className="rp-nav-menu--others">
       <NavLangs />
       <NavVersions />
       <SwitchAppearance />
       <SocialLinks />
-    </div>
+    </ul>
   );
 }
