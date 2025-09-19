@@ -1,0 +1,14 @@
+.switchAppearance {
+  cursor: pointer;
+  width: 24px;
+  height: 24px;
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  color: var(--rp-c-text-2);
+  &:hover {
+    color: var(--rp-c-text-1);
+  }
+}

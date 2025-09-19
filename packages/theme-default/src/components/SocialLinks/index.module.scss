@@ -1,23 +1,22 @@
-.social-links-icon {
-  width: 20px;
-  height: 20px;
+.socialLinks {
   display: flex;
-  align-items: center;
-  fill: currentColor;
-  margin-left: 0.5rem;
-  color: var(--rp-c-text-2);
+  gap: 24px;
 
-  &:hover {
-    color: var(--rp-c-text-1);
-  }
-}
+  .item {
+    width: 20px;
+    height: 20px;
+    justify-content: center;
+    align-items: center;
+    .icon {
+      width: 20px;
+      height: 20px;
+      display: flex;
+      align-items: center;
+      color: var(--rp-c-text-2);
 
-@media (max-width: 768px) {
-  .menu-item:before {
-    display: none;
-  }
-
-  a:only-child .social-links-icon {
-    margin-left: 0rem;
+      &:hover {
+        color: var(--rp-c-text-1);
+      }
+    }
   }
 }

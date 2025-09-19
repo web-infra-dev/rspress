@@ -1,7 +1,7 @@
+import { preloadLink } from '@rspress/runtime';
 import nprogress from 'nprogress';
 import type React from 'react';
 import type { ComponentProps } from 'react';
-import { preloadLink } from '../Sidebar/utils';
 import { getHref, useNavigate } from './useNavigate';
 import './index.scss';
 
