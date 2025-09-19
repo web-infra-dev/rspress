@@ -9,7 +9,7 @@ import {
 } from '@rspress/shared';
 import { useEffect } from 'react';
 import type { UISwitchResult } from '../../logic/useUISwitch';
-import { NavBarTitle } from '../Nav/NavBarTitle';
+import { NavTitle } from '../NewNav/NavTitle';
 import * as styles from './index.module.scss';
 import { SidebarDivider } from './SidebarDivider';
 import { SidebarGroup } from './SidebarGroup';
@@ -56,7 +56,7 @@ export function Sidebar(props: Props) {
   return (
     <aside className={`${styles.sidebar} ${isSidebarOpen ? styles.open : ''}`}>
       {!uiSwitch?.showNavbar ? null : (
-        <div className={styles.navTitleMask}>{navTitle || <NavBarTitle />}</div>
+        <div className={styles.navTitleMask}>{navTitle || <NavTitle />}</div>
       )}
       <div className={`${styles.sidebarContainer} rspress-scrollbar`}>
         <nav>
