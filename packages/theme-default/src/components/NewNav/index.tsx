@@ -1,8 +1,10 @@
 import { useNav } from '@rspress/runtime';
 import { Search } from '@theme';
-import { leftNav, navContainer, rightNav } from './index.module.scss';
+import './index.scss';
+import type { NavItem } from '@rspress/shared';
+import { useMemo } from 'react';
 import { NavTitle } from './NarTitle';
-import { NavMenu } from './NavMenu';
+import { NavMenu, NavMenuDivider, NavMenuOthers } from './NavMenu';
 
 export interface NavProps {
   beforeNav?: React.ReactNode;
@@ -12,6 +14,7 @@ export interface NavProps {
 
   beforeNavMenu?: React.ReactNode;
   afterNavMenu?: React.ReactNode;
+  afterNav?: React.ReactNode;
 }
 
 export function Nav(props: NavProps) {
@@ -22,25 +25,39 @@ export function Nav(props: NavProps) {
     beforeNavMenu,
     afterNavMenu,
     navTitle,
+    afterNav,
   } = props;
   const navList = useNav();
+  const getPosition = (menuItem: NavItem) => menuItem.position ?? 'right';
+
+  const leftMenu = useMemo(() => {
+    return navList.filter(item => getPosition(item) === 'left');
+  }, [navList]);
+  const rightMenu = useMemo(() => {
+    return navList.filter(item => getPosition(item) === 'right');
+  }, [navList]);
+
   return (
     <>
       {beforeNav}
-      <header className={navContainer}>
-        <div className={leftNav}>
+      <header className="rp-nav">
+        <div className="rp-nav__left">
           {beforeNavTitle}
           {navTitle ?? <NavTitle />}
+          <NavMenu menuItems={leftMenu} />
           {afterNavTitle}
         </div>
 
-        <div className={rightNav}>
+        <div className="rp-nav__right">
           {beforeNavMenu}
           <Search />
-          <NavMenu menuItems={navList} />
+          <NavMenu menuItems={rightMenu} />
+          <NavMenuDivider />
+          <NavMenuOthers />
           {afterNavMenu}
         </div>
       </header>
+      {afterNav}
     </>
   );
 }
