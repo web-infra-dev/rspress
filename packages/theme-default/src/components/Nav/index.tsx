@@ -21,13 +21,20 @@ export interface NavProps {
   navTitle?: React.ReactNode;
   afterNavTitle?: React.ReactNode;
   afterNavMenu?: React.ReactNode;
+  afterNav?: React.ReactNode;
 }
 
 const DEFAULT_NAV_POSITION = 'right';
 
 export function Nav(props: NavProps) {
-  const { beforeNavTitle, afterNavTitle, beforeNav, afterNavMenu, navTitle } =
-    props;
+  const {
+    beforeNavTitle,
+    afterNavTitle,
+    beforeNav,
+    afterNavMenu,
+    navTitle,
+    afterNav,
+  } = props;
   const { siteData, page } = usePageData();
   const { pathname } = useLocation();
   const { width } = useWindowSize();
@@ -148,6 +155,7 @@ export function Nav(props: NavProps) {
           </div>
         </div>
       </div>
+      {afterNav}
     </>
   );
 }
