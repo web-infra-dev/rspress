@@ -30,7 +30,7 @@ export function pluginApiDocgen(options?: PluginOptions): RspressPlugin {
         []
       ).filter((lang): lang is SupportLanguages =>
         ['zh', 'en', 'ru'].includes(lang),
-      ) as SupportLanguages[];
+      );
       await docgen({
         entries,
         apiParseTool,

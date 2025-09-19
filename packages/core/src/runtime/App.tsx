@@ -4,10 +4,10 @@ import React, { useContext, useLayoutEffect } from 'react';
 import globalComponents from 'virtual-global-components';
 import { initPageData } from './initPageData';
 
-enum QueryStatus {
-  Show = '1',
-  Hide = '0',
-}
+const QueryStatus = {
+  Show: '1',
+  Hide: '0',
+} as const;
 
 export function App() {
   const { setData: setPageData, data } = useContext(PageContext);
@@ -51,8 +51,7 @@ export function App() {
                 // The component order is stable
                 // eslint-disable-next-line react/no-array-index-key
                 key: index,
-                // FIXME: ` as object` should be omitted, seems like `@microsoft/api-extractor` issue
-                ...(props as object),
+                ...props,
               });
             }
 
