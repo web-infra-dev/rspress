@@ -11,37 +11,37 @@ export function PrevNextPage() {
   const { prevPage, nextPage } = usePrevNextPage();
 
   return (
-    <div className="rp-prevNextPage">
+    <div className="rp-prev-next-page">
       {prevPage ? (
         <Link
           href={prevPage.link}
-          className={clsx('rp-prevNextPage__item', 'rp-prevNextPage__prev')}
+          className={clsx('rp-prev-next-page__item', 'rp-prev-next-page__prev')}
         >
-          <span className="rp-prevNextPage__item__desc">{prevPageText}</span>
-          <span className="rp-prevNextPage__item__title">
+          <span className="rp-prev-next-page__item__desc">{prevPageText}</span>
+          <span className="rp-prev-next-page__item__title">
             <SvgWrapper
               icon={ArrowRight}
-              className="rp-prevNextPage__icon rp-prevNextPage__rotate_180"
+              className="rp-prev-next-page__icon rp-prev-next-page__rotate_180"
             />
             <span {...renderInlineMarkdown(prevPage.text)} />
           </span>
         </Link>
       ) : (
-        <div className="rp-prevNextPage__placeholder" />
+        <div className="rp-prev-next-page__placeholder" />
       )}
       {nextPage ? (
         <Link
           href={nextPage.link}
-          className={clsx('rp-prevNextPage__item', 'rp-prevNextPage__next')}
+          className={clsx('rp-prev-next-page__item', 'rp-prev-next-page__next')}
         >
-          <span className="rp-prevNextPage__item__desc">{nextPageText}</span>
-          <span className="rp-prevNextPage__item__title">
+          <span className="rp-prev-next-page__item__desc">{nextPageText}</span>
+          <span className="rp-prev-next-page__item__title">
             <span {...renderInlineMarkdown(nextPage.text)} />
-            <SvgWrapper icon={ArrowRight} className="rp-prevNextPage__icon" />
+            <SvgWrapper icon={ArrowRight} className="rp-prev-next-page__icon" />
           </span>
         </Link>
       ) : (
-        <div className="rp-prevNextPage__placeholder" />
+        <div className="rp-prev-next-page__placeholder" />
       )}
     </div>
   );
