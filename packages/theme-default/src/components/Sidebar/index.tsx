@@ -10,7 +10,7 @@ import {
 import { useEffect } from 'react';
 import type { UISwitchResult } from '../../logic/useUISwitch';
 import { NavTitle } from '../NewNav/NavTitle';
-import * as styles from './index.module.scss';
+import './index.scss';
 import { SidebarDivider } from './SidebarDivider';
 import { SidebarGroup } from './SidebarGroup';
 import { SidebarItem } from './SidebarItem';
@@ -54,20 +54,18 @@ export function Sidebar(props: Props) {
   }, [isSidebarOpen]);
 
   return (
-    <aside className={`${styles.sidebar} ${isSidebarOpen ? styles.open : ''}`}>
+    <aside className={`rp-sidebar ${isSidebarOpen ? 'rp-sidebar--open' : ''}`}>
       {!uiSwitch?.showNavbar ? null : (
-        <div className={styles.navTitleMask}>{navTitle || <NavTitle />}</div>
+        <div className="rp-sidebar__nav-title">{navTitle || <NavTitle />}</div>
       )}
-      <div className={`${styles.sidebarContainer} rspress-scrollbar`}>
-        <nav>
-          {beforeSidebar}
-          <SidebarList
-            sidebarData={sidebarData}
-            setSidebarData={setSidebarData}
-          />
-          {afterSidebar}
-        </nav>
-      </div>
+      <nav className="rp-sidebar__container rspress-scrollbar">
+        {beforeSidebar}
+        <SidebarList
+          sidebarData={sidebarData}
+          setSidebarData={setSidebarData}
+        />
+        {afterSidebar}
+      </nav>
     </aside>
   );
 }
