@@ -14,7 +14,7 @@ export { HomeFooter } from './components/HomeFooter/index';
 export { HomeHero, type HomeHeroProps } from './components/HomeHero/index';
 export { LastUpdated } from './components/LastUpdated/index';
 export { Link, type LinkProps } from './components/Link/index';
-export { Nav } from './components/Nav/index';
+export { Nav } from './components/NewNav/index';
 export { Overview } from './components/Overview/index';
 export { PackageManagerTabs } from './components/PackageManagerTabs/index';
 export { PrevNextPage } from './components/PrevNextPage/index';
