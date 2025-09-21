@@ -50,7 +50,7 @@
 
     &:hover {
       .rp-nav-menu__item__container {
-        color: #007bff;
+        color: var(--rp-c-brand);
         text-align: center;
         font-size: 14px;
         font-style: normal;
@@ -62,7 +62,7 @@
 
     &--active {
       .rp-nav-menu__item__container {
-        color: #007bff;
+        color: var(--rp-c-brand);
         text-align: center;
         font-size: 14px;
         font-style: normal;
@@ -72,7 +72,7 @@
 
   &__divider {
     width: 1px;
-    height: 14.884px;
+    height: 15px;
     background: var(--rp-c-divider);
     @media (max-width: 1280px) {
       display: none;
@@ -81,5 +81,18 @@
 
   @media (max-width: 1280px) {
     display: none;
+  }
+
+  a[target='_blank'] {
+    &::after {
+      content: '↗';
+      font-weight: 700;
+      display: inline-block;
+      font-size: 0.7em;
+      margin-left: 0.5em;
+      margin-right: 0.1em;
+
+      color: var(--rp-c-text-3);
+    }
   }
 }
