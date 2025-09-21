@@ -1,4 +1,3 @@
-import { usePageData } from '@rspress/runtime';
 import { HomeFeature, HomeFooter, HomeHero } from '@theme';
 
 export interface HomeLayoutProps {
@@ -19,32 +18,19 @@ export function HomeLayout(props: HomeLayoutProps) {
     beforeHeroActions,
     afterHeroActions,
   } = props;
-  const {
-    page: { frontmatter, routePath },
-  } = usePageData();
 
   return (
-    <div
-      className="rp-relative"
-      style={{
-        minHeight: 'calc(100vh - var(--rp-nav-height))',
-        paddingBottom: '80px',
-      }}
-    >
-      <div className="rp-pb-12">
-        {beforeHero}
-        <HomeHero
-          frontmatter={frontmatter}
-          routePath={routePath}
-          beforeHeroActions={beforeHeroActions}
-          afterHeroActions={afterHeroActions}
-        />
-        {afterHero}
-        {beforeFeatures}
-        <HomeFeature frontmatter={frontmatter} routePath={routePath} />
-        {afterFeatures}
-      </div>
+    <>
+      {beforeHero}
+      <HomeHero
+        beforeHeroActions={beforeHeroActions}
+        afterHeroActions={afterHeroActions}
+      />
+      {afterHero}
+      {beforeFeatures}
+      <HomeFeature />
+      {afterFeatures}
       <HomeFooter />
-    </div>
+    </>
   );
 }
