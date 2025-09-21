@@ -150,7 +150,7 @@ export function Nav(props: NavProps) {
             {afterNavMenu}
             <div className={styles.mobileNavMenu}>
               {hasSearch && <Search />}
-              <NavHamburger siteData={siteData} pathname={pathname} />
+              <NavHamburger />
             </div>
           </div>
         </div>
