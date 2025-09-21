@@ -10,7 +10,7 @@ import { initPageData } from './initPageData';
 // 3. add onRecoverableError
 
 async function renderInBrowser() {
-  const container = document.getElementById('root')!;
+  const container = document.getElementById('__rspress_root')!;
   const initialPageData = await initPageData(
     removeBase(window.location.pathname),
   );

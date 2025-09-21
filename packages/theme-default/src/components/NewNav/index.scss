@@ -1,6 +1,6 @@
 .rp-nav {
   display: flex;
-  height: 64px;
+  height: var(--rp-nav-height);
   flex-shrink: 0;
   border-bottom: 1px solid var(--rp-c-divider-light);
   background: var(--rp-c-bg);

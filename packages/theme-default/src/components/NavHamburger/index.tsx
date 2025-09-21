@@ -1,26 +1,14 @@
-import type { DefaultThemeConfig, SiteData } from '@rspress/shared';
 import SmallMenu from '@theme-assets/small-menu';
 import { NavScreen } from '../NavScreen';
 import { SvgWrapper } from '../SvgWrapper';
 import * as styles from './index.module.scss';
 import { useNavScreen } from './useNavScreen';
 
-interface Props {
-  siteData: SiteData<DefaultThemeConfig>;
-  pathname: string;
-}
-
-export function NavHamburger(props: Props) {
-  const { siteData, pathname } = props;
+export function NavHamburger() {
   const { isScreenOpen, toggleScreen } = useNavScreen();
   return (
     <>
-      <NavScreen
-        isScreenOpen={isScreenOpen}
-        toggleScreen={toggleScreen}
-        siteData={siteData}
-        pathname={pathname}
-      />
+      <NavScreen isScreenOpen={isScreenOpen} toggleScreen={toggleScreen} />
       <button
         onClick={toggleScreen}
         aria-label="mobile hamburger"
