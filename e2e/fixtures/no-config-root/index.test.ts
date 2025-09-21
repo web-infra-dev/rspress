@@ -24,9 +24,10 @@ test.describe('no config.root dev test', async () => {
 
   test('Index page', async ({ page }) => {
     await page.goto(`http://localhost:${appPort}`);
-    const h1 = await page.$('h1');
-    const text = await page.evaluate(h1 => h1?.textContent, h1);
-    expect(text).toContain('Hello world');
+
+    // Verify the main heading using modern locator API
+    const h1 = page.locator('h1');
+    await expect(h1).toContainText('Hello world');
   });
 });
 
@@ -47,11 +48,11 @@ test.describe('no config.root build and preview test', async () => {
   });
 
   test('Index page', async ({ page }) => {
-    await page.goto(`http://localhost:${appPort}`, {
-      waitUntil: 'networkidle',
-    });
-    const h1 = await page.$('h1');
-    const text = await page.evaluate(h1 => h1?.textContent, h1);
-    expect(text).toContain('Hello world');
+    await page.goto(`http://localhost:${appPort}`);
+    await page.waitForLoadState('networkidle');
+
+    // Verify the main heading using modern locator API
+    const h1 = page.locator('h1');
+    await expect(h1).toContainText('Hello world');
   });
 });
