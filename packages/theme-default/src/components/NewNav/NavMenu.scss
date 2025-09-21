@@ -6,13 +6,16 @@
 
   list-style: none;
 
-  &--others {
+  &__others {
     display: flex;
     align-items: center;
     height: 100%;
     gap: 24px;
 
     list-style: none;
+    @media (max-width: 1280px) {
+      display: none;
+    }
   }
 
   &__item {
@@ -71,5 +74,12 @@
     width: 1px;
     height: 14.884px;
     background: var(--rp-c-divider);
+    @media (max-width: 1280px) {
+      display: none;
+    }
+  }
+
+  @media (max-width: 1280px) {
+    display: none;
   }
 }
