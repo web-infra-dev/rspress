@@ -29,7 +29,7 @@ export default defineConfig({
       },
       plugins: [
         pluginReact(),
-        pluginSvgr({ svgrOptions: { exportType: 'default' } }),
+        // pluginSvgr({ svgrOptions: { exportType: 'default' } }),
         pluginSass(),
       ],
       source: {
@@ -46,6 +46,7 @@ export default defineConfig({
             environment: {
               // For Circular import of "@theme", https://github.com/web-infra-dev/rsbuild/issues/2862
               const: false,
+              arrowFunction: false,
             },
           },
         },

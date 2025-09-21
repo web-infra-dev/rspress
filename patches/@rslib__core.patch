@@ -1,0 +1,31 @@
+diff --git a/dist/index.js b/dist/index.js
+index 7c55b5dbb4ecfe000114efa3f31e664c41159fb5..8c2ffa947b559c956c8af478ad3c376ab5c19774 100644
+--- a/dist/index.js
++++ b/dist/index.js
+@@ -145,7 +145,7 @@ const pluginLibAsset = ({ bundle })=>({
+                 const isUserSetPublicPath = 'auto' !== config.output.get('publicPath');
+                 const generatorOptions = isUserSetPublicPath ? originalGeneratorOptions : {
+                     ...originalGeneratorOptions,
+-                    importMode: 'preserve'
++                    importMode: 'newURL'
+                 };
+                 const rule = config.module.rule(CHAIN_ID.RULE.SVG);
+                 rule.oneOf(CHAIN_ID.ONE_OF.SVG_ASSET).generator(generatorOptions).issuer({
+@@ -168,7 +168,7 @@ const pluginLibAsset = ({ bundle })=>({
+                     const originalGeneratorOptions = assetRuleOneOf.get('generator');
+                     const generatorOptions = isUserSetPublicPath ? originalGeneratorOptions : {
+                         ...originalGeneratorOptions,
+-                        importMode: 'preserve'
++                        importMode: 'newURL'
+                     };
+                     const rule = config.module.rule(ruleId);
+                     rule.oneOf(oneOfId).generator(generatorOptions).issuer({
+@@ -192,7 +192,7 @@ const pluginLibAsset = ({ bundle })=>({
+                     const originalGeneratorOptions = rule.get('generator');
+                     const generatorOptions = isUserSetPublicPath ? originalGeneratorOptions : {
+                         ...originalGeneratorOptions,
+-                        importMode: 'preserve'
++                        importMode: 'newURL'
+                     };
+                     rule.generator(generatorOptions);
+                 } else {
