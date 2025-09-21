@@ -3,6 +3,7 @@ import { Search } from '@theme';
 import './index.scss';
 import type { NavItem } from '@rspress/shared';
 import { useMemo } from 'react';
+import { NavHamburger } from '../NavHamburger';
 import { NavMenu, NavMenuDivider, NavMenuOthers } from './NavMenu';
 import { NavTitle } from './NavTitle';
 
@@ -44,6 +45,7 @@ export function Nav(props: NavProps) {
         <div className="rp-nav__left">
           {beforeNavTitle}
           {navTitle ?? <NavTitle />}
+          {/* only in desktop */}
           <NavMenu menuItems={leftMenu} />
           {afterNavTitle}
         </div>
@@ -51,9 +53,14 @@ export function Nav(props: NavProps) {
         <div className="rp-nav__right">
           {beforeNavMenu}
           <Search />
+
+          {/* only in desktop */}
           <NavMenu menuItems={rightMenu} />
           <NavMenuDivider />
           <NavMenuOthers />
+
+          {/* only in mobile */}
+          <NavHamburger />
           {afterNavMenu}
         </div>
       </header>

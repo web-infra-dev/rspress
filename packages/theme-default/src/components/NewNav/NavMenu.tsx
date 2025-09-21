@@ -119,7 +119,7 @@ export function NavMenu({ menuItems }: { menuItems: NavItem[] }) {
 
 export function NavMenuOthers() {
   return (
-    <ul className="rp-nav-menu--others">
+    <ul className="rp-nav-menu__others">
       <NavLangs />
       <NavVersions />
       <SwitchAppearance />
