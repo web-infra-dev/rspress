@@ -163,21 +163,19 @@
     /* table */
     /* #region */
     &:where(table) {
-      display: inline-block;
+      width: 100%;
       border-radius: var(--rp-radius);
       overflow: hidden;
-      border: 1px solid var(--rp-c-divider-light);
+      box-shadow: inset 0 0 0 1px var(--rp-c-divider-light);
     }
 
     /* thead */
     &:where(thead) {
       color: var(--rp-c-text-0);
       background: var(--rp-c-bg-soft);
-      border-bottom: 1px solid var(--rp-c-divider-light);
     }
 
     &:where(th) {
-      flex: 1;
       padding: 1rem 2rem;
       font-weight: 600;
       font-size: 0.875rem;
@@ -201,6 +199,7 @@
 
     &:where(tr) {
       transition: background-color 0.2s ease;
+
       &:hover {
         background: var(--rp-c-bg-soft);
       }
@@ -209,7 +208,6 @@
     &:where(tr:last-child td) {
       border-bottom: none;
     }
-
     /* #endregion */
 
     /* code block */
