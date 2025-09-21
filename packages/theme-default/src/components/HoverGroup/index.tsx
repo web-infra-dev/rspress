@@ -1,6 +1,6 @@
 import type { NavItemWithChildren } from '@rspress/shared';
+import { Link } from '@theme';
 import cls from 'clsx';
-import { useNavigate } from '../Link/useNavigate';
 import './index.scss';
 
 type Items = NavItemWithChildren['items'];
@@ -12,7 +12,6 @@ interface HoverGroupProps {
 }
 
 function HoverGroup({ items, isOpen, activeMatcher }: HoverGroupProps) {
-  const navigate = useNavigate();
   return (
     <ul
       className={cls('rp-hover-group', { 'rp-hover-group--hidden': !isOpen })}
@@ -27,11 +26,8 @@ function HoverGroup({ items, isOpen, activeMatcher }: HoverGroupProps) {
             className={cls('rp-hover-group__item', {
               'rp-hover-group__item--active': isActiveItem,
             })}
-            onClick={() => {
-              navigate(link);
-            }}
           >
-            {text}
+            <Link href={link}>{text}</Link>
           </li>
         );
       })}
