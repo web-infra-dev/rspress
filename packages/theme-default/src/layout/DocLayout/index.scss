@@ -29,7 +29,7 @@
   position: relative;
 
   display: flex;
-  justify-content: center;
+  justify-content: flex-start;
   flex-direction: row;
 
   &__doc {
@@ -82,10 +82,7 @@
 
 @media (min-width: 1280px) {
   .rp-doc-layout__doc {
-    max-width: min(
-      100%,
-      calc(1440px - var(--rp-sidebar-width) - var(--rp-aside-width))
-    );
+    max-width: min(100%, 1000px);
   }
   .rp-doc-layout__sidebar {
     --rp-sidebar-margin-left: calc(

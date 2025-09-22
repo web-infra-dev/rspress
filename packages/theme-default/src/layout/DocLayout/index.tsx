@@ -80,15 +80,6 @@ export function DocLayout(props: DocLayoutProps) {
               onIsSidebarOpenChange={setIsSidebarOpen}
               uiSwitch={uiSwitch}
             />
-            {/* Menu sidebar for mobile */}
-            <div className="rp-doc-layout__menu-sidebar">
-              {/* Mobile sidebar content */}
-            </div>
-
-            {/* Menu aside for mobile */}
-            <div className="rp-doc-layout__menu-aside">
-              {/* Mobile aside content */}
-            </div>
           </div>
           <main className="rp-doc-layout__doc-container">
             {isOverviewPage ? (
