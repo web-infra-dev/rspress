@@ -49,24 +49,22 @@ export const Aside = memo(({ outlineTitle }: { outlineTitle: string }) => {
 
   return (
     <div className={styles.asideContainer}>
-      <div id="aside-container">
-        <div className={styles.outlineTitle}>
-          {outlineTitle}
-          <ProgressCircle percent={readPercent} size={14} strokeWidth={2} />
-        </div>
-        <nav>
-          <ul className={styles.tocContainer}>
-            {headers.map((header, index) => (
-              <TocItem
-                key={`${header.depth}_${header.text}_${header.id}_${index}`}
-                baseHeaderLevel={baseHeaderLevel}
-                header={header}
-                active={activeAnchorId === header.id}
-              />
-            ))}
-          </ul>
-        </nav>
+      <div className={styles.outlineTitle}>
+        {outlineTitle}
+        <ProgressCircle percent={readPercent} size={14} strokeWidth={2} />
       </div>
+      <nav>
+        <ul className={styles.tocContainer}>
+          {headers.map((header, index) => (
+            <TocItem
+              key={`${header.depth}_${header.text}_${header.id}_${index}`}
+              baseHeaderLevel={baseHeaderLevel}
+              header={header}
+              active={activeAnchorId === header.id}
+            />
+          ))}
+        </ul>
+      </nav>
 
       <div style={{ display: readPercent !== 0 ? '' : 'none' }}>
         <div className={styles.divider} />
