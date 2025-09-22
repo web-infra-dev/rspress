@@ -3,11 +3,29 @@
   display: none;
   top: var(--rp-nav-height);
   padding-top: var(--rp-content-padding-y);
+  padding-left: 20px;
+
   overflow-x: hidden;
   overflow-y: auto;
   scrollbar-width: none;
   width: 0;
   max-height: calc(100vh - var(--rp-nav-height) - var(--rp-content-padding-y));
+}
+
+@media (min-width: 960px) {
+  .aside-container {
+    width: var(--rp-aside-width);
+    display: block;
+  }
+}
+
+@media (min-width: 1280px) {
+  .aside-container {
+    --rp-aside-margin-right: calc(
+      max(0px, calc((100vw - 1000px) / 2 - var(--rp-aside-width)))
+    );
+    margin-right: var(--rp-aside-margin-right);
+  }
 }
 
 .aside-container::-webkit-scrollbar {
