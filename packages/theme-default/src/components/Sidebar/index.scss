@@ -9,7 +9,8 @@
     transform 0.25s ease;
   background: var(--rp-c-bg);
 
-  height: 100%;
+  height: calc(100% + var(--rp-nav-height));
+  margin-top: calc(-1 * var(--rp-nav-height));
 
   border-right: 1px solid var(--rp-c-divider-light);
 

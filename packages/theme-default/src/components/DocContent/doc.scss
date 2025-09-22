@@ -1,5 +1,7 @@
 /* keep the html syntax in markdown original style e.g: <ul></ul> */
 .rp-doc {
+  min-height: 600px;
+
   :not(:where(.rp-not-doc, .rp-not-doc *)) {
     // escape hatch like <div className="rp-not-doc"></div>
     /* why ":where"? For css priority, <<equal to className priority>>, to be easy to overrides by className */
@@ -63,7 +65,6 @@
     /* #region */
     &:where(h1, h2, h3, h4, h5, h6) {
       font-weight: 600;
-      position: relative;
       outline: none;
       & .header-anchor {
         float: left;
