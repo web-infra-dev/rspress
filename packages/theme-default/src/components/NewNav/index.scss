@@ -17,7 +17,12 @@
   width: 100%;
 
   @media (min-width: 1280px) {
-    --rp-nav-padding-x: max(calc((100vw - 1440px) / 2), 20px);
+    --rp-nav-padding-x: max(
+      calc(
+        (100vw - 1000px - var(--rp-sidebar-width) - var(--rp-aside-width)) / 2
+      ),
+      20px
+    );
     padding: 0 var(--rp-nav-padding-x) 0 var(--rp-nav-padding-x);
   }
 
