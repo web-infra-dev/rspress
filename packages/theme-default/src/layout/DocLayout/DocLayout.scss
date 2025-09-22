@@ -2,7 +2,7 @@
   // z-index
   --rp-z-index-nav-menu: 40;
   --rp-z-index-nav: 50;
-  --rp-z-index-backdrop: 30;
+  --rp-z-index-backdrop: 60;
   --rp-z-index-sidebar: 40;
   --rp-z-index-aside: 40;
 }
@@ -23,6 +23,7 @@
 }
 
 .rp-doc-layout {
+  width: 100%; // mobile
   padding: 0px;
   margin: 0px;
   position: relative;
@@ -37,10 +38,6 @@
     position: relative;
 
     width: 100%;
-    max-width: min(
-      100%,
-      calc(1440px - var(--rp-sidebar-width) - var(--rp-aside-width))
-    );
   }
 
   &__sidebar {
@@ -56,6 +53,7 @@
   }
 
   &__doc {
+    min-height: 60vh;
     padding: var(--rp-content-padding-y) var(--rp-content-padding-x);
   }
 
@@ -74,9 +72,21 @@
     scrollbar-width: none;
     max-height: calc(100vh - var(--rp-nav-height));
   }
+  &__menu {
+    position: sticky;
+    top: var(--rp-nav-height);
+    left: 0;
+    z-index: var(--rp-z-index-nav-menu);
+  }
 }
 
 @media (min-width: 1280px) {
+  .rp-doc-layout__doc-container {
+    max-width: min(
+      100%,
+      calc(1440px - var(--rp-sidebar-width) - var(--rp-aside-width))
+    );
+  }
   .rp-doc-layout__sidebar {
     --rp-sidebar-margin-left: calc(
       max(0px, calc((100vw - 1000px) / 2 - var(--rp-sidebar-width)))
@@ -100,6 +110,9 @@
 }
 
 @media (max-width: 960px) {
+  :root {
+    --rp-z-index-sidebar: 70;
+  }
   .rp-doc-layout {
     &__sidebar {
       position: fixed;
