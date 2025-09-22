@@ -1,4 +1,4 @@
-import * as styles from './ScrollToTop.module.scss';
+import './ScrollToTop.scss';
 
 export function ScrollToTop() {
   const scrollToTop = () => {
@@ -9,7 +9,7 @@ export function ScrollToTop() {
   };
 
   return (
-    <button className={`${styles.scrollToTop}`} onClick={scrollToTop}>
+    <button className="rp-aside__scroll-to-top" onClick={scrollToTop}>
       <svg
         width="16"
         height="16"

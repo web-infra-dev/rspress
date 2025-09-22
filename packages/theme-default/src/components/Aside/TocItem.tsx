@@ -5,7 +5,7 @@ import {
   renderInlineMarkdown,
 } from '../../logic/utils';
 import { Link } from '../Link';
-import * as styles from './TocItem.module.scss';
+import './TocItem.scss';
 
 export const TocItem = ({
   header,
@@ -21,16 +21,15 @@ export const TocItem = ({
       <Link
         href={`#${header.id}`}
         title={parseInlineMarkdownText(header.text)}
-        className={clsx('aside-link', styles.tocItem, {
-          [styles.active]: active,
-          'aside-link-active': active,
+        className={clsx('rp-aside__toc-item', {
+          'rp-aside__toc-item--active': active,
         })}
         style={{
           paddingLeft: (header.depth - baseHeaderLevel) * 12,
         }}
       >
         <span
-          className="aside-link-text"
+          className="rp-aside__toc-text"
           {...renderInlineMarkdown(header.text)}
         ></span>
       </Link>

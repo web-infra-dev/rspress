@@ -3,7 +3,7 @@ import { useEffect, useMemo } from 'react';
 import { scrollToTarget } from '../../logic/sideEffects';
 import { type UISwitchResult, useUISwitch } from '../../logic/useUISwitch.js';
 
-import * as styles from './index.module.scss';
+import './index.scss';
 import { ProgressCircle } from './ProgressCircle';
 import { ScrollToTop } from './ScrollToTop';
 import { TocItem } from './TocItem';
@@ -55,13 +55,13 @@ export function Aside() {
   }
 
   return (
-    <div className={styles.asideContainer}>
-      <div className={styles.outlineTitle}>
+    <div className="rp-aside">
+      <div className="rp-aside__title">
         {outlineTitle}
         <ProgressCircle percent={readPercent} size={14} strokeWidth={2} />
       </div>
       <nav>
-        <ul className={styles.tocContainer}>
+        <ul className="rp-aside__toc">
           {headers.map((header, index) => (
             <TocItem
               key={`${header.depth}_${header.text}_${header.id}_${index}`}
@@ -74,7 +74,7 @@ export function Aside() {
       </nav>
 
       <div style={{ display: readPercent !== 0 ? '' : 'none' }}>
-        <div className={styles.divider} />
+        <div className="rp-aside__divider" />
         <ScrollToTop />
       </div>
     </div>
