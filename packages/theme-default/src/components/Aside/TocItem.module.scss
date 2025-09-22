@@ -7,6 +7,8 @@
   align-self: stretch;
   border-radius: 6px;
 
+  position: relative;
+
   // text
   color: var(--rp-c-text-2);
   font-weight: 400;
@@ -14,5 +16,15 @@
 
   &.active {
     color: var(--rp-c-link);
+    &::before {
+      content: '';
+      display: block;
+      height: 100%;
+      width: 1px;
+      background-color: var(--rp-c-brand);
+      position: absolute;
+      left: -20px;
+      top: 0px;
+    }
   }
 }
