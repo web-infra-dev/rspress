@@ -1,6 +1,6 @@
 .rspress-sidebar-menu-container {
   position: sticky;
-  top: 0;
+  top: var(--rp-nav-height);
   left: 0;
   z-index: var(--rp-z-index-local-nav);
 }

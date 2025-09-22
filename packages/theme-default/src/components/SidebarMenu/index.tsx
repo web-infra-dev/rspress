@@ -75,60 +75,64 @@ export function SidebarMenu({
   const hasToc = toc.length > 0;
 
   return (
-    <div className={`rspress-sidebar-menu-container ${hasToc ? '' : 'no-toc'}`}>
-      <div className="rspress-sidebar-menu">
-        {uiSwitch?.showSidebar && (
-          <>
-            <button
-              type="button"
-              onClick={openSidebar}
-              className="rp-flex rp-items-center rp-justify-center rp-mr-auto"
-            >
-              <div className="rp-text-md rp-mr-2">
-                <SvgWrapper icon={MenuIcon} />
-              </div>
-              <span className="rp-text-sm">Menu</span>
-            </button>
-            {isSidebarOpen && (
-              <div
-                onClick={closeSidebar}
-                className="rspress-sidebar-back-drop"
-                style={{
-                  background: 'rgba(0, 0, 0, 0.6)',
-                }}
-              />
-            )}
-          </>
-        )}
-        {uiSwitch?.showAside && hasToc && (
-          <>
-            <button
-              type="button"
-              onClick={() => setIsTocOpen(tocOpened => !tocOpened)}
-              className="rp-flex rp-items-center rp-justify-center rp-ml-auto"
-              ref={outlineButtonRef}
-            >
-              <span className="rp-text-sm">{outlineTitle}</span>
-              <div
-                className="rp-text-md rp-mr-2"
-                style={{
-                  transform: isTocOpen ? 'rotate(90deg)' : 'rotate(0deg)',
-                  transition: 'transform 0.2s ease-out',
-                  marginTop: '2px',
-                }}
+    <>
+      <div
+        className={`rspress-sidebar-menu-container ${hasToc ? '' : 'no-toc'}`}
+      >
+        <div className="rspress-sidebar-menu">
+          {uiSwitch?.showSidebar && (
+            <>
+              <button
+                type="button"
+                onClick={openSidebar}
+                className="rp-flex rp-items-center rp-justify-center rp-mr-auto"
               >
-                <SvgWrapper icon={ArrowRight} />
-              </div>
-            </button>
+                <div className="rp-text-md rp-mr-2">
+                  <SvgWrapper icon={MenuIcon} />
+                </div>
+                <span className="rp-text-sm">Menu</span>
+              </button>
+            </>
+          )}
+          {uiSwitch?.showAside && hasToc && (
+            <>
+              <button
+                type="button"
+                onClick={() => setIsTocOpen(tocOpened => !tocOpened)}
+                className="rp-flex rp-items-center rp-justify-center rp-ml-auto"
+                ref={outlineButtonRef}
+              >
+                <span className="rp-text-sm">{outlineTitle}</span>
+                <div
+                  className="rp-text-md rp-mr-2"
+                  style={{
+                    transform: isTocOpen ? 'rotate(90deg)' : 'rotate(0deg)',
+                    transition: 'transform 0.2s ease-out',
+                    marginTop: '2px',
+                  }}
+                >
+                  <SvgWrapper icon={ArrowRight} />
+                </div>
+              </button>
 
-            <div
-              className={`rspress-local-toc-container ${isTocOpen ? 'rspress-local-toc-container-show' : ''}`}
-            >
-              <Toc onItemClick={toggleTocItem} />
-            </div>
-          </>
-        )}
+              <div
+                className={`rspress-local-toc-container ${isTocOpen ? 'rspress-local-toc-container-show' : ''}`}
+              >
+                <Toc onItemClick={toggleTocItem} />
+              </div>
+            </>
+          )}
+        </div>
       </div>
-    </div>
+      {isSidebarOpen && (
+        <div
+          onClick={closeSidebar}
+          className="rspress-sidebar-back-drop"
+          style={{
+            background: 'rgba(0, 0, 0, 0.6)',
+          }}
+        />
+      )}
+    </>
   );
 }
