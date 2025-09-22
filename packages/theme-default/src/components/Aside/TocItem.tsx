@@ -26,7 +26,7 @@ export const TocItem = ({
           'aside-link-active': active,
         })}
         style={{
-          marginLeft: (header.depth - baseHeaderLevel) * 12,
+          paddingLeft: (header.depth - baseHeaderLevel) * 12,
         }}
       >
         <span

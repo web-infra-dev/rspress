@@ -1,6 +1,9 @@
 .asideContainer {
   display: flex;
   flex-direction: column;
+
+  border-left: 1px solid var(--rp-c-divider-light);
+  padding-left: 20px;
 }
 
 .outlineTitle {
