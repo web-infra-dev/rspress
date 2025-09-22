@@ -1,0 +1,34 @@
+.rp-aside {
+  display: flex;
+  flex-direction: column;
+  border-left: 1px solid var(--rp-c-divider-light);
+  padding-left: 20px;
+
+  &__title {
+    font-size: 14px;
+    font-weight: 700;
+    height: 32px;
+    line-height: 32px;
+    font-family: Inter;
+    font-style: normal;
+    color: var(--rp-c-text-1);
+    margin-bottom: 4px;
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+  }
+
+  &__divider {
+    height: 1px;
+    background: var(--rp-c-divider-light);
+    margin-top: 16px;
+    margin-bottom: 16px;
+  }
+
+  &__toc {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    gap: 6px;
+  }
+}
