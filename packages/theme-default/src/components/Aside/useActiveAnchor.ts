@@ -13,16 +13,16 @@ const useVisibleAnchors = (headers: Header[]): string[] => {
         return { id: header.id, top: rect.top };
       });
 
-      const visible = offsets
+      const visibleIds = offsets
         .filter(offset => offset.top >= 64 && offset.top < window.innerHeight)
         .map(offset => offset.id);
 
-      setVisibleAnchors(visible);
+      setVisibleAnchors(visibleIds);
     };
 
-    window.addEventListener('scroll', handleScroll, { passive: true });
     handleScroll();
 
+    window.addEventListener('scroll', handleScroll, { passive: true });
     return () => {
       window.removeEventListener('scroll', handleScroll);
     };
@@ -33,6 +33,7 @@ const useVisibleAnchors = (headers: Header[]): string[] => {
 
 export const useActiveAnchor = (headers: Header[], isBottom: boolean) => {
   const anchors = useVisibleAnchors(headers);
+  console.log('anchors', anchors, headers, isBottom);
 
   const anchorDirty = useRef<string>(null);
 

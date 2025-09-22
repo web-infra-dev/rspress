@@ -2,7 +2,7 @@ import { useSite } from '@rspress/runtime';
 import IconWrap from '@theme-assets/wrap';
 import IconWrapped from '@theme-assets/wrapped';
 import { useState } from 'react';
-import { SvgWrapper } from '../../../../components/SvgWrapper';
+import { SvgWrapper } from '../../../SvgWrapper';
 import * as styles from './CodeButtonGroup.module.scss';
 import { CopyCodeButton } from './CopyCodeButton';
 

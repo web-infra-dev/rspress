@@ -1,0 +1,112 @@
+:root {
+  // z-index
+  --rp-z-index-nav-menu: 40;
+  --rp-z-index-nav: 50;
+  --rp-z-index-backdrop: 30;
+  --rp-z-index-sidebar: 40;
+  --rp-z-index-aside: 40;
+}
+
+:root {
+  --rp-nav-height: 64px;
+  --rp-sidebar-width: 320px;
+  --rp-sidebar-menu-height: 46px;
+  --rp-aside-width: 268px;
+  --rp-content-padding-x: 24px;
+  --rp-content-padding-y: 48px;
+}
+
+@media (min-width: 1280px) {
+  html:root {
+    --rp-sidebar-menu-height: 0px;
+  }
+}
+
+.rp-doc-layout {
+  padding: 0px;
+  margin: 0px;
+  position: relative;
+
+  display: flex;
+  justify-content: center;
+  flex-direction: row;
+
+  &__doc-container {
+    display: flex;
+    flex-direction: column;
+    position: relative;
+
+    width: 100%;
+    max-width: min(
+      100%,
+      calc(1440px - var(--rp-sidebar-width) - var(--rp-aside-width))
+    );
+  }
+
+  &__sidebar {
+    width: var(--rp-sidebar-width);
+
+    position: sticky;
+    top: var(--rp-nav-height);
+    // bottom: 0;
+    left: 0;
+    z-index: var(--rp-z-index-sidebar);
+    height: calc(100vh - var(--rp-nav-height));
+    max-height: calc(100vh - var(--rp-nav-height));
+  }
+
+  &__doc {
+    padding: var(--rp-content-padding-y) var(--rp-content-padding-x);
+  }
+
+  &__aside {
+    width: var(--rp-aside-width);
+
+    position: sticky;
+    top: var(--rp-nav-height);
+    right: 0;
+    z-index: var(--rp-z-index-aside);
+
+    padding-top: var(--rp-content-padding-y);
+
+    overflow-x: hidden;
+    overflow-y: auto;
+    scrollbar-width: none;
+    max-height: calc(100vh - var(--rp-nav-height));
+  }
+}
+
+@media (min-width: 1280px) {
+  .rp-doc-layout__sidebar {
+    --rp-sidebar-margin-left: calc(
+      max(0px, calc((100vw - 1000px) / 2 - var(--rp-sidebar-width)))
+    );
+    margin-left: var(--rp-sidebar-margin-left);
+  }
+  .rp-doc-layout__aside {
+    --rp-aside-margin-right: calc(
+      max(0px, calc((100vw - 1000px) / 2 - var(--rp-aside-width)))
+    );
+    margin-right: var(--rp-aside-margin-right);
+  }
+}
+
+@media (max-width: 1279px) {
+  .rp-doc-layout {
+    &__aside {
+      display: none;
+    }
+  }
+}
+
+@media (max-width: 960px) {
+  .rp-doc-layout {
+    &__sidebar {
+      position: fixed;
+      left: calc(-1 * var(--rp-sidebar-width));
+      &--open {
+        left: 0;
+      }
+    }
+  }
+}

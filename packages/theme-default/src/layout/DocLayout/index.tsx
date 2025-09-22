@@ -15,8 +15,6 @@ import { DocFooter } from '../../components/DocFooter';
 import { Sidebar } from '../../components/Sidebar';
 import { SidebarMenu } from '../../components/SidebarMenu';
 import type { UISwitchResult } from '../../logic/useUISwitch';
-import { A } from './docComponents/a';
-import { H1 } from './docComponents/title';
 import * as styles from './index.module.scss';
 
 export interface DocLayoutProps {
@@ -155,7 +153,7 @@ export function DocLayout(props: DocLayoutProps) {
               }
             >
               {beforeOutline}
-              <Aside outlineTitle={outlineTitle} />
+              <Aside />
               {afterOutline}
             </div>
           )}

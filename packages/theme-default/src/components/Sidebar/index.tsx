@@ -54,7 +54,7 @@ export function Sidebar(props: Props) {
   }, [isSidebarOpen]);
 
   return (
-    <aside className={`rp-sidebar ${isSidebarOpen ? 'rp-sidebar--open' : ''}`}>
+    <div className={`rp-sidebar ${isSidebarOpen ? 'rp-sidebar--open' : ''}`}>
       {!uiSwitch?.showNavbar ? null : (
         <div className="rp-sidebar__nav-title">{navTitle || <NavTitle />}</div>
       )}
@@ -66,7 +66,7 @@ export function Sidebar(props: Props) {
         />
         {afterSidebar}
       </nav>
-    </aside>
+    </div>
   );
 }
 

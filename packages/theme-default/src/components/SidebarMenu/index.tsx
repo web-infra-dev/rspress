@@ -1,4 +1,4 @@
-import { useLocation } from '@rspress/runtime';
+import { useLocaleSiteData, useLocation, useSite } from '@rspress/runtime';
 import ArrowRight from '@theme-assets/arrow-right';
 import MenuIcon from '@theme-assets/menu';
 import { useCallback, useEffect, useRef, useState } from 'react';
@@ -12,14 +12,19 @@ import { useDynamicToc } from '../Aside/useDynamicToc';
 export function SidebarMenu({
   isSidebarOpen,
   onIsSidebarOpenChange,
-  outlineTitle,
   uiSwitch,
 }: {
   isSidebarOpen: boolean;
   onIsSidebarOpenChange: (isOpen: boolean) => void;
-  outlineTitle: string;
   uiSwitch?: UISwitchResult;
 }) {
+  const localesData = useLocaleSiteData();
+  const {
+    site: { themeConfig },
+  } = useSite();
+  const outlineTitle =
+    localesData?.outlineTitle || themeConfig?.outlineTitle || 'ON THIS PAGE';
+
   const tocContainerRef = useRef<HTMLDivElement>(null);
   const outlineButtonRef = useRef<HTMLButtonElement>(null);
 
