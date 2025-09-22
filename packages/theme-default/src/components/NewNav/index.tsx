@@ -8,25 +8,21 @@ import { NavMenu, NavMenuDivider, NavMenuOthers } from './NavMenu';
 import { NavTitle } from './NavTitle';
 
 export interface NavProps {
-  beforeNav?: React.ReactNode;
   beforeNavTitle?: React.ReactNode;
   navTitle?: React.ReactNode;
   afterNavTitle?: React.ReactNode;
 
   beforeNavMenu?: React.ReactNode;
   afterNavMenu?: React.ReactNode;
-  afterNav?: React.ReactNode;
 }
 
 export function Nav(props: NavProps) {
   const {
     beforeNavTitle,
     afterNavTitle,
-    beforeNav,
     beforeNavMenu,
     afterNavMenu,
     navTitle,
-    afterNav,
   } = props;
   const navList = useNav();
   const getPosition = (menuItem: NavItem) => menuItem.position ?? 'right';
@@ -39,32 +35,28 @@ export function Nav(props: NavProps) {
   }, [navList]);
 
   return (
-    <>
-      {beforeNav}
-      <header className="rp-nav">
-        <div className="rp-nav__left">
-          {beforeNavTitle}
-          {navTitle ?? <NavTitle />}
-          {/* only in desktop */}
-          <NavMenu menuItems={leftMenu} />
-          {afterNavTitle}
-        </div>
+    <header className="rp-nav">
+      <div className="rp-nav__left">
+        {beforeNavTitle}
+        {navTitle ?? <NavTitle />}
+        {/* only in desktop */}
+        <NavMenu menuItems={leftMenu} />
+        {afterNavTitle}
+      </div>
 
-        <div className="rp-nav__right">
-          {beforeNavMenu}
-          <Search />
+      <div className="rp-nav__right">
+        {beforeNavMenu}
+        <Search />
 
-          {/* only in desktop */}
-          <NavMenu menuItems={rightMenu} />
-          <NavMenuDivider />
-          <NavMenuOthers />
+        {/* only in desktop */}
+        <NavMenu menuItems={rightMenu} />
+        <NavMenuDivider />
+        <NavMenuOthers />
 
-          {/* only in mobile */}
-          <NavHamburger />
-          {afterNavMenu}
-        </div>
-      </header>
-      {afterNav}
-    </>
+        {/* only in mobile */}
+        <NavHamburger />
+        {afterNavMenu}
+      </div>
+    </header>
   );
 }

@@ -6,6 +6,14 @@ export {
   CodeBlockRuntime,
   type CodeBlockRuntimeProps,
 } from './components/CodeBlockRuntime/index';
+// layout
+export type { CodeButtonGroupProps } from './components/DocContent/docComponents/codeblock/CodeButtonGroup';
+export type {
+  PreWithCodeButtonGroupProps,
+  ShikiPreProps,
+} from './components/DocContent/docComponents/codeblock/pre';
+export { getCustomMDXComponent } from './components/DocContent/docComponents/index';
+export { DocContent } from './components/DocContent/index';
 export { DocFooter } from './components/DocFooter/index';
 export { EditLink } from './components/EditLink/index';
 export { useEditLink } from './components/EditLink/useEditLink';
@@ -55,14 +63,7 @@ export { SwitchAppearance } from './components/SwitchAppearance/index';
 export { Tab, Tabs } from './components/Tabs/index';
 export { Tag } from './components/Tag/index';
 export { Toc } from './components/Toc/index';
-// layout
-export type { CodeButtonGroupProps } from './layout/DocLayout/docComponents/codeblock/CodeButtonGroup';
-export type {
-  PreWithCodeButtonGroupProps,
-  ShikiPreProps,
-} from './layout/DocLayout/docComponents/codeblock/pre';
-export { getCustomMDXComponent } from './layout/DocLayout/docComponents/index';
-export { DocLayout } from './layout/DocLayout/index';
+export { DocLayout, type DocLayoutProps } from './layout/DocLayout/DocLayout';
 export { HomeLayout } from './layout/HomeLayout/index';
 export { Layout } from './layout/Layout/index';
 export { NotFoundLayout } from './layout/NotFountLayout/index';

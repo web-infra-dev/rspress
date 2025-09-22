@@ -1,5 +1,5 @@
 import { Tab, Tabs } from '@theme';
-import { PreWithCodeButtonGroup } from '../../layout/DocLayout/docComponents/codeblock/pre';
+import { PreWithCodeButtonGroup } from '../DocContent/docComponents/codeblock/pre';
 import { Bun } from './icons/Bun';
 import { Npm } from './icons/Npm';
 import { Pnpm } from './icons/Pnpm';

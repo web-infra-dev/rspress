@@ -11,7 +11,7 @@ import type {
   SidebarSectionHeader,
 } from '@rspress/shared';
 import { useEffect, useMemo, useRef, useState } from 'react';
-import { H1 } from '../../layout/DocLayout/docComponents/title';
+import { H1 } from '../DocContent/docComponents/title';
 import {
   isSidebarDivider,
   isSidebarSectionHeader,

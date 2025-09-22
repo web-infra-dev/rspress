@@ -1,5 +1,5 @@
-import { useLocation } from '@rspress/runtime';
-import { memo, useEffect, useMemo } from 'react';
+import { useLocaleSiteData, useLocation, useSite } from '@rspress/runtime';
+import { useEffect, useMemo } from 'react';
 import { scrollToTarget } from '../../logic/sideEffects';
 import { type UISwitchResult, useUISwitch } from '../../logic/useUISwitch.js';
 
@@ -16,7 +16,14 @@ export interface AsideProps {
   uiSwitch?: UISwitchResult;
 }
 
-export const Aside = memo(({ outlineTitle }: { outlineTitle: string }) => {
+export function Aside() {
+  const localesData = useLocaleSiteData();
+  const {
+    site: { themeConfig },
+  } = useSite();
+  const outlineTitle =
+    localesData?.outlineTitle || themeConfig?.outlineTitle || 'ON THIS PAGE';
+
   const { scrollPaddingTop } = useUISwitch();
   const headers = useDynamicToc();
   const [readPercent] = useReadPercent();
@@ -72,6 +79,4 @@ export const Aside = memo(({ outlineTitle }: { outlineTitle: string }) => {
       </div>
     </div>
   );
-});
-
-Aside.displayName = 'Aside';
+}

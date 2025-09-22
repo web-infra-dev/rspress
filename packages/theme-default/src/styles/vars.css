@@ -2,21 +2,6 @@
   * Some common css theme variables and they will be used in the tailwind theme as well.
 */
 :root {
-  --rp-nav-height: 64px;
-  --rp-sidebar-width: 320px;
-  --rp-sidebar-menu-height: 46px;
-  --rp-aside-width: 268px;
-  --rp-content-padding-x: 24px;
-  --rp-content-padding-y: 48px;
-}
-
-@media (min-width: 1280px) {
-  html:root {
-    --rp-sidebar-menu-height: 0px;
-  }
-}
-
-:root {
   --rp-c-bg: #ffffff;
   --rp-c-bg-soft: #f8f8f9;
   --rp-c-bg-mute: #f1f1f1;
@@ -73,13 +58,6 @@
   --rp-c-text-code: #c9def1;
 
   --rp-c-link: var(--rp-c-brand-light);
-}
-
-:root {
-  --rp-z-index-local-nav: 10;
-  --rp-z-index-nav: 20;
-  --rp-z-index-backdrop: 30;
-  --rp-z-index-sidebar: 40;
 }
 
 :root {
