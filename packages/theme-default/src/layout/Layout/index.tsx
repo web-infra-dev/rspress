@@ -9,6 +9,8 @@ import type { FrontMatterMeta } from '@rspress/shared';
 import {
   HomeLayout as DefaultHomeLayout,
   NotFoundLayout as DefaultNotFoundLayout,
+  DocLayout,
+  type DocLayoutProps,
   Nav,
 } from '@theme';
 import { Head, useHead } from '@unhead/react';
@@ -18,7 +20,6 @@ import { useSetup } from '../../logic/sideEffects';
 import { TabDataContext } from '../../logic/TabDataContext';
 import { useRedirect4FirstVisit } from '../../logic/useRedirect4FirstVisit';
 import { type UISwitchResult, useUISwitch } from '../../logic/useUISwitch';
-import { DocLayout, type DocLayoutProps } from '../DocLayout';
 import type { HomeLayoutProps } from '../HomeLayout';
 
 export type LayoutProps = {
@@ -219,19 +220,20 @@ export function Layout(props: LayoutProps) {
       />
 
       {top}
-
       {pageType !== 'blank' && uiSwitch.showNavbar && (
-        <Nav
-          beforeNavTitle={beforeNavTitle}
-          afterNavTitle={afterNavTitle}
-          navTitle={navTitle}
-          beforeNav={beforeNav}
-          afterNavMenu={afterNavMenu}
-          afterNav={afterNav}
-        />
+        <>
+          {beforeNav}
+          <Nav
+            beforeNavTitle={beforeNavTitle}
+            afterNavTitle={afterNavTitle}
+            navTitle={navTitle}
+            afterNavMenu={afterNavMenu}
+          />
+          {afterNav}
+        </>
       )}
 
-      <section>{getContentLayout()}</section>
+      {getContentLayout()}
       {bottom}
     </TabDataContext.Provider>
   );
