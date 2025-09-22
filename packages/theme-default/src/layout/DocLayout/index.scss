@@ -32,7 +32,7 @@
   justify-content: center;
   flex-direction: row;
 
-  &__doc-container {
+  &__doc {
     display: flex;
     flex-direction: column;
     position: relative;
@@ -52,7 +52,7 @@
     max-height: calc(100vh - var(--rp-nav-height));
   }
 
-  &__doc {
+  &__doc-container {
     min-height: 60vh;
     padding: var(--rp-content-padding-y) var(--rp-content-padding-x);
   }
@@ -81,7 +81,7 @@
 }
 
 @media (min-width: 1280px) {
-  .rp-doc-layout__doc-container {
+  .rp-doc-layout__doc {
     max-width: min(
       100%,
       calc(1440px - var(--rp-sidebar-width) - var(--rp-aside-width))
