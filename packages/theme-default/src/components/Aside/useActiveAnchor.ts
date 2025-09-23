@@ -33,7 +33,6 @@ const useVisibleAnchors = (headers: Header[]): string[] => {
 
 export const useActiveAnchor = (headers: Header[], isBottom: boolean) => {
   const anchors = useVisibleAnchors(headers);
-  console.log('anchors', anchors, headers, isBottom);
 
   const anchorDirty = useRef<string>(null);
 
