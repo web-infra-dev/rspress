@@ -47,6 +47,7 @@
   &__sidebar {
     width: var(--rp-sidebar-width);
     max-width: var(--rp-sidebar-width);
+    min-width: var(--rp-sidebar-width);
 
     height: calc(100vh - var(--rp-nav-height));
     max-height: calc(100vh - var(--rp-nav-height));
