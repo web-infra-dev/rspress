@@ -27,6 +27,7 @@ export function processLocales(
   root: string,
   extensions: string[],
   metaFileSet: Set<string>,
+  mdFileSet: Set<string>,
 ): Promise<{ nav: Record<string, NavItem[]>; sidebar: Sidebar }[]> {
   return Promise.all(
     langs.map(async lang => {
@@ -38,10 +39,19 @@ export function processLocales(
                 root,
                 extensions,
                 metaFileSet,
+                mdFileSet,
               );
             }),
           )
-        : [await walk(path.join(root, lang), root, extensions, metaFileSet)];
+        : [
+            await walk(
+              path.join(root, lang),
+              root,
+              extensions,
+              metaFileSet,
+              mdFileSet,
+            ),
+          ];
       return combineWalkResult(walks, versions);
     }),
   );

@@ -38,12 +38,14 @@ describe('walk', () => {
       getRoutePathParts: mockGetRoutePathParts,
     } as RouteService;
     const metaFileSet = new Set<string>();
+    const mdFileSet = new Set<string>();
     const result = await processLocales(
       ['zh', 'en'],
       [],
       docsDir,
       ['.md', '.mdx', '.tsx'],
       metaFileSet,
+      mdFileSet,
     );
     expect(result).toMatchInlineSnapshot(`
       [
@@ -225,16 +227,36 @@ describe('walk', () => {
       <ROOT>/packages/core/src/node/auto-nav-sidebar/fixtures/docs-locales/zh/_nav.json
       <ROOT>/packages/core/src/node/auto-nav-sidebar/fixtures/docs-locales/zh/guide/_meta.json"
     `);
+    expect(orderStringSet(mdFileSet)).toMatchInlineSnapshot(`
+      "<ROOT>/packages/core/src/node/auto-nav-sidebar/fixtures/docs-locales/en/guide/a.md
+      <ROOT>/packages/core/src/node/auto-nav-sidebar/fixtures/docs-locales/en/guide/b.mdx
+      <ROOT>/packages/core/src/node/auto-nav-sidebar/fixtures/docs-locales/en/guide/c.tsx
+      <ROOT>/packages/core/src/node/auto-nav-sidebar/fixtures/docs-locales/en/guide/index.mdx
+      <ROOT>/packages/core/src/node/auto-nav-sidebar/fixtures/docs-locales/en/guide/test-dir/getting-started.mdx
+      <ROOT>/packages/core/src/node/auto-nav-sidebar/fixtures/docs-locales/en/guide/test-dir/index.mdx
+      <ROOT>/packages/core/src/node/auto-nav-sidebar/fixtures/docs-locales/en/guide/test-same-name-dir.md
+      <ROOT>/packages/core/src/node/auto-nav-sidebar/fixtures/docs-locales/en/guide/test-same-name-dir/index.mdx
+      <ROOT>/packages/core/src/node/auto-nav-sidebar/fixtures/docs-locales/zh/guide/a.md
+      <ROOT>/packages/core/src/node/auto-nav-sidebar/fixtures/docs-locales/zh/guide/b.mdx
+      <ROOT>/packages/core/src/node/auto-nav-sidebar/fixtures/docs-locales/zh/guide/c.tsx
+      <ROOT>/packages/core/src/node/auto-nav-sidebar/fixtures/docs-locales/zh/guide/index.mdx
+      <ROOT>/packages/core/src/node/auto-nav-sidebar/fixtures/docs-locales/zh/guide/test-dir/getting-started.mdx
+      <ROOT>/packages/core/src/node/auto-nav-sidebar/fixtures/docs-locales/zh/guide/test-dir/index.mdx
+      <ROOT>/packages/core/src/node/auto-nav-sidebar/fixtures/docs-locales/zh/guide/test-same-name-dir.md
+      <ROOT>/packages/core/src/node/auto-nav-sidebar/fixtures/docs-locales/zh/guide/test-same-name-dir/index.mdx"
+    `);
   });
   it('multiVersion', async () => {
     const docsDir = path.join(__dirname, './fixtures/docs-multi-version');
     const metaFileSet = new Set<string>();
+    const mdFileSet = new Set<string>();
     const result = await processLocales(
       ['zh', 'en'],
       ['v1', 'v2'],
       docsDir,
       ['.md', '.mdx', '.tsx'],
       metaFileSet,
+      mdFileSet,
     );
     expect(result).toMatchInlineSnapshot(`
       [
@@ -305,6 +327,16 @@ describe('walk', () => {
       <ROOT>/packages/core/src/node/auto-nav-sidebar/fixtures/docs-multi-version/v2/en/guide/_meta.json
       <ROOT>/packages/core/src/node/auto-nav-sidebar/fixtures/docs-multi-version/v2/zh/_nav.json
       <ROOT>/packages/core/src/node/auto-nav-sidebar/fixtures/docs-multi-version/v2/zh/guide/_meta.json"
+    `);
+    expect(orderStringSet(mdFileSet)).toMatchInlineSnapshot(`
+      "<ROOT>/packages/core/src/node/auto-nav-sidebar/fixtures/docs-multi-version/v1/en/guide.md
+      <ROOT>/packages/core/src/node/auto-nav-sidebar/fixtures/docs-multi-version/v1/en/guide/feature.md
+      <ROOT>/packages/core/src/node/auto-nav-sidebar/fixtures/docs-multi-version/v1/zh/guide.md
+      <ROOT>/packages/core/src/node/auto-nav-sidebar/fixtures/docs-multi-version/v1/zh/guide/feature.md
+      <ROOT>/packages/core/src/node/auto-nav-sidebar/fixtures/docs-multi-version/v2/en/guide.md
+      <ROOT>/packages/core/src/node/auto-nav-sidebar/fixtures/docs-multi-version/v2/en/guide/feature.md
+      <ROOT>/packages/core/src/node/auto-nav-sidebar/fixtures/docs-multi-version/v2/zh/guide.md
+      <ROOT>/packages/core/src/node/auto-nav-sidebar/fixtures/docs-multi-version/v2/zh/guide/feature.md"
     `);
   });
 });

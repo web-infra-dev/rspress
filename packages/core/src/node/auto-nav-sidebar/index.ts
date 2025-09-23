@@ -7,6 +7,7 @@ import { walk } from './walk';
 async function runAutoNavSide(
   config: UserConfig,
   metaFileSet: Set<string>,
+  mdFileSet: Set<string>,
 ): Promise<
   | { nav: Record<string, NavItem[]>; sidebar: Sidebar }[]
   | {
@@ -29,6 +30,7 @@ async function runAutoNavSide(
       config.root!,
       extensions,
       metaFileSet,
+      mdFileSet,
     );
     return metaInfo;
   }
@@ -41,10 +43,19 @@ async function runAutoNavSide(
             config.root!,
             extensions,
             metaFileSet,
+            mdFileSet,
           );
         }),
       )
-    : [await walk(config.root!, config.root!, extensions, metaFileSet)];
+    : [
+        await walk(
+          config.root!,
+          config.root!,
+          extensions,
+          metaFileSet,
+          mdFileSet,
+        ),
+      ];
 
   const combined = combineWalkResult(walks, versions);
 
@@ -64,12 +75,13 @@ export function haveNavSidebarConfig(config: UserConfig) {
 export async function modifyConfigWithAutoNavSide(
   config: UserConfig,
   metaFileSet: Set<string> = new Set<string>(),
+  mdFileSet: Set<string> = new Set<string>(),
   force: boolean = false,
 ): Promise<void> {
   if (haveNavSidebarConfig(config) && !force) {
     return;
   }
-  const autoNavSide = await runAutoNavSide(config, metaFileSet);
+  const autoNavSide = await runAutoNavSide(config, metaFileSet, mdFileSet);
   if (autoNavSide === null) {
     return;
   }

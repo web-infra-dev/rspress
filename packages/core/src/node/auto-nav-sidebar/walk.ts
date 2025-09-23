@@ -49,6 +49,7 @@ export async function walk(
   docsDir: string,
   extensions: string[],
   metaFileSet: Set<string>,
+  mdFileSet: Set<string>,
 ) {
   // find the `_meta.json` file
   const rootNavJson = path.resolve(workDir, '_nav.json');
@@ -68,7 +69,13 @@ export async function walk(
     return {
       nav: navConfig,
       sidebar: {
-        '/': await scanSideMeta(workDir, docsDir, extensions, metaFileSet),
+        '/': await scanSideMeta(
+          workDir,
+          docsDir,
+          extensions,
+          metaFileSet,
+          mdFileSet,
+        ),
       },
     };
   }
@@ -102,6 +109,7 @@ export async function walk(
           docsDir,
           extensions,
           metaFileSet,
+          mdFileSet,
         );
       }),
     );
@@ -117,7 +125,13 @@ export async function walk(
   return {
     nav: [],
     sidebar: {
-      '/': await scanSideMeta(workDir, docsDir, extensions, metaFileSet),
+      '/': await scanSideMeta(
+        workDir,
+        docsDir,
+        extensions,
+        metaFileSet,
+        mdFileSet,
+      ),
     },
   };
 }
