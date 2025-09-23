@@ -32,7 +32,7 @@
   ],
   "scripts": {
     "build": "rslib build",
-    "dev": "rslib build -w",
+    "dev": "IS_DEV=1 rslib build -w",
     "reset": "rimraf ./**/node_modules"
   },
   "dependencies": {

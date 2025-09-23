@@ -60,17 +60,15 @@ export function Aside() {
         {outlineTitle}
         <ProgressCircle percent={readPercent} size={14} strokeWidth={2} />
       </div>
-      <nav>
-        <ul className="rp-aside__toc">
-          {headers.map((header, index) => (
-            <TocItem
-              key={`${header.depth}_${header.text}_${header.id}_${index}`}
-              baseHeaderLevel={baseHeaderLevel}
-              header={header}
-              active={activeAnchorId === header.id}
-            />
-          ))}
-        </ul>
+      <nav className="rp-aside__toc">
+        {headers.map((header, index) => (
+          <TocItem
+            key={`${header.depth}_${header.text}_${header.id}_${index}`}
+            baseHeaderLevel={baseHeaderLevel}
+            header={header}
+            active={activeAnchorId === header.id}
+          />
+        ))}
       </nav>
 
       <div style={{ display: readPercent !== 0 ? '' : 'none' }}>
