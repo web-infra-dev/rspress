@@ -8,9 +8,6 @@ import {
   type SidebarData,
 } from '@rspress/shared';
 import { useEffect } from 'react';
-import type { UISwitchResult } from '../../logic/useUISwitch';
-import { NavTitle } from '../NewNav/NavTitle';
-import './index.scss';
 import { SidebarDivider } from './SidebarDivider';
 import { SidebarGroup } from './SidebarGroup';
 import { SidebarItem } from './SidebarItem';
@@ -23,17 +20,12 @@ import {
 
 interface Props {
   isSidebarOpen?: boolean;
-  beforeSidebar?: React.ReactNode;
-  afterSidebar?: React.ReactNode;
-  uiSwitch?: UISwitchResult;
-  navTitle?: React.ReactNode;
 }
 
 export let bodyStyleOverflow: string;
 
 export function Sidebar(props: Props) {
-  const { isSidebarOpen, beforeSidebar, afterSidebar, uiSwitch, navTitle } =
-    props;
+  const { isSidebarOpen } = props;
 
   const [sidebarData, setSidebarData] = useSidebarDynamic();
 
@@ -54,19 +46,7 @@ export function Sidebar(props: Props) {
   }, [isSidebarOpen]);
 
   return (
-    <div className={`rp-sidebar ${isSidebarOpen ? 'rp-sidebar--open' : ''}`}>
-      {!uiSwitch?.showNavbar ? null : (
-        <div className="rp-sidebar__nav-title">{navTitle || <NavTitle />}</div>
-      )}
-      <nav className="rp-sidebar__container rspress-scrollbar">
-        {beforeSidebar}
-        <SidebarList
-          sidebarData={sidebarData}
-          setSidebarData={setSidebarData}
-        />
-        {afterSidebar}
-      </nav>
-    </div>
+    <SidebarList sidebarData={sidebarData} setSidebarData={setSidebarData} />
   );
 }
 
