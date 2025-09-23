@@ -5,7 +5,10 @@
   border-bottom: 1px solid var(--rp-c-divider-light);
   background: var(--rp-c-bg);
   color: var(--rp-c-text-1);
-  padding: 0 20px 0 20px;
+
+  --rp-nav-padding-x: 20px;
+  padding: 0 var(--rp-nav-padding-x) 0 var(--rp-nav-padding-x);
+
   justify-content: space-between;
   align-items: center;
 
