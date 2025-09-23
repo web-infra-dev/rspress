@@ -55,6 +55,7 @@ export default defineConfig({
         },
       },
       output: {
+        cleanDistPath: process.env.IS_DEV === '1',
         target: 'web',
         externals: COMMON_EXTERNALS,
         cssModules: {
