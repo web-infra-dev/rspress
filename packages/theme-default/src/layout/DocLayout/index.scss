@@ -83,6 +83,8 @@
 @media (min-width: 1280px) {
   .rp-doc-layout__doc {
     max-width: min(100%, 1000px);
+    overflow-x: auto; // CSS footgun: ensure right aside width is fixed
+    flex: 1; // CSS footgun: ensure right aside width is fixed
   }
   .rp-doc-layout__sidebar {
     --rp-sidebar-margin-left: calc(
