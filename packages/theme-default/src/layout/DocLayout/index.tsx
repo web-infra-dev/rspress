@@ -39,7 +39,6 @@ export function DocLayout(props: DocLayoutProps) {
     beforeSidebar,
     afterSidebar,
     uiSwitch,
-    navTitle,
     components,
   } = props;
   const { frontmatter } = useFrontmatter();
@@ -52,35 +51,32 @@ export function DocLayout(props: DocLayoutProps) {
 
   return (
     <>
+      <div className="rp-doc-layout__menu">
+        <SidebarMenu
+          isSidebarOpen={isSidebarOpen}
+          onIsSidebarOpenChange={setIsSidebarOpen}
+          uiSwitch={uiSwitch}
+        />
+      </div>
       {beforeDoc}
-      <div className="rp-doc-layout">
+      <div className="rp-doc-layout__container">
         {/* Sidebar */}
         {uiSwitch?.showSidebar && (
           <aside
             className={clsx(
               'rp-doc-layout__sidebar',
               isSidebarOpen && 'rp-doc-layout__sidebar--open',
+              'rspress-scrollbar',
             )}
           >
-            <Sidebar
-              isSidebarOpen={isSidebarOpen}
-              beforeSidebar={beforeSidebar}
-              afterSidebar={afterSidebar}
-              uiSwitch={uiSwitch}
-              navTitle={navTitle}
-            />
+            {beforeSidebar}
+            <Sidebar isSidebarOpen={isSidebarOpen} />
+            {afterSidebar}
           </aside>
         )}
 
         {/* Main document content */}
         <div className="rp-doc-layout__doc">
-          <div className="rp-doc-layout__menu">
-            <SidebarMenu
-              isSidebarOpen={isSidebarOpen}
-              onIsSidebarOpenChange={setIsSidebarOpen}
-              uiSwitch={uiSwitch}
-            />
-          </div>
           <main className="rp-doc-layout__doc-container">
             {isOverviewPage ? (
               <>
