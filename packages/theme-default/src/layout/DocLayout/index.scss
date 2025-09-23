@@ -12,7 +12,7 @@
   --rp-sidebar-width: 320px;
   --rp-sidebar-menu-height: 46px;
   --rp-aside-width: 268px;
-  --rp-content-padding-x: 24px;
+  --rp-content-padding-x: 80px;
   --rp-content-padding-y: 48px;
 }
 
@@ -100,6 +100,8 @@
 
 @media (max-width: 1279px) {
   .rp-doc-layout {
+    --rp-content-padding-x: 24px;
+    --rp-content-padding-y: 48px;
     &__aside {
       display: none;
     }
@@ -108,6 +110,7 @@
 
 @media (max-width: 960px) {
   :root {
+    --rp-z-index-nav: 40;
     --rp-z-index-sidebar: 70;
   }
   .rp-doc-layout {
