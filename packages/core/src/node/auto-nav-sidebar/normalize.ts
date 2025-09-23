@@ -83,15 +83,28 @@ async function metaItemToSidebarItem(
   docsDir: string,
   extensions: string[],
   metaFileSet: Set<string>,
+  mdFileSet: Set<string>,
   isFirstDir: boolean = false, // TODO: removed in the future, single-page mode
 ): Promise<SidebarItem | SidebarGroup | SidebarDivider | SidebarSectionHeader> {
   if (typeof metaItem === 'string') {
-    return metaFileItemToSidebarItem(metaItem, workDir, docsDir, extensions);
+    return metaFileItemToSidebarItem(
+      metaItem,
+      workDir,
+      docsDir,
+      extensions,
+      mdFileSet,
+    );
   }
 
   const { type } = metaItem;
   if (type === 'file') {
-    return metaFileItemToSidebarItem(metaItem, workDir, docsDir, extensions);
+    return metaFileItemToSidebarItem(
+      metaItem,
+      workDir,
+      docsDir,
+      extensions,
+      mdFileSet,
+    );
   }
 
   if (type === 'dir') {
@@ -138,6 +151,7 @@ async function metaItemToSidebarItem(
             docsDir,
             extensions,
             metaFileSet,
+            mdFileSet,
           ),
         ),
       );
@@ -154,6 +168,7 @@ async function metaItemToSidebarItem(
         workDir,
         docsDir,
         extensions,
+        mdFileSet,
       );
 
       const { link, text, _fileKey, context, overviewHeaders, tag } =
@@ -202,6 +217,7 @@ async function metaItemToSidebarItem(
           dirAbsolutePath,
           docsDir,
           extensions,
+          mdFileSet,
         );
 
         const { link, text, _fileKey, context, overviewHeaders, tag } =
@@ -256,6 +272,7 @@ async function metaFileItemToSidebarItem(
   workDir: string,
   docsDir: string,
   extensions: string[],
+  mdFileSet: Set<string>,
 ): Promise<SidebarItem> {
   let metaItem: FileSideMeta | null = null;
   if (typeof metaItemRaw === 'string') {
@@ -292,6 +309,7 @@ async function metaFileItemToSidebarItem(
     docsDir,
   );
   const title = label || info.title;
+  mdFileSet.add(absolutePathWithExt);
   return {
     text: title,
     link,
@@ -389,6 +407,7 @@ async function scanSideMeta(
   docsDir: string,
   extensions: string[],
   metaFileSet: Set<string>,
+  mdFileSet: Set<string>,
 ) {
   const dir = (await metaItemToSidebarItem(
     {
@@ -399,6 +418,7 @@ async function scanSideMeta(
     docsDir,
     extensions,
     metaFileSet,
+    mdFileSet,
     true,
   )) as SidebarGroup;
   return dir.items;
