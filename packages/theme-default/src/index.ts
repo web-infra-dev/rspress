@@ -2,6 +2,7 @@
 export { Aside } from './components/Aside/index';
 export { Badge } from './components/Badge/index';
 export { Button } from './components/Button/index';
+export { Callout, type CalloutProps } from './components/Callout/index';
 export {
   CodeBlockRuntime,
   type CodeBlockRuntimeProps,
