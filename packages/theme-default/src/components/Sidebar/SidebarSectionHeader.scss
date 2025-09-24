@@ -1,14 +1,12 @@
 .rp-sidebar-section-header {
   display: flex;
   align-items: center;
-  padding: 8px 0 8px 16px;
+  padding: 4px 12px;
 
   > span {
     display: flex;
     align-items: center;
-    margin-left: 8px;
     font-size: 14px;
-    line-height: 20px;
     color: var(--rp-c-text-1);
     font-weight: bold;
   }
