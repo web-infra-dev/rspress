@@ -1,7 +1,3 @@
-.DocSearch {
-  align-self: center;
-}
-
 [class*='DocSearch'] {
   --docsearch-primary-color: var(--rp-c-brand);
   --docsearch-text-color: var(--rp-c-text-1);
@@ -32,21 +28,10 @@ html.rp-dark [class*='DocSearch'] {
   --docsearch-container-background: rgba(0, 0, 0, 0.8);
 }
 
-@media (max-width: 768px) {
-  .DocSearch {
-    --docsearch-searchbox-background: transparent;
-  }
+.DocSearch {
+  --docsearch-searchbox-background: transparent;
 }
 
 .DocSearch-Button-Container > .DocSearch-Button-Placeholder {
   font-size: 0.825rem;
-}
-
-span.DocSearch-Button-Keys > kbd {
-  font-size: 0.825rem;
-}
-
-.DocSearch-Screen-Icon {
-  display: flex;
-  justify-content: center;
 }
