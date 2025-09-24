@@ -17,9 +17,9 @@ export interface CalloutProps {
  *
  * will be transformed to:
  *
- * <div class="rspress-directive tip">
- *   <div class="rspress-directive-title">Tip</div>
- *   <div class="rspress-directive-content">
+ * <div class="rp-callout rp-callout--tip">
+ *   <div class="rp-callout__title">Tip</div>
+ *   <div class="rp-callout__content">
  *     <p>This is a tip</p>
  *   </div>
  * </div>
@@ -29,17 +29,17 @@ export function Callout({ type, title, children }: CalloutProps) {
 
   if (isDetails) {
     return (
-      <details className={`rspress-directive ${type}`}>
-        <summary className="rspress-directive-title">{title}</summary>
-        <div className="rspress-directive-content">{children}</div>
+      <details className={`rp-callout rp-callout--${type}`}>
+        <summary className="rp-callout__title">{title}</summary>
+        <div className="rp-callout__content">{children}</div>
       </details>
     );
   }
 
   return (
-    <div className={`rspress-directive ${type}`}>
-      <div className="rspress-directive-title">{title}</div>
-      <div className="rspress-directive-content">{children}</div>
+    <div className={`rp-callout rp-callout--${type}`}>
+      <div className="rp-callout__title">{title}</div>
+      <div className="rp-callout__content">{children}</div>
     </div>
   );
 }
