@@ -3,7 +3,7 @@
   --docsearch-text-color: var(--rp-c-text-1);
   --docsearch-secondary-text-color: var(--rp-c-text-2);
   --docsearch-muted-color: var(--rp-c-text-2);
-  --docsearch-subtle-color: var(--rp-c-divider);
+  --docsearch-subtle-color: var(--rp-c-divider-light);
 
   --docsearch-container-background: rgba(60, 60, 60, 0.4);
   --docsearch-modal-background: var(--rp-c-bg);
@@ -29,6 +29,7 @@ html.rp-dark [class*='DocSearch'] {
 }
 
 .DocSearch {
+  border-radius: var(--rp-radius-small);
   --docsearch-searchbox-background: transparent;
 }
 
