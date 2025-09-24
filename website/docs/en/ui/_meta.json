@@ -3,5 +3,6 @@
     "type": "section-header",
     "label": "UI"
   },
-  "vars"
+  "vars",
+  "custom-theme"
 ]
