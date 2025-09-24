@@ -11,6 +11,10 @@
   },
   {
     "type": "dir",
+    "name": "use-mdx"
+  },
+  {
+    "type": "dir",
     "name": "default-theme",
     "label": "defaultTheme"
   },
