@@ -30,7 +30,6 @@ export {
 } from '@rspress/shared/node-utils';
 // cli
 export { defineConfig } from './cli/config';
-// TODO: do not expose remarkPluginNormalizeLink as publicAPI
 export {
   build,
   dev,
@@ -38,4 +37,5 @@ export {
   remarkLink,
   serve,
 } from './node';
-export type { RouteService } from './node/route/RouteService';
+export { PluginDriver } from './node/PluginDriver';
+export { RouteService } from './node/route/RouteService';

@@ -11,8 +11,8 @@ import {
 import { logger } from '@rspress/shared/logger';
 import type { Root } from 'mdast';
 import picocolors from 'picocolors';
-import type { Plugin } from 'unified';
 import { visit } from 'unist-util-visit';
+import type { VFile } from 'vfile';
 import { hintRelativeMarkdownLink } from '../../logger/hint';
 import type { RouteService } from '../../route/RouteService';
 
@@ -20,7 +20,8 @@ import type { RouteService } from '../../route/RouteService';
 function checkDeadLinks(
   checkDeadLinks: boolean | { excludes: string[] | ((url: string) => boolean) },
   internalLinks: Map<string, string>,
-  filePath: string,
+  file: VFile,
+  lint?: boolean,
 ) {
   const errorInfos: [string, string][] = [];
   const excludes =
@@ -51,11 +52,17 @@ function checkDeadLinks(
       hintRelativeMarkdownLink();
     }
 
-    logger.error(`Dead links found in ${picocolors.cyan(filePath)}:
-${errorInfos.map(([nodeUrl, link]) => `  ${picocolors.green(`"[..](${nodeUrl})"`)} ${picocolors.gray(link)}`).join('\n')}`);
+    const message = `Dead links found${lint ? '' : ` in ${picocolors.cyan(file.path)}`}:
+${errorInfos.map(([nodeUrl, link]) => `  ${picocolors.green(`"[..](${nodeUrl})"`)} ${picocolors.gray(link)}`).join('\n')}`;
 
-    if (isProduction()) {
-      throw new Error('Dead link found');
+    if (lint) {
+      file.message(message);
+    } else {
+      logger.error(message);
+
+      if (isProduction()) {
+        throw new Error('Dead link found');
+      }
     }
   }
 }
@@ -169,19 +176,21 @@ function normalizeLink(
  * 1. add version and lang prefix to the link
  * 2. checkDeadLinks
  */
-export const remarkLink: Plugin<
-  [
-    {
-      cleanUrls: boolean | string;
-      routeService: RouteService | null;
-      remarkLinkOptions?: MarkdownOptions['link'];
-      __base?: string;
-    },
-  ],
-  Root
-> =
-  ({ cleanUrls, routeService, remarkLinkOptions, __base }) =>
-  (tree, file) => {
+export const remarkLink =
+  ({
+    cleanUrls,
+    routeService,
+    remarkLinkOptions,
+    lint,
+    __base,
+  }: {
+    cleanUrls: boolean | string;
+    routeService: RouteService | null;
+    remarkLinkOptions?: MarkdownOptions['link'];
+    lint?: boolean;
+    __base?: string;
+  }) =>
+  (tree: Root, file: VFile) => {
     const { checkDeadLinks: shouldCheckDeadLinks = true, autoPrefix = true } =
       remarkLinkOptions ?? {};
     const deadLinks = new Map<string, string>();
@@ -214,6 +223,6 @@ export const remarkLink: Plugin<
     });
 
     if (shouldCheckDeadLinks && routeService) {
-      checkDeadLinks(shouldCheckDeadLinks, deadLinks, file.path);
+      checkDeadLinks(shouldCheckDeadLinks, deadLinks, file, lint);
     }
   };
