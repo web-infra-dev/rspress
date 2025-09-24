@@ -9,8 +9,6 @@
   --docsearch-muted-color: var(--rp-c-text-2);
   --docsearch-subtle-color: var(--rp-c-divider);
 
-  --docsearch-searchbox-focus-background: var(--rp-c-bg);
-
   --docsearch-container-background: rgba(60, 60, 60, 0.4);
   --docsearch-modal-background: var(--rp-c-bg);
 
