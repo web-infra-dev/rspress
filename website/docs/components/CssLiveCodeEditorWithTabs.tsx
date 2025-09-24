@@ -53,9 +53,10 @@ export function CssLiveCodeEditorWithTabs({
             onChange={e => handleTabChange(Number(e.target.value))}
             style={{
               padding: '8px 12px',
-              border: '1px solid #ccc',
+              border: '1px solid var(--rp-c-divider-light)',
               borderRadius: '4px',
-              backgroundColor: '#fff',
+              backgroundColor: 'var(--rp-c-bg)',
+              color: 'var(--rp-c-text-1)',
               cursor: 'pointer',
               fontSize: '14px',
               minWidth: '200px',
@@ -88,12 +89,9 @@ export function CssLiveCodeEditorWithTabs({
                     ? index === 0
                       ? '#0095ff'
                       : 'var(--rp-c-brand)'
-                    : '#fff',
-                color: activeTab === index ? '#fff' : '#333',
-                border:
-                  activeTab === index
-                    ? '1px solid var(--rp-c-brand)'
-                    : '1px solid #ddd',
+                    : 'var(--rp-c-bg)',
+                color: activeTab === index ? '#fff' : 'var(--rp-c-text-1)',
+                border: '1px solid var(--rp-c-divider-light)',
                 borderRadius: '6px',
                 cursor: 'pointer',
                 fontSize: '14px',
