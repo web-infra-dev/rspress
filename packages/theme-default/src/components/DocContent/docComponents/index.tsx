@@ -1,3 +1,4 @@
+import { Callout } from '@theme';
 import { A } from './a';
 import { Code } from './codeblock/code';
 import { PreWithCodeButtonGroup } from './codeblock/pre';
@@ -31,5 +32,8 @@ export function getCustomMDXComponent() {
     code: Code,
     pre: PreWithCodeButtonGroup,
     img: Img,
+
+    // custom components can be added here
+    Callout,
   };
 }

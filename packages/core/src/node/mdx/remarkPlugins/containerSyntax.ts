@@ -77,40 +77,21 @@ const createContainer = (
   title: string | undefined,
   children: (BlockContent | PhrasingContent)[],
 ): ContainerDirective => {
-  const isDetails = type === 'details';
-
-  const rootHName = isDetails ? 'details' : 'div';
-  const titleHName = isDetails ? 'summary' : 'div';
-
   return {
     type: 'containerDirective',
-    name: type,
+    name: 'Callout',
+    attributes: {
+      type: type,
+      title: title || getTypeName(type),
+    },
     data: {
-      hName: rootHName,
+      hName: 'Callout',
       hProperties: {
-        class: `rspress-directive ${type}`,
+        type: type,
+        title: title || getTypeName(type),
       },
     },
-    children: [
-      {
-        type: 'paragraph',
-        data: {
-          hName: titleHName,
-          hProperties: {
-            class: 'rspress-directive-title',
-          },
-        },
-        children: [{ type: 'text', value: title || getTypeName(type) }],
-      },
-      {
-        type: 'paragraph',
-        data: {
-          hName: 'div',
-          hProperties: { class: 'rspress-directive-content' },
-        },
-        children: children as PhrasingContent[],
-      },
-    ],
+    children: children as BlockContent[],
   };
 };
 

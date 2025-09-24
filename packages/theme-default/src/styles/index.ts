@@ -10,5 +10,4 @@ import './tailwind.css';
 import './code.scss';
 import './scrollbar.scss';
 import './shiki.scss';
-import './container.scss';
 import 'nprogress/nprogress.css';
