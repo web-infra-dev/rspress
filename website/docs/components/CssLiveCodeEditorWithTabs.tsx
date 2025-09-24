@@ -55,7 +55,7 @@ export function CssLiveCodeEditorWithTabs({
               padding: '8px 12px',
               border: '1px solid #ccc',
               borderRadius: '4px',
-              backgroundColor: 'var(--rp-c-bg-mute)',
+              backgroundColor: 'var(--rp-c-bg)',
               color: 'var(--rp-c-text-1)',
               cursor: 'pointer',
               fontSize: '14px',
@@ -89,7 +89,7 @@ export function CssLiveCodeEditorWithTabs({
                     ? index === 0
                       ? '#0095ff'
                       : 'var(--rp-c-brand)'
-                    : '#fff',
+                    : 'var(--rp-c-bg)',
                 color: activeTab === index ? '#fff' : '#333',
                 border:
                   activeTab === index
