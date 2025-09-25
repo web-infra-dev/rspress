@@ -1,10 +1,9 @@
 import { useSite } from '@rspress/runtime';
 import type { SocialLink } from '@rspress/shared';
 import ArrowDown from '@theme-assets/arrow-down';
-import { useCallback, useState } from 'react';
 import { SvgWrapper } from '../SvgWrapper';
-import { HiddenLinks } from './HiddenLinks';
-import * as styles from './index.module.scss';
+import './index.scss';
+import { useHoverGroup } from '../HoverGroup/useHoverGroup';
 import { SocialLink as SocialLinkComp } from './SocialLink';
 
 const MORE_LENGTH = 5;
@@ -23,27 +22,30 @@ export const SocialLinks = ({
   const shownLinks: SocialLink[] = socialLinks.slice(0, MORE_LENGTH);
   const hiddenLinks: SocialLink[] = socialLinks.slice(MORE_LENGTH);
 
-  const [hiddenLinksVisible, setHiddenLinksVisible] = useState(false);
-
-  const hide = useCallback(() => {
-    setHiddenLinksVisible(false);
-  }, [setHiddenLinksVisible]);
-
-  const show = useCallback(() => {
-    setHiddenLinksVisible(true);
-  }, [setHiddenLinksVisible]);
+  const { hoverGroup, handleMouseEnter, handleMouseLeave } = useHoverGroup({
+    position: 'right',
+    customChildren: isMore ? (
+      <div className="rp-social-links__hidden">
+        {hiddenLinks.map(item => (
+          <SocialLinkComp key={item.content} link={item} />
+        ))}
+      </div>
+    ) : null,
+  });
 
   return (
-    <div className={styles.socialLinks} onMouseLeave={hide}>
+    <div className={'rp-social-links'} onMouseLeave={handleMouseLeave}>
       {shownLinks.map((item, index) => (
         <SocialLinkComp key={index} link={item} />
       ))}
       {isMore ? (
-        <div onMouseEnter={show}>
-          <SvgWrapper icon={ArrowDown} />
-        </div>
+        <SvgWrapper
+          icon={ArrowDown}
+          onMouseEnter={handleMouseEnter}
+          fontSize={20}
+        />
       ) : null}
-      {hiddenLinksVisible ? <HiddenLinks links={hiddenLinks} /> : null}
+      {hoverGroup}
     </div>
   );
 };

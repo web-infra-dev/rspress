@@ -1,0 +1,30 @@
+.rp-social-links {
+  display: flex;
+  align-items: center;
+  gap: 24px;
+  height: 100%;
+  position: relative;
+
+  &__item {
+    width: 20px;
+    height: 20px;
+    justify-content: center;
+    align-items: center;
+  }
+  &__icon {
+    width: 20px;
+    height: 20px;
+    display: flex;
+    align-items: center;
+    color: var(--rp-c-text-2);
+
+    &:hover {
+      color: var(--rp-c-text-1);
+    }
+  }
+  &__hidden {
+    display: flex;
+    flex-wrap: nowrap;
+    gap: 1rem;
+  }
+}
