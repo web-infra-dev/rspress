@@ -15,9 +15,11 @@
   --rp-aside-width: 268px;
   --rp-content-padding-x: 80px;
   --rp-content-padding-y: 48px;
+
+  --rp-content-max-width: 1000px;
 }
 
-@media (min-width: 1280px) {
+@media (min-width: 1000px) {
   html:root {
     --rp-sidebar-menu-height: 0px;
   }
@@ -42,6 +44,15 @@
 
     width: 100%;
     overflow-x: auto;
+  }
+
+  &__overview {
+    max-width: min(100%, 1280px);
+    position: relative;
+    width: 100%;
+    overflow-x: auto;
+    min-height: 60vh;
+    padding: var(--rp-content-padding-y) var(--rp-content-padding-x);
   }
 
   &__sidebar {
@@ -101,19 +112,27 @@
 
 @media (min-width: 1280px) {
   .rp-doc-layout__doc {
-    max-width: min(100%, 1000px);
+    max-width: min(100%, var(--rp-content-max-width));
     overflow-x: auto; // CSS footgun: ensure right aside width is fixed
     flex: 1; // CSS footgun: ensure right aside width is fixed
   }
   .rp-doc-layout__sidebar {
     --rp-sidebar-margin-left: calc(
-      max(0px, calc((100vw - 1000px) / 2 - var(--rp-sidebar-width)))
+      max(
+        0px,
+        calc(
+          (100vw - var(--rp-content-max-width)) / 2 - var(--rp-sidebar-width)
+        )
+      )
     );
     margin-left: var(--rp-sidebar-margin-left);
   }
   .rp-doc-layout__aside {
     --rp-aside-margin-right: calc(
-      max(0px, calc((100vw - 1000px) / 2 - var(--rp-aside-width)))
+      max(
+        0px,
+        calc((100vw - var(--rp-content-max-width)) / 2 - var(--rp-aside-width))
+      )
     );
     margin-right: var(--rp-aside-margin-right);
   }
@@ -127,9 +146,6 @@
   .rp-doc-layout {
     &__aside {
       display: none;
-    }
-    &__doc-container {
-      padding: var(--rp-content-padding-y) var(--rp-content-padding-x);
     }
   }
 }
