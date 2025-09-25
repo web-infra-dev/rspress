@@ -10,8 +10,8 @@ import {
 import { isExternalUrl } from '@rspress/shared';
 import nprogress from 'nprogress';
 import { useCallback } from 'react';
+import { useUISwitch } from '../../layout/Layout/useUISwitch';
 import { scrollToTarget } from '../../logic/sideEffects';
-import { useUISwitch } from '../../logic/useUISwitch';
 
 nprogress.configure({ showSpinner: false });
 

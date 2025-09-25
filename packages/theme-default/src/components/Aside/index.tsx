@@ -1,7 +1,7 @@
 import { useLocaleSiteData, useLocation, useSite } from '@rspress/runtime';
 import { useEffect, useMemo } from 'react';
+import { useUISwitch } from '../../layout/Layout/useUISwitch.js';
 import { scrollToTarget } from '../../logic/sideEffects';
-import { type UISwitchResult, useUISwitch } from '../../logic/useUISwitch.js';
 
 import './index.scss';
 import { ProgressCircle } from './ProgressCircle';
@@ -13,7 +13,6 @@ import { useReadPercent } from './useReadPercent';
 
 export interface AsideProps {
   outlineTitle: string;
-  uiSwitch?: UISwitchResult;
 }
 
 export function Aside() {
