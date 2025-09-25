@@ -1,8 +1,6 @@
 import {
   isEqualPath,
-  NoSSR,
   useLocaleSiteData,
-  useLocation,
   usePageData,
   useSidebar,
 } from '@rspress/runtime';
@@ -12,7 +10,7 @@ import type {
   SidebarItem,
   SidebarSectionHeader,
 } from '@rspress/shared';
-import { Suspense, useEffect, useMemo, useRef, useState } from 'react';
+import { useEffect, useMemo, useRef, useState } from 'react';
 import { FallbackHeading } from '../DocContent/FallbackHeading';
 import {
   isSidebarDivider,
