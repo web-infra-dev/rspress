@@ -2,6 +2,8 @@ import { Link, renderInlineMarkdown } from '@theme';
 import './OverviewGroup.scss';
 import type { Header } from '@rspress/shared';
 import { FallbackHeading } from '../DocContent/FallbackHeading';
+import { SvgWrapper } from '../SvgWrapper';
+import IconPlugin from './icons/plugin.svg';
 
 export interface GroupItem {
   text: string;
@@ -26,6 +28,10 @@ export const OverviewGroup = ({ group }: { group: Group }) => {
                 href={item.link}
                 {...renderInlineMarkdown(item.text)}
               ></Link>
+              <SvgWrapper
+                icon={IconPlugin}
+                className="rp-overview-group__item__title__icon"
+              />
             </div>
             <ul className="rp-overview-group__item__content">
               {item.headers?.map(header => (

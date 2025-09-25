@@ -75,32 +75,31 @@ export function DocLayout(props: DocLayoutProps) {
         )}
 
         {/* Main document content */}
-        <div className="rp-doc-layout__doc">
-          <main className="rp-doc-layout__doc-container">
-            {isOverviewPage ? (
-              <>
-                {beforeDocContent}
-                <Overview
-                  content={
-                    <DocContent components={components} isOverviewPage />
-                  }
-                />
-                {afterDocContent}
-              </>
-            ) : (
-              <>
-                {beforeDocContent}
-                <div className="rp-doc rspress-doc" ref={rspressDocRef}>
-                  <DocContent components={components} />
-                </div>
-                {afterDocContent}
-                {beforeDocFooter}
-                {uiSwitch?.showDocFooter && <DocFooter />}
-                {afterDocFooter}
-              </>
-            )}
-          </main>
-        </div>
+        {isOverviewPage ? (
+          <>
+            <main className="rp-doc-layout__overview">
+              {beforeDocContent}
+              <Overview
+                content={<DocContent components={components} isOverviewPage />}
+              />
+              {afterDocContent}
+            </main>
+          </>
+        ) : (
+          <div className="rp-doc-layout__doc">
+            <main className="rp-doc-layout__doc-container">
+              {beforeDocContent}
+              <div className="rp-doc rspress-doc" ref={rspressDocRef}>
+                <DocContent components={components} />
+              </div>
+              {afterDocContent}
+              {beforeDocFooter}
+              {uiSwitch?.showDocFooter && <DocFooter />}
+              {afterDocFooter}
+            </main>
+          </div>
+        )}
+
         {/* Right aside */}
         {uiSwitch?.showAside && !isOverviewPage && (
           <aside className="rp-doc-layout__aside">
