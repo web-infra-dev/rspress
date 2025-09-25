@@ -55,6 +55,7 @@
 .rspress-local-toc-container {
   position: absolute;
   padding: 6px;
+  margin-left: var(--rp-sidebar-width);
   border-radius: var(--rp-radius-small);
   top: calc(var(--rp-nav-height) - 14px);
   background-color: var(--rp-c-bg-soft);
