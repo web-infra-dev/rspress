@@ -11,10 +11,6 @@ import { useActiveAnchor } from './useActiveAnchor';
 import { useDynamicToc } from './useDynamicToc';
 import { useReadPercent } from './useReadPercent';
 
-export interface AsideProps {
-  outlineTitle: string;
-}
-
 export function Aside() {
   const localesData = useLocaleSiteData();
   const {

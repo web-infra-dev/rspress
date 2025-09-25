@@ -7,8 +7,12 @@ export {
   CodeBlockRuntime,
   type CodeBlockRuntimeProps,
 } from './components/CodeBlockRuntime/index';
+export {
+  CodeButtonGroup,
+  type CodeButtonGroupProps,
+} from './components/DocContent/docComponents/codeblock/CodeButtonGroup';
+
 // layout
-export type { CodeButtonGroupProps } from './components/DocContent/docComponents/codeblock/CodeButtonGroup';
 export type {
   PreWithCodeButtonGroupProps,
   ShikiPreProps,
@@ -53,10 +57,7 @@ export {
   SearchPanel,
   type SearchPanelProps,
 } from './components/Search/SearchPanel';
-export {
-  Sidebar,
-  SidebarList,
-} from './components/Sidebar/index';
+export { Sidebar, SidebarList } from './components/Sidebar/index';
 export { SocialLinks } from './components/SocialLinks/index';
 export { SourceCode } from './components/SourceCode/index';
 export { Steps } from './components/Steps/index';
@@ -68,10 +69,7 @@ export { DocLayout, type DocLayoutProps } from './layout/DocLayout';
 export { HomeLayout } from './layout/HomeLayout/index';
 export { Layout } from './layout/Layout/index';
 export { NotFoundLayout } from './layout/NotFountLayout/index';
-export {
-  scrollToTarget,
-  useSetup,
-} from './logic/sideEffects';
+export { scrollToTarget, useSetup } from './logic/sideEffects';
 export { useThemeState } from './logic/useAppearance';
 export { useFullTextSearch } from './logic/useFullTextSearch';
 export { useEnableNav, useHiddenNav } from './logic/useHiddenNav';
