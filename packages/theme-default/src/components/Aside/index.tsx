@@ -65,9 +65,8 @@ export function Aside() {
           />
         ))}
       </nav>
-
-      <div style={{ display: readPercent !== 0 ? '' : 'none' }}>
-        <div className="rp-aside__divider" />
+      <div className="rp-aside__divider" />
+      <div className="rp-aside__bottom">
         <ScrollToTop />
       </div>
     </div>
