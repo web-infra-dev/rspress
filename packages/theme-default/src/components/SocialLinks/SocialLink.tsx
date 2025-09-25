@@ -1,7 +1,7 @@
 import type { SocialLink as ISocialLink } from '@rspress/shared';
 import { useState } from 'react';
 import iconMap from 'virtual-social-links';
-import * as styles from './index.module.scss';
+import './index.scss';
 
 interface SocialLinkProps {
   link: ISocialLink;
@@ -16,7 +16,7 @@ export const SocialLink = (props: SocialLinkProps) => {
     const html = typeof icon === 'string' ? iconMap[icon] : icon.svg;
     IconComp = (
       <div
-        className={styles.icon}
+        className="rp-social-links__icon"
         dangerouslySetInnerHTML={{ __html: html }}
       ></div>
     );
@@ -37,18 +37,17 @@ export const SocialLink = (props: SocialLinkProps) => {
         href={content}
         target="_blank"
         rel="noopener noreferrer"
-        className={styles.item}
+        className="rp-social-links__item"
       >
-        <div className={`${styles.icon}`}>{IconComp}</div>
+        <div className="rp-social-links__icon">{IconComp}</div>
       </a>
     );
   }
 
-  // TODO
   if (mode === 'text') {
     return (
       <div
-        className={styles.item}
+        className="rp-social-links__item"
         onMouseEnter={mouseEnterIcon}
         onMouseLeave={mouseLeavePopper}
       >
@@ -64,7 +63,7 @@ export const SocialLink = (props: SocialLinkProps) => {
   if (mode === 'img') {
     return (
       <div
-        className={`${styles.icon}`}
+        className="rp-social-links__icon"
         onMouseEnter={mouseEnterIcon}
         onMouseLeave={mouseLeavePopper}
       >
@@ -80,7 +79,7 @@ export const SocialLink = (props: SocialLinkProps) => {
   if (mode === 'dom') {
     return (
       <div
-        className={styles.item}
+        className="rp-social-links__item"
         onMouseEnter={mouseEnterIcon}
         onMouseLeave={mouseLeavePopper}
       >

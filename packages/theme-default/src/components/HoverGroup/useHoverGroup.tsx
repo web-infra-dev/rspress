@@ -2,9 +2,24 @@ import { useCallback, useMemo, useRef, useState } from 'react';
 import { HoverGroup, type Items } from '.';
 
 function useHoverGroup(
-  items: Items,
-  activeMatcher?: (item: Items[number]) => boolean,
+  props:
+    | {
+        items?: Items;
+        activeMatcher?: (item: Items[number]) => boolean;
+        position?: 'left' | 'center' | 'right';
+      }
+    | {
+        customChildren?: React.ReactNode;
+        position?: 'left' | 'center' | 'right';
+      },
 ) {
+  const { items, activeMatcher, customChildren, position } = props as {
+    items?: Items;
+    activeMatcher?: (item: Items[number]) => boolean;
+    customChildren?: React.ReactNode;
+    position?: 'left' | 'center' | 'right';
+  };
+
   const closeTimerRef = useRef<number>(null);
   const [isOpen, setIsOpen] = useState(false);
 
@@ -33,9 +48,15 @@ function useHoverGroup(
 
   const hoverGroup = useMemo(() => {
     return (
-      <HoverGroup items={items} isOpen={isOpen} activeMatcher={activeMatcher} />
+      <HoverGroup
+        items={items}
+        customChildren={customChildren}
+        isOpen={isOpen}
+        activeMatcher={activeMatcher}
+        position={position}
+      />
     );
-  }, [items, isOpen, activeMatcher]);
+  }, [items, customChildren, isOpen, activeMatcher]);
 
   return {
     hoverGroup,
