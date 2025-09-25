@@ -311,6 +311,16 @@
       background-color: var(--rp-code-block-bg);
     }
     /* #endregion */
+
+    &:where(details) {
+      cursor: pointer;
+      margin: 16px 0;
+      padding: 8px;
+      transition: background-color 0.3s;
+      &:hover {
+        background-color: var(--rp-c-bg-mute);
+      }
+    }
   }
 }
 

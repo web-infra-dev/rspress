@@ -249,6 +249,9 @@
 }
 
 details.rp-callout {
+  padding: 20px 24px 12px 24px; // override default padding
+  margin: 24px 0; // override default padding
+
   font-size: normal;
   cursor: pointer;
   transition: background-color 0.3s ease;
