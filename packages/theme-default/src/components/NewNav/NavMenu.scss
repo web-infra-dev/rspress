@@ -13,7 +13,7 @@
     gap: 24px;
 
     list-style: none;
-    @media (max-width: 1280px) {
+    @media (max-width: 768px) {
       display: none;
     }
   }
@@ -74,12 +74,12 @@
     width: 1px;
     height: 15px;
     background: var(--rp-c-divider);
-    @media (max-width: 1280px) {
+    @media (max-width: 768px) {
       display: none;
     }
   }
 
-  @media (max-width: 1280px) {
+  @media (max-width: 768px) {
     display: none;
   }
 
