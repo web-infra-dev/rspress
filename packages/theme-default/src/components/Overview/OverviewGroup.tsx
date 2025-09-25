@@ -1,6 +1,7 @@
 import { Link, renderInlineMarkdown } from '@theme';
 import './OverviewGroup.scss';
 import type { Header } from '@rspress/shared';
+import { FallbackHeading } from '../DocContent/FallbackHeading';
 
 export interface GroupItem {
   text: string;
@@ -16,7 +17,7 @@ export interface Group {
 export const OverviewGroup = ({ group }: { group: Group }) => {
   return (
     <>
-      <h2 {...renderInlineMarkdown(group.name)} />
+      <FallbackHeading level={2} title={group.name} />
       <div className="rp-overview-group rp-not-doc">
         {group.items.map(item => (
           <div className="rp-overview-group__item" key={item.link}>

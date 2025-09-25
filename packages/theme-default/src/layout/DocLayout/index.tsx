@@ -81,7 +81,11 @@ export function DocLayout(props: DocLayoutProps) {
             {isOverviewPage ? (
               <>
                 {beforeDocContent}
-                <Overview content={<DocContent components={components} />} />
+                <Overview
+                  content={
+                    <DocContent components={components} isOverviewPage />
+                  }
+                />
                 {afterDocContent}
               </>
             ) : (
@@ -97,10 +101,9 @@ export function DocLayout(props: DocLayoutProps) {
               </>
             )}
           </main>
-
-          {/* Right aside */}
         </div>
-        {uiSwitch?.showAside && (
+        {/* Right aside */}
+        {uiSwitch?.showAside && !isOverviewPage && (
           <aside className="rp-doc-layout__aside">
             {beforeOutline}
             <Aside />

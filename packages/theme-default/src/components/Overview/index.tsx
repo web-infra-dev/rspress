@@ -11,15 +11,15 @@ import type {
   SidebarSectionHeader,
 } from '@rspress/shared';
 import { useEffect, useMemo, useRef, useState } from 'react';
-import { H1 } from '../DocContent/docComponents/title';
+import { FallbackHeading } from '../DocContent/FallbackHeading';
 import {
   isSidebarDivider,
   isSidebarSectionHeader,
   isSidebarSingleFile,
 } from '../Sidebar/utils';
+import './index.scss';
 import { type Group, type GroupItem, OverviewGroup } from './OverviewGroup';
 import { findItemByRoutePath } from './utils';
-import './index.scss';
 
 // Utility function to normalize text for search
 const normalizeText = (s: string) => s.toLowerCase().replace(/-/g, ' ');
@@ -252,7 +252,7 @@ export function Overview(props: {
 
   return (
     <div className="rspress-doc rp-doc rspress-overview rp-overview">
-      <H1>{overviewTitle}</H1>
+      <FallbackHeading level={1} title={overviewTitle} />
       <OverviewSearchInput
         query={query}
         setQuery={setQuery}
