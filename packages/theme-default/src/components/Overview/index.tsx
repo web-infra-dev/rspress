@@ -1,6 +1,8 @@
 import {
   isEqualPath,
+  NoSSR,
   useLocaleSiteData,
+  useLocation,
   usePageData,
   useSidebar,
 } from '@rspress/runtime';
@@ -10,7 +12,7 @@ import type {
   SidebarItem,
   SidebarSectionHeader,
 } from '@rspress/shared';
-import { useEffect, useMemo, useRef, useState } from 'react';
+import { Suspense, useEffect, useMemo, useRef, useState } from 'react';
 import { FallbackHeading } from '../DocContent/FallbackHeading';
 import {
   isSidebarDivider,
@@ -77,6 +79,7 @@ export function Overview(props: {
     groups: customGroups,
     defaultGroupTitle: _ = 'Others',
   } = props;
+
   // Added state for search query
   const [query, setQuery] = useState('');
   // Added ref for search input
