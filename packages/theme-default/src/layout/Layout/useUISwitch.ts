@@ -4,8 +4,8 @@ import {
   usePageData,
   useWindowSize,
 } from '@rspress/runtime';
-import { useEffect, useState } from 'react';
-import { useEnableNav, useHiddenNav } from './useHiddenNav';
+import { createContext, useContext, useEffect, useState } from 'react';
+import { useEnableNav, useHiddenNav } from '../../logic/useHiddenNav';
 
 enum QueryStatus {
   Show = '1',
@@ -23,7 +23,14 @@ export interface UISwitchResult {
   scrollPaddingTop: number;
 }
 
+export const UISwitchContext = createContext({} as UISwitchResult);
+
 export function useUISwitch(): UISwitchResult {
+  const context = useContext(UISwitchContext);
+  return context;
+}
+
+export function useCreateUISwitch(): UISwitchResult {
   const { page, siteData } = usePageData();
   const { frontmatter } = page;
   const { themeConfig } = siteData;

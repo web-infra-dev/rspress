@@ -4,11 +4,11 @@ import { useState } from 'react';
 import { Aside } from '../../components/Aside';
 import { DocFooter } from '../../components/DocFooter';
 import { Sidebar } from '../../components/Sidebar';
-import type { UISwitchResult } from '../../logic/useUISwitch';
 import './index.scss';
 import clsx from 'clsx';
 import { useWatchToc } from '../../components/Aside/useDynamicToc';
 import { SidebarMenu } from '../../components/SidebarMenu';
+import { useUISwitch } from '../Layout/useUISwitch';
 
 export interface DocLayoutProps {
   beforeSidebar?: React.ReactNode;
@@ -21,7 +21,6 @@ export interface DocLayoutProps {
   afterDocContent?: React.ReactNode;
   beforeOutline?: React.ReactNode;
   afterOutline?: React.ReactNode;
-  uiSwitch?: UISwitchResult;
   navTitle?: React.ReactNode;
   components?: Record<string, React.FC>;
 }
@@ -38,7 +37,6 @@ export function DocLayout(props: DocLayoutProps) {
     afterOutline,
     beforeSidebar,
     afterSidebar,
-    uiSwitch,
     components,
   } = props;
   const { frontmatter } = useFrontmatter();
@@ -49,13 +47,14 @@ export function DocLayout(props: DocLayoutProps) {
 
   const rspressDocRef = useWatchToc();
 
+  const uiSwitch = useUISwitch();
+
   return (
     <>
       <div className="rp-doc-layout__menu">
         <SidebarMenu
           isSidebarOpen={isSidebarOpen}
           onIsSidebarOpenChange={setIsSidebarOpen}
-          uiSwitch={uiSwitch}
         />
       </div>
       {beforeDoc}

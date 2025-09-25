@@ -2,22 +2,21 @@ import { useLocaleSiteData, useLocation, useSite } from '@rspress/runtime';
 import ArrowRight from '@theme-assets/arrow-right';
 import MenuIcon from '@theme-assets/menu';
 import { useCallback, useEffect, useRef, useState } from 'react';
-import type { UISwitchResult } from '../../logic/useUISwitch';
+import { useUISwitch } from '../../layout/Layout/useUISwitch';
+import { useDynamicToc } from '../Aside/useDynamicToc';
 import { SvgWrapper } from '../SvgWrapper';
 import { Toc } from '../Toc';
 import './index.scss';
-import { useDynamicToc } from '../Aside/useDynamicToc';
 
 /* Top Menu, only displayed on <1280px screen width */
 export function SidebarMenu({
   isSidebarOpen,
   onIsSidebarOpenChange,
-  uiSwitch,
 }: {
   isSidebarOpen: boolean;
   onIsSidebarOpenChange: (isOpen: boolean) => void;
-  uiSwitch?: UISwitchResult;
 }) {
+  const uiSwitch = useUISwitch();
   const localesData = useLocaleSiteData();
   const {
     site: { themeConfig },
