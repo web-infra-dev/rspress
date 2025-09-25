@@ -11,8 +11,13 @@ import { Link, SocialLinks, SwitchAppearance, useHoverGroup } from '@theme';
 import cls from 'clsx';
 import { useMemo } from 'react';
 import { useLangsMenu, useVersionMenu } from './hooks';
-import { SvgDown } from './icons/SvgDown';
 import './NavMenu.scss';
+import ArrowDown from '@theme-assets/arrow-down';
+import { SvgWrapper } from '../SvgWrapper';
+
+const SvgDown = (props: React.SVGProps<SVGSVGElement>) => {
+  return <SvgWrapper icon={ArrowDown} {...props} />;
+};
 
 function NavMenuItemWithChildren({
   menuItem,
@@ -32,10 +37,10 @@ function NavMenuItemWithChildren({
     );
   }
 
-  const { handleMouseEnter, handleMouseLeave, hoverGroup } = useHoverGroup(
-    menuItem.items,
+  const { handleMouseEnter, handleMouseLeave, hoverGroup } = useHoverGroup({
+    items: menuItem.items,
     activeMatcher,
-  );
+  });
 
   return (
     <li

@@ -15,13 +15,26 @@
   border: var(--rp-code-block-border);
   background: var(--rp-c-bg);
   box-shadow: 0px 4px 16px 0px rgba(0, 0, 0, 0.04);
+  transition: opacity 0.3s ease-in-out;
 
   position: absolute;
   top: calc(100% - 10px);
-  left: 50%;
-  transform: translateX(-50%);
 
-  transition: opacity 0.3s ease-in-out;
+  // #region postion
+  &--center {
+    left: 50%;
+    transform: translateX(-50%);
+  }
+
+  &--left {
+    left: 0;
+    transform: none;
+  }
+  &--right {
+    right: 0;
+    transform: none;
+  }
+  // #endregion postion
 
   &--hidden {
     visibility: hidden;
