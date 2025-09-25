@@ -69,6 +69,10 @@ function NavMenuItemWithLink({ menuItem }: { menuItem: NavItemWithLink }) {
       className={cls(
         'rp-nav-menu__item',
         isActive ? 'rp-nav-menu__item--active' : '',
+
+        // For algolia crawler compatibility
+        'rspress-nav-menu-item',
+        isActive ? 'rspress-nav-menu-item-active' : '',
       )}
     >
       <Link href={menuItem.link}>
