@@ -19,8 +19,12 @@ import type { NavProps } from '../../components/Nav';
 import { useSetup } from '../../logic/sideEffects';
 import { TabDataContext } from '../../logic/TabDataContext';
 import { useRedirect4FirstVisit } from '../../logic/useRedirect4FirstVisit';
-import { type UISwitchResult, useUISwitch } from '../../logic/useUISwitch';
 import type { HomeLayoutProps } from '../HomeLayout';
+import {
+  UISwitchContext,
+  type UISwitchResult,
+  useCreateUISwitch,
+} from './useUISwitch';
 
 export type LayoutProps = {
   top?: React.ReactNode;
@@ -183,10 +187,12 @@ export function Layout(props: LayoutProps) {
     site.description ||
     localesData.description;
 
+  const uiSwitchResult = useCreateUISwitch();
+
   // Control whether or not to display the navbar, sidebar, outline and footer
   // `props.uiSwitch` has higher priority and allows user to override the default value
   const uiSwitch = {
-    ...useUISwitch(),
+    ...uiSwitchResult,
     ...props.uiSwitch,
   };
 
@@ -196,9 +202,7 @@ export function Layout(props: LayoutProps) {
       case 'home':
         return <HomeLayout {...homeProps} />;
       case 'doc':
-        return (
-          <DocLayout {...docProps} uiSwitch={uiSwitch} navTitle={navTitle} />
-        );
+        return <DocLayout {...docProps} navTitle={navTitle} />;
       case '404':
         return <NotFoundLayout />;
       // The custom pageType will have navbar while the blank pageType will not.
@@ -212,29 +216,31 @@ export function Layout(props: LayoutProps) {
 
   return (
     <TabDataContext.Provider value={{ tabData, setTabData }}>
-      <HeadTags
-        lang={currentLang}
-        title={title}
-        description={description}
-        frontmatter={frontmatter}
-      />
+      <UISwitchContext.Provider value={uiSwitch}>
+        <HeadTags
+          lang={currentLang}
+          title={title}
+          description={description}
+          frontmatter={frontmatter}
+        />
 
-      {top}
-      {pageType !== 'blank' && uiSwitch.showNavbar && (
-        <>
-          {beforeNav}
-          <Nav
-            beforeNavTitle={beforeNavTitle}
-            afterNavTitle={afterNavTitle}
-            navTitle={navTitle}
-            afterNavMenu={afterNavMenu}
-          />
-          {afterNav}
-        </>
-      )}
+        {top}
+        {pageType !== 'blank' && uiSwitch.showNavbar && (
+          <>
+            {beforeNav}
+            <Nav
+              beforeNavTitle={beforeNavTitle}
+              afterNavTitle={afterNavTitle}
+              navTitle={navTitle}
+              afterNavMenu={afterNavMenu}
+            />
+            {afterNav}
+          </>
+        )}
 
-      {getContentLayout()}
-      {bottom}
+        {getContentLayout()}
+        {bottom}
+      </UISwitchContext.Provider>
     </TabDataContext.Provider>
   );
 }
