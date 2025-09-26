@@ -73,6 +73,10 @@
         transition:
           color 0.25s,
           opacity 0.25s;
+        &:hover {
+          border-bottom: 1px solid var(--rp-c-brand);
+          opacity: 0.85;
+        }
       }
       &:hover {
         & .header-anchor {
@@ -217,7 +221,11 @@
     &:where(:not(pre, h1, h2, h3, h4, h5, h6) > code) {
       font-size: var(--rp-code-font-size);
     }
+    &:where(h1 code, h2 code, h3 code) {
+      font-size: 0.9em;
+    }
     &:where(:not(pre, div) > code) {
+      font-family: var(--rp-font-family-mono);
       padding: 3px 6px;
       border-radius: var(--rp-radius-small);
       background-color: var(--rp-c-text-code-bg);
@@ -225,9 +233,6 @@
     }
     &:where(:not(pre, div, a) > code) {
       color: var(--rp-c-text-code);
-    }
-    &:where(h1 code, h2 code, h3 code) {
-      font-size: 0.9em;
     }
     &:where(a > code) {
       color: var(--rp-c-brand-dark);
@@ -295,17 +300,19 @@
         width: fit-content;
         min-width: 100%;
         line-height: 1.7;
-        font-size: var(--rp-code-font-size);
       }
     }
 
     &:where(.rspress-code-title) {
+      font-family: var(--rp-font-family-mono);
       padding: 12px 16px;
       font-size: var(--rp-code-font-size);
       background-color: var(--rp-code-title-bg);
     }
 
     &:where(.rspress-code-content) {
+      font-size: var(--rp-code-font-size);
+      font-family: var(--rp-font-family-mono);
       position: relative;
       color: var(--rp-code-block-color);
       background-color: var(--rp-code-block-bg);
