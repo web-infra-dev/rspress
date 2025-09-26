@@ -19,7 +19,7 @@
   --rp-content-max-width: 1000px;
 }
 
-@media (min-width: 1000px) {
+@media (min-width: 1280px) {
   html:root {
     --rp-sidebar-menu-height: 0px;
   }
@@ -107,6 +107,12 @@
     z-index: var(--rp-z-index-nav-menu);
 
     height: var(--rp-sidebar-menu-height);
+    &__placeholder {
+      display: block;
+      width: 100%;
+      height: var(--rp-sidebar-menu-height);
+      min-height: var(--rp-sidebar-menu-height);
+    }
   }
 }
 
@@ -140,8 +146,8 @@
 
 @media (max-width: 1279px) {
   :root {
-    --rp-content-padding-x: 24px;
-    --rp-content-padding-y: 64px;
+    --rp-content-padding-x: 36px;
+    --rp-content-padding-y: 48px;
   }
   .rp-doc-layout {
     &__aside {
@@ -152,6 +158,7 @@
 
 @media (max-width: 960px) {
   :root {
+    --rp-content-padding-x: 24px;
     --rp-z-index-nav: 40;
     --rp-z-index-sidebar: 70;
   }

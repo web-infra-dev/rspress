@@ -1,7 +1,5 @@
 import { useLocaleSiteData, useLocation, useSite } from '@rspress/runtime';
 import { useEffect, useMemo } from 'react';
-import { useUISwitch } from '../../layout/Layout/useUISwitch.js';
-import { scrollToTarget } from '../../logic/sideEffects';
 
 import './index.scss';
 import { ProgressCircle } from './ProgressCircle';
@@ -19,7 +17,6 @@ export function Aside() {
   const outlineTitle =
     localesData?.outlineTitle || themeConfig?.outlineTitle || 'ON THIS PAGE';
 
-  const { scrollPaddingTop } = useUISwitch();
   const headers = useDynamicToc();
   const [readPercent] = useReadPercent();
 
@@ -40,7 +37,7 @@ export function Aside() {
     } else {
       const target = document.getElementById(decodedHash.slice(1));
       if (target) {
-        scrollToTarget(target, false, scrollPaddingTop);
+        target.scrollIntoView();
       }
     }
   }, [decodedHash, headers, pathname]);
