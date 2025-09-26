@@ -45,3 +45,10 @@ export function isActive(itemLink: string, currentPathname: string): boolean {
   const linkMatched = matchPath(normalizedItemLink, normalizedCurrentPathname);
   return linkMatched !== null;
 }
+
+export const preloadLink = (link: string) => {
+  const route = pathnameToRouteService(link);
+  if (route) {
+    route.preload();
+  }
+};

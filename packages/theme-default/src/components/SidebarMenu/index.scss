@@ -1,17 +1,10 @@
-.rspress-sidebar-menu-container {
-  position: sticky;
-  top: 0;
-  left: 0;
-  z-index: var(--rp-z-index-local-nav);
-}
-
 // Only appear on <1280px screen width
 .rspress-sidebar-menu {
   display: flex;
   justify-content: space-between;
   align-items: center;
   border-bottom: 1px solid var(--rp-c-divider-light);
-  border-top: 1px solid var(--rp-c-divider-light);
+  // border-top: 1px solid var(--rp-c-divider-light);
   width: 100%;
   color: var(--rp-c-text-1);
   background-color: var(--rp-c-bg);
@@ -62,6 +55,7 @@
 .rspress-local-toc-container {
   position: absolute;
   padding: 6px;
+  margin-left: var(--rp-sidebar-width);
   border-radius: var(--rp-radius-small);
   top: calc(var(--rp-nav-height) - 14px);
   background-color: var(--rp-c-bg-soft);

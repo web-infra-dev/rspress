@@ -25,7 +25,7 @@ const useSubScribe = () => {
   }, [forceUpdate]);
 };
 
-const headers: Header[] = [] satisfies Header[];
+const headers: { current: Header[] } = { current: [] satisfies Header[] };
 
 function isElementOnlyVisible(element: Element): boolean {
   const style = window.getComputedStyle(element);
@@ -55,9 +55,9 @@ function isElementVisible(element: Element): boolean {
   return true;
 }
 
-export const useDynamicToc = () => {
+export const useDynamicToc = (): Header[] => {
   useSubScribe();
-  return headers;
+  return headers.current;
 };
 
 function updateHeaders(target: Element) {
@@ -76,8 +76,7 @@ function updateHeaders(target: Element) {
     }
   });
 
-  headers.length = 0;
-  headers.push(...collectedHeaders);
+  headers.current = [...collectedHeaders];
   distributeUpdate();
 }
 

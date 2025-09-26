@@ -1,0 +1,13 @@
+.rp-sidebar-section-header {
+  display: flex;
+  align-items: center;
+  padding: 4px 12px;
+
+  > span {
+    display: flex;
+    align-items: center;
+    font-size: 14px;
+    color: var(--rp-c-text-1);
+    font-weight: bold;
+  }
+}

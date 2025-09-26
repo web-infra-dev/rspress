@@ -50,6 +50,10 @@ const parseTitle = (rawTitle = '', isMDX = false) => {
   return trimTailingQuote(matched?.[1] || rawTitle);
 };
 
+const getTypeName = (type: DirectiveType | string): string => {
+  return type[0].toUpperCase() + type.slice(1).toLowerCase();
+};
+
 /**
  * Construct the DOM structure of the container directive.
  * For example:
@@ -61,7 +65,7 @@ const parseTitle = (rawTitle = '', isMDX = false) => {
  * will be transformed to:
  *
  * <div class="rspress-directive tip">
- *   <div class="rspress-directive-title">TIP</div>
+ *   <div class="rspress-directive-title">Tip</div>
  *   <div class="rspress-directive-content">
  *     <p>This is a tip</p>
  *   </div>
@@ -73,40 +77,21 @@ const createContainer = (
   title: string | undefined,
   children: (BlockContent | PhrasingContent)[],
 ): ContainerDirective => {
-  const isDetails = type === 'details';
-
-  const rootHName = isDetails ? 'details' : 'div';
-  const titleHName = isDetails ? 'summary' : 'div';
-
   return {
     type: 'containerDirective',
-    name: type,
+    name: 'Callout',
+    attributes: {
+      type: type,
+      title: title || getTypeName(type),
+    },
     data: {
-      hName: rootHName,
+      hName: 'Callout',
       hProperties: {
-        class: `rspress-directive ${type}`,
+        type: type,
+        title: title || getTypeName(type),
       },
     },
-    children: [
-      {
-        type: 'paragraph',
-        data: {
-          hName: titleHName,
-          hProperties: {
-            class: 'rspress-directive-title',
-          },
-        },
-        children: [{ type: 'text', value: title || type.toUpperCase() }],
-      },
-      {
-        type: 'paragraph',
-        data: {
-          hName: 'div',
-          hProperties: { class: 'rspress-directive-content' },
-        },
-        children: children as PhrasingContent[],
-      },
-    ],
+    children: children as BlockContent[],
   };
 };
 

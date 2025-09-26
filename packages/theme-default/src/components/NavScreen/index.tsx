@@ -1,5 +1,5 @@
-import { NoSSR, useNav } from '@rspress/runtime';
-import type { DefaultThemeConfig, NavItem, SiteData } from '@rspress/shared';
+import { NoSSR, useLocation, useNav, useSite } from '@rspress/runtime';
+import type { NavItem } from '@rspress/shared';
 import { SocialLinks, SwitchAppearance } from '@theme';
 import { clearAllBodyScrollLocks, disableBodyScroll } from 'body-scroll-lock';
 import { useEffect, useRef } from 'react';
@@ -11,11 +11,9 @@ import { NavMenuSingleItem } from '../Nav/NavMenuSingleItem';
 import * as styles from './index.module.scss';
 import { NavScreenMenuGroup } from './NavScreenMenuGroup';
 
-interface Props {
+export interface NavScreenProps {
   isScreenOpen: boolean;
   toggleScreen: () => void;
-  siteData: SiteData<DefaultThemeConfig>;
-  pathname: string;
 }
 
 const NavScreenTranslations = () => {
@@ -91,15 +89,17 @@ const NavScreenMenu = ({
   );
 };
 
-export function NavScreen(props: Props) {
-  const { isScreenOpen, toggleScreen, siteData, pathname } = props;
+export function NavScreen(props: NavScreenProps) {
+  const { isScreenOpen, toggleScreen } = props;
   const screen = useRef<HTMLDivElement | null>(null);
-  const localesData = siteData.themeConfig.locales || [];
+  const { pathname } = useLocation();
+  const { site } = useSite();
+  const localesData = site.themeConfig.locales || [];
   const hasMultiLanguage = localesData.length > 1;
-  const hasMultiVersion = siteData.multiVersion.versions.length > 1;
+  const hasMultiVersion = site.multiVersion.versions.length > 1;
   const menuItems = useNav();
-  const hasAppearanceSwitch = siteData.themeConfig.darkMode !== false;
-  const socialLinks = siteData?.themeConfig?.socialLinks || [];
+  const hasAppearanceSwitch = site.themeConfig.darkMode !== false;
+  const socialLinks = site?.themeConfig?.socialLinks || [];
   const hasSocialLinks = socialLinks.length > 0;
   const langs = localesData.map(item => item.lang || 'zh') || [];
 

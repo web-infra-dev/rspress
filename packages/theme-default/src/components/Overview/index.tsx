@@ -5,33 +5,21 @@ import {
   useSidebar,
 } from '@rspress/runtime';
 import type {
-  Header,
   NormalizedSidebarGroup,
   SidebarDivider,
   SidebarItem,
   SidebarSectionHeader,
 } from '@rspress/shared';
-import { Link } from '@theme';
 import { useEffect, useMemo, useRef, useState } from 'react';
-import { renderInlineMarkdown } from '../../logic/utils';
+import { FallbackHeading } from '../DocContent/FallbackHeading';
 import {
   isSidebarDivider,
   isSidebarSectionHeader,
   isSidebarSingleFile,
 } from '../Sidebar/utils';
-import * as styles from './index.module.scss';
+import './index.scss';
+import { type Group, type GroupItem, OverviewGroup } from './OverviewGroup';
 import { findItemByRoutePath } from './utils';
-
-interface GroupItem {
-  text: string;
-  link: string;
-  headers?: Header[];
-}
-
-interface Group {
-  name: string;
-  items: GroupItem[];
-}
 
 // Utility function to normalize text for search
 const normalizeText = (s: string) => s.toLowerCase().replace(/-/g, ' ');
@@ -41,7 +29,7 @@ const matchesQuery = (text: string, query: string) =>
   normalizeText(text).includes(normalizeText(query));
 
 // JSX fragment for the search input
-const SearchInput = ({
+const OverviewSearchInput = ({
   query,
   setQuery,
   searchRef,
@@ -55,8 +43,10 @@ const SearchInput = ({
   filterPlaceholderText: string;
 }) => {
   return (
-    <div className="rp-flex rp-items-center rp-justify-start rp-gap-4">
-      <label htmlFor="api-filter">{filterNameText}</label>
+    <div className="rp-overview-search">
+      <label htmlFor="api-filter" className="rp-overview-search__label">
+        {filterNameText}
+      </label>
       <input
         ref={searchRef}
         type="search"
@@ -64,53 +54,13 @@ const SearchInput = ({
         id="api-filter"
         value={query}
         onChange={e => setQuery(e.target.value)}
-        className="rp-border rp-border-gray-300 dark:rp-border-gray-700 rp-rounded-lg rp-px-3 rp-py-2 rp-transition-shadow rp-duration-250 rp-ease-in-out focus:rp-outline-none focus:rp-ring-2 focus:rp-ring-green-500 focus:rp-ring-opacity-50"
+        className="rp-overview-search__input"
       />
     </div>
   );
 };
 
 // JSX fragment for rendering a group
-const GroupRenderer = ({
-  group,
-  styles,
-}: {
-  group: Group;
-  styles: Record<string, string>;
-}) => (
-  <div className="rp-mb-16" key={group.name}>
-    <h2 {...renderInlineMarkdown(group.name)}></h2>
-    <div className={styles.overviewGroups}>
-      {group.items.map(item => (
-        <div className={styles.overviewGroup} key={item.link}>
-          <div className="rp-flex">
-            <h3 style={{ marginBottom: 8 }}>
-              <Link
-                href={item.link}
-                {...renderInlineMarkdown(item.text)}
-              ></Link>
-            </h3>
-          </div>
-          <ul className="rp-list-none">
-            {item.headers?.map(header => (
-              <li
-                key={header.id}
-                className={`${styles.overviewGroupLi} ${
-                  styles[`level${header.depth}`]
-                } first:rp-mt-2`}
-              >
-                <Link
-                  href={`${item.link}#${header.id}`}
-                  {...renderInlineMarkdown(header.text)}
-                ></Link>
-              </li>
-            ))}
-          </ul>
-        </div>
-      ))}
-    </div>
-  </div>
-);
 
 export function Overview(props: {
   content?: React.ReactNode;
@@ -127,6 +77,7 @@ export function Overview(props: {
     groups: customGroups,
     defaultGroupTitle: _ = 'Others',
   } = props;
+
   // Added state for search query
   const [query, setQuery] = useState('');
   // Added ref for search input
@@ -301,28 +252,20 @@ export function Overview(props: {
   const overviewTitle = title || 'Overview';
 
   return (
-    <div className="overview-index rp-mx-auto">
-      <div className="rp-flex rp-flex-col sm:rp-flex-row rp-items-start sm:rp-items-center rp-justify-between rp-mb-10">
-        <h1 className="rp-text-3xl rp-leading-10 rp-tracking-tight">
-          {overviewTitle}
-        </h1>
-        <SearchInput
-          query={query}
-          setQuery={setQuery}
-          searchRef={searchRef}
-          filterNameText={filterNameText}
-          filterPlaceholderText={filterPlaceholderText}
-        />
-      </div>
+    <div className="rspress-doc rp-doc rspress-overview rp-overview">
+      <FallbackHeading level={1} title={overviewTitle} />
+      <OverviewSearchInput
+        query={query}
+        setQuery={setQuery}
+        searchRef={searchRef}
+        filterNameText={filterNameText}
+        filterPlaceholderText={filterPlaceholderText}
+      />
       {content}
       {filtered.length > 0 ? (
-        filtered.map(group => (
-          <GroupRenderer key={group?.name} group={group} styles={styles} />
-        ))
+        filtered.map(group => <OverviewGroup key={group?.name} group={group} />)
       ) : (
-        <div className="rp-text-lg rp-text-gray-500 rp-text-center rp-mt-9 rp-pt-9 rp-border-t rp-border-gray-200 dark:rp-border-gray-800">
-          {`${filterNoResultText}: ${query}`}
-        </div>
+        <div className="rp-overview__empty">{`${filterNoResultText}: ${query}`}</div>
       )}
     </div>
   );

@@ -1,25 +1,29 @@
-import { useLocation } from '@rspress/runtime';
+import { useLocaleSiteData, useLocation, useSite } from '@rspress/runtime';
 import ArrowRight from '@theme-assets/arrow-right';
 import MenuIcon from '@theme-assets/menu';
 import { useCallback, useEffect, useRef, useState } from 'react';
-import type { UISwitchResult } from '../../logic/useUISwitch';
+import { useUISwitch } from '../../layout/Layout/useUISwitch';
+import { useDynamicToc } from '../Aside/useDynamicToc';
 import { SvgWrapper } from '../SvgWrapper';
 import { Toc } from '../Toc';
 import './index.scss';
-import { useDynamicToc } from '../Aside/useDynamicToc';
 
 /* Top Menu, only displayed on <1280px screen width */
 export function SidebarMenu({
   isSidebarOpen,
   onIsSidebarOpenChange,
-  outlineTitle,
-  uiSwitch,
 }: {
   isSidebarOpen: boolean;
   onIsSidebarOpenChange: (isOpen: boolean) => void;
-  outlineTitle: string;
-  uiSwitch?: UISwitchResult;
 }) {
+  const uiSwitch = useUISwitch();
+  const localesData = useLocaleSiteData();
+  const {
+    site: { themeConfig },
+  } = useSite();
+  const outlineTitle =
+    localesData?.outlineTitle || themeConfig?.outlineTitle || 'ON THIS PAGE';
+
   const tocContainerRef = useRef<HTMLDivElement>(null);
   const outlineButtonRef = useRef<HTMLButtonElement>(null);
 
@@ -70,7 +74,7 @@ export function SidebarMenu({
   const hasToc = toc.length > 0;
 
   return (
-    <div className={`rspress-sidebar-menu-container ${hasToc ? '' : 'no-toc'}`}>
+    <>
       <div className="rspress-sidebar-menu">
         {uiSwitch?.showSidebar && (
           <>
@@ -84,15 +88,6 @@ export function SidebarMenu({
               </div>
               <span className="rp-text-sm">Menu</span>
             </button>
-            {isSidebarOpen && (
-              <div
-                onClick={closeSidebar}
-                className="rspress-sidebar-back-drop"
-                style={{
-                  background: 'rgba(0, 0, 0, 0.6)',
-                }}
-              />
-            )}
           </>
         )}
         {uiSwitch?.showAside && hasToc && (
@@ -124,6 +119,15 @@ export function SidebarMenu({
           </>
         )}
       </div>
-    </div>
+      {isSidebarOpen && (
+        <div
+          onClick={closeSidebar}
+          className="rspress-sidebar-back-drop"
+          style={{
+            background: 'rgba(0, 0, 0, 0.6)',
+          }}
+        />
+      )}
+    </>
   );
 }
