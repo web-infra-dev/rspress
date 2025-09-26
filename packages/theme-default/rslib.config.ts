@@ -24,17 +24,11 @@ export default defineConfig({
     {
       format: 'esm',
       bundle: false,
-      dts: {
-        bundle: true,
-      },
+      dts: true,
       plugins: [
         pluginReact(),
         pluginSvgr({ svgrOptions: { exportType: 'default' } }),
-        pluginSass({
-          sassLoaderOptions: {
-            additionalData: `$prefix: 'rp-';`,
-          },
-        }),
+        pluginSass(),
       ],
       source: {
         define: {
