@@ -24,7 +24,7 @@ export interface CalloutProps {
  *   </div>
  * </div>
  */
-export function Callout({ type, title, children }: CalloutProps) {
+export function Callout({ type, title, children }: CalloutProps): ReactNode {
   const isDetails = type === 'details';
 
   if (isDetails) {
