@@ -70,7 +70,6 @@
     "@unhead/react": "^2.0.17",
     "cac": "^6.7.14",
     "chokidar": "^3.6.0",
-    "enhanced-resolve": "5.18.3",
     "github-slugger": "^2.0.0",
     "hast-util-heading-rank": "^3.0.0",
     "html-to-text": "^9.0.5",

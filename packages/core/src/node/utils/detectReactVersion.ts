@@ -1,14 +1,12 @@
-import fs from 'node:fs';
 import path from 'node:path';
+import { rspack } from '@rsbuild/core';
 import { logger } from '@rspress/shared/logger';
-import enhancedResolve from 'enhanced-resolve';
 import picocolors from 'picocolors';
 import { PACKAGE_ROOT } from '../constants';
 import { hintReactVersion } from '../logger/hint';
 import { pathExists, readJson } from './fs';
 
-// TODO: replace enhanced-resolve with this.getResolver
-const { CachedInputFileSystem, ResolverFactory } = enhancedResolve;
+const Resolver = rspack.experiments.resolver.ResolverFactory;
 
 async function detectPackageMajorVersion(
   name: string,
@@ -36,33 +34,23 @@ export async function resolveReactRouterDomAlias(): Promise<
   Record<string, string>
 > {
   const alias: Record<string, string> = {};
-  const resolver = ResolverFactory.createResolver({
-    fileSystem: new CachedInputFileSystem(
-      fs as unknown as enhancedResolve.CachedInputFileSystem['fileSystem'],
-      0,
-    ),
+  const resolver = new Resolver({
     mainFields: ['browser', 'module', 'main'],
     extensions: ['.js'],
     alias,
   });
 
   try {
-    const pkgPath = await new Promise<string>((resolve, reject) => {
-      resolver.resolve(
-        { importer: PACKAGE_ROOT },
-        PACKAGE_ROOT,
-        'react-router-dom',
-        {},
-        (err, filePath) => {
-          if (err || !filePath) {
-            return reject(err);
-          }
-          return resolve(filePath);
-        },
-      );
-    });
+    const resolved = await resolver.async(PACKAGE_ROOT, 'react-router-dom');
+    if (resolved.error) {
+      throw Error(resolved.error);
+    }
+
+    if (!resolved.path) {
+      throw Error(`'react-router-dom' resolved to empty path`);
+    }
     return {
-      'react-router-dom': pkgPath,
+      'react-router-dom': resolved.path,
     };
   } catch (e) {
     logger.warn('react-router-dom not found: \n', e);
@@ -83,11 +71,7 @@ export async function resolveReactAlias(reactVersion: number, isSSR: boolean) {
   ];
 
   const alias: Record<string, string> = {};
-  const resolver = ResolverFactory.createResolver({
-    fileSystem: new CachedInputFileSystem(
-      fs as unknown as enhancedResolve.CachedInputFileSystem['fileSystem'],
-      0,
-    ),
+  const resolver = new Resolver({
     extensions: ['.js'],
     alias,
     conditionNames: isSSR ? ['...'] : ['browser', '...'],
@@ -96,20 +80,13 @@ export async function resolveReactAlias(reactVersion: number, isSSR: boolean) {
   await Promise.all(
     libPaths.map(async lib => {
       try {
-        alias[lib] = await new Promise<string>((resolve, reject) => {
-          resolver.resolve(
-            { importer: basedir },
-            basedir,
-            lib,
-            {},
-            (err, filePath) => {
-              if (err || !filePath) {
-                return reject(err);
-              }
-              return resolve(filePath);
-            },
-          );
-        });
+        const resolved = await resolver.async(basedir, lib);
+
+        if (resolved.error || !resolved.path) {
+          throw Error(resolved.error);
+        }
+
+        alias[lib] = resolved.path;
       } catch (e) {
         if (e instanceof Error) {
           logger.warn(
