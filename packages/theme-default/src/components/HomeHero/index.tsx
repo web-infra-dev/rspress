@@ -4,6 +4,7 @@ import { Button } from '@theme';
 
 import { renderHtmlOrText } from '../../logic/utils';
 import './index.scss';
+import { useNavTransparent } from './useNavTransparent';
 
 const DEFAULT_HERO = {
   name: '',
@@ -32,77 +33,83 @@ function HomeHero({ beforeHeroActions, afterHeroActions }: HomeHeroProps) {
     typeof hero.image?.src === 'string'
       ? { light: hero.image.src, dark: hero.image.src }
       : hero.image?.src || { light: '', dark: '' };
+
+  const styleDom = useNavTransparent();
+
   return (
-    <div className="rp-home-hero">
-      <div className="rp-home-hero__background-mask"></div>
-      <div className="rp-home-hero__container">
-        <div className="rp-home-hero__content">
-          <div className="rp-home-hero__badge">
-            🎉 Rspress is now open source
+    <>
+      {styleDom}
+      <div className="rp-home-hero">
+        <div className="rp-home-hero__background-mask"></div>
+        <div className="rp-home-hero__container">
+          <div className="rp-home-hero__content">
+            {/* <div className="rp-home-hero__badge"> */}
+            {/* 🎉 Rspress is now open source */}
+            {/* </div> */}
+
+            <div className="rp-home-hero__title">
+              <span
+                className="rp-home-hero__title-brand"
+                {...renderHtmlOrText(hero.name)}
+              ></span>
+            </div>
+
+            {multiHeroText.length !== 0 &&
+              multiHeroText.map(heroText => (
+                <div
+                  key={heroText}
+                  className="rp-home-hero__subtitle"
+                  {...renderHtmlOrText(heroText)}
+                ></div>
+              ))}
+
+            <p
+              className="rp-home-hero__tagline"
+              {...renderHtmlOrText(hero.tagline)}
+            ></p>
+
+            {beforeHeroActions}
+            <div className="rp-home-hero__actions">
+              {hero.actions.map(action => {
+                return (
+                  <div className="rp-home-hero__action" key={action.link}>
+                    <Button
+                      type="a"
+                      href={action.link}
+                      theme={action.theme}
+                      {...renderHtmlOrText(action.text)}
+                    />
+                  </div>
+                );
+              })}
+            </div>
+            {afterHeroActions}
           </div>
-
-          <div className="rp-home-hero__title">
-            <span
-              className="rp-home-hero__title-brand"
-              {...renderHtmlOrText(hero.name)}
-            ></span>
-          </div>
-
-          {multiHeroText.length !== 0 &&
-            multiHeroText.map(heroText => (
-              <div
-                key={heroText}
-                className="rp-home-hero__subtitle"
-                {...renderHtmlOrText(heroText)}
-              ></div>
-            ))}
-
-          <p
-            className="rp-home-hero__tagline"
-            {...renderHtmlOrText(hero.tagline)}
-          ></p>
-
-          {beforeHeroActions}
-          <div className="rp-home-hero__actions">
-            {hero.actions.map(action => {
-              return (
-                <div className="rp-home-hero__action" key={action.link}>
-                  <Button
-                    type="a"
-                    href={action.link}
-                    theme={action.theme}
-                    {...renderHtmlOrText(action.text)}
-                  />
-                </div>
-              );
-            })}
-          </div>
-          {afterHeroActions}
         </div>
+        {hasImage ? (
+          <div className="rp-home-hero__image">
+            <img
+              src={normalizeImagePath(imageSrc.light)}
+              alt={hero.image?.alt}
+              srcSet={normalizeSrcsetAndSizes(hero.image?.srcset)}
+              sizes={normalizeSrcsetAndSizes(hero.image?.sizes)}
+              width={375}
+              height={375}
+              className="dark:rp-hidden"
+            />
+            <img
+              src={normalizeImagePath(imageSrc.dark)}
+              alt={hero.image?.alt}
+              srcSet={normalizeSrcsetAndSizes(hero.image?.srcset)}
+              sizes={normalizeSrcsetAndSizes(hero.image?.sizes)}
+              width={375}
+              height={375}
+              className="rp-hidden dark:rp-block"
+            />
+          </div>
+        ) : null}
       </div>
-      {hasImage ? (
-        <div className="rp-home-hero__image">
-          <img
-            src={normalizeImagePath(imageSrc.light)}
-            alt={hero.image?.alt}
-            srcSet={normalizeSrcsetAndSizes(hero.image?.srcset)}
-            sizes={normalizeSrcsetAndSizes(hero.image?.sizes)}
-            width={375}
-            height={375}
-            className="dark:rp-hidden"
-          />
-          <img
-            src={normalizeImagePath(imageSrc.dark)}
-            alt={hero.image?.alt}
-            srcSet={normalizeSrcsetAndSizes(hero.image?.srcset)}
-            sizes={normalizeSrcsetAndSizes(hero.image?.sizes)}
-            width={375}
-            height={375}
-            className="rp-hidden dark:rp-block"
-          />
-        </div>
-      ) : null}
-    </div>
+    </>
   );
 }
 
