@@ -90,8 +90,8 @@ export function PackageManagerTabs({
     commandInfo = {
       npm: `${exec ? 'npx' : 'npm'} ${command}`,
       yarn: `yarn ${command}`,
-      pnpm: `pnpm ${command}`,
-      bun: `bun ${command}`,
+      pnpm: `${exec ? 'pnpx' : 'pnpm'} ${command}`,
+      bun: `${exec ? 'bunx' : 'bun'} ${command}`,
     };
     additionalTabs.forEach(tab => {
       commandInfo[tab.tool] = `${tab.tool} ${command}`;
