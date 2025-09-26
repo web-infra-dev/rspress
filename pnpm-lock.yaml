@@ -837,9 +837,6 @@ importers:
       chokidar:
         specifier: ^3.6.0
         version: 3.6.0
-      enhanced-resolve:
-        specifier: 5.18.3
-        version: 5.18.3
       github-slugger:
         specifier: ^2.0.0
         version: 2.0.0
