@@ -20,7 +20,6 @@ export interface UISwitchResult {
   showDocFooter: boolean;
   navbarHeight: number;
   sidebarMenuHeight: number;
-  scrollPaddingTop: number;
 }
 
 export const UISwitchContext = createContext({} as UISwitchResult);
@@ -117,8 +116,6 @@ export function useCreateUISwitch(): UISwitchResult {
 
   const navbarHeight = hiddenNav ? 0 : width <= 768 ? 56 : 72;
   const sidebarMenuHeight = showSidebarMenu ? 46 : 0;
-  const scrollPaddingTop = navbarHeight + sidebarMenuHeight;
-
   return {
     showAside,
     showNavbar,
@@ -127,6 +124,5 @@ export function useCreateUISwitch(): UISwitchResult {
     showDocFooter,
     navbarHeight,
     sidebarMenuHeight,
-    scrollPaddingTop,
   };
 }
