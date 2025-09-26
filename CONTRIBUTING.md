@@ -161,12 +161,18 @@ pnpm run test:e2e
 
 ## Linting
 
-To help maintain consistency and readability of the codebase, we use a ESLint to lint the codes.
+To help maintain consistency and readability of the codebase, we use Biome for code formatting and RSLint for type-aware linting.
 
 You can run the Linter by executing the following command:
 
 ```sh
 pnpm run lint
+```
+
+You can also run type-aware linting separately with RSLint:
+
+```sh
+pnpm run lint:type
 ```
 
 ---

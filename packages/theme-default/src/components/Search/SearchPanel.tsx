@@ -303,7 +303,7 @@ export function SearchPanel({ focused, setFocused }: SearchPanelProps) {
       const searchResult: MatchResult = [];
 
       if ('beforeSearch' in userSearchHooks) {
-        const key = 'beforeSearch' as const;
+        const key = 'beforeSearch';
         const transformedQuery = await userSearchHooks[key](newQuery);
         if (transformedQuery) {
           newQuery = transformedQuery;
@@ -318,7 +318,7 @@ export function SearchPanel({ focused, setFocused }: SearchPanelProps) {
       }
 
       if ('onSearch' in userSearchHooks) {
-        const key = 'onSearch' as const;
+        const key = 'onSearch';
         const customSearchResult = await userSearchHooks[key](
           newQuery,
           searchResult as DefaultMatchResult[],
@@ -337,7 +337,7 @@ export function SearchPanel({ focused, setFocused }: SearchPanelProps) {
       }
 
       if ('afterSearch' in userSearchHooks) {
-        const key = 'afterSearch' as const;
+        const key = 'afterSearch';
         await userSearchHooks[key](newQuery, searchResult);
       }
 
@@ -386,7 +386,7 @@ export function SearchPanel({ focused, setFocused }: SearchPanelProps) {
       return item.group;
     });
 
-    const renderKey = 'render' as const;
+    const renderKey = 'render';
 
     return (
       <Tabs

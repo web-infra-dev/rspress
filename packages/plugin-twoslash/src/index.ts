@@ -95,10 +95,10 @@ function renderMarkdownInline(
   // If the result is a single paragraph, unwrap it to return just its children
   if (
     children.length === 1 &&
-    children[0]!.type === 'element' &&
-    children[0]!.tagName === 'p'
+    children[0].type === 'element' &&
+    children[0].tagName === 'p'
   ) {
-    return children[0]!.children;
+    return children[0].children;
   }
 
   return children;

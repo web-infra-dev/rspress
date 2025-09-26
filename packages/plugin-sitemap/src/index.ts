@@ -81,7 +81,7 @@ export function pluginSitemap(options: PluginSitemapOptions): RspressPlugin {
             lastmod: (await stat(pageData._filepath)).mtime.toISOString(),
             priority: pageData.routePath === '/' ? '1.0' : defaultPriority,
             changefreq: defaultChangeFreq,
-            ...(customMaps?.[pageData.routePath] ?? {}),
+            ...customMaps?.[pageData.routePath],
           });
         }
       }
