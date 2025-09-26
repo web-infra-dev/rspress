@@ -1,0 +1,34 @@
+.rp-steps {
+  margin-left: 16px;
+  margin-bottom: 44px;
+  border-left: 1px solid var(--rp-c-text-3);
+  padding-left: 24px;
+  counter-reset: step;
+
+  h3 {
+    counter-increment: step;
+    margin-top: 3px;
+    position: relative;
+
+    &::before {
+      content: counter(step);
+      position: absolute;
+      left: -41px;
+      width: 30px;
+      height: 30px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.1rem;
+      font-weight: 400;
+      color: var(--rp-c-text-1);
+      background-color: var(--rp-code-block-bg);
+      border: 1.5px solid var(--rp-c-text-3);
+      border-radius: 50%;
+    }
+  }
+
+  p {
+    color: var(--rp-c-text-1);
+  }
+}
