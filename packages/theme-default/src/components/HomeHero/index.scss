@@ -1,12 +1,9 @@
 .rp-home-hero {
   position: relative;
   margin: 0 auto;
-  padding: 0 1.5rem 3rem;
-  min-height: 80vh;
   display: flex;
   align-items: center;
   justify-content: center;
-  overflow: hidden;
 
   @media (min-width: 640px) {
     padding: 2.5rem 4rem 4rem;
@@ -17,20 +14,18 @@
   }
 
   @media (min-width: 768px) {
-    padding: 4rem 4rem 4rem;
+    padding: 7.5rem 4rem 4rem 7.5rem;
   }
 
   &__background-mask {
     position: absolute;
+    z-index: -1;
     top: 0;
     left: 0;
     right: 0;
     bottom: 0;
-    background: radial-gradient(
-      circle at 50% 50%,
-      rgba(255, 255, 255, 0.1) 0%,
-      transparent 70%
-    );
+    margin-top: calc(-1 * var(--rp-nav-height));
+    background-image: url('./imgs/light.svg');
     pointer-events: none;
   }
 
@@ -167,4 +162,8 @@
   &__image {
     display: flex;
   }
+}
+
+.rp-dark .rp-home-hero__background-mask {
+  background-image: url('./imgs/dark.png');
 }
