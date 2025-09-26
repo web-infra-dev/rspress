@@ -1,7 +1,8 @@
 import { useLocaleSiteData, useLocation, useSite } from '@rspress/runtime';
-import { useEffect, useMemo } from 'react';
+import { useEffect } from 'react';
 
 import './index.scss';
+import { scrollToTarget } from '../../logic/sideEffects';
 import { ProgressCircle } from './ProgressCircle';
 import { ScrollToTop } from './ScrollToTop';
 import { TocItem } from './TocItem';
@@ -23,24 +24,23 @@ export function Aside() {
   // For outline text highlight
   const baseHeaderLevel = 2;
 
-  const { hash: locationHash = '', pathname } = useLocation();
-  const decodedHash: string = useMemo(
-    () => decodeURIComponent(locationHash),
-    [locationHash],
-  );
+  const { pathname } = useLocation();
 
   const activeAnchorId = useActiveAnchor(headers, readPercent === 100);
 
   useEffect(() => {
+    const decodedHash = decodeURIComponent(window.location.hash);
+    console.log('decodedHash', decodedHash);
     if (decodedHash.length === 0) {
       window.scrollTo(0, 0);
     } else {
       const target = document.getElementById(decodedHash.slice(1));
       if (target) {
+        scrollToTarget(target, false, 0);
         target.scrollIntoView();
       }
     }
-  }, [decodedHash, headers, pathname]);
+  }, [pathname]);
 
   if (headers.length === 0) {
     return <></>;
