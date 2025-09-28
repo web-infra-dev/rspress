@@ -2,9 +2,8 @@ import { useLocaleSiteData, useLocation, useSite } from '@rspress/runtime';
 import { Toc } from '@theme';
 import { useEffect } from 'react';
 import { scrollToTarget } from '../../logic/sideEffects';
-import { useDynamicToc } from '../Toc/useDynamicToc';
-import './index.scss';
 import { ReadPercent } from '../ReadPercent';
+import './index.scss';
 import { ScrollToTop } from './ScrollToTop';
 
 export function Aside() {
@@ -14,8 +13,6 @@ export function Aside() {
   } = useSite();
   const outlineTitle =
     localesData?.outlineTitle || themeConfig?.outlineTitle || 'ON THIS PAGE';
-
-  const headers = useDynamicToc();
 
   const { pathname } = useLocation();
 
@@ -32,10 +29,6 @@ export function Aside() {
       }
     }
   }, [pathname]);
-
-  if (headers.length === 0) {
-    return <></>;
-  }
 
   return (
     <div className="rp-aside">
