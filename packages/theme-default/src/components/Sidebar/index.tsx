@@ -1,13 +1,11 @@
 import { useSidebarDynamic } from '@rspress/runtime';
-import {
-  type SidebarDivider as ISidebarDivider,
-  type SidebarItem as ISidebarItem,
-  type SidebarSectionHeader as ISidebarSectionHeader,
-  inBrowser,
-  type NormalizedSidebarGroup,
-  type SidebarData,
+import type {
+  SidebarDivider as ISidebarDivider,
+  SidebarItem as ISidebarItem,
+  SidebarSectionHeader as ISidebarSectionHeader,
+  NormalizedSidebarGroup,
+  SidebarData,
 } from '@rspress/shared';
-import { useEffect } from 'react';
 import { SidebarDivider } from './SidebarDivider';
 import { SidebarGroup } from './SidebarGroup';
 import { SidebarItem } from './SidebarItem';
@@ -18,32 +16,8 @@ import {
   isSidebarSectionHeader,
 } from './utils';
 
-interface Props {
-  isSidebarOpen?: boolean;
-}
-
-export let bodyStyleOverflow: string;
-
-export function Sidebar(props: Props) {
-  const { isSidebarOpen } = props;
-
+export function Sidebar() {
   const [sidebarData, setSidebarData] = useSidebarDynamic();
-
-  useEffect(() => {
-    if (inBrowser()) {
-      if (isSidebarOpen) {
-        bodyStyleOverflow = document.body.style.overflow;
-        document.body.style.overflow = 'hidden';
-      } else {
-        document.body.style.overflow = bodyStyleOverflow || '';
-      }
-    }
-    return () => {
-      if (inBrowser()) {
-        document.body.style.overflow = bodyStyleOverflow || '';
-      }
-    };
-  }, [isSidebarOpen]);
 
   return (
     <SidebarList sidebarData={sidebarData} setSidebarData={setSidebarData} />

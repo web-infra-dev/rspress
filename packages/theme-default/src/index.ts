@@ -64,7 +64,7 @@ export { Steps } from './components/Steps/index';
 export { SwitchAppearance } from './components/SwitchAppearance/index';
 export { Tab, Tabs } from './components/Tabs/index';
 export { Tag } from './components/Tag/index';
-export { Toc } from './components/Toc/index';
+export { Toc } from './components/Toc';
 export { DocLayout, type DocLayoutProps } from './layout/DocLayout';
 export { HomeLayout } from './layout/HomeLayout/index';
 export { Layout } from './layout/Layout/index';
