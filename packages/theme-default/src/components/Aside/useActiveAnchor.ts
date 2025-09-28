@@ -14,7 +14,7 @@ const useVisibleAnchors = (headers: Header[]): string[] => {
       });
 
       const visibleIds = offsets
-        .filter(offset => offset.top >= 64 && offset.top < window.innerHeight)
+        .filter(offset => offset.top >= 0 && offset.top < window.innerHeight)
         .map(offset => offset.id);
 
       setVisibleAnchors(visibleIds);
