@@ -16,6 +16,9 @@
     display: inline-flex;
     align-items: center;
     gap: 4px;
+    @media (max-width: 1280px) {
+      display: none;
+    }
   }
 
   &__divider {

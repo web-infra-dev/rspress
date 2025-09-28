@@ -1,10 +1,10 @@
 import type { Header } from '@rspress/shared';
+import { Link } from '@theme';
 import clsx from 'clsx';
 import {
   parseInlineMarkdownText,
   renderInlineMarkdown,
 } from '../../logic/utils';
-import { Link } from '../Link';
 import './TocItem.scss';
 
 export const TocItem = ({
@@ -20,8 +20,8 @@ export const TocItem = ({
     <Link
       href={`#${header.id}`}
       title={parseInlineMarkdownText(header.text)}
-      className={clsx('rp-aside__toc-item', {
-        'rp-aside__toc-item--active': active,
+      className={clsx('rp-toc-item', {
+        'rp-toc-item--active': active,
       })}
       style={{
         paddingLeft: (header.depth - baseHeaderLevel) * 12,

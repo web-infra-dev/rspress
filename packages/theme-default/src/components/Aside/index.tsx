@@ -2,12 +2,11 @@ import { useLocaleSiteData, useLocation, useSite } from '@rspress/runtime';
 import { useEffect } from 'react';
 
 import './index.scss';
+import { Toc } from '@theme';
 import { scrollToTarget } from '../../logic/sideEffects';
+import { useDynamicToc } from '../Toc/useDynamicToc';
 import { ProgressCircle } from './ProgressCircle';
 import { ScrollToTop } from './ScrollToTop';
-import { TocItem } from './TocItem';
-import { useActiveAnchor } from './useActiveAnchor';
-import { useDynamicToc } from './useDynamicToc';
 import { useReadPercent } from './useReadPercent';
 
 export function Aside() {
@@ -21,12 +20,7 @@ export function Aside() {
   const headers = useDynamicToc();
   const [readPercent] = useReadPercent();
 
-  // For outline text highlight
-  const baseHeaderLevel = 2;
-
   const { pathname } = useLocation();
-
-  const activeAnchorId = useActiveAnchor(headers, readPercent === 100);
 
   useEffect(() => {
     const decodedHash = decodeURIComponent(window.location.hash);
@@ -53,14 +47,7 @@ export function Aside() {
         <ProgressCircle percent={readPercent} size={14} strokeWidth={2} />
       </div>
       <nav className="rp-aside__toc">
-        {headers.map((header, index) => (
-          <TocItem
-            key={`${header.depth}_${header.text}_${header.id}_${index}`}
-            baseHeaderLevel={baseHeaderLevel}
-            header={header}
-            active={activeAnchorId === header.id}
-          />
-        ))}
+        <Toc />
       </nav>
       <div className="rp-aside__divider" />
       <div className="rp-aside__bottom">

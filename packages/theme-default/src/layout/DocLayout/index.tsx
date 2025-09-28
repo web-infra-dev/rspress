@@ -1,14 +1,13 @@
 import { useFrontmatter } from '@rspress/runtime';
 import { DocContent, Overview } from '@theme';
-import { useState } from 'react';
+import clsx from 'clsx';
 import { Aside } from '../../components/Aside';
 import { DocFooter } from '../../components/DocFooter';
 import { Sidebar } from '../../components/Sidebar';
-import './index.scss';
-import clsx from 'clsx';
-import { useWatchToc } from '../../components/Aside/useDynamicToc';
-import { SidebarMenu } from '../../components/SidebarMenu';
+import { useSidebarMenu } from '../../components/SidebarMenu/useSidebarMenu';
+import { useWatchToc } from '../../components/Toc/useDynamicToc';
 import { useUISwitch } from '../Layout/useUISwitch';
+import './index.scss';
 
 export interface DocLayoutProps {
   beforeSidebar?: React.ReactNode;
@@ -43,7 +42,13 @@ export function DocLayout(props: DocLayoutProps) {
 
   const isOverviewPage = frontmatter?.overview ?? false;
 
-  const [isSidebarOpen, setIsSidebarOpen] = useState(false);
+  const {
+    isAsideOpen,
+    isSidebarOpen,
+    sidebarMenu,
+    asideLayoutRef,
+    sidebarLayoutRef,
+  } = useSidebarMenu();
 
   const rspressDocRef = useWatchToc();
 
@@ -51,12 +56,7 @@ export function DocLayout(props: DocLayoutProps) {
 
   return (
     <>
-      <div className="rp-doc-layout__menu">
-        <SidebarMenu
-          isSidebarOpen={isSidebarOpen}
-          onIsSidebarOpenChange={setIsSidebarOpen}
-        />
-      </div>
+      <div className="rp-doc-layout__menu">{sidebarMenu}</div>
       {beforeDoc}
       <div className="rp-doc-layout__container">
         {/* Sidebar */}
@@ -67,9 +67,10 @@ export function DocLayout(props: DocLayoutProps) {
               isSidebarOpen && 'rp-doc-layout__sidebar--open',
               'rspress-scrollbar',
             )}
+            ref={sidebarLayoutRef}
           >
             {beforeSidebar}
-            <Sidebar isSidebarOpen={isSidebarOpen} />
+            <Sidebar />
             {afterSidebar}
           </aside>
         )}
@@ -102,7 +103,14 @@ export function DocLayout(props: DocLayoutProps) {
 
         {/* Right aside */}
         {uiSwitch?.showAside && !isOverviewPage && (
-          <aside className="rp-doc-layout__aside">
+          <aside
+            className={clsx(
+              'rp-doc-layout__aside',
+              isAsideOpen && 'rp-doc-layout__aside--open',
+              'rspress-scrollbar',
+            )}
+            ref={asideLayoutRef}
+          >
             {beforeOutline}
             <Aside />
             {afterOutline}
