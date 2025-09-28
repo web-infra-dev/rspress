@@ -1,12 +1,10 @@
 import { useLocaleSiteData, useLocation, useSite } from '@rspress/runtime';
 import MenuIcon from '@theme-assets/menu';
-import { clearAllBodyScrollLocks, disableBodyScroll } from 'body-scroll-lock';
 import { forwardRef, useEffect, useRef } from 'react';
 import { useUISwitch } from '../../layout/Layout/useUISwitch';
-import { SvgWrapper } from '../SvgWrapper';
-import { useDynamicToc } from '../Toc/useDynamicToc';
-import './index.scss';
 import { ReadPercent } from '../ReadPercent';
+import { SvgWrapper } from '../SvgWrapper';
+import './index.scss';
 
 /* Top Menu, only displayed on <1280px screen width */
 export const SidebarMenu = forwardRef(
@@ -62,32 +60,6 @@ export const SidebarMenu = forwardRef(
       }
     }, [hash]);
 
-    useEffect(() => {
-      sidebarMenuRef.current &&
-        (isAsideOpen || isSidebarOpen) &&
-        disableBodyScroll(sidebarMenuRef.current, {
-          reserveScrollBarGap: true,
-        });
-      return () => {
-        clearAllBodyScrollLocks();
-      };
-    }, [isSidebarOpen, isAsideOpen]);
-
-    useEffect(() => {
-      sidebarMenuRef.current &&
-        isAsideOpen &&
-        disableBodyScroll(sidebarMenuRef.current, {
-          reserveScrollBarGap: true,
-        });
-      return () => {
-        clearAllBodyScrollLocks();
-      };
-    }, [isAsideOpen]);
-
-    const toc = useDynamicToc();
-
-    const hasToc = toc.length > 0;
-
     return (
       <>
         <div
@@ -111,7 +83,7 @@ export const SidebarMenu = forwardRef(
               <span>Menu</span>
             </button>
           )}
-          {uiSwitch?.showAside && hasToc && (
+          {uiSwitch?.showAside && (
             <button
               type="button"
               onClickCapture={e => {
