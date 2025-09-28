@@ -1,5 +1,4 @@
 import { useLocaleSiteData, useLocation, useSite } from '@rspress/runtime';
-import ArrowRight from '@theme-assets/arrow-right';
 import MenuIcon from '@theme-assets/menu';
 import { clearAllBodyScrollLocks, disableBodyScroll } from 'body-scroll-lock';
 import { forwardRef, useEffect, useRef } from 'react';
@@ -7,6 +6,7 @@ import { useUISwitch } from '../../layout/Layout/useUISwitch';
 import { SvgWrapper } from '../SvgWrapper';
 import { useDynamicToc } from '../Toc/useDynamicToc';
 import './index.scss';
+import { ReadPercent } from '../ReadPercent';
 
 /* Top Menu, only displayed on <1280px screen width */
 export const SidebarMenu = forwardRef(
@@ -66,7 +66,7 @@ export const SidebarMenu = forwardRef(
       sidebarMenuRef.current &&
         (isAsideOpen || isSidebarOpen) &&
         disableBodyScroll(sidebarMenuRef.current, {
-          reserveScrollBarGap: false,
+          reserveScrollBarGap: true,
         });
       return () => {
         clearAllBodyScrollLocks();
@@ -77,7 +77,7 @@ export const SidebarMenu = forwardRef(
       sidebarMenuRef.current &&
         isAsideOpen &&
         disableBodyScroll(sidebarMenuRef.current, {
-          reserveScrollBarGap: false,
+          reserveScrollBarGap: true,
         });
       return () => {
         clearAllBodyScrollLocks();
@@ -121,13 +121,15 @@ export const SidebarMenu = forwardRef(
               className="rp-sidebar-menu__right"
             >
               <span>{outlineTitle}</span>
-              <SvgWrapper
+              <ReadPercent size={14} strokeWidth={2} />
+              {/* TODO: discussion */}
+              {/* <SvgWrapper
                 icon={ArrowRight}
                 style={{
                   transform: isAsideOpen ? 'rotate(90deg)' : 'rotate(0deg)',
                   transition: 'transform 0.2s ease-out',
                 }}
-              />
+              /> */}
             </button>
           )}
         </div>

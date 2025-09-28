@@ -2,9 +2,15 @@
   display: inline-flex;
   align-items: center;
   height: 100%;
-  gap: 32px;
-
   list-style: none;
+
+  @media (min-width: 1280px) {
+    gap: 32px;
+  }
+
+  @media (max-width: 1279px) {
+    gap: 24px;
+  }
 
   &__others {
     display: flex;
