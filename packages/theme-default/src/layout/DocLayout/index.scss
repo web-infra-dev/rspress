@@ -2,7 +2,7 @@
   // z-index
   --rp-z-index-nav-menu: 30;
   --rp-z-index-nav: 50;
-  --rp-z-index-backdrop: 60;
+  --rp-z-index-mask: 60;
   --rp-z-index-sidebar: 70;
   --rp-z-index-aside: 40;
 }
@@ -152,6 +152,19 @@
   .rp-doc-layout {
     &__aside {
       display: none;
+      position: fixed;
+      margin-top: var(--rp-sidebar-menu-height);
+      background-color: color-mix(in srgb, var(--rp-c-bg) 60%, transparent);
+      backdrop-filter: blur(25px);
+      padding: 20px 20px 20px 0px;
+      max-width: 100%;
+
+      border-radius: var(--rp-radius-small);
+      border: 1px solid var(--rp-c-divider-light);
+
+      &--open {
+        display: block;
+      }
     }
   }
 }

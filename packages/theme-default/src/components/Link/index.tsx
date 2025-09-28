@@ -4,6 +4,7 @@ import type React from 'react';
 import type { ComponentProps } from 'react';
 import { getHref, useNavigate } from './useNavigate';
 import './index.scss';
+import clsx from 'clsx';
 
 export interface LinkProps extends ComponentProps<'a'> {
   href?: string;
@@ -37,7 +38,7 @@ export function Link(props: LinkProps) {
         href={href}
         target="_blank"
         rel="noopener noreferrer"
-        className={`rp-link ${className}`}
+        className={clsx(className, 'rp-link')}
       >
         {children}
       </a>
@@ -46,7 +47,7 @@ export function Link(props: LinkProps) {
 
   if (linkType === 'hashOnly') {
     return (
-      <a {...props} href={href} className={`rp-link ${className}`}>
+      <a {...props} href={href} className={clsx(className, 'rp-link')}>
         {children}
       </a>
     );
@@ -57,7 +58,7 @@ export function Link(props: LinkProps) {
       <a
         {...props}
         href={href}
-        className={`rp-link ${className}`}
+        className={`${className} rp-link`}
         onMouseEnter={event => {
           onMouseEnter?.(event);
           preloadLink(removeBaseHref);
@@ -90,7 +91,7 @@ export function Link(props: LinkProps) {
     <a
       {...props}
       href={withBaseHref}
-      className={`rp-link ${className}`}
+      className={clsx(className, 'rp-link')}
       onMouseEnter={event => {
         onMouseEnter?.(event);
         preloadLink(removeBaseHref);
