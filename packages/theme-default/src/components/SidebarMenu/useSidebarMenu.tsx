@@ -1,4 +1,5 @@
-import { useRef, useState } from 'react';
+import { clearAllBodyScrollLocks, disableBodyScroll } from 'body-scroll-lock';
+import { useEffect, useMemo, useRef, useState } from 'react';
 import { SidebarMenu } from '.';
 import { useClickOutside } from './useClickOutside';
 
@@ -10,6 +11,19 @@ function useSidebarMenu() {
   const sidebarLayoutRef = useRef<HTMLDivElement>(null);
   const asideLayoutRef = useRef<HTMLDivElement>(null);
 
+  // only sidebar, body scroll lock can not work in iOS safari in aside
+  useEffect(() => {
+    sidebarMenuRef.current &&
+      isSidebarOpen &&
+      disableBodyScroll(sidebarMenuRef.current, {
+        reserveScrollBarGap: true,
+        allowTouchMove: () => true,
+      });
+    return () => {
+      clearAllBodyScrollLocks();
+    };
+  }, [isSidebarOpen]);
+
   useClickOutside([sidebarMenuRef, sidebarLayoutRef], () => {
     setIsSidebarOpen(false);
   });
@@ -17,15 +31,17 @@ function useSidebarMenu() {
     setIsAsideOpen(false);
   });
 
-  const sidebarMenu = (
-    <SidebarMenu
-      isSidebarOpen={isSidebarOpen}
-      onIsSidebarOpenChange={setIsSidebarOpen}
-      isAsideOpen={isAsideOpen}
-      onIsAsideOpenChange={setIsAsideOpen}
-      ref={sidebarMenuRef}
-    />
-  );
+  const sidebarMenu = useMemo(() => {
+    return (
+      <SidebarMenu
+        isSidebarOpen={isSidebarOpen}
+        onIsSidebarOpenChange={setIsSidebarOpen}
+        isAsideOpen={isAsideOpen}
+        onIsAsideOpenChange={setIsAsideOpen}
+        ref={sidebarMenuRef}
+      />
+    );
+  }, [isAsideOpen, isSidebarOpen, setIsAsideOpen, setIsSidebarOpen]);
 
   return {
     sidebarMenu,

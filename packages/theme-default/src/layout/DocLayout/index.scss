@@ -66,8 +66,7 @@
     padding: var(--rp-sidebar-padding);
     border-right: 1px solid var(--rp-c-divider-light);
 
-    overflow-x: auto;
-    overflow-y: scroll;
+    overflow: auto scroll;
 
     // postion
     position: sticky;
@@ -95,8 +94,7 @@
 
     padding-top: var(--rp-content-padding-y);
 
-    overflow-x: hidden;
-    overflow-y: auto;
+    overflow: hidden scroll;
     scrollbar-width: none;
     max-height: calc(100vh - var(--rp-nav-height));
   }
@@ -186,12 +184,20 @@
   }
   .rp-doc-layout {
     &__sidebar {
-      height: 100vh;
-      max-width: 100vh;
-
+      z-index: var(--rp-z-index-sidebar);
       position: fixed;
-      top: unset;
-      bottom: 0;
+      top: var(--rp-nav-height);
+      right: 0;
+
+      margin-top: var(--rp-sidebar-menu-height);
+      height: calc(
+        100vh - var(--rp-nav-height) - var(--rp-sidebar-menu-height)
+      );
+
+      padding: var(--rp-sidebar-padding) var(--rp-sidebar-padding)
+        calc(var(--rp-sidebar-padding) + 100px) var(--rp-sidebar-padding);
+
+      overflow: auto scroll;
 
       background: var(--rp-c-bg);
       opacity: 0;

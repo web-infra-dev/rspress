@@ -4,6 +4,9 @@
   border-left: 1px solid var(--rp-c-divider-light);
   padding-left: 20px;
 
+  max-width: calc(100vh - var(--rp-nav-height) - var(--rp-sidebar-menu-height));
+  // padding-bottom: 100px;
+
   &__title {
     font-size: 14px;
     font-weight: 700;
