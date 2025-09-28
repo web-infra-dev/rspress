@@ -4,8 +4,7 @@ import SunSvg from '@theme-assets/sun';
 import { type MouseEvent, useContext } from 'react';
 import { SvgWrapper } from '../SvgWrapper';
 import './global.scss';
-import { cls } from '../../utils';
-import * as styles from './index.module.scss';
+import './index.scss';
 
 const supportAppearanceTransition = () => {
   return (
@@ -87,17 +86,14 @@ export function SwitchAppearance({ onClick }: { onClick?: () => void }) {
   };
 
   return (
-    <div
-      onClick={handleClick}
-      className={cls('rspress-nav-appearance', styles.switchAppearance)}
-    >
+    <div onClick={handleClick} className="rp-switch-appearance">
       <SvgWrapper
-        className="dark:rp-hidden"
+        className="rp-switch-appearance__icon rp-switch-appearance__icon--sun"
         icon={SunSvg}
         fill="currentColor"
       />
       <SvgWrapper
-        className="rp-hidden dark:rp-block"
+        className="rp-switch-appearance__icon rp-switch-appearance__icon--moon"
         icon={MoonSvg}
         fill="currentColor"
       />
