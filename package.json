@@ -2,7 +2,7 @@
   "name": "rspress-monorepo",
   "private": true,
   "scripts": {
-    "build": "cross-env NX_DAEMON=false nx run-many -t build --exclude @rspress-fixture/* --exclude @rspress/docs",
+    "build": "rspress build",
     "build:website": "cross-env NX_DAEMON=false nx run @rspress/docs:build",
     "change": "changeset",
     "changeset": "changeset",
