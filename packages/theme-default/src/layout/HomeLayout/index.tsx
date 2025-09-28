@@ -1,4 +1,5 @@
 import { HomeFeature, HomeFooter, HomeHero } from '@theme';
+import { HomeBackground } from '../../components/HomeBackground';
 
 export interface HomeLayoutProps {
   beforeHero?: React.ReactNode;
@@ -21,6 +22,7 @@ export function HomeLayout(props: HomeLayoutProps) {
 
   return (
     <>
+      <HomeBackground />
       {beforeHero}
       <HomeHero
         beforeHeroActions={beforeHeroActions}

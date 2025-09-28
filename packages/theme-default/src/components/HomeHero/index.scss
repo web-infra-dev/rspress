@@ -17,18 +17,6 @@
     padding: 7.5rem 4rem 4rem 7.5rem;
   }
 
-  &__background-mask {
-    position: absolute;
-    z-index: -1;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    margin-top: calc(-1 * var(--rp-nav-height));
-    background-image: url('./imgs/light.svg');
-    pointer-events: none;
-  }
-
   &__container {
     position: relative;
     z-index: 10;
@@ -71,7 +59,6 @@
     color: transparent;
     width: 640px;
     text-align: center;
-    font-family: Inter;
     font-weight: 600;
     line-height: 64px;
   }
@@ -80,7 +67,6 @@
     margin: 0;
     font-size: 2.5rem;
     font-weight: 600;
-    font-family: Inter;
     font-style: normal;
   }
 
@@ -162,8 +148,4 @@
   &__image {
     display: flex;
   }
-}
-
-.rp-dark .rp-home-hero__background-mask {
-  background-image: url('./imgs/dark.png');
 }
