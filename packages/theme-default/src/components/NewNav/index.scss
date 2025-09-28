@@ -67,5 +67,9 @@
     gap: 24px;
     display: flex;
     align-items: center;
+
+    @media (max-width: 767px) {
+      gap: 4px;
+    }
   }
 }

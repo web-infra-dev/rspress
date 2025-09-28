@@ -151,7 +151,6 @@
   }
   .rp-doc-layout {
     &__aside {
-      display: none;
       position: fixed;
       margin-top: var(--rp-sidebar-menu-height);
       background-color: color-mix(in srgb, var(--rp-c-bg) 60%, transparent);
@@ -162,8 +161,18 @@
       border-radius: var(--rp-radius-small);
       border: 1px solid var(--rp-c-divider-light);
 
+      visibility: hidden;
+      opacity: 0;
+      transform: translate3d(0, -10px, 0);
+      transition:
+        opacity 0.2s,
+        transform 0.2s cubic-bezier(0.19, 1, 0.22, 1);
+
       &--open {
         display: block;
+        opacity: 1;
+        visibility: visible;
+        transform: translate3d(0, 0, 0);
       }
     }
   }

@@ -1,6 +1,6 @@
 import clsx from 'clsx';
 import type React from 'react';
-import './ProgressCircle.scss';
+import './index.scss';
 
 interface CircleProgressProps {
   percent: number;
@@ -28,7 +28,7 @@ export const ProgressCircle: React.FC<CircleProgressProps> = ({
     <svg
       width={size}
       height={size}
-      className={clsx('rp-aside__progress-circle', className)}
+      className={clsx('rp-progress-circle', className)}
     >
       <circle
         cx={size / 2}
@@ -49,7 +49,6 @@ export const ProgressCircle: React.FC<CircleProgressProps> = ({
         strokeWidth={strokeWidth}
         strokeDasharray={circumference}
         strokeDashoffset={offset}
-        // className="duration-75"
         transform={`rotate(-90 ${size / 2} ${size / 2})`}
         style={{ transition: 'stroke-dashoffset 0.3s' }}
       />

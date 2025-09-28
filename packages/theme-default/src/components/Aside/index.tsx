@@ -1,13 +1,11 @@
 import { useLocaleSiteData, useLocation, useSite } from '@rspress/runtime';
-import { useEffect } from 'react';
-
-import './index.scss';
 import { Toc } from '@theme';
+import { useEffect } from 'react';
 import { scrollToTarget } from '../../logic/sideEffects';
 import { useDynamicToc } from '../Toc/useDynamicToc';
-import { ProgressCircle } from './ProgressCircle';
+import './index.scss';
+import { ReadPercent } from '../ReadPercent';
 import { ScrollToTop } from './ScrollToTop';
-import { useReadPercent } from './useReadPercent';
 
 export function Aside() {
   const localesData = useLocaleSiteData();
@@ -18,7 +16,6 @@ export function Aside() {
     localesData?.outlineTitle || themeConfig?.outlineTitle || 'ON THIS PAGE';
 
   const headers = useDynamicToc();
-  const [readPercent] = useReadPercent();
 
   const { pathname } = useLocation();
 
@@ -44,7 +41,7 @@ export function Aside() {
     <div className="rp-aside">
       <div className="rp-aside__title">
         {outlineTitle}
-        <ProgressCircle percent={readPercent} size={14} strokeWidth={2} />
+        <ReadPercent size={14} strokeWidth={2} />
       </div>
       <nav className="rp-aside__toc">
         <Toc />
