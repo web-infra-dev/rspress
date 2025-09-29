@@ -48,7 +48,7 @@
     "@rslib/core": "0.13.3",
     "@types/lodash-es": "^4.17.12",
     "@types/node": "^22.8.1",
-    "@types/react": "^19.1.13",
+    "@types/react": "^19.1.15",
     "mdast-util-mdx-jsx": "^3.2.0",
     "medium-zoom": "1.1.0",
     "rimraf": "^6.0.1",

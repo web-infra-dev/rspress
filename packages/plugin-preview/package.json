@@ -30,7 +30,7 @@
   "dependencies": {
     "@rsbuild/core": "~1.5.12",
     "@rsbuild/plugin-babel": "~1.0.6",
-    "@rsbuild/plugin-react": "~1.4.0",
+    "@rsbuild/plugin-react": "~1.4.1",
     "@rsbuild/plugin-solid": "~1.0.6",
     "lodash": "4.17.21",
     "qrcode.react": "^4.2.0"
@@ -40,7 +40,7 @@
     "@types/lodash": "^4.17.20",
     "@types/mdast": "^4.0.4",
     "@types/node": "^22.8.1",
-    "@types/react": "^19.1.13",
+    "@types/react": "^19.1.15",
     "@types/react-dom": "^19.1.9",
     "mdast-util-mdx-jsx": "^3.2.0",
     "mdast-util-mdxjs-esm": "^2.0.1",
