@@ -10,22 +10,20 @@
 
   --docsearch-searchbox-background: var(--rp-c-bg-soft);
   --docsearch-searchbox-focus-background: var(--rp-c-bg);
-  --docsearch-hit-color: var(--rp-c-text-1);
+
+  --docsearch-hit-highlight-color: var(--rp-c-brand-tint);
   --docsearch-hit-active-color: var(--rp-c-text-1);
   --docsearch-hit-background: var(--rp-c-bg-soft);
   --docsearch-hit-shadow: var(--rp-shadow-2);
-  --docsearch-footer-background: var(--rp-c-bg-soft);
+
+  --docsearch-footer-background: var(--rp-c-bg);
 
   --docsearch-key-background: var(--rp-c-bg-mute);
   --docsearch-key-color: var(--rp-c-text-2);
-  --docsearch-logo-color: var(--rp-c-text-2);
-  --docsearch-highlight-color: var(--rp-c-brand);
-  --docsearch-icon-color: var(--rp-c-text-2);
-  --docsearch-background-color: var(--rp-c-bg);
-}
 
-html.rp-dark [class*='DocSearch'] {
-  --docsearch-container-background: rgba(0, 0, 0, 0.8);
+  --docsearch-highlight-color: var(--rp-c-brand);
+  --docsearch-icon-color: var(--rp-c-text-1);
+  --docsearch-background-color: var(--rp-c-bg-mute);
 }
 
 .DocSearch {
