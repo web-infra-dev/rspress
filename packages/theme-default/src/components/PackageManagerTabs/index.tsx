@@ -11,10 +11,16 @@ export type PackageManagerTabProps = (
   | {
       command: string;
       /**
-       * If true, the command will be interpreted as a shell command and prefixed with npx for npm,
-       * or the package manager binary for others.
+       * If true, uses local package execution (pnpm, bun, yarn, npm).
+       * For locally installed packages in node_modules.
        */
       exec?: boolean;
+      /**
+       * If true, uses remote package execution (pnpm dlx, bunx, npx, yarn dlx).
+       * For executing packages directly from registry without installing locally.
+       * Takes precedence over exec prop.
+       */
+      dlx?: boolean;
     }
   | {
       command: {
@@ -24,6 +30,7 @@ export type PackageManagerTabProps = (
         bun?: string;
       };
       exec?: never;
+      dlx?: never;
     }
 ) & {
   additionalTabs?: {
@@ -71,6 +78,7 @@ function splitTo2Parts(command: string): [string, string] {
 export function PackageManagerTabs({
   command,
   exec,
+  dlx,
   additionalTabs = [],
 }: PackageManagerTabProps) {
   let commandInfo: Record<string, string>;
@@ -87,11 +95,46 @@ export function PackageManagerTabs({
 
   // Init Command
   if (typeof command === 'string') {
+    const getPrefix = (packageManager: string) => {
+      if (dlx) {
+        // Remote package execution - fetch and run from registry
+        switch (packageManager) {
+          case 'npm':
+            return 'npx';
+          case 'yarn':
+            return 'yarn dlx';
+          case 'pnpm':
+            return 'pnpm dlx';
+          case 'bun':
+            return 'bunx';
+          default:
+            return packageManager;
+        }
+      } else if (exec) {
+        // Local package execution - run from node_modules
+        switch (packageManager) {
+          case 'npm':
+            return 'npx'; // npx works for both local and remote
+          case 'yarn':
+            return 'yarn';
+          case 'pnpm':
+            return 'pnpm';
+          case 'bun':
+            return 'bun';
+          default:
+            return packageManager;
+        }
+      } else {
+        // Default behavior - package management (install, etc)
+        return packageManager;
+      }
+    };
+
     commandInfo = {
-      npm: `${exec ? 'npx' : 'npm'} ${command}`,
-      yarn: `yarn ${command}`,
-      pnpm: `pnpm ${command}`,
-      bun: `bun ${command}`,
+      npm: `${getPrefix('npm')} ${command}`,
+      yarn: `${getPrefix('yarn')} ${command}`,
+      pnpm: `${getPrefix('pnpm')} ${command}`,
+      bun: `${getPrefix('bun')} ${command}`,
     };
     additionalTabs.forEach(tab => {
       commandInfo[tab.tool] = `${tab.tool} ${command}`;
