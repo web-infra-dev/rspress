@@ -36,7 +36,7 @@
     "qrcode.react": "^4.2.0"
   },
   "devDependencies": {
-    "@rslib/core": "0.13.3",
+    "@rslib/core": "0.15.0",
     "@types/lodash": "^4.17.20",
     "@types/mdast": "^4.0.4",
     "@types/node": "^22.8.1",
