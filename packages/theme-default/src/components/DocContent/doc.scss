@@ -276,6 +276,8 @@
       }
 
       & :where(pre) {
+        outline: none; // avoid focus outline https://github.com/web-infra-dev/rspack/issues/11775
+
         position: relative;
         z-index: 1;
         margin: 0;
