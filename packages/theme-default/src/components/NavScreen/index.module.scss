@@ -10,7 +10,7 @@
   background-color: var(--rp-c-bg);
   overflow-y: auto;
   pointer-events: auto;
-  z-index: 20;
+  z-index: var(--rp-z-index-nav-screen);
 }
 .active {
   display: block;

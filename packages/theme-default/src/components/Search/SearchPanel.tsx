@@ -550,7 +550,7 @@ export function SearchPanel({ focused, setFocused }: SearchPanelProps) {
               ) : null}
             </div>
           </div>,
-          document.getElementById('__rspress_search_container')!,
+          document.getElementById('__rspress_modal_container')!,
         )}
     </>
   );
