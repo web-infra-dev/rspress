@@ -23,6 +23,7 @@ import type {
 } from 'mdast';
 import type { ContainerDirective } from 'mdast-util-directive';
 import type { Plugin } from 'unified';
+import { getNamedImportAstNode } from '../../utils';
 
 export const DIRECTIVE_TYPES = [
   'tip',
@@ -38,6 +39,8 @@ export const REGEX_END = /\s*:::$/;
 export const REGEX_GH_BEGIN = /^\s*\s*\[!(\w+)\]\s*(.*)?/;
 export const TITLE_REGEX_IN_MD = /{\s*title=["']?(.+)}\s*/;
 export const TITLE_REGEX_IN_MDX = /\s*title=["']?(.+)\s*/;
+
+const CALLOUT_COMPONENT = '$$$Callout$$$';
 
 export type DirectiveType = (typeof DIRECTIVE_TYPES)[number];
 
@@ -79,13 +82,13 @@ const createContainer = (
 ): ContainerDirective => {
   return {
     type: 'containerDirective',
-    name: 'Callout',
+    name: CALLOUT_COMPONENT,
     attributes: {
       type: type,
       title: title || getTypeName(type),
     },
     data: {
-      hName: 'Callout',
+      hName: CALLOUT_COMPONENT,
       hProperties: {
         type: type,
         title: title || getTypeName(type),
@@ -355,5 +358,10 @@ function transformer(tree: Parent) {
 }
 
 export const remarkContainerSyntax: Plugin<[], Root> = () => {
-  return transformer;
+  return tree => {
+    transformer(tree);
+    tree.children.unshift(
+      getNamedImportAstNode('Callout', CALLOUT_COMPONENT, '@theme'),
+    );
+  };
 };
