@@ -14,7 +14,8 @@ const useVisibleAnchors = (headers: Header[]): string[] => {
       });
 
       const visibleIds = offsets
-        .filter(offset => offset.top >= 0 && offset.top < window.innerHeight)
+        // 110 = var(--rp-nav-height) + var(--rp-sidebar-menu-height)
+        .filter(offset => offset.top >= 110 && offset.top < window.innerHeight)
         .map(offset => offset.id);
 
       setVisibleAnchors(visibleIds);
@@ -36,7 +37,7 @@ export const useActiveAnchor = (headers: Header[], isBottom: boolean) => {
 
   const anchorDirty = useRef<string>(null);
 
-  const activeAnchor = useMemo(() => {
+  const activeAnchorId = useMemo(() => {
     // If there are no anchors on the entire screen, use the before value.
     if (anchors.length === 0) {
       return anchorDirty.current;
@@ -48,7 +49,14 @@ export const useActiveAnchor = (headers: Header[], isBottom: boolean) => {
     return anchors[0];
   }, [headers, anchors, isBottom]);
 
-  anchorDirty.current = activeAnchor;
+  anchorDirty.current = activeAnchorId;
 
-  return activeAnchor;
+  const lastAnchor = headers[
+    headers.findIndex(h => h.id === activeAnchorId) - 1
+  ] as Header | undefined;
+
+  return {
+    activeAnchorId,
+    lastAnchor,
+  };
 };

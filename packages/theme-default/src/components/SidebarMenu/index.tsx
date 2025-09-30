@@ -5,6 +5,8 @@ import { useUISwitch } from '../../layout/Layout/useUISwitch';
 import { ReadPercent } from '../ReadPercent';
 import { SvgWrapper } from '../SvgWrapper';
 import './index.scss';
+import { useActiveAnchor } from '../Toc/useActiveAnchor';
+import { useDynamicToc } from '../Toc/useDynamicToc';
 
 /* Top Menu, only displayed on <1280px screen width */
 export const SidebarMenu = forwardRef(
@@ -33,6 +35,9 @@ export const SidebarMenu = forwardRef(
     const sidebarMenuRef = useRef<HTMLDivElement>(null);
 
     const { pathname, hash } = useLocation();
+
+    const headers = useDynamicToc();
+    const { lastAnchor } = useActiveAnchor(headers, false);
 
     function openSidebar() {
       onIsSidebarOpenChange(true);
@@ -86,13 +91,14 @@ export const SidebarMenu = forwardRef(
           {uiSwitch?.showAside && (
             <button
               type="button"
-              onClickCapture={e => {
+              onClick={e => {
                 e.stopPropagation();
+                if (headers.length === 0) return;
                 openAside();
               }}
               className="rp-sidebar-menu__right"
             >
-              <span>{outlineTitle}</span>
+              <span>{lastAnchor?.text ?? outlineTitle}</span>
               <ReadPercent size={14} strokeWidth={2} />
               {/* TODO: discussion */}
               {/* <SvgWrapper
