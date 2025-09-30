@@ -3,6 +3,7 @@
 exports[`remarkFileCodeBlock > basic 1`] = `
 "import {Fragment as _Fragment, jsx as _jsx, jsxs as _jsxs} from "react/jsx-runtime";
 import {useMDXComponents as _provideComponents} from "@mdx-js/react";
+import {Callout as $$$Callout$$$} from "@theme";
 function _createMdxContent(props) {
   const _components = {
     code: "code",

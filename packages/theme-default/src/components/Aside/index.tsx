@@ -4,6 +4,7 @@ import { useEffect } from 'react';
 import { scrollToTarget } from '../../logic/sideEffects';
 import { ReadPercent } from '../ReadPercent';
 import './index.scss';
+import { useDynamicToc } from '../Toc/useDynamicToc';
 import { ScrollToTop } from './ScrollToTop';
 
 export function Aside() {
@@ -18,7 +19,6 @@ export function Aside() {
 
   useEffect(() => {
     const decodedHash = decodeURIComponent(window.location.hash);
-    console.log('decodedHash', decodedHash);
     if (decodedHash.length === 0) {
       window.scrollTo(0, 0);
     } else {
@@ -29,6 +29,12 @@ export function Aside() {
       }
     }
   }, [pathname]);
+
+  const headers = useDynamicToc();
+
+  if (headers.length === 0) {
+    return <></>;
+  }
 
   return (
     <div className="rp-aside">
