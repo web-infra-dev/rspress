@@ -3,9 +3,7 @@
   flex-direction: column;
   border-left: 1px solid var(--rp-c-divider-light);
   padding-left: 20px;
-
-  max-width: calc(100vh - var(--rp-nav-height) - var(--rp-sidebar-menu-height));
-  // padding-bottom: 100px;
+  padding-right: 20px;
 
   &__title {
     font-size: 14px;
@@ -36,5 +34,11 @@
     flex-direction: column;
     flex: 1;
     gap: 6px;
+
+    // allow scroll when there are too many toc items
+    @media (max-width: 1280px) {
+      max-height: 60vh;
+      overflow: auto scroll;
+    }
   }
 }
