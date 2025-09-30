@@ -1,9 +1,10 @@
 :root {
   // z-index
+  --rp-z-index-nav-screen: 80;
   --rp-z-index-nav-menu: 30;
   --rp-z-index-nav: 50;
-  --rp-z-index-mask: 60;
-  --rp-z-index-sidebar: 70;
+  --rp-z-index-mask: 70;
+  --rp-z-index-sidebar: 60;
   --rp-z-index-aside: 40;
 }
 
@@ -70,7 +71,7 @@
 
     // postion
     position: sticky;
-    // margin-top: calc(-1 * var(--rp-sidebar-menu-height));
+    margin-top: calc(-1 * var(--rp-sidebar-menu-height));
     top: var(--rp-nav-height);
     left: 0;
     bottom: 0;
@@ -177,7 +178,7 @@
   }
 }
 
-@media (max-width: 960px) {
+@media (max-width: 768px) {
   :root {
     --rp-content-padding-x: 24px;
   }
@@ -186,12 +187,9 @@
       z-index: var(--rp-z-index-sidebar);
       position: fixed;
       top: var(--rp-nav-height);
-      right: 0;
 
-      // margin-top: var(--rp-sidebar-menu-height);
-      height: calc(
-        100vh - var(--rp-nav-height) - var(--rp-sidebar-menu-height)
-      );
+      margin-top: 0px;
+      height: calc(100vh - var(--rp-nav-height));
 
       padding: var(--rp-sidebar-padding) var(--rp-sidebar-padding)
         calc(var(--rp-sidebar-padding) + 100px) var(--rp-sidebar-padding);
