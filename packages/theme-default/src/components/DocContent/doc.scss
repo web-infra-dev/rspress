@@ -27,7 +27,7 @@
     /* link */
     /* #region */
     // we do not style all the <a> links, only the links with class "rp-link" because there are too many usages of <a> tag in user custom components
-    &:where(a.rp-link):not(:where(.header-anchor)) {
+    &:where(a.rp-link):not(:where(.rp-header-anchor)) {
       font-weight: 500;
       color: var(--rp-c-link);
       transition: color 0.25s;
@@ -64,7 +64,7 @@
     &:where(h1, h2, h3, h4, h5, h6) {
       font-weight: 600;
       outline: none;
-      & .header-anchor {
+      & .rp-header-anchor {
         float: left;
         margin-left: -0.8em;
         font-weight: 500;
@@ -79,15 +79,15 @@
         }
       }
       &:hover {
-        & .header-anchor {
+        & .rp-header-anchor {
           opacity: 1;
         }
-        & .header-anchor:focus {
+        & .rp-header-anchor:focus {
           opacity: 1;
         }
       }
     }
-    &:where(.header-anchor) {
+    &:where(.rp-header-anchor) {
       color: var(--rp-c-brand);
     }
     &:where(h1) {

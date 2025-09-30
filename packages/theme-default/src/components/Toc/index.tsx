@@ -4,9 +4,9 @@ import { useDynamicToc } from './useDynamicToc';
 
 const baseHeaderLevel = 2;
 
-export function Toc({ isBottom = false }: { isBottom?: boolean }) {
+export function Toc() {
   const headers = useDynamicToc();
-  const activeAnchorId = useActiveAnchor(headers, isBottom);
+  const { activeAnchorId } = useActiveAnchor(headers, false);
 
   return (
     <>

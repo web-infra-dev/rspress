@@ -5,6 +5,7 @@ exports[`mdx > basic 1`] = `
 import {useMDXComponents as _provideComponents} from "@mdx-js/react";
 import image0 from "./test3.jpg";
 import image1 from "./test4.png";
+import {Callout as $$$Callout$$$} from "@theme";
 function _createMdxContent(props) {
   const _components = {
     img: "img",
