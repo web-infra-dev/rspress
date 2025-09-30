@@ -91,9 +91,10 @@ export const SidebarMenu = forwardRef(
           {uiSwitch?.showAside && (
             <button
               type="button"
+              disabled={headers.length === 0}
               onClick={e => {
+                e.preventDefault();
                 e.stopPropagation();
-                if (headers.length === 0) return;
                 openAside();
               }}
               className="rp-sidebar-menu__right"

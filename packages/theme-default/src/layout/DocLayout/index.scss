@@ -149,11 +149,15 @@
   }
   .rp-doc-layout {
     &__aside {
+      max-height: calc(
+        100vh - var(--rp-nav-height) - var(--rp-sidebar-menu-height)
+      );
+
       position: fixed;
       margin-top: var(--rp-sidebar-menu-height);
       background-color: color-mix(in srgb, var(--rp-c-bg) 60%, transparent);
       backdrop-filter: blur(25px);
-      padding: 20px 20px 20px 0px;
+      padding: 20px 0px 20px 0px;
       max-width: 100%;
 
       border-radius: var(--rp-radius-small);
@@ -179,8 +183,6 @@
 @media (max-width: 960px) {
   :root {
     --rp-content-padding-x: 24px;
-    --rp-z-index-nav: 40;
-    --rp-z-index-sidebar: 70;
   }
   .rp-doc-layout {
     &__sidebar {

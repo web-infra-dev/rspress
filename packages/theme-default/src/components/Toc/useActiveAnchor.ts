@@ -1,8 +1,10 @@
+import { useLocation } from '@rspress/runtime';
 import type { Header } from '@rspress/shared';
 import { useEffect, useMemo, useRef, useState } from 'react';
 
 const useVisibleAnchors = (headers: Header[]): string[] => {
   const [visibleAnchors, setVisibleAnchors] = useState<string[]>([]);
+  const { hash } = useLocation();
 
   useEffect(() => {
     const handleScroll = () => {
@@ -27,7 +29,7 @@ const useVisibleAnchors = (headers: Header[]): string[] => {
     return () => {
       window.removeEventListener('scroll', handleScroll);
     };
-  }, [headers]);
+  }, [headers, hash]);
 
   return visibleAnchors;
 };
