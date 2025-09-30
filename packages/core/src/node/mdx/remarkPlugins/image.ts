@@ -4,7 +4,7 @@ import type { Root } from 'mdast';
 import type { MdxjsEsm } from 'mdast-util-mdxjs-esm';
 import type { Plugin } from 'unified';
 import { visit } from 'unist-util-visit';
-import { getASTNodeImport } from '../../utils';
+import { getDefaultImportAstNode } from '../../utils';
 
 const normalizeImageUrl = (imageUrl: string): string => {
   if (isExternalUrl(imageUrl) || imageUrl.startsWith('/')) {
@@ -69,7 +69,7 @@ export const remarkImage: Plugin<[], Root> = () => (tree, _file) => {
       ].filter(Boolean),
     });
 
-    images.push(getASTNodeImport(tempVariableName, imagePath));
+    images.push(getDefaultImportAstNode(tempVariableName, imagePath));
   });
 
   visit(tree, node => {
@@ -98,7 +98,7 @@ export const remarkImage: Plugin<[], Root> = () => (tree, _file) => {
 
     Object.assign(srcAttr, getMdxSrcAttribute(tempVariableName));
 
-    images.push(getASTNodeImport(tempVariableName, imagePath));
+    images.push(getDefaultImportAstNode(tempVariableName, imagePath));
   });
 
   tree.children.unshift(...images);
