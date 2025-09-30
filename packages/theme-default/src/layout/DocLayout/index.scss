@@ -70,7 +70,7 @@
 
     // postion
     position: sticky;
-    margin-top: calc(-1 * var(--rp-sidebar-menu-height));
+    // margin-top: calc(-1 * var(--rp-sidebar-menu-height));
     top: var(--rp-nav-height);
     left: 0;
     bottom: 0;
@@ -149,12 +149,9 @@
   }
   .rp-doc-layout {
     &__aside {
-      max-height: calc(
-        100vh - var(--rp-nav-height) - var(--rp-sidebar-menu-height)
-      );
-
       position: fixed;
-      margin-top: var(--rp-sidebar-menu-height);
+      inset-inline-end: 0;
+      // margin-top: var(--rp-sidebar-menu-height);
       background-color: color-mix(in srgb, var(--rp-c-bg) 60%, transparent);
       backdrop-filter: blur(25px);
       padding: 20px 0px 20px 0px;
@@ -191,7 +188,7 @@
       top: var(--rp-nav-height);
       right: 0;
 
-      margin-top: var(--rp-sidebar-menu-height);
+      // margin-top: var(--rp-sidebar-menu-height);
       height: calc(
         100vh - var(--rp-nav-height) - var(--rp-sidebar-menu-height)
       );
