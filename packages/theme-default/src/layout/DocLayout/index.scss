@@ -1,10 +1,10 @@
 :root {
   // z-index
-  --rp-z-index-nav-screen: 80;
-  --rp-z-index-nav-menu: 30;
-  --rp-z-index-nav: 50;
-  --rp-z-index-mask: 70;
-  --rp-z-index-sidebar: 60;
+  --rp-z-index-nav-screen: 70;
+  --rp-z-index-nav: 60;
+  --rp-z-index-mask: 20;
+  --rp-z-index-sidebar: 50;
+  --rp-z-index-sidebar-menu: 30;
   --rp-z-index-aside: 40;
 }
 
@@ -90,20 +90,22 @@
 
     position: sticky;
     top: var(--rp-nav-height);
+    margin-top: var(--rp-sidebar-menu-height);
     right: 0;
     z-index: var(--rp-z-index-aside);
-
     padding-top: var(--rp-content-padding-y);
 
     overflow: hidden scroll;
     scrollbar-width: none;
     max-height: calc(100vh - var(--rp-nav-height));
+
+    box-shadow: var(--rp-shadow-1);
   }
   &__menu {
     position: sticky;
     top: var(--rp-nav-height);
     left: 0;
-    z-index: var(--rp-z-index-nav-menu);
+    z-index: var(--rp-z-index-sidebar-menu);
 
     height: var(--rp-sidebar-menu-height);
     &__placeholder {

@@ -1,6 +1,7 @@
 import { useLocaleSiteData, useLocation, useSite } from '@rspress/runtime';
 import MenuIcon from '@theme-assets/menu';
 import { forwardRef, useEffect, useRef } from 'react';
+import { createPortal } from 'react-dom';
 import { useUISwitch } from '../../layout/Layout/useUISwitch';
 import { ReadPercent } from '../ReadPercent';
 import { SvgWrapper } from '../SvgWrapper';
@@ -112,9 +113,11 @@ export const SidebarMenu = forwardRef(
             </button>
           )}
         </div>
-        {(isSidebarOpen || isAsideOpen) && (
-          <div onClick={closeSidebar} className="rp-sidebar-menu__mask" />
-        )}
+        {(isSidebarOpen || isAsideOpen) &&
+          createPortal(
+            <div onClick={closeSidebar} className="rp-sidebar-menu__mask" />,
+            document.getElementById('__rspress_modal_container')!,
+          )}
       </>
     );
   },
