@@ -1,4 +1,5 @@
 import { useLocaleSiteData, usePage, useSite } from '@rspress/runtime';
+import './index.scss';
 
 export function LastUpdated() {
   const { lastUpdatedText: localesLastUpdatedText = 'Last Updated' } =
@@ -14,7 +15,7 @@ export function LastUpdated() {
     themeConfig?.lastUpdatedText || localesLastUpdatedText;
 
   return (
-    <div className="rp-flex rp-text-sm rp-text-text-2 rp-leading-6 sm:rp-leading-8 rp-font-medium">
+    <div className="rp-last-updated">
       <p>
         {lastUpdatedText}: <span>{lastUpdatedTime}</span>
       </p>

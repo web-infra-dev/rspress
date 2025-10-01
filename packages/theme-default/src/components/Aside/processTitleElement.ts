@@ -6,15 +6,17 @@
 export function processTitleElement(element: Element): Element {
   const elementClone = element.cloneNode(true) as Element;
 
-  // 1. remove .header-anchor
-  const anchorElement = elementClone.querySelector('.header-anchor');
+  // 1. remove .rp-header-anchor
+  const anchorElement = elementClone.querySelector('.rp-header-anchor');
 
   if (anchorElement) {
     elementClone.removeChild(anchorElement);
   }
 
   // 2. delete ".rspress-toc-exclude" element
-  const excludeElements = elementClone.querySelectorAll('.rspress-toc-exclude');
+  const excludeElements = elementClone.querySelectorAll(
+    '.rspress-toc-exclude,.rp-toc-exclude',
+  );
   excludeElements.forEach(excludeElement => {
     const parentElement = excludeElement.parentElement;
     if (parentElement) {

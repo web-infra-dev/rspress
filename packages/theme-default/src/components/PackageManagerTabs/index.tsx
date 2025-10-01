@@ -1,5 +1,5 @@
 import { Tab, Tabs } from '@theme';
-import { PreWithCodeButtonGroup } from '../../layout/DocLayout/docComponents/pre';
+import { PreWithCodeButtonGroup } from '../DocContent/docComponents/codeblock/pre';
 import { Bun } from './icons/Bun';
 import { Npm } from './icons/Npm';
 import { Pnpm } from './icons/Pnpm';
@@ -170,7 +170,14 @@ export function PackageManagerTabs({
 
         return (
           <Tab key={key}>
-            <PreWithCodeButtonGroup>
+            <PreWithCodeButtonGroup
+              containerElementClassName="language-bash"
+              className="shiki css-variables"
+              style={{
+                backgroundColor: 'var(--shiki-background)',
+                color: 'var(--shiki-foreground)',
+              }}
+            >
               {/* For this case, we highlight the command manually */}
               <code className="language-bash" style={{ whiteSpace: 'pre' }}>
                 <span style={{ display: 'block', padding: '0px 1.25rem' }}>

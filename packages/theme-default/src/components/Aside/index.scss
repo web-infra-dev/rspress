@@ -1,24 +1,44 @@
-.aside-link {
-  padding: 0.25rem 0;
-  margin-bottom: 1px;
-  border-radius: var(--rp-radius-small) 0 0 var(--rp-radius-small);
+.rp-aside {
+  display: flex;
+  flex-direction: column;
+  border-left: 1px solid var(--rp-c-divider-light);
+  padding-left: 20px;
+  padding-right: 20px;
 
-  &:hover {
-    background-color: var(--rp-c-bg-mute);
-  }
-
-  &.aside-active {
-    &,
-    &:hover {
-      color: var(--rp-c-link);
-      background-color: var(--rp-c-brand-tint);
+  &__title {
+    font-size: 14px;
+    font-weight: 700;
+    height: 32px;
+    line-height: 32px;
+    font-family: Inter;
+    font-style: normal;
+    color: var(--rp-c-text-1);
+    margin-bottom: 4px;
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    @media (max-width: 1280px) {
+      display: none;
     }
   }
-}
 
-.aside-link-text {
-  padding: 0px 12px;
-  font-size: 0.8125rem;
-  line-height: 1.25rem;
-  overflow-wrap: break-word;
+  &__divider {
+    height: 1px;
+    background: var(--rp-c-divider-light);
+    margin-top: 16px;
+    margin-bottom: 16px;
+  }
+
+  &__toc {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    gap: 6px;
+
+    // allow scroll when there are too many toc items
+    @media (max-width: 1280px) {
+      max-height: 60vh;
+      overflow: auto scroll;
+    }
+  }
 }
