@@ -37,5 +37,9 @@
     z-index: var(--rp-z-index-mask);
     backdrop-filter: blur(3px);
     background-color: color-mix(in srgb, var(--rp-c-bg) 60%, transparent);
+    display: none;
+    @media (max-width: 767px) {
+      display: block;
+    }
   }
 }
