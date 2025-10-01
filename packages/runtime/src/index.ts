@@ -1,5 +1,4 @@
 export { Head } from '@unhead/react';
-export { createPortal, flushSync } from 'react-dom';
 export * from 'react-router-dom';
 export { Content } from './Content';
 export { useActiveMatcher } from './hooks/useActiveMatcher';
