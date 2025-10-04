@@ -72,22 +72,23 @@
     }
   }
 
-  &__icon-wrapper {
+  &__title-wrapper {
     display: flex;
+    justify-content: flex-start;
     align-items: center;
-    justify-content: center;
   }
 
   &__icon {
+    display: inline-block;
     width: 3rem;
     height: 3rem;
     font-size: 1.875rem;
-    text-align: center;
+    text-align: left;
   }
 
   &__title {
     font-weight: 700;
-    text-align: center;
+    text-align: left;
     margin: 0;
   }
 
