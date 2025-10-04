@@ -35,73 +35,72 @@ function HomeHero({ beforeHeroActions, afterHeroActions }: HomeHeroProps) {
 
   return (
     <div className="rp-home-hero">
+      <div className="rp-home-hero__badge">🎉 Rspress V2 is now released</div>
       <div className="rp-home-hero__container">
-        <div className="rp-home-hero__content">
-          {/* <div className="rp-home-hero__badge"> */}
-          {/* 🎉 Rspress is now open source */}
-          {/* </div> */}
+        <div className="rp-home-hero__text-container">
+          <div className="rp-home-hero__content">
+            <div className="rp-home-hero__title">
+              <span
+                className="rp-home-hero__title-brand"
+                {...renderHtmlOrText(hero.name)}
+              ></span>
+            </div>
 
-          <div className="rp-home-hero__title">
-            <span
-              className="rp-home-hero__title-brand"
-              {...renderHtmlOrText(hero.name)}
-            ></span>
+            {multiHeroText.length !== 0 &&
+              multiHeroText.map(heroText => (
+                <div
+                  key={heroText}
+                  className="rp-home-hero__subtitle"
+                  {...renderHtmlOrText(heroText)}
+                ></div>
+              ))}
           </div>
-
-          {multiHeroText.length !== 0 &&
-            multiHeroText.map(heroText => (
-              <div
-                key={heroText}
-                className="rp-home-hero__subtitle"
-                {...renderHtmlOrText(heroText)}
-              ></div>
-            ))}
-
           <p
             className="rp-home-hero__tagline"
             {...renderHtmlOrText(hero.tagline)}
           ></p>
+        </div>
 
-          {beforeHeroActions}
-          <div className="rp-home-hero__actions">
-            {hero.actions.map(action => {
-              return (
-                <div className="rp-home-hero__action" key={action.link}>
-                  <Button
-                    type="a"
-                    href={action.link}
-                    theme={action.theme}
-                    {...renderHtmlOrText(action.text)}
-                  />
-                </div>
-              );
-            })}
+        {hasImage ? (
+          <div className="rp-home-hero__image">
+            <img
+              src={normalizeImagePath(imageSrc.light)}
+              alt={hero.image?.alt}
+              srcSet={normalizeSrcsetAndSizes(hero.image?.srcset)}
+              sizes={normalizeSrcsetAndSizes(hero.image?.sizes)}
+              width={375}
+              height={375}
+              className="dark:rp-hidden"
+            />
+            <img
+              src={normalizeImagePath(imageSrc.dark)}
+              alt={hero.image?.alt}
+              srcSet={normalizeSrcsetAndSizes(hero.image?.srcset)}
+              sizes={normalizeSrcsetAndSizes(hero.image?.sizes)}
+              width={375}
+              height={375}
+              className="rp-hidden dark:rp-block"
+            />
           </div>
-          {afterHeroActions}
-        </div>
+        ) : null}
       </div>
-      {hasImage ? (
-        <div className="rp-home-hero__image">
-          <img
-            src={normalizeImagePath(imageSrc.light)}
-            alt={hero.image?.alt}
-            srcSet={normalizeSrcsetAndSizes(hero.image?.srcset)}
-            sizes={normalizeSrcsetAndSizes(hero.image?.sizes)}
-            width={375}
-            height={375}
-            className="dark:rp-hidden"
-          />
-          <img
-            src={normalizeImagePath(imageSrc.dark)}
-            alt={hero.image?.alt}
-            srcSet={normalizeSrcsetAndSizes(hero.image?.srcset)}
-            sizes={normalizeSrcsetAndSizes(hero.image?.sizes)}
-            width={375}
-            height={375}
-            className="rp-hidden dark:rp-block"
-          />
-        </div>
-      ) : null}
+
+      {beforeHeroActions}
+      <div className="rp-home-hero__actions">
+        {hero.actions.map(action => {
+          return (
+            <div className="rp-home-hero__action" key={action.link}>
+              <Button
+                type="a"
+                href={action.link}
+                theme={action.theme}
+                {...renderHtmlOrText(action.text)}
+              />
+            </div>
+          );
+        })}
+      </div>
+      {afterHeroActions}
     </div>
   );
 }

@@ -44,16 +44,16 @@ function HomeFeatureItem({ feature }: { feature: Feature }): JSX.Element {
             }
           }}
         >
-          {icon ? (
-            <div className="rp-home-feature__icon-wrapper">
+          <div className="rp-home-feature__title-wrapper">
+            {icon ? (
               <div
                 className="rp-home-feature__icon"
                 {...renderHtmlOrText(icon)}
               ></div>
-            </div>
-          ) : null}
+            ) : null}
 
-          <h2 className="rp-home-feature__title">{title}</h2>
+            <h2 className="rp-home-feature__title">{title}</h2>
+          </div>
           <p
             className="rp-home-feature__detail"
             {...renderHtmlOrText(details)}
