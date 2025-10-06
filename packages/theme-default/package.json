@@ -52,7 +52,7 @@
     "shiki": "^3.12.2"
   },
   "devDependencies": {
-    "@microsoft/api-extractor": "^7.52.13",
+    "@microsoft/api-extractor": "^7.53.0",
     "@rsbuild/plugin-react": "~1.4.1",
     "@rsbuild/plugin-sass": "~1.4.0",
     "@rsbuild/plugin-svgr": "^1.2.2",
