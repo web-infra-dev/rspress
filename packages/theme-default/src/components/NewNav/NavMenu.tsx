@@ -27,35 +27,36 @@ function NavMenuItemWithChildren({
   menuItem: NavItemWithChildren | NavItemWithLinkAndChildren;
   activeMatcher?: HoverGroupProps['activeMatcher'];
 }) {
-  if ('link' in menuItem) {
-    return (
-      <li className="rp-nav-menu__item">
-        <Link href={menuItem.link} className="rp-nav-menu__item__container">
-          {menuItem.text}
-          <SvgDown className="rp-nav-menu__item__icon" />
-        </Link>
-      </li>
-    );
-  }
-
   const { handleMouseEnter, handleMouseLeave, hoverGroup } = useHoverGroup({
     items: menuItem.items,
     activeMatcher,
   });
 
-  return (
+  const inner =
+    'link' in menuItem && typeof menuItem.link === 'string' ? (
+      <Link href={menuItem.link} className="rp-nav-menu__item__container">
+        {menuItem.text}
+        <SvgDown className="rp-nav-menu__item__icon" />
+      </Link>
+    ) : (
+      <div className="rp-nav-menu__item__container">
+        {menuItem.text}
+        <SvgDown className="rp-nav-menu__item__icon" />
+      </div>
+    );
+
+  return menuItem.items.length > 1 ? (
     <li
       className="rp-nav-menu__item"
       onMouseEnter={handleMouseEnter}
       onMouseLeave={handleMouseLeave}
       onClick={handleMouseEnter}
     >
-      <div className="rp-nav-menu__item__container">
-        {menuItem.text}
-        <SvgDown className="rp-nav-menu__item__icon" />
-      </div>
+      {inner}
       {hoverGroup}
     </li>
+  ) : (
+    <li className="rp-nav-menu__item">{inner}</li>
   );
 }
 
