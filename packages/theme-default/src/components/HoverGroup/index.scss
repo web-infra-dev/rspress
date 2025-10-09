@@ -18,6 +18,7 @@
   transition: opacity 0.3s ease-in-out;
 
   position: absolute;
+  z-index: 999;
   top: calc(100% - 10px);
 
   // #region postion
