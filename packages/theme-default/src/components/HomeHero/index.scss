@@ -6,8 +6,7 @@
 
   display: flex;
   flex-direction: column;
-  align-items: center;
-  // align-items: flex-start;
+  align-items: flex-start;
 
   &__container {
     width: 100%;
@@ -121,6 +120,9 @@
       align-items: center;
       text-align: center;
     }
+    &__content {
+      align-items: center;
+    }
     &__title {
       line-height: 1.2em;
     }
@@ -128,11 +130,24 @@
       line-height: 1.2em;
       font-size: 3.5rem;
     }
-    &__content {
-      align-items: center;
-    }
     &__image {
       transform: none;
     }
+  }
+}
+
+.rp-home-hero.rp-home-hero--no-image {
+  align-items: center;
+  .rp-home-hero__container {
+    align-items: center;
+    text-align: center;
+    flex-direction: column-reverse;
+  }
+  .rp-home-hero__text-container {
+    align-items: center;
+    text-align: center;
+  }
+  .rp-home-hero__content {
+    align-items: center;
   }
 }

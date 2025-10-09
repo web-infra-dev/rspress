@@ -4,6 +4,7 @@ import { Button } from '@theme';
 
 import { renderHtmlOrText } from '../../logic/utils';
 import './index.scss';
+import clsx from 'clsx';
 
 const DEFAULT_HERO = {
   name: '',
@@ -34,7 +35,9 @@ function HomeHero({ beforeHeroActions, afterHeroActions }: HomeHeroProps) {
       : hero.image?.src || { light: '', dark: '' };
 
   return (
-    <div className="rp-home-hero">
+    <div
+      className={clsx('rp-home-hero', { 'rp-home-hero--no-image': !hasImage })}
+    >
       <div className="rp-home-hero__badge">🎉 Rspress V2 is now released</div>
       <div className="rp-home-hero__container">
         <div className="rp-home-hero__text-container">
