@@ -13,6 +13,7 @@ import { useMemo } from 'react';
 import { useLangsMenu, useVersionMenu } from './hooks';
 import './NavMenu.scss';
 import ArrowDown from '@theme-assets/arrow-down';
+import SmallMenu from '@theme-assets/small-menu';
 import { SvgWrapper } from '../SvgWrapper';
 
 const SvgDown = (props: React.SVGProps<SVGSVGElement>) => {
@@ -127,12 +128,33 @@ export function NavMenu({ menuItems }: { menuItems: NavItem[] }) {
 }
 
 export function NavMenuOthers() {
-  return (
-    <ul className="rp-nav-menu__others">
+  const items = (
+    <>
       <NavLangs />
       <NavVersions />
       <SwitchAppearance />
       <SocialLinks />
-    </ul>
+    </>
+  );
+
+  const { handleMouseEnter, handleMouseLeave, hoverGroup } = useHoverGroup({
+    position: 'right',
+    customChildren: (
+      <div className="rp-nav-menu__others-mobile__container">{items}</div>
+    ),
+  });
+  return (
+    <>
+      <ul className="rp-nav-menu__others">{items}</ul>
+      <div
+        className="rp-nav-menu__others-mobile"
+        onMouseEnter={handleMouseEnter}
+        onMouseLeave={handleMouseLeave}
+        onClick={handleMouseEnter}
+      >
+        <SvgWrapper icon={SmallMenu} fill="currentColor" />
+        {hoverGroup}
+      </div>
+    </>
   );
 }
