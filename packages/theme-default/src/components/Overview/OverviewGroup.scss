@@ -64,6 +64,8 @@
       }
       &__icon {
         position: absolute;
+        user-select: none;
+        pointer-events: none;
         right: 0;
         bottom: 0;
         color: var(--rp-c-text-1);
