@@ -31,7 +31,7 @@
       }
     }
 
-    @media (max-width: 768) {
+    @media (max-width: 1280px) {
       flex-direction: column;
       &__title {
         width: 100% !important;
@@ -85,13 +85,15 @@
       &__item {
         width: 200px;
         flex: 1 1 200px;
-        max-width: 25%;
+        max-width: 25%; // 4 columns
 
         @media (min-width: 769px) and (max-width: 1280px) {
+          // 3 columns
           max-width: 33%;
         }
 
         @media (max-width: 768px) {
+          // 2 columns
           max-width: 100%;
         }
 
@@ -119,7 +121,7 @@
 html.rp-dark {
   .rp-overview-group__item:hover {
     .rp-overview-group__item__title__icon {
-      color: white !important;
+      color: white;
     }
   }
 }
