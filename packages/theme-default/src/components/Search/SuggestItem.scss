@@ -3,8 +3,8 @@
   box-sizing: border-box;
   margin: 5px 2px;
 
-  :global(.dark) &,
-  :global(.dark) & > a {
+  .dark &,
+  .dark & > a {
     box-shadow: none;
   }
 
