@@ -38,7 +38,7 @@ export const SidebarMenu = forwardRef(
     const { pathname, hash } = useLocation();
 
     const headers = useDynamicToc();
-    const { lastAnchor } = useActiveAnchor(headers, false);
+    const { scrolledHeader } = useActiveAnchor(headers);
 
     function openSidebar() {
       onIsSidebarOpenChange(true);
@@ -100,7 +100,7 @@ export const SidebarMenu = forwardRef(
               }}
               className="rp-sidebar-menu__right"
             >
-              <span>{lastAnchor?.text ?? outlineTitle}</span>
+              <span>{scrolledHeader?.text ?? outlineTitle}</span>
               <ReadPercent size={14} strokeWidth={2} />
               {/* TODO: discussion */}
               {/* <SvgWrapper

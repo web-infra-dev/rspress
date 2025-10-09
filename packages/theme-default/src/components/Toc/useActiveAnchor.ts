@@ -1,9 +1,10 @@
 import { useLocation } from '@rspress/runtime';
 import type { Header } from '@rspress/shared';
-import { useEffect, useMemo, useRef, useState } from 'react';
+import { useEffect, useState } from 'react';
 
-const useVisibleAnchors = (headers: Header[]): string[] => {
-  const [visibleAnchors, setVisibleAnchors] = useState<string[]>([]);
+export const useActiveAnchor = (headers: Header[]) => {
+  const [activeAnchorId, setActiveAnchorId] = useState<string | undefined>();
+  const [scrolledHeader, setScrolledHeader] = useState<Header | undefined>();
   const { hash } = useLocation();
 
   useEffect(() => {
@@ -21,7 +22,7 @@ const useVisibleAnchors = (headers: Header[]): string[] => {
           .replace(/(px|em|rem)$/, ''),
       );
 
-      const topOffset = navHeight + sidebarMenuHeight;
+      const topOffset = navHeight + sidebarMenuHeight - 5; // 5 is the tolerance
 
       const offsets = headers.map(header => {
         const el = document.getElementById(header.id);
@@ -30,13 +31,28 @@ const useVisibleAnchors = (headers: Header[]): string[] => {
         return { id: header.id, top: rect.top };
       });
 
+      const scrolledIds = offsets
+        .filter(offset => offset.top < topOffset)
+        .map(offset => offset.id);
+
       const visibleIds = offsets
         .filter(
-          offset => offset.top >= topOffset && offset.top < window.innerHeight,
+          offset => offset.top >= topOffset && offset.top <= window.innerHeight,
         )
         .map(offset => offset.id);
 
-      setVisibleAnchors(visibleIds);
+      const scrolledHeaderId = scrolledIds[scrolledIds.length - 1];
+
+      const scrolledHeader = headers.find(
+        header => header.id === scrolledHeaderId,
+      );
+
+      if (visibleIds.length === 0) {
+        setActiveAnchorId(scrolledHeaderId);
+      } else {
+        setActiveAnchorId(visibleIds[0]);
+      }
+      setScrolledHeader(scrolledHeader);
     };
 
     handleScroll();
@@ -47,34 +63,8 @@ const useVisibleAnchors = (headers: Header[]): string[] => {
     };
   }, [headers, hash]);
 
-  return visibleAnchors;
-};
-
-export const useActiveAnchor = (headers: Header[], isBottom: boolean) => {
-  const anchors = useVisibleAnchors(headers);
-
-  const anchorDirty = useRef<string>(null);
-
-  const activeAnchorId = useMemo(() => {
-    // If there are no anchors on the entire screen, use the before value.
-    if (anchors.length === 0) {
-      return anchorDirty.current;
-    }
-    const lastHeader = headers[headers.length - 1];
-    if (isBottom) {
-      return lastHeader.id;
-    }
-    return anchors[0];
-  }, [headers, anchors, isBottom]);
-
-  anchorDirty.current = activeAnchorId;
-
-  const lastAnchor = headers[
-    headers.findIndex(h => h.id === activeAnchorId) - 1
-  ] as Header | undefined;
-
   return {
+    scrolledHeader,
     activeAnchorId,
-    lastAnchor,
   };
 };
