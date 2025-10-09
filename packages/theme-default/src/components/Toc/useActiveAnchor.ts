@@ -8,6 +8,21 @@ const useVisibleAnchors = (headers: Header[]): string[] => {
 
   useEffect(() => {
     const handleScroll = () => {
+      // get var(--rp-nav-height)
+      const navHeight = Number(
+        getComputedStyle(document.documentElement)
+          .getPropertyValue('--rp-nav-height')
+          .replace(/(px|em|rem)$/, ''),
+      );
+      // get ver(--rp-sidebar-menu-height)
+      const sidebarMenuHeight = Number(
+        getComputedStyle(document.documentElement)
+          .getPropertyValue('--rp-sidebar-menu-height')
+          .replace(/(px|em|rem)$/, ''),
+      );
+
+      const topOffset = navHeight + sidebarMenuHeight;
+
       const offsets = headers.map(header => {
         const el = document.getElementById(header.id);
         if (!el) return { id: header.id, top: Infinity };
@@ -16,8 +31,9 @@ const useVisibleAnchors = (headers: Header[]): string[] => {
       });
 
       const visibleIds = offsets
-        // 110 = var(--rp-nav-height) + var(--rp-sidebar-menu-height)
-        .filter(offset => offset.top >= 110 && offset.top < window.innerHeight)
+        .filter(
+          offset => offset.top >= topOffset && offset.top < window.innerHeight,
+        )
         .map(offset => offset.id);
 
       setVisibleAnchors(visibleIds);
