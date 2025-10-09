@@ -18,19 +18,22 @@ export function SearchButton({ setFocused }: SearchButtonProps) {
   }, []);
   return (
     <>
-      <div
+      <button
         className={`rspress-nav-search-button ${styles.navSearchButton}`}
         onClick={() => setFocused(true)}
       >
-        <button>
-          <SvgWrapper icon={SearchSvg} width="18" height="18" />
-          <p className={styles.searchWord}>{searchPlaceholderText}</p>
-          <div style={{ opacity: metaKey ? 1 : 0 }}>
-            <span>{metaKey}</span>
-            <span>K</span>
-          </div>
-        </button>
-      </div>
+        <div className={styles.searchContent}>
+          <SvgWrapper icon={SearchSvg} className={styles.searchIcon} />
+          <span className={styles.searchWord}>{searchPlaceholderText}</span>
+        </div>
+        <div
+          className={styles.searchHotKey}
+          style={{ opacity: metaKey ? 1 : 0 }}
+        >
+          <span>{metaKey}</span>
+          <span>K</span>
+        </div>
+      </button>
       <div
         className={styles.mobileNavSearchButton}
         onClick={() => setFocused(true)}
