@@ -70,48 +70,49 @@
 }
 
 .navSearchButton {
-  display: flex;
   border-radius: var(--rp-radius-small);
   padding: 0 10px;
   height: 40px;
-  width: 100%;
-  background-color: var(--rp-c-bg);
+  min-width: 140px;
+  background-color: color-mix(in srgb, var(--rp-c-bg) 60%, transparent);
+  backdrop-filter: blur(25px);
   border: 1px solid var(--rp-c-divider-light);
   transition: border-color 0.3s;
 
-  & > button {
-    cursor: pointer;
+  cursor: pointer;
+  display: flex;
+  justify-content: space-between;
+
+  align-items: center;
+  font-size: 13px;
+
+  .searchContent {
     display: flex;
-    justify-content: space-around;
     align-items: center;
-    font-size: 13px;
-    background-color: transparent;
-
-    .searchWord {
-      margin-left: 5px;
-      margin-right: 40px;
-      font-weight: 500;
-      white-space: nowrap;
-      color: var(--rp-c-text-2);
-      transition: all 0.3s;
-    }
-
-    > div {
-      border-radius: var(--rp-radius-small);
-      color: var(--rp-c-gray);
-      font-weight: 500;
-      background-color: var(--rp-c-bg);
-      width: 43px;
-      transition: opacity 0.3s;
-      > span {
-        margin-left: 5px;
-        + span {
-          margin-right: 5px;
-        }
-      }
-    }
+    word-break: keep-all;
+    font-size: 14px;
+    gap: 4px;
   }
 
+  .searchWord {
+    font-weight: 500;
+    white-space: nowrap;
+    color: var(--rp-c-text-2);
+  }
+
+  .searchIcon {
+    display: inline-block;
+    font-size: 20px;
+  }
+
+  .searchHotKey {
+    background-color: var(--rp-c-bg-soft);
+    border-radius: var(--rp-radius-small);
+    color: var(--rp-c-gray);
+    font-weight: 500;
+    padding: 0px 8px;
+    transition: opacity 0.3s;
+  }
   &:hover {
     border: 1px solid var(--rp-c-brand);
     > button {
