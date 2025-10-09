@@ -9,10 +9,11 @@ export function NavHamburger() {
   const { isScreenOpen, toggleScreen } = useNavScreen();
   return (
     <>
-      {createPortal(
-        <NavScreen isScreenOpen={isScreenOpen} toggleScreen={toggleScreen} />,
-        document.getElementById('__rspress_modal_container')!,
-      )}
+      {typeof window !== 'undefined' &&
+        createPortal(
+          <NavScreen isScreenOpen={isScreenOpen} toggleScreen={toggleScreen} />,
+          document.getElementById('__rspress_modal_container')!,
+        )}
       <button
         onClick={toggleScreen}
         aria-label="mobile hamburger"
