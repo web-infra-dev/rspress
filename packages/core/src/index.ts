@@ -30,12 +30,18 @@ export {
 } from '@rspress/shared/node-utils';
 // cli
 export { defineConfig } from './cli/config';
-export {
-  build,
-  dev,
-  remarkFileCodeBlock,
-  remarkLink,
-  serve,
-} from './node';
+export { build, dev, remarkFileCodeBlock, remarkLink, serve } from './node';
+export type {
+  CustomLinkMeta,
+  DirSectionHeaderSideMeta,
+  DirSideMeta,
+  DividerSideMeta,
+  FileSideMeta,
+  MetaJson,
+  NavJson,
+  SectionHeaderMeta,
+  SideMeta,
+  SideMetaItem,
+} from './node/auto-nav-sidebar/type';
 export { PluginDriver } from './node/PluginDriver';
 export { RouteService } from './node/route/RouteService';

@@ -109,6 +109,9 @@ export type DirSideMeta = {
   context?: string;
 };
 
+export type DirSectionHeaderSideMeta = Omit<DirSideMeta, 'type'> &
+  Omit<SectionHeaderMeta, 'type'> & { type: 'dir-section-header' };
+
 export type DividerSideMeta = {
   type: 'divider';
   dashed?: boolean;
@@ -146,6 +149,7 @@ export type CustomLinkMeta =
 export type SideMetaItem =
   | FileSideMeta
   | DirSideMeta
+  | DirSectionHeaderSideMeta
   | DividerSideMeta
   | SectionHeaderMeta
   | CustomLinkMeta
@@ -204,11 +208,32 @@ export type DirSideMeta = {
 };
 ```
 
-其中，`name` 表示目录名，`label` 表示该目录在侧边栏中的显示名称，`collapsible` 表示该目录是否可以折叠，`collapsed` 表示该目录是否默认折叠，`overviewHeaders` 表示该目录下的文件在预览页中展示的标题级别，为可选值，默认为 `[2]`。`context` 表示在生成侧边栏时在所在的 DOM 节点添加 `data-context` 属性的值。为可选值，默认不会添加。比如:
+其中，`name` 表示目录名，`label` 表示该目录在侧边栏中的显示名称，`collapsible` 表示该目录是否可以折叠，`collapsed` 表示该目录是否默认折叠，`overviewHeaders` 表示该目录下的文件在预览页中展示的标题级别，为可选值，默认为 `[2]`，即 h2。`context` 表示在生成侧边栏时在所在的 DOM 节点添加 `data-context` 属性的值。为可选值，默认不会添加。比如:
 
 ```json
 {
   "type": "dir",
+  "name": "advanced",
+  "label": "Advanced",
+  "collapsible": true,
+  "collapsed": false
+}
+```
+
+### dir-section-header
+
+当描述**目录**时，你也可以使用 `dir-section-header`，它与 `"type": "dir"` 仅在 UI 上有所变化，常用于第一级别，目录标题会以 [分组标题](#section-header) 的形式展示，并与目录下的文件处于同一层级。
+
+类型为：
+
+```ts
+export type DirSectionHeaderSideMeta = Omit<DirSideMeta, 'type'> &
+  Omit<SectionHeaderMeta, 'type'> & { type: 'dir-section-header' };
+```
+
+```json
+{
+  "type": "dir-section-header",
   "name": "advanced",
   "label": "Advanced",
   "collapsible": true,

@@ -47,7 +47,7 @@ docs
 
 ## JSON schema type hint
 
-To better edit `_nav.json` and `_meta.json` files, Rspress V2 provides two schema files `@rspress/core/meta-json-schema.json` and `@rspress/core/nav-json-schema.json` for ide type hinting.
+To better edit `_nav.json` and `_meta.json` files, Rspress V2 provides two schema files `@rspress/core/meta-json-schema.json` and `@rspress/core/nav-json-schema.json` for IDE type hinting.
 
 For example, in VSCode, you can add the following configuration in `.vscode/settings.json`:
 
@@ -63,15 +63,16 @@ For example, in VSCode, you can add the following configuration in `.vscode/sett
     {
       "fileMatch": ["**/_nav.json"],
       "url": "./node_modules/@rspress/core/nav-json-schema.json"
-      // or "url": "https://unpkg.com/@rspress/core@2.0.0-beta.22/nav-json-schema.json"
+      // or "url": "https://unpkg.com/@rspress/core@2.0.0-beta.21/nav-json-schema.json"
     }
   ]
+  // ...
 }
 ```
 
 ## Navbar level config
 
-In the case of the navigation bar level, you can fill in an array in `_nav.json`, and its type is exactly the same as the nav config of the default theme. For details, please refer to [nav config](/api/config/config-theme.html#nav). for example:
+At the navigation bar level, you can fill in an array in `_nav.json`, and its type is exactly the same as the nav config of the default theme. For details, please refer to [nav config](/api/config/config-theme.html#nav). For example:
 
 ```json title="docs/_nav.json"
 [
@@ -85,7 +86,7 @@ In the case of the navigation bar level, you can fill in an array in `_nav.json`
 
 ## Sidebar level config
 
-In the case of the sidebar level, you can fill in `_meta.json` an array with each item of the following type:
+At the sidebar level, you can fill in an array in `_meta.json`, with each item of the following type:
 
 ```ts
 export type FileSideMeta = {
@@ -107,6 +108,9 @@ export type DirSideMeta = {
   overviewHeaders?: number[];
   context?: string;
 };
+
+export type DirSectionHeaderSideMeta = Omit<DirSideMeta, 'type'> &
+  Omit<SectionHeaderMeta, 'type'> & { type: 'dir-section-header' };
 
 export type DividerSideMeta = {
   type: 'divider';
@@ -145,6 +149,7 @@ export type CustomLinkMeta =
 export type SideMetaItem =
   | FileSideMeta
   | DirSideMeta
+  | DirSectionHeaderSideMeta
   | DividerSideMeta
   | SectionHeaderMeta
   | CustomLinkMeta
@@ -176,7 +181,7 @@ export type FileSideMeta = {
 };
 ```
 
-Among them, `name` means the file name, `with`/`without` suffix is ​​supported, `label` means the display name of the file in the sidebar.`label` is an optional value, if it is not filled, it will automatically take the h1 title in the document. `overviewHeaders` means the headers displayed in the overview page of the file. It is an optional value and the default value is `[2]`. `context` means adding the value of the `data-context` attribute to the DOM node when generating the sidebar, it is an optional value and will not be added by default. For example:
+Here, `name` means the file name, with or without a suffix is supported, `label` means the display name of the file in the sidebar. `label` is optional, if not filled, it will automatically take the h1 title in the document. `overviewHeaders` means the headers displayed in the overview page of the file. It is optional and the default value is `[2]`. `context` means adding the value of the `data-context` attribute to the DOM node when generating the sidebar, it is optional and will not be added by default. For example:
 
 ```json
 {
@@ -203,7 +208,7 @@ export type DirSideMeta = {
 };
 ```
 
-Among them, `name` indicates the directory name, `label` indicates the display name of the directory in the sidebar, `collapsible` indicates whether the directory can be collapsed, `collapsed` indicates whether the directory is collapsed by default, and `overviewHeaders` indicates the headers displayed on the overview page for files in this directory. It is an optional value and the default value is `[2]`. `context` means adding the value of the `data-context` attribute to the DOM node when generating the sidebar, it is an optional value and will not be added by default. For example:
+Here, `name` indicates the directory name, `label` indicates the display name of the directory in the sidebar, `collapsible` indicates whether the directory can be collapsed, `collapsed` indicates whether the directory is collapsed by default, and `overviewHeaders` indicates the headers displayed on the overview page for files in this directory. It is optional and the default value is `[2]`. `context` means adding the value of the `data-context` attribute to the DOM node when generating the sidebar, it is optional and will not be added by default. For example:
 
 ```json
 {
@@ -214,6 +219,29 @@ Among them, `name` indicates the directory name, `label` indicates the display n
   "collapsed": false
 }
 ```
+
+### dir-section-header
+
+When describing a **directory**, you can also use `dir-section-header`, which only differs from `"type": "dir"` in UI. It is often used at the first level, where the directory title is displayed as a [section header](#section-header) and is at the same level as files under the directory.
+
+Type:
+
+```ts
+export type DirSectionHeaderSideMeta = Omit<DirSideMeta, 'type'> &
+  Omit<SectionHeaderMeta, 'type'> & { type: 'dir-section-header' };
+```
+
+```json
+{
+  "type": "dir-section-header",
+  "name": "advanced",
+  "label": "Advanced",
+  "collapsible": true,
+  "collapsed": false
+}
+```
+
+### divider
 
 In the case of describing **divider**, the types are as follows:
 
@@ -312,7 +340,7 @@ export type CustomLinkMeta =
     };
 ```
 
-Among them, `link` indicates the link address, `label` indicates the display name of the link in the sidebar, for example:
+Here, `link` indicates the link address, `label` indicates the display name of the link in the sidebar, for example:
 
 ```json
 {
@@ -322,7 +350,7 @@ Among them, `link` indicates the link address, `label` indicates the display nam
 }
 ```
 
-`link` support external links, for example:
+`link` supports external links, for example:
 
 ```json
 {
@@ -404,7 +432,7 @@ In the guides directory you can configure `_meta.json` as follows:
 ]
 ```
 
-In `basic` directory, you may not configure `_meta.json`, and then Rspress will automatically generate a sidebar for you, the default is sorted alphabetically according to the file name. If you want to customize the order, you can prefix the file name with a number, such as:
+In the `basic` directory, you may not configure `_meta.json`, and then Rspress will automatically generate a sidebar for you, the default is sorted alphabetically according to the file name. If you want to customize the order, you can prefix the file name with a number, such as:
 
 ```txt
 basic

@@ -21,6 +21,9 @@ export type DirSideMeta = {
   collapsed?: boolean;
 };
 
+export type DirSectionHeaderSideMeta = Omit<DirSideMeta, 'type'> &
+  Omit<SectionHeaderMeta, 'type'> & { type: 'dir-section-header' };
+
 export type DividerSideMeta = {
   type: 'divider';
   dashed?: boolean;
@@ -84,6 +87,7 @@ export type CustomLinkMeta =
 export type SideMetaItem =
   | FileSideMeta
   | DirSideMeta
+  | DirSectionHeaderSideMeta
   | DividerSideMeta
   | SectionHeaderMeta
   | CustomLinkMeta
