@@ -10,7 +10,7 @@ import * as userSearchHooks from 'virtual-search-hooks';
 import { useNavigate } from '../Link/useNavigate';
 import { SvgWrapper } from '../SvgWrapper';
 import { Tab, Tabs } from '../Tabs';
-import * as styles from './index.module.scss';
+import './SearchPanel.scss';
 import { PageSearcher } from './logic/search';
 import type {
   CustomMatchResult,
@@ -392,7 +392,7 @@ export function SearchPanel({ focused, setFocused }: SearchPanelProps) {
     return (
       <Tabs
         values={tabValues}
-        tabContainerClassName={styles.tabClassName}
+        tabContainerClassName="rp-search-panel__tab-container"
         onChange={index => {
           setResultTabIndex(index);
           setCurrentSuggestionIndex(0);
@@ -419,8 +419,8 @@ export function SearchPanel({ focused, setFocused }: SearchPanelProps) {
     // if isSearching, show loading svg
     if (isSearching) {
       return (
-        <div className="rp-flex rp-flex-col rp-items-center">
-          <SvgWrapper icon={LoadingSvg} className="m-8 opacity-80" />
+        <div className="rp-search-panel__loading">
+          <SvgWrapper icon={LoadingSvg} />
         </div>
       );
     }
@@ -439,7 +439,7 @@ export function SearchPanel({ focused, setFocused }: SearchPanelProps) {
           const groupSuggestions = normalizedSuggestions.get(group) || [];
           return (
             <li key={group}>
-              <ul className="rp-pb-2">
+              <ul className="rp-search-panel__group">
                 {groupSuggestions.map(suggestion => {
                   accumulateIndex++;
                   const suggestionIndex = accumulateIndex;
@@ -486,25 +486,25 @@ export function SearchPanel({ focused, setFocused }: SearchPanelProps) {
       {focused &&
         createPortal(
           <div
-            className={styles.mask}
+            className="rp-search-panel__mask"
             onClick={() => {
               clearSearchState();
             }}
           >
             <div
-              className={`${styles.modal}`}
+              className="rp-search-panel__modal"
               onClick={e => {
                 setFocused(true);
                 e.stopPropagation();
               }}
             >
-              <div className="rp-flex rp-items-center">
-                <div className={styles.inputForm}>
+              <div className="rp-search-panel__header">
+                <div className="rp-search-panel__input-form">
                   <label>
                     <SvgWrapper icon={SearchSvg} />
                   </label>
                   <input
-                    className={`rspress-search-panel-input ${styles.input}`}
+                    className="rp-search-panel__input"
                     ref={searchInputRef}
                     placeholder={searchPlaceholderText}
                     aria-label="SearchPanelInput"
@@ -515,7 +515,7 @@ export function SearchPanel({ focused, setFocused }: SearchPanelProps) {
                   <label>
                     <SvgWrapper
                       icon={CloseSvg}
-                      className={styles.close}
+                      className="rp-search-panel__close"
                       onClick={e => {
                         if (searchInputRef.current) {
                           e.stopPropagation();
@@ -531,7 +531,7 @@ export function SearchPanel({ focused, setFocused }: SearchPanelProps) {
                   </label>
                 </div>
                 <h2
-                  className="rp-text-brand rp-ml-2 sm:rp-hidden rp-cursor-pointer"
+                  className="rp-search-panel__cancel"
                   onClick={e => {
                     e.stopPropagation();
                     clearSearchState();
@@ -543,7 +543,7 @@ export function SearchPanel({ focused, setFocused }: SearchPanelProps) {
 
               {query && initStatus === 'inited' ? (
                 <div
-                  className={`${styles.searchHits}  rspress-scrollbar`}
+                  className="rp-search-panel__results rspress-scrollbar"
                   ref={searchResultRef}
                 >
                   {renderSearchResult(searchResult, isSearching)}
