@@ -2,7 +2,7 @@ import { useLocaleSiteData } from '@rspress/runtime';
 import SearchSvg from '@theme-assets/search';
 import { useEffect, useState } from 'react';
 import { SvgWrapper } from '../SvgWrapper';
-import * as styles from './index.module.scss';
+import './SearchButton.scss';
 
 export interface SearchButtonProps {
   setFocused: (focused: boolean) => void;
@@ -18,16 +18,15 @@ export function SearchButton({ setFocused }: SearchButtonProps) {
   }, []);
   return (
     <>
-      <button
-        className={`rspress-nav-search-button ${styles.navSearchButton}`}
-        onClick={() => setFocused(true)}
-      >
-        <div className={styles.searchContent}>
-          <SvgWrapper icon={SearchSvg} className={styles.searchIcon} />
-          <span className={styles.searchWord}>{searchPlaceholderText}</span>
+      <button className="rp-search-button" onClick={() => setFocused(true)}>
+        <div className="rp-search-button__content">
+          <SvgWrapper icon={SearchSvg} className="rp-search-button__icon" />
+          <span className="rp-search-button__word">
+            {searchPlaceholderText}
+          </span>
         </div>
         <div
-          className={styles.searchHotKey}
+          className="rp-search-button__hotkey"
           style={{ opacity: metaKey ? 1 : 0 }}
         >
           <span>{metaKey}</span>
@@ -35,7 +34,7 @@ export function SearchButton({ setFocused }: SearchButtonProps) {
         </div>
       </button>
       <div
-        className={styles.mobileNavSearchButton}
+        className="rp-search-button--mobile"
         onClick={() => setFocused(true)}
       >
         <SvgWrapper icon={SearchSvg} />
