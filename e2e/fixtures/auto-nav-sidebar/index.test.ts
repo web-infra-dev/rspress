@@ -37,7 +37,14 @@ test.describe('Auto nav and sidebar test', async () => {
     const h2 = await page.$$('.overview-index h2');
     const h2Texts = await Promise.all(h2.map(element => element.textContent()));
     expect(h2Texts.join(',')).toEqual(
-      ['Config', 'Client API', 'Commands', 'Single'].join(','),
+      [
+        'Config',
+        'Client API',
+        'Commands',
+        'Single',
+        'Section A',
+        'Section B',
+      ].join(','),
     );
 
     const h3 = await page.$$('.overview-group_f8331 h3');
@@ -54,6 +61,8 @@ test.describe('Auto nav and sidebar test', async () => {
         'Components',
         'Commands',
         'Single',
+        'Section A',
+        'Section B',
       ].join(','),
     );
 
