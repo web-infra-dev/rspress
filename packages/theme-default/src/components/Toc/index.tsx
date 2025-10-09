@@ -6,7 +6,7 @@ const baseHeaderLevel = 2;
 
 export function Toc() {
   const headers = useDynamicToc();
-  const { activeAnchorId } = useActiveAnchor(headers, false);
+  const { activeAnchorId } = useActiveAnchor(headers);
 
   return (
     <>
