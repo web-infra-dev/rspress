@@ -1,8 +1,8 @@
 .rp-home-hero {
   position: relative;
-  margin: 10vh auto;
+  margin: 100px auto;
   max-width: 72rem;
-  padding: 40px;
+  padding: 20px 80px;
 
   display: flex;
   flex-direction: column;
@@ -17,8 +17,12 @@
     gap: 20px;
   }
   &__text-container {
+    display: flex;
+    align-self: stretch;
+    flex-direction: column;
     text-align: left;
     align-items: flex-start;
+    justify-content: space-between;
   }
 
   &__image {
@@ -26,7 +30,6 @@
     min-width: 350px;
     width: 350px;
     max-width: 50vw;
-    margin: 0 20px;
   }
 
   &__content {
@@ -55,8 +58,8 @@
   }
 
   &__title {
-    font-size: 4.5rem;
-    line-height: 1em;
+    font-size: 4rem;
+    line-height: 1.2em;
     font-weight: 600;
   }
 
@@ -71,8 +74,8 @@
 
   &__subtitle {
     margin: 0;
-    font-size: 4.5rem;
-    line-height: 1em;
+    font-size: 4rem;
+    line-height: 1.2em;
     font-weight: 600;
   }
 
@@ -96,7 +99,7 @@
     display: flex;
     flex-direction: column;
     gap: 1rem;
-    margin-top: 1rem;
+    margin-top: 3rem;
 
     @media (min-width: 768px) {
       flex-direction: row;
@@ -111,6 +114,9 @@
 
 @media (max-width: 768px) {
   .rp-home-hero {
+    padding: 20px;
+    margin: 0px auto;
+
     align-items: center;
     &__container {
       align-items: center;

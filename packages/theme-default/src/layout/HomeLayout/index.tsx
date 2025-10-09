@@ -1,5 +1,4 @@
-import { HomeFeature, HomeFooter, HomeHero } from '@theme';
-import { HomeBackground } from '../../components/HomeBackground';
+import { HomeBackground, HomeFeature, HomeFooter, HomeHero } from '@theme';
 
 export interface HomeLayoutProps {
   beforeHero?: React.ReactNode;

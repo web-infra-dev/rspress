@@ -22,6 +22,7 @@ export { DocContent } from './components/DocContent/index';
 export { DocFooter } from './components/DocFooter/index';
 export { EditLink } from './components/EditLink/index';
 export { useEditLink } from './components/EditLink/useEditLink';
+export { HomeBackground } from './components/HomeBackground/index';
 export { HomeFeature } from './components/HomeFeature/index';
 export { HomeFooter } from './components/HomeFooter/index';
 export { HomeHero, type HomeHeroProps } from './components/HomeHero/index';
