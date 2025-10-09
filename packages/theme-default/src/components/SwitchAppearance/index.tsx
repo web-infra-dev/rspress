@@ -1,10 +1,11 @@
-import { flushSync, ThemeContext, useSite } from '@rspress/runtime';
+import { ThemeContext, useSite } from '@rspress/runtime';
 import MoonSvg from '@theme-assets/moon';
 import SunSvg from '@theme-assets/sun';
 import { type MouseEvent, useContext } from 'react';
 import { SvgWrapper } from '../SvgWrapper';
 import './global.scss';
 import './index.scss';
+import { flushSync } from 'react-dom';
 
 const supportAppearanceTransition = () => {
   return (

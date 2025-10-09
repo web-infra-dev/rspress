@@ -1,10 +1,11 @@
-import { createPortal, useLocaleSiteData, usePageData } from '@rspress/runtime';
+import { useLocaleSiteData, usePageData } from '@rspress/runtime';
 import type { AnyFunction } from '@rspress/shared';
 import CloseSvg from '@theme-assets/close';
 import LoadingSvg from '@theme-assets/loading';
 import SearchSvg from '@theme-assets/search';
 import { debounce } from 'lodash-es';
 import { useCallback, useEffect, useRef, useState } from 'react';
+import { createPortal } from 'react-dom';
 import * as userSearchHooks from 'virtual-search-hooks';
 import { useNavigate } from '../Link/useNavigate';
 import { SvgWrapper } from '../SvgWrapper';

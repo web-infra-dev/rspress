@@ -1,26 +1,27 @@
 [
   {
-    "type": "dir",
+    "type": "dir-section-header",
     "name": "start",
     "label": "gettingStarted"
   },
   {
-    "type": "dir",
+    "type": "dir-section-header",
     "name": "basic",
     "label": "features"
   },
   {
-    "type": "dir",
+    "type": "dir-section-header",
+    "label": "Markdown & MDX",
     "name": "use-mdx",
     "tag": "new"
   },
   {
-    "type": "dir",
+    "type": "dir-section-header",
     "name": "default-theme",
     "label": "defaultTheme"
   },
   {
-    "type": "dir",
+    "type": "dir-section-header",
     "name": "advanced",
     "label": "advanced"
   }
