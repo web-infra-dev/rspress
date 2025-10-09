@@ -13,14 +13,14 @@
 
   /* Scrollbar thumb */
   &::-webkit-scrollbar-thumb {
-    background: rgba(0, 0, 0, 0.1);
+    background: rgba(0, 0, 0, 0.05);
     border-radius: 4px;
     transition: background 0.2s ease;
   }
 
   /* Hover state */
   &:hover::-webkit-scrollbar-thumb {
-    background: rgba(0, 0, 0, 0.2);
+    background: rgba(0, 0, 0, 0.1);
   }
 
   /* Scrollbar corner */
