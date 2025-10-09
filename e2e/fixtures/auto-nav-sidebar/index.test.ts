@@ -42,8 +42,8 @@ test.describe('Auto nav and sidebar test', async () => {
         'Client API',
         'Commands',
         'Single',
-        'Section A',
-        'Section B',
+        'Section a',
+        'Section b',
       ].join(','),
     );
 
@@ -61,8 +61,8 @@ test.describe('Auto nav and sidebar test', async () => {
         'Components',
         'Commands',
         'Single',
-        'Section A',
-        'Section B',
+        'Section a',
+        'Section b',
       ].join(','),
     );
 
