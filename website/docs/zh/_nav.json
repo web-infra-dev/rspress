@@ -12,7 +12,8 @@
   {
     "text": "UI",
     "link": "/ui/vars",
-    "activeMatch": "/ui/"
+    "activeMatch": "/ui/",
+    "tag": "new"
   },
   {
     "text": "API",
