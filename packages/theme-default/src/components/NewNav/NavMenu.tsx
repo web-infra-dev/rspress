@@ -7,7 +7,13 @@ import {
   type NavItemWithLinkAndChildren,
 } from '@rspress/shared';
 import type { HoverGroupProps } from '@theme';
-import { Link, SocialLinks, SwitchAppearance, useHoverGroup } from '@theme';
+import {
+  Link,
+  SocialLinks,
+  SwitchAppearance,
+  Tag,
+  useHoverGroup,
+} from '@theme';
 import cls from 'clsx';
 import { useMemo } from 'react';
 import { useLangsMenu, useVersionMenu } from './hooks';
@@ -66,6 +72,7 @@ function NavMenuItemWithLink({ menuItem }: { menuItem: NavItemWithLink }) {
     return matchNavbar(menuItem, pathname);
   }, [menuItem, pathname]);
 
+  const { link, text, tag } = menuItem;
   return (
     <li
       className={cls(
@@ -77,8 +84,11 @@ function NavMenuItemWithLink({ menuItem }: { menuItem: NavItemWithLink }) {
         isActive ? 'rspress-nav-menu-item-active' : '',
       )}
     >
-      <Link href={menuItem.link}>
-        <div className="rp-nav-menu__item__container">{menuItem.text}</div>
+      <Link href={link}>
+        <div className="rp-nav-menu__item__container">
+          {text}
+          {tag && <Tag tag={tag} />}
+        </div>
       </Link>
     </li>
   );
