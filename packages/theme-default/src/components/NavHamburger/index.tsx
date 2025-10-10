@@ -1,6 +1,6 @@
 import SmallMenu from '@theme-assets/small-menu';
 import { createPortal } from 'react-dom';
-import { NavScreen } from '../NavScreen';
+import { NavScreen } from '../NewNavScreen';
 import { SvgWrapper } from '../SvgWrapper';
 import * as styles from './index.module.scss';
 import { useNavScreen } from './useNavScreen';
