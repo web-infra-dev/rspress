@@ -42,11 +42,13 @@ function NavMenuItemWithChildren({
     'link' in menuItem && typeof menuItem.link === 'string' ? (
       <Link href={menuItem.link} className="rp-nav-menu__item__container">
         {menuItem.text}
+        {menuItem.tag && <Tag tag={menuItem.tag} />}
         <SvgDown className="rp-nav-menu__item__icon" />
       </Link>
     ) : (
       <div className="rp-nav-menu__item__container">
         {menuItem.text}
+        {menuItem.tag && <Tag tag={menuItem.tag} />}
         <SvgDown className="rp-nav-menu__item__icon" />
       </div>
     );
@@ -72,7 +74,6 @@ function NavMenuItemWithLink({ menuItem }: { menuItem: NavItemWithLink }) {
     return matchNavbar(menuItem, pathname);
   }, [menuItem, pathname]);
 
-  const { link, text, tag } = menuItem;
   return (
     <li
       className={cls(
@@ -84,11 +85,9 @@ function NavMenuItemWithLink({ menuItem }: { menuItem: NavItemWithLink }) {
         isActive ? 'rspress-nav-menu-item-active' : '',
       )}
     >
-      <Link href={link}>
-        <div className="rp-nav-menu__item__container">
-          {text}
-          {tag && <Tag tag={tag} />}
-        </div>
+      <Link href={menuItem.link} className="rp-nav-menu__item__container">
+        {menuItem.text}
+        {menuItem.tag && <Tag tag={menuItem.tag} />}
       </Link>
     </li>
   );
