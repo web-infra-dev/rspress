@@ -10,15 +10,28 @@
   background-color: var(--rp-c-bg);
   overflow-y: auto;
   z-index: var(--rp-z-index-nav-screen);
-  
-  &--active {
+
+  &--open {
     display: block;
   }
 
   &__container {
     display: flex;
     flex-direction: column;
-    align-items: center; 
+    align-items: center;
     gap: 2px;
   }
+  &__others {
+    display: flex;
+    @media (max-width: 1280px) {
+      display: none;
+    }
+  }
+}
+
+.rp-nav-screen-divider {
+  width: 100%;
+  height: 1px;
+  background-color: var(--rp-c-divider-light);
+  margin: 1rem 0;
 }

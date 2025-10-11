@@ -12,31 +12,6 @@
     gap: 24px;
   }
 
-  &__others {
-    display: flex;
-    align-items: center;
-    height: 100%;
-    gap: 24px;
-
-    list-style: none;
-    @media (max-width: 1280px) {
-      display: none;
-    }
-  }
-  &__others-mobile {
-    display: none;
-    @media (min-width: 769px) and (max-width: 1280px) {
-      display: flex;
-    }
-    &__container {
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      flex-direction: column;
-      gap: 32px;
-    }
-  }
-
   &__item {
     display: flex;
     height: 100%;

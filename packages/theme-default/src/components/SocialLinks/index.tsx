@@ -33,6 +33,10 @@ export const SocialLinks = ({
     ) : null,
   });
 
+  if (socialLinks.length === 0) {
+    return <></>;
+  }
+
   return (
     <div className={'rp-social-links'} onMouseLeave={handleMouseLeave}>
       {shownLinks.map((item, index) => (

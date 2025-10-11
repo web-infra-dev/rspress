@@ -11,7 +11,6 @@ export {
   CodeButtonGroup,
   type CodeButtonGroupProps,
 } from './components/DocContent/docComponents/codeblock/CodeButtonGroup';
-
 // layout
 export type {
   PreWithCodeButtonGroupProps,
@@ -62,6 +61,7 @@ export { Sidebar, SidebarList } from './components/Sidebar/index';
 export { SocialLinks } from './components/SocialLinks/index';
 export { SourceCode } from './components/SourceCode/index';
 export { Steps } from './components/Steps/index';
+export { SvgWrapper } from './components/SvgWrapper/index';
 export { SwitchAppearance } from './components/SwitchAppearance/index';
 export { Tab, Tabs } from './components/Tabs/index';
 export { Tag } from './components/Tag/index';

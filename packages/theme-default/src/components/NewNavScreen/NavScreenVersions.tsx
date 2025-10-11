@@ -7,8 +7,8 @@ export function NavScreenVersions() {
   return items.length > 1 ? (
     <div className="rp-nav-screen__group-wrapper">
       <NavScreenMenuItemWithChildren
-        menuItem={{ items }}
-        activeMatcher={item => item.text === activeValue}
+        menuItem={{ items, text: activeValue }}
+        // activeMatcher={item => item.text === activeValue}
       />
     </div>
   ) : null;

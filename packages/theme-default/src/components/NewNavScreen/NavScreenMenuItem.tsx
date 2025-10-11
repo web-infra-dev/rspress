@@ -9,7 +9,8 @@ import { matchNavbar } from '@rspress/shared';
 import { Link, Tag } from '@theme';
 import ArrowDown from '@theme-assets/arrow-down';
 import clsx from 'clsx';
-import React, { useMemo, useState } from 'react';
+import type React from 'react';
+import { useMemo, useState } from 'react';
 import { SvgWrapper } from '../SvgWrapper';
 import './NavScreenMenuItem.scss';
 
@@ -17,11 +18,11 @@ interface NavScreenMenuItemWithLinkProps {
   menuItem: NavItemWithLink;
 }
 
-const SvgDown = (props: React.SVGProps<SVGSVGElement>) => {
+export const SvgDown = (props: React.SVGProps<SVGSVGElement>) => {
   return <SvgWrapper icon={ArrowDown} {...props} />;
 };
 
-function NavScreenMenuItemRaw({
+export function NavScreenMenuItemRaw({
   left,
   right,
   isOpen,
@@ -116,8 +117,11 @@ export function NavScreenMenuItemWithChildren({
       <div
         className={`rp-nav-screen-menu-item__group ${isOpen ? 'rp-nav-screen-menu-item__group--open' : ''}`}
       >
-        {menuItem.items.map((item) => (
-          <NavScreenMenuItemWithChildren menuItem={item as any} />
+        {menuItem.items.map(item => (
+          <NavScreenMenuItemWithChildren
+            key={item.text}
+            menuItem={item as any}
+          />
         ))}
       </div>
     </>

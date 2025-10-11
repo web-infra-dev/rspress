@@ -34,7 +34,7 @@
   }
 
   &__icon {
-    transform: rotate(-180deg);
+    transform: rotate(-90deg);
     transition: transform 0.25s ease-in;
   }
 
@@ -49,11 +49,13 @@
 
     height: 0px;
     overflow: hidden;
-    transition: height 0.3s ease, opacity 0.3s ease;
+    transition:
+      height 0.3s ease,
+      opacity 0.3s ease;
 
     display: flex;
     flex-direction: column;
-    align-items: center; 
+    align-items: center;
     gap: 2px;
 
     margin-left: 8px;

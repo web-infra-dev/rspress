@@ -7,26 +7,19 @@ import {
   type NavItemWithLinkAndChildren,
 } from '@rspress/shared';
 import type { HoverGroupProps } from '@theme';
-import {
-  Link,
-  SocialLinks,
-  SwitchAppearance,
-  Tag,
-  useHoverGroup,
-} from '@theme';
+import { Link, Tag, useHoverGroup } from '@theme';
+import ArrowDown from '@theme-assets/arrow-down';
 import cls from 'clsx';
 import { useMemo } from 'react';
+import { SvgWrapper } from '../SvgWrapper';
 import { useLangsMenu, useVersionMenu } from './hooks';
 import './NavMenu.scss';
-import ArrowDown from '@theme-assets/arrow-down';
-import SmallMenu from '@theme-assets/small-menu';
-import { SvgWrapper } from '../SvgWrapper';
 
-const SvgDown = (props: React.SVGProps<SVGSVGElement>) => {
+export const SvgDown = (props: React.SVGProps<SVGSVGElement>) => {
   return <SvgWrapper icon={ArrowDown} {...props} />;
 };
 
-function NavMenuItemWithChildren({
+export function NavMenuItemWithChildren({
   menuItem,
   activeMatcher,
 }: {
@@ -68,7 +61,11 @@ function NavMenuItemWithChildren({
   );
 }
 
-function NavMenuItemWithLink({ menuItem }: { menuItem: NavItemWithLink }) {
+export function NavMenuItemWithLink({
+  menuItem,
+}: {
+  menuItem: NavItemWithLink;
+}) {
   const { pathname } = useLocation();
   const isActive = useMemo(() => {
     return matchNavbar(menuItem, pathname);
@@ -93,7 +90,7 @@ function NavMenuItemWithLink({ menuItem }: { menuItem: NavItemWithLink }) {
   );
 }
 
-function NavMenuItem({ menuItem: item }: { menuItem: NavItem }) {
+export function NavMenuItem({ menuItem: item }: { menuItem: NavItem }) {
   if ('items' in item && Array.isArray(item.items) && item.items.length > 0) {
     return <NavMenuItemWithChildren menuItem={item} />;
   }
@@ -105,7 +102,7 @@ export function NavMenuDivider() {
   return <div className="rp-nav-menu__divider"></div>;
 }
 
-function NavLangs() {
+export function NavLangs() {
   const { items, activeValue } = useLangsMenu();
 
   return items.length > 1 ? (
@@ -116,7 +113,7 @@ function NavLangs() {
   ) : null;
 }
 
-function NavVersions() {
+export function NavVersions() {
   const { activeValue, items } = useVersionMenu();
 
   return items.length > 1 ? (
@@ -134,37 +131,5 @@ export function NavMenu({ menuItems }: { menuItems: NavItem[] }) {
         return <NavMenuItem key={index} menuItem={item} />;
       })}
     </ul>
-  );
-}
-
-export function NavMenuOthers() {
-  const items = (
-    <>
-      <NavLangs />
-      <NavVersions />
-      <SwitchAppearance />
-      <SocialLinks />
-    </>
-  );
-
-  const { handleMouseEnter, handleMouseLeave, hoverGroup } = useHoverGroup({
-    position: 'right',
-    customChildren: (
-      <div className="rp-nav-menu__others-mobile__container">{items}</div>
-    ),
-  });
-  return (
-    <>
-      <ul className="rp-nav-menu__others">{items}</ul>
-      <div
-        className="rp-nav-menu__others-mobile"
-        onMouseEnter={handleMouseEnter}
-        onMouseLeave={handleMouseLeave}
-        onClick={handleMouseEnter}
-      >
-        <SvgWrapper icon={SmallMenu} fill="currentColor" />
-        {hoverGroup}
-      </div>
-    </>
   );
 }
