@@ -90,7 +90,7 @@ function HomeHero({ beforeHeroActions, afterHeroActions }: HomeHeroProps) {
 
       {beforeHeroActions}
       <div className="rp-home-hero__actions">
-        {hero.actions.map(action => {
+        {hero.actions?.map(action => {
           return (
             <div className="rp-home-hero__action" key={action.link}>
               <Button

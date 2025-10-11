@@ -2,22 +2,19 @@ import type { Page } from '@playwright/test';
 
 export async function getNavbar(page: Page) {
   // take the nav
-  const nav = await page.$$('.rspress-nav-menu');
+  const nav = await page.$$('.rp-nav-menu');
   return nav;
 }
 
 export async function getNavbarItems(page: Page) {
   // take the nav
-  const nav = await page.$$('.rspress-nav-menu .rspress-nav-menu-item');
+  const nav = await page.$$('.rp-nav-menu .rp-nav-menu__item');
   return nav;
 }
 
 export async function getSidebar(page: Page) {
   // take the sidebar, properly a section or a tag
-  const sidebar = await page.$$(
-    `.rspress-sidebar .rspress-scrollbar > nav > section,
-     .rspress-sidebar .rspress-scrollbar > nav > div.rspress-sidebar-item > a`,
-  );
+  const sidebar = await page.$$('.rp-doc-layout__sidebar .rp-sidebar-item');
   return sidebar;
 }
 
