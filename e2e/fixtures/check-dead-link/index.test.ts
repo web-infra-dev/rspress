@@ -7,8 +7,8 @@ import {
 } from '../../utils/runCommands';
 
 test.describe('check dead links', async () => {
-  let appPort;
-  let app;
+  let appPort: number;
+  let app: Awaited<ReturnType<typeof runPreviewCommand>>;
   test.afterAll(async () => {
     if (app) {
       await killProcess(app);
@@ -21,19 +21,26 @@ test.describe('check dead links', async () => {
     await runBuildCommand(appDir);
     app = await runPreviewCommand(appDir, appPort);
 
-    {
-      await page.goto(
-        `http://localhost:${appPort}/base/guide/basic/quick-start`,
-        {
-          waitUntil: 'networkidle',
-        },
-      );
-      // Get all the <a /> element
-      const linkDoms = await page.$$('.rspress-doc a');
+    const getLinks = async (url: string) => {
+      await page.goto(url, {
+        waitUntil: 'networkidle',
+      });
+      return page
+        .locator('.rp-doc a')
+        .evaluateAll(elements =>
+          elements
+            .map(element => element.getAttribute('href'))
+            .filter(
+              (href): href is string =>
+                typeof href === 'string' && !href.startsWith('#'),
+            ),
+        );
+    };
 
-      const links = (
-        await Promise.all(linkDoms.map(linkDom => linkDom.getAttribute('href')))
-      ).filter(i => !i?.startsWith('#'));
+    {
+      const links = await getLinks(
+        `http://localhost:${appPort}/base/guide/basic/quick-start`,
+      );
       expect(links).toEqual([
         '/base/guide/basic/install.html',
         '/base/guide/basic/install.html',
@@ -55,18 +62,9 @@ test.describe('check dead links', async () => {
       ]);
     }
     {
-      await page.goto(
+      const links = await getLinks(
         `http://localhost:${appPort}/base/en/guide/basic/quick-start`,
-        {
-          waitUntil: 'networkidle',
-        },
       );
-      // Get all the <a /> element
-      const linkDoms = await page.$$('.rspress-doc a');
-
-      const links = (
-        await Promise.all(linkDoms.map(linkDom => linkDom.getAttribute('href')))
-      ).filter(i => !i?.startsWith('#'));
       expect(links).toEqual([
         '/base/en/guide/basic/install.html',
         '/base/en/guide/basic/install.html',
@@ -95,19 +93,26 @@ test.describe('check dead links', async () => {
     await runBuildCommand(appDir, 'rspress-no-prefix.config.ts');
     app = await runPreviewCommand(appDir, appPort);
 
-    {
-      await page.goto(
-        `http://localhost:${appPort}/base/guide/basic/quick-start`,
-        {
-          waitUntil: 'networkidle',
-        },
-      );
-      // Get all the <a /> element
-      const linkDoms = await page.$$('.rspress-doc a');
+    const getLinks = async (url: string) => {
+      await page.goto(url, {
+        waitUntil: 'networkidle',
+      });
+      return page
+        .locator('.rp-doc a')
+        .evaluateAll(elements =>
+          elements
+            .map(element => element.getAttribute('href'))
+            .filter(
+              (href): href is string =>
+                typeof href === 'string' && !href.startsWith('#'),
+            ),
+        );
+    };
 
-      const links = (
-        await Promise.all(linkDoms.map(linkDom => linkDom.getAttribute('href')))
-      ).filter(i => !i?.startsWith('#'));
+    {
+      const links = await getLinks(
+        `http://localhost:${appPort}/base/guide/basic/quick-start`,
+      );
       expect(links).toEqual([
         '/base/guide/basic/install.html',
         '/base/guide/basic/install.html',
@@ -129,18 +134,9 @@ test.describe('check dead links', async () => {
       ]);
     }
     {
-      await page.goto(
+      const links = await getLinks(
         `http://localhost:${appPort}/base/en/guide/basic/quick-start`,
-        {
-          waitUntil: 'networkidle',
-        },
       );
-      // Get all the <a /> element
-      const linkDoms = await page.$$('.rspress-doc a');
-
-      const links = (
-        await Promise.all(linkDoms.map(linkDom => linkDom.getAttribute('href')))
-      ).filter(i => !i?.startsWith('#'));
       expect(links).toEqual([
         '/base/guide/basic/install.html',
         '/base/guide/basic/install.html',
@@ -169,19 +165,26 @@ test.describe('check dead links', async () => {
     await runBuildCommand(appDir, 'rspress-clean.config.ts');
     app = await runPreviewCommand(appDir, appPort);
 
-    {
-      await page.goto(
-        `http://localhost:${appPort}/base/guide/basic/quick-start`,
-        {
-          waitUntil: 'networkidle',
-        },
-      );
-      // Get all the <a /> element
-      const linkDoms = await page.$$('.rspress-doc a');
+    const getLinks = async (url: string) => {
+      await page.goto(url, {
+        waitUntil: 'networkidle',
+      });
+      return page
+        .locator('.rp-doc a')
+        .evaluateAll(elements =>
+          elements
+            .map(element => element.getAttribute('href'))
+            .filter(
+              (href): href is string =>
+                typeof href === 'string' && !href.startsWith('#'),
+            ),
+        );
+    };
 
-      const links = (
-        await Promise.all(linkDoms.map(linkDom => linkDom.getAttribute('href')))
-      ).filter(i => !i?.startsWith('#'));
+    {
+      const links = await getLinks(
+        `http://localhost:${appPort}/base/guide/basic/quick-start`,
+      );
       expect(links).toEqual([
         '/base/guide/basic/install',
         '/base/guide/basic/install',
@@ -204,18 +207,9 @@ test.describe('check dead links', async () => {
     }
 
     {
-      await page.goto(
+      const links = await getLinks(
         `http://localhost:${appPort}/base/en/guide/basic/quick-start`,
-        {
-          waitUntil: 'networkidle',
-        },
       );
-      // Get all the <a /> element
-      const linkDoms = await page.$$('.rspress-doc a');
-
-      const links = (
-        await Promise.all(linkDoms.map(linkDom => linkDom.getAttribute('href')))
-      ).filter(i => !i?.startsWith('#'));
       expect(links).toEqual([
         '/base/en/guide/basic/install',
         '/base/en/guide/basic/install',
