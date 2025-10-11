@@ -1,27 +1,24 @@
-import type { Page } from '@playwright/test';
+import type { Locator, Page } from '@playwright/test';
 
-export async function getNavbar(page: Page) {
-  // take the nav
-  const nav = await page.$$('.rp-nav-menu');
-  return nav;
+export function getNavbar(page: Page): Locator {
+  // Query both nav menus (left + right) rendered in the layout
+  return page.locator('.rp-nav-menu');
 }
 
-export async function getNavbarItems(page: Page) {
-  // take the nav
-  const nav = await page.$$('.rp-nav-menu .rp-nav-menu__item');
-  return nav;
+export function getNavbarItems(page: Page): Locator {
+  // Query actual nav menu items
+  return page.locator('.rp-nav-menu .rp-nav-menu__item');
 }
 
-export async function getSidebar(page: Page) {
-  // take the sidebar, properly a section or a tag
-  const sidebar = await page.$$('.rp-doc-layout__sidebar .rp-sidebar-item');
-  return sidebar;
+export function getSidebar(page: Page): Locator {
+  // Query all sidebar items including nested entries
+  return page.locator('.rp-doc-layout__sidebar .rp-sidebar-item');
 }
 
-export async function getSidebarTexts(page: Page) {
-  const sidebar = await getSidebar(page);
-  const sidebarTexts = await Promise.all(
-    sidebar.map(element => element.textContent()),
-  );
-  return sidebarTexts;
+export async function getSidebarTexts(page: Page): Promise<string[]> {
+  const sidebar = getSidebar(page);
+  const texts = await sidebar.allTextContents();
+  return texts
+    .map(text => text.trim())
+    .filter((text): text is string => text.length > 0);
 }
