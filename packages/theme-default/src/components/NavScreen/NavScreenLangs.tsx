@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { useLangsMenu } from '../NewNav/hooks';
+import { useLangsMenu } from '../Nav/hooks';
 import './NavScreenLangs.scss';
 import { Link } from '@theme';
 import clsx from 'clsx';

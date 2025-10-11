@@ -35,6 +35,8 @@ export type LayoutProps = {
   uiSwitch?: Partial<UISwitchResult>;
   HomeLayout?: React.FC<HomeLayoutProps>;
   NotFoundLayout?: React.FC<any>;
+  beforeNav?: React.ReactNode;
+  afterNav?: React.ReactNode;
 } & Omit<DocLayoutProps, 'uiSwitch'> &
   HomeLayoutProps &
   NavProps;
