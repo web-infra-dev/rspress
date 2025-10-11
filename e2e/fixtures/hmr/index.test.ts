@@ -13,8 +13,8 @@ const TEST_NAV_FILE = path.resolve(__dirname, 'doc/_nav.json');
 const TEST_META_FILE = path.resolve(__dirname, 'doc/guide/_meta.json');
 
 test.describe('hmr test', async () => {
-  let appPort;
-  let app;
+  let appPort: number;
+  let app: Awaited<ReturnType<typeof runDevCommand>>;
   let originalContent: string;
   let originalFragmentContent: string;
   let originalNavContent: string;
@@ -42,44 +42,44 @@ test.describe('hmr test', async () => {
 
   test('Test page', async ({ page }) => {
     await page.goto(`http://localhost:${appPort}/guide/test.html`);
-    await page.waitForSelector('p:text("Hello world")');
 
     // basic
-    await expect(page.locator('p:text("Hello world")')).toBeVisible();
+    const helloParagraph = page.locator('p', { hasText: 'Hello world' });
+    await expect(helloParagraph).toBeVisible();
     await fs.writeFile(
       TEST_FILE,
       originalContent.replace('Hello world', 'Hello hmr world'),
     );
-    await expect(page.locator('p:text("Hello hmr world")')).toBeVisible();
+    await expect(
+      page.locator('p', { hasText: 'Hello hmr world' }),
+    ).toBeVisible();
 
     // file code block
-    await expect(page.locator('text=This is mdx fragment')).toBeVisible();
+    await expect(page.getByText('This is mdx fragment')).toBeVisible();
     await fs.writeFile(
       TEST_FRAGMENT_FILE,
       originalFragmentContent.replace('This is', 'This is hmr'),
     );
-    await expect(page.locator('text=This is hmr mdx fragment')).toBeVisible();
+    await expect(page.getByText('This is hmr mdx fragment')).toBeVisible();
 
     // _nav.json
     await expect(
-      page.locator('.rspress-nav-menu .rspress-nav-menu-item:text("Guide")'),
+      page.locator('.rp-nav-menu__item', { hasText: 'Guide' }),
     ).toBeVisible();
     await fs.writeFile(
       TEST_NAV_FILE,
       originalNavContent.replace('"Guide"', '"HMR Guide"'),
     );
     await expect(
-      page.locator(
-        '.rspress-nav-menu .rspress-nav-menu-item:text("HMR Guide")',
-      ),
+      page.locator('.rp-nav-menu__item', { hasText: 'HMR Guide' }),
     ).toBeVisible();
     // _meta.json
     await expect(
-      page.locator('.rspress-sidebar-item :text("Test")'),
+      page.locator('.rp-sidebar-item span', { hasText: 'Test' }),
     ).toBeVisible();
     await fs.writeFile(TEST_META_FILE, '["foo"]');
     await expect(
-      page.locator('.rspress-sidebar-item :text("Foo")'),
+      page.locator('.rp-sidebar-item span', { hasText: 'Foo' }),
     ).toBeVisible();
   });
 });

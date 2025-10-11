@@ -1,5 +1,3 @@
-import { setTimeout } from 'node:timers/promises';
-
 import { expect, test } from '@playwright/test';
 
 import { getPort, killProcess, runDevCommand } from '../../utils/runCommands';
