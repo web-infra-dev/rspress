@@ -291,12 +291,12 @@ export type RemotePageInfo = PageIndexInfo & {
 };
 
 export interface Hero {
-  name: string;
-  text: string;
-  tagline: string;
+  name?: string;
+  text?: string;
+  tagline?: string;
   image?: {
-    src: string | { dark: string; light: string };
-    alt: string;
+    src?: string | { dark: string; light: string };
+    alt?: string;
     /**
      * `srcset` and `sizes` are attributes of `<img>` tag. Please refer to https://mdn.io/srcset for the usage.
      * When the value is an array, rspress will join array members with commas.
@@ -304,7 +304,7 @@ export interface Hero {
     sizes?: string | string[];
     srcset?: string | string[];
   };
-  actions: {
+  actions?: {
     text: string;
     link: string;
     theme: 'brand' | 'alt';

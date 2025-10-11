@@ -1,15 +1,40 @@
+import { useActiveMatcher } from '@rspress/runtime';
+import type {
+  NormalizedSidebarGroup,
+  SidebarItem as SidebarItemType,
+} from '@rspress/shared';
 import { Link, Tag } from '@theme';
+import clsx from 'clsx';
+import type React from 'react';
 import { useEffect, useRef } from 'react';
 import { renderInlineMarkdown } from '../../logic/utils';
-import { highlightTitleStyle, type SidebarItemProps } from '.';
-import * as styles from './index.module.scss';
-import { SidebarGroup } from './SidebarGroup';
+import './SidebarItem.scss';
 
-export function SidebarItem(props: SidebarItemProps) {
-  const { item, depth = 0, activeMatcher, id, setSidebarData } = props;
-
-  const active = 'link' in item && item.link && activeMatcher(item.link);
+export function SidebarItemRaw({
+  active,
+  text,
+  tag,
+  link,
+  context,
+  className,
+  left,
+  right,
+  onClick,
+  depth,
+}: {
+  className?: string;
+  active: boolean;
+  text: string;
+  tag: SidebarItemType['tag'];
+  link: string | undefined;
+  depth: number;
+  context?: string;
+  left?: React.ReactNode;
+  right?: React.ReactNode;
+  onClick?: React.MouseEventHandler<HTMLDivElement | HTMLAnchorElement>;
+}) {
   const ref = useRef<HTMLDivElement>(null);
+
   useEffect(() => {
     if (active) {
       ref.current?.scrollIntoView({
@@ -18,77 +43,89 @@ export function SidebarItem(props: SidebarItemProps) {
     }
   }, []);
 
-  if ('items' in item) {
+  const innerContent = (
+    <>
+      <div className="rp-sidebar-item__left" ref={ref}>
+        <span {...renderInlineMarkdown(text)}></span>
+        {left}
+      </div>
+      <div className="rp-sidebar-item__right">
+        <Tag tag={tag} />
+        {right}
+      </div>
+    </>
+  );
+
+  if (link) {
     return (
-      <SidebarGroup
-        id={id}
-        activeMatcher={activeMatcher}
-        key={`${item.text}-${id}`}
-        item={item}
-        depth={depth}
-        collapsed={item.collapsed}
-        setSidebarData={setSidebarData}
-      />
+      <Link
+        href={link}
+        onClick={onClick}
+        className={clsx(
+          'rp-sidebar-item',
+          {
+            'rp-sidebar-item--active': active,
+          },
+          className,
+        )}
+        style={{
+          // paddingLeft: depth <= 1 ? '12px' : `calc(12px * ${depth - 1} + 12px)`, // TODO: discussion
+          paddingLeft: depth === 0 ? '12px' : `calc(12px * ${depth} + 12px)`,
+        }}
+        {...{ 'data-depth': depth }}
+        {...(context ? { 'data-context': context } : {})}
+      >
+        {innerContent}
+      </Link>
     );
   }
 
-  // add the div.rspress-sidebar-item in an unified place
   return (
-    <LinkContextContainer
-      context={item.context}
-      className={props.contextContainerClassName}
+    <div
+      ref={ref}
+      className={clsx(
+        'rp-sidebar-item',
+        {
+          'rp-sidebar-item--active': active,
+        },
+        className,
+      )}
+      style={{
+        paddingLeft: depth === 0 ? '12px' : `calc(12px * ${depth} + 12px)`,
+        // paddingLeft: depth <= 1 ? '12px' : `calc(12px * ${depth - 1} + 12px)`, // TODO: discussion
+      }}
+      {...{ 'data-depth': depth }}
+      {...(context ? { 'data-context': context } : {})}
+      onClick={onClick}
     >
-      <Link
-        // {...(depth === 0 ? { 'data-context': item.context } : {})}
-        href={item.link}
-        className={styles.menuLink}
-      >
-        <div
-          ref={ref}
-          className={`${
-            active
-              ? `${styles.menuItemActive} rspress-sidebar-item-active`
-              : styles.menuItem
-          } rp-mt-0.5 rp-py-2 rp-px-3 rp-font-medium rp-flex`}
-          style={{
-            // The first level menu item will have the same font size as the sidebar group
-            fontSize: depth === 0 ? '14px' : '13px',
-            marginLeft: depth === 0 ? 0 : '18px',
-            borderRadius: '0 var(--rp-radius) var(--rp-radius) 0',
-            ...(depth === 0 ? highlightTitleStyle : {}),
-          }}
-        >
-          <Tag tag={item.tag} />
-          <span {...renderInlineMarkdown(item.text)}></span>
-        </div>
-      </Link>
-    </LinkContextContainer>
+      {innerContent}
+    </div>
   );
 }
 
-/**
- * A container component for sidebar link items that conditionally wraps its children
- * with a <div> element, adding contextual data and custom class names as needed.
- *
- * This design helps maintain sidebar structure stability and minimizes disruption to historical tests
- * and user code.
- *
- * @param props - The component props.
- * @param props.context - Optional context string to be added as a `data-context` attribute.
- * @param props.className - Optional additional class name(s) for the container div.
- * @param props.children - The content to be rendered inside the container.
- */
-function LinkContextContainer(
-  props: React.PropsWithChildren<{ context?: string; className?: string }>,
-) {
+export interface SidebarItemProps {
+  item: SidebarItemType | NormalizedSidebarGroup;
+  depth: number;
+  className?: string;
+}
+
+export function SidebarItem(props: SidebarItemProps) {
+  const { item, depth, className } = props;
+  const activeMatcher = useActiveMatcher();
+
+  const active = Boolean(
+    'link' in item && item.link && activeMatcher(item.link),
+  );
+
   return (
-    <div
-      className={['rspress-sidebar-item', props.className]
-        .filter(Boolean)
-        .join(' ')}
-      {...(props.context ? { 'data-context': props.context } : {})}
-    >
-      {props.children}
-    </div>
+    <SidebarItemRaw
+      className={className}
+      active={active}
+      link={item.link}
+      tag={item.tag}
+      text={item.text}
+      context={item.context}
+      depth={depth}
+    />
   );
 }

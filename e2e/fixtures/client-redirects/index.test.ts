@@ -2,8 +2,8 @@ import { expect, test } from '@playwright/test';
 import { getPort, killProcess, runDevCommand } from '../../utils/runCommands';
 
 test.describe('client redirects test', async () => {
-  let appPort;
-  let app;
+  let appPort: number;
+  let app: Awaited<ReturnType<typeof runDevCommand>>;
   test.beforeAll(async () => {
     const appDir = __dirname;
     appPort = await getPort();
@@ -20,43 +20,43 @@ test.describe('client redirects test', async () => {
     await page.goto(`http://localhost:${appPort}/docs/old1`, {
       waitUntil: 'networkidle',
     });
-    expect(page.url()).toBe(`http://localhost:${appPort}/docs/new1`);
+    await expect(page).toHaveURL(`http://localhost:${appPort}/docs/new1`);
   });
 
   test('Should redirect correctly - array', async ({ page }) => {
     await page.goto(`http://localhost:${appPort}/docs/2022`, {
       waitUntil: 'networkidle',
     });
-    expect(page.url()).toBe(`http://localhost:${appPort}/docs/2024`);
+    await expect(page).toHaveURL(`http://localhost:${appPort}/docs/2024`);
 
     await page.goto(`http://localhost:${appPort}/docs/2023/new`, {
       waitUntil: 'networkidle',
     });
-    expect(page.url()).toBe(`http://localhost:${appPort}/docs/2024/new`);
+    await expect(page).toHaveURL(`http://localhost:${appPort}/docs/2024/new`);
   });
 
   test('Should redirect correctly - reg1', async ({ page }) => {
     await page.goto(`http://localhost:${appPort}/docs/old2`, {
       waitUntil: 'networkidle',
     });
-    expect(page.url()).toBe(`http://localhost:${appPort}/docs/new2`);
+    await expect(page).toHaveURL(`http://localhost:${appPort}/docs/new2`);
 
     await page.goto(`http://localhost:${appPort}/docs/old2/foo`, {
       waitUntil: 'networkidle',
     });
-    expect(page.url()).toBe(`http://localhost:${appPort}/docs/new2/foo`);
+    await expect(page).toHaveURL(`http://localhost:${appPort}/docs/new2/foo`);
   });
 
   test('Should redirect correctly - reg2', async ({ page }) => {
     await page.goto(`http://localhost:${appPort}/docs/old3`, {
       waitUntil: 'networkidle',
     });
-    expect(page.url()).toBe(`http://localhost:${appPort}/docs/new3`);
+    await expect(page).toHaveURL(`http://localhost:${appPort}/docs/new3`);
 
     await page.goto(`http://localhost:${appPort}/foo/docs/old3`, {
       waitUntil: 'networkidle',
     });
-    expect(page.url()).toBe(`http://localhost:${appPort}/foo/docs/new3`);
+    await expect(page).toHaveURL(`http://localhost:${appPort}/foo/docs/new3`);
   });
 
   test('Should redirect correctly - external', async ({ page }) => {
@@ -74,6 +74,6 @@ test.describe('client redirects test', async () => {
       waitUntil: 'networkidle',
     });
 
-    expect(page.url()).toBe(externalUrl);
+    await expect(page).toHaveURL(externalUrl);
   });
 });

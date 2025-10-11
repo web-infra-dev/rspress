@@ -1,50 +1,23 @@
-import type { Header } from '@rspress/shared';
-import './index.css';
-import { renderInlineMarkdown } from '../../logic/utils';
-import { useDynamicToc } from '../Aside/useDynamicToc';
-import { Link } from '../Link';
+import { TocItem } from './TocItem';
+import { useActiveAnchor } from './useActiveAnchor';
+import { useDynamicToc } from './useDynamicToc';
 
-const TocItem = ({
-  header,
-  onItemClick,
-}: {
-  header: Header;
-  onItemClick?: (header: Header) => void;
-}) => {
-  return (
-    <li>
-      <Link
-        href={`#${header.id}`}
-        className={'rspress-toc-link sm:rp-text-normal rp-text-sm'}
-        style={{
-          marginLeft: (header.depth - 2) * 12,
-        }}
-        onClick={() => {
-          onItemClick?.(header);
-        }}
-      >
-        <span
-          className={'rspress-toc-link-text rp-block'}
-          {...renderInlineMarkdown(header.text)}
-        ></span>
-      </Link>
-    </li>
-  );
-};
+const baseHeaderLevel = 2;
 
-export function Toc({
-  onItemClick,
-}: {
-  onItemClick?: (header: Header) => void;
-}) {
+export function Toc() {
   const headers = useDynamicToc();
+  const { activeAnchorId } = useActiveAnchor(headers);
+
   return (
-    headers.length > 0 && (
-      <ul className="rp-not-doc">
-        {headers.map(item => (
-          <TocItem key={item.id} header={item} onItemClick={onItemClick} />
-        ))}
-      </ul>
-    )
+    <>
+      {headers.map((header, index) => (
+        <TocItem
+          key={`${header.depth}_${header.text}_${header.id}_${index}`}
+          baseHeaderLevel={baseHeaderLevel}
+          header={header}
+          active={activeAnchorId === header.id}
+        />
+      ))}
+    </>
   );
 }

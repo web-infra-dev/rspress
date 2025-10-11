@@ -9,11 +9,11 @@ import {
   codeToHast,
   createCssVariablesTheme,
 } from 'shiki';
-import { Code } from '../../layout/DocLayout/docComponents/code';
+import { Code } from '../DocContent/docComponents/codeblock/code';
 import {
   PreWithCodeButtonGroup,
   type PreWithCodeButtonGroupProps,
-} from '../../layout/DocLayout/docComponents/pre';
+} from '../DocContent/docComponents/codeblock/pre';
 
 export interface CodeBlockRuntimeProps extends PreWithCodeButtonGroupProps {
   lang: string;

@@ -23,6 +23,7 @@ export async function extractInfoFromFrontmatterWithAbsolutePath(
   title: string;
   overviewHeaders: number[] | undefined;
   context: string | undefined;
+  tag: string | undefined;
 }> {
   const fileHandle = await fs.open(absolutePath, 'r');
   try {
@@ -105,6 +106,7 @@ export async function extractInfoFromFrontmatterWithAbsolutePath(
       )[0],
       overviewHeaders: frontmatter.overviewHeaders,
       context: frontmatter.context,
+      tag: frontmatter.tag,
     };
   } finally {
     await fileHandle.close();

@@ -1,6 +1,18 @@
 .badge {
   font-weight: 500;
   transition: color 0.25s;
+  border-radius: var(--rp-radius-small);
+
+  height: 1.5rem; // 24px
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  gap: 0.25rem;
+
+  // text
+  font-weight: 500;
+  font-size: 0.75rem; // 12px
+  padding: 0.5rem;
 
   &.tip {
     color: var(--rp-container-tip-text);
@@ -23,7 +35,7 @@
   }
 
   &.outline {
-    border: 1px solid;
+    border: 1px solid currentColor;
 
     &.tip {
       border-color: var(--rp-container-tip-border);

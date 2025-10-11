@@ -1,23 +1,23 @@
-import type { Feature, FrontMatterMeta } from '@rspress/shared';
-
+import { useFrontmatter } from '@rspress/runtime';
+import type { Feature } from '@rspress/shared';
 import type { JSX } from 'react';
 import { renderHtmlOrText } from '../../logic/utils';
 import { useNavigate } from '../Link/useNavigate';
-import * as styles from './index.module.scss';
+import './index.scss';
 
 const getGridClass = (feature: Feature): string => {
   const { span } = feature;
   switch (span) {
     case 2:
-      return styles.grid2;
+      return 'rp-home-feature__item--span-2';
     case 3:
-      return styles.grid3;
+      return 'rp-home-feature__item--span-3';
     case 4:
-      return styles.grid4;
+      return 'rp-home-feature__item--span-4';
     case 6:
-      return styles.grid6;
+      return 'rp-home-feature__item--span-6';
     case undefined:
-      return styles.grid4;
+      return 'rp-home-feature__item--span-4';
     default:
       return '';
   }
@@ -32,35 +32,30 @@ function HomeFeatureItem({ feature }: { feature: Feature }): JSX.Element {
   return (
     <div
       key={title}
-      className={`${getGridClass(feature)} rp-rounded hover:rp-var(--rp-c-brand)`}
+      className={`rp-home-feature__item ${getGridClass(feature)}`}
     >
-      <div className="rp-h-full rp-p-2">
+      <div className="rp-home-feature__item-wrapper">
         <article
           key={title}
-          className={`rspress-home-feature-card ${styles.featureCard} rp-h-full rp-p-8 rp-rounded-4xl rp-border-transparent`}
-          style={{
-            cursor: link ? 'pointer' : 'auto',
-          }}
+          className={`rp-home-feature__card ${link ? 'rp-home-feature__card--clickable' : ''}`}
           onClick={() => {
             if (link) {
               navigate(link);
             }
           }}
         >
-          {icon ? (
-            <div className="rp-flex rp-items-center rp-justify-center">
+          <div className="rp-home-feature__title-wrapper">
+            {icon ? (
               <div
-                className="rspress-home-feature-icon rp-w-12 rp-h-12 rp-text-3xl rp-text-center"
+                className="rp-home-feature__icon"
                 {...renderHtmlOrText(icon)}
               ></div>
-            </div>
-          ) : null}
+            ) : null}
 
-          <h2 className="rspress-home-feature-title rp-font-bold rp-text-center">
-            {title}
-          </h2>
+            <h2 className="rp-home-feature__title">{title}</h2>
+          </div>
           <p
-            className="rspress-home-feature-detail rp-leading-6 rp-pt-2 rp-text-sm rp-text-text-2 rp-font-medium"
+            className="rp-home-feature__detail"
             {...renderHtmlOrText(details)}
           ></p>
         </article>
@@ -69,16 +64,12 @@ function HomeFeatureItem({ feature }: { feature: Feature }): JSX.Element {
   );
 }
 
-export function HomeFeature({
-  frontmatter,
-}: {
-  frontmatter: FrontMatterMeta;
-  routePath: string;
-}) {
+export function HomeFeature() {
+  const { frontmatter } = useFrontmatter();
   const features = frontmatter?.features;
 
   return (
-    <div className="rp-overflow-hidden rp-m-auto rp-flex rp-flex-wrap rp-max-w-6xl">
+    <div className="rp-home-feature">
       {features?.map(feature => {
         return <HomeFeatureItem key={feature.title} feature={feature} />;
       })}

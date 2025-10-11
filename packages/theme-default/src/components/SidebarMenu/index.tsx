@@ -1,129 +1,124 @@
-import { useLocation } from '@rspress/runtime';
-import ArrowRight from '@theme-assets/arrow-right';
+import { useLocaleSiteData, useLocation, useSite } from '@rspress/runtime';
 import MenuIcon from '@theme-assets/menu';
-import { useCallback, useEffect, useRef, useState } from 'react';
-import type { UISwitchResult } from '../../logic/useUISwitch';
+import { forwardRef, useEffect, useRef } from 'react';
+import { createPortal } from 'react-dom';
+import { useUISwitch } from '../../layout/Layout/useUISwitch';
+import { ReadPercent } from '../ReadPercent';
 import { SvgWrapper } from '../SvgWrapper';
-import { Toc } from '../Toc';
 import './index.scss';
-import { useDynamicToc } from '../Aside/useDynamicToc';
+import { useActiveAnchor } from '../Toc/useActiveAnchor';
+import { useDynamicToc } from '../Toc/useDynamicToc';
 
 /* Top Menu, only displayed on <1280px screen width */
-export function SidebarMenu({
-  isSidebarOpen,
-  onIsSidebarOpenChange,
-  outlineTitle,
-  uiSwitch,
-}: {
-  isSidebarOpen: boolean;
-  onIsSidebarOpenChange: (isOpen: boolean) => void;
-  outlineTitle: string;
-  uiSwitch?: UISwitchResult;
-}) {
-  const tocContainerRef = useRef<HTMLDivElement>(null);
-  const outlineButtonRef = useRef<HTMLButtonElement>(null);
+export const SidebarMenu = forwardRef(
+  (
+    {
+      isSidebarOpen,
+      onIsSidebarOpenChange,
+      isAsideOpen,
+      onIsAsideOpenChange,
+    }: {
+      isSidebarOpen: boolean;
+      onIsSidebarOpenChange: (isOpen: boolean) => void;
+      isAsideOpen: boolean;
+      onIsAsideOpenChange: (isOpen: boolean) => void;
+    },
+    forwardedRef,
+  ) => {
+    const uiSwitch = useUISwitch();
+    const localesData = useLocaleSiteData();
+    const {
+      site: { themeConfig },
+    } = useSite();
+    const outlineTitle =
+      localesData?.outlineTitle || themeConfig?.outlineTitle || 'ON THIS PAGE';
 
-  const [isTocOpen, setIsTocOpen] = useState<boolean>(false);
+    const sidebarMenuRef = useRef<HTMLDivElement>(null);
 
-  const { pathname } = useLocation();
+    const { pathname, hash } = useLocation();
 
-  function openSidebar() {
-    onIsSidebarOpenChange(true);
-  }
+    const headers = useDynamicToc();
+    const { scrolledHeader } = useActiveAnchor(headers);
 
-  function closeSidebar() {
-    onIsSidebarOpenChange(false);
-  }
-
-  useEffect(() => {
-    onIsSidebarOpenChange(false);
-  }, [pathname]);
-
-  useEffect(() => {
-    document.addEventListener('mouseup', handleClickOutsideForToc);
-    document.addEventListener('touchend', handleClickOutsideForToc);
-
-    return () => {
-      document.addEventListener('mouseup', handleClickOutsideForToc);
-      document.removeEventListener('touchend', handleClickOutsideForToc);
-    };
-  }, []);
-
-  const handleClickOutsideForToc = useCallback((e: MouseEvent | TouchEvent) => {
-    const { current: outlineButton } = outlineButtonRef;
-    if (outlineButton?.contains(e.target as Node)) {
-      return;
+    function openSidebar() {
+      onIsSidebarOpenChange(true);
     }
 
-    const { current: tocContainer } = tocContainerRef;
-    if (tocContainer && !tocContainer.contains(e.target as Node)) {
-      setIsTocOpen(false);
+    function closeSidebar() {
+      onIsSidebarOpenChange(false);
     }
-  }, []);
 
-  const toggleTocItem = useCallback(() => {
-    setIsTocOpen(false);
-  }, []);
+    function openAside() {
+      onIsAsideOpenChange(!isAsideOpen);
+    }
 
-  const toc = useDynamicToc();
+    function closeAside() {
+      onIsAsideOpenChange(false);
+    }
 
-  const hasToc = toc.length > 0;
+    useEffect(() => {
+      closeSidebar();
+    }, [pathname]);
 
-  return (
-    <div className={`rspress-sidebar-menu-container ${hasToc ? '' : 'no-toc'}`}>
-      <div className="rspress-sidebar-menu">
-        {uiSwitch?.showSidebar && (
-          <>
+    useEffect(() => {
+      if (hash) {
+        closeAside();
+      }
+    }, [hash]);
+
+    return (
+      <>
+        <div
+          className="rp-sidebar-menu"
+          ref={ref => {
+            sidebarMenuRef.current = ref;
+            if (typeof forwardedRef === 'function') {
+              forwardedRef(sidebarMenuRef.current);
+            } else if (forwardedRef) {
+              forwardedRef.current = sidebarMenuRef.current;
+            }
+          }}
+        >
+          {uiSwitch?.showSidebar && (
             <button
               type="button"
               onClick={openSidebar}
-              className="rp-flex rp-items-center rp-justify-center rp-mr-auto"
+              className="rp-sidebar-menu__left"
             >
-              <div className="rp-text-md rp-mr-2">
-                <SvgWrapper icon={MenuIcon} />
-              </div>
-              <span className="rp-text-sm">Menu</span>
+              <SvgWrapper icon={MenuIcon} />
+              <span>Menu</span>
             </button>
-            {isSidebarOpen && (
-              <div
-                onClick={closeSidebar}
-                className="rspress-sidebar-back-drop"
-                style={{
-                  background: 'rgba(0, 0, 0, 0.6)',
-                }}
-              />
-            )}
-          </>
-        )}
-        {uiSwitch?.showAside && hasToc && (
-          <>
+          )}
+          {uiSwitch?.showAside && (
             <button
               type="button"
-              onClick={() => setIsTocOpen(tocOpened => !tocOpened)}
-              className="rp-flex rp-items-center rp-justify-center rp-ml-auto"
-              ref={outlineButtonRef}
+              disabled={headers.length === 0}
+              onClick={e => {
+                e.preventDefault();
+                e.stopPropagation();
+                openAside();
+              }}
+              className="rp-sidebar-menu__right"
             >
-              <span className="rp-text-sm">{outlineTitle}</span>
-              <div
-                className="rp-text-md rp-mr-2"
+              <span>{scrolledHeader?.text ?? outlineTitle}</span>
+              <ReadPercent size={14} strokeWidth={2} />
+              {/* TODO: discussion */}
+              {/* <SvgWrapper
+                icon={ArrowRight}
                 style={{
-                  transform: isTocOpen ? 'rotate(90deg)' : 'rotate(0deg)',
+                  transform: isAsideOpen ? 'rotate(90deg)' : 'rotate(0deg)',
                   transition: 'transform 0.2s ease-out',
-                  marginTop: '2px',
                 }}
-              >
-                <SvgWrapper icon={ArrowRight} />
-              </div>
+              /> */}
             </button>
-
-            <div
-              className={`rspress-local-toc-container ${isTocOpen ? 'rspress-local-toc-container-show' : ''}`}
-            >
-              <Toc onItemClick={toggleTocItem} />
-            </div>
-          </>
-        )}
-      </div>
-    </div>
-  );
-}
+          )}
+        </div>
+        {(isSidebarOpen || isAsideOpen) &&
+          createPortal(
+            <div onClick={closeSidebar} className="rp-sidebar-menu__mask" />,
+            document.getElementById('__rspress_modal_container')!,
+          )}
+      </>
+    );
+  },
+);

@@ -2,8 +2,8 @@ import { expect, test } from '@playwright/test';
 import { getPort, killProcess, runDevCommand } from '../../utils/runCommands';
 
 test.describe('custom icon test', async () => {
-  let appPort;
-  let app;
+  let appPort: number;
+  let app: Awaited<ReturnType<typeof runDevCommand>>;
   test.beforeAll(async () => {
     const appDir = __dirname;
     appPort = await getPort();
@@ -20,15 +20,12 @@ test.describe('custom icon test', async () => {
     await page.goto(`http://localhost:${appPort}`, {
       waitUntil: 'networkidle',
     });
-    const h1 = await page.$('h1');
-    const text = await page.evaluate(h1 => h1?.textContent, h1);
-    await expect(text).toContain('Hello world');
+    await expect(page.locator('h1')).toContainText('Hello world');
 
-    const headerAnchor = await page.$('.rspress-nav-search-button img');
-    const src = await page.evaluate(
-      headerAnchor => headerAnchor?.getAttribute('src'),
-      headerAnchor,
+    const searchIcon = page.locator('.rp-search-button__content img').first();
+    await expect(searchIcon).toHaveAttribute(
+      'src',
+      /data:image\/svg\+xml;base64/,
     );
-    expect(src).toContain('data:image/svg+xml;base64');
   });
 });

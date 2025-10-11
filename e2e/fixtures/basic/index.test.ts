@@ -2,8 +2,8 @@ import { expect, test } from '@playwright/test';
 import { getPort, killProcess, runDevCommand } from '../../utils/runCommands';
 
 test.describe('basic test', async () => {
-  let appPort;
-  let app;
+  let appPort: number;
+  let app: Awaited<ReturnType<typeof runDevCommand>>;
   test.beforeAll(async () => {
     const appDir = __dirname;
     appPort = await getPort();
@@ -18,62 +18,44 @@ test.describe('basic test', async () => {
 
   test('Index page', async ({ page }) => {
     await page.goto(`http://localhost:${appPort}`);
-    const h1 = await page.$('h1');
-    const text = await page.evaluate(h1 => h1?.textContent, h1);
-    expect(text).toContain('Hello world');
-    // expect the .header-anchor to be rendered and take the correct href
-    const headerAnchor = await page.$('.header-anchor');
-    const href = await page.evaluate(
-      headerAnchor => headerAnchor?.getAttribute('href'),
-      headerAnchor,
-    );
-    expect(href).toBe('#hello-world');
+    await expect(page.locator('h1')).toContainText('Hello world');
+    const headerAnchor = page.locator('.rp-header-anchor').first();
+    await expect(headerAnchor).toHaveAttribute('href', '#hello-world');
   });
 
   test('404 page', async ({ page }) => {
     await page.goto(`http://localhost:${appPort}/404`, {
       waitUntil: 'networkidle',
     });
-    // find the 404 text in the page
-    const text = await page.evaluate(() => document.body.textContent);
-    expect(text).toContain('404');
+    await expect(page.locator('body')).toContainText('404');
   });
 
   test('dark mode', async ({ page }) => {
     await page.goto(`http://localhost:${appPort}`, {
       waitUntil: 'networkidle',
     });
-    const darkModeButton = await page.$('.rspress-nav-appearance');
-    const html = await page.$('html');
-    let htmlClass = await page.evaluate(
-      html => html?.getAttribute('class'),
-      html,
-    );
-    const defaultMode = htmlClass?.includes('dark') ? 'dark' : 'light';
-    await darkModeButton?.click();
-    // check the class in html
-    htmlClass = await page.evaluate(html => html?.getAttribute('class'), html);
-    expect(Boolean(htmlClass?.includes('dark'))).toBe(defaultMode !== 'dark');
-    // click the button again, check the class in html
-    await darkModeButton?.click();
-    htmlClass = await page.evaluate(html => html?.getAttribute('class'), html);
-    expect(Boolean(htmlClass?.includes('dark'))).toBe(defaultMode === 'dark');
+    const appearanceToggle = page.locator('.rp-switch-appearance').first();
+    const getIsDark = () =>
+      page.evaluate(() =>
+        document.documentElement.classList.contains('rp-dark'),
+      );
+    const defaultIsDark = await getIsDark();
+    await appearanceToggle.click();
+    await expect.poll(getIsDark).toBe(!defaultIsDark);
+    await appearanceToggle.click();
+    await expect.poll(getIsDark).toBe(defaultIsDark);
   });
 
   test('Hover over social links', async ({ page }) => {
     await page.goto(`http://localhost:${appPort}`);
-    await page.hover('.social-links');
-    await page.waitForTimeout(1000);
-    const logoLink = await page.$('a[href="/zh"]');
-    expect(logoLink).not.toBeNull();
+    const socialLinks = page.locator('.rp-social-links').first();
+    await socialLinks.hover();
+    await expect(page.locator('.rp-social-links a[href="/zh"]')).toBeVisible();
   });
 
   test('globalStyles should work', async ({ page }) => {
     await page.goto(`http://localhost:${appPort}`);
-    const link = await page.$('.rspress-doc a');
-    const colorValue = await link?.evaluate(
-      element => getComputedStyle(element).color,
-    );
-    expect(colorValue).toEqual('rgb(255, 165, 0)');
+    const link = page.locator('.rp-doc a').first();
+    await expect(link).toHaveCSS('color', 'rgb(255, 165, 0)');
   });
 });

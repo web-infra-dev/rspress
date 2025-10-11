@@ -12,6 +12,7 @@ export default defineConfig({
   use: {
     trace: 'on',
     video: 'on',
+    viewport: { width: 1440, height: 900 }, // screen size
   },
   retries: process.env.CI ? 5 : 0,
 });

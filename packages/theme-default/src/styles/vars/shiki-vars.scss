@@ -1,6 +1,6 @@
 :where(html:not(.rp-dark)) {
-  --shiki-foreground: #414141;
-  --shiki-background: var(--rp-code-block-bg);
+  --shiki-foreground: inherit; // color: var(--rp-code-block-color);
+  --shiki-background: transparent; // background-color: var(--rp-code-block-bg);
 
   --shiki-token-constant: #1976d2;
   --shiki-token-string: #31a94d;
@@ -18,8 +18,8 @@
 }
 
 :where(html.rp-dark) {
-  --shiki-foreground: #cac7c7;
-  --shiki-background: var(--rp-code-block-bg);
+  --shiki-foreground: inherit; // color: var(--rp-code-block-color);
+  --shiki-background: transparent; // background-color: var(--rp-code-block-bg);
 
   --shiki-token-constant: #6fb0fa;
   --shiki-token-string: #f9a86e;

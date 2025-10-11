@@ -7,8 +7,8 @@ import {
 } from '../../utils/runCommands';
 
 test.describe('custom headers', async () => {
-  let appPort;
-  let app;
+  let appPort: number;
+  let app: Awaited<ReturnType<typeof runPreviewCommand>>;
   test.beforeAll(async () => {
     const appDir = __dirname;
     appPort = await getPort();
@@ -26,8 +26,7 @@ test.describe('custom headers', async () => {
     await page.goto(`http://localhost:${appPort}`, {
       waitUntil: 'networkidle',
     });
-    const titleDoms = await page.$$('title');
-    expect(titleDoms.length).toBe(1);
+    await expect(page.locator('title')).toHaveCount(1);
   });
 
   test('config headers should be injected', async ({ page }) => {
@@ -35,32 +34,26 @@ test.describe('custom headers', async () => {
       waitUntil: 'networkidle',
     });
 
-    const configStringMetaContent = await page.$eval(
-      'meta[name="config-string-head"]',
-      configStringMeta => configStringMeta.getAttribute('content'),
-    );
-    expect(configStringMetaContent).toEqual('config-string-head-value');
+    await expect(
+      page.locator('meta[name="config-string-head"]'),
+    ).toHaveAttribute('content', 'config-string-head-value');
 
-    const configTupleMetaContent = await page.getAttribute(
-      'meta[name="config-tuple-head"]',
-      'content',
-    );
-    expect(configTupleMetaContent).toEqual('config-tuple-head-value');
+    await expect(
+      page.locator('meta[name="config-tuple-head"]'),
+    ).toHaveAttribute('content', 'config-tuple-head-value');
 
-    const configFnStringMetaContent = await page.$eval(
-      'meta[name="config-fn-string-head"]',
-      configFnStringMeta => configFnStringMeta.getAttribute('content'),
-    );
+    const configFnStringMetaContent = await page
+      .locator('meta[name="config-fn-string-head"]')
+      .getAttribute('content');
     expect(
       configFnStringMetaContent?.endsWith(
         'e2e/fixtures/custom-headers/doc/index.mdx',
       ),
     ).toBeTruthy();
 
-    const configFnTupleMetaContent = await page.getAttribute(
-      'meta[name="config-fn-tuple-head"]',
-      'content',
-    );
+    const configFnTupleMetaContent = await page
+      .locator('meta[name="config-fn-tuple-head"]')
+      .getAttribute('content');
     expect(
       configFnTupleMetaContent?.endsWith(
         'e2e/fixtures/custom-headers/doc/index.mdx',
@@ -73,23 +66,20 @@ test.describe('custom headers', async () => {
       waitUntil: 'networkidle',
     });
 
-    const customMetaContent = await page.$eval(
-      'meta[name="custom-meta"]',
-      customMeta => customMeta.getAttribute('content'),
-    );
-    expect(customMetaContent).toEqual('custom-meta-content');
-
-    const customMetaContent2 = await page.getAttribute(
-      'meta[name="custom-meta-2"]',
+    await expect(page.locator('meta[name="custom-meta"]')).toHaveAttribute(
       'content',
+      'custom-meta-content',
     );
-    expect(customMetaContent2).toEqual('custom-meta-content-2');
 
-    const customHttpEquiv = await page.$eval(
-      'meta[http-equiv="refresh"]',
-      customMeta => customMeta.getAttribute('content'),
+    await expect(page.locator('meta[name="custom-meta-2"]')).toHaveAttribute(
+      'content',
+      'custom-meta-content-2',
     );
-    expect(customHttpEquiv).toEqual('300');
+
+    await expect(page.locator('meta[http-equiv="refresh"]')).toHaveAttribute(
+      'content',
+      '300',
+    );
 
     const htmlContent = await page.content();
     expect(htmlContent).toContain(
