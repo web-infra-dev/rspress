@@ -34,7 +34,7 @@ function ShikiPre({
   return (
     <div className={containerElementClassName}>
       {title && (
-        <div className="rspress-code-title rp-codeblock_content">{title}</div>
+        <div className="rspress-code-title rp-codeblock_title">{title}</div>
       )}
       <div className="rspress-code-content rp-codeblock_content">
         <div>
