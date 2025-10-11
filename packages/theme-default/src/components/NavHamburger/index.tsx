@@ -2,10 +2,10 @@ import { SocialLinks, SvgWrapper, useHoverGroup } from '@theme';
 import SmallMenu from '@theme-assets/small-menu';
 import clsx from 'clsx';
 import { createPortal } from 'react-dom';
-import { NavVersions } from '../NewNav/NavMenu';
-import { NavScreen, NavScreenDivider } from '../NewNavScreen';
-import { NavScreenAppearance } from '../NewNavScreen/NavScreenAppearance';
-import { NavScreenLangs } from '../NewNavScreen/NavScreenLangs';
+import { NavVersions } from '../Nav/NavMenu';
+import { NavScreen, NavScreenDivider } from '../NavScreen';
+import { NavScreenAppearance } from '../NavScreen/NavScreenAppearance';
+import { NavScreenLangs } from '../NavScreen/NavScreenLangs';
 import './index.scss';
 import { useNavScreen } from './useNavScreen';
 

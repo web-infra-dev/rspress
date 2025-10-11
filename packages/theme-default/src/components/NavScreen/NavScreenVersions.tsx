@@ -1,4 +1,4 @@
-import { useVersionMenu } from '../NewNav/hooks';
+import { useVersionMenu } from '../Nav/hooks';
 import { NavScreenMenuItemWithChildren } from './NavScreenMenuItem';
 
 export function NavScreenVersions() {

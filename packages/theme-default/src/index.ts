@@ -29,7 +29,7 @@ export { HoverGroup, type HoverGroupProps } from './components/HoverGroup';
 export { useHoverGroup } from './components/HoverGroup/useHoverGroup';
 export { LastUpdated } from './components/LastUpdated/index';
 export { Link, type LinkProps } from './components/Link/index';
-export { Nav } from './components/NewNav/index';
+export { Nav } from './components/Nav/index';
 export { Overview } from './components/Overview/index';
 export { PackageManagerTabs } from './components/PackageManagerTabs/index';
 export { PrevNextPage } from './components/PrevNextPage/index';
