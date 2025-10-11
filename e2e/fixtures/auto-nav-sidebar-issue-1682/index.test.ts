@@ -3,8 +3,8 @@ import { getSidebarTexts } from '../../utils/getSideBar';
 import { getPort, killProcess, runDevCommand } from '../../utils/runCommands';
 
 test.describe('Auto nav and sidebar dir issue-1682', async () => {
-  let appPort;
-  let app;
+  let appPort: number;
+  let app: Awaited<ReturnType<typeof runDevCommand>>;
   test.beforeAll(async () => {
     const appDir = __dirname;
     appPort = await getPort();
@@ -25,9 +25,9 @@ test.describe('Auto nav and sidebar dir issue-1682', async () => {
     });
 
     const sidebarTexts = await getSidebarTexts(page);
-    expect(sidebarTexts.length).toBe(2);
+    expect(sidebarTexts.length).toBe(3);
     expect(sidebarTexts.join(',')).toEqual(
-      ['Second sub-directorytest', 'First sub-directory'].join(','),
+      ['Second sub-directory', 'test', 'First sub-directory'].join(','),
     );
   });
 });
