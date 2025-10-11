@@ -22,20 +22,18 @@ test.describe('Auto nav and sidebar test', async () => {
       waitUntil: 'networkidle',
     });
 
-    const nav = await getNavbar(page);
-    expect(nav?.length).toBeGreaterThan(0);
+    const nav = getNavbar(page);
+    expect(await nav.count()).toBeGreaterThan(0);
 
-    const topLevelSidebarItems = await page.$$(
+    const topLevelSidebarItems = page.locator(
       '.rp-doc-layout__sidebar .rp-sidebar-item[data-depth="0"]',
     );
-    expect(topLevelSidebarItems.length).toBeGreaterThan(0);
+    expect(await topLevelSidebarItems.count()).toBeGreaterThan(0);
 
-    const topLevelTexts = await Promise.all(
-      topLevelSidebarItems.map(element => element.textContent()),
-    );
+    const topLevelTexts = await topLevelSidebarItems.allTextContents();
     const trimmedTopLevelTexts = topLevelTexts
-      .map(text => text?.trim())
-      .filter(Boolean) as string[];
+      .map(text => text.trim())
+      .filter((text): text is string => text.length > 0);
     expect(trimmedTopLevelTexts).toEqual(
       expect.arrayContaining(['Guide', 'Advanced']),
     );
