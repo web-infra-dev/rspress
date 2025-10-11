@@ -12,9 +12,9 @@ import { useNavScreen } from './useNavScreen';
 export function NavHamburger() {
   const items = (
     <div className="rp-nav-hamburger__md__hover-group">
-      <NavScreenLangs />
-      <NavVersions />
       <NavScreenAppearance />
+      <NavVersions />
+      <NavScreenLangs />
       <NavScreenDivider />
       <SocialLinks />
     </div>
