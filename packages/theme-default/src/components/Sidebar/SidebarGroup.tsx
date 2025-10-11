@@ -133,7 +133,6 @@ export function SidebarGroup(props: SidebarGroupProps) {
         text={item.text}
         context={item.context}
         className={clsx(
-          'rspress-sidebar-group',
           'rp-sidebar-group',
           {
             'rp-sidebar-group--top-level': depth === 0,

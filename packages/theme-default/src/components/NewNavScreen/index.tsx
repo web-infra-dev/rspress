@@ -1,13 +1,21 @@
 import { useNav } from '@rspress/runtime';
+import { SocialLinks } from '@theme';
 import { clearAllBodyScrollLocks, disableBodyScroll } from 'body-scroll-lock';
+import clsx from 'clsx';
 import { useEffect, useRef } from 'react';
 import './index.scss';
+import { NavScreenAppearance } from './NavScreenAppearance';
+import { NavScreenLangs } from './NavScreenLangs';
 import { NavScreenMenu } from './NavScreenMenu';
-import { NavScreenMenuOthers } from './NavScreenMenuOthers';
+import { NavScreenVersions } from './NavScreenVersions';
 
 export interface NavScreenProps {
   isScreenOpen: boolean;
   toggleScreen: () => void;
+}
+
+export function NavScreenDivider() {
+  return <div className="rp-nav-screen-divider"></div>;
 }
 
 export function NavScreen(props: NavScreenProps) {
@@ -26,16 +34,21 @@ export function NavScreen(props: NavScreenProps) {
 
   return (
     <div
-      className={`rp-nav-screen ${isScreenOpen ? 'rp-nav-screen--active' : ''}`}
+      className={clsx('rp-nav-screen', { 'rp-nav-screen--open': isScreenOpen })}
       ref={screen}
       onClick={toggleScreen}
     >
       <div
         className="rp-nav-screen__container"
-        onClick={(e) => e.stopPropagation()}
+        onClick={e => e.stopPropagation()}
       >
         <NavScreenMenu menuItems={menuItems} />
-        <NavScreenMenuOthers />
+        <NavScreenDivider />
+        <NavScreenAppearance />
+        <NavScreenLangs />
+        <NavScreenVersions />
+        <NavScreenDivider />
+        <SocialLinks />
       </div>
     </div>
   );

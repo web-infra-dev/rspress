@@ -68,7 +68,18 @@
     align-items: center;
 
     @media (max-width: 767px) {
-      gap: 4px;
+      gap: 8px;
+    }
+  }
+  &__others {
+    display: flex;
+    align-items: center;
+    height: 100%;
+    gap: 24px;
+    list-style: none;
+
+    @media (max-width: 1280px) {
+      display: none;
     }
   }
 }

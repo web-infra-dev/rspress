@@ -1,10 +1,10 @@
 import { useNav } from '@rspress/runtime';
-import { Search } from '@theme';
-import './index.scss';
 import type { NavItem } from '@rspress/shared';
+import { Search, SocialLinks, SwitchAppearance } from '@theme';
 import { useMemo } from 'react';
 import { NavHamburger } from '../NavHamburger';
-import { NavMenu, NavMenuDivider, NavMenuOthers } from './NavMenu';
+import './index.scss';
+import { NavLangs, NavMenu, NavMenuDivider, NavVersions } from './NavMenu';
 import { NavTitle } from './NavTitle';
 
 export interface NavProps {
@@ -50,8 +50,13 @@ export function Nav(props: NavProps) {
 
         {/* only in desktop */}
         <NavMenu menuItems={rightMenu} />
-        <NavMenuDivider />
-        <NavMenuOthers />
+        <div className="rp-nav__others">
+          <NavMenuDivider />
+          <NavLangs />
+          <NavVersions />
+          <SwitchAppearance />
+          <SocialLinks />
+        </div>
 
         {/* only in mobile */}
         <NavHamburger />
