@@ -195,10 +195,9 @@
 
     &:where(td) {
       padding: 1rem 1.5rem;
-      color: rgba(75, 85, 99, 0.9);
-      font-size: 0.875rem;
-      transition: all 0.2s ease;
       border-bottom: 1px solid var(--rp-c-divider-light);
+
+      font-size: 0.875rem;
     }
 
     &:where(tr) {
