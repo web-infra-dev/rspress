@@ -73,7 +73,6 @@ export { NotFoundLayout } from './layout/NotFountLayout/index';
 export { scrollToTarget, useSetup } from './logic/sideEffects';
 export { useThemeState } from './logic/useAppearance';
 export { useFullTextSearch } from './logic/useFullTextSearch';
-export { useEnableNav, useHiddenNav } from './logic/useHiddenNav';
 // logic
 export { usePrevNextPage } from './logic/usePrevNextPage';
 export { useRedirect4FirstVisit } from './logic/useRedirect4FirstVisit';
