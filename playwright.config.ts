@@ -12,7 +12,7 @@ export default defineConfig({
   use: {
     trace: 'on',
     video: 'on',
-    viewport: { width: 1440, height: 900 }, // 默认所有测试使用这个尺寸
+    viewport: { width: 1440, height: 900 }, // screen size
   },
   retries: process.env.CI ? 5 : 0,
 });
