@@ -77,7 +77,6 @@ export default defineConfig({
     footer: {
       message: '© 2023-present ByteDance Inc.',
     },
-    hideNavbar: 'auto',
     socialLinks: [
       {
         icon: 'github',

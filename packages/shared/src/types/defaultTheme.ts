@@ -94,10 +94,6 @@ export interface Config {
    */
   overview?: FilterConfig;
   /**
-   * The behavior of hiding navbar
-   */
-  hideNavbar?: 'always' | 'auto' | 'never';
-  /**
    * Whether to enable view transition animation for pages switching
    */
   enableContentAnimation?: boolean;

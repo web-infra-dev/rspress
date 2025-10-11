@@ -7,7 +7,6 @@ export default defineConfig({
     cleanUrls: true,
   },
   themeConfig: {
-    hideNavbar: 'never',
     nav: [
       {
         text: 'PageA',
