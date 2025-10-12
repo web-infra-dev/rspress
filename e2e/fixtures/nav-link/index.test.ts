@@ -17,7 +17,7 @@ test.describe('Navigation with <Link>', async () => {
 
     return {
       page,
-      anchor: page.locator('.rspress-nav-menu > a:first-child').first(),
+      anchor: page.locator('.rp-nav-menu > a:first-child').first(),
       shouldOpenNewPage,
       dispose,
     };

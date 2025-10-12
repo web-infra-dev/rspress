@@ -35,7 +35,7 @@ test.describe('basic test', async () => {
       expect(payload.animation.type).toMatch(/[CSSTransition|CSSAnimation]/);
       resolve();
     });
-    const alinks = await page.locator('.rspress-nav-menu a').all();
+    const alinks = await page.locator('.rp-nav-menu a').all();
     const secondLink = alinks[1];
     secondLink.click();
     await page.waitForURL('**/start**');
