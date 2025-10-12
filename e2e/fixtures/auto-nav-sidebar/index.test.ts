@@ -1,4 +1,4 @@
-import { type ElementHandle, expect, test } from '@playwright/test';
+import { expect, test } from '@playwright/test';
 import { getNavbar } from '../../utils/getSideBar';
 import { getPort, killProcess, runDevCommand } from '../../utils/runCommands';
 
@@ -44,10 +44,10 @@ test.describe('Auto nav and sidebar test', async () => {
       waitUntil: 'networkidle',
     });
 
-    const h2Texts = await page.$$eval(
-      '.rp-overview h2.rspress-doc-outline span',
-      nodes => nodes.map(node => node.textContent?.trim()).filter(Boolean),
-    );
+    const h2Elements = page.locator('.rp-overview h2.rspress-doc-outline span');
+    const h2Texts = (await h2Elements.allTextContents())
+      .map(text => text.trim())
+      .filter(Boolean);
     expect(h2Texts.join(',')).toEqual(
       [
         'Config',
@@ -59,10 +59,12 @@ test.describe('Auto nav and sidebar test', async () => {
       ].join(','),
     );
 
-    const itemTitleTexts = await page.$$eval(
+    const itemTitles = page.locator(
       '.rp-overview .rp-overview-group__item__title > a',
-      nodes => nodes.map(node => node.textContent?.trim()).filter(Boolean),
     );
+    const itemTitleTexts = (await itemTitles.allTextContents())
+      .map(text => text.trim())
+      .filter(Boolean);
     expect(itemTitleTexts.join(',')).toEqual(
       [
         'Basic config',
@@ -80,10 +82,12 @@ test.describe('Auto nav and sidebar test', async () => {
       ].join(','),
     );
 
-    const linkTexts = await page.$$eval(
+    const links = page.locator(
       '.rp-overview .rp-overview-group__item__content__item__link',
-      nodes => nodes.map(node => node.textContent?.trim()).filter(Boolean),
     );
+    const linkTexts = (await links.allTextContents())
+      .map(text => text.trim())
+      .filter(Boolean);
     expect(linkTexts.join(',')).toEqual(
       [
         'root',
@@ -109,10 +113,10 @@ test.describe('Auto nav and sidebar test', async () => {
       waitUntil: 'networkidle',
     });
 
-    const h2Texts = await page.$$eval(
-      '.rp-overview h2.rspress-doc-outline span',
-      nodes => nodes.map(node => node.textContent?.trim()).filter(Boolean),
-    );
+    const h2Elements = page.locator('.rp-overview h2.rspress-doc-outline span');
+    const h2Texts = (await h2Elements.allTextContents())
+      .map(text => text.trim())
+      .filter(Boolean);
     expect(h2Texts.join(',')).toEqual(
       [
         'Basic config',
@@ -124,10 +128,12 @@ test.describe('Auto nav and sidebar test', async () => {
       ].join(','),
     );
 
-    const itemTitleTexts = await page.$$eval(
+    const itemTitles = page.locator(
       '.rp-overview .rp-overview-group__item__title > a',
-      nodes => nodes.map(node => node.textContent?.trim()).filter(Boolean),
     );
+    const itemTitleTexts = (await itemTitles.allTextContents())
+      .map(text => text.trim())
+      .filter(Boolean);
     expect(itemTitleTexts.join(',')).toEqual(
       [
         'Basic config',
@@ -139,10 +145,12 @@ test.describe('Auto nav and sidebar test', async () => {
       ].join(','),
     );
 
-    const linkTexts = await page.$$eval(
+    const links = page.locator(
       '.rp-overview .rp-overview-group__item__content__item__link',
-      nodes => nodes.map(node => node.textContent?.trim()).filter(Boolean),
     );
+    const linkTexts = (await links.allTextContents())
+      .map(text => text.trim())
+      .filter(Boolean);
     expect(linkTexts.join(',')).toEqual(
       [
         'root',
@@ -165,24 +173,28 @@ test.describe('Auto nav and sidebar test', async () => {
       waitUntil: 'networkidle',
     });
 
-    const h2Texts = await page.$$eval(
-      '.rp-overview h2.rspress-doc-outline span',
-      nodes => nodes.map(node => node.textContent?.trim()).filter(Boolean),
-    );
+    const h2Elements = page.locator('.rp-overview h2.rspress-doc-outline span');
+    const h2Texts = (await h2Elements.allTextContents())
+      .map(text => text.trim())
+      .filter(Boolean);
     expect(h2Texts.join(',')).toEqual(['Client API'].join(','));
 
-    const itemTitleTexts = await page.$$eval(
+    const itemTitles = page.locator(
       '.rp-overview .rp-overview-group__item__title > a',
-      nodes => nodes.map(node => node.textContent?.trim()).filter(Boolean),
     );
+    const itemTitleTexts = (await itemTitles.allTextContents())
+      .map(text => text.trim())
+      .filter(Boolean);
     expect(itemTitleTexts.join(',')).toEqual(
       ['Runtime API', 'Components'].join(','),
     );
 
-    const linkTexts = await page.$$eval(
+    const links = page.locator(
       '.rp-overview .rp-overview-group__item__content__item__link',
-      nodes => nodes.map(node => node.textContent?.trim()).filter(Boolean),
     );
+    const linkTexts = (await links.allTextContents())
+      .map(text => text.trim())
+      .filter(Boolean);
     expect(linkTexts.join(',')).toEqual(['Usage', 'Example'].join(','));
   });
 
@@ -203,22 +215,26 @@ test.describe('Auto nav and sidebar test', async () => {
       waitUntil: 'networkidle',
     });
 
-    const h2Texts = await page.$$eval(
-      '.rp-overview h2.rspress-doc-outline span',
-      nodes => nodes.map(node => node.textContent?.trim()).filter(Boolean),
-    );
+    const h2Elements = page.locator('.rp-overview h2.rspress-doc-outline span');
+    const h2Texts = (await h2Elements.allTextContents())
+      .map(text => text.trim())
+      .filter(Boolean);
     expect(h2Texts.join(',')).toEqual(['Nested'].join(','));
 
-    const itemTitleTexts = await page.$$eval(
+    const itemTitles = page.locator(
       '.rp-overview .rp-overview-group__item__title > a',
-      nodes => nodes.map(node => node.textContent?.trim()).filter(Boolean),
     );
+    const itemTitleTexts = (await itemTitles.allTextContents())
+      .map(text => text.trim())
+      .filter(Boolean);
     expect(itemTitleTexts.join(',')).toEqual(['Nested config'].join(','));
 
-    const linkTexts = await page.$$eval(
+    const links = page.locator(
       '.rp-overview .rp-overview-group__item__content__item__link',
-      nodes => nodes.map(node => node.textContent?.trim()).filter(Boolean),
     );
+    const linkTexts = (await links.allTextContents())
+      .map(text => text.trim())
+      .filter(Boolean);
     expect(linkTexts.join(',')).toEqual(['Nested H2'].join(','));
   });
 
@@ -229,20 +245,15 @@ test.describe('Auto nav and sidebar test', async () => {
       waitUntil: 'networkidle',
     });
 
-    function getDataContextFromElements(
-      elements: ElementHandle<SVGElement | HTMLElement>[],
-    ) {
-      return page.evaluate(
-        sidebars =>
-          sidebars?.map(sidebar => sidebar.getAttribute('data-context')),
-        elements,
-      );
-    }
-
-    const topLevelItems = await page.$$(
+    const topLevelItems = page.locator(
       '.rp-doc-layout__sidebar .rp-sidebar-item[data-depth="0"]',
     );
-    const topLevelContexts = await getDataContextFromElements(topLevelItems);
+    const topLevelCount = await topLevelItems.count();
+    const topLevelContexts = await Promise.all(
+      Array.from({ length: topLevelCount }, (_, i) =>
+        topLevelItems.nth(i).getAttribute('data-context'),
+      ),
+    );
     expect(topLevelContexts.filter(Boolean)).toEqual([
       'api-overview',
       'config',
@@ -250,30 +261,30 @@ test.describe('Auto nav and sidebar test', async () => {
       'rspack-official-docsite-custom-link',
     ]);
 
-    const overviewItems = await page.$$('[data-context="api-overview"]');
-    expect(overviewItems.length).toEqual(1);
+    const overviewItems = page.locator('[data-context="api-overview"]');
+    await expect(overviewItems).toHaveCount(1);
 
-    const depthOneItems = await page.$$(
+    const depthOneItems = page.locator(
       '.rp-doc-layout__sidebar .rp-sidebar-item[data-depth="1"]',
     );
-    const depthOneContexts = await getDataContextFromElements(depthOneItems);
+    const depthOneCount = await depthOneItems.count();
+    const depthOneContexts = await Promise.all(
+      Array.from({ length: depthOneCount }, (_, i) =>
+        depthOneItems.nth(i).getAttribute('data-context'),
+      ),
+    );
     expect(depthOneContexts).toEqual(
       expect.arrayContaining(['front-matter', 'config-build']),
     );
 
-    const customLinkItems = await page.$$(
+    const customLinkItems = page.locator(
       '.rp-doc-layout__sidebar [data-context="rspack-official-docsite-custom-link"]',
     );
-    const customLinkTexts = await Promise.all(
-      customLinkItems.map(i => i.textContent()),
-    );
+    const customLinkTexts = (await customLinkItems.allTextContents())
+      .map(text => text?.trim())
+      .filter(Boolean);
 
-    expect(
-      customLinkTexts
-        .map(text => text?.trim())
-        .filter(Boolean)
-        .join(','),
-    ).toEqual(
+    expect(customLinkTexts.join(',')).toEqual(
       ['Rspack Official Docsite', 'Inner SideBar Rspack Official Docsite'].join(
         ',',
       ),
