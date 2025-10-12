@@ -15,5 +15,6 @@ export default defineConfig({
         label: 'English',
       },
     ],
+    localeRedirect: 'never',
   },
 });
