@@ -87,14 +87,14 @@ test.describe('home pageType', async () => {
 
   test('Features', async ({ page }) => {
     await page.goto(`http://localhost:${appPort}/base/`);
-    const features = await page.$$('.rspress-home-feature-card');
-    expect(features).toHaveLength(2);
+    const features = page.locator('.rspress-home-feature-card');
+    await expect(features).toHaveCount(2);
 
     const url1 = page.url();
-    await features[0].click();
+    await features.nth(0).click();
     expect(page.url()).toBe(url1);
 
-    await features[1].click();
+    await features.nth(1).click();
     expect(page.url()).toBe('https://example.com/');
   });
 });

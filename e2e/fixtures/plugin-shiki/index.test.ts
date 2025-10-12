@@ -26,22 +26,26 @@ test.describe('plugin shiki test', async () => {
     await page.goto(`http://localhost:${appPort}`, {
       waitUntil: 'networkidle',
     });
-    const shikiDoms = await page.$$('.rspress-code-content');
-    expect(shikiDoms.length).toBe(6);
+    const shikiDoms = page.locator('.rspress-code-content');
+    await expect(shikiDoms).toHaveCount(6);
 
-    const firstShikiDom = shikiDoms[0];
+    const firstShikiDom = shikiDoms.first();
 
     expect(
-      await firstShikiDom.$eval('code', node =>
-        node.computedStyleMap().get('white-space')?.toString(),
-      ),
+      await firstShikiDom
+        .locator('code')
+        .evaluate(node =>
+          node.computedStyleMap().get('white-space')?.toString(),
+        ),
     ).toBe('pre');
 
-    await firstShikiDom.$eval('button', btn => btn.click());
+    await firstShikiDom.locator('button').click();
     expect(
-      await firstShikiDom.$eval('code', node =>
-        node.computedStyleMap().get('white-space')?.toString(),
-      ),
+      await firstShikiDom
+        .locator('code')
+        .evaluate(node =>
+          node.computedStyleMap().get('white-space')?.toString(),
+        ),
     ).toBe('pre-wrap');
   });
 
@@ -49,7 +53,7 @@ test.describe('plugin shiki test', async () => {
     await page.goto(`http://localhost:${appPort}/langAlias`, {
       waitUntil: 'networkidle',
     });
-    const shikiDoms = await page.$$('.rspress-code-content');
-    expect(shikiDoms.length).toBe(1);
+    const shikiDoms = page.locator('.rspress-code-content');
+    await expect(shikiDoms).toHaveCount(1);
   });
 });

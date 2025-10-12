@@ -27,10 +27,10 @@ test.describe('plugin test', async () => {
       waitUntil: 'networkidle',
     });
     // take the sidebar
-    const sidebar = await page.$$(
+    const sidebar = page.locator(
       '.rspress-sidebar .rspress-scrollbar > nav > section',
     );
-    expect(sidebar?.length).toBe(1);
+    await expect(sidebar).toHaveCount(1);
     // get the section
   });
 
@@ -38,9 +38,9 @@ test.describe('plugin test', async () => {
     await page.goto(`http://localhost:${appPort}/base/en/guide/quick-start`, {
       waitUntil: 'networkidle',
     });
-    const a = await page.$('.rspress-doc a:not(.header-anchor)');
+    const a = page.locator('.rspress-doc a:not(.header-anchor)');
     // extract the href of a tag
-    const href = await page.evaluate(a => a?.getAttribute('href'), a);
+    const href = await a.getAttribute('href');
     expect(href).toBe('/base/en/guide/install.html');
   });
 
@@ -48,17 +48,15 @@ test.describe('plugin test', async () => {
     await page.goto(`http://localhost:${appPort}/base`, {
       waitUntil: 'networkidle',
     });
-    const docContent = await page.$('.rspress-doc');
-    const text = await docContent?.textContent();
-    expect(text?.includes('This is the index page')).toBeTruthy();
+    const docContent = page.locator('.rspress-doc');
+    await expect(docContent).toContainText('This is the index page');
   });
 
   test('Should render the homepage - "/base/"', async ({ page }) => {
     await page.goto(`http://localhost:${appPort}/base/`, {
       waitUntil: 'networkidle',
     });
-    const docContent = await page.$('.rspress-doc');
-    const text = await docContent?.textContent();
-    expect(text?.includes('This is the index page')).toBeTruthy();
+    const docContent = page.locator('.rspress-doc');
+    await expect(docContent).toContainText('This is the index page');
   });
 });
