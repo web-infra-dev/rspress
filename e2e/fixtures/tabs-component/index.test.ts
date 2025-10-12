@@ -23,13 +23,13 @@ test.describe('tabs-component test', async () => {
 
     // Tab A
     const tabA = page.locator('.tabs-a');
-    const contentA = page.locator('.tabs-a + div');
+    const contentA = page.locator('.tabs-a > div').nth(1);
     await expect(tabA).toContainText('label1');
     await expect(contentA).toContainText('content1');
 
     // Tab B
     const tabB = page.locator('.tabs-b');
-    const contentB = page.locator('.tabs-b + div');
+    const contentB = page.locator('.tabs-b > div').nth(1);
     await expect(tabB).toContainText('label2');
     await expect(contentB).toContainText('content2');
     const notSelected = await page
@@ -43,7 +43,7 @@ test.describe('tabs-component test', async () => {
 
     // Tab C
     const tabC = page.locator('.tabs-c');
-    const contentC = page.locator('.tabs-c + div');
+    const contentC = page.locator('.tabs-c > div');
     await expect(tabC).toHaveText('');
     await expect(contentC).toHaveText('');
   });

@@ -3,8 +3,8 @@ import { getPort, killProcess, runDevCommand } from '../../utils/runCommands';
 import { searchInPage } from '../../utils/search';
 
 test.describe('api-docgen test', async () => {
-  let appPort;
-  let app;
+  let appPort: number;
+  let app: unknown;
 
   test.beforeAll(async () => {
     const appDir = __dirname;
@@ -20,11 +20,11 @@ test.describe('api-docgen test', async () => {
 
   test('Index page', async ({ page }) => {
     await page.goto(`http://localhost:${appPort}`);
-    await page.waitForSelector('table');
+    await page.waitForSelector('.rspress-plugin-api-docgen table');
     const tableH3 = page.locator('#button');
     await expect(tableH3).toBeVisible();
 
-    const table = page.locator('table');
+    const table = page.locator('.rspress-plugin-api-docgen table');
 
     // Property
     await expect(table).toContainText('Property');

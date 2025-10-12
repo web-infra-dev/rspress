@@ -18,7 +18,7 @@ test.describe('theme-css-order', async () => {
 
   test('globalStyles should work', async ({ page }) => {
     await page.goto(`http://localhost:${appPort}`);
-    const link = page.locator('.rspress-doc a');
+    const link = page.locator('.rspress-doc a:not(.rp-header-anchor)');
     await expect(link).toHaveCSS('color', 'rgb(255, 165, 0)');
   });
 });

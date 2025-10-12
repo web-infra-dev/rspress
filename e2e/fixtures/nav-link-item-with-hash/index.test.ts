@@ -2,8 +2,8 @@ import { expect, test } from '@playwright/test';
 import { getPort, killProcess, runDevCommand } from '../../utils/runCommands';
 
 test.describe('basic test', async () => {
-  let appPort;
-  let app;
+  let appPort: number;
+  let app: Awaited<ReturnType<typeof runDevCommand>>;
   test.beforeAll(async () => {
     const appDir = __dirname;
     appPort = await getPort();
@@ -32,11 +32,13 @@ test.describe('basic test', async () => {
     await page.setViewportSize({ width: 375, height: 812 });
 
     await page.goto(`http://localhost:${appPort}/`);
+    await page.waitForSelector('.rp-nav-screen');
 
+    const navScreen = page.locator('.rp-nav-screen');
     await page.locator('.rp-nav-hamburger').first().click();
-    await expect(page.locator('.rp-hover-group')).toBeVisible();
+    await expect(navScreen).toHaveClass(/rp-nav-screen--open/);
 
     await page.getByRole('link', { name: 'PageC' }).click();
-    await expect(page.locator('.rp-hover-group')).not.toBeVisible();
+    await expect(navScreen).not.toHaveClass(/rp-nav-screen--open/);
   });
 });

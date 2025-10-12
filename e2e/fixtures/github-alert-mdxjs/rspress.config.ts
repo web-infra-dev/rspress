@@ -3,4 +3,11 @@ import { defineConfig } from '@rspress/core';
 
 export default defineConfig({
   root: path.join(__dirname, 'doc'),
+  markdown: {
+    link: {
+      checkDeadLinks: {
+        excludes: ['bar'],
+      },
+    },
+  },
 });
