@@ -28,8 +28,8 @@ test.describe('search i18n test', async () => {
     await page.click('body');
 
     // Switch language to Chinese
-    await page.click('.rspress-nav-menu-group-button');
-    await page.click('.rspress-nav-menu-group-content a');
+    await page.click('.rp-nav-menu__item__container');
+    await page.click('.rp-hover-group a');
     await page.waitForLoadState();
 
     const suggestItems2 = await searchInPage(page, 'Button');
@@ -37,8 +37,8 @@ test.describe('search i18n test', async () => {
     await page.click('body');
 
     // Switch language to English
-    await page.click('.rspress-nav-menu-group-button');
-    await page.click('.rspress-nav-menu-group-content a');
+    await page.click('.rp-nav-menu__item__container');
+    await page.click('.rp-hover-group a');
     await page.waitForLoadState();
 
     const suggestItems3 = await searchInPage(page, 'Button');

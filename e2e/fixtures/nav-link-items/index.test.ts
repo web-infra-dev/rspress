@@ -22,26 +22,22 @@ test.describe('Nav should functions well', async () => {
     // ElementHandler is currently discouraged by official
     // use Locator instead
     // Please refer to https://playwright.dev/docs/api/class-elementhandle
-    navMenu = page.locator('.rspress-nav-menu');
-    navMenuItems = await page.locator('.rspress-nav-menu > *').all();
+    navMenu = page.locator('.rp-nav-menu');
+    navMenuItems = await page.locator('.rp-nav-menu > *').all();
 
-    onlyItemsButton = navMenuItems[1].locator('.rspress-nav-menu-group-button');
+    onlyItemsButton = navMenuItems[1].locator('.rp-nav-menu__item__container');
     onlyItemsChildren = await navMenuItems[1]
-      .locator('.rspress-nav-menu-group-content a')
+      .locator('.rp-hover-group a')
       .all();
-    onlyItemsContainer = navMenuItems[1].locator(
-      '.rspress-nav-menu-group-content',
-    );
+    onlyItemsContainer = navMenuItems[1].locator('.rp-hover-group');
 
     itemsAndLinkButton = navMenuItems[2].locator(
-      '.rspress-nav-menu-group-button',
+      '.rp-nav-menu__item__container',
     );
     itemsAndLinkChildren = await navMenuItems[2]
-      .locator('.rspress-nav-menu-group-content a')
+      .locator('.rp-hover-group a')
       .all();
-    itemsAndLinkContainer = navMenuItems[2].locator(
-      '.rspress-nav-menu-group-content',
-    );
+    itemsAndLinkContainer = navMenuItems[2].locator('.rp-hover-group');
   };
 
   const gotoPage = (suffix: string) => `http://localhost:${appPort}${suffix}`;

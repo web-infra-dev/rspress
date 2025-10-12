@@ -19,10 +19,10 @@ test.describe('basic test', async () => {
   test('Navigate with an hash as link', async ({ page }) => {
     await page.goto(`http://localhost:${appPort}/`);
 
-    await page.locator('.rspress-nav-menu a').first().click();
+    await page.locator('.rp-nav-menu a').first().click();
     expect(page.url()).toContain('/#pageA');
 
-    await page.locator('.rspress-nav-menu a').nth(1).click();
+    await page.locator('.rp-nav-menu a').nth(1).click();
     expect(page.url()).toContain('/#pageB');
   });
 
@@ -33,10 +33,10 @@ test.describe('basic test', async () => {
 
     await page.goto(`http://localhost:${appPort}/`);
 
-    await page.locator('.rspress-mobile-hamburger').click();
-    await expect(page.locator('.rspress-nav-screen')).toBeVisible();
+    await page.locator('.rp-nav-hamburger').first().click();
+    await expect(page.locator('.rp-hover-group')).toBeVisible();
 
     await page.getByRole('link', { name: 'PageC' }).click();
-    await expect(page.locator('.rspress-nav-screen')).not.toBeVisible();
+    await expect(page.locator('.rp-hover-group')).not.toBeVisible();
   });
 });

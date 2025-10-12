@@ -27,9 +27,7 @@ test.describe('plugin test', async () => {
       waitUntil: 'networkidle',
     });
     // take the sidebar
-    const sidebar = page.locator(
-      '.rspress-sidebar .rspress-scrollbar > nav > section',
-    );
+    const sidebar = page.locator('.rp-doc-layout__sidebar');
     await expect(sidebar).toHaveCount(1);
     // get the section
   });
@@ -38,7 +36,7 @@ test.describe('plugin test', async () => {
     await page.goto(`http://localhost:${appPort}/base/en/guide/quick-start`, {
       waitUntil: 'networkidle',
     });
-    const a = page.locator('.rspress-doc a:not(.header-anchor)');
+    const a = page.locator('.rspress-doc a:not(.rp-header-anchor)');
     // extract the href of a tag
     const href = await a.getAttribute('href');
     expect(href).toBe('/base/en/guide/install.html');

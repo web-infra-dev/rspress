@@ -20,7 +20,7 @@ test.describe('replace-rules test', async () => {
     await page.goto(`http://localhost:${appPort}`);
 
     // replace text in _meta.json
-    const nav = page.locator('.rspress-nav-menu');
+    const nav = page.locator('.rp-nav-menu');
     await expect(nav).toHaveText('bar-meta');
 
     // replace text in object frontmatter
