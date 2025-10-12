@@ -26,7 +26,7 @@ test.describe('plugin shiki test', async () => {
     await page.goto(`http://localhost:${appPort}`, {
       waitUntil: 'networkidle',
     });
-    const shikiDoms = page.locator('.rspress-code-content');
+    const shikiDoms = page.locator('.rp-codeblock_content');
     await expect(shikiDoms).toHaveCount(6);
 
     const firstShikiDom = shikiDoms.first();
@@ -39,7 +39,7 @@ test.describe('plugin shiki test', async () => {
         ),
     ).toBe('pre');
 
-    await firstShikiDom.locator('button').click();
+    await firstShikiDom.locator('button[title="Toggle code wrap"]').click();
     expect(
       await firstShikiDom
         .locator('code')
@@ -53,7 +53,7 @@ test.describe('plugin shiki test', async () => {
     await page.goto(`http://localhost:${appPort}/langAlias`, {
       waitUntil: 'networkidle',
     });
-    const shikiDoms = page.locator('.rspress-code-content');
+    const shikiDoms = page.locator('.rp-codeblock_content');
     await expect(shikiDoms).toHaveCount(1);
   });
 });

@@ -4,40 +4,36 @@ import { getPort, killProcess, runDevCommand } from '../../utils/runCommands';
 
 test.describe('Nav should functions well', async () => {
   let appPort: number;
-  let app: unknown;
+  let app: Awaited<ReturnType<typeof runDevCommand>>;
   let navMenu: Locator;
-  let navMenuItems: Locator[];
-  let onlyItemsButton: Locator;
-  let onlyItemsContainer: Locator;
-  let onlyItemsChildren: Locator[];
-  let itemsAndLinkButton: Locator;
-  let itemsAndLinkChildren: Locator[];
-  let itemsAndLinkContainer: Locator;
+  let navMenuItems: Locator;
+  let onlyLinkItem: Locator;
+  let onlyItemsItem: Locator;
+  let itemsAndLinkItem: Locator;
+  let itemsAndLinkDropdown: Locator;
 
   const init = async (page: Page) => {
     await page.goto(`http://localhost:${appPort}`, {
       waitUntil: 'networkidle',
     });
 
-    // ElementHandler is currently discouraged by official
-    // use Locator instead
-    // Please refer to https://playwright.dev/docs/api/class-elementhandle
     navMenu = page.locator('.rp-nav-menu');
-    navMenuItems = await page.locator('.rp-nav-menu > *').all();
+    navMenuItems = navMenu.locator('.rp-nav-menu__item');
 
-    onlyItemsButton = navMenuItems[1].locator('.rp-nav-menu__item__container');
-    onlyItemsChildren = await navMenuItems[1]
-      .locator('.rp-hover-group a')
-      .all();
-    onlyItemsContainer = navMenuItems[1].locator('.rp-hover-group');
+    onlyLinkItem = navMenuItems.nth(0);
+    onlyItemsItem = navMenuItems.nth(1);
+    itemsAndLinkItem = navMenuItems.nth(2);
+    itemsAndLinkDropdown = itemsAndLinkItem.locator('.rp-hover-group');
+  };
 
-    itemsAndLinkButton = navMenuItems[2].locator(
-      '.rp-nav-menu__item__container',
-    );
-    itemsAndLinkChildren = await navMenuItems[2]
-      .locator('.rp-hover-group a')
-      .all();
-    itemsAndLinkContainer = navMenuItems[2].locator('.rp-hover-group');
+  const getNavScreen = (page: Page) => page.locator('.rp-nav-screen');
+
+  const openNavScreen = async (page: Page) => {
+    const navScreen = getNavScreen(page);
+    await page.waitForSelector('.rp-nav-screen');
+    await page.locator('.rp-nav-hamburger').first().click();
+    await expect(navScreen).toHaveClass(/rp-nav-screen--open/);
+    return navScreen;
   };
 
   const gotoPage = (suffix: string) => `http://localhost:${appPort}${suffix}`;
@@ -57,90 +53,128 @@ test.describe('Nav should functions well', async () => {
   test('it should render correct visibility', async ({ page }) => {
     await init(page);
 
-    expect(await navMenu.isVisible()).toBe(true);
-    expect(await navMenuItems[0].isVisible()).toBe(true);
-    expect(await onlyItemsButton.isVisible()).toBe(true);
-    expect(await onlyItemsContainer.isVisible()).toBe(false);
-    expect(await itemsAndLinkButton.isVisible()).toBe(true);
-    expect(await itemsAndLinkContainer.isVisible()).toBe(false);
+    await expect(navMenu).toBeVisible();
+    await expect(
+      onlyLinkItem.locator('a.rp-nav-menu__item__container'),
+    ).toBeVisible();
+    await expect(
+      onlyItemsItem.locator('.rp-nav-menu__item__container'),
+    ).toBeVisible();
+    await expect(
+      itemsAndLinkItem.locator('.rp-nav-menu__item__container'),
+    ).toBeVisible();
+    await expect(onlyItemsItem.locator('.rp-hover-group')).toHaveCount(0);
+    await expect(itemsAndLinkDropdown).toHaveClass(/rp-hover-group--hidden/);
   });
 
   test('items should be visible when button is hovered', async ({ page }) => {
     await init(page);
 
-    expect(await onlyItemsContainer.isVisible()).toBe(false);
-    await onlyItemsButton.hover();
-    expect(await onlyItemsContainer.isVisible()).toBe(true);
-
-    expect(await itemsAndLinkContainer.isVisible()).toBe(false);
-    await itemsAndLinkButton.hover();
-    expect(await itemsAndLinkContainer.isVisible()).toBe(true);
+    await expect(itemsAndLinkDropdown).toHaveClass(/rp-hover-group--hidden/);
+    await itemsAndLinkItem.hover();
+    await expect(itemsAndLinkDropdown).not.toHaveClass(
+      /rp-hover-group--hidden/,
+    );
   });
 
   test('it should render correct number of nav', async ({ page }) => {
     await init(page);
 
-    expect(navMenuItems.length).toBe(3);
+    await expect(navMenuItems).toHaveCount(3);
   });
 
   test('it should render correct type of nav', async ({ page }) => {
     await init(page);
 
-    const onlyLinkElTag = await navMenuItems[0].evaluate(e => e.tagName);
-    const onlyItemsElTag = await navMenuItems[1].evaluate(e => e.tagName);
-    const itemsAndLinkElTag = await navMenuItems[2].evaluate(e => e.tagName);
+    const onlyLinkElTag = await onlyLinkItem.evaluate(node => node.tagName);
+    const onlyItemsElTag = await onlyItemsItem.evaluate(node => node.tagName);
+    const itemsAndLinkElTag = await itemsAndLinkItem.evaluate(
+      node => node.tagName,
+    );
 
-    expect(onlyLinkElTag).toBe('A');
-    expect(onlyItemsElTag).toBe('DIV');
-    expect(itemsAndLinkElTag).toBe('DIV');
+    expect(onlyLinkElTag).toBe('LI');
+    expect(onlyItemsElTag).toBe('LI');
+    expect(itemsAndLinkElTag).toBe('LI');
+
+    expect(
+      await onlyLinkItem.locator('a.rp-nav-menu__item__container').count(),
+    ).toBe(1);
+    expect(
+      await onlyItemsItem.locator('a.rp-nav-menu__item__container').count(),
+    ).toBe(0);
+    expect(
+      await onlyItemsItem.locator('div.rp-nav-menu__item__container').count(),
+    ).toBe(1);
+    expect(
+      await itemsAndLinkItem.locator('a.rp-nav-menu__item__container').count(),
+    ).toBe(1);
   });
 
   test('it should be able to redirect correctly', async ({ page }) => {
     await init(page);
 
-    await navMenuItems[0].click();
+    await onlyLinkItem.locator('a').click();
     expect(page.url()).toBe(gotoPage('/only-link/index.html'));
 
-    await onlyItemsButton.hover();
-    await onlyItemsChildren[0].click({ force: true });
+    await page.goto(gotoPage('/'), { waitUntil: 'networkidle' });
+    const navScreen = await openNavScreen(page);
+    await navScreen.getByRole('link', { name: 'Item' }).click();
+    await page.waitForURL('**/only-items/item.html');
     expect(page.url()).toBe(gotoPage('/only-items/item.html'));
 
-    await itemsAndLinkButton.click();
+    await page.goto(gotoPage('/'), { waitUntil: 'networkidle' });
+    await itemsAndLinkItem.locator('a').click();
     expect(page.url()).toBe(gotoPage('/items-and-link/index.html'));
 
     await page.goto(gotoPage('/'), {
       waitUntil: 'networkidle',
     });
-    await itemsAndLinkButton.hover();
-    await itemsAndLinkChildren[0].click({ force: true, timeout: 1000 });
+    await itemsAndLinkItem.hover();
+    await itemsAndLinkDropdown
+      .locator('.rp-hover-group__item a')
+      .first()
+      .click({ force: true, timeout: 1000 });
     expect(page.url()).toBe(gotoPage('/items-and-link/child-1.html'));
 
     await page.goto(gotoPage('/'), {
       waitUntil: 'networkidle',
     });
-    await itemsAndLinkButton.hover();
-    await itemsAndLinkChildren[1].click({ force: true, timeout: 1000 });
+    await itemsAndLinkItem.hover();
+    await itemsAndLinkDropdown
+      .locator('.rp-hover-group__item a')
+      .nth(1)
+      .click({ force: true, timeout: 1000 });
     expect(page.url()).toBe(gotoPage('/items-and-link/child-2.html'));
   });
 
   test('it should render correct text', async ({ page }) => {
     await init(page);
 
-    const onlyLinkText = await navMenuItems[0].textContent();
-    const onlyItemsButtonText = await onlyItemsButton.textContent();
-    const onlyItemsChildrenText = await onlyItemsChildren[0].textContent();
+    const onlyLinkText = await onlyLinkItem.textContent();
+    const onlyItemsButtonText = await onlyItemsItem.textContent();
+    const navScreen = await openNavScreen(page);
+    const onlyItemsNavText = await navScreen
+      .getByRole('link', { name: 'Item' })
+      .textContent();
+    await navScreen.click();
+    await expect(navScreen).not.toHaveClass(/rp-nav-screen--open/);
 
-    const itemsAndLinkButtonText = await itemsAndLinkButton.textContent();
-    const itemsAndLinkChildrenText1 =
-      await itemsAndLinkChildren[0].textContent();
-    const itemsAndLinkChildrenText2 =
-      await itemsAndLinkChildren[1].textContent();
+    const itemsAndLinkButtonText = await itemsAndLinkItem.textContent();
+    await itemsAndLinkItem.hover();
+    const itemsAndLinkChildrenText1 = await itemsAndLinkDropdown
+      .locator('.rp-hover-group__item a')
+      .first()
+      .textContent();
+    const itemsAndLinkChildrenText2 = await itemsAndLinkDropdown
+      .locator('.rp-hover-group__item a')
+      .nth(1)
+      .textContent();
 
-    expect(onlyLinkText).toBe('OnlyLink');
-    expect(onlyItemsButtonText).toBe('OnlyItems');
-    expect(onlyItemsChildrenText).toBe('Item');
-    expect(itemsAndLinkButtonText).toBe('ItemsAndLink');
-    expect(itemsAndLinkChildrenText1).toBe('Child1');
-    expect(itemsAndLinkChildrenText2).toBe('Child2');
+    expect(onlyLinkText?.trim()).toBe('OnlyLink');
+    expect(onlyItemsButtonText?.includes('OnlyItems')).toBe(true);
+    expect(onlyItemsNavText?.trim()).toBe('Item');
+    expect(itemsAndLinkButtonText?.includes('ItemsAndLink')).toBe(true);
+    expect(itemsAndLinkChildrenText1?.trim()).toBe('Child1');
+    expect(itemsAndLinkChildrenText2?.trim()).toBe('Child2');
   });
 });

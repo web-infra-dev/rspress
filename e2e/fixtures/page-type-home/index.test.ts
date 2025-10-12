@@ -19,15 +19,15 @@ test.describe('home pageType', async () => {
 
   test('Hero', async ({ page }) => {
     await page.goto(`http://localhost:${appPort}/base/`);
-    await expect(page.locator('h1').textContent()).resolves.toBe(
+    await expect(page.locator('.rp-home-hero__title-brand')).toHaveText(
       'E2E case title',
     );
-    await expect(
-      page.locator('.rp-home-hero__subtitle').textContent(),
-    ).resolves.toBe('E2E case subTitle');
-    await expect(
-      page.locator('.rp-home-hero__tagline').textContent(),
-    ).resolves.toBe('E2E case tagline');
+    await expect(page.locator('.rp-home-hero__subtitle')).toHaveText(
+      'E2E case subTitle',
+    );
+    await expect(page.locator('.rp-home-hero__tagline')).toHaveText(
+      'E2E case tagline',
+    );
 
     const img = page.locator('.rp-home-hero__image img').first();
     await expect(img.getAttribute('src')).resolves.toBe('/base/brand.png');
@@ -41,9 +41,9 @@ test.describe('home pageType', async () => {
 
     const actions = page.locator('.rp-home-hero__actions a');
     await expect(actions).toHaveCount(3);
-    await expect(actions.nth(0).textContent()).resolves.toBe('Action 1');
-    await expect(actions.nth(1).textContent()).resolves.toBe('Action 2');
-    await expect(actions.nth(2).textContent()).resolves.toBe('External');
+    await expect(actions.nth(0)).toHaveText('Action 1');
+    await expect(actions.nth(1)).toHaveText('Action 2');
+    await expect(actions.nth(2)).toHaveText('External');
     // click the first action
     const url1 = page.url();
     await actions.nth(0).click();
@@ -53,15 +53,15 @@ test.describe('home pageType', async () => {
 
   test('Hero - zh', async ({ page }) => {
     await page.goto(`http://localhost:${appPort}/base/zh/`);
-    await expect(page.locator('h1').textContent()).resolves.toBe(
+    await expect(page.locator('.rp-home-hero__title-brand')).toHaveText(
       'E2E 用例 title',
     );
-    await expect(
-      page.locator('.rp-home-hero__subtitle').textContent(),
-    ).resolves.toBe('E2E 用例 subTitle');
-    await expect(
-      page.locator('.rp-home-hero__tagline').textContent(),
-    ).resolves.toBe('E2E 用例 tagline');
+    await expect(page.locator('.rp-home-hero__subtitle')).toHaveText(
+      'E2E 用例 subTitle',
+    );
+    await expect(page.locator('.rp-home-hero__tagline')).toHaveText(
+      'E2E 用例 tagline',
+    );
 
     const img = page.locator('.rp-home-hero__image img').first();
     await expect(img.getAttribute('src')).resolves.toBe('/base/brand.png');
@@ -75,9 +75,9 @@ test.describe('home pageType', async () => {
 
     const actions = page.locator('.rp-home-hero__actions a');
     await expect(actions).toHaveCount(3);
-    await expect(actions.nth(0).textContent()).resolves.toBe('操作 1');
-    await expect(actions.nth(1).textContent()).resolves.toBe('操作 2');
-    await expect(actions.nth(2).textContent()).resolves.toBe('External');
+    await expect(actions.nth(0)).toHaveText('操作 1');
+    await expect(actions.nth(1)).toHaveText('操作 2');
+    await expect(actions.nth(2)).toHaveText('External');
     // click the first action
     const url1 = page.url();
     await actions.nth(0).click();
