@@ -18,8 +18,8 @@ function proxyConsole(page: Page) {
 }
 
 test.describe('search hooks', async () => {
-  let appPort;
-  let app;
+  let appPort: number;
+  let app: Awaited<ReturnType<typeof runDevCommand>>;
 
   test.beforeAll(async () => {
     const appDir = __dirname;
