@@ -18,29 +18,25 @@ test.describe('Multi version test', async () => {
 
   test('Default version and default language', async ({ page }) => {
     await page.goto(`http://localhost:${appPort}`);
-    const h1 = await page.$('h1');
-    const text = await page.evaluate(h1 => h1?.textContent, h1);
-    await expect(text).toContain('v1');
+    const h1 = page.locator('h1');
+    await expect(h1).toContainText('v1');
   });
 
   test('Not Default version default language', async ({ page }) => {
     await page.goto(`http://localhost:${appPort}/v2`);
-    const h1 = await page.$('h1');
-    const text = await page.evaluate(h1 => h1?.textContent, h1);
-    await expect(text).toContain('v2');
+    const h1 = page.locator('h1');
+    await expect(h1).toContainText('v2');
   });
 
   test('Default version not default language', async ({ page }) => {
     await page.goto(`http://localhost:${appPort}/zh`);
-    const h1 = await page.$('h1');
-    const text = await page.evaluate(h1 => h1?.textContent, h1);
-    await expect(text).toContain('v1 中文');
+    const h1 = page.locator('h1');
+    await expect(h1).toContainText('v1 中文');
   });
 
   test('Not default version not default language', async ({ page }) => {
     await page.goto(`http://localhost:${appPort}/v2/zh`);
-    const h1 = await page.$('h1');
-    const text = await page.evaluate(h1 => h1?.textContent, h1);
-    await expect(text).toContain('v2 中文');
+    const h1 = page.locator('h1');
+    await expect(h1).toContainText('v2 中文');
   });
 });

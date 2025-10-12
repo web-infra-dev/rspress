@@ -18,9 +18,8 @@ test.describe('React 19 test', async () => {
 
   test('Index page', async ({ page }) => {
     await page.goto(`http://localhost:${appPort}`);
-    const h1 = await page.$('h1');
-    const text = await page.evaluate(h1 => h1?.textContent, h1);
-    expect(text).toContain('Hello world');
+    const h1 = page.locator('h1');
+    await expect(h1).toContainText('Hello world');
   });
 
   test('404 page', async ({ page }) => {
@@ -28,7 +27,6 @@ test.describe('React 19 test', async () => {
       waitUntil: 'networkidle',
     });
     // find the 404 text in the page
-    const text = await page.evaluate(() => document.body.textContent);
-    expect(text).toContain('404');
+    await expect(page.locator('body')).toContainText('404');
   });
 });
