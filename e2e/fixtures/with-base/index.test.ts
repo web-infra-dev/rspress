@@ -28,7 +28,7 @@ test.describe('plugin test', async () => {
     });
     // take the sidebar
     const sidebar = page.locator(
-      '.rspress-sidebar .rspress-scrollbar > nav > section',
+      '.rp-doc-layout__sidebar .rspress-scrollbar > nav > section',
     );
     await expect(sidebar).toHaveCount(1);
     // get the section

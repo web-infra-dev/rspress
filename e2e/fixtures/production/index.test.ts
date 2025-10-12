@@ -26,13 +26,13 @@ test.describe('basic test', async () => {
     await page.goto(`http://localhost:${appPort}`, {
       waitUntil: 'networkidle',
     });
-    const darkModeButton = page.locator('.rspress-nav-appearance');
+    const darkModeButton = page.locator('.rp-switch-appearance');
     const html = page.locator('html');
     const htmlClass = await html.getAttribute('class');
-    const defaultMode = htmlClass?.includes('dark') ? 'dark' : 'light';
+    const defaultMode = htmlClass?.includes('rp-dark') ? 'dark' : 'light';
     await darkModeButton.click();
     // check the class in html
     const newHtmlClass = await html.getAttribute('class');
-    expect(newHtmlClass?.includes('dark')).toBe(defaultMode !== 'dark');
+    expect(newHtmlClass?.includes('rp-dark')).toBe(defaultMode !== 'dark');
   });
 });
