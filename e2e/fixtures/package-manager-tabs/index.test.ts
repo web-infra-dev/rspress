@@ -21,10 +21,8 @@ test.describe('tabs-component test', async () => {
     await page.goto(`http://localhost:${appPort}`);
 
     await page.waitForSelector('[class^="tab_"] > div > span');
-    const tabs = await page.$$('[class^="tab_"] > div > span');
-    const tabsText = await Promise.all(
-      tabs.map(element => element.textContent()),
-    );
+    const tabs = page.locator('[class^="tab_"] > div > span');
+    const tabsText = await tabs.allTextContents();
 
     expect(tabsText).toEqual([
       'npm',
@@ -41,13 +39,11 @@ test.describe('tabs-component test', async () => {
       'bun',
     ]);
 
-    const clickTabs = await page.$$('[class^="tab_"]');
+    const clickTabs = page.locator('[class^="tab_"]');
 
-    await clickTabs[0].click();
-    const npmSpanElements = await page.$$('code > span > span');
-    const npmCode = await Promise.all(
-      npmSpanElements.map(element => element.textContent()),
-    );
+    await clickTabs.nth(0).click();
+    const npmSpanElements = page.locator('code > span > span');
+    const npmCode = await npmSpanElements.allTextContents();
     expect(npmCode).toEqual([
       'npm',
       ' create rspress@latest',
@@ -57,11 +53,9 @@ test.describe('tabs-component test', async () => {
       ' example-cli-tool --yes',
     ]);
 
-    await clickTabs[1].click();
-    const yarnSpanElements = await page.$$('code > span > span');
-    const yarnCode = await Promise.all(
-      yarnSpanElements.map(element => element.textContent()),
-    );
+    await clickTabs.nth(1).click();
+    const yarnSpanElements = page.locator('code > span > span');
+    const yarnCode = await yarnSpanElements.allTextContents();
     expect(yarnCode).toEqual([
       'yarn',
       ' create rspress',
@@ -71,11 +65,9 @@ test.describe('tabs-component test', async () => {
       ' example-cli-tool --yes',
     ]);
 
-    await clickTabs[2].click();
-    const pnpmSpanElements = await page.$$('code > span > span');
-    const pnpmCode = await Promise.all(
-      pnpmSpanElements.map(element => element.textContent()),
-    );
+    await clickTabs.nth(2).click();
+    const pnpmSpanElements = page.locator('code > span > span');
+    const pnpmCode = await pnpmSpanElements.allTextContents();
     expect(pnpmCode).toEqual([
       'pnpm',
       ' create rspress@latest',
@@ -85,11 +77,9 @@ test.describe('tabs-component test', async () => {
       ' example-cli-tool --yes',
     ]);
 
-    await clickTabs[3].click();
-    const bunSpanElements = await page.$$('code > span > span');
-    const bunCode = await Promise.all(
-      bunSpanElements.map(element => element.textContent()),
-    );
+    await clickTabs.nth(3).click();
+    const bunSpanElements = page.locator('code > span > span');
+    const bunCode = await bunSpanElements.allTextContents();
     expect(bunCode).toEqual([
       'bun',
       ' create rspress@latest',

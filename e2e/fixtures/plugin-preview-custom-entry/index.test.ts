@@ -20,7 +20,8 @@ test.describe('plugin test', async () => {
     await page.goto(`http://localhost:${appPort}/`, {
       waitUntil: 'networkidle',
     });
-    const codeBlockElements = await page.$$('.rspress-doc > .rspress-preview');
+    const codeBlockElements = page.locator('.rspress-doc > .rspress-preview');
+    await expect(codeBlockElements).toHaveCount(4);
 
     const internalIframeJsxDemoCodePreview = await page
       .frameLocator('iframe')
@@ -43,7 +44,6 @@ test.describe('plugin test', async () => {
       .getByText('VUE')
       .innerText();
 
-    expect(codeBlockElements.length).toBe(4);
     expect(internalIframeJsxDemoCodePreview).toBe('Hello World JSX');
     expect(internalIframeTsxDemoCodePreview).toBe('Hello World TSX');
     expect(externalIframeJsxDemoCodePreview).toBe('Hello World External');

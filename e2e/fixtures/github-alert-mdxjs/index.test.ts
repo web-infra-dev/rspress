@@ -21,30 +21,32 @@ test.describe('github alert syntax in mdx-js', async () => {
   }) => {
     await page.goto(`http://localhost:${appPort}`);
 
-    const topLevelDirectives = await page.$$(
+    const topLevelDirectives = page.locator(
       '.rspress-doc > [class^="rspress-directive"]',
     );
+    await expect(topLevelDirectives).toHaveCount(7);
 
-    expect(topLevelDirectives.length).toEqual(7);
-
-    const listDirectives = await page.$$(
+    const listDirectives = page.locator(
       '.rspress-doc > * > li > [class^="rspress-directive"]',
     );
-    expect(listDirectives.length).toEqual(2);
+    await expect(listDirectives).toHaveCount(2);
 
-    const stepsDirectives = await page.$$(
+    const stepsDirectives = page.locator(
       '.rspress-doc > .\\[counter-reset\\:step\\] * > li > [class^="rspress-directive"]',
     );
-    expect(stepsDirectives.length).toEqual(2);
+    await expect(stepsDirectives).toHaveCount(2);
 
-    const containerTypes = await Promise.all(
-      [...topLevelDirectives, ...listDirectives, ...stepsDirectives].map(
-        async directive => {
-          const className = await directive.getAttribute('class');
-          return className?.split(' ')[1];
-        },
-      ),
-    );
+    const allDirectives = [topLevelDirectives, listDirectives, stepsDirectives];
+    const containerTypes: string[] = [];
+
+    for (const directivesLocator of allDirectives) {
+      const count = await directivesLocator.count();
+      for (let i = 0; i < count; i++) {
+        const className = await directivesLocator.nth(i).getAttribute('class');
+        containerTypes.push(className?.split(' ')[1] || '');
+      }
+    }
+
     expect(containerTypes).toEqual([
       'tip',
       'note',
