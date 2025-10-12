@@ -23,13 +23,13 @@ test.describe('home pageType', async () => {
       'E2E case title',
     );
     await expect(
-      page.locator('.rspress-home-hero-text').textContent(),
+      page.locator('.rp-home-hero__subtitle').textContent(),
     ).resolves.toBe('E2E case subTitle');
     await expect(
-      page.locator('.rspress-home-hero-tagline').textContent(),
+      page.locator('.rp-home-hero__tagline').textContent(),
     ).resolves.toBe('E2E case tagline');
 
-    const img = page.locator('.rspress-home-hero-image img').first();
+    const img = page.locator('.rp-home-hero__image img').first();
     await expect(img.getAttribute('src')).resolves.toBe('/base/brand.png');
     await expect(img.getAttribute('alt')).resolves.toBe('E2E case brand image');
     await expect(img.getAttribute('srcset')).resolves.toBe(
@@ -39,7 +39,7 @@ test.describe('home pageType', async () => {
       '((min-width: 50em) and (max-width: 60em)) 50em, (max-width: 30em) 20em',
     );
 
-    const actions = page.locator('.rspress-home-hero-actions a');
+    const actions = page.locator('.rp-home-hero__actions a');
     await expect(actions).toHaveCount(3);
     await expect(actions.nth(0).textContent()).resolves.toBe('Action 1');
     await expect(actions.nth(1).textContent()).resolves.toBe('Action 2');
@@ -57,13 +57,13 @@ test.describe('home pageType', async () => {
       'E2E 用例 title',
     );
     await expect(
-      page.locator('.rspress-home-hero-text').textContent(),
+      page.locator('.rp-home-hero__subtitle').textContent(),
     ).resolves.toBe('E2E 用例 subTitle');
     await expect(
-      page.locator('.rspress-home-hero-tagline').textContent(),
+      page.locator('.rp-home-hero__tagline').textContent(),
     ).resolves.toBe('E2E 用例 tagline');
 
-    const img = page.locator('.rspress-home-hero-image img').first();
+    const img = page.locator('.rp-home-hero__image img').first();
     await expect(img.getAttribute('src')).resolves.toBe('/base/brand.png');
     await expect(img.getAttribute('alt')).resolves.toBe('E2E 用例 brand image');
     await expect(img.getAttribute('srcset')).resolves.toBe(
@@ -73,7 +73,7 @@ test.describe('home pageType', async () => {
       '((min-width: 50em) and (max-width: 60em)) 50em, (max-width: 30em) 20em',
     );
 
-    const actions = page.locator('.rspress-home-hero-actions a');
+    const actions = page.locator('.rp-home-hero__actions a');
     await expect(actions).toHaveCount(3);
     await expect(actions.nth(0).textContent()).resolves.toBe('操作 1');
     await expect(actions.nth(1).textContent()).resolves.toBe('操作 2');
@@ -87,7 +87,7 @@ test.describe('home pageType', async () => {
 
   test('Features', async ({ page }) => {
     await page.goto(`http://localhost:${appPort}/base/`);
-    const features = page.locator('.rspress-home-feature-card');
+    const features = page.locator('.rp-home-feature__card');
     await expect(features).toHaveCount(2);
 
     const url1 = page.url();
