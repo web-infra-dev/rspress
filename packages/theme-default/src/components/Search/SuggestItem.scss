@@ -35,6 +35,9 @@
       }
 
       .rp-suggest-item__content {
+        .rp-suggest-item__statement {
+          color: #ffffff;
+        }
         .rp-suggest-item__mark {
           color: #ffffff;
           text-decoration: underline;

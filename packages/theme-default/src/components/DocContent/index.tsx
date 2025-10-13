@@ -1,6 +1,6 @@
 import { MDXProvider } from '@mdx-js/react';
 import { Content, usePage, useSite } from '@rspress/runtime';
-import { getCustomMDXComponent } from '@theme';
+import { Callout, getCustomMDXComponent } from '@theme';
 import './doc.scss';
 import { FallbackHeading } from './FallbackHeading';
 
@@ -22,7 +22,13 @@ export function DocContent({
   components: Record<string, React.FC<any>> | undefined;
   isOverviewPage?: boolean;
 }) {
-  const mdxComponents = { ...getCustomMDXComponent(), ...components };
+  const mdxComponents = {
+    ...getCustomMDXComponent(),
+    ...components,
+
+    // custom components can be added here
+    $$$callout$$$: Callout, // FIXME: For .md files, .md files cannot add import statements
+  };
 
   return (
     <MDXProvider components={mdxComponents}>

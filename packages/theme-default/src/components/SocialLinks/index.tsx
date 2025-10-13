@@ -26,8 +26,14 @@ export const SocialLinks = ({
     position: 'right',
     customChildren: isMore ? (
       <div className="rp-social-links__hidden">
-        {hiddenLinks.map(item => (
-          <SocialLinkComp key={item.content} link={item} />
+        {hiddenLinks.map((item, index) => (
+          <SocialLinkComp
+            key={item.content}
+            link={item}
+            hoverGroupPosition={
+              index === hiddenLinks.length - 1 ? 'right' : 'center'
+            }
+          />
         ))}
       </div>
     ) : null,
@@ -38,9 +44,15 @@ export const SocialLinks = ({
   }
 
   return (
-    <div className={'rp-social-links'} onMouseLeave={handleMouseLeave}>
+    <div className="rp-social-links" onMouseLeave={handleMouseLeave}>
       {shownLinks.map((item, index) => (
-        <SocialLinkComp key={index} link={item} />
+        <SocialLinkComp
+          key={item.content}
+          link={item}
+          hoverGroupPosition={
+            index === shownLinks.length - 1 ? 'right' : 'center'
+          }
+        />
       ))}
       {isMore ? (
         <SvgWrapper

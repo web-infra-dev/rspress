@@ -12,7 +12,7 @@ import ArrowDown from '@theme-assets/arrow-down';
 import cls from 'clsx';
 import { useMemo } from 'react';
 import { SvgWrapper } from '../SvgWrapper';
-import { useLangsMenu, useVersionMenu } from './hooks';
+import { useLangsMenu, useVersionsMenu } from './hooks';
 import './NavMenu.scss';
 
 export const SvgDown = (props: React.SVGProps<SVGSVGElement>) => {
@@ -114,11 +114,11 @@ export function NavLangs() {
 }
 
 export function NavVersions() {
-  const { activeValue, items } = useVersionMenu();
+  const { activeValue, items } = useVersionsMenu();
 
   return items.length > 1 ? (
     <NavMenuItemWithChildren
-      menuItem={{ items }}
+      menuItem={{ text: activeValue, items }}
       activeMatcher={item => item.text === activeValue}
     />
   ) : null;

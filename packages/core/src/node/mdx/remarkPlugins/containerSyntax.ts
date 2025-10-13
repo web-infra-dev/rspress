@@ -40,7 +40,7 @@ export const REGEX_GH_BEGIN = /^\s*\s*\[!(\w+)\]\s*(.*)?/;
 export const TITLE_REGEX_IN_MD = /{\s*title=["']?(.+)}\s*/;
 export const TITLE_REGEX_IN_MDX = /\s*title=["']?(.+)\s*/;
 
-const CALLOUT_COMPONENT = '$$$Callout$$$';
+const CALLOUT_COMPONENT = '$$$callout$$$'; // in md, we can not add import statement, so we use a special component name to avoid conflict with user components
 
 export type DirectiveType = (typeof DIRECTIVE_TYPES)[number];
 

@@ -139,7 +139,7 @@ function replaceVersion(
   return addLeadingSlash([versionPart, restPart].filter(Boolean).join('/'));
 }
 
-export function useVersionMenu() {
+export function useVersionsMenu() {
   const { page } = usePage();
   const { site } = useSite();
   const currentVersion = useVersion();
