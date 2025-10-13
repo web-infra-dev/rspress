@@ -3,8 +3,8 @@ import { getPort, killProcess, runDevCommand } from '../../utils/runCommands';
 import { searchInPage } from '../../utils/search';
 
 test.describe('search code blocks test', async () => {
-  let appPort;
-  let app;
+  let appPort: number;
+  let app: Awaited<ReturnType<typeof runDevCommand>>;
 
   test.beforeAll(async () => {
     const appDir = __dirname;

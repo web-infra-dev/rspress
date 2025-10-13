@@ -1,10 +1,10 @@
 import { expect, test } from '@playwright/test';
-import { getNavbar, getSidebar } from '../../utils/getSideBar';
+import { getNavbarItems, getSidebar } from '../../utils/getSideBar';
 import { getPort, killProcess, runDevCommand } from '../../utils/runCommands';
 
 test.describe('issue-1309', async () => {
-  let appPort;
-  let app;
+  let appPort: number;
+  let app: Awaited<ReturnType<typeof runDevCommand>>;
   test.beforeAll(async () => {
     const appDir = __dirname;
     appPort = await getPort();
@@ -19,21 +19,21 @@ test.describe('issue-1309', async () => {
 
   test('should not generate the sidebar in homePage', async ({ page }) => {
     await page.goto(`http://localhost:${appPort}`);
-    const nav = await getNavbar(page);
-    expect(nav?.length).toBe(1);
+    const navItems = getNavbarItems(page);
+    await expect(navItems).toHaveCount(1);
 
-    const sidebar = await getSidebar(page);
-    expect(sidebar?.length).toBe(0);
+    const sidebar = getSidebar(page);
+    expect(await sidebar.count()).toBe(0);
   });
 
   test('should render the sidebar correctly in guide page', async ({
     page,
   }) => {
     await page.goto(`http://localhost:${appPort}/guide`);
-    const nav = await getNavbar(page);
-    expect(nav?.length).toBe(1);
+    const navItems = getNavbarItems(page);
+    await expect(navItems).toHaveCount(1);
 
-    const sidebar = await getSidebar(page);
-    expect(sidebar?.length).toBe(3);
+    const sidebar = getSidebar(page);
+    expect(await sidebar.count()).toBe(4);
   });
 });

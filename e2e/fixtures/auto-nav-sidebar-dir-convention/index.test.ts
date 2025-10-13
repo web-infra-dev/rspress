@@ -3,8 +3,8 @@ import { getSidebar, getSidebarTexts } from '../../utils/getSideBar';
 import { getPort, killProcess, runDevCommand } from '../../utils/runCommands';
 
 test.describe('Auto nav and sidebar dir convention', async () => {
-  let appPort;
-  let app;
+  let appPort: number;
+  let app: Awaited<ReturnType<typeof runDevCommand>>;
   test.beforeAll(async () => {
     const appDir = __dirname;
     appPort = await getPort();
@@ -25,14 +25,15 @@ test.describe('Auto nav and sidebar dir convention', async () => {
     });
 
     const sidebarTexts = await getSidebarTexts(page);
-    expect(sidebarTexts.length).toBe(7);
+    expect(sidebarTexts.length).toBe(8);
     expect(sidebarTexts.join(',')).toEqual(
       [
         '/guide Page',
         'index md convention',
         'index mdx convention',
         'same name',
-        'index in metaIndex in meta',
+        'index in meta',
+        'Index in meta',
         'no meta md',
         'no meta mdx',
       ].join(','),
@@ -45,7 +46,11 @@ test.describe('Auto nav and sidebar dir convention', async () => {
     await page.goto(`http://localhost:${appPort}/guide/`, {
       waitUntil: 'networkidle',
     });
-    await page.click('.rspress-scrollbar nav section div');
+    await page
+      .locator(
+        '.rp-doc-layout__sidebar .rp-sidebar-item[data-context="context-index-md-convention"]',
+      )
+      .click();
     await page.waitForURL('**/index-md-convention/**');
     expect(page.url()).toBe(
       `http://localhost:${appPort}/guide/index-md-convention/index.html`,
@@ -56,71 +61,47 @@ test.describe('Auto nav and sidebar dir convention', async () => {
     await page.goto(`http://localhost:${appPort}/guide/`, {
       waitUntil: 'networkidle',
     });
+    const itemsWithContext = await page
+      .locator('.rp-doc-layout__sidebar .rp-sidebar-item[data-context]')
+      .evaluateAll(sidebarNodes =>
+        sidebarNodes
+          .map(node => node.getAttribute('data-context'))
+          .filter((context): context is string => Boolean(context)),
+      );
+    expect(itemsWithContext).toEqual([
+      'context-index-md-convention',
+      'context-index-mdx-convention',
+      'context-same-name',
+      'context-index-in-meta',
+      'context-no-meta-md',
+      'context-no-meta-mdx',
+    ]);
 
-    const sidebarGroupSections = await page.$$('.rspress-sidebar-section');
-
-    // first level
-    const contexts1 = await page.evaluate(
-      sidebars =>
-        sidebars?.map(sidebar => sidebar.getAttribute('data-context')),
-      sidebarGroupSections,
-    );
-    expect(contexts1.join(',')).toEqual(
-      [
-        'context-index-md-convention',
-        'context-index-mdx-convention',
-        'context-same-name',
-        '',
-        'context-no-meta-md',
-        'context-no-meta-mdx',
-      ].join(','),
-    );
-
-    const sidebarGroupCollapses = await page.$$('.rspress-sidebar-collapse');
-    const contexts2 = await page.evaluate(
-      sidebars =>
-        sidebars?.map(sidebar => sidebar.getAttribute('data-context')),
-      sidebarGroupCollapses,
-    );
-    expect(contexts2.join(',')).toEqual(
-      [
-        'context-index-md-convention',
-        'context-index-mdx-convention',
-        'context-same-name',
-        '',
-        'context-no-meta-md',
-        'context-no-meta-mdx',
-      ].join(','),
-    );
-
-    const sidebarGroupItems = await page.$$('.rspress-sidebar-item');
-    const contexts3 = await page.evaluate(
-      sidebarGroupConfig =>
-        sidebarGroupConfig?.map(sidebarItem =>
-          sidebarItem.getAttribute('data-context'),
-        ),
-      sidebarGroupItems,
-    );
-    // added container `div.rspress-sidebar-item` to ( depth=0 & type=file )'s sidebar item
-    // so have to modify this test result
-    expect(contexts3.join(',')).toEqual(
-      ['', 'context-index-in-meta'].join(','),
-    );
+    const nestedContexts = await page
+      .locator(
+        '.rp-doc-layout__sidebar .rp-sidebar-item[data-depth="1"][data-context]',
+      )
+      .evaluateAll(sidebarNodes =>
+        sidebarNodes
+          .map(node => node.getAttribute('data-context'))
+          .filter((context): context is string => Boolean(context)),
+      );
+    expect(nestedContexts).toEqual(['context-index-in-meta']);
   });
 
   test('/api/config/index.html /api/config/index /api/config should be the same page', async ({
     page,
   }) => {
     async function getSidebarLength(): Promise<number> {
-      return ((await getSidebar(page)) ?? []).length;
+      return getSidebar(page).count();
     }
 
     async function isMenuItemActive(): Promise<boolean> {
-      const activeMenuItem = await page.$(
-        '.rspress-sidebar-collapse[class*="menuItemActive"]',
+      const activeMenuItem = page.locator(
+        '.rp-doc-layout__sidebar .rp-sidebar-item--active .rp-sidebar-item__left span',
       );
-      const content = await activeMenuItem?.textContent();
-      return content === 'index md convention';
+      const content = await activeMenuItem.textContent();
+      return content?.trim() === 'index md convention';
     }
     // /api/config/index.html
     await page.goto(
@@ -129,7 +110,7 @@ test.describe('Auto nav and sidebar dir convention', async () => {
         waitUntil: 'networkidle',
       },
     );
-    expect(await getSidebarLength()).toBe(7);
+    expect(await getSidebarLength()).toBe(8);
     expect(await isMenuItemActive()).toBe(true);
 
     // /api/config/index
@@ -139,14 +120,14 @@ test.describe('Auto nav and sidebar dir convention', async () => {
         waitUntil: 'networkidle',
       },
     );
-    expect(await getSidebarLength()).toBe(7);
+    expect(await getSidebarLength()).toBe(8);
     expect(await isMenuItemActive()).toBe(true);
 
     // /api/config
     await page.goto(`http://localhost:${appPort}/guide/index-md-convention`, {
       waitUntil: 'networkidle',
     });
-    expect(await getSidebarLength()).toBe(7);
+    expect(await getSidebarLength()).toBe(8);
     expect(await isMenuItemActive()).toBe(true);
   });
 });

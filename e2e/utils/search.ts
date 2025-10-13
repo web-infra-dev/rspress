@@ -2,8 +2,11 @@ import assert from 'node:assert';
 import type { Page } from '@playwright/test';
 
 async function getSearchButton(page: Page) {
-  const searchButton = await page.$('.rp-flex > .rspress-nav-search-button');
-  return searchButton;
+  const desktopButton = await page.$('.rp-search-button');
+  if (desktopButton) {
+    return desktopButton;
+  }
+  return page.$('.rp-search-button--mobile');
 }
 
 /**
@@ -14,25 +17,23 @@ export async function searchInPage(
   searchText: string,
   reset = true,
 ) {
-  const searchInputLoc = page.locator('.rspress-search-panel-input');
+  const searchInputLoc = page.locator('.rp-search-panel__input');
   const isSearchInputVisible = await searchInputLoc.isVisible();
   if (!isSearchInputVisible) {
     const searchButton = await getSearchButton(page);
     assert(searchButton);
     await searchButton.click();
-    const searchInput = await page.$('.rspress-search-panel-input');
-    assert(searchInput);
+    await page.waitForSelector('.rp-search-panel__input');
   }
-  const searchInput = await page.$('.rspress-search-panel-input');
+  const searchInput = await page.$('.rp-search-panel__input');
   assert(searchInput);
   const isEditable = await searchInput.isEditable();
   assert(isEditable);
   await searchInput.focus();
   await page.keyboard.type(searchText);
   await page.waitForTimeout(400);
-  const elements = await page.$$('.rspress-search-suggest-item');
+  const elements = await page.$$('.rp-suggest-item');
 
-  // reset
   if (reset) {
     for (let i = 0; i < searchText.length; i++) {
       await page.keyboard.press('Backspace');

@@ -1,19 +1,27 @@
 /** Define code style */
 html:not(.rp-dark) {
-  --rp-code-font-size: 14px;
+  --rp-code-font-size: 0.875rem;
+  --rp-code-title-bg: #f8f8f9;
+
   --rp-code-block-color: rgb(46, 52, 64);
-  --rp-code-title-bg: #e9f0f7;
-  --rp-code-block-bg: #f6f8fa;
+  --rp-code-block-bg: var(--rp-c-bg);
+
+  --rp-code-block-border: 1px solid #e5e6eb;
+  --rp-code-block-scroll-bar-bg: #e5e6eb;
 
   --rp-code-copy-code-hover-bg: rgba(255, 255, 255, 0.05);
   --rp-code-wrap-code-hover-bg: rgba(255, 255, 255, 0.05);
 }
 
 html.rp-dark {
-  --rp-code-font-size: 14px;
+  --rp-code-font-size: 0.875rem;
+  --rp-code-title-bg: #191919;
+
   --rp-code-block-color: rgb(229, 231, 235);
-  --rp-code-title-bg: #2d2d2d;
-  --rp-code-block-bg: #242424;
+  --rp-code-block-bg: var(--rp-c-bg);
+
+  --rp-code-block-border: 1px solid #363636;
+  --rp-code-block-scroll-bar-bg: #363636;
 
   --rp-code-copy-code-hover-bg: rgba(255, 255, 255, 0.05);
   --rp-code-wrap-code-hover-bg: rgba(255, 255, 255, 0.05);

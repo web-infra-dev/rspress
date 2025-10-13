@@ -62,7 +62,7 @@ function create(node: Element): Element {
     type: 'element',
     tagName: 'a',
     properties: {
-      class: 'header-anchor',
+      class: 'rp-header-anchor',
       ariaHidden: 'true',
       href: `#${node.properties!.id}`,
     },

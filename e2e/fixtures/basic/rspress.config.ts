@@ -10,7 +10,7 @@ export default defineConfig({
         icon: 'github',
         mode: 'dom',
         content:
-          '<a href="/zh" class="flex items-center text-base font-semibold transition-opacity duration-300 hover:opacity-60" style="width: max-content"><img src="https://lf3-static.bytednsdoc.com/obj/eden-cn/rjhwzy/ljhwZthlaukjlkulzlp/rspress/rspress-navbar-logo-0904.png" alt="logo" id="logo" class="mr-4 rspress-logo dark:hidden" style=" height: 90px; width: 360px"><img src="https://lf3-static.bytednsdoc.com/obj/eden-cn/rjhwzy/ljhwZthlaukjlkulzlp/rspress/rspress-navbar-logo-dark-0904.png" alt="logo" id="logo" class="mr-4 rspress-logo hidden dark:block" style=" height: 45px; width: 180px"></a>',
+          '<a href="/zh"><img src="https://assets.rspack.rs/rspress/rspress-logo-480x480.png" /></a>',
       },
     ],
   },

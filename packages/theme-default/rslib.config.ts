@@ -24,9 +24,7 @@ export default defineConfig({
     {
       format: 'esm',
       bundle: false,
-      dts: {
-        bundle: true,
-      },
+      dts: true,
       plugins: [
         pluginReact(),
         pluginSvgr({ svgrOptions: { exportType: 'default' } }),
@@ -51,6 +49,7 @@ export default defineConfig({
         },
       },
       output: {
+        cleanDistPath: process.env.IS_DEV === '1',
         target: 'web',
         externals: COMMON_EXTERNALS,
         cssModules: {

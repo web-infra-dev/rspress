@@ -21,30 +21,31 @@ test.describe('github alert syntax in mdx-js', async () => {
   }) => {
     await page.goto(`http://localhost:${appPort}`);
 
-    const topLevelDirectives = await page.$$(
-      '.rspress-doc > [class^="rspress-directive"]',
-    );
+    const topLevelCallouts = page.locator('.rspress-doc > .rp-callout');
+    await expect(topLevelCallouts).toHaveCount(7);
 
-    expect(topLevelDirectives.length).toEqual(7);
-
-    const listDirectives = await page.$$(
-      '.rspress-doc > * > li > [class^="rspress-directive"]',
+    const listCallouts = page.locator(
+      '.rspress-doc > ol li > .rp-callout, .rspress-doc > ul li > .rp-callout',
     );
-    expect(listDirectives.length).toEqual(2);
+    await expect(listCallouts).toHaveCount(2);
 
-    const stepsDirectives = await page.$$(
-      '.rspress-doc > .\\[counter-reset\\:step\\] * > li > [class^="rspress-directive"]',
-    );
-    expect(stepsDirectives.length).toEqual(2);
+    const stepsCallouts = page.locator('.rp-steps .rp-callout');
+    await expect(stepsCallouts).toHaveCount(2);
 
-    const containerTypes = await Promise.all(
-      [...topLevelDirectives, ...listDirectives, ...stepsDirectives].map(
-        async directive => {
-          const className = await directive.getAttribute('class');
-          return className?.split(' ')[1];
-        },
-      ),
-    );
+    const allCallouts = [topLevelCallouts, listCallouts, stepsCallouts];
+    const containerTypes: string[] = [];
+
+    for (const calloutsLocator of allCallouts) {
+      const count = await calloutsLocator.count();
+      for (let i = 0; i < count; i++) {
+        const className = await calloutsLocator.nth(i).getAttribute('class');
+        const modifier = className
+          ?.split(' ')
+          .find(name => name.startsWith('rp-callout--'));
+        containerTypes.push(modifier?.replace('rp-callout--', '') || '');
+      }
+    }
+
     expect(containerTypes).toEqual([
       'tip',
       'note',

@@ -1,3 +1,4 @@
+import clsx from 'clsx';
 import {
   Children,
   type ComponentPropsWithRef,
@@ -13,7 +14,7 @@ import {
 } from 'react';
 import { TabDataContext } from '../../logic/TabDataContext';
 import { useStorageValue } from '../../logic/useStorageValue';
-import * as styles from './index.module.scss';
+import './index.scss';
 
 type TabItem = {
   value?: string;
@@ -135,43 +136,41 @@ export const Tabs = forwardRef(
     const currentIndex = groupId ? syncIndex : activeIndex;
 
     return (
-      <div className={styles.container} ref={ref}>
-        <div className={tabContainerClassName}>
-          {tabValues.length ? (
-            <div
-              className={`${styles.tabList} ${styles.noScrollbar}`}
-              style={{
-                justifyContent:
-                  tabPosition === 'center' ? 'center' : 'flex-start',
-              }}
-            >
-              {tabValues.map((item, index) => {
-                return (
-                  <div
-                    // eslint-disable-next-line react/no-array-index-key
-                    key={index}
-                    className={`${styles.tab} ${
-                      currentIndex === index
-                        ? styles.selected
-                        : styles.notSelected
-                    }`}
-                    onClick={() => {
-                      onChange?.(index);
-                      if (groupId) {
-                        setTabData({ ...tabData, [groupId]: index });
-                        setStorageIndex(index.toString());
-                      } else {
-                        setActiveIndex(index);
-                      }
-                    }}
-                  >
-                    {renderTab(item)}
-                  </div>
-                );
-              })}
-            </div>
-          ) : null}
-        </div>
+      <div className={clsx('rp-tabs', tabContainerClassName)} ref={ref}>
+        {tabValues.length ? (
+          <div
+            className="rp-tabs__list rp-tabs__list--no-scrollbar"
+            style={{
+              justifyContent:
+                tabPosition === 'center' ? 'center' : 'flex-start',
+            }}
+          >
+            {tabValues.map((item, index) => {
+              return (
+                <div
+                  key={index}
+                  className={clsx(
+                    'rp-tabs__tab',
+                    currentIndex === index
+                      ? 'rp-tabs__tab--selected'
+                      : 'rp-tabs__tab--not-selected',
+                  )}
+                  onClick={() => {
+                    onChange?.(index);
+                    if (groupId) {
+                      setTabData({ ...tabData, [groupId]: index });
+                      setStorageIndex(index.toString());
+                    } else {
+                      setActiveIndex(index);
+                    }
+                  }}
+                >
+                  {renderTab(item)}
+                </div>
+              );
+            })}
+          </div>
+        ) : null}
         <div>{Children.toArray(children)[currentIndex]}</div>
       </div>
     );

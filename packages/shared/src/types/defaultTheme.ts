@@ -94,10 +94,6 @@ export interface Config {
    */
   overview?: FilterConfig;
   /**
-   * The behavior of hiding navbar
-   */
-  hideNavbar?: 'always' | 'auto' | 'never';
-  /**
    * Whether to enable view transition animation for pages switching
    */
   enableContentAnimation?: boolean;
@@ -106,11 +102,6 @@ export interface Config {
    * @default false
    */
   enableAppearanceAnimation?: boolean;
-  /**
-   * Enable scroll to top button on documentation
-   * @default false
-   */
-  enableScrollToTop?: boolean;
   /**
    * Whether to redirect to the closest locale when the user visits the site
    * @default 'auto'

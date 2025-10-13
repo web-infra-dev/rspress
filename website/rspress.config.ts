@@ -13,7 +13,8 @@ import {
 } from '@shikijs/transformers';
 import { pluginGoogleAnalytics } from 'rsbuild-plugin-google-analytics';
 import { pluginOpenGraph } from 'rsbuild-plugin-open-graph';
-import { pluginFontOpenSans } from 'rspress-plugin-font-open-sans';
+
+// import { pluginFontOpenSans } from 'rspress-plugin-font-open-sans';
 
 const siteUrl = 'https://v2.rspress.rs';
 
@@ -43,7 +44,7 @@ export default defineConfig({
   },
   plugins: [
     pluginTwoslash(),
-    pluginFontOpenSans(),
+    // pluginFontOpenSans(), // removed this line for Rspress preview
     pluginSitemap({
       siteUrl,
     }),
@@ -76,7 +77,6 @@ export default defineConfig({
     footer: {
       message: '© 2023-present ByteDance Inc.',
     },
-    hideNavbar: 'auto',
     socialLinks: [
       {
         icon: 'github',
@@ -102,7 +102,7 @@ export default defineConfig({
     locales: [
       {
         lang: 'zh',
-        label: '简体中文',
+        label: '中文',
         editLink: {
           docRepoBaseUrl:
             'https://github.com/web-infra-dev/rspress/tree/main/website/docs',

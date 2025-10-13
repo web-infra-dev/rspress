@@ -2,8 +2,8 @@ import { expect, test } from '@playwright/test';
 import { getPort, killProcess, runDevCommand } from '../../utils/runCommands';
 
 test.describe('heading-title test', async () => {
-  let appPort;
-  let app;
+  let appPort: number;
+  let app: Awaited<ReturnType<typeof runDevCommand>>;
   test.beforeAll(async () => {
     const appDir = __dirname;
     appPort = await getPort();
@@ -29,7 +29,7 @@ test.describe('heading-title test', async () => {
     expect(fontSize).toBe('32px');
 
     // check anchor #heading-title should be in h1
-    const anchor = h1.locator('a.header-anchor');
+    const anchor = h1.locator('.rp-header-anchor');
     await expect(anchor).toHaveAttribute('href', '#heading-title');
   });
 });

@@ -22,32 +22,29 @@ test.describe('tabs-component test', async () => {
     await page.waitForSelector('.tabs-a');
 
     // Tab A
-    const tabA = await page.$('.tabs-a');
-    const contentA = await page.$('.tabs-a + div');
-    const tabAText = await page.evaluate(node => node?.innerHTML, tabA);
-    const contentAText = await page.evaluate(node => node?.innerHTML, contentA);
-    expect(tabAText).toContain('label1');
-    expect(contentAText).toContain('content1');
+    const tabA = page.locator('.tabs-a');
+    const contentA = page.locator('.tabs-a > div').nth(1);
+    await expect(tabA).toContainText('label1');
+    await expect(contentA).toContainText('content1');
 
     // Tab B
-    const tabB = await page.$('.tabs-b');
-    const contentB = await page.$('.tabs-b + div');
-    const tabBText = await page.evaluate(node => node?.innerHTML, tabB);
-    const contentBText = await page.evaluate(node => node?.innerHTML, contentB);
-    expect(tabBText).toContain('label2');
-    expect(contentBText).toContain('content2');
-    const notSelected = await page.$$eval(
-      '.tabs-b div',
-      divs => divs.filter(div => div.className.includes('not-selected')).length,
-    );
+    const tabB = page.locator('.tabs-b');
+    const contentB = page.locator('.tabs-b > div').nth(1);
+    await expect(tabB).toContainText('label2');
+    await expect(contentB).toContainText('content2');
+    const notSelected = await page
+      .locator('.tabs-b div')
+      .filter({ hasText: /./ })
+      .evaluateAll(
+        divs =>
+          divs.filter(div => div.className.includes('not-selected')).length,
+      );
     expect(notSelected).toEqual(2);
 
     // Tab C
-    const tabC = await page.$('.tabs-c');
-    const contentC = await page.$('.tabs-c + div');
-    const tabCText = await page.evaluate(node => node?.innerHTML, tabC);
-    const contentCText = await page.evaluate(node => node?.innerHTML, contentC);
-    expect(tabCText).toEqual('');
-    expect(contentCText).toEqual('');
+    const tabC = page.locator('.tabs-c');
+    const contentC = page.locator('.tabs-c > div');
+    await expect(tabC).toHaveText('');
+    await expect(contentC).toHaveText('');
   });
 });

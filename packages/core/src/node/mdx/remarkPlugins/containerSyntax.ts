@@ -23,6 +23,7 @@ import type {
 } from 'mdast';
 import type { ContainerDirective } from 'mdast-util-directive';
 import type { Plugin } from 'unified';
+import { getNamedImportAstNode } from '../../utils';
 
 export const DIRECTIVE_TYPES = [
   'tip',
@@ -39,6 +40,8 @@ export const REGEX_GH_BEGIN = /^\s*\s*\[!(\w+)\]\s*(.*)?/;
 export const TITLE_REGEX_IN_MD = /{\s*title=["']?(.+)}\s*/;
 export const TITLE_REGEX_IN_MDX = /\s*title=["']?(.+)\s*/;
 
+const CALLOUT_COMPONENT = '$$$callout$$$'; // in md, we can not add import statement, so we use a special component name to avoid conflict with user components
+
 export type DirectiveType = (typeof DIRECTIVE_TYPES)[number];
 
 const trimTailingQuote = (str: string) => str.replace(/['"]$/g, '');
@@ -48,6 +51,10 @@ const parseTitle = (rawTitle = '', isMDX = false) => {
     isMDX ? TITLE_REGEX_IN_MDX : TITLE_REGEX_IN_MD,
   );
   return trimTailingQuote(matched?.[1] || rawTitle);
+};
+
+const getTypeName = (type: DirectiveType | string): string => {
+  return type[0].toUpperCase() + type.slice(1).toLowerCase();
 };
 
 /**
@@ -61,7 +68,7 @@ const parseTitle = (rawTitle = '', isMDX = false) => {
  * will be transformed to:
  *
  * <div class="rspress-directive tip">
- *   <div class="rspress-directive-title">TIP</div>
+ *   <div class="rspress-directive-title">Tip</div>
  *   <div class="rspress-directive-content">
  *     <p>This is a tip</p>
  *   </div>
@@ -73,40 +80,21 @@ const createContainer = (
   title: string | undefined,
   children: (BlockContent | PhrasingContent)[],
 ): ContainerDirective => {
-  const isDetails = type === 'details';
-
-  const rootHName = isDetails ? 'details' : 'div';
-  const titleHName = isDetails ? 'summary' : 'div';
-
   return {
     type: 'containerDirective',
-    name: type,
+    name: CALLOUT_COMPONENT,
+    attributes: {
+      type: type,
+      title: title || getTypeName(type),
+    },
     data: {
-      hName: rootHName,
+      hName: CALLOUT_COMPONENT,
       hProperties: {
-        class: `rspress-directive ${type}`,
+        type: type,
+        title: title || getTypeName(type),
       },
     },
-    children: [
-      {
-        type: 'paragraph',
-        data: {
-          hName: titleHName,
-          hProperties: {
-            class: 'rspress-directive-title',
-          },
-        },
-        children: [{ type: 'text', value: title || type.toUpperCase() }],
-      },
-      {
-        type: 'paragraph',
-        data: {
-          hName: 'div',
-          hProperties: { class: 'rspress-directive-content' },
-        },
-        children: children as PhrasingContent[],
-      },
-    ],
+    children: children as BlockContent[],
   };
 };
 
@@ -370,5 +358,10 @@ function transformer(tree: Parent) {
 }
 
 export const remarkContainerSyntax: Plugin<[], Root> = () => {
-  return transformer;
+  return tree => {
+    transformer(tree);
+    tree.children.unshift(
+      getNamedImportAstNode('Callout', CALLOUT_COMPONENT, '@theme'),
+    );
+  };
 };
