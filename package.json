@@ -46,7 +46,7 @@
     "heading-case": "^1.0.2",
     "husky": "^9.1.7",
     "lint-staged": "~15.5.2",
-    "nx": "21.6.3",
+    "nx": "21.6.4",
     "path-serializer": "0.5.1",
     "playwright": "1.55.1",
     "prettier": "3.6.2",
@@ -55,7 +55,7 @@
     "vitest": "2.1.9",
     "zx": "^8.8.4"
   },
-  "packageManager": "pnpm@10.18.0",
+  "packageManager": "pnpm@10.18.2",
   "engines": {
     "node": ">=18.0.0"
   },
