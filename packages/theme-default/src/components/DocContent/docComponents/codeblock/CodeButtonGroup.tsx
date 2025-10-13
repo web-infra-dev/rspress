@@ -1,9 +1,10 @@
 import { useSite } from '@rspress/runtime';
 import IconWrap from '@theme-assets/wrap';
 import IconWrapped from '@theme-assets/wrapped';
+import clsx from 'clsx';
 import { useState } from 'react';
 import { SvgWrapper } from '../../../SvgWrapper';
-import * as styles from './CodeButtonGroup.module.scss';
+import './CodeButtonGroup.scss';
 import { CopyCodeButton } from './CopyCodeButton';
 
 export interface CodeButtonGroupProps extends ReturnType<typeof useCodeWrap> {
@@ -43,15 +44,25 @@ export function CodeButtonGroup({
 }: CodeButtonGroupProps) {
   return (
     <>
-      <div className={styles.codeButtonGroup}>
+      <div className="rp-code-button-group">
         {showCodeWrapButton && (
           <button
-            className={codeWrap ? styles.wrappedBtn : ''}
+            className={clsx(
+              'rp-code-button-group__button',
+              'rp-code-wrap-button',
+              codeWrap && 'rp-code-wrap-button--wrapped',
+            )}
             onClick={() => toggleCodeWrap()}
             title="Toggle code wrap"
           >
-            <SvgWrapper icon={IconWrapped} className={styles.iconWrapped} />
-            <SvgWrapper icon={IconWrap} className={styles.iconWrap} />
+            <SvgWrapper
+              icon={IconWrapped}
+              className="rp-code-button-group__icon rp-code-button-group__icon--wrapped"
+            />
+            <SvgWrapper
+              icon={IconWrap}
+              className="rp-code-button-group__icon rp-code-button-group__icon--wrap"
+            />
           </button>
         )}
         {showCopyButton && <CopyCodeButton codeBlockRef={preElementRef} />}
