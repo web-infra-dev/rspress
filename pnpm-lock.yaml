@@ -1735,8 +1735,8 @@ importers:
         specifier: ^1.0.3
         version: 1.0.3(@rspress/core@packages+core)
       tm-themes:
-        specifier: 1.10.10
-        version: 1.10.10
+        specifier: 1.10.11
+        version: 1.10.11
       typescript:
         specifier: ^5.8.2
         version: 5.8.2
@@ -6640,8 +6640,8 @@ packages:
     resolution: {integrity: sha512-n1cw8k1k0x4pgA2+9XrOkFydTerNcJ1zWCO5Nn9scWHTD+5tp8dghT2x1uduQePZTZgd3Tupf+x9BxJjeJi77Q==}
     engines: {node: '>=14.0.0'}
 
-  tm-themes@1.10.10:
-    resolution: {integrity: sha512-IElrczNsyxdoVvmjvhF/rZIOoF8wrpwGhh7dAivQPthZQhP2gj/8rvHMamelDQZbItNRclZElJGK/z4LVCIkBA==}
+  tm-themes@1.10.11:
+    resolution: {integrity: sha512-JknEnN+fQ8Y+VxHIccVPpnt6/ztAoAaPrXyDAawjvQt5PUNsl3eErAW6tOW+YzUFh9UxsHTNvsgDSY9jwe0hdw==}
 
   tmp@0.2.1:
     resolution: {integrity: sha512-76SUhtfqR2Ijn+xllcI5P1oyannHNHByD80W1q447gU3mp9G9PSpGdWmjUOHRDPiHYacIk66W7ubDTuPF3BEtQ==}
@@ -12881,7 +12881,7 @@ snapshots:
 
   tinyspy@3.0.2: {}
 
-  tm-themes@1.10.10: {}
+  tm-themes@1.10.11: {}
 
   tmp@0.2.1:
     dependencies:
