@@ -23,10 +23,11 @@ export async function extractInfoFromFrontmatterWithAbsolutePath(
   title: string;
   overviewHeaders: number[] | undefined;
   context: string | undefined;
+  tag: string | undefined;
 }> {
   const fileHandle = await fs.open(absolutePath, 'r');
   try {
-    const buffer = Buffer.alloc(1024); // 1KB buffer
+    const buffer = Buffer.alloc(2048); // 2KB buffer
     let content = '';
     let bytesRead = 0;
     let hasFrontmatter = false;
@@ -65,7 +66,7 @@ export async function extractInfoFromFrontmatterWithAbsolutePath(
       if (!h1Match) {
         const searchStart =
           hasFrontmatter && frontmatterEnd > -1 ? frontmatterEnd : 0;
-        const h1RegExp = /^#\s+(.*)$/m;
+        const h1RegExp = /^#\s+(.*?)\n$/m;
         h1Match = content.slice(searchStart).match(h1RegExp);
       }
 
@@ -94,6 +95,11 @@ export async function extractInfoFromFrontmatterWithAbsolutePath(
       frontmatter = fm;
     }
 
+    if (!h1Match) {
+      const h1RegExp = /^#\s+(.*)$/m;
+      h1Match = content.match(h1RegExp);
+    }
+
     const fileNameWithoutExt = path.basename(
       absolutePath,
       path.extname(absolutePath),
@@ -105,6 +111,7 @@ export async function extractInfoFromFrontmatterWithAbsolutePath(
       )[0],
       overviewHeaders: frontmatter.overviewHeaders,
       context: frontmatter.context,
+      tag: frontmatter.tag,
     };
   } finally {
     await fileHandle.close();

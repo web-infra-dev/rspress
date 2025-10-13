@@ -213,7 +213,7 @@ async function metaFileItemToSidebarItem(
   return {
     text: title,
     link,
-    tag,
+    tag: info.tag || tag,
     overviewHeaders: info.overviewHeaders || overviewHeaders,
     context: info.context || context,
     _fileKey: getFileKey(absolutePathWithExt, docsDir),
