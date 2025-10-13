@@ -72,9 +72,7 @@ test.describe('Inline markdown test', async () => {
       waitUntil: 'networkidle',
     });
 
-    const overviewHeadingLocator = page.locator(
-      '.rp-overview h2.rspress-doc-outline span',
-    );
+    const overviewHeadingLocator = page.locator('.rp-overview h2.rp-toc span');
     const overviewHeadings = await overviewHeadingLocator.allTextContents();
     expect(overviewHeadings.map(text => text.trim()).join(',')).toEqual(
       [

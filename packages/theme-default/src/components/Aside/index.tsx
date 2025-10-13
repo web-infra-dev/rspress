@@ -25,7 +25,7 @@ export function Aside() {
         {outlineTitle}
         <ReadPercent size={14} strokeWidth={2} />
       </div>
-      <nav className="rp-aside__toc rspress-scrollbar">
+      <nav className="rp-aside__toc rp-scrollbar">
         <Toc />
       </nav>
       <div className="rp-aside__divider" />
