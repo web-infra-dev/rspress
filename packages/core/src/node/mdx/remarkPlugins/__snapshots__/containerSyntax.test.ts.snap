@@ -3,14 +3,14 @@
 exports[`remark-container > Has space before ::: 1`] = `
 "import {jsx as _jsx} from "react/jsx-runtime";
 import {useMDXComponents as _provideComponents} from "@mdx-js/react";
-import {Callout as $$$Callout$$$} from "@theme";
+import {Callout as $$$callout$$$} from "@theme";
 function _createMdxContent(props) {
   const _components = {
     p: "p",
     ..._provideComponents(),
     ...props.components
   };
-  return _jsx($$$Callout$$$, {
+  return _jsx($$$callout$$$, {
     type: "tip",
     title: "title",
     children: _jsx(_components.p, {
@@ -40,14 +40,14 @@ MDXContent.__RSPRESS_PAGE_META["index.mdx"] = {"toc":[],"title":"","headingTitle
 exports[`remark-container > Has space before type 1`] = `
 "import {jsx as _jsx} from "react/jsx-runtime";
 import {useMDXComponents as _provideComponents} from "@mdx-js/react";
-import {Callout as $$$Callout$$$} from "@theme";
+import {Callout as $$$callout$$$} from "@theme";
 function _createMdxContent(props) {
   const _components = {
     p: "p",
     ..._provideComponents(),
     ...props.components
   };
-  return _jsx($$$Callout$$$, {
+  return _jsx($$$callout$$$, {
     type: "tip",
     title: "Tip",
     children: _jsx(_components.p, {
@@ -77,7 +77,7 @@ MDXContent.__RSPRESS_PAGE_META["index.mdx"] = {"toc":[],"title":"","headingTitle
 exports[`remark-container > No newline 1`] = `
 "import {Fragment as _Fragment, jsx as _jsx, jsxs as _jsxs} from "react/jsx-runtime";
 import {useMDXComponents as _provideComponents} from "@mdx-js/react";
-import {Callout as $$$Callout$$$} from "@theme";
+import {Callout as $$$callout$$$} from "@theme";
 function _createMdxContent(props) {
   const _components = {
     p: "p",
@@ -85,7 +85,7 @@ function _createMdxContent(props) {
     ...props.components
   };
   return _jsxs(_Fragment, {
-    children: [_jsx($$$Callout$$$, {
+    children: [_jsx($$$callout$$$, {
       type: "tip",
       title: "Tip",
       children: _jsx(_components.p, {
@@ -118,14 +118,14 @@ MDXContent.__RSPRESS_PAGE_META["index.mdx"] = {"toc":[],"title":"","headingTitle
 exports[`remark-container > Use \\{title="foo"} as title 1`] = `
 "import {jsx as _jsx} from "react/jsx-runtime";
 import {useMDXComponents as _provideComponents} from "@mdx-js/react";
-import {Callout as $$$Callout$$$} from "@theme";
+import {Callout as $$$callout$$$} from "@theme";
 function _createMdxContent(props) {
   const _components = {
     p: "p",
     ..._provideComponents(),
     ...props.components
   };
-  return _jsx($$$Callout$$$, {
+  return _jsx($$$callout$$$, {
     type: "tip",
     title: "Custom title",
     children: _jsx(_components.p, {
@@ -155,14 +155,14 @@ MDXContent.__RSPRESS_PAGE_META["index.mdx"] = {"toc":[],"title":"","headingTitle
 exports[`remark-container > Use \\{title='foo'} as title 1`] = `
 "import {jsx as _jsx} from "react/jsx-runtime";
 import {useMDXComponents as _provideComponents} from "@mdx-js/react";
-import {Callout as $$$Callout$$$} from "@theme";
+import {Callout as $$$callout$$$} from "@theme";
 function _createMdxContent(props) {
   const _components = {
     p: "p",
     ..._provideComponents(),
     ...props.components
   };
-  return _jsx($$$Callout$$$, {
+  return _jsx($$$callout$$$, {
     type: "tip",
     title: "Custom title",
     children: _jsx(_components.p, {
@@ -192,14 +192,14 @@ MDXContent.__RSPRESS_PAGE_META["index.mdx"] = {"toc":[],"title":"","headingTitle
 exports[`remark-container > Use \\{title=foo} as title 1`] = `
 "import {jsx as _jsx} from "react/jsx-runtime";
 import {useMDXComponents as _provideComponents} from "@mdx-js/react";
-import {Callout as $$$Callout$$$} from "@theme";
+import {Callout as $$$callout$$$} from "@theme";
 function _createMdxContent(props) {
   const _components = {
     p: "p",
     ..._provideComponents(),
     ...props.components
   };
-  return _jsx($$$Callout$$$, {
+  return _jsx($$$callout$$$, {
     type: "tip",
     title: "Custom title",
     children: _jsx(_components.p, {
@@ -229,14 +229,14 @@ MDXContent.__RSPRESS_PAGE_META["index.mdx"] = {"toc":[],"title":"","headingTitle
 exports[`remark-container > With a new line after the start position of container 1`] = `
 "import {jsx as _jsx} from "react/jsx-runtime";
 import {useMDXComponents as _provideComponents} from "@mdx-js/react";
-import {Callout as $$$Callout$$$} from "@theme";
+import {Callout as $$$callout$$$} from "@theme";
 function _createMdxContent(props) {
   const _components = {
     p: "p",
     ..._provideComponents(),
     ...props.components
   };
-  return _jsx($$$Callout$$$, {
+  return _jsx($$$callout$$$, {
     type: "tip",
     title: "Tip",
     children: _jsx(_components.p, {
@@ -266,7 +266,7 @@ MDXContent.__RSPRESS_PAGE_META["index.mdx"] = {"toc":[],"title":"","headingTitle
 exports[`remark-container > With block quote in container 1`] = `
 "import {jsx as _jsx, jsxs as _jsxs} from "react/jsx-runtime";
 import {useMDXComponents as _provideComponents} from "@mdx-js/react";
-import {Callout as $$$Callout$$$} from "@theme";
+import {Callout as $$$callout$$$} from "@theme";
 function _createMdxContent(props) {
   const _components = {
     a: "a",
@@ -276,7 +276,7 @@ function _createMdxContent(props) {
     ..._provideComponents(),
     ...props.components
   };
-  return _jsxs($$$Callout$$$, {
+  return _jsxs($$$callout$$$, {
     type: "tip",
     title: "Tip",
     children: [_jsxs(_components.p, {
@@ -315,7 +315,7 @@ MDXContent.__RSPRESS_PAGE_META["index.mdx"] = {"toc":[],"title":"","headingTitle
 exports[`remark-container > With code block in container 1`] = `
 "import {Fragment as _Fragment, jsx as _jsx, jsxs as _jsxs} from "react/jsx-runtime";
 import {useMDXComponents as _provideComponents} from "@mdx-js/react";
-import {Callout as $$$Callout$$$} from "@theme";
+import {Callout as $$$callout$$$} from "@theme";
 function _createMdxContent(props) {
   const _components = {
     a: "a",
@@ -326,7 +326,7 @@ function _createMdxContent(props) {
     ..._provideComponents(),
     ...props.components
   };
-  return _jsxs($$$Callout$$$, {
+  return _jsxs($$$callout$$$, {
     type: "tip",
     title: "Tip",
     children: [_jsxs(_components.p, {
@@ -403,7 +403,7 @@ exports[`remark-container > With link, inlineCode, img, list in container 1`] = 
 "import {jsx as _jsx, jsxs as _jsxs} from "react/jsx-runtime";
 import {useMDXComponents as _provideComponents} from "@mdx-js/react";
 import image0 from "foo";
-import {Callout as $$$Callout$$$} from "@theme";
+import {Callout as $$$callout$$$} from "@theme";
 function _createMdxContent(props) {
   const _components = {
     a: "a",
@@ -415,7 +415,7 @@ function _createMdxContent(props) {
     ..._provideComponents(),
     ...props.components
   };
-  return _jsxs($$$Callout$$$, {
+  return _jsxs($$$callout$$$, {
     type: "tip",
     title: "Tip",
     children: [_jsxs(_components.p, {
@@ -462,7 +462,7 @@ exports[`remark-container > With link, inlineCode, img, spread list in container
 "import {jsx as _jsx, jsxs as _jsxs} from "react/jsx-runtime";
 import {useMDXComponents as _provideComponents} from "@mdx-js/react";
 import image0 from "foo";
-import {Callout as $$$Callout$$$} from "@theme";
+import {Callout as $$$callout$$$} from "@theme";
 function _createMdxContent(props) {
   const _components = {
     a: "a",
@@ -474,7 +474,7 @@ function _createMdxContent(props) {
     ..._provideComponents(),
     ...props.components
   };
-  return _jsxs($$$Callout$$$, {
+  return _jsxs($$$callout$$$, {
     type: "tip",
     title: "Tip",
     children: [_jsxs(_components.p, {
@@ -520,14 +520,14 @@ MDXContent.__RSPRESS_PAGE_META["index.mdx"] = {"toc":[],"title":"","headingTitle
 exports[`remark-container > With new line before the end position of container 1`] = `
 "import {jsx as _jsx} from "react/jsx-runtime";
 import {useMDXComponents as _provideComponents} from "@mdx-js/react";
-import {Callout as $$$Callout$$$} from "@theme";
+import {Callout as $$$callout$$$} from "@theme";
 function _createMdxContent(props) {
   const _components = {
     p: "p",
     ..._provideComponents(),
     ...props.components
   };
-  return _jsx($$$Callout$$$, {
+  return _jsx($$$callout$$$, {
     type: "tip",
     title: "Tip",
     children: _jsx(_components.p, {
@@ -557,14 +557,14 @@ MDXContent.__RSPRESS_PAGE_META["index.mdx"] = {"toc":[],"title":"","headingTitle
 exports[`remark-container > With new line in all case 1`] = `
 "import {jsx as _jsx} from "react/jsx-runtime";
 import {useMDXComponents as _provideComponents} from "@mdx-js/react";
-import {Callout as $$$Callout$$$} from "@theme";
+import {Callout as $$$callout$$$} from "@theme";
 function _createMdxContent(props) {
   const _components = {
     p: "p",
     ..._provideComponents(),
     ...props.components
   };
-  return _jsx($$$Callout$$$, {
+  return _jsx($$$callout$$$, {
     type: "tip",
     title: "Tip",
     children: _jsx(_components.p, {
@@ -594,14 +594,14 @@ MDXContent.__RSPRESS_PAGE_META["index.mdx"] = {"toc":[],"title":"","headingTitle
 exports[`remark-container > details 1`] = `
 "import {jsx as _jsx} from "react/jsx-runtime";
 import {useMDXComponents as _provideComponents} from "@mdx-js/react";
-import {Callout as $$$Callout$$$} from "@theme";
+import {Callout as $$$callout$$$} from "@theme";
 function _createMdxContent(props) {
   const _components = {
     p: "p",
     ..._provideComponents(),
     ...props.components
   };
-  return _jsx($$$Callout$$$, {
+  return _jsx($$$callout$$$, {
     type: "details",
     title: "Details",
     children: _jsx(_components.p, {
@@ -631,7 +631,7 @@ MDXContent.__RSPRESS_PAGE_META["index.mdx"] = {"toc":[],"title":"","headingTitle
 exports[`remark-container > empty blockquote 1`] = `
 "import {jsx as _jsx} from "react/jsx-runtime";
 import {useMDXComponents as _provideComponents} from "@mdx-js/react";
-import {Callout as $$$Callout$$$} from "@theme";
+import {Callout as $$$callout$$$} from "@theme";
 function _createMdxContent(props) {
   const _components = {
     blockquote: "blockquote",
@@ -664,7 +664,7 @@ MDXContent.__RSPRESS_PAGE_META["index.mdx"] = {"toc":[],"title":"","headingTitle
 exports[`remark-container > end with a link 1`] = `
 "import {jsx as _jsx, jsxs as _jsxs} from "react/jsx-runtime";
 import {useMDXComponents as _provideComponents} from "@mdx-js/react";
-import {Callout as $$$Callout$$$} from "@theme";
+import {Callout as $$$callout$$$} from "@theme";
 function _createMdxContent(props) {
   const _components = {
     a: "a",
@@ -672,7 +672,7 @@ function _createMdxContent(props) {
     ..._provideComponents(),
     ...props.components
   };
-  return _jsxs($$$Callout$$$, {
+  return _jsxs($$$callout$$$, {
     type: "tip",
     title: "Tip",
     children: [_jsx(_components.p, {
@@ -709,7 +709,7 @@ MDXContent.__RSPRESS_PAGE_META["index.mdx"] = {"toc":[],"title":"","headingTitle
 exports[`remark-container > end with a new line 1`] = `
 "import {jsx as _jsx, jsxs as _jsxs} from "react/jsx-runtime";
 import {useMDXComponents as _provideComponents} from "@mdx-js/react";
-import {Callout as $$$Callout$$$} from "@theme";
+import {Callout as $$$callout$$$} from "@theme";
 function _createMdxContent(props) {
   const _components = {
     a: "a",
@@ -717,7 +717,7 @@ function _createMdxContent(props) {
     ..._provideComponents(),
     ...props.components
   };
-  return _jsxs($$$Callout$$$, {
+  return _jsxs($$$callout$$$, {
     type: "tip",
     title: "Tip",
     children: [_jsx(_components.p, {
@@ -754,7 +754,7 @@ MDXContent.__RSPRESS_PAGE_META["index.mdx"] = {"toc":[],"title":"","headingTitle
 exports[`remark-container > end with an inline code 1`] = `
 "import {jsx as _jsx, jsxs as _jsxs} from "react/jsx-runtime";
 import {useMDXComponents as _provideComponents} from "@mdx-js/react";
-import {Callout as $$$Callout$$$} from "@theme";
+import {Callout as $$$callout$$$} from "@theme";
 function _createMdxContent(props) {
   const _components = {
     code: "code",
@@ -762,7 +762,7 @@ function _createMdxContent(props) {
     ..._provideComponents(),
     ...props.components
   };
-  return _jsxs($$$Callout$$$, {
+  return _jsxs($$$callout$$$, {
     type: "tip",
     title: "Tip",
     children: [_jsx(_components.p, {
@@ -796,7 +796,7 @@ MDXContent.__RSPRESS_PAGE_META["index.mdx"] = {"toc":[],"title":"","headingTitle
 exports[`remark-container > github alerts ~ caution 1`] = `
 "import {Fragment as _Fragment, jsx as _jsx, jsxs as _jsxs} from "react/jsx-runtime";
 import {useMDXComponents as _provideComponents} from "@mdx-js/react";
-import {Callout as $$$Callout$$$} from "@theme";
+import {Callout as $$$callout$$$} from "@theme";
 function _createMdxContent(props) {
   const _components = {
     code: "code",
@@ -806,7 +806,7 @@ function _createMdxContent(props) {
     ..._provideComponents(),
     ...props.components
   };
-  return _jsxs($$$Callout$$$, {
+  return _jsxs($$$callout$$$, {
     type: "caution",
     title: "CAUTION",
     children: [_jsx(_components.p, {
@@ -877,7 +877,7 @@ MDXContent.__RSPRESS_PAGE_META["index.mdx"] = {"toc":[],"title":"","headingTitle
 exports[`remark-container > github alerts ~ note 1`] = `
 "import {jsx as _jsx, jsxs as _jsxs} from "react/jsx-runtime";
 import {useMDXComponents as _provideComponents} from "@mdx-js/react";
-import {Callout as $$$Callout$$$} from "@theme";
+import {Callout as $$$callout$$$} from "@theme";
 function _createMdxContent(props) {
   const _components = {
     a: "a",
@@ -885,7 +885,7 @@ function _createMdxContent(props) {
     ..._provideComponents(),
     ...props.components
   };
-  return _jsx($$$Callout$$$, {
+  return _jsx($$$callout$$$, {
     type: "note",
     title: "NOTE",
     children: _jsxs(_components.h1, {
@@ -921,7 +921,7 @@ MDXContent.__RSPRESS_PAGE_META["index.mdx"] = {"toc":[],"title":"","headingTitle
 exports[`remark-container > github alerts ~ tip 1`] = `
 "import {jsx as _jsx} from "react/jsx-runtime";
 import {useMDXComponents as _provideComponents} from "@mdx-js/react";
-import {Callout as $$$Callout$$$} from "@theme";
+import {Callout as $$$callout$$$} from "@theme";
 function _createMdxContent(props) {
   const _components = {
     p: "p",
@@ -929,7 +929,7 @@ function _createMdxContent(props) {
     ..._provideComponents(),
     ...props.components
   };
-  return _jsx($$$Callout$$$, {
+  return _jsx($$$callout$$$, {
     type: "tip",
     title: "TIP",
     children: _jsx(_components.p, {
@@ -961,7 +961,7 @@ MDXContent.__RSPRESS_PAGE_META["index.mdx"] = {"toc":[],"title":"","headingTitle
 exports[`remark-container > github alerts ~ warning 1`] = `
 "import {jsx as _jsx, jsxs as _jsxs} from "react/jsx-runtime";
 import {useMDXComponents as _provideComponents} from "@mdx-js/react";
-import {Callout as $$$Callout$$$} from "@theme";
+import {Callout as $$$callout$$$} from "@theme";
 function _createMdxContent(props) {
   const _components = {
     code: "code",
@@ -969,7 +969,7 @@ function _createMdxContent(props) {
     ..._provideComponents(),
     ...props.components
   };
-  return _jsx($$$Callout$$$, {
+  return _jsx($$$callout$$$, {
     type: "warning",
     title: "WARNING",
     children: _jsxs(_components.p, {
@@ -1003,7 +1003,7 @@ MDXContent.__RSPRESS_PAGE_META["index.mdx"] = {"toc":[],"title":"","headingTitle
 exports[`remark-container > nested in list - github alerts 1`] = `
 "import {Fragment as _Fragment, jsx as _jsx, jsxs as _jsxs} from "react/jsx-runtime";
 import {useMDXComponents as _provideComponents} from "@mdx-js/react";
-import {Callout as $$$Callout$$$} from "@theme";
+import {Callout as $$$callout$$$} from "@theme";
 function _createMdxContent(props) {
   const _components = {
     li: "li",
@@ -1018,7 +1018,7 @@ function _createMdxContent(props) {
       children: ["\\n", _jsxs(_components.li, {
         children: ["\\n", _jsx(_components.p, {
           children: "Title"
-        }), "\\n", _jsx($$$Callout$$$, {
+        }), "\\n", _jsx($$$callout$$$, {
           type: "tip",
           title: "TIP",
           children: _jsx(_components.p, {
@@ -1030,7 +1030,7 @@ function _createMdxContent(props) {
       children: ["\\n", _jsx(_components.li, {
         children: "Title"
       }), "\\n"]
-    }), "\\n", _jsx($$$Callout$$$, {
+    }), "\\n", _jsx($$$callout$$$, {
       type: "tip",
       title: "TIP",
       children: _jsx(_components.p, {
@@ -1061,7 +1061,7 @@ MDXContent.__RSPRESS_PAGE_META["index.mdx"] = {"toc":[],"title":"","headingTitle
 exports[`remark-container > nested in ordered list 1`] = `
 "import {jsx as _jsx, jsxs as _jsxs} from "react/jsx-runtime";
 import {useMDXComponents as _provideComponents} from "@mdx-js/react";
-import {Callout as $$$Callout$$$} from "@theme";
+import {Callout as $$$callout$$$} from "@theme";
 function _createMdxContent(props) {
   const _components = {
     li: "li",
@@ -1074,7 +1074,7 @@ function _createMdxContent(props) {
     children: ["\\n", _jsxs(_components.li, {
       children: ["\\n", _jsx(_components.p, {
         children: "Title1"
-      }), "\\n", _jsx($$$Callout$$$, {
+      }), "\\n", _jsx($$$callout$$$, {
         type: "tip",
         title: "Tip",
         children: _jsx(_components.p, {
@@ -1110,7 +1110,7 @@ MDXContent.__RSPRESS_PAGE_META["index.mdx"] = {"toc":[],"title":"","headingTitle
 exports[`remark-container > nested in ordered list inside mdx component 1`] = `
 "import {jsx as _jsx, jsxs as _jsxs} from "react/jsx-runtime";
 import {useMDXComponents as _provideComponents} from "@mdx-js/react";
-import {Callout as $$$Callout$$$} from "@theme";
+import {Callout as $$$callout$$$} from "@theme";
 function _createMdxContent(props) {
   const _components = {
     li: "li",
@@ -1126,7 +1126,7 @@ function _createMdxContent(props) {
           children: ["\\n", _jsxs(_components.li, {
             children: ["\\n", _jsx(_components.p, {
               children: "Title1"
-            }), "\\n", _jsx($$$Callout$$$, {
+            }), "\\n", _jsx($$$callout$$$, {
               type: "tip",
               title: "Tip",
               children: _jsx(_components.p, {
@@ -1165,7 +1165,7 @@ MDXContent.__RSPRESS_PAGE_META["index.mdx"] = {"toc":[],"title":"","headingTitle
 exports[`remark-container > nested in unordered list 1`] = `
 "import {jsx as _jsx, jsxs as _jsxs} from "react/jsx-runtime";
 import {useMDXComponents as _provideComponents} from "@mdx-js/react";
-import {Callout as $$$Callout$$$} from "@theme";
+import {Callout as $$$callout$$$} from "@theme";
 function _createMdxContent(props) {
   const _components = {
     li: "li",
@@ -1178,7 +1178,7 @@ function _createMdxContent(props) {
     children: ["\\n", _jsxs(_components.li, {
       children: ["\\n", _jsx(_components.p, {
         children: "Title1"
-      }), "\\n", _jsx($$$Callout$$$, {
+      }), "\\n", _jsx($$$callout$$$, {
         type: "tip",
         title: "Tip",
         children: _jsx(_components.p, {
@@ -1214,7 +1214,7 @@ MDXContent.__RSPRESS_PAGE_META["index.mdx"] = {"toc":[],"title":"","headingTitle
 exports[`remark-container > nested in unordered list inside mdx component 1`] = `
 "import {jsx as _jsx, jsxs as _jsxs} from "react/jsx-runtime";
 import {useMDXComponents as _provideComponents} from "@mdx-js/react";
-import {Callout as $$$Callout$$$} from "@theme";
+import {Callout as $$$callout$$$} from "@theme";
 function _createMdxContent(props) {
   const _components = {
     li: "li",
@@ -1230,7 +1230,7 @@ function _createMdxContent(props) {
           children: ["\\n", _jsxs(_components.li, {
             children: ["\\n", _jsx(_components.p, {
               children: "Title1"
-            }), "\\n", _jsx($$$Callout$$$, {
+            }), "\\n", _jsx($$$callout$$$, {
               type: "tip",
               title: "Tip",
               children: _jsx(_components.p, {
@@ -1269,7 +1269,7 @@ MDXContent.__RSPRESS_PAGE_META["index.mdx"] = {"toc":[],"title":"","headingTitle
 exports[`remark-container > start with a link 1`] = `
 "import {jsx as _jsx, jsxs as _jsxs} from "react/jsx-runtime";
 import {useMDXComponents as _provideComponents} from "@mdx-js/react";
-import {Callout as $$$Callout$$$} from "@theme";
+import {Callout as $$$callout$$$} from "@theme";
 function _createMdxContent(props) {
   const _components = {
     a: "a",
@@ -1277,7 +1277,7 @@ function _createMdxContent(props) {
     ..._provideComponents(),
     ...props.components
   };
-  return _jsx($$$Callout$$$, {
+  return _jsx($$$callout$$$, {
     type: "tip",
     title: "Tip",
     children: _jsxs(_components.p, {

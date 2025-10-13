@@ -5,7 +5,7 @@ exports[`rehypeHeadAnchor > basic 1`] = `
 /*prettier-ignore-end*/
 import {Fragment as _Fragment, jsx as _jsx, jsxs as _jsxs} from "react/jsx-runtime";
 import {useMDXComponents as _provideComponents} from "@mdx-js/react";
-import {Callout as $$$Callout$$$} from "@theme";
+import {Callout as $$$callout$$$} from "@theme";
 function _createMdxContent(props) {
   const _components = {
     a: "a",
@@ -121,7 +121,7 @@ MDXContent.__RSPRESS_PAGE_META["index.mdx"] = {"toc":[{"id":"custom-id","text":"
 exports[`rehypeHeadAnchor > should render inline code in title 1`] = `
 "import {jsx as _jsx, jsxs as _jsxs} from "react/jsx-runtime";
 import {useMDXComponents as _provideComponents} from "@mdx-js/react";
-import {Callout as $$$Callout$$$} from "@theme";
+import {Callout as $$$callout$$$} from "@theme";
 function _createMdxContent(props) {
   const _components = {
     a: "a",
@@ -164,7 +164,7 @@ MDXContent.__RSPRESS_PAGE_META["inline-code.mdx"] = {"toc":[],"title":"Hello Wor
 exports[`rehypeHeadAnchor > should support custom id 1`] = `
 "import {jsx as _jsx, jsxs as _jsxs} from "react/jsx-runtime";
 import {useMDXComponents as _provideComponents} from "@mdx-js/react";
-import {Callout as $$$Callout$$$} from "@theme";
+import {Callout as $$$callout$$$} from "@theme";
 function _createMdxContent(props) {
   const _components = {
     a: "a",
@@ -207,7 +207,7 @@ MDXContent.__RSPRESS_PAGE_META["inline-code.mdx"] = {"toc":[],"title":"Hello Wor
 exports[`rehypeHeadAnchor > should support mdx component with trim 1`] = `
 "import {jsx as _jsx, jsxs as _jsxs} from "react/jsx-runtime";
 import {useMDXComponents as _provideComponents} from "@mdx-js/react";
-import {Callout as $$$Callout$$$} from "@theme";
+import {Callout as $$$callout$$$} from "@theme";
 function _createMdxContent(props) {
   const _components = {
     a: "a",
