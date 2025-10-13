@@ -78,23 +78,25 @@ export function useLangsMenu() {
 
   const translationMenuData = hasMultiLanguage
     ? {
-        items: localeLanguages.map(item => ({
-          text: item?.label,
-          link: replaceLang(
-            pathname + search,
-            {
-              current: currentLang,
-              target: item.lang,
-              default: defaultLang,
-            },
-            {
-              current: currentVersion,
-              default: defaultVersion,
-            },
-            cleanUrls,
-            pageType === '404',
-          ),
-        })),
+        items: localeLanguages.map(item => {
+          return {
+            text: item?.label,
+            link: replaceLang(
+              pathname + search,
+              {
+                current: currentLang,
+                target: item.lang,
+                default: defaultLang,
+              },
+              {
+                current: currentVersion,
+                default: defaultVersion,
+              },
+              cleanUrls,
+              pageType === '404',
+            ),
+          };
+        }),
         activeValue: localeLanguages.find(item => currentLang === item.lang)
           ?.label,
       }

@@ -45,7 +45,9 @@ function HoverGroup({
                 'rp-hover-group__item--active': isActiveItem,
               })}
             >
-              <Link href={link}>{text}</Link>
+              <Link href={link} aria-label={text}>
+                {text}
+              </Link>
             </li>
           );
         })}

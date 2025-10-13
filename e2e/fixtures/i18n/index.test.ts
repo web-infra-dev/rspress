@@ -200,15 +200,19 @@ test.describe('i18n test', async () => {
     expect(overviewContentZh ?? '').toContain('zh');
     expect(overviewContentZh ?? '').not.toContain('en');
 
-    const languageSwitcher = page.locator(
-      '.rp-nav__others .rp-nav-menu__item__container',
-    );
-    await languageSwitcher.first().click();
-    const englishOption = page.locator('.rp-hover-group__item a', {
+    const languageSwitcher = page
+      .locator('.rp-nav-menu__item')
+      .filter({ hasText: '简体中文' });
+    await languageSwitcher.hover();
+    const englishOption = languageSwitcher.locator('.rp-hover-group__item a', {
       hasText: 'English',
     });
     await englishOption.click();
-    await page.waitForLoadState('networkidle');
+
+    const newLanguageSwitcher = page
+      .locator('.rp-nav-menu__item')
+      .filter({ hasText: 'English' });
+    await expect(newLanguageSwitcher).toBeVisible();
 
     const content = await page.textContent('#__rspress_root');
     expect(content ?? '').not.toEqual('');

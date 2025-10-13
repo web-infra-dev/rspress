@@ -109,7 +109,7 @@ export function pluginPreview(options?: Options): RspressPlugin {
       if (Object.keys(sourceEntry).length === 0) {
         return;
       }
-      const { html, source, output, performance } = clientConfig ?? {};
+      const { source, output, performance } = clientConfig ?? {};
       const rsbuildConfig = mergeRsbuildConfig(
         {
           server: {
@@ -125,7 +125,6 @@ export function pluginPreview(options?: Options): RspressPlugin {
             printFileSize: false,
             buildCache: false,
           },
-          html,
           source: {
             ...source,
             entry: sourceEntry,
