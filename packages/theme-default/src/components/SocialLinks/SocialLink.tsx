@@ -1,14 +1,18 @@
 import type { SocialLink as ISocialLink } from '@rspress/shared';
-import { useState } from 'react';
 import iconMap from 'virtual-social-links';
 import './index.scss';
+import { useHoverGroup } from '../HoverGroup/useHoverGroup';
 
 interface SocialLinkProps {
   link: ISocialLink;
+  /**
+   * @default 'center'
+   */
+  hoverGroupPosition?: 'center' | 'left' | 'right';
 }
 
 export const SocialLink = (props: SocialLinkProps) => {
-  const { link } = props;
+  const { link, hoverGroupPosition = 'center' } = props;
   const { icon, mode = 'link', content } = link;
 
   let IconComp: React.ReactElement = <></>;
@@ -22,13 +26,20 @@ export const SocialLink = (props: SocialLinkProps) => {
     );
   }
 
-  const [contentVisible, setContentVisible] = useState(false);
-  const mouseEnterIcon = () => {
-    setContentVisible(true);
-  };
-  const mouseLeavePopper = () => {
-    setContentVisible(false);
-  };
+  const { handleMouseEnter, handleMouseLeave, hoverGroup } = useHoverGroup({
+    position: hoverGroupPosition,
+    customChildren: (
+      <div className="rp-social-links__item__hover-group">
+        {mode === 'text' ? (
+          <div className="rp-social-links__item__text">{content}</div>
+        ) : mode === 'dom' ? (
+          <div dangerouslySetInnerHTML={{ __html: content }} />
+        ) : mode === 'img' ? (
+          <img src={content} alt="img" />
+        ) : null}
+      </div>
+    ),
+  });
 
   if (mode === 'link') {
     return (
@@ -48,31 +59,23 @@ export const SocialLink = (props: SocialLinkProps) => {
     return (
       <div
         className="rp-social-links__item"
-        onMouseEnter={mouseEnterIcon}
-        onMouseLeave={mouseLeavePopper}
+        onMouseEnter={handleMouseEnter}
+        onMouseLeave={handleMouseLeave}
       >
         {IconComp}
-        {contentVisible ? (
-          <div>
-            <div>{content}</div>
-          </div>
-        ) : null}
+        {hoverGroup}
       </div>
     );
   }
   if (mode === 'img') {
     return (
       <div
-        className="rp-social-links__icon"
-        onMouseEnter={mouseEnterIcon}
-        onMouseLeave={mouseLeavePopper}
+        className="rp-social-links__item"
+        onMouseEnter={handleMouseEnter}
+        onMouseLeave={handleMouseLeave}
       >
         {IconComp}
-        {contentVisible ? (
-          <div>
-            <img src={content} alt="img" />
-          </div>
-        ) : null}
+        {hoverGroup}
       </div>
     );
   }
@@ -80,16 +83,14 @@ export const SocialLink = (props: SocialLinkProps) => {
     return (
       <div
         className="rp-social-links__item"
-        onMouseEnter={mouseEnterIcon}
-        onMouseLeave={mouseLeavePopper}
+        onMouseEnter={handleMouseEnter}
+        onMouseLeave={handleMouseLeave}
       >
         {IconComp}
-        {contentVisible ? (
-          <div dangerouslySetInnerHTML={{ __html: content }} />
-        ) : null}
+        {hoverGroup}
       </div>
     );
   }
 
-  return <div></div>;
+  return <div className="rp-social-links__item"></div>;
 };

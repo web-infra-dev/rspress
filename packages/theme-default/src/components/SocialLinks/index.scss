@@ -3,13 +3,22 @@
   align-items: center;
   gap: 24px;
   height: 100%;
+  min-height: 40px;
   position: relative;
 
   &__item {
-    width: 20px;
-    height: 20px;
+    height: 100%;
+    display: flex;
     justify-content: center;
     align-items: center;
+    position: relative;
+    &__hover-group {
+      width: auto;
+    }
+    &__text {
+      word-break: keep-all;
+      white-space: nowrap;
+    }
   }
   &__icon {
     width: 20px;

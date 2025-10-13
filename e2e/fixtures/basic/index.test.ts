@@ -50,7 +50,9 @@ test.describe('basic test', async () => {
     await page.goto(`http://localhost:${appPort}`);
     const socialLinks = page.locator('.rp-social-links').first();
     await socialLinks.hover();
-    await expect(page.locator('.rp-social-links a[href="/zh"]')).toBeVisible();
+    await expect(
+      page.locator('.rp-social-links__item a[href="/zh"]').first(),
+    ).toBeVisible();
   });
 
   test('globalStyles should work', async ({ page }) => {

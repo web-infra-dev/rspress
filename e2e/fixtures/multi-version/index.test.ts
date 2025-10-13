@@ -2,8 +2,8 @@ import { expect, test } from '@playwright/test';
 import { getPort, killProcess, runDevCommand } from '../../utils/runCommands';
 
 test.describe('Multi version test', async () => {
-  let appPort;
-  let app;
+  let appPort: number;
+  let app: Awaited<ReturnType<typeof runDevCommand>>;
   test.beforeAll(async () => {
     const appDir = __dirname;
     appPort = await getPort();

@@ -11,7 +11,7 @@ export const NavTitle = () => {
   const { site } = useSite();
   const localeData = useLocaleSiteData();
   const { logo: rawLogo, logoText } = site;
-  const title = localeData.title ?? site.title;
+  const title = (localeData.title ?? site.title) || 'Home';
   const logo = useMemo(() => {
     if (!rawLogo) {
       return null;
