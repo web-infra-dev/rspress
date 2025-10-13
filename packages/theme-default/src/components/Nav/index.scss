@@ -59,6 +59,14 @@
       margin-right: 0.25rem;
       min-width: 2rem;
     }
+
+    &__logo-image {
+      display: block;
+    }
+
+    &__logo-image--dark {
+      display: none;
+    }
   }
 
   &__right {
@@ -82,4 +90,12 @@
       display: none;
     }
   }
+}
+
+.dark .rp-nav__title__logo-image--light {
+  display: none;
+}
+
+.dark .rp-nav__title__logo-image--dark {
+  display: block;
 }
