@@ -70,5 +70,8 @@
       color: var(--rp-c-brand);
       cursor: auto;
     }
+    &:hover {
+      opacity: 0.7;
+    }
   }
 }

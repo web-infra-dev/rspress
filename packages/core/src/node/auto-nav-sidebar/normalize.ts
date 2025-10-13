@@ -33,6 +33,7 @@ function getFileKey(realPath: string | undefined, docsDir: string) {
 
 async function fsDirToMetaItems(
   workDir: string,
+  docsDir: string,
   extensions: string[],
 ): Promise<SideMetaItem[]> {
   let subItems: string[];
@@ -66,6 +67,10 @@ async function fsDirToMetaItems(
         const stat = await fsStat(join(workDir, item));
         // If the item is a directory, we will transform it to a object with `type` and `name` property.
         if (stat.isDirectory()) {
+          // ignore public folder
+          if (item === 'public' && workDir === docsDir) {
+            return null;
+          }
           return {
             type: 'dir',
             name: item,
@@ -247,7 +252,7 @@ async function metaDirItemToSidebarItem(
     metaFileSet.add(dirMetaJsonPath);
     dirMetaJson = await readJson<SideMetaItem[]>(dirMetaJsonPath);
   } else {
-    dirMetaJson = await fsDirToMetaItems(dirAbsolutePath, extensions);
+    dirMetaJson = await fsDirToMetaItems(dirAbsolutePath, docsDir, extensions);
   }
 
   async function getItems(

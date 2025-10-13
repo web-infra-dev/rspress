@@ -2,7 +2,7 @@ import { useLocation } from '@rspress/runtime';
 import { useEffect, useState } from 'react';
 
 export function useNavScreen() {
-  const { pathname } = useLocation();
+  const { pathname, hash } = useLocation();
   const [isScreenOpen, setIsScreenOpen] = useState(false);
 
   function openScreen() {
@@ -25,7 +25,7 @@ export function useNavScreen() {
 
   useEffect(() => {
     closeScreen();
-  }, [pathname]);
+  }, [pathname, hash]);
 
   /**
    * Close screen when the user resizes the window wider than tablet size.

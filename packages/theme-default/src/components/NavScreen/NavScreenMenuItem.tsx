@@ -100,7 +100,7 @@ export function NavScreenMenuItemWithChildren({
 }: NavScreenMenuItemWithChildrenProps) {
   const [isOpen, setIsOpen] = useState(false);
 
-  return menuItem.items?.length > 1 ? (
+  return menuItem.items?.length > 0 ? (
     <>
       <NavScreenMenuItemRaw
         left={

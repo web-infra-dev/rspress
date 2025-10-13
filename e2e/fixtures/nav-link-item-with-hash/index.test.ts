@@ -19,10 +19,10 @@ test.describe('basic test', async () => {
   test('Navigate with an hash as link', async ({ page }) => {
     await page.goto(`http://localhost:${appPort}/`);
 
-    await page.locator('.rp-nav-menu a').first().click();
+    await page.locator('.rp-nav-menu__item a').first().click();
     expect(page.url()).toContain('/#pageA');
 
-    await page.locator('.rp-nav-menu a').nth(1).click();
+    await page.locator('.rp-nav-menu__item a').nth(1).click();
     expect(page.url()).toContain('/#pageB');
   });
 
@@ -32,10 +32,9 @@ test.describe('basic test', async () => {
     await page.setViewportSize({ width: 375, height: 812 });
 
     await page.goto(`http://localhost:${appPort}/`);
-    await page.waitForSelector('.rp-nav-screen');
 
-    const navScreen = page.locator('.rp-nav-screen');
     await page.locator('.rp-nav-hamburger').first().click();
+    const navScreen = page.locator('.rp-nav-screen');
     await expect(navScreen).toHaveClass(/rp-nav-screen--open/);
 
     await page.getByRole('link', { name: 'PageC' }).click();

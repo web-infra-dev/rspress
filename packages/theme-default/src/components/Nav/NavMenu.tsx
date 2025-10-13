@@ -14,6 +14,7 @@ import { useMemo } from 'react';
 import { SvgWrapper } from '../SvgWrapper';
 import { useLangsMenu, useVersionsMenu } from './hooks';
 import './NavMenu.scss';
+import clsx from 'clsx';
 
 export const SvgDown = (props: React.SVGProps<SVGSVGElement>) => {
   return <SvgWrapper icon={ArrowDown} {...props} />;
@@ -46,7 +47,7 @@ export function NavMenuItemWithChildren({
       </div>
     );
 
-  return menuItem.items.length > 1 ? (
+  return menuItem.items.length > 0 ? (
     <li
       className="rp-nav-menu__item"
       onMouseEnter={handleMouseEnter}
@@ -124,10 +125,26 @@ export function NavVersions() {
   ) : null;
 }
 
-export function NavMenu({ menuItems }: { menuItems: NavItem[] }) {
+export function NavMenu({
+  menuItems,
+  position,
+}: {
+  menuItems: NavItem[];
+  position: 'left' | 'right';
+}) {
+  const getPosition = (menuItem: NavItem) => menuItem.position ?? 'right';
+
+  const leftOrRightMenuItems = useMemo(() => {
+    return menuItems.filter(item => getPosition(item) === position);
+  }, [menuItems]);
+
+  if (leftOrRightMenuItems.length === 0) {
+    return null;
+  }
+
   return (
-    <ul className="rp-nav-menu">
-      {menuItems.map((item, index) => {
+    <ul className={clsx('rp-nav-menu', `rp-nav-menu--${position}`)}>
+      {leftOrRightMenuItems.map((item, index) => {
         return <NavMenuItem key={index} menuItem={item} />;
       })}
     </ul>
