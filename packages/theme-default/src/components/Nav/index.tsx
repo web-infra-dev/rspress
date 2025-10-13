@@ -1,7 +1,5 @@
 import { useNav } from '@rspress/runtime';
-import type { NavItem } from '@rspress/shared';
 import { Search, SocialLinks, SwitchAppearance } from '@theme';
-import { useMemo } from 'react';
 import { NavHamburger } from '../NavHamburger';
 import './index.scss';
 import { NavLangs, NavMenu, NavMenuDivider, NavVersions } from './NavMenu';
@@ -25,14 +23,6 @@ export function Nav(props: NavProps) {
     navTitle,
   } = props;
   const navList = useNav();
-  const getPosition = (menuItem: NavItem) => menuItem.position ?? 'right';
-
-  const leftMenu = useMemo(() => {
-    return navList.filter(item => getPosition(item) === 'left');
-  }, [navList]);
-  const rightMenu = useMemo(() => {
-    return navList.filter(item => getPosition(item) === 'right');
-  }, [navList]);
 
   return (
     <header className="rp-nav">
@@ -40,7 +30,7 @@ export function Nav(props: NavProps) {
         {beforeNavTitle}
         {navTitle ?? <NavTitle />}
         {/* only in desktop */}
-        <NavMenu menuItems={leftMenu} />
+        <NavMenu menuItems={navList} position="left" />
         {afterNavTitle}
       </div>
 
@@ -49,7 +39,7 @@ export function Nav(props: NavProps) {
         <Search />
 
         {/* only in desktop */}
-        <NavMenu menuItems={rightMenu} />
+        <NavMenu menuItems={navList} position="right" />
         <div className="rp-nav__others">
           <NavMenuDivider />
           <NavLangs />

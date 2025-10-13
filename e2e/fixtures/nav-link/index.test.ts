@@ -6,7 +6,7 @@ import { getPort, killProcess, runDevCommand } from '../../utils/runCommands';
 
 test.describe('Navigation with <Link>', async () => {
   let appPort: number;
-  let app: unknown;
+  let app: Awaited<ReturnType<typeof runDevCommand>>;
 
   const getContext = async (page: Page) => {
     await page.goto(`http://localhost:${appPort}`, {
@@ -17,7 +17,7 @@ test.describe('Navigation with <Link>', async () => {
 
     return {
       page,
-      anchor: page.locator('.rp-nav-menu a').first(),
+      anchor: page.locator('.rp-nav-menu__item a').first(),
       shouldOpenNewPage,
       dispose,
     };
