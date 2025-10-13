@@ -3,6 +3,7 @@ pageType: home
 titleSuffix: 'Rsbuild-based Static Site Generator'
 
 hero:
+  badge: Rspress V2 is coming! 🚀
   name: Rspress
   text: Lightning Fast Static Site Generator
   tagline: Simple, efficient and easy to extend
