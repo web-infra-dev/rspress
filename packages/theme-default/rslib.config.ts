@@ -52,11 +52,6 @@ export default defineConfig({
         cleanDistPath: process.env.IS_DEV === '1',
         target: 'web',
         externals: COMMON_EXTERNALS,
-        cssModules: {
-          localIdentName: '[local]_[hash:hex:5]',
-          namedExport: true,
-          exportLocalsConvention: 'camelCaseOnly',
-        },
       },
     },
   ],

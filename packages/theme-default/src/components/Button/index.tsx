@@ -1,6 +1,7 @@
 import { Link } from '@theme';
+import clsx from 'clsx';
 import React, { type JSX } from 'react';
-import * as styles from './index.module.scss';
+import './index.scss';
 
 interface ButtonProps {
   type?: string;
@@ -34,7 +35,12 @@ export function Button(props: ButtonProps): JSX.Element {
   return React.createElement(
     type ?? 'a',
     {
-      className: `${styles.button} ${styles[theme]} ${styles[size]} ${className}`,
+      className: clsx(
+        'rp-button',
+        `rp-button--${theme}`,
+        `rp-button--${size}`,
+        className,
+      ),
       href,
       ...dangerouslySetInnerHTML,
     },

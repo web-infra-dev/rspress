@@ -1,5 +1,5 @@
 import clsx from 'clsx';
-import * as styles from './index.module.scss';
+import './index.scss';
 
 interface BadgeProps {
   /**
@@ -54,9 +54,9 @@ export function Badge({
   return (
     <span
       className={clsx(
-        styles.badge,
-        styles[type],
-        outline ? styles.outline : '',
+        'rp-badge',
+        `rp-badge--${type}`,
+        outline && 'rp-badge--outline',
       )}
     >
       {content}
