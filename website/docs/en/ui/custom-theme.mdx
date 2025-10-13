@@ -161,47 +161,17 @@ In the `theme/index.tsx` file, you need to export a Layout component, which is t
 
 ```tsx
 // theme/index.tsx
+import { Layout as BasicLayout } from '@rspress/core/theme';
+
 function Layout() {
-  return <div>Custom Theme Layout</div>;
+  return <BasicLayout />;
 }
 
-// The setup function will be called when the page is initialized. It is generally used to monitor global events, and it can be an empty function
-const setup = () => {};
-
 // Export Layout component and setup function
-export { Layout, setup };
+export { Layout };
 // Export all content of the default theme to ensure that your theme configuration can work properly
 export * from '@rspress/core/theme';
 ```
-
-Layout component will be used to render the layout of the entire document site, you can introduce your custom components in this component, for example:
-
-```tsx
-// theme/index.tsx
-import { Navbar } from './Navbar';
-
-function Layout() {
-  return (
-    <div>
-      <Navbar />
-      <div>Custom Theme Layout</div>
-    </div>
-  );
-}
-
-const setup = () => {};
-
-export * from '@rspress/core/theme';
-
-export { Layout, setup };
-
-// theme/Navbar.tsx
-export function Navbar() {
-  return <div>Custom Navbar</div>;
-}
-```
-
-So the question is, how does the theme component get the page data and the content of the body MDX component? Next, let's take a look at the related APIs.
 
 ### 2. Runtime API
 

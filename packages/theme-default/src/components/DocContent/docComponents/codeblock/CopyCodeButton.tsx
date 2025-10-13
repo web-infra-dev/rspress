@@ -62,11 +62,11 @@ export function CopyCodeButton({
     >
       <SvgWrapper
         icon={IconCopy}
-        className="rp-code-copy-button__icon rp-code-copy-button__icon--copy"
+        className="rp-code-button-group__icon rp-code-copy-button__icon rp-code-copy-button__icon--copy"
       />
       <SvgWrapper
         icon={IconSuccess}
-        className="rp-code-copy-button__icon rp-code-copy-button__icon--success"
+        className="rp-code-button-group__icon rp-code-copy-button__icon rp-code-copy-button__icon--success"
       />
     </button>
   );

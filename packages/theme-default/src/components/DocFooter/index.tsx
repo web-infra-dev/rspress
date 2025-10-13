@@ -1,5 +1,6 @@
 import { useLocaleSiteData, useSite } from '@rspress/runtime';
 import { LastUpdated, PrevNextPage } from '@theme';
+import './index.scss';
 
 export function DocFooter() {
   const { lastUpdated: localesLastUpdated = false } = useLocaleSiteData();

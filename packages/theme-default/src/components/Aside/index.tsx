@@ -1,10 +1,8 @@
-import { useLocaleSiteData, useLocation, useSite } from '@rspress/runtime';
+import { useLocaleSiteData, useSite } from '@rspress/runtime';
 import { Toc } from '@theme';
-import { useEffect } from 'react';
-import { scrollToTarget } from '../../logic/sideEffects';
 import { ReadPercent } from '../ReadPercent';
-import './index.scss';
 import { useDynamicToc } from '../Toc/useDynamicToc';
+import './index.scss';
 import { ScrollToTop } from './ScrollToTop';
 
 export function Aside() {
@@ -14,21 +12,6 @@ export function Aside() {
   } = useSite();
   const outlineTitle =
     localesData?.outlineTitle || themeConfig?.outlineTitle || 'ON THIS PAGE';
-
-  const { pathname } = useLocation();
-
-  useEffect(() => {
-    const decodedHash = decodeURIComponent(window.location.hash);
-    if (decodedHash.length === 0) {
-      window.scrollTo(0, 0);
-    } else {
-      const target = document.getElementById(decodedHash.slice(1));
-      if (target) {
-        scrollToTarget(target, false, 0);
-        target.scrollIntoView();
-      }
-    }
-  }, [pathname]);
 
   const headers = useDynamicToc();
 

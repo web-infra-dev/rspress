@@ -10,7 +10,6 @@ import {
 import { isExternalUrl } from '@rspress/shared';
 import nprogress from 'nprogress';
 import { useCallback } from 'react';
-import { scrollToTarget } from '../../logic/sideEffects';
 
 nprogress.configure({ showSpinner: false });
 
@@ -19,16 +18,6 @@ function isAbsoluteUrl(url: string): boolean {
 }
 
 type LinkType = 'external' | 'hashOnly' | 'relative' | 'internal';
-
-const scrollToAnchor = (smooth: boolean) => {
-  const currentUrl = window.location;
-  const { hash: rawHash } = currentUrl;
-  const hash = decodeURIComponent(rawHash);
-  const target = hash.length > 1 && document.getElementById(hash.slice(1));
-  if (hash && target) {
-    scrollToTarget(target, smooth, 0);
-  }
-};
 
 function getLinkType(href: string): LinkType {
   if (isExternalUrl(href)) {
@@ -95,9 +84,6 @@ export function useNavigate(): (href: string) => Promise<void> {
         }
       }
       navigate(removeBaseHref, { replace: false });
-      setTimeout(() => {
-        scrollToAnchor(false);
-      }, 100);
     },
     [currPagePathname, navigate],
   );
