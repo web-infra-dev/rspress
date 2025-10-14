@@ -33,6 +33,7 @@ export type BannerProps = {
  * @example
  * // theme/index.tsx
  * import { Layout as BasicLayout, Banner } from '@rspress/core/theme';
+ * import { useLang } from '@rspress/core/runtime';
  * const Layout = () => {
       const lang = useLang();
       return (
