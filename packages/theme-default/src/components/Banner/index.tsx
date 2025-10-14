@@ -79,8 +79,8 @@ export const Banner = forwardRef<HTMLDivElement, BannerProps>(
       return null;
     }
     const [height, setHeight] = useState(36);
-    const ref = mergeRefs(forwardedRef, ref => {
-      ref?.offsetHeight && setHeight(ref?.offsetHeight);
+    const ref = mergeRefs(forwardedRef, element => {
+      element?.offsetHeight && setHeight(element?.offsetHeight);
     });
     const [disable, setDisable] = useState(
       typeof window === 'undefined'
@@ -107,7 +107,7 @@ export const Banner = forwardRef<HTMLDivElement, BannerProps>(
                 icon={CloseSvg}
                 onClick={() => {
                   setDisable(true);
-                  window.localStorage.setItem(storageKey, 'true');
+                  window[storage].setItem(storageKey, 'true');
                 }}
                 className="rp-banner__close"
               />
