@@ -345,7 +345,6 @@ function _createMdxContent(props) {
         },
         tabIndex: "0",
         children: _jsx(_components.code, {
-          className: "language-js",
           children: _jsxs(_components.span, {
             className: "line",
             children: [_jsx(_components.span, {
@@ -820,7 +819,6 @@ function _createMdxContent(props) {
         },
         tabIndex: "0",
         children: _jsx(_components.code, {
-          className: "language-javascript",
           children: _jsxs(_components.span, {
             className: "line",
             children: [_jsx(_components.span, {

@@ -1,3 +1,4 @@
+export { SHIKI_TRANSFORMER_ADD_LANG, transformerAddLang } from './add-lang';
 export { SHIKI_TRANSFORMER_ADD_TITLE, transformerAddTitle } from './add-title';
 export {
   SHIKI_TRANSFORMER_LINE_NUMBER,

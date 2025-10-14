@@ -151,6 +151,19 @@ importers:
         specifier: ^22.8.1
         version: 22.10.2
 
+  e2e/fixtures/code-block:
+    dependencies:
+      '@rspress/core':
+        specifier: workspace:*
+        version: link:../../../packages/core
+      '@shikijs/transformers':
+        specifier: ^3.12.2
+        version: 3.12.2
+    devDependencies:
+      '@types/node':
+        specifier: ^22.8.1
+        version: 22.10.2
+
   e2e/fixtures/code-block-runtime:
     dependencies:
       '@rspress/core':
@@ -524,19 +537,6 @@ importers:
       '@rspress/plugin-rss':
         specifier: workspace:*
         version: link:../../../packages/plugin-rss
-    devDependencies:
-      '@types/node':
-        specifier: ^22.8.1
-        version: 22.10.2
-
-  e2e/fixtures/plugin-shiki:
-    dependencies:
-      '@rspress/core':
-        specifier: workspace:*
-        version: link:../../../packages/core
-      '@shikijs/transformers':
-        specifier: ^3.12.2
-        version: 3.12.2
     devDependencies:
       '@types/node':
         specifier: ^22.8.1

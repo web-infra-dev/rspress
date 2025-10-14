@@ -73,23 +73,10 @@ export function CodeBlockRuntime({
         development: false,
         components: {
           ...getCustomMDXComponent(),
-          // implement `addLanguageClass: true`
           pre: props => (
-            <PreWithCodeButtonGroup
-              title={title}
-              containerElementClassName={`language-${lang}`}
-              {...props}
-              {...otherProps}
-            />
+            <PreWithCodeButtonGroup title={title} {...props} {...otherProps} />
           ),
-          code: ({ className, ...otherProps }) => (
-            <Code
-              {...otherProps}
-              className={[className, `language-${lang}`]
-                .filter(Boolean)
-                .join(' ')}
-            />
-          ),
+          code: props => <Code {...props} />,
         },
         Fragment,
       });

@@ -242,7 +242,7 @@
     }
     // #endregion inline code
 
-    &:where(div[class^='language-']) {
+    &:where(.rp-codeblock) {
       position: relative;
       margin: 16px 0;
       border: var(--rp-code-block-border);
@@ -304,14 +304,14 @@
       }
     }
 
-    &:where(.rspress-code-title) {
+    &:where(.rp-codeblock__title) {
       font-family: var(--rp-font-family-mono);
       padding: 12px 16px;
       font-size: var(--rp-code-font-size);
       background-color: var(--rp-code-title-bg);
     }
 
-    &:where(.rspress-code-content) {
+    &:where(.rp-codeblock__content) {
       font-size: var(--rp-code-font-size);
       font-family: var(--rp-font-family-mono);
       position: relative;
