@@ -1,4 +1,5 @@
 import {
+  Banner,
   HomeLayout as BasicHomeLayout,
   Layout as BasicLayout,
   getCustomMDXComponent as basicGetCustomMDXComponent,
@@ -13,12 +14,11 @@ import {
   LlmsCopyButton,
   LlmsViewOptions,
 } from '@rspress/plugin-llms/runtime';
-import { Announcement } from '@rstack-dev/doc-ui/announcement';
 import { NavIcon } from '@rstack-dev/doc-ui/nav-icon';
 import { ToolStack } from './components/ToolStack';
 
 import './index.css';
-import { NoSSR, useLang } from '@rspress/core/runtime';
+import { useLang } from '@rspress/core/runtime';
 
 function HomeLayout() {
   return (
@@ -39,17 +39,14 @@ const Layout = () => {
     <BasicLayout
       beforeNavTitle={<NavIcon />}
       beforeNav={
-        <NoSSR>
-          <Announcement
-            href="/"
-            message={
-              lang === 'en'
-                ? '🚧 Rspress 2.0 document is under development'
-                : '🚧 Rspress 2.0 文档还在开发中'
-            }
-            localStorageKey="rspress-announcement-closed"
-          />
-        </NoSSR>
+        <Banner
+          href="/"
+          message={
+            lang === 'en'
+              ? '🚧 Rspress 2.0 document is under development'
+              : '🚧 Rspress 2.0 文档还在开发中'
+          }
+        />
       }
     />
   );
