@@ -81,8 +81,11 @@ export function FileTree({ children, className, style }: FileTreeProps) {
 
     Children.forEach(children, (child, index) => {
       if (!isValidElement(child)) return;
+      console.log(child.props, 111111);
 
-      const { title: rawTitle } = child.props as { title?: string };
+      const { title: rawTitle } = (child.props as any).children?.props as {
+        title?: string;
+      };
       const trimmedTitle = typeof rawTitle === 'string' ? rawTitle.trim() : '';
       const fallbackLabel = `File ${normalized.length + 1}`;
       const sourceForSegments = trimmedTitle || fallbackLabel;
