@@ -144,14 +144,14 @@
   font-size: var(--twoslash-code-font-size);
 }
 
-.twoslash .rspress-code-content {
+.twoslash .rp-codeblock__content {
   padding: 16px 0;
   color: var(--rp-code-block-color);
   background-color: var(--rp-code-block-bg);
   border-radius: var(--rp-radius);
 }
 
-.twoslash .rspress-code-content [class^='code-button-group'] {
+.twoslash .rp-codeblock__content [class^='code-button-group'] {
   display: none;
 }
 

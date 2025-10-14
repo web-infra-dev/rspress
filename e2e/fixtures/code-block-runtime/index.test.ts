@@ -31,7 +31,7 @@ test.describe('<CodeBlockRuntime />', async () => {
       await expect(container.locator('.rspress-code-title')).toHaveText(
         'test.js',
       );
-      const content = container.locator('.rspress-code-content');
+      const content = container.locator('.rp-codeblock__content');
       const shikiContainer = content.locator('.shiki.css-variables').first();
       await expect(shikiContainer).toHaveJSProperty('tagName', 'PRE');
       await expect(shikiContainer.locator('code').first()).toHaveText(
@@ -53,7 +53,7 @@ test.describe('<CodeBlockRuntime />', async () => {
       await expect(container.locator('.rspress-code-title')).toHaveText(
         'highlight.ts',
       );
-      const content = container.locator('.rspress-code-content');
+      const content = container.locator('.rp-codeblock__content');
       const shikiContainer = content.locator('.shiki.css-variables').first();
       await expect(shikiContainer).toHaveJSProperty('tagName', 'PRE');
       await expect(shikiContainer.locator('code').first()).toHaveText(

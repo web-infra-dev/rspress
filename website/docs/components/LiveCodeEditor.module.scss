@@ -7,7 +7,7 @@
   position: relative;
   width: 100%;
   overflow: auto;
-  div[class^='language-'] {
+  :global(.rp-codeblock) {
     margin: 0;
   }
 }

@@ -5,6 +5,7 @@ import {
   SHIKI_TRANSFORMER_LINE_NUMBER,
   transformerLineNumber,
 } from './transformers';
+import { transformerAddLang } from './transformers/add-lang';
 import { transformerAddTitle } from './transformers/add-title';
 
 const cssVariablesTheme = createCssVariablesTheme({
@@ -20,7 +21,11 @@ function createRehypeShikiOptions(
 ): RehypeShikiOptions {
   const { transformers = [], ...restOptions } = options || {};
 
-  const newTransformers = [transformerAddTitle(), ...transformers];
+  const newTransformers = [
+    transformerAddTitle(),
+    transformerAddLang(),
+    ...transformers,
+  ];
   if (
     showLineNumbers &&
     !newTransformers.some(
@@ -36,7 +41,6 @@ function createRehypeShikiOptions(
     lazy: true, // Lazy loading all langs except ['tsx', 'ts', 'js'] , @see https://github.com/fuma-nama/fumadocs/blob/9b38baf2e66d7bc6f88d24b90a3857730a15fe3c/packages/core/src/mdx-plugins/rehype-code.ts#L169
     langs: ['tsx', 'ts', 'js'],
     ...restOptions,
-    addLanguageClass: true,
     transformers: newTransformers,
   };
 }
