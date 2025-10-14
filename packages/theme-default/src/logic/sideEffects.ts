@@ -1,3 +1,6 @@
+import { useLocation } from '@rspress/runtime';
+import { useEffect } from 'react';
+
 function getTargetTop(element: HTMLElement, scrollPaddingTop: number) {
   const targetPadding = Number.parseInt(
     window.getComputedStyle(element).paddingTop,
@@ -27,5 +30,19 @@ export function scrollToTarget(
 }
 
 export function useSetup() {
+  const { pathname } = useLocation();
+
+  useEffect(() => {
+    const decodedHash = decodeURIComponent(window.location.hash);
+    if (decodedHash.length === 0) {
+      window.scrollTo(0, 0);
+    } else {
+      const target = document.getElementById(decodedHash.slice(1));
+      if (target) {
+        scrollToTarget(target, false, 0);
+        target.scrollIntoView();
+      }
+    }
+  }, [pathname]);
   return;
 }

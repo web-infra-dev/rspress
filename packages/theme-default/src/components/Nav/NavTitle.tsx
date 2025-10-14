@@ -22,7 +22,7 @@ export const NavTitle = () => {
           src={normalizeImagePath(rawLogo)}
           alt="logo"
           id="logo"
-          className="rspress-logo"
+          className="rspress-logo rp-nav__title__logo-image"
         />
       );
     }
@@ -32,13 +32,13 @@ export const NavTitle = () => {
           src={normalizeImagePath(rawLogo.light)}
           alt="logo"
           id="logo"
-          className="rspress-logo dark:rp-hidden"
+          className="rspress-logo rp-nav__title__logo-image rp-nav__title__logo-image--light"
         />
         <img
           src={normalizeImagePath(rawLogo.dark)}
           alt="logo"
           id="logo"
-          className="rspress-logo rp-hidden dark:rp-block"
+          className="rspress-logo rp-nav__title__logo-image rp-nav__title__logo-image--dark"
         />
       </>
     );

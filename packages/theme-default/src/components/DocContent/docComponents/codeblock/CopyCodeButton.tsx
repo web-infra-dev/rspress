@@ -3,9 +3,10 @@ import IconSuccess from '@theme-assets/success';
 import copy from 'copy-to-clipboard';
 import { useRef } from 'react';
 import { SvgWrapper } from '../../../SvgWrapper';
-import * as styles from './CopyCodeButton.module.scss';
+import './CopyCodeButton.scss';
 
 const timeoutIdMap: Map<HTMLElement, NodeJS.Timeout> = new Map();
+const COPIED_CLASS = 'rp-code-copy-button--copied';
 
 function copyCode(
   codeBlockElement: HTMLElement | null,
@@ -34,10 +35,10 @@ function copyCode(
   const isCopied = copy(text);
 
   if (isCopied && copyButtonElement) {
-    copyButtonElement.classList.add(styles.codeCopied);
+    copyButtonElement.classList.add(COPIED_CLASS);
     clearTimeout(timeoutIdMap.get(copyButtonElement));
     const timeoutId = setTimeout(() => {
-      copyButtonElement.classList.remove(styles.codeCopied);
+      copyButtonElement.classList.remove(COPIED_CLASS);
       copyButtonElement.blur();
       timeoutIdMap.delete(copyButtonElement);
     }, 2000);
@@ -54,13 +55,19 @@ export function CopyCodeButton({
 
   return (
     <button
-      className={styles.codeCopyButton}
+      className="rp-code-button-group__button rp-code-copy-button"
       onClick={() => copyCode(codeBlockRef.current, copyButtonRef.current!)}
       ref={copyButtonRef}
       title="Copy code"
     >
-      <SvgWrapper icon={IconCopy} className={styles.iconCopy} />
-      <SvgWrapper icon={IconSuccess} className={styles.iconSuccess} />
+      <SvgWrapper
+        icon={IconCopy}
+        className="rp-code-button-group__icon rp-code-copy-button__icon rp-code-copy-button__icon--copy"
+      />
+      <SvgWrapper
+        icon={IconSuccess}
+        className="rp-code-button-group__icon rp-code-copy-button__icon rp-code-copy-button__icon--success"
+      />
     </button>
   );
 }

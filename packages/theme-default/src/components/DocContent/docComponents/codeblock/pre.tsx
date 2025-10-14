@@ -5,7 +5,7 @@ import {
   type CodeButtonGroupProps,
   useCodeWrap,
 } from './CodeButtonGroup';
-import { forceWrap } from './pre.module.scss';
+import './pre.scss';
 
 export type ShikiPreProps = {
   containerElementClassName: string | undefined;
@@ -40,12 +40,7 @@ function ShikiPre({
         <div>
           <pre
             ref={preElementRef}
-            className={clsx(
-              {
-                [forceWrap]: codeWrap,
-              },
-              className,
-            )}
+            className={clsx(codeWrap && 'rp-code-force-wrap', className)}
             {...otherProps}
           >
             {child}
@@ -77,17 +72,17 @@ export interface PreWithCodeButtonGroupProps
  * expected wrapped pre element is:
  * ```html
  *<div class="language-js">
- *  <div class="rp-pre__title">test.js</div>
- *  <div class="rp-pre__content rp-pre__content--scrollbar">
+ *  <div class="rspress-code-title rp-codeblock_title">test.js</div>
+ *  <div class="rspress-code-content rp-codeblock_content">
  *    <div>
  *      <pre class="shiki css-variables" tabindex="0">
  *        <code class="language-js">
  *        </code>
  *      </pre>
  *    </div>
- *    <div class="code-button-group_fb445">
- *      <button class="" title="Toggle code wrap"></button>
- *      <button class="code-copy-button_c5089" title="Copy code"></button>
+ *    <div class="rp-code-button-group">
+ *      <button class="rp-code-button-group__button" title="Toggle code wrap"></button>
+ *      <button class="rp-code-button-group__button rp-code-copy-button" title="Copy code"></button>
  *    </div>
  *  </div>
  *</div>

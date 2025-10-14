@@ -161,48 +161,16 @@ export * from '@rspress/core/theme';
 
 ```tsx
 // theme/index.tsx
+import { Layout as BasicLayout } from '@rspress/core/theme';
+
 function Layout() {
-  return <div>Custom Theme Layout</div>;
+  return <BasicLayout />;
 }
 
-// setup 函数，会在页面初始化时调用，一般用来做全局事件的监听，可为空函数
-const setup = () => {};
-
-// 导出 Layout 组件和 setup 函数
-// 两者必须导出
-export { Layout, setup };
+export { Layout };
 // 导出默认主题的所有内容，这样才能保证你的主题配置能够正常工作
 export * from '@rspress/core/theme';
 ```
-
-这个 Layout 组件会被用来渲染整个文档站点的布局，你可以在这个组件中引入你的自定义组件，比如:
-
-```tsx
-// theme/index.tsx
-import { Navbar } from './Navbar';
-
-function Layout() {
-  return (
-    <div>
-      <Navbar />
-      <div>Custom Theme Layout</div>
-    </div>
-  );
-}
-
-const setup = () => {};
-
-export * from '@rspress/core/theme';
-
-export { Layout, setup };
-
-// theme/Navbar.tsx
-export function Navbar() {
-  return <div>Custom Navbar</div>;
-}
-```
-
-那么问题来了，主题组件是如何获取页面数据和正文 MDX 组件内容的呢？接下来我们来看看相关的 API。
 
 ### 2. 运行时 API
 

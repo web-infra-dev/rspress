@@ -13,7 +13,7 @@ export function processTitleElement(element: Element): Element {
     elementClone.removeChild(anchorElement);
   }
 
-  // 2. delete ".rspress-toc-exclude" element
+  // 2. delete ".rp-toc-exclude" element
   const excludeElements = elementClone.querySelectorAll(
     '.rspress-toc-exclude,.rp-toc-exclude',
   );

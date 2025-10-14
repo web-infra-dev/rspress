@@ -65,7 +65,7 @@ export function DocLayout(props: DocLayoutProps) {
             className={clsx(
               'rp-doc-layout__sidebar',
               isSidebarOpen && 'rp-doc-layout__sidebar--open',
-              'rspress-scrollbar',
+              'rp-scrollbar',
             )}
             ref={sidebarLayoutRef}
           >
@@ -107,7 +107,7 @@ export function DocLayout(props: DocLayoutProps) {
             className={clsx(
               'rp-doc-layout__aside',
               isAsideOpen && 'rp-doc-layout__aside--open',
-              'rspress-scrollbar',
+              'rp-scrollbar',
             )}
             ref={asideLayoutRef}
           >

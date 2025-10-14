@@ -3,6 +3,7 @@ pageType: home
 titleSuffix: '基于 Rsbuild 的静态站点生成器'
 
 hero:
+  badge: Rspress V2 正在开发中! 🚀
   name: Rspress
   text: |
     快如闪电的

@@ -291,6 +291,7 @@ export type RemotePageInfo = PageIndexInfo & {
 };
 
 export interface Hero {
+  badge?: string;
   name?: string;
   text?: string;
   tagline?: string;

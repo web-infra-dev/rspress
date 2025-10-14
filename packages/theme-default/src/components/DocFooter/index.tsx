@@ -1,6 +1,6 @@
 import { useLocaleSiteData, useSite } from '@rspress/runtime';
 import { LastUpdated, PrevNextPage } from '@theme';
-import * as styles from './index.module.scss';
+import './index.scss';
 
 export function DocFooter() {
   const { lastUpdated: localesLastUpdated = false } = useLocaleSiteData();
@@ -9,9 +9,9 @@ export function DocFooter() {
   const showLastUpdated = themeConfig.lastUpdated || localesLastUpdated;
 
   return (
-    <footer className={styles.docFooter}>
+    <footer className="rp-doc-footer">
       {showLastUpdated && <LastUpdated />}
-      <div className={styles.divider} />
+      <div className="rp-divider" />
       <PrevNextPage />
     </footer>
   );

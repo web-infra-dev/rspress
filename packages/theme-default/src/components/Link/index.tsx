@@ -58,7 +58,7 @@ export function Link(props: LinkProps) {
       <a
         {...props}
         href={href}
-        className={`${className} rp-link`}
+        className={clsx(className, 'rp-link')}
         onMouseEnter={event => {
           onMouseEnter?.(event);
           preloadLink(removeBaseHref);

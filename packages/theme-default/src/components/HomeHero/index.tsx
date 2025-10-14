@@ -7,6 +7,7 @@ import './index.scss';
 import clsx from 'clsx';
 
 const DEFAULT_HERO = {
+  badge: '',
   name: '',
   text: '',
   tagline: '',
@@ -38,7 +39,7 @@ function HomeHero({ beforeHeroActions, afterHeroActions }: HomeHeroProps) {
     <div
       className={clsx('rp-home-hero', { 'rp-home-hero--no-image': !hasImage })}
     >
-      <div className="rp-home-hero__badge">🎉 Rspress V2 is now released</div>
+      {hero.badge && <div className="rp-home-hero__badge">{hero.badge}</div>}
       <div className="rp-home-hero__container">
         <div className="rp-home-hero__text-container">
           <div className="rp-home-hero__content">
@@ -73,7 +74,7 @@ function HomeHero({ beforeHeroActions, afterHeroActions }: HomeHeroProps) {
               sizes={normalizeSrcsetAndSizes(hero.image?.sizes)}
               width={375}
               height={375}
-              className="dark:rp-hidden"
+              className="rp-home-hero__image-img rp-home-hero__image-img--light"
             />
             <img
               src={normalizeImagePath(imageSrc.dark)}
@@ -82,7 +83,7 @@ function HomeHero({ beforeHeroActions, afterHeroActions }: HomeHeroProps) {
               sizes={normalizeSrcsetAndSizes(hero.image?.sizes)}
               width={375}
               height={375}
-              className="rp-hidden dark:rp-block"
+              className="rp-home-hero__image-img rp-home-hero__image-img--dark"
             />
           </div>
         ) : null}

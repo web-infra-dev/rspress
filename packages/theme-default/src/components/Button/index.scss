@@ -1,21 +1,21 @@
-.button {
+.rp-button {
   display: inline-flex;
   box-sizing: border-box;
   align-items: center;
   justify-content: center;
-  font-weight: bold;
+  font-weight: 700;
   white-space: nowrap;
   height: 48px;
 }
 
-.button:active {
+.rp-button:active {
   transition:
     color 0.1s,
     border-color 0.1s,
     background-color 0.1s;
 }
 
-.button.medium {
+.rp-button--medium {
   border-radius: var(--rp-radius);
   padding: 0 20px;
   line-height: 38px;
@@ -23,22 +23,21 @@
   font-size: 14px;
 }
 
-.button.big {
+.rp-button--big {
   border-radius: var(--rp-radius-large);
   font-size: 16px;
   min-width: 142px;
-  font-weight: 700;
 }
 
-.button.brand,
-.button.brand:hover,
-.button.brand:active {
+.rp-button--brand,
+.rp-button--brand:hover,
+.rp-button--brand:active {
   opacity: 1;
   color: #fff;
   transition: all 0.3s ease;
 }
 
-.button.brand {
+.rp-button--brand {
   background: linear-gradient(
     275deg,
     var(--rp-c-brand-dark) 3%,
@@ -46,36 +45,36 @@
   );
 }
 
-.button.brand:hover {
+.rp-button--brand:hover {
   background-color: var(--rp-c-brand-light);
   opacity: 0.8;
 }
 
-.button.alt,
-.button.alt:hover,
-.button.alt:active {
+.rp-button--alt,
+.rp-button--alt:hover,
+.rp-button--alt:active {
   border: 1px solid var(--rp-c-gray-light-3);
   color: var(--rp-c-text-1);
   background-color: var(--rp-c-gray-light-5);
   transition: all 0.3s ease;
 }
 
-:global(.dark) .button.alt {
+.dark .rp-button--alt {
   background-color: var(--rp-c-bg-mute);
   border-color: #484848;
   color: var(--rp-c-text-1);
 }
 
-.button.alt:hover {
+.rp-button--alt:hover {
   background-color: var(--rp-c-gray-light-4);
 }
 
-:global(.dark) .button.alt:hover {
+.dark .rp-button--alt:hover {
   background-color: #484848;
 }
 
 @media (max-width: 768px) {
-  .button.big {
+  .rp-button--big {
     font-size: 14px;
     min-width: 100px;
     height: 42px;

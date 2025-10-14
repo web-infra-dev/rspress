@@ -32,6 +32,14 @@
     max-width: 50vw;
   }
 
+  &__image-img {
+    display: block;
+  }
+
+  &__image-img--dark {
+    display: none;
+  }
+
   &__content {
     display: flex;
     flex-direction: column;
@@ -157,4 +165,12 @@
   .rp-home-hero__content {
     align-items: center;
   }
+}
+
+.dark .rp-home-hero__image-img--light {
+  display: none;
+}
+
+.dark .rp-home-hero__image-img--dark {
+  display: block;
 }
