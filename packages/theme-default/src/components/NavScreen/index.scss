@@ -1,7 +1,7 @@
 .rp-nav-screen {
   display: none;
   position: fixed;
-  top: var(--rp-nav-height);
+  top: calc(var(--rp-nav-height) + var(--rp-banner-height, 0px));
   right: 0;
   bottom: 0;
   left: 0;

@@ -1,6 +1,7 @@
 // components
 export { Aside } from './components/Aside/index';
 export { Badge } from './components/Badge/index';
+export { Banner, type BannerProps } from './components/Banner/index';
 export { Button } from './components/Button/index';
 export { Callout, type CalloutProps } from './components/Callout/index';
 export {
@@ -78,6 +79,7 @@ export { DocLayout, type DocLayoutProps } from './layout/DocLayout';
 export { HomeLayout } from './layout/HomeLayout/index';
 export { Layout } from './layout/Layout/index';
 export { NotFoundLayout } from './layout/NotFountLayout/index';
+export { mergeRefs } from './logic/mergeRefs';
 export { scrollToTarget, useSetup } from './logic/sideEffects';
 export { useThemeState } from './logic/useAppearance';
 export { useFullTextSearch } from './logic/useFullTextSearch';

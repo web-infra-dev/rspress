@@ -13,7 +13,7 @@
   align-items: center;
 
   position: sticky;
-  top: 0;
+  top: var(--rp-banner-height, 0px);
   left: 0;
   z-index: var(--rp-z-index-nav);
 

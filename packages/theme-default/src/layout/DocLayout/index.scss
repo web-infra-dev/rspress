@@ -61,8 +61,10 @@
     max-width: var(--rp-sidebar-width);
     min-width: var(--rp-sidebar-width);
 
-    height: calc(100vh - var(--rp-nav-height));
-    max-height: calc(100vh - var(--rp-nav-height));
+    height: calc(100vh - var(--rp-nav-height) - var(--rp-banner-height, 0px));
+    max-height: calc(
+      100vh - var(--rp-nav-height) - var(--rp-banner-height, 0px)
+    );
 
     padding: var(--rp-sidebar-padding);
     border-right: 1px solid var(--rp-c-divider-light);
@@ -72,7 +74,7 @@
     // postion
     position: sticky;
     margin-top: calc(-1 * var(--rp-sidebar-menu-height));
-    top: var(--rp-nav-height);
+    top: calc(var(--rp-nav-height) + var(--rp-banner-height, 0px));
     left: 0;
     bottom: 0;
     z-index: var(--rp-z-index-sidebar);
@@ -89,7 +91,7 @@
     width: var(--rp-aside-width);
 
     position: sticky;
-    top: var(--rp-nav-height);
+    top: calc(var(--rp-nav-height) + var(--rp-banner-height, 0px));
     margin-top: var(--rp-sidebar-menu-height);
     right: 0;
     z-index: var(--rp-z-index-aside);
@@ -97,13 +99,15 @@
 
     overflow: hidden scroll;
     scrollbar-width: none;
-    max-height: calc(100vh - var(--rp-nav-height));
+    max-height: calc(
+      100vh - var(--rp-nav-height) - var(--rp-banner-height, 0px)
+    );
 
     box-shadow: var(--rp-shadow-1);
   }
   &__menu {
     position: sticky;
-    top: var(--rp-nav-height);
+    top: calc(var(--rp-nav-height) + var(--rp-banner-height, 0px));
     left: 0;
     z-index: var(--rp-z-index-sidebar-menu);
 
@@ -188,7 +192,7 @@
     &__sidebar {
       z-index: var(--rp-z-index-sidebar);
       position: fixed;
-      top: var(--rp-nav-height);
+      top: calc(var(--rp-nav-height) + var(--rp-banner-height, 0px));
 
       margin-top: 0px;
       height: calc(100vh - var(--rp-nav-height));
