@@ -8,7 +8,8 @@ import type { Root } from 'mdast';
 import type { Plugin } from 'unified';
 import { SKIP, visit } from 'unist-util-visit';
 
-type RemarkMdxToMdPayload = {
+type RemarkMdxToMdModule = {
+  name: string;
   mdx: string;
   compiled?: string;
   runtime?: unknown;
@@ -16,12 +17,9 @@ type RemarkMdxToMdPayload = {
 };
 
 type RemarkMdxToMdOptions = {
-  /** Callback receiving the gathered virtual JS content and optional compiled/runtime artifacts. */
-  onVirtualFile?: (payload: RemarkMdxToMdPayload) => void;
-  /**
-   * Persist the virtual JS code on the vfile via `file.data.mdxVirtualJs`.
-   * Enabled by default so downstream plugins can consume it.
-   */
+  /** Callback receiving each virtual module and providing rendered placeholder content. */
+  onVirtualFile?: (payload: RemarkMdxToMdModule) => Promise<string>;
+  /** Persist the virtual modules on the vfile via `file.data.mdxVirtualModules`. */
   emitToVFile?: boolean;
 };
 
@@ -39,7 +37,13 @@ const remarkMdxToMd: Plugin<[RemarkMdxToMdOptions?], Root> =
 
     const originalSource =
       typeof file.value === 'string' ? (file.value as string) : '';
-    const mdxSnippets: string[] = [];
+    const importSnippets: string[] = [];
+    type PlaceholderNode = { type: 'html'; value: string };
+    const jsxSnippets: {
+      name: string;
+      source: string;
+      placeholder: PlaceholderNode;
+    }[] = [];
 
     const collectSource = (node: {
       value?: string;
@@ -91,7 +95,7 @@ const remarkMdxToMd: Plugin<[RemarkMdxToMdOptions?], Root> =
     visit(tree, 'mdxjsEsm', (node: any, index?: number, parent?: any) => {
       const source = collectSource(node);
       if (source) {
-        mdxSnippets.push(source.trimEnd());
+        importSnippets.push(source.trimEnd());
       }
 
       if (parent && typeof index === 'number') {
@@ -105,12 +109,10 @@ const remarkMdxToMd: Plugin<[RemarkMdxToMdOptions?], Root> =
 
     const handleJsx = (type: 'mdxJsxFlowElement' | 'mdxJsxTextElement') => {
       visit(tree, type, (node: any, index?: number, parent?: any) => {
-        const source = collectSource(node);
-        if (source) {
-          mdxSnippets.push(source.trimEnd());
+        if (!parent || typeof index !== 'number') {
+          return SKIP;
         }
 
-        // derive a component name for placeholder
         let compName = 'Component';
         if (node && typeof node === 'object') {
           if (typeof node.name === 'string') compName = node.name;
@@ -120,16 +122,22 @@ const remarkMdxToMd: Plugin<[RemarkMdxToMdOptions?], Root> =
             compName = node.name.name ?? node.name.value ?? compName;
         }
 
-        const placeholder = { type: 'html', value: `<!--${compName} ->` };
+        const placeholder: PlaceholderNode = {
+          type: 'html',
+          value: `<!-- ${compName} -->`,
+        };
 
-        if (
-          parent &&
-          typeof index === 'number' &&
-          Array.isArray(parent.children)
-        ) {
-          // replace the node with a single html placeholder comment
+        const source = collectSource(node);
+        if (source) {
+          jsxSnippets.push({
+            name: compName,
+            source: source.trimEnd(),
+            placeholder,
+          });
+        }
+
+        if (Array.isArray(parent.children)) {
           parent.children.splice(index, 1, placeholder);
-          return SKIP;
         }
 
         return SKIP;
@@ -139,42 +147,59 @@ const remarkMdxToMd: Plugin<[RemarkMdxToMdOptions?], Root> =
     handleJsx('mdxJsxFlowElement');
     handleJsx('mdxJsxTextElement');
 
-    const virtualJs = mdxSnippets.join('\n\n').trim();
-
-    if (virtualJs) {
-      const finalCode = `${virtualJs}\n`;
-      // emit original mdx snippets
+    if (!jsxSnippets.length) {
       if (emitToVFile) {
         // eslint-disable-next-line no-param-reassign
-        (file.data ??= {}).mdxVirtualJs = finalCode;
+        (file.data ??= {}).mdxVirtualModules = [];
       }
+      return;
+    }
 
-      // compile to JS using @mdx-js/mdx
+    const uniqueImports: string[] = [];
+    const seenImports = new Set<string>();
+    importSnippets.forEach(snippet => {
+      if (!seenImports.has(snippet)) {
+        seenImports.add(snippet);
+        uniqueImports.push(snippet);
+      }
+    });
+
+    const importBlock = uniqueImports.join('\n');
+    const results: RemarkMdxToMdModule[] = [];
+
+    for (const { name, source, placeholder } of jsxSnippets) {
+      const parts: string[] = [];
+      if (importBlock) {
+        parts.push(importBlock);
+      }
+      parts.push(source);
+      const mdxCode = `${parts.join('\n\n')}\n`;
+
+      const moduleResult: RemarkMdxToMdModule = { name, mdx: mdxCode };
+
       try {
-        const compiled = await compile(finalCode, {
-          // produce JavaScript program output
-          outputFormat: 'program',
-        });
+        const compiled = await compile(mdxCode, { outputFormat: 'program' });
         const compiledCode = String(compiled);
+        moduleResult.compiled = compiledCode;
 
-        let runtimeResult: unknown;
         const baseDir = file.path ? path.dirname(file.path) : os.tmpdir();
         const tempFile = path.join(
           baseDir,
           `.rspress-mdx-${crypto.randomUUID() ?? Date.now().toString(36)}.mjs`,
         );
+
         try {
           await fs.writeFile(tempFile, compiledCode, 'utf-8');
           const module = await import(pathToFileURL(tempFile).href);
           const exported = module?.default ?? module;
 
           if (typeof exported === 'function') {
-            runtimeResult = await Promise.resolve(exported());
+            moduleResult.runtime = await Promise.resolve(exported());
           } else {
-            runtimeResult = exported;
+            moduleResult.runtime = exported;
           }
         } catch (runtimeError) {
-          runtimeResult = {
+          moduleResult.runtime = {
             error:
               runtimeError instanceof Error
                 ? runtimeError.message
@@ -183,21 +208,31 @@ const remarkMdxToMd: Plugin<[RemarkMdxToMdOptions?], Root> =
         } finally {
           await fs.rm(tempFile, { force: true }).catch(() => {});
         }
-
-        if (emitToVFile) {
-          (file.data ??= {}).mdxVirtualJsJs = compiledCode;
-          (file.data ??= {}).mdxVirtualRuntime = runtimeResult;
-        }
-        onVirtualFile?.({
-          mdx: finalCode,
-          compiled: compiledCode,
-          runtime: runtimeResult,
-        });
       } catch (error) {
-        // if compile fails, still surface original mdx to callback
-        onVirtualFile?.({ mdx: finalCode, error });
+        moduleResult.error = error;
       }
+
+      let placeholderContent = name;
+      if (onVirtualFile) {
+        try {
+          const rendered = await onVirtualFile(moduleResult);
+          if (typeof rendered === 'string') {
+            placeholderContent = rendered;
+          }
+        } catch (callbackError) {
+          moduleResult.error = moduleResult.error ?? callbackError;
+        }
+      }
+
+      placeholder.value = placeholderContent;
+
+      results.push(moduleResult);
+    }
+
+    if (emitToVFile) {
+      // eslint-disable-next-line no-param-reassign
+      (file.data ??= {}).mdxVirtualModules = results;
     }
   };
 
-export { remarkMdxToMd, type RemarkMdxToMdOptions, type RemarkMdxToMdPayload };
+export { remarkMdxToMd, type RemarkMdxToMdModule, type RemarkMdxToMdOptions };

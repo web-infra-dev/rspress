@@ -63,8 +63,13 @@ describe('normalizeMdFile', () => {
         [
           remarkMdxToMd,
           {
-            onVirtualFile({ runtime }) {
-              console.log(renderToMd(runtime), 333333333);
+            async onVirtualFile({ name, runtime }) {
+              if (runtime) {
+                const rendered = renderToMd(runtime as any);
+                return rendered;
+              }
+
+              return name;
             },
           } as ArgumentsType<typeof remarkMdxToMd>[0],
         ],

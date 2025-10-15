@@ -55,10 +55,17 @@ exports[`normalizeMdFile > compiles mdx-to-md 1`] = `
 
 ## Mdx
 
-<!--List ->
+- foo
+- bar
 
-<!--L ->
 
-<!--Table ->
+
+- L1
+- L2
+
+
+
+123| foo |
+| bar |
 "
 `;
