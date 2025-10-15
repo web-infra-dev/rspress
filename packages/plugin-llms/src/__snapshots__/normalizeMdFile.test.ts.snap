@@ -25,6 +25,8 @@ import { List as L } from '../components/index';
 <L items={['L1', 'L2']} />
 
 <Table>
+  <div>123</div>
+
   <tr>
     <td>foo</td>
   </tr>

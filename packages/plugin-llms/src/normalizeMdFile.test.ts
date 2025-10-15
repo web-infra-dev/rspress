@@ -1,7 +1,8 @@
 import { readFile } from 'node:fs/promises';
 import path from 'node:path';
 import { RouteService } from '@rspress/core';
-import { describe, expect, it } from 'vitest';
+import { type ArgumentsType, describe, expect, it } from 'vitest';
+import { renderToMd } from '/Users/appe/Documents/codes/remark-mdx-to-md/src/react/render';
 import { normalizeMdFile } from './normalizeMdFile';
 import { remarkMdxToMd } from './remarkMdxToMd';
 
@@ -62,10 +63,10 @@ describe('normalizeMdFile', () => {
         [
           remarkMdxToMd,
           {
-            onVirtualFile(code) {
-              console.log(code, 222222);
+            onVirtualFile({ runtime }) {
+              console.log(renderToMd(runtime), 333333333);
             },
-          },
+          } as ArgumentsType<typeof remarkMdxToMd>[0],
         ],
       ],
     );

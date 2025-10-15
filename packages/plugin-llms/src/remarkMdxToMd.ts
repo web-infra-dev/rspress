@@ -1,10 +1,23 @@
+import crypto from 'node:crypto';
+import { promises as fs } from 'node:fs';
+import os from 'node:os';
+import path from 'node:path';
+import { pathToFileURL } from 'node:url';
+import { compile } from '@mdx-js/mdx';
 import type { Root } from 'mdast';
 import type { Plugin } from 'unified';
 import { SKIP, visit } from 'unist-util-visit';
 
+type RemarkMdxToMdPayload = {
+  mdx: string;
+  compiled?: string;
+  runtime?: unknown;
+  error?: unknown;
+};
+
 type RemarkMdxToMdOptions = {
-  /** Callback receiving the gathered virtual JS content. */
-  onVirtualFile?: (code: string) => void;
+  /** Callback receiving the gathered virtual JS content and optional compiled/runtime artifacts. */
+  onVirtualFile?: (payload: RemarkMdxToMdPayload) => void;
   /**
    * Persist the virtual JS code on the vfile via `file.data.mdxVirtualJs`.
    * Enabled by default so downstream plugins can consume it.
@@ -18,7 +31,7 @@ const DEFAULT_OPTIONS: RemarkMdxToMdOptions = {
 
 const remarkMdxToMd: Plugin<[RemarkMdxToMdOptions?], Root> =
   (options = {}) =>
-  (tree, file) => {
+  async (tree, file) => {
     const { onVirtualFile, emitToVFile } = {
       ...DEFAULT_OPTIONS,
       ...options,
@@ -130,12 +143,61 @@ const remarkMdxToMd: Plugin<[RemarkMdxToMdOptions?], Root> =
 
     if (virtualJs) {
       const finalCode = `${virtualJs}\n`;
+      // emit original mdx snippets
       if (emitToVFile) {
         // eslint-disable-next-line no-param-reassign
         (file.data ??= {}).mdxVirtualJs = finalCode;
       }
-      onVirtualFile?.(finalCode);
+
+      // compile to JS using @mdx-js/mdx
+      try {
+        const compiled = await compile(finalCode, {
+          // produce JavaScript program output
+          outputFormat: 'program',
+        });
+        const compiledCode = String(compiled);
+
+        let runtimeResult: unknown;
+        const baseDir = file.path ? path.dirname(file.path) : os.tmpdir();
+        const tempFile = path.join(
+          baseDir,
+          `.rspress-mdx-${crypto.randomUUID() ?? Date.now().toString(36)}.mjs`,
+        );
+        try {
+          await fs.writeFile(tempFile, compiledCode, 'utf-8');
+          const module = await import(pathToFileURL(tempFile).href);
+          const exported = module?.default ?? module;
+
+          if (typeof exported === 'function') {
+            runtimeResult = await Promise.resolve(exported());
+          } else {
+            runtimeResult = exported;
+          }
+        } catch (runtimeError) {
+          runtimeResult = {
+            error:
+              runtimeError instanceof Error
+                ? runtimeError.message
+                : String(runtimeError),
+          };
+        } finally {
+          await fs.rm(tempFile, { force: true }).catch(() => {});
+        }
+
+        if (emitToVFile) {
+          (file.data ??= {}).mdxVirtualJsJs = compiledCode;
+          (file.data ??= {}).mdxVirtualRuntime = runtimeResult;
+        }
+        onVirtualFile?.({
+          mdx: finalCode,
+          compiled: compiledCode,
+          runtime: runtimeResult,
+        });
+      } catch (error) {
+        // if compile fails, still surface original mdx to callback
+        onVirtualFile?.({ mdx: finalCode, error });
+      }
     }
   };
 
-export { remarkMdxToMd, type RemarkMdxToMdOptions };
+export { remarkMdxToMd, type RemarkMdxToMdOptions, type RemarkMdxToMdPayload };
