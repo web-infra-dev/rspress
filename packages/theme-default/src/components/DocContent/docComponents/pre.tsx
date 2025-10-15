@@ -5,8 +5,6 @@ export type ShikiPreProps = CodeBlockProps &
 
 export function ShikiPre({
   containerElementClassName,
-  children,
-  className,
   title,
   lang,
   codeButtonGroupProps,
@@ -19,7 +17,7 @@ export function ShikiPre({
       codeButtonGroupProps={codeButtonGroupProps}
       containerElementClassName={containerElementClassName}
     >
-      <pre {...otherProps}>{children}</pre>
+      <pre {...otherProps} />
     </CodeBlock>
   );
 }
