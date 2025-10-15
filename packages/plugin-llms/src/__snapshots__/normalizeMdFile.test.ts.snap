@@ -1,0 +1,34 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`normalizeMdFile > compiles docs-basic fixture to markdown 1`] = `
+"# Index
+
+## link
+
+[Link](/foo.md)
+[](/llms.txt)
+
+## FileCodeBlock
+
+\`\`\`tsx file="./foo.mdx"
+# Foo
+
+\`\`\`
+
+## Mdx
+
+import { List, Table } from '../components/index';
+
+<List items={['foo', 'bar']} />
+
+<Table>
+  <tr>
+    <td>foo</td>
+  </tr>
+
+  <tr>
+    <td>bar</td>
+  </tr>
+</Table>
+"
+`;
