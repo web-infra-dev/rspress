@@ -4,9 +4,9 @@ export type ShikiPreProps = CodeBlockProps &
   React.HTMLAttributes<HTMLPreElement>;
 
 export function ShikiPre({
-  containerElementClassName,
   title,
   lang,
+  containerElementClassName,
   codeButtonGroupProps,
   ...otherProps
 }: ShikiPreProps) {
@@ -14,8 +14,8 @@ export function ShikiPre({
     <CodeBlock
       title={title}
       lang={lang}
-      codeButtonGroupProps={codeButtonGroupProps}
       containerElementClassName={containerElementClassName}
+      codeButtonGroupProps={codeButtonGroupProps}
     >
       <pre {...otherProps} />
     </CodeBlock>

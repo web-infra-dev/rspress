@@ -43,6 +43,9 @@ export function CodeBlockRuntime({
   title,
   code,
   shikiOptions,
+  codeButtonGroupProps,
+  children,
+  containerElementClassName,
   onRendered,
   ...otherProps
 }: CodeBlockRuntimeProps) {
@@ -75,7 +78,18 @@ export function CodeBlockRuntime({
         development: false,
         components: {
           ...otherMdxComponents,
-          pre: props => <ShikiPre title={title} {...props} {...otherProps} />,
+          pre: props => (
+            <ShikiPre
+              title={title}
+              lang={lang}
+              containerElementClassName={containerElementClassName}
+              codeButtonGroupProps={codeButtonGroupProps}
+              {...props}
+              {...otherProps}
+            >
+              {children}
+            </ShikiPre>
+          ),
           code: props => <Code {...props} />,
         },
         Fragment,

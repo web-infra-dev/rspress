@@ -41,7 +41,7 @@ test.describe('tabs-component test', async () => {
 
     const clickTabs = tabs;
     const getCommands = async () =>
-      (await page.locator('.rp-codeblock_content code').allInnerTexts()).map(
+      (await page.locator('.rp-codeblock__content code').allInnerTexts()).map(
         text => text.trim(),
       );
 

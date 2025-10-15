@@ -26,7 +26,7 @@ test.describe('plugin shiki test', async () => {
     await page.goto(`http://localhost:${appPort}`, {
       waitUntil: 'networkidle',
     });
-    const shikiDoms = page.locator('.rp-codeblock_content');
+    const shikiDoms = page.locator('.rp-codeblock__content');
     await expect(shikiDoms).toHaveCount(6);
 
     const firstShikiDom = shikiDoms.first();
@@ -53,7 +53,7 @@ test.describe('plugin shiki test', async () => {
     await page.goto(`http://localhost:${appPort}/langAlias`, {
       waitUntil: 'networkidle',
     });
-    const shikiDoms = page.locator('.rp-codeblock_content');
+    const shikiDoms = page.locator('.rp-codeblock__content');
     await expect(shikiDoms).toHaveCount(1);
   });
 });
