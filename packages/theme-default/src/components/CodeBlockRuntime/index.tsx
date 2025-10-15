@@ -44,7 +44,7 @@ export function CodeBlockRuntime({
   code,
   shikiOptions,
   codeButtonGroupProps,
-  children,
+  children: _,
   containerElementClassName,
   onRendered,
   ...otherProps
@@ -86,9 +86,7 @@ export function CodeBlockRuntime({
               codeButtonGroupProps={codeButtonGroupProps}
               {...props}
               {...otherProps}
-            >
-              {children}
-            </ShikiPre>
+            />
           ),
           code: props => <Code {...props} />,
         },
