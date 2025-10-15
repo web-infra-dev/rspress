@@ -215,6 +215,21 @@
 
     /* code block */
     /* #region */
+    & :where(pre, code) {
+      text-align: left;
+      white-space: pre;
+      word-spacing: normal;
+      word-break: normal;
+      word-wrap: normal;
+      -moz-tab-size: 4;
+      -o-tab-size: 4;
+      tab-size: 4;
+      -webkit-hyphens: none;
+      -moz-hyphens: none;
+      -ms-hyphens: none;
+      hyphens: none;
+    }
+    /* #endregion */
 
     // #region inline code
     &:where(:not(pre, h1, h2, h3, h4, h5, h6) > code) {
@@ -241,84 +256,6 @@
       color: var(--rp-c-brand);
     }
     // #endregion inline code
-
-    &:where(div[class^='language-']) {
-      position: relative;
-      margin: 16px 0;
-      border: var(--rp-code-block-border);
-      overflow-x: auto;
-      transition: none;
-
-      @media (min-width: 641px) {
-        border-radius: var(--rp-radius);
-      }
-
-      @media (max-width: 640px) {
-        border-radius: var(--rp-radius-small);
-        margin: 24px 0;
-        contain: content;
-      }
-
-      & :where(pre, code) {
-        text-align: left;
-        white-space: pre;
-        word-spacing: normal;
-        word-break: normal;
-        word-wrap: normal;
-        -moz-tab-size: 4;
-        -o-tab-size: 4;
-        tab-size: 4;
-        -webkit-hyphens: none;
-        -moz-hyphens: none;
-        -ms-hyphens: none;
-        hyphens: none;
-      }
-
-      & :where(pre) {
-        outline: none; // avoid focus outline https://github.com/web-infra-dev/rspack/issues/11775
-
-        position: relative;
-        z-index: 1;
-        margin: 0;
-        background: transparent;
-        overflow-x: auto;
-        &::-webkit-scrollbar {
-          height: 5px;
-          width: 5px;
-        }
-        &::-webkit-scrollbar-corner {
-          display: none;
-        }
-        &::-webkit-scrollbar-thumb {
-          background-color: var(--rp-code-block-scroll-bar-bg);
-          border-radius: 10px;
-        }
-      }
-
-      & :where(code) {
-        display: inline-block;
-        padding: 16px 0;
-        width: fit-content;
-        min-width: 100%;
-        line-height: 1.7;
-      }
-    }
-
-    &:where(.rspress-code-title) {
-      font-family: var(--rp-font-family-mono);
-      padding: 12px 16px;
-      font-size: var(--rp-code-font-size);
-      background-color: var(--rp-code-title-bg);
-    }
-
-    &:where(.rspress-code-content) {
-      font-size: var(--rp-code-font-size);
-      font-family: var(--rp-font-family-mono);
-      position: relative;
-      color: var(--rp-code-block-color);
-      background-color: var(--rp-code-block-bg);
-    }
-    /* #endregion */
 
     &:where(details) {
       cursor: pointer;

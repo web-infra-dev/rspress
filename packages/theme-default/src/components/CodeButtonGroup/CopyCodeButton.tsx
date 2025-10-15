@@ -2,7 +2,7 @@ import IconCopy from '@theme-assets/copy';
 import IconSuccess from '@theme-assets/success';
 import copy from 'copy-to-clipboard';
 import { useRef } from 'react';
-import { SvgWrapper } from '../../../SvgWrapper';
+import { SvgWrapper } from '../SvgWrapper';
 import './CopyCodeButton.scss';
 
 const timeoutIdMap: Map<HTMLElement, NodeJS.Timeout> = new Map();

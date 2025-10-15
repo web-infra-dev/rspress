@@ -44,7 +44,7 @@ test.describe('Auto nav and sidebar test', async () => {
       waitUntil: 'networkidle',
     });
 
-    const h2Elements = page.locator('.rp-overview h2.rp-toc span');
+    const h2Elements = page.locator('.rp-overview h2.rp-toc-include span');
     const h2Texts = (await h2Elements.allTextContents())
       .map(text => text.trim())
       .filter(Boolean);
@@ -113,7 +113,7 @@ test.describe('Auto nav and sidebar test', async () => {
       waitUntil: 'networkidle',
     });
 
-    const h2Elements = page.locator('.rp-overview h2.rp-toc span');
+    const h2Elements = page.locator('.rp-overview h2.rp-toc-include span');
     const h2Texts = (await h2Elements.allTextContents())
       .map(text => text.trim())
       .filter(Boolean);
@@ -173,7 +173,7 @@ test.describe('Auto nav and sidebar test', async () => {
       waitUntil: 'networkidle',
     });
 
-    const h2Elements = page.locator('.rp-overview h2.rp-toc span');
+    const h2Elements = page.locator('.rp-overview h2.rp-toc-include span');
     const h2Texts = (await h2Elements.allTextContents())
       .map(text => text.trim())
       .filter(Boolean);
@@ -215,7 +215,7 @@ test.describe('Auto nav and sidebar test', async () => {
       waitUntil: 'networkidle',
     });
 
-    const h2Elements = page.locator('.rp-overview h2.rp-toc span');
+    const h2Elements = page.locator('.rp-overview h2.rp-toc-include span');
     const h2Texts = (await h2Elements.allTextContents())
       .map(text => text.trim())
       .filter(Boolean);

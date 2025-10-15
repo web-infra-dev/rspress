@@ -2,13 +2,14 @@ import { useSite } from '@rspress/runtime';
 import IconWrap from '@theme-assets/wrap';
 import IconWrapped from '@theme-assets/wrapped';
 import clsx from 'clsx';
-import { useState } from 'react';
-import { SvgWrapper } from '../../../SvgWrapper';
-import './CodeButtonGroup.scss';
+import { useRef, useState } from 'react';
+import { SvgWrapper } from '../SvgWrapper';
+import './index.scss';
 import { CopyCodeButton } from './CopyCodeButton';
 
-export interface CodeButtonGroupProps extends ReturnType<typeof useCodeWrap> {
-  preElementRef: React.RefObject<HTMLPreElement | null>;
+export interface CodeButtonGroupProps
+  extends ReturnType<typeof useCodeButtonGroup> {
+  copyElementRef: React.RefObject<HTMLDivElement | null>;
 
   /**
    * @default true
@@ -20,16 +21,18 @@ export interface CodeButtonGroupProps extends ReturnType<typeof useCodeWrap> {
   showCopyButton?: boolean;
 }
 
-export const useCodeWrap = () => {
+export const useCodeButtonGroup = () => {
   const { site } = useSite();
   const { defaultWrapCode } = site.markdown;
   const [codeWrap, setCodeWrap] = useState(defaultWrapCode);
+  const copyElementRef = useRef<HTMLDivElement>(null);
 
   const toggleCodeWrap = () => {
     setCodeWrap(!codeWrap);
   };
 
   return {
+    copyElementRef,
     codeWrap,
     toggleCodeWrap,
   };
@@ -38,7 +41,7 @@ export const useCodeWrap = () => {
 export function CodeButtonGroup({
   codeWrap,
   toggleCodeWrap,
-  preElementRef,
+  copyElementRef,
   showCodeWrapButton = true,
   showCopyButton = true,
 }: CodeButtonGroupProps) {
@@ -65,7 +68,7 @@ export function CodeButtonGroup({
             />
           </button>
         )}
-        {showCopyButton && <CopyCodeButton codeBlockRef={preElementRef} />}
+        {showCopyButton && <CopyCodeButton codeBlockRef={copyElementRef} />}
       </div>
     </>
   );

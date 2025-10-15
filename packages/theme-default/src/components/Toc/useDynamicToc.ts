@@ -63,7 +63,7 @@ export const useDynamicToc = (): Header[] => {
 function updateHeaders(target: Element) {
   const collectedHeaders: Header[] = [];
   const elements = target?.querySelectorAll(
-    '.rspress-doc h2.rp-toc, h3.rp-toc, h4.rp-toc',
+    '.rspress-doc h2.rp-toc-include, h3.rp-toc-include, h4.rp-toc-include',
   );
   elements?.forEach(el => {
     if (

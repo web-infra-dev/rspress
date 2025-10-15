@@ -182,7 +182,7 @@ export type TabProps = ComponentPropsWithRef<'div'> &
 
 export function Tab({ children, ...props }: TabProps): ReactElement {
   return (
-    <div {...props} className="rp-rounded rp-px-2">
+    <div {...props} className="rp-tab">
       {children}
     </div>
   );
