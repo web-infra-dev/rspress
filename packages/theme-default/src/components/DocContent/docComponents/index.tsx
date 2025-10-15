@@ -1,10 +1,10 @@
 import { A } from './a';
-import { Code } from './codeblock/code';
-import { PreWithCodeButtonGroup } from './codeblock/pre';
+import { Code } from './code';
 import { Hr } from './hr';
 import { Img } from './img';
 import { Li, Ol, Ul } from './list';
 import { Blockquote, P, Strong } from './paragraph';
+import { ShikiPre } from './pre';
 import { Table, Td, Th, Tr } from './table';
 import { H1, H2, H3, H4, H5, H6 } from './title';
 
@@ -29,7 +29,9 @@ export function getCustomMDXComponent() {
     strong: Strong,
     a: A,
     code: Code,
-    pre: PreWithCodeButtonGroup,
     img: Img,
+
+    // changed from `pre` to `ShikiPre`
+    pre: ShikiPre,
   };
 }

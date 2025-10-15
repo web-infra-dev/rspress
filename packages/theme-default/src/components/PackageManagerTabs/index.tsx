@@ -1,6 +1,5 @@
-import { Tab, Tabs } from '@theme';
-import type { ReactNode } from 'react';
-import { PreWithCodeButtonGroup } from '../DocContent/docComponents/codeblock/pre';
+import { getCustomMDXComponent, Tab, Tabs } from '@theme';
+import { type ReactNode, useMemo } from 'react';
 import { Bun } from './icons/Bun';
 import { Npm } from './icons/Npm';
 import { Pnpm } from './icons/Pnpm';
@@ -92,6 +91,10 @@ export function PackageManagerTabs({
     packageMangerToIcon[tab.tool] = tab.icon;
   });
 
+  const Pre = useMemo(() => {
+    return getCustomMDXComponent().pre;
+  }, [getCustomMDXComponent]);
+
   // Init Command
   if (typeof command === 'string') {
     const getPrefix = (packageManager: string) => {
@@ -169,8 +172,8 @@ export function PackageManagerTabs({
 
         return (
           <Tab key={key}>
-            <PreWithCodeButtonGroup
-              containerElementClassName="language-bash"
+            <Pre
+              lang="bash"
               className="shiki css-variables"
               style={{
                 backgroundColor: 'var(--shiki-background)',
@@ -178,8 +181,8 @@ export function PackageManagerTabs({
               }}
             >
               {/* For this case, we highlight the command manually */}
-              <code className="language-bash" style={{ whiteSpace: 'pre' }}>
-                <span style={{ display: 'block', padding: '0px 1.25rem' }}>
+              <code style={{ whiteSpace: 'pre' }}>
+                <span className="line">
                   <span style={{ color: 'var(--shiki-token-function)' }}>
                     {packageManager}
                   </span>
@@ -188,7 +191,7 @@ export function PackageManagerTabs({
                   </span>
                 </span>
               </code>
-            </PreWithCodeButtonGroup>
+            </Pre>
           </Tab>
         );
       })}

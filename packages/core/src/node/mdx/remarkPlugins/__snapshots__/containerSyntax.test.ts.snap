@@ -344,8 +344,8 @@ function _createMdxContent(props) {
           color: "var(--shiki-foreground)"
         },
         tabIndex: "0",
+        lang: "js",
         children: _jsx(_components.code, {
-          className: "language-js",
           children: _jsxs(_components.span, {
             className: "line",
             children: [_jsx(_components.span, {
@@ -819,8 +819,8 @@ function _createMdxContent(props) {
           color: "var(--shiki-foreground)"
         },
         tabIndex: "0",
+        lang: "javascript",
         children: _jsx(_components.code, {
-          className: "language-javascript",
           children: _jsxs(_components.span, {
             className: "line",
             children: [_jsx(_components.span, {

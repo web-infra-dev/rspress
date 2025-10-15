@@ -25,7 +25,9 @@ test.describe('Nested overview page', async () => {
         waitUntil: 'networkidle',
       },
     );
-    const overviewHeadings = page.locator('.rp-overview h2.rp-toc span');
+    const overviewHeadings = page.locator(
+      '.rp-overview h2.rp-toc-include span',
+    );
     await expect(overviewHeadings).toHaveText(['Level 2']);
 
     const overviewGroups = page.locator(
@@ -43,7 +45,9 @@ test.describe('Nested overview page', async () => {
         waitUntil: 'networkidle',
       },
     );
-    const overviewHeadings = page.locator('.rp-overview h2.rp-toc span');
+    const overviewHeadings = page.locator(
+      '.rp-overview h2.rp-toc-include span',
+    );
     await expect(overviewHeadings).toHaveText(['two', 'Level 3']);
 
     const overviewGroups = page.locator(
@@ -61,7 +65,9 @@ test.describe('Nested overview page', async () => {
         waitUntil: 'networkidle',
       },
     );
-    const overviewHeadings = page.locator('.rp-overview h2.rp-toc span');
+    const overviewHeadings = page.locator(
+      '.rp-overview h2.rp-toc-include span',
+    );
     await expect(overviewHeadings).toHaveText(['three']);
 
     const overviewGroups = page.locator(

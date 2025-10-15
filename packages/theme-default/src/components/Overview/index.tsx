@@ -18,7 +18,7 @@ import {
   isSidebarSingleFile,
 } from '../Sidebar/utils';
 import './index.scss';
-import { type Group, type GroupItem, OverviewGroup } from './OverviewGroup';
+import { type Group, type GroupItem, OverviewGroup } from '@theme';
 import { findItemByRoutePath } from './utils';
 
 // Utility function to normalize text for search

@@ -4,15 +4,14 @@
   margin: 1rem 0;
   border: var(--rp-code-block-border);
 
-  div[class*='language-'] {
-    margin: 0 -0.5rem !important;
+  .rp-codeblock {
+    margin: 0 !important;
     border-radius: 0 !important;
     border: none !important;
-    font-size: 13px !important;
-  }
 
-  .rspress-code-title {
-    padding: 8px 16px !important;
+    .rp-codeblock__title {
+      padding: 8px 16px !important;
+    }
   }
 
   &__list {

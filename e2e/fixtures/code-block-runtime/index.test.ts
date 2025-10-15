@@ -28,10 +28,10 @@ test.describe('<CodeBlockRuntime />', async () => {
     const containerCount = await containers.count();
     for (let index = 0; index < containerCount; index += 1) {
       const container = containers.nth(index);
-      await expect(container.locator('.rspress-code-title')).toHaveText(
+      await expect(container.locator('.rp-codeblock__title')).toHaveText(
         'test.js',
       );
-      const content = container.locator('.rspress-code-content');
+      const content = container.locator('.rp-codeblock__content');
       const shikiContainer = content.locator('.shiki.css-variables').first();
       await expect(shikiContainer).toHaveJSProperty('tagName', 'PRE');
       await expect(shikiContainer.locator('code').first()).toHaveText(
@@ -50,10 +50,10 @@ test.describe('<CodeBlockRuntime />', async () => {
     const containerCount = await containers.count();
     for (let index = 0; index < containerCount; index += 1) {
       const container = containers.nth(index);
-      await expect(container.locator('.rspress-code-title')).toHaveText(
+      await expect(container.locator('.rp-codeblock__title')).toHaveText(
         'highlight.ts',
       );
-      const content = container.locator('.rspress-code-content');
+      const content = container.locator('.rp-codeblock__content');
       const shikiContainer = content.locator('.shiki.css-variables').first();
       await expect(shikiContainer).toHaveJSProperty('tagName', 'PRE');
       await expect(shikiContainer.locator('code').first()).toHaveText(

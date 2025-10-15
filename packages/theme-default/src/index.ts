@@ -11,13 +11,14 @@ export {
 export {
   CodeButtonGroup,
   type CodeButtonGroupProps,
-} from './components/DocContent/docComponents/codeblock/CodeButtonGroup';
-// layout
-export type {
-  PreWithCodeButtonGroupProps,
-  ShikiPreProps,
-} from './components/DocContent/docComponents/codeblock/pre';
+} from './components/Codeblock/CodeButtonGroup';
+export {
+  CodeBlock,
+  type CodeBlockProps,
+} from './components/Codeblock/index';
 export { getCustomMDXComponent } from './components/DocContent/docComponents/index';
+// layout
+export type { ShikiPreProps } from './components/DocContent/docComponents/pre';
 export { DocContent } from './components/DocContent/index';
 export { DocFooter } from './components/DocFooter/index';
 export { EditLink } from './components/EditLink/index';
