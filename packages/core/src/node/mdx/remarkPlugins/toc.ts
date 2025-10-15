@@ -88,3 +88,5 @@ export const remarkToc: Plugin<[], Root> = function () {
     }
   };
 };
+
+console.log;
