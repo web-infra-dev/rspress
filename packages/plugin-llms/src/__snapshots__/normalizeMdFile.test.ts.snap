@@ -3,7 +3,7 @@
 exports[`normalizeMdFile > compiles docs-basic fixture to markdown 1`] = `
 "# Index
 
-## link
+## Link
 
 [Link](/foo.md)
 [](/llms.txt)
@@ -18,8 +18,11 @@ exports[`normalizeMdFile > compiles docs-basic fixture to markdown 1`] = `
 ## Mdx
 
 import { List, Table } from '../components/index';
+import { List as L } from '../components/index';
 
 <List items={['foo', 'bar']} />
+
+<L items={['L1', 'L2']} />
 
 <Table>
   <tr>
@@ -30,5 +33,30 @@ import { List, Table } from '../components/index';
     <td>bar</td>
   </tr>
 </Table>
+"
+`;
+
+exports[`normalizeMdFile > compiles mdx-to-md 1`] = `
+"# Index
+
+## Link
+
+[Link](/foo.md)
+[](/llms.txt)
+
+## FileCodeBlock
+
+\`\`\`tsx file="./foo.mdx"
+# Foo
+
+\`\`\`
+
+## Mdx
+
+<!--List ->
+
+<!--L ->
+
+<!--Table ->
 "
 `;
