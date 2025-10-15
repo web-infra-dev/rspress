@@ -5,17 +5,18 @@ export { Banner, type BannerProps } from './components/Banner/index';
 export { Button } from './components/Button/index';
 export { Callout, type CalloutProps } from './components/Callout/index';
 export {
+  CodeBlock,
+  type CodeBlockProps,
+} from './components/CodeBlock/index';
+export {
   CodeBlockRuntime,
   type CodeBlockRuntimeProps,
 } from './components/CodeBlockRuntime/index';
 export {
   CodeButtonGroup,
   type CodeButtonGroupProps,
-} from './components/Codeblock/CodeButtonGroup';
-export {
-  CodeBlock,
-  type CodeBlockProps,
-} from './components/Codeblock/index';
+  useCodeButtonGroup,
+} from './components/CodeButtonGroup';
 export { getCustomMDXComponent } from './components/DocContent/docComponents/index';
 // layout
 export type { ShikiPreProps } from './components/DocContent/docComponents/pre';
