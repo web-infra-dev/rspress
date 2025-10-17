@@ -69,7 +69,7 @@ export async function createMDXOptions(options: {
       remarkGFM,
       remarkToc,
       !isSsgMd && remarkContainerSyntax,
-      [remarkFileCodeBlock, { filepath, addDependency }],
+      [remarkFileCodeBlock, { filepath, docDirectory, addDependency }],
       [
         remarkLink,
         isSsgMd
