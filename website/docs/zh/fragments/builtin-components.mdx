@@ -276,7 +276,8 @@ function App() {
 
 :::tip
 
-在 install 命令中，对 yarn、pnpm、bun 和 deno 做了特殊处理，如果你的命令是`install some-packages`，在 yarn、pnpm、bun 和 deno 的 tab 中会自动将 install 替换为 add，并且在 deno 的 tab 中会为包加上 `npm:` 前缀。
+- 在 install 命令中，对 yarn、pnpm、bun 和 deno 做了特殊处理，如果你的命令是`install some-packages`，在 yarn、pnpm、bun 和 deno 的 tab 中会自动将 install 替换为 add。
+- 在 deno 的 tab 中会默认为没有指定来源的包加上 `npm:` 前缀。
 
 :::
 

@@ -225,7 +225,7 @@ The effect is as follows:
 
 import { PackageManagerTabs } from '@theme';
 
-<PackageManagerTabs command="install -D @rspress/core @rr" />
+<PackageManagerTabs command="install -D @rspress/core" />
 
 The types of props included are as follows:
 
@@ -287,7 +287,8 @@ function App() {
 
 :::tip
 
-In the install command, special processing has been done for yarn, pnpm, bun and deno. If your command is `install some-packages`, the install will be automatically replaced with add in the yarn/pnpm/bun/deno tab, and the `npm:` prefix will be added to the package in the deno tab.
+- In the install command, special processing has been done for yarn, pnpm, bun and deno. If your command is `install some-packages`, the install will be automatically replaced with add in the yarn/pnpm/bun/deno tab.
+- In the deno tab, the `npm:` prefix will be added to the package by default if no source is specified.
 
 :::
 
