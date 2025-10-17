@@ -7,6 +7,7 @@ import rehypeExternalLinks from 'rehype-external-links';
 import rehypeRaw from 'rehype-raw';
 import remarkGFM from 'remark-gfm';
 import type { PluggableList } from 'unified';
+import { remarkWrapMarkdown } from '../mdSsg/remarkWrapMarkdown';
 import type { PluginDriver } from '../PluginDriver';
 import type { RouteService } from '../route/RouteService';
 import { rehypeCodeMeta } from './rehypePlugins/codeMeta';
@@ -88,6 +89,7 @@ export async function createMDXOptions(options: {
               remarkLinkOptions,
             },
       ],
+      isMdSSG && [remarkWrapMarkdown],
       remarkImage,
       globalComponents.length && [
         remarkBuiltin,
