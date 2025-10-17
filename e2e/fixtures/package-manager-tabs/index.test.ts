@@ -60,7 +60,7 @@ test.describe('tabs-component test', async () => {
 
     await clickTabs.nth(0).click();
     expect(await getCommands()).toEqual([
-      'npm create @rspress/core@latest',
+      'npm create rspress@latest',
       'npm install -D @rspress/core',
       'npx example-cli-tool --yes',
       'npx example-cli-tool --yes',
@@ -69,7 +69,7 @@ test.describe('tabs-component test', async () => {
 
     await clickTabs.nth(1).click();
     expect(await getCommands()).toEqual([
-      'yarn create @rspress/core',
+      'yarn create rspress',
       'yarn add -D @rspress/core',
       'yarn dlx example-cli-tool --yes',
       'yarn example-cli-tool --yes',
@@ -78,7 +78,7 @@ test.describe('tabs-component test', async () => {
 
     await clickTabs.nth(2).click();
     expect(await getCommands()).toEqual([
-      'pnpm create @rspress/core@latest',
+      'pnpm create rspress@latest',
       'pnpm add -D @rspress/core',
       'pnpm dlx example-cli-tool --yes',
       'pnpm example-cli-tool --yes',
@@ -87,7 +87,7 @@ test.describe('tabs-component test', async () => {
 
     await clickTabs.nth(3).click();
     expect(await getCommands()).toEqual([
-      'bun create @rspress/core@latest',
+      'bun create rspress@latest',
       'bun add -D @rspress/core',
       'bunx example-cli-tool --yes',
       'bun example-cli-tool --yes',
@@ -96,7 +96,7 @@ test.describe('tabs-component test', async () => {
 
     await clickTabs.nth(4).click();
     expect(await getCommands()).toEqual([
-      'deno init --npm @rspress/core@latest',
+      'deno init --npm rspress@latest',
       'deno add -D npm:@rspress/core',
       'deno run npm:example-cli-tool --yes',
       'deno run npm:example-cli-tool --yes',
