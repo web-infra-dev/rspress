@@ -246,6 +246,7 @@ type PackageManagerTabProps = (
         yarn?: string;
         pnpm?: string;
         bun?: string;
+        deno?: string;
       };
       exec?: never;
     }
@@ -261,12 +262,32 @@ type PackageManagerTabProps = (
   };
 ```
 
-When `command` is set to a string, it will default to displaying three tabs: npm, yarn, pnpm and bun, and the component will automatically add the corresponding package manager command before the command. If you need to display additional tabs, you can achieve this through `additionalTabs`.
+When `command` is set to a string, it will default to displaying five tabs: npm, yarn, pnpm, bun and deno, and the component will automatically add the corresponding package manager command before the command. If you need to display additional tabs, you can achieve this through `additionalTabs`.
 For the `string` variant of the `command` prop, an optional `exec` prop can be used for presenting binary execution usage (by changing the NPM tab's command prefix to `npx`).
+
+You can also set different commands for each package manager by using the object form:
+
+```tsx title="index.mdx"
+import { PackageManagerTabs } from '@theme';
+
+function App() {
+  return (
+    <PackageManagerTabs
+      command={{
+        npm: 'npm create rsbuild@latest',
+        yarn: 'yarn create rsbuild',
+        pnpm: 'pnpm create rsbuild@latest',
+        bun: 'bun create rsbuild@latest',
+        deno: 'deno init --npm rsbuild@latest',
+      }}
+    />
+  );
+}
+```
 
 :::tip
 
-In the install command, special processing has been done for yarn, pnpm and bun. If your command is `install some-packages`, the install will be automatically replaced with add in the yarn/pnpm/bun tab.
+In the install command, special processing has been done for yarn, pnpm, bun and deno. If your command is `install some-packages`, the install will be automatically replaced with add in the yarn/pnpm/bun/deno tab.
 
 :::
 

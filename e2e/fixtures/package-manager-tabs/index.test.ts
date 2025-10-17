@@ -29,14 +29,22 @@ test.describe('tabs-component test', async () => {
       'yarn',
       'pnpm',
       'bun',
+      'deno',
       'npm',
       'yarn',
       'pnpm',
       'bun',
+      'deno',
       'npm',
       'yarn',
       'pnpm',
       'bun',
+      'deno',
+      'npm',
+      'yarn',
+      'pnpm',
+      'bun',
+      'deno',
     ]);
 
     const clickTabs = tabs;
@@ -50,6 +58,7 @@ test.describe('tabs-component test', async () => {
       'npm create rspress@latest',
       'npm install rspress -D',
       'npx example-cli-tool --yes',
+      'npm create rsbuild@latest',
     ]);
 
     await clickTabs.nth(1).click();
@@ -57,6 +66,7 @@ test.describe('tabs-component test', async () => {
       'yarn create rspress',
       'yarn add rspress -D',
       'yarn example-cli-tool --yes',
+      'yarn create rsbuild',
     ]);
 
     await clickTabs.nth(2).click();
@@ -64,6 +74,7 @@ test.describe('tabs-component test', async () => {
       'pnpm create rspress@latest',
       'pnpm add rspress -D',
       'pnpm example-cli-tool --yes',
+      'pnpm create rsbuild@latest',
     ]);
 
     await clickTabs.nth(3).click();
@@ -71,6 +82,15 @@ test.describe('tabs-component test', async () => {
       'bun create rspress@latest',
       'bun add rspress -D',
       'bun example-cli-tool --yes',
+      'bun create rsbuild@latest',
+    ]);
+
+    await clickTabs.nth(4).click();
+    expect(await getCommands()).toEqual([
+      'deno create rspress@latest',
+      'deno add rspress -D',
+      'deno example-cli-tool --yes',
+      'deno init --npm rsbuild@latest',
     ]);
   });
 });

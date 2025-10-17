@@ -13,3 +13,15 @@ import { PackageManagerTabs } from '@theme';
 ## PackageManagerTabs exec
 
 <PackageManagerTabs exec command="example-cli-tool --yes" />
+
+## PackageManagerTabs with custom deno command
+
+<PackageManagerTabs
+  command={{
+    npm: 'npm create rsbuild@latest',
+    yarn: 'yarn create rsbuild',
+    pnpm: 'pnpm create rsbuild@latest',
+    bun: 'bun create rsbuild@latest',
+    deno: 'deno init --npm rsbuild@latest',
+  }}
+/>
