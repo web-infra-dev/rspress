@@ -26,6 +26,7 @@ export async function createMDXOptions(options: {
   routeService: RouteService | null;
   pluginDriver: PluginDriver | null;
   addDependency?: Rspack.LoaderContext['addDependency'];
+  isMdSSG?: boolean;
 }): Promise<ProcessorOptions> {
   const {
     docDirectory,
@@ -34,6 +35,7 @@ export async function createMDXOptions(options: {
     filepath,
     pluginDriver,
     addDependency,
+    isMdSSG = false,
   } = options;
   const remarkLinkOptions = config?.markdown?.link;
   const format = path.extname(filepath).slice(1) as 'mdx' | 'md';
@@ -68,13 +70,23 @@ export async function createMDXOptions(options: {
       [remarkFileCodeBlock, { filepath, addDependency }],
       [
         remarkLink,
-        {
-          // we do cleanUrls in runtime side
-          cleanUrls: false,
-          root: docDirectory,
-          routeService,
-          remarkLinkOptions,
-        },
+        isMdSSG
+          ? {
+              cleanUrls: '.md',
+              root: docDirectory,
+              routeService,
+              remarkLinkOptions: {
+                checkDeadLinks: false,
+                autoPrefix: true,
+              },
+            }
+          : {
+              // we do cleanUrls in runtime side
+              cleanUrls: false,
+              root: docDirectory,
+              routeService,
+              remarkLinkOptions,
+            },
       ],
       remarkImage,
       globalComponents.length && [
