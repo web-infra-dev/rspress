@@ -218,7 +218,7 @@ PackageManagerTabs 组件用于在文档中展示不同包管理器的命令。�
 import { PackageManagerTabs } from '@theme';
 
 function App() {
-  return <PackageManagerTabs command="install rspress -D" />;
+  return <PackageManagerTabs command="install -D @rspress/core" />;
 }
 ```
 
@@ -226,36 +226,76 @@ function App() {
 
 import { PackageManagerTabs } from '@theme';
 
-<PackageManagerTabs command="install rspress -D" />
+<PackageManagerTabs command="install -D @rspress/core" />
 
 其中包含的 props 类型如下：
 
 ```ts
-interface PackageManagerTabsProps {
-  command:
-    | string
-    | {
-        // 用于设置不同包管理器的命令
+type PackageManagerTabProps = (
+  | {
+      command: string;
+      /**
+       * 如果为 true，使用本地包执行（npx、yarn、pnpm、bun、deno run）。
+       * 用于 node_modules 中安装的本地包。
+       */
+      exec?: boolean;
+      /**
+       * 如果为 true，使用远程包执行（npx、yarn dlx、pnpm dlx、bunx、deno run）。
+       * 用于直接从源下载并执行包而无需本地安装。
+       * 优先于 exec 属性。
+       */
+      dlx?: boolean;
+    }
+  | {
+      command: {
+        // 用于为不同的包管理器设置命令
         npm?: string;
         yarn?: string;
         pnpm?: string;
         bun?: string;
+        deno?: string;
       };
-  // 用于设置额外的 tab
-  additionalTabs: {
-    // 用于设置额外的包管理器
-    tool: string;
-    // 用于设置包管理器的 icon
-    icon?: React.ReactNode;
-  }[];
+      exec?: never;
+      dlx?: never;
+    }
+) &
+  // 用于设置额外的 tabs
+  {
+    additionalTabs?: {
+      // 用于设置额外的包管理器
+      tool: string;
+      // 用于设置额外包管理器的图标
+      icon?: ReactNode;
+    }[];
+  };
+```
+
+当 `command` 设置为字符串时，会默认展示 npm、yarn、pnpm、bun、deno 五个 tab，并且组件内部为自动在 command 前面添加对应的包管理器命令。如果你需要展示额外的 tab，可以通过 `additionalTabs` 来实现。
+
+你也可以使用对象形式为每个包管理器设置不同的命令：
+
+```tsx title="index.mdx"
+import { PackageManagerTabs } from '@theme';
+
+function App() {
+  return (
+    <PackageManagerTabs
+      command={{
+        npm: 'npm create rspress@latest',
+        yarn: 'yarn create rspress',
+        pnpm: 'pnpm create rspress@latest',
+        bun: 'bun create rspress@latest',
+        deno: 'deno init --npm rspress@latest',
+      }}
+    />
+  );
 }
 ```
 
-当 `command` 设置为字符串时，会默认展示 npm、yarn、pnpm、bun 四个 tab，并且组件内部为自动在 command 前面添加对应的包管理器命令。如果你需要展示额外的 tab，可以通过 `additionalTabs` 来实现。
-
 :::tip
 
-在 install 命令中，对 yarn 和 bun 做了特殊处理，如果你的命令是`install some-packages`，在 yarn 和 bun 的 tab 中会自动将 install 替换为 add。
+- 在 install 命令中，对 yarn、pnpm、bun 和 deno 做了特殊处理，如果你的命令是`install some-packages`，在 yarn、pnpm、bun 和 deno 的 tab 中会自动将 install 替换为 add。
+- 在 deno 的 tab 中会默认为没有指定来源的包加上 `npm:` 前缀。
 
 :::
 

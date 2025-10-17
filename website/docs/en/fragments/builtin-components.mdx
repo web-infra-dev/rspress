@@ -217,7 +217,7 @@ The PackageManagerTabs component is used to display commands for different packa
 import { PackageManagerTabs } from '@theme';
 
 function App() {
-  return <PackageManagerTabs command="install rspress -D" />;
+  return <PackageManagerTabs command="install -D @rspress/core" />;
 }
 ```
 
@@ -225,7 +225,7 @@ The effect is as follows:
 
 import { PackageManagerTabs } from '@theme';
 
-<PackageManagerTabs command="install rspress -D" />
+<PackageManagerTabs command="install -D @rspress/core" />
 
 The types of props included are as follows:
 
@@ -234,10 +234,16 @@ type PackageManagerTabProps = (
   | {
       command: string;
       /**
-       * If true, the command will be interpreted as a shell command and prefixed with npx for npm,
-       * or the package manager binary for others.
+       * If true, uses local package execution (npx, yarn, pnpm, bun, deno run).
+       * For locally installed packages in node_modules.
        */
       exec?: boolean;
+      /**
+       * If true, uses remote package execution (npx, yarn dlx, pnpm dlx, bunx, deno run).
+       * For executing packages directly from registry without installing locally.
+       * Takes precedence over exec prop.
+       */
+      dlx?: boolean;
     }
   | {
       command: {
@@ -246,8 +252,10 @@ type PackageManagerTabProps = (
         yarn?: string;
         pnpm?: string;
         bun?: string;
+        deno?: string;
       };
       exec?: never;
+      dlx?: never;
     }
 ) &
   // Used to set additional tabs
@@ -261,12 +269,33 @@ type PackageManagerTabProps = (
   };
 ```
 
-When `command` is set to a string, it will default to displaying three tabs: npm, yarn, pnpm and bun, and the component will automatically add the corresponding package manager command before the command. If you need to display additional tabs, you can achieve this through `additionalTabs`.
+When `command` is set to a string, it will default to displaying five tabs: npm, yarn, pnpm, bun and deno, and the component will automatically add the corresponding package manager command before the command. If you need to display additional tabs, you can achieve this through `additionalTabs`.
 For the `string` variant of the `command` prop, an optional `exec` prop can be used for presenting binary execution usage (by changing the NPM tab's command prefix to `npx`).
+
+You can also set different commands for each package manager by using the object form:
+
+```tsx title="index.mdx"
+import { PackageManagerTabs } from '@theme';
+
+function App() {
+  return (
+    <PackageManagerTabs
+      command={{
+        npm: 'npm create rspress@latest',
+        yarn: 'yarn create rspress',
+        pnpm: 'pnpm create rspress@latest',
+        bun: 'bun create rspress@latest',
+        deno: 'deno init --npm rspress@latest',
+      }}
+    />
+  );
+}
+```
 
 :::tip
 
-In the install command, special processing has been done for yarn, pnpm and bun. If your command is `install some-packages`, the install will be automatically replaced with add in the yarn/pnpm/bun tab.
+- In the install command, special processing has been done for yarn, pnpm, bun and deno. If your command is `install some-packages`, the install will be automatically replaced with add in the yarn/pnpm/bun/deno tab.
+- In the deno tab, the `npm:` prefix will be added to the package by default if no source is specified.
 
 :::
 

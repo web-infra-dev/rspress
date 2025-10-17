@@ -1,6 +1,7 @@
 import { getCustomMDXComponent, Tab, Tabs } from '@theme';
 import { type ReactNode, useMemo } from 'react';
 import { Bun } from './icons/Bun';
+import { Deno } from './icons/Deno';
 import { Npm } from './icons/Npm';
 import { Pnpm } from './icons/Pnpm';
 import { Yarn } from './icons/Yarn';
@@ -9,12 +10,12 @@ export type PackageManagerTabProps = (
   | {
       command: string;
       /**
-       * If true, uses local package execution (pnpm, bun, yarn, npm).
+       * If true, uses local package execution (npx, yarn, pnpm, bun, deno run).
        * For locally installed packages in node_modules.
        */
       exec?: boolean;
       /**
-       * If true, uses remote package execution (pnpm dlx, bunx, npx, yarn dlx).
+       * If true, uses remote package execution (npx, yarn dlx, pnpm dlx, bunx, deno run).
        * For executing packages directly from registry without installing locally.
        * Takes precedence over exec prop.
        */
@@ -26,6 +27,7 @@ export type PackageManagerTabProps = (
         yarn?: string;
         pnpm?: string;
         bun?: string;
+        deno?: string;
       };
       exec?: never;
       dlx?: never;
@@ -37,10 +39,50 @@ export type PackageManagerTabProps = (
   }[];
 };
 
+// Unified Deno transformation: for deno commands (run / add / install / init) we
+// prefix positional package args with `npm:` unless the command already
+// contains `--npm` or `--jsr` (in which case explicit npm behavior is desired).
+const transformDenoPositional = (cmd: string) => {
+  const parts = cmd.split(' ');
+  const transformed = parts.map((tok, idx) => {
+    // only transform positional args (after "deno" and the subcommand)
+    if (
+      idx >= 2 &&
+      !tok.startsWith('-') &&
+      !tok.includes(':') &&
+      !/^https?:/.test(tok)
+    ) {
+      return `npm:${tok}`;
+    }
+    return tok;
+  });
+  return transformed.join(' ');
+};
+
 function normalizeCommand(command: string): string {
-  // If command is yarn create foo@latest, remove `@latest`
+  // If command is `yarn create foo@latest`, remove `@latest`
   if (command.startsWith('yarn create')) {
     return command.replace(/(yarn create [^\s]+)@latest/, '$1');
+  }
+
+  if (command.startsWith('deno ')) {
+    // convert `deno create X` -> `deno init --npm X`
+    const transformedCmd = command.replace(
+      /deno create\s+([^\s]+)/,
+      'deno init --npm $1',
+    );
+
+    if (!transformedCmd.includes('install')) {
+      // If the command explicitly requests --npm or --jsr, don't add npm: prefixes.
+      if (
+        transformedCmd.includes('--npm') ||
+        transformedCmd.includes('--jsr')
+      ) {
+        return transformedCmd;
+      }
+
+      return transformDenoPositional(transformedCmd);
+    }
   }
 
   if (!command?.includes('install')) {
@@ -55,12 +97,23 @@ function normalizeCommand(command: string): string {
   if (
     pureCommand === 'yarn install' ||
     pureCommand === 'pnpm install' ||
-    pureCommand === 'bun install'
+    pureCommand === 'bun install' ||
+    pureCommand === 'deno install'
   ) {
     return command;
   }
 
-  return command.replace('install', 'add');
+  const replaced = command.replace(/\binstall\b/, 'add');
+
+  // For deno after install->add replacement, apply the same unified deno logic
+  if (replaced.startsWith('deno ')) {
+    if (replaced.includes('--npm') || replaced.includes('--jsr')) {
+      return replaced;
+    }
+    return transformDenoPositional(replaced);
+  }
+
+  return replaced;
 }
 
 /**
@@ -86,6 +139,7 @@ export function PackageManagerTabs({
     yarn: <Yarn />,
     pnpm: <Pnpm />,
     bun: <Bun />,
+    deno: <Deno />,
   };
   additionalTabs.forEach(tab => {
     packageMangerToIcon[tab.tool] = tab.icon;
@@ -109,6 +163,8 @@ export function PackageManagerTabs({
             return 'pnpm dlx';
           case 'bun':
             return 'bunx';
+          case 'deno':
+            return 'deno run';
           default:
             return packageManager;
         }
@@ -123,6 +179,8 @@ export function PackageManagerTabs({
             return 'pnpm';
           case 'bun':
             return 'bun';
+          case 'deno':
+            return 'deno run';
           default:
             return packageManager;
         }
@@ -137,16 +195,18 @@ export function PackageManagerTabs({
       yarn: `${getPrefix('yarn')} ${command}`,
       pnpm: `${getPrefix('pnpm')} ${command}`,
       bun: `${getPrefix('bun')} ${command}`,
+      deno: `${getPrefix('deno')} ${command}`,
     };
     additionalTabs.forEach(tab => {
       commandInfo[tab.tool] = `${tab.tool} ${command}`;
     });
-    // Normalize yarn/pnpm/bun command
+    // Normalize yarn/pnpm/bun/deno command
     commandInfo.yarn = normalizeCommand(commandInfo.yarn);
     commandInfo.pnpm = normalizeCommand(commandInfo.pnpm);
     commandInfo.bun = normalizeCommand(commandInfo.bun);
+    commandInfo.deno = normalizeCommand(commandInfo.deno);
   } else {
-    // When using { "yarn": "", "pnpm": "", "bun": "" } as command we don't normalize anything
+    // When using { "yarn": "", "pnpm": "", "bun": "", "deno": "" } as command we don't normalize anything
     commandInfo = command;
   }
 
