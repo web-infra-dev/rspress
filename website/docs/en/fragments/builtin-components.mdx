@@ -234,10 +234,16 @@ type PackageManagerTabProps = (
   | {
       command: string;
       /**
-       * If true, the command will be interpreted as a shell command and prefixed with npx for npm,
-       * or the package manager binary for others.
+       * If true, uses local package execution (npx, yarn, pnpm, bun, deno run).
+       * For locally installed packages in node_modules.
        */
       exec?: boolean;
+      /**
+       * If true, uses remote package execution (npx, yarn dlx, pnpm dlx, bunx, deno run).
+       * For executing packages directly from registry without installing locally.
+       * Takes precedence over exec prop.
+       */
+      dlx?: boolean;
     }
   | {
       command: {
@@ -249,6 +255,7 @@ type PackageManagerTabProps = (
         deno?: string;
       };
       exec?: never;
+      dlx?: never;
     }
 ) &
   // Used to set additional tabs

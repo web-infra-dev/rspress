@@ -10,12 +10,12 @@ export type PackageManagerTabProps = (
   | {
       command: string;
       /**
-       * If true, uses local package execution (pnpm, bun, yarn, npm, deno).
+       * If true, uses local package execution (npx, yarn, pnpm, bun, deno run).
        * For locally installed packages in node_modules.
        */
       exec?: boolean;
       /**
-       * If true, uses remote package execution (pnpm dlx, bunx, npx, yarn dlx, deno run).
+       * If true, uses remote package execution (npx, yarn dlx, pnpm dlx, bunx, deno run).
        * For executing packages directly from registry without installing locally.
        * Takes precedence over exec prop.
        */
