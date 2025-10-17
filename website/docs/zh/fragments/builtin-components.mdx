@@ -218,7 +218,7 @@ PackageManagerTabs 组件用于在文档中展示不同包管理器的命令。�
 import { PackageManagerTabs } from '@theme';
 
 function App() {
-  return <PackageManagerTabs command="install rspress -D" />;
+  return <PackageManagerTabs command="install -D @rspress/core" />;
 }
 ```
 
@@ -226,7 +226,7 @@ function App() {
 
 import { PackageManagerTabs } from '@theme';
 
-<PackageManagerTabs command="install rspress -D" />
+<PackageManagerTabs command="install -D @rspress/core" />
 
 其中包含的 props 类型如下：
 
@@ -263,11 +263,11 @@ function App() {
   return (
     <PackageManagerTabs
       command={{
-        npm: 'npm create rsbuild@latest',
-        yarn: 'yarn create rsbuild',
-        pnpm: 'pnpm create rsbuild@latest',
-        bun: 'bun create rsbuild@latest',
-        deno: 'deno init --npm rsbuild@latest',
+        npm: 'npm create rspress@latest',
+        yarn: 'yarn create rspress',
+        pnpm: 'pnpm create rspress@latest',
+        bun: 'bun create rspress@latest',
+        deno: 'deno init --npm rspress@latest',
       }}
     />
   );
@@ -276,7 +276,7 @@ function App() {
 
 :::tip
 
-在 install 命令中，对 yarn、pnpm、bun 和 deno 做了特殊处理，如果你的命令是`install some-packages`，在 yarn、pnpm、bun 和 deno 的 tab 中会自动将 install 替换为 add。
+在 install 命令中，对 yarn、pnpm、bun 和 deno 做了特殊处理，如果你的命令是`install some-packages`，在 yarn、pnpm、bun 和 deno 的 tab 中会自动将 install 替换为 add，并且在 deno 的 tab 中会为包加上 `npm:` 前缀。
 
 :::
 

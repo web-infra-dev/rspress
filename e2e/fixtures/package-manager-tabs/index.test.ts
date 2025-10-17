@@ -45,6 +45,11 @@ test.describe('tabs-component test', async () => {
       'pnpm',
       'bun',
       'deno',
+      'npm',
+      'yarn',
+      'pnpm',
+      'bun',
+      'deno',
     ]);
 
     const clickTabs = tabs;
@@ -55,42 +60,47 @@ test.describe('tabs-component test', async () => {
 
     await clickTabs.nth(0).click();
     expect(await getCommands()).toEqual([
-      'npm create rspress@latest',
-      'npm install rspress -D',
+      'npm create @rspress/core@latest',
+      'npm install -D @rspress/core',
       'npx example-cli-tool --yes',
-      'npm create rsbuild@latest',
+      'npx example-cli-tool --yes',
+      'npm create rspress@latest',
     ]);
 
     await clickTabs.nth(1).click();
     expect(await getCommands()).toEqual([
-      'yarn create rspress',
-      'yarn add rspress -D',
+      'yarn create @rspress/core',
+      'yarn add -D @rspress/core',
+      'yarn dlx example-cli-tool --yes',
       'yarn example-cli-tool --yes',
-      'yarn create rsbuild',
+      'yarn create rspress',
     ]);
 
     await clickTabs.nth(2).click();
     expect(await getCommands()).toEqual([
-      'pnpm create rspress@latest',
-      'pnpm add rspress -D',
+      'pnpm create @rspress/core@latest',
+      'pnpm add -D @rspress/core',
+      'pnpm dlx example-cli-tool --yes',
       'pnpm example-cli-tool --yes',
-      'pnpm create rsbuild@latest',
+      'pnpm create rspress@latest',
     ]);
 
     await clickTabs.nth(3).click();
     expect(await getCommands()).toEqual([
-      'bun create rspress@latest',
-      'bun add rspress -D',
+      'bun create @rspress/core@latest',
+      'bun add -D @rspress/core',
+      'bunx example-cli-tool --yes',
       'bun example-cli-tool --yes',
-      'bun create rsbuild@latest',
+      'bun create rspress@latest',
     ]);
 
     await clickTabs.nth(4).click();
     expect(await getCommands()).toEqual([
-      'deno create rspress@latest',
-      'deno add rspress -D',
-      'deno example-cli-tool --yes',
-      'deno init --npm rsbuild@latest',
+      'deno init --npm @rspress/core@latest',
+      'deno add -D npm:@rspress/core',
+      'deno run npm:example-cli-tool --yes',
+      'deno run npm:example-cli-tool --yes',
+      'deno init --npm rspress@latest',
     ]);
   });
 });

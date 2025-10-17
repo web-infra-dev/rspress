@@ -39,10 +39,50 @@ export type PackageManagerTabProps = (
   }[];
 };
 
+// Unified Deno transformation: for deno commands (run / add / install / init) we
+// prefix positional package args with `npm:` unless the command already
+// contains `--npm` or `--jsr` (in which case explicit npm behavior is desired).
+const transformDenoPositional = (cmd: string) => {
+  const parts = cmd.split(' ');
+  const transformed = parts.map((tok, idx) => {
+    // only transform positional args (after "deno" and the subcommand)
+    if (
+      idx >= 2 &&
+      !tok.startsWith('-') &&
+      !tok.includes(':') &&
+      !/^https?:/.test(tok)
+    ) {
+      return `npm:${tok}`;
+    }
+    return tok;
+  });
+  return transformed.join(' ');
+};
+
 function normalizeCommand(command: string): string {
-  // If command is yarn create foo@latest, remove `@latest`
+  // If command is `yarn create foo@latest`, remove `@latest`
   if (command.startsWith('yarn create')) {
     return command.replace(/(yarn create [^\s]+)@latest/, '$1');
+  }
+
+  if (command.startsWith('deno ')) {
+    // convert `deno create X` -> `deno init --npm X`
+    const transformedCmd = command.replace(
+      /deno create\s+([^\s]+)/,
+      'deno init --npm $1',
+    );
+
+    if (!transformedCmd.includes('install')) {
+      // If the command explicitly requests --npm or --jsr, don't add npm: prefixes.
+      if (
+        transformedCmd.includes('--npm') ||
+        transformedCmd.includes('--jsr')
+      ) {
+        return transformedCmd;
+      }
+
+      return transformDenoPositional(transformedCmd);
+    }
   }
 
   if (!command?.includes('install')) {
@@ -63,7 +103,17 @@ function normalizeCommand(command: string): string {
     return command;
   }
 
-  return command.replace('install', 'add');
+  const replaced = command.replace(/\binstall\b/, 'add');
+
+  // For deno after install->add replacement, apply the same unified deno logic
+  if (replaced.startsWith('deno ')) {
+    if (replaced.includes('--npm') || replaced.includes('--jsr')) {
+      return replaced;
+    }
+    return transformDenoPositional(replaced);
+  }
+
+  return replaced;
 }
 
 /**
@@ -130,7 +180,7 @@ export function PackageManagerTabs({
           case 'bun':
             return 'bun';
           case 'deno':
-            return 'deno';
+            return 'deno run';
           default:
             return packageManager;
         }
@@ -156,7 +206,7 @@ export function PackageManagerTabs({
     commandInfo.bun = normalizeCommand(commandInfo.bun);
     commandInfo.deno = normalizeCommand(commandInfo.deno);
   } else {
-    // When using { "yarn": "", "pnpm": "", "bun": "" } as command we don't normalize anything
+    // When using { "yarn": "", "pnpm": "", "bun": "", "deno": "" } as command we don't normalize anything
     commandInfo = command;
   }
 

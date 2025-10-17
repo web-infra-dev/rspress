@@ -217,7 +217,7 @@ The PackageManagerTabs component is used to display commands for different packa
 import { PackageManagerTabs } from '@theme';
 
 function App() {
-  return <PackageManagerTabs command="install rspress -D" />;
+  return <PackageManagerTabs command="install -D @rspress/core" />;
 }
 ```
 
@@ -225,7 +225,7 @@ The effect is as follows:
 
 import { PackageManagerTabs } from '@theme';
 
-<PackageManagerTabs command="install rspress -D" />
+<PackageManagerTabs command="install -D @rspress/core @rr" />
 
 The types of props included are as follows:
 
@@ -274,11 +274,11 @@ function App() {
   return (
     <PackageManagerTabs
       command={{
-        npm: 'npm create rsbuild@latest',
-        yarn: 'yarn create rsbuild',
-        pnpm: 'pnpm create rsbuild@latest',
-        bun: 'bun create rsbuild@latest',
-        deno: 'deno init --npm rsbuild@latest',
+        npm: 'npm create rspress@latest',
+        yarn: 'yarn create rspress',
+        pnpm: 'pnpm create rspress@latest',
+        bun: 'bun create rspress@latest',
+        deno: 'deno init --npm rspress@latest',
       }}
     />
   );
@@ -287,7 +287,7 @@ function App() {
 
 :::tip
 
-In the install command, special processing has been done for yarn, pnpm, bun and deno. If your command is `install some-packages`, the install will be automatically replaced with add in the yarn/pnpm/bun/deno tab.
+In the install command, special processing has been done for yarn, pnpm, bun and deno. If your command is `install some-packages`, the install will be automatically replaced with add in the yarn/pnpm/bun/deno tab, and the `npm:` prefix will be added to the package in the deno tab.
 
 :::
 
