@@ -9,8 +9,8 @@ importers:
   .:
     devDependencies:
       '@biomejs/biome':
-        specifier: ^2.2.5
-        version: 2.2.5
+        specifier: ^2.2.6
+        version: 2.2.6
       '@changesets/cli':
         specifier: ^2.29.7
         version: 2.29.7(@types/node@22.10.2)
@@ -54,8 +54,8 @@ importers:
         specifier: ~15.5.2
         version: 15.5.2
       nx:
-        specifier: 21.6.4
-        version: 21.6.4
+        specifier: 21.6.5
+        version: 21.6.5
       path-serializer:
         specifier: 0.5.1
         version: 0.5.1
@@ -75,8 +75,8 @@ importers:
         specifier: 2.1.9
         version: 2.1.9(@types/node@22.10.2)(sass-embedded@1.90.0)(sass@1.90.0)(terser@5.31.6)
       zx:
-        specifier: ^8.8.4
-        version: 8.8.4
+        specifier: ^8.8.5
+        version: 8.8.5
 
   e2e/fixtures/auto-nav-sidebar:
     dependencies:
@@ -872,8 +872,8 @@ importers:
         specifier: ^7.53.1
         version: 7.53.1(@types/node@22.10.2)
       '@rslib/core':
-        specifier: 0.15.0
-        version: 0.15.0(@microsoft/api-extractor@7.53.1(@types/node@22.10.2))(typescript@5.8.2)
+        specifier: 0.15.1
+        version: 0.15.1(@microsoft/api-extractor@7.53.1(@types/node@22.10.2))(typescript@5.8.2)
       '@rspress/config':
         specifier: workspace:*
         version: link:../../scripts/config
@@ -966,8 +966,8 @@ importers:
         specifier: ^7.53.1
         version: 7.53.1(@types/node@22.10.2)
       '@rslib/core':
-        specifier: 0.15.0
-        version: 0.15.0(@microsoft/api-extractor@7.53.1(@types/node@22.10.2))(typescript@5.8.2)
+        specifier: 0.15.1
+        version: 0.15.1(@microsoft/api-extractor@7.53.1(@types/node@22.10.2))(typescript@5.8.2)
       '@types/node':
         specifier: ^22.8.1
         version: 22.10.2
@@ -997,8 +997,8 @@ importers:
         specifier: ~1.4.1
         version: 1.4.1(@rsbuild/core@1.5.17)
       '@rslib/core':
-        specifier: 0.15.0
-        version: 0.15.0(@microsoft/api-extractor@7.53.1(@types/node@22.10.2))(typescript@5.8.2)
+        specifier: 0.15.1
+        version: 0.15.1(@microsoft/api-extractor@7.53.1(@types/node@22.10.2))(typescript@5.8.2)
       '@rspress/config':
         specifier: workspace:*
         version: link:../../scripts/config
@@ -1055,8 +1055,8 @@ importers:
         specifier: ^7.53.1
         version: 7.53.1(@types/node@22.10.2)
       '@rslib/core':
-        specifier: 0.15.0
-        version: 0.15.0(@microsoft/api-extractor@7.53.1(@types/node@22.10.2))(typescript@5.8.2)
+        specifier: 0.15.1
+        version: 0.15.1(@microsoft/api-extractor@7.53.1(@types/node@22.10.2))(typescript@5.8.2)
       '@types/hast':
         specifier: ^3.0.4
         version: 3.0.4
@@ -1098,8 +1098,8 @@ importers:
         specifier: ^7.53.1
         version: 7.53.1(@types/node@22.10.2)
       '@rslib/core':
-        specifier: 0.15.0
-        version: 0.15.0(@microsoft/api-extractor@7.53.1(@types/node@22.10.2))(typescript@5.8.2)
+        specifier: 0.15.1
+        version: 0.15.1(@microsoft/api-extractor@7.53.1(@types/node@22.10.2))(typescript@5.8.2)
       '@rspress/config':
         specifier: workspace:*
         version: link:../../scripts/config
@@ -1156,8 +1156,8 @@ importers:
         specifier: ~1.4.0
         version: 1.4.0(@rsbuild/core@1.5.17)
       '@rslib/core':
-        specifier: 0.15.0
-        version: 0.15.0(@microsoft/api-extractor@7.53.1(@types/node@22.10.2))(typescript@5.8.2)
+        specifier: 0.15.1
+        version: 0.15.1(@microsoft/api-extractor@7.53.1(@types/node@22.10.2))(typescript@5.8.2)
       '@rspress/config':
         specifier: workspace:*
         version: link:../../scripts/config
@@ -1214,8 +1214,8 @@ importers:
         specifier: ~1.4.1
         version: 1.4.1(@rsbuild/core@1.5.17)
       '@rslib/core':
-        specifier: 0.15.0
-        version: 0.15.0(@microsoft/api-extractor@7.53.1(@types/node@22.10.2))(typescript@5.8.2)
+        specifier: 0.15.1
+        version: 0.15.1(@microsoft/api-extractor@7.53.1(@types/node@22.10.2))(typescript@5.8.2)
       '@rspress/plugin-playground':
         specifier: workspace:*
         version: 'link:'
@@ -1287,8 +1287,8 @@ importers:
         version: 4.2.0(react@19.1.1)
     devDependencies:
       '@rslib/core':
-        specifier: 0.15.0
-        version: 0.15.0(@microsoft/api-extractor@7.53.1(@types/node@22.10.2))(typescript@5.8.2)
+        specifier: 0.15.1
+        version: 0.15.1(@microsoft/api-extractor@7.53.1(@types/node@22.10.2))(typescript@5.8.2)
       '@types/lodash':
         specifier: ^4.17.20
         version: 4.17.20
@@ -1342,8 +1342,8 @@ importers:
         version: 4.2.2
     devDependencies:
       '@rslib/core':
-        specifier: 0.15.0
-        version: 0.15.0(@microsoft/api-extractor@7.53.1(@types/node@22.10.2))(typescript@5.8.2)
+        specifier: 0.15.1
+        version: 0.15.1(@microsoft/api-extractor@7.53.1(@types/node@22.10.2))(typescript@5.8.2)
       '@types/node':
         specifier: ^22.8.1
         version: 22.10.2
@@ -1370,8 +1370,8 @@ importers:
         specifier: ^7.53.1
         version: 7.53.1(@types/node@22.10.2)
       '@rslib/core':
-        specifier: 0.15.0
-        version: 0.15.0(@microsoft/api-extractor@7.53.1(@types/node@22.10.2))(typescript@5.8.2)
+        specifier: 0.15.1
+        version: 0.15.1(@microsoft/api-extractor@7.53.1(@types/node@22.10.2))(typescript@5.8.2)
       '@rspress/config':
         specifier: workspace:*
         version: link:../../scripts/config
@@ -1410,8 +1410,8 @@ importers:
         specifier: ^7.53.1
         version: 7.53.1(@types/node@22.10.2)
       '@rslib/core':
-        specifier: 0.15.0
-        version: 0.15.0(@microsoft/api-extractor@7.53.1(@types/node@22.10.2))(typescript@5.8.2)
+        specifier: 0.15.1
+        version: 0.15.1(@microsoft/api-extractor@7.53.1(@types/node@22.10.2))(typescript@5.8.2)
       '@rspress/config':
         specifier: workspace:*
         version: link:../../scripts/config
@@ -1453,8 +1453,8 @@ importers:
         specifier: ^7.53.1
         version: 7.53.1(@types/node@22.10.2)
       '@rslib/core':
-        specifier: 0.15.0
-        version: 0.15.0(@microsoft/api-extractor@7.53.1(@types/node@22.10.2))(typescript@5.8.2)
+        specifier: 0.15.1
+        version: 0.15.1(@microsoft/api-extractor@7.53.1(@types/node@22.10.2))(typescript@5.8.2)
       '@rspress/config':
         specifier: workspace:*
         version: link:../../scripts/config
@@ -1499,8 +1499,8 @@ importers:
         specifier: ~1.4.1
         version: 1.4.1(@rsbuild/core@1.5.17)
       '@rslib/core':
-        specifier: 0.15.0
-        version: 0.15.0(@microsoft/api-extractor@7.53.1(@types/node@22.10.2))(typescript@5.8.2)
+        specifier: 0.15.1
+        version: 0.15.1(@microsoft/api-extractor@7.53.1(@types/node@22.10.2))(typescript@5.8.2)
       '@rspress/config':
         specifier: workspace:*
         version: link:../../scripts/config
@@ -1536,8 +1536,8 @@ importers:
         version: 11.0.5
     devDependencies:
       '@rslib/core':
-        specifier: 0.15.0
-        version: 0.15.0(@microsoft/api-extractor@7.53.1(@types/node@22.10.2))(typescript@5.8.2)
+        specifier: 0.15.1
+        version: 0.15.1(@microsoft/api-extractor@7.53.1(@types/node@22.10.2))(typescript@5.8.2)
       '@types/lodash-es':
         specifier: ^4.17.12
         version: 4.17.12
@@ -1627,8 +1627,8 @@ importers:
         specifier: ^1.2.2
         version: 1.2.2(@rsbuild/core@1.5.17)(typescript@5.8.2)
       '@rslib/core':
-        specifier: 0.15.0
-        version: 0.15.0(@microsoft/api-extractor@7.53.1(@types/node@22.10.2))(typescript@5.8.2)
+        specifier: 0.15.1
+        version: 0.15.1(@microsoft/api-extractor@7.53.1(@types/node@22.10.2))(typescript@5.8.2)
       '@types/body-scroll-lock':
         specifier: ^3.1.2
         version: 3.1.2
@@ -1651,8 +1651,8 @@ importers:
         specifier: ^19.1.9
         version: 19.1.9(@types/react@19.1.15)
       '@types/web':
-        specifier: ^0.0.278
-        version: 0.0.278
+        specifier: ^0.0.281
+        version: 0.0.281
       rsbuild-plugin-publint:
         specifier: ^0.3.3
         version: 0.3.3(@rsbuild/core@1.5.17)
@@ -2045,55 +2045,55 @@ packages:
     resolution: {integrity: sha512-bkFqkLhh3pMBUQQkpVgWDWq/lqzc2678eUyDlTBhRqhCHFguYYGM0Efga7tYk4TogG/3x0EEl66/OQ+WGbWB/Q==}
     engines: {node: '>=6.9.0'}
 
-  '@biomejs/biome@2.2.5':
-    resolution: {integrity: sha512-zcIi+163Rc3HtyHbEO7CjeHq8DjQRs40HsGbW6vx2WI0tg8mYQOPouhvHSyEnCBAorfYNnKdR64/IxO7xQ5faw==}
+  '@biomejs/biome@2.2.6':
+    resolution: {integrity: sha512-yKTCNGhek0rL5OEW1jbLeZX8LHaM8yk7+3JRGv08my+gkpmtb5dDE+54r2ZjZx0ediFEn1pYBOJSmOdDP9xtFw==}
     engines: {node: '>=14.21.3'}
     hasBin: true
 
-  '@biomejs/cli-darwin-arm64@2.2.5':
-    resolution: {integrity: sha512-MYT+nZ38wEIWVcL5xLyOhYQQ7nlWD0b/4mgATW2c8dvq7R4OQjt/XGXFkXrmtWmQofaIM14L7V8qIz/M+bx5QQ==}
+  '@biomejs/cli-darwin-arm64@2.2.6':
+    resolution: {integrity: sha512-UZPmn3M45CjTYulgcrFJFZv7YmK3pTxTJDrFYlNElT2FNnkkX4fsxjExTSMeWKQYoZjvekpH5cvrYZZlWu3yfA==}
     engines: {node: '>=14.21.3'}
     cpu: [arm64]
     os: [darwin]
 
-  '@biomejs/cli-darwin-x64@2.2.5':
-    resolution: {integrity: sha512-FLIEl73fv0R7dI10EnEiZLw+IMz3mWLnF95ASDI0kbx6DDLJjWxE5JxxBfmG+udz1hIDd3fr5wsuP7nwuTRdAg==}
+  '@biomejs/cli-darwin-x64@2.2.6':
+    resolution: {integrity: sha512-HOUIquhHVgh/jvxyClpwlpl/oeMqntlteL89YqjuFDiZ091P0vhHccwz+8muu3nTyHWM5FQslt+4Jdcd67+xWQ==}
     engines: {node: '>=14.21.3'}
     cpu: [x64]
     os: [darwin]
 
-  '@biomejs/cli-linux-arm64-musl@2.2.5':
-    resolution: {integrity: sha512-5Ov2wgAFwqDvQiESnu7b9ufD1faRa+40uwrohgBopeY84El2TnBDoMNXx6iuQdreoFGjwW8vH6k68G21EpNERw==}
+  '@biomejs/cli-linux-arm64-musl@2.2.6':
+    resolution: {integrity: sha512-TjCenQq3N6g1C+5UT3jE1bIiJb5MWQvulpUngTIpFsL4StVAUXucWD0SL9MCW89Tm6awWfeXBbZBAhJwjyFbRQ==}
     engines: {node: '>=14.21.3'}
     cpu: [arm64]
     os: [linux]
 
-  '@biomejs/cli-linux-arm64@2.2.5':
-    resolution: {integrity: sha512-5DjiiDfHqGgR2MS9D+AZ8kOfrzTGqLKywn8hoXpXXlJXIECGQ32t+gt/uiS2XyGBM2XQhR6ztUvbjZWeccFMoQ==}
+  '@biomejs/cli-linux-arm64@2.2.6':
+    resolution: {integrity: sha512-BpGtuMJGN+o8pQjvYsUKZ+4JEErxdSmcRD/JG3mXoWc6zrcA7OkuyGFN1mDggO0Q1n7qXxo/PcupHk8gzijt5g==}
     engines: {node: '>=14.21.3'}
     cpu: [arm64]
     os: [linux]
 
-  '@biomejs/cli-linux-x64-musl@2.2.5':
-    resolution: {integrity: sha512-AVqLCDb/6K7aPNIcxHaTQj01sl1m989CJIQFQEaiQkGr2EQwyOpaATJ473h+nXDUuAcREhccfRpe/tu+0wu0eQ==}
+  '@biomejs/cli-linux-x64-musl@2.2.6':
+    resolution: {integrity: sha512-1ZcBux8zVM3JhWN2ZCPaYf0+ogxXG316uaoXJdgoPZcdK/rmRcRY7PqHdAos2ExzvjIdvhQp72UcveI98hgOog==}
     engines: {node: '>=14.21.3'}
     cpu: [x64]
     os: [linux]
 
-  '@biomejs/cli-linux-x64@2.2.5':
-    resolution: {integrity: sha512-fq9meKm1AEXeAWan3uCg6XSP5ObA6F/Ovm89TwaMiy1DNIwdgxPkNwxlXJX8iM6oRbFysYeGnT0OG8diCWb9ew==}
+  '@biomejs/cli-linux-x64@2.2.6':
+    resolution: {integrity: sha512-1HaM/dpI/1Z68zp8ZdT6EiBq+/O/z97a2AiHMl+VAdv5/ELckFt9EvRb8hDHpk8hUMoz03gXkC7VPXOVtU7faA==}
     engines: {node: '>=14.21.3'}
     cpu: [x64]
     os: [linux]
 
-  '@biomejs/cli-win32-arm64@2.2.5':
-    resolution: {integrity: sha512-xaOIad4wBambwJa6mdp1FigYSIF9i7PCqRbvBqtIi9y29QtPVQ13sDGtUnsRoe6SjL10auMzQ6YAe+B3RpZXVg==}
+  '@biomejs/cli-win32-arm64@2.2.6':
+    resolution: {integrity: sha512-h3A88G8PGM1ryTeZyLlSdfC/gz3e95EJw9BZmA6Po412DRqwqPBa2Y9U+4ZSGUAXCsnSQE00jLV8Pyrh0d+jQw==}
     engines: {node: '>=14.21.3'}
     cpu: [arm64]
     os: [win32]
 
-  '@biomejs/cli-win32-x64@2.2.5':
-    resolution: {integrity: sha512-F/jhuXCssPFAuciMhHKk00xnCAxJRS/pUzVfXYmOMUp//XW7mO6QeCjsjvnm8L4AO/dG2VOB0O+fJPiJ2uXtIw==}
+  '@biomejs/cli-win32-x64@2.2.6':
+    resolution: {integrity: sha512-yx0CqeOhPjYQ5ZXgPfu8QYkgBhVJyvWe36as7jRuPrKPO5ylVDfwVtPQ+K/mooNTADW0IhxOZm3aPu16dP8yNQ==}
     engines: {node: '>=14.21.3'}
     cpu: [x64]
     os: [win32]
@@ -2720,53 +2720,53 @@ packages:
     resolution: {integrity: sha512-oGB+UxlgWcgQkgwo8GcEGwemoTFt3FIO9ababBmaGwXIoBKZ+GTy0pP185beGg7Llih/NSHSV2XAs1lnznocSg==}
     engines: {node: '>= 8'}
 
-  '@nx/nx-darwin-arm64@21.6.4':
-    resolution: {integrity: sha512-Ra24qHf55i9ogJ8wDymRzQL0kLK8uEXjntwKHD0stZtyiYO1tCKLgvxn5oOhiyn1sAk7aKT238s2y9zJ5bYPnQ==}
+  '@nx/nx-darwin-arm64@21.6.5':
+    resolution: {integrity: sha512-TFIQPKsKZrLeWN8JMaTuwnLq+QE/vh7TjinlXUjdalH6uTczPKWC9ViNmdfNUBblZWQjOGxc4aQ5rVs8YvUIbw==}
     cpu: [arm64]
     os: [darwin]
 
-  '@nx/nx-darwin-x64@21.6.4':
-    resolution: {integrity: sha512-4tzVVu+2arCpu7RGqdb4JR3fvKyTrHUn0fX33kMtds2TGvzERbfgBPzEzrqbLiflpYdxqCZX8l0yPRsvjuCojA==}
+  '@nx/nx-darwin-x64@21.6.5':
+    resolution: {integrity: sha512-S/uW1tznZ5p93fOwcG+s+tuYI3aVIJKWTWI366XlusOj8yAHsDl1lI8dTp9ImN9kIdcgfF7/fr/zEMHpLLVvLg==}
     cpu: [x64]
     os: [darwin]
 
-  '@nx/nx-freebsd-x64@21.6.4':
-    resolution: {integrity: sha512-DqeQn//aHLdvqkd5uTpAm6/TGW54XBg3UEfvCD5LFLMXWVdToi6CbIFnRIhufdFLEboQH0Nm22fdJnGwAPV+Xw==}
+  '@nx/nx-freebsd-x64@21.6.5':
+    resolution: {integrity: sha512-DTSTXWiy381u6u4YEuJK8sFFnlRojuPqmWd8sxhVHzxE5gShm2lcZmuCmmPHm/p2cqW929a07rMpjJfgcJyjIA==}
     cpu: [x64]
     os: [freebsd]
 
-  '@nx/nx-linux-arm-gnueabihf@21.6.4':
-    resolution: {integrity: sha512-6m82VzjrVVvwZtS5rFj0j7CcDrYaSkZ4yk0lf1NIvRqWjgnTnfaG58XQQxLo8wxH8mKiPDQzlDuer9HNNIxKCw==}
+  '@nx/nx-linux-arm-gnueabihf@21.6.5':
+    resolution: {integrity: sha512-GEZXLowEaJb0ug4HgPSx6Cmc6EBP2WI7horw69aQ2bH7VeXEvxg758C5JDPSK33LQliJTGw4eaMzJqfEutvsuA==}
     cpu: [arm]
     os: [linux]
 
-  '@nx/nx-linux-arm64-gnu@21.6.4':
-    resolution: {integrity: sha512-Ohlh3YdzbmWnXjlDZd6yw20mNMWvZ1CGW/iQ5suerfyJZGjO+ToPjw3Mp8HgBoesHaWPGi81GhjAEyiZmEAHug==}
+  '@nx/nx-linux-arm64-gnu@21.6.5':
+    resolution: {integrity: sha512-iGIyx7jZvgOfs4e8jMZbEZ0b8jqsnVBwcU0s+5XltMxUuVNiDmnzRnj+lyYFxO5DuFEKyO5YGDtI9nLeBuzDkg==}
     cpu: [arm64]
     os: [linux]
 
-  '@nx/nx-linux-arm64-musl@21.6.4':
-    resolution: {integrity: sha512-OLvEpJYo7n8nHGaBSl7Fb+Oz68wmPfRP+i6voQbM8qV/g5No9vE/QtAdSTlyFXOCGwSekCGpc2Ef2KOvpmYUTg==}
+  '@nx/nx-linux-arm64-musl@21.6.5':
+    resolution: {integrity: sha512-miz+U1g9pRfKV3sofzXOb8MzX/wpc09NLJ0P/IH5vfxHe5URk9ipk3tKrnoWnd0GaZxJTfdQcoAAOzBSOOyP/A==}
     cpu: [arm64]
     os: [linux]
 
-  '@nx/nx-linux-x64-gnu@21.6.4':
-    resolution: {integrity: sha512-TYC5a5VnXhEGGVAtPVwdG5qLzf9p7SZyOrOdQMZlAZCchFpL37gmV1OMH1Eb5eM32o+mGF/DDIgbyNXAErTN5g==}
+  '@nx/nx-linux-x64-gnu@21.6.5':
+    resolution: {integrity: sha512-mn9INnIDPHxm2lN7dMPydoYR/Z0t7VmekIZIQx1TlkOvJJfC+B1UeQ/VDvOqs6bhNv+WCPw7b7Kq7gBC4hbgMw==}
     cpu: [x64]
     os: [linux]
 
-  '@nx/nx-linux-x64-musl@21.6.4':
-    resolution: {integrity: sha512-2ZG3DUadDpP79oW5DIYMZPKFMCGSRbqLKeHlW8miYORbPJ6VinUp6wTVDx6cAoL2IhP9biD6dItc9Dcfn5Hj2g==}
+  '@nx/nx-linux-x64-musl@21.6.5':
+    resolution: {integrity: sha512-1CudJ4QEvbrD5fj7udOLrApPWcx0BqZ7KIBdp3CqJ6De8oXUAmNgcf1NjD+DhJt0efVOGtaDPK60Sshkm9wjSA==}
     cpu: [x64]
     os: [linux]
 
-  '@nx/nx-win32-arm64-msvc@21.6.4':
-    resolution: {integrity: sha512-o64p5hVavJhD+ISxCfwCKhKccgXalEnvfXfqXBV6yZiud6kDnYphPp2SPzyf9NgZyuFJdeFRvJ1XtuEzW3VcXg==}
+  '@nx/nx-win32-arm64-msvc@21.6.5':
+    resolution: {integrity: sha512-dFNNfqNZUi4Hqox8NPlVjjQw5dqOlmBERZ4he1CRQ0OC4SAFV7uX8c+U9y8ndghU2R5AnCztu63aHfZOQiTfBw==}
     cpu: [arm64]
     os: [win32]
 
-  '@nx/nx-win32-x64-msvc@21.6.4':
-    resolution: {integrity: sha512-g+YwOFd9sjTjf6LCaN8hq6plvNo4BfwmTurnKBzJ/Q/hCbxffYpo1Vdos+OfHBuMsJN2yIMX97LwB0d9w2I8Ag==}
+  '@nx/nx-win32-x64-msvc@21.6.5':
+    resolution: {integrity: sha512-KC0nK82N2suok1Q2J4sNavtAvVnF9QVivGs/7Wj4Gx3L14lyt/mq6I9f8eOyI1JAeSCRf0a7RhQKfDv8Qac4mQ==}
     cpu: [x64]
     os: [win32]
 
@@ -3025,8 +3025,8 @@ packages:
     peerDependencies:
       '@rsbuild/core': 1.x
 
-  '@rslib/core@0.15.0':
-    resolution: {integrity: sha512-ZxDwEU38qsM32VpW4Dy7oNf6MxgrRAgYxVsuv8v+aKm4pIOSs0nzDTJHsa2vhKjFdyRtgnHObZ6pjoJ0cmcU3A==}
+  '@rslib/core@0.15.1':
+    resolution: {integrity: sha512-rNGGHJwxU1g6u2op5Jf2JMgbRCRmMZGCNPU099Ebp5ZgjmknyaU88YMJc8L6trfBU7M6yIYlqgepqg/0L8evew==}
     engines: {node: '>=18.12.0'}
     hasBin: true
     peerDependencies:
@@ -3451,8 +3451,8 @@ packages:
   '@types/unist@3.0.3':
     resolution: {integrity: sha512-ko/gIFJRv177XgZsZcBwnqJN5x/Gien8qNOn0D5bQU/zAzVf9Zt3BlcUiLqhV9y4ARk0GbT3tnUiPNgnTXzc/Q==}
 
-  '@types/web@0.0.278':
-    resolution: {integrity: sha512-eOLk3D5f6ILvnaMDs9SwZSoYwKg6YjAjXY/bws96SLyliwqv2B7LlVPERotwk0bCjqL4mM+q7nzmR4JipbgP+w==}
+  '@types/web@0.0.281':
+    resolution: {integrity: sha512-Lw3pSZoAOqVcWTEEZpbL0LIzKqfBxBABeqpokTW5BjQibzBJxYTXvQEO4Mo7Ox1jBG8E0/yYc1vLAG28YRDdRw==}
 
   '@typescript/vfs@1.6.1':
     resolution: {integrity: sha512-JwoxboBh7Oz1v38tPbkrZ62ZXNHAk9bJ7c9x0eI5zBfBnBYGhURdbnh7Z4smN/MV48Y5OCcZb58n972UtbazsA==}
@@ -5540,8 +5540,8 @@ packages:
   nth-check@2.1.1:
     resolution: {integrity: sha512-lqjrjmaOoAnWfMmBPL+XNnynZh2+swxiX3WUE0s4yEHI6m+AwrK2UZOimIRl3X/4QctVqS8AiZjFqyOGrMXb/w==}
 
-  nx@21.6.4:
-    resolution: {integrity: sha512-RVQ7x/bTfJmGWS1rnGMpLDeaW7MnM8eja0qfSbZooP55GWPE6g4uwMKqfX+uqU/dV9GBNOBn77y8h0dEIZtMhg==}
+  nx@21.6.5:
+    resolution: {integrity: sha512-PqvLf24A+x10b4oXX19hd8FqWK/EiMkcmehOP+JLN64R0qYrCxiJcE/s9Zp9YXJS5S0jkeikSz0ZDq1OG21NcQ==}
     hasBin: true
     peerDependencies:
       '@swc-node/register': ^1.8.0
@@ -6076,8 +6076,8 @@ packages:
     engines: {node: '>=18.0.0', npm: '>=8.0.0'}
     hasBin: true
 
-  rsbuild-plugin-dts@0.15.0:
-    resolution: {integrity: sha512-qKGCtv4fxKxWZb3DxHpgmP6uY+JAckovBE/92APerORvrtEtqwY6sAEY2UOaRo2ErENOiWhf5yFLE5EhdUsj9A==}
+  rsbuild-plugin-dts@0.15.1:
+    resolution: {integrity: sha512-RPJK/ycEYECstXYmg1vfboB4oa/yC23J4HzLkhhF8iyNYwHNxC/fSPuHkfikhGbvYyxw4pq52xHO/Y4FqcW+yA==}
     engines: {node: '>=18.12.0'}
     peerDependencies:
       '@microsoft/api-extractor': ^7
@@ -7059,8 +7059,8 @@ packages:
   zwitch@2.0.4:
     resolution: {integrity: sha512-bXE4cR/kVZhKZX/RjPEflHaKVhUVl85noU3v6b8apfQEc1x4A+zBxjZ4lN8LqGd6WZ3dl98pY4o717VFmoPp+A==}
 
-  zx@8.8.4:
-    resolution: {integrity: sha512-44GcD+ZlM/v1OQtbwnSxLPcoE1ZEUICmR+RSbJZLAqfIixNLuMjLyh0DcS75OyfJ/sWYAwCWDmDvJ4hdnANAPQ==}
+  zx@8.8.5:
+    resolution: {integrity: sha512-SNgDF5L0gfN7FwVOdEFguY3orU5AkfFZm9B5YSHog/UDHv+lvmd82ZAsOenOkQixigwH2+yyH198AwNdKhj+RA==}
     engines: {node: '>= 12.17.0'}
     hasBin: true
 
@@ -7470,39 +7470,39 @@ snapshots:
       '@babel/helper-string-parser': 7.27.1
       '@babel/helper-validator-identifier': 7.27.1
 
-  '@biomejs/biome@2.2.5':
+  '@biomejs/biome@2.2.6':
     optionalDependencies:
-      '@biomejs/cli-darwin-arm64': 2.2.5
-      '@biomejs/cli-darwin-x64': 2.2.5
-      '@biomejs/cli-linux-arm64': 2.2.5
-      '@biomejs/cli-linux-arm64-musl': 2.2.5
-      '@biomejs/cli-linux-x64': 2.2.5
-      '@biomejs/cli-linux-x64-musl': 2.2.5
-      '@biomejs/cli-win32-arm64': 2.2.5
-      '@biomejs/cli-win32-x64': 2.2.5
+      '@biomejs/cli-darwin-arm64': 2.2.6
+      '@biomejs/cli-darwin-x64': 2.2.6
+      '@biomejs/cli-linux-arm64': 2.2.6
+      '@biomejs/cli-linux-arm64-musl': 2.2.6
+      '@biomejs/cli-linux-x64': 2.2.6
+      '@biomejs/cli-linux-x64-musl': 2.2.6
+      '@biomejs/cli-win32-arm64': 2.2.6
+      '@biomejs/cli-win32-x64': 2.2.6
 
-  '@biomejs/cli-darwin-arm64@2.2.5':
+  '@biomejs/cli-darwin-arm64@2.2.6':
     optional: true
 
-  '@biomejs/cli-darwin-x64@2.2.5':
+  '@biomejs/cli-darwin-x64@2.2.6':
     optional: true
 
-  '@biomejs/cli-linux-arm64-musl@2.2.5':
+  '@biomejs/cli-linux-arm64-musl@2.2.6':
     optional: true
 
-  '@biomejs/cli-linux-arm64@2.2.5':
+  '@biomejs/cli-linux-arm64@2.2.6':
     optional: true
 
-  '@biomejs/cli-linux-x64-musl@2.2.5':
+  '@biomejs/cli-linux-x64-musl@2.2.6':
     optional: true
 
-  '@biomejs/cli-linux-x64@2.2.5':
+  '@biomejs/cli-linux-x64@2.2.6':
     optional: true
 
-  '@biomejs/cli-win32-arm64@2.2.5':
+  '@biomejs/cli-win32-arm64@2.2.6':
     optional: true
 
-  '@biomejs/cli-win32-x64@2.2.5':
+  '@biomejs/cli-win32-x64@2.2.6':
     optional: true
 
   '@bufbuild/protobuf@2.6.0': {}
@@ -8219,34 +8219,34 @@ snapshots:
       '@nodelib/fs.scandir': 2.1.5
       fastq: 1.15.0
 
-  '@nx/nx-darwin-arm64@21.6.4':
+  '@nx/nx-darwin-arm64@21.6.5':
     optional: true
 
-  '@nx/nx-darwin-x64@21.6.4':
+  '@nx/nx-darwin-x64@21.6.5':
     optional: true
 
-  '@nx/nx-freebsd-x64@21.6.4':
+  '@nx/nx-freebsd-x64@21.6.5':
     optional: true
 
-  '@nx/nx-linux-arm-gnueabihf@21.6.4':
+  '@nx/nx-linux-arm-gnueabihf@21.6.5':
     optional: true
 
-  '@nx/nx-linux-arm64-gnu@21.6.4':
+  '@nx/nx-linux-arm64-gnu@21.6.5':
     optional: true
 
-  '@nx/nx-linux-arm64-musl@21.6.4':
+  '@nx/nx-linux-arm64-musl@21.6.5':
     optional: true
 
-  '@nx/nx-linux-x64-gnu@21.6.4':
+  '@nx/nx-linux-x64-gnu@21.6.5':
     optional: true
 
-  '@nx/nx-linux-x64-musl@21.6.4':
+  '@nx/nx-linux-x64-musl@21.6.5':
     optional: true
 
-  '@nx/nx-win32-arm64-msvc@21.6.4':
+  '@nx/nx-win32-arm64-msvc@21.6.5':
     optional: true
 
-  '@nx/nx-win32-x64-msvc@21.6.4':
+  '@nx/nx-win32-x64-msvc@21.6.5':
     optional: true
 
   '@opentelemetry/api@1.9.0': {}
@@ -8477,10 +8477,10 @@ snapshots:
       - vue
       - webpack-cli
 
-  '@rslib/core@0.15.0(@microsoft/api-extractor@7.53.1(@types/node@22.10.2))(typescript@5.8.2)':
+  '@rslib/core@0.15.1(@microsoft/api-extractor@7.53.1(@types/node@22.10.2))(typescript@5.8.2)':
     dependencies:
       '@rsbuild/core': 1.5.17
-      rsbuild-plugin-dts: 0.15.0(@microsoft/api-extractor@7.53.1(@types/node@22.10.2))(@rsbuild/core@1.5.17)(typescript@5.8.2)
+      rsbuild-plugin-dts: 0.15.1(@microsoft/api-extractor@7.53.1(@types/node@22.10.2))(@rsbuild/core@1.5.17)(typescript@5.8.2)
     optionalDependencies:
       '@microsoft/api-extractor': 7.53.1(@types/node@22.10.2)
       typescript: 5.8.2
@@ -8923,7 +8923,7 @@ snapshots:
 
   '@types/unist@3.0.3': {}
 
-  '@types/web@0.0.278': {}
+  '@types/web@0.0.281': {}
 
   '@typescript/vfs@1.6.1(typescript@5.8.2)':
     dependencies:
@@ -11684,7 +11684,7 @@ snapshots:
     dependencies:
       boolbase: 1.0.0
 
-  nx@21.6.4:
+  nx@21.6.5:
     dependencies:
       '@napi-rs/wasm-runtime': 0.2.4
       '@yarnpkg/lockfile': 1.1.0
@@ -11722,16 +11722,16 @@ snapshots:
       yargs: 17.7.2
       yargs-parser: 21.1.1
     optionalDependencies:
-      '@nx/nx-darwin-arm64': 21.6.4
-      '@nx/nx-darwin-x64': 21.6.4
-      '@nx/nx-freebsd-x64': 21.6.4
-      '@nx/nx-linux-arm-gnueabihf': 21.6.4
-      '@nx/nx-linux-arm64-gnu': 21.6.4
-      '@nx/nx-linux-arm64-musl': 21.6.4
-      '@nx/nx-linux-x64-gnu': 21.6.4
-      '@nx/nx-linux-x64-musl': 21.6.4
-      '@nx/nx-win32-arm64-msvc': 21.6.4
-      '@nx/nx-win32-x64-msvc': 21.6.4
+      '@nx/nx-darwin-arm64': 21.6.5
+      '@nx/nx-darwin-x64': 21.6.5
+      '@nx/nx-freebsd-x64': 21.6.5
+      '@nx/nx-linux-arm-gnueabihf': 21.6.5
+      '@nx/nx-linux-arm64-gnu': 21.6.5
+      '@nx/nx-linux-arm64-musl': 21.6.5
+      '@nx/nx-linux-x64-gnu': 21.6.5
+      '@nx/nx-linux-x64-musl': 21.6.5
+      '@nx/nx-win32-arm64-msvc': 21.6.5
+      '@nx/nx-win32-x64-msvc': 21.6.5
     transitivePeerDependencies:
       - debug
 
@@ -12346,7 +12346,7 @@ snapshots:
       '@rollup/rollup-win32-x64-msvc': 4.20.0
       fsevents: 2.3.3
 
-  rsbuild-plugin-dts@0.15.0(@microsoft/api-extractor@7.53.1(@types/node@22.10.2))(@rsbuild/core@1.5.17)(typescript@5.8.2):
+  rsbuild-plugin-dts@0.15.1(@microsoft/api-extractor@7.53.1(@types/node@22.10.2))(@rsbuild/core@1.5.17)(typescript@5.8.2):
     dependencies:
       '@ast-grep/napi': 0.37.0
       '@rsbuild/core': 1.5.17
@@ -13368,4 +13368,4 @@ snapshots:
 
   zwitch@2.0.4: {}
 
-  zx@8.8.4: {}
+  zx@8.8.5: {}

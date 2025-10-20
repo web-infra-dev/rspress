@@ -58,7 +58,7 @@
     "@rsbuild/plugin-react": "~1.4.1",
     "@rsbuild/plugin-sass": "~1.4.0",
     "@rsbuild/plugin-svgr": "^1.2.2",
-    "@rslib/core": "0.15.0",
+    "@rslib/core": "0.15.1",
     "@types/body-scroll-lock": "^3.1.2",
     "@types/hast": "^3.0.4",
     "@types/lodash-es": "^4.17.12",
@@ -66,7 +66,7 @@
     "@types/nprogress": "^0.2.3",
     "@types/react": "^19.1.15",
     "@types/react-dom": "^19.1.9",
-    "@types/web": "^0.0.278",
+    "@types/web": "^0.0.281",
     "rsbuild-plugin-publint": "^0.3.3",
     "tailwindcss": "^3.4.18",
     "typescript": "^5.8.2"
