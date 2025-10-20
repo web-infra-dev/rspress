@@ -40,8 +40,8 @@
   "dependencies": {
     "@rspress/shared": "workspace:*",
     "@unhead/react": "^2.0.19",
-    "react": "^19.1.1",
-    "react-dom": "^19.1.1",
+    "react": "^19.2.0",
+    "react-dom": "^19.2.0",
     "react-router-dom": "^6.30.1"
   },
   "devDependencies": {
