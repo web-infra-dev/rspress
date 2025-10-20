@@ -849,6 +849,9 @@ importers:
       lodash-es:
         specifier: ^4.17.21
         version: 4.17.21
+      mdast-util-mdx:
+        specifier: ^3.0.0
+        version: 3.0.0
       mdast-util-mdxjs-esm:
         specifier: ^2.0.1
         version: 2.0.1
@@ -867,6 +870,9 @@ importers:
       react-lazy-with-preload:
         specifier: ^2.2.1
         version: 2.2.1
+      react-reconciler:
+        specifier: 0.33.0
+        version: 0.33.0(react@19.1.1)
       react-router-dom:
         specifier: ^6.30.1
         version: 6.30.1(react-dom@19.1.1(react@19.1.1))(react@19.1.1)
@@ -879,6 +885,9 @@ importers:
       remark-gfm:
         specifier: ^4.0.1
         version: 4.0.1
+      remark-mdx:
+        specifier: ^3.1.1
+        version: 3.1.1
       shiki:
         specifier: ^3.12.2
         version: 3.12.2
@@ -928,6 +937,9 @@ importers:
       '@types/react-dom':
         specifier: ^19.1.9
         version: 19.1.9(@types/react@19.1.15)
+      '@types/react-reconciler':
+        specifier: ^0.32.1
+        version: 0.32.2(@types/react@19.1.15)
       execa:
         specifier: 8.0.1
         version: 8.0.1
@@ -952,9 +964,6 @@ importers:
       remark-directive:
         specifier: ^4.0.0
         version: 4.0.0
-      remark-mdx:
-        specifier: ^3.1.1
-        version: 3.1.1
       remark-parse:
         specifier: ^11.0.0
         version: 11.0.0
@@ -3463,6 +3472,11 @@ packages:
     peerDependencies:
       '@types/react': ^19.0.0
 
+  '@types/react-reconciler@0.32.2':
+    resolution: {integrity: sha512-gjcm6O0aUknhYaogEl8t5pecPfiOTD8VQkbjOhgbZas/E6qGY+veW9iuJU/7p4Y1E0EuQ0mArga7VEOUWSlVRA==}
+    peerDependencies:
+      '@types/react': '*'
+
   '@types/react@19.1.15':
     resolution: {integrity: sha512-+kLxJpaJzXybyDyFXYADyP1cznTO8HSuBpenGlnKOAkH4hyNINiywvXS/tGJhsrGGP/gM185RA3xpjY0Yg4erA==}
 
@@ -5906,6 +5920,12 @@ packages:
       '@types/react': '>=18'
       react: '>=18'
 
+  react-reconciler@0.33.0:
+    resolution: {integrity: sha512-KetWRytFv1epdpJc3J4G75I4WrplZE5jOL7Yq0p34+OVOKF4Se7WrdIdVC45XsSSmUTlht2FM/fM1FZb1mfQeA==}
+    engines: {node: '>=0.10.0'}
+    peerDependencies:
+      react: ^19.2.0
+
   react-refresh@0.17.0:
     resolution: {integrity: sha512-z6F7K9bV85EfseRCp2bzrpyQ0Gkw1uLoCel9XBVWPg/TjRj94SkJzUTGfOa4bs7iJvBWtQG0Wq7wnI0syw3EBQ==}
     engines: {node: '>=0.10.0'}
@@ -6288,6 +6308,9 @@ packages:
 
   scheduler@0.26.0:
     resolution: {integrity: sha512-NlHwttCI/l5gCPR3D1nNXtWABUmBwvZpEQiD4IXSbIDq8BzLIK/7Ir5gTFSGZDUu37K5cMNp0hFtzO38sC7gWA==}
+
+  scheduler@0.27.0:
+    resolution: {integrity: sha512-eNv+WrVbKu1f3vbYJT/xtiF5syA5HPIMtf9IgY/nKg0sWqzAUEvqY/xm7OcZc/qafLx/iO9FgOmeSAp4v5ti/Q==}
 
   schema-utils@4.3.2:
     resolution: {integrity: sha512-Gn/JaSk/Mt9gYubxTtSn/QCV4em9mpAPiR1rqy/Ocu19u/G9J5WWdNoUT4SiV6mFC3y6cxyFcFwdzPM3FgxGAQ==}
@@ -8924,6 +8947,10 @@ snapshots:
   '@types/parse5@6.0.3': {}
 
   '@types/react-dom@19.1.9(@types/react@19.1.15)':
+    dependencies:
+      '@types/react': 19.1.15
+
+  '@types/react-reconciler@0.32.2(@types/react@19.1.15)':
     dependencies:
       '@types/react': 19.1.15
 
@@ -12056,6 +12083,11 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
+  react-reconciler@0.33.0(react@19.1.1):
+    dependencies:
+      react: 19.1.1
+      scheduler: 0.27.0
+
   react-refresh@0.17.0: {}
 
   react-router-dom@6.30.1(react-dom@19.1.1(react@19.1.1))(react@19.1.1):
@@ -12509,6 +12541,8 @@ snapshots:
   sax@1.3.0: {}
 
   scheduler@0.26.0: {}
+
+  scheduler@0.27.0: {}
 
   schema-utils@4.3.2:
     dependencies:

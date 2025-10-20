@@ -25,6 +25,22 @@ export default defineConfig({
     generateEntry('./src/runtime.ts'),
     generateEntry('./src/theme.ts'),
     {
+      bundle: false,
+      dts: false,
+      format: 'esm',
+      syntax: 'es2022',
+      source: {
+        entry: {
+          index: './src/node/ssg-md/react/*.ts',
+        },
+      },
+      output: {
+        distPath: {
+          root: './dist/_private/react',
+        },
+      },
+    },
+    {
       format: 'esm',
       syntax: 'es2022',
       source: {
