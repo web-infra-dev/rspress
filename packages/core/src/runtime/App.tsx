@@ -1,4 +1,4 @@
-import { PageContext, useLocation } from '@rspress/runtime';
+import { Content, PageContext, useLocation } from '@rspress/runtime';
 import { Layout } from '@theme';
 import React, { useContext, useLayoutEffect } from 'react';
 import globalComponents from 'virtual-global-components';
@@ -37,6 +37,10 @@ export function App() {
     // Disable global components in frontmatter or query
     frontmatter[GLOBAL_COMPONENTS_KEY] === false ||
     query.get(GLOBAL_COMPONENTS_KEY) === QueryStatus.Hide;
+
+  if (process.env.__SSR_MD__) {
+    return <Content />;
+  }
 
   return (
     <>

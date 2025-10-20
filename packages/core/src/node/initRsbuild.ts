@@ -21,9 +21,12 @@ import {
   isProduction,
   NODE_SSG_BUNDLE_FOLDER,
   NODE_SSG_BUNDLE_NAME,
+  NODE_SSG_MD_BUNDLE_FOLDER,
+  NODE_SSG_MD_BUNDLE_NAME,
   OUTPUT_DIR,
   PACKAGE_ROOT,
   PUBLIC_DIR,
+  SSG_MD_SERVER_ENTRY,
   SSR_CLIENT_ENTRY,
   SSR_SERVER_ENTRY,
   TEMPLATE_PATH,
@@ -45,6 +48,7 @@ import { socialLinksVMPlugin } from './runtimeModule/socialLinks';
 import type { FactoryContext } from './runtimeModule/types';
 import { rsbuildPluginCSR } from './ssg/rsbuildPluginCSR';
 import { rsbuildPluginSSG } from './ssg/rsbuildPluginSSG';
+import { rsbuildPluginSSGMD } from './ssg-md/rsbuildPluginSSGMD';
 import {
   detectReactVersion,
   resolveReactAlias,
@@ -127,6 +131,7 @@ async function createInternalBuildConfig(
     detectCustomIcon(CUSTOM_THEME_DIR),
     resolveReactAlias(reactVersion, false),
     enableSSG ? resolveReactAlias(reactVersion, true) : Promise.resolve({}),
+    resolveReactAlias(reactVersion, true),
     resolveReactRouterDomAlias(),
   ]);
 
@@ -182,7 +187,7 @@ async function createInternalBuildConfig(
           ...siteDataVMPlugin(context),
         },
       }),
-      enableSSG
+      enableSSG && config.ssg
         ? rsbuildPluginSSG({
             routeService,
             config,
@@ -191,6 +196,12 @@ async function createInternalBuildConfig(
             routeService,
             config,
           }),
+      enableSSG && config.llms
+        ? rsbuildPluginSSGMD({
+            routeService,
+            config,
+          })
+        : null,
     ],
     server: {
       port:
@@ -300,6 +311,8 @@ async function createInternalBuildConfig(
     },
     tools: {
       bundlerChain(chain, { CHAIN_ID, environment }) {
+        const isSsg = environment.name === 'node';
+        const isSsgMd = environment.name === 'node_md';
         const jsModuleRule = chain.module.rule(CHAIN_ID.RULE.JS);
 
         const swcLoaderOptions = jsModuleRule
@@ -327,6 +340,7 @@ async function createInternalBuildConfig(
             docDirectory: userDocRoot,
             routeService,
             pluginDriver,
+            isSsgMd,
           })
           .end();
 
@@ -355,11 +369,18 @@ async function createInternalBuildConfig(
           .test(/\.rspress[\\/]runtime[\\/]virtual-global-styles/)
           .merge({ sideEffects: true });
 
-        if (environment.name === 'node') {
+        if (isSsg) {
           chain.output.filename(
             `${NODE_SSG_BUNDLE_FOLDER}/${NODE_SSG_BUNDLE_NAME}`,
           );
           chain.output.chunkFilename(`${NODE_SSG_BUNDLE_FOLDER}/[name].cjs`);
+          // For perf
+          chain.output.set('asyncChunks', false);
+        } else if (isSsgMd) {
+          chain.output.filename(
+            `${NODE_SSG_MD_BUNDLE_FOLDER}/${NODE_SSG_MD_BUNDLE_NAME}`,
+          );
+          chain.output.chunkFilename(`${NODE_SSG_MD_BUNDLE_FOLDER}/[name].cjs`);
           // For perf
           chain.output.set('asyncChunks', false);
         }
@@ -384,6 +405,7 @@ async function createInternalBuildConfig(
           ],
           define: {
             'process.env.__SSR__': JSON.stringify(false),
+            'process.env.__SSR_MD__': JSON.stringify(false),
           },
         },
         output: {
@@ -393,7 +415,7 @@ async function createInternalBuildConfig(
           },
         },
       },
-      ...(enableSSG
+      ...(enableSSG && config.ssg
         ? {
             node: {
               resolve: {
@@ -408,6 +430,46 @@ async function createInternalBuildConfig(
                 },
                 define: {
                   'process.env.__SSR__': JSON.stringify(true),
+                  'process.env.__SSR_MD__': JSON.stringify(false),
+                },
+              },
+              performance: {
+                printFileSize: {
+                  compressed: true,
+                },
+              },
+              output: {
+                emitAssets: false,
+                target: 'node',
+                minify: false,
+              },
+            },
+          }
+        : {}),
+      ...(enableSSG && config.llms
+        ? {
+            node_md: {
+              resolve: {
+                alias: {
+                  ...reactSSRAlias,
+                  ...reactRouterDomAlias,
+                },
+              },
+              tools: {
+                rspack: {
+                  optimization: {
+                    moduleIds: 'named',
+                    chunkIds: 'named',
+                  },
+                },
+              },
+              source: {
+                entry: {
+                  index: SSG_MD_SERVER_ENTRY,
+                },
+                define: {
+                  'process.env.__SSR__': JSON.stringify(true),
+                  'process.env.__SSR_MD__': JSON.stringify(true),
                 },
               },
               performance: {

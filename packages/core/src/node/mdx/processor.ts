@@ -26,6 +26,11 @@ interface CompileOptions {
   pluginDriver: PluginDriver | null;
 
   addDependency?: Rspack.LoaderContext['addDependency']; // remarkFileCodeBlock hmr
+
+  /**
+   * @default false
+   */
+  isSsgMd?: boolean;
 }
 
 async function compile(options: CompileOptions): Promise<string> {
@@ -37,6 +42,7 @@ async function compile(options: CompileOptions): Promise<string> {
     routeService,
     pluginDriver,
     addDependency,
+    isSsgMd = false,
   } = options;
 
   const mdxOptions = await createMDXOptions({
@@ -46,6 +52,7 @@ async function compile(options: CompileOptions): Promise<string> {
     pluginDriver,
     routeService,
     addDependency,
+    isSsgMd,
   });
   // Separate frontmatter and content in MDX source
   const { frontmatter, emptyLinesSource } = loadFrontMatter(

@@ -17,7 +17,9 @@ export async function build(options: BuildOptions) {
   // 1. create PluginDriver
   const pluginDriver = await PluginDriver.create(config, configFilePath, true);
   const modifiedConfig = await pluginDriver.modifyConfig();
-  const ssgConfig = Boolean(modifiedConfig.ssg ?? true);
+  const enableSSG = Boolean(
+    (modifiedConfig.ssg || modifiedConfig.llms) ?? true,
+  );
 
   // 2. create RouteService
   const additionalPages = await pluginDriver.addPages();
@@ -42,7 +44,7 @@ export async function build(options: BuildOptions) {
       modifiedConfig,
       pluginDriver,
       routeService,
-      ssgConfig,
+      enableSSG,
     );
     await rsbuild.build();
   } finally {
@@ -50,7 +52,7 @@ export async function build(options: BuildOptions) {
   }
   await pluginDriver.afterBuild();
 
-  if (!ssgConfig) {
+  if (!enableSSG) {
     hintSSGFalse();
   }
 }
