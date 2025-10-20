@@ -14,9 +14,9 @@ bilibili
 biomejs
 Bluch
 brotli
-bunx
 browserslistrc
 bundleless
+bunx
 Bytedance
 caniuse
 chunkhash
@@ -75,6 +75,7 @@ longpaths
 manypkg
 mattcompiles
 mdast
+MDSSG
 Mdxjs
 mdxrs
 menlo
@@ -120,9 +121,9 @@ rsbuild
 rsdoctor
 rsfamily
 rslib
+rslint
 rslog
 rspack
-rslint
 rspress
 rstack
 rstest
@@ -135,6 +136,7 @@ Sizefor
 sokra
 speedscope
 srcset
+SSGMD
 stacktracey
 styl
 subdir
