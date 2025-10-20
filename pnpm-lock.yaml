@@ -959,8 +959,8 @@ importers:
   packages/create-rspress:
     dependencies:
       create-rstack:
-        specifier: 1.6.1
-        version: 1.6.1
+        specifier: 1.7.0
+        version: 1.7.0
     devDependencies:
       '@microsoft/api-extractor':
         specifier: ^7.53.1
@@ -4003,8 +4003,8 @@ packages:
   create-require@1.1.1:
     resolution: {integrity: sha512-dcKFX3jn0MpIaXjisoRvexIJVEKzaq7z2rZKxf+MSr9TkdmHmsU4m2lcLojrj/FHl8mk5VxMmYA+ftRkP/3oKQ==}
 
-  create-rstack@1.6.1:
-    resolution: {integrity: sha512-m3pVfncYhMqsXq5zcnSS1LTi5vd4BD5aRDVWySZSMjgwX3BxIzmPMs3K+N4uf5kyzZTu1rVUGOOAn3jkK6GsIQ==}
+  create-rstack@1.7.0:
+    resolution: {integrity: sha512-DXmuGshqLZKKfzZnCkXsB0z+Vpr6Ym0wQuCVcAC8o8HBSXhs6vYpJrENgaOzokLBB7FiRr2Fe2gXxn+cFNLh4w==}
 
   cross-env@10.1.0:
     resolution: {integrity: sha512-GsYosgnACZTADcmEyJctkJIoqAhHjttw7RsFrVoJNXbsWWqaq6Ym+7kZjq6mS45O0jij6vtiReppKQEtqWy6Dw==}
@@ -9535,7 +9535,7 @@ snapshots:
   create-require@1.1.1:
     optional: true
 
-  create-rstack@1.6.1: {}
+  create-rstack@1.7.0: {}
 
   cross-env@10.1.0:
     dependencies:
