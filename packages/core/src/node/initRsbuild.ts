@@ -360,6 +360,7 @@ async function createInternalBuildConfig(
             `${NODE_SSG_BUNDLE_FOLDER}/${NODE_SSG_BUNDLE_NAME}`,
           );
           chain.output.chunkFilename(`${NODE_SSG_BUNDLE_FOLDER}/[name].cjs`);
+          // For perf
           chain.output.set('asyncChunks', false);
         }
       },
