@@ -299,8 +299,7 @@ async function createInternalBuildConfig(
       },
     },
     tools: {
-      bundlerChain(chain, { CHAIN_ID, target }) {
-        const isServer = target === 'node';
+      bundlerChain(chain, { CHAIN_ID, environment }) {
         const jsModuleRule = chain.module.rule(CHAIN_ID.RULE.JS);
 
         const swcLoaderOptions = jsModuleRule
@@ -356,12 +355,12 @@ async function createInternalBuildConfig(
           .test(/\.rspress[\\/]runtime[\\/]virtual-global-styles/)
           .merge({ sideEffects: true });
 
-        if (isServer) {
+        if (environment.name === 'node') {
           chain.output.filename(
             `${NODE_SSG_BUNDLE_FOLDER}/${NODE_SSG_BUNDLE_NAME}`,
           );
           chain.output.chunkFilename(`${NODE_SSG_BUNDLE_FOLDER}/[name].cjs`);
-          chain.target('async-node'); // For MF support
+          chain.output.set('asyncChunks', false);
         }
       },
     },
