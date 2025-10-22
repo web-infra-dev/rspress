@@ -14,7 +14,7 @@
     }
   }
 
-  &__list {
+  &__label {
     padding-left: 8px;
     padding-top: 4px;
     display: flex;
@@ -31,7 +31,7 @@
     }
   }
 
-  &__tab {
+  &__label__item {
     position: relative;
     color: var(--rp-c-text-2);
     border-bottom: 2px solid transparent;
@@ -67,6 +67,19 @@
 
       &:after {
         background-color: currentColor;
+      }
+    }
+  }
+
+  &__content {
+    &__item {
+      display: none;
+
+      &--active {
+        display: block;
+      }
+      &--hidden {
+        display: none;
       }
     }
   }

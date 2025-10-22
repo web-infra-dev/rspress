@@ -139,7 +139,7 @@ export const Tabs = forwardRef(
       <div className={clsx('rp-tabs', tabContainerClassName)} ref={ref}>
         {tabValues.length ? (
           <div
-            className="rp-tabs__list rp-tabs__list--no-scrollbar"
+            className="rp-tabs__label rp-tabs__label--no-scrollbar"
             style={{
               justifyContent:
                 tabPosition === 'center' ? 'center' : 'flex-start',
@@ -150,10 +150,10 @@ export const Tabs = forwardRef(
                 <div
                   key={index}
                   className={clsx(
-                    'rp-tabs__tab',
+                    'rp-tabs__label__item',
                     currentIndex === index
-                      ? 'rp-tabs__tab--selected'
-                      : 'rp-tabs__tab--not-selected',
+                      ? 'rp-tabs__label__item--selected'
+                      : 'rp-tabs__label__item--not-selected',
                   )}
                   onClick={() => {
                     onChange?.(index);
@@ -171,7 +171,26 @@ export const Tabs = forwardRef(
             })}
           </div>
         ) : null}
-        <div>{Children.toArray(children)[currentIndex]}</div>
+        <div className="rp-tabs__content">
+          {Children.map(children, (child, index) => {
+            const isActive = index === currentIndex;
+            return (
+              <div
+                className={clsx(
+                  'rp-tabs__content__item',
+                  isActive
+                    ? 'rp-tabs__content__item--active'
+                    : 'rp-tabs__content__item--hidden',
+                )}
+                aria-hidden={!isActive}
+                data-index={index}
+                key={index}
+              >
+                {child}
+              </div>
+            );
+          })}
+        </div>
       </div>
     );
   },
