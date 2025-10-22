@@ -82,10 +82,7 @@ export const rsbuildPluginSSG = ({
             Object.entries(assets).map(async ([assetName, assetSource]) => {
               if (assetName.startsWith(`${NODE_SSG_BUNDLE_FOLDER}/`)) {
                 const fileAbsolutePath = join(distPath, assetName);
-                await writeFile(
-                  fileAbsolutePath,
-                  assetSource.source().toString(),
-                );
+                await writeFile(fileAbsolutePath, assetSource.source());
                 compilation.deleteAsset(assetName);
               }
             }),
