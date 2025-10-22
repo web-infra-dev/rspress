@@ -13,7 +13,7 @@ export default defineConfig(
     exclude: ['**/node_modules/**'],
     setupFiles: ['./scripts/test-helper/rstest.setup.ts'],
     output: {
-      externals: ['virtual-routes']
+      externals: ['virtual-routes', 'virtual-site-data']
     },
   }
 );

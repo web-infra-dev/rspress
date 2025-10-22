@@ -1,4 +1,4 @@
-name: Test (rstest & playwright - Windows)
+name: Test (Windows)
 
 concurrency:
   group: windows-test-${{ github.head_ref }}
