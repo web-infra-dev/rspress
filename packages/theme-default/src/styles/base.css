@@ -23,7 +23,8 @@ html {
   font-size: 16px;
   -webkit-text-size-adjust: 100%;
   scroll-padding-top: calc(
-    var(--rp-nav-height) + var(--rp-sidebar-menu-height)
+    var(--rp-banner-height, 0px) + var(--rp-nav-height) +
+      var(--rp-sidebar-menu-height)
   );
 }
 

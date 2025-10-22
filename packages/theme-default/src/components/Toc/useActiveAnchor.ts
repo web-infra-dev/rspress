@@ -2,27 +2,44 @@ import { useLocation } from '@rspress/runtime';
 import type { Header } from '@rspress/shared';
 import { useEffect, useState } from 'react';
 
+function defaultZeroComputedStyle(s: string) {
+  const n = Number(s.replace(/(px|em|rem)$/, ''));
+  if (Number.isNaN(n)) {
+    return 0;
+  }
+  return n;
+}
+
 export const useActiveAnchor = (headers: Header[]) => {
   const [activeAnchorId, setActiveAnchorId] = useState<string | undefined>();
   const [scrolledHeader, setScrolledHeader] = useState<Header | undefined>();
   const { hash } = useLocation();
 
   useEffect(() => {
+    if (typeof window === 'undefined') {
+      return;
+    }
     const handleScroll = () => {
+      // get var(--rp-banner-height)
+      const bannerHeight = defaultZeroComputedStyle(
+        window
+          .getComputedStyle(document.documentElement)
+          .getPropertyValue('--rp-banner-height'),
+      );
       // get var(--rp-nav-height)
-      const navHeight = Number(
-        getComputedStyle(document.documentElement)
-          .getPropertyValue('--rp-nav-height')
-          .replace(/(px|em|rem)$/, ''),
+      const navHeight = defaultZeroComputedStyle(
+        window
+          .getComputedStyle(document.documentElement)
+          .getPropertyValue('--rp-nav-height'),
       );
       // get ver(--rp-sidebar-menu-height)
-      const sidebarMenuHeight = Number(
-        getComputedStyle(document.documentElement)
-          .getPropertyValue('--rp-sidebar-menu-height')
-          .replace(/(px|em|rem)$/, ''),
+      const sidebarMenuHeight = defaultZeroComputedStyle(
+        window
+          .getComputedStyle(document.documentElement)
+          .getPropertyValue('--rp-sidebar-menu-height'),
       );
 
-      const topOffset = navHeight + sidebarMenuHeight - 5; // 5 is the tolerance
+      const topOffset = bannerHeight + navHeight + sidebarMenuHeight - 5; // 5 is the tolerance
 
       const offsets = headers.map(header => {
         const el = document.getElementById(header.id);
