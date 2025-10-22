@@ -32,7 +32,7 @@ export const useActiveAnchor = (headers: Header[]) => {
           .getComputedStyle(document.documentElement)
           .getPropertyValue('--rp-nav-height'),
       );
-      // get ver(--rp-sidebar-menu-height)
+      // get var(--rp-sidebar-menu-height)
       const sidebarMenuHeight = defaultZeroComputedStyle(
         window
           .getComputedStyle(document.documentElement)
