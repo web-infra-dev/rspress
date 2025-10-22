@@ -2,8 +2,8 @@ import { expect, test } from '@playwright/test';
 import { getPort, killProcess, runDevCommand } from '../../utils/runCommands';
 
 test.describe('i18n test', async () => {
-  let appPort;
-  let app;
+  let appPort: number;
+  let app: Awaited<ReturnType<typeof runDevCommand>>;
   test.beforeAll(async () => {
     const appDir = __dirname;
     appPort = await getPort();
@@ -22,23 +22,23 @@ test.describe('i18n test', async () => {
       waitUntil: 'networkidle',
     });
 
-    const h1 = await page.$('h1');
-    const text = await page.evaluate(h1 => h1?.textContent, h1);
-    await expect(text).toContain('首页');
+    const heading = page.locator('h1').first();
+    await expect(heading).toContainText('首页');
 
-    const button = await page.$('.translation .rspress-nav-menu-group-button')!;
-    expect(button).toBeTruthy();
-    // hover the button
-    await button!.hover();
-    // click the button content to switch to English
-    const buttonContent = await page.$(
-      '.translation .rspress-nav-menu-group-content > div > div:nth-child(2)',
+    const languageSwitcher = page.locator(
+      '.rp-nav__others .rp-nav-menu__item__container',
+      {
+        hasText: '简体中文',
+      },
     );
-    const buttonContentText = await page.evaluate(
-      buttonContent => buttonContent?.textContent,
-      buttonContent,
-    );
-    expect(buttonContentText).toBe('English');
+    await expect(languageSwitcher).toBeVisible();
+    await languageSwitcher.hover();
+
+    const englishOption = page.locator('.rp-hover-group__item a', {
+      hasText: 'English',
+    });
+    await expect(englishOption).toBeVisible();
+    await expect(englishOption).toHaveText('English');
   });
 
   test('Add language prefix in route automatically when current language is not default language', async ({
@@ -48,21 +48,21 @@ test.describe('i18n test', async () => {
       waitUntil: 'networkidle',
     });
     // take the `click` button
-    let link = await page.getByRole('link', {
+    const absoluteLink = page.getByRole('link', {
       name: /absolute/,
     });
-    expect(link).toBeTruthy();
-    // check the compile result of absolute link in doc content
-    expect(await link.getAttribute('href')).toBe(
+    await expect(absoluteLink).toBeVisible();
+    await expect(absoluteLink).toHaveAttribute(
+      'href',
       '/en/guide/basic/install.html',
     );
-    link = await page.getByRole('link', {
+
+    const relativeLink = page.getByRole('link', {
       name: /relative/,
     });
-
-    // check the compile result of relative link in doc content
-    expect(link).toBeTruthy();
-    expect(await link.getAttribute('href')).toBe(
+    await expect(relativeLink).toBeVisible();
+    await expect(relativeLink).toHaveAttribute(
+      'href',
       '/en/guide/basic/install.html',
     );
   });
@@ -74,37 +74,42 @@ test.describe('i18n test', async () => {
       waitUntil: 'networkidle',
     });
     // check the compile result of absolute link in doc content
-    let link = await page.getByRole('link', {
+    const absoluteLink = page.getByRole('link', {
       name: /绝对路径/,
     });
-    expect(link).toBeTruthy();
-    expect(await link.getAttribute('href')).toBe('/guide/basic/install.html');
+    await expect(absoluteLink).toBeVisible();
+    await expect(absoluteLink).toHaveAttribute(
+      'href',
+      '/guide/basic/install.html',
+    );
     // check the compile result of relative link in doc content
-    link = await page.getByRole('link', {
+    const relativeLink = page.getByRole('link', {
       name: /相对路径/,
     });
-    expect(link).toBeTruthy();
-    expect(await link.getAttribute('href')).toBe('/guide/basic/install.html');
+    await expect(relativeLink).toBeVisible();
+    await expect(relativeLink).toHaveAttribute(
+      'href',
+      '/guide/basic/install.html',
+    );
   });
 
   test('Should render sidebar correctly', async ({ page }) => {
     await page.goto(`http://localhost:${appPort}/guide/basic/quick-start`, {
       waitUntil: 'networkidle',
     });
-    // take the sidebar
-    const sidebar = await page.$$(
-      '.rspress-sidebar .rspress-scrollbar > nav > section',
+    const sidebarGroups = page.locator(
+      '.rp-doc-layout__sidebar .rp-sidebar-group',
     );
-    expect(sidebar?.length).toBe(1);
+    await expect(sidebarGroups).toHaveCount(1);
   });
 
-  test('Should not render appearance switch button', async ({ page }) => {
+  test('Should render appearance switch button', async ({ page }) => {
     await page.goto(`http://localhost:${appPort}/guide/basic/quick-start`, {
       waitUntil: 'networkidle',
     });
-    // take the appearance switch button
-    const button = await page.$('.rspress-nav-appearance');
-    expect(button).toBeFalsy();
+    const button = page.locator('.rp-switch-appearance');
+    await expect(button).toHaveCount(1);
+    await expect(button).toBeVisible();
   });
 
   test('Should not 404 after redirecting in first visit', async ({ page }) => {
@@ -128,52 +133,60 @@ test.describe('i18n test', async () => {
     await page.goto(`http://localhost:${appPort}/guide/basic/quick-start`, {
       waitUntil: 'networkidle',
     });
-    const dirContent = await page.textContent(
-      '.rspress-sidebar .rspress-scrollbar nav section',
-    );
-    expect(dirContent).toContain('基本');
+    const dirContent = await page
+      .locator('.rp-doc-layout__sidebar')
+      .textContent();
+    expect(dirContent ?? '').toContain('基本');
 
-    const sectionHeaderContent = await page.textContent(
-      '.rspress-sidebar-section-header span',
-    );
-    expect(sectionHeaderContent).toEqual('成长');
+    const sectionHeaderContent = await page
+      .locator('.rp-sidebar-section-header__left span')
+      .textContent();
+    expect(sectionHeaderContent ?? '').toEqual('成长');
   });
 
   test('Should render i18n sidebar - en', async ({ page }) => {
     await page.goto(`http://localhost:${appPort}/en/guide/basic/quick-start`, {
       waitUntil: 'networkidle',
     });
-    const dirContent = await page.textContent(
-      '.rspress-sidebar .rspress-scrollbar nav section',
-    );
-    expect(dirContent).toContain('Basic');
+    const dirContent = await page
+      .locator('.rp-doc-layout__sidebar')
+      .textContent();
+    expect(dirContent ?? '').toContain('Basic');
 
-    const sectionHeaderContent = await page.textContent(
-      '.rspress-sidebar-section-header span',
-    );
-    expect(sectionHeaderContent).toEqual('Growth');
+    const sectionHeaderContent = await page
+      .locator('.rp-sidebar-section-header__left span')
+      .textContent();
+    expect(sectionHeaderContent ?? '').toEqual('Growth');
   });
 
   test('Should add routePrefix when type is custom-link', async ({ page }) => {
     await page.goto(`http://localhost:${appPort}/guide/basic/quick-start`, {
       waitUntil: 'networkidle',
     });
-    const customLinkZh = await page.$('nav > div.rspress-sidebar-item > a');
-    const hrefZh = await page.evaluate(
-      customLinkZh => customLinkZh?.getAttribute('href'),
-      customLinkZh,
+    const customLinkZh = page.locator(
+      '.rp-doc-layout__sidebar a.rp-sidebar-item',
+      {
+        hasText: 'My Link',
+      },
     );
-    expect(hrefZh).toBe('/guide/basic/install.html');
+    await expect(customLinkZh).toHaveAttribute(
+      'href',
+      '/guide/basic/install.html',
+    );
 
     await page.goto(`http://localhost:${appPort}/en/guide/basic/quick-start`, {
       waitUntil: 'networkidle',
     });
-    const customLinkEn = await page.$('nav > div.rspress-sidebar-item > a');
-    const hrefEn = await page.evaluate(
-      customLinkEn => customLinkEn?.getAttribute('href'),
-      customLinkEn,
+    const customLinkEn = page.locator(
+      '.rp-doc-layout__sidebar a.rp-sidebar-item',
+      {
+        hasText: 'My Link',
+      },
     );
-    expect(hrefEn).toBe('/en/guide/basic/install.html');
+    await expect(customLinkEn).toHaveAttribute(
+      'href',
+      '/en/guide/basic/install.html',
+    );
   });
 
   test('Should not crash when switch language in api page', async ({
@@ -182,18 +195,30 @@ test.describe('i18n test', async () => {
     await page.goto(`http://localhost:${appPort}/api`, {
       waitUntil: 'networkidle',
     });
-    const overviewContentZh = await page.textContent('.overview-index');
-    expect(overviewContentZh).toContain('Overview');
-    expect(overviewContentZh).toContain('zh');
-    expect(overviewContentZh).not.toContain('en');
-    await page.click('.rspress-nav-menu-group-button');
-    await page.click('.rspress-nav-menu-group-content a');
-    await page.waitForLoadState();
-    const content = await page.textContent('#root');
-    expect(content).not.toEqual('');
-    const overviewContentEn = await page.textContent('.overview-index');
-    expect(overviewContentEn).toContain('Overview');
-    expect(overviewContentEn).toContain('en');
-    expect(overviewContentEn).not.toContain('zh');
+    const overviewContentZh = await page.locator('.rp-overview').textContent();
+    expect(overviewContentZh ?? '').toContain('Overview');
+    expect(overviewContentZh ?? '').toContain('zh');
+    expect(overviewContentZh ?? '').not.toContain('en');
+
+    const languageSwitcher = page
+      .locator('.rp-nav-menu__item')
+      .filter({ hasText: '简体中文' });
+    await languageSwitcher.hover();
+    const englishOption = languageSwitcher.locator('.rp-hover-group__item a', {
+      hasText: 'English',
+    });
+    await englishOption.click();
+
+    const newLanguageSwitcher = page
+      .locator('.rp-nav-menu__item')
+      .filter({ hasText: 'English' });
+    await expect(newLanguageSwitcher).toBeVisible();
+
+    const content = await page.textContent('#__rspress_root');
+    expect(content ?? '').not.toEqual('');
+    const overviewContentEn = await page.locator('.rp-overview').textContent();
+    expect(overviewContentEn ?? '').toContain('Overview');
+    expect(overviewContentEn ?? '').toContain('en');
+    expect(overviewContentEn ?? '').not.toContain('zh');
   });
 });

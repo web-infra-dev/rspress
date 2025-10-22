@@ -94,13 +94,6 @@ export interface RspressPlugin {
     isProd: boolean,
   ) => Promise<void> | void;
   /**
-   * Add addition ssg routes, for dynamic routes.
-   */
-  addSSGRoutes?: (
-    config: UserConfig,
-    isProd: boolean,
-  ) => { path: string }[] | Promise<{ path: string }[]>;
-  /**
    * @private
    * Modify search index data.
    */

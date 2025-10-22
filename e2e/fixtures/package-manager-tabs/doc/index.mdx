@@ -2,14 +2,30 @@ import { PackageManagerTabs } from '@theme';
 
 # Hello world
 
-## PackageManagerTabs a
+## PackageManagerTabs create
 
 <PackageManagerTabs command="create rspress@latest" />
 
-## PackageManagerTabs b
+## PackageManagerTabs install
 
-<PackageManagerTabs command="install rspress -D" />
+<PackageManagerTabs command="install -D @rspress/core" />
+
+## PackageManagerTabs dlx
+
+<PackageManagerTabs dlx command="example-cli-tool --yes" />
 
 ## PackageManagerTabs exec
 
 <PackageManagerTabs exec command="example-cli-tool --yes" />
+
+## PackageManagerTabs with custom object
+
+<PackageManagerTabs
+  command={{
+    npm: 'npm create rspress@latest',
+    yarn: 'yarn create rspress',
+    pnpm: 'pnpm create rspress@latest',
+    bun: 'bun create rspress@latest',
+    deno: 'deno init --npm rspress@latest',
+  }}
+/>

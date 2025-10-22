@@ -8,10 +8,10 @@
     "preview": "rspress preview"
   },
   "dependencies": {
-    "rspress": "workspace:*"
+    "@rspress/core": "workspace:*"
   },
   "devDependencies": {
-    "@shikijs/transformers": "^3.2.2",
+    "@shikijs/transformers": "^3.12.2",
     "@types/node": "^22.8.1"
   }
 }

@@ -1,12 +1,10 @@
-import { setTimeout } from 'node:timers/promises';
-
 import { expect, test } from '@playwright/test';
 
 import { getPort, killProcess, runDevCommand } from '../../utils/runCommands';
 
 test.describe('dynamic toc', async () => {
-  let appPort;
-  let app;
+  let appPort: number;
+  let app: Awaited<ReturnType<typeof runDevCommand>>;
   test.beforeAll(async () => {
     const appDir = __dirname;
     appPort = await getPort();
@@ -24,22 +22,16 @@ test.describe('dynamic toc', async () => {
       waitUntil: 'networkidle',
     });
 
-    let h2 = await page.$('h2');
-    let text = await page.evaluate(h2 => h2?.textContent.trim(), h2);
-    expect(text).toBe('#Term');
+    const heading = page.locator('h2');
+    await expect(heading).toContainText('Term');
 
-    let toc = await page.$('.aside-link');
-    let tocText = await page.evaluate(toc => toc?.textContent.trim(), toc);
-    expect(tocText).toBe('Term');
+    const tocItem = page
+      .locator('.rp-toc-item .rp-aside__toc-item__text')
+      .first();
+    await expect(tocItem).toHaveText('Term');
 
-    await setTimeout(1000); // Wait for dynamic TOC to update
+    await expect(heading).toContainText('Term dynamic & content');
 
-    h2 = await page.$('h2');
-    text = await page.evaluate(h2 => h2?.textContent.trim(), h2);
-    expect(text).toBe('#Term dynamic content');
-
-    toc = await page.$('.aside-link');
-    tocText = await page.evaluate(toc => toc?.textContent.trim(), toc);
-    expect(tocText).toBe('Term dynamic content');
+    await expect(tocItem).toHaveText('Term dynamic & content');
   });
 });

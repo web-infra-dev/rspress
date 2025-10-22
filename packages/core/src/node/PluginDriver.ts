@@ -4,6 +4,7 @@ import type {
   RspressPlugin,
   UserConfig,
 } from '@rspress/shared';
+import { haveNavSidebarConfig } from './auto-nav-sidebar';
 import type { RouteService } from './route/RouteService';
 
 type RspressPluginHookKeys =
@@ -14,7 +15,6 @@ type RspressPluginHookKeys =
   | 'addRuntimeModules'
   | 'routeGenerated'
   | 'routeServiceGenerated'
-  | 'addSSGRoutes'
   | 'extendPageData'
   | 'modifySearchIndexData';
 
@@ -26,7 +26,23 @@ export class PluginDriver {
 
   #isProd: boolean;
 
-  constructor(config: UserConfig, configFilePath: string, isProd: boolean) {
+  haveNavSidebarConfig = false;
+
+  static async create(
+    config: UserConfig,
+    configFilePath: string,
+    isProd: boolean,
+  ): Promise<PluginDriver> {
+    const pluginDriver = new PluginDriver(config, configFilePath, isProd);
+    await pluginDriver.init();
+    return pluginDriver;
+  }
+
+  private constructor(
+    config: UserConfig,
+    configFilePath: string,
+    isProd: boolean,
+  ) {
     this.#config = config;
     this.#configFilePath = configFilePath;
     this.#isProd = isProd;
@@ -117,6 +133,7 @@ export class PluginDriver {
       }
     }
     this.#config = config;
+    this.haveNavSidebarConfig = haveNavSidebarConfig(config);
     return this.#config;
   }
 
@@ -182,15 +199,6 @@ export class PluginDriver {
         ...current,
       };
     }, {});
-  }
-
-  async addSSGRoutes() {
-    const result = await this._runParallelAsyncHook<'addSSGRoutes'>(
-      'addSSGRoutes',
-      this.#config || {},
-      this.#isProd,
-    );
-    return result.flat();
   }
 
   globalUIComponents() {

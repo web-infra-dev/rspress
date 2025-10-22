@@ -94,22 +94,14 @@ export interface Config {
    */
   overview?: FilterConfig;
   /**
-   * The behavior of hiding navbar
-   */
-  hideNavbar?: 'always' | 'auto' | 'never';
-  /**
    * Whether to enable view transition animation for pages switching
    */
   enableContentAnimation?: boolean;
   /**
    * Whether to enable view transition animation for the theme
-   */
-  enableAppearanceAnimation?: boolean;
-  /**
-   * Enable scroll to top button on documentation
    * @default false
    */
-  enableScrollToTop?: boolean;
+  enableAppearanceAnimation?: boolean;
   /**
    * Whether to redirect to the closest locale when the user visits the site
    * @default 'auto'
@@ -298,6 +290,7 @@ export type SocialLinkIcon =
   | 'gitlab'
   | 'X'
   | 'bluesky'
+  | 'npm'
   | { svg: string };
 
 // footer --------------------------------------------------------------------
@@ -319,13 +312,15 @@ export interface LocaleLink {
 }
 
 // normalized config ---------------------------------------------------------
+export type SidebarData = (
+  | SidebarDivider
+  | SidebarItem
+  | SidebarSectionHeader
+  | NormalizedSidebarGroup
+)[];
+
 export interface NormalizedSidebarGroup extends Omit<SidebarGroup, 'items'> {
-  items: (
-    | SidebarDivider
-    | SidebarItem
-    | SidebarSectionHeader
-    | NormalizedSidebarGroup
-  )[];
+  items: SidebarData;
   collapsible: boolean;
   collapsed: boolean;
 }

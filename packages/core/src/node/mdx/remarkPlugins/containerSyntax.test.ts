@@ -5,7 +5,7 @@ describe('remark-container', async () => {
   const process = (source: string) => {
     return compile({
       source,
-      checkDeadLinks: false,
+
       docDirectory: '/usr/rspress-project/docs',
       filepath: '/usr/rspress-project/docs/index.mdx',
       config: null,

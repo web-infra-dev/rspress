@@ -1,15 +1,20 @@
+import { createRequire } from 'node:module';
 import { join } from 'node:path';
 import type { UserConfig } from '@rspress/shared';
 import { logger } from '@rspress/shared/logger';
+import { pathExists } from '../utils';
 import { RuntimeModuleID, type VirtualModulePlugin } from './types';
 
+const require = createRequire(import.meta.url);
 const DEFAULT_I18N_SOURCE = join(process.cwd(), 'i18n.json');
 
-export function getI18nData(docConfig: UserConfig) {
+export function getI18nData(
+  docConfig: UserConfig,
+): Record<string, Record<string, string>> {
   const { i18nSourcePath = DEFAULT_I18N_SOURCE } = docConfig;
   try {
     // require.cache is an API in Rslib.
-    delete REQUIRE_CACHE[i18nSourcePath];
+    delete require.cache[i18nSourcePath];
     // eslint-disable-next-line import/no-dynamic-require
     const i18nSource = require(i18nSourcePath);
     return i18nSource;
@@ -25,9 +30,18 @@ export function getI18nData(docConfig: UserConfig) {
 export const i18nVMPlugin: VirtualModulePlugin = context => {
   const { config } = context;
   return {
-    [RuntimeModuleID.I18nText]: ({ addDependency, addMissingDependency }) => {
-      addDependency(config.i18nSourcePath || DEFAULT_I18N_SOURCE);
-      addMissingDependency(config.i18nSourcePath || DEFAULT_I18N_SOURCE);
+    [RuntimeModuleID.I18nText]: async ({
+      addDependency,
+      addMissingDependency,
+    }) => {
+      const configPath = config.i18nSourcePath || DEFAULT_I18N_SOURCE;
+
+      const isExist = await pathExists(configPath);
+      if (isExist) {
+        addDependency(configPath);
+      } else {
+        addMissingDependency(configPath);
+      }
       const i18nData = getI18nData(config);
 
       return `export default ${JSON.stringify(i18nData, null, 2)}`;

@@ -21,7 +21,11 @@ export function renderHtmlOrText(
     str,
   );
 
-  if (hasValidHtmlElements) {
+  const hasValidHtmlEntities = /&(?:[a-z][0-9a-z]*|#(?:\d+|x[0-9a-f]+));/i.test(
+    str,
+  );
+
+  if (hasValidHtmlElements || hasValidHtmlEntities) {
     return { dangerouslySetInnerHTML: { __html: str } };
   }
 
@@ -41,7 +45,7 @@ export function renderHtmlOrText(
 const CODE_TEXT_PATTERN = /`(.*?)`/g;
 const STRONG_TEXT_PATTERN = /\*{2}(?!\*)(.*?)\*{2}(?!\*)/g;
 const EMPHASIS_TEXT_PATTERN = /\*(?!\*)(.*?)\*(?!\*)/g;
-const DELETE_TEXT_PATTERN = /\~{2}(.*?)\~{2}/g;
+const DELETE_TEXT_PATTERN = /~{2}(.*?)~{2}/g;
 
 /**
  * In this method, we will render the markdown text to inline html and support basic markdown syntax, including the following:

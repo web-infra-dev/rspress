@@ -14,6 +14,7 @@ bilibili
 biomejs
 Bluch
 brotli
+bunx
 browserslistrc
 bundleless
 Bytedance
@@ -46,6 +47,7 @@ flexsearch
 fnames
 frontmatter
 fullhash
+fumadocs
 Geass
 htmr
 iconify
@@ -120,6 +122,7 @@ rsfamily
 rslib
 rslog
 rspack
+rslint
 rspress
 rstack
 rstest
@@ -149,6 +152,7 @@ transpiling
 treeshaking
 tsbuildinfo
 tsdoc
+twoslash
 Unhead
 unocss
 unpatch

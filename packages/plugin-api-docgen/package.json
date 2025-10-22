@@ -1,6 +1,6 @@
 {
   "name": "@rspress/plugin-api-docgen",
-  "version": "2.0.0-beta.20",
+  "version": "2.0.0-beta.34",
   "description": "A plugin for rspress to generate api doc.",
   "bugs": "https://github.com/web-infra-dev/rspress/issues",
   "repository": {
@@ -12,15 +12,14 @@
   "type": "module",
   "exports": {
     ".": {
-      "types": "./index.d.ts",
+      "types": "./dist/index.d.ts",
       "default": "./dist/index.js"
     }
   },
-  "types": "./index.d.ts",
+  "types": "./dist/index.d.ts",
   "files": [
     "dist",
-    "static",
-    "index.d.ts"
+    "static"
   ],
   "scripts": {
     "build": "rslib build",
@@ -28,7 +27,6 @@
     "reset": "rimraf ./**/node_modules"
   },
   "dependencies": {
-    "@rspress/shared": "workspace:*",
     "chokidar": "^3.6.0",
     "documentation": "14.0.3",
     "github-slugger": "^2.0.0",
@@ -39,21 +37,21 @@
     "unist-util-visit": "^5.0.0"
   },
   "devDependencies": {
-    "@microsoft/api-extractor": "^7.52.8",
-    "@rslib/core": "0.10.4",
+    "@microsoft/api-extractor": "^7.53.1",
+    "@rslib/core": "0.15.1",
     "@types/hast": "^3.0.4",
     "@types/mdast": "^4.0.4",
     "@types/node": "^22.8.1",
-    "@types/react": "^19.1.8",
-    "@types/react-dom": "^19.1.6",
-    "react": "^19.1.0",
-    "react-dom": "^19.1.0",
-    "react-router-dom": "^6.29.0",
-    "rsbuild-plugin-publint": "^0.3.2",
+    "@types/react": "^19.1.15",
+    "@types/react-dom": "^19.1.9",
+    "react": "^19.1.1",
+    "react-dom": "^19.1.1",
+    "react-router-dom": "^6.30.1",
+    "rsbuild-plugin-publint": "^0.3.3",
     "typescript": "^5.8.2"
   },
   "peerDependencies": {
-    "@rspress/core": "workspace:^2.0.0-beta.20",
+    "@rspress/core": "workspace:^2.0.0-beta.34",
     "typescript": "^5.8.2"
   },
   "peerDependenciesMeta": {
@@ -66,7 +64,6 @@
   },
   "publishConfig": {
     "access": "public",
-    "provenance": true,
     "registry": "https://registry.npmjs.org/"
   }
 }

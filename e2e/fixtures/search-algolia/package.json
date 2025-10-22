@@ -8,12 +8,12 @@
     "preview": "rspress preview"
   },
   "dependencies": {
-    "react": "^19.1.0",
-    "rspress": "workspace:*"
+    "@rspress/core": "workspace:*",
+    "react": "^19.1.1"
   },
   "devDependencies": {
     "@rspress/plugin-algolia": "workspace:*",
     "@types/node": "^22.8.1",
-    "@types/react": "^19.1.8"
+    "@types/react": "^19.1.15"
   }
 }

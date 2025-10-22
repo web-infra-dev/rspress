@@ -1,34 +1,62 @@
-import type { DefaultThemeConfig, SiteData } from '@rspress/shared';
+import { SocialLinks, SvgWrapper, useHoverGroup } from '@theme';
 import SmallMenu from '@theme-assets/small-menu';
-import { useNavScreen } from '../../logic/useNav';
-import { NavScreen } from '../NavScreen';
-import { SvgWrapper } from '../SvgWrapper';
-import * as styles from './index.module.scss';
+import clsx from 'clsx';
+import { createPortal } from 'react-dom';
+import { NavVersions } from '../Nav/NavMenu';
+import { NavScreen, NavScreenDivider } from '../NavScreen';
+import { NavScreenAppearance } from '../NavScreen/NavScreenAppearance';
+import { NavScreenLangs } from '../NavScreen/NavScreenLangs';
+import './index.scss';
+import { useNavScreen } from './useNavScreen';
 
-interface Props {
-  siteData: SiteData<DefaultThemeConfig>;
-  pathname: string;
-}
-
-export function NavHamburger(props: Props) {
-  const { siteData, pathname } = props;
+export function NavHamburger() {
+  const items = (
+    <div className="rp-nav-hamburger__md__hover-group">
+      <NavScreenAppearance />
+      <NavVersions />
+      <NavScreenLangs />
+      <NavScreenDivider />
+      <SocialLinks />
+    </div>
+  );
   const { isScreenOpen, toggleScreen } = useNavScreen();
+
+  const { handleMouseEnter, handleMouseLeave, hoverGroup } = useHoverGroup({
+    position: 'right',
+    customChildren: (
+      <div className="rp-nav-menu__others-mobile__container">{items}</div>
+    ),
+  });
+
   return (
     <>
-      <NavScreen
-        isScreenOpen={isScreenOpen}
-        toggleScreen={toggleScreen}
-        siteData={siteData}
-        pathname={pathname}
-      />
+      {typeof window !== 'undefined' &&
+        createPortal(
+          <NavScreen isScreenOpen={isScreenOpen} toggleScreen={toggleScreen} />,
+          document.getElementById('__rspress_modal_container')!,
+        )}
+
       <button
         onClick={toggleScreen}
         aria-label="mobile hamburger"
-        className={`${isScreenOpen ? styles.active : ''} rspress-mobile-hamburger ${
-          styles.navHamburger
-        } rp-text-gray-500`}
+        className={clsx('rp-nav-hamburger', 'rp-nav-hamburger__sm', {
+          'rp-nav-hamburger--active': isScreenOpen,
+        })}
       >
-        <SvgWrapper icon={SmallMenu} fill="currentColor" />
+        <SvgWrapper icon={SmallMenu} />
+      </button>
+
+      <button
+        aria-label="mobile hamburger"
+        className={clsx('rp-nav-hamburger', 'rp-nav-hamburger__md', {
+          'rp-nav-hamburger--active': isScreenOpen,
+        })}
+        onClick={handleMouseEnter}
+        onMouseEnter={handleMouseEnter}
+        onMouseLeave={handleMouseLeave}
+      >
+        <SvgWrapper icon={SmallMenu} />
+        {hoverGroup}
       </button>
     </>
   );

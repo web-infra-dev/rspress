@@ -2,45 +2,13 @@
  * Custom shiki code block theme
  * reference: https://github.com/shikijs/shiki/blob/main/docs/themes.md
  * -------------------------------------------------------------------------- */
-
-:root {
-  --shiki-foreground: #414141;
-  --shiki-background: transparent;
-  --shiki-token-constant: #1976d2;
-  --shiki-token-string: #31a94d;
-  --shiki-token-comment: rgb(182, 180, 180);
-  --shiki-token-keyword: #cf2727;
-  --shiki-token-parameter: #f59403;
-  --shiki-token-function: #7041c8;
-  --shiki-token-string-expression: #218438;
-  --shiki-token-punctuation: #242323;
-  --shiki-token-link: #22863a;
-
-  // diff language
-  --shiki-token-deleted: #d32828;
-  --shiki-token-inserted: #22863a;
-}
-
-html.rp-dark {
-  --shiki-foreground: #cac7c7;
-  --shiki-token-constant: #6fb0fa;
-  --shiki-token-string: #f9a86e;
-  --shiki-token-comment: #6a727b;
-  --shiki-token-keyword: #f47481;
-  --shiki-token-parameter: #ff9800;
-  --shiki-token-function: #ae8eeb;
-  --shiki-token-string-expression: #4fb74d;
-  --shiki-token-punctuation: #bbbbbb;
-  --shiki-token-link: #f9a76d;
-
-  // diff language
-  --shiki-token-deleted: #ee6d7a;
-  --shiki-token-inserted: #36c47f;
-}
-
 .shiki span.line {
   padding: 0 1.25rem;
   display: inline-block;
+}
+
+.code-line-highlighted {
+  background-color: var(--rp-code-line-highlight-color);
 }
 
 .diff,
@@ -68,34 +36,32 @@ html.rp-dark {
   color: #f47481;
 }
 
-.has-diff [class*='language-'] .diff.add {
+.shiki.has-diff code .diff.add {
   background-color: rgba(16, 185, 129, 0.1);
   padding: 0 20px 0 19px;
 }
 
-[class*='language-'] code .diff.remove {
+.shiki.has-diff code .diff.remove {
   background-color: rgba(244, 63, 94, 0.1);
   padding: 0 20px 0 19px;
 }
 
-.rspress-code-content {
-  .has-highlighted [class*='language-'] {
-    .line.highlighted {
-      width: 100%;
-      position: static;
-      display: inline-block;
-      background-color: rgba(0, 99, 199, 0.1);
-    }
-    .line.highlighted.error {
-      background-color: rgba(244, 63, 94, 0.1);
-    }
-    .line.highlighted.warning {
-      background-color: rgba(234, 179, 8, 0.1);
-    }
+.shiki.has-highlighted {
+  .line.highlighted {
+    width: 100%;
+    position: static;
+    display: inline-block;
+    background-color: rgba(0, 99, 199, 0.1);
+  }
+  .line.highlighted.error {
+    background-color: rgba(244, 63, 94, 0.1);
+  }
+  .line.highlighted.warning {
+    background-color: rgba(234, 179, 8, 0.1);
   }
 }
 
-.has-focused [class*='language-'] {
+.shiki.has-focused {
   .line:not(.focused) {
     filter: blur(0.095rem);
     opacity: 0.4;
@@ -111,7 +77,7 @@ html.rp-dark {
   }
 }
 
-.has-line-number code {
+.shiki.has-line-number code {
   counter-reset: step;
   counter-increment: step 0;
   & .line-number::before {
@@ -122,11 +88,5 @@ html.rp-dark {
     display: inline-block;
     text-align: right;
     color: rgba(115, 138, 148, 0.4);
-  }
-}
-
-.rp-force-wrap {
-  code {
-    white-space: pre-wrap !important;
   }
 }

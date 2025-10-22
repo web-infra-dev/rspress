@@ -1,0 +1,46 @@
+.editorContainer {
+  position: relative;
+  width: 100%;
+}
+
+.codeBlockWrapper {
+  position: relative;
+  width: 100%;
+  overflow: auto;
+  :global(.rp-codeblock) {
+    margin: 0;
+  }
+}
+
+.codeInput {
+  position: absolute;
+  display: block;
+  top: 0px;
+  left: 0px;
+  width: 100%;
+  height: 100%;
+  resize: none;
+  background: transparent;
+  color: transparent;
+  caret-color: #333;
+  font: inherit;
+  border: none;
+  outline: none;
+
+  padding: 16px 20px;
+  margin: 0;
+  z-index: 2;
+
+  font-family: var(--rp-font-family-mono);
+  font-size: var(--rp-code-font-size);
+  line-height: inherit;
+
+  overflow: hidden;
+  pointer-events: auto;
+
+  caret-color: rgba(156, 163, 175, 0.7);
+}
+
+.codeInput::selection {
+  background: rgba(0, 0, 0, 0.15);
+}

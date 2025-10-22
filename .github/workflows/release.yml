@@ -28,10 +28,10 @@ jobs:
     name: Release
     if: github.repository == 'web-infra-dev/rspress' && github.event_name == 'workflow_dispatch'
     runs-on: ubuntu-latest
-    environment: production
+    environment: npm
     steps:
       - name: Checkout
-        uses: actions/checkout@v4.2.2
+        uses: actions/checkout@v5.0.0
         with:
           fetch-depth: 1
           ref: ${{ github.event.inputs.branch }}
@@ -42,20 +42,20 @@ jobs:
           corepack enable
 
       - name: Setup Node.js
-        uses: actions/setup-node@v4
+        uses: actions/setup-node@v5
         with:
           node-version: 22.x
           cache: 'pnpm'
 
-      - name: Install npm v9
-        run: npm install -g npm@9
+      # Update npm to the latest version to enable OIDC
+      - name: Update npm
+        run: |
+          npm install -g npm@latest
+          npm --version
 
       - name: Install Dependencies && Build
         run: pnpm install
 
       - name: Publish to npm
-        env:
-          NPM_TOKEN: ${{ secrets.RSPRESS_NPM_TOKEN }}
         run: |
-          npm config set "//registry.npmjs.org/:_authToken" "${NPM_TOKEN}"
           pnpm -r publish --tag ${{ github.event.inputs.npm_tag }} --publish-branch ${{ github.event.inputs.branch }}

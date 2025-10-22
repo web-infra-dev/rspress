@@ -2,8 +2,8 @@ import { expect, test } from '@playwright/test';
 import { getPort, killProcess, runDevCommand } from '../../utils/runCommands';
 
 test.describe('Nested overview page', async () => {
-  let appPort;
-  let app;
+  let appPort: number;
+  let app: Awaited<ReturnType<typeof runDevCommand>>;
   test.beforeAll(async () => {
     const appDir = __dirname;
     appPort = await getPort();
@@ -25,14 +25,15 @@ test.describe('Nested overview page', async () => {
         waitUntil: 'networkidle',
       },
     );
+    const overviewHeadings = page.locator(
+      '.rp-overview h2.rp-toc-include span',
+    );
+    await expect(overviewHeadings).toHaveText(['Level 2']);
 
-    const h2 = await page.$$('.overview-index h2');
-    const h2Texts = await Promise.all(h2.map(element => element.textContent()));
-    expect(h2Texts.join(',')).toEqual(['Level 2'].join(','));
-
-    const h3 = await page.$$('.overview-group_f8331 h3');
-    const h3Texts = await Promise.all(h3.map(element => element.textContent()));
-    expect(h3Texts.join(',')).toEqual(['Level 2', 'two', 'Level 3'].join(','));
+    const overviewGroups = page.locator(
+      '.rp-overview .rp-overview-group__item__title > a',
+    );
+    await expect(overviewGroups).toHaveText(['Level 2', 'two', 'Level 3']);
   });
 
   test('Should load nested overview page correctly - level 2', async ({
@@ -44,14 +45,15 @@ test.describe('Nested overview page', async () => {
         waitUntil: 'networkidle',
       },
     );
+    const overviewHeadings = page.locator(
+      '.rp-overview h2.rp-toc-include span',
+    );
+    await expect(overviewHeadings).toHaveText(['two', 'Level 3']);
 
-    const h2 = await page.$$('.overview-index h2');
-    const h2Texts = await Promise.all(h2.map(element => element.textContent()));
-    expect(h2Texts.join(',')).toEqual(['two', 'Level 3'].join(','));
-
-    const h3 = await page.$$('.overview-group_f8331 h3');
-    const h3Texts = await Promise.all(h3.map(element => element.textContent()));
-    expect(h3Texts.join(',')).toEqual(['two', 'Level 3', 'three'].join(','));
+    const overviewGroups = page.locator(
+      '.rp-overview .rp-overview-group__item__title > a',
+    );
+    await expect(overviewGroups).toHaveText(['two', 'Level 3', 'three']);
   });
 
   test('Should load nested overview page correctly - level 3', async ({
@@ -63,13 +65,14 @@ test.describe('Nested overview page', async () => {
         waitUntil: 'networkidle',
       },
     );
+    const overviewHeadings = page.locator(
+      '.rp-overview h2.rp-toc-include span',
+    );
+    await expect(overviewHeadings).toHaveText(['three']);
 
-    const h2 = await page.$$('.overview-index h2');
-    const h2Texts = await Promise.all(h2.map(element => element.textContent()));
-    expect(h2Texts.join(',')).toEqual(['three'].join(','));
-
-    const h3 = await page.$$('.overview-group_f8331 h3');
-    const h3Texts = await Promise.all(h3.map(element => element.textContent()));
-    expect(h3Texts.join(',')).toEqual(['three'].join(','));
+    const overviewGroups = page.locator(
+      '.rp-overview .rp-overview-group__item__title > a',
+    );
+    await expect(overviewGroups).toHaveText(['three']);
   });
 });

@@ -1,6 +1,22 @@
-@import url(./preflight.css);
-@tailwind components;
-@tailwind utilities;
+@import url(./preflight.css) layer(rp-base);
+
+/* all the tag select except html and body should be added to rp-base layer */
+@layer rp-base {
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6,
+  li,
+  p {
+    overflow-wrap: break-word;
+  }
+  button:focus,
+  button:focus-visible {
+    outline: none;
+  }
+}
 
 html {
   line-height: 1.7;
@@ -31,24 +47,15 @@ body {
   -moz-osx-font-smoothing: grayscale;
 }
 
-button:focus,
-button:focus-visible {
-  outline: none;
-}
-
-h1,
-h2,
-h3,
-h4,
-h5,
-h6,
-li,
-p {
-  overflow-wrap: break-word;
-}
-
-.visually-hidden {
-  visibility: hidden;
+/**
+  * Custom font family
+*/
+:root {
+  --rp-font-family-base:
+    'Inter var experimental', 'Inter var', -apple-system, BlinkMacSystemFont,
+    'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Fira Sans', 'Droid Sans',
+    'Helvetica Neue', sans-serif;
+  --rp-font-family-mono: Menlo, Monaco, Consolas, 'Courier New', monospace;
 }
 
 .rspress-logo {
@@ -62,15 +69,4 @@ p {
   left: 0;
   width: 100%;
   height: 2px;
-}
-
-/**
-  * Custom font family
-*/
-:root {
-  --rp-font-family-base:
-    'Inter var experimental', 'Inter var', -apple-system, BlinkMacSystemFont,
-    'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Fira Sans', 'Droid Sans',
-    'Helvetica Neue', sans-serif;
-  --rp-font-family-mono: Menlo, Monaco, Consolas, 'Courier New', monospace;
 }

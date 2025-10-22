@@ -1,5 +1,6 @@
 import path from 'node:path';
 import { createProcessor } from '@mdx-js/mdx';
+import type { Rspack } from '@rsbuild/core';
 import type { Header, UserConfig } from '@rspress/shared';
 import { extractTextAndId, loadFrontMatter } from '@rspress/shared/node-utils';
 
@@ -17,13 +18,14 @@ import type { PageMeta } from './types';
 interface CompileOptions {
   source: string;
   filepath: string;
-  checkDeadLinks: boolean;
 
   // assume that the below instances are singleton, it will not change.
   docDirectory: string;
   config: UserConfig | null;
   routeService: RouteService | null;
   pluginDriver: PluginDriver | null;
+
+  addDependency?: Rspack.LoaderContext['addDependency']; // remarkFileCodeBlock hmr
 }
 
 async function compile(options: CompileOptions): Promise<string> {
@@ -31,19 +33,19 @@ async function compile(options: CompileOptions): Promise<string> {
     source,
     filepath,
     docDirectory,
-    checkDeadLinks,
     config,
     routeService,
     pluginDriver,
+    addDependency,
   } = options;
 
   const mdxOptions = await createMDXOptions({
-    checkDeadLinks,
     config,
     docDirectory,
     filepath,
     pluginDriver,
     routeService,
+    addDependency,
   });
   // Separate frontmatter and content in MDX source
   const { frontmatter, emptyLinesSource } = loadFrontMatter(
@@ -92,10 +94,9 @@ async function compile(options: CompileOptions): Promise<string> {
       frontmatter,
     } as PageMeta;
 
-    const result = `const frontmatter = ${JSON.stringify(frontmatter)};
-${compileResult}
-MDXContent.__RSPRESS_PAGE_META = {};
+    const result = `${compileResult}
 
+MDXContent.__RSPRESS_PAGE_META = {};
 MDXContent.__RSPRESS_PAGE_META["${encodeURIComponent(
       normalizePath(path.relative(docDirectory, filepath)),
     )}"] = ${JSON.stringify(pageMeta)};
@@ -109,19 +110,22 @@ MDXContent.__RSPRESS_PAGE_META["${encodeURIComponent(
   }
 }
 
-// TODO: free the memory
 const cache = new Map<string, Promise<string>>();
 
 async function compileWithCrossCompilerCache(
   options: CompileOptions,
 ): Promise<string> {
-  const task = cache.get(options.filepath);
+  const filepath = options.filepath;
+  const task = cache.get(filepath);
   if (task) {
+    // only for web and node, one write and one read
+    // free the memory after one read
+    cache.delete(filepath);
     return task;
   }
 
   const promise = compile(options);
-  cache.set(options.filepath, promise);
+  cache.set(filepath, promise);
   return promise;
 }
 

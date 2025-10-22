@@ -1,13 +1,12 @@
-import { expect, test } from '@playwright/test';
-import { getPort, killProcess, runDevCommand } from '../../utils/runCommands';
-
 import os from 'node:os';
 import type { Locator, Page } from '@playwright/test';
+import { expect, test } from '@playwright/test';
 import { getShouldOpenNewPage } from '../../utils/newPage';
+import { getPort, killProcess, runDevCommand } from '../../utils/runCommands';
 
 test.describe('Navigation with <Link>', async () => {
   let appPort: number;
-  let app: unknown;
+  let app: Awaited<ReturnType<typeof runDevCommand>>;
 
   const getContext = async (page: Page) => {
     await page.goto(`http://localhost:${appPort}`, {
@@ -18,7 +17,7 @@ test.describe('Navigation with <Link>', async () => {
 
     return {
       page,
-      anchor: page.locator('.rspress-nav-menu > a:first-child').first(),
+      anchor: page.locator('.rp-nav-menu__item a').first(),
       shouldOpenNewPage,
       dispose,
     };

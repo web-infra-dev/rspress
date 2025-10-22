@@ -1,6 +1,6 @@
 {
   "name": "@rspress/plugin-typedoc",
-  "version": "2.0.0-beta.20",
+  "version": "2.0.0-beta.34",
   "description": "A plugin for rspress to integrate typedoc",
   "bugs": "https://github.com/web-infra-dev/rspress/issues",
   "repository": {
@@ -33,30 +33,28 @@
     "reset": "rimraf ./**/node_modules"
   },
   "dependencies": {
-    "@rspress/shared": "workspace:*",
     "typedoc": "0.24.8",
     "typedoc-plugin-markdown": "3.17.1"
   },
   "devDependencies": {
-    "@microsoft/api-extractor": "^7.52.8",
-    "@rslib/core": "0.10.4",
+    "@microsoft/api-extractor": "^7.53.1",
+    "@rslib/core": "0.15.1",
     "@rspress/config": "workspace:*",
     "@types/node": "^22.8.1",
-    "@types/react": "^19.1.8",
-    "@types/react-dom": "^19.1.6",
-    "react": "^19.1.0",
-    "rsbuild-plugin-publint": "^0.3.2",
+    "@types/react": "^19.1.15",
+    "@types/react-dom": "^19.1.9",
+    "react": "^19.1.1",
+    "rsbuild-plugin-publint": "^0.3.3",
     "typescript": "^5.8.2"
   },
   "peerDependencies": {
-    "rspress": "workspace:^2.0.0-beta.20"
+    "@rspress/core": "workspace:^2.0.0-beta.34"
   },
   "engines": {
     "node": ">=18.0.0"
   },
   "publishConfig": {
     "access": "public",
-    "provenance": true,
     "registry": "https://registry.npmjs.org/"
   }
 }

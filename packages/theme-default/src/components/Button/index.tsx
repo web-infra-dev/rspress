@@ -1,13 +1,13 @@
 import { Link } from '@theme';
+import clsx from 'clsx';
 import React, { type JSX } from 'react';
-import * as styles from './index.module.scss';
+import './index.scss';
 
 interface ButtonProps {
   type?: string;
   size?: 'medium' | 'big';
   theme?: 'brand' | 'alt';
   href?: string;
-  external?: boolean;
   className?: string;
   children?: React.ReactNode;
   dangerouslySetInnerHTML?: {
@@ -20,7 +20,6 @@ export function Button(props: ButtonProps): JSX.Element {
     theme = 'brand',
     size = 'big',
     href = '/',
-    external = false,
     className = '',
     children,
     dangerouslySetInnerHTML,
@@ -30,14 +29,18 @@ export function Button(props: ButtonProps): JSX.Element {
   if (props.type === 'button') {
     type = 'button';
   } else if (props.type === 'a') {
-    // Will be tree shaking in production in modern mode.
-    type = external ? 'a' : Link;
+    type = Link;
   }
 
   return React.createElement(
     type ?? 'a',
     {
-      className: `${styles.button} ${styles[theme]} ${styles[size]} ${className}`,
+      className: clsx(
+        'rp-button',
+        `rp-button--${theme}`,
+        `rp-button--${size}`,
+        className,
+      ),
       href,
       ...dangerouslySetInnerHTML,
     },

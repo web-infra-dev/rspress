@@ -1,13 +1,13 @@
-import { isProduction } from '@rspress/runtime';
+import { Link } from '@theme';
 import FileSvg from '@theme-assets/file';
 import HeaderSvg from '@theme-assets/header';
 import JumpSvg from '@theme-assets/jump';
 import TitleSvg from '@theme-assets/title';
 import { useRef } from 'react';
 import { SvgWrapper } from '../SvgWrapper';
-import * as styles from './index.module.scss';
+import './SuggestItem.scss';
 import type { DefaultMatchResultItem, HighlightInfo } from './logic/types';
-import { getSlicedStrByByteLength, removeDomain } from './logic/util';
+import { getSlicedStrByByteLength } from './logic/util';
 
 const ICON_MAP = {
   title: TitleSvg,
@@ -20,7 +20,6 @@ export function SuggestItem({
   closeSearch,
   isCurrent,
   setCurrentSuggestionIndex,
-  inCurrentDocIndex,
   scrollTo,
   onMouseMove,
 }: {
@@ -35,10 +34,6 @@ export function SuggestItem({
   scrollTo: (top: number, height: number) => void;
 }) {
   const HitIcon = ICON_MAP[suggestion.type];
-  const link =
-    inCurrentDocIndex && !isProduction()
-      ? removeDomain(suggestion.link)
-      : suggestion.link;
   const selfRef = useRef<HTMLLIElement>(null);
   if (isCurrent && selfRef.current?.offsetTop) {
     scrollTo(selfRef.current?.offsetTop, selfRef.current?.offsetHeight);
@@ -59,7 +54,7 @@ export function SuggestItem({
       const queryStr = getSlicedStrByByteLength(rawText, start, length);
       fragmentList.push(prefix);
       fragmentList.push(
-        <span key={start} className={styles.mark}>
+        <span key={start} className="rp-suggest-item__mark">
           {queryStr}
         </span>,
       );
@@ -77,13 +72,13 @@ export function SuggestItem({
     if (suggestion.type === 'header' || suggestion.type === 'title') {
       const { header, highlightInfoList } = suggestion;
       return (
-        <div className="rp-font-medium">
+        <div className="rp-suggest-item__header">
           {getHighlightedFragments(header, highlightInfoList)}
         </div>
       );
     }
 
-    return <div className="rp-font-medium">{suggestion.header}</div>;
+    return <div className="rp-suggest-item__header">{suggestion.header}</div>;
   };
 
   const renderStatementMatch = () => {
@@ -92,7 +87,7 @@ export function SuggestItem({
     }
     const { statement, highlightInfoList } = suggestion;
     return (
-      <div className="rp-text-sm rp-text-gray-light rp-w-full">
+      <div className="rp-suggest-item__statement">
         {getHighlightedFragments(statement, highlightInfoList)}
       </div>
     );
@@ -109,7 +104,7 @@ export function SuggestItem({
       hitContent = (
         <>
           {renderStatementMatch()}
-          <p className={styles.titleForContent}>{suggestion.title}</p>
+          <p className="rp-suggest-item__title">{suggestion.title}</p>
         </>
       );
       break;
@@ -120,31 +115,30 @@ export function SuggestItem({
   return (
     <li
       key={suggestion.link}
-      className={`rspress-search-suggest-item ${styles.suggestItem} ${isCurrent ? styles.current : ''}`}
+      className={`rp-suggest-item ${isCurrent ? 'rp-suggest-item--current' : ''}`}
       onMouseEnter={setCurrentSuggestionIndex}
       onMouseMove={onMouseMove}
       ref={selfRef}
     >
-      <a
-        href={link}
+      <Link
+        href={suggestion.link}
         onClick={e => {
           closeSearch();
           e.stopPropagation();
         }}
-        target={inCurrentDocIndex ? '_self' : '_blank'}
       >
-        <div className={styles.suggestItemContainer}>
+        <div className="rp-suggest-item__container">
           <div>
             <SvgWrapper icon={HitIcon} />
           </div>
-          <div className={styles.contentWrapper}>
+          <div className="rp-suggest-item__content">
             <span>{hitContent}</span>
           </div>
-          <div className={styles.actionIcon}>
+          <div className="rp-suggest-item__action-icon">
             <SvgWrapper icon={JumpSvg} />
           </div>
         </div>
-      </a>
+      </Link>
     </li>
   );
 }

@@ -1,21 +1,30 @@
-import { Content, usePageData } from '@rspress/runtime';
+import {
+  Content,
+  useFrontmatter,
+  useLocaleSiteData,
+  usePageData,
+  useSite,
+} from '@rspress/runtime';
 import type { FrontMatterMeta } from '@rspress/shared';
 import {
   HomeLayout as DefaultHomeLayout,
   NotFoundLayout as DefaultNotFoundLayout,
+  DocLayout,
+  type DocLayoutProps,
   Nav,
 } from '@theme';
-import { useHead } from '@unhead/react';
-import { Head } from '@unhead/react';
-import React, { memo } from 'react';
-import { useMemo } from 'react';
+import { Head, useHead } from '@unhead/react';
+import React, { memo, useMemo, useState } from 'react';
 import type { NavProps } from '../../components/Nav';
 import { useSetup } from '../../logic/sideEffects';
-import { useLocaleSiteData } from '../../logic/useLocaleSiteData';
+import { TabDataContext } from '../../logic/TabDataContext';
 import { useRedirect4FirstVisit } from '../../logic/useRedirect4FirstVisit';
-import { type UISwitchResult, useUISwitch } from '../../logic/useUISwitch';
-import { DocLayout, type DocLayoutProps } from '../DocLayout';
 import type { HomeLayoutProps } from '../HomeLayout';
+import {
+  UISwitchContext,
+  type UISwitchResult,
+  useCreateUISwitch,
+} from './useUISwitch';
 
 export type LayoutProps = {
   top?: React.ReactNode;
@@ -26,6 +35,8 @@ export type LayoutProps = {
   uiSwitch?: Partial<UISwitchResult>;
   HomeLayout?: React.FC<HomeLayoutProps>;
   NotFoundLayout?: React.FC<any>;
+  beforeNav?: React.ReactNode;
+  afterNav?: React.ReactNode;
 } & Omit<DocLayoutProps, 'uiSwitch'> &
   HomeLayoutProps &
   NavProps;
@@ -67,6 +78,16 @@ const HeadTags = memo(
       },
       title: title || undefined,
       meta: [
+        {
+          property: 'og:type',
+          content: 'website',
+        },
+        title
+          ? {
+              property: 'og:title',
+              content: title,
+            }
+          : undefined,
         description
           ? {
               name: 'description',
@@ -98,6 +119,7 @@ export function Layout(props: LayoutProps) {
     afterNavTitle,
     navTitle,
     beforeNav,
+    afterNav,
     beforeHero,
     afterHero,
     beforeFeatures,
@@ -126,13 +148,14 @@ export function Layout(props: LayoutProps) {
     beforeFeatures,
     afterFeatures,
   };
-  const { siteData, page } = usePageData();
+  const { page } = usePageData();
+  const { site } = useSite();
+  const { frontmatter } = useFrontmatter();
   const {
     pageType,
     lang: currentLang,
     // Inject by remark-plugin-toc
     title: articleTitle,
-    frontmatter = {},
   } = page;
   const localesData = useLocaleSiteData();
 
@@ -140,10 +163,12 @@ export function Layout(props: LayoutProps) {
 
   useRedirect4FirstVisit();
 
+  const [tabData, setTabData] = useState({});
+
   // Always show sidebar by default
   // Priority: front matter title > h1 title
   let title = (frontmatter.title as string) ?? articleTitle;
-  const mainTitle = siteData.title || localesData.title || '';
+  const mainTitle = site.title || localesData.title || '';
 
   if (title && pageType === 'doc') {
     // append main title as a suffix
@@ -161,13 +186,15 @@ export function Layout(props: LayoutProps) {
 
   const description =
     (frontmatter?.description as string) ||
-    siteData.description ||
+    site.description ||
     localesData.description;
+
+  const uiSwitchResult = useCreateUISwitch();
 
   // Control whether or not to display the navbar, sidebar, outline and footer
   // `props.uiSwitch` has higher priority and allows user to override the default value
   const uiSwitch = {
-    ...useUISwitch(),
+    ...uiSwitchResult,
     ...props.uiSwitch,
   };
 
@@ -177,9 +204,7 @@ export function Layout(props: LayoutProps) {
       case 'home':
         return <HomeLayout {...homeProps} />;
       case 'doc':
-        return (
-          <DocLayout {...docProps} uiSwitch={uiSwitch} navTitle={navTitle} />
-        );
+        return <DocLayout {...docProps} navTitle={navTitle} />;
       case '404':
         return <NotFoundLayout />;
       // The custom pageType will have navbar while the blank pageType will not.
@@ -192,28 +217,32 @@ export function Layout(props: LayoutProps) {
   };
 
   return (
-    <>
-      <HeadTags
-        lang={currentLang}
-        title={title}
-        description={description}
-        frontmatter={frontmatter}
-      />
-
-      {top}
-
-      {pageType !== 'blank' && uiSwitch.showNavbar && (
-        <Nav
-          beforeNavTitle={beforeNavTitle}
-          afterNavTitle={afterNavTitle}
-          navTitle={navTitle}
-          beforeNav={beforeNav}
-          afterNavMenu={afterNavMenu}
+    <TabDataContext.Provider value={{ tabData, setTabData }}>
+      <UISwitchContext.Provider value={uiSwitch}>
+        <HeadTags
+          lang={currentLang}
+          title={title}
+          description={description}
+          frontmatter={frontmatter}
         />
-      )}
 
-      <section>{getContentLayout()}</section>
-      {bottom}
-    </>
+        {top}
+        {pageType !== 'blank' && uiSwitch.showNavbar && (
+          <>
+            {beforeNav}
+            <Nav
+              beforeNavTitle={beforeNavTitle}
+              afterNavTitle={afterNavTitle}
+              navTitle={navTitle}
+              afterNavMenu={afterNavMenu}
+            />
+            {afterNav}
+          </>
+        )}
+
+        {getContentLayout()}
+        {bottom}
+      </UISwitchContext.Provider>
+    </TabDataContext.Provider>
   );
 }

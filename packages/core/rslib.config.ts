@@ -1,31 +1,68 @@
+import path from 'node:path';
 import { pluginReact } from '@rsbuild/plugin-react';
 import { defineConfig } from '@rslib/core';
 import { pluginPublint } from 'rsbuild-plugin-publint';
 
+function generateEntry(entryPath: string) {
+  const entryName = path
+    .basename(entryPath)
+    .replace(path.extname(entryPath), '');
+  return {
+    dts: { bundle: true },
+    source: {
+      entry: {
+        [entryName]: entryPath,
+      },
+    },
+    format: 'esm',
+    syntax: 'esnext',
+  } as const;
+}
+
 export default defineConfig({
   plugins: [pluginPublint()],
   lib: [
+    generateEntry('./src/runtime.ts'),
+    generateEntry('./src/theme.ts'),
+    {
+      format: 'esm',
+      syntax: 'es2022',
+      source: {
+        entry: {
+          renderPageWorker: './src/node/ssg/renderPageWorker.ts',
+        },
+      },
+    },
     {
       format: 'esm',
       dts: {
         bundle: true,
       },
       syntax: 'es2022',
-      shims: {
-        esm: {
-          require: true,
-        },
-      },
       source: {
-        define: {
-          REQUIRE_CACHE: 'require.cache',
+        entry: {
+          cli: './src/cli/index.ts',
         },
       },
       output: {
         distPath: {
           root: './dist',
         },
-        externals: ['jsdom', 'tailwindcss'],
+        externals: {
+          '../node/index': 'module ./index.js',
+        },
+      },
+    },
+    {
+      format: 'esm',
+      dts: {
+        bundle: true,
+      },
+      syntax: 'es2022',
+      output: {
+        distPath: {
+          root: './dist',
+        },
       },
     },
     {
@@ -33,11 +70,6 @@ export default defineConfig({
       syntax: 'es2022',
       dts: {
         bundle: true,
-      },
-      shims: {
-        esm: {
-          require: true,
-        },
       },
       output: {
         distPath: {
@@ -58,11 +90,6 @@ export default defineConfig({
       syntax: 'es2022',
       dts: {
         bundle: true,
-      },
-      shims: {
-        esm: {
-          require: true,
-        },
       },
       output: {
         distPath: {

@@ -6,7 +6,8 @@ import { RouteService } from './RouteService';
 
 export class RoutePage {
   routeMeta: RouteMeta;
-  // @ts-ignore use this field in the future
+  // @ts-expect-error use this field in the future
+  // biome-ignore lint/correctness/noUnusedPrivateClassMembers: use this field in the future
   #docDir: string;
 
   // TODO: add pageIndexInfo

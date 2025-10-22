@@ -6,7 +6,7 @@ process.env.NO_COLOR = '1';
 export default defineConfig(
   {
     name: 'node',
-    globals: true,
+    globals: false,
     testEnvironment: 'node',
     testTimeout: 30000,
     include: ['packages/**/*.test.ts'],

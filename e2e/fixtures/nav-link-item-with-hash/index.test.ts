@@ -2,8 +2,8 @@ import { expect, test } from '@playwright/test';
 import { getPort, killProcess, runDevCommand } from '../../utils/runCommands';
 
 test.describe('basic test', async () => {
-  let appPort;
-  let app;
+  let appPort: number;
+  let app: Awaited<ReturnType<typeof runDevCommand>>;
   test.beforeAll(async () => {
     const appDir = __dirname;
     appPort = await getPort();
@@ -19,10 +19,10 @@ test.describe('basic test', async () => {
   test('Navigate with an hash as link', async ({ page }) => {
     await page.goto(`http://localhost:${appPort}/`);
 
-    await page.locator('.rspress-nav-menu a').first().click();
+    await page.locator('.rp-nav-menu__item a').first().click();
     expect(page.url()).toContain('/#pageA');
 
-    await page.locator('.rspress-nav-menu a').nth(1).click();
+    await page.locator('.rp-nav-menu__item a').nth(1).click();
     expect(page.url()).toContain('/#pageB');
   });
 
@@ -33,10 +33,11 @@ test.describe('basic test', async () => {
 
     await page.goto(`http://localhost:${appPort}/`);
 
-    await page.locator('.rspress-mobile-hamburger').click();
-    await expect(page.locator('.rspress-nav-screen')).toBeVisible();
+    await page.locator('.rp-nav-hamburger').first().click();
+    const navScreen = page.locator('.rp-nav-screen');
+    await expect(navScreen).toHaveClass(/rp-nav-screen--open/);
 
     await page.getByRole('link', { name: 'PageC' }).click();
-    await expect(page.locator('.rspress-nav-screen')).not.toBeVisible();
+    await expect(navScreen).not.toHaveClass(/rp-nav-screen--open/);
   });
 });

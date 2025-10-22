@@ -55,9 +55,8 @@ test.describe('basic test', async () => {
       waitUntil: 'networkidle',
     });
 
-    const img = await page.$('.rspress-doc img');
-    const src = await img?.getAttribute('src');
-    expect(src).toEqual('/base/rspress-icon.png');
+    const img = page.locator('.rspress-doc img');
+    await expect(img).toHaveAttribute('src', '/base/rspress-icon.png');
   });
 
   test('should load public dir img successfully under "rspress dev"', async ({
@@ -70,8 +69,7 @@ test.describe('basic test', async () => {
       waitUntil: 'networkidle',
     });
 
-    const img = await page.$('.rspress-doc img');
-    const src = await img?.getAttribute('src');
-    expect(src).toEqual('/base/rspress-icon.png');
+    const img = page.locator('.rspress-doc img');
+    await expect(img).toHaveAttribute('src', '/base/rspress-icon.png');
   });
 });

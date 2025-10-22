@@ -1,4 +1,4 @@
-import { type Rspack, logger } from '@rsbuild/core';
+import { logger, type Rspack } from '@rsbuild/core';
 
 import { compile, compileWithCrossCompilerCache } from './processor';
 import type { MdxLoaderOptions } from './types';
@@ -12,8 +12,7 @@ export default async function mdxLoader(
 
   const options = this.getOptions();
   const filepath = this.resourcePath;
-  const { config, docDirectory, checkDeadLinks, routeService, pluginDriver } =
-    options;
+  const { config, docDirectory, routeService, pluginDriver } = options;
 
   const crossCompilerCache = config?.markdown?.crossCompilerCache ?? true;
 
@@ -24,7 +23,6 @@ export default async function mdxLoader(
         source,
         filepath,
         docDirectory,
-        checkDeadLinks,
         config,
         pluginDriver,
         routeService,
@@ -35,10 +33,10 @@ export default async function mdxLoader(
         source,
         filepath,
         docDirectory,
-        checkDeadLinks,
         config,
         pluginDriver,
         routeService,
+        addDependency: this.addDependency,
       });
       callback(null, compileResult);
     }

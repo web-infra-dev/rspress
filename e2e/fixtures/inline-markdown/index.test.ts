@@ -1,10 +1,9 @@
 import { expect, test } from '@playwright/test';
-import { getSidebar } from '../../utils/getSideBar';
 import { getPort, killProcess, runDevCommand } from '../../utils/runCommands';
 
 test.describe('Inline markdown test', async () => {
-  let appPort;
-  let app;
+  let appPort: number;
+  let app: Awaited<ReturnType<typeof runDevCommand>>;
   test.beforeAll(async () => {
     const appDir = __dirname;
     appPort = await getPort();
@@ -24,11 +23,11 @@ test.describe('Inline markdown test', async () => {
       waitUntil: 'networkidle',
     });
 
-    const sidebar = await getSidebar(page);
-    expect(sidebar?.length).toBe(8);
+    const sidebar = page.locator('.rp-doc-layout__sidebar .rp-sidebar-item');
+    await expect(sidebar).toHaveCount(9);
 
-    const sidebarTexts = await Promise.all(
-      sidebar.map(element => element.textContent()),
+    const sidebarTexts = (await sidebar.allTextContents()).map(text =>
+      text.trim(),
     );
     expect(sidebarTexts.join(',')).toEqual(
       [
@@ -40,21 +39,26 @@ test.describe('Inline markdown test', async () => {
         '<foo>',
         '-m <number>',
         'delete',
+        'link',
       ].join(','),
     );
 
+    const sidebarCount = await sidebar.count();
     const sidebarInnerHtml = await Promise.all(
-      sidebar.map(element => element.innerHTML()),
+      Array.from({ length: sidebarCount }, (_, index) =>
+        sidebar.nth(index).locator('.rp-sidebar-item__left span').innerHTML(),
+      ),
     );
     const expectedSidebarInnerHtml = [
-      '<span>Overview</span>',
-      '<span>Class: Component&lt;P, S&gt;</span>',
-      '<span>Class: Component&lt;P, S&gt;</span>',
-      '<span><strong>bold</strong></span>',
-      '<span><em>emphasis</em></span>',
-      '<span><code>&lt;foo&gt;</code></span>',
-      '<span>-m &lt;number&gt;</span>',
-      '<span><del>delete</del></span>',
+      'Overview',
+      'Class: Component&lt;P, S&gt;',
+      'Class: Component&lt;P, S&gt;',
+      '<strong>bold</strong>',
+      '<em>emphasis</em>',
+      '<code>&lt;foo&gt;</code>',
+      '-m &lt;number&gt;',
+      '<del>delete</del>',
+      'link',
     ];
     for (const [index, html] of sidebarInnerHtml.entries()) {
       expect(html).toContain(expectedSidebarInnerHtml[index]);
@@ -68,9 +72,11 @@ test.describe('Inline markdown test', async () => {
       waitUntil: 'networkidle',
     });
 
-    const h2 = await page.$$('.overview-index h2');
-    const h2Texts = await Promise.all(h2.map(element => element.textContent()));
-    expect(h2Texts.join(',')).toEqual(
+    const overviewHeadingLocator = page.locator(
+      '.rp-overview h2.rp-toc-include span',
+    );
+    const overviewHeadings = await overviewHeadingLocator.allTextContents();
+    expect(overviewHeadings.map(text => text.trim()).join(',')).toEqual(
       [
         'Class: Component<P, S>',
         'Class: Component<P, S>',
@@ -79,12 +85,17 @@ test.describe('Inline markdown test', async () => {
         '<foo>',
         '-m <number>',
         'delete',
+        'link',
       ].join(','),
     );
-    const h2InnerHtml = await Promise.all(
-      h2.map(element => element.innerHTML()),
+
+    const overviewHeadingCount = await overviewHeadingLocator.count();
+    const overviewHeadingHtml = await Promise.all(
+      Array.from({ length: overviewHeadingCount }, (_, index) =>
+        overviewHeadingLocator.nth(index).innerHTML(),
+      ),
     );
-    expect(h2InnerHtml.join(',')).toEqual(
+    expect(overviewHeadingHtml.join(',')).toEqual(
       [
         'Class: Component&lt;P, S&gt;',
         'Class: Component&lt;P, S&gt;',
@@ -93,55 +104,70 @@ test.describe('Inline markdown test', async () => {
         '<code>&lt;foo&gt;</code>',
         '-m &lt;number&gt;',
         '<del>delete</del>',
+        'link',
       ].join(','),
     );
 
-    const h3 = await page.$$('.overview-group_f8331 h3');
-    const h3Texts = await Promise.all(h3.map(element => element.textContent()));
-    expect(h3Texts.join(',')).toEqual(
-      [
-        'Class: Component<P, S>',
-        'Class: Component<P, S>',
-        'bold',
-        'emphasis',
-        '<foo>',
-        '-m <number>',
-        'delete',
-      ].join(','),
+    const overviewTitles = page.locator(
+      '.rp-overview .rp-overview-group__item__title > a',
     );
-    const h3InnerHtml = await Promise.all(
-      h3.map(element => element.innerHTML()),
+    await expect(overviewTitles).toHaveText([
+      'Class: Component<P, S>',
+      'Class: Component<P, S>',
+      'bold',
+      'emphasis',
+      '<foo>',
+      '-m <number>',
+      'delete',
+      'link',
+    ]);
+
+    const overviewTitlesCount = await overviewTitles.count();
+    const titleInnerHtml = await Promise.all(
+      Array.from({ length: overviewTitlesCount }, (_, index) =>
+        overviewTitles.nth(index).innerHTML(),
+      ),
     );
-    const expectedH3InnerHtml = [
-      'Class: Component&lt;P, S&gt;</a>',
-      'Class: Component&lt;P, S&gt;</a>',
-      '<strong>bold</strong></a>',
-      '<em>emphasis</em></a>',
-      '<code>&lt;foo&gt;</code></a>',
-      '-m &lt;number&gt;</a>',
-      '<del>delete</del></a>',
+    const expectedTitleInnerHtml = [
+      'Class: Component&lt;P, S&gt;',
+      'Class: Component&lt;P, S&gt;',
+      '<strong>bold</strong>',
+      '<em>emphasis</em>',
+      '<code>&lt;foo&gt;</code>',
+      '-m &lt;number&gt;',
+      '<del>delete</del>',
+      'link',
     ];
-    for (const [index, html] of h3InnerHtml.entries()) {
-      expect(html).toContain(expectedH3InnerHtml[index]);
+    for (const [index, html] of titleInnerHtml.entries()) {
+      expect(html).toContain(expectedTitleInnerHtml[index]);
     }
 
-    const a = await page.$$('.overview-group_f8331 ul a');
-    const aTexts = await Promise.all(a.map(element => element.textContent()));
-    expect(aTexts.join(',')).toEqual(
-      [
-        'Class: Component<P, S>',
-        'Class: Component<P, S>',
-        '-m <number>',
-        '<foo>',
-        'foo <bar> baz',
-        'bold',
-        'emphasis',
-        'delete',
-        'This is a long string to test regex performance',
-      ].join(','),
+    const overviewLinks = page.locator(
+      '.rp-overview .rp-overview-group__item__content__item__link',
     );
-    const aInnerHtml = await Promise.all(a.map(element => element.innerHTML()));
-    const expectedAInnerHtml = [
+    await expect(overviewLinks).toHaveText([
+      'Class: Component<P, S>',
+      'Class: Component<P, S>',
+      '-m <number>',
+      '<foo>',
+      'foo <bar> baz',
+      'bold',
+      'emphasis',
+      'delete',
+      'This is a long string to test regex performance',
+      'this is link rsbuild',
+      'this is bold link', // FIXME: should be 'this is bold link rsbuild'
+      'this is code link',
+      'this is bold code link',
+    ]);
+
+    const overviewLinkCount = await overviewLinks.count();
+    const overviewLinkInnerHtml = await Promise.all(
+      Array.from({ length: overviewLinkCount }, (_, index) =>
+        overviewLinks.nth(index).innerHTML(),
+      ),
+    );
+    const expectedOverviewLinkInnerHtml = [
       'Class: Component&lt;P, S&gt;',
       'Class: Component&lt;P, S&gt;',
       '-m &lt;number&gt;',
@@ -151,9 +177,13 @@ test.describe('Inline markdown test', async () => {
       '<em>emphasis</em>',
       '<del>delete</del>',
       '<code>This is a long string to test regex performance</code>',
+      'this is link rsbuild',
+      'this is bold link',
+      'this is code link',
+      'this is bold code link',
     ];
-    for (const [index, html] of aInnerHtml.entries()) {
-      expect(html).toContain(expectedAInnerHtml[index]);
+    for (const [index, html] of overviewLinkInnerHtml.entries()) {
+      expect(html).toContain(expectedOverviewLinkInnerHtml[index]);
     }
   });
 
@@ -162,11 +192,13 @@ test.describe('Inline markdown test', async () => {
       waitUntil: 'networkidle',
     });
 
-    const asides = await page.$$('.aside-link-text');
-    const asidesTexts = await Promise.all(
-      asides.map(element => element.textContent()),
+    const asideItems = page.locator('.rp-aside__toc-item__text');
+    await expect(asideItems).toHaveCount(9);
+
+    const asideTexts = (await asideItems.allTextContents()).map(text =>
+      text.trim(),
     );
-    expect(asidesTexts.join(',')).toEqual(
+    expect(asideTexts.join(',')).toEqual(
       [
         'Class: Component<P, S>',
         'Class: Component<P, S>',
@@ -179,17 +211,21 @@ test.describe('Inline markdown test', async () => {
         'This is a long string to test regex performance',
       ].join(','),
     );
-    const asidesInnerHtml = await Promise.all(
-      asides.map(element => element.innerHTML()),
+
+    const asideCount = await asideItems.count();
+    const asideInnerHtml = await Promise.all(
+      Array.from({ length: asideCount }, (_, index) =>
+        asideItems.nth(index).innerHTML(),
+      ),
     );
-    expect(asidesInnerHtml.join(',')).toEqual(
+    expect(asideInnerHtml.join(',')).toEqual(
       [
         'Class: Component&lt;P, S&gt;',
         'Class: Component&lt;P, S&gt;',
         '-m &lt;number&gt;',
         '<code>&lt;foo&gt;</code>',
         '<code>foo &lt;bar&gt; baz</code>',
-        '<strong class="rp-font-semibold">bold</strong>',
+        '<strong>bold</strong>',
         '<em>emphasis</em>',
         '<del>delete</del>',
         '<code>This is a long string to test regex performance</code>',
@@ -205,10 +241,10 @@ test.describe('Inline markdown test', async () => {
     });
 
     // Check h1 element
-    const h1 = await page.$('h1#class-componentp-s');
-    expect(h1).not.toBeNull();
-    const h1Anchor = await h1?.$('a.header-anchor');
-    expect(await h1Anchor?.getAttribute('href')).toBe('#class-componentp-s');
+    const h1 = page.locator('h1#class-componentp-s');
+    await expect(h1).toHaveCount(1);
+    const h1Anchor = h1.locator('a.rp-header-anchor');
+    await expect(h1Anchor).toHaveAttribute('href', '#class-componentp-s');
 
     // Check h2 elements
     const h2Selectors = [
@@ -223,10 +259,11 @@ test.describe('Inline markdown test', async () => {
     ];
 
     for (const selector of h2Selectors) {
-      const h2 = await page.$(selector);
-      expect(h2).not.toBeNull();
-      const h2Anchor = await h2?.$('a.header-anchor');
-      expect(await h2Anchor?.getAttribute('href')).toBe(
+      const h2 = page.locator(selector);
+      await expect(h2).toHaveCount(1);
+      const h2Anchor = h2.locator('a.rp-header-anchor');
+      await expect(h2Anchor).toHaveAttribute(
+        'href',
         `#${selector.split('#')[1]}`,
       );
     }
@@ -239,9 +276,10 @@ test.describe('Inline markdown test', async () => {
       waitUntil: 'networkidle',
     });
 
-    const img = await page.$('img');
-    expect(img).not.toBeNull();
-    expect(await img?.getAttribute('src')).toBe(
+    const img = page.locator('img').first();
+    await expect(img).toBeVisible();
+    await expect(img).toHaveAttribute(
+      'src',
       'https://assets.rspack.rs/rspress/rspress-logo-480x480.png',
     );
   });

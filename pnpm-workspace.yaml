@@ -2,6 +2,7 @@ packages:
   - 'scripts/config'
   - 'packages/**'
   - 'e2e/**'
+  - 'website'
   - '!**/compiled/**'
   - '!**/tests/**'
   - '!packages/create-rspress/template-basic'
@@ -11,3 +12,7 @@ onlyBuiltDependencies:
   - 'core-js'
   - 'esbuild'
   - 'nx'
+
+hoistPattern: []
+linkWorkspacePackages: true
+strictPeerDependencies: false

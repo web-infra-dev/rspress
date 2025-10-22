@@ -1,10 +1,10 @@
 import net from 'node:net';
 import { join } from 'node:path';
 import {
-  type RsbuildConfig,
-  type RsbuildPluginAPI,
   createRsbuild,
   mergeRsbuildConfig,
+  type RsbuildConfig,
+  type RsbuildPluginAPI,
 } from '@rsbuild/core';
 import { pluginBabel } from '@rsbuild/plugin-babel';
 import { pluginReact } from '@rsbuild/plugin-react';
@@ -13,7 +13,7 @@ import {
   type RouteMeta,
   type RspressPlugin,
   removeTrailingSlash,
-} from '@rspress/shared';
+} from '@rspress/core';
 import { cloneDeep, isEqual } from 'lodash';
 import { staticPath } from './constant';
 import { generateEntry } from './generate-entry';
@@ -99,7 +99,7 @@ export function pluginPreview(options?: Options): RspressPlugin {
       lastDemos = cloneDeep(demos);
       await devServer?.server?.close();
       devServer = undefined;
-      const sourceEntry = generateEntry(
+      const sourceEntry = await generateEntry(
         demos,
         framework,
         position,
@@ -109,7 +109,7 @@ export function pluginPreview(options?: Options): RspressPlugin {
       if (Object.keys(sourceEntry).length === 0) {
         return;
       }
-      const { html, source, output, performance } = clientConfig ?? {};
+      const { source, output, performance } = clientConfig ?? {};
       const rsbuildConfig = mergeRsbuildConfig(
         {
           server: {
@@ -117,11 +117,14 @@ export function pluginPreview(options?: Options): RspressPlugin {
             printUrls: () => undefined,
             strictPort: true,
           },
+          dev: {
+            lazyCompilation: false,
+          },
           performance: {
             ...performance,
             printFileSize: false,
+            buildCache: false,
           },
-          html,
           source: {
             ...source,
             entry: sourceEntry,
@@ -137,7 +140,6 @@ export function pluginPreview(options?: Options): RspressPlugin {
             // not copy files again
             copy: undefined,
           },
-          plugins: config?.builderPlugins,
         },
         builderConfig,
       );
@@ -145,11 +147,6 @@ export function pluginPreview(options?: Options): RspressPlugin {
         callerName: 'rspress',
         rsbuildConfig,
       });
-
-      const { pluginSass } = await import('@rsbuild/plugin-sass');
-      const { pluginLess } = await import('@rsbuild/plugin-less');
-
-      rsbuildInstance.addPlugins([pluginSass(), pluginLess()]);
 
       if (framework === 'solid') {
         rsbuildInstance.addPlugins([
@@ -208,6 +205,8 @@ export function pluginPreview(options?: Options): RspressPlugin {
     },
     extendPageData(pageData, isProd) {
       if (!isProd) {
+        // Property 'devPort' does not exist on type 'PageIndexInfo'.
+        // @ts-expect-error
         pageData.devPort = port;
       }
     },

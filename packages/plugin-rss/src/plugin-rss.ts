@@ -2,13 +2,13 @@
 
 import NodePath from 'node:path';
 import { resolve as resolveUrl } from 'node:url';
-import type { PageIndexInfo, RspressPlugin, UserConfig } from '@rspress/shared';
-import { getIconUrlPath } from '@rspress/shared/node-utils';
+import type { PageIndexInfo, RspressPlugin, UserConfig } from '@rspress/core';
+import { getIconUrlPath } from '@rspress/core';
 import { Feed } from 'feed';
 
 import { createFeed, generateFeedItem } from './createFeed';
 import { PluginComponents, PluginName } from './exports';
-import { type ResolvedOutput, concatArray, writeFile } from './internals';
+import { concatArray, type ResolvedOutput, writeFile } from './internals';
 import { getDefaultFeedOption, getOutputInfo, testPage } from './options';
 import type { FeedChannel, FeedItem, PluginRssOptions } from './type';
 

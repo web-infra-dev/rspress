@@ -18,17 +18,19 @@ test.describe('title-number test', async () => {
 
   test('Index page', async ({ page }) => {
     await page.goto(`http://localhost:${appPort}`);
-    const h3 = await page.$$('h3');
-    const textList = await page.evaluate(h3 => h3.map(h => h.textContent), h3);
+    const h3Elements = page.locator('h3');
+    await expect(h3Elements).toHaveText([
+      '#-22222222',
+      '#-1111111111',
+      '#-1111111111',
+    ]);
 
-    expect(textList).toEqual(['#-22222222', '#-1111111111', '#-1111111111']);
-
-    const h3A = await page.$$('h3 a');
-    const hrefList = await page.evaluate(
-      h3A => h3A.map(h => h?.getAttribute('href')),
-      h3A,
+    const h3Links = page.locator('h3 a');
+    const hrefList = await Promise.all(
+      Array.from({ length: await h3Links.count() }, async (_, i) =>
+        h3Links.nth(i).getAttribute('href'),
+      ),
     );
-
     expect(hrefList).toEqual(['#-22222222', '#-1111111111', '#-1111111111-1']);
   });
 });

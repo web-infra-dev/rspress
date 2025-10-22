@@ -1,23 +1,33 @@
 import fs from 'node:fs/promises';
 import path from 'node:path';
-import type { PageModule, RouteMeta, UserConfig } from '@rspress/shared';
+import {
+  type AdditionalPage,
+  addTrailingSlash,
+  type PageModule,
+  type RouteMeta,
+  RSPRESS_TEMP_DIR,
+  removeTrailingSlash,
+  type UserConfig,
+} from '@rspress/shared';
 import { DEFAULT_PAGE_EXTENSIONS } from '@rspress/shared/constants';
 import type { ComponentType } from 'react';
 import { glob } from 'tinyglobby';
-import type { PluginDriver } from '../PluginDriver';
 import { PUBLIC_DIR } from '../constants';
 import {
-  RoutePage,
+  getRoutePathParts,
+  normalizeRoutePath,
+  splitRoutePathParts,
+} from './normalizeRoutePath';
+import {
   absolutePathToRelativePath,
   absolutePathToRoutePath,
+  RoutePage,
 } from './RoutePage';
-import { getRoutePathParts, normalizeRoutePath } from './normalizeRoutePath';
 
 interface InitOptions {
   scanDir: string;
   config: UserConfig;
-  runtimeTempDir: string;
-  pluginDriver: PluginDriver;
+  externalPages: AdditionalPage[];
 }
 
 export interface Route {
@@ -41,21 +51,23 @@ export class RouteService {
 
   #defaultLang: string;
 
-  #defaultVersion: string = '';
+  #defaultVersion: string;
 
-  #extensions: string[] = [];
+  #extensions: string[];
 
-  #langs: string[] = [];
+  #langs: string[];
 
-  #versions: string[] = [];
+  #versions: string[];
 
-  #include: string[] = [];
+  #include: string[];
 
-  #exclude: string[] = [];
+  #exclude: string[];
 
-  #tempDir: string = '';
+  #excludeConvention: string[];
 
-  #pluginDriver: PluginDriver;
+  #tempDir: string;
+
+  #externalPages: AdditionalPage[];
 
   static __instance__: RouteService | null = null;
 
@@ -65,42 +77,57 @@ export class RouteService {
 
   // The factory to create route service instance
   static async create(options: InitOptions) {
-    const { scanDir, config, runtimeTempDir, pluginDriver } = options;
+    const { scanDir, config, externalPages } = options;
+    const runtimeAbsTempDir = path.join(
+      process.cwd(),
+      'node_modules',
+      RSPRESS_TEMP_DIR,
+      'runtime',
+    );
+    await fs.mkdir(runtimeAbsTempDir, { recursive: true });
     const routeService = new RouteService(
       scanDir,
       config,
-      runtimeTempDir,
-      pluginDriver,
+      externalPages || [],
+      runtimeAbsTempDir,
     );
     RouteService.__instance__ = routeService;
     await routeService.#init();
-    await pluginDriver.routeServiceGenerated(routeService);
     return routeService;
+  }
+
+  static async createSimple() {
+    return new RouteService('', {}, [], '');
   }
 
   private constructor(
     scanDir: string,
     userConfig: UserConfig,
-    tempDir: string,
-    pluginDriver: PluginDriver,
+    externalPages: AdditionalPage[],
+    runtimeAbsTempDir: string,
   ) {
     const routeOptions = userConfig?.route || {};
     this.#scanDir = scanDir;
     this.#extensions = routeOptions.extensions || DEFAULT_PAGE_EXTENSIONS;
     this.#include = routeOptions.include || [];
-    this.#exclude = routeOptions.exclude || [];
+    this.#exclude = routeOptions.exclude || []; // partial mdx components and code samples, e.g: _d.mdx
+    this.#excludeConvention = routeOptions.excludeConvention || ['**/_[^_]*']; // partial mdx components and code samples, e.g: _d.mdx
     this.#defaultLang = userConfig?.lang || '';
     this.#langs = (
       userConfig?.locales ??
       userConfig?.themeConfig?.locales ??
       []
     ).map(item => item.lang);
-    this.#tempDir = tempDir;
-    this.#pluginDriver = pluginDriver;
+
+    this.#tempDir = runtimeAbsTempDir;
+    this.#externalPages = externalPages;
 
     if (userConfig.multiVersion) {
       this.#defaultVersion = userConfig.multiVersion.default || '';
       this.#versions = userConfig.multiVersion.versions || [];
+    } else {
+      this.#defaultVersion = '';
+      this.#versions = [];
     }
   }
 
@@ -121,10 +148,12 @@ export class RouteService {
         onlyFiles: true,
         ignore: [
           ...this.#exclude,
+          ...this.#excludeConvention,
           '**/node_modules/**',
           '**/.eslintrc.js',
           '**/.nx/**',
           `./${PUBLIC_DIR}/**`,
+          '**/*.d.ts',
         ],
       })
     ).sort();
@@ -135,7 +164,7 @@ export class RouteService {
     });
 
     // 2. external pages added by plugins
-    const externalPages = await this.#pluginDriver.addPages();
+    const externalPages = this.#externalPages;
 
     await Promise.all(
       externalPages.map(async (route, index) => {
@@ -162,8 +191,6 @@ export class RouteService {
         }
       }),
     );
-
-    await this.#pluginDriver.routeGenerated(this.getRoutes());
   }
 
   async addRoute(routePage: RoutePage): Promise<void> {
@@ -184,15 +211,30 @@ export class RouteService {
     return Array.from(this.routeData.values());
   }
 
-  isExistRoute(routePath: string): boolean {
-    return this.routeData.has(routePath);
+  isExistRoute(link: string): boolean {
+    function linkToRoutePath(routePath: string) {
+      return decodeURIComponent(routePath.split('#')[0])
+        .replace(/\.html$/, '')
+        .replace(/\/index$/, '/');
+    }
+
+    const cleanLinkPath = linkToRoutePath(link);
+    // allow fuzzy matching, e.g: /guide/ and /guide is equal
+    // This is a simple judgment, the performance will be better than "matchPath" in react-router-dom
+    if (
+      !this.routeData.has(removeTrailingSlash(cleanLinkPath)) &&
+      !this.routeData.has(addTrailingSlash(cleanLinkPath))
+    ) {
+      return false;
+    }
+    return true;
   }
 
   generateRoutesCode(): string {
     return this.generateRoutesCodeByRouteMeta(this.getRoutes());
   }
 
-  generateRoutesCodeByRouteMeta(routeMeta: RouteMeta[]) {
+  private generateRoutesCodeByRouteMeta(routeMeta: RouteMeta[]) {
     return `
 import React from 'react';
 import { lazyWithPreload } from "react-lazy-with-preload";
@@ -234,6 +276,16 @@ ${routeMeta
     );
   }
 
+  splitRoutePathParts(relativePath: string) {
+    return splitRoutePathParts(
+      relativePath,
+      this.#defaultLang,
+      this.#defaultVersion,
+      this.#langs,
+      this.#versions,
+    );
+  }
+
   normalizeRoutePath(relativePath: string) {
     return normalizeRoutePath(
       relativePath,
@@ -247,6 +299,11 @@ ${routeMeta
 
   absolutePathToRoutePath(absolutePath: string): string {
     return absolutePathToRoutePath(absolutePath, this.#scanDir, this);
+  }
+
+  isInDocsDir(absolutePath: string): boolean {
+    const relativePath = path.relative(this.#scanDir, absolutePath);
+    return !relativePath.startsWith('..') && !path.isAbsolute(relativePath);
   }
 
   absolutePathToRelativePath(absolutePath: string): string {

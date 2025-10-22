@@ -16,11 +16,11 @@
   "json.schemas": [
     {
       "fileMatch": ["**/_meta.json"],
-      "url": "./packages/cli/meta-json-schema.json"
+      "url": "./packages/core/meta-json-schema.json"
     },
     {
       "fileMatch": ["**/_nav.json"],
-      "url": "./packages/cli/nav-json-schema.json"
+      "url": "./packages/core/nav-json-schema.json"
     }
   ],
   "mdx.validate.validateFileLinks": "ignore",

@@ -1,6 +1,13 @@
 import * as path from 'node:path';
-import { defineConfig } from 'rspress/config';
+import { defineConfig } from '@rspress/core';
 
 export default defineConfig({
   root: path.join(__dirname, 'doc'),
+  markdown: {
+    link: {
+      checkDeadLinks: {
+        excludes: ['bar'],
+      },
+    },
+  },
 });

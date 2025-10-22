@@ -5,18 +5,7 @@ export const APPEARANCE_KEY = 'rspress-theme-appearance';
 export const SEARCH_INDEX_NAME = 'search_index';
 export const RSPRESS_TEMP_DIR = '.rspress';
 
-export const DEFAULT_HIGHLIGHT_LANGUAGES = [
-  ['js', 'javascript'],
-  ['ts', 'typescript'],
-  ['jsx', 'tsx'],
-  ['xml', 'xml-doc'],
-  ['md', 'markdown'],
-  ['mdx', 'tsx'],
-];
-
 // TODO: these utils should be divided into node and runtime
-export const isSCM = () => Boolean(process.env.BUILD_VERSION);
-
 export const isProduction = () => process.env.NODE_ENV === 'production';
 
 export const isDebugMode = () => {
@@ -90,10 +79,6 @@ export function addTrailingSlash(url: string) {
 
 export function removeTrailingSlash(url: string) {
   return url.charAt(url.length - 1) === '/' ? url.slice(0, -1) : url;
-}
-
-export function normalizeSlash(url: string) {
-  return removeTrailingSlash(addLeadingSlash(normalizePosixPath(url)));
 }
 
 export function isExternalUrl(url = '') {
@@ -217,7 +202,11 @@ export const parseUrl = (
   };
 };
 
-export function normalizeHref(url?: string, cleanUrls = false) {
+export function normalizeHref(
+  url?: string,
+  cleanUrls = false,
+  assetExtensions: string[] = [],
+): string {
   if (!url) {
     return '/';
   }
@@ -227,13 +216,20 @@ export function normalizeHref(url?: string, cleanUrls = false) {
   if (url.startsWith('#')) {
     return url;
   }
+  if (!url.startsWith('/')) {
+    return url;
+  }
 
   // eslint-disable-next-line prefer-const
   let { url: cleanUrl, hash } = parseUrl(decodeURIComponent(url));
 
   // 1. cleanUrls: false
   if (!cleanUrls) {
-    if (!cleanUrl.endsWith('.html')) {
+    const hasExt =
+      cleanUrl.endsWith('.html') ||
+      assetExtensions.some(i => cleanUrl.endsWith(i));
+
+    if (!hasExt) {
       if (cleanUrl.endsWith('/')) {
         cleanUrl += 'index.html';
       } else {
@@ -258,18 +254,35 @@ export function withoutLang(path: string, langs: string[]) {
   return addLeadingSlash(path.replace(langRegexp, ''));
 }
 
+function normalizeSlash(url: string) {
+  return removeTrailingSlash(addLeadingSlash(normalizePosixPath(url)));
+}
+
 export function withBase(url: string, base: string): string {
   const normalizedUrl = addLeadingSlash(url);
   const normalizedBase = normalizeSlash(base);
-  // Avoid adding base path repeatedly
-  return normalizedUrl.startsWith(normalizedBase)
-    ? normalizedUrl
-    : `${normalizedBase}${normalizedUrl}`;
+
+  const hasBase = normalizedUrl.startsWith(normalizedBase);
+  if (hasBase) {
+    // normalizedUrl => '/base' base => '/base/'
+    if (`${normalizedUrl}/` === base) {
+      return base;
+    }
+    return normalizedUrl;
+  }
+
+  return `${normalizedBase}${normalizedUrl}`;
 }
 
 export function removeBase(url: string, base: string) {
-  return addLeadingSlash(url).replace(
-    new RegExp(`^${normalizeSlash(base)}`),
+  const normalizedUrl = addLeadingSlash(url);
+  const normalizedBase = normalizeSlash(base);
+  const removedBaseUrl = normalizedUrl.replace(
+    new RegExp(`^${normalizedBase}`),
     '',
   );
+  if (removedBaseUrl === '') {
+    return '/';
+  }
+  return removedBaseUrl;
 }

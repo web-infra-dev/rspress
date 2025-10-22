@@ -33,7 +33,7 @@ jobs:
           git config --system core.longpaths true
 
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
         with:
           fetch-depth: 1
 
@@ -52,7 +52,7 @@ jobs:
 
       - name: Setup Node.js ${{ matrix.node-version }}
         if: ${{steps.skip-ci.outputs.RESULT != 'true'}}
-        uses: actions/setup-node@v4
+        uses: actions/setup-node@v5
         with:
           node-version: ${{ matrix.node-version }}
           cache: 'pnpm'

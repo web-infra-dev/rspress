@@ -1,0 +1,97 @@
+# 构建能力扩展
+
+## Rsbuild
+
+Rspress 底层基于 [Rsbuild](https://github.com/web-infra-dev/rsbuild) 来进行文档构建。
+
+### Rsbuild 配置
+
+Rsbuild 提供了丰富的构建配置，你可以使用 [builderConfig](/api/config/config-build.html#builderconfig) 来自定义这些配置项。
+
+比如，将产物目录修改为 `doc_dist`：
+
+```ts title="rspress.config.ts"
+import { defineConfig } from '@rspress/core';
+
+export default defineConfig({
+  builderConfig: {
+    output: {
+      distPath: {
+        root: 'doc_dist',
+      },
+    },
+  },
+});
+```
+
+Rspress 还提供了 [builderConfig.plugins](/api/config/config-build#builderconfigplugins) 配置项来注册 Rsbuild 插件。你可以利用 Rsbuild 丰富的插件生态来增强和扩展构建能力。
+
+比如通过 [rsbuild-plugin-google-analytics](https://github.com/rspack-contrib/rsbuild-plugin-google-analytics) 添加 Google analytics：
+
+```ts title="rspress.config.ts"
+import { defineConfig } from '@rspress/core';
+import { pluginGoogleAnalytics } from 'rsbuild-plugin-google-analytics';
+
+export default defineConfig({
+  builderConfig: {
+    plugins: [
+      pluginGoogleAnalytics({
+        // replace this with your Google tag ID
+        id: 'G-xxxxxxxxxx',
+      }),
+    ],
+  },
+});
+```
+
+:::tip
+你可以通过 [Rsbuild - 配置](https://rsbuild.rs/zh/config/) 文档来了解更多的配置项。
+:::
+
+### Rspack 配置
+
+你可以通过 Rsbuild 提供的 [tools.rspack](https://rsbuild.rs/config/tools/rspack) 选项来修改 Rspack 的配置：
+
+```ts title="rspress.config.ts"
+import { defineConfig } from '@rspress/core';
+
+export default defineConfig({
+  builderConfig: {
+    tools: {
+      rspack(options) {
+        // 修改 rspack 的配置
+      },
+    },
+  },
+});
+```
+
+## MDX 编译插件
+
+在 Rspress 中，MDX 的编译基于 [unified](https://github.com/unifiedjs/unified) 完成，你可以通过 `markdown` 配置来添加相关的编译插件。比如
+
+```ts title="rspress.config.ts"
+import { defineConfig } from '@rspress/core';
+
+export default defineConfig({
+  markdown: {
+    // 需要使用 JS 版本的 MDX 编译器
+    mdxRs: false,
+    remarkPlugins: [
+      [
+        require('remark-autolink-headings'),
+        {
+          behavior: 'wrap',
+        },
+      ],
+    ],
+    rehypePlugins: [require('rehype-slug')],
+  },
+});
+```
+
+:::warning 注意
+
+仅 JS 版本的 MDX 编译器支持编译插件。
+
+:::

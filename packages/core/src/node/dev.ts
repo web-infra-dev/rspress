@@ -1,8 +1,8 @@
 import type { RsbuildConfig } from '@rsbuild/core';
 import type { UserConfig } from '@rspress/shared';
-import { PluginDriver } from './PluginDriver';
 import { initRsbuild } from './initRsbuild';
-import { writeSearchIndex } from './searchIndex';
+import { PluginDriver } from './PluginDriver';
+import { RouteService } from './route/RouteService';
 import { checkLanguageParity } from './utils/checkLanguageParity';
 
 interface ServerInstance {
@@ -20,21 +20,36 @@ interface DevOptions {
 export async function dev(options: DevOptions): Promise<ServerInstance> {
   const { docDirectory, config, extraBuilderConfig, configFilePath } = options;
   const isProd = false;
-  const pluginDriver = new PluginDriver(config, configFilePath, isProd);
-  await pluginDriver.init();
+  // 1. create PluginDriver
+  const pluginDriver = await PluginDriver.create(
+    config,
+    configFilePath,
+    isProd,
+  );
   const modifiedConfig = await pluginDriver.modifyConfig();
 
   try {
-    // empty temp dir before build
+    // 2. create RouteService
+    const additionalPages = await pluginDriver.addPages();
+    const routeService = await RouteService.create({
+      config: modifiedConfig,
+      scanDir: docDirectory,
+      externalPages: additionalPages,
+    });
+    await pluginDriver.routeGenerated(routeService.getRoutes());
+    await pluginDriver.routeServiceGenerated(routeService);
+
+    // 3. rsbuild.dev
+    await pluginDriver.beforeBuild();
     const rsbuild = await initRsbuild(
       docDirectory,
       modifiedConfig,
       pluginDriver,
+      routeService,
       false,
       extraBuilderConfig,
     );
-    await pluginDriver.beforeBuild();
-    rsbuild.onDevCompileDone(async () => {
+    rsbuild.onAfterDevCompile(async () => {
       await pluginDriver.afterBuild();
     });
     const { server } = await rsbuild.startDevServer({
@@ -44,7 +59,6 @@ export async function dev(options: DevOptions): Promise<ServerInstance> {
 
     return server;
   } finally {
-    await writeSearchIndex(modifiedConfig);
     await checkLanguageParity(modifiedConfig);
   }
 }

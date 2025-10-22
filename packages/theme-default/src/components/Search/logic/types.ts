@@ -1,4 +1,4 @@
-import type { LocalSearchOptions, RemoteSearchOptions } from '@rspress/shared';
+import type { LocalSearchOptions } from '@rspress/shared';
 import type { ReactNode } from 'react';
 
 export const enum RenderType {
@@ -56,8 +56,7 @@ export type PageSearcherConfig = {
   currentVersion: string;
 };
 
-export type SearchOptions = (LocalSearchOptions | RemoteSearchOptions) &
-  PageSearcherConfig;
+export type SearchOptions = LocalSearchOptions & PageSearcherConfig;
 
 export type BeforeSearch = (query: string) => string | Promise<string> | void;
 

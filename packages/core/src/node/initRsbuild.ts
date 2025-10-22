@@ -1,4 +1,4 @@
-import fs from 'node:fs/promises';
+import { createRequire } from 'node:module';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import type {
@@ -7,18 +7,18 @@ import type {
   RsbuildPlugin,
 } from '@rsbuild/core';
 import { PLUGIN_REACT_NAME, pluginReact } from '@rsbuild/plugin-react';
+import { version as rspressVersion } from '@rspress/core/package.json';
 import {
   MDX_OR_MD_REGEXP,
-  RSPRESS_TEMP_DIR,
-  type UserConfig,
   removeTrailingSlash,
+  type UserConfig,
 } from '@rspress/shared';
 import { pluginVirtualModule } from 'rsbuild-plugin-virtual-module';
-import type { PluginDriver } from './PluginDriver';
-import { modifyConfigWithAutoNavSide } from './auto-nav-sidebar';
 import {
   CSR_CLIENT_ENTRY,
   DEFAULT_TITLE,
+  inlineThemeScript,
+  isProduction,
   NODE_SSG_BUNDLE_FOLDER,
   NODE_SSG_BUNDLE_NAME,
   OUTPUT_DIR,
@@ -27,23 +27,23 @@ import {
   SSR_CLIENT_ENTRY,
   SSR_SERVER_ENTRY,
   TEMPLATE_PATH,
-  inlineThemeScript,
-  isProduction,
 } from './constants';
-import { hintThemeBreakingChange } from './logger/hint';
-import { RouteService } from './route/RouteService';
 import {
-  getVirtualModulesFromPlugins,
-  rsbuildPluginDocVM,
-} from './runtimeModule';
+  hintBuilderPluginsBreakingChange,
+  hintThemeBreakingChange,
+} from './logger/hint';
+import type { PluginDriver } from './PluginDriver';
+import type { RouteService } from './route/RouteService';
 import { globalStylesVMPlugin } from './runtimeModule/globalStyles';
 import { globalUIComponentsVMPlugin } from './runtimeModule/globalUIComponents';
 import { i18nVMPlugin } from './runtimeModule/i18n';
+import { rsbuildPluginDocVM } from './runtimeModule/pageData/rsbuildPlugin';
 import { routeListVMPlugin } from './runtimeModule/routeList';
-import { runtimeConfigVMPlugin } from './runtimeModule/runtimeConfig';
 import { searchHookVMPlugin } from './runtimeModule/searchHooks';
+import { siteDataVMPlugin } from './runtimeModule/siteData/rsbuildPlugin';
+import { socialLinksVMPlugin } from './runtimeModule/socialLinks';
 import type { FactoryContext } from './runtimeModule/types';
-import { serveSearchIndexMiddleware } from './searchIndex';
+import { rsbuildPluginCSR } from './ssg/rsbuildPluginCSR';
 import { rsbuildPluginSSG } from './ssg/rsbuildPluginSSG';
 import {
   detectReactVersion,
@@ -51,15 +51,33 @@ import {
   resolveReactRouterDomAlias,
 } from './utils';
 import { detectCustomIcon } from './utils/detectCustomIcon';
-import { getSocialIcons } from './utils/getSocialIcons';
 
 function isPluginIncluded(config: UserConfig, pluginName: string): boolean {
   return Boolean(
-    config.builderPlugins?.some(plugin => plugin.name === pluginName) ||
-      config.builderConfig?.plugins?.some(
-        plugin => plugin && (plugin as RsbuildPlugin).name === pluginName,
-      ),
+    config.builderConfig?.plugins?.some(
+      plugin => plugin && (plugin as RsbuildPlugin).name === pluginName,
+    ),
   );
+}
+
+const require = createRequire(import.meta.url);
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+
+async function getVirtualModulesFromPlugins(
+  pluginDriver: PluginDriver,
+): Promise<Record<string, () => string>> {
+  const runtimeModule: Record<string, () => string> = {};
+  const modulesByPlugin = await pluginDriver.addRuntimeModules();
+  Object.keys(modulesByPlugin).forEach(key => {
+    if (runtimeModule[key]) {
+      throw new Error(
+        `The runtime module ${key} is duplicated, please check your plugin`,
+      );
+    }
+    runtimeModule[key] = () => modulesByPlugin[key];
+  });
+  return runtimeModule;
 }
 
 async function createInternalBuildConfig(
@@ -69,7 +87,6 @@ async function createInternalBuildConfig(
   routeService: RouteService,
   pluginDriver: PluginDriver,
 ): Promise<RsbuildConfig> {
-  const cwd = process.cwd();
   const CUSTOM_THEME_DIR =
     config?.themeDir ?? path.join(process.cwd(), 'theme');
   const outDir = config?.outDir ?? OUTPUT_DIR;
@@ -122,10 +139,19 @@ async function createInternalBuildConfig(
   return {
     plugins: [
       ...(isPluginIncluded(config, PLUGIN_REACT_NAME) ? [] : [pluginReact()]),
-      rsbuildPluginDocVM(context),
+      rsbuildPluginDocVM({
+        config,
+        pluginDriver,
+        routeService,
+        userDocRoot,
+      }),
       pluginVirtualModule({
         tempDir: '.rspress/runtime',
         virtualModules: {
+          /**
+           * Load social links in compile time for treeshaking
+           */
+          ...socialLinksVMPlugin(context),
           /**
            * Load i18n.json to runtime
            */
@@ -150,22 +176,21 @@ async function createInternalBuildConfig(
            *  Get virtual modules from plugins
            */
           ...(await getVirtualModulesFromPlugins(pluginDriver)),
-
           /**
-           * Serialize rspress.config.ts to runtime
+           * Serialize site data (rspress.config.ts) to runtime
            */
-          ...runtimeConfigVMPlugin(context),
+          ...siteDataVMPlugin(context),
         },
       }),
-      ...(enableSSG
-        ? [
-            rsbuildPluginSSG({
-              routeService,
-              config,
-              pluginDriver,
-            }),
-          ]
-        : []),
+      enableSSG
+        ? rsbuildPluginSSG({
+            routeService,
+            config,
+          })
+        : rsbuildPluginCSR({
+            routeService,
+            config,
+          }),
     ],
     server: {
       port:
@@ -179,10 +204,6 @@ async function createInternalBuildConfig(
     },
     dev: {
       lazyCompilation: process.env.RSPRESS_LAZY_COMPILATION !== 'false', // This is an escape hatch for playwright test, playwright does not support lazyCompilation
-      // Serve static files
-      setupMiddlewares: middlewares => {
-        middlewares.unshift(serveSearchIndexMiddleware(config));
-      },
       cliShortcuts: {
         // does not support restart server yet
         custom: shortcuts => shortcuts.filter(({ key }) => key !== 'r'),
@@ -215,23 +236,52 @@ async function createInternalBuildConfig(
         '@mdx-js/react': require.resolve('@mdx-js/react'),
         '@theme': [CUSTOM_THEME_DIR, DEFAULT_THEME],
         '@theme-assets': path.join(DEFAULT_THEME, '../assets'),
-        '@rspress/core': PACKAGE_ROOT,
         'react-lazy-with-preload': require.resolve('react-lazy-with-preload'),
-      },
-    },
-    source: {
-      include: [PACKAGE_ROOT, path.join(cwd, 'node_modules', RSPRESS_TEMP_DIR)],
-      define: {
-        'process.env.TEST': JSON.stringify(process.env.TEST),
-        'process.env.RSPRESS_SOCIAL_ICONS': JSON.stringify(
-          getSocialIcons(config.themeConfig?.socialLinks),
+        // single runtime
+        '@rspress/core/theme': path.join(__dirname, 'theme.js'),
+        '@rspress/core/runtime': path.join(__dirname, 'runtime.js'),
+        '@rspress/core/shiki-transformers': path.join(
+          __dirname,
+          'shiki-transformers.js',
         ),
       },
     },
-    performance: {
-      buildCache: {
-        buildDependencies: [pluginDriver.getConfigFilePath()],
+    source: {
+      include: [PACKAGE_ROOT],
+      define: {
+        'process.env.TEST': JSON.stringify(process.env.TEST),
       },
+    },
+    performance: {
+      ...(process.env.RSPRESS_PERSISTENT_CACHE !== 'false'
+        ? {
+            buildCache: {
+              // 1. config file: rspress.config.ts
+              buildDependencies: [
+                __filename, // this file,  __filename
+                pluginDriver.getConfigFilePath(), // rspress.config.ts
+              ],
+              cacheDigest: [
+                // 2.other configuration files which are not included in rspress.config.ts should be added to cacheDigest
+                // 2.1 routeService glob
+                routeService.generateRoutesCode(),
+                // 2.2. auto-nav-sidebar _nav.json or _meta.json
+                JSON.stringify(
+                  config.themeConfig?.locales?.map(i => ({
+                    nav: i.nav,
+                    sidebar: i.sidebar,
+                  })) ?? {
+                    nav: config.themeConfig?.nav,
+                    sidebar: config.themeConfig?.sidebar,
+                  },
+                ),
+
+                // add rspress version to persistent cache digest to make it more safe
+                rspressVersion,
+              ],
+            },
+          }
+        : {}),
       chunkSplit: {
         override: {
           cacheGroups: {
@@ -249,16 +299,12 @@ async function createInternalBuildConfig(
       },
     },
     tools: {
-      bundlerChain(chain, { CHAIN_ID, target }) {
-        const isServer = target === 'node';
+      bundlerChain(chain, { CHAIN_ID, environment }) {
         const jsModuleRule = chain.module.rule(CHAIN_ID.RULE.JS);
 
         const swcLoaderOptions = jsModuleRule
           .use(CHAIN_ID.USE.SWC)
           .get('options');
-
-        const checkDeadLinks =
-          (config?.markdown?.checkDeadLinks && !isServer) ?? false;
 
         chain.module
           .rule('MDX')
@@ -279,15 +325,21 @@ async function createInternalBuildConfig(
           .options({
             config,
             docDirectory: userDocRoot,
-            checkDeadLinks,
             routeService,
             pluginDriver,
           })
           .end();
 
+        chain.experiments({
+          // Enable native watcher by default unless RSPRESS_NATIVE_WATCHER is set to 'false'
+          ...chain.get('experiments'),
+          nativeWatcher: process.env.RSPRESS_NATIVE_WATCHER !== 'false',
+        });
+
         if (chain.plugins.has(CHAIN_ID.PLUGIN.REACT_FAST_REFRESH)) {
           chain.plugin(CHAIN_ID.PLUGIN.REACT_FAST_REFRESH).tap(options => {
             options[0] ??= {};
+            options[0].test = [/\.([cm]js|[jt]sx?|flow)$/i, MDX_OR_MD_REGEXP];
             options[0].include = [
               /\.([cm]js|[jt]sx?|flow)$/i,
               MDX_OR_MD_REGEXP,
@@ -303,12 +355,13 @@ async function createInternalBuildConfig(
           .test(/\.rspress[\\/]runtime[\\/]virtual-global-styles/)
           .merge({ sideEffects: true });
 
-        if (isServer) {
+        if (environment.name === 'node') {
           chain.output.filename(
             `${NODE_SSG_BUNDLE_FOLDER}/${NODE_SSG_BUNDLE_NAME}`,
           );
           chain.output.chunkFilename(`${NODE_SSG_BUNDLE_FOLDER}/[name].cjs`);
-          chain.target('async-node'); // For MF support
+          // For perf
+          chain.output.set('asyncChunks', false);
         }
       },
     },
@@ -376,29 +429,16 @@ async function createInternalBuildConfig(
 
 export async function initRsbuild(
   rootDir: string,
-  _config: UserConfig,
+  config: UserConfig,
   pluginDriver: PluginDriver,
+  routeService: RouteService,
   enableSSG: boolean,
   extraRsbuildConfig?: RsbuildConfig,
 ): Promise<RsbuildInstance> {
   const cwd = process.cwd();
-  const userDocRoot = path.resolve(rootDir || _config?.root || cwd);
-  const builderPlugins = _config?.builderPlugins ?? [];
-  // We use a temp dir to store runtime files, so we can separate client and server build
-  // and we should empty temp dir before build
-  // TODO: remove all the temp dir
-  const runtimeTempDir = path.join(RSPRESS_TEMP_DIR, 'runtime');
-  const runtimeAbsTempDir = path.join(cwd, 'node_modules', runtimeTempDir);
-  await fs.mkdir(runtimeAbsTempDir, { recursive: true });
+  const userDocRoot = path.resolve(rootDir || config?.root || cwd);
 
-  const routeService = await RouteService.create({
-    config: _config,
-    runtimeTempDir: runtimeAbsTempDir,
-    scanDir: userDocRoot,
-    pluginDriver,
-  });
-
-  const config = await modifyConfigWithAutoNavSide(_config);
+  hintBuilderPluginsBreakingChange(config);
 
   const { createRsbuild, mergeRsbuildConfig } = await import('@rsbuild/core');
 
@@ -417,12 +457,10 @@ export async function initRsbuild(
       ...(pluginDriver
         .getPlugins()
         ?.map(plugin => plugin.builderConfig ?? {}) || []),
-      config?.builderConfig || {},
+      config.builderConfig || {},
       extraRsbuildConfig || {},
     ),
   });
-
-  rsbuild.addPlugins(builderPlugins);
 
   return rsbuild;
 }

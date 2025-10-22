@@ -1,6 +1,6 @@
 import fs from 'node:fs/promises';
 import path from 'node:path';
-import { type NavItem, type Sidebar, isExternalUrl } from '@rspress/shared';
+import { isExternalUrl, type NavItem, type Sidebar } from '@rspress/shared';
 import { logger } from '@rspress/shared/logger';
 import { hintNavJsonChangeThenPanic } from '../logger/hint';
 import { addRoutePrefix } from '../route/RoutePage';
@@ -8,13 +8,18 @@ import { pathExists } from '../utils';
 import { scanSideMeta } from './normalize';
 import { readJson } from './utils';
 
-async function scanNav(workDir: string, docsDir: string) {
+async function scanNav(
+  workDir: string,
+  docsDir: string,
+  metaFileSet: Set<string>,
+): Promise<NavItem[]> {
   let navConfig: NavItem[] | undefined;
   const rootNavJson = path.resolve(workDir, '_nav.json');
   // Get the nav config from the `_meta.json` file
   try {
     navConfig = await readJson<NavItem[]>(rootNavJson);
-  } catch (e) {
+    metaFileSet.add(rootNavJson);
+  } catch (_e) {
     logger.error(
       '[auto-nav-sidebar]',
       `Generate nav meta error: ${rootNavJson} failed`,
@@ -43,6 +48,8 @@ export async function walk(
   workDir: string,
   docsDir: string,
   extensions: string[],
+  metaFileSet: Set<string>,
+  mdFileSet: Set<string>,
 ) {
   // find the `_meta.json` file
   const rootNavJson = path.resolve(workDir, '_nav.json');
@@ -56,8 +63,26 @@ export async function walk(
     hintNavJsonChangeThenPanic(metaConfig, workDir, docsDir);
   }
 
+  // 0. both `_nav.json` and `_meta.json` exist
+  if (isRootMetaJsonExist && isRootNavJsonExist) {
+    const navConfig = await scanNav(workDir, docsDir, metaFileSet);
+    return {
+      nav: navConfig,
+      sidebar: {
+        '/': await scanSideMeta(
+          workDir,
+          docsDir,
+          extensions,
+          metaFileSet,
+          mdFileSet,
+        ),
+      },
+    };
+  }
+
+  // 1. only `_nav.json` exist (normal)
   if (isRootNavJsonExist) {
-    const navConfig = await scanNav(workDir, docsDir);
+    const navConfig = await scanNav(workDir, docsDir, metaFileSet);
     // find the `_meta.json` file in the subdirectory
     const subDirs: string[] = (
       await Promise.all(
@@ -83,25 +108,30 @@ export async function walk(
           path.join(workDir, subDir),
           docsDir,
           extensions,
+          metaFileSet,
+          mdFileSet,
         );
       }),
     );
 
-    if (isRootMetaJsonExist) {
-      const rootMetaConfig = await scanSideMeta(workDir, docsDir, extensions);
-      sidebarConfig['/'] = rootMetaConfig;
-    }
-
     return {
-      nav: navConfig as NavItem[],
+      nav: navConfig,
       sidebar: sidebarConfig,
     };
   }
 
+  // 2. only `_meta.json` exist
+  // 3. both `_nav.json` and `_meta.json` do not exist
   return {
     nav: [],
     sidebar: {
-      '/': await scanSideMeta(workDir, docsDir, extensions),
+      '/': await scanSideMeta(
+        workDir,
+        docsDir,
+        extensions,
+        metaFileSet,
+        mdFileSet,
+      ),
     },
   };
 }

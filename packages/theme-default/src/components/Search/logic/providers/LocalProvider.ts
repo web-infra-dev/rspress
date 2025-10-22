@@ -5,15 +5,15 @@
 
 import {
   type PageIndexInfo,
-  SEARCH_INDEX_NAME,
   removeTrailingSlash,
+  SEARCH_INDEX_NAME,
 } from '@rspress/shared';
 // https://github.com/nextapps-de/flexsearch/issues/438
 import Index, {
   type EnrichedDocumentSearchResultSetUnit,
   type IndexOptionsForDocumentSearch,
 } from 'flexsearch';
-import searchIndexHash from 'virtual-search-index-hash';
+import { searchIndexHash } from 'virtual-page-data';
 import { LOCAL_INDEX, type Provider, type SearchQuery } from '../Provider';
 import type { SearchOptions } from '../types';
 import { normalizeTextCase } from '../util';
@@ -88,7 +88,7 @@ export class LocalProvider implements Provider {
     }
 
     const { currentLang, currentVersion } = options;
-    const versioned = options.mode !== 'remote' && options.versioned;
+    const versioned = options.versioned;
 
     this.#fetchPromise = this.#getPages(
       currentLang,

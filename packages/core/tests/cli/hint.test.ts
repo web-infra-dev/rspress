@@ -1,5 +1,5 @@
 import { logger } from '@rspress/shared/logger';
-import { describe, it, rs } from '@rstest/core';
+import { describe, expect, it, rs } from '@rstest/core';
 import { fs, vol } from 'memfs';
 import { hintThemeBreakingChange } from '../../src/node/logger/hint';
 

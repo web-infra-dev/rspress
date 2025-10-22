@@ -1,5 +1,5 @@
-import { useEditLink } from '../../logic/useEditLink';
-import * as styles from './index.module.scss';
+import './index.scss';
+import { useEditLink } from './useEditLink';
 
 export function EditLink() {
   const editLinkObj = useEditLink();
@@ -12,7 +12,7 @@ export function EditLink() {
 
   // EditLink must be an external site, so we use <a> directly instead of Link
   return (
-    <a href={link} target="_blank" className={styles.editLink}>
+    <a href={link} target="_blank" className="rp-edit-link">
       {text}
     </a>
   );

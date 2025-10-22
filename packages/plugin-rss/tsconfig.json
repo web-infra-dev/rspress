@@ -9,6 +9,6 @@
   "references": [
     { "path": "./tsconfig.runtime.json" },
     { "path": "./tsconfig.tools.json" },
-    { "path": "../runtime" }
+    { "path": "../core" }
   ]
 }

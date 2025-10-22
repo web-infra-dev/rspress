@@ -1,14 +1,13 @@
 import fs from 'node:fs';
 import path, { join } from 'node:path';
 import type {
-  EditorProps as MonacoEditorProps,
   loader,
+  EditorProps as MonacoEditorProps,
 } from '@monaco-editor/react';
-import type { RouteMeta, RspressPlugin } from '@rspress/shared';
-import { getNodeAttribute } from '@rspress/shared/node-utils';
+import type { RouteMeta, RspressPlugin } from '@rspress/core';
+import { getNodeAttribute } from '@rspress/core';
 import { RspackVirtualModulePlugin } from 'rspack-plugin-virtual-module';
 import { DEFAULT_BABEL_URL, DEFAULT_MONACO_URL } from '../web/constant';
-import { normalizeUrl } from '../web/utils';
 import { remarkPlugin } from './remarkPlugin';
 import { parseImports } from './utils';
 
@@ -63,9 +62,12 @@ export function pluginPlayground(
   }
 
   const preloads: string[] = [];
-  const monacoPrefix = monacoLoader.paths?.vs || DEFAULT_MONACO_URL;
-  preloads.push(normalizeUrl(`${monacoPrefix}/loader.js`));
-  preloads.push(normalizeUrl(`${monacoPrefix}/editor/editor.main.js`));
+  const monacoPrefix = (monacoLoader.paths?.vs || DEFAULT_MONACO_URL).replace(
+    /\/+$/,
+    '',
+  );
+  preloads.push(`${monacoPrefix}/loader.js`);
+  preloads.push(`${monacoPrefix}/editor/editor.main.js`);
 
   return {
     name: '@rspress/plugin-playground',

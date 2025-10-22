@@ -5,13 +5,7 @@
     "baseUrl": "src",
     "rootDir": "."
   },
-  "include": [
-    "src",
-    "index.d.ts",
-    "mdx-meta-loader.cjs",
-    "static/",
-    "rslib.config.ts"
-  ],
+  "include": ["src", "static/"],
   "references": [
     {
       "path": "../shared"
@@ -19,6 +13,5 @@
     {
       "path": "../theme-default"
     }
-  ],
-  "exclude": ["runtime.d.ts", "theme.d.ts", "node_modules", "dist"]
+  ]
 }

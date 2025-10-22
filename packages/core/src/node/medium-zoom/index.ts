@@ -1,6 +1,6 @@
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
-import { type RspressPlugin, normalizePosixPath } from '@rspress/shared';
+import { normalizePosixPath, type RspressPlugin } from '@rspress/shared';
 import type { ZoomOptions } from 'medium-zoom';
 
 // TODO: reimplement medium-zoom in https://github.com/web-infra-dev/rspress/issues/2325

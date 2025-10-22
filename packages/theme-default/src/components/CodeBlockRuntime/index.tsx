@@ -1,3 +1,5 @@
+import type { CodeBlockProps } from '@theme';
+import { getCustomMDXComponent } from '@theme';
 import { toJsxRuntime } from 'hast-util-to-jsx-runtime';
 import { Fragment, type ReactNode, useEffect, useRef, useState } from 'react';
 import { jsx, jsxs } from 'react/jsx-runtime';
@@ -9,14 +11,7 @@ import {
   createCssVariablesTheme,
 } from 'shiki';
 
-import { getCustomMDXComponent } from '@theme';
-import { Code } from '../../layout/DocLayout/docComponents/code';
-import {
-  PreWithCodeButtonGroup,
-  type PreWithCodeButtonGroupProps,
-} from '../../layout/DocLayout/docComponents/pre';
-
-export interface CodeBlockRuntimeProps extends PreWithCodeButtonGroupProps {
+export interface CodeBlockRuntimeProps extends CodeBlockProps {
   lang: string;
   code: string;
   shikiOptions?: Omit<
@@ -48,6 +43,9 @@ export function CodeBlockRuntime({
   title,
   code,
   shikiOptions,
+  codeButtonGroupProps,
+  children: _,
+  containerElementClassName,
   onRendered,
   ...otherProps
 }: CodeBlockRuntimeProps) {
@@ -68,29 +66,29 @@ export function CodeBlockRuntime({
         return;
       }
 
+      const {
+        pre: ShikiPre,
+        code: Code,
+        ...otherMdxComponents
+      } = getCustomMDXComponent();
+
       const reactNode = toJsxRuntime(hast, {
         jsx,
         jsxs,
         development: false,
         components: {
-          ...getCustomMDXComponent(),
-          // implement `addLanguageClass: true`
+          ...otherMdxComponents,
           pre: props => (
-            <PreWithCodeButtonGroup
+            <ShikiPre
               title={title}
-              containerElementClassName={`language-${lang}`}
+              lang={lang}
+              containerElementClassName={containerElementClassName}
+              codeButtonGroupProps={codeButtonGroupProps}
               {...props}
               {...otherProps}
             />
           ),
-          code: ({ className, ...otherProps }) => (
-            <Code
-              {...otherProps}
-              className={[className, `language-${lang}`]
-                .filter(Boolean)
-                .join(' ')}
-            />
-          ),
+          code: props => <Code {...props} />,
         },
         Fragment,
       });

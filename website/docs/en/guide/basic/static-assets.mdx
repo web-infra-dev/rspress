@@ -1,0 +1,156 @@
+# Static assets
+
+## Introduction
+
+In Rspress, you may use the following static assets:
+
+- Logo image at the top left corner of the site
+- Site favicon icon
+- Homepage logo image
+- Images, videos and other static assets used in .md(x) files
+- Other static assets
+
+Next, we will introduce how to use these static assets one by one.
+
+:::tip Tip
+
+The `document root directory` mentioned below refers to the directory specified by the `root` field in `rspress.config.ts`:
+
+```ts title="rspress.config.ts"
+import { defineConfig } from '@rspress/core';
+
+export default defineConfig({
+  root: 'docs',
+});
+```
+
+:::
+
+## Top left corner logo
+
+In Rspress, you can specify the logo image at the top left corner through the `logo` field. For example:
+
+```ts title="rspress.config.ts"
+import { defineConfig } from '@rspress/core';
+
+export default defineConfig({
+  logo: 'https://avatars.githubusercontent.com/u/56892468?s=200&v=4',
+});
+```
+
+The logo field supports both string and object configurations.
+
+When the logo is a string, there are the following config situations:
+
+- Configured as an **external link**, like the above example.
+- Configured as an **absolute path**, such as `/rspress-logo.png`. In this case, Rspress will automatically find the `rspress-logo.png` image in the `public directory` of your **document root directory** and display it.
+- Configured as a **relative path**, such as `./docs/public/rspress-logo.png`. In this case, Rspress will find the `rspress-logo.png` image based on the project root directory and display it.
+
+If your website needs to adapt to dark mode, you can also use the object configuration of the logo, such as:
+
+```ts title="rspress.config.ts"
+import { defineConfig } from '@rspress/core';
+
+export default defineConfig({
+  logo: {
+    light: 'https://avatars.githubusercontent.com/u/56892468?s=200&v=4',
+    dark: 'https://avatars.githubusercontent.com/u/56892468?s=200&v=4',
+  },
+});
+```
+
+Here, `light` represents the logo address in light mode, and `dark` represents the logo address in dark mode. Their configuration methods are consistent with the above string configuration.
+
+## Favicon
+
+In Rspress, you can specify the site's favicon icon through the `icon` field. For example:
+
+```ts title="rspress.config.ts"
+import { defineConfig } from '@rspress/core';
+
+export default defineConfig({
+  icon: 'https://avatars.githubusercontent.com/u/56892468?s=200&v=4',
+});
+```
+
+The icon field supports string or URL config, with the following specific ways:
+
+- Configured as an **external link**, like the above example.
+- Configured as an **absolute path**, such as `/favicon.ico`. In this case, Rspress will automatically find the `favicon.ico` icon in the `public directory` of your **document root directory** and display it.
+- Configured as a **relative path**, such as `./docs/public/favicon.ico`. In this case, Rspress will find the `favicon.ico` icon based on the project root directory and display it.
+- Configured as a `file://` protocol or `URL`, such as `file:///local_path/favicon.ico`. In this case, Rspress will use the local absolute path `/local_path/favicon.ico` icon directly and display it.
+
+## Homepage logo
+
+In the [frontmatter configuration](/api/config/config-frontmatter.html#hero) of the homepage, you can specify the homepage logo image through the `hero.image.src` field. For example:
+
+```mdx title="index.mdx"
+---
+pageType: home
+
+hero:
+  image:
+    src: 'https://avatars.githubusercontent.com/u/56892468?s=200&v=4'
+    alt: Rspress
+---
+```
+
+Here, src is a string, supporting the following configurations:
+
+- Configured as an **external link**, like the above example.
+- Configured as an **absolute path**, such as `/rspress-logo.png`. In this case, Rspress will automatically find the `rspress-logo.png` image in the `public directory` of your **document root directory** and display it.
+
+## Static assets used in .md(x) files
+
+You can import static assets in `markdown` (or `mdx`) files. Both relative paths and absolute paths are supported. For example, if there is an image in the same directory as the markdown, you can reference it like this:
+
+```mdx
+![](./demo.png)
+```
+
+Of course, you can also directly use the img tag in `.mdx` files:
+
+```mdx
+<img src="./demo.png" />
+```
+
+Rspress will automatically find the image based on the `.mdx` file path and image path, and respond to the browser.
+
+On the other hand, you can also import static assets using absolute paths. In this case, Rspress will look for assets in the `public` folder under the `document root directory`.
+
+For example, if the root directory is `docs` and the directory structure is as follows
+
+```txt
+docs
+├── public
+│   └── demo.png
+├── index.mdx
+```
+
+In the above `index.mdx` file, you can reference `demo.png` like this:
+
+```mdx
+![](./public/demo.png)
+```
+
+Or use an absolute path to reference:
+
+```mdx
+![](/demo.png)
+```
+
+**A special case to note is that**, when your site is configured with a `base` path, if you want to use the `img` tag to introduce an absolute path, you need to use `normalizeImagePath` provided by `rspress/runtime` to manually add the `base` path to its src. Here is an example:
+
+```tsx title="guide.mdx"
+import { normalizeImagePath } from '@rspress/core/runtime';
+
+<img src={normalizeImagePath('/demo.png')} />;
+```
+
+Not only images, but you can also import videos, audios and other static assets in markdown files.
+
+## Other static assets
+
+In some scenarios, you may need to deploy certain specific static assets, such as adding the deployment configuration file `_headers` of `Netlify` to specify custom HTTP response headers.
+
+In that case, you can directly put these static assets in the `public directory` of the document root directory (such as `docs`). During the project build process, Rspress will automatically **copy all assets in the public directory to the product directory**. In this way, the assets under public can be deployed to the server.

@@ -1,41 +1,42 @@
 import path from 'node:path';
-import { type ProcessorOptions, nodeTypes } from '@mdx-js/mdx';
+import { nodeTypes, type ProcessorOptions } from '@mdx-js/mdx';
+import type { Rspack } from '@rsbuild/core';
 import type { UserConfig } from '@rspress/shared';
-import rehypePluginExternalLinks from 'rehype-external-links';
+import rehypeShiki from '@shikijs/rehype';
+import rehypeExternalLinks from 'rehype-external-links';
 import rehypeRaw from 'rehype-raw';
 import remarkGFM from 'remark-gfm';
-
 import type { PluggableList } from 'unified';
-import { rehypeHeaderAnchor } from './rehypePlugins/headerAnchor';
-import { remarkBuiltin } from './remarkPlugins/builtin';
-import { remarkPluginNormalizeLink } from './remarkPlugins/normalizeLink';
-import { remarkPluginToc } from './remarkPlugins/toc';
-
-import rehypeShiki from '@shikijs/rehype';
 import type { PluginDriver } from '../PluginDriver';
 import type { RouteService } from '../route/RouteService';
 import { rehypeCodeMeta } from './rehypePlugins/codeMeta';
+import { rehypeHeaderAnchor } from './rehypePlugins/headerAnchor';
 import { createRehypeShikiOptions } from './rehypePlugins/shiki';
+import { remarkBuiltin } from './remarkPlugins/builtin';
 import { remarkContainerSyntax } from './remarkPlugins/containerSyntax';
+import { remarkFileCodeBlock } from './remarkPlugins/fileCodeBlock';
+import { remarkImage } from './remarkPlugins/image';
+import { remarkLink } from './remarkPlugins/link';
+import { remarkToc } from './remarkPlugins/toc';
 
 export async function createMDXOptions(options: {
   docDirectory: string;
   filepath: string;
-  checkDeadLinks: boolean;
   config: UserConfig | null;
   routeService: RouteService | null;
   pluginDriver: PluginDriver | null;
+  addDependency?: Rspack.LoaderContext['addDependency'];
 }): Promise<ProcessorOptions> {
   const {
     docDirectory,
     config,
-    checkDeadLinks,
     routeService,
     filepath,
     pluginDriver,
+    addDependency,
   } = options;
+  const remarkLinkOptions = config?.markdown?.link;
   const format = path.extname(filepath).slice(1) as 'mdx' | 'md';
-  const cleanUrls = config?.route?.cleanUrls ?? false;
   const {
     remarkPlugins: remarkPluginsFromConfig = [],
     rehypePlugins: rehypePluginsFromConfig = [],
@@ -62,17 +63,20 @@ export async function createMDXOptions(options: {
     format,
     remarkPlugins: [
       remarkGFM,
-      remarkPluginToc,
+      remarkToc,
       remarkContainerSyntax,
+      [remarkFileCodeBlock, { filepath, addDependency }],
       [
-        remarkPluginNormalizeLink,
+        remarkLink,
         {
-          cleanUrls,
+          // we do cleanUrls in runtime side
+          cleanUrls: false,
           root: docDirectory,
           routeService,
-          checkDeadLinks,
+          remarkLinkOptions,
         },
       ],
+      remarkImage,
       globalComponents.length && [
         remarkBuiltin,
         {
@@ -97,7 +101,7 @@ export async function createMDXOptions(options: {
         : []),
       [rehypeShiki, createRehypeShikiOptions(showLineNumbers, shiki)],
       [
-        rehypePluginExternalLinks,
+        rehypeExternalLinks,
         {
           target: '_blank',
           rel: 'noopener noreferrer',

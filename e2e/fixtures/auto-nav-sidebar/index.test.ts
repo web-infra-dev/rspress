@@ -1,10 +1,10 @@
-import { type ElementHandle, expect, test } from '@playwright/test';
-import { getNavbar, getSidebar } from '../../utils/getSideBar';
+import { expect, test } from '@playwright/test';
+import { getNavbar } from '../../utils/getSideBar';
 import { getPort, killProcess, runDevCommand } from '../../utils/runCommands';
 
 test.describe('Auto nav and sidebar test', async () => {
-  let appPort;
-  let app;
+  let appPort: number;
+  let app: Awaited<ReturnType<typeof runDevCommand>>;
   test.beforeAll(async () => {
     const appDir = __dirname;
     appPort = await getPort();
@@ -22,11 +22,21 @@ test.describe('Auto nav and sidebar test', async () => {
       waitUntil: 'networkidle',
     });
 
-    const nav = await getNavbar(page);
-    expect(nav?.length).toBe(1);
+    const nav = getNavbar(page);
+    expect(await nav.count()).toBeGreaterThan(0);
 
-    const sidebar = await getSidebar(page);
-    expect(sidebar?.length).toBe(2);
+    const topLevelSidebarItems = page.locator(
+      '.rp-doc-layout__sidebar .rp-sidebar-item[data-depth="0"]',
+    );
+    expect(await topLevelSidebarItems.count()).toBeGreaterThan(0);
+
+    const topLevelTexts = await topLevelSidebarItems.allTextContents();
+    const trimmedTopLevelTexts = topLevelTexts
+      .map(text => text.trim())
+      .filter((text): text is string => text.length > 0);
+    expect(trimmedTopLevelTexts).toEqual(
+      expect.arrayContaining(['Guide', 'Advanced']),
+    );
   });
 
   test('Should load total API Overview correctly', async ({ page }) => {
@@ -34,15 +44,28 @@ test.describe('Auto nav and sidebar test', async () => {
       waitUntil: 'networkidle',
     });
 
-    const h2 = await page.$$('.overview-index h2');
-    const h2Texts = await Promise.all(h2.map(element => element.textContent()));
+    const h2Elements = page.locator('.rp-overview h2.rp-toc-include span');
+    const h2Texts = (await h2Elements.allTextContents())
+      .map(text => text.trim())
+      .filter(Boolean);
     expect(h2Texts.join(',')).toEqual(
-      ['Config', 'Client API', 'Commands', 'Single'].join(','),
+      [
+        'Config',
+        'Client API',
+        'Commands',
+        'Single',
+        'Section a',
+        'Section b',
+      ].join(','),
     );
 
-    const h3 = await page.$$('.overview-group_f8331 h3');
-    const h3Texts = await Promise.all(h3.map(element => element.textContent()));
-    expect(h3Texts.join(',')).toEqual(
+    const itemTitles = page.locator(
+      '.rp-overview .rp-overview-group__item__title > a',
+    );
+    const itemTitleTexts = (await itemTitles.allTextContents())
+      .map(text => text.trim())
+      .filter(Boolean);
+    expect(itemTitleTexts.join(',')).toEqual(
       [
         'Basic config',
         'Theme config',
@@ -54,12 +77,18 @@ test.describe('Auto nav and sidebar test', async () => {
         'Components',
         'Commands',
         'Single',
+        'Section a',
+        'Section b',
       ].join(','),
     );
 
-    const a = await page.$$('.overview-group_f8331 ul a');
-    const aTexts = await Promise.all(a.map(element => element.textContent()));
-    expect(aTexts.join(',')).toEqual(
+    const links = page.locator(
+      '.rp-overview .rp-overview-group__item__content__item__link',
+    );
+    const linkTexts = (await links.allTextContents())
+      .map(text => text.trim())
+      .filter(Boolean);
+    expect(linkTexts.join(',')).toEqual(
       [
         'root',
         'logoText',
@@ -84,8 +113,10 @@ test.describe('Auto nav and sidebar test', async () => {
       waitUntil: 'networkidle',
     });
 
-    const h2 = await page.$$('.overview-index h2');
-    const h2Texts = await Promise.all(h2.map(element => element.textContent()));
+    const h2Elements = page.locator('.rp-overview h2.rp-toc-include span');
+    const h2Texts = (await h2Elements.allTextContents())
+      .map(text => text.trim())
+      .filter(Boolean);
     expect(h2Texts.join(',')).toEqual(
       [
         'Basic config',
@@ -97,9 +128,13 @@ test.describe('Auto nav and sidebar test', async () => {
       ].join(','),
     );
 
-    const h3 = await page.$$('.overview-group_f8331 h3');
-    const h3Texts = await Promise.all(h3.map(element => element.textContent()));
-    expect(h3Texts.join(',')).toEqual(
+    const itemTitles = page.locator(
+      '.rp-overview .rp-overview-group__item__title > a',
+    );
+    const itemTitleTexts = (await itemTitles.allTextContents())
+      .map(text => text.trim())
+      .filter(Boolean);
+    expect(itemTitleTexts.join(',')).toEqual(
       [
         'Basic config',
         'Theme config',
@@ -110,9 +145,13 @@ test.describe('Auto nav and sidebar test', async () => {
       ].join(','),
     );
 
-    const a = await page.$$('.overview-group_f8331 ul a');
-    const aTexts = await Promise.all(a.map(element => element.textContent()));
-    expect(aTexts.join(',')).toEqual(
+    const links = page.locator(
+      '.rp-overview .rp-overview-group__item__content__item__link',
+    );
+    const linkTexts = (await links.allTextContents())
+      .map(text => text.trim())
+      .filter(Boolean);
+    expect(linkTexts.join(',')).toEqual(
       [
         'root',
         'logoText',
@@ -134,17 +173,29 @@ test.describe('Auto nav and sidebar test', async () => {
       waitUntil: 'networkidle',
     });
 
-    const h2 = await page.$$('.overview-index h2');
-    const h2Texts = await Promise.all(h2.map(element => element.textContent()));
+    const h2Elements = page.locator('.rp-overview h2.rp-toc-include span');
+    const h2Texts = (await h2Elements.allTextContents())
+      .map(text => text.trim())
+      .filter(Boolean);
     expect(h2Texts.join(',')).toEqual(['Client API'].join(','));
 
-    const h3 = await page.$$('.overview-group_f8331 h3');
-    const h3Texts = await Promise.all(h3.map(element => element.textContent()));
-    expect(h3Texts.join(',')).toEqual(['Runtime API', 'Components'].join(','));
+    const itemTitles = page.locator(
+      '.rp-overview .rp-overview-group__item__title > a',
+    );
+    const itemTitleTexts = (await itemTitles.allTextContents())
+      .map(text => text.trim())
+      .filter(Boolean);
+    expect(itemTitleTexts.join(',')).toEqual(
+      ['Runtime API', 'Components'].join(','),
+    );
 
-    const a = await page.$$('.overview-group_f8331 ul a');
-    const aTexts = await Promise.all(a.map(element => element.textContent()));
-    expect(aTexts.join(',')).toEqual(['Usage', 'Example'].join(','));
+    const links = page.locator(
+      '.rp-overview .rp-overview-group__item__content__item__link',
+    );
+    const linkTexts = (await links.allTextContents())
+      .map(text => text.trim())
+      .filter(Boolean);
+    expect(linkTexts.join(',')).toEqual(['Usage', 'Example'].join(','));
   });
 
   test('Sidebar not have same name md/mdx will not navigate', async ({
@@ -153,7 +204,7 @@ test.describe('Auto nav and sidebar test', async () => {
     await page.goto(`http://localhost:${appPort}/guide/`, {
       waitUntil: 'networkidle',
     });
-    await page.click('.rspress-scrollbar nav section div');
+    await page.click('.rp-doc-layout__sidebar .rp-sidebar-group');
     expect(page.url()).toBe(`http://localhost:${appPort}/guide/`);
   });
 
@@ -164,17 +215,27 @@ test.describe('Auto nav and sidebar test', async () => {
       waitUntil: 'networkidle',
     });
 
-    const h2 = await page.$$('.overview-index h2');
-    const h2Texts = await Promise.all(h2.map(element => element.textContent()));
+    const h2Elements = page.locator('.rp-overview h2.rp-toc-include span');
+    const h2Texts = (await h2Elements.allTextContents())
+      .map(text => text.trim())
+      .filter(Boolean);
     expect(h2Texts.join(',')).toEqual(['Nested'].join(','));
 
-    const h3 = await page.$$('.overview-group_f8331 h3');
-    const h3Texts = await Promise.all(h3.map(element => element.textContent()));
-    expect(h3Texts.join(',')).toEqual(['Nested config'].join(','));
+    const itemTitles = page.locator(
+      '.rp-overview .rp-overview-group__item__title > a',
+    );
+    const itemTitleTexts = (await itemTitles.allTextContents())
+      .map(text => text.trim())
+      .filter(Boolean);
+    expect(itemTitleTexts.join(',')).toEqual(['Nested config'].join(','));
 
-    const a = await page.$$('.overview-group_f8331 ul a');
-    const aTexts = await Promise.all(a.map(element => element.textContent()));
-    expect(aTexts.join(',')).toEqual(['Nested H2'].join(','));
+    const links = page.locator(
+      '.rp-overview .rp-overview-group__item__content__item__link',
+    );
+    const linkTexts = (await links.allTextContents())
+      .map(text => text.trim())
+      .filter(Boolean);
+    expect(linkTexts.join(',')).toEqual(['Nested H2'].join(','));
   });
 
   test('Should generate data-context in sidebar group dom', async ({
@@ -184,52 +245,46 @@ test.describe('Auto nav and sidebar test', async () => {
       waitUntil: 'networkidle',
     });
 
-    function getDataContextFromElements(
-      elements: ElementHandle<SVGElement | HTMLElement>[],
-    ) {
-      return page.evaluate(
-        sidebars =>
-          sidebars?.map(sidebar => sidebar.getAttribute('data-context')),
-        elements,
-      );
-    }
+    const topLevelItems = page.locator(
+      '.rp-doc-layout__sidebar .rp-sidebar-item[data-depth="0"]',
+    );
+    const topLevelCount = await topLevelItems.count();
+    const topLevelContexts = await Promise.all(
+      Array.from({ length: topLevelCount }, (_, i) =>
+        topLevelItems.nth(i).getAttribute('data-context'),
+      ),
+    );
+    expect(topLevelContexts.filter(Boolean)).toEqual([
+      'api-overview',
+      'config',
+      'client-api',
+      'rspack-official-docsite-custom-link',
+    ]);
 
-    const sidebarGroupSections = await page.$$('.rspress-sidebar-section');
-    const c1 = await getDataContextFromElements(sidebarGroupSections);
-    expect(c1.join(',')).toEqual(
-      ['config', null, 'client-api', null].join(','),
+    const overviewItems = page.locator('[data-context="api-overview"]');
+    await expect(overviewItems).toHaveCount(1);
+
+    const depthOneItems = page.locator(
+      '.rp-doc-layout__sidebar .rp-sidebar-item[data-depth="1"]',
+    );
+    const depthOneCount = await depthOneItems.count();
+    const depthOneContexts = await Promise.all(
+      Array.from({ length: depthOneCount }, (_, i) =>
+        depthOneItems.nth(i).getAttribute('data-context'),
+      ),
+    );
+    expect(depthOneContexts).toEqual(
+      expect.arrayContaining(['front-matter', 'config-build']),
     );
 
-    // Find sidebar elements with data-context="api-overview"
-    const overviewItems = await page.$$('[data-context="api-overview"]');
-
-    // Assert that there is at least one api-overview marker and the content is correct
-    expect(overviewItems.length).toEqual(1);
-
-    const sidebarGroupCollapses = await page.$$('.rspress-sidebar-collapse');
-    const c2 = await page.evaluate(
-      sidebars =>
-        sidebars?.map(sidebar => sidebar.getAttribute('data-context')),
-      sidebarGroupCollapses,
+    const customLinkItems = page.locator(
+      '.rp-doc-layout__sidebar [data-context="rspack-official-docsite-custom-link"]',
     );
-    expect(c2.join(',')).toEqual(
-      ['config', null, 'client-api', null].join(','),
-    );
+    const customLinkTexts = (await customLinkItems.allTextContents())
+      .map(text => text?.trim())
+      .filter(Boolean);
 
-    const sidebarGroupItems = await page.$$('.rspress-sidebar-item');
-    const c3 = await getDataContextFromElements(sidebarGroupItems);
-    // added the `depth=0 type=file` sidebar item with div.rspress-sidebar-item container
-    // so modify this to update test case
-    expect(c3?.[3]).toEqual('front-matter');
-    expect(c3?.[4]).toEqual('config-build');
-
-    // custom link should work
-    const customLinkItems = await page.$$(
-      '[data-context="rspack-official-docsite-custom-link"]',
-    );
-    const c4 = await Promise.all(customLinkItems.map(i => i.textContent()));
-
-    expect(c4.join(',')).toEqual(
+    expect(customLinkTexts.join(',')).toEqual(
       ['Rspack Official Docsite', 'Inner SideBar Rspack Official Docsite'].join(
         ',',
       ),

@@ -8,6 +8,28 @@ export const getRoutePathParts = (
   langs: string[],
   versions: string[],
 ) => {
+  const [versionPart, langPart, purePath] = splitRoutePathParts(
+    relativePath,
+    lang,
+    version,
+    langs,
+    versions,
+  );
+
+  return [
+    versionPart === version ? '' : versionPart,
+    langPart === lang ? '' : langPart,
+    purePath,
+  ];
+};
+
+export const splitRoutePathParts = (
+  relativePath: string,
+  lang: string,
+  version: string,
+  langs: string[],
+  versions: string[],
+) => {
   const hasTrailSlash = relativePath.endsWith('/');
 
   let versionPart = '';
@@ -19,20 +41,14 @@ export const getRoutePathParts = (
   if (version) {
     const versionToMatch = parts[0];
     if (versions.includes(versionToMatch)) {
-      if (versionToMatch !== version) {
-        versionPart = versionToMatch;
-      }
-      parts.shift();
+      versionPart = parts.shift() ?? '';
     }
   }
 
   if (lang) {
     const langToMatch = parts[0];
     if (langs.includes(langToMatch)) {
-      if (langToMatch !== lang) {
-        langPart = langToMatch;
-      }
-      parts.shift();
+      langPart = parts.shift() ?? '';
     }
   }
 
@@ -69,6 +85,10 @@ export const normalizeRoutePath = (
   let routePath = relativePath
     .replace(cleanExtensionPattern, '')
     .replace(/\.html$/, '');
+
+  if (routePath.endsWith('/')) {
+    routePath = `${routePath}index`;
+  }
 
   // 2. remove /v3/en
   const [versionPart, langPart, purePathPart] = getRoutePathParts(

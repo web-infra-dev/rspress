@@ -1,16 +1,19 @@
-/// <reference path="../../index.d.ts" />
-
-import { useLang, usePageData } from '@rspress/core/runtime';
-import { getCustomMDXComponent } from '@rspress/core/theme';
+import { useLang } from '@rspress/core/runtime';
+// @ts-expect-error @theme is overridden by alias in @rspress/core
+import { getCustomMDXComponent } from '@theme';
+import GithubSlugger from 'github-slugger';
+import type { Content, Element, Root } from 'hast';
 import ReactMarkdown from 'react-markdown';
 import remarkGfm from 'remark-gfm';
 import './API.css';
-import GithubSlugger from 'github-slugger';
-import type { Content, Element, Root } from 'hast';
 // biome-ignore lint/style/useImportType: <exact>
 import React from 'react';
 import type { Plugin } from 'unified';
 import { visit } from 'unist-util-visit';
+
+declare global {
+  var RSPRESS_PLUGIN_API_DOCGEN_MAP: Record<string, string>;
+}
 
 function headingRank(node: Root | Content): number | null {
   const name =
@@ -57,7 +60,7 @@ function create(node: Element): Element {
     type: 'element',
     tagName: 'a',
     properties: {
-      class: 'header-anchor',
+      class: 'rp-header-anchor',
       ariaHidden: 'true',
       href: `#${node.properties!.id}`,
     },
@@ -97,12 +100,11 @@ const collectHeaderText = (node: Element): string => {
   return text;
 };
 
-export default (props: { moduleName: string }) => {
+const API = (props: { moduleName: string }) => {
   const lang = useLang();
-  const { page } = usePageData();
   const { moduleName } = props;
   // some api doc have two languages.
-  const apiDocMap = page.apiDocMap;
+  const apiDocMap = RSPRESS_PLUGIN_API_DOCGEN_MAP;
   // avoid error when no page data
   const apiDoc =
     apiDocMap?.[moduleName] || apiDocMap?.[`${moduleName}-${lang}`] || '';
@@ -121,3 +123,5 @@ export default (props: { moduleName: string }) => {
     </div>
   );
 };
+
+export default API;

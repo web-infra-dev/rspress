@@ -1,7 +1,11 @@
 {
-  "$schema": "https://biomejs.dev/schemas/1.9.4/schema.json",
-  "organizeImports": {
-    "enabled": true
+  "$schema": "https://biomejs.dev/schemas/2.2.3/schema.json",
+  "assist": {
+    "actions": {
+      "source": {
+        "organizeImports": "on"
+      }
+    }
   },
   "vcs": {
     "enabled": true,
@@ -10,27 +14,21 @@
     "useIgnoreFile": true
   },
   "files": {
-    "include": [
-      "packages/**/*.ts",
-      "packages/**/*.tsx",
-      "packages/**/*.js",
-      "packages/**/*.mjs",
-      "packages/**/*.jsx",
-      "scripts/**/*.js",
-      "scripts/**/*.ts",
-      "e2e/**/*.js",
-      "e2e/**/*.ts"
-    ],
-    "ignore": [
-      "*.d.ts",
-      "dist-*/**/*",
-      "compiled/**/*",
-      "create-rspress/template/rspress.config.ts"
+    "includes": [
+      "**/packages/**",
+      "**/examples/**",
+      "**/e2e/**",
+      "**/scripts/**",
+      "**/website/**",
+      "!**/*.d.ts",
+      "!**/dist-*/**/*",
+      "!**/compiled/**/*",
+      "!**/create-rspress/template/rspress.config.ts"
     ],
     "ignoreUnknown": true
   },
   "formatter": {
-    "ignore": ["**/.rslib/*"],
+    "includes": ["**", "!**/.rslib/**/*"],
     "indentStyle": "space"
   },
   "javascript": {
@@ -55,6 +53,7 @@
     "rules": {
       "recommended": true,
       "style": {
+        "noDescendingSpecificity": "off",
         "noParameterAssign": "off",
         "noInferrableTypes": "off",
         "noNonNullAssertion": "off",
@@ -62,7 +61,8 @@
         "useDefaultParameterLast": "off"
       },
       "security": {
-        "noDangerouslySetInnerHtml": "off"
+        "noDangerouslySetInnerHtml": "off",
+        "noBlankTarget": "off"
       },
       "suspicious": {
         "noConstEnum": "off",
@@ -70,25 +70,33 @@
         "noArrayIndexKey": "off",
         "noImplicitAnyLet": "off",
         "noConfusingVoidType": "off",
-        "noAssignInExpressions": "off"
+        "noAssignInExpressions": "off",
+        "useIterableCallbackReturn": "off",
+        "noUselessEscapeInString": "off",
+        "noUnknownAtRules": "off"
       },
       "correctness": {
-        "useExhaustiveDependencies": "off"
+        "useExhaustiveDependencies": "off",
+        "useHookAtTopLevel": "off",
+        "useUniqueElementIds": "off",
+        "noNestedComponentDefinitions": "off"
       },
       "complexity": {
+        "noImportantStyles": "off",
         "noForEach": "off",
         "useFlatMap": "off",
         "useArrowFunction": "off",
-        "noUselessSwitchCase": "off"
+        "noUselessSwitchCase": "off",
+        "noUselessFragments": "off"
       },
       "performance": {
         "noDelete": "off",
-        "noAccumulatingSpread": "off"
+        "noAccumulatingSpread": "off",
+        "noDynamicNamespaceImportAccess": "off"
       },
       "a11y": {
         "useAltText": "off",
         "noAutofocus": "off",
-        "noBlankTarget": "off",
         "useButtonType": "off",
         "useIframeTitle": "off",
         "useValidAnchor": "off",
@@ -96,7 +104,8 @@
         "useHeadingContent": "off",
         "useKeyWithClickEvents": "off",
         "noLabelWithoutControl": "off",
-        "noAriaHiddenOnFocusable": "off"
+        "noAriaHiddenOnFocusable": "off",
+        "noStaticElementInteractions": "off"
       }
     }
   }

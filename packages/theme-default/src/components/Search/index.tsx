@@ -1,6 +1,5 @@
 import { NoSSR } from '@rspress/runtime';
-import { SearchPanel } from '@theme';
-import { SearchButton } from '@theme';
+import { SearchButton, SearchPanel } from '@theme';
 import { useState } from 'react';
 
 export function Search() {

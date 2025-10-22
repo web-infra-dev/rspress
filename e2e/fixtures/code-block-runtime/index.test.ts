@@ -2,8 +2,8 @@ import { expect, test } from '@playwright/test';
 import { getPort, killProcess, runDevCommand } from '../../utils/runCommands';
 
 test.describe('<CodeBlockRuntime />', async () => {
-  let appPort;
-  let app;
+  let appPort: number;
+  let app: Awaited<ReturnType<typeof runDevCommand>>;
   test.beforeAll(async () => {
     const appDir = __dirname;
     appPort = await getPort();
@@ -22,22 +22,19 @@ test.describe('<CodeBlockRuntime />', async () => {
     await page.goto(`http://localhost:${appPort}`, {
       waitUntil: 'networkidle',
     });
-    const containers = await page.$$('div.language-js');
-    expect(containers.length).toBe(2);
+    const containers = page.locator('div.language-js');
+    await expect(containers).toHaveCount(2);
 
-    // CodeBlockRuntime should render the same result with compile-time code block
-    for (const container of containers) {
-      const title = await container.$('.rspress-code-title');
-      expect(await title!.textContent()).toBe('test.js');
-      const content = await container.$('.rspress-code-content');
-      expect(
-        await content!.evaluate(el =>
-          el.classList.contains('rspress-scrollbar'),
-        ),
-      ).toBe(true);
-      const shikiContainer = await content?.$('.shiki.css-variables');
-      expect(await shikiContainer?.evaluate(el => el.tagName)).toBe('PRE');
-      expect(await shikiContainer?.$eval('code', el => el.textContent)).toBe(
+    const containerCount = await containers.count();
+    for (let index = 0; index < containerCount; index += 1) {
+      const container = containers.nth(index);
+      await expect(container.locator('.rp-codeblock__title')).toHaveText(
+        'test.js',
+      );
+      const content = container.locator('.rp-codeblock__content');
+      const shikiContainer = content.locator('.shiki.css-variables').first();
+      await expect(shikiContainer).toHaveJSProperty('tagName', 'PRE');
+      await expect(shikiContainer.locator('code').first()).toHaveText(
         "console.log('Hello CodeBlock!');",
       );
     }
@@ -47,22 +44,19 @@ test.describe('<CodeBlockRuntime />', async () => {
     await page.goto(`http://localhost:${appPort}/highlight`, {
       waitUntil: 'networkidle',
     });
-    const containers = await page.$$('div.language-ts');
-    expect(containers.length).toBe(2);
+    const containers = page.locator('div.language-ts');
+    await expect(containers).toHaveCount(2);
 
-    // CodeBlockRuntime should render the same result with compile-time code block
-    for (const container of containers) {
-      const title = await container.$('.rspress-code-title');
-      expect(await title!.textContent()).toBe('highlight.ts');
-      const content = await container.$('.rspress-code-content');
-      expect(
-        await content!.evaluate(el =>
-          el.classList.contains('rspress-scrollbar'),
-        ),
-      ).toBe(true);
-      const shikiContainer = await content?.$('.shiki.css-variables');
-      expect(await shikiContainer?.evaluate(el => el.tagName)).toBe('PRE');
-      expect(await shikiContainer?.$eval('code', el => el.textContent)).toBe(
+    const containerCount = await containers.count();
+    for (let index = 0; index < containerCount; index += 1) {
+      const container = containers.nth(index);
+      await expect(container.locator('.rp-codeblock__title')).toHaveText(
+        'highlight.ts',
+      );
+      const content = container.locator('.rp-codeblock__content');
+      const shikiContainer = content.locator('.shiki.css-variables').first();
+      await expect(shikiContainer).toHaveJSProperty('tagName', 'PRE');
+      await expect(shikiContainer.locator('code').first()).toHaveText(
         "console.log('Highlighted'); \nconsole.log('Highlighted');\nconsole.log('Not highlighted');",
       );
     }

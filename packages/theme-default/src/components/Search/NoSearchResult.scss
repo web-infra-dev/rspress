@@ -1,0 +1,20 @@
+.rp-no-search-result {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding-top: 2rem;
+  padding-bottom: 0.5rem;
+
+  &__icon {
+    margin-bottom: 1rem;
+    opacity: 0.8;
+  }
+
+  &__text {
+    margin-bottom: 0.5rem;
+  }
+
+  &__suggestion {
+    margin: 0;
+  }
+}

@@ -1,10 +1,9 @@
-import assert from 'node:assert';
 import { expect, test } from '@playwright/test';
 import { getPort, killProcess, runDevCommand } from '../../utils/runCommands';
 
 test.describe('search code blocks test', async () => {
-  let appPort;
-  let app;
+  let appPort: number;
+  let app: Awaited<ReturnType<typeof runDevCommand>>;
 
   test.beforeAll(async () => {
     const appDir = __dirname;
@@ -21,11 +20,10 @@ test.describe('search code blocks test', async () => {
   test('should search by algolia', async ({ page }) => {
     await page.goto(`http://localhost:${appPort}`);
 
-    const searchButton = await page.$('.DocSearch.DocSearch-Button');
-    assert(searchButton);
+    const searchButton = page.locator('.DocSearch.DocSearch-Button');
     await searchButton.click();
 
-    const searchBar = await page.$('.DocSearch-SearchBar');
-    expect(await searchBar?.isVisible()).toBeTruthy();
+    const searchBar = page.locator('.DocSearch-SearchBar');
+    await expect(searchBar).toBeVisible();
   });
 });

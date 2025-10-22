@@ -6,5 +6,6 @@
   "emphasis",
   "code",
   "escape",
-  "delete"
+  "delete",
+  "link"
 ]

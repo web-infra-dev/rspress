@@ -32,7 +32,7 @@ export function pluginLastUpdated(): RspressPlugin {
       const lastUpdated = await getGitLastUpdatedTimeStamp(_filepath);
       if (lastUpdated) {
         // Property 'lastUpdatedTime' does not exist on type 'PageIndexInfo'.
-        // @ts-ignore
+        // @ts-expect-error
         pageData.lastUpdatedTime = transform(lastUpdated, lang);
       }
     },

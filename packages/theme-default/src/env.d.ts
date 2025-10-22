@@ -5,8 +5,9 @@ declare module 'virtual-site-data' {
   export default data;
 }
 
-// for the first build when generating the module.scss.d.ts
 declare module '*.module.scss';
+declare module '*.scss';
+declare module '*.css';
 
 declare module '@theme-assets/*' {
   const SvgIcon: React.FC<React.SVGProps<SVGSVGElement>> | string;
@@ -32,9 +33,8 @@ declare module 'virtual-search-hooks' {
   export const render: RenderSearchFunction;
 }
 
-declare module 'virtual-search-index-hash' {
-  const hash: Record<string, string>;
-  export default hash;
+declare module 'virtual-social-links' {
+  export default Record<string, string>;
 }
 
 declare const __WEBPACK_PUBLIC_PATH__: string;
@@ -44,3 +44,11 @@ declare module 'virtual-runtime-config' {
 
   export const base: NormalizedRuntimeConfig['base'];
 }
+
+declare module 'virtual-page-data' {
+  import { PageData } from '@rspress/shared';
+  const searchIndexHash: Record<string, string>;
+  const pageData: PageData;
+  export { pageData, searchIndexHash };
+}
+

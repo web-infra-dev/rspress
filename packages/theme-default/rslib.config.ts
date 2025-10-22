@@ -1,13 +1,11 @@
 import { pluginReact } from '@rsbuild/plugin-react';
 import { pluginSass } from '@rsbuild/plugin-sass';
 import { pluginSvgr } from '@rsbuild/plugin-svgr';
-import { pluginTypedCSSModules } from '@rsbuild/plugin-typed-css-modules';
 import { defineConfig } from '@rslib/core';
 import { pluginPublint } from 'rsbuild-plugin-publint';
 
 const COMMON_EXTERNALS = [
   'virtual-routes',
-  'virtual-search-index-hash',
   'virtual-site-data',
   'virtual-global-styles',
   'virtual-global-components',
@@ -26,14 +24,11 @@ export default defineConfig({
     {
       format: 'esm',
       bundle: false,
-      dts: {
-        bundle: true,
-      },
+      dts: true,
       plugins: [
         pluginReact(),
         pluginSvgr({ svgrOptions: { exportType: 'default' } }),
         pluginSass(),
-        pluginTypedCSSModules(),
       ],
       source: {
         define: {
@@ -54,13 +49,9 @@ export default defineConfig({
         },
       },
       output: {
+        cleanDistPath: process.env.IS_DEV === '1',
         target: 'web',
         externals: COMMON_EXTERNALS,
-        cssModules: {
-          localIdentName: '[local]_[hash:hex:5]',
-          namedExport: true,
-          exportLocalsConvention: 'camelCaseOnly',
-        },
       },
     },
   ],

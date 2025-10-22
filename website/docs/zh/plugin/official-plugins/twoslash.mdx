@@ -1,0 +1,155 @@
+# @rspress/plugin-twoslash <SourceCode href="https://github.com/web-infra-dev/rspress/tree/main/packages/plugin-twoslash" />
+
+import { SourceCode, PackageManagerTabs, Tabs, Tab } from '@theme';
+
+集成 [Twoslash](https://github.com/twoslashes/twoslash) 的 Rspress 插件，用于自动生成带有类型信息的丰富代码块。
+
+## 安装
+
+<PackageManagerTabs command="add @rspress/plugin-twoslash -D" />
+
+## 使用
+
+### 1. 注册插件
+
+```ts twoslash title="rspress.config.ts"
+import { defineConfig } from '@rspress/core';
+import { pluginTwoslash } from '@rspress/plugin-twoslash';
+
+export default defineConfig({
+  plugins: [pluginTwoslash()],
+});
+```
+
+### 2. 使用 Twoslash 编写代码块
+
+在 TypeScript 代码块中使用特殊注释来启用 Twoslash 功能。
+
+更详细的用法，请参考 [Twoslash 文档](https://twoslash.netlify.app/guide/)。
+
+#### 提取类型
+
+<Tabs>
+
+<Tab label="结果">
+
+```ts twoslash
+const hi = 'Hello';
+const msg = `${hi}, world`;
+//    ^?
+```
+
+</Tab>
+
+<Tab label="语法">
+
+````mdx
+```ts twoslash
+const hi = 'Hello';
+const msg = `${hi}, world`;
+//    ^?
+```
+````
+
+</Tab>
+
+</Tabs>
+
+#### 自动补全
+
+<Tabs>
+
+<Tab label="结果">
+
+```ts twoslash
+// @noErrors
+console.e;
+//       ^|
+```
+
+</Tab>
+
+<Tab label="语法">
+
+````mdx
+```ts twoslash
+// @noErrors
+console.e;
+//       ^|
+```
+````
+
+</Tab>
+
+</Tabs>
+
+#### 高亮显示
+
+<Tabs>
+
+<Tab label="结果">
+
+```ts twoslash
+function add(a: number, b: number) {
+  //     ^^^
+  return a + b;
+}
+```
+
+</Tab>
+
+<Tab label="语法">
+````mdx
+```ts twoslash
+function add(a: number, b: number) {
+  //     ^^^
+  return a + b;
+}
+```
+````
+
+</Tab>
+
+</Tabs>
+
+#### 错误提示
+
+<Tabs>
+
+<Tab label="结果">
+
+```ts twoslash
+// @noErrorValidation
+const str: string = 1;
+```
+
+</Tab>
+
+<Tab label="语法">
+````mdx
+```ts twoslash
+// @noErrorValidation
+const str: string = 1;
+```
+````
+
+</Tab>
+
+</Tabs>
+
+## 配置
+
+该插件接受一个对象，具有以下类型：
+
+```ts twoslash
+export interface PluginTwoslashOptions {
+  explicitTrigger?: boolean;
+}
+```
+
+### explicitTrigger
+
+`explicitTrigger` 用于配置是否显式触发 twoslash 功能。默认值为 `true`。
+
+- 如果设置为 `false`，默认情况下所有 TypeScript 代码块都将被处理。
+- 如果设置为 `true`，只有带有 `twoslash` 标签的代码块才会被处理。

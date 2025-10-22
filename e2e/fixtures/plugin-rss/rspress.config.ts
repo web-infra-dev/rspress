@@ -1,6 +1,6 @@
 import * as NodePath from 'node:path';
+import { defineConfig } from '@rspress/core';
 import { pluginRss } from '@rspress/plugin-rss';
-import { defineConfig } from 'rspress/config';
 import fixture from './fixture.json';
 
 export default defineConfig({

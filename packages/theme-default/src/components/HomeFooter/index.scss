@@ -1,0 +1,23 @@
+.rp-home-footer {
+  bottom: 0;
+  margin-top: 3rem;
+  padding: 2rem 1.5rem;
+  width: 100%;
+  border-top: 1px solid var(--rp-c-divider-light);
+
+  @media (min-width: 640px) {
+    padding: 2rem;
+  }
+
+  &__container {
+    margin: auto;
+    width: 100%;
+    text-align: center;
+  }
+
+  &__message {
+    font-weight: 500;
+    font-size: 0.875rem;
+    color: var(--rp-c-text-3);
+  }
+}

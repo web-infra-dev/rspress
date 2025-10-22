@@ -2,8 +2,8 @@ import { expect, test } from '@playwright/test';
 import { getPort, killProcess, runDevCommand } from '../../utils/runCommands';
 
 test.describe('replace-rules test', async () => {
-  let appPort;
-  let app;
+  let appPort: number;
+  let app: Awaited<ReturnType<typeof runDevCommand>>;
   test.beforeAll(async () => {
     const appDir = __dirname;
     appPort = await getPort();
@@ -20,37 +20,29 @@ test.describe('replace-rules test', async () => {
     await page.goto(`http://localhost:${appPort}`);
 
     // replace text in _meta.json
-    const nav = await page.$('.rspress-nav-menu');
-    const navContent = await page.evaluate(nav => nav?.textContent, nav);
+    const navItem = page.locator('.rp-nav-menu__item__container').nth(0);
+    await expect(navItem).toHaveText('bar-meta');
 
     // replace text in object frontmatter
-    const hero = await page.$('h1');
-    const heroContent = await page.evaluate(hero => hero?.textContent, hero);
-
-    expect(navContent).toEqual('bar-meta');
-    expect(heroContent).toEqual('bar-hero');
+    const hero = page.locator('.rp-home-hero__title-brand');
+    await expect(hero).toHaveText('bar-hero');
   });
 
   test('Foo page', async ({ page }) => {
     await page.goto(`http://localhost:${appPort}/foo`);
+    const doc = page.locator('.rspress-doc');
+    await expect(doc).toBeVisible();
 
     // text in string frontmatter
     const title = await page.$('title');
-    const titleContent = await page.evaluate(
-      title => title?.textContent,
-      title,
-    );
+    expect(await title?.textContent()).toBe('bar-title');
 
     // replace text in shared mdx content
-    const h2 = await page.$('h2');
-    const h2Content = await page.evaluate(h2 => h2?.textContent, h2);
+    const h2 = page.locator('h2');
+    await expect(h2).toHaveText('#bar-h2');
 
     // replace text in mdx content
-    const text = await page.$('.rspress-doc p');
-    const textContent = await page.evaluate(text => text?.textContent, text);
-
-    expect(titleContent).toEqual('bar-title');
-    expect(h2Content).toEqual('#bar-h2');
-    expect(textContent).toEqual('bar-content');
+    const text = page.locator('.rspress-doc p');
+    await expect(text).toHaveText('bar-content');
   });
 });

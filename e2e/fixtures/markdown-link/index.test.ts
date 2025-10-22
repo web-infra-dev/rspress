@@ -18,12 +18,12 @@ test.describe('basic test', async () => {
 
   test('all links should be normalized', async ({ page }) => {
     await page.goto(`http://localhost:${appPort}/base/guide`);
-    const links = await page.$$('.rspress-doc ul li a');
+    const links = page.locator('.rspress-doc ul li a');
+    const count = await links.count();
     const urls = await Promise.all(
-      links.map(async link => {
-        const href = await link.getAttribute('href');
-        return href;
-      }),
+      Array.from({ length: count }, (_, i) =>
+        links.nth(i).getAttribute('href'),
+      ),
     );
 
     expect(urls).toEqual([

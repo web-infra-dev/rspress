@@ -1,13 +1,12 @@
-import type { RsbuildConfig, RsbuildPlugin } from '@rsbuild/core';
-import type { loadConfig } from '@rsbuild/core';
+import type { loadConfig, RsbuildConfig } from '@rsbuild/core';
 import type { RehypeShikiOptions } from '@shikijs/rehype';
 import type { ZoomOptions } from 'medium-zoom';
 import type { PluggableList } from 'unified';
-import type { AdditionalPage, RspressPlugin } from './Plugin';
 import type {
   Config as DefaultThemeConfig,
   NormalizedConfig as NormalizedDefaultThemeConfig,
 } from './defaultTheme';
+import type { AdditionalPage, RspressPlugin } from './Plugin';
 
 export type { DefaultThemeConfig, NormalizedDefaultThemeConfig };
 export * from './defaultTheme';
@@ -153,11 +152,26 @@ export interface UserConfig<ThemeConfig = DefaultThemeConfig> {
    */
   search?: SearchOptions;
   /**
-   * Whether to enable ssg, default is true
+   * Whether to enable ssg
+   * @default true
    */
-  ssg?: boolean;
+  ssg?:
+    | boolean
+    | {
+        /**
+         * After enabled, you can use worker to accelerate the SSG process and reduce memory usage. It is suitable for large document sites and is based on [tinypool](https://github.com/tinylibs/tinypool).
+         * @default false
+         */
+        experimentalWorker?: boolean;
+        /**
+         * After enabled, some pages will not be rendered by SSG, and they will directly use html under CSR. This is suitable for SSG errors in large document sites bypassing a small number of pages. It is not recommended to enable this option actively.
+         * @default []
+         */
+        experimentalExcludeRoutePaths?: (string | RegExp)[];
+      };
   /**
-   * Whether to enable medium-zoom, default is true
+   * Whether to enable medium-zoom
+   * @default true
    */
   mediumZoom?:
     | boolean
@@ -165,10 +179,6 @@ export interface UserConfig<ThemeConfig = DefaultThemeConfig> {
         selector?: string;
         options?: ZoomOptions;
       };
-  /**
-   * Add some extra builder plugins
-   */
-  builderPlugins?: RsbuildPlugin[];
   /**
    * Multi version config
    */
@@ -210,10 +220,24 @@ export type BaseRuntimePageInfo = Omit<
   'id' | 'content' | 'domain'
 >;
 
-type PluginShikiOptions = RehypeShikiOptions;
+export interface PageData {
+  pages: BaseRuntimePageInfo[];
+}
+
+export interface PageDataLegacy {
+  siteData: SiteData<DefaultThemeConfig> & { pages: BaseRuntimePageInfo[] };
+  page: BaseRuntimePageInfo & {
+    headingTitle?: string;
+    pagePath: string;
+    lastUpdatedTime?: string;
+    description?: string;
+    pageType: PageType;
+    [key: string]: unknown;
+  };
+}
 
 export interface SiteData<ThemeConfig = NormalizedDefaultThemeConfig> {
-  root: string;
+  base: string;
   lang: string;
   route: RouteOptions;
   locales: { lang: string; label: string }[];
@@ -223,23 +247,16 @@ export interface SiteData<ThemeConfig = NormalizedDefaultThemeConfig> {
   themeConfig: ThemeConfig;
   logo: string | { dark: string; light: string };
   logoText: string;
-  pages: BaseRuntimePageInfo[];
   search: SearchOptions;
-  ssg: boolean;
   markdown: {
     showLineNumbers: boolean;
     defaultWrapCode: boolean;
-    shiki: Partial<PluginShikiOptions>;
+    shiki: Partial<RehypeShikiOptions>;
   };
   multiVersion: {
     default: string;
     versions: string[];
   };
-}
-
-// TODO: migrate more SiteData to NormalizedRuntimeConfig, and rename "SiteData" to "PageData" or "Pages"
-export interface NormalizedRuntimeConfig {
-  base: string;
 }
 
 /**
@@ -260,7 +277,6 @@ export interface PageIndexInfo {
   frontmatter: FrontMatterMeta;
   lang: string;
   version: string;
-  domain: string;
   _filepath: string;
   _relativePath: string;
 }
@@ -275,12 +291,13 @@ export type RemotePageInfo = PageIndexInfo & {
 };
 
 export interface Hero {
-  name: string;
-  text: string;
-  tagline: string;
+  badge?: string;
+  name?: string;
+  text?: string;
+  tagline?: string;
   image?: {
-    src: string | { dark: string; light: string };
-    alt: string;
+    src?: string | { dark: string; light: string };
+    alt?: string;
     /**
      * `srcset` and `sizes` are attributes of `<img>` tag. Please refer to https://mdn.io/srcset for the usage.
      * When the value is an array, rspress will join array members with commas.
@@ -288,7 +305,7 @@ export interface Hero {
     sizes?: string | string[];
     srcset?: string | string[];
   };
-  actions: {
+  actions?: {
     text: string;
     link: string;
     theme: 'brand' | 'alt';
@@ -330,18 +347,6 @@ export interface FrontMatterMeta {
   [key: string]: unknown;
 }
 
-export interface PageData {
-  siteData: SiteData<DefaultThemeConfig>;
-  page: BaseRuntimePageInfo & {
-    headingTitle?: string;
-    pagePath: string;
-    lastUpdatedTime?: string;
-    description?: string;
-    pageType: PageType;
-    [key: string]: unknown;
-  };
-}
-
 export interface RouteOptions {
   /**
    * The extension name of the filepath that will be converted to a route
@@ -350,14 +355,22 @@ export interface RouteOptions {
   extensions?: string[];
   /**
    * Include extra files from being converted to routes
+   * @default []
    */
   include?: string[];
   /**
    * Exclude files from being converted to routes
+   * @default []
    */
   exclude?: string[];
   /**
+   * Exclude convention files from being converted to routes
+   * @default ['**\/_[^_]*']
+   */
+  excludeConvention?: string[];
+  /**
    * use links without .html files
+   * @default false
    */
   cleanUrls?: boolean;
 }
@@ -382,34 +395,31 @@ export type LocalSearchOptions = SearchHooks & {
   codeBlocks?: boolean;
 };
 
-export type RemoteSearchIndexInfo =
-  | string
-  | {
-      value: string;
-      label: string;
-    };
+export type SearchOptions = LocalSearchOptions | false;
 
-export type RemoteSearchOptions = SearchHooks & {
-  mode: 'remote';
-  apiUrl: string;
-  domain?: string;
-  indexName: string;
-  searchIndexes?: RemoteSearchIndexInfo[];
-  searchLoading?: boolean;
+export type RemarkLinkOptions = {
+  /**
+   * Whether to enable check dead links
+   * @default true
+   */
+  checkDeadLinks?:
+    | boolean
+    | { excludes: string[] | ((url: string) => boolean) };
+  /**
+   * [](/v3/zh/guide) [](/zh/guide) [](/guide) will be regarded as the same [](/v3/zh/guide) according to the directory.
+   * @default true
+   */
+  autoPrefix?: boolean;
 };
-
-export type SearchOptions = LocalSearchOptions | RemoteSearchOptions | false;
 
 export interface MarkdownOptions {
   remarkPlugins?: PluggableList;
   rehypePlugins?: PluggableList;
-  /**
-   * Whether to enable check dead links, default is false
-   */
-  checkDeadLinks?: boolean;
+  link?: RemarkLinkOptions;
   showLineNumbers?: boolean;
   /**
-   * Whether to wrap code by default, default is false
+   * Whether to wrap code by default
+   * @default false
    */
   defaultWrapCode?: boolean;
   /**
@@ -419,7 +429,7 @@ export interface MarkdownOptions {
   /**
    * @type import('@shikijs/rehype').RehypeShikiOptions
    */
-  shiki?: Partial<PluginShikiOptions>;
+  shiki?: Partial<RehypeShikiOptions>;
 
   /**
    * Speed up build time by caching mdx parsing result in `rspress build`
