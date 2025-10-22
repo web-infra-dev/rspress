@@ -25,7 +25,7 @@ function HomeLayout() {
     <BasicHomeLayout
       afterFeatures={<ToolStack />}
       afterHeroActions={
-        <div className="rp-doc" style={{ width: '100%', maxWidth: 400 }}>
+        <div className="rp-doc" style={{ width: '100%', maxWidth: 450 }}>
           <PackageManagerTabs command="create rspress@beta" />
         </div>
       }
