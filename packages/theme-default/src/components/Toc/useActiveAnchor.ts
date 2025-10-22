@@ -2,7 +2,7 @@ import { useLocation } from '@rspress/runtime';
 import type { Header } from '@rspress/shared';
 import { useEffect, useState } from 'react';
 
-function defaultZeroComputedStyle(s: string) {
+function defaultZeroComputedStyle(s: string): number {
   const n = Number(s.replace(/(px|em|rem)$/, ''));
   if (Number.isNaN(n)) {
     return 0;
