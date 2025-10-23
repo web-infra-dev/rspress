@@ -89,7 +89,10 @@ export function pluginSitemap(options: PluginSitemapOptions): RspressPlugin {
     async afterBuild(config, isProd) {
       if (isProd) {
         const configPath =
-          config.outDir || config.builderConfig?.output?.distPath?.root;
+          config.outDir ||
+          (typeof config.builderConfig?.output?.distPath === 'string'
+            ? config.builderConfig?.output?.distPath
+            : config.builderConfig?.output?.distPath?.root);
         let outputPath = `./${configPath || 'doc_build'}/sitemap.xml`;
         if (isAbsolute(configPath || '')) {
           outputPath = `${configPath}/sitemap.xml`;
