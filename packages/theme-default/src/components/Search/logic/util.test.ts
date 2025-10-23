@@ -1,5 +1,5 @@
 import type { Header } from '@rspress/shared';
-import { describe, expect, test } from 'vitest';
+import { describe, expect, test } from '@rstest/core';
 import { backTrackHeaders } from './util';
 
 describe('utils logic', () => {

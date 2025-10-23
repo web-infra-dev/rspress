@@ -1,9 +1,8 @@
+import { describe, expect, it, rs } from '@rstest/core';
 import { fs, vol } from 'memfs';
-
-import { describe, expect, it, vi } from 'vitest';
 import { compile } from '../processor';
 
-vi.mock('node:fs/promises', () => {
+rs.mock('node:fs/promises', () => {
   return { readFile: fs.promises.readFile };
 });
 
@@ -25,7 +24,7 @@ describe('remarkFileCodeBlock', () => {
       filepath: '/usr/rspress-project/docs/index.mdx',
       config: null,
       pluginDriver: null,
-      routeService: null,
+      routeSerrsce: null,
     });
     expect(result).toMatchSnapshot();
   });
