@@ -30,6 +30,11 @@ interface TabsProps {
   groupId?: string;
   tabContainerClassName?: string;
   tabPosition?: 'left' | 'center';
+  /**
+   * It is very useful during the transition animation and the first screen rendering of Static Site Generation (SSG).
+   * @default true
+   */
+  keepDOM?: boolean;
 }
 
 function isTabItem(item: unknown): item is TabItem {
@@ -58,6 +63,7 @@ export const Tabs = forwardRef(
       groupId,
       tabPosition = 'left',
       tabContainerClassName,
+      keepDOM = false,
     } = props;
     // remove "\n" character when write JSX element in multiple lines, use Children.toArray for Tabs with no Tab element
     const children = Children.toArray(rawChildren).filter(
@@ -174,6 +180,10 @@ export const Tabs = forwardRef(
         <div className="rp-tabs__content">
           {Children.map(children, (child, index) => {
             const isActive = index === currentIndex;
+            if (!keepDOM && !isActive) {
+              return null;
+            }
+
             return (
               <div
                 className={clsx(

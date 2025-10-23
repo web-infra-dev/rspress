@@ -20,8 +20,8 @@ test.describe('tabs-component test', async () => {
   test('Index page', async ({ page }) => {
     await page.goto(`http://localhost:${appPort}`);
 
-    await page.waitForSelector('.rp-tabs__tab');
-    const tabs = page.locator('.rp-tabs__tab');
+    await page.waitForSelector('.rp-tabs__label__item');
+    const tabs = page.locator('.rp-tabs__label__item');
     const tabsText = (await tabs.allInnerTexts()).map(text => text.trim());
 
     expect(tabsText).toEqual([
