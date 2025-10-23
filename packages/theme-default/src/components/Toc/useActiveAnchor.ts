@@ -2,12 +2,22 @@ import { useLocation } from '@rspress/runtime';
 import type { Header } from '@rspress/shared';
 import { useEffect, useState } from 'react';
 
-function defaultZeroComputedStyle(s: string): number {
-  const n = Number(s.replace(/(px|em|rem)$/, ''));
-  if (Number.isNaN(n)) {
+/**
+ * Parse CSS length value to number (in pixels)
+ * Supports: px
+ */
+function parseCSSLength(value: string): number {
+  if (!value || value === 'auto' || value === 'none') {
     return 0;
   }
-  return n;
+
+  const numValue = Number.parseFloat(value);
+  if (Number.isNaN(numValue)) {
+    return 0;
+  }
+
+  // For px or plain number, just return the numeric value
+  return numValue;
 }
 
 export const useActiveAnchor = (headers: Header[]) => {
@@ -20,26 +30,15 @@ export const useActiveAnchor = (headers: Header[]) => {
       return;
     }
     const handleScroll = () => {
-      // get var(--rp-banner-height)
-      const bannerHeight = defaultZeroComputedStyle(
+      // Reuse scroll-padding-top from CSS
+      // This value is already calculated as:
+      // calc(var(--rp-banner-height, 0px) + var(--rp-nav-height) + var(--rp-sidebar-menu-height))
+      const scrollPaddingTop = parseCSSLength(
         window
           .getComputedStyle(document.documentElement)
-          .getPropertyValue('--rp-banner-height'),
+          .getPropertyValue('scroll-padding-top'),
       );
-      // get var(--rp-nav-height)
-      const navHeight = defaultZeroComputedStyle(
-        window
-          .getComputedStyle(document.documentElement)
-          .getPropertyValue('--rp-nav-height'),
-      );
-      // get var(--rp-sidebar-menu-height)
-      const sidebarMenuHeight = defaultZeroComputedStyle(
-        window
-          .getComputedStyle(document.documentElement)
-          .getPropertyValue('--rp-sidebar-menu-height'),
-      );
-
-      const topOffset = bannerHeight + navHeight + sidebarMenuHeight - 5; // 5 is the tolerance
+      const topOffset = scrollPaddingTop - 5; // 5 is the tolerance
 
       const offsets = headers.map(header => {
         const el = document.getElementById(header.id);
