@@ -80,6 +80,7 @@ export async function createMDXOptions(options: {
                 checkDeadLinks: false,
                 autoPrefix: true,
               },
+              __base: config?.base,
             }
           : {
               // we do cleanUrls in runtime side

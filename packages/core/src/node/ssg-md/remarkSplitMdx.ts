@@ -403,12 +403,17 @@ function shouldKeepJsxElement(
 
   const { includes, excludes } = options;
 
-  // If no filters specified, keep all JSX elements
+  // If no filters specified, keep all JSX elements, includes all
   if (!includes && !excludes) {
     return true;
   }
 
   const importSource = importMap.get(componentName);
+
+  if (importSource?.endsWith('.mdx')) {
+    // Mdx Fragments should always be kept
+    return true;
+  }
 
   // Check excludes first (takes precedence)
   if (excludes) {
