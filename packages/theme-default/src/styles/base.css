@@ -22,6 +22,8 @@ html {
   line-height: 1.7;
   font-size: 16px;
   -webkit-text-size-adjust: 100%;
+
+  /* @see https://developer.mozilla.org/docs/Web/CSS/scroll-padding-top */
   scroll-padding-top: calc(
     var(--rp-banner-height, 0px) + var(--rp-nav-height) +
       var(--rp-sidebar-menu-height)
