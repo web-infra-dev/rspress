@@ -4,7 +4,6 @@ import type {
   MdxFlowExpression,
   MdxJsxFlowElement,
   MdxJsxTextElement,
-  MdxjsEsm,
   MdxTextExpression,
 } from 'mdast-util-mdx';
 import remarkGfm from 'remark-gfm';
@@ -60,12 +59,9 @@ export function remarkSplitMdx(
     const importMap = buildImportMap(tree);
 
     for (const node of tree.children) {
-      // Process imports - only keep those that match the filter
+      // Process imports - keep all the import
       if (node.type === 'mdxjsEsm') {
-        const shouldKeep = shouldKeepImport(node, options);
-        if (shouldKeep) {
-          newChildren.push(node);
-        }
+        newChildren.push(node);
         continue;
       }
 
@@ -337,6 +333,7 @@ function serializeNodeToMarkdown(node: RootContent): string {
       fences: true,
       incrementListMarker: true,
       handlers: {
+        // remarkContainerSyntax compatibility
         containerDirective: (node: ContainerDirective) => {
           const content = node.children
             .map((child: RootContent) => serializeNodeToMarkdown(child))
@@ -390,81 +387,6 @@ function buildImportMap(tree: Root): Map<string, string> {
   }
 
   return importMap;
-}
-
-/**
- * Check if an import statement should be kept based on options
- */
-function shouldKeepImport(
-  node: MdxjsEsm,
-  options: RemarkSplitMdxOptions,
-): boolean {
-  if (!node.data?.estree) {
-    return true; // Keep if we can't parse it
-  }
-
-  const { includes, excludes } = options;
-
-  // If no filters specified, keep all imports
-  if (!includes && !excludes) {
-    return true;
-  }
-
-  const estree = node.data.estree;
-
-  for (const statement of estree.body) {
-    if (statement.type === 'ImportDeclaration') {
-      const source = statement.source.value;
-      const specifiers = statement.specifiers
-        .map((spec: any) => {
-          if (spec.type === 'ImportDefaultSpecifier') {
-            return spec.local.name;
-          } else if (spec.type === 'ImportSpecifier') {
-            return spec.local.name;
-          } else if (spec.type === 'ImportNamespaceSpecifier') {
-            return spec.local.name;
-          }
-          return null;
-        })
-        .filter(Boolean);
-
-      // Check excludes first (takes precedence)
-      if (excludes) {
-        for (const [excludeSpecifiers, excludeSource] of excludes) {
-          // If source matches
-          if (excludeSource === source) {
-            // Check if any specifier matches
-            if (excludeSpecifiers.some(spec => specifiers.includes(spec))) {
-              return false;
-            }
-          }
-        }
-      }
-
-      // Check includes
-      if (includes) {
-        let matchesAnyRule = false;
-
-        for (const [includeSpecifiers, includeSource] of includes) {
-          // If source matches
-          if (includeSource === source) {
-            // Check if any specifier matches
-            if (includeSpecifiers.some(spec => specifiers.includes(spec))) {
-              matchesAnyRule = true;
-              break;
-            }
-          }
-        }
-
-        // If includes are specified but nothing matches, exclude
-        if (!matchesAnyRule) {
-          return false;
-        }
-      }
-    }
-  }
-
-  return true;
 }
 
 /**

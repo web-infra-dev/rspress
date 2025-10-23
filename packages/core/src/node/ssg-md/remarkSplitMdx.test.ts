@@ -1,3 +1,4 @@
+import fs from 'node:fs/promises';
 import { compile } from '@mdx-js/mdx';
 import { describe, expect, it } from 'vitest';
 import { remarkSplitMdx } from './remarkSplitMdx';
@@ -225,17 +226,14 @@ import Button from 'react';
     expect(code).toMatchInlineSnapshot(`
       "/*@jsxRuntime automatic*/
       /*@jsxImportSource react*/
+      import {Table} from '@lynx';
+      import Button from 'react';
       function _createMdxContent(props) {
-        const {Table} = props.components || ({});
-        if (!Table) _missingMdxReference("Table", true);
         return <><Table />{"\\n"}<>{"<Button>\\n  Click\\n</Button>\\n"}</></>;
       }
       export default function MDXContent(props = {}) {
         const {wrapper: MDXLayout} = props.components || ({});
         return MDXLayout ? <MDXLayout {...props}><_createMdxContent {...props} /></MDXLayout> : _createMdxContent(props);
-      }
-      function _missingMdxReference(id, component) {
-        throw new Error("Expected " + (component ? "component" : "object") + " \`" + id + "\` to be defined: you likely forgot to import, pass, or provide it.");
       }
       "
     `);
@@ -304,17 +302,14 @@ import Button from 'react';
     expect(code).toMatchInlineSnapshot(`
       "/*@jsxRuntime automatic*/
       /*@jsxImportSource react*/
+      import {Table} from '@lynx';
+      import Button from 'react';
       function _createMdxContent(props) {
-        const {Table} = props.components || ({});
-        if (!Table) _missingMdxReference("Table", true);
         return <><Table />{"\\n"}<>{"<Button>\\n  Click\\n</Button>\\n"}</></>;
       }
       export default function MDXContent(props = {}) {
         const {wrapper: MDXLayout} = props.components || ({});
         return MDXLayout ? <MDXLayout {...props}><_createMdxContent {...props} /></MDXLayout> : _createMdxContent(props);
-      }
-      function _missingMdxReference(id, component) {
-        throw new Error("Expected " + (component ? "component" : "object") + " \`" + id + "\` to be defined: you likely forgot to import, pass, or provide it.");
       }
       "
     `);
@@ -342,17 +337,13 @@ import Button from 'react';
     expect(code).toMatchInlineSnapshot(`
       "/*@jsxRuntime automatic*/
       /*@jsxImportSource react*/
+      import {Table, Card} from '@lynx';
       function _createMdxContent(props) {
-        const {Table} = props.components || ({});
-        if (!Table) _missingMdxReference("Table", true);
         return <><Table />{"\\n"}<>{"<Card />\\n"}</></>;
       }
       export default function MDXContent(props = {}) {
         const {wrapper: MDXLayout} = props.components || ({});
         return MDXLayout ? <MDXLayout {...props}><_createMdxContent {...props} /></MDXLayout> : _createMdxContent(props);
-      }
-      function _missingMdxReference(id, component) {
-        throw new Error("Expected " + (component ? "component" : "object") + " \`" + id + "\` to be defined: you likely forgot to import, pass, or provide it.");
       }
       "
     `);
@@ -381,6 +372,7 @@ import Button from 'react';
     expect(code).toMatchInlineSnapshot(`
       "/*@jsxRuntime automatic*/
       /*@jsxImportSource react*/
+      import {Table as Tab} from '@lynx';
       function _createMdxContent(props) {
         return <><>{"<Tab />\\n"}</></>;
       }
@@ -417,17 +409,14 @@ import Button from 'react';
     expect(code).toMatchInlineSnapshot(`
       "/*@jsxRuntime automatic*/
       /*@jsxImportSource react*/
+      import {Table, Card} from '@lynx';
+      import Button from 'react';
       function _createMdxContent(props) {
-        const {Table} = props.components || ({});
-        if (!Table) _missingMdxReference("Table", true);
         return <><Table />{"\\n"}<>{"<Card />\\n"}</>{"\\n"}<>{"<Button>\\n  Click\\n</Button>\\n"}</></>;
       }
       export default function MDXContent(props = {}) {
         const {wrapper: MDXLayout} = props.components || ({});
         return MDXLayout ? <MDXLayout {...props}><_createMdxContent {...props} /></MDXLayout> : _createMdxContent(props);
-      }
-      function _missingMdxReference(id, component) {
-        throw new Error("Expected " + (component ? "component" : "object") + " \`" + id + "\` to be defined: you likely forgot to import, pass, or provide it.");
       }
       "
     `);
@@ -461,18 +450,15 @@ import Card from 'react';
     expect(code).toMatchInlineSnapshot(`
       "/*@jsxRuntime automatic*/
       /*@jsxImportSource react*/
+      import {Table} from '@lynx';
+      import {Button} from 'antd';
+      import Card from 'react';
       function _createMdxContent(props) {
-        const {Button, Table} = props.components || ({});
-        if (!Button) _missingMdxReference("Button", true);
-        if (!Table) _missingMdxReference("Table", true);
         return <><Table />{"\\n"}<Button />{"\\n"}<>{"<Card />\\n"}</></>;
       }
       export default function MDXContent(props = {}) {
         const {wrapper: MDXLayout} = props.components || ({});
         return MDXLayout ? <MDXLayout {...props}><_createMdxContent {...props} /></MDXLayout> : _createMdxContent(props);
-      }
-      function _missingMdxReference(id, component) {
-        throw new Error("Expected " + (component ? "component" : "object") + " \`" + id + "\` to be defined: you likely forgot to import, pass, or provide it.");
       }
       "
     `);
@@ -526,5 +512,23 @@ This is a <Button>click me</Button> and <Link href="/test">link</Link> example.`
       }
       "
     `);
+  });
+
+  it('should lynx', async () => {
+    const fixturesTestMdxPath = new URL('./fixtures/test.mdx', import.meta.url);
+    const input = await fs.readFile(fixturesTestMdxPath, 'utf-8');
+
+    const result = await compile(input, {
+      remarkPlugins: [
+        [
+          remarkSplitMdx,
+          {
+            includes: [[['Go'], '@lynx']],
+          },
+        ],
+      ],
+      jsx: true,
+    });
+    expect(result.toString()).toMatchSnapshot();
   });
 });

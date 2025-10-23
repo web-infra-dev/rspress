@@ -81,6 +81,10 @@ const createContainer = (
   return {
     type: 'containerDirective',
     name: type,
+    attributes: {
+      type,
+      title,
+    },
     data: {
       hName: rootHName,
       hProperties: {
