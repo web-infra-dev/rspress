@@ -2,27 +2,43 @@ import { useLocation } from '@rspress/runtime';
 import type { Header } from '@rspress/shared';
 import { useEffect, useState } from 'react';
 
+/**
+ * Parse CSS length value to number (in pixels)
+ * Supports: px
+ */
+function parseCSSLength(value: string): number {
+  if (!value || value === 'auto' || value === 'none') {
+    return 0;
+  }
+
+  const numValue = Number.parseFloat(value);
+  if (Number.isNaN(numValue)) {
+    return 0;
+  }
+
+  // For px or plain number, just return the numeric value
+  return numValue;
+}
+
 export const useActiveAnchor = (headers: Header[]) => {
   const [activeAnchorId, setActiveAnchorId] = useState<string | undefined>();
   const [scrolledHeader, setScrolledHeader] = useState<Header | undefined>();
   const { hash } = useLocation();
 
   useEffect(() => {
+    if (typeof window === 'undefined') {
+      return;
+    }
     const handleScroll = () => {
-      // get var(--rp-nav-height)
-      const navHeight = Number(
-        getComputedStyle(document.documentElement)
-          .getPropertyValue('--rp-nav-height')
-          .replace(/(px|em|rem)$/, ''),
+      // Reuse scroll-padding-top from CSS
+      // This value is already calculated as:
+      // calc(var(--rp-banner-height, 0px) + var(--rp-nav-height) + var(--rp-sidebar-menu-height))
+      const scrollPaddingTop = parseCSSLength(
+        window
+          .getComputedStyle(document.documentElement)
+          .getPropertyValue('scroll-padding-top'),
       );
-      // get ver(--rp-sidebar-menu-height)
-      const sidebarMenuHeight = Number(
-        getComputedStyle(document.documentElement)
-          .getPropertyValue('--rp-sidebar-menu-height')
-          .replace(/(px|em|rem)$/, ''),
-      );
-
-      const topOffset = navHeight + sidebarMenuHeight - 5; // 5 is the tolerance
+      const topOffset = scrollPaddingTop - 5; // 5 is the tolerance
 
       const offsets = headers.map(header => {
         const el = document.getElementById(header.id);
