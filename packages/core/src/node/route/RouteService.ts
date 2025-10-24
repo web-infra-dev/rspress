@@ -319,4 +319,16 @@ ${routeMeta
   getRoutePageByRoutePath(routePath: string) {
     return this.routeData.get(routePath);
   }
+
+  getDocsDir(): string {
+    return this.#scanDir;
+  }
+
+  getLangs() {
+    return this.#langs;
+  }
+
+  getDefaultLang() {
+    return this.#defaultLang;
+  }
 }

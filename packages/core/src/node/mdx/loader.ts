@@ -12,13 +12,23 @@ export default async function mdxLoader(
 
   const options = this.getOptions();
   const filepath = this.resourcePath;
-  const { config, docDirectory, routeService, pluginDriver } = options;
+  const {
+    config,
+    docDirectory,
+    routeService,
+    pluginDriver,
+    isSsgMd = false,
+  } = options;
 
   const crossCompilerCache = config?.markdown?.crossCompilerCache ?? true;
 
   try {
     // TODO wrong but good enough for now (example: "build --watch")
-    if (crossCompilerCache && process.env.NODE_ENV === 'production') {
+    if (
+      crossCompilerCache &&
+      process.env.NODE_ENV === 'production' &&
+      !isSsgMd
+    ) {
       const compileResult = await compileWithCrossCompilerCache({
         source,
         filepath,
@@ -37,6 +47,7 @@ export default async function mdxLoader(
         pluginDriver,
         routeService,
         addDependency: this.addDependency,
+        isSsgMd,
       });
       callback(null, compileResult);
     }

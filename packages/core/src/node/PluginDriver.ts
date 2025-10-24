@@ -1,8 +1,10 @@
-import type {
-  PageIndexInfo,
-  RouteMeta,
-  RspressPlugin,
-  UserConfig,
+import {
+  addLeadingSlash,
+  addTrailingSlash,
+  type PageIndexInfo,
+  type RouteMeta,
+  type RspressPlugin,
+  type UserConfig,
 } from '@rspress/shared';
 import { haveNavSidebarConfig } from './auto-nav-sidebar';
 import type { RouteService } from './route/RouteService';
@@ -108,7 +110,17 @@ export class PluginDriver {
     }
   }
 
+  private async normalizeConfig() {
+    this.#config.ssg ??= true;
+    this.#config.llms ??= false;
+    this.#config.base = addTrailingSlash(
+      addLeadingSlash(this.#config.base ?? '/'),
+    );
+  }
+
   async modifyConfig() {
+    this.normalizeConfig();
+
     let config = this.#config;
 
     for (let i = 0; i < this.#plugins.length; i++) {
