@@ -397,6 +397,7 @@ export function SearchPanel({ focused, setFocused }: SearchPanelProps) {
           setResultTabIndex(index);
           setCurrentSuggestionIndex(0);
         }}
+        keepDOM={false}
         ref={searchResultTabRef}
       >
         {result.map(item => (
