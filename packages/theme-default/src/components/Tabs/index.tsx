@@ -63,7 +63,7 @@ export const Tabs = forwardRef(
       groupId,
       tabPosition = 'left',
       tabContainerClassName,
-      keepDOM = false,
+      keepDOM = true,
     } = props;
     // remove "\n" character when write JSX element in multiple lines, use Children.toArray for Tabs with no Tab element
     const children = Children.toArray(rawChildren).filter(
