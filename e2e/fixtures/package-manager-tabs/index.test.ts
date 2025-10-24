@@ -54,41 +54,55 @@ test.describe('tabs-component test', async () => {
 
     const clickTabs = tabs;
     const getCommands = async () =>
-      (await page.locator('.rp-codeblock__content code').allInnerTexts()).map(
-        text => text.trim(),
-      );
+      (
+        await page
+          .locator('.rp-codeblock__content code')
+          .filter({ visible: true })
+          .allInnerTexts()
+      ).map(text => text.trim());
 
     await clickTabs.nth(0).click();
     expect(await getCommands()).toEqual([
-      // Create commands
       'npm create rspress@latest',
-      'yarn create rspress',
-      'pnpm create rspress@latest',
-      'bun create rspress@latest',
-      'deno init --npm rspress@latest',
-      // Install commands
       'npm install -D @rspress/core',
-      'yarn add -D @rspress/core',
-      'pnpm add -D @rspress/core',
-      'bun add -D @rspress/core',
-      'deno add -D npm:@rspress/core',
-      // Dlx commands
       'npx example-cli-tool --yes',
-      'yarn dlx example-cli-tool --yes',
-      'pnpm dlx example-cli-tool --yes',
-      'bunx example-cli-tool --yes',
-      'deno run npm:example-cli-tool --yes',
-      // Run commands
       'npx example-cli-tool --yes',
-      'yarn example-cli-tool --yes',
-      'pnpm example-cli-tool --yes',
-      'bun example-cli-tool --yes',
-      'deno run npm:example-cli-tool --yes',
-      // Create commands
       'npm create rspress@latest',
+    ]);
+
+    await clickTabs.nth(1).click();
+    expect(await getCommands()).toEqual([
       'yarn create rspress',
+      'yarn add -D @rspress/core',
+      'yarn dlx example-cli-tool --yes',
+      'yarn example-cli-tool --yes',
+      'yarn create rspress',
+    ]);
+
+    await clickTabs.nth(2).click();
+    expect(await getCommands()).toEqual([
       'pnpm create rspress@latest',
+      'pnpm add -D @rspress/core',
+      'pnpm dlx example-cli-tool --yes',
+      'pnpm example-cli-tool --yes',
+      'pnpm create rspress@latest',
+    ]);
+
+    await clickTabs.nth(3).click();
+    expect(await getCommands()).toEqual([
       'bun create rspress@latest',
+      'bun add -D @rspress/core',
+      'bunx example-cli-tool --yes',
+      'bun example-cli-tool --yes',
+      'bun create rspress@latest',
+    ]);
+
+    await clickTabs.nth(4).click();
+    expect(await getCommands()).toEqual([
+      'deno init --npm rspress@latest',
+      'deno add -D npm:@rspress/core',
+      'deno run npm:example-cli-tool --yes',
+      'deno run npm:example-cli-tool --yes',
       'deno init --npm rspress@latest',
     ]);
   });
