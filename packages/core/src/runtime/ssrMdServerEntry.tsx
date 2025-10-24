@@ -2,6 +2,7 @@
 // @ts-ignore
 import { renderToMarkdownString } from '@rspress/core/_private/react';
 import {
+  Content,
   PageContext,
   pathnameToRouteService,
   removeTrailingSlash,
@@ -10,7 +11,6 @@ import {
 } from '@rspress/runtime';
 import { StaticRouter } from '@rspress/runtime/server';
 import { type Unhead, UnheadProvider } from '@unhead/react/server';
-import { App } from './App';
 import { initPageData } from './initPageData';
 
 const DEFAULT_THEME = 'light';
@@ -35,7 +35,7 @@ export async function render(
           basename={removeTrailingSlash(withBase('/'))}
         >
           <UnheadProvider value={head}>
-            <App />
+            <Content />
           </UnheadProvider>
         </StaticRouter>
       </PageContext.Provider>
