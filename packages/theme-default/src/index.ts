@@ -43,6 +43,12 @@ export {
   type PackageManagerTabProps,
   PackageManagerTabs,
 } from './components/PackageManagerTabs/index';
+export {
+  PageTab,
+  type PageTabProps,
+  PageTabs,
+  type PageTabsProps,
+} from './components/PageTabs/index';
 export { PrevNextPage } from './components/PrevNextPage/index';
 export { Search } from './components/Search/index';
 export type {

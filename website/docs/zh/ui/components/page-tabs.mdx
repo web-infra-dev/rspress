@@ -1,0 +1,70 @@
+---
+tag: new
+---
+
+# PageTabs
+
+import { PageTabs, PageTab } from '@theme';
+
+:::info
+
+PageTabs 组件创建子标签页，可以将一个页面内容拆分成多个子页面，每个页面有且仅允许一个 PageTabs。
+
+:::
+
+<PageTabs>
+
+<PageTab label="API">
+
+## 基础使用
+
+```mdx title="docs/guide/getting-started.mdx"
+# Getting started
+
+import { PageTabs, PageTab } from '@theme';
+
+<PageTabs>
+<PageTab label="PageTab 1">
+
+## Foo
+
+</PageTab>
+
+<PageTab label="PageTab 2">
+
+## Bar
+
+</PageTab>
+</PageTabs>
+```
+
+## 配合 MDX 片段使用
+
+更推荐配合 [MDX 片段](../../guide/use-mdx/components.mdx) 将一个页面拆分成多个子页面
+
+```mdx title="docs/guide/getting-started.mdx"
+# Getting started
+
+import { PageTabs, PageTab } from '@theme';
+import Foo from './fragments/_foo.mdx';
+import Bar from './fragments/_bar.mdx';
+
+<PageTabs>
+  <PageTab label="PageTab 1">
+    <Foo />
+  </PageTab>
+  <PageTab label="PageTab 2">
+    <Bar />
+  </PageTab>
+</PageTabs>
+```
+
+</PageTab>
+
+<PageTab label="实现原理">
+
+## Dynamic TOC
+
+</PageTab>
+
+</PageTabs>

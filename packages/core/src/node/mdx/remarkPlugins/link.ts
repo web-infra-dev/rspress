@@ -121,17 +121,14 @@ function normalizeLink(
   if (nodeUrl.startsWith('#')) {
     return nodeUrl;
   }
-
-  // eslint-disable-next-line prefer-const
-  let { url, hash } = parseUrl(nodeUrl);
-
-  if (isExternalUrl(url)) {
-    return url + (hash ? `#${hash}` : '');
+  if (isExternalUrl(nodeUrl)) {
+    return nodeUrl;
   }
-
   if (!routeService) {
     return nodeUrl;
   }
+
+  let { url, hash, search } = parseUrl(nodeUrl);
 
   // 1. [](/api/getting-started) or [](/en/api/getting-started)
   if (url.startsWith('/')) {
@@ -162,6 +159,9 @@ function normalizeLink(
     return nodeUrl;
   }
 
+  if (search) {
+    url += `?${search}`;
+  }
   if (hash) {
     url += `#${hash}`;
   }
