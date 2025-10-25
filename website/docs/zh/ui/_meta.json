@@ -11,6 +11,7 @@
   },
   {
     "type": "dir",
-    "name": "components"
+    "name": "components",
+    "label": "内置组件"
   }
 ]

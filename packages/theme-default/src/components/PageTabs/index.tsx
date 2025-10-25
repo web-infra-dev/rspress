@@ -1,3 +1,4 @@
+import { useLocation, useNavigate } from '@rspress/runtime';
 import clsx from 'clsx';
 import {
   Children,
@@ -7,22 +8,40 @@ import {
   isValidElement,
   type ReactElement,
   type ReactNode,
-  useEffect,
   useMemo,
-  useState,
 } from 'react';
 import './index.scss';
-import { useLocation, useNavigate } from '@rspress/runtime';
 
 type TabItem = {
   value?: string;
   label?: string | ReactNode;
-  disabled?: boolean;
 };
+
+function getTabValuesFromChildren(
+  children: ReactElement<PageTabProps>[],
+): TabItem[] {
+  return Children.map<TabItem, ReactElement<PageTabProps>>(children, child => {
+    if (isValidElement(child)) {
+      return {
+        label: child.props?.label || undefined,
+        value:
+          child.props?.value || (child.props?.label as string) || undefined,
+      };
+    }
+
+    return {
+      label: undefined,
+      value: undefined,
+    };
+  });
+}
 
 export interface PageTabsProps {
   values?: ReactNode[] | ReadonlyArray<ReactNode> | TabItem[];
-  defaultValue?: string;
+  /**
+   * @default 'page''
+   */
+  id?: string;
   children: ReactNode;
   tabContainerClassName?: string;
   tabPosition?: 'left' | 'center';
@@ -42,93 +61,62 @@ const renderTab = (item: ReactNode | TabItem) => {
   return item;
 };
 
-export const groupIdPrefix = 'rspress.tabs.';
+function usePageTabs(id: string, rawChildren: ReactNode) {
+  // remove "\n" character when write JSX element in multiple lines, use Children.toArray for Tabs with no Tab element
+  const children = Children.toArray(rawChildren).filter(
+    child => !(typeof child === 'string' && child.trim() === ''),
+  ) as unknown as ReactElement<PageTabProps>[];
+  const navigate = useNavigate();
+
+  const tabValues = useMemo(() => {
+    return getTabValuesFromChildren(children);
+  }, [rawChildren]);
+
+  const { search } = useLocation();
+
+  function navigateToTab(index: number) {
+    const urlSearchParams = new URLSearchParams(search);
+    if (index === 0) {
+      urlSearchParams.delete(id);
+    } else {
+      urlSearchParams.set(id, String(index));
+    }
+    navigate({
+      search: urlSearchParams.toString(),
+    });
+  }
+
+  const currentIndex = Number(new URLSearchParams(search).get(id)) || 0;
+
+  return {
+    children,
+    currentIndex,
+    tabValues,
+    navigateToTab,
+  };
+}
 
 let renderCountForTocUpdate = 0;
 
 export const PageTabs = forwardRef(
   (props: PageTabsProps, ref: ForwardedRef<HTMLDivElement>): ReactElement => {
     const {
-      values,
-      defaultValue,
       children: rawChildren,
       tabPosition = 'left',
       tabContainerClassName,
+      id = 'page',
     } = props;
-    // remove "\n" character when write JSX element in multiple lines, use Children.toArray for Tabs with no Tab element
-    const children = Children.toArray(rawChildren).filter(
-      child => !(typeof child === 'string' && child.trim() === ''),
-    ) as unknown as ReactElement<PageTabProps>[];
 
-    const { search } = useLocation();
-    const currentValue = useMemo(() => {
-      const urlSearchParams = new URLSearchParams(search);
-      return urlSearchParams.get('pageTabs');
-    }, [search]);
+    const { children, currentIndex, tabValues, navigateToTab } = usePageTabs(
+      id,
+      rawChildren,
+    );
 
-    let tabValues = values || [];
-
-    if (tabValues.length === 0) {
-      tabValues = Children.map<TabItem, ReactElement<PageTabProps>>(
-        children,
-        child => {
-          if (isValidElement(child)) {
-            return {
-              label: child.props?.label || undefined,
-              value:
-                child.props?.value ||
-                (child.props?.label as string) ||
-                undefined,
-            };
-          }
-
-          return {
-            label: undefined,
-            value: undefined,
-          };
-        },
-      );
-    }
-
-    const [activeIndex, setActiveIndex] = useState(() => {
-      if (currentValue) {
-        return tabValues.findIndex(item => {
-          if (typeof item === 'string') {
-            return item === currentValue;
-          }
-          if (item && typeof item === 'object' && 'value' in item) {
-            return item.value === currentValue;
-          }
-          return false;
-        });
-      }
-      if (defaultValue === undefined) {
-        return 0;
-      }
-
-      return tabValues.findIndex(item => {
-        if (typeof item === 'string') {
-          return item === defaultValue;
-        }
-        if (item && typeof item === 'object' && 'value' in item) {
-          return item.value === defaultValue;
-        }
-        return false;
-      });
-    });
-
-    const currentIndex = activeIndex;
-    const navigate = useNavigate();
-
-    useEffect(() => {
-      navigate({
-        search: `?pageTabs=${tabValues[currentIndex] && typeof tabValues[currentIndex] === 'object' && isTabItem(tabValues[currentIndex]) ? (tabValues[currentIndex] as TabItem).value : tabValues[currentIndex]}`,
-      });
-    }, [currentIndex]);
     renderCountForTocUpdate++;
 
     return (
       <>
+        {/* <script>{`window.addEventLi`}</script> */}
         <div className={clsx('rp-page-tabs', tabContainerClassName)} ref={ref}>
           {tabValues.length ? (
             <div
@@ -149,7 +137,9 @@ export const PageTabs = forwardRef(
                         : 'rp-page-tabs__label__item--not-selected',
                     )}
                     onClick={() => {
-                      setActiveIndex(index);
+                      if (item.value) {
+                        navigateToTab(index);
+                      }
                     }}
                   >
                     {renderTab(item)}
@@ -179,6 +169,11 @@ export const PageTabs = forwardRef(
             })}
           </div>
         </div>
+        {/* 
+          Render a hidden <h2> element to trigger a Table of Contents (TOC) update.  
+          This mechanism ensures that the TOC stays in sync with tab content changes,  
+          as some TOC generators rely on heading elements being present in the DOM.  
+        */}
         {renderCountForTocUpdate % 2 === 0 ? (
           <h2 style={{ display: 'none' }} />
         ) : null}
