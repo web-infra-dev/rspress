@@ -14,9 +14,37 @@
     margin: 24px 0;
     contain: content;
   }
+}
+
+.rp-codeblock__title {
+  font-family: var(--rp-font-family-mono);
+  padding: 12px 16px;
+  font-size: var(--rp-code-font-size);
+  background-color: var(--rp-code-title-bg);
+}
+
+.rp-codeblock__content {
+  position: relative;
+  color: var(--rp-code-block-color);
+  background-color: var(--rp-code-block-bg);
 
   & :where(pre) {
     outline: none; // avoid focus outline https://github.com/web-infra-dev/rspack/issues/11775
+
+    // #region text
+    text-align: left;
+    white-space: pre;
+    word-spacing: normal;
+    word-break: normal;
+    word-wrap: normal;
+    -moz-tab-size: 4;
+    -o-tab-size: 4;
+    tab-size: 4;
+    -webkit-hyphens: none;
+    -moz-hyphens: none;
+    -ms-hyphens: none;
+    hyphens: none;
+    // #endregion text
 
     position: relative;
     z-index: 1;
@@ -37,27 +65,14 @@
   }
 
   & :where(code) {
+    font-size: var(--rp-code-font-size);
+    font-family: var(--rp-font-family-mono);
     display: inline-block;
     padding: 16px 0;
     width: fit-content;
     min-width: 100%;
     line-height: 1.7;
   }
-}
-
-.rp-codeblock__title {
-  font-family: var(--rp-font-family-mono);
-  padding: 12px 16px;
-  font-size: var(--rp-code-font-size);
-  background-color: var(--rp-code-title-bg);
-}
-
-.rp-codeblock__content {
-  font-size: var(--rp-code-font-size);
-  font-family: var(--rp-font-family-mono);
-  position: relative;
-  color: var(--rp-code-block-color);
-  background-color: var(--rp-code-block-bg);
 
   &--code-wrap code {
     white-space: pre-wrap !important;

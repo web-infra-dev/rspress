@@ -215,37 +215,20 @@
 
     /* code block */
     /* #region */
-    & :where(pre, code) {
-      text-align: left;
-      white-space: pre;
-      word-spacing: normal;
-      word-break: normal;
-      word-wrap: normal;
-      -moz-tab-size: 4;
-      -o-tab-size: 4;
-      tab-size: 4;
-      -webkit-hyphens: none;
-      -moz-hyphens: none;
-      -ms-hyphens: none;
-      hyphens: none;
-    }
+    // migrated to .rp-codeblock
     /* #endregion */
 
-    // #region inline code
-    &:where(:not(pre, h1, h2, h3, h4, h5, h6) > code) {
-      font-size: var(--rp-code-font-size);
-    }
-    &:where(h1 code, h2 code, h3 code) {
-      font-size: 0.9em;
-    }
-    &:where(:not(pre, div) > code) {
+    /* inline code */
+    // #region
+    &:where(:not(pre) > code) {
+      font-size: 0.875em;
       font-family: var(--rp-font-family-mono);
       padding: 3px 6px;
       border-radius: var(--rp-radius-small);
       background-color: var(--rp-c-text-code-bg);
       overflow-wrap: break-word;
     }
-    &:where(:not(pre, div, a) > code) {
+    &:where(:not(pre, a) > code) {
       color: var(--rp-c-text-code);
     }
     &:where(a > code) {
@@ -255,7 +238,7 @@
     &:where(a:hover > code) {
       color: var(--rp-c-brand);
     }
-    // #endregion inline code
+    // #endregion
 
     &:where(details) {
       cursor: pointer;
