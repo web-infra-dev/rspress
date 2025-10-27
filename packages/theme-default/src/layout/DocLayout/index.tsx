@@ -1,11 +1,10 @@
 import { useFrontmatter } from '@rspress/runtime';
-import { DocContent, Overview } from '@theme';
+import { DocContent, Overview, useWatchToc } from '@theme';
 import clsx from 'clsx';
 import { Aside } from '../../components/Aside';
 import { DocFooter } from '../../components/DocFooter';
 import { Sidebar } from '../../components/Sidebar';
 import { useSidebarMenu } from '../../components/SidebarMenu/useSidebarMenu';
-import { useWatchToc } from '../../components/Toc/useDynamicToc';
 import { useUISwitch } from '../Layout/useUISwitch';
 import './index.scss';
 

@@ -63,26 +63,15 @@ import Bar from './fragments/_bar.mdx';
 
 <PageTab label="How it works">
 
-## Section 2
-
-```mdx title="docs/guide/getting-started.mdx"
-# Getting started
-
-import { PageTabs, PageTab } from '@theme';
-import Foo from './fragments/_foo.mdx';
-import Bar from './fragments/_bar.mdx';
-
-<PageTabs>
-  <PageTab label="PageTab 1">
-    <Foo />
-  </PageTab>
-  <PageTab label="PageTab 2">
-    <Bar />
-  </PageTab>
-</PageTabs>
-```
-
 ## Dynamic TOC
+
+Based on extensive feedback from V1 users, we found that users often encountered issues with incorrect static TOC extraction when using [MDX fragments](../../guide/use-mdx/components.mdx) that include headers.
+
+Rspress V2 introduces Dynamic TOC, which dynamically generates the TOC at runtime by monitoring DOM changes through [MutationObserver](https://developer.mozilla.org/en-US/docs/Web/API/MutationObserver). This ensures TOC accuracy and allows users to leverage the full flexibility of [MDX fragments](../../guide/use-mdx/components.mdx). This also makes the `<PageTabs />` component possible.
+
+```ts
+import { useDynamicTOC } from '@theme';
+```
 
 </PageTab>
 

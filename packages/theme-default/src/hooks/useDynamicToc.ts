@@ -1,6 +1,6 @@
 import type { Header } from '@rspress/shared';
 import { useCallback, useEffect, useState } from 'react';
-import { processTitleElement } from '../Aside/processTitleElement';
+import { processTitleElement } from '../components/Aside/processTitleElement';
 
 const updateFns: Record<string, () => void> = {};
 const useForceUpdate = () => {
@@ -55,6 +55,9 @@ function isElementVisible(element: Element): boolean {
   return true;
 }
 
+/**
+ * @internal
+ */
 export const useDynamicToc = (): Header[] => {
   useSubScribe();
   return headers.current;
@@ -85,6 +88,9 @@ function updateHeaders(target: Element) {
 
 const TOC_HEADING_TAGS = new Set(['H2', 'H3', 'H4']);
 
+/**
+ * @internal
+ */
 export const useWatchToc = () => {
   const [innerRef, setRef] = useState<HTMLDivElement | null>(null);
 
