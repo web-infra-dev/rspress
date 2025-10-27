@@ -20,6 +20,9 @@ function parseCSSLength(value: string): number {
   return numValue;
 }
 
+/**
+ * @internal
+ */
 export const useActiveAnchor = (headers: Header[]) => {
   const [activeAnchorId, setActiveAnchorId] = useState<string | undefined>();
   const [scrolledHeader, setScrolledHeader] = useState<Header | undefined>();

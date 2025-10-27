@@ -4,10 +4,7 @@ export { Badge } from './components/Badge/index';
 export { Banner, type BannerProps } from './components/Banner/index';
 export { Button } from './components/Button/index';
 export { Callout, type CalloutProps } from './components/Callout/index';
-export {
-  CodeBlock,
-  type CodeBlockProps,
-} from './components/CodeBlock/index';
+export { CodeBlock, type CodeBlockProps } from './components/CodeBlock/index';
 export {
   CodeBlockRuntime,
   type CodeBlockRuntimeProps,
@@ -43,6 +40,12 @@ export {
   type PackageManagerTabProps,
   PackageManagerTabs,
 } from './components/PackageManagerTabs/index';
+export {
+  PageTab,
+  type PageTabProps,
+  PageTabs,
+  type PageTabsProps,
+} from './components/PageTabs/index';
 export { PrevNextPage } from './components/PrevNextPage/index';
 export { Search } from './components/Search/index';
 export type {
@@ -77,6 +80,8 @@ export { SwitchAppearance } from './components/SwitchAppearance/index';
 export { Tab, Tabs } from './components/Tabs/index';
 export { Tag } from './components/Tag/index';
 export { Toc } from './components/Toc';
+export { useActiveAnchor } from './hooks/useActiveAnchor';
+export { useDynamicToc, useWatchToc } from './hooks/useDynamicToc';
 export { DocLayout, type DocLayoutProps } from './layout/DocLayout';
 export { HomeLayout } from './layout/HomeLayout/index';
 export { Layout } from './layout/Layout/index';

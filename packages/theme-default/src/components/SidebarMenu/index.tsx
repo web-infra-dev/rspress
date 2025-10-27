@@ -1,13 +1,12 @@
 import { useLocaleSiteData, useLocation, useSite } from '@rspress/runtime';
+import { SvgWrapper } from '@theme';
 import MenuIcon from '@theme-assets/menu';
 import { forwardRef, useEffect, useRef } from 'react';
 import { createPortal } from 'react-dom';
 import { useUISwitch } from '../../layout/Layout/useUISwitch';
 import { ReadPercent } from '../ReadPercent';
-import { SvgWrapper } from '../SvgWrapper';
 import './index.scss';
-import { useActiveAnchor } from '../Toc/useActiveAnchor';
-import { useDynamicToc } from '../Toc/useDynamicToc';
+import { useActiveAnchor, useDynamicToc } from '@theme';
 
 /* Top Menu, only displayed on <1280px screen width */
 export const SidebarMenu = forwardRef(

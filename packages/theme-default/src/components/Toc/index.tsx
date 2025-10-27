@@ -1,6 +1,5 @@
+import { useActiveAnchor, useDynamicToc } from '@theme';
 import { TocItem } from './TocItem';
-import { useActiveAnchor } from './useActiveAnchor';
-import { useDynamicToc } from './useDynamicToc';
 
 const baseHeaderLevel = 2;
 

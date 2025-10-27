@@ -1,0 +1,47 @@
+.rp-page-tabs {
+  &__label {
+    width: 100%;
+    display: flex;
+    justify-content: flex-start;
+    gap: 1.5rem;
+    margin: 2rem 0;
+    border-bottom: 1px solid var(--rp-c-divider-light);
+    box-shadow: var(--rp-shadow-1);
+
+    &__item {
+      display: inline-block;
+      // width: auto;
+      padding: 1rem 0.5rem;
+      cursor: pointer;
+      color: var(--rp-c-text-2);
+      border-bottom: 2px solid transparent;
+
+      &--selected {
+        font-weight: 700;
+        color: var(--rp-c-text-0);
+        border-bottom: 2px solid var(--rp-c-brand-dark);
+      }
+
+      &--not-selected:hover {
+        border-bottom: 2px solid var(--rp-c-divider-light);
+        color: var(--rp-c-text-1);
+      }
+    }
+  }
+
+  &__content {
+    &__item {
+      // overrides rp-doc
+      h2:first-of-type::before {
+        display: none;
+      }
+
+      &--hidden {
+        display: none;
+      }
+      &--active {
+        display: block;
+      }
+    }
+  }
+}
