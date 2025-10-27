@@ -3,10 +3,10 @@
  */
 import './vars/brand-vars.scss';
 import './vars/shiki-vars.scss';
+import './vars/code-vars.scss';
 import './vars.css';
 
 import './base.css';
-import './code.scss';
 import './scrollbar.scss';
 import './shiki.scss';
 import 'nprogress/nprogress.css';

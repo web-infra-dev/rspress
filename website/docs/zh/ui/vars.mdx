@@ -15,3 +15,15 @@ import { CssPickerEditor } from '../../components/CssPickerEditor';
 import { ShikiThemeSwitcher } from '../../components/ShikiThemeSwitcher';
 
 <ShikiThemeSwitcher />
+
+## 代码块样式
+
+import { CssLiveCodeEditorWithDefault } from '../../components/CssLiveCodeEditor';
+
+import rawCodeScss from '../../../../packages/theme-default/src/styles/vars/code-vars.scss?raw';
+
+<CssLiveCodeEditorWithDefault defaultValue={rawCodeScss} />
+
+```tsx title="foo.ts"
+console.log('This is a code block');
+```
