@@ -10,7 +10,6 @@ import type { AdditionalPage, RspressPlugin } from './Plugin';
 
 export type { DefaultThemeConfig, NormalizedDefaultThemeConfig };
 export * from './defaultTheme';
-export * from './helpers';
 
 export type { RspressPlugin, AdditionalPage, RspressPlugin as Plugin };
 

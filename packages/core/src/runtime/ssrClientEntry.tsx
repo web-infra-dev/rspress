@@ -1,4 +1,4 @@
-import { removeBase } from '@rspress/runtime';
+import { removeBase } from '@rspress/core/runtime';
 import { startTransition } from 'react';
 import { hydrateRoot } from 'react-dom/client';
 import { ClientApp } from './ClientApp';

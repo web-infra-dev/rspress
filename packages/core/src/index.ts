@@ -2,16 +2,28 @@ export { matchPath } from '@rspress/runtime/server';
 
 // TODO: do not expose so much pubic API
 export type {
+  Feature,
+  FrontMatterMeta,
+  Header,
+  Hero,
+  LocalSearchOptions,
   Nav,
+  NavItem,
+  NavItemWithChildren,
   NavItemWithLink,
+  NavItemWithLinkAndChildren,
+  NormalizedSidebarGroup,
   PageIndexInfo,
+  RemotePageInfo,
   RouteMeta,
   RspressPlugin,
   Sidebar,
+  SidebarData,
   SidebarDivider,
   SidebarGroup,
   SidebarItem,
   SidebarSectionHeader,
+  SocialLink,
   UserConfig,
 } from '@rspress/shared';
 export {
