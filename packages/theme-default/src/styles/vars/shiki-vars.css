@@ -1,6 +1,7 @@
+/* Light Mode */
 :where(html:not(.rp-dark)) {
-  --shiki-foreground: inherit; // color: var(--rp-code-block-color);
-  --shiki-background: transparent; // background-color: var(--rp-code-block-bg);
+  --shiki-foreground: inherit; /* Priority higher than var(--rp-code-block-color); */
+  --shiki-background: transparent; /* Priority higher than var(--rp-code-block-bg); */
 
   --shiki-token-constant: #1976d2;
   --shiki-token-string: #31a94d;
@@ -12,14 +13,15 @@
   --shiki-token-punctuation: #242323;
   --shiki-token-link: #22863a;
 
-  // diff language
+  /* diff language */
   --shiki-token-deleted: #d32828;
   --shiki-token-inserted: #22863a;
 }
 
+/* Dark Mode */
 :where(html.rp-dark) {
-  --shiki-foreground: inherit; // color: var(--rp-code-block-color);
-  --shiki-background: transparent; // background-color: var(--rp-code-block-bg);
+  --shiki-foreground: inherit; /* Priority higher than var(--rp-code-block-color); */
+  --shiki-background: transparent; /* Priority higher than var(--rp-code-block-bg); */
 
   --shiki-token-constant: #6fb0fa;
   --shiki-token-string: #f9a86e;
@@ -31,7 +33,7 @@
   --shiki-token-punctuation: #bbbbbb;
   --shiki-token-link: #f9a76d;
 
-  // diff language
+  /* diff language */
   --shiki-token-deleted: #ee6d7a;
   --shiki-token-inserted: #36c47f;
 }
