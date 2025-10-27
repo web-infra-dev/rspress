@@ -1,4 +1,4 @@
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { LiveCodeEditor } from './LiveCodeEditor';
 
 export interface CssLiveCodeEditorProps {
@@ -43,4 +43,14 @@ export function CssLiveCodeEditor({
       }}
     />
   );
+}
+
+export function CssLiveCodeEditorWithDefault({
+  defaultValue,
+}: {
+  defaultValue: string;
+}) {
+  const [value, setValue] = useState(defaultValue);
+
+  return <CssLiveCodeEditor value={value} onChange={code => setValue(code)} />;
 }

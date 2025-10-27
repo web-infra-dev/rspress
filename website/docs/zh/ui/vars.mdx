@@ -10,8 +10,20 @@ import { CssPickerEditor } from '../../components/CssPickerEditor';
 
 <CssPickerEditor />
 
-## Shiki 主题色
+## 代码块 - Shiki 主题
 
 import { ShikiThemeSwitcher } from '../../components/ShikiThemeSwitcher';
 
 <ShikiThemeSwitcher />
+
+## 代码块 - 外层标题和容器
+
+import { CssLiveCodeEditorWithDefault } from '../../components/CssLiveCodeEditor';
+
+import rawCodeScss from '../../../../packages/theme-default/src/styles/vars/code-vars.css?raw';
+
+<CssLiveCodeEditorWithDefault defaultValue={rawCodeScss} />
+
+```tsx title="foo.ts"
+console.log('This is a code block');
+```

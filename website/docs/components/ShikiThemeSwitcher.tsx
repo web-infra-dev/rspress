@@ -1,5 +1,5 @@
 import { useMemo } from 'react';
-import INITIAL_CONTENT from '../../../packages/theme-default/dist/styles/vars/shiki-vars.css?raw';
+import INITIAL_CONTENT from '../../../packages/theme-default/src/styles/vars/shiki-vars.css?raw';
 import {
   CssLiveCodeEditorWithTabs,
   type Tab,

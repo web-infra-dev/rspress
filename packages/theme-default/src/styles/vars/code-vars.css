@@ -1,0 +1,21 @@
+/* Light Mode */
+html:not(.rp-dark) {
+  --rp-code-font-size: 0.875rem;
+  --rp-code-title-bg: #f8f8f9;
+
+  --rp-code-block-color: rgb(46, 52, 64);
+  --rp-code-block-bg: var(--rp-c-bg);
+
+  --rp-code-block-border: 1px solid #e5e6eb;
+}
+
+/* Dark Mode */
+html.rp-dark {
+  --rp-code-font-size: 0.875rem;
+  --rp-code-title-bg: #191919;
+
+  --rp-code-block-color: rgb(229, 231, 235);
+  --rp-code-block-bg: var(--rp-c-bg);
+
+  --rp-code-block-border: 1px solid #242424;
+}

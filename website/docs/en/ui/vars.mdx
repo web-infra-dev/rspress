@@ -4,14 +4,26 @@
 
 :::
 
-## Brand css variables
+## Brand colors
 
 import { CssPickerEditor } from '../../components/CssPickerEditor';
 
 <CssPickerEditor />
 
-## Shiki theme css variables
+## Codeblock - shiki theme
 
 import { ShikiThemeSwitcher } from '../../components/ShikiThemeSwitcher';
 
 <ShikiThemeSwitcher />
+
+## Codeblock - outer title and container
+
+import { CssLiveCodeEditorWithDefault } from '../../components/CssLiveCodeEditor';
+
+import rawCodeScss from '../../../../packages/theme-default/src/styles/vars/code-vars.css?raw';
+
+<CssLiveCodeEditorWithDefault defaultValue={rawCodeScss} />
+
+```tsx title="foo.ts"
+console.log('This is a code block');
+```
