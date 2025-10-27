@@ -120,8 +120,8 @@ function getColorForScope(
         }
         // Word boundary match (e.g., "constant" matches "constant.numeric")
         else if (
-          s.startsWith(targetScope + '.') ||
-          targetScope.startsWith(s + '.')
+          s.startsWith(`${targetScope}.`) ||
+          targetScope.startsWith(`${s}.`)
         ) {
           score = Math.min(targetScope.length, s.length) * 1.5;
         }
@@ -148,12 +148,12 @@ export function generateShikiCssVars(themePath: string) {
   // Extract foreground and background colors
   const foreground =
     theme.colors?.['editor.foreground'] ||
-    theme.colors?.['foreground'] ||
+    theme.colors?.foreground ||
     (theme.type === 'dark' ? '#ffffff' : '#000000');
 
   const background =
     theme.colors?.['editor.background'] ||
-    theme.colors?.['background'] ||
+    theme.colors?.background ||
     (theme.type === 'dark' ? '#000000' : '#ffffff');
 
   result.push(['--shiki-foreground', foreground]);
