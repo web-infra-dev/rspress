@@ -9,16 +9,18 @@ import {
   SEARCH_INDEX_NAME,
 } from '@rspress/shared';
 // https://github.com/nextapps-de/flexsearch/issues/438
-import Index, {
-  type EnrichedDocumentSearchResultSetUnit,
-  type IndexOptionsForDocumentSearch,
+import {
+  Document,
+  type DocumentOptions,
+  type EnrichedDocumentSearchResults,
 } from 'flexsearch';
 import { searchIndexHash } from 'virtual-page-data';
 import { LOCAL_INDEX, type Provider, type SearchQuery } from '../Provider';
 import type { SearchOptions } from '../types';
 import { normalizeTextCase } from '../util';
 
-type FlexSearchDocumentWithType = Index.Document<PageIndexInfo, true>;
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+type FlexSearchDocumentWithType = Document<any, false, false>;
 
 interface PageIndexForFlexSearch extends PageIndexInfo {
   normalizedContent: string;
@@ -108,7 +110,8 @@ export class LocalProvider implements Provider {
       normalizedTitle: normalizeTextCase(page.title),
     }));
 
-    const createOptions: IndexOptionsForDocumentSearch<PageIndexInfo, true> = {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    const createOptions: DocumentOptions<any, false, false> = {
       tokenize: 'full',
       document: {
         id: 'id',
@@ -122,16 +125,32 @@ export class LocalProvider implements Provider {
     };
     // Init Search Indexes
     // English Index
-    this.#index = new Index.Document(createOptions);
+    this.#index = new Document(createOptions);
     // CJK: Chinese, Japanese, Korean
-    this.#cjkIndex = new Index.Document({
+    this.#cjkIndex = new Document({
       ...createOptions,
-      tokenize: (str: string) => tokenize(str, cjkRegex),
+      encoder: {
+        finalize: (str: string[]) => {
+          const result: string[] = [];
+          for (const s of str) {
+            result.push(...tokenize(s, cjkRegex));
+          }
+          return result;
+        },
+      },
     });
     // Cyrillic Index
-    this.#cyrillicIndex = new Index.Document({
+    this.#cyrillicIndex = new Document({
       ...createOptions,
-      tokenize: (str: string) => tokenize(str, cyrillicRegex),
+      encoder: {
+        finalize: (str: string[]) => {
+          const result: string[] = [];
+          for (const s of str) {
+            result.push(...tokenize(s, cyrillicRegex));
+          }
+          return result;
+        },
+      },
     });
     for (const item of pagesForSearch) {
       // Add search index async to avoid blocking the main thread
@@ -151,16 +170,17 @@ export class LocalProvider implements Provider {
     };
 
     const searchResult = await Promise.all([
-      this.#index?.searchAsync<true>(keyword, options),
-      this.#cjkIndex?.searchAsync<true>(keyword, options),
-      this.#cyrillicIndex?.searchAsync<true>(keyword, options),
+      this.#index?.searchAsync(keyword, options),
+      this.#cjkIndex?.searchAsync(keyword, options),
+      this.#cyrillicIndex?.searchAsync(keyword, options),
     ]);
 
     const combinedSearchResult: PageIndexInfo[] = [];
     const pushedId: Set<string> = new Set();
 
     function insertCombinedSearchResult(
-      resultFromOneSearchIndex: EnrichedDocumentSearchResultSetUnit<PageIndexInfo>[],
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      resultFromOneSearchIndex: EnrichedDocumentSearchResults<any>,
     ) {
       for (const item of resultFromOneSearchIndex) {
         // item.field; // ignored
@@ -172,7 +192,9 @@ export class LocalProvider implements Provider {
           }
           // mark the doc is in the searched results
           pushedId.add(id);
-          combinedSearchResult.push(resultItem.doc);
+          if (resultItem.doc) {
+            combinedSearchResult.push(resultItem.doc);
+          }
         });
       }
     }
