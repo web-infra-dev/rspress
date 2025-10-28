@@ -1,5 +1,5 @@
+import { useSite } from '@rspress/core/runtime';
 import { useCallback, useEffect, useState } from 'react';
-import siteData from 'virtual-site-data';
 import { useHandler } from './useHandler';
 import { useMediaQuery } from './useMediaQuery';
 import { useStorageValue } from './useStorageValue';
@@ -24,8 +24,6 @@ const sanitize = (value: string): ThemeConfigValue => {
     : 'auto';
 };
 
-const disableDarkMode = siteData.themeConfig.darkMode === false;
-
 /**
  * State provider for theme context.
  */
@@ -35,6 +33,9 @@ export const useThemeState = () => {
     APPEARANCE_KEY,
     'auto',
   );
+
+  const { site } = useSite();
+  const disableDarkMode = site.themeConfig.darkMode === false;
 
   const getPreferredTheme = useHandler(() => {
     if (disableDarkMode) {

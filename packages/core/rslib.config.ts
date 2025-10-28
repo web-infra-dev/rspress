@@ -21,18 +21,6 @@ const COMMON_EXTERNALS = [
 
 export default defineConfig({
   plugins: [pluginPublint()],
-  output: {
-    copy: [
-      {
-        from: path.resolve(__dirname, './src/runtime.ts'),
-        to: path.resolve(__dirname, './dist/runtime.js'),
-      },
-      {
-        from: path.resolve(__dirname, './src/runtime.ts'),
-        to: path.resolve(__dirname, './dist/runtime.d.ts'),
-      },
-    ],
-  },
   lib: [
     {
       format: 'esm',
@@ -74,6 +62,7 @@ export default defineConfig({
         },
       },
     },
+
     {
       format: 'esm',
       syntax: 'es2022',
@@ -117,6 +106,15 @@ export default defineConfig({
       source: {
         entry: {
           'shiki-transformers': './src/shiki-transformers.ts',
+        },
+      },
+    },
+    {
+      format: 'esm',
+      syntax: 'es2022',
+      source: {
+        entry: {
+          runtime: './src/runtime.ts',
         },
       },
     },
