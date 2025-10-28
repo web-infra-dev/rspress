@@ -130,26 +130,15 @@ export class LocalProvider implements Provider {
     this.#cjkIndex = new Document({
       ...createOptions,
       encoder: {
-        finalize: (str: string[]) => {
-          const result: string[] = [];
-          for (const s of str) {
-            result.push(...tokenize(s, cjkRegex));
-          }
-          return result;
-        },
+        finalize: (str: string[]) => str.flatMap(s => tokenize(s, cjkRegex)),
       },
     });
     // Cyrillic Index
     this.#cyrillicIndex = new Document({
       ...createOptions,
       encoder: {
-        finalize: (str: string[]) => {
-          const result: string[] = [];
-          for (const s of str) {
-            result.push(...tokenize(s, cyrillicRegex));
-          }
-          return result;
-        },
+        finalize: (str: string[]) =>
+          str.flatMap(s => tokenize(s, cyrillicRegex)),
       },
     });
     for (const item of pagesForSearch) {
