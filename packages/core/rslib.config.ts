@@ -131,8 +131,7 @@ export default defineConfig({
       },
       source: {
         entry: {
-          'shiki-transformers':
-            './src/node/mdx/rehypePlugins/transformers/index.ts',
+          'shiki-transformers': './src/shiki-transformers.ts',
         },
       },
     },
@@ -144,7 +143,6 @@ export default defineConfig({
         entry: {
           index: './src/runtime/*.{tsx,ts}',
         },
-        tsconfigPath: './src/runtime/tsconfig.json',
       },
       output: {
         target: 'web',
@@ -170,7 +168,6 @@ export default defineConfig({
         entry: {
           index: ['./src/theme/**', '!./src/theme/tsconfig.json'],
         },
-        tsconfigPath: './src/theme/tsconfig.json',
       },
       tools: {
         rspack: {
