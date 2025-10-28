@@ -1,4 +1,4 @@
-import { PageContext, useLocation } from '@rspress/runtime';
+import { PageContext, useLocation } from '@rspress/core/runtime';
 import { Layout } from '@theme';
 import React, { useContext, useLayoutEffect } from 'react';
 import globalComponents from 'virtual-global-components';

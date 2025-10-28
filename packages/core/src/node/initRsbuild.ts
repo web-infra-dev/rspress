@@ -91,7 +91,7 @@ async function createInternalBuildConfig(
     config?.themeDir ?? path.join(process.cwd(), 'theme');
   const outDir = config?.outDir ?? OUTPUT_DIR;
 
-  const DEFAULT_THEME = require.resolve('@rspress/theme-default');
+  const DEFAULT_THEME = path.join(__dirname, 'theme');
   const base = config?.base ?? '';
 
   // In production, we need to add assetPrefix in asset path
@@ -235,10 +235,10 @@ async function createInternalBuildConfig(
         ...detectCustomIconAlias,
         '@mdx-js/react': require.resolve('@mdx-js/react'),
         '@theme': [CUSTOM_THEME_DIR, DEFAULT_THEME],
-        '@theme-assets': path.join(DEFAULT_THEME, '../assets'),
+        '@theme-assets': path.join(DEFAULT_THEME, './assets'),
         'react-lazy-with-preload': require.resolve('react-lazy-with-preload'),
         // single runtime
-        '@rspress/core/theme': path.join(__dirname, 'theme.js'),
+        '@rspress/core/theme': DEFAULT_THEME,
         '@rspress/core/runtime': path.join(__dirname, 'runtime.js'),
         '@rspress/core/shiki-transformers': path.join(
           __dirname,
@@ -379,7 +379,7 @@ async function createInternalBuildConfig(
               enableSSG && isProduction() ? SSR_CLIENT_ENTRY : CSR_CLIENT_ENTRY,
           },
           preEntry: [
-            path.join(DEFAULT_THEME, '../styles/index.js'),
+            path.join(DEFAULT_THEME, './styles/index.js'),
             'virtual-global-styles',
           ],
           define: {

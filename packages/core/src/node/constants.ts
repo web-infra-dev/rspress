@@ -1,9 +1,10 @@
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
-import { APPEARANCE_KEY } from '@rspress/shared';
 import { version } from '../../package.json';
 
 export const RSPRESS_VERSION = version;
+
+const APPEARANCE_KEY = 'rspress-theme-appearance';
 
 export const isProduction = () => process.env.NODE_ENV === 'production';
 

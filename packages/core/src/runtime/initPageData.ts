@@ -1,4 +1,4 @@
-import { isEqualPath, pathnameToRouteService } from '@rspress/runtime';
+import { isEqualPath, pathnameToRouteService } from '@rspress/core/runtime';
 import {
   type BaseRuntimePageInfo,
   cleanUrl,

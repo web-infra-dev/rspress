@@ -6,7 +6,7 @@ import {
   removeTrailingSlash,
   ThemeContext,
   withBase,
-} from '@rspress/runtime';
+} from '@rspress/core/runtime';
 import { StaticRouter } from '@rspress/runtime/server';
 import { type Unhead, UnheadProvider } from '@unhead/react/server';
 import type { ReactNode } from 'react';

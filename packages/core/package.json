@@ -16,6 +16,9 @@
     "*.scss"
   ],
   "type": "module",
+  "imports": {
+    "#theme": "./src/theme/index.ts"
+  },
   "exports": {
     ".": {
       "types": "./dist/index.d.ts",
@@ -24,8 +27,8 @@
     "./dist/*": "./dist/*",
     "./package.json": "./package.json",
     "./theme": {
-      "types": "./dist/theme.d.ts",
-      "default": "./dist/theme.js"
+      "types": "./dist/theme/index.d.ts",
+      "default": "./dist/theme/index.js"
     },
     "./runtime": {
       "types": "./dist/runtime.d.ts",
@@ -64,18 +67,23 @@
     "@rspress/mdx-rs": "0.6.6",
     "@rspress/runtime": "workspace:*",
     "@rspress/shared": "workspace:*",
-    "@rspress/theme-default": "workspace:*",
     "@shikijs/rehype": "^3.12.2",
     "@types/unist": "^3.0.3",
     "@unhead/react": "^2.0.19",
+    "body-scroll-lock": "4.0.0-beta.0",
     "cac": "^6.7.14",
     "chokidar": "^3.6.0",
+    "clsx": "2.1.1",
+    "copy-to-clipboard": "^3.3.3",
+    "flexsearch": "0.7.43",
     "github-slugger": "^2.0.0",
     "hast-util-heading-rank": "^3.0.0",
+    "hast-util-to-jsx-runtime": "^2.3.6",
     "html-to-text": "^9.0.5",
     "lodash-es": "^4.17.21",
     "mdast-util-mdxjs-esm": "^2.0.1",
     "medium-zoom": "1.1.0",
+    "nprogress": "^0.2.0",
     "picocolors": "^1.1.1",
     "react": "^19.2.0",
     "react-dom": "^19.2.0",
@@ -84,6 +92,7 @@
     "rehype-external-links": "^3.0.0",
     "rehype-raw": "^7.0.0",
     "remark-gfm": "^4.0.1",
+    "scroll-into-view-if-needed": "^3.1.0",
     "shiki": "^3.12.2",
     "tinyglobby": "^0.2.15",
     "tinypool": "^1.1.1",
@@ -93,15 +102,20 @@
   },
   "devDependencies": {
     "@microsoft/api-extractor": "^7.53.3",
+    "@rsbuild/plugin-sass": "~1.4.0",
+    "@rsbuild/plugin-svgr": "^1.2.2",
     "@rslib/core": "0.16.1",
     "@rspress/config": "workspace:*",
+    "@types/body-scroll-lock": "^3.1.2",
     "@types/hast": "^3.0.4",
     "@types/html-to-text": "^9.0.4",
     "@types/lodash-es": "^4.17.12",
     "@types/mdast": "^4.0.4",
     "@types/node": "^22.8.1",
+    "@types/nprogress": "^0.2.3",
     "@types/react": "^19.2.2",
     "@types/react-dom": "^19.2.2",
+    "@types/web": "^0.0.283",
     "execa": "8.0.1",
     "mdast-util-directive": "^3.1.0",
     "mdast-util-mdx-expression": "^2.0.1",

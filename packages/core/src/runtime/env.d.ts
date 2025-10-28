@@ -18,6 +18,7 @@ declare module 'virtual-page-data' {
   export { pageData, searchIndexHash };
 }
 
+
 declare module 'virtual-global-components' {
   import { ComponentType } from 'react';
 
@@ -28,10 +29,6 @@ declare module 'virtual-global-components' {
 declare module 'virtual-global-styles';
 
 declare module 'virtual-i18n-text';
-
-declare module 'virtual-search-hooks' {
-  export const onSearch: (query: string) => void | Promise<void>;
-}
 
 declare module '*.module.scss' {
   const classes: { [key: string]: string };
@@ -44,5 +41,5 @@ declare module '*.svg' {
 }
 
 declare module '@theme' {
-  export * from '@rspress/theme-default';
+  export * from '#theme';
 }

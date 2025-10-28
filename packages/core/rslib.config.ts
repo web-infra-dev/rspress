@@ -1,29 +1,27 @@
 import path from 'node:path';
 import { pluginReact } from '@rsbuild/plugin-react';
+import { pluginSass } from '@rsbuild/plugin-sass';
+import { pluginSvgr } from '@rsbuild/plugin-svgr';
 import { defineConfig } from '@rslib/core';
 import { pluginPublint } from 'rsbuild-plugin-publint';
 
-function generateEntry(entryPath: string) {
-  const entryName = path
-    .basename(entryPath)
-    .replace(path.extname(entryPath), '');
-  return {
-    dts: { bundle: true },
-    source: {
-      entry: {
-        [entryName]: entryPath,
-      },
-    },
-    format: 'esm',
-    syntax: 'esnext',
-  } as const;
-}
+const COMMON_EXTERNALS = [
+  'virtual-routes',
+  'virtual-site-data',
+  'virtual-global-styles',
+  'virtual-global-components',
+  'virtual-search-hooks',
+  '@rspress/runtime',
+  '@theme',
+  /@theme-assets\//,
+  'virtual-i18n-text',
+  // To be externalized when bundling d.ts.
+  '@types/react',
+];
 
 export default defineConfig({
   plugins: [pluginPublint()],
   lib: [
-    generateEntry('./src/runtime.ts'),
-    generateEntry('./src/theme.ts'),
     {
       format: 'esm',
       syntax: 'es2022',
@@ -35,9 +33,6 @@ export default defineConfig({
     },
     {
       format: 'esm',
-      dts: {
-        bundle: true,
-      },
       syntax: 'es2022',
       source: {
         entry: {
@@ -55,8 +50,10 @@ export default defineConfig({
     },
     {
       format: 'esm',
-      dts: {
-        bundle: true,
+      source: {
+        entry: {
+          index: './src/index.ts',
+        },
       },
       syntax: 'es2022',
       output: {
@@ -68,9 +65,6 @@ export default defineConfig({
     {
       format: 'esm',
       syntax: 'es2022',
-      dts: {
-        bundle: true,
-      },
       output: {
         distPath: {
           root: './dist',
@@ -88,9 +82,6 @@ export default defineConfig({
     {
       format: 'esm',
       syntax: 'es2022',
-      dts: {
-        bundle: true,
-      },
       output: {
         distPath: {
           root: './dist',
@@ -105,9 +96,6 @@ export default defineConfig({
     {
       format: 'esm',
       syntax: 'es2022',
-      dts: {
-        bundle: true,
-      },
       output: {
         target: 'web',
         distPath: {
@@ -116,21 +104,27 @@ export default defineConfig({
       },
       source: {
         entry: {
-          'shiki-transformers':
-            './src/node/mdx/rehypePlugins/transformers/index.ts',
+          'shiki-transformers': './src/shiki-transformers.ts',
+        },
+      },
+    },
+    {
+      format: 'esm',
+      syntax: 'es2022',
+      source: {
+        entry: {
+          runtime: './src/runtime.ts',
         },
       },
     },
     {
       bundle: false,
-      dts: true,
       format: 'esm',
       syntax: 'es2022',
       source: {
         entry: {
           index: './src/runtime/*.{tsx,ts}',
         },
-        tsconfigPath: './src/runtime/tsconfig.json',
       },
       output: {
         target: 'web',
@@ -139,6 +133,41 @@ export default defineConfig({
         },
       },
       plugins: [pluginReact()],
+    },
+    {
+      format: 'esm',
+      bundle: false,
+      dts: true,
+      plugins: [
+        pluginReact(),
+        pluginSvgr({ svgrOptions: { exportType: 'default' } }),
+        pluginSass(),
+      ],
+      source: {
+        define: {
+          __WEBPACK_PUBLIC_PATH__: '__webpack_public_path__',
+        },
+        entry: {
+          index: ['./src/theme/**', '!./src/theme/tsconfig.json'],
+        },
+      },
+      tools: {
+        rspack: {
+          output: {
+            environment: {
+              // For Circular import of "@theme", https://github.com/web-infra-dev/rsbuild/issues/2862
+              const: false,
+            },
+          },
+        },
+      },
+      output: {
+        target: 'web',
+        distPath: {
+          root: './dist/theme',
+        },
+        externals: COMMON_EXTERNALS,
+      },
     },
   ],
 });
