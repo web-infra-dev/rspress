@@ -2,7 +2,7 @@ import type {
   NormalizedSidebarGroup,
   SidebarItem as SidebarItemType,
 } from '@rspress/core';
-import { useActiveMatcher } from '@rspress/runtime';
+import { useActiveMatcher } from '@rspress/core/runtime';
 import { Link, Tag } from '@theme';
 import clsx from 'clsx';
 import type React from 'react';

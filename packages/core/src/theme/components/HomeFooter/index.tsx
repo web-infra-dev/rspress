@@ -1,4 +1,4 @@
-import { useSite } from '@rspress/runtime';
+import { useSite } from '@rspress/core/runtime';
 import { renderHtmlOrText } from '../../logic/utils';
 import './index.scss';
 

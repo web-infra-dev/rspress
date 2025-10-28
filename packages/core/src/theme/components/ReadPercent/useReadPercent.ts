@@ -1,4 +1,4 @@
-import { useWindowSize } from '@rspress/runtime';
+import { useWindowSize } from '@rspress/core/runtime';
 import { useEffect, useMemo, useState } from 'react';
 
 export const useReadPercent = () => {

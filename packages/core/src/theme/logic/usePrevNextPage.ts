@@ -4,7 +4,7 @@ import type {
   SidebarItem,
   SidebarSectionHeader,
 } from '@rspress/core';
-import { isEqualPath, useLocation, useSidebar } from '@rspress/runtime';
+import { isEqualPath, useLocation, useSidebar } from '@rspress/core/runtime';
 
 export function usePrevNextPage(): {
   prevPage: SidebarItem | null;

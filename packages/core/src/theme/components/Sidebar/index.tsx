@@ -5,7 +5,7 @@ import type {
   NormalizedSidebarGroup,
   SidebarData,
 } from '@rspress/core';
-import { useSidebarDynamic } from '@rspress/runtime';
+import { useSidebarDynamic } from '@rspress/core/runtime';
 import { SidebarDivider } from './SidebarDivider';
 import { SidebarGroup } from './SidebarGroup';
 import { SidebarItem } from './SidebarItem';

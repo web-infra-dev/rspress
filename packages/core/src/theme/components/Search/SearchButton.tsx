@@ -1,4 +1,4 @@
-import { useLocaleSiteData } from '@rspress/runtime';
+import { useLocaleSiteData } from '@rspress/core/runtime';
 import SearchSvg from '@theme-assets/search';
 import { useEffect, useState } from 'react';
 import { SvgWrapper } from '../SvgWrapper';

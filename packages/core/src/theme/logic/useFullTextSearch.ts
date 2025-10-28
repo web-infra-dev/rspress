@@ -1,4 +1,4 @@
-import { usePageData } from '@rspress/runtime';
+import { usePageData } from '@rspress/core/runtime';
 import { useEffect, useRef, useState } from 'react';
 import { PageSearcher } from '../components/Search/logic/search';
 import type { MatchResult } from '../components/Search/logic/types';

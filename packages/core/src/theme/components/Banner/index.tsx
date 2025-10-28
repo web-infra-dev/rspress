@@ -32,7 +32,7 @@ export type BannerProps = {
 /**
  * @example
  * // theme/index.tsx
- * import { Layout as BasicLayout, Banner } from '@theme';
+ * import { Layout as BasicLayout, Banner } from '@rspress/core/theme';
  * import { useLang } from '@rspress/core/runtime';
  * const Layout = () => {
       const lang = useLang();
@@ -46,7 +46,7 @@ export type BannerProps = {
                     ? '🚧 Rspress 2.0 document is under development'
                     : '🚧 Rspress 2.0 文档还在开发中'
                 }
-                localStorageKey="rspress-announcement-closed"
+                storageKey="rspress-announcement-closed"
               />
           }
         />

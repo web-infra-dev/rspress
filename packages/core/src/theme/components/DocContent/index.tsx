@@ -1,5 +1,5 @@
 import { MDXProvider } from '@mdx-js/react';
-import { Content, usePage, useSite } from '@rspress/runtime';
+import { Content, usePage, useSite } from '@rspress/core/runtime';
 import { Callout, getCustomMDXComponent } from '@theme';
 import './doc.scss';
 import { FallbackHeading } from './FallbackHeading';

@@ -4,7 +4,7 @@ import type {
   SidebarItem as SidebarItemType,
   SidebarSectionHeader as SidebarSectionHeaderType,
 } from '@rspress/core';
-import { useActiveMatcher } from '@rspress/runtime';
+import { useActiveMatcher } from '@rspress/core/runtime';
 import ArrowRight from '@theme-assets/arrow-right';
 import clsx from 'clsx';
 import type React from 'react';

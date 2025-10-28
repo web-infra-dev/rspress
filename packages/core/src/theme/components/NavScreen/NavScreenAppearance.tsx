@@ -1,4 +1,4 @@
-import { NoSSR, useSite } from '@rspress/runtime';
+import { NoSSR, useSite } from '@rspress/core/runtime';
 import { SwitchAppearance } from '@theme';
 import './NavScreenAppearance.scss';
 

@@ -1,4 +1,4 @@
-import { NoSSR, useSite } from '@rspress/runtime';
+import { NoSSR, useSite } from '@rspress/core/runtime';
 import { SocialLinks, SwitchAppearance } from '@theme';
 import './index.scss';
 import { NavScreenLangs } from './NavScreenLangs';

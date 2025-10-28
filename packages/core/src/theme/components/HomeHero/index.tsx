@@ -1,5 +1,5 @@
 import type { FrontMatterMeta } from '@rspress/core';
-import { normalizeImagePath, useFrontmatter } from '@rspress/runtime';
+import { normalizeImagePath, useFrontmatter } from '@rspress/core/runtime';
 import { Button } from '@theme';
 
 import { renderHtmlOrText } from '../../logic/utils';

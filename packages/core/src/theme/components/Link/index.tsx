@@ -1,4 +1,4 @@
-import { preloadLink } from '@rspress/runtime';
+import { preloadLink } from '@rspress/core/runtime';
 import nprogress from 'nprogress';
 import type React from 'react';
 import type { ComponentProps } from 'react';

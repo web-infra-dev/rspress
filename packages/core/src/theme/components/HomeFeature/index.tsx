@@ -1,5 +1,5 @@
 import type { Feature } from '@rspress/core';
-import { useFrontmatter } from '@rspress/runtime';
+import { useFrontmatter } from '@rspress/core/runtime';
 import type { JSX } from 'react';
 import { renderHtmlOrText } from '../../logic/utils';
 import { useNavigate } from '../Link/useNavigate';

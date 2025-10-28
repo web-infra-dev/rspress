@@ -1,4 +1,4 @@
-import { removeBase, usePageData, withBase } from '@rspress/runtime';
+import { removeBase, usePageData, withBase } from '@rspress/core/runtime';
 import { useEffect } from 'react';
 
 /**

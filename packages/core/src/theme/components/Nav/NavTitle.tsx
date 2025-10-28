@@ -3,7 +3,7 @@ import {
   normalizeImagePath,
   useLocaleSiteData,
   useSite,
-} from '@rspress/runtime';
+} from '@rspress/core/runtime';
 import { Link } from '@theme';
 import { useMemo } from 'react';
 

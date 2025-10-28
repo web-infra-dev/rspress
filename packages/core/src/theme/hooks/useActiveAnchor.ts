@@ -1,5 +1,5 @@
 import type { Header } from '@rspress/core';
-import { useLocation } from '@rspress/runtime';
+import { useLocation } from '@rspress/core/runtime';
 import { useEffect, useState } from 'react';
 
 /**

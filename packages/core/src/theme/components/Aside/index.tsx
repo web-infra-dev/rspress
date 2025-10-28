@@ -1,4 +1,4 @@
-import { useLocaleSiteData, useSite } from '@rspress/runtime';
+import { useLocaleSiteData, useSite } from '@rspress/core/runtime';
 import { Toc, useDynamicToc } from '@theme';
 import { ReadPercent } from '../ReadPercent';
 import './index.scss';

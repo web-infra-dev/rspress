@@ -1,4 +1,4 @@
-import { useLocaleSiteData } from '@rspress/runtime';
+import { useLocaleSiteData } from '@rspress/core/runtime';
 import Github from '@theme-assets/github';
 import Gitlab from '@theme-assets/gitlab';
 import { SvgWrapper } from '../SvgWrapper';

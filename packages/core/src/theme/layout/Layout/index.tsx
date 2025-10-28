@@ -5,7 +5,7 @@ import {
   useLocaleSiteData,
   usePageData,
   useSite,
-} from '@rspress/runtime';
+} from '@rspress/core/runtime';
 import {
   HomeLayout as DefaultHomeLayout,
   NotFoundLayout as DefaultNotFoundLayout,

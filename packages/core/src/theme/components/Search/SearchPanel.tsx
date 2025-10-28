@@ -1,4 +1,4 @@
-import { useLocaleSiteData, usePageData } from '@rspress/runtime';
+import { useLocaleSiteData, usePageData } from '@rspress/core/runtime';
 import CloseSvg from '@theme-assets/close';
 import LoadingSvg from '@theme-assets/loading';
 import SearchSvg from '@theme-assets/search';

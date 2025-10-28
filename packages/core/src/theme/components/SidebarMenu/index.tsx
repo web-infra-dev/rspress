@@ -1,4 +1,4 @@
-import { useLocaleSiteData, useLocation, useSite } from '@rspress/runtime';
+import { useLocaleSiteData, useLocation, useSite } from '@rspress/core/runtime';
 import { SvgWrapper } from '@theme';
 import MenuIcon from '@theme-assets/menu';
 import { forwardRef, useEffect, useRef } from 'react';

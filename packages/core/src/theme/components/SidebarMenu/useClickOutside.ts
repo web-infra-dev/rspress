@@ -12,7 +12,7 @@ function useClickOutside(
 
       for (const r of refs) {
         const { current: el } = r;
-        if (el && el.contains(event.target as Node)) {
+        if (el?.contains(event.target as Node)) {
           return;
         }
       }

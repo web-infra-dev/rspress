@@ -1,4 +1,4 @@
-import { useFrontmatter } from '@rspress/runtime';
+import { useFrontmatter } from '@rspress/core/runtime';
 import { DocContent, Overview, useWatchToc } from '@theme';
 import clsx from 'clsx';
 import { Aside } from '../../components/Aside';

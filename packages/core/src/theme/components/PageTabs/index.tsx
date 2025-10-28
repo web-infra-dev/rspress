@@ -1,4 +1,4 @@
-import { useLocation, useNavigate } from '@rspress/runtime';
+import { useLocation, useNavigate } from '@rspress/core/runtime';
 import clsx from 'clsx';
 import {
   Children,

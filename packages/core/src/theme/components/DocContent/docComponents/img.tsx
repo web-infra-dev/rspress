@@ -1,4 +1,4 @@
-import { normalizeImagePath } from '@rspress/runtime';
+import { normalizeImagePath } from '@rspress/core/runtime';
 import type { ComponentProps } from 'react';
 
 export const Img = (props: ComponentProps<'img'>) => {

@@ -1,4 +1,4 @@
-import { useSite } from '@rspress/runtime';
+import { useSite } from '@rspress/core/runtime';
 import IconWrap from '@theme-assets/wrap';
 import IconWrapped from '@theme-assets/wrapped';
 import clsx from 'clsx';

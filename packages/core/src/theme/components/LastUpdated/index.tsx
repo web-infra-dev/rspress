@@ -1,4 +1,4 @@
-import { useLocaleSiteData, usePage, useSite } from '@rspress/runtime';
+import { useLocaleSiteData, usePage, useSite } from '@rspress/core/runtime';
 import './index.scss';
 
 export function LastUpdated() {

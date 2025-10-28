@@ -6,7 +6,7 @@ import {
   usePage,
   useSite,
   useVersion,
-} from '@rspress/runtime';
+} from '@rspress/core/runtime';
 
 function replaceLang(
   rawUrl: string,

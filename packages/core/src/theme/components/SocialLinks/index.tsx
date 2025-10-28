@@ -1,5 +1,5 @@
 import type { SocialLink } from '@rspress/core';
-import { useSite } from '@rspress/runtime';
+import { useSite } from '@rspress/core/runtime';
 import ArrowDown from '@theme-assets/arrow-down';
 import { SvgWrapper } from '../SvgWrapper';
 import './index.scss';

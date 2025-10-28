@@ -1,4 +1,4 @@
-import { useNav } from '@rspress/runtime';
+import { useNav } from '@rspress/core/runtime';
 import { SocialLinks } from '@theme';
 import { clearAllBodyScrollLocks, disableBodyScroll } from 'body-scroll-lock';
 import clsx from 'clsx';

@@ -1,4 +1,4 @@
-import { useLocaleSiteData } from '@rspress/runtime';
+import { useLocaleSiteData } from '@rspress/core/runtime';
 import Empty from '@theme-assets/empty';
 import { SvgWrapper } from '../SvgWrapper';
 import './NoSearchResult.scss';

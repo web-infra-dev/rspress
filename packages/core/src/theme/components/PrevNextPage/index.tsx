@@ -1,4 +1,4 @@
-import { useLocaleSiteData } from '@rspress/runtime';
+import { useLocaleSiteData } from '@rspress/core/runtime';
 import { Link, renderInlineMarkdown, usePrevNextPage } from '@theme';
 import ArrowRight from '@theme-assets/arrow-right';
 import clsx from 'clsx';
