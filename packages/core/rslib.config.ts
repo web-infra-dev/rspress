@@ -62,7 +62,6 @@ export default defineConfig({
         },
       },
     },
-
     {
       format: 'esm',
       syntax: 'es2022',
