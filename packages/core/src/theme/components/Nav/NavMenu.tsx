@@ -4,8 +4,7 @@ import type {
   NavItemWithLink,
   NavItemWithLinkAndChildren,
 } from '@rspress/core';
-import { matchNavbar } from '@rspress/core/runtime';
-import { useLocation } from '@rspress/runtime';
+import { matchNavbar, useLocation } from '@rspress/core/runtime';
 import type { HoverGroupProps } from '@theme';
 import { Link, Tag, useHoverGroup } from '@theme';
 import ArrowDown from '@theme-assets/arrow-down';

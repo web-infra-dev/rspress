@@ -9,7 +9,7 @@ import {
   useLocaleSiteData,
   usePageData,
   useSidebar,
-} from '@rspress/runtime';
+} from '@rspress/core/runtime';
 import { useEffect, useMemo, useRef, useState } from 'react';
 import { FallbackHeading } from '../DocContent/FallbackHeading';
 import {

@@ -1,10 +1,10 @@
-import {
-  type NormalizedSidebarGroup,
-  normalizeHref,
-  type SidebarDivider,
-  type SidebarItem,
-  type SidebarSectionHeader,
+import type {
+  NormalizedSidebarGroup,
+  SidebarDivider,
+  SidebarItem,
+  SidebarSectionHeader,
 } from '@rspress/core';
+import { normalizeHref } from '@rspress/core/runtime';
 import { isSidebarDivider, isSidebarSectionHeader } from '../Sidebar/utils';
 
 function removeIndex(link: string) {

@@ -45,9 +45,6 @@ export default defineConfig({
     },
     {
       format: 'esm',
-      // dts: {
-      //   bundle: true,
-      // },
       syntax: 'es2022',
       source: {
         entry: {
@@ -70,9 +67,6 @@ export default defineConfig({
           index: './src/index.ts',
         },
       },
-      // dts: {
-      //   bundle: true,
-      // },
       syntax: 'es2022',
       output: {
         distPath: {
@@ -83,9 +77,6 @@ export default defineConfig({
     {
       format: 'esm',
       syntax: 'es2022',
-      // dts: {
-      //   bundle: true,
-      // },
       output: {
         distPath: {
           root: './dist',
@@ -103,9 +94,6 @@ export default defineConfig({
     {
       format: 'esm',
       syntax: 'es2022',
-      // dts: {
-      //   bundle: true,
-      // },
       output: {
         distPath: {
           root: './dist',
@@ -120,9 +108,6 @@ export default defineConfig({
     {
       format: 'esm',
       syntax: 'es2022',
-      // dts: {
-      //   bundle: true,
-      // },
       output: {
         target: 'web',
         distPath: {
