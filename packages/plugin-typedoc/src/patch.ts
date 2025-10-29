@@ -70,9 +70,16 @@ async function generateMetaJson(absoluteApiDir: string) {
 
 export async function patchGeneratedApiDocs(absoluteApiDir: string) {
   await patchLinks(absoluteApiDir);
-  await fs.rename(
-    path.join(absoluteApiDir, 'README.md'),
-    path.join(absoluteApiDir, 'index.md'),
-  );
+  // In newer versions of typedoc-plugin-markdown with entryFileName='index',
+  // index.md is generated directly. Only rename if README.md exists.
+  const readmePath = path.join(absoluteApiDir, 'README.md');
+  const indexPath = path.join(absoluteApiDir, 'index.md');
+  try {
+    await fs.access(readmePath);
+    // README.md exists, rename it to index.md
+    await fs.rename(readmePath, indexPath);
+  } catch {
+    // README.md doesn't exist, index.md should already exist
+  }
   await generateMetaJson(absoluteApiDir);
 }
