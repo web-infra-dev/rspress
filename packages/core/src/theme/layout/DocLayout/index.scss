@@ -20,6 +20,21 @@
   --rp-content-max-width: 1000px;
 }
 
+:root {
+  --rp-sidebar-margin-left: calc(
+    max(
+      0px,
+      calc((100vw - var(--rp-content-max-width)) / 2 - var(--rp-sidebar-width))
+    )
+  );
+  --rp-outline-margin-right: calc(
+    max(
+      0px,
+      calc((100vw - var(--rp-content-max-width)) / 2 - var(--rp-outline-width))
+    )
+  );
+}
+
 @media (min-width: 1280px) {
   html:root {
     --rp-sidebar-menu-height: 0px;
@@ -128,25 +143,17 @@
     flex: 1; // CSS footgun: ensure right aside width is fixed
   }
   .rp-doc-layout__sidebar {
-    --rp-sidebar-margin-left: calc(
-      max(
-        0px,
-        calc(
-          (100vw - var(--rp-content-max-width)) / 2 - var(--rp-sidebar-width)
-        )
-      )
-    );
+    margin-left: var(--rp-sidebar-margin-left);
+  }
+  .rp-doc-layout__sidebar-placeholder {
+    width: var(--rp-outline-width);
     margin-left: var(--rp-sidebar-margin-left);
   }
   .rp-doc-layout__outline {
-    --rp-outline-margin-right: calc(
-      max(
-        0px,
-        calc(
-          (100vw - var(--rp-content-max-width)) / 2 - var(--rp-outline-width)
-        )
-      )
-    );
+    margin-right: var(--rp-outline-margin-right);
+  }
+  .rp-doc-layout__outline-placeholder {
+    width: var(--rp-outline-width);
     margin-right: var(--rp-outline-margin-right);
   }
 }

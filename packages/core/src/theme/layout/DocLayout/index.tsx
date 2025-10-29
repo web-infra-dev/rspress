@@ -5,7 +5,6 @@ import { DocFooter } from '../../components/DocFooter';
 import { Outline } from '../../components/Outline';
 import { Sidebar } from '../../components/Sidebar';
 import { useSidebarMenu } from '../../components/SidebarMenu/useSidebarMenu';
-import { useUISwitch } from '../Layout/useUISwitch';
 import './index.scss';
 
 export interface DocLayoutProps {
@@ -42,6 +41,12 @@ export function DocLayout(props: DocLayoutProps) {
   const isOverviewPage = frontmatter?.overview ?? false;
 
   const {
+    sidebar: showSidebar = true,
+    outline: showOutline = true,
+    footer: showDocFooter = true,
+  } = frontmatter;
+
+  const {
     isOutlineOpen,
     isSidebarOpen,
     sidebarMenu,
@@ -51,15 +56,13 @@ export function DocLayout(props: DocLayoutProps) {
 
   const rspressDocRef = useWatchToc();
 
-  const uiSwitch = useUISwitch();
-
   return (
     <>
       <div className="rp-doc-layout__menu">{sidebarMenu}</div>
       {beforeDoc}
       <div className="rp-doc-layout__container">
         {/* Sidebar */}
-        {uiSwitch?.showSidebar && (
+        {showSidebar ? (
           <aside
             className={clsx(
               'rp-doc-layout__sidebar',
@@ -72,6 +75,8 @@ export function DocLayout(props: DocLayoutProps) {
             <Sidebar />
             {afterSidebar}
           </aside>
+        ) : (
+          <aside className="rp-doc-layout__sidebar-placeholder"></aside>
         )}
 
         {/* Main document content */}
@@ -94,14 +99,14 @@ export function DocLayout(props: DocLayoutProps) {
               </div>
               {afterDocContent}
               {beforeDocFooter}
-              {uiSwitch?.showDocFooter && <DocFooter />}
+              {showDocFooter && <DocFooter />}
               {afterDocFooter}
             </main>
           </div>
         )}
 
         {/* Right outline */}
-        {uiSwitch?.showOutline && !isOverviewPage && (
+        {showOutline && !isOverviewPage ? (
           <aside
             className={clsx(
               'rp-doc-layout__outline',
@@ -114,6 +119,8 @@ export function DocLayout(props: DocLayoutProps) {
             <Outline />
             {afterOutline}
           </aside>
+        ) : (
+          <aside className="rp-doc-layout__outline-placeholder"></aside>
         )}
       </div>
 

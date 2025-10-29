@@ -110,13 +110,15 @@ export const SidebarMenu = forwardRef(
               <span>{scrolledHeader?.text ?? outlineTitle}</span>
               <ReadPercent size={14} strokeWidth={2} />
               {/* TODO: discussion */}
-              <SvgWrapper
-                icon={ArrowRight}
-                style={{
-                  transform: isOutlineOpen ? 'rotate(90deg)' : 'rotate(0deg)',
-                  transition: 'transform 0.2s ease-out',
-                }}
-              />
+              {headers.length !== 0 && (
+                <SvgWrapper
+                  icon={ArrowRight}
+                  style={{
+                    transform: isOutlineOpen ? 'rotate(90deg)' : 'rotate(0deg)',
+                    transition: 'transform 0.2s ease-out',
+                  }}
+                />
+              )}
             </button>
           )}
         </div>

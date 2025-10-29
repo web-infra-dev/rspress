@@ -20,7 +20,6 @@ import { useSetup } from '../../logic/sideEffects';
 import { TabDataContext } from '../../logic/TabDataContext';
 import { useRedirect4FirstVisit } from '../../logic/useRedirect4FirstVisit';
 import type { HomeLayoutProps } from '../HomeLayout';
-import { UISwitchContext, useCreateUISwitch } from './useUISwitch';
 
 export type LayoutProps = {
   top?: React.ReactNode;
@@ -181,8 +180,6 @@ export function Layout(props: LayoutProps) {
     site.description ||
     localesData.description;
 
-  const uiSwitch = useCreateUISwitch();
-
   // Use doc layout by default
   const getContentLayout = () => {
     switch (pageType) {
@@ -201,33 +198,35 @@ export function Layout(props: LayoutProps) {
     }
   };
 
+  const {
+    frontmatter: { navbar: showNavbar = true },
+  } = useFrontmatter();
+
   return (
     <TabDataContext.Provider value={{ tabData, setTabData }}>
-      <UISwitchContext.Provider value={uiSwitch}>
-        <HeadTags
-          lang={currentLang}
-          title={title}
-          description={description}
-          frontmatter={frontmatter}
-        />
+      <HeadTags
+        lang={currentLang}
+        title={title}
+        description={description}
+        frontmatter={frontmatter}
+      />
 
-        {top}
-        {pageType !== 'blank' && uiSwitch.showNavbar && (
-          <>
-            {beforeNav}
-            <Nav
-              beforeNavTitle={beforeNavTitle}
-              afterNavTitle={afterNavTitle}
-              navTitle={navTitle}
-              afterNavMenu={afterNavMenu}
-            />
-            {afterNav}
-          </>
-        )}
+      {top}
+      {pageType !== 'blank' && showNavbar && (
+        <>
+          {beforeNav}
+          <Nav
+            beforeNavTitle={beforeNavTitle}
+            afterNavTitle={afterNavTitle}
+            navTitle={navTitle}
+            afterNavMenu={afterNavMenu}
+          />
+          {afterNav}
+        </>
+      )}
 
-        {getContentLayout()}
-        {bottom}
-      </UISwitchContext.Provider>
+      {getContentLayout()}
+      {bottom}
     </TabDataContext.Provider>
   );
 }
