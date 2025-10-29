@@ -39,72 +39,71 @@ function HomeHero({ beforeHeroActions, afterHeroActions }: HomeHeroProps) {
     <div
       className={clsx('rp-home-hero', { 'rp-home-hero--no-image': !hasImage })}
     >
-      {hero.badge && <div className="rp-home-hero__badge">{hero.badge}</div>}
       <div className="rp-home-hero__container">
-        <div className="rp-home-hero__text-container">
-          <div className="rp-home-hero__content">
-            <div className="rp-home-hero__title">
-              <span
-                className="rp-home-hero__title-brand"
-                {...renderHtmlOrText(hero.name)}
-              ></span>
-            </div>
-
-            {multiHeroText.length !== 0 &&
-              multiHeroText.map(heroText => (
-                <div
-                  key={heroText}
-                  className="rp-home-hero__subtitle"
-                  {...renderHtmlOrText(heroText)}
-                ></div>
-              ))}
+        {hero.badge && <div className="rp-home-hero__badge">{hero.badge}</div>}
+        <div className="rp-home-hero__content">
+          <div className="rp-home-hero__title">
+            <span
+              className="rp-home-hero__title-brand"
+              {...renderHtmlOrText(hero.name)}
+            ></span>
           </div>
-          <p
-            className="rp-home-hero__tagline"
-            {...renderHtmlOrText(hero.tagline)}
-          ></p>
+
+          {multiHeroText.length !== 0 &&
+            multiHeroText.map(heroText => (
+              <div
+                key={heroText}
+                className="rp-home-hero__subtitle"
+                {...renderHtmlOrText(heroText)}
+              ></div>
+            ))}
         </div>
+        <p
+          className="rp-home-hero__tagline"
+          {...renderHtmlOrText(hero.tagline)}
+        ></p>
 
-        {hasImage ? (
-          <div className="rp-home-hero__image">
-            <img
-              src={normalizeImagePath(imageSrc.light)}
-              alt={hero.image?.alt}
-              srcSet={normalizeSrcsetAndSizes(hero.image?.srcset)}
-              sizes={normalizeSrcsetAndSizes(hero.image?.sizes)}
-              width={375}
-              height={375}
-              className="rp-home-hero__image-img rp-home-hero__image-img--light"
-            />
-            <img
-              src={normalizeImagePath(imageSrc.dark)}
-              alt={hero.image?.alt}
-              srcSet={normalizeSrcsetAndSizes(hero.image?.srcset)}
-              sizes={normalizeSrcsetAndSizes(hero.image?.sizes)}
-              width={375}
-              height={375}
-              className="rp-home-hero__image-img rp-home-hero__image-img--dark"
-            />
+        <>
+          {beforeHeroActions}
+          <div className="rp-home-hero__actions">
+            {hero.actions?.map(action => {
+              return (
+                <Button
+                  type="a"
+                  key={action.link}
+                  href={action.link}
+                  theme={action.theme}
+                  className="rp-home-hero__action"
+                  {...renderHtmlOrText(action.text)}
+                />
+              );
+            })}
           </div>
-        ) : null}
+          {afterHeroActions}
+        </>
       </div>
-
-      {beforeHeroActions}
-      <div className="rp-home-hero__actions">
-        {hero.actions?.map(action => {
-          return (
-            <div className="rp-home-hero__action" key={action.link}>
-              <Button
-                type="a"
-                href={action.link}
-                theme={action.theme}
-                {...renderHtmlOrText(action.text)}
-              />
-            </div>
-          );
-        })}
-      </div>
-      {afterHeroActions}
+      {hasImage ? (
+        <div className="rp-home-hero__image">
+          <img
+            src={normalizeImagePath(imageSrc.light)}
+            alt={hero.image?.alt}
+            srcSet={normalizeSrcsetAndSizes(hero.image?.srcset)}
+            sizes={normalizeSrcsetAndSizes(hero.image?.sizes)}
+            width={375}
+            height={375}
+            className="rp-home-hero__image-img rp-home-hero__image-img--light"
+          />
+          <img
+            src={normalizeImagePath(imageSrc.dark)}
+            alt={hero.image?.alt}
+            srcSet={normalizeSrcsetAndSizes(hero.image?.srcset)}
+            sizes={normalizeSrcsetAndSizes(hero.image?.sizes)}
+            width={375}
+            height={375}
+            className="rp-home-hero__image-img rp-home-hero__image-img--dark"
+          />
+        </div>
+      ) : null}
     </div>
   );
 }
