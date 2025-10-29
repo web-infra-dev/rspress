@@ -117,7 +117,16 @@
       margin-top: 1.5rem; // 24px
       margin-bottom: 1rem; // 16px
     }
-
+    &:where(h5) {
+      font-size: 1.125rem; // 18px
+      margin-top: 1.25rem; // 20px
+      margin-bottom: 0.75rem; // 12px
+    }
+    &:where(h6) {
+      font-size: 1rem; // 16px
+      margin-top: 1rem; // 16px
+      margin-bottom: 0.5rem; // 8px
+    }
     /* #endregion */
 
     /* blockquote, summary */
