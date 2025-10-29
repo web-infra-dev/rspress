@@ -1,5 +1,5 @@
 {
-  "name": "@rspress-fixture/rspress-ssg-fail-strict",
+  "name": "@rspress-fixture/ssg-fail-strict",
   "version": "1.0.0",
   "private": true,
   "scripts": {

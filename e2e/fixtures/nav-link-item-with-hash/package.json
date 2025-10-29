@@ -1,5 +1,5 @@
 {
-  "name": "@rspress-fixture/rspress-nav-with-hash",
+  "name": "@rspress-fixture/nav-link-item-with-hash",
   "version": "1.0.0",
   "private": true,
   "scripts": {

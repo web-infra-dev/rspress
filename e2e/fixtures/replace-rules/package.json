@@ -1,5 +1,5 @@
 {
-  "name": "@rspress-fixture/rspress-replace-rules",
+  "name": "@rspress-fixture/replace-rules",
   "version": "1.0.0",
   "private": true,
   "scripts": {

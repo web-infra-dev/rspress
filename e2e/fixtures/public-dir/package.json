@@ -1,5 +1,5 @@
 {
-  "name": "@rspress-fixture/rspress-doc-public-dir",
+  "name": "@rspress-fixture/public-dir",
   "version": "1.0.0",
   "private": true,
   "scripts": {

@@ -1,5 +1,5 @@
 {
-  "name": "@rspress-fixture/rspress-no-config-root",
+  "name": "@rspress-fixture/no-config-root",
   "version": "1.0.0",
   "private": true,
   "scripts": {
