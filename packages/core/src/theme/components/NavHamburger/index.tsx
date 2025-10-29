@@ -30,7 +30,7 @@ export function NavHamburger() {
 
   return (
     <>
-      {typeof window !== 'undefined' &&
+      {isScreenOpen &&
         createPortal(
           <NavScreen isScreenOpen={isScreenOpen} toggleScreen={toggleScreen} />,
           document.getElementById('__rspress_modal_container')!,
