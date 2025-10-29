@@ -122,13 +122,14 @@ export function SuggestItem({
     >
       <Link
         href={suggestion.link}
+        className="rp-suggest-item__link"
         onClick={e => {
           closeSearch();
           e.stopPropagation();
         }}
       >
         <div className="rp-suggest-item__container">
-          <div>
+          <div className="rp-suggest-item__icon">
             <SvgWrapper icon={HitIcon} />
           </div>
           <div className="rp-suggest-item__content">
