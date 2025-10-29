@@ -39,11 +39,9 @@
   }
 
   &__image {
-    // margin-top: 0;
     align-self: center;
 
     display: flex;
-    // min-width: 350px;
     flex: 1;
     max-width: 50vw;
   }
@@ -148,6 +146,13 @@
 
   &__action {
     display: flex;
+  }
+}
+
+.rp-home-hero--no-image {
+  .rp-home-hero__container {
+    align-items: center;
+    text-align: center;
   }
 }
 

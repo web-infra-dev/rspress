@@ -6,13 +6,10 @@
   font-weight: 700;
   white-space: nowrap;
   height: 48px;
-
-  &:active {
-    transition:
-      color 0.1s,
-      border-color 0.1s,
-      background-color 0.1s;
-  }
+  transition:
+    color 0.1s,
+    border-color 0.1s,
+    background-color 0.1s;
 
   &--medium {
     border-radius: var(--rp-radius);
@@ -46,13 +43,6 @@
       #a673ff 100%
     );
 
-    &:hover,
-    &:active {
-      opacity: 1;
-      color: #fff;
-      transition: all 0.3s ease;
-    }
-
     &:hover {
       opacity: 0.8;
     }
@@ -68,12 +58,6 @@
       background-color: var(--rp-c-bg-mute);
       border-color: #484848;
       color: var(--rp-c-text-1);
-    }
-
-    &:active {
-      border: 1px solid var(--rp-c-gray-light-3);
-      color: var(--rp-c-text-0);
-      transition: all 0.3s ease;
     }
 
     &:hover {
