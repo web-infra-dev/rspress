@@ -9,7 +9,7 @@ export function ScrollToTop() {
   };
 
   return (
-    <button className="rp-aside__scroll-to-top" onClick={scrollToTop}>
+    <button className="rp-outline__scroll-to-top" onClick={scrollToTop}>
       <svg
         width="16"
         height="16"

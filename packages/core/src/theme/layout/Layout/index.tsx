@@ -20,19 +20,11 @@ import { useSetup } from '../../logic/sideEffects';
 import { TabDataContext } from '../../logic/TabDataContext';
 import { useRedirect4FirstVisit } from '../../logic/useRedirect4FirstVisit';
 import type { HomeLayoutProps } from '../HomeLayout';
-import {
-  UISwitchContext,
-  type UISwitchResult,
-  useCreateUISwitch,
-} from './useUISwitch';
+import { UISwitchContext, useCreateUISwitch } from './useUISwitch';
 
 export type LayoutProps = {
   top?: React.ReactNode;
   bottom?: React.ReactNode;
-  /**
-   * Control whether or not to display the navbar, sidebar, outline and footer
-   */
-  uiSwitch?: Partial<UISwitchResult>;
   HomeLayout?: React.FC<HomeLayoutProps>;
   NotFoundLayout?: React.FC<any>;
   beforeNav?: React.ReactNode;
@@ -189,14 +181,7 @@ export function Layout(props: LayoutProps) {
     site.description ||
     localesData.description;
 
-  const uiSwitchResult = useCreateUISwitch();
-
-  // Control whether or not to display the navbar, sidebar, outline and footer
-  // `props.uiSwitch` has higher priority and allows user to override the default value
-  const uiSwitch = {
-    ...uiSwitchResult,
-    ...props.uiSwitch,
-  };
+  const uiSwitch = useCreateUISwitch();
 
   // Use doc layout by default
   const getContentLayout = () => {

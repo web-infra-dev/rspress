@@ -335,14 +335,17 @@ export interface FrontMatterMeta {
   pageType?: PageType;
   features?: Feature[];
   hero?: Hero;
+
+  // ui
+  navbar?: boolean;
   sidebar?: boolean;
   outline?: boolean;
-  lineNumbers?: boolean;
+  footer?: boolean;
+
   overviewHeaders?: number[];
   titleSuffix?: string;
   head?: [string, Record<string, string>][];
   context?: string;
-  footer?: boolean;
   [key: string]: unknown;
 }
 

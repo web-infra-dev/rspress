@@ -28,7 +28,7 @@ export const TocItem = ({
         inline: 'center',
         boundary: element => {
           const isBoundary =
-            element.classList.contains('rp-doc-layout__aside') ||
+            element.classList.contains('rp-doc-layout__outline') ||
             element.classList.contains('rspress-doc');
           return !isBoundary;
         },
@@ -49,7 +49,7 @@ export const TocItem = ({
       }}
     >
       <span
-        className="rp-aside__toc-item__text"
+        className="rp-outline__toc-item__text"
         {...renderInlineMarkdown(header.text)}
       ></span>
     </Link>

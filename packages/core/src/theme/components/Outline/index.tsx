@@ -4,7 +4,7 @@ import { ReadPercent } from '../ReadPercent';
 import './index.scss';
 import { ScrollToTop } from './ScrollToTop';
 
-export function Aside() {
+export function Outline() {
   const localesData = useLocaleSiteData();
   const {
     site: { themeConfig },
@@ -19,16 +19,16 @@ export function Aside() {
   }
 
   return (
-    <div className="rp-aside">
-      <div className="rp-aside__title">
+    <div className="rp-outline">
+      <div className="rp-outline__title">
         {outlineTitle}
         <ReadPercent size={14} strokeWidth={2} />
       </div>
-      <nav className="rp-aside__toc rp-scrollbar">
+      <nav className="rp-outline__toc rp-scrollbar">
         <Toc />
       </nav>
-      <div className="rp-aside__divider" />
-      <div className="rp-aside__bottom">
+      <div className="rp-outline__divider" />
+      <div className="rp-outline__bottom">
         <ScrollToTop />
       </div>
     </div>

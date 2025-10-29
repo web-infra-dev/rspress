@@ -13,7 +13,7 @@
   --rp-sidebar-width: 320px;
   --rp-sidebar-menu-height: 46px;
   --rp-sidebar-padding: 20px;
-  --rp-aside-width: 268px;
+  --rp-outline-width: 268px;
   --rp-content-padding-x: 80px;
   --rp-content-padding-y: 48px;
 
@@ -87,8 +87,8 @@
     padding: var(--rp-content-padding-y) var(--rp-content-padding-x);
   }
 
-  &__aside {
-    width: var(--rp-aside-width);
+  &__outline {
+    width: var(--rp-outline-width);
 
     position: sticky;
     top: calc(var(--rp-nav-height) + var(--rp-banner-height, 0px));
@@ -138,14 +138,16 @@
     );
     margin-left: var(--rp-sidebar-margin-left);
   }
-  .rp-doc-layout__aside {
-    --rp-aside-margin-right: calc(
+  .rp-doc-layout__outline {
+    --rp-outline-margin-right: calc(
       max(
         0px,
-        calc((100vw - var(--rp-content-max-width)) / 2 - var(--rp-aside-width))
+        calc(
+          (100vw - var(--rp-content-max-width)) / 2 - var(--rp-outline-width)
+        )
       )
     );
-    margin-right: var(--rp-aside-margin-right);
+    margin-right: var(--rp-outline-margin-right);
   }
 }
 
@@ -155,7 +157,7 @@
     --rp-content-padding-y: 48px;
   }
   .rp-doc-layout {
-    &__aside {
+    &__outline {
       position: fixed;
       inset-inline-end: 0;
       // margin-top: var(--rp-sidebar-menu-height);

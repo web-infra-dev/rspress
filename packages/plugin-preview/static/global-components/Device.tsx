@@ -39,9 +39,9 @@ export default () => {
   useEffect(() => {
     const root = document.querySelector(':root');
     if (root) {
-      const defaultAsideWidth =
-        getComputedStyle(root).getPropertyValue('--rp-aside-width');
-      setAsideWidth(defaultAsideWidth);
+      const defaultOutlineWidth =
+        getComputedStyle(root).getPropertyValue('--rp-outline-width');
+      setAsideWidth(defaultOutlineWidth);
     }
   }, []);
 
@@ -64,10 +64,10 @@ export default () => {
       } else {
         node?.removeAttribute('style');
       }
-      style.setProperty('--rp-aside-width', '0px');
+      style.setProperty('--rp-outline-width', '0px');
     } else {
       node?.removeAttribute('style');
-      style.setProperty('--rp-aside-width', asideWidth);
+      style.setProperty('--rp-outline-width', asideWidth);
     }
   }, [haveDemos, asideWidth, innerWidth]);
 

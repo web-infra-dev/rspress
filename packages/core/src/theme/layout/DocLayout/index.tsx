@@ -1,8 +1,8 @@
 import { useFrontmatter } from '@rspress/core/runtime';
 import { DocContent, Overview, useWatchToc } from '@theme';
 import clsx from 'clsx';
-import { Aside } from '../../components/Aside';
 import { DocFooter } from '../../components/DocFooter';
+import { Outline } from '../../components/Outline';
 import { Sidebar } from '../../components/Sidebar';
 import { useSidebarMenu } from '../../components/SidebarMenu/useSidebarMenu';
 import { useUISwitch } from '../Layout/useUISwitch';
@@ -42,7 +42,7 @@ export function DocLayout(props: DocLayoutProps) {
   const isOverviewPage = frontmatter?.overview ?? false;
 
   const {
-    isAsideOpen,
+    isOutlineOpen,
     isSidebarOpen,
     sidebarMenu,
     asideLayoutRef,
@@ -100,18 +100,18 @@ export function DocLayout(props: DocLayoutProps) {
           </div>
         )}
 
-        {/* Right aside */}
-        {uiSwitch?.showAside && !isOverviewPage && (
+        {/* Right outline */}
+        {uiSwitch?.showOutline && !isOverviewPage && (
           <aside
             className={clsx(
-              'rp-doc-layout__aside',
-              isAsideOpen && 'rp-doc-layout__aside--open',
+              'rp-doc-layout__outline',
+              isOutlineOpen && 'rp-doc-layout__outline--open',
               'rp-scrollbar',
             )}
             ref={asideLayoutRef}
           >
             {beforeOutline}
-            <Aside />
+            <Outline />
             {afterOutline}
           </aside>
         )}
