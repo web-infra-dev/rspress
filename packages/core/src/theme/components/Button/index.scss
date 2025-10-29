@@ -6,78 +6,63 @@
   font-weight: 700;
   white-space: nowrap;
   height: 48px;
-}
-
-.rp-button:active {
   transition:
     color 0.1s,
     border-color 0.1s,
     background-color 0.1s;
-}
 
-.rp-button--medium {
-  border-radius: var(--rp-radius);
-  padding: 0 20px;
-  line-height: 38px;
-  height: 38px;
-  font-size: 14px;
-}
-
-.rp-button--big {
-  border-radius: var(--rp-radius-large);
-  font-size: 16px;
-  min-width: 142px;
-}
-
-.rp-button--brand,
-.rp-button--brand:hover,
-.rp-button--brand:active {
-  opacity: 1;
-  color: #fff;
-  transition: all 0.3s ease;
-}
-
-.rp-button--brand {
-  background: linear-gradient(
-    275deg,
-    var(--rp-c-brand-dark) 3%,
-    var(--rp-c-brand-light) 97%
-  );
-}
-
-.rp-button--brand:hover {
-  background-color: var(--rp-c-brand-light);
-  opacity: 0.8;
-}
-
-.rp-button--alt,
-.rp-button--alt:hover,
-.rp-button--alt:active {
-  border: 1px solid var(--rp-c-gray-light-3);
-  color: var(--rp-c-text-1);
-  background-color: var(--rp-c-gray-light-5);
-  transition: all 0.3s ease;
-}
-
-.dark .rp-button--alt {
-  background-color: var(--rp-c-bg-mute);
-  border-color: #484848;
-  color: var(--rp-c-text-1);
-}
-
-.rp-button--alt:hover {
-  background-color: var(--rp-c-gray-light-4);
-}
-
-.dark .rp-button--alt:hover {
-  background-color: #484848;
-}
-
-@media (max-width: 768px) {
-  .rp-button--big {
+  &--medium {
+    border-radius: var(--rp-radius);
+    padding: 0 20px;
+    line-height: 38px;
+    height: 38px;
     font-size: 14px;
-    min-width: 100px;
-    height: 42px;
-    line-height: 42px;
+  }
+
+  &--big {
+    border-radius: var(--rp-radius-large);
+    font-size: 16px;
+    min-width: 142px;
+
+    @media (max-width: 768px) {
+      font-size: 14px;
+      min-width: 100px;
+      height: 42px;
+      line-height: 42px;
+    }
+  }
+
+  &--brand {
+    opacity: 1;
+    color: #fff;
+    transition: all 0.3s ease;
+    background: linear-gradient(
+      90deg,
+      var(--rp-c-brand-dark) 0%,
+      var(--rp-c-brand-dark) 30%,
+      #a673ff 100%
+    );
+
+    &:hover {
+      opacity: 0.8;
+    }
+  }
+
+  &--alt {
+    border: 1px solid var(--rp-c-gray-light-3);
+    color: var(--rp-c-text-0);
+    background-color: var(--rp-c-bg);
+    transition: all 0.3s ease;
+
+    .dark & {
+      background-color: var(--rp-c-bg-mute);
+      border-color: #484848;
+      color: var(--rp-c-text-1);
+    }
+
+    &:hover {
+      opacity: 0.8;
+      background-color: var(--rp-c-bg-mute);
+    }
   }
 }
