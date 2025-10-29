@@ -5,7 +5,7 @@ import { useClickOutside } from './useClickOutside';
 
 function useSidebarMenu() {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
-  const [isAsideOpen, setIsAsideOpen] = useState(false);
+  const [isOutlineOpen, setIsOutlineOpen] = useState(false);
 
   const sidebarMenuRef = useRef<HTMLDivElement>(null);
   const sidebarLayoutRef = useRef<HTMLDivElement>(null);
@@ -28,7 +28,7 @@ function useSidebarMenu() {
     setIsSidebarOpen(false);
   });
   useClickOutside([sidebarMenuRef, asideLayoutRef], () => {
-    setIsAsideOpen(false);
+    setIsOutlineOpen(false);
   });
 
   const sidebarMenu = useMemo(() => {
@@ -36,16 +36,16 @@ function useSidebarMenu() {
       <SidebarMenu
         isSidebarOpen={isSidebarOpen}
         onIsSidebarOpenChange={setIsSidebarOpen}
-        isAsideOpen={isAsideOpen}
-        onIsAsideOpenChange={setIsAsideOpen}
+        isOutlineOpen={isOutlineOpen}
+        onIsOutlineOpenChange={setIsOutlineOpen}
         ref={sidebarMenuRef}
       />
     );
-  }, [isAsideOpen, isSidebarOpen, setIsAsideOpen, setIsSidebarOpen]);
+  }, [isOutlineOpen, isSidebarOpen, setIsOutlineOpen, setIsSidebarOpen]);
 
   return {
     sidebarMenu,
-    isAsideOpen,
+    isOutlineOpen,
     isSidebarOpen,
     sidebarLayoutRef,
     asideLayoutRef,

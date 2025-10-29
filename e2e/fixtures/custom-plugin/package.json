@@ -1,5 +1,5 @@
 {
-  "name": "@rspress-fixture/doc-plugin",
+  "name": "@rspress-fixture/custom-plugin",
   "version": "1.0.0",
   "private": true,
   "scripts": {

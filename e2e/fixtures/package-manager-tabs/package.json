@@ -1,5 +1,5 @@
 {
-  "name": "@rspress-fixture/rspress-package-manager-tabs",
+  "name": "@rspress-fixture/package-manager-tabs",
   "version": "1.0.0",
   "private": true,
   "scripts": {

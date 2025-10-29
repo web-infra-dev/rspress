@@ -26,7 +26,7 @@ test.describe('dynamic toc', async () => {
     await expect(heading).toContainText('Term');
 
     const tocItem = page
-      .locator('.rp-toc-item .rp-aside__toc-item__text')
+      .locator('.rp-toc-item .rp-outline__toc-item__text')
       .first();
     await expect(tocItem).toHaveText('Term');
 

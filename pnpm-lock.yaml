@@ -207,6 +207,16 @@ importers:
         specifier: ^22.8.1
         version: 22.10.2
 
+  e2e/fixtures/custom-layout:
+    dependencies:
+      '@rspress/core':
+        specifier: workspace:*
+        version: link:../../../packages/core
+    devDependencies:
+      '@types/node':
+        specifier: ^22.8.1
+        version: 22.10.2
+
   e2e/fixtures/custom-plugin:
     dependencies:
       '@rspress/core':
@@ -1006,7 +1016,7 @@ importers:
         version: 22.10.2
       rsbuild-plugin-publint:
         specifier: ^0.3.3
-        version: 0.3.3(@rsbuild/core@1.5.17)
+        version: 0.3.3(@rsbuild/core@1.6.0-beta.1)
       typescript:
         specifier: ^5.8.2
         version: 5.8.2

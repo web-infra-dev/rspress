@@ -192,7 +192,7 @@ test.describe('Inline markdown test', async () => {
       waitUntil: 'networkidle',
     });
 
-    const asideItems = page.locator('.rp-aside__toc-item__text');
+    const asideItems = page.locator('.rp-outline__toc-item__text');
     await expect(asideItems).toHaveCount(9);
 
     const asideTexts = (await asideItems.allTextContents()).map(text =>

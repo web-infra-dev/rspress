@@ -1,5 +1,5 @@
 {
-  "name": "@rspress-fixture/rspress-algolia",
+  "name": "@rspress-fixture/search-algolia",
   "version": "1.0.0",
   "private": true,
   "scripts": {

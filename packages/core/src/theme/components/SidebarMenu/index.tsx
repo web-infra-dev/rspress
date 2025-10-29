@@ -1,9 +1,14 @@
-import { useLocaleSiteData, useLocation, useSite } from '@rspress/core/runtime';
+import {
+  useFrontmatter,
+  useLocaleSiteData,
+  useLocation,
+  useSite,
+} from '@rspress/core/runtime';
 import { SvgWrapper } from '@theme';
+import ArrowRight from '@theme-assets/arrow-right';
 import MenuIcon from '@theme-assets/menu';
 import { forwardRef, useEffect, useRef } from 'react';
 import { createPortal } from 'react-dom';
-import { useUISwitch } from '../../layout/Layout/useUISwitch';
 import { ReadPercent } from '../ReadPercent';
 import './index.scss';
 import { useActiveAnchor, useDynamicToc } from '@theme';
@@ -14,17 +19,16 @@ export const SidebarMenu = forwardRef(
     {
       isSidebarOpen,
       onIsSidebarOpenChange,
-      isAsideOpen,
-      onIsAsideOpenChange,
+      isOutlineOpen,
+      onIsOutlineOpenChange,
     }: {
       isSidebarOpen: boolean;
       onIsSidebarOpenChange: (isOpen: boolean) => void;
-      isAsideOpen: boolean;
-      onIsAsideOpenChange: (isOpen: boolean) => void;
+      isOutlineOpen: boolean;
+      onIsOutlineOpenChange: (isOpen: boolean) => void;
     },
     forwardedRef,
   ) => {
-    const uiSwitch = useUISwitch();
     const localesData = useLocaleSiteData();
     const {
       site: { themeConfig },
@@ -39,6 +43,10 @@ export const SidebarMenu = forwardRef(
     const headers = useDynamicToc();
     const { scrolledHeader } = useActiveAnchor(headers);
 
+    const {
+      frontmatter: { sidebar: showSidebar = true, outline: showOutline = true },
+    } = useFrontmatter();
+
     function openSidebar() {
       onIsSidebarOpenChange(true);
     }
@@ -47,12 +55,12 @@ export const SidebarMenu = forwardRef(
       onIsSidebarOpenChange(false);
     }
 
-    function openAside() {
-      onIsAsideOpenChange(!isAsideOpen);
+    function openOutline() {
+      onIsOutlineOpenChange(!isOutlineOpen);
     }
 
-    function closeAside() {
-      onIsAsideOpenChange(false);
+    function closeOutline() {
+      onIsOutlineOpenChange(false);
     }
 
     useEffect(() => {
@@ -61,7 +69,7 @@ export const SidebarMenu = forwardRef(
 
     useEffect(() => {
       if (hash) {
-        closeAside();
+        closeOutline();
       }
     }, [hash]);
 
@@ -78,7 +86,7 @@ export const SidebarMenu = forwardRef(
             }
           }}
         >
-          {uiSwitch?.showSidebar && (
+          {showSidebar && (
             <button
               type="button"
               onClick={openSidebar}
@@ -88,31 +96,33 @@ export const SidebarMenu = forwardRef(
               <span>Menu</span>
             </button>
           )}
-          {uiSwitch?.showAside && (
+          {showOutline && (
             <button
               type="button"
               disabled={headers.length === 0}
               onClick={e => {
                 e.preventDefault();
                 e.stopPropagation();
-                openAside();
+                openOutline();
               }}
               className="rp-sidebar-menu__right"
             >
               <span>{scrolledHeader?.text ?? outlineTitle}</span>
               <ReadPercent size={14} strokeWidth={2} />
               {/* TODO: discussion */}
-              {/* <SvgWrapper
-                icon={ArrowRight}
-                style={{
-                  transform: isAsideOpen ? 'rotate(90deg)' : 'rotate(0deg)',
-                  transition: 'transform 0.2s ease-out',
-                }}
-              /> */}
+              {headers.length !== 0 && (
+                <SvgWrapper
+                  icon={ArrowRight}
+                  style={{
+                    transform: isOutlineOpen ? 'rotate(90deg)' : 'rotate(0deg)',
+                    transition: 'transform 0.2s ease-out',
+                  }}
+                />
+              )}
             </button>
           )}
         </div>
-        {(isSidebarOpen || isAsideOpen) &&
+        {(isSidebarOpen || isOutlineOpen) &&
           createPortal(
             <div onClick={closeSidebar} className="rp-sidebar-menu__mask" />,
             document.getElementById('__rspress_modal_container')!,

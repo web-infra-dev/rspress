@@ -1,5 +1,5 @@
 {
-  "name": "@rspress-fixture/rspress-auto-nav-sidebar-dir-convention",
+  "name": "@rspress-fixture/auto-nav-sidebar-dir-convention",
   "version": "1.0.0",
   "private": true,
   "scripts": {

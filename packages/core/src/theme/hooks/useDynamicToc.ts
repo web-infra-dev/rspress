@@ -1,6 +1,6 @@
 import type { Header } from '@rspress/core';
 import { useCallback, useEffect, useState } from 'react';
-import { processTitleElement } from '../components/Aside/processTitleElement';
+import { processTitleElement } from '../components/Outline/processTitleElement';
 
 const updateFns: Record<string, () => void> = {};
 const useForceUpdate = () => {

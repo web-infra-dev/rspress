@@ -1,5 +1,5 @@
 // components
-export { Aside } from './components/Aside/index';
+
 export { Badge } from './components/Badge/index';
 export { Banner, type BannerProps } from './components/Banner/index';
 export { Button } from './components/Button/index';
@@ -30,6 +30,7 @@ export { useHoverGroup } from './components/HoverGroup/useHoverGroup';
 export { LastUpdated } from './components/LastUpdated/index';
 export { Link, type LinkProps } from './components/Link/index';
 export { Nav } from './components/Nav/index';
+export { Outline } from './components/Outline/index';
 export { Overview } from './components/Overview/index';
 export {
   type Group,

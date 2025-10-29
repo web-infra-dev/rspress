@@ -20,19 +20,10 @@ import { useSetup } from '../../logic/sideEffects';
 import { TabDataContext } from '../../logic/TabDataContext';
 import { useRedirect4FirstVisit } from '../../logic/useRedirect4FirstVisit';
 import type { HomeLayoutProps } from '../HomeLayout';
-import {
-  UISwitchContext,
-  type UISwitchResult,
-  useCreateUISwitch,
-} from './useUISwitch';
 
 export type LayoutProps = {
   top?: React.ReactNode;
   bottom?: React.ReactNode;
-  /**
-   * Control whether or not to display the navbar, sidebar, outline and footer
-   */
-  uiSwitch?: Partial<UISwitchResult>;
   HomeLayout?: React.FC<HomeLayoutProps>;
   NotFoundLayout?: React.FC<any>;
   beforeNav?: React.ReactNode;
@@ -189,15 +180,6 @@ export function Layout(props: LayoutProps) {
     site.description ||
     localesData.description;
 
-  const uiSwitchResult = useCreateUISwitch();
-
-  // Control whether or not to display the navbar, sidebar, outline and footer
-  // `props.uiSwitch` has higher priority and allows user to override the default value
-  const uiSwitch = {
-    ...uiSwitchResult,
-    ...props.uiSwitch,
-  };
-
   // Use doc layout by default
   const getContentLayout = () => {
     switch (pageType) {
@@ -216,33 +198,35 @@ export function Layout(props: LayoutProps) {
     }
   };
 
+  const {
+    frontmatter: { navbar: showNavbar = true },
+  } = useFrontmatter();
+
   return (
     <TabDataContext.Provider value={{ tabData, setTabData }}>
-      <UISwitchContext.Provider value={uiSwitch}>
-        <HeadTags
-          lang={currentLang}
-          title={title}
-          description={description}
-          frontmatter={frontmatter}
-        />
+      <HeadTags
+        lang={currentLang}
+        title={title}
+        description={description}
+        frontmatter={frontmatter}
+      />
 
-        {top}
-        {pageType !== 'blank' && uiSwitch.showNavbar && (
-          <>
-            {beforeNav}
-            <Nav
-              beforeNavTitle={beforeNavTitle}
-              afterNavTitle={afterNavTitle}
-              navTitle={navTitle}
-              afterNavMenu={afterNavMenu}
-            />
-            {afterNav}
-          </>
-        )}
+      {top}
+      {pageType !== 'blank' && showNavbar && (
+        <>
+          {beforeNav}
+          <Nav
+            beforeNavTitle={beforeNavTitle}
+            afterNavTitle={afterNavTitle}
+            navTitle={navTitle}
+            afterNavMenu={afterNavMenu}
+          />
+          {afterNav}
+        </>
+      )}
 
-        {getContentLayout()}
-        {bottom}
-      </UISwitchContext.Provider>
+      {getContentLayout()}
+      {bottom}
     </TabDataContext.Provider>
   );
 }
