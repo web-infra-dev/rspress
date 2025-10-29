@@ -4,7 +4,6 @@
   height: 40px;
   min-width: 140px;
   background-color: color-mix(in srgb, var(--rp-c-bg) 30%, transparent);
-
   backdrop-filter: blur(25px);
   border: 1px solid var(--rp-c-divider-light);
   transition: border-color 0.3s;
