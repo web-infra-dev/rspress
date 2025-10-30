@@ -67,7 +67,7 @@ export async function createMDXOptions(options: {
     remarkPlugins: [
       remarkGFM,
       remarkToc,
-      remarkContainerSyntax,
+      !isSsgMd && remarkContainerSyntax,
       [remarkFileCodeBlock, { filepath, addDependency }],
       [
         remarkLink,

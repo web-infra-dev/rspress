@@ -1,5 +1,4 @@
 import type { Root, RootContent } from 'mdast';
-import type { ContainerDirective } from 'mdast-util-directive';
 import type {
   MdxFlowExpression,
   MdxJsxFlowElement,
@@ -276,61 +275,42 @@ function processMixedContent(
  * <>{"# Heading\nSome **bold** text."}</>
  * ```
  */
-function buildMdxFlowExpressionFragment(node: RootContent): MdxJsxFlowElement {
+function buildMdxFlowExpressionFragment(node: RootContent): MdxFlowExpression {
   const textContent = serializeNodeToMarkdown(node);
   // <>{"string"}</>
   const stringified = JSON.stringify(textContent);
 
-  const fragment: MdxJsxFlowElement = {
-    type: 'mdxJsxFlowElement',
-    name: null, // Fragment
-    attributes: [],
-    children: [
-      {
-        type: 'mdxFlowExpression',
-        value: stringified,
-        data: {
-          estree: {
-            type: 'Program',
-            body: [
-              {
-                type: 'ExpressionStatement',
-                expression: {
-                  type: 'Literal',
-                  value: textContent,
-                  raw: stringified,
-                },
-              },
-            ],
-            sourceType: 'module',
+  const fragment: MdxFlowExpression = {
+    type: 'mdxFlowExpression',
+    value: stringified,
+    data: {
+      estree: {
+        type: 'Program',
+        body: [
+          {
+            type: 'ExpressionStatement',
+            expression: {
+              type: 'Literal',
+              value: textContent,
+              raw: stringified,
+            },
           },
-        },
+        ],
+        sourceType: 'module',
       },
-    ],
-  } satisfies MdxJsxFlowElement;
+    },
+  };
 
   return fragment;
 }
 
 // Use unified with remark-stringify to convert the node back to markdown
-const processor = unified()
-  .use(remarkMdx)
-  .use(remarkGfm)
-  .use(remarkStringify, {
-    bullet: '-',
-    emphasis: '_',
-    fences: true,
-    incrementListMarker: true,
-    handlers: {
-      // remarkContainerSyntax compatibility
-      containerDirective: (node: ContainerDirective) => {
-        const content = node.children
-          .map((child: RootContent) => serializeNodeToMarkdown(child))
-          .join('');
-        return `:::${node.attributes?.type ?? node.type} ${node.attributes?.title ?? ''}\n${content}\n:::\n`;
-      },
-    },
-  });
+const processor = unified().use(remarkMdx).use(remarkGfm).use(remarkStringify, {
+  bullet: '-',
+  emphasis: '_',
+  fences: true,
+  incrementListMarker: true,
+});
 
 /**
  * Serialize a markdown node back to its markdown text representation
