@@ -312,6 +312,26 @@ function buildMdxFlowExpressionFragment(node: RootContent): MdxJsxFlowElement {
   return fragment;
 }
 
+// Use unified with remark-stringify to convert the node back to markdown
+const processor = unified()
+  .use(remarkMdx)
+  .use(remarkGfm)
+  .use(remarkStringify, {
+    bullet: '-',
+    emphasis: '_',
+    fences: true,
+    incrementListMarker: true,
+    handlers: {
+      // remarkContainerSyntax compatibility
+      containerDirective: (node: ContainerDirective) => {
+        const content = node.children
+          .map((child: RootContent) => serializeNodeToMarkdown(child))
+          .join('');
+        return `:::${node.attributes?.type ?? node.type} ${node.attributes?.title ?? ''}\n${content}\n:::\n`;
+      },
+    },
+  });
+
 /**
  * Serialize a markdown node back to its markdown text representation
  * Uses remark-stringify for proper serialization of all node types
@@ -322,26 +342,6 @@ function serializeNodeToMarkdown(node: RootContent): string {
     type: 'root',
     children: [node],
   };
-
-  // Use unified with remark-stringify to convert the node back to markdown
-  const processor = unified()
-    .use(remarkMdx)
-    .use(remarkGfm)
-    .use(remarkStringify, {
-      bullet: '-',
-      emphasis: '_',
-      fences: true,
-      incrementListMarker: true,
-      handlers: {
-        // remarkContainerSyntax compatibility
-        containerDirective: (node: ContainerDirective) => {
-          const content = node.children
-            .map((child: RootContent) => serializeNodeToMarkdown(child))
-            .join('');
-          return `:::${node.attributes?.type ?? node.type} ${node.attributes?.title ?? ''}\n${content}\n:::\n`;
-        },
-      },
-    });
 
   const result = processor.stringify(tempRoot);
 
