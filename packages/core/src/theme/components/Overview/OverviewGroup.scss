@@ -91,11 +91,13 @@
 
         @media (min-width: 769px) and (max-width: 1280px) {
           // 3 columns
+          min-width: 33%;
           max-width: 33%;
         }
 
         @media (max-width: 768px) {
-          // 2 columns
+          // 2 columns or 1 columns
+          min-width: 50%;
           max-width: 100%;
         }
 

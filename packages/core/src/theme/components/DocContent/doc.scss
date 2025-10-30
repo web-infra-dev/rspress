@@ -3,7 +3,6 @@
   :not(:where(.rp-not-doc, .rp-not-doc *)) {
     // escape hatch like <div className="rp-not-doc"></div>
     /* why ":where"? For css priority, <<equal to className priority>>, to be easy to overrides by className */
-
     /* paragraph */
     /* #region */
     &:where(p) {
