@@ -106,7 +106,7 @@ export function DocLayout(props: DocLayoutProps) {
         )}
 
         {/* Right outline */}
-        {showOutline && !isOverviewPage ? (
+        {isOverviewPage ? null : showOutline ? (
           <aside
             className={clsx(
               'rp-doc-layout__outline',
