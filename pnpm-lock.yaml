@@ -118,6 +118,22 @@ importers:
         specifier: ^22.8.1
         version: 22.10.2
 
+  e2e/fixtures/banner:
+    dependencies:
+      '@rspress/core':
+        specifier: workspace:*
+        version: link:../../../packages/core
+      react:
+        specifier: ^19.2.0
+        version: 19.2.0
+    devDependencies:
+      '@types/node':
+        specifier: ^22.8.1
+        version: 22.10.2
+      '@types/react':
+        specifier: ^19.2.2
+        version: 19.2.2
+
   e2e/fixtures/basic:
     dependencies:
       '@rspress/core':
@@ -1016,7 +1032,7 @@ importers:
         version: 22.10.2
       rsbuild-plugin-publint:
         specifier: ^0.3.3
-        version: 0.3.3(@rsbuild/core@1.6.0-beta.1)
+        version: 0.3.3(@rsbuild/core@1.5.17)
       typescript:
         specifier: ^5.8.2
         version: 5.8.2
