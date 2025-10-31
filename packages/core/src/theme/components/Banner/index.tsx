@@ -4,6 +4,7 @@ import clsx from 'clsx';
 import { forwardRef, type ReactNode, useState } from 'react';
 import { SvgWrapper } from '../SvgWrapper';
 import './index.scss';
+import { NoSSR } from '@rspress/core/runtime';
 
 export type BannerProps = {
   /**
@@ -16,7 +17,7 @@ export type BannerProps = {
       /**
        * @default 'localStorage'
        */
-      storage?: 'localStorage' | 'sessionStorage';
+      storage?: 'localStorage' | 'sessionStorage' | false;
       /**
        * @default 'rp-banner-closed'
        */
@@ -46,7 +47,6 @@ export type BannerProps = {
                     ? '🚧 Rspress 2.0 document is under development'
                     : '🚧 Rspress 2.0 文档还在开发中'
                 }
-                storageKey="rspress-announcement-closed"
               />
           }
         />
@@ -55,7 +55,15 @@ export type BannerProps = {
     export { Layout }
  *
  */
-export const Banner = forwardRef<HTMLDivElement, BannerProps>(
+export const Banner = forwardRef<HTMLDivElement, BannerProps>((props, ref) => {
+  return (
+    <NoSSR>
+      <BannerInner {...props} ref={ref} />
+    </NoSSR>
+  );
+});
+
+const BannerInner = forwardRef<HTMLDivElement, BannerProps>(
   (props, forwardedRef) => {
     const {
       href,
@@ -70,8 +78,8 @@ export const Banner = forwardRef<HTMLDivElement, BannerProps>(
       message?: string | ReactNode;
       display?: boolean;
       className?: string;
-      storageKey: string;
-      storage?: 'localStorage' | 'sessionStorage';
+      storageKey?: string;
+      storage?: 'localStorage' | 'sessionStorage' | false;
       customChildren?: ReactNode;
     };
 
@@ -96,7 +104,6 @@ export const Banner = forwardRef<HTMLDivElement, BannerProps>(
 
     return (
       <>
-        <style>{`:root {--rp-banner-height: ${height}px;}`}</style>
         <div className={clsx('rp-banner', className)} ref={ref}>
           {customChildren ?? (
             <>
@@ -107,16 +114,19 @@ export const Banner = forwardRef<HTMLDivElement, BannerProps>(
                 icon={CloseSvg}
                 onClick={() => {
                   setDisable(true);
-                  window[storage].setItem(storageKey, 'true');
+                  if (storage) {
+                    window[storage].setItem(storageKey, 'true');
+                  }
                 }}
                 className="rp-banner__close"
               />
             </>
           )}
         </div>
+        <style>{`:root {--rp-banner-height: ${height}px;}`}</style>
       </>
     );
   },
 );
 
-Banner.displayName = 'Banner';
+BannerInner.displayName = 'BannerInner';
