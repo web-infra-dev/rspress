@@ -1,4 +1,5 @@
 import { pluginSass } from '@rsbuild/plugin-sass';
+import { RsdoctorRspackPlugin } from '@rsdoctor/rspack-plugin';
 import { defineConfig } from '@rspress/core';
 import { transformerCompatibleMetaHighlight } from '@rspress/core/shiki-transformers';
 import { pluginAlgolia } from '@rspress/plugin-algolia';
@@ -67,6 +68,37 @@ export default defineConfig({
         },
       }),
     ],
+    tools: {
+      rspack: async config => {
+        if (config.name === 'web' && process.env.RSDOCTOR) {
+          config.plugins?.push(
+            new RsdoctorRspackPlugin({
+              disableClientServer: true,
+              output: {
+                mode: 'brief',
+                options: {
+                  type: ['json'],
+                },
+                reportDir: './doc_build/web',
+              },
+            }),
+          );
+        } else if (process.env.RSDOCTOR) {
+          config.plugins?.push(
+            new RsdoctorRspackPlugin({
+              disableClientServer: true,
+              output: {
+                mode: 'brief',
+                options: {
+                  type: ['json'],
+                },
+              },
+            }),
+          );
+        }
+        return config;
+      },
+    },
   },
   route: {
     cleanUrls: true,
