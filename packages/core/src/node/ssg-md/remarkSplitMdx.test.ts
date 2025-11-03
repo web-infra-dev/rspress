@@ -1,3 +1,4 @@
+import fs from 'node:fs/promises';
 import { compile } from '@mdx-js/mdx';
 import { describe, expect, it } from 'vitest';
 import { remarkSplitMdx } from './remarkSplitMdx';
@@ -33,7 +34,7 @@ import Foo from '@components'
       /*@jsxImportSource react*/
       import Foo from '@components';
       function _createMdxContent(props) {
-        return <><>{"# title\\n"}</>{"\\n"}{"\\n"}<Foo /></>;
+        return <>{"# title\\n"}{"\\n"}{"\\n"}<Foo /></>;
       }
       export default function MDXContent(props = {}) {
         const {wrapper: MDXLayout} = props.components || ({});
@@ -57,7 +58,7 @@ import Button from '@components/Button'
       /*@jsxImportSource react*/
       import Button from '@components/Button';
       function _createMdxContent(props) {
-        return <><>{"# Hello World\\n"}</>{"\\n"}{"\\n"}<Button type="primary" disabled={true}>{"Click me"}</Button></>;
+        return <>{"# Hello World\\n"}{"\\n"}{"\\n"}<Button type="primary" disabled={true}>{"Click me"}</Button></>;
       }
       export default function MDXContent(props = {}) {
         const {wrapper: MDXLayout} = props.components || ({});
@@ -89,7 +90,7 @@ More content.
       import Foo from '@components/Foo';
       import Bar from '@components/Bar';
       function _createMdxContent(props) {
-        return <><>{"# Documentation\\n"}</>{"\\n"}{"\\n"}<>{"Some text here.\\n"}</>{"\\n"}<Foo />{"\\n"}<>{"More content.\\n"}</>{"\\n"}<Bar prop="value" /></>;
+        return <>{"# Documentation\\n"}{"\\n"}{"\\n"}{"Some text here.\\n"}{"\\n"}<Foo />{"\\n"}{"More content.\\n"}{"\\n"}<Bar prop="value" /></>;
       }
       export default function MDXContent(props = {}) {
         const {wrapper: MDXLayout} = props.components || ({});
@@ -114,7 +115,7 @@ function greet(name: string) {
       "/*@jsxRuntime automatic*/
       /*@jsxImportSource react*/
       function _createMdxContent(props) {
-        return <><>{"# Code Example\\n"}</>{"\\n"}<>{"\`\`\`tsx\\nconsole.log('Hello, world!');\\nfunction greet(name: string) {\\n  return \`Hello, \${name}!\`;\\n}\\n\`\`\`\\n"}</></>;
+        return <>{"# Code Example\\n"}{"\\n"}{"\`\`\`tsx\\nconsole.log('Hello, world!');\\nfunction greet(name: string) {\\n  return \`Hello, \${name}!\`;\\n}\\n\`\`\`\\n"}</>;
       }
       export default function MDXContent(props = {}) {
         const {wrapper: MDXLayout} = props.components || ({});
@@ -158,7 +159,7 @@ console.log('Hello, world!');
           pre: "pre",
           ...props.components
         };
-        return <><>{"# title\\n"}</>{"\\n"}{"\\n"}<Card>{"Content inside"}</Card>{"\\n"}<>{"Content outside\\n"}</>{"\\n"}<Card><_components.pre><_components.code className="language-tsx">{"console.log('Hello, world!');\\n"}</_components.code></_components.pre></Card>{"\\n"}<>{"\`\`\`tsx\\nconsole.log('Hello, world!');\\n\`\`\`\\n"}</></>;
+        return <>{"# title\\n"}{"\\n"}{"\\n"}<Card>{"Content inside"}</Card>{"\\n"}{"Content outside\\n"}{"\\n"}<Card><_components.pre><_components.code className="language-tsx">{"console.log('Hello, world!');\\n"}</_components.code></_components.pre></Card>{"\\n"}{"\`\`\`tsx\\nconsole.log('Hello, world!');\\n\`\`\`\\n"}</>;
       }
       export default function MDXContent(props = {}) {
         const {wrapper: MDXLayout} = props.components || ({});
@@ -190,7 +191,7 @@ End of content.`;
       import Img from '@components/Image';
       import Svg from '@assets/image.svg';
       function _createMdxContent(props) {
-        return <><>{"# Image Example\\n"}</>{"\\n"}{"\\n"}{"\\n"}<>{"Here is an image:\\n"}</>{"\\n"}<Img src="/path/to/image.jpg" alt="An image" />{"\\n"}<img src={Svg} alt="An SVG image" />{"\\n"}<>{"End of content.\\n"}</></>;
+        return <>{"# Image Example\\n"}{"\\n"}{"\\n"}{"\\n"}{"Here is an image:\\n"}{"\\n"}<Img src="/path/to/image.jpg" alt="An image" />{"\\n"}<img src={Svg} alt="An SVG image" />{"\\n"}{"End of content.\\n"}</>;
       }
       export default function MDXContent(props = {}) {
         const {wrapper: MDXLayout} = props.components || ({});
@@ -225,17 +226,14 @@ import Button from 'react';
     expect(code).toMatchInlineSnapshot(`
       "/*@jsxRuntime automatic*/
       /*@jsxImportSource react*/
+      import {Table} from '@lynx';
+      import Button from 'react';
       function _createMdxContent(props) {
-        const {Table} = props.components || ({});
-        if (!Table) _missingMdxReference("Table", true);
-        return <><Table />{"\\n"}<>{"<Button>\\n  Click\\n</Button>\\n"}</></>;
+        return <><Table />{"\\n"}{"<Button>\\n  Click\\n</Button>\\n"}</>;
       }
       export default function MDXContent(props = {}) {
         const {wrapper: MDXLayout} = props.components || ({});
         return MDXLayout ? <MDXLayout {...props}><_createMdxContent {...props} /></MDXLayout> : _createMdxContent(props);
-      }
-      function _missingMdxReference(id, component) {
-        throw new Error("Expected " + (component ? "component" : "object") + " \`" + id + "\` to be defined: you likely forgot to import, pass, or provide it.");
       }
       "
     `);
@@ -271,7 +269,7 @@ import Button from 'react';
       import {Table, Card} from '@lynx';
       import Button from 'react';
       function _createMdxContent(props) {
-        return <><Table />{"\\n"}<>{"<Card />\\n"}</>{"\\n"}<Button>{"Click"}</Button></>;
+        return <><Table />{"\\n"}{"<Card />\\n"}{"\\n"}<Button>{"Click"}</Button></>;
       }
       export default function MDXContent(props = {}) {
         const {wrapper: MDXLayout} = props.components || ({});
@@ -304,17 +302,14 @@ import Button from 'react';
     expect(code).toMatchInlineSnapshot(`
       "/*@jsxRuntime automatic*/
       /*@jsxImportSource react*/
+      import {Table} from '@lynx';
+      import Button from 'react';
       function _createMdxContent(props) {
-        const {Table} = props.components || ({});
-        if (!Table) _missingMdxReference("Table", true);
-        return <><Table />{"\\n"}<>{"<Button>\\n  Click\\n</Button>\\n"}</></>;
+        return <><Table />{"\\n"}{"<Button>\\n  Click\\n</Button>\\n"}</>;
       }
       export default function MDXContent(props = {}) {
         const {wrapper: MDXLayout} = props.components || ({});
         return MDXLayout ? <MDXLayout {...props}><_createMdxContent {...props} /></MDXLayout> : _createMdxContent(props);
-      }
-      function _missingMdxReference(id, component) {
-        throw new Error("Expected " + (component ? "component" : "object") + " \`" + id + "\` to be defined: you likely forgot to import, pass, or provide it.");
       }
       "
     `);
@@ -342,17 +337,13 @@ import Button from 'react';
     expect(code).toMatchInlineSnapshot(`
       "/*@jsxRuntime automatic*/
       /*@jsxImportSource react*/
+      import {Table, Card} from '@lynx';
       function _createMdxContent(props) {
-        const {Table} = props.components || ({});
-        if (!Table) _missingMdxReference("Table", true);
-        return <><Table />{"\\n"}<>{"<Card />\\n"}</></>;
+        return <><Table />{"\\n"}{"<Card />\\n"}</>;
       }
       export default function MDXContent(props = {}) {
         const {wrapper: MDXLayout} = props.components || ({});
         return MDXLayout ? <MDXLayout {...props}><_createMdxContent {...props} /></MDXLayout> : _createMdxContent(props);
-      }
-      function _missingMdxReference(id, component) {
-        throw new Error("Expected " + (component ? "component" : "object") + " \`" + id + "\` to be defined: you likely forgot to import, pass, or provide it.");
       }
       "
     `);
@@ -381,8 +372,9 @@ import Button from 'react';
     expect(code).toMatchInlineSnapshot(`
       "/*@jsxRuntime automatic*/
       /*@jsxImportSource react*/
+      import {Table as Tab} from '@lynx';
       function _createMdxContent(props) {
-        return <><>{"<Tab />\\n"}</></>;
+        return <>{"<Tab />\\n"}</>;
       }
       export default function MDXContent(props = {}) {
         const {wrapper: MDXLayout} = props.components || ({});
@@ -417,17 +409,14 @@ import Button from 'react';
     expect(code).toMatchInlineSnapshot(`
       "/*@jsxRuntime automatic*/
       /*@jsxImportSource react*/
+      import {Table, Card} from '@lynx';
+      import Button from 'react';
       function _createMdxContent(props) {
-        const {Table} = props.components || ({});
-        if (!Table) _missingMdxReference("Table", true);
-        return <><Table />{"\\n"}<>{"<Card />\\n"}</>{"\\n"}<>{"<Button>\\n  Click\\n</Button>\\n"}</></>;
+        return <><Table />{"\\n"}{"<Card />\\n"}{"\\n"}{"<Button>\\n  Click\\n</Button>\\n"}</>;
       }
       export default function MDXContent(props = {}) {
         const {wrapper: MDXLayout} = props.components || ({});
         return MDXLayout ? <MDXLayout {...props}><_createMdxContent {...props} /></MDXLayout> : _createMdxContent(props);
-      }
-      function _missingMdxReference(id, component) {
-        throw new Error("Expected " + (component ? "component" : "object") + " \`" + id + "\` to be defined: you likely forgot to import, pass, or provide it.");
       }
       "
     `);
@@ -461,18 +450,15 @@ import Card from 'react';
     expect(code).toMatchInlineSnapshot(`
       "/*@jsxRuntime automatic*/
       /*@jsxImportSource react*/
+      import {Table} from '@lynx';
+      import {Button} from 'antd';
+      import Card from 'react';
       function _createMdxContent(props) {
-        const {Button, Table} = props.components || ({});
-        if (!Button) _missingMdxReference("Button", true);
-        if (!Table) _missingMdxReference("Table", true);
-        return <><Table />{"\\n"}<Button />{"\\n"}<>{"<Card />\\n"}</></>;
+        return <><Table />{"\\n"}<Button />{"\\n"}{"<Card />\\n"}</>;
       }
       export default function MDXContent(props = {}) {
         const {wrapper: MDXLayout} = props.components || ({});
         return MDXLayout ? <MDXLayout {...props}><_createMdxContent {...props} /></MDXLayout> : _createMdxContent(props);
-      }
-      function _missingMdxReference(id, component) {
-        throw new Error("Expected " + (component ? "component" : "object") + " \`" + id + "\` to be defined: you likely forgot to import, pass, or provide it.");
       }
       "
     `);
@@ -496,7 +482,7 @@ Some text here.`;
       /*@jsxImportSource react*/
       import Foo from '@components';
       function _createMdxContent(props) {
-        return <><>{"# title "}<Foo /></>{"\\n"}<>{"# title [link](./link)\\n"}</>{"\\n"}<>{"# title [link](./link)\\n "}<Foo /></>{"\\n"}<>{"Some text here.\\n"}</></>;
+        return <><>{"# title "}<Foo /></>{"\\n"}{"# title [link](./link)\\n"}{"\\n"}<>{"# title [link](./link)\\n "}<Foo /></>{"\\n"}{"Some text here.\\n"}</>;
       }
       export default function MDXContent(props = {}) {
         const {wrapper: MDXLayout} = props.components || ({});

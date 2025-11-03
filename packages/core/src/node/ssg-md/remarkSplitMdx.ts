@@ -1,10 +1,8 @@
 import type { Root, RootContent } from 'mdast';
-import type { ContainerDirective } from 'mdast-util-directive';
 import type {
   MdxFlowExpression,
   MdxJsxFlowElement,
   MdxJsxTextElement,
-  MdxjsEsm,
   MdxTextExpression,
 } from 'mdast-util-mdx';
 import remarkGfm from 'remark-gfm';
@@ -60,12 +58,9 @@ export function remarkSplitMdx(
     const importMap = buildImportMap(tree);
 
     for (const node of tree.children) {
-      // Process imports - only keep those that match the filter
+      // Process imports - keep all the import
       if (node.type === 'mdxjsEsm') {
-        const shouldKeep = shouldKeepImport(node, options);
-        if (shouldKeep) {
-          newChildren.push(node);
-        }
+        newChildren.push(node);
         continue;
       }
 
@@ -280,41 +275,42 @@ function processMixedContent(
  * <>{"# Heading\nSome **bold** text."}</>
  * ```
  */
-function buildMdxFlowExpressionFragment(node: RootContent): MdxJsxFlowElement {
+function buildMdxFlowExpressionFragment(node: RootContent): MdxFlowExpression {
   const textContent = serializeNodeToMarkdown(node);
   // <>{"string"}</>
   const stringified = JSON.stringify(textContent);
 
-  const fragment: MdxJsxFlowElement = {
-    type: 'mdxJsxFlowElement',
-    name: null, // Fragment
-    attributes: [],
-    children: [
-      {
-        type: 'mdxFlowExpression',
-        value: stringified,
-        data: {
-          estree: {
-            type: 'Program',
-            body: [
-              {
-                type: 'ExpressionStatement',
-                expression: {
-                  type: 'Literal',
-                  value: textContent,
-                  raw: stringified,
-                },
-              },
-            ],
-            sourceType: 'module',
+  const fragment: MdxFlowExpression = {
+    type: 'mdxFlowExpression',
+    value: stringified,
+    data: {
+      estree: {
+        type: 'Program',
+        body: [
+          {
+            type: 'ExpressionStatement',
+            expression: {
+              type: 'Literal',
+              value: textContent,
+              raw: stringified,
+            },
           },
-        },
+        ],
+        sourceType: 'module',
       },
-    ],
-  } satisfies MdxJsxFlowElement;
+    },
+  };
 
   return fragment;
 }
+
+// Use unified with remark-stringify to convert the node back to markdown
+const processor = unified().use(remarkMdx).use(remarkGfm).use(remarkStringify, {
+  bullet: '-',
+  emphasis: '_',
+  fences: true,
+  incrementListMarker: true,
+});
 
 /**
  * Serialize a markdown node back to its markdown text representation
@@ -326,25 +322,6 @@ function serializeNodeToMarkdown(node: RootContent): string {
     type: 'root',
     children: [node],
   };
-
-  // Use unified with remark-stringify to convert the node back to markdown
-  const processor = unified()
-    .use(remarkMdx)
-    .use(remarkGfm)
-    .use(remarkStringify, {
-      bullet: '-',
-      emphasis: '_',
-      fences: true,
-      incrementListMarker: true,
-      handlers: {
-        containerDirective: (node: ContainerDirective) => {
-          const content = node.children
-            .map((child: RootContent) => serializeNodeToMarkdown(child))
-            .join('');
-          return `:::${node.attributes?.type ?? node.type} ${node.attributes?.title ?? ''}\n${content}\n:::\n`;
-        },
-      },
-    });
 
   const result = processor.stringify(tempRoot);
 
@@ -393,81 +370,6 @@ function buildImportMap(tree: Root): Map<string, string> {
 }
 
 /**
- * Check if an import statement should be kept based on options
- */
-function shouldKeepImport(
-  node: MdxjsEsm,
-  options: RemarkSplitMdxOptions,
-): boolean {
-  if (!node.data?.estree) {
-    return true; // Keep if we can't parse it
-  }
-
-  const { includes, excludes } = options;
-
-  // If no filters specified, keep all imports
-  if (!includes && !excludes) {
-    return true;
-  }
-
-  const estree = node.data.estree;
-
-  for (const statement of estree.body) {
-    if (statement.type === 'ImportDeclaration') {
-      const source = statement.source.value;
-      const specifiers = statement.specifiers
-        .map((spec: any) => {
-          if (spec.type === 'ImportDefaultSpecifier') {
-            return spec.local.name;
-          } else if (spec.type === 'ImportSpecifier') {
-            return spec.local.name;
-          } else if (spec.type === 'ImportNamespaceSpecifier') {
-            return spec.local.name;
-          }
-          return null;
-        })
-        .filter(Boolean);
-
-      // Check excludes first (takes precedence)
-      if (excludes) {
-        for (const [excludeSpecifiers, excludeSource] of excludes) {
-          // If source matches
-          if (excludeSource === source) {
-            // Check if any specifier matches
-            if (excludeSpecifiers.some(spec => specifiers.includes(spec))) {
-              return false;
-            }
-          }
-        }
-      }
-
-      // Check includes
-      if (includes) {
-        let matchesAnyRule = false;
-
-        for (const [includeSpecifiers, includeSource] of includes) {
-          // If source matches
-          if (includeSource === source) {
-            // Check if any specifier matches
-            if (includeSpecifiers.some(spec => specifiers.includes(spec))) {
-              matchesAnyRule = true;
-              break;
-            }
-          }
-        }
-
-        // If includes are specified but nothing matches, exclude
-        if (!matchesAnyRule) {
-          return false;
-        }
-      }
-    }
-  }
-
-  return true;
-}
-
-/**
  * Check if a JSX element should be kept based on its component name and import filters
  */
 function shouldKeepJsxElement(
@@ -481,12 +383,17 @@ function shouldKeepJsxElement(
 
   const { includes, excludes } = options;
 
-  // If no filters specified, keep all JSX elements
+  // If no filters specified, keep all JSX elements, includes all
   if (!includes && !excludes) {
     return true;
   }
 
   const importSource = importMap.get(componentName);
+
+  if (importSource?.endsWith('.mdx')) {
+    // Mdx Fragments should always be kept
+    return true;
+  }
 
   // Check excludes first (takes precedence)
   if (excludes) {

@@ -163,6 +163,9 @@ function normalizeLink(
     url = url.replace(/\.html$/, cleanUrls);
   }
 
+  if (search) {
+    url += `?${search}`;
+  }
   if (hash) {
     url += `#${hash}`;
   }

@@ -50,7 +50,6 @@ export default defineConfig({
     pluginAlgolia({
       verificationContent: '8F5BFE50E65777F1',
     }),
-    // pluginLlms(),
   ],
   builderConfig: {
     plugins: [

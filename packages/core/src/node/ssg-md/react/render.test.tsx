@@ -209,3 +209,20 @@ describe('renderToMarkdownString', () => {
       `);
   });
 });
+
+describe('renderToMarkdownString - styles', () => {
+  it('renders two row correctly', async () => {
+    const Comp1 = () => {
+      return (
+        <>
+          <div>Row 1</div>
+          <div>Row 2</div>
+        </>
+      );
+    };
+
+    expect(await renderToMarkdownString(<Comp1 />)).toMatchInlineSnapshot(
+      `"Row 1Row 2"`,
+    );
+  });
+});
