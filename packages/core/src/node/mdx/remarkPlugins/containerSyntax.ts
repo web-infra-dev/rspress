@@ -206,7 +206,7 @@ function transformer(tree: Parent) {
         // {title="foo"} is not a part of the content, So we need to remove it
         node.children.splice(1, 1);
       }
-      if (!DIRECTIVE_TYPES.includes(type.toLowerCase() as DirectiveType)) {
+      if (!DIRECTIVE_TYPES.includes(type as DirectiveType)) {
         i++;
         continue;
       }
@@ -227,11 +227,7 @@ function transformer(tree: Parent) {
             },
           ],
         });
-        const newChild = createContainer(
-          type.toLowerCase(),
-          title,
-          wrappedChildren,
-        );
+        const newChild = createContainer(type, title, wrappedChildren);
         tree.children.splice(i, 1, newChild as RootContent);
       } else {
         // 2.2 case: with newline before the end of container, for example:
@@ -281,11 +277,7 @@ function transformer(tree: Parent) {
               ],
             });
           }
-          const newChild = createContainer(
-            type.toLowerCase(),
-            title,
-            wrappedChildren,
-          );
+          const newChild = createContainer(type, title, wrappedChildren);
           tree.children.splice(i, 1, newChild as RootContent);
           i++;
           continue;
@@ -351,11 +343,7 @@ function transformer(tree: Parent) {
               wrappedChildren.push(...filteredChildren);
             }
 
-            const newChild = createContainer(
-              type.toLowerCase(),
-              title,
-              wrappedChildren,
-            );
+            const newChild = createContainer(type, title, wrappedChildren);
             tree.children.splice(i, j - i + 1, newChild as RootContent);
             break;
           }
