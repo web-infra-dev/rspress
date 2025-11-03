@@ -1000,6 +1000,55 @@ MDXContent.__RSPRESS_PAGE_META["index.mdx"] = {"toc":[],"title":"","headingTitle
 "
 `;
 
+exports[`remark-container > multiple containers with title on same line 1`] = `
+"import {Fragment as _Fragment, jsx as _jsx, jsxs as _jsxs} from "react/jsx-runtime";
+import {useMDXComponents as _provideComponents} from "@mdx-js/react";
+import {Callout as $$$callout$$$} from "@theme";
+function _createMdxContent(props) {
+  const _components = {
+    li: "li",
+    p: "p",
+    ul: "ul",
+    ..._provideComponents(),
+    ...props.components
+  };
+  return _jsxs(_Fragment, {
+    children: [_jsx($$$callout$$$, {
+      type: "caution",
+      title: "Differences from Web",
+      children: _jsxs(_components.ul, {
+        children: ["\\n", _jsx(_components.li, {
+          children: "Streaming/FormData/Blob related APIs are not supported"
+        }), "\\n"]
+      })
+    }), "\\n", _jsx($$$callout$$$, {
+      type: "warning",
+      title: "Web Platform Compatibility",
+      children: _jsx(_components.p, {
+        children: "Web Platform supports Fetch API using Browser's Fetch implementation, it follows the same rules as the web."
+      })
+    })]
+  });
+}
+export default function MDXContent(props = {}) {
+  const {wrapper: MDXLayout} = {
+    ..._provideComponents(),
+    ...props.components
+  };
+  return MDXLayout ? _jsx(MDXLayout, {
+    ...props,
+    children: _jsx(_createMdxContent, {
+      ...props
+    })
+  }) : _createMdxContent(props);
+}
+
+
+MDXContent.__RSPRESS_PAGE_META = {};
+MDXContent.__RSPRESS_PAGE_META["index.mdx"] = {"toc":[],"title":"","headingTitle":"","frontmatter":{}};
+"
+`;
+
 exports[`remark-container > nested in list - github alerts 1`] = `
 "import {Fragment as _Fragment, jsx as _jsx, jsxs as _jsxs} from "react/jsx-runtime";
 import {useMDXComponents as _provideComponents} from "@mdx-js/react";

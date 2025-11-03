@@ -341,4 +341,21 @@ Line 2 with [link](http://example.com).
   `);
     expect(result).toMatchSnapshot();
   });
+
+  test('multiple containers with title on same line', async () => {
+    const result = await process(`
+:::Caution Differences from Web
+
+- Streaming/FormData/Blob related APIs are not supported
+
+:::
+
+:::Warning Web Platform Compatibility
+
+Web Platform supports Fetch API using Browser's Fetch implementation, it follows the same rules as the web.
+
+:::
+`);
+    expect(result).toMatchSnapshot();
+  });
 });
