@@ -12,6 +12,8 @@
  * So the plugin is used to solve the problem and support both syntaxes in above cases.
  */
 /// <reference types="mdast-util-mdx-expression" />
+
+import { logger } from '@rspress/shared/logger';
 import type {
   BlockContent,
   Literal,
@@ -104,19 +106,26 @@ const createContainer = (
  * 2. If it is, crawl the next nodes, if there is a paragraph node, we need to check if it is the end of the container directive. If not, we need to push it to the children of the container directive node.
  * 3. If we find the end of the container directive, we remove the visited node and insert the custom container directive node.
  */
-function transformer(tree: Parent) {
+function transformer(
+  tree: Parent,
+  warnUnknownType: (type: string | undefined) => void,
+) {
   let i = 0;
   try {
     while (i < tree.children.length) {
       const node = tree.children[i];
 
       if ('children' in node) {
-        transformer(node);
+        transformer(node, warnUnknownType);
       }
 
       if (node.type === 'containerDirective') {
-        const type = node.name as DirectiveType;
-        if (DIRECTIVE_TYPES.includes(type)) {
+        const type = node.name as string;
+        if (type === CALLOUT_COMPONENT) {
+          i++;
+          continue;
+        }
+        if (DIRECTIVE_TYPES.includes(type as DirectiveType)) {
           tree.children.splice(
             i,
             1,
@@ -126,6 +135,8 @@ function transformer(tree: Parent) {
               node.children as BlockContent[],
             ) as RootContent,
           );
+        } else {
+          warnUnknownType(type);
         }
       } else if (
         /**
@@ -153,6 +164,7 @@ function transformer(tree: Parent) {
         if (match) {
           const [, type] = match;
           if (!DIRECTIVE_TYPES.includes(type.toLowerCase() as DirectiveType)) {
+            warnUnknownType(type);
             i++;
             continue;
           }
@@ -207,6 +219,7 @@ function transformer(tree: Parent) {
         node.children.splice(1, 1);
       }
       if (!DIRECTIVE_TYPES.includes(type as DirectiveType)) {
+        warnUnknownType(type);
         i++;
         continue;
       }
@@ -358,8 +371,24 @@ function transformer(tree: Parent) {
 }
 
 export const remarkContainerSyntax: Plugin<[], Root> = () => {
+  const warnedUnknownTypes = new Set<string>();
+
+  const warnUnknownType = (type: string | undefined) => {
+    if (!type || type === CALLOUT_COMPONENT) {
+      return;
+    }
+    if (warnedUnknownTypes.has(type)) {
+      return;
+    }
+    warnedUnknownTypes.add(type);
+    const supportedTypes = DIRECTIVE_TYPES.join(', ');
+    logger.warn(
+      `Unknown container directive type "${type}". Supported types: ${supportedTypes}. Container directive types must be lowercase.`,
+    );
+  };
+
   return tree => {
-    transformer(tree);
+    transformer(tree, warnUnknownType);
     tree.children.unshift(
       getNamedImportAstNode('Callout', CALLOUT_COMPONENT, '@theme'),
     );

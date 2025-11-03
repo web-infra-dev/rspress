@@ -1,4 +1,15 @@
-import { describe, expect, test } from 'vitest';
+import { beforeEach, describe, expect, test, vi } from 'vitest';
+
+vi.mock('@rspress/shared/logger', () => ({
+  logger: {
+    info: vi.fn(),
+    warn: vi.fn(),
+    error: vi.fn(),
+    success: vi.fn(),
+  },
+}));
+
+import { logger } from '@rspress/shared/logger';
 import { compile } from '../processor';
 
 describe('remark-container', async () => {
@@ -13,6 +24,10 @@ describe('remark-container', async () => {
       routeService: null,
     });
   };
+
+  beforeEach(() => {
+    vi.clearAllMocks();
+  });
 
   test('No newline', async () => {
     const result = await process(`
@@ -331,6 +346,18 @@ Line 2 with [link](http://example.com).
 `);
 
     expect(result).toMatchSnapshot();
+  });
+
+  test('warn when container type is unknown', async () => {
+    await process(`
+:::Tip
+This is a tip.
+:::
+`);
+
+    expect(logger.warn).toHaveBeenCalledWith(
+      'Unknown container directive type "Tip". Supported types: tip, note, warning, caution, danger, info, details. Container directive types must be lowercase.',
+    );
   });
 
   test('empty blockquote', async () => {
