@@ -41,7 +41,7 @@
   },
   "devDependencies": {
     "@microsoft/api-extractor": "^7.53.3",
-    "@rsbuild/core": "~1.5.17",
+    "@rsbuild/core": "~1.6.0",
     "@rsbuild/plugin-react": "~1.4.1",
     "@rsbuild/plugin-sass": "~1.4.0",
     "@rslib/core": "0.16.1",

@@ -18,7 +18,7 @@ export async function serve(
   const { config, port: userPort, host: userHost, configFilePath } = options;
   const envPort = process.env.PORT;
   const envHost = process.env.HOST;
-  const { builderConfig } = config;
+  const { builderConfig = {} } = config;
   const port = Number(
     envPort || userPort || builderConfig?.server?.port || 4173,
   );
