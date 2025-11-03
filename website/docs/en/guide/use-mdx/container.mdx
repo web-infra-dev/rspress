@@ -90,21 +90,17 @@ This is a `block` of `Custom Title`
 
 </Tabs>
 
-:::warning
+:::warning Notes
 
-We recommend using the syntax `:::tip Custom Title` directly.
+- Container types must be lowercase. Use `:::tip`, `:::warning`, `:::caution`, etc. Capitalized types like `:::Tip` or `:::Warning` will not be recognized.
 
-When using the `:::` syntax in `.mdx` files and customizing headings with curly braces syntax, be aware of escaping.
+- When using the `:::` syntax in `.mdx` files and customizing headings with curly braces syntax, remember to escape the braces. We therefore recommend using the syntax `:::tip Custom Title` directly.
 
 ```mdx
 :::tip\{title="Custom Title"}
-
 This is a `block` of `Custom Title`
-
 :::
 ```
-
-**Important**: Container types must be lowercase. Use `:::tip`, `:::warning`, `:::caution`, etc. Capitalized types like `:::Tip` or `:::Warning` will not be recognized.
 
 :::
 
