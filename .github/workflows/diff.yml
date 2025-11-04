@@ -6,13 +6,13 @@ on:
 
 jobs:
   Build:
-    runs-on: ubuntu-latest    
+    runs-on: ubuntu-latest
 
     permissions:
       contents: write
       issues: write
       pull-requests: write
-      
+
     steps:
       - name: Checkout
         uses: actions/checkout@08eba0b27e820071cde6df949e0beb9ba4906955 # v4
@@ -34,13 +34,13 @@ jobs:
       - name: Install Dependencies and Build
         run: |
           pnpm install
-          
+
       - name: Build Demo Project
         run: |
           cd website
           pnpm install
           RSDOCTOR=1 pnpm run build
-          
+
       - name: Report Compressed Size
         uses: web-infra-dev/rsdoctor-action@feat/no-baseline-report
         with:
