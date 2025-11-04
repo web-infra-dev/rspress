@@ -1,4 +1,4 @@
-import { logger, type Rspack } from '@rsbuild/core';
+import type { Rspack } from '@rsbuild/core';
 
 import { compile, compileWithCrossCompilerCache } from './processor';
 import type { MdxLoaderOptions } from './types';
@@ -42,11 +42,17 @@ export default async function mdxLoader(
     }
   } catch (e) {
     if (e instanceof Error) {
-      logger.debug(e);
-      callback({
-        message: `MDX compile error: ${e.message} in ${filepath}`,
-        name: `${filepath} compile error`,
-      });
+      // Enhance the message with filepath context for better error reporting
+      e.message = `MDX compile error: ${e.message} in ${filepath}`;
+      // Truncate stack trace to first 10 lines for better readability
+      if (e.stack) {
+        const stackLines = e.stack.split('\n');
+        if (stackLines.length > 10) {
+          e.stack =
+            stackLines.slice(0, 10).join('\n') + '\n    ... (truncated)';
+        }
+      }
+      callback(e);
     }
   }
 }
