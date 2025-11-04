@@ -57,12 +57,14 @@ export default async function mdxLoader(
       const message = `MDX compile error: ${e.message} in ${filepath}`;
       let stack: string | undefined = e.stack;
       // Truncate stack trace to first 10 lines for better readability
-      if (stack && typeof stack === 'string') {
+      if (stack) {
         const stackLines = stack.split('\n');
         if (stackLines.length > 10) {
           stack = stackLines.slice(0, 10).join('\n') + '\n    ... (truncated)';
         }
       }
+      // why not `callback(e)` ?
+      // https://github.com/web-infra-dev/rspack/issues/12080
       callback({
         message,
         ...(stack ? { stack } : {}),
