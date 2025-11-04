@@ -19,6 +19,17 @@ import { pluginOpenGraph } from 'rsbuild-plugin-open-graph';
 
 const siteUrl = 'https://v2.rspress.rs';
 
+// Common RsdoctorRspackPlugin configuration
+const commonRsdoctorConfig = {
+  disableClientServer: true,
+  output: {
+    mode: 'brief' as const,
+    options: {
+      type: ['json'] as ('json' | 'html')[],
+    },
+  },
+};
+
 export default defineConfig({
   root: 'docs',
   title: 'Rspress',
@@ -70,28 +81,13 @@ export default defineConfig({
     ],
     tools: {
       rspack: async config => {
-        if (config.name === 'web' && process.env.RSDOCTOR) {
+        if (process.env.RSDOCTOR) {
           config.plugins?.push(
             new RsdoctorRspackPlugin({
-              disableClientServer: true,
+              ...commonRsdoctorConfig,
               output: {
-                mode: 'brief',
-                options: {
-                  type: ['json'],
-                },
-                reportDir: './doc_build/web',
-              },
-            }),
-          );
-        } else if (process.env.RSDOCTOR) {
-          config.plugins?.push(
-            new RsdoctorRspackPlugin({
-              disableClientServer: true,
-              output: {
-                mode: 'brief',
-                options: {
-                  type: ['json'],
-                },
+                ...commonRsdoctorConfig.output,
+                ...(config.name === 'web' && { reportDir: './doc_build/web' }),
               },
             }),
           );
