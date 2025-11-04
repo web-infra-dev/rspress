@@ -1,4 +1,4 @@
-import { logger, type Rspack } from '@rsbuild/core';
+import type { Rspack } from '@rsbuild/core';
 
 import { compile, compileWithCrossCompilerCache } from './processor';
 import type { MdxLoaderOptions } from './types';
