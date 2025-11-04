@@ -110,13 +110,18 @@ export interface PluginTwoslashOptions {
    * @default true
    */
   explicitTrigger?: boolean;
+  /**
+   * Cache the TypeScript language servers based on compiler options when `createTwoslasher`
+   * @default true
+   */
+  cache?: boolean;
 }
 
 /**
  * Plugin to applies Twoslash transformations to code blocks.
  */
 export function pluginTwoslash(options?: PluginTwoslashOptions): RspressPlugin {
-  const { explicitTrigger = true } = options || {};
+  const { explicitTrigger = true, cache = true } = options || {};
 
   return {
     name: '@rspress/plugin-twoslash',
@@ -131,6 +136,7 @@ export function pluginTwoslash(options?: PluginTwoslashOptions): RspressPlugin {
       config.markdown.shiki.transformers.push(
         transformerTwoslash({
           explicitTrigger,
+          cache,
           onShikiError: onError,
           onTwoslashError: onError,
           rendererRich: {

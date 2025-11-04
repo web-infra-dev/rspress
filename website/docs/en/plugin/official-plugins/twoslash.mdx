@@ -134,6 +134,7 @@ The plugin accepts an object with the following type:
 ```ts twoslash
 export interface PluginTwoslashOptions {
   explicitTrigger?: boolean;
+  cache?: boolean;
 }
 ```
 
@@ -143,3 +144,7 @@ export interface PluginTwoslashOptions {
 
 - If set to `false`, all TypeScript code blocks will be processed by default.
 - If set to `true`, only code blocks with the `twoslash` tag will be processed.
+
+### cache
+
+`cache` is used to cache the TypeScript language servers based on compiler options when [createTwoslasher](https://twoslash.netlify.app/refs/api#createtwoslasher). Default is `true`.
