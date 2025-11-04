@@ -43,9 +43,16 @@ export default async function mdxLoader(
   } catch (e) {
     if (e instanceof Error) {
       logger.debug(e);
-      // Pass the original error to preserve its stack trace
       // Enhance the message with filepath context for better error reporting
       e.message = `MDX compile error: ${e.message} in ${filepath}`;
+      // Truncate stack trace to first 10 lines for better readability
+      if (e.stack) {
+        const stackLines = e.stack.split('\n');
+        if (stackLines.length > 10) {
+          e.stack =
+            stackLines.slice(0, 10).join('\n') + '\n    ... (truncated)';
+        }
+      }
       callback(e);
     }
   }
