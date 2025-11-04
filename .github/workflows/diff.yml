@@ -33,6 +33,7 @@ jobs:
       - name: Install Dependencies and Build
         run: |
           pnpm install
+          
       - name: Build Demo Project
         run: |
           cd website
