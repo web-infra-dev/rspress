@@ -42,7 +42,6 @@ export default async function mdxLoader(
     }
   } catch (e) {
     if (e instanceof Error) {
-      logger.debug(e);
       // Enhance the message with filepath context for better error reporting
       e.message = `MDX compile error: ${e.message} in ${filepath}`;
       // Truncate stack trace to first 10 lines for better readability
