@@ -258,6 +258,12 @@ async function createInternalBuildConfig(
       },
     },
     source: {
+      preEntry: [
+        // ensure CSS orders and access @theme before @rspress/theme-default to avoid circular dependency
+        path.join(DEFAULT_THEME, './styles/index.js'), // 1. @rspress/theme-default global styles
+        'virtual-global-styles', // 2. virtual-global-styles
+        '@theme', // 3. import './index.css'; from 'theme/index.tsx'
+      ],
       include: [PACKAGE_ROOT],
       define: {
         'process.env.TEST': JSON.stringify(process.env.TEST),
@@ -369,20 +375,20 @@ async function createInternalBuildConfig(
           .test(/\.rspress[\\/]runtime[\\/]virtual-global-styles/)
           .merge({ sideEffects: true });
 
+        if (isSsg || isSsgMd) {
+          chain.optimization.splitChunks({});
+        }
+
         if (isSsg) {
           chain.output.filename(
             `${NODE_SSG_BUNDLE_FOLDER}/${NODE_SSG_BUNDLE_NAME}`,
           );
           chain.output.chunkFilename(`${NODE_SSG_BUNDLE_FOLDER}/[name].cjs`);
-          // For perf
-          chain.output.set('asyncChunks', false);
         } else if (isSsgMd) {
           chain.output.filename(
             `${NODE_SSG_MD_BUNDLE_FOLDER}/${NODE_SSG_MD_BUNDLE_NAME}`,
           );
           chain.output.chunkFilename(`${NODE_SSG_MD_BUNDLE_FOLDER}/[name].cjs`);
-          // For perf
-          chain.output.set('asyncChunks', false);
         }
       },
     },
@@ -399,10 +405,6 @@ async function createInternalBuildConfig(
             index:
               enableSSG && isProduction() ? SSR_CLIENT_ENTRY : CSR_CLIENT_ENTRY,
           },
-          preEntry: [
-            path.join(DEFAULT_THEME, './styles/index.js'),
-            'virtual-global-styles',
-          ],
           define: {
             'process.env.__SSR__': JSON.stringify(false),
             'process.env.__SSR_MD__': JSON.stringify(false),
