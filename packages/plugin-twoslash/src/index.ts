@@ -111,7 +111,7 @@ export interface PluginTwoslashOptions {
    */
   explicitTrigger?: boolean;
   /**
-   * Cache the TypeScript language servers based on compiler options when `createTwoslasher`
+   * Cache the TypeScript language servers based on compiler options when calling `createTwoslasher`
    * @default true
    */
   cache?: boolean;

@@ -14,9 +14,9 @@ bilibili
 biomejs
 Bluch
 brotli
-bunx
 browserslistrc
 bundleless
+bunx
 Bytedance
 caniuse
 chunkhash
@@ -120,9 +120,9 @@ rsbuild
 rsdoctor
 rsfamily
 rslib
+rslint
 rslog
 rspack
-rslint
 rspress
 rstack
 rstest
@@ -153,6 +153,7 @@ treeshaking
 tsbuildinfo
 tsdoc
 twoslash
+Twoslasher
 Unhead
 unocss
 unpatch
