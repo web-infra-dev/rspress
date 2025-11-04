@@ -1,4 +1,5 @@
 import { pluginSass } from '@rsbuild/plugin-sass';
+import { RsdoctorRspackPlugin } from '@rsdoctor/rspack-plugin';
 import { defineConfig } from '@rspress/core';
 import { transformerCompatibleMetaHighlight } from '@rspress/core/shiki-transformers';
 import { pluginAlgolia } from '@rspress/plugin-algolia';
@@ -16,6 +17,17 @@ import { pluginOpenGraph } from 'rsbuild-plugin-open-graph';
 // import { pluginFontOpenSans } from 'rspress-plugin-font-open-sans';
 
 const siteUrl = 'https://v2.rspress.rs';
+
+// Common RsdoctorRspackPlugin configuration
+const commonRsdoctorConfig = {
+  disableClientServer: true,
+  output: {
+    mode: 'brief' as const,
+    options: {
+      type: ['json'] as ('json' | 'html')[],
+    },
+  },
+};
 
 export default defineConfig({
   root: 'docs',
@@ -65,6 +77,22 @@ export default defineConfig({
         },
       }),
     ],
+    tools: {
+      rspack: async config => {
+        if (process.env.RSDOCTOR) {
+          config.plugins?.push(
+            new RsdoctorRspackPlugin({
+              ...commonRsdoctorConfig,
+              output: {
+                ...commonRsdoctorConfig.output,
+                ...(config.name === 'web' && { reportDir: './doc_build/web' }),
+              },
+            }),
+          );
+        }
+        return config;
+      },
+    },
   },
   route: {
     cleanUrls: true,
