@@ -1,4 +1,4 @@
-import { beforeEach, describe, expect, test, vi } from 'vitest';
+import { describe, expect, test } from 'vitest';
 import { compile } from '../processor';
 
 describe('remark-container', async () => {
@@ -13,10 +13,6 @@ describe('remark-container', async () => {
       routeService: null,
     });
   };
-
-  beforeEach(() => {
-    vi.clearAllMocks();
-  });
 
   test('No newline', async () => {
     const result = await process(`
