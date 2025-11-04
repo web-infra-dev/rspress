@@ -144,6 +144,7 @@ const str: string = 1;
 ```ts twoslash
 export interface PluginTwoslashOptions {
   explicitTrigger?: boolean;
+  cache?: boolean;
 }
 ```
 
@@ -153,3 +154,7 @@ export interface PluginTwoslashOptions {
 
 - 如果设置为 `false`，默认情况下所有 TypeScript 代码块都将被处理。
 - 如果设置为 `true`，只有带有 `twoslash` 标签的代码块才会被处理。
+
+### cache
+
+`cache` 用于在 [createTwoslasher](https://twoslash.netlify.app/refs/api#createtwoslasher) 时根据编译器选项缓存 TypeScript 语言服务器。默认值为 `true`。
