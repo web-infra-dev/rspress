@@ -43,10 +43,9 @@ export default async function mdxLoader(
   } catch (e) {
     if (e instanceof Error) {
       logger.debug(e);
-      callback({
-        message: `MDX compile error: ${e.message} in ${filepath}`,
-        name: `${filepath} compile error`,
-      });
+      // Enhance the error message with filepath context while preserving the stack trace
+      e.message = `MDX compile error: ${e.message} in ${filepath}`;
+      callback(e);
     }
   }
 }
