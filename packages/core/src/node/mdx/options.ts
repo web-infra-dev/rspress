@@ -9,6 +9,7 @@ import remarkGFM from 'remark-gfm';
 import type { PluggableList } from 'unified';
 import type { PluginDriver } from '../PluginDriver';
 import type { RouteService } from '../route/RouteService';
+import { remarkSplitMdx } from '../ssg-md/remarkSplitMdx';
 import { rehypeCodeMeta } from './rehypePlugins/codeMeta';
 import { rehypeHeaderAnchor } from './rehypePlugins/headerAnchor';
 import { createRehypeShikiOptions } from './rehypePlugins/shiki';
@@ -26,6 +27,7 @@ export async function createMDXOptions(options: {
   routeService: RouteService | null;
   pluginDriver: PluginDriver | null;
   addDependency?: Rspack.LoaderContext['addDependency'];
+  isSsgMd?: boolean;
 }): Promise<ProcessorOptions> {
   const {
     docDirectory,
@@ -34,6 +36,7 @@ export async function createMDXOptions(options: {
     filepath,
     pluginDriver,
     addDependency,
+    isSsgMd = false,
   } = options;
   const remarkLinkOptions = config?.markdown?.link;
   const format = path.extname(filepath).slice(1) as 'mdx' | 'md';
@@ -64,19 +67,35 @@ export async function createMDXOptions(options: {
     remarkPlugins: [
       remarkGFM,
       remarkToc,
-      remarkContainerSyntax,
+      !isSsgMd && remarkContainerSyntax,
       [remarkFileCodeBlock, { filepath, addDependency }],
       [
         remarkLink,
-        {
-          // we do cleanUrls in runtime side
-          cleanUrls: false,
-          root: docDirectory,
-          routeService,
-          remarkLinkOptions,
-        },
+        isSsgMd
+          ? {
+              cleanUrls: '.md',
+              root: docDirectory,
+              routeService,
+              remarkLinkOptions: {
+                checkDeadLinks: false,
+                autoPrefix: true,
+              },
+            }
+          : {
+              // we do cleanUrls in runtime side
+              cleanUrls: false,
+              root: docDirectory,
+              routeService,
+              remarkLinkOptions,
+            },
       ],
       remarkImage,
+      isSsgMd && [
+        remarkSplitMdx,
+        typeof config?.llms === 'object'
+          ? config.llms.remarkSplitMdxOptions
+          : undefined,
+      ],
       globalComponents.length && [
         remarkBuiltin,
         {
@@ -86,29 +105,33 @@ export async function createMDXOptions(options: {
       ...remarkPluginsFromConfig,
       ...remarkPluginsFromPlugins,
     ].filter(Boolean) as PluggableList,
-    rehypePlugins: [
-      rehypeHeaderAnchor,
-      ...(format === 'md'
-        ? [
-            // make the code node compatible with `rehype-raw` which will remove `node.data` unconditionally
-            rehypeCodeMeta,
-            // why adding rehype-raw?
-            // This is what permits to embed HTML elements with format 'md'
-            // See https://github.com/facebook/docusaurus/pull/8960
-            // See https://github.com/mdx-js/mdx/pull/2295#issuecomment-1540085960
-            [rehypeRaw, { passThrough: nodeTypes }],
-          ]
-        : []),
-      [rehypeShiki, createRehypeShikiOptions(showLineNumbers, shiki)],
-      [
-        rehypeExternalLinks,
-        {
-          target: '_blank',
-          rel: 'noopener noreferrer',
-        },
-      ],
-      ...rehypePluginsFromConfig,
-      ...rehypePluginsFromPlugins,
-    ] as PluggableList,
+    ...(isSsgMd
+      ? {}
+      : {
+          rehypePlugins: [
+            rehypeHeaderAnchor,
+            ...(format === 'md'
+              ? [
+                  // make the code node compatible with `rehype-raw` which will remove `node.data` unconditionally
+                  rehypeCodeMeta,
+                  // why adding rehype-raw?
+                  // This is what permits to embed HTML elements with format 'md'
+                  // See https://github.com/facebook/docusaurus/pull/8960
+                  // See https://github.com/mdx-js/mdx/pull/2295#issuecomment-1540085960
+                  [rehypeRaw, { passThrough: nodeTypes }],
+                ]
+              : []),
+            [rehypeShiki, createRehypeShikiOptions(showLineNumbers, shiki)],
+            [
+              rehypeExternalLinks,
+              {
+                target: '_blank',
+                rel: 'noopener noreferrer',
+              },
+            ],
+            ...rehypePluginsFromConfig,
+            ...rehypePluginsFromPlugins,
+          ] as PluggableList,
+        }),
   };
 }

@@ -37,7 +37,6 @@ jobs:
       - name: Build Demo Project
         run: |
           cd website
-          pnpm install
           RSDOCTOR=1 pnpm run build
 
       - name: Report Compressed Size

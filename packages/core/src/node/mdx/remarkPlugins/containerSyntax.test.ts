@@ -333,6 +333,18 @@ Line 2 with [link](http://example.com).
     expect(result).toMatchSnapshot();
   });
 
+  test('error when container type is unknown', async () => {
+    await expect(
+      process(`
+:::Tip
+This is a tip.
+:::
+`),
+    ).rejects.toThrow(
+      '[remarkContainerSyntax] Unknown container directive type "Tip". Supported types: tip, note, warning, caution, danger, info, details',
+    );
+  });
+
   test('empty blockquote', async () => {
     const result = await process(`
 

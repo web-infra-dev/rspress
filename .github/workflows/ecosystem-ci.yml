@@ -1,0 +1,70 @@
+name: Ecosystem CI
+
+on:
+  push:
+    branches: ['main']
+  workflow_dispatch:
+    inputs:
+      branch:
+        description: 'The branch of the Ecosystem CI run'
+        required: true
+        default: 'main'
+
+permissions:
+  contents: write
+  issues: write
+  pull-requests: write
+
+jobs:
+  changes:
+    runs-on: ubuntu-latest
+    if: github.repository == 'web-infra-dev/rspress' && github.event_name != 'workflow_dispatch'
+    outputs:
+      changed: ${{ steps.changes.outputs.changed }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@08eba0b27e820071cde6df949e0beb9ba4906955 # v4
+        with:
+          fetch-depth: 1
+
+      - uses: dorny/paths-filter@de90cc6fb38fc0963ad72b210f1f284cd68cea36 # v3.0.2
+        id: changes
+        with:
+          predicate-quantifier: 'every'
+          filters: |
+            changed:
+              - "!**/*.md"
+              - "!**/*.mdx"
+              - "!**/_meta.json"
+              - "!**/dictionary.txt"
+              - "!document/**"
+
+  ecosystem_ci_dispatch:
+    name: Dispatch ecosystem CI
+    runs-on: ubuntu-latest
+    if: github.repository == 'web-infra-dev/rspress' && github.event_name == 'workflow_dispatch'
+    steps:
+      - name: Trigger Ecosystem CI
+        uses: rspack-contrib/rstack-ecosystem-ci/.github/actions/ecosystem_ci_dispatch@main
+        with:
+          github-token: ${{ secrets.REPO_rspress_ECO_CI_GITHUB_TOKEN_NEXT }}
+          ecosystem-owner: web-infra-dev
+          ecosystem-repo: rspress
+          workflow-file: rspress-ecosystem-ci-selected.yml
+          client-payload: '{"ref":"${{ github.event.inputs.branch }}","repo":"web-infra-dev/rspress","suite":"-","suiteRefType":"precoded","suiteRef":"precoded"}'
+          branch: ${{ github.event.inputs.branch }}
+
+  ecosystem_ci_per_commit:
+    name: Run ecosystem CI per commit
+    needs: changes
+    runs-on: ubuntu-latest
+    if: github.repository == 'web-infra-dev/rspress' && github.event_name != 'workflow_dispatch' && needs.changes.outputs.changed == 'true'
+    steps:
+      - name: Trigger Ecosystem CI
+        uses: rspack-contrib/rstack-ecosystem-ci/.github/actions/ecosystem_ci_per_commit@main
+        with:
+          github-token: ${{ secrets.REPO_RSPRESS_ECO_CI_GITHUB_TOKEN_NEXT }}
+          ecosystem-owner: web-infra-dev
+          ecosystem-repo: rspress
+          workflow-file: rspress-ecosystem-ci-from-commit.yml
+          client-payload: '{"commitSHA":"${{ github.sha }}","updateComment":true,"repo":"web-infra-dev/rspress","suite":"-","suiteRefType":"precoded","suiteRef":"precoded"}'

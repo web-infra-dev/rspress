@@ -148,15 +148,19 @@ function normalizeLink(
 
   if (typeof cleanUrls === 'boolean') {
     url = normalizeHref(url, cleanUrls);
+    // preserve dead links
+    if (!routeService.isExistRoute(url)) {
+      deadLinks.set(nodeUrl, url);
+      return nodeUrl;
+    }
   } else {
     url = normalizeHref(url, false);
+    // preserve dead links
+    if (!routeService.isExistRoute(url)) {
+      deadLinks.set(nodeUrl, url);
+      return nodeUrl;
+    }
     url = url.replace(/\.html$/, cleanUrls);
-  }
-
-  // preserve dead links
-  if (!routeService.isExistRoute(url)) {
-    deadLinks.set(nodeUrl, url);
-    return nodeUrl;
   }
 
   if (search) {

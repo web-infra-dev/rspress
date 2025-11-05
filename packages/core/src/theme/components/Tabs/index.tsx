@@ -1,40 +1,91 @@
 import clsx from 'clsx';
 import {
   Children,
-  type ComponentPropsWithRef,
   type ForwardedRef,
   forwardRef,
   isValidElement,
   type ReactElement,
   type ReactNode,
-  useContext,
-  useEffect,
   useMemo,
   useState,
 } from 'react';
-import { TabDataContext } from '../../logic/TabDataContext';
 import { useStorageValue } from '../../logic/useStorageValue';
 import './index.scss';
 
 type TabItem = {
-  value?: string;
   label?: string | ReactNode;
   disabled?: boolean;
+  content?: ReactNode;
 };
 
 interface TabsProps {
   values?: ReactNode[] | ReadonlyArray<ReactNode> | TabItem[];
-  defaultValue?: string;
+  /**
+   * @default 0
+   */
+  defaultIndex?: number;
   onChange?: (index: number) => void;
   children: ReactNode;
+  /**
+   * If set, tabs with the same `groupId` will share the same active tab state via `localStorage`.
+   * @default undefined
+   */
   groupId?: string;
-  tabContainerClassName?: string;
   tabPosition?: 'left' | 'center';
   /**
    * It is very useful during the transition animation and the first screen rendering of Static Site Generation (SSG).
    * @default true
    */
   keepDOM?: boolean;
+
+  className?: string;
+  labelItemClassName?: string;
+  contentItemClassName?: string;
+}
+
+function getTabValuesFromChildren(
+  children: ReactElement<TabProps>[],
+  defaultValues: ReactNode[] | ReadonlyArray<ReactNode> | TabItem[] | undefined,
+): TabItem[] {
+  // 0. only values, values contain label and content
+  // <Tabs values={[{}, {}]}/>
+  if (defaultValues?.every(item => isTabItem(item) && item.content)) {
+    return defaultValues as TabItem[];
+  }
+
+  // 1. values only contain label
+  // <Tabs values={['Tab1', 'Tab2']}><Tab label="Tab1"/></Tab><Tab label="Tab2"/></Tab></Tabs>
+  if (defaultValues && defaultValues.length > 0) {
+    return defaultValues.map((item, index) => {
+      if (isTabItem(item)) {
+        return item;
+      }
+
+      return {
+        label: item,
+        content: children[index],
+      } satisfies TabItem;
+    });
+  }
+
+  // 2. no values
+  // <Tabs><Tab label="Tab1"/></Tab><Tab label="Tab2"/></Tab></Tabs>
+  return Children.map<TabItem, ReactElement<TabProps>>(
+    children,
+    (child, index) => {
+      if (isValidElement(child)) {
+        return {
+          label: child.props?.label || undefined,
+          content: children[index],
+        } satisfies TabItem;
+      }
+
+      return {
+        label: index,
+        content: children[index],
+      } satisfies TabItem;
+    },
+  );
 }
 
 function isTabItem(item: unknown): item is TabItem {
@@ -44,105 +95,44 @@ function isTabItem(item: unknown): item is TabItem {
   return false;
 }
 
-const renderTab = (item: ReactNode | TabItem) => {
-  if (isTabItem(item)) {
-    return item.label || item.value;
-  }
-  return item;
-};
-
-export const groupIdPrefix = 'rspress.tabs.';
+const groupIdPrefix = 'rspress.tabs.';
 
 export const Tabs = forwardRef(
   (props: TabsProps, ref: ForwardedRef<HTMLDivElement>): ReactElement => {
     const {
       values,
-      defaultValue,
+      defaultIndex,
       onChange,
       children: rawChildren,
       groupId,
       tabPosition = 'left',
-      tabContainerClassName,
+      className,
+      labelItemClassName,
+      contentItemClassName,
       keepDOM = true,
     } = props;
     // remove "\n" character when write JSX element in multiple lines, use Children.toArray for Tabs with no Tab element
     const children = Children.toArray(rawChildren).filter(
-      child => !(typeof child === 'string' && child.trim() === ''),
+      child =>
+        !(typeof child === 'string' && child.trim() === '') &&
+        isValidElement(child),
     ) as unknown as ReactElement<TabProps>[];
 
-    let tabValues = values || [];
+    const tabValues: TabItem[] = useMemo(() => {
+      return getTabValuesFromChildren(children, values);
+    }, [values, children]);
 
-    if (tabValues.length === 0) {
-      tabValues = Children.map<TabItem, ReactElement<TabProps>>(
-        children,
-        child => {
-          if (isValidElement(child)) {
-            return {
-              label: child.props?.label || undefined,
-              value:
-                child.props?.value ||
-                (child.props?.label as string) ||
-                undefined,
-            };
-          }
-
-          return {
-            label: undefined,
-            value: undefined,
-          };
-        },
-      );
-    }
-
-    const { tabData, setTabData } = useContext(TabDataContext);
-    const [activeIndex, setActiveIndex] = useState(() => {
-      if (defaultValue === undefined) {
-        return 0;
-      }
-
-      return tabValues.findIndex(item => {
-        if (typeof item === 'string') {
-          return item === defaultValue;
-        }
-        if (item && typeof item === 'object' && 'value' in item) {
-          return item.value === defaultValue;
-        }
-        return false;
-      });
-    });
+    const [activeIndex, setActiveIndex] = useState(defaultIndex ?? 0);
 
     const [storageIndex, setStorageIndex] = useStorageValue<string>(
       `${groupIdPrefix}${groupId}`,
       activeIndex.toString(),
     );
 
-    const syncIndex = useMemo(() => {
-      if (groupId) {
-        if (tabData[groupId] !== undefined) {
-          return tabData[groupId];
-        }
-
-        return Number.parseInt(storageIndex, 10);
-      }
-
-      return activeIndex;
-    }, [groupId && tabData[groupId]]);
-
-    // sync when other browser page trigger update
-    useEffect(() => {
-      if (groupId) {
-        const correctIndex = Number.parseInt(storageIndex, 10);
-
-        if (syncIndex !== correctIndex) {
-          setTabData({ ...tabData, [groupId]: correctIndex });
-        }
-      }
-    }, [storageIndex]);
-
-    const currentIndex = groupId ? syncIndex : activeIndex;
+    const currentIndex: number = groupId ? Number(storageIndex) : activeIndex;
 
     return (
-      <div className={clsx('rp-tabs', tabContainerClassName)} ref={ref}>
+      <div className={clsx('rp-tabs', className)} ref={ref}>
         {tabValues.length ? (
           <div
             className="rp-tabs__label rp-tabs__label--no-scrollbar"
@@ -151,34 +141,36 @@ export const Tabs = forwardRef(
                 tabPosition === 'center' ? 'center' : 'flex-start',
             }}
           >
-            {tabValues.map((item, index) => {
+            {tabValues.map(({ label }, index) => {
+              const isActive = index === currentIndex;
               return (
                 <div
-                  key={index}
+                  key={typeof label === 'string' ? label : index}
                   className={clsx(
                     'rp-tabs__label__item',
-                    currentIndex === index
+                    isActive
                       ? 'rp-tabs__label__item--selected'
                       : 'rp-tabs__label__item--not-selected',
+                    labelItemClassName,
                   )}
+                  data-index={index}
                   onClick={() => {
                     onChange?.(index);
                     if (groupId) {
-                      setTabData({ ...tabData, [groupId]: index });
                       setStorageIndex(index.toString());
                     } else {
                       setActiveIndex(index);
                     }
                   }}
                 >
-                  {renderTab(item)}
+                  {label}
                 </div>
               );
             })}
           </div>
         ) : null}
         <div className="rp-tabs__content">
-          {Children.map(children, (child, index) => {
+          {tabValues.map(({ label, content }, index) => {
             const isActive = index === currentIndex;
             if (!keepDOM && !isActive) {
               return null;
@@ -186,17 +178,18 @@ export const Tabs = forwardRef(
 
             return (
               <div
+                key={typeof label === 'string' ? label : index}
                 className={clsx(
                   'rp-tabs__content__item',
                   isActive
                     ? 'rp-tabs__content__item--active'
                     : 'rp-tabs__content__item--hidden',
+                  contentItemClassName,
                 )}
                 aria-hidden={!isActive}
                 data-index={index}
-                key={index}
               >
-                {child}
+                {content}
               </div>
             );
           })}
@@ -206,13 +199,12 @@ export const Tabs = forwardRef(
   },
 );
 
-export type TabProps = ComponentPropsWithRef<'div'> &
-  Pick<TabItem, 'label' | 'value'>;
+Tabs.displayName = 'Tabs';
 
-export function Tab({ children, ...props }: TabProps): ReactElement {
-  return (
-    <div {...props} className="rp-tab">
-      {children}
-    </div>
-  );
+export type TabProps = Pick<TabItem, 'label' | 'disabled'> & {
+  children: ReactNode;
+};
+
+export function Tab({ children }: TabProps): ReactElement {
+  return <>{children}</>;
 }

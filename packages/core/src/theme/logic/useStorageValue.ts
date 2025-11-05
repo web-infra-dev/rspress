@@ -1,27 +1,40 @@
-import { useCallback, useEffect, useState } from 'react';
+import { useCallback, useEffect, useLayoutEffect, useState } from 'react';
+
+const SYNC_STORAGE_EVENT_NAME = 'RSPRESS_SYNC_STORAGE_EVENT_NAME';
 
 /**
  * Read/update the value in localStorage, and keeping it in sync with other tabs.
  */
 export const useStorageValue = <T>(key: string, defaultValue: T) => {
-  const [value, setValueInternal] = useState<T>(() => {
-    if (typeof window === 'undefined') {
-      return defaultValue;
+  const [value, setValueInternal] = useState<T>(defaultValue);
+  // TODO: support SSR
+  useLayoutEffect(() => {
+    const storedValue = localStorage.getItem(key);
+    if (storedValue != null) {
+      setValueInternal(storedValue as T);
     }
-    return (localStorage.getItem(key) as T) ?? defaultValue;
-  });
+  }, []);
 
   const setValue = useCallback(
     (value: T) => {
-      setValueInternal(prev => {
-        const next = typeof value === 'function' ? value(prev) : value;
-        if (next == null) {
-          localStorage.removeItem(key);
-        } else {
-          localStorage.setItem(key, next);
-        }
-        return next;
-      });
+      const next = value;
+      if (next == null) {
+        localStorage.removeItem(key);
+      } else {
+        localStorage.setItem(key, next.toString());
+      }
+      setValueInternal(next);
+      dispatchEvent(
+        // send custom event to communicate within same page
+        // importantly this should not be a StorageEvent since those cannot
+        // be constructed with a non-built-in storage area
+        new CustomEvent<{ key: string; newValue: T }>(SYNC_STORAGE_EVENT_NAME, {
+          detail: {
+            key,
+            newValue: next,
+          },
+        }),
+      );
     },
     [key],
   );
@@ -37,6 +50,23 @@ export const useStorageValue = <T>(key: string, defaultValue: T) => {
       window.removeEventListener('storage', listener);
     };
   }, [key, defaultValue]);
+
+  // from same page
+  useEffect(() => {
+    const listener = (e: CustomEvent) => {
+      const { key: eventKey, newValue } = e.detail;
+      if (eventKey === key) {
+        setValueInternal((newValue as T) ?? defaultValue);
+      }
+    };
+    window.addEventListener(SYNC_STORAGE_EVENT_NAME, listener as EventListener);
+    return () => {
+      window.removeEventListener(
+        SYNC_STORAGE_EVENT_NAME,
+        listener as EventListener,
+      );
+    };
+  }, []);
 
   return [value, setValue] as const;
 };
