@@ -116,7 +116,10 @@ export const PageTabs = forwardRef(
     return (
       <>
         {/* First screen during SSR */}
-        <script>{injectScript}</script>
+        <script
+          suppressHydrationWarning
+          dangerouslySetInnerHTML={{ __html: injectScript }}
+        />
         <div className={clsx('rp-page-tabs', tabContainerClassName)} ref={ref}>
           {tabValues.length ? (
             <div
