@@ -54,16 +54,23 @@ export default async function mdxLoader(
   } catch (e) {
     if (e instanceof Error) {
       // Enhance the message with filepath context for better error reporting
-      e.message = `MDX compile error: ${e.message} in ${filepath}`;
+      const message = `MDX compile error: ${e.message} in ${filepath}`;
+      let stack: string | undefined = e.stack;
       // Truncate stack trace to first 10 lines for better readability
-      if (e.stack) {
-        const stackLines = e.stack.split('\n');
+      if (stack) {
+        const stackLines = stack.split('\n');
         if (stackLines.length > 10) {
-          e.stack =
-            stackLines.slice(0, 10).join('\n') + '\n    ... (truncated)';
+          stack = stackLines.slice(0, 10).join('\n') + '\n    ... (truncated)';
         }
       }
-      callback(e);
+      // why not `callback(e)` ?
+      // https://github.com/web-infra-dev/rspack/issues/12080
+      callback({
+        message,
+        ...(stack ? { stack } : {}),
+        name: e.name,
+        cause: e.cause,
+      } as Error);
     }
   }
 }
