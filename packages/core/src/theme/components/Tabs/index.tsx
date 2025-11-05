@@ -106,7 +106,7 @@ export const Tabs = forwardRef(
       children: rawChildren,
       groupId,
       tabPosition = 'left',
-      className: tabContainerClassName,
+      className,
       labelItemClassName,
       contentItemClassName,
       keepDOM = true,
@@ -132,7 +132,7 @@ export const Tabs = forwardRef(
     const currentIndex: number = groupId ? Number(storageIndex) : activeIndex;
 
     return (
-      <div className={clsx('rp-tabs', tabContainerClassName)} ref={ref}>
+      <div className={clsx('rp-tabs', className)} ref={ref}>
         {tabValues.length ? (
           <div
             className="rp-tabs__label rp-tabs__label--no-scrollbar"
