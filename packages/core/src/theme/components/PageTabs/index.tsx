@@ -46,7 +46,7 @@ export interface PageTabsProps {
    */
   id?: string;
   children: ReactNode;
-  tabContainerClassName?: string;
+  className?: string;
   tabPosition?: 'left' | 'center';
 }
 
@@ -67,9 +67,9 @@ function usePageTabs(id: string, children: ReactElement<PageTabProps>[]) {
   }
 
   useEffect(() => {
-    const currIndex = searchParams.get(id) ?? '0';
+    const currIndex = Number(searchParams.get(id) ?? '0');
     if (!Number.isNaN(currIndex)) {
-      document.body.dataset.pageTabsActiveIndex = currIndex;
+      document.body.dataset.pageTabsActiveIndex = currIndex.toString();
     }
   }, [searchParams]);
 
@@ -95,7 +95,7 @@ export const PageTabs = forwardRef(
     const {
       children: rawChildren,
       tabPosition = 'left',
-      tabContainerClassName,
+      className,
       id = 'page',
     } = props;
 
@@ -120,7 +120,7 @@ export const PageTabs = forwardRef(
           suppressHydrationWarning
           dangerouslySetInnerHTML={{ __html: injectScript }}
         />
-        <div className={clsx('rp-page-tabs', tabContainerClassName)} ref={ref}>
+        <div className={clsx('rp-page-tabs', className)} ref={ref}>
           {tabValues.length ? (
             <div
               className="rp-page-tabs__label"
