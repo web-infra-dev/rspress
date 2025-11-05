@@ -114,14 +114,22 @@ export function NavScreenMenuItemWithChildren({
       />
 
       <div
-        className={`rp-nav-screen-menu-item__group ${isOpen ? 'rp-nav-screen-menu-item__group--open' : ''}`}
+        className="rp-nav-screen-menu-item__group"
+        style={{
+          display: 'grid',
+          gridTemplateRows: isOpen ? '1fr' : '0fr',
+          transition: 'grid-template-rows .2s ease-out',
+          width: '100%',
+        }}
       >
-        {menuItem.items.map(item => (
-          <NavScreenMenuItemWithChildren
-            key={item.text}
-            menuItem={item as any}
-          />
-        ))}
+        <div className="rp-nav-screen-menu-item__group-inner">
+          {menuItem.items.map(item => (
+            <NavScreenMenuItemWithChildren
+              key={item.text}
+              menuItem={item as any}
+            />
+          ))}
+        </div>
       </div>
     </>
   ) : (
