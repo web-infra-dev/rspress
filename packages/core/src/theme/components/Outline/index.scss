@@ -1,11 +1,16 @@
+:root {
+  --rp-outline-padding-x: 20px;
+}
+
 .rp-outline {
   display: flex;
   flex-direction: column;
   border-left: 1px solid var(--rp-c-divider-light);
-  padding-left: 20px;
-  padding-right: 20px;
 
   &__title {
+    padding-left: var(--rp-outline-padding-x);
+    padding-right: var(--rp-outline-padding-x);
+
     font-size: 14px;
     font-weight: 700;
     height: 32px;
@@ -23,6 +28,9 @@
   }
 
   &__divider {
+    margin-left: var(--rp-outline-padding-x);
+    margin-right: var(--rp-outline-padding-x);
+
     height: 1px;
     background: var(--rp-c-divider-light);
     margin-top: 16px;
@@ -30,6 +38,9 @@
   }
 
   &__toc {
+    padding-left: var(--rp-outline-padding-x);
+    padding-right: var(--rp-outline-padding-x);
+
     display: flex;
     flex-direction: column;
     flex: 1;
@@ -40,5 +51,10 @@
       max-height: 60vh;
       overflow: auto scroll;
     }
+  }
+
+  &__bottom {
+    padding-left: var(--rp-outline-padding-x);
+    padding-right: var(--rp-outline-padding-x);
   }
 }

@@ -26,7 +26,7 @@
       width: 1px;
       background-color: var(--rp-c-brand);
       position: absolute;
-      left: -20px;
+      left: calc(-1 * var(--rp-outline-padding-x));
       top: 0px;
     }
   }
