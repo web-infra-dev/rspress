@@ -18,7 +18,6 @@ import { pluginOpenGraph } from 'rsbuild-plugin-open-graph';
 
 const siteUrl = 'https://v2.rspress.rs';
 
-// Common RsdoctorRspackPlugin configuration
 const commonRsdoctorConfig = {
   disableClientServer: true,
   output: {
