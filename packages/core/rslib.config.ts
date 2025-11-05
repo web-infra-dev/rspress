@@ -22,6 +22,22 @@ export default defineConfig({
   plugins: [pluginPublint()],
   lib: [
     {
+      bundle: false,
+      dts: false,
+      format: 'esm',
+      syntax: 'es2022',
+      source: {
+        entry: {
+          index: './src/node/ssg-md/react/*.ts',
+        },
+      },
+      output: {
+        distPath: {
+          root: './dist/_private/react',
+        },
+      },
+    },
+    {
       format: 'esm',
       syntax: 'es2022',
       source: {

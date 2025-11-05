@@ -1,9 +1,4 @@
-import {
-  addLeadingSlash,
-  addTrailingSlash,
-  type SiteData,
-  type UserConfig,
-} from '@rspress/shared';
+import type { SiteData, UserConfig } from '@rspress/shared';
 import { getIconUrlPath } from '@rspress/shared/node-utils';
 import { normalizeThemeConfig } from './normalizeThemeConfig';
 
@@ -18,13 +13,8 @@ export async function createSiteData(userConfig: UserConfig): Promise<{
     tempSearchObj.searchHooks = undefined;
   }
 
-  const { base } = userConfig;
-
-  // TODO: base can be normalized in compile time side in an earlier stage
-  const normalizedBase = addTrailingSlash(addLeadingSlash(base ?? '/'));
-
   const siteData: Omit<SiteData, 'root' | 'pages'> = {
-    base: normalizedBase,
+    base: userConfig.base ?? '/',
     title: userConfig?.title || '',
     description: userConfig?.description || '',
     icon: getIconUrlPath(userConfig?.icon) || '',

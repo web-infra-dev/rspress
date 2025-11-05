@@ -10,6 +10,10 @@ export interface MdxLoaderOptions {
   checkDeadLinks: boolean;
   routeService: RouteService;
   pluginDriver: PluginDriver;
+  /**
+   * @default false
+   */
+  isSsgMd?: boolean;
 }
 
 export interface PageMeta {

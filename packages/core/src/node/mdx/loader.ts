@@ -1,4 +1,4 @@
-import { logger, type Rspack } from '@rsbuild/core';
+import type { Rspack } from '@rsbuild/core';
 
 import { compile, compileWithCrossCompilerCache } from './processor';
 import type { MdxLoaderOptions } from './types';
@@ -12,13 +12,23 @@ export default async function mdxLoader(
 
   const options = this.getOptions();
   const filepath = this.resourcePath;
-  const { config, docDirectory, routeService, pluginDriver } = options;
+  const {
+    config,
+    docDirectory,
+    routeService,
+    pluginDriver,
+    isSsgMd = false,
+  } = options;
 
   const crossCompilerCache = config?.markdown?.crossCompilerCache ?? true;
 
   try {
     // TODO wrong but good enough for now (example: "build --watch")
-    if (crossCompilerCache && process.env.NODE_ENV === 'production') {
+    if (
+      crossCompilerCache &&
+      process.env.NODE_ENV === 'production' &&
+      !isSsgMd
+    ) {
       const compileResult = await compileWithCrossCompilerCache({
         source,
         filepath,
@@ -37,16 +47,30 @@ export default async function mdxLoader(
         pluginDriver,
         routeService,
         addDependency: this.addDependency,
+        isSsgMd,
       });
       callback(null, compileResult);
     }
   } catch (e) {
     if (e instanceof Error) {
-      logger.debug(e);
+      // Enhance the message with filepath context for better error reporting
+      const message = `MDX compile error: ${e.message} in ${filepath}`;
+      let stack: string | undefined = e.stack;
+      // Truncate stack trace to first 10 lines for better readability
+      if (stack) {
+        const stackLines = stack.split('\n');
+        if (stackLines.length > 10) {
+          stack = stackLines.slice(0, 10).join('\n') + '\n    ... (truncated)';
+        }
+      }
+      // why not `callback(e)` ?
+      // https://github.com/web-infra-dev/rspack/issues/12080
       callback({
-        message: `MDX compile error: ${e.message} in ${filepath}`,
-        name: `${filepath} compile error`,
-      });
+        message,
+        ...(stack ? { stack } : {}),
+        name: e.name,
+        cause: e.cause,
+      } as Error);
     }
   }
 }

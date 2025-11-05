@@ -21,6 +21,44 @@ export interface Route {
   lang: string;
 }
 
+// #region RemarkSplitMdxOptions
+/**
+ * Filter rule format: [specifiers, source]
+ * - specifiers: Array of component/function names to match
+ * - source: Import source to match
+ *
+ * Example: [['Table', 'Button'], '@lynx']
+ * Matches: import { Table, Button } from '@lynx'
+ */
+type FilterRule = [string[], string];
+
+interface RemarkSplitMdxOptions {
+  /**
+   * Include rules for filtering imports and JSX elements
+   * Format: [[specifiers, source], ...]
+   *
+   * @example
+   * includes: [
+   *   [['Table', 'Button'], '@lynx'],
+   *   [['Card'], 'antd']
+   * ]
+   */
+  includes?: FilterRule[];
+
+  /**
+   * Exclude rules for filtering imports and JSX elements
+   * Takes precedence over includes
+   * Format: [[specifiers, source], ...]
+   *
+   * @example
+   * excludes: [
+   *   [['LegacyTable'], '@lynx']
+   * ]
+   */
+  excludes?: FilterRule[];
+}
+// #endregion
+
 export interface RouteMeta {
   routePath: string;
   absolutePath: string;
@@ -167,6 +205,20 @@ export interface UserConfig<ThemeConfig = DefaultThemeConfig> {
          * @default []
          */
         experimentalExcludeRoutePaths?: (string | RegExp)[];
+      };
+
+  /**
+   * Whether to enable llms and ssg-md
+   * @default false
+   * @experimental
+   */
+  llms?:
+    | boolean
+    | {
+        /**
+         * @experimental
+         */
+        remarkSplitMdxOptions?: RemarkSplitMdxOptions;
       };
   /**
    * Whether to enable medium-zoom
