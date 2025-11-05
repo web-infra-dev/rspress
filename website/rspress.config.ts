@@ -64,6 +64,9 @@ export default defineConfig({
     }),
   ],
   builderConfig: {
+    performance: {
+      buildCache: false,
+    },
     plugins: [
       pluginSass(),
       pluginGoogleAnalytics({ id: 'G-66B2Z6KG0J' }),
