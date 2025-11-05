@@ -145,6 +145,7 @@ export const Tabs = forwardRef(
               const isActive = index === currentIndex;
               return (
                 <div
+                  key={typeof label === 'string' ? label : index}
                   className={clsx(
                     'rp-tabs__label__item',
                     isActive
@@ -161,7 +162,6 @@ export const Tabs = forwardRef(
                       setActiveIndex(index);
                     }
                   }}
-                  key={typeof label === 'string' ? label : index}
                 >
                   {label}
                 </div>
@@ -178,6 +178,7 @@ export const Tabs = forwardRef(
 
             return (
               <div
+                key={typeof label === 'string' ? label : index}
                 className={clsx(
                   'rp-tabs__content__item',
                   isActive
@@ -187,7 +188,6 @@ export const Tabs = forwardRef(
                 )}
                 aria-hidden={!isActive}
                 data-index={index}
-                key={typeof label === 'string' ? label : index}
               >
                 {content}
               </div>
