@@ -1,3 +1,4 @@
+import { HomeFeature } from '@rspress/core/theme';
 import { CodeBlockRuntime, type CodeBlockRuntimeProps } from '@theme';
 import { useRef } from 'react';
 import styles from './LiveCodeEditor.module.scss';
@@ -20,6 +21,7 @@ export function LiveCodeEditor({
   return (
     <div className={styles.editorContainer}>
       <div className={`${styles.codeBlockWrapper} rp-force-wrap`}>
+        <HomeFeature />
         <CodeBlockRuntime {...rest} code={value} />
         {!disabled && (
           <textarea
