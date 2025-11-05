@@ -57,8 +57,6 @@ export function SidebarGroup(props: SidebarGroupProps) {
   const { collapsed = false, collapsible = true } =
     item as NormalizedSidebarGroup;
 
-  console.log(collapsed, collapsible, 111111111);
-
   const toggleCollapse = (): void => {
     // update collapsed state
     setSidebarData(sidebarData => {
