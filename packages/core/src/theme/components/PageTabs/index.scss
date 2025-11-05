@@ -26,7 +26,9 @@
       body[data-page-tabs-active-index='2'] &[data-index='2'],
       body[data-page-tabs-active-index='3'] &[data-index='3'],
       body[data-page-tabs-active-index='4'] &[data-index='4'],
-      body[data-page-tabs-active-index='5'] &[data-index='5'] {
+      body[data-page-tabs-active-index='5'] &[data-index='5'],
+      body[data-page-tabs-active-index='6'] &[data-index='6'],
+      body[data-page-tabs-active-index='7'] &[data-index='7'] {
         font-weight: 700;
         color: var(--rp-c-text-0);
         border-bottom: 2px solid var(--rp-c-brand-dark);
@@ -48,7 +50,9 @@
       body[data-page-tabs-active-index='2'] &[data-index='2'],
       body[data-page-tabs-active-index='3'] &[data-index='3'],
       body[data-page-tabs-active-index='4'] &[data-index='4'],
-      body[data-page-tabs-active-index='5'] &[data-index='5'] {
+      body[data-page-tabs-active-index='5'] &[data-index='5'],
+      body[data-page-tabs-active-index='6'] &[data-index='6'],
+      body[data-page-tabs-active-index='7'] &[data-index='7'] {
         display: block;
       }
     }

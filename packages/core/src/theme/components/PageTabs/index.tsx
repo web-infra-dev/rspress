@@ -73,13 +73,13 @@ function usePageTabs(id: string, children: ReactElement<PageTabProps>[]) {
     }
   }, [searchParams]);
 
-  const injectScript = `
-    const urlSearchParams = new URLSearchParams(window.location.search);
-    const currIndex = Number(urlSearchParams.get('${id}') || 0);
+  const injectScript = `(function () {
+    var searchParams = new URLSearchParams(window.location.search);
+    var currIndex = Number(searchParams.get('${id}') || 0);
     if (!Number.isNaN(currIndex)) {
       document.body.dataset.pageTabsActiveIndex = currIndex;
     }
-  `;
+  })();`;
 
   return {
     tabValues,
@@ -115,6 +115,7 @@ export const PageTabs = forwardRef(
 
     return (
       <>
+        {/* First screen during SSR */}
         <script>{injectScript}</script>
         <div className={clsx('rp-page-tabs', tabContainerClassName)} ref={ref}>
           {tabValues.length ? (
