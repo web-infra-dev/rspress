@@ -1,3 +1,4 @@
+import { existsSync } from 'node:fs';
 import fs from 'node:fs/promises';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
@@ -36,8 +37,7 @@ function getThemeComponentsPath(): string {
   // Try to use source path first (for development), then fallback to dist path
   try {
     // Synchronously check if source path exists - this is only used for path resolution
-    const fs = require('node:fs');
-    if (fs.existsSync(srcThemePath)) {
+    if (existsSync(srcThemePath)) {
       return srcThemePath;
     }
   } catch {
@@ -118,8 +118,6 @@ async function transformImports(filePath: string): Promise<void> {
   if (transformed !== content) {
     await fs.writeFile(filePath, transformed, 'utf-8');
   }
-
-  return;
 }
 
 /**
