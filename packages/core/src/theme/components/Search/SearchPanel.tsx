@@ -391,7 +391,7 @@ export function SearchPanel({ focused, setFocused }: SearchPanelProps) {
     return (
       <Tabs
         values={tabValues}
-        tabContainerClassName="rp-search-panel__tab-container"
+        className="rp-search-panel__tabs"
         onChange={index => {
           setResultTabIndex(index);
           setCurrentSuggestionIndex(0);

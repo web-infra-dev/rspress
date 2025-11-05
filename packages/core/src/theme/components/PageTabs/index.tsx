@@ -1,44 +1,47 @@
-import { useLocation, useNavigate } from '@rspress/core/runtime';
+import { useSearchParams } from '@rspress/core/runtime';
 import clsx from 'clsx';
 import {
   Children,
-  type ComponentPropsWithRef,
   type ForwardedRef,
   forwardRef,
   isValidElement,
   type ReactElement,
   type ReactNode,
+  useEffect,
   useMemo,
 } from 'react';
 import './index.scss';
 
-type TabItem = {
-  value?: string;
+type PageTabItem = {
   label?: string | ReactNode;
+  content?: ReactNode;
 };
 
 function getTabValuesFromChildren(
   children: ReactElement<PageTabProps>[],
-): TabItem[] {
-  return Children.map<TabItem, ReactElement<PageTabProps>>(children, child => {
-    if (isValidElement(child)) {
-      return {
-        label: child.props?.label || undefined,
-        value:
-          child.props?.value || (child.props?.label as string) || undefined,
-      };
-    }
+): PageTabItem[] {
+  return Children.map<PageTabItem, ReactElement<PageTabProps>>(
+    children,
+    (child, index) => {
+      if (isValidElement(child)) {
+        return {
+          label: child.props?.label || undefined,
+          content: children[index],
+        } satisfies PageTabItem;
+      }
 
-    return {
-      label: undefined,
-      value: undefined,
-    };
-  });
+      return {
+        label: index,
+        content: children[index],
+      } satisfies PageTabItem;
+    },
+  );
 }
 
 export interface PageTabsProps {
-  values?: ReactNode[] | ReadonlyArray<ReactNode> | TabItem[];
+  values?: ReactNode[] | ReadonlyArray<ReactNode> | PageTabItem[];
   /**
+   * determine the query parameter name for the current tab
    * @default 'page''
    */
   id?: string;
@@ -47,52 +50,41 @@ export interface PageTabsProps {
   tabPosition?: 'left' | 'center';
 }
 
-function isTabItem(item: unknown): item is TabItem {
-  if (item && typeof item === 'object' && 'label' in item) {
-    return true;
-  }
-  return false;
-}
-
-const renderTab = (item: ReactNode | TabItem) => {
-  if (isTabItem(item)) {
-    return item.label || item.value;
-  }
-  return item;
-};
-
-function usePageTabs(id: string, rawChildren: ReactNode) {
-  // remove "\n" character when write JSX element in multiple lines, use Children.toArray for Tabs with no Tab element
-  const children = Children.toArray(rawChildren).filter(
-    child => !(typeof child === 'string' && child.trim() === ''),
-  ) as unknown as ReactElement<PageTabProps>[];
-  const navigate = useNavigate();
+function usePageTabs(id: string, children: ReactElement<PageTabProps>[]) {
+  const [searchParams, setSearchParams] = useSearchParams();
 
   const tabValues = useMemo(() => {
     return getTabValuesFromChildren(children);
-  }, [rawChildren]);
-
-  const { search } = useLocation();
+  }, [children]);
 
   function navigateToTab(index: number) {
-    const urlSearchParams = new URLSearchParams(search);
     if (index === 0) {
-      urlSearchParams.delete(id);
+      searchParams.delete(id);
     } else {
-      urlSearchParams.set(id, String(index));
+      searchParams.set(id, String(index));
     }
-    navigate({
-      search: urlSearchParams.toString(),
-    });
+    setSearchParams(searchParams);
   }
 
-  const currentIndex = Number(new URLSearchParams(search).get(id)) || 0;
+  useEffect(() => {
+    const currIndex = searchParams.get(id) ?? '0';
+    if (!Number.isNaN(currIndex)) {
+      document.body.dataset.pageTabsActiveIndex = currIndex;
+    }
+  }, [searchParams]);
+
+  const injectScript = `
+    const urlSearchParams = new URLSearchParams(window.location.search);
+    const currIndex = Number(urlSearchParams.get('${id}') || 0);
+    if (!Number.isNaN(currIndex)) {
+      document.body.dataset.pageTabsActiveIndex = currIndex;
+    }
+  `;
 
   return {
-    children,
-    currentIndex,
     tabValues,
     navigateToTab,
+    injectScript,
   };
 }
 
@@ -107,16 +99,23 @@ export const PageTabs = forwardRef(
       id = 'page',
     } = props;
 
-    const { children, currentIndex, tabValues, navigateToTab } = usePageTabs(
+    // remove "\n" character when write JSX element in multiple lines, use Children.toArray for Tabs with no Tab element
+    const children = Children.toArray(rawChildren).filter(
+      child =>
+        !(typeof child === 'string' && child.trim() === '') &&
+        isValidElement(child),
+    ) as unknown as ReactElement<PageTabProps>[];
+
+    const { tabValues, navigateToTab, injectScript } = usePageTabs(
       id,
-      rawChildren,
+      children,
     );
 
     renderCountForTocUpdate++;
 
     return (
       <>
-        {/* <script>{`window.addEventLi`}</script> */}
+        <script>{injectScript}</script>
         <div className={clsx('rp-page-tabs', tabContainerClassName)} ref={ref}>
           {tabValues.length ? (
             <div
@@ -126,44 +125,31 @@ export const PageTabs = forwardRef(
                   tabPosition === 'center' ? 'center' : 'flex-start',
               }}
             >
-              {tabValues.map((item, index) => {
+              {tabValues.map(({ label }, index) => {
                 return (
                   <div
-                    key={index}
-                    className={clsx(
-                      'rp-page-tabs__label__item',
-                      currentIndex === index
-                        ? 'rp-page-tabs__label__item--selected'
-                        : 'rp-page-tabs__label__item--not-selected',
-                    )}
+                    key={typeof label === 'string' ? label : index}
+                    className="rp-page-tabs__label__item"
+                    data-index={index}
                     onClick={() => {
-                      if (item.value) {
-                        navigateToTab(index);
-                      }
+                      navigateToTab(index);
                     }}
                   >
-                    {renderTab(item)}
+                    {label}
                   </div>
                 );
               })}
             </div>
           ) : null}
           <div className="rp-page-tabs__content">
-            {Children.map(children, (child, index) => {
-              const isActive = index === currentIndex;
+            {tabValues.map(({ label, content }, index) => {
               return (
                 <div
-                  className={clsx(
-                    'rp-page-tabs__content__item',
-                    isActive
-                      ? 'rp-page-tabs__content__item--active'
-                      : 'rp-page-tabs__content__item--hidden',
-                  )}
-                  aria-hidden={!isActive}
+                  key={typeof label === 'string' ? label : index}
+                  className="rp-page-tabs__content__item"
                   data-index={index}
-                  key={index}
                 >
-                  {child}
+                  {content}
                 </div>
               );
             })}
@@ -182,8 +168,9 @@ export const PageTabs = forwardRef(
   },
 );
 
-export type PageTabProps = ComponentPropsWithRef<'div'> &
-  Pick<TabItem, 'label' | 'value'>;
+export type PageTabProps = Pick<PageTabItem, 'label'> & {
+  children?: ReactNode;
+};
 
 export function PageTab({ children }: PageTabProps): ReactElement {
   return <>{children}</>;
