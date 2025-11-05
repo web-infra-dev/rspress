@@ -64,9 +64,6 @@ export default defineConfig({
     }),
   ],
   builderConfig: {
-    performance: {
-      buildCache: false,
-    },
     plugins: [
       pluginSass(),
       pluginGoogleAnalytics({ id: 'G-66B2Z6KG0J' }),
@@ -81,7 +78,7 @@ export default defineConfig({
       }),
     ],
     tools: {
-      rspack: async config => {
+      rspack: config => {
         if (process.env.RSDOCTOR) {
           config.plugins?.push(
             new RsdoctorRspackPlugin({
