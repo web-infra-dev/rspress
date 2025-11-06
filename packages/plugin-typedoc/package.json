@@ -33,8 +33,8 @@
     "reset": "rimraf ./**/node_modules"
   },
   "dependencies": {
-    "typedoc": "0.24.8",
-    "typedoc-plugin-markdown": "3.17.1"
+    "typedoc": "0.28.14",
+    "typedoc-plugin-markdown": "4.9.0"
   },
   "devDependencies": {
     "@microsoft/api-extractor": "^7.53.3",
