@@ -1,3 +1,4 @@
+import { useLang } from '@rspress/core/runtime';
 import {
   Banner,
   HomeLayout as BasicHomeLayout,
@@ -16,9 +17,6 @@ import {
 } from '@rspress/plugin-llms/runtime';
 import { NavIcon } from '@rstack-dev/doc-ui/nav-icon';
 import { ToolStack } from './components/ToolStack';
-
-import './index.css';
-import { useLang } from '@rspress/core/runtime';
 
 function HomeLayout() {
   return (

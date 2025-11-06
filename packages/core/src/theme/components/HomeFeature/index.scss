@@ -6,9 +6,11 @@
   flex-wrap: wrap;
   max-width: 72rem;
   gap: var(--rp-home-feature-gap);
+  padding: 10px;
 
   &__item {
     width: 100%;
+    position: relative;
 
     &--span-2,
     &--span-4,
@@ -52,6 +54,7 @@
   }
 
   &__item-wrapper {
+    position: relative;
     height: 100%;
   }
 
@@ -61,6 +64,7 @@
     border-radius: 2rem;
     border: 1px solid var(--rp-c-divider-light);
     background: var(--rp-home-feature-bg);
+    // fill: var(--rp-home-feature-bg-fill);
     backdrop-filter: blur(10px);
     transition: all 0.3s;
 

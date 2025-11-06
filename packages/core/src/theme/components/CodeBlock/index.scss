@@ -4,13 +4,9 @@
   border: var(--rp-code-block-border);
   overflow-x: auto;
   transition: none;
-
-  @media (min-width: 641px) {
-    border-radius: var(--rp-radius);
-  }
+  border-radius: var(--rp-radius);
 
   @media (max-width: 640px) {
-    border-radius: var(--rp-radius-small);
     margin: 24px 0;
     contain: content;
   }

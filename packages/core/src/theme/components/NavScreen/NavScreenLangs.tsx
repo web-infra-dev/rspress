@@ -2,7 +2,6 @@ import { useState } from 'react';
 import { useLangsMenu } from '../Nav/hooks';
 import './NavScreenLangs.scss';
 import { Link } from '@theme';
-import clsx from 'clsx';
 import { SvgDown } from './NavScreenMenuItem';
 
 export function NavScreenLangs() {
@@ -16,27 +15,29 @@ export function NavScreenLangs() {
         <div className="rp-nav-screen-langs__right">
           {activeValue}
           <SvgDown
-            className={clsx('rp-nav-screen-langs__icon', {
-              'rp-nav-screen-langs__icon--open': isOpen,
-            })}
+            className={`rp-nav-screen-langs__icon ${isOpen ? 'rp-nav-screen-langs__icon--open' : ''}`}
           />
         </div>
       </div>
       <div
-        className={clsx(
-          'rp-nav-screen-langs-group',
-          isOpen && 'rp-nav-screen-langs-group--open',
-        )}
+        className="rp-nav-screen-langs-group"
+        style={{
+          display: 'grid',
+          gridTemplateRows: isOpen ? '1fr' : '0fr',
+          transition: 'grid-template-rows 0.2s ease-out',
+        }}
       >
-        {items.map(item => (
-          <Link
-            key={item.text}
-            href={item.link}
-            className={`rp-nav-screen-langs-group__item`}
-          >
-            {item.text}
-          </Link>
-        ))}
+        <div className="rp-nav-screen-langs-group__inner">
+          {items.map(item => (
+            <Link
+              key={item.text}
+              href={item.link}
+              className={`rp-nav-screen-langs-group__item`}
+            >
+              {item.text}
+            </Link>
+          ))}
+        </div>
       </div>
     </>
   ) : null;
