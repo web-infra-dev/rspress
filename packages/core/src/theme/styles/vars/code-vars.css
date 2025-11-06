@@ -6,7 +6,7 @@ html:not(.rp-dark) {
   --rp-code-block-color: rgb(46, 52, 64);
   --rp-code-block-bg: var(--rp-c-bg);
 
-  --rp-code-block-border: 1px solid #e5e6eb;
+  --rp-code-block-border: 1px solid var(--rp-c-divider-light);
 }
 
 /* Dark Mode */
@@ -17,5 +17,5 @@ html.rp-dark {
   --rp-code-block-color: rgb(229, 231, 235);
   --rp-code-block-bg: var(--rp-c-bg);
 
-  --rp-code-block-border: 1px solid #242424;
+  --rp-code-block-border: 1px solid var(--rp-c-divider-light);
 }

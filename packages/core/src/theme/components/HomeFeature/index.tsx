@@ -4,6 +4,7 @@ import type { JSX } from 'react';
 import { renderHtmlOrText } from '../../logic/utils';
 import { useNavigate } from '../Link/useNavigate';
 import './index.scss';
+import { useCardAnimation } from './useCardAnimation';
 
 const getGridClass = (feature: Feature): string => {
   const { span } = feature;
@@ -24,17 +25,19 @@ const getGridClass = (feature: Feature): string => {
 };
 
 function HomeFeatureItem({ feature }: { feature: Feature }): JSX.Element {
-  const { icon, title, details, link: rawLink } = feature;
+  const { icon, title, details, link } = feature;
 
-  const link = rawLink;
   const navigate = useNavigate();
+  const { innerProps, outerProps, outerRef, shineDom } = useCardAnimation();
 
   return (
     <div
       key={title}
+      {...outerProps}
       className={`rp-home-feature__item ${getGridClass(feature)}`}
+      ref={outerRef}
     >
-      <div className="rp-home-feature__item-wrapper">
+      <div className="rp-home-feature__item-wrapper" {...innerProps}>
         <article
           key={title}
           className={`rp-home-feature__card ${link ? 'rp-home-feature__card--clickable' : ''}`}
@@ -60,6 +63,7 @@ function HomeFeatureItem({ feature }: { feature: Feature }): JSX.Element {
           ></p>
         </article>
       </div>
+      {shineDom}
     </div>
   );
 }

@@ -67,12 +67,7 @@
       height: 8px;
       margin-right: 8px;
       border-radius: 50%;
-      background: linear-gradient(
-        90deg,
-        var(--rp-c-brand-dark) 0%,
-        var(--rp-c-brand-dark) 30%,
-        #a673ff 100%
-      );
+      background: var(--rp-home-hero-title-bg);
     }
     display: inline-flex;
     align-items: center;
@@ -97,16 +92,11 @@
   }
 
   &__title-brand {
-    background: linear-gradient(
-      90deg,
-      var(--rp-c-brand-dark) 0%,
-      var(--rp-c-brand-dark) 30%,
-      #a673ff 100%
-    );
+    background: var(--rp-home-hero-title-bg);
     background-clip: text;
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
-    color: transparent;
+    color: var(--rp-home-hero-title-color);
     width: 640px;
   }
 

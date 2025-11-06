@@ -26,9 +26,20 @@ export function NavScreen(props: NavScreenProps) {
   useEffect(() => {
     if (screen.current && isScreenOpen) {
       disableBodyScroll(screen.current, { reserveScrollBarGap: true });
+      const style = `:root { --rp-home-background-bg: transparent; }`;
+      const styleElement = document.createElement('style');
+      styleElement.id = 'rp-nav-screen-body-lock-style';
+      styleElement.innerHTML = style;
+      document.head.appendChild(styleElement);
     }
     return () => {
       clearAllBodyScrollLocks();
+      const styleElement = document.getElementById(
+        'rp-nav-screen-body-lock-style',
+      );
+      if (styleElement) {
+        document.head.removeChild(styleElement);
+      }
     };
   }, [isScreenOpen]);
 
