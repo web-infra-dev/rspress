@@ -26,11 +26,7 @@ export function NavScreen(props: NavScreenProps) {
   useEffect(() => {
     if (screen.current && isScreenOpen) {
       disableBodyScroll(screen.current, { reserveScrollBarGap: true });
-      const style = `
-       :root {
-        --rp-home-background-bg: transparent;
-       } 
-      `;
+      const style = `:root { --rp-home-background-bg: transparent; }`;
       const styleElement = document.createElement('style');
       styleElement.id = 'rp-nav-screen-body-lock-style';
       styleElement.innerHTML = style;

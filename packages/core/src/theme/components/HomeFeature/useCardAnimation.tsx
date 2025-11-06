@@ -61,7 +61,7 @@ export const useCardAnimation = () => {
     }) 0%, rgba(255, 255, 255, 0) 50%)`;
 
     container = `rotateX(${xRotate}deg) rotateY(${yRotate}deg)`;
-    outerContainer = `perspective(${rootElemWidth * 2}px`;
+    outerContainer = `perspective(${rootElemWidth * 2}px)`;
   } else {
     shine = '';
     shineBg = '';
