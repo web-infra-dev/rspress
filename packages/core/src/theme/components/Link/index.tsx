@@ -2,7 +2,7 @@ import { preloadLink } from '@rspress/core/runtime';
 import nprogress from 'nprogress';
 import type React from 'react';
 import type { ComponentProps } from 'react';
-import { getHref, useNavigate } from './useNavigate';
+import { getHref, useLinkNavigate } from './useLinkNavigate';
 import './index.scss';
 import clsx from 'clsx';
 
@@ -29,7 +29,7 @@ export function Link(props: LinkProps) {
   const { href = '/', children, className = '', onClick, onMouseEnter } = props;
 
   const { linkType, removeBaseHref, withBaseHref } = getHref(href);
-  const navigate = useNavigate();
+  const navigate = useLinkNavigate();
 
   if (linkType === 'external') {
     return (

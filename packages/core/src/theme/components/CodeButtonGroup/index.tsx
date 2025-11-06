@@ -1,9 +1,9 @@
 import { useSite } from '@rspress/core/runtime';
+import { SvgWrapper } from '@theme';
 import IconWrap from '@theme-assets/wrap';
 import IconWrapped from '@theme-assets/wrapped';
 import clsx from 'clsx';
 import { useRef, useState } from 'react';
-import { SvgWrapper } from '../SvgWrapper';
 import './index.scss';
 import { CopyCodeButton } from './CopyCodeButton';
 

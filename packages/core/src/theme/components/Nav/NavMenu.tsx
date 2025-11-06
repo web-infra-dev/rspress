@@ -6,11 +6,10 @@ import type {
 } from '@rspress/core';
 import { matchNavbar, useLocation } from '@rspress/core/runtime';
 import type { HoverGroupProps } from '@theme';
-import { Link, Tag, useHoverGroup } from '@theme';
+import { Link, SvgWrapper, Tag, useHoverGroup } from '@theme';
 import ArrowDown from '@theme-assets/arrow-down';
 import cls from 'clsx';
 import { useMemo } from 'react';
-import { SvgWrapper } from '../SvgWrapper';
 import { useLangsMenu, useVersionsMenu } from './hooks';
 import './NavMenu.scss';
 import clsx from 'clsx';

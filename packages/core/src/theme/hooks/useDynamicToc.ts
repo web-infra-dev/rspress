@@ -1,6 +1,6 @@
 import type { Header } from '@rspress/core';
 import { useCallback, useEffect, useState } from 'react';
-import { processTitleElement } from '../components/Outline/processTitleElement';
+import { processTitleElement } from './processTitleElement';
 
 const updateFns: Record<string, () => void> = {};
 const useForceUpdate = () => {
@@ -137,12 +137,12 @@ export const useWatchToc = () => {
     };
   }, [innerRef]);
 
-  const ref = useCallback(
+  const rspressDocRef = useCallback(
     (ref: HTMLDivElement | null) => {
       setRef(ref);
     },
     [setRef],
   );
 
-  return ref;
+  return { rspressDocRef };
 };

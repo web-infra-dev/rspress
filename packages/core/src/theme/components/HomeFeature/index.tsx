@@ -1,8 +1,7 @@
 import type { Feature } from '@rspress/core';
 import { useFrontmatter } from '@rspress/core/runtime';
+import { renderHtmlOrText, useLinkNavigate } from '@theme';
 import type { JSX } from 'react';
-import { renderHtmlOrText } from '../../logic/utils';
-import { useNavigate } from '../Link/useNavigate';
 import './index.scss';
 import { useCardAnimation } from './useCardAnimation';
 
@@ -27,8 +26,8 @@ const getGridClass = (feature: Feature): string => {
 function HomeFeatureItem({ feature }: { feature: Feature }): JSX.Element {
   const { icon, title, details, link } = feature;
 
-  const navigate = useNavigate();
   const { innerProps, outerProps, outerRef, shineDom } = useCardAnimation();
+  const navigate = useLinkNavigate();
 
   return (
     <div

@@ -1,8 +1,7 @@
-import { Link, mergeRefs } from '@theme';
+import { Link, mergeRefs, SvgWrapper } from '@theme';
 import CloseSvg from '@theme-assets/close';
 import clsx from 'clsx';
 import { forwardRef, type ReactNode, useState } from 'react';
-import { SvgWrapper } from '../SvgWrapper';
 import './index.scss';
 import { NoSSR } from '@rspress/core/runtime';
 

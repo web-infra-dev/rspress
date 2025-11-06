@@ -51,17 +51,31 @@ function getThemeComponentsPath(): string {
  * Get all available components that can be ejected
  */
 export async function getAvailableComponents(): Promise<string[]> {
-  const themePath = getThemeComponentsPath();
-  try {
-    const entries = await fs.readdir(themePath, { withFileTypes: true });
-    return entries
-      .filter(entry => entry.isDirectory())
-      .map(entry => entry.name)
-      .sort();
-  } catch (error) {
-    logger.error('Failed to read theme components directory');
-    throw error;
-  }
+  // TODO: currently hardcode the available components, and release more components later when stabilized
+  return [
+    'Banner',
+    'Badge',
+    'Callout',
+    'HomeFeature',
+    'HomeBackground',
+    'HomeHero',
+    'Toc',
+    'PrevNextPage',
+    'Overview',
+    'SocialLinks',
+    'Steps',
+  ];
+  // const themePath = getThemeComponentsPath();
+  // try {
+  //   const entries = await fs.readdir(themePath, { withFileTypes: true });
+  //   return entries
+  //     .filter((entry) => entry.isDirectory())
+  //     .map((entry) => entry.name)
+  //     .sort();
+  // } catch (error) {
+  //   logger.error('Failed to read theme components directory');
+  //   throw error;
+  // }
 }
 
 /**
@@ -103,12 +117,8 @@ async function copyDir(src: string, dest: string): Promise<void> {
 async function transformImports(filePath: string): Promise<void> {
   const content = await fs.readFile(filePath, 'utf-8');
 
-  // Transform @theme imports to relative imports
-  // e.g., "import { Link } from '@theme'" -> "import { Link } from '@rspress/core/theme'"
-  const transformed = content.replace(
-    /from ['"]@theme['"]/g,
-    "from '@rspress/core/theme'",
-  );
+  // TODO: currently do noting
+  const transformed = content;
 
   // Transform @theme-assets imports
   // Note: @theme-assets imports cannot be directly imported by users.
@@ -148,7 +158,7 @@ export async function ejectComponent(
   const exists = await componentExists(componentName);
   if (!exists) {
     logger.error(
-      `Component "${picocolors.cyan(componentName)}" not found in theme.`,
+      `Component ${picocolors.cyan(componentName)} not found in theme.`,
     );
     const available = await getAvailableComponents();
     logger.info(
@@ -160,14 +170,14 @@ export async function ejectComponent(
   // Set up paths
   const themePath = getThemeComponentsPath();
   const sourceComponentPath = path.join(themePath, componentName);
-  const destThemePath = path.join(cwd, 'src', 'theme', 'components');
+  const destThemePath = path.join(cwd, 'theme', 'components');
   const destComponentPath = path.join(destThemePath, componentName);
 
   // Check if component already exists in destination
   try {
     await fs.access(destComponentPath);
     logger.warn(
-      `Component "${picocolors.cyan(componentName)}" already exists in ${picocolors.yellow(
+      `Component ${picocolors.cyan(componentName)} already exists in ${picocolors.yellow(
         path.relative(cwd, destComponentPath),
       )}`,
     );
@@ -187,17 +197,14 @@ export async function ejectComponent(
     await transformDirectory(destComponentPath);
 
     logger.success(
-      `✨ Component "${picocolors.cyan(componentName)}" ejected successfully!`,
+      `✨ Component ${picocolors.cyan(componentName)} ejected successfully!`,
     );
     logger.info(
-      `\nComponent files copied to: ${picocolors.green(
+      `Component files copied to: ${picocolors.green(
         path.relative(cwd, destComponentPath),
-      )}`,
-    );
-    logger.info(
-      `\nYou can now customize the component. To use it in your theme, you'll need to:\n` +
-        `  1. Import it in your custom theme file\n` +
-        `  2. Re-export or use it in your layouts\n`,
+      )}\nYou can now customize the component. To use it in your theme, you'll need to:\n` +
+        `  1. Re-export it in your custom \`theme/index.tsx\` file\n` +
+        `  2. Edit it by yourself`,
     );
   } catch (error) {
     logger.error(`Failed to eject component: ${error}`);
@@ -210,11 +217,9 @@ export async function ejectComponent(
  */
 export async function listComponents(): Promise<void> {
   const components = await getAvailableComponents();
-  logger.info(`\n📦 Available components to eject:\n`);
+  logger.info(`📦 Available components to eject:\n`);
   components.forEach(component => {
     logger.info(`  ${picocolors.cyan('•')} ${component}`);
   });
-  logger.info(
-    `\n💡 Usage: ${picocolors.dim('rspress eject <ComponentName>')}\n`,
-  );
+  logger.info(`💡 Usage: ${picocolors.dim('rspress eject <ComponentName>')}\n`);
 }

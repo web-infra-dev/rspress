@@ -1,8 +1,8 @@
+import { SvgWrapper } from '@theme';
 import IconCopy from '@theme-assets/copy';
 import IconSuccess from '@theme-assets/success';
 import copy from 'copy-to-clipboard';
 import { useRef } from 'react';
-import { SvgWrapper } from '../SvgWrapper';
 import './CopyCodeButton.scss';
 import { useI18n } from '@rspress/core/runtime';
 

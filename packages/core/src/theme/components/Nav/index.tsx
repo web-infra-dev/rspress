@@ -1,6 +1,5 @@
 import { useNav } from '@rspress/core/runtime';
-import { Search, SocialLinks, SwitchAppearance } from '@theme';
-import { NavHamburger } from '../NavHamburger';
+import { NavHamburger, Search, SocialLinks, SwitchAppearance } from '@theme';
 import './index.scss';
 import { NavLangs, NavMenu, NavMenuDivider, NavVersions } from './NavMenu';
 import { NavTitle } from './NavTitle';

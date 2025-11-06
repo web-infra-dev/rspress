@@ -1,5 +1,5 @@
+import { renderInlineMarkdown } from '@theme';
 import { slug } from 'github-slugger';
-import { renderInlineMarkdown } from '../../logic/utils';
 import { A } from './docComponents/a';
 import { H1, H2, H3, H4, H5, H6 } from './docComponents/title';
 

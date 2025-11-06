@@ -1,6 +1,7 @@
 /**
  * A wrapper for custom SVG icon.
  * When the user uses a custom SVG, the imported icon can be a string or a React component.
+ * @internal
  */
 export function SvgWrapper({
   icon: Icon,

@@ -1,6 +1,5 @@
 import { useI18n, useSite } from '@rspress/core/runtime';
-import { Toc, useDynamicToc } from '@theme';
-import { ReadPercent } from '../ReadPercent';
+import { Toc, ReadPercent, useDynamicToc } from '@theme';
 import './index.scss';
 import { ScrollToTop } from './ScrollToTop';
 

@@ -54,6 +54,8 @@ const DELETE_TEXT_PATTERN = /~{2}(.*?)~{2}/g;
  * - delete
  * - inline code
  * @param text The markdown text to render.
+ * @internal
+ * @private
  */
 export function renderInlineMarkdown(text: string) {
   const htmlText = text
@@ -67,6 +69,10 @@ export function renderInlineMarkdown(text: string) {
   return renderHtmlOrText(htmlText);
 }
 
+/**
+ * @internal
+ * @private
+ */
 export function parseInlineMarkdownText(mdx: string) {
   return mdx
     .replace(STRONG_TEXT_PATTERN, '$1')

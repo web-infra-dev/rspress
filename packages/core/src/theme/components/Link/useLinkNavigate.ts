@@ -56,7 +56,11 @@ export function getHref(href: string): {
   return { withBaseHref, removeBaseHref, linkType };
 }
 
-export function useNavigate(): (href: string) => Promise<void> {
+/**
+ * For import { Link } from '@theme';
+ * useNavigate with preload logic
+ */
+export function useLinkNavigate(): (href: string) => Promise<void> {
   const { pathname: currPagePathname } = useLocation();
   const navigate = useNavigateInner();
 

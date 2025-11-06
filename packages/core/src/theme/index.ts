@@ -29,7 +29,9 @@ export { HoverGroup, type HoverGroupProps } from './components/HoverGroup';
 export { useHoverGroup } from './components/HoverGroup/useHoverGroup';
 export { LastUpdated } from './components/LastUpdated/index';
 export { Link, type LinkProps } from './components/Link/index';
+export { useLinkNavigate } from './components/Link/useLinkNavigate';
 export { Nav } from './components/Nav/index';
+export { NavHamburger } from './components/NavHamburger/index';
 export { Outline } from './components/Outline/index';
 export { Overview } from './components/Overview/index';
 export {
@@ -48,6 +50,7 @@ export {
   type PageTabsProps,
 } from './components/PageTabs/index';
 export { PrevNextPage } from './components/PrevNextPage/index';
+export { ReadPercent } from './components/ReadPercent/index';
 export { Search } from './components/Search/index';
 export type {
   AfterSearch,

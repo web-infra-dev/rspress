@@ -8,7 +8,7 @@ import { useActiveMatcher } from '@rspress/core/runtime';
 import ArrowRight from '@theme-assets/arrow-right';
 import clsx from 'clsx';
 import type React from 'react';
-import { useNavigate } from '../Link/useNavigate';
+import { useLinkNavigate } from '../Link/useLinkNavigate';
 import { SvgWrapper } from '../SvgWrapper';
 import { SidebarDivider } from './SidebarDivider';
 import './SidebarGroup.scss';
@@ -52,7 +52,7 @@ export interface SidebarGroupProps {
 export function SidebarGroup(props: SidebarGroupProps) {
   const activeMatcher = useActiveMatcher();
   const { item, depth, id, setSidebarData, className } = props;
-  const navigate = useNavigate();
+  const navigate = useLinkNavigate();
   const active = item.link && activeMatcher(item.link);
   const { collapsed = false, collapsible = true } =
     item as NormalizedSidebarGroup;
