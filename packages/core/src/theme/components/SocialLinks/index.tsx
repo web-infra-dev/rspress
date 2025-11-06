@@ -1,7 +1,7 @@
 import type { SocialLink } from '@rspress/core';
 import { useSite } from '@rspress/core/runtime';
+import { SvgWrapper } from '@theme';
 import ArrowDown from '@theme-assets/arrow-down';
-import { SvgWrapper } from '../SvgWrapper';
 import './index.scss';
 import { useHoverGroup } from '../HoverGroup/useHoverGroup';
 import { SocialLink as SocialLinkComp } from './SocialLink';

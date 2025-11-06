@@ -1,10 +1,6 @@
 import type { Header } from '@rspress/core';
-import { Link } from '@theme';
+import { Link, parseInlineMarkdownText, renderInlineMarkdown } from '@theme';
 import clsx from 'clsx';
-import {
-  parseInlineMarkdownText,
-  renderInlineMarkdown,
-} from '../../logic/utils';
 import './TocItem.scss';
 import { useEffect, useRef } from 'react';
 import scrollIntoView from 'scroll-into-view-if-needed';

@@ -30,7 +30,7 @@ export { useHoverGroup } from './components/HoverGroup/useHoverGroup';
 export { LastUpdated } from './components/LastUpdated/index';
 export { Link, type LinkProps } from './components/Link/index';
 export { useLinkNavigate } from './components/Link/useLinkNavigate';
-export { Nav } from './components/Nav/index';
+export { Nav, type NavProps } from './components/Nav/index';
 export { NavHamburger } from './components/NavHamburger/index';
 export { Outline } from './components/Outline/index';
 export { Overview } from './components/Overview/index';
@@ -97,6 +97,7 @@ export { useFullTextSearch } from './logic/useFullTextSearch';
 // logic
 export { usePrevNextPage } from './logic/usePrevNextPage';
 export { useRedirect4FirstVisit } from './logic/useRedirect4FirstVisit';
+export { useStorageValue } from './logic/useStorageValue';
 export {
   parseInlineMarkdownText,
   renderHtmlOrText,

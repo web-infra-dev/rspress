@@ -1,10 +1,14 @@
 import { useFrontmatter, useI18n, useLocation } from '@rspress/core/runtime';
-import { SvgWrapper, useActiveAnchor, useDynamicToc } from '@theme';
+import {
+  ReadPercent,
+  SvgWrapper,
+  useActiveAnchor,
+  useDynamicToc,
+} from '@theme';
 import ArrowRight from '@theme-assets/arrow-right';
 import MenuIcon from '@theme-assets/menu';
 import { forwardRef, useEffect, useRef } from 'react';
 import { createPortal } from 'react-dom';
-import { ReadPercent } from '../ReadPercent';
 import './index.scss';
 
 /* Top Menu, only displayed on <1280px screen width */

@@ -1,8 +1,8 @@
 import { Link, renderInlineMarkdown } from '@theme';
 import './OverviewGroup.scss';
 import type { Header } from '@rspress/core';
+import { SvgWrapper } from '@theme';
 import { FallbackHeading } from '../DocContent/FallbackHeading';
-import { SvgWrapper } from '../SvgWrapper';
 import IconPlugin from './icons/plugin.svg';
 
 export interface GroupItem {

@@ -5,11 +5,10 @@ import type {
   SidebarSectionHeader as SidebarSectionHeaderType,
 } from '@rspress/core';
 import { useActiveMatcher } from '@rspress/core/runtime';
+import { SvgWrapper, useLinkNavigate } from '@theme';
 import ArrowRight from '@theme-assets/arrow-right';
 import clsx from 'clsx';
 import type React from 'react';
-import { useLinkNavigate } from '../Link/useLinkNavigate';
-import { SvgWrapper } from '../SvgWrapper';
 import { SidebarDivider } from './SidebarDivider';
 import './SidebarGroup.scss';
 import { SidebarItem as SidebarItemComp, SidebarItemRaw } from './SidebarItem';

@@ -4,6 +4,7 @@ const SYNC_STORAGE_EVENT_NAME = 'RSPRESS_SYNC_STORAGE_EVENT_NAME';
 
 /**
  * Read/update the value in localStorage, and keeping it in sync with other tabs.
+ * @internal
  */
 export const useStorageValue = <T>(key: string, defaultValue: T) => {
   const [value, setValueInternal] = useState<T>(defaultValue);

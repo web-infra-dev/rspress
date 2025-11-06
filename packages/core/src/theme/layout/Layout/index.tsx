@@ -12,10 +12,10 @@ import {
   DocLayout,
   type DocLayoutProps,
   Nav,
+  type NavProps,
 } from '@theme';
 import { Head, useHead } from '@unhead/react';
 import React, { memo, useMemo } from 'react';
-import type { NavProps } from '../../components/Nav';
 import { useSetup } from '../../logic/sideEffects';
 import { useRedirect4FirstVisit } from '../../logic/useRedirect4FirstVisit';
 import type { HomeLayoutProps } from '../HomeLayout';

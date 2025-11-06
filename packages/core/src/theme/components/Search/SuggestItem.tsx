@@ -1,10 +1,9 @@
-import { Link } from '@theme';
+import { Link, SvgWrapper } from '@theme';
 import FileSvg from '@theme-assets/file';
 import HeaderSvg from '@theme-assets/header';
 import JumpSvg from '@theme-assets/jump';
 import TitleSvg from '@theme-assets/title';
 import { useRef } from 'react';
-import { SvgWrapper } from '../SvgWrapper';
 import './SuggestItem.scss';
 import type { DefaultMatchResultItem, HighlightInfo } from './logic/types';
 import { getSlicedStrByByteLength } from './logic/util';
