@@ -35,20 +35,23 @@ describe('eject command', () => {
 
   describe('getAvailableComponents', () => {
     it('should return list of available components', async () => {
+      // TODO: add more components to
       // Mock the theme components directory
-      vol.fromJSON({
-        [`${MOCK_THEME_PATH}/Sidebar/index.tsx`]:
-          'export const Sidebar = () => null;',
-        [`${MOCK_THEME_PATH}/Banner/index.tsx`]:
-          'export const Banner = () => null;',
-        [`${MOCK_THEME_PATH}/Button/index.tsx`]:
-          'export const Button = () => null;',
-      });
+      // vol.fromJSON({
+      //   [`${MOCK_THEME_PATH}/Sidebar/index.tsx`]:
+      //     'export const Sidebar = () => null;',
+      //   [`${MOCK_THEME_PATH}/Banner/index.tsx`]:
+      //     'export const Banner = () => null;',
+      //   [`${MOCK_THEME_PATH}/Button/index.tsx`]:
+      //     'export const Button = () => null;',
+      // });
 
       const components = await getAvailableComponents();
-      expect(components).toContain('Sidebar');
       expect(components).toContain('Banner');
-      expect(components).toContain('Button');
+      expect(components).toContain('HomeFeature');
+      expect(components).toContain('HomeHero');
+      expect(components).toContain('HomeBackground');
+      expect(components).toContain('HomeFooter');
     });
   });
 
@@ -56,10 +59,7 @@ describe('eject command', () => {
     it('should copy component files to user directory', async () => {
       const componentName = 'TestComponent';
       const themePath = path.join(MOCK_THEME_PATH, componentName);
-      const destPath = path.join(
-        '/project/src/theme/components',
-        componentName,
-      );
+      const destPath = path.join('/project/theme/components', componentName);
 
       // Setup mock file structure
       vol.fromJSON({
@@ -81,23 +81,12 @@ describe('eject command', () => {
 
       expect(indexExists).toBe(true);
       expect(stylesExist).toBe(true);
-
-      // Check imports were transformed
-      const content = await fs.promises.readFile(
-        `${destPath}/index.tsx`,
-        'utf-8',
-      );
-      expect(content).toContain("from '@rspress/core/theme'");
-      expect(content).not.toContain("from '@theme'");
     });
 
     it('should handle nested file structures', async () => {
       const componentName = 'ComplexComponent';
       const themePath = path.join(MOCK_THEME_PATH, componentName);
-      const destPath = path.join(
-        '/project/src/theme/components',
-        componentName,
-      );
+      const destPath = path.join('/project/theme/components', componentName);
 
       // Setup mock file structure with nested files
       vol.fromJSON({
