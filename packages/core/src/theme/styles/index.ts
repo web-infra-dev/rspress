@@ -5,7 +5,7 @@ import './vars/brand-vars.css';
 import './vars/shiki-vars.css';
 import './vars/code-vars.css';
 import './vars/home-vars.css';
-import './vars.css';
+import './vars/base-vars.css';
 
 import './base.css';
 import './scrollbar.scss';

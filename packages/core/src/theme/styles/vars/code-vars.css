@@ -1,5 +1,5 @@
 /* Light Mode */
-html:not(.rp-dark) {
+:where(html:not(.rp-dark)) {
   --rp-code-font-size: 0.875rem;
   --rp-code-title-bg: #f8f8f9;
 
@@ -10,7 +10,7 @@ html:not(.rp-dark) {
 }
 
 /* Dark Mode */
-html.rp-dark {
+:where(html.rp-dark) {
   --rp-code-font-size: 0.875rem;
   --rp-code-title-bg: #191919;
 
