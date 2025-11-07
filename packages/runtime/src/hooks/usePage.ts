@@ -1,5 +1,6 @@
 import type { PageDataLegacy } from '@rspress/shared';
-import { createContext, useContext } from 'react';
+import { createContext } from 'react';
+import { useLoaderData } from 'react-router-dom';
 
 interface IPageContext {
   data: PageDataLegacy['page'];
@@ -9,8 +10,9 @@ interface IPageContext {
 export const PageContext = createContext<IPageContext>({} as IPageContext);
 
 export function usePage(): { page: PageDataLegacy['page'] } {
-  const ctx = useContext(PageContext);
+  const data = useLoaderData();
+  console.log(data, 22222222);
   return {
-    page: ctx.data,
+    page: data as PageDataLegacy['page'],
   };
 }

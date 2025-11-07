@@ -15,10 +15,10 @@ export type { RspressPlugin, AdditionalPage, RspressPlugin as Plugin };
 
 export interface Route {
   path: string;
-  element: React.ReactElement;
+  Component: React.ComponentType<unknown>;
   filePath: string;
   preload: () => Promise<PageModule<React.ComponentType<unknown>>>;
-  lang: string;
+  loader: () => Promise<PageModule<React.ComponentType<unknown>>>;
 }
 
 // #region RemarkSplitMdxOptions

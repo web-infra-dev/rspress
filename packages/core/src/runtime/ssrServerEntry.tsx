@@ -1,7 +1,6 @@
 import { PassThrough } from 'node:stream';
 import { text } from 'node:stream/consumers';
 import {
-  PageContext,
   pathnameToRouteService,
   removeTrailingSlash,
   ThemeContext,
@@ -12,7 +11,6 @@ import { type Unhead, UnheadProvider } from '@unhead/react/server';
 import type { ReactNode } from 'react';
 import { renderToPipeableStream } from 'react-dom/server';
 import { App } from './App';
-import { initPageData } from './initPageData';
 
 const DEFAULT_THEME = 'light';
 
@@ -40,21 +38,18 @@ export async function render(
   routePath: string,
   head: Unhead,
 ): Promise<{ appHtml: string }> {
-  const initialPageData = await initPageData(routePath);
   await preloadRoute(routePath);
 
   const appHtml = await renderToHtml(
     <ThemeContext.Provider value={{ theme: DEFAULT_THEME }}>
-      <PageContext.Provider value={{ data: initialPageData }}>
-        <StaticRouter
-          location={withBase(routePath)}
-          basename={removeTrailingSlash(withBase('/'))}
-        >
-          <UnheadProvider value={head}>
-            <App />
-          </UnheadProvider>
-        </StaticRouter>
-      </PageContext.Provider>
+      <StaticRouter
+        location={withBase(routePath)}
+        basename={removeTrailingSlash(withBase('/'))}
+      >
+        <UnheadProvider value={head}>
+          <App />
+        </UnheadProvider>
+      </StaticRouter>
     </ThemeContext.Provider>,
   );
 

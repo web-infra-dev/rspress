@@ -254,12 +254,13 @@ ${routeMeta
     /**
      * {
      *   route: '/',
-     *   element: jsx(Route0),
+     *   Component: Route0,
      *   preload: Route0.preload,
-     *   filePath: '/Users/foo/bar/index.md'
+     *   filePath: '/Users/foo/bar/index.md',
+     *   loader: async () => { return Route0.preload() }
      * }
      */
-    return `{ path: '${route.routePath}', element: React.createElement(${component}), filePath: '${route.relativePath}', preload: ${preload}, lang: '${route.lang}', version: '${route.version}' }`;
+    return `{ path: '${route.routePath}', Component: ${component}, filePath: '${route.relativePath}', preload: ${preload},  version: '${route.version}', loader: async () => { return ${preload}} }`;
   })
   .join(',\n')}
 ];
