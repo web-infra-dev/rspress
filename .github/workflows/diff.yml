@@ -2,8 +2,7 @@ name: Diff
 
 on:
   pull_request:
-    branches: [main]
-  push:
+    types: [opened, synchronize, reopened, closed]
     branches: [main]
 
 jobs:
@@ -43,7 +42,7 @@ jobs:
           RSDOCTOR=1 pnpm run build
 
       - name: Report Compressed Size
-        uses: web-infra-dev/rsdoctor-action@feat/no-baseline-report
+        uses: web-infra-dev/rsdoctor-action@main
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           file_path: 'website/doc_build/web/rsdoctor-data.json'
