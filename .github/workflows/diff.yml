@@ -3,6 +3,7 @@ name: Diff
 on:
   pull_request:
     types: [opened, synchronize, reopened, closed]
+    branches: [main]
 
 jobs:
   Build:
