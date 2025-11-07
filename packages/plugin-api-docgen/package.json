@@ -28,7 +28,7 @@
   },
   "dependencies": {
     "chokidar": "^3.6.0",
-    "documentation": "14.0.3",
+    "documentation": "^14.0.3",
     "github-slugger": "^2.0.0",
     "react-docgen-typescript": "2.4.0",
     "react-markdown": "^10.1.0",
