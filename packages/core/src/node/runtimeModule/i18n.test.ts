@@ -1,3 +1,4 @@
+// cspell:disable
 import type { UserConfig } from '@rspress/shared';
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 import type { PluginDriver } from '../PluginDriver';
