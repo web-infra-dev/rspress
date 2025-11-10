@@ -314,6 +314,22 @@ importers:
         specifier: ^22.8.1
         version: 22.10.2
 
+  e2e/fixtures/i18n-source-text:
+    dependencies:
+      '@rspress/core':
+        specifier: workspace:*
+        version: link:../../../packages/core
+      react:
+        specifier: ^19.2.0
+        version: 19.2.0
+    devDependencies:
+      '@types/node':
+        specifier: ^22.8.1
+        version: 22.10.2
+      '@types/react':
+        specifier: ^19.2.2
+        version: 19.2.2
+
   e2e/fixtures/icon-file-url:
     dependencies:
       '@rspress/core':

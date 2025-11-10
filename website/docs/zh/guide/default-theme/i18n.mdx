@@ -82,18 +82,6 @@ export default defineConfig({
       description: '静态网站生成器',
     },
   ],
-  themeConfig: {
-    locales: [
-      {
-        lang: 'en',
-        outlineTitle: 'ON THIS Page',
-      },
-      {
-        lang: 'zh',
-        outlineTitle: '大纲',
-      },
-    ],
-  },
 });
 ```
 
@@ -179,6 +167,6 @@ docs
 
 在 MDX 开发或者自定义主题开发的过程中，你可能会写一些自定义组件，这些组件中也需要使用到国际化文本，那么如何获取呢？
 
-import UseI18n from '../../fragments/useI18n';
+import UseI18n from '../../fragments/useI18n.mdx';
 
 <UseI18n />

@@ -111,6 +111,66 @@ export default defineConfig({
 });
 ```
 
+## i18nSource
+
+- **Type**: `Record<string, Record<string, string>> | Promise<(Record<string, Record<string, string>>) => Record<string, Record<string, string>>>`
+- **Default**: `{}`
+
+Used to customize internationalization (i18n) text data. You can use this configuration to modify Rspress's built-in i18n text or extend custom component text. When extending text, it is usually used together with [useI18n](/en/ui/hooks/use-i18n.html).
+
+The `i18nSource` parameter is an object with the following structure:
+
+```ts
+{
+  [textKey: string]: {
+    [locale: string]: string;
+  }
+}
+```
+
+Where the first-level `textKey` is the text key name, the second-level `locale` is the language code (e.g., `zh`, `en`), and the value is the translated text for the corresponding language.
+
+Example of modifying Rspress's built-in i18n text:
+
+```ts title="rspress.config.ts"
+import { defineConfig } from '@rspress/core';
+export default defineConfig({
+  i18nSource: {
+    prevPage: {
+      zh: '上一页',
+      en: 'Previous Page',
+    },
+  },
+});
+```
+
+`i18nSource` can also be a function, for example:
+
+```ts
+import { defineConfig } from '@rspress/core';
+
+export default defineConfig({
+  i18nSource: async (source) => {
+    // Modify or extend the i18n source
+    source.customKey = {
+      zh: '自定义文案',
+      en: 'Custom Text',
+    };
+    return source;
+  },
+});
+```
+
+Here are the built-in i18n texts in Rspress:
+
+<details>
+
+```ts file="../../../../../packages/core/src/node/runtimeModule/DEFAULT_I18N_TEXT.ts"
+
+```
+
+</details>
+
 ## logo \{#logo-1}
 
 - **Type**: `string | { dark: string; light: string }`

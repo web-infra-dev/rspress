@@ -26,10 +26,6 @@ export type ThemeConfig = {
    */
   darkMode?: boolean;
   /**
-   * Whether to show the sidebar in right position.
-   */
-  outline?: boolean;
-  /**
    * The nav items. When it's an object, the key is the version of current doc.
    */
   nav?: NavItem[] | { [key: string]: NavItem[] };
@@ -47,14 +43,13 @@ export type ThemeConfig = {
    * @default false
    */
   lastUpdated?: boolean;
-
   /**
    * The social links to be displayed at the end of the nav bar. Perfect for
    * placing links to social services such as GitHub, X, Facebook, etc.
    */
   socialLinks?: SocialLink[];
   /**
-   * The footer configuration.
+   * The homeLayout footer configuration.
    */
   footer?: Footer;
   /**
@@ -73,6 +68,8 @@ export type ThemeConfig = {
   hideNavbar?: 'always' | 'auto' | 'never';
   /**
    * Whether to enable view transition animation for pages switching
+   * Currently, Rspress V2 does not implement `hideNavBar`
+   * @default false
    */
   enableContentAnimation?: boolean;
   /**

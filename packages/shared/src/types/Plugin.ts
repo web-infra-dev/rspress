@@ -106,7 +106,6 @@ export interface RspressPlugin {
    */
   i18nSource?: (
     source: Record<string, Record<string, string>>,
-    isProd: boolean,
   ) =>
     | Record<string, Record<string, string>>
     | Promise<Record<string, Record<string, string>>>;

@@ -12,8 +12,6 @@ export default defineConfig({
         lang: 'zh',
         title: '一个很棒的项目',
         description: '一个很棒的项目描述',
-        // 语言切换按钮的文案
-        // Language switch button text
         label: '简体中文',
       },
       {
@@ -22,6 +20,43 @@ export default defineConfig({
         description: 'A awesome project description',
         label: 'English',
       },
+      {
+        lang: 'en_US',
+        title: 'A awesome project',
+        description: 'A awesome project description',
+        label: 'EN_US',
+      },
     ],
   },
+  i18nSource(source) {
+    source['config'] = {
+      zh: '配置-文件',
+      en: 'Configuration-file',
+    };
+    source['Foo'] = {
+      zh: '被配置修改',
+      en: 'Modified by configuration',
+    };
+
+    for (const key of Object.keys(source)) {
+      source[key]['en_US'] = source[key]['en'];
+    }
+    return source;
+  },
+  plugins: [
+    {
+      name: 'i18n-source-text',
+      i18nSource(source) {
+        source['config-plugin'] = {
+          zh: '配置-插件',
+          en: 'Configuration-plugin',
+        };
+        source['Foo'] = {
+          zh: '被插件修改',
+          en: 'Modified by plugin',
+        };
+        return source;
+      },
+    },
+  ],
 });

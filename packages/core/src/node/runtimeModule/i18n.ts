@@ -1,92 +1,15 @@
 import { createRequire } from 'node:module';
 import { join } from 'node:path';
-import type { I18nText, UserConfig } from '@rspress/shared';
+import type { UserConfig } from '@rspress/shared';
 import { logger } from '@rspress/shared/logger';
+import picocolors from 'picocolors';
 import type { PluginDriver } from '../PluginDriver';
 import { pathExists } from '../utils';
+import { DEFAULT_I18N_TEXT } from './DEFAULT_I18N_TEXT';
 import { RuntimeModuleID, type VirtualModulePlugin } from './types';
 
 const require = createRequire(import.meta.url);
 const DEFAULT_I18N_SOURCE_PATH = join(process.cwd(), 'i18n.json');
-
-const DEFAULT_I18N_TEXT = {
-  languagesText: {
-    zh: '语言',
-    en: 'Languages',
-  },
-  themeText: {
-    zh: '主题',
-    en: 'Theme',
-  },
-  versionsText: {
-    zh: '版本',
-    en: 'Versions',
-  },
-  menuTitle: {
-    zh: '菜单',
-    en: 'Menu',
-  },
-  outlineTitle: {
-    zh: '目录',
-    en: 'ON THIS PAGE',
-  },
-  scrollToTopText: {
-    en: 'Back to top',
-    zh: '回到顶部',
-  },
-  lastUpdatedText: {
-    en: 'Last Updated',
-    zh: '最后更新于',
-  },
-  prevPageText: {
-    en: 'Previous page',
-    zh: '上一页',
-  },
-  nextPageText: {
-    en: 'Next page',
-    zh: '下一页',
-  },
-  sourceCodeText: {
-    en: 'Source Code',
-    zh: '源码',
-  },
-  searchPlaceholderText: {
-    en: 'Search',
-    zh: '搜索',
-  },
-  searchPanelCancelText: {
-    en: 'Cancel',
-    zh: '取消',
-  },
-  searchNoResultsText: {
-    en: 'No matching results',
-    zh: '未找到与之匹配的结果',
-  },
-  searchSuggestedQueryText: {
-    en: 'Try searching for different keywords',
-    zh: '试试搜索不同关键词',
-  },
-  'overview.filterNameText': {
-    en: 'Filter',
-    zh: '筛选',
-  },
-  'overview.filterPlaceholderText': {
-    en: 'Search API',
-    zh: '搜索 API',
-  },
-  'overview.filterNoResultText': {
-    en: 'No matching API found',
-    zh: '未找到匹配的 API',
-  },
-  editLinkText: {
-    en: 'Edit this page',
-    zh: '编辑此页',
-  },
-  codeButtonGroupCopyButtonText: {
-    en: 'Copy code',
-    zh: '复制代码',
-  },
-} as const satisfies Required<I18nText>;
 
 function mergeI18nData(
   ...sources: Record<string, Record<string, string>>[]
@@ -102,7 +25,8 @@ function mergeI18nData(
   }
   return result;
 }
-
+const logPrefix = '[i18n]';
+const logKeys = new Set<string>();
 export async function getI18nData(
   docConfig: UserConfig,
   pluginDriver?: PluginDriver,
@@ -113,7 +37,9 @@ export async function getI18nData(
     themeConfig,
   } = docConfig;
 
-  const langs = themeConfig?.locales?.map(locale => locale.lang) ?? [];
+  const langs: string[] =
+    (docConfig.locales ?? themeConfig?.locales)?.map(locale => locale.lang) ??
+    [];
 
   // 0. load default value
   let i18nSourceFull: Record<
@@ -144,7 +70,7 @@ export async function getI18nData(
       i18nSourceFull = i18nSource(i18nSourceFull);
     } catch (e) {
       logger.error(
-        'getI18nData Failed to execute `i18nSource` function in `rspress.config.ts`: \n',
+        `${logPrefix} getI18nData Failed to execute \`i18nSource\` function in \`rspress.config.ts\`: \n`,
         e,
       );
     }
@@ -157,11 +83,28 @@ export async function getI18nData(
     for (const lang of langs) {
       if (i18nSourceFull[key][lang]) {
         filteredI18nSource[key][lang] = i18nSourceFull[key][lang];
+      } else {
+        // fallback to 'en'
+        const enText = i18nSourceFull[key]['en'];
+        const logged = logKeys.has(key);
+        if (!logged) {
+          logKeys.add(key);
+        }
+
+        const cyan = picocolors.cyan;
+        if (enText) {
+          filteredI18nSource[key][lang] = enText;
+          !logged &&
+            logger.warn(
+              `${logPrefix} i18n key ${cyan(key)} has no text for lang ${cyan(lang)}, fallback to ${cyan('en')} text.`,
+            );
+        } else {
+          logger.error(
+            `${logPrefix} i18n key ${cyan(key)} has no text for lang ${cyan(lang)}, and no fallback ${cyan('en')} text either.`,
+          );
+          throw new Error(`i18n text missing for ${picocolors.cyan(key)}`);
+        }
       }
-    }
-    // always keep 'en' if exist
-    if (i18nSourceFull[key]['en']) {
-      filteredI18nSource[key]['en'] = i18nSourceFull[key]['en'];
     }
   }
 
@@ -188,10 +131,7 @@ export const i18nVMPlugin: VirtualModulePlugin = context => {
       }
       const i18nData = await getI18nData(config, pluginDriver);
 
-      const i18nDataModifiedByI18nData =
-        await pluginDriver.i18nSource(i18nData);
-
-      return `export default ${JSON.stringify(i18nDataModifiedByI18nData, null, 2)}`;
+      return `export default ${JSON.stringify(i18nData, null, 2)}`;
     },
   };
 };

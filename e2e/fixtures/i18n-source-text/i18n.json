@@ -1,10 +1,13 @@
 {
-  "basic": {
-    "zh": "基本",
-    "en": "Basic"
+  "config-json": {
+    "zh": "配置-json",
+    "en": "Configuration-json"
   },
-  "growth": {
-    "zh": "成长",
-    "en": "Growth"
+  "Foo": {
+    "zh": "Foo",
+    "en": "Foo"
+  },
+  "shouldFallbackToEn": {
+    "en": "This text is only in English"
   }
 }

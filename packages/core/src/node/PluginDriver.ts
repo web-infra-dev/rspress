@@ -216,8 +216,7 @@ export class PluginDriver {
     let i18nSource = defaultSource;
     for (const plugin of this.#plugins) {
       if (typeof plugin.i18nSource === 'function') {
-        i18nSource =
-          (await plugin.i18nSource(i18nSource, this.#isProd)) || i18nSource;
+        i18nSource = (await plugin.i18nSource(i18nSource)) || i18nSource;
       }
     }
     return i18nSource;
