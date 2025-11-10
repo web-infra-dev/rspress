@@ -61,9 +61,7 @@ export class PluginDriver {
     this.clearPlugins();
     const config = this.#config;
     const themeConfig = config?.themeConfig || {};
-    const enableLastUpdated =
-      themeConfig?.lastUpdated ||
-      themeConfig?.locales?.some(locale => locale.lastUpdated);
+    const enableLastUpdated = themeConfig?.lastUpdated;
     const mediumZoomConfig = config?.mediumZoom ?? true;
     if (enableLastUpdated) {
       const { pluginLastUpdated } = await import('./last-updated/index');

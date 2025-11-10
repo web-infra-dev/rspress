@@ -1,17 +1,19 @@
 import { useState } from 'react';
 import { useLangsMenu } from '../Nav/hooks';
 import './NavScreenLangs.scss';
+import { useI18n } from '@rspress/runtime';
 import { Link } from '@theme';
 import { SvgDown } from './NavScreenMenuItem';
 
 export function NavScreenLangs() {
   const { items, activeValue } = useLangsMenu();
   const [isOpen, setIsOpen] = useState(false);
+  const t = useI18n();
 
   return items.length > 1 ? (
     <>
       <div className="rp-nav-screen-langs" onClick={() => setIsOpen(!isOpen)}>
-        <div className="rp-nav-screen-langs__left">Languages</div>
+        <div className="rp-nav-screen-langs__left">{t('languagesText')}</div>
         <div className="rp-nav-screen-langs__right">
           {activeValue}
           <SvgDown

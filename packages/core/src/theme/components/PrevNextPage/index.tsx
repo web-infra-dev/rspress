@@ -1,4 +1,4 @@
-import { useLocaleSiteData } from '@rspress/core/runtime';
+import { useI18n } from '@rspress/core/runtime';
 import { Link, renderInlineMarkdown, usePrevNextPage } from '@theme';
 import ArrowRight from '@theme-assets/arrow-right';
 import clsx from 'clsx';
@@ -6,9 +6,8 @@ import { SvgWrapper } from '../SvgWrapper';
 import './index.scss';
 
 export function PrevNextPage() {
-  const { prevPageText = 'Previous', nextPageText = 'Next' } =
-    useLocaleSiteData();
   const { prevPage, nextPage } = usePrevNextPage();
+  const t = useI18n();
 
   return (
     <div className="rp-prev-next-page">
@@ -17,7 +16,9 @@ export function PrevNextPage() {
           href={prevPage.link}
           className={clsx('rp-prev-next-page__item', 'rp-prev-next-page__prev')}
         >
-          <span className="rp-prev-next-page__item__desc">{prevPageText}</span>
+          <span className="rp-prev-next-page__item__desc">
+            {t('prevPageText')}
+          </span>
           <span className="rp-prev-next-page__item__title">
             <SvgWrapper
               icon={ArrowRight}
@@ -34,7 +35,9 @@ export function PrevNextPage() {
           href={nextPage.link}
           className={clsx('rp-prev-next-page__item', 'rp-prev-next-page__next')}
         >
-          <span className="rp-prev-next-page__item__desc">{nextPageText}</span>
+          <span className="rp-prev-next-page__item__desc">
+            {t('nextPageText')}
+          </span>
           <span className="rp-prev-next-page__item__title">
             <span {...renderInlineMarkdown(nextPage.text)} />
             <SvgWrapper icon={ArrowRight} className="rp-prev-next-page__icon" />

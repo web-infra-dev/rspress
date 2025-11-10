@@ -1,18 +1,14 @@
-import { useLocaleSiteData, usePageData } from '@rspress/core/runtime';
-
-interface EditLink {
-  docRepoBaseUrl?: string;
-  text?: string;
-}
+import type { EditLink } from '@rspress/core';
+import { useI18n, usePageData } from '@rspress/core/runtime';
 
 export function useEditLink() {
   const { siteData, page } = usePageData();
-  const locales = useLocaleSiteData();
+  const editLink: EditLink | undefined = siteData.themeConfig?.editLink;
 
-  const editLink: EditLink =
-    locales.editLink ?? siteData.themeConfig?.editLink ?? {};
+  const t = useI18n();
+  const text = t('editLinkText');
 
-  if (!editLink.docRepoBaseUrl || !editLink.text) {
+  if (!editLink?.docRepoBaseUrl || !text) {
     return null;
   }
 
@@ -26,7 +22,7 @@ export function useEditLink() {
   const link = `${docRepoBaseUrl}${relativePagePath}`;
 
   return {
-    text: editLink.text,
+    text,
     link,
   };
 }

@@ -7,7 +7,7 @@ declare module 'virtual-routes' {
 declare module 'virtual-site-data' {
   import { SiteData, DefaultThemeConfig } from '@rspress/shared';
 
-  const data: SiteData<DefaultThemeConfig>;
+  const data: SiteData;
   export default data;
 }
 

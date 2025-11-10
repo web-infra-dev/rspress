@@ -1,4 +1,4 @@
-import { useLocaleSiteData, usePageData } from '@rspress/core/runtime';
+import { useI18n, usePageData } from '@rspress/core/runtime';
 import CloseSvg from '@theme-assets/close';
 import LoadingSvg from '@theme-assets/loading';
 import SearchSvg from '@theme-assets/search';
@@ -9,7 +9,6 @@ import * as userSearchHooks from 'virtual-search-hooks';
 import { useNavigate } from '../Link/useNavigate';
 import { SvgWrapper } from '../SvgWrapper';
 import { Tab, Tabs } from '../Tabs';
-import './SearchPanel.scss';
 import { PageSearcher } from './logic/search';
 import type {
   CustomMatchResult,
@@ -20,6 +19,7 @@ import type {
 } from './logic/types';
 import { RenderType } from './logic/types';
 import { NoSearchResult } from './NoSearchResult';
+import './SearchPanel.scss';
 import { SuggestItem } from './SuggestItem';
 
 const KEY_CODE = {
@@ -110,7 +110,7 @@ export function SearchPanel({ focused, setFocused }: SearchPanelProps) {
     siteData,
     page: { lang, version },
   } = usePageData();
-  const { searchPlaceholderText = 'Search docs' } = useLocaleSiteData();
+  const t = useI18n();
   const navigate = useNavigate();
   const { search, title: siteTitle } = siteData;
   const versionedSearch = typeof search !== 'boolean' && search?.versioned;
@@ -506,7 +506,7 @@ export function SearchPanel({ focused, setFocused }: SearchPanelProps) {
                   <input
                     className="rp-search-panel__input"
                     ref={searchInputRef}
-                    placeholder={searchPlaceholderText}
+                    placeholder={t('searchPlaceholderText')}
                     aria-label="SearchPanelInput"
                     autoComplete="off"
                     autoFocus
@@ -537,7 +537,7 @@ export function SearchPanel({ focused, setFocused }: SearchPanelProps) {
                     clearSearchState();
                   }}
                 >
-                  Cancel
+                  {t('searchPanelCancelText')}
                 </h2>
               </div>
 

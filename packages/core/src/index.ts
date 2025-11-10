@@ -2,10 +2,12 @@ export { matchPath } from '@rspress/runtime/server';
 
 // TODO: do not expose so much pubic API
 export type {
+  EditLink,
   Feature,
   FrontMatterMeta,
   Header,
   Hero,
+  I18nText,
   LocalSearchOptions,
   Nav,
   NavItem,
