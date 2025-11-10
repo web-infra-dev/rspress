@@ -115,6 +115,7 @@ export class PluginDriver {
     this.#config.base = addTrailingSlash(
       addLeadingSlash(this.#config.base ?? '/'),
     );
+    this.#config.lang ??= 'en';
   }
 
   async modifyConfig() {

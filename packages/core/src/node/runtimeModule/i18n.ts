@@ -35,12 +35,14 @@ export async function getI18nData(
     i18nSourcePath = DEFAULT_I18N_SOURCE_PATH,
     i18nSource = {},
     themeConfig,
+    locales,
   } = docConfig;
 
-  const langs: string[] = (docConfig.locales ?? themeConfig?.locales)?.map(
-    locale => locale.lang,
-  ) ?? [docConfig.lang!];
-
+  let langs: string[] =
+    (locales ?? themeConfig?.locales)?.map(locale => locale.lang) ?? [];
+  if (langs.length === 0) {
+    langs = [docConfig.lang ?? 'en'];
+  }
   // 0. load default value
   let i18nSourceFull: Record<
     string,

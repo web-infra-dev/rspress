@@ -144,6 +144,7 @@ export interface UserConfig {
   icon?: string | URL;
   /**
    * Default language of the site.
+   * @default 'en'
    */
   lang?: string;
   /**
@@ -172,6 +173,7 @@ export interface UserConfig {
   locales?: Locale[];
   /**
    * The i18n text data source path. Default is `i18n.json` in cwd.
+   * @default '<cwd>/i18n.json'
    */
   i18nSourcePath?: string;
   /**

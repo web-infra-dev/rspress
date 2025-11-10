@@ -12,6 +12,17 @@ describe('getI18nData', () => {
     vi.restoreAllMocks();
   });
 
+  it('no locales and no lang', async () => {
+    const config: UserConfig = {};
+    const result = await getI18nData(config);
+    expect(result.languagesText).toEqual({
+      en: 'Languages',
+    });
+    expect(result.themeText).toEqual({
+      en: 'Theme',
+    });
+  });
+
   it('no locales', async () => {
     const config: UserConfig = {
       lang: 'zh',
@@ -307,22 +318,5 @@ describe('getI18nData', () => {
       zh: '插件独有',
       en: 'Plugin Only',
     });
-  });
-
-  it('should handle empty locales array', async () => {
-    const config: UserConfig = {
-      locales: [],
-      i18nSource: {
-        customKey: {
-          zh: '自定义文案',
-          en: 'Custom Text',
-        },
-      },
-    };
-
-    const result = await getI18nData(config);
-
-    // Should not include any language when locales is empty
-    expect(result.customKey).toEqual({});
   });
 });
