@@ -25,7 +25,7 @@ export function Outline() {
       </nav>
       <div className="rp-outline__divider" />
       <div className="rp-outline__bottom">
-        {site.themeConfig?.enableScrollToTop ?? <ScrollToTop />}
+        {site.themeConfig?.enableScrollToTop && <ScrollToTop />}
       </div>
     </div>
   );

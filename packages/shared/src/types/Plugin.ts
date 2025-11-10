@@ -105,7 +105,7 @@ export interface RspressPlugin {
    * Add i18n source data or modify existing i18n source data.
    */
   i18nSource?: (
-    source: Record<string, Record<string, string>>,
+    value: Record<string, Record<string, string>>,
   ) =>
     | Record<string, Record<string, string>>
     | Promise<Record<string, Record<string, string>>>;

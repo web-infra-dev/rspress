@@ -183,7 +183,9 @@ export interface UserConfig {
     | (I18nText & Record<string, Record<string, string>>)
     | ((
         value: Record<string, Record<string, string>>,
-      ) => I18nText & Record<string, Record<string, string>>);
+      ) =>
+        | Record<string, Record<string, string>>
+        | Promise<Record<string, Record<string, string>>>);
   /**
    * Theme config.
    */

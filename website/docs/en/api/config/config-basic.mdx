@@ -113,7 +113,7 @@ export default defineConfig({
 
 ## i18nSource
 
-- **Type**: `Record<string, Record<string, string>> | Promise<(Record<string, Record<string, string>>) => Record<string, Record<string, string>>>`
+- **Type**: `Record<string, Record<string, string>> | ((value: Record<string, Record<string, string>>) => Record<string, Record<string, string>> | Promise<Record<string, Record<string, string>>>)`
 - **Default**: `{}`
 
 You can use this configuration to modify Rspress's built-in i18n text or extend custom component text. When extending text, it is usually used together with [useI18n](/ui/hooks/use-i18n.html).

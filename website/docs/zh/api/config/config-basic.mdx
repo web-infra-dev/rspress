@@ -113,7 +113,7 @@ export default defineConfig({
 
 ## i18nSource
 
-- **类型**： `Record<string, Record<string, string>> | Promise<(Record<string, Record<string, string>>) => Record<string, Record<string, string>>>`
+- **类型**： `Record<string, Record<string, string>> | ((value: Record<string, Record<string, string>>) => Record<string, Record<string, string>> | Promise<Record<string, Record<string, string>>>)`
 - **默认值**： `{}`
 
 你可以通过这个配置项来修改 Rspress 内置的国际化文案或扩展自定义组件的文案。当扩展文案时，通常配合 [useI18n](/ui/hooks/use-i18n.html) 一起使用。
