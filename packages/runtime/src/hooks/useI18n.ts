@@ -9,8 +9,10 @@ export function useI18n<T>() {
     (key: keyof (T & I18nText)) => {
       const text: string = i18nTextData[key as string]?.[lang];
 
-      if (!text) {
-        throw new Error(`i18n key "${key as string}" not found`);
+      if (typeof text !== 'string') {
+        throw new Error(
+          `i18n key "${key as string}" not found for language "${lang}"`,
+        );
       }
 
       return text;

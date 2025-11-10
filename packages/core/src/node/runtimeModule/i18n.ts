@@ -27,6 +27,8 @@ function mergeI18nData(
 }
 const logPrefix = '[i18n]';
 const logKeys = new Set<string>();
+let logged = false;
+
 export async function getI18nData(
   docConfig: UserConfig,
   pluginDriver?: PluginDriver,
@@ -75,6 +77,7 @@ export async function getI18nData(
         `${logPrefix} getI18nData Failed to execute \`i18nSource\` function in \`rspress.config.ts\`: \n`,
         e,
       );
+      throw e;
     }
   } else {
     i18nSourceFull = mergeI18nData(i18nSourceFull, i18nSource);
@@ -105,11 +108,12 @@ export async function getI18nData(
     }
   }
 
-  if (logKeys.size > 0) {
+  if (logKeys.size > 0 && !logged) {
     logger.warn(
       `${logPrefix} The following i18n keys are missing for some languages and have fallen back to 'en': 
       ${picocolors.gray(JSON.stringify(Object.fromEntries([...logKeys.keys()].map(i => [i, '...'])), null, 2))}`,
     );
+    logged = true;
   }
 
   return filteredI18nSource;

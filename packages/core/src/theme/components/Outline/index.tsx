@@ -8,7 +8,11 @@ export function Outline() {
   const t = useI18n();
 
   const headers = useDynamicToc();
-  const { site } = useSite();
+  const {
+    site: {
+      themeConfig: { enableScrollToTop = true },
+    },
+  } = useSite();
 
   if (headers.length === 0) {
     return <></>;
@@ -25,7 +29,7 @@ export function Outline() {
       </nav>
       <div className="rp-outline__divider" />
       <div className="rp-outline__bottom">
-        {site.themeConfig?.enableScrollToTop && <ScrollToTop />}
+        {enableScrollToTop && <ScrollToTop />}
       </div>
     </div>
   );

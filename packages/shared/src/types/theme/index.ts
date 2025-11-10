@@ -79,7 +79,7 @@ export type ThemeConfig = {
   enableAppearanceAnimation?: boolean;
   /**
    * Enable scroll to top button on documentation
-   * @default false
+   * @default true
    */
   enableScrollToTop?: boolean;
   /**

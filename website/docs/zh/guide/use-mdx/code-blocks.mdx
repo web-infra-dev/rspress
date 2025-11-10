@@ -227,7 +227,7 @@ function test() {
 
 Rspress 在 V2 中，使用 [Shiki](https://shiki.style) 进行编译时的代码高亮，提供了灵活扩展的代码块能力。
 
-通过配置 [`markdown.shiki.transformers`](../../../api/config/config-build.mdx#markdownshiki) 添加自定义 [shiki transformers](https://shiki.style/guide/transformers.html) 来实现更加丰富的代码块效果。
+通过配置 [`markdown.shiki.transformers`](../../api/config/config-build.mdx#markdownshiki) 添加自定义 [shiki transformers](https://shiki.style/guide/transformers.html) 来实现更加丰富的代码块效果。
 
 除了上文中的 [transformerNotationHighlight](#notation-行高亮)，Rspress 默认支持 [@shikijs/transformers](https://shiki.style/packages/transformers) 中的以下 transformers。
 
@@ -352,7 +352,7 @@ console.log('Not focused');
 
 > [TwoSlash](https://twoslash.netlify.app/guide/) 是一种用于 TypeScript 代码的标记格式，适合创建自包含的代码示例，并让 TypeScript 编译器自动补充类型信息和提示，广泛应用于 TypeScript 官网。
 
-Rspress 提供了 `@rspress/core/plugin-twoslash` 插件，它可以在 Rspress 中使用 Twoslash 功能。详见 [@rspress/plugin-twoslash 文档](../../../plugin/official-plugins/twoslash.mdx)
+Rspress 提供了 `@rspress/core/plugin-twoslash` 插件，它可以在 Rspress 中使用 Twoslash 功能。详见 [@rspress/plugin-twoslash 文档](../../plugin/official-plugins/twoslash.mdx)
 
 ```ts twoslash
 // @noErrorValidation
