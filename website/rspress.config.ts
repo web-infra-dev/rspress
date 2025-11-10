@@ -33,9 +33,9 @@ export default defineConfig({
   title: 'Rspress',
   description: 'Rsbuild based static site generator',
   lang: 'en',
-  logo: 'https://assets.rspack.rs/rspress/rspress-logo-480x480.png',
+  logo: 'https://assets.rspack.rs/rspress/rspress-logo.svg',
   logoText: 'Rspress',
-  icon: 'https://assets.rspack.rs/rspress/rspress-logo-480x480.png',
+  icon: 'https://assets.rspack.rs/rspress/rspress-logo.svg',
   markdown: {
     shiki: {
       transformers: [

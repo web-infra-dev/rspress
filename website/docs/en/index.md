@@ -15,7 +15,7 @@ hero:
       text: Quick Start
       link: ./guide/start/getting-started
   image:
-    src: /rspress-logo.webp
+    src: https://assets.rspack.rs/rspress/rspress-logo.svg
     alt: Rspress Logo
 features:
   - title: Blazing fast build speed
