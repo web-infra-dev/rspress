@@ -105,10 +105,12 @@ export async function getI18nData(
     }
   }
 
-  logger.warn(
-    `${logPrefix} The following i18n keys are missing for some languages and have fallen back to 'en': 
-${picocolors.gray(JSON.stringify(Object.fromEntries([...logKeys.keys()].map(i => [i, '...'])), null, 2))}`,
-  );
+  if (logKeys.size > 0) {
+    logger.warn(
+      `${logPrefix} The following i18n keys are missing for some languages and have fallen back to 'en': 
+      ${picocolors.gray(JSON.stringify(Object.fromEntries([...logKeys.keys()].map(i => [i, '...'])), null, 2))}`,
+    );
+  }
 
   return filteredI18nSource;
 }
