@@ -13,33 +13,3 @@ pageType: custom
 ## 侧边栏
 
 在 `rspress.config.ts` 中，你可以配置侧边栏的内容，具体可参考 [API-侧边栏配置](/api/config/config-theme#sidebar)。
-
-## 大纲栏标题
-
-通过 `outlineTitle` 配置项，你可以设置大纲栏的标题。
-
-```ts title="rspress.config.ts"
-import { defineConfig } from '@rspress/core';
-import path from 'path';
-
-export default defineConfig({
-  themeConfig: {
-    outlineTitle: '目录',
-  },
-});
-```
-
-## 上一页/下一页文本
-
-通过 `prevText` 和 `nextText` 配置项，你可以设置上一页/下一页的文本。
-
-```ts title="rspress.config.ts"
-import { defineConfig } from '@rspress/core';
-
-export default defineConfig({
-  themeConfig: {
-    prevPageText: '上一页',
-    nextPageText: '下一页',
-  },
-});
-```

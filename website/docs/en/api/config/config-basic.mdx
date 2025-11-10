@@ -116,7 +116,13 @@ export default defineConfig({
 - **Type**: `Record<string, Record<string, string>> | Promise<(Record<string, Record<string, string>>) => Record<string, Record<string, string>>>`
 - **Default**: `{}`
 
-Used to customize internationalization (i18n) text data. You can use this configuration to modify Rspress's built-in i18n text or extend custom component text. When extending text, it is usually used together with [useI18n](/en/ui/hooks/use-i18n.html).
+You can use this configuration to modify Rspress's built-in i18n text or extend custom component text. When extending text, it is usually used together with [useI18n](/ui/hooks/use-i18n.html).
+
+:::tip
+
+This has the same implementation and effect as `i18n.json`. You can use either one. `i18nSource` has higher priority than `i18n.json` and supports functions.
+
+:::
 
 The `i18nSource` parameter is an object with the following structure:
 
@@ -130,15 +136,15 @@ The `i18nSource` parameter is an object with the following structure:
 
 Where the first-level `textKey` is the text key name, the second-level `locale` is the language code (e.g., `zh`, `en`), and the value is the translated text for the corresponding language.
 
-Example of modifying Rspress's built-in i18n text:
+Here is an example of modifying Rspress's built-in i18n text:
 
 ```ts title="rspress.config.ts"
 import { defineConfig } from '@rspress/core';
 export default defineConfig({
   i18nSource: {
-    prevPage: {
-      zh: '上一页',
-      en: 'Previous Page',
+    editLinkText: {
+      en: '📝 Edit this page on Gitlab',
+      zh: '📝 在 Gitlab 上编辑此页',
     },
   },
 });
@@ -151,11 +157,9 @@ import { defineConfig } from '@rspress/core';
 
 export default defineConfig({
   i18nSource: async (source) => {
-    // Modify or extend the i18n source
-    source.customKey = {
-      zh: '自定义文案',
-      en: 'Custom Text',
-    };
+    for (const key of Object.keys(source)) {
+      source[key]['en_US'] = source[key]['en'];
+    }
     return source;
   },
 });

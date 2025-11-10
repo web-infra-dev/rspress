@@ -37,9 +37,9 @@ export async function getI18nData(
     themeConfig,
   } = docConfig;
 
-  const langs: string[] =
-    (docConfig.locales ?? themeConfig?.locales)?.map(locale => locale.lang) ??
-    [];
+  const langs: string[] = (docConfig.locales ?? themeConfig?.locales)?.map(
+    locale => locale.lang,
+  ) ?? [docConfig.lang!];
 
   // 0. load default value
   let i18nSourceFull: Record<
@@ -74,6 +74,8 @@ export async function getI18nData(
         e,
       );
     }
+  } else {
+    i18nSourceFull = mergeI18nData(i18nSourceFull, i18nSource);
   }
 
   // 4. select langs from i18nSourceFull for treeshaking
