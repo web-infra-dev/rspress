@@ -31,7 +31,7 @@
     "create-rstack": "1.7.4"
   },
   "devDependencies": {
-    "@microsoft/api-extractor": "^7.53.3",
+    "@microsoft/api-extractor": "^7.54.0",
     "@rslib/core": "0.16.1",
     "@types/node": "^22.8.1",
     "rsbuild-plugin-publint": "^0.3.3",
