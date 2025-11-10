@@ -81,6 +81,7 @@ export async function getI18nData(
   }
 
   // 4. select langs from i18nSourceFull for treeshaking
+  const cyan = picocolors.cyan;
   const filteredI18nSource: Record<string, Record<string, string>> = {};
   for (const key in i18nSourceFull) {
     filteredI18nSource[key] = {};
@@ -90,18 +91,10 @@ export async function getI18nData(
       } else {
         // fallback to 'en'
         const enText = i18nSourceFull[key]['en'];
-        const logged = logKeys.has(key);
-        if (!logged) {
-          logKeys.add(key);
-        }
+        logKeys.add(key);
 
-        const cyan = picocolors.cyan;
         if (enText) {
           filteredI18nSource[key][lang] = enText;
-          !logged &&
-            logger.warn(
-              `${logPrefix} i18n key ${cyan(key)} has no text for lang ${cyan(lang)}, fallback to ${cyan('en')} text.`,
-            );
         } else {
           logger.error(
             `${logPrefix} i18n key ${cyan(key)} has no text for lang ${cyan(lang)}, and no fallback ${cyan('en')} text either.`,
@@ -111,6 +104,11 @@ export async function getI18nData(
       }
     }
   }
+
+  logger.warn(
+    `${logPrefix} The following i18n keys are missing for some languages and have fallen back to 'en': 
+${picocolors.gray(JSON.stringify(Object.fromEntries([...logKeys.keys()].map(i => [i, '...'])), null, 2))}`,
+  );
 
   return filteredI18nSource;
 }
