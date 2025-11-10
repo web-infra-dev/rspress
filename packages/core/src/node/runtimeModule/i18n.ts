@@ -2,11 +2,12 @@ import { createRequire } from 'node:module';
 import { join } from 'node:path';
 import type { I18nText, UserConfig } from '@rspress/shared';
 import { logger } from '@rspress/shared/logger';
+import type { PluginDriver } from '../PluginDriver';
 import { pathExists } from '../utils';
 import { RuntimeModuleID, type VirtualModulePlugin } from './types';
 
 const require = createRequire(import.meta.url);
-const DEFAULT_I18N_SOURCE = join(process.cwd(), 'i18n.json');
+const DEFAULT_I18N_SOURCE_PATH = join(process.cwd(), 'i18n.json');
 
 const DEFAULT_I18N_TEXT = {
   languagesText: {
@@ -102,48 +103,54 @@ function mergeI18nData(
   return result;
 }
 
-export function getI18nData(
+export async function getI18nData(
   docConfig: UserConfig,
-): Record<string, Record<string, string>> {
+  pluginDriver?: PluginDriver,
+): Promise<Record<string, Record<string, string>>> {
   const {
-    i18nSourcePath = DEFAULT_I18N_SOURCE,
+    i18nSourcePath = DEFAULT_I18N_SOURCE_PATH,
     i18nSource = {},
     themeConfig,
   } = docConfig;
 
   const langs = themeConfig?.locales?.map(locale => locale.lang) ?? [];
 
-  // 1. load i18n.json
+  // 0. load default value
+  let i18nSourceFull: Record<
+    string,
+    Record<string, string>
+  > = DEFAULT_I18N_TEXT;
+
+  // 1. modified by plugin (default value)
+  const i18nSourceFromPlugin = await pluginDriver?.i18nSource(i18nSourceFull);
+  if (i18nSourceFromPlugin) {
+    i18nSourceFull = i18nSourceFromPlugin;
+  }
+
+  // 2. load i18nSource from i18n.json
   let i18nSourceFromJson: Record<string, Record<string, string>> = {};
   try {
-    // require.cache is an API in Rslib.
     delete require.cache[i18nSourcePath];
-    // eslint-disable-next-line import/no-dynamic-require
     i18nSourceFromJson = require(i18nSourcePath);
   } catch (e) {
     logger.debug('getI18nData from i18n.json Failed: \n', e);
   }
 
-  // 2. load i18nSource from rspress.config.ts
-  let i18nSourceFull: Record<string, Record<string, string>> = {};
-  const i18nSourceFromJsonMergedWithDefault = mergeI18nData(
-    DEFAULT_I18N_TEXT,
-    i18nSourceFromJson,
-  );
+  i18nSourceFull = mergeI18nData(i18nSourceFull, i18nSourceFromJson);
+
+  // 3. load i18nSource from rspress.config.ts
   if (typeof i18nSource === 'function') {
     try {
-      i18nSourceFull = i18nSource(i18nSourceFromJsonMergedWithDefault);
+      i18nSourceFull = i18nSource(i18nSourceFull);
     } catch (e) {
       logger.error(
         'getI18nData Failed to execute `i18nSource` function in `rspress.config.ts`: \n',
         e,
       );
     }
-  } else {
-    i18nSourceFull = i18nSourceFromJsonMergedWithDefault;
   }
 
-  // 3. select langs from i18nSourceFull for treeshaking
+  // 4. select langs from i18nSourceFull for treeshaking
   const filteredI18nSource: Record<string, Record<string, string>> = {};
   for (const key in i18nSourceFull) {
     filteredI18nSource[key] = {};
@@ -165,13 +172,13 @@ export function getI18nData(
  * Generate i18n text for client runtime
  */
 export const i18nVMPlugin: VirtualModulePlugin = context => {
-  const { config } = context;
+  const { config, pluginDriver } = context;
   return {
     [RuntimeModuleID.I18nText]: async ({
       addDependency,
       addMissingDependency,
     }) => {
-      const configPath = config.i18nSourcePath || DEFAULT_I18N_SOURCE;
+      const configPath = config.i18nSourcePath || DEFAULT_I18N_SOURCE_PATH;
 
       const isExist = await pathExists(configPath);
       if (isExist) {
@@ -179,9 +186,12 @@ export const i18nVMPlugin: VirtualModulePlugin = context => {
       } else {
         addMissingDependency(configPath);
       }
-      const i18nData = getI18nData(config);
+      const i18nData = await getI18nData(config, pluginDriver);
 
-      return `export default ${JSON.stringify(i18nData, null, 2)}`;
+      const i18nDataModifiedByI18nData =
+        await pluginDriver.i18nSource(i18nData);
+
+      return `export default ${JSON.stringify(i18nDataModifiedByI18nData, null, 2)}`;
     },
   };
 };

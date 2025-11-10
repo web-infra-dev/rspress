@@ -18,9 +18,9 @@ import {
 import { applyReplaceRules } from '../../utils/applyReplaceRules';
 import { getI18nData } from '../i18n';
 
-export function normalizeThemeConfig(
+export async function normalizeThemeConfig(
   docConfig: UserConfig,
-): NormalizedDefaultThemeConfig {
+): Promise<NormalizedDefaultThemeConfig> {
   const {
     locales: siteLocales,
     lang,
@@ -32,7 +32,7 @@ export function normalizeThemeConfig(
   docConfig.themeConfig = docConfig.themeConfig || {};
   const { themeConfig } = docConfig;
   const locales = siteLocales ?? (themeConfig?.locales || []);
-  const i18nTextData = getI18nData(docConfig);
+  const i18nTextData = await getI18nData(docConfig);
   // In following code, we will normalize the theme config reference to the pages data extracted from mdx files
   const normalizeLinkPrefix = (link: string, currentLang: string) => {
     const normalizedLink = slash(link);

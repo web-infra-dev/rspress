@@ -12,6 +12,8 @@ export default defineConfig({
         lang: 'zh',
         title: '一个很棒的项目',
         description: '一个很棒的项目描述',
+        // 语言切换按钮的文案
+        // Language switch button text
         label: '简体中文',
       },
       {

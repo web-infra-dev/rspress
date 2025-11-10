@@ -1,4 +1,3 @@
-import type { I18nText } from './i18nText';
 import type { Nav } from './nav';
 import type { Sidebar } from './sidebar';
 
@@ -18,4 +17,4 @@ export type LocaleConfig = {
    */
   nav?: Nav;
   sidebar?: Sidebar;
-} & I18nText;
+};

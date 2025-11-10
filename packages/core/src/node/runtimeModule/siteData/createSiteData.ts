@@ -19,7 +19,7 @@ export async function createSiteData(userConfig: UserConfig): Promise<{
     description: userConfig?.description || '',
     icon: getIconUrlPath(userConfig?.icon) || '',
     route: userConfig?.route || {},
-    themeConfig: normalizeThemeConfig(userConfig),
+    themeConfig: await normalizeThemeConfig(userConfig),
     lang: userConfig?.lang || '',
     locales: userConfig?.locales || userConfig.themeConfig?.locales || [],
     logo: userConfig?.logo || '',
