@@ -45,7 +45,7 @@
     "react-router-dom": "^6.30.1"
   },
   "devDependencies": {
-    "@rsbuild/plugin-react": "~1.4.1",
+    "@rsbuild/plugin-react": "~1.4.2",
     "@rslib/core": "0.16.1",
     "@rspress/config": "workspace:*",
     "@types/react": "^19.2.2",
