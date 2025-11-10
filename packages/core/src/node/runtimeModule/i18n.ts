@@ -69,7 +69,7 @@ export async function getI18nData(
   // 3. load i18nSource from rspress.config.ts
   if (typeof i18nSource === 'function') {
     try {
-      i18nSourceFull = i18nSource(i18nSourceFull);
+      i18nSourceFull = await i18nSource(i18nSourceFull);
     } catch (e) {
       logger.error(
         `${logPrefix} getI18nData Failed to execute \`i18nSource\` function in \`rspress.config.ts\`: \n`,
