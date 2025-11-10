@@ -12,23 +12,3 @@
   user-select: none;
   background: var(--rp-home-background-bg);
 }
-
-.rp-dark .rp-home-background {
-  background:
-    radial-gradient(
-      42.12% 56.13% at 100% 0%,
-      #0c1d48 0%,
-      rgba(18, 18, 18, 0) 100%
-    ),
-    radial-gradient(
-      55.81% 87.78% at 48.37% 0%,
-      #000000 0%,
-      rgba(18, 18, 18, 0) 89.55%
-    ),
-    radial-gradient(
-      122.65% 88.24% at 0% 0%,
-      #34268a 0%,
-      rgba(18, 18, 18, 0) 100%
-    ),
-    #121212;
-}
