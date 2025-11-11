@@ -58,7 +58,7 @@ import Button from '@components/Button'
       /*@jsxImportSource react*/
       import Button from '@components/Button';
       function _createMdxContent(props) {
-        return <>{"# Hello World\\n"}{"\\n"}{"\\n"}<Button type="primary" disabled={true}>{"Click me"}</Button></>;
+        return <>{"# Hello World\\n"}{"\\n"}{"\\n"}<Button type="primary" disabled={true}>{"Click me\\n"}</Button></>;
       }
       export default function MDXContent(props = {}) {
         const {wrapper: MDXLayout} = props.components || ({});
@@ -154,12 +154,7 @@ console.log('Hello, world!');
       /*@jsxImportSource react*/
       import Card from '@components';
       function _createMdxContent(props) {
-        const _components = {
-          code: "code",
-          pre: "pre",
-          ...props.components
-        };
-        return <>{"# title\\n"}{"\\n"}{"\\n"}<Card>{"Content inside"}</Card>{"\\n"}{"Content outside\\n"}{"\\n"}<Card><_components.pre><_components.code className="language-tsx">{"console.log('Hello, world!');\\n"}</_components.code></_components.pre></Card>{"\\n"}{"\`\`\`tsx\\nconsole.log('Hello, world!');\\n\`\`\`\\n"}</>;
+        return <>{"# title\\n"}{"\\n"}{"\\n"}<Card>{"Content inside\\n"}</Card>{"\\n"}{"Content outside\\n"}{"\\n"}<Card>{"\`\`\`tsx\\nconsole.log('Hello, world!');\\n\`\`\`\\n"}</Card>{"\\n"}{"\`\`\`tsx\\nconsole.log('Hello, world!');\\n\`\`\`\\n"}</>;
       }
       export default function MDXContent(props = {}) {
         const {wrapper: MDXLayout} = props.components || ({});
@@ -229,7 +224,7 @@ import Button from 'react';
       import {Table} from '@lynx';
       import Button from 'react';
       function _createMdxContent(props) {
-        return <><Table />{"\\n"}{"<Button>\\n  Click\\n</Button>\\n"}</>;
+        return <><Table />{"\\n"}<>{"<Button>"}{"Click\\n"}{"</Button>"}</></>;
       }
       export default function MDXContent(props = {}) {
         const {wrapper: MDXLayout} = props.components || ({});
@@ -269,7 +264,7 @@ import Button from 'react';
       import {Table, Card} from '@lynx';
       import Button from 'react';
       function _createMdxContent(props) {
-        return <><Table />{"\\n"}{"<Card />\\n"}{"\\n"}<Button>{"Click"}</Button></>;
+        return <><Table />{"\\n"}{"<Card />\\n"}{"\\n"}<Button>{"Click\\n"}</Button></>;
       }
       export default function MDXContent(props = {}) {
         const {wrapper: MDXLayout} = props.components || ({});
@@ -305,7 +300,7 @@ import Button from 'react';
       import {Table} from '@lynx';
       import Button from 'react';
       function _createMdxContent(props) {
-        return <><Table />{"\\n"}{"<Button>\\n  Click\\n</Button>\\n"}</>;
+        return <><Table />{"\\n"}<>{"<Button>"}{"Click\\n"}{"</Button>"}</></>;
       }
       export default function MDXContent(props = {}) {
         const {wrapper: MDXLayout} = props.components || ({});
@@ -412,7 +407,7 @@ import Button from 'react';
       import {Table, Card} from '@lynx';
       import Button from 'react';
       function _createMdxContent(props) {
-        return <><Table />{"\\n"}{"<Card />\\n"}{"\\n"}{"<Button>\\n  Click\\n</Button>\\n"}</>;
+        return <><Table />{"\\n"}{"<Card />\\n"}{"\\n"}<>{"<Button>"}{"Click\\n"}{"</Button>"}</></>;
       }
       export default function MDXContent(props = {}) {
         const {wrapper: MDXLayout} = props.components || ({});
@@ -504,7 +499,7 @@ This is a <Button>click me</Button> and <Link href="/test">link</Link> example.`
       /*@jsxImportSource react*/
       import {Button, Link} from '@components';
       function _createMdxContent(props) {
-        return <><>{"This is a "}<Button>{"click me"}</Button>{" and "}<Link href="/test">{"link"}</Link>{" example."}</></>;
+        return <><>{"This is a "}<Button>{"click me\\n"}</Button>{" and "}<Link href="/test">{"link\\n"}</Link>{" example."}</></>;
       }
       export default function MDXContent(props = {}) {
         const {wrapper: MDXLayout} = props.components || ({});
@@ -530,5 +525,167 @@ This is a <Button>click me</Button> and <Link href="/test">link</Link> example.`
       jsx: true,
     });
     expect(result.toString()).toMatchSnapshot();
+  });
+});
+
+describe('remarkWrapMarkdown - mdx fragments', () => {
+  it('should keep MDX fragments even when includes filter is set', async () => {
+    const input = `import Content from './content.mdx'
+import { Table } from '@lynx'
+
+<Content />
+<Table />`;
+
+    const result = await compile(input, {
+      remarkPlugins: [
+        [
+          remarkSplitMdx,
+          {
+            includes: [[['Table', 'Content'], '@lynx']],
+          },
+        ],
+      ],
+      jsx: true,
+    });
+
+    const code = String(result);
+    expect(code).toMatchInlineSnapshot(`
+      "/*@jsxRuntime automatic*/
+      /*@jsxImportSource react*/
+      import Content from './content.mdx';
+      import {Table} from '@lynx';
+      function _createMdxContent(props) {
+        return <><Content />{"\\n"}<Table /></>;
+      }
+      export default function MDXContent(props = {}) {
+        const {wrapper: MDXLayout} = props.components || ({});
+        return MDXLayout ? <MDXLayout {...props}><_createMdxContent {...props} /></MDXLayout> : _createMdxContent(props);
+      }
+      "
+    `);
+  });
+
+  it('should handle MDX fragments within Tabs', async () => {
+    const input = `
+import { PlatformTabs } from '@lynx';
+import IntegratingLynxIOS from './fragments/ios/integrating-lynx-with-existing-app-ios.mdx';
+import IntegratingLynxAndroid from './fragments/android/integrating-lynx-with-existing-app-android.mdx';
+import IntegratingLynxHarmony from './fragments/harmony/integrating-lynx-with-existing-app-harmony.mdx';
+import IntegratingLynxWeb from './fragments/web/integrating-lynx-with-web.mdx';
+
+<PlatformTabs queryKey="platform">
+<PlatformTabs.Tab platform="ios">
+<IntegratingLynxIOS />
+</PlatformTabs.Tab>
+
+<PlatformTabs.Tab platform="android">
+  <IntegratingLynxAndroid />
+</PlatformTabs.Tab>
+
+<PlatformTabs.Tab platform="harmony">
+  <IntegratingLynxHarmony />
+</PlatformTabs.Tab>
+
+<PlatformTabs.Tab platform="web">
+  <IntegratingLynxWeb />
+</PlatformTabs.Tab>
+
+</PlatformTabs>`;
+
+    const result = await compile(input, {
+      remarkPlugins: [
+        [
+          remarkSplitMdx,
+          {
+            includes: [[['Content'], '@lynx']],
+          },
+        ],
+      ],
+      jsx: true,
+    });
+
+    const code = String(result);
+    expect(code).toMatchInlineSnapshot(`
+      "/*@jsxRuntime automatic*/
+      /*@jsxImportSource react*/
+      import {PlatformTabs} from '@lynx';
+      import IntegratingLynxIOS from './fragments/ios/integrating-lynx-with-existing-app-ios.mdx';
+      import IntegratingLynxAndroid from './fragments/android/integrating-lynx-with-existing-app-android.mdx';
+      import IntegratingLynxHarmony from './fragments/harmony/integrating-lynx-with-existing-app-harmony.mdx';
+      import IntegratingLynxWeb from './fragments/web/integrating-lynx-with-web.mdx';
+      function _createMdxContent(props) {
+        return <><>{"<PlatformTabs queryKey=\\"platform\\">"}<>{"<PlatformTabs.Tab platform=\\"ios\\">"}<IntegratingLynxIOS />{"</PlatformTabs.Tab>"}</><>{"<PlatformTabs.Tab platform=\\"android\\">"}<IntegratingLynxAndroid />{"</PlatformTabs.Tab>"}</><>{"<PlatformTabs.Tab platform=\\"harmony\\">"}<IntegratingLynxHarmony />{"</PlatformTabs.Tab>"}</><>{"<PlatformTabs.Tab platform=\\"web\\">"}<IntegratingLynxWeb />{"</PlatformTabs.Tab>"}</>{"</PlatformTabs>"}</></>;
+      }
+      export default function MDXContent(props = {}) {
+        const {wrapper: MDXLayout} = props.components || ({});
+        return MDXLayout ? <MDXLayout {...props}><_createMdxContent {...props} /></MDXLayout> : _createMdxContent(props);
+      }
+      "
+    `);
+  });
+
+  it('should handle MDX fragments within Steps', async () => {
+    const input = `<Steps>
+  
+  ### Configuring Deps
+  
+  1. **Lynx**
+  
+  The core capabilities of [Lynx Engine](/guide/spec.html#engine) include basic capabilities such as parsing [Bundle](/guide/spec.html#lynx-bundle-or-bundle), style parsing, layout, and rendering views
+  
+  Get the latest version of Lynx from Cocoapods. Then add Lynx to your Podfile:
+  
+  <CodeFold height={360} toggle>
+  
+  \`\`\`ruby title="Podfile" {1,6-8,10}
+  source 'https://cdn.cocoapods.org/'
+  
+  platform :ios, '10.0'
+  
+  target 'YourTarget' do
+    pod 'Lynx', '3.4.1', :subspecs => [
+      'Framework',
+    ]
+  
+    pod 'PrimJS', '2.14.1', :subspecs => ['quickjs', 'napi']
+  end
+  \`\`\`
+  
+  </CodeFold>
+  
+  2. **Lynx Service**
+  
+  Lynx provides standard native Image, Log, and Http service capabilities, which can be quickly accessed and used by the access party;
+  
+  Get the latest version of Lynx Service from Cocoapods. Then add Lynx Service to your Podfile:
+  
+  </Steps>
+  `;
+
+    const result = await compile(input, {
+      remarkPlugins: [
+        [
+          remarkSplitMdx,
+          {
+            includes: [[['Content'], '@lynx']],
+          },
+        ],
+      ],
+      jsx: true,
+    });
+
+    const code = String(result);
+    expect(code).toMatchInlineSnapshot(`
+      "/*@jsxRuntime automatic*/
+      /*@jsxImportSource react*/
+      function _createMdxContent(props) {
+        return <><>{"<Steps>"}{"### Configuring Deps\\n1. **Lynx**\\nThe core capabilities of [Lynx Engine](/guide/spec.html#engine) include basic capabilities such as parsing [Bundle](/guide/spec.html#lynx-bundle-or-bundle), style parsing, layout, and rendering views\\nGet the latest version of Lynx from Cocoapods. Then add Lynx to your Podfile:\\n"}<>{"<CodeFold height={360} toggle>"}{"\`\`\`ruby title=\\"Podfile\\" {1,6-8,10}\\nsource 'https://cdn.cocoapods.org/'\\n\\nplatform :ios, '10.0'\\n\\ntarget 'YourTarget' do\\n  pod 'Lynx', '3.4.1', :subspecs => [\\n    'Framework',\\n  ]\\n\\n  pod 'PrimJS', '2.14.1', :subspecs => ['quickjs', 'napi']\\nend\\n\`\`\`\\n"}{"</CodeFold>"}</>{"2. **Lynx Service**\\nLynx provides standard native Image, Log, and Http service capabilities, which can be quickly accessed and used by the access party;\\nGet the latest version of Lynx Service from Cocoapods. Then add Lynx Service to your Podfile:\\n"}{"</Steps>"}</></>;
+      }
+      export default function MDXContent(props = {}) {
+        const {wrapper: MDXLayout} = props.components || ({});
+        return MDXLayout ? <MDXLayout {...props}><_createMdxContent {...props} /></MDXLayout> : _createMdxContent(props);
+      }
+      "
+    `);
   });
 });

@@ -8,7 +8,7 @@ concurrency:
 on:
   # Triggers the workflow on pull request events but only for the main branch
   pull_request:
-    branches: [main]
+    branches: [main, release_v2.0.0-beta.35]
 
   merge_group:
 
