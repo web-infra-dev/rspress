@@ -470,14 +470,27 @@ importers:
         specifier: ^22.8.1
         version: 22.10.2
 
-  e2e/fixtures/plugin-api-docgen:
+  e2e/fixtures/plugin-api-docgen/locales:
     dependencies:
       '@rspress/core':
         specifier: workspace:*
-        version: link:../../../packages/core
+        version: link:../../../../packages/core
       '@rspress/plugin-api-docgen':
         specifier: workspace:*
-        version: link:../../../packages/plugin-api-docgen
+        version: link:../../../../packages/plugin-api-docgen
+    devDependencies:
+      '@types/node':
+        specifier: ^22.8.1
+        version: 22.10.2
+
+  e2e/fixtures/plugin-api-docgen/single:
+    dependencies:
+      '@rspress/core':
+        specifier: workspace:*
+        version: link:../../../../packages/core
+      '@rspress/plugin-api-docgen':
+        specifier: workspace:*
+        version: link:../../../../packages/plugin-api-docgen
     devDependencies:
       '@types/node':
         specifier: ^22.8.1

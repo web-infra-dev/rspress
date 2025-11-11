@@ -29,7 +29,6 @@ const commonRsdoctorConfig = {
 };
 
 export default defineConfig({
-  root: 'docs',
   title: 'Rspress',
   description: 'Rsbuild based static site generator',
   lang: 'en',
