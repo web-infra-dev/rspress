@@ -24,13 +24,19 @@ export function pluginApiDocgen(options?: PluginOptions): RspressPlugin {
     },
     async beforeBuild(config, isProd) {
       // only support zh , en and ru
-      const languages: SupportLanguages[] = (
+      let languages: SupportLanguages[] = (
         config.themeConfig?.locales?.map(locale => locale.lang) ||
         config.locales?.map(locale => locale.lang) ||
         []
       ).filter((lang): lang is SupportLanguages =>
         ['zh', 'en', 'ru'].includes(lang),
       ) as SupportLanguages[];
+
+      const defaultLang = config.lang || 'en';
+      if (languages.length === 0) {
+        languages = [defaultLang as SupportLanguages];
+      }
+
       await docgen({
         entries,
         apiParseTool,
@@ -62,9 +68,7 @@ export function pluginApiDocgen(options?: PluginOptions): RspressPlugin {
             const matchContent = matchResult[0];
             const moduleName = matchResult[2] ?? matchResult[5] ?? '';
             const apiDoc =
-              apiDocMap[moduleName] ??
-              apiDocMap[`${moduleName}-${lang ? lang : 'en'}`] ??
-              '';
+              apiDocMap[`${moduleName}-${lang ? lang : 'en'}`] ?? '';
             if (matchContent && !apiDoc) {
               logger.warn(
                 `No api doc found for module: ${moduleName} in lang: ${lang ?? 'en'}`,
