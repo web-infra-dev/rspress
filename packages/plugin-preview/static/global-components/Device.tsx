@@ -47,7 +47,6 @@ export default () => {
 
   useEffect(() => {
     const node = document.querySelector('.rspress-doc-container');
-    const { style } = document.documentElement;
     if (haveDemos) {
       if (innerWidth > 1280) {
         node?.setAttribute(
@@ -64,10 +63,8 @@ export default () => {
       } else {
         node?.removeAttribute('style');
       }
-      style.setProperty('--rp-outline-width', '0px');
     } else {
       node?.removeAttribute('style');
-      style.setProperty('--rp-outline-width', asideWidth);
     }
   }, [haveDemos, asideWidth, innerWidth]);
 
