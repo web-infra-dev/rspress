@@ -101,6 +101,9 @@ export function pluginPreview(options?: Options): RspressPlugin {
         return;
       }
       const { html, source, output, performance } = clientConfig ?? {};
+
+      // omit preEntry to avoid '@theme' import
+      const { preEntry, ...otherSourceOptions } = source ?? {};
       const rsbuildConfig = mergeRsbuildConfig(
         {
           dev: {
@@ -117,7 +120,7 @@ export function pluginPreview(options?: Options): RspressPlugin {
           },
           html,
           source: {
-            ...source,
+            ...otherSourceOptions,
             entry: sourceEntry,
           },
           output: {
