@@ -1,5 +1,5 @@
 {
-  "name": "@rspress-fixture/plugin-api-docgen",
+  "name": "@rspress-fixture/plugin-api-docgen-locales",
   "version": "1.0.0",
   "private": true,
   "scripts": {
