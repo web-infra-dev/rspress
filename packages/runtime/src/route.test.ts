@@ -71,6 +71,17 @@ describe('isActive', () => {
   it('should return false for non-matching paths', () => {
     expect(isActive('/api/config', '/api/other')).toBe(false);
   });
+
+  it('should handle hash and search parameters correctly', () => {
+    expect(isActive('/api/config', '/api/config#hash')).toBe(true);
+    expect(isActive('/api/config', '/api/config?query=value')).toBe(true);
+    expect(isActive('/api/config', '/api/config.html#hash')).toBe(true);
+    expect(isActive('/api/config', '/api/config.html?query=value')).toBe(true);
+    expect(isActive('/api/config', '/api/config.html?query=value#hash')).toBe(
+      true,
+    );
+    expect(isActive('/api/config#different', '/api/config#hash')).toBe(true);
+  });
 });
 
 describe('pathnameToRouteService', () => {
@@ -115,6 +126,34 @@ describe('pathnameToRouteService', () => {
     );
     expect(pathnameToRouteService('/index.md')?.path).toMatchInlineSnapshot(
       `undefined`,
+    );
+  });
+
+  it('6. /api/config.html#hash - should handle hash correctly', () => {
+    const pathname = '/api/config.html#hash';
+    expect(pathnameToRouteService(pathname)?.path).toMatchInlineSnapshot(
+      `"/api/config/"`,
+    );
+  });
+
+  it('7. /api/config.html?query=value - should handle query params correctly', () => {
+    const pathname = '/api/config.html?query=value';
+    expect(pathnameToRouteService(pathname)?.path).toMatchInlineSnapshot(
+      `"/api/config/"`,
+    );
+  });
+
+  it('8. /api/config.html?query=value#hash - should handle both query and hash', () => {
+    const pathname = '/api/config.html?query=value#hash';
+    expect(pathnameToRouteService(pathname)?.path).toMatchInlineSnapshot(
+      `"/api/config/"`,
+    );
+  });
+
+  it('9. /api/config#hash - should handle hash without .html', () => {
+    const pathname = '/api/config#hash';
+    expect(pathnameToRouteService(pathname)?.path).toMatchInlineSnapshot(
+      `"/api/config/"`,
     );
   });
 });
