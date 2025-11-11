@@ -2,7 +2,7 @@ import Github from '@theme-assets/github';
 import Gitlab from '@theme-assets/gitlab';
 import { SvgWrapper } from '../SvgWrapper';
 import './index.scss';
-import { useI18n } from '@rspress/runtime';
+import { useI18n } from '@rspress/core/runtime';
 
 interface SourceCodeProps {
   href: string;

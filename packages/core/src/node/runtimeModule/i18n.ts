@@ -46,10 +46,9 @@ export async function getI18nData(
     langs = [docConfig.lang ?? 'en'];
   }
   // 0. load default value
-  let i18nSourceFull: Record<
-    string,
-    Record<string, string>
-  > = DEFAULT_I18N_TEXT;
+  let i18nSourceFull: Record<string, Record<string, string>> = JSON.parse(
+    JSON.stringify(DEFAULT_I18N_TEXT),
+  );
 
   // 1. modified by plugin (default value)
   const i18nSourceFromPlugin = await pluginDriver?.i18nSource(i18nSourceFull);

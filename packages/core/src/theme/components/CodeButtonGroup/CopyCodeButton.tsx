@@ -4,7 +4,7 @@ import copy from 'copy-to-clipboard';
 import { useRef } from 'react';
 import { SvgWrapper } from '../SvgWrapper';
 import './CopyCodeButton.scss';
-import { useI18n } from '@rspress/runtime';
+import { useI18n } from '@rspress/core/runtime';
 
 const timeoutIdMap: Map<HTMLElement, NodeJS.Timeout> = new Map();
 const COPIED_CLASS = 'rp-code-copy-button--copied';
