@@ -7,7 +7,6 @@ export default defineConfig({
   root: NodePath.resolve(__dirname, 'doc'),
   title: fixture.title,
   base: fixture.base,
-  ssg: false, // FIXME: should @unhead/react issue
   plugins: [
     pluginRss({
       siteUrl: fixture.siteUrl,
