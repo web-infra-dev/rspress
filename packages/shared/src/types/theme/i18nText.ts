@@ -35,4 +35,8 @@ export interface I18nText {
 
   // codeblock
   codeButtonGroupCopyButtonText?: I18nTextValue;
+
+  // NotFoundLayout
+  notFoundText?: I18nTextValue;
+  takeMeHomeText?: I18nTextValue;
 }

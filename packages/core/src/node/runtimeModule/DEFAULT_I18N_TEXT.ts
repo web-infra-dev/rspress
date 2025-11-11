@@ -115,4 +115,16 @@ export const DEFAULT_I18N_TEXT = {
     ja: 'コードをコピー',
     ko: '코드 복사',
   },
+  notFoundText: {
+    en: 'PAGE NOT FOUND',
+    zh: '页面未找到',
+    ja: 'ページが見つかりません',
+    ko: '페이지를 찾을 수 없음',
+  },
+  takeMeHomeText: {
+    en: 'Take me home',
+    zh: '返回首页',
+    ja: 'ホームに連れてって',
+    ko: '홈으로 이동',
+  },
 } as const satisfies Required<I18nText>;
