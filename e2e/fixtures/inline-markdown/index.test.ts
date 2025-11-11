@@ -280,7 +280,7 @@ test.describe('Inline markdown test', async () => {
     await expect(img).toBeVisible();
     await expect(img).toHaveAttribute(
       'src',
-      'https://assets.rspack.rs/rspress/rspress-logo-480x480.png',
+      'https://assets.rspack.rs/rspress/rspress-logo.svg',
     );
   });
 });

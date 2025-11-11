@@ -10,7 +10,7 @@ hero:
     静态站点生成器
   tagline: 简单、高性能、易于扩展
   image:
-    src: /rspress-logo.webp
+    src: https://assets.rspack.rs/rspress/rspress-logo.svg
     alt: Rspress Logo
   actions:
     - theme: brand
