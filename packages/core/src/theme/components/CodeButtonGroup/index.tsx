@@ -7,10 +7,10 @@ import { SvgWrapper } from '../SvgWrapper';
 import './index.scss';
 import { CopyCodeButton } from './CopyCodeButton';
 
-export interface CodeButtonGroupProps
-  extends ReturnType<typeof useCodeButtonGroup> {
+export interface CodeButtonGroupProps {
   copyElementRef: React.RefObject<HTMLDivElement | null>;
-
+  codeWrap: boolean;
+  toggleCodeWrap: () => void;
   /**
    * @default true
    */
@@ -34,6 +34,7 @@ export const useCodeButtonGroup = () => {
   return {
     copyElementRef,
     codeWrap,
+    setCodeWrap,
     toggleCodeWrap,
   };
 };

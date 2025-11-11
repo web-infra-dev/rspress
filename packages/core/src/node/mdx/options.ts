@@ -45,6 +45,7 @@ export async function createMDXOptions(options: {
     rehypePlugins: rehypePluginsFromConfig = [],
     globalComponents: globalComponentsFromConfig = [],
     showLineNumbers = false,
+    defaultWrapCode = false,
     shiki,
   } = config?.markdown || {};
   const rspressPlugins = pluginDriver?.getPlugins() ?? [];
@@ -121,7 +122,10 @@ export async function createMDXOptions(options: {
                   [rehypeRaw, { passThrough: nodeTypes }],
                 ]
               : []),
-            [rehypeShiki, createRehypeShikiOptions(showLineNumbers, shiki)],
+            [
+              rehypeShiki,
+              createRehypeShikiOptions(showLineNumbers, defaultWrapCode, shiki),
+            ],
             [
               rehypeExternalLinks,
               {

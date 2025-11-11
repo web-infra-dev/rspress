@@ -8,3 +8,7 @@ export {
   SHIKI_TRANSFORMER_META_HIGHLIGHT,
   transformerCompatibleMetaHighlight,
 } from './meta-highlight';
+export {
+  SHIKI_TRANSFORMER_WRAP_CODE,
+  transformerWrapCode,
+} from './wrap-code';
