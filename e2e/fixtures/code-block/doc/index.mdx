@@ -50,3 +50,27 @@ export function foo() {
 +  console.log('Diff add');
 }
 ```
+
+## Meta attributes
+
+{/* lineNumbers meta attribute - should show line numbers even without global config */}
+
+```tsx lineNumbers
+function Component() {
+  return <div>With line numbers via meta</div>;
+}
+```
+
+{/* wrapCode meta attribute - should wrap code */}
+
+```tsx wrapCode
+const longLine =
+  'This is a very long line of code that should wrap when the wrapCode meta attribute is present in the code block declaration';
+```
+
+{/* Both lineNumbers and wrapCode together */}
+
+```tsx lineNumbers wrapCode
+const longLineWithNumbers =
+  'This is a very long line of code with both line numbers and code wrapping enabled via meta attributes';
+```
