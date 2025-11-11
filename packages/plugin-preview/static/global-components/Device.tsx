@@ -27,27 +27,14 @@ export default () => {
     // Do nothing in ssr
     return '';
   };
-  const [asideWidth, setAsideWidth] = useState('0px');
   const { width: innerWidth } = useWindowSize();
   const [iframeKey, setIframeKey] = useState(0);
   const refresh = useCallback(() => {
     setIframeKey(Math.random());
   }, []);
 
-  // get default value from root
-  // listen resize and re-render
-  useEffect(() => {
-    const root = document.querySelector(':root');
-    if (root) {
-      const defaultOutlineWidth =
-        getComputedStyle(root).getPropertyValue('--rp-outline-width');
-      setAsideWidth(defaultOutlineWidth);
-    }
-  }, []);
-
   useEffect(() => {
     const node = document.querySelector('.rspress-doc-container');
-    const { style } = document.documentElement;
     if (haveDemos) {
       if (innerWidth > 1280) {
         node?.setAttribute(
@@ -64,12 +51,10 @@ export default () => {
       } else {
         node?.removeAttribute('style');
       }
-      style.setProperty('--rp-outline-width', '0px');
     } else {
       node?.removeAttribute('style');
-      style.setProperty('--rp-outline-width', asideWidth);
     }
-  }, [haveDemos, asideWidth, innerWidth]);
+  }, [haveDemos, innerWidth]);
 
   return haveDemos ? (
     <div className="fixed-device">
