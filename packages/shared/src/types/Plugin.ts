@@ -101,4 +101,12 @@ export interface RspressPlugin {
     data: PageIndexInfo[],
     isProd: boolean,
   ) => void | Promise<void>;
+  /**
+   * Add i18n source data or modify existing i18n source data.
+   */
+  i18nSource?: (
+    value: Record<string, Record<string, string>>,
+  ) =>
+    | Record<string, Record<string, string>>
+    | Promise<Record<string, Record<string, string>>>;
 }

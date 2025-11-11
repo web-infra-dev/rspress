@@ -57,10 +57,7 @@ export interface I18n {
 
 ## 配置 `locales` 数据
 
-在 `rspress.config.ts`中，你可以通过两个地方来配置 `locales` 数据:
-
-- `locales`，用于配置站点的`语言`、`标题`、`描述`等信息，主要围绕站点本身的信息来配置。
-- `themeConfig.locales`，用于配置主题的`语言`、`大纲栏标题`、`上一页/下一页文本`等信息，主要进行主题相关的配置。
+`rspress.config.ts`中的 `locales`，用于配置站点的`语言`、`标题`、`描述`等信息，主要围绕站点本身的信息来配置。
 
 ```ts title="rspress.config.ts"
 import { defineConfig } from '@rspress/core';
@@ -82,23 +79,13 @@ export default defineConfig({
       description: '静态网站生成器',
     },
   ],
-  themeConfig: {
-    locales: [
-      {
-        lang: 'en',
-        outlineTitle: 'ON THIS Page',
-      },
-      {
-        lang: 'zh',
-        outlineTitle: '大纲',
-      },
-    ],
-  },
 });
 ```
 
 :::tip 注意
-默认主题中， `themeConfig.locales` 也包含 `locales` 中的所有字段，前者优先级更高。
+
+`themeConfig.locales` 也包含 `locales` 中的所有字段。不过它将在未来被移除，请使用 `locales`。
+
 :::
 
 对于其它的国际化主题参数配置，请参考 [API 类型](/api/config/config-theme#locales)。
@@ -179,6 +166,6 @@ docs
 
 在 MDX 开发或者自定义主题开发的过程中，你可能会写一些自定义组件，这些组件中也需要使用到国际化文本，那么如何获取呢？
 
-import UseI18n from '../../fragments/useI18n';
+import UseI18n from '../../fragments/useI18n.mdx';
 
 <UseI18n />

@@ -57,15 +57,13 @@ These text data are used in both **config file** and **custom components**, whic
 
 ## Configure `locales`
 
-In `rspress.config.ts`, you can configure `locales` data in two places:
-
-- `locales`, used to configure the `lang`, `title`, `description` and other information of the site, mainly around the information of the site itself.
-- `themeConfig.locales`, used to configure the theme's `lang`, `outline title`, `previous page/next page text` and other information, mainly for theme-related config.
+In `rspress.config.ts`, `locales` is used to configure the `lang`, `title`, `description` and other information of the site, mainly around the information of the site itself.
 
 ```ts title="rspress.config.ts"
 import { defineConfig } from '@rspress/core';
 
 export default defineConfig({
+  // locales is an array of objects
   locales: [
     {
       lang: 'en',
@@ -81,23 +79,13 @@ export default defineConfig({
       description: '静态网站生成器',
     },
   ],
-  themeConfig: {
-    locales: [
-      {
-        lang: 'en',
-        outlineTitle: 'ON THIS Page',
-      },
-      {
-        lang: 'zh',
-        outlineTitle: '大纲',
-      },
-    ],
-  },
 });
 ```
 
 :::tip Note
-In the default theme, `themeConfig.locales` also contains all the fields in `locales`, the former takes precedence.
+
+`themeConfig.locales` also contains all the fields in `locales`. However, it will be removed in the future, please use `locales`.
+
 :::
 
 For other international theme parameters, please refer to [API type](/api/config/config-theme#locales).
@@ -178,6 +166,6 @@ Here, `label` is `gettingStarted`, this value will be automatically translated i
 
 In the process of MDX development or custom theme development, you may write some custom components, which also need to use international text, so how to get it?
 
-import UseI18n from '../../fragments/useI18n';
+import UseI18n from '../../fragments/useI18n.mdx';
 
 <UseI18n />

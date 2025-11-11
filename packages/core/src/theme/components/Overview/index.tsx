@@ -6,10 +6,11 @@ import type {
 } from '@rspress/core';
 import {
   isEqualPath,
-  useLocaleSiteData,
+  useI18n,
   usePageData,
   useSidebar,
 } from '@rspress/core/runtime';
+import { type Group, type GroupItem, OverviewGroup } from '@theme';
 import { useEffect, useMemo, useRef, useState } from 'react';
 import { FallbackHeading } from '../DocContent/FallbackHeading';
 import {
@@ -18,7 +19,6 @@ import {
   isSidebarSingleFile,
 } from '../Sidebar/utils';
 import './index.scss';
-import { type Group, type GroupItem, OverviewGroup } from '@theme';
 import { findItemByRoutePath } from './utils';
 
 // Utility function to normalize text for search
@@ -33,24 +33,21 @@ const OverviewSearchInput = ({
   query,
   setQuery,
   searchRef,
-  filterNameText,
-  filterPlaceholderText,
 }: {
   query: string;
   setQuery: (query: string) => void;
   searchRef: React.RefObject<HTMLInputElement | null>;
-  filterNameText: string;
-  filterPlaceholderText: string;
 }) => {
+  const t = useI18n();
   return (
     <div className="rp-overview-search">
       <label htmlFor="api-filter" className="rp-overview-search__label">
-        {filterNameText}
+        {t('overview.filterNameText')}
       </label>
       <input
         ref={searchRef}
         type="search"
-        placeholder={filterPlaceholderText}
+        placeholder={t('overview.filterPlaceholderText')}
         id="api-filter"
         value={query}
         onChange={e => setQuery(e.target.value)}
@@ -77,6 +74,7 @@ export function Overview(props: {
     groups: customGroups,
     defaultGroupTitle: _ = 'Others',
   } = props;
+  const t = useI18n();
 
   // Added state for search query
   const [query, setQuery] = useState('');
@@ -113,14 +111,6 @@ export function Overview(props: {
     | NormalizedSidebarGroup
     | SidebarItem
   )[];
-
-  const {
-    overview: {
-      filterNameText = 'Filter',
-      filterPlaceholderText = 'Enter keyword',
-      filterNoResultText = 'No matching API found',
-    } = {},
-  } = useLocaleSiteData();
 
   if (overviewSidebarGroups[0]?.link !== routePath) {
     overviewSidebarGroups = findItemByRoutePath(
@@ -258,14 +248,12 @@ export function Overview(props: {
         query={query}
         setQuery={setQuery}
         searchRef={searchRef}
-        filterNameText={filterNameText}
-        filterPlaceholderText={filterPlaceholderText}
       />
       {content}
       {filtered.length > 0 ? (
         filtered.map(group => <OverviewGroup key={group?.name} group={group} />)
       ) : (
-        <div className="rp-overview__empty">{`${filterNoResultText}: ${query}`}</div>
+        <div className="rp-overview__empty">{`${t('overview.filterNoResultText')}: ${query}`}</div>
       )}
     </div>
   );

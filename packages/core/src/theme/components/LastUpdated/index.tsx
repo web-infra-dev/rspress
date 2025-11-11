@@ -1,23 +1,17 @@
-import { useLocaleSiteData, usePage, useSite } from '@rspress/core/runtime';
+import { useI18n, usePage } from '@rspress/core/runtime';
 import './index.scss';
 
 export function LastUpdated() {
-  const { lastUpdatedText: localesLastUpdatedText = 'Last Updated' } =
-    useLocaleSiteData();
   const {
     page: { lastUpdatedTime },
   } = usePage();
 
-  const { site } = useSite();
-
-  const { themeConfig } = site;
-  const lastUpdatedText =
-    themeConfig?.lastUpdatedText || localesLastUpdatedText;
+  const t = useI18n();
 
   return (
     <div className="rp-last-updated">
       <p>
-        {lastUpdatedText}: <span>{lastUpdatedTime}</span>
+        {t('lastUpdatedText')}: <span>{lastUpdatedTime}</span>
       </p>
     </div>
   );

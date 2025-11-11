@@ -4,6 +4,7 @@ import copy from 'copy-to-clipboard';
 import { useRef } from 'react';
 import { SvgWrapper } from '../SvgWrapper';
 import './CopyCodeButton.scss';
+import { useI18n } from '@rspress/core/runtime';
 
 const timeoutIdMap: Map<HTMLElement, NodeJS.Timeout> = new Map();
 const COPIED_CLASS = 'rp-code-copy-button--copied';
@@ -52,13 +53,14 @@ export function CopyCodeButton({
   codeBlockRef: React.RefObject<HTMLElement | null>;
 }) {
   const copyButtonRef = useRef<HTMLButtonElement>(null);
+  const t = useI18n();
 
   return (
     <button
       className="rp-code-button-group__button rp-code-copy-button"
       onClick={() => copyCode(codeBlockRef.current, copyButtonRef.current!)}
       ref={copyButtonRef}
-      title="Copy code"
+      title={t('codeButtonGroupCopyButtonText')}
     >
       <SvgWrapper
         icon={IconCopy}

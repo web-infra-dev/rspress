@@ -3,7 +3,20 @@ import { useLang } from './useLang';
 import { useSite } from './useSite';
 
 /**
- * @deprecated
+ * @deprecated should use useSite and useLang instead
+ *
+ * ```ts
+ * const site = useSite();
+ * const lang = useLang();
+ * const locales = site.themeConfig.locales;
+ * const localeInfo = locales?.find((locale) => locale.lang === lang);
+ * ```
+ *
+ * For i18n text:
+ * ```ts
+ * const t = useI18n();
+ * <div>{t('outlineTitle')}</div>;
+ * ```
  */
 export function useLocaleSiteData(): NormalizedLocales {
   const { site } = useSite();
@@ -16,13 +29,6 @@ export function useLocaleSiteData(): NormalizedLocales {
     return {
       nav: themeConfig.nav,
       sidebar: themeConfig.sidebar,
-      prevPageText: themeConfig.prevPageText,
-      nextPageText: themeConfig.nextPageText,
-      sourceCodeText: themeConfig.sourceCodeText,
-      searchPlaceholderText: themeConfig.searchPlaceholderText,
-      searchNoResultsText: themeConfig.searchNoResultsText,
-      searchSuggestedQueryText: themeConfig.searchSuggestedQueryText,
-      overview: themeConfig.overview,
     } as NormalizedLocales;
   }
   const localeInfo = locales.find(locale => locale.lang === lang)!;

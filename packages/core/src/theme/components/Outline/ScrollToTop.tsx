@@ -1,3 +1,4 @@
+import { useI18n } from '@rspress/core/runtime';
 import './ScrollToTop.scss';
 
 export function ScrollToTop() {
@@ -7,6 +8,8 @@ export function ScrollToTop() {
       behavior: 'smooth',
     });
   };
+
+  const t = useI18n();
 
   return (
     <button className="rp-outline__scroll-to-top" onClick={scrollToTop}>
@@ -42,7 +45,7 @@ export function ScrollToTop() {
         />
       </svg>
 
-      <span>back to top</span>
+      <span>{t('scrollToTopText')}</span>
     </button>
   );
 }

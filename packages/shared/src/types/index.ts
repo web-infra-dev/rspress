@@ -2,14 +2,44 @@ import type { loadConfig, RsbuildConfig } from '@rsbuild/core';
 import type { RehypeShikiOptions } from '@shikijs/rehype';
 import type { ZoomOptions } from 'medium-zoom';
 import type { PluggableList } from 'unified';
-import type {
-  Config as DefaultThemeConfig,
-  NormalizedConfig as NormalizedDefaultThemeConfig,
-} from './defaultTheme';
 import type { AdditionalPage, RspressPlugin } from './Plugin';
+import type {
+  ThemeConfig as DefaultThemeConfig,
+  NormalizedThemeConfig as NormalizedDefaultThemeConfig,
+} from './theme';
+import type { I18nText } from './theme/i18nText';
 
+// #region theme
 export type { DefaultThemeConfig, NormalizedDefaultThemeConfig };
-export * from './defaultTheme';
+
+export type { I18nText } from './theme/i18nText';
+export type {
+  EditLink,
+  Footer,
+  NormalizedLocales,
+  NormalizedThemeConfig,
+  ThemeConfig,
+} from './theme/index';
+export type { LocaleConfig } from './theme/locale';
+export type {
+  Nav,
+  NavItem,
+  NavItemWithChildren,
+  NavItemWithLink,
+  NavItemWithLinkAndChildren,
+} from './theme/nav';
+export type {
+  NormalizedSidebar,
+  NormalizedSidebarGroup,
+  Sidebar,
+  SidebarData,
+  SidebarDivider,
+  SidebarGroup,
+  SidebarItem,
+  SidebarSectionHeader,
+} from './theme/sidebar';
+export type { SocialLink } from './theme/socialLink';
+// #endregion
 
 export type { RspressPlugin, AdditionalPage, RspressPlugin as Plugin };
 
@@ -88,7 +118,7 @@ export interface Locale {
   description?: string;
 }
 
-export interface UserConfig<ThemeConfig = DefaultThemeConfig> {
+export interface UserConfig {
   /**
    * The root directory of the site.
    * @default 'docs'
@@ -114,6 +144,7 @@ export interface UserConfig<ThemeConfig = DefaultThemeConfig> {
   icon?: string | URL;
   /**
    * Default language of the site.
+   * @default 'en'
    */
   lang?: string;
   /**
@@ -142,12 +173,23 @@ export interface UserConfig<ThemeConfig = DefaultThemeConfig> {
   locales?: Locale[];
   /**
    * The i18n text data source path. Default is `i18n.json` in cwd.
+   * @default '<cwd>/i18n.json'
    */
   i18nSourcePath?: string;
   /**
+   * The i18n text data.
+   */
+  i18nSource?:
+    | (I18nText & Record<string, Record<string, string>>)
+    | ((
+        value: Record<string, Record<string, string>>,
+      ) =>
+        | Record<string, Record<string, string>>
+        | Promise<Record<string, Record<string, string>>>);
+  /**
    * Theme config.
    */
-  themeConfig?: ThemeConfig;
+  themeConfig?: DefaultThemeConfig;
   /**
    * Rsbuild Configuration
    */
@@ -276,7 +318,7 @@ export interface PageData {
 }
 
 export interface PageDataLegacy {
-  siteData: SiteData<DefaultThemeConfig> & { pages: BaseRuntimePageInfo[] };
+  siteData: SiteData & { pages: BaseRuntimePageInfo[] };
   page: BaseRuntimePageInfo & {
     headingTitle?: string;
     pagePath: string;
@@ -287,7 +329,7 @@ export interface PageDataLegacy {
   };
 }
 
-export interface SiteData<ThemeConfig = NormalizedDefaultThemeConfig> {
+export interface SiteData {
   base: string;
   lang: string;
   route: RouteOptions;
@@ -295,7 +337,7 @@ export interface SiteData<ThemeConfig = NormalizedDefaultThemeConfig> {
   title: string;
   description: string;
   icon: string;
-  themeConfig: ThemeConfig;
+  themeConfig: NormalizedDefaultThemeConfig;
   logo: string | { dark: string; light: string };
   logoText: string;
   search: SearchOptions;
@@ -394,6 +436,7 @@ export interface FrontMatterMeta {
   outline?: boolean;
   footer?: boolean;
 
+  lineNumbers?: boolean;
   overviewHeaders?: number[];
   titleSuffix?: string;
   head?: [string, Record<string, string>][];

@@ -1,18 +1,18 @@
-import { useLocaleSiteData, useSite } from '@rspress/core/runtime';
+import { useI18n, useSite } from '@rspress/core/runtime';
 import { Toc, useDynamicToc } from '@theme';
 import { ReadPercent } from '../ReadPercent';
 import './index.scss';
 import { ScrollToTop } from './ScrollToTop';
 
 export function Outline() {
-  const localesData = useLocaleSiteData();
-  const {
-    site: { themeConfig },
-  } = useSite();
-  const outlineTitle =
-    localesData?.outlineTitle || themeConfig?.outlineTitle || 'ON THIS PAGE';
+  const t = useI18n();
 
   const headers = useDynamicToc();
+  const {
+    site: {
+      themeConfig: { enableScrollToTop = true },
+    },
+  } = useSite();
 
   if (headers.length === 0) {
     return <></>;
@@ -21,7 +21,7 @@ export function Outline() {
   return (
     <div className="rp-outline">
       <div className="rp-outline__title">
-        {outlineTitle}
+        {t('outlineTitle')}
         <ReadPercent size={14} strokeWidth={2} />
       </div>
       <nav className="rp-outline__toc rp-scrollbar">
@@ -29,7 +29,7 @@ export function Outline() {
       </nav>
       <div className="rp-outline__divider" />
       <div className="rp-outline__bottom">
-        <ScrollToTop />
+        {enableScrollToTop && <ScrollToTop />}
       </div>
     </div>
   );

@@ -1,4 +1,4 @@
-import { usePageData } from '@rspress/core/runtime';
+import { useI18n, usePageData } from '@rspress/core/runtime';
 import { Link } from '@theme';
 import './index.scss';
 
@@ -6,6 +6,8 @@ export function NotFoundLayout() {
   const { siteData, page } = usePageData();
   const defaultLang = siteData.lang;
   const defaultVersion = siteData.multiVersion.default;
+
+  const t = useI18n();
   // Consider the existing sites include the defaultLang in some links, such as '/zh/guide/quick-start'
   // We need to redirect them to '/guide/quick-start'
   // In the meanwhile, we will not show the 404 page for the user experience
@@ -30,7 +32,7 @@ export function NotFoundLayout() {
   return (
     <div className="rp-not-found">
       <p className="rp-not-found__error-code">404</p>
-      <h1 className="rp-not-found__title">PAGE NOT FOUND</h1>
+      <h1 className="rp-not-found__title">{t('notFoundText')}</h1>
       <div className="rp-not-found__divider" />
 
       <div className="rp-not-found__action">
@@ -39,7 +41,7 @@ export function NotFoundLayout() {
           href={root}
           aria-label="go to home"
         >
-          Take me home
+          {t('takeMeHomeText')}
         </Link>
       </div>
     </div>

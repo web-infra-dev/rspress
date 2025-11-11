@@ -1,17 +1,11 @@
-import {
-  useFrontmatter,
-  useLocaleSiteData,
-  useLocation,
-  useSite,
-} from '@rspress/core/runtime';
-import { SvgWrapper } from '@theme';
+import { useFrontmatter, useI18n, useLocation } from '@rspress/core/runtime';
+import { SvgWrapper, useActiveAnchor, useDynamicToc } from '@theme';
 import ArrowRight from '@theme-assets/arrow-right';
 import MenuIcon from '@theme-assets/menu';
 import { forwardRef, useEffect, useRef } from 'react';
 import { createPortal } from 'react-dom';
 import { ReadPercent } from '../ReadPercent';
 import './index.scss';
-import { useActiveAnchor, useDynamicToc } from '@theme';
 
 /* Top Menu, only displayed on <1280px screen width */
 export const SidebarMenu = forwardRef(
@@ -29,14 +23,8 @@ export const SidebarMenu = forwardRef(
     },
     forwardedRef,
   ) => {
-    const localesData = useLocaleSiteData();
-    const {
-      site: { themeConfig },
-    } = useSite();
-    const outlineTitle =
-      localesData?.outlineTitle || themeConfig?.outlineTitle || 'ON THIS PAGE';
-
     const sidebarMenuRef = useRef<HTMLDivElement>(null);
+    const t = useI18n();
 
     const { pathname, hash } = useLocation();
 
@@ -93,7 +81,7 @@ export const SidebarMenu = forwardRef(
               className="rp-sidebar-menu__left"
             >
               <SvgWrapper icon={MenuIcon} />
-              <span>Menu</span>
+              <span>{t('menuTitle')}</span>
             </button>
           )}
           {showOutline && (
@@ -107,7 +95,7 @@ export const SidebarMenu = forwardRef(
               }}
               className="rp-sidebar-menu__right"
             >
-              <span>{scrolledHeader?.text ?? outlineTitle}</span>
+              <span>{scrolledHeader?.text ?? t('outlineTitle')}</span>
               <ReadPercent size={14} strokeWidth={2} />
               {/* TODO: discussion */}
               {headers.length !== 0 && (

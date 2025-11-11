@@ -45,6 +45,7 @@ flexbox
 flexbugs
 flexsearch
 fnames
+Français
 frontmatter
 fullhash
 fumadocs

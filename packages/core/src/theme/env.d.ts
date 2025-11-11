@@ -1,7 +1,7 @@
 declare module 'virtual-site-data' {
   import { SiteData, DefaultThemeConfig } from '@rspress/core';
 
-  const data: SiteData<DefaultThemeConfig>;
+  const data: SiteData;
   export default data;
 }
 

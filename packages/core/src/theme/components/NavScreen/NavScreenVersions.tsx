@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { useVersionsMenu } from '../Nav/hooks';
 import './NavScreenVersions.scss';
+import { useI18n } from '@rspress/core/runtime';
 import { Link } from '@theme';
 import clsx from 'clsx';
 import { SvgDown } from './NavScreenMenuItem';
@@ -8,6 +9,7 @@ import { SvgDown } from './NavScreenMenuItem';
 export function NavScreenVersions() {
   const { items, activeValue } = useVersionsMenu();
   const [isOpen, setIsOpen] = useState(false);
+  const t = useI18n();
 
   return items.length > 1 ? (
     <>
@@ -15,7 +17,7 @@ export function NavScreenVersions() {
         className="rp-nav-screen-versions"
         onClick={() => setIsOpen(!isOpen)}
       >
-        <div className="rp-nav-screen-versions__left">Versions</div>
+        <div className="rp-nav-screen-versions__left">{t('versionsText')}</div>
         <div className="rp-nav-screen-versions__right">
           {activeValue}
           <SvgDown

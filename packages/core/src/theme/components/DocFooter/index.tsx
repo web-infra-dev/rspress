@@ -1,12 +1,11 @@
-import { useLocaleSiteData, useSite } from '@rspress/core/runtime';
+import { useSite } from '@rspress/core/runtime';
 import { LastUpdated, PrevNextPage } from '@theme';
 import './index.scss';
 
 export function DocFooter() {
-  const { lastUpdated: localesLastUpdated = false } = useLocaleSiteData();
   const { site } = useSite();
   const { themeConfig } = site;
-  const showLastUpdated = themeConfig.lastUpdated || localesLastUpdated;
+  const showLastUpdated = themeConfig.lastUpdated;
 
   return (
     <footer className="rp-doc-footer">

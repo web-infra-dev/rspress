@@ -111,6 +111,70 @@ export default defineConfig({
 });
 ```
 
+## i18nSource
+
+- **类型**： `Record<string, Record<string, string>> | ((value: Record<string, Record<string, string>>) => Record<string, Record<string, string>> | Promise<Record<string, Record<string, string>>>)`
+- **默认值**： `{}`
+
+你可以通过这个配置项来修改 Rspress 内置的国际化文案或扩展自定义组件的文案。当扩展文案时，通常配合 [useI18n](/ui/hooks/use-i18n.html) 一起使用。
+
+:::tip
+
+与 `i18n.json` 的实现和效果均一致，任选一个使用即可，`i18nSource` 比 `i18n.json` 的优先级高，并且支持函数。
+
+:::
+
+参数 `i18nSource` 是一个对象，其结构为：
+
+```ts
+{
+  [textKey: string]: {
+    [locale: string]: string;
+  }
+}
+```
+
+其中第一层的 `textKey` 是文案的键名，第二层的 `locale` 是语言代码（如 `zh`、`en`），值是对应语言的翻译文本。
+
+下面是一个修改 Rspress 内置国际化文案的示例：
+
+```ts title="rspress.config.ts"
+import { defineConfig } from '@rspress/core';
+export default defineConfig({
+  i18nSource: {
+    editLinkText: {
+      en: '📝 Edit this page on Gitlab',
+      zh: '📝 在 Gitlab 上编辑此页',
+    },
+  },
+});
+```
+
+`i18nSource` 也可以是一个函数，例如：
+
+```ts
+import { defineConfig } from '@rspress/core';
+
+export default defineConfig({
+  i18nSource: async (source) => {
+    for (const key of Object.keys(source)) {
+      source[key]['en_US'] = source[key]['en'];
+    }
+    return source;
+  },
+});
+```
+
+以下是 Rspress 内置的国际化文案：
+
+<details>
+
+```ts file="../../../../../packages/core/src/node/runtimeModule/DEFAULT_I18N_TEXT.ts"
+
+```
+
+</details>
+
 ## logo \{#logo-1}
 
 - **类型**： `string | { dark: string; light: string }`

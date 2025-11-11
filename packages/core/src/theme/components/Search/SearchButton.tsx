@@ -1,4 +1,4 @@
-import { useLocaleSiteData } from '@rspress/core/runtime';
+import { useI18n } from '@rspress/core/runtime';
 import SearchSvg from '@theme-assets/search';
 import { useEffect, useState } from 'react';
 import { SvgWrapper } from '../SvgWrapper';
@@ -10,7 +10,7 @@ export interface SearchButtonProps {
 
 export function SearchButton({ setFocused }: SearchButtonProps) {
   const [metaKey, setMetaKey] = useState<null | string>(null);
-  const { searchPlaceholderText = 'Search' } = useLocaleSiteData();
+  const t = useI18n();
   useEffect(() => {
     setMetaKey(
       /(Mac|iPhone|iPod|iPad)/i.test(navigator.platform) ? '⌘' : 'Ctrl',
@@ -22,7 +22,7 @@ export function SearchButton({ setFocused }: SearchButtonProps) {
         <div className="rp-search-button__content">
           <SvgWrapper icon={SearchSvg} className="rp-search-button__icon" />
           <span className="rp-search-button__word">
-            {searchPlaceholderText}
+            {t('searchPlaceholderText')}
           </span>
         </div>
         <div

@@ -14,8 +14,8 @@ export default defineConfig({
 
 ## nav
 
-- Type: `Array`
-- Default: `[]`
+- **Type**: `Array`
+- **Default**: `[]`
 
 The `nav` configuration is an array of `NavItem` with the following types:
 
@@ -113,7 +113,7 @@ export default defineConfig({
 
 ## sidebar
 
-- Type: `Object`
+- **Type**: `Object`
 
 The sidebar of the website. The config is an object with the following types:
 
@@ -187,8 +187,8 @@ export default defineConfig({
 
 ## footer
 
-- Type: `Object`
-- Default: `{}`
+- **Type**: `Object`
+- **Default**: `{}`
 
 The footer of the home page.
 
@@ -197,7 +197,6 @@ The `footer` config is an object of `Footer`, which has the following types:
 ```ts
 export interface Footer {
   message?: string;
-  copyright?: string;
 }
 ```
 
@@ -218,188 +217,10 @@ export default defineConfig({
 });
 ```
 
-## outline
-
-- Type: `boolean`
-- Default: `true`
-
-Whether to show the sidebar in right position.
-
-For example:
-
-```ts title="rspress.config.ts"
-import { defineConfig } from '@rspress/core';
-
-export default defineConfig({
-  themeConfig: {
-    outline: false,
-  },
-});
-```
-
-## outlineTitle
-
-- Type: `string`
-- Default: 'ON THIS PAGE'
-
-Configure the title of the outline in the outline panel.
-
-For example:
-
-```ts title="rspress.config.ts"
-import { defineConfig } from '@rspress/core';
-
-export default defineConfig({
-  themeConfig: {
-    outlineTitle: 'Outline',
-  },
-});
-```
-
-## lastUpdated
-
-- Type: `boolean`
-- Default: `false`
-
-Whether to display the last update time, it is not displayed by default.
-
-:::info
-You need to commit the markdown file to see the updated time.
-:::
-
-For example:
-
-```ts title="rspress.config.ts"
-import { defineConfig } from '@rspress/core';
-
-export default defineConfig({
-  themeConfig: {
-    lastUpdated: true,
-  },
-});
-```
-
-## lastUpdatedText
-
-- Type: `string`
-- Default: `Last Updated`
-
-The text of the last update time.
-
-For example:
-
-```ts title="rspress.config.ts"
-import { defineConfig } from '@rspress/core';
-
-export default defineConfig({
-  themeConfig: {
-    lastUpdatedText: 'Last Updated',
-  },
-});
-```
-
-## prevPageText
-
-- Type: `string`
-- Default: `Previous Page`
-
-The text of the previous page. for example:
-
-```ts title="rspress.config.ts"
-import { defineConfig } from '@rspress/core';
-
-export default defineConfig({
-  themeConfig: {
-    prevPageText: 'Previous Page',
-  },
-});
-```
-
-## searchPlaceholderText
-
-- Type: `string`
-- Default: `Search`
-
-The placeholder text of the search box. For example:
-
-```ts title="rspress.config.ts"
-import { defineConfig } from '@rspress/core';
-
-export default defineConfig({
-  themeConfig: {
-    searchPlaceholderText: 'Search',
-  },
-});
-```
-
-## searchNoResultsText
-
-- Type: `string`
-- Default: `No results for`
-
-The text of no search result. For example:
-
-```ts title="rspress.config.ts"
-import { defineConfig } from '@rspress/core';
-
-export default defineConfig({
-  themeConfig: {
-    searchNoResultsText: 'No results for',
-  },
-});
-```
-
-## searchSuggestedQueryText
-
-- Type: `string`
-- Default: `Please try again with a different keyword`
-
-The text of suggested query text when no search result. For example:
-
-```ts title="rspress.config.ts"
-import { defineConfig } from '@rspress/core';
-
-export default defineConfig({
-  themeConfig: {
-    searchSuggestedQueryText: 'Please search again',
-  },
-});
-```
-
-## overview
-
-- Type: `Object`
-
-The config of overview page/component. The config is an object with the following types:
-
-```ts
-interface FilterConfig {
-  filterNameText?: string;
-  filterPlaceholderText?: string;
-  filterNoResultText?: string;
-}
-```
-
-For example:
-
-```ts title="rspress.config.ts"
-import { defineConfig } from '@rspress/core';
-
-export default defineConfig({
-  themeConfig: {
-    overview: {
-      filterNameText: 'Filter',
-      filterPlaceholderText: 'Enter keyword',
-      filterNoResultText: 'No matching API found',
-    },
-  },
-});
-```
-
 ## socialLinks
 
-- Type: `Array`
-- Default: `[]`
+- **Type**: `Array`
+- **Default**: `[]`
 
 You can add related links through the following config, such as `github` links, `x` links, etc.
 Related links support four modes: `link mode` `text mode` `image mode` `dom mode`, for example:
@@ -489,8 +310,8 @@ export default defineConfig({
 
 ## nextPageText
 
-- Type: `string`
-- Default: `Next Page`
+- **Type**: `string`
+- **Default**: `Next Page`
 
 Text for the next page. for example:
 
@@ -506,8 +327,8 @@ export default defineConfig({
 
 ## locales
 
-- Type: `Array<LocaleConfig>`
-- Default: `undefined`
+- **Type**: `Array<LocaleConfig>`
+- **Default**: `undefined`
 
 I18n config. This config is an array, and every item of it is `LocaleConfig`, and the types are as follows:
 
@@ -524,27 +345,6 @@ export interface LocaleConfig {
   description?: string;
   // Display text for the corresponding language
   label: string;
-  /**
-   * Locale config for theme.
-   */
-  // Right outline title
-  outlineTitle?: string;
-  // Whether to display the last update time
-  lastUpdated?: boolean;
-  // Last update time text
-  lastUpdatedText?: string;
-  // Previous text
-  prevPageText?: string;
-  // Next page text
-  nextPageText?: string;
-  // Search box placeholder text
-  searchPlaceholderText?: string;
-  // The text of no search result
-  searchNoResultsText?: string;
-  // The text of suggested query text when no search result
-  searchSuggestedQueryText?: string;
-  // Info for the edit link.
-  editLink?: EditLink;
 }
 ```
 
@@ -552,8 +352,8 @@ export interface LocaleConfig {
 
 ## darkMode
 
-- Type: `boolean`
-- Default: `true`
+- **Type**: `boolean`
+- **Default**: `true`
 
 Whether a Dark/Light mode toggle button appears. for example:
 
@@ -597,17 +397,10 @@ interface EditLink {
    * Custom repository url for edit link.
    */
   docRepoBaseUrl: string;
-
-  /**
-   * Custom text for edit link.
-   *
-   * @default 'Edit this page'
-   */
-  text?: string;
 }
 ```
 
-- Default: `undefined`
+- **Default**: `undefined`
 
 Display a link to edit the page on Git management services such as GitHub, or GitLab.
 
@@ -621,7 +414,6 @@ export default defineConfig({
     editLink: {
       docRepoBaseUrl:
         'https://github.com/web-infra-dev/rspress/tree/main/website/docs',
-      text: '📝 Edit this page on GitHub',
     },
   },
 });
@@ -629,8 +421,8 @@ export default defineConfig({
 
 ## enableContentAnimation
 
-- Type: `boolean`
-- Default: `false`
+- **Type**: `boolean`
+- **Default**: `false`
 
 Whether there is animation effect when switching between pages. It is implemented with [View Transition API](https://developer.mozilla.org/docs/Web/API/View_Transitions_API). For example:
 
@@ -648,8 +440,8 @@ export default defineConfig({
 
 ## enableAppearanceAnimation
 
-- Type: `boolean`
-- Default: `false`
+- **Type**: `boolean`
+- **Default**: `false`
 
 Whether there is animation effect when switching between light and dark theme. It is implemented with [View Transition API](https://developer.mozilla.org/docs/Web/API/View_Transitions_API). For example:
 
@@ -667,8 +459,8 @@ export default defineConfig({
 
 ## search
 
-- Type: `boolean`
-- Default: `true`
+- **Type**: `boolean`
+- **Default**: `true`
 
 Whether to display the search box. For example:
 
@@ -682,27 +474,10 @@ export default defineConfig({
 });
 ```
 
-## sourceCodeText
-
-- Type: `string`
-- Default: `Source`
-
-The text of the source code button. For example:
-
-```ts title="rspress.config.ts"
-import { defineConfig } from '@rspress/core';
-
-export default defineConfig({
-  themeConfig: {
-    sourceCodeText: 'Source',
-  },
-});
-```
-
 ## enableScrollToTop
 
-- Type: `boolean`
-- Default: `false`
+- **Type**: `boolean`
+- **Default**: `false`
 
 Enable scroll to top button on documentation. For example:
 
@@ -718,8 +493,8 @@ export default defineConfig({
 
 ## localeRedirect
 
-- Type: `'auto' | 'never' | 'only-default-lang'`
-- Default: `'auto'`
+- **Type**: `'auto' | 'never' | 'only-default-lang'`
+- **Default**: `'auto'`
 
 Whether to redirect to the locale closest to `window.navigator.language` when the user visits the site, the default is `auto`, which means that the user will be redirected on the first visit. If you set it to `never`, the user will not be redirected. If you set it to `only-default-lang`, the user will only be redirected when visiting the default locale. For example:
 
@@ -735,10 +510,10 @@ export default defineConfig({
 
 ## fallbackHeadingTitle
 
-- Type: `boolean`
-- Default: `true`
+- **Type**: `boolean`
+- **Default**: `true`
 
-Whether to display [`frontmatter.title`](./config-frontmatter#title) as fallback when the heading title is not presented. For example:
+Whether to use [`frontmatter.title`](./config-frontmatter#title) as fallback when the document does not have an H1 heading. For example:
 
 ```ts title="rspress.config.ts"
 import { defineConfig } from '@rspress/core';
@@ -748,4 +523,12 @@ export default defineConfig({
     fallbackHeadingTitle: false,
   },
 });
+```
+
+```mdx
+---
+title: Document Title
+---
+
+## Content
 ```

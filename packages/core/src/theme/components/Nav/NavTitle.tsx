@@ -47,7 +47,7 @@ export const NavTitle = () => {
   return (
     <div className="rp-nav__title">
       <Link
-        href={addLeadingSlash(localeData.langRoutePrefix ?? '/')}
+        href={addLeadingSlash((localeData as any).langRoutePrefix ?? '/')}
         className="rp-nav__title__link"
       >
         {logo && <div className="rp-nav__title__logo">{logo}</div>}

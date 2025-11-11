@@ -14,8 +14,8 @@ export default defineConfig({
 
 ## nav
 
-- Type: `Array`
-- Default: `[]`
+- **类型**：`Array`
+- **默认值**： `[]`
 
 网站的导航栏。 `nav` 配置是 `NavItem` 的数组，具有以下类型：
 
@@ -100,7 +100,7 @@ export default defineConfig({
 
 ## sidebar
 
-- Type: `Object`
+- **类型**：`Object`
 
 网站的侧边栏。配置为一个对象，类型如下：
 
@@ -174,8 +174,8 @@ export default defineConfig({
 
 ## footer
 
-- Type: `Object`
-- Default: `{}`
+- **类型**：`Object`
+- **默认值**： `{}`
 
 主页的页脚。
 
@@ -204,188 +204,10 @@ export default defineConfig({
 });
 ```
 
-## outline
-
-- Type: `boolean`
-- Default: `true`
-
-是否显示右侧大纲。
-
-比如:
-
-```ts title="rspress.config.ts"
-import { defineConfig } from '@rspress/core';
-
-export default defineConfig({
-  themeConfig: {
-    outline: false,
-  },
-});
-```
-
-## outlineTitle
-
-- Type: `string`
-- Default: `'ON THIS PAGE'`
-
-在右侧边栏中配置大纲的标题。
-
-比如:
-
-```ts title="rspress.config.ts"
-import { defineConfig } from '@rspress/core';
-
-export default defineConfig({
-  themeConfig: {
-    outlineTitle: 'Outline',
-  },
-});
-```
-
-## lastUpdated
-
-- Type: `boolean`
-- Default: `false`
-
-是否显示最后更新时间，默认情况下不显示。
-
-:::info
-你必须提交 markdown 文件才能看到最后更新时间。
-:::
-
-比如:
-
-```ts title="rspress.config.ts"
-import { defineConfig } from '@rspress/core';
-
-export default defineConfig({
-  themeConfig: {
-    lastUpdated: true,
-  },
-});
-```
-
-## lastUpdatedText
-
-- Type: `string`
-- Default: `Last Updated`
-
-最后更新时间的文本。
-
-比如:
-
-```ts title="rspress.config.ts"
-import { defineConfig } from '@rspress/core';
-
-export default defineConfig({
-  themeConfig: {
-    lastUpdatedText: 'Last Updated',
-  },
-});
-```
-
-## prevPageText
-
-- Type: `string`
-- Default: `Previous Page`
-
-上一页的文本。比如:
-
-```ts title="rspress.config.ts"
-import { defineConfig } from '@rspress/core';
-
-export default defineConfig({
-  themeConfig: {
-    prevPageText: 'Previous Page',
-  },
-});
-```
-
-## searchPlaceholderText
-
-- Type: `string`
-- Default: `Search`
-
-搜索框的占位符文本。比如:
-
-```ts title="rspress.config.ts"
-import { defineConfig } from '@rspress/core';
-
-export default defineConfig({
-  themeConfig: {
-    searchPlaceholderText: 'Search',
-  },
-});
-```
-
-## searchNoResultsText
-
-- Type: `string`
-- Default: `No results for`
-
-没有搜索结果时的显示文本。比如:
-
-```ts title="rspress.config.ts"
-import { defineConfig } from '@rspress/core';
-
-export default defineConfig({
-  themeConfig: {
-    searchNoResultsText: 'No results for',
-  },
-});
-```
-
-## searchSuggestedQueryText
-
-- Type: `string`
-- Default: `Please try again with a different keyword`
-
-没有搜索结果时的建议查询提示文本。比如:
-
-```ts title="rspress.config.ts"
-import { defineConfig } from '@rspress/core';
-
-export default defineConfig({
-  themeConfig: {
-    searchSuggestedQueryText: 'Please search again',
-  },
-});
-```
-
-## overview
-
-- Type: `Object`
-
-预览页/组件的配置项。配置为一个对象，类型如下：
-
-```ts
-interface FilterConfig {
-  filterNameText?: string;
-  filterPlaceholderText?: string;
-  filterNoResultText?: string;
-}
-```
-
-For example:
-
-```ts title="rspress.config.ts"
-import { defineConfig } from '@rspress/core';
-
-export default defineConfig({
-  themeConfig: {
-    overview: {
-      filterNameText: 'Filter',
-      filterPlaceholderText: 'Enter keyword',
-      filterNoResultText: 'No matching API found',
-    },
-  },
-});
-```
-
 ## socialLinks
 
-- Type: `Array`
-- Default: `[]`
+- **类型**：`Array`
+- **默认值**： `[]`
 
 你可以通过如下的配置添加相关链接，比如 `github` 链接、`x` 链接等。
 相关链接支持四种模式：`链接模式link` `文本模式text` `图片模式img` `自定义模式dom`，相关例子如下：
@@ -475,8 +297,8 @@ export default defineConfig({
 
 ## nextPageText
 
-- Type: `string`
-- Default: `Next Page`
+- **类型**：`string`
+- **默认值**： `Next Page`
 
 下一页的文本。比如:
 
@@ -492,8 +314,8 @@ export default defineConfig({
 
 ## locales
 
-- Type: `Array<LocaleConfig>`
-- Default: `undefined`
+- **类型**：`Array<LocaleConfig>`
+- **默认值**： `undefined`
 
 国际化配置。此配置为一个数组，数组中的每一项都是一个 `LocaleConfig` 对象，它具有以下类型：
 
@@ -510,27 +332,6 @@ export interface LocaleConfig {
   description?: string;
   // 对应语言的显示文本
   label: string;
-  /**
-   * 主题相关信息
-   */
-  // 右侧大纲标题
-  outlineTitle?: string;
-  // 最后更新时间文本
-  lastUpdatedText?: string;
-  // 是否显示最后更新时间
-  lastUpdated?: boolean;
-  // 上一页文本
-  prevPageText?: string;
-  // 下一页文本
-  nextPageText?: string;
-  // 搜索框占位符文本
-  searchPlaceholderText?: string;
-  // 没有搜索结果时的显示文本
-  searchNoResultsText?: string;
-  // 没有搜索结果时的建议查询提示文本
-  searchSuggestedQueryText?: string;
-  // 配置编辑链接
-  editLink?: EditLink;
 }
 ```
 
@@ -538,8 +339,8 @@ export interface LocaleConfig {
 
 ## darkMode
 
-- Type: `boolean`
-- Default: `true`
+- **类型**：`boolean`
+- **默认值**： `true`
 
 是否出现暗黑模式/白天模式切换按钮。比如：
 
@@ -583,17 +384,10 @@ interface EditLink {
    * 自定义编辑链接的 URL
    */
   docRepoBaseUrl: string;
-
-  /**
-   * 自定义编辑链接的文本
-   *
-   * @default 'Edit this page'
-   */
-  text?: string;
 }
 ```
 
-- Default: `undefined`
+- **默认值**： `undefined`
 
 用于配置编辑链接，以在 GitHub 或 GitLab 等 Git 管理服务上编辑页面。
 
@@ -607,7 +401,6 @@ export default defineConfig({
     editLink: {
       docRepoBaseUrl:
         'https://github.com/web-infra-dev/rspress/tree/main/website/docs',
-      text: '📝 在 GitHub 上编辑此页',
     },
   },
 });
@@ -615,8 +408,8 @@ export default defineConfig({
 
 ## enableContentAnimation
 
-- Type: `boolean`
-- Default: `false`
+- **类型**：`boolean`
+- **默认值**： `false`
 
 在页面切换的时候是否显示转场动画，使用 [View Transition API](https://developer.mozilla.org/docs/Web/API/View_Transitions_API) 实现。例如：
 
@@ -634,8 +427,8 @@ export default defineConfig({
 
 ## enableAppearanceAnimation
 
-- Type: `boolean`
-- Default: `false`
+- **类型**：`boolean`
+- **默认值**： `false`
 
 在浅色和深色主题之间切换时是否有动画效果，使用 [View Transition API](https://developer.mozilla.org/docs/Web/API/View_Transitions_API) 实现。例如：
 
@@ -653,8 +446,8 @@ export default defineConfig({
 
 ## search
 
-- Type: `boolean`
-- Default: `true`
+- **类型**：`boolean`
+- **默认值**： `true`
 
 是否显示搜索框。比如：
 
@@ -668,27 +461,10 @@ export default defineConfig({
 });
 ```
 
-## sourceCodeText
-
-- Type: `string`
-- Default: `Source`
-
-源代码按钮的文本。比如：
-
-```ts title="rspress.config.ts"
-import { defineConfig } from '@rspress/core';
-
-export default defineConfig({
-  themeConfig: {
-    sourceCodeText: 'Source',
-  },
-});
-```
-
 ## enableScrollToTop
 
-- Type: `boolean`
-- Default: `false`
+- **类型**：`boolean`
+- **默认值**： `false`
 
 启用文档上的滚动到顶部按钮. 比如:
 
@@ -704,8 +480,8 @@ export default defineConfig({
 
 ## localeRedirect
 
-- Type: `'auto' | 'never' | 'only-default-lang'`
-- Default: `'auto'`
+- **类型**：`'auto' | 'never' | 'only-default-lang'`
+- **默认值**： `'auto'`
 
 是否在访问网站时重定向到最接近 `window.navigator.language` 的语言，默认为 `auto` 表示首次访问时将重定向，`never` 表示不重定向，`only-default-lang` 表示仅在访问默认语言时重定向。比如:
 
@@ -721,10 +497,10 @@ export default defineConfig({
 
 ## fallbackHeadingTitle
 
-- Type: `boolean`
-- Default: `true`
+- **类型**：`boolean`
+- **默认值**： `true`
 
-是否在文档标题未提供时将 [`frontmatter.title`](./config-frontmatter#title) 作为后备内容。比如:
+是否在文档不书写 H1 时将 [`frontmatter.title`](./config-frontmatter#title) 作为后备内容。比如:
 
 ```ts title="rspress.config.ts"
 import { defineConfig } from '@rspress/core';
@@ -734,4 +510,12 @@ export default defineConfig({
     fallbackHeadingTitle: false,
   },
 });
+```
+
+```mdx
+---
+title: 文档标题
+---
+
+## 正文内容
 ```

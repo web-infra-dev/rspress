@@ -102,6 +102,10 @@ export default defineConfig({
     footer: {
       message: '© 2023-present ByteDance Inc.',
     },
+    editLink: {
+      docRepoBaseUrl:
+        'https://github.com/web-infra-dev/rspress/tree/main/website/docs',
+    },
     socialLinks: [
       {
         icon: 'github',
@@ -128,25 +132,10 @@ export default defineConfig({
       {
         lang: 'zh',
         label: '中文',
-        editLink: {
-          docRepoBaseUrl:
-            'https://github.com/web-infra-dev/rspress/tree/main/website/docs',
-          text: '📝 在 GitHub 上编辑此页',
-        },
-        overview: {
-          filterNameText: '过滤',
-          filterPlaceholderText: '输入关键词',
-          filterNoResultText: '未找到匹配的 API',
-        },
       },
       {
         lang: 'en',
         label: 'English',
-        editLink: {
-          docRepoBaseUrl:
-            'https://github.com/web-infra-dev/rspress/tree/main/website/docs',
-          text: '📝 Edit this page on GitHub',
-        },
       },
     ],
   },

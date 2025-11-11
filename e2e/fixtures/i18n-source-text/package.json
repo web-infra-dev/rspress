@@ -1,0 +1,18 @@
+{
+  "name": "@rspress-fixture/i18n-source-text",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "build": "rspress build",
+    "dev": "rspress dev",
+    "preview": "rspress preview"
+  },
+  "dependencies": {
+    "@rspress/core": "workspace:*",
+    "react": "^19.2.0"
+  },
+  "devDependencies": {
+    "@types/node": "^22.8.1",
+    "@types/react": "^19.2.2"
+  }
+}
