@@ -27,22 +27,10 @@ export default () => {
     // Do nothing in ssr
     return '';
   };
-  const [asideWidth, setAsideWidth] = useState('0px');
   const { width: innerWidth } = useWindowSize();
   const [iframeKey, setIframeKey] = useState(0);
   const refresh = useCallback(() => {
     setIframeKey(Math.random());
-  }, []);
-
-  // get default value from root
-  // listen resize and re-render
-  useEffect(() => {
-    const root = document.querySelector(':root');
-    if (root) {
-      const defaultOutlineWidth =
-        getComputedStyle(root).getPropertyValue('--rp-outline-width');
-      setAsideWidth(defaultOutlineWidth);
-    }
   }, []);
 
   useEffect(() => {
@@ -66,7 +54,7 @@ export default () => {
     } else {
       node?.removeAttribute('style');
     }
-  }, [haveDemos, asideWidth, innerWidth]);
+  }, [haveDemos, innerWidth]);
 
   return haveDemos ? (
     <div className="fixed-device">
