@@ -108,7 +108,6 @@ const API = (props: { moduleName: string }) => {
   // avoid error when no page data
   const apiDoc =
     apiDocMap?.[moduleName] || apiDocMap?.[`${moduleName}-${lang}`] || '';
-  console.log('apiDoc', apiDoc, 22222);
   return (
     <div className="rspress-plugin-api-docgen">
       <ReactMarkdown
