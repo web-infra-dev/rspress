@@ -10,7 +10,7 @@ export default defineConfig({
         icon: 'github',
         mode: 'dom',
         content:
-          '<a href="/zh"><img src="https://assets.rspack.rs/rspress/rspress-logo.svg" /></a>',
+          '<a href="/zh"><img src="https://assets.rspack.rs/rspress/rspress-logo.svg" style="width:300px;" /></a>',
       },
     ],
   },
