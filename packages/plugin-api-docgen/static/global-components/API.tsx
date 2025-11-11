@@ -106,8 +106,7 @@ const API = (props: { moduleName: string }) => {
   // some api doc have two languages.
   const apiDocMap = RSPRESS_PLUGIN_API_DOCGEN_MAP;
   // avoid error when no page data
-  const apiDoc =
-    apiDocMap?.[moduleName] || apiDocMap?.[`${moduleName}-${lang}`] || '';
+  const apiDoc = apiDocMap?.[`${moduleName}-${lang}`] || '';
   return (
     <div className="rspress-plugin-api-docgen">
       <ReactMarkdown
