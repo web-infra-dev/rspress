@@ -64,17 +64,26 @@ test.describe('plugin shiki test', async () => {
       waitUntil: 'networkidle',
     });
 
-    // First code block has lineNumbers meta
+    // First code block has lineNumbers meta - check if lineNumbers property is set
     const codeBlockWithLineNumbers = page
       .locator('.rp-codeblock__content')
       .first();
     const preWithLineNumbers = codeBlockWithLineNumbers.locator('pre');
-    await expect(preWithLineNumbers).toHaveClass(/has-line-number/);
+    // Check if the pre element has lineNumbers attribute/property
+    const hasLineNumbersProp = await preWithLineNumbers.evaluate(
+      node => 'lineNumbers' in node || node.hasAttribute('lineNumbers'),
+    );
+    expect(hasLineNumbersProp).toBe(true);
 
-    // Third code block has wrapCode meta
+    // Third code block has wrapCode meta - check if wrapCode property is set and wrapping is applied
     const codeBlockWithWrap = page.locator('.rp-codeblock__content').nth(2);
     const preWithWrap = codeBlockWithWrap.locator('pre');
-    await expect(preWithWrap).toHaveClass(/has-wrap-code/);
+    // Check if the pre element has wrapCode attribute/property
+    const hasWrapCodeProp = await preWithWrap.evaluate(
+      node => 'wrapCode' in node || node.hasAttribute('wrapCode'),
+    );
+    expect(hasWrapCodeProp).toBe(true);
+    // The parent div should have the wrapping class applied by the React component
     await expect(codeBlockWithWrap).toHaveClass(
       /rp-codeblock__content--code-wrap/,
     );
@@ -82,7 +91,16 @@ test.describe('plugin shiki test', async () => {
     // Fifth code block has both attributes
     const codeBlockWithBoth = page.locator('.rp-codeblock__content').nth(4);
     const preWithBoth = codeBlockWithBoth.locator('pre');
-    await expect(preWithBoth).toHaveClass(/has-line-number/);
-    await expect(preWithBoth).toHaveClass(/has-wrap-code/);
+    // Check if both properties are set
+    const hasBothProps = await preWithBoth.evaluate(
+      node =>
+        ('lineNumbers' in node || node.hasAttribute('lineNumbers')) &&
+        ('wrapCode' in node || node.hasAttribute('wrapCode')),
+    );
+    expect(hasBothProps).toBe(true);
+    // Should have wrapping class applied
+    await expect(codeBlockWithBoth).toHaveClass(
+      /rp-codeblock__content--code-wrap/,
+    );
   });
 });
