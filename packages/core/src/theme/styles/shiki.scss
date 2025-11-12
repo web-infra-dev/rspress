@@ -76,17 +76,3 @@
     }
   }
 }
-
-.shiki.has-line-number code {
-  counter-reset: step;
-  counter-increment: step 0;
-  & .line-number::before {
-    content: counter(step);
-    counter-increment: step;
-    width: 15px;
-    margin-right: 15px;
-    display: inline-block;
-    text-align: right;
-    color: rgba(115, 138, 148, 0.4);
-  }
-}

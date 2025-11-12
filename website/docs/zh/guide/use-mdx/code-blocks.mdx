@@ -175,9 +175,27 @@ console.log('Highlighted');
 console.log('Highlighted');
 ```
 
-### 显示代码行号
+## 显示代码行号
 
-如果你想要显示代码行号，你可以在配置文件中开启 `showLineNumbers` 选项:
+你可以使用 `lineNumbers` meta 属性为单个代码块显示行号：
+
+````mdx
+```ts lineNumbers
+function hello() {
+  console.log('此代码块启用了行号');
+}
+```
+````
+
+它将被渲染为：
+
+```ts lineNumbers
+function hello() {
+  console.log('此代码块启用了行号');
+}
+```
+
+你也可以通过在配置文件中设置 `showLineNumbers` 选项来全局启用行号：
 
 ```ts title="rspress.config.ts"
 export default {
@@ -188,9 +206,27 @@ export default {
 };
 ```
 
-### Wrap code
+当全局启用 `showLineNumbers` 时，所有代码块默认都会显示行号。
 
-如果你想要默认启用长代码换行展示，你可以在配置文件中开启 `defaultWrapCode` 选项:
+## 代码换行
+
+你可以使用 `wrapCode` meta 属性为单个代码块启用代码换行：
+
+````mdx
+```ts wrapCode
+const longLine =
+  '这是一行很长的代码，当存在 wrapCode meta 属性时会自动换行显示';
+```
+````
+
+它将被渲染为：
+
+```ts wrapCode
+const longLine =
+  '这是一行很长的代码，当存在 wrapCode meta 属性时会自动换行显示';
+```
+
+你也可以通过在配置文件中设置 `defaultWrapCode` 选项来全局启用代码换行：
 
 ```ts title="rspress.config.ts"
 export default {
@@ -199,6 +235,24 @@ export default {
     defaultWrapCode: true,
   },
 };
+```
+
+当全局启用 `defaultWrapCode` 时，所有代码块默认都会换行显示长代码。
+
+## 组合使用 meta 属性
+
+你可以将多个 meta 属性组合使用：
+
+````mdx
+```ts lineNumbers wrapCode title="example.ts"
+const longLine = '此代码块同时具有行号、代码换行和标题';
+```
+````
+
+它将被渲染为：
+
+```ts lineNumbers wrapCode title="example.ts"
+const longLine = '此代码块同时具有行号、代码换行和标题';
 ```
 
 ## Diff 代码块

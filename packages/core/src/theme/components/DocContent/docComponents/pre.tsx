@@ -6,6 +6,8 @@ export type ShikiPreProps = CodeBlockProps &
 export function ShikiPre({
   title,
   lang,
+  wrapCode,
+  lineNumbers,
   containerElementClassName,
   codeButtonGroupProps,
   ...otherProps
@@ -14,6 +16,8 @@ export function ShikiPre({
     <CodeBlock
       title={title}
       lang={lang}
+      wrapCode={wrapCode}
+      lineNumbers={lineNumbers}
       containerElementClassName={containerElementClassName}
       codeButtonGroupProps={codeButtonGroupProps}
     >

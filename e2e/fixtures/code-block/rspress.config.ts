@@ -10,7 +10,6 @@ import {
 export default defineConfig({
   root: path.join(__dirname, 'doc'),
   markdown: {
-    showLineNumbers: true,
     shiki: {
       langAlias: {
         ejs: 'js', // 'js' is in the langs array

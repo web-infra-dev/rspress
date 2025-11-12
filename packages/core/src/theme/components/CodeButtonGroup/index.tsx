@@ -7,10 +7,10 @@ import { SvgWrapper } from '../SvgWrapper';
 import './index.scss';
 import { CopyCodeButton } from './CopyCodeButton';
 
-export interface CodeButtonGroupProps
-  extends ReturnType<typeof useCodeButtonGroup> {
+export interface CodeButtonGroupProps {
   copyElementRef: React.RefObject<HTMLDivElement | null>;
-
+  codeWrap: boolean;
+  toggleCodeWrap: () => void;
   /**
    * @default true
    */
@@ -21,10 +21,10 @@ export interface CodeButtonGroupProps
   showCopyButton?: boolean;
 }
 
-export const useCodeButtonGroup = () => {
+export const useCodeButtonGroup = (initialWrapCode?: boolean) => {
   const { site } = useSite();
   const { defaultWrapCode } = site.markdown;
-  const [codeWrap, setCodeWrap] = useState(defaultWrapCode);
+  const [codeWrap, setCodeWrap] = useState(initialWrapCode ?? defaultWrapCode);
   const copyElementRef = useRef<HTMLDivElement>(null);
 
   const toggleCodeWrap = () => {
