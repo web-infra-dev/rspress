@@ -68,37 +68,36 @@ test.describe('plugin shiki test', async () => {
     const codeBlockWithLineNumbers = page
       .locator('.rp-codeblock__content')
       .first();
-    const preWithLineNumbers = codeBlockWithLineNumbers.locator('pre');
-    // Check if the pre element has lineNumbers attribute/property
-    const hasLineNumbersProp = await preWithLineNumbers.evaluate(
-      node => 'lineNumbers' in node || node.hasAttribute('lineNumbers'),
+    await expect(codeBlockWithLineNumbers).toHaveClass(
+      /rp-codeblock__content--line-numbers/,
     );
-    expect(hasLineNumbersProp).toBe(true);
+    await expect(codeBlockWithLineNumbers).not.toHaveClass(
+      /rp-codeblock__content--code-wrap/,
+    );
+
+    // Second code block has no meta - check if no extra class is applied
+    const codeBlockWithoutBoth = page.locator('.rp-codeblock__content').nth(1);
+    await expect(codeBlockWithoutBoth).not.toHaveClass(
+      /rp-codeblock__content--line-numbers/,
+    );
+    await expect(codeBlockWithoutBoth).not.toHaveClass(
+      /rp-codeblock__content--code-wrap/,
+    );
 
     // Third code block has wrapCode meta - check if wrapCode property is set and wrapping is applied
     const codeBlockWithWrap = page.locator('.rp-codeblock__content').nth(2);
-    const preWithWrap = codeBlockWithWrap.locator('pre');
-    // Check if the pre element has wrapCode attribute/property
-    const hasWrapCodeProp = await preWithWrap.evaluate(
-      node => 'wrapCode' in node || node.hasAttribute('wrapCode'),
+    await expect(codeBlockWithWrap).not.toHaveClass(
+      /rp-codeblock__content--line-numbers/,
     );
-    expect(hasWrapCodeProp).toBe(true);
-    // The parent div should have the wrapping class applied by the React component
     await expect(codeBlockWithWrap).toHaveClass(
       /rp-codeblock__content--code-wrap/,
     );
 
     // Fifth code block has both attributes
     const codeBlockWithBoth = page.locator('.rp-codeblock__content').nth(4);
-    const preWithBoth = codeBlockWithBoth.locator('pre');
-    // Check if both properties are set
-    const hasBothProps = await preWithBoth.evaluate(
-      node =>
-        ('lineNumbers' in node || node.hasAttribute('lineNumbers')) &&
-        ('wrapCode' in node || node.hasAttribute('wrapCode')),
+    await expect(codeBlockWithBoth).toHaveClass(
+      /rp-codeblock__content--line-numbers/,
     );
-    expect(hasBothProps).toBe(true);
-    // Should have wrapping class applied
     await expect(codeBlockWithBoth).toHaveClass(
       /rp-codeblock__content--code-wrap/,
     );
