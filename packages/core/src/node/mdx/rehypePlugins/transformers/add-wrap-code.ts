@@ -1,7 +1,6 @@
 import type { ShikiTransformer } from 'shiki';
 
 export interface ITransformerWrapCodeOptions {
-  classActivePre?: string;
   /**
    * Default value for wrapping code
    * @default false
@@ -22,10 +21,10 @@ function hasWrapCodeInMeta(meta: string | undefined): boolean | undefined {
   return kvList.includes('wrapCode');
 }
 
-export function transformerWrapCode(
+export function transformerAddWrapCode(
   options: ITransformerWrapCodeOptions = {},
 ): ShikiTransformer {
-  const { classActivePre = 'has-wrap-code', defaultWrapCode = false } = options;
+  const { defaultWrapCode = false } = options;
 
   return {
     name: SHIKI_TRANSFORMER_WRAP_CODE,
@@ -39,7 +38,6 @@ export function transformerWrapCode(
           ...pre.properties,
           wrapCode: true,
         };
-        return this.addClassToHast(pre, classActivePre);
       }
       return pre;
     },

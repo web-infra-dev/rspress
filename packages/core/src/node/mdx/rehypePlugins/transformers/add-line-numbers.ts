@@ -1,8 +1,6 @@
 import type { ShikiTransformer } from 'shiki';
 
 export interface ITransformerLineNumberOptions {
-  classActivePre?: string;
-  classActiveLine?: string;
   /**
    * Default value for showing line numbers
    * @default false
@@ -23,14 +21,10 @@ function hasLineNumbersInMeta(meta: string | undefined): boolean | undefined {
   return kvList.includes('lineNumbers');
 }
 
-export function transformerLineNumber(
+export function transformerAddLineNumbers(
   options: ITransformerLineNumberOptions = {},
 ): ShikiTransformer {
-  const {
-    classActiveLine = 'line-number',
-    classActivePre = 'has-line-number',
-    defaultShowLineNumbers = false,
-  } = options;
+  const { defaultShowLineNumbers = false } = options;
 
   return {
     name: SHIKI_TRANSFORMER_LINE_NUMBER,
@@ -41,19 +35,13 @@ export function transformerLineNumber(
         metaHasLineNumbers ?? defaultShowLineNumbers;
 
       if (shouldShowLineNumbers) {
-        return this.addClassToHast(pre, classActivePre);
+        pre.properties = {
+          ...pre.properties,
+          lineNumbers: shouldShowLineNumbers,
+        };
       }
-      return pre;
-    },
-    line(node) {
-      // Check meta attribute first, then fall back to default config
-      const metaHasLineNumbers = hasLineNumbersInMeta(this.options.meta?.__raw);
-      const shouldShowLineNumbers =
-        metaHasLineNumbers ?? defaultShowLineNumbers;
 
-      if (shouldShowLineNumbers) {
-        this.addClassToHast(node, classActiveLine);
-      }
+      return pre;
     },
   };
 }

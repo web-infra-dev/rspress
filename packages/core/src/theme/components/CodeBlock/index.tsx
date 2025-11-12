@@ -9,7 +9,14 @@ import './index.scss';
 export type CodeBlockProps = {
   title?: string;
   lang?: string;
+  /**
+   * @default false
+   */
   wrapCode?: boolean;
+  /**
+   * @default false
+   */
+  lineNumbers?: boolean;
   containerElementClassName?: string;
   codeButtonGroupProps?: Omit<
     CodeButtonGroupProps,
@@ -57,7 +64,8 @@ export function CodeBlock({
   containerElementClassName,
   title,
   lang = 'txt',
-  wrapCode: wrapCodeProp,
+  wrapCode: wrapCodeProp = false,
+  lineNumbers: lineNumbersProp = false,
   codeButtonGroupProps,
   children,
 }: CodeBlockProps) {
@@ -76,6 +84,7 @@ export function CodeBlock({
         className={clsx(
           'rp-codeblock__content',
           codeWrap && 'rp-codeblock__content--code-wrap',
+          lineNumbersProp && 'rp-codeblock__content--line-numbers',
         )}
       >
         <div ref={copyElementRef}>{children}</div>
