@@ -19,8 +19,8 @@ export function LiveCodeEditor({
 
   return (
     <div className={styles.editorContainer}>
-      <div className={`${styles.codeBlockWrapper} rp-force-wrap`}>
-        <CodeBlockRuntime {...rest} code={value} />
+      <div className={`${styles.codeBlockWrapper}`}>
+        <CodeBlockRuntime {...rest} code={value} wrapCode />
         {!disabled && (
           <textarea
             name="live-code-editor"
