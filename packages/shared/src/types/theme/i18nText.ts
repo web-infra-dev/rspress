@@ -29,9 +29,9 @@ export interface I18nText {
   searchSuggestedQueryText?: I18nTextValue;
 
   // overview
-  ['overview.filterNameText']?: I18nTextValue;
-  ['overview.filterPlaceholderText']?: I18nTextValue;
-  ['overview.filterNoResultText']?: I18nTextValue;
+  'overview.filterNameText'?: I18nTextValue;
+  'overview.filterPlaceholderText'?: I18nTextValue;
+  'overview.filterNoResultText'?: I18nTextValue;
 
   // codeblock
   codeButtonGroupCopyButtonText?: I18nTextValue;

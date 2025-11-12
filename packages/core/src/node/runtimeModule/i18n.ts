@@ -92,7 +92,7 @@ export async function getI18nData(
         filteredI18nSource[key][lang] = i18nSourceFull[key][lang];
       } else {
         // fallback to 'en'
-        const enText = i18nSourceFull[key]['en'];
+        const enText = i18nSourceFull[key].en;
         logKeys.add(key);
 
         if (enText) {

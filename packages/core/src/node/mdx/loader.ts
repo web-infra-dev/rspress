@@ -60,7 +60,7 @@ export default async function mdxLoader(
       if (stack) {
         const stackLines = stack.split('\n');
         if (stackLines.length > 10) {
-          stack = stackLines.slice(0, 10).join('\n') + '\n    ... (truncated)';
+          stack = `${stackLines.slice(0, 10).join('\n')}\n    ... (truncated)`;
         }
       }
       // why not `callback(e)` ?

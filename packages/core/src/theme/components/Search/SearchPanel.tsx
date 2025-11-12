@@ -1,4 +1,5 @@
 import { useI18n, usePageData } from '@rspress/core/runtime';
+import { SvgWrapper, Tab, Tabs, useLinkNavigate } from '@theme';
 import CloseSvg from '@theme-assets/close';
 import LoadingSvg from '@theme-assets/loading';
 import SearchSvg from '@theme-assets/search';
@@ -6,7 +7,6 @@ import { debounce } from 'lodash-es';
 import { useCallback, useEffect, useRef, useState } from 'react';
 import { createPortal } from 'react-dom';
 import * as userSearchHooks from 'virtual-search-hooks';
-import { useLinkNavigate, SvgWrapper, Tab, Tabs } from '@theme';
 import { PageSearcher } from './logic/search';
 import type {
   CustomMatchResult,

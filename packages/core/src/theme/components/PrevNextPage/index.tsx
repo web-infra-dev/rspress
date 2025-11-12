@@ -1,5 +1,10 @@
 import { useI18n } from '@rspress/core/runtime';
-import { Link, renderInlineMarkdown, SvgWrapper, usePrevNextPage } from '@theme';
+import {
+  Link,
+  renderInlineMarkdown,
+  SvgWrapper,
+  usePrevNextPage,
+} from '@theme';
 import ArrowRight from '@theme-assets/arrow-right';
 import clsx from 'clsx';
 import './index.scss';
