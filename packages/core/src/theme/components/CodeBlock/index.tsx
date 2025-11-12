@@ -4,12 +4,12 @@ import {
   useCodeButtonGroup,
 } from '@theme';
 import clsx from 'clsx';
-import { useEffect, useRef } from 'react';
 import './index.scss';
 
 export type CodeBlockProps = {
   title?: string;
   lang?: string;
+  wrapCode?: boolean;
   containerElementClassName?: string;
   codeButtonGroupProps?: Omit<
     CodeButtonGroupProps,
@@ -57,23 +57,12 @@ export function CodeBlock({
   containerElementClassName,
   title,
   lang = 'txt',
+  wrapCode: wrapCodeProp,
   codeButtonGroupProps,
   children,
 }: CodeBlockProps) {
-  const { codeWrap, toggleCodeWrap, copyElementRef, setCodeWrap } =
-    useCodeButtonGroup();
-  const contentRef = useRef<HTMLDivElement>(null);
-
-  // Check if the pre element has the has-wrap-code class from the transformer
-  useEffect(() => {
-    if (contentRef.current) {
-      const preElement = contentRef.current.querySelector('pre');
-      if (preElement?.classList.contains('has-wrap-code')) {
-        setCodeWrap(true);
-      }
-    }
-  }, [setCodeWrap]);
-
+  const { codeWrap, toggleCodeWrap, copyElementRef } =
+    useCodeButtonGroup(wrapCodeProp);
   return (
     <div
       className={clsx(
@@ -84,7 +73,6 @@ export function CodeBlock({
     >
       {title && <div className="rp-codeblock__title">{title}</div>}
       <div
-        ref={contentRef}
         className={clsx(
           'rp-codeblock__content',
           codeWrap && 'rp-codeblock__content--code-wrap',

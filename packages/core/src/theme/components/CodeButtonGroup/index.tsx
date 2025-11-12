@@ -21,10 +21,10 @@ export interface CodeButtonGroupProps {
   showCopyButton?: boolean;
 }
 
-export const useCodeButtonGroup = () => {
+export const useCodeButtonGroup = (initialWrapCode?: boolean) => {
   const { site } = useSite();
   const { defaultWrapCode } = site.markdown;
-  const [codeWrap, setCodeWrap] = useState(defaultWrapCode);
+  const [codeWrap, setCodeWrap] = useState(initialWrapCode ?? defaultWrapCode);
   const copyElementRef = useRef<HTMLDivElement>(null);
 
   const toggleCodeWrap = () => {
@@ -34,7 +34,6 @@ export const useCodeButtonGroup = () => {
   return {
     copyElementRef,
     codeWrap,
-    setCodeWrap,
     toggleCodeWrap,
   };
 };

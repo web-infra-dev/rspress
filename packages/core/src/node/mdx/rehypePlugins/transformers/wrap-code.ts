@@ -35,6 +35,10 @@ export function transformerWrapCode(
       const shouldWrapCode = metaHasWrapCode ?? defaultWrapCode;
 
       if (shouldWrapCode) {
+        pre.properties = {
+          ...pre.properties,
+          wrapCode: true,
+        };
         return this.addClassToHast(pre, classActivePre);
       }
       return pre;
