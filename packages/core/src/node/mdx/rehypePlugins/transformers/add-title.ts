@@ -16,6 +16,9 @@ function parseTitleFromMeta(meta: string | undefined): string {
   return '';
 }
 
+/**
+ * @private compile-time only
+ */
 export function transformerAddTitle(): ShikiTransformer {
   return {
     name: SHIKI_TRANSFORMER_ADD_TITLE,

@@ -2,6 +2,9 @@ import type { ShikiTransformer } from 'shiki';
 
 export const SHIKI_TRANSFORMER_ADD_LANG = 'shiki-transformer:add-lang';
 
+/**
+ * @private compile-time only
+ */
 export function transformerAddLang(): ShikiTransformer {
   return {
     name: SHIKI_TRANSFORMER_ADD_LANG,

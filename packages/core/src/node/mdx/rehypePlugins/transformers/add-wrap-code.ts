@@ -8,7 +8,7 @@ export interface ITransformerWrapCodeOptions {
   defaultWrapCode?: boolean;
 }
 
-export const SHIKI_TRANSFORMER_WRAP_CODE = 'shiki-transformer:wrap-code';
+export const SHIKI_TRANSFORMER_ADD_WRAP_CODE = 'shiki-transformer:wrap-code';
 
 /**
  * Check if the meta string contains the wrapCode keyword
@@ -21,13 +21,16 @@ function hasWrapCodeInMeta(meta: string | undefined): boolean | undefined {
   return kvList.includes('wrapCode');
 }
 
+/**
+ * @private compile-time only
+ */
 export function transformerAddWrapCode(
   options: ITransformerWrapCodeOptions = {},
 ): ShikiTransformer {
   const { defaultWrapCode = false } = options;
 
   return {
-    name: SHIKI_TRANSFORMER_WRAP_CODE,
+    name: SHIKI_TRANSFORMER_ADD_WRAP_CODE,
     pre(pre) {
       // Check meta attribute first, then fall back to default config
       const metaHasWrapCode = hasWrapCodeInMeta(this.options.meta?.__raw);

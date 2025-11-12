@@ -1,9 +1,10 @@
 import type { RehypeShikiOptions } from '@shikijs/rehype';
 import rehypeShiki from '@shikijs/rehype';
 import { createCssVariablesTheme } from 'shiki';
-import { transformerLineNumber, transformerWrapCode } from './transformers';
 import { transformerAddLang } from './transformers/add-lang';
+import { transformerAddLineNumbers } from './transformers/add-line-numbers';
 import { transformerAddTitle } from './transformers/add-title';
+import { transformerAddWrapCode } from './transformers/add-wrap-code';
 
 const cssVariablesTheme = createCssVariablesTheme({
   name: 'css-variables',
@@ -22,10 +23,8 @@ function createRehypeShikiOptions(
   const newTransformers = [
     transformerAddTitle(),
     transformerAddLang(),
-    // Always add line number transformer with default config
-    transformerLineNumber({ defaultShowLineNumbers: showLineNumbers }),
-    // Always add wrap code transformer with default config
-    transformerWrapCode({ defaultWrapCode }),
+    transformerAddLineNumbers({ defaultShowLineNumbers: showLineNumbers }),
+    transformerAddWrapCode({ defaultWrapCode }),
     ...transformers,
   ];
 
