@@ -6,18 +6,20 @@
   align-self: stretch;
   border-radius: 6px;
   position: relative;
-  color: var(--rp-c-text-2);
-
-  font-weight: 400;
-  font-size: 14px;
-  line-height: 24px;
 
   &__text {
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 24px;
+    color: var(--rp-c-text-2);
     overflow-wrap: break-word;
   }
 
   &--active {
-    color: var(--rp-c-link);
+    .rp-toc-item__text,
+    .rp-toc-item__text * {
+      color: var(--rp-c-link);
+    }
 
     &::before {
       content: '';

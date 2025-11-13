@@ -45,7 +45,7 @@ export const TocItem = ({
       }}
     >
       <span
-        className="rp-outline__toc-item__text"
+        className="rp-toc-item__text rp-doc"
         {...renderInlineMarkdown(header.text)}
       ></span>
     </Link>
