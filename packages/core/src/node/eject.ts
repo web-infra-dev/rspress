@@ -7,7 +7,23 @@ import picocolors from 'picocolors';
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
+// For testing purposes, allow overriding the theme path
+let _themeComponentsPathOverride: string | undefined;
+
+export function __setThemeComponentsPathForTesting(
+  themePath: string | undefined,
+): void {
+  _themeComponentsPathOverride = themePath;
+}
+
+/**
+ * Get the path to the theme components directory
+ */
 function getThemeComponentsPath(): string {
+  if (_themeComponentsPathOverride) {
+    return _themeComponentsPathOverride;
+  }
+
   const distThemePath = path.join(__dirname, 'eject-theme');
   return distThemePath;
 }
