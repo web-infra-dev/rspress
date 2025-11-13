@@ -1,4 +1,3 @@
-import { existsSync } from 'node:fs';
 import fs from 'node:fs/promises';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
@@ -8,42 +7,8 @@ import picocolors from 'picocolors';
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
-// For testing purposes, allow overriding the theme path
-let _themeComponentsPathOverride: string | undefined;
-
-export function __setThemeComponentsPathForTesting(
-  themePath: string | undefined,
-): void {
-  _themeComponentsPathOverride = themePath;
-}
-
-/**
- * Get the path to the theme components directory
- */
 function getThemeComponentsPath(): string {
-  if (_themeComponentsPathOverride) {
-    return _themeComponentsPathOverride;
-  }
-
-  // From dist/node/eject.js, we need to go to dist/theme/components
-  // The theme source is in packages/core/src/theme/components
-  // After build, it's in packages/core/dist/theme/components
-  const coreDistPath = path.resolve(__dirname, '..');
-  const distThemePath = path.join(coreDistPath, 'theme', 'components');
-
-  // For development/testing, check if src directory exists
-  const srcThemePath = path.join(coreDistPath, 'src', 'theme', 'components');
-
-  // Try to use source path first (for development), then fallback to dist path
-  try {
-    // Synchronously check if source path exists - this is only used for path resolution
-    if (existsSync(srcThemePath)) {
-      return srcThemePath;
-    }
-  } catch {
-    // If check fails, use dist path
-  }
-
+  const distThemePath = path.join(__dirname, 'eject-theme');
   return distThemePath;
 }
 
