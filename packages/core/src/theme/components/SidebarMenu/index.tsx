@@ -1,6 +1,7 @@
 import { useFrontmatter, useI18n, useLocation } from '@rspress/core/runtime';
 import {
   ReadPercent,
+  renderInlineMarkdown,
   SvgWrapper,
   useActiveAnchor,
   useDynamicToc,
@@ -78,7 +79,7 @@ export const SidebarMenu = forwardRef(
             }
           }}
         >
-          {showSidebar && (
+          {showSidebar ? (
             <button
               type="button"
               onClick={openSidebar}
@@ -87,8 +88,10 @@ export const SidebarMenu = forwardRef(
               <SvgWrapper icon={MenuIcon} />
               <span>{t('menuTitle')}</span>
             </button>
+          ) : (
+            <div className="rp-sidebar-menu__left" />
           )}
-          {showOutline && (
+          {showOutline ? (
             <button
               type="button"
               disabled={headers.length === 0}
@@ -99,7 +102,14 @@ export const SidebarMenu = forwardRef(
               }}
               className="rp-sidebar-menu__right"
             >
-              <span>{scrolledHeader?.text ?? t('outlineTitle')}</span>
+              {scrolledHeader?.text ? (
+                <span
+                  className="rp-doc"
+                  {...renderInlineMarkdown(scrolledHeader.text)}
+                />
+              ) : (
+                <span>{t('outlineTitle')}</span>
+              )}
               <ReadPercent size={14} strokeWidth={2} />
               {/* TODO: discussion */}
               {headers.length !== 0 && (
@@ -112,6 +122,8 @@ export const SidebarMenu = forwardRef(
                 />
               )}
             </button>
+          ) : (
+            <div className="rp-sidebar-menu__right" />
           )}
         </div>
         {(isSidebarOpen || isOutlineOpen) &&

@@ -56,18 +56,17 @@
     left: 12px;
     bottom: 0;
     width: 1px;
-    background-color: var(--rp-c-bg-mute);
-    opacity: 0.8;
+    background-color: var(--rp-c-divider-light);
   }
 
   &--group-item.rp-sidebar-item--active {
     .rp-sidebar-item__left::before {
       content: '';
       position: absolute;
-      top: calc(50% - 6px);
+      top: calc(25% + 2px);
       bottom: 0;
       left: 12px;
-      height: 12px;
+      height: calc(50% - 4px);
       width: 1px;
       background-color: var(--rp-c-brand);
     }
