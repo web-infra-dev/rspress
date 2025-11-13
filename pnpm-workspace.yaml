@@ -16,3 +16,4 @@ onlyBuiltDependencies:
 hoistPattern: []
 linkWorkspacePackages: true
 strictPeerDependencies: false
+trustPolicy: no-downgrade
