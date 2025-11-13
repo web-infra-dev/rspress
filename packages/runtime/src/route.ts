@@ -1,4 +1,5 @@
 import type { Route } from '@rspress/shared';
+import { cleanUrl } from '@rspress/shared';
 import { routes } from 'virtual-routes';
 
 /**
@@ -89,14 +90,16 @@ const cache = new Map<string, Route>();
  * @returns
  */
 export function pathnameToRouteService(pathname: string): Route | undefined {
-  const cacheItem = cache.get(pathname);
+  // Strip hash and search parameters before processing
+  const cleanPathname = cleanUrl(pathname);
+  const cacheItem = cache.get(cleanPathname);
   if (cacheItem) {
     return cacheItem;
   }
-  const matched = matchRoutes(routes, normalizeRoutePath(pathname));
+  const matched = matchRoutes(routes, normalizeRoutePath(cleanPathname));
   const route: Route | undefined = matched?.[0]?.route;
   if (route) {
-    cache.set(pathname, route);
+    cache.set(cleanPathname, route);
   }
   return route;
 }
@@ -114,8 +117,11 @@ export function pathnameToRouteService(pathname: string): Route | undefined {
  * @returns
  */
 export function isActive(itemLink: string, currentPathname: string): boolean {
-  const normalizedItemLink = normalizeRoutePath(itemLink);
-  const normalizedCurrentPathname = normalizeRoutePath(currentPathname);
+  // Strip hash and search parameters before comparing
+  const cleanItemLink = cleanUrl(itemLink);
+  const cleanCurrentPathname = cleanUrl(currentPathname);
+  const normalizedItemLink = normalizeRoutePath(cleanItemLink);
+  const normalizedCurrentPathname = normalizeRoutePath(cleanCurrentPathname);
   const linkMatched = matchPath(normalizedItemLink, normalizedCurrentPathname);
   return linkMatched !== null;
 }
