@@ -10,7 +10,7 @@ export function DocFooter() {
   return (
     <footer className="rp-doc-footer">
       {showLastUpdated && <LastUpdated />}
-      <div className="rp-divider" />
+      <div className="rp-doc-footer__divider" />
       <PrevNextPage />
     </footer>
   );
