@@ -39,7 +39,7 @@ export async function renderPage(
     throw e;
   }
   const head = createHead();
-  const { routePath, relativePath } = route;
+  const { routePath, absolutePath } = route;
   let appHtml = '';
   if (render) {
     try {
@@ -48,7 +48,7 @@ export async function renderPage(
       if (e instanceof Error) {
         logger.error(
           `Page "${picocolors.yellow(routePath)}" SSG rendering failed.
-${relativePath ? picocolors.gray(`    File: <docs>/${relativePath}\n`) : ''}    ${picocolors.gray(e.toString())}`,
+${absolutePath ? picocolors.gray(`    File: ${absolutePath}\n`) : ''}    ${picocolors.gray(e.toString())}`,
         );
         throw e;
       }

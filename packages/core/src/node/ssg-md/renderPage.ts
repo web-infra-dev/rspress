@@ -29,7 +29,7 @@ export async function renderPage(route: RouteMeta, ssrBundlePath: string) {
     throw e;
   }
   const head = createHead();
-  const { routePath, relativePath } = route;
+  const { routePath, absolutePath } = route;
   let appMd = '';
   if (render) {
     try {
@@ -38,7 +38,7 @@ export async function renderPage(route: RouteMeta, ssrBundlePath: string) {
       if (e instanceof Error) {
         logger.error(
           `Page "${picocolors.yellow(routePath)}" SSG-MD rendering failed.
-${relativePath ? picocolors.gray(`    File: <docs>/${relativePath}\n`) : ''}    ${picocolors.gray(e.toString())}`,
+${absolutePath ? picocolors.gray(`    File: ${absolutePath}\n`) : ''}    ${picocolors.gray(e.toString())}`,
         );
         throw e;
       }
