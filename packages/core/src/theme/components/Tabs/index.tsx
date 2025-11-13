@@ -1,3 +1,4 @@
+import { useStorageValue } from '@theme';
 import clsx from 'clsx';
 import {
   Children,
@@ -9,7 +10,6 @@ import {
   useMemo,
   useState,
 } from 'react';
-import { useStorageValue } from '../../logic/useStorageValue';
 import './index.scss';
 
 type TabItem = {

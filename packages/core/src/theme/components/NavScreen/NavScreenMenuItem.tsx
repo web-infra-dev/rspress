@@ -5,12 +5,11 @@ import type {
   NavItemWithLinkAndChildren,
 } from '@rspress/core';
 import { matchNavbar, useLocation } from '@rspress/core/runtime';
-import { Link, Tag } from '@theme';
+import { Link, SvgWrapper, Tag } from '@theme';
 import ArrowDown from '@theme-assets/arrow-down';
 import clsx from 'clsx';
 import type React from 'react';
 import { useMemo, useState } from 'react';
-import { SvgWrapper } from '../SvgWrapper';
 import './NavScreenMenuItem.scss';
 
 interface NavScreenMenuItemWithLinkProps {

@@ -3,11 +3,10 @@ import type {
   SidebarItem as SidebarItemType,
 } from '@rspress/core';
 import { useActiveMatcher } from '@rspress/core/runtime';
-import { Link, Tag } from '@theme';
+import { Link, renderInlineMarkdown, Tag } from '@theme';
 import clsx from 'clsx';
 import type React from 'react';
 import { useEffect, useRef } from 'react';
-import { renderInlineMarkdown } from '../../logic/utils';
 import './SidebarItem.scss';
 
 export function SidebarItemRaw({

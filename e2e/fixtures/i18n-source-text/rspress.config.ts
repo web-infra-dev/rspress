@@ -29,17 +29,17 @@ export default defineConfig({
     ],
   },
   i18nSource(source) {
-    source['config'] = {
+    source.config = {
       zh: '配置-文件',
       en: 'Configuration-file',
     };
-    source['Foo'] = {
+    source.Foo = {
       zh: '被配置修改',
       en: 'Modified by configuration',
     };
 
     for (const key of Object.keys(source)) {
-      source[key]['en_US'] = source[key]['en'];
+      source[key].en_US = source[key].en;
     }
     return source;
   },
@@ -51,7 +51,7 @@ export default defineConfig({
           zh: '配置-插件',
           en: 'Configuration-plugin',
         };
-        source['Foo'] = {
+        source.Foo = {
           zh: '被插件修改',
           en: 'Modified by plugin',
         };

@@ -1,4 +1,5 @@
 import { useI18n, usePageData } from '@rspress/core/runtime';
+import { SvgWrapper, Tab, Tabs, useLinkNavigate } from '@theme';
 import CloseSvg from '@theme-assets/close';
 import LoadingSvg from '@theme-assets/loading';
 import SearchSvg from '@theme-assets/search';
@@ -6,9 +7,6 @@ import { debounce } from 'lodash-es';
 import { useCallback, useEffect, useRef, useState } from 'react';
 import { createPortal } from 'react-dom';
 import * as userSearchHooks from 'virtual-search-hooks';
-import { useNavigate } from '../Link/useNavigate';
-import { SvgWrapper } from '../SvgWrapper';
-import { Tab, Tabs } from '../Tabs';
 import { PageSearcher } from './logic/search';
 import type {
   CustomMatchResult,
@@ -111,7 +109,7 @@ export function SearchPanel({ focused, setFocused }: SearchPanelProps) {
     page: { lang, version },
   } = usePageData();
   const t = useI18n();
-  const navigate = useNavigate();
+  const navigate = useLinkNavigate();
   const { search, title: siteTitle } = siteData;
   const versionedSearch = typeof search !== 'boolean' && search?.versioned;
   const DEFAULT_RESULT = [

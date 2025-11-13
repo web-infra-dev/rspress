@@ -2,6 +2,7 @@ import { pluginReact } from '@rsbuild/plugin-react';
 import { pluginSass } from '@rsbuild/plugin-sass';
 import { pluginSvgr } from '@rsbuild/plugin-svgr';
 import { defineConfig } from '@rslib/core';
+import path from 'path';
 import { pluginPublint } from 'rsbuild-plugin-publint';
 
 const COMMON_EXTERNALS = [
@@ -182,6 +183,13 @@ export default defineConfig({
           root: './dist/theme',
         },
         externals: COMMON_EXTERNALS,
+        copy: [
+          {
+            from: './theme/components',
+            to: '../eject-theme/components',
+            context: path.join(__dirname, 'src'),
+          },
+        ],
       },
     },
   ],

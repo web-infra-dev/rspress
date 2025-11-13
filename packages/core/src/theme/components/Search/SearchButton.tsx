@@ -1,7 +1,7 @@
 import { useI18n } from '@rspress/core/runtime';
+import { SvgWrapper } from '@theme';
 import SearchSvg from '@theme-assets/search';
 import { useEffect, useState } from 'react';
-import { SvgWrapper } from '../SvgWrapper';
 import './SearchButton.scss';
 
 export interface SearchButtonProps {

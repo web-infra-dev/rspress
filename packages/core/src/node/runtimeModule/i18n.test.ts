@@ -98,7 +98,7 @@ describe('getI18nData', () => {
       i18nSource: source => {
         // Add en_US as fallback from en
         for (const key of Object.keys(source)) {
-          source[key]['en_US'] = source[key]['en'];
+          source[key].en_US = source[key].en;
         }
         return source;
       },
