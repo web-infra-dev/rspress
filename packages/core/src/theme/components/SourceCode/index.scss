@@ -2,7 +2,7 @@
   display: inline-block;
   border-radius: 4px;
   border: 1px solid;
-  border-color: var(--rp-c-gray-light-3);
+  border-color: var(--rp-c-divider);
   color: var(--rp-c-text-2);
   fill: currentColor;
 
@@ -31,14 +31,4 @@
   &__text {
     // Text styling if needed
   }
-}
-
-// Dark theme support
-:global(.dark) .rp-source-code {
-  border-color: var(--rp-c-divider);
-}
-
-// Not-doc context styling
-.rp-not-doc .rp-source-code {
-  // Additional styling for not-doc context if needed
 }

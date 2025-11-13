@@ -35,6 +35,7 @@ export async function getAvailableComponents(): Promise<string[]> {
     'Banner',
     'Badge',
     'Callout',
+    'DocFooter',
     'HomeFeature',
     'HomeHero',
     'HomeBackground',
