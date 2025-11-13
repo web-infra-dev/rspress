@@ -23,9 +23,7 @@ function getThemeComponentsPath(): string {
   if (_themeComponentsPathOverride) {
     return _themeComponentsPathOverride;
   }
-
-  const distThemePath = path.join(__dirname, 'eject-theme');
-  return distThemePath;
+  return path.join(__dirname, 'eject-theme/components');
 }
 
 /**
