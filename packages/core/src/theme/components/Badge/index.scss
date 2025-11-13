@@ -33,19 +33,19 @@
   &--outline {
     border: 1px solid currentColor;
 
-    &#{&}--tip {
+    &.rp-badge--tip {
       border-color: var(--rp-container-tip-border);
     }
 
-    &#{&}--info {
+    &.rp-badge--info {
       border-color: var(--rp-container-info-border);
     }
 
-    &#{&}--warning {
+    &.rp-badge--warning {
       border-color: var(--rp-container-warning-border);
     }
 
-    &#{&}--danger {
+    &.rp-badge--danger {
       border-color: var(--rp-container-danger-border);
     }
   }
