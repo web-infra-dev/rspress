@@ -73,9 +73,6 @@ export const Banner = forwardRef<HTMLDivElement, BannerProps>(
       customChildren?: ReactNode;
     };
 
-    if (!display) {
-      return null;
-    }
     const [height, setHeight] = useState(36);
     const ref = mergeRefs(forwardedRef, element => {
       element?.offsetHeight && setHeight(element?.offsetHeight);
@@ -84,13 +81,13 @@ export const Banner = forwardRef<HTMLDivElement, BannerProps>(
 
     // TODO: support SSR
     useEffect(() => {
-      if (typeof window === 'undefined' || !storage) {
+      if (typeof window === 'undefined' || !storage || !storageKey) {
         return;
       }
-      setDisable(Boolean(window[storage].getItem(storageKey)) ?? false);
+      setDisable(Boolean(window[storage].getItem(storageKey)));
     }, []);
 
-    if (disable) {
+    if (!display || disable) {
       return null;
     }
 
