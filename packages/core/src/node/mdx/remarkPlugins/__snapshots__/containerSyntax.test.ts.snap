@@ -89,7 +89,7 @@ function _createMdxContent(props) {
       type: "tip",
       title: "Tip",
       children: _jsx(_components.p, {
-        children: "\\nThis is a tip"
+        children: "This is a tip"
       })
     }), "\\n", _jsx(_components.p, {
       children: "12312"
@@ -531,7 +531,7 @@ function _createMdxContent(props) {
     type: "tip",
     title: "Tip",
     children: _jsx(_components.p, {
-      children: "\\nThis is a tip"
+      children: "This is a tip"
     })
   });
 }
@@ -676,7 +676,7 @@ function _createMdxContent(props) {
     type: "tip",
     title: "Tip",
     children: [_jsx(_components.p, {
-      children: "\\nLine 1."
+      children: "Line 1."
     }), _jsxs(_components.p, {
       children: ["Line 2 with ", _jsx(_components.a, {
         href: "http://example.com",
@@ -721,7 +721,7 @@ function _createMdxContent(props) {
     type: "tip",
     title: "Tip",
     children: [_jsx(_components.p, {
-      children: "\\nLine 1."
+      children: "Line 1."
     }), _jsxs(_components.p, {
       children: ["Line 2 with ", _jsx(_components.a, {
         href: "http://example.com",
@@ -766,7 +766,7 @@ function _createMdxContent(props) {
     type: "tip",
     title: "Tip",
     children: [_jsx(_components.p, {
-      children: "\\nLine 1."
+      children: "Line 1."
     }), _jsxs(_components.p, {
       children: ["Line 2 with ", _jsx(_components.code, {
         children: "code"
@@ -1078,7 +1078,7 @@ function _createMdxContent(props) {
         type: "tip",
         title: "Tip",
         children: _jsx(_components.p, {
-          children: "\\nThis is a tip."
+          children: "This is a tip."
         })
       }), "\\n"]
     }), "\\n", _jsxs(_components.li, {
@@ -1130,7 +1130,7 @@ function _createMdxContent(props) {
               type: "tip",
               title: "Tip",
               children: _jsx(_components.p, {
-                children: "\\nThis is a tip."
+                children: "This is a tip."
               })
             }), "\\n"]
           }), "\\n", _jsxs(_components.li, {
@@ -1182,7 +1182,7 @@ function _createMdxContent(props) {
         type: "tip",
         title: "Tip",
         children: _jsx(_components.p, {
-          children: "\\nThis is a tip."
+          children: "This is a tip."
         })
       }), "\\n"]
     }), "\\n", _jsxs(_components.li, {
@@ -1234,7 +1234,7 @@ function _createMdxContent(props) {
               type: "tip",
               title: "Tip",
               children: _jsx(_components.p, {
-                children: "\\nThis is a tip."
+                children: "This is a tip."
               })
             }), "\\n"]
           }), "\\n", _jsxs(_components.li, {
@@ -1281,7 +1281,7 @@ function _createMdxContent(props) {
     type: "tip",
     title: "Tip",
     children: _jsxs(_components.p, {
-      children: ["\\n", _jsx(_components.a, {
+      children: [_jsx(_components.a, {
         href: "https://example.com",
         rel: "noopener noreferrer",
         target: "_blank",

@@ -1,15 +1,12 @@
 /**
  * 🚀 This plugin is used to support container directive in unified.
- * Taking into account the compatibility of the VuePress/Docusaurus container directive, current remark plugin in unified ecosystem only supports the following syntax:
- * ::: tip {title="foo"}
- * This is a tip
- * :::
- * But the following syntax is not supported:
- * ::: tip foo
- * This is a tip
- * :::
- * In fact, the syntax is usually used in SSG Frameworks, such as VuePress/Docusaurus.
- * So the plugin is used to solve the problem and support both syntaxes in above cases.
+ * This implementation uses remark-directive for standard directive syntax,
+ * while keeping custom parsing for VuePress/Docusaurus-style syntax.
+ *
+ * Standard remark-directive syntax: :::tip{title="foo"}
+ * VuePress/Docusaurus syntax: ::: tip foo
+ *
+ * Both are supported.
  */
 /// <reference types="mdast-util-mdx-expression" />
 
@@ -41,7 +38,7 @@ export const REGEX_GH_BEGIN = /^\s*\s*\[!(\w+)\]\s*(.*)?/;
 export const TITLE_REGEX_IN_MD = /{\s*title=["']?(.+)}\s*/;
 export const TITLE_REGEX_IN_MDX = /\s*title=["']?(.+)\s*/;
 
-const CALLOUT_COMPONENT = '$$$callout$$$'; // in md, we can not add import statement, so we use a special component name to avoid conflict with user components
+const CALLOUT_COMPONENT = '$$$callout$$$';
 const ERROR_PREFIX = '[remarkContainerSyntax]';
 
 export type DirectiveType = (typeof DIRECTIVE_TYPES)[number];
@@ -61,21 +58,6 @@ const getTypeName = (type: DirectiveType | string): string => {
 
 /**
  * Construct the DOM structure of the container directive.
- * For example:
- *
- * ::: tip {title="foo"}
- * This is a tip
- * :::
- *
- * will be transformed to:
- *
- * <div class="rspress-directive tip">
- *   <div class="rspress-directive-title">Tip</div>
- *   <div class="rspress-directive-content">
- *     <p>This is a tip</p>
- *   </div>
- * </div>
- *
  */
 const createContainer = (
   type: DirectiveType | string,
@@ -101,10 +83,8 @@ const createContainer = (
 };
 
 /**
- * How the transformer works:
- * 1. We get the paragraph and check if it is a container directive
- * 2. If it is, crawl the next nodes, if there is a paragraph node, we need to check if it is the end of the container directive. If not, we need to push it to the children of the container directive node.
- * 3. If we find the end of the container directive, we remove the visited node and insert the custom container directive node.
+ * Transform containerDirective nodes created by remark-directive
+ * and handle VuePress/Docusaurus syntax that remark-directive doesn't support
  */
 function transformer(
   tree: Parent,
@@ -118,6 +98,7 @@ function transformer(
       transformer(node, warnUnknownType);
     }
 
+    // Handle containerDirective nodes from remark-directive
     if (node.type === 'containerDirective') {
       const type = node.name as string;
       if (type === CALLOUT_COMPONENT) {
@@ -130,7 +111,7 @@ function transformer(
           1,
           createContainer(
             type,
-            node.attributes?.title ?? type.toUpperCase(),
+            node.attributes?.title ?? getTypeName(type),
             node.children as BlockContent[],
           ) as RootContent,
         );
@@ -142,15 +123,6 @@ function transformer(
        * Support for Github Alerts
        * > [!TIP]
        * > This is a tip
-       *
-       * will be transformed to:
-       *
-       * <div class="rspress-directive tip">
-       *   <div class="rspress-directive-title">TIP</div>
-       *   <div class="rspress-directive-content">
-       *     <p>This is a tip</p>
-       *   </div>
-       * </div>
        */
       node.type === 'blockquote' &&
       node.children[0]?.type === 'paragraph' &&
@@ -184,11 +156,9 @@ function transformer(
       }
     }
 
-    if (
-      node.type !== 'paragraph' ||
-      // 1. We get the paragraph and check if it is a container directive
-      node.children[0].type !== 'text'
-    ) {
+    // Handle VuePress/Docusaurus-style syntax that remark-directive doesn't support
+    // E.g., ::: tip Custom Title (with space and plain text)
+    if (node.type !== 'paragraph' || node.children[0].type !== 'text') {
       i++;
       continue;
     }
@@ -222,13 +192,9 @@ function transformer(
       i++;
       continue;
     }
-    // 2. If it is, we remove the paragraph and create a container directive
+    // Create container directive from VuePress/Docusaurus syntax
     const wrappedChildren: (BlockContent | PhrasingContent)[] = [];
-    // 2.1 case: with no newline between `:::` and `:::`, for example
-    // ::: tip
-    // This is a tip
-    // :::
-    // Here the content is `::: tip\nThis is a tip\n:::`
+    // Case with no newline between `:::` and `:::`
     if (content?.endsWith(':::')) {
       wrappedChildren.push({
         type: 'paragraph',
@@ -242,12 +208,7 @@ function transformer(
       const newChild = createContainer(type, title, wrappedChildren);
       tree.children.splice(i, 1, newChild as RootContent);
     } else {
-      // 2.2 case: with newline before the end of container, for example:
-      // ::: tip
-      // This is a tip
-      //
-      // :::
-      // Here the content is `::: tip\nThis is a tip`
+      // Case with newline before the end of container
       const paragraphChild: Paragraph = {
         type: 'paragraph',
         children: [] as PhrasingContent[],
@@ -300,14 +261,8 @@ function transformer(
         (wrappedChildren[0] as Paragraph).children.push(lastChildInNode);
       }
 
-      // 2.3 The final case: has newline after the start of container, for example:
-      // ::: tip
-      //
-      // This is a tip
-      // :::
-
-      // All of the above cases need to crawl the children of the container directive node.
-      // In other word, We look for the next paragraph nodes and collect all the content until we find the end of the container directive
+      // The final case: has newline after the start of container
+      // Look for the next paragraph nodes and collect all the content until we find the end
       let j = i + 1;
       while (j < tree.children.length) {
         const currentParagraph = tree.children[j];
@@ -331,9 +286,7 @@ function transformer(
           });
           j++;
         } else {
-          // 3. We find the end of the container directive
-          // Then create the container directive, and remove the original paragraphs
-          // Finally, we insert the new container directive and break the loop
+          // We find the end of the container directive
           const lastChildText = lastChild.value;
           const matchedEndContent = lastChildText.slice(0, -3).trimEnd();
           const filteredChildren = currentParagraph.children.filter(

@@ -5,6 +5,7 @@ import type { UserConfig } from '@rspress/shared';
 import rehypeShiki from '@shikijs/rehype';
 import rehypeExternalLinks from 'rehype-external-links';
 import rehypeRaw from 'rehype-raw';
+import remarkDirective from 'remark-directive';
 import remarkGFM from 'remark-gfm';
 import type { PluggableList } from 'unified';
 import type { PluginDriver } from '../PluginDriver';
@@ -68,6 +69,7 @@ export async function createMDXOptions(options: {
     remarkPlugins: [
       remarkGFM,
       remarkToc,
+      !isSsgMd && remarkDirective,
       !isSsgMd && remarkContainerSyntax,
       [remarkFileCodeBlock, { filepath, addDependency }],
       [

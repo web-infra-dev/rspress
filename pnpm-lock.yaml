@@ -886,6 +886,9 @@ importers:
       lodash-es:
         specifier: ^4.17.21
         version: 4.17.21
+      mdast-util-directive:
+        specifier: ^3.1.0
+        version: 3.1.0
       mdast-util-mdx:
         specifier: ^3.0.0
         version: 3.0.0
@@ -922,6 +925,9 @@ importers:
       rehype-raw:
         specifier: ^7.0.0
         version: 7.0.0
+      remark-directive:
+        specifier: ^4.0.0
+        version: 4.0.0
       remark-gfm:
         specifier: ^4.0.1
         version: 4.0.1
@@ -1001,9 +1007,6 @@ importers:
       execa:
         specifier: 8.0.1
         version: 8.0.1
-      mdast-util-directive:
-        specifier: ^3.1.0
-        version: 3.1.0
       mdast-util-mdx-expression:
         specifier: ^2.0.1
         version: 2.0.1
@@ -1019,9 +1022,6 @@ importers:
       rehype-stringify:
         specifier: ^10.0.1
         version: 10.0.1
-      remark-directive:
-        specifier: ^4.0.0
-        version: 4.0.0
       remark-parse:
         specifier: ^11.0.0
         version: 11.0.0
@@ -1070,7 +1070,7 @@ importers:
         version: 22.10.2
       rsbuild-plugin-publint:
         specifier: ^0.3.3
-        version: 0.3.3(@rsbuild/core@1.6.0-beta.1)
+        version: 0.3.3(@rsbuild/core@1.6.3)
       typescript:
         specifier: ^5.8.2
         version: 5.8.2
@@ -12885,13 +12885,6 @@ snapshots:
   rsbuild-plugin-open-graph@1.1.0(@rsbuild/core@1.6.3):
     optionalDependencies:
       '@rsbuild/core': 1.6.3
-
-  rsbuild-plugin-publint@0.3.3(@rsbuild/core@1.6.0-beta.1):
-    dependencies:
-      picocolors: 1.1.1
-      publint: 0.3.12
-    optionalDependencies:
-      '@rsbuild/core': 1.6.0-beta.1
 
   rsbuild-plugin-publint@0.3.3(@rsbuild/core@1.6.3):
     dependencies:
