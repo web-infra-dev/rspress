@@ -1,31 +1,44 @@
 import { useLocation } from '@rspress/core/runtime';
 import { useEffect } from 'react';
 
-function getTargetTop(element: HTMLElement, scrollPaddingTop: number) {
-  const targetPadding = Number.parseInt(
-    window.getComputedStyle(element).paddingTop,
-    10,
+/**
+ * Parse CSS length value to number (in pixels)
+ * Supports: px
+ */
+function parseCSSLength(value: string): number {
+  if (!value || value === 'auto' || value === 'none') {
+    return 0;
+  }
+
+  const numValue = Number.parseFloat(value);
+  if (Number.isNaN(numValue)) {
+    return 0;
+  }
+
+  // For px or plain number, just return the numeric value
+  return numValue;
+}
+
+function getTargetTop(element: HTMLElement) {
+  // get scroll-padding-top from html
+  const scrollPaddingTop = parseCSSLength(
+    window
+      .getComputedStyle(document.documentElement)
+      .getPropertyValue('scroll-padding-top'),
   );
 
   const targetTop =
-    window.scrollY +
-    element.getBoundingClientRect().top -
-    scrollPaddingTop -
-    targetPadding;
+    window.scrollY + element.getBoundingClientRect().top - scrollPaddingTop;
 
   return Math.round(targetTop);
 }
 
-export function scrollToTarget(
-  target: HTMLElement,
-  isSmooth: boolean,
-  scrollPaddingTop: number,
-) {
-  // Only scroll smoothly in page header anchor
+function scrollToTarget(target: HTMLElement) {
+  const offsetTop = getTargetTop(target);
+
   window.scrollTo({
     left: 0,
-    top: getTargetTop(target, scrollPaddingTop),
-    ...(isSmooth ? { behavior: 'smooth' } : {}),
+    top: offsetTop,
   });
 }
 
@@ -39,8 +52,7 @@ export function useSetup() {
     } else {
       const target = document.getElementById(decodedHash.slice(1));
       if (target) {
-        scrollToTarget(target, false, 0);
-        target.scrollIntoView();
+        scrollToTarget(target);
       }
     }
   }, [pathname]);
