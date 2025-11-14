@@ -377,10 +377,11 @@ export const remarkContainerSyntax: Plugin<[], Root> = () => {
       return;
     }
     unknownTypes.add(type);
-    const supportedTypes = DIRECTIVE_TYPES.join(', ');
-    logger.warn(
-      `${ERROR_PREFIX} Unknown container directive type "${type}". Supported types: ${supportedTypes}`,
-    );
+    // FIXME: add panic after remark-directive
+    // const supportedTypes = DIRECTIVE_TYPES.join(', ');
+    // logger.warn(
+    //   `${ERROR_PREFIX} Unknown container directive type "${type}". Supported types: ${supportedTypes}`,
+    // );
   };
 
   return tree => {
