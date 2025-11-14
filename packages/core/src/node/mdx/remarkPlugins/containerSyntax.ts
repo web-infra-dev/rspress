@@ -42,7 +42,7 @@ export const TITLE_REGEX_IN_MD = /{\s*title=["']?(.+)}\s*/;
 export const TITLE_REGEX_IN_MDX = /\s*title=["']?(.+)\s*/;
 
 const CALLOUT_COMPONENT = '$$$callout$$$'; // in md, we can not add import statement, so we use a special component name to avoid conflict with user components
-const ERROR_PREFIX = '[remarkContainerSyntax]';
+// const ERROR_PREFIX = '[remarkContainerSyntax]';
 
 export type DirectiveType = (typeof DIRECTIVE_TYPES)[number];
 
@@ -376,10 +376,11 @@ export const remarkContainerSyntax: Plugin<[], Root> = () => {
       return;
     }
     unknownTypes.add(type);
-    const supportedTypes = DIRECTIVE_TYPES.join(', ');
-    throw new Error(
-      `${ERROR_PREFIX} Unknown container directive type "${type}". Supported types: ${supportedTypes}`,
-    );
+    // FIXME: add panic after remark-directive
+    // const supportedTypes = DIRECTIVE_TYPES.join(', ');
+    // logger.warn(
+    //   `${ERROR_PREFIX} Unknown container directive type "${type}". Supported types: ${supportedTypes}`,
+    // );
   };
 
   return tree => {
