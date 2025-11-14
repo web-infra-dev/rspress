@@ -420,7 +420,7 @@ export interface PageModule<T extends React.ComponentType<unknown>> {
   [key: string]: unknown;
 }
 
-export type PageType = 'home' | 'doc' | 'custom' | '404' | 'blank';
+export type PageType = 'home' | 'doc' | 'doc-wide' | 'custom' | '404' | 'blank';
 
 export interface FrontMatterMeta {
   title?: string;

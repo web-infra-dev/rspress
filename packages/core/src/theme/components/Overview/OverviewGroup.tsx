@@ -9,6 +9,9 @@ export interface GroupItem {
   text: string;
   link: string;
   headers?: Header[];
+
+  // For customization
+  items?: { text: string; link: string }[];
 }
 
 export interface Group {
@@ -24,10 +27,14 @@ export const OverviewGroup = ({ group }: { group: Group }) => {
         {group.items.map(item => (
           <div className="rp-overview-group__item" key={item.link}>
             <div className="rp-overview-group__item__title">
-              <Link
-                href={item.link}
-                {...renderInlineMarkdown(item.text)}
-              ></Link>
+              {item.link ? (
+                <Link
+                  href={item.link}
+                  {...renderInlineMarkdown(item.text)}
+                ></Link>
+              ) : (
+                <span {...renderInlineMarkdown(item.text)} />
+              )}
               <SvgWrapper
                 icon={IconPlugin}
                 className="rp-overview-group__item__title__icon"
@@ -46,6 +53,20 @@ export const OverviewGroup = ({ group }: { group: Group }) => {
                   ></Link>
                 </li>
               ))}
+              {item.items?.map(({ link, text }) => {
+                return (
+                  <li
+                    key={link}
+                    className="rp-overview-group__item__content__item"
+                  >
+                    <Link
+                      className="rp-overview-group__item__content__item__link"
+                      href={link}
+                      {...renderInlineMarkdown(text)}
+                    ></Link>
+                  </li>
+                );
+              })}
             </ul>
           </div>
         ))}

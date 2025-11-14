@@ -44,7 +44,10 @@ export function DocLayout(props: DocLayoutProps) {
     sidebar: showSidebar = true,
     outline: showOutline = true,
     footer: showDocFooter = true,
+    pageType,
   } = frontmatter;
+
+  const isDocWide = pageType === 'doc-wide';
 
   const {
     isOutlineOpen,
@@ -76,7 +79,10 @@ export function DocLayout(props: DocLayoutProps) {
             {afterSidebar}
           </aside>
         ) : (
-          <aside className="rp-doc-layout__sidebar-placeholder"></aside>
+          <aside
+            className="rp-doc-layout__sidebar-placeholder"
+            style={isDocWide ? { width: '0' } : {}}
+          ></aside>
         )}
 
         {/* Main document content */}
@@ -91,7 +97,12 @@ export function DocLayout(props: DocLayoutProps) {
             </main>
           </>
         ) : (
-          <div className="rp-doc-layout__doc">
+          <div
+            className={clsx(
+              'rp-doc-layout__doc',
+              isDocWide && 'rp-doc-layout__doc--wide',
+            )}
+          >
             <main className="rp-doc-layout__doc-container">
               {beforeDocContent}
               <div className="rp-doc rspress-doc" ref={rspressDocRef}>
@@ -120,7 +131,10 @@ export function DocLayout(props: DocLayoutProps) {
             {afterOutline}
           </aside>
         ) : (
-          <aside className="rp-doc-layout__outline-placeholder"></aside>
+          <aside
+            className="rp-doc-layout__outline-placeholder"
+            style={isDocWide ? { width: '0' } : {}}
+          ></aside>
         )}
       </div>
 

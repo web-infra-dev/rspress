@@ -8,6 +8,7 @@ import clsx from 'clsx';
 import type React from 'react';
 import { useEffect, useRef } from 'react';
 import './SidebarItem.scss';
+import scrollIntoView from 'scroll-into-view-if-needed';
 
 export function SidebarItemRaw({
   active,
@@ -35,12 +36,12 @@ export function SidebarItemRaw({
   const ref = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    if (active) {
-      ref.current?.scrollIntoView({
-        block: 'center',
+    if (active && ref.current) {
+      scrollIntoView(ref.current, {
+        scrollMode: 'if-needed',
       });
     }
-  }, []);
+  }, [active]);
 
   const innerContent = (
     <>

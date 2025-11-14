@@ -141,6 +141,15 @@
     max-width: min(100%, var(--rp-content-max-width));
     overflow-x: auto; // CSS footgun: ensure right aside width is fixed
     flex: 1; // CSS footgun: ensure right aside width is fixed
+    &--wide {
+      max-width: min(
+        100%,
+        calc(
+          var(--rp-content-max-width) + var(--rp-sidebar-width) +
+            var(--rp-outline-width)
+        )
+      );
+    }
   }
   .rp-doc-layout__sidebar {
     margin-left: var(--rp-sidebar-margin-left);

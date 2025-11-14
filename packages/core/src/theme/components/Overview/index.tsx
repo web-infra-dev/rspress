@@ -149,7 +149,7 @@ export function Overview(props: {
     );
     const link = getChildLink(item);
     return {
-      ...item,
+      text: item.text,
       link,
       headers:
         pageModule?.toc?.filter(header =>

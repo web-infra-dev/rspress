@@ -85,7 +85,8 @@
 
       &__item {
         width: 200px;
-        flex: 1 1 200px;
+        flex: 0 0 200px;
+        min-width: 25%; // 4 columns
         max-width: 25%; // 4 columns
         word-break: break-all;
 
@@ -99,6 +100,7 @@
           // 2 columns or 1 columns
           min-width: 50%;
           max-width: 100%;
+          flex: 1 1 200px;
         }
 
         &__link {
