@@ -1,9 +1,8 @@
 import { Link, mergeRefs, SvgWrapper } from '@theme';
 import CloseSvg from '@theme-assets/close';
 import clsx from 'clsx';
-import { forwardRef, type ReactNode, useState } from 'react';
+import { forwardRef, type ReactNode, useEffect, useState } from 'react';
 import './index.scss';
-import { NoSSR } from '@rspress/core/runtime';
 
 export type BannerProps = {
   /**
@@ -54,15 +53,7 @@ export type BannerProps = {
     export { Layout }
  *
  */
-export const Banner = forwardRef<HTMLDivElement, BannerProps>((props, ref) => {
-  return (
-    <NoSSR>
-      <BannerInner {...props} ref={ref} />
-    </NoSSR>
-  );
-});
-
-const BannerInner = forwardRef<HTMLDivElement, BannerProps>(
+export const Banner = forwardRef<HTMLDivElement, BannerProps>(
   (props, forwardedRef) => {
     const {
       href,
@@ -82,22 +73,21 @@ const BannerInner = forwardRef<HTMLDivElement, BannerProps>(
       customChildren?: ReactNode;
     };
 
-    if (!display) {
-      return null;
-    }
     const [height, setHeight] = useState(36);
     const ref = mergeRefs(forwardedRef, element => {
       element?.offsetHeight && setHeight(element?.offsetHeight);
     });
-    const [disable, setDisable] = useState(
-      typeof window === 'undefined'
-        ? false
-        : storage
-          ? (window[storage].getItem(storageKey) ?? false)
-          : false,
-    );
+    const [disable, setDisable] = useState(false);
 
-    if (disable) {
+    // TODO: support SSR
+    useEffect(() => {
+      if (typeof window === 'undefined' || !storage || !storageKey) {
+        return;
+      }
+      setDisable(Boolean(window[storage].getItem(storageKey)));
+    }, []);
+
+    if (!display || disable) {
       return null;
     }
 
@@ -127,5 +117,3 @@ const BannerInner = forwardRef<HTMLDivElement, BannerProps>(
     );
   },
 );
-
-BannerInner.displayName = 'BannerInner';

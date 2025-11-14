@@ -91,7 +91,7 @@ export { HomeLayout } from './layout/HomeLayout/index';
 export { Layout } from './layout/Layout/index';
 export { NotFoundLayout } from './layout/NotFountLayout/index';
 export { mergeRefs } from './logic/mergeRefs';
-export { scrollToTarget, useSetup } from './logic/sideEffects';
+export { useSetup } from './logic/sideEffects';
 export { useThemeState } from './logic/useAppearance';
 export { useFullTextSearch } from './logic/useFullTextSearch';
 // logic
