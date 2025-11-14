@@ -104,10 +104,10 @@ export const DEFAULT_I18N_TEXT = {
     ko: '일치하는 API가 없습니다',
   },
   editLinkText: {
-    en: '📝 Edit this page on the Git repo',
-    zh: '📝 在 Git 仓库中编辑此页面',
-    ja: '📝 このページを Git リポジトリで編集',
-    ko: '📝 Git 저장소에서 이 페이지 편집',
+    en: '📝 Edit this page',
+    zh: '📝 编辑此页面',
+    ja: '📝 このページを編集',
+    ko: '📝 이 페이지 편집',
   },
   codeButtonGroupCopyButtonText: {
     en: 'Copy code',

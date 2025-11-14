@@ -9,8 +9,10 @@ export function DocFooter() {
 
   return (
     <footer className="rp-doc-footer">
-      {showLastUpdated && <LastUpdated />}
-      <EditLink />
+      <div className="rp-doc-footer__edit">
+        <EditLink />
+        {showLastUpdated && <LastUpdated />}
+      </div>
       <div className="rp-doc-footer__divider" />
       <PrevNextPage />
     </footer>
