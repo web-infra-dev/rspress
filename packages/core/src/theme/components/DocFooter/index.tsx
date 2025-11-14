@@ -1,5 +1,5 @@
 import { useSite } from '@rspress/core/runtime';
-import { LastUpdated, PrevNextPage } from '@theme';
+import { EditLink, LastUpdated, PrevNextPage } from '@theme';
 import './index.scss';
 
 export function DocFooter() {
@@ -10,6 +10,7 @@ export function DocFooter() {
   return (
     <footer className="rp-doc-footer">
       {showLastUpdated && <LastUpdated />}
+      <EditLink />
       <div className="rp-doc-footer__divider" />
       <PrevNextPage />
     </footer>
