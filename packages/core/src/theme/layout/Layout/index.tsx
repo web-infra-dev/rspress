@@ -158,7 +158,7 @@ export function Layout(props: LayoutProps) {
   let title = (frontmatter.title as string) ?? articleTitle;
   const mainTitle = site.title || localesData.title || '';
 
-  if (title && pageType === 'doc') {
+  if (title && (pageType === 'doc' || pageType === 'doc-wide')) {
     // append main title as a suffix
     title = concatTitle(
       title,
@@ -183,6 +183,7 @@ export function Layout(props: LayoutProps) {
       case 'home':
         return <HomeLayout {...homeProps} />;
       case 'doc':
+      case 'doc-wide':
         return <DocLayout {...docProps} navTitle={navTitle} />;
       case '404':
         return <NotFoundLayout />;

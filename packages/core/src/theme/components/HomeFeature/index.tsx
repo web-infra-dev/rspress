@@ -67,9 +67,13 @@ function HomeFeatureItem({ feature }: { feature: Feature }): JSX.Element {
   );
 }
 
-export function HomeFeature() {
+export function HomeFeature({
+  features: featuresProp,
+}: {
+  features: Feature[] | undefined;
+}): JSX.Element {
   const { frontmatter } = useFrontmatter();
-  const features = frontmatter?.features;
+  const features = featuresProp ?? frontmatter?.features;
 
   return (
     <div className="rp-home-feature">

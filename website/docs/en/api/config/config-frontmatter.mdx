@@ -30,7 +30,7 @@ description: This is my custom description for this page.
 
 ## pageType
 
-- Type: `'home' | 'doc' | 'custom' | 'blank' | '404'`
+- Type: `'home' | 'doc' | 'doc-wide' | 'custom' | 'blank' | '404'`
 - Default: `'doc'`
 
 The type of the page. By default, the page type is `doc`. But if you want to use a different page type, you can use the front matter field `pageType` to specify the page type. E.g:
@@ -43,7 +43,7 @@ pageType: home
 
 The meaning of each `pageType` config is as follows:
 
-import PageType from '@en/fragments/page-type';
+import PageType from '@en/fragments/page-type.mdx';
 
 <PageType />
 
