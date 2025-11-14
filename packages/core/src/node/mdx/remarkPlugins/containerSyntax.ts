@@ -13,6 +13,7 @@
  */
 /// <reference types="mdast-util-mdx-expression" />
 
+import { logger } from '@rsbuild/core';
 import type {
   BlockContent,
   Literal,
@@ -377,7 +378,7 @@ export const remarkContainerSyntax: Plugin<[], Root> = () => {
     }
     unknownTypes.add(type);
     const supportedTypes = DIRECTIVE_TYPES.join(', ');
-    throw new Error(
+    logger.warn(
       `${ERROR_PREFIX} Unknown container directive type "${type}". Supported types: ${supportedTypes}`,
     );
   };
