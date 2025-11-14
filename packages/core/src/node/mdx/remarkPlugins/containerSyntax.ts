@@ -21,7 +21,6 @@ import type {
 } from 'mdast';
 import type { ContainerDirective } from 'mdast-util-directive';
 import type { Plugin } from 'unified';
-import { visit } from 'unist-util-visit';
 import { getNamedImportAstNode } from '../../utils';
 
 export const DIRECTIVE_TYPES = [
