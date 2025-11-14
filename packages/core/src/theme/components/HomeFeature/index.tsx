@@ -70,7 +70,7 @@ function HomeFeatureItem({ feature }: { feature: Feature }): JSX.Element {
 export function HomeFeature({
   features: featuresProp,
 }: {
-  features: Feature[] | undefined;
+  features?: Feature[];
 }): JSX.Element {
   const { frontmatter } = useFrontmatter();
   const features = featuresProp ?? frontmatter?.features;
