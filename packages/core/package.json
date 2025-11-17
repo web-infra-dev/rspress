@@ -107,7 +107,7 @@
     "unist-util-visit-children": "^3.0.0"
   },
   "devDependencies": {
-    "@microsoft/api-extractor": "^7.54.0",
+    "@microsoft/api-extractor": "^7.55.0",
     "@rsbuild/plugin-sass": "~1.4.0",
     "@rsbuild/plugin-svgr": "^1.2.2",
     "@rslib/core": "0.16.1",
