@@ -46,7 +46,7 @@
   },
   "devDependencies": {
     "@rsbuild/plugin-react": "~1.4.2",
-    "@rslib/core": "0.16.1",
+    "@rslib/core": "0.17.2",
     "@rspress/config": "workspace:*",
     "@types/react": "^19.2.5",
     "@types/react-dom": "^19.2.3",
