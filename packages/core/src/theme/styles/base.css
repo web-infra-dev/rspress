@@ -61,10 +61,6 @@ body {
   --rp-font-family-mono: Menlo, Monaco, Consolas, 'Courier New', monospace;
 }
 
-.rspress-logo {
-  height: 1.6rem;
-}
-
 :root #nprogress .bar {
   background: var(--rp-c-brand);
 }
