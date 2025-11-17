@@ -132,9 +132,12 @@ const str: string = 1;
 The plugin accepts an object with the following type:
 
 ```ts twoslash
+import { CompilerOptions } from 'typescript';
+// ---cut-before---
 export interface PluginTwoslashOptions {
   explicitTrigger?: boolean;
   cache?: boolean;
+  compilerOptions?: CompilerOptions;
 }
 ```
 
@@ -148,3 +151,8 @@ export interface PluginTwoslashOptions {
 ### cache
 
 `cache` is used to cache the TypeScript language servers based on compiler options when calling [createTwoslasher](https://twoslash.netlify.app/refs/api#createtwoslasher). Default is `true`.
+
+### compilerOptions
+
+`compilerOptions` is used to configure TypeScript compiler options for Twoslash.
+This allows you to customize the TypeScript environment used for type checking and hover information in code blocks.
