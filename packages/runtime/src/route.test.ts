@@ -59,6 +59,25 @@ describe('matchPath', () => {
     expect(matchPath('/api', '/api/config')).toBeNull();
     expect(matchPath('/api', '/api/index.md')).toBeNull();
   });
+
+  it('should handle case-insensitive matching', () => {
+    // Pattern is lowercase, pathname has uppercase
+    expect(matchPath('/api/config', '/API/CONFIG')).toEqual({
+      path: '/api/config',
+    });
+    expect(matchPath('/api/config', '/Api/Config')).toEqual({
+      path: '/api/config',
+    });
+    expect(matchPath('/api/config', '/api/CONFIG.html')).toEqual({
+      path: '/api/config',
+    });
+    expect(matchPath('/api/config/', '/API/CONFIG/')).toEqual({
+      path: '/api/config/',
+    });
+    expect(matchPath('/api/config/', '/API/CONFIG/index.html')).toEqual({
+      path: '/api/config/',
+    });
+  });
 });
 
 describe('isActive', () => {
@@ -81,6 +100,17 @@ describe('isActive', () => {
       true,
     );
     expect(isActive('/api/config#different', '/api/config#hash')).toBe(true);
+  });
+
+  it('should handle case-insensitive matching', () => {
+    // Item link is lowercase, current pathname has uppercase
+    expect(isActive('/api/config', '/API/CONFIG')).toBe(true);
+    expect(isActive('/api/config', '/Api/Config')).toBe(true);
+    expect(isActive('/api/config', '/api/CONFIG.html')).toBe(true);
+    expect(isActive('/api/config', '/API/CONFIG/')).toBe(true);
+    expect(isActive('/api/config', '/API/CONFIG/index.html')).toBe(true);
+    expect(isActive('/api/config', '/api/CONFIG#hash')).toBe(true);
+    expect(isActive('/api/config', '/API/config?query=value')).toBe(true);
   });
 });
 
@@ -155,5 +185,27 @@ describe('pathnameToRouteService', () => {
     expect(pathnameToRouteService(pathname)?.path).toMatchInlineSnapshot(
       `"/api/config/"`,
     );
+  });
+
+  it('10. Case-insensitive route matching', () => {
+    // Uppercase pathname should match lowercase route
+    expect(pathnameToRouteService('/API/CONFIG')?.path).toMatchInlineSnapshot(
+      `"/api/config/"`,
+    );
+    expect(pathnameToRouteService('/Api/Config')?.path).toMatchInlineSnapshot(
+      `"/api/config/"`,
+    );
+    expect(
+      pathnameToRouteService('/API/CONFIG.html')?.path,
+    ).toMatchInlineSnapshot(`"/api/config/"`);
+    expect(pathnameToRouteService('/API/CONFIG/')?.path).toMatchInlineSnapshot(
+      `"/api/config/"`,
+    );
+    expect(
+      pathnameToRouteService('/API/CONFIG/index.html')?.path,
+    ).toMatchInlineSnapshot(`"/api/config/"`);
+    expect(
+      pathnameToRouteService('/api/CONFIG#hash')?.path,
+    ).toMatchInlineSnapshot(`"/api/config/"`);
   });
 });

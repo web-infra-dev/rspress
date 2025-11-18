@@ -7,6 +7,7 @@ import { routes } from 'virtual-routes';
  * 1. Decoding URI components
  * 2. Removing .html suffix
  * 3. Converting /index to /
+ * 4. Converting to lowercase for case-insensitive matching
  *
  * Examples:
  * - /api/config → /api/config
@@ -14,11 +15,13 @@ import { routes } from 'virtual-routes';
  * - /api/config/index → /api/config/
  * - /api/config/index.html → /api/config/
  * - /index.html → /
+ * - /API/CONFIG → /api/config (case-insensitive)
  */
 function normalizeRoutePath(routePath: string) {
-  return decodeURIComponent(routePath)
+  return cleanUrl(decodeURIComponent(routePath))
     .replace(/\.html$/, '')
-    .replace(/\/index$/, '/');
+    .replace(/\/index$/, '/')
+    .toLowerCase();
 }
 
 /**
@@ -39,14 +42,18 @@ export function matchPath(
 ): { path: string } | null {
   // Normalize both pattern and pathname for comparison
   // Always add trailing slash for consistent comparison
-  const _pathname = normalizeRoutePath(pathname);
-  const normalizedPattern = pattern.endsWith('/') ? pattern : `${pattern}/`;
-  const normalizedPathname = _pathname.endsWith('/')
-    ? _pathname
-    : `${_pathname}/`;
+  const normalizedPattern = normalizeRoutePath(pattern);
+  const normalizedPathname = normalizeRoutePath(pathname);
 
-  // Exact match
-  if (normalizedPattern === normalizedPathname) {
+  const normalizedPatternWithSlash = normalizedPattern.endsWith('/')
+    ? normalizedPattern
+    : `${normalizedPattern}/`;
+  const normalizedPathnameWithSlash = normalizedPathname.endsWith('/')
+    ? normalizedPathname
+    : `${normalizedPathname}/`;
+
+  // Exact match (case-insensitive)
+  if (normalizedPatternWithSlash === normalizedPathnameWithSlash) {
     return { path: pattern };
   }
 
@@ -91,15 +98,18 @@ const cache = new Map<string, Route>();
  */
 export function pathnameToRouteService(pathname: string): Route | undefined {
   // Strip hash and search parameters before processing
-  const cleanPathname = cleanUrl(pathname);
-  const cacheItem = cache.get(cleanPathname);
+  const normalizedPathname = normalizeRoutePath(pathname);
+
+  // Use normalized pathname as cache key for case-insensitive caching
+  const cacheItem = cache.get(normalizedPathname);
   if (cacheItem) {
     return cacheItem;
   }
-  const matched = matchRoutes(routes, normalizeRoutePath(cleanPathname));
+
+  const matched = matchRoutes(routes, normalizedPathname);
   const route: Route | undefined = matched?.[0]?.route;
   if (route) {
-    cache.set(cleanPathname, route);
+    cache.set(normalizedPathname, route);
   }
   return route;
 }
@@ -118,11 +128,7 @@ export function pathnameToRouteService(pathname: string): Route | undefined {
  */
 export function isActive(itemLink: string, currentPathname: string): boolean {
   // Strip hash and search parameters before comparing
-  const cleanItemLink = cleanUrl(itemLink);
-  const cleanCurrentPathname = cleanUrl(currentPathname);
-  const normalizedItemLink = normalizeRoutePath(cleanItemLink);
-  const normalizedCurrentPathname = normalizeRoutePath(cleanCurrentPathname);
-  const linkMatched = matchPath(normalizedItemLink, normalizedCurrentPathname);
+  const linkMatched = matchPath(itemLink, currentPathname);
   return linkMatched !== null;
 }
 
