@@ -1713,6 +1713,9 @@ importers:
       tm-themes:
         specifier: 1.10.12
         version: 1.10.12
+      twoslash:
+        specifier: ^0.3.4
+        version: 0.3.4(typescript@5.8.2)
       typescript:
         specifier: ^5.8.2
         version: 5.8.2

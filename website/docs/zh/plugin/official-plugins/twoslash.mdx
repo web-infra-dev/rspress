@@ -139,15 +139,15 @@ const str: string = 1;
 
 ## 配置
 
-该插件接受一个对象，具有以下类型：
+该插件接受一个对象,具有以下类型：
 
 ```ts twoslash
-import { CompilerOptions } from 'typescript';
+import { TwoslashOptions } from 'twoslash';
 // ---cut-before---
 export interface PluginTwoslashOptions {
   explicitTrigger?: boolean;
   cache?: boolean;
-  compilerOptions?: CompilerOptions;
+  twoslashOptions?: TwoslashOptions;
 }
 ```
 
@@ -162,6 +162,7 @@ export interface PluginTwoslashOptions {
 
 `cache` 用于在 [createTwoslasher](https://twoslash.netlify.app/refs/api#createtwoslasher) 时根据编译器选项缓存 TypeScript 语言服务器。默认值为 `true`。
 
-### compilerOptions
+### twoslashOptions
 
-`compilerOptions` 用于配置 Twoslash 的 TypeScript 编译器选项。这允许您自定义用于代码块中类型检查和悬停信息的 TypeScript 环境。
+`twoslashOptions` 用于传递选项到 Twoslash。
+这允许您自定义 Twoslash 的行为,包括 TypeScript 编译器选项和其他设置。

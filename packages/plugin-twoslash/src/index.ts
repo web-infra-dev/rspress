@@ -9,8 +9,8 @@ import { fromMarkdown } from 'mdast-util-from-markdown';
 import { gfmFromMarkdown } from 'mdast-util-gfm';
 import { defaultHandlers, toHast } from 'mdast-util-to-hast';
 import picocolors from 'picocolors';
+import type { TwoslashOptions } from 'twoslash';
 import { removeTwoslashNotations } from 'twoslash';
-import type { CompilerOptions } from 'typescript';
 
 const staticPath = path.join(__dirname, '../static');
 
@@ -117,16 +117,20 @@ export interface PluginTwoslashOptions {
    */
   cache?: boolean;
   /**
-   * TypeScript compiler options to use for Twoslash
+   * Options to pass to Twoslash
    */
-  compilerOptions?: CompilerOptions;
+  twoslashOptions: TwoslashOptions;
 }
 
 /**
  * Plugin to applies Twoslash transformations to code blocks.
  */
 export function pluginTwoslash(options?: PluginTwoslashOptions): RspressPlugin {
-  const { explicitTrigger = true, cache = true } = options || {};
+  const {
+    explicitTrigger = true,
+    cache = true,
+    twoslashOptions,
+  } = options || {};
 
   return {
     name: '@rspress/plugin-twoslash',
@@ -142,9 +146,7 @@ export function pluginTwoslash(options?: PluginTwoslashOptions): RspressPlugin {
         transformerTwoslash({
           explicitTrigger,
           cache,
-          twoslashOptions: {
-            compilerOptions: options?.compilerOptions,
-          },
+          twoslashOptions,
           onShikiError: onError,
           onTwoslashError: onError,
           rendererRich: {
