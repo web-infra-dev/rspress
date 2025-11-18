@@ -8,6 +8,7 @@
     &:where(p) {
       margin-top: 1.25rem; /* 20px */
       margin-bottom: 1.25rem;
+      line-height: 1.75rem; /* 28px */
     }
     &:where(strong, b) {
       font-weight: 600;

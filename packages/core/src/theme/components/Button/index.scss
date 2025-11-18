@@ -36,12 +36,7 @@
     opacity: 1;
     color: #fff;
     transition: all 0.3s ease;
-    background: linear-gradient(
-      90deg,
-      var(--rp-c-brand-dark) 0%,
-      var(--rp-c-brand-dark) 30%,
-      #a673ff 100%
-    );
+    background: var(--rp-home-hero-title-bg);
 
     &:hover {
       opacity: 0.8;
