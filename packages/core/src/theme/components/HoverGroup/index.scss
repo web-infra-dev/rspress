@@ -63,7 +63,11 @@
     font-weight: 500;
     line-height: 32px;
 
-    cursor: pointer;
+    &__link {
+      // For click area
+      display: block;
+      height: 100%;
+    }
 
     &--active {
       font-weight: 600;
