@@ -2,6 +2,7 @@ import { MDXProvider } from '@mdx-js/react';
 import { Content, usePage, useSite } from '@rspress/core/runtime';
 import { Callout, getCustomMDXComponent } from '@theme';
 import './doc.scss';
+import { useScrollAfterNav } from '../../logic/useScrollAfterNav';
 import { FallbackHeading } from './FallbackHeading';
 
 export function FallbackTitle() {
@@ -22,6 +23,8 @@ export function DocContent({
   components: Record<string, React.FC<any>> | undefined;
   isOverviewPage?: boolean;
 }) {
+  useScrollAfterNav();
+
   const mdxComponents = {
     ...getCustomMDXComponent(),
     ...components,

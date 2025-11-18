@@ -1,11 +1,16 @@
 import { useFrontmatter } from '@rspress/core/runtime';
-import { DocContent, Overview, useWatchToc } from '@theme';
+import {
+  DocContent,
+  DocFooter,
+  Outline,
+  Overview,
+  Sidebar,
+  useWatchToc,
+} from '@theme';
 import clsx from 'clsx';
-import { DocFooter } from '../../components/DocFooter';
-import { Outline } from '../../components/Outline';
-import { Sidebar } from '../../components/Sidebar';
 import { useSidebarMenu } from '../../components/SidebarMenu/useSidebarMenu';
 import './index.scss';
+import { useScrollReset } from '../../logic/useScrollReset';
 
 export interface DocLayoutProps {
   beforeSidebar?: React.ReactNode;
@@ -37,6 +42,7 @@ export function DocLayout(props: DocLayoutProps) {
     components,
   } = props;
   const { frontmatter } = useFrontmatter();
+  useScrollReset();
 
   const isOverviewPage = frontmatter?.overview ?? false;
 

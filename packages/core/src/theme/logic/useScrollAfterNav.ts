@@ -42,6 +42,10 @@ function scrollToTarget(target: HTMLElement) {
   });
 }
 
+/**
+ * @private
+ * @unstable
+ */
 export function useScrollAfterNav() {
   const { pathname } = useLocation();
 
