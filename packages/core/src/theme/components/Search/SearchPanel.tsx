@@ -232,8 +232,8 @@ export function SearchPanel({ focused, setFocused }: SearchPanelProps) {
             currentRenderType === RenderType.Default
           ) {
             // the ResultItem has been normalized to display
-            const flatSuggestions = Object.values(
-              normalizeSuggestions(currentSuggestions),
+            const flatSuggestions = Array.from(
+              normalizeSuggestions(currentSuggestions).values(),
             ).flat();
             const suggestion = flatSuggestions[currentSuggestionIndex];
             navigate(suggestion.link);
