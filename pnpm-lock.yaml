@@ -698,6 +698,25 @@ importers:
         specifier: ^22.8.1
         version: 22.10.2
 
+  e2e/fixtures/search:
+    dependencies:
+      '@rspress/core':
+        specifier: workspace:*
+        version: link:../../../packages/core
+      react:
+        specifier: ^19.2.0
+        version: 19.2.0
+    devDependencies:
+      '@rspress/plugin-algolia':
+        specifier: workspace:*
+        version: link:../../../packages/plugin-algolia
+      '@types/node':
+        specifier: ^22.8.1
+        version: 22.10.2
+      '@types/react':
+        specifier: ^19.2.5
+        version: 19.2.5
+
   e2e/fixtures/search-algolia:
     dependencies:
       '@rspress/core':
