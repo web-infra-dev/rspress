@@ -36,18 +36,11 @@ test.describe('search keyboard', async () => {
     const suggestItems = await page.$$('.rp-suggest-item');
     expect(suggestItems.length).toBeGreaterThan(0);
 
-    let currentIndex = await page.evaluate(() => {
-      const items = Array.from(document.querySelectorAll('.rp-suggest-item'));
-      const current = document.querySelector(
-        '.rp-suggest-item.rp-suggest-item--current',
-      );
-      return items.indexOf(current as Element);
-    });
 
     // Press ArrowDown again - second item should be highlighted
     await page.keyboard.press('ArrowDown');
     await page.waitForTimeout(100);
-    currentIndex = await page.evaluate(() => {
+    let currentIndex = await page.evaluate(() => {
       const items = Array.from(document.querySelectorAll('.rp-suggest-item'));
       const current = document.querySelector(
         '.rp-suggest-item.rp-suggest-item--current',
