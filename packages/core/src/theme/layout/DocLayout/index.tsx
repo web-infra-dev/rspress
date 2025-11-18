@@ -10,7 +10,6 @@ import {
 import clsx from 'clsx';
 import { useSidebarMenu } from '../../components/SidebarMenu/useSidebarMenu';
 import './index.scss';
-import { useScrollReset } from '../../logic/useScrollReset';
 
 export interface DocLayoutProps {
   beforeSidebar?: React.ReactNode;
