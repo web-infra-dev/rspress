@@ -18,7 +18,7 @@ import { routes } from 'virtual-routes';
  * - /API/CONFIG → /api/config (case-insensitive)
  */
 function normalizeRoutePath(routePath: string) {
-  return decodeURIComponent(routePath)
+  return cleanUrl(decodeURIComponent(routePath))
     .replace(/\.html$/, '')
     .replace(/\/index$/, '/')
     .toLowerCase();
@@ -98,8 +98,7 @@ const cache = new Map<string, Route>();
  */
 export function pathnameToRouteService(pathname: string): Route | undefined {
   // Strip hash and search parameters before processing
-  const cleanPathname = cleanUrl(pathname);
-  const normalizedPathname = normalizeRoutePath(cleanPathname);
+  const normalizedPathname = normalizeRoutePath(pathname);
 
   // Use normalized pathname as cache key for case-insensitive caching
   const cacheItem = cache.get(normalizedPathname);
@@ -129,11 +128,7 @@ export function pathnameToRouteService(pathname: string): Route | undefined {
  */
 export function isActive(itemLink: string, currentPathname: string): boolean {
   // Strip hash and search parameters before comparing
-  const cleanItemLink = cleanUrl(itemLink);
-  const cleanCurrentPathname = cleanUrl(currentPathname);
-  const normalizedItemLink = normalizeRoutePath(cleanItemLink);
-  const normalizedCurrentPathname = normalizeRoutePath(cleanCurrentPathname);
-  const linkMatched = matchPath(normalizedItemLink, normalizedCurrentPathname);
+  const linkMatched = matchPath(itemLink, currentPathname);
   return linkMatched !== null;
 }
 
