@@ -42,7 +42,7 @@ function scrollToTarget(target: HTMLElement) {
   });
 }
 
-export function useSetup() {
+export function useScrollAfterNav() {
   const { pathname } = useLocation();
 
   useEffect(() => {

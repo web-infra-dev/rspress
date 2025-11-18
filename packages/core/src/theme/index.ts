@@ -87,16 +87,16 @@ export { Toc } from './components/Toc';
 export { useActiveAnchor } from './hooks/useActiveAnchor';
 export { useDynamicToc, useWatchToc } from './hooks/useDynamicToc';
 export { DocLayout, type DocLayoutProps } from './layout/DocLayout';
-export { HomeLayout } from './layout/HomeLayout/index';
-export { Layout } from './layout/Layout/index';
+export { HomeLayout, type HomeLayoutProps } from './layout/HomeLayout/index';
+export { Layout, type LayoutProps } from './layout/Layout/index';
 export { NotFoundLayout } from './layout/NotFountLayout/index';
 export { mergeRefs } from './logic/mergeRefs';
-export { useSetup } from './logic/sideEffects';
 export { useThemeState } from './logic/useAppearance';
 export { useFullTextSearch } from './logic/useFullTextSearch';
 // logic
 export { usePrevNextPage } from './logic/usePrevNextPage';
 export { useRedirect4FirstVisit } from './logic/useRedirect4FirstVisit';
+export { useSetup } from './logic/useSetup';
 export { useStorageValue } from './logic/useStorageValue';
 export {
   parseInlineMarkdownText,
