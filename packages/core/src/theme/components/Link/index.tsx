@@ -1,10 +1,10 @@
 import { preloadLink } from '@rspress/core/runtime';
+import clsx from 'clsx';
 import nprogress from 'nprogress';
 import type React from 'react';
-import type { ComponentProps } from 'react';
-import { getHref, useLinkNavigate } from './useLinkNavigate';
+import type { ComponentProps, TransitionStartFunction } from 'react';
 import './index.scss';
-import clsx from 'clsx';
+import { getHref, useLinkNavigate } from './useLinkNavigate';
 
 export interface LinkProps extends ComponentProps<'a'> {
   href?: string;
@@ -13,6 +13,24 @@ export interface LinkProps extends ComponentProps<'a'> {
   onMouseEnter?: (
     event: React.MouseEvent<HTMLAnchorElement, MouseEvent>,
   ) => void;
+
+  /**
+   * Get isPending state of Link navigation
+   *
+   * ```tsx
+   * const [isPending, startTransition] = useTransition();
+   * <Link
+   *   href="/some-path"
+   *   startTransition={startTransition}
+   * >
+   *   Some Link
+   * </Link>
+   * ```
+   *
+   * @private
+   * @unstable
+   */
+  startTransition?: TransitionStartFunction;
 }
 
 nprogress.configure({ showSpinner: false });
@@ -26,10 +44,17 @@ nprogress.configure({ showSpinner: false });
  * 4. Link is styled.
  */
 export function Link(props: LinkProps) {
-  const { href = '/', children, className = '', onClick, onMouseEnter } = props;
+  const {
+    href = '/',
+    children,
+    className = '',
+    onClick,
+    onMouseEnter,
+    startTransition,
+  } = props;
 
   const { linkType, removeBaseHref, withBaseHref } = getHref(href);
-  const navigate = useLinkNavigate();
+  const navigate = useLinkNavigate({ startTransition });
 
   if (linkType === 'external') {
     return (

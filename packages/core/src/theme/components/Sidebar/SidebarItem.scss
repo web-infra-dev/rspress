@@ -15,9 +15,14 @@
     color 0.15s,
     background-color 0.15s;
 
-  &:hover {
+  &:hover,
+  &--pending {
     color: var(--rp-c-text-1);
     background-color: var(--rp-c-bg-mute);
+  }
+
+  &--pending {
+    opacity: 0.8;
   }
 
   // external link
@@ -32,11 +37,6 @@
       margin-left: 0.2em;
       margin-right: 0.1em;
     }
-
-    // TODO: discussion
-    // &:hover::after {
-    //   transform: translate(0.1em, -0.4em);
-    // }
   }
 
   &--active {

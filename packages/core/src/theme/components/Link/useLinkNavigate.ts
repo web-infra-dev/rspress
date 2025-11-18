@@ -9,7 +9,11 @@ import {
   withBase,
 } from '@rspress/core/runtime';
 import nprogress from 'nprogress';
-import { useCallback } from 'react';
+import {
+  startTransition as reactStartTransition,
+  type TransitionStartFunction,
+  useCallback,
+} from 'react';
 
 nprogress.configure({ showSpinner: false });
 
@@ -60,7 +64,11 @@ export function getHref(href: string): {
  * For import { Link } from '@theme';
  * useNavigate with preload logic
  */
-export function useLinkNavigate(): (href: string) => Promise<void> {
+export function useLinkNavigate(
+  { startTransition }: { startTransition?: TransitionStartFunction } = {
+    startTransition: reactStartTransition,
+  },
+): (href: string) => Promise<void> {
   const { pathname: currPagePathname } = useLocation();
   const navigate = useNavigateInner();
 
@@ -72,22 +80,30 @@ export function useLinkNavigate(): (href: string) => Promise<void> {
         return;
       }
 
-      const inCurrPage = isActive(removeBaseHref, currPagePathname);
-      if (!process.env.__SSR__ && !inCurrPage) {
-        const matchedRoute = pathnameToRouteService(removeBaseHref);
-        if (matchedRoute) {
-          const timer = setTimeout(() => {
-            nprogress.start();
-          }, 200);
-          await matchedRoute.preload();
-          clearTimeout(timer);
-          nprogress.done();
-        } else {
-          window.location.assign(withBaseHref);
-          return;
+      const preloadChunkThenNavigate = async () => {
+        const inCurrPage = isActive(removeBaseHref, currPagePathname);
+        if (!process.env.__SSR__ && !inCurrPage) {
+          const matchedRoute = pathnameToRouteService(removeBaseHref);
+          if (matchedRoute) {
+            const timer = setTimeout(() => {
+              nprogress.start();
+            }, 200);
+            await matchedRoute.preload();
+            clearTimeout(timer);
+            nprogress.done();
+          } else {
+            window.location.assign(withBaseHref);
+            return;
+          }
         }
+        navigate(removeBaseHref, { replace: false });
+      };
+
+      if (startTransition) {
+        startTransition(preloadChunkThenNavigate);
+      } else {
+        preloadChunkThenNavigate();
       }
-      navigate(removeBaseHref, { replace: false });
     },
     [currPagePathname, navigate],
   );
