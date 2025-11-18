@@ -1,8 +1,8 @@
+import path from 'node:path';
 import { pluginReact } from '@rsbuild/plugin-react';
 import { pluginSass } from '@rsbuild/plugin-sass';
 import { pluginSvgr } from '@rsbuild/plugin-svgr';
 import { defineConfig } from '@rslib/core';
-import path from 'path';
 import { pluginPublint } from 'rsbuild-plugin-publint';
 
 const COMMON_EXTERNALS = [

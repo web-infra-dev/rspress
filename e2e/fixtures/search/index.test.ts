@@ -36,7 +36,6 @@ test.describe('search keyboard', async () => {
     const suggestItems = await page.$$('.rp-suggest-item');
     expect(suggestItems.length).toBeGreaterThan(0);
 
-
     // Press ArrowDown again - second item should be highlighted
     await page.keyboard.press('ArrowDown');
     await page.waitForTimeout(100);
