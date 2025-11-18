@@ -58,5 +58,4 @@ export function useScrollAfterNav() {
       }
     }
   }, [location]);
-  return;
 }
