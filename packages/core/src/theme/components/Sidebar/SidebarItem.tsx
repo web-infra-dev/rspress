@@ -6,7 +6,7 @@ import { useActiveMatcher } from '@rspress/core/runtime';
 import { Link, renderInlineMarkdown, Tag } from '@theme';
 import clsx from 'clsx';
 import type React from 'react';
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef, useTransition } from 'react';
 import './SidebarItem.scss';
 import scrollIntoView from 'scroll-into-view-if-needed';
 
@@ -35,6 +35,8 @@ export function SidebarItemRaw({
 }) {
   const ref = useRef<HTMLDivElement>(null);
 
+  const [isPending, startTransition] = useTransition();
+
   useEffect(() => {
     if (active && ref.current) {
       scrollIntoView(ref.current, {
@@ -60,16 +62,16 @@ export function SidebarItemRaw({
     return (
       <Link
         href={link}
-        onClick={onClick}
+        startTransition={startTransition}
         className={clsx(
           'rp-sidebar-item',
           {
             'rp-sidebar-item--active': active,
+            'rp-sidebar-item--pending': isPending,
           },
           className,
         )}
         style={{
-          // paddingLeft: depth <= 1 ? '12px' : `calc(12px * ${depth - 1} + 12px)`, // TODO: discussion
           paddingLeft: depth === 0 ? '12px' : `calc(12px * ${depth} + 12px)`,
         }}
         {...{ 'data-depth': depth }}
@@ -92,7 +94,6 @@ export function SidebarItemRaw({
       )}
       style={{
         paddingLeft: depth === 0 ? '12px' : `calc(12px * ${depth} + 12px)`,
-        // paddingLeft: depth <= 1 ? '12px' : `calc(12px * ${depth - 1} + 12px)`, // TODO: discussion
       }}
       {...{ 'data-depth': depth }}
       {...(context ? { 'data-context': context } : {})}
