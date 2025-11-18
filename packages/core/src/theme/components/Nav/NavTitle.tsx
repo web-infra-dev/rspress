@@ -6,6 +6,7 @@ import {
 } from '@rspress/core/runtime';
 import { Link } from '@theme';
 import { useMemo } from 'react';
+import './NavTitle.scss';
 
 export const NavTitle = () => {
   const { site } = useSite();
