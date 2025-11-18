@@ -1,9 +1,13 @@
 import { useFrontmatter } from '@rspress/core/runtime';
-import { DocContent, Overview, useWatchToc } from '@theme';
+import {
+  DocContent,
+  DocFooter,
+  Outline,
+  Overview,
+  Sidebar,
+  useWatchToc,
+} from '@theme';
 import clsx from 'clsx';
-import { DocFooter } from '../../components/DocFooter';
-import { Outline } from '../../components/Outline';
-import { Sidebar } from '../../components/Sidebar';
 import { useSidebarMenu } from '../../components/SidebarMenu/useSidebarMenu';
 import './index.scss';
 

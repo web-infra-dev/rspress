@@ -6,6 +6,7 @@ import {
   usePageData,
   useSite,
 } from '@rspress/core/runtime';
+import type { HomeLayoutProps } from '@theme';
 import {
   HomeLayout as DefaultHomeLayout,
   NotFoundLayout as DefaultNotFoundLayout,
@@ -13,12 +14,12 @@ import {
   type DocLayoutProps,
   Nav,
   type NavProps,
+  useRedirect4FirstVisit,
+  useSetup,
 } from '@theme';
 import { Head, useHead } from '@unhead/react';
 import React, { memo, useMemo } from 'react';
-import { useSetup } from '../../logic/sideEffects';
-import { useRedirect4FirstVisit } from '../../logic/useRedirect4FirstVisit';
-import type { HomeLayoutProps } from '../HomeLayout';
+import { useScrollReset } from '../../logic/useScrollReset';
 
 export type LayoutProps = {
   top?: React.ReactNode;
@@ -150,7 +151,7 @@ export function Layout(props: LayoutProps) {
   const localesData = useLocaleSiteData();
 
   useSetup();
-
+  useScrollReset();
   useRedirect4FirstVisit();
 
   // Always show sidebar by default
