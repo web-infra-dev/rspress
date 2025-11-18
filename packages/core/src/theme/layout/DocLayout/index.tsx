@@ -42,7 +42,6 @@ export function DocLayout(props: DocLayoutProps) {
     components,
   } = props;
   const { frontmatter } = useFrontmatter();
-  useScrollReset();
 
   const isOverviewPage = frontmatter?.overview ?? false;
 

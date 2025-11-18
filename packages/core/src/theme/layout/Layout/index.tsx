@@ -19,6 +19,7 @@ import {
 } from '@theme';
 import { Head, useHead } from '@unhead/react';
 import React, { memo, useMemo } from 'react';
+import { useScrollReset } from '../../logic/useScrollReset';
 
 export type LayoutProps = {
   top?: React.ReactNode;
@@ -150,7 +151,7 @@ export function Layout(props: LayoutProps) {
   const localesData = useLocaleSiteData();
 
   useSetup();
-
+  useScrollReset();
   useRedirect4FirstVisit();
 
   // Always show sidebar by default
