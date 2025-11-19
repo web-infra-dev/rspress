@@ -70,9 +70,5 @@ async function generateMetaJson(absoluteApiDir: string) {
 
 export async function patchGeneratedApiDocs(absoluteApiDir: string) {
   await patchLinks(absoluteApiDir);
-  await fs.rename(
-    path.join(absoluteApiDir, 'README.md'),
-    path.join(absoluteApiDir, 'index.md'),
-  );
   await generateMetaJson(absoluteApiDir);
 }
