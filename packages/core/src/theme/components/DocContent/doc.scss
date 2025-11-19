@@ -7,7 +7,7 @@
     /* #region */
     &:where(p) {
       margin-top: 1.25rem; /* 20px */
-      margin-bottom: 1.25rem;
+      margin-bottom: 1.25rem; /* 20px */
       line-height: 1.75rem; /* 28px */
     }
     &:where(strong, b) {
@@ -97,7 +97,7 @@
     &:where(h2) {
       font-size: 1.75rem; // 28px
       margin-top: 3rem; // 48px
-      margin-bottom: 2rem;
+      margin-bottom: 1.25rem; // 20px
     }
     &:where(h2:first-of-type)::before {
       content: '';

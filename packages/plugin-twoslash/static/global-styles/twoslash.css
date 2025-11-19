@@ -144,11 +144,17 @@
   font-size: var(--twoslash-code-font-size);
 }
 
+.twoslash .rp-codeblock {
+  border: none;
+  border-radius: 0;
+  box-shadow: none;
+  margin-top: 0;
+  margin-bottom: 0;
+}
+
 .twoslash .rp-codeblock__content {
-  padding: 16px 0;
   color: var(--rp-code-block-color);
   background-color: var(--rp-code-block-bg);
-  border-radius: var(--rp-radius);
 }
 
 .twoslash .rp-codeblock__content .rp-code-button-group {
