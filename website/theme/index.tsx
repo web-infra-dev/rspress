@@ -80,6 +80,7 @@ function getCustomMDXComponent() {
         <LlmsContainer>
           <LlmsCopyButton />
           <LlmsViewOptions />
+          <LlmsCopyButton />
         </LlmsContainer>
       </>
     );
