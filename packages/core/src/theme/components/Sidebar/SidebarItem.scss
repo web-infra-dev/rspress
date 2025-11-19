@@ -15,6 +15,10 @@
     color 0.15s,
     background-color 0.15s;
 
+  &:first-child {
+    margin-top: 0;
+  }
+
   &:hover,
   &--pending {
     color: var(--rp-c-text-1);
