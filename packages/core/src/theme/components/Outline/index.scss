@@ -43,7 +43,6 @@
     display: flex;
     flex-direction: column;
     flex: 1;
-    gap: 6px;
 
     // allow scroll when there are too many toc items
     @media (max-width: 1280px) {

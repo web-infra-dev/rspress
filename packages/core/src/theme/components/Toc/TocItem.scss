@@ -4,20 +4,24 @@
   align-items: flex-start;
   gap: 10px;
   align-self: stretch;
-  border-radius: 6px;
   position: relative;
+  margin-top: 6px;
+
+  &:first-child {
+    margin-top: 0;
+  }
 
   &__text {
     font-weight: 400;
     font-size: 14px;
-    line-height: 24px;
+    line-height: 1;
     color: var(--rp-c-text-2);
     overflow-wrap: break-word;
   }
 
   &--active {
     .rp-toc-item__text,
-    .rp-toc-item__text * {
+    .rp-toc-item__text code {
       color: var(--rp-c-link);
     }
 
