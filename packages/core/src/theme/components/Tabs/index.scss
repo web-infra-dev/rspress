@@ -36,11 +36,15 @@
 
       position: relative;
       color: var(--rp-c-text-2);
+      opacity: 0.8;
+
       box-sizing: border-box;
       margin-right: 10px;
       padding: 6px 12px;
       user-select: none;
-      transition: all 0.2s ease-in-out;
+      transition:
+        color 0.2s ease-out,
+        opacity 0.2s ease-out;
       cursor: pointer;
 
       &:last-child {
@@ -49,11 +53,14 @@
 
       &:after {
         content: '';
-        position: absolute;
-        bottom: 0;
-        left: 5%;
-        width: 90%;
+
+        width: 80%;
         height: 1px;
+        position: absolute;
+        left: 50%;
+        bottom: 0;
+        transform: translateX(-50%);
+
         background-color: transparent;
         transition: background-color 0.3s ease-out;
       }
@@ -61,12 +68,15 @@
       &--not-selected {
         &:hover {
           color: var(--rp-c-text-0);
-          opacity: 0.8;
+          &::after {
+            background-color: var(--rp-c-divider-light);
+          }
         }
       }
 
       &--selected {
-        color: var(--rp-c-text-0);
+        color: var(--rp-c-brand-dark);
+        opacity: 1;
 
         &:after {
           background-color: currentColor;
