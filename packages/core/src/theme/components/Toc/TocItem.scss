@@ -4,12 +4,11 @@
   align-items: flex-start;
   gap: 10px;
   align-self: stretch;
-  border-radius: 6px;
   position: relative;
-  margin-top: 8px;
+  margin-top: 6px;
 
   &:first-child {
-    margin-top: 0px;
+    margin-top: 0;
   }
 
   &__text {
