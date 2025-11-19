@@ -47,18 +47,15 @@ function scrollToTarget(target: HTMLElement) {
  * @unstable
  */
 export function useScrollAfterNav() {
-  const { pathname } = useLocation();
+  const location = useLocation();
 
   useEffect(() => {
     const decodedHash = decodeURIComponent(window.location.hash);
-    if (decodedHash.length === 0) {
-      window.scrollTo(0, 0);
-    } else {
+    if (decodedHash.length > 0) {
       const target = document.getElementById(decodedHash.slice(1));
       if (target) {
         scrollToTarget(target);
       }
     }
-  }, [pathname]);
-  return;
+  }, [location]);
 }
