@@ -16,6 +16,7 @@
 
   --rp-c-text-code: #476573; /* inline code */
   --rp-c-text-code-bg: rgb(153 161 179/ 0.1); /* inline code bg */
+  --rp-c-text-code-border: rgb(153 161 179/ 0.3); /* inline code border */
 
   --rp-c-link: var(--rp-c-brand-dark);
 }
@@ -38,6 +39,7 @@
 
   --rp-c-text-code: #c9def1; /* inline code */
   --rp-c-text-code-bg: rgb(153 161 179/ 0.1); /* inline code bg */
+  --rp-c-text-code-border: transparent; /* inline code border */
 
   --rp-c-link: var(--rp-c-brand-light);
 }

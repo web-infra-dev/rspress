@@ -235,6 +235,7 @@
       padding: 3px 6px;
       border-radius: var(--rp-radius-small);
       background-color: var(--rp-c-text-code-bg);
+      border: 1px solid var(--rp-c-text-code-border);
       overflow-wrap: break-word;
     }
     &:where(:not(pre, a) > code) {
