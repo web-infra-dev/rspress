@@ -19,8 +19,6 @@ export const useCardAnimation = () => {
 
   let shine: string;
   let shineBg: string;
-  let container: string;
-  let outerContainer: string;
   const handleEnter = () => {
     setIsHovering(true);
   };
@@ -40,17 +38,13 @@ export const useCardAnimation = () => {
     const bodyScrollLeft = document.body.scrollLeft;
 
     const offsets = ele.getBoundingClientRect();
-    const wMultiple = 320 / rootElemWidth;
-    const multiple = wMultiple * 0.05;
     const offsetX =
       0.52 - (pageX - offsets.left - bodyScrollLeft) / rootElemWidth;
     const offsetY =
       0.52 - (pageY - offsets.top - bodyScrollTop) / rootElemHeight;
     const dy = pageY - offsets.top - bodyScrollTop - rootElemHeight / 2;
     const dx = pageX - offsets.left - bodyScrollLeft - rootElemWidth / 2;
-    const yRotate = (offsetX - dx) * multiple;
-    const xRotate =
-      (dy - offsetY) * (Math.min(offsets.width / offsets.height, 1) * multiple);
+
     const arad = Math.atan2(dy, dx);
     const rawAngle = (arad * 180) / Math.PI - 90;
     const angle = rawAngle < 0 ? rawAngle + 360 : rawAngle;
@@ -60,20 +54,14 @@ export const useCardAnimation = () => {
       ((pageY - offsets.top - bodyScrollTop) / rootElemHeight) * 0.2
     }) 0%, rgba(255, 255, 255, 0) 50%)`;
 
-    container = `rotateX(${xRotate}deg) rotateY(${yRotate}deg)`;
-    outerContainer = `perspective(${rootElemWidth * 2}px)`;
+    // container = `rotateX(${xRotate}deg) rotateY(${yRotate}deg)`;
+    // outerContainer = `perspective(${rootElemWidth * 2}px)`;
   } else {
     shine = '';
     shineBg = '';
-    container = '';
-    outerContainer = '';
   }
 
   const outerProps: HTMLAttributes<HTMLDivElement> = {
-    style: {
-      transform: outerContainer,
-      transformStyle: 'preserve-3d',
-    },
     onMouseEnter: handleEnter,
     onMouseLeave: handleLeave,
     onMouseMove: handleMove,
@@ -82,12 +70,6 @@ export const useCardAnimation = () => {
     onTouchEnd: handleLeave,
   };
   const outerRef = ref;
-
-  const innerProps = {
-    style: {
-      transform: container,
-    },
-  };
 
   const shineDom = (
     <div
@@ -119,7 +101,6 @@ export const useCardAnimation = () => {
   return {
     outerProps,
     outerRef,
-    innerProps,
     shineDom,
   };
 };
