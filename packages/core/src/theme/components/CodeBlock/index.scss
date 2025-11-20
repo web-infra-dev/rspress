@@ -25,6 +25,10 @@
   color: var(--rp-code-block-color);
   background-color: var(--rp-code-block-bg);
 
+  &__scroll-container {
+    overflow-x: auto;
+  }
+
   & :where(pre) {
     outline: none; // avoid focus outline https://github.com/web-infra-dev/rspack/issues/11775
 
@@ -47,18 +51,6 @@
     z-index: 1;
     margin: 0;
     background: transparent;
-    overflow-x: auto;
-    &::-webkit-scrollbar {
-      height: 5px;
-      width: 5px;
-    }
-    &::-webkit-scrollbar-corner {
-      display: none;
-    }
-    &::-webkit-scrollbar-thumb {
-      background-color: var(--rp-code-block-scroll-bar-bg);
-      border-radius: 10px;
-    }
   }
 
   & :where(code) {

@@ -174,18 +174,38 @@
 
     /* table */
     /* #region */
+    &:where(.rp-table-scroll-container) {
+      overflow-x: auto;
+    }
     &:where(table) {
       width: 100%;
+
+      table-layout: auto;
+      border-collapse: separate;
+      border-spacing: 0;
+
+      border: 1px solid var(--rp-c-divider-light);
       border-radius: var(--rp-radius);
       overflow: hidden;
-      box-shadow: inset 0 0 0 0.5px var(--rp-c-divider-light);
-      outline: 1px solid var(--rp-c-divider-light);
+
+      &::-webkit-scrollbar {
+        height: 5px;
+        width: 5px;
+      }
+      &::-webkit-scrollbar-corner {
+        display: none;
+      }
+      &::-webkit-scrollbar-thumb {
+        background-color: rgba(0, 0, 0, 0.05);
+        border-radius: 10px;
+      }
     }
 
     /* thead */
     &:where(thead) {
       color: var(--rp-c-text-0);
       background: var(--rp-c-bg-soft);
+      border-radius: var(--rp-radius);
     }
 
     &:where(th) {
@@ -199,7 +219,7 @@
 
     /* tbody */
     &:where(tbody) {
-      background: transparent;
+      background: var(--rp-c-bg);
     }
 
     &:where(td) {

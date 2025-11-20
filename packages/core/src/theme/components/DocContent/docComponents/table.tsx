@@ -1,8 +1,14 @@
-import type { ComponentProps } from 'react';
+import { type ComponentProps, forwardRef } from 'react';
 
-export const Table = (props: ComponentProps<'table'>) => {
-  return <table {...props} />;
-};
+export const Table = forwardRef<HTMLTableElement, ComponentProps<'table'>>(
+  (props, ref) => {
+    return (
+      <div className="rp-table-scroll-container rp-scrollbar">
+        <table ref={ref} {...props} />
+      </div>
+    );
+  },
+);
 
 export const Tr = (props: ComponentProps<'tr'>) => {
   return <tr {...props} />;

@@ -87,7 +87,12 @@ export function CodeBlock({
           lineNumbersProp && 'rp-codeblock__content--line-numbers',
         )}
       >
-        <div ref={copyElementRef}>{children}</div>
+        <div
+          className="rp-codeblock__content__scroll-container rp-scrollbar"
+          ref={copyElementRef}
+        >
+          {children}
+        </div>
         <CodeButtonGroup
           {...codeButtonGroupProps}
           copyElementRef={copyElementRef}
