@@ -37,13 +37,15 @@
 
 /* Dark Mode */
 :where(html.rp-dark) {
+  --rp-home-hero-secondary-color: #a673ff;
+
   /* HomeHero */
   --rp-home-hero-title-color: transparent;
   --rp-home-hero-title-bg: linear-gradient(
     90deg,
     var(--rp-c-brand-dark) 0%,
     var(--rp-c-brand-dark) 30%,
-    #a673ff 100%
+    var(--rp-home-hero-secondary-color) 100%
   );
 
   /* HomeBackground */
