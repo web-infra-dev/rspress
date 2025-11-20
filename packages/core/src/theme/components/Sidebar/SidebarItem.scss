@@ -12,8 +12,9 @@
   font-weight: 400;
   color: var(--rp-c-text-2);
   transition:
-    color 0.15s,
-    background-color 0.15s;
+    color 0.2s cubic-bezier(0.4, 0, 0.2, 1),
+    background-color 0.2s cubic-bezier(0.4, 0, 0.2, 1),
+    transform 0.2s cubic-bezier(0.4, 0, 0.2, 1);
 
   &:first-child {
     margin-top: 0;
@@ -47,6 +48,9 @@
     color: var(--rp-c-link);
     background-color: var(--rp-c-brand-tint);
     font-weight: 600;
+    border-left: 3px solid var(--rp-c-brand);
+    padding-left: 9px;
+
     &:hover {
       color: var(--rp-c-link);
       background-color: var(--rp-c-brand-tint);
