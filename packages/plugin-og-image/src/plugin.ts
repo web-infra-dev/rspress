@@ -21,6 +21,28 @@ export function pluginOgImage(options: PluginOgImageOptions): RspressPlugin {
   return {
     name: '@rspress/plugin-og-image',
 
+    config(config) {
+      // Extend config.head to add og:image meta tags
+      const originalHead = config.head || [];
+      config.head = [
+        ...originalHead,
+        route => {
+          const pageInfo = pageInfoMap.get(route.routePath);
+          if (pageInfo) {
+            return [
+              'meta',
+              {
+                property: 'og:image',
+                content: pageInfo.imageUrl,
+              },
+            ] as [string, Record<string, string>];
+          }
+          return undefined;
+        },
+      ];
+      return config;
+    },
+
     async extendPageData(pageData: PageIndexInfo, isProd: boolean) {
       if (!isProd || !filter(pageData)) {
         return;
@@ -53,14 +75,6 @@ export function pluginOgImage(options: PluginOgImageOptions): RspressPlugin {
         imageUrl,
         templateData,
       });
-
-      // Add OG meta tags to page data
-      if (!pageData.frontmatter) {
-        pageData.frontmatter = {};
-      }
-
-      // Set OG image meta tags
-      pageData.frontmatter.ogImage = imageUrl;
     },
 
     async afterBuild(config, isProd) {

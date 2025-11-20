@@ -509,6 +509,15 @@ importers:
         specifier: ^22.8.1
         version: 22.10.2
 
+  e2e/fixtures/plugin-og-image:
+    dependencies:
+      '@rspress/core':
+        specifier: workspace:*
+        version: link:../../../packages/core
+      '@rspress/plugin-og-image':
+        specifier: workspace:*
+        version: link:../../../packages/plugin-og-image
+
   e2e/fixtures/plugin-playground:
     dependencies:
       '@rspress/core':
