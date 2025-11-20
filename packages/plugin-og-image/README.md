@@ -73,7 +73,7 @@ Custom template function to generate the image. Receives page data and should re
 
 Filter function to determine which pages should have OG images generated. By default, all pages get OG images.
 
-## Frontmatter Options
+## Frontmatter options
 
 You can customize OG images per page using frontmatter:
 
@@ -94,7 +94,7 @@ OG images are generated with URLs matching your page routes:
 - Page: `https://your-site.com/guide/getting-started`
 - OG Image: `https://your-site.com/og/guide/getting-started.png`
 
-## How It Works
+## How it works
 
 1. During the build process, the plugin generates OG images for each page
 2. Images are created using [Satori](https://github.com/vercel/satori) (SVG generation) and [Sharp](https://sharp.pixelplumbing.com/) (PNG conversion)
