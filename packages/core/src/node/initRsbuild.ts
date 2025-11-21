@@ -49,11 +49,7 @@ import type { FactoryContext } from './runtimeModule/types';
 import { rsbuildPluginCSR } from './ssg/rsbuildPluginCSR';
 import { rsbuildPluginSSG } from './ssg/rsbuildPluginSSG';
 import { rsbuildPluginSSGMD } from './ssg-md/rsbuildPluginSSGMD';
-import {
-  detectReactVersion,
-  resolveReactAlias,
-  resolveReactRouterDomAlias,
-} from './utils';
+import { resolveReactAlias, resolveReactRouterDomAlias } from './utils';
 import { detectCustomIcon } from './utils/detectCustomIcon';
 
 function isPluginIncluded(config: UserConfig, pluginName: string): boolean {
@@ -102,7 +98,6 @@ async function createInternalBuildConfig(
   const assetPrefix = isProduction()
     ? removeTrailingSlash(config?.builderConfig?.output?.assetPrefix ?? base)
     : '';
-  const reactVersion = await detectReactVersion();
 
   const normalizeIcon = (icon: string | URL | undefined) => {
     if (!icon) {
@@ -129,9 +124,8 @@ async function createInternalBuildConfig(
     reactRouterDomAlias,
   ] = await Promise.all([
     detectCustomIcon(CUSTOM_THEME_DIR),
-    resolveReactAlias(reactVersion, false),
-    enableSSG ? resolveReactAlias(reactVersion, true) : Promise.resolve({}),
-    resolveReactAlias(reactVersion, true),
+    resolveReactAlias(false),
+    enableSSG ? resolveReactAlias(true) : Promise.resolve({}),
     resolveReactRouterDomAlias(),
   ]);
 

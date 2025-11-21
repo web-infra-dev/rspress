@@ -1,5 +1,5 @@
 {
-  "name": "@rspress-fixture/react-19",
+  "name": "@rspress-fixture/react-router-dom-6",
   "version": "1.0.0",
   "private": true,
   "scripts": {
@@ -11,7 +11,7 @@
     "@rspress/core": "workspace:*",
     "react": "^19.2.0",
     "react-dom": "^19.2.0",
-    "react-router-dom": "^7.9.6"
+    "react-router-dom": "^6.30.1"
   },
   "devDependencies": {
     "@types/node": "^22.8.1"
