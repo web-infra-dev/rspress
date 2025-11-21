@@ -7,10 +7,10 @@ import {
   ThemeContext,
   withBase,
 } from '@rspress/core/runtime';
-import { StaticRouter } from '@rspress/runtime/server';
 import { type Unhead, UnheadProvider } from '@unhead/react/server';
 import type { ReactNode } from 'react';
 import { renderToPipeableStream } from 'react-dom/server';
+import { StaticRouter } from 'react-router-dom';
 import { App } from './App';
 import { initPageData } from './initPageData';
 

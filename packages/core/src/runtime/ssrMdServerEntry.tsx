@@ -8,8 +8,8 @@ import {
   ThemeContext,
   withBase,
 } from '@rspress/runtime';
-import { StaticRouter } from '@rspress/runtime/server';
 import { type Unhead, UnheadProvider } from '@unhead/react/server';
+import { StaticRouter } from 'react-router-dom';
 import { App } from './App';
 import { initPageData } from './initPageData';
 

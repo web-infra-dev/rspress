@@ -1,4 +1,3 @@
-import { matchPath } from '@rspress/runtime/server';
 import {
   getSidebarDataGroup,
   type Nav,
@@ -10,6 +9,7 @@ import {
   type SidebarSectionHeader,
   type UserConfig,
 } from '@rspress/shared';
+import { matchPath } from 'react-router-dom';
 import type { RouteService } from '../../route/RouteService';
 import { generateLlmsFullTxt, generateLlmsTxt } from './llmsTxt';
 
