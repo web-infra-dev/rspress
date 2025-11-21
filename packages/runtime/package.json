@@ -20,17 +20,11 @@
     ".": {
       "types": "./dist/index.d.ts",
       "default": "./dist/index.js"
-    },
-    "./server": {
-      "types": "./server.d.ts",
-      "default": "./server.js"
     }
   },
   "types": "./dist/index.d.ts",
   "files": [
-    "dist",
-    "server.js",
-    "server.d.ts"
+    "dist"
   ],
   "scripts": {
     "build": "rslib build",
