@@ -1,14 +1,15 @@
 import { readFileSync } from 'node:fs';
-import { createRequire } from 'node:module';
+import path from 'node:path';
 import { expect, test } from '@playwright/test';
 import { getPort, killProcess, runDevCommand } from '../../utils/runCommands';
 
-const require = createRequire(import.meta.url);
-
 function getPackageVersion(name: string) {
-  const pkgJsonPath = require.resolve(`${name}/package.json`, {
-    paths: [__dirname],
-  });
+  const pkgJsonPath = path.join(
+    __dirname,
+    'node_modules',
+    name,
+    'package.json',
+  );
   return JSON.parse(readFileSync(pkgJsonPath, 'utf-8')).version as string;
 }
 
