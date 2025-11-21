@@ -13,7 +13,7 @@ function getPackageVersion(name: string) {
   return JSON.parse(readFileSync(pkgJsonPath, 'utf-8')).version as string;
 }
 
-test.describe('React 19 test', async () => {
+test.describe('React 18 test', async () => {
   let appPort: number;
   let app: Awaited<ReturnType<typeof runDevCommand>> | null;
   test.beforeAll(async () => {

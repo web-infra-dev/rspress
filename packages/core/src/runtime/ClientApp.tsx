@@ -30,13 +30,7 @@ export function ClientApp({
       <PageContext.Provider
         value={useMemo(() => ({ data, setData }), [data, setData])}
       >
-        <BrowserRouter
-          future={{
-            v7_relativeSplatPath: true,
-            v7_startTransition: true,
-          }}
-          basename={removeTrailingSlash(withBase('/'))}
-        >
+        <BrowserRouter basename={removeTrailingSlash(withBase('/'))}>
           <UnheadProvider head={head}>
             <App />
           </UnheadProvider>
