@@ -13,10 +13,10 @@ const COMMON_EXTERNALS = [
   'virtual-global-styles',
   'virtual-global-components',
   'virtual-search-hooks',
+  'virtual-i18n-text',
   '@rspress/runtime',
   '@theme',
   /@theme-assets\//,
-  'virtual-i18n-text',
   // To be externalized when bundling d.ts.
   '@types/react',
   '@rspress/core/runtime',
@@ -24,7 +24,7 @@ const COMMON_EXTERNALS = [
   '@rspress/core/shiki-transformers',
   '@rspress/core/_private/react',
   '@rspress/shared',
-  '@theme',
+  '@rspress/runtime',
 ];
 
 export default defineConfig({
@@ -37,6 +37,8 @@ export default defineConfig({
           'cli/index': './src/cli/index.ts',
           'shiki-transformers': './src/shiki-transformers.ts',
           runtime: './src/runtime.ts',
+
+          // TODO: should add entry by new URL parser in Rspack module graph
           'node/mdx/loader': './src/node/mdx/loader.ts',
           'node/ssg/renderPageWorker': './src/node/ssg/renderPageWorker.ts',
         },
