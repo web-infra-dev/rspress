@@ -26,7 +26,7 @@ body {
 }
 /* #endregion copied from preflight.css */
 
-.preview-nav {
+.rp-preview-nav {
   position: relative;
   display: flex;
   align-items: center;

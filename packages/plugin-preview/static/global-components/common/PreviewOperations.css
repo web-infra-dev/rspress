@@ -1,0 +1,61 @@
+/* PreviewOperations Component Styles (BEM) */
+
+/* Block: rp-preview-operations */
+.rp-preview-operations {
+  display: flex;
+}
+
+/* Modifier: --mobile */
+.rp-preview-operations--mobile {
+  justify-content: flex-end;
+  width: 100%;
+  padding: 6px;
+}
+
+/* Modifier: --web */
+.rp-preview-operations--web {
+  justify-content: center;
+  align-items: center;
+  flex: none;
+}
+
+/* Element: __button */
+.rp-preview-operations__button {
+  width: 28px;
+  height: 28px;
+  cursor: pointer;
+  padding: 0;
+  text-align: center;
+  border-radius: 50%;
+  border: 1px solid transparent;
+  background-color: var(--rp-c-bg-soft);
+  margin-left: 14px;
+
+  transition: background-color 0.2s ease-out;
+}
+
+.rp-preview-operations__button:hover {
+  background-color: var(--rp-preview-button-hover-bg);
+}
+
+.rp-preview-operations__button svg {
+  display: inline-block;
+  vertical-align: -2px;
+}
+
+/* Element: __qrcode */
+.rp-preview-operations__qrcode {
+  position: relative;
+}
+
+/* Element: __qrcode-popup */
+.rp-preview-operations__qrcode-popup {
+  background-color: #fff;
+  width: 120px;
+  height: 120px;
+  position: absolute;
+  top: -132px;
+  right: -46px;
+  padding: 12px;
+  z-index: 999;
+}

@@ -10,7 +10,7 @@ import {
 import IconLaunch from '../icons/Launch';
 import IconQrcode from '../icons/Qrcode';
 import IconRefresh from '../icons/Refresh';
-import './index.css';
+import './PreviewOperations.css';
 
 const locales = {
   zh: {
@@ -79,21 +79,34 @@ export default (props: {
   }, [showQRCode]);
 
   return (
-    <div className={`rspress-preview-operations mobile ${className}`}>
-      <button onClick={refresh} aria-label={t.refresh}>
+    <div
+      className={`rp-preview-operations rp-preview-operations--mobile ${className}`}
+    >
+      <button
+        className="rp-preview-operations__button"
+        onClick={refresh}
+        aria-label={t.refresh}
+      >
         <IconRefresh />
       </button>
-      <div className="relative" ref={triggerRef}>
+      <div className="rp-preview-operations__qrcode" ref={triggerRef}>
         {showQRCode && (
-          <div className="rspress-preview-qrcode">
+          <div className="rp-preview-operations__qrcode-popup">
             <QRCodeSVG value={url} size={96} />
           </div>
         )}
-        <button onClick={toggleQRCode}>
+        <button
+          className="rp-preview-operations__button"
+          onClick={toggleQRCode}
+        >
           <IconQrcode />
         </button>
       </div>
-      <button onClick={openNewPage} aria-label={t.open}>
+      <button
+        className="rp-preview-operations__button"
+        onClick={openNewPage}
+        aria-label={t.open}
+      >
         <IconLaunch />
       </button>
     </div>

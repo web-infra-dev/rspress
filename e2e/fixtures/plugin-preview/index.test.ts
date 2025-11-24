@@ -49,28 +49,60 @@ test.describe('plugin test', async () => {
     expect(transformedCodePreview).toBe('Render from JSON');
   });
 
-  test('```tsx internal preview', async ({ page }) => {
+  test('mixed page', async ({ page }) => {
     await page.goto(`http://localhost:${appPort}/mixed`, {
       waitUntil: 'networkidle',
     });
-    const externalDemoCodePreview = await page
-      .frameLocator('iframe')
-      .getByText('External')
-      .innerText();
 
-    const cardTexts = await Promise.all(
-      (await page.$$('.rspress-preview-card')).map(i => i.innerText()),
+    // ========================================================================
+    // Test preview="internal" blocks (2 total: 1 inline + 1 external file)
+    // ========================================================================
+    const internalCards = page.locator('.rp-preview--internal__card');
+    await expect(internalCards).toHaveCount(2);
+
+    // First internal card: inline code with preview="internal"
+    await expect(internalCards.nth(0)).toContainText('This is a component');
+    // Second internal card: external file with preview="internal"
+    await expect(internalCards.nth(1)).toContainText('Hello World External');
+
+    // ========================================================================
+    // Test preview="iframe-follow" blocks (2 total: 1 inline + 1 external file)
+    // ========================================================================
+    const iframeFollowBlocks = page.locator('.rp-preview--iframe-follow');
+    await expect(iframeFollowBlocks).toHaveCount(2);
+
+    // First iframe-follow: inline code
+    const iframeFollow1 = iframeFollowBlocks
+      .nth(0)
+      .locator('.rp-preview--iframe-follow__device iframe');
+    await expect(iframeFollow1.contentFrame().locator('body')).toContainText(
+      'This is a component',
     );
 
-    const externalDemoCodePreviewWithPreviewModeInternal = cardTexts[0];
-
-    const innerCodePreviewWithPreviewModeInternal = cardTexts[1];
-
-    expect(externalDemoCodePreview).toBe('Hello World External');
-    expect(externalDemoCodePreviewWithPreviewModeInternal).toBe(
+    // Second iframe-follow: external file
+    const iframeFollow2 = iframeFollowBlocks
+      .nth(1)
+      .locator('.rp-preview--iframe-follow__device iframe');
+    await expect(iframeFollow2.contentFrame().locator('body')).toContainText(
       'Hello World External',
     );
-    expect(innerCodePreviewWithPreviewModeInternal).toBe('This is a component');
+
+    // ========================================================================
+    // Test preview="iframe-fixed" and preview (default) blocks
+    // These render in a fixed device panel, 4 total:
+    // - 2 inline: preview (default=iframe-fixed), preview="iframe-fixed"
+    // - 2 external: preview (default=iframe-fixed), preview="iframe-fixed"
+    // ========================================================================
+    const fixedDevice = page.locator('.rp-fixed-device');
+    await expect(fixedDevice).toHaveCount(1);
+
+    // The fixed device iframe should contain demos from all iframe-fixed blocks
+    const fixedIframe = fixedDevice.locator('.rp-fixed-device__iframe');
+    const fixedIframeBody = fixedIframe.contentFrame().locator('body');
+
+    // Should contain both inline and external component text
+    await expect(fixedIframeBody).toContainText('This is a component');
+    await expect(fixedIframeBody).toContainText('Hello World External');
   });
 });
 

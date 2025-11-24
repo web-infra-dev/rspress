@@ -1,16 +1,17 @@
 import { NoSSR, useLang, usePageData, withBase } from '@rspress/core/runtime';
 import { type MouseEvent, useCallback, useState } from 'react';
-import MobileOperation from './common/mobile-operation';
+import MobileOperation from './common/PreviewOperations';
 import IconCode from './icons/Code';
+import './Preview.css';
 
-type ContainerProps = {
+type PreviewProps = {
   children: React.ReactNode[];
-  isMobile: 'true' | 'false';
+  previewMode: 'internal' | 'iframe-follow';
   demoId: string;
 };
 
-const Container: React.FC<ContainerProps> = props => {
-  const { children, isMobile, demoId } = props;
+const Preview: React.FC<PreviewProps> = props => {
+  const { children, previewMode, demoId } = props;
   const { page } = usePageData();
   const [showCode, setShowCode] = useState(false);
   const lang = useLang();
@@ -43,44 +44,43 @@ const Container: React.FC<ContainerProps> = props => {
 
   return (
     <NoSSR>
-      <div className="rspress-preview rp-not-doc">
-        {isMobile === 'true' ? (
-          <div className="rspress-preview-wrapper" style={{ display: 'flex' }}>
-            <div className="rspress-preview-code">{children?.[0]}</div>
-            <div className="rspress-preview-device">
-              <iframe src={getPageUrl()} key={iframeKey}></iframe>
+      <div className="rp-preview rp-not-doc">
+        {previewMode === 'iframe-follow' ? (
+          <div className="rp-preview--iframe-follow">
+            <div className="rp-preview--iframe-follow__code">
+              {children?.[0]}
+            </div>
+            <div className="rp-preview--iframe-follow__device">
+              <iframe
+                className="rp-preview--iframe-follow__device__iframe"
+                src={getPageUrl()}
+                key={iframeKey}
+              ></iframe>
               <MobileOperation url={getPageUrl()} refresh={refresh} />
             </div>
           </div>
         ) : (
-          <div>
-            <div className="rspress-preview-card">
-              <div
-                style={{
-                  overflow: 'auto',
-                  flex: 'auto',
-                }}
-              >
+          <div className="rp-preview--internal">
+            <div className="rp-preview--internal__card">
+              <div className="rp-preview--internal__card__content">
                 {children?.[1]}
               </div>
-              <div className="rspress-preview-operations web">
+              <div className="rp-preview-operations rp-preview-operations--web">
                 <button
                   onClick={toggleCode}
                   aria-label={lang === 'zh' ? '收起代码' : 'Collapse Code'}
-                  className={showCode ? 'button-expanded' : ''}
+                  className={`rp-preview-operations__button ${showCode ? 'rp-preview-operations__button--expanded' : ''}`}
                 >
                   <IconCode />
                 </button>
               </div>
             </div>
             <div
-              className={`${
-                showCode
-                  ? 'rspress-preview-code-show'
-                  : 'rspress-preview-code-hide'
+              className={`rp-preview--internal__code-wrapper ${
+                showCode ? 'rp-preview--internal__code-wrapper--visible' : ''
               }`}
             >
-              {children?.[0]}
+              <div className="rp-preview--internal__code">{children?.[0]}</div>
             </div>
           </div>
         )}
@@ -89,4 +89,4 @@ const Container: React.FC<ContainerProps> = props => {
   );
 };
 
-export default Container;
+export default Preview;
