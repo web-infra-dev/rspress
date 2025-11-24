@@ -1,4 +1,5 @@
 import path from 'node:path';
+import { fileURLToPath } from 'node:url';
 import { version } from '../../package.json';
 
 export const RSPRESS_VERSION = version;
@@ -26,11 +27,10 @@ export const inlineThemeScript = `{
   .replace(/\n/g, ';')
   .replace(/\s{2,}/g, '');
 
-const dirname = path.dirname(
-  new URL(import.meta.resolve('@rspress/core')).pathname,
+export const PACKAGE_ROOT = path.join(
+  path.dirname(fileURLToPath(import.meta.resolve('@rspress/core'))),
+  '..',
 );
-
-export const PACKAGE_ROOT = path.join(dirname, '..');
 export const DEFAULT_THEME = path.join(PACKAGE_ROOT, 'dist/theme');
 export const TEMPLATE_PATH = path.join(PACKAGE_ROOT, 'index.html');
 

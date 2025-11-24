@@ -1,4 +1,5 @@
 import path from 'node:path';
+import { fileURLToPath } from 'node:url';
 import { pluginReact } from '@rsbuild/plugin-react';
 import { pluginSass } from '@rsbuild/plugin-sass';
 import { pluginSvgr } from '@rsbuild/plugin-svgr';
@@ -56,7 +57,10 @@ export default defineConfig({
             if (plugin?.constructor.name === 'EsmLibraryPlugin') {
               // @ts-expect-error
               plugin.options = {
-                preserveModules: path.resolve(import.meta.dirname, './src'),
+                preserveModules: path.resolve(
+                  path.dirname(fileURLToPath(import.meta.url)),
+                  './src',
+                ),
               };
             }
           });

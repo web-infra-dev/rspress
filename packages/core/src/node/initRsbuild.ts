@@ -233,12 +233,12 @@ async function createInternalBuildConfig(
     resolve: {
       alias: {
         ...detectCustomIconAlias,
-        '@mdx-js/react': new URL(import.meta.resolve('@mdx-js/react')).pathname,
+        '@mdx-js/react': fileURLToPath(import.meta.resolve('@mdx-js/react')),
         '@theme': [CUSTOM_THEME_DIR, DEFAULT_THEME],
         '@theme-assets': path.join(DEFAULT_THEME, './assets'),
-        'react-lazy-with-preload': new URL(
+        'react-lazy-with-preload': fileURLToPath(
           import.meta.resolve('react-lazy-with-preload'),
-        ).pathname,
+        ),
         // single runtime
         '@rspress/core/theme': DEFAULT_THEME,
         '@rspress/core/runtime': path.join(PACKAGE_ROOT, 'dist/runtime.js'),
@@ -331,7 +331,7 @@ async function createInternalBuildConfig(
           .options(swcLoaderOptions)
           .end()
           .use('mdx-loader')
-          .loader(new URL('./mdx/loader.js', import.meta.url).pathname)
+          .loader(fileURLToPath(new URL('./mdx/loader.js', import.meta.url)))
           .options({
             config,
             docDirectory: userDocRoot,
