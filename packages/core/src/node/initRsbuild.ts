@@ -1,3 +1,4 @@
+import { createRequire } from 'node:module';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import type {
@@ -59,6 +60,8 @@ function isPluginIncluded(config: UserConfig, pluginName: string): boolean {
     ),
   );
 }
+
+const require = createRequire(import.meta.url);
 
 async function getVirtualModulesFromPlugins(
   pluginDriver: PluginDriver,
@@ -233,12 +236,10 @@ async function createInternalBuildConfig(
     resolve: {
       alias: {
         ...detectCustomIconAlias,
-        '@mdx-js/react': fileURLToPath(import.meta.resolve('@mdx-js/react')),
+        '@mdx-js/react': require.resolve('@mdx-js/react'),
         '@theme': [CUSTOM_THEME_DIR, DEFAULT_THEME],
         '@theme-assets': path.join(DEFAULT_THEME, './assets'),
-        'react-lazy-with-preload': fileURLToPath(
-          import.meta.resolve('react-lazy-with-preload'),
-        ),
+        'react-lazy-with-preload': require.resolve('react-lazy-with-preload'),
         // single runtime
         '@rspress/core/theme': DEFAULT_THEME,
         '@rspress/core/runtime': path.join(PACKAGE_ROOT, 'dist/runtime.js'),
