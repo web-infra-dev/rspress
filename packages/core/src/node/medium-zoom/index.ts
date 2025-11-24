@@ -1,7 +1,7 @@
 import path from 'node:path';
-import { fileURLToPath } from 'node:url';
-import { normalizePosixPath, type RspressPlugin } from '@rspress/shared';
+import type { RspressPlugin } from '@rspress/shared';
 import type { ZoomOptions } from 'medium-zoom';
+import { PACKAGE_ROOT } from '../constants';
 
 // TODO: reimplement medium-zoom in https://github.com/web-infra-dev/rspress/issues/2325
 interface Options {
@@ -13,14 +13,10 @@ interface Options {
  * The plugin is used to add medium-zoom to the doc site.
  */
 export function pluginMediumZoom(options: Options = {}): RspressPlugin {
-  const __dirname = normalizePosixPath(
-    path.dirname(fileURLToPath(import.meta.url)),
-  );
-
   return {
     name: '@rspress/plugin-medium-zoom',
     globalUIComponents: [
-      [path.join(__dirname, '../static/MediumZoom.tsx'), options],
+      [path.join(PACKAGE_ROOT, './static/MediumZoom.tsx'), options],
     ],
   };
 }

@@ -91,6 +91,7 @@ export async function renderPages(
     if (typeof ssg === 'object' && ssg?.experimentalWorker) {
       const numberOfThreads = getNumberOfThreads(routes.length);
       const Tinypool = await import('tinypool').then(m => m.default);
+
       const pool = new Tinypool({
         filename: new URL('./renderPageWorker.js', import.meta.url).href,
         // chunk tasks manually

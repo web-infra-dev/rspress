@@ -1,6 +1,8 @@
+import { createRequire } from 'node:module';
 import path from 'node:path';
-import { fileURLToPath } from 'node:url';
 import { version } from '../../package.json';
+
+const require = createRequire(import.meta.url);
 
 export const RSPRESS_VERSION = version;
 
@@ -27,9 +29,10 @@ export const inlineThemeScript = `{
   .replace(/\n/g, ';')
   .replace(/\s{2,}/g, '');
 
-const dirname = path.dirname(fileURLToPath(new URL(import.meta.url)));
-
-export const PACKAGE_ROOT = path.join(dirname, '..');
+export const PACKAGE_ROOT = path.dirname(
+  require.resolve('@rspress/core/package.json'),
+);
+export const DEFAULT_THEME = path.join(PACKAGE_ROOT, 'dist/theme');
 export const TEMPLATE_PATH = path.join(PACKAGE_ROOT, 'index.html');
 
 export const CSR_CLIENT_ENTRY = path.join(

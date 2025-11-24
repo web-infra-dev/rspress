@@ -143,5 +143,8 @@ export default defineConfig({
     include: [],
     exclude: [],
   },
+  ssg: {
+    experimentalWorker: true,
+  },
   llms: true,
 });

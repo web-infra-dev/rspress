@@ -16,6 +16,7 @@ import {
 import { pluginVirtualModule } from 'rsbuild-plugin-virtual-module';
 import {
   CSR_CLIENT_ENTRY,
+  DEFAULT_THEME,
   DEFAULT_TITLE,
   inlineThemeScript,
   isProduction,
@@ -61,8 +62,6 @@ function isPluginIncluded(config: UserConfig, pluginName: string): boolean {
 }
 
 const require = createRequire(import.meta.url);
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = path.dirname(__filename);
 
 async function getVirtualModulesFromPlugins(
   pluginDriver: PluginDriver,
@@ -91,7 +90,6 @@ async function createInternalBuildConfig(
     config?.themeDir ?? path.join(process.cwd(), 'theme');
   const outDir = config?.outDir ?? OUTPUT_DIR;
 
-  const DEFAULT_THEME = path.join(__dirname, 'theme');
   const base = config?.base ?? '';
 
   // In production, we need to add assetPrefix in asset path
@@ -244,10 +242,10 @@ async function createInternalBuildConfig(
         'react-lazy-with-preload': require.resolve('react-lazy-with-preload'),
         // single runtime
         '@rspress/core/theme': DEFAULT_THEME,
-        '@rspress/core/runtime': path.join(__dirname, 'runtime.js'),
+        '@rspress/core/runtime': path.join(PACKAGE_ROOT, 'dist/runtime.js'),
         '@rspress/core/shiki-transformers': path.join(
-          __dirname,
-          'shiki-transformers.js',
+          PACKAGE_ROOT,
+          'dist/shiki-transformers.js',
         ),
       },
     },
@@ -269,7 +267,7 @@ async function createInternalBuildConfig(
             buildCache: {
               // 1. config file: rspress.config.ts
               buildDependencies: [
-                __filename, // this file,  __filename
+                new URL(import.meta.url).href, // this file,  __filename
                 pluginDriver.getConfigFilePath(), // rspress.config.ts
               ],
               cacheDigest: [
@@ -334,7 +332,7 @@ async function createInternalBuildConfig(
           .options(swcLoaderOptions)
           .end()
           .use('mdx-loader')
-          .loader(require.resolve('./loader.js'))
+          .loader(fileURLToPath(new URL('./mdx/loader.js', import.meta.url)))
           .options({
             config,
             docDirectory: userDocRoot,
