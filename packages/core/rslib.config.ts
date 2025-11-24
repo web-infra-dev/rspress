@@ -38,6 +38,7 @@ export default defineConfig({
           'shiki-transformers': './src/shiki-transformers.ts',
           runtime: './src/runtime.ts',
           'node/mdx/loader': './src/node/mdx/loader.ts',
+          'node/ssg/renderPageWorker': './src/node/ssg/renderPageWorker.ts',
         },
       },
       dts: false,
