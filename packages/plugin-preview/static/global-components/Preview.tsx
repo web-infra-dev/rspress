@@ -1,16 +1,17 @@
 import { NoSSR, useLang, usePageData, withBase } from '@rspress/core/runtime';
 import { type MouseEvent, useCallback, useState } from 'react';
-import MobileOperation from './common/mobile-operation';
+import MobileOperation from './common/Operations';
 import IconCode from './icons/Code';
+import './Preview.css';
 
-type ContainerProps = {
+type PreviewProps = {
   children: React.ReactNode[];
-  isMobile: 'true' | 'false';
+  previewMode: 'internal' | 'iframe-follow';
   demoId: string;
 };
 
-const Container: React.FC<ContainerProps> = props => {
-  const { children, isMobile, demoId } = props;
+const Preview: React.FC<PreviewProps> = props => {
+  const { children, previewMode, demoId } = props;
   const { page } = usePageData();
   const [showCode, setShowCode] = useState(false);
   const lang = useLang();
@@ -43,18 +44,18 @@ const Container: React.FC<ContainerProps> = props => {
 
   return (
     <NoSSR>
-      <div className="rspress-preview rp-not-doc">
-        {isMobile === 'true' ? (
-          <div className="rspress-preview-wrapper" style={{ display: 'flex' }}>
-            <div className="rspress-preview-code">{children?.[0]}</div>
-            <div className="rspress-preview-device">
+      <div className="rp-preview rp-not-doc">
+        {previewMode === 'iframe-follow' ? (
+          <div className="rp-preview-wrapper" style={{ display: 'flex' }}>
+            <div className="rp-preview-code">{children?.[0]}</div>
+            <div className="rp-preview-device">
               <iframe src={getPageUrl()} key={iframeKey}></iframe>
               <MobileOperation url={getPageUrl()} refresh={refresh} />
             </div>
           </div>
         ) : (
           <div>
-            <div className="rspress-preview-card">
+            <div className="rp-preview-card">
               <div
                 style={{
                   overflow: 'auto',
@@ -63,7 +64,7 @@ const Container: React.FC<ContainerProps> = props => {
               >
                 {children?.[1]}
               </div>
-              <div className="rspress-preview-operations web">
+              <div className="rp-preview-operations web">
                 <button
                   onClick={toggleCode}
                   aria-label={lang === 'zh' ? '收起代码' : 'Collapse Code'}
@@ -75,10 +76,8 @@ const Container: React.FC<ContainerProps> = props => {
             </div>
             <div
               className={`${
-                showCode
-                  ? 'rspress-preview-code-show'
-                  : 'rspress-preview-code-hide'
-              }`}
+                showCode ? 'rp-preview-code-show' : 'rp-preview-code-hide'
+              } rp-preview-`}
             >
               {children?.[0]}
             </div>
@@ -89,4 +88,4 @@ const Container: React.FC<ContainerProps> = props => {
   );
 };
 
-export default Container;
+export default Preview;

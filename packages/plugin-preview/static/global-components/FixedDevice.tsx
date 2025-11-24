@@ -1,16 +1,16 @@
-import { NoSSR, usePageData, withBase } from '@rspress/core/runtime';
+import { NoSSR, usePage, withBase } from '@rspress/core/runtime';
 import { useCallback, useState } from 'react';
 // @ts-expect-error
 import { normalizeId } from '../../dist/utils';
-import MobileOperation from './common/mobile-operation';
-import './Device.css';
+import MobileOperation from './common/Operations';
+import './FixedDevice.css';
 
 export default () => {
-  const { page } = usePageData();
+  const { page } = usePage();
   const pageName = `${normalizeId(page.pagePath)}`;
   const demoId = `_${pageName}`;
   const url = `~demo/${demoId}`;
-  const { haveDemos } = page;
+  const { haveIframeFixedDemos } = page;
 
   const getPageUrl = (url: string) => {
     if (page?.devPort) {
@@ -27,10 +27,10 @@ export default () => {
     setIframeKey(Math.random());
   }, []);
 
-  return haveDemos ? (
+  return haveIframeFixedDemos ? (
     <div className="rp-fixed-device">
       {/* hide the outline */}
-      <style>{`.rp-doc-layout__outline { display: none;}`}</style>
+      <style>{`@media (min-width: 1280px) {.rp-doc-layout__outline { display: none; }}`}</style>
       <NoSSR>
         <iframe
           // refresh when load the iframe, then remove NoSSR

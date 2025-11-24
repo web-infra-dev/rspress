@@ -79,13 +79,17 @@ export default (props: {
   }, [showQRCode]);
 
   return (
-    <div className={`rspress-preview-operations mobile ${className}`}>
-      <button onClick={refresh} aria-label={t.refresh}>
+    <div className={`rp-preview-operations mobile ${className}`}>
+      <button
+        className="rp-preview-operations__refresh"
+        onClick={refresh}
+        aria-label={t.refresh}
+      >
         <IconRefresh />
       </button>
-      <div className="relative" ref={triggerRef}>
+      <div className="rp-preview-operations__qrcode" ref={triggerRef}>
         {showQRCode && (
-          <div className="rspress-preview-qrcode">
+          <div className="rp-preview-qrcode">
             <QRCodeSVG value={url} size={96} />
           </div>
         )}
@@ -93,7 +97,11 @@ export default (props: {
           <IconQrcode />
         </button>
       </div>
-      <button onClick={openNewPage} aria-label={t.open}>
+      <button
+        className="rp-preview-operations__launch"
+        onClick={openNewPage}
+        aria-label={t.open}
+      >
         <IconLaunch />
       </button>
     </div>

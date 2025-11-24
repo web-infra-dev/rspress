@@ -8,16 +8,16 @@
   --rp-preview-button-bg: #c5c5c5;
 }
 
-.rspress-preview {
+.rp-preview {
   padding: 16px 0;
 }
 
-.rspress-preview-wrapper {
+.rp-preview-wrapper {
   border: 1px solid var(--rp-container-details-border);
   border-radius: var(--rp-radius-small);
 }
 
-.rspress-preview-card {
+.rp-preview-card {
   padding: 16px;
   position: relative;
   border: 1px solid var(--rp-container-details-border);
@@ -25,7 +25,11 @@
   display: flex;
 }
 
-.rspress-preview-qrcode {
+.rp-preview-operations__qrcode {
+  position: relative;
+}
+
+.rp-preview-qrcode {
   background-color: #fff;
   width: 120px;
   height: 120px;
@@ -33,27 +37,28 @@
   top: -132px;
   right: -46px;
   padding: 12px;
+  z-index: 999;
 }
 
-.rspress-preview-code {
+.rp-preview-code {
   position: relative;
   overflow: hidden;
   flex: 1 1;
   max-height: 700px;
 }
 
-.rspress-preview-code-hide {
+.rp-preview-code-hide {
   position: relative;
   overflow: hidden;
   display: none;
 }
 
-.rspress-preview-code-show {
+.rp-preview-code-show {
   margin-top: 16px;
   display: block;
 }
 
-.rspress-preview-device {
+.rp-preview-device {
   position: relative;
   flex: 0 0;
   border-left: 1px solid #e6e6e6;
@@ -61,14 +66,14 @@
   flex-direction: column;
 }
 
-.rspress-preview-device iframe {
+.rp-preview-device iframe {
   border-bottom: 1px solid #e6e6e6;
   width: 360px;
   height: 100%;
   flex: auto;
 }
 
-.rspress-preview-operations button {
+.rp-preview-operations button {
   width: 28px;
   height: 28px;
   padding: 0;
@@ -79,23 +84,23 @@
   margin-left: 14px;
 }
 
-.rspress-preview-operations button:hover {
+.rp-preview-operations button:hover {
   background-color: var(--rp-preview-button-hover-bg);
 }
 
-.rspress-preview-operations svg {
+.rp-preview-operations svg {
   display: inline-block;
   vertical-align: -2px;
 }
 
-.rspress-preview-operations.mobile {
+.rp-preview-operations.mobile {
   display: flex;
   justify-content: flex-end;
   width: 100%;
   padding: 6px;
 }
 
-.rspress-preview-operations.web {
+.rp-preview-operations.web {
   display: flex;
   justify-content: center;
   align-items: center;

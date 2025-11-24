@@ -1,16 +1,8 @@
 # Mixed
 
-## Internal mixed with fixed
+## defaultPreviewMode="iframe-fixed"
 
-```tsx file="./component.jsx"
-
-```
-
-```tsx file="./component.jsx" previewMode="internal"
-
-```
-
-```tsx internal preview
+```tsx preview="internal"
 const Component = () => {
   return (
     <div>
@@ -19,4 +11,55 @@ const Component = () => {
   );
 };
 export default Component;
+```
+
+```tsx preview
+const Component = () => {
+  return (
+    <div>
+      <p>This is a component</p>
+    </div>
+  );
+};
+export default Component;
+```
+
+```tsx preview="iframe-follow"
+const Component = () => {
+  return (
+    <div>
+      <p>This is a component</p>
+    </div>
+  );
+};
+export default Component;
+```
+
+```tsx preview="iframe-fixed"
+const Component = () => {
+  return (
+    <div>
+      <p>This is a component</p>
+    </div>
+  );
+};
+export default Component;
+```
+
+## External File
+
+```tsx preview="internal" file="./component.jsx"
+
+```
+
+```tsx preview file="./component.jsx"
+
+```
+
+```tsx preview="iframe-follow" file="./component.jsx"
+
+```
+
+```tsx preview="iframe-fixed" file="./component.jsx"
+
 ```

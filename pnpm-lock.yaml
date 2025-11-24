@@ -1424,9 +1424,6 @@ importers:
       '@rspress/core':
         specifier: workspace:^2.0.0-rc.1
         version: link:../core
-      lodash:
-        specifier: 4.17.21
-        version: 4.17.21
       qrcode.react:
         specifier: ^4.2.0
         version: 4.2.0(react@19.2.0)
@@ -1434,9 +1431,6 @@ importers:
       '@rslib/core':
         specifier: 0.18.0
         version: 0.18.0(@microsoft/api-extractor@7.55.1(@types/node@22.10.2))(typescript@5.8.2)
-      '@types/lodash':
-        specifier: ^4.17.21
-        version: 4.17.21
       '@types/mdast':
         specifier: ^4.0.4
         version: 4.0.4
@@ -3582,9 +3576,6 @@ packages:
 
   '@types/lodash@4.17.20':
     resolution: {integrity: sha512-H3MHACvFUEiujabxhaI/ImO6gUrd8oOurg7LQtS7mbwIXA/cUqWrvBsaeJ23aZEPk1TAYkurjfMbSELfoCXlGA==}
-
-  '@types/lodash@4.17.21':
-    resolution: {integrity: sha512-FOvQ0YPD5NOfPgMzJihoT+Za5pdkDJWcbpuj1DjaKZIr/gxodQjY/uWEFlTNqW2ugXHUiL8lRQgw63dzKHZdeQ==}
 
   '@types/mdast@3.0.15':
     resolution: {integrity: sha512-LnwD+mUEfxWMa1QpDraczIn6k0Ee3SMicuYSSzS6ZYl2gKS09EClnJYGd8Du6rfc5r/GZEk5o1mRb8TaTj03sQ==}
@@ -9376,8 +9367,6 @@ snapshots:
       '@types/lodash': 4.17.20
 
   '@types/lodash@4.17.20': {}
-
-  '@types/lodash@4.17.21': {}
 
   '@types/mdast@3.0.15':
     dependencies:
