@@ -6,18 +6,18 @@
   --rp-demo-block-bg: #1a1a1a;
 }
 
-.rspress-demo-block {
+.rp-demo-block {
   padding-bottom: 12px;
   background-color: var(--rp-demo-block-bg);
 }
 
-.rspress-demo-block-title {
+.rp-demo-block-title {
   padding: 12px 12px 8px;
   color: #697b8c;
   font-size: 14px;
 }
 
-.rspress-demo-block-main {
+.rp-demo-block-main {
   border-right: none;
   border-left: none;
 }
