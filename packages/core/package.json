@@ -65,7 +65,7 @@
   "dependencies": {
     "@mdx-js/mdx": "^3.1.1",
     "@mdx-js/react": "^3.1.1",
-    "@rsbuild/core": "~1.6.6",
+    "@rsbuild/core": "~1.6.8",
     "@rsbuild/plugin-react": "~1.4.2",
     "@rspress/mdx-rs": "0.6.6",
     "@rspress/runtime": "workspace:*",
@@ -107,7 +107,7 @@
     "unist-util-visit-children": "^3.0.0"
   },
   "devDependencies": {
-    "@microsoft/api-extractor": "^7.55.0",
+    "@microsoft/api-extractor": "^7.55.1",
     "@rsbuild/plugin-sass": "~1.4.0",
     "@rsbuild/plugin-svgr": "^1.2.2",
     "@rslib/core": "0.17.2",
@@ -119,7 +119,7 @@
     "@types/mdast": "^4.0.4",
     "@types/node": "^22.8.1",
     "@types/nprogress": "^0.2.3",
-    "@types/react": "^19.2.5",
+    "@types/react": "^19.2.6",
     "@types/react-dom": "^19.2.3",
     "@types/react-reconciler": "^0.32.3",
     "@types/web": "^0.0.294",
