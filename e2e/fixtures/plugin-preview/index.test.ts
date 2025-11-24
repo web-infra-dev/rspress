@@ -50,7 +50,7 @@ test.describe('plugin test', async () => {
   });
 
   test('```tsx internal preview', async ({ page }) => {
-    await page.goto(`http://localhost:${appPort}/prop`, {
+    await page.goto(`http://localhost:${appPort}/mixed`, {
       waitUntil: 'networkidle',
     });
     const externalDemoCodePreview = await page
