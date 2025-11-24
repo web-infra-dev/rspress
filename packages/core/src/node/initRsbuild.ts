@@ -1,4 +1,3 @@
-import { createRequire } from 'node:module';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import type {
@@ -16,6 +15,7 @@ import {
 import { pluginVirtualModule } from 'rsbuild-plugin-virtual-module';
 import {
   CSR_CLIENT_ENTRY,
+  DEFAULT_THEME,
   DEFAULT_TITLE,
   inlineThemeScript,
   isProduction,
@@ -60,10 +60,6 @@ function isPluginIncluded(config: UserConfig, pluginName: string): boolean {
   );
 }
 
-const require = createRequire(import.meta.url);
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = path.dirname(__filename);
-
 async function getVirtualModulesFromPlugins(
   pluginDriver: PluginDriver,
 ): Promise<Record<string, () => string>> {
@@ -91,7 +87,6 @@ async function createInternalBuildConfig(
     config?.themeDir ?? path.join(process.cwd(), 'theme');
   const outDir = config?.outDir ?? OUTPUT_DIR;
 
-  const DEFAULT_THEME = path.join(__dirname, 'theme');
   const base = config?.base ?? '';
 
   // In production, we need to add assetPrefix in asset path
@@ -238,16 +233,18 @@ async function createInternalBuildConfig(
     resolve: {
       alias: {
         ...detectCustomIconAlias,
-        '@mdx-js/react': require.resolve('@mdx-js/react'),
+        '@mdx-js/react': new URL(import.meta.resolve('@mdx-js/react')).pathname,
         '@theme': [CUSTOM_THEME_DIR, DEFAULT_THEME],
         '@theme-assets': path.join(DEFAULT_THEME, './assets'),
-        'react-lazy-with-preload': require.resolve('react-lazy-with-preload'),
+        'react-lazy-with-preload': new URL(
+          import.meta.resolve('react-lazy-with-preload'),
+        ).pathname,
         // single runtime
         '@rspress/core/theme': DEFAULT_THEME,
-        '@rspress/core/runtime': path.join(__dirname, 'runtime.js'),
+        '@rspress/core/runtime': path.join(PACKAGE_ROOT, 'dist/runtime.js'),
         '@rspress/core/shiki-transformers': path.join(
-          __dirname,
-          'shiki-transformers.js',
+          PACKAGE_ROOT,
+          'dist/shiki-transformers.js',
         ),
       },
     },
@@ -269,7 +266,7 @@ async function createInternalBuildConfig(
             buildCache: {
               // 1. config file: rspress.config.ts
               buildDependencies: [
-                __filename, // this file,  __filename
+                new URL(import.meta.url).href, // this file,  __filename
                 pluginDriver.getConfigFilePath(), // rspress.config.ts
               ],
               cacheDigest: [
@@ -334,7 +331,7 @@ async function createInternalBuildConfig(
           .options(swcLoaderOptions)
           .end()
           .use('mdx-loader')
-          .loader(require.resolve('./loader.js'))
+          .loader(new URL('./mdx/loader.js', import.meta.url).pathname)
           .options({
             config,
             docDirectory: userDocRoot,
