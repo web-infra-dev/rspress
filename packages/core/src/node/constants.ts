@@ -29,9 +29,8 @@ export const inlineThemeScript = `{
   .replace(/\n/g, ';')
   .replace(/\s{2,}/g, '');
 
-export const PACKAGE_ROOT = path.join(
-  path.dirname(require.resolve('@rspress/core/package.json')),
-  '..',
+export const PACKAGE_ROOT = path.dirname(
+  require.resolve('@rspress/core/package.json'),
 );
 export const DEFAULT_THEME = path.join(PACKAGE_ROOT, 'dist/theme');
 export const TEMPLATE_PATH = path.join(PACKAGE_ROOT, 'index.html');
