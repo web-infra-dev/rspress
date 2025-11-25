@@ -1,3 +1,3 @@
 export default function HelloWorld() {
-  return <div style={{ background: 'pink' }}>Hello World External File</div>;
+  return <div>Hello World External</div>;
 }

@@ -20,7 +20,7 @@ test.describe('plugin test', async () => {
     await page.goto(`http://localhost:${appPort}/`, {
       waitUntil: 'networkidle',
     });
-    const codeBlockElements = page.locator('.rspress-doc > .rspress-preview');
+    const codeBlockElements = page.locator('.rspress-doc > .rp-preview');
     await expect(codeBlockElements).toHaveCount(4);
 
     const internalIframeJsxDemoCodePreview = await page

@@ -56,10 +56,11 @@ test.describe('plugin test', async () => {
     const externalDemoCodePreview = await page
       .frameLocator('iframe')
       .getByText('External')
+      .first()
       .innerText();
 
     const cardTexts = await Promise.all(
-      (await page.$$('.rspress-preview-card')).map(i => i.innerText()),
+      (await page.$$('.rp-preview--internal__card')).map(i => i.innerText()),
     );
 
     const externalDemoCodePreviewWithPreviewModeInternal = cardTexts[0];
