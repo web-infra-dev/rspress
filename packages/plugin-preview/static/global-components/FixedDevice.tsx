@@ -2,7 +2,7 @@ import { NoSSR, usePage, withBase } from '@rspress/core/runtime';
 import { useCallback, useState } from 'react';
 // @ts-expect-error
 import { normalizeId } from '../../dist/utils';
-import MobileOperation from './common/Operations';
+import MobileOperation from './common/PreviewOperations';
 import './FixedDevice.css';
 
 export default () => {
@@ -35,13 +35,13 @@ export default () => {
         <iframe
           // refresh when load the iframe, then remove NoSSR
           src={getPageUrl(url)}
-          className="rp-fixed-iframe"
+          className="rp-fixed-device__iframe"
           key={iframeKey}
         ></iframe>
       </NoSSR>
       <MobileOperation
         url={getPageUrl(url)}
-        className="rp-fixed-operation"
+        className="rp-fixed-device__operations"
         refresh={refresh}
       />
     </div>

@@ -238,21 +238,12 @@ importers:
       '@rspress/core':
         specifier: workspace:*
         version: link:../../../packages/core
-      '@rspress/plugin-playground':
-        specifier: workspace:*
-        version: link:../../../packages/plugin-playground
-      '@rspress/plugin-preview':
-        specifier: workspace:*
-        version: link:../../../packages/plugin-preview
       react:
         specifier: ^19.2.0
         version: 19.2.0
       react-dom:
         specifier: ^19.2.0
         version: 19.2.0(react@19.2.0)
-      solid-js:
-        specifier: ^1.9.10
-        version: 1.9.10
     devDependencies:
       '@types/node':
         specifier: ^22.8.1
@@ -533,6 +524,9 @@ importers:
 
   e2e/fixtures/plugin-preview:
     dependencies:
+      '@rspress-fixture/plugin-preview':
+        specifier: workspace:*
+        version: 'link:'
       '@rspress/core':
         specifier: workspace:*
         version: link:../../../packages/core
@@ -1418,9 +1412,6 @@ importers:
       '@rsbuild/plugin-react':
         specifier: ~1.4.2
         version: 1.4.2(@rsbuild/core@1.6.8)
-      '@rsbuild/plugin-solid':
-        specifier: ~1.0.6
-        version: 1.0.6(@babel/core@7.28.0)(@rsbuild/core@1.6.8)(solid-js@1.9.10)
       '@rspress/core':
         specifier: workspace:^2.0.0-rc.1
         version: link:../core
@@ -1970,10 +1961,6 @@ packages:
 
   '@babel/helper-member-expression-to-functions@7.27.1':
     resolution: {integrity: sha512-E5chM8eWjTp/aNoVpcbfM7mLxu9XGLWYise2eBKGQomAk/Mb4XoxyqXTZbuTohbsl8EKqdlMhnDI2CCLfcs9wA==}
-    engines: {node: '>=6.9.0'}
-
-  '@babel/helper-module-imports@7.18.6':
-    resolution: {integrity: sha512-0NFvs3VkuSYbFi1x2Vd6tKrywq+z/cLeYC/RJNFrIX/30Bf5aiGYbtvGXolEktzJH8o5E5KJ3tT+nkxuuZFVlA==}
     engines: {node: '>=6.9.0'}
 
   '@babel/helper-module-imports@7.27.1':
@@ -3134,11 +3121,6 @@ packages:
     peerDependencies:
       '@rsbuild/core': 1.x
 
-  '@rsbuild/plugin-solid@1.0.6':
-    resolution: {integrity: sha512-4dCNiSBSYuJjzC7Bov/hCUzxAZcMiGMBZnKKgQXKuJRJwy23OqrxiiDa6AlmZozD5I/wEBwoUDasPbRqjkKFcA==}
-    peerDependencies:
-      '@rsbuild/core': 1.x
-
   '@rsbuild/plugin-svgr@1.2.2':
     resolution: {integrity: sha512-zd1efqsd0mDWe6B6dAKmubMvvaGrD4lPKXUZObynROvPZBSeaZxY2y2Ddrwc1yCyWL6X4WdBd1WIfShGGGKDxg==}
     peerDependencies:
@@ -3921,20 +3903,6 @@ packages:
 
   axios@1.12.0:
     resolution: {integrity: sha512-oXTDccv8PcfjZmPGlWsPSwtOJCZ/b6W5jAMCNcfwJbCzDckwG0jrYJFaWH1yvivfCXjVzV/SPDEhMB3Q+DSurg==}
-
-  babel-plugin-jsx-dom-expressions@0.40.1:
-    resolution: {integrity: sha512-b4iHuirqK7RgaMzB2Lsl7MqrlDgQtVRSSazyrmx7wB3T759ggGjod5Rkok5MfHjQXhR7tRPmdwoeGPqBnW2KfA==}
-    peerDependencies:
-      '@babel/core': ^7.20.12
-
-  babel-preset-solid@1.9.8:
-    resolution: {integrity: sha512-Tz2ZoKCPITeV+cANGeIA6pxHBLeEtX7hwk04tEh3xSWVqHMf2FqFwVz0RBxCLlBehpKfY1scDiuijBkmyVpqrQ==}
-    peerDependencies:
-      '@babel/core': ^7.0.0
-      solid-js: ^1.9.8
-    peerDependenciesMeta:
-      solid-js:
-        optional: true
 
   bail@2.0.2:
     resolution: {integrity: sha512-0xO6mYd7JB2YesxDKplafRpsiOzPt9V02ddPCLbY1xYGPOX24NTyN50qnUxgCPcSoYMhKpAuBTjQoRZCAkUDRw==}
@@ -4960,9 +4928,6 @@ packages:
   hosted-git-info@4.1.0:
     resolution: {integrity: sha512-kyCuEOWjJqZuDbRHzL8V93NzQhwIB71oFWSyzVo+KPZI+pnQPPxucdkrOZvkLRnrf5URsQM+IJ09Dw29cRALIA==}
     engines: {node: '>=10'}
-
-  html-entities@2.3.3:
-    resolution: {integrity: sha512-DV5Ln36z34NNTDgnz0EWGBLZENelNAtkiFA4kyNOG2tDI6Mz1uSWiq1wAKdyjnJwyDiDO7Fa2SO1CTxPXL8VxA==}
 
   html-entities@2.6.0:
     resolution: {integrity: sha512-kig+rMn/QOVRvr7c86gQ8lWXq+Hkv6CbAH1hLu+RG338StTpE8Z0b44SDVaqVu7HGKf27frdmUYEs9hTUX/cLQ==}
@@ -6707,11 +6672,6 @@ packages:
   solid-js@1.9.10:
     resolution: {integrity: sha512-Coz956cos/EPDlhs6+jsdTxKuJDPT7B5SVIWgABwROyxjY7Xbr8wkzD68Et+NxnV7DLJ3nJdAC2r9InuV/4Jew==}
 
-  solid-refresh@0.6.3:
-    resolution: {integrity: sha512-F3aPsX6hVw9ttm5LYlth8Q15x6MlI/J3Dn+o3EQyRTtTxidepSTwAYdozt01/YA+7ObcciagGEyXIopGZzQtbA==}
-    peerDependencies:
-      solid-js: ^1.3
-
   sort-object-keys@1.1.3:
     resolution: {integrity: sha512-855pvK+VkU7PaKYPc+Jjnmt4EzejQHyhhF33q31qG8x7maDzkeFhAAThdCYay11CISO+qAMwjOBP+fPZe0IPyg==}
 
@@ -7161,9 +7121,6 @@ packages:
 
   v8-compile-cache-lib@3.0.1:
     resolution: {integrity: sha512-wa7YjyUGfNZngI/vtK0UHAN+lgDCxBPCylVXGp0zu59Fz5aiGtNXaq3DhIov063MorB+VfufLh3JlF2KdTK3xg==}
-
-  validate-html-nesting@1.2.2:
-    resolution: {integrity: sha512-hGdgQozCsQJMyfK5urgFcWEqsSSrK63Awe0t/IMR0bZ0QMtnuaiHzThW81guu3qx9abLi99NEuiaN6P9gVYsNg==}
 
   validate-npm-package-license@3.0.4:
     resolution: {integrity: sha512-DpKm2Ui/xN7/HQKCtpZxoRWBhZ9Z0kqtygG8XCgNQ8ZlDnxuQmWhj566j8fN4Cu3/JmbhsDo7fcAJq4s9h27Ew==}
@@ -7659,10 +7616,6 @@ snapshots:
       '@babel/types': 7.28.5
     transitivePeerDependencies:
       - supports-color
-
-  '@babel/helper-module-imports@7.18.6':
-    dependencies:
-      '@babel/types': 7.28.5
 
   '@babel/helper-module-imports@7.27.1':
     dependencies:
@@ -8814,17 +8767,6 @@ snapshots:
       reduce-configs: 1.1.1
       sass-embedded: 1.90.0
 
-  '@rsbuild/plugin-solid@1.0.6(@babel/core@7.28.0)(@rsbuild/core@1.6.8)(solid-js@1.9.10)':
-    dependencies:
-      '@rsbuild/core': 1.6.8
-      '@rsbuild/plugin-babel': 1.0.6(@rsbuild/core@1.6.8)
-      babel-preset-solid: 1.9.8(@babel/core@7.28.0)(solid-js@1.9.10)
-      solid-refresh: 0.6.3(solid-js@1.9.10)
-    transitivePeerDependencies:
-      - '@babel/core'
-      - solid-js
-      - supports-color
-
   '@rsbuild/plugin-svgr@1.2.2(@rsbuild/core@1.6.8)(typescript@5.8.2)':
     dependencies:
       '@rsbuild/core': 1.6.8
@@ -9755,23 +9697,6 @@ snapshots:
       proxy-from-env: 1.1.0
     transitivePeerDependencies:
       - debug
-
-  babel-plugin-jsx-dom-expressions@0.40.1(@babel/core@7.28.0):
-    dependencies:
-      '@babel/core': 7.28.0
-      '@babel/helper-module-imports': 7.18.6
-      '@babel/plugin-syntax-jsx': 7.27.1(@babel/core@7.28.0)
-      '@babel/types': 7.28.5
-      html-entities: 2.3.3
-      parse5: 7.1.2
-      validate-html-nesting: 1.2.2
-
-  babel-preset-solid@1.9.8(@babel/core@7.28.0)(solid-js@1.9.10):
-    dependencies:
-      '@babel/core': 7.28.0
-      babel-plugin-jsx-dom-expressions: 0.40.1(@babel/core@7.28.0)
-    optionalDependencies:
-      solid-js: 1.9.10
 
   bail@2.0.2: {}
 
@@ -10985,8 +10910,6 @@ snapshots:
   hosted-git-info@4.1.0:
     dependencies:
       lru-cache: 6.0.0
-
-  html-entities@2.3.3: {}
 
   html-entities@2.6.0: {}
 
@@ -13250,15 +13173,6 @@ snapshots:
       seroval: 1.3.2
       seroval-plugins: 1.3.2(seroval@1.3.2)
 
-  solid-refresh@0.6.3(solid-js@1.9.10):
-    dependencies:
-      '@babel/generator': 7.28.0
-      '@babel/helper-module-imports': 7.27.1
-      '@babel/types': 7.28.5
-      solid-js: 1.9.10
-    transitivePeerDependencies:
-      - supports-color
-
   sort-object-keys@1.1.3: {}
 
   sort-package-json@3.4.0:
@@ -13740,8 +13654,6 @@ snapshots:
 
   v8-compile-cache-lib@3.0.1:
     optional: true
-
-  validate-html-nesting@1.2.2: {}
 
   validate-npm-package-license@3.0.4:
     dependencies:

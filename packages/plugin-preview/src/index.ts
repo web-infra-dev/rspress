@@ -29,7 +29,7 @@ export function pluginPreview(options?: Options): RspressPlugin {
   const {
     iframeOptions = {},
     defaultPreviewMode = 'internal',
-    defaultRenderMode = 'preview',
+    defaultRenderMode = 'pure',
     previewLanguages = ['jsx', 'tsx'],
     previewCodeTransform = ({ code }: { code: string }) => code,
   } = options ?? {};

@@ -1,6 +1,6 @@
 import { NoSSR, useLang, usePageData, withBase } from '@rspress/core/runtime';
 import { type MouseEvent, useCallback, useState } from 'react';
-import MobileOperation from './common/Operations';
+import MobileOperation from './common/PreviewOperations';
 import IconCode from './icons/Code';
 import './Preview.css';
 
@@ -46,40 +46,37 @@ const Preview: React.FC<PreviewProps> = props => {
     <NoSSR>
       <div className="rp-preview rp-not-doc">
         {previewMode === 'iframe-follow' ? (
-          <div className="rp-preview-wrapper" style={{ display: 'flex' }}>
-            <div className="rp-preview-code">{children?.[0]}</div>
-            <div className="rp-preview-device">
+          <div className="rp-preview--iframe-follow">
+            <div className="rp-preview--iframe-follow__code">
+              {children?.[0]}
+            </div>
+            <div className="rp-preview--iframe-follow__device">
               <iframe src={getPageUrl()} key={iframeKey}></iframe>
               <MobileOperation url={getPageUrl()} refresh={refresh} />
             </div>
           </div>
         ) : (
-          <div>
-            <div className="rp-preview-card">
-              <div
-                style={{
-                  overflow: 'auto',
-                  flex: 'auto',
-                }}
-              >
+          <div className="rp-preview--internal">
+            <div className="rp-preview--internal__card">
+              <div className="rp-preview--internal__card__content">
                 {children?.[1]}
               </div>
-              <div className="rp-preview-operations web">
+              <div className="rp-preview-operations rp-preview-operations--web">
                 <button
                   onClick={toggleCode}
                   aria-label={lang === 'zh' ? '收起代码' : 'Collapse Code'}
-                  className={showCode ? 'button-expanded' : ''}
+                  className={`rp-preview-operations__button ${showCode ? 'rp-preview-operations__button--expanded' : ''}`}
                 >
                   <IconCode />
                 </button>
               </div>
             </div>
             <div
-              className={`${
-                showCode ? 'rp-preview-code-show' : 'rp-preview-code-hide'
-              } rp-preview-`}
+              className={`rp-preview--internal__code-wrapper ${
+                showCode ? 'rp-preview--internal__code-wrapper--visible' : ''
+              }`}
             >
-              {children?.[0]}
+              <div className="rp-preview--internal__code">{children?.[0]}</div>
             </div>
           </div>
         )}
