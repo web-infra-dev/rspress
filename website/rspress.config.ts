@@ -53,7 +53,11 @@ export default defineConfig({
     },
   },
   plugins: [
-    pluginPreview(),
+    pluginPreview({
+      iframeOptions: {
+        devPort: 7777,
+      },
+    }),
     pluginTwoslash(),
     // pluginFontOpenSans(), // removed this line for Rspress preview
     pluginSitemap({

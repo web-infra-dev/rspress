@@ -167,6 +167,9 @@ export const remarkWriteCodeFile: Plugin<[RemarkPluginOptions], Root> =
         )
       ) {
         isDirtyRef.current = true;
+      }
+
+      if (demosInCurrPage[pageName].length !== 0) {
         globalDemos[pageName] = demosInCurrPage[pageName];
       }
     };

@@ -1,8 +1,12 @@
+---
+tag: new
+---
+
 # @rspress/plugin-preview <SourceCode href="https://github.com/web-infra-dev/rspress/tree/main/packages/plugin-preview" />
 
 import { SourceCode, PackageManagerTabs, Tabs, Tab } from '@theme';
 
-用于预览 md(x) 文件代码块中的组件。
+用于预览 md(x) 文件代码块中的组件，适合编写组件库文档。
 
 ## 安装
 
@@ -29,8 +33,18 @@ export default defineConfig({
 
 ````mdx title="example.mdx"
 ```tsx preview
+import { useState } from 'react';
+
 function App() {
-  return <div style={{ color: 'gray' }}>Hello World</div>;
+  const [count, setCount] = useState(0);
+
+  return (
+    <div style={{ textAlign: 'center' }}>
+      <p>当前计数: {count}</p>
+      <button onClick={() => setCount(count + 1)}>+</button>
+      <button onClick={() => setCount(count - 1)}>-</button>
+    </div>
+  );
 }
 
 export default App;
@@ -40,8 +54,18 @@ export default App;
 它的渲染结果如下：
 
 ```tsx preview
+import { useState } from 'react';
+
 function App() {
-  return <div style={{ color: 'gray' }}>Hello World</div>;
+  const [count, setCount] = useState(0);
+
+  return (
+    <div style={{ textAlign: 'center' }}>
+      <p>当前计数: {count}</p>
+      <button onClick={() => setCount(count + 1)}>+</button>
+      <button onClick={() => setCount(count - 1)}>-</button>
+    </div>
+  );
 }
 
 export default App;
@@ -74,11 +98,67 @@ export default App;
 
 ```
 
+## 使用 iframe 预览模式 \{#preview-mode}
+
+该插件内置了多种预览模式，通过调整 `preview="..."` meta 信息，例如 ` ```tsx preview="iframe-follow" `，可以切换不同的预览模式。[defaultPreviewMode](#defaultPreviewMode) 配置项可以用来配置默认的预览模式。
+
 :::tip 提示
 
-如果你从 Rspress V1 中迁移，`<code src="./foo.tsx"/>` 应该迁移为 ` ```tsx file="./foo.tsx"`。
+你可以选择使用带有 iframe 的预览模式进行组件展示，以隔离文档和组件的运行环境，避免样式冲突等问题，或者选择便于移动端组件展示的预览模式。
 
 :::
+
+### `preview="internal"`
+
+默认的 `"internal"` 模式效果如下：
+
+语法为：
+
+````mdx
+```tsx file="./_demo.tsx" preview="internal"
+
+```
+````
+
+渲染结果为：
+
+```tsx file="./_demo.tsx" preview="internal"
+
+```
+
+### `preview="iframe-follow"`
+
+`"iframe-follow"` 模式效果如下：
+
+语法为：
+
+````mdx
+```tsx file="./_demo.tsx" preview="iframe-follow"
+
+```
+````
+
+渲染结果为：
+
+```tsx file="./_demo.tsx" preview="iframe-follow"
+
+```
+
+### `preview="iframe-fixed"`
+
+`"iframe-fixed"` 模式效果如下：
+
+语法为：
+
+````mdx
+```tsx file="./_demo.tsx" preview="iframe-fixed"
+
+```
+````
+
+渲染结果为：
+
+![](https://lf3-static.bytednsdoc.com/obj/eden-cn/uhbfnupenuhf/rspress/demo-preview-mobile-fixed.png)
 
 ## 配置
 
@@ -108,7 +188,7 @@ interface IframeOptions {
 - **类型**： `string`
 - **默认值**： `pure`
 
-支持用户配置没有主动声明 `pure` 或 `preview` 标识符的内部代码块的默认行为，默认为 `pure`。
+支持用户配置没有主动声明 `pure` 或 `preview` 的内部代码块的默认行为，默认为 `pure`。
 
 - ` ```tsx pure`: 渲染为普通代码块。
 - ` ```tsx `: 根据 `defaultRenderMode` 配置渲染。
@@ -119,27 +199,23 @@ interface IframeOptions {
 - **类型**： `"internal" | "iframe-follow" | "iframe-fixed" `
 - **默认值**： `internal`
 
-`defaultPreviewMode` 参数用于指定预览组件是否内置，默认为 `"internal"`，展示效果如下：
+`defaultPreviewMode` 参数用于配置 ` ```tsx preview` 时的 [预览模式](#preview-mode)，默认为 `"internal"`
 
-```tsx file="./_demo.tsx" preview
-
-```
-
-`"iframe-follow"` 模式效果如下：
-
-```tsx file="./_demo.tsx" preview="iframe-follow"
-
-```
-
-`"iframe-fixed"` 模式效果如下：
-
-![](https://lf3-static.bytednsdoc.com/obj/eden-cn/uhbfnupenuhf/rspress/demo-preview-mobile-fixed.png)
+- ` ```tsx preview`: 根据 `defaultPreviewMode` 配置渲染。
+- ` ```tsx preview="internal"`: 使用内嵌模式渲染。
+- ` ```tsx preview="iframe-follow"`: 使用跟随模式渲染。
+- ` ```tsx preview="iframe-fixed"`: 使用固定模式渲染。
 
 ### iframeOptions
 
+该插件会启动一个全新的 Rsbuild 实例用于 `iframe` 模式代码块的开发服务器和构建产物，因此编译流程与 Rspress 文档完全隔离，可自主配置。
+
 #### iframeOptions.devPort
 
-在 iframe 预览模式下，你可以配置预览组件的 dev server port。
+- **类型**： `number`
+- **默认值**： `7890`
+
+当默认端口冲突时，你可以手动配置组件的 dev server 端口。
 
 #### iframeOptions.builderConfig
 
@@ -149,7 +225,9 @@ interface IframeOptions {
 
 配置自定义入口支持其他 `Web` 框架，例如 `Vue`。
 
-仅设置 `iframeOptions.position = follow` 时可使用 customEntry。
+仅设置 `preview="iframe-follow"` 时可使用 customEntry。
+
+以下是一个使用 Vue 框架的示例：
 
 ```ts
 import { defineConfig } from '@rspress/core';
@@ -228,8 +306,65 @@ return React.createElement(json.type, null, json.children);
 
 这样，最后会渲染出自定义逻辑转换后的组件代码。
 
-:::warning 注意
+## 从 V1 迁移
 
-`previewLanguages` 和 `previewCodeTransform` 配置仅对内部组件生效，即对声明在 mdx 文件中的代码块生效，而对于 `code` 标签中声明的外部文件不会生效！
+如果你从 Rspress V1 中迁移，插件的功能本身没有变化，仅 mdx 源码的书写方式会有以下调整：
+
+- `<code src="./foo.tsx"/>` 应该迁移为 [文件代码块](../../guide/use-mdx/code-blocks.mdx#file-code-block) ` ```tsx file="./foo.tsx"`。
+
+- `defaultPreviewMode` 配置项代替了 `iframeOptions.position` 和 `previewMode`。
+
+:::tip 迁移示例
+
+**示例 1**：
+
+**Before**：需要同时在 `rspress.config.ts` 和 mdx 文件中进行声明。
+
+```ts
+pluginPreview({
+  previewMode: 'iframe',
+  iframeOptions: { position: 'fixed' },
+});
+```
+
+````mdx
+```tsx preview
+
+```
+````
+
+**After**：仅需要在 mdx 文件中进行声明即可。
+
+````mdx
+```tsx preview="iframe-fixed"
+
+```
+````
+
+**示例 2**：
+
+**Before**：使用了 `iframe` 或者 `previewMode="iframe"` 属性。
+
+````mdx
+```tsx iframe
+// 或者
+
+<code src="./_demo.tsx" previewMode="iframe" />
+```
+````
+
+**After**：仅有 `preview="..."` 一个属性。
+
+````mdx
+```tsx preview="iframe-follow"
+
+```
+
+```tsx file="./_demo.tsx" preview="iframe-follow"
+
+```
+````
 
 :::
+
+- `defaultRenderMode` 默认值从 `preview` 改为了 `pure`。
