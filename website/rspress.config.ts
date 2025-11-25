@@ -3,6 +3,7 @@ import { RsdoctorRspackPlugin } from '@rsdoctor/rspack-plugin';
 import { defineConfig } from '@rspress/core';
 import { transformerCompatibleMetaHighlight } from '@rspress/core/shiki-transformers';
 import { pluginAlgolia } from '@rspress/plugin-algolia';
+import { pluginPreview } from '@rspress/plugin-preview';
 import { pluginSitemap } from '@rspress/plugin-sitemap';
 import { pluginTwoslash } from '@rspress/plugin-twoslash';
 import {
@@ -52,6 +53,7 @@ export default defineConfig({
     },
   },
   plugins: [
+    pluginPreview(),
     pluginTwoslash(),
     // pluginFontOpenSans(), // removed this line for Rspress preview
     pluginSitemap({

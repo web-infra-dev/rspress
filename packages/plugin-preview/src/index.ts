@@ -14,8 +14,8 @@ import {
   removeTrailingSlash,
   type UserConfig,
 } from '@rspress/core';
-import { STATIC_DIR } from './constant';
-import { generateEntry } from './generate-entry';
+import { STATIC_DIR } from './constants';
+import { generateEntry } from './generateEntry';
 import { globalDemos, isDirtyRef, remarkWriteCodeFile } from './remarkPlugin';
 import type { Options, StartServerResult } from './types';
 

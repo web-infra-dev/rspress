@@ -1,6 +1,6 @@
 import { mkdir, writeFile } from 'node:fs/promises';
 import { join } from 'node:path';
-import { STATIC_DIR, VIRTUAL_DEMO_DIR } from './constant';
+import { STATIC_DIR, VIRTUAL_DEMO_DIR } from './constants';
 import type { CustomEntry, DemoInfo } from './types';
 import { toValidVarName } from './utils';
 

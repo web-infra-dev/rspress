@@ -1719,6 +1719,9 @@ importers:
       '@rspress/plugin-llms':
         specifier: workspace:*
         version: link:../packages/plugin-llms
+      '@rspress/plugin-preview':
+        specifier: workspace:*
+        version: link:../packages/plugin-preview
       '@rspress/plugin-sitemap':
         specifier: workspace:*
         version: link:../packages/plugin-sitemap
@@ -1734,6 +1737,12 @@ importers:
       '@types/react':
         specifier: ^19.2.6
         version: 19.2.6
+      react:
+        specifier: ^19.2.0
+        version: 19.2.0
+      react-dom:
+        specifier: ^19.2.0
+        version: 19.2.0(react@19.2.0)
       rsbuild-plugin-google-analytics:
         specifier: ^1.0.4
         version: 1.0.4(@rsbuild/core@1.6.8)

@@ -30,6 +30,8 @@
   border: 1px solid transparent;
   background-color: var(--rp-c-bg-soft);
   margin-left: 14px;
+
+  transition: background-color 0.2s ease-out;
 }
 
 .rp-preview-operations__button:hover {

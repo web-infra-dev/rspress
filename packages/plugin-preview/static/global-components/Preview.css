@@ -23,7 +23,7 @@
   padding: 16px;
   position: relative;
   border: 1px solid var(--rp-container-details-border);
-  border-radius: var(--rp-radius-small);
+  border-radius: var(--rp-radius);
   display: flex;
 }
 
@@ -47,13 +47,18 @@
   overflow: hidden;
 }
 
+.rp-preview-operations__button--expanded {
+  background: var(--rp-c-bg-mute);
+  box-shadow: inset 1px 1px 0 1px var(--rp-c-divider-light);
+}
+
 /* ==========================================================================
    Preview--iframe-follow (iframe-follow mode)
    ========================================================================== */
 
 .rp-preview--iframe-follow {
   border: 1px solid var(--rp-container-details-border);
-  border-radius: var(--rp-radius-small);
+  border-radius: var(--rp-radius);
   display: flex;
 }
 

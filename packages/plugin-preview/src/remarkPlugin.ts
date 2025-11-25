@@ -6,8 +6,8 @@ import type { Code, Root } from 'mdast';
 import type { MdxjsEsm } from 'mdast-util-mdxjs-esm';
 import type { Plugin } from 'unified';
 import { visit } from 'unist-util-visit';
-import { getASTNodeImport } from './ast-helpers';
-import { VIRTUAL_DEMO_DIR } from './constant';
+import { getASTNodeImport } from './ast';
+import { VIRTUAL_DEMO_DIR } from './constants';
 import { parsePreviewInfoFromMeta } from './parsePreviewInfoFromMeta';
 import type { DemoInfo, Options, RemarkPluginOptions } from './types';
 import { generateId, getLangFileExt } from './utils';
@@ -161,7 +161,10 @@ export const remarkWriteCodeFile: Plugin<[RemarkPluginOptions], Root> =
       }
 
       if (
-        !isDeepStrictEqual(globalDemos[pageName], demosInCurrPage[pageName])
+        !isDeepStrictEqual(
+          globalDemos[pageName] ?? [],
+          demosInCurrPage[pageName],
+        )
       ) {
         isDirtyRef.current = true;
         globalDemos[pageName] = demosInCurrPage[pageName];
