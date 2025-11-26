@@ -57,7 +57,7 @@ export function pluginPreview(options?: Options): RspressPlugin {
     }
 
     const outDir = join(config.outDir ?? 'doc_build', '~demo');
-    const { source, output, performance } = clientConfig ?? {};
+    const { source, output, performance, resolve } = clientConfig ?? {};
     // omit preEntry to avoid '@theme' import
     const { preEntry: _, ...otherSourceOptions } = source ?? {};
 
@@ -81,7 +81,7 @@ export function pluginPreview(options?: Options): RspressPlugin {
           ...otherSourceOptions,
           entry: await generateEntry(globalDemos, framework, customEntry),
         },
-
+        resolve,
         output: {
           ...output,
           target: 'web',
