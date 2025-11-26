@@ -53,25 +53,28 @@ test.describe('plugin test', async () => {
     await page.goto(`http://localhost:${appPort}/mixed`, {
       waitUntil: 'networkidle',
     });
+
+    // Get the second iframe which contains "External" text (from external file with preview="iframe-follow")
     const externalDemoCodePreview = await page
       .frameLocator('iframe')
+      .nth(1)
       .getByText('External')
-      .first()
       .innerText();
 
     const cardTexts = await Promise.all(
       (await page.$$('.rp-preview--internal__card')).map(i => i.innerText()),
     );
 
-    const externalDemoCodePreviewWithPreviewModeInternal = cardTexts[0];
-
-    const innerCodePreviewWithPreviewModeInternal = cardTexts[1];
+    // First internal card is from inline code (preview="internal")
+    const innerCodePreviewWithPreviewModeInternal = cardTexts[0];
+    // Second internal card is from external file (preview="internal" file="./component.jsx")
+    const externalDemoCodePreviewWithPreviewModeInternal = cardTexts[1];
 
     expect(externalDemoCodePreview).toBe('Hello World External');
+    expect(innerCodePreviewWithPreviewModeInternal).toBe('This is a component');
     expect(externalDemoCodePreviewWithPreviewModeInternal).toBe(
       'Hello World External',
     );
-    expect(innerCodePreviewWithPreviewModeInternal).toBe('This is a component');
   });
 });
 
