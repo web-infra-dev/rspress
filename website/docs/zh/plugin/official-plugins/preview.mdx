@@ -100,21 +100,21 @@ export default App;
 
 ## 切换为 iframe 预览模式 \{#preview-mode}
 
-该插件内置了多种预览模式，通过调整 `preview="..."` meta 信息可切换为不同的预览模式。 ` ```tsx preview` 实际上等同于 ` ```tsx preview="internal"`，由 [defaultPreviewMode](#defaultpreviewmode) 配置。
+该插件内置了多种预览模式，通过调整 `preview="..."` meta 信息可切换不同的预览模式。例如，你可以通过 ` ```tsx preview="iframe-follow" ` 切换为 [iframe-follow](#previewiframe-follow) 模式。
 
-比如你可以通过 ` ```tsx preview="iframe-follow" ` 切换为 [iframe-follow](#previewiframe-follow) 模式，
+` ```tsx preview` 等同于 ` ```tsx preview="{defaultPreviewMode}"`，由 [defaultPreviewMode](#defaultpreviewmode) 配置决定。
 
 :::tip 提示
 
-使用带有 iframe 的预览模式进行组件展示，可以隔离文档和组件的运行环境，避免样式冲突等问题。
+使用 iframe 预览模式可以隔离文档与组件的运行环境，有效避免样式冲突等问题。
 
 :::
 
 ### `preview="internal"`
 
-下面是一个 `"internal"` 默认预览模式的示例：
+`"internal"` 是默认的预览模式，组件直接内嵌在文档中渲染。
 
-语法为：
+语法：
 
 ````mdx title="example.mdx"
 ```tsx file="./_demo.tsx" preview
@@ -130,7 +130,7 @@ export default App;
 ```
 ````
 
-渲染结果为：
+渲染结果：
 
 ```tsx file="./_demo.tsx" preview="internal"
 
@@ -138,9 +138,9 @@ export default App;
 
 ### `preview="iframe-follow"`
 
-该预览模式将在代码块右侧显示一个 iframe 预览环境，下面是一个 `"iframe-follow"` 的使用示例：
+该模式会在代码块右侧显示一个跟随的 iframe 预览区域。
 
-语法为：
+语法：
 
 ````mdx title="example.mdx"
 ```tsx file="./_demo.tsx" preview="iframe-follow"
@@ -148,7 +148,7 @@ export default App;
 ```
 ````
 
-渲染结果为：
+渲染结果：
 
 ```tsx file="./_demo.tsx" preview="iframe-follow"
 
@@ -156,11 +156,9 @@ export default App;
 
 ### `preview="iframe-fixed"`
 
-该预览模式的特点是会显示一个固定的 iframe 在右侧，适合移动端组件库。
+该模式会在页面右侧显示一个固定的 iframe 预览区域，适合移动端组件库文档。
 
-下面是一个 `"iframe-fixed"` 的使用示例：
-
-语法为：
+语法：
 
 ````mdx title="example.mdx"
 ```tsx file="./_demo.tsx" preview="iframe-fixed"
@@ -168,13 +166,13 @@ export default App;
 ```
 ````
 
-渲染结果为：
+渲染结果：
 
 ![](https://lf3-static.bytednsdoc.com/obj/eden-cn/uhbfnupenuhf/rspress/demo-preview-mobile-fixed.png)
 
 ## 配置
 
-这个插件接受一个对象参数，类型如下:
+该插件接受一个配置对象，类型定义如下：
 
 ```ts
 interface PreviewOptions {
@@ -189,57 +187,59 @@ interface PreviewOptions {
 }
 
 interface IframeOptions {
-  framework?: 'react' | 'solid';
   devPort?: number;
   builderConfig?: RsbuildConfig;
+  customEntry?: (meta: CustomEntry) => string;;
 }
 ```
 
 ### defaultRenderMode
 
-- **类型**： `string`
-- **默认值**： `pure`
+- **类型**：`'pure' | 'preview'`
+- **默认值**：`'pure'`
 
-支持用户配置没有主动声明 `pure` 或 `preview` 的内部代码块的默认行为，默认为 `pure`。
+配置未显式声明 `pure` 或 `preview` 的代码块的默认渲染行为。
 
-- ` ```tsx pure`: 渲染为普通代码块。
-- ` ```tsx `: 根据 `defaultRenderMode` 配置渲染。
-- ` ```tsx preview`: 渲染为预览组件。
+- ` ```tsx pure`：渲染为普通代码块
+- ` ```tsx `：根据 `defaultRenderMode` 配置渲染
+- ` ```tsx preview`：渲染为可预览组件
 
 ### defaultPreviewMode
 
-- **类型**： `"internal" | "iframe-follow" | "iframe-fixed" `
-- **默认值**： `internal`
+- **类型**：`'internal' | 'iframe-follow' | 'iframe-fixed'`
+- **默认值**：`'internal'`
 
-`defaultPreviewMode` 参数用于配置 ` ```tsx preview` 时的 [预览模式](#preview-mode)，默认为 `"internal"`
+配置 ` ```tsx preview` 的默认[预览模式](#preview-mode)。
 
-- ` ```tsx preview`: 根据 `defaultPreviewMode` 配置渲染。
-- ` ```tsx preview="internal"`: 预览组件将使用内嵌模式渲染。
-- ` ```tsx preview="iframe-follow"`: 预览组件将使用跟随模式渲染。
-- ` ```tsx preview="iframe-fixed"`: 预览组件将使用固定模式渲染。
+- ` ```tsx preview`：根据 `defaultPreviewMode` 配置渲染
+- ` ```tsx preview="internal"`：使用内嵌模式渲染
+- ` ```tsx preview="iframe-follow"`：使用跟随 iframe 模式渲染
+- ` ```tsx preview="iframe-fixed"`：使用固定 iframe 模式渲染
 
 ### iframeOptions
 
-该插件会启动一个全新的 Rsbuild 实例用于 `iframe` 模式代码块的开发服务器和构建产物，因此编译流程与 Rspress 文档完全隔离，可自主配置。
+该插件会启动一个独立的 Rsbuild 实例用于 iframe 模式的开发服务器和构建，编译流程与 Rspress 文档完全隔离。
 
 #### iframeOptions.devPort
 
-- **类型**： `number`
-- **默认值**： `7890`
+- **类型**：`number`
+- **默认值**：`7890`
 
-当默认端口冲突时，你可以手动配置组件的 dev server 端口。
+配置 iframe 预览的开发服务器端口。当默认端口被占用时可手动指定。
 
 #### iframeOptions.builderConfig
 
-配置 iframe 的构建配置，例如添加一些全局代码逻辑。
+配置 iframe 的 Rsbuild 构建选项，例如添加全局样式或脚本。
 
 #### iframeOptions.customEntry
 
-配置自定义入口支持其他 `Web` 框架，例如 `Vue`。
+配置自定义入口以支持其他框架（如 Vue）。
 
-仅设置 `preview="iframe-follow"` 时可使用 customEntry。
+:::warning 注意
+仅在 `preview="iframe-follow"` 模式下可用。
+:::
 
-以下是一个使用 Vue 框架的示例：
+以下是 Vue 框架的配置示例：
 
 ```ts
 import { defineConfig } from '@rspress/core';
@@ -273,17 +273,19 @@ export default defineConfig({
 
 ### previewLanguages
 
-- **类型**： `string[]`
-- **默认值**： `['jsx', 'tsx']`
+- **类型**：`string[]`
+- **默认值**：`['jsx', 'tsx']`
 
-支持预览的代码语言，默认支持 jsx 和 tsx 代码。如果你需要支持其它格式的代码，如 json/yaml, 可以配合下面的 `previewCodeTransform` 配置一起使用。
+配置支持预览的代码语言。如需支持其他格式（如 JSON、YAML），可配合 `previewCodeTransform` 使用。
 
 ### previewCodeTransform
 
-- **类型**： `(codeInfo: { language: string; code: string }) => string`
-- **默认值**： `({ code }) => code`
+- **类型**：`(codeInfo: { language: string; code: string }) => string`
+- **默认值**：`({ code }) => code`
 
-预览前对代码进行自定义的转换。以 JSON 代码为例，如果你想要通过自定义的转换逻辑渲染一段 JSON Schema：
+在预览前对代码进行自定义转换。
+
+以下示例展示如何将 JSON Schema 转换为可渲染的 React 组件：
 
 ```json
 {
@@ -296,7 +298,6 @@ export default defineConfig({
 
 ```ts
 pluginPreview({
-  // 注意添加默认的 jsx 和 tsx
   previewLanguages: ['jsx', 'tsx', 'json'],
   previewCodeTransform(codeInfo) {
     if (codeInfo.language === 'json') {
@@ -316,21 +317,19 @@ return React.createElement(json.type, null, json.children);
 });
 ```
 
-这样，最后会渲染出自定义逻辑转换后的组件代码。
-
 ## 从 V1 迁移
 
-如果你从 Rspress V1 中迁移，插件的功能本身没有变化，仅 mdx 源码的书写方式会有以下调整：
+从 Rspress V1 迁移时，插件功能保持不变，仅 MDX 源码的书写方式有以下调整：
 
-- `<code src="./foo.tsx"/>` 应该迁移为 [文件代码块](../../guide/use-mdx/code-blocks.mdx#file-code-block) ` ```tsx file="./foo.tsx"`。
-
-- `defaultPreviewMode` 配置项代替了 `iframeOptions.position` 和 `previewMode`。
+- `<code src="./foo.tsx"/>` 迁移为[文件代码块](../../guide/use-mdx/code-blocks.mdx#file-code-block) ` ```tsx file="./foo.tsx"`
+- `defaultPreviewMode` 配置项替代了 `iframeOptions.position` 和 `previewMode`
+- `defaultRenderMode` 默认值从 `'preview'` 改为 `'pure'`
 
 :::tip 迁移示例
 
 **示例 1**：
 
-**Before**：需要同时在 `rspress.config.ts` 和 mdx 文件中进行声明。
+迁移前：需要同时在配置文件和 MDX 文件中声明。
 
 ```ts
 pluginPreview({
@@ -345,7 +344,7 @@ pluginPreview({
 ```
 ````
 
-**After**：仅需要在 mdx 文件中进行声明即可。
+迁移后：仅需在 MDX 文件中声明。
 
 ````mdx
 ```tsx preview="iframe-fixed"
@@ -355,7 +354,7 @@ pluginPreview({
 
 **示例 2**：
 
-**Before**：使用了 `iframe` 或者 `previewMode="iframe"` 属性。
+迁移前：使用 `iframe` 或 `previewMode="iframe"` 属性。
 
 ````mdx
 ```tsx iframe
@@ -367,7 +366,7 @@ pluginPreview({
 <code src="./_demo.tsx" previewMode="iframe" />
 ````
 
-**After**：仅有 `preview="..."` 一个属性。
+迁移后：统一使用 `preview="..."` 属性。
 
 ````mdx
 ```tsx preview="iframe-follow"
@@ -380,5 +379,3 @@ pluginPreview({
 ````
 
 :::
-
-- `defaultRenderMode` 默认值从 `preview` 改为了 `pure`。

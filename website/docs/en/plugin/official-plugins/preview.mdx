@@ -100,17 +100,19 @@ The rendering result is as follows:
 
 ## Using iframe preview mode \{#preview-mode}
 
-This plugin has multiple built-in preview modes. By adjusting the `preview="..."` meta information, for example ` ```tsx preview="iframe-follow" `, you can switch between different preview modes. The [defaultPreviewMode](#defaultPreviewMode) configuration option can be used to configure the default preview mode.
+This plugin supports multiple preview modes. You can switch between them by adjusting the `preview="..."` meta information. For example, you can use ` ```tsx preview="iframe-follow" ` to switch to [iframe-follow](#previewiframe-follow) mode.
+
+` ```tsx preview` is equivalent to ` ```tsx preview="{defaultPreviewMode}"`, which is determined by the [defaultPreviewMode](#defaultPreviewMode) configuration.
 
 :::tip
 
-You can choose to use the preview mode with iframe for component display to isolate the runtime environment between the documentation and the component, avoiding issues like style conflicts, or choose a preview mode suitable for mobile component display.
+Using iframe preview mode isolates the runtime environment between your documentation and components, effectively preventing style conflicts and other issues.
 
 :::
 
 ### `preview="internal"`
 
-The default `"internal"` mode effect is as follows:
+`"internal"` is the default preview mode, where the component is rendered directly within the document.
 
 Syntax:
 
@@ -136,7 +138,7 @@ Rendering result:
 
 ### `preview="iframe-follow"`
 
-This preview mode will display an iframe preview environment on the right side of the code block. Here is an example of `"iframe-follow"`:
+This mode displays an iframe preview area on the right side of the code block that follows the content flow.
 
 Syntax:
 
@@ -154,9 +156,7 @@ Rendering result:
 
 ### `preview="iframe-fixed"`
 
-This preview mode features a fixed iframe on the right side, suitable for mobile component libraries.
-
-Here is an example of `"iframe-fixed"`:
+This mode displays a fixed iframe preview area on the right side of the page, ideal for mobile component library documentation.
 
 Syntax:
 
@@ -172,7 +172,7 @@ Rendering result:
 
 ## Options
 
-This plugin accepts an object parameter of the following type:
+This plugin accepts a configuration object with the following type definition:
 
 ```ts
 interface PreviewOptions {
@@ -187,57 +187,59 @@ interface PreviewOptions {
 }
 
 interface IframeOptions {
-  framework?: 'react' | 'solid';
   devPort?: number;
   builderConfig?: RsbuildConfig;
+  customEntry?: (meta: CustomEntry) => string;;
 }
 ```
 
 ### defaultRenderMode
 
-- **Type:** `string`
-- **Default:** `pure`
+- **Type:** `'pure' | 'preview'`
+- **Default:** `'pure'`
 
-Supports configuring the default behavior of internal code blocks that do not actively declare `pure` or `preview`, defaults to `pure`.
+Configures the default rendering behavior for code blocks that don't explicitly declare `pure` or `preview`.
 
-- ` ```tsx pure`: Render as a regular code block.
-- ` ```tsx `: Render based on the `defaultRenderMode` configuration.
-- ` ```tsx preview`: Render as a preview component.
+- ` ```tsx pure`: Render as a regular code block
+- ` ```tsx `: Render based on `defaultRenderMode` configuration
+- ` ```tsx preview`: Render as a previewable component
 
 ### defaultPreviewMode
 
-- **Type:** `"internal" | "iframe-follow" | "iframe-fixed" `
-- **Default:** `internal`
+- **Type:** `'internal' | 'iframe-follow' | 'iframe-fixed'`
+- **Default:** `'internal'`
 
-The `defaultPreviewMode` parameter is used to configure the [preview mode](#preview-mode) for ` ```tsx preview`, defaults to `"internal"`.
+Configures the default [preview mode](#preview-mode) for ` ```tsx preview`.
 
-- ` ```tsx preview`: Render based on the `defaultPreviewMode` configuration.
-- ` ```tsx preview="internal"`: Render using internal mode.
-- ` ```tsx preview="iframe-follow"`: Render using follow mode.
-- ` ```tsx preview="iframe-fixed"`: Render using fixed mode.
+- ` ```tsx preview`: Render based on `defaultPreviewMode` configuration
+- ` ```tsx preview="internal"`: Render using internal mode
+- ` ```tsx preview="iframe-follow"`: Render using follow iframe mode
+- ` ```tsx preview="iframe-fixed"`: Render using fixed iframe mode
 
 ### iframeOptions
 
-This plugin will start a new Rsbuild instance for the dev server and build artifacts of `iframe` mode code blocks, so the compilation process is completely isolated from Rspress documentation and can be configured independently.
+This plugin starts a separate Rsbuild instance for the iframe mode's dev server and build process, completely isolated from the Rspress documentation compilation.
 
 #### iframeOptions.devPort
 
 - **Type:** `number`
 - **Default:** `7890`
 
-When the default port conflicts, you can manually configure the dev server port for the component.
+Configures the dev server port for iframe preview. Use this when the default port is occupied.
 
 #### iframeOptions.builderConfig
 
-Configure the build configuration for iframe, such as adding some global code logic.
+Configures Rsbuild build options for the iframe, such as adding global styles or scripts.
 
 #### iframeOptions.customEntry
 
-Configure custom entry to support other `Web` frameworks, such as `Vue`.
+Configures a custom entry to support other frameworks like Vue.
 
-customEntry can only be used when `preview="iframe-follow"` is set.
+:::warning Note
+Only available in `preview="iframe-follow"` mode.
+:::
 
-Here is an example using the Vue framework:
+Here is an example for the Vue framework:
 
 ```ts
 import { defineConfig } from '@rspress/core';
@@ -274,14 +276,16 @@ export default defineConfig({
 - **Type:** `string[]`
 - **Default:** `['jsx', 'tsx']`
 
-The code languages that support preview, by default jsx and tsx codes are supported. If you need to support other formats of code, such as json/yaml, you can use it in conjunction with the `previewCodeTransform` configuration below.
+Configures the code languages that support preview. To support other formats like JSON or YAML, use this in conjunction with `previewCodeTransform`.
 
 ### previewCodeTransform
 
 - **Type:** `(codeInfo: { language: string; code: string }) => string`
 - **Default:** `({ code }) => code`
 
-Customize the transformation of the code before previewing. Taking JSON code as an example, if you want to render a piece of JSON Schema through custom transformation logic:
+Performs custom transformation on code before preview.
+
+The following example shows how to transform JSON Schema into a renderable React component:
 
 ```json
 {
@@ -290,11 +294,10 @@ Customize the transformation of the code before previewing. Taking JSON code as 
 }
 ```
 
-You can make the following configuration:
+You can configure it as follows:
 
 ```ts
 pluginPreview({
-  // Note to add the default jsx and tsx
   previewLanguages: ['jsx', 'tsx', 'json'],
   previewCodeTransform(codeInfo) {
     if (codeInfo.language === 'json') {
@@ -314,21 +317,19 @@ return React.createElement(json.type, null, json.children);
 });
 ```
 
-In this way, the component code after custom logic transformation will be rendered in the end.
-
 ## Migrating from V1
 
-If you are migrating from Rspress V1, the plugin functionality itself has not changed, only the way of writing mdx source code will have the following adjustments:
+When migrating from Rspress V1, the plugin functionality remains unchanged. Only the MDX source code syntax has the following adjustments:
 
-- `<code src="./foo.tsx"/>` should be migrated to [File Code Block](../../guide/use-mdx/code-blocks.mdx#file-code-block) ` ```tsx file="./foo.tsx"`.
-
-- The `defaultPreviewMode` configuration option replaces `iframeOptions.position` and `previewMode`.
+- `<code src="./foo.tsx"/>` should be migrated to [File Code Block](../../guide/use-mdx/code-blocks.mdx#file-code-block) ` ```tsx file="./foo.tsx"`
+- The `defaultPreviewMode` option replaces `iframeOptions.position` and `previewMode`
+- The default value of `defaultRenderMode` changed from `'preview'` to `'pure'`
 
 :::tip Migration Examples
 
 **Example 1**:
 
-**Before**: You need to declare in both `rspress.config.ts` and mdx files.
+Before: Required declarations in both config file and MDX file.
 
 ```ts
 pluginPreview({
@@ -343,7 +344,7 @@ pluginPreview({
 ```
 ````
 
-**After**: You only need to declare in the mdx file.
+After: Only declare in the MDX file.
 
 ````mdx
 ```tsx preview="iframe-fixed"
@@ -353,7 +354,7 @@ pluginPreview({
 
 **Example 2**:
 
-**Before**: Using the `iframe` or `previewMode="iframe"` attribute.
+Before: Using `iframe` or `previewMode="iframe"` attribute.
 
 ````mdx
 ```tsx iframe
@@ -365,7 +366,7 @@ pluginPreview({
 <code src="./_demo.tsx" previewMode="iframe" />
 ````
 
-**After**: There is only one `preview="..."` attribute.
+After: Use the unified `preview="..."` attribute.
 
 ````mdx
 ```tsx preview="iframe-follow"
@@ -378,5 +379,3 @@ pluginPreview({
 ````
 
 :::
-
-- The default value of `defaultRenderMode` has changed from `preview` to `pure`.

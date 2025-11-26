@@ -33,6 +33,7 @@ export type IframeOptions = {
   /**
    * framework in the iframe
    * @default 'react'
+   * @deprecated
    */
   framework?: 'react';
   /**
