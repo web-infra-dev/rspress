@@ -12,12 +12,18 @@
 
 /* Block: rp-preview */
 .rp-preview {
-  padding: 16px 0;
+  margin: 16px 0;
 }
 
 /* ==========================================================================
    Preview--internal (internal mode)
    ========================================================================== */
+
+.rp-preview--internal .rp-codeblock {
+  margin: 0;
+  border-radius: 0 0 var(--rp-radius) var(--rp-radius);
+  border-top: 0px;
+}
 
 .rp-preview--internal__card {
   padding: 16px;
@@ -33,14 +39,23 @@
 }
 
 /* Code collapse/expand animation using CSS Grid */
+.rp-preview--internal--show-code .rp-preview--internal__card {
+  border-radius: var(--rp-radius) var(--rp-radius) 0 0;
+  transition: border-radius 0.2s ease-out;
+}
+
 .rp-preview--internal__code-wrapper {
   display: grid;
   grid-template-rows: 0fr;
-  transition: grid-template-rows 0.2s ease-out;
+  transition:
+    grid-template-rows 0.2s ease-out,
+    opacity 0.2s ease-out;
+  opacity: 0;
 }
 
 .rp-preview--internal__code-wrapper--visible {
   grid-template-rows: 1fr;
+  opacity: 1;
 }
 
 .rp-preview--internal__code {
