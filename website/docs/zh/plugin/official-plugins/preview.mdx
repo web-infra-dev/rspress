@@ -98,23 +98,33 @@ export default App;
 
 ```
 
-## 使用 iframe 预览模式 \{#preview-mode}
+## 切换为 iframe 预览模式 \{#preview-mode}
 
-该插件内置了多种预览模式，通过调整 `preview="..."` meta 信息，例如 ` ```tsx preview="iframe-follow" `，可以切换不同的预览模式。[defaultPreviewMode](#defaultPreviewMode) 配置项可以用来配置默认的预览模式。
+该插件内置了多种预览模式，通过调整 `preview="..."` meta 信息可切换为不同的预览模式。 ` ```tsx preview` 实际上等同于 ` ```tsx preview="internal"`，由 [defaultPreviewMode](#defaultpreviewmode) 配置。
+
+比如你可以通过 ` ```tsx preview="iframe-follow" ` 切换为 [iframe-follow](#previewiframe-follow) 模式，
 
 :::tip 提示
 
-你可以选择使用带有 iframe 的预览模式进行组件展示，以隔离文档和组件的运行环境，避免样式冲突等问题，或者选择便于移动端组件展示的预览模式。
+使用带有 iframe 的预览模式进行组件展示，可以隔离文档和组件的运行环境，避免样式冲突等问题。
 
 :::
 
 ### `preview="internal"`
 
-默认的 `"internal"` 模式效果如下：
+下面是一个 `"internal"` 默认预览模式的示例：
 
 语法为：
 
-````mdx
+````mdx title="example.mdx"
+```tsx file="./_demo.tsx" preview
+
+```
+````
+
+或者
+
+````mdx title="example.mdx"
 ```tsx file="./_demo.tsx" preview="internal"
 
 ```
@@ -128,11 +138,11 @@ export default App;
 
 ### `preview="iframe-follow"`
 
-`"iframe-follow"` 模式效果如下：
+该预览模式将在代码块右侧显示一个 iframe 预览环境，下面是一个 `"iframe-follow"` 的使用示例：
 
 语法为：
 
-````mdx
+````mdx title="example.mdx"
 ```tsx file="./_demo.tsx" preview="iframe-follow"
 
 ```
@@ -146,11 +156,13 @@ export default App;
 
 ### `preview="iframe-fixed"`
 
-`"iframe-fixed"` 模式效果如下：
+该预览模式的特点是会显示一个固定的 iframe 在右侧，适合移动端组件库。
+
+下面是一个 `"iframe-fixed"` 的使用示例：
 
 语法为：
 
-````mdx
+````mdx title="example.mdx"
 ```tsx file="./_demo.tsx" preview="iframe-fixed"
 
 ```
@@ -202,9 +214,9 @@ interface IframeOptions {
 `defaultPreviewMode` 参数用于配置 ` ```tsx preview` 时的 [预览模式](#preview-mode)，默认为 `"internal"`
 
 - ` ```tsx preview`: 根据 `defaultPreviewMode` 配置渲染。
-- ` ```tsx preview="internal"`: 使用内嵌模式渲染。
-- ` ```tsx preview="iframe-follow"`: 使用跟随模式渲染。
-- ` ```tsx preview="iframe-fixed"`: 使用固定模式渲染。
+- ` ```tsx preview="internal"`: 预览组件将使用内嵌模式渲染。
+- ` ```tsx preview="iframe-follow"`: 预览组件将使用跟随模式渲染。
+- ` ```tsx preview="iframe-fixed"`: 预览组件将使用固定模式渲染。
 
 ### iframeOptions
 

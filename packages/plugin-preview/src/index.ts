@@ -53,7 +53,9 @@ export function pluginPreview(options?: Options): RspressPlugin {
     if (devServer && !isProd) {
       await devServer.server.close();
       devServer = undefined;
-      logger.info('Restart dev Server for preview demos...');
+      logger.info(
+        '[@rspress/plugin-preview] Restarting preview server due to demo changes...',
+      );
     }
 
     const outDir = join(config.outDir ?? 'doc_build', '~demo');
