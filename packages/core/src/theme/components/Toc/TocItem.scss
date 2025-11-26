@@ -1,0 +1,39 @@
+.rp-toc-item {
+  display: block;
+  justify-content: flex-start;
+  align-items: flex-start;
+  gap: 10px;
+  align-self: stretch;
+  position: relative;
+  margin-top: 6px;
+
+  &:first-child {
+    margin-top: 0;
+  }
+
+  &__text {
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 1;
+    color: var(--rp-c-text-2);
+    overflow-wrap: break-word;
+  }
+
+  &--active {
+    .rp-toc-item__text,
+    .rp-toc-item__text code {
+      color: var(--rp-c-link);
+    }
+
+    &::before {
+      content: '';
+      display: block;
+      height: 100%;
+      width: 1px;
+      background-color: var(--rp-c-brand);
+      position: absolute;
+      left: calc(-1 * var(--rp-outline-padding-x));
+      top: 0px;
+    }
+  }
+}

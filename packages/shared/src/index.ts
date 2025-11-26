@@ -4,7 +4,6 @@ export {
   matchSidebar,
 } from './runtime-utils/sidebar';
 export {
-  APPEARANCE_KEY,
   addLeadingSlash,
   addTrailingSlash,
   cleanUrl,

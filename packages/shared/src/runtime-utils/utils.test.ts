@@ -173,18 +173,22 @@ describe('test shared utils', () => {
   test('parseUrl', () => {
     expect(parseUrl('/guide/')).toEqual({
       url: '/guide/',
+      search: '',
       hash: '',
     });
     expect(parseUrl('/guide/?a=1')).toEqual({
-      url: '/guide/?a=1',
+      url: '/guide/',
+      search: 'a=1',
       hash: '',
     });
     expect(parseUrl('/guide/#a=1')).toEqual({
       url: '/guide/',
+      search: '',
       hash: 'a=1',
     });
     expect(parseUrl('/guide/?a=1#b=2')).toEqual({
-      url: '/guide/?a=1',
+      url: '/guide/',
+      search: 'a=1',
       hash: 'b=2',
     });
   });

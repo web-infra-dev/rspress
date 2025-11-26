@@ -1,0 +1,78 @@
+/**
+ * Custom shiki code block theme
+ * reference: https://github.com/shikijs/shiki/blob/main/docs/themes.md
+ * -------------------------------------------------------------------------- */
+.shiki span.line {
+  padding: 0 1.25rem;
+  display: inline-block;
+}
+
+.code-line-highlighted {
+  background-color: var(--rp-code-line-highlight-color);
+}
+
+.diff,
+.code-line-highlighted {
+  transition: background-color 0.5s;
+  padding: 0 20px;
+  width: 100%;
+  display: inline-block;
+  position: relative;
+}
+
+.diff.add::after {
+  content: '+';
+  position: absolute;
+  left: 10px;
+  top: 0px;
+  color: #4fb74d;
+}
+
+.diff.remove::after {
+  content: '-';
+  position: absolute;
+  left: 10px;
+  top: 0px;
+  color: #f47481;
+}
+
+.shiki.has-diff code .diff.add {
+  background-color: rgba(16, 185, 129, 0.1);
+  padding: 0 20px 0 19px;
+}
+
+.shiki.has-diff code .diff.remove {
+  background-color: rgba(244, 63, 94, 0.1);
+  padding: 0 20px 0 19px;
+}
+
+.shiki.has-highlighted {
+  .line.highlighted {
+    width: 100%;
+    position: static;
+    display: inline-block;
+    background-color: rgba(0, 99, 199, 0.1);
+  }
+  .line.highlighted.error {
+    background-color: rgba(244, 63, 94, 0.1);
+  }
+  .line.highlighted.warning {
+    background-color: rgba(234, 179, 8, 0.1);
+  }
+}
+
+.shiki.has-focused {
+  .line:not(.focused) {
+    filter: blur(0.095rem);
+    opacity: 0.4;
+    transition:
+      filter 0.35s,
+      opacity 0.35s;
+  }
+  &:hover {
+    .line:not(.focused) {
+      filter: blur(0);
+      opacity: 1;
+    }
+  }
+}

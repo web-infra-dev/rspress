@@ -1,0 +1,305 @@
+/* keep the html syntax in markdown original style e.g: <ul></ul> */
+.rp-doc {
+  :not(:where(.rp-not-doc, .rp-not-doc *)) {
+    // escape hatch like <div className="rp-not-doc"></div>
+    /* why ":where"? For css priority, <<equal to className priority>>, to be easy to overrides by className */
+    /* paragraph */
+    /* #region */
+    &:where(p) {
+      margin-top: 1.25rem; /* 20px */
+      margin-bottom: 1.25rem; /* 20px */
+      line-height: 1.75rem; /* 28px */
+    }
+    &:where(strong, b) {
+      font-weight: 600;
+    }
+    &:where(hr) {
+      display: block;
+      margin-top: 3rem;
+      margin-bottom: 3rem;
+      margin-left: 0;
+      margin-right: 0;
+      border-color: var(--rp-c-divider-light);
+      border-top-width: 1px;
+    }
+    /* #endregion */
+
+    /* link */
+    /* #region */
+    // we do not style all the <a> links, only the links with class "rp-link" because there are too many usages of <a> tag in user custom components
+    &:where(a.rp-link):not(:where(.rp-header-anchor)) {
+      font-weight: 500;
+      color: var(--rp-c-link);
+      transition: color 0.25s;
+      text-decoration: none;
+      display: inline;
+      overflow-wrap: break-word;
+
+      &:hover {
+        border-bottom: 1px solid var(--rp-c-brand);
+        opacity: 0.85;
+      }
+      &[target='_blank'] {
+        &::after {
+          content: '↗';
+          font-weight: 700;
+          display: inline-block;
+          font-size: 0.7em;
+          transform: translate(0, -0.3em);
+          transition: transform 0.2s ease;
+          margin-left: 0.2em;
+          margin-right: 0.1em;
+        }
+
+        &:hover::after {
+          transform: translate(0.1em, -0.5em);
+        }
+      }
+    }
+
+    /* #endregion */
+
+    /* title */
+    /* #region */
+    &:where(h1, h2, h3, h4, h5, h6) {
+      font-weight: 600;
+      outline: none;
+      & .rp-header-anchor {
+        float: left;
+        margin-left: -0.8em;
+        font-weight: 500;
+        opacity: 0;
+        font-size: inherit;
+        transition:
+          color 0.25s,
+          opacity 0.25s;
+        &:hover {
+          border-bottom: 1px solid var(--rp-c-brand);
+          opacity: 0.85;
+        }
+      }
+      &:hover {
+        & .rp-header-anchor {
+          opacity: 1;
+        }
+        & .rp-header-anchor:focus {
+          opacity: 1;
+        }
+      }
+    }
+    &:where(.rp-header-anchor) {
+      color: var(--rp-c-brand);
+    }
+    &:where(h1) {
+      font-size: 2rem; // 36px
+      margin-bottom: 2rem; // 32px
+    }
+    &:where(h2) {
+      font-size: 1.75rem; // 28px
+      margin-top: 3rem; // 48px
+      margin-bottom: 1.25rem; // 20px
+    }
+    &:where(h2:first-of-type)::before {
+      content: '';
+      display: block;
+      height: 1px;
+      width: 100%;
+      background: var(--rp-c-divider-light);
+      margin-bottom: 3rem;
+    }
+    &:where(h3) {
+      font-size: 1.5rem; // 24px
+      margin-top: 2rem; // 32px
+      margin-bottom: 1.25rem; // 20px
+    }
+    &:where(h4) {
+      font-size: 1.25rem; // 20px
+      margin-top: 1.5rem; // 24px
+      margin-bottom: 1rem; // 16px
+    }
+    &:where(h5) {
+      font-size: 1.125rem; // 18px
+      margin-top: 1.25rem; // 20px
+      margin-bottom: 0.75rem; // 12px
+    }
+    &:where(h6) {
+      font-size: 1rem; // 16px
+      margin-top: 1rem; // 16px
+      margin-bottom: 0.5rem; // 8px
+    }
+    /* #endregion */
+
+    /* blockquote, summary */
+    /* #region */
+    &:where(blockquote) {
+      border-left: 2px solid var(--rp-c-divider); /* rp-border-l-2 rp-border-solid rp-border-divider */
+      padding-left: 1rem; /* rp-pl-4 */
+      margin-top: 1.5rem; /* rp-my-6 (top) */
+      margin-bottom: 1.5rem; /* rp-my-6 (bottom) */
+      color: var(--rp-c-text-2);
+    }
+    &:where(blockquote p) {
+      margin: 0;
+      font-size: 1rem;
+      color: var(--rp-c-text-2);
+    }
+    /* #endregion */
+
+    /* list */
+    /* #region */
+    &:where(ul) {
+      list-style: disc;
+      padding-left: 1.25rem;
+      margin-top: 1rem;
+      margin-bottom: 1rem;
+      line-height: 1.75rem;
+    }
+
+    &:where(ol) {
+      list-style: decimal;
+      padding-left: 1.25rem;
+      margin-top: 1rem;
+      margin-bottom: 1rem;
+      line-height: 1.75rem;
+    }
+
+    &:where(ul li):not(:first-child) {
+      margin-top: 0.5rem;
+    }
+
+    &:where(ol li):not(:first-child) {
+      margin-top: 0.5rem;
+    }
+    /* #endregion */
+
+    /* table */
+    /* #region */
+    &:where(.rp-table-scroll-container) {
+      overflow-x: auto;
+    }
+    &:where(table) {
+      width: 100%;
+
+      table-layout: auto;
+      border-collapse: separate;
+      border-spacing: 0;
+
+      border: 1px solid var(--rp-c-divider-light);
+      border-radius: var(--rp-radius);
+      overflow: hidden;
+
+      &::-webkit-scrollbar {
+        height: 5px;
+        width: 5px;
+      }
+      &::-webkit-scrollbar-corner {
+        display: none;
+      }
+      &::-webkit-scrollbar-thumb {
+        background-color: rgba(0, 0, 0, 0.05);
+        border-radius: 10px;
+      }
+    }
+
+    /* thead */
+    &:where(thead) {
+      color: var(--rp-c-text-0);
+      background: var(--rp-c-bg-soft);
+    }
+
+    &:where(th) {
+      padding: 1rem 1.5rem;
+      font-weight: 600;
+      font-size: 0.875rem;
+      text-align: left;
+      border-bottom: 1px solid var(--rp-c-divider-light);
+      position: relative;
+    }
+
+    /* tbody */
+    &:where(tbody) {
+      background: var(--rp-c-bg);
+    }
+
+    &:where(td) {
+      padding: 1rem 1.5rem;
+      border-bottom: 1px solid var(--rp-c-divider-light);
+
+      font-size: 0.875rem;
+    }
+
+    &:where(tr) {
+      transition: background-color 0.2s ease;
+
+      &:hover {
+        background: var(--rp-c-bg-soft);
+      }
+    }
+
+    &:where(tr:last-child td) {
+      border-bottom: none;
+    }
+    /* #endregion */
+
+    /* code block */
+    /* #region */
+    // migrated to .rp-codeblock
+    /* #endregion */
+
+    /* inline code */
+    // #region
+    &:where(:not(pre) > code) {
+      font-size: 0.875em;
+      font-family: var(--rp-font-family-mono);
+      padding: 3px 6px;
+      border-radius: var(--rp-radius-small);
+      background-color: var(--rp-c-text-code-bg);
+      border: 1px solid var(--rp-c-text-code-border);
+      overflow-wrap: break-word;
+    }
+    &:where(:not(pre, a) > code) {
+      color: var(--rp-c-text-code);
+    }
+    &:where(a > code) {
+      color: var(--rp-c-brand-dark);
+      transition: color 0.25s;
+    }
+    &:where(a:hover > code) {
+      color: var(--rp-c-brand);
+    }
+    // #endregion
+
+    &:where(details) {
+      cursor: pointer;
+      margin: 16px 0;
+      padding: 8px;
+      transition: background-color 0.3s;
+      &:hover {
+        background-color: var(--rp-c-bg-mute);
+      }
+    }
+  }
+}
+
+/* Dark mode styles */
+:where(.rp-dark) .rp-doc {
+  :not(:where(.rp-not-doc, .rp-not-doc *)) {
+    /* table */
+    /* #region */
+    &:where(table) {
+      border-color: var(--rp-c-divider);
+    }
+
+    &:where(table tr) {
+      border-color: var(--rp-c-divider);
+    }
+
+    &:where(table td) {
+      border-color: var(--rp-c-divider);
+    }
+
+    &:where(table th) {
+      border-color: var(--rp-c-divider);
+    }
+  }
+}

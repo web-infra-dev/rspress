@@ -1,0 +1,19 @@
+{
+  "name": "@rspress-fixture/react-router-dom-6",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "build": "rspress build",
+    "dev": "rspress dev",
+    "preview": "rspress preview"
+  },
+  "dependencies": {
+    "@rspress/core": "workspace:*",
+    "react": "^19.2.0",
+    "react-dom": "^19.2.0",
+    "react-router-dom": "^6.30.2"
+  },
+  "devDependencies": {
+    "@types/node": "^22.8.1"
+  }
+}

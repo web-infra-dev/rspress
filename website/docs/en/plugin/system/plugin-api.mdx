@@ -384,3 +384,60 @@ export function MyComponent() {
 This hook is executed after the `routeGenerated` hook.
 
 :::
+
+### i18nSource
+
+- **Type**: `(source: Record<string, Record<string, string>>) => Record<string, Record<string, string>> | Promise<Record<string, Record<string, string>>>`
+
+Used to add or modify internationalization (i18n) text data. You can use this hook to extend or modify the theme's i18n text.
+
+The `source` parameter is an object with the following structure:
+
+```ts
+{
+  [textKey: string]: {
+    [locale: string]: string;
+  }
+}
+```
+
+Where the first-level `textKey` is the text key name, the second-level `locale` is the language code (e.g., `zh`, `en`), and the value is the translated text for the corresponding language.
+
+Usage example:
+
+```tsx title="plugin.ts"
+import type { RspressPlugin } from '@rspress/core';
+
+export function pluginForDoc(): RspressPlugin {
+  return {
+    // Plugin name
+    name: 'plugin-name',
+    // Add or modify i18n text
+    i18nSource(source) {
+      // Add new text
+      return {
+        ...source,
+        customKey: {
+          zh: '自定义文案',
+          en: 'Custom Text',
+        },
+        anotherKey: {
+          zh: '另一个文案',
+          en: 'Another Text',
+        },
+      };
+    },
+  };
+}
+```
+
+If your plugin provides runtime components at the same time, you can use these texts via the `useI18n` hook:
+
+```tsx
+import { useI18n } from '@rspress/core/runtime';
+
+export function MyComponent() {
+  const t = useI18n();
+  return <div>{t('customKey')}</div>;
+}
+```

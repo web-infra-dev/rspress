@@ -1,0 +1,72 @@
+/* This is some variables used in HomeLayout. */
+/* Light Mode */
+:where(html:not(.rp-dark)) {
+  --rp-home-hero-secondary-color: #a673ff;
+
+  /* HomeHero */
+  --rp-home-hero-title-color: transparent;
+  --rp-home-hero-title-bg: linear-gradient(
+    90deg,
+    var(--rp-c-brand-dark) 0%,
+    var(--rp-c-brand-dark) 30%,
+    var(--rp-home-hero-secondary-color) 100%
+  );
+
+  /* HomeBackground */
+  --rp-home-background-bg:
+    radial-gradient(
+      42.12% 56.13% at 100% 0%,
+      rgba(83, 125, 255, 0.1) 0%,
+      rgba(255, 255, 255, 0) 100%
+    ),
+    radial-gradient(
+      42.01% 79.63% at 52.86% 0%,
+      rgba(83, 125, 255, 0.2) 0%,
+      rgba(255, 255, 255, 0) 100%
+    ),
+    radial-gradient(
+      79.67% 58.09% at 0% 0%,
+      rgba(126, 105, 255, 0.2) 0%,
+      rgba(255, 255, 255, 0) 100%
+    ),
+    #fff;
+
+  /* HomeFeature */
+  --rp-home-feature-bg: linear-gradient(135deg, #fff, #f9f9f980);
+}
+
+/* Dark Mode */
+:where(html.rp-dark) {
+  --rp-home-hero-secondary-color: #a673ff;
+
+  /* HomeHero */
+  --rp-home-hero-title-color: transparent;
+  --rp-home-hero-title-bg: linear-gradient(
+    90deg,
+    var(--rp-c-brand-dark) 0%,
+    var(--rp-c-brand-dark) 30%,
+    var(--rp-home-hero-secondary-color) 100%
+  );
+
+  /* HomeBackground */
+  --rp-home-background-bg:
+    radial-gradient(
+      42.12% 56.13% at 100% 0%,
+      #0c1d48 0%,
+      rgba(18, 18, 18, 0) 100%
+    ),
+    radial-gradient(
+      55.81% 87.78% at 48.37% 0%,
+      #000000 0%,
+      rgba(18, 18, 18, 0) 89.55%
+    ),
+    radial-gradient(
+      122.65% 88.24% at 0% 0%,
+      #34268a 0%,
+      rgba(18, 18, 18, 0) 100%
+    ),
+    #121212;
+
+  /* HomeFeature */
+  --rp-home-feature-bg: linear-gradient(135deg, #ffffff00, #ffffff08);
+}

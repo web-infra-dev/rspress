@@ -1,0 +1,116 @@
+.rp-home-feature {
+  --rp-home-feature-gap: 0.5rem;
+  overflow: hidden;
+  margin: auto;
+  display: flex;
+  flex-wrap: wrap;
+  max-width: 72rem;
+  gap: var(--rp-home-feature-gap);
+  padding: 10px;
+
+  &__item {
+    width: 100%;
+    position: relative;
+
+    &--span-2,
+    &--span-4,
+    &--span-6 {
+      @media (min-width: 640px) {
+        width: calc(50% - var(--rp-home-feature-gap));
+      }
+    }
+
+    &--span-2,
+    &--span-4 {
+      @media (min-width: 768px) {
+        width: calc(50% - var(--rp-home-feature-gap));
+      }
+    }
+
+    &--span-3,
+    &--span-6 {
+      @media (min-width: 768px) {
+        width: calc((100% - 2 * var(--rp-home-feature-gap)) / 3);
+      }
+    }
+
+    &--span-3 {
+      @media (min-width: 960px) {
+        width: calc((100% - 3 * var(--rp-home-feature-gap)) / 4);
+      }
+    }
+
+    &--span-4 {
+      @media (min-width: 960px) {
+        width: calc((100% - 2 * var(--rp-home-feature-gap)) / 3);
+      }
+    }
+
+    &--span-6 {
+      @media (min-width: 960px) {
+        width: calc(50% - var(--rp-home-feature-gap));
+      }
+    }
+  }
+
+  &__item-wrapper {
+    position: relative;
+    height: 100%;
+  }
+
+  &__card {
+    height: 100%;
+    padding: 2rem;
+    border-radius: 2rem;
+    border: 1px solid var(--rp-c-divider-light);
+    background: var(--rp-home-feature-bg);
+    // fill: var(--rp-home-feature-bg-fill);
+    backdrop-filter: blur(10px);
+    transition: all 0.3s;
+
+    &--clickable {
+      cursor: pointer;
+    }
+
+    &:hover {
+      border: 1px solid var(--rp-c-brand);
+      color: var(--rp-c-brand);
+    }
+  }
+
+  &__title-wrapper {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    align-items: flex-start;
+  }
+
+  &__icon {
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+
+    min-width: 3rem;
+    min-height: 3rem;
+    font-size: 1.5rem;
+
+    background-color: var(--rp-c-bg);
+    border-radius: 1rem;
+    border: 3px solid var(--rp-c-divider-light);
+  }
+
+  &__title {
+    font-weight: 700;
+    text-align: left;
+    margin: 0;
+  }
+
+  &__detail {
+    line-height: 1.5;
+    padding-top: 0.5rem;
+    font-size: 0.875rem;
+    color: var(--rp-c-text-2);
+    font-weight: 500;
+    margin: 0;
+  }
+}

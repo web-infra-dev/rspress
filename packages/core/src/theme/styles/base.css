@@ -1,0 +1,66 @@
+@import url(./preflight.css) layer(rp-base);
+
+/* all the tag select except html and body should be added to rp-base layer */
+@layer rp-base {
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6,
+  li,
+  p {
+    overflow-wrap: break-word;
+  }
+  button:focus,
+  button:focus-visible {
+    outline: none;
+  }
+}
+
+html {
+  line-height: 1.7;
+  font-size: 16px;
+  -webkit-text-size-adjust: 100%;
+
+  /* @see https://developer.mozilla.org/docs/Web/CSS/scroll-padding-top */
+  scroll-padding-top: calc(
+    var(--rp-banner-height, 0px) + var(--rp-nav-height) +
+      var(--rp-sidebar-menu-height)
+  );
+}
+
+html.dark {
+  color-scheme: dark;
+}
+
+body {
+  margin: 0;
+  width: 100%;
+  min-width: 320px;
+  font-family: var(--rp-font-family-base);
+  font-size: 16px;
+  font-weight: 400;
+  color: var(--rp-c-text-1);
+  background-color: var(--rp-c-bg);
+  direction: ltr;
+  font-synthesis: style;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/**
+  * Custom font family
+*/
+:root {
+  --rp-font-family-base:
+    'Inter var experimental', 'Inter var', -apple-system, BlinkMacSystemFont,
+    'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Fira Sans', 'Droid Sans',
+    'Helvetica Neue', sans-serif;
+  --rp-font-family-mono: Menlo, Monaco, Consolas, 'Courier New', monospace;
+}
+
+:root #nprogress .bar {
+  background: var(--rp-c-brand);
+}

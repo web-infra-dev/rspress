@@ -12,4 +12,4 @@ if (enableCompileCache) {
   }
 }
 
-import('../dist/cli.js');
+import('../dist/cli/index.js');

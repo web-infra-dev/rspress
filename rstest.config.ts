@@ -9,7 +9,7 @@ export default defineConfig(
     globals: false,
     testEnvironment: 'node',
     testTimeout: 30000,
-    include: ['packages/**/*.test.ts'],
+    include: ['packages/**/*.test.{ts,tsx}'],
     exclude: ['**/node_modules/**'],
     setupFiles: ['./scripts/test-helper/rstest.setup.ts'],
     output: {

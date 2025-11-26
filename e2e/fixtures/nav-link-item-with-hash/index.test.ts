@@ -38,6 +38,6 @@ test.describe('basic test', async () => {
     await expect(navScreen).toHaveClass(/rp-nav-screen--open/);
 
     await page.getByRole('link', { name: 'PageC' }).click();
-    await expect(navScreen).not.toHaveClass(/rp-nav-screen--open/);
+    expect(await navScreen.isVisible()).toBe(false);
   });
 });

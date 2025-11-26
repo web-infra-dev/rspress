@@ -1,9 +1,12 @@
+import { createRequire } from 'node:module';
 import path from 'node:path';
-import { fileURLToPath } from 'node:url';
-import { APPEARANCE_KEY } from '@rspress/shared';
 import { version } from '../../package.json';
 
+const require = createRequire(import.meta.url);
+
 export const RSPRESS_VERSION = version;
+
+const APPEARANCE_KEY = 'rspress-theme-appearance';
 
 export const isProduction = () => process.env.NODE_ENV === 'production';
 
@@ -26,9 +29,10 @@ export const inlineThemeScript = `{
   .replace(/\n/g, ';')
   .replace(/\s{2,}/g, '');
 
-const dirname = path.dirname(fileURLToPath(new URL(import.meta.url)));
-
-export const PACKAGE_ROOT = path.join(dirname, '..');
+export const PACKAGE_ROOT = path.dirname(
+  require.resolve('@rspress/core/package.json'),
+);
+export const DEFAULT_THEME = path.join(PACKAGE_ROOT, 'dist/theme');
 export const TEMPLATE_PATH = path.join(PACKAGE_ROOT, 'index.html');
 
 export const CSR_CLIENT_ENTRY = path.join(
@@ -52,6 +56,13 @@ export const SSR_SERVER_ENTRY = path.join(
   'ssrServerEntry.js',
 );
 
+export const SSG_MD_SERVER_ENTRY = path.join(
+  PACKAGE_ROOT,
+  'dist',
+  'runtime',
+  'ssrMdServerEntry.js',
+);
+
 export const OUTPUT_DIR = 'doc_build';
 
 export const APP_HTML_MARKER = '<!--<?- DOC_CONTENT ?>-->';
@@ -64,3 +75,6 @@ export const PUBLIC_DIR = 'public';
 // Prevent the risk of naming conflicts with the user's folders
 export const NODE_SSG_BUNDLE_FOLDER = '__ssg__';
 export const NODE_SSG_BUNDLE_NAME = 'rspress-ssg-entry.cjs';
+
+export const NODE_SSG_MD_BUNDLE_FOLDER = '__ssg_md__';
+export const NODE_SSG_MD_BUNDLE_NAME = 'rspress-ssg-md-entry.cjs';

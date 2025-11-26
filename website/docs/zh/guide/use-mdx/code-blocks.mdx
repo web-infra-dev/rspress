@@ -175,9 +175,27 @@ console.log('Highlighted');
 console.log('Highlighted');
 ```
 
-### 显示代码行号
+## 显示代码行号
 
-如果你想要显示代码行号，你可以在配置文件中开启 `showLineNumbers` 选项:
+你可以使用 `lineNumbers` meta 属性为单个代码块显示行号：
+
+````mdx
+```ts lineNumbers
+function hello() {
+  console.log('此代码块启用了行号');
+}
+```
+````
+
+它将被渲染为：
+
+```ts lineNumbers
+function hello() {
+  console.log('此代码块启用了行号');
+}
+```
+
+你也可以通过在配置文件中设置 `showLineNumbers` 选项来全局启用行号：
 
 ```ts title="rspress.config.ts"
 export default {
@@ -188,9 +206,27 @@ export default {
 };
 ```
 
-### Wrap code
+当全局启用 `showLineNumbers` 时，所有代码块默认都会显示行号。
 
-如果你想要默认启用长代码换行展示，你可以在配置文件中开启 `defaultWrapCode` 选项:
+## 代码换行
+
+你可以使用 `wrapCode` meta 属性为单个代码块启用代码换行：
+
+````mdx
+```ts wrapCode
+const longLine =
+  '这是一行很长的代码，当存在 wrapCode meta 属性时会自动换行显示';
+```
+````
+
+它将被渲染为：
+
+```ts wrapCode
+const longLine =
+  '这是一行很长的代码，当存在 wrapCode meta 属性时会自动换行显示';
+```
+
+你也可以通过在配置文件中设置 `defaultWrapCode` 选项来全局启用代码换行：
 
 ```ts title="rspress.config.ts"
 export default {
@@ -199,6 +235,24 @@ export default {
     defaultWrapCode: true,
   },
 };
+```
+
+当全局启用 `defaultWrapCode` 时，所有代码块默认都会换行显示长代码。
+
+## 组合使用 meta 属性
+
+你可以将多个 meta 属性组合使用：
+
+````mdx
+```ts lineNumbers wrapCode title="example.ts"
+const longLine = '此代码块同时具有行号、代码换行和标题';
+```
+````
+
+它将被渲染为：
+
+```ts lineNumbers wrapCode title="example.ts"
+const longLine = '此代码块同时具有行号、代码换行和标题';
 ```
 
 ## Diff 代码块
@@ -227,7 +281,7 @@ function test() {
 
 Rspress 在 V2 中，使用 [Shiki](https://shiki.style) 进行编译时的代码高亮，提供了灵活扩展的代码块能力。
 
-通过配置 [`markdown.shiki.transformers`](../../../api/config/config-build.mdx#markdownshiki) 添加自定义 [shiki transformers](https://shiki.style/guide/transformers.html) 来实现更加丰富的代码块效果。
+通过配置 [`markdown.shiki.transformers`](../../api/config/config-build.mdx#markdownshiki) 添加自定义 [shiki transformers](https://shiki.style/guide/transformers.html) 来实现更加丰富的代码块效果。
 
 除了上文中的 [transformerNotationHighlight](#notation-行高亮)，Rspress 默认支持 [@shikijs/transformers](https://shiki.style/packages/transformers) 中的以下 transformers。
 
@@ -352,7 +406,7 @@ console.log('Not focused');
 
 > [TwoSlash](https://twoslash.netlify.app/guide/) 是一种用于 TypeScript 代码的标记格式，适合创建自包含的代码示例，并让 TypeScript 编译器自动补充类型信息和提示，广泛应用于 TypeScript 官网。
 
-Rspress 提供了 `@rspress/core/plugin-twoslash` 插件，它可以在 Rspress 中使用 Twoslash 功能。详见 [@rspress/plugin-twoslash 文档](../../../plugin/official-plugins/twoslash.mdx)
+Rspress 提供了 `@rspress/core/plugin-twoslash` 插件，它可以在 Rspress 中使用 Twoslash 功能。详见 [@rspress/plugin-twoslash 文档](../../plugin/official-plugins/twoslash.mdx)
 
 ```ts twoslash
 // @noErrorValidation

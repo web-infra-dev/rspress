@@ -1,0 +1,130 @@
+import type { I18nText } from '@rspress/core';
+
+export const DEFAULT_I18N_TEXT = {
+  languagesText: {
+    zh: '语言',
+    en: 'Languages',
+    ja: '言語',
+    ko: '언어',
+  },
+  themeText: {
+    zh: '主题',
+    en: 'Theme',
+    ja: 'テーマ',
+    ko: '테마',
+  },
+  versionsText: {
+    zh: '版本',
+    en: 'Versions',
+    ja: 'バージョン',
+    ko: '버전',
+  },
+  menuTitle: {
+    zh: '菜单',
+    en: 'Menu',
+    ja: 'メニュー',
+    ko: '사이드바 메뉴',
+  },
+  outlineTitle: {
+    zh: '目录',
+    en: 'ON THIS PAGE',
+    ja: '目次',
+    ko: '이 페이지 목차',
+  },
+  scrollToTopText: {
+    en: 'Back to top',
+    zh: '回到顶部',
+    ja: 'トップに戻る',
+    ko: '맨 위로',
+  },
+  lastUpdatedText: {
+    en: 'Last Updated',
+    zh: '最后更新于',
+    ja: '最終更新',
+    ko: '업데이트 날짜',
+  },
+  prevPageText: {
+    en: 'Previous page',
+    zh: '上一页',
+    ja: '前のページ',
+    ko: '이전 페이지',
+  },
+  nextPageText: {
+    en: 'Next page',
+    zh: '下一页',
+    ja: '次のページ',
+    ko: '다음 페이지',
+  },
+  sourceCodeText: {
+    en: 'Source Code',
+    zh: '源码',
+    ja: 'ソースコード',
+    ko: '소스 코드',
+  },
+  searchPlaceholderText: {
+    en: 'Search',
+    zh: '搜索',
+    ja: '検索',
+    ko: '검색',
+  },
+  searchPanelCancelText: {
+    en: 'Cancel',
+    zh: '取消',
+    ja: 'キャンセル',
+    ko: '취소',
+  },
+  searchNoResultsText: {
+    en: 'No matching results',
+    zh: '未找到与之匹配的结果',
+    ja: '一致する結果が見つかりません',
+    ko: '일치하는 결과가 없습니다',
+  },
+  searchSuggestedQueryText: {
+    en: 'Try searching for different keywords',
+    zh: '试试搜索不同关键词',
+    ja: '別のキーワードで検索してみてください',
+    ko: '다른 키워드로 검색해 보세요',
+  },
+  'overview.filterNameText': {
+    en: 'Filter',
+    zh: '筛选',
+    ja: 'フィルター',
+    ko: '필터',
+  },
+  'overview.filterPlaceholderText': {
+    en: 'Search API',
+    zh: '搜索 API',
+    ja: 'API を検索',
+    ko: 'API 검색',
+  },
+  'overview.filterNoResultText': {
+    en: 'No matching API found',
+    zh: '未找到匹配的 API',
+    ja: '一致する API が見つかりません',
+    ko: '일치하는 API가 없습니다',
+  },
+  editLinkText: {
+    en: '📝 Edit this page',
+    zh: '📝 编辑此页面',
+    ja: '📝 このページを編集',
+    ko: '📝 이 페이지 편집',
+  },
+  codeButtonGroupCopyButtonText: {
+    en: 'Copy code',
+    zh: '复制代码',
+    ja: 'コードをコピー',
+    ko: '코드 복사',
+  },
+  notFoundText: {
+    en: 'PAGE NOT FOUND',
+    zh: '页面未找到',
+    ja: 'ページが見つかりません',
+    ko: '페이지를 찾을 수 없음',
+  },
+  takeMeHomeText: {
+    en: 'Take me home',
+    zh: '返回首页',
+    ja: 'ホームに連れてって',
+    ko: '홈으로 이동',
+  },
+} as const satisfies Required<I18nText>;

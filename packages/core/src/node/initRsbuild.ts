@@ -16,14 +16,18 @@ import {
 import { pluginVirtualModule } from 'rsbuild-plugin-virtual-module';
 import {
   CSR_CLIENT_ENTRY,
+  DEFAULT_THEME,
   DEFAULT_TITLE,
   inlineThemeScript,
   isProduction,
   NODE_SSG_BUNDLE_FOLDER,
   NODE_SSG_BUNDLE_NAME,
+  NODE_SSG_MD_BUNDLE_FOLDER,
+  NODE_SSG_MD_BUNDLE_NAME,
   OUTPUT_DIR,
   PACKAGE_ROOT,
   PUBLIC_DIR,
+  SSG_MD_SERVER_ENTRY,
   SSR_CLIENT_ENTRY,
   SSR_SERVER_ENTRY,
   TEMPLATE_PATH,
@@ -45,11 +49,8 @@ import { socialLinksVMPlugin } from './runtimeModule/socialLinks';
 import type { FactoryContext } from './runtimeModule/types';
 import { rsbuildPluginCSR } from './ssg/rsbuildPluginCSR';
 import { rsbuildPluginSSG } from './ssg/rsbuildPluginSSG';
-import {
-  detectReactVersion,
-  resolveReactAlias,
-  resolveReactRouterDomAlias,
-} from './utils';
+import { rsbuildPluginSSGMD } from './ssg-md/rsbuildPluginSSGMD';
+import { resolveReactAlias, resolveReactRouterDomAlias } from './utils';
 import { detectCustomIcon } from './utils/detectCustomIcon';
 
 function isPluginIncluded(config: UserConfig, pluginName: string): boolean {
@@ -61,8 +62,6 @@ function isPluginIncluded(config: UserConfig, pluginName: string): boolean {
 }
 
 const require = createRequire(import.meta.url);
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = path.dirname(__filename);
 
 async function getVirtualModulesFromPlugins(
   pluginDriver: PluginDriver,
@@ -91,14 +90,12 @@ async function createInternalBuildConfig(
     config?.themeDir ?? path.join(process.cwd(), 'theme');
   const outDir = config?.outDir ?? OUTPUT_DIR;
 
-  const DEFAULT_THEME = require.resolve('@rspress/theme-default');
   const base = config?.base ?? '';
 
   // In production, we need to add assetPrefix in asset path
   const assetPrefix = isProduction()
     ? removeTrailingSlash(config?.builderConfig?.output?.assetPrefix ?? base)
     : '';
-  const reactVersion = await detectReactVersion();
 
   const normalizeIcon = (icon: string | URL | undefined) => {
     if (!icon) {
@@ -125,8 +122,8 @@ async function createInternalBuildConfig(
     reactRouterDomAlias,
   ] = await Promise.all([
     detectCustomIcon(CUSTOM_THEME_DIR),
-    resolveReactAlias(reactVersion, false),
-    enableSSG ? resolveReactAlias(reactVersion, true) : Promise.resolve({}),
+    resolveReactAlias(false),
+    enableSSG ? resolveReactAlias(true) : Promise.resolve({}),
     resolveReactRouterDomAlias(),
   ]);
 
@@ -182,7 +179,7 @@ async function createInternalBuildConfig(
           ...siteDataVMPlugin(context),
         },
       }),
-      enableSSG
+      enableSSG && config.ssg
         ? rsbuildPluginSSG({
             routeService,
             config,
@@ -191,6 +188,12 @@ async function createInternalBuildConfig(
             routeService,
             config,
           }),
+      enableSSG && config.llms
+        ? rsbuildPluginSSGMD({
+            routeService,
+            config,
+          })
+        : null,
     ],
     server: {
       port:
@@ -235,18 +238,24 @@ async function createInternalBuildConfig(
         ...detectCustomIconAlias,
         '@mdx-js/react': require.resolve('@mdx-js/react'),
         '@theme': [CUSTOM_THEME_DIR, DEFAULT_THEME],
-        '@theme-assets': path.join(DEFAULT_THEME, '../assets'),
+        '@theme-assets': path.join(DEFAULT_THEME, './assets'),
         'react-lazy-with-preload': require.resolve('react-lazy-with-preload'),
         // single runtime
-        '@rspress/core/theme': path.join(__dirname, 'theme.js'),
-        '@rspress/core/runtime': path.join(__dirname, 'runtime.js'),
+        '@rspress/core/theme': DEFAULT_THEME,
+        '@rspress/core/runtime': path.join(PACKAGE_ROOT, 'dist/runtime.js'),
         '@rspress/core/shiki-transformers': path.join(
-          __dirname,
-          'shiki-transformers.js',
+          PACKAGE_ROOT,
+          'dist/shiki-transformers.js',
         ),
       },
     },
     source: {
+      preEntry: [
+        // ensure CSS orders and access @theme before @rspress/theme-default to avoid circular dependency
+        path.join(DEFAULT_THEME, './styles/index.js'), // 1. @rspress/theme-default global styles
+        'virtual-global-styles', // 2. virtual-global-styles
+        '@theme', // 3. import './index.css'; from 'theme/index.tsx'
+      ],
       include: [PACKAGE_ROOT],
       define: {
         'process.env.TEST': JSON.stringify(process.env.TEST),
@@ -258,7 +267,7 @@ async function createInternalBuildConfig(
             buildCache: {
               // 1. config file: rspress.config.ts
               buildDependencies: [
-                __filename, // this file,  __filename
+                new URL(import.meta.url).href, // this file,  __filename
                 pluginDriver.getConfigFilePath(), // rspress.config.ts
               ],
               cacheDigest: [
@@ -300,6 +309,8 @@ async function createInternalBuildConfig(
     },
     tools: {
       bundlerChain(chain, { CHAIN_ID, environment }) {
+        const isSsg = environment.name === 'node';
+        const isSsgMd = environment.name === 'node_md';
         const jsModuleRule = chain.module.rule(CHAIN_ID.RULE.JS);
 
         const swcLoaderOptions = jsModuleRule
@@ -321,12 +332,13 @@ async function createInternalBuildConfig(
           .options(swcLoaderOptions)
           .end()
           .use('mdx-loader')
-          .loader(require.resolve('./loader.js'))
+          .loader(fileURLToPath(new URL('./mdx/loader.js', import.meta.url)))
           .options({
             config,
             docDirectory: userDocRoot,
             routeService,
             pluginDriver,
+            isSsgMd,
           })
           .end();
 
@@ -355,13 +367,20 @@ async function createInternalBuildConfig(
           .test(/\.rspress[\\/]runtime[\\/]virtual-global-styles/)
           .merge({ sideEffects: true });
 
-        if (environment.name === 'node') {
+        if (isSsg || isSsgMd) {
+          chain.optimization.splitChunks({});
+        }
+
+        if (isSsg) {
           chain.output.filename(
             `${NODE_SSG_BUNDLE_FOLDER}/${NODE_SSG_BUNDLE_NAME}`,
           );
           chain.output.chunkFilename(`${NODE_SSG_BUNDLE_FOLDER}/[name].cjs`);
-          // For perf
-          chain.output.set('asyncChunks', false);
+        } else if (isSsgMd) {
+          chain.output.filename(
+            `${NODE_SSG_MD_BUNDLE_FOLDER}/${NODE_SSG_MD_BUNDLE_NAME}`,
+          );
+          chain.output.chunkFilename(`${NODE_SSG_MD_BUNDLE_FOLDER}/[name].cjs`);
         }
       },
     },
@@ -378,12 +397,9 @@ async function createInternalBuildConfig(
             index:
               enableSSG && isProduction() ? SSR_CLIENT_ENTRY : CSR_CLIENT_ENTRY,
           },
-          preEntry: [
-            path.join(DEFAULT_THEME, '../styles/index.js'),
-            'virtual-global-styles',
-          ],
           define: {
             'process.env.__SSR__': JSON.stringify(false),
+            'process.env.__SSR_MD__': JSON.stringify(false),
           },
         },
         output: {
@@ -393,7 +409,7 @@ async function createInternalBuildConfig(
           },
         },
       },
-      ...(enableSSG
+      ...(enableSSG && config.ssg
         ? {
             node: {
               resolve: {
@@ -408,6 +424,46 @@ async function createInternalBuildConfig(
                 },
                 define: {
                   'process.env.__SSR__': JSON.stringify(true),
+                  'process.env.__SSR_MD__': JSON.stringify(false),
+                },
+              },
+              performance: {
+                printFileSize: {
+                  compressed: true,
+                },
+              },
+              output: {
+                emitAssets: false,
+                target: 'node',
+                minify: false,
+              },
+            },
+          }
+        : {}),
+      ...(enableSSG && config.llms
+        ? {
+            node_md: {
+              resolve: {
+                alias: {
+                  ...reactSSRAlias,
+                  ...reactRouterDomAlias,
+                },
+              },
+              tools: {
+                rspack: {
+                  optimization: {
+                    moduleIds: 'named',
+                    chunkIds: 'named',
+                  },
+                },
+              },
+              source: {
+                entry: {
+                  index: SSG_MD_SERVER_ENTRY,
+                },
+                define: {
+                  'process.env.__SSR__': JSON.stringify(true),
+                  'process.env.__SSR_MD__': JSON.stringify(true),
                 },
               },
               performance: {

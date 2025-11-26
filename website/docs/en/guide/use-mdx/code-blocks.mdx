@@ -175,9 +175,27 @@ console.log('Highlighted');
 console.log('Highlighted');
 ```
 
-### Show code line numbers
+## Show code line numbers
 
-If you want to show code line numbers, you can enable the `showLineNumbers` option in the config file:
+You can show line numbers for individual code blocks using the `lineNumbers` meta attribute:
+
+````mdx
+```ts lineNumbers
+function hello() {
+  console.log('Line numbers enabled for this block');
+}
+```
+````
+
+It will be rendered as:
+
+```ts lineNumbers
+function hello() {
+  console.log('Line numbers enabled for this block');
+}
+```
+
+You can also enable line numbers globally by setting the `showLineNumbers` option in the config file:
 
 ```ts title="rspress.config.ts"
 export default {
@@ -188,9 +206,27 @@ export default {
 };
 ```
 
-### Wrap code
+When `showLineNumbers` is enabled globally, all code blocks will show line numbers by default.
 
-If you want to enable long code wrapping by default, you can enable the `defaultWrapCode` option in the config file:
+## Wrap code
+
+You can enable code wrapping for individual code blocks using the `wrapCode` meta attribute:
+
+````mdx
+```ts wrapCode
+const longLine =
+  'This is a very long line of code that will wrap when the wrapCode meta attribute is present';
+```
+````
+
+It will be rendered as:
+
+```ts wrapCode
+const longLine =
+  'This is a very long line of code that will wrap when the wrapCode meta attribute is present';
+```
+
+You can also enable code wrapping globally by setting the `defaultWrapCode` option in the config file:
 
 ```ts title="rspress.config.ts"
 export default {
@@ -199,6 +235,24 @@ export default {
     defaultWrapCode: true,
   },
 };
+```
+
+When `defaultWrapCode` is enabled globally, all code blocks will wrap long lines by default.
+
+## Combining meta attributes
+
+You can combine multiple meta attributes together:
+
+````mdx
+```ts lineNumbers wrapCode title="example.ts"
+const longLine = 'This code block has line numbers, code wrapping, and a title';
+```
+````
+
+It will be rendered as:
+
+```ts lineNumbers wrapCode title="example.ts"
+const longLine = 'This code block has line numbers, code wrapping, and a title';
 ```
 
 ## Diff code block
@@ -227,7 +281,7 @@ function test() {
 
 Rspress V2 uses [Shiki](https://shiki.style) for compile-time code highlighting, providing flexible code block capabilities.
 
-You can add custom [shiki transformers](https://shiki.style/guide/transformers.html) via [`markdown.shiki.transformers`](../../../api/config/config-build.mdx#markdownshiki) for richer code block effects.
+You can add custom [shiki transformers](https://shiki.style/guide/transformers.html) via [`markdown.shiki.transformers`](../../api/config/config-build.mdx#markdownshiki) for richer code block effects.
 
 In addition to the [transformerNotationHighlight](#notation-line-highlight) mentioned above, Rspress defaults to supporting the following transformers from [@shikijs/transformers](https://shiki.style/packages/transformers).
 
@@ -352,7 +406,7 @@ console.log('Not focused');
 
 > [Twoslash](https://twoslash.netlify.app/guide/) is a markup format for TypeScript code, suitable for creating self-contained code samples and letting the TypeScript compiler automatically supplement type information and hints. It is widely used on the official TypeScript website.
 
-Rspress provides the `@rspress/core/plugin-twoslash` plugin, which enables Twoslash features in Rspress. See [@rspress/plugin-twoslash documentation](../../../plugin/official-plugins/twoslash.mdx) for details.
+Rspress provides the `@rspress/core/plugin-twoslash` plugin, which enables Twoslash features in Rspress. See [@rspress/plugin-twoslash documentation](../../plugin/official-plugins/twoslash.mdx) for details.
 
 ```ts twoslash
 // @noErrorValidation

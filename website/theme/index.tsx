@@ -1,3 +1,4 @@
+import { useLang } from '@rspress/core/runtime';
 import {
   Banner,
   HomeLayout as BasicHomeLayout,
@@ -17,16 +18,16 @@ import {
 import { NavIcon } from '@rstack-dev/doc-ui/nav-icon';
 import { ToolStack } from './components/ToolStack';
 
-import './index.css';
-import { useLang } from '@rspress/core/runtime';
-
 function HomeLayout() {
   return (
     <BasicHomeLayout
       afterFeatures={<ToolStack />}
       afterHeroActions={
-        <div className="rp-doc" style={{ width: '100%', maxWidth: 400 }}>
-          <PackageManagerTabs command="create rspress@beta" />
+        <div
+          className="rp-doc"
+          style={{ width: '100%', maxWidth: 450, margin: '-1rem 0' }}
+        >
+          <PackageManagerTabs command="create rspress@rc" />
         </div>
       }
     />

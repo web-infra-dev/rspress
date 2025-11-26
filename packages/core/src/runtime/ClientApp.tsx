@@ -4,7 +4,7 @@ import {
   removeTrailingSlash,
   ThemeContext,
   withBase,
-} from '@rspress/runtime';
+} from '@rspress/core/runtime';
 import { useThemeState } from '@theme';
 import { createHead, UnheadProvider } from '@unhead/react/client';
 import { useMemo, useState } from 'react';
@@ -30,13 +30,7 @@ export function ClientApp({
       <PageContext.Provider
         value={useMemo(() => ({ data, setData }), [data, setData])}
       >
-        <BrowserRouter
-          future={{
-            v7_relativeSplatPath: true,
-            v7_startTransition: true,
-          }}
-          basename={removeTrailingSlash(withBase('/'))}
-        >
+        <BrowserRouter basename={removeTrailingSlash(withBase('/'))}>
           <UnheadProvider head={head}>
             <App />
           </UnheadProvider>

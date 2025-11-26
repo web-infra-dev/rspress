@@ -1,0 +1,11 @@
+.rp-edit-link {
+  color: var(--rp-c-brand);
+  text-decoration: none;
+  font-size: 15px;
+  font-weight: 500;
+  transition: all 0.2s ease-in-out;
+
+  &:hover {
+    color: var(--rp-c-brand-dark);
+  }
+}

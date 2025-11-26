@@ -1,0 +1,63 @@
+.rp-button {
+  display: inline-flex;
+  box-sizing: border-box;
+  align-items: center;
+  justify-content: center;
+  font-weight: 700;
+  white-space: nowrap;
+  height: 48px;
+  transition:
+    color 0.1s,
+    border-color 0.1s,
+    background-color 0.1s;
+
+  &--medium {
+    border-radius: var(--rp-radius);
+    padding: 0 20px;
+    line-height: 38px;
+    height: 38px;
+    font-size: 14px;
+  }
+
+  &--big {
+    border-radius: var(--rp-radius-large);
+    font-size: 16px;
+    min-width: 142px;
+
+    @media (max-width: 768px) {
+      font-size: 14px;
+      min-width: 100px;
+      height: 42px;
+      line-height: 42px;
+    }
+  }
+
+  &--brand {
+    opacity: 1;
+    color: #fff;
+    transition: all 0.3s ease;
+    background: var(--rp-home-hero-title-bg);
+
+    &:hover {
+      opacity: 0.8;
+    }
+  }
+
+  &--alt {
+    border: 1px solid var(--rp-c-gray-light-3);
+    color: var(--rp-c-text-0);
+    background-color: var(--rp-c-bg);
+    transition: all 0.3s ease;
+
+    .dark & {
+      background-color: var(--rp-c-bg-mute);
+      border-color: #484848;
+      color: var(--rp-c-text-1);
+    }
+
+    &:hover {
+      opacity: 0.8;
+      background-color: var(--rp-c-bg-mute);
+    }
+  }
+}

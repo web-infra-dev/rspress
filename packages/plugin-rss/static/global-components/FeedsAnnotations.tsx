@@ -16,10 +16,10 @@ export default function FeedsAnnotations() {
           href: url,
         };
         if (language) {
-          props.hrefLang = language;
+          // @ts-expect-error FIXME: why not hrefLang? @unhead/react issue
+          props.hreflang = language;
         }
-        // biome-ignore lint/correctness/useJsxKeyInIterable: no key props
-        return <link {...props} />;
+        return <link {...props} key={`${language}-${url}-${mime}`} />;
       })}
     </Head>
   );

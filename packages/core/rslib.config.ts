@@ -1,136 +1,108 @@
 import path from 'node:path';
+import { fileURLToPath } from 'node:url';
 import { pluginReact } from '@rsbuild/plugin-react';
+import { pluginSass } from '@rsbuild/plugin-sass';
+import { pluginSvgr } from '@rsbuild/plugin-svgr';
 import { defineConfig } from '@rslib/core';
 import { pluginPublint } from 'rsbuild-plugin-publint';
 
-function generateEntry(entryPath: string) {
-  const entryName = path
-    .basename(entryPath)
-    .replace(path.extname(entryPath), '');
-  return {
-    dts: { bundle: true },
-    source: {
-      entry: {
-        [entryName]: entryPath,
-      },
-    },
-    format: 'esm',
-    syntax: 'esnext',
-  } as const;
-}
+const COMMON_EXTERNALS = [
+  'virtual-routes',
+  'virtual-site-data',
+  'virtual-page-data',
+  'virtual-global-styles',
+  'virtual-global-components',
+  'virtual-search-hooks',
+  'virtual-i18n-text',
+  '@rspress/runtime',
+  '@theme',
+  /@theme-assets\//,
+  // To be externalized when bundling d.ts.
+  '@types/react',
+  '@rspress/core/runtime',
+  '@rspress/core/theme',
+  '@rspress/core/shiki-transformers',
+  '@rspress/core/_private/react',
+  '@rspress/shared',
+  '@rspress/runtime',
+];
 
 export default defineConfig({
   plugins: [pluginPublint()],
   lib: [
-    generateEntry('./src/runtime.ts'),
-    generateEntry('./src/theme.ts'),
     {
-      format: 'esm',
-      syntax: 'es2022',
       source: {
         entry: {
-          renderPageWorker: './src/node/ssg/renderPageWorker.ts',
+          index: './src/index.ts',
+          'cli/index': './src/cli/index.ts',
+          'shiki-transformers': './src/shiki-transformers.ts',
+          runtime: './src/runtime.ts',
+
+          // TODO: should add entry by new URL parser in Rspack module graph
+          'node/mdx/loader': './src/node/mdx/loader.ts',
+          'node/ssg/renderPageWorker': './src/node/ssg/renderPageWorker.ts',
         },
       },
-    },
-    {
-      format: 'esm',
-      dts: {
-        bundle: true,
+      dts: false,
+      experiments: {
+        advancedEsm: true,
       },
-      syntax: 'es2022',
-      source: {
-        entry: {
-          cli: './src/cli/index.ts',
-        },
+      performance: {
+        buildCache: false,
       },
       output: {
-        distPath: {
-          root: './dist',
+        externals: COMMON_EXTERNALS,
+        filenameHash: true,
+      },
+      tools: {
+        rspack(config) {
+          config.plugins.forEach(plugin => {
+            if (plugin?.constructor.name === 'EsmLibraryPlugin') {
+              // @ts-expect-error
+              plugin.options = {
+                preserveModules: path.resolve(
+                  path.dirname(fileURLToPath(import.meta.url)),
+                  './src',
+                ),
+              };
+            }
+          });
         },
-        externals: {
-          '../node/index': 'module ./index.js',
-        },
-      },
-    },
-    {
-      format: 'esm',
-      dts: {
-        bundle: true,
-      },
-      syntax: 'es2022',
-      output: {
-        distPath: {
-          root: './dist',
-        },
-      },
-    },
-    {
-      format: 'esm',
-      syntax: 'es2022',
-      dts: {
-        bundle: true,
-      },
-      output: {
-        distPath: {
-          root: './dist',
-        },
-        externals: {
-          './processor': 'module ./processor.js',
-        },
-      },
-      source: {
-        entry: {
-          loader: './src/node/mdx/loader.ts',
-        },
-      },
-    },
-    {
-      format: 'esm',
-      syntax: 'es2022',
-      dts: {
-        bundle: true,
-      },
-      output: {
-        distPath: {
-          root: './dist',
-        },
-      },
-      source: {
-        entry: {
-          processor: './src/node/mdx/processor.ts',
-        },
-      },
-    },
-    {
-      format: 'esm',
-      syntax: 'es2022',
-      dts: {
-        bundle: true,
-      },
-      output: {
-        target: 'web',
-        distPath: {
-          root: './dist',
-        },
-      },
-      source: {
-        entry: {
-          'shiki-transformers':
-            './src/node/mdx/rehypePlugins/transformers/index.ts',
+        bundlerChain(chain, { CHAIN_ID }) {
+          const rule = chain.module.rule(
+            `Rslib:${CHAIN_ID.RULE.JS}-entry-loader`,
+          );
+          rule.uses.delete('rsbuild:lib-entry-module');
+          rule.issuer({});
+          rule.clear();
         },
       },
     },
     {
       bundle: false,
-      dts: true,
+      dts: false,
+      format: 'esm',
+      syntax: 'es2022',
+      source: {
+        entry: {
+          index: './src/node/ssg-md/react/*.ts',
+        },
+      },
+      output: {
+        distPath: {
+          root: './dist/_private/react',
+        },
+      },
+    },
+    {
+      bundle: false,
+      dts: false,
       format: 'esm',
       syntax: 'es2022',
       source: {
         entry: {
           index: './src/runtime/*.{tsx,ts}',
         },
-        tsconfigPath: './src/runtime/tsconfig.json',
       },
       output: {
         target: 'web',
@@ -139,6 +111,48 @@ export default defineConfig({
         },
       },
       plugins: [pluginReact()],
+    },
+    {
+      format: 'esm',
+      bundle: false,
+      dts: true,
+      plugins: [
+        pluginReact(),
+        pluginSvgr({ svgrOptions: { exportType: 'default' } }),
+        pluginSass(),
+      ],
+      source: {
+        define: {
+          __WEBPACK_PUBLIC_PATH__: '__webpack_public_path__',
+        },
+        entry: {
+          index: ['./src/theme/**', '!./src/theme/tsconfig.json'],
+        },
+      },
+      tools: {
+        rspack: {
+          output: {
+            environment: {
+              // For Circular import of "@theme", https://github.com/web-infra-dev/rsbuild/issues/2862
+              const: false,
+            },
+          },
+        },
+      },
+      output: {
+        target: 'web',
+        distPath: {
+          root: './dist/theme',
+        },
+        externals: COMMON_EXTERNALS,
+        copy: [
+          {
+            from: './theme/components',
+            to: '../eject-theme/components',
+            context: path.join(__dirname, 'src'),
+          },
+        ],
+      },
     },
   ],
 });

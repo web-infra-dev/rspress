@@ -1,0 +1,82 @@
+.rp-hover-group {
+  // base
+  list-style: none;
+
+  // layout
+  display: flex;
+  width: auto;
+  min-width: 80px;
+  padding: 8px;
+  flex-direction: column;
+  align-items: flex-start;
+
+  // style
+  border-radius: 8px;
+  border: var(--rp-code-block-border);
+  background: var(--rp-c-bg);
+  box-shadow: 0px 4px 16px 0px rgba(0, 0, 0, 0.04);
+  transition: opacity 0.3s ease-in-out;
+
+  position: absolute;
+  z-index: 999;
+  top: 80%; // not 100%
+
+  // #region postion
+  &--center {
+    left: 50%;
+    transform: translateX(-50%);
+  }
+
+  &--left {
+    left: 0;
+    transform: none;
+  }
+  &--right {
+    right: 0;
+    transform: none;
+  }
+  // #endregion postion
+
+  &--hidden {
+    visibility: hidden;
+    opacity: 0;
+  }
+
+  &__item {
+    height: 32px;
+    flex: 1;
+    align-self: stretch;
+    display: block;
+    white-space: nowrap;
+
+    padding-left: 8px;
+    padding-right: 8px;
+
+    // style
+    border-radius: 8px;
+    transition: background-color 0.3s ease-in-out;
+
+    // text
+    color: var(--rp-c-text-1);
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: 32px;
+
+    &__link {
+      // For click area
+      display: block;
+      height: 100%;
+    }
+
+    &--active {
+      font-weight: 600;
+      color: var(--rp-c-brand);
+      cursor: auto;
+      pointer-events: none;
+    }
+    &:hover {
+      opacity: 0.7;
+    }
+  }
+}

@@ -1,8 +1,10 @@
-import type {
-  PageIndexInfo,
-  RouteMeta,
-  RspressPlugin,
-  UserConfig,
+import {
+  addLeadingSlash,
+  addTrailingSlash,
+  type PageIndexInfo,
+  type RouteMeta,
+  type RspressPlugin,
+  type UserConfig,
 } from '@rspress/shared';
 import { haveNavSidebarConfig } from './auto-nav-sidebar';
 import type { RouteService } from './route/RouteService';
@@ -16,7 +18,8 @@ type RspressPluginHookKeys =
   | 'routeGenerated'
   | 'routeServiceGenerated'
   | 'extendPageData'
-  | 'modifySearchIndexData';
+  | 'modifySearchIndexData'
+  | 'i18nSource';
 
 export class PluginDriver {
   #config: UserConfig;
@@ -59,9 +62,7 @@ export class PluginDriver {
     this.clearPlugins();
     const config = this.#config;
     const themeConfig = config?.themeConfig || {};
-    const enableLastUpdated =
-      themeConfig?.lastUpdated ||
-      themeConfig?.locales?.some(locale => locale.lastUpdated);
+    const enableLastUpdated = themeConfig?.lastUpdated;
     const mediumZoomConfig = config?.mediumZoom ?? true;
     if (enableLastUpdated) {
       const { pluginLastUpdated } = await import('./last-updated/index');
@@ -108,7 +109,18 @@ export class PluginDriver {
     }
   }
 
+  private async normalizeConfig() {
+    this.#config.ssg ??= true;
+    this.#config.llms ??= false;
+    this.#config.base = addTrailingSlash(
+      addLeadingSlash(this.#config.base ?? '/'),
+    );
+    this.#config.lang ??= 'en';
+  }
+
   async modifyConfig() {
+    this.normalizeConfig();
+
     let config = this.#config;
 
     for (let i = 0; i < this.#plugins.length; i++) {
@@ -199,6 +211,16 @@ export class PluginDriver {
         ...current,
       };
     }, {});
+  }
+
+  async i18nSource(defaultSource: Record<string, Record<string, string>>) {
+    let i18nSource = defaultSource;
+    for (const plugin of this.#plugins) {
+      if (typeof plugin.i18nSource === 'function') {
+        i18nSource = (await plugin.i18nSource(i18nSource)) || i18nSource;
+      }
+    }
+    return i18nSource;
   }
 
   globalUIComponents() {

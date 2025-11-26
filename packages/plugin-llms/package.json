@@ -1,6 +1,6 @@
 {
   "name": "@rspress/plugin-llms",
-  "version": "2.0.0-beta.34",
+  "version": "2.0.0-rc.1",
   "description": "A plugin for rspress to generate llms.txt, llms-full.txt, md files to let llm understand your website.",
   "bugs": "https://github.com/web-infra-dev/rspress/issues",
   "repository": {
@@ -40,22 +40,22 @@
     "unist-util-visit": "^5.0.0"
   },
   "devDependencies": {
-    "@microsoft/api-extractor": "^7.53.1",
-    "@rsbuild/core": "~1.5.17",
-    "@rsbuild/plugin-react": "~1.4.1",
+    "@microsoft/api-extractor": "^7.55.1",
+    "@rsbuild/core": "~1.6.8",
+    "@rsbuild/plugin-react": "~1.4.2",
     "@rsbuild/plugin-sass": "~1.4.0",
-    "@rslib/core": "0.15.1",
+    "@rslib/core": "0.18.0",
     "@rspress/config": "workspace:*",
     "@types/hast": "^3.0.4",
     "@types/node": "^22.8.1",
-    "@types/react": "^19.1.15",
-    "react": "^19.1.1",
+    "@types/react": "^19.2.6",
+    "react": "^19.2.0",
     "rsbuild-plugin-publint": "^0.3.3",
     "typescript": "^5.8.2",
     "vfile": "^6.0.3"
   },
   "peerDependencies": {
-    "@rspress/core": "workspace:^2.0.0-beta.34"
+    "@rspress/core": "workspace:^2.0.0-rc.1"
   },
   "engines": {
     "node": ">=18.0.0"

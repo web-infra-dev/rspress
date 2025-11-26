@@ -121,17 +121,14 @@ function normalizeLink(
   if (nodeUrl.startsWith('#')) {
     return nodeUrl;
   }
-
-  // eslint-disable-next-line prefer-const
-  let { url, hash } = parseUrl(nodeUrl);
-
-  if (isExternalUrl(url)) {
-    return url + (hash ? `#${hash}` : '');
+  if (isExternalUrl(nodeUrl)) {
+    return nodeUrl;
   }
-
   if (!routeService) {
     return nodeUrl;
   }
+
+  let { url, hash, search } = parseUrl(nodeUrl);
 
   // 1. [](/api/getting-started) or [](/en/api/getting-started)
   if (url.startsWith('/')) {
@@ -151,17 +148,24 @@ function normalizeLink(
 
   if (typeof cleanUrls === 'boolean') {
     url = normalizeHref(url, cleanUrls);
+    // preserve dead links
+    if (!routeService.isExistRoute(url)) {
+      deadLinks.set(nodeUrl, url);
+      return nodeUrl;
+    }
   } else {
     url = normalizeHref(url, false);
+    // preserve dead links
+    if (!routeService.isExistRoute(url)) {
+      deadLinks.set(nodeUrl, url);
+      return nodeUrl;
+    }
     url = url.replace(/\.html$/, cleanUrls);
   }
 
-  // preserve dead links
-  if (!routeService.isExistRoute(url)) {
-    deadLinks.set(nodeUrl, url);
-    return nodeUrl;
+  if (search) {
+    url += `?${search}`;
   }
-
   if (hash) {
     url += `#${hash}`;
   }

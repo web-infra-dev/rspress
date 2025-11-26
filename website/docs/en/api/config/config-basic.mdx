@@ -111,6 +111,70 @@ export default defineConfig({
 });
 ```
 
+## i18nSource
+
+- **Type**: `Record<string, Record<string, string>> | ((value: Record<string, Record<string, string>>) => Record<string, Record<string, string>> | Promise<Record<string, Record<string, string>>>)`
+- **Default**: `{}`
+
+You can use this configuration to modify Rspress's built-in i18n text or extend custom component text. When extending text, it is usually used together with [useI18n](/ui/hooks/use-i18n.html).
+
+:::tip
+
+This has the same implementation and effect as `i18n.json`. You can use either one. `i18nSource` has higher priority than `i18n.json` and supports functions.
+
+:::
+
+The `i18nSource` parameter is an object with the following structure:
+
+```ts
+{
+  [textKey: string]: {
+    [locale: string]: string;
+  }
+}
+```
+
+Where the first-level `textKey` is the text key name, the second-level `locale` is the language code (e.g., `zh`, `en`), and the value is the translated text for the corresponding language.
+
+Here is an example of modifying Rspress's built-in i18n text:
+
+```ts title="rspress.config.ts"
+import { defineConfig } from '@rspress/core';
+export default defineConfig({
+  i18nSource: {
+    editLinkText: {
+      en: '📝 Edit this page on Gitlab',
+      zh: '📝 在 Gitlab 上编辑此页',
+    },
+  },
+});
+```
+
+`i18nSource` can also be a function, for example:
+
+```ts
+import { defineConfig } from '@rspress/core';
+
+export default defineConfig({
+  i18nSource: async (source) => {
+    for (const key of Object.keys(source)) {
+      source[key]['en_US'] = source[key]['en'];
+    }
+    return source;
+  },
+});
+```
+
+Here are the built-in i18n texts in Rspress:
+
+<details>
+
+```ts file="../../../../../packages/core/src/node/runtimeModule/DEFAULT_I18N_TEXT.ts"
+
+```
+
+</details>
+
 ## logo \{#logo-1}
 
 - **Type**: `string | { dark: string; light: string }`
@@ -502,7 +566,7 @@ export default defineConfig({
 });
 ```
 
-:::tips
+:::tip
 
 SSG requires the source code to support SSR. If the code is not compatible to SSR, the build process will fail. You can try:
 

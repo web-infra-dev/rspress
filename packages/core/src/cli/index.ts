@@ -5,6 +5,7 @@ import { logger } from '@rspress/shared/logger';
 import { cac } from 'cac';
 import chokidar from 'chokidar';
 import picocolors from 'picocolors';
+import { ejectComponent, listComponents } from '../node/eject';
 import { build, dev, serve } from '../node/index';
 import { loadConfigFile, resolveDocRoot } from './config/loadConfigFile';
 
@@ -152,5 +153,22 @@ cli
       });
     },
   );
+
+cli
+  .command('eject [component]', 'Eject a theme component to customize it')
+  .action(async (component?: string) => {
+    if (!component) {
+      await listComponents();
+      return;
+    }
+
+    const cwd = process.cwd();
+    try {
+      await ejectComponent(component, cwd);
+    } catch (error) {
+      logger.error(`Failed to eject component: ${error}`);
+      process.exit(1);
+    }
+  });
 
 cli.parse();

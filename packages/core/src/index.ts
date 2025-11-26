@@ -1,17 +1,30 @@
-export { matchPath } from '@rspress/runtime/server';
-
 // TODO: do not expose so much pubic API
+
 export type {
+  EditLink,
+  Feature,
+  FrontMatterMeta,
+  Header,
+  Hero,
+  I18nText,
+  LocalSearchOptions,
   Nav,
+  NavItem,
+  NavItemWithChildren,
   NavItemWithLink,
+  NavItemWithLinkAndChildren,
+  NormalizedSidebarGroup,
   PageIndexInfo,
+  RemotePageInfo,
   RouteMeta,
   RspressPlugin,
   Sidebar,
+  SidebarData,
   SidebarDivider,
   SidebarGroup,
   SidebarItem,
   SidebarSectionHeader,
+  SocialLink,
   UserConfig,
 } from '@rspress/shared';
 export {
@@ -28,6 +41,7 @@ export {
   getNodeAttribute,
   mergeDocConfig,
 } from '@rspress/shared/node-utils';
+export { matchPath } from 'react-router-dom';
 // cli
 export { defineConfig } from './cli/config';
 export { build, dev, remarkFileCodeBlock, remarkLink, serve } from './node';

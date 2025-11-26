@@ -13,33 +13,3 @@ pageType: custom
 ## Sidebar
 
 In `rspress.config.ts`, you can configure the content of the sidebar, for details, please refer to [Sidebar Config](/api/config/config-theme#sidebar).
-
-## Outline title
-
-With the `outlineTitle` config, you can set the title of the outline bar.
-
-```ts title="rspress.config.ts"
-import { defineConfig } from '@rspress/core';
-import path from 'path';
-
-export default defineConfig({
-  themeConfig: {
-    outlineTitle: 'ON THIS PAGE',
-  },
-});
-```
-
-## Previous/Next page text
-
-With the `prevPageText` and `nextPageText` config, you can set the previous/next page text.
-
-```ts title="rspress.config.ts"
-import { defineConfig } from '@rspress/core';
-
-export default defineConfig({
-  themeConfig: {
-    prevPageText: 'Prev Page',
-    nextPageText: 'Next Page',
-  },
-});
-```

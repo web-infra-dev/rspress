@@ -1,7 +1,6 @@
 export const QUERY_REGEXP = /\?.*$/s;
 export const HASH_REGEXP = /#.*$/s;
 export const MDX_OR_MD_REGEXP = /\.mdx?$/;
-export const APPEARANCE_KEY = 'rspress-theme-appearance';
 export const SEARCH_INDEX_NAME = 'search_index';
 export const RSPRESS_TEMP_DIR = '.rspress';
 
@@ -194,10 +193,13 @@ export const parseUrl = (
 ): {
   url: string;
   hash: string;
+  search: string;
 } => {
   const [withoutHash, hash = ''] = url.split('#');
+  const [withoutSearch, search = ''] = withoutHash.split('?');
   return {
-    url: withoutHash,
+    url: withoutSearch,
+    search,
     hash,
   };
 };
@@ -221,7 +223,7 @@ export function normalizeHref(
   }
 
   // eslint-disable-next-line prefer-const
-  let { url: cleanUrl, hash } = parseUrl(decodeURIComponent(url));
+  let { url: cleanUrl, hash, search } = parseUrl(decodeURIComponent(url));
 
   // 1. cleanUrls: false
   if (!cleanUrls) {
@@ -246,7 +248,12 @@ export function normalizeHref(
     }
   }
 
-  return addLeadingSlash(hash ? `${cleanUrl}#${hash}` : cleanUrl);
+  const finalUrl = [
+    cleanUrl,
+    search ? `?${search}` : '',
+    hash ? `#${hash}` : '',
+  ].join('');
+  return addLeadingSlash(finalUrl);
 }
 
 export function withoutLang(path: string, langs: string[]) {

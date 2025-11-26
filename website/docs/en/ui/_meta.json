@@ -1,8 +1,26 @@
 [
   {
     "type": "section-header",
-    "label": "UI"
+    "label": "Theme"
   },
   "vars",
-  "custom-theme"
+  "custom-theme",
+  {
+    "type": "section-header",
+    "label": "Components"
+  },
+  {
+    "type": "dir",
+    "label": "Built-in components",
+    "name": "components"
+  },
+  {
+    "type": "section-header",
+    "label": "Hooks"
+  },
+  {
+    "type": "dir",
+    "label": "Built-in hooks",
+    "name": "hooks"
+  }
 ]

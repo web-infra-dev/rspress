@@ -1,5 +1,5 @@
 {
-  "name": "@rspress-fixture/rspress-inline-markdown",
+  "name": "@rspress-fixture/inline-markdown",
   "version": "1.0.0",
   "private": true,
   "scripts": {

@@ -1,4 +1,4 @@
-import type { NavItemWithLink, NormalizedSidebar } from '../types/defaultTheme';
+import type { NavItemWithLink, NormalizedSidebar } from '../types';
 
 /**
  * match the sidebar key in user config

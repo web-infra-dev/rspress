@@ -20,8 +20,8 @@ test.describe('tabs-component test', async () => {
   test('Index page', async ({ page }) => {
     await page.goto(`http://localhost:${appPort}`);
 
-    await page.waitForSelector('.rp-tabs__tab');
-    const tabs = page.locator('.rp-tabs__tab');
+    await page.waitForSelector('.rp-tabs__label__item');
+    const tabs = page.locator('.rp-tabs__label__item');
     const tabsText = (await tabs.allInnerTexts()).map(text => text.trim());
 
     expect(tabsText).toEqual([
@@ -54,9 +54,12 @@ test.describe('tabs-component test', async () => {
 
     const clickTabs = tabs;
     const getCommands = async () =>
-      (await page.locator('.rp-codeblock__content code').allInnerTexts()).map(
-        text => text.trim(),
-      );
+      (
+        await page
+          .locator('.rp-codeblock__content code')
+          .filter({ visible: true })
+          .allInnerTexts()
+      ).map(text => text.trim());
 
     await clickTabs.nth(0).click();
     expect(await getCommands()).toEqual([

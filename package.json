@@ -6,7 +6,7 @@
     "build:website": "cross-env NX_DAEMON=false nx run @rspress/docs:build",
     "change": "changeset",
     "changeset": "changeset",
-    "check-dependency-version": "check-dependency-version-consistency . --ignore-dep @rspress/core && echo 0",
+    "check-dependency-version": "check-dependency-version-consistency . --ignore-dep @rspress/core --ignore-package @rspress-fixture/react-18 --ignore-package @rspress-fixture/react-router-dom-6 && echo 0",
     "check-spell": "pnpm cspell && heading-case",
     "dev": "cross-env NX_DAEMON=false NX_REJECT_UNKNOWN_LOCAL_CACHE=0 nx run-many -t dev --exclude @rspress-fixture/* --exclude @rspress/docs",
     "dev:website": "cross-env NX_DAEMON=false NX_REJECT_UNKNOWN_LOCAL_CACHE=0 nx run @rspress/docs:dev",
@@ -31,23 +31,23 @@
     ]
   },
   "devDependencies": {
-    "@biomejs/biome": "^2.2.6",
+    "@biomejs/biome": "^2.3.7",
     "@changesets/cli": "^2.29.7",
     "@playwright/test": "1.56.1",
     "@rspress/config": "workspace:*",
-    "@rstest/core": "https://pkg.pr.new/web-infra-dev/rstest/@rstest/core@375186a",
+    "@rstest/core": "^0.6.6",
     "@types/cross-spawn": "^6.0.6",
     "@types/node": "^22.8.1",
     "check-dependency-version-consistency": "^5.0.1",
     "cross-env": "^10.1.0",
     "cross-spawn": "^7.0.6",
-    "cspell": "^9.2.1",
+    "cspell": "^9.3.2",
     "cspell-ban-words": "^0.0.4",
     "get-port": "5.1.1",
-    "heading-case": "^1.0.2",
+    "heading-case": "^1.0.3",
     "husky": "^9.1.7",
     "lint-staged": "~15.5.2",
-    "nx": "21.6.5",
+    "nx": "21.6.9",
     "path-serializer": "0.5.1",
     "playwright": "1.56.1",
     "prettier": "3.6.2",
@@ -55,9 +55,10 @@
     "tree-kill": "^1.2.2",
     "zx": "^8.8.5"
   },
-  "packageManager": "pnpm@10.18.3",
+  "packageManager": "pnpm@10.22.0",
   "engines": {
-    "node": ">=18.0.0"
+    "node": ">=18.0.0",
+    "pnpm": ">=10.22.0"
   },
   "publishConfig": {
     "access": "public",

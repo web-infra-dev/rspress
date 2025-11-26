@@ -35,7 +35,7 @@
 ## Architecture overview
 
 - `packages/core` (`@rspress/core`): CLI `rspress build/dev` (add `--watch`), config via `rspress.config.ts` using `defineConfig`; programmatic `import { defineConfig, loadConfig } from '@rspress/core'`.
-- `packages/theme-default` (`@rspress/theme-default`): Default theme with components and layouts.
+- `packages/core/theme` (`@rspress/core/theme`): Default theme with components and layouts.
 - `packages/plugin-*` (`@rspress/plugin-*`): Official plugins like `plugin-algolia` (search), `plugin-llms` (LLM optimization), `plugin-typedoc` (API docs), etc.
 - `packages/create-rspress` (`create-rspress`): scaffold new projects/templates with `pnpm dlx create-rspress` (or `npx create-rspress`).
 

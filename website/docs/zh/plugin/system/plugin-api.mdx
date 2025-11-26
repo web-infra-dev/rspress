@@ -392,3 +392,60 @@ export function MyComponent() {
 该 hook 在 `routeGenerated` 之后执行。
 
 :::
+
+### i18nSource
+
+- **类型**：`(source: Record<string, Record<string, string>>) => Record<string, Record<string, string>> | Promise<Record<string, Record<string, string>>>`
+
+用于添加或修改国际化文案数据。你可以通过这个 hook 来扩展或修改主题的国际化文案。
+
+参数 `source` 是一个对象，其结构为：
+
+```ts
+{
+  [textKey: string]: {
+    [locale: string]: string;
+  }
+}
+```
+
+其中第一层的 `textKey` 是文案的键名，第二层的 `locale` 是语言代码（如 `zh`、`en`），值是对应语言的翻译文本。
+
+使用示例：
+
+```tsx title="plugin.ts"
+import type { RspressPlugin } from '@rspress/core';
+
+export function pluginForDoc(): RspressPlugin {
+  return {
+    // 插件名称
+    name: 'plugin-name',
+    // 添加或修改国际化文案
+    i18nSource(source) {
+      // 添加新的文案
+      return {
+        ...source,
+        customKey: {
+          zh: '自定义文案',
+          en: 'Custom Text',
+        },
+        anotherKey: {
+          zh: '另一个文案',
+          en: 'Another Text',
+        },
+      };
+    },
+  };
+}
+```
+
+如果你的插件同时提供了运行时组件，你可以通过 `useI18n` hook 来使用这些文案：
+
+```tsx
+import { useI18n } from '@rspress/core/runtime';
+
+export function MyComponent() {
+  const t = useI18n();
+  return <div>{t('customKey')}</div>;
+}
+```

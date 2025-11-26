@@ -1,8 +1,8 @@
 import { pluginSass } from '@rsbuild/plugin-sass';
+import { RsdoctorRspackPlugin } from '@rsdoctor/rspack-plugin';
 import { defineConfig } from '@rspress/core';
 import { transformerCompatibleMetaHighlight } from '@rspress/core/shiki-transformers';
 import { pluginAlgolia } from '@rspress/plugin-algolia';
-import { pluginLlms } from '@rspress/plugin-llms';
 import { pluginSitemap } from '@rspress/plugin-sitemap';
 import { pluginTwoslash } from '@rspress/plugin-twoslash';
 import {
@@ -18,14 +18,23 @@ import { pluginOpenGraph } from 'rsbuild-plugin-open-graph';
 
 const siteUrl = 'https://v2.rspress.rs';
 
+const commonRsdoctorConfig = {
+  disableClientServer: true,
+  output: {
+    mode: 'brief' as const,
+    options: {
+      type: ['json'] as ('json' | 'html')[],
+    },
+  },
+};
+
 export default defineConfig({
-  root: 'docs',
   title: 'Rspress',
   description: 'Rsbuild based static site generator',
   lang: 'en',
-  logo: 'https://assets.rspack.rs/rspress/rspress-logo-480x480.png',
+  logo: 'https://assets.rspack.rs/rspress/rspress-logo.svg',
   logoText: 'Rspress',
-  icon: 'https://assets.rspack.rs/rspress/rspress-logo-480x480.png',
+  icon: 'https://assets.rspack.rs/rspress/rspress-logo.svg',
   markdown: {
     shiki: {
       transformers: [
@@ -51,7 +60,6 @@ export default defineConfig({
     pluginAlgolia({
       verificationContent: '8F5BFE50E65777F1',
     }),
-    pluginLlms(),
   ],
   builderConfig: {
     plugins: [
@@ -67,6 +75,22 @@ export default defineConfig({
         },
       }),
     ],
+    tools: {
+      rspack: config => {
+        if (process.env.RSDOCTOR) {
+          config.plugins?.push(
+            new RsdoctorRspackPlugin({
+              ...commonRsdoctorConfig,
+              output: {
+                ...commonRsdoctorConfig.output,
+                ...(config.name === 'web' && { reportDir: './doc_build/web' }),
+              },
+            }),
+          );
+        }
+        return config;
+      },
+    },
   },
   route: {
     cleanUrls: true,
@@ -76,6 +100,10 @@ export default defineConfig({
     lastUpdated: process.env.NODE_ENV === 'production',
     footer: {
       message: '© 2023-present ByteDance Inc.',
+    },
+    editLink: {
+      docRepoBaseUrl:
+        'https://github.com/web-infra-dev/rspress/tree/main/website/docs',
     },
     socialLinks: [
       {
@@ -103,25 +131,10 @@ export default defineConfig({
       {
         lang: 'zh',
         label: '中文',
-        editLink: {
-          docRepoBaseUrl:
-            'https://github.com/web-infra-dev/rspress/tree/main/website/docs',
-          text: '📝 在 GitHub 上编辑此页',
-        },
-        overview: {
-          filterNameText: '过滤',
-          filterPlaceholderText: '输入关键词',
-          filterNoResultText: '未找到匹配的 API',
-        },
       },
       {
         lang: 'en',
         label: 'English',
-        editLink: {
-          docRepoBaseUrl:
-            'https://github.com/web-infra-dev/rspress/tree/main/website/docs',
-          text: '📝 Edit this page on GitHub',
-        },
       },
     ],
   },
@@ -130,4 +143,8 @@ export default defineConfig({
     include: [],
     exclude: [],
   },
+  ssg: {
+    experimentalWorker: true,
+  },
+  llms: true,
 });

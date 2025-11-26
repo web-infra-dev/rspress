@@ -1,6 +1,6 @@
 {
   "name": "@rspress/plugin-algolia",
-  "version": "2.0.0-beta.34",
+  "version": "2.0.0-rc.1",
   "description": "A plugin for rspress to search with algolia in docs.",
   "bugs": "https://github.com/web-infra-dev/rspress/issues",
   "repository": {
@@ -39,23 +39,23 @@
     "reset": "rimraf ./**/node_modules"
   },
   "dependencies": {
-    "@docsearch/css": "^4.2.0",
-    "@docsearch/react": "^4.2.0"
+    "@docsearch/css": "^4.3.2",
+    "@docsearch/react": "^4.3.2"
   },
   "devDependencies": {
-    "@microsoft/api-extractor": "^7.53.1",
-    "@rsbuild/plugin-react": "~1.4.1",
-    "@rslib/core": "0.15.1",
+    "@microsoft/api-extractor": "^7.55.1",
+    "@rsbuild/plugin-react": "~1.4.2",
+    "@rslib/core": "0.18.0",
     "@rspress/config": "workspace:*",
     "@types/node": "^22.8.1",
-    "@types/react": "^19.1.15",
-    "@types/react-dom": "^19.1.9",
-    "react": "^19.1.1",
+    "@types/react": "^19.2.6",
+    "@types/react-dom": "^19.2.3",
+    "react": "^19.2.0",
     "rsbuild-plugin-publint": "^0.3.3",
     "typescript": "^5.8.2"
   },
   "peerDependencies": {
-    "@rspress/core": "workspace:^2.0.0-beta.34"
+    "@rspress/core": "workspace:^2.0.0-rc.1"
   },
   "engines": {
     "node": ">=18.0.0"

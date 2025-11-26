@@ -1,0 +1,58 @@
+:root {
+  --rp-outline-padding-x: 20px;
+}
+
+.rp-outline {
+  display: flex;
+  flex-direction: column;
+  border-left: 1px solid var(--rp-c-divider-light);
+
+  &__title {
+    padding-left: var(--rp-outline-padding-x);
+    padding-right: var(--rp-outline-padding-x);
+
+    font-size: 14px;
+    font-weight: 700;
+    height: 32px;
+    line-height: 32px;
+    font-style: normal;
+    color: var(--rp-c-text-1);
+    margin-bottom: 4px;
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    @media (max-width: 1280px) {
+      display: none;
+    }
+  }
+
+  &__divider {
+    margin-left: var(--rp-outline-padding-x);
+    margin-right: var(--rp-outline-padding-x);
+
+    height: 1px;
+    background: var(--rp-c-divider-light);
+    margin-top: 16px;
+    margin-bottom: 16px;
+  }
+
+  &__toc {
+    padding-left: var(--rp-outline-padding-x);
+    padding-right: var(--rp-outline-padding-x);
+
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+
+    // allow scroll when there are too many toc items
+    @media (max-width: 1280px) {
+      max-height: 60vh;
+      overflow: auto scroll;
+    }
+  }
+
+  &__bottom {
+    padding-left: var(--rp-outline-padding-x);
+    padding-right: var(--rp-outline-padding-x);
+  }
+}

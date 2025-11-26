@@ -24,7 +24,7 @@ describe('remarkFileCodeBlock', () => {
       filepath: '/usr/rspress-project/docs/index.mdx',
       config: null,
       pluginDriver: null,
-      routeSerrsce: null,
+      routeService: null,
     });
     expect(result).toMatchSnapshot();
   });

@@ -6,11 +6,11 @@ import {
   removeTrailingSlash,
   ThemeContext,
   withBase,
-} from '@rspress/runtime';
-import { StaticRouter } from '@rspress/runtime/server';
+} from '@rspress/core/runtime';
 import { type Unhead, UnheadProvider } from '@unhead/react/server';
 import type { ReactNode } from 'react';
 import { renderToPipeableStream } from 'react-dom/server';
+import { StaticRouter } from 'react-router-dom';
 import { App } from './App';
 import { initPageData } from './initPageData';
 

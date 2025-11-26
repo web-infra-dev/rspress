@@ -1,5 +1,5 @@
 {
-  "name": "@rspress-fixture/rspress-algolia",
+  "name": "@rspress-fixture/search-algolia",
   "version": "1.0.0",
   "private": true,
   "scripts": {
@@ -9,11 +9,11 @@
   },
   "dependencies": {
     "@rspress/core": "workspace:*",
-    "react": "^19.1.1"
+    "react": "^19.2.0"
   },
   "devDependencies": {
     "@rspress/plugin-algolia": "workspace:*",
     "@types/node": "^22.8.1",
-    "@types/react": "^19.1.15"
+    "@types/react": "^19.2.6"
   }
 }
