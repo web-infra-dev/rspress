@@ -8,12 +8,12 @@
     "preview": "rspress preview"
   },
   "dependencies": {
+    "@rspress-fixture/plugin-preview": "workspace:*",
     "@rspress/core": "workspace:*",
     "@rspress/plugin-playground": "workspace:*",
     "@rspress/plugin-preview": "workspace:*",
     "react": "^19.2.0",
-    "react-dom": "^19.2.0",
-    "solid-js": "^1.9.10"
+    "react-dom": "^19.2.0"
   },
   "devDependencies": {
     "@types/node": "^22.8.1"

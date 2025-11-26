@@ -1,11 +1,28 @@
+/* FixedDevice Component Styles (BEM) */
+
+:root {
+  --rp-preview-padding: 32px;
+
+  --rp-device-width: 360px;
+  --rp-device-height: 640px;
+  --rp-device-border-radius: 20px;
+  --rp-device-border: 1px solid #e5e6e8;
+}
+
+/* Block: rp-fixed-device */
 .rp-fixed-device {
   display: none;
   position: fixed;
-  top: calc(var(--rp-nav-height) + var(--rp-preview-padding));
+  top: calc(
+    var(--rp-nav-height) + var(--rp-sidebar-menu-height)+
+      var(--rp-preview-padding) + var(--rp-banner-height, 0px)
+  );
   overflow: hidden;
+  z-index: 100;
 }
 
-.rp-fixed-iframe {
+/* Element: __iframe */
+.rp-fixed-device__iframe {
   height: var(--rp-device-height);
   max-height: calc(
     100vh - var(--rp-preview-padding) * 2 - var(--rp-nav-height)
@@ -17,18 +34,12 @@
   border: var(--rp-device-border);
 }
 
-.rp-fixed-operation {
+/* Element: __operations */
+.rp-fixed-device__operations {
   border: var(--rp-device-border);
   border-top: 0;
   border-radius: 0 0 var(--rp-device-border-radius)
     var(--rp-device-border-radius);
-}
-
-:root {
-  --rp-device-width: 360px;
-  --rp-device-height: 640px;
-  --rp-device-border-radius: 20px;
-  --rp-device-border: 1px solid #e5e6e8;
 }
 
 @media (min-width: 960px) {
