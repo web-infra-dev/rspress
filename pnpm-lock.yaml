@@ -542,9 +542,6 @@ importers:
       react-dom:
         specifier: ^19.2.0
         version: 19.2.0(react@19.2.0)
-      solid-js:
-        specifier: ^1.9.10
-        version: 1.9.10
     devDependencies:
       '@types/node':
         specifier: ^22.8.1

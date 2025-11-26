@@ -106,7 +106,11 @@ This plugin supports multiple preview modes. You can switch between them by adju
 
 :::tip
 
-Using iframe preview mode isolates the runtime environment between your documentation and components, effectively preventing style conflicts and other issues.
+iframe preview mode has a separate compilation and runtime environment.
+
+1. Separate compilation environment, the example code in the code block will be compiled as an entry by a separate Rsbuild instance, allowing injection of sass or less variables, etc.
+
+2. Separate runtime environment, effectively avoiding style conflicts with the documentation site.
 
 :::
 
