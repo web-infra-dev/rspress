@@ -5,6 +5,8 @@ import './doc.scss';
 import { useScrollAfterNav } from '../../logic/useScrollAfterNav';
 import { FallbackHeading } from './FallbackHeading';
 
+export { FallbackHeading };
+
 export function FallbackTitle() {
   const { site } = useSite();
   const { page } = usePage();
