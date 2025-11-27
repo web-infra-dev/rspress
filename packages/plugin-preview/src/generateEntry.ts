@@ -1,8 +1,17 @@
 import { mkdir, writeFile } from 'node:fs/promises';
 import { join } from 'node:path';
-import { STATIC_DIR, VIRTUAL_DEMO_DIR } from './constants';
+import { VIRTUAL_DEMO_DIR } from './constants';
 import type { CustomEntry, DemoInfo } from './types';
 import { toValidVarName } from './utils';
+
+function reactEntry({ demoPath }: CustomEntry) {
+  return `
+    import { createRoot } from 'react-dom/client';
+    import Demo from ${JSON.stringify(demoPath)};
+    const container = document.getElementById('root');
+    createRoot(container).render(<Demo />);
+    `;
+}
 
 export async function generateEntry(
   globalDemos: DemoInfo,
@@ -10,7 +19,14 @@ export async function generateEntry(
   customEntry?: (meta: CustomEntry) => string,
 ) {
   const sourceEntry: Record<string, string> = {};
-  const entryCssPath = join(STATIC_DIR, 'global-styles', 'entry.css');
+
+  const generateEntry = (meta: CustomEntry) => {
+    return customEntry
+      ? customEntry(meta)
+      : framework === 'react'
+        ? reactEntry(meta)
+        : '';
+  };
 
   await mkdir(VIRTUAL_DEMO_DIR, { recursive: true });
 
@@ -25,21 +41,7 @@ export async function generateEntry(
         const followPromiseList = followDemos.map(async demo => {
           const { id, path: demoPath } = demo;
           const entry = join(VIRTUAL_DEMO_DIR, `${id}.entry.tsx`);
-          const reactEntry = `
-            import { createRoot } from 'react-dom/client';
-            import ${JSON.stringify(entryCssPath)};
-            import Demo from ${JSON.stringify(demoPath)};
-            const container = document.getElementById('root');
-            createRoot(container).render(<Demo />);
-            `;
-          const entryContent = customEntry
-            ? customEntry({
-                entryCssPath,
-                demoPath,
-              })
-            : framework === 'react'
-              ? reactEntry
-              : '';
+          const entryContent = generateEntry({ demoPath });
           await writeFile(entry, entryContent);
           sourceEntry[id] = entry;
         });
@@ -53,9 +55,8 @@ export async function generateEntry(
           if (fixedDemos.length === 0) {
             return;
           }
-          const reactContent = `
-        import { createRoot } from 'react-dom/client';
-        import ${JSON.stringify(entryCssPath)};
+
+          const appContent = `
         ${fixedDemos
           .map((demo, index) => {
             return `import Demo_${index} from ${JSON.stringify(demo.path)}`;
@@ -73,14 +74,18 @@ export async function generateEntry(
             </div>
           )
         }
-        const container = document.getElementById('root');
-        createRoot(container).render(<App />);
+        export default App;
       `;
 
-          const renderContent = reactContent;
           const id = `_${toValidVarName(pageName)}`;
+          const demoPath = join(VIRTUAL_DEMO_DIR, `${id}.app.tsx`);
+          const entryContent = generateEntry({ demoPath });
           const entry = join(VIRTUAL_DEMO_DIR, `${id}.entry.tsx`);
-          await writeFile(entry, renderContent);
+
+          await Promise.all([
+            writeFile(demoPath, appContent),
+            writeFile(entry, entryContent),
+          ]);
           sourceEntry[id] = entry;
         })();
 

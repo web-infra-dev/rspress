@@ -1,5 +1,11 @@
-import { NoSSR, usePageData, withBase } from '@rspress/core/runtime';
-import { type MouseEvent, useCallback, useState } from 'react';
+import { NoSSR, useDark, usePageData, withBase } from '@rspress/core/runtime';
+import {
+  type MouseEvent,
+  useCallback,
+  useEffect,
+  useRef,
+  useState,
+} from 'react';
 import MobileOperation from './common/PreviewOperations';
 import IconCode from './icons/Code';
 import './Preview.css';
@@ -24,6 +30,18 @@ const PreviewIframeFollow: React.FC<BasePreviewProps> = ({
     setIframeKey(Math.random());
   }, []);
 
+  const iframeRef = useRef<HTMLIFrameElement>(null);
+  const dark = useDark();
+  useEffect(() => {
+    iframeRef.current?.contentWindow?.postMessage(
+      {
+        type: 'theme-change',
+        dark,
+      },
+      '*',
+    );
+  }, [dark]);
+
   return (
     <div className="rp-preview rp-not-doc rp-preview--iframe-follow">
       <div className="rp-preview--iframe-follow__code">{children?.[0]}</div>
@@ -32,6 +50,7 @@ const PreviewIframeFollow: React.FC<BasePreviewProps> = ({
           className="rp-preview--iframe-follow__device__iframe"
           src={getPageUrl()}
           key={iframeKey}
+          ref={iframeRef}
         />
         <MobileOperation url={getPageUrl()} refresh={refresh} />
       </div>
@@ -92,10 +111,7 @@ const Preview: React.FC<PreviewProps> = props => {
     if (page?.devPort) {
       return `http://localhost:${page.devPort}/${demoId}`;
     }
-    if (typeof window !== 'undefined') {
-      return `${window.location.origin}${withBase(url)}`;
-    }
-    return '';
+    return withBase(url);
   }, [page?.devPort, demoId]);
 
   return (

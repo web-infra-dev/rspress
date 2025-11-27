@@ -1,5 +1,5 @@
-import { NoSSR, usePage, withBase } from '@rspress/core/runtime';
-import { useCallback, useState } from 'react';
+import { NoSSR, useDark, usePage, withBase } from '@rspress/core/runtime';
+import { useCallback, useEffect, useRef, useState } from 'react';
 // @ts-expect-error
 import { normalizeId } from '../../dist/utils';
 import MobileOperation from './common/PreviewOperations';
@@ -16,28 +16,47 @@ export default () => {
     if (page?.devPort) {
       return `http://localhost:${page.devPort}/${demoId}`;
     }
-    if (typeof window !== 'undefined') {
-      return `${window.location.origin}${withBase(url)}`;
-    }
-    // Do nothing in ssr
-    return '';
+    return withBase(url);
   };
   const [iframeKey, setIframeKey] = useState(0);
+  const dark = useDark();
   const refresh = useCallback(() => {
     setIframeKey(Math.random());
   }, []);
 
+  const iframeRef = useRef<HTMLIFrameElement>(null);
+
+  useEffect(() => {
+    iframeRef.current?.contentWindow?.postMessage(
+      {
+        type: 'theme-change',
+        dark,
+      },
+      '*',
+    );
+  }, [dark]);
+
   return haveIframeFixedDemos ? (
     <div className="rp-fixed-device">
       {/* hide the outline */}
-      <style>{`@media (min-width: 1280px) {.rp-doc-layout__outline { display: none; }}`}</style>
+      <style>{`@media (min-width: 1280px) {
+      .rp-doc-layout__outline { 
+        display: none; 
+      }
+    }
+    @media (min-width: 960px) and (max-width: 1280px) {
+      .rp-doc-layout__doc-container {
+        padding-right: calc(var(--rp-device-width) + var(--rp-preview-padding));
+      }
+    }
+    `}</style>
       <NoSSR>
         <iframe
-          // refresh when load the iframe, then remove NoSSR
           src={getPageUrl(url)}
           className="rp-fixed-device__iframe"
           key={iframeKey}
-        ></iframe>
+          ref={iframeRef}
+        />
       </NoSSR>
       <MobileOperation
         url={getPageUrl(url)}

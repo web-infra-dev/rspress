@@ -108,6 +108,40 @@ test.describe('plugin test', async () => {
     await expect(fixedIframeBody).toContainText('This is a component');
     await expect(fixedIframeBody).toContainText('Hello World External');
   });
+
+  test('iframe dark mode', async ({ page }) => {
+    await page.goto(`http://localhost:${appPort}/mixed`, {
+      waitUntil: 'networkidle',
+    });
+
+    // Toggle to dark mode
+    await page.click('.rp-switch-appearance');
+
+    // Wait a bit for the theme change message to be posted to iframes
+    await page.waitForTimeout(200);
+
+    // Test iframe-follow dark mode
+    const iframeFollowBlocks = page.locator('.rp-preview--iframe-follow');
+    const iframeFollow = iframeFollowBlocks
+      .first()
+      .locator('.rp-preview--iframe-follow__device iframe');
+    const iframeFollowHtml = iframeFollow.contentFrame().locator('html');
+    await expect(iframeFollowHtml).toHaveClass(/dark/);
+
+    // Test iframe-fixed dark mode
+    const fixedDevice = page.locator('.rp-fixed-device');
+    const fixedIframe = fixedDevice.locator('.rp-fixed-device__iframe');
+    const fixedIframeHtml = fixedIframe.contentFrame().locator('html');
+    await expect(fixedIframeHtml).toHaveClass(/dark/);
+
+    // Toggle back to light mode
+    await page.click('.rp-switch-appearance');
+    await page.waitForTimeout(200);
+
+    // Verify dark class is removed
+    await expect(iframeFollowHtml).not.toHaveClass(/dark/);
+    await expect(fixedIframeHtml).not.toHaveClass(/dark/);
+  });
 });
 
 test.describe('plugin preview build', async () => {
