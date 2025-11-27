@@ -49,7 +49,6 @@ export type IframeOptions = {
 };
 
 export interface CustomEntry {
-  entryCssPath: string;
   demoPath: string;
 }
 

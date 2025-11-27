@@ -17,6 +17,13 @@
     var(--rp-nav-height) + var(--rp-sidebar-menu-height)+
       var(--rp-preview-padding) + var(--rp-banner-height, 0px)
   );
+  right: max(
+    calc(
+      var(--rp-outline-margin-right) + var(--rp-outline-width) -
+        var(--rp-device-width)
+    ),
+    0px
+  );
   overflow: hidden;
   z-index: 100;
 }
@@ -27,7 +34,7 @@
   max-height: calc(
     100vh - var(--rp-preview-padding) * 2 - var(--rp-nav-height)
   );
-  width: 360px;
+  width: var(--rp-device-width);
   pointer-events: auto;
   border-radius: var(--rp-device-border-radius) var(--rp-device-border-radius) 0
     0;
@@ -45,15 +52,5 @@
 @media (min-width: 960px) {
   .rp-fixed-device {
     display: inline;
-    left: calc(1280px - var(--rp-device-width) - var(--rp-preview-padding));
-    right: auto;
-  }
-}
-
-@media (min-width: 1280px) {
-  .rp-fixed-device {
-    display: inline;
-    right: var(--rp-preview-padding);
-    left: auto;
   }
 }

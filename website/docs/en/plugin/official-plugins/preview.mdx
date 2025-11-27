@@ -257,11 +257,10 @@ export default defineConfig({
       previewLanguages: ['vue'],
       iframeOptions: {
         position: 'follow',
-        customEntry: ({ entryCssPath, demoPath }) => {
+        customEntry: ({ demoPath }) => {
           return `
           import { createApp } from 'vue';
           import App from ${JSON.stringify(demoPath)};
-          import ${JSON.stringify(entryCssPath)};
           createApp(App).mount('#root');
           `;
         },

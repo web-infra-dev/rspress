@@ -14,6 +14,7 @@ import {
   removeTrailingSlash,
   type UserConfig,
 } from '@rspress/core';
+import entryContent from '../static/iframe/entry?raw';
 import { STATIC_DIR } from './constants';
 import { generateEntry } from './generateEntry';
 import { globalDemos, isDirtyRef, remarkWriteCodeFile } from './remarkPlugin';
@@ -82,6 +83,20 @@ export function pluginPreview(options?: Options): RspressPlugin {
         source: {
           ...otherSourceOptions,
           entry: await generateEntry(globalDemos, framework, customEntry),
+          preEntry: [
+            join(STATIC_DIR, 'iframe', 'entry.css'),
+            ...(builderConfig.source?.preEntry ?? []),
+          ],
+        },
+        html: {
+          tags: [
+            // why not preEntry to load js?
+            // avoid theme flash
+            {
+              tag: 'script',
+              children: entryContent,
+            },
+          ],
         },
         resolve,
         output: {
