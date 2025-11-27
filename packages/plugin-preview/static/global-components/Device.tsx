@@ -1,10 +1,5 @@
-import {
-  NoSSR,
-  usePageData,
-  useWindowSize,
-  withBase,
-} from '@rspress/core/runtime';
-import { useCallback, useEffect, useState } from 'react';
+import { NoSSR, usePageData, withBase } from '@rspress/core/runtime';
+import { useCallback, useState } from 'react';
 // @ts-ignore
 import { normalizeId } from '../../dist/utils';
 import MobileOperation from './common/mobile-operation';
@@ -21,58 +16,29 @@ export default () => {
     if (page?.devPort) {
       return `http://localhost:${page.devPort}/${demoId}`;
     }
-    if (typeof window !== 'undefined') {
-      return `${window.location.origin}${withBase(url)}`;
-    }
-    // Do nothing in ssr
-    return '';
+    return withBase(url);
   };
-  const [asideWidth, setAsideWidth] = useState('0px');
-  const { width: innerWidth } = useWindowSize();
   const [iframeKey, setIframeKey] = useState(0);
   const refresh = useCallback(() => {
     setIframeKey(Math.random());
   }, []);
 
-  // get default value from root
-  // listen resize and re-render
-  useEffect(() => {
-    const root = document.querySelector(':root');
-    if (root) {
-      const defaultAsideWidth =
-        getComputedStyle(root).getPropertyValue('--rp-aside-width');
-      setAsideWidth(defaultAsideWidth);
-    }
-  }, []);
-
-  useEffect(() => {
-    const node = document.querySelector('.rspress-doc-container');
-    const { style } = document.documentElement;
-    if (haveDemos) {
-      if (innerWidth > 1280) {
-        node?.setAttribute(
-          'style',
-          'padding-right: calc(var(--rp-device-width) + var(--rp-preview-padding) * 2)',
-        );
-      } else if (innerWidth > 960) {
-        node?.setAttribute(
-          'style',
-          `padding-right: calc(${
-            innerWidth - 1280
-          }px + var(--rp-device-width) + var(--rp-preview-padding) * 2)`,
-        );
-      } else {
-        node?.removeAttribute('style');
-      }
-      style.setProperty('--rp-aside-width', '0px');
-    } else {
-      node?.removeAttribute('style');
-      style.setProperty('--rp-aside-width', asideWidth);
-    }
-  }, [haveDemos, asideWidth, innerWidth]);
-
   return haveDemos ? (
     <div className="rspress-fixed-device">
+      <style>
+        {`
+            body {
+              --rp-aside-width: 0px;
+            }
+            @media (min-width: 960px) {
+              .rspress-doc-container {
+                padding-right: calc(var(--rp-device-width) + var(--rp-preview-padding) * 2);
+              }
+            }
+          `
+          .split('\n')
+          .join(' ')}
+      </style>
       <NoSSR>
         <iframe
           // refresh when load the iframe, then remove NoSSR
