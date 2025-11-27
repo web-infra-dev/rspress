@@ -119,7 +119,7 @@ export interface PluginTwoslashOptions {
   /**
    * Options to pass to Twoslash
    */
-  twoslashOptions: TwoslashOptions;
+  twoslashOptions?: TwoslashOptions;
 }
 
 /**
