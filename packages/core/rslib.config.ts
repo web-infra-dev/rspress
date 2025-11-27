@@ -6,6 +6,32 @@ import { pluginSvgr } from '@rsbuild/plugin-svgr';
 import { defineConfig } from '@rslib/core';
 import { pluginPublint } from 'rsbuild-plugin-publint';
 
+const DEFAULT_PREFIX = 'rp-';
+const EJECT_PREFIX = 'my-';
+
+/**
+ * Transform content to replace the default prefix with the eject prefix.
+ * This is used when copying theme files to eject-theme directory.
+ */
+function transformPrefixForEject(content: string, filename: string): string {
+  // For TypeScript/JavaScript files, replace the PREFIX constant value
+  if (
+    filename.endsWith('.ts') ||
+    filename.endsWith('.tsx') ||
+    filename.endsWith('.js')
+  ) {
+    return content.replace(
+      /const PREFIX = 'rp-';/g,
+      `const PREFIX = '${EJECT_PREFIX}';`,
+    );
+  }
+  // For SCSS files, replace the $prefix variable value
+  if (filename.endsWith('.scss')) {
+    return content.replace(/\$prefix: 'rp-';/g, `$prefix: '${EJECT_PREFIX}';`);
+  }
+  return content;
+}
+
 const COMMON_EXTERNALS = [
   'virtual-routes',
   'virtual-site-data',
@@ -150,6 +176,28 @@ export default defineConfig({
             from: './theme/components',
             to: '../eject-theme/components',
             context: path.join(__dirname, 'src'),
+            transform: (content: Buffer, absoluteFilename: string) => {
+              const filename = path.basename(absoluteFilename);
+              return transformPrefixForEject(content.toString(), filename);
+            },
+          },
+          {
+            from: './theme/constant.ts',
+            to: '../eject-theme/constant.ts',
+            context: path.join(__dirname, 'src'),
+            transform: (content: Buffer, absoluteFilename: string) => {
+              const filename = path.basename(absoluteFilename);
+              return transformPrefixForEject(content.toString(), filename);
+            },
+          },
+          {
+            from: './theme/styles/_prefix.scss',
+            to: '../eject-theme/styles/_prefix.scss',
+            context: path.join(__dirname, 'src'),
+            transform: (content: Buffer, absoluteFilename: string) => {
+              const filename = path.basename(absoluteFilename);
+              return transformPrefixForEject(content.toString(), filename);
+            },
           },
         ],
       },
