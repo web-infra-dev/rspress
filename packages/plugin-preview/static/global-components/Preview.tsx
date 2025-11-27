@@ -111,10 +111,7 @@ const Preview: React.FC<PreviewProps> = props => {
     if (page?.devPort) {
       return `http://localhost:${page.devPort}/${demoId}`;
     }
-    if (typeof window !== 'undefined') {
-      return `${window.location.origin}${withBase(url)}`;
-    }
-    return '';
+    return withBase(url);
   }, [page?.devPort, demoId]);
 
   return (
