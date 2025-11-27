@@ -1,4 +1,6 @@
-.rp-scrollbar {
+@use '../styles/prefix' as *;
+
+.#{$prefix}scrollbar {
   scrollbar-gutter: stable;
 
   /* Scrollbar dimensions */
@@ -30,7 +32,7 @@
   }
 
   /* Dark mode adaptation */
-  .rp-dark & {
+  .#{$prefix}dark & {
     &::-webkit-scrollbar-thumb {
       background: rgba(255, 255, 255, 0.1);
     }

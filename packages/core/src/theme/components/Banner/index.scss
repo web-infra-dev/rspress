@@ -1,3 +1,5 @@
+@use '../../styles/prefix' as *;
+
 :root {
   --rp-banner-background: linear-gradient(
     279deg,
@@ -6,7 +8,7 @@
   );
 }
 
-.rp-banner {
+.#{$prefix}banner {
   display: flex;
   justify-content: center;
   align-items: center;

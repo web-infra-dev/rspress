@@ -11,6 +11,7 @@ import {
   useState,
 } from 'react';
 import './index.scss';
+import { PREFIX } from '../../constant';
 
 type TabItem = {
   label?: string | ReactNode;
@@ -132,10 +133,10 @@ export const Tabs = forwardRef(
     const currentIndex: number = groupId ? Number(storageIndex) : activeIndex;
 
     return (
-      <div className={clsx('rp-tabs', className)} ref={ref}>
+      <div className={clsx(`${PREFIX}tabs`, className)} ref={ref}>
         {tabValues.length ? (
           <div
-            className="rp-tabs__label rp-tabs__label--no-scrollbar"
+            className={`${PREFIX}tabs__label rp-tabs__label--no-scrollbar`}
             style={{
               justifyContent:
                 tabPosition === 'center' ? 'center' : 'flex-start',
@@ -147,10 +148,10 @@ export const Tabs = forwardRef(
                 <div
                   key={typeof label === 'string' ? label : index}
                   className={clsx(
-                    'rp-tabs__label__item',
+                    `${PREFIX}tabs__label__item`,
                     isActive
-                      ? 'rp-tabs__label__item--selected'
-                      : 'rp-tabs__label__item--not-selected',
+                      ? `${PREFIX}tabs__label__item--selected`
+                      : `${PREFIX}tabs__label__item--not-selected`,
                     labelItemClassName,
                   )}
                   data-index={index}
@@ -169,7 +170,7 @@ export const Tabs = forwardRef(
             })}
           </div>
         ) : null}
-        <div className="rp-tabs__content">
+        <div className={`${PREFIX}tabs__content`}>
           {tabValues.map(({ label, content }, index) => {
             const isActive = index === currentIndex;
             if (!keepDOM && !isActive) {
@@ -180,10 +181,10 @@ export const Tabs = forwardRef(
               <div
                 key={typeof label === 'string' ? label : index}
                 className={clsx(
-                  'rp-tabs__content__item',
+                  `${PREFIX}tabs__content__item`,
                   isActive
-                    ? 'rp-tabs__content__item--active'
-                    : 'rp-tabs__content__item--hidden',
+                    ? `${PREFIX}tabs__content__item--active`
+                    : `${PREFIX}tabs__content__item--hidden`,
                   contentItemClassName,
                 )}
                 aria-hidden={!isActive}

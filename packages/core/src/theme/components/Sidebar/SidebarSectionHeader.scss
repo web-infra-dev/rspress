@@ -1,4 +1,6 @@
-.rp-sidebar-section-header {
+@use '../../styles/prefix' as *;
+
+.#{$prefix}sidebar-section-header {
   display: flex;
   align-items: center;
   justify-content: space-between;

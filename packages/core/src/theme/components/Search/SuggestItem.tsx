@@ -5,6 +5,7 @@ import JumpSvg from '@theme-assets/jump';
 import TitleSvg from '@theme-assets/title';
 import { useRef } from 'react';
 import './SuggestItem.scss';
+import { PREFIX } from '../../constant';
 import type { DefaultMatchResultItem, HighlightInfo } from './logic/types';
 import { getSlicedStrByByteLength } from './logic/util';
 
@@ -53,7 +54,7 @@ export function SuggestItem({
       const queryStr = getSlicedStrByByteLength(rawText, start, length);
       fragmentList.push(prefix);
       fragmentList.push(
-        <span key={start} className="rp-suggest-item__mark">
+        <span key={start} className={`${PREFIX}suggest-item__mark`}>
           {queryStr}
         </span>,
       );
@@ -71,13 +72,15 @@ export function SuggestItem({
     if (suggestion.type === 'header' || suggestion.type === 'title') {
       const { header, highlightInfoList } = suggestion;
       return (
-        <div className="rp-suggest-item__header">
+        <div className={`${PREFIX}suggest-item__header`}>
           {getHighlightedFragments(header, highlightInfoList)}
         </div>
       );
     }
 
-    return <div className="rp-suggest-item__header">{suggestion.header}</div>;
+    return (
+      <div className={`${PREFIX}suggest-item__header`}>{suggestion.header}</div>
+    );
   };
 
   const renderStatementMatch = () => {
@@ -86,7 +89,7 @@ export function SuggestItem({
     }
     const { statement, highlightInfoList } = suggestion;
     return (
-      <div className="rp-suggest-item__statement">
+      <div className={`${PREFIX}suggest-item__statement`}>
         {getHighlightedFragments(statement, highlightInfoList)}
       </div>
     );
@@ -103,7 +106,7 @@ export function SuggestItem({
       hitContent = (
         <>
           {renderStatementMatch()}
-          <p className="rp-suggest-item__title">{suggestion.title}</p>
+          <p className={`${PREFIX}suggest-item__title`}>{suggestion.title}</p>
         </>
       );
       break;
@@ -114,27 +117,27 @@ export function SuggestItem({
   return (
     <li
       key={suggestion.link}
-      className={`rp-suggest-item ${isCurrent ? 'rp-suggest-item--current' : ''}`}
+      className={`${PREFIX}suggest-item ${isCurrent ? [`${PREFIX}suggest-item--current`] : ''}`}
       onMouseEnter={setCurrentSuggestionIndex}
       onMouseMove={onMouseMove}
       ref={selfRef}
     >
       <Link
         href={suggestion.link}
-        className="rp-suggest-item__link"
+        className={`${PREFIX}suggest-item__link`}
         onClick={e => {
           closeSearch();
           e.stopPropagation();
         }}
       >
-        <div className="rp-suggest-item__container">
-          <div className="rp-suggest-item__icon">
+        <div className={`${PREFIX}suggest-item__container`}>
+          <div className={`${PREFIX}suggest-item__icon`}>
             <SvgWrapper icon={HitIcon} />
           </div>
-          <div className="rp-suggest-item__content">
+          <div className={`${PREFIX}suggest-item__content`}>
             <span>{hitContent}</span>
           </div>
-          <div className="rp-suggest-item__action-icon">
+          <div className={`${PREFIX}suggest-item__action-icon`}>
             <SvgWrapper icon={JumpSvg} />
           </div>
         </div>

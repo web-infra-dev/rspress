@@ -1,5 +1,6 @@
 import { useI18n, usePage } from '@rspress/core/runtime';
 import './index.scss';
+import { PREFIX } from '../../constant';
 
 export function LastUpdated() {
   const {
@@ -9,7 +10,7 @@ export function LastUpdated() {
   const t = useI18n();
 
   return (
-    <div className="rp-last-updated">
+    <div className={`${PREFIX}last-updated`}>
       <p>
         {t('lastUpdatedText')}: <span>{lastUpdatedTime}</span>
       </p>

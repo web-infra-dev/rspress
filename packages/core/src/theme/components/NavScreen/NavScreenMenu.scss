@@ -1,4 +1,6 @@
-.rp-nav-screen-menu {
+@use '../../styles/prefix' as *;
+
+.#{$prefix}nav-screen-menu {
   display: flex;
   flex-direction: column;
   align-items: center;

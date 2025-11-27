@@ -13,6 +13,7 @@ import { useMemo } from 'react';
 import { useLangsMenu, useVersionsMenu } from './hooks';
 import './NavMenu.scss';
 import clsx from 'clsx';
+import { PREFIX } from '../../constant';
 
 export const SvgDown = (props: React.SVGProps<SVGSVGElement>) => {
   return <SvgWrapper icon={ArrowDown} {...props} />;
@@ -32,22 +33,25 @@ export function NavMenuItemWithChildren({
 
   const inner =
     'link' in menuItem && typeof menuItem.link === 'string' ? (
-      <Link href={menuItem.link} className="rp-nav-menu__item__container">
+      <Link
+        href={menuItem.link}
+        className={`${PREFIX}nav-menu__item__container`}
+      >
         {menuItem.text}
         {menuItem.tag && <Tag tag={menuItem.tag} />}
-        <SvgDown className="rp-nav-menu__item__icon" />
+        <SvgDown className={`${PREFIX}nav-menu__item__icon`} />
       </Link>
     ) : (
-      <div className="rp-nav-menu__item__container">
+      <div className={`${PREFIX}nav-menu__item__container`}>
         {menuItem.text}
         {menuItem.tag && <Tag tag={menuItem.tag} />}
-        <SvgDown className="rp-nav-menu__item__icon" />
+        <SvgDown className={`${PREFIX}nav-menu__item__icon`} />
       </div>
     );
 
   return menuItem.items.length > 0 ? (
     <li
-      className="rp-nav-menu__item"
+      className={`${PREFIX}nav-menu__item`}
       onMouseEnter={handleMouseEnter}
       onMouseLeave={handleMouseLeave}
       onClick={handleMouseEnter}
@@ -56,7 +60,7 @@ export function NavMenuItemWithChildren({
       {hoverGroup}
     </li>
   ) : (
-    <li className="rp-nav-menu__item">{inner}</li>
+    <li className={`${PREFIX}nav-menu__item`}>{inner}</li>
   );
 }
 
@@ -73,15 +77,18 @@ export function NavMenuItemWithLink({
   return (
     <li
       className={cls(
-        'rp-nav-menu__item',
-        isActive ? 'rp-nav-menu__item--active' : '',
+        `${PREFIX}nav-menu__item`,
+        isActive ? `${PREFIX}nav-menu__item--active` : '',
 
         // For algolia crawler compatibility
         'rspress-nav-menu-item',
         isActive ? 'rspress-nav-menu-item-active' : '',
       )}
     >
-      <Link href={menuItem.link} className="rp-nav-menu__item__container">
+      <Link
+        href={menuItem.link}
+        className={`${PREFIX}nav-menu__item__container`}
+      >
         {menuItem.text}
         {menuItem.tag && <Tag tag={menuItem.tag} />}
       </Link>
@@ -98,7 +105,7 @@ export function NavMenuItem({ menuItem: item }: { menuItem: NavItem }) {
 }
 
 export function NavMenuDivider() {
-  return <div className="rp-nav-menu__divider"></div>;
+  return <div className={`${PREFIX}nav-menu__divider`}></div>;
 }
 
 export function NavLangs() {
@@ -141,7 +148,7 @@ export function NavMenu({
   }
 
   return (
-    <ul className={clsx('rp-nav-menu', `rp-nav-menu--${position}`)}>
+    <ul className={clsx(`${PREFIX}nav-menu`, `${PREFIX}nav-menu--${position}`)}>
       {leftOrRightMenuItems.map((item, index) => {
         return <NavMenuItem key={index} menuItem={item} />;
       })}

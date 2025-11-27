@@ -1,5 +1,6 @@
 import { useNavTransparent } from './useNavTransparent';
 import './index.scss';
+import { PREFIX } from '../../constant';
 
 function HomeBackground({
   className,
@@ -10,7 +11,10 @@ function HomeBackground({
   return (
     <>
       {styleDom}
-      <div className={`rp-home-background ${className}`} {...otherProps}></div>
+      <div
+        className={`${PREFIX}home-background ${className}`}
+        {...otherProps}
+      ></div>
     </>
   );
 }

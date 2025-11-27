@@ -1,4 +1,6 @@
-.rp-nav-screen-appearance {
+@use '../../styles/prefix' as *;
+
+.#{$prefix}nav-screen-appearance {
   display: flex;
   width: 100%;
   min-height: 36px;

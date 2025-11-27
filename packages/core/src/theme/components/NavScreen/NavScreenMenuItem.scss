@@ -1,4 +1,6 @@
-.rp-nav-screen-menu-item {
+@use '../../styles/prefix' as *;
+
+.#{$prefix}nav-screen-menu-item {
   display: flex;
   width: 100%;
   border-radius: var(--rp-radius-small);
@@ -39,7 +41,7 @@
   }
 
   &--open {
-    .rp-nav-screen-menu-item__icon {
+    .#{$prefix}nav-screen-menu-item__icon {
       transform: rotate(0deg);
     }
   }
@@ -58,8 +60,8 @@
   }
 
   // external link
-  &.rp-link[target='_blank'] {
-    .rp-nav-screen-menu-item__left {
+  &.#{$prefix}link[target='_blank'] {
+    .#{$prefix}nav-screen-menu-item__left {
       &::after {
         content: '↗';
         font-weight: 400;

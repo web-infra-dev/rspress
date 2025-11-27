@@ -1,3 +1,5 @@
+@use '../../styles/prefix' as *;
+
 /*
   * Container Style
  */
@@ -61,7 +63,7 @@
   --rp-container-danger-bg: rgba(237, 60, 80, 0.12);
 }
 
-.rp-callout {
+.#{$prefix}callout {
   border: 1px solid transparent;
   border-radius: var(--rp-radius);
   padding: 20px 24px 12px 24px;
@@ -93,11 +95,11 @@
     }
 
     // code
-    .rp-codeblock__title {
+    .#{$prefix}codeblock__title {
       background-color: var(--rp-code-title-bg-with-opacity);
     }
 
-    .rp-codeblock__content {
+    .#{$prefix}codeblock__content {
       background-color: var(--rp-code-block-bg-with-opacity);
     }
 
@@ -110,11 +112,11 @@
 }
 
 // note
-.rp-callout--note {
+.#{$prefix}callout--note {
   border-color: var(--rp-container-note-border);
   background-color: var(--rp-container-note-bg);
 
-  .rp-callout__title {
+  .#{$prefix}callout__title {
     color: var(--rp-container-note-text);
     &::before {
       background-color: var(--rp-container-note-text);
@@ -133,11 +135,11 @@
 }
 
 // tip
-.rp-callout--tip {
+.#{$prefix}callout--tip {
   border-color: var(--rp-container-tip-border);
   background-color: var(--rp-container-tip-bg);
 
-  .rp-callout__title {
+  .#{$prefix}callout__title {
     color: var(--rp-container-tip-text);
     &::before {
       background-color: var(--rp-container-tip-text);
@@ -156,11 +158,11 @@
 }
 
 // info
-.rp-callout--info {
+.#{$prefix}callout--info {
   border-color: var(--rp-container-info-border);
   background-color: var(--rp-container-info-bg);
 
-  .rp-callout__title {
+  .#{$prefix}callout__title {
     color: var(--rp-container-info-text);
     &::before {
       background-color: var(--rp-container-info-text);
@@ -179,11 +181,11 @@
 }
 
 // warning
-.rp-callout--warning {
+.#{$prefix}callout--warning {
   border-color: var(--rp-container-warning-border);
   background-color: var(--rp-container-warning-bg);
 
-  .rp-callout__title {
+  .#{$prefix}callout__title {
     color: var(--rp-container-warning-text);
     &::before {
       background-color: var(--rp-container-warning-text);
@@ -202,12 +204,12 @@
 }
 
 // caution danger
-.rp-callout--caution,
-.rp-callout--danger {
+.#{$prefix}callout--caution,
+.#{$prefix}callout--danger {
   border-color: var(--rp-container-danger-border);
   background-color: var(--rp-container-danger-bg);
 
-  .rp-callout__title {
+  .#{$prefix}callout__title {
     color: var(--rp-container-danger-text);
     &::before {
       background-color: var(--rp-container-danger-text);
@@ -226,11 +228,11 @@
 }
 
 // details
-.rp-callout--details {
+.#{$prefix}callout--details {
   border-color: var(--rp-container-details-border);
   background-color: var(--rp-container-details-bg);
 
-  .rp-callout__title {
+  .#{$prefix}callout__title {
     color: var(--rp-container-details-text);
     &::before {
       background-color: var(--rp-container-details-text);
@@ -248,7 +250,7 @@
   }
 }
 
-details.rp-callout {
+details.#{$prefix}callout {
   padding: 20px 24px 12px 24px; // override default padding
   margin: 24px 0; // override default padding
 

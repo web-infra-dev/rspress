@@ -11,6 +11,7 @@ import clsx from 'clsx';
 import type React from 'react';
 import { useMemo, useState } from 'react';
 import './NavScreenMenuItem.scss';
+import { PREFIX } from '../../constant';
 
 interface NavScreenMenuItemWithLinkProps {
   menuItem: NavItemWithLink;
@@ -40,13 +41,13 @@ export function NavScreenMenuItemRaw({
       <Link
         href={href}
         className={clsx(
-          'rp-nav-screen-menu-item',
-          isActive && 'rp-nav-screen-menu-item--active',
+          `${PREFIX}nav-screen-menu-item`,
+          isActive && `${PREFIX}nav-screen-menu-item--active`,
         )}
         onClick={onClick}
       >
-        <div className="rp-nav-screen-menu-item__left">{left}</div>
-        <div className="rp-nav-screen-menu-item__right">{right}</div>
+        <div className={`${PREFIX}nav-screen-menu-item__left`}>{left}</div>
+        <div className={`${PREFIX}nav-screen-menu-item__right`}>{right}</div>
       </Link>
     );
   }
@@ -54,14 +55,14 @@ export function NavScreenMenuItemRaw({
   return (
     <div
       className={clsx(
-        'rp-nav-screen-menu-item',
-        isOpen && 'rp-nav-screen-menu-item--open',
-        isActive && 'rp-nav-screen-menu-item--active',
+        `${PREFIX}nav-screen-menu-item`,
+        isOpen && `${PREFIX}nav-screen-menu-item--open`,
+        isActive && `${PREFIX}nav-screen-menu-item--active`,
       )}
       onClick={onClick}
     >
-      <div className="rp-nav-screen-menu-item__left">{left}</div>
-      <div className="rp-nav-screen-menu-item__right">{right}</div>
+      <div className={`${PREFIX}nav-screen-menu-item__left`}>{left}</div>
+      <div className={`${PREFIX}nav-screen-menu-item__right`}>{right}</div>
     </div>
   );
 }
@@ -107,13 +108,13 @@ export function NavScreenMenuItemWithChildren({
             {menuItem.tag && <Tag tag={menuItem.tag} />}
           </>
         }
-        right={<SvgDown className="rp-nav-screen-menu-item__icon" />}
+        right={<SvgDown className={`${PREFIX}nav-screen-menu-item__icon`} />}
         isOpen={isOpen}
         onClick={() => setIsOpen(!isOpen)}
       />
 
       <div
-        className="rp-nav-screen-menu-item__group"
+        className={`${PREFIX}nav-screen-menu-item__group`}
         style={{
           display: 'grid',
           gridTemplateRows: isOpen ? '1fr' : '0fr',
@@ -121,7 +122,7 @@ export function NavScreenMenuItemWithChildren({
           width: '100%',
         }}
       >
-        <div className="rp-nav-screen-menu-item__group-inner">
+        <div className={`${PREFIX}nav-screen-menu-item__group-inner`}>
           {menuItem.items.map(item => (
             <NavScreenMenuItemWithChildren
               key={item.text}

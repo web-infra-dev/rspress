@@ -9,6 +9,7 @@ import type React from 'react';
 import { useEffect, useRef, useTransition } from 'react';
 import './SidebarItem.scss';
 import scrollIntoView from 'scroll-into-view-if-needed';
+import { PREFIX } from '../../constant';
 
 export function SidebarItemRaw({
   active,
@@ -47,11 +48,11 @@ export function SidebarItemRaw({
 
   const innerContent = (
     <>
-      <div className="rp-sidebar-item__left" ref={ref}>
+      <div className={`${PREFIX}sidebar-item__left`} ref={ref}>
         <span {...renderInlineMarkdown(text)}></span>
         {left}
       </div>
-      <div className="rp-sidebar-item__right">
+      <div className={`${PREFIX}sidebar-item__right`}>
         <Tag tag={tag} />
         {right}
       </div>
@@ -64,10 +65,10 @@ export function SidebarItemRaw({
         href={link}
         startTransition={startTransition}
         className={clsx(
-          'rp-sidebar-item',
+          `${PREFIX}sidebar-item`,
           {
-            'rp-sidebar-item--active': active,
-            'rp-sidebar-item--pending': isPending,
+            [`${PREFIX}sidebar-item--active`]: active,
+            [`${PREFIX}sidebar-item--pending`]: isPending,
           },
           className,
         )}
@@ -87,10 +88,8 @@ export function SidebarItemRaw({
     <div
       ref={ref}
       className={clsx(
-        'rp-sidebar-item',
-        {
-          'rp-sidebar-item--active': active,
-        },
+        `${PREFIX}sidebar-item`,
+        { [`${PREFIX}sidebar-item--active`]: active },
         className,
       )}
       style={{

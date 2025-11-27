@@ -1,8 +1,10 @@
+@use '../../styles/prefix' as *;
+
 :root {
   --rp-outline-padding-x: 20px;
 }
 
-.rp-outline {
+.#{$prefix}outline {
   display: flex;
   flex-direction: column;
   border-left: 1px solid var(--rp-c-divider-light);

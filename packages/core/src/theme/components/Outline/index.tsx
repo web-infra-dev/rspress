@@ -1,6 +1,7 @@
 import { useI18n, useSite } from '@rspress/core/runtime';
 import { ReadPercent, Toc, useDynamicToc } from '@theme';
 import './index.scss';
+import { PREFIX } from '../../constant';
 import { ScrollToTop } from './ScrollToTop';
 
 export function Outline() {
@@ -18,16 +19,16 @@ export function Outline() {
   }
 
   return (
-    <div className="rp-outline">
-      <div className="rp-outline__title">
+    <div className={`${PREFIX}outline`}>
+      <div className={`${PREFIX}outline__title`}>
         {t('outlineTitle')}
         <ReadPercent size={14} strokeWidth={2} />
       </div>
-      <nav className="rp-outline__toc rp-scrollbar">
+      <nav className={`${PREFIX}outline__toc rp-scrollbar`}>
         <Toc />
       </nav>
-      <div className="rp-outline__divider" />
-      <div className="rp-outline__bottom">
+      <div className={`${PREFIX}outline__divider`} />
+      <div className={`${PREFIX}outline__bottom`}>
         {enableScrollToTop && <ScrollToTop />}
       </div>
     </div>

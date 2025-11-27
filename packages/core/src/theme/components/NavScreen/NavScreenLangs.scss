@@ -1,4 +1,6 @@
-.rp-nav-screen-langs {
+@use '../../styles/prefix' as *;
+
+.#{$prefix}nav-screen-langs {
   display: flex;
   width: 100%;
   min-height: 36px;
@@ -26,7 +28,7 @@
   }
 }
 
-.rp-nav-screen-langs-group {
+.#{$prefix}nav-screen-langs-group {
   width: 100%;
 
   &__inner {

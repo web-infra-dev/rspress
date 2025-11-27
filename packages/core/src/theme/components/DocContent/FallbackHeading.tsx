@@ -1,5 +1,6 @@
 import { renderInlineMarkdown } from '@theme';
 import { slug } from 'github-slugger';
+import { PREFIX } from '../../constant';
 import { A } from './docComponents/a';
 import { H1, H2, H3, H4, H5, H6 } from './docComponents/title';
 
@@ -34,7 +35,11 @@ export function FallbackHeading({
     titleSlug && (
       <Element id={titleSlug}>
         <span {...renderInlineMarkdown(title)}></span>
-        <A className="rp-header-anchor" href={`#${titleSlug}`} aria-hidden>
+        <A
+          className={`${PREFIX}header-anchor`}
+          href={`#${titleSlug}`}
+          aria-hidden
+        >
           #
         </A>
       </Element>

@@ -3,6 +3,7 @@ import { SvgWrapper } from '@theme';
 import SearchSvg from '@theme-assets/search';
 import { useEffect, useState } from 'react';
 import './SearchButton.scss';
+import { PREFIX } from '../../constant';
 
 export interface SearchButtonProps {
   setFocused: (focused: boolean) => void;
@@ -18,15 +19,21 @@ export function SearchButton({ setFocused }: SearchButtonProps) {
   }, []);
   return (
     <>
-      <button className="rp-search-button" onClick={() => setFocused(true)}>
-        <div className="rp-search-button__content">
-          <SvgWrapper icon={SearchSvg} className="rp-search-button__icon" />
-          <span className="rp-search-button__word">
+      <button
+        className={`${PREFIX}search-button`}
+        onClick={() => setFocused(true)}
+      >
+        <div className={`${PREFIX}search-button__content`}>
+          <SvgWrapper
+            icon={SearchSvg}
+            className={`${PREFIX}search-button__icon`}
+          />
+          <span className={`${PREFIX}search-button__word`}>
             {t('searchPlaceholderText')}
           </span>
         </div>
         <div
-          className="rp-search-button__hotkey"
+          className={`${PREFIX}search-button__hotkey`}
           style={{ opacity: metaKey ? 1 : 0 }}
         >
           <span>{metaKey}</span>
@@ -34,7 +41,7 @@ export function SearchButton({ setFocused }: SearchButtonProps) {
         </div>
       </button>
       <div
-        className="rp-search-button--mobile"
+        className={`${PREFIX}search-button--mobile`}
         onClick={() => setFocused(true)}
       >
         <SvgWrapper icon={SearchSvg} />

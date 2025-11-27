@@ -4,6 +4,7 @@ import { Button, renderHtmlOrText } from '@theme';
 
 import './index.scss';
 import clsx from 'clsx';
+import { PREFIX } from '../../constant';
 
 const DEFAULT_HERO = {
   badge: '',
@@ -36,14 +37,18 @@ function HomeHero({ beforeHeroActions, afterHeroActions }: HomeHeroProps) {
 
   return (
     <div
-      className={clsx('rp-home-hero', { 'rp-home-hero--no-image': !hasImage })}
+      className={clsx(`${PREFIX}home-hero`, {
+        [`${PREFIX}home-hero--no-image`]: !hasImage,
+      })}
     >
-      <div className="rp-home-hero__container">
-        {hero.badge && <div className="rp-home-hero__badge">{hero.badge}</div>}
-        <div className="rp-home-hero__content">
-          <div className="rp-home-hero__title">
+      <div className={`${PREFIX}home-hero__container`}>
+        {hero.badge && (
+          <div className={`${PREFIX}home-hero__badge`}>{hero.badge}</div>
+        )}
+        <div className={`${PREFIX}home-hero__content`}>
+          <div className={`${PREFIX}home-hero__title`}>
             <span
-              className="rp-home-hero__title-brand"
+              className={`${PREFIX}home-hero__title-brand`}
               {...renderHtmlOrText(hero.name)}
             ></span>
           </div>
@@ -52,19 +57,19 @@ function HomeHero({ beforeHeroActions, afterHeroActions }: HomeHeroProps) {
             multiHeroText.map(heroText => (
               <div
                 key={heroText}
-                className="rp-home-hero__subtitle"
+                className={`${PREFIX}home-hero__subtitle`}
                 {...renderHtmlOrText(heroText)}
               ></div>
             ))}
         </div>
         <p
-          className="rp-home-hero__tagline"
+          className={`${PREFIX}home-hero__tagline`}
           {...renderHtmlOrText(hero.tagline)}
         ></p>
 
         <>
           {beforeHeroActions}
-          <div className="rp-home-hero__actions">
+          <div className={`${PREFIX}home-hero__actions`}>
             {hero.actions?.map(action => {
               return (
                 <Button
@@ -72,7 +77,7 @@ function HomeHero({ beforeHeroActions, afterHeroActions }: HomeHeroProps) {
                   key={action.link}
                   href={action.link}
                   theme={action.theme}
-                  className="rp-home-hero__action"
+                  className={`${PREFIX}home-hero__action`}
                   {...renderHtmlOrText(action.text)}
                 />
               );
@@ -82,7 +87,7 @@ function HomeHero({ beforeHeroActions, afterHeroActions }: HomeHeroProps) {
         </>
       </div>
       {hasImage ? (
-        <div className="rp-home-hero__image">
+        <div className={`${PREFIX}home-hero__image`}>
           <img
             src={normalizeImagePath(imageSrc.light)}
             alt={hero.image?.alt}
@@ -90,7 +95,7 @@ function HomeHero({ beforeHeroActions, afterHeroActions }: HomeHeroProps) {
             sizes={normalizeSrcsetAndSizes(hero.image?.sizes)}
             width={375}
             height={375}
-            className="rp-home-hero__image-img rp-home-hero__image-img--light"
+            className={`${PREFIX}home-hero__image-img rp-home-hero__image-img--light`}
           />
           <img
             src={normalizeImagePath(imageSrc.dark)}
@@ -99,7 +104,7 @@ function HomeHero({ beforeHeroActions, afterHeroActions }: HomeHeroProps) {
             sizes={normalizeSrcsetAndSizes(hero.image?.sizes)}
             width={375}
             height={375}
-            className="rp-home-hero__image-img rp-home-hero__image-img--dark"
+            className={`${PREFIX}home-hero__image-img rp-home-hero__image-img--dark`}
           />
         </div>
       ) : null}

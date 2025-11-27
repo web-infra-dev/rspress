@@ -1,4 +1,6 @@
-.rp-outline__scroll-to-top {
+@use '../../styles/prefix' as *;
+
+.#{$prefix}outline__scroll-to-top {
   cursor: pointer;
   font-size: 0.875rem;
   font-style: normal;

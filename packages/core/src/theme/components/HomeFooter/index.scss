@@ -1,4 +1,6 @@
-.rp-home-footer {
+@use '../../styles/prefix' as *;
+
+.#{$prefix}home-footer {
   bottom: 0;
   margin-top: 3rem;
   padding: 2rem 1.5rem;

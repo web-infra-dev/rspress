@@ -1,6 +1,8 @@
+@use '../../styles/prefix' as *;
+
 /* keep the html syntax in markdown original style e.g: <ul></ul> */
-.rp-doc {
-  :not(:where(.rp-not-doc, .rp-not-doc *)) {
+.#{$prefix}doc {
+  :not(:where(.#{$prefix}not-doc, .#{$prefix}not-doc *)) {
     // escape hatch like <div className="rp-not-doc"></div>
     /* why ":where"? For css priority, <<equal to className priority>>, to be easy to overrides by className */
     /* paragraph */
@@ -27,7 +29,7 @@
     /* link */
     /* #region */
     // we do not style all the <a> links, only the links with class "rp-link" because there are too many usages of <a> tag in user custom components
-    &:where(a.rp-link):not(:where(.rp-header-anchor)) {
+    &:where(a.#{$prefix}link):not(:where(.#{$prefix}header-anchor)) {
       font-weight: 500;
       color: var(--rp-c-link);
       transition: color 0.25s;
@@ -64,7 +66,7 @@
     &:where(h1, h2, h3, h4, h5, h6) {
       font-weight: 600;
       outline: none;
-      & .rp-header-anchor {
+      & .#{$prefix}header-anchor {
         float: left;
         margin-left: -0.8em;
         font-weight: 500;
@@ -79,15 +81,15 @@
         }
       }
       &:hover {
-        & .rp-header-anchor {
+        & .#{$prefix}header-anchor {
           opacity: 1;
         }
-        & .rp-header-anchor:focus {
+        & .#{$prefix}header-anchor:focus {
           opacity: 1;
         }
       }
     }
-    &:where(.rp-header-anchor) {
+    &:where(.#{$prefix}header-anchor) {
       color: var(--rp-c-brand);
     }
     &:where(h1) {
@@ -174,7 +176,7 @@
 
     /* table */
     /* #region */
-    &:where(.rp-table-scroll-container) {
+    &:where(.#{$prefix}table-scroll-container) {
       overflow-x: auto;
     }
     &:where(table) {
@@ -243,7 +245,7 @@
 
     /* code block */
     /* #region */
-    // migrated to .rp-codeblock
+    // migrated to .#{$prefix}codeblock
     /* #endregion */
 
     /* inline code */
@@ -282,8 +284,8 @@
 }
 
 /* Dark mode styles */
-:where(.rp-dark) .rp-doc {
-  :not(:where(.rp-not-doc, .rp-not-doc *)) {
+:where(.#{$prefix}dark) .#{$prefix}doc {
+  :not(:where(.#{$prefix}not-doc, .#{$prefix}not-doc *)) {
     /* table */
     /* #region */
     &:where(table) {

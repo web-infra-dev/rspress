@@ -6,7 +6,6 @@ import { pluginSvgr } from '@rsbuild/plugin-svgr';
 import { defineConfig } from '@rslib/core';
 import { pluginPublint } from 'rsbuild-plugin-publint';
 
-const DEFAULT_PREFIX = 'rp-';
 const EJECT_PREFIX = 'my-';
 
 /**

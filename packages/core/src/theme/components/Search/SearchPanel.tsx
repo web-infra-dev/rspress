@@ -18,6 +18,7 @@ import type {
 import { RenderType } from './logic/types';
 import { NoSearchResult } from './NoSearchResult';
 import './SearchPanel.scss';
+import { PREFIX } from '../../constant';
 import { SuggestItem } from './SuggestItem';
 
 const KEY_CODE = {
@@ -389,7 +390,7 @@ export function SearchPanel({ focused, setFocused }: SearchPanelProps) {
     return (
       <Tabs
         values={tabValues}
-        className="rp-search-panel__tabs"
+        className={`${PREFIX}search-panel__tabs`}
         onChange={index => {
           setResultTabIndex(index);
           setCurrentSuggestionIndex(0);
@@ -417,7 +418,7 @@ export function SearchPanel({ focused, setFocused }: SearchPanelProps) {
     // if isSearching, show loading svg
     if (isSearching) {
       return (
-        <div className="rp-search-panel__loading">
+        <div className={`${PREFIX}search-panel__loading`}>
           <SvgWrapper icon={LoadingSvg} />
         </div>
       );
@@ -437,7 +438,7 @@ export function SearchPanel({ focused, setFocused }: SearchPanelProps) {
           const groupSuggestions = normalizedSuggestions.get(group) || [];
           return (
             <li key={group}>
-              <ul className="rp-search-panel__group">
+              <ul className={`${PREFIX}search-panel__group`}>
                 {groupSuggestions.map(suggestion => {
                   accumulateIndex++;
                   const suggestionIndex = accumulateIndex;
@@ -484,25 +485,25 @@ export function SearchPanel({ focused, setFocused }: SearchPanelProps) {
       {focused &&
         createPortal(
           <div
-            className="rp-search-panel__mask"
+            className={`${PREFIX}search-panel__mask`}
             onClick={() => {
               clearSearchState();
             }}
           >
             <div
-              className="rp-search-panel__modal"
+              className={`${PREFIX}search-panel__modal`}
               onClick={e => {
                 setFocused(true);
                 e.stopPropagation();
               }}
             >
-              <div className="rp-search-panel__header">
-                <div className="rp-search-panel__input-form">
+              <div className={`${PREFIX}search-panel__header`}>
+                <div className={`${PREFIX}search-panel__input-form`}>
                   <label>
                     <SvgWrapper icon={SearchSvg} />
                   </label>
                   <input
-                    className="rp-search-panel__input"
+                    className={`${PREFIX}search-panel__input`}
                     ref={searchInputRef}
                     placeholder={t('searchPlaceholderText')}
                     aria-label="SearchPanelInput"
@@ -513,7 +514,7 @@ export function SearchPanel({ focused, setFocused }: SearchPanelProps) {
                   <label>
                     <SvgWrapper
                       icon={CloseSvg}
-                      className="rp-search-panel__close"
+                      className={`${PREFIX}search-panel__close`}
                       onClick={e => {
                         if (searchInputRef.current) {
                           e.stopPropagation();
@@ -529,7 +530,7 @@ export function SearchPanel({ focused, setFocused }: SearchPanelProps) {
                   </label>
                 </div>
                 <h2
-                  className="rp-search-panel__cancel"
+                  className={`${PREFIX}search-panel__cancel`}
                   onClick={e => {
                     e.stopPropagation();
                     clearSearchState();
@@ -541,7 +542,7 @@ export function SearchPanel({ focused, setFocused }: SearchPanelProps) {
 
               {query && initStatus === 'inited' ? (
                 <div
-                  className="rp-search-panel__results rp-scrollbar"
+                  className={`${PREFIX}search-panel__results rp-scrollbar`}
                   ref={searchResultRef}
                 >
                   {renderSearchResult(searchResult, isSearching)}

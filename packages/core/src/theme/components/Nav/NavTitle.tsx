@@ -7,6 +7,7 @@ import {
 import { Link } from '@theme';
 import { useMemo } from 'react';
 import './NavTitle.scss';
+import { PREFIX } from '../../constant';
 
 export const NavTitle = () => {
   const { site } = useSite();
@@ -46,12 +47,12 @@ export const NavTitle = () => {
   }, [rawLogo]);
 
   return (
-    <div className="rp-nav__title">
+    <div className={`${PREFIX}nav__title`}>
       <Link
         href={addLeadingSlash((localeData as any).langRoutePrefix ?? '/')}
-        className="rp-nav__title__link"
+        className={`${PREFIX}nav__title__link`}
       >
-        {logo && <div className="rp-nav__title__logo">{logo}</div>}
+        {logo && <div className={`${PREFIX}nav__title__logo`}>{logo}</div>}
         {logoText && <span>{logoText}</span>}
         {!logo && !logoText && <span>{title}</span>}
       </Link>

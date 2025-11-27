@@ -1,4 +1,6 @@
-.rp-overview-group {
+@use '../../styles/prefix' as *;
+
+.#{$prefix}overview-group {
   width: 100%;
   display: flex;
   flex-direction: column;
@@ -19,13 +21,13 @@
     &:hover {
       border-color: var(--rp-c-brand-light);
       box-shadow: 0 4px 6px 0 rgba(0, 0, 0, 0.04);
-      .rp-overview-group__item__title {
+      .#{$prefix}overview-group__item__title {
         background-color: color-mix(
           in srgb,
           var(--rp-c-brand-lighter) 30%,
           transparent
         ) !important;
-        .rp-overview-group__item__title__icon {
+        .#{$prefix}overview-group__item__title__icon {
           color: var(--rp-c-brand-dark);
         }
       }
@@ -123,9 +125,9 @@
   }
 }
 
-html.rp-dark {
-  .rp-overview-group__item:hover {
-    .rp-overview-group__item__title__icon {
+html.#{$prefix}dark {
+  .#{$prefix}overview-group__item:hover {
+    .#{$prefix}overview-group__item__title__icon {
       color: white;
     }
   }

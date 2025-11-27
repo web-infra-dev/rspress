@@ -10,6 +10,7 @@ import {
 import clsx from 'clsx';
 import { useSidebarMenu } from '../../components/SidebarMenu/useSidebarMenu';
 import './index.scss';
+import { PREFIX } from '../../constant';
 
 export interface DocLayoutProps {
   beforeSidebar?: React.ReactNode;
@@ -65,16 +66,16 @@ export function DocLayout(props: DocLayoutProps) {
 
   return (
     <>
-      <div className="rp-doc-layout__menu">{sidebarMenu}</div>
+      <div className={`${PREFIX}doc-layout__menu`}>{sidebarMenu}</div>
       {beforeDoc}
-      <div className="rp-doc-layout__container">
+      <div className={`${PREFIX}doc-layout__container`}>
         {/* Sidebar */}
         {showSidebar ? (
           <aside
             className={clsx(
-              'rp-doc-layout__sidebar',
-              isSidebarOpen && 'rp-doc-layout__sidebar--open',
-              'rp-scrollbar',
+              `${PREFIX}doc-layout__sidebar`,
+              isSidebarOpen && `${PREFIX}doc-layout__sidebar--open`,
+              `${PREFIX}scrollbar`,
             )}
             ref={sidebarLayoutRef}
           >
@@ -84,7 +85,7 @@ export function DocLayout(props: DocLayoutProps) {
           </aside>
         ) : (
           <aside
-            className="rp-doc-layout__sidebar-placeholder"
+            className={`${PREFIX}doc-layout__sidebar-placeholder`}
             style={isDocWide ? { width: '0' } : {}}
           ></aside>
         )}
@@ -92,7 +93,7 @@ export function DocLayout(props: DocLayoutProps) {
         {/* Main document content */}
         {isOverviewPage ? (
           <>
-            <main className="rp-doc-layout__overview">
+            <main className={`${PREFIX}doc-layout__overview`}>
               {beforeDocContent}
               <Overview
                 content={<DocContent components={components} isOverviewPage />}
@@ -103,13 +104,13 @@ export function DocLayout(props: DocLayoutProps) {
         ) : (
           <div
             className={clsx(
-              'rp-doc-layout__doc',
-              isDocWide && 'rp-doc-layout__doc--wide',
+              `${PREFIX}doc-layout__doc`,
+              isDocWide && `${PREFIX}doc-layout__doc--wide`,
             )}
           >
-            <main className="rp-doc-layout__doc-container">
+            <main className={`${PREFIX}doc-layout__doc-container`}>
               {beforeDocContent}
-              <div className="rp-doc rspress-doc" ref={rspressDocRef}>
+              <div className={`${PREFIX}doc rspress-doc`} ref={rspressDocRef}>
                 <DocContent components={components} />
               </div>
               {afterDocContent}
@@ -124,9 +125,9 @@ export function DocLayout(props: DocLayoutProps) {
         {isOverviewPage ? null : showOutline ? (
           <aside
             className={clsx(
-              'rp-doc-layout__outline',
-              isOutlineOpen && 'rp-doc-layout__outline--open',
-              'rp-scrollbar',
+              `${PREFIX}doc-layout__outline`,
+              isOutlineOpen && `${PREFIX}doc-layout__outline--open`,
+              `${PREFIX}scrollbar`,
             )}
             ref={asideLayoutRef}
           >
@@ -136,7 +137,7 @@ export function DocLayout(props: DocLayoutProps) {
           </aside>
         ) : (
           <aside
-            className="rp-doc-layout__outline-placeholder"
+            className={`${PREFIX}doc-layout__outline-placeholder`}
             style={isDocWide ? { width: '0' } : {}}
           ></aside>
         )}

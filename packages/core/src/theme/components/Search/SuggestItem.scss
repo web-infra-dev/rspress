@@ -1,14 +1,16 @@
-.rp-suggest-item {
+@use '../../styles/prefix' as *;
+
+.#{$prefix}suggest-item {
   list-style: none;
   box-sizing: border-box;
   margin: 5px 2px;
 
   .dark &,
-  .dark & .rp-suggest-item__link {
+  .dark & .#{$prefix}suggest-item__link {
     box-shadow: none;
   }
 
-  & .rp-suggest-item__link {
+  & .#{$prefix}suggest-item__link {
     color: var(--rp-c-text-1);
     background-color: var(--rp-c-bg);
     border-radius: var(--rp-radius-small);
@@ -19,31 +21,31 @@
   }
 
   &--current {
-    .rp-suggest-item__link {
+    .#{$prefix}suggest-item__link {
       background-color: var(--rp-c-brand);
       cursor: pointer;
       color: #ffffff;
     }
 
-    .rp-suggest-item__container {
-      .rp-suggest-item__icon {
+    .#{$prefix}suggest-item__container {
+      .#{$prefix}suggest-item__icon {
         color: #ffffff;
       }
 
-      .rp-suggest-item__action-icon {
+      .#{$prefix}suggest-item__action-icon {
         opacity: 1;
       }
 
-      .rp-suggest-item__content {
-        .rp-suggest-item__statement {
+      .#{$prefix}suggest-item__content {
+        .#{$prefix}suggest-item__statement {
           color: #ffffff;
         }
-        .rp-suggest-item__mark {
+        .#{$prefix}suggest-item__mark {
           color: #ffffff;
           text-decoration: underline;
         }
 
-        .rp-suggest-item__title {
+        .#{$prefix}suggest-item__title {
           color: #ffffff;
         }
       }

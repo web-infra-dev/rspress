@@ -1,5 +1,6 @@
 import { useI18n } from '@rspress/core/runtime';
 import './ScrollToTop.scss';
+import { PREFIX } from '../../constant';
 
 export function ScrollToTop() {
   const scrollToTop = () => {
@@ -12,7 +13,7 @@ export function ScrollToTop() {
   const t = useI18n();
 
   return (
-    <button className="rp-outline__scroll-to-top" onClick={scrollToTop}>
+    <button className={`${PREFIX}outline__scroll-to-top`} onClick={scrollToTop}>
       <svg
         width="16"
         height="16"

@@ -1,5 +1,6 @@
 import { useSite } from '@rspress/core/runtime';
 import { useCallback, useEffect, useState } from 'react';
+import { PREFIX } from '../constant';
 import { useHandler } from './useHandler';
 import { useMediaQuery } from './useMediaQuery';
 import { useStorageValue } from './useStorageValue';
@@ -70,7 +71,10 @@ export const useThemeState = () => {
 
   useEffect(() => {
     document.documentElement.classList.toggle('dark', theme === 'dark');
-    document.documentElement.classList.toggle('rp-dark', theme === 'dark');
+    document.documentElement.classList.toggle(
+      `${PREFIX}dark`,
+      theme === 'dark',
+    );
     document.documentElement.style.colorScheme = theme;
   }, [theme]);
 

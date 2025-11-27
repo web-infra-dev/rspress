@@ -11,6 +11,7 @@ import {
   useMemo,
 } from 'react';
 import './index.scss';
+import { PREFIX } from '../../constant';
 
 type PageTabItem = {
   label?: string | ReactNode;
@@ -120,10 +121,10 @@ export const PageTabs = forwardRef(
           suppressHydrationWarning
           dangerouslySetInnerHTML={{ __html: injectScript }}
         />
-        <div className={clsx('rp-page-tabs', className)} ref={ref}>
+        <div className={clsx(`${PREFIX}page-tabs`, className)} ref={ref}>
           {tabValues.length ? (
             <div
-              className="rp-page-tabs__label"
+              className={`${PREFIX}page-tabs__label`}
               style={{
                 justifyContent:
                   tabPosition === 'center' ? 'center' : 'flex-start',
@@ -133,7 +134,7 @@ export const PageTabs = forwardRef(
                 return (
                   <div
                     key={typeof label === 'string' ? label : index}
-                    className="rp-page-tabs__label__item"
+                    className={`${PREFIX}page-tabs__label__item`}
                     data-index={index}
                     onClick={() => {
                       navigateToTab(index);
@@ -145,12 +146,12 @@ export const PageTabs = forwardRef(
               })}
             </div>
           ) : null}
-          <div className="rp-page-tabs__content">
+          <div className={`${PREFIX}page-tabs__content`}>
             {tabValues.map(({ label, content }, index) => {
               return (
                 <div
                   key={typeof label === 'string' ? label : index}
-                  className="rp-page-tabs__content__item"
+                  className={`${PREFIX}page-tabs__content__item`}
                   data-index={index}
                 >
                   {content}

@@ -4,6 +4,7 @@ import clsx from 'clsx';
 import './TocItem.scss';
 import { useEffect, useRef } from 'react';
 import scrollIntoView from 'scroll-into-view-if-needed';
+import { PREFIX } from '../../constant';
 
 export const TocItem = ({
   header,
@@ -24,7 +25,7 @@ export const TocItem = ({
         inline: 'center',
         boundary: element => {
           const isBoundary =
-            element.classList.contains('rp-doc-layout__outline') ||
+            element.classList.contains(`${PREFIX}doc-layout__outline`) ||
             element.classList.contains('rspress-doc');
           return !isBoundary;
         },
@@ -37,15 +38,15 @@ export const TocItem = ({
       href={`#${header.id}`}
       ref={ref}
       title={parseInlineMarkdownText(header.text)}
-      className={clsx('rp-toc-item', {
-        'rp-toc-item--active': active,
+      className={clsx(`${PREFIX}toc-item`, {
+        [`${PREFIX}toc-item--active`]: active,
       })}
       style={{
         paddingLeft: (header.depth - baseHeaderLevel) * 12,
       }}
     >
       <span
-        className="rp-toc-item__text rp-doc"
+        className={`${PREFIX}toc-item__text rp-doc`}
         {...renderInlineMarkdown(header.text)}
       ></span>
     </Link>

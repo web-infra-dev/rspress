@@ -1,9 +1,10 @@
 import { type ComponentProps, forwardRef } from 'react';
+import { PREFIX } from '../../../constant';
 
 export const Table = forwardRef<HTMLTableElement, ComponentProps<'table'>>(
   (props, ref) => {
     return (
-      <div className="rp-table-scroll-container rp-scrollbar">
+      <div className={`${PREFIX}table-scroll-container rp-scrollbar`}>
         <table ref={ref} {...props} />
       </div>
     );

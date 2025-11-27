@@ -1,4 +1,6 @@
-.rp-sidebar-divider {
+@use '../../styles/prefix' as *;
+
+.#{$prefix}sidebar-divider {
   border-top: 1px solid var(--rp-c-divider-light);
   margin-top: 0.75rem;
   margin-bottom: 0.75rem;

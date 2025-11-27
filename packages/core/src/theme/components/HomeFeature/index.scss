@@ -1,4 +1,6 @@
-.rp-home-feature {
+@use '../../styles/prefix' as *;
+
+.#{$prefix}home-feature {
   --rp-home-feature-gap: 0.5rem;
   overflow: hidden;
   margin: auto;

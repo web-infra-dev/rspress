@@ -6,6 +6,7 @@ import { type MouseEvent, useContext } from 'react';
 import './global.scss';
 import './index.scss';
 import { flushSync } from 'react-dom';
+import { PREFIX } from '../../constant';
 
 const supportAppearanceTransition = () => {
   return (
@@ -87,14 +88,14 @@ export function SwitchAppearance({ onClick }: { onClick?: () => void }) {
   };
 
   return (
-    <div onClick={handleClick} className="rp-switch-appearance">
+    <div onClick={handleClick} className={`${PREFIX}switch-appearance`}>
       <SvgWrapper
-        className="rp-switch-appearance__icon rp-switch-appearance__icon--sun"
+        className={`${PREFIX}switch-appearance__icon rp-switch-appearance__icon--sun`}
         icon={SunSvg}
         fill="currentColor"
       />
       <SvgWrapper
-        className="rp-switch-appearance__icon rp-switch-appearance__icon--moon"
+        className={`${PREFIX}switch-appearance__icon rp-switch-appearance__icon--moon`}
         icon={MoonSvg}
         fill="currentColor"
       />

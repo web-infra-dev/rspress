@@ -1,6 +1,7 @@
 import type { SocialLink as ISocialLink } from '@rspress/core';
 import iconMap from 'virtual-social-links';
 import './index.scss';
+import { PREFIX } from '../../constant';
 import { useHoverGroup } from '../HoverGroup/useHoverGroup';
 
 interface SocialLinkProps {
@@ -20,7 +21,7 @@ export const SocialLink = (props: SocialLinkProps) => {
     const html = typeof icon === 'string' ? iconMap[icon] : icon.svg;
     IconComp = (
       <div
-        className="rp-social-links__icon"
+        className={`${PREFIX}social-links__icon`}
         dangerouslySetInnerHTML={{ __html: html }}
       ></div>
     );
@@ -29,9 +30,9 @@ export const SocialLink = (props: SocialLinkProps) => {
   const { handleMouseEnter, handleMouseLeave, hoverGroup } = useHoverGroup({
     position: hoverGroupPosition,
     customChildren: (
-      <div className="rp-social-links__item__hover-group">
+      <div className={`${PREFIX}social-links__item__hover-group`}>
         {mode === 'text' ? (
-          <div className="rp-social-links__item__text">{content}</div>
+          <div className={`${PREFIX}social-links__item__text`}>{content}</div>
         ) : mode === 'dom' ? (
           <div dangerouslySetInnerHTML={{ __html: content }} />
         ) : mode === 'img' ? (
@@ -48,9 +49,9 @@ export const SocialLink = (props: SocialLinkProps) => {
         href={content}
         target="_blank"
         rel="noopener noreferrer"
-        className="rp-social-links__item"
+        className={`${PREFIX}social-links__item`}
       >
-        <div className="rp-social-links__icon">{IconComp}</div>
+        <div className={`${PREFIX}social-links__icon`}>{IconComp}</div>
       </a>
     );
   }
@@ -58,7 +59,7 @@ export const SocialLink = (props: SocialLinkProps) => {
   if (mode === 'text') {
     return (
       <div
-        className="rp-social-links__item"
+        className={`${PREFIX}social-links__item`}
         onMouseEnter={handleMouseEnter}
         onMouseLeave={handleMouseLeave}
       >
@@ -70,7 +71,7 @@ export const SocialLink = (props: SocialLinkProps) => {
   if (mode === 'img') {
     return (
       <div
-        className="rp-social-links__item"
+        className={`${PREFIX}social-links__item`}
         onMouseEnter={handleMouseEnter}
         onMouseLeave={handleMouseLeave}
       >
@@ -82,7 +83,7 @@ export const SocialLink = (props: SocialLinkProps) => {
   if (mode === 'dom') {
     return (
       <div
-        className="rp-social-links__item"
+        className={`${PREFIX}social-links__item`}
         onMouseEnter={handleMouseEnter}
         onMouseLeave={handleMouseLeave}
       >
@@ -92,5 +93,5 @@ export const SocialLink = (props: SocialLinkProps) => {
     );
   }
 
-  return <div className="rp-social-links__item"></div>;
+  return <div className={`${PREFIX}social-links__item`}></div>;
 };

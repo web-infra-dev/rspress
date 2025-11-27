@@ -11,6 +11,7 @@ import clsx from 'clsx';
 import type React from 'react';
 import { SidebarDivider } from './SidebarDivider';
 import './SidebarGroup.scss';
+import { PREFIX } from '../../constant';
 import { SidebarItem as SidebarItemComp, SidebarItemRaw } from './SidebarItem';
 import { SidebarSectionHeader } from './SidebarSectionHeader';
 import {
@@ -82,7 +83,7 @@ export function SidebarGroup(props: SidebarGroupProps) {
         tag={item.tag}
         text={item.text}
         context={item.context}
-        className={clsx('rp-sidebar-group', className)}
+        className={clsx(`${PREFIX}sidebar-group`, className)}
         depth={depth}
         onClick={e => {
           if (!active && item.link && !collapsed) {
@@ -119,7 +120,7 @@ export function SidebarGroup(props: SidebarGroupProps) {
                 key={`${id}-${index}`}
                 item={item}
                 setSidebarData={setSidebarData}
-                className="rp-sidebar-item--group-item"
+                className={`${PREFIX}sidebar-item--group-item`}
               />
             ) : isSidebarDivider(item) ? (
               <SidebarDivider
@@ -137,7 +138,7 @@ export function SidebarGroup(props: SidebarGroupProps) {
                 key={index}
                 item={item}
                 depth={depth + 1}
-                className="rp-sidebar-item--group-item"
+                className={`${PREFIX}sidebar-item--group-item`}
               />
             ),
           )}

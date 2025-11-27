@@ -3,6 +3,7 @@ import { useSite } from '@rspress/core/runtime';
 import { SvgWrapper } from '@theme';
 import ArrowDown from '@theme-assets/arrow-down';
 import './index.scss';
+import { PREFIX } from '../../constant';
 import { useHoverGroup } from '../HoverGroup/useHoverGroup';
 import { SocialLink as SocialLinkComp } from './SocialLink';
 
@@ -25,7 +26,7 @@ export const SocialLinks = ({
   const { hoverGroup, handleMouseEnter, handleMouseLeave } = useHoverGroup({
     position: 'right',
     customChildren: isMore ? (
-      <div className="rp-social-links__hidden">
+      <div className={`${PREFIX}social-links__hidden`}>
         {hiddenLinks.map((item, index) => (
           <SocialLinkComp
             key={item.content}
@@ -44,7 +45,7 @@ export const SocialLinks = ({
   }
 
   return (
-    <div className="rp-social-links" onMouseLeave={handleMouseLeave}>
+    <div className={`${PREFIX}social-links`} onMouseLeave={handleMouseLeave}>
       {shownLinks.map((item, index) => (
         <SocialLinkComp
           key={item.content}

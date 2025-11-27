@@ -1,4 +1,6 @@
-.rp-page-tabs {
+@use '../../styles/prefix' as *;
+
+.#{$prefix}page-tabs {
   &__label {
     width: 100%;
     display: flex;

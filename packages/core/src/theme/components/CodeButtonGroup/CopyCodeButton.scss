@@ -1,8 +1,10 @@
-.rp-code-copy-button {
+@use '../../styles/prefix' as *;
+
+.#{$prefix}code-copy-button {
   position: relative;
 }
 
-.rp-code-copy-button__icon--success {
+.#{$prefix}code-copy-button__icon--success {
   position: absolute;
   top: 50%;
   left: 50%;
@@ -11,12 +13,12 @@
   color: #00d600;
 }
 
-.rp-code-copy-button--copied .rp-code-copy-button__icon--copy {
+.#{$prefix}code-copy-button--copied .#{$prefix}code-copy-button__icon--copy {
   transform: scale(0.33);
   opacity: 0;
 }
 
-.rp-code-copy-button--copied .rp-code-copy-button__icon--success {
+.#{$prefix}code-copy-button--copied .#{$prefix}code-copy-button__icon--success {
   transform: translate(-50%, -50%) scale(1);
   opacity: 1;
   transition-delay: 0.075s;

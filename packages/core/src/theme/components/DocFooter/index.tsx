@@ -1,6 +1,7 @@
 import { useSite } from '@rspress/core/runtime';
 import { EditLink, LastUpdated, PrevNextPage } from '@theme';
 import './index.scss';
+import { PREFIX } from '../../constant';
 
 export function DocFooter() {
   const { site } = useSite();
@@ -8,12 +9,12 @@ export function DocFooter() {
   const showLastUpdated = themeConfig.lastUpdated;
 
   return (
-    <footer className="rp-doc-footer">
-      <div className="rp-doc-footer__edit">
+    <footer className={`${PREFIX}doc-footer`}>
+      <div className={`${PREFIX}doc-footer__edit`}>
         <EditLink />
         {showLastUpdated && <LastUpdated />}
       </div>
-      <div className="rp-doc-footer__divider" />
+      <div className={`${PREFIX}doc-footer__divider`} />
       <PrevNextPage />
     </footer>
   );

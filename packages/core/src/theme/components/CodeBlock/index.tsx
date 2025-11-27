@@ -5,6 +5,7 @@ import {
 } from '@theme';
 import clsx from 'clsx';
 import './index.scss';
+import { PREFIX } from '../../constant';
 
 export type CodeBlockProps = {
   title?: string;
@@ -74,21 +75,21 @@ export function CodeBlock({
   return (
     <div
       className={clsx(
-        'rp-codeblock',
+        `${PREFIX}codeblock`,
         `language-${lang}`,
         containerElementClassName,
       )}
     >
-      {title && <div className="rp-codeblock__title">{title}</div>}
+      {title && <div className={`${PREFIX}codeblock__title`}>{title}</div>}
       <div
         className={clsx(
-          'rp-codeblock__content',
-          codeWrap && 'rp-codeblock__content--code-wrap',
-          lineNumbersProp && 'rp-codeblock__content--line-numbers',
+          `${PREFIX}codeblock__content`,
+          codeWrap && `${PREFIX}codeblock__content--code-wrap`,
+          lineNumbersProp && `${PREFIX}codeblock__content--line-numbers`,
         )}
       >
         <div
-          className="rp-codeblock__content__scroll-container rp-scrollbar"
+          className={`${PREFIX}codeblock__content__scroll-container rp-scrollbar`}
           ref={copyElementRef}
         >
           {children}

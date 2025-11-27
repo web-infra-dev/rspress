@@ -1,4 +1,6 @@
-.rp-search-button {
+@use '../../styles/prefix' as *;
+
+.#{$prefix}search-button {
   border-radius: var(--rp-radius-small);
   padding: 0 10px;
   height: 40px;
@@ -16,7 +18,7 @@
   &:hover {
     border: 1px solid var(--rp-c-brand);
 
-    .rp-search-button__word {
+    .#{$prefix}search-button__word {
       color: var(--rp-c-text-1);
     }
   }

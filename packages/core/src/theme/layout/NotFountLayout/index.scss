@@ -1,4 +1,6 @@
-.rp-not-found {
+@use '../../styles/prefix' as *;
+
+.#{$prefix}not-found {
   margin: 0 auto;
   padding: 4rem; // 16 * 0.25rem
   text-align: center;

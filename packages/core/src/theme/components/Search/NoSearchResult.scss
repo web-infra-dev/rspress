@@ -1,4 +1,6 @@
-.rp-no-search-result {
+@use '../../styles/prefix' as *;
+
+.#{$prefix}no-search-result {
   display: flex;
   flex-direction: column;
   align-items: center;

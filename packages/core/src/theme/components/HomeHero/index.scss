@@ -1,4 +1,6 @@
-.rp-home-hero {
+@use '../../styles/prefix' as *;
+
+.#{$prefix}home-hero {
   position: relative;
   margin: 5rem auto 5rem auto;
   max-width: 72rem;
@@ -12,7 +14,7 @@
     margin: 0 auto 0 auto;
     flex-direction: column-reverse;
     align-items: center;
-    .rp-home-hero__container {
+    .#{$prefix}home-hero__container {
       align-items: center;
       text-align: center;
     }
@@ -20,10 +22,10 @@
 
   @media (max-width: 600px) {
     padding: 10px;
-    .rp-home-hero__title {
+    .#{$prefix}home-hero__title {
       font-size: 2.5rem;
     }
-    .rp-home-hero__subtitle {
+    .#{$prefix}home-hero__subtitle {
       font-size: 2rem;
       margin-top: 1rem;
     }
@@ -139,17 +141,17 @@
   }
 }
 
-.rp-home-hero--no-image {
-  .rp-home-hero__container {
+.#{$prefix}home-hero--no-image {
+  .#{$prefix}home-hero__container {
     align-items: center;
     text-align: center;
   }
 }
 
-.dark .rp-home-hero__image-img--light {
+.dark .#{$prefix}home-hero__image-img--light {
   display: none;
 }
 
-.dark .rp-home-hero__image-img--dark {
+.dark .#{$prefix}home-hero__image-img--dark {
   display: block;
 }

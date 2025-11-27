@@ -7,11 +7,12 @@ import { NavScreen, NavScreenDivider } from '../NavScreen';
 import { NavScreenAppearance } from '../NavScreen/NavScreenAppearance';
 import { NavScreenLangs } from '../NavScreen/NavScreenLangs';
 import './index.scss';
+import { PREFIX } from '../../constant';
 import { useNavScreen } from './useNavScreen';
 
 export function NavHamburger() {
   const items = (
-    <div className="rp-nav-hamburger__md__hover-group">
+    <div className={`${PREFIX}nav-hamburger__md__hover-group`}>
       <NavScreenAppearance />
       <NavVersions />
       <NavScreenLangs />
@@ -24,7 +25,9 @@ export function NavHamburger() {
   const { handleMouseEnter, handleMouseLeave, hoverGroup } = useHoverGroup({
     position: 'right',
     customChildren: (
-      <div className="rp-nav-menu__others-mobile__container">{items}</div>
+      <div className={`${PREFIX}nav-menu__others-mobile__container`}>
+        {items}
+      </div>
     ),
   });
 
@@ -39,18 +42,22 @@ export function NavHamburger() {
       <button
         onClick={toggleScreen}
         aria-label="mobile hamburger"
-        className={clsx('rp-nav-hamburger', 'rp-nav-hamburger__sm', {
-          'rp-nav-hamburger--active': isScreenOpen,
-        })}
+        className={clsx(
+          `${PREFIX}nav-hamburger`,
+          `${PREFIX}nav-hamburger__sm`,
+          { [`${PREFIX}nav-hamburger--active`]: isScreenOpen },
+        )}
       >
         <SvgWrapper icon={SmallMenu} />
       </button>
 
       <button
         aria-label="mobile hamburger"
-        className={clsx('rp-nav-hamburger', 'rp-nav-hamburger__md', {
-          'rp-nav-hamburger--active': isScreenOpen,
-        })}
+        className={clsx(
+          `${PREFIX}nav-hamburger`,
+          `${PREFIX}nav-hamburger__md`,
+          { [`${PREFIX}nav-hamburger--active`]: isScreenOpen },
+        )}
         onClick={handleMouseEnter}
         onMouseEnter={handleMouseEnter}
         onMouseLeave={handleMouseLeave}

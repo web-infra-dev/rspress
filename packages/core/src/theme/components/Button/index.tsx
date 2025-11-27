@@ -2,6 +2,7 @@ import { Link } from '@theme';
 import clsx from 'clsx';
 import React, { type JSX } from 'react';
 import './index.scss';
+import { PREFIX } from '../../constant';
 
 interface ButtonProps {
   type?: string;
@@ -36,9 +37,9 @@ export function Button(props: ButtonProps): JSX.Element {
     type ?? 'a',
     {
       className: clsx(
-        'rp-button',
-        `rp-button--${theme}`,
-        `rp-button--${size}`,
+        `${PREFIX}button`,
+        `${PREFIX}button--${theme}`,
+        `${PREFIX}button--${size}`,
         className,
       ),
       href,

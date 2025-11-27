@@ -1,6 +1,7 @@
 import { useI18n, usePageData } from '@rspress/core/runtime';
 import { Link } from '@theme';
 import './index.scss';
+import { PREFIX } from '../../constant';
 
 export function NotFoundLayout() {
   const { siteData, page } = usePageData();
@@ -30,14 +31,14 @@ export function NotFoundLayout() {
 
   // The 404 page content
   return (
-    <div className="rp-not-found">
-      <p className="rp-not-found__error-code">404</p>
-      <h1 className="rp-not-found__title">{t('notFoundText')}</h1>
-      <div className="rp-not-found__divider" />
+    <div className={`${PREFIX}not-found`}>
+      <p className={`${PREFIX}not-found__error-code`}>404</p>
+      <h1 className={`${PREFIX}not-found__title`}>{t('notFoundText')}</h1>
+      <div className={`${PREFIX}not-found__divider`} />
 
-      <div className="rp-not-found__action">
+      <div className={`${PREFIX}not-found__action`}>
         <Link
-          className="rp-not-found__home-link"
+          className={`${PREFIX}not-found__home-link`}
           href={root}
           aria-label="go to home"
         >

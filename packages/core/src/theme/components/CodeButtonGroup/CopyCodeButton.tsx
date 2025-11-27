@@ -5,9 +5,10 @@ import copy from 'copy-to-clipboard';
 import { useRef } from 'react';
 import './CopyCodeButton.scss';
 import { useI18n } from '@rspress/core/runtime';
+import { PREFIX } from '../../constant';
 
 const timeoutIdMap: Map<HTMLElement, NodeJS.Timeout> = new Map();
-const COPIED_CLASS = 'rp-code-copy-button--copied';
+const COPIED_CLASS = `${PREFIX}code-copy-button--copied`;
 
 function copyCode(
   codeBlockElement: HTMLElement | null,
@@ -57,18 +58,18 @@ export function CopyCodeButton({
 
   return (
     <button
-      className="rp-code-button-group__button rp-code-copy-button"
+      className={`${PREFIX}code-button-group__button rp-code-copy-button`}
       onClick={() => copyCode(codeBlockRef.current, copyButtonRef.current!)}
       ref={copyButtonRef}
       title={t('codeButtonGroupCopyButtonText')}
     >
       <SvgWrapper
         icon={IconCopy}
-        className="rp-code-button-group__icon rp-code-copy-button__icon rp-code-copy-button__icon--copy"
+        className={`${PREFIX}code-button-group__icon rp-code-copy-button__icon rp-code-copy-button__icon--copy`}
       />
       <SvgWrapper
         icon={IconSuccess}
-        className="rp-code-button-group__icon rp-code-copy-button__icon rp-code-copy-button__icon--success"
+        className={`${PREFIX}code-button-group__icon rp-code-copy-button__icon rp-code-copy-button__icon--success`}
       />
     </button>
   );

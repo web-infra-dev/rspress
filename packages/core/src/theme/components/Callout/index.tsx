@@ -1,5 +1,6 @@
 import type { ReactNode } from 'react';
 import './index.scss';
+import { PREFIX } from '../../constant';
 
 export interface CalloutProps {
   type: 'tip' | 'note' | 'warning' | 'caution' | 'danger' | 'info' | 'details';
@@ -29,17 +30,17 @@ export function Callout({ type, title, children }: CalloutProps): ReactNode {
 
   if (isDetails) {
     return (
-      <details className={`rp-callout rp-callout--${type}`}>
-        <summary className="rp-callout__title">{title}</summary>
-        <div className="rp-callout__content">{children}</div>
+      <details className={`${PREFIX}callout rp-callout--${type}`}>
+        <summary className={`${PREFIX}callout__title`}>{title}</summary>
+        <div className={`${PREFIX}callout__content`}>{children}</div>
       </details>
     );
   }
 
   return (
-    <div className={`rp-callout rp-callout--${type}`}>
-      <div className="rp-callout__title">{title}</div>
-      <div className="rp-callout__content">{children}</div>
+    <div className={`${PREFIX}callout rp-callout--${type}`}>
+      <div className={`${PREFIX}callout__title`}>{title}</div>
+      <div className={`${PREFIX}callout__content`}>{children}</div>
     </div>
   );
 }

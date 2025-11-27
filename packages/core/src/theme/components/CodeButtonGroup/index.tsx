@@ -5,6 +5,7 @@ import IconWrapped from '@theme-assets/wrapped';
 import clsx from 'clsx';
 import { useRef, useState } from 'react';
 import './index.scss';
+import { PREFIX } from '../../constant';
 import { CopyCodeButton } from './CopyCodeButton';
 
 export interface CodeButtonGroupProps {
@@ -47,24 +48,24 @@ export function CodeButtonGroup({
 }: CodeButtonGroupProps) {
   return (
     <>
-      <div className="rp-code-button-group">
+      <div className={`${PREFIX}code-button-group`}>
         {showCodeWrapButton && (
           <button
             className={clsx(
-              'rp-code-button-group__button',
-              'rp-code-wrap-button',
-              codeWrap && 'rp-code-wrap-button--wrapped',
+              `${PREFIX}code-button-group__button`,
+              `${PREFIX}code-wrap-button`,
+              codeWrap && `${PREFIX}code-wrap-button--wrapped`,
             )}
             onClick={() => toggleCodeWrap()}
             title="Toggle code wrap"
           >
             <SvgWrapper
               icon={IconWrapped}
-              className="rp-code-button-group__icon rp-code-button-group__icon--wrapped"
+              className={`${PREFIX}code-button-group__icon rp-code-button-group__icon--wrapped`}
             />
             <SvgWrapper
               icon={IconWrap}
-              className="rp-code-button-group__icon rp-code-button-group__icon--wrap"
+              className={`${PREFIX}code-button-group__icon rp-code-button-group__icon--wrap`}
             />
           </button>
         )}

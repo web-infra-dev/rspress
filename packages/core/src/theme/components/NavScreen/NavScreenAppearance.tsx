@@ -1,6 +1,7 @@
 import { NoSSR, useI18n, useSite } from '@rspress/core/runtime';
 import { SwitchAppearance } from '@theme';
 import './NavScreenAppearance.scss';
+import { PREFIX } from '../../constant';
 
 export function NavScreenAppearance() {
   const { site } = useSite();
@@ -9,9 +10,11 @@ export function NavScreenAppearance() {
   return (
     <>
       {hasAppearanceSwitch && (
-        <div className="rp-nav-screen-appearance">
-          <div className="rp-nav-screen-appearance__left">{t('themeText')}</div>
-          <div className="rp-nav-screen-appearance__right">
+        <div className={`${PREFIX}nav-screen-appearance`}>
+          <div className={`${PREFIX}nav-screen-appearance__left`}>
+            {t('themeText')}
+          </div>
+          <div className={`${PREFIX}nav-screen-appearance__right`}>
             <NoSSR>
               <SwitchAppearance />
             </NoSSR>
