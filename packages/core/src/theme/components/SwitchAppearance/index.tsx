@@ -90,12 +90,12 @@ export function SwitchAppearance({ onClick }: { onClick?: () => void }) {
   return (
     <div onClick={handleClick} className={`${PREFIX}switch-appearance`}>
       <SvgWrapper
-        className={`${PREFIX}switch-appearance__icon rp-switch-appearance__icon--sun`}
+        className={`${PREFIX}switch-appearance__icon ${PREFIX}switch-appearance__icon--sun`}
         icon={SunSvg}
         fill="currentColor"
       />
       <SvgWrapper
-        className={`${PREFIX}switch-appearance__icon rp-switch-appearance__icon--moon`}
+        className={`${PREFIX}switch-appearance__icon ${PREFIX}switch-appearance__icon--moon`}
         icon={MoonSvg}
         fill="currentColor"
       />

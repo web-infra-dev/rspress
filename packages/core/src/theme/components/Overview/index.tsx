@@ -243,7 +243,9 @@ export function Overview(props: {
   const overviewTitle = title || 'Overview';
 
   return (
-    <div className="rspress-doc rp-doc rspress-overview rp-overview">
+    <div
+      className={`rspress-doc ${PREFIX}doc rspress-overview ${PREFIX}overview`}
+    >
       <FallbackHeading level={1} title={overviewTitle} />
       <OverviewSearchInput
         query={query}

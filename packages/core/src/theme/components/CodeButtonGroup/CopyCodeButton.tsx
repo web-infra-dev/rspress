@@ -58,18 +58,18 @@ export function CopyCodeButton({
 
   return (
     <button
-      className={`${PREFIX}code-button-group__button rp-code-copy-button`}
+      className={`${PREFIX}code-button-group__button ${PREFIX}code-copy-button`}
       onClick={() => copyCode(codeBlockRef.current, copyButtonRef.current!)}
       ref={copyButtonRef}
       title={t('codeButtonGroupCopyButtonText')}
     >
       <SvgWrapper
         icon={IconCopy}
-        className={`${PREFIX}code-button-group__icon rp-code-copy-button__icon rp-code-copy-button__icon--copy`}
+        className={`${PREFIX}code-button-group__icon ${PREFIX}code-copy-button__icon ${PREFIX}code-copy-button__icon--copy`}
       />
       <SvgWrapper
         icon={IconSuccess}
-        className={`${PREFIX}code-button-group__icon rp-code-copy-button__icon rp-code-copy-button__icon--success`}
+        className={`${PREFIX}code-button-group__icon ${PREFIX}code-copy-button__icon ${PREFIX}code-copy-button__icon--success`}
       />
     </button>
   );

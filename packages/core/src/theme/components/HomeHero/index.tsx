@@ -95,7 +95,7 @@ function HomeHero({ beforeHeroActions, afterHeroActions }: HomeHeroProps) {
             sizes={normalizeSrcsetAndSizes(hero.image?.sizes)}
             width={375}
             height={375}
-            className={`${PREFIX}home-hero__image-img rp-home-hero__image-img--light`}
+            className={`${PREFIX}home-hero__image-img ${PREFIX}home-hero__image-img--light`}
           />
           <img
             src={normalizeImagePath(imageSrc.dark)}
@@ -104,7 +104,7 @@ function HomeHero({ beforeHeroActions, afterHeroActions }: HomeHeroProps) {
             sizes={normalizeSrcsetAndSizes(hero.image?.sizes)}
             width={375}
             height={375}
-            className={`${PREFIX}home-hero__image-img rp-home-hero__image-img--dark`}
+            className={`${PREFIX}home-hero__image-img ${PREFIX}home-hero__image-img--dark`}
           />
         </div>
       ) : null}

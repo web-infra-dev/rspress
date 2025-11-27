@@ -24,7 +24,7 @@ export function Outline() {
         {t('outlineTitle')}
         <ReadPercent size={14} strokeWidth={2} />
       </div>
-      <nav className={`${PREFIX}outline__toc rp-scrollbar`}>
+      <nav className={`${PREFIX}outline__toc ${PREFIX}scrollbar`}>
         <Toc />
       </nav>
       <div className={`${PREFIX}outline__divider`} />

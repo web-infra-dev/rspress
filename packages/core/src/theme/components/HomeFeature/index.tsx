@@ -40,7 +40,7 @@ function HomeFeatureItem({ feature }: { feature: Feature }): JSX.Element {
       <div className={`${PREFIX}home-feature__item-wrapper`} {...innerProps}>
         <article
           key={title}
-          className={`${PREFIX}home-feature__card ${link ? [`${PREFIX}home-feature__card--clickable`] : ''}`}
+          className={`${PREFIX}home-feature__card ${link ? `${PREFIX}home-feature__card--clickable` : ''}`}
           onClick={() => {
             if (link) {
               navigate(link);

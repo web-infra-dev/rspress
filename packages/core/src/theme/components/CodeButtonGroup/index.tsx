@@ -61,11 +61,11 @@ export function CodeButtonGroup({
           >
             <SvgWrapper
               icon={IconWrapped}
-              className={`${PREFIX}code-button-group__icon rp-code-button-group__icon--wrapped`}
+              className={`${PREFIX}code-button-group__icon ${PREFIX}code-button-group__icon--wrapped`}
             />
             <SvgWrapper
               icon={IconWrap}
-              className={`${PREFIX}code-button-group__icon rp-code-button-group__icon--wrap`}
+              className={`${PREFIX}code-button-group__icon ${PREFIX}code-button-group__icon--wrap`}
             />
           </button>
         )}

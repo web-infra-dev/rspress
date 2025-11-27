@@ -542,7 +542,7 @@ export function SearchPanel({ focused, setFocused }: SearchPanelProps) {
 
               {query && initStatus === 'inited' ? (
                 <div
-                  className={`${PREFIX}search-panel__results rp-scrollbar`}
+                  className={`${PREFIX}search-panel__results ${PREFIX}scrollbar`}
                   ref={searchResultRef}
                 >
                   {renderSearchResult(searchResult, isSearching)}

@@ -30,7 +30,7 @@ export function PrevNextPage() {
           <span className={`${PREFIX}prev-next-page__item__title`}>
             <SvgWrapper
               icon={ArrowRight}
-              className={`${PREFIX}prev-next-page__icon rp-prev-next-page__rotate_180`}
+              className={`${PREFIX}prev-next-page__icon ${PREFIX}prev-next-page__rotate_180`}
             />
             <span {...renderInlineMarkdown(prevPage.text)} />
           </span>

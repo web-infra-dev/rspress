@@ -14,7 +14,7 @@ export function SourceCode(props: SourceCodeProps) {
   const { href, platform = 'github' } = props;
   const t = useI18n();
   return (
-    <div className={`${PREFIX}not-doc rp-source-code`}>
+    <div className={`${PREFIX}not-doc ${PREFIX}source-code`}>
       <a href={href} target="_blank" className={`${PREFIX}source-code__link`}>
         <span className={`${PREFIX}source-code__icon`}>
           {<SvgWrapper icon={platform === 'gitlab' ? Gitlab : Github} />}

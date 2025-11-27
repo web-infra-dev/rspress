@@ -30,7 +30,7 @@ export function Callout({ type, title, children }: CalloutProps): ReactNode {
 
   if (isDetails) {
     return (
-      <details className={`${PREFIX}callout rp-callout--${type}`}>
+      <details className={`${PREFIX}callout ${PREFIX}callout--${type}`}>
         <summary className={`${PREFIX}callout__title`}>{title}</summary>
         <div className={`${PREFIX}callout__content`}>{children}</div>
       </details>
@@ -38,7 +38,7 @@ export function Callout({ type, title, children }: CalloutProps): ReactNode {
   }
 
   return (
-    <div className={`${PREFIX}callout rp-callout--${type}`}>
+    <div className={`${PREFIX}callout ${PREFIX}callout--${type}`}>
       <div className={`${PREFIX}callout__title`}>{title}</div>
       <div className={`${PREFIX}callout__content`}>{children}</div>
     </div>

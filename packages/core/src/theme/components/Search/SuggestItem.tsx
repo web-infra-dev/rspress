@@ -117,7 +117,7 @@ export function SuggestItem({
   return (
     <li
       key={suggestion.link}
-      className={`${PREFIX}suggest-item ${isCurrent ? [`${PREFIX}suggest-item--current`] : ''}`}
+      className={`${PREFIX}suggest-item ${isCurrent ? `${PREFIX}suggest-item--current` : ''}`}
       onMouseEnter={setCurrentSuggestionIndex}
       onMouseMove={onMouseMove}
       ref={selfRef}

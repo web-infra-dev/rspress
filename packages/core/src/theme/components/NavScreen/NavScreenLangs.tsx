@@ -23,7 +23,7 @@ export function NavScreenLangs() {
         <div className={`${PREFIX}nav-screen-langs__right`}>
           {activeValue}
           <SvgDown
-            className={`${PREFIX}nav-screen-langs__icon ${isOpen ? [`${PREFIX}nav-screen-langs__icon--open`] : ''}`}
+            className={`${PREFIX}nav-screen-langs__icon ${isOpen ? `${PREFIX}nav-screen-langs__icon--open` : ''}`}
           />
         </div>
       </div>

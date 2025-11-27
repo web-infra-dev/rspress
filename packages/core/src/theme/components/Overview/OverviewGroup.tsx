@@ -24,7 +24,7 @@ export const OverviewGroup = ({ group }: { group: Group }) => {
   return (
     <>
       <FallbackHeading level={2} title={group.name} />
-      <div className={`${PREFIX}overview-group rp-not-doc`}>
+      <div className={`${PREFIX}overview-group ${PREFIX}not-doc`}>
         {group.items.map(item => (
           <div className={`${PREFIX}overview-group__item`} key={item.link}>
             <div className={`${PREFIX}overview-group__item__title`}>

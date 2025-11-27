@@ -89,7 +89,7 @@ export function CodeBlock({
         )}
       >
         <div
-          className={`${PREFIX}codeblock__content__scroll-container rp-scrollbar`}
+          className={`${PREFIX}codeblock__content__scroll-container ${PREFIX}scrollbar`}
           ref={copyElementRef}
         >
           {children}

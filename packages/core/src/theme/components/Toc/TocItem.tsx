@@ -46,7 +46,7 @@ export const TocItem = ({
       }}
     >
       <span
-        className={`${PREFIX}toc-item__text rp-doc`}
+        className={`${PREFIX}toc-item__text ${PREFIX}doc`}
         {...renderInlineMarkdown(header.text)}
       ></span>
     </Link>
