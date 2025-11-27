@@ -39,7 +39,7 @@ export default () => {
 
   useEffect(() => {
     publishIframeUrl(initialUrl);
-  }, []);
+  }, [initialUrl]);
 
   const [asideWidth, setAsideWidth] = useState('0px');
   const { width: innerWidth } = useWindowSize();

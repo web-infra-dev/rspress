@@ -27,8 +27,6 @@ const MobileContainerFixedPerComp: React.FC<ContainerProps> = props => {
 
   const setIframeUrl = () => {
     const url = getPageUrl();
-    const fixedIframe = document.querySelector('.rspress-fixed-iframe');
-    fixedIframe?.setAttribute('src', url);
     publishIframeUrl(url);
   };
 
