@@ -20,7 +20,7 @@ test.describe('plugin test', async () => {
   });
 
   test('Should render the element', async ({ page }) => {
-    await page.goto(`http://localhost:${appPort}/`, {
+    await page.goto(`http://localhost:${appPort}/guide/`, {
       waitUntil: 'networkidle',
     });
     // FIXME: ContainerFixedPerComp add a additional div structure, so we use `.rspress-doc div[class*=language-]` rather than '.rspress-doc > div[class*=language-]'
@@ -50,7 +50,7 @@ test.describe('plugin test', async () => {
   test('<code previewMode="internal" /> and ```tsx internal preview', async ({
     page,
   }) => {
-    await page.goto(`http://localhost:${appPort}/prop`, {
+    await page.goto(`http://localhost:${appPort}/guide/prop`, {
       waitUntil: 'networkidle',
     });
     const externalDemoCodePreview = await page

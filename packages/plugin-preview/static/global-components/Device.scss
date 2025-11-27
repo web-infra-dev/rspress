@@ -1,7 +1,10 @@
 .rspress-fixed-device {
   display: none;
   position: fixed;
-  top: calc(var(--rp-nav-height) + var(--rp-preview-padding));
+  top: calc(
+    var(--rp-nav-height) + var(--rp-preview-padding) +
+      var(--rp-sidebar-menu-height)
+  );
   overflow: hidden;
 }
 
@@ -34,15 +37,6 @@
 @media (min-width: 960px) {
   .rspress-fixed-device {
     display: inline;
-    left: calc(1280px - var(--rp-device-width) - var(--rp-preview-padding));
-    right: auto;
-  }
-}
-
-@media (min-width: 1280px) {
-  .rspress-fixed-device {
-    display: inline;
     right: var(--rp-preview-padding);
-    left: auto;
   }
 }
