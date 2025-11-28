@@ -1,4 +1,6 @@
-.rp-doc-footer {
+@use '../../styles/prefix' as *;
+
+.#{$prefix}doc-footer {
   margin-top: 48px;
   &__edit {
     display: flex;

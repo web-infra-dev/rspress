@@ -1,3 +1,5 @@
-.rp-sidebar-group {
+@use '../../styles/prefix' as *;
+
+.#{$prefix}sidebar-group {
   color: var(--rp-c-text-1);
 }

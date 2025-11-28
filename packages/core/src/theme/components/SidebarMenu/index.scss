@@ -1,4 +1,6 @@
-.rp-sidebar-menu {
+@use '../../styles/prefix' as *;
+
+.#{$prefix}sidebar-menu {
   width: 100%;
   height: 100%;
   display: flex;

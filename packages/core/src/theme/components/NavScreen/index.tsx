@@ -4,6 +4,7 @@ import { clearAllBodyScrollLocks, disableBodyScroll } from 'body-scroll-lock';
 import clsx from 'clsx';
 import { useEffect, useRef } from 'react';
 import './index.scss';
+import { PREFIX } from '../../constant';
 import { NavScreenAppearance } from './NavScreenAppearance';
 import { NavScreenLangs } from './NavScreenLangs';
 import { NavScreenMenu } from './NavScreenMenu';
@@ -15,7 +16,7 @@ export interface NavScreenProps {
 }
 
 export function NavScreenDivider() {
-  return <div className="rp-nav-screen-divider"></div>;
+  return <div className={`${PREFIX}nav-screen-divider`}></div>;
 }
 
 export function NavScreen(props: NavScreenProps) {
@@ -28,14 +29,14 @@ export function NavScreen(props: NavScreenProps) {
       disableBodyScroll(screen.current, { reserveScrollBarGap: true });
       const style = `:root { --rp-home-background-bg: transparent; }`;
       const styleElement = document.createElement('style');
-      styleElement.id = 'rp-nav-screen-body-lock-style';
+      styleElement.id = `${PREFIX}nav-screen-body-lock-style`;
       styleElement.innerHTML = style;
       document.head.appendChild(styleElement);
     }
     return () => {
       clearAllBodyScrollLocks();
       const styleElement = document.getElementById(
-        'rp-nav-screen-body-lock-style',
+        `${PREFIX}nav-screen-body-lock-style`,
       );
       if (styleElement) {
         document.head.removeChild(styleElement);
@@ -45,12 +46,14 @@ export function NavScreen(props: NavScreenProps) {
 
   return (
     <div
-      className={clsx('rp-nav-screen', { 'rp-nav-screen--open': isScreenOpen })}
+      className={clsx(`${PREFIX}nav-screen`, {
+        [`${PREFIX}nav-screen--open`]: isScreenOpen,
+      })}
       ref={screen}
       onClick={toggleScreen}
     >
       <div
-        className="rp-nav-screen__container"
+        className={`${PREFIX}nav-screen__container`}
         onClick={e => e.stopPropagation()}
       >
         <NavScreenMenu menuItems={menuItems} />

@@ -1,4 +1,6 @@
-.rp-nav-menu {
+@use '../../styles/prefix' as *;
+
+.#{$prefix}nav-menu {
   display: inline-flex;
   align-items: center;
   height: 100%;
@@ -45,19 +47,19 @@
     }
 
     &:hover {
-      .rp-nav-menu__item__container {
+      .#{$prefix}nav-menu__item__container {
         color: var(--rp-c-brand);
         text-align: center;
         font-size: 14px;
         font-style: normal;
       }
-      .rp-nav-menu__item__icon {
+      .#{$prefix}nav-menu__item__icon {
         transform: rotate(180deg);
       }
     }
 
     &--active {
-      .rp-nav-menu__item__container {
+      .#{$prefix}nav-menu__item__container {
         color: var(--rp-c-brand);
         text-align: center;
         font-size: 14px;

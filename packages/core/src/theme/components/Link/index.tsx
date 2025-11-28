@@ -4,6 +4,7 @@ import nprogress from 'nprogress';
 import type React from 'react';
 import type { ComponentProps, TransitionStartFunction } from 'react';
 import './index.scss';
+import { PREFIX } from '../../constant';
 import { getHref, useLinkNavigate } from './useLinkNavigate';
 
 export interface LinkProps extends ComponentProps<'a'> {
@@ -63,7 +64,7 @@ export function Link(props: LinkProps) {
         href={href}
         target="_blank"
         rel="noopener noreferrer"
-        className={clsx(className, 'rp-link')}
+        className={clsx(className, `${PREFIX}link`)}
         onClick={onClick}
         onMouseEnter={onMouseEnter}
         {...otherProps}
@@ -77,7 +78,7 @@ export function Link(props: LinkProps) {
     return (
       <a
         href={href}
-        className={clsx(className, 'rp-link')}
+        className={clsx(className, `${PREFIX}link`)}
         onClick={onClick}
         onMouseEnter={onMouseEnter}
         {...otherProps}
@@ -91,7 +92,7 @@ export function Link(props: LinkProps) {
     return (
       <a
         href={href}
-        className={clsx(className, 'rp-link')}
+        className={clsx(className, `${PREFIX}link`)}
         onMouseEnter={event => {
           onMouseEnter?.(event);
           preloadLink(removeBaseHref);
@@ -124,7 +125,7 @@ export function Link(props: LinkProps) {
   return (
     <a
       href={withBaseHref}
-      className={clsx(className, 'rp-link')}
+      className={clsx(className, `${PREFIX}link`)}
       onMouseEnter={event => {
         onMouseEnter?.(event);
         preloadLink(removeBaseHref);

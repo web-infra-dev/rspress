@@ -1,4 +1,6 @@
-.rp-edit-link {
+@use '../../styles/prefix' as *;
+
+.#{$prefix}edit-link {
   color: var(--rp-c-brand);
   text-decoration: none;
   font-size: 15px;

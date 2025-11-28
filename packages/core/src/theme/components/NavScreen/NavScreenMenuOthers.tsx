@@ -1,6 +1,7 @@
 import { NoSSR, useSite } from '@rspress/core/runtime';
 import { SocialLinks, SwitchAppearance } from '@theme';
 import './index.scss';
+import { PREFIX } from '../../constant';
 import { NavScreenLangs } from './NavScreenLangs';
 import { NavScreenVersions } from './NavScreenVersions';
 
@@ -10,9 +11,9 @@ export function NavScreenMenuOthers() {
   const socialLinks = site?.themeConfig?.socialLinks || [];
   const hasSocialLinks = socialLinks.length > 0;
   return (
-    <div className="rp-nav-screen__others">
+    <div className={`${PREFIX}nav-screen__others`}>
       {hasAppearanceSwitch && (
-        <div className="rp-nav-screen__appearance">
+        <div className={`${PREFIX}nav-screen__appearance`}>
           <NoSSR>
             <SwitchAppearance />
           </NoSSR>

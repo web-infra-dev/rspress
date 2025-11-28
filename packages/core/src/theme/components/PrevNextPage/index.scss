@@ -1,4 +1,6 @@
-.rp-prev-next-page {
+@use '../../styles/prefix' as *;
+
+.#{$prefix}prev-next-page {
   display: flex;
   justify-content: space-between;
   align-items: center;

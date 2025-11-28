@@ -3,6 +3,7 @@ import CloseSvg from '@theme-assets/close';
 import clsx from 'clsx';
 import { forwardRef, type ReactNode, useEffect, useState } from 'react';
 import './index.scss';
+import { PREFIX } from '../../constant';
 
 export type BannerProps = {
   /**
@@ -17,7 +18,7 @@ export type BannerProps = {
        */
       storage?: 'localStorage' | 'sessionStorage' | false;
       /**
-       * @default 'rp-banner-closed'
+       * @default `${PREFIX}banner-closed`
        */
       storageKey?: string;
       href: string;
@@ -60,7 +61,7 @@ export const Banner = forwardRef<HTMLDivElement, BannerProps>(
       message,
       display = true,
       className,
-      storageKey = 'rp-banner-closed',
+      storageKey = `${PREFIX}banner-closed`,
       storage = 'localStorage',
       customChildren,
     } = props as {
@@ -93,10 +94,10 @@ export const Banner = forwardRef<HTMLDivElement, BannerProps>(
 
     return (
       <>
-        <div className={clsx('rp-banner', className)} ref={ref}>
+        <div className={clsx(`${PREFIX}banner`, className)} ref={ref}>
           {customChildren ?? (
             <>
-              <Link href={href} className="rp-banner__link">
+              <Link href={href} className={`${PREFIX}banner__link`}>
                 {message}
               </Link>
               <SvgWrapper
@@ -107,7 +108,7 @@ export const Banner = forwardRef<HTMLDivElement, BannerProps>(
                     window[storage].setItem(storageKey, 'true');
                   }
                 }}
-                className="rp-banner__close"
+                className={`${PREFIX}banner__close`}
               />
             </>
           )}

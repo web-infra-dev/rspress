@@ -1,4 +1,6 @@
-.rp-nav {
+@use '../../styles/prefix' as *;
+
+.#{$prefix}nav {
   display: flex;
   height: var(--rp-nav-height);
   flex-shrink: 0;

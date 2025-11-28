@@ -1,4 +1,6 @@
-.rp-codeblock {
+@use '../../styles/prefix' as *;
+
+.#{$prefix}codeblock {
   position: relative;
   margin: 16px 0;
   border: var(--rp-code-block-border);
@@ -12,7 +14,7 @@
   }
 }
 
-.rp-codeblock__title {
+.#{$prefix}codeblock__title {
   font-family: var(--rp-font-family-mono);
   padding: 12px 16px;
   font-size: var(--rp-code-font-size);
@@ -20,7 +22,7 @@
   border-bottom: var(--rp-code-block-border);
 }
 
-.rp-codeblock__content {
+.#{$prefix}codeblock__content {
   position: relative;
   color: var(--rp-code-block-color);
   background-color: var(--rp-code-block-bg);

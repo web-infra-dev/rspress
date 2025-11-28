@@ -2,6 +2,7 @@ import type { NavItemWithChildren } from '@rspress/core';
 import { Link } from '@theme';
 import cls from 'clsx';
 import './index.scss';
+import { PREFIX } from '../../constant';
 
 type Items = NavItemWithChildren['items'];
 
@@ -26,11 +27,11 @@ function HoverGroup({
 }: HoverGroupProps) {
   return (
     <ul
-      className={cls('rp-hover-group', {
-        'rp-hover-group--hidden': !isOpen,
-        'rp-hover-group--left': position === 'left',
-        'rp-hover-group--center': position === 'center',
-        'rp-hover-group--right': position === 'right',
+      className={cls(`${PREFIX}hover-group`, {
+        [`${PREFIX}hover-group--hidden`]: !isOpen,
+        [`${PREFIX}hover-group--left`]: position === 'left',
+        [`${PREFIX}hover-group--center`]: position === 'center',
+        [`${PREFIX}hover-group--right`]: position === 'right',
       })}
     >
       {customChildren ??
@@ -41,14 +42,14 @@ function HoverGroup({
           return (
             <li
               key={text + link}
-              className={cls('rp-hover-group__item', {
-                'rp-hover-group__item--active': isActiveItem,
+              className={cls(`${PREFIX}hover-group__item`, {
+                [`${PREFIX}hover-group__item--active`]: isActiveItem,
               })}
             >
               <Link
                 href={link}
                 aria-label={text}
-                className="rp-hover-group__item__link"
+                className={`${PREFIX}hover-group__item__link`}
               >
                 {text}
               </Link>

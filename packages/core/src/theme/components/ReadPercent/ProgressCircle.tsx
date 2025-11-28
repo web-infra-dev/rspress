@@ -1,6 +1,7 @@
 import clsx from 'clsx';
 import type React from 'react';
 import './index.scss';
+import { PREFIX } from '../../constant';
 
 interface CircleProgressProps {
   percent: number;
@@ -28,7 +29,7 @@ export const ProgressCircle: React.FC<CircleProgressProps> = ({
     <svg
       width={size}
       height={size}
-      className={clsx('rp-progress-circle', className)}
+      className={clsx(`${PREFIX}progress-circle`, className)}
     >
       <circle
         cx={size / 2}

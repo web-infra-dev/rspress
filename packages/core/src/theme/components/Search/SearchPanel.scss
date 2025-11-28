@@ -1,4 +1,6 @@
-.rp-search-panel {
+@use '../../styles/prefix' as *;
+
+.#{$prefix}search-panel {
   &__mask {
     position: fixed;
     left: 0;
@@ -89,8 +91,8 @@
     background-color: var(--rp-c-bg-soft);
     padding-bottom: 6px;
 
-    &.rp-tabs {
-      // overrides .rp-tabs
+    &.#{$prefix}tabs {
+      // overrides .#{$prefix}tabs
       border-radius: 0;
       border: none;
       margin: 0;

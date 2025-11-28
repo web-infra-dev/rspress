@@ -19,6 +19,7 @@ import {
   isSidebarSingleFile,
 } from '../Sidebar/utils';
 import './index.scss';
+import { PREFIX } from '../../constant';
 import { findItemByRoutePath } from './utils';
 
 // Utility function to normalize text for search
@@ -40,8 +41,8 @@ const OverviewSearchInput = ({
 }) => {
   const t = useI18n();
   return (
-    <div className="rp-overview-search">
-      <label htmlFor="api-filter" className="rp-overview-search__label">
+    <div className={`${PREFIX}overview-search`}>
+      <label htmlFor="api-filter" className={`${PREFIX}overview-search__label`}>
         {t('overview.filterNameText')}
       </label>
       <input
@@ -51,7 +52,7 @@ const OverviewSearchInput = ({
         id="api-filter"
         value={query}
         onChange={e => setQuery(e.target.value)}
-        className="rp-overview-search__input"
+        className={`${PREFIX}overview-search__input`}
       />
     </div>
   );
@@ -242,7 +243,9 @@ export function Overview(props: {
   const overviewTitle = title || 'Overview';
 
   return (
-    <div className="rspress-doc rp-doc rspress-overview rp-overview">
+    <div
+      className={`rspress-doc ${PREFIX}doc rspress-overview ${PREFIX}overview`}
+    >
       <FallbackHeading level={1} title={overviewTitle} />
       <OverviewSearchInput
         query={query}
@@ -253,7 +256,9 @@ export function Overview(props: {
       {filtered.length > 0 ? (
         filtered.map(group => <OverviewGroup key={group?.name} group={group} />)
       ) : (
-        <div className="rp-overview__empty">{`${t('overview.filterNoResultText')}: ${query}`}</div>
+        <div
+          className={`${PREFIX}overview__empty`}
+        >{`${t('overview.filterNoResultText')}: ${query}`}</div>
       )}
     </div>
   );
