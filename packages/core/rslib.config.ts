@@ -116,6 +116,11 @@ export default defineConfig({
       format: 'esm',
       bundle: false,
       dts: true,
+      redirect: {
+        dts: {
+          extension: true,
+        },
+      },
       plugins: [
         pluginReact(),
         pluginSvgr({ svgrOptions: { exportType: 'default' } }),
@@ -155,4 +160,7 @@ export default defineConfig({
       },
     },
   ],
+  source: {
+    tsconfigPath: 'tsconfig.build.json',
+  },
 });
