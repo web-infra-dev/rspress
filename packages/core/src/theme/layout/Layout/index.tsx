@@ -115,6 +115,7 @@ export function Layout(props: LayoutProps) {
     afterHero,
     beforeFeatures,
     afterFeatures,
+    beforeNavMenu,
     afterNavMenu,
     components,
     HomeLayout = DefaultHomeLayout,
@@ -218,6 +219,7 @@ export function Layout(props: LayoutProps) {
             beforeNavTitle={beforeNavTitle}
             afterNavTitle={afterNavTitle}
             navTitle={navTitle}
+            beforeNavMenu={beforeNavMenu}
             afterNavMenu={afterNavMenu}
           />
           {afterNav}
