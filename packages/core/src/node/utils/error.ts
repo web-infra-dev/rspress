@@ -10,7 +10,9 @@ export function createError(message: string, maxStackLines = 5): Error {
   const error = new Error(message);
   if (error.stack) {
     const lines = error.stack.split('\n');
-    error.stack = lines.slice(0, maxStackLines).join('\n');
+    if (lines.length > maxStackLines) {
+      error.stack = `${lines.slice(0, maxStackLines).join('\n')}\n    ... (truncated)`;
+    }
   }
   return error;
 }

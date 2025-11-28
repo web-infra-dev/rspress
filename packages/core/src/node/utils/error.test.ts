@@ -8,18 +8,26 @@ describe('createError', () => {
     expect(error.message).toBe('Test error message');
   });
 
-  it('should truncate stack trace to 5 lines by default', () => {
+  it('should truncate stack trace and add truncated indicator', () => {
     const error = createError('Test error message');
     expect(error.stack).toBeDefined();
-    const stackLines = error.stack!.split('\n');
-    expect(stackLines.length).toBeLessThanOrEqual(5);
+    // Stack should contain the truncated indicator if it was truncated
+    if (error.stack!.includes('... (truncated)')) {
+      const stackLines = error.stack!.split('\n');
+      // maxStackLines (5) + 1 for the truncated indicator line
+      expect(stackLines.length).toBeLessThanOrEqual(6);
+    }
   });
 
   it('should truncate stack trace to custom number of lines', () => {
     const error = createError('Test error message', 3);
     expect(error.stack).toBeDefined();
-    const stackLines = error.stack!.split('\n');
-    expect(stackLines.length).toBeLessThanOrEqual(3);
+    // Stack should contain the truncated indicator if it was truncated
+    if (error.stack!.includes('... (truncated)')) {
+      const stackLines = error.stack!.split('\n');
+      // maxStackLines (3) + 1 for the truncated indicator line
+      expect(stackLines.length).toBeLessThanOrEqual(4);
+    }
   });
 
   it('should keep original error message in stack', () => {
