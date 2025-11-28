@@ -1,6 +1,7 @@
 import { workerData } from 'node:worker_threads';
 import type { RouteMeta, UserConfig } from '@rspress/shared';
 import pMap from 'p-map';
+import { createError } from '../utils';
 import { renderPage } from './renderPage';
 
 interface Args {
@@ -12,7 +13,7 @@ interface Args {
 
 const params = workerData?.[1]?.params as Omit<Args, 'route'>;
 if (!params) {
-  throw new Error('SSG Worker Thread workerData params missing');
+  throw createError('SSG Worker Thread workerData params missing');
 }
 
 const { htmlTemplate, head, ssrBundlePath } = params;

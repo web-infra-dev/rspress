@@ -1,5 +1,6 @@
 export * from './applyReplaceRules';
 export * from './createHash';
+export * from './error';
 export * from './escapeHeadingIds';
 export * from './flattenMdxContent';
 export * from './fs';

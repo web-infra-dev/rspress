@@ -8,6 +8,7 @@ import type { PluginDriver } from '../PluginDriver';
 import type { RouteService } from '../route/RouteService';
 import {
   applyReplaceRules,
+  createError,
   escapeMarkdownHeadingIds,
   normalizePath,
 } from '../utils';
@@ -113,7 +114,7 @@ MDXContent.__RSPRESS_PAGE_META["${encodeURIComponent(
     if (e instanceof Error) {
       throw e;
     }
-    throw new Error(`MDX compile error: ${e} in ${filepath}`);
+    throw createError(`MDX compile error: ${e} in ${filepath}`);
   }
 }
 

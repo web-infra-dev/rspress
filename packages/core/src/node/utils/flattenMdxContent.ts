@@ -7,6 +7,7 @@ import { MDX_OR_MD_REGEXP } from '@rspress/shared';
 import { logger } from '@rspress/shared/logger';
 import type { Root } from 'mdast';
 import { importStatementRegex } from '../constants';
+import { createError } from './error';
 
 const RspackResolveFactory = rspack.experiments.resolver.ResolverFactory;
 
@@ -37,7 +38,7 @@ export async function resolveDepPath(
   if (resolved.path) {
     return resolved.path;
   } else {
-    throw new Error(
+    throw createError(
       `Empty result when resolving ${moduleSpecifier} from ${importer}`,
     );
   }

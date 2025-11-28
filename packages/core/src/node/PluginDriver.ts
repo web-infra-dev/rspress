@@ -8,6 +8,7 @@ import {
 } from '@rspress/shared';
 import { haveNavSidebarConfig } from './auto-nav-sidebar';
 import type { RouteService } from './route/RouteService';
+import { createError } from './utils';
 
 type RspressPluginHookKeys =
   | 'beforeBuild'
@@ -88,7 +89,7 @@ export class PluginDriver {
     );
     // Avoid the duplicated plugin
     if (existedIndex !== -1) {
-      throw new Error(`The plugin "${plugin.name}" has been registered`);
+      throw createError(`The plugin "${plugin.name}" has been registered`);
     }
 
     this.#plugins.push(plugin);

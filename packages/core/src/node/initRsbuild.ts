@@ -50,7 +50,11 @@ import type { FactoryContext } from './runtimeModule/types';
 import { rsbuildPluginCSR } from './ssg/rsbuildPluginCSR';
 import { rsbuildPluginSSG } from './ssg/rsbuildPluginSSG';
 import { rsbuildPluginSSGMD } from './ssg-md/rsbuildPluginSSGMD';
-import { resolveReactAlias, resolveReactRouterDomAlias } from './utils';
+import {
+  createError,
+  resolveReactAlias,
+  resolveReactRouterDomAlias,
+} from './utils';
 import { detectCustomIcon } from './utils/detectCustomIcon';
 
 function isPluginIncluded(config: UserConfig, pluginName: string): boolean {
@@ -70,7 +74,7 @@ async function getVirtualModulesFromPlugins(
   const modulesByPlugin = await pluginDriver.addRuntimeModules();
   Object.keys(modulesByPlugin).forEach(key => {
     if (runtimeModule[key]) {
-      throw new Error(
+      throw createError(
         `The runtime module ${key} is duplicated, please check your plugin`,
       );
     }
