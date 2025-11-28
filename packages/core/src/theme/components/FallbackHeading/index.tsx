@@ -1,7 +1,7 @@
 import { renderInlineMarkdown } from '@theme';
 import { slug } from 'github-slugger';
-import { A } from './docComponents/a';
-import { H1, H2, H3, H4, H5, H6 } from './docComponents/title';
+import { A } from '../DocContent/docComponents/a';
+import { H1, H2, H3, H4, H5, H6 } from '../DocContent/docComponents/title';
 
 const HEADING_MAP = {
   1: H1,

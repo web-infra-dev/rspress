@@ -17,14 +17,11 @@ export {
 export { getCustomMDXComponent } from './components/DocContent/docComponents/index';
 // layout
 export type { ShikiPreProps } from './components/DocContent/docComponents/pre';
-export {
-  DocContent,
-  FallbackHeading,
-  FallbackTitle,
-} from './components/DocContent/index';
+export { DocContent } from './components/DocContent/index';
 export { DocFooter } from './components/DocFooter/index';
 export { EditLink } from './components/EditLink/index';
 export { useEditLink } from './components/EditLink/useEditLink';
+export { FallbackHeading } from './components/FallbackHeading/index';
 export { HomeBackground } from './components/HomeBackground/index';
 export { HomeFeature } from './components/HomeFeature/index';
 export { HomeFooter } from './components/HomeFooter/index';
