@@ -1,4 +1,5 @@
 import path from 'node:path';
+import { pluginLess } from '@rsbuild/plugin-less';
 import { pluginPreview } from '@rspress/plugin-preview';
 import { defineConfig } from 'rspress/config';
 
@@ -10,6 +11,20 @@ export default defineConfig({
       iframeOptions: {
         framework: 'react',
         position: 'fixed',
+        builderConfig: {
+          plugins: [
+            pluginLess({
+              lessLoaderOptions: {
+                lessOptions: {
+                  modifyVars: {
+                    '@color-1': '#ff0000',
+                  },
+                  javascriptEnabled: true,
+                },
+              },
+            }),
+          ],
+        },
       },
       previewLanguages: ['jsx', 'tsx', 'json'],
       previewCodeTransform(codeInfo) {
