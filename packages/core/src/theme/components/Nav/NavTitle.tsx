@@ -1,7 +1,7 @@
 import {
   addLeadingSlash,
   normalizeImagePath,
-  useLocaleSiteData,
+  useLang,
   useSite,
 } from '@rspress/core/runtime';
 import { Link } from '@theme';
@@ -10,9 +10,12 @@ import './NavTitle.scss';
 
 export const NavTitle = () => {
   const { site } = useSite();
-  const localeData = useLocaleSiteData();
+  const lang = useLang();
+  const locales = site.themeConfig.locales;
+  const localeData = locales?.find(locale => locale.lang === lang);
+
   const { logo: rawLogo, logoText } = site;
-  const title = (localeData.title ?? site.title) || 'Home';
+  const title = (localeData?.title ?? site.title) || 'Home';
   const logo = useMemo(() => {
     if (!rawLogo) {
       return null;

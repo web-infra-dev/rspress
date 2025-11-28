@@ -109,6 +109,10 @@ export class PluginDriver {
     }
   }
 
+  /**
+   * We'll handle here the default values that need to be supplemented both at compile time and runtime,
+   * which are generally important configurations.
+   */
   private async normalizeConfig() {
     this.#config.ssg ??= true;
     this.#config.llms ??= false;
@@ -116,6 +120,15 @@ export class PluginDriver {
       addLeadingSlash(this.#config.base ?? '/'),
     );
     this.#config.lang ??= 'en';
+
+    // FIXME: for locales and themeConfig.locales compatibility, we should unify `locales` and `themeConfig.locales` later
+    if (this.#config.themeConfig?.locales && !this.#config.locales) {
+      this.#config.locales = this.#config.themeConfig.locales;
+    }
+    if (this.#config.locales && !this.#config.themeConfig?.locales) {
+      this.#config.themeConfig = this.#config.themeConfig || {};
+      this.#config.themeConfig.locales = this.#config.locales;
+    }
   }
 
   async modifyConfig() {

@@ -22,7 +22,6 @@ export interface DocLayoutProps {
   afterDocContent?: React.ReactNode;
   beforeOutline?: React.ReactNode;
   afterOutline?: React.ReactNode;
-  navTitle?: React.ReactNode;
   components?: Record<string, React.FC>;
 }
 

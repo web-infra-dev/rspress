@@ -40,6 +40,7 @@ export async function getAvailableComponents(): Promise<string[]> {
     'HomeHero',
     'HomeBackground',
     'HomeFooter',
+    'NavTitle',
     'Toc',
     'Tabs',
     'PackageManagerTabs',

@@ -108,7 +108,6 @@ export function Layout(props: LayoutProps) {
     afterOutline,
     beforeNavTitle,
     afterNavTitle,
-    navTitle,
     beforeNav,
     afterNav,
     beforeHero,
@@ -185,7 +184,7 @@ export function Layout(props: LayoutProps) {
         return <HomeLayout {...homeProps} />;
       case 'doc':
       case 'doc-wide':
-        return <DocLayout {...docProps} navTitle={navTitle} />;
+        return <DocLayout {...docProps} />;
       case '404':
         return <NotFoundLayout />;
       // The custom pageType will have navbar while the blank pageType will not.
@@ -217,7 +216,6 @@ export function Layout(props: LayoutProps) {
           <Nav
             beforeNavTitle={beforeNavTitle}
             afterNavTitle={afterNavTitle}
-            navTitle={navTitle}
             afterNavMenu={afterNavMenu}
           />
           {afterNav}

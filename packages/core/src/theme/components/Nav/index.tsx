@@ -6,7 +6,6 @@ import { NavTitle } from './NavTitle';
 
 export interface NavProps {
   beforeNavTitle?: React.ReactNode;
-  navTitle?: React.ReactNode;
   afterNavTitle?: React.ReactNode;
 
   beforeNavMenu?: React.ReactNode;
@@ -14,20 +13,14 @@ export interface NavProps {
 }
 
 export function Nav(props: NavProps) {
-  const {
-    beforeNavTitle,
-    afterNavTitle,
-    beforeNavMenu,
-    afterNavMenu,
-    navTitle,
-  } = props;
+  const { beforeNavTitle, afterNavTitle, beforeNavMenu, afterNavMenu } = props;
   const navList = useNav();
 
   return (
     <header className="rp-nav">
       <div className="rp-nav__left">
         {beforeNavTitle}
-        {navTitle ?? <NavTitle />}
+        <NavTitle />
         {/* only in desktop */}
         <NavMenu menuItems={navList} position="left" />
         {afterNavTitle}
