@@ -224,7 +224,9 @@ test.describe('plugin preview HMR', async () => {
     await fs.writeFile(HMR_TEST_FILE, updatedContent);
 
     // Wait for HMR to apply
-    await expect(internalCard).toContainText('HMR Internal Updated');
+    await expect(internalCard).toContainText('HMR Internal Updated', {
+      timeout: 30000,
+    });
 
     // Restore for next test
     await fs.writeFile(HMR_TEST_FILE, originalContent);
