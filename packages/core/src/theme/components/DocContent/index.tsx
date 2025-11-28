@@ -1,9 +1,9 @@
 import { MDXProvider } from '@mdx-js/react';
 import { Content, usePage, useSite } from '@rspress/core/runtime';
-import { Callout, getCustomMDXComponent } from '@theme';
-import './doc.scss';
+import { Callout, FallbackHeading, getCustomMDXComponent } from '@theme';
 import { useScrollAfterNav } from '../../logic/useScrollAfterNav';
-import { FallbackHeading } from './FallbackHeading';
+
+import './doc.scss';
 
 export function FallbackTitle() {
   const { site } = useSite();

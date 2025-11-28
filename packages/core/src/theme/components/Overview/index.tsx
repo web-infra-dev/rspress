@@ -10,9 +10,13 @@ import {
   usePageData,
   useSidebar,
 } from '@rspress/core/runtime';
-import { type Group, type GroupItem, OverviewGroup } from '@theme';
+import {
+  FallbackHeading,
+  type Group,
+  type GroupItem,
+  OverviewGroup,
+} from '@theme';
 import { useEffect, useMemo, useRef, useState } from 'react';
-import { FallbackHeading } from '../DocContent/FallbackHeading';
 import {
   isSidebarDivider,
   isSidebarSectionHeader,

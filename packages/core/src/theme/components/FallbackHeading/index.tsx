@@ -1,15 +1,17 @@
-import { renderInlineMarkdown } from '@theme';
+import { getCustomMDXComponent, renderInlineMarkdown } from '@theme';
 import { slug } from 'github-slugger';
-import { A } from './docComponents/a';
-import { H1, H2, H3, H4, H5, H6 } from './docComponents/title';
+import { useMemo } from 'react';
 
-const HEADING_MAP = {
-  1: H1,
-  2: H2,
-  3: H3,
-  4: H4,
-  5: H5,
-  6: H6,
+const getHeadingMap = () => {
+  const { h1, h2, h3, h4, h5, h6 } = getCustomMDXComponent();
+  return {
+    1: h1,
+    2: h2,
+    3: h3,
+    4: h4,
+    5: h5,
+    6: h6,
+  };
 };
 
 /**
@@ -28,7 +30,14 @@ export function FallbackHeading({
 }) {
   const titleSlug = title && slug(title.trim());
 
-  const Element = HEADING_MAP[level] || H1;
+  const Element = useMemo(() => {
+    const headingMap = getHeadingMap();
+    return headingMap[level] || headingMap[1];
+  }, [level]);
+
+  const A = useMemo(() => {
+    return getCustomMDXComponent().a;
+  }, []);
 
   return (
     titleSlug && (
