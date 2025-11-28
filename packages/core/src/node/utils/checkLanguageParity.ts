@@ -2,6 +2,7 @@ import fs from 'node:fs/promises';
 import path from 'node:path';
 import type { UserConfig } from '@rspress/shared';
 import { logger } from '@rspress/shared/logger';
+import { createError } from './error';
 
 // Normalize path separators to forward slashes
 function normalizePath(filePath: string) {
@@ -74,7 +75,7 @@ async function collectModuleFiles(
     }
   } catch (e) {
     logger.error(e);
-    throw new Error(
+    throw createError(
       `Failed to access directory: ${normalizePath(langModuleDir)}`,
     );
   }
@@ -136,7 +137,7 @@ export async function checkLanguageParity(config: UserConfig) {
     }
 
     if (missingLanguagesFile.length > 0) {
-      throw new Error(
+      throw createError(
         `Check language parity failed! Missing content:\n${missingLanguagesFile
           .map(file => `        - ${normalizePath(file)}`)
           .join('\n')}`,

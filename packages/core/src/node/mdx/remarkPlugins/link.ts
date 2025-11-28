@@ -15,6 +15,7 @@ import { visit } from 'unist-util-visit';
 import type { VFile } from 'vfile';
 import { hintRelativeMarkdownLink } from '../../logger/hint';
 import type { RouteService } from '../../route/RouteService';
+import { createError } from '../../utils';
 
 // TODO: checkDeadLinks support external links and anchor hash links
 function checkDeadLinks(
@@ -61,7 +62,7 @@ ${errorInfos.map(([nodeUrl, link]) => `  ${picocolors.green(`"[..](${nodeUrl})"`
       logger.error(message);
 
       if (isProduction()) {
-        throw new Error('Dead link found');
+        throw createError('Dead link found');
       }
     }
   }

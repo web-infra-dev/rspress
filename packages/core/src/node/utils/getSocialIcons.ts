@@ -1,4 +1,5 @@
 import type { SocialLink } from '@rspress/shared';
+import { createError } from './error';
 
 /**
  * these icons come from "@iconify-json/simple-icons/icons.json"
@@ -39,7 +40,7 @@ export function getSocialIcons(socialLinks: SocialLink[] = []) {
     if (typeof link.icon === 'string') {
       const pathContent = presetIcons[formatIconName(link.icon)];
       if (!pathContent) {
-        throw new Error(`Icon "${link.icon}" not found in preset icons.`);
+        throw createError(`Icon "${link.icon}" not found in preset icons.`);
       }
       icons[link.icon] =
         `<svg xmlns="http://www.w3.org/2000/svg" width="100%" viewBox="0 0 24 24">${pathContent}</svg>`;
