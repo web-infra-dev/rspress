@@ -8,6 +8,7 @@
     "preview": "rspress preview"
   },
   "dependencies": {
+    "@rsbuild/plugin-less": "~1.2.4",
     "@rspress/plugin-playground": "workspace:*",
     "@rspress/plugin-preview": "workspace:*",
     "@rspress/shared": "workspace:*",

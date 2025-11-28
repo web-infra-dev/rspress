@@ -77,6 +77,26 @@ test.describe('plugin test', async () => {
     );
     expect(innerCodePreviewWithPreviewModeInternal).toBe('This is a component');
   });
+
+  test('Should support custom less variables', async ({ page }) => {
+    await page.goto(`http://localhost:${appPort}/guide/less`, {
+      waitUntil: 'networkidle',
+    });
+
+    const textContent = await page
+      .frameLocator('iframe')
+      .getByText('This text should be red.')
+      .innerText();
+
+    const textColor = await page
+      .frameLocator('iframe')
+      .locator('.foo')
+      .evaluate(el => window.getComputedStyle(el).color);
+
+    expect(textContent).toBe('This text should be red.');
+    // rgb(255, 0, 0) is the computed value of #ff0000
+    expect(textColor).toBe('rgb(255, 0, 0)');
+  });
 });
 
 test.describe('plugin preview build', async () => {
@@ -119,5 +139,25 @@ test.describe('plugin preview build', async () => {
     expect(internalDemoCodePreview).toBe('Hello World Internal');
     expect(externalDemoCodePreview).toBe('Hello World External');
     expect(transformedCodePreview).toBe('Render from JSON');
+  });
+
+  test('Should support custom less variables in build', async ({ page }) => {
+    await page.goto(`http://localhost:${appPort}/guide/less`, {
+      waitUntil: 'networkidle',
+    });
+
+    const textContent = await page
+      .frameLocator('iframe')
+      .getByText('This text should be red.')
+      .innerText();
+
+    const textColor = await page
+      .frameLocator('iframe')
+      .locator('.foo')
+      .evaluate(el => window.getComputedStyle(el).color);
+
+    expect(textContent).toBe('This text should be red.');
+    // rgb(255, 0, 0) is the computed value of #ff0000
+    expect(textColor).toBe('rgb(255, 0, 0)');
   });
 });
