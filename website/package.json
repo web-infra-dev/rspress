@@ -9,7 +9,7 @@
   },
   "devDependencies": {
     "@rsbuild/plugin-sass": "~1.4.0",
-    "@rsdoctor/rspack-plugin": "1.3.11",
+    "@rsdoctor/rspack-plugin": "1.3.12",
     "@rspress/core": "workspace:*",
     "@rspress/plugin-algolia": "workspace:*",
     "@rspress/plugin-llms": "workspace:*",
@@ -18,13 +18,13 @@
     "@rspress/plugin-twoslash": "workspace:*",
     "@rstack-dev/doc-ui": "^1.12.0",
     "@shikijs/transformers": "^3.12.2",
-    "@types/react": "^19.2.6",
+    "@types/react": "^19.2.7",
     "react": "^19.2.0",
     "react-dom": "^19.2.0",
     "rsbuild-plugin-google-analytics": "^1.0.4",
     "rsbuild-plugin-open-graph": "^1.1.0",
     "rspress-plugin-font-open-sans": "^1.0.3",
-    "tm-themes": "1.10.12",
+    "tm-themes": "1.10.13",
     "twoslash": "^0.3.4",
     "typescript": "^5.8.2"
   }

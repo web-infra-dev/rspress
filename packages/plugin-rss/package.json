@@ -33,9 +33,9 @@
     "feed": "^4.2.2"
   },
   "devDependencies": {
-    "@rslib/core": "0.18.0",
+    "@rslib/core": "0.18.2",
     "@types/node": "^22.8.1",
-    "@types/react": "^19.2.6",
+    "@types/react": "^19.2.7",
     "react": "^19.2.0",
     "rsbuild-plugin-publint": "^0.3.3",
     "typescript": "^5.8.2"
