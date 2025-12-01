@@ -49,7 +49,7 @@
     "nx": "21.6.9",
     "path-serializer": "0.5.1",
     "playwright": "1.56.1",
-    "prettier": "3.6.2",
+    "prettier": "3.7.3",
     "prettier-plugin-packagejson": "^2.5.19",
     "tree-kill": "^1.2.2",
     "vitest": "2.1.9",
