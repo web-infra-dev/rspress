@@ -40,9 +40,9 @@
   },
   "devDependencies": {
     "@rsbuild/plugin-react": "~1.4.2",
-    "@rslib/core": "0.18.0",
+    "@rslib/core": "0.18.2",
     "@rspress/config": "workspace:*",
-    "@types/react": "^19.2.6",
+    "@types/react": "^19.2.7",
     "@types/react-dom": "^19.2.3",
     "rsbuild-plugin-publint": "^0.3.3",
     "typescript": "^5.8.2"
