@@ -55,10 +55,10 @@
     "vitest": "2.1.9",
     "zx": "^8.8.5"
   },
-  "packageManager": "pnpm@10.22.0",
+  "packageManager": "pnpm@10.24.0",
   "engines": {
     "node": ">=18.0.0",
-    "pnpm": ">=10.22.0"
+    "pnpm": ">=10.24.0"
   },
   "publishConfig": {
     "access": "public",
