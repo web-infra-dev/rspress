@@ -1,5 +1,6 @@
 import type { I18nText } from '@rspress/core';
 
+// cspell:disable
 export const DEFAULT_I18N_TEXT = {
   languagesText: {
     zh: '语言',
@@ -149,3 +150,5 @@ export const DEFAULT_I18N_TEXT = {
     ru: 'Вернуться на главную',
   },
 } as const satisfies Required<I18nText>;
+
+// cspell:enable
