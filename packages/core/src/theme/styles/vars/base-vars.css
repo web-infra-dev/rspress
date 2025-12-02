@@ -14,8 +14,9 @@
   --rp-c-text-3: rgba(60, 60, 60, 0.33);
   --rp-c-text-4: rgba(60, 60, 60, 0.18);
 
-  --rp-c-text-code: #476573; /* inline code */
-  --rp-c-text-code-bg: rgb(153 161 179/ 0.1); /* inline code bg */
+  --rp-c-text-code: #476582; /* inline code */
+  --rp-c-text-code-bg: rgba(153, 161, 179, 0.08); /* inline code bg */
+  --rp-c-text-code-border: rgba(0, 0, 0, 0.05); /* inline code border */
 
   --rp-c-link: var(--rp-c-brand-dark);
 }
@@ -37,7 +38,8 @@
   --rp-c-text-4: rgba(235, 235, 235, 0.18);
 
   --rp-c-text-code: #c9def1; /* inline code */
-  --rp-c-text-code-bg: rgb(153 161 179/ 0.1); /* inline code bg */
+  --rp-c-text-code-bg: rgba(255, 255, 255, 0.08); /* inline code bg */
+  --rp-c-text-code-border: rgba(255, 255, 255, 0.05); /* inline code border */
 
   --rp-c-link: var(--rp-c-brand-light);
 }

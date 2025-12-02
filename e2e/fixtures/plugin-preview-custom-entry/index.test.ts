@@ -17,11 +17,11 @@ test.describe('plugin test', async () => {
   });
 
   test('Should render the element', async ({ page }) => {
-    await page.goto(`http://localhost:${appPort}/`, {
+    await page.goto(`http://localhost:${appPort}/guide/`, {
       waitUntil: 'networkidle',
     });
-    const codeBlockElements = page.locator('.rspress-doc > .rspress-preview');
-    await expect(codeBlockElements).toHaveCount(4);
+    const codeBlockElements = page.locator('.rspress-doc > .rp-preview');
+    await expect(codeBlockElements).toHaveCount(3);
 
     const internalIframeJsxDemoCodePreview = await page
       .frameLocator('iframe')
@@ -38,15 +38,21 @@ test.describe('plugin test', async () => {
       .nth(2)
       .getByText('EXTERNAL')
       .innerText();
-    const transformedCodePreview = await page
-      .frameLocator('iframe')
-      .nth(3)
-      .getByText('VUE')
-      .innerText();
 
     expect(internalIframeJsxDemoCodePreview).toBe('Hello World JSX');
     expect(internalIframeTsxDemoCodePreview).toBe('Hello World TSX');
     expect(externalIframeJsxDemoCodePreview).toBe('Hello World External');
+  });
+
+  test('should render vue', async ({ page }) => {
+    await page.goto(`http://localhost:${appPort}/guide/vue`, {
+      waitUntil: 'networkidle',
+    });
+    const transformedCodePreview = await page
+      .frameLocator('iframe')
+      .getByText('VUE')
+      .innerText();
+
     expect(transformedCodePreview).toBe('Hello World VUE');
   });
 });

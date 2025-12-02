@@ -1,4 +1,5 @@
 import path from 'node:path';
+import { fileURLToPath } from 'node:url';
 import { pluginReact } from '@rsbuild/plugin-react';
 import { pluginSass } from '@rsbuild/plugin-sass';
 import { pluginSvgr } from '@rsbuild/plugin-svgr';
@@ -8,20 +9,75 @@ import { pluginPublint } from 'rsbuild-plugin-publint';
 const COMMON_EXTERNALS = [
   'virtual-routes',
   'virtual-site-data',
+  'virtual-page-data',
   'virtual-global-styles',
   'virtual-global-components',
   'virtual-search-hooks',
+  'virtual-i18n-text',
   '@rspress/runtime',
   '@theme',
   /@theme-assets\//,
-  'virtual-i18n-text',
   // To be externalized when bundling d.ts.
   '@types/react',
+  '@rspress/core/runtime',
+  '@rspress/core/theme',
+  '@rspress/core/shiki-transformers',
+  '@rspress/core/_private/react',
+  '@rspress/shared',
+  '@rspress/runtime',
 ];
 
 export default defineConfig({
   plugins: [pluginPublint()],
   lib: [
+    {
+      source: {
+        entry: {
+          index: './src/index.ts',
+          'cli/index': './src/cli/index.ts',
+          'shiki-transformers': './src/shiki-transformers.ts',
+          runtime: './src/runtime.ts',
+
+          // TODO: should add entry by new URL parser in Rspack module graph
+          'node/mdx/loader': './src/node/mdx/loader.ts',
+          'node/ssg/renderPageWorker': './src/node/ssg/renderPageWorker.ts',
+        },
+      },
+      dts: false,
+      experiments: {
+        advancedEsm: true,
+      },
+      performance: {
+        buildCache: false,
+      },
+      output: {
+        externals: COMMON_EXTERNALS,
+        filenameHash: true,
+      },
+      tools: {
+        rspack(config) {
+          config.plugins.forEach(plugin => {
+            if (plugin?.constructor.name === 'EsmLibraryPlugin') {
+              // @ts-expect-error
+              plugin.options = {
+                preserveModules: path.resolve(
+                  path.dirname(fileURLToPath(import.meta.url)),
+                  './src',
+                ),
+              };
+            }
+          });
+        },
+        bundlerChain(chain, { CHAIN_ID }) {
+          const rule = chain.module.rule(
+            `Rslib:${CHAIN_ID.RULE.JS}-entry-loader`,
+          );
+          rule.uses.delete('rsbuild:lib-entry-module');
+          rule.issuer({});
+          rule.clear();
+        },
+      },
+    },
     {
       bundle: false,
       dts: false,
@@ -39,102 +95,8 @@ export default defineConfig({
       },
     },
     {
-      format: 'esm',
-      syntax: 'es2022',
-      source: {
-        entry: {
-          renderPageWorker: './src/node/ssg/renderPageWorker.ts',
-        },
-      },
-    },
-    {
-      format: 'esm',
-      syntax: 'es2022',
-      source: {
-        entry: {
-          cli: './src/cli/index.ts',
-        },
-      },
-      output: {
-        distPath: {
-          root: './dist',
-        },
-        externals: {
-          '../node/index': 'module ./index.js',
-        },
-      },
-    },
-    {
-      format: 'esm',
-      source: {
-        entry: {
-          index: './src/index.ts',
-        },
-      },
-      syntax: 'es2022',
-      output: {
-        distPath: {
-          root: './dist',
-        },
-      },
-    },
-    {
-      format: 'esm',
-      syntax: 'es2022',
-      output: {
-        distPath: {
-          root: './dist',
-        },
-        externals: {
-          './processor': 'module ./processor.js',
-        },
-      },
-      source: {
-        entry: {
-          loader: './src/node/mdx/loader.ts',
-        },
-      },
-    },
-    {
-      format: 'esm',
-      syntax: 'es2022',
-      output: {
-        distPath: {
-          root: './dist',
-        },
-      },
-      source: {
-        entry: {
-          processor: './src/node/mdx/processor.ts',
-        },
-      },
-    },
-    {
-      format: 'esm',
-      syntax: 'es2022',
-      output: {
-        target: 'web',
-        distPath: {
-          root: './dist',
-        },
-      },
-      source: {
-        entry: {
-          'shiki-transformers': './src/shiki-transformers.ts',
-        },
-      },
-    },
-    {
-      format: 'esm',
-      syntax: 'es2022',
-      source: {
-        entry: {
-          runtime: './src/runtime.ts',
-        },
-      },
-    },
-    {
       bundle: false,
+      dts: false,
       format: 'esm',
       syntax: 'es2022',
       source: {
@@ -154,6 +116,11 @@ export default defineConfig({
       format: 'esm',
       bundle: false,
       dts: true,
+      redirect: {
+        dts: {
+          extension: true,
+        },
+      },
       plugins: [
         pluginReact(),
         pluginSvgr({ svgrOptions: { exportType: 'default' } }),
@@ -193,4 +160,7 @@ export default defineConfig({
       },
     },
   ],
+  source: {
+    tsconfigPath: 'tsconfig.build.json',
+  },
 });

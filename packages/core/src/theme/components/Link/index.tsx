@@ -51,6 +51,7 @@ export function Link(props: LinkProps) {
     onClick,
     onMouseEnter,
     startTransition,
+    ...otherProps
   } = props;
 
   const { linkType, removeBaseHref, withBaseHref } = getHref(href);
@@ -59,11 +60,13 @@ export function Link(props: LinkProps) {
   if (linkType === 'external') {
     return (
       <a
-        {...props}
         href={href}
         target="_blank"
         rel="noopener noreferrer"
         className={clsx(className, 'rp-link')}
+        onClick={onClick}
+        onMouseEnter={onMouseEnter}
+        {...otherProps}
       >
         {children}
       </a>
@@ -72,7 +75,13 @@ export function Link(props: LinkProps) {
 
   if (linkType === 'hashOnly') {
     return (
-      <a {...props} href={href} className={clsx(className, 'rp-link')}>
+      <a
+        href={href}
+        className={clsx(className, 'rp-link')}
+        onClick={onClick}
+        onMouseEnter={onMouseEnter}
+        {...otherProps}
+      >
         {children}
       </a>
     );
@@ -81,7 +90,6 @@ export function Link(props: LinkProps) {
   if (linkType === 'relative') {
     return (
       <a
-        {...props}
         href={href}
         className={clsx(className, 'rp-link')}
         onMouseEnter={event => {
@@ -106,6 +114,7 @@ export function Link(props: LinkProps) {
           e.preventDefault();
           navigate(href);
         }}
+        {...otherProps}
       >
         {children}
       </a>
@@ -114,7 +123,6 @@ export function Link(props: LinkProps) {
 
   return (
     <a
-      {...props}
       href={withBaseHref}
       className={clsx(className, 'rp-link')}
       onMouseEnter={event => {
@@ -139,6 +147,7 @@ export function Link(props: LinkProps) {
         e.preventDefault();
         navigate(removeBaseHref);
       }}
+      {...otherProps}
     >
       {children}
     </a>

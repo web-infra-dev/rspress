@@ -1,3 +1,7 @@
+:root {
+  --rp-code-button-group-z-index: 10;
+}
+
 .rp-codeblock__content:hover .rp-code-button-group__button {
   opacity: 1;
 }
@@ -6,7 +10,7 @@
   position: absolute;
   right: 20px;
   top: 20px;
-  z-index: 10;
+  z-index: var(--rp-code-button-group-z-index);
   display: flex;
   gap: 10px;
 

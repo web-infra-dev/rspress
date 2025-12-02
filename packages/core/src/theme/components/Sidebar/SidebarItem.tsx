@@ -76,6 +76,7 @@ export function SidebarItemRaw({
         }}
         {...{ 'data-depth': depth }}
         {...(context ? { 'data-context': context } : {})}
+        onClick={onClick}
       >
         {innerContent}
       </Link>

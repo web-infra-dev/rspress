@@ -20,17 +20,11 @@
     ".": {
       "types": "./dist/index.d.ts",
       "default": "./dist/index.js"
-    },
-    "./server": {
-      "types": "./server.d.ts",
-      "default": "./server.js"
     }
   },
   "types": "./dist/index.d.ts",
   "files": [
-    "dist",
-    "server.js",
-    "server.d.ts"
+    "dist"
   ],
   "scripts": {
     "build": "rslib build",
@@ -42,13 +36,13 @@
     "@unhead/react": "^2.0.19",
     "react": "^19.2.0",
     "react-dom": "^19.2.0",
-    "react-router-dom": "^6.30.2"
+    "react-router-dom": "^7.9.6"
   },
   "devDependencies": {
     "@rsbuild/plugin-react": "~1.4.2",
-    "@rslib/core": "0.17.2",
+    "@rslib/core": "0.18.2",
     "@rspress/config": "workspace:*",
-    "@types/react": "^19.2.5",
+    "@types/react": "^19.2.7",
     "@types/react-dom": "^19.2.3",
     "rsbuild-plugin-publint": "^0.3.3",
     "typescript": "^5.8.2"

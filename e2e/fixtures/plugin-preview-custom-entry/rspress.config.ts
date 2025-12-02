@@ -8,18 +8,16 @@ export default defineConfig({
   plugins: [
     pluginPreview({
       iframeOptions: {
-        customEntry: ({ entryCssPath, demoPath }) => {
+        customEntry: ({ demoPath }) => {
           if (demoPath.endsWith('.vue')) {
             return `
 import { createApp } from 'vue';
 import App from ${JSON.stringify(demoPath)};
-import ${JSON.stringify(entryCssPath)};
 createApp(App).mount('#root');
 `;
           }
           return `
 import { createRoot } from 'react-dom/client';
-import ${JSON.stringify(entryCssPath)};
 import Demo from ${JSON.stringify(demoPath)};
 const container = document.getElementById('root');
 createRoot(container).render(<Demo />);

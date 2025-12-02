@@ -24,15 +24,12 @@ async function detectPackageMajorVersion(
   return undefined;
 }
 
-const DEFAULT_REACT_VERSION = 19;
-export async function detectReactVersion(): Promise<number> {
-  return (await detectPackageMajorVersion('react')) ?? DEFAULT_REACT_VERSION;
-}
-
-// FIXME: currently in Rspress we only support react-router-dom ^6.29.0
 export async function resolveReactRouterDomAlias(): Promise<
   Record<string, string>
 > {
+  const hasInstalled = await detectPackageMajorVersion('react-router-dom');
+  const basedir = hasInstalled ? process.cwd() : PACKAGE_ROOT;
+
   const alias: Record<string, string> = {};
   const resolver = new Resolver({
     mainFields: ['browser', 'module', 'main'],
@@ -41,7 +38,10 @@ export async function resolveReactRouterDomAlias(): Promise<
   });
 
   try {
-    const resolved = await resolver.async(PACKAGE_ROOT, 'react-router-dom');
+    const resolved = await resolver.async(
+      basedir,
+      'react-router-dom/package.json',
+    );
     if (resolved.error) {
       throw Error(resolved.error);
     }
@@ -50,7 +50,7 @@ export async function resolveReactRouterDomAlias(): Promise<
       throw Error(`'react-router-dom' resolved to empty path`);
     }
     return {
-      'react-router-dom': resolved.path,
+      'react-router-dom': path.dirname(resolved.path),
     };
   } catch (e) {
     logger.warn('react-router-dom not found: \n', e);
@@ -58,16 +58,19 @@ export async function resolveReactRouterDomAlias(): Promise<
   return {};
 }
 
-export async function resolveReactAlias(reactVersion: number, isSSR: boolean) {
-  const basedir =
-    reactVersion === DEFAULT_REACT_VERSION ? PACKAGE_ROOT : process.cwd();
+export async function resolveReactAlias(isSSR: boolean) {
+  const hasInstalled = await detectPackageMajorVersion('react');
+  const basedir = hasInstalled ? process.cwd() : PACKAGE_ROOT;
+
   const libPaths = [
     'react',
     'react/jsx-runtime',
     'react/jsx-dev-runtime',
+    'react/package.json',
     'react-dom',
     'react-dom/client',
     'react-dom/server',
+    'react-dom/package.json',
   ];
 
   const alias: Record<string, string> = {};

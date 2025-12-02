@@ -3,31 +3,19 @@ import type { RouteMeta } from '@rspress/core';
 
 export type Options = {
   /**
-   * @deprecated Use previewMode instead.
-   * true = 'iframe'
-   * false = 'internal'
+   * determine how to handle a internal code block without meta like \`\`\`tsx
+   * @default 'preview'
    */
-  isMobile?: boolean;
+  defaultRenderMode?: 'pure' | 'preview';
   /**
-   * @deprecated Use iframeOptions.position instead.
-   */
-  iframePosition?: 'fixed' | 'follow';
-  /**
-   * internal mode: component will be rendered inside the documentation, only support react.
-   *
-   * iframe mode: component will be rendered in iframe, note that aside will hide.
+   * determine how to preview \`\`\`tsx preview code block
    * @default 'internal'
    */
-  previewMode?: 'internal' | 'iframe';
+  defaultPreviewMode?: 'internal' | 'iframe-fixed' | 'iframe-follow';
   /**
    * enable when preview mode is iframe.
    */
   iframeOptions?: IframeOptions;
-  /**
-   * determine how to handle a internal code block without meta
-   * @default 'preview'
-   */
-  defaultRenderMode?: 'pure' | 'preview';
   /**
    * Supported languages to be previewed
    */
@@ -45,13 +33,9 @@ export type IframeOptions = {
   /**
    * framework in the iframe
    * @default 'react'
+   * @deprecated
    */
-  framework?: 'react' | 'solid';
-  /**
-   * position of the iframe
-   * @default 'follow'
-   */
-  position?: 'fixed' | 'follow';
+  framework?: 'react';
   /**
    * dev server port for the iframe
    * @default 7890
@@ -65,14 +49,13 @@ export type IframeOptions = {
 };
 
 export interface CustomEntry {
-  entryCssPath: string;
   demoPath: string;
 }
 
 export type RemarkPluginOptions = Required<
   Pick<
     Options,
-    | 'previewMode'
+    | 'defaultPreviewMode'
     | 'defaultRenderMode'
     | 'previewLanguages'
     | 'previewCodeTransform'
@@ -89,6 +72,7 @@ export type DemoInfo = Record<
     id: string;
     path: string;
     title: string;
+    previewMode: 'iframe-fixed' | 'iframe-follow';
   }[]
 >;
 

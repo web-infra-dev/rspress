@@ -3,11 +3,10 @@
   --rp-iframe-nav-bg: #ffffff;
 }
 
-/* TODO: support dark mode */
-/* .dark {
+.dark {
   --rp-iframe-bg: #242424;
   --rp-iframe-nav-bg: #191d24;
-} */
+}
 
 body {
   background-color: var(--rp-iframe-bg) !important;
@@ -26,7 +25,7 @@ body {
 }
 /* #endregion copied from preflight.css */
 
-.preview-nav {
+.rp-preview-nav {
   position: relative;
   display: flex;
   align-items: center;
