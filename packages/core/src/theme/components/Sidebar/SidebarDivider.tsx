@@ -1,4 +1,5 @@
 import './SidebarDivider.scss';
+import { PREFIX } from '../../constant';
 
 export type SidebarDividerProps = {
   depth: number;
@@ -9,8 +10,8 @@ export function SidebarDivider(props: SidebarDividerProps) {
   const { depth, dividerType } = props;
   const className =
     dividerType === 'dashed'
-      ? 'rp-sidebar-divider--dashed'
-      : 'rp-sidebar-divider';
+      ? `${PREFIX}sidebar-divider--dashed`
+      : `${PREFIX}sidebar-divider`;
 
   return (
     <div

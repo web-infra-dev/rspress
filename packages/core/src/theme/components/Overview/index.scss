@@ -1,8 +1,10 @@
+@use '../../styles/prefix' as *;
+
 .rspress-overview-container {
   padding: var(--rp-content-padding-y) var(--rp-content-padding-x);
 }
 
-.rp-overview {
+.#{$prefix}overview {
   &-search {
     display: flex;
     align-items: center;
@@ -68,7 +70,7 @@
 
 // Dark mode adjustments
 @media (prefers-color-scheme: dark) {
-  .rp-overview-search__input {
+  .#{$prefix}overview-search__input {
     border-color: var(--rp-c-divider-dark);
     background-color: var(--rp-c-bg-dark);
   }

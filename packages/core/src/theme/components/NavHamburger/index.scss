@@ -1,4 +1,6 @@
-.rp-nav-hamburger {
+@use '../../styles/prefix' as *;
+
+.#{$prefix}nav-hamburger {
   display: none;
   cursor: pointer;
   padding: 8px;

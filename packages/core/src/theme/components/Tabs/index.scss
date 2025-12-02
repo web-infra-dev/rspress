@@ -1,15 +1,17 @@
-.rp-tabs {
+@use '../../styles/prefix' as *;
+
+.#{$prefix}tabs {
   contain: content;
   border-radius: var(--rp-radius);
   margin: 1rem 0;
   border: var(--rp-code-block-border);
 
-  .rp-codeblock {
+  .#{$prefix}codeblock {
     margin: 0 !important;
     border-radius: 0 !important;
     border: none !important;
 
-    .rp-codeblock__title {
+    .#{$prefix}codeblock__title {
       padding: 8px 16px !important;
     }
   }

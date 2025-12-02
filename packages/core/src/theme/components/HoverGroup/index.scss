@@ -1,4 +1,6 @@
-.rp-hover-group {
+@use '../../styles/prefix' as *;
+
+.#{$prefix}hover-group {
   // base
   list-style: none;
 

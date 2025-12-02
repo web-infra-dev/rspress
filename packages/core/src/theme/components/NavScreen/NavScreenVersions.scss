@@ -1,4 +1,6 @@
-.rp-nav-screen-versions {
+@use '../../styles/prefix' as *;
+
+.#{$prefix}nav-screen-versions {
   display: flex;
   width: 100%;
   min-height: 36px;
@@ -26,7 +28,7 @@
   }
 }
 
-.rp-nav-screen-versions-group {
+.#{$prefix}nav-screen-versions-group {
   display: flex;
   flex-direction: column;
   align-items: flex-end;

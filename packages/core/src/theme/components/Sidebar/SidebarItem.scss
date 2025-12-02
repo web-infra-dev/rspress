@@ -1,4 +1,6 @@
-.rp-sidebar-item {
+@use '../../styles/prefix' as *;
+
+.#{$prefix}sidebar-item {
   cursor: pointer;
   display: flex;
   justify-content: space-between;
@@ -30,7 +32,7 @@
   }
 
   // external link
-  &.rp-link[target='_blank'] {
+  &.#{$prefix}link[target='_blank'] {
     &::after {
       content: '↗';
       font-weight: 400;
@@ -63,8 +65,8 @@
     background-color: var(--rp-c-divider-light);
   }
 
-  &--group-item.rp-sidebar-item--active {
-    .rp-sidebar-item__left::before {
+  &--group-item.#{$prefix}sidebar-item--active {
+    .#{$prefix}sidebar-item__left::before {
       content: '';
       position: absolute;
       top: calc(25% + 2px);

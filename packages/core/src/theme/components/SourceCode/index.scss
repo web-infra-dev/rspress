@@ -1,4 +1,6 @@
-.rp-source-code {
+@use '../../styles/prefix' as *;
+
+.#{$prefix}source-code {
   display: inline-block;
   border-radius: 4px;
   border: 1px solid;

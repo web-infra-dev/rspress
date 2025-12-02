@@ -4,6 +4,7 @@ import './NavScreenVersions.scss';
 import { useI18n } from '@rspress/core/runtime';
 import { Link } from '@theme';
 import clsx from 'clsx';
+import { PREFIX } from '../../constant';
 import { SvgDown } from './NavScreenMenuItem';
 
 export function NavScreenVersions() {
@@ -14,30 +15,32 @@ export function NavScreenVersions() {
   return items.length > 1 ? (
     <>
       <div
-        className="rp-nav-screen-versions"
+        className={`${PREFIX}nav-screen-versions`}
         onClick={() => setIsOpen(!isOpen)}
       >
-        <div className="rp-nav-screen-versions__left">{t('versionsText')}</div>
-        <div className="rp-nav-screen-versions__right">
+        <div className={`${PREFIX}nav-screen-versions__left`}>
+          {t('versionsText')}
+        </div>
+        <div className={`${PREFIX}nav-screen-versions__right`}>
           {activeValue}
           <SvgDown
-            className={clsx('rp-nav-screen-versions__icon', {
-              'rp-nav-screen-versions__icon--open': isOpen,
+            className={clsx(`${PREFIX}nav-screen-versions__icon`, {
+              [`${PREFIX}nav-screen-versions__icon--open`]: isOpen,
             })}
           />
         </div>
       </div>
       <div
         className={clsx(
-          'rp-nav-screen-versions-group',
-          isOpen && 'rp-nav-screen-versions-group--open',
+          `${PREFIX}nav-screen-versions-group`,
+          isOpen && `${PREFIX}nav-screen-versions-group--open`,
         )}
       >
         {items.map(item => (
           <Link
             key={item.text}
             href={item.link}
-            className={`rp-nav-screen-versions-group__item`}
+            className={`${PREFIX}nav-screen-versions-group__item`}
           >
             {item.text}
           </Link>

@@ -1,3 +1,5 @@
+@use '../../styles/prefix' as *;
+
 :root {
   // z-index
   --rp-z-index-nav-screen: 70;
@@ -41,7 +43,7 @@
   }
 }
 
-.rp-doc-layout {
+.#{$prefix}doc-layout {
   &__container {
     width: 100%; // mobile
     padding: 0px;
@@ -137,7 +139,7 @@
 }
 
 @media (min-width: 1280px) {
-  .rp-doc-layout__doc {
+  .#{$prefix}doc-layout__doc {
     max-width: min(100%, var(--rp-content-max-width));
     overflow-x: auto; // CSS footgun: ensure right aside width is fixed
     flex: 1; // CSS footgun: ensure right aside width is fixed
@@ -151,18 +153,18 @@
       );
     }
   }
-  .rp-doc-layout__sidebar {
+  .#{$prefix}doc-layout__sidebar {
     margin-left: var(--rp-sidebar-margin-left);
   }
-  .rp-doc-layout__sidebar-placeholder {
+  .#{$prefix}doc-layout__sidebar-placeholder {
     width: var(--rp-sidebar-width);
     margin-left: var(--rp-sidebar-margin-left);
   }
-  .rp-doc-layout__outline {
+  .#{$prefix}doc-layout__outline {
     margin-right: var(--rp-outline-margin-right);
     padding-bottom: var(--rp-content-padding-y);
   }
-  .rp-doc-layout__outline-placeholder {
+  .#{$prefix}doc-layout__outline-placeholder {
     width: var(--rp-outline-width);
     margin-right: var(--rp-outline-margin-right);
   }
@@ -173,7 +175,7 @@
     --rp-content-padding-x: 36px;
     --rp-content-padding-y: 48px;
   }
-  .rp-doc-layout {
+  .#{$prefix}doc-layout {
     &__outline {
       position: fixed;
       inset-inline-end: 0;
@@ -207,7 +209,7 @@
   :root {
     --rp-content-padding-x: 24px;
   }
-  .rp-doc-layout {
+  .#{$prefix}doc-layout {
     &__sidebar {
       z-index: var(--rp-z-index-sidebar);
       position: fixed;

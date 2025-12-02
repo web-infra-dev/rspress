@@ -1,0 +1,6 @@
+/**
+ * CSS class name prefix for theme components.
+ * When ejecting the theme, this will be replaced with a custom prefix (e.g., 'my-')
+ * to avoid conflicts with the default theme components.
+ */
+export const PREFIX = 'rp-';

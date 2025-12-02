@@ -11,6 +11,7 @@ import MenuIcon from '@theme-assets/menu';
 import { forwardRef, useEffect, useRef } from 'react';
 import { createPortal } from 'react-dom';
 import './index.scss';
+import { PREFIX } from '../../constant';
 
 /* Top Menu, only displayed on <1280px screen width */
 export const SidebarMenu = forwardRef(
@@ -69,7 +70,7 @@ export const SidebarMenu = forwardRef(
     return (
       <>
         <div
-          className="rp-sidebar-menu"
+          className={`${PREFIX}sidebar-menu`}
           ref={ref => {
             sidebarMenuRef.current = ref;
             if (typeof forwardedRef === 'function') {
@@ -83,13 +84,13 @@ export const SidebarMenu = forwardRef(
             <button
               type="button"
               onClick={openSidebar}
-              className="rp-sidebar-menu__left"
+              className={`${PREFIX}sidebar-menu__left`}
             >
               <SvgWrapper icon={MenuIcon} />
               <span>{t('menuTitle')}</span>
             </button>
           ) : (
-            <div className="rp-sidebar-menu__left" />
+            <div className={`${PREFIX}sidebar-menu__left`} />
           )}
           {showOutline ? (
             <button
@@ -100,11 +101,11 @@ export const SidebarMenu = forwardRef(
                 e.stopPropagation();
                 openOutline();
               }}
-              className="rp-sidebar-menu__right"
+              className={`${PREFIX}sidebar-menu__right`}
             >
               {scrolledHeader?.text ? (
                 <span
-                  className="rp-doc"
+                  className={`${PREFIX}doc`}
                   {...renderInlineMarkdown(scrolledHeader.text)}
                 />
               ) : (
@@ -123,12 +124,15 @@ export const SidebarMenu = forwardRef(
               )}
             </button>
           ) : (
-            <div className="rp-sidebar-menu__right" />
+            <div className={`${PREFIX}sidebar-menu__right`} />
           )}
         </div>
         {(isSidebarOpen || isOutlineOpen) &&
           createPortal(
-            <div onClick={closeSidebar} className="rp-sidebar-menu__mask" />,
+            <div
+              onClick={closeSidebar}
+              className={`${PREFIX}sidebar-menu__mask`}
+            />,
             document.getElementById('__rspress_modal_container')!,
           )}
       </>

@@ -1,4 +1,6 @@
-.rp-toc-item {
+@use '../../styles/prefix' as *;
+
+.#{$prefix}toc-item {
   display: block;
   justify-content: flex-start;
   align-items: flex-start;
@@ -20,8 +22,8 @@
   }
 
   &--active {
-    .rp-toc-item__text,
-    .rp-toc-item__text code {
+    .#{$prefix}toc-item__text,
+    .#{$prefix}toc-item__text code {
       color: var(--rp-c-link);
     }
 

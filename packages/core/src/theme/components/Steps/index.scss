@@ -1,4 +1,6 @@
-.rp-steps {
+@use '../../styles/prefix' as *;
+
+.#{$prefix}steps {
   margin-left: 16px;
   margin-bottom: 44px;
   border-left: 1px solid var(--rp-c-text-3);

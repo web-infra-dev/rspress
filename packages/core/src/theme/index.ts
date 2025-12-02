@@ -84,6 +84,7 @@ export { SwitchAppearance } from './components/SwitchAppearance/index';
 export { Tab, Tabs } from './components/Tabs/index';
 export { Tag } from './components/Tag/index';
 export { Toc } from './components/Toc';
+export { PREFIX } from './constant';
 export { useActiveAnchor } from './hooks/useActiveAnchor';
 export { useDynamicToc, useWatchToc } from './hooks/useDynamicToc';
 export { DocLayout, type DocLayoutProps } from './layout/DocLayout';

@@ -1,4 +1,5 @@
 import { type HTMLAttributes, useRef, useState } from 'react';
+import { PREFIX } from '../../constant';
 
 export const useCardAnimation = () => {
   const [pageX, setPageX] = useState<null | number>(null);
@@ -91,7 +92,7 @@ export const useCardAnimation = () => {
 
   const shineDom = (
     <div
-      className="rp-home-feature__item__shine"
+      className={`${PREFIX}home-feature__item__shine`}
       style={{
         position: 'absolute',
         userSelect: 'none',

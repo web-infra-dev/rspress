@@ -1,6 +1,7 @@
 import { useSite } from '@rspress/core/runtime';
 import { renderHtmlOrText } from '@theme';
 import './index.scss';
+import { PREFIX } from '../../constant';
 
 export function HomeFooter() {
   const { site } = useSite();
@@ -11,10 +12,10 @@ export function HomeFooter() {
   }
 
   return (
-    <footer className="rp-home-footer">
-      <div className="rp-home-footer__container">
+    <footer className={`${PREFIX}home-footer`}>
+      <div className={`${PREFIX}home-footer__container`}>
         <div
-          className="rp-home-footer__message"
+          className={`${PREFIX}home-footer__message`}
           {...renderHtmlOrText(message)}
         />
       </div>

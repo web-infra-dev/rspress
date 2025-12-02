@@ -1,4 +1,6 @@
-.rp-badge {
+@use '../../styles/prefix' as *;
+
+.#{$prefix}badge {
   font-weight: 500;
   transition: color 0.25s;
   border-radius: var(--rp-radius-small);
@@ -33,19 +35,19 @@
   &--outline {
     border: 1px solid currentColor;
 
-    &.rp-badge--tip {
+    &.#{$prefix}badge--tip {
       border-color: var(--rp-container-tip-border);
     }
 
-    &.rp-badge--info {
+    &.#{$prefix}badge--info {
       border-color: var(--rp-container-info-border);
     }
 
-    &.rp-badge--warning {
+    &.#{$prefix}badge--warning {
       border-color: var(--rp-container-warning-border);
     }
 
-    &.rp-badge--danger {
+    &.#{$prefix}badge--danger {
       border-color: var(--rp-container-danger-border);
     }
   }

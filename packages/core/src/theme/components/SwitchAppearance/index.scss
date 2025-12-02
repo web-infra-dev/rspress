@@ -1,4 +1,6 @@
-.rp-switch-appearance {
+@use '../../styles/prefix' as *;
+
+.#{$prefix}switch-appearance {
   cursor: pointer;
   width: 24px;
   height: 24px;
@@ -23,7 +25,7 @@
   }
 }
 
-.rp-dark .rp-switch-appearance {
+.#{$prefix}dark .#{$prefix}switch-appearance {
   &__icon {
     &--sun {
       display: none;

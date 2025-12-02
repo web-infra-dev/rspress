@@ -1,11 +1,13 @@
+@use '../../styles/prefix' as *;
+
 .rspress-logo {
   height: 1.6rem;
 }
 
-.dark .rp-nav__title__logo-image--light {
+.dark .#{$prefix}nav__title__logo-image--light {
   display: none;
 }
 
-.dark .rp-nav__title__logo-image--dark {
+.dark .#{$prefix}nav__title__logo-image--dark {
   display: block;
 }
