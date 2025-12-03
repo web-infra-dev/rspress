@@ -35,12 +35,12 @@
   },
   "devDependencies": {
     "@microsoft/api-extractor": "^7.55.1",
-    "@rslib/core": "0.18.2",
+    "@rslib/core": "0.18.3",
     "@rspress/config": "workspace:*",
     "@types/node": "^22.8.1",
     "@types/react": "^19.2.7",
     "@types/react-dom": "^19.2.3",
-    "react": "^19.2.0",
+    "react": "^19.2.1",
     "rsbuild-plugin-publint": "^0.3.3",
     "typescript": "^5.8.2"
   },

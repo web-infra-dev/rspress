@@ -41,15 +41,15 @@
   },
   "devDependencies": {
     "@microsoft/api-extractor": "^7.55.1",
-    "@rsbuild/core": "~1.6.11",
+    "@rsbuild/core": "~1.6.12",
     "@rsbuild/plugin-react": "~1.4.2",
     "@rsbuild/plugin-sass": "~1.4.0",
-    "@rslib/core": "0.18.2",
+    "@rslib/core": "0.18.3",
     "@rspress/config": "workspace:*",
     "@types/hast": "^3.0.4",
     "@types/node": "^22.8.1",
     "@types/react": "^19.2.7",
-    "react": "^19.2.0",
+    "react": "^19.2.1",
     "rsbuild-plugin-publint": "^0.3.3",
     "typescript": "^5.8.2",
     "vfile": "^6.0.3"

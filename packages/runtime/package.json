@@ -34,13 +34,13 @@
   "dependencies": {
     "@rspress/shared": "workspace:*",
     "@unhead/react": "^2.0.19",
-    "react": "^19.2.0",
-    "react-dom": "^19.2.0",
+    "react": "^19.2.1",
+    "react-dom": "^19.2.1",
     "react-router-dom": "^7.9.6"
   },
   "devDependencies": {
     "@rsbuild/plugin-react": "~1.4.2",
-    "@rslib/core": "0.18.2",
+    "@rslib/core": "0.18.3",
     "@rspress/config": "workspace:*",
     "@types/react": "^19.2.7",
     "@types/react-dom": "^19.2.3",
