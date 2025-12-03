@@ -41,7 +41,9 @@
       margin-right: 4px;
       padding: 4px 12px;
       user-select: none;
-      transition: color 0.2s ease-out;
+      transition:
+        color 0.2s ease-out,
+        background-color 0.2s ease-out;
       cursor: pointer;
 
       border-radius: var(--rp-radius-small);
@@ -59,7 +61,7 @@
       &--selected {
         color: var(--rp-c-text-0);
         background-color: var(--rp-c-bg);
-        box-shadow: 0px 0px 2px 0px #00000040;
+        box-shadow: 0px 0px 3px 0px var(--rp-c-divider-light);
       }
     }
   }
