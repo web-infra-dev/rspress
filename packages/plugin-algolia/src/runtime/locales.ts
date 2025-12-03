@@ -5,6 +5,7 @@ export type Locales = Record<
   { translations: DocSearchProps['translations']; placeholder: string }
 >;
 
+// cspell:disable
 export const ZH_LOCALES: Locales = {
   ru: {
     placeholder: 'Поиск в документации',
@@ -89,3 +90,5 @@ export const ZH_LOCALES: Locales = {
     },
   },
 } as const;
+
+// cspell:enable
