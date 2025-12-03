@@ -1,4 +1,5 @@
 import path from 'node:path';
+import { cwd } from 'node:process';
 import type { RspressPlugin } from '@rspress/core';
 import { Application } from 'typedoc';
 import { load as loadPluginMarkdown } from 'typedoc-plugin-markdown';
@@ -19,7 +20,15 @@ export interface PluginTypeDocOptions {
 }
 
 export function pluginTypeDoc(options: PluginTypeDocOptions): RspressPlugin {
-  const { entryPoints = [], outDir = API_DIR } = options;
+  const { entryPoints: userEntryPoints = [], outDir = API_DIR } = options;
+
+  // windows posix path fix https://github.com/web-infra-dev/rspress/pull/2790#issuecomment-3590946652
+  const entryPoints = userEntryPoints.map(entryPath => {
+    return path.isAbsolute(entryPath)
+      ? path.posix.relative(entryPath, cwd())
+      : entryPath;
+  });
+
   return {
     name: '@rspress/plugin-typedoc',
     async config(config) {
