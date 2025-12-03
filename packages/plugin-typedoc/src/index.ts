@@ -16,10 +16,15 @@ export interface PluginTypeDocOptions {
    * @default 'api'
    */
   outDir?: string;
+  /**
+   * A function to setup the TypeDoc Application.
+   * @param app
+   */
+  setup?: (app: Application) => Promise<void> | void;
 }
 
 export function pluginTypeDoc(options: PluginTypeDocOptions): RspressPlugin {
-  const { entryPoints = [], outDir = API_DIR } = options;
+  const { entryPoints = [], outDir = API_DIR, setup = () => {} } = options;
   return {
     name: '@rspress/plugin-typedoc',
     async config(config) {
@@ -40,6 +45,7 @@ export function pluginTypeDoc(options: PluginTypeDocOptions): RspressPlugin {
           module: '{kind}: {name}', // e.g. "Module: MyModule"
         },
       });
+      await setup(app);
 
       const project = await app.convert();
       if (project) {
