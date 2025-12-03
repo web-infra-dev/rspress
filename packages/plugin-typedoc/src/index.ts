@@ -25,7 +25,7 @@ export function pluginTypeDoc(options: PluginTypeDocOptions): RspressPlugin {
   // windows posix path fix https://github.com/web-infra-dev/rspress/pull/2790#issuecomment-3590946652
   const entryPoints = userEntryPoints.map(entryPath => {
     return path.isAbsolute(entryPath)
-      ? path.posix.relative(entryPath, cwd())
+      ? path.posix.relative(cwd(), entryPath)
       : entryPath;
   });
 
