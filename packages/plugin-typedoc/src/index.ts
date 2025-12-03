@@ -24,9 +24,14 @@ export function pluginTypeDoc(options: PluginTypeDocOptions): RspressPlugin {
 
   // windows posix path fix https://github.com/web-infra-dev/rspress/pull/2790#issuecomment-3590946652
   const entryPoints = userEntryPoints.map(entryPath => {
-    return path.isAbsolute(entryPath)
-      ? path.posix.relative(cwd(), entryPath)
-      : entryPath;
+    if (!path.isAbsolute(entryPath)) {
+      return entryPath;
+    }
+    // Convert Windows paths to POSIX format before calculating relative path
+    // Replace all backslashes with forward slashes
+    const cwdPosix = cwd().replace(/\\/g, '/');
+    const entryPosix = entryPath.replace(/\\/g, '/');
+    return path.posix.relative(cwdPosix, entryPosix);
   });
 
   return {
