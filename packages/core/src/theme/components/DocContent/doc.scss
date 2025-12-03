@@ -204,7 +204,7 @@
     /* thead */
     &:where(thead) {
       color: var(--rp-c-text-0);
-      background: var(--rp-c-bg-soft);
+      background: var(--rp-code-title-bg);
     }
 
     &:where(th) {
