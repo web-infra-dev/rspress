@@ -33,7 +33,7 @@
   "devDependencies": {
     "@biomejs/biome": "^2.3.8",
     "@changesets/cli": "^2.29.8",
-    "@playwright/test": "1.56.1",
+    "@playwright/test": "1.57.0",
     "@rspress/config": "workspace:*",
     "@types/cross-spawn": "^6.0.6",
     "@types/node": "^22.8.1",
@@ -48,7 +48,7 @@
     "lint-staged": "~15.5.2",
     "nx": "21.6.10",
     "path-serializer": "0.5.1",
-    "playwright": "1.56.1",
+    "playwright": "1.57.0",
     "prettier": "3.7.4",
     "prettier-plugin-packagejson": "^2.5.20",
     "tree-kill": "^1.2.2",
