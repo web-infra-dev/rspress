@@ -100,6 +100,10 @@
     .rp-codeblock__content {
       background-color: var(--rp-code-block-bg-with-opacity);
     }
+
+    a {
+      border-bottom: 1px solid currentColor;
+    }
   }
 }
 
