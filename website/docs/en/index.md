@@ -39,5 +39,3 @@ features:
     details: Through its extension mechanism, you can easily extend theme UI and build process.
     icon: 🔥
 ---
-
-# Rspress
