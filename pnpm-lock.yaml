@@ -1750,7 +1750,7 @@ importers:
         specifier: ^1.0.3
         version: 1.0.3(@rspress/core@packages+core)
       rspress-plugin-og:
-        specifier: npm:@soonit/rspress-plugin-og@latest
+        specifier: npm:@soonit/rspress-plugin-og@0.0.1
         version: '@soonit/rspress-plugin-og@0.0.1(@rspress/core@packages+core)'
       tm-themes:
         specifier: 1.10.13
