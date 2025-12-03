@@ -2,6 +2,7 @@
 pageType: home
 title: Rspress
 titleSuffix: 'Rsbuild-based Static Site Generator'
+title: Rspress
 
 hero:
   badge: Rspress V2 is coming! 🚀
@@ -38,3 +39,5 @@ features:
     details: Through its extension mechanism, you can easily extend theme UI and build process.
     icon: 🔥
 ---
+
+# Rspress
