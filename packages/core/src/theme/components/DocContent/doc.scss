@@ -36,7 +36,7 @@
       overflow-wrap: break-word;
 
       &:hover {
-        border-bottom: 1px solid var(--rp-c-brand);
+        border-bottom: 1px solid currentColor;
         opacity: 0.85;
       }
       &[target='_blank'] {
