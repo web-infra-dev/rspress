@@ -6,6 +6,47 @@ export type Locales = Record<
 >;
 
 export const ZH_LOCALES: Locales = {
+  ru: {
+    placeholder: 'Поиск в документации',
+    translations: {
+      button: {
+        buttonText: 'Поиск',
+        buttonAriaLabel: 'Поиск',
+      },
+      modal: {
+        searchBox: {
+          clearButtonTitle: 'Очистить поиск',
+          clearButtonAriaLabel: 'Очистить поиск',
+          closeButtonText: 'Закрыть',
+          closeButtonAriaLabel: 'Закрыть',
+        },
+        startScreen: {
+          recentSearchesTitle: 'История поиска',
+          noRecentSearchesText: 'Нет истории поиска',
+          saveRecentSearchButtonTitle: 'Сохранить в истории поиска',
+          removeRecentSearchButtonTitle: 'Удалить из истории поиска',
+          favoriteSearchesTitle: 'Избранное',
+          removeFavoriteSearchButtonTitle: 'Удалить из избранного',
+        },
+        errorScreen: {
+          titleText: 'Невозможно получить результаты',
+          helpText: 'Проверьте подключение к Интернету',
+        },
+        footer: {
+          selectText: 'выбрать',
+          navigateText: 'перейти',
+          closeText: 'закрыть',
+          poweredByText: 'поиск от',
+        },
+        noResultsScreen: {
+          noResultsText: 'Ничего не найдено',
+          suggestedQueryText: 'Попробуйте изменить запрос',
+          reportMissingResultsText: 'Считаете, что результаты должны быть?',
+          reportMissingResultsLinkText: 'Сообщите об этом',
+        },
+      },
+    },
+  },
   zh: {
     placeholder: '搜索文档',
     translations: {
