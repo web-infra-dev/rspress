@@ -9,6 +9,7 @@ import {
   slash,
 } from '@rspress/shared';
 import { logger } from '@rspress/shared/logger';
+import { PUBLIC_DIR } from '../constants';
 import { absolutePathToRoutePath, addRoutePrefix } from '../route/RoutePage';
 import type {
   CustomLinkMeta,
@@ -68,7 +69,7 @@ async function fsDirToMetaItems(
         // If the item is a directory, we will transform it to a object with `type` and `name` property.
         if (stat.isDirectory()) {
           // ignore public folder
-          if (item === 'public' && workDir === docsDir) {
+          if (item === PUBLIC_DIR && workDir === docsDir) {
             return null;
           }
           return {
