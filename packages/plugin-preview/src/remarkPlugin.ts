@@ -1,13 +1,21 @@
 import fs from 'node:fs';
-import { dirname, join, resolve } from 'node:path';
+import { basename, dirname, join, relative, resolve } from 'node:path';
 import { normalizePosixPath } from '@rspress/shared';
 import { getNodeAttribute } from '@rspress/shared/node-utils';
 import type { Code, Root } from 'mdast';
-import type { MdxJsxFlowElement } from 'mdast-util-mdx-jsx';
+import type {
+  MdxJsxAttributeValueExpression,
+  MdxJsxFlowElement,
+} from 'mdast-util-mdx-jsx';
 import type { MdxjsEsm } from 'mdast-util-mdxjs-esm';
 import type { Plugin } from 'unified';
 import { visit } from 'unist-util-visit';
-import { getASTNodeImport, getExternalDemoContent } from './ast-helpers';
+import {
+  createOtherFilesProp,
+  getASTNodeImport,
+  getExternalDemoContent,
+  inferLanguageFromPath,
+} from './ast-helpers';
 import { demoBlockComponentPath, virtualDir } from './constant';
 import type { DemoInfo, RemarkPluginOptions } from './types';
 import { generateId, injectDemoBlockImport } from './utils';
@@ -80,14 +88,89 @@ export const remarkCodeToDemo: Plugin<[RemarkPluginOptions], Root> = function ({
         // Only show the code block
         externalDemoIndex !== undefined &&
           Object.assign(currentNode, getExternalDemoContent(tempVar));
+      } else if (position === 'fixed-with-per-comp') {
+        const entryFile = normalizePosixPath(demoPath);
+
+        const otherFiles: string[] =
+          currentNode.type === 'code'
+            ? []
+            : // biome-ignore lint/security/noGlobalEval: we only support otherFiles={["foo.tsx", "bar.tsx"]}
+              eval(
+                (
+                  getNodeAttribute(
+                    currentNode,
+                    'otherFiles',
+                  ) as MdxJsxAttributeValueExpression
+                )?.value ?? '[]',
+              );
+
+        const otherFilesAttr: {
+          label: string;
+          tempVar: string;
+          language: string;
+        }[] = otherFiles.map((filePath, idx) => {
+          const demoPath = resolve(
+            vfile.dirname || dirname(vfile.path),
+            filePath,
+          );
+          const tempVar = `Demo${demoId}OtherFile${idx}`;
+          demoMdx.push(getASTNodeImport(tempVar, `!!${demoPath}?raw`));
+
+          const language = inferLanguageFromPath(filePath);
+          return {
+            label: normalizePosixPath(relative(entryFile, filePath)),
+            tempVar,
+            language,
+          };
+        });
+
+        Object.assign(currentNode, {
+          type: 'mdxJsxFlowElement',
+          name: 'ContainerFixedPerComp',
+          attributes: [
+            {
+              type: 'mdxJsxAttribute',
+              name: 'isMobile',
+              value: isMobileMode,
+            },
+            {
+              type: 'mdxJsxAttribute',
+              name: 'demoId',
+              value: demoId,
+            },
+            {
+              type: 'mdxJsxAttribute',
+              name: 'entryFile',
+              value: `${basename(demoPath, '.tsx')}.tsx`,
+            },
+            createOtherFilesProp(otherFilesAttr.map(i => i.label)),
+          ],
+          children: [
+            externalDemoIndex === undefined
+              ? {
+                  ...currentNode,
+                  hasVisited: true,
+                }
+              : getExternalDemoContent(tempVar),
+            isMobileMode
+              ? {
+                  type: 'mdxJsxFlowElement',
+                  name: null,
+                }
+              : {
+                  type: 'mdxJsxFlowElement',
+                  name: `Demo${demoId}`,
+                },
+            ...otherFilesAttr.map(i =>
+              getExternalDemoContent(i.tempVar, i.language),
+            ),
+          ],
+        });
       } else {
         // Use container to show the code and view
         Object.assign(currentNode, {
           type: 'mdxJsxFlowElement',
-          name:
-            position === 'fixed-with-per-comp'
-              ? 'ContainerFixedPerComp'
-              : 'Container',
+          name: 'Container',
           attributes: [
             {
               type: 'mdxJsxAttribute',

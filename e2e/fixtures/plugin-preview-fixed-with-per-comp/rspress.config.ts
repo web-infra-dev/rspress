@@ -8,6 +8,7 @@ export default defineConfig({
     pluginPreview({
       isMobile: true,
       iframeOptions: {
+        devPort: 7777,
         framework: 'react',
         position: 'fixed-with-per-comp',
       },
