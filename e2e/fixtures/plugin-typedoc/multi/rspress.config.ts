@@ -7,9 +7,9 @@ export default defineConfig({
   plugins: [
     pluginTypeDoc({
       entryPoints: [
-        './src/index.ts',
-        './src/middleware.ts',
-        './src/raw-link.ts',
+        path.join(__dirname, './src/index.ts'),
+        path.join(__dirname, './src/middleware.ts'),
+        path.join(__dirname, './src/raw-link.ts'),
       ],
     }),
   ],

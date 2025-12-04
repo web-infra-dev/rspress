@@ -6,7 +6,7 @@ export default defineConfig({
   root: path.join(__dirname, 'doc'),
   plugins: [
     pluginTypeDoc({
-      entryPoints: ['./src/index.ts'],
+      entryPoints: [path.join(__dirname, './src/index.ts')],
     }),
   ],
 });
