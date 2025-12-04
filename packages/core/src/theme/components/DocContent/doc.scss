@@ -208,7 +208,7 @@
     }
 
     &:where(th) {
-      padding: 1rem 1.5rem;
+      padding: 0.75rem 1.25rem;
       font-weight: 600;
       font-size: 0.875rem;
       text-align: left;
@@ -222,7 +222,7 @@
     }
 
     &:where(td) {
-      padding: 1rem 1.5rem;
+      padding: 0.75rem 1.25rem;
       border-bottom: 1px solid var(--rp-c-divider-light);
 
       font-size: 0.875rem;
