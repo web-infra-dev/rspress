@@ -46,6 +46,10 @@ const HelloCodeBlockTitle = (props) => {
 
 You can use the `file="./path/to/file"` attribute without writing any code block content to reference the text from an external file.
 
+### Relative paths
+
+Use relative paths starting with `./` or `../` to reference files relative to the current MDX file:
+
 <Tabs>
 <Tab label="foo.mdx">
 
@@ -70,6 +74,18 @@ It will be rendered as:
 ```tsx file="./_tsx-component.tsx"
 
 ```
+
+### Absolute paths with `<root>/` prefix
+
+Use the `<root>/` prefix to reference files using absolute paths relative to the project root directory. This is useful when you need to reference shared code files from different locations in your documentation:
+
+````mdx
+```tsx file="<root>/src/components/Button.tsx"
+
+```
+````
+
+For example, if your project root is `/project`, then `<root>/src/components/Button.tsx` will resolve to `/project/src/components/Button.tsx`.
 
 :::tip
 

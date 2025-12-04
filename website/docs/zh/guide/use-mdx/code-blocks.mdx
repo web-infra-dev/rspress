@@ -46,6 +46,10 @@ const HelloCodeBlockTitle = (props) => {
 
 你可以使用 `file="./path/to/file"` 属性并不书写任何代码块内容，来引用外部文件中的文本。
 
+### 相对路径
+
+使用以 `./` 或 `../` 开头的相对路径来引用相对于当前 MDX 文件的文件：
+
 <Tabs>
 <Tab label="foo.mdx">
 
@@ -70,6 +74,18 @@ const HelloCodeBlockTitle = (props) => {
 ```tsx file="./_tsx-component.tsx"
 
 ```
+
+### 使用 `<root>/` 前缀的绝对路径
+
+使用 `<root>/` 前缀来引用相对于项目根目录的绝对路径文件。当你需要从文档的不同位置引用共享的代码文件时，这非常有用：
+
+````mdx
+```tsx file="<root>/src/components/Button.tsx"
+
+```
+````
+
+例如，如果你的项目根目录是 `/project`，那么 `<root>/src/components/Button.tsx` 将解析为 `/project/src/components/Button.tsx`。
 
 :::tip
 

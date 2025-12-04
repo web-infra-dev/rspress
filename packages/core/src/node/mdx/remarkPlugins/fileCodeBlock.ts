@@ -1,5 +1,6 @@
 import { readFile } from 'node:fs/promises';
 import path from 'node:path';
+import { cwd } from 'node:process';
 import type { Rspack } from '@rsbuild/core';
 import { logger } from '@rspress/shared/logger';
 import type { Root } from 'mdast';
@@ -27,12 +28,11 @@ export const remarkFileCodeBlock: Plugin<
   [
     {
       filepath: string;
-      docDirectory: string;
       addDependency?: Rspack.LoaderContext['addDependency'];
     },
   ],
   Root
-> = ({ filepath, docDirectory, addDependency }) => {
+> = ({ filepath, addDependency }) => {
   return async tree => {
     const promiseList: Promise<void>[] = [];
     visit(tree, 'code', node => {
@@ -54,11 +54,8 @@ export const remarkFileCodeBlock: Plugin<
         let resolvedFilePath: string;
 
         if (file.startsWith('<root>/')) {
-          // Absolute path relative to docDirectory
-          resolvedFilePath = path.join(
-            docDirectory,
-            file.slice('<root>/'.length),
-          );
+          // Absolute path relative to project root directory
+          resolvedFilePath = path.join(cwd(), file.slice('<root>/'.length));
         } else {
           // Relative path to current file
           resolvedFilePath = path.join(path.dirname(filepath), file);

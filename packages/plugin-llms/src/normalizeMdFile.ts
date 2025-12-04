@@ -54,7 +54,6 @@ async function normalizeMdFile(
     .use(isMd ? noopPlugin : remarkMdx)
     .use(remarkFileCodeBlock, {
       filepath,
-      docDirectory: routeService.getDocsDir(),
     })
     .use(!isMd && mdxToMd ? mdxToMdPlugin : noopPlugin)
     .use(remarkLink, {

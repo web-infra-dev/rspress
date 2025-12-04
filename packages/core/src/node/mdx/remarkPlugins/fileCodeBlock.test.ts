@@ -7,6 +7,10 @@ vi.mock('node:fs/promises', () => {
   return { readFile: fs.promises.readFile };
 });
 
+vi.mock('node:process', () => {
+  return { cwd: () => '/usr/rspress-project' };
+});
+
 describe('remarkFileCodeBlock', () => {
   it('basic', async () => {
     vol.fromJSON({
@@ -32,7 +36,7 @@ describe('remarkFileCodeBlock', () => {
 
   it('should support absolute path with <root>/ prefix', async () => {
     vol.fromJSON({
-      '/usr/rspress-project/docs/src/components/Button.tsx': `export const Button = () => {
+      '/usr/rspress-project/src/components/Button.tsx': `export const Button = () => {
   return <button>Click me</button>;
 }
 `,
@@ -57,7 +61,7 @@ describe('remarkFileCodeBlock', () => {
 
   it('should support nested absolute paths with <root>/ prefix', async () => {
     vol.fromJSON({
-      '/usr/rspress-project/docs/examples/code/demo.js': `const demo = 'test';
+      '/usr/rspress-project/examples/code/demo.js': `const demo = 'test';
 console.log(demo);
 `,
     });
@@ -98,7 +102,7 @@ console.log(demo);
 
   it('should throw error when content is not empty with absolute path', async () => {
     vol.fromJSON({
-      '/usr/rspress-project/docs/test.tsx': 'const test = 1;',
+      '/usr/rspress-project/test.tsx': 'const test = 1;',
     });
     await expect(
       compile({
