@@ -8,26 +8,40 @@ describe('createError', () => {
     expect(error.message).toBe('Test error message');
   });
 
-  it('should truncate stack trace and add truncated indicator', () => {
-    const error = createError('Test error message');
+  it('should not truncate short stacks', () => {
+    const error = createError('Test error message', 100);
     expect(error.stack).toBeDefined();
-    // Stack should contain the truncated indicator if it was truncated
-    if (error.stack!.includes('... (truncated)')) {
-      const stackLines = error.stack!.split('\n');
-      // maxStackLines (5) + 1 for the truncated indicator line
-      expect(stackLines.length).toBeLessThanOrEqual(6);
-    }
+    expect(error.stack).not.toContain('... (truncated)');
   });
 
-  it('should truncate stack trace to custom number of lines', () => {
-    const error = createError('Test error message', 3);
-    expect(error.stack).toBeDefined();
-    // Stack should contain the truncated indicator if it was truncated
-    if (error.stack!.includes('... (truncated)')) {
-      const stackLines = error.stack!.split('\n');
-      // maxStackLines (3) + 1 for the truncated indicator line
-      expect(stackLines.length).toBeLessThanOrEqual(4);
+  it('should truncate when limit is 1', () => {
+    function deepCall() {
+      return createError('Test error message', 1);
     }
+    const error = deepCall();
+    expect(error.stack).toBeDefined();
+    expect(error.stack).toContain('... (truncated)');
+    const lines = error.stack!.split('\n');
+    // Should have: error message line (1) + stack trace line (1) + truncated indicator (1) = 3 lines
+    expect(lines.length).toBe(3);
+  });
+
+  it('should truncate when limit is 3 with deep call stack', () => {
+    function level3() {
+      return createError('Test error message', 3);
+    }
+    function level2() {
+      return level3();
+    }
+    function level1() {
+      return level2();
+    }
+    const error = level1();
+    expect(error.stack).toBeDefined();
+    expect(error.stack).toContain('... (truncated)');
+    const lines = error.stack!.split('\n');
+    // Should have: error message line (1) + 3 stack trace lines + truncated indicator (1) = 5 lines
+    expect(lines.length).toBe(5);
   });
 
   it('should keep original error message in stack', () => {
