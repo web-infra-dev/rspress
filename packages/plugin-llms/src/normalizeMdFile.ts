@@ -52,7 +52,10 @@ async function normalizeMdFile(
   const compiler = unified()
     .use(remarkParse)
     .use(isMd ? noopPlugin : remarkMdx)
-    .use(remarkFileCodeBlock, { filepath })
+    .use(remarkFileCodeBlock, {
+      filepath,
+      docDirectory: routeService.getDocsDir(),
+    })
     .use(!isMd && mdxToMd ? mdxToMdPlugin : noopPlugin)
     .use(remarkLink, {
       cleanUrls: '.md',
