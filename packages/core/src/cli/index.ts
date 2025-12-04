@@ -1,15 +1,14 @@
-import path from 'node:path';
+import path, { join } from 'node:path';
 // Rslib(Rspack) will optimize the json module, the only one point that we need to concern is to bump the package.json version first then run build command
 import { version } from '@rspress/core/package.json';
 import { logger } from '@rspress/shared/logger';
 import { cac } from 'cac';
 import chokidar from 'chokidar';
 import picocolors from 'picocolors';
+import { PUBLIC_DIR } from '../node/constants';
 import { ejectComponent, listComponents } from '../node/eject';
 import { build, dev, serve } from '../node/index';
 import { loadConfigFile, resolveDocRoot } from './config/loadConfigFile';
-
-const CONFIG_FILES = ['rspress.config.ts', 'rspress.config.js'];
 
 const META_FILES = ['_meta.json', '_nav.json'];
 
@@ -57,13 +56,16 @@ cli
           extraBuilderConfig: { server: { port, host } },
         });
 
-        cliWatcher = chokidar.watch(
-          [`${cwd}/**/{${CONFIG_FILES.join(',')}}`, docDirectory],
-          {
-            ignoreInitial: true,
-            ignored: ['**/node_modules/**', '**/.git/**', '**/.DS_Store/**'],
-          },
-        );
+        cliWatcher = chokidar.watch([configFilePath, docDirectory], {
+          ignoreInitial: true,
+          ignored: [
+            '**/node_modules/**',
+            '**/.git/**',
+            '**/.DS_Store/**',
+            // ignore public folder in dev, these files are handled by server middleware
+            join(docDirectory, PUBLIC_DIR),
+          ],
+        });
         cliWatcher.on('all', async (eventName, filepath) => {
           const basename = path.basename(filepath);
           if (eventName === 'change' && META_FILES.includes(basename)) {
@@ -73,11 +75,12 @@ cli
           if (
             eventName === 'add' ||
             eventName === 'unlink' ||
-            (eventName === 'change' && CONFIG_FILES.includes(basename))
+            (eventName === 'change' && filepath === configFilePath)
           ) {
             if (isRestarting) {
               return;
             }
+
             isRestarting = true;
             console.log(
               `\n✨ ${eventName} ${picocolors.green(
