@@ -20,6 +20,9 @@ export default defineConfig({
       },
       bundle: true,
       format: 'esm',
+      experiments: {
+        advancedEsm: true,
+      },
       plugins: [pluginReact(), pluginSass()],
       output: {
         externals: [
@@ -46,6 +49,9 @@ export default defineConfig({
         },
       },
       format: 'esm',
+      experiments: {
+        advancedEsm: true,
+      },
       syntax: 'esnext',
     },
   ],
