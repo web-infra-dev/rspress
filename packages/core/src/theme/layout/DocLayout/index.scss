@@ -184,7 +184,7 @@
       max-width: 100%;
 
       border-radius: var(--rp-radius-small);
-      border: 1px solid var(--rp-c-divider-light);
+      box-shadow: var(--rp-shadow-2);
 
       visibility: hidden;
       opacity: 0;
