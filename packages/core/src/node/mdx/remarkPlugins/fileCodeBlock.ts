@@ -7,6 +7,7 @@ import type { Root } from 'mdast';
 import picocolors from 'picocolors';
 import type { Plugin } from 'unified';
 import { visit } from 'unist-util-visit';
+import { createError } from '../../utils';
 
 const ERROR_PREFIX = '[remarkFileCodeBlock]';
 
@@ -74,7 +75,7 @@ this usage is not allowed, please use below:
 \`\`\`tsx file="./filename"
 \`\`\`
 `);
-          throw new Error(
+          throw createError(
             `${ERROR_PREFIX} ${originalMetaForErrorInfo} The content of file code block should be empty.`,
           );
         }
@@ -108,7 +109,7 @@ or
 \`\`\`tsx file="<root>/path/to/filename"
 \`\`\`
 `);
-      throw new Error(
+      throw createError(
         `${ERROR_PREFIX} ${originalMetaForErrorInfo} syntax error of file code block`,
       );
     });
