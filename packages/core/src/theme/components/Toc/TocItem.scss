@@ -2,10 +2,11 @@
   display: block;
   justify-content: flex-start;
   align-items: flex-start;
-  gap: 10px;
   align-self: stretch;
   position: relative;
-  margin-top: 6px;
+
+  margin-top: 10px;
+  line-height: 1.4;
 
   &:first-child {
     margin-top: 0;
@@ -14,7 +15,6 @@
   &__text {
     font-weight: 400;
     font-size: 14px;
-    line-height: 1;
     color: var(--rp-c-text-2);
     overflow-wrap: break-word;
   }
