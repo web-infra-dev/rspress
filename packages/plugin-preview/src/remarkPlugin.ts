@@ -1,5 +1,5 @@
 import fs from 'node:fs';
-import { basename, dirname, join, relative, resolve } from 'node:path';
+import { basename, dirname, extname, join, relative, resolve } from 'node:path';
 import { normalizePosixPath } from '@rspress/shared';
 import { getNodeAttribute } from '@rspress/shared/node-utils';
 import type { Code, Root } from 'mdast';
@@ -89,7 +89,7 @@ export const remarkCodeToDemo: Plugin<[RemarkPluginOptions], Root> = function ({
         externalDemoIndex !== undefined &&
           Object.assign(currentNode, getExternalDemoContent(tempVar));
       } else if (position === 'fixed-with-per-comp') {
-        const entryFile = normalizePosixPath(demoPath);
+        const entryFilePath = normalizePosixPath(demoPath);
 
         const otherFiles: string[] =
           currentNode.type === 'code'
@@ -118,11 +118,16 @@ export const remarkCodeToDemo: Plugin<[RemarkPluginOptions], Root> = function ({
 
           const language = inferLanguageFromPath(filePath);
           return {
-            label: normalizePosixPath(relative(entryFile, filePath)),
+            label: normalizePosixPath(relative(entryFilePath, filePath)),
             tempVar,
             language,
           };
         });
+
+        const demoFileName = basename(demoPath);
+        // ensure \.tsx suffix
+        const entryFile =
+          extname(demoFileName) === '' ? `${demoFileName}.tsx` : demoFileName;
 
         Object.assign(currentNode, {
           type: 'mdxJsxFlowElement',
@@ -141,7 +146,7 @@ export const remarkCodeToDemo: Plugin<[RemarkPluginOptions], Root> = function ({
             {
               type: 'mdxJsxAttribute',
               name: 'entryFile',
-              value: `${basename(demoPath, '.tsx')}.tsx`,
+              value: entryFile,
             },
             createOtherFilesProp(otherFilesAttr.map(i => i.label)),
           ],
