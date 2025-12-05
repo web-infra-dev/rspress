@@ -44,7 +44,7 @@ describe('useWindowSize', () => {
     // Verify initial size is set immediately (before addEventListener)
     const setStateMatch = fileContent.match(/setSize\(\{[^}]+\}\)/g);
     expect(setStateMatch).toBeTruthy();
-    expect(setStateMatch!.length).toBeGreaterThanOrEqual(2); // One for initial, one in setTimeout
+    expect(setStateMatch?.length).toBeGreaterThanOrEqual(2); // One for initial, one in setTimeout
   });
 
   it('should export useWindowSize function', async () => {
