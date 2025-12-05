@@ -1,6 +1,4 @@
-import { SvgWrapper } from '@theme';
-import IconCopy from '@theme-assets/copy';
-import IconSuccess from '@theme-assets/success';
+import { IconCopy, IconSuccess, SvgWrapper } from '@theme';
 import copy from 'copy-to-clipboard';
 import { useRef } from 'react';
 import './CopyCodeButton.scss';

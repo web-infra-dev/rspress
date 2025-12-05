@@ -1,13 +1,13 @@
 import { useFrontmatter, useI18n, useLocation } from '@rspress/core/runtime';
 import {
+  IconArrowRight,
+  IconMenu,
   ReadPercent,
   renderInlineMarkdown,
   SvgWrapper,
   useActiveAnchor,
   useDynamicToc,
 } from '@theme';
-import ArrowRight from '@theme-assets/arrow-right';
-import MenuIcon from '@theme-assets/menu';
 import { forwardRef, useEffect, useRef } from 'react';
 import { createPortal } from 'react-dom';
 import './index.scss';
@@ -85,7 +85,7 @@ export const SidebarMenu = forwardRef(
               onClick={openSidebar}
               className="rp-sidebar-menu__left"
             >
-              <SvgWrapper icon={MenuIcon} />
+              <SvgWrapper icon={IconMenu} />
               <span>{t('menuTitle')}</span>
             </button>
           ) : (
@@ -114,7 +114,7 @@ export const SidebarMenu = forwardRef(
               {/* TODO: discussion */}
               {headers.length !== 0 && (
                 <SvgWrapper
-                  icon={ArrowRight}
+                  icon={IconArrowRight}
                   style={{
                     transform: isOutlineOpen ? 'rotate(90deg)' : 'rotate(0deg)',
                     transition: 'transform 0.2s ease-out',

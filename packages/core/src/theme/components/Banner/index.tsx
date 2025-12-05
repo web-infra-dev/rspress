@@ -1,5 +1,4 @@
-import { Link, mergeRefs, SvgWrapper } from '@theme';
-import CloseSvg from '@theme-assets/close';
+import { IconClose, Link, mergeRefs, SvgWrapper } from '@theme';
 import clsx from 'clsx';
 import { forwardRef, type ReactNode, useEffect, useState } from 'react';
 import './index.scss';
@@ -100,7 +99,7 @@ export const Banner = forwardRef<HTMLDivElement, BannerProps>(
                 {message}
               </Link>
               <SvgWrapper
-                icon={CloseSvg}
+                icon={IconClose}
                 onClick={() => {
                   setDisable(true);
                   if (storage) {

@@ -1,7 +1,6 @@
 import type { SocialLink } from '@rspress/core';
 import { useSite } from '@rspress/core/runtime';
-import { SvgWrapper } from '@theme';
-import ArrowDown from '@theme-assets/arrow-down';
+import { IconArrowDown, SvgWrapper } from '@theme';
 import './index.scss';
 import { useHoverGroup } from '../HoverGroup/useHoverGroup';
 import { SocialLink as SocialLinkComp } from './SocialLink';
@@ -56,7 +55,7 @@ export const SocialLinks = ({
       ))}
       {isMore ? (
         <SvgWrapper
-          icon={ArrowDown}
+          icon={IconArrowDown}
           onMouseEnter={handleMouseEnter}
           fontSize={20}
         />
