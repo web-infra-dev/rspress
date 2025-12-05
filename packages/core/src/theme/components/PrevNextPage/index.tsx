@@ -1,11 +1,11 @@
 import { useI18n } from '@rspress/core/runtime';
 import {
+  IconArrowRight,
   Link,
   renderInlineMarkdown,
   SvgWrapper,
   usePrevNextPage,
 } from '@theme';
-import ArrowRight from '@theme-assets/arrow-right';
 import clsx from 'clsx';
 import './index.scss';
 
@@ -25,7 +25,7 @@ export function PrevNextPage() {
           </span>
           <span className="rp-prev-next-page__item__title">
             <SvgWrapper
-              icon={ArrowRight}
+              icon={IconArrowRight}
               className="rp-prev-next-page__icon rp-prev-next-page__rotate_180"
             />
             <span {...renderInlineMarkdown(prevPage.text)} />
@@ -44,7 +44,10 @@ export function PrevNextPage() {
           </span>
           <span className="rp-prev-next-page__item__title">
             <span {...renderInlineMarkdown(nextPage.text)} />
-            <SvgWrapper icon={ArrowRight} className="rp-prev-next-page__icon" />
+            <SvgWrapper
+              icon={IconArrowRight}
+              className="rp-prev-next-page__icon"
+            />
           </span>
         </Link>
       ) : (

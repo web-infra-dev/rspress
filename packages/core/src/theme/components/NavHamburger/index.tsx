@@ -1,5 +1,4 @@
-import { SocialLinks, SvgWrapper, useHoverGroup } from '@theme';
-import SmallMenu from '@theme-assets/small-menu';
+import { IconSmallMenu, SocialLinks, SvgWrapper, useHoverGroup } from '@theme';
 import clsx from 'clsx';
 import { createPortal } from 'react-dom';
 import { NavVersions } from '../Nav/NavMenu';
@@ -43,7 +42,7 @@ export function NavHamburger() {
           'rp-nav-hamburger--active': isScreenOpen,
         })}
       >
-        <SvgWrapper icon={SmallMenu} />
+        <SvgWrapper icon={IconSmallMenu} />
       </button>
 
       <button
@@ -55,7 +54,7 @@ export function NavHamburger() {
         onMouseEnter={handleMouseEnter}
         onMouseLeave={handleMouseLeave}
       >
-        <SvgWrapper icon={SmallMenu} />
+        <SvgWrapper icon={IconSmallMenu} />
         {hoverGroup}
       </button>
     </>

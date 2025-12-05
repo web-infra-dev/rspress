@@ -6,6 +6,7 @@ import {
   type RspressPlugin,
   type UserConfig,
 } from '@rspress/shared';
+import path from 'path';
 import { haveNavSidebarConfig } from './auto-nav-sidebar';
 import type { RouteService } from './route/RouteService';
 import { createError } from './utils';
@@ -20,7 +21,8 @@ type RspressPluginHookKeys =
   | 'routeServiceGenerated'
   | 'extendPageData'
   | 'modifySearchIndexData'
-  | 'i18nSource';
+  | 'i18nSource'
+  | 'themeDir';
 
 export class PluginDriver {
   #config: UserConfig;
@@ -117,6 +119,7 @@ export class PluginDriver {
       addLeadingSlash(this.#config.base ?? '/'),
     );
     this.#config.lang ??= 'en';
+    this.#config.themeDir ??= path.join(process.cwd(), 'theme');
   }
 
   async modifyConfig() {
@@ -222,6 +225,18 @@ export class PluginDriver {
       }
     }
     return i18nSource;
+  }
+
+  async themeDir() {
+    let pluginThemeDir: { themeIndexPath: string } | undefined;
+    for (const plugin of this.#plugins) {
+      if (pluginThemeDir) {
+        throw createError(
+          `Multiple plugins provide customTheme, only one plugin can provide customTheme.`,
+        );
+      }
+      pluginThemeDir = await plugin.themeDir?.();
+    }
   }
 
   globalUIComponents() {

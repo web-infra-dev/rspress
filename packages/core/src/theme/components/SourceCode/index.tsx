@@ -1,7 +1,5 @@
 import { useI18n } from '@rspress/core/runtime';
-import { SvgWrapper } from '@theme';
-import Github from '@theme-assets/github';
-import Gitlab from '@theme-assets/gitlab';
+import { IconGithub, IconGitlab, SvgWrapper } from '@theme';
 import './index.scss';
 
 interface SourceCodeProps {
@@ -16,7 +14,11 @@ export function SourceCode(props: SourceCodeProps) {
     <div className="rp-not-doc rp-source-code">
       <a href={href} target="_blank" className="rp-source-code__link">
         <span className="rp-source-code__icon">
-          {<SvgWrapper icon={platform === 'gitlab' ? Gitlab : Github} />}
+          {
+            <SvgWrapper
+              icon={platform === 'gitlab' ? IconGitlab : IconGithub}
+            />
+          }
         </span>
         <span className="rp-source-code__text">{t('sourceCodeText')}</span>
       </a>

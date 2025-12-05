@@ -5,8 +5,7 @@ import type {
   SidebarSectionHeader as SidebarSectionHeaderType,
 } from '@rspress/core';
 import { useActiveMatcher } from '@rspress/core/runtime';
-import { SvgWrapper, useLinkNavigate } from '@theme';
-import ArrowRight from '@theme-assets/arrow-right';
+import { IconArrowRight, SvgWrapper, useLinkNavigate } from '@theme';
 import clsx from 'clsx';
 import type React from 'react';
 import { SidebarDivider } from './SidebarDivider';
@@ -27,7 +26,7 @@ const CollapsibleIcon = ({ collapsed }: { collapsed: boolean }) => (
       transform: collapsed ? 'rotate(0deg)' : 'rotate(90deg)',
     }}
   >
-    <SvgWrapper icon={ArrowRight} />
+    <SvgWrapper icon={IconArrowRight} />
   </div>
 );
 

@@ -215,7 +215,7 @@ export interface UserConfig {
    */
   outDir?: string;
   /**
-   * Custom theme directory
+   * User side custom theme directory
    */
   themeDir?: string;
   /**

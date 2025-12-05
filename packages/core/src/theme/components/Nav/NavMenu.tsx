@@ -6,8 +6,7 @@ import type {
 } from '@rspress/core';
 import { matchNavbar, useLocation } from '@rspress/core/runtime';
 import type { HoverGroupProps } from '@theme';
-import { Link, SvgWrapper, Tag, useHoverGroup } from '@theme';
-import ArrowDown from '@theme-assets/arrow-down';
+import { IconArrowDown, Link, SvgWrapper, Tag, useHoverGroup } from '@theme';
 import cls from 'clsx';
 import { useMemo } from 'react';
 import { useLangsMenu, useVersionsMenu } from './hooks';
@@ -15,7 +14,7 @@ import './NavMenu.scss';
 import clsx from 'clsx';
 
 export const SvgDown = (props: React.SVGProps<SVGSVGElement>) => {
-  return <SvgWrapper icon={ArrowDown} {...props} />;
+  return <SvgWrapper icon={IconArrowDown} {...props} />;
 };
 
 export function NavMenuItemWithChildren({

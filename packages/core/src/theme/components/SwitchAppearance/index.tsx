@@ -1,7 +1,5 @@
 import { ThemeContext, useSite } from '@rspress/core/runtime';
-import { SvgWrapper } from '@theme';
-import MoonSvg from '@theme-assets/moon';
-import SunSvg from '@theme-assets/sun';
+import { IconMoon, IconSun, SvgWrapper } from '@theme';
 import { type MouseEvent, useContext } from 'react';
 import './global.scss';
 import './index.scss';
@@ -90,12 +88,12 @@ export function SwitchAppearance({ onClick }: { onClick?: () => void }) {
     <div onClick={handleClick} className="rp-switch-appearance">
       <SvgWrapper
         className="rp-switch-appearance__icon rp-switch-appearance__icon--sun"
-        icon={SunSvg}
+        icon={IconSun}
         fill="currentColor"
       />
       <SvgWrapper
         className="rp-switch-appearance__icon rp-switch-appearance__icon--moon"
-        icon={MoonSvg}
+        icon={IconMoon}
         fill="currentColor"
       />
     </div>
