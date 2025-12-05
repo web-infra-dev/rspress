@@ -34,8 +34,9 @@ export function Nav(props: NavProps) {
       </div>
 
       <div className="rp-nav__right">
-        {beforeNavMenu}
         <Search />
+
+        {beforeNavMenu}
 
         {/* only in desktop */}
         <NavMenu menuItems={navList} position="right" />
