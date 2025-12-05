@@ -14,13 +14,24 @@ export function useWindowSize(initialWidth?: number, initialHeight?: number) {
   });
 
   useLayoutEffect(() => {
+    let timeoutId: ReturnType<typeof setTimeout> | null = null;
+
     const handleResize = () => {
-      setSize({ width: window.innerWidth, height: window.innerHeight });
+      if (timeoutId !== null) {
+        clearTimeout(timeoutId);
+      }
+      timeoutId = setTimeout(() => {
+        setSize({ width: window.innerWidth, height: window.innerHeight });
+      }, 150);
     };
+
     // first initialization
-    handleResize();
+    setSize({ width: window.innerWidth, height: window.innerHeight });
     window.addEventListener('resize', handleResize);
     return () => {
+      if (timeoutId !== null) {
+        clearTimeout(timeoutId);
+      }
       window.removeEventListener('resize', handleResize);
     };
   }, []);
