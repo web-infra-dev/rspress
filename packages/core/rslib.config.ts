@@ -68,14 +68,6 @@ export default defineConfig({
             }
           });
         },
-        bundlerChain(chain, { CHAIN_ID }) {
-          const rule = chain.module.rule(
-            `Rslib:${CHAIN_ID.RULE.JS}-entry-loader`,
-          );
-          rule.uses.delete('rsbuild:lib-entry-module');
-          rule.issuer({});
-          rule.clear();
-        },
       },
     },
     {
