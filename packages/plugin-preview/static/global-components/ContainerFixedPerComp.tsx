@@ -1,4 +1,5 @@
 import { NoSSR, useLang, usePageData, withBase } from '@rspress/core/runtime';
+import { Tab, Tabs } from '@theme';
 import { type MouseEvent, useCallback, useState } from 'react';
 import IconCode from './icons/Code';
 import { publishIframeUrl } from './useIframeUrlPerComp';
@@ -7,9 +8,30 @@ type ContainerProps = {
   children: React.ReactNode[];
   isMobile: 'true' | 'false';
   demoId: string;
+  entryFile?: string;
+  otherFiles?: string[];
 };
 
-const MobileContainerFixedPerComp: React.FC<ContainerProps> = props => {
+const getTabs = (entryFile?: string, otherFiles?: string[], children?: any) => {
+  if (entryFile && otherFiles && otherFiles.length > 0) {
+    return (
+      <Tabs>
+        <Tab label={entryFile}>{children?.[0]}</Tab>
+        {children.slice(2).map((child: any, i: number) => {
+          const filename = otherFiles ? otherFiles[i] : `File ${i + 1}`;
+          return (
+            <Tab key={filename} label={filename}>
+              {child || null}
+            </Tab>
+          );
+        })}
+      </Tabs>
+    );
+  }
+  return null;
+};
+
+const MobileContainerFixedPerComp: React.FC<ContainerProps & {}> = props => {
   const { children, demoId } = props;
   const { page } = usePageData();
   const url = `/~demo/${demoId}`;
@@ -32,7 +54,7 @@ const MobileContainerFixedPerComp: React.FC<ContainerProps> = props => {
 
   return (
     <div className="rspress-preview-code" onClick={setIframeUrl}>
-      {children}
+      {getTabs(props.entryFile, props.otherFiles, children) || children}
     </div>
   );
 };
@@ -86,7 +108,8 @@ const ContainerFixedPerComp = (props: ContainerProps) => {
                     : 'rspress-preview-code-hide'
                 }`}
               >
-                {children?.[0]}
+                {getTabs(props.entryFile, props.otherFiles, children) ||
+                  children?.[0]}
               </div>
             </div>
           </div>
