@@ -19,7 +19,7 @@ export function useWindowSize(initialWidth?: number, initialHeight?: number) {
     let timeoutId: ReturnType<typeof setTimeout> | null = null;
 
     const handleResize = () => {
-      clearTimeout(timeoutId!);
+      if (timeoutId) clearTimeout(timeoutId);
       timeoutId = setTimeout(() => {
         setSize({ width: window.innerWidth, height: window.innerHeight });
       }, RESIZE_DEBOUNCE_MS);
@@ -29,7 +29,7 @@ export function useWindowSize(initialWidth?: number, initialHeight?: number) {
     setSize({ width: window.innerWidth, height: window.innerHeight });
     window.addEventListener('resize', handleResize);
     return () => {
-      clearTimeout(timeoutId!);
+      if (timeoutId) clearTimeout(timeoutId);
       window.removeEventListener('resize', handleResize);
     };
   }, []);
