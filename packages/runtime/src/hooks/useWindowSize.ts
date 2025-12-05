@@ -7,6 +7,8 @@ declare global {
   }
 }
 
+const RESIZE_DEBOUNCE_MS = 150;
+
 export function useWindowSize(initialWidth?: number, initialHeight?: number) {
   const [size, setSize] = useState({
     width: initialWidth ?? Number.POSITIVE_INFINITY,
@@ -17,21 +19,17 @@ export function useWindowSize(initialWidth?: number, initialHeight?: number) {
     let timeoutId: ReturnType<typeof setTimeout> | null = null;
 
     const handleResize = () => {
-      if (timeoutId !== null) {
-        clearTimeout(timeoutId);
-      }
+      clearTimeout(timeoutId!);
       timeoutId = setTimeout(() => {
         setSize({ width: window.innerWidth, height: window.innerHeight });
-      }, 150);
+      }, RESIZE_DEBOUNCE_MS);
     };
 
     // first initialization
     setSize({ width: window.innerWidth, height: window.innerHeight });
     window.addEventListener('resize', handleResize);
     return () => {
-      if (timeoutId !== null) {
-        clearTimeout(timeoutId);
-      }
+      clearTimeout(timeoutId!);
       window.removeEventListener('resize', handleResize);
     };
   }, []);
