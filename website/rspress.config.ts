@@ -14,6 +14,7 @@ import {
 } from '@shikijs/transformers';
 import { pluginGoogleAnalytics } from 'rsbuild-plugin-google-analytics';
 import { pluginOpenGraph } from 'rsbuild-plugin-open-graph';
+import pluginOg from 'rspress-plugin-og';
 
 // import { pluginFontOpenSans } from 'rspress-plugin-font-open-sans';
 
@@ -66,6 +67,9 @@ export default defineConfig({
     pluginAlgolia({
       verificationContent: '8F5BFE50E65777F1',
     }),
+    pluginOg({
+      domain: 'https://deploy-preview-2835--rspress-v2.netlify.app',
+    }),
   ],
   builderConfig: {
     plugins: [
@@ -73,7 +77,6 @@ export default defineConfig({
       pluginGoogleAnalytics({ id: 'G-66B2Z6KG0J' }),
       pluginOpenGraph({
         url: siteUrl,
-        image: 'https://rspress.rs/og-image.png',
         description: 'Rsbuild based static site generator',
         twitter: {
           site: '@rspack_dev',
@@ -149,8 +152,9 @@ export default defineConfig({
     include: [],
     exclude: [],
   },
-  ssg: {
-    experimentalWorker: true,
-  },
+  // FIXME: DataCloneError: pluginOg requires function clone between main thread and worker thread
+  // ssg: {
+  //   experimentalWorker: true,
+  // },
   llms: true,
 });
