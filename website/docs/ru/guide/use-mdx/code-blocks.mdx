@@ -1,0 +1,474 @@
+import { Tabs, Tab } from '@theme';
+
+# Блоки кода
+
+Rspress V2 использует [Shiki](https://shiki.style) для подсветки синтаксиса на этапе компиляции, что обеспечивает лучшую производительность во время выполнения.
+
+При использовании блоков кода на нескольких языках соответствующий язык автоматически определяется на этапе компиляции, а размер бандла во время выполнения не увеличивается. Список поддерживаемых языков программирования смотрите в [списке языков, поддерживаемых Shiki](https://shiki.style/languages).
+
+## Базовое использование
+
+Вы можете использовать синтаксис \`\`\` для создания блоков кода. Например:
+
+````mdx
+```js
+console.log('Привет, мир');
+```
+````
+
+Отобразится так:
+
+```js
+console.log('Привет, мир');
+```
+
+## Заголовок блока кода
+
+Вы можете добавить заголовок к блоку кода с помощью атрибута `title="..."`.
+
+````mdx
+```jsx title="src/components/HelloCodeBlockTitle.tsx"
+const HelloCodeBlockTitle = (props) => {
+  return <h1>Блок кода с заголовком</h1>;
+};
+```
+````
+
+Отобразится так:
+
+```jsx title="src/components/HelloCodeBlockTitle.tsx"
+const HelloCodeBlockTitle = (props) => {
+  return <h1>Блок кода с заголовком</h1>;
+};
+```
+
+## Блок кода из файла \{#file-code-block}
+
+Вы можете использовать атрибут `file="./path/to/file"` без написания содержимого блока кода — это позволит подгрузить содержимое из внешнего файла.
+
+### Относительные пути
+
+Используйте относительные пути, начинающиеся с `./` или `../`, чтобы ссылаться на файлы относительно текущего MDX-файла:
+
+<Tabs>
+<Tab label="foo.mdx">
+
+````mdx
+```tsx file="./_tsx-component.tsx"
+
+```
+````
+
+</Tab>
+<Tab label="_tsx-component.tsx">
+
+```tsx file="./_tsx-component.tsx"
+
+```
+
+</Tab>
+</Tabs>
+
+Отобразится так:
+
+```tsx file="./_tsx-component.tsx"
+
+```
+
+### Абсолютные пути с префиксом `<root>/`
+
+Используйте префикс `<root>/`, чтобы ссылаться на файлы по абсолютному пути относительно корневой директории проекта. Это удобно, когда нужно обращаться к общим файлам кода из разных мест в документации:
+
+````mdx
+```tsx file="<root>/src/components/Button.tsx"
+
+```
+````
+
+Например, если корень вашего проекта — `/project`, то путь `<root>/src/components/Button.tsx` будет указывать на файл, расположенный по адресу `/project/src/components/Button.tsx`.
+
+:::tip Совет
+
+При использовании блоков кода из внешних файлов их часто комбинируют с [соглашениями о маршрутах](./components.mdx#routing-convention). Называйте такие файлы с подчёркиванием в начале — `_`.
+
+:::
+
+## Подсветка отдельных строк \{#notation-line-highlight}
+
+Вы можете подсвечивать отдельные строки кода с помощью [трансформеров Shiki](#shiki-transformers) и специального трансформера `transformerNotationHighlight`, а также комментариев вида `// [!code highlight]`:
+
+<Tabs>
+<Tab label="Code">
+
+````mdx
+```ts
+console.log('Подсвечено'); // [\!code highlight]
+console.log('Не подсвечено');
+// [\!code highlight:2]
+console.log('Подсвечено');
+console.log('Подсвечено');
+```
+````
+
+</Tab>
+<Tab label="rspress.config.ts">
+
+```ts
+import { defineConfig } from '@rspress/core';
+import { transformerNotationHighlight } from '@shikijs/transformers';
+
+export default defineConfig({
+  markdown: {
+    shiki: {
+      transformers: [transformerNotationHighlight()],
+    },
+  },
+});
+```
+
+</Tab>
+</Tabs>
+
+Отобразится так:
+
+```ts title="highlight.ts"
+console.log('Подсвечено'); // [!code highlight]
+console.log('Не подсвечено');
+// [!code highlight:2]
+console.log('Подсвечено');
+console.log('Подсвечено');
+```
+
+:::warning Предупреждение
+Обратный слеш (`\`) в `[\!code highlight]` нужен только для экранирования в Markdown, чтобы показать оригинальный синтаксис. **При реальном использовании этого синтаксиса обратный слеш ставить не нужно.**
+:::
+
+## Подсветка строк через meta-информацию
+
+:::warning Предупреждение
+При использовании meta-информации для подсветки строк помните, что автоформаттеры и другие инструменты могут менять нумерацию строк. Для лучшей поддержки и удобства рекомендуется использовать [подсветку через специальные комментарии](#notation-line-highlight).
+:::
+
+Вы можете подсвечивать строки кода с помощью трансформера `transformerCompatibleMetaHighlight` из пакета `@rspress/core/shiki-transformers` и meta-информации в заголовке блока кода.
+
+<Tabs>
+<Tab label="Code">
+
+````mdx
+```ts {1,3-4}
+console.log('Подсвечено');
+console.log('Не подсвечено');
+console.log('Подсвечено');
+console.log('Подсвечено');
+```
+````
+
+</Tab>
+<Tab label="rspress.config.ts">
+
+```ts
+import { defineConfig } from '@rspress/core';
+import { transformerCompatibleMetaHighlight } from '@rspress/core/shiki-transformers';
+
+export default defineConfig({
+  markdown: {
+    shiki: {
+      transformers: [transformerCompatibleMetaHighlight()],
+    },
+  },
+});
+```
+
+</Tab>
+</Tabs>
+
+Отобразится так:
+
+```ts {1,3-4}
+console.log('Подсвечено');
+console.log('Не подсвечено');
+console.log('Подсвечено');
+console.log('Подсвечено');
+```
+
+## Нумерация строк
+
+Вы можете включить отображение номеров строк для отдельных блоков кода с помощью мета-атрибута `lineNumbers`:
+
+````mdx
+```ts lineNumbers
+function hello() {
+  console.log('Для этого блока включена нумерация строк');
+}
+```
+````
+
+Отобразится так:
+
+```ts lineNumbers
+function hello() {
+  console.log('Для этого блока включена нумерация строк');
+}
+```
+
+Вы также можете включить нумерацию строк глобально, указав опцию `showLineNumbers` в конфигурации:
+
+```ts title="rspress.config.ts"
+export default {
+  // ...
+  markdown: {
+    showLineNumbers: true,
+  },
+};
+```
+
+Когда опция `showLineNumbers` включена глобально, все блоки кода по умолчанию будут показывать нумерацию строк.
+
+## Перенос длинных строк
+
+Вы можете включить перенос длинных строк в отдельных блоках кода с помощью мета-атрибута `wrapCode`:
+
+````mdx
+```ts wrapCode
+const longLine =
+  'Это очень длинная строка кода, которая будет переноситься по словам, когда указан мета-атрибут wrapCode';
+```
+````
+
+Отобразится так:
+
+```ts wrapCode
+const longLine =
+  'Это очень длинная строка кода, которая будет переноситься по словам, когда указан мета-атрибут wrapCode';
+```
+
+Вы также можете включить перенос длинных строк глобально, указав опцию `defaultWrapCode` в конфигурации:
+
+```ts title="rspress.config.ts"
+export default {
+  // ...
+  markdown: {
+    defaultWrapCode: true,
+  },
+};
+```
+
+Когда опция `defaultWrapCode` включена глобально, все блоки кода по умолчанию будут выполнять перенос длинных строк.
+
+## Комбинирование мета-атрибутов
+
+Вы можете одновременно использовать несколько мета-атрибутов:
+
+````mdx
+```ts lineNumbers wrapCode title="example.ts"
+const longLine =
+  'Этот блок кода имеет нумерацию строк, перенос длинных строк и заголовок';
+```
+````
+
+Отобразится так:
+
+```ts lineNumbers wrapCode title="example.ts"
+const longLine =
+  'Этот блок кода имеет нумерацию строк, перенос длинных строк и заголовок';
+```
+
+## Блок кода с подсветкой различий
+
+````mdx
+```diff
+function test() {
+- console.log('удалено');
++ console.log('добавлено');
+  console.log('без изменений');
+}
+```
+````
+
+Отобразится так:
+
+```diff
+function test() {
+- console.log('удалено');
++ console.log('добавлено');
+  console.log('без изменений');
+}
+```
+
+## Трансформеры Shiki \{#shiki-transformers}
+
+Rspress V2 использует [Shiki](https://shiki.style) для подсветки кода на этапе компиляции, что даёт широкие возможности по кастомизации блоков кода.
+
+Вы можете подключать собственные [трансформеры Shiki](https://shiki.style/guide/transformers.html) через опцию [`markdown.shiki.transformers`](../../api/config/config-build.mdx#markdownshiki) — это позволяет получать более богатые эффекты в блоках кода.
+
+Помимо уже упомянутого выше [transformerNotationHighlight](#notation-line-highlight), Rspress по умолчанию включает следующие трансформеры из пакета [@shikijs/transformers](https://shiki.style/packages/transformers):
+
+### transformerNotationDiff
+
+<Tabs>
+<Tab label="Syntax">
+
+````mdx
+```ts
+console.log('удалено'); // [\!code --]
+console.log('добавлено'); // [\!code ++]
+console.log('без изменений');
+```
+````
+
+</Tab>
+<Tab label="rspress.config.ts">
+
+```ts
+import { defineConfig } from '@rspress/core';
+import { transformerNotationDiff } from '@shikijs/transformers';
+export default defineConfig({
+  markdown: {
+    shiki: {
+      transformers: [transformerNotationDiff()],
+    },
+  },
+});
+```
+
+</Tab>
+</Tabs>
+
+Отобразится так:
+
+```ts
+console.log('удалено'); // [!code --]
+console.log('добавлено'); // [!code ++]
+console.log('без изменений');
+```
+
+### transformerNotationErrorLevel
+
+<Tabs>
+<Tab label="Syntax">
+
+````mdx
+```ts
+console.log('Без ошибок и предупреждений');
+console.error('Ошибка'); // [\!code error]
+console.warn('Предупреждение'); // [\!code warning]
+```
+````
+
+</Tab>
+<Tab label="rspress.config.ts">
+
+```ts
+import { defineConfig } from '@rspress/core';
+import { transformerNotationErrorLevel } from '@shikijs/transformers';
+export default defineConfig({
+  markdown: {
+    shiki: {
+      transformers: [transformerNotationErrorLevel()],
+    },
+  },
+});
+```
+
+</Tab>
+</Tabs>
+
+Отобразится так:
+
+```ts
+console.log('Без ошибок и предупреждений');
+console.error('Ошибка'); // [!code error]
+console.warn('Предупреждение'); // [!code warning]
+```
+
+### transformerNotationFocus
+
+<Tabs>
+<Tab label="Syntax">
+
+````mdx
+```ts
+console.log('Без фокуса');
+console.log('С фокусом'); // [\!code focus]
+console.log('Без фокуса');
+```
+````
+
+</Tab>
+<Tab label="rspress.config.ts">
+
+```ts
+import { defineConfig } from '@rspress/core';
+import { transformerNotationFocus } from '@shikijs/transformers';
+export default defineConfig({
+  markdown: {
+    shiki: {
+      transformers: [transformerNotationFocus()],
+    },
+  },
+});
+```
+
+</Tab>
+</Tabs>
+
+Отобразится так:
+
+```ts
+console.log('Без фокуса');
+console.log('С фокусом'); // [!code focus]
+console.log('Без фокуса');
+```
+
+## Twoslash
+
+> [Twoslash](https://twoslash.netlify.app/guide/) — это формат разметки для кода на TypeScript, который позволяет создавать полностью автономные примеры кода, автоматически дополняя их информацией о типах и подсказками от компилятора TypeScript. Он широко используется на официальном сайте TypeScript.
+
+Rspress предоставляет плагин `@rspress/core/plugin-twoslash`, который включает поддержку Twoslash в Rspress. Подробности — в [документации @rspress/plugin-twoslash](../../plugin/official-plugins/twoslash.mdx).
+
+```ts twoslash
+// @noErrorValidation
+const str: string = 1;
+```
+
+## Подсветка синтаксиса во время выполнения
+
+Когда нужно динамически отображать блоки кода во время выполнения — например, в интерактивной документации или при подгрузке кода с сервера, — Rspress предоставляет компонент `CodeBlockRuntime`.
+
+Пример использования:
+
+```mdx title="foo.mdx"
+import { CodeBlockRuntime } from '@theme';
+import { transformerNotationHighlight } from '@shikijs/transformers';
+
+<CodeBlockRuntime
+  lang="ts"
+  title="highlight.ts"
+  code={`console.log('Подсвечено'); // [\!code highlight]
+// [\!code highlight:1]
+console.log('Подсвечено');
+console.log('Не подсвечено');`}
+  shikiOptions={{
+    transformers: [transformerNotationHighlight()],
+  }}
+/>
+```
+
+import { CodeBlockRuntime } from '@theme';
+import { transformerNotationHighlight } from '@shikijs/transformers';
+
+<CodeBlockRuntime
+  lang="ts"
+  title="highlight.ts"
+  code={`console.log('Подсвечено'); // [!code highlight]
+// [!code highlight:1]
+console.log('Подсвечено');
+console.log('Не подсвечено');`}
+  shikiOptions={{
+    transformers: [transformerNotationHighlight()],
+  }}
+/>
+
+:::warning Предупреждение
+Рекомендуется использовать `CodeBlockRuntime` только в случаях, когда это действительно необходимо, поскольку он увеличивает размер бандла во время выполнения и лишает возможности воспользоваться преимуществами подсветки синтаксиса на этапе компиляции.
+:::

@@ -1,0 +1,33 @@
+# @rspress/plugin-medium-zoom <SourceCode href="https://github.com/web-infra-dev/rspress/tree/main/packages/plugin-medium-zoom" />
+
+import { SourceCode } from '@rspress/core/theme';
+
+Встроенный по умолчанию плагин для поддержки увеличения изображений.
+
+## Конфигурация
+
+Поскольку этот плагин встроен в Rspress, его **не нужно** вручную регистрировать в конфигурации. Достаточно настроить его через поле `themeConfig.mediumZoom`:
+
+```ts title="rspress.config.ts"
+import { defineConfig } from '@rspress/core';
+
+export default defineConfig({
+  mediumZoom: {
+    selector: '.rspress-doc img',
+  },
+});
+```
+
+### selector
+
+- Тип: `string`
+- Значение по умолчанию: `.rspress-doc img`
+
+Позволяет настроить CSS-селектор изображений, к которым будет применяться зум.
+
+### options
+
+- Тип: `ZoomOptions`
+- Значение по умолчанию: `{}`
+
+Опции библиотеки [medium-zoom](https://github.com/francoischalifour/medium-zoom). Подробное описание всех доступных настроек — в [официальной документации](https://github.com/francoischalifour/medium-zoom#options).

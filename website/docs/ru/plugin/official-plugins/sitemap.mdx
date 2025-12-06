@@ -1,0 +1,143 @@
+# @rspress/plugin-sitemap <SourceCode href="https://github.com/web-infra-dev/rspress/tree/main/packages/plugin-sitemap" />
+
+import { SourceCode } from '@rspress/core/theme';
+
+Автоматическая генерация [карты сайта](https://developers.google.com/search/docs/crawling-indexing/sitemaps/overview) для SEO — помогает поисковым системам лучше индексировать ваш сайт.
+
+## Установка
+
+import { PackageManagerTabs } from '@theme';
+
+<PackageManagerTabs command="add @rspress/plugin-sitemap -D" />
+
+## Использование
+
+Добавьте следующую конфигурацию в файл `rspress.config.ts`:
+
+```ts
+// rspress.config.ts
+import path from 'path';
+import { defineConfig } from '@rspress/core';
+import { pluginSitemap } from '@rspress/plugin-sitemap';
+
+export default defineConfig({
+  plugins: [
+    pluginSitemap({
+      siteUrl: 'https://example.com', // Замените на адрес своего сайта
+    }),
+  ],
+});
+```
+
+## Конфигурация
+
+Плагин принимает объект-параметр следующего типа:
+
+```ts
+type ChangeFreq =
+  | 'always'
+  | 'hourly'
+  | 'daily'
+  | 'weekly'
+  | 'monthly'
+  | 'yearly'
+  | 'never';
+
+type Priority =
+  | '0.0'
+  | '0.1'
+  | '0.2'
+  | '0.3'
+  | '0.4'
+  | '0.5'
+  | '0.6'
+  | '0.7'
+  | '0.8'
+  | '0.9'
+  | '1.0';
+
+// https://www.sitemaps.org/protocol.html
+interface Sitemap {
+  loc: string;
+  lastmod?: string;
+  changefreq?: ChangeFreq;
+  priority?: Priority;
+}
+
+interface CustomMaps {
+  [routePath: string]: Sitemap;
+}
+
+export interface PluginSitemapOptions {
+  siteUrl?: string;
+  customMaps?: CustomMaps;
+  defaultPriority?: Priority;
+  defaultChangeFreq?: ChangeFreq;
+}
+```
+
+### siteUrl
+
+- **Тип**: `string`
+- **Обязательный**
+
+URL сайта, на котором будет развёрнута документация, например `https://example.com`.
+
+Если в проекте задан параметр `base`, то `siteUrl` должен включать этот `base`-путь. Пример:
+
+```ts
+// rspress.config.ts
+import path from 'path';
+import { defineConfig } from '@rspress/core';
+import { pluginSitemap } from '@rspress/plugin-sitemap';
+
+export default defineConfig({
+  base: '/base/',
+  plugins: [
+    pluginSitemap({
+      siteUrl: 'https://example.com/base/',
+    }),
+  ],
+});
+```
+
+### customMaps
+
+- **Тип**:
+
+```ts
+interface Sitemap {
+  loc: string;
+  lastmod?: string;
+  changefreq?: ChangeFreq;
+  priority?: Priority;
+}
+
+interface CustomMaps {
+  [routePath: string]: Sitemap;
+}
+```
+
+- **По умолчанию**: `{}`
+
+Позволяет задать индивидуальные значения sitemap для отдельных важных страниц.
+
+### defaultChangeFreq
+
+- **Тип**: `ChangeFreq`
+- **По умолчанию**: `'monthly'`
+- **Возможные значения**: `"always" | "hourly" | "daily" | "weekly" | "monthly" | "yearly" | "never"`
+
+> changefreq — как часто страница, вероятно, будет изменяться. Это значение даёт общую информацию поисковым системам и не обязательно точно соответствует частоте обхода страницы.
+
+Задаёт значение [changefreq](https://www.sitemaps.org/protocol.html) по умолчанию для всех страниц в генерируемом sitemap-файле.
+
+### defaultPriority
+
+- **Тип**: `Priority`
+- **По умолчанию**: `'0.5'`
+- **Возможные значения**: `"0.0" | "0.1" | "0.2" | "0.3" | "0.4" | "0.5" | "0.6" | "0.7" | "0.8" | "0.9" | "1.0"`
+
+> priority — приоритет этой страницы относительно других страниц вашего сайта.
+
+Задаёт значение [priority](https://www.sitemaps.org/protocol.html) по умолчанию для всех страниц в генерируемом sitemap-файле.

@@ -1,0 +1,103 @@
+# @rspress/plugin-typedoc <SourceCode href="https://github.com/web-infra-dev/rspress/tree/main/packages/plugin-typedoc" />
+
+import { SourceCode, PackageManagerTabs } from '@rspress/core/theme';
+
+Интеграция плагина [TypeDoc](https://github.com/TypeStrong/typedoc) для Rspress — автоматическая генерация документации API для модулей TypeScript.
+
+## Установка
+
+<PackageManagerTabs command="add @rspress/plugin-typedoc -D" />
+
+## Использование
+
+```ts
+import { defineConfig } from '@rspress/core';
+import { pluginTypeDoc } from '@rspress/plugin-typedoc';
+import path from 'path';
+
+export default defineConfig({
+  plugins: [
+    pluginTypeDoc({
+      entryPoints: [
+        path.join(__dirname, 'src', 'foo.ts'),
+        path.join(__dirname, 'src', 'bar.ts'),
+      ],
+    }),
+  ],
+});
+```
+
+```ts title="src/foo.ts"
+/**
+ * Это функция сложения (add).
+ */
+export function add(
+  /**
+   * Это param1.
+   */
+  param1: string,
+  /**
+   * Это param2.
+   */
+  param2: number,
+) {
+  return 1;
+}
+```
+
+```ts title="src/bar.ts"
+/**
+ * Это функция умножения (multi).
+ */
+export function multi(
+  /**
+   * Это param1.
+   */
+  param1?: string,
+  /**
+   * Это param2.
+   */
+  param2?: number,
+) {
+  return 1;
+}
+```
+
+При запуске/сборке проекта плагин автоматически создаст папку `api` в корне вашей документации. Структура папки будет следующей:
+
+```txt
+api
+├── README.md
+├── documentation.json
+├── functions
+│   ├── bar.multi.md
+│   └── foo.add.md
+├── interfaces
+│   ├── foo.RunTestsOptions.md
+│   └── foo.TestMessage.md
+└── modules
+    ├── bar.md
+    └── foo.md
+```
+
+Это означает, что плагин внутренне вызывает TypeDoc и автоматически генерирует документацию API для ваших модулей: списки модулей, детали `Interface`, детали функций (параметры, возвращаемые значения, описание) и т. д. Также будет создан файл `documentation.json`, который используется для последующего рендеринга боковой панели.
+
+Обратите внимание: документация пересоздаётся при каждом запуске проекта, чтобы отражать актуальное содержимое модулей. Поэтому мы рекомендуем добавить папку `api` в `.gitignore`. Если вы настроите другой каталог вывода через параметр `outDir` (см. ниже), его тоже следует добавить в `.gitignore`.
+
+Кроме того, мы не рекомендуем вручную изменять или добавлять файлы в папку `api`, поскольку при каждом запуске проекта из-за изменений в модулях эти файлы будут перезаписаны.
+
+## Описание параметров
+
+### entryPoints
+
+- Тип: `string[]`
+- По умолчанию: `[]`
+
+Указывает абсолютные пути к модулям TypeScript, для которых нужно генерировать документацию.
+
+### outDir
+
+- Тип: `string`
+- По умолчанию: `api`
+
+Позволяет задать собственную папку для вывода документации. Нужно указывать относительный путь, например `api/custom`.

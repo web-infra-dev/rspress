@@ -1,0 +1,540 @@
+# Конфигурация темы
+
+Параметры темы определяются внутри ключа `themeConfig` в объекте `doc`. Например:
+
+```ts title="rspress.config.ts"
+import { defineConfig } from '@rspress/core';
+
+export default defineConfig({
+  themeConfig: {
+    // ...
+  },
+});
+```
+
+## nav
+
+- **Тип**: `Array`
+- **По умолчанию**: `[]`
+
+Параметр `nav` — это массив элементов типа `NavItem`, которые могут иметь следующие формы:
+
+```ts
+interface NavItem {
+  // Текст пункта навигационной панели
+  text: string;
+  // Ссылка пункта навигации
+  link: '/';
+  // Правило активации (подсветки) пункта навигации
+  activeMatch: '^/$|^/';
+  // SVG-строка или URL изображения (необязательно)
+  tag?: string;
+}
+```
+
+Поле `activeMatch` используется для определения текущего активного пункта меню. Когда текущий маршрут соответствует правилу `activeMatch`, соответствующий элемент навигации будет подсвечен. По умолчанию в качестве `activeMatch` используется значение поля `link`.
+
+Например:
+
+```ts title="rspress.config.ts"
+import { defineConfig } from '@rspress/core';
+
+export default defineConfig({
+  themeConfig: {
+    nav: [
+      {
+        text: 'Главная',
+        link: '/',
+      },
+      {
+        text: 'Руководство',
+        link: '/guide/',
+      },
+    ],
+  },
+});
+```
+
+Конечно, в массиве `nav` можно также настроить многоуровневые меню, используя следующие типы:
+
+```ts
+interface NavGroup {
+  text: string;
+  // подменю
+  items: NavItem[];
+  // SVG-строка или URL изображения (необязательно)
+  tag?: string;
+}
+```
+
+Например, такая конфигурация:
+
+```ts title="rspress.config.ts"
+import { defineConfig } from '@rspress/core';
+
+export default defineConfig({
+  themeConfig: {
+    nav: [
+      {
+        text: 'Главная',
+        link: '/',
+      },
+      {
+        text: 'Руководство',
+        items: [
+          {
+            text: 'Первые шаги',
+            link: '/guide/getting-started',
+          },
+          {
+            text: 'Дополнительно',
+            link: '/guide/advanced',
+          },
+          // Также поддерживаем вложенные подменю
+          {
+            text: 'Группа',
+            items: [
+              {
+                text: 'Персональный сайт',
+                link: 'http://example.com/',
+              },
+              {
+                text: 'Компания',
+                link: 'http://example.com/',
+              },
+            ],
+          },
+        ],
+      },
+    ],
+  },
+});
+```
+
+## sidebar
+
+- **Тип**: `Object`
+
+Боковая панель сайта. Конфигурация представляет собой объект следующего вида:
+
+```ts
+// Ключ — путь SidebarGroup
+// Значение — массив элементов SidebarGroup
+type Sidebar = Record<string, SidebarGroup[]>;
+
+interface SidebarGroup {
+  text: string;
+  link?: string;
+  items: SidebarItem[];
+  // Можно ли сворачивать группу
+  collapsible?: boolean;
+  // Свёрнута ли группа по умолчанию
+  collapsed?: boolean;
+  // SVG-строка или URL изображения (необязательно)
+  tag?: string;
+}
+
+// Можно указать объект или просто строку
+// При указании строки она автоматически преобразуется в объект: строка будет использована как link, а текст будет взят из заголовка соответствующего документа
+type SidebarItem =
+  | {
+      // Текст пункта боковой панели
+      text: string;
+      // Ссылка пункта боковой панели
+      link: string;
+      // SVG-строка или URL изображения (необязательно)
+      tag?: string;
+    }
+  | string;
+```
+
+Например:
+
+```ts title="rspress.config.ts"
+import { defineConfig } from '@rspress/core';
+
+export default defineConfig({
+  themeConfig: {
+    sidebar: {
+      '/guide/': [
+        {
+          text: 'Первые шаги',
+          items: [
+            // Заполняем объект
+            {
+              text: 'Введение',
+              link: '/guide/getting-started/introduction',
+            },
+            {
+              text: 'Установка',
+              link: '/guide/getting-started/installation',
+            },
+          ],
+        },
+        {
+          text: 'Дополнительно',
+          items: [
+            // Заполняем ссылки строками
+            '/guide/advanced/customization',
+            '/guide/advanced/markdown',
+          ],
+        },
+      ],
+    },
+  },
+});
+```
+
+## footer
+
+- **Тип**: `Object`
+- **По умолчанию**: `{}`
+
+Подвал (footer) главной страницы.
+
+Параметр `footer` — это объект типа `Footer` следующей структуры:
+
+```ts
+export interface Footer {
+  message?: string;
+}
+```
+
+`message` — это строка, которая может содержать HTML-контент. Данная строка будет вставлена в подвал с помощью `dangerouslySetInnerHTML`, что позволяет передавать HTML-теги и произвольно оформлять подвал.
+
+Например:
+
+```ts title="rspress.config.ts"
+import { defineConfig } from '@rspress/core';
+
+export default defineConfig({
+  themeConfig: {
+    footer: {
+      message:
+        '<p>Это подвал с <a href="https://example.com">ссылкой</a> и <strong>жирным текстом</strong></p>',
+    },
+  },
+});
+```
+
+## socialLinks
+
+- **Тип**: `Array`
+- **По умолчанию**: `[]`
+
+Вы можете добавить связанные ссылки через следующую конфигурацию, например ссылки на `github`, `x` и т. д.
+Связанные ссылки поддерживают четыре режима: `link mode`, `text mode`, `image mode`, `dom mode`, например:
+
+```ts title="rspress.config.ts"
+import { defineConfig } from '@rspress/core';
+
+export default defineConfig({
+  themeConfig: {
+    socialLinks: [
+      {
+        icon: 'github',
+        mode: 'link',
+        content: 'https://github.com/sanyuan0704/island.js',
+      },
+      {
+        icon: 'wechat',
+        mode: 'text',
+        content: 'wechat: foo',
+      },
+      {
+        icon: 'qq',
+        mode: 'img',
+        content: '/qrcode.png',
+      },
+      {
+        icon: 'github',
+        mode: 'dom',
+        content:
+          '<img src="https://lf3-static.bytednsdoc.com/obj/eden-cn/rjhwzy/ljhwZthlaukjlkulzlp/rspress/rspress-navbar-logo-0904.png" alt="logo" id="logo" class="mr-4 rspress-logo dark:hidden">',
+      },
+    ],
+  },
+});
+```
+
+- В режиме `link` — при клике по иконке происходит переход по ссылке.
+- В режиме `text` — при наведении курсора на иконку появляется всплывающая подсказка, содержимым которой будет введённый текст.
+- В режиме `img` — при наведении курсора появляется всплывающая подсказка с указанным изображением. Обратите внимание: изображение должно находиться в директории `public`.
+- В режиме `dom` — в поле `content` можно напрямую передать HTML-код для рендеринга. Используйте одинарные кавычки `''` для оборачивания строк.
+
+Связанные ссылки поддерживают следующие типы иконок, выбираемые через атрибут `icon`:
+
+```ts
+export type SocialLinkIcon =
+  | 'lark'
+  | 'discord'
+  | 'facebook'
+  | 'github'
+  | 'instagram'
+  | 'linkedin'
+  | 'slack'
+  | 'x'
+  | 'youtube'
+  | 'wechat'
+  | 'qq'
+  | 'juejin'
+  | 'zhihu'
+  | 'bilibili'
+  | 'weibo'
+  | 'gitlab'
+  | 'X'
+  | 'bluesky'
+  | 'npm'
+  | { svg: string };
+```
+
+Если нужно использовать собственную иконку, можно передать объект с атрибутом `svg`, где значением будет содержимое кастомной SVG-иконки, например:
+
+```js
+import { defineConfig } from '@rspress/core';
+
+export default defineConfig({
+  themeConfig: {
+    socialLinks: [
+      {
+        icon: {
+          svg: '<svg>foo</svg>',
+        },
+        mode: 'link',
+        content: 'https://github.com/',
+      },
+    ],
+  },
+});
+```
+
+## nextPageText
+
+- **Тип**: `string`
+- **По умолчанию**: `Next Page`
+
+Текст ссылки «Следующая страница». Например:
+
+```ts title="rspress.config.ts"
+import { defineConfig } from '@rspress/core';
+
+export default defineConfig({
+  themeConfig: {
+    nextPageText: 'Следующая страница',
+  },
+});
+```
+
+## locales
+
+- **Тип**: `Array<LocaleConfig>`
+- **По умолчанию**: `undefined`
+
+Конфигурация интернационализации (i18n). Это массив, каждый элемент которого имеет тип `LocaleConfig` и выглядит следующим образом:
+
+```ts
+export interface LocaleConfig {
+  /**
+   * Общая локальная конфигурация сайта, имеет более высокий приоритет, чем `locales`
+   */
+  // код языка
+  lang?: string;
+  // Заголовок HTML-страницы, имеет приоритет над `themeConfig.title`
+  title?: string;
+  // Описание HTML-страницы, имеет приоритет над `themeConfig.description`
+  description?: string;
+  // Отображаемый текст для соответствующего языка
+  label: string;
+}
+```
+
+`LocaleConfig` содержит многие из тех же параметров, что и обычная конфигурация темы, но имеет более высокий приоритет.
+
+## darkMode
+
+- **Тип**: `boolean`
+- **По умолчанию**: `true`
+
+Показывать ли кнопку переключения между тёмной и светлой темой. Например:
+
+```ts title="rspress.config.ts"
+import { defineConfig } from '@rspress/core';
+
+export default defineConfig({
+  themeConfig: {
+    darkMode: true,
+  },
+});
+```
+
+Можно также задать режим темы по умолчанию, внедрив глобальную переменную в HTML-шаблон, например:
+
+```ts title="rspress.config.ts"
+import { defineConfig } from '@rspress/core';
+
+export default defineConfig({
+  builderConfig: {
+    html: {
+      tags: [
+        {
+          tag: 'script',
+          // Указать режим темы по умолчанию: `dark` или `light`
+          children: "window.RSPRESS_THEME = 'dark';",
+        },
+      ],
+    },
+  },
+});
+```
+
+## editLink
+
+- Тип:
+
+```ts
+interface EditLink {
+  /**
+   * Пользовательский URL репозитория для ссылки «Редактировать страницу».
+   */
+  docRepoBaseUrl: string;
+}
+```
+
+- **По умолчанию**: `undefined`
+
+Отображает ссылку «Редактировать страницу» на сервисе управления Git (например, GitHub, GitLab).
+
+Например:
+
+```ts title="rspress.config.ts"
+import { defineConfig } from '@rspress/core';
+
+export default defineConfig({
+  themeConfig: {
+    editLink: {
+      docRepoBaseUrl:
+        'https://github.com/web-infra-dev/rspress/tree/main/website/docs',
+    },
+  },
+});
+```
+
+## enableContentAnimation
+
+- **Тип**: `boolean`
+- **По умолчанию**: `false`
+
+Включить ли анимацию перехода при переключении между страницами. Реализовано с помощью [View Transition API](https://developer.mozilla.org/docs/Web/API/View_Transitions_API). Например:
+
+> На данный момент анимация не настраивается.
+
+```ts title="rspress.config.ts"
+import { defineConfig } from '@rspress/core';
+
+export default defineConfig({
+  themeConfig: {
+    enableContentAnimation: true,
+  },
+});
+```
+
+## enableAppearanceAnimation
+
+- **Тип**: `boolean`
+- **По умолчанию**: `false`
+
+Включить ли анимацию перехода при смене светлой и тёмной темы. Реализовано с помощью [View Transition API](https://developer.mozilla.org/docs/Web/API/View_Transitions_API). Например:
+
+> На данный момент анимация не настраивается.
+
+```ts title="rspress.config.ts"
+import { defineConfig } from '@rspress/core';
+
+export default defineConfig({
+  themeConfig: {
+    enableAppearanceAnimation: true,
+  },
+});
+```
+
+## search
+
+- **Тип**: `boolean`
+- **По умолчанию**: `true`
+
+Отображать ли поле поиска. Например:
+
+```ts title="rspress.config.ts"
+import { defineConfig } from '@rspress/core';
+
+export default defineConfig({
+  themeConfig: {
+    search: false,
+  },
+});
+```
+
+## enableScrollToTop
+
+- **Тип**: `boolean`
+- **По умолчанию**: `false`
+
+Включить кнопку «Наверх» в документации. Например:
+
+```ts title="rspress.config.ts"
+import { defineConfig } from '@rspress/core';
+
+export default defineConfig({
+  themeConfig: {
+    enableScrollToTop: true,
+  },
+});
+```
+
+## localeRedirect
+
+- **Тип**: `'auto' | 'never' | 'only-default-lang'`
+- **По умолчанию**: `'auto'`
+
+Определяет, нужно ли автоматически перенаправлять пользователя на языковую версию, наиболее близкую к `window.navigator.language`, при посещении сайта.
+
+- `auto` — пользователь будет перенаправлен при первом посещении сайта (поведение по умолчанию);
+- `never` — автоматическое перенаправление полностью отключено;
+- `only-default-lang` — перенаправление будет выполняться только при заходе на версию сайта с языком по умолчанию.
+
+Например:
+
+```ts title="rspress.config.ts"
+import { defineConfig } from '@rspress/core';
+
+export default defineConfig({
+  themeConfig: {
+    localeRedirect: 'never',
+  },
+});
+```
+
+## fallbackHeadingTitle
+
+- **Тип**: `boolean`
+- **По умолчанию**: `true`
+
+Использовать ли значение `frontmatter.title` в качестве запасного заголовка страницы, если в документе отсутствует заголовок H1. Например:
+
+```ts title="rspress.config.ts"
+import { defineConfig } from '@rspress/core';
+
+export default defineConfig({
+  themeConfig: {
+    fallbackHeadingTitle: false,
+  },
+});
+```
+
+```mdx
+---
+title: Заголовок документа
+---
+
+## Содержимое
+```

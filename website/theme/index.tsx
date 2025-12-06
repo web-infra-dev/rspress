@@ -45,7 +45,9 @@ const Layout = () => {
           message={
             lang === 'en'
               ? '🚧 Rspress 2.0 document is under development'
-              : '🚧 Rspress 2.0 文档还在开发中'
+              : lang === 'ru'
+                ? 'Документация Rspress 2.0 в процессе доработки'
+                : '🚧 Rspress 2.0 文档还在开发中'
           }
         />
       }

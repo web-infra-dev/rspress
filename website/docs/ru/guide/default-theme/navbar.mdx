@@ -1,0 +1,140 @@
+# Панель навигации
+
+Панель навигации — очень важная часть сайта. Она позволяет пользователям быстро переключаться между страницами и оперативно находить важную информацию.
+
+## Пользовательское меню навигации
+
+Вы можете добавить собственные пункты меню в `themeConfig.nav`. Параметр принимает массив, пример настройки:
+
+```ts title="rspress.config.ts"
+import { defineConfig } from '@rspress/core';
+
+export default defineConfig({
+  themeConfig: {
+    nav: [],
+  },
+});
+```
+
+Панель навигации настраивается в виде массива. Каждый элемент массива — это объект типа `NavItem`, который имеет следующие поля:
+
+```ts
+export type NavItem = NavItemWithLink | NavItemWithChildren;
+```
+
+То есть каждый элемент навигационной панели (`NavItem`) может быть либо обычной ссылкой (`NavItemWithLink`), либо группой (`NavItemWithChildren`), содержащей дочерние пункты.
+
+### NavItemWithLink
+
+```ts
+export interface NavItemWithLink {
+  text: string;
+  link: string;
+  activeMatch?: string;
+  position?: 'left' | 'right';
+}
+```
+
+Описание полей:
+
+- `text` — текст пункта
+- `link` — ссылка пункта
+- `activeMatch` — правило подсветки активного пункта
+- `position` — позиция пункта в верхнем меню
+
+### Подробно о полях
+
+`activeMatch` используется для определения текущего маршрута. Когда маршрут совпадает с правилом `activeMatch`, соответствующий пункт навигации будет подсвечен как активный.
+
+> По умолчанию `activeMatch` равен значению `link` пункта.
+
+`position` позволяет задать положение пункта в верхнем меню. Доступны два варианта:
+
+- `left` — пункт будет размещён в левой части верхнего меню;
+- `right` — пункт будет размещён в правой части верхнего меню.
+
+> Если `position` не указан, пункт по умолчанию размещается справа (то же самое, что указать `right`).
+
+### NavItemWithChildren
+
+```ts
+export interface NavItemWithChildren {
+  text: string;
+  items: NavItem[];
+  position?: 'left' | 'right';
+}
+```
+
+Описание полей:
+
+- `text` — текст группы
+- `items` — дочерние пункты меню
+- `position` — позиция группы в верхнем меню
+
+### Пример
+
+```ts title="rspress.config.ts"
+import { defineConfig } from '@rspress/core';
+
+export default defineConfig({
+  themeConfig: {
+    nav: [
+      {
+        text: 'Главная',
+        link: '/',
+        position: 'left',
+      },
+      {
+        text: 'Links',
+        items: [
+          {
+            text: 'GitHub',
+            link: 'http://github.com/',
+          },
+          {
+            text: 'X',
+            link: 'http://x.com/',
+          },
+        ],
+        position: 'left',
+      },
+    ],
+  },
+});
+```
+
+## Светлая/тёмная тема
+
+По умолчанию в навигационной панели присутствует кнопка переключения светлой/тёмной темы. Её можно отключить следующей настройкой:
+
+```ts title="rspress.config.ts"
+import { defineConfig } from '@rspress/core';
+
+export default defineConfig({
+  themeConfig: {
+    darkMode: false,
+  },
+});
+```
+
+## Связанные ссылки
+
+Ссылки на социальные сети проекта. Например:
+
+```ts title="rspress.config.ts"
+import { defineConfig } from '@rspress/core';
+
+export default defineConfig({
+  themeConfig: {
+    socialLinks: [
+      {
+        icon: 'github',
+        mode: 'link',
+        content: 'https://github.com/web-infra-dev/modern.js',
+      },
+    ],
+  },
+});
+```
+
+Подробные настройки смотрите в разделе [конфигурация `socialLinks`](/api/config/config-theme#sociallinks).

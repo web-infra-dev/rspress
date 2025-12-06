@@ -1,0 +1,272 @@
+# @rspress/plugin-algolia <SourceCode href="https://github.com/web-infra-dev/rspress/tree/main/packages/plugin-algolia" />
+
+import { SourceCode } from '@rspress/core/theme';
+
+Этот плагин, основанный на [DocSearch](https://docsearch.algolia.com), заменяет встроенную функцию поиска Rspress на поиск, предоставляемый [Algolia](https://www.algolia.com/).
+
+## Установка
+
+import { PackageManagerTabs } from '@theme';
+
+<PackageManagerTabs command="add @rspress/plugin-algolia -D" />
+
+## Использование
+
+Сначала добавьте следующую конфигурацию в файл `rspress.config.ts`:
+
+```ts
+// rspress.config.ts
+import path from 'path';
+import { defineConfig } from '@rspress/core';
+import { pluginAlgolia } from '@rspress/plugin-algolia';
+
+export default defineConfig({
+  plugins: [pluginAlgolia()],
+});
+```
+
+Затем замените компонент `Search` на поле поиска, поддерживающее Algolia, с помощью [пользовательской темы](/ui/custom-theme).
+
+```tsx
+// theme/index.tsx
+import { Search as PluginAlgoliaSearch } from '@rspress/plugin-algolia/runtime';
+
+const Search = () => {
+  return (
+    <PluginAlgoliaSearch
+      docSearchProps={{
+        appId: 'R2IYF7ETH7', // Замените на ваш собственный идентификатор приложения Algolia
+        apiKey: '599cec31baffa4868cae4e79f180729b', // Замените на ваш собственный ключ API Algolia
+        indexName: 'docsearch', // Замените на ваше собственное имя индекса Algolia
+      }}
+    />
+  );
+};
+export { Search };
+export * from '@rspress/core/theme';
+```
+
+## Конфигурация
+
+Плагин принимает объект параметров следующего типа:
+
+```ts
+interface Options {
+  verificationContent?: string;
+}
+```
+
+### verificationContent
+
+- Тип: `string | undefined`
+- Значение по умолчанию: `undefined`
+
+Используется для проверки мета-тега при создании краулера Algolia. Формат: `<meta name="algolia-site-verification" content="YOUR_VERIFICATION_CONTENT" />`. Подробности см. в документации [Создание нового краулера — Algolia](https://www.algolia.com/doc/tools/crawler/getting-started/create-crawler/#dns).
+
+## SearchProps
+
+Тип `SearchProps` из модуля `@rspress/plugin-algolia/runtime` имеет следующее определение:
+
+```ts
+import type { DocSearchProps } from '@docsearch/react';
+
+type Locales = Record<
+  string,
+  { translations: DocSearchProps['translations']; placeholder: string }
+>;
+type SearchProps = {
+  /**
+   * @link https://docsearch.algolia.com/docs/api
+   */
+  docSearchProps?: DocSearchProps;
+  locales?: Locales;
+};
+```
+
+### docSearchProps
+
+- Тип: `import('@docsearch/react').DocSearchProps`
+- Значение по умолчанию: `undefined`
+
+`docSearchProps` передается непосредственно в компонент `<DocSearch />` из пакета `@docsearch/react`. Для получения подробной информации о типах обратитесь к [документации docsearch](https://docsearch.algolia.com/docs/api).
+
+### locales
+
+- Тип:
+
+```ts
+type Locales = Record<
+  string,
+  { translations: DocSearchProps['translations']; placeholder: string }
+>;
+```
+
+- Значение по умолчанию: `{}`
+
+Для настройки переведённого текста на разных языках Rspress предоставляет следующий текст, который можно импортировать с помощью оператора `import`.
+
+<details>
+
+```ts file="<root>/../packages/plugin-algolia/src/runtime/locales.ts"
+
+```
+
+</details>
+
+Rspress по умолчанию предоставляет перевод на китайский язык, и вы можете настроить переведенный текст на различных языках с помощью параметра `locales`.
+
+- Пример:
+
+```tsx
+import { Search as PluginAlgoliaSearch, RU_LOCALES } from '@rspress/plugin-algolia/runtime';
+
+<PluginAlgoliaSearch locales={RU_LOCALES} />
+// или
+<PluginAlgoliaSearch
+  locales={{
+    ru: {
+      placeholder: 'Поиск в документации',
+      translations: {
+        button: {
+          buttonText: 'Поиск',
+          buttonAriaLabel: 'Поиск',
+        }
+      }
+    },
+    ...ZH_LOCALES,
+  }}
+/>
+```
+
+## Конфигурация краулера Algolia
+
+Вот пример конфигурации на основе того, что использует этот сайт:
+
+<details>
+
+```tsx
+new Crawler({
+  appId: 'YOUR_APP_ID',
+  apiKey: 'YOUR_API_KEY',
+  rateLimit: 8,
+  maxDepth: 10,
+  startUrls: ['https://rspress.rs'],
+  sitemaps: ['https://rspress.rs/sitemap.xml'],
+  discoveryPatterns: ['https://rspress.rs/**'],
+  actions: [
+    {
+      indexName: 'doc_search_rspress_pages',
+      pathsToMatch: ['https://rspress.rs/**'],
+      recordExtractor: ({ $, helpers }) => {
+        const lvl0 =
+          $('.rspress-nav-menu-item.rspress-nav-menu-item-active')
+            .first()
+            .text() || 'Documentation';
+
+        return helpers.docsearch({
+          recordProps: {
+            lvl0: {
+              selectors: '',
+              defaultValue: lvl0,
+            },
+            lvl1: '.rspress-doc h1',
+            lvl2: '.rspress-doc h2',
+            lvl3: '.rspress-doc h3',
+            lvl4: '.rspress-doc h4',
+            lvl5: '.rspress-doc h5',
+            lvl6: '.rspress-doc pre > code', // добавьте, если хотите искать внутри блоков кода
+            content: '.rspress-doc p, .rspress-doc li',
+          },
+          indexHeadings: true,
+          aggregateContent: true,
+          recordVersion: 'v3',
+        });
+      },
+    },
+  ],
+  initialIndexSettings: {
+    doc_search_rspress_pages: {
+      attributesForFaceting: ['type', 'lang'],
+      attributesToRetrieve: [
+        'hierarchy',
+        'content',
+        'anchor',
+        'url',
+        'url_without_anchor',
+        'type',
+      ],
+      attributesToHighlight: ['hierarchy', 'content'],
+      attributesToSnippet: ['content:10'],
+      camelCaseAttributes: ['hierarchy', 'content'],
+      searchableAttributes: [
+        'unordered(hierarchy.lvl0)',
+        'unordered(hierarchy.lvl1)',
+        'unordered(hierarchy.lvl2)',
+        'unordered(hierarchy.lvl3)',
+        'unordered(hierarchy.lvl4)',
+        'unordered(hierarchy.lvl5)',
+        'unordered(hierarchy.lvl6)',
+        'content',
+      ],
+      distinct: true,
+      attributeForDistinct: 'url',
+      customRanking: [
+        'desc(weight.pageRank)',
+        'desc(weight.level)',
+        'asc(weight.position)',
+      ],
+      ranking: [
+        'words',
+        'filters',
+        'typo',
+        'attribute',
+        'proximity',
+        'exact',
+        'custom',
+      ],
+      highlightPreTag: '<span class="algolia-docsearch-suggestion--highlight">',
+      highlightPostTag: '</span>',
+      minWordSizefor1Typo: 3,
+      minWordSizefor2Typos: 7,
+      allowTyposOnNumericTokens: false,
+      minProximity: 1,
+      ignorePlurals: true,
+      advancedSyntax: true,
+      attributeCriteriaComputedByMinProximity: true,
+      removeWordsIfNoResults: 'allOptional',
+    },
+  },
+});
+```
+
+</details>
+
+## Разделение результатов поиска в зависимости от локализации
+
+Вы можете добиться получения интернационализированных результатов поиска, комбинируя [Runtime API](/api/client-api/api-runtime) с параметром `docSearchProps`.
+
+Вот пример использования параметра `docSearchProps.searchParameters`:
+
+```tsx
+// theme/index.tsx
+import { useLang } from '@rspress/core/runtime';
+import { Search as PluginAlgoliaSearch } from '@rspress/plugin-algolia/runtime';
+
+const Search = () => {
+  const lang = useLang();
+  return (
+    <PluginAlgoliaSearch
+      docSearchProps={{
+        appId: 'R2IYF7ETH7',
+        apiKey: '599cec31baffa4868cae4e79f180729b',
+        indexName: 'docsearch',
+        searchParameters: {
+          facetFilters: [`lang:${lang}`],
+        },
+      }}
+    />
+  );
+};
+export { Search };
+export * from '@rspress/core/theme';
+```

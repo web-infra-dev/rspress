@@ -1,46 +1,57 @@
 {
   "gettingStarted": {
     "zh": "开始",
-    "en": "Getting Started"
+    "en": "Getting Started",
+    "ru": "Подготовка"
   },
   "features": {
     "zh": "特性",
-    "en": "Features"
+    "en": "Features",
+    "ru": "Возможности"
   },
   "defaultTheme": {
     "zh": "默认主题",
-    "en": "Default Theme"
+    "en": "Default Theme",
+    "ru": "Тема по умолчанию"
   },
   "advanced": {
     "zh": "高级能力",
-    "en": "Advanced"
+    "en": "Advanced",
+    "ru": "Дополнительно"
   },
   "apiOverview": {
     "zh": "API 概览",
-    "en": "API Overview"
+    "en": "API Overview",
+    "ru": "Обзор API"
   },
   "config": {
     "zh": "配置",
-    "en": "Config"
+    "en": "Config",
+    "ru": "Конфигурация"
   },
   "clientApi": {
     "zh": "Client API",
-    "en": "Client API"
+    "en": "Client API",
+    "ru": "Client API"
   },
   "commands": {
     "zh": "命令",
-    "en": "Commands"
+    "en": "Commands",
+    "ru": "Команды"
   },
   "pluginSystem": {
     "zh": "插件机制",
-    "en": "Plugin System"
+    "en": "Plugin System",
+    "ru": "Система плагинов"
   },
   "pluginList": {
     "zh": "官方插件",
-    "en": "Official Plugins"
+    "en": "Official Plugins",
+    "ru": "Официальные плагины"
   },
   "communityPlugins": {
     "zh": "社区插件",
-    "en": "Community Plugins"
+    "en": "Community Plugins",
+    "ru": "Плагины сообщества"
   }
 }

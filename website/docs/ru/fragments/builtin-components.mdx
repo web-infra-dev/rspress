@@ -1,0 +1,527 @@
+:::info Примечание
+Чтобы вам было проще использовать эти компоненты, пакет `rspress/theme` алиасится внутри Rspress, поэтому вы можете напрямую использовать `@theme` для импорта этих компонентов.
+:::
+
+## Badge
+
+Компонент Badge используется для отображения бейджа. Например:
+
+```tsx title="index.mdx"
+import { Badge } from '@theme';
+
+function App() {
+  // Использование пропа text
+  return <Badge text="info" type="info" />;
+
+  // Использование произвольных дочерних элементов
+  return (
+    <Badge>
+      <img
+        style={{ height: '18px' }}
+        src="https://assets.rspack.rs/rspress/rspress-logo.svg"
+      />
+      <span>Rspress</span>
+    </Badge>
+  );
+}
+```
+
+Эффект выглядит следующим образом:
+
+import { Badge } from '@theme';
+
+<Badge text="совет" type="tip" />
+<Badge text="информация" type="info" />
+<Badge text="предупреждение" type="warning" />
+<Badge text="опасность" type="danger" />
+<Badge text="обводка" outline />
+
+Произвольные дочерние элементы:
+
+import SearchSvg from '@theme-assets/github';
+
+<Badge type="tip">
+  <img
+    style={{ height: '18px' }}
+    src="https://assets.rspack.rs/rspress/rspress-logo.svg"
+  />
+  <span>Rspress</span>
+</Badge>
+
+<Badge type="info">
+  <SearchSvg width="16" />
+  <span>Github</span>
+</Badge>
+
+Встроенный в текст <Badge text="Совет" />
+
+##### H5 <Badge text="Информация" type="info" />
+
+#### H4 <Badge text="Предупреждение" type="warning" />
+
+### H3 <Badge text="Опасность" type="danger" />
+
+Поддерживаемые типы пропсов:
+
+```ts
+interface BadgeProps {
+  /**
+   * Содержимое, отображаемое внутри бейджа. Может быть строкой или React-узлами.
+   */
+  children?: React.ReactNode;
+  /**
+   * Тип бейджа, определяющий его цвет и стиль.
+   * @default 'tip'
+   */
+  type?: 'tip' | 'info' | 'warning' | 'danger';
+  /**
+   * Текстовое содержимое бейджа (оставлено для обратной совместимости).
+   */
+  text?: string;
+  /**
+   * Отображать ли бейдж в контурном (обводном) стиле.
+   * @default false
+   */
+  outline?: boolean;
+}
+```
+
+## Head
+
+Обычно используется для задания произвольного содержимого `<head>` в документах (на основе [unhead](https://www.npmjs.com/package/unhead)). Пример использования:
+
+```tsx title="index.tsx"
+// Ниже — кастомный компонент, который можно импортировать в ваш документ
+import { Head } from '@rspress/core/runtime';
+
+function App() {
+  return (
+    <Head>
+      <meta
+        property="og:description"
+        content="Готовый к использованию инструмент сборки на базе Rspack"
+      />
+    </Head>
+  );
+}
+```
+
+## HomeFeature
+
+Компонент Feature на главной странице, посмотрите [эффект на этом сайте](/).
+
+```tsx
+import { HomeFeature } from '@rspress/core/theme';
+
+interface Feature {
+  title: string;
+  details: string;
+  icon: string;
+  // поддерживаются только [3, 4, 6]
+  span?: number;
+  link?: string;
+}
+
+export type Features = Feature[];
+```
+
+## HomeHero
+
+Компонент Hero на главной странице.
+
+```tsx
+import { HomeHero } from '@rspress/core/theme';
+
+interface Hero {
+  name: string;
+  text: string;
+  tagline: string;
+  image?: {
+    src: string | { dark: string; light: string };
+    alt: string;
+  };
+  actions: {
+    text: string;
+    link: string;
+    theme: 'brand' | 'alt';
+  }[];
+}
+```
+
+## LastUpdated
+
+Компонент LastUpdated используется для отображения времени последнего обновления текущей страницы. Например:
+
+```tsx title="index.mdx"
+import { LastUpdated } from '@theme';
+
+function App() {
+  return <LastUpdated />;
+}
+```
+
+:::tip Совет
+
+Если в конфигурации темы по умолчанию не указано `lastUpdated: true`, вам нужно установить и зарегистрировать плагин `@rspress/plugin-last-updated`.
+
+:::
+
+## NoSSR
+
+Используется для отключения серверного рендеринга (SSR) у отдельных компонентов. Например:
+
+```tsx
+import { NoSSR } from '@rspress/core/runtime';
+
+const Component = () => {
+  return (
+    <NoSSR>
+      <div>Этот контент будет отрендерен только на стороне клиента</div>
+    </NoSSR>
+  );
+};
+```
+
+## Overview
+
+Компонент Overview, посмотрите [эффект на этом сайте](/api/)
+
+```tsx
+import { Overview } from '@rspress/core/theme';
+
+interface GroupItem {
+  text?: string;
+  link?: string;
+  headers?: Header[];
+}
+
+interface Group {
+  name: string;
+  items: GroupItem[];
+}
+
+interface OverviewProps {
+  // содержимое, отображаемое перед рендерингом данных
+  content?: React.ReactNode;
+  // данные
+  groups?: Group[];
+  // заголовок группы по умолчанию
+  defaultGroupTitle?: string;
+  // уровни заголовков (H1-H6), которые будут показаны на странице обзора
+  overviewHeaders?: number[];
+}
+```
+
+## PackageManagerTabs
+
+Компонент PackageManagerTabs используется для отображения команд разных менеджеров пакетов в документации. Пример использования:
+
+```tsx title="index.mdx"
+import { PackageManagerTabs } from '@theme';
+
+function App() {
+  return <PackageManagerTabs command="install -D @rspress/core" />;
+}
+```
+
+Эффект выглядит следующим образом:
+
+import { PackageManagerTabs } from '@theme';
+
+<PackageManagerTabs command="install -D @rspress/core" />
+
+Поддерживаемые типы пропсов:
+
+```ts
+type PackageManagerTabProps = (
+  | {
+      command: string;
+      /**
+       * Если true — используется локальное выполнение пакета
+       * (npx, yarn, pnpm, bun, deno run) из node_modules.
+       */
+      exec?: boolean;
+      /**
+       * Если true — используется удалённое выполнение пакета
+       * (npx, yarn dlx, pnpm dlx, bunx, deno run) напрямую из реестра
+       * без локальной установки. Имеет приоритет над exec.
+       */
+      dlx?: boolean;
+    }
+  | {
+      command: {
+        // Позволяет задать отдельные команды для разных менеджеров пакетов
+        npm?: string;
+        yarn?: string;
+        pnpm?: string;
+        bun?: string;
+        deno?: string;
+      };
+      exec?: never;
+      dlx?: never;
+    }
+) &
+  // Дополнительные вкладки
+  {
+    additionalTabs?: {
+      // Название дополнительного менеджера пакетов
+      tool: string;
+      // Иконка дополнительного менеджера пакетов
+      icon?: ReactNode;
+    }[];
+  };
+```
+
+Когда `command` передаётся в виде строки, компонент по умолчанию отображает пять вкладок: **npm**, **yarn**, **pnpm**, **bun** и **deno**, автоматически добавляя соответствующий префикс менеджера пакетов перед командой. Если нужно добавить дополнительные вкладки, это можно сделать через проп `additionalTabs`.
+Для строкового варианта `command` доступен необязательный проп `exec` — он переключает отображение команд на запуск бинарных файлов (например, меняет префикс вкладки NPM с `npm run` на `npx`).
+
+Также можно задать отдельные команды для каждого менеджера пакетов, передав `command` в виде объекта:
+
+```tsx title="index.mdx"
+import { PackageManagerTabs } from '@theme';
+
+function App() {
+  return (
+    <PackageManagerTabs
+      command={{
+        npm: 'npm create rspress@latest',
+        yarn: 'yarn create rspress',
+        pnpm: 'pnpm create rspress@latest',
+        bun: 'bun create rspress@latest',
+        deno: 'deno init --npm rspress@latest',
+      }}
+    />
+  );
+}
+```
+
+:::tip Совет
+
+- В команде установки предусмотрена специальная обработка для **yarn**, **pnpm**, **bun** и **deno**. Если ваша команда — `install some-packages`, то в соответствующих вкладках слово `install` будет автоматически заменено на `add`.
+- Во вкладке **deno** к пакетам, у которых не указан источник, по умолчанию будет добавляться префикс `npm:`.
+
+:::
+
+## PrevNextPage
+
+Компонент PrevNextPage используется для отображения ссылок на предыдущую и следующую страницы текущего документа. Например:
+
+```tsx title="index.mdx"
+import { PrevNextPage } from '@theme';
+
+function App() {
+  return (
+    <PrevNextPage
+      type="prev"
+      text="Предыдущая страница"
+      href="https://rspress.rs/"
+    />
+  );
+}
+```
+
+Поддерживаемые типы пропсов:
+
+```ts
+interface PrevNextPageProps {
+  // Указывает, для какой ссылки используется компонент — предыдущей или следующей страницы
+  type: 'prev' | 'next';
+  // Текст ссылки (например, заголовок предыдущей/следующей страницы)
+  text: string;
+  // Ссылка на предыдущую или следующую страницу
+  href: string;
+}
+```
+
+## SourceCode
+
+Компонент SourceCode используется для перехода к исходному коду. Например:
+
+```tsx title="index.mdx"
+import { SourceCode } from '@theme';
+
+function App() {
+  return (
+    <SourceCode href="https://github.com/web-infra-dev/rspress/blob/main/packages/theme-default/src/components/SourceCode/index.tsx" />
+  );
+}
+```
+
+Эффект выглядит следующим образом:
+
+import { SourceCode } from '@theme';
+
+<SourceCode href="https://github.com/web-infra-dev/rspress/blob/main/packages/theme-default/src/components/SourceCode/index.tsx" />
+
+Поддерживаемые типы пропсов:
+
+```ts
+interface SourceCodeProps {
+  // Ссылка на исходный код
+  href: string;
+  // Платформа с исходным кодом
+  platform?: 'github' | 'gitlab';
+}
+```
+
+## Steps
+
+Компонент Steps используется для превращения вашего контента в визуальное представление пошагового руководства.
+
+```tsx title="index.mdx"
+import { Steps } from '@theme';
+
+function App() {
+  return (
+    <Steps>
+      ### Шаг 1
+
+      Содержимое первого шага.
+
+      ### Шаг 2
+
+      > Содержимое второго шага.
+    </Steps>
+  );
+}
+```
+
+Эффект выглядит следующим образом:
+
+import { Steps } from '@theme';
+
+<Steps>
+  ### Шаг 1
+
+Содержимое первого шага.
+
+### Шаг 2
+
+> Содержимое второго шага.
+
+</Steps>
+
+## Tab/Tabs
+
+Вы можете использовать компоненты `Tab` и `Tabs` прямо в документе, чтобы реализовать переключение вкладок. Например:
+
+```mdx title="index.mdx"
+import { Tab, Tabs } from '@rspress/core/theme';
+
+<Tabs>
+  <Tab label="Вкладка 1">Содержимое вкладки 1</Tab>
+  <Tab label="Вкладка 2">Содержимое вкладки 2</Tab>
+</Tabs>
+```
+
+import { Tab, Tabs } from '@theme';
+
+<Tabs>
+  <Tab label="Вкладка 1">Содержимое вкладки 1</Tab>
+  <Tab label="Вкладка 2">Содержимое вкладки 2</Tab>
+</Tabs>
+
+### Блоки кода
+
+Использование компонента `Tabs` для переключения между несколькими блоками кода.
+
+````mdx title="index.mdx"
+import { Tab, Tabs } from '@rspress/core/theme';
+
+<Tabs>
+  <Tab label="Вкладка 1">
+
+```tsx title="src/index.mjs"
+import foo from 'foo';
+import bar from 'bar';
+```
+
+  </Tab>
+  <Tab label="Вкладка 2">
+
+```tsx title="src/index.cjs"
+const foo = require('foo');
+const bar = require('bar');
+```
+
+  </Tab>
+</Tabs>
+````
+
+<Tabs>
+  <Tab label="Вкладка 1">
+
+```tsx title="src/index.mjs"
+import foo from 'foo';
+import bar from 'bar';
+```
+
+  </Tab>
+  <Tab label="Вкладка 2">
+
+```tsx title="src/index.cjs"
+const foo = require('foo');
+const bar = require('bar');
+```
+
+  </Tab>
+</Tabs>
+
+### Пропсы
+
+Типы пропсов компонента Tabs выглядят следующим образом:
+
+```ts
+interface TabsProps {
+  children: React.ReactNode;
+  defaultValue?: string;
+  groupId?: string;
+  tabPosition?: 'left' | 'center';
+}
+```
+
+- `defaultValue` — задаёт вкладку, выбранную по умолчанию. Это значение сравнивается с полем `value` пропсов компонента `Tab`; если они совпадают — вкладка будет активна.
+- `groupId` — используется для синхронизации выбранной вкладки между несколькими компонентами `Tabs`. Все группы с одинаковым `groupId` будут синхронизированы.
+- `tabPosition` — задаёт расположение списка вкладок, принимает два значения: `left` и `center`. По умолчанию — `left`.
+
+Типы пропсов компонента `Tab` следующие:
+
+```ts
+interface TabProps {
+  label: string;
+  // Используется для идентификации текущей вкладки
+  value?: string;
+  children: React.ReactNode;
+}
+```
+
+Поле `value` используется для идентификации текущей вкладки. Если его не передать — по умолчанию будет использована подпись вкладки (`label`).
+
+## CodeBlockRuntime
+
+Рендеринг блока кода во время выполнения
+
+```tsx title="index.mdx"
+import { CodeBlockRuntime } from '@theme';
+
+function App() {
+  return (
+    <CodeBlockRuntime
+      lang="js"
+      title="index.js"
+      code={`console.log('Привет, мир!')`}
+      shikiOptions={{
+        {/* shikiOptions */}
+      }}
+    />
+  );
+}
+```
+
+import { CodeBlockRuntime } from '@theme';
+
+<CodeBlockRuntime
+  lang="js"
+  title="index.js"
+  code={`console.log('Привет, мир!')`}
+/>

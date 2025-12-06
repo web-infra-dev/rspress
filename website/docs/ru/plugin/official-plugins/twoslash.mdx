@@ -1,0 +1,157 @@
+# @rspress/plugin-twoslash <SourceCode href="https://github.com/web-infra-dev/rspress/tree/main/packages/plugin-twoslash" />
+
+import { SourceCode, PackageManagerTabs, Tabs, Tab } from '@theme';
+
+Интеграция плагина [Twoslash](https://github.com/twoslashes/twoslash) для Rspress — автоматическое создание продвинутых блоков кода с информацией о типах.
+
+## Установка
+
+<PackageManagerTabs command="add @rspress/plugin-twoslash -D" />
+
+## Использование
+
+### 1. Регистрация плагина
+
+```ts twoslash title="rspress.config.ts"
+import { defineConfig } from '@rspress/core';
+import { pluginTwoslash } from '@rspress/plugin-twoslash';
+
+export default defineConfig({
+  plugins: [pluginTwoslash()],
+});
+```
+
+### 2. Написание блоков кода с twoslash
+
+Используйте специальные комментарии внутри блоков кода TypeScript, чтобы включить возможности Twoslash.
+
+Подробное описание использования — в [официальной документации Twoslash](https://twoslash.netlify.app/guide/).
+
+#### Извлечение типа
+
+<Tabs>
+<Tab label="Отрендеренный результат">
+
+```ts twoslash
+const hi = 'Hello';
+const msg = `${hi}, world`;
+//    ^?
+```
+
+</Tab>
+<Tab label="Синтаксис">
+
+````mdx
+```ts twoslash
+const hi = 'Hello';
+const msg = `${hi}, world`;
+//    ^?
+```
+````
+
+</Tab>
+</Tabs>
+
+#### Автодополнения
+
+<Tabs>
+<Tab label="Отрендеренный результат">
+
+```ts twoslash
+// @noErrors
+console.e;
+//       ^|
+```
+
+</Tab>
+<Tab label="Синтаксис">
+
+````mdx
+```ts twoslash
+// @noErrors
+console.e;
+//       ^|
+```
+````
+
+</Tab>
+</Tabs>
+
+#### Подсветка
+
+<Tabs>
+<Tab label="Отрендеренный результат">
+
+```ts twoslash
+function add(a: number, b: number) {
+  //     ^^^
+  return a + b;
+}
+```
+
+</Tab>
+<Tab label="Синтаксис">
+
+````mdx
+```ts twoslash
+function add(a: number, b: number) {
+  //     ^^^
+  return a + b;
+}
+```
+````
+
+</Tab>
+</Tabs>
+
+#### Ошибки
+
+<Tabs>
+<Tab label="Отрендеренный результат">
+
+```ts twoslash
+// @noErrorValidation
+const str: string = 1;
+```
+
+</Tab>
+<Tab label="Синтаксис">
+
+````mdx
+```ts twoslash
+// @noErrorValidation
+const str: string = 1;
+```
+````
+
+</Tab>
+</Tabs>
+
+## Конфигурация
+
+Плагин принимает объект следующего типа:
+
+```ts twoslash
+import { TwoslashOptions } from 'twoslash';
+// ---cut-before---
+export interface PluginTwoslashOptions {
+  explicitTrigger?: boolean;
+  cache?: boolean;
+  twoslashOptions?: TwoslashOptions;
+}
+```
+
+### explicitTrigger
+
+Параметр `explicitTrigger` определяет, нужно ли явно активировать возможности Twoslash. По умолчанию: `true`.
+
+- Если установить `false` — все блоки кода TypeScript будут обрабатываться Twoslash автоматически.
+- Если установить `true` — обрабатываться будут только те блоки кода, в которых указан тег `twoslash`.
+
+### cache
+
+Параметр `cache` включает кэширование языковых серверов TypeScript в зависимости от опций компилятора при вызове [createTwoslasher](https://twoslash.netlify.app/refs/api#createtwoslasher). По умолчанию: `true`.
+
+### twoslashOptions
+
+Параметр `twoslashOptions` позволяет передавать любые опции непосредственно в Twoslash. С его помощью можно настраивать поведение Twoslash, включая опции компилятора TypeScript и другие параметры.

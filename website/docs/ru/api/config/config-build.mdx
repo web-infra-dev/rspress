@@ -1,0 +1,291 @@
+# Конфигурация сборки
+
+## builderConfig
+
+- **Тип**: `RsbuildConfig`
+
+Используется для настройки конфигураций Rsbuild. Подробные конфигурации смотрите в [Rsbuild - Config](https://rsbuild.rs/config/).
+
+- Пример: Использование [resolve.alias](https://rsbuild.rs/config/resolve/alias) для настройки псевдонимов путей:
+
+```ts title="rspress.config.ts"
+export default defineConfig({
+  builderConfig: {
+    resolve: {
+      alias: {
+        '@common': './src/common',
+      },
+    },
+  },
+});
+```
+
+- Пример: Использование [tools.rspack](https://rsbuild.rs/config/tools/rspack) для изменения конфигурации Rspack, например, для регистрации webpack или Rspack плагина:
+
+```ts title="rspress.config.ts"
+export default defineConfig({
+  builderConfig: {
+    tools: {
+      rspack: async (config) => {
+        const { default: ESLintPlugin } = await import('eslint-webpack-plugin');
+        config.plugins?.push(new ESLintPlugin());
+        return config;
+      },
+    },
+  },
+});
+```
+
+::: warning Предупреждение
+
+Если вы хотите изменить директорию вывода, используйте параметр [outDir](/api/config/config-basic#outdir).
+
+:::
+
+## builderConfig.plugins
+
+- **Тип**: `RsbuildPlugin[]`
+
+Для регистрации [плагинов Rsbuild](https://rsbuild.rs/plugins/list/).
+
+Вы можете использовать обширную экосистему плагинов Rsbuild для улучшения и расширения возможностей сборки.
+
+- Пример: Поддержка Vue SFC через [@rsbuild/plugin-vue](https://rsbuild.rs/plugins/list/plugin-vue)
+
+```ts title="rspress.config.ts"
+import { defineConfig } from '@rspress/core';
+import { pluginVue } from '@rsbuild/plugin-vue';
+
+export default defineConfig({
+  builderConfig: {
+    plugins: [pluginVue()],
+  },
+});
+```
+
+- Пример: Добавление Google Analytics через [rsbuild-plugin-google-analytics](https://github.com/rspack-contrib/rsbuild-plugin-google-analytics).
+
+```ts title="rspress.config.ts"
+import { defineConfig } from '@rspress/core';
+import { pluginGoogleAnalytics } from 'rsbuild-plugin-google-analytics';
+
+export default defineConfig({
+  builderConfig: {
+    plugins: [
+      pluginGoogleAnalytics({
+        // замените это своим Google tag ID
+        id: 'G-xxxxxxxxxx',
+      }),
+    ],
+  },
+});
+```
+
+- Пример: Добавление мета-тегов Open Graph через [rsbuild-plugin-open-graph](https://github.com/rspack-contrib/rsbuild-plugin-open-graph).
+
+```ts title="rspress.config.ts"
+import { defineConfig } from '@rspress/core';
+import { pluginOpenGraph } from 'rsbuild-plugin-open-graph';
+
+export default defineConfig({
+  builderConfig: {
+    plugins: [
+      pluginOpenGraph({
+        title: 'My Website',
+        type: 'website',
+        // ...параметры
+      }),
+    ],
+  },
+});
+```
+
+Вы также можете переопределить встроенный плагин [@rsbuild/plugin-react](https://rsbuild.rs/plugins/list/plugin-react) и настроить параметры плагина.
+
+Например:
+
+```ts title="rspress.config.ts"
+import { defineConfig } from '@rspress/core';
+import { pluginReact } from '@rsbuild/plugin-react';
+
+export default defineConfig({
+  builderConfig: {
+    plugins: [
+      pluginReact({
+        // ...параметры
+      }),
+    ],
+  },
+});
+```
+
+### Конфигурация по умолчанию
+
+Если вам нужно просмотреть конфигурации Rspack или Rsbuild по умолчанию, вы можете добавить параметр `DEBUG=rsbuild` при запуске команды `rspress dev` или `rspress build`:
+
+```bash
+DEBUG=rsbuild rspress dev
+```
+
+После выполнения в директории `doc_build` создается файл `rsbuild.config.js`, который содержит полную конфигурацию `builderConfig`.
+
+> Подробнее о том, как отлаживать Rsbuild, смотрите в [Rsbuild - Debug Mode](https://rsbuild.rs/guide/debug/debug-mode).
+
+## markdown
+
+Настройка возможностей компиляции, связанных с MDX.
+
+### markdown.remarkPlugins
+
+- **Тип**: `Array`
+- По умолчанию: `[]`
+
+Настройка remark плагинов. Например:
+
+```ts title="rspress.config.ts"
+import { defineConfig } from '@rspress/core';
+
+export default defineConfig({
+  markdown: {
+    remarkPlugins: [
+      [
+        require('remark-autolink-headings'),
+        {
+          behavior: 'wrap',
+        },
+      ],
+    ],
+  },
+});
+```
+
+### markdown.rehypePlugins
+
+- **Тип**: `Array`
+
+Настройка rehype плагинов. Например:
+
+```ts title="rspress.config.ts"
+import { defineConfig } from '@rspress/core';
+
+export default defineConfig({
+  markdown: {
+    rehypePlugins: [
+      [
+        require('rehype-autolink-headings'),
+        {
+          behavior: 'wrap',
+        },
+      ],
+    ],
+  },
+});
+```
+
+### markdown.shiki
+
+- **Тип**: `import('@shikijs/rehype').RehypeShikiOptions`
+
+- **По умолчанию**:
+
+```ts
+const cssVariablesTheme = createCssVariablesTheme({
+  name: 'css-variables',
+  variablePrefix: '--shiki-',
+  variableDefaults: {},
+  fontStyle: true,
+});
+const shikiOptions = {
+  theme: cssVariablesTheme,
+  defaultLanguage: 'txt',
+  lazy: true,
+  langs: ['tsx', 'ts', 'js'],
+  addLanguageClass: true,
+};
+```
+
+Настройка параметров, связанных с Shiki. Подробнее см. [RehypeShikiOptions](https://github.com/shikijs/shiki/blob/main/packages/rehype/src/types.ts).
+
+### markdown.link
+
+- **Тип**:
+
+```ts
+export type RemarkLinkOptions = {
+  checkDeadLinks?:
+    | boolean
+    | { excludes: string[] | ((url: string) => boolean) };
+  autoPrefix?: boolean;
+};
+```
+
+- **По умолчанию**: `{ checkDeadLinks: true, autoPrefix: true }`
+
+Настройка параметров, связанных со ссылками.
+
+#### markdown.link.checkDeadLinks
+
+- **Тип**: `boolean | { excludes: string[] | ((url: string) => boolean) }`
+- **По умолчанию**: `true`
+
+После включения этой опции Rspress будет проверять ссылки в документе на основе соглашения о маршрутах. Если обнаружена недоступная ссылка, сборка завершится с ошибкой.
+
+Если происходит ошибочное определение ссылок, вы можете игнорировать ошибку с помощью параметра `excludes`:
+
+```ts title="rspress.config.ts"
+import { defineConfig } from '@rspress/core';
+
+export default defineConfig({
+  markdown: {
+    link: {
+      checkDeadLinks: {
+        excludes: ['/guide/getting-started', '/llms.txt'],
+      },
+    },
+  },
+});
+```
+
+#### markdown.link.autoPrefix
+
+- **Тип**: `boolean`
+- **По умолчанию**: `true`
+
+После включения этой конфигурации Rspress будет автоматически добавлять префиксы к ссылкам в документах на основе соглашения о маршрутах для [Интернационализации](/guide/default-theme/i18n) и [Мультиверсионности](/guide/default-theme/multi-version).
+
+Если пользователь напишет ссылку `[](/guide/getting-started)` в `docs/ru/guide/index.md`, Rspress автоматически преобразует её в `[](/ru/guide/getting-started)`.
+
+### markdown.showLineNumbers
+
+- **Тип**: `boolean`
+
+Отображать ли номера строк в блоке кода. По умолчанию `false`.
+
+### markdown.defaultWrapCode
+
+- **Тип**: `boolean`
+
+Включить ли перенос длинных строк кода по умолчанию. По умолчанию `false`.
+
+### markdown.globalComponents
+
+- **Тип**: `string[]`
+
+Зарегистрировать компонент в глобальной области видимости, что сделает его автоматически доступным в каждом MDX-файле без необходимости импорта. Например:
+
+```ts title="rspress.config.ts"
+import { defineConfig } from '@rspress/core';
+import path from 'path';
+
+export default defineConfig({
+  markdown: {
+    globalComponents: [path.join(__dirname, 'src/src/components/Alert.tsx')],
+  },
+});
+```
+
+Затем вы можете использовать компонент `Alert` в любом MDX-файле:
+
+```mdx title="test.mdx"
+<Alert type="info">Это информационное уведомление</Alert>
+```

@@ -1,0 +1,59 @@
+# Написание плагина
+
+В качестве примера добавим глобальный компонент и посмотрим, как определять и использовать плагины.
+
+### 1. Определение плагина
+
+```tsx title="plugin.ts"
+import type { RspressPlugin } from '@rspress/core';
+
+export function pluginExample(slug: string): RspressPlugin {
+  // Путь к компоненту — содержимое компонента вам нужно реализовать самостоятельно
+  const componentPath = path.join(__dirname, 'Example.tsx');
+  return {
+    name: 'plugin-example',
+    // Пути к глобальным компонентам
+    globalUIComponents: [componentPath],
+    // Определение глобальных переменных на этапе сборки
+    builderConfig: {
+      source: {
+        define: {
+          'process.env.SLUG': JSON.stringify(slug),
+        },
+      },
+    },
+  };
+}
+```
+
+```tsx title="Example.tsx"
+import React from 'react';
+
+const Example = () => {
+  console.log(process.env.SLUG);
+  return <div>Пример</div>;
+};
+
+export default Example;
+```
+
+Плагин — это, как правило, функция, которая принимает параметры плагина (необязательно) и возвращает объект, содержащий имя плагина и другие настройки.
+
+В приведённом выше примере мы определили плагин с именем `plugin-example`. Он делает две вещи:
+
+- задаёт глобальную переменную окружения `process.env.SLUG` на этапе сборки,
+- внедряет глобальный компонент `Example.tsx` во все страницы сайта.
+
+### 2. Подключение плагина
+
+Подключайте плагины через параметр `plugins` в файле `rspress.config.ts`:
+
+```tsx title="rspress.config.ts"
+import { pluginExample } from './plugin';
+
+export default {
+  plugins: [pluginExample('test')],
+};
+```
+
+После этого компонент `Example` будет автоматически внедрён на все страницы сайта, и внутри этого компонента вы сможете использовать переменную `process.env.SLUG`.
