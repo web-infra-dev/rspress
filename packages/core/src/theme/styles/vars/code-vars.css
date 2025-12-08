@@ -7,6 +7,7 @@
   --rp-code-block-bg: var(--rp-c-bg);
 
   --rp-code-block-border: 1px solid var(--rp-c-divider-light);
+  --rp-code-block-shadow: var(--rp-shadow-1);
 }
 
 /* Dark Mode */
@@ -18,4 +19,5 @@
   --rp-code-block-bg: var(--rp-c-bg);
 
   --rp-code-block-border: 1px solid var(--rp-c-divider-light);
+  --rp-code-block-shadow: var(--rp-shadow-1);
 }

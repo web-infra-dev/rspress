@@ -2,6 +2,8 @@
   position: relative;
   margin: 16px 0;
   border: var(--rp-code-block-border);
+  box-shadow: var(--rp-code-block-shadow);
+
   overflow-x: auto;
   transition: none;
   border-radius: var(--rp-radius);
