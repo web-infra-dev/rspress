@@ -29,17 +29,17 @@ export async function hintThemeBreakingChange(customThemeDir: string) {
     logger.warn(
       `[Rspress v2] Breaking Change: The "theme/index.tsx" is now using named export instead of default export, please update ${picocolors.greenBright(useDefaultExportFilePath)} (https://github.com/web-infra-dev/rspress/discussions/1891#discussioncomment-12422737).\n`,
       picocolors.redBright(`
-- import Theme from '@rspress/core/theme';
+- import Theme from 'rspress/theme';
 - export default {
 -  ...Theme,
 -  Layout,
 - };
-- export * from '@rspress/core/theme';`) +
+- export * from 'rspress/theme';`) +
         picocolors.greenBright(`
-+ import { Layout } from '@rspress/core/theme';
++ import { Layout } from '@rspress/core/theme-original';
 
 + export { Layout };
-+ export * from '@rspress/core/theme';
++ export * from '@rspress/core/theme-original';
 `),
     );
   }
