@@ -1,1 +1,1 @@
-export * from '@rspress/core/theme';
+export * from '@rspress/core/theme-original';

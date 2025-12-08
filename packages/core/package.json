@@ -1,6 +1,6 @@
 {
   "name": "@rspress/core",
-  "version": "2.0.0-rc.1",
+  "version": "2.0.0-rc.2",
   "description": "The Rspress Documentation Framework",
   "bugs": "https://github.com/web-infra-dev/rspress/issues",
   "repository": {
@@ -27,6 +27,10 @@
     "./dist/*": "./dist/*",
     "./package.json": "./package.json",
     "./theme": {
+      "types": "./dist/theme/index.d.ts",
+      "default": "./dist/theme/index.js"
+    },
+    "./theme-original": {
       "types": "./dist/theme/index.d.ts",
       "default": "./dist/theme/index.js"
     },
@@ -65,7 +69,7 @@
   "dependencies": {
     "@mdx-js/mdx": "^3.1.1",
     "@mdx-js/react": "^3.1.1",
-    "@rsbuild/core": "~1.6.8",
+    "@rsbuild/core": "~1.6.13",
     "@rsbuild/plugin-react": "~1.4.2",
     "@rspress/mdx-rs": "0.6.6",
     "@rspress/runtime": "workspace:*",
@@ -89,11 +93,11 @@
     "medium-zoom": "1.1.0",
     "nprogress": "^0.2.0",
     "picocolors": "^1.1.1",
-    "react": "^19.2.0",
-    "react-dom": "^19.2.0",
+    "react": "^19.2.1",
+    "react-dom": "^19.2.1",
     "react-lazy-with-preload": "^2.2.1",
     "react-reconciler": "0.33.0",
-    "react-router-dom": "^7.9.6",
+    "react-router-dom": "^7.10.1",
     "rehype-external-links": "^3.0.0",
     "rehype-raw": "^7.0.0",
     "remark-gfm": "^4.0.1",
@@ -108,10 +112,10 @@
     "unist-util-visit-children": "^3.0.0"
   },
   "devDependencies": {
-    "@microsoft/api-extractor": "^7.55.1",
+    "@microsoft/api-extractor": "^7.55.2",
     "@rsbuild/plugin-sass": "~1.4.0",
     "@rsbuild/plugin-svgr": "^1.2.2",
-    "@rslib/core": "0.18.0",
+    "@rslib/core": "0.18.3",
     "@rspress/config": "workspace:*",
     "@types/body-scroll-lock": "^3.1.2",
     "@types/hast": "^3.0.4",
@@ -120,14 +124,14 @@
     "@types/mdast": "^4.0.4",
     "@types/node": "^22.8.1",
     "@types/nprogress": "^0.2.3",
-    "@types/react": "^19.2.6",
+    "@types/react": "^19.2.7",
     "@types/react-dom": "^19.2.3",
     "@types/react-reconciler": "^0.32.3",
-    "@types/web": "^0.0.294",
+    "@types/web": "^0.0.297",
     "execa": "8.0.1",
     "mdast-util-directive": "^3.1.0",
     "mdast-util-mdx-expression": "^2.0.1",
-    "memfs": "^4.51.0",
+    "memfs": "^4.51.1",
     "p-map": "^7.0.4",
     "postcss": "8.5.6",
     "remark-directive": "^4.0.0",

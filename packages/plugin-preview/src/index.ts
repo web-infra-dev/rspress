@@ -2,59 +2,141 @@ import net from 'node:net';
 import { join } from 'node:path';
 import {
   createRsbuild,
+  logger,
   mergeRsbuildConfig,
   type RsbuildConfig,
   type RsbuildPluginAPI,
 } from '@rsbuild/core';
-import { pluginBabel } from '@rsbuild/plugin-babel';
 import { pluginReact } from '@rsbuild/plugin-react';
-import { pluginSolid } from '@rsbuild/plugin-solid';
 import {
   type RouteMeta,
   type RspressPlugin,
   removeTrailingSlash,
+  type UserConfig,
 } from '@rspress/core';
-import { cloneDeep, isEqual } from 'lodash';
-import { staticPath } from './constant';
-import { generateEntry } from './generate-entry';
-import { demos, remarkCodeToDemo } from './remarkPlugin';
+import entryContent from '../static/iframe/entry?raw';
+import { STATIC_DIR } from './constants';
+import { generateEntry } from './generateEntry';
+import { globalDemos, isDirtyRef, remarkWriteCodeFile } from './remarkPlugin';
 import type { Options, StartServerResult } from './types';
 
 // global variables which need to be initialized in plugin
 let routeMeta: RouteMeta[];
-
-const DEFAULT_PREVIEW_LANGUAGES = ['jsx', 'tsx'];
 
 /**
  * The plugin is used to preview component.
  */
 export function pluginPreview(options?: Options): RspressPlugin {
   const {
-    isMobile = false,
     iframeOptions = {},
-    iframePosition = 'follow',
-    defaultRenderMode = 'preview',
-    previewLanguages = DEFAULT_PREVIEW_LANGUAGES,
+    defaultPreviewMode = 'internal',
+    defaultRenderMode = 'pure',
+    previewLanguages = ['jsx', 'tsx'],
     previewCodeTransform = ({ code }: { code: string }) => code,
   } = options ?? {};
-  const previewMode =
-    options?.previewMode ?? (isMobile ? 'iframe' : 'internal');
   const {
     devPort = 7890,
     framework = 'react',
-    position = iframePosition,
     builderConfig = {},
     customEntry,
   } = iframeOptions;
-  const globalUIComponents =
-    position === 'fixed'
-      ? [join(staticPath, 'global-components', 'Device.tsx')]
-      : [];
+
   const getRouteMeta = () => routeMeta;
-  let lastDemos: typeof demos;
   let devServer: StartServerResult | undefined;
   let clientConfig: RsbuildConfig;
   const port = devPort;
+
+  async function rsbuildStartOrBuild(config: UserConfig, isProd: boolean) {
+    if (devServer && !isProd && !isDirtyRef.current) {
+      return;
+    }
+
+    if (devServer && !isProd) {
+      await devServer.server.close();
+      devServer = undefined;
+      logger.info(
+        '[@rspress/plugin-preview] Restarting preview server due to demo changes...',
+      );
+    }
+
+    const outDir = join(config.outDir ?? 'doc_build', '~demo');
+    const { source, output, performance, resolve } = clientConfig ?? {};
+    // omit preEntry to avoid '@theme' import
+    const { preEntry: _, ...otherSourceOptions } = source ?? {};
+
+    const rsbuildConfig = mergeRsbuildConfig(
+      {
+        server: {
+          port: devPort,
+          printUrls: () => undefined,
+          strictPort: true,
+        },
+        dev: {
+          lazyCompilation: false,
+          writeToDisk: true,
+        },
+        performance: {
+          ...performance,
+          printFileSize: false,
+          buildCache: false,
+        },
+        source: {
+          ...otherSourceOptions,
+          entry: await generateEntry(globalDemos, framework, customEntry),
+          preEntry: [
+            join(STATIC_DIR, 'iframe', 'entry.css'),
+            ...(builderConfig.source?.preEntry ?? []),
+          ],
+        },
+        html: {
+          tags: [
+            // why not preEntry to load js?
+            // avoid theme flash
+            {
+              tag: 'script',
+              children: entryContent,
+            },
+          ],
+        },
+        resolve,
+        output: {
+          ...output,
+          target: 'web',
+          assetPrefix: output?.assetPrefix
+            ? `${removeTrailingSlash(output.assetPrefix)}/~demo`
+            : '/~demo',
+          distPath: {
+            root: outDir,
+          },
+          // not copy files again
+          copy: undefined,
+        },
+        tools: {
+          rspack: {
+            watchOptions: {
+              ignored: /\.git/,
+            },
+          },
+        },
+      },
+      builderConfig,
+    );
+    const rsbuildInstance = await createRsbuild({
+      callerName: 'rspress',
+      rsbuildConfig,
+    });
+
+    if (framework === 'react') {
+      rsbuildInstance.addPlugins([pluginReact()]);
+    }
+    if (isProd) {
+      rsbuildInstance.build();
+    } else {
+      devServer = await rsbuildInstance.startDevServer();
+    }
+    isDirtyRef.current = false;
+  }
+
   return {
     name: '@rspress/plugin-preview',
     config(config) {
@@ -93,79 +175,7 @@ export function pluginPreview(options?: Options): RspressPlugin {
       }
     },
     async afterBuild(config, isProd) {
-      if (isEqual(demos, lastDemos)) {
-        return;
-      }
-      lastDemos = cloneDeep(demos);
-      await devServer?.server?.close();
-      devServer = undefined;
-      const sourceEntry = await generateEntry(
-        demos,
-        framework,
-        position,
-        customEntry,
-      );
-      const outDir = join(config.outDir ?? 'doc_build', '~demo');
-      if (Object.keys(sourceEntry).length === 0) {
-        return;
-      }
-      const { source, output, performance } = clientConfig ?? {};
-      // omit preEntry to avoid '@theme' import
-      const { preEntry: _, ...otherSourceOptions } = source ?? {};
-      const rsbuildConfig = mergeRsbuildConfig(
-        {
-          server: {
-            port: devPort,
-            printUrls: () => undefined,
-            strictPort: true,
-          },
-          dev: {
-            lazyCompilation: false,
-          },
-          performance: {
-            ...performance,
-            printFileSize: false,
-            buildCache: false,
-          },
-          source: {
-            ...otherSourceOptions,
-            entry: sourceEntry,
-          },
-          output: {
-            ...output,
-            assetPrefix: output?.assetPrefix
-              ? `${removeTrailingSlash(output.assetPrefix)}/~demo`
-              : '/~demo',
-            distPath: {
-              root: outDir,
-            },
-            // not copy files again
-            copy: undefined,
-          },
-        },
-        builderConfig,
-      );
-      const rsbuildInstance = await createRsbuild({
-        callerName: 'rspress',
-        rsbuildConfig,
-      });
-
-      if (framework === 'solid') {
-        rsbuildInstance.addPlugins([
-          pluginBabel({
-            include: /\.(?:jsx|tsx)$/,
-          }),
-          pluginSolid(),
-        ]);
-      }
-      if (framework === 'react') {
-        rsbuildInstance.addPlugins([pluginReact()]);
-      }
-      if (isProd) {
-        rsbuildInstance.build();
-      } else {
-        devServer = await rsbuildInstance.startDevServer();
-      }
+      await rsbuildStartOrBuild(config, isProd);
     },
     builderConfig: {
       source: {
@@ -186,6 +196,11 @@ export function pluginPreview(options?: Options): RspressPlugin {
             ignored: /\.git/,
           },
         },
+      },
+      performance: {
+        // FIXME: currently plugin preview does not support build cache
+        // Because in the remarkDemo plugin, some demo files will be written, and it is required that the files must be processed by mdx-loader
+        buildCache: false,
       },
       plugins: [
         {
@@ -215,23 +230,21 @@ export function pluginPreview(options?: Options): RspressPlugin {
     markdown: {
       remarkPlugins: [
         [
-          remarkCodeToDemo,
+          remarkWriteCodeFile,
           {
             getRouteMeta,
-            position,
-            previewMode,
+            defaultPreviewMode,
             defaultRenderMode,
             previewLanguages,
             previewCodeTransform,
           },
         ],
       ],
-      globalComponents: [
-        join(staticPath, 'global-components', 'Container.tsx'),
-      ],
+      globalComponents: [join(STATIC_DIR, 'global-components', 'Preview.tsx')],
     },
-    globalUIComponents,
-    globalStyles: join(staticPath, 'global-styles', `${previewMode}.css`),
+    globalUIComponents: [
+      join(STATIC_DIR, 'global-components', 'FixedDevice.tsx'),
+    ],
   };
 }
 

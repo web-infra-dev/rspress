@@ -52,6 +52,7 @@ describe('eject command', () => {
       expect(components).toContain('HomeHero');
       expect(components).toContain('HomeBackground');
       expect(components).toContain('HomeFooter');
+      expect(components).toContain('Root');
     });
   });
 

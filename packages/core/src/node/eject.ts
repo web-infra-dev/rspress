@@ -36,6 +36,7 @@ export async function getAvailableComponents(): Promise<string[]> {
     'Badge',
     'Callout',
     'DocFooter',
+    'FallbackHeading',
     'HomeFeature',
     'HomeHero',
     'HomeBackground',
@@ -45,6 +46,7 @@ export async function getAvailableComponents(): Promise<string[]> {
     'PackageManagerTabs',
     'PrevNextPage',
     'Overview',
+    'Root',
     'SocialLinks',
     'Steps',
   ];
@@ -102,11 +104,6 @@ async function transformImports(filePath: string): Promise<void> {
 
   // TODO: currently do noting
   const transformed = content;
-
-  // Transform @theme-assets imports
-  // Note: @theme-assets imports cannot be directly imported by users.
-  // These will need to be manually handled or we could provide helper functions.
-  // For now, we keep them as is.
 
   if (transformed !== content) {
     await fs.writeFile(filePath, transformed, 'utf-8');

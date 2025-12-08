@@ -16,7 +16,6 @@ const COMMON_EXTERNALS = [
   'virtual-i18n-text',
   '@rspress/runtime',
   '@theme',
-  /@theme-assets\//,
   // To be externalized when bundling d.ts.
   '@types/react',
   '@rspress/core/runtime',
@@ -68,14 +67,6 @@ export default defineConfig({
             }
           });
         },
-        bundlerChain(chain, { CHAIN_ID }) {
-          const rule = chain.module.rule(
-            `Rslib:${CHAIN_ID.RULE.JS}-entry-loader`,
-          );
-          rule.uses.delete('rsbuild:lib-entry-module');
-          rule.issuer({});
-          rule.clear();
-        },
       },
     },
     {
@@ -116,6 +107,11 @@ export default defineConfig({
       format: 'esm',
       bundle: false,
       dts: true,
+      redirect: {
+        dts: {
+          extension: true,
+        },
+      },
       plugins: [
         pluginReact(),
         pluginSvgr({ svgrOptions: { exportType: 'default' } }),
@@ -155,4 +151,7 @@ export default defineConfig({
       },
     },
   ],
+  source: {
+    tsconfigPath: 'tsconfig.build.json',
+  },
 });

@@ -6,6 +6,7 @@ import {
   META_GENERATOR,
   RSPRESS_VERSION,
 } from '../constants';
+import { createError } from '../utils';
 
 async function renderConfigHead(
   head: UserConfig['head'],
@@ -52,7 +53,7 @@ function renderAttrs(attrs: Record<string, string>): string {
       if (typeof value === 'boolean') return key;
       if (typeof value === 'string' || typeof value === 'number')
         return `${key}="${value}"`;
-      throw new Error(
+      throw createError(
         `Invalid value for attribute ${key}:${JSON.stringify(value)}`,
       );
     })

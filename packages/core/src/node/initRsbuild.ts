@@ -50,8 +50,11 @@ import type { FactoryContext } from './runtimeModule/types';
 import { rsbuildPluginCSR } from './ssg/rsbuildPluginCSR';
 import { rsbuildPluginSSG } from './ssg/rsbuildPluginSSG';
 import { rsbuildPluginSSGMD } from './ssg-md/rsbuildPluginSSGMD';
-import { resolveReactAlias, resolveReactRouterDomAlias } from './utils';
-import { detectCustomIcon } from './utils/detectCustomIcon';
+import {
+  createError,
+  resolveReactAlias,
+  resolveReactRouterDomAlias,
+} from './utils';
 
 function isPluginIncluded(config: UserConfig, pluginName: string): boolean {
   return Boolean(
@@ -70,7 +73,7 @@ async function getVirtualModulesFromPlugins(
   const modulesByPlugin = await pluginDriver.addRuntimeModules();
   Object.keys(modulesByPlugin).forEach(key => {
     if (runtimeModule[key]) {
-      throw new Error(
+      throw createError(
         `The runtime module ${key} is duplicated, please check your plugin`,
       );
     }
@@ -86,8 +89,7 @@ async function createInternalBuildConfig(
   routeService: RouteService,
   pluginDriver: PluginDriver,
 ): Promise<RsbuildConfig> {
-  const CUSTOM_THEME_DIR =
-    config?.themeDir ?? path.join(process.cwd(), 'theme');
+  const CUSTOM_THEME_DIR = config.themeDir!;
   const outDir = config?.outDir ?? OUTPUT_DIR;
 
   const base = config?.base ?? '';
@@ -115,17 +117,13 @@ async function createInternalBuildConfig(
 
   await hintThemeBreakingChange(CUSTOM_THEME_DIR);
 
-  const [
-    detectCustomIconAlias,
-    reactCSRAlias,
-    reactSSRAlias,
-    reactRouterDomAlias,
-  ] = await Promise.all([
-    detectCustomIcon(CUSTOM_THEME_DIR),
-    resolveReactAlias(false),
-    enableSSG ? resolveReactAlias(true) : Promise.resolve({}),
-    resolveReactRouterDomAlias(),
-  ]);
+  const [reactCSRAlias, reactSSRAlias, reactRouterDomAlias] = await Promise.all(
+    [
+      resolveReactAlias(false),
+      enableSSG ? resolveReactAlias(true) : Promise.resolve({}),
+      resolveReactRouterDomAlias(),
+    ],
+  );
 
   const context: Omit<FactoryContext, 'alias'> = {
     userDocRoot,
@@ -235,13 +233,15 @@ async function createInternalBuildConfig(
     },
     resolve: {
       alias: {
-        ...detectCustomIconAlias,
         '@mdx-js/react': require.resolve('@mdx-js/react'),
-        '@theme': [CUSTOM_THEME_DIR, DEFAULT_THEME],
-        '@theme-assets': path.join(DEFAULT_THEME, './assets'),
         'react-lazy-with-preload': require.resolve('react-lazy-with-preload'),
         // single runtime
-        '@rspress/core/theme': DEFAULT_THEME,
+        '@theme': [CUSTOM_THEME_DIR, DEFAULT_THEME],
+        '@rspress/core/theme': [CUSTOM_THEME_DIR, DEFAULT_THEME],
+
+        '@theme-original': DEFAULT_THEME,
+        '@rspress/core/theme-original': DEFAULT_THEME,
+
         '@rspress/core/runtime': path.join(PACKAGE_ROOT, 'dist/runtime.js'),
         '@rspress/core/shiki-transformers': path.join(
           PACKAGE_ROOT,
@@ -342,11 +342,11 @@ async function createInternalBuildConfig(
           })
           .end();
 
-        chain.experiments({
-          // Enable native watcher by default unless RSPRESS_NATIVE_WATCHER is set to 'false'
-          ...chain.get('experiments'),
-          nativeWatcher: process.env.RSPRESS_NATIVE_WATCHER !== 'false',
-        });
+        // chain.experiments({
+        //   // Enable native watcher by default unless RSPRESS_NATIVE_WATCHER is set to 'false'
+        //   ...chain.get('experiments'),
+        //   nativeWatcher: process.env.RSPRESS_NATIVE_WATCHER !== 'false',
+        // });
 
         if (chain.plugins.has(CHAIN_ID.PLUGIN.REACT_FAST_REFRESH)) {
           chain.plugin(CHAIN_ID.PLUGIN.REACT_FAST_REFRESH).tap(options => {

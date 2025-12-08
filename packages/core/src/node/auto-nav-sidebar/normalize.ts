@@ -9,7 +9,9 @@ import {
   slash,
 } from '@rspress/shared';
 import { logger } from '@rspress/shared/logger';
+import { PUBLIC_DIR } from '../constants';
 import { absolutePathToRoutePath, addRoutePrefix } from '../route/RoutePage';
+import { createError } from '../utils';
 import type {
   CustomLinkMeta,
   DirSectionHeaderSideMeta,
@@ -68,7 +70,7 @@ async function fsDirToMetaItems(
         // If the item is a directory, we will transform it to a object with `type` and `name` property.
         if (stat.isDirectory()) {
           // ignore public folder
-          if (item === 'public' && workDir === docsDir) {
+          if (item === PUBLIC_DIR && workDir === docsDir) {
             return null;
           }
           return {
@@ -149,7 +151,7 @@ async function metaItemToSidebarItem(
     return metaSectionHeaderToSidebarItem(metaItem);
   }
 
-  throw new Error(
+  throw createError(
     `Unknown meta item type: ${(metaItem as any).type}, please check it in "${join(workDir, '_meta.json')}".`,
   );
 }
@@ -167,7 +169,7 @@ async function detectFilePath(absolutePath: string, extensions: string[]) {
     }
   }
 
-  throw new Error(
+  throw createError(
     `The file extension "${ext}" is not supported, please use one of the following extensions: ${extensions.join(', ')}`,
   );
 }
@@ -192,7 +194,7 @@ async function metaFileItemToSidebarItem(
   const { name, context, label, overviewHeaders, tag } = metaItem;
 
   if (typeof name !== 'string') {
-    throw new Error(
+    throw createError(
       `The file name "${name}" is not a string, please check it in "${join(workDir, '_meta.json')}".`,
     );
   }
@@ -203,7 +205,7 @@ async function metaFileItemToSidebarItem(
   try {
     absolutePathWithExt = await detectFilePath(absolutePath, extensions);
   } catch {
-    throw new Error(
+    throw createError(
       `The file "${absolutePath}" does not exist, please check it in "${join(workDir, '_meta.json')}".`,
     );
   }
@@ -462,7 +464,7 @@ function metaCustomLinkItemToSidebarItem(
   }
 
   const { label } = metaItem;
-  throw new Error(
+  throw createError(
     `The custom link "${label}" does not have a link, please check it in "${join(workDir, '_meta.json')}".`,
   );
 }

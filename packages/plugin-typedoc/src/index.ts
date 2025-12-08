@@ -1,7 +1,8 @@
 import path from 'node:path';
+import { cwd } from 'node:process';
 import type { RspressPlugin } from '@rspress/core';
-import { Application, TSConfigReader } from 'typedoc';
-import { load } from 'typedoc-plugin-markdown';
+import { Application } from 'typedoc';
+import { load as loadPluginMarkdown } from 'typedoc-plugin-markdown';
 import { API_DIR } from './constants';
 import { patchGeneratedApiDocs } from './patch';
 
@@ -16,38 +17,62 @@ export interface PluginTypeDocOptions {
    * @default 'api'
    */
   outDir?: string;
+  /**
+   * A function to setup the TypeDoc Application.
+   * @param app
+   */
+  setup?: (app: Application) => Promise<Application> | Promise<void> | void;
 }
 
 export function pluginTypeDoc(options: PluginTypeDocOptions): RspressPlugin {
-  let docRoot: string | undefined;
-  const { entryPoints = [], outDir = API_DIR } = options;
+  const {
+    entryPoints: userEntryPoints = [],
+    outDir = API_DIR,
+    setup = () => {},
+  } = options;
+
+  // windows posix path fix https://github.com/web-infra-dev/rspress/pull/2790#issuecomment-3590946652
+  const entryPoints = userEntryPoints.map(entryPath => {
+    if (!path.isAbsolute(entryPath)) {
+      return entryPath;
+    }
+    // Convert Windows paths to POSIX format before calculating relative path
+    // Replace all backslashes with forward slashes
+    const cwdPosix = cwd().replace(/\\/g, '/');
+    const entryPosix = entryPath.replace(/\\/g, '/');
+    return path.posix.relative(cwdPosix, entryPosix);
+  });
+
   return {
     name: '@rspress/plugin-typedoc',
     async config(config) {
-      const app = new Application();
-      docRoot = config.root;
-      app.options.addReader(new TSConfigReader());
-      load(app);
-      app.bootstrap({
+      let app = await Application.bootstrapWithPlugins({
         name: config.title,
         entryPoints,
-        theme: 'markdown',
         disableSources: true,
+        router: 'kind',
         readme: 'none',
         githubPages: false,
         requiredToBeDocumented: ['Class', 'Function', 'Interface'],
-        plugin: ['typedoc-plugin-markdown'],
-        // @ts-expect-error - FIXME: current version of MarkdownTheme has no export, bump related package versions
+        // @ts-expect-error - Typedoc does not export a type for this options
+        plugin: [loadPluginMarkdown],
+        entryFileName: 'index',
+        hidePageHeader: true,
         hideBreadcrumbs: true,
-        hideMembersSymbol: true,
-        allReflectionsHaveOwnDocument: true,
+        pageTitleTemplates: {
+          module: '{kind}: {name}', // e.g. "Module: MyModule"
+        },
       });
-      const project = app.convert();
+      app = (await setup(app)) || app;
 
+      const project = await app.convert();
       if (project) {
         // 1. Generate doc/api, doc/api/_meta.json by typedoc
-        const absoluteApiDir = path.join(docRoot!, outDir);
-        await app.generateDocs(project, absoluteApiDir);
+        const absoluteApiDir = path.join(config.root!, outDir);
+        await app.outputs.writeOutput(
+          { name: 'markdown', path: absoluteApiDir },
+          project,
+        );
         await patchGeneratedApiDocs(absoluteApiDir);
       }
       return config;

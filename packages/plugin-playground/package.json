@@ -1,6 +1,6 @@
 {
   "name": "@rspress/plugin-playground",
-  "version": "2.0.0-rc.1",
+  "version": "2.0.0-rc.2",
   "description": "A plugin for rspress to preview the code block in markdown/mdx file.",
   "bugs": "https://github.com/web-infra-dev/rspress/issues",
   "repository": {
@@ -42,25 +42,25 @@
   "devDependencies": {
     "@babel/types": "^7.28.5",
     "@rsbuild/plugin-react": "~1.4.2",
-    "@rslib/core": "0.18.0",
+    "@rslib/core": "0.18.3",
     "@rspress/plugin-playground": "workspace:*",
     "@types/babel__core": "^7.20.5",
     "@types/babel__standalone": "^7.1.9",
     "@types/babel__traverse": "^7.28.0",
     "@types/mdast": "^4.0.4",
     "@types/node": "^22.8.1",
-    "@types/react": "^19.2.6",
+    "@types/react": "^19.2.7",
     "@types/react-dom": "^19.2.3",
     "mdast-util-mdx-jsx": "^3.2.0",
-    "react": "^19.2.0",
-    "react-dom": "^19.2.0",
-    "react-router-dom": "^7.9.6",
+    "react": "^19.2.1",
+    "react-dom": "^19.2.1",
+    "react-router-dom": "^7.10.1",
     "rsbuild-plugin-publint": "^0.3.3",
     "typescript": "^5.8.2",
     "unified": "^11.0.5"
   },
   "peerDependencies": {
-    "@rspress/core": "workspace:^2.0.0-rc.1",
+    "@rspress/core": "workspace:^2.0.0-rc.2",
     "react": ">=18.0.0",
     "react-router-dom": "^6.8.1"
   },

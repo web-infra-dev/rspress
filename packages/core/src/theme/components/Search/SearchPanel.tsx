@@ -1,8 +1,13 @@
 import { useI18n, usePageData } from '@rspress/core/runtime';
-import { SvgWrapper, Tab, Tabs, useLinkNavigate } from '@theme';
-import CloseSvg from '@theme-assets/close';
-import LoadingSvg from '@theme-assets/loading';
-import SearchSvg from '@theme-assets/search';
+import {
+  IconClose,
+  IconLoading,
+  IconSearch,
+  SvgWrapper,
+  Tab,
+  Tabs,
+  useLinkNavigate,
+} from '@theme';
 import { debounce } from 'lodash-es';
 import { useCallback, useEffect, useRef, useState } from 'react';
 import { createPortal } from 'react-dom';
@@ -418,7 +423,7 @@ export function SearchPanel({ focused, setFocused }: SearchPanelProps) {
     if (isSearching) {
       return (
         <div className="rp-search-panel__loading">
-          <SvgWrapper icon={LoadingSvg} />
+          <SvgWrapper icon={IconLoading} />
         </div>
       );
     }
@@ -499,7 +504,7 @@ export function SearchPanel({ focused, setFocused }: SearchPanelProps) {
               <div className="rp-search-panel__header">
                 <div className="rp-search-panel__input-form">
                   <label>
-                    <SvgWrapper icon={SearchSvg} />
+                    <SvgWrapper icon={IconSearch} />
                   </label>
                   <input
                     className="rp-search-panel__input"
@@ -512,7 +517,7 @@ export function SearchPanel({ focused, setFocused }: SearchPanelProps) {
                   />
                   <label>
                     <SvgWrapper
-                      icon={CloseSvg}
+                      icon={IconClose}
                       className="rp-search-panel__close"
                       onClick={e => {
                         if (searchInputRef.current) {

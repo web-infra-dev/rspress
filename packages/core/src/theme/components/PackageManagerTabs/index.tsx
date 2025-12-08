@@ -210,6 +210,18 @@ export function PackageManagerTabs({
     commandInfo = command;
   }
 
+  if (process.env.__SSR_MD__) {
+    return Object.values(commandInfo).reduce((previous, current) => {
+      const [packageManager, command] = splitTo2Parts(current);
+      return (
+        previous +
+        `\n\`\`\`sh [${packageManager}]\n` +
+        `${packageManager}${command}\n` +
+        `\`\`\`\n`
+      );
+    }, '');
+  }
+
   return (
     <Tabs
       groupId="package.manager"

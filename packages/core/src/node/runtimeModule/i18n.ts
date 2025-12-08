@@ -4,7 +4,7 @@ import type { UserConfig } from '@rspress/shared';
 import { logger } from '@rspress/shared/logger';
 import picocolors from 'picocolors';
 import type { PluginDriver } from '../PluginDriver';
-import { pathExists } from '../utils';
+import { createError, pathExists } from '../utils';
 import { DEFAULT_I18N_TEXT } from './DEFAULT_I18N_TEXT';
 import { RuntimeModuleID, type VirtualModulePlugin } from './types';
 
@@ -101,7 +101,7 @@ export async function getI18nData(
           logger.error(
             `${logPrefix} i18n key ${cyan(key)} has no text for lang ${cyan(lang)}, and no fallback ${cyan('en')} text either.`,
           );
-          throw new Error(`i18n text missing for ${picocolors.cyan(key)}`);
+          throw createError(`i18n text missing for ${picocolors.cyan(key)}`);
         }
       }
     }

@@ -1,5 +1,5 @@
 import { Content, PageContext, useLocation } from '@rspress/core/runtime';
-import { Layout } from '@theme';
+import { Layout, Root } from '@theme';
 import React, { useContext, useLayoutEffect } from 'react';
 import globalComponents from 'virtual-global-components';
 import { initPageData } from './initPageData';
@@ -43,7 +43,7 @@ export function App() {
   }
 
   return (
-    <>
+    <Root>
       <Layout />
       {
         // Global UI
@@ -66,6 +66,6 @@ export function App() {
             });
           })
       }
-    </>
+    </Root>
   );
 }

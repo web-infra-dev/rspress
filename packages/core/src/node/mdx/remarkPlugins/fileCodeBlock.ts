@@ -1,11 +1,13 @@
 import { readFile } from 'node:fs/promises';
 import path from 'node:path';
+import { cwd } from 'node:process';
 import type { Rspack } from '@rsbuild/core';
 import { logger } from '@rspress/shared/logger';
 import type { Root } from 'mdast';
 import picocolors from 'picocolors';
 import type { Plugin } from 'unified';
 import { visit } from 'unist-util-visit';
+import { createError } from '../../utils';
 
 const ERROR_PREFIX = '[remarkFileCodeBlock]';
 
@@ -24,7 +26,12 @@ function parseFileFromMeta(meta: string | undefined): string {
 }
 
 export const remarkFileCodeBlock: Plugin<
-  [{ filepath: string; addDependency?: Rspack.LoaderContext['addDependency'] }],
+  [
+    {
+      filepath: string;
+      addDependency?: Rspack.LoaderContext['addDependency'];
+    },
+  ],
   Root
 > = ({ filepath, addDependency }) => {
   return async tree => {
@@ -39,8 +46,22 @@ export const remarkFileCodeBlock: Plugin<
 
       const originalMetaForErrorInfo = picocolors.cyan(`\`\`\`${lang} ${meta}`);
 
-      if (file.startsWith('./') || file.startsWith('../')) {
-        const resolvedFilePath = path.join(path.dirname(filepath), file);
+      // Support relative paths and absolute paths with <root>/ prefix
+      if (
+        file.startsWith('./') ||
+        file.startsWith('../') ||
+        file.startsWith('<root>/')
+      ) {
+        let resolvedFilePath: string;
+
+        if (file.startsWith('<root>/')) {
+          // Absolute path relative to project root directory
+          resolvedFilePath = path.join(cwd(), file.slice('<root>/'.length));
+        } else {
+          // Relative path to current file
+          resolvedFilePath = path.join(path.dirname(filepath), file);
+        }
+
         // we allow blank lines or spaces, which may be necessary due to formatting tools and other reasons.
         if (value.trim() !== '') {
           logger.error(`${ERROR_PREFIX} ${originalMetaForErrorInfo} The content of file code block should be empty.
@@ -54,7 +75,7 @@ this usage is not allowed, please use below:
 \`\`\`tsx file="./filename"
 \`\`\`
 `);
-          throw new Error(
+          throw createError(
             `${ERROR_PREFIX} ${originalMetaForErrorInfo} The content of file code block should be empty.`,
           );
         }
@@ -82,8 +103,13 @@ Please use below:
 
 \`\`\`tsx file="./filename"
 \`\`\`
+
+or
+
+\`\`\`tsx file="<root>/path/to/filename"
+\`\`\`
 `);
-      throw new Error(
+      throw createError(
         `${ERROR_PREFIX} ${originalMetaForErrorInfo} syntax error of file code block`,
       );
     });

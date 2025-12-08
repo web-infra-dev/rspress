@@ -36,7 +36,7 @@
       overflow-wrap: break-word;
 
       &:hover {
-        border-bottom: 1px solid var(--rp-c-brand);
+        border-bottom: 1px solid currentColor;
         opacity: 0.85;
       }
       &[target='_blank'] {
@@ -204,11 +204,11 @@
     /* thead */
     &:where(thead) {
       color: var(--rp-c-text-0);
-      background: var(--rp-c-bg-soft);
+      background: var(--rp-code-title-bg);
     }
 
     &:where(th) {
-      padding: 1rem 1.5rem;
+      padding: 0.75rem 1.25rem;
       font-weight: 600;
       font-size: 0.875rem;
       text-align: left;
@@ -222,7 +222,7 @@
     }
 
     &:where(td) {
-      padding: 1rem 1.5rem;
+      padding: 0.75rem 1.25rem;
       border-bottom: 1px solid var(--rp-c-divider-light);
 
       font-size: 0.875rem;

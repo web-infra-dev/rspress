@@ -118,6 +118,7 @@ pxtorem
 Qrcode
 rebranded
 rehype
+renderable
 rsbuild
 rsdoctor
 rsfamily

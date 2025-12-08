@@ -16,8 +16,3 @@ onlyBuiltDependencies:
 hoistPattern: []
 linkWorkspacePackages: true
 strictPeerDependencies: false
-trustPolicy: no-downgrade
-trustPolicyExclude:
-  - tailwindcss@3.4.18
-  - undici-types@6.20.0
-  - semver@6.3.1

@@ -31,10 +31,10 @@ test.describe('plugin-typedoc single entry', async () => {
       [
         '@rspress-fixture/rspress-plugin-typedoc-single',
         'Functions',
-        'Function: createMiddleware',
-        'Function: mergeMiddlewares',
+        'Function: createMiddleware()',
+        'Function: mergeMiddlewares()',
         'Types',
-        'Type alias: Middleware',
+        'Type Alias: Middleware()',
       ].join(','),
     );
   });
@@ -68,21 +68,21 @@ test.describe('plugin-typedoc multi entries', async () => {
       [
         '@rspress-fixture/rspress-plugin-typedoc-multi',
         'Functions',
-        'Function: createMiddleware',
-        'Function: mergeMiddlewares',
-        'Function: getRspressUrl',
+        'Function: createMiddleware()',
+        'Function: mergeMiddlewares()',
+        'Function: getRspressUrl()',
         'Modules',
         'Module: middleware',
         'Module: raw-link',
         'Types',
-        'Type alias: Middleware',
+        'Type Alias: Middleware()',
       ].join(','),
     );
   });
 
   test('Should render raw link correctly', async ({ page }) => {
     await page.goto(
-      `http://localhost:${appPort}/api/functions/raw_link.getRspressUrl.html`,
+      `http://localhost:${appPort}/api/functions/raw-link.getRspressUrl.html`,
       {
         waitUntil: 'networkidle',
       },

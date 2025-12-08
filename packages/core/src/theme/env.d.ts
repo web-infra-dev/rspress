@@ -9,11 +9,6 @@ declare module '*.module.scss';
 declare module '*.scss';
 declare module '*.css';
 
-declare module '@theme-assets/*' {
-  const SvgIcon: React.FC<React.SVGProps<SVGSVGElement>> | string;
-  export default SvgIcon;
-}
-
 declare module '*.svg' {
   export const ReactComponent: React.FC<React.SVGProps<SVGSVGElement>>;
   export default ReactComponent;

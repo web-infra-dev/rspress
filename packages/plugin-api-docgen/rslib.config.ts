@@ -9,6 +9,9 @@ export default defineConfig({
         bundle: true,
       },
       format: 'esm',
+      experiments: {
+        advancedEsm: true,
+      },
       syntax: 'es2022',
     },
   ],

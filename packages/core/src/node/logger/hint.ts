@@ -8,6 +8,9 @@ import { pathExists } from '../utils';
 
 const THEME_DEFAULT_EXPORT_PATTERN = /export\s+default\s+\{/;
 
+const THEME_OLD_IMPORT_0 = /from\s+['"]rspress\/theme['"]/;
+const THEME_OLD_IMPORT_1 = /from\s+['"]@rspress\/core\/theme['"]/;
+
 /**
  * breaking change hint of theme
  * @see https://github.com/web-infra-dev/rspress/discussions/1891#discussioncomment-12422737
@@ -21,25 +24,32 @@ export async function hintThemeBreakingChange(customThemeDir: string) {
       const content = await readFile(filePath, { encoding: 'utf-8' });
       if (THEME_DEFAULT_EXPORT_PATTERN.test(content)) {
         useDefaultExportFilePath = filePath;
+        break;
       }
-      break;
+      if (
+        THEME_OLD_IMPORT_0.test(content) ||
+        THEME_OLD_IMPORT_1.test(content)
+      ) {
+        useDefaultExportFilePath = filePath;
+        break;
+      }
     }
   }
   if (useDefaultExportFilePath) {
     logger.warn(
-      `[Rspress v2] Breaking Change: The "theme/index.tsx" is now using named export instead of default export, please update ${picocolors.greenBright(useDefaultExportFilePath)} (https://github.com/web-infra-dev/rspress/discussions/1891#discussioncomment-12422737).\n`,
+      `[Rspress v2] Breaking Change: The "theme/index.tsx" is now using named export from '@rspress/core/theme-original' instead of default export from 'rspress/theme', please update ${picocolors.greenBright(useDefaultExportFilePath)} (https://github.com/web-infra-dev/rspress/discussions/1891#discussioncomment-12422737).\n`,
       picocolors.redBright(`
-- import Theme from '@rspress/core/theme';
+- import Theme from 'rspress/theme';
 - export default {
 -  ...Theme,
 -  Layout,
 - };
-- export * from '@rspress/core/theme';`) +
+- export * from 'rspress/theme';`) +
         picocolors.greenBright(`
-+ import { Layout } from '@rspress/core/theme';
++ import { Layout } from '@rspress/core/theme-original';
 
 + export { Layout };
-+ export * from '@rspress/core/theme';
++ export * from '@rspress/core/theme-original';
 `),
     );
   }

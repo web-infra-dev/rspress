@@ -22,23 +22,23 @@ By default, you need to create a `theme` directory under the project root direct
 You can write the `theme/index.tsx` file as follows:
 
 ```tsx title="theme/index.tsx"
-import { Layout as BasicLayout } from '@rspress/core/theme';
+import { Layout as BasicLayout } from '@rspress/core/theme-original';
 
 const Layout = () => <BasicLayout beforeNavTitle={<div>some content</div>} />;
 
 export { Layout };
 
-export * from '@rspress/core/theme';
+export * from '@rspress/core/theme-original';
 ```
 
-On the one hand, you need to export a theme configuration object through `export`, on the other hand, you need to export all named exported content through `export * from '@rspress/core/theme'` so as to ensure your theme works fine.
+On the one hand, you need to export a theme configuration object through `export`, on the other hand, you need to export all named exported content through `export * from '@rspress/core/theme-original'` so as to ensure your theme works fine.
 
 ### 2. Use slot
 
 It is worth noting that the `Layout` component has designed a series of props to support slot elements. You can use these props to extend the layout of the default theme. For example, change the above `Layout` component to the following form:
 
 ```tsx title="theme/index.tsx"
-import { Layout as BasicLayout } from '@rspress/core/theme';
+import { Layout as BasicLayout } from '@rspress/core/theme-original';
 
 // Show all props below
 const Layout = () => (
@@ -92,7 +92,7 @@ const Layout = () => (
 
 export { Layout };
 // re-export
-export * from '@rspress/core/theme';
+export * from '@rspress/core/theme-original';
 ```
 
 ### 3. Custom home page and 404 page
@@ -104,7 +104,7 @@ as well as other Rspress [built-in components](https://github.com/web-infra-dev/
 import {
   Search as BasicSearch,
   Layout as BasicLayout,
-} from '@rspress/core/theme';
+} from '@rspress/core/theme-original';
 
 // Custom Home Page
 const HomeLayout = () => <div>Home</div>;
@@ -127,7 +127,7 @@ const Search = () => (
 );
 export { Search, HomeLayout, NotFoundLayout };
 // re-export
-export * from '@rspress/core/theme';
+export * from '@rspress/core/theme-original';
 ```
 
 Of course, you may need to use page data during the development process, you can get it through [`Runtime API`](/api/client-api/api-runtime).
@@ -161,7 +161,7 @@ In the `theme/index.tsx` file, you need to export a Layout component, which is t
 
 ```tsx
 // theme/index.tsx
-import { Layout as BasicLayout } from '@rspress/core/theme';
+import { Layout as BasicLayout } from '@rspress/core/theme-original';
 
 function Layout() {
   return <BasicLayout />;
@@ -170,7 +170,7 @@ function Layout() {
 // Export Layout component and setup function
 export { Layout };
 // Export all content of the default theme to ensure that your theme configuration can work properly
-export * from '@rspress/core/theme';
+export * from '@rspress/core/theme-original';
 ```
 
 ### 2. Runtime API
@@ -242,7 +242,7 @@ The default theme comes with built-in search functionality, which we can break d
 If you want to fully reuse the search functionality, you can directly import the `Search` component, like so:
 
 ```tsx
-import { Search } from '@rspress/core/theme';
+import { Search } from '@rspress/core/theme-original';
 
 function MySearch() {
   return <Search />;
@@ -255,7 +255,7 @@ If you only want to reuse the search panel and customize the search box part, th
 
 ```tsx
 import { useState } from 'react';
-import { SearchPanel } from '@rspress/core/theme';
+import { SearchPanel } from '@rspress/core/theme-original';
 
 function MySearch() {
   const [focused, setFocused] = useState(false);
@@ -275,7 +275,7 @@ In this case, you need to maintain the `focused` state and `setFocused` method y
 If you want to reuse the default full text search logic, you can use the `useFullTextSearch` Hook, for example:
 
 ```tsx
-import { useFullTextSearch } from '@rspress/core/theme';
+import { useFullTextSearch } from '@rspress/core/theme-original';
 
 function MySearch() {
   const { initialized, search } = useFullTextSearch();
