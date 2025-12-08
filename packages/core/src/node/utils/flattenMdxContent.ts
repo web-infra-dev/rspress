@@ -74,7 +74,7 @@ export async function flattenMdxContent(
   let result = content;
 
   try {
-    ast = processor.parse(content) as Root;
+    ast = processor.parse(content);
   } catch (e) {
     // Fallback: if mdx parse failed, just return the content
     logger.debug('flattenMdxContent parse failed: \n', e);

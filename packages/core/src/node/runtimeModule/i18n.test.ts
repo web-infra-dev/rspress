@@ -279,7 +279,7 @@ describe('getI18nData', () => {
 
   it('should merge priority: default < plugin < i18n.json < config', async () => {
     // This test verifies the merge order
-    // default < plugin < i18n.json (mocked rsa require) < config
+    // default < plugin < i18n.json (mocked via require) < config
     const config: UserConfig = {
       locales: [
         { lang: 'zh', label: '简体中文' },
