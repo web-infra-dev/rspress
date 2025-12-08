@@ -104,7 +104,7 @@ api
 
 ### setup
 
-- 类型：`(app: Application) => Promise<void> | void`
+- 类型：`(app: Application) => Promise<Application> | Promise<void> | void`
 - 默认值：`() => {}`
 
 用于设置 TypeDoc Application 的函数。你可以使用它在生成文档之前自定义 TypeDoc 配置。

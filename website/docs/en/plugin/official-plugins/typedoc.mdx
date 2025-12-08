@@ -104,7 +104,7 @@ Customize the output directory for the documentation. You need to provide a rela
 
 ### setup
 
-- Type: `(app: Application) => Promise<void> | void`
+- Type: `(app: Application) => Promise<Application> | Promise<void> | void`
 - Default: `() => {}`
 
 A function to setup the TypeDoc Application. You can use this to customize the TypeDoc configuration before it generates the documentation.
