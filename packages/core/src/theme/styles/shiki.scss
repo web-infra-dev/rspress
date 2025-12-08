@@ -51,13 +51,18 @@
     width: 100%;
     position: static;
     display: inline-block;
-    background-color: rgba(0, 99, 199, 0.1);
+  }
+  .line.highlighted:not(.error):not(.warning) {
+    background-color: rgba(59, 130, 246, 0.1);
+    box-shadow: inset 2px 0 0 0 rgb(59, 130, 246);
   }
   .line.highlighted.error {
-    background-color: rgba(244, 63, 94, 0.1);
+    background-color: rgba(237, 60, 80, 0.1);
+    box-shadow: inset 2px 0 0 0 rgb(237, 60, 80);
   }
   .line.highlighted.warning {
-    background-color: rgba(234, 179, 8, 0.1);
+    background-color: rgba(255, 197, 23, 0.1);
+    box-shadow: inset 2px 0 0 0 rgb(255, 197, 23);
   }
 }
 
