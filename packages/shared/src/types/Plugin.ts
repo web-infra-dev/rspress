@@ -109,11 +109,4 @@ export interface RspressPlugin {
   ) =>
     | Record<string, Record<string, string>>
     | Promise<Record<string, Record<string, string>>>;
-
-  /**
-   * Allow plugin author to provide a custom theme module.
-   */
-  themeDir?: () =>
-    | { themeIndexPath: string }
-    | Promise<{ themeIndexPath: string }>;
 }

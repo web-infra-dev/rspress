@@ -21,8 +21,7 @@ type RspressPluginHookKeys =
   | 'routeServiceGenerated'
   | 'extendPageData'
   | 'modifySearchIndexData'
-  | 'i18nSource'
-  | 'themeDir';
+  | 'i18nSource';
 
 export class PluginDriver {
   #config: UserConfig;
@@ -225,18 +224,6 @@ export class PluginDriver {
       }
     }
     return i18nSource;
-  }
-
-  async themeDir() {
-    let pluginThemeDir: { themeIndexPath: string } | undefined;
-    for (const plugin of this.#plugins) {
-      if (pluginThemeDir) {
-        throw createError(
-          `Multiple plugins provide customTheme, only one plugin can provide customTheme.`,
-        );
-      }
-      pluginThemeDir = await plugin.themeDir?.();
-    }
   }
 
   globalUIComponents() {

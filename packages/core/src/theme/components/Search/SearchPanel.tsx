@@ -27,7 +27,7 @@ import { SuggestItem } from './SuggestItem';
 
 const KEY_CODE = {
   ARROW_UP: 'ArrowUp',
-  ARROW_DOWN: 'IconArrowDown',
+  ARROW_DOWN: 'ArrowDown',
   ENTER: 'Enter',
   SEARCH: 'KeyK',
   ESC: 'Escape',

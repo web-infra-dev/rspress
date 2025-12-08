@@ -89,7 +89,7 @@ async function createInternalBuildConfig(
   routeService: RouteService,
   pluginDriver: PluginDriver,
 ): Promise<RsbuildConfig> {
-  const CUSTOM_THEME_DIR = (await pluginDriver?.themeDir()) ?? config.themeDir!;
+  const CUSTOM_THEME_DIR = config.themeDir!;
   const outDir = config?.outDir ?? OUTPUT_DIR;
 
   const base = config?.base ?? '';
