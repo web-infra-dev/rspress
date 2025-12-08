@@ -101,3 +101,10 @@ api
 - 默认值：`api`
 
 自定义文档输出目录，你需要传入一个相对路径，比如 `api/custom`。
+
+### setup
+
+- 类型：`(app: Application) => Promise<Application> | Promise<void> | void`
+- 默认值：`() => {}`
+
+用于设置 TypeDoc Application 的函数。你可以使用它在生成文档之前自定义 TypeDoc 配置。

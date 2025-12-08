@@ -101,3 +101,10 @@ Specifies the absolute path of the TS modules for which documentation should be 
 - Default: `api`
 
 Customize the output directory for the documentation. You need to provide a relative path, such as `api/custom`.
+
+### setup
+
+- Type: `(app: Application) => Promise<Application> | Promise<void> | void`
+- Default: `() => {}`
+
+A function to setup the TypeDoc Application. You can use this to customize the TypeDoc configuration before it generates the documentation.

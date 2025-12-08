@@ -17,10 +17,19 @@ export interface PluginTypeDocOptions {
    * @default 'api'
    */
   outDir?: string;
+  /**
+   * A function to setup the TypeDoc Application.
+   * @param app
+   */
+  setup?: (app: Application) => Promise<Application> | Promise<void> | void;
 }
 
 export function pluginTypeDoc(options: PluginTypeDocOptions): RspressPlugin {
-  const { entryPoints: userEntryPoints = [], outDir = API_DIR } = options;
+  const {
+    entryPoints: userEntryPoints = [],
+    outDir = API_DIR,
+    setup = () => {},
+  } = options;
 
   // windows posix path fix https://github.com/web-infra-dev/rspress/pull/2790#issuecomment-3590946652
   const entryPoints = userEntryPoints.map(entryPath => {
@@ -37,7 +46,7 @@ export function pluginTypeDoc(options: PluginTypeDocOptions): RspressPlugin {
   return {
     name: '@rspress/plugin-typedoc',
     async config(config) {
-      const app = await Application.bootstrapWithPlugins({
+      let app = await Application.bootstrapWithPlugins({
         name: config.title,
         entryPoints,
         disableSources: true,
@@ -54,6 +63,7 @@ export function pluginTypeDoc(options: PluginTypeDocOptions): RspressPlugin {
           module: '{kind}: {name}', // e.g. "Module: MyModule"
         },
       });
+      app = (await setup(app)) || app;
 
       const project = await app.convert();
       if (project) {
