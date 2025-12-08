@@ -11,12 +11,6 @@ import './SuggestItem.scss';
 import type { DefaultMatchResultItem, HighlightInfo } from './logic/types';
 import { getSlicedStrByByteLength } from './logic/util';
 
-const ICON_MAP = {
-  title: IconTitle,
-  header: IconHeader,
-  content: IconFile,
-};
-
 export function SuggestItem({
   suggestion,
   closeSearch,
@@ -35,6 +29,12 @@ export function SuggestItem({
   inCurrentDocIndex: boolean;
   scrollTo: (top: number, height: number) => void;
 }) {
+  const ICON_MAP = {
+    title: IconTitle,
+    header: IconHeader,
+    content: IconFile,
+  };
+
   const HitIcon = ICON_MAP[suggestion.type];
   const selfRef = useRef<HTMLLIElement>(null);
   if (isCurrent && selfRef.current?.offsetTop) {
