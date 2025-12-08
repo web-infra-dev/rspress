@@ -36,7 +36,7 @@ import { Badge } from '@theme';
 <Badge text="danger" type="danger" />
 <Badge text="outlined" outline />
 
-import SearchSvg from '@theme-assets/github';
+import { IconSearch, SvgWrapper } from '@theme';
 
 自定义子元素：
 
@@ -49,7 +49,7 @@ import SearchSvg from '@theme-assets/github';
 </Badge>
 
 <Badge type="info">
-  <SearchSvg width="16" />
+  <SvgWrapper icon={IconSearch} />
   <span>Github</span>
 </Badge>
 

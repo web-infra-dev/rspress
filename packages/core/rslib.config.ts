@@ -16,7 +16,6 @@ const COMMON_EXTERNALS = [
   'virtual-i18n-text',
   '@rspress/runtime',
   '@theme',
-  /@theme-assets\//,
   // To be externalized when bundling d.ts.
   '@types/react',
   '@rspress/core/runtime',

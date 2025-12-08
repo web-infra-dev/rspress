@@ -22,23 +22,23 @@
 你可以使用如下的方式来书写 `theme/index.tsx` 文件:
 
 ```tsx title="theme/index.tsx"
-import { Layout as BasicLayout } from '@rspress/core/theme';
+import { Layout as BasicLayout } from '@rspress/core/theme-original';
 
 const Layout = () => <BasicLayout beforeNavTitle={<div>some content</div>} />;
 
 export { Layout };
 
-export * from '@rspress/core/theme';
+export * from '@rspress/core/theme-original';
 ```
 
-一方面你需要通过 `export` 导出一个主题配置对象，另一方面你需要通过 `export * from '@rspress/core/theme'` 导出所有具名导出的内容，这样才能保证你的主题配置能够正常工作。
+一方面你需要通过 `export` 导出一个主题配置对象，另一方面你需要通过 `export * from '@rspress/core/theme-original'` 导出所有具名导出的内容，这样才能保证你的主题配置能够正常工作。
 
 ### 2. 使用插槽
 
 值得注意的是，`Layout` 组件设计了一系列的 props 支持插槽元素，你可以通过这些 props 来扩展默认主题的布局，比如将上面的 `Layout` 组件改成如下的形式:
 
 ```tsx title="theme/index.tsx"
-import { Layout as BasicLayout } from '@rspress/core/theme';
+import { Layout as BasicLayout } from '@rspress/core/theme-original';
 
 // 以下展示所有的 Props
 const Layout = () => (
@@ -92,7 +92,7 @@ const Layout = () => (
 
 export { Layout };
 // 重导出
-export * from '@rspress/core/theme';
+export * from '@rspress/core/theme-original';
 ```
 
 ### 3. 自定义组件
@@ -104,7 +104,7 @@ export * from '@rspress/core/theme';
 import {
   Search as BasicSearch,
   Layout as BasicLayout,
-} from '@rspress/core/theme';
+} from '@rspress/core/theme-original';
 
 // 定制 Home 页面
 const HomeLayout = () => <div>Home</div>;
@@ -127,7 +127,7 @@ const Search = () => (
 );
 export { Search, HomeLayout, NotFoundLayout };
 // 重导出其他部分
-export * from '@rspress/core/theme';
+export * from '@rspress/core/theme-original';
 ```
 
 当然，在开发过程可能需要使用页面的数据，你可以通过 [`Runtime API`](/api/client-api/api-runtime) 来获取。
@@ -161,7 +161,7 @@ export * from '@rspress/core/theme';
 
 ```tsx
 // theme/index.tsx
-import { Layout as BasicLayout } from '@rspress/core/theme';
+import { Layout as BasicLayout } from '@rspress/core/theme-original';
 
 function Layout() {
   return <BasicLayout />;
@@ -169,7 +169,7 @@ function Layout() {
 
 export { Layout };
 // 导出默认主题的所有内容，这样才能保证你的主题配置能够正常工作
-export * from '@rspress/core/theme';
+export * from '@rspress/core/theme-original';
 ```
 
 ### 2. 运行时 API
@@ -241,7 +241,7 @@ function Layout() {
 如果你想完整复用搜索功能，你可以直接引入 `Search` 组件，比如:
 
 ```tsx
-import { Search } from '@rspress/core/theme';
+import { Search } from '@rspress/core/theme-original';
 
 function MySearch() {
   return <Search />;
@@ -254,7 +254,7 @@ function MySearch() {
 
 ```tsx
 import { useState } from 'react';
-import { SearchPanel } from '@rspress/core/theme';
+import { SearchPanel } from '@rspress/core/theme-original';
 
 function MySearch() {
   const [focused, setFocused] = useState(false);
@@ -274,7 +274,7 @@ function MySearch() {
 如果你想复用默认的全文搜索逻辑，你可以使用 `useFullTextSearch` Hook，比如:
 
 ```tsx
-import { useFullTextSearch } from '@rspress/core/theme';
+import { useFullTextSearch } from '@rspress/core/theme-original';
 
 function MySearch() {
   const { initialized, search } = useFullTextSearch();

@@ -1,5 +1,4 @@
 // components
-
 export { Badge } from './components/Badge/index';
 export { Banner, type BannerProps } from './components/Banner/index';
 export { Button } from './components/Button/index';
@@ -15,7 +14,6 @@ export {
   useCodeButtonGroup,
 } from './components/CodeButtonGroup';
 export { getCustomMDXComponent } from './components/DocContent/docComponents/index';
-// layout
 export type { ShikiPreProps } from './components/DocContent/docComponents/pre';
 export { DocContent } from './components/DocContent/index';
 export { DocFooter } from './components/DocFooter/index';
@@ -87,14 +85,17 @@ export { Tag } from './components/Tag/index';
 export { Toc } from './components/Toc';
 export { useActiveAnchor } from './hooks/useActiveAnchor';
 export { useDynamicToc, useWatchToc } from './hooks/useDynamicToc';
+// icons
+export * from './icons';
+// layout
 export { DocLayout, type DocLayoutProps } from './layout/DocLayout';
 export { HomeLayout, type HomeLayoutProps } from './layout/HomeLayout/index';
 export { Layout, type LayoutProps } from './layout/Layout/index';
 export { NotFoundLayout } from './layout/NotFountLayout/index';
+// logic
 export { mergeRefs } from './logic/mergeRefs';
 export { useThemeState } from './logic/useAppearance';
 export { useFullTextSearch } from './logic/useFullTextSearch';
-// logic
 export { usePrevNextPage } from './logic/usePrevNextPage';
 export { useRedirect4FirstVisit } from './logic/useRedirect4FirstVisit';
 export { useSetup } from './logic/useSetup';

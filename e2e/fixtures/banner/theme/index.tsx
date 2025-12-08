@@ -1,5 +1,5 @@
 import { useLang } from '@rspress/core/runtime';
-import { Banner, Layout as BasicLayout } from '@rspress/core/theme';
+import { Banner, Layout as BasicLayout } from '@rspress/core/theme-original';
 
 const Layout = () => {
   const lang = useLang();
@@ -20,4 +20,4 @@ const Layout = () => {
 };
 
 export { Layout };
-export * from '@rspress/core/theme';
+export * from '@rspress/core/theme-original';

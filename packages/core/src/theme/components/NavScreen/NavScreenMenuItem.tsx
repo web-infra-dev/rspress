@@ -5,8 +5,7 @@ import type {
   NavItemWithLinkAndChildren,
 } from '@rspress/core';
 import { matchNavbar, useLocation } from '@rspress/core/runtime';
-import { Link, SvgWrapper, Tag } from '@theme';
-import ArrowDown from '@theme-assets/arrow-down';
+import { IconArrowDown, Link, SvgWrapper, Tag } from '@theme';
 import clsx from 'clsx';
 import type React from 'react';
 import { useMemo, useState } from 'react';
@@ -17,7 +16,7 @@ interface NavScreenMenuItemWithLinkProps {
 }
 
 export const SvgDown = (props: React.SVGProps<SVGSVGElement>) => {
-  return <SvgWrapper icon={ArrowDown} {...props} />;
+  return <SvgWrapper icon={IconArrowDown} {...props} />;
 };
 
 export function NavScreenMenuItemRaw({

@@ -1,9 +1,9 @@
-import type { RenderSearchFunction } from '@rspress/core/theme';
+import type { RenderSearchFunction } from '@rspress/core/theme-original';
 import {
   type BeforeSearch,
   type OnSearch,
   RenderType,
-} from '@rspress/core/theme';
+} from '@rspress/core/theme-original';
 
 const onSearch: OnSearch = async (query, defaultSearchResult) => {
   const { result } = defaultSearchResult[0];
