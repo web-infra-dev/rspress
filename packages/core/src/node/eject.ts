@@ -46,6 +46,7 @@ export async function getAvailableComponents(): Promise<string[]> {
     'PackageManagerTabs',
     'PrevNextPage',
     'Overview',
+    'Root',
     'SocialLinks',
     'Steps',
   ];
