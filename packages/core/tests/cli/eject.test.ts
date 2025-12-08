@@ -1,22 +1,22 @@
 import path from 'node:path';
+import { afterEach, beforeEach, describe, expect, it, rs } from '@rstest/core';
 import { fs, vol } from 'memfs';
-import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 import {
   __setThemeComponentsPathForTesting,
   ejectComponent,
   getAvailableComponents,
 } from '../../src/node/eject';
 
-vi.mock('node:fs/promises', () => {
+rs.mock('node:fs/promises', () => {
   return { default: fs.promises, ...fs.promises };
 });
 
-vi.mock('@rspress/shared/logger', () => ({
+rs.mock('@rspress/shared/logger', () => ({
   logger: {
-    info: vi.fn(),
-    warn: vi.fn(),
-    error: vi.fn(),
-    success: vi.fn(),
+    info: rs.fn(),
+    warn: rs.fn(),
+    error: rs.fn(),
+    success: rs.fn(),
   },
 }));
 
@@ -120,7 +120,7 @@ describe('eject command', () => {
     });
 
     it('should exit with error for non-existent component', async () => {
-      const mockExit = vi.spyOn(process, 'exit').mockImplementation(() => {
+      const mockExit = rs.spyOn(process, 'exit').mockImplementation(() => {
         throw new Error('process.exit called');
       });
 

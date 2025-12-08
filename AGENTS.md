@@ -23,7 +23,7 @@
 
 ## Testing guidelines
 
-- Unit: `vitest`; E2E: `@playwright/test`.
+- Unit: `rstest`; E2E: `@playwright/test`.
 - Naming: `*.test.ts`/`*.test.tsx`; snapshots in `__snapshots__/`.
 - Placement: unit under `packages/*/tests`; e2e under `e2e/`.
 

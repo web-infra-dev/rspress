@@ -1,4 +1,4 @@
-import { describe, expect, test } from 'vitest';
+import { describe, expect, test } from '@rstest/core';
 import { ZH_LOCALES } from '../src/runtime/locales';
 
 describe('Docsearch v4 Locales', () => {

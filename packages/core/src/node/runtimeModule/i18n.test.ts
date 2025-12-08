@@ -1,16 +1,16 @@
 // cspell:disable
 import type { UserConfig } from '@rspress/shared';
-import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
+import { afterEach, beforeEach, describe, expect, it, rs } from '@rstest/core';
 import type { PluginDriver } from '../PluginDriver';
 import { getI18nData } from './i18n';
 
 describe('getI18nData', () => {
   beforeEach(() => {
-    vi.clearAllMocks();
+    rs.clearAllMocks();
   });
 
   afterEach(() => {
-    vi.restoreAllMocks();
+    rs.restoreAllMocks();
   });
 
   it('no locales and no lang', async () => {
@@ -122,7 +122,7 @@ describe('getI18nData', () => {
     };
 
     const mockPluginDriver = {
-      i18nSource: vi.fn().mockResolvedValue({
+      i18nSource: rs.fn().mockResolvedValue({
         pluginKey: {
           zh: '插件文案',
           en: 'Plugin Text',
@@ -162,7 +162,7 @@ describe('getI18nData', () => {
     };
 
     const mockPluginDriver = {
-      i18nSource: vi.fn().mockResolvedValue({
+      i18nSource: rs.fn().mockResolvedValue({
         editLinkText: {
           zh: '📝 在 GitHub 上编辑此页',
           en: '📝 Edit this page on GitHub',
@@ -294,7 +294,7 @@ describe('getI18nData', () => {
     };
 
     const mockPluginDriver = {
-      i18nSource: vi.fn().mockResolvedValue({
+      i18nSource: rs.fn().mockResolvedValue({
         editLinkText: {
           zh: '📝 插件',
           en: '📝 Plugin',

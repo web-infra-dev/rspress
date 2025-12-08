@@ -1,3 +1,4 @@
+import { describe, expect, it } from '@rstest/core';
 import React, {
   createContext,
   type ReactNode,
@@ -6,7 +7,6 @@ import React, {
   useLayoutEffect,
   useState,
 } from 'react';
-import { describe, expect, it } from 'vitest';
 import { renderToMarkdownString } from './render';
 
 describe('renderToMarkdownString', () => {
