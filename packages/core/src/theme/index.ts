@@ -50,6 +50,7 @@ export {
 } from './components/PageTabs/index';
 export { PrevNextPage } from './components/PrevNextPage/index';
 export { ReadPercent } from './components/ReadPercent/index';
+export { Root, type RootProps } from './components/Root/index';
 export { Search } from './components/Search/index';
 export type {
   AfterSearch,
