@@ -43,6 +43,7 @@ export const TocItem = ({
       style={{
         paddingLeft: (header.depth - baseHeaderLevel) * 12,
       }}
+      {...{ 'data-depth': header.depth - baseHeaderLevel }}
     >
       <span
         className="rp-toc-item__text rp-doc"
