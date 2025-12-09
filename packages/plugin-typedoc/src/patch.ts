@@ -7,10 +7,10 @@ import path from 'node:path';
 async function generateMetaJson(absoluteApiDir: string) {
   const metaJsonPath = path.join(absoluteApiDir, '_meta.json');
   if (
-    (await fs
+    await fs
       .access(metaJsonPath)
       .then(() => true)
-      .catch(() => false)) === true
+      .catch(() => false)
   ) {
     return;
   }
