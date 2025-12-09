@@ -5,13 +5,20 @@
   border: var(--rp-code-block-border);
   box-shadow: var(--rp-code-block-shadow);
 
+  // nested
+  & & {
+    border-radius: 0;
+    margin: 0;
+    border: none;
+  }
+
   .rp-codeblock {
-    margin: 0 !important;
-    border-radius: 0 !important;
-    border: none !important;
+    margin: 0;
+    border-radius: 0;
+    border: none;
 
     .rp-codeblock__title {
-      padding: 8px 16px !important;
+      padding: 8px 12px;
     }
   }
 
