@@ -1,3 +1,4 @@
+import path from 'node:path';
 import {
   addLeadingSlash,
   addTrailingSlash,
@@ -6,7 +7,6 @@ import {
   type RspressPlugin,
   type UserConfig,
 } from '@rspress/shared';
-import path from 'path';
 import { haveNavSidebarConfig } from './auto-nav-sidebar';
 import type { RouteService } from './route/RouteService';
 import { createError } from './utils';
