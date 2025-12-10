@@ -1,6 +1,6 @@
 # Frontmatter
 
-你可以在 Markdown 文件的顶部添加 front matter，它是一个特殊部分，使用 [YAML](https://yaml.org/) 格式来定义元数据，被包含在文件顶部的三个连字符 `---` 之间。
+你可以在 Markdown 文件的顶部添加 front matter。它是一个使用 [YAML](https://yaml.org/) 格式定义元数据的块，位于文件顶部的三个连字符 `---` 之间。
 
 例如使用 [title](/api/config/config-frontmatter#title) 来指定页面的标题：
 
@@ -20,7 +20,7 @@ title: Hello world
 # {frontmatter.title}
 ```
 
-前面定义的属性将作为 `frontmatter` 属性传递给组件。所以最终输出将是：
+上述属性会以 `frontmatter` 形式传递给组件，最终输出为：
 
 ```html
 <h1>Hello world</h1>

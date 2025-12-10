@@ -8,7 +8,7 @@ import { PageTabs, PageTab } from '@theme';
 
 :::info
 
-The PageTabs component creates sub-tabs within a page, allowing a single page to be split into multiple sub-pages. Each page may contain exactly one PageTabs.
+The PageTabs component creates sub-tabs within a page so a single page can be split into multiple views. To keep anchors and the TOC correct, each page may contain exactly one PageTabs.
 
 :::
 
@@ -65,9 +65,9 @@ import Bar from './fragments/_bar.mdx';
 
 ## Dynamic TOC
 
-Based on extensive feedback from V1 users, we found that users often encountered issues with incorrect static TOC extraction when using [MDX fragments](../../guide/use-mdx/components.mdx) that include headers.
+Based on extensive feedback from V1 users, we found that static TOC extraction often failed when using [MDX fragments](../../guide/use-mdx/components.mdx) that include headers.
 
-Rspress V2 introduces Dynamic TOC, which dynamically generates the TOC at runtime by monitoring DOM changes through [MutationObserver](https://developer.mozilla.org/en-US/docs/Web/API/MutationObserver). This ensures TOC accuracy and allows users to leverage the full flexibility of [MDX fragments](../../guide/use-mdx/components.mdx). This also makes the `<PageTabs />` component possible.
+Rspress V2 introduces Dynamic TOC, which generates the TOC at runtime by monitoring DOM changes through [MutationObserver](https://developer.mozilla.org/en-US/docs/Web/API/MutationObserver). This keeps the TOC accurate while letting you fully leverage [MDX fragments](../../guide/use-mdx/components.mdx), making the `<PageTabs />` component possible.
 
 ```ts
 import { useDynamicTOC } from '@theme';
