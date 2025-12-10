@@ -62,6 +62,7 @@ export function pluginTypeDoc(options: PluginTypeDocOptions): RspressPlugin {
         pageTitleTemplates: {
           module: '{kind}: {name}', // e.g. "Module: MyModule"
         },
+        cleanOutputDir: false,
       });
       app = (await setup(app)) || app;
 
@@ -70,7 +71,10 @@ export function pluginTypeDoc(options: PluginTypeDocOptions): RspressPlugin {
         // 1. Generate doc/api, doc/api/_meta.json by typedoc
         const absoluteApiDir = path.join(config.root!, outDir);
         await app.outputs.writeOutput(
-          { name: 'markdown', path: absoluteApiDir },
+          {
+            name: 'markdown',
+            path: absoluteApiDir,
+          },
           project,
         );
         await patchGeneratedApiDocs(absoluteApiDir);

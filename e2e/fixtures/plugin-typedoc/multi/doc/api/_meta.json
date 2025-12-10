@@ -1,0 +1,8 @@
+[
+  "index",
+  { "type": "dir", "label": "Functions", "name": "functions" },
+  { "type": "divider" },
+  { "type": "dir", "label": "Modules", "name": "modules" },
+  { "type": "divider" },
+  { "type": "dir", "label": "Types", "name": "types" }
+]
