@@ -38,6 +38,9 @@ export default defineConfig({
   icon: 'https://assets.rspack.rs/rspress/rspress-logo.svg',
   markdown: {
     shiki: {
+      // "markdown" and "mdx" can contain any language, so that it is not support lazy for now
+      // @see https://github.com/shikijs/shiki/issues/853#issuecomment-2507237577
+      langs: ['markdown', 'mdx', 'tsx', 'json', 'bash', 'yaml', 'ts', 'js'],
       transformers: [
         transformerNotationDiff(),
         transformerNotationErrorLevel(),
