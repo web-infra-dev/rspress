@@ -8,7 +8,7 @@ import { PageTabs, PageTab } from '@theme';
 
 :::info
 
-PageTabs 组件创建子标签页，可以将一个页面内容拆分成多个子页面，为了保证锚点跳转和 TOC 生成的正确性，每个页面有且仅允许一个 PageTabs。
+PageTabs 组件用于在同一页面中创建子标签页，将内容拆分成多个子页面。为了保证锚点跳转和 TOC 生成的正确性，每个页面有且仅允许一个 PageTabs。
 
 :::
 
@@ -65,9 +65,9 @@ import Bar from './fragments/_bar.mdx';
 
 ## Dynamic TOC
 
-通过 V1 版本用户的大量反馈，我们发现用户在使用 [MDX 片段] 并包含 Header 时常常会遇到 TOC 静态提取不正确的问题。
+从 V1 用户反馈中，我们发现使用包含标题的 [MDX 片段] 时常常会遇到 TOC 静态提取不正确的问题。
 
-Rspress V2 中引入了 Dynamic TOC，在运行时通过 [MutationObserver](https://developer.mozilla.org/zh-CN/docs/Web/API/MutationObserver) 监听 DOM 变化，动态生成 TOC，保证了 TOC 的正确，使用户可以发挥 [MDX 片段] 的最大灵活性。这也使得 `<PageTabs />` 组件成为可能。
+Rspress V2 引入了 Dynamic TOC，在运行时通过 [MutationObserver](https://developer.mozilla.org/zh-CN/docs/Web/API/MutationObserver) 监听 DOM 变化并动态生成 TOC，既保证准确性，也让你可以充分发挥 [MDX 片段] 的灵活性，这也使得 `<PageTabs />` 组件成为可能。
 
 ```ts
 import { useDynamicTOC } from '@theme';
