@@ -1,10 +1,15 @@
 import path from 'node:path';
-import { RouteService } from '../route/RouteService';
+import { describe, expect, it } from '@rstest/core';
 import {
   getRoutePathParts,
   normalizeRoutePath,
 } from '../route/normalizeRoutePath';
+import { RouteService } from '../route/RouteService';
 import { processLocales } from './locales';
+
+function orderStringSet(input: Set<string>) {
+  return Array.from(input).sort().join('\n');
+}
 
 describe('walk', () => {
   it('basic', async () => {
@@ -12,7 +17,6 @@ describe('walk', () => {
     const mockNormalizeRoutePath = (link: string) => {
       return normalizeRoutePath(
         link,
-        '/base',
         'en',
         '',
         ['zh', 'en'],
@@ -23,7 +27,6 @@ describe('walk', () => {
     const mockGetRoutePathParts = (link: string) => {
       return getRoutePathParts(
         link,
-        '/base',
         'en',
         '',
         ['zh', 'en'],
@@ -34,11 +37,16 @@ describe('walk', () => {
       normalizeRoutePath: mockNormalizeRoutePath,
       getRoutePathParts: mockGetRoutePathParts,
     } as RouteService;
-    const result = await processLocales(['zh', 'en'], [], docsDir, [
-      '.md',
-      '.mdx',
-      '.tsx',
-    ]);
+    const metaFileSet = new Set<string>();
+    const mdFileSet = new Set<string>();
+    const result = await processLocales(
+      ['zh', 'en'],
+      [],
+      docsDir,
+      ['.md', '.mdx', '.tsx'],
+      metaFileSet,
+      mdFileSet,
+    );
     expect(result).toMatchInlineSnapshot(`
       [
         {
@@ -46,13 +54,13 @@ describe('walk', () => {
             "default": [
               {
                 "activeMatch": "^/guide/",
-                "link": "/base/zh/guide/",
+                "link": "/zh/guide/",
                 "text": "Guide",
               },
             ],
           },
           "sidebar": {
-            "/base/zh/guide": [
+            "/zh/guide": [
               {
                 "_fileKey": "zh/guide/test-dir/index",
                 "collapsed": undefined,
@@ -62,13 +70,13 @@ describe('walk', () => {
                   {
                     "_fileKey": "zh/guide/test-dir/getting-started",
                     "context": undefined,
-                    "link": "/base/zh/guide/test-dir/getting-started",
+                    "link": "/zh/guide/test-dir/getting-started",
                     "overviewHeaders": undefined,
                     "tag": undefined,
                     "text": "Getting started 页面",
                   },
                 ],
-                "link": "/base/zh/guide/test-dir/",
+                "link": "/zh/guide/test-dir/",
                 "overviewHeaders": undefined,
                 "tag": undefined,
                 "text": "Test dir 页面",
@@ -82,13 +90,13 @@ describe('walk', () => {
                   {
                     "_fileKey": "zh/guide/test-same-name-dir/index",
                     "context": undefined,
-                    "link": "/base/zh/guide/test-same-name-dir/",
+                    "link": "/zh/guide/test-same-name-dir/",
                     "overviewHeaders": undefined,
                     "tag": undefined,
                     "text": "Test same name dir 页面",
                   },
                 ],
-                "link": "/base/zh/guide/test-same-name-dir",
+                "link": "/zh/guide/test-same-name-dir",
                 "overviewHeaders": undefined,
                 "tag": undefined,
                 "text": "Test same name dir in file 页面",
@@ -96,7 +104,7 @@ describe('walk', () => {
               {
                 "_fileKey": "zh/guide/a",
                 "context": undefined,
-                "link": "/base/zh/guide/a",
+                "link": "/zh/guide/a",
                 "overviewHeaders": undefined,
                 "tag": undefined,
                 "text": "Page a 页面",
@@ -104,7 +112,7 @@ describe('walk', () => {
               {
                 "_fileKey": "zh/guide/b",
                 "context": undefined,
-                "link": "/base/zh/guide/b",
+                "link": "/zh/guide/b",
                 "overviewHeaders": undefined,
                 "tag": undefined,
                 "text": "Page b 页面",
@@ -112,14 +120,14 @@ describe('walk', () => {
               {
                 "_fileKey": "zh/guide/c",
                 "context": undefined,
-                "link": "/base/zh/guide/c",
+                "link": "/zh/guide/c",
                 "overviewHeaders": undefined,
                 "tag": undefined,
                 "text": "c",
               },
               {
                 "context": undefined,
-                "link": "/base/zh/guide/test-dir",
+                "link": "/zh/guide/test-dir",
                 "tag": undefined,
                 "text": "My Link",
               },
@@ -131,13 +139,13 @@ describe('walk', () => {
             "default": [
               {
                 "activeMatch": "^/guide/",
-                "link": "/base/guide/",
+                "link": "/guide/",
                 "text": "Guide",
               },
             ],
           },
           "sidebar": {
-            "/base/guide": [
+            "/guide": [
               {
                 "_fileKey": "en/guide/test-dir/index",
                 "collapsed": undefined,
@@ -147,13 +155,13 @@ describe('walk', () => {
                   {
                     "_fileKey": "en/guide/test-dir/getting-started",
                     "context": undefined,
-                    "link": "/base/guide/test-dir/getting-started",
+                    "link": "/guide/test-dir/getting-started",
                     "overviewHeaders": undefined,
                     "tag": undefined,
                     "text": "Getting started",
                   },
                 ],
-                "link": "/base/guide/test-dir/",
+                "link": "/guide/test-dir/",
                 "overviewHeaders": undefined,
                 "tag": undefined,
                 "text": "Test dir",
@@ -167,13 +175,13 @@ describe('walk', () => {
                   {
                     "_fileKey": "en/guide/test-same-name-dir/index",
                     "context": undefined,
-                    "link": "/base/guide/test-same-name-dir/",
+                    "link": "/guide/test-same-name-dir/",
                     "overviewHeaders": undefined,
                     "tag": undefined,
                     "text": "Test same name dir",
                   },
                 ],
-                "link": "/base/guide/test-same-name-dir",
+                "link": "/guide/test-same-name-dir",
                 "overviewHeaders": undefined,
                 "tag": undefined,
                 "text": "Test same name dir in file",
@@ -181,7 +189,7 @@ describe('walk', () => {
               {
                 "_fileKey": "en/guide/a",
                 "context": undefined,
-                "link": "/base/guide/a",
+                "link": "/guide/a",
                 "overviewHeaders": undefined,
                 "tag": undefined,
                 "text": "Page a",
@@ -189,7 +197,7 @@ describe('walk', () => {
               {
                 "_fileKey": "en/guide/b",
                 "context": undefined,
-                "link": "/base/guide/b",
+                "link": "/guide/b",
                 "overviewHeaders": undefined,
                 "tag": undefined,
                 "text": "Page b",
@@ -197,14 +205,14 @@ describe('walk', () => {
               {
                 "_fileKey": "en/guide/c",
                 "context": undefined,
-                "link": "/base/guide/c",
+                "link": "/guide/c",
                 "overviewHeaders": undefined,
                 "tag": undefined,
                 "text": "c",
               },
               {
                 "context": undefined,
-                "link": "/base/guide/test-dir",
+                "link": "/guide/test-dir",
                 "tag": undefined,
                 "text": "My Link",
               },
@@ -212,6 +220,123 @@ describe('walk', () => {
           },
         },
       ]
+    `);
+    expect(orderStringSet(metaFileSet)).toMatchInlineSnapshot(`
+      "<ROOT>/packages/core/src/node/auto-nav-sidebar/fixtures/docs-locales/en/_nav.json
+      <ROOT>/packages/core/src/node/auto-nav-sidebar/fixtures/docs-locales/en/guide/_meta.json
+      <ROOT>/packages/core/src/node/auto-nav-sidebar/fixtures/docs-locales/zh/_nav.json
+      <ROOT>/packages/core/src/node/auto-nav-sidebar/fixtures/docs-locales/zh/guide/_meta.json"
+    `);
+    expect(orderStringSet(mdFileSet)).toMatchInlineSnapshot(`
+      "<ROOT>/packages/core/src/node/auto-nav-sidebar/fixtures/docs-locales/en/guide/a.md
+      <ROOT>/packages/core/src/node/auto-nav-sidebar/fixtures/docs-locales/en/guide/b.mdx
+      <ROOT>/packages/core/src/node/auto-nav-sidebar/fixtures/docs-locales/en/guide/c.tsx
+      <ROOT>/packages/core/src/node/auto-nav-sidebar/fixtures/docs-locales/en/guide/index.mdx
+      <ROOT>/packages/core/src/node/auto-nav-sidebar/fixtures/docs-locales/en/guide/test-dir/getting-started.mdx
+      <ROOT>/packages/core/src/node/auto-nav-sidebar/fixtures/docs-locales/en/guide/test-dir/index.mdx
+      <ROOT>/packages/core/src/node/auto-nav-sidebar/fixtures/docs-locales/en/guide/test-same-name-dir.md
+      <ROOT>/packages/core/src/node/auto-nav-sidebar/fixtures/docs-locales/en/guide/test-same-name-dir/index.mdx
+      <ROOT>/packages/core/src/node/auto-nav-sidebar/fixtures/docs-locales/zh/guide/a.md
+      <ROOT>/packages/core/src/node/auto-nav-sidebar/fixtures/docs-locales/zh/guide/b.mdx
+      <ROOT>/packages/core/src/node/auto-nav-sidebar/fixtures/docs-locales/zh/guide/c.tsx
+      <ROOT>/packages/core/src/node/auto-nav-sidebar/fixtures/docs-locales/zh/guide/index.mdx
+      <ROOT>/packages/core/src/node/auto-nav-sidebar/fixtures/docs-locales/zh/guide/test-dir/getting-started.mdx
+      <ROOT>/packages/core/src/node/auto-nav-sidebar/fixtures/docs-locales/zh/guide/test-dir/index.mdx
+      <ROOT>/packages/core/src/node/auto-nav-sidebar/fixtures/docs-locales/zh/guide/test-same-name-dir.md
+      <ROOT>/packages/core/src/node/auto-nav-sidebar/fixtures/docs-locales/zh/guide/test-same-name-dir/index.mdx"
+    `);
+  });
+  it('multiVersion', async () => {
+    const docsDir = path.join(__dirname, './fixtures/docs-multi-version');
+    const metaFileSet = new Set<string>();
+    const mdFileSet = new Set<string>();
+    const result = await processLocales(
+      ['zh', 'en'],
+      ['v1', 'v2'],
+      docsDir,
+      ['.md', '.mdx', '.tsx'],
+      metaFileSet,
+      mdFileSet,
+    );
+    expect(result).toMatchInlineSnapshot(`
+      [
+        {
+          "nav": {
+            "v1": [
+              {
+                "link": "/guide",
+                "text": "指引",
+              },
+            ],
+            "v2": [
+              {
+                "link": "/guide",
+                "text": "指引",
+              },
+            ],
+          },
+          "sidebar": {
+            "/guide": [
+              {
+                "_fileKey": "v2/zh/guide/feature",
+                "context": undefined,
+                "link": "/v2/zh/guide/feature",
+                "overviewHeaders": undefined,
+                "tag": undefined,
+                "text": "功能 V2",
+              },
+            ],
+          },
+        },
+        {
+          "nav": {
+            "v1": [
+              {
+                "link": "/guide",
+                "text": "Guide",
+              },
+            ],
+            "v2": [
+              {
+                "link": "/guide",
+                "text": "Guide",
+              },
+            ],
+          },
+          "sidebar": {
+            "/guide": [
+              {
+                "_fileKey": "v2/en/guide/feature",
+                "context": undefined,
+                "link": "/v2/en/guide/feature",
+                "overviewHeaders": undefined,
+                "tag": undefined,
+                "text": "Feature V2",
+              },
+            ],
+          },
+        },
+      ]
+    `);
+    expect(orderStringSet(metaFileSet)).toMatchInlineSnapshot(`
+      "<ROOT>/packages/core/src/node/auto-nav-sidebar/fixtures/docs-multi-version/v1/en/_nav.json
+      <ROOT>/packages/core/src/node/auto-nav-sidebar/fixtures/docs-multi-version/v1/en/guide/_meta.json
+      <ROOT>/packages/core/src/node/auto-nav-sidebar/fixtures/docs-multi-version/v1/zh/_nav.json
+      <ROOT>/packages/core/src/node/auto-nav-sidebar/fixtures/docs-multi-version/v1/zh/guide/_meta.json
+      <ROOT>/packages/core/src/node/auto-nav-sidebar/fixtures/docs-multi-version/v2/en/_nav.json
+      <ROOT>/packages/core/src/node/auto-nav-sidebar/fixtures/docs-multi-version/v2/en/guide/_meta.json
+      <ROOT>/packages/core/src/node/auto-nav-sidebar/fixtures/docs-multi-version/v2/zh/_nav.json
+      <ROOT>/packages/core/src/node/auto-nav-sidebar/fixtures/docs-multi-version/v2/zh/guide/_meta.json"
+    `);
+    expect(orderStringSet(mdFileSet)).toMatchInlineSnapshot(`
+      "<ROOT>/packages/core/src/node/auto-nav-sidebar/fixtures/docs-multi-version/v1/en/guide.md
+      <ROOT>/packages/core/src/node/auto-nav-sidebar/fixtures/docs-multi-version/v1/en/guide/feature.md
+      <ROOT>/packages/core/src/node/auto-nav-sidebar/fixtures/docs-multi-version/v1/zh/guide.md
+      <ROOT>/packages/core/src/node/auto-nav-sidebar/fixtures/docs-multi-version/v1/zh/guide/feature.md
+      <ROOT>/packages/core/src/node/auto-nav-sidebar/fixtures/docs-multi-version/v2/en/guide.md
+      <ROOT>/packages/core/src/node/auto-nav-sidebar/fixtures/docs-multi-version/v2/en/guide/feature.md
+      <ROOT>/packages/core/src/node/auto-nav-sidebar/fixtures/docs-multi-version/v2/zh/guide.md
+      <ROOT>/packages/core/src/node/auto-nav-sidebar/fixtures/docs-multi-version/v2/zh/guide/feature.md"
     `);
   });
 });

@@ -1,4 +1,3 @@
-import path from 'node:path';
 import { expect, test } from '@playwright/test';
 import { getPort, killProcess, runDevCommand } from '../../utils/runCommands';
 
@@ -18,10 +17,11 @@ test.describe('plugin test', async () => {
   });
 
   test('Should render the element', async ({ page }) => {
-    await page.goto(`http://localhost:${appPort}/`, {
+    await page.goto(`http://localhost:${appPort}/guide/`, {
       waitUntil: 'networkidle',
     });
-    const codeBlockElements = await page.$$('.rspress-doc > .rspress-preview');
+    const codeBlockElements = page.locator('.rspress-doc > .rp-preview');
+    await expect(codeBlockElements).toHaveCount(3);
 
     const internalIframeJsxDemoCodePreview = await page
       .frameLocator('iframe')
@@ -33,15 +33,26 @@ test.describe('plugin test', async () => {
       .nth(1)
       .getByText('TSX')
       .innerText();
-    const transformedCodePreview = await page
+    const externalIframeJsxDemoCodePreview = await page
       .frameLocator('iframe')
       .nth(2)
+      .getByText('EXTERNAL')
+      .innerText();
+
+    expect(internalIframeJsxDemoCodePreview).toBe('Hello World JSX');
+    expect(internalIframeTsxDemoCodePreview).toBe('Hello World TSX');
+    expect(externalIframeJsxDemoCodePreview).toBe('Hello World External');
+  });
+
+  test('should render vue', async ({ page }) => {
+    await page.goto(`http://localhost:${appPort}/guide/vue`, {
+      waitUntil: 'networkidle',
+    });
+    const transformedCodePreview = await page
+      .frameLocator('iframe')
       .getByText('VUE')
       .innerText();
 
-    expect(codeBlockElements.length).toBe(3);
-    expect(internalIframeJsxDemoCodePreview).toBe('Hello World JSX');
-    expect(internalIframeTsxDemoCodePreview).toBe('Hello World TSX');
     expect(transformedCodePreview).toBe('Hello World VUE');
   });
 });

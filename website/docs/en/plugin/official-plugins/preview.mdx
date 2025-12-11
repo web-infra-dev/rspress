@@ -1,0 +1,384 @@
+---
+tag: new
+---
+
+# @rspress/plugin-preview <SourceCode href="https://github.com/web-infra-dev/rspress/tree/main/packages/plugin-preview" />
+
+import { SourceCode, PackageManagerTabs, Tabs, Tab } from '@theme';
+
+Used to preview components in the code block of md(x) files, suitable for writing component library documentation.
+
+## Installation
+
+<PackageManagerTabs command="add @rspress/plugin-preview -D" />
+
+## Usage
+
+### 1. Install the plugin
+
+First, write the following config in the config file:
+
+```ts title="rspress.config.ts" twoslash
+import { defineConfig } from '@rspress/core';
+import { pluginPreview } from '@rspress/plugin-preview';
+
+export default defineConfig({
+  plugins: [pluginPreview()],
+});
+```
+
+### 2. Use in mdx files
+
+Use the ` ```tsx preview ` syntax in mdx files:
+
+````mdx title="example.mdx"
+```tsx preview
+import { useState } from 'react';
+
+function App() {
+  const [count, setCount] = useState(0);
+
+  return (
+    <div style={{ textAlign: 'center' }}>
+      <p>Current count: {count}</p>
+      <button onClick={() => setCount(count + 1)}>+</button>
+      <button onClick={() => setCount(count - 1)}>-</button>
+    </div>
+  );
+}
+
+export default App;
+```
+````
+
+The rendering result is as follows:
+
+```tsx preview
+import { useState } from 'react';
+
+function App() {
+  const [count, setCount] = useState(0);
+
+  return (
+    <div style={{ textAlign: 'center' }}>
+      <p>Current count: {count}</p>
+      <button onClick={() => setCount(count + 1)}>+</button>
+      <button onClick={() => setCount(count - 1)}>-</button>
+    </div>
+  );
+}
+
+export default App;
+```
+
+:::tip
+
+1. Currently only works in `.mdx` files.
+2. You need to export the component as default, and Rspress will automatically render this component.
+
+:::
+
+### 3. Write component code in other files
+
+In addition to writing component code in the code block of the mdx file, you can also use it with [File Code Block](../../guide/use-mdx/code-blocks.mdx#file-code-block) to write the example code in other files.
+
+````mdx title="example.mdx"
+```tsx file="./_demo.tsx" preview
+
+```
+````
+
+```tsx title="_demo.tsx" file="./_demo.tsx"
+
+```
+
+The rendering result is as follows:
+
+```tsx file="./_demo.tsx" preview
+
+```
+
+## Using iframe preview mode \{#preview-mode}
+
+This plugin supports multiple preview modes. You can switch between them by adjusting the `preview="..."` meta information. For example, you can use ` ```tsx preview="iframe-follow" ` to switch to [iframe-follow](#previewiframe-follow) mode.
+
+` ```tsx preview` is equivalent to ` ```tsx preview="{defaultPreviewMode}"`, which is determined by the [defaultPreviewMode](#defaultPreviewMode) configuration.
+
+:::tip
+
+iframe preview mode has a separate compilation and runtime environment.
+
+1. Separate compilation environment, the example code in the code block will be compiled as an entry by a separate Rsbuild instance, allowing injection of sass or less variables, etc.
+
+2. Separate runtime environment, effectively avoiding style conflicts with the documentation site, and can load the component library's own `base.css`.
+
+:::
+
+### `preview="internal"`
+
+`"internal"` is the default preview mode, where the component is rendered directly within the document.
+
+Syntax:
+
+````mdx title="example.mdx"
+```tsx file="./_demo.tsx" preview
+
+```
+````
+
+or
+
+````mdx title="example.mdx"
+```tsx file="./_demo.tsx" preview="internal"
+
+```
+````
+
+Rendering result:
+
+```tsx file="./_demo.tsx" preview="internal"
+
+```
+
+### `preview="iframe-follow"`
+
+This mode displays an iframe preview area on the right side of the code block that follows the content flow.
+
+Syntax:
+
+````mdx title="example.mdx"
+```tsx file="./_demo.tsx" preview="iframe-follow"
+
+```
+````
+
+Rendering result:
+
+```tsx file="./_demo.tsx" preview="iframe-follow"
+
+```
+
+### `preview="iframe-fixed"`
+
+This mode displays a fixed iframe preview area on the right side of the page, ideal for mobile component library documentation.
+
+Syntax:
+
+````mdx title="example.mdx"
+```tsx file="./_demo.tsx" preview="iframe-fixed"
+
+```
+````
+
+Rendering result:
+
+![](https://lf3-static.bytednsdoc.com/obj/eden-cn/uhbfnupenuhf/rspress/demo-preview-mobile-fixed.png)
+
+## Options
+
+This plugin accepts a configuration object with the following type definition:
+
+```ts
+interface PreviewOptions {
+  defaultRenderMode?: 'pure' | 'preview';
+  defaultPreviewMode?: 'internal' | 'iframe-fixed' | 'iframe-follow';
+  iframeOptions?: IframeOptions;
+  previewLanguages?: string[];
+  previewCodeTransform?: (codeInfo: {
+    language: string;
+    code: string;
+  }) => string;
+}
+
+interface IframeOptions {
+  devPort?: number;
+  builderConfig?: RsbuildConfig;
+  customEntry?: (meta: CustomEntry) => string;;
+}
+```
+
+### defaultRenderMode
+
+- **Type:** `'pure' | 'preview'`
+- **Default:** `'pure'`
+
+Configures the default rendering behavior for code blocks that don't explicitly declare `pure` or `preview`.
+
+- ` ```tsx pure`: Render as a regular code block
+- ` ```tsx `: Render based on `defaultRenderMode` configuration
+- ` ```tsx preview`: Render as a code block with preview component
+
+### defaultPreviewMode
+
+- **Type:** `'internal' | 'iframe-follow' | 'iframe-fixed'`
+- **Default:** `'internal'`
+
+Configures the default [preview mode](#preview-mode) for ` ```tsx preview`.
+
+- ` ```tsx preview`: Render based on `defaultPreviewMode` configuration
+- ` ```tsx preview="internal"`: Render using internal mode
+- ` ```tsx preview="iframe-follow"`: Render using follow iframe mode
+- ` ```tsx preview="iframe-fixed"`: Render using fixed iframe mode
+
+### iframeOptions
+
+This plugin starts a separate Rsbuild instance for the iframe mode's dev server and build process, completely isolated from the Rspress documentation compilation.
+
+#### iframeOptions.devPort
+
+- **Type:** `number`
+- **Default:** `7890`
+
+Configures the dev server port for iframe preview. Use this when the default port is occupied.
+
+#### iframeOptions.builderConfig
+
+Configures Rsbuild build options for the iframe, such as adding global styles or scripts.
+
+#### iframeOptions.customEntry
+
+Configures a custom entry to support other frameworks like Vue.
+
+:::warning Note
+Only available in `preview="iframe-follow"` mode.
+:::
+
+Here is an example for the Vue framework:
+
+```ts
+import { defineConfig } from '@rspress/core';
+import { pluginPreview } from '@rspress/plugin-preview';
+import { pluginVue } from '@rsbuild/plugin-vue';
+
+export default defineConfig({
+  // ...
+  plugins: [
+    pluginPreview({
+      previewMode: 'iframe',
+      previewLanguages: ['vue'],
+      iframeOptions: {
+        position: 'follow',
+        customEntry: ({ demoPath }) => {
+          return `
+          import { createApp } from 'vue';
+          import App from ${JSON.stringify(demoPath)};
+          createApp(App).mount('#root');
+          `;
+        },
+        builderConfig: {
+          plugins: [pluginVue()],
+        },
+      },
+    }),
+  ],
+});
+```
+
+### previewLanguages
+
+- **Type:** `string[]`
+- **Default:** `['jsx', 'tsx']`
+
+Configures the code languages that support preview. To support other formats like JSON or YAML, use this in conjunction with `previewCodeTransform`.
+
+### previewCodeTransform
+
+- **Type:** `(codeInfo: { language: string; code: string }) => string`
+- **Default:** `({ code }) => code`
+
+Performs custom transformation on code before preview.
+
+The following example shows how to transform JSON Schema into a renderable React component:
+
+```json
+{
+  "type": "div",
+  "children": "Render from JSON"
+}
+```
+
+You can configure it as follows:
+
+```ts
+pluginPreview({
+  previewLanguages: ['jsx', 'tsx', 'json'],
+  previewCodeTransform(codeInfo) {
+    if (codeInfo.language === 'json') {
+      return `
+import React from 'react';
+
+const json = ${codeInfo.code};
+
+export default function() {
+return React.createElement(json.type, null, json.children);
+}
+`;
+    } else {
+      return codeInfo.code;
+    }
+  },
+});
+```
+
+## Migrating from V1
+
+When migrating from Rspress V1, the plugin functionality remains unchanged. Only the MDX source code syntax has the following adjustments:
+
+- `<code src="./foo.tsx"/>` should be migrated to [File Code Block](../../guide/use-mdx/code-blocks.mdx#file-code-block) ` ```tsx file="./foo.tsx"`
+- The `defaultPreviewMode` option replaces `iframeOptions.position` and `previewMode`
+- The default value of `defaultRenderMode` changed from `'preview'` to `'pure'`
+
+:::tip Migration Examples
+
+**Example 1**:
+
+Before: Required declarations in both config file and MDX file.
+
+```ts
+pluginPreview({
+  previewMode: 'iframe',
+  iframeOptions: { position: 'fixed' },
+});
+```
+
+````mdx
+```tsx preview
+
+```
+````
+
+After: Only declare in the MDX file.
+
+````mdx
+```tsx preview="iframe-fixed"
+
+```
+````
+
+**Example 2**:
+
+Before: Using `iframe` or `previewMode="iframe"` attribute.
+
+````mdx
+```tsx iframe
+
+```
+
+{/* or */}
+
+<code src="./_demo.tsx" previewMode="iframe" />
+````
+
+After: Use the unified `preview="..."` attribute.
+
+````mdx
+```tsx preview="iframe-follow"
+
+```
+
+```tsx file="./_demo.tsx" preview="iframe-follow"
+
+```
+````
+
+:::

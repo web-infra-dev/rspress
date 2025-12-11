@@ -4,8 +4,8 @@ import { getNavbarItems, getSidebarTexts } from '../../utils/getSideBar';
 import { getPort, killProcess, runDevCommand } from '../../utils/runCommands';
 
 test.describe('plugin-typedoc single entry', async () => {
-  let appPort;
-  let app;
+  let appPort: number;
+  let app: Awaited<ReturnType<typeof runDevCommand>>;
   test.beforeAll(async () => {
     const appDir = path.join(__dirname, 'single');
     appPort = await getPort();
@@ -22,24 +22,27 @@ test.describe('plugin-typedoc single entry', async () => {
       waitUntil: 'networkidle',
     });
 
-    const navItems = await getNavbarItems(page);
-    expect(navItems?.length).toBe(2);
+    const navItems = getNavbarItems(page);
+    await expect(navItems).toHaveCount(2);
 
     const sidebarTexts = await getSidebarTexts(page);
-    expect(sidebarTexts?.length).toBe(3);
+    expect(sidebarTexts.length).toBe(6);
     expect(sidebarTexts.join(',')).toEqual(
       [
         '@rspress-fixture/rspress-plugin-typedoc-single',
-        'FunctionsFunction: createMiddlewareFunction: mergeMiddlewares',
-        'TypesType alias: Middleware',
+        'Functions',
+        'Function: createMiddleware()',
+        'Function: mergeMiddlewares()',
+        'Types',
+        'Type Alias: Middleware()',
       ].join(','),
     );
   });
 });
 
 test.describe('plugin-typedoc multi entries', async () => {
-  let appPort;
-  let app;
+  let appPort: number;
+  let app: Awaited<ReturnType<typeof runDevCommand>>;
   test.beforeAll(async () => {
     const appDir = path.join(__dirname, 'multi');
     appPort = await getPort();
@@ -56,18 +59,38 @@ test.describe('plugin-typedoc multi entries', async () => {
       waitUntil: 'networkidle',
     });
 
-    const navItems = await getNavbarItems(page);
-    expect(navItems?.length).toBe(2);
+    const navItems = getNavbarItems(page);
+    await expect(navItems).toHaveCount(2);
 
     const sidebarTexts = await getSidebarTexts(page);
-    expect(sidebarTexts?.length).toBe(4);
+    expect(sidebarTexts.length).toBe(10);
     expect(sidebarTexts.join(',')).toEqual(
       [
         '@rspress-fixture/rspress-plugin-typedoc-multi',
-        'FunctionsFunction: createMiddlewareFunction: mergeMiddlewares',
-        'ModulesModule: middleware',
-        'TypesType alias: Middleware',
+        'Functions',
+        'Function: createMiddleware()',
+        'Function: mergeMiddlewares()',
+        'Function: getRspressUrl()',
+        'Modules',
+        'Module: middleware',
+        'Module: raw-link',
+        'Types',
+        'Type Alias: Middleware()',
       ].join(','),
     );
+  });
+
+  test('Should render raw link correctly', async ({ page }) => {
+    await page.goto(
+      `http://localhost:${appPort}/api/functions/raw-link.getRspressUrl.html`,
+      {
+        waitUntil: 'networkidle',
+      },
+    );
+    const rspressUrl = await page.$eval(
+      'a[href="https://rspress.rs"]',
+      el => el.textContent,
+    );
+    expect(rspressUrl).toBe('Rspress site');
   });
 });

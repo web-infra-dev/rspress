@@ -1,8 +1,8 @@
 import { usePageData } from '@rspress/core/runtime';
 import { Editor, Runner } from '@rspress/plugin-playground/web';
-// @ts-ignore Cannot find module _rspress_playground_imports
+// @ts-expect-error Cannot find module _rspress_playground_imports
 import getImport from '_rspress_playground_imports';
-import React, {
+import {
   type HTMLAttributes,
   type ReactNode,
   useCallback,
@@ -58,7 +58,7 @@ export default function Playground(props: PlaygroundProps) {
     code: codeProp,
     language,
     className = '',
-    direction: directionProp,
+    direction: _directionProp,
     editorPosition,
     renderChildren,
     ...rest
@@ -82,8 +82,11 @@ export default function Playground(props: PlaygroundProps) {
     'rspress-playground',
     `rspress-playground-${direction}`,
     `rspress-playground-reverse-${useReverseLayout ? 'y' : 'n'}`,
+    'rp-not-doc',
     className,
-  ].join(' ');
+  ]
+    .filter(Boolean)
+    .join(' ');
 
   return (
     <div className={classNames} {...rest}>

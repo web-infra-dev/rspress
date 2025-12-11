@@ -13,12 +13,16 @@ export type DirSideMeta = {
   type: 'dir';
   name: string;
   label?: string;
-  collapsible?: boolean;
-  collapsed?: boolean;
   tag?: string;
   overviewHeaders?: number[];
   context?: string;
+
+  collapsible?: boolean;
+  collapsed?: boolean;
 };
+
+export type DirSectionHeaderSideMeta = Omit<DirSideMeta, 'type'> &
+  Omit<SectionHeaderMeta, 'type'> & { type: 'dir-section-header' };
 
 export type DividerSideMeta = {
   type: 'divider';
@@ -31,17 +35,59 @@ export type SectionHeaderMeta = {
   tag?: string;
 };
 
-export type CustomLinkMeta = {
-  type: 'custom-link';
-  label: string;
-  link: string;
-  context?: string;
-  tag?: string;
-};
+// just copied from CustomLinkMeta, but without type field, to avoid circular reference in json schema
+type _CustomLinkMetaWithoutTypeField =
+  | {
+      type?: 'custom-link';
+      label: string;
+      tag?: string;
+      overviewHeaders?: number[];
+      context?: string;
+      // custom link
+      link: string;
+    }
+  | {
+      type?: 'custom-link';
+      label: string;
+      tag?: string;
+      overviewHeaders?: number[];
+      context?: string;
+      link?: string;
+      collapsible?: boolean;
+      collapsed?: boolean;
+      items: _CustomLinkMetaWithoutTypeField[];
+    };
+
+export type CustomLinkMeta =
+  | {
+      // file link
+      type: 'custom-link';
+      label: string;
+      tag?: string;
+      overviewHeaders?: number[];
+      context?: string;
+      // custom link
+      link: string;
+    }
+  | {
+      // dir link
+      type: 'custom-link';
+      label: string;
+      tag?: string;
+      overviewHeaders?: number[];
+      context?: string;
+      // custom link
+      link?: string;
+      // DirSideMeta
+      collapsible?: boolean;
+      collapsed?: boolean;
+      items: _CustomLinkMetaWithoutTypeField[];
+    };
 
 export type SideMetaItem =
   | FileSideMeta
   | DirSideMeta
+  | DirSectionHeaderSideMeta
   | DividerSideMeta
   | SectionHeaderMeta
   | CustomLinkMeta

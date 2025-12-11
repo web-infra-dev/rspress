@@ -1,0 +1,42 @@
+.rp-scrollbar {
+  scrollbar-gutter: stable;
+
+  /* Scrollbar dimensions */
+  &::-webkit-scrollbar {
+    width: 4px;
+    height: 4px;
+  }
+
+  /* Scrollbar track */
+  &::-webkit-scrollbar-track {
+    background: transparent;
+  }
+
+  /* Scrollbar thumb */
+  &::-webkit-scrollbar-thumb {
+    background: rgba(0, 0, 0, 0.05);
+    border-radius: 4px;
+    transition: background 0.2s ease;
+  }
+
+  /* Hover state */
+  &:hover::-webkit-scrollbar-thumb {
+    background: rgba(0, 0, 0, 0.1);
+  }
+
+  /* Scrollbar corner */
+  &::-webkit-scrollbar-corner {
+    background: transparent;
+  }
+
+  /* Dark mode adaptation */
+  .rp-dark & {
+    &::-webkit-scrollbar-thumb {
+      background: rgba(255, 255, 255, 0.1);
+    }
+
+    &:hover::-webkit-scrollbar-thumb {
+      background: rgba(255, 255, 255, 0.2);
+    }
+  }
+}

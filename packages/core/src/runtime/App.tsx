@@ -1,5 +1,5 @@
-import { DataContext, useLocation } from '@rspress/runtime';
-import { Layout } from '@theme';
+import { Content, PageContext, useLocation } from '@rspress/core/runtime';
+import { Layout, Root } from '@theme';
 import React, { useContext, useLayoutEffect } from 'react';
 import globalComponents from 'virtual-global-components';
 import { initPageData } from './initPageData';
@@ -10,7 +10,7 @@ enum QueryStatus {
 }
 
 export function App() {
-  const { setData: setPageData, data } = useContext(DataContext);
+  const { setData: setPageData, data } = useContext(PageContext);
   const { pathname, search } = useLocation();
   useLayoutEffect(() => {
     async function refetchData() {
@@ -29,7 +29,7 @@ export function App() {
     return <></>;
   }
 
-  const frontmatter = data.page.frontmatter || {};
+  const frontmatter = data.frontmatter || {};
   const GLOBAL_COMPONENTS_KEY = 'globalUIComponents';
 
   const query = new URLSearchParams(search);
@@ -38,8 +38,12 @@ export function App() {
     frontmatter[GLOBAL_COMPONENTS_KEY] === false ||
     query.get(GLOBAL_COMPONENTS_KEY) === QueryStatus.Hide;
 
+  if (process.env.__SSR_MD__) {
+    return <Content />;
+  }
+
   return (
-    <>
+    <Root>
       <Layout />
       {
         // Global UI
@@ -62,6 +66,6 @@ export function App() {
             });
           })
       }
-    </>
+    </Root>
   );
 }

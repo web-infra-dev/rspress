@@ -1,10 +1,9 @@
-import path from 'node:path';
 import { expect, test } from '@playwright/test';
 import { getPort, killProcess, runDevCommand } from '../../utils/runCommands';
 
 test.describe('home footer test', async () => {
-  let appPort;
-  let app;
+  let appPort: number;
+  let app: Awaited<ReturnType<typeof runDevCommand>>;
   test.beforeAll(async () => {
     const appDir = __dirname;
     appPort = await getPort();
@@ -19,12 +18,8 @@ test.describe('home footer test', async () => {
 
   test('custom home footer', async ({ page }) => {
     await page.goto(`http://localhost:${appPort}`);
-    const footer = await page.$('footer');
-    expect(footer).not.toBeNull();
-    if (!footer) {
-      return;
-    }
-    const a = await footer.$('a');
-    expect(a).not.toBeNull();
+    const footer = page.locator('footer');
+    await expect(footer).toBeVisible();
+    await expect(footer.locator('a')).toBeVisible();
   });
 });

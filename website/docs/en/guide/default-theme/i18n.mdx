@@ -1,0 +1,171 @@
+# Internationalization
+
+To achieve document internationalization in Rspress, you need to do the following:
+
+1. Defines I18n text data.
+2. Configure `locales` and `themeConfig.locales`。
+3. Configure the default language.
+4. Create documents in different language version.
+5. Configure sidebar and navbar.
+6. Use `useI18n` in custom components.
+
+## Defines I18n text data
+
+Create a new `i18n.json` in the current workspace, the directory structure is as follows:
+
+```txt
+.
+├── docs
+├── i18n.json
+├── package.json
+├── tsconfig.json
+└── rspress.config.ts
+```
+
+In this JSON file, you can define the text needed for internationalization, the type definition is as follows:
+
+```ts
+export interface I18n {
+  // key: text id
+  [key: string]: {
+    // key: language
+    [key: string]: string;
+  };
+}
+```
+
+For example:
+
+```json title="i18n.json"
+{
+  "gettingStarted": {
+    "en": "Getting Started",
+    "zh": "开始"
+  },
+  "features": {
+    "en": "Features",
+    "zh": "特性"
+  },
+  "guide": {
+    "en": "Guide",
+    "zh": "指南"
+  }
+}
+```
+
+These text data are used in both **config file** and **custom components**, which will be introduced in detail later.
+
+## Configure `locales`
+
+In `rspress.config.ts`, `locales` is used to configure the `lang`, `title`, `description` and other information of the site, mainly around the information of the site itself.
+
+```ts title="rspress.config.ts"
+import { defineConfig } from '@rspress/core';
+
+export default defineConfig({
+  // locales is an array of objects
+  locales: [
+    {
+      lang: 'en',
+      // The label in nav bar to switch language
+      label: 'English',
+      title: 'Rspress',
+      description: 'Static Site Generator',
+    },
+    {
+      lang: 'zh',
+      label: '简体中文',
+      title: 'Rspress',
+      description: '静态网站生成器',
+    },
+  ],
+});
+```
+
+:::tip Note
+
+`themeConfig.locales` also contains all the fields in `locales`. However, it will be removed in the future, please use `locales`.
+
+:::
+
+For other international theme parameters, please refer to [API type](/api/config/config-theme#locales).
+
+## Configure the default language
+
+After configure `locales` data, you need configure the default language of the document via [lang](/api/config/config-basic#lang), as shown in the following example:
+
+```ts title="rspress.config.ts"
+import { defineConfig } from '@rspress/core';
+
+export default defineConfig({
+  lang: 'en',
+});
+```
+
+This is important because **for routes in the default language, Rspress will remove the language prefix**, such as `/en/guide/getting-started` will be converted to `/guide/getting-started`.
+
+## Create documents in different language
+
+After the above configuration, we can start to create documents in different language versions. It is very simple. We only need to create the following structure in the document root directory:
+
+```txt
+docs
+├── en
+│   ├── api
+│   │   └── index.md
+│   └── guide
+│       └── getting-started.md
+│       └── features.md
+└── zh
+    ├── api
+    │   └── index.md
+    └── guide
+        └── getting-started.md
+        └── features.md
+```
+
+As you can see, we put documents in different languages ​​in the `en` and `zh` directories under the `docs` directory, so that we can easily distinguish documents in different languages.
+
+## Configuring \_meta.json
+
+Through the \_meta.json file, we can configure the content of the nav bar and sidebar. For details, please refer to [Auto Nav/Sidebar](/guide/basic/auto-nav-sidebar).
+
+### Navigation bar level
+
+In the \_meta.json configuration at the navigation bar level, you can specify `text` as an i18n key, for example:
+
+```json title="_meta.json"
+[
+  {
+    "text": "guide",
+    "link": "/guide/start/getting-started",
+    "activeMatch": "/guide/"
+  }
+]
+```
+
+Here, `text` is `guide`, this value will be automatically translated into `指南` or `Guide`, depending on the current language.
+
+### Sidebar level
+
+In the \_meta.json configuration at the sidebar level, you can specify `label` as an i18n key, for example:
+
+```json title="_meta.json"
+[
+  {
+    "type": "dir",
+    "name": "start",
+    "label": "gettingStarted"
+  }
+]
+```
+
+Here, `label` is `gettingStarted`, this value will be automatically translated into `开始` or `Getting Started`, depending on the current language.
+
+## Use `useI18n` in custom components
+
+In the process of MDX development or custom theme development, you may write some custom components, which also need to use international text, so how to get it?
+
+import UseI18n from '../../fragments/useI18n.mdx';
+
+<UseI18n />

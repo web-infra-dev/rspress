@@ -8,6 +8,6 @@
     "preview": "rspress preview"
   },
   "dependencies": {
-    "rspress": "workspace:*"
+    "@rspress/core": "workspace:*"
   }
 }

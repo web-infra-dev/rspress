@@ -1,5 +1,5 @@
 export {
-  type Middleware,
   createMiddleware,
+  type Middleware,
   mergeMiddlewares,
 } from './middleware';

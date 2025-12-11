@@ -1,0 +1,133 @@
+/* Preview Component Styles (BEM) */
+
+:root {
+  --rp-preview-button-hover-bg: #e5e6eb;
+  --rp-preview-button-bg: #e5e6eb;
+}
+
+.dark {
+  --rp-preview-button-hover-bg: #c5c5c5;
+  --rp-preview-button-bg: #c5c5c5;
+}
+
+/* Block: rp-preview */
+.rp-preview {
+  margin: 16px 0;
+}
+
+/* ==========================================================================
+   Preview--internal (internal mode)
+   ========================================================================== */
+
+.rp-preview--internal .rp-codeblock {
+  margin: 0;
+  border-radius: 0 0 var(--rp-radius) var(--rp-radius);
+  border-top: 0px;
+}
+
+.rp-preview--internal__card {
+  padding: 16px;
+  position: relative;
+  border: 1px solid var(--rp-container-details-border);
+  border-radius: var(--rp-radius);
+  display: flex;
+}
+
+.rp-preview--internal__card__content {
+  overflow: auto;
+  flex: auto;
+}
+
+/* Code collapse/expand animation using CSS Grid */
+.rp-preview--internal--show-code .rp-preview--internal__card {
+  border-radius: var(--rp-radius) var(--rp-radius) 0 0;
+  transition: border-radius 0.2s ease-out;
+}
+
+.rp-preview--internal__code-wrapper {
+  display: grid;
+  grid-template-rows: 0fr;
+  transition:
+    grid-template-rows 0.2s ease-out,
+    opacity 0.2s ease-out;
+  opacity: 0;
+}
+
+.rp-preview--internal__code-wrapper--visible {
+  grid-template-rows: 1fr;
+  opacity: 1;
+}
+
+.rp-preview--internal__code {
+  overflow: hidden;
+}
+
+.rp-preview-operations__button--expanded {
+  background: var(--rp-c-bg-mute);
+  box-shadow: inset 1px 1px 0 1px var(--rp-c-divider-light);
+}
+
+/* ==========================================================================
+   Preview--iframe-follow (iframe-follow mode)
+   ========================================================================== */
+
+.rp-preview--iframe-follow {
+  border: 1px solid var(--rp-container-details-border);
+  border-radius: var(--rp-radius);
+  display: flex;
+  flex-direction: column;
+}
+
+@media (min-width: 960px) {
+  .rp-preview--iframe-follow {
+    flex-direction: row;
+  }
+}
+
+.rp-preview--iframe-follow__code {
+  position: relative;
+  overflow: hidden;
+  flex: 1 1 auto;
+  min-height: 300px;
+}
+
+@media (min-width: 960px) {
+  .rp-preview--iframe-follow__code {
+    max-height: 700px;
+    min-height: auto;
+  }
+}
+
+.rp-preview--iframe-follow__code .rp-codeblock {
+  border: none;
+  margin: 0;
+}
+
+.rp-preview--iframe-follow__code .rp-codeblock,
+.rp-preview--iframe-follow__code .rp-codeblock__content,
+.rp-preview--iframe-follow__code
+  .rp-codeblock__content
+  .rp-codeblock__content__scroll-container {
+  height: 100%;
+}
+
+.rp-preview--iframe-follow__device {
+  position: relative;
+  flex: 1 1 auto;
+  border-top: 1px solid var(--rp-container-details-border);
+  display: flex;
+  flex-direction: column;
+}
+
+@media (min-width: 960px) {
+  .rp-preview--iframe-follow__device {
+    border-top: none;
+    border-left: 1px solid var(--rp-container-details-border);
+  }
+}
+
+.rp-preview--iframe-follow__device iframe {
+  border-bottom: 1px solid var(--rp-container-details-border);
+  height: 100%;
+  flex: 1 1 auto;
+}

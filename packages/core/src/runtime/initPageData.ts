@@ -1,12 +1,13 @@
-import { isEqualPath, pathnameToRouteService } from '@rspress/runtime';
+import { isEqualPath, pathnameToRouteService } from '@rspress/core/runtime';
 import {
   type BaseRuntimePageInfo,
+  cleanUrl,
   type FrontMatterMeta,
   type Header,
   MDX_OR_MD_REGEXP,
-  type PageData,
-  cleanUrl,
+  type PageDataLegacy,
 } from '@rspress/shared';
+import { pageData } from 'virtual-page-data';
 import siteData from 'virtual-site-data';
 
 type PageMeta = {
@@ -16,7 +17,9 @@ type PageMeta = {
   frontmatter: FrontMatterMeta;
 };
 
-export async function initPageData(routePath: string): Promise<PageData> {
+export type Page = PageDataLegacy['page'];
+
+export async function initPageData(routePath: string): Promise<Page> {
   const matchedRoute = pathnameToRouteService(routePath);
   if (matchedRoute) {
     // Preload route component
@@ -27,7 +30,7 @@ export async function initPageData(routePath: string): Promise<PageData> {
       p
         .replace(/\/$/, '')
         .toLowerCase();
-    const extractPageInfo: BaseRuntimePageInfo = siteData.pages.find(page =>
+    const extractPageInfo: BaseRuntimePageInfo = pageData.pages.find(page =>
       isEqualPath(normalize(page.routePath), normalize(matchedRoute.path)),
     )!;
 
@@ -51,24 +54,21 @@ export async function initPageData(routePath: string): Promise<PageData> {
       ? meta
       : (mod as unknown as PageMeta);
     return {
-      siteData,
-      page: {
-        ...rest,
-        pagePath,
-        ...extractPageInfo,
-        pageType: frontmatter?.pageType || 'doc',
-        title,
-        frontmatter,
-        toc,
-      },
-    } satisfies PageData;
+      ...rest,
+      pagePath,
+      ...extractPageInfo,
+      pageType: frontmatter?.pageType || 'doc',
+      title,
+      frontmatter,
+      toc,
+    };
   }
 
   let lang = siteData.lang || '';
   let version = siteData.multiVersion?.default || '';
 
   if (siteData.lang && typeof window !== 'undefined') {
-    const path = location.pathname
+    const path = window.location.pathname
       .replace(siteData.base, '')
       .split('/')
       .slice(0, 2);
@@ -94,18 +94,15 @@ export async function initPageData(routePath: string): Promise<PageData> {
 
   // 404 Page
   return {
-    siteData,
-    page: {
-      pagePath: '',
-      pageType: '404',
-      routePath: '/404',
-      lang,
-      frontmatter: {},
-      title: '404',
-      toc: [],
-      version,
-      _filepath: '',
-      _relativePath: '',
-    },
+    pagePath: '',
+    pageType: '404',
+    routePath: '/404',
+    lang,
+    frontmatter: {},
+    title: '404',
+    toc: [],
+    version,
+    _filepath: '',
+    _relativePath: '',
   };
 }

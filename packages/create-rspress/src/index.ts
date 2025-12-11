@@ -1,6 +1,6 @@
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
-import { type ESLintTemplateName, create } from 'create-rstack';
+import { create, type ESLintTemplateName } from 'create-rstack';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 

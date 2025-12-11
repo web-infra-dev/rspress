@@ -1,0 +1,26 @@
+[
+  {
+    "type": "section-header",
+    "label": "主题"
+  },
+  "vars",
+  "custom-theme",
+  {
+    "type": "section-header",
+    "label": "组件"
+  },
+  {
+    "type": "dir",
+    "label": "内置组件",
+    "name": "components"
+  },
+  {
+    "type": "section-header",
+    "label": "Hooks"
+  },
+  {
+    "type": "dir",
+    "label": "内置 hooks",
+    "name": "hooks"
+  }
+]

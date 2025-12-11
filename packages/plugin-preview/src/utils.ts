@@ -27,13 +27,6 @@ export const normalizeId = (routePath: string) => {
   return toValidVarName(result);
 };
 
-export const injectDemoBlockImport = (str: string, path: string): string => {
-  return `
-    import DemoBlock from ${JSON.stringify(path)};
-    ${str}
-  `;
-};
-
 export const getLangFileExt = (lang: string): string => {
   switch (lang) {
     case 'jsx':

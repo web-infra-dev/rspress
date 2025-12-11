@@ -1,0 +1,35 @@
+.rp-source-code {
+  display: inline-block;
+  border-radius: 4px;
+  border: 1px solid;
+  border-color: var(--rp-c-divider);
+  color: var(--rp-c-text-2);
+  fill: currentColor;
+
+  &:hover {
+    color: var(--rp-c-text-1);
+  }
+
+  &__link {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.3s;
+    font-size: 12px;
+    padding: 4px 8px;
+    text-decoration: none;
+    color: inherit;
+  }
+
+  &__icon {
+    margin-right: 8px;
+    display: inline-flex;
+    width: 16px;
+    height: 16px;
+  }
+
+  &__text {
+    font-weight: 600;
+    line-height: 1.5em;
+  }
+}

@@ -1,52 +1,63 @@
 import path from 'node:path';
 import type { RsbuildPlugin } from '@rsbuild/core';
-import type { RouteService } from '@rspress/core';
-import { matchPath } from '@rspress/runtime/server';
-import { getSidebarDataGroup, removeBase } from '@rspress/shared';
 import type {
   Nav,
+  NavItemWithLink,
   PageIndexInfo,
   RouteMeta,
+  RouteService,
   RspressPlugin,
   Sidebar,
   SidebarDivider,
   SidebarGroup,
   SidebarItem,
   SidebarSectionHeader,
-} from '@rspress/shared';
-import type { NavItemWithLink } from '@rspress/shared';
-import { logger } from '@rspress/shared/logger';
-import { generateLlmsFullTxt, generateLlmsTxt } from './llmsTxt';
-import { mdxToMd } from './mdxToMd';
-import type { Options, rsbuildPluginLlmsOptions } from './types';
+} from '@rspress/core';
+import { getSidebarDataGroup, logger, matchPath } from '@rspress/core';
+import {
+  generateLlmsFullTxt,
+  generateLlmsTxt,
+  routePathToMdPath,
+} from './llmsTxt';
+import { normalizeMdFile } from './normalizeMdFile';
+import type {
+  Options,
+  RspressPluginLlmsOptions,
+  rsbuildPluginLlmsOptions,
+} from './types';
 
 const rsbuildPluginLlms = ({
   disableSSGRef,
+  baseRef,
   pageDataList,
   routes,
   titleRef,
   descriptionRef,
   langRef,
   sidebar,
-  baseRef,
-  docDirectoryRef,
   routeServiceRef,
   nav,
   rspressPluginOptions,
+  index = 0,
 }: rsbuildPluginLlmsOptions): RsbuildPlugin => ({
-  name: 'rsbuild-plugin-llms',
+  name: `rsbuild-plugin-llms-${index}`,
   async setup(api) {
     const {
-      llmsTxt = true,
-      mdFiles = true,
-      llmsFullTxt = true,
+      llmsTxt = {
+        name: 'llms.txt',
+      },
+      mdFiles = {
+        mdxToMd: false,
+        remarkPlugins: [],
+      },
+      llmsFullTxt = {
+        name: 'llms-full.txt',
+      },
       include,
       exclude,
     } = rspressPluginOptions;
 
     api.onBeforeBuild(async () => {
-      const base = baseRef.current;
-      const docDirectory = docDirectoryRef.current;
       const disableSSG = disableSSGRef.current;
 
       const newPageDataList = mergeRouteMetaWithPageData(
@@ -57,12 +68,13 @@ const rsbuildPluginLlms = ({
         exclude,
       );
 
-      // currently we do not support multi version
+      // TODO: currently we do not support multi version
       const navList: (NavItemWithLink & { lang: string })[] = Array.isArray(nav)
         ? (
             nav
               .map(i => {
-                const nav = (i.nav as any).default as NavItemWithLink[];
+                const nav = ((i.nav as any).default ||
+                  i.nav) as NavItemWithLink[];
                 const lang = i.lang;
                 return nav.map(i => {
                   return {
@@ -89,9 +101,7 @@ const rsbuildPluginLlms = ({
           const navItem = navList[i];
           if (
             lang === navItem.lang &&
-            new RegExp(navItem.activeMatch ?? navItem.link).test(
-              removeBase(routePath, base),
-            )
+            new RegExp(navItem.activeMatch ?? navItem.link).test(routePath)
           ) {
             pageArrayItem.push(pageData);
             return;
@@ -101,23 +111,28 @@ const rsbuildPluginLlms = ({
       });
 
       for (const array of pageArray) {
-        organizeBySidebar(sidebar, array, base);
+        organizeBySidebar(sidebar, array);
       }
 
       if (llmsTxt) {
+        const { name } = llmsTxt;
         const llmsTxtContent = generateLlmsTxt(
           pageArray,
           navList,
           others,
-          rspressPluginOptions.llmsTxt ?? {},
+          llmsTxt,
           titleRef.current,
           descriptionRef.current,
+          baseRef.current,
         );
         api.processAssets(
-          { targets: disableSSG ? ['web'] : ['node'], stage: 'additional' },
+          {
+            environments: disableSSG ? ['web'] : ['node'],
+            stage: 'additional',
+          },
           async ({ compilation, sources }) => {
             const source = new sources.RawSource(llmsTxtContent);
-            compilation.emitAsset('llms.txt', source);
+            compilation.emitAsset(name, source);
           },
         );
       }
@@ -129,39 +144,36 @@ const rsbuildPluginLlms = ({
           const filepath = pageData._filepath;
           const isMD = path.extname(filepath).slice(1) !== 'mdx';
           let mdContent: string | Buffer;
-          if (isMD) {
+          try {
+            mdContent = await normalizeMdFile(
+              content,
+              filepath,
+              routeServiceRef.current!,
+              baseRef.current,
+              typeof mdFiles !== 'boolean'
+                ? (mdFiles?.mdxToMd ?? false)
+                : false,
+              isMD,
+              typeof mdFiles !== 'boolean'
+                ? (mdFiles?.remarkPlugins ?? [])
+                : [],
+            );
+          } catch (e) {
+            // normalizeMdFile might have some edge cases, fallback to no flatten and plain mdx
+            logger.debug('normalizeMdFile failed', pageData.routePath, e);
             mdContent = content;
-          } else {
-            try {
-              mdContent = (
-                await mdxToMd(
-                  content,
-                  filepath,
-                  docDirectory,
-                  routeServiceRef.current,
-                )
-              ).toString();
-            } catch (e) {
-              // flatten might have some edge cases, fallback to no flatten and plain mdx
-              logger.debug(e);
-              mdContent = content;
-              return;
-            }
           }
-          // @ts-ignore
-          pageData.mdContent = mdContent;
-          const outFilePath = `${
-            pageData.routePath.endsWith('/')
-              ? `${pageData.routePath}index`
-              : pageData.routePath
-          }.md`;
+          const outFilePath = routePathToMdPath(pageData.routePath, '');
           mdContents[outFilePath] = mdContent.toString();
         }) ?? [],
       );
 
       if (mdFiles) {
         api.processAssets(
-          { targets: disableSSG ? ['web'] : ['node'], stage: 'additional' },
+          {
+            environments: disableSSG ? ['web'] : ['node'],
+            stage: 'additional',
+          },
           async ({ compilation, sources }) => {
             if (mdFiles) {
               Object.entries(mdContents).forEach(([outFilePath, content]) => {
@@ -174,16 +186,18 @@ const rsbuildPluginLlms = ({
       }
 
       if (llmsFullTxt) {
+        const { name } = llmsFullTxt;
         const llmsFullTxtContent = generateLlmsFullTxt(
           pageArray,
           navList,
           others,
+          baseRef.current,
         );
         api.processAssets(
           { targets: disableSSG ? ['web'] : ['node'], stage: 'additional' },
           async ({ compilation, sources }) => {
             const source = new sources.RawSource(llmsFullTxtContent);
-            compilation.emitAsset('llms-full.txt', source);
+            compilation.emitAsset(name, source);
           },
         );
       }
@@ -256,20 +270,12 @@ function flatSidebar(
     .filter(Boolean) as string[];
 }
 
-function organizeBySidebar(
-  sidebar: Sidebar,
-  pages: PageIndexInfo[],
-  base: string,
-) {
+function organizeBySidebar(sidebar: Sidebar, pages: PageIndexInfo[]) {
   if (pages.length === 0) {
     return;
   }
   const pageItem = pages[0];
-  const currSidebar = getSidebarDataGroup(
-    sidebar as any,
-    pageItem.routePath,
-    base,
-  );
+  const currSidebar = getSidebarDataGroup(sidebar as any, pageItem.routePath);
 
   if (currSidebar.length === 0) {
     return;
@@ -277,16 +283,55 @@ function organizeBySidebar(
   const orderList = flatSidebar(currSidebar);
 
   pages.sort((a, b) => {
-    const aIndex = orderList.findIndex(order => matchPath(order, a.routePath));
-    const bIndex = orderList.findIndex(order => matchPath(order, b.routePath));
+    let aIndex = orderList.findIndex(order => matchPath(order, a.routePath));
+    // if not in sidebar, put it to last
+    if (aIndex === -1) {
+      aIndex = Number.MAX_SAFE_INTEGER;
+    }
+    let bIndex = orderList.findIndex(order => matchPath(order, b.routePath));
+    if (bIndex === -1) {
+      bIndex = Number.MAX_SAFE_INTEGER;
+    }
     return aIndex - bIndex;
+  });
+}
+
+function getDefaultOptions(
+  lang: string | undefined,
+  langs: string[],
+): RspressPluginLlmsOptions {
+  if (!lang || langs.length === 0) {
+    return {};
+  }
+  return langs.map(l => {
+    if (l === lang) {
+      return {
+        llmsTxt: {
+          name: 'llms.txt',
+        },
+        llmsFullTxt: {
+          name: 'llms-full.txt',
+        },
+      };
+    }
+    return {
+      llmsTxt: {
+        name: `${l}/llms.txt`,
+      },
+      llmsFullTxt: {
+        name: `${l}/llms-full.txt`,
+      },
+      include({ page }) {
+        return page.lang === l;
+      },
+    };
   });
 }
 
 /**
  * A plugin for rspress to generate llms.txt, llms-full.txt, md files to let llm understand your website.
  */
-export function pluginLlms(options: Options = {}): RspressPlugin {
+export function pluginLlms(options?: RspressPluginLlmsOptions): RspressPlugin {
   const baseRef: { current: string } = { current: '' };
   const docDirectoryRef: { current: string } = { current: '' };
   const titleRef: { current: string | undefined } = { current: '' };
@@ -321,6 +366,62 @@ export function pluginLlms(options: Options = {}): RspressPlugin {
         routes.push(..._routes);
       }
     },
+    config(config) {
+      config.themeConfig = config.themeConfig || {};
+      config.themeConfig.locales =
+        config.themeConfig.locales || config.locales || [];
+
+      const langs = config.themeConfig.locales.map(locale => locale.lang);
+      let mergedOptions: RspressPluginLlmsOptions;
+      if (options === undefined) {
+        mergedOptions = getDefaultOptions(config.lang, langs);
+      } else {
+        mergedOptions = options;
+      }
+
+      if (!config.builderConfig) {
+        config.builderConfig = {};
+      }
+      if (!config.builderConfig.plugins) {
+        config.builderConfig.plugins = [];
+      }
+
+      config.builderConfig.plugins.push(
+        ...(Array.isArray(mergedOptions)
+          ? mergedOptions.map((item, index) => {
+              return rsbuildPluginLlms({
+                pageDataList,
+                routes,
+                titleRef,
+                descriptionRef,
+                langRef,
+                sidebar,
+                routeServiceRef,
+                nav,
+                baseRef,
+                disableSSGRef,
+                rspressPluginOptions: item,
+                index,
+              });
+            })
+          : [
+              rsbuildPluginLlms({
+                pageDataList,
+                routes,
+                titleRef,
+                descriptionRef,
+                langRef,
+                sidebar,
+                routeServiceRef,
+                nav,
+                baseRef,
+                disableSSGRef,
+                rspressPluginOptions: mergedOptions,
+              }),
+            ]),
+      );
+      return config;
+    },
     beforeBuild(config) {
       disableSSGRef.current = config.ssg === false;
 
@@ -353,25 +454,6 @@ export function pluginLlms(options: Options = {}): RspressPlugin {
       langRef.current = config.lang ?? '';
       baseRef.current = config.base ?? '/';
       docDirectoryRef.current = config.root ?? 'docs';
-    },
-    builderConfig: {
-      plugins: [
-        rsbuildPluginLlms({
-          ...options,
-          pageDataList,
-          routes,
-          titleRef,
-          descriptionRef,
-          langRef,
-          sidebar,
-          docDirectoryRef,
-          routeServiceRef,
-          nav,
-          baseRef,
-          disableSSGRef,
-          rspressPluginOptions: options,
-        }),
-      ],
     },
   };
 }

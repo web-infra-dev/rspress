@@ -1,0 +1,666 @@
+# 基础配置
+
+## root
+
+- **类型**： `string`
+- **默认值**： `docs`
+
+指定文档根目录。比如：
+
+```ts title="rspress.config.ts" twoslash
+import { defineConfig } from '@rspress/core';
+
+export default defineConfig({
+  root: 'docs',
+});
+```
+
+该配置同时支持相对路径和绝对路径，相对路径相对于当前工作目录。
+
+当然，除了通过配置文件来指定文档根目录，你也可以通过命令行参数来指定，比如：
+
+```bash
+rspress dev docs
+rspress build docs
+```
+
+## base
+
+- **类型**： `string`
+- **默认值**： `/`
+
+部署基础路径。比如，如果你计划将你的站点部署到 `https://foo.github.io/bar/`，那么你应该将 `base` 设置为 `"/bar/"`：
+
+```ts title="rspress.config.ts" twoslash
+import { defineConfig } from '@rspress/core';
+
+export default defineConfig({
+  base: '/bar/',
+});
+```
+
+## title
+
+- **类型**： `string`
+- **默认值**： `"Rspress"`
+
+站点标题。这个参数将被用作 HTML 页面的标题。例如：
+
+```ts title="rspress.config.ts"
+import { defineConfig } from '@rspress/core';
+
+export default defineConfig({
+  title: '我的站点',
+});
+```
+
+## description
+
+- **类型**： `string`
+- **默认值**： `""`
+
+站点描述。这将用作 HTML 页面的描述。例如：
+
+```ts title="rspress.config.ts"
+import { defineConfig } from '@rspress/core';
+
+export default defineConfig({
+  description: '我的站点描述',
+});
+```
+
+## icon
+
+- **类型**： `string | URL`
+- **默认值**： `""`
+
+站点图标。这个路径将用作 HTML 页面的图标路径。例如：
+
+```ts title="rspress.config.ts"
+import { defineConfig } from '@rspress/core';
+
+export default defineConfig({
+  icon: '/favicon.ico',
+});
+```
+
+对于普通路径，Rspress 会在 `public` 目录中找到你的图标，当然你也可以设置成一个 CDN 地址，或使用 `file://` 协议或 `URL` 来使用本地文件绝对路径。
+
+## lang
+
+- **类型**： `string`
+- **默认值**： `""`
+
+站点默认使用的语言。查看 [国际化](/guide/default-theme/i18n) 了解更多。
+
+```ts title="rspress.config.ts"
+import { defineConfig } from '@rspress/core';
+
+export default defineConfig({
+  lang: 'en',
+  locales: [
+    {
+      lang: 'en',
+      // ...
+    },
+    {
+      lang: 'zh',
+      // ...
+    },
+  ],
+});
+```
+
+## i18nSource
+
+- **类型**： `Record<string, Record<string, string>> | ((value: Record<string, Record<string, string>>) => Record<string, Record<string, string>> | Promise<Record<string, Record<string, string>>>)`
+- **默认值**： `{}`
+
+你可以通过这个配置项来修改 Rspress 内置的国际化文案或扩展自定义组件的文案。当扩展文案时，通常配合 [useI18n](/ui/hooks/use-i18n.html) 一起使用。
+
+:::tip
+
+与 `i18n.json` 的实现和效果均一致，任选一个使用即可，`i18nSource` 比 `i18n.json` 的优先级高，并且支持函数。
+
+:::
+
+参数 `i18nSource` 是一个对象，其结构为：
+
+```ts
+{
+  [textKey: string]: {
+    [locale: string]: string;
+  }
+}
+```
+
+其中第一层的 `textKey` 是文案的键名，第二层的 `locale` 是语言代码（如 `zh`、`en`），值是对应语言的翻译文本。
+
+下面是一个修改 Rspress 内置国际化文案的示例：
+
+```ts title="rspress.config.ts"
+import { defineConfig } from '@rspress/core';
+export default defineConfig({
+  i18nSource: {
+    editLinkText: {
+      en: '📝 Edit this page on Gitlab',
+      zh: '📝 在 Gitlab 上编辑此页',
+    },
+  },
+});
+```
+
+`i18nSource` 也可以是一个函数，例如：
+
+```ts
+import { defineConfig } from '@rspress/core';
+
+export default defineConfig({
+  i18nSource: async (source) => {
+    for (const key of Object.keys(source)) {
+      source[key]['en_US'] = source[key]['en'];
+    }
+    return source;
+  },
+});
+```
+
+以下是 Rspress 内置的国际化文案：
+
+<details>
+
+```ts file="../../../../../packages/core/src/node/runtimeModule/DEFAULT_I18N_TEXT.ts"
+
+```
+
+</details>
+
+## logo \{#logo-1}
+
+- **类型**： `string | { dark: string; light: string }`
+- **默认值**： `""`
+
+站点 logo。这个路径将用作导航栏左上角的 logo 路径。例如：
+
+```ts title="rspress.config.ts"
+import { defineConfig } from '@rspress/core';
+
+export default defineConfig({
+  logo: '/logo.png',
+});
+```
+
+Rspress 会在 `public` 目录中找到你的图标，当然你也可以设置成一个 CDN 地址。
+
+当然你可以针对浅色/暗黑模式设置不同的 logo：
+
+```ts title="rspress.config.ts"
+import { defineConfig } from '@rspress/core';
+
+export default defineConfig({
+  logo: {
+    dark: '/logo-dark.png',
+    light: '/logo-light.png',
+  },
+});
+```
+
+## logoText
+
+- **类型**： `string`
+- **默认值**： `""`
+
+站点 logo 文字。这个文字将用作导航栏左上角的 logo 文字。例如：
+
+```ts title="rspress.config.ts"
+import { defineConfig } from '@rspress/core';
+
+export default defineConfig({
+  logoText: 'rspress',
+});
+```
+
+## outDir
+
+- **类型**： `string`
+- **默认值**： `doc_build`
+
+自定义构建站点的输出目录。比如:
+
+```ts title="rspress.config.ts"
+import { defineConfig } from '@rspress/core';
+
+export default defineConfig({
+  outDir: 'doc_build',
+});
+```
+
+## locales
+
+- **类型**： `Locale[]`
+
+```ts
+export interface Locale {
+  lang: string;
+  label: string;
+  title?: string;
+  description?: string;
+}
+```
+
+站点的多语言配置。比如：
+
+```ts title="rspress.config.ts"
+import { defineConfig } from '@rspress/core';
+
+export default defineConfig({
+  locales: [
+    {
+      lang: 'en-US',
+      label: 'English',
+      title: 'My Site',
+      description: 'My site description',
+    },
+    {
+      lang: 'zh-CN',
+      label: '简体中文',
+      title: '站点标题',
+      description: '站点描述',
+    },
+  ],
+});
+```
+
+## head
+
+- **类型**： `string` | `[string, Record<string, string>]` | `(route) => string | [string, Record<string, string>] | undefined`
+- 也可以通过 [frontmatter](./config-frontmatter.mdx#head) 针对每个页面设置
+
+用于设置生产模式下页面 HTML 的 `<head>` 标签中呈现的附加元素。
+
+```ts title="rspress.config.ts"
+import { defineConfig } from '@rspress/core';
+
+export default defineConfig({
+  // ... 其他用户配置
+  head: [
+    '<meta name="author" content="John Doe">',
+    // 或者
+    ['meta', { name: 'author', content: 'John Doe' }],
+    // [htmlTag, { attrName: attrValue, attrName2: attrValue2 }]
+    // 或者
+    (route) => {
+      if (route.routePath.startsWith('/jane/')) return "<meta name='author' content='Jane Doe'>";
+      if (route.routePath.startsWith('/john/')) return ['meta', { name: 'author', content: 'John Doe' }];
+      \\ or even skip returning anything
+      return undefined;
+    }
+  ]
+});
+```
+
+## mediumZoom
+
+- **类型**： `boolean` | `{ selector?: string }`
+- **默认值**： `true`
+
+是否开启图片放大功能。默认开启，你可以通过设置 `mediumZoom` 为 `false` 来关闭。
+
+> 底层使用的是 [medium-zoom](https://github.com/francoischalifour/medium-zoom) 库来实现的。
+
+使用示例：
+
+```ts title="rspress.config.ts"
+import { defineConfig } from '@rspress/core';
+
+export default defineConfig({
+  // 关闭图片放大功能
+  mediumZoom: false,
+  // 配置 CSS 选择器，自定义要放大的图片，默认为 '.rspress-doc img'
+  mediumZoom: {
+    selector: '.rspress-doc img',
+  },
+});
+```
+
+## search
+
+- **类型**：
+
+```ts
+type SearchOptions = {
+  searchHooks?: string;
+  versioned?: boolean;
+  codeBlocks?: boolean;
+};
+```
+
+### searchHooks
+
+- **类型**： `string`
+- **默认值**： `undefined`
+
+你可以通过 `searchHooks` 参数来增加搜索运行时钩子逻辑，比如：
+
+```ts title="rspress.config.ts"
+import { defineConfig } from '@rspress/core';
+import path from 'path';
+
+export default defineConfig({
+  search: {
+    searchHooks: path.join(__dirname, 'searchHooks.ts'),
+  },
+});
+```
+
+关于具体的钩子逻辑，你可以阅读 [自定义搜索功能](/zh/guide/advanced/custom-search)。
+
+### versioned
+
+- **类型**： `boolean`
+- **默认值**： `false`
+
+如果你配置了 `multiVersion`，可以使用 `versioned` 参数为文档的每个版本创建单独的搜索索引。开启该选项后，搜索将仅会查询当前所选版本对应的索引。
+
+```ts title="rspress.config.ts"
+import { defineConfig } from '@rspress/core';
+
+export default defineConfig({
+  search: {
+    versioned: true,
+  },
+});
+```
+
+### codeBlocks
+
+- **类型**： `boolean`
+- **默认值**： `true`
+
+是否在搜索的索引中包含代码块的内容，这可以让用户搜索代码块。
+
+```ts title="rspress.config.ts"
+import { defineConfig } from '@rspress/core';
+
+export default defineConfig({
+  search: {
+    codeBlocks: false,
+  },
+});
+```
+
+## globalUIComponents
+
+- **类型**： `(string | object)[]`
+- **默认值**： `[]`
+
+你可以通过 `globalUIComponents` 参数来增加全局 UI 组件，比如：
+
+```ts title="rspress.config.ts"
+import { defineConfig } from '@rspress/core';
+import path from 'path';
+
+export default defineConfig({
+  globalUIComponents: [path.join(__dirname, 'components', 'MyComponent.tsx')],
+});
+```
+
+`globalUIComponents` 的每一项可以是一个字符串，代表组件的文件路径；也可以是一个数组，第一项为组件的文件路径，第二项为组件的 props 对象，比如：
+
+```ts title="rspress.config.ts"
+import { defineConfig } from '@rspress/core';
+
+export default defineConfig({
+  globalUIComponents: [
+    [
+      path.join(__dirname, 'components', 'MyComponent.tsx'),
+      {
+        foo: 'bar',
+      },
+    ],
+  ],
+});
+```
+
+import GlobalUIComponents from '../../fragments/global-ui-components.mdx';
+
+<GlobalUIComponents />
+
+## multiVersion
+
+- **类型**： `{ default: string; versions: string[] }`
+
+你可以通过 `multiVersion` 参数来增加多版本文档支持，比如：
+
+```ts title="rspress.config.ts"
+import { defineConfig } from '@rspress/core';
+
+export default defineConfig({
+  multiVersion: {
+    default: 'v1',
+    versions: ['v1', 'v2'],
+  },
+});
+```
+
+其中，`default` 为默认版本，`versions` 为所有版本列表。
+
+## route
+
+- **类型**： `Object`
+
+自定义路由配置。
+
+### route.include
+
+- **类型**： `string[]`
+- **默认值**： `[]`
+
+在路由中添加一些额外的文件。默认情况下，只有文档根目录中的文件才会包含在路由中。如果你想在路由中添加一些额外的文件，你可以使用这个选项。例如：
+
+```js title="rspress.config.ts"
+import { defineConfig } from '@rspress/core';
+
+export default defineConfig({
+  route: {
+    include: ['other-dir/**/*.{md,mdx}'],
+  },
+});
+```
+
+> 注意：数组中的字符串支持 glob 模式，填写的 glob 表达式应基于文档的 `root` 目录，并带上对应的 extensions 后缀。
+
+:::note
+
+我们更加推荐在自定义 Rspress 插件中使用 [addPages hook](/plugin/system/plugin-api.html#addpages) 来在路由中添加一些额外的文件，这样可以更灵活且更合理地指定页面路由和文件路径/内容。
+
+:::
+
+### route.exclude
+
+- **类型**： `string[]`
+- **默认值**： `[]`
+
+从路由中排除一些文件。例如：
+
+```js title="rspress.config.ts"
+import { defineConfig } from '@rspress/core';
+
+export default defineConfig({
+  route: {
+    exclude: ['custom.tsx', 'component/**/*'],
+  },
+});
+```
+
+> 注意：数组中的字符串支持 glob 模式，填写的 glob 表达式应基于文档的 `root` 目录。
+
+### route.excludeConvention
+
+- **类型**： `string[]`
+- **默认值**： `['**/_[^_]*']`
+
+为方便用户在 [docs 目录](/api/config/config-basic#root) 中使用组件，而设置的 [路由约定](../../guide/use-mdx/components.mdx)，默认排除以 `_` 开头的文件。
+
+如果你确实需要一些 `_` 开头的路由时，你可以调整这个规则，例如设置为以 `_fragment-` 开头才会被排除：
+
+```js title="rspress.config.ts"
+import { defineConfig } from '@rspress/core';
+
+export default defineConfig({
+  route: {
+    excludeConvention: ['**/_fragment-*'],
+  },
+});
+```
+
+### route.extensions
+
+- **类型**： `string[]`
+- **默认值**： `['.js', '.jsx', '.ts', '.tsx', '.md', '.mdx']`
+
+将包含在路由中的文件的扩展名。默认情况下，Rspress 会在路由中包含所有 `'js'、'jsx'、'ts'、'tsx'、'md'、'mdx' 文件。如果你想自定义扩展名，你可以使用这个选项。例如：
+
+```js title="rspress.config.ts"
+import { defineConfig } from '@rspress/core';
+
+export default defineConfig({
+  route: {
+    extensions: ['.md', '.mdx'],
+  },
+});
+```
+
+### route.cleanUrls
+
+- **类型**： `boolean`
+- **默认值**： `false`
+
+开启后可以生成无 `.html` 后缀的链接，URL 可以更加简洁。
+
+```js title="rspress.config.ts"
+import { defineConfig } from '@rspress/core';
+
+export default defineConfig({
+  route: {
+    cleanUrls: true,
+  },
+});
+```
+
+## ssg
+
+- **类型**： `boolean | { experimentalWorker?: boolean; experimentalLoose?: boolean; }`
+- **默认值**： `true`
+
+是否开启静态站点生成。Rspress 默认开启该功能，生成 SSG 产物。
+
+如果你的文档站只要求在 CSR 场景下使用，你可以设置 `ssg` 为 `false`，此时 Rspress 会生成 CSR 产物。
+
+```ts title="rspress.config.ts"
+import { defineConfig } from '@rspress/core';
+
+export default defineConfig({
+  ssg: false,
+});
+```
+
+:::tip
+
+SSG 要求源码支持在 SSR 下编译，如果使用了不兼容 SSR 场景下的代码，会导致编译失败。你可以尝试：
+
+1. 修复不兼容 SSR 场景下的代码，使其兼容 SSR。
+
+2. 设置 `ssg` 为 `false`，但是会失去 SSG 功能。
+
+:::
+
+### experimentalWorker
+
+- **类型**： `boolean`
+- **默认值**： `false`
+
+开启后可以使用 Worker 来加速 SSG 过程并降低内存占用，适合大型文档站点，底层基于 [tinypool](https://github.com/tinylibs/tinypool)。
+
+### experimentalExcludeRoutePaths
+
+- **类型**： `(string | RegExp)[]`
+- **默认值**： `[]`
+
+开启后一部分页面将不进行 SSG 渲染，直接使用 CSR 下的 html，适合用于大型文档站点绕过一小部分页面的 SSG 错误，不建议主动开启。
+
+## replaceRules
+
+- **类型**： `{ search: string | RegExp; replace: string; }[]`
+- **默认值**： `[]`
+
+你可以通过 `replaceRules` 来对整个站点设置文本替换规则，规则会作用于包括 `_meta.json` 文件、frontmatter 配置以及文档内容和标题等所有内容。
+
+```ts title="rspress.config.ts"
+export default {
+  replaceRules: [
+    {
+      search: /foo/g,
+      replace: 'bar',
+    },
+  ],
+};
+```
+
+## languageParity
+
+- **类型**： `Object`
+
+对文档根目录的 md 和 mdx 文件进行扫描，检测是否存在某些语言版本缺失的情况，保证语言一致性。
+
+### languageParity.enable
+
+- **类型**： `boolean`
+- **默认值**： `false`
+
+是否启用语言一致性检查。
+
+```ts title="rspress.config.ts"
+import { defineConfig } from '@rspress/core';
+
+export default defineConfig({
+  languageParity: {
+    enabled: true,
+  },
+});
+```
+
+### languageParity.include
+
+- **类型**： `string[]`
+- **默认值**： `[]`
+
+需要检查的文件夹，默认为文档根目录下所有文件。填写路径时，相对于文档各语言目录。例如：
+
+```ts title="rspress.config.ts"
+import { defineConfig } from '@rspress/core';
+
+export default defineConfig({
+  languageParity: {
+    // 包含 zh/en 语言目录下的 posts/foods 和 articles 文件夹
+    include: ['posts/foods', 'articles'],
+  },
+});
+```
+
+### languageParity.exclude
+
+- **类型**： `string[]`
+- **默认值**： `[]`
+
+从文档目录排除一些文件夹和文件，不进行检查。
+
+```ts title="rspress.config.ts"
+import { defineConfig } from '@rspress/core';
+
+export default defineConfig({
+  languageParity: {
+    exclude: ['excluded-directory', 'articles/secret.md'],
+  },
+});
+```

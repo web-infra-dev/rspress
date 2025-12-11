@@ -1,0 +1,171 @@
+# 国际化
+
+在 Rspress 中实现文档的国际化，你需要做如下的操作:
+
+1. 定义 I18n 文本数据。
+2. 配置 `locales` 和 `themeConfig.locales`。
+3. 配置默认语言。
+4. 新建不同的语言版本的文档。
+5. 配置侧边栏和导航栏。
+6. 自定义组件中使用 `useI18n`。
+
+## 定义 I18n 文本数据
+
+在当前工作区新建 `i18n.json`，目录结构如下：
+
+```txt
+.
+├── docs
+├── i18n.json
+├── package.json
+├── tsconfig.json
+└── rspress.config.ts
+```
+
+在这个 JSON 文件中，你可以定义国际化所需的文本，类型定义如下:
+
+```ts
+export interface I18n {
+  // key 为文本 id
+  [key: string]: {
+    // key 为语言
+    [key: string]: string;
+  };
+}
+```
+
+举个例子:
+
+```json title="i18n.json"
+{
+  "gettingStarted": {
+    "en": "Getting Started",
+    "zh": "开始"
+  },
+  "features": {
+    "en": "Features",
+    "zh": "特性"
+  },
+  "guide": {
+    "en": "Guide",
+    "zh": "指南"
+  }
+}
+```
+
+这些文本数据在**配置文件**和**自定义组件**中都会用到，后文会详细介绍。
+
+## 配置 `locales` 数据
+
+`rspress.config.ts`中的 `locales`，用于配置站点的`语言`、`标题`、`描述`等信息，主要围绕站点本身的信息来配置。
+
+```ts title="rspress.config.ts"
+import { defineConfig } from '@rspress/core';
+
+export default defineConfig({
+  // locales 为一个对象数组
+  locales: [
+    {
+      lang: 'en',
+      // 导航栏切换语言的标签
+      label: 'English',
+      title: 'Rspress',
+      description: 'Static Site Generator',
+    },
+    {
+      lang: 'zh',
+      label: '简体中文',
+      title: 'Rspress',
+      description: '静态网站生成器',
+    },
+  ],
+});
+```
+
+:::tip 注意
+
+`themeConfig.locales` 也包含 `locales` 中的所有字段。不过它将在未来被移除，请使用 `locales`。
+
+:::
+
+对于其它的国际化主题参数配置，请参考 [API 类型](/api/config/config-theme#locales)。
+
+## 配置默认语言
+
+在配置完 `locales` 之后，你需要通过 [lang](/api/config/config-basic#lang) 配置文档的默认语言，如下例子所示:
+
+```ts title="rspress.config.ts"
+import { defineConfig } from '@rspress/core';
+
+export default defineConfig({
+  lang: 'en',
+});
+```
+
+这很重要，因为**对于默认语言下的路由，Rspress 会去掉语言前缀**，比如 `/en/guide/getting-started` 会被转换为 `/guide/getting-started`。
+
+## 新建不同的语言版本的文档
+
+在做好上面的配置后，我们就可以开始新建不同语言版本的文档了，非常简单，我们只需要在文档根目录下新建如下的结构即可：
+
+```txt
+docs
+├── en
+│   ├── api
+│   │   └── index.md
+│   └── guide
+│       └── getting-started.md
+│       └── features.md
+└── zh
+    ├── api
+    │   └── index.md
+    └── guide
+        └── getting-started.md
+        └── features.md
+```
+
+可以看到，我们把不同语言的文档放在了 `docs` 目录下的 `en` 和 `zh` 目录中，这样就可以方便地区分不同语言的文档了。
+
+## 配置 \_meta.json
+
+通过 \_meta.json 文件，我们可以配置导航栏和侧边栏的内容，具体可以参考[自动化导航栏/侧边栏](/guide/basic/auto-nav-sidebar)。
+
+### 导航栏级别
+
+在导航栏级别的 \_meta.json 配置中，你可以将 `text` 指定为 i18n key，比如:
+
+```json title="_meta.json"
+[
+  {
+    "text": "guide",
+    "link": "/guide/start/getting-started",
+    "activeMatch": "/guide/"
+  }
+]
+```
+
+其中，`text` 为 `guide`，这个值会被自动翻译为 `指南` 或者 `Guide`，具体取决于当前语言。
+
+### 侧边栏级别
+
+在侧边栏级别的 \_meta.json 配置中，你可以将 `label` 指定为 i18n key，比如:
+
+```json title="_meta.json"
+[
+  {
+    "type": "dir",
+    "name": "start",
+    "label": "gettingStarted"
+  }
+]
+```
+
+其中，`label` 为 `gettingStarted`，这个值会被自动翻译为 `开始` 或者 `Getting Started`，具体取决于当前语言。
+
+## 自定义组件中使用 `useI18n`
+
+在 MDX 开发或者自定义主题开发的过程中，你可能会写一些自定义组件，这些组件中也需要使用到国际化文本，那么如何获取呢？
+
+import UseI18n from '../../fragments/useI18n.mdx';
+
+<UseI18n />

@@ -35,7 +35,6 @@ function applyReplaceRulesToNestedObject(
 
 interface ExtractPageDataOptions {
   root: string;
-  domain: string;
   searchCodeBlocks: boolean;
   replaceRules: ReplaceRule[];
   alias: Record<string, string | string[]>;
@@ -45,7 +44,7 @@ async function getPageIndexInfoByRoute(
   route: RouteMeta,
   options: ExtractPageDataOptions,
 ): Promise<PageIndexInfo> {
-  const { alias, domain, replaceRules, root, searchCodeBlocks } = options;
+  const { alias, replaceRules, root, searchCodeBlocks } = options;
   const defaultIndexInfo: PageIndexInfo = {
     title: '',
     content: '',
@@ -54,7 +53,6 @@ async function getPageIndexInfoByRoute(
     routePath: route.routePath,
     lang: route.lang,
     toc: [],
-    domain,
     frontmatter: {},
     version: route.version,
     _filepath: route.absolutePath,

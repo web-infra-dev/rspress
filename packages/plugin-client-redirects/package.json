@@ -1,6 +1,6 @@
 {
   "name": "@rspress/plugin-client-redirects",
-  "version": "2.0.0-beta.16",
+  "version": "2.0.0-rc.2",
   "description": "A plugin for rspress to client redirect in docs.",
   "bugs": "https://github.com/web-infra-dev/rspress/issues",
   "repository": {
@@ -33,29 +33,25 @@
     "dev": "rslib build -w",
     "reset": "rimraf ./**/node_modules"
   },
-  "dependencies": {
-    "@rspress/shared": "workspace:*"
-  },
   "devDependencies": {
-    "@microsoft/api-extractor": "^7.52.8",
-    "@rslib/core": "0.10.2",
+    "@microsoft/api-extractor": "^7.55.2",
+    "@rslib/core": "0.18.3",
     "@rspress/config": "workspace:*",
     "@types/node": "^22.8.1",
-    "@types/react": "^19.1.8",
-    "@types/react-dom": "^19.1.6",
-    "react": "^19.1.0",
-    "rsbuild-plugin-publint": "^0.3.2",
+    "@types/react": "^19.2.7",
+    "@types/react-dom": "^19.2.3",
+    "react": "^19.2.1",
+    "rsbuild-plugin-publint": "^0.3.3",
     "typescript": "^5.8.2"
   },
   "peerDependencies": {
-    "@rspress/runtime": "workspace:^2.0.0-beta.16"
+    "@rspress/core": "workspace:^2.0.0-rc.2"
   },
   "engines": {
     "node": ">=18.0.0"
   },
   "publishConfig": {
     "access": "public",
-    "provenance": true,
     "registry": "https://registry.npmjs.org/"
   }
 }

@@ -1,5 +1,5 @@
 {
-  "name": "@rspress-fixture/doc-plugin",
+  "name": "@rspress-fixture/custom-plugin",
   "version": "1.0.0",
   "private": true,
   "scripts": {
@@ -8,13 +8,9 @@
     "preview": "rspress preview"
   },
   "dependencies": {
-    "@rspress/plugin-playground": "workspace:*",
-    "@rspress/plugin-preview": "workspace:*",
-    "@rspress/shared": "workspace:*",
-    "react": "^19.1.0",
-    "react-dom": "^19.1.0",
-    "rspress": "workspace:*",
-    "solid-js": "^1.9.7"
+    "@rspress/core": "workspace:*",
+    "react": "^19.2.1",
+    "react-dom": "^19.2.1"
   },
   "devDependencies": {
     "@types/node": "^22.8.1"

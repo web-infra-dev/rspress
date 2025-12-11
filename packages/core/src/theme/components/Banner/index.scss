@@ -1,0 +1,50 @@
+:root {
+  --rp-banner-background: linear-gradient(
+    279deg,
+    hsl(32.71, 100%, 50%) 35.21%,
+    hsl(6.91, 94.76%, 67%) 63.34%
+  );
+}
+
+.rp-banner {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: #fff;
+  position: sticky;
+  top: 0;
+  left: 0;
+  z-index: 999;
+  background: var(--rp-banner-background);
+  height: 36px;
+
+  &__link {
+    color: #fff;
+    font-weight: 700;
+    text-decoration: none;
+
+    &:hover {
+      text-decoration: underline;
+      opacity: 0.9;
+    }
+
+    &:active {
+      opacity: 0.7;
+    }
+  }
+
+  &__close {
+    right: 1.5rem;
+    font-size: 28px;
+    padding: 5px;
+    position: absolute;
+    cursor: pointer;
+    border-radius: 4px;
+    box-sizing: border-box;
+    color: inherit;
+
+    &:hover {
+      background-color: rgba(255, 255, 255, 0.3);
+    }
+  }
+}

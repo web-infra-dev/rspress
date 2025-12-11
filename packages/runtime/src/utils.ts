@@ -4,7 +4,6 @@ import {
   isExternalUrl,
   isProduction,
   normalizeHref,
-  normalizeSlash,
   removeBase as rawRemoveBase,
   withBase as rawWithBase,
   removeHash,
@@ -12,27 +11,37 @@ import {
 } from '@rspress/shared';
 import siteData from 'virtual-site-data';
 
-export function withBase(url = '/'): string {
+function withBase(url = '/'): string {
   return rawWithBase(url, siteData.base);
 }
 
-export function removeBase(url: string): string {
+function removeBase(url: string): string {
   return rawRemoveBase(url, siteData.base);
 }
 
-export function isEqualPath(a: string, b: string) {
+function isEqualPath(a: string, b: string) {
   return (
-    withBase(normalizeHrefInRuntime(removeHash(a))) ===
-    withBase(normalizeHrefInRuntime(removeHash(b)))
+    removeBase(normalizeHref(removeHash(a), true)) ===
+    removeBase(normalizeHref(removeHash(b), true))
   );
 }
 
-export function normalizeHrefInRuntime(a: string) {
+function normalizeHrefInRuntime(link: string) {
   const cleanUrls = Boolean(siteData?.route?.cleanUrls);
-  return normalizeHref(a, cleanUrls);
+  return normalizeHref(link, cleanUrls);
 }
 
-export function normalizeImagePath(imagePath: string) {
+/**
+ * we do cleanUrls in runtime side
+ */
+function cleanUrlByConfig(link: string) {
+  if (siteData?.route?.cleanUrls) {
+    return normalizeHref(link, true);
+  }
+  return link;
+}
+
+function normalizeImagePath(imagePath: string) {
   if (isAbsoluteUrl(imagePath)) {
     return imagePath;
   }
@@ -44,8 +53,18 @@ export function normalizeImagePath(imagePath: string) {
   return withBase(imagePath);
 }
 
-export function isAbsoluteUrl(path: string) {
+function isAbsoluteUrl(path: string) {
   return isExternalUrl(path) || isDataUrl(path) || path.startsWith('//');
 }
 
-export { addLeadingSlash, removeTrailingSlash, normalizeSlash, isProduction };
+export {
+  addLeadingSlash,
+  removeTrailingSlash,
+  isProduction,
+  normalizeImagePath,
+  cleanUrlByConfig,
+  removeBase,
+  withBase,
+  isEqualPath,
+  normalizeHrefInRuntime,
+};

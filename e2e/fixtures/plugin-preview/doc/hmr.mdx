@@ -1,0 +1,42 @@
+# HMR test
+
+This page tests HMR for all three preview modes.
+
+## preview="internal"
+
+```tsx preview="internal"
+const Component = () => {
+  return (
+    <div className="hmr-internal">
+      <p>HMR Internal Original</p>
+    </div>
+  );
+};
+export default Component;
+```
+
+## preview="iframe-follow"
+
+```tsx preview="iframe-follow"
+const Component = () => {
+  return (
+    <div className="hmr-iframe-follow">
+      <p>HMR Iframe Follow Original</p>
+    </div>
+  );
+};
+export default Component;
+```
+
+## preview="iframe-fixed"
+
+```tsx preview="iframe-fixed"
+const Component = () => {
+  return (
+    <div className="hmr-iframe-fixed">
+      <p>HMR Iframe Fixed Original</p>
+    </div>
+  );
+};
+export default Component;
+```

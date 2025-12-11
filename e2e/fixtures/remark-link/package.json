@@ -1,0 +1,18 @@
+{
+  "name": "@rspress-fixture/remark-link",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "build": "rspress build",
+    "dev": "rspress dev",
+    "preview": "rspress preview"
+  },
+  "dependencies": {
+    "@rspress/core": "workspace:*"
+  },
+  "devDependencies": {
+    "picocolors": "^1.1.1",
+    "remark": "^15.0.1",
+    "unified-lint-rule": "^3.0.1"
+  }
+}

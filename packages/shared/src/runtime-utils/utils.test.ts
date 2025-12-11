@@ -1,12 +1,12 @@
-import { describe, expect, test } from 'vitest';
+import { describe, expect, test } from '@rstest/core';
 import {
   normalizeHref,
   normalizePosixPath,
   parseUrl,
+  removeBase,
   replaceLang,
   replaceVersion,
   withBase,
-  withoutBase,
   withoutLang,
 } from './utils';
 
@@ -20,19 +20,32 @@ describe('test shared utils', () => {
     expect(withBase('/guide/', '/zh/')).toBe('/zh/guide/');
     expect(withBase('/guide/', '/')).toBe('/guide/');
     expect(withBase('/guide/', '')).toBe('/guide/');
-  });
+    expect(withBase('/', '/')).toBe('/');
+    expect(withBase('/base/', '/base/')).toBe('/base/');
+    expect(withBase('/base', '/base/')).toBe('/base/');
 
-  test('multiple withBase', () => {
+    // multiple withBase
     const base = '/my-base/';
     const firstResult = withBase('/guide/', base);
+    expect(firstResult).toBe('/my-base/guide/');
     const secondResult = withBase(firstResult, base);
     expect(secondResult).toBe('/my-base/guide/');
   });
 
-  test('withoutBase', () => {
-    expect(withoutBase('/zh/guide/', '/zh/')).toBe('/guide/');
-    expect(withoutBase('/guide/', '/')).toBe('/guide/');
-    expect(withoutBase('/guide/', '')).toBe('/guide/');
+  test('removeBase', () => {
+    expect(removeBase('/zh/guide/', '/zh/')).toBe('/guide/');
+    expect(removeBase('/guide/', '/')).toBe('/guide/');
+    expect(removeBase('/guide/', '')).toBe('/guide/');
+    expect(removeBase('/', '/')).toBe('/');
+    expect(removeBase('/base/', '/base/')).toBe('/');
+    expect(removeBase('/base', '/base/')).toBe('/');
+
+    // multiple removeBase
+    const base = '/my-base/';
+    const firstResult = removeBase('/my-base/guide/', base);
+    expect(firstResult).toBe('/guide/');
+    const secondResult = removeBase(firstResult, base);
+    expect(secondResult).toBe('/guide/');
   });
 
   test('normalizePosix', () => {
@@ -160,18 +173,22 @@ describe('test shared utils', () => {
   test('parseUrl', () => {
     expect(parseUrl('/guide/')).toEqual({
       url: '/guide/',
+      search: '',
       hash: '',
     });
     expect(parseUrl('/guide/?a=1')).toEqual({
-      url: '/guide/?a=1',
+      url: '/guide/',
+      search: 'a=1',
       hash: '',
     });
     expect(parseUrl('/guide/#a=1')).toEqual({
       url: '/guide/',
+      search: '',
       hash: 'a=1',
     });
     expect(parseUrl('/guide/?a=1#b=2')).toEqual({
-      url: '/guide/?a=1',
+      url: '/guide/',
+      search: 'a=1',
       hash: 'b=2',
     });
   });

@@ -1,0 +1,17 @@
+{
+  "name": "@rspress-fixture/plugin-api-docgen-single",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "build": "rspress build",
+    "dev": "rspress dev",
+    "preview": "rspress preview"
+  },
+  "dependencies": {
+    "@rspress/core": "workspace:*",
+    "@rspress/plugin-api-docgen": "workspace:*"
+  },
+  "devDependencies": {
+    "@types/node": "^22.8.1"
+  }
+}

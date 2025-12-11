@@ -8,8 +8,8 @@
     "preview": "rspress preview"
   },
   "dependencies": {
-    "@rspress/plugin-llms": "workspace:*",
-    "rspress": "workspace:*"
+    "@rspress/core": "workspace:*",
+    "@rspress/plugin-llms": "workspace:*"
   },
   "devDependencies": {
     "@types/node": "^22.8.1"

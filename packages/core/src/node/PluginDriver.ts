@@ -1,11 +1,15 @@
-import { pluginContainerSyntax } from '@rspress/plugin-container-syntax';
-import type {
-  PageIndexInfo,
-  RouteMeta,
-  RspressPlugin,
-  UserConfig,
+import path from 'node:path';
+import {
+  addLeadingSlash,
+  addTrailingSlash,
+  type PageIndexInfo,
+  type RouteMeta,
+  type RspressPlugin,
+  type UserConfig,
 } from '@rspress/shared';
+import { haveNavSidebarConfig } from './auto-nav-sidebar';
 import type { RouteService } from './route/RouteService';
+import { createError } from './utils';
 
 type RspressPluginHookKeys =
   | 'beforeBuild'
@@ -15,21 +19,43 @@ type RspressPluginHookKeys =
   | 'addRuntimeModules'
   | 'routeGenerated'
   | 'routeServiceGenerated'
-  | 'addSSGRoutes'
   | 'extendPageData'
-  | 'modifySearchIndexData';
+  | 'modifySearchIndexData'
+  | 'i18nSource';
 
 export class PluginDriver {
   #config: UserConfig;
+  #configFilePath: string;
 
   #plugins: RspressPlugin[];
 
   #isProd: boolean;
 
-  constructor(config: UserConfig, isProd: boolean) {
+  haveNavSidebarConfig = false;
+
+  static async create(
+    config: UserConfig,
+    configFilePath: string,
+    isProd: boolean,
+  ): Promise<PluginDriver> {
+    const pluginDriver = new PluginDriver(config, configFilePath, isProd);
+    await pluginDriver.init();
+    return pluginDriver;
+  }
+
+  private constructor(
+    config: UserConfig,
+    configFilePath: string,
+    isProd: boolean,
+  ) {
     this.#config = config;
+    this.#configFilePath = configFilePath;
     this.#isProd = isProd;
     this.#plugins = [];
+  }
+
+  getConfigFilePath() {
+    return this.#configFilePath;
   }
 
   // The init function is used to initialize the doc plugins and will execute before the build process.
@@ -38,27 +64,20 @@ export class PluginDriver {
     this.clearPlugins();
     const config = this.#config;
     const themeConfig = config?.themeConfig || {};
-    const enableLastUpdated =
-      themeConfig?.lastUpdated ||
-      themeConfig?.locales?.some(locale => locale.lastUpdated);
+    const enableLastUpdated = themeConfig?.lastUpdated;
     const mediumZoomConfig = config?.mediumZoom ?? true;
     if (enableLastUpdated) {
-      const { pluginLastUpdated } = await import(
-        '@rspress/plugin-last-updated'
-      );
+      const { pluginLastUpdated } = await import('./last-updated/index');
       this.addPlugin(pluginLastUpdated());
     }
     if (mediumZoomConfig) {
-      const { pluginMediumZoom } = await import('@rspress/plugin-medium-zoom');
+      const { pluginMediumZoom } = await import('./medium-zoom/index');
       this.addPlugin(
         pluginMediumZoom(
           typeof mediumZoomConfig === 'object' ? mediumZoomConfig : undefined,
         ),
       );
     }
-
-    // Support the container syntax in markdown/mdx, such as :::tip
-    this.addPlugin(pluginContainerSyntax());
 
     (config.plugins || []).forEach(plugin => {
       this.addPlugin(plugin);
@@ -71,7 +90,7 @@ export class PluginDriver {
     );
     // Avoid the duplicated plugin
     if (existedIndex !== -1) {
-      throw new Error(`The plugin "${plugin.name}" has been registered`);
+      throw createError(`The plugin "${plugin.name}" has been registered`);
     }
 
     this.#plugins.push(plugin);
@@ -92,7 +111,19 @@ export class PluginDriver {
     }
   }
 
+  private async normalizeConfig() {
+    this.#config.ssg ??= true;
+    this.#config.llms ??= false;
+    this.#config.base = addTrailingSlash(
+      addLeadingSlash(this.#config.base ?? '/'),
+    );
+    this.#config.lang ??= 'en';
+    this.#config.themeDir ??= path.join(process.cwd(), 'theme');
+  }
+
   async modifyConfig() {
+    this.normalizeConfig();
+
     let config = this.#config;
 
     for (let i = 0; i < this.#plugins.length; i++) {
@@ -117,6 +148,7 @@ export class PluginDriver {
       }
     }
     this.#config = config;
+    this.haveNavSidebarConfig = haveNavSidebarConfig(config);
     return this.#config;
   }
 
@@ -184,13 +216,14 @@ export class PluginDriver {
     }, {});
   }
 
-  async addSSGRoutes() {
-    const result = await this._runParallelAsyncHook<'addSSGRoutes'>(
-      'addSSGRoutes',
-      this.#config || {},
-      this.#isProd,
-    );
-    return result.flat();
+  async i18nSource(defaultSource: Record<string, Record<string, string>>) {
+    let i18nSource = defaultSource;
+    for (const plugin of this.#plugins) {
+      if (typeof plugin.i18nSource === 'function') {
+        i18nSource = (await plugin.i18nSource(i18nSource)) || i18nSource;
+      }
+    }
+    return i18nSource;
   }
 
   globalUIComponents() {

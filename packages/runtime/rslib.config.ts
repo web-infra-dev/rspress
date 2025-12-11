@@ -16,7 +16,7 @@ export default defineConfig({
         externals: [
           '@theme',
           'virtual-routes',
-          'virtual-search-index-hash',
+          'virtual-page-data',
           'virtual-site-data',
           'virtual-global-styles',
           'virtual-global-components',

@@ -1,16 +1,16 @@
-import {
-  DataContext,
-  ThemeContext,
-  pathnameToRouteService,
-} from '@rspress/runtime';
-import { StaticRouter } from '@rspress/runtime/server';
-import type { PageData } from '@rspress/shared';
-import { type Unhead, UnheadProvider } from '@unhead/react/server';
-import { renderToPipeableStream } from 'react-dom/server';
-
 import { PassThrough } from 'node:stream';
 import { text } from 'node:stream/consumers';
+import {
+  PageContext,
+  pathnameToRouteService,
+  removeTrailingSlash,
+  ThemeContext,
+  withBase,
+} from '@rspress/core/runtime';
+import { type Unhead, UnheadProvider } from '@unhead/react/server';
 import type { ReactNode } from 'react';
+import { renderToPipeableStream } from 'react-dom/server';
+import { StaticRouter } from 'react-router-dom';
 import { App } from './App';
 import { initPageData } from './initPageData';
 
@@ -25,6 +25,8 @@ function renderToHtml(app: ReactNode): Promise<string> {
   return new Promise((resolve, reject) => {
     const passThrough = new PassThrough();
     const { pipe } = renderToPipeableStream(app, {
+      // Why Infinity? https://github.com/facebook/react/pull/33027#issuecomment-3403958008
+      progressiveChunkSize: Infinity,
       onError(error) {
         reject(error);
       },
@@ -37,27 +39,29 @@ function renderToHtml(app: ReactNode): Promise<string> {
 }
 
 export async function render(
-  pagePath: string,
+  routePath: string,
   head: Unhead,
-): Promise<{ appHtml: string; pageData: PageData }> {
-  const initialPageData = await initPageData(pagePath);
-  await preloadRoute(pagePath);
+): Promise<{ appHtml: string }> {
+  const initialPageData = await initPageData(routePath);
+  await preloadRoute(routePath);
 
   const appHtml = await renderToHtml(
     <ThemeContext.Provider value={{ theme: DEFAULT_THEME }}>
-      <DataContext.Provider value={{ data: initialPageData }}>
-        <StaticRouter location={pagePath}>
+      <PageContext.Provider value={{ data: initialPageData }}>
+        <StaticRouter
+          location={withBase(routePath)}
+          basename={removeTrailingSlash(withBase('/'))}
+        >
           <UnheadProvider value={head}>
             <App />
           </UnheadProvider>
         </StaticRouter>
-      </DataContext.Provider>
+      </PageContext.Provider>
     </ThemeContext.Provider>,
   );
 
   return {
     appHtml,
-    pageData: initialPageData,
   };
 }
 

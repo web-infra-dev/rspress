@@ -1,0 +1,95 @@
+# Prose
+
+## Paragraph
+
+In Rspress, in addition to declaring [nav](https://rspress.rs/api/config/config-theme.html#nav) and [sidebar](https://rspress.rs/api/config/config-theme.html#sidebar) in the configuration file, you can also automatically generate the navigation bar and sidebar by declaring the `_nav.json` and `_meta.json` description files. We recommend the latter because it can make the configuration file more concise and clear, and it includes all the capabilities under `themeConfig`.
+
+<p>some paragraph, some text here</p>
+
+<p className="rp-not-doc">some paragraph, some text here</p>
+
+## Blockquote
+
+> blockquote text [rspress](https://rspress.rs)
+
+<blockquote>
+  <p>
+    <span>blockquote text</span>{' '}
+    <a href="https://rspress.rs" target="_blank">
+      <span>rspress</span>
+    </a>
+  </p>
+</blockquote>
+
+<blockquote className="rp-not-doc">
+  <p>
+    <span>blockquote text</span>{' '}
+    <a href="https://rspress.rs" target="_blank">
+      <span>rspress</span>
+    </a>
+  </p>
+</blockquote>
+
+## List
+
+- list item 1
+- list item 2
+
+<ul>
+  <li>list item 1</li>
+  <li>list item 2</li>
+</ul>
+
+<div className="rp-not-doc">
+  <ul>
+    <li>list item 1</li>
+    <li>list item 2</li>
+  </ul>
+</div>
+
+## Table
+
+| Header 1 | Header 2 |
+| -------- | -------- |
+| Data 1   | Data 2   |
+| Data 1   | Data 2   |
+
+<table>
+  <thead>
+    <tr>
+      <th>Header 1</th>
+      <th>Header 2</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Data 1</td>
+      <td>Data 2</td>
+    </tr>
+    <tr>
+      <td>Data 1</td>
+      <td>Data 2</td>
+    </tr>
+  </tbody>
+</table>
+
+<div className="rp-not-doc">
+  <table>
+    <thead>
+      <tr>
+        <th>Header 1</th>
+        <th>Header 2</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>Data 1</td>
+        <td>Data 2</td>
+      </tr>
+      <tr>
+        <td>Data 1</td>
+        <td>Data 2</td>
+      </tr>
+    </tbody>
+  </table>
+</div>

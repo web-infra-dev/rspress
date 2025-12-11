@@ -1,0 +1,310 @@
+# Front matter 配置
+
+这篇文档介绍了如何使用 front matter 来配置页面的各种属性，包括标题、描述、页面类型、导航栏等。
+
+查看 [Front matter](/guide/use-mdx/frontmatter) 了解什么是 front matter 以及如何使用它。
+
+## title
+
+- Type: `string`
+
+页面的标题。默认情况下，页面的 h1 标题将用作 HTML 文档的标题。如果你想使用不同的标题，你可以使用 front matter 来指定页面的标题。例如：
+
+```yaml
+---
+title: 我的主页
+---
+```
+
+## description
+
+- Type: `string`
+
+页面的自定义描述。例如：
+
+```yaml
+---
+description: 这是我的主页
+---
+```
+
+## pageType
+
+- Type: `'home' | 'doc' | 'doc-wide' | 'custom' | 'blank' | '404'`
+- Default: `'doc'`
+
+页面的类型。默认情况下，页面类型为`doc`。但是如果你想使用不同的页面类型，你可以使用 `pageType` 这个 front matter 字段来指定页面类型。例如：
+
+```yaml
+---
+pageType: home
+---
+```
+
+各个`pageType`配置的含义如下：
+
+import PageType from '@zh/fragments/page-type.mdx';
+
+<PageType />
+
+## titleSuffix
+
+- Type: `string`
+
+设置页面标题的后缀。未设置 `titleSuffix` 时，默认使用站点的 [title](/api/config/config-basic#title) 作为后缀。
+
+```yaml
+---
+titleSuffix: '基于 Rsbuild 的静态站点生成器'
+---
+```
+
+标题与后缀之间默认使用 `-` 作为分隔符，你也可以使用 `|` 进行分隔：
+
+```yaml
+---
+titleSuffix: '| 基于 Rsbuild 的静态站点生成器'
+---
+```
+
+## head
+
+- Type: `[string, Record<string, string>][]`
+
+设置为当前页面注入的额外 head 标签，它们将附加在 Rspress 全局注入的 head 标签之后。
+
+例如，你可以使用这些 headers 为 [Open Graph](https://ogp.me/) 指定自定义元标签。
+
+```yaml
+---
+head:
+  - - meta
+    - property: og:url
+      content: https://example.com/foo/
+  - - meta
+    - property: og:image
+      content: https://example.com/bar.jpg
+# - - [htmlTag]
+#   - [attributeName]: [attributeValue]
+#     [attributeName]: [attributeValue]
+---
+```
+
+生成的 head 标签如下：
+
+```html
+<head>
+  <meta property="og:url" content="https://example.com/foo/" />
+  <meta property="og:image" content="https://example.com/bar.jpg" />
+</head>
+```
+
+## hero
+
+- Type: `Object`
+
+`home` 页面的 hero 配置。它有以下类型：
+
+```ts
+interface Hero {
+  name: string;
+  text: string;
+  tagline: string;
+  image?: {
+    src: string | { dark: string; light: string };
+    alt: string;
+    /**
+     * `srcset` 和 `sizes` 同 `<img>` 的同名属性，取值请参考 https://mdn.io/srcset。
+     * 值为数组时，rspress 将使用逗号将其合并为字符串。
+     **/
+    srcset?: string | string[];
+    sizes?: string | string[];
+  };
+  actions: {
+    text: string;
+    link: string;
+    theme: 'brand' | 'alt';
+  }[];
+}
+```
+
+例如，你可以使用以下 front matter 来指定页面的 hero config：
+
+```yaml
+---
+pageType: home
+
+hero:
+  name: Rspress
+  text: 文档工程解决方案
+  tagline: 现代化文档开发技术栈
+  actions:
+    - theme: brand
+      text: 介绍
+      link: /zh/guide/introduction
+    - theme: alt
+      text: 快速开始
+      link: /zh/guide/getting-started
+---
+```
+
+在设置 `hero.text` 时，你可以使用 YAML 的 `|` 符号来手动控制换行：
+
+```yaml
+---
+pageType: home
+
+hero:
+  name: Rspress
+  text: |
+    文档工程
+    解决方案
+```
+
+或者你也可以用 `HTML` 来指定页面的 hero config：
+
+```yaml
+---
+pageType: home
+
+hero:
+  name: <span class="hero-name">Rspress</span>
+  text: <span class="hero-text">文档工程解决方案</span>
+  tagline: <span class="hero-tagline">现代化文档开发技术栈</span>
+  actions:
+    - theme: brand
+      text: <span class="hero-actions-text">介绍</span>
+      link: /zh/guide/introduction
+    - theme: alt
+      text: <span class="hero-actions-text">快速开始</span>
+      link: /zh/guide/getting-started
+---
+```
+
+## features
+
+- Type: `Array`
+- Default: `[]`
+
+`home` 页面的功能配置。它有以下类型：
+
+```ts
+interface Feature {
+  title: string;
+  details: string;
+  icon: string;
+  // 卡片栅格的长度，目前仅支持[3, 4, 6]
+  span?: number;
+  // feature 卡片跳转链接，选填
+  link?: string;
+}
+
+export type Features = Feature[];
+```
+
+例如，你可以使用以下内容来指定 `home` 页面的 features 配置：
+
+```yaml
+---
+pageType: home
+
+features:
+  - title: 'MDX: 使用灵活语法编写内容'
+    details: MDX 是一种强大的内容编写方式，你可以在 Markdown 中使用 React 组件。
+    icon: 📦
+  - title: '功能丰富: 一站式解决方案'
+    details: 对全文搜索、国际化等常见功能可以做到开箱即用。
+    icon: 🎨
+  - title: '扩展性强: 提供多种自定义能力'
+    details: 通过其扩展机制，你可以轻松的扩展主题 UI 和构建能力。
+    icon: 🚀
+---
+```
+
+## sidebar
+
+是否展示左侧的目录栏。默认情况下，`doc` 页面会展示左侧的目录栏。但是如果你想隐藏左侧的目录栏，你可以使用以下 front matter 来配置：
+
+```yaml
+---
+sidebar: false
+---
+```
+
+## outline
+
+是否展示右侧的大纲栏。默认情况下，`doc` 页面会展示右侧的大纲栏。你可以通过下面的配置来隐藏大纲栏：
+
+```yaml
+---
+outline: false
+---
+```
+
+## footer
+
+是否展示文档底部的组件（如上一页/下一页）。默认情况下，`doc` 页面会展示底部的 footer。你可以通过下面的配置来隐藏 footer：
+
+```yaml
+---
+footer: false
+---
+```
+
+## navbar
+
+是否展示顶部导航栏。默认情况下，所有页面都会展示顶部导航栏。但是如果你想隐藏顶部导航栏，你可以使用以下 front matter 来配置：
+
+```yaml
+---
+navbar: false
+---
+```
+
+## overviewHeaders
+
+- Type: `number[]`
+- Default: `[2]`
+
+在预览页中展示的标题级别。默认情况下，展示的标题为 h2。但是如果你想展示不同的标题级别，你可以使用 `overviewHeaders` 这个 front matter 字段来指定。例如：
+
+```yaml
+---
+overviewHeaders: []
+---
+```
+
+或者
+
+```yaml
+---
+overviewHeaders: [2, 3]
+---
+```
+
+## context
+
+- Type: `string`
+
+配置后，在生成侧边栏时会在所在的 DOM 节点添加 `data-context` 属性，值为配置的值。
+
+```yaml title="foo.mdx"
+---
+context: 'context-foo'
+---
+```
+
+```yaml title="bar.mdx"
+---
+context: 'context-bar'
+---
+```
+
+最终生成的侧边栏的 DOM 结构缩略如下：
+
+```html
+<div class="rspress-sidebar-group">
+  <div className="rspress-sidebar-item" data-context="context-foo"></div>
+  <div className="rspress-sidebar-item" data-context="context-bar"></div>
+</div>
+```

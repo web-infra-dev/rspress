@@ -1,0 +1,52 @@
+.rp-badge {
+  font-weight: 500;
+  transition: color 0.25s;
+  border-radius: var(--rp-radius-small);
+  height: 1.5rem;
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  gap: 0.25rem;
+  font-size: 0.75rem;
+  padding: 0.5rem;
+
+  &--tip {
+    color: var(--rp-container-tip-text);
+    background-color: var(--rp-container-tip-bg);
+  }
+
+  &--info {
+    color: var(--rp-container-info-text);
+    background-color: var(--rp-container-info-bg);
+  }
+
+  &--warning {
+    color: var(--rp-container-warning-text);
+    background-color: var(--rp-container-warning-bg);
+  }
+
+  &--danger {
+    color: var(--rp-container-danger-text);
+    background-color: var(--rp-container-danger-bg);
+  }
+
+  &--outline {
+    border: 1px solid currentColor;
+
+    &.rp-badge--tip {
+      border-color: var(--rp-container-tip-border);
+    }
+
+    &.rp-badge--info {
+      border-color: var(--rp-container-info-border);
+    }
+
+    &.rp-badge--warning {
+      border-color: var(--rp-container-warning-border);
+    }
+
+    &.rp-badge--danger {
+      border-color: var(--rp-container-danger-border);
+    }
+  }
+}

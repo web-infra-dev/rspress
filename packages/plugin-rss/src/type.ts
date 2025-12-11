@@ -1,4 +1,4 @@
-import type { PageIndexInfo } from '@rspress/shared';
+import type { PageIndexInfo } from '@rspress/core';
 import type { FeedOptions, Item } from 'feed';
 import type { PartialPartial } from './internals';
 
@@ -62,18 +62,16 @@ export interface FeedChannel
     | RegExp
     | string
     | (RegExp | string)[]
-    | ((item: PageIndexInfo, base: string) => boolean);
+    | ((item: PageIndexInfo) => boolean);
   /**
    * a function to modify feed item
    * @param item pre-generated feed item
    * @param page page data
-   * @param base base path of the rspress site
    * @returns modified feed item
    */
   item?: (
     item: FeedItem,
     page: PageIndexInfo,
-    base: string,
   ) => FeedItem | PromiseLike<FeedItem>;
   /**
    * feed level output config

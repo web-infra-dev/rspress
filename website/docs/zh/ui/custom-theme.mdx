@@ -1,0 +1,307 @@
+# 自定义主题
+
+本文所要介绍的是如何开发一套自定义主题。
+
+## 基于默认主题的扩展
+
+大部分情况下，你并不想从零开始开发一个主题，而是想基于默认主题进行扩展，这时候可以参考下面的方式进行主题开发。
+
+:::tip
+如果你想从头开发一套自定义主题，可以前往[【重新开发自定义主题】](/ui/custom-theme#重新开发自定义主题)。
+:::
+
+### 1. 基本结构
+
+默认情况下，你需要在项目根目录下创建一个 `theme` 目录，然后在 `theme` 目录下创建一个 `index.ts` 或者 `index.tsx` 文件，该文件用于导出主题配置。
+
+```txt
+└── theme
+    └── index.tsx
+```
+
+你可以使用如下的方式来书写 `theme/index.tsx` 文件:
+
+```tsx title="theme/index.tsx"
+import { Layout as BasicLayout } from '@rspress/core/theme-original';
+
+const Layout = () => <BasicLayout beforeNavTitle={<div>some content</div>} />;
+
+export { Layout };
+
+export * from '@rspress/core/theme-original';
+```
+
+一方面你需要通过 `export` 导出一个主题配置对象，另一方面你需要通过 `export * from '@rspress/core/theme-original'` 导出所有具名导出的内容，这样才能保证你的主题配置能够正常工作。
+
+### 2. 使用插槽
+
+值得注意的是，`Layout` 组件设计了一系列的 props 支持插槽元素，你可以通过这些 props 来扩展默认主题的布局，比如将上面的 `Layout` 组件改成如下的形式:
+
+```tsx title="theme/index.tsx"
+import { Layout as BasicLayout } from '@rspress/core/theme-original';
+
+// 以下展示所有的 Props
+const Layout = () => (
+  <BasicLayout
+    /* Home 页 Hero 部分之前 */
+    beforeHero={<div>beforeHero</div>}
+    /* Home 页 Hero 部分之后 */
+    afterHero={<div>afterHero</div>}
+    /* Home 页 Features 部分之前 */
+    beforeFeatures={<div>beforeFeatures</div>}
+    /* Home 页 Features 部分之后 */
+    afterFeatures={<div>afterFeatures</div>}
+    /* 正文页 Footer 部分之前 */
+    beforeDocFooter={<div>beforeDocFooter</div>}
+    /* 正文页 Footer 部分之后 */
+    afterDocFooter={<div>afterDocFooter</div>}
+    /* 正文页最前面 */
+    beforeDoc={<div>beforeDoc</div>}
+    /* 正文页最后面 */
+    afterDoc={<div>afterDoc</div>}
+    /* 文档内容前面 */
+    beforeDocContent={<div>beforeDocContent</div>}
+    /* 文档内容后面 */
+    afterDocContent={<div>afterDocContent</div>}
+    /* 导航栏之前 */
+    beforeNav={<div>beforeNav</div>}
+    /* 左上角导航栏标题之前 */
+    beforeNavTitle={<span>😄</span>}
+    /* 导航栏标题 */
+    navTitle={<div>Custom Nav Title</div>}
+    /* 左上角导航栏标题之后 */
+    afterNavTitle={<div>afterNavTitle</div>}
+    /* 导航栏右上角部分 */
+    afterNavMenu={<div>afterNavMenu</div>}
+    /* 左侧侧边栏上面 */
+    beforeSidebar={<div>beforeSidebar</div>}
+    /* 左侧侧边栏下面 */
+    afterSidebar={<div>afterSidebar</div>}
+    /* 右侧大纲栏上面 */
+    beforeOutline={<div>beforeOutline</div>}
+    /* 右侧大纲栏下面 */
+    afterOutline={<div>afterOutline</div>}
+    /* 整个页面最顶部 */
+    top={<div>top</div>}
+    /* 整个页面最底部 */
+    bottom={<div>bottom</div>}
+    /* 自定义 MDX 组件 */
+    components={{ p: (props) => <p {...props} className="my-4 leading-7" /> }}
+  />
+);
+
+export { Layout };
+// 重导出
+export * from '@rspress/core/theme-original';
+```
+
+### 3. 自定义组件
+
+要扩展默认主题的组件，除了插槽方式以外，你还可以自定义 Home 页面组件及 404 页面组件，
+以及其他 Rspress [内置的组件](https://github.com/web-infra-dev/rspress/tree/main/packages/theme-default/src/components)。比如:
+
+```tsx title="theme/index.tsx"
+import {
+  Search as BasicSearch,
+  Layout as BasicLayout,
+} from '@rspress/core/theme-original';
+
+// 定制 Home 页面
+const HomeLayout = () => <div>Home</div>;
+// 定制 404 页面
+const NotFoundLayout = () => <div>404</div>;
+// 传入插槽
+const Layout = () => (
+  <BasicLayout
+    beforeNavTitle={<div>some content</div>}
+    HomeLayout={HomeLayout}
+    NotFoundLayout={NotFoundLayout}
+  />
+);
+
+// 定制 Search 组件
+const Search = () => (
+  <div className="my-search">
+    <BasicSearch />
+  </div>
+);
+export { Search, HomeLayout, NotFoundLayout };
+// 重导出其他部分
+export * from '@rspress/core/theme-original';
+```
+
+当然，在开发过程可能需要使用页面的数据，你可以通过 [`Runtime API`](/api/client-api/api-runtime) 来获取。
+
+### 4. 自定义图标
+
+如果想要单独修改默认主题组件里用到的图标，只需要将同名图标放在 theme/assets 目录下即可。
+
+```txt
+└── theme
+    └── assets
+        └── logo.svg
+```
+
+你可以在 [这里](https://github.com/web-infra-dev/rspress/tree/main/packages/theme-default/src/assets) 查看默认主题中用到的所有图标。
+
+## 重新开发自定义主题
+
+如果你要从头开始开发一个自定义主题，你需要了解一下主题的组成。
+
+### 1. 基本结构
+
+默认情况下，你需要在项目根目录下创建一个 `theme` 目录，然后在 `theme` 目录下创建一个 `index.ts` 或者 `index.tsx` 文件，该文件用于导出主题配置。
+
+```txt
+├── theme
+│   └── index.tsx
+```
+
+在 `theme/index.tsx` 文件中，你需要导出一个 Layout 组件，这个组件就是你的主题的入口组件:
+
+```tsx
+// theme/index.tsx
+import { Layout as BasicLayout } from '@rspress/core/theme-original';
+
+function Layout() {
+  return <BasicLayout />;
+}
+
+export { Layout };
+// 导出默认主题的所有内容，这样才能保证你的主题配置能够正常工作
+export * from '@rspress/core/theme-original';
+```
+
+### 2. 运行时 API
+
+#### usePageData
+
+获取站点所有数据的信息，比如:
+
+```tsx
+import { usePageData } from '@rspress/core/runtime';
+
+function MyComponent() {
+  const pageData = usePageData();
+  return <div>{pageData.title}</div>;
+}
+```
+
+#### useLang
+
+获取当前语言信息，比如:
+
+```tsx
+import { useLang } from '@rspress/core/runtime';
+
+function MyComponent() {
+  const lang = useLang();
+  return <div>{lang}</div>;
+}
+```
+
+#### Content
+
+正文 MDX 组件内容，如:
+
+```tsx
+import { Content } from '@rspress/core/runtime';
+
+function Layout() {
+  return (
+    <div>
+      <Content />
+    </div>
+  );
+}
+```
+
+#### 路由 Hook
+
+Rspress 内部用 [react-router-dom](https://reactrouter.com/) 来实现路由，所以你可以直接使用 `react-router-dom` 的 Hook，比如:
+
+```ts
+import { useLocation } from '@rspress/core/runtime';
+
+function Layout() {
+  const location = useLocation();
+  return <div>Current location: {location.pathname}</div>;
+}
+```
+
+### 3. 搜索功能复用
+
+默认主题内置了搜索功能，我们可以将搜索组件拆分为两部分：
+
+1. 搜索框，即唤起搜索的入口。
+2. 点击搜索框后弹出的搜索面板。
+
+#### 完整复用
+
+如果你想完整复用搜索功能，你可以直接引入 `Search` 组件，比如:
+
+```tsx
+import { Search } from '@rspress/core/theme-original';
+
+function MySearch() {
+  return <Search />;
+}
+```
+
+#### 复用搜索面板
+
+如果你仅仅想复用搜索面板，想要自定义搜索框部分，那么你需要在你的主题组件中引入 `SearchPanel` 组件，比如:
+
+```tsx
+import { useState } from 'react';
+import { SearchPanel } from '@rspress/core/theme-original';
+
+function MySearch() {
+  const [focused, setFocused] = useState(false);
+  return (
+    <div>
+      <button onClick={() => setFocused(true)}>Toggle Search</button>
+      <SearchPanel focused={focused} setFocused={setFocused} />
+    </div>
+  );
+}
+```
+
+其中，你需要自己维护 `focused` 状态和 `setFocused` 方法，并且作为 props 传给 `SearchPanel` 组件，用于控制搜索面板的显示和隐藏。
+
+#### 复用默认全文搜索逻辑
+
+如果你想复用默认的全文搜索逻辑，你可以使用 `useFullTextSearch` Hook，比如:
+
+```tsx
+import { useFullTextSearch } from '@rspress/core/theme-original';
+
+function MySearch() {
+  const { initialized, search } = useFullTextSearch();
+
+  useEffect(() => {
+    async function searchSomeKeywords(keywords: string) {
+      if (initialized) {
+        // 搜索关键字
+        const results = await search(keywords);
+        console.log(results);
+      }
+    }
+    searchSomeKeywords('keyword');
+  }, [initialized]);
+
+  return <div>Search</div>;
+}
+```
+
+其中，`initialized` 表示搜索是否初始化完成，`search` 方法用于搜索关键字，返回一个 Promise，Promise 的结果为默认全文搜索的结果。
+
+需要注意的是，`useFullTextSearch` Hook 会在初始化时自动加载搜索索引，所以你需要先判断 `initialized` 状态，确保初始化完成之后，然后再调用 `search` 方法。
+
+search 方法的类型定义如下:
+
+```ts
+type SearchFn = (keywords: string, limit?: number) => Promise<SearchResult>;
+```
+
+limit 表示搜索结果的最大数量，默认为 7，也就是默认最多返回七篇文章的结果。

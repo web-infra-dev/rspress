@@ -1,46 +1,60 @@
-import { addLeadingSlash, addTrailingSlash, withBase } from '@rspress/shared';
+import { addLeadingSlash, addTrailingSlash } from '@rspress/shared';
 import { DEFAULT_PAGE_EXTENSIONS } from '@rspress/shared/constants';
 
 export const getRoutePathParts = (
-  routePath: string,
-  base: string,
+  relativePath: string,
   lang: string,
   version: string,
   langs: string[],
   versions: string[],
 ) => {
-  const hasTrailSlash = routePath.endsWith('/');
+  const [versionPart, langPart, purePath] = splitRoutePathParts(
+    relativePath,
+    lang,
+    version,
+    langs,
+    versions,
+  );
+
+  return [
+    versionPart === version ? '' : versionPart,
+    langPart === lang ? '' : langPart,
+    purePath,
+  ];
+};
+
+export const splitRoutePathParts = (
+  relativePath: string,
+  lang: string,
+  version: string,
+  langs: string[],
+  versions: string[],
+) => {
+  const hasTrailSlash = relativePath.endsWith('/');
 
   let versionPart = '';
   let langPart = '';
   let purePathPart = '';
 
-  const parts: string[] = routePath.split('/').filter(Boolean);
+  const parts: string[] = relativePath.split('/').filter(Boolean);
 
   if (version) {
     const versionToMatch = parts[0];
     if (versions.includes(versionToMatch)) {
-      if (versionToMatch !== version) {
-        versionPart = versionToMatch;
-      }
-      parts.shift();
+      versionPart = parts.shift() ?? '';
     }
   }
 
   if (lang) {
     const langToMatch = parts[0];
     if (langs.includes(langToMatch)) {
-      if (langToMatch !== lang) {
-        langPart = langToMatch;
-      }
-      parts.shift();
+      langPart = parts.shift() ?? '';
     }
   }
 
   purePathPart = parts.join('/');
 
   return [
-    base,
     versionPart,
     langPart,
     // restore the trail slash
@@ -48,40 +62,56 @@ export const getRoutePathParts = (
   ] as const;
 };
 
+/**
+ *
+ * @param relativePath "/v3/en/guide/getting-started.mdx" or "/v3/guide/getting-started.mdx" or "/en/guide/getting-started.mdx" or "/guide/getting-started.mdx"
+ * @returns
+ */
 export const normalizeRoutePath = (
-  routePath: string,
-  base: string,
+  relativePath: string,
   lang: string,
   version: string,
   langs: string[],
   versions: string[],
   extensions: string[] = DEFAULT_PAGE_EXTENSIONS,
 ) => {
-  const [_, versionPart, langPart, purePathPart] = getRoutePathParts(
-    routePath,
-    base,
-    lang,
-    version,
-    langs,
-    versions,
-  );
+  // 1. remove extension
   const extensionsWithoutDot = extensions.map(i => i.slice(1));
   const cleanExtensionPattern = new RegExp(
     `\\.(${extensionsWithoutDot.join('|')})$`,
     'i',
   );
 
-  const normalizedRoutePath = addLeadingSlash(
-    [versionPart, langPart].filter(Boolean).join('/') +
-      addLeadingSlash(purePathPart),
-  )
-    // remove the extension
+  let routePath = relativePath
     .replace(cleanExtensionPattern, '')
-    .replace(/\.html$/, '')
-    .replace(/\/index$/, '/');
+    .replace(/\.html$/, '');
+
+  if (routePath.endsWith('/')) {
+    routePath = `${routePath}index`;
+  }
+
+  // 2. remove /v3/en
+  const [versionPart, langPart, purePathPart] = getRoutePathParts(
+    routePath,
+    lang,
+    version,
+    langs,
+    versions,
+  );
+
+  // 3. remove index
+  routePath = purePathPart.replace(/\/index$/, '/');
+  if (routePath === 'index') {
+    routePath = '';
+  }
+
+  const normalizedRoutePath = addLeadingSlash(
+    [...[versionPart, langPart].filter(Boolean), routePath].join('/'),
+  );
 
   return {
-    routePath: withBase(normalizedRoutePath, base),
+    pureRoutePath: `/${routePath}`,
+    routePath: normalizedRoutePath,
     lang: langPart || lang,
     version: versionPart || version,
   };

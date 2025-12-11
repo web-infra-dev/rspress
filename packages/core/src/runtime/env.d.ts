@@ -7,14 +7,17 @@ declare module 'virtual-routes' {
 declare module 'virtual-site-data' {
   import { SiteData, DefaultThemeConfig } from '@rspress/shared';
 
-  const data: SiteData<DefaultThemeConfig>;
+  const data: SiteData;
   export default data;
 }
 
-declare module 'virtual-search-index-hash' {
-  const hash: string;
-  export default hash;
+declare module 'virtual-page-data' {
+  import { PageData } from '@rspress/shared';
+  const searchIndexHash: Record<string, string>;
+  const pageData: PageData;
+  export { pageData, searchIndexHash };
 }
+
 
 declare module 'virtual-global-components' {
   import { ComponentType } from 'react';
@@ -27,10 +30,6 @@ declare module 'virtual-global-styles';
 
 declare module 'virtual-i18n-text';
 
-declare module 'virtual-search-hooks' {
-  export const onSearch: (query: string) => void | Promise<void>;
-}
-
 declare module '*.module.scss' {
   const classes: { [key: string]: string };
   export default classes;
@@ -42,5 +41,5 @@ declare module '*.svg' {
 }
 
 declare module '@theme' {
-  export * from '@rspress/theme-default';
+  export * from '#theme';
 }

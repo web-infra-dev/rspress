@@ -16,6 +16,7 @@ Bluch
 brotli
 browserslistrc
 bundleless
+bunx
 Bytedance
 caniuse
 chunkhash
@@ -44,8 +45,10 @@ flexbox
 flexbugs
 flexsearch
 fnames
+Français
 frontmatter
 fullhash
+fumadocs
 Geass
 htmr
 iconify
@@ -73,6 +76,7 @@ longpaths
 manypkg
 mattcompiles
 mdast
+MDSSG
 Mdxjs
 mdxrs
 menlo
@@ -114,10 +118,12 @@ pxtorem
 Qrcode
 rebranded
 rehype
+renderable
 rsbuild
 rsdoctor
 rsfamily
 rslib
+rslint
 rslog
 rspack
 rspress
@@ -132,6 +138,7 @@ Sizefor
 sokra
 speedscope
 srcset
+SSGMD
 stacktracey
 styl
 subdir
@@ -149,13 +156,14 @@ transpiling
 treeshaking
 tsbuildinfo
 tsdoc
+twoslash
+Twoslasher
 Unhead
 unocss
 unpatch
 unplugin
 unshift
 upath
-vitest
 watchpack
 webm
 webp

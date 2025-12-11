@@ -1,0 +1,51 @@
+name: Diff
+
+on:
+  pull_request:
+    types: [opened, synchronize, reopened]
+  push:
+    branches:
+      - main
+
+jobs:
+  Build:
+    runs-on: ubuntu-latest
+
+    permissions:
+      contents: write
+      issues: write
+      pull-requests: write
+    steps:
+      - name: Checkout
+        uses: actions/checkout@8e8c483db84b4bee98b60c0593521ed34d9990e8 # v6
+        with:
+          fetch-depth: 0
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Setup Pnpm
+        run: |
+          npm install -g corepack@latest --force
+          corepack enable
+
+      - name: Setup Node.js
+        uses: actions/setup-node@395ad3262231945c25e8478fd5baf05154b1d79f # v6.1.0
+        with:
+          node-version: 22
+          cache: 'pnpm'
+
+      - name: Install Dependencies and Build
+        run: |
+          pnpm install
+
+      - name: Build Demo Project
+        run: |
+          cd website
+          pnpm install
+          RSDOCTOR=1 pnpm run build
+
+      - name: Report Compressed Size
+        uses: web-infra-dev/rsdoctor-action@main
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          file_path: 'website/doc_build/web/rsdoctor-data.json'
+          target_branch: 'main'

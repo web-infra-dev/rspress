@@ -1,0 +1,68 @@
+.editorContainer {
+  position: relative;
+  width: 100%;
+  .codeBlockWrapper::before {
+    content: 'editable';
+    font-size: 0.75rem;
+    font-family: var(--rp-font-family-mono);
+    padding: 0px 5px;
+    color: var(--rp-c-text-1);
+    border-radius: 4px;
+    position: absolute;
+    bottom: 16px;
+    right: 16px;
+    background-color: var(--rp-c-bg-mute);
+    display: inline-block;
+    z-index: 10;
+  }
+  &:hover {
+    :global(.rp-code-button-group__button) {
+      opacity: 1 !important;
+    }
+  }
+  :global(.rp-codeblock) {
+    margin: 0;
+  }
+  :global(.rp-code-button-group > .rp-code-wrap-button) {
+    display: none;
+  }
+}
+
+.codeBlockWrapper {
+  position: relative;
+  width: 100%;
+  overflow: auto;
+}
+
+.codeInput {
+  position: absolute;
+  display: block;
+  top: 0px;
+  left: 0px;
+  width: 100%;
+  height: 100%;
+  resize: none;
+  background: transparent;
+  color: transparent;
+  caret-color: #333;
+  font: inherit;
+  border: none;
+  outline: none;
+
+  padding: 16px 20px;
+  margin: 0;
+  z-index: 2;
+
+  font-family: var(--rp-font-family-mono);
+  font-size: var(--rp-code-font-size);
+  line-height: inherit;
+
+  overflow: hidden;
+  pointer-events: auto;
+
+  caret-color: rgba(156, 163, 175, 0.7);
+}
+
+.codeInput::selection {
+  background: rgba(0, 0, 0, 0.15);
+}

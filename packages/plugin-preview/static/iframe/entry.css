@@ -1,0 +1,37 @@
+:root {
+  --rp-iframe-bg: #f6f8fa;
+  --rp-iframe-nav-bg: #ffffff;
+}
+
+.dark {
+  --rp-iframe-bg: #242424;
+  --rp-iframe-nav-bg: #191d24;
+}
+
+body {
+  background-color: var(--rp-iframe-bg) !important;
+  margin: 0px; /* copied from preflight.css */
+}
+
+/* #region copied from preflight.css */
+@layer rp-base {
+  *,
+  ::before,
+  ::after {
+    box-sizing: border-box; /* 1 */
+    border-width: 0; /* 2 */
+    border-style: solid; /* 2 */
+  }
+}
+/* #endregion copied from preflight.css */
+
+.rp-preview-nav {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 56px;
+  background-color: var(--rp-iframe-nav-bg) !important;
+  font-weight: 600;
+  font-size: 17px;
+}

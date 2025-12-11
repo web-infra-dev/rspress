@@ -1,20 +1,34 @@
 import fs from 'node:fs/promises';
 import path from 'node:path';
-import type { PageModule, RouteMeta, UserConfig } from '@rspress/shared';
+import {
+  type AdditionalPage,
+  addTrailingSlash,
+  type PageModule,
+  type RouteMeta,
+  RSPRESS_TEMP_DIR,
+  removeTrailingSlash,
+  type UserConfig,
+} from '@rspress/shared';
 import { DEFAULT_PAGE_EXTENSIONS } from '@rspress/shared/constants';
 import type { ComponentType } from 'react';
 import { glob } from 'tinyglobby';
-import type { PluginDriver } from '../PluginDriver';
 import { PUBLIC_DIR } from '../constants';
-import { getPageKey, normalizePath } from '../utils';
-import { RoutePage } from './RoutePage';
-import { getRoutePathParts, normalizeRoutePath } from './normalizeRoutePath';
+import { createError } from '../utils';
+import {
+  getRoutePathParts,
+  normalizeRoutePath,
+  splitRoutePathParts,
+} from './normalizeRoutePath';
+import {
+  absolutePathToRelativePath,
+  absolutePathToRoutePath,
+  RoutePage,
+} from './RoutePage';
 
 interface InitOptions {
   scanDir: string;
   config: UserConfig;
-  runtimeTempDir: string;
-  pluginDriver: PluginDriver;
+  externalPages: AdditionalPage[];
 }
 
 export interface Route {
@@ -38,23 +52,23 @@ export class RouteService {
 
   #defaultLang: string;
 
-  #defaultVersion: string = '';
+  #defaultVersion: string;
 
-  #extensions: string[] = [];
+  #extensions: string[];
 
-  #langs: string[] = [];
+  #langs: string[];
 
-  #versions: string[] = [];
+  #versions: string[];
 
-  #include: string[] = [];
+  #include: string[];
 
-  #exclude: string[] = [];
+  #exclude: string[];
 
-  #base: string = '';
+  #excludeConvention: string[];
 
-  #tempDir: string = '';
+  #tempDir: string;
 
-  #pluginDriver: PluginDriver;
+  #externalPages: AdditionalPage[];
 
   static __instance__: RouteService | null = null;
 
@@ -64,43 +78,57 @@ export class RouteService {
 
   // The factory to create route service instance
   static async create(options: InitOptions) {
-    const { scanDir, config, runtimeTempDir, pluginDriver } = options;
+    const { scanDir, config, externalPages } = options;
+    const runtimeAbsTempDir = path.join(
+      process.cwd(),
+      'node_modules',
+      RSPRESS_TEMP_DIR,
+      'runtime',
+    );
+    await fs.mkdir(runtimeAbsTempDir, { recursive: true });
     const routeService = new RouteService(
       scanDir,
       config,
-      runtimeTempDir,
-      pluginDriver,
+      externalPages || [],
+      runtimeAbsTempDir,
     );
-    await routeService.#init();
-    await pluginDriver.routeServiceGenerated(routeService);
     RouteService.__instance__ = routeService;
+    await routeService.#init();
     return routeService;
   }
 
-  constructor(
+  static async createSimple() {
+    return new RouteService('', {}, [], '');
+  }
+
+  private constructor(
     scanDir: string,
     userConfig: UserConfig,
-    tempDir: string,
-    pluginDriver: PluginDriver,
+    externalPages: AdditionalPage[],
+    runtimeAbsTempDir: string,
   ) {
     const routeOptions = userConfig?.route || {};
     this.#scanDir = scanDir;
     this.#extensions = routeOptions.extensions || DEFAULT_PAGE_EXTENSIONS;
     this.#include = routeOptions.include || [];
-    this.#exclude = routeOptions.exclude || [];
+    this.#exclude = routeOptions.exclude || []; // partial mdx components and code samples, e.g: _d.mdx
+    this.#excludeConvention = routeOptions.excludeConvention || ['**/_[^_]*']; // partial mdx components and code samples, e.g: _d.mdx
     this.#defaultLang = userConfig?.lang || '';
     this.#langs = (
       userConfig?.locales ??
       userConfig?.themeConfig?.locales ??
       []
     ).map(item => item.lang);
-    this.#base = userConfig?.base || '';
-    this.#tempDir = tempDir;
-    this.#pluginDriver = pluginDriver;
+
+    this.#tempDir = runtimeAbsTempDir;
+    this.#externalPages = externalPages;
 
     if (userConfig.multiVersion) {
       this.#defaultVersion = userConfig.multiVersion.default || '';
       this.#versions = userConfig.multiVersion.versions || [];
+    } else {
+      this.#defaultVersion = '';
+      this.#versions = [];
     }
   }
 
@@ -121,70 +149,59 @@ export class RouteService {
         onlyFiles: true,
         ignore: [
           ...this.#exclude,
+          ...this.#excludeConvention,
           '**/node_modules/**',
           '**/.eslintrc.js',
           '**/.nx/**',
           `./${PUBLIC_DIR}/**`,
+          '**/*.d.ts',
         ],
       })
     ).sort();
 
     files.forEach(filePath => {
-      const fileRelativePath = normalizePath(
-        path.relative(this.#scanDir, filePath),
-      );
-      const { routePath, lang, version } =
-        this.normalizeRoutePath(fileRelativePath);
-      const absolutePath = path.join(this.#scanDir, fileRelativePath);
-
-      const routeMeta = {
-        routePath,
-        absolutePath: normalizePath(absolutePath),
-        relativePath: fileRelativePath,
-        pageName: getPageKey(fileRelativePath),
-        lang,
-        version,
-      };
-      this.addRoute(routeMeta);
+      const routePage = RoutePage.create(filePath, this.#scanDir);
+      this.addRoute(routePage);
     });
+
     // 2. external pages added by plugins
-    const externalPages = await this.#pluginDriver.addPages();
+    const externalPages = this.#externalPages;
 
     await Promise.all(
       externalPages.map(async (route, index) => {
         const { routePath, content, filepath } = route;
         // case1: specify the filepath
         if (filepath) {
-          const routeMeta = this.#generateRouteMeta(routePath, filepath);
-          this.addRoute(routeMeta);
+          const routePage = RoutePage.createFromExternal(
+            routePath,
+            filepath,
+            this.#scanDir,
+          );
+          this.addRoute(routePage);
           return;
         }
         // case2: specify the content
         if (content) {
           const filepath = await this.#writeTempFile(index, content);
-          const routeMeta = this.#generateRouteMeta(routePath, filepath);
-          this.addRoute(routeMeta);
+          const routePage = RoutePage.createFromExternal(
+            routePath,
+            filepath,
+            this.#scanDir,
+          );
+          this.addRoute(routePage);
         }
       }),
     );
-
-    await this.#pluginDriver.routeGenerated(this.getRoutes());
   }
 
-  async addRoute(routeMeta: RouteMeta) {
-    const { routePath } = routeMeta;
+  async addRoute(routePage: RoutePage): Promise<void> {
+    const {
+      routeMeta: { routePath },
+    } = routePage;
     if (this.routeData.has(routePath)) {
-      throw new Error(`routePath ${routePath} has already been added`);
+      throw createError(`routePath ${routePath} has already been added`);
     }
-
-    const routePage = RoutePage.create(routeMeta);
     this.routeData.set(routePath, routePage);
-  }
-
-  removeRoute(filePath: string): void {
-    const fileRelativePath = path.relative(this.#scanDir, filePath);
-    const { routePath } = this.normalizeRoutePath(fileRelativePath);
-    this.routeData.delete(routePath);
   }
 
   getRoutes(): RouteMeta[] {
@@ -195,16 +212,30 @@ export class RouteService {
     return Array.from(this.routeData.values());
   }
 
-  isExistRoute(routePath: string): boolean {
-    const { routePath: normalizedRoute } = this.normalizeRoutePath(routePath);
-    return Boolean(this.routeData.get(normalizedRoute));
+  isExistRoute(link: string): boolean {
+    function linkToRoutePath(routePath: string) {
+      return decodeURIComponent(routePath.split('#')[0])
+        .replace(/\.html$/, '')
+        .replace(/\/index$/, '/');
+    }
+
+    const cleanLinkPath = linkToRoutePath(link);
+    // allow fuzzy matching, e.g: /guide/ and /guide is equal
+    // This is a simple judgment, the performance will be better than "matchPath" in react-router-dom
+    if (
+      !this.routeData.has(removeTrailingSlash(cleanLinkPath)) &&
+      !this.routeData.has(addTrailingSlash(cleanLinkPath))
+    ) {
+      return false;
+    }
+    return true;
   }
 
   generateRoutesCode(): string {
     return this.generateRoutesCodeByRouteMeta(this.getRoutes());
   }
 
-  generateRoutesCodeByRouteMeta(routeMeta: RouteMeta[]) {
+  private generateRoutesCodeByRouteMeta(routeMeta: RouteMeta[]) {
     return `
 import React from 'react';
 import { lazyWithPreload } from "react-lazy-with-preload";
@@ -236,10 +267,9 @@ ${routeMeta
 `;
   }
 
-  getRoutePathParts(routePath: string) {
+  getRoutePathParts(relativePath: string) {
     return getRoutePathParts(
-      routePath,
-      this.#base,
+      relativePath,
       this.#defaultLang,
       this.#defaultVersion,
       this.#langs,
@@ -247,10 +277,19 @@ ${routeMeta
     );
   }
 
-  normalizeRoutePath(routePath: string) {
+  splitRoutePathParts(relativePath: string) {
+    return splitRoutePathParts(
+      relativePath,
+      this.#defaultLang,
+      this.#defaultVersion,
+      this.#langs,
+      this.#versions,
+    );
+  }
+
+  normalizeRoutePath(relativePath: string) {
     return normalizeRoutePath(
-      routePath,
-      this.#base,
+      relativePath,
       this.#defaultLang,
       this.#defaultVersion,
       this.#langs,
@@ -259,29 +298,38 @@ ${routeMeta
     );
   }
 
+  absolutePathToRoutePath(absolutePath: string): string {
+    return absolutePathToRoutePath(absolutePath, this.#scanDir, this);
+  }
+
+  isInDocsDir(absolutePath: string): boolean {
+    const relativePath = path.relative(this.#scanDir, absolutePath);
+    return !relativePath.startsWith('..') && !path.isAbsolute(relativePath);
+  }
+
+  absolutePathToRelativePath(absolutePath: string): string {
+    return absolutePathToRelativePath(absolutePath, this.#scanDir);
+  }
+
   async #writeTempFile(index: number, content: string) {
     const tempFilePath = path.join(this.#tempDir, `temp-${index}.mdx`);
     await fs.writeFile(tempFilePath, content);
     return tempFilePath;
   }
 
-  #generateRouteMeta(routePath: string, filepath: string): RouteMeta {
-    const {
-      routePath: normalizedPath,
-      lang,
-      version,
-    } = this.normalizeRoutePath(routePath);
-    return {
-      routePath: normalizedPath,
-      absolutePath: normalizePath(filepath),
-      relativePath: normalizePath(path.relative(this.#scanDir, filepath)),
-      pageName: getPageKey(routePath),
-      lang,
-      version,
-    };
-  }
-
   getRoutePageByRoutePath(routePath: string) {
     return this.routeData.get(routePath);
+  }
+
+  getDocsDir(): string {
+    return this.#scanDir;
+  }
+
+  getLangs() {
+    return this.#langs;
+  }
+
+  getDefaultLang() {
+    return this.#defaultLang;
   }
 }

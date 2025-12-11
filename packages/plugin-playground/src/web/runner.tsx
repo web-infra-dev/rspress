@@ -205,7 +205,13 @@ class Runner extends Component<RunnerProps, RunnerState> {
   }
 
   render() {
-    const { className = '', code, language, getImport, ...rest } = this.props;
+    const {
+      className = '',
+      code: _code,
+      language: _language,
+      getImport: _getImport,
+      ...rest
+    } = this.props;
     const { error, comp } = this.state;
 
     return (

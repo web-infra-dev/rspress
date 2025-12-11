@@ -1,10 +1,12 @@
-import { type RsbuildInstance, mergeRsbuildConfig } from '@rsbuild/core';
+import { mergeRsbuildConfig, type RsbuildInstance } from '@rsbuild/core';
 import type { UserConfig } from '@rspress/shared';
-import { PluginDriver } from './PluginDriver';
 import { initRsbuild } from './initRsbuild';
+import { PluginDriver } from './PluginDriver';
+import { RouteService } from './route/RouteService';
 
 interface ServeOptions {
   config: UserConfig;
+  configFilePath: string;
   port?: number;
   host?: string;
 }
@@ -13,10 +15,10 @@ interface ServeOptions {
 export async function serve(
   options: ServeOptions,
 ): Promise<ReturnType<RsbuildInstance['preview']>> {
-  const { config, port: userPort, host: userHost } = options;
+  const { config, port: userPort, host: userHost, configFilePath } = options;
   const envPort = process.env.PORT;
   const envHost = process.env.HOST;
-  const { builderConfig } = config;
+  const { builderConfig = {} } = config;
   const port = Number(
     envPort || userPort || builderConfig?.server?.port || 4173,
   );
@@ -30,8 +32,7 @@ export async function serve(
     },
   });
 
-  const pluginDriver = new PluginDriver(config, true);
-  await pluginDriver.init();
+  const pluginDriver = await PluginDriver.create(config, configFilePath, true);
 
   const modifiedConfig = await pluginDriver.modifyConfig();
 
@@ -39,6 +40,7 @@ export async function serve(
     config.root!,
     modifiedConfig,
     pluginDriver,
+    await RouteService.createSimple(),
     false,
   );
 

@@ -1,0 +1,159 @@
+# 容器
+
+容器是一个很好的方式用来标注重要的信息，用于提示用户。
+
+:::tip
+Rspress 提供了两种风格的语法，[`:::` 语法](#three-colon-syntax) 和 [GitHub Markdown Alerts 语法](#github-markdown-alerts-syntax)。
+:::
+
+## `:::` 语法 \{#three-colon-syntax}
+
+你可以使用 `:::` 语法来创建自定义容器，且支持自定义标题。例如：
+
+import { Tabs, Tab } from '@theme';
+
+<Tabs>
+
+<Tab label="渲染结果">
+
+:::note
+这是一个 `note` 类型的 `block`
+:::
+
+:::tip
+这是一个 `tip` 类型的 `block`
+:::
+
+:::info
+这是一个 `info` 类型的 `block`
+:::
+
+:::warning
+这是一个 `warning` 类型的 `block`
+:::
+
+:::danger
+这是一个 `danger` 类型的 `block`
+:::
+
+:::details
+这是一个 `details` 类型的 `block`
+:::
+
+:::tip 自定义标题
+自定义标题的 `block`
+:::
+
+:::tip\{title="自定义标题"}
+自定义标题的 `block`
+:::
+
+</Tab>
+
+<Tab label="语法">
+
+```markdown
+:::note
+这是一个 `note` 类型的 `block`
+:::
+
+:::tip
+这是一个 `tip` 类型的 `block`
+:::
+
+:::info
+这是一个 `info` 类型的 `block`
+:::
+
+:::warning
+这是一个 `warning` 类型的 `block`
+:::
+
+:::danger
+这是一个 `danger` 类型的 `block`
+:::
+
+:::details
+这是一个 `details` of type `block`
+:::
+
+:::tip 自定义标题
+自定义标题的 `block`
+:::
+
+:::tip{title=自定义标题}
+自定义标题的 `block`
+:::
+```
+
+</Tab>
+
+</Tabs>
+
+:::warning 注意事项
+
+- 容器类型必须使用小写。请使用 `:::tip`、`:::warning`、`:::caution` 等。大写形式如 `:::Tip` 或 `:::Warning` 将不会被识别。
+
+- 在 `.mdx` 文件中使用 `:::` 语法且使用大括号语法自定义标题时，需注意转义。因此更推荐直接使用 `:::tip 自定义标题` 这种语法。
+
+```mdx
+:::tip\{title="Custom Title"}
+自定义标题的 `block`
+:::
+```
+
+:::
+
+## GitHub Markdown alerts 语法 \{#github-markdown-alerts-syntax}
+
+你可以使用 [GitHub Markdown Alerts 语法](https://docs.github.com/zh/get-started/writing-on-github/getting-started-with-writing-and-formatting-on-github/basic-writing-and-formatting-syntax#alerts) 来创建自定义容器。
+
+<Tabs>
+
+<Tab label="渲染结果">
+
+> [!NOTE]
+> 这是一个 `note` 类型的 `block`
+
+> [!TIP]
+> 这是一个 `tip` 类型的 `block`
+
+> [!INFO]
+> 这是一个 `info` 类型的 `block`
+
+> [!WARNING]
+> 这是一个 `warning` 类型的 `block`
+
+> [!DANGER]
+> 这是一个 `danger` 类型的 `block`
+
+> [!DETAILS]
+> 这是一个 `details` 类型的 `block`
+
+</Tab>
+
+<Tab label="语法">
+
+```markdown
+> [!NOTE]
+> 这是一个 `note` 类型的 `block`
+
+> [!TIP]
+> 这是一个 `tip` 类型的 `block`
+
+> [!INFO]
+> 这是一个 `info` 类型的 `block`
+
+> [!WARNING]
+> 这是一个 `warning` 类型的 `block`
+
+> [!DANGER]
+> 这是一个 `danger` 类型的 `block`
+
+> [!DETAILS]
+> 这是一个 `details` 类型的 `block`
+```
+
+</Tab>
+
+</Tabs>

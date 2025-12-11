@@ -29,5 +29,14 @@
     "label": "Link"
   },
   "commands",
-  "single-page"
+  "single-page",
+  {
+    "type": "section-header",
+    "label": "Section Header"
+  },
+  {
+    "type": "dir-section-header",
+    "name": "section-header",
+    "label": "Dir Section Header"
+  }
 ]

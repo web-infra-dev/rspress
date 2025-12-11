@@ -1,0 +1,52 @@
+# Shiki
+
+## transformers
+
+{/* transformerNotationDiff */}
+
+```ts
+export function foo() {
+  console.log('Diff remove'); // [!code --]
+  console.log('Diff add'); // [!code ++]
+}
+```
+
+{/* transformerLineNumber */}
+
+```ts
+export function foo() {
+  console.log('Line number'); // [!code hl]
+}
+```
+
+{/* transformerNotationErrorLevel */}
+
+```ts
+export function foo() {
+  console.log('Error level'); // [!code error]
+}
+```
+
+{/* transformerFocus */}
+
+```ts
+export function foo() {
+  console.log('Focus'); // [!code focus]
+}
+```
+
+{/* transformerNotationHighlight */}
+
+```js
+console.log('1'); // [!code highlight]
+console.log('2');
+console.log('3'); // [!code highlight]
+console.log('4'); // [!code highlight]
+```
+
+```diff
+export function foo() {
+-  console.log('Diff remove');
++  console.log('Diff add');
+}
+```

@@ -1,0 +1,13 @@
+{
+  "config-json": {
+    "zh": "配置-json",
+    "en": "Configuration-json"
+  },
+  "Foo": {
+    "zh": "Foo",
+    "en": "Foo"
+  },
+  "shouldFallbackToEn": {
+    "en": "This text is only in English"
+  }
+}

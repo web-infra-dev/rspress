@@ -1,17 +1,45 @@
-import type { RsbuildConfig, RsbuildPlugin } from '@rsbuild/core';
-import type { loadConfig } from '@rsbuild/core';
+import type { loadConfig, RsbuildConfig } from '@rsbuild/core';
 import type { RehypeShikiOptions } from '@shikijs/rehype';
 import type { ZoomOptions } from 'medium-zoom';
 import type { PluggableList } from 'unified';
 import type { AdditionalPage, RspressPlugin } from './Plugin';
 import type {
-  Config as DefaultThemeConfig,
-  NormalizedConfig as NormalizedDefaultThemeConfig,
-} from './defaultTheme';
+  ThemeConfig as DefaultThemeConfig,
+  NormalizedThemeConfig as NormalizedDefaultThemeConfig,
+} from './theme';
+import type { I18nText } from './theme/i18nText';
 
+// #region theme
 export type { DefaultThemeConfig, NormalizedDefaultThemeConfig };
-export * from './defaultTheme';
-export * from './helpers';
+
+export type { I18nText } from './theme/i18nText';
+export type {
+  EditLink,
+  Footer,
+  NormalizedLocales,
+  NormalizedThemeConfig,
+  ThemeConfig,
+} from './theme/index';
+export type { LocaleConfig } from './theme/locale';
+export type {
+  Nav,
+  NavItem,
+  NavItemWithChildren,
+  NavItemWithLink,
+  NavItemWithLinkAndChildren,
+} from './theme/nav';
+export type {
+  NormalizedSidebar,
+  NormalizedSidebarGroup,
+  Sidebar,
+  SidebarData,
+  SidebarDivider,
+  SidebarGroup,
+  SidebarItem,
+  SidebarSectionHeader,
+} from './theme/sidebar';
+export type { SocialLink } from './theme/socialLink';
+// #endregion
 
 export type { RspressPlugin, AdditionalPage, RspressPlugin as Plugin };
 
@@ -22,6 +50,44 @@ export interface Route {
   preload: () => Promise<PageModule<React.ComponentType<unknown>>>;
   lang: string;
 }
+
+// #region RemarkSplitMdxOptions
+/**
+ * Filter rule format: [specifiers, source]
+ * - specifiers: Array of component/function names to match
+ * - source: Import source to match
+ *
+ * Example: [['Table', 'Button'], '@lynx']
+ * Matches: import { Table, Button } from '@lynx'
+ */
+type FilterRule = [string[], string];
+
+interface RemarkSplitMdxOptions {
+  /**
+   * Include rules for filtering imports and JSX elements
+   * Format: [[specifiers, source], ...]
+   *
+   * @example
+   * includes: [
+   *   [['Table', 'Button'], '@lynx'],
+   *   [['Card'], 'antd']
+   * ]
+   */
+  includes?: FilterRule[];
+
+  /**
+   * Exclude rules for filtering imports and JSX elements
+   * Takes precedence over includes
+   * Format: [[specifiers, source], ...]
+   *
+   * @example
+   * excludes: [
+   *   [['LegacyTable'], '@lynx']
+   * ]
+   */
+  excludes?: FilterRule[];
+}
+// #endregion
 
 export interface RouteMeta {
   routePath: string;
@@ -52,7 +118,7 @@ export interface Locale {
   description?: string;
 }
 
-export interface UserConfig<ThemeConfig = DefaultThemeConfig> {
+export interface UserConfig {
   /**
    * The root directory of the site.
    * @default 'docs'
@@ -78,6 +144,7 @@ export interface UserConfig<ThemeConfig = DefaultThemeConfig> {
   icon?: string | URL;
   /**
    * Default language of the site.
+   * @default 'en'
    */
   lang?: string;
   /**
@@ -106,12 +173,23 @@ export interface UserConfig<ThemeConfig = DefaultThemeConfig> {
   locales?: Locale[];
   /**
    * The i18n text data source path. Default is `i18n.json` in cwd.
+   * @default '<cwd>/i18n.json'
    */
   i18nSourcePath?: string;
   /**
+   * The i18n text data.
+   */
+  i18nSource?:
+    | (I18nText & Record<string, Record<string, string>>)
+    | ((
+        value: Record<string, Record<string, string>>,
+      ) =>
+        | Record<string, Record<string, string>>
+        | Promise<Record<string, Record<string, string>>>);
+  /**
    * Theme config.
    */
-  themeConfig?: ThemeConfig;
+  themeConfig?: DefaultThemeConfig;
   /**
    * Rsbuild Configuration
    */
@@ -137,7 +215,7 @@ export interface UserConfig<ThemeConfig = DefaultThemeConfig> {
    */
   outDir?: string;
   /**
-   * Custom theme directory
+   * User side custom theme directory
    */
   themeDir?: string;
   /**
@@ -153,11 +231,40 @@ export interface UserConfig<ThemeConfig = DefaultThemeConfig> {
    */
   search?: SearchOptions;
   /**
-   * Whether to enable ssg, default is true
+   * Whether to enable ssg
+   * @default true
    */
-  ssg?: boolean;
+  ssg?:
+    | boolean
+    | {
+        /**
+         * After enabled, you can use worker to accelerate the SSG process and reduce memory usage. It is suitable for large document sites and is based on [tinypool](https://github.com/tinylibs/tinypool).
+         * @default false
+         */
+        experimentalWorker?: boolean;
+        /**
+         * After enabled, some pages will not be rendered by SSG, and they will directly use html under CSR. This is suitable for SSG errors in large document sites bypassing a small number of pages. It is not recommended to enable this option actively.
+         * @default []
+         */
+        experimentalExcludeRoutePaths?: (string | RegExp)[];
+      };
+
   /**
-   * Whether to enable medium-zoom, default is true
+   * Whether to enable llms and ssg-md
+   * @default false
+   * @experimental
+   */
+  llms?:
+    | boolean
+    | {
+        /**
+         * @experimental
+         */
+        remarkSplitMdxOptions?: RemarkSplitMdxOptions;
+      };
+  /**
+   * Whether to enable medium-zoom
+   * @default true
    */
   mediumZoom?:
     | boolean
@@ -165,10 +272,6 @@ export interface UserConfig<ThemeConfig = DefaultThemeConfig> {
         selector?: string;
         options?: ZoomOptions;
       };
-  /**
-   * Add some extra builder plugins
-   */
-  builderPlugins?: RsbuildPlugin[];
   /**
    * Multi version config
    */
@@ -210,10 +313,23 @@ export type BaseRuntimePageInfo = Omit<
   'id' | 'content' | 'domain'
 >;
 
-type PluginShikiOptions = RehypeShikiOptions;
+export interface PageData {
+  pages: BaseRuntimePageInfo[];
+}
 
-export interface SiteData<ThemeConfig = NormalizedDefaultThemeConfig> {
-  root: string;
+export interface PageDataLegacy {
+  siteData: SiteData & { pages: BaseRuntimePageInfo[] };
+  page: BaseRuntimePageInfo & {
+    headingTitle?: string;
+    pagePath: string;
+    lastUpdatedTime?: string;
+    description?: string;
+    pageType: PageType;
+    [key: string]: unknown;
+  };
+}
+
+export interface SiteData {
   base: string;
   lang: string;
   route: RouteOptions;
@@ -221,16 +337,14 @@ export interface SiteData<ThemeConfig = NormalizedDefaultThemeConfig> {
   title: string;
   description: string;
   icon: string;
-  themeConfig: ThemeConfig;
+  themeConfig: NormalizedDefaultThemeConfig;
   logo: string | { dark: string; light: string };
   logoText: string;
-  pages: BaseRuntimePageInfo[];
   search: SearchOptions;
-  ssg: boolean;
   markdown: {
     showLineNumbers: boolean;
     defaultWrapCode: boolean;
-    shiki: Partial<PluginShikiOptions>;
+    shiki: Partial<RehypeShikiOptions>;
   };
   multiVersion: {
     default: string;
@@ -256,7 +370,6 @@ export interface PageIndexInfo {
   frontmatter: FrontMatterMeta;
   lang: string;
   version: string;
-  domain: string;
   _filepath: string;
   _relativePath: string;
 }
@@ -271,12 +384,13 @@ export type RemotePageInfo = PageIndexInfo & {
 };
 
 export interface Hero {
-  name: string;
-  text: string;
-  tagline: string;
+  badge?: string;
+  name?: string;
+  text?: string;
+  tagline?: string;
   image?: {
-    src: string | { dark: string; light: string };
-    alt: string;
+    src?: string | { dark: string; light: string };
+    alt?: string;
     /**
      * `srcset` and `sizes` are attributes of `<img>` tag. Please refer to https://mdn.io/srcset for the usage.
      * When the value is an array, rspress will join array members with commas.
@@ -284,7 +398,7 @@ export interface Hero {
     sizes?: string | string[];
     srcset?: string | string[];
   };
-  actions: {
+  actions?: {
     text: string;
     link: string;
     theme: 'brand' | 'alt';
@@ -306,7 +420,7 @@ export interface PageModule<T extends React.ComponentType<unknown>> {
   [key: string]: unknown;
 }
 
-export type PageType = 'home' | 'doc' | 'custom' | '404' | 'blank';
+export type PageType = 'home' | 'doc' | 'doc-wide' | 'custom' | '404' | 'blank';
 
 export interface FrontMatterMeta {
   title?: string;
@@ -315,27 +429,19 @@ export interface FrontMatterMeta {
   pageType?: PageType;
   features?: Feature[];
   hero?: Hero;
+
+  // ui
+  navbar?: boolean;
   sidebar?: boolean;
   outline?: boolean;
+  footer?: boolean;
+
   lineNumbers?: boolean;
   overviewHeaders?: number[];
   titleSuffix?: string;
   head?: [string, Record<string, string>][];
   context?: string;
-  footer?: boolean;
   [key: string]: unknown;
-}
-
-export interface PageData {
-  siteData: SiteData<DefaultThemeConfig>;
-  page: BaseRuntimePageInfo & {
-    headingTitle?: string;
-    pagePath: string;
-    lastUpdatedTime?: string;
-    description?: string;
-    pageType: PageType;
-    [key: string]: unknown;
-  };
 }
 
 export interface RouteOptions {
@@ -346,14 +452,22 @@ export interface RouteOptions {
   extensions?: string[];
   /**
    * Include extra files from being converted to routes
+   * @default []
    */
   include?: string[];
   /**
    * Exclude files from being converted to routes
+   * @default []
    */
   exclude?: string[];
   /**
+   * Exclude convention files from being converted to routes
+   * @default ['**\/_[^_]*']
+   */
+  excludeConvention?: string[];
+  /**
    * use links without .html files
+   * @default false
    */
   cleanUrls?: boolean;
 }
@@ -378,34 +492,31 @@ export type LocalSearchOptions = SearchHooks & {
   codeBlocks?: boolean;
 };
 
-export type RemoteSearchIndexInfo =
-  | string
-  | {
-      value: string;
-      label: string;
-    };
+export type SearchOptions = LocalSearchOptions | false;
 
-export type RemoteSearchOptions = SearchHooks & {
-  mode: 'remote';
-  apiUrl: string;
-  domain?: string;
-  indexName: string;
-  searchIndexes?: RemoteSearchIndexInfo[];
-  searchLoading?: boolean;
+export type RemarkLinkOptions = {
+  /**
+   * Whether to enable check dead links
+   * @default true
+   */
+  checkDeadLinks?:
+    | boolean
+    | { excludes: string[] | ((url: string) => boolean) };
+  /**
+   * [](/v3/zh/guide) [](/zh/guide) [](/guide) will be regarded as the same [](/v3/zh/guide) according to the directory.
+   * @default true
+   */
+  autoPrefix?: boolean;
 };
-
-export type SearchOptions = LocalSearchOptions | RemoteSearchOptions | false;
 
 export interface MarkdownOptions {
   remarkPlugins?: PluggableList;
   rehypePlugins?: PluggableList;
-  /**
-   * Whether to enable check dead links, default is false
-   */
-  checkDeadLinks?: boolean;
+  link?: RemarkLinkOptions;
   showLineNumbers?: boolean;
   /**
-   * Whether to wrap code by default, default is false
+   * Whether to wrap code by default
+   * @default false
    */
   defaultWrapCode?: boolean;
   /**
@@ -415,7 +526,7 @@ export interface MarkdownOptions {
   /**
    * @type import('@shikijs/rehype').RehypeShikiOptions
    */
-  shiki?: Partial<PluginShikiOptions>;
+  shiki?: Partial<RehypeShikiOptions>;
 
   /**
    * Speed up build time by caching mdx parsing result in `rspress build`

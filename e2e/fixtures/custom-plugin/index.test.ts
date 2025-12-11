@@ -1,10 +1,9 @@
-import path from 'node:path';
 import { expect, test } from '@playwright/test';
 import { getPort, killProcess, runDevCommand } from '../../utils/runCommands';
 
 test.describe('plugin test', async () => {
-  let appPort;
-  let app;
+  let appPort: number;
+  let app: Awaited<ReturnType<typeof runDevCommand>>;
   test.beforeAll(async () => {
     const appDir = __dirname;
     appPort = await getPort();
@@ -21,10 +20,8 @@ test.describe('plugin test', async () => {
     await page.goto(`http://localhost:${appPort}/filepath-route`, {
       waitUntil: 'networkidle',
     });
-    const h1 = await page.getByRole('heading', {
-      name: /Demo1/,
-    });
-    await expect(h1).toBeTruthy();
+    const heading = page.getByRole('heading', { name: /Demo1/ });
+    await expect(heading).toBeVisible();
   });
 
   test('Should add route by content', async ({ page }) => {
@@ -32,9 +29,7 @@ test.describe('plugin test', async () => {
       waitUntil: 'networkidle',
     });
 
-    const h1 = await page.getByRole('heading', {
-      name: /Demo2/,
-    });
-    await expect(h1).toBeTruthy();
+    const heading = page.getByRole('heading', { name: /Demo2/ });
+    await expect(heading).toBeVisible();
   });
 });

@@ -1,0 +1,46 @@
+# Meta attributes test
+
+This page tests meta attributes without global config enabled.
+
+## lineNumbers meta attribute
+
+This should show line numbers via meta attribute:
+
+```tsx lineNumbers
+function ComponentWithLineNumbers() {
+  return <div>Line numbers from meta</div>;
+}
+```
+
+This should NOT show line numbers (no meta, no global config):
+
+```tsx
+function ComponentWithoutLineNumbers() {
+  return <div>No line numbers</div>;
+}
+```
+
+## wrapCode meta attribute
+
+This should wrap code via meta attribute:
+
+```tsx wrapCode
+const veryLongLineOfCodeThatShouldWrapWhenTheWrapCodeMetaAttributeIsPresentInTheCodeBlockDeclaration =
+  'This demonstrates wrapping';
+```
+
+This should NOT wrap code (no meta, no global config):
+
+```tsx
+const veryLongLineOfCodeThatShouldNotWrapWithoutTheMetaAttribute =
+  'This will not wrap';
+```
+
+## Both attributes
+
+This should have both line numbers and wrapping:
+
+```tsx lineNumbers wrapCode
+const longLineWithBothFeatures =
+  'This line has both line numbers and code wrapping enabled through meta attributes only';
+```

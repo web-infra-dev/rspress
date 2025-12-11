@@ -95,6 +95,7 @@ export async function runDevCommand(
     appDir,
     env: {
       PORT: port.toString(),
+      RSPRESS_PERSISTENT_CACHE: 'false',
     },
   });
 }

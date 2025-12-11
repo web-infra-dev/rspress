@@ -18,7 +18,7 @@ async function getCurrentVersion() {
 
 async function getNextVersion(currentVersion, type) {
   const [major, minor, patch, _, prereleaseVersion] = currentVersion
-    .split(/[\.-]/)
+    .split(/[.-]/)
     .map(Number);
   switch (type) {
     case 'patch':

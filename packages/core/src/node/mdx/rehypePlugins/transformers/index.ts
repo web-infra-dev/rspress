@@ -1,9 +1,14 @@
+export { SHIKI_TRANSFORMER_ADD_LANG, transformerAddLang } from './add-lang';
 export {
-  transformerLineNumber,
-  SHIKI_TRANSFORMER_LINE_NUMBER,
-} from './line-number';
-export { transformerAddTitle, SHIKI_TRANSFORMER_ADD_TITLE } from './add-title';
+  SHIKI_TRANSFORMER_ADD_LINE_NUMBERS,
+  transformerAddLineNumbers,
+} from './add-line-numbers';
+export { SHIKI_TRANSFORMER_ADD_TITLE, transformerAddTitle } from './add-title';
 export {
-  transformerCompatibleMetaHighlight,
+  SHIKI_TRANSFORMER_ADD_WRAP_CODE,
+  transformerAddWrapCode,
+} from './add-wrap-code';
+export {
   SHIKI_TRANSFORMER_META_HIGHLIGHT,
+  transformerCompatibleMetaHighlight,
 } from './meta-highlight';

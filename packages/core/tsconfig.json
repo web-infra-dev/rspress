@@ -10,23 +10,10 @@
   "include": ["src"],
   "references": [
     {
-      "path": "../plugin-last-updated"
-    },
-    {
-      "path": "../plugin-container-syntax"
-    },
-    {
-      "path": "../plugin-medium-zoom"
-    },
-    {
       "path": "../shared"
-    },
-    {
-      "path": "../theme-default"
     },
     {
       "path": "../runtime"
     }
-  ],
-  "exclude": ["runtime.ts", "theme.ts", "node_modules"]
+  ]
 }

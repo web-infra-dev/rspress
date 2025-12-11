@@ -1,7 +1,6 @@
 import fs from 'node:fs';
 import path from 'node:path';
-import { RSPRESS_TEMP_DIR } from '@rspress/shared';
-import { logger } from '@rspress/shared/logger';
+import { logger, RSPRESS_TEMP_DIR } from '@rspress/core';
 import chokidar from 'chokidar';
 import type { ComponentDoc, PropItem } from 'react-docgen-typescript';
 import {
@@ -98,16 +97,13 @@ export const docgen = async ({
                 `Unable to parse API document in ${moduleSourceFilePath}`,
               );
             }
-            if (languages.length > 0) {
-              languages.forEach(language => {
-                apiDocMap[`${key}-${language}`] = generateTable(
-                  componentDoc,
-                  language,
-                );
-              });
-            } else {
-              apiDocMap[key] = generateTable(componentDoc, 'en');
-            }
+
+            languages.forEach(language => {
+              apiDocMap[`${key}-${language}`] = generateTable(
+                componentDoc,
+                language,
+              );
+            });
           }
         } catch (e) {
           if (e instanceof Error) {
@@ -185,7 +181,7 @@ function generateTable(
   return componentDoc
     .map(param => {
       const { props } = param;
-      const t = locales[language];
+      const t = locales[language] ?? locales.en;
       const PROP_TABLE_HEADER = `|${t.property}|${t.description}|${t.type}|${t.defaultValue}|\n|:---:|:---:|:---:|:---:|`;
 
       const tableContent = Object.keys(props)

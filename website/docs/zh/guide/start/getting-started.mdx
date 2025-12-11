@@ -1,0 +1,124 @@
+# 快速开始
+
+import { PackageManagerTabs } from '@theme';
+
+## 1. 初始化项目
+
+### 方式一：通过脚手架创建
+
+你可以通过 Rspress 脚手架命令来创建项目:
+
+<PackageManagerTabs command="create rspress@latest" />
+
+然后按照提示输入项目名称，即可创建一个 Rspress 项目。
+
+### 方式二：手动创建
+
+首先，你可以通过以下命令创建一个新目录：
+
+```bash
+mkdir rspress-app && cd rspress-app
+```
+
+执行 `npm init -y` 来初始化一个项目。你可以使用 npm、pnpm、yarn 或 bun 安装 Rspress:
+
+<PackageManagerTabs command="install rspress -D" />
+
+然后通过如下命令创建文件:
+
+```bash
+mkdir docs && echo '# Hello world' > docs/index.md
+```
+
+在 `package.json` 中加上如下的脚本:
+
+```json
+{
+  "scripts": {
+    "dev": "rspress dev",
+    "build": "rspress build",
+    "preview": "rspress preview"
+  }
+}
+```
+
+然后初始化一个配置文件 `rspress.config.ts`:
+
+```ts title="rspress.config.ts"
+import { defineConfig } from '@rspress/core';
+
+export default defineConfig({
+  // 文档根目录
+  root: 'docs',
+});
+```
+
+同时新建 `tsconfig.json`，内容如下:
+
+```json
+{
+  "compilerOptions": {
+    "lib": ["DOM", "ES2020"],
+    "jsx": "react-jsx",
+    "target": "ES2020",
+    "noEmit": true,
+    "skipLibCheck": true,
+    "useDefineForClassFields": true,
+
+    /* modules */
+    "module": "ESNext",
+    "moduleDetection": "force",
+    "moduleResolution": "bundler",
+    "verbatimModuleSyntax": true,
+    "resolveJsonModule": true,
+    "allowImportingTsExtensions": true,
+    "noUncheckedSideEffectImports": true,
+    "isolatedModules": true,
+
+    /* type checking */
+    "strict": true,
+    "noUnusedLocals": true,
+    "noUnusedParameters": true
+  },
+  "include": ["docs", "theme", "rspress.config.ts"],
+  "mdx": {
+    "checkMdx": true
+  }
+}
+```
+
+## 2. 启动 Dev server
+
+通过如下命令启动本地开发服务:
+
+```bash
+npm run dev
+```
+
+这样 Rspress 将启动开发服务。
+
+:::tip 提示
+
+对于 dev 命令，你可以通过 `--port` 或 `--host` 参数来指定开发服务的端口号或 host，例如 `rspress dev --port 8080 --host 0.0.0.0`。
+
+:::
+
+## 3. 生产环境构建
+
+通过如下命令构建生产环境的产物:
+
+```bash
+npm run build
+```
+
+默认情况下，Rspress 将会把产物打包到 `doc_build` 目录。
+
+## 4. 本地预览产物
+
+通过如下命令启动本地预览服务:
+
+```bash
+npm run preview
+```
+
+这样 Rspress 将启动产物预览服务。

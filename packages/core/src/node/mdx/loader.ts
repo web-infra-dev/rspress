@@ -1,5 +1,4 @@
 import type { Rspack } from '@rsbuild/core';
-import { logger } from '@rspress/shared/logger';
 
 import { compile, compileWithCrossCompilerCache } from './processor';
 import type { MdxLoaderOptions } from './types';
@@ -13,22 +12,31 @@ export default async function mdxLoader(
 
   const options = this.getOptions();
   const filepath = this.resourcePath;
-  const { config, docDirectory, checkDeadLinks, routeService, pluginDriver } =
-    options;
+  const {
+    config,
+    docDirectory,
+    routeService,
+    pluginDriver,
+    isSsgMd = false,
+  } = options;
 
   const crossCompilerCache = config?.markdown?.crossCompilerCache ?? true;
 
   try {
     // TODO wrong but good enough for now (example: "build --watch")
-    if (crossCompilerCache && process.env.NODE_ENV === 'production') {
+    if (
+      crossCompilerCache &&
+      process.env.NODE_ENV === 'production' &&
+      !isSsgMd
+    ) {
       const compileResult = await compileWithCrossCompilerCache({
         source,
         filepath,
         docDirectory,
-        checkDeadLinks,
         config,
         pluginDriver,
         routeService,
+        addDependency: this.addDependency,
       });
       callback(null, compileResult);
     } else {
@@ -36,18 +44,34 @@ export default async function mdxLoader(
         source,
         filepath,
         docDirectory,
-        checkDeadLinks,
         config,
         pluginDriver,
         routeService,
+        addDependency: this.addDependency,
+        isSsgMd,
       });
       callback(null, compileResult);
     }
   } catch (e) {
     if (e instanceof Error) {
-      logger.error(`MDX compile error: ${e.message} in ${filepath}`);
-      logger.debug(e);
-      callback({ message: e.message, name: `${filepath} compile error` });
+      // Enhance the message with filepath context for better error reporting
+      const message = `MDX compile error: ${e.message} in ${filepath}`;
+      let stack: string | undefined = e.stack;
+      // Truncate stack trace to first 10 lines for better readability
+      if (stack) {
+        const stackLines = stack.split('\n');
+        if (stackLines.length > 10) {
+          stack = `${stackLines.slice(0, 10).join('\n')}\n    ... (truncated)`;
+        }
+      }
+      // why not `callback(e)` ?
+      // https://github.com/web-infra-dev/rspack/issues/12080
+      callback({
+        message,
+        ...(stack ? { stack } : {}),
+        name: e.name,
+        cause: e.cause,
+      } as Error);
     }
   }
 }

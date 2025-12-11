@@ -1,0 +1,36 @@
+[
+  {
+    "text": "Guide",
+    "link": "/guide/start/introduction",
+    "activeMatch": "/guide/"
+  },
+  {
+    "text": "Plugin",
+    "link": "/plugin/system/introduction",
+    "activeMatch": "/plugin/"
+  },
+  {
+    "text": "UI",
+    "link": "/ui/vars",
+    "activeMatch": "/ui/",
+    "tag": "new"
+  },
+  {
+    "text": "API",
+    "link": "/api/",
+    "activeMatch": "/api/"
+  },
+  {
+    "text": "Version",
+    "items": [
+      {
+        "text": "Changelog",
+        "link": "https://github.com/web-infra-dev/rspress/releases"
+      },
+      {
+        "text": "Rspress 1.x Doc",
+        "link": "http://rspress.rs/"
+      }
+    ]
+  }
+]

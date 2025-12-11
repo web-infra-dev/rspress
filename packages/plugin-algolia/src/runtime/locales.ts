@@ -5,6 +5,7 @@ export type Locales = Record<
   { translations: DocSearchProps['translations']; placeholder: string }
 >;
 
+// cspell:disable
 export const ZH_LOCALES: Locales = {
   zh: {
     placeholder: '搜索文档',
@@ -15,10 +16,10 @@ export const ZH_LOCALES: Locales = {
       },
       modal: {
         searchBox: {
-          resetButtonTitle: '清除查询条件',
-          resetButtonAriaLabel: '清除查询条件',
-          cancelButtonText: '取消',
-          cancelButtonAriaLabel: '取消',
+          clearButtonTitle: '清除查询条件',
+          clearButtonAriaLabel: '清除查询条件',
+          closeButtonText: '取消',
+          closeButtonAriaLabel: '取消',
         },
         startScreen: {
           recentSearchesTitle: '搜索历史',
@@ -36,7 +37,7 @@ export const ZH_LOCALES: Locales = {
           selectText: '选择',
           navigateText: '切换',
           closeText: '关闭',
-          searchByText: '搜索提供者',
+          poweredByText: '搜索提供者',
         },
         noResultsScreen: {
           noResultsText: '无法找到相关结果',
@@ -48,3 +49,48 @@ export const ZH_LOCALES: Locales = {
     },
   },
 } as const;
+
+export const RU_LOCALES: Locales = {
+  ru: {
+    placeholder: 'Поиск в документации',
+    translations: {
+      button: {
+        buttonText: 'Поиск',
+        buttonAriaLabel: 'Поиск',
+      },
+      modal: {
+        searchBox: {
+          clearButtonTitle: 'Очистить поиск',
+          clearButtonAriaLabel: 'Очистить поиск',
+          closeButtonText: 'Закрыть',
+          closeButtonAriaLabel: 'Закрыть',
+        },
+        startScreen: {
+          recentSearchesTitle: 'История поиска',
+          noRecentSearchesText: 'Нет истории поиска',
+          saveRecentSearchButtonTitle: 'Сохранить в истории поиска',
+          removeRecentSearchButtonTitle: 'Удалить из истории поиска',
+          favoriteSearchesTitle: 'Избранное',
+          removeFavoriteSearchButtonTitle: 'Удалить из избранного',
+        },
+        errorScreen: {
+          titleText: 'Невозможно получить результаты',
+          helpText: 'Проверьте подключение к Интернету',
+        },
+        footer: {
+          selectText: 'выбрать',
+          navigateText: 'перейти',
+          closeText: 'закрыть',
+          poweredByText: 'поиск от',
+        },
+        noResultsScreen: {
+          noResultsText: 'Ничего не найдено',
+          suggestedQueryText: 'Попробуйте изменить запрос',
+          reportMissingResultsText: 'Считаете, что результаты должны быть?',
+          reportMissingResultsLinkText: 'Сообщите об этом',
+        },
+      },
+    },
+  },
+} as const;
+// cspell:enable

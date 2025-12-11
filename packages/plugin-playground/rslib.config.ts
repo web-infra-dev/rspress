@@ -7,6 +7,9 @@ export default defineConfig({
   lib: [
     {
       format: 'esm',
+      experiments: {
+        advancedEsm: true,
+      },
       source: {
         entry: { index: 'src/cli/index.ts' },
       },
@@ -19,19 +22,22 @@ export default defineConfig({
         distPath: {
           root: 'dist/cli',
         },
-        externals: ['@types/react'],
+        externals: ['@types/react', 'rspress'],
       },
       syntax: 'es2022',
       dts: { bundle: true },
     },
     {
       format: 'esm',
+      experiments: {
+        advancedEsm: true,
+      },
       source: {
         entry: { index: 'src/web/index.ts' },
       },
       plugins: [pluginReact()],
       output: {
-        externals: ['@types/react'],
+        externals: ['@types/react', 'rspress'],
         distPath: {
           root: 'dist/web',
         },

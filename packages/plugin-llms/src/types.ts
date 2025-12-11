@@ -1,7 +1,17 @@
-import type { RouteService } from '@rspress/core';
-import type { Nav, PageIndexInfo, RouteMeta, Sidebar } from '@rspress/shared';
+import type {
+  Nav,
+  PageIndexInfo,
+  RouteMeta,
+  RouteService,
+  Sidebar,
+} from '@rspress/core';
+import type { PluggableList } from 'unified';
 
+/**
+ * @default { name: "llms.txt" }
+ */
 export interface LlmsTxt {
+  name: string;
   onTitleGenerate?: (context: {
     title: string | undefined;
     description: string | undefined;
@@ -10,26 +20,42 @@ export interface LlmsTxt {
   onAfterLlmsTxtGenerate?: (llmsTxtContent: string) => string;
 }
 
+export interface MdFiles {
+  /**
+   * Whether to convert mdx to md.
+   * @default false
+   */
+  mdxToMd?: boolean;
+  /**
+   * Allow users to customize remarkPlugins and edit the content of generated md files.
+   * @default []
+   */
+  remarkPlugins?: PluggableList;
+}
+
+/**
+ * @default { name: 'llms-full.txt' }
+ */
+export interface LlmsFullTxt {
+  name: string;
+}
+
 export interface Options {
   /**
    * Whether to generate llms.txt.
-   * @default true
    */
-  llmsTxt?: boolean | LlmsTxt;
+  llmsTxt?: false | LlmsTxt;
   /**
    * Whether to generate llms.txt related md files for each route.
-   * @default true
    */
-  mdFiles?: boolean;
+  mdFiles?: false | MdFiles;
   /**
    * Whether to generate llms-full.txt.
-   * @default true
    */
-  llmsFullTxt?: boolean;
+  llmsFullTxt?: false | LlmsFullTxt;
   /**
    * Whether to include some routes from llms.txt.
-   * @param context
-   * @default (context) => context.page.lang === config.lang
+   * @default undefined
    */
   include?: (context: { page: PageIndexInfo }) => boolean;
   /**
@@ -40,9 +66,10 @@ export interface Options {
   exclude?: (context: { page: PageIndexInfo }) => boolean;
 }
 
+export type RspressPluginLlmsOptions = Options | Options[];
+
 export interface rsbuildPluginLlmsOptions {
   disableSSGRef: { current: boolean };
-  docDirectoryRef: { current: string };
   titleRef: { current: string | undefined };
   descriptionRef: { current: string | undefined };
   langRef: { current: string | undefined };
@@ -56,4 +83,5 @@ export interface rsbuildPluginLlmsOptions {
     lang: string;
   }[];
   rspressPluginOptions: Options;
+  index?: number;
 }

@@ -1,0 +1,9 @@
+/* Default Rspress brand colors */
+:where(:root) {
+  --rp-c-brand: #0095ff;
+  --rp-c-brand-light: #33adff;
+  --rp-c-brand-lighter: #c6e0fd;
+  --rp-c-brand-dark: #0077ff;
+  --rp-c-brand-darker: #005fcc;
+  --rp-c-brand-tint: rgba(127, 163, 255, 0.16);
+}

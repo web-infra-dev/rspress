@@ -1,0 +1,66 @@
+:root {
+  --rp-code-button-group-z-index: 10;
+}
+
+.rp-codeblock__content:hover .rp-code-button-group__button {
+  opacity: 1;
+}
+
+.rp-code-button-group {
+  position: absolute;
+  right: 20px;
+  top: 20px;
+  z-index: var(--rp-code-button-group-z-index);
+  display: flex;
+  gap: 10px;
+
+  &__button {
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    opacity: 0;
+    transition: opacity 0.2s ease-out;
+    background-color: transparent;
+    cursor: pointer;
+  }
+
+  &__icon {
+    opacity: inherit;
+    width: 20px;
+    height: 20px;
+    transition: all 0.2s ease;
+    color: var(--rp-c-text-3);
+
+    &:hover {
+      color: var(--rp-c-text-2);
+    }
+
+    &--wrap {
+      transform: scale(1);
+      opacity: 1;
+    }
+
+    &--wrapped {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%) scale(0);
+      opacity: 0;
+      color: #00d600;
+    }
+  }
+}
+
+.rp-code-wrap-button--wrapped {
+  .rp-code-button-group__icon--wrap {
+    transform: scale(0.33);
+    opacity: 0;
+  }
+
+  .rp-code-button-group__icon--wrapped {
+    transform: translate(-50%, -50%) scale(1);
+    opacity: 1;
+    transition-delay: 0.075s;
+  }
+}

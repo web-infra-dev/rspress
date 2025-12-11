@@ -1,10 +1,9 @@
-import path from 'node:path';
 import { expect, test } from '@playwright/test';
 import { getPort, killProcess, runDevCommand } from '../../utils/runCommands';
 
 test.describe('tabs-component test', async () => {
-  let appPort;
-  let app;
+  let appPort: number;
+  let app: Awaited<ReturnType<typeof runDevCommand>>;
 
   test.beforeAll(async () => {
     const appDir = __dirname;
@@ -21,70 +20,90 @@ test.describe('tabs-component test', async () => {
   test('Index page', async ({ page }) => {
     await page.goto(`http://localhost:${appPort}`);
 
-    const tabs = await page.$$('[class^="tab_"] > div > span');
-    const tabsText = await Promise.all(
-      tabs.map(element => element.textContent()),
-    );
+    await page.waitForSelector('.rp-tabs__label__item');
+    const tabs = page.locator('.rp-tabs__label__item');
+    const tabsText = (await tabs.allInnerTexts()).map(text => text.trim());
 
     expect(tabsText).toEqual([
       'npm',
       'yarn',
       'pnpm',
       'bun',
+      'deno',
       'npm',
       'yarn',
       'pnpm',
       'bun',
-    ]);
-
-    const clickTabs = await page.$$('[class^="tab_"]');
-
-    await clickTabs[0].click();
-    const npmSpanElements = await page.$$('code > span > span');
-    const npmCode = await Promise.all(
-      npmSpanElements.map(element => element.textContent()),
-    );
-    expect(npmCode).toEqual([
+      'deno',
       'npm',
-      ' create rspress@latest',
+      'yarn',
+      'pnpm',
+      'bun',
+      'deno',
       'npm',
-      ' install rspress -D',
-    ]);
-
-    await clickTabs[1].click();
-    const yarnSpanElements = await page.$$('code > span > span');
-    const yarnCode = await Promise.all(
-      yarnSpanElements.map(element => element.textContent()),
-    );
-    expect(yarnCode).toEqual([
       'yarn',
-      ' create rspress',
+      'pnpm',
+      'bun',
+      'deno',
+      'npm',
       'yarn',
-      ' add rspress -D',
+      'pnpm',
+      'bun',
+      'deno',
     ]);
 
-    await clickTabs[2].click();
-    const pnpmSpanElements = await page.$$('code > span > span');
-    const pnpmCode = await Promise.all(
-      pnpmSpanElements.map(element => element.textContent()),
-    );
-    expect(pnpmCode).toEqual([
-      'pnpm',
-      ' create rspress@latest',
-      'pnpm',
-      ' install rspress -D',
+    const clickTabs = tabs;
+    const getCommands = async () =>
+      (
+        await page
+          .locator('.rp-codeblock__content code')
+          .filter({ visible: true })
+          .allInnerTexts()
+      ).map(text => text.trim());
+
+    await clickTabs.nth(0).click();
+    expect(await getCommands()).toEqual([
+      'npm create rspress@latest',
+      'npm install -D @rspress/core',
+      'npx example-cli-tool --yes',
+      'npx example-cli-tool --yes',
+      'npm create rspress@latest',
     ]);
 
-    await clickTabs[3].click();
-    const bunSpanElements = await page.$$('code > span > span');
-    const bunCode = await Promise.all(
-      bunSpanElements.map(element => element.textContent()),
-    );
-    expect(bunCode).toEqual([
-      'bun',
-      ' create rspress@latest',
-      'bun',
-      ' add rspress -D',
+    await clickTabs.nth(1).click();
+    expect(await getCommands()).toEqual([
+      'yarn create rspress',
+      'yarn add -D @rspress/core',
+      'yarn dlx example-cli-tool --yes',
+      'yarn example-cli-tool --yes',
+      'yarn create rspress',
+    ]);
+
+    await clickTabs.nth(2).click();
+    expect(await getCommands()).toEqual([
+      'pnpm create rspress@latest',
+      'pnpm add -D @rspress/core',
+      'pnpm dlx example-cli-tool --yes',
+      'pnpm example-cli-tool --yes',
+      'pnpm create rspress@latest',
+    ]);
+
+    await clickTabs.nth(3).click();
+    expect(await getCommands()).toEqual([
+      'bun create rspress@latest',
+      'bun add -D @rspress/core',
+      'bunx example-cli-tool --yes',
+      'bun example-cli-tool --yes',
+      'bun create rspress@latest',
+    ]);
+
+    await clickTabs.nth(4).click();
+    expect(await getCommands()).toEqual([
+      'deno init --npm rspress@latest',
+      'deno add -D npm:@rspress/core',
+      'deno run npm:example-cli-tool --yes',
+      'deno run npm:example-cli-tool --yes',
+      'deno init --npm rspress@latest',
     ]);
   });
 });
