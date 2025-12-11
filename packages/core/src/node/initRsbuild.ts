@@ -408,6 +408,14 @@ async function createInternalBuildConfig(
             root: outDir,
           },
         },
+        tools: {
+          rspack: {
+            node: {
+              __dirname: 'mock',
+              __filename: 'mock',
+            },
+          },
+        },
       },
       ...(enableSSG && config.ssg
         ? {
