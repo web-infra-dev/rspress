@@ -1,6 +1,6 @@
 # Introduction
 
-Rspress is a static site generator based on [Rsbuild](https://rsbuild.rs/), rendered with the React framework. It comes with a default documentation theme, and you can quickly build a documentation site with Rspress. You can also customize the theme to meet your personalized static site needs, such as blog sites, product homepages, etc. Of course, you can also integrate the corresponding plugins provided by the official to easily build component library documentation.
+Rspress is a static site generator based on [Rsbuild](https://rsbuild.rs/) and rendered with React. It ships with a ready-to-use documentation theme so you can launch a site quickly, and it remains easy to tailor for blogs, product pages, or component libraries through theme overrides and official plugins.
 
 ## Why Rspress
 
@@ -11,42 +11,34 @@ Rspress is designed around the following core features:
 - **Basic Capabilities of Documentation Site**. Including internationalization, multi-version support, full-text search, component library documentation, etc.
 - **Extensibility**. Provides a built-in plugin system, supports extending Rspress through plugin API.
 
-These also represent some core requirements for static site development. The following will introduce these aspects separately.
+These align with the core needs of modern static sites. The following sections outline how Rspress addresses each one.
 
 ### Build performance
 
-As the project becomes larger and larger, team members often worry about the lengthy project startup time, which negatively affects the development experience. The longer the project development time, the more obvious this deterioration of experience.
+As projects grow, slow startup time quickly hurts developer experience. Rspress focuses on instant feedback by relying on a `Rust frontend toolchain` in two key places:
 
-We couldn't help but start thinking, can we break the limitations of the current community tool chain, break through the performance bottleneck of the existing SSG framework, and achieve the effect of instant startup for most project scenarios?
-
-Then, we continued to explore in this direction and finally achieved this effect on Rspress.
-
-If there is only one most core optimization method, it is undoubtedly the `Rust Frontend Toolchain`. We mainly use the Rust toolchain in two performance-sensitive parts:
-
-- Bundler. Traditional bundlers include webpack, Rollup, etc. For a front-end project, the bundler is the integration hub of various compilation tool chains. It is a very critical engineering capability and has a huge impact on project construction performance. Rspress uses Rspack developed by the team. Rspack is a Bundler based on Rust, with built-in multiple performance optimization methods, such as multi-threaded parallel compilation, incremental compilation, etc., which are 5 to 10 times more efficient than traditional packaging tools in the community.
-- Markdown compiler. For another major compilation performance bottleneck in the SSG framework, namely `Markdown Compilation`, we also Rust this process to further speed up and customize Rspress's Markdown compiler (ie `@rspress/mdx-rs`). This compiler is nearly 20 times more efficient than the JS version of the compiler in the community:
+- **Bundler**. Rspress uses the team-built Rspack. With Rust, multi-threaded compilation, and incremental rebuilds, it is 5–10× faster than traditional JS bundlers.
+- **Markdown compiler**. Rspress ships with a custom Rust-based compiler (`@rspress/mdx-rs`) that is nearly 20× faster than common JS implementations:
 
 <img src="https://lf3-static.bytednsdoc.com/obj/eden-cn/uhbfnupenuhf/rspress/mdx-rs-benchmark.png" />
 
-At the same time, Rspress internally also applies many other build optimization methods, such as `pre-bundle of theme`, etc. These additional optimization methods, combined with the powerful Rust front-end toolchain, push the compilation performance of the SSG framework to a new height.
+Rspress also applies build optimizations such as theme pre-bundling and pre-generated styles. Combined with the Rust toolchain, these keep both development and production builds consistently fast.
 
 ### MDX support
 
-In order to ensure the flexibility of content development, Rspress chooses to support the MDX content format.
-
-MDX represents a method of componentized content organization. In other words, documents serve as components, allowing for the reuse of document fragments across different documents. Additionally, custom React components can be incorporated into documents, significantly enhancing the flexibility of document development.
+Rspress adopts MDX to keep content flexible: documents are components, fragments can be reused, and custom React components can be embedded wherever you need them.
 
 ### Basic capabilities of documentation site
 
-Of course, Rspress has also done a lot of work on the polishing of the basic capabilities of the documentation site, supporting the following functional features:
+Rspress comes with the core capabilities you expect from a documentation site:
 
-- Automatically generate layouts, including navigation bars, left sidebars, etc.
-- Static site generation, HTML is directly output after production build.
-- Internationalization, support for multi-language documents.
-- Full-text search, provide out-of-the-box search function.
-- Multi-version document management.
-- Custom document theme.
-- Automatically generate component Demo preview and playground.
+- Automatic layout generation for navigation, sidebar, and outline.
+- Static site generation with direct HTML output.
+- Internationalization (multiple locales).
+- Built-in full-text search.
+- Multi-version documentation management.
+- Customizable themes.
+- Built-in demo preview and playground tooling.
 
 In the following text, we will introduce these functional features in detail.
 
@@ -73,7 +65,7 @@ For the construction of a documentation site, in addition to displaying the main
 
 For the document outline, Rspress will automatically extract the various titles in the document, generate outline information, and display it on the right side of the article page by default, without any other operations.
 
-For the navigation bar and sidebar, we provide two config methods, you can choose one of them:
+For the navigation bar and sidebar, we provide two config methods. Choose whichever fits your workflow:
 
 - **Declarative config**. Configure the corresponding data by declaring `_meta.json` in the directory, such as:
 
@@ -85,13 +77,9 @@ You can read the [Auto Nav/Sidebar](/guide/basic/auto-nav-sidebar) for config de
 
 - **Programming config**. Implement it by specifying the [nav](/api/config/config-theme.html#nav) and [sidebar](/api/config/config-theme.html#sidebar) config items in the Rspress config.
 
-We recommend using `declarative config` under normal scenes, which has many benefits:
+We recommend `declarative config` in most cases because it keeps config concise, matches the directory structure intuitively, and avoids jumping back to `rspress.config.ts` when adding or removing sidebar items.
 
-1. Make config file is more concise and clear.
-2. The correspondence between the `file directory structure` and the `sidebar directory structure` is more intuitive.
-3. When adding or deleting a sidebar directory, operate directly in the current directory, instead of going to the `rspress.config.ts` config file to locate the corresponding position and then add/delete the config, thereby reducing the cost of switching development context.
-
-The `programming config` is very useful in some scenarios where dynamic config generation is needed. For example, the official Rspress [TypeDoc plugin](/plugin/official-plugins/typedoc) will automatically convert a json data provided by TypeDoc into `nav` and `sidebar` configs.
+`Programming config` shines when config is generated dynamically. For example, the [TypeDoc plugin](/plugin/official-plugins/typedoc) converts TypeDoc JSON output directly into `nav` and `sidebar` configs.
 
 ### MDX support
 
@@ -113,7 +101,7 @@ Rspress is a SSG framework. In the build process in the production environment, 
 
 Then, you can deploy the contents of this product directory to any static site hosting service, such as GitHub Pages, Netlify, Vercel, etc.
 
-At the same time, we also provide config to easily customize the HTML content generated by SSG. For details, please refer to the [Static Site Generation Document](/guide/basic/ssg.html 'Static Site Generation Document').
+You can further customize the generated HTML via config. See the [Static Site Generation guide](/guide/basic/ssg.html 'Static Site Generation Document') for details.
 
 ### Internationalization (I18n)
 
@@ -156,7 +144,7 @@ docs
 
 ### Full text search
 
-Rspress provides out-of-the-box full-text search capabilities, which you can access without any config. It is based on the open-source FlexSearch engine, with the following effect:
+Rspress provides out-of-the-box full-text search with no config required. It is powered by the FlexSearch engine:
 
 <img src="https://lf3-static.bytednsdoc.com/obj/eden-cn/uhbfnupenuhf/rspress/rspress-search.png" />
 
@@ -183,11 +171,11 @@ export * from '@rspress/core/theme';
 
 2.  Fully customized theme. If you want to develop a custom theme from scratch, you can customize the content of Layout and use various Runtime APIs provided by Rspress (such as `usePageData`) to obtain compile-time data, routing information, etc.
 
-For details about custom themes, you can refer to the [Custom Theme Documentation](/ui/custom-theme.html 'Custom Theme Documentation').
+For details about custom themes, see the [Custom Theme Documentation](/ui/custom-theme.html 'Custom Theme Documentation').
 
 ### Plugin system
 
-The plugin system is a crucial part of Rspress, which can help you conveniently extend Rspress's functionality during site construction. Details can be found in the [Plugin Introduction Documentation](/plugin/system/introduction.html 'Introduction Documentation').
+The plugin system is central to Rspress and lets you extend functionality while building your site. Details are in the [Plugin Introduction Documentation](/plugin/system/introduction.html 'Introduction Documentation').
 
 ### Component documentation
 
