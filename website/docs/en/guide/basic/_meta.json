@@ -4,5 +4,6 @@
   "static-assets",
   "custom-page",
   "ssg",
+  "ssg-md",
   "deploy"
 ]
