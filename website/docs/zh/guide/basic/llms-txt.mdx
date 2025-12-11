@@ -1,0 +1,74 @@
+# llms.txt 生成（SSG-MD）
+
+Rspress 提供实验性的 SSG-MD 能力，在 [静态站点生成（SSG）](./ssg) 时额外输出便于大模型理解的 Markdown 资源。
+
+## 功能介绍
+
+- 将站点页面渲染为 `.md` 文件，便于向量化或提供给大模型。
+- 生成 `llms.txt`，按导航、侧边栏顺序罗列各页面标题与描述。
+- 生成 `llms-full.txt`，包含每个页面的 Markdown 内容，方便批量导入。
+- 支持多语言站点，会为非默认语言输出对应的 `{lang}/llms.txt` 与 `{lang}/llms-full.txt`。
+
+## 产物示例
+
+```txt
+doc_build
+├── llms.txt
+├── llms-full.txt
+├── guide
+│   └── start
+│       └── introduction.md
+└── ...
+```
+
+实际文件落在构建目录（如 `guide/start/introduction.md`），`llms-full.txt` 中的 `url` 会携带站点前缀，例如 `/guide/start/introduction.md`。
+
+`llms-full.txt` 示例片段：
+
+```md
+---
+url: /guide/start/introduction.md
+---
+
+# 介绍
+
+...
+```
+
+## 启用方式
+
+在 `rspress.config.ts` 中开启 `llms` 即可在构建阶段产出上述文件：
+
+```ts title="rspress.config.ts"
+import { defineConfig } from '@rspress/core';
+
+export default defineConfig({
+  llms: true,
+});
+```
+
+执行 `rspress build` 后，可在输出目录（默认 `doc_build`）中看到 `llms.txt`、`llms-full.txt` 以及各路由对应的 `.md` 文件。
+
+## 自定义 MDX 拆分（可选）
+
+当文档中包含自定义组件时，可以通过 `remarkSplitMdxOptions` 控制哪些组件在转换为 Markdown 时保留或转成纯文本：
+
+```ts title="rspress.config.ts"
+import { defineConfig } from '@rspress/core';
+
+export default defineConfig({
+  llms: {
+    remarkSplitMdxOptions: {
+      excludes: [[['Demo'], '@project/components']],
+    },
+  },
+});
+```
+
+- `excludes`：匹配的组件会被转成纯文本，优先级最高。
+- `includes`：若设置，仅允许匹配的组件保留，其余会转成纯文本。
+- 同时配置时会先应用 `excludes`，再按 `includes` 进行过滤。
+
+:::warning
+`llms` 为实验能力，主要用于生成便于大模型或检索系统使用的 Markdown 数据。
+:::
