@@ -1,0 +1,128 @@
+# Tag
+
+Tag 组件用于在侧边栏或导航中显示标签。它支持多种格式，包括特殊预设标签、SVG 图标、图片和纯文本。
+
+## 使用方法
+
+```tsx title="index.mdx"
+import { Tag } from '@theme';
+
+function App() {
+  return <Tag tag="new" />;
+}
+```
+
+## 特殊标签
+
+Tag 组件内置支持特殊预设标签，会自动应用相应的样式：
+
+```tsx
+import { Tag } from '@theme';
+
+// 单个特殊标签
+<Tag tag="new" />
+<Tag tag="tip" />
+<Tag tag="info" />
+<Tag tag="warning" />
+<Tag tag="danger" />
+<Tag tag="experimental" />
+<Tag tag="deprecated" />
+
+// 多个特殊标签（用逗号分隔）
+<Tag tag="new, experimental" />
+```
+
+import { Tag } from '@theme';
+
+效果如下：
+
+<div
+  style={{
+    display: 'flex',
+    gap: '8px',
+    flexWrap: 'wrap',
+    marginBottom: '16px',
+  }}
+>
+  <Tag tag="new" />
+  <Tag tag="tip" />
+  <Tag tag="info" />
+  <Tag tag="warning" />
+  <Tag tag="danger" />
+  <Tag tag="experimental" />
+  <Tag tag="deprecated" />
+</div>
+
+多个标签：
+
+<Tag tag="new, experimental" />
+
+### 特殊标签类型
+
+| 标签           | Badge 类型 |
+| -------------- | ---------- |
+| `tip`          | tip        |
+| `info`         | info       |
+| `warning`      | warning    |
+| `danger`       | danger     |
+| `new`          | info       |
+| `experimental` | warning    |
+| `deprecated`   | danger     |
+
+## SVG 字符串
+
+你可以直接传递 SVG 字符串作为标签：
+
+```tsx
+import { Tag } from '@theme';
+
+<Tag tag='<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24"><path fill="currentColor" d="M12 2L2 7l10 5 10-5-10-5z"/></svg>' />;
+```
+
+## 图片 URL
+
+你可以使用外部 URL 或 data URL 作为标签：
+
+```tsx
+import { Tag } from '@theme';
+
+// 外部 URL
+<Tag tag="https://example.com/icon.png" />
+
+// Data URL
+<Tag tag="data:image/svg+xml;base64,..." />
+```
+
+<Tag tag="https://assets.rspack.rs/rspress/rspress-logo.svg" />
+
+## 纯文本
+
+任何不匹配上述模式的文本都会显示为纯文本徽章：
+
+```tsx
+import { Tag } from '@theme';
+
+<Tag tag="v1.0.0" />
+<Tag tag="Beta" />
+```
+
+<div style={{ display: 'flex', gap: '8px' }}>
+  <Tag tag="v1.0.0" />
+  <Tag tag="Beta" />
+</div>
+
+## Props
+
+```ts
+interface TagProps {
+  /**
+   * 标签内容。支持：
+   * - 特殊标签：'tip'、'info'、'warning'、'danger'、'new'、'experimental'、'deprecated'
+   * - 多个特殊标签：'new, experimental'
+   * - SVG 字符串：'<svg>...</svg>'
+   * - 图片 URL：'https://...' 或 'data:...'
+   * - 纯文本：任意其他字符串
+   */
+  tag?: string;
+}
+```

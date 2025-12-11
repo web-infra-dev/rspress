@@ -1,0 +1,128 @@
+# Tag
+
+The Tag component is used to display tags in the sidebar or navigation. It supports multiple formats including special preset tags, SVG icons, images, and plain text.
+
+## Usage
+
+```tsx title="index.mdx"
+import { Tag } from '@theme';
+
+function App() {
+  return <Tag tag="new" />;
+}
+```
+
+## Special Tags
+
+The Tag component has built-in support for special preset tags that automatically apply corresponding styles:
+
+```tsx
+import { Tag } from '@theme';
+
+// Single special tag
+<Tag tag="new" />
+<Tag tag="tip" />
+<Tag tag="info" />
+<Tag tag="warning" />
+<Tag tag="danger" />
+<Tag tag="experimental" />
+<Tag tag="deprecated" />
+
+// Multiple special tags (comma-separated)
+<Tag tag="new, experimental" />
+```
+
+import { Tag } from '@theme';
+
+The effect is as follows:
+
+<div
+  style={{
+    display: 'flex',
+    gap: '8px',
+    flexWrap: 'wrap',
+    marginBottom: '16px',
+  }}
+>
+  <Tag tag="new" />
+  <Tag tag="tip" />
+  <Tag tag="info" />
+  <Tag tag="warning" />
+  <Tag tag="danger" />
+  <Tag tag="experimental" />
+  <Tag tag="deprecated" />
+</div>
+
+Multiple tags:
+
+<Tag tag="new, experimental" />
+
+### Special Tag Types
+
+| Tag            | Badge Type |
+| -------------- | ---------- |
+| `tip`          | tip        |
+| `info`         | info       |
+| `warning`      | warning    |
+| `danger`       | danger     |
+| `new`          | info       |
+| `experimental` | warning    |
+| `deprecated`   | danger     |
+
+## SVG String
+
+You can pass an SVG string directly as the tag:
+
+```tsx
+import { Tag } from '@theme';
+
+<Tag tag='<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24"><path fill="currentColor" d="M12 2L2 7l10 5 10-5-10-5z"/></svg>' />;
+```
+
+## Image URL
+
+You can use an external URL or data URL as the tag:
+
+```tsx
+import { Tag } from '@theme';
+
+// External URL
+<Tag tag="https://example.com/icon.png" />
+
+// Data URL
+<Tag tag="data:image/svg+xml;base64,..." />
+```
+
+<Tag tag="https://assets.rspack.rs/rspress/rspress-logo.svg" />
+
+## Plain Text
+
+Any text that doesn't match the above patterns will be displayed as a plain text badge:
+
+```tsx
+import { Tag } from '@theme';
+
+<Tag tag="v1.0.0" />
+<Tag tag="Beta" />
+```
+
+<div style={{ display: 'flex', gap: '8px' }}>
+  <Tag tag="v1.0.0" />
+  <Tag tag="Beta" />
+</div>
+
+## Props
+
+```ts
+interface TagProps {
+  /**
+   * The tag content. Supports:
+   * - Special tags: 'tip', 'info', 'warning', 'danger', 'new', 'experimental', 'deprecated'
+   * - Multiple special tags: 'new, experimental'
+   * - SVG string: '<svg>...</svg>'
+   * - Image URL: 'https://...' or 'data:...'
+   * - Plain text: any other string
+   */
+  tag?: string;
+}
+```
