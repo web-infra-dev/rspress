@@ -5,7 +5,7 @@ Rspress 提供实验性的 SSG-MD 能力，在 [静态站点生成（SSG）](./s
 ## 功能介绍
 
 - 将站点页面渲染为 `.md` 文件，便于向量化或提供给大模型。
-- 生成 `llms.txt`，按导航和侧边栏顺序罗列各页面标题与描述。
+- 生成 `llms.txt`，按导航、侧边栏顺序罗列各页面标题与描述。
 - 生成 `llms-full.txt`，包含每个页面的 Markdown 内容，方便批量导入。
 - 支持多语言站点，会为非默认语言输出对应的 `{lang}/llms.txt` 与 `{lang}/llms-full.txt`。
 
@@ -20,6 +20,8 @@ doc_build
 │       └── introduction.md
 └── ...
 ```
+
+实际文件落在构建目录（如 `guide/start/introduction.md`），`llms-full.txt` 中的 `url` 会携带站点前缀，例如 `/guide/start/introduction.md`。
 
 `llms-full.txt` 示例片段：
 
@@ -65,6 +67,7 @@ export default defineConfig({
 
 - `excludes`：匹配的组件会被转成纯文本，优先级最高。
 - `includes`：若设置，仅允许匹配的组件保留，其余会转成纯文本。
+- 同时配置时会先应用 `excludes`，再按 `includes` 进行过滤。
 
 :::warning
 `llms` 为实验能力，主要用于生成便于大模型或检索系统使用的 Markdown 数据。
