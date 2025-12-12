@@ -1,0 +1,28 @@
+---
+overviewHeaders: []
+---
+
+# SourceCode
+
+`SourceCode` renders a link to repository source code.
+
+## Usage
+
+```tsx title="index.mdx"
+import { SourceCode } from '@rspress/core/theme';
+
+<SourceCode href="https://github.com/web-infra-dev/rspress/blob/main/packages/theme-default/src/components/SourceCode/index.tsx" />;
+```
+
+## Props
+
+```ts
+interface SourceCodeProps {
+  /** Source code link */
+  href: string;
+  /** Code hosting platform, determines which icon to display */
+  platform?: 'github' | 'gitlab';
+}
+```
+
+Use `platform` to switch the icon between GitHub and GitLab. Defaults to `'github'`.

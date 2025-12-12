@@ -1,0 +1,15 @@
+# NoSSR
+
+`NoSSR` 用于禁用特定子树在服务端渲染，强制只在客户端渲染。
+
+## 用法
+
+```mdx title="index.mdx"
+import { NoSSR } from '@rspress/core/runtime';
+
+<NoSSR>
+  <ThirdPartyWidget />
+</NoSSR>
+```
+
+常用于依赖浏览器 API 的组件，避免 SSR 阶段报错或与客户端渲染不一致。

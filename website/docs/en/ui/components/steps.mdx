@@ -1,0 +1,31 @@
+---
+overviewHeaders: []
+---
+
+import { Tag } from '@theme';
+
+# Steps
+
+`Steps` turns markdown content into step-by-step blocks.
+
+## Usage
+
+```tsx title="index.mdx"
+import { Steps } from '@theme';
+
+export default function Page() {
+  return (
+    <Steps>
+      ### Step 1
+
+      Body for Step 1.
+
+      ### Step 2
+
+      > Body for Step 2.
+    </Steps>
+  );
+}
+```
+
+Write headings inside `<Steps>`; each heading starts a new step. Markdown under a heading becomes that step’s body.

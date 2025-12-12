@@ -15,11 +15,11 @@ import {
   Nav,
   type NavProps,
   useRedirect4FirstVisit,
+  useScrollReset,
   useSetup,
 } from '@theme';
 import { Head, useHead } from '@unhead/react';
 import React, { memo, useMemo } from 'react';
-import { useScrollReset } from '../../logic/useScrollReset';
 
 export type LayoutProps = {
   top?: React.ReactNode;

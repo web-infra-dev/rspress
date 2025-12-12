@@ -1,0 +1,62 @@
+---
+overviewHeaders: []
+---
+
+# Tabs/Tab
+
+`Tabs` 与 `Tab` 用于在多个内容面板间切换。
+
+## 用法
+
+```mdx title="index.mdx"
+import { Tab, Tabs } from '@theme';
+
+<Tabs>
+  <Tab label="Tab 1">Tab 1 content</Tab>
+  <Tab label="Tab 2">Tab 2 content</Tab>
+</Tabs>
+```
+
+### 代码块
+
+````mdx title="index.mdx"
+import { Tab, Tabs } from '@theme';
+
+<Tabs>
+  <Tab label="Tab 1">
+
+```tsx title="src/index.mjs"
+import foo from 'foo';
+import bar from 'bar';
+```
+
+  </Tab>
+  <Tab label="Tab 2">
+
+```tsx title="src/index.cjs"
+const foo = require('foo');
+const bar = require('bar');
+```
+
+  </Tab>
+</Tabs>
+````
+
+### Props
+
+```ts
+interface TabsProps {
+  children: React.ReactNode;
+  defaultValue?: string;
+  groupId?: string;
+  tabPosition?: 'left' | 'center';
+}
+
+interface TabProps {
+  label: string;
+  value?: string;
+  children: React.ReactNode;
+}
+```
+
+`defaultValue` 可设置默认选中的标签（匹配 `value`）；`groupId` 可以让多个 `Tabs` 共享选择状态；`tabPosition` 控制标签列表的对齐方式。

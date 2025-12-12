@@ -16,6 +16,11 @@
     "name": "components"
   },
   {
+    "type": "dir",
+    "label": "Runtime components",
+    "name": "runtime-components"
+  },
+  {
     "type": "section-header",
     "label": "Hooks"
   },

@@ -1,0 +1,35 @@
+---
+overviewHeaders: []
+tag: eject-only
+---
+
+# EditLink
+
+`EditLink` 用于渲染"编辑此页"链接，点击后跳转到文档源文件的编辑页面（如 GitHub）。
+
+## 用法
+
+该组件通常作为 [DocFooter](/ui/components/doc-footer) 的一部分自动渲染，无需手动使用。
+
+## 相关配置
+
+在 `rspress.config.ts` 中配置 `editLink`：
+
+```ts title="rspress.config.ts"
+import { defineConfig } from '@rspress/core';
+
+export default defineConfig({
+  themeConfig: {
+    editLink: {
+      docRepoBaseUrl:
+        'https://github.com/web-infra-dev/rspress/tree/main/website/docs',
+      text: '📝 在 GitHub 上编辑此页',
+    },
+  },
+});
+```
+
+- `docRepoBaseUrl` - 文档仓库的基础 URL
+- `text` - 链接显示的文本
+
+如果未配置 `editLink`，组件不会渲染任何内容。

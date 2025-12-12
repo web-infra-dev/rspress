@@ -1,0 +1,27 @@
+---
+overviewHeaders: []
+tag: non-ejectable
+---
+
+# CodeBlockRuntime
+
+`CodeBlockRuntime` 用于在运行时渲染可执行的代码块。
+
+## 用法
+
+```tsx title="index.mdx"
+import { CodeBlockRuntime } from '@theme';
+
+export default function Page() {
+  return (
+    <CodeBlockRuntime
+      lang="js"
+      title="index.js"
+      code={`console.log('Hello World!')`}
+      shikiOptions={{}}
+    />
+  );
+}
+```
+
+传入 `lang`、`title`、`code` 渲染代码块；`shikiOptions` 可自定义高亮配置。

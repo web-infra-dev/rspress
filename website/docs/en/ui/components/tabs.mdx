@@ -1,0 +1,64 @@
+---
+overviewHeaders: []
+---
+
+import { Tag } from '@theme';
+
+# Tabs/Tab
+
+`Tabs` and `Tab` switch between multiple content panes.
+
+## Usage
+
+```mdx title="index.mdx"
+import { Tab, Tabs } from '@theme';
+
+<Tabs>
+  <Tab label="Tab 1">Tab 1 content</Tab>
+  <Tab label="Tab 2">Tab 2 content</Tab>
+</Tabs>
+```
+
+### Code blocks
+
+````mdx title="index.mdx"
+import { Tab, Tabs } from '@theme';
+
+<Tabs>
+  <Tab label="Tab 1">
+
+```tsx title="src/index.mjs"
+import foo from 'foo';
+import bar from 'bar';
+```
+
+  </Tab>
+  <Tab label="Tab 2">
+
+```tsx title="src/index.cjs"
+const foo = require('foo');
+const bar = require('bar');
+```
+
+  </Tab>
+</Tabs>
+````
+
+### Props
+
+```ts
+interface TabsProps {
+  children: React.ReactNode;
+  defaultValue?: string;
+  groupId?: string;
+  tabPosition?: 'left' | 'center';
+}
+
+interface TabProps {
+  label: string;
+  value?: string;
+  children: React.ReactNode;
+}
+```
+
+Use `defaultValue` to preselect a tab (matches `value`); `groupId` syncs selection across multiple `Tabs`; `tabPosition` sets list alignment.

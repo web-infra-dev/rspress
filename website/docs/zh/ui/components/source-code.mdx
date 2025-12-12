@@ -1,0 +1,28 @@
+---
+overviewHeaders: []
+---
+
+# SourceCode
+
+`SourceCode` 用于渲染仓库源码的链接。
+
+## 用法
+
+```tsx title="index.mdx"
+import { SourceCode } from '@theme';
+
+<SourceCode href="https://github.com/web-infra-dev/rspress/blob/main/packages/theme-default/src/components/SourceCode/index.tsx" />;
+```
+
+## Props
+
+```ts
+interface SourceCodeProps {
+  /** 源码链接 */
+  href: string;
+  /** 代码托管平台，决定显示的图标 */
+  platform?: 'github' | 'gitlab';
+}
+```
+
+通过 `platform` 切换 GitHub/GitLab 图标，默认为 `'github'`。

@@ -1,5 +1,5 @@
 import { Link, renderInlineMarkdown } from '@theme';
-import './OverviewGroup.scss';
+import './index.scss';
 import type { Header } from '@rspress/core';
 import { FallbackHeading, SvgWrapper } from '@theme';
 import IconPlugin from './icons/plugin.svg';

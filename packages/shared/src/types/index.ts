@@ -429,6 +429,7 @@ export interface FrontMatterMeta {
   pageType?: PageType;
   features?: Feature[];
   hero?: Hero;
+  tag?: string;
 
   // ui
   navbar?: boolean;
