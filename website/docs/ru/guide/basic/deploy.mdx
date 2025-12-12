@@ -1,0 +1,206 @@
+# Развёртывание
+
+В этом разделе мы рассмотрим развёртывание проекта. Предполагается, что разработка проекта завершена, и теперь необходимо разместить его онлайн. Нужно учесть следующие аспекты:
+
+- Сборка проекта для продакшена и его локальный просмотр.
+- Настройка префикса для статических ресурсов.
+- Настройка базового пути проекта.
+- Выбор платформы для развёртывания.
+
+## Сборка и просмотр
+
+Перед развёртыванием необходимо сначала собрать проект для продакшена и локально его просмотреть, чтобы убедиться, что проект работает корректно. В проектах Rspress для этого можно использовать следующие команды из секции `scripts`:
+
+```json
+{
+  "scripts": {
+    "build": "rspress build",
+    "preview": "rspress preview"
+  }
+}
+```
+
+:::tip СОВЕТ
+
+Для команды просмотра (preview) можно указать номер порта через параметр `--port`, например: `rspress preview --port 8080`.
+
+:::
+
+Финальный результат будет выведен в директорию `doc_build` в корне проекта. Содержимое этой директории — это то, что необходимо разместить на сервере.
+
+## Настройка префикса для статических ресурсов
+
+Вывод проекта можно разделить на две части: HTML-файлы и статические ресурсы. HTML-файлы — это файлы в директории вывода, которые мы в конечном итоге развёртываем на сервере.
+
+Статические ресурсы — это директория `static` в директории вывода, которая содержит JavaScript, CSS, изображения и другие ресурсы, необходимые проекту. При развёртывании, если вы планируете разместить эти ресурсы на CDN для ускорения загрузки, вместо прямого размещения на сервере вместе с HTML, нужно настроить префикс для статических ресурсов, чтобы проект корректно их подключал. Это можно сделать через `builderConfig.output.assetPrefix`:
+
+```ts title="rspress.config.ts"
+import { defineConfig } from '@rspress/core';
+
+export default defineConfig({
+  builderConfig: {
+    output: {
+      assetPrefix: 'https://cdn.com/',
+    },
+  },
+});
+```
+
+Таким образом, при обращении к статическим ресурсам в HTML префикс будет добавляться автоматически, например:
+
+```html
+<script src="https://cdn.com/static/js/app.123.js"></script>
+```
+
+## Настройка базового пути проекта
+
+При развёртывании проект может потребоваться разместить в поддиректории. Например, если вы планируете развернуть сайт по адресу `https://foo.github.io/bar/`, то нужно установить параметр `base` в `"/bar/"`:
+
+```ts title="rspress.config.ts"
+import { defineConfig } from '@rspress/core';
+
+export default defineConfig({
+  base: '/bar/',
+});
+```
+
+## Развёртывание на платформе
+
+После выполнения всех настроек можно развернуть вывод на сервере. Существует множество вариантов, таких как `Zephyr`, `GitHub Pages`, `Netlify`, `Vercel` и др. Здесь в качестве примера рассмотрим `Zephyr`, `GitHub Pages` и `Netlify`.
+
+### Развёртывание через Zephyr Cloud
+
+[Zephyr Cloud](https://zephyr-cloud.io) — это платформа для развёртывания без конфигурации, которая интегрируется напрямую в процесс сборки и обеспечивает глобальную доставку сайта через сеть серверов, расположенных ближе к пользователям.
+
+#### Как развернуть
+
+Следуйте инструкциям плагина [zephyr-rspress-plugin](https://www.npmjs.com/package/zephyr-rspress-plugin).
+
+Во время сборки ваш сайт документации на Rspress будет автоматически развернут, и вы получите URL для доступа.
+
+Zephyr Cloud обеспечивает оптимизацию ресурсов, глобальное распределение через CDN и предоставляет возможность автоматического отката изменений для ваших сайтов документации.
+
+### Развёртывание через GitHub Actions
+
+Если ваш проект размещён на `GitHub`, вы можете развернуть его через `GitHub Pages`. `GitHub Pages` — это сервис для хостинга статических сайтов от GitHub, позволяющий напрямую публиковать проект без необходимости создавать собственный сервер.
+
+#### 1. Создание workflow-файла
+
+Сначала необходимо создать файл `.github/workflows/deploy.yml` в корне проекта со следующим содержимым:
+
+```yml
+name: Deploy Rspress site to Pages
+
+on:
+  push:
+    branches: [main]
+
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: false
+
+jobs:
+  # Build job
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0 # Not needed if lastUpdated is not enabled
+      - uses: pnpm/action-setup@v3 # pnpm is optional but recommended, you can also use npm / yarn
+        with:
+          version: 8
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: pnpm
+      - name: Setup Pages
+        uses: actions/configure-pages@v5
+      - name: Install dependencies
+        run: pnpm install
+      - name: Build with Rspress
+        run: |
+          pnpm run build
+      - name: Upload artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: doc_build
+
+  # Deployment job
+  deploy:
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    needs: build
+    runs-on: ubuntu-latest
+    name: Deploy
+    steps:
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
+```
+
+#### 2. Настройка GitHub Actions
+
+В `Settings => Pages` репозитория можно выбрать `GitHub Actions` в качестве источника для развёртывания.
+
+#### 3. Отправка кода в ветку main
+
+При пуше кода в ветку `main` `GitHub Actions` автоматически выполнит процесс развёртывания. Прогресс можно отслеживать в колонке `Actions`. После завершения развёртывания ваш сайт будет доступен по адресу `https://<username>.github.io/<repository>/`.
+
+### Развёртывание через Netlify
+
+`Netlify` — это платформа для развёртывания веб-приложений, которая позволяет публиковать проект напрямую на Netlify без собственного сервера.
+
+#### Базовая настройка
+
+Развёртывание проекта на Netlify очень простое. Нужно только импортировать ваш репозиторий с GitHub и настроить несколько основных параметров. Настройте следующие поля:
+
+- `Build command`: команда сборки проекта, например `npm run build`.
+- `Publish directory`: директория вывода, укажите здесь `doc_build`.
+
+После этого нажмите кнопку `Deploy site` для завершения развёртывания.
+
+#### Настройка собственного домена
+
+Если вы хотите привязать сайт к собственному домену, настройку можно выполнить в колонке `Domain management` на Netlify. Подробности можно посмотреть в [официальной документации Netlify](https://docs.netlify.com/domains-https/custom-domains/).
+
+### Развёртывание на хостинге статических сайтов Kinsta
+
+Вы можете разместить свой сайт на [Kinsta](https://kinsta.com/static-site-hosting/).
+
+1. Войдите в систему или создайте аккаунт, чтобы открыть панель управления [MyKinsta](https://my.kinsta.com/).
+
+2. Авторизуйте Kinsta через ваш Git-провайдер.
+
+3. В левом боковом меню выберите **Static Sites** и нажмите **Add sites**.
+
+4. Выберите репозиторий и ветку, которые хотите развернуть.
+
+5. В настройках сборки Kinsta автоматически попытается заполнить **Build command**, **Node version** и **Publish directory**. Если это не произойдёт, укажите нужные данные вручную:
+   - Build command: `npm run build`
+   - Node version: `18.16.0`
+   - Publish directory: `doc_build`
+
+6. Нажмите **Create site**.
+
+### Развёртывание на Zeabur
+
+[Zeabur](https://zeabur.com) — это платформа для мгновенного развёртывания сервисов, которая позволяет напрямую развернуть сайт на Rspress без дополнительной настройки.
+
+#### Как развернуть
+
+Сначала [создайте аккаунт Zeabur](https://zeabur.com). Затем следуйте инструкциям для создания проекта и установки GitHub-приложения для авторизации доступа Zeabur к вашему репозиторию Rspress.
+
+Нажмите `Deploy New Service` и импортируйте ваш репозиторий Rspress, развёртывание начнётся автоматически, и Zeabur определит, что ваш сайт создан с помощью Rspress.
+
+Развёртывание завершится за минуту, вы также можете привязать бесплатный субдомен, предоставляемый Zeabur, или использовать свой собственный домен для сайта.

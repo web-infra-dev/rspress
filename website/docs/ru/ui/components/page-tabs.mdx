@@ -1,0 +1,78 @@
+---
+tag: новинка
+---
+
+# PageTabs
+
+import { PageTabs, PageTab } from '@theme';
+
+:::info Информация
+
+Компонент **PageTabs** позволяет создавать вкладки внутри одной страницы, разбивая её на несколько подстраниц. На одной странице может быть **ровно один** экземпляр `PageTabs`.
+
+:::
+
+<PageTabs>
+
+<PageTab label="API">
+
+## Основы
+
+```mdx title="docs/guide/getting-started.mdx"
+# Первые шаги
+
+import { PageTabs, PageTab } from '@theme';
+
+<PageTabs>
+<PageTab label="Вкладка 1">
+
+## Foo
+
+</PageTab>
+
+<PageTab label="Вкладка 2">
+
+## Bar
+
+</PageTab>
+</PageTabs>
+```
+
+## Использование MDX-фрагментов
+
+Рекомендуется использовать [MDX-фрагменты](../../guide/use-mdx/components.mdx) для разбиения страницы на несколько подстраниц.
+
+```mdx title="docs/guide/getting-started.mdx"
+# Первые шаги
+
+import { PageTabs, PageTab } from '@theme';
+import Foo from './fragments/_foo.mdx';
+import Bar from './fragments/_bar.mdx';
+
+<PageTabs>
+  <PageTab label="Вкладка 1">
+    <Foo />
+  </PageTab>
+  <PageTab label="Вкладка 2">
+    <Bar />
+  </PageTab>
+</PageTabs>
+```
+
+</PageTab>
+
+<PageTab label="Как это работает">
+
+## Динамическое оглавление
+
+На основе многочисленных отзывов пользователей версии V1 мы обнаружили, что при использовании [MDX-фрагментов](../../guide/use-mdx/components.mdx), содержащих заголовки, часто возникали проблемы с некорректным извлечением статического оглавления.
+
+В Rspress V2 появилось **динамическое оглавление** — оно генерируется во время выполнения, отслеживая изменения DOM с помощью [MutationObserver](https://developer.mozilla.org/en-US/docs/Web/API/MutationObserver). Это гарантирует точность оглавления и позволяет в полной мере использовать гибкость [MDX-фрагментов](../../guide/use-mdx/components.mdx). Именно благодаря динамическому оглавлению стал возможен компонент `<PageTabs />`.
+
+```ts
+import { useDynamicTOC } from '@theme';
+```
+
+</PageTab>
+
+</PageTabs>

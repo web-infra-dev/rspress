@@ -1,0 +1,26 @@
+[
+  {
+    "type": "section-header",
+    "label": "Тема"
+  },
+  "vars",
+  "custom-theme",
+  {
+    "type": "section-header",
+    "label": "Компоненты"
+  },
+  {
+    "type": "dir",
+    "label": "Встроенные компоненты",
+    "name": "components"
+  },
+  {
+    "type": "section-header",
+    "label": "Хуки"
+  },
+  {
+    "type": "dir",
+    "label": "Встроенные хуки",
+    "name": "hooks"
+  }
+]

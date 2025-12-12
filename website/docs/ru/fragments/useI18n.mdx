@@ -1,0 +1,37 @@
+Rspress предоставляет хук `useI18n` для получения текста на нужном языке. Использование выглядит следующим образом:
+
+```tsx
+import { useI18n } from '@rspress/core/runtime';
+
+const MyComponent = () => {
+  const t = useI18n();
+
+  return <div>{t('gettingStarted')}</div>;
+};
+```
+
+Для удобной подсказки типов вы можете настроить `paths` в `tsconfig.json`:
+
+```json
+{
+  "compilerOptions": {
+    "paths": {
+      "i18n": ["./i18n.json"]
+    }
+  }
+}
+```
+
+Затем используйте это следующим образом в компоненте:
+
+```tsx
+import { useI18n } from '@rspress/core/runtime';
+
+const MyComponent = () => {
+  const t = useI18n<typeof import('i18n')>();
+
+  return <div>{t('gettingStarted')}</div>;
+};
+```
+
+Таким образом вы получаете подсказки типов для всех ключей, определённых в `i18n.json`.

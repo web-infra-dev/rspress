@@ -1,0 +1,311 @@
+# Кастомная тема
+
+В этой статье рассказано, как разрабатывать собственную тему.
+
+## Расширение стандартной темы
+
+В большинстве случаев вы не хотите писать тему полностью с нуля, а хотите расширить стандартную тему. Для этого можно воспользоваться описанными ниже способами разработки темы.
+
+:::tip Совет
+Если вам нужно разработать полностью кастомную тему с нуля, перейдите в раздел [Кастомная тема с нуля](/ui/custom-theme#переписать-кастомную-тему-с-нуля).
+:::
+
+### 1. Базовая структура
+
+По умолчанию нужно создать папку `theme` в корне проекта, а внутри неё — файл `index.ts` или `index.tsx`, который будет экспортировать содержимое темы.
+
+```txt
+└── theme
+    └── index.tsx
+```
+
+Файл `theme/index.tsx` может выглядеть следующим образом:
+
+```tsx title="theme/index.tsx"
+import { Layout as BasicLayout } from '@rspress/core/theme-original';
+
+const Layout = () => (
+  <BasicLayout beforeNavTitle={<div>какое-то содержимое</div>} />
+);
+
+export { Layout };
+
+export * from '@rspress/core/theme-original';
+```
+
+С одной стороны, вам нужно экспортировать объект конфигурации темы через `export`, а с другой — переэкспортировать всё именованное содержимое из `@rspress/core/theme` с помощью `export * from '@rspress/core/theme-original'`. Это необходимо, чтобы ваша тема работала корректно.
+
+### 2. Использование слотов
+
+Стоит отметить, что компонент `Layout` предоставляет ряд пропсов-слотов для расширения разметки. С их помощью вы можете кастомизировать стандартную тему. Например, можно изменить компонент `Layout` следующим образом:
+
+```tsx title="theme/index.tsx"
+import { Layout as BasicLayout } from '@rspress/core/theme-original';
+
+// Ниже показаны все доступные пропсы-слоты
+const Layout = () => (
+  <BasicLayout
+    /* Перед блоком hero на главной странице */
+    beforeHero={<div>beforeHero</div>}
+    /* После блока hero на главной странице */
+    afterHero={<div>afterHero</div>}
+    /* Перед блоком фич (features) на главной */
+    beforeFeatures={<div>beforeFeatures</div>}
+    /* После блока фич на главной */
+    afterFeatures={<div>afterFeatures</div>}
+    /* Перед футером документа */
+    beforeDocFooter={<div>beforeDocFooter</div>}
+    /* После футера документа */
+    afterDocFooter={<div>afterDocFooter</div>}
+    /* В начале страницы документации */
+    beforeDoc={<div>beforeDoc</div>}
+    /* В конце страницы документации */
+    afterDoc={<div>afterDoc</div>}
+    /* Перед основным содержимым документа */
+    beforeDocContent={<div>beforeDocContent</div>}
+    /* После основного содержимого документа */
+    afterDocContent={<div>afterDocContent</div>}
+    /* Перед навигационной панелью */
+    beforeNav={<div>beforeNav</div>}
+    /* Перед заголовком в левом верхнем углу навбара */
+    beforeNavTitle={<span>😄</span>}
+    /* Кастомный заголовок навбара */
+    navTitle={<div>Custom Nav Title</div>}
+    /* После заголовка в левом верхнем углу навбара */
+    afterNavTitle={<div>afterNavTitle</div>}
+    /* В правом углу меню навигации */
+    afterNavMenu={<div>afterNavMenu</div>}
+    /* Над левой боковой панелью */
+    beforeSidebar={<div>beforeSidebar</div>}
+    /* Под левой боковой панелью */
+    afterSidebar={<div>afterSidebar</div>}
+    /* Над правой колонкой оглавления */
+    beforeOutline={<div>beforeOutline</div>}
+    /* Под правой колонкой оглавления */
+    afterOutline={<div>afterOutline</div>}
+    /* В самом верху всей страницы */
+    top={<div>top</div>}
+    /* В самом низу всей страницы */
+    bottom={<div>bottom</div>}
+    /* Пользовательские MDX-компоненты */
+    components={{ p: (props) => <p {...props} className="my-4 leading-7" /> }}
+  />
+);
+
+export { Layout };
+// re-export
+export * from '@rspress/core/theme-original';
+```
+
+### 3. Кастомная главная страница и страница 404
+
+Помимо использования слотов, если вы хотите расширить компоненты стандартной темы, вы также можете полностью переопределить компоненты главной страницы (`HomeLayout` и `HomeFooter`) и страницы 404 (`NotFoundLayout`), а также любые другие встроенные компоненты Rspress из каталога [theme-default/src/components](https://github.com/web-infra-dev/rspress/tree/main/packages/theme-default/src/components).
+
+```tsx title="theme/index.tsx"
+import {
+  Search as BasicSearch,
+  Layout as BasicLayout,
+} from '@rspress/core/theme-original';
+
+// Кастомная главная страница
+const HomeLayout = () => <div>Главная</div>;
+
+// Кастомная страница 404
+const NotFoundLayout = () => <div>404</div>;
+
+// Использование слотов
+const Layout = () => (
+  <BasicLayout
+    beforeNavTitle={<div>какое-то содержимое</div>}
+    HomeLayout={HomeLayout}
+    NotFoundLayout={NotFoundLayout}
+  />
+);
+
+// Кастомный компонент поиска
+const Search = () => (
+  <div className="my-search">
+    <BasicSearch />
+  </div>
+);
+export { Search, HomeLayout, NotFoundLayout };
+// re-export
+export * from '@rspress/core/theme-original';
+```
+
+Конечно, в процессе разработки вам может понадобиться доступ к данным текущей страницы — их можно получить через [`Runtime API`](/api/client-api/api-runtime).
+
+### 4. Кастомные иконки
+
+Если вы хотите заменить отдельные иконки, используемые в компонентах стандартной темы, достаточно положить свои иконки **с теми же именами** в директорию `theme/assets`.
+
+```txt
+└── theme
+    └── assets
+        └── logo.svg
+```
+
+Все иконки, используемые в стандартной теме, можно посмотреть [здесь](https://github.com/web-infra-dev/rspress/tree/main/packages/theme-default/src/assets).
+
+## Кастомная тема с нуля
+
+Если вы разрабатываете полностью собственную тему, вам нужно понимать базовую структуру темы и runtime API.
+
+### 1. Базовая структура
+
+Как и в случае расширения темы, нужно создать папку `theme` в корне проекта, а внутри неё — файл `index.ts` или `index.tsx`, который будет экспортировать содержимое вашей темы.
+
+```txt
+├── theme
+│   └── index.tsx
+```
+
+В файле `theme/index.tsx` необходимо экспортировать компонент `Layout` — это точка входа вашей темы:
+
+```tsx
+// theme/index.tsx
+import { Layout as BasicLayout } from '@rspress/core/theme-original';
+
+function Layout() {
+  return <BasicLayout />;
+}
+
+// Экспортируем компонент Layout и функцию настройки
+export { Layout };
+// Переэкспортируем всё содержимое стандартной темы, чтобы конфигурация вашей темы работала корректно
+export * from '@rspress/core/theme-original';
+```
+
+### 2. Runtime API
+
+#### usePageData
+
+Получить информацию обо всех данных сайта, например:
+
+```tsx
+import { usePageData } from '@rspress/core/runtime';
+
+function MyComponent() {
+  const pageData = usePageData();
+  return <div>{pageData.title}</div>;
+}
+```
+
+#### useLang
+
+Получить информацию о текущем языке, например:
+
+```tsx
+import { useLang } from '@rspress/core/runtime';
+
+function MyComponent() {
+  const lang = useLang();
+  return <div>{lang}</div>;
+}
+```
+
+#### Content
+
+Получить содержимое MDX-компонента, например:
+
+```tsx
+import { Content } from '@rspress/core/runtime';
+
+function Layout() {
+  return (
+    <div>
+      <Content />
+    </div>
+  );
+}
+```
+
+#### Хуки маршрутизации
+
+Rspress использует [react-router-dom](https://reactrouter.com/) для реализации маршрутизации, поэтому вы можете напрямую использовать хуки из `react-router-dom`, например:
+
+```tsx
+import { useLocation } from '@rspress/core/runtime';
+
+function Layout() {
+  const location = useLocation();
+  return <div>Текущее расположение: {location.pathname}</div>;
+}
+```
+
+### 3. Повторное использование функциональности поиска
+
+В стандартной теме уже реализован поиск, который состоит из двух частей:
+
+1. Поле ввода поиска — точка входа для запуска поиска.
+2. Выпадающая панель с результатами поиска, которая появляется после клика по полю.
+
+#### Полное повторное использование
+
+Если вы хотите полностью использовать готовую функциональность поиска, просто импортируйте компонент `Search`:
+
+```tsx
+import { Search } from '@rspress/core/theme-original';
+
+function MySearch() {
+  return <Search />;
+}
+```
+
+#### Повторное использование только панели поиска
+
+Если вы хотите использовать готовую панель с результатами поиска, но полностью кастомизировать само поле ввода, то в своём компоненте темы нужно импортировать `SearchPanel`:
+
+```tsx
+import { useState } from 'react';
+import { SearchPanel } from '@rspress/core/theme-original';
+
+function MySearch() {
+  const [focused, setFocused] = useState(false);
+  return (
+    <div>
+      <button onClick={() => setFocused(true)}>Переключить поиск</button>
+      <SearchPanel focused={focused} setFocused={setFocused} />
+    </div>
+  );
+}
+```
+
+В этом случае вам нужно самостоятельно управлять состоянием `focused` и методом `setFocused`, а затем передавать их в качестве пропсов в компонент `SearchPanel`, чтобы контролировать показ и скрытие панели поиска.
+
+#### Повторное использование логики полнотекстового поиска по умолчанию
+
+Если вы хотите использовать стандартную логику полнотекстового поиска, можно воспользоваться хуком `useFullTextSearch`, например:
+
+```tsx
+import { useFullTextSearch } from '@rspress/core/theme-original';
+
+function MySearch() {
+  const { initialized, search } = useFullTextSearch();
+
+  useEffect(() => {
+    async function searchSomeKeywords(keywords: string) {
+      if (initialized) {
+        // Поиск по ключевым словам
+        const results = await search(keywords);
+        console.log(results);
+      }
+    }
+    searchSomeKeywords('keyword');
+  }, [initialized]);
+
+  return <div>Поиск</div>;
+}
+```
+
+Здесь `initialized` указывает, инициализирован ли поиск, а метод `search` используется для поиска по ключевым словам. Он возвращает `Promise`, результат которого — это результаты стандартного полнотекстового поиска.
+
+Важно: хук `useFullTextSearch` автоматически загружает поисковый индекс при инициализации, поэтому сначала нужно проверить статус `initialized`, дождаться завершения инициализации и только после этого вызывать метод `search`.
+
+Типизация метода `search` выглядит так:
+
+```ts
+type SearchFn = (keywords: string, limit?: number) => Promise<SearchResult>;
+```
+
+Параметр `limit` указывает максимальное количество результатов поиска. По умолчанию он равен 7 — то есть без дополнительных настроек возвращается не более семи статей.

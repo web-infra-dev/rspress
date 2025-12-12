@@ -1,0 +1,65 @@
+# CSS-переменные
+
+:::warning 🚧 Ещё в разработке
+
+:::
+
+Rspress предоставляет ряд часто используемых CSS-переменных. По сравнению с переопределением встроенных React-компонентов Rspress, изменение CSS-переменных — более простой и поддерживаемый способ кастомизации.
+
+Вы можете редактировать их прямо на этой странице в режиме реального времени, а затем скопировать нужные значения в файл `theme/index.css`, чтобы переопределить стили. Вот простой пример переопределения стилей:
+
+import { Tabs, Tab } from '@theme';
+
+<Tabs>
+<Tab label="theme/index.tsx">
+
+```tsx
+import './index.css';
+export * from '@rspress/core/theme';
+```
+
+</Tab>
+<Tab label="theme/index.css">
+```css
+/* Скопируйте сюда код с CSS-переменными, чтобы переопределить стили */
+```
+</Tab>
+</Tabs>
+
+Ниже перечислены некоторые CSS-переменные, предоставляемые Rspress, и их значения по умолчанию:
+
+## Основные брендовые цвета
+
+import { CssPickerEditor } from '../../components/CssPickerEditor';
+
+<CssPickerEditor />
+
+## Блок кода - тема Shiki
+
+import { ShikiThemeSwitcher } from '../../components/ShikiThemeSwitcher';
+
+<ShikiThemeSwitcher />
+
+## Блок кода - внешний заголовок и контейнер
+
+import { CssLiveCodeEditorWithDefault } from '../../components/CssLiveCodeEditor';
+
+import rawCodeScss from '../../../../packages/core/src/theme/styles/vars/code-vars.css?raw';
+
+<CssLiveCodeEditorWithDefault defaultValue={rawCodeScss} />
+
+```tsx title="foo.ts"
+console.log('Это блок кода');
+```
+
+## Домашняя страница по умолчанию
+
+import rawCodeHome from '../../../../packages/core/src/theme/styles/vars/home-vars.css?raw';
+
+<CssLiveCodeEditorWithDefault defaultValue={rawCodeHome} />
+
+## Базовые переменные
+
+import rawCodeBase from '../../../../packages/core/src/theme/styles/vars/base-vars.css?raw';
+
+<CssLiveCodeEditorWithDefault defaultValue={rawCodeBase} />

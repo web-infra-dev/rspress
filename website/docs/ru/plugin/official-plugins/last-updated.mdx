@@ -1,0 +1,44 @@
+# @rspress/plugin-last-updated <SourceCode href="https://github.com/web-infra-dev/rspress/tree/main/packages/plugin-last-updated" />
+
+import { SourceCode, PackageManagerTabs } from '@rspress/core/theme';
+
+## Введение
+
+`@rspress/plugin-last-updated` — плагин для отображения времени последнего обновления статьи.
+
+:::tip Подсказка
+
+- Если в конфигурации темы указано `lastUpdated: true`, этот плагин активируется автоматически. Устанавливать и регистрировать его вручную не нужно.
+- Чтобы увидеть время обновления, файл markdown должен быть закоммичен в Git.
+
+:::
+
+## Установка
+
+<PackageManagerTabs command="add @rspress/plugin-last-updated -D" />
+
+## Использование
+
+### 1. Регистрация плагина
+
+```ts title="rspress.config.ts"
+import { pluginLastUpdated } from '@rspress/plugin-last-updated';
+import { defineConfig } from '@rspress/core';
+
+export default defineConfig({
+  plugins: [pluginLastUpdated()],
+});
+```
+
+### 2. Получение времени обновления во время выполнения
+
+После подключения плагина вы можете получить метку времени последнего обновления статьи в runtime. Пример:
+
+```ts
+import { usePageData } from '@rspress/core/runtime';
+
+function MyComponent() {
+  const pageData = usePageData();
+  return <div>{pageData.page.lastUpdatedTime}</div>;
+}
+```
