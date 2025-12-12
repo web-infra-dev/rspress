@@ -1,0 +1,16 @@
+# useVersion
+
+`useVersion` 在开启多版本文档时提供当前文档版本。
+
+- **类型：** `() => string`
+
+可用它在 UI 中展示当前版本，或为不同版本执行分支逻辑。
+
+```tsx
+import { useVersion } from '@rspress/core/runtime';
+
+export default function VersionTag() {
+  const version = useVersion();
+  return <div>当前查看的文档版本：{version}</div>;
+}
+```
