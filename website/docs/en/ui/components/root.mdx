@@ -6,39 +6,23 @@ tag: eject-only
 
 `Root` is a wrapper component for the entire application, wrapping all content including the Layout and global UI components.
 
-## Usage
+Its source code is as follows:
 
-By default, the `Root` component simply renders its children without any additional markup or styling:
-
-```tsx title="theme/components/Root/index.tsx"
-import { Root } from '@rspress/core/theme';
-
-function App() {
-  return (
-    <Root>
-      <YourContent />
-    </Root>
-  );
+```tsx title="Root.tsx"
+export function Root({ children }: RootProps) {
+  return <>{children}</>;
 }
 ```
 
-## Customizing Root
+## Usage
 
-You can [eject](/guide/advanced/custom-theme.html#eject-component) this component to add global providers, styles, or any other elements that should wrap your entire application:
+Eject this component to wrap custom providers:
 
 ```tsx title="theme/components/Root/index.tsx"
-import type { ReactNode } from 'react';
-
-export interface RootProps {
-  children: ReactNode;
-}
+import type { RootProps } from '@rspress/core/theme';
 
 export function Root({ children }: RootProps) {
-  return (
-    <YourGlobalProvider>
-      <div className="my-custom-root">{children}</div>
-    </YourGlobalProvider>
-  );
+  return <YourProvider>{children}</YourProvider>;
 }
 ```
 
@@ -50,11 +34,3 @@ export function Root({ children }: RootProps) {
 - **Required:** Yes
 
 The children elements to render, containing the entire application content.
-
-## Use Cases
-
-- Adding global state management providers (e.g., Redux, Zustand)
-- Adding theme providers
-- Adding global style wrappers
-- Adding global error boundaries
-- Injecting global scripts or analytics code

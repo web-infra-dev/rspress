@@ -18,7 +18,6 @@ import {
 } from '@rspress/plugin-llms/runtime';
 import { NavIcon } from '@rstack-dev/doc-ui/nav-icon';
 import type { PropsWithChildren } from 'react';
-import { DocContent } from './components/DocContent';
 import { Tag } from './components/Tag';
 import { ToolStack } from './components/ToolStack';
 
@@ -110,4 +109,4 @@ function getCustomMDXComponent() {
 }
 
 export * from '@rspress/core/theme-original';
-export { DocContent, getCustomMDXComponent, HomeLayout, Layout, Search, Tag };
+export { getCustomMDXComponent, HomeLayout, Layout, Search, Tag };

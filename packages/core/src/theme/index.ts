@@ -99,6 +99,8 @@ export { useThemeState } from './logic/useAppearance';
 export { useFullTextSearch } from './logic/useFullTextSearch';
 export { usePrevNextPage } from './logic/usePrevNextPage';
 export { useRedirect4FirstVisit } from './logic/useRedirect4FirstVisit';
+export { useScrollAfterNav } from './logic/useScrollAfterNav';
+export { useScrollReset } from './logic/useScrollReset';
 export { useSetup } from './logic/useSetup';
 export { useStorageValue } from './logic/useStorageValue';
 export {
