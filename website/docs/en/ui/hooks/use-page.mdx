@@ -1,0 +1,20 @@
+# usePage
+
+`usePage` exposes metadata extracted from the current Markdown or MDX page.
+
+- **Type:** `() => { page: PageDataLegacy['page'] }`
+
+The `page` object contains parsed frontmatter and runtime details such as `title`, `toc`, `lang`, `version`, `routePath`, `pagePath`, `description`, `headingTitle`, `pageType`, and `lastUpdatedTime`, allowing you to build contextual UI for the active document.
+
+```tsx preview
+import { usePage } from '@rspress/core/runtime';
+
+export default function LastUpdated() {
+  const { page } = usePage();
+  return page.lastUpdatedTime ? (
+    <span>Updated: {page.lastUpdatedTime}</span>
+  ) : null;
+}
+```
+
+> Use `usePage` together with [`useSite`](./use-site) or `usePages` when you need both per-page metadata and global site information.
