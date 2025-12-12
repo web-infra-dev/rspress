@@ -37,7 +37,7 @@ export {
   type Group,
   type GroupItem,
   OverviewGroup,
-} from './components/Overview/OverviewGroup';
+} from './components/OverviewGroup';
 export {
   type PackageManagerTabProps,
   PackageManagerTabs,
