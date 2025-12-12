@@ -4,22 +4,34 @@
 
 ## 用法
 
-```tsx title="index.mdx"
 import { Steps } from '@theme';
 
-export default function Page() {
-  return (
-    <Steps>
-      ### 第一步
+<Steps>
 
-      第一步的内容。
+### 第一步
 
-      ### 第二步
+第一步的内容。
 
-      > 第二步的内容。
-    </Steps>
-  );
-}
+### 第二步
+
+> 第二步的内容。
+
+</Steps>
+
+```mdx title="index.mdx"
+import { Steps } from '@theme';
+
+<Steps>
+
+### 第一步
+
+第一步的内容。
+
+### 第二步
+
+> 第二步的内容。
+
+</Steps>
 ```
 
 在 `<Steps>` 中书写标题；每个标题会开启一个新的步骤，标题下的 Markdown 内容会作为该步骤的正文。

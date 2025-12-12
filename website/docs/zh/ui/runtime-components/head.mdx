@@ -1,0 +1,23 @@
+# Head
+
+Head 组件用于向文档页面插入自定义 head 内容（基于 [unhead](https://www.npmjs.com/package/unhead)）。
+
+## 用法
+
+```mdx title="index.mdx"
+import { Head } from '@rspress/core/runtime';
+
+<Head>
+  <meta property="og:description" content="Out-of-box Rspack build tools" />
+  <link rel="canonical" href="https://example.com" />
+</Head>
+```
+
+import { Head } from '@rspress/core/runtime';
+
+<Head>
+  <meta property="og:description" content="Out-of-box Rspack build tools" />
+  <link rel="canonical" href="https://example.com" />
+</Head>
+
+可在 MDX 或 React 页面中添加 meta 标签、canonical、Open Graph、favicon 等头部信息。
