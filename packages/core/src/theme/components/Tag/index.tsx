@@ -1,8 +1,8 @@
 import { isDataUrl, isExternalUrl } from '@rspress/core/runtime';
+import { Badge, IconDeprecated, IconExperimental, SvgWrapper } from '@theme';
 import { useMemo } from 'react';
-import { Badge } from '../Badge';
 
-const SPECIAL_TAGS = {
+const COMMON_TAGS = {
   tip: 'tip',
   info: 'info',
   warning: 'warning',
@@ -12,36 +12,36 @@ const SPECIAL_TAGS = {
   deprecated: 'danger',
 } as const;
 
-function parseSpecialTagsArrayStr(tagStr: string): string[] | null {
+function parseCommonTagsArrayStr(tagStr: string): string[] | null {
   const tags = tagStr
     .split(',')
     .map(tag => tag.trim())
     .filter(tag => tag.length > 0);
 
-  if (tags.every(tag => Object.keys(SPECIAL_TAGS).includes(tag))) {
+  if (tags.every(tag => Object.keys(COMMON_TAGS).includes(tag))) {
     return tags;
   }
   return null;
 }
 
 const getTagType = (tag: string) => {
-  const normalizeTag = tag.trim();
-  const isSvgTagString = normalizeTag.startsWith('<svg');
-  const isPic = isExternalUrl(normalizeTag) || isDataUrl(normalizeTag);
+  const normalizedTag = tag.trim();
+  const isSvgTagString = normalizedTag.startsWith('<svg');
+  const isPic = isExternalUrl(normalizedTag) || isDataUrl(normalizedTag);
 
-  const specialTagsArray = parseSpecialTagsArrayStr(normalizeTag);
+  const commonTagsArray = parseCommonTagsArrayStr(normalizedTag);
 
   return {
     isSvgTagString,
     isPic,
-    isSpecialTagsArray: specialTagsArray !== null,
-    specialTagsArray,
-    normalizeTag,
+    isCommonTagsArray: commonTagsArray !== null,
+    commonTagsArray: commonTagsArray,
+    normalizedTag: normalizedTag,
   };
 };
 
 /**
- * @param {string} [props.tag] - Supported 1.special tags 2. svg 3. dataUrl 4. externalUrl 4.  5. normal text
+ * @param {string} [props.tag] - Supported 1.common tags 2. svg 3. dataUrl 4. externalUrl 4.  5. normal text
  */
 export const Tag = ({ tag }: { tag?: string }) => {
   if (!tag) {
@@ -50,19 +50,34 @@ export const Tag = ({ tag }: { tag?: string }) => {
 
   const {
     isPic,
-    isSpecialTagsArray,
+    isCommonTagsArray,
     isSvgTagString,
-    normalizeTag,
-    specialTagsArray,
+    normalizedTag,
+    commonTagsArray,
   } = useMemo(() => {
     return getTagType(tag);
   }, [tag]);
 
-  if (isSpecialTagsArray) {
+  if (isCommonTagsArray) {
     return (
       <>
-        {specialTagsArray?.map(tag => {
-          const type = SPECIAL_TAGS[tag as keyof typeof SPECIAL_TAGS];
+        {commonTagsArray?.map(tag => {
+          if (tag === 'experimental') {
+            return (
+              <Badge type="warning">
+                <SvgWrapper icon={IconExperimental} />
+                <span>experimental</span>
+              </Badge>
+            );
+          } else if (tag === 'deprecated') {
+            return (
+              <Badge type="danger">
+                <SvgWrapper icon={IconDeprecated} />
+                <span>deprecated</span>
+              </Badge>
+            );
+          }
+          const type = COMMON_TAGS[tag as keyof typeof COMMON_TAGS];
           return <Badge key={tag} text={tag} type={type} />;
         })}
       </>
@@ -83,5 +98,5 @@ export const Tag = ({ tag }: { tag?: string }) => {
     return <img src={tag} />;
   }
 
-  return <Badge text={normalizeTag} type="info" />;
+  return <Badge text={normalizedTag} type="info" />;
 };

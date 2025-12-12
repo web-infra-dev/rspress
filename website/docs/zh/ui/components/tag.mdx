@@ -2,104 +2,109 @@
 tag: new
 ---
 
+import { Badge } from '@theme';
+
 # Tag
 
-Tag 组件用于在侧边栏或导航中显示标签。它支持多种格式，包括特殊预设标签、SVG 图标、图片和纯文本。
+<Badge text="ejectable" />
+
+Tag 组件用于在侧边栏或导航栏中进行 UI 信息展示。它支持多种格式，包括常用标签、SVG 图标、图片和纯文本。
 
 ## 使用方法
 
-```mdx title="index.mdx"
-import { Tag } from '@theme';
+通过 [frontmatter](../../guide/use-mdx/frontmatter.mdx) 使用，之后在侧边栏或者导航栏会进行对应展示：
 
-<Tag tag="new" />;
+```mdx title="foo.mdx"
+---
+tag: new
+---
+
+# Foo
+
+some text
 ```
 
-## 特殊标签
-
-Tag 组件内置支持特殊预设标签，会自动应用相应的样式：
-
-```tsx
-import { Tag } from '@theme';
-
-// 单个特殊标签
 <Tag tag="new" />
-<Tag tag="tip" />
-<Tag tag="info" />
-<Tag tag="warning" />
-<Tag tag="danger" />
-<Tag tag="experimental" />
-<Tag tag="deprecated" />
 
-// 多个特殊标签（用逗号分隔）
-<Tag tag="new, experimental" />
+同时支持多个标签：
+
+```mdx
+---
+tag: new, experimental
+---
 ```
 
-import { Tag } from '@theme';
-
-效果如下：
-
-<div
-  style={{
-    display: 'flex',
-    gap: '8px',
-    flexWrap: 'wrap',
-    marginBottom: '16px',
-  }}
->
-  <Tag tag="new" />
-  <Tag tag="tip" />
-  <Tag tag="info" />
-  <Tag tag="warning" />
-  <Tag tag="danger" />
-  <Tag tag="experimental" />
-  <Tag tag="deprecated" />
+<div style={{ display: 'flex', gap: '8px' }}>
+  <Tag tag="new, experimental" />
 </div>
 
-多个标签：
+也可通过 `_meta.json` 使用，例如：
 
-<Tag tag="new, experimental" />
+```json title="_meta.json"
+{
+  "name": "foo",
+  "type": "file",
+  "tag": "new, experimental"
+}
+```
 
-### 特殊标签类型
+:::tip 提示
 
-| 标签           | Badge 类型 |
-| -------------- | ---------- |
-| `tip`          | tip        |
-| `info`         | info       |
-| `warning`      | warning    |
-| `danger`       | danger     |
-| `new`          | info       |
-| `experimental` | warning    |
-| `deprecated`   | danger     |
+Tag 组件专门为在侧边栏或者导航栏中展示设计，在 MDX 中使用时，请使用 Badge 组件。
 
-## SVG 字符串
+:::
+
+## Tag 种类
+
+为确保 frontmatter 中传值方便，Tag 组件支持以下多种标签类型：
+
+### 常用标签
+
+内置支持了一些常用标签，会配合 `<Badge />` 进行展示，全部常用标签如下：
+
+import { Tag } from '@theme';
+
+| tag            | 对应的 Badge UI 显示       |
+| -------------- | -------------------------- |
+| `tip`          | <Tag tag="tip" />          |
+| `info`         | <Tag tag="info" />         |
+| `warning`      | <Tag tag="warning" />      |
+| `danger`       | <Tag tag="danger" />       |
+| `new`          | <Tag tag="new" />          |
+| `experimental` | <Tag tag="experimental" /> |
+| `deprecated`   | <Tag tag="deprecated" />   |
+
+Tag 组件是可被 eject 的，当你想扩充常用标签时，可使用 eject 来对 Tag 组件进行修改。
+
+### SVG 字符串
 
 你可以直接传递 SVG 字符串作为标签：
 
-```tsx
-import { Tag } from '@theme';
-
-<Tag tag='<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24"><path fill="currentColor" d="M12 2L2 7l10 5 10-5-10-5z"/></svg>' />;
+```mdx
+---
+tag: <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24"><path fill="currentColor" d="M12 2L2 7l10 5 10-5-10-5z"/></svg>
+---
 ```
 
-## 图片 URL
+### 图片 URL
 
 你可以使用外部 URL 或 data URL 作为标签：
 
-```tsx
-import { Tag } from '@theme';
-
-// 外部 URL
-<Tag tag="https://example.com/icon.png" />
-
-// Data URL
-<Tag tag="data:image/svg+xml;base64,..." />
+```mdx
+---
+tag: https://example.com/icon.png
+---
 ```
 
-<Tag tag="https://assets.rspack.rs/rspress/rspress-logo.svg" />
+```mdx
+---
+tag: data:image/svg+xml;base64,...
+---
+```
 
-## 纯文本
+### 纯文本
 
-任何不匹配上述模式的文本都会显示为纯文本徽章：
+任何不匹配上述模式的文本都会显示为纯文本 Badge：
 
 ```tsx
 import { Tag } from '@theme';
@@ -119,8 +124,8 @@ import { Tag } from '@theme';
 interface TagProps {
   /**
    * 标签内容。支持：
-   * - 特殊标签：'tip'、'info'、'warning'、'danger'、'new'、'experimental'、'deprecated'
-   * - 多个特殊标签：'new, experimental'
+   * - 常用标签：'tip'、'info'、'warning'、'danger'、'new'、'experimental'、'deprecated'
+   * - 多个常用标签：'new, experimental'
    * - SVG 字符串：'<svg>...</svg>'
    * - 图片 URL：'https://...' 或 'data:...'
    * - 纯文本：任意其他字符串

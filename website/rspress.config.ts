@@ -58,7 +58,7 @@ export default defineConfig({
   plugins: [
     pluginPreview({
       iframeOptions: {
-        devPort: 7777,
+        devPort: 7778,
       },
     }),
     pluginTwoslash(),
