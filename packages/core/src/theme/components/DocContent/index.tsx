@@ -5,7 +5,7 @@ import { useScrollAfterNav } from '../../logic/useScrollAfterNav';
 
 import './doc.scss';
 
-export function FallbackTitle() {
+function FallbackTitle() {
   const { site } = useSite();
   const { page } = usePage();
   const { headingTitle, title } = page;
@@ -19,9 +19,13 @@ export function FallbackTitle() {
 export function DocContent({
   components,
   isOverviewPage = false,
+  afterDocContent,
+  beforeDocContent,
 }: {
   components: Record<string, React.FC<any>> | undefined;
   isOverviewPage?: boolean;
+  beforeDocContent?: React.ReactNode;
+  afterDocContent?: React.ReactNode;
 }) {
   useScrollAfterNav();
 
@@ -35,8 +39,10 @@ export function DocContent({
 
   return (
     <MDXProvider components={mdxComponents}>
+      {beforeDocContent}
       {!isOverviewPage && <FallbackTitle />}
       <Content />
+      {afterDocContent}
     </MDXProvider>
   );
 }

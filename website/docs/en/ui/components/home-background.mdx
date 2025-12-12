@@ -1,0 +1,32 @@
+---
+tag: eject-only
+---
+
+import { Tag } from '@theme';
+
+# HomeBackground <Tag tag="ejectable" />
+
+`HomeBackground` renders a background effect on the home page and automatically sets the navigation bar to transparent style.
+
+## Usage
+
+```tsx title="index.mdx"
+import { HomeBackground } from '@rspress/core/theme';
+
+<HomeBackground className="my-custom-bg" />;
+```
+
+## Props
+
+This component inherits all `React.HTMLAttributes<HTMLDivElement>` properties.
+
+### className
+
+- **Type:** `string`
+
+Add custom CSS class names to customize the background style.
+
+## How it works
+
+- The component automatically switches the navigation bar to transparent mode
+- You can customize the `.rp-home-background` class via CSS to adjust the background effect

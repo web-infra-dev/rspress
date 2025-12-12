@@ -1,29 +1,35 @@
+---
+tag: eject-only
+---
+
 import { Tag } from '@theme';
 
 # PrevNextPage <Tag tag="ejectable" />
 
-`PrevNextPage` renders previous/next navigation links.
+`PrevNextPage` renders previous/next navigation links at the bottom of the page.
 
 ## Usage
 
 ```tsx title="index.mdx"
-import { PrevNextPage } from '@theme';
+import { PrevNextPage } from '@rspress/core/theme';
 
-export default function Page() {
-  return (
-    <PrevNextPage type="prev" text="Previous" href="https://rspress.rs/" />
-  );
-}
+<PrevNextPage />;
 ```
 
-### Props
+This component does not accept any props. It automatically calculates the previous/next page links based on the sidebar order.
+
+## How it works
+
+The component internally uses the `usePrevNextPage` hook to get the previous and next page information:
 
 ```ts
-interface PrevNextPageProps {
-  type: 'prev' | 'next';
-  text: string;
-  href: string;
-}
+import { usePrevNextPage } from '@theme';
+
+const { prevPage, nextPage } = usePrevNextPage();
+// prevPage: { text: string; link: string } | null
+// nextPage: { text: string; link: string } | null
 ```
 
-Set `type` to control direction; `text` and `href` set the label and link.
+- Previous/next pages are automatically calculated based on the current page's position in the sidebar
+- If the current page is the first page, `prevPage` will be `null`
+- If the current page is the last page, `nextPage` will be `null`

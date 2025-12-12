@@ -5,22 +5,20 @@
 ## Usage
 
 ```tsx title="index.mdx"
-import { SourceCode } from '@theme';
+import { SourceCode } from '@rspress/core/theme';
 
-export default function Page() {
-  return (
-    <SourceCode href="https://github.com/web-infra-dev/rspress/blob/main/packages/theme-default/src/components/SourceCode/index.tsx" />
-  );
-}
+<SourceCode href="https://github.com/web-infra-dev/rspress/blob/main/packages/theme-default/src/components/SourceCode/index.tsx" />;
 ```
 
-### Props
+## Props
 
 ```ts
 interface SourceCodeProps {
+  /** Source code link */
   href: string;
+  /** Code hosting platform, determines which icon to display */
   platform?: 'github' | 'gitlab';
 }
 ```
 
-Use `platform` to switch the icon between GitHub and GitLab.
+Use `platform` to switch the icon between GitHub and GitLab. Defaults to `'github'`.

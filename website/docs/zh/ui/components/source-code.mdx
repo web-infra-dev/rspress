@@ -4,23 +4,21 @@
 
 ## 用法
 
-```tsx title="index.mdx" preview
+```tsx title="index.mdx"
 import { SourceCode } from '@theme';
 
-export default function Page() {
-  return (
-    <SourceCode href="https://github.com/web-infra-dev/rspress/blob/main/packages/theme-default/src/components/SourceCode/index.tsx" />
-  );
-}
+<SourceCode href="https://github.com/web-infra-dev/rspress/blob/main/packages/theme-default/src/components/SourceCode/index.tsx" />;
 ```
 
-### Props
+## Props
 
 ```ts
 interface SourceCodeProps {
+  /** 源码链接 */
   href: string;
+  /** 代码托管平台，决定显示的图标 */
   platform?: 'github' | 'gitlab';
 }
 ```
 
-通过 `platform` 切换 GitHub/GitLab 图标。
+通过 `platform` 切换 GitHub/GitLab 图标，默认为 `'github'`。

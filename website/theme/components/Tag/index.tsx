@@ -3,7 +3,7 @@ import {
   Tag as BasicTag,
 } from '@rspress/core/theme-original';
 
-export const Tag = ({ tag }: { tag: string }) => {
+export const Tag = ({ tag }: { tag?: string }) => {
   if (tag === 'non-ejectable') {
     return <BasicBadge text="non-ejectable" type="danger" />;
   }

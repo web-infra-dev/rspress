@@ -42,5 +42,13 @@
   "communityPlugins": {
     "zh": "社区插件",
     "en": "Community Plugins"
+  },
+  "ejectOnlyDescription": {
+    "zh": "该组件是 eject-only 组件，专门为 wrap/eject 设计，不建议在 MDX 文件中直接使用",
+    "en": "This is an eject-only component, designed specifically for wrap/eject, and is not recommended for direct use in MDX files"
+  },
+  "nonEjectableDescription": {
+    "zh": "该组件是非 ejectable 组件，不能通过 wrap/eject 进行替换",
+    "en": "This is a non-ejectable component and cannot be replaced through wrap/eject"
   }
 }

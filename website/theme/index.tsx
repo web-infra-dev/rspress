@@ -1,9 +1,10 @@
-import { useLang } from '@rspress/core/runtime';
+import { useFrontmatter, useI18n, useLang } from '@rspress/core/runtime';
 import {
   Banner,
   HomeLayout as BasicHomeLayout,
   Layout as BasicLayout,
   getCustomMDXComponent as basicGetCustomMDXComponent,
+  Callout,
   PackageManagerTabs,
 } from '@rspress/core/theme-original';
 import {
@@ -16,6 +17,8 @@ import {
   LlmsViewOptions,
 } from '@rspress/plugin-llms/runtime';
 import { NavIcon } from '@rstack-dev/doc-ui/nav-icon';
+import type { PropsWithChildren } from 'react';
+import { DocContent } from './components/DocContent';
 import { Tag } from './components/Tag';
 import { ToolStack } from './components/ToolStack';
 
@@ -74,14 +77,29 @@ const Search = () => {
 function getCustomMDXComponent() {
   const { h1: H1, ...components } = basicGetCustomMDXComponent();
 
-  const MyH1 = ({ ...props }) => {
+  const MyH1 = ({ children, ...props }: PropsWithChildren) => {
+    const {
+      frontmatter: { tag },
+    } = useFrontmatter();
+    const isEjectOnly = tag?.includes('eject-only');
+    const isNonEjectable = tag?.includes('non-ejectable');
+    const t = useI18n<typeof import('i18n')>();
+
     return (
       <>
-        <H1 {...props} />
+        <H1 {...props}>
+          {children} {<Tag tag={tag} />}
+        </H1>
         <LlmsContainer>
           <LlmsCopyButton />
           <LlmsViewOptions />
         </LlmsContainer>
+        {isEjectOnly || isNonEjectable ? (
+          <Callout type="warning">
+            {isEjectOnly ? <p>{t('ejectOnlyDescription')}</p> : null}
+            {isNonEjectable ? <p>{t('nonEjectableDescription')}</p> : null}
+          </Callout>
+        ) : null}
       </>
     );
   };
@@ -91,5 +109,5 @@ function getCustomMDXComponent() {
   };
 }
 
-export { Layout, HomeLayout, Search, getCustomMDXComponent, Tag };
 export * from '@rspress/core/theme-original';
+export { DocContent, getCustomMDXComponent, HomeLayout, Layout, Search, Tag };
