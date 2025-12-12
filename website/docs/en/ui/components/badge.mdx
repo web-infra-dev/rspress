@@ -1,0 +1,113 @@
+import { Badge } from '@theme';
+
+# Badge <Badge text="ejectable" />
+
+The Badge component is used to display a small inline badge.
+
+## Usage
+
+```mdx title="index.mdx"
+import { Badge } from '@theme';
+
+<Badge text="NEW" type="info" />
+```
+
+<Badge text="NEW" type="info" />
+
+## Types
+
+The Badge component supports four types, each with a different color:
+
+```mdx preview title="index.mdx"
+import { Badge } from '@theme';
+
+<Badge text="tip" type="tip" />
+<Badge text="info" type="info" />
+<Badge text="warning" type="warning" />
+<Badge text="danger" type="danger" />
+```
+
+## Outline Style
+
+```mdx preview title="index.mdx"
+import { Badge } from '@theme';
+
+<Badge text="tip" type="tip" outline />
+<Badge text="info" type="info" outline />
+<Badge text="warning" type="warning" outline />
+<Badge text="danger" type="danger" outline />
+```
+
+## Custom Children
+
+You can use the `children` prop to render custom content inside the badge:
+
+```mdx preview title="index.mdx"
+import { Badge, IconSearch, SvgWrapper } from '@theme';
+
+<Badge type="tip">
+  <img
+    style={{ height: '18px' }}
+    src="https://assets.rspack.rs/rspress/rspress-logo.svg"
+  />
+  <span>Rspress</span>
+</Badge>
+
+<Badge type="info">
+  <SvgWrapper icon={IconSearch} />
+  <span>Search</span>
+</Badge>
+```
+
+## Inline with Text
+
+Badge can be used inline with text:
+
+```mdx preview title="index.mdx"
+import { Badge } from '@theme';
+
+Inlined with text <Badge text="New" />
+```
+
+## In Headings
+
+Badge can be used in headings:
+
+```mdx
+##### H5 Heading <Badge text="Info" type="info" />
+
+#### H4 Heading <Badge text="Warning" type="warning" />
+
+### H3 Heading <Badge text="Danger" type="danger" />
+```
+
+##### H5 Heading <Badge text="Info" type="info" />
+
+#### H4 Heading <Badge text="Warning" type="warning" />
+
+### H3 Heading <Badge text="Danger" type="danger" />
+
+## Props
+
+```ts
+interface BadgeProps {
+  /**
+   * The content to display inside the badge. Can be a string or React nodes.
+   */
+  children?: React.ReactNode;
+  /**
+   * The type of badge, which determines its color and style.
+   * @default 'tip'
+   */
+  type?: 'tip' | 'info' | 'warning' | 'danger';
+  /**
+   * The text content to display inside the badge (for backwards compatibility).
+   */
+  text?: string;
+  /**
+   * Whether to display the badge with an outline style.
+   * @default false
+   */
+  outline?: boolean;
+}
+```

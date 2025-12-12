@@ -2,13 +2,11 @@
 tag: new
 ---
 
-import { Badge } from '@theme';
+import { Badge, Tag } from '@theme';
 
-# Tag
+# Tag <Tag tag="new" /> <Badge text="ejectable" />
 
-<Badge text="ejectable" />
-
-Tag 组件用于在侧边栏或导航栏中进行 UI 信息展示。它支持多种格式，包括常用标签、SVG 图标、图片和纯文本。
+Tag 组件用于在 **侧边栏或导航栏** 中进行 UI 信息展示。它支持多种格式，包括常用标签、SVG 图标、图片和纯文本。
 
 ## 使用方法
 
@@ -50,7 +48,7 @@ tag: new, experimental
 
 :::tip 提示
 
-Tag 组件专门为在侧边栏或者导航栏中展示设计，在 MDX 中使用时，请使用 Badge 组件。
+Tag 组件专门为在侧边栏或者导航栏中展示设计，在 MDX 中使用时，请使用 [Badge 组件](./badge.mdx)。
 
 :::
 
@@ -61,8 +59,6 @@ Tag 组件专门为在侧边栏或者导航栏中展示设计，在 MDX 中使�
 ### 常用标签
 
 内置支持了一些常用标签，会配合 `<Badge />` 进行展示，全部常用标签如下：
-
-import { Tag } from '@theme';
 
 | tag            | 对应的 Badge UI 显示       |
 | -------------- | -------------------------- |

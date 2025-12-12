@@ -57,6 +57,7 @@ export default defineConfig({
   },
   plugins: [
     pluginPreview({
+      previewLanguages: ['tsx', 'jsx', 'mdx'],
       iframeOptions: {
         devPort: 7778,
       },
