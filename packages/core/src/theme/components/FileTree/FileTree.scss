@@ -62,7 +62,7 @@
   &__label {
     color: currentColor;
     text-decoration: none;
-    word-break: break-all;
+    overflow-wrap: break-word;
 
     &--link {
       color: var(--rp-c-link);

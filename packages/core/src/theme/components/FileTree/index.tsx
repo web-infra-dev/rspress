@@ -35,8 +35,8 @@ export interface FileTreeProps {
 export function FileTree({ items, className }: FileTreeProps) {
   return (
     <div className={clsx('rp-file-tree', className)} role="tree">
-      {items.map(item => {
-        const path = item.href ?? item.name;
+      {items.map((item, index) => {
+        const path = `${index}-${item.href ?? item.name}`;
         return <FileTreeNode key={path} item={item} depth={0} path={path} />;
       })}
     </div>
@@ -53,9 +53,12 @@ function FileTreeNode({
   path: string;
 }) {
   const hasChildren = Boolean(item.children?.length);
+  const isSafeHref = (href?: string) =>
+    typeof href === 'string' && !/^\s*(javascript:|data:)/i.test(href.trim());
+  const safeHref = isSafeHref(item.href) ? item.href : undefined;
   const [collapsed, setCollapsed] = useState(Boolean(item.collapsed));
   const padding = `calc(12px + ${depth} * var(--rp-file-tree-indent))`;
-  const isLinkLeaf = Boolean(!hasChildren && item.href);
+  const isLinkLeaf = Boolean(!hasChildren && safeHref);
   const Component = (isLinkLeaf ? 'a' : 'div') as 'div' | 'a';
 
   const toggleCollapse = () => {
@@ -91,7 +94,7 @@ function FileTreeNode({
             : undefined
         }
         tabIndex={hasChildren ? 0 : isLinkLeaf ? undefined : -1}
-        href={isLinkLeaf ? item.href : undefined}
+        href={isLinkLeaf ? safeHref : undefined}
       >
         {hasChildren ? (
           <span className="rp-file-tree__toggle">
@@ -123,12 +126,12 @@ function FileTreeNode({
           }}
         >
           <div className="rp-file-tree__children-inner">
-            {item.children?.map(child => (
+            {item.children?.map((child, childIndex) => (
               <FileTreeNode
-                key={`${path}/${child.href ?? child.name}`}
+                key={`${path}/${childIndex}-${child.href ?? child.name}`}
                 item={child}
                 depth={depth + 1}
-                path={`${path}/${child.href ?? child.name}`}
+                path={`${path}/${childIndex}-${child.href ?? child.name}`}
               />
             ))}
           </div>
