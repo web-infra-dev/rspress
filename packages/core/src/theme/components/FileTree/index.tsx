@@ -93,7 +93,7 @@ function FileTreeNode({
               }
             : undefined
         }
-        tabIndex={hasChildren ? 0 : isLinkLeaf ? undefined : -1}
+        tabIndex={0}
         href={isLinkLeaf ? safeHref : undefined}
       >
         {hasChildren ? (
