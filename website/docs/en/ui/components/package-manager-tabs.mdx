@@ -56,7 +56,7 @@ type PackageManagerTabProps = (
   | {
       command: string;
       /**
-       * If true, use local package execution (npx, yarn, pnpm, bun, deno run).
+       * If true, use local package execution (npx <pkg>, yarn <pkg>, pnpm <pkg>, bun <pkg>, deno run <pkg>).
        * For packages installed in node_modules.
        */
       exec?: boolean;

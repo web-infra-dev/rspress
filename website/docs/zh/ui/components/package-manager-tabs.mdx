@@ -56,7 +56,7 @@ type PackageManagerTabProps = (
   | {
       command: string;
       /**
-       * 如果为 true，使用本地包执行（npx、yarn、pnpm、bun、deno run）。
+       * 如果为 true，使用本地包执行（npx <pkg>、yarn <pkg>、pnpm <pkg>、bun <pkg>、deno run <pkg>）。
        * 用于 node_modules 中安装的本地包。
        */
       exec?: boolean;
