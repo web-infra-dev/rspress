@@ -1,0 +1,25 @@
+# Router hooks
+
+Rspress re-exports the routing utilities from `react-router-dom`, letting you access navigation and location data without adding extra dependencies.
+
+- **Type:** the same signatures as the corresponding `react-router-dom` hooks
+
+Commonly used hooks include `useLocation`, `useNavigate`, `useParams`, `useSearchParams`, and `useMatches`.
+
+```tsx
+import { useLocation, useNavigate } from '@rspress/core/runtime';
+
+export default function LocationDebugger() {
+  const location = useLocation();
+  const navigate = useNavigate();
+
+  return (
+    <div>
+      <div>Current path: {location.pathname}</div>
+      <button type="button" onClick={() => navigate('/')}>
+        Back to home
+      </button>
+    </div>
+  );
+}
+```

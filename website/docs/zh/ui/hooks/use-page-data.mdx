@@ -1,0 +1,18 @@
+# usePageData
+
+`usePageData` 公开当前页面的元数据，方便在自定义组件或工具函数中直接读取。
+
+- **类型：** `() => PageData`
+
+返回的 `PageData` 对象包含页面标题、路由路径、Frontmatter 以及站点级数据，在服务端和客户端均可使用，适合 SSR 与 SSG 场景。
+
+```tsx
+import { usePageData } from '@rspress/core/runtime';
+
+export default function PageTitle() {
+  const { page } = usePageData();
+  return <h1>{page.title}</h1>;
+}
+```
+
+> 你可以结合 [`useLang`](./use-lang) 或 [`useVersion`](./use-version) 一起使用，根据语言或文档版本定制内容。

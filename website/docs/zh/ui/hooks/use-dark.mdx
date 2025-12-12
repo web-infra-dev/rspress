@@ -1,0 +1,37 @@
+# useDark
+
+`useDark` 用于判断当前主题是否为暗黑模式。
+
+- **类型：** `() => boolean`
+
+:::warning 注意
+
+在 SSG 过程中，`useDark` 无法准确反映用户浏览器的主题设置，因为 SSG 是在构建阶段执行的。只有在客户端 hydration 完成后，这个 hook 才会返回正确的主题值。
+
+如果你需要在 SSG 阶段应用暗黑主题样式，建议使用 CSS 选择器 `.dark` 来设置样式。Rspress 会在文档根元素上添加 `dark` 类名，这个类名在 SSG 和客户端都能正确生效：
+
+:::
+
+
+```tsx
+import { useDark } from '@rspress/core/runtime';
+
+export default function ThemeSwitchHint() {
+  const isDark = useDark();
+  return <div>{isDark ? '已启用暗黑模式' : '当前为浅色模式'}</div>;
+}
+```
+
+```css
+/* 浅色模式 */
+.my-component {
+  color: black;
+  background-color: white;
+}
+
+/* 暗黑模式 */
+.dark .my-component {
+  color: white;
+  background-color: #1a1a1a;
+}
+```

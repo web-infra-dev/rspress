@@ -1,0 +1,16 @@
+# useVersion
+
+`useVersion` provides the current documentation version when multi-version docs are enabled.
+
+- **Type:** `() => string`
+
+Use it to surface the active version in UI or to branch logic for versioned content.
+
+```tsx
+import { useVersion } from '@rspress/core/runtime';
+
+export default function VersionTag() {
+  const version = useVersion();
+  return <div>Viewing docs for version {version}</div>;
+}
+```

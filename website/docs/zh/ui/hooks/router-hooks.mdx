@@ -1,0 +1,25 @@
+# 路由 Hooks
+
+Rspress 直接重导出 `react-router-dom` 的路由能力，你可以无需额外依赖就访问导航与位置信息。
+
+- **类型：** 与对应的 `react-router-dom` Hook 保持一致
+
+常用的 Hook 包括 `useLocation`、`useNavigate`、`useParams`、`useSearchParams` 和 `useMatches`。
+
+```tsx
+import { useLocation, useNavigate } from '@rspress/core/runtime';
+
+export default function LocationDebugger() {
+  const location = useLocation();
+  const navigate = useNavigate();
+
+  return (
+    <div>
+      <div>当前路径：{location.pathname}</div>
+      <button type="button" onClick={() => navigate('/')}>
+        返回首页
+      </button>
+    </div>
+  );
+}
+```

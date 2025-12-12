@@ -1,0 +1,18 @@
+# usePageData
+
+`usePageData` exposes the metadata of the current page so you can render it inside custom components or utilities.
+
+- **Type:** `() => PageData`
+
+The returned `PageData` object includes information such as the page title, route path, frontmatter, and site-wide data. This hook is available on both the server and client, making it suitable for SSR and SSG-safe rendering.
+
+```tsx
+import { usePageData } from '@rspress/core/runtime';
+
+export default function PageTitle() {
+  const { page } = usePageData();
+  return <h1>{page.title}</h1>;
+}
+```
+
+> Related: you can pair this hook with [`useLang`](./use-lang) or [`useVersion`](./use-version) to tailor content by locale or documentation version.
