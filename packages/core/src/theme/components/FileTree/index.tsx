@@ -38,6 +38,12 @@ const buildPath = (
   index: number,
   item: FileTreeItem,
 ) => `${base ? `${base}/` : ''}${index}-${item.href ?? item.name}`;
+const isSafeHref = (href?: string) =>
+  typeof href === 'string' &&
+  Boolean(href.trim()) &&
+  !/^\s*(javascript:|data:|vbscript:|file:|about:)/i.test(
+    href.trim().toLowerCase(),
+  );
 
 export function FileTree({ items, className }: FileTreeProps) {
   return (
@@ -74,12 +80,6 @@ function FileTreeNode({
   isFirst: boolean;
 }) {
   const hasChildren = Boolean(item.children?.length);
-  const isSafeHref = (href?: string) =>
-    typeof href === 'string' &&
-    Boolean(href.trim()) &&
-    !/^\s*(javascript:|data:|vbscript:|file:|about:)/i.test(
-      href.trim().toLowerCase(),
-    );
   const safeHref = isSafeHref(item.href) ? item.href : undefined;
   const [collapsed, setCollapsed] = useState(Boolean(item.collapsed));
   const padding = `calc(12px + ${depth} * var(--rp-file-tree-indent))`;
@@ -159,42 +159,38 @@ function FileTreeNode({
     'data-rp-file-tree-item': true,
   };
 
+  const itemContent = (
+    <>
+      {hasChildren ? (
+        <span className="rp-file-tree__toggle">
+          <SvgWrapper icon={IconArrowRight} />
+        </span>
+      ) : (
+        <span className="rp-file-tree__spacer" />
+      )}
+      <span className="rp-file-tree__icon">
+        <SvgWrapper
+          icon={hasChildren ? IconFileTreeFolder : IconFileTreeFile}
+        />
+      </span>
+      {isLinkLeaf ? (
+        <span className="rp-file-tree__label rp-file-tree__label--link">
+          {item.name}
+        </span>
+      ) : (
+        <span className="rp-file-tree__label">{item.name}</span>
+      )}
+    </>
+  );
+
   return (
     <div className="rp-file-tree__node">
       {isLinkLeaf ? (
         <a {...sharedProps} href={safeHref}>
-          {hasChildren ? (
-            <span className="rp-file-tree__toggle">
-              <SvgWrapper icon={IconArrowRight} />
-            </span>
-          ) : (
-            <span className="rp-file-tree__spacer" />
-          )}
-          <span className="rp-file-tree__icon">
-            <SvgWrapper
-              icon={hasChildren ? IconFileTreeFolder : IconFileTreeFile}
-            />
-          </span>
-          <span className="rp-file-tree__label rp-file-tree__label--link">
-            {item.name}
-          </span>
+          {itemContent}
         </a>
       ) : (
-        <div {...sharedProps}>
-          {hasChildren ? (
-            <span className="rp-file-tree__toggle">
-              <SvgWrapper icon={IconArrowRight} />
-            </span>
-          ) : (
-            <span className="rp-file-tree__spacer" />
-          )}
-          <span className="rp-file-tree__icon">
-            <SvgWrapper
-              icon={hasChildren ? IconFileTreeFolder : IconFileTreeFile}
-            />
-          </span>
-          <span className="rp-file-tree__label">{item.name}</span>
-        </div>
+        <div {...sharedProps}>{itemContent}</div>
       )}
 
       {hasChildren && (
