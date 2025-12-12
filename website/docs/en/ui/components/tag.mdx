@@ -1,10 +1,10 @@
 ---
-tag: new
+tag: new, ejectable
 ---
 
 import { Badge, Tag } from '@theme';
 
-# Tag <Tag tag="new" /> <Badge text="ejectable" />
+# Tag <Tag tag="new" /> <Tag tag="ejectable" />
 
 The Tag component is used to display tags in the **sidebar or navigation bar** for UI information. It supports multiple formats including common tags, SVG icons, images, and plain text.
 
@@ -56,7 +56,7 @@ The Tag component is specifically designed for display in the sidebar or navigat
 
 To make it easy to pass values in frontmatter, the Tag component supports multiple tag types:
 
-### Common tags
+### Common tags <Tag tag="new" />
 
 Some common tags are built-in and will be displayed with `<Badge />`. All common tags are as follows:
 
@@ -72,7 +72,29 @@ Some common tags are built-in and will be displayed with `<Badge />`. All common
 
 :::tip
 
-The Tag component is ejectable. When you want to extend common tags, you can use eject to modify the Tag component.
+The Tag component is ejectable. When you want to extend common tags, you can use wrap/eject to modify the Tag component.
+
+Here is an example using wrap:
+
+```tsx title="theme/components/Tag/index.tsx"
+import {
+  Badge as BasicBadge,
+  Tag as BasicTag,
+} from '@rspress/core/theme-original';
+
+export const Tag = ({ tag }: { tag: string }) => {
+  if (tag === 'ejectable') {
+    return <BasicBadge text="ejectable" type="tip" />;
+  }
+  return <BasicTag tag={tag} />;
+};
+```
+
+```mdx title="index.mdx"
+---
+tag: new, ejectable
+---
+```
 
 :::
 
