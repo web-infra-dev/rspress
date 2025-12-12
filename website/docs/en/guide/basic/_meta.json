@@ -2,8 +2,10 @@
   "conventional-route",
   "auto-nav-sidebar",
   "static-assets",
-  "custom-page",
   "ssg",
   "ssg-md",
+  "i18n",
+  "multi-version",
+  "home-page",
   "deploy"
 ]
