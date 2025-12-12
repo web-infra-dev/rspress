@@ -1,0 +1,100 @@
+import { PackageManagerTabs } from '@theme';
+
+# PackageManagerTabs
+
+PackageManagerTabs 组件用于在文档中展示不同包管理器的命令。
+
+## 基础用法
+
+```mdx preview title="index.mdx"
+import { PackageManagerTabs } from '@theme';
+
+<PackageManagerTabs command="install -D @rspress/core" />
+```
+
+<PackageManagerTabs command="install -D @rspress/core" />
+
+## 为不同的包管理器设置命令
+
+你可以使用对象形式为每个包管理器设置不同的命令：
+
+```mdx preview title="index.mdx"
+import { PackageManagerTabs } from '@theme';
+
+<PackageManagerTabs
+  command={{
+    npm: 'npm create rspress@latest',
+    yarn: 'yarn create rspress',
+    pnpm: 'pnpm create rspress@latest',
+    bun: 'bun create rspress@latest',
+    deno: 'deno init --npm rspress@latest',
+  }}
+/>
+```
+
+## 扩展 Tab
+
+通过 `additionalTabs` 可以为其他包管理器添加额外的 tab：
+
+```mdx title="index.mdx"
+import { PackageManagerTabs } from '@theme';
+
+<PackageManagerTabs
+  command="install -D @rspress/core"
+  additionalTabs={[
+    {
+      tool: 'custom',
+    },
+  ]}
+/>
+```
+
+## Props
+
+```ts
+type PackageManagerTabProps = (
+  | {
+      command: string;
+      /**
+       * 如果为 true，使用本地包执行（npx、yarn、pnpm、bun、deno run）。
+       * 用于 node_modules 中安装的本地包。
+       */
+      exec?: boolean;
+      /**
+       * 如果为 true，使用远程包执行（npx、yarn dlx、pnpm dlx、bunx、deno run）。
+       * 用于直接从源下载并执行包而无需本地安装。
+       * 优先于 exec 属性。
+       */
+      dlx?: boolean;
+    }
+  | {
+      command: {
+        // 用于为不同的包管理器设置命令
+        npm?: string;
+        yarn?: string;
+        pnpm?: string;
+        bun?: string;
+        deno?: string;
+      };
+      exec?: never;
+      dlx?: never;
+    }
+) &
+  // 用于设置额外的 tabs
+  {
+    additionalTabs?: {
+      // 用于设置额外的包管理器
+      tool: string;
+      // 用于设置额外包管理器的图标
+      icon?: React.ReactNode;
+    }[];
+  };
+```
+
+:::tip
+
+- 当 `command` 为字符串时，组件会自动在命令前补齐对应包管理器的前缀，并默认展示 npm、yarn、pnpm、bun、deno 五个 tab。
+- 在 install 命令中，对 yarn、pnpm、bun 和 deno 做了特殊处理，如果命令为 `install some-packages`，在这些 tab 中会自动替换为 `add some-packages`。
+- 在 deno 的 tab 中会默认为没有指定来源的包加上 `npm:` 前缀。
+
+:::

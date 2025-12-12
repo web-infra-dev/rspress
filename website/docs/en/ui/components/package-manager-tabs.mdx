@@ -1,0 +1,100 @@
+import { PackageManagerTabs } from '@theme';
+
+# PackageManagerTabs
+
+PackageManagerTabs displays commands for different package managers.
+
+## Basic usage
+
+```mdx preview title="index.mdx"
+import { PackageManagerTabs } from '@theme';
+
+<PackageManagerTabs command="install -D @rspress/core" />
+```
+
+<PackageManagerTabs command="install -D @rspress/core" />
+
+## Set commands per package manager
+
+You can pass an object to define the command for each package manager:
+
+```mdx preview title="index.mdx"
+import { PackageManagerTabs } from '@theme';
+
+<PackageManagerTabs
+  command={{
+    npm: 'npm create rspress@latest',
+    yarn: 'yarn create rspress',
+    pnpm: 'pnpm create rspress@latest',
+    bun: 'bun create rspress@latest',
+    deno: 'deno init --npm rspress@latest',
+  }}
+/>
+```
+
+## Add extra tabs
+
+Use `additionalTabs` to add more package managers:
+
+```mdx title="index.mdx"
+import { PackageManagerTabs } from '@theme';
+
+<PackageManagerTabs
+  command="install -D @rspress/core"
+  additionalTabs={[
+    {
+      tool: 'custom',
+    },
+  ]}
+/>
+```
+
+## Props
+
+```ts
+type PackageManagerTabProps = (
+  | {
+      command: string;
+      /**
+       * If true, use local package execution (npx, yarn, pnpm, bun, deno run).
+       * For packages installed in node_modules.
+       */
+      exec?: boolean;
+      /**
+       * If true, use remote package execution (npx, yarn dlx, pnpm dlx, bunx, deno run).
+       * For downloading and running packages directly without local install.
+       * Takes priority over exec.
+       */
+      dlx?: boolean;
+    }
+  | {
+      command: {
+        // Set commands for different package managers
+        npm?: string;
+        yarn?: string;
+        pnpm?: string;
+        bun?: string;
+        deno?: string;
+      };
+      exec?: never;
+      dlx?: never;
+    }
+) &
+  // Configure extra tabs
+  {
+    additionalTabs?: {
+      // Extra package manager name
+      tool: string;
+      // Icon for the extra package manager
+      icon?: React.ReactNode;
+    }[];
+  };
+```
+
+:::tip
+
+- When `command` is a string, the component auto prefixes the correct package manager command and renders npm, yarn, pnpm, bun, and deno tabs by default.
+- For install commands, yarn, pnpm, bun, and deno tabs automatically replace `install` with `add`.
+- In the deno tab, packages without an explicit source automatically get the `npm:` prefix.
+
+:::
