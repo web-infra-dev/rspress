@@ -208,9 +208,7 @@ async function metaFileItemToSidebarItem(
     absolutePathWithExt = await detectFilePath(absolutePath, extensions);
   } catch {
     throw createError(
-      `${picocolors.red('Missing page file:')} ${picocolors.yellow(
-        `"${absolutePath}"`,
-      )}\nPlease check ${picocolors.cyan(metaFilePath)}.`,
+      `Missing page file: "${absolutePath}"\nPlease check ${metaFilePath}.`,
     );
   }
 
