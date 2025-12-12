@@ -1,0 +1,20 @@
+# usePage
+
+`usePage` 提供当前 Markdown 或 MDX 页面解析得到的元信息。
+
+- **类型：** `() => { page: PageDataLegacy['page'] }`
+
+`page` 包含解析出的 frontmatter 以及运行时信息，例如 `title`、`toc`、`lang`、`version`、`routePath`、`pagePath`、`description`、`headingTitle`、`pageType`、`lastUpdatedTime` 等，方便基于当前文档构建上下文 UI。
+
+```tsx preview
+import { usePage } from '@rspress/core/runtime';
+
+export default function LastUpdated() {
+  const { page } = usePage();
+  return page.lastUpdatedTime ? (
+    <span>Updated: {page.lastUpdatedTime}</span>
+  ) : null;
+}
+```
+
+> 当需要同时获取页面元信息和站点全局配置时，可结合 [`useSite`](./use-site) 或 `usePages` 使用。

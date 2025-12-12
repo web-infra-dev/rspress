@@ -1,0 +1,18 @@
+# useSite
+
+`useSite` 返回根据 `rspress.config.ts` 归一化后的站点配置。
+
+- **类型：** `() => { site: SiteData }`
+
+`site` 包含已归一化的配置数据，包括基础路径、语言与多语言信息、主题配置、搜索与 Markdown 选项、多版本设置等。
+
+```tsx preview
+import { useSite } from '@rspress/core/runtime';
+
+export default function SiteTitle() {
+  const { site } = useSite();
+  return <span>{site.title}</span>;
+}
+```
+
+> 可以配合 [`usePage`](./use-page) 一起使用，同时获取全局站点配置和当前页面的元信息。

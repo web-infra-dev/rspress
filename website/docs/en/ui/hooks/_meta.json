@@ -4,5 +4,7 @@
   "use-dark",
   "router-hooks",
   "use-i18n",
-  "use-page-data"
+  "use-page-data",
+  "use-page",
+  "use-site"
 ]
