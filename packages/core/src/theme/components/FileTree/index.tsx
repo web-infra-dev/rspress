@@ -75,7 +75,11 @@ function FileTreeNode({
 }) {
   const hasChildren = Boolean(item.children?.length);
   const isSafeHref = (href?: string) =>
-    typeof href === 'string' && !/^\s*(javascript:|data:)/i.test(href.trim());
+    typeof href === 'string' &&
+    Boolean(href.trim()) &&
+    !/^\s*(javascript:|data:|vbscript:|file:|about:)/i.test(
+      href.trim().toLowerCase(),
+    );
   const safeHref = isSafeHref(item.href) ? item.href : undefined;
   const [collapsed, setCollapsed] = useState(Boolean(item.collapsed));
   const padding = `calc(12px + ${depth} * var(--rp-file-tree-indent))`;
@@ -158,7 +162,7 @@ function FileTreeNode({
   return (
     <div className="rp-file-tree__node">
       {isLinkLeaf ? (
-        <a {...sharedProps} href={safeHref ?? undefined}>
+        <a {...sharedProps} href={safeHref}>
           {hasChildren ? (
             <span className="rp-file-tree__toggle">
               <SvgWrapper icon={IconArrowRight} />
@@ -203,15 +207,18 @@ function FileTreeNode({
           aria-hidden={collapsed}
         >
           <div className="rp-file-tree__children-inner">
-            {item.children?.map((child, childIndex) => (
-              <FileTreeNode
-                key={buildPath(path, childIndex, child)}
-                item={child}
-                depth={depth + 1}
-                path={buildPath(path, childIndex, child)}
-                isFirst={false}
-              />
-            ))}
+            {item.children?.map((child, childIndex) => {
+              const childPath = buildPath(path, childIndex, child);
+              return (
+                <FileTreeNode
+                  key={childPath}
+                  item={child}
+                  depth={depth + 1}
+                  path={childPath}
+                  isFirst={false}
+                />
+              );
+            })}
           </div>
         </div>
       )}
