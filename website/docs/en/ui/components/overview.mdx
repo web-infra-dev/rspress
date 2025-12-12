@@ -1,0 +1,51 @@
+# Overview
+
+`Overview` renders grouped overview data for documentation landing pages.
+
+## Usage
+
+```tsx
+import { Overview } from '@rspress/core/theme';
+
+const groups = [
+  {
+    name: 'Guide',
+    items: [
+      { text: 'Introduction', link: '/guide/start/introduction' },
+      { text: 'Install', link: '/guide/start/install' },
+    ],
+  },
+  {
+    name: 'API',
+    items: [{ text: 'Config', link: '/api/config/config-theme' }],
+  },
+];
+
+export default function Page() {
+  return <Overview groups={groups} />;
+}
+```
+
+### Props
+
+```ts
+interface GroupItem {
+  text?: string;
+  link?: string;
+  headers?: Header[];
+}
+
+interface Group {
+  name: string;
+  items: GroupItem[];
+}
+
+interface OverviewProps {
+  content?: React.ReactNode;
+  groups?: Group[];
+  defaultGroupTitle?: string;
+  overviewHeaders?: number[];
+}
+```
+
+Use `content` to render custom elements above the data; `overviewHeaders` controls which header levels appear.

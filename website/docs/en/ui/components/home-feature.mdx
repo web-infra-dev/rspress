@@ -1,0 +1,35 @@
+# HomeFeature
+
+`HomeFeature` renders a feature grid on the hero page.
+
+## Usage
+
+```tsx title="index.mdx"
+import { HomeFeature } from '@rspress/core/theme';
+
+const features = [
+  { title: 'Fast', details: 'Rspress builds fast', icon: '⚡', span: 3 },
+  { title: 'MDX first', details: 'MDX everywhere', icon: '🧩', span: 3 },
+];
+
+export default function Page() {
+  return <HomeFeature features={features} />;
+}
+```
+
+### Props
+
+```ts
+interface Feature {
+  title: string;
+  details: string;
+  icon: string;
+  // only support [3, 4, 6]
+  span?: number;
+  link?: string;
+}
+
+export type Features = Feature[];
+```
+
+Use `span` to control column width (3/4/6). Add `link` to make the feature clickable.

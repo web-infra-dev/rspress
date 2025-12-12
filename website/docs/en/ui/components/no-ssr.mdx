@@ -1,0 +1,21 @@
+# NoSSR
+
+`NoSSR` skips server-side rendering for its children.
+
+## Usage
+
+```tsx
+import { NoSSR } from '@rspress/core/runtime';
+
+const ClientOnly = () => {
+  return (
+    <NoSSR>
+      <div>This content renders only on the client</div>
+    </NoSSR>
+  );
+};
+
+export default ClientOnly;
+```
+
+Use it when a component depends on browser-only APIs or needs to avoid SSR.

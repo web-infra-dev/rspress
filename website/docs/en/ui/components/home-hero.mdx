@@ -1,0 +1,52 @@
+# HomeHero
+
+`HomeHero` renders the hero section on the home page.
+
+## Usage
+
+```tsx title="index.mdx"
+import { HomeHero } from '@rspress/core/theme';
+
+const hero = {
+  name: 'Rspress',
+  text: 'Build docs fast',
+  tagline: 'MDX-powered, Vite-speed docs framework',
+  image: {
+    src: 'https://assets.rspack.rs/rspress/rspress-logo.svg',
+    alt: 'Rspress',
+  },
+  actions: [
+    { text: 'Get Started', link: '/guide/start/introduction', theme: 'brand' },
+    {
+      text: 'GitHub',
+      link: 'https://github.com/web-infra-dev/rspress',
+      theme: 'alt',
+    },
+  ],
+};
+
+export default function Page() {
+  return <HomeHero hero={hero} />;
+}
+```
+
+### Props
+
+```ts
+interface Hero {
+  name: string;
+  text: string;
+  tagline: string;
+  image?: {
+    src: string | { dark: string; light: string };
+    alt: string;
+  };
+  actions: {
+    text: string;
+    link: string;
+    theme: 'brand' | 'alt';
+  }[];
+}
+```
+
+Support light/dark images via `image.src` object. Use `actions` to configure hero buttons.

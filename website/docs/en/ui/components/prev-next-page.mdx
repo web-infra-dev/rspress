@@ -1,0 +1,27 @@
+# PrevNextPage
+
+`PrevNextPage` renders previous/next navigation links.
+
+## Usage
+
+```tsx title="index.mdx"
+import { PrevNextPage } from '@theme';
+
+export default function Page() {
+  return (
+    <PrevNextPage type="prev" text="Previous" href="https://rspress.rs/" />
+  );
+}
+```
+
+### Props
+
+```ts
+interface PrevNextPageProps {
+  type: 'prev' | 'next';
+  text: string;
+  href: string;
+}
+```
+
+Set `type` to control direction; `text` and `href` set the label and link.

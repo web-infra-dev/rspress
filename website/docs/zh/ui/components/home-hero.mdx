@@ -1,0 +1,52 @@
+# HomeHero
+
+`HomeHero` 用于渲染首页的 Hero 区域。
+
+## 用法
+
+```tsx title="index.mdx"
+import { HomeHero } from '@rspress/core/theme';
+
+const hero = {
+  name: 'Rspress',
+  text: '构建文档更快',
+  tagline: 'MDX 驱动、Vite 级别速度',
+  image: {
+    src: 'https://assets.rspack.rs/rspress/rspress-logo.svg',
+    alt: 'Rspress',
+  },
+  actions: [
+    { text: '快速开始', link: '/guide/start/introduction', theme: 'brand' },
+    {
+      text: 'GitHub',
+      link: 'https://github.com/web-infra-dev/rspress',
+      theme: 'alt',
+    },
+  ],
+};
+
+export default function Page() {
+  return <HomeHero hero={hero} />;
+}
+```
+
+### Props
+
+```ts
+interface Hero {
+  name: string;
+  text: string;
+  tagline: string;
+  image?: {
+    src: string | { dark: string; light: string };
+    alt: string;
+  };
+  actions: {
+    text: string;
+    link: string;
+    theme: 'brand' | 'alt';
+  }[];
+}
+```
+
+`image.src` 支持深/浅色分开配置；`actions` 配置 Hero 按钮。

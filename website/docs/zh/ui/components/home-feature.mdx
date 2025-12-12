@@ -1,0 +1,35 @@
+# HomeFeature
+
+`HomeFeature` 用于在首页 Hero 区域渲染特性网格。
+
+## 用法
+
+```tsx title="index.mdx"
+import { HomeFeature } from '@rspress/core/theme';
+
+const features = [
+  { title: '快速', details: 'Rspress 构建快', icon: '⚡', span: 3 },
+  { title: 'MDX 优先', details: '到处都是 MDX', icon: '🧩', span: 3 },
+];
+
+export default function Page() {
+  return <HomeFeature features={features} />;
+}
+```
+
+### Props
+
+```ts
+interface Feature {
+  title: string;
+  details: string;
+  icon: string;
+  // 仅支持 [3, 4, 6]
+  span?: number;
+  link?: string;
+}
+
+export type Features = Feature[];
+```
+
+通过 `span` 控制列宽（3/4/6），通过 `link` 让卡片可点击。
