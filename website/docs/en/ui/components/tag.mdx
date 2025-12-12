@@ -1,0 +1,157 @@
+---
+tag: new, ejectable
+---
+
+import { Badge, Tag } from '@theme';
+
+# Tag <Tag tag="new" /> <Tag tag="ejectable" />
+
+The Tag component is used to display tags in the **sidebar or navigation bar** for UI information. It supports multiple formats including common tags, SVG icons, images, and plain text.
+
+## Usage
+
+Use via [frontmatter](../../guide/use-mdx/frontmatter.mdx), and it will be displayed in the sidebar or navigation bar:
+
+```mdx title="foo.mdx"
+---
+tag: new
+---
+
+# Foo
+
+some text
+```
+
+<Tag tag="new" />
+
+Multiple tags are also supported:
+
+```mdx
+---
+tag: new, experimental
+---
+```
+
+<div style={{ display: 'flex', gap: '8px' }}>
+  <Tag tag="new, experimental" />
+</div>
+
+You can also use it via `_meta.json`, for example:
+
+```json title="_meta.json"
+{
+  "name": "foo",
+  "type": "file",
+  "tag": "new, experimental"
+}
+```
+
+:::tip
+
+The Tag component is specifically designed for display in the sidebar or navigation bar. When using in MDX content, please use the [Badge component](./badge.mdx) instead.
+
+:::
+
+## Tag types
+
+To make it easy to pass values in frontmatter, the Tag component supports multiple tag types:
+
+### Common tags <Tag tag="new" />
+
+Some common tags are built-in and will be displayed with `<Badge />`. All common tags are as follows:
+
+| tag            | Corresponding Badge UI     |
+| -------------- | -------------------------- |
+| `tip`          | <Tag tag="tip" />          |
+| `info`         | <Tag tag="info" />         |
+| `warning`      | <Tag tag="warning" />      |
+| `danger`       | <Tag tag="danger" />       |
+| `new`          | <Tag tag="new" />          |
+| `experimental` | <Tag tag="experimental" /> |
+| `deprecated`   | <Tag tag="deprecated" />   |
+
+:::tip
+
+The Tag component is ejectable. When you want to extend common tags, you can use wrap/eject to modify the Tag component.
+
+The following is an example of how this docsite uses wrap to add `ejectable` custom tag:
+
+```tsx title="theme/components/Tag/index.tsx"
+import {
+  Badge as BasicBadge,
+  Tag as BasicTag,
+} from '@rspress/core/theme-original';
+
+export const Tag = ({ tag }: { tag: string }) => {
+  if (tag === 'ejectable') {
+    return <BasicBadge text="ejectable" type="tip" />;
+  }
+  return <BasicTag tag={tag} />;
+};
+```
+
+```mdx title="index.mdx"
+---
+tag: new, ejectable
+---
+```
+
+:::
+
+### SVG string
+
+You can pass an SVG string directly as the tag:
+
+```mdx
+---
+tag: <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24"><path fill="currentColor" d="M12 2L2 7l10 5 10-5-10-5z"/></svg>
+---
+```
+
+### Image URL
+
+You can use an external URL or data URL as the tag:
+
+```mdx
+---
+tag: https://example.com/icon.png
+---
+```
+
+```mdx
+---
+tag: data:image/svg+xml;base64,...
+---
+```
+
+### Plain text
+
+Any text that doesn't match the above patterns will be displayed as a plain text Badge:
+
+```tsx
+import { Tag } from '@theme';
+
+<Tag tag="v1.0.0" />
+<Tag tag="Beta" />
+```
+
+<div style={{ display: 'flex', gap: '8px' }}>
+  <Tag tag="v1.0.0" />
+  <Tag tag="Beta" />
+</div>
+
+## Props
+
+```ts
+interface TagProps {
+  /**
+   * The tag content. Supports:
+   * - Common tags: 'tip', 'info', 'warning', 'danger', 'new', 'experimental', 'deprecated'
+   * - Multiple common tags: 'new, experimental'
+   * - SVG string: '<svg>...</svg>'
+   * - Image URL: 'https://...' or 'data:...'
+   * - Plain text: any other string
+   */
+  tag?: string;
+}
+```

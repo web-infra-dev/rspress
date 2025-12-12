@@ -16,6 +16,7 @@ import {
   LlmsViewOptions,
 } from '@rspress/plugin-llms/runtime';
 import { NavIcon } from '@rstack-dev/doc-ui/nav-icon';
+import { Tag } from './components/Tag';
 import { ToolStack } from './components/ToolStack';
 
 function HomeLayout() {
@@ -90,5 +91,5 @@ function getCustomMDXComponent() {
   };
 }
 
-export { Layout, HomeLayout, Search, getCustomMDXComponent };
+export { Layout, HomeLayout, Search, getCustomMDXComponent, Tag };
 export * from '@rspress/core/theme-original';

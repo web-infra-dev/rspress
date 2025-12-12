@@ -3,7 +3,7 @@
   "auto-nav-sidebar",
   "static-assets",
   "custom-page",
-  "llms-txt",
   "ssg",
+  "ssg-md",
   "deploy"
 ]
