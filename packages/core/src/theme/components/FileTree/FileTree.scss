@@ -1,0 +1,83 @@
+.rp-file-tree {
+  --rp-file-tree-indent: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  color: var(--rp-c-text-2);
+  font-size: 14px;
+  line-height: 22px;
+
+  &__node {
+    width: 100%;
+  }
+
+  &__item {
+    display: grid;
+    grid-template-columns: 16px 18px 1fr;
+    align-items: center;
+    gap: 6px;
+    border-radius: 8px;
+    padding: 6px 8px;
+    transition:
+      color 0.2s ease,
+      background-color 0.2s ease;
+    cursor: default;
+
+    &:hover {
+      color: var(--rp-c-text-1);
+      background-color: var(--rp-c-bg-mute);
+    }
+
+    &--folder {
+      cursor: pointer;
+    }
+
+    &--collapsed {
+      .rp-file-tree__toggle {
+        transform: rotate(0deg);
+      }
+    }
+  }
+
+  &__toggle {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--rp-c-text-3);
+    transition: transform 0.2s ease-out;
+    transform: rotate(90deg);
+  }
+
+  &__spacer {
+    width: 16px;
+    height: 1em;
+  }
+
+  &__icon {
+    display: inline-flex;
+    align-items: center;
+    color: var(--rp-c-text-2);
+  }
+
+  &__label {
+    color: currentColor;
+    text-decoration: none;
+    word-break: break-all;
+
+    &--link {
+      color: var(--rp-c-link);
+
+      &:hover {
+        text-decoration: underline;
+      }
+    }
+  }
+
+  &__children {
+    transition: grid-template-rows 0.2s ease-out;
+
+    &-inner {
+      overflow: hidden;
+    }
+  }
+}

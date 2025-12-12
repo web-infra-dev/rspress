@@ -20,6 +20,11 @@ export { DocFooter } from './components/DocFooter/index';
 export { EditLink } from './components/EditLink/index';
 export { useEditLink } from './components/EditLink/useEditLink';
 export { FallbackHeading } from './components/FallbackHeading/index';
+export {
+  FileTree,
+  type FileTreeItem,
+  type FileTreeProps,
+} from './components/FileTree';
 export { HomeBackground } from './components/HomeBackground/index';
 export { HomeFeature } from './components/HomeFeature/index';
 export { HomeFooter } from './components/HomeFooter/index';
