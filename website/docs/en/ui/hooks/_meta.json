@@ -1,8 +1,8 @@
 [
-  "use-page-data",
   "use-lang",
   "use-version",
   "use-dark",
   "router-hooks",
-  "use-i18n"
+  "use-i18n",
+  "use-page-data"
 ]

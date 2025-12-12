@@ -6,10 +6,10 @@
 
 The hook reads the active language from the runtime context and stays in sync when users switch locales.
 
-```tsx
+```tsx preview
 import { useLang } from '@rspress/core/runtime';
 
-export default function LangBadge() {
+export default function Comp() {
   const lang = useLang();
   return <span>Current language: {lang}</span>;
 }
