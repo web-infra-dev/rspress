@@ -35,14 +35,10 @@ export interface FileTreeProps {
 export function FileTree({ items, className }: FileTreeProps) {
   return (
     <div className={clsx('rp-file-tree', className)} role="tree">
-      {items.map((item, index) => (
-        <FileTreeNode
-          key={`${index}-${item.name}`}
-          item={item}
-          depth={0}
-          path={`${index}-${item.name}`}
-        />
-      ))}
+      {items.map(item => {
+        const path = item.href ?? item.name;
+        return <FileTreeNode key={path} item={item} depth={0} path={path} />;
+      })}
     </div>
   );
 }
@@ -59,6 +55,8 @@ function FileTreeNode({
   const hasChildren = Boolean(item.children?.length);
   const [collapsed, setCollapsed] = useState(Boolean(item.collapsed));
   const padding = `calc(12px + ${depth} * var(--rp-file-tree-indent))`;
+  const isLinkLeaf = Boolean(!hasChildren && item.href);
+  const Component = (isLinkLeaf ? 'a' : 'div') as 'div' | 'a';
 
   const toggleCollapse = () => {
     if (!hasChildren) {
@@ -69,7 +67,7 @@ function FileTreeNode({
 
   return (
     <div className="rp-file-tree__node">
-      <div
+      <Component
         className={clsx(
           'rp-file-tree__item',
           hasChildren
@@ -81,17 +79,19 @@ function FileTreeNode({
         aria-expanded={hasChildren ? !collapsed : undefined}
         aria-level={depth + 1}
         role="treeitem"
-        onClick={toggleCollapse}
-        onKeyDown={event => {
-          if (!hasChildren) {
-            return;
-          }
-          if (event.key === 'Enter' || event.key === ' ') {
-            event.preventDefault();
-            toggleCollapse();
-          }
-        }}
-        tabIndex={0}
+        onClick={hasChildren ? toggleCollapse : undefined}
+        onKeyDown={
+          hasChildren
+            ? event => {
+                if (event.key === 'Enter' || event.key === ' ') {
+                  event.preventDefault();
+                  toggleCollapse();
+                }
+              }
+            : undefined
+        }
+        tabIndex={hasChildren ? 0 : isLinkLeaf ? undefined : -1}
+        href={isLinkLeaf ? item.href : undefined}
       >
         {hasChildren ? (
           <span className="rp-file-tree__toggle">
@@ -105,17 +105,14 @@ function FileTreeNode({
             icon={hasChildren ? IconFileTreeFolder : IconFileTreeFile}
           />
         </span>
-        {item.href ? (
-          <a
-            className="rp-file-tree__label rp-file-tree__label--link"
-            href={item.href}
-          >
+        {isLinkLeaf ? (
+          <span className="rp-file-tree__label rp-file-tree__label--link">
             {item.name}
-          </a>
+          </span>
         ) : (
           <span className="rp-file-tree__label">{item.name}</span>
         )}
-      </div>
+      </Component>
 
       {hasChildren && (
         <div
@@ -126,12 +123,12 @@ function FileTreeNode({
           }}
         >
           <div className="rp-file-tree__children-inner">
-            {item.children?.map((child, index) => (
+            {item.children?.map(child => (
               <FileTreeNode
-                key={`${path}/${index}-${child.name}`}
+                key={`${path}/${child.href ?? child.name}`}
                 item={child}
                 depth={depth + 1}
-                path={`${path}/${index}-${child.name}`}
+                path={`${path}/${child.href ?? child.name}`}
               />
             ))}
           </div>
