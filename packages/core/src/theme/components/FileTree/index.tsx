@@ -36,13 +36,26 @@ export function FileTree({ items, className }: FileTreeProps) {
   return (
     <div className={clsx('rp-file-tree', className)} role="tree">
       {items.map((item, index) => (
-        <FileTreeNode key={`${item.name}-${index}`} item={item} depth={0} />
+        <FileTreeNode
+          key={`${index}-${item.name}`}
+          item={item}
+          depth={0}
+          path={`${index}-${item.name}`}
+        />
       ))}
     </div>
   );
 }
 
-function FileTreeNode({ item, depth }: { item: FileTreeItem; depth: number }) {
+function FileTreeNode({
+  item,
+  depth,
+  path,
+}: {
+  item: FileTreeItem;
+  depth: number;
+  path: string;
+}) {
   const hasChildren = Boolean(item.children?.length);
   const [collapsed, setCollapsed] = useState(Boolean(item.collapsed));
   const padding = `calc(12px + ${depth} * var(--rp-file-tree-indent))`;
@@ -115,9 +128,10 @@ function FileTreeNode({ item, depth }: { item: FileTreeItem; depth: number }) {
           <div className="rp-file-tree__children-inner">
             {item.children?.map((child, index) => (
               <FileTreeNode
-                key={`${item.name}-${index}`}
+                key={`${path}/${index}-${child.name}`}
                 item={child}
                 depth={depth + 1}
+                path={`${path}/${index}-${child.name}`}
               />
             ))}
           </div>
