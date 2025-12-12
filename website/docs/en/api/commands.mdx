@@ -44,3 +44,16 @@ Options:
    --host <host>        specify host
    -h, --help           show command help
 ```
+
+## rspress eject
+
+The `rspress eject` command copies a built-in theme component to your project so you can customize it.
+
+```txt
+Usage: rspress eject [component]
+
+Arguments:
+   component             (optional) the theme component to eject; if omitted, all available components are listed
+```
+
+After ejection, the component files are placed in `theme/components/<ComponentName>`. Re-export the component in `theme/index.tsx` to use your customized version.
