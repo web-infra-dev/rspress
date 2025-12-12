@@ -5,7 +5,8 @@ import {
   SvgWrapper,
 } from '@theme';
 import clsx from 'clsx';
-import { useState } from 'react';
+import type React from 'react';
+import { useRef, useState } from 'react';
 import './FileTree.scss';
 
 export interface FileTreeItem {
@@ -32,12 +33,30 @@ export interface FileTreeProps {
   className?: string;
 }
 
+const buildPath = (
+  base: string | undefined,
+  index: number,
+  item: FileTreeItem,
+) => `${base ? `${base}/` : ''}${index}-${item.href ?? item.name}`;
+
 export function FileTree({ items, className }: FileTreeProps) {
   return (
-    <div className={clsx('rp-file-tree', className)} role="tree">
+    <div
+      className={clsx('rp-file-tree', className)}
+      role="tree"
+      aria-label="File tree"
+    >
       {items.map((item, index) => {
-        const path = `${index}-${item.href ?? item.name}`;
-        return <FileTreeNode key={path} item={item} depth={0} path={path} />;
+        const path = buildPath(undefined, index, item);
+        return (
+          <FileTreeNode
+            key={path}
+            item={item}
+            depth={0}
+            path={path}
+            isFirst={index === 0}
+          />
+        );
       })}
     </div>
   );
@@ -47,10 +66,12 @@ function FileTreeNode({
   item,
   depth,
   path,
+  isFirst,
 }: {
   item: FileTreeItem;
   depth: number;
   path: string;
+  isFirst: boolean;
 }) {
   const hasChildren = Boolean(item.children?.length);
   const isSafeHref = (href?: string) =>
@@ -59,7 +80,7 @@ function FileTreeNode({
   const [collapsed, setCollapsed] = useState(Boolean(item.collapsed));
   const padding = `calc(12px + ${depth} * var(--rp-file-tree-indent))`;
   const isLinkLeaf = Boolean(!hasChildren && safeHref);
-  const Component = (isLinkLeaf ? 'a' : 'div') as 'div' | 'a';
+  const itemRef = useRef<HTMLDivElement | HTMLAnchorElement>(null);
 
   const toggleCollapse = () => {
     if (!hasChildren) {
@@ -68,54 +89,109 @@ function FileTreeNode({
     setCollapsed(value => !value);
   };
 
+  const focusSibling = (direction: 1 | -1) => {
+    const root = itemRef.current?.closest('.rp-file-tree');
+    if (!root || !itemRef.current) {
+      return;
+    }
+    const focusableItems = Array.from(
+      root.querySelectorAll<HTMLElement>('[data-rp-file-tree-item="true"]'),
+    );
+    const currentIndex = focusableItems.indexOf(itemRef.current as HTMLElement);
+    const target = focusableItems[currentIndex + direction];
+    if (target) {
+      target.focus();
+    }
+  };
+
+  const handleKeyDown = (event: React.KeyboardEvent<HTMLElement>) => {
+    switch (event.key) {
+      case 'ArrowRight':
+        if (hasChildren && collapsed) {
+          event.preventDefault();
+          setCollapsed(false);
+        }
+        break;
+      case 'ArrowLeft':
+        if (hasChildren && !collapsed) {
+          event.preventDefault();
+          setCollapsed(true);
+        }
+        break;
+      case 'ArrowDown':
+        event.preventDefault();
+        focusSibling(1);
+        break;
+      case 'ArrowUp':
+        event.preventDefault();
+        focusSibling(-1);
+        break;
+      case 'Enter':
+      case ' ':
+        if (hasChildren) {
+          event.preventDefault();
+          toggleCollapse();
+        }
+        break;
+      default:
+        break;
+    }
+  };
+
+  const sharedProps = {
+    className: clsx(
+      'rp-file-tree__item',
+      hasChildren ? 'rp-file-tree__item--folder' : 'rp-file-tree__item--file',
+      collapsed && hasChildren && 'rp-file-tree__item--collapsed',
+    ),
+    style: { paddingInlineStart: padding },
+    'aria-expanded': hasChildren ? !collapsed : undefined,
+    'aria-level': depth + 1,
+    role: 'treeitem',
+    onClick: hasChildren ? toggleCollapse : undefined,
+    onKeyDown: handleKeyDown,
+    tabIndex: isFirst ? 0 : -1,
+    ref: itemRef,
+    'data-rp-file-tree-item': true,
+  };
+
   return (
     <div className="rp-file-tree__node">
-      <Component
-        className={clsx(
-          'rp-file-tree__item',
-          hasChildren
-            ? 'rp-file-tree__item--folder'
-            : 'rp-file-tree__item--file',
-          collapsed && hasChildren && 'rp-file-tree__item--collapsed',
-        )}
-        style={{ paddingInlineStart: padding }}
-        aria-expanded={hasChildren ? !collapsed : undefined}
-        aria-level={depth + 1}
-        role="treeitem"
-        onClick={hasChildren ? toggleCollapse : undefined}
-        onKeyDown={
-          hasChildren
-            ? event => {
-                if (event.key === 'Enter' || event.key === ' ') {
-                  event.preventDefault();
-                  toggleCollapse();
-                }
-              }
-            : undefined
-        }
-        tabIndex={0}
-        href={isLinkLeaf ? safeHref : undefined}
-      >
-        {hasChildren ? (
-          <span className="rp-file-tree__toggle">
-            <SvgWrapper icon={IconArrowRight} />
+      {isLinkLeaf ? (
+        <a {...sharedProps} href={safeHref ?? undefined}>
+          {hasChildren ? (
+            <span className="rp-file-tree__toggle">
+              <SvgWrapper icon={IconArrowRight} />
+            </span>
+          ) : (
+            <span className="rp-file-tree__spacer" />
+          )}
+          <span className="rp-file-tree__icon">
+            <SvgWrapper
+              icon={hasChildren ? IconFileTreeFolder : IconFileTreeFile}
+            />
           </span>
-        ) : (
-          <span className="rp-file-tree__spacer" />
-        )}
-        <span className="rp-file-tree__icon">
-          <SvgWrapper
-            icon={hasChildren ? IconFileTreeFolder : IconFileTreeFile}
-          />
-        </span>
-        {isLinkLeaf ? (
           <span className="rp-file-tree__label rp-file-tree__label--link">
             {item.name}
           </span>
-        ) : (
+        </a>
+      ) : (
+        <div {...sharedProps}>
+          {hasChildren ? (
+            <span className="rp-file-tree__toggle">
+              <SvgWrapper icon={IconArrowRight} />
+            </span>
+          ) : (
+            <span className="rp-file-tree__spacer" />
+          )}
+          <span className="rp-file-tree__icon">
+            <SvgWrapper
+              icon={hasChildren ? IconFileTreeFolder : IconFileTreeFile}
+            />
+          </span>
           <span className="rp-file-tree__label">{item.name}</span>
-        )}
-      </Component>
+        </div>
+      )}
 
       {hasChildren && (
         <div
@@ -124,14 +200,16 @@ function FileTreeNode({
             display: 'grid',
             gridTemplateRows: collapsed ? '0fr' : '1fr',
           }}
+          aria-hidden={collapsed}
         >
           <div className="rp-file-tree__children-inner">
             {item.children?.map((child, childIndex) => (
               <FileTreeNode
-                key={`${path}/${childIndex}-${child.href ?? child.name}`}
+                key={buildPath(path, childIndex, child)}
                 item={child}
                 depth={depth + 1}
-                path={`${path}/${childIndex}-${child.href ?? child.name}`}
+                path={buildPath(path, childIndex, child)}
+                isFirst={false}
               />
             ))}
           </div>
