@@ -9,6 +9,7 @@ import {
   slash,
 } from '@rspress/shared';
 import { logger } from '@rspress/shared/logger';
+import picocolors from 'picocolors';
 import { PUBLIC_DIR } from '../constants';
 import { absolutePathToRoutePath, addRoutePrefix } from '../route/RoutePage';
 import { createError } from '../utils';
@@ -182,6 +183,7 @@ async function metaFileItemToSidebarItem(
   mdFileSet: Set<string>,
 ): Promise<SidebarItem> {
   let metaItem: FileSideMeta | null = null;
+  const metaFilePath = join(workDir, '_meta.json');
   if (typeof metaItemRaw === 'string') {
     metaItem = {
       name: metaItemRaw,
@@ -206,7 +208,7 @@ async function metaFileItemToSidebarItem(
     absolutePathWithExt = await detectFilePath(absolutePath, extensions);
   } catch {
     throw createError(
-      `The file "${absolutePath}" does not exist, please check it in "${join(workDir, '_meta.json')}".`,
+      `Missing page file: "${absolutePath}"\nPlease check ${metaFilePath}.`,
     );
   }
 
