@@ -2,6 +2,7 @@
 pageType: home
 title: Rspress
 titleSuffix: 'Rsbuild-based Static Site Generator'
+title: Rspress
 
 hero:
   badge: Rspress V2 is coming! 🚀
