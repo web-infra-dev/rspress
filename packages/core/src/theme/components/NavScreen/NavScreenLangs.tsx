@@ -3,6 +3,7 @@ import { useLangsMenu } from '../Nav/hooks';
 import './NavScreenLangs.scss';
 import { useI18n } from '@rspress/core/runtime';
 import { Link } from '@theme';
+import clsx from 'clsx';
 import { SvgDown } from './NavScreenMenuItem';
 
 export function NavScreenLangs() {
@@ -30,15 +31,28 @@ export function NavScreenLangs() {
         }}
       >
         <div className="rp-nav-screen-langs-group__inner">
-          {items.map(item => (
-            <Link
-              key={item.text}
-              href={item.link}
-              className={`rp-nav-screen-langs-group__item`}
-            >
-              {item.text}
-            </Link>
-          ))}
+          {items.map(item => {
+            const isActive = item.text === activeValue;
+            const className = clsx(
+              'rp-nav-screen-langs-group__item',
+              isActive && 'rp-nav-screen-langs-group__item--active',
+            );
+
+            return isActive ? (
+              <span
+                key={item.text}
+                className={className}
+                aria-current="page"
+                aria-disabled={true}
+              >
+                {item.text}
+              </span>
+            ) : (
+              <Link key={item.text} href={item.link} className={className}>
+                {item.text}
+              </Link>
+            );
+          })}
         </div>
       </div>
     </>

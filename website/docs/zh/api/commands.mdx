@@ -44,3 +44,16 @@ Options:
   --host <host>         指定 host
   -h, --help            显示命令帮助
 ```
+
+## rspress eject
+
+`rspress eject` 命令会将内置主题组件拷贝到你的项目中，便于自定义。
+
+```bash
+Usage: rspress eject [component]
+
+Arguments:
+  component             （可选）要导出的主题组件名；留空则列出所有可导出的组件
+```
+
+组件会被放置到 `theme/components/<ComponentName>` 目录下。请在 `theme/index.tsx` 中重新导出该组件以使用你的自定义版本。

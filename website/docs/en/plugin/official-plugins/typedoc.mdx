@@ -67,8 +67,8 @@ When you start/build the project, the plugin will automatically generate an `api
 
 ```txt
 api
-├── README.md
-├── documentation.json
+├── _meta.json
+├── index.md
 ├── functions
 │   ├── bar.multi.md
 │   └── foo.add.md
@@ -80,11 +80,13 @@ api
     └── foo.md
 ```
 
-This means that the plugin will internally call TypeDoc to automatically generate API documentation for your modules, including module lists, `Interface` details, function details (parameters, return values, description), etc. It will also generate a `documentation.json` file for subsequent sidebar rendering.
+This means that the plugin will internally call TypeDoc to automatically generate API documentation for your modules, including module lists, `Interface` details, function details (parameters, return values, description), etc.
 
-Note that the documentation is regenerated every time you start the project to reflect the latest module content. Therefore, we recommend adding the `api` directory to `.gitignore`. If you customize the output directory with the `outDir` parameter below, you should also add it to `.gitignore`.
+Note that the `.md` documentation files are regenerated every time you start the project to reflect the latest module content. Therefore, we recommend adding the `.md` files in the `api` directory to `.gitignore`, for example `docs/api/**/*.md`. If you customize the output directory with the `outDir` parameter below, you should also add the corresponding `.md` files to `.gitignore`.
 
-Also, we do not recommend modifying or adding documents in the `api` directory because these documents will be overwritten each time the project is started due to changes in module content.
+The `_meta.json` file is only automatically generated on the first run and will not be overwritten afterwards. This means you can manually edit it to customize the sidebar structure (e.g., add dividers, adjust order, etc.) and commit it to git.
+
+We do not recommend modifying the generated `.md` documents in the `api` directory because these documents will be overwritten each time the project is started due to changes in module content.
 
 ## Parameter description
 

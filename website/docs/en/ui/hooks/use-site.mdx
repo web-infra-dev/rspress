@@ -1,0 +1,18 @@
+# useSite
+
+`useSite` returns the normalized site configuration generated from your `rspress.config.ts`.
+
+- **Type:** `() => { site: SiteData }`
+
+The `site` object mirrors the normalized config, including base path, language/locales, theme configuration, search and markdown options, and multi-version settings.
+
+```tsx preview
+import { useSite } from '@rspress/core/runtime';
+
+export default function SiteTitle() {
+  const { site } = useSite();
+  return <span>{site.title}</span>;
+}
+```
+
+> Pair with [`usePage`](./use-page) to combine global config with the current page metadata.

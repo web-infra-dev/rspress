@@ -1,6 +1,6 @@
 import * as fs from 'node:fs';
 import * as path from 'node:path';
-import { describe, expect, it } from 'vitest';
+import { describe, expect, it } from '@rstest/core';
 
 describe('useWindowSize', () => {
   it('should have debounce implementation with RESIZE_DEBOUNCE_MS constant', () => {

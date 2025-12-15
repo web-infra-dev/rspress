@@ -4,7 +4,7 @@ tag: new
 
 # 自动生成导航
 
-在 Rspress 中，除了在配置文件中通过 `themeConfig` 声明 [nav](/api/config/config-theme.html#nav) 和 [sidebar](/api/config/config-theme.html#sidebar)， 你也可以通过声明 `_nav.json` 和 `_meta.json` 描述文件来分别自动化生成导航栏和侧边栏，我们更加推荐后者，因为可以使配置文件更加简洁和清晰，并且包含 `themeConfig` 下的全部能力。
+在 Rspress 中，除了在配置文件中通过 `themeConfig` 声明 [nav](/api/config/config-theme.html#nav) 和 [sidebar](/api/config/config-theme.html#sidebar)，你也可以通过声明 `_nav.json` 和 `_meta.json` 描述文件来自动生成导航栏和侧边栏。我们更推荐后者，它能让配置文件更简洁，同时仍包含 `themeConfig` 下的全部能力。
 
 :::tip 提示
 当配置文件 `rspress.config.ts` 中没有 `nav` 和 `sidebar` 配置的情况下，自动化导航栏/侧边栏才会生效。
@@ -62,12 +62,12 @@ docs
     {
       "fileMatch": ["**/_meta.json"],
       "url": "./node_modules/@rspress/core/meta-json-schema.json"
-      // 或者 "url": "https://unpkg.com/@rspress/core@2.0.0-beta.21/meta-json-schema.json"
+      // 或者 "url": "https://unpkg.com/@rspress/core@2.0.0-rc.2/meta-json-schema.json"
     },
     {
       "fileMatch": ["**/_nav.json"],
       "url": "./node_modules/@rspress/core/nav-json-schema.json"
-      // 或者 "url": "https://unpkg.com/@rspress/core@2.0.0-beta.21/nav-json-schema.json"
+      // 或者 "url": "https://unpkg.com/@rspress/core@2.0.0-rc.2/nav-json-schema.json"
     }
   ]
   // ...

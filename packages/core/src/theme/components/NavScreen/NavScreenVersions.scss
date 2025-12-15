@@ -43,6 +43,12 @@
     padding: 0px 24px;
   }
 
+  &__item--active {
+    color: var(--rp-c-text-2);
+    cursor: default;
+    pointer-events: none;
+  }
+
   &--open {
     height: auto;
   }

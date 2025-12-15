@@ -1,13 +1,12 @@
+import { describe, expect, it, rs } from '@rstest/core';
 import { fs, vol } from 'memfs';
-
-import { describe, expect, it, vi } from 'vitest';
 import { compile } from '../processor';
 
-vi.mock('node:fs/promises', () => {
+rs.mock('node:fs/promises', () => {
   return { readFile: fs.promises.readFile };
 });
 
-vi.mock('node:process', () => {
+rs.mock('node:process', () => {
   return { cwd: () => '/usr/rspress-project' };
 });
 

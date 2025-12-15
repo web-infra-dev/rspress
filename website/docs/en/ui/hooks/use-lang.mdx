@@ -1,0 +1,16 @@
+# useLang
+
+`useLang` returns the current locale code so you can render language-specific content or route users accordingly.
+
+- **Type:** `() => string`
+
+The hook reads the active language from the runtime context and stays in sync when users switch locales.
+
+```tsx preview
+import { useLang } from '@rspress/core/runtime';
+
+export default function Comp() {
+  const lang = useLang();
+  return <span>Current language: {lang}</span>;
+}
+```

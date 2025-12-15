@@ -1,0 +1,40 @@
+# useDark
+
+`useDark` reports whether the current theme is dark mode.
+
+- **Type:** `() => boolean`
+
+```tsx preview
+import { useDark } from '@rspress/core/runtime';
+
+export default function ThemeSwitchHint() {
+  const isDark = useDark();
+  return <div>{isDark ? 'Dark theme enabled' : 'Light theme enabled'}</div>;
+}
+```
+
+:::warning Note
+
+During SSG, `useDark` cannot accurately reflect the user's browser theme setting because SSG is executed at build time. This hook will only return the correct theme value after client-side hydration is complete.
+
+If you need to apply dark theme styles during SSG, it's recommended to use the CSS selector `.dark` for styling. Rspress adds the `dark` class name to the document root element, which works correctly in both SSG and client-side rendering:
+
+```css
+/* Light mode */
+.my-component {
+  color: black;
+  background-color: white;
+}
+
+/* Dark mode */
+.dark .my-component {
+  color: white;
+  background-color: #1a1a1a;
+}
+```
+
+:::
+
+```
+
+```

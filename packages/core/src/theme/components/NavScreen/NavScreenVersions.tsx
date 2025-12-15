@@ -33,15 +33,28 @@ export function NavScreenVersions() {
           isOpen && 'rp-nav-screen-versions-group--open',
         )}
       >
-        {items.map(item => (
-          <Link
-            key={item.text}
-            href={item.link}
-            className={`rp-nav-screen-versions-group__item`}
-          >
-            {item.text}
-          </Link>
-        ))}
+        {items.map(item => {
+          const isActive = item.text === activeValue;
+          const className = clsx(
+            'rp-nav-screen-versions-group__item',
+            isActive && 'rp-nav-screen-versions-group__item--active',
+          );
+
+          return isActive ? (
+            <span
+              key={item.text}
+              className={className}
+              aria-current="page"
+              aria-disabled={true}
+            >
+              {item.text}
+            </span>
+          ) : (
+            <Link key={item.text} href={item.link} className={className}>
+              {item.text}
+            </Link>
+          );
+        })}
       </div>
     </>
   ) : null;

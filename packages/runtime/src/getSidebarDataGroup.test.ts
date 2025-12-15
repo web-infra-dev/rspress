@@ -1,12 +1,12 @@
-import { describe, expect, it, vi } from 'vitest';
+import { describe, expect, it, rs } from '@rstest/core';
 import { getSidebarDataGroup } from './hooks/useSidebar';
 import { isActive } from './route';
 
-vi.mock('virtual-i18n-text', () => {
+rs.mock('virtual-i18n-text', () => {
   return { default: {} };
 });
 
-vi.mock('virtual-site-data', () => {
+rs.mock('virtual-site-data', () => {
   return {
     default: {
       base: '/',
@@ -14,7 +14,7 @@ vi.mock('virtual-site-data', () => {
   };
 });
 
-vi.mock('virtual-routes', () => {
+rs.mock('virtual-routes', () => {
   return { routes: [] };
 });
 

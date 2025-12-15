@@ -5,6 +5,7 @@
   },
   "vars",
   "custom-theme",
+  "custom-page",
   {
     "type": "section-header",
     "label": "组件"

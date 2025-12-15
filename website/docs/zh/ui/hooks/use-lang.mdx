@@ -1,0 +1,16 @@
+# useLang
+
+`useLang` 返回当前语言代码，便于渲染多语言文案或按语言跳转路由。
+
+- **类型：** `() => string`
+
+该 Hook 会从运行时上下文中读取语言，并在用户切换语言时保持同步。
+
+```tsx preview
+import { useLang } from '@rspress/core/runtime';
+
+export default function Comp() {
+  const lang = useLang();
+  return <span>当前语言：{lang}</span>;
+}
+```
