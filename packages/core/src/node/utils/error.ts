@@ -1,3 +1,5 @@
+import picocolors from 'picocolors';
+
 /**
  * Creates an Error with a truncated stack trace.
  * Only keeps the first N lines of the stack trace to reduce noise.
@@ -11,7 +13,10 @@ export function createError(message: string, maxStackLines = 5): Error {
   if (error.stack) {
     const lines = error.stack.split('\n');
     if (lines.length > maxStackLines + 1) {
-      error.stack = `${lines.slice(0, maxStackLines + 1).join('\n')}\n    ... (truncated)`;
+      error.stack = `${lines
+        .slice(0, maxStackLines + 1)
+        .map(line => picocolors.gray(line))
+        .join('\n')}\n    ${picocolors.gray('... (truncated)')}`;
     }
   }
   return error;
