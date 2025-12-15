@@ -122,7 +122,7 @@ export default defineConfig({
           name: 'export_star_optimizer',
           setup(api) {
             api.transform(
-              { test: /src\/theme\/index\.ts/ },
+              { test: /src[\\/]theme[\\/]index\.ts/ },
               ({ code, resourcePath }) => {
                 return exportStarOptimizerTransform(code, resourcePath);
               },
