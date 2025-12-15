@@ -3,8 +3,9 @@ import { fileURLToPath } from 'node:url';
 import { pluginReact } from '@rsbuild/plugin-react';
 import { pluginSass } from '@rsbuild/plugin-sass';
 import { pluginSvgr } from '@rsbuild/plugin-svgr';
-import { defineConfig } from '@rslib/core';
+import { defineConfig, type RsbuildPlugin } from '@rslib/core';
 import { pluginPublint } from 'rsbuild-plugin-publint';
+import { exportStarOptimizerTransform } from './src/node/theme/exportStarOptimizerTransform';
 
 const COMMON_EXTERNALS = [
   'virtual-routes',
@@ -39,6 +40,7 @@ export default defineConfig({
 
           // TODO: should add entry by new URL parser in Rspack module graph
           'node/mdx/loader': './src/node/mdx/loader.ts',
+          'node/theme/loader': './src/node/theme/loader.ts',
           'node/ssg/renderPageWorker': './src/node/ssg/renderPageWorker.ts',
         },
       },
@@ -116,6 +118,17 @@ export default defineConfig({
         pluginReact(),
         pluginSvgr({ svgrOptions: { exportType: 'default' } }),
         pluginSass(),
+        {
+          name: 'export_star_optimizer',
+          setup(api) {
+            api.transform(
+              { test: /src\/theme\/index\.ts/ },
+              ({ code, resourcePath }) => {
+                return exportStarOptimizerTransform(code, resourcePath);
+              },
+            );
+          },
+        } satisfies RsbuildPlugin,
       ],
       source: {
         define: {
