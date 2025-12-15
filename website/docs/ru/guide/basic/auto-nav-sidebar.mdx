@@ -4,7 +4,7 @@ tag: новинка
 
 # Автоматическое формирование навигации
 
-В Rspress, помимо объявления [nav](/api/config/config-theme.html#nav) и [sidebar](/api/config/config-theme.html#sidebar) в файле конфигурации, вы также можете автоматически генерировать панель навигации и боковое меню, объявив файлы метаданных `_nav.json` и `_meta.json`. Мы рекомендуем последний способ, потому что он делает конфигурацию более лаконичной и понятной и при этом включает в себя все возможности `themeConfig`.
+В Rspress, помимо объявления [nav](/api/config/config-theme.html#nav) и [sidebar](/api/config/config-theme.html#sidebar) в файле конфигурации, вы также можете автоматически генерировать панель навигации и боковую панель, объявив файлы метаданных `_nav.json` и `_meta.json`. Мы рекомендуем второй подход, поскольку он позволяет сохранить файл конфигурации лаконичным, при этом всё остаётся доступным через `themeConfig`.
 
 :::tip СОВЕТ
 Автоматическая генерация панели навигации и бокового меню будет работать только в том случае, если в файле `rspress.config.ts` отсутствуют настройки `nav` и `sidebar`.
@@ -12,7 +12,7 @@ tag: новинка
 
 ## Основные понятия
 
-Rspress генерирует nav через файл `_nav.json`, а sidebar — через файл `_meta.json`. Файл `_nav.json` находится в корневой директории документации, а файл `_meta.json` — в подкаталогах корня документации. Например:
+Rspress генерирует nav через файл `_nav.json`, а sidebar — через файл `_meta.json`. Файл `_nav.json` находится в корневой директории документации, а файл `_meta.json` — в поддиректориях корня документации. Например:
 
 ```txt
 docs
@@ -62,12 +62,12 @@ docs
     {
       "fileMatch": ["**/_meta.json"],
       "url": "./node_modules/@rspress/core/meta-json-schema.json"
-      // или "url": "https://unpkg.com/@rspress/core@2.0.0-beta.21/meta-json-schema.json"
+      // или "url": "https://unpkg.com/@rspress/core@2.0.0-rc.2/meta-json-schema.json"
     },
     {
       "fileMatch": ["**/_nav.json"],
       "url": "./node_modules/@rspress/core/nav-json-schema.json"
-      // или "url": "https://unpkg.com/@rspress/core@2.0.0-beta.21/nav-json-schema.json"
+      // или "url": "https://unpkg.com/@rspress/core@2.0.0-rc.2/nav-json-schema.json"
     }
   ]
   // ...
@@ -170,7 +170,7 @@ export type SideMetaItem =
 
 Имя файла может указываться как с расширением, так и без него — например, `introduction` будет распознано как `introduction.mdx`.
 
-- Когда тип — объект, с его помощью можно описать файл, каталог или произвольную ссылку.
+- Когда тип — объект, с его помощью можно описать файл, директорию или произвольную ссылку.
 
 Если объект описывает **файл**, то поддерживаются следующие поля:
 
