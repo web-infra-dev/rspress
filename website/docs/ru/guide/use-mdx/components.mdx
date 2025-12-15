@@ -12,7 +12,7 @@ MDX является надмножеством Markdown, поэтому вы м
 
 ## Компонентизация
 
-В MDX все файлы с расширением `.mdx` компилируются в React-компоненты. Это значит, что их можно использовать как обычные React-компоненты и свободно вставлять внутрь другие React-компоненты. Например:
+В MDX каждый файл `.mdx` компилируется в React-компонент, что означает, что его можно импортировать как обычный компонент и свободно рендерить внутри него React-компоненты. Например:
 
 import { Tabs, Tab } from '@theme';
 import { Border } from './_Border';
@@ -64,13 +64,13 @@ import TsxComponent from './_tsx-component';
 <TsxComponent />
 </Border>
 
-Вы можете использовать [встроенные компоненты](/guide/default-theme/components), предоставляемые Rspress, или подключить сторонние библиотеки React-компонентов, чтобы обогатить документацию в файлах `.mdx`.
+Вы можете использовать [встроенные компоненты](/ui/components/index.mdx), предоставляемые Rspress, или подключить сторонние библиотеки React-компонентов, чтобы обогатить документацию в файлах `.mdx`.
 
 ## Соглашение о маршрутах \{#routing-convention}
 
-В каталоге [docs](/api/config/config-basic#root) MDX-фрагменты и React-компоненты нужно исключать из маршрутизации с помощью параметра [route.exclude](/api/config/config-basic#routeexclude). Для удобства принято соглашение: файлы, начинающиеся с символа `_`, по умолчанию исключаются через [route.excludeConvention](/api/config/config-basic#routeexcludeconvention).
+В директории [docs](/api/config/config-basic#root) фрагменты MDX или React-компоненты необходимо исключать из маршрутизации с помощью параметра [route.exclude](/api/config/config-basic#routeexclude). Для удобства файлы, начинающиеся с символа `_`, по умолчанию исключаются через [route.excludeConvention](/api/config/config-basic#routeexcludeconvention).
 
-Также вы можете размещать компоненты в соседних каталогах вне каталога docs, например:
+Также вы можете размещать компоненты в соседних директориях вне директории docs, например:
 
 <Tabs>
 <Tab label="docsite/docs/index.mdx">
