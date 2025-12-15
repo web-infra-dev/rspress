@@ -1,11 +1,8 @@
 import fs from 'node:fs/promises';
 import path from 'node:path';
-import { fileURLToPath } from 'node:url';
 import { logger } from '@rspress/shared/logger';
 import picocolors from 'picocolors';
-
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = path.dirname(__filename);
+import { EJECTED_THEME } from './constants';
 
 // For testing purposes, allow overriding the theme path
 let _themeComponentsPathOverride: string | undefined;
@@ -23,7 +20,7 @@ function getThemeComponentsPath(): string {
   if (_themeComponentsPathOverride) {
     return _themeComponentsPathOverride;
   }
-  return path.join(__dirname, 'eject-theme/components');
+  return path.join(EJECTED_THEME, 'components');
 }
 
 /**
@@ -69,6 +66,7 @@ export async function getAvailableComponents(): Promise<string[]> {
  */
 async function componentExists(componentName: string): Promise<boolean> {
   const themePath = getThemeComponentsPath();
+  console.log(themePath, 222222);
   const componentPath = path.join(themePath, componentName);
   try {
     const stat = await fs.stat(componentPath);
