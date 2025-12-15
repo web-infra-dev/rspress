@@ -17,11 +17,6 @@
   },
   {
     "type": "dir-section-header",
-    "name": "default-theme",
-    "label": "defaultTheme"
-  },
-  {
-    "type": "dir-section-header",
     "name": "advanced",
     "label": "advanced"
   }

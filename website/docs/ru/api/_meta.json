@@ -10,11 +10,6 @@
     "label": "config"
   },
   {
-    "type": "dir",
-    "name": "client-api",
-    "label": "clientApi"
-  },
-  {
     "type": "file",
     "name": "commands",
     "label": "commands"
