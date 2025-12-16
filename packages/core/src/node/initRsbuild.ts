@@ -1,5 +1,6 @@
 import { createRequire } from 'node:module';
 import path from 'node:path';
+import { cwd } from 'node:process';
 import { fileURLToPath } from 'node:url';
 import type {
   RsbuildConfig,
@@ -89,7 +90,9 @@ async function createInternalBuildConfig(
   routeService: RouteService,
   pluginDriver: PluginDriver,
 ): Promise<RsbuildConfig> {
-  const CUSTOM_THEME_DIR = config.themeDir!;
+  const CUSTOM_THEME_DIR = path.isAbsolute(config.themeDir!)
+    ? config.themeDir!
+    : path.join(cwd(), config.themeDir!);
   const outDir = config?.outDir ?? OUTPUT_DIR;
 
   const base = config?.base ?? '';
@@ -363,7 +366,7 @@ async function createInternalBuildConfig(
         chain.resolve.extensions.prepend('.md').prepend('.mdx').prepend('.mjs');
 
         chain.module
-          .rule('css-virtual-module')
+          .rule('rspress-css-virtual-module')
           .test(/\.rspress[\\/]runtime[\\/]virtual-global-styles/)
           .merge({ sideEffects: true });
 
@@ -499,8 +502,7 @@ export async function initRsbuild(
   enableSSG: boolean,
   extraRsbuildConfig?: RsbuildConfig,
 ): Promise<RsbuildInstance> {
-  const cwd = process.cwd();
-  const userDocRoot = path.resolve(rootDir || config?.root || cwd);
+  const userDocRoot = path.resolve(rootDir || config.root!);
 
   hintBuilderPluginsBreakingChange(config);
 
