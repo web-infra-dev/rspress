@@ -91,5 +91,6 @@ function getCustomMDXComponent() {
   };
 }
 
+export { HomeBackground } from './components/HomeBackground/index';
 export { Layout, HomeLayout, Search, getCustomMDXComponent, Tag };
 export * from '@rspress/core/theme-original';

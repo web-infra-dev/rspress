@@ -85,6 +85,9 @@ export default defineConfig({
         },
       }),
     ],
+    dev: {
+      writeToDisk: true,
+    },
     tools: {
       rspack: config => {
         if (process.env.RSDOCTOR) {
