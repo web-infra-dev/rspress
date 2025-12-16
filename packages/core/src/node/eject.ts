@@ -66,7 +66,6 @@ export async function getAvailableComponents(): Promise<string[]> {
  */
 async function componentExists(componentName: string): Promise<boolean> {
   const themePath = getThemeComponentsPath();
-  console.log(themePath, 222222);
   const componentPath = path.join(themePath, componentName);
   try {
     const stat = await fs.stat(componentPath);

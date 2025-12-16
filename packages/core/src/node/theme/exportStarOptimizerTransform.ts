@@ -2,20 +2,44 @@ import { readFile } from 'node:fs/promises';
 import { dirname } from 'node:path';
 import { rspack } from '@rsbuild/core';
 
+type ResolveAsync = (
+  directory: string,
+  request: string,
+) => Promise<{ path?: string; error?: string }>;
+
+const resolver = new rspack.experiments.resolver.ResolverFactory({
+  extensions: ['.ts', '.tsx', '.mjs', '.js', '.jsx', '.json'],
+  mainFiles: ['index'],
+  mainFields: ['module', 'browser', 'main'],
+  alias: {},
+});
+
 /**
  * Convert `export *` into named exports via regex for tree-shaking friendliness.
  */
 class ExportStarOptimizer {
   filepath: string;
+  _resolve: ResolveAsync | undefined;
 
   localExports: Set<string>;
 
   reExports: Map<string, { source: string; imported: string }>;
 
-  constructor(filepath: string) {
+  constructor(filepath: string, resolveAsync?: ResolveAsync) {
     this.filepath = filepath;
     this.localExports = new Set();
     this.reExports = new Map();
+    this._resolve = resolveAsync;
+  }
+
+  resolve(
+    directory: string,
+    request: string,
+  ): Promise<{ path?: string; error?: string }> {
+    if (this._resolve) {
+      return this._resolve(directory, request);
+    }
+    return resolver.async(directory, request);
   }
 
   /**
@@ -72,15 +96,8 @@ class ExportStarOptimizer {
    * Get all exports of a module.
    */
   async getModuleExports(modulePath: string): Promise<Set<string>> {
-    const resolver = new rspack.experiments.resolver.ResolverFactory({
-      extensions: ['.ts', '.tsx', '.mjs', '.js', '.jsx', '.json'],
-      mainFiles: ['index'],
-      mainFields: ['module', 'browser', 'main'],
-      alias: {},
-    });
-
     const baseDir = dirname(this.filepath);
-    const resolved = await resolver.async(baseDir, modulePath);
+    const resolved = await this.resolve(baseDir, modulePath);
 
     if (resolved.error || !resolved.path) {
       throw new Error(resolved.error || 'Failed to resolve path');
@@ -199,7 +216,8 @@ class ExportStarOptimizer {
 export async function exportStarOptimizerTransform(
   code: string,
   filepath: string,
+  resolveAsync?: ResolveAsync,
 ): Promise<string> {
-  const transformer = new ExportStarOptimizer(filepath);
+  const transformer = new ExportStarOptimizer(filepath, resolveAsync);
   return transformer.transform(code);
 }

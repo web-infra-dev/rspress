@@ -8,7 +8,30 @@ export default async function themeIndexFileOptimizerLoader(
   this.cacheable(true);
   const callback = this.async();
   const filepath = this.resourcePath;
-  const content = await exportStarOptimizerTransform(source, filepath);
+
+  const resolveFn = this.resolve;
+
+  const resolveAsync = (context: string, request: string) => {
+    return new Promise<{ path?: string }>((resolve, reject) => {
+      resolveFn(
+        context,
+        request,
+        (err: Error | null, filepath: string | false | undefined) => {
+          if (err) {
+            reject(err);
+          } else {
+            resolve({ path: filepath as string });
+          }
+        },
+      );
+    });
+  };
+
+  const content = await exportStarOptimizerTransform(
+    source,
+    filepath,
+    resolveAsync,
+  );
 
   if (process.env.DEBUG === 'RSPRESS_EXPORT_STAR') {
     console.log(
