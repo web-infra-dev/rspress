@@ -33,6 +33,7 @@ export const PACKAGE_ROOT = path.dirname(
   require.resolve('@rspress/core/package.json'),
 );
 export const DEFAULT_THEME = path.join(PACKAGE_ROOT, 'dist/theme');
+export const EJECTED_THEME = path.join(PACKAGE_ROOT, 'dist/eject-theme');
 export const TEMPLATE_PATH = path.join(PACKAGE_ROOT, 'index.html');
 
 export const CSR_CLIENT_ENTRY = path.join(
