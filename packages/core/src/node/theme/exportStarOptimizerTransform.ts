@@ -2,7 +2,7 @@ import { readFile } from 'node:fs/promises';
 import { dirname } from 'node:path';
 import { rspack } from '@rsbuild/core';
 
-type ResolveAsync = (
+type ResolveAsyncType = (
   directory: string,
   request: string,
 ) => Promise<{ path?: string; error?: string }>;
@@ -14,30 +14,99 @@ const resolver = new rspack.experiments.resolver.ResolverFactory({
   alias: {},
 });
 
+type ParseResult = {
+  exports: Set<string>;
+  exportStarRequests: string[];
+};
+
+function lastNonEmpty<T>(arr: T[]): T | undefined {
+  return arr.length ? arr[arr.length - 1] : undefined;
+}
+
+function addNamedExportsFromSpecifier(exports: Set<string>, specifier: string) {
+  specifier
+    .split(',')
+    .map(n => n.trim())
+    .filter(Boolean)
+    .forEach(item => {
+      // Support `foo as bar` -> bar
+      const parts = item.split(/\s+as\s+/).map(p => p.trim());
+      const name = lastNonEmpty(parts);
+      if (name) {
+        exports.add(name);
+      }
+    });
+}
+
+function parseExportsFromCode(code: string): ParseResult {
+  const exports = new Set<string>();
+  const exportStarRequests: string[] = [];
+
+  // export const/let/var name = ...
+  const varExportRegex = /export\s+(?:const|let|var)\s+(\w+)/g;
+  for (const m of code.matchAll(varExportRegex)) {
+    exports.add(m[1]);
+  }
+
+  // export function / export async function / export class
+  const funcOrClassRegex =
+    /export\s+(?:async\s+)?function\*?\s+(\w+)|export\s+class\s+(\w+)/g;
+  for (const m of code.matchAll(funcOrClassRegex)) {
+    const name = m[1] || m[2];
+    if (name) {
+      exports.add(name);
+    }
+  }
+
+  // export { a, b as c }
+  const namedExportRegex = /export\s*\{([^}]+)\}(?!\s*from)/g;
+  for (const m of code.matchAll(namedExportRegex)) {
+    addNamedExportsFromSpecifier(exports, m[1]);
+  }
+
+  // export { a, b as c } from '...'
+  const reExportRegex = /export\s*\{([^}]+)\}\s*from\s*['"][^'"]+['"]/g;
+  for (const m of code.matchAll(reExportRegex)) {
+    addNamedExportsFromSpecifier(exports, m[1]);
+  }
+
+  // export * from '...'
+  const exportStarRegex = /export\s*\*\s*from\s*['"]([^'"]+)['"]/g;
+  for (const m of code.matchAll(exportStarRegex)) {
+    exportStarRequests.push(m[1]);
+  }
+
+  if (/export\s+default/.test(code)) {
+    exports.add('default');
+  }
+
+  return { exports, exportStarRequests };
+}
+
 /**
  * Convert `export *` into named exports via regex for tree-shaking friendliness.
  */
 class ExportStarOptimizer {
   filepath: string;
-  _resolve: ResolveAsync | undefined;
+  resolveAsync?: ResolveAsyncType;
 
   localExports: Set<string>;
 
   reExports: Map<string, { source: string; imported: string }>;
 
-  constructor(filepath: string, resolveAsync?: ResolveAsync) {
+  constructor(filepath: string, resolveAsync?: ResolveAsyncType) {
     this.filepath = filepath;
     this.localExports = new Set();
     this.reExports = new Map();
-    this._resolve = resolveAsync;
+    this.resolveAsync = resolveAsync;
   }
 
   resolve(
     directory: string,
     request: string,
   ): Promise<{ path?: string; error?: string }> {
-    if (this._resolve) {
-      return this._resolve(directory, request);
+    if (this.resolveAsync) {
+      return this.resolveAsync(directory, request);
     }
     return resolver.async(directory, request);
   }
@@ -46,54 +115,9 @@ class ExportStarOptimizer {
    * Parse source code to collect local exports.
    */
   parseLocalExports(code: string): void {
-    // 移除注释
     const cleanCode = this.removeComments(code);
-
-    // 1. export const/let/var name = ...
-    const varExportRegex = /export\s+(?:const|let|var)\s+(\w+)/g;
-    let match: RegExpExecArray | null;
-    while ((match = varExportRegex.exec(cleanCode)) !== null) {
-      this.localExports.add(match[1]);
-    }
-
-    // 2. export function name() {} 或 export class Name {}
-    const funcClassRegex =
-      /export\s+(?:async\s+)?function\*?\s+(\w+)|export\s+class\s+(\w+)/g;
-    while ((match = funcClassRegex.exec(cleanCode)) !== null) {
-      const name = match[1] || match[2];
-      if (name) {
-        this.localExports.add(name);
-      }
-    }
-
-    // 3. export { name1, name2 }
-    const namedExportRegex = /export\s*\{([^}]+)\}/g;
-    while ((match = namedExportRegex.exec(cleanCode)) !== null) {
-      const names = match[1].split(',').map(n => {
-        // Handle `name as alias`.
-        const parts = n.trim().split(/\s+as\s+/);
-        return parts[parts.length - 1].trim();
-      });
-      names.forEach(name => this.localExports.add(name));
-    }
-
-    // 4. export { name } from 'module'
-    const reExportRegex = /export\s*\{([^}]+)\}\s*from\s*['"]([^'"]+)['"]/g;
-    while ((match = reExportRegex.exec(cleanCode)) !== null) {
-      const names = match[1].split(',').map(n => n.trim().split(/\s+as\s+/));
-      const source = match[2];
-      names.forEach(parts => {
-        const exported = parts[parts.length - 1].trim();
-        const imported = parts[0].trim();
-        this.localExports.add(exported);
-        this.reExports.set(exported, { source, imported });
-      });
-    }
-
-    // 5. export default
-    if (/export\s+default/.test(cleanCode)) {
-      this.localExports.add('default');
-    }
+    const parsed = parseExportsFromCode(cleanCode);
+    parsed.exports.forEach(name => this.localExports.add(name));
   }
 
   /**
@@ -118,55 +142,13 @@ class ExportStarOptimizer {
     try {
       const moduleCode = await readFile(resolved.path, 'utf-8');
       const cleanCode = this.removeComments(moduleCode);
-      const exports = new Set<string>();
+      const parsed = parseExportsFromCode(cleanCode);
 
-      // Extract export names.
-      const varExportRegex = /export\s+(?:const|let|var)\s+(\w+)/g;
-      let match: RegExpExecArray | null;
-      while ((match = varExportRegex.exec(cleanCode)) !== null) {
-        exports.add(match[1]);
-      }
+      const exports = new Set(parsed.exports);
 
-      const funcClassRegex =
-        /export\s+(?:async\s+)?function\*?\s+(\w+)|export\s+class\s+(\w+)/g;
-      while ((match = funcClassRegex.exec(cleanCode)) !== null) {
-        const name = match[1] || match[2];
-        if (name) {
-          exports.add(name);
-        }
-      }
-
-      const namedExportRegex = /export\s*\{([^}]+)\}(?!\s*from)/g;
-      while ((match = namedExportRegex.exec(cleanCode)) !== null) {
-        const names = match[1].split(',').map(n => {
-          const parts = n.trim().split(/\s+as\s+/);
-          return parts[parts.length - 1].trim();
-        });
-        names.forEach(name => exports.add(name));
-      }
-
-      const reExportRegex = /export\s*\{([^}]+)\}\s*from/g;
-      while ((match = reExportRegex.exec(cleanCode)) !== null) {
-        const names = match[1].split(',').map(n => {
-          const parts = n.trim().split(/\s+as\s+/);
-          return parts[parts.length - 1].trim();
-        });
-        names.forEach(name => exports.add(name));
-      }
-
-      const exportStarRegex = /export\s*\*\s*from\s*['"]([^'"]+)['"]/g;
-      let starMatch: RegExpExecArray | null;
-      while ((starMatch = exportStarRegex.exec(cleanCode)) !== null) {
-        const targetRequest = starMatch[1];
-        const targetExports = await this.getModuleExports(
-          targetRequest,
-          visited,
-        );
+      for (const request of parsed.exportStarRequests) {
+        const targetExports = await this.getModuleExports(request, visited);
         targetExports.forEach(name => exports.add(name));
-      }
-
-      if (/export\s+default/.test(cleanCode)) {
-        exports.add('default');
       }
 
       return exports;
@@ -243,7 +225,7 @@ class ExportStarOptimizer {
 export async function exportStarOptimizerTransform(
   code: string,
   filepath: string,
-  resolveAsync?: ResolveAsync,
+  resolveAsync?: ResolveAsyncType,
 ): Promise<string> {
   const transformer = new ExportStarOptimizer(filepath, resolveAsync);
   return transformer.transform(code);

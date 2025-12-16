@@ -49,8 +49,8 @@ describe('exportStarOptimizerTransform', () => {
       "export const A = 1;
       export function B() {}
 
-      export { C } from './original-original';
       export { D } from './original';
+      export { C } from './original-original';
       "
     `);
   });
