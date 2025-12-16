@@ -1,0 +1,117 @@
+---
+tag: ejectable
+---
+
+import { Badge, Tag } from '@theme';
+
+# Badge <Tag tag="ejectable" />
+
+Компонент Badge используется для отображения небольшого встроенного бейджа.
+
+## Использование
+
+```mdx title="index.mdx"
+import { Badge } from '@theme';
+
+<Badge text="НОВИНКА" type="info" />
+```
+
+<Badge text="НОВИНКА" type="info" />
+
+## Типы
+
+Компонент Badge поддерживает четыре типа, каждый из которых имеет свой цвет:
+
+```mdx preview title="index.mdx"
+import { Badge } from '@theme';
+
+<Badge text="совет" type="tip" />
+<Badge text="информация" type="info" />
+<Badge text="предупреждение" type="warning" />
+<Badge text="опасность" type="danger" />
+```
+
+## Стиль с обводкой
+
+```mdx preview title="index.mdx"
+import { Badge } from '@theme';
+
+<Badge text="совет" type="tip" outline />
+<Badge text="информация" type="info" outline />
+<Badge text="предупреждение" type="warning" outline />
+<Badge text="опасность" type="danger" outline />
+```
+
+## Пользовательский контент
+
+Вы можете использовать проп `children`, чтобы рендерить пользовательский контент внутри бейджа:
+
+```mdx preview title="index.mdx"
+import { Badge, IconSearch, SvgWrapper } from '@theme';
+
+<Badge type="tip">
+  <img
+    style={{ height: '18px' }}
+    src="https://assets.rspack.rs/rspress/rspress-logo.svg"
+  />
+  <span>Rspress</span>
+</Badge>
+
+<Badge type="info">
+  <SvgWrapper icon={IconSearch} />
+  <span>Поиск</span>
+</Badge>
+```
+
+## Встраивание в текст
+
+Бейдж можно использовать встроенным в текст:
+
+```mdx preview title="index.mdx"
+import { Badge } from '@theme';
+
+Встроенный в текст <Badge text="Новинка" />
+```
+
+## Встраивание в заголовок
+
+Бейдж можно использовать в заголовках:
+
+```mdx
+##### Заголовок H5 <Badge text="Информация" type="info" />
+
+#### Заголовок H4 <Badge text="Предупреждение" type="warning" />
+
+### Заголовок H3 <Badge text="Опасность" type="danger" />
+```
+
+##### Заголовок H5 <Badge text="Информация" type="info" />
+
+#### Заголовок H4 <Badge text="Предупреждение" type="warning" />
+
+### Заголовок H3 <Badge text="Опасность" type="danger" />
+
+## Пропсы
+
+```ts
+interface BadgeProps {
+  /**
+   * Содержимое, отображаемое внутри бейджа. Может быть строкой или React-узлами.
+   */
+  children?: React.ReactNode;
+  /**
+   * Тип бейджа, определяющий его цвет и стиль.
+   * @default 'tip'
+   */
+  type?: 'tip' | 'info' | 'warning' | 'danger';
+  /**
+   * Текстовое содержимое для отображения внутри бейджа (для обратной совместимости).
+   */
+  text?: string;
+  /**
+   * Отображать ли бейдж в стиле с обводкой.
+   * @default false
+   */
+  outline?: boolean;
+}
+```
