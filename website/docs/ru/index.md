@@ -1,5 +1,6 @@
 ---
 pageType: home
+title: Rspress
 titleSuffix: 'Статический генератор сайтов на базе Rsbuild'
 
 hero:
