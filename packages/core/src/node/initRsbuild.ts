@@ -370,6 +370,15 @@ async function createInternalBuildConfig(
           .test(/\.rspress[\\/]runtime[\\/]virtual-global-styles/)
           .merge({ sideEffects: true });
 
+        // Optimize the theme
+        const themeIndexPath = path.join(CUSTOM_THEME_DIR, 'index');
+        const themeIndexRule = chain.module.rule('rspress-theme-index');
+
+        themeIndexRule.include.add(themeIndexPath);
+        themeIndexRule
+          .use('EXPORT_STAR_OPTIMIZE')
+          .loader(fileURLToPath(new URL('./theme/loader.js', import.meta.url)));
+
         if (isSsg || isSsgMd) {
           chain.optimization.splitChunks({});
         }
