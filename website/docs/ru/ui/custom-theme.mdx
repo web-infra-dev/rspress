@@ -99,7 +99,7 @@ export * from '@rspress/core/theme-original';
 
 ### 3. Кастомная главная страница и страница 404
 
-Помимо использования слотов, если вы хотите расширить компоненты стандартной темы, вы также можете полностью переопределить компоненты главной страницы (`HomeLayout` и `HomeFooter`) и страницы 404 (`NotFoundLayout`), а также любые другие встроенные компоненты Rspress из каталога [theme-default/src/components](https://github.com/web-infra-dev/rspress/tree/main/packages/theme-default/src/components).
+Помимо использования слотов, если вы хотите расширить компоненты стандартной темы, вы также можете полностью переопределить компоненты главной страницы (`HomeLayout` и `HomeFooter`) и страницы 404 (`NotFoundLayout`), а также любые другие встроенные компоненты Rspress из директории [theme-default/src/components](https://github.com/web-infra-dev/rspress/tree/main/packages/theme-default/src/components).
 
 ```tsx title="theme/index.tsx"
 import {
@@ -133,7 +133,7 @@ export { Search, HomeLayout, NotFoundLayout };
 export * from '@rspress/core/theme-original';
 ```
 
-Конечно, в процессе разработки вам может понадобиться доступ к данным текущей страницы — их можно получить через [`Runtime API`](/api/client-api/api-runtime).
+Конечно, в процессе разработки вам может понадобиться доступ к данным текущей страницы — их можно получить через [`Runtime API`](/ui/hooks/).
 
 ### 4. Кастомные иконки
 
