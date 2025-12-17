@@ -1,0 +1,27 @@
+# Head
+
+The Head component lets you inject custom head content (built on [unhead](https://www.npmjs.com/package/unhead)).
+
+## Usage
+
+```tsx title="index.tsx"
+import { Head } from '@rspress/core/runtime';
+
+export default function Page() {
+  return (
+    <Head>
+      <meta property="og:description" content="Out-of-box Rspack build tools" />
+      <link rel="canonical" href="https://example.com" />
+    </Head>
+  );
+}
+```
+
+import { Head } from '@rspress/core/runtime';
+
+<Head>
+  <meta property="og:description" content="Out-of-box Rspack build tools" />
+  <link rel="canonical" href="https://example.com" />
+</Head>
+
+Use it inside MDX or React pages to add meta tags, canonical links, Open Graph data, favicons, and more.

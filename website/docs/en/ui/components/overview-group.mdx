@@ -1,0 +1,75 @@
+---
+overviewHeaders: []
+---
+
+# OverviewGroup
+
+`OverviewGroup` renders grouped cards on overview pages, displaying a list of pages and their heading anchors.
+
+## Usage
+
+```tsx title="index.mdx"
+import { OverviewGroup } from '@rspress/core/theme';
+
+const group = {
+  name: 'Getting Started',
+  items: [
+    {
+      text: 'Introduction',
+      link: '/guide/introduction',
+      headers: [
+        { id: 'what-is-rspress', text: 'What is Rspress' },
+        { id: 'features', text: 'Features' },
+      ],
+    },
+    {
+      text: 'Installation',
+      link: '/guide/installation',
+    },
+  ],
+};
+
+<OverviewGroup group={group} />;
+```
+
+:::tip
+This component is usually used automatically by Rspress on pages with `overview: true` in the frontmatter and does not need to be called manually.
+:::
+
+## Props
+
+### group
+
+- **Type:** `Group`
+- **Required:** Yes
+
+```ts
+interface GroupItem {
+  /** Item title */
+  text: string;
+  /** Item link */
+  link: string;
+  /** List of heading anchors within the page */
+  headers?: Header[];
+  /** Custom sub-items list */
+  items?: { text: string; link: string }[];
+}
+
+interface Group {
+  /** Group name */
+  name: string;
+  /** List of items in the group */
+  items: GroupItem[];
+}
+
+interface Header {
+  id: string;
+  text: string;
+  depth: number;
+}
+```
+
+- `name` - The group title, rendered as an h2 heading
+- `items` - List of pages in the group
+- `headers` - Heading anchors within each page, clicking navigates to the corresponding position
+- `items` (within GroupItem) - Custom sub-items, used to replace automatically extracted headers

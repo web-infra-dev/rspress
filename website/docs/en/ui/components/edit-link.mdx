@@ -1,0 +1,35 @@
+---
+overviewHeaders: []
+tag: eject-only
+---
+
+# EditLink
+
+`EditLink` renders an "Edit this page" link that navigates to the document source file's edit page (e.g., GitHub).
+
+## Usage
+
+This component is usually rendered automatically as part of [DocFooter](/ui/components/doc-footer) and does not need to be used manually.
+
+## Related configuration
+
+Configure `editLink` in `rspress.config.ts`:
+
+```ts title="rspress.config.ts"
+import { defineConfig } from '@rspress/core';
+
+export default defineConfig({
+  themeConfig: {
+    editLink: {
+      docRepoBaseUrl:
+        'https://github.com/web-infra-dev/rspress/tree/main/website/docs',
+      text: '📝 Edit this page on GitHub',
+    },
+  },
+});
+```
+
+- `docRepoBaseUrl` - Base URL of the documentation repository
+- `text` - Text to display for the link
+
+If `editLink` is not configured, the component will not render anything.

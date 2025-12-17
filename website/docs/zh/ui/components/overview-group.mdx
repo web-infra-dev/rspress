@@ -1,0 +1,99 @@
+---
+overviewHeaders: []
+---
+
+# OverviewGroup
+
+`OverviewGroup` 用于渲染概览页面中的分组卡片，展示页面列表及其标题锚点，是 [预览页](/guide/advanced/overview-page) 的一部分。
+
+## 用法
+
+```mdx title="index.mdx"
+import { OverviewGroup } from '@rspress/core/theme';
+
+<OverviewGroup
+  group={{
+    name: '用法测试',
+    items: [
+      {
+        text: '介绍',
+        link: '/guide/introduction',
+        headers: [
+          { id: 'what-is-rspress', text: '什么是 Rspress' },
+          { id: 'features', text: '特性' },
+        ],
+      },
+      {
+        text: '安装',
+        link: '/guide/installation',
+      },
+    ],
+  }}
+/>
+```
+
+import { OverviewGroup } from '@rspress/core/theme';
+
+<OverviewGroup
+  group={{
+    name: '用法测试',
+    items: [
+      {
+        text: '介绍',
+        link: '/guide/introduction',
+        headers: [
+          { id: 'what-is-rspress', text: '什么是 Rspress' },
+          { id: 'features', text: '特性' },
+        ],
+      },
+      {
+        text: '安装',
+        link: '/guide/installation',
+      },
+    ],
+  }}
+/>
+
+:::tip
+
+该组件通常由 Rspress 在 `overview: true` 页面中自动使用，仅当需要自定义大纲页面时，才需手动使用该组件。
+
+:::
+
+## Props
+
+### group
+
+- **类型：** `Group`
+- **必填：** 是
+
+```ts
+interface GroupItem {
+  /** 项目标题 */
+  text: string;
+  /** 项目链接 */
+  link: string;
+  /** 页面内的标题锚点列表 */
+  headers?: Header[];
+  /** 自定义子项列表 */
+  items?: { text: string; link: string }[];
+}
+
+interface Group {
+  /** 分组名称 */
+  name: string;
+  /** 分组内的项目列表 */
+  items: GroupItem[];
+}
+
+interface Header {
+  id: string;
+  text: string;
+  depth: number;
+}
+```
+
+- `name` - 分组的标题，会渲染为 h2 标题
+- `items` - 分组内的页面列表
+- `headers` - 每个页面内的标题锚点，点击可跳转到对应位置
+- `items` (在 GroupItem 内) - 自定义子项，用于替代自动提取的 headers

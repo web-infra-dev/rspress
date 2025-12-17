@@ -1,0 +1,40 @@
+---
+overviewHeaders: []
+tag: eject-only
+---
+
+# HomeFooter
+
+This component is part of the [Home Page](/guide/basic/home-page). `HomeFooter` renders footer information at the bottom of the home page.
+
+## Usage
+
+```tsx title="index.mdx"
+import { HomeFooter } from '@rspress/core/theme';
+
+<HomeFooter />;
+```
+
+This component does not accept any props. It automatically reads the `footer.message` content from the theme configuration.
+
+## Configuration
+
+Configure footer information in `rspress.config.ts`:
+
+```ts title="rspress.config.ts"
+import { defineConfig } from '@rspress/core';
+
+export default defineConfig({
+  themeConfig: {
+    footer: {
+      message: 'Copyright © 2024 Your Company',
+    },
+  },
+});
+```
+
+## How it works
+
+- The component reads footer content from `themeConfig.footer.message`
+- If `message` is not configured, the component will not render anything
+- `message` supports HTML strings

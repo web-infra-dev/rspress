@@ -1,0 +1,53 @@
+---
+overviewHeaders: []
+tag: eject-only
+features:
+  - title: '快速'
+    details: 'Rspress 构建快'
+    icon: '⚡'
+    span: 3
+  - title: 'MDX 优先'
+    details: '到处都是 MDX'
+    icon: '🧩'
+    span: 3
+---
+
+# HomeFeature
+
+该组件是 [首页](/guide/basic/home-page) 的一部分，`HomeFeature` 用于在首页 Hero 区域下方渲染特性网格。
+
+## 用法
+
+你可以在 mdx 文件的 frontmatter 中配置 `features`，组件会自动从 frontmatter 读取，更多信息请参考 [首页](/guide/basic/home-page)。
+
+```mdx title="index.mdx" preview
+import { HomeFeature } from '@rspress/core/theme';
+
+<HomeFeature />
+```
+
+## Props
+
+### features
+
+- **类型：** `Feature[]`
+- **默认值：** 从 frontmatter 中读取
+
+```ts
+interface Feature {
+  /** 特性图标，支持 emoji 或 HTML 字符串 */
+  icon: string;
+  /** 特性标题 */
+  title: string;
+  /** 特性详情描述，支持 HTML 字符串 */
+  details: string;
+  /** 网格列跨度，支持 2、3、4、6，默认为 4 */
+  span?: 2 | 3 | 4 | 6;
+  /** 点击卡片跳转的链接 */
+  link?: string;
+}
+```
+
+- `span` 控制每个卡片占据的网格列数，总共 12 列
+- `icon` 和 `details` 支持 HTML 字符串
+- 设置 `link` 后卡片可点击跳转

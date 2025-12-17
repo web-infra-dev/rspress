@@ -1,0 +1,34 @@
+---
+overviewHeaders: []
+tag: eject-only
+---
+
+# PrevNextPage
+
+`PrevNextPage` 渲染页面底部的上一页/下一页导航链接。
+
+## 用法
+
+```mdx title="index.mdx" preview
+import { PrevNextPage } from '@rspress/core/theme';
+
+<PrevNextPage />
+```
+
+该组件不接受任何 props，会自动根据侧边栏顺序计算上一页/下一页链接。
+
+## 工作原理
+
+组件内部使用 `usePrevNextPage` hook 来获取上一页和下一页的信息：
+
+```ts
+import { usePrevNextPage } from '@theme';
+
+const { prevPage, nextPage } = usePrevNextPage();
+// prevPage: { text: string; link: string } | null
+// nextPage: { text: string; link: string } | null
+```
+
+- 上一页/下一页根据当前页面在侧边栏中的位置自动计算
+- 如果当前页是第一页，则 `prevPage` 为 `null`
+- 如果当前页是最后一页，则 `nextPage` 为 `null`

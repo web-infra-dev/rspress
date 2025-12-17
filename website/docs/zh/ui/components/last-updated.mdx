@@ -1,0 +1,38 @@
+---
+overviewHeaders: []
+tag: eject-only
+---
+
+# LastUpdated
+
+`LastUpdated` 展示页面的最后更新时间。通常配合主题的 `lastUpdated` 配置使用。
+
+## 用法
+
+```mdx title="index.mdx" preview
+import { LastUpdated } from '@rspress/core/theme';
+
+<LastUpdated />
+```
+
+该组件不接受任何 props，会自动从页面元数据中读取最后更新时间。
+
+## 相关配置
+
+在 `rspress.config.ts` 中开启 `lastUpdated`，并设置 `timezone`/`language` 等格式化选项。
+
+```ts title="rspress.config.ts"
+import { defineConfig } from '@rspress/core';
+
+export default defineConfig({
+  themeConfig: {
+    lastUpdated: {
+      text: '最近更新',
+      format: 'yyyy-MM-dd HH:mm',
+      timezone: 'Asia/Shanghai',
+    },
+  },
+});
+```
+
+当启用 `lastUpdated` 时，组件会自动读取页面元数据并格式化显示。

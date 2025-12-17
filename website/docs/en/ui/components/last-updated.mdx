@@ -1,0 +1,42 @@
+---
+overviewHeaders: []
+tag: eject-only
+---
+
+# LastUpdated
+
+`LastUpdated` displays the last update time of the current page.
+
+## Usage
+
+```tsx title="index.mdx"
+import { LastUpdated } from '@rspress/core/theme';
+
+<LastUpdated />;
+```
+
+This component does not accept any props. It automatically reads the last update time from the page metadata.
+
+## Related configuration
+
+Configure `lastUpdated` in `rspress.config.ts` to enable this feature, and set formatting options like `timezone` and `format`:
+
+```ts title="rspress.config.ts"
+import { defineConfig } from '@rspress/core';
+
+export default defineConfig({
+  themeConfig: {
+    lastUpdated: {
+      text: 'Last Updated',
+      format: 'yyyy-MM-dd HH:mm',
+      timezone: 'America/New_York',
+    },
+  },
+});
+```
+
+When `lastUpdated` is enabled, the component will automatically read and format the page metadata for display.
+
+:::tip
+If `lastUpdated: true` is not configured in the default theme, install and register `@rspress/plugin-last-updated`.
+:::

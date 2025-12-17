@@ -1,0 +1,27 @@
+---
+overviewHeaders: []
+tag: non-ejectable
+---
+
+# CodeBlockRuntime
+
+`CodeBlockRuntime` renders runnable code blocks at runtime.
+
+## Usage
+
+```tsx title="index.mdx"
+import { CodeBlockRuntime } from '@theme';
+
+export default function Page() {
+  return (
+    <CodeBlockRuntime
+      lang="js"
+      title="index.js"
+      code={`console.log('Hello World!')`}
+      shikiOptions={{}}
+    />
+  );
+}
+```
+
+Pass `lang`, `title`, and `code` to render the block; `shikiOptions` customizes highlighting.

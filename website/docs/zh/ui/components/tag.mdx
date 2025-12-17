@@ -1,11 +1,11 @@
 ---
-tag: new, ejectable
+tag: new, eject-only
 overviewHeaders: []
 ---
 
 import { Badge, Tag } from '@theme';
 
-# Tag <Tag tag="new" /> <Tag tag="ejectable" />
+# Tag
 
 Tag 组件用于在 **侧边栏或导航栏** 中进行 UI 信息展示。它支持多种格式，包括常用标签、SVG 图标、图片和纯文本。
 
@@ -75,7 +75,7 @@ Tag 组件专门为在侧边栏或者导航栏中展示设计，在 MDX 中使�
 
 Tag 组件是 ejectable 的，当你想扩充常用标签时，可使用 wrap/eject 来对 Tag 组件进行修改。
 
-以下是一个本站通过 wrap 增加 `ejectable` 自定义标签的使用示例：
+以下是一个本站通过 wrap 增加 `eject-only` 自定义标签的使用示例：
 
 ```tsx title="theme/components/Tag/index.tsx"
 import {
@@ -84,8 +84,8 @@ import {
 } from '@rspress/core/theme-original';
 
 export const Tag = ({ tag }: { tag: string }) => {
-  if (tag === 'ejectable') {
-    return <BasicBadge text="ejectable" type="tip" />;
+  if (tag === 'eject-only') {
+    return <BasicBadge text="eject-only" type="warning" />;
   }
   return <BasicTag tag={tag} />;
 };
@@ -93,7 +93,7 @@ export const Tag = ({ tag }: { tag: string }) => {
 
 ```mdx title="index.mdx"
 ---
-tag: new, ejectable
+tag: new, eject-only
 ---
 ```
 
