@@ -31,6 +31,14 @@
       }
     }
 
+    // Special styling for items without content (no headers/items)
+    &--no-content {
+      .rp-overview-group__item__title {
+        width: 100%;
+        flex: 1;
+      }
+    }
+
     @media (max-width: 1280px) {
       flex-direction: column;
       &__title {
