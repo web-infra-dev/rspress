@@ -5,7 +5,7 @@
     var(--rp-c-brand-lighter) 30%,
     transparent
   );
-  --rp-c-overview-group-border:  
+  --rp-c-overview-group-border:      
 ;
 }
 
@@ -47,22 +47,25 @@
     }
 
     &__title {
-      width: 20%;
-      flex: 0 0 20%;
-      word-break: break-all;
+      width: 25%;
+      flex: 0 0 25%;
 
       padding: 16px 20px;
+
+      word-break: break-all;
       font-size: 18px;
       font-weight: 600;
-      background-color: var(--rp-c-overview-group-bg);
       color: var(--rp-c-text-1);
+
+      background-color: var(--rp-c-overview-group-bg);
 
       overflow: hidden;
       position: relative;
 
       transition: background-color 0.2s ease;
 
-      a {
+      &__link,
+      &__text {
         color: inherit;
         text-decoration: none;
 
@@ -152,41 +155,31 @@
   &__grid-item {
     border: 1px solid var(--rp-c-divider-light);
     border-radius: var(--rp-radius);
-    padding: 16px 20px;
-    background-color: var(--rp-c-overview-group-bg);
     transition:
       border-color 0.2s ease,
       box-shadow 0.2s ease,
       background-color 0.2s ease;
 
+    &.rp-overview-group__item__title {
+      width: 100%;
+      flex: none;
+    }
+
     &:hover {
       border-color: var(--rp-c-brand-light);
       box-shadow: 0 4px 6px 0 rgba(0, 0, 0, 0.04);
       background-color: var(--rp-c-overview-group-bg-hover);
-    }
 
-    &__link,
-    &__text {
-      display: block;
-      font-size: 16px;
-      font-weight: 500;
-      color: var(--rp-c-text-1);
-      text-decoration: none;
-      word-break: break-word;
-
-      &:hover {
-        color: var(--rp-c-brand);
+      .rp-overview-group__item__title__icon {
+        color: var(--rp-c-brand-dark);
       }
-    }
-
-    &__text {
-      cursor: default;
     }
   }
 }
 
 html.rp-dark {
-  .rp-overview-group__item:hover {
+  .rp-overview-group__item:hover,
+  .rp-overview-group__grid-item:hover {
     .rp-overview-group__item__title__icon {
       color: white;
     }

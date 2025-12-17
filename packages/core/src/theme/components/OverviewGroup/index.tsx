@@ -47,10 +47,14 @@ export const OverviewGroup = ({ group }: { group: Group }) => {
               {item.link ? (
                 <Link
                   href={item.link}
+                  className="rp-overview-group__item__title__link"
                   {...renderInlineMarkdown(item.text)}
                 ></Link>
               ) : (
-                <span {...renderInlineMarkdown(item.text)} />
+                <span
+                  className="rp-overview-group__item__title__text"
+                  {...renderInlineMarkdown(item.text)}
+                />
               )}
               <SvgWrapper
                 icon={IconPlugin}
@@ -92,16 +96,19 @@ export const OverviewGroup = ({ group }: { group: Group }) => {
         {itemsWithoutContent.length > 0 && (
           <div className="rp-overview-group__grid">
             {itemsWithoutContent.map(item => (
-              <div className="rp-overview-group__grid-item" key={item.link}>
+              <div
+                className="rp-overview-group__grid-item rp-overview-group__item__title"
+                key={item.link}
+              >
                 {item.link ? (
                   <Link
                     href={item.link}
-                    className="rp-overview-group__grid-item__link"
+                    className="rp-overview-group__item__title__link"
                     {...renderInlineMarkdown(item.text)}
                   ></Link>
                 ) : (
                   <span
-                    className="rp-overview-group__grid-item__text"
+                    className="rp-overview-group__item__title__text"
                     {...renderInlineMarkdown(item.text)}
                   />
                 )}
