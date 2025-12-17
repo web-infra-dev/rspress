@@ -19,11 +19,23 @@ export interface Group {
 }
 
 export const OverviewGroup = ({ group }: { group: Group }) => {
+  // Filter out items that have no headers and no custom items
+  const itemsWithContent = group.items.filter(
+    item =>
+      (item.headers && item.headers.length > 0) ||
+      (item.items && item.items.length > 0),
+  );
+
+  // If no items have content, don't render the group at all
+  if (itemsWithContent.length === 0) {
+    return null;
+  }
+
   return (
     <>
       <FallbackHeading level={2} title={group.name} />
       <div className="rp-overview-group rp-not-doc">
-        {group.items.map(item => (
+        {itemsWithContent.map(item => (
           <div className="rp-overview-group__item" key={item.link}>
             <div className="rp-overview-group__item__title">
               {item.link ? (
