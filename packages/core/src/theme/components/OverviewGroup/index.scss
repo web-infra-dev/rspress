@@ -5,8 +5,7 @@
     var(--rp-c-brand-lighter) 30%,
     transparent
   );
-  --rp-c-overview-group-border:      
-;
+  --rp-c-overview-group-border: 1px solid var(--rp-c-divider-light);
 }
 
 .rp-overview-group {
@@ -20,7 +19,7 @@
     width: 100%;
     flex-direction: row;
 
-    border: 1px solid var(--rp-c-divider-light);
+    border: var(--rp-c-overview-group-border);
     border-radius: var(--rp-radius);
     overflow: hidden;
     transition:
