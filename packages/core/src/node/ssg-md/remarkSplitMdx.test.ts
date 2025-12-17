@@ -547,18 +547,18 @@ import Button from './_button.mdx';
 
     const result2 = await processMdx(input2);
     expect(result2).toMatchInlineSnapshot(`
-        "/*@jsxRuntime automatic*/
-        /*@jsxImportSource react*/
-        import {Tabs, Tab} from '@theme';
-        import Button from './_button.mdx';
-        function _createMdxContent(props) {
-          return <Tabs><Tab>{"import Button from './_button.mdx';\\n"}<Button /></Tab><Tab /></Tabs>;
-        }
-        export default function MDXContent(props = {}) {
-          const {wrapper: MDXLayout} = props.components || ({});
-          return MDXLayout ? <MDXLayout {...props}><_createMdxContent {...props} /></MDXLayout> : _createMdxContent(props);
-        }
-        "
-      `);
+      "/*@jsxRuntime automatic*/
+      /*@jsxImportSource react*/
+      import {Tabs, Tab} from '@theme';
+      import Button from './_button.mdx';
+      function _createMdxContent(props) {
+        return <Tabs><Tab><Button /></Tab><Tab /></Tabs>;
+      }
+      export default function MDXContent(props = {}) {
+        const {wrapper: MDXLayout} = props.components || ({});
+        return MDXLayout ? <MDXLayout {...props}><_createMdxContent {...props} /></MDXLayout> : _createMdxContent(props);
+      }
+      "
+    `);
   });
 });

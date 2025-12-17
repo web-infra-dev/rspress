@@ -482,12 +482,18 @@ function serializeClosingTag(
 }
 
 // Use unified with remark-stringify to convert the node back to markdown
-const processor = unified().use(remarkMdx).use(remarkGfm).use(remarkStringify, {
-  bullet: '-',
-  emphasis: '_',
-  fences: true,
-  incrementListMarker: true,
-});
+const processor = unified()
+  .use(remarkMdx)
+  .use(remarkGfm)
+  .use(remarkStringify, {
+    bullet: '-',
+    emphasis: '_',
+    fences: true,
+    incrementListMarker: true,
+    handlers: {
+      mdxjsEsm: () => '',
+    },
+  });
 
 /**
  * Serialize a markdown node back to its markdown text representation
