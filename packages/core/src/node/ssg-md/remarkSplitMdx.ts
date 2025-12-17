@@ -129,8 +129,6 @@ function processJsxElement(
   const isMdxFragment =
     componentName && importMap.get(componentName)?.endsWith('.mdx');
 
-  console.log(componentName, isMdxFragment, importMap);
-
   // MDX fragments are always kept, otherwise check filtering rules
   if (
     isMdxFragment ||
