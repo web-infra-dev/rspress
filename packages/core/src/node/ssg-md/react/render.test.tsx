@@ -208,6 +208,50 @@ describe('renderToMarkdownString', () => {
         "
       `);
   });
+
+  it('does not wrap <pre><code> with inline backticks', async () => {
+    // In MDX compilation, fenced code blocks usually become <pre><code>...</code></pre>.
+    // We must NOT render the inner <code> as inline code (`...`) or we'd end up with
+    // nested backticks inside the fence.
+    expect(
+      await renderToMarkdownString(
+        <pre data-lang="ts" data-title="rspress.config.ts">
+          <code>{'const a = 1;\n'}</code>
+        </pre>,
+      ),
+    ).toMatchInlineSnapshot(`
+      "
+      \`\`\`ts title=rspress.config.ts
+      const a = 1;
+
+      \`\`\`
+      "
+    `);
+  });
+
+  it('should handle mdx language with ```` four backticks', async () => {
+    expect(
+      await renderToMarkdownString(
+        <pre data-lang="mdx">
+          <code>{`# Hello World
+\`\`\`tsx
+console.log('Hello, world!');
+\`\`\`
+`}</code>
+        </pre>,
+      ),
+    ).toMatchInlineSnapshot(`
+      "
+      \`\`\`\`mdx 
+      # Hello World
+      \`\`\`tsx
+      console.log('Hello, world!');
+      \`\`\`
+
+      \`\`\`\`
+      "
+    `);
+  });
 });
 
 describe('renderToMarkdownString - styles', () => {

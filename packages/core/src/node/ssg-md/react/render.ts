@@ -39,10 +39,23 @@ function toMarkdown(root: MarkdownNode): string {
     case 'i':
       return `*${childrenMd}*`;
     case 'code':
+      // When <code> is nested inside <pre>, it represents the code block body,
+      // so we must not wrap it with inline backticks (would create nested fences).
+      if (root.parent?.type === 'pre') {
+        return childrenMd;
+      }
       return `\`${childrenMd}\``;
     case 'pre': {
-      const language = props.lang || props.language || '';
-      return `\`\`\`${language}\n${childrenMd}\n\`\`\`\n\n`;
+      const _language =
+        props['data-lang'] || props.language || props.lang || '';
+
+      const language = typeof _language === 'string' ? _language : '';
+      const title = props['data-title'] || '';
+      const block = ['markdown', 'mdx', 'md', ''].includes(language)
+        ? '````'
+        : '```';
+
+      return `\n${block}${language}${title ? ` title=${title}` : ''}\n${childrenMd}\n${block}\n`;
     }
     case 'a':
       return `[${childrenMd}](${props.href || '#'})`;

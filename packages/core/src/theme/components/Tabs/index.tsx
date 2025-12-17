@@ -133,7 +133,8 @@ export const Tabs = forwardRef(
 
     return (
       <div className={clsx('rp-tabs', className)} ref={ref}>
-        {tabValues.length ? (
+        {/* For __SSR_MD__  markdown content beautify */}
+        {tabValues.length && !process.env.__SSR_MD__ ? (
           <div
             className="rp-tabs__label rp-tabs__label--no-scrollbar"
             style={{
@@ -205,6 +206,16 @@ export type TabProps = Pick<TabItem, 'label' | 'disabled'> & {
   children: ReactNode;
 };
 
-export function Tab({ children }: TabProps): ReactElement {
+export function Tab({ children, label }: TabProps): ReactElement {
+  if (process.env.__SSR_MD__) {
+    return (
+      <>
+        {`\n**${label}**\n`}
+        {children}
+        {`\n`}
+      </>
+    );
+  }
+
   return <>{children}</>;
 }
