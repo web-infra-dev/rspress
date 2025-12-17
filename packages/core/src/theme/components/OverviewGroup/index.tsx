@@ -19,68 +19,91 @@ export interface Group {
 }
 
 export const OverviewGroup = ({ group }: { group: Group }) => {
+  // Separate items into those with content and those without
+  const itemsWithContent = group.items.filter(
+    item =>
+      (item.headers && item.headers.length > 0) ||
+      (item.items && item.items.length > 0),
+  );
+  const itemsWithoutContent = group.items.filter(
+    item =>
+      !(item.headers && item.headers.length > 0) &&
+      !(item.items && item.items.length > 0),
+  );
+
   return (
     <>
       <FallbackHeading level={2} title={group.name} />
       <div className="rp-overview-group rp-not-doc">
-        {group.items.map(item => {
-          const hasContent =
-            (item.headers && item.headers.length > 0) ||
-            (item.items && item.items.length > 0);
+        {/* Render items with content in the standard split layout */}
+        {itemsWithContent.map(item => (
+          <div className="rp-overview-group__item" key={item.link}>
+            <div className="rp-overview-group__item__title">
+              {item.link ? (
+                <Link
+                  href={item.link}
+                  {...renderInlineMarkdown(item.text)}
+                ></Link>
+              ) : (
+                <span {...renderInlineMarkdown(item.text)} />
+              )}
+              <SvgWrapper
+                icon={IconPlugin}
+                className="rp-overview-group__item__title__icon"
+              />
+            </div>
+            <ul className="rp-overview-group__item__content">
+              {item.headers?.map(header => (
+                <li
+                  key={header.id}
+                  className="rp-overview-group__item__content__item"
+                >
+                  <Link
+                    className="rp-overview-group__item__content__item__link"
+                    href={`${item.link}#${header.id}`}
+                    {...renderInlineMarkdown(header.text)}
+                  ></Link>
+                </li>
+              ))}
+              {item.items?.map(({ link, text }) => {
+                return (
+                  <li
+                    key={link}
+                    className="rp-overview-group__item__content__item"
+                  >
+                    <Link
+                      className="rp-overview-group__item__content__item__link"
+                      href={link}
+                      {...renderInlineMarkdown(text)}
+                    ></Link>
+                  </li>
+                );
+              })}
+            </ul>
+          </div>
+        ))}
 
-          // If item has no headers/items, render it with special styling to hide empty content area
-          return (
-            <div
-              className={`rp-overview-group__item ${!hasContent ? 'rp-overview-group__item--no-content' : ''}`}
-              key={item.link}
-            >
-              <div className="rp-overview-group__item__title">
+        {/* Render items without content in a grid layout */}
+        {itemsWithoutContent.length > 0 && (
+          <div className="rp-overview-group__grid">
+            {itemsWithoutContent.map(item => (
+              <div className="rp-overview-group__grid-item" key={item.link}>
                 {item.link ? (
                   <Link
                     href={item.link}
+                    className="rp-overview-group__grid-item__link"
                     {...renderInlineMarkdown(item.text)}
                   ></Link>
                 ) : (
-                  <span {...renderInlineMarkdown(item.text)} />
+                  <span
+                    className="rp-overview-group__grid-item__text"
+                    {...renderInlineMarkdown(item.text)}
+                  />
                 )}
-                <SvgWrapper
-                  icon={IconPlugin}
-                  className="rp-overview-group__item__title__icon"
-                />
               </div>
-              {hasContent && (
-                <ul className="rp-overview-group__item__content">
-                  {item.headers?.map(header => (
-                    <li
-                      key={header.id}
-                      className="rp-overview-group__item__content__item"
-                    >
-                      <Link
-                        className="rp-overview-group__item__content__item__link"
-                        href={`${item.link}#${header.id}`}
-                        {...renderInlineMarkdown(header.text)}
-                      ></Link>
-                    </li>
-                  ))}
-                  {item.items?.map(({ link, text }) => {
-                    return (
-                      <li
-                        key={link}
-                        className="rp-overview-group__item__content__item"
-                      >
-                        <Link
-                          className="rp-overview-group__item__content__item__link"
-                          href={link}
-                          {...renderInlineMarkdown(text)}
-                        ></Link>
-                      </li>
-                    );
-                  })}
-                </ul>
-              )}
-            </div>
-          );
-        })}
+            ))}
+          </div>
+        )}
       </div>
     </>
   );

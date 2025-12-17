@@ -31,14 +31,6 @@
       }
     }
 
-    // Special styling for items without content (no headers/items)
-    &--no-content {
-      .rp-overview-group__item__title {
-        width: 100%;
-        flex: 1;
-      }
-    }
-
     @media (max-width: 1280px) {
       flex-direction: column;
       &__title {
@@ -127,6 +119,61 @@
           }
         }
       }
+    }
+  }
+
+  // Grid layout for items without content (no headers/items)
+  &__grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 20px;
+    width: 100%;
+
+    @media (max-width: 1280px) {
+      grid-template-columns: repeat(3, 1fr);
+    }
+
+    @media (max-width: 768px) {
+      grid-template-columns: repeat(2, 1fr);
+    }
+
+    @media (max-width: 480px) {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  &__grid-item {
+    border: 1px solid var(--rp-c-divider-light);
+    border-radius: var(--rp-radius);
+    padding: 16px 20px;
+    background-color: var(--rp-c-bg);
+    transition:
+      border-color 0.2s ease,
+      box-shadow 0.2s ease,
+      background-color 0.2s ease;
+
+    &:hover {
+      border-color: var(--rp-c-brand-light);
+      box-shadow: 0 4px 6px 0 rgba(0, 0, 0, 0.04);
+      background-color: var(--rp-c-bg-soft);
+    }
+
+    &__link,
+    &__text {
+      display: block;
+      font-size: 16px;
+      font-weight: 500;
+      color: var(--rp-c-text-1);
+      text-decoration: none;
+      word-break: break-word;
+
+      &:hover {
+        color: var(--rp-c-brand);
+      }
+    }
+
+    &__text {
+      cursor: default;
     }
   }
 }
