@@ -19,23 +19,21 @@ This component does not accept any props. It automatically reads the last update
 
 ## Related configuration
 
-Configure `lastUpdated` in `rspress.config.ts` to enable this feature, and set formatting options like `timezone` and `format`:
+Enable `lastUpdated` in `rspress.config.ts`:
 
 ```ts title="rspress.config.ts"
 import { defineConfig } from '@rspress/core';
 
 export default defineConfig({
   themeConfig: {
-    lastUpdated: {
-      text: 'Last Updated',
-      format: 'yyyy-MM-dd HH:mm',
-      timezone: 'America/New_York',
-    },
+    lastUpdated: true,
   },
 });
 ```
 
 When `lastUpdated` is enabled, the component will automatically read and format the page metadata for display.
+
+To customize the label or formatting, run `rspress eject` and edit `theme/components/LastUpdated/index.tsx`.
 
 :::tip
 If `lastUpdated: true` is not configured in the default theme, install and register `@rspress/plugin-last-updated`.
