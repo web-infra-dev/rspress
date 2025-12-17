@@ -75,8 +75,6 @@ export function CodeBlockRuntime({
       </ShikiPre>
     ),
     [
-      ShikiPre,
-      Code,
       title,
       lang,
       wrapCode,
@@ -132,7 +130,6 @@ export function CodeBlockRuntime({
     code,
     codeButtonGroupProps,
     containerElementClassName,
-    fallback,
     lang,
     lineNumbers,
     shikiOptions,
