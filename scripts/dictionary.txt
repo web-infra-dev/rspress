@@ -37,6 +37,7 @@ deepmerge
 directorytest
 docgen
 docsite
+domcontentloaded
 envinfo
 estree
 facti
