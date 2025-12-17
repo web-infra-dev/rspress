@@ -3,12 +3,14 @@ import type {
   MdxFlowExpression,
   MdxJsxFlowElement,
   MdxJsxTextElement,
+  MdxjsEsm,
   MdxTextExpression,
 } from 'mdast-util-mdx';
 import remarkGfm from 'remark-gfm';
 import remarkMdx from 'remark-mdx';
 import remarkStringify from 'remark-stringify';
 import { unified } from 'unified';
+import { visit } from 'unist-util-visit';
 
 /**
  * Filter rule format: [specifiers, source]
@@ -55,12 +57,12 @@ export function remarkSplitMdx(
 ): (tree: Root) => void {
   return (tree: Root) => {
     const newChildren: RootContent[] = [];
-    const importMap = buildImportMap(tree);
+    const { importMap, importNodes } = buildImportMap(tree);
+
+    newChildren.push(...importNodes);
 
     for (const node of tree.children) {
-      // Process imports - keep all the import
       if (node.type === 'mdxjsEsm') {
-        newChildren.push(node);
         continue;
       }
 
@@ -126,6 +128,8 @@ function processJsxElement(
   const componentName = getComponentName((node as any).name);
   const isMdxFragment =
     componentName && importMap.get(componentName)?.endsWith('.mdx');
+
+  console.log(componentName, isMdxFragment, importMap);
 
   // MDX fragments are always kept, otherwise check filtering rules
   if (
@@ -507,13 +511,19 @@ function serializeNodeToMarkdown(node: RootContent): string {
  * Build a map of component names to their import sources
  * Example: { Table: '@lynx', Button: 'react' }
  */
-function buildImportMap(tree: Root): Map<string, string> {
+function buildImportMap(tree: Root): {
+  importMap: Map<string, string>;
+  importNodes: Set<MdxjsEsm>;
+} {
   const importMap = new Map<string, string>();
+  const importNodes: Set<MdxjsEsm> = new Set();
 
-  for (const node of tree.children) {
-    if (node.type !== 'mdxjsEsm' || !(node as any).data?.estree) continue;
+  visit(tree, 'mdxjsEsm', node => {
+    const estree = node.data?.estree;
+    if (!estree) {
+      return;
+    }
 
-    const estree = (node as any).data.estree;
     for (const statement of estree.body) {
       if (statement.type !== 'ImportDeclaration') continue;
 
@@ -521,13 +531,14 @@ function buildImportMap(tree: Root): Map<string, string> {
       for (const specifier of statement.specifiers) {
         const localName = specifier.local?.name;
         if (localName) {
-          importMap.set(localName, source);
+          importMap.set(localName, source as string);
+          importNodes.add(node);
         }
       }
     }
-  }
+  });
 
-  return importMap;
+  return { importMap, importNodes };
 }
 
 /**

@@ -1,3 +1,4 @@
+import { createError } from '../../utils';
 import { MarkdownNode, reconciler, TextNode } from './reconciler.js';
 
 // Convert node tree to Markdown string
@@ -125,9 +126,11 @@ export async function renderToMarkdownString(
     false, // isStrictMode
     false, // concurrentUpdatesByDefaultOverride
     '', // identifierPrefix
-    (...args) => {
+    (error, info) => {
       if (process.env.DEBUG) {
-        console.log('Reconciler Error:', ...args);
+        console.error('Reconciler Error:', error, info);
+        const message = 'Reconciler Error:' + error.message;
+        throw new Error(message);
       }
     }, // onUncaughtError
     () => {}, // onCaughtError

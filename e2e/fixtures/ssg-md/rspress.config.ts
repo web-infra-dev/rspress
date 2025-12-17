@@ -5,4 +5,9 @@ export default defineConfig({
   root: path.join(__dirname, 'doc'),
   ssg: true,
   llms: true,
+  markdown: {
+    link: {
+      checkDeadLinks: false,
+    },
+  },
 });

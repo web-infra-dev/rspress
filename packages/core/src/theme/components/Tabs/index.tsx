@@ -122,6 +122,22 @@ export const Tabs = forwardRef(
       return getTabValuesFromChildren(children, values);
     }, [values, children]);
 
+    if (process.env.__SSR_MD__) {
+      return (
+        <>
+          {tabValues.map(({ label, content }) => {
+            return (
+              <>
+                {`\n**${label}**\n\n`}
+                {content}
+                {`\n`}
+              </>
+            );
+          })}
+        </>
+      );
+    }
+
     const [activeIndex, setActiveIndex] = useState(defaultIndex ?? 0);
 
     const [storageIndex, setStorageIndex] = useStorageValue<string>(
@@ -133,8 +149,7 @@ export const Tabs = forwardRef(
 
     return (
       <div className={clsx('rp-tabs', className)} ref={ref}>
-        {/* For __SSR_MD__  markdown content beautify */}
-        {tabValues.length && !process.env.__SSR_MD__ ? (
+        {tabValues.length ? (
           <div
             className="rp-tabs__label rp-tabs__label--no-scrollbar"
             style={{
@@ -206,16 +221,6 @@ export type TabProps = Pick<TabItem, 'label' | 'disabled'> & {
   children: ReactNode;
 };
 
-export function Tab({ children, label }: TabProps): ReactElement {
-  if (process.env.__SSR_MD__) {
-    return (
-      <>
-        {`\n**${label}**\n`}
-        {children}
-        {`\n`}
-      </>
-    );
-  }
-
+export function Tab({ children }: TabProps): ReactElement {
   return <>{children}</>;
 }
