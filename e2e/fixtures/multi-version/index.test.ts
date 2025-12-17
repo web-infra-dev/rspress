@@ -17,25 +17,33 @@ test.describe('Multi version test', async () => {
   });
 
   test('Default version and default language', async ({ page }) => {
-    await page.goto(`http://localhost:${appPort}`);
+    await page.goto(`http://localhost:${appPort}`, {
+      waitUntil: 'networkidle',
+    });
     const h1 = page.locator('h1');
     await expect(h1).toContainText('v1');
   });
 
   test('Not Default version default language', async ({ page }) => {
-    await page.goto(`http://localhost:${appPort}/v2`);
+    await page.goto(`http://localhost:${appPort}/v2`, {
+      waitUntil: 'networkidle',
+    });
     const h1 = page.locator('h1');
     await expect(h1).toContainText('v2');
   });
 
   test('Default version not default language', async ({ page }) => {
-    await page.goto(`http://localhost:${appPort}/zh`);
+    await page.goto(`http://localhost:${appPort}/zh`, {
+      waitUntil: 'networkidle',
+    });
     const h1 = page.locator('h1');
     await expect(h1).toContainText('v1 中文');
   });
 
   test('Not default version not default language', async ({ page }) => {
-    await page.goto(`http://localhost:${appPort}/v2/zh`);
+    await page.goto(`http://localhost:${appPort}/v2/zh`, {
+      waitUntil: 'networkidle',
+    });
     const h1 = page.locator('h1');
     await expect(h1).toContainText('v2 中文');
   });

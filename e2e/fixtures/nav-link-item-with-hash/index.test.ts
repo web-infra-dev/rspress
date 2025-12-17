@@ -17,7 +17,9 @@ test.describe('basic test', async () => {
   });
 
   test('Navigate with an hash as link', async ({ page }) => {
-    await page.goto(`http://localhost:${appPort}/`);
+    await page.goto(`http://localhost:${appPort}/`, {
+      waitUntil: 'networkidle',
+    });
 
     await page.locator('.rp-nav-menu__item a').first().click();
     expect(page.url()).toContain('/#pageA');
@@ -31,7 +33,9 @@ test.describe('basic test', async () => {
   }) => {
     await page.setViewportSize({ width: 375, height: 812 });
 
-    await page.goto(`http://localhost:${appPort}/`);
+    await page.goto(`http://localhost:${appPort}/`, {
+      waitUntil: 'networkidle',
+    });
 
     await page.locator('.rp-nav-hamburger').first().click();
     const navScreen = page.locator('.rp-nav-screen');

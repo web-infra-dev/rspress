@@ -2,8 +2,8 @@ import { expect, test } from '@playwright/test';
 import { getPort, killProcess, runDevCommand } from '../../utils/runCommands';
 
 test.describe('title-number test', async () => {
-  let appPort;
-  let app;
+  let appPort: number;
+  let app: Awaited<ReturnType<typeof runDevCommand>> | null;
   test.beforeAll(async () => {
     const appDir = __dirname;
     appPort = await getPort();
@@ -17,7 +17,9 @@ test.describe('title-number test', async () => {
   });
 
   test('Index page', async ({ page }) => {
-    await page.goto(`http://localhost:${appPort}`);
+    await page.goto(`http://localhost:${appPort}`, {
+      waitUntil: 'networkidle',
+    });
     const h3Elements = page.locator('h3');
     await expect(h3Elements).toHaveText([
       '#-22222222',

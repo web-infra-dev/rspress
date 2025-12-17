@@ -17,7 +17,9 @@ test.describe('home footer test', async () => {
   });
 
   test('custom home footer', async ({ page }) => {
-    await page.goto(`http://localhost:${appPort}`);
+    await page.goto(`http://localhost:${appPort}`, {
+      waitUntil: 'networkidle',
+    });
     const footer = page.locator('footer');
     await expect(footer).toBeVisible();
     await expect(footer.locator('a')).toBeVisible();

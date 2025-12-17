@@ -21,7 +21,9 @@ test.describe('search code blocks test', async () => {
   test('search index should include content of code blocks', async ({
     page,
   }) => {
-    await page.goto(`http://localhost:${appPort}`);
+    await page.goto(`http://localhost:${appPort}`, {
+      waitUntil: 'networkidle',
+    });
 
     // inline code block
     const suggestItems0 = await searchInPage(

@@ -41,7 +41,9 @@ test.describe('hmr test', async () => {
   });
 
   test('Test page', async ({ page }) => {
-    await page.goto(`http://localhost:${appPort}/guide/test.html`);
+    await page.goto(`http://localhost:${appPort}/guide/test.html`, {
+      waitUntil: 'networkidle',
+    });
 
     // basic
     const helloParagraph = page.locator('p', { hasText: 'Hello world' });
