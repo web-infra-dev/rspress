@@ -1,3 +1,14 @@
+:root {
+  --rp-c-overview-group-bg: var(--rp-c-bg-soft);
+  --rp-c-overview-group-bg-hover: color-mix(
+    in srgb,
+    var(--rp-c-brand-lighter) 30%,
+    transparent
+  );
+  --rp-c-overview-group-border:  
+;
+}
+
 .rp-overview-group {
   width: 100%;
   display: flex;
@@ -20,11 +31,7 @@
       border-color: var(--rp-c-brand-light);
       box-shadow: 0 4px 6px 0 rgba(0, 0, 0, 0.04);
       .rp-overview-group__item__title {
-        background-color: color-mix(
-          in srgb,
-          var(--rp-c-brand-lighter) 30%,
-          transparent
-        ) !important;
+        background-color: var(--rp-c-overview-group-bg-hover);
         .rp-overview-group__item__title__icon {
           color: var(--rp-c-brand-dark);
         }
@@ -47,7 +54,7 @@
       padding: 16px 20px;
       font-size: 18px;
       font-weight: 600;
-      background-color: var(--rp-c-bg-soft);
+      background-color: var(--rp-c-overview-group-bg);
       color: var(--rp-c-text-1);
 
       overflow: hidden;
@@ -146,7 +153,7 @@
     border: 1px solid var(--rp-c-divider-light);
     border-radius: var(--rp-radius);
     padding: 16px 20px;
-    background-color: var(--rp-c-bg);
+    background-color: var(--rp-c-overview-group-bg);
     transition:
       border-color 0.2s ease,
       box-shadow 0.2s ease,
@@ -155,7 +162,7 @@
     &:hover {
       border-color: var(--rp-c-brand-light);
       box-shadow: 0 4px 6px 0 rgba(0, 0, 0, 0.04);
-      background-color: var(--rp-c-bg-soft);
+      background-color: var(--rp-c-overview-group-bg-hover);
     }
 
     &__link,

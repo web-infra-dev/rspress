@@ -2,6 +2,7 @@ import { Link, renderInlineMarkdown } from '@theme';
 import './index.scss';
 import type { Header } from '@rspress/core';
 import { FallbackHeading, SvgWrapper } from '@theme';
+import { useMemo } from 'react';
 import IconPlugin from './icons/plugin.svg';
 
 export interface GroupItem {
@@ -19,17 +20,21 @@ export interface Group {
 }
 
 export const OverviewGroup = ({ group }: { group: Group }) => {
-  // Separate items into those with content and those without
-  const itemsWithContent = group.items.filter(
-    item =>
-      (item.headers && item.headers.length > 0) ||
-      (item.items && item.items.length > 0),
-  );
-  const itemsWithoutContent = group.items.filter(
-    item =>
-      !(item.headers && item.headers.length > 0) &&
-      !(item.items && item.items.length > 0),
-  );
+  const { itemsWithContent, itemsWithoutContent } = useMemo(() => {
+    // Separate items into those with content and those without
+    const itemsWithContent = group.items.filter(
+      item =>
+        (item.headers && item.headers.length > 0) ||
+        (item.items && item.items.length > 0),
+    );
+    const itemsWithoutContent = group.items.filter(
+      item =>
+        !(item.headers && item.headers.length > 0) &&
+        !(item.items && item.items.length > 0),
+    );
+
+    return { itemsWithContent, itemsWithoutContent };
+  }, [group]);
 
   return (
     <>
