@@ -1,4 +1,3 @@
-import { createError } from '../../utils';
 import { MarkdownNode, reconciler, TextNode } from './reconciler.js';
 
 // Convert node tree to Markdown string
