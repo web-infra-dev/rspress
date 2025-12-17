@@ -2,8 +2,8 @@ import { expect, test } from '@playwright/test';
 import { getPort, killProcess, runDevCommand } from '../../utils/runCommands';
 
 test.describe('basic test', async () => {
-  let appPort;
-  let app;
+  let appPort: number;
+  let app: Awaited<ReturnType<typeof runDevCommand>> | null;
   test.beforeAll(async () => {
     const appDir = __dirname;
     appPort = await getPort();
@@ -17,7 +17,9 @@ test.describe('basic test', async () => {
   });
 
   test('all links should be normalized', async ({ page }) => {
-    await page.goto(`http://localhost:${appPort}/base/guide`);
+    await page.goto(`http://localhost:${appPort}/base/guide`, {
+      waitUntil: 'networkidle',
+    });
     const links = page.locator('.rspress-doc ul li a');
     const count = await links.count();
     const urls = await Promise.all(

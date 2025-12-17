@@ -7,8 +7,8 @@ import {
 } from '../../utils/runCommands';
 
 test.describe('basic test', async () => {
-  let appPort;
-  let app;
+  let appPort: number;
+  let app: Awaited<ReturnType<typeof runPreviewCommand>> | null;
   test.afterAll(async () => {
     if (app) {
       await killProcess(app);
@@ -21,12 +21,15 @@ test.describe('basic test', async () => {
     cleanUrls: boolean,
   ) {
     if (isI18n) {
-      await page.goto(`http://localhost:${appPort}/base/zh/public-asset-test`);
+      await page.goto(`http://localhost:${appPort}/base/zh/public-asset-test`, {
+        waitUntil: 'networkidle',
+      });
     } else {
-      await page.goto(`http://localhost:${appPort}/base/public-asset-test`);
+      await page.goto(`http://localhost:${appPort}/base/public-asset-test`, {
+        waitUntil: 'networkidle',
+      });
     }
 
-    await page.waitForLoadState('networkidle');
     const links = await page.locator('.rspress-doc p>a').all();
     expect(links.length).toBe(6);
 

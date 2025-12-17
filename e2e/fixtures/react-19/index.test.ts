@@ -29,7 +29,9 @@ test.describe('React 19 test', async () => {
   });
 
   test('Index page', async ({ page }) => {
-    await page.goto(`http://localhost:${appPort}`);
+    await page.goto(`http://localhost:${appPort}`, {
+      waitUntil: 'networkidle',
+    });
     const h1 = page.locator('h1');
     await expect(h1).toContainText('Hello world');
     const body = page.locator('body');

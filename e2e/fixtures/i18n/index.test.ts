@@ -208,6 +208,7 @@ test.describe('i18n test', async () => {
       hasText: 'English',
     });
     await englishOption.click();
+    await page.waitForURL(/\/en\//);
 
     const newLanguageSwitcher = page
       .locator('.rp-nav-menu__item')

@@ -18,7 +18,9 @@ test.describe('search keyboard', async () => {
   });
 
   test('keyboard navigation should work', async ({ page }) => {
-    await page.goto(`http://localhost:${appPort}/base/`);
+    await page.goto(`http://localhost:${appPort}/base/`, {
+      waitUntil: 'networkidle',
+    });
 
     // Open search panel
     const searchButton = await page.$('.rp-search-button');
@@ -81,7 +83,9 @@ test.describe('search keyboard', async () => {
   });
 
   test('ESC key should close search panel', async ({ page }) => {
-    await page.goto(`http://localhost:${appPort}/base/`);
+    await page.goto(`http://localhost:${appPort}/base/`, {
+      waitUntil: 'networkidle',
+    });
 
     // Open search panel
     const searchButton = await page.$('.rp-search-button');
@@ -110,7 +114,9 @@ test.describe('search keyboard', async () => {
   test('keyboard shortcut (Cmd+K / Ctrl+K) should toggle search panel', async ({
     page,
   }) => {
-    await page.goto(`http://localhost:${appPort}/base/`);
+    await page.goto(`http://localhost:${appPort}/base/`, {
+      waitUntil: 'networkidle',
+    });
 
     // Verify search panel is closed initially
     let searchPanel = await page.$('.rp-search-panel__mask');

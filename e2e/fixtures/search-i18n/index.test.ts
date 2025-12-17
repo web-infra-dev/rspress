@@ -19,7 +19,9 @@ test.describe('search i18n test', async () => {
   });
 
   test('should update search index when language changed', async ({ page }) => {
-    await page.goto(`http://localhost:${appPort}`);
+    await page.goto(`http://localhost:${appPort}`, {
+      waitUntil: 'networkidle',
+    });
 
     const suggestItems1 = await searchInPage(page, 'Button');
     expect(await suggestItems1[0].textContent()).toContain('Button en');
@@ -33,7 +35,7 @@ test.describe('search i18n test', async () => {
     // Switch language to Chinese
     await langMenu.click();
     await page.getByRole('link', { name: '简体中文' }).click();
-    await page.waitForLoadState();
+    await page.waitForURL(/\/zh\//);
 
     const suggestItems2 = await searchInPage(page, 'Button');
     expect(await suggestItems2[0].textContent()).toContain('Button 中文');
@@ -42,7 +44,7 @@ test.describe('search i18n test', async () => {
     // Switch language to English
     await langMenu.click();
     await page.getByRole('link', { name: 'English' }).click();
-    await page.waitForLoadState();
+    await page.waitForURL(/\/index\.html/);
 
     const suggestItems3 = await searchInPage(page, 'Button');
     expect(await suggestItems3[0].textContent()).toContain('Button en');
