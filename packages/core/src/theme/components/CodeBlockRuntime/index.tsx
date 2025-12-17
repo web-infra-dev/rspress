@@ -71,7 +71,7 @@ export function CodeBlockRuntime({
         codeButtonGroupProps={codeButtonGroupProps}
         className="shiki css-variables"
       >
-        <Code>{code}</Code>
+        <Code style={{ padding: '1rem 1.25rem' }}>{code}</Code>
       </ShikiPre>
     ),
     [
