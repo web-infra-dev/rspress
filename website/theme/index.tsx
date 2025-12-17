@@ -87,7 +87,7 @@ function getCustomMDXComponent() {
     return (
       <>
         <H1 {...props}>
-          {children} {<Tag tag={tag} />}
+          {children} <Tag tag={tag} />
         </H1>
         <LlmsContainer>
           <LlmsCopyButton />

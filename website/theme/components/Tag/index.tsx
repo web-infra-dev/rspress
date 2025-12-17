@@ -4,14 +4,27 @@ import {
 } from '@rspress/core/theme-original';
 
 export const Tag = ({ tag }: { tag?: string }) => {
-  if (tag === 'non-ejectable') {
-    return <BasicBadge text="non-ejectable" type="danger" />;
+  if (!tag) {
+    return null;
   }
-  if (tag === 'eject-only') {
-    return <BasicBadge text="eject-only" type="warning" />;
-  }
-  if (tag === 'ejectable') {
-    return <BasicBadge text="ejectable" type="tip" />;
-  }
-  return <BasicTag tag={tag} />;
+
+  // Handle comma-separated tags
+  const tags = tag.includes(',') ? tag.split(',').map(t => t.trim()) : [tag];
+
+  return (
+    <>
+      {tags.map(t => {
+        if (t === 'non-ejectable') {
+          return <BasicBadge key={t} text="non-ejectable" type="danger" />;
+        }
+        if (t === 'eject-only') {
+          return <BasicBadge key={t} text="eject-only" type="warning" />;
+        }
+        if (t === 'ejectable') {
+          return <BasicBadge key={t} text="ejectable" type="tip" />;
+        }
+        return <BasicTag key={t} tag={t} />;
+      })}
+    </>
+  );
 };
