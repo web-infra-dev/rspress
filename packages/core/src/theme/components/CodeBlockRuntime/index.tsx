@@ -59,7 +59,7 @@ export function CodeBlockRuntime({
 }: CodeBlockRuntimeProps) {
   // getCustomMDXComponent is stable for theme rendering
   const mdxComponents = useMemo(() => getCustomMDXComponent(), []);
-  const { pre: ShikiPre, code: Code } = mdxComponents;
+  const { pre: ShikiPre, code: Code, ...otherMdxComponents } = mdxComponents;
   const fallback = useMemo(
     () => (
       <ShikiPre
@@ -88,14 +88,8 @@ export function CodeBlockRuntime({
   );
   const [child, setChild] = useState<ReactNode | null>(fallback);
   const codeRef = useLatest(code);
-  const prevCodeRef = useRef(code);
 
   useEffect(() => {
-    if (prevCodeRef.current !== code) {
-      prevCodeRef.current = code;
-      setChild(fallback);
-    }
-
     const highlightCode = async () => {
       const hast = await codeToHast(code, {
         lang,
@@ -108,12 +102,6 @@ export function CodeBlockRuntime({
       if (codeRef.current.length !== code.length) {
         return;
       }
-
-      const {
-        pre: ShikiPre,
-        code: Code,
-        ...otherMdxComponents
-      } = getCustomMDXComponent();
 
       const reactNode = toJsxRuntime(hast, {
         jsx,
