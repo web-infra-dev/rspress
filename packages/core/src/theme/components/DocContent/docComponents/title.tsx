@@ -1,4 +1,3 @@
-import {} from '@theme';
 import clsx from 'clsx';
 import type React from 'react';
 
