@@ -72,7 +72,7 @@ export default defineConfig({
       verificationContent: '8F5BFE50E65777F1',
     }),
     pluginOg({
-      domain: 'https://deploy-preview-2835--rspress-v2.netlify.app',
+      domain: 'https://v2.rspress.rs',
       maxTitleSizePerLine: 28,
     }),
   ],
