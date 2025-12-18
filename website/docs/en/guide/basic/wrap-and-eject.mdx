@@ -1,6 +1,6 @@
 # Customize themes with wrap and eject
 
-This page follows Rspress [custom theme](/ui/custom-theme) and Docusaurus [Swizzling](https://docusaurus.io/docs/swizzling) ideas to explain how to override built-in components and clarify the difference between wrap and eject.
+In simple terms: `theme/index.tsx` can re-export and replace built-in components. After that you have two paths—**wrap (no source edits, pass props/slots)** or **eject (copy source, edit freely)**. See [custom theme](/ui/custom-theme) for more examples.
 
 ## `theme/index.tsx`: override built-ins via re-export
 
@@ -24,17 +24,17 @@ export * from '@rspress/core/theme-original';
 
 Wrap means extending the re-exported components with extra props, e.g., using `Layout` slots:
 
-- No need to touch theme source; upgrading the default theme only requires maintaining your custom props/slots.
-- Best for light tweaks, slot fills, or replacing a few same-name components.
+- No source edits: just wrap in `theme/index.tsx` and pass props/slots to built-ins.
+- Great for light tweaks: style nits, slot content, or swapping a few same-name components.
 
 ## Eject: copy source then edit directly
 
 Eject uses the CLI `rspress eject` to copy `@rspress/core/theme-original` source into your project so you can edit it directly:
 
-- Produces an editable local copy, enabling deep customization of internal logic.
-- Decouples from upstream updates; you must sync changes manually when upgrading.
+- Gives you source: `rspress eject` copies theme source locally so you can change internals.
+- You maintain it: decoupled from upstream; you must sync updates yourself when upgrading.
 
 ## Recommendations
 
-- **Prefer Wrap**: wrap + re-export in `theme/index.tsx`, leveraging props/slots/same-name exports for overrides with low upgrade cost.
-- **Consider Eject**: only when Wrap can’t cover deep changes (e.g., altering internal logic) should you run `rspress eject`.
+- **Prefer Wrap**: safer, easier to upgrade, covers most style/slot needs.
+- **Consider Eject**: only when you must change internals that Wrap can’t cover.
