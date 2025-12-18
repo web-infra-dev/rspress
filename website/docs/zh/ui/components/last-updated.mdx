@@ -19,20 +19,18 @@ import { LastUpdated } from '@rspress/core/theme';
 
 ## 相关配置
 
-在 `rspress.config.ts` 中开启 `lastUpdated`，并设置 `timezone`/`language` 等格式化选项。
+在 `rspress.config.ts` 中开启 `lastUpdated`：
 
 ```ts title="rspress.config.ts"
 import { defineConfig } from '@rspress/core';
 
 export default defineConfig({
   themeConfig: {
-    lastUpdated: {
-      text: '最近更新',
-      format: 'yyyy-MM-dd HH:mm',
-      timezone: 'Asia/Shanghai',
-    },
+    lastUpdated: true,
   },
 });
 ```
 
 当启用 `lastUpdated` 时，组件会自动读取页面元数据并格式化显示。
+
+如需自定义展示文案或时间格式，可通过 `rspress eject LastUpdated` 导出并修改 `theme/components/LastUpdated/index.tsx`。
