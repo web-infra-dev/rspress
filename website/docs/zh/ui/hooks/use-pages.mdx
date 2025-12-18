@@ -12,11 +12,12 @@ import { useLang, usePages } from '@rspress/core/runtime';
 const useBlogPages = () => {
   const { pages } = usePages();
   const lang = useLang();
+  const defaultDate = new Date('1970-01-01');
 
   const getDate = (page: (typeof pages)[number]) =>
     page.frontmatter?.date
       ? new Date(page.frontmatter.date as string)
-      : new Date(0);
+      : defaultDate;
 
   const blogPages = pages
     .filter((page) => page.lang === lang)
