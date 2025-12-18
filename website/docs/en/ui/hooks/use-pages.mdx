@@ -1,6 +1,6 @@
 # usePages
 
-`usePages` returns metadata for all pages in the site and is handy for building overview pages such as a blog index.
+`usePages` returns metadata for all pages in the site and is handy for building custom [overview pages](/guide/advanced/overview-page) such as a blog index.
 
 - **Type:** `() => { pages: PageData['pages'] }`
 
@@ -33,4 +33,4 @@ const useBlogPages = () => {
 };
 ```
 
-> `usePages` does not support HMR; refresh the page after adding or removing documents to update the list.
+> `usePages` does not support HMR; restart the dev server after adding or removing documents to update the list.

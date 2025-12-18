@@ -1,6 +1,6 @@
 # usePages
 
-`usePages` 返回站点内所有页面的元信息列表，常用于编写博客或概览类页面。
+`usePages` 返回站点内所有页面的元信息列表，常用于编写自定义 [预览页](/guide/advanced/overview-page)。
 
 - **类型：** `() => { pages: PageData['pages'] }`
 
@@ -33,4 +33,4 @@ const useBlogPages = () => {
 };
 ```
 
-> `usePages` 暂不支持 HMR，如有文档增删需刷新页面以更新数据。
+> `usePages` 暂不支持 HMR，如有文档增删需重启 dev 以更新数据。
