@@ -4,7 +4,7 @@
 
 - **Type:** `() => { pages: PageData['pages'] }`
 
-The following example shows how to fetch the blog list for the current language on `/blog/index` and sort it by the `date` field in frontmatter (newest first):
+Below is a real-world example showing how to retrieve blog posts located at `/blog/*` in the current language from the `/blog/index` page, sorted in descending order by the `date` field in Frontmatter:
 
 ```tsx
 import { useLang, usePages } from '@rspress/core/runtime';

@@ -4,7 +4,7 @@
 
 - **类型：** `() => { pages: PageData['pages'] }`
 
-下面的示例展示了如何在 `/blog/index` 页面获取当前语言下的博客文章列表，并按 Frontmatter 中的 `date` 字段倒序排序：
+下面是一个用户使用的真实示例，展示了如何在 `/blog/index` 页面获取位于 `/blog/*` 且是当前语言下的博客文章列表，并按 Frontmatter 中的 `date` 字段倒序排序：
 
 ```tsx
 import { useLang, usePages } from '@rspress/core/runtime';
