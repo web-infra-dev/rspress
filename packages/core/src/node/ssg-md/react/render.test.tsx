@@ -242,7 +242,7 @@ console.log('Hello, world!');
       ),
     ).toMatchInlineSnapshot(`
       "
-      \`\`\`\`mdx 
+      \`\`\`\`mdx
       # Hello World
       \`\`\`tsx
       console.log('Hello, world!');
