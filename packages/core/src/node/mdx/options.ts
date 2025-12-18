@@ -81,6 +81,7 @@ export async function createMDXOptions(options: {
                 checkDeadLinks: false,
                 autoPrefix: true,
               },
+              __base: config?.base,
             }
           : {
               // we do cleanUrls in runtime side
@@ -103,8 +104,9 @@ export async function createMDXOptions(options: {
           globalComponents,
         },
       ],
-      ...remarkPluginsFromConfig,
-      ...remarkPluginsFromPlugins,
+      ...(isSsgMd
+        ? []
+        : [...remarkPluginsFromConfig, ...remarkPluginsFromPlugins]),
     ].filter(Boolean) as PluggableList,
     ...(isSsgMd
       ? {}

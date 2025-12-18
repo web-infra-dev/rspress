@@ -1,0 +1,32 @@
+import { Tabs, Tab } from '@theme';
+
+# Code blocks
+
+Rspress V2 uses [Shiki](https://shiki.style) for syntax highlighting at compile time, which means better runtime performance.
+
+When using code blocks in multiple languages, the corresponding language is automatically detected at compile time, and the runtime bundle size does not increase. For supported programming languages, refer to the [Shiki supported languages list](https://shiki.style/languages).
+
+````mdx
+```tsx
+
+```
+````
+
+<Tabs>
+<Tab label="foo.mdx">
+
+````mdx
+```tsx
+
+```
+````
+
+</Tab>
+<Tab label="_tsx-component.tsx">
+
+```tsx
+
+```
+
+</Tab>
+</Tabs>

@@ -93,7 +93,7 @@ export default defineConfig({
               ...commonRsdoctorConfig,
               output: {
                 ...commonRsdoctorConfig.output,
-                ...(config.name === 'web' && { reportDir: './doc_build/web' }),
+                reportDir: `./doc_build/diff-rsdoctor/${config.name}`,
               },
             }),
           );

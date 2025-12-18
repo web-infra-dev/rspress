@@ -122,6 +122,22 @@ export const Tabs = forwardRef(
       return getTabValuesFromChildren(children, values);
     }, [values, children]);
 
+    if (process.env.__SSR_MD__) {
+      return (
+        <>
+          {tabValues.map(({ label, content }) => {
+            return (
+              <>
+                {`\n**${label}**\n\n`}
+                {content}
+                {`\n`}
+              </>
+            );
+          })}
+        </>
+      );
+    }
+
     const [activeIndex, setActiveIndex] = useState(defaultIndex ?? 0);
 
     const [storageIndex, setStorageIndex] = useStorageValue<string>(
