@@ -73,6 +73,7 @@ export default defineConfig({
     }),
     pluginOg({
       domain: 'https://deploy-preview-2835--rspress-v2.netlify.app',
+      maxTitleSizePerLine: 28,
     }),
   ],
   builderConfig: {
