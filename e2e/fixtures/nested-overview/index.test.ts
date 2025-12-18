@@ -30,10 +30,20 @@ test.describe('Nested overview page', async () => {
     );
     await expect(overviewHeadings).toHaveText(['Level 2']);
 
-    const overviewGroups = page.locator(
+    // Items can be in either standard layout or grid layout
+    const standardItems = page.locator(
       '.rp-overview .rp-overview-group__item__title > a',
     );
-    await expect(overviewGroups).toHaveText(['Level 2', 'two', 'Level 3']);
+    const gridItems = page.locator(
+      '.rp-overview .rp-overview-group__grid-item__link',
+    );
+
+    // Get text from both selectors and combine
+    const standardText = await standardItems.allTextContents();
+    const gridText = await gridItems.allTextContents();
+    const allText = [...standardText, ...gridText];
+
+    expect(allText).toEqual(['two', 'Level 2', 'Level 3']);
   });
 
   test('Should load nested overview page correctly - level 2', async ({
@@ -50,10 +60,21 @@ test.describe('Nested overview page', async () => {
     );
     await expect(overviewHeadings).toHaveText(['two', 'Level 3']);
 
-    const overviewGroups = page.locator(
+    // Items can be in either standard layout or grid layout
+    const standardItems = page.locator(
       '.rp-overview .rp-overview-group__item__title > a',
     );
-    await expect(overviewGroups).toHaveText(['two', 'Level 3', 'three']);
+    const gridItems = page.locator(
+      '.rp-overview .rp-overview-group__grid-item__link',
+    );
+
+    // Get text from both selectors and combine
+    const standardText = await standardItems.allTextContents();
+    const gridText = await gridItems.allTextContents();
+    const allText = [...standardText, ...gridText];
+
+    // Items with headers (standard layout) come first, then items without headers (grid layout)
+    expect(allText).toEqual(['two', 'three', 'Level 3']);
   });
 
   test('Should load nested overview page correctly - level 3', async ({
@@ -70,9 +91,19 @@ test.describe('Nested overview page', async () => {
     );
     await expect(overviewHeadings).toHaveText(['three']);
 
-    const overviewGroups = page.locator(
+    // Items can be in either standard layout or grid layout
+    const standardItems = page.locator(
       '.rp-overview .rp-overview-group__item__title > a',
     );
-    await expect(overviewGroups).toHaveText(['three']);
+    const gridItems = page.locator(
+      '.rp-overview .rp-overview-group__grid-item__link',
+    );
+
+    // Get text from both selectors and combine
+    const standardText = await standardItems.allTextContents();
+    const gridText = await gridItems.allTextContents();
+    const allText = [...standardText, ...gridText];
+
+    expect(allText).toEqual(['three']);
   });
 });

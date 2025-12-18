@@ -69,12 +69,12 @@ test.describe('Auto nav and sidebar test', async () => {
       [
         'Basic config',
         'Theme config',
-        'Front matter config',
         'Build config',
+        'Front matter config',
         'Extname config',
         'Nested',
-        'Runtime API',
         'Components',
+        'Runtime API',
         'Commands',
         'Single',
         'Section a',
@@ -186,7 +186,7 @@ test.describe('Auto nav and sidebar test', async () => {
       .map(text => text.trim())
       .filter(Boolean);
     expect(itemTitleTexts.join(',')).toEqual(
-      ['Runtime API', 'Components'].join(','),
+      ['Components', 'Runtime API'].join(','),
     );
 
     const links = page.locator(
