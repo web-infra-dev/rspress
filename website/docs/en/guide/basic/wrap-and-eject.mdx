@@ -1,0 +1,40 @@
+# Customize themes with wrap and eject
+
+This page follows Rspress [custom theme](/ui/custom-theme) and Docusaurus [Swizzling](https://docusaurus.io/docs/swizzling) ideas to explain how to override built-in components and clarify the difference between wrap and eject.
+
+## `theme/index.tsx`: override built-ins via re-export
+
+Rspress loads the theme from `theme/index.tsx` at the project root. You can use **ESM re-export** here to override default exports or same-name components; any internal usage will prefer your re-exported version:
+
+```tsx title="theme/index.tsx"
+import { Layout as BasicLayout } from '@rspress/core/theme-original';
+
+const Layout = () => <BasicLayout beforeNavTitle={<div>some content</div>} />;
+
+export { Layout };
+
+export * from '@rspress/core/theme-original';
+```
+
+- `Layout` is the theme entry; Rspress auto-loads it. By exporting a same-name component you can wrap or replace the default.
+- `export * from '@rspress/core/theme-original'` keeps other default exports available while your overrides take effect.
+- This capability underpins all customization: you may simply wrap defaults or swap in your own implementations before re-exporting.
+
+## Wrap: add props/slots on top of re-exports
+
+Wrap means extending the re-exported components with extra props, e.g., using `Layout` slots:
+
+- No need to touch theme source; upgrading the default theme only requires maintaining your custom props/slots.
+- Best for light tweaks, slot fills, or replacing a few same-name components.
+
+## Eject: copy source then edit directly
+
+Eject uses the CLI `rspress eject` to copy `@rspress/core/theme-original` source into your project so you can edit it directly:
+
+- Produces an editable local copy, enabling deep customization of internal logic.
+- Decouples from upstream updates; you must sync changes manually when upgrading.
+
+## Recommendations
+
+- **Prefer Wrap**: wrap + re-export in `theme/index.tsx`, leveraging props/slots/same-name exports for overrides with low upgrade cost.
+- **Consider Eject**: only when Wrap can’t cover deep changes (e.g., altering internal logic) should you run `rspress eject`.
