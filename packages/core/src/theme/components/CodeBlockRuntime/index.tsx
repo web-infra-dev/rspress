@@ -1,7 +1,14 @@
 import type { CodeBlockProps } from '@theme';
 import { getCustomMDXComponent } from '@theme';
 import { toJsxRuntime } from 'hast-util-to-jsx-runtime';
-import { Fragment, type ReactNode, useEffect, useRef, useState } from 'react';
+import {
+  Fragment,
+  type ReactNode,
+  useEffect,
+  useMemo,
+  useRef,
+  useState,
+} from 'react';
 import { jsx, jsxs } from 'react/jsx-runtime';
 import {
   type BundledLanguage,
@@ -47,9 +54,37 @@ export function CodeBlockRuntime({
   children: _,
   containerElementClassName,
   onRendered,
-  ...otherProps
+  wrapCode,
+  lineNumbers,
 }: CodeBlockRuntimeProps) {
-  const [child, setChild] = useState<ReactNode | null>(null);
+  // getCustomMDXComponent is stable for theme rendering
+  const mdxComponents = useMemo(() => getCustomMDXComponent(), []);
+  const { pre: ShikiPre, code: Code, ...otherMdxComponents } = mdxComponents;
+  const fallback = useMemo(
+    () => (
+      <ShikiPre
+        title={title}
+        lang={lang}
+        wrapCode={wrapCode}
+        lineNumbers={lineNumbers}
+        containerElementClassName={containerElementClassName}
+        codeButtonGroupProps={codeButtonGroupProps}
+        className="shiki css-variables"
+      >
+        <Code style={{ padding: '1rem 1.25rem' }}>{code}</Code>
+      </ShikiPre>
+    ),
+    [
+      title,
+      lang,
+      wrapCode,
+      lineNumbers,
+      containerElementClassName,
+      codeButtonGroupProps,
+      code,
+    ],
+  );
+  const [child, setChild] = useState<ReactNode | null>(fallback);
   const codeRef = useLatest(code);
 
   useEffect(() => {
@@ -66,12 +101,6 @@ export function CodeBlockRuntime({
         return;
       }
 
-      const {
-        pre: ShikiPre,
-        code: Code,
-        ...otherMdxComponents
-      } = getCustomMDXComponent();
-
       const reactNode = toJsxRuntime(hast, {
         jsx,
         jsxs,
@@ -84,8 +113,9 @@ export function CodeBlockRuntime({
               lang={lang}
               containerElementClassName={containerElementClassName}
               codeButtonGroupProps={codeButtonGroupProps}
+              wrapCode={wrapCode}
+              lineNumbers={lineNumbers}
               {...props}
-              {...otherProps}
             />
           ),
           code: props => <Code {...props} />,
@@ -96,7 +126,16 @@ export function CodeBlockRuntime({
       setChild(reactNode);
     };
     void highlightCode();
-  }, [lang, code, shikiOptions]);
+  }, [
+    code,
+    codeButtonGroupProps,
+    containerElementClassName,
+    lang,
+    lineNumbers,
+    shikiOptions,
+    title,
+    wrapCode,
+  ]);
 
   useEffect(() => {
     if (child) {
