@@ -1,11 +1,11 @@
 
 <svg width="1200px" height="630px" viewBox="0 0 1200 630" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
     <defs>
-        <path d="M0,0 L1200,0 L1200,630 L0,630 L0,0 Z" id="path-0wlbrcsiyn-1"></path>
+        <path d="M0,0 L1200,0 L1200,630 L0,630 L0,0 Z" id="path-7u9acbtnlj-1"></path>
     </defs>
     <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
-        <g id="Rspress-og-image" xlink:href="#path-0wlbrcsiyn-1">
-            <use fill="#FFFDF1" fill-rule="evenodd" xlink:href="#path-0wlbrcsiyn-1"></use>
+        <g id="Rspress-og-image" xlink:href="#path-7u9acbtnlj-1">
+            <use fill="#FFFDF1" fill-rule="evenodd" xlink:href="#path-7u9acbtnlj-1"></use>
             <text id="Rspress" font-family="Inter-Regular, Inter" font-size="50" font-weight="normal" fill="#323233">
                 <tspan x="512" y="546">Rspress</tspan>
             </text>
@@ -15,10 +15,10 @@
                 <tspan x="351" y="595">Rspack-based static site generator</tspan>
             </text>
             <text id="{{line1}}" font-family="Inter-Regular_opsz200000_wght2BC0000, Inter" font-size="72" font-weight="bold" fill="#323233">
-                <tspan x="106" y="165">{{line1}}</tspan>
+                <tspan x="50" y="150">{{line1}}</tspan>
             </text>
             <text id="{{line2}}" font-family="Inter-Regular_opsz200000_wght2BC0000, Inter" font-size="72" font-weight="bold" fill="#323233">
-                <tspan x="105" y="261">{{line2}}</tspan>
+                <tspan x="50" y="246">{{line2}}</tspan>
             </text>
         </g>
     </g>
