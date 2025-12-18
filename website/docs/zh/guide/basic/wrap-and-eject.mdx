@@ -1,0 +1,33 @@
+# Wrap 和 eject
+
+本篇结合 Rspress 的[自定义主题](/zh/ui/custom-theme)与 Docusaurus 的 [Swizzling](https://docusaurus.io/docs/swizzling) 思想，说明如何覆盖默认主题组件，并厘清 Wrap 与 Eject 的区别。
+
+## Wrap：通过 `theme/index.tsx` 包裹并重导出
+
+Wrap 的核心是复用 `@rspress/core/theme-original`，在自定义的 `theme/index.tsx` 中通过 **ESM 重导出**替换默认组件，同时向内置组件传递额外的 props：
+
+```tsx title="theme/index.tsx"
+import { Layout as BasicLayout } from '@rspress/core/theme-original';
+
+const Layout = () => <BasicLayout beforeNavTitle={<div>some content</div>} />;
+
+export { Layout };
+
+export * from '@rspress/core/theme-original';
+```
+
+- `Layout` 作为主题入口被 Rspress 自动消费，你可以在这里传递插槽 props（如 `beforeNavTitle`）或替换某个同名组件。
+- 通过 `export * from '@rspress/core/theme-original'` 进行 ESM 重导出，保持默认主题的其它导出可用，仅对你覆写的组件生效。
+- 这种方式无需接触主题源码，升级默认主题时只需调整你自定义的 props 或组件即可。
+
+## Eject：拉取源码后直接改动
+
+当需要深入修改默认主题源码时，可以使用 CLI 命令 `rspress eject` 将内置主题文件复制到本地。此后你直接编辑拷贝出的源码，不再依赖重导出。
+
+- 优点：可以对任何细节进行完全控制。
+- 代价：与上游主题解耦，后续升级需手动同步变更。
+
+## 选择建议
+
+- **优先使用 Wrap**：通过 `theme/index.tsx` 包裹 + ESM 重导出，利用 props/同名组件替换实现定制，升级成本低。
+- **再考虑 Eject**：只有在 Wrap 无法覆盖的深度改动场景下（例如需要修改内部实现逻辑）再执行 `rspress eject`。
