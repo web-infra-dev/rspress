@@ -13,6 +13,11 @@ const useBlogPages = () => {
   const { pages } = usePages();
   const lang = useLang();
 
+  const getDate = (page: (typeof pages)[number]) =>
+    page.frontmatter?.date
+      ? new Date(page.frontmatter.date as string)
+      : new Date(0);
+
   const blogPages = pages
     .filter((page) => page.lang === lang)
     .filter(
@@ -20,13 +25,7 @@ const useBlogPages = () => {
         page.routePath.includes('/blog/') && !page.routePath.endsWith('/blog/'),
     )
     .sort((a, b) => {
-      const dateA = a.frontmatter?.date
-        ? new Date(a.frontmatter?.date as string)
-        : new Date(0);
-      const dateB = b.frontmatter?.date
-        ? new Date(b.frontmatter?.date as string)
-        : new Date(0);
-      return dateB.getTime() - dateA.getTime();
+      return getDate(b).getTime() - getDate(a).getTime();
     });
 
   return blogPages;
