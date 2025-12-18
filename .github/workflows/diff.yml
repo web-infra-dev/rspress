@@ -47,5 +47,5 @@ jobs:
         uses: web-infra-dev/rsdoctor-action@main
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
-          file_path: 'website/doc_build/web/rsdoctor-data.json'
+          file_path: 'website/doc_build/diff-rsdoctor/**/rsdoctor-data.json'
           target_branch: 'main'
