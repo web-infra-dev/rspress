@@ -1,0 +1,36 @@
+# usePages
+
+`usePages` returns metadata for all pages in the site and is handy for building overview pages such as a blog index.
+
+- **Type:** `() => { pages: PageData['pages'] }`
+
+The following example shows how to fetch the blog list for the current language on `/blog/index` and sort it by the `date` field in frontmatter (newest first):
+
+```tsx
+import { useLang, usePages } from '@rspress/core/runtime';
+
+const useBlogPages = () => {
+  const { pages } = usePages();
+  const lang = useLang();
+
+  const blogPages = pages
+    .filter((page) => page.lang === lang)
+    .filter(
+      (page) =>
+        page.routePath.includes('/blog/') && !page.routePath.endsWith('/blog/'),
+    )
+    .sort((a, b) => {
+      const dateA = a.frontmatter?.date
+        ? new Date(a.frontmatter?.date as string)
+        : new Date(0);
+      const dateB = b.frontmatter?.date
+        ? new Date(b.frontmatter?.date as string)
+        : new Date(0);
+      return dateB.getTime() - dateA.getTime();
+    });
+
+  return blogPages;
+};
+```
+
+> `usePages` does not support HMR; refresh the page after adding or removing documents to update the list.
