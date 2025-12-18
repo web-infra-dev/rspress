@@ -10,6 +10,8 @@ tag: deprecated
 
 The returned `PageData` object includes information such as the page title, route path, frontmatter, and site-wide data. This hook is available on both the server and client, making it suitable for SSR and SSG-safe rendering.
 
+> Capabilities have been split into [`usePage`](./use-page), [`usePages`](./use-pages), and [`useSite`](./use-site); prefer these dedicated hooks as needed.
+
 ```tsx
 import { usePageData } from '@rspress/core/runtime';
 
