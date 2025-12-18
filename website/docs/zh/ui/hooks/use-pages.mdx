@@ -1,0 +1,36 @@
+# usePages
+
+`usePages` 返回站点内所有页面的元信息列表，常用于编写自定义 [预览页](/guide/advanced/overview-page)。
+
+- **类型：** `() => { pages: PageData['pages'] }`
+
+下面是一个用户使用的真实示例，展示了如何在 `/blog/index` 页面获取位于 `/blog/*` 且是当前语言下的博客文章列表，并按 Frontmatter 中的 `date` 字段倒序排序：
+
+```tsx
+import { useLang, usePages } from '@rspress/core/runtime';
+
+const useBlogPages = () => {
+  const { pages } = usePages();
+  const lang = useLang();
+  const defaultDate = new Date('1970-01-01');
+
+  const getDate = (page: (typeof pages)[number]) =>
+    page.frontmatter?.date
+      ? new Date(page.frontmatter.date as string)
+      : defaultDate;
+
+  const blogPages = pages
+    .filter((page) => page.lang === lang)
+    .filter(
+      (page) =>
+        page.routePath.includes('/blog/') && !page.routePath.endsWith('/blog/'),
+    )
+    .sort((a, b) => {
+      return getDate(b).getTime() - getDate(a).getTime();
+    });
+
+  return blogPages;
+};
+```
+
+> `usePages` 暂不支持 HMR，如有文档增删需重启 dev 以更新数据。
