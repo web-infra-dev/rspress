@@ -60,6 +60,8 @@ function createInitialSidebar(
   rawSidebarData: SidebarData,
   activeMatcher: (link: string) => boolean,
 ) {
+  // do not modify singleton global sidebar - #2910
+  rawSidebarData = structuredClone(rawSidebarData);
   const matchCache = new WeakMap<
     | NormalizedSidebarGroup
     | SidebarItem
