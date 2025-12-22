@@ -66,18 +66,13 @@ const OverviewSearchInput = ({
 export function Overview(props: {
   content?: React.ReactNode;
   groups?: Group[];
-  defaultGroupTitle?: string;
   overviewHeaders?: number[];
 }) {
   const {
     siteData,
     page: { routePath, title, frontmatter },
   } = usePageData();
-  const {
-    content,
-    groups: customGroups,
-    defaultGroupTitle: _ = 'Others',
-  } = props;
+  const { content, groups: customGroups } = props;
   const t = useI18n();
 
   // Added state for search query
