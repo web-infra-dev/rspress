@@ -54,7 +54,7 @@
     "mdast-util-mdx-jsx": "^3.2.0",
     "react": "^19.2.3",
     "react-dom": "^19.2.3",
-    "react-router-dom": "^7.10.1",
+    "react-router-dom": "^7.11.0",
     "rsbuild-plugin-publint": "^0.3.3",
     "typescript": "^5.8.2",
     "unified": "^11.0.5"

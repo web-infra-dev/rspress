@@ -97,7 +97,7 @@
     "react-dom": "^19.2.3",
     "react-lazy-with-preload": "^2.2.1",
     "react-reconciler": "0.33.0",
-    "react-router-dom": "^7.10.1",
+    "react-router-dom": "^7.11.0",
     "rehype-external-links": "^3.0.0",
     "rehype-raw": "^7.0.0",
     "remark-gfm": "^4.0.1",
