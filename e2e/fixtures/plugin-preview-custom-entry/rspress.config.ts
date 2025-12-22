@@ -8,6 +8,8 @@ export default defineConfig({
   plugins: [
     pluginPreview({
       iframeOptions: {
+        // Provide a different port for the test to avoid port conflicts and crashes.
+        devPort: 7788,
         customEntry: ({ demoPath }) => {
           if (demoPath.endsWith('.vue')) {
             return `
