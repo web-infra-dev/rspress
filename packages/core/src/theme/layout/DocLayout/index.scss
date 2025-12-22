@@ -67,7 +67,6 @@
     position: relative;
     width: 100%;
     overflow-x: auto;
-    min-height: 60vh;
     padding: var(--rp-content-padding-y) var(--rp-content-padding-x);
   }
 
@@ -98,7 +97,6 @@
   }
 
   &__doc-container {
-    min-height: 60vh;
     padding: var(--rp-content-padding-y) var(--rp-content-padding-x);
   }
 
