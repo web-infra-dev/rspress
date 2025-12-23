@@ -82,6 +82,7 @@ Mdxjs
 mdxrs
 menlo
 metastring
+microhei
 modularly
 napi
 networkidle
@@ -120,6 +121,7 @@ Qrcode
 rebranded
 rehype
 renderable
+resvg
 rsbuild
 rsdoctor
 rsfamily
