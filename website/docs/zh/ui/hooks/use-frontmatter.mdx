@@ -1,0 +1,18 @@
+# useFrontmatter
+
+`useFrontmatter` 返回当前页面的 Frontmatter，对读取自定义元信息更友好。
+
+- **类型：** `() => { frontmatter: FrontMatterMeta }`
+
+示例：当页面 Frontmatter 标记为 `beta` 时展示徽标。
+
+```tsx
+import { useFrontmatter } from '@rspress/core/runtime';
+
+export default function BetaBadge() {
+  const { frontmatter } = useFrontmatter();
+  return frontmatter.beta ? <span>Beta</span> : null;
+}
+```
+
+> 若还需要其他页面元信息（如标题、路由、目录等），可配合 [`usePage`](./use-page) 一起使用。

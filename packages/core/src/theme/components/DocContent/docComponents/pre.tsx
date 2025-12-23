@@ -21,7 +21,8 @@ export function ShikiPre({
       containerElementClassName={containerElementClassName}
       codeButtonGroupProps={codeButtonGroupProps}
     >
-      <pre {...otherProps} />
+      {/* data-lang is a meta for SSG-MD */}
+      <pre {...otherProps} data-lang={lang} data-title={title} />
     </CodeBlock>
   );
 }

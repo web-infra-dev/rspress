@@ -17,7 +17,9 @@ test.describe('basic test', async () => {
   });
 
   test('Index page', async ({ page }) => {
-    await page.goto(`http://localhost:${appPort}`);
+    await page.goto(`http://localhost:${appPort}`, {
+      waitUntil: 'networkidle',
+    });
     await expect(page.locator('h1')).toContainText('Hello world');
     const headerAnchor = page.locator('.rp-header-anchor').first();
     await expect(headerAnchor).toHaveAttribute('href', '#hello-world');
@@ -47,7 +49,9 @@ test.describe('basic test', async () => {
   });
 
   test('Hover over social links', async ({ page }) => {
-    await page.goto(`http://localhost:${appPort}`);
+    await page.goto(`http://localhost:${appPort}`, {
+      waitUntil: 'networkidle',
+    });
     const socialLinks = page.locator('.rp-social-links').first();
     await socialLinks.hover();
     await expect(
@@ -56,7 +60,9 @@ test.describe('basic test', async () => {
   });
 
   test('globalStyles should work', async ({ page }) => {
-    await page.goto(`http://localhost:${appPort}`);
+    await page.goto(`http://localhost:${appPort}`, {
+      waitUntil: 'networkidle',
+    });
     const link = page.locator('.rp-doc a').first();
     await expect(link).toHaveCSS('color', 'rgb(255, 165, 0)');
   });

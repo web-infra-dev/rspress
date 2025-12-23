@@ -9,6 +9,7 @@ import {
   slash,
 } from '@rspress/shared';
 import { logger } from '@rspress/shared/logger';
+import picocolors from 'picocolors';
 import { PUBLIC_DIR } from '../constants';
 import { absolutePathToRoutePath, addRoutePrefix } from '../route/RoutePage';
 import { createError } from '../utils';
@@ -27,6 +28,8 @@ import {
   readJson,
 } from './utils';
 
+const AUTO_NAV_SIDEBAR_ERROR_PREFIX = '[auto-nav-sidebar] ';
+
 function getFileKey(realPath: string | undefined, docsDir: string) {
   return realPath
     ? slash(relative(docsDir, realPath).replace(extname(realPath), ''))
@@ -42,10 +45,11 @@ async function fsDirToMetaItems(
   try {
     subItems = await readdir(workDir);
   } catch (e) {
-    logger.error(
-      `Failed to read directory: ${workDir}, maybe it does not exist. Please check it in "_meta.json".`,
+    const metaFilePath = join(workDir, '_meta.json');
+
+    throw createError(
+      `${AUTO_NAV_SIDEBAR_ERROR_PREFIX}Failed to read directory: ${picocolors.yellow(workDir)}, maybe it does not exist. Please check it in ${picocolors.cyan(metaFilePath)}. (${e})`,
     );
-    throw e;
   }
   // If there exists a file with the same name of the directory folder
   // we don't need to generate SideMeta for this single file
@@ -152,7 +156,7 @@ async function metaItemToSidebarItem(
   }
 
   throw createError(
-    `Unknown meta item type: ${(metaItem as any).type}, please check it in "${join(workDir, '_meta.json')}".`,
+    `${AUTO_NAV_SIDEBAR_ERROR_PREFIX}Unknown meta item type: ${(metaItem as any).type}, please check it in "${join(workDir, '_meta.json')}".`,
   );
 }
 
@@ -170,7 +174,7 @@ async function detectFilePath(absolutePath: string, extensions: string[]) {
   }
 
   throw createError(
-    `The file extension "${ext}" is not supported, please use one of the following extensions: ${extensions.join(', ')}`,
+    `${AUTO_NAV_SIDEBAR_ERROR_PREFIX}The file extension "${ext}" is not supported, please use one of the following extensions: ${extensions.join(', ')}`,
   );
 }
 
@@ -192,10 +196,11 @@ async function metaFileItemToSidebarItem(
   }
 
   const { name, context, label, overviewHeaders, tag } = metaItem;
+  const metaFilePath = join(workDir, '_meta.json');
 
   if (typeof name !== 'string') {
     throw createError(
-      `The file name "${name}" is not a string, please check it in "${join(workDir, '_meta.json')}".`,
+      `${AUTO_NAV_SIDEBAR_ERROR_PREFIX}The file name "${name}" is not a string, please check it in ${picocolors.cyan(metaFilePath)}.`,
     );
   }
 
@@ -206,7 +211,9 @@ async function metaFileItemToSidebarItem(
     absolutePathWithExt = await detectFilePath(absolutePath, extensions);
   } catch {
     throw createError(
-      `The file "${absolutePath}" does not exist, please check it in "${join(workDir, '_meta.json')}".`,
+      `${AUTO_NAV_SIDEBAR_ERROR_PREFIX}${picocolors.white('Missing page file:')} ${picocolors.yellow(
+        `"${absolutePath}"`,
+      )}\n${picocolors.white('Please check')} ${picocolors.cyan(join(workDir, '_meta.json'))}.`,
     );
   }
 
@@ -465,7 +472,7 @@ function metaCustomLinkItemToSidebarItem(
 
   const { label } = metaItem;
   throw createError(
-    `The custom link "${label}" does not have a link, please check it in "${join(workDir, '_meta.json')}".`,
+    `${AUTO_NAV_SIDEBAR_ERROR_PREFIX}The custom link "${label}" does not have a link, please check it in "${join(workDir, '_meta.json')}".`,
   );
 }
 

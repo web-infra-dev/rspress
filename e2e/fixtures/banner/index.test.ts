@@ -3,7 +3,7 @@ import { getPort, killProcess, runDevCommand } from '../../utils/runCommands';
 
 test.describe('tabs-component test', async () => {
   let appPort: number;
-  let app;
+  let app: Awaited<ReturnType<typeof runDevCommand>> | null;
 
   test.beforeAll(async () => {
     const appDir = __dirname;
@@ -18,7 +18,9 @@ test.describe('tabs-component test', async () => {
   });
 
   test('Banner close hides banner and persists state', async ({ page }) => {
-    await page.goto(`http://localhost:${appPort}`);
+    await page.goto(`http://localhost:${appPort}`, {
+      waitUntil: 'networkidle',
+    });
     await page.waitForSelector('.rp-banner');
 
     const closeButton = page.locator('.rp-banner__close');

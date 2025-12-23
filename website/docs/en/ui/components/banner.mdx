@@ -1,0 +1,102 @@
+---
+overviewHeaders: []
+tag: eject-only
+---
+
+# Banner
+
+`Banner` displays a notification banner at the top of the page, supporting link navigation and close functionality.
+
+## Usage
+
+Use the Banner component by customizing the Layout:
+
+```tsx title="theme/index.tsx"
+import { Layout as BasicLayout, Banner } from '@rspress/core/theme';
+import { useLang } from '@rspress/core/runtime';
+
+const Layout = () => {
+  const lang = useLang();
+  return (
+    <BasicLayout
+      beforeNav={
+        <Banner
+          href="/"
+          message={
+            lang === 'en'
+              ? '🚧 Rspress 2.0 document is under development'
+              : '🚧 Rspress 2.0 文档还在开发中'
+          }
+        />
+      }
+    />
+  );
+};
+
+export { Layout };
+```
+
+## Props
+
+```ts
+type BannerProps = {
+  /** Whether to display the Banner, defaults to true */
+  display?: boolean;
+  /** Custom CSS class name */
+  className?: string;
+} & (
+  | {
+      /** How to store the closed state, defaults to 'localStorage' */
+      storage?: 'localStorage' | 'sessionStorage' | false;
+      /** Key name for storing the closed state, defaults to 'rp-banner-closed' */
+      storageKey?: string;
+      /** Link to navigate when clicked */
+      href: string;
+      /** Message content to display */
+      message: string | ReactNode;
+    }
+  | {
+      /** Fully customized content */
+      customChildren: ReactNode;
+    }
+);
+```
+
+### display
+
+- **Type:** `boolean`
+- **Default:** `true`
+
+Controls whether the Banner is displayed.
+
+### storage
+
+- **Type:** `'localStorage' | 'sessionStorage' | false`
+- **Default:** `'localStorage'`
+
+How to store the closed state after the user closes the Banner. Set to `false` to not store.
+
+### storageKey
+
+- **Type:** `string`
+- **Default:** `'rp-banner-closed'`
+
+Key name for storing the closed state.
+
+### href
+
+- **Type:** `string`
+
+Link to navigate when clicking the Banner.
+
+### message
+
+- **Type:** `string | ReactNode`
+
+Message content displayed in the Banner.
+
+### customChildren
+
+- **Type:** `ReactNode`
+
+Fully customized content for the Banner. When using this property, `href` and `message` will be ignored.

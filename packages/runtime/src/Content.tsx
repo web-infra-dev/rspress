@@ -1,21 +1,6 @@
-import { memo, type ReactNode, Suspense, useMemo } from 'react';
+import { type ReactNode, Suspense, useMemo } from 'react';
 import { useLocation } from 'react-router-dom';
-import siteData from 'virtual-site-data';
-import { useViewTransition } from './hooks/useViewTransition';
 import { pathnameToRouteService } from './route';
-
-function TransitionContentImpl(props: { el: ReactNode }) {
-  let element = props.el;
-  if (siteData?.themeConfig?.enableContentAnimation) {
-    element = useViewTransition(props.el);
-  }
-  return element;
-}
-
-const TransitionContent = memo(
-  TransitionContentImpl,
-  (prevProps, nextProps) => prevProps.el === nextProps.el,
-);
 
 // TODO: fallback should be a loading spinner
 export const Content = ({ fallback = <></> }: { fallback?: ReactNode }) => {
@@ -25,9 +10,5 @@ export const Content = ({ fallback = <></> }: { fallback?: ReactNode }) => {
     return route?.element;
   }, [pathname]);
 
-  return (
-    <Suspense fallback={fallback}>
-      <TransitionContent el={matchedElement} />
-    </Suspense>
-  );
+  return <Suspense fallback={fallback}>{matchedElement}</Suspense>;
 };

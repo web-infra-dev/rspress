@@ -2,13 +2,15 @@
 tag: deprecated
 ---
 
-# usePageData
+# ~~usePageData~~
 
 `usePageData` 公开当前页面的元数据，方便在自定义组件或工具函数中直接读取。
 
 - **类型：** `() => PageData`
 
 返回的 `PageData` 对象包含页面标题、路由路径、Frontmatter 以及站点级数据，在服务端和客户端均可使用，适合 SSR 与 SSG 场景。
+
+> 相关功能已拆分为 [`usePage`](./use-page)、[`usePages`](./use-pages) 与 [`useSite`](./use-site)，推荐按需使用对应的组合。
 
 ```tsx
 import { usePageData } from '@rspress/core/runtime';

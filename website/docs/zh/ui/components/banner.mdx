@@ -1,0 +1,102 @@
+---
+overviewHeaders: []
+tag: eject-only
+---
+
+# Banner
+
+`Banner` 用于在页面顶部显示通知横幅，支持链接跳转和关闭功能。
+
+## 用法
+
+通过自定义 Layout 来使用 Banner 组件：
+
+```tsx title="theme/index.tsx"
+import { Layout as BasicLayout, Banner } from '@rspress/core/theme';
+import { useLang } from '@rspress/core/runtime';
+
+const Layout = () => {
+  const lang = useLang();
+  return (
+    <BasicLayout
+      beforeNav={
+        <Banner
+          href="/"
+          message={
+            lang === 'en'
+              ? '🚧 Rspress 2.0 document is under development'
+              : '🚧 Rspress 2.0 文档还在开发中'
+          }
+        />
+      }
+    />
+  );
+};
+
+export { Layout };
+```
+
+## Props
+
+```ts
+type BannerProps = {
+  /** 是否显示 Banner，默认为 true */
+  display?: boolean;
+  /** 自定义 CSS 类名 */
+  className?: string;
+} & (
+  | {
+      /** 存储关闭状态的方式，默认为 'localStorage' */
+      storage?: 'localStorage' | 'sessionStorage' | false;
+      /** 存储关闭状态的键名，默认为 'rp-banner-closed' */
+      storageKey?: string;
+      /** 点击跳转的链接 */
+      href: string;
+      /** 显示的消息内容 */
+      message: string | ReactNode;
+    }
+  | {
+      /** 完全自定义的内容 */
+      customChildren: ReactNode;
+    }
+);
+```
+
+### display
+
+- **类型：** `boolean`
+- **默认值：** `true`
+
+控制 Banner 是否显示。
+
+### storage
+
+- **类型：** `'localStorage' | 'sessionStorage' | false`
+- **默认值：** `'localStorage'`
+
+用户关闭 Banner 后，存储关闭状态的方式。设置为 `false` 则不存储。
+
+### storageKey
+
+- **类型：** `string`
+- **默认值：** `'rp-banner-closed'`
+
+存储关闭状态的键名。
+
+### href
+
+- **类型：** `string`
+
+点击 Banner 跳转的链接。
+
+### message
+
+- **类型：** `string | ReactNode`
+
+Banner 显示的消息内容。
+
+### customChildren
+
+- **类型：** `ReactNode`
+
+完全自定义 Banner 的内容，使用此属性时 `href` 和 `message` 将被忽略。

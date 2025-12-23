@@ -16,6 +16,11 @@
     "name": "components"
   },
   {
+    "type": "dir",
+    "label": "运行时组件",
+    "name": "runtime-components"
+  },
+  {
     "type": "section-header",
     "label": "Hooks"
   },

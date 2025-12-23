@@ -59,6 +59,11 @@ body {
     'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Fira Sans', 'Droid Sans',
     'Helvetica Neue', sans-serif;
   --rp-font-family-mono: Menlo, Monaco, Consolas, 'Courier New', monospace;
+
+  /* The text-autospace CSS property allows you to specify the space applied between Chinese/Japanese/Korean (CJK) and non-CJK characters. */
+  /* @see https://developer.mozilla.org/en-US/docs/Web/CSS/Reference/Properties/text-autospace */
+  /* If you don't like it, you can cancel it by using `body { text-autospace: unset; }` */
+  text-autospace: normal;
 }
 
 :root #nprogress .bar {

@@ -18,7 +18,9 @@ test.describe('search code blocks test', async () => {
   });
 
   test('should search by algolia', async ({ page }) => {
-    await page.goto(`http://localhost:${appPort}`);
+    await page.goto(`http://localhost:${appPort}`, {
+      waitUntil: 'networkidle',
+    });
 
     const searchButton = page.locator('.DocSearch.DocSearch-Button');
     await searchButton.click();
@@ -30,7 +32,9 @@ test.describe('search code blocks test', async () => {
   test('should have correct crawler selectors for Algolia', async ({
     page,
   }) => {
-    await page.goto(`http://localhost:${appPort}`);
+    await page.goto(`http://localhost:${appPort}`, {
+      waitUntil: 'networkidle',
+    });
 
     // Test lvl0 selector - active navigation menu item
     const navMenuItem = page.locator(

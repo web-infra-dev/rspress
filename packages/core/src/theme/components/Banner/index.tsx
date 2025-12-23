@@ -74,7 +74,9 @@ export const Banner = forwardRef<HTMLDivElement, BannerProps>(
 
     const [height, setHeight] = useState(36);
     const ref = mergeRefs(forwardedRef, element => {
-      element?.offsetHeight && setHeight(element?.offsetHeight);
+      if (element?.offsetHeight) {
+        setHeight(element?.offsetHeight);
+      }
     });
     const [disable, setDisable] = useState(false);
 

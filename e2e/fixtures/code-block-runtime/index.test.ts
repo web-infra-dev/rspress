@@ -1,5 +1,11 @@
 import { expect, test } from '@playwright/test';
-import { getPort, killProcess, runDevCommand } from '../../utils/runCommands';
+import {
+  getPort,
+  killProcess,
+  runBuildCommand,
+  runDevCommand,
+  runPreviewCommand,
+} from '../../utils/runCommands';
 
 test.describe('<CodeBlockRuntime />', async () => {
   let appPort: number;
@@ -59,6 +65,44 @@ test.describe('<CodeBlockRuntime />', async () => {
       await expect(shikiContainer.locator('code').first()).toHaveText(
         "console.log('Highlighted'); \nconsole.log('Highlighted');\nconsole.log('Not highlighted');",
       );
+    }
+  });
+});
+
+test.describe('<CodeBlockRuntime /> SSG', async () => {
+  let appPort: number;
+  let app: Awaited<ReturnType<typeof runPreviewCommand>>;
+  test.beforeAll(async () => {
+    const appDir = __dirname;
+    appPort = await getPort();
+    await runBuildCommand(appDir);
+    app = await runPreviewCommand(appDir, appPort);
+  });
+
+  test.afterAll(async () => {
+    if (app) {
+      await killProcess(app);
+    }
+  });
+
+  test('should render code from static HTML when JavaScript is disabled', async ({
+    browser,
+  }) => {
+    const context = await browser.newContext({ javaScriptEnabled: false });
+    const page = await context.newPage();
+    try {
+      await page.goto(`http://localhost:${appPort}`, {
+        waitUntil: 'domcontentloaded',
+      });
+
+      const containers = page.locator('div.language-js');
+      await expect(containers).toHaveCount(2);
+      const codeElement = containers
+        .locator('.rp-codeblock__content pre code')
+        .first();
+      await expect(codeElement).toHaveText("console.log('Hello CodeBlock!');");
+    } finally {
+      await context.close();
     }
   });
 });

@@ -112,6 +112,7 @@ export class PluginDriver {
   }
 
   private async normalizeConfig() {
+    this.#config.root ??= 'docs';
     this.#config.ssg ??= true;
     this.#config.llms ??= false;
     this.#config.base = addTrailingSlash(

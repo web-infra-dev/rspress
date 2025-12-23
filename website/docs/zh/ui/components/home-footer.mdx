@@ -1,0 +1,40 @@
+---
+overviewHeaders: []
+tag: eject-only
+---
+
+# HomeFooter
+
+该组件是 [首页](/guide/basic/home-page) 的一部分，`HomeFooter` 用于在首页底部渲染页脚信息。
+
+## 用法
+
+```mdx title="index.mdx" preview
+import { HomeFooter } from '@rspress/core/theme';
+
+<HomeFooter />
+```
+
+该组件不接受任何 props，会自动从主题配置中读取 `footer.message` 内容。
+
+## 配置
+
+在 `rspress.config.ts` 中配置 footer 信息：
+
+```ts title="rspress.config.ts"
+import { defineConfig } from '@rspress/core';
+
+export default defineConfig({
+  themeConfig: {
+    footer: {
+      message: 'Copyright © 2024 Your Company',
+    },
+  },
+});
+```
+
+## 工作原理
+
+- 组件从 `themeConfig.footer.message` 读取页脚内容
+- 如果未配置 `message`，组件不会渲染任何内容
+- `message` 支持 HTML 字符串

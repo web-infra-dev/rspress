@@ -113,6 +113,7 @@ export function pluginPreview(options?: Options): RspressPlugin {
         },
         tools: {
           rspack: {
+            lazyCompilation: false,
             watchOptions: {
               ignored: /\.git/,
             },

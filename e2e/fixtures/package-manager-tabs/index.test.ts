@@ -18,7 +18,9 @@ test.describe('tabs-component test', async () => {
   });
 
   test('Index page', async ({ page }) => {
-    await page.goto(`http://localhost:${appPort}`);
+    await page.goto(`http://localhost:${appPort}`, {
+      waitUntil: 'networkidle',
+    });
 
     await page.waitForSelector('.rp-tabs__label__item');
     const tabs = page.locator('.rp-tabs__label__item');

@@ -1,0 +1,37 @@
+---
+overviewHeaders: []
+tag: eject-only
+---
+
+# Root
+
+`Root` 是整个应用的包装组件，包裹所有内容（包括 Layout 和全局 UI 组件）。
+
+它的源代码如下：
+
+```tsx title="Root.tsx"
+export function Root({ children }: RootProps) {
+  return <>{children}</>;
+}
+```
+
+## 用法
+
+通过 eject 来使用它，用于包裹自定义的 Provider：
+
+```tsx title="theme/components/Root/index.tsx"
+import type { RootProps } from '@rspress/core/theme';
+
+export function Root({ children }: RootProps) {
+  return <YourProvider>{children}</YourProvider>;
+}
+```
+
+## Props
+
+### children
+
+- **类型：** `ReactNode`
+- **必填：** 是
+
+需要渲染的子元素，包含整个应用的内容。

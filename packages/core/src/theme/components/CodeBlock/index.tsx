@@ -69,6 +69,10 @@ export function CodeBlock({
   codeButtonGroupProps,
   children,
 }: CodeBlockProps) {
+  if (process.env.__SSR_MD__) {
+    return <>{children}</>;
+  }
+
   const { codeWrap, toggleCodeWrap, copyElementRef } =
     useCodeButtonGroup(wrapCodeProp);
   return (
