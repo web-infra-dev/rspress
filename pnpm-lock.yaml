@@ -1750,8 +1750,8 @@ importers:
         specifier: ^1.0.3
         version: 1.0.3(@rspress/core@packages+core)
       rspress-plugin-og:
-        specifier: npm:@soonit/rspress-plugin-og@0.1.1
-        version: '@soonit/rspress-plugin-og@0.1.1(@rspress/core@packages+core)'
+        specifier: npm:@soonit/rspress-plugin-og@0.1.2
+        version: '@soonit/rspress-plugin-og@0.1.2(@rspress/core@packages+core)'
       tm-themes:
         specifier: 1.10.13
         version: 1.10.13
@@ -3423,8 +3423,8 @@ packages:
   '@socket.io/component-emitter@3.1.2':
     resolution: {integrity: sha512-9BCxFwvbGg/RsZK9tjXd8s4UcwR0MWeFQ1XEKIQVVvAGJyINdrqKMcTRyLoK8Rse1GjzLV9cwjWV1olXRWEXVA==}
 
-  '@soonit/rspress-plugin-og@0.1.1':
-    resolution: {integrity: sha512-dL031RGOc5XWAu7iySrOSENNDe1iV30Zp/mp3MCdjrz6ejafuKKjuNdJ7skyFCn9uPITsGID2hN2QB1xhkw5tg==}
+  '@soonit/rspress-plugin-og@0.1.2':
+    resolution: {integrity: sha512-tQbuxWEvzN6wQt0m5krWuBhvVoNyjEKf7y3w/FNpyJCD+7mUFqTqG+JyyRhqKAvOvZbJ1hKMRuLnb2ARwSLjWQ==}
     engines: {node: '>=20'}
     peerDependencies:
       '@rspress/core': ^2.0.0-rc.1 || ^2.0.0
@@ -9132,7 +9132,7 @@ snapshots:
 
   '@socket.io/component-emitter@3.1.2': {}
 
-  '@soonit/rspress-plugin-og@0.1.1(@rspress/core@packages+core)':
+  '@soonit/rspress-plugin-og@0.1.2(@rspress/core@packages+core)':
     dependencies:
       '@resvg/resvg-js': 2.6.2
       '@rspress/core': link:packages/core
