@@ -1,10 +1,35 @@
-# 用 wrap 和 eject 定制主题
+# 主题定制
 
 本篇用更直白的方式说明：通过 `theme/index.tsx` 重导出可以替换 Rspress 内置组件，然后有两条路——**wrap（不改源码，传 props/插槽）** 和 **eject（复制源码，直接改）**。可参考 [自定义主题](/zh/ui/custom-theme) 里的示例。
 
 ## `theme/index.tsx`：重导出覆盖内置组件
 
 Rspress 通过项目根目录的 `theme/index.tsx` 加载主题。你可以在这里通过 **ESM 重导出**覆写默认导出或同名组件，所有 Rspress 内部引用的内置组件都会优先使用你重导出的版本：
+
+```tree
+.
+├── rspress.config.ts
+├── src
+│   ├── components
+│   │   ├── FileTreeRender.tsx
+│   │   ├── Tree
+│   │   │   ├── Expand.tsx
+│   │   │   ├── FileIcon.tsx
+│   │   │   ├── Tree.tsx
+│   │   │   ├── TreeContext.tsx
+│   │   │   ├── TreeFile.tsx
+│   │   │   ├── TreeFolder.tsx
+│   │   │   ├── TreeFolderIcon.tsx
+│   │   │   ├── TreeIndents.tsx
+│   │   │   ├── TreeStatusIcon.tsx
+│   │   │   ├── index.less
+│   │   │   └── index.tsx
+│   │   ├── helpers.ts
+│   │   └── presets.ts
+│   ├── index.ts
+│   └── parser.ts
+└── tsconfig.json
+```
 
 ```tsx title="theme/index.tsx"
 import { Layout as BasicLayout } from '@rspress/core/theme-original';
