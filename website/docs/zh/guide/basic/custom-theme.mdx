@@ -1,0 +1,99 @@
+# 自定义主题
+
+1. 对于 CSS，Rspress 提供了 [CSS 变量](#css-variables) 和 [BEM 类名](#bem-classname)进行定制。
+
+2. 对于 JS / React，Rspress 基于 ESM 重导出覆盖实现了一套运行时接口，支持对内置组件进行修改或替换，实现自己的首页、侧边栏、搜索组件等。
+
+   在此之上有两种模式：
+   - [**wrap**](#wrap)：通过 props / 插槽来对 Rspress 内置的组件进行 **包装** 并增强。
+   - [**eject**](#eject)：通过 [`rspress eject`](../../api/commands.mdx#rspress-eject) 命令将源码 **拷贝** 到本地直接修改并覆盖。
+
+下面会根据主题定制化的程度会依次进行介绍。
+
+## CSS 变量 \{#css-variables}
+
+Rspress 暴露了一些常用的 CSS 变量，相比重写 Rspress 内置的 React 组件，覆盖 CSS 变量实现定制化更简单也更易维护。你可以在 [UI - CSS 变量](../../ui/vars.mdx) 页面查看这些 CSS 变量，并通过：
+
+import { Tabs, Tab } from '@theme';
+
+<Tabs>
+<Tab label="theme/index.tsx">
+
+```tsx
+import './index.css';
+export * from '@rspress/core/theme-original';
+```
+
+</Tab>
+<Tab label="theme/index.css">
+```css
+/* 复制 CSS 变量代码到这里来进行样式覆盖 */
+```
+</Tab>
+</Tabs>
+
+## BEM 类名 \{#bem-classname}
+
+Rspress 内置组件均使用 BEM 命名规范。你可以使用这些类名进行样式覆盖，覆盖方式和 [CSS 变量](#css-variables) 一致。
+
+```css
+.rp-[component-name]__[element-name]--[modifier-name] {
+  /* 样式 */
+}
+```
+
+例如：
+
+```css
+.rp-nav {
+}
+.rp-link {
+}
+.rp-codeblock {
+}
+.rp-codeblock__title {
+}
+.rp-codeblock__description {
+}
+```
+
+## `theme/index.tsx`：ESM 重导出覆盖内置组件
+
+默认情况下，你需要在项目根目录下创建一个 `theme` 目录，然后在 `theme` 目录下创建一个 `index.ts` 或者 `index.tsx` 文件，该文件用于导出主题配置。
+
+```txt
+└── theme
+    └── index.tsx
+```
+
+你可以使用如下的方式来书写 `theme/index.tsx` 文件:
+
+```tsx title="theme/index.tsx"
+import { Layout as BasicLayout } from '@rspress/core/theme-original';
+
+const Layout = () => <BasicLayout beforeNavTitle={<div>some content</div>} />;
+
+export { Layout }; //[!code highlight]
+export * from '@rspress/core/theme-original'; //[!code highlight]
+```
+
+通过 **ESM 重导出** 覆写内置的组件，所有 Rspress 内部引用的内置组件都会优先使用你重导出的版本。
+
+## Wrap：在重导出的基础上传 props/插槽 \{#wrap}
+
+Wrap 指在重导出的组件上增加 props 进行定制，例如利用 Layout 的插槽：
+
+- 不改源码：只在 `theme/index.tsx` 里包一层，给内置组件传 props/插槽。
+- 轻量改动：样式微调、在插槽里加内容、或用同名导出替换少量组件。
+
+## Eject：复制源码后直接修改 \{#eject}
+
+Eject 指使用 CLI `rspress eject` 将 `@rspress/core/theme-original` 的源码拷贝到本地，然后直接改动：
+
+- 有源码：`rspress eject` 把主题源码拷到本地，直接改内部实现。
+- 需维护：与上游解耦，后续升级要自己同步改动。
+
+## 选择建议
+
+- **优先使用 Wrap**：低风险、易升级，能满足大多数样式和插槽需求。
+- **再考虑 Eject**：只有当需要改内部逻辑、Wrap 覆盖不了时，再执行 `rspress eject`。
