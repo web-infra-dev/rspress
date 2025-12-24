@@ -22,7 +22,7 @@ jobs:
     runs-on: ${{ matrix.os }}
     strategy:
       matrix:
-        node-version: [20.x]
+        node-version: [22.x]
         os: [macos-14] # M1 Mac
 
     # Steps represent a sequence of tasks that will be executed as part of the job
