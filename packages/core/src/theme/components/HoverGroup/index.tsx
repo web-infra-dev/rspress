@@ -1,6 +1,8 @@
 import type { NavItemWithChildren } from '@rspress/core';
+import { matchNavbar, useLocation } from '@rspress/core/runtime';
 import { Link } from '@theme';
 import cls from 'clsx';
+
 import './index.scss';
 
 type Items = NavItemWithChildren['items'];
@@ -24,6 +26,7 @@ function HoverGroup({
   position = 'center',
   activeMatcher,
 }: HoverGroupProps) {
+  const { pathname } = useLocation();
   return (
     <ul
       className={cls('rp-hover-group', {
@@ -36,7 +39,9 @@ function HoverGroup({
       {customChildren ??
         items?.map(item => {
           const { text, link } = item;
-          const isActiveItem = activeMatcher ? activeMatcher(item) : false;
+          const isActiveItem = activeMatcher
+            ? activeMatcher(item)
+            : matchNavbar(item, pathname);
 
           return (
             <li
