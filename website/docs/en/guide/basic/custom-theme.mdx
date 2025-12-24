@@ -146,7 +146,10 @@ It's worth noting that the `Layout` component is designed with a series of props
 <details>
 
 ```tsx title="theme/index.tsx"
-import { Layout as BasicLayout } from '@rspress/core/theme-original';
+import {
+  Layout as BasicLayout,
+  getCustomMDXComponent as basicGetCustomMDXComponent,
+} from '@rspress/core/theme-original';
 
 // Show all props below
 const Layout = () => (
@@ -194,7 +197,19 @@ const Layout = () => (
     /* Bottom of entire page */
     bottom={<div>bottom</div>}
     /* Custom MDX components */
-    components={{ p: (props) => <p {...props} className="my-4 leading-7" /> }}
+    components={{
+      h1: (props) => {
+        const { h1: OriginalH1, p: OriginalP } = basicGetCustomMDXComponent();
+        return (
+          <>
+            <OriginalH1 {...props} />
+            <OriginalP>
+              This is a custom paragraph added after every H1 heading.
+            </OriginalP>
+          </>
+        );
+      },
+    }}
   />
 );
 

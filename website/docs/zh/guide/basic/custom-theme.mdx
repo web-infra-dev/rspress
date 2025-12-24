@@ -146,7 +146,10 @@ export * from '@rspress/core/theme-original';
 <details>
 
 ```tsx title="theme/index.tsx"
-import { Layout as BasicLayout } from '@rspress/core/theme-original';
+import {
+  Layout as BasicLayout,
+  getCustomMDXComponent as basicGetCustomMDXComponent,
+} from '@rspress/core/theme-original';
 
 // 以下展示所有的 Props
 const Layout = () => (
@@ -194,7 +197,19 @@ const Layout = () => (
     /* 整个页面最底部 */
     bottom={<div>bottom</div>}
     /* 自定义 MDX 组件 */
-    components={{ p: (props) => <p {...props} className="my-4 leading-7" /> }}
+    components={{
+      h1: (props) => {
+        const { h1: OriginalH1, p: OriginalP } = basicGetCustomMDXComponent();
+        return (
+          <>
+            <OriginalH1 {...props} />
+            <OriginalP>
+              This is a custom paragraph added after every H1 heading.
+            </OriginalP>
+          </>
+        );
+      },
+    }}
   />
 );
 
