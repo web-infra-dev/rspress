@@ -37,6 +37,16 @@ export default defineConfig({
   logo: 'https://assets.rspack.rs/rspress/rspress-logo.svg',
   logoText: 'Rspress',
   icon: 'https://assets.rspack.rs/rspress/rspress-logo.svg',
+  locales: [
+    {
+      lang: 'zh',
+      label: '中文',
+    },
+    {
+      lang: 'en',
+      label: 'English',
+    },
+  ],
   markdown: {
     shiki: {
       // "markdown" and "mdx" can contain any language, so it does not support lazy loading for now
@@ -139,16 +149,6 @@ export default defineConfig({
         icon: 'x',
         mode: 'link',
         content: 'https://x.com/rspack_dev',
-      },
-    ],
-    locales: [
-      {
-        lang: 'zh',
-        label: '中文',
-      },
-      {
-        lang: 'en',
-        label: 'English',
       },
     ],
   },

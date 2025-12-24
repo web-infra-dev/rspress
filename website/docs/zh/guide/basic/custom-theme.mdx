@@ -1,0 +1,247 @@
+# 自定义主题
+
+1. 对于 CSS，Rspress 提供了 [CSS 变量](#css-variables) 和 [BEM 类名](#bem-classname)进行定制。
+
+2. 对于 JS / React，Rspress 基于 ESM 重导出覆盖实现了一套运行时接口，支持对内置组件进行修改或替换，实现自己的首页、侧边栏、搜索组件等。
+
+   在此之上有两种模式：
+   - [**wrap**](#wrap)：通过 props / 插槽来对 Rspress 内置的组件进行 **包装** 并增强。
+   - [**eject**](#eject)：通过 [`rspress eject`](../../api/commands.mdx#rspress-eject) 命令将源码 **拷贝** 到本地直接修改并覆盖。
+
+下面会根据主题定制化的程度会依次进行介绍。
+
+## CSS 变量 \{#css-variables}
+
+Rspress 暴露了一些常用的 CSS 变量，相比重写 Rspress 内置的 React 组件，覆盖 CSS 变量实现定制化更简单也更易维护。你可以在 [UI - CSS 变量](../../ui/vars.mdx) 页面查看这些 CSS 变量，并通过：
+
+import { Tabs, Tab } from '@theme';
+
+<Tabs>
+<Tab label="theme/index.tsx">
+
+```tsx
+import './index.css';
+export * from '@rspress/core/theme-original';
+```
+
+</Tab>
+<Tab label="theme/index.css">
+```css
+/* 复制 CSS 变量代码到这里来进行样式覆盖 */
+```
+</Tab>
+</Tabs>
+
+## BEM 类名 \{#bem-classname}
+
+Rspress 内置组件均使用 BEM 命名规范。你可以使用这些类名进行样式覆盖，覆盖方式和 [CSS 变量](#css-variables) 一致。
+
+```css
+.rp-[component-name]__[element-name]--[modifier-name] {
+  /* 样式 */
+}
+```
+
+例如：
+
+```css
+.rp-nav {
+}
+.rp-link {
+}
+.rp-tabs {
+}
+.rp-codeblock {
+}
+.rp-codeblock__title {
+}
+.rp-codeblock__description {
+}
+.rp-nav-menu__item,
+.rp-nav-menu__item--active {
+}
+```
+
+## `theme/index.tsx`：利用 ESM 重导出覆盖内置组件 \{#reexport}
+
+默认情况下，你需要在项目根目录下创建一个 `theme` 目录，然后在 `theme` 目录下创建一个 `index.ts` 或者 `index.tsx` 文件，该文件用于导出主题组件。
+
+```txt
+├── docs
+├── theme
+│   └── index.tsx
+└── rspress.config.ts
+```
+
+你可以使用 `@rspress/core/theme-original` 的内置组件，来编写 `theme/index.tsx` 文件:
+
+```tsx title="theme/index.tsx"
+import { Layout as BasicLayout } from '@rspress/core/theme-original';
+
+const Layout = () => <BasicLayout beforeNavTitle={<div>some content</div>} />;
+
+export { Layout }; //[!code highlight]
+export * from '@rspress/core/theme-original'; //[!code highlight]
+```
+
+通过 **ESM 重导出** 覆写内置的组件，所有 Rspress 内部引用的内置组件都会优先使用你重导出的版本。
+
+:::tip 提示
+
+仅在自定义主题的时候使用 `@rspress/core/theme-original`
+
+```txt
+├── docs
+│   └── index.mdx <-- "@rspress/core/theme"
+├── theme
+│   └── index.tsx <-- "@rspress/core/theme-original"
+└── rspress.config.ts
+```
+
+1. `docs` 目录下，使用 `@rspress/core/theme`，`@rspress/core/theme` 指向你的 `theme/index.tsx`。
+
+2. `theme` 目录下，使用 `@rspress/core/theme-original`，`@rspress/core/theme-original` 永远指向 Rspress 内置的主题组件。
+
+:::
+
+## Wrap：在重导出的基础上传 props/插槽 \{#wrap}
+
+Wrap 指在重导出的组件上增加 props。下面是一个例子，在导航栏标题前面插入一些内容：
+
+<Tabs>
+<Tab label="theme/index.tsx">
+
+```tsx
+import { Layout as BasicLayout } from '@rspress/core/theme-original';
+import { useI18n } from '@rspress/core';
+
+const Layout = () => {
+  const t = useI18n();
+  return <BasicLayout beforeNavTitle={<div>{t('some content')}</div>} />;
+};
+
+export { Layout };
+export * from '@rspress/core/theme-original';
+```
+
+</Tab>
+
+<Tab label="i18n.json">
+
+```json
+{
+  "some content": {
+    "zh": "一些内容",
+    "en": "some content"
+  }
+}
+```
+
+</Tab>
+
+</Tabs>
+
+值得注意的是，`Layout` 组件设计了一系列的 props 支持插槽元素，你可以通过这些 props 来扩展默认主题的布局：
+
+<details>
+
+```tsx title="theme/index.tsx"
+import {
+  Layout as BasicLayout,
+  getCustomMDXComponent as basicGetCustomMDXComponent,
+} from '@rspress/core/theme-original';
+
+// 以下展示所有的 Props
+const Layout = () => (
+  <BasicLayout
+    /* Home 页 Hero 部分之前 */
+    beforeHero={<div>beforeHero</div>}
+    /* Home 页 Hero 部分之后 */
+    afterHero={<div>afterHero</div>}
+    /* Home 页 Features 部分之前 */
+    beforeFeatures={<div>beforeFeatures</div>}
+    /* Home 页 Features 部分之后 */
+    afterFeatures={<div>afterFeatures</div>}
+    /* 正文页 Footer 部分之前 */
+    beforeDocFooter={<div>beforeDocFooter</div>}
+    /* 正文页 Footer 部分之后 */
+    afterDocFooter={<div>afterDocFooter</div>}
+    /* 正文页最前面 */
+    beforeDoc={<div>beforeDoc</div>}
+    /* 正文页最后面 */
+    afterDoc={<div>afterDoc</div>}
+    /* 文档内容前面 */
+    beforeDocContent={<div>beforeDocContent</div>}
+    /* 文档内容后面 */
+    afterDocContent={<div>afterDocContent</div>}
+    /* 导航栏之前 */
+    beforeNav={<div>beforeNav</div>}
+    /* 左上角导航栏标题之前 */
+    beforeNavTitle={<span>😄</span>}
+    /* 导航栏标题 */
+    navTitle={<div>Custom Nav Title</div>}
+    /* 左上角导航栏标题之后 */
+    afterNavTitle={<div>afterNavTitle</div>}
+    /* 导航栏右上角部分 */
+    afterNavMenu={<div>afterNavMenu</div>}
+    /* 左侧侧边栏上面 */
+    beforeSidebar={<div>beforeSidebar</div>}
+    /* 左侧侧边栏下面 */
+    afterSidebar={<div>afterSidebar</div>}
+    /* 右侧大纲栏上面 */
+    beforeOutline={<div>beforeOutline</div>}
+    /* 右侧大纲栏下面 */
+    afterOutline={<div>afterOutline</div>}
+    /* 整个页面最顶部 */
+    top={<div>top</div>}
+    /* 整个页面最底部 */
+    bottom={<div>bottom</div>}
+    /* 自定义 MDX 组件 */
+    components={{
+      h1: (props) => {
+        const { h1: OriginalH1, p: OriginalP } = basicGetCustomMDXComponent();
+        return (
+          <>
+            <OriginalH1 {...props} />
+            <OriginalP>
+              This is a custom paragraph added after every H1 heading.
+            </OriginalP>
+          </>
+        );
+      },
+    }}
+  />
+);
+
+export { Layout };
+// 重导出
+export * from '@rspress/core/theme-original';
+```
+
+</details>
+
+## Eject：对源码直接修改 \{#eject}
+
+Eject 指将 Rspress 单个内置组件的源码拷贝到本地，然后直接改动，步骤如下：
+
+1. 执行 CLI [`rspress eject [component]`](../../api/commands.mdx#rspress-eject)，Rspress 会将指定组件的源码 eject 到本地 `theme/components` 目录，不会 eject 依赖。
+
+2. 更新 `theme/index.tsx` 重导出：
+
+```tsx title="theme/index.tsx"
+// 假设你 eject 了 DocFooter 组件
+export { DocFooter } from './components/DocFooter';
+export * from '@rspress/core/theme-original';
+```
+
+3. 任意修改 `theme/components/DocFooter.tsx`，使它满足你的需要。
+
+Rspress 的组件经过细粒度的拆分，你可在 [内置组件](/ui/components/) 中看到哪些组件适合 eject。
+
+:::warning 你是否真的需要 eject？
+
+eject 会增加一定的维护成本，因为 Rspress 未来版本更新时，这些被 eject 的组件不会自动获得更新，你需要手动对比并合并变更。
+
+请先查看 wrap 能否满足你的需求，只有在 wrap 无法满足你的需求时，才考虑 eject。
+
+:::

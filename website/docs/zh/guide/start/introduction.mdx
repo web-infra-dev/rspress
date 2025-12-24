@@ -56,7 +56,7 @@ Rspress 内部设计了多种扩展机制，保证足够强的定制能力，包
 
 - 支持自定义全局组件、全局样式、页面布局结构，详情请参考[自定义页面](../../ui/custom-page.mdx)。
 - 支持**构建能力扩展**，包括 Rspack 配置、增加 MDX 编译插件等等，详情请参考[构建能力扩展](/guide/advanced/extend-build)。
-- 支持**自定义主题**，详情请参考[自定义主题](/ui/custom-theme)。
+- 支持**自定义主题**，详情请参考[自定义主题](/guide/basic/custom-theme)。
 - 内置**插件机制**，支持自定义插件，详情请参考[插件机制](/plugin/system/introduction)。
 
 ## 功能特性
@@ -184,7 +184,7 @@ export * from '@rspress/core/theme-original';
 
 2.  完全自定义主题。如果你想从头开发一套自定义主题，可以重新自定义 Layout 的内容，并借助 Rspress 提供的各个 Runtime API （如 `usePageData`）来获取编译时数据、路由等信息。
 
-关于自定义主题的详情，你可以参考[「自定义主题」文档](/ui/custom-theme.html '「自定义主题」文档')。
+关于自定义主题的详情，你可以参考[「自定义主题」文档](/guide/basic/custom-theme.html '「自定义主题」文档')。
 
 ### 插件机制
 

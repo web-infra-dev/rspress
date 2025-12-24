@@ -1,0 +1,97 @@
+# Built-in icons
+
+import { SvgWrapper, SourceCode } from '@rspress/core/theme';
+
+When Rspress uses icons, it uses a `SvgWrapper` component to render icons. It supports icon as a URL or an svgr React component:
+
+```ts
+type Icon = React.FC<React.SVGProps<SVGSVGElement>> | string;
+```
+
+The following code is an example of how Rspress uses `IconGithub`:
+
+```mdx preview
+import { SvgWrapper, IconGithub } from '@rspress/core/theme-original';
+
+<SvgWrapper icon={IconGithub} width={24} height={24} />
+```
+
+## Usage
+
+When you want to replace Rspress built-in icons, use [Custom Theme - Re-export](/guide/basic/custom-theme#themeindextsx-override-built-in-components-using-esm-re-exports) for replacement.
+
+```tsx title="theme/index.tsx"
+export { IconGithub } from './my-icons';
+export * from '@rspress/core/theme-original';
+```
+
+All icons used by Rspress are as follows:
+
+<SourceCode href="https://github.com/web-infra-dev/rspress/blob/main/packages/core/src/theme/icons.ts" />
+
+```tsx preview
+import {
+  SvgWrapper,
+  IconArrowDown,
+  IconArrowRight,
+  IconClose,
+  IconCopy,
+  IconDeprecated,
+  IconDown,
+  IconEmpty,
+  IconExperimental,
+  IconFile,
+  IconGithub,
+  IconGitlab,
+  IconHeader,
+  IconJump,
+  IconLoading,
+  IconMenu,
+  IconMoon,
+  IconRight,
+  IconSearch,
+  IconSmallMenu,
+  IconSuccess,
+  IconSun,
+  IconTitle,
+  IconTranslator,
+  IconWrap,
+  IconWrapped,
+} from '@rspress/core/theme';
+
+export default () => {
+  return (
+    <div style={{ display: 'flex', gap: 8, flexWrap: 'wrap', fontSize: 12 }}>
+      {[
+        IconArrowDown,
+        IconArrowRight,
+        IconClose,
+        IconCopy,
+        IconDeprecated,
+        IconDown,
+        IconEmpty,
+        IconExperimental,
+        IconFile,
+        IconGithub,
+        IconGitlab,
+        IconHeader,
+        IconJump,
+        IconLoading,
+        IconMenu,
+        IconMoon,
+        IconRight,
+        IconSearch,
+        IconSmallMenu,
+        IconSuccess,
+        IconSun,
+        IconTitle,
+        IconTranslator,
+        IconWrap,
+        IconWrapped,
+      ].map((Icon, idx) => (
+        <SvgWrapper icon={Icon} key={idx} width={24} height={24} />
+      ))}
+    </div>
+  );
+};
+```
