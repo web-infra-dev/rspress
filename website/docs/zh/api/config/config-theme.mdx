@@ -25,6 +25,8 @@ interface NavItem {
   text: string;
   // 导航栏链接
   link: '/';
+  // 是否为下载链接
+  download?: boolean;
   // 导航栏链接的激活规则
   activeMatch: '^/$|^/';
   // 图标配置(可选)，填入 svg 标签内容或者图片 URL
