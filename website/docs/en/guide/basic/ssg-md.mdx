@@ -4,4 +4,166 @@ tag: experimental
 
 # llms.txt (SSG-MD)
 
-{/* TODO */}
+Rspress provides experimental SSG-MD capability, which is a brand new feature. As its name suggests SSG-MD, the only difference from [Static Site Generation (SSG)](./ssg) is that it renders your pages as Markdown files instead of HTML files, and generates [`llms.txt`](https://llmstxt.org/) and llms-full.txt related files, making it easier for large language models to understand and use your technical documentation.
+
+## Why SSG-MD?
+
+In frontend frameworks based on React dynamic rendering, there is often a problem of difficulty in extracting static information. This also exists in MDX, where `.mdx` files contain both Markdown content and support embedding React components, enhancing the interactivity of documents. For Rspress, Rspress allows users to use [MDX fragments](../use-mdx/coponents.mdx), custom components, React Hooks, tsx files as routes, etc. to enhance the expressiveness of document content. However, these dynamic contents are difficult to convert to Markdown format, and even if the html generated during the SSG phase is converted to markdown, the results are often unsatisfactory.
+
+[Static Site Generation (SSG)](./ssg) can generate static HTML files for crawlers to crawl, improving [SEO](https://en.wikipedia.org/wiki/Search_engine_optimization). SSG-MD also solves similar problems, improving [GEO](https://en.wikipedia.org/wiki/Generative_engine_optimization) and the quality of static information for large language models. Compared to converting html to markdown, React's virtual DOM during rendering has a better source of information.
+
+## How to implement SSG-MD?
+
+1. Rspress internally implements a `renderToMarkdownString` method similar to `renderToString` in `react-dom`.
+
+```tsx
+import { expect, describe, it } from '@rstest/core';
+import { renderToMarkdownString } from './react-render-to-markdown';
+import { useState } from 'react';
+
+describe('renderToMarkdownString', () => {
+  it('renders text', () => {
+    expect(
+      renderToMarkdownString(
+        <div>
+          <strong>foo</strong>
+          <span>bar</span>
+        </div>,
+      ),
+    ).toBe('**foo**bar');
+  });
+  it('renders header and paragraph', () => {
+    const Comp1 = () => {
+      const [count, setCount] = useState(1);
+      return <h1>Header {count}</h1>;
+    };
+    const Comp2 = () => {
+      return (
+        <>
+          <Comp1 />
+          <p>Paragraph</p>
+        </>
+      );
+    };
+    expect(renderToMarkdownString(<Comp2 />)).toBe('# Header 1\n\nParagraph\n');
+  });
+});
+```
+
+2. Provides `process.env.__SSR_MD__` environment variable, making it easy for users to distinguish between SSG-MD rendering and browser rendering in MDX components, thus achieving more flexible content customization. For example:
+
+```tsx
+export function Tab({ label }: { label: string }) {
+  if (process.env.__SSR_MD__) {
+    return <>{`** Here is a Tab named ${label}**`}</>;
+  }
+  return <div>{label}</div>;
+}
+```
+
+3. Rspress internal component library has been adapted for SSG-MD to ensure reasonable Markdown content is rendered during the SSG-MD phase. For example:
+
+```tsx
+<PackageManagerTabs command="create rspress@latest" />
+```
+
+Will be rendered as:
+
+````md
+```sh [npm]
+npm create rspress@latest
+```
+
+```sh [yarn]
+yarn create rspress
+```
+
+```sh [pnpm]
+pnpm create rspress@latest
+```
+
+```sh [bun]
+bun create rspress@latest
+```
+
+```sh [deno]
+deno init --npm rspress@latest
+```
+````
+
+We believe that with the introduction of this feature, all websites built with React in the future can use SSG-MD to achieve better GEO.
+
+## Features
+
+- Renders each site page as a `.md` file, convenient for vectorization or providing to large language models. `/guide/start/introduction.html` can be accessed by replacing the `.html` suffix with `.md`.
+- Generates [`llms.txt`](https://llmstxt.org/), displaying the title and description of each page in navigation and sidebar order.
+- Generates `llms-full.txt`, containing the Markdown content of each page, convenient for batch import.
+- Supports multilingual sites, outputting corresponding `{lang}/llms.txt` and `{lang}/llms-full.txt` for non-default languages.
+
+## Output Example
+
+```txt
+doc_build
+├── llms.txt
+├── llms-full.txt
+├── guide
+│   └── start
+│       └── introduction.md
+└── ...
+```
+
+The actual files are placed in the build directory (such as `guide/start/introduction.md`), and the `url` in `llms-full.txt` will carry the site prefix, such as `/guide/start/introduction.md`.
+
+`llms-full.txt` example snippet:
+
+```md
+---
+url: /guide/start/introduction.md
+---
+
+# Introduction
+
+...
+```
+
+## How to Enable
+
+Enable `llms` in `rspress.config.ts` to generate the above files during the build phase:
+
+```ts title="rspress.config.ts"
+import { defineConfig } from '@rspress/core';
+
+export default defineConfig({
+  llms: true,
+});
+```
+
+After executing `rspress build`, you can see `llms.txt`, `llms-full.txt` and the `.md` files corresponding to each route in the output directory (default `doc_build`).
+
+:::warning
+
+`llms` is an experimental capability, mainly used to generate Markdown data that is easy for large language models or retrieval systems to use. It will be continuously optimized in future versions and may have stability or compatibility issues.
+
+If your project does not support SSG, such as using `ssg: false`, please use [@rspress/plugin-llms](/plugin/official-plugins/llms).
+
+:::
+
+## Custom MDX Splitting (Optional)
+
+When documents contain custom components, you can control which components to keep or convert to plain text when converting to Markdown through `remarkSplitMdxOptions`:
+
+```ts title="rspress.config.ts"
+import { defineConfig } from '@rspress/core';
+
+export default defineConfig({
+  llms: {
+    remarkSplitMdxOptions: {
+      excludes: [[['Demo'], '@project/components']],
+    },
+  },
+});
+```
+
+- `excludes`: Matched components will be converted to plain text, with the highest priority.
+- `includes`: If set, only matched components are allowed to be retained, and the rest will be converted to plain text.
+- When configured simultaneously, `excludes` will be applied first, then filtered by `includes`.

@@ -3,7 +3,7 @@ import {
   Content,
   useFrontmatter,
   useLocaleSiteData,
-  usePageData,
+  usePage,
   useSite,
 } from '@rspress/core/runtime';
 import type { HomeLayoutProps } from '@theme';
@@ -139,7 +139,7 @@ export function Layout(props: LayoutProps) {
     beforeFeatures,
     afterFeatures,
   };
-  const { page } = usePageData();
+  const { page } = usePage();
   const { site } = useSite();
   const { frontmatter } = useFrontmatter();
   const {

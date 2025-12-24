@@ -4,12 +4,99 @@ tag: experimental
 
 # llms.txt （SSG-MD）
 
-Rspress 提供实验性的 SSG-MD 能力，在 [静态站点生成（SSG）](./ssg) 时额外输出便于大模型理解的 Markdown 资源。
+Rspress 提供实验性的 SSG-MD 能力，这是一个全新的功能。与它的名字一样 SSG-MD，与 [静态站点生成（SSG）](./ssg) 唯一的不同在于它将你的页面渲染为 Markdown 文件，而非 HTML 文件，并生成 [`llms.txt`](https://llmstxt.org/) 及 llms-full.txt 相关文件，便于大模型理解和使用你的技术文档。
+
+## 为什么需要 SSG-MD？
+
+在基于 React 动态渲染的前端框架中， 往往存在静态信息难以提取的问题。这在 MDX 中同样存在，`.mdx` 文件既包含 Markdown 内容，也支持嵌入 React 组件，增强文档的交互能力。对于 Rspress 而言，Rspress 允许用户使用 [MDX 片段](../use-mdx/coponents.mdx)、自定义组件、React Hooks、用 tsx 文件作为路由等等来增强文档内容的表现力。然而，这些动态内容很难被转化为 Markdown 格式，即使使用 SSG 阶段产生后的 html 转为 markdown，结果也往往不尽如人意。
+
+[静态站点生成（SSG）](./ssg) 可以生成静态的 HTML 文件提供给爬虫爬取，提高 [SEO](https://en.wikipedia.org/wiki/Search_engine_optimization)，SSG-MD 也为了解决类似的问题，提升 [GEO](https://en.wikipedia.org/wiki/Generative_engine_optimization) 和给大模型的静态信息质量，相比与将 html 转化为 markdown，React 在渲染期间的虚拟 DOM 拥有更好的信息源。
+
+## 怎么实现 SSG-MD？
+
+1. Rspress 内部实现了类似 `react-dom` 中 `renderToString` 相同的 `renderToMarkdownString` 方法。
+
+```tsx
+import { expect, describe, it } from '@rstest/core';
+import { renderToMarkdownString } from './react-render-to-markdown';
+import { useState } from 'react';
+
+describe('renderToMarkdownString', () => {
+  it('renders text', () => {
+    expect(
+      renderToMarkdownString(
+        <div>
+          <strong>foo</strong>
+          <span>bar</span>
+        </div>,
+      ),
+    ).toBe('**foo**bar');
+  });
+  it('renders header and paragraph', () => {
+    const Comp1 = () => {
+      const [count, setCount] = useState(1);
+      return <h1>Header {count}</h1>;
+    };
+    const Comp2 = () => {
+      return (
+        <>
+          <Comp1 />
+          <p>Paragraph</p>
+        </>
+      );
+    };
+    expect(renderToMarkdownString(<Comp2 />)).toBe('# Header 1\n\nParagraph\n');
+  });
+});
+```
+
+2. 提供 `process.env.__SSR_MD__` 环境变量，方便用户在 React 组件中区分 SSG-MD 渲染和浏览器渲染，从而实现更灵活的内容定制。例如：
+
+```tsx
+export function Tab({ label }: { label: string }) {
+  if (process.env.__SSR_MD__) {
+    return <>{`** Here is a Tab named ${label}**`}</>;
+  }
+  return <div>{label}</div>;
+}
+```
+
+3. Rspress 内部组件对于 SSG-MD 做了适配，确保在 SSG-MD 阶段渲染出合理的 Markdown 内容。例如：
+
+```tsx
+<PackageManagerTabs command="create rspress@latest" />
+```
+
+将被渲染为：
+
+````md
+```sh [npm]
+npm create rspress@latest
+```
+
+```sh [yarn]
+yarn create rspress
+```
+
+```sh [pnpm]
+pnpm create rspress@latest
+```
+
+```sh [bun]
+bun create rspress@latest
+```
+
+```sh [deno]
+deno init --npm rspress@latest
+```
+````
+
+相信随着这一功能的推出，未来所有使用 React 构建的网站都可以运用 SSG-MD 获得更好的 GEO。
 
 ## 功能介绍
 
-- 将站点页面渲染为 `.md` 文件，便于向量化或提供给大模型。
-- 生成 `llms.txt`，按导航、侧边栏顺序罗列各页面标题与描述。
+- 将每个站点页面渲染为 `.md` 文件，便于向量化或提供给大模型，`/guide/start/introduction.html` 将 `.html` 后缀替换为 `.md` 即可访问。
+- 生成 [`llms.txt`](https://llmstxt.org/)，按导航、侧边栏顺序展示各页面标题与描述。
 - 生成 `llms-full.txt`，包含每个页面的 Markdown 内容，方便批量导入。
 - 支持多语言站点，会为非默认语言输出对应的 `{lang}/llms.txt` 与 `{lang}/llms-full.txt`。
 
@@ -53,6 +140,14 @@ export default defineConfig({
 
 执行 `rspress build` 后，可在输出目录（默认 `doc_build`）中看到 `llms.txt`、`llms-full.txt` 以及各路由对应的 `.md` 文件。
 
+:::warning
+
+`llms` 为实验能力，主要用于生成便于大模型或检索系统使用的 Markdown 数据。会在未来版本中持续优化，可能存在不稳定或兼容性问题。
+
+如果你的项目不支持 SSG，例如使用 `ssg: false`，请使用 [@rspress/plugin-llms](/plugin/official-plugins/llms)。
+
+:::
+
 ## 自定义 MDX 拆分（可选）
 
 当文档中包含自定义组件时，可以通过 `remarkSplitMdxOptions` 控制哪些组件在转换为 Markdown 时保留或转成纯文本：
@@ -72,7 +167,3 @@ export default defineConfig({
 - `excludes`：匹配的组件会被转成纯文本，优先级最高。
 - `includes`：若设置，仅允许匹配的组件保留，其余会转成纯文本。
 - 同时配置时会先应用 `excludes`，再按 `includes` 进行过滤。
-
-:::warning
-`llms` 为实验能力，主要用于生成便于大模型或检索系统使用的 Markdown 数据。
-:::
