@@ -4,7 +4,6 @@
     "label": "主题"
   },
   "vars",
-  "custom-theme",
   "custom-page",
   {
     "type": "section-header",
@@ -12,14 +11,20 @@
   },
   {
     "type": "dir",
-    "label": "内置组件",
-    "name": "components"
-  },
-  {
-    "type": "dir",
     "label": "运行时组件",
     "name": "runtime-components"
   },
+  {
+    "type": "file",
+    "label": "内置图标",
+    "name": "icons/index"
+  },
+  {
+    "type": "dir",
+    "label": "内置组件",
+    "name": "components"
+  },
+
   {
     "type": "section-header",
     "label": "Hooks"

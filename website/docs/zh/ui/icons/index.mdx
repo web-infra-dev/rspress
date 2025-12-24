@@ -1,0 +1,97 @@
+# 内置图标
+
+import { SvgWrapper, SourceCode } from '@rspress/core/theme';
+
+Rspress 内置使用图标时，会使用一个 `SvgWrapper` 组件来渲染图标。支持 icon 为 url 或者 svgr 的 React 组件：
+
+```ts
+type Icon = React.FC<React.SVGProps<SVGSVGElement>> | string;
+```
+
+下面的代码是一个 Rspress 如何使用 `IconGithub` 的示例：
+
+```mdx preview
+import { SvgWrapper, IconGithub } from '@rspress/core/theme-original';
+
+<SvgWrapper icon={IconGithub} width={24} height={24} />
+```
+
+## 用法
+
+当你想更换 Rspress 内置图标时，使用 [自定义主题 - 重导出](/guide/basic/custom-theme#reexport) 进行替换。
+
+```tsx title="theme/index.tsx"
+export { IconGithub } from './my-icons';
+export * from '@rspress/core/theme-original';
+```
+
+所有 Rspress 使用到的图标如下：
+
+<SourceCode href="https://github.com/web-infra-dev/rspress/blob/main/packages/core/src/theme/icons.ts" />
+
+```tsx preview
+import {
+  SvgWrapper,
+  IconArrowDown,
+  IconArrowRight,
+  IconClose,
+  IconCopy,
+  IconDeprecated,
+  IconDown,
+  IconEmpty,
+  IconExperimental,
+  IconFile,
+  IconGithub,
+  IconGitlab,
+  IconHeader,
+  IconJump,
+  IconLoading,
+  IconMenu,
+  IconMoon,
+  IconRight,
+  IconSearch,
+  IconSmallMenu,
+  IconSuccess,
+  IconSun,
+  IconTitle,
+  IconTranslator,
+  IconWrap,
+  IconWrapped,
+} from '@rspress/core/theme';
+
+export default () => {
+  return (
+    <div style={{ display: 'flex', gap: 8, flexWrap: 'wrap', fontSize: 12 }}>
+      {[
+        IconArrowDown,
+        IconArrowRight,
+        IconClose,
+        IconCopy,
+        IconDeprecated,
+        IconDown,
+        IconEmpty,
+        IconExperimental,
+        IconFile,
+        IconGithub,
+        IconGitlab,
+        IconHeader,
+        IconJump,
+        IconLoading,
+        IconMenu,
+        IconMoon,
+        IconRight,
+        IconSearch,
+        IconSmallMenu,
+        IconSuccess,
+        IconSun,
+        IconTitle,
+        IconTranslator,
+        IconWrap,
+        IconWrapped,
+      ].map((Icon, idx) => (
+        <SvgWrapper icon={Icon} key={idx} width={24} height={24} />
+      ))}
+    </div>
+  );
+};
+```
