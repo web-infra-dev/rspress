@@ -117,7 +117,6 @@ export function useSidebarDynamic(): [
   SidebarData,
   React.Dispatch<React.SetStateAction<SidebarData>>,
 ] {
-  const { pathname } = useLocation();
   const rawSidebarData = useSidebar();
   const activeMatcher = useActiveMatcher();
 
@@ -131,7 +130,7 @@ export function useSidebarDynamic(): [
 
   useLayoutEffect(() => {
     setSidebar(createInitialSidebar(rawSidebarData, activeMatcher));
-  }, [pathname, rawSidebarData]);
+  }, [activeMatcher, rawSidebarData]);
 
   return [sidebar, setSidebar];
 }
