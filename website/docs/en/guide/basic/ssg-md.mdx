@@ -100,7 +100,7 @@ We believe that with the introduction of this feature, all websites built with R
 - Generates `llms-full.txt`, containing the Markdown content of each page, convenient for batch import.
 - Supports multilingual sites, outputting corresponding `{lang}/llms.txt` and `{lang}/llms-full.txt` for non-default languages.
 
-## Output Example
+## Output example
 
 ```txt
 doc_build
@@ -126,7 +126,7 @@ url: /guide/start/introduction.md
 ...
 ```
 
-## How to Enable
+## How to enable
 
 Enable `llms` in `rspress.config.ts` to generate the above files during the build phase:
 
@@ -148,7 +148,7 @@ If your project does not support SSG, such as using `ssg: false`, please use [@r
 
 :::
 
-## Custom MDX Splitting (Optional)
+## Custom MDX splitting (Optional)
 
 When documents contain custom components, you can control which components to keep or convert to plain text when converting to Markdown through `remarkSplitMdxOptions`:
 
