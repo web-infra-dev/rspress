@@ -89,7 +89,7 @@ export function NavMenuItemWithLink({
 }
 
 export function NavMenuItem({ menuItem: item }: { menuItem: NavItem }) {
-  if ('items' in item && Array.isArray(item.items) && item.items.length > 0) {
+  if ('items' in item && Array.isArray(item.items)) {
     return <NavMenuItemWithChildren menuItem={item} />;
   }
 
