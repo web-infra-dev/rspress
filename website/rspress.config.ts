@@ -81,7 +81,7 @@ export default defineConfig({
         const fontDir = path.join(__dirname, './og-fonts');
         const fontFile = path.join(fontDir, 'wqy-microhei.ttc');
         const fontUrl =
-          'https://github.com/anthonyfok/fonts-wqy-microhei/raw/master/wqy-microhei.ttc';
+          'https://github.com/anthonyfok/fonts-wqy-microhei/raw/cd82defe33ec0e86e628329f1b63049ef562c8e5/wqy-microhei.ttc';
 
         try {
           await fs.access(fontFile);
