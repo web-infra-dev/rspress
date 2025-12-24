@@ -60,8 +60,6 @@ function createInitialSidebar(
   rawSidebarData: SidebarData,
   activeMatcher: (link: string) => boolean,
 ) {
-  // do not modify singleton global sidebar - #2910
-  rawSidebarData = structuredClone(rawSidebarData);
   const matchCache = new WeakMap<
     | NormalizedSidebarGroup
     | SidebarItem
@@ -123,12 +121,16 @@ export function useSidebarDynamic(): [
   const activeMatcher = useActiveMatcher();
 
   const [sidebar, setSidebar] = useState<SidebarData>(() =>
-    createInitialSidebar(rawSidebarData, activeMatcher),
+    createInitialSidebar(
+      // do not modify singleton global sidebar on server - #2910
+      structuredClone(rawSidebarData),
+      activeMatcher,
+    ),
   );
 
   useLayoutEffect(() => {
     setSidebar(createInitialSidebar(rawSidebarData, activeMatcher));
-  }, [rawSidebarData]);
+  }, [activeMatcher, rawSidebarData]);
 
   return [sidebar, setSidebar];
 }
