@@ -2,14 +2,14 @@
 
 To achieve document internationalization in Rspress, you need to do the following:
 
-1. Defines I18n text data.
-2. Configure `locales` and `themeConfig.locales`。
-3. Configure the default language.
-4. Create documents in different language version.
-5. Configure sidebar and navbar.
-6. Use `useI18n` in custom components.
+1. Define I18n text data.
+1. Configure the language list, `locales` in `rspress.config.ts`.
+1. Configure the default language, `lang` in `rspress.config.ts`.
+1. Create documents in different language versions.
+1. Configure sidebar and navbar.
+1. Use `useI18n` in custom components.
 
-## Defines I18n text data
+## Define I18n text data
 
 Create a new `i18n.json` in the current workspace, the directory structure is as follows:
 
@@ -90,9 +90,9 @@ export default defineConfig({
 
 For other international theme parameters, please refer to [API type](/api/config/config-theme#locales).
 
-## Configure the default language
+## Configure `lang` default language
 
-After configure `locales` data, you need configure the default language of the document via [lang](/api/config/config-basic#lang), as shown in the following example:
+After configure `locales`, you need to configure the default language of the document via [lang](/api/config/config-basic#lang), as shown in the following example:
 
 ```ts title="rspress.config.ts"
 import { defineConfig } from '@rspress/core';
@@ -104,49 +104,65 @@ export default defineConfig({
 
 This is important because **for routes in the default language, Rspress will remove the language prefix**, such as `/en/guide/getting-started` will be converted to `/guide/getting-started`.
 
-## Create documents in different language
+## Create documents in different language versions
 
 After the above configuration, we can start to create documents in different language versions. It is very simple. We only need to create the following structure in the document root directory:
 
 ```txt
-docs
-├── en
-│   ├── api
+├── doc
+│   ├── en
+│   │   ├── _nav.json
+│   │   ├── api
+│   │   │   └── index.mdx
+│   │   ├── guide
+│   │   │   ├── _meta.json
+│   │   │   └── start
+│   │   │       ├── introduction.mdx
+│   │   │       └── quick-start.mdx
 │   │   └── index.md
-│   └── guide
-│       └── getting-started.md
-│       └── features.md
-└── zh
-    ├── api
-    │   └── index.md
-    └── guide
-        └── getting-started.md
-        └── features.md
+│   └── zh
+│       ├── _nav.json
+│       ├── api
+│       │   └── index.mdx
+│       ├── guide
+│       │   ├── _meta.json
+│       │   └── start
+│       │       ├── introduction.mdx
+│       │       └── quick-start.mdx
+│       └── index.md
+├── i18n.json
+├── package.json
+├── rspress.config.ts
+└── tsconfig.json
+
 ```
 
-As you can see, we put documents in different languages ​​in the `en` and `zh` directories under the `docs` directory, so that we can easily distinguish documents in different languages.
+As you can see, we put documents in different languages in the `en` and `zh` directories under the `docs` directory, so that we can easily distinguish documents in different languages.
 
-## Configuring \_meta.json
+## Configure \_nav.json and \_meta.json
 
 Through the \_meta.json file, we can configure the content of the nav bar and sidebar. For details, please refer to [Auto Nav/Sidebar](/guide/basic/auto-nav-sidebar).
 
-### Navigation bar level
+### Navigation bar \_nav.json
 
-In the \_meta.json configuration at the navigation bar level, you can specify `text` as an i18n key, for example:
+In the \_nav.json configuration at the navigation bar level, you can specify `text` as an i18n key, for example:
 
-```json title="_meta.json"
+```json title="_nav.json"
 [
   {
     "text": "guide",
-    "link": "/guide/start/getting-started",
-    "activeMatch": "/guide/"
+    "link": "/guide/start/introduction"
+  },
+  {
+    "text": "api",
+    "link": "/api/"
   }
 ]
 ```
 
-Here, `text` is `guide`, this value will be automatically translated into `指南` or `Guide`, depending on the current language.
+Here, `text` is `guide`, this value will be automatically translated into `指南` or `Guide`, depending on `i18n.json` and the current language.
 
-### Sidebar level
+### Sidebar \_meta.json
 
 In the \_meta.json configuration at the sidebar level, you can specify `label` as an i18n key, for example:
 
