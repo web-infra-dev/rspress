@@ -8,7 +8,7 @@ Rspress 提供实验性的 SSG-MD 能力，这是一个全新的功能。与它�
 
 ## 为什么需要 SSG-MD？
 
-在基于 React 动态渲染的前端框架中， 往往存在静态信息难以提取的问题。这在 MDX 中同样存在，`.mdx` 文件既包含 Markdown 内容，也支持嵌入 React 组件，增强文档的交互能力。对于 Rspress 而言，Rspress 允许用户使用 [MDX 片段](../use-mdx/coponents.mdx)、自定义组件、React Hooks、用 tsx 文件作为路由等等来增强文档内容的表现力。然而，这些动态内容很难被转化为 Markdown 格式，即使使用 SSG 阶段产生后的 html 转为 markdown，结果也往往不尽如人意。
+在基于 React 动态渲染的前端框架中， 往往存在静态信息难以提取的问题。这在 MDX 中同样存在，`.mdx` 文件既包含 Markdown 内容，也支持嵌入 React 组件，增强文档的交互能力。对于 Rspress 而言，Rspress 允许用户使用 [MDX 片段](../use-mdx/components.mdx)、自定义组件、React Hooks、用 tsx 文件作为路由等等来增强文档内容的表现力。然而，这些动态内容很难被转化为 Markdown 格式，即使使用 SSG 阶段产生后的 html 转为 markdown，结果也往往不尽如人意。
 
 [静态站点生成（SSG）](./ssg) 可以生成静态的 HTML 文件提供给爬虫爬取，提高 [SEO](https://en.wikipedia.org/wiki/Search_engine_optimization)，SSG-MD 也为了解决类似的问题，提升 [GEO](https://en.wikipedia.org/wiki/Generative_engine_optimization) 和给大模型的静态信息质量，相比与将 html 转化为 markdown，React 在渲染期间的虚拟 DOM 拥有更好的信息源。
 
