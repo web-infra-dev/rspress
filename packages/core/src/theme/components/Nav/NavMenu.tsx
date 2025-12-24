@@ -80,7 +80,11 @@ export function NavMenuItemWithLink({
         isActive ? 'rspress-nav-menu-item-active' : '',
       )}
     >
-      <Link href={menuItem.link} className="rp-nav-menu__item__container">
+      <Link
+        href={menuItem.link}
+        download={menuItem.download}
+        className="rp-nav-menu__item__container"
+      >
         {menuItem.text}
         {menuItem.tag && <Tag tag={menuItem.tag} />}
       </Link>

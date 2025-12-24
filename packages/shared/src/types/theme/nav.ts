@@ -10,6 +10,7 @@ export type NavItem =
 export type NavItemWithLink = {
   text: string;
   link: string;
+  download?: boolean;
   tag?: string;
   activeMatch?: string;
   position?: 'left' | 'right';

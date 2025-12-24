@@ -26,6 +26,7 @@ export function NavScreenMenuItemRaw({
   isActive,
   onClick,
   href,
+  download,
 }: {
   left: React.ReactNode;
   right: React.ReactNode;
@@ -33,6 +34,7 @@ export function NavScreenMenuItemRaw({
   isActive?: boolean;
   onClick?: () => void;
   href?: string;
+  download?: boolean;
 }) {
   if (href) {
     return (
@@ -43,6 +45,7 @@ export function NavScreenMenuItemRaw({
           isActive && 'rp-nav-screen-menu-item--active',
         )}
         onClick={onClick}
+        download={download}
       >
         <div className="rp-nav-screen-menu-item__left">{left}</div>
         <div className="rp-nav-screen-menu-item__right">{right}</div>
@@ -83,6 +86,7 @@ export function NavScreenMenuItemWithLink({
       }
       right={null}
       href={menuItem.link}
+      download={menuItem.download}
       isActive={isActive}
     />
   );

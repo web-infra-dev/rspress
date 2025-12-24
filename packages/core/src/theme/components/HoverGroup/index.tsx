@@ -35,7 +35,7 @@ function HoverGroup({
     >
       {customChildren ??
         items?.map(item => {
-          const { text, link } = item;
+          const { text, link, download } = item;
           const isActiveItem = activeMatcher ? activeMatcher(item) : false;
 
           return (
@@ -47,6 +47,7 @@ function HoverGroup({
             >
               <Link
                 href={link}
+                download={download}
                 aria-label={text}
                 className="rp-hover-group__item__link"
               >
