@@ -71,7 +71,7 @@ export function BlogList() {
       {blogPages.map(({ date, description, link, title, authors }, index) => (
         <React.Fragment key={link || index}>
           {title && (
-            <H2 id={title}>
+            <H2 id={link}>
               <A href={link}>{title}</A>
             </H2>
           )}
