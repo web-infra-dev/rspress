@@ -61,9 +61,8 @@
     "index.html"
   ],
   "scripts": {
-    "build": "rslib build",
+    "build": "node ./scripts/generateJsonSchema.mjs && rslib build",
     "dev": "rslib build -w",
-    "prepare": "node ./scripts/generateJsonSchema.mjs",
     "reset": "rimraf ./**/node_modules"
   },
   "dependencies": {
