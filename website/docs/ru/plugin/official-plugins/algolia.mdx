@@ -29,7 +29,7 @@ export default defineConfig({
 });
 ```
 
-Затем замените компонент `Search` на поле поиска, поддерживающее Algolia, с помощью [пользовательской темы](/ui/custom-theme).
+Затем замените компонент `Search` на поле поиска, поддерживающее Algolia, с помощью [пользовательской темы](/guide/basic/custom-theme).
 
 ```tsx
 // theme/index.tsx
@@ -47,7 +47,7 @@ const Search = () => {
   );
 };
 export { Search };
-export * from '@rspress/core/theme';
+export * from '@rspress/core/theme-original';
 ```
 
 ## Конфигурация
@@ -272,5 +272,5 @@ const Search = () => {
   );
 };
 export { Search };
-export * from '@rspress/core/theme';
+export * from '@rspress/core/theme-original';
 ```
