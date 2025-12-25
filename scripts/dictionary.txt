@@ -141,6 +141,7 @@ shikijs
 sirv
 Sizefor
 sokra
+sooniter
 speedscope
 srcset
 SSGMD
@@ -177,3 +178,4 @@ weibo
 weixin
 zeabur
 zhihu
+zhong

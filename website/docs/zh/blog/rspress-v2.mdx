@@ -1,0 +1,185 @@
+---
+date: 2025-12-22
+authors: ['sooniter']
+description: 'Rspress 2.0 正式发布，带来 llms.txt（SSG-MD），全新主题，eject 等多项功能。'
+---
+
+# Rspress 2.0 发布公告
+
+我们很高兴地宣布 Rspress 2.0 的正式发布！
+
+Rspress 是基于 [Rsbuild](https://rsbuild.rs/) 的静态站点生成器，使用 React 进行渲染，你可以通过 Rspress 快速搭建文档站点。
+
+自 Rspress V1 发布以来，已经过了三年时间，Rspress V1 共迭代了 **近 50** 个 minor 版本，期间收到了社区大量的反馈和建议。在此基础上，V2 版本经历了近 40 个测试版本的打磨，最终带来了全新的主题设计、AI 友好的 SSG-MD 能力、更强的性能优化等重要功能。
+
+## 为什么是 Rspress V2
+
+在规划 Rspress V2 时，我们聚焦于解决 V1 版本存在的以下几个核心问题：
+
+- **主题样式**：Rspress V1 版本的主题样式较为基础，缺乏设计感且定制性有限，影响阅读体验和写作体验。
+- **AI 友好**：随着大语言模型的普及，技术文档不仅服务于人类读者，也需要被 AI 更好地理解和使用。
+- **冷启动性能**：即使使用了 MDX-RS，Rspress 在大型文档站点（400+ 页面）下的冷启动时间仍然偏长，影响开发效率。
+- **代码高亮**：prismjs 运行时语法高亮在多编程语言上的情况下，包体积和性能表现不佳。
+- **开发体验**：`_meta.json` 和增加新的代码块编程语言时，会存在 HMR 不生效，被迫 restart 造成开发体验不佳。
+
+## V2 新特性
+
+### 一整套全新主题
+
+全新主题意味着一个崭新的开始，它由团队设计师 [@wei_zhong41532](https://x.com/wei_zhong41532) 设计，在视觉效果和阅读体验上都有显著提升，同时提供了极高的可定制性。
+
+![Rspress V2 主题](https://assets.rspack.rs/rspress/rspress-v2-theme.png)
+
+#### BEM 命名规范
+
+所有内置组件现已采用 [BEM 命名规范](https://getbem.com/)。这是一个很 Old School 的决定，这一改变使开发者能够通过标准 CSS 选择器灵活调整样式，避免与 Tailwind CSS 等工具产生冲突，大大降低了样式定制的门槛。
+
+```css
+/* 轻松覆盖组件样式 */
+.rp-nav__title {
+  height: 32px;
+}
+.rp-nav-menu__item--active {
+  color: purple;
+}
+```
+
+#### 丰富的 CSS 变量
+
+全新主题暴露了更多的 CSS 变量，覆盖主题色、代码块、首页等组件的样式。你可以在 [CSS 变量](/ui/vars) 页面交互式地预览和调整这些变量，找到满意的配置后直接复制到项目中使用。
+
+```css
+:root {
+  /* 自定义主题色 */
+  --rp-c-brand: #3451b2;
+  --rp-c-brand-dark: #2e4599;
+  /* 自定义代码块样式 */
+  --rp-code-block-bg: #1e1e1e;
+}
+```
+
+#### `rspress eject` 命令
+
+当 CSS 变量无法满足定制需求时，你可以使用全新的 `rspress eject` 命令将内置组件的源代码复制到项目的主题目录中，实现完全自定义。
+
+```bash
+# 将 Nav 组件导出到 theme 目录
+npx rspress eject Nav
+```
+
+这个命令会将指定组件的源代码复制到 `theme/components/` 目录下，你可以自由修改这些代码来实现深度定制。
+
+#### 内置多语言支持
+
+以往 V1 中仅内置了英文文本，现在 V2 主题内置了中文、英文、日文、韩文等多种语言的翻译文本，未来会支持更多语言，系统会自动根据语言配置和使用进行 ”Tree Shaking“，仅打包你需要的文本。你也可以通过 [`i18nSource`](../api/config/config-basic.mdx#i18nsource) 配置项轻松扩展或覆盖翻译内容。
+
+### SSG-MD
+
+SSG-MD 是 Rspress V2 引入的全新能力，与[静态站点生成（SSG）](https://rspress.rs/zh/guide/basic/ssg)唯一的不同在于它将页面渲染为 Markdown 文件而非 HTML 文件，并生成符合 [llms.txt](https://llmstxt.org/) 规范的索引文件，便于大语言模型理解和使用你的技术文档。
+
+在基于 React 动态渲染的前端框架中，往往存在静态信息难以提取的问题。`.mdx` 文件既包含 Markdown 内容，也支持嵌入 React 组件，Rspress 还允许用户使用 MDX 片段、自定义组件、React Hooks、用 tsx 文件作为路由等来增强文档的表现力。然而，这些动态内容很难被转化为 Markdown 格式，即使将 SSG 阶段产生的 HTML 转为 Markdown，结果也往往不尽如人意。正如 SSG 可以生成静态 HTML 文件提高 [SEO](https://en.wikipedia.org/wiki/Search_engine_optimization)，SSG-MD 也可以相对提升 [GEO（Generative Engine Optimization）](https://en.wikipedia.org/wiki/Generative_engine_optimization) 和给大模型的静态信息质量——相比将 HTML 转化为 Markdown，React 在渲染期间的虚拟 DOM 拥有更好的信息源。
+
+```ts title="rspress.config.ts"
+import { defineConfig } from '@rspress/core';
+
+export default defineConfig({
+  llms: true,
+});
+```
+
+启用后，构建产物中会包含 `llms.txt`（按导航和侧边栏顺序展示各页面标题与描述的索引文件）、`llms-full.txt`（包含所有页面 Markdown 内容的完整文件）以及各路由对应的 `.md` 文件，多语言站点还会为非默认语言输出对应的 `{lang}/llms.txt` 与 `{lang}/llms-full.txt`。
+
+Rspress 内部实现了类似 `react-dom` 中 `renderToString` 的 `renderToMarkdownString` 方法，并提供 `process.env.__SSR_MD__` 环境变量方便用户在组件中区分 SSG-MD 渲染和浏览器渲染。同时，Rspress 内置组件已全面适配 SSG-MD，确保渲染出合理的 Markdown 内容。例如 `<PackageManagerTabs command="create rspress@latest" />` 会被渲染为包含 npm、yarn、pnpm、bun、deno 五种包管理器命令的代码块。自定义组件也可以针对 SSG-MD 输出不同内容：
+
+```tsx
+export function MyComponent({ label }: { label: string }) {
+  if (process.env.__SSR_MD__) {
+    return <>{`**${label}**`}</>;
+  }
+  return <div className="fancy-component">{label}</div>;
+}
+```
+
+相信随着这一功能的推出，未来所有使用 React 构建的网站都可以运用 SSG-MD 获得更好的 GEO。详细用法请参考 [SSG-MD 文档](/guide/basic/ssg-md)。
+
+### 集成 Shiki 用于代码块高亮
+
+Rspress V2 默认使用 [Shiki](https://shiki.style/) 进行代码高亮。相比运行时高亮方案，Shiki 在编译时完成高亮处理，基于 TextMate 语法实现与 VS Code 一致的准确语法高亮，不增加运行时开销和包体积，并支持多种内置主题和自定义配置。可以通过 CSS 变量自定义代码块的配色方案，在 [CSS 变量](/ui/vars) 页面可以交互式地切换和预览不同的 Shiki 主题。同时 Shiki 也允许使用自定义的 [transformer](https://shiki.style/guide/transformers) 进行扩展来丰富写作，如 [twoslash](https://twoslash.netlify.app/)。
+
+### 更强的性能：默认开启 lazyCompilation 和持久化缓存
+
+Rspress V2 默认开启了 [lazyCompilation](https://rspack.rs/zh/config/experiments#experimentslazycompilation) 和 [持久化缓存](https://rspack.rs/zh/config/experiments#experimentscache)。
+
+lazyCompilation 会在 dev 模式下按需编译。只有当你访问某个页面时，该页面才会被编译，大幅提升了开发启动速度，甚至实现毫秒级的冷启动。类似 Rspress 的文档站框架，每次开发仅编辑几个页面，编译内容被均匀分散在各个页面，极其适合 lazyCompilation 的优化。
+
+Rspress 同时实现了路由的 preload 策略，当鼠标悬停在链接上时会预先加载目标路由页面，搭配 lazyCompilation 实现无损的开发体验。
+
+而对于 build 生产构建中，默认开启了持久化缓存，在热启动中复用上次编译的结果，提升 30%-60% 的构建速度。
+
+### 文档开发体验
+
+#### 默认开启死链检查
+
+Rspress V2 默认开启死链检查功能。在构建过程中，会自动检测文档中的无效链接，帮助你及时发现和修复问题。
+
+```ts title="rspress.config.ts"
+import { defineConfig } from '@rspress/core';
+
+export default defineConfig({
+  markdown: {
+    link: {
+      checkDeadLinks: true, // 默认开启
+    },
+  },
+});
+```
+
+#### 配置文件 HMR 支持
+
+基于 Rsbuild 重新设计的虚拟模块插件，现在支持 `_nav.json` 导航配置、`_meta.json` 侧边栏配置以及 `@rspress/plugin-preview` 中 iframe 相关配置的 HMR。修改这些配置文件后，页面会自动热更新，无需手动刷新。
+
+### 更多 Rspress 官方插件
+
+Rspress V2 新增了多个官方插件：
+
+- **[@rspress/plugin-algolia](/plugin/official-plugins/algolia)**：更换 Rspress 的内置搜索为 Algolia DocSearch。
+- **[@rspress/plugin-twoslash](/plugin/official-plugins/twoslash)**：为 TypeScript 代码块添加类型提示
+- **[@rspress/plugin-llms](/plugin/official-plugins/llms)**：为不支持 SSG 的项目提供 llms.txt 生成能力
+- **[@rspress/plugin-sitemap](/plugin/official-plugins/sitemap)**：自动生成站点地图
+
+## 其他
+
+### 在 Markdown/MDX 的编译流程中不再使用 Rust 版本的 MDX 解析器
+
+在使用 lazyCompilation 和持久化缓存后，性能优化效果已经非常显著。我们决定在 Markdown/MDX 编译流程中不再使用 Rust 版本的 MDX 解析器（`@rspress/mdx-rs`），以换取更好的扩展性和维护性。
+
+这使得 Rspress 能够更好地集成 Shiki 等 JavaScript 生态的工具，带来更丰富的功能。这个权衡是值得的——用户在使用 remark/rehype 插件时不再需要关闭 mdxRs。
+
+这并不意味着我们放弃 Markdown 相关生态的 Rust 化。未来我们可能会在 Rspack / Rslint 中继续推进 Rust 版本的 Markdown 解析器集成，在更底层的位置提供性能优化。
+
+### Node.js 版本要求 20+，React 版本要求 18+
+
+Rspress V2 要求 Node.js 版本 **20+**，React 版本 **18+**。
+
+### 一些配置变更
+
+默认主题已从 `@rspress/theme-default` 迁移至 `@rspress/core/theme`：
+
+```diff
+- import Theme from '@rspress/theme-default';
++ import Theme from '@rspress/core/theme';
+```
+
+更多迁移细节请参考 [迁移指南](/guide/migration/rspress-1-x)。
+
+## 下一步
+
+Rspress 2.0 的发布只是一个新的起点。我们将继续推进生态集成，与 Rslib、Rstest 更深度地结合，提供前端项目和组件库项目的一体化开发体验；探索 AI 与文档更深度集成的可能，如智能问答、自动摘要等； 完善 SSG-MD 使其稳定并更加易用。
+
+感谢所有为 Rspress 做出贡献的开发者和用户！如果你在使用过程中遇到问题或有任何建议，欢迎在 [GitHub Issues](https://github.com/web-infra-dev/rspress/issues) 中反馈。
+
+立即升级到 Rspress 2.0，体验全新的文档开发之旅！
+
+import { PackageManagerTabs } from '@theme';
+
+<PackageManagerTabs command="install @rspress/core@latest" />

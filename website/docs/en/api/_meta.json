@@ -1,8 +1,16 @@
 [
   {
+    "type": "section-header",
+    "label": "总览"
+  },
+  {
     "type": "file",
     "name": "index",
     "label": "apiOverview"
+  },
+  {
+    "type": "section-header",
+    "label": "配置"
   },
   {
     "type": "dir",
