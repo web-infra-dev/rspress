@@ -4,11 +4,20 @@
     "label": "Тема"
   },
   "vars",
-  "custom-theme",
   "custom-page",
   {
     "type": "section-header",
     "label": "Компоненты"
+  },
+  {
+    "type": "dir",
+    "label": "Runtime-компоненты",
+    "name": "runtime-components"
+  },
+  {
+    "type": "file",
+    "label": "Встроенные иконки",
+    "name": "icons/index"
   },
   {
     "type": "dir",
