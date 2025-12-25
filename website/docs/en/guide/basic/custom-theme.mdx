@@ -1,59 +1,170 @@
 # Custom theme
 
-This article will tell you how to develop custom theme.
+1. For CSS, Rspress provides [CSS variables](#css-variables) and [BEM classnames](#bem-classname) for customization.
 
-## Extensions based on the default theme
+2. For JS / React, Rspress implements a runtime interface based on ESM re-exports, supporting modification or replacement of built-in components to implement your own home page, sidebar, search components, etc.
 
-In most cases, you don't want to develop a theme from scratch, but want to extend it based on the default theme. At this time, you can refer to the following methods for theme development.
+   On top of this, there are two modes:
+   - [**wrap**](#wrap): **Wrap** and enhance Rspress built-in components through props / slots.
+   - [**eject**](#eject): **Copy** source code locally through the [`rspress eject`](../../api/commands.mdx#rspress-eject) command and modify it directly to override.
 
-:::tip
-If you want to develop a custom theme from scratch, you can go to [Redevelop a custom theme](/ui/custom-theme#redevelop-a-custom-theme).
-:::
+The following will introduce them in order according to the degree of theme customization.
 
-### 1. Basic structure
+## CSS variables \{#css-variables}
+
+Rspress exposes some commonly used CSS variables. Compared to rewriting Rspress built-in React components, overriding CSS variables for customization is simpler and easier to maintain. You can view these CSS variables on the [UI - CSS Variables](../../ui/vars.mdx) page, and override them through:
+
+import { Tabs, Tab } from '@theme';
+
+<Tabs>
+<Tab label="theme/index.tsx">
+
+```tsx
+import './index.css';
+export * from '@rspress/core/theme-original';
+```
+
+</Tab>
+<Tab label="theme/index.css">
+```css
+/* Copy CSS variable code here for style overrides */
+```
+</Tab>
+</Tabs>
+
+## BEM classname \{#bem-classname}
+
+Rspress built-in components all use BEM naming convention. You can override these classnames in the same way as [CSS Variables](#css-variables).
+
+```css
+.rp-[component-name]__[element-name]--[modifier-name] {
+  /* styles */
+}
+```
+
+For example:
+
+```css
+.rp-nav {
+}
+.rp-link {
+}
+.rp-tabs {
+}
+.rp-codeblock {
+}
+.rp-codeblock__title {
+}
+.rp-codeblock__description {
+}
+.rp-nav-menu__item,
+.rp-nav-menu__item--active {
+}
+```
+
+## `theme/index.tsx`: Override built-in components using ESM re-exports \{#reexport}
 
 By default, you need to create a `theme` directory under the project root directory, and then create an `index.ts` or `index.tsx` file under the `theme` directory, which is used to export the theme content.
 
 ```txt
-└── theme
-    └── index.tsx
+├── docs
+├── theme
+│   └── index.tsx
+└── rspress.config.ts
 ```
 
-You can write the `theme/index.tsx` file as follows:
+You can write the `theme/index.tsx` file using built-in components from `@rspress/core/theme-original`:
 
 ```tsx title="theme/index.tsx"
 import { Layout as BasicLayout } from '@rspress/core/theme-original';
 
 const Layout = () => <BasicLayout beforeNavTitle={<div>some content</div>} />;
 
-export { Layout };
+export { Layout }; //[!code highlight]
+export * from '@rspress/core/theme-original'; //[!code highlight]
+```
 
+By **ESM re-export** to override built-in components, all Rspress internal references to built-in components will preferentially use your re-exported version.
+
+:::tip Note
+
+Only use `@rspress/core/theme-original` when customizing themes
+
+```txt
+├── docs
+│   └── index.mdx <-- "@rspress/core/theme"
+├── theme
+│   └── index.tsx <-- "@rspress/core/theme-original"
+└── rspress.config.ts
+```
+
+1. In the `docs` directory, use `@rspress/core/theme`, `@rspress/core/theme` points to your `theme/index.tsx`.
+
+2. In the `theme` directory, use `@rspress/core/theme-original`, `@rspress/core/theme-original` always points to Rspress built-in theme components.
+
+:::
+
+## Wrap: Add props/slots on re-exported components \{#wrap}
+
+Wrap means adding props to re-exported components. Here's an example of inserting some content before the nav bar title:
+
+<Tabs>
+<Tab label="theme/index.tsx">
+
+```tsx
+import { Layout as BasicLayout } from '@rspress/core/theme-original';
+import { useI18n } from '@rspress/core';
+
+const Layout = () => {
+  const t = useI18n();
+  return <BasicLayout beforeNavTitle={<div>{t('some content')}</div>} />;
+};
+
+export { Layout };
 export * from '@rspress/core/theme-original';
 ```
 
-On the one hand, you need to export a theme configuration object through `export`, on the other hand, you need to export all named exported content through `export * from '@rspress/core/theme-original'` so as to ensure your theme works fine.
+</Tab>
 
-### 2. Use slot
+<Tab label="i18n.json">
 
-It is worth noting that the `Layout` component has designed a series of props to support slot elements. You can use these props to extend the layout of the default theme. For example, change the above `Layout` component to the following form:
+```json
+{
+  "some content": {
+    "zh": "一些内容",
+    "en": "some content"
+  }
+}
+```
+
+</Tab>
+
+</Tabs>
+
+It's worth noting that the `Layout` component is designed with a series of props to support slot elements. You can use these props to extend the default theme layout:
+
+<details>
 
 ```tsx title="theme/index.tsx"
-import { Layout as BasicLayout } from '@rspress/core/theme-original';
+import {
+  Layout as BasicLayout,
+  getCustomMDXComponent as basicGetCustomMDXComponent,
+} from '@rspress/core/theme-original';
 
 // Show all props below
 const Layout = () => (
   <BasicLayout
-    /* Before home hero */
+    /* Home page Hero section before */
     beforeHero={<div>beforeHero</div>}
-    /* After home hero */
+    /* Home page Hero section after */
     afterHero={<div>afterHero</div>}
-    /* Before home features */
+    /* Home page Features section before */
     beforeFeatures={<div>beforeFeatures</div>}
-    /* After home features */
+    /* Home page Features section after */
     afterFeatures={<div>afterFeatures</div>}
-    /* Before doc footer */
+    /* Doc page Footer section before */
     beforeDocFooter={<div>beforeDocFooter</div>}
-    /* After doc footer */
+    /* Doc page Footer section after */
     afterDocFooter={<div>afterDocFooter</div>}
     /* Doc page front */
     beforeDoc={<div>beforeDoc</div>}
@@ -63,30 +174,42 @@ const Layout = () => (
     beforeDocContent={<div>beforeDocContent</div>}
     /* Doc content end */
     afterDocContent={<div>afterDocContent</div>}
-    /* Before the nav bar */
+    /* Before nav bar */
     beforeNav={<div>beforeNav</div>}
-    /* Before the title of the nav bar in the upper left corner */
+    /* Before upper left nav bar title */
     beforeNavTitle={<span>😄</span>}
     /* Nav bar title */
     navTitle={<div>Custom Nav Title</div>}
-    /* After the title of the nav bar in the upper left corner */
+    /* After upper left nav bar title */
     afterNavTitle={<div>afterNavTitle</div>}
-    /* The right corner of the nav menu */
+    /* Upper right corner of nav bar */
     afterNavMenu={<div>afterNavMenu</div>}
-    /* Above the left sidebar */
+    /* Above left sidebar */
     beforeSidebar={<div>beforeSidebar</div>}
-    /* Below the left sidebar */
+    /* Below left sidebar */
     afterSidebar={<div>afterSidebar</div>}
-    /* Above the right outline column */
+    /* Above right outline column */
     beforeOutline={<div>beforeOutline</div>}
-    /* Below the outline column on the right */
+    /* Below right outline column */
     afterOutline={<div>afterOutline</div>}
-    /* Top of the entire page */
+    /* Top of entire page */
     top={<div>top</div>}
-    /* Bottom of the entire page */
+    /* Bottom of entire page */
     bottom={<div>bottom</div>}
     /* Custom MDX components */
-    components={{ p: (props) => <p {...props} className="my-4 leading-7" /> }}
+    components={{
+      h1: (props) => {
+        const { h1: OriginalH1, p: OriginalP } = basicGetCustomMDXComponent();
+        return (
+          <>
+            <OriginalH1 {...props} />
+            <OriginalP>
+              This is a custom paragraph added after every H1 heading.
+            </OriginalP>
+          </>
+        );
+      },
+    }}
   />
 );
 
@@ -95,54 +218,33 @@ export { Layout };
 export * from '@rspress/core/theme-original';
 ```
 
-### 3. Custom home page and 404 page
+</details>
 
-In addition to the slot method, if you want to extend the default theme components, you can also customize the Home page components and 404 page components,
-as well as other Rspress [built-in components](https://github.com/web-infra-dev/rspress/tree/main/packages/theme-default/src/components)
+## Eject: Modify source code directly \{#eject}
+
+Eject means copying the source code of a single Rspress built-in component locally and then modifying it directly. The steps are as follows:
+
+1. Execute CLI [`rspress eject [component]`](../../api/commands.mdx#rspress-eject), Rspress will eject the source code of the specified component to the local `theme/components` directory, without ejecting dependencies.
+
+2. Update `theme/index.tsx` re-export:
 
 ```tsx title="theme/index.tsx"
-import {
-  Search as BasicSearch,
-  Layout as BasicLayout,
-} from '@rspress/core/theme-original';
-
-// Custom Home Page
-const HomeLayout = () => <div>Home</div>;
-// Custom 404 page
-const NotFoundLayout = () => <div>404</div>;
-// Use slot
-const Layout = () => (
-  <BasicLayout
-    beforeNavTitle={<div>some content</div>}
-    HomeLayout={HomeLayout}
-    NotFoundLayout={NotFoundLayout}
-  />
-);
-
-// Custom Search Component
-const Search = () => (
-  <div className="my-search">
-    <BasicSearch />
-  </div>
-);
-export { Search, HomeLayout, NotFoundLayout };
-// re-export
+// Assuming you ejected the DocFooter component
+export { DocFooter } from './components/DocFooter';
 export * from '@rspress/core/theme-original';
 ```
 
-Of course, you may need to use page data during the development process, you can get it through [`Runtime API`](/ui/hooks/).
+3. Modify `theme/components/DocFooter.tsx` as needed to meet your requirements.
 
-### 4. Custom icon
+Rspress components are split with fine granularity, you can see which components are suitable for eject in [Built-in Components](/ui/components/).
 
-If you want to modify the icons used in the default theme component individually, just put the icons with the same name in the theme/assets directory.
+:::warning Do you really need eject?
 
-```txt
-└── theme
-    └── assets
-        └── logo.svg
-```
+Eject will increase maintenance costs, because when Rspress is updated in the future, these ejected components will not automatically receive updates, and you need to manually compare and merge changes.
 
-You can view all the icons used in the default theme [here](https://github.com/web-infra-dev/rspress/tree/main/packages/theme-default/src/assets).
+Please check if wrap can meet your needs first. Only consider eject when wrap cannot meet your needs.
+
+:::
 
 ## Redevelop a custom theme
 

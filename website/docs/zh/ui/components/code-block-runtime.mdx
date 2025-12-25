@@ -25,3 +25,9 @@ export default function Page() {
 ```
 
 传入 `lang`、`title`、`code` 渲染代码块；`shikiOptions` 可自定义高亮配置。
+
+:::warning
+
+建议仅在必要条件下使用 `CodeBlockRuntime`，因为它会增加运行时的包体积，尤其是在需要引入多门语言的时候，并且无法享受编译时高亮带来的性能优势。
+
+:::

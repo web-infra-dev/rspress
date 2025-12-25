@@ -63,9 +63,9 @@ export async function emitLlmsTxt(
     : [];
 
   const defaultLang = routeService.getDefaultLang();
-  const langs = new Set([defaultLang, ...routeService.getLangs()]);
+  const langs = [...new Set([defaultLang, ...routeService.getLangs()])];
   await Promise.all(
-    langs.values().map(async lang => {
+    langs.map(async lang => {
       const navList = noVersionNav.filter(i => i.lang === lang);
       const routeGroups: string[][] = new Array(navList.length)
         .fill(0)

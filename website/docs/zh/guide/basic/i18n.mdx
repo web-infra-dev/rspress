@@ -3,11 +3,11 @@
 在 Rspress 中实现文档的国际化，你需要做如下的操作:
 
 1. 定义 I18n 文本数据。
-2. 配置 `locales` 和 `themeConfig.locales`。
-3. 配置默认语言。
-4. 新建不同的语言版本的文档。
-5. 配置侧边栏和导航栏。
-6. 自定义组件中使用 `useI18n`。
+1. 配置语言列表，`rspress.config.ts` 中的 `locales`。
+1. 配置默认语言，`rspress.config.ts` 中的 `lang`。
+1. 新建不同的语言版本的文档。
+1. 配置侧边栏和导航栏。
+1. 自定义组件中使用 `useI18n`。
 
 ## 定义 I18n 文本数据
 
@@ -55,7 +55,7 @@ export interface I18n {
 
 这些文本数据在**配置文件**和**自定义组件**中都会用到，后文会详细介绍。
 
-## 配置 `locales` 数据
+## 配置 `locales`
 
 `rspress.config.ts`中的 `locales`，用于配置站点的`语言`、`标题`、`描述`等信息，主要围绕站点本身的信息来配置。
 
@@ -84,13 +84,13 @@ export default defineConfig({
 
 :::tip 注意
 
-`themeConfig.locales` 也包含 `locales` 中的所有字段。不过它将在未来被移除，请使用 `locales`。
+`themeConfig.locales` 也包含 `locales` 中的所有字段。不过它将在未来被移除，请尽可能使用 `locales`。
 
 :::
 
 对于其它的国际化主题参数配置，请参考 [API 类型](/api/config/config-theme#locales)。
 
-## 配置默认语言
+## 配置 `lang` 默认语言
 
 在配置完 `locales` 之后，你需要通过 [lang](/api/config/config-basic#lang) 配置文档的默认语言，如下例子所示:
 
@@ -109,46 +109,62 @@ export default defineConfig({
 在做好上面的配置后，我们就可以开始新建不同语言版本的文档了，非常简单，我们只需要在文档根目录下新建如下的结构即可：
 
 ```txt
-docs
-├── en
-│   ├── api
+├── doc
+│   ├── en
+│   │   ├── _nav.json
+│   │   ├── api
+│   │   │   └── index.mdx
+│   │   ├── guide
+│   │   │   ├── _meta.json
+│   │   │   └── start
+│   │   │       ├── introduction.mdx
+│   │   │       └── quick-start.mdx
 │   │   └── index.md
-│   └── guide
-│       └── getting-started.md
-│       └── features.md
-└── zh
-    ├── api
-    │   └── index.md
-    └── guide
-        └── getting-started.md
-        └── features.md
+│   └── zh
+│       ├── _nav.json
+│       ├── api
+│       │   └── index.mdx
+│       ├── guide
+│       │   ├── _meta.json
+│       │   └── start
+│       │       ├── introduction.mdx
+│       │       └── quick-start.mdx
+│       └── index.md
+├── i18n.json
+├── package.json
+├── rspress.config.ts
+└── tsconfig.json
+
 ```
 
 可以看到，我们把不同语言的文档放在了 `docs` 目录下的 `en` 和 `zh` 目录中，这样就可以方便地区分不同语言的文档了。
 
-## 配置 \_meta.json
+## 配置 \_nav.json 和 \_meta.json
 
 通过 \_meta.json 文件，我们可以配置导航栏和侧边栏的内容，具体可以参考[自动化导航栏/侧边栏](/guide/basic/auto-nav-sidebar)。
 
-### 导航栏级别
+### 导航栏 \_nav.json
 
-在导航栏级别的 \_meta.json 配置中，你可以将 `text` 指定为 i18n key，比如:
+在导航栏配置中，你可以将 `text` 指定为 i18n key，比如:
 
-```json title="_meta.json"
+```json title="_nav.json"
 [
   {
     "text": "guide",
-    "link": "/guide/start/getting-started",
-    "activeMatch": "/guide/"
+    "link": "/guide/start/introduction"
+  },
+  {
+    "text": "api",
+    "link": "/api/"
   }
 ]
 ```
 
-其中，`text` 为 `guide`，这个值会被自动翻译为 `指南` 或者 `Guide`，具体取决于当前语言。
+其中，`text` 为 `guide`，这个值会被自动翻译为 `指南` 或者 `Guide`，具体取决于 `i18n.json` 和当前语言。
 
-### 侧边栏级别
+### 侧边栏 \_meta.json
 
-在侧边栏级别的 \_meta.json 配置中，你可以将 `label` 指定为 i18n key，比如:
+在侧边栏配置中，你可以将 `label` 指定为 i18n key，比如:
 
 ```json title="_meta.json"
 [

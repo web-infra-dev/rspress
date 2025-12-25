@@ -4,7 +4,6 @@
     "label": "Theme"
   },
   "vars",
-  "custom-theme",
   "custom-page",
   {
     "type": "section-header",
@@ -12,13 +11,18 @@
   },
   {
     "type": "dir",
-    "label": "Built-in components",
-    "name": "components"
+    "label": "Runtime components",
+    "name": "runtime-components"
+  },
+  {
+    "type": "file",
+    "label": "Built-in icons",
+    "name": "icons/index"
   },
   {
     "type": "dir",
-    "label": "Runtime components",
-    "name": "runtime-components"
+    "label": "Built-in components",
+    "name": "components"
   },
   {
     "type": "section-header",
