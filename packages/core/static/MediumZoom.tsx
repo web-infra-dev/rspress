@@ -1,4 +1,4 @@
-import { useLocation } from '@rspress/runtime';
+import { useLocation } from '@rspress/core/runtime';
 import mediumZoom, { type Zoom, type ZoomOptions } from 'medium-zoom';
 import { useEffect } from 'react';
 import './MediumZoom.css';

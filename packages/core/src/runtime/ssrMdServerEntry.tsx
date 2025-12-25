@@ -7,7 +7,7 @@ import {
   removeTrailingSlash,
   ThemeContext,
   withBase,
-} from '@rspress/runtime';
+} from '@rspress/core/runtime';
 import { type Unhead, UnheadProvider } from '@unhead/react/server';
 import { StaticRouter } from 'react-router-dom';
 import { App } from './App';

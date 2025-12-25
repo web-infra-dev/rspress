@@ -14,7 +14,6 @@ const COMMON_EXTERNALS = [
   'virtual-global-components',
   'virtual-search-hooks',
   'virtual-i18n-text',
-  '@rspress/runtime',
   '@theme',
   // To be externalized when bundling d.ts.
   '@types/react',
@@ -23,7 +22,6 @@ const COMMON_EXTERNALS = [
   '@rspress/core/shiki-transformers',
   '@rspress/core/_private/react',
   '@rspress/shared',
-  '@rspress/runtime',
 ];
 
 export default defineConfig({
