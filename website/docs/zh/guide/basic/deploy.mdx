@@ -32,7 +32,7 @@
 
 我们可以把部署产物分为两部分：**HTML 文件**和**静态资源**。HTML 文件指的是产物目录中的 HTML 文件，这些文件是我们最终部署到服务器上的文件。
 
-而所谓的静态资源，指的是产物目录中的 `static` 目录，里面包含了项目所需要的 JavaScript、CSS、图片等静态资源。在部署的时候，如果你想要将这些静态资源放到 CDN 上，以保证更好的访问性能，而不是像 HTML 一样直接放到服务器上，那么你就需要配置静态资源的前缀，这样才能够让项目正确的引用到这些静态资源，你可以通过 `builderConfig.output.assetPrefix` 来完成：
+而所谓的静态资源，指的是产物目录中的 `static` 目录，里面包含了项目所需的 JavaScript、CSS、图片等静态资源。在部署时，如果你想将这些静态资源放到 CDN 上以保证更好的访问性能，而不是像 HTML 一样直接放到服务器上，那么你需要配置静态资源的前缀，这样才能让项目正确地引用到这些静态资源，可以通过 `builderConfig.output.assetPrefix` 来完成：
 
 ```ts title="rspress.config.ts"
 import { defineConfig } from '@rspress/core';
@@ -86,7 +86,7 @@ Zephyr Cloud 会处理资源优化、全球 CDN 分发，并为你的文档站�
 
 #### 1. 创建 Workflow 文件
 
-首先，你需要你需要在项目根目录下创建一个名为 `.github/workflows/deploy.yml` 的文件，内容如下：
+首先，你需要在项目根目录下创建一个名为 `.github/workflows/deploy.yml` 的文件，内容如下：
 
 ```yml
 name: Deploy Rspress site to Pages
