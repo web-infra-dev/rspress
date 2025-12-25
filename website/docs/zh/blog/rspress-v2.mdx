@@ -6,6 +6,65 @@ description: 'Rspress 2.0 正式发布，带来 llms.txt（SSG-MD），全新主
 
 # Rspress 2.0 发布公告
 
-## SSG-MD：
+我们很高兴地宣布 Rspress 2.0 的正式发布！
 
-## 全新主题
+Rspress 自发布以来共迭代了 x 个 minor 版本，同时 2.0 也经历了 x 个 alpha/beta/rc 测试版本。
+
+## 为什么是 Rspress 2.0？
+
+AI-friendly，定制化，文档开发体验，用户阅读体验，构建性能
+
+## 2.0 新特性
+
+### 一整套的全新主题
+
+设计师重新设计，良好的阅读体验，极高的可定制性
+
+### SSG-MD
+
+AI-friendly
+
+### 集成 Shiki 代码块高亮
+
+编译时的代码高亮
+
+### 更强的性能，默认开启 lazyCompilation 和 persistent cache
+
+开发下的 lazyCompilation + Link preload 开发体验
+
+persistent cache
+
+### 文档开发体验
+
+默认开启死链检查，
+
+基于 Rsbuild 重新设计虚拟模块插件，支持主要配置文件 `_nav.json` `_meta.json` `@rspress/plugin-preview` 中 iframe 相关的 HMR。
+
+### 更多 Rspress 官方插件
+
+- `@rspress/plugin-algolia`
+
+- `@rspress/plugin-twoslash`
+
+- `@rspress/plugin-llms`
+
+- `@rspress/plugin-sitemap`
+
+## 其他
+
+## 在 Markdown/MDX 的编译流程中不再使用 Rust 版本的 MDX 解析器
+
+在使用 lazyCompilation / persistentCache 后，性能的优化效果已经非常显著，我们决定牺牲一些，以换取更好的扩展性和维护性。对比使用 Shiki 等 JS 版本 Markdown 解析辅助工具带来的扩展性和收益，这个权衡是值得的。
+
+这不意味着我们放弃 Markdown 相关生态的 Rust 化，未来我们可能会在 Rslint / Rspack 中继续推进 Rust 版本的 Markdown 解析器的集成。
+
+## Node.js 版本要求 20+，React 版本要求 18+，
+
+## 一些配置变更
+
+## 下一步
+
+继续演进和功能完善
+
+- 与 Rslib、Rstest 更深度的集成，前端项目、组件库项目的一体化开发体验
+- 探索 AI 与文档更深度集成的可能
