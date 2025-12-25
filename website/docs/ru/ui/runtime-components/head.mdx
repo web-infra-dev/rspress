@@ -1,0 +1,37 @@
+---
+overviewHeaders: []
+---
+
+# Head
+
+Компонент `Head` позволяет инжектировать пользовательский контент в `<head>` страницы (построен на базе [unhead](https://www.npmjs.com/package/unhead)).
+
+## Использование
+
+```tsx title="index.tsx"
+import { Head } from '@rspress/core/runtime';
+
+export default function Page() {
+  return (
+    <Head>
+      <meta
+        property="og:description"
+        content="Готовые к использованию инструменты сборки на базе Rspack"
+      />
+      <link rel="canonical" href="https://example.com" />
+    </Head>
+  );
+}
+```
+
+import { Head } from '@rspress/core/runtime';
+
+<Head>
+  <meta
+    property="og:description"
+    content="Готовые к использованию инструменты сборки на базе Rspack"
+  />
+  <link rel="canonical" href="https://example.com" />
+</Head>
+
+Используйте его внутри MDX- или React-страниц для добавления мета-тегов, канонических ссылок, данных Open Graph, фавиконок и многого другого.
