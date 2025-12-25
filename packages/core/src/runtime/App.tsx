@@ -1,4 +1,4 @@
-import { Content, PageContext, useLocation } from '@rspress/core/runtime';
+import { PageContext, useLocation } from '@rspress/core/runtime';
 import { Layout, Root } from '@theme';
 import React, { useContext, useLayoutEffect } from 'react';
 import globalComponents from 'virtual-global-components';
@@ -39,7 +39,11 @@ export function App() {
     query.get(GLOBAL_COMPONENTS_KEY) === QueryStatus.Hide;
 
   if (process.env.__SSR_MD__) {
-    return <Content />;
+    return (
+      <Root>
+        <Layout />
+      </Root>
+    );
   }
 
   return (
