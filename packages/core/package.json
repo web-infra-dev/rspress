@@ -72,7 +72,6 @@
     "@rsbuild/core": "~1.7.1",
     "@rsbuild/plugin-react": "~1.4.2",
     "@rspress/mdx-rs": "0.6.6",
-    "@rspress/runtime": "workspace:*",
     "@rspress/shared": "workspace:*",
     "@shikijs/rehype": "^3.20.0",
     "@types/unist": "^3.0.3",
