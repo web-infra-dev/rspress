@@ -12,29 +12,32 @@
   border-radius: 50%;
   object-fit: cover;
   flex-shrink: 0;
+  pointer-events: none;
 }
 
 .info {
   display: flex;
   flex-direction: column;
-  gap: 2px;
 }
 
 .name {
-  font-weight: 600;
-  font-size: 14px;
+  font-weight: 700;
+  line-height: 1.25rem;
+  font-size: 0.875rem;
   color: var(--rp-c-text-1);
 }
 
 .title {
-  font-size: 13px;
   color: var(--rp-c-text-2);
+  line-height: 1;
+  font-size: 0.75rem;
+  margin-top: 4px;
+  margin-bottom: 12px;
 }
 
 .links {
   display: flex;
   gap: 8px;
-  margin-top: 2px;
 }
 
 .link {
