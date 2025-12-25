@@ -1,0 +1,40 @@
+---
+overviewHeaders: []
+tag: eject-only
+---
+
+# HomeFooter
+
+Этот компонент является частью [главной страницы](/guide/basic/home-page). `HomeFooter` отображает информацию в футере в нижней части главной страницы.
+
+## Использование
+
+```tsx title="index.mdx"
+import { HomeFooter } from '@rspress/core/theme';
+
+<HomeFooter />;
+```
+
+Этот компонент не принимает никаких пропсов. Он автоматически читает содержимое `footer.message` из конфигурации темы.
+
+## Конфигурация
+
+Настройте информацию футера в `rspress.config.ts`:
+
+```ts title="rspress.config.ts"
+import { defineConfig } from '@rspress/core';
+
+export default defineConfig({
+  themeConfig: {
+    footer: {
+      message: '© 2024 Ваша компания',
+    },
+  },
+});
+```
+
+## Как это работает
+
+- Компонент читает содержимое футера из `themeConfig.footer.message`
+- Если `message` не настроено, компонент ничего не отобразит
+- `message` поддерживает HTML-строки
