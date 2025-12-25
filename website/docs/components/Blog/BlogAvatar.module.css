@@ -1,0 +1,55 @@
+.avatarContainer {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  padding: 8px 0;
+  margin-right: 40px;
+}
+
+.avatar {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  object-fit: cover;
+  flex-shrink: 0;
+}
+
+.info {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.name {
+  font-weight: 600;
+  font-size: 14px;
+  color: var(--rp-c-text-1);
+}
+
+.title {
+  font-size: 13px;
+  color: var(--rp-c-text-2);
+}
+
+.links {
+  display: flex;
+  gap: 8px;
+  margin-top: 2px;
+}
+
+.link {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--rp-c-text-2);
+  transition: color 0.2s;
+}
+
+.link:hover {
+  color: var(--rp-c-brand);
+}
+
+.link svg {
+  width: 16px;
+  height: 16px;
+}
