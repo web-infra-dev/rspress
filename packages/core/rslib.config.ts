@@ -33,7 +33,6 @@ export default defineConfig({
           index: './src/index.ts',
           'cli/index': './src/cli/index.ts',
           'shiki-transformers': './src/shiki-transformers.ts',
-          runtime: './src/runtime.ts',
 
           // TODO: should add entry by new URL parser in Rspack module graph
           'node/mdx/loader': './src/node/mdx/loader.ts',
@@ -48,6 +47,7 @@ export default defineConfig({
         buildCache: false,
       },
       output: {
+        target: 'node',
         externals: COMMON_EXTERNALS,
         filenameHash: true,
       },
@@ -90,7 +90,7 @@ export default defineConfig({
       syntax: 'es2022',
       source: {
         entry: {
-          index: './src/runtime/*.{tsx,ts}',
+          index: './src/runtime/**/*.{tsx,ts}',
         },
       },
       output: {

@@ -245,7 +245,10 @@ async function createInternalBuildConfig(
         '@theme-original': DEFAULT_THEME,
         '@rspress/core/theme-original': DEFAULT_THEME,
 
-        '@rspress/core/runtime': path.join(PACKAGE_ROOT, 'dist/runtime.js'),
+        '@rspress/core/runtime': path.join(
+          PACKAGE_ROOT,
+          'dist/runtime/index.js',
+        ),
         '@rspress/core/shiki-transformers': path.join(
           PACKAGE_ROOT,
           'dist/shiki-transformers.js',

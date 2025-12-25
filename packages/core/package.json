@@ -35,8 +35,8 @@
       "default": "./dist/theme/index.js"
     },
     "./runtime": {
-      "types": "./dist/runtime.d.ts",
-      "default": "./dist/runtime.js"
+      "types": "./dist/runtime/index.d.ts",
+      "default": "./dist/runtime/index.js"
     },
     "./shiki-transformers": {
       "types": "./dist/shiki-transformers.d.ts",
