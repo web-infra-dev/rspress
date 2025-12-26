@@ -140,7 +140,7 @@ interface NavScreenMenuItemProps {
 }
 
 export function NavScreenMenuItem({ menuItem: item }: NavScreenMenuItemProps) {
-  if ('items' in item && Array.isArray(item.items) && item.items.length > 0) {
+  if ('items' in item && Array.isArray(item.items)) {
     return <NavScreenMenuItemWithChildren menuItem={item} />;
   }
 
