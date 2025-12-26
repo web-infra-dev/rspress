@@ -29,22 +29,24 @@ export function NavMenuItemWithChildren({
     activeMatcher,
   });
 
+  const hasItems = menuItem.items.length > 0;
+
   const inner =
     'link' in menuItem && typeof menuItem.link === 'string' ? (
       <Link href={menuItem.link} className="rp-nav-menu__item__container">
         {menuItem.text}
         {menuItem.tag && <Tag tag={menuItem.tag} />}
-        <SvgDown className="rp-nav-menu__item__icon" />
+        {hasItems && <SvgDown className="rp-nav-menu__item__icon" />}
       </Link>
     ) : (
       <div className="rp-nav-menu__item__container">
         {menuItem.text}
         {menuItem.tag && <Tag tag={menuItem.tag} />}
-        <SvgDown className="rp-nav-menu__item__icon" />
+        {hasItems && <SvgDown className="rp-nav-menu__item__icon" />}
       </div>
     );
 
-  return menuItem.items.length > 0 ? (
+  return hasItems ? (
     <li
       className="rp-nav-menu__item"
       onMouseEnter={handleMouseEnter}
