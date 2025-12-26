@@ -150,10 +150,6 @@ export function Layout(props: LayoutProps) {
   } = page;
   const localesData = useLocaleSiteData();
 
-  useSetup();
-  useScrollReset();
-  useRedirect4FirstVisit();
-
   // Always show sidebar by default
   // Priority: front matter title > h1 title
   let title = (frontmatter.title as string) ?? articleTitle;
@@ -196,6 +192,14 @@ export function Layout(props: LayoutProps) {
         return <DocLayout {...docProps} />;
     }
   };
+
+  if (process.env.__SSR_MD__) {
+    return <>{getContentLayout()}</>;
+  }
+
+  useSetup();
+  useScrollReset();
+  useRedirect4FirstVisit();
 
   const {
     frontmatter: { navbar: showNavbar = true },

@@ -25,6 +25,58 @@ import {
 import './index.scss';
 import { findItemByRoutePath } from './utils';
 
+function OverviewMarkdown({
+  title,
+  groups,
+}: {
+  title: string;
+  groups: Group[];
+}) {
+  const lines: string[] = [];
+
+  lines.push(`# ${title}`);
+  lines.push('');
+
+  for (const group of groups) {
+    if (group.name) {
+      lines.push(`## ${group.name}`);
+      lines.push('');
+    }
+
+    for (const item of group.items) {
+      const itemTitle = item.link
+        ? `[${item.text}](${item.link})`
+        : `**${item.text}**`;
+      lines.push(`### ${itemTitle}`);
+      lines.push('');
+
+      // Render headers as a list
+      if (item.headers && item.headers.length > 0) {
+        for (const header of item.headers) {
+          const headerLink = item.link
+            ? `[${header.text}](${item.link}#${header.id})`
+            : header.text;
+          lines.push(`- ${headerLink}`);
+        }
+        lines.push('');
+      }
+
+      // Render custom items as a list
+      if (item.items && item.items.length > 0) {
+        for (const subItem of item.items) {
+          const subItemLink = subItem.link
+            ? `[${subItem.text}](${subItem.link})`
+            : subItem.text;
+          lines.push(`- ${subItemLink}`);
+        }
+        lines.push('');
+      }
+    }
+  }
+
+  return <>{lines.join('\n')}</>;
+}
+
 // Utility function to normalize text for search
 const normalizeText = (s: string) => s.toLowerCase().replace(/-/g, ' ');
 
@@ -239,6 +291,10 @@ export function Overview(props: {
   }, [groups, query]);
 
   const overviewTitle = title || 'Overview';
+
+  if (process.env.__SSR_MD__) {
+    return <OverviewMarkdown title={overviewTitle} groups={groups} />;
+  }
 
   return (
     <div className="rspress-doc rp-doc rspress-overview rp-overview">
