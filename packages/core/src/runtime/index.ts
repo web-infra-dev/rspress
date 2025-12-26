@@ -1,3 +1,10 @@
+export {
+  isDataUrl,
+  isExternalUrl,
+  matchNavbar,
+  matchSidebar,
+  normalizeHref,
+} from '@rspress/shared';
 export { Head } from '@unhead/react';
 export * from 'react-router-dom';
 export { Content } from './Content';
@@ -17,7 +24,6 @@ export {
   useSidebarDynamic,
 } from './hooks/useSidebar';
 export { useSite } from './hooks/useSite';
-
 export { useVersion } from './hooks/useVersion';
 export { useWindowSize } from './hooks/useWindowSize';
 export { NoSSR } from './NoSSR';
