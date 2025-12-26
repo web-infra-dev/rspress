@@ -9,6 +9,7 @@ import {
 } from '@rspress/core/theme-original';
 import {
   Search as PluginAlgoliaSearch,
+  RU_LOCALES,
   ZH_LOCALES,
 } from '@rspress/plugin-algolia/runtime';
 import {
@@ -48,7 +49,9 @@ const Layout = () => {
           message={
             lang === 'en'
               ? '🚧 Rspress 2.0 document is under development'
-              : '🚧 Rspress 2.0 文档还在开发中'
+              : lang === 'ru'
+                ? 'Документация Rspress 2.0 в процессе доработки'
+                : '🚧 Rspress 2.0 文档还在开发中'
           }
         />
       }
@@ -68,7 +71,7 @@ const Search = () => {
           facetFilters: [`lang:${lang}`],
         },
       }}
-      locales={ZH_LOCALES}
+      locales={{ ...ZH_LOCALES, ...RU_LOCALES }}
     />
   );
 };

@@ -1,0 +1,36 @@
+[
+  {
+    "type": "section-header",
+    "label": "Тема"
+  },
+  "vars",
+  "custom-page",
+  {
+    "type": "section-header",
+    "label": "Компоненты"
+  },
+  {
+    "type": "dir",
+    "label": "Runtime-компоненты",
+    "name": "runtime-components"
+  },
+  {
+    "type": "file",
+    "label": "Встроенные иконки",
+    "name": "icons/index"
+  },
+  {
+    "type": "dir",
+    "label": "Встроенные компоненты",
+    "name": "components"
+  },
+  {
+    "type": "section-header",
+    "label": "Хуки"
+  },
+  {
+    "type": "dir",
+    "label": "Встроенные хуки",
+    "name": "hooks"
+  }
+]

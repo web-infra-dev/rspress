@@ -1,0 +1,221 @@
+# @rspress/plugin-playground <SourceCode href="https://github.com/web-infra-dev/rspress/tree/main/packages/plugin-playground" />
+
+import { SourceCode, PackageManagerTabs } from '@rspress/core/theme';
+
+Предоставляет интерактивную площадку для предварительного просмотра блоков кода в MDX-файлах в реальном времени.
+
+## Установка
+
+<PackageManagerTabs command="add @rspress/plugin-playground -D" />
+
+## Использование
+
+### Регистрация
+
+Сначала добавьте следующую конфигурацию в файл настроек:
+
+```ts title="rspress.config.ts"
+import { defineConfig } from '@rspress/core';
+import { pluginPlayground } from '@rspress/plugin-playground';
+
+export default defineConfig({
+  plugins: [pluginPlayground()],
+});
+```
+
+:::warning Примечание
+
+Этот плагин устанавливает для `markdown.mdxRs` значение `false`. В будущем команда Rspress перенесет этот плагин в версию компилятора на Rust.
+
+:::
+
+### Внутренние компоненты
+
+:::tip Примечание
+Рекомендуется использовать js или jsx для написания примеров кода, чтобы избежать ошибок типов TypeScript в редакторе.
+:::
+
+Код компонентов для внутренних компонентов объявляется в mdx-файле. Этот плагин поддерживает jsx и tsx. Вы можете объявить следующий блок кода в mdx-файле:
+
+````mdx
+```jsx
+import React from 'react';
+
+function App() {
+  return <div>Привет, мир</div>;
+}
+
+export default App;
+```
+````
+
+В противном случае, вы можете использовать параметр `direction` для указания макета площадки, поддерживаются значения `horizontal` и `vertical`:
+
+````mdx
+```jsx direction=vertical
+import React from 'react';
+
+function App() {
+  return <div>Привет, мир</div>;
+}
+
+export default App;
+```
+````
+
+Стоит отметить, что вам нужно экспортировать компонент как default, и Rspress автоматически отрендерит этот компонент.
+
+Но если вы хотите сохранить стиль блока кода вместо рендеринга в качестве компонента, вы можете добавить идентификатор `pure`, использование выглядит следующим образом:
+
+````mdx
+```tsx pure
+import React from 'react';
+
+function App() {
+  return <div>Привет, мир</div>;
+}
+
+export default App;
+```
+````
+
+Если вы установили для `defaultRenderMode` значение `'pure'`, Rspress не будет рендерить этот компонент по умолчанию, а вместо этого отобразит его как блок кода. Если в этой ситуации вы хотите отобразить блок кода как компонент, вы можете добавить идентификатор `preview`, использование выглядит следующим образом:
+
+````mdx
+```tsx playground
+function App() {
+  return <div>Привет, мир</div>;
+}
+export default App;
+```
+````
+
+:::tip Подсказка
+Убедитесь, что документ имеет расширение `.mdx`.
+:::
+
+### Внешние компоненты
+
+Помимо написания кода компонента в блоке кода mdx-файла, вы также можете написать код компонента во внешнем файле, а затем импортировать его в mdx-файл через мета-тег `file="./filename"`. Например:
+
+````md title="example.mdx"
+```jsx file="./Demo.jsx"
+
+```
+````
+
+```jsx title="Demo.jsx"
+import React from 'react';
+
+export default function App() {
+  return <div>Привет, мир</div>;
+}
+```
+
+Так же, как и внутренние компоненты, внешние компоненты также поддерживают атрибут `direction`:
+
+````md title="example.mdx"
+```jsx file="./Demo.jsx" direction=vertical
+
+```
+````
+
+Внешние компоненты также должны экспортировать компонент как default. С помощью атрибута `src` тега code вы можете указать путь к внешнему компоненту. Этот плагин поддерживает как относительные пути, так и пути-псевдонимы.
+
+Для некоторых более сложных компонентов такой способ использования внешних компонентов будет более удобным.
+
+### Определение макета всей страницы
+
+Вы можете указать `playgroundDirection` в блоке метаданных, чтобы определить макет редактора и области предпросмотра на всей странице.
+
+```md title="example.mdx"
+---
+title: title
+playgroundDirection: horizontal
+---
+```
+
+Приоритет: Прямое определение в области предпросмотра > Определение на странице > Конфигурация.
+
+## Конфигурация
+
+Этот плагин принимает параметр-объект, тип которого следующий:
+
+```ts
+interface PlaygroundOptions {
+  render: string;
+  include: Array<string | [string, string]>;
+  // Определяет макет площадки по умолчанию (горизонтальный/вертикальный)
+  defaultDirection: 'horizontal' | 'vertical';
+  // Определяет положение редактора в горизонтальном макете (слева/справа)
+  editorPosition: 'left' | 'right';
+  // Частичная конфигурация редактора (monaco) по умолчанию
+  monacoLoader: Parameters<typeof loader.config>[0];
+  monacoOptions: MonacoEditorProps['options'];
+}
+```
+
+:::warning Примечание
+
+`monacoLoader` и `monacoOptions` будут сериализованы в JSON, поэтому некоторые типы данных, такие как функции и объекты с циклическими ссылками, не поддерживаются.
+
+:::
+
+### render
+
+Вы можете настроить файл рендеринга для отображения площадки. Обратите внимание, что имя файла должно быть `Playground.(jsx?|tsx?)`
+
+```ts
+pluginPlayground({
+  render: '/path/to/render/Playground.tsx',
+});
+```
+
+В пользовательской площадке вы можете напрямую импортировать оригинальный редактор и рендерер, а также импортировать предварительно упакованные зависимости через `_rspress_playground_imports`:
+
+```ts
+import getImport from '_rspress_playground_imports';
+import { Runner, Editor } from '@rspress/plugin-playground/web';
+```
+
+Вы можете обратиться к встроенному файлу [Playground.tsx](https://github.com/web-infra-dev/rspress/tree/main/packages/plugin-playground/static/global-components/Playground.tsx).
+
+### include
+
+По умолчанию этот плагин автоматически сканирует все импорты в демо-примерах, и пакеты, не используемые в демо-примерах, нельзя использовать на площадке. Если вы хотите добавить другие пакеты на площадку, вы можете использовать параметр `include`:
+
+```ts
+pluginPlayground({
+  include: [
+    // Добавить пакет dayjs
+    'dayjs',
+    // Добавить пакет с именем "my-package", который фактически ссылается на "/path/to/package/index.js"
+    ['my-package', '/path/to/package/index.js'],
+  ],
+});
+```
+
+### babelUrl
+
+Компонент Playground использует `@babel/standalone` для компиляции демо-кода, по умолчанию загружаемый с [cdnjs.com](https://cdnjs.cloudflare.com/ajax/libs/babel-standalone/7.22.20/babel.min.js).
+
+Вы можете изменить URL для загрузки с других CDN, таких как unpkg, jsdelivr и т. д.
+
+### monacoLoader
+
+Настройка поведения monaco-loader, по умолчанию загружается с [cdnjs.com](https://cdnjs.com/libraries/monaco-editor).
+
+Вы можете изменить URL для загрузки с других CDN, таких как unpkg, jsdelivr и т. д.
+
+Полная документация доступна по адресу [suren-atoyan/monaco-loader](https://github.com/suren-atoyan/monaco-loader#config)
+
+### monacoOptions
+
+Настройка редактора monaco, соответствует [IStandaloneEditorConstructionOptions](https://microsoft.github.io/monaco-editor/typedoc/interfaces/editor.IStandaloneEditorConstructionOptions.html)
+
+### defaultRenderMode
+
+Режим по умолчанию для рендеринга внутренних блоков кода, у которых пользователем не объявлены идентификаторы `pure` или `playground`, по умолчанию установлен в `playground`.
+
+- `pure`: рендерить как обычный блок кода
+- `playground`: рендерить как компонент Playground

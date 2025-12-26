@@ -1,0 +1,25 @@
+# Хуки роутера
+
+Rspress реэкспортирует утилиты маршрутизации из `react-router-dom`, позволяя вам получать доступ к данным навигации и местоположения без добавления дополнительных зависимостей.
+
+- **Тип:** те же сигнатуры, что и у соответствующих хуков из `react-router-dom`
+
+Часто используемые хуки: `useLocation`, `useNavigate`, `useParams`, `useSearchParams` и `useMatches`.
+
+```tsx
+import { useLocation, useNavigate } from '@rspress/core/runtime';
+
+export default function LocationDebugger() {
+  const location = useLocation();
+  const navigate = useNavigate();
+
+  return (
+    <div>
+      <div>Текущий путь: {location.pathname}</div>
+      <button type="button" onClick={() => navigate('/')}>
+        Вернуться на главную
+      </button>
+    </div>
+  );
+}
+```

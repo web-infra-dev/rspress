@@ -1,0 +1,18 @@
+# useSite
+
+`useSite` возвращает нормализованную конфигурацию сайта, сгенерированную из вашего файла `rspress.config.ts`.
+
+- **Тип:** `() => { site: SiteData }`
+
+Объект `site` отражает нормализованную конфигурацию и включает базовый путь, язык/локали, конфигурацию темы, параметры поиска и Markdown, а также настройки мультиверсионности.
+
+```tsx preview
+import { useSite } from '@rspress/core/runtime';
+
+export default function SiteTitle() {
+  const { site } = useSite();
+  return <span>{site.title}</span>;
+}
+```
+
+> Комбинируйте с [`usePage`](./use-page), чтобы объединить глобальную конфигурацию с метаданными текущей страницы.

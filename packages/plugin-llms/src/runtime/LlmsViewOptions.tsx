@@ -113,7 +113,7 @@ const IconExternalLink = () => {
 const LlmsViewOptions = ({
   options = ['markdownLink', 'chatgpt', 'claude'],
   text,
-  textByLang = { en: 'Open', zh: '打开' },
+  textByLang = { en: 'Open', zh: '打开', ru: 'Открыть' },
 }: LlmsViewOptionsProps) => {
   const [isOpen, setIsOpen] = useState(false);
   const dropdownRef = useRef<HTMLButtonElement>(null);

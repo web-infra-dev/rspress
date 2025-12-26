@@ -1,0 +1,476 @@
+---
+tag: новинка
+---
+
+# Автоматическое формирование навигации
+
+В Rspress, помимо объявления [nav](/api/config/config-theme.html#nav) и [sidebar](/api/config/config-theme.html#sidebar) в файле конфигурации, вы также можете автоматически генерировать панель навигации и боковую панель, объявив файлы метаданных `_nav.json` и `_meta.json`. Мы рекомендуем второй подход, поскольку он позволяет сохранить файл конфигурации лаконичным, при этом всё остаётся доступным через `themeConfig`.
+
+:::tip СОВЕТ
+Автоматическая генерация панели навигации и бокового меню будет работать только в том случае, если в файле `rspress.config.ts` отсутствуют настройки `nav` и `sidebar`.
+:::
+
+## Основные понятия
+
+Rspress генерирует nav через файл `_nav.json`, а sidebar — через файл `_meta.json`. Файл `_nav.json` находится в корневой директории документации, а файл `_meta.json` — в поддиректориях корня документации. Например:
+
+```txt
+docs
+├── _nav.json // навигация
+└── guides
+    ├── _meta.json // сайдбар
+    ├── introduction.mdx
+    └── advanced
+        ├── _meta.json // сайдбар
+        └── plugin-development.md
+```
+
+Если ваша документация поддерживает i18n, то файл `_nav.json` будет размещён в соответствующей языковой директории, например:
+
+```txt
+docs
+├── en
+│   ├── _nav.json // навигация
+│   └── guides
+│       ├── _meta.json // сайдбар
+│       ├── introduction.mdx
+│       ├── install.mdx
+│       └── advanced
+│           ├── _meta.json // сайдбар
+│           └── plugin-development.md
+└── ru
+    ├── _nav.json // навигация
+    └── guides
+        ├── _meta.json // сайдбар
+        ├── introduction.mdx
+        ├── install.mdx
+        └── advanced
+            ├── _meta.json // сайдбар
+            └── plugin-development.md
+```
+
+## Подсказки типов по JSON-схеме
+
+Чтобы удобнее редактировать файлы `_nav.json` и `_meta.json`, в Rspress V2 предусмотрены два файла схем: `@rspress/core/meta-json-schema.json` и `@rspress/core/nav-json-schema.json`. Они обеспечивают подсказки типов в редакторе.
+
+Например, в VS Code можно добавить следующую настройку в файл `.vscode/settings.json`:
+
+```json title=".vscode/settings.json"
+{
+  //...
+  "json.schemas": [
+    {
+      "fileMatch": ["**/_meta.json"],
+      "url": "./node_modules/@rspress/core/meta-json-schema.json"
+      // или "url": "https://unpkg.com/@rspress/core@2.0.0-rc.2/meta-json-schema.json"
+    },
+    {
+      "fileMatch": ["**/_nav.json"],
+      "url": "./node_modules/@rspress/core/nav-json-schema.json"
+      // или "url": "https://unpkg.com/@rspress/core@2.0.0-rc.2/nav-json-schema.json"
+    }
+  ]
+  // ...
+}
+```
+
+## Настройка навигации
+
+В файле `_nav.json` указывается массив элементов. Его структура и тип полностью совпадают с конфигурацией `nav` стандартной темы. Подробности — в разделе [конфигурация `nav`](/api/config/config-theme#nav). Например:
+
+```json title="docs/_nav.json"
+[
+  {
+    "text": "Guide",
+    "link": "/guides/introduction",
+    "activeMatch": "^/guides/"
+  }
+]
+```
+
+## Настройка сайдбара
+
+В файле `_meta.json` указывается массив элементов, каждый из которых имеет следующий тип:
+
+```ts
+export type FileSideMeta = {
+  type: 'file';
+  name: string;
+  label?: string;
+  tag?: string;
+  overviewHeaders?: number[];
+  context?: string;
+};
+
+export type DirSideMeta = {
+  type: 'dir';
+  name: string;
+  label?: string;
+  collapsible?: boolean;
+  collapsed?: boolean;
+  tag?: string;
+  overviewHeaders?: number[];
+  context?: string;
+};
+
+export type DirSectionHeaderSideMeta = Omit<DirSideMeta, 'type'> &
+  Omit<SectionHeaderMeta, 'type'> & { type: 'dir-section-header' };
+
+export type DividerSideMeta = {
+  type: 'divider';
+  dashed?: boolean;
+};
+
+export type SectionHeaderMeta = {
+  type: 'section-header';
+  label: string;
+  tag?: string;
+};
+
+export type CustomLinkMeta =
+  | {
+      // ссылка на файл
+      type: 'custom-link';
+      label: string;
+      tag?: string;
+      overviewHeaders?: number[];
+      context?: string;
+      link: string;
+    }
+  | {
+      // ссылка на директорию
+      type: 'custom-link';
+      label: string;
+      tag?: string;
+      overviewHeaders?: number[];
+      context?: string;
+      link?: string;
+      collapsible?: boolean;
+      collapsed?: boolean;
+      items: _CustomLinkMetaWithoutTypeField[];
+    };
+
+export type SideMetaItem =
+  | FileSideMeta
+  | DirSideMeta
+  | DirSectionHeaderSideMeta
+  | DividerSideMeta
+  | SectionHeaderMeta
+  | CustomLinkMeta
+  | string;
+```
+
+### file
+
+- Когда тип — `string`, элемент обозначает файл, а сама строка — имя этого файла, например:
+
+```json
+["introduction"]
+```
+
+Имя файла может указываться как с расширением, так и без него — например, `introduction` будет распознано как `introduction.mdx`.
+
+- Когда тип — объект, с его помощью можно описать файл, директорию или произвольную ссылку.
+
+Если объект описывает **файл**, то поддерживаются следующие поля:
+
+```ts
+export type FileSideMeta = {
+  type: 'file';
+  name: string;
+  label?: string;
+  tag?: string;
+  overviewHeaders?: number[];
+  context?: string;
+};
+```
+
+- `name` — имя файла (поддерживается как с суффиксом, так и без него)
+- `label` — отображаемое в боковом меню название файла (необязательное поле; если не указать, будет автоматически использовано заголовок h1 из документа)
+- `overviewHeaders` — заголовки, которые отображаются на странице-обзоре файла (необязательное поле, значение по умолчанию — `[2]`)
+- `context` — значение атрибута `data-context`, добавляемое к DOM-узлу пункта бокового меню при генерации (необязательное поле, по умолчанию не добавляется)
+
+Например:
+
+```json
+{
+  "type": "file",
+  "name": "introduction",
+  "label": "Введение"
+}
+```
+
+### dir
+
+Если объект описывает **директорию**, то поддерживаются следующие поля:
+
+```ts
+export type DirSideMeta = {
+  type: 'dir';
+  name: string;
+  label?: string;
+  collapsible?: boolean;
+  collapsed?: boolean;
+  tag?: string;
+  overviewHeaders?: number[];
+  context?: string;
+};
+```
+
+- `name` — имя директории
+- `label` — отображаемое в боковом меню название директории
+- `collapsible` — можно ли сворачивать директорию
+- `collapsed` — свёрнута ли директория по умолчанию
+- `overviewHeaders` — уровни заголовков, отображаемые на странице-обзоре файлов этой директории (необязательное поле, значение по умолчанию — `[2]`)
+- `context` — значение атрибута `data-context`, добавляемое к DOM-узлу пункта бокового меню при генерации (необязательное поле, по умолчанию не добавляется)
+
+Например:
+
+```json
+{
+  "type": "dir",
+  "name": "advanced",
+  "label": "Дополнительно",
+  "collapsible": true,
+  "collapsed": false
+}
+```
+
+### dir-section-header
+
+При описании **директории** также можно использовать `dir-section-header`. От обычного `"type": "dir"` он отличается только визуально. Чаще всего применяется на первом уровне, когда название директории отображается как [заголовок раздела](#section-header) и находится на одном уровне с файлами внутри директории.
+
+Тип:
+
+```ts
+export type DirSectionHeaderSideMeta = Omit<DirSideMeta, 'type'> &
+  Omit<SectionHeaderMeta, 'type'> & { type: 'dir-section-header' };
+```
+
+```json
+{
+  "type": "dir-section-header",
+  "name": "advanced",
+  "label": "Дополнительно",
+  "collapsible": true,
+  "collapsed": false
+}
+```
+
+### divider
+
+Если объект описывает **разделитель**, то поддерживаются следующие поля:
+
+```ts
+export type DividerSideMeta = {
+  type: 'divider';
+  dashed?: boolean;
+};
+```
+
+Когда `dashed` установлен в `true` — линия разделителя будет пунктирной, иначе — сплошной.
+
+:::tip СОВЕТ
+
+Если вы хотите, чтобы при клике на директорию в боковом меню открывался документ, создайте файл `md(x)` с тем же именем на том же уровне, что и текущая директория, например:
+
+```txt
+docs
+├── advanced.mdx
+└── advanced
+  ├── _meta.json
+  └── ...
+```
+
+Таким образом, при клике на директорию `Advanced` будет отображаться содержимое файла `advanced.mdx`.
+
+:::
+
+### section-header
+
+Если объект описывает **заголовок раздела**, то поддерживаются следующие поля:
+
+```ts
+export type SectionHeaderMeta = {
+  type: 'section-header';
+  label: string;
+  tag?: string;
+};
+```
+
+- `label` — отображаемое в боковом меню название заголовка раздела. Например:
+
+```json
+{
+  "type": "section-header",
+  "label": "Заголовок раздела"
+}
+```
+
+Таким образом вы можете добавлять в боковое меню заголовки разделов — это удобно для группировки документов и директорий. Обычно их используют вместе с `divider`, чтобы лучше визуально отделять разные группы. Например:
+
+```json
+[
+  {
+    "type": "section-header",
+    "label": "Раздел 1"
+  },
+  "introduction",
+  {
+    "type": "divider"
+  },
+  {
+    "type": "section-header",
+    "label": "Раздел 2"
+  },
+  "advanced"
+]
+```
+
+### custom-link
+
+Если объект описывает **произвольную ссылку**, то поддерживаются следующие поля:
+
+```ts
+export type CustomLinkMeta =
+  | {
+      // ссылка на файл
+      type: 'custom-link';
+      label: string;
+      tag?: string;
+      overviewHeaders?: number[];
+      context?: string;
+      link: string;
+    }
+  | {
+      // ссылка на директорию
+      type: 'custom-link';
+      label: string;
+      tag?: string;
+      overviewHeaders?: number[];
+      context?: string;
+      link?: string;
+      collapsible?: boolean;
+      collapsed?: boolean;
+      items: _CustomLinkMetaWithoutTypeField[];
+    };
+```
+
+- `link` — адрес ссылки
+- `label` — отображаемое в боковом меню название ссылки
+
+Например:
+
+```json
+{
+  "type": "custom-link",
+  "link": "/my-link",
+  "label": "Моя ссылка"
+}
+```
+
+Поле `link` поддерживает внешние ссылки, например:
+
+```json
+{
+  "type": "custom-link",
+  "link": "https://github.com",
+  "label": "GitHub"
+}
+```
+
+Также можно использовать поле `items`, чтобы создать вложенные произвольные ссылки, например:
+
+```json
+{
+  "type": "custom-link",
+  "label": "Моя ссылка",
+  "items": [
+    {
+      "type": "custom-link",
+      "label": "Вложенная ссылка",
+      "link": "/sub-link"
+    }
+  ]
+}
+```
+
+### Полный пример
+
+Вот полный пример с использованием трёх перечисленных выше типов ссылок:
+
+```json
+[
+  "install",
+  {
+    "type": "file",
+    "name": "introduction",
+    "label": "Введение"
+  },
+  {
+    "type": "dir",
+    "name": "advanced",
+    "label": "Дополнительно",
+    "collapsible": true,
+    "collapsed": false
+  },
+  {
+    "type": "custom-link",
+    "link": "/my-link",
+    "label": "Моя ссылка"
+  }
+]
+```
+
+### Использование без конфигурации
+
+В некоторых директориях можно не создавать файл `_meta.json` и позволить Rspress автоматически генерировать боковое меню. Это работает при условии, что директория содержит только документы (без вложенных поддиректорий) и вам не важен порядок отображения документов. Например, есть следующая структура документов:
+
+```txt
+docs
+├── _meta.json
+└── guides
+  ├── _meta.json
+  └── basic
+    ├── introduction.mdx
+    ├── install.mdx
+    └── plugin-development.md
+```
+
+В директории guides можно настроить `_meta.json` следующим образом:
+
+```json
+[
+  {
+    "type": "dir",
+    "name": "basic",
+    "label": "Основы",
+    "collapsible": true,
+    "collapsed": false
+  }
+]
+```
+
+В директории `basic` можно не создавать `_meta.json` — тогда Rspress автоматически сформирует для неё боковое меню. По умолчанию сортировка будет алфавитной по имени файла. Если нужно задать свой порядок, добавьте к имени файла числовой префикс, например:
+
+```txt
+basic
+  ├── 1-introduction.mdx
+  ├── 2-install.mdx
+  └── 3-plugin-development.md
+```
+
+### Добавление SVG-иконок перед заголовками
+
+Кроме того, вы можете добавить иконки перед заголовками с помощью свойства `tag`, например:
+
+```json title="_meta.json"
+{
+  "type": "file",
+  "name": "introduction",
+  "label": "Введение",
+  "tag": "<svg width=\"1em\" height=\"1em\" viewBox=\"0 0 32 32\"><path fill=\"currentColor\" d=\"M4 6h24v2H4zm0 18h24v2H4zm0-12h24v2H4zm0 6h24v2H4z\"/></svg>"
+}
+```
+
+Значение `tag` — это строка SVG-тега или URL изображения. Его можно указывать как в **навигационной панели**, так и в **боковом меню**.

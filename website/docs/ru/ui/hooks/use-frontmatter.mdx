@@ -1,0 +1,18 @@
+# useFrontmatter
+
+`useFrontmatter` возвращает метаданные текущей страницы в виде удобного объекта.
+
+- **Тип:** `() => { frontmatter: FrontMatterMeta }`
+
+Пример: отобразить пользовательский бейдж, когда страница помечена как `beta` в блоке метаданных.
+
+```tsx
+import { useFrontmatter } from '@rspress/core/runtime';
+
+export default function BetaBadge() {
+  const { frontmatter } = useFrontmatter();
+  return frontmatter.beta ? <span>Beta</span> : null;
+}
+```
+
+> Комбинируйте с [`usePage`](./use-page), когда вам также нужны другие метаданные страницы (заголовок, маршрут, оглавление и т. д.).

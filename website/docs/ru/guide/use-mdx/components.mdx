@@ -1,0 +1,135 @@
+# MDX и React-компоненты
+
+Rspress поддерживает [MDX](https://mdxjs.com/) — мощный способ создания контента.
+
+## Markdown
+
+MDX является надмножеством Markdown, поэтому вы можете писать обычные Markdown-файлы как и раньше. Например:
+
+```md
+# Привет, мир
+```
+
+## Компонентизация
+
+В MDX каждый файл `.mdx` компилируется в React-компонент, что означает, что его можно импортировать как обычный компонент и свободно рендерить внутри него React-компоненты. Например:
+
+import { Tabs, Tab } from '@theme';
+import { Border } from './_Border';
+
+<Tabs>
+<Tab label="docs/index.mdx">
+
+```mdx
+import MdxFragment from './_mdx-fragment.mdx';
+import TsxComponent from './_tsx-component';
+
+Тестирование использования MDX-фрагментов и React-компонентов.
+
+<MdxFragment />
+
+<TsxComponent />
+```
+
+</Tab>
+
+<Tab label="docs/_mdx-fragment.mdx">
+
+```mdx file="./_mdx-fragment.mdx"
+
+```
+
+</Tab>
+
+<Tab label="docs/_tsx-component.tsx">
+
+```tsx file="./_tsx-component.tsx"
+
+```
+
+</Tab>
+
+</Tabs>
+
+Отобразится так:
+
+import MdxFragment from './_mdx-fragment.mdx';
+import TsxComponent from './_tsx-component';
+
+<Border>
+Тестирование использования MDX-фрагментов и React-компонентов.
+
+<MdxFragment />
+
+<TsxComponent />
+</Border>
+
+Вы можете использовать [встроенные компоненты](/ui/components/index.mdx), предоставляемые Rspress, или подключить сторонние библиотеки React-компонентов, чтобы обогатить документацию в файлах `.mdx`.
+
+## Соглашение о маршрутах \{#routing-convention}
+
+В директории [docs](/api/config/config-basic#root) фрагменты MDX или React-компоненты необходимо исключать из маршрутизации с помощью параметра [route.exclude](/api/config/config-basic#routeexclude). Для удобства файлы, начинающиеся с символа `_`, по умолчанию исключаются через [route.excludeConvention](/api/config/config-basic#routeexcludeconvention).
+
+Также вы можете размещать компоненты в соседних директориях вне директории docs, например:
+
+<Tabs>
+<Tab label="docsite/docs/index.mdx">
+
+```mdx
+import ButtonFragment from './_button.mdx';
+import Button from '../../components/button';
+
+<ButtonFragment />
+<Button />
+```
+
+</Tab>
+<Tab label="docsite/docs/_button.mdx">
+
+```mdx file="./_button.mdx"
+
+```
+
+</Tab>
+<Tab label="docsite/components/button.tsx">
+
+```tsx
+const Button = () => <button>Кнопка</button>;
+export default Button;
+```
+
+</Tab>
+</Tabs>
+
+Отобразится так:
+
+<Border>
+
+import Button from './_button.mdx';
+
+<Button />
+<button>Кнопка</button>
+
+</Border>
+
+## Альтернативный способ: написание страниц на TSX/HTML
+
+```tsx file="./_escape-hatch.tsx" title="_escape-hatch.tsx"
+
+```
+
+import EscapeHatch from './_escape-hatch';
+
+Отобразится так:
+
+<Border>
+  <EscapeHatch />
+</Border>
+
+:::warning Предупреждение
+
+Синтаксис tsx и html затрудняет извлечение статической информации, например, индексов для локального поиска.
+
+Поэтому рекомендуется писать основной контент документации в файлах `.mdx`, а файлы `.tsx` использовать только для интерактивного и динамического содержимого.
+
+:::

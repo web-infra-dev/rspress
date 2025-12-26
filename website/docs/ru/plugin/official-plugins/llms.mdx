@@ -1,0 +1,460 @@
+---
+tag: новинка
+---
+
+# @rspress/plugin-llms <SourceCode href="https://github.com/web-infra-dev/rspress/tree/main/packages/plugin-llms" />
+
+import { SourceCode } from '@rspress/core/theme';
+
+Генерирует файлы по спецификации [llms.txt](https://llmstxt.org/) для вашего сайта на Rspress — помогает большим языковым моделям лучше понимать содержимое документации.
+
+## Установка
+
+import { PackageManagerTabs } from '@theme';
+
+<PackageManagerTabs command="add @rspress/plugin-llms -D" />
+
+## Использование
+
+### 1. Подключение плагина
+
+Добавьте следующую конфигурацию в ваш файл `rspress.config.ts`:
+
+```ts
+// rspress.config.ts
+import { defineConfig } from '@rspress/core';
+import { pluginLlms } from '@rspress/plugin-llms';
+
+export default defineConfig({
+  plugins: [pluginLlms()],
+});
+```
+
+Затем выполните команду `rspress build`. Во время генерации сборки плагин дополнительно создаст в выходной директории файлы `llms.txt`, `llms-full.txt`, а также отдельные markdown-файлы для каждого маршрута на основе структуры навигации и бокового меню.
+
+### 2. Отображение в интерфейсе
+
+Если вы хотите, чтобы пользователи вашего сайта могли удобнее использовать большие языковые модели для чтения документации, вы можете добавить кнопку «Скопировать Markdown» в шапку страницы через [кастомизацию темы](/guide/basic/custom-theme). Эффект будет таким же, как на этом сайте.
+
+Пример добавления кнопки копирования на все страницы:
+
+```tsx title="theme/index.tsx"
+import { getCustomMDXComponent as basicGetCustomMDXComponent } from '@rspress/core/theme';
+import {
+  LlmsContainer,
+  LlmsCopyButton,
+  LlmsViewOptions,
+} from '@rspress/plugin-llms/runtime';
+
+function getCustomMDXComponent() {
+  const { h1: H1, ...mdxComponents } = basicGetCustomMDXComponent();
+
+  const MyH1 = ({ ...props }) => {
+    return (
+      <>
+        <H1 {...props} />
+        {/* [!code highlight:5] */}
+        <LlmsContainer>
+          <LlmsCopyButton />
+          {/* Компонент LlmsViewOptions можно добавить по необходимости */}
+          <LlmsViewOptions />
+        </LlmsContainer>
+      </>
+    );
+  };
+  return {
+    ...mdxComponents,
+    h1: MyH1,
+  };
+}
+
+export { getCustomMDXComponent };
+export * from '@rspress/core/theme-original';
+```
+
+Добавляем кнопку копирования на отдельные страницы:
+
+```mdx title="docs/hello-world.mdx"
+# Привет, мир
+
+<LlmsContainer>
+  <LlmsCopyButton />
+  {/* Компонент LlmsViewOptions можно добавить по необходимости */}
+  <LlmsViewOptions />
+</LlmsContainer>
+
+Пример документа
+```
+
+## Конфигурация
+
+Плагин принимает объект-параметр со следующим типом:
+
+- **Тип**:
+
+<details>
+
+```ts
+interface LlmsTxt {
+  name: string;
+  onTitleGenerate?: (context: {
+    title: string | undefined;
+    description: string | undefined;
+  }) => string;
+  onLineGenerate?: (page: PageIndexInfo) => string;
+  onAfterLlmsTxtGenerate?: (llmsTxtContent: string) => string;
+}
+
+interface MdFiles {
+  mdxToMd?: boolean;
+  remarkPlugins?: PluggableList;
+}
+
+interface LlmsFullTxt {
+  name: string;
+}
+
+export interface Options {
+  llmsTxt?: false | LlmsTxt;
+  mdFiles?: false | MdFiles;
+  llmsFullTxt?: false | LlmsFullTxt;
+  include?: (context: { page: PageIndexInfo }) => boolean;
+  exclude?: (context: { page: PageIndexInfo }) => boolean;
+}
+```
+
+</details>
+
+- **По умолчанию**:
+
+Если [интернационализация](/guide/basic/i18n) не включена, значение по умолчанию:
+
+```ts
+{
+  llmsTxt: { name: 'llms.txt' },
+  llmsFullTxt: { name: 'llms-full.txt' },
+  mdFiles: true
+}
+```
+
+Если [интернационализация](/guide/basic/i18n) включена, будет использоваться [групповая конфигурация](#group), а значение по умолчанию:
+
+```ts
+[
+  {
+    llmsTxt: { name: 'llms.txt' },
+    llmsFullTxt: { name: 'llms-full.txt' },
+    mdFiles: true,
+    include: ({ page }) => page.lang === config.lang,
+  },
+  // Автоматически генерируем файлы для остальных языков на основе конфигурации locales
+  {
+    llmsTxt: { name: `${lang}/llms.txt` },
+    llmsFullTxt: { name: `${lang}/llms-full.txt` },
+    mdFiles: true,
+    include: ({ page }) => page.lang === lang,
+  },
+  // ...
+];
+```
+
+### llmsTxt
+
+- **Тип**: `false | LlmsTxt`
+
+```ts
+import type { PageIndexInfo } from '@rspress/core';
+
+export interface LlmsTxt {
+  name: string;
+  onTitleGenerate?: (context: {
+    title: string | undefined;
+    description: string | undefined;
+  }) => string;
+  onLineGenerate?: (page: PageIndexInfo) => string;
+  onAfterLlmsTxtGenerate?: (llmsTxtContent: string) => string;
+}
+```
+
+- **Значение по умолчанию**: `{ name: 'llms.txt' }`
+
+Генерировать ли файл `llms.txt`, либо кастомизировать его содержимое через хуки.
+
+Формат файла `llms.txt` по умолчанию выглядит так:
+
+```markdown
+# {title}
+
+> {description}
+
+## {nav1.title}
+
+- [{page.title}]({ page.routePath }): {page.frontmatter.description}
+
+## {nav2.title}
+
+- [{page.title}]({ page.routePath }): {page.frontmatter.description}
+```
+
+Вы можете изменить отдельные части через хуки:
+
+- `onTitleGenerate`: кастомизировать заголовок и секцию описания.
+- `onLineGenerate`: кастомизировать каждую строку md-файла.
+- `onAfterLlmsTxtGenerate`: финально изменить содержимое файла `llms.txt`.
+
+Например:
+
+```ts
+pluginLlms({
+  llmsTxt: {
+    onTitleGenerate: ({ title, description }) => {
+      return `# ${title} - llms.txt
+
+> ${description}
+
+Rspress — это статический генератор сайтов на основе Rsbuild, который умеет генерировать llms.txt с помощью плагина `@rspress/plugin-llms`.
+`;
+    },
+  },
+});
+```
+
+Соответствующие результаты генерации:
+
+```markdown
+# Rspress - llms.txt
+
+> Статический генератор сайтов на базе Rsbuild
+
+Rspress — это статический генератор сайтов на основе Rsbuild, который умеет генерировать llms.txt с помощью плагина `@rspress/plugin-llms`.
+
+## guide
+
+- [foo](/foo.md)
+```
+
+### mdFiles
+
+- **Тип**: `false | MdFiles`
+
+```ts
+export interface MdFiles {
+  mdxToMd?: boolean;
+  remarkPlugins?: PluggableList;
+}
+```
+
+- **Значение по умолчанию**: `{ mdxToMd: false, remarkPlugins: [] }`
+
+Генерировать ли отдельный Markdown-файл для соответствующего маршрута. При значении `false` файл для данного маршрута создаваться не будет.
+
+#### mdxToMd
+
+- **Тип**: `boolean`
+- **Значение по умолчанию**: `false`
+
+Преобразовывать ли содержимое MDX в обычный Markdown. При включении MDX-файлы будут конвертироваться в MD с помощью набора стандартных правил, но возможна потеря некоторой информации (например, JSX-компонентов).
+
+#### remarkPlugins
+
+- **Тип**: `PluggableList`
+- **Значение по умолчанию**: `[]`
+
+Вы можете передать свои remark-плагины для изменения содержимого Markdown.
+
+### llmsFullTxt
+
+- **Тип**: `false | LlmsFullTxt`
+
+```ts
+export interface LlmsFullTxt {
+  name: string;
+}
+```
+
+- **Значение по умолчанию**: `{ name: 'llms-full.txt' }`
+
+Генерировать ли файл `llms-full.txt`. При значении `false` файл `llms-full.txt` не будет создан.
+
+### include
+
+- **Тип**: `(context: { page: PageIndexInfo }) => boolean`
+
+Включать только определённые страницы при генерации, обычно используется для упрощения `llms.txt`.
+
+- Пример:
+
+Генерировать `llms.txt` и связанные файлы только для страниц на английском языке:
+
+```ts
+pluginLlms({
+  llmsTxt: {
+    name: 'llms.txt',
+  },
+  llmsFullTxt: {
+    name: 'llms-full.txt',
+  },
+  include: ({ page }) => {
+    return page.lang === 'en';
+  },
+});
+```
+
+### exclude
+
+- **Тип**: `(context: { page: PageIndexInfo }) => boolean`
+
+Исключать определённые страницы. Выполняется после `include`.
+
+- Пример:
+
+Исключить одну страницу внутри маршрута `/foo`:
+
+```ts
+pluginLlms({
+  llmsTxt: {
+    name: 'llms.txt',
+  },
+  llmsFullTxt: {
+    name: 'llms-full.txt',
+  },
+  exclude: ({ page }) => {
+    return page.routePath === '/foo';
+  },
+});
+```
+
+## Пропсы UI-компонента
+
+### LlmsCopyButtonProps
+
+- **Тип**: `LlmsCopyButtonProps`
+
+```ts
+interface LlmsCopyButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
+  textByLang?: Record<string, string>;
+  text?: string;
+}
+```
+
+#### textByLang
+
+- **Тип**: `Record<string, string>`
+- **Значение по умолчанию**: `{ en: 'Copy Markdown', zh: '复制 Markdown' }`
+
+Заменять текст на кнопке в зависимости от текущего языка.
+
+- **Пример**:
+
+```mdx
+<LlmsCopyButton textByLang={{ ru: 'Копировать Markdown' }} />
+```
+
+#### text
+
+- **Тип**: `string`
+- **Значение по умолчанию**: `''`
+
+Текст на кнопке копирования, имеет более высокий приоритет, чем `textByLang`.
+
+### LlmsViewOptionsProps
+
+- **Тип**: `LlmsViewOptionsProps`
+
+```ts
+type Option =
+  | {
+      title: string;
+      icon?: React.ReactNode;
+      onClick?: () => void;
+    }
+  | {
+      title: string;
+      href: string;
+      icon?: React.ReactNode;
+    }
+  | 'markdownLink'
+  | 'chatgpt'
+  | 'claude';
+
+interface LlmsViewOptionsProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
+  options?: Option[];
+  textByLang?: Record<string, string>;
+  text?: string;
+}
+```
+
+#### options
+
+- **Тип**: `Option[]`
+
+```ts
+type Option =
+  | {
+      title: string;
+      icon?: React.ReactNode;
+      onClick?: () => void;
+    }
+  | {
+      title: string;
+      href: string;
+      icon?: React.ReactNode;
+    }
+  | 'markdownLink'
+  | 'chatgpt'
+  | 'claude';
+```
+
+- **Значение по умолчанию**: `['markdownLink', 'chatgpt', 'claude']`
+
+Кастомизировать пункты выпадающего меню. По умолчанию поддерживаются: «Скопировать ссылку Markdown», [ChatGPT](https://chatgpt.com/) и [Claude](https://claude.ai).
+
+#### textByLang
+
+- **Тип**: `Record<string, string>`
+- **Значение по умолчанию**: `{ en: 'Open', zh: '打开' }`
+
+Заменять текст на кнопке в зависимости от текущего языка.
+
+#### text
+
+- **Тип**: `string`
+- **Значение по умолчанию**: `''`
+
+Текст на кнопке, имеет более высокий приоритет, чем `textByLang`.
+
+## Одновременная генерация нескольких групп `llms.txt` \{#group}
+
+В некоторых случаях может понадобиться сгенерировать сразу несколько групп `llms.txt`, например, для сайта с i18n. В этом случае можно передать массив конфигураций:
+
+- Пример：
+
+```ts
+// rspress.config.ts
+import { defineConfig } from '@rspress/core';
+defineConfig({
+  lang: 'en',
+  plugins: [
+    pluginLlms([
+      {
+        llmsTxt: {
+          name: 'llms.txt',
+        },
+        llmsFullTxt: {
+          name: 'llms-full.txt',
+        },
+        include: ({ page }) => page.lang === 'en',
+      },
+      {
+        llmsTxt: {
+          name: 'ru/llms.txt',
+        },
+        llmsFullTxt: {
+          name: 'ru/llms-full.txt',
+        },
+        include: ({ page }) => page.lang === 'ru',
+      },
+    ]),
+  ],
+});
+```

@@ -1,0 +1,104 @@
+---
+overviewHeaders: []
+---
+
+import { PackageManagerTabs, Tag } from '@theme';
+
+# PackageManagerTabs
+
+PackageManagerTabs отображает команды для разных менеджеров пакетов.
+
+## Базовое использование
+
+```mdx title="index.mdx"
+import { PackageManagerTabs } from '@theme';
+
+<PackageManagerTabs command="install -D @rspress/core" />
+```
+
+<PackageManagerTabs command="install -D @rspress/core" />
+
+## Установка команд для каждого менеджера пакетов
+
+Вы можете передать объект, чтобы указать команду для каждого менеджера пакетов:
+
+```mdx preview title="index.mdx"
+import { PackageManagerTabs } from '@theme';
+
+<PackageManagerTabs
+  command={{
+    npm: 'npm create rspress@latest',
+    yarn: 'yarn create rspress',
+    pnpm: 'pnpm create rspress@latest',
+    bun: 'bun create rspress@latest',
+    deno: 'deno init --npm rspress@latest',
+  }}
+/>
+```
+
+## Добавление дополнительных вкладок
+
+Используйте `additionalTabs`, чтобы добавить больше менеджеров пакетов:
+
+```mdx preview title="index.mdx"
+import { PackageManagerTabs } from '@theme';
+
+<PackageManagerTabs
+  command="install -D @rspress/core"
+  additionalTabs={[
+    {
+      tool: 'custom',
+    },
+  ]}
+/>
+```
+
+## Пропсы
+
+```ts
+type PackageManagerTabProps = (
+  | {
+      command: string;
+      /**
+       * Если true, использовать локальное выполнение пакета (npx <pkg>, yarn <pkg>, pnpm <pkg>, bun <pkg>, deno run <pkg>).
+       * Для пакетов, установленных в node_modules.
+       */
+      exec?: boolean;
+      /**
+       * Если true, использовать удалённое выполнение пакета (npx, yarn dlx, pnpm dlx, bunx, deno run).
+       * Для скачивания и прямого запуска пакетов без локальной установки.
+       * Имеет приоритет над exec.
+       */
+      dlx?: boolean;
+    }
+  | {
+      command: {
+        // Установка команд для разных менеджеров пакетов
+        npm?: string;
+        yarn?: string;
+        pnpm?: string;
+        bun?: string;
+        deno?: string;
+      };
+      exec?: never;
+      dlx?: never;
+    }
+) &
+  // Настройка дополнительных вкладок
+  {
+    additionalTabs?: {
+      // Название дополнительного менеджера пакетов
+      tool: string;
+      // Иконка для дополнительного менеджера пакетов
+      icon?: React.ReactNode;
+    }[];
+  };
+```
+
+:::tip Совет
+
+- Когда `command` является строкой, компонент автоматически добавляет префикс соответствующей команды менеджера пакетов и по умолчанию отображает вкладки npm, yarn, pnpm, bun и deno.
+- Для команд установки вкладки yarn, pnpm, bun и deno автоматически заменяют `install` на `add`.
+- Во вкладке deno для пакетов без явного указания источника автоматически добавляется префикс `npm:`.
+
+:::

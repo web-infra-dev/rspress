@@ -1,54 +1,67 @@
 {
   "gettingStarted": {
     "zh": "开始",
-    "en": "Getting Started"
+    "en": "Getting Started",
+    "ru": "Подготовка"
   },
   "features": {
     "zh": "特性",
-    "en": "Features"
+    "en": "Features",
+    "ru": "Возможности"
   },
   "defaultTheme": {
     "zh": "默认主题",
-    "en": "Default Theme"
+    "en": "Default Theme",
+    "ru": "Тема по умолчанию"
   },
   "advanced": {
     "zh": "高级能力",
-    "en": "Advanced"
+    "en": "Advanced",
+    "ru": "Дополнительно"
   },
   "apiOverview": {
     "zh": "API 概览",
-    "en": "API Overview"
+    "en": "API Overview",
+    "ru": "Обзор API"
   },
   "config": {
     "zh": "配置",
-    "en": "Config"
+    "en": "Config",
+    "ru": "Конфигурация"
   },
   "clientApi": {
     "zh": "Client API",
-    "en": "Client API"
+    "en": "Client API",
+    "ru": "Client API"
   },
   "commands": {
     "zh": "命令",
-    "en": "Commands"
+    "en": "Commands",
+    "ru": "Команды"
   },
   "pluginSystem": {
     "zh": "插件机制",
-    "en": "Plugin System"
+    "en": "Plugin System",
+    "ru": "Система плагинов"
   },
   "pluginList": {
     "zh": "官方插件",
-    "en": "Official Plugins"
+    "en": "Official Plugins",
+    "ru": "Официальные плагины"
   },
   "communityPlugins": {
     "zh": "社区插件",
-    "en": "Community Plugins"
+    "en": "Community Plugins",
+    "ru": "Плагины сообщества"
   },
   "ejectOnlyDescription": {
     "zh": "该组件是 eject-only 组件，专门为 wrap/eject 设计，不建议在 MDX 文件中直接使用。",
-    "en": "This component is an eject-only component, specifically designed for wrap/eject, and it's not recommended to be used directly in MDX files."
+    "en": "This component is an eject-only component, specifically designed for wrap/eject, and it's not recommended to be used directly in MDX files.",
+    "ru": "Этот компонент является компонентом только для eject (eject-only), специально предназначенным для использования через wrap/eject, и не рекомендуется использовать его напрямую в MDX-файлах."
   },
   "nonEjectableDescription": {
     "zh": "该组件是非 ejectable 组件，代码与核心代码耦合度较高，不建议通过 wrap/eject 进行定制。",
-    "en": "This component is a non-ejectable one, and the code has a high degree of coupling with the core code. It's not recommended to customize it via wrap/eject."
+    "en": "This component is a non-ejectable one, and the code has a high degree of coupling with the core code. It's not recommended to customize it via wrap/eject.",
+    "ru": "Этот компонент является невыбрасываемым (non-ejectable), и его код имеет высокую степень связанности с основным (ядром) кодом. Не рекомендуется настраивать/изменять его через wrap или eject."
   }
 }
