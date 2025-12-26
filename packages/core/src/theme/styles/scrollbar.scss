@@ -3,8 +3,8 @@
 
   /* Scrollbar dimensions */
   &::-webkit-scrollbar {
-    width: 4px;
-    height: 4px;
+    width: 6px;
+    height: 6px;
   }
 
   /* Scrollbar track */
@@ -14,14 +14,14 @@
 
   /* Scrollbar thumb */
   &::-webkit-scrollbar-thumb {
-    background: rgba(0, 0, 0, 0.05);
-    border-radius: 4px;
+    background: rgba(0, 0, 0, 0.12);
+    border-radius: 6px;
     transition: background 0.2s ease;
   }
 
   /* Hover state */
   &:hover::-webkit-scrollbar-thumb {
-    background: rgba(0, 0, 0, 0.1);
+    background: rgba(0, 0, 0, 0.2);
   }
 
   /* Scrollbar corner */
@@ -32,11 +32,11 @@
   /* Dark mode adaptation */
   .rp-dark & {
     &::-webkit-scrollbar-thumb {
-      background: rgba(255, 255, 255, 0.1);
+      background: rgba(255, 255, 255, 0.15);
     }
 
     &:hover::-webkit-scrollbar-thumb {
-      background: rgba(255, 255, 255, 0.2);
+      background: rgba(255, 255, 255, 0.25);
     }
   }
 }
