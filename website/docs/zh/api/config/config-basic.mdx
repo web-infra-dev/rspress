@@ -290,12 +290,14 @@ export default defineConfig({
     // [htmlTag, { attrName: attrValue, attrName2: attrValue2 }]
     // 或者
     (route) => {
-      if (route.routePath.startsWith('/jane/')) return "<meta name='author' content='Jane Doe'>";
-      if (route.routePath.startsWith('/john/')) return ['meta', { name: 'author', content: 'John Doe' }];
-      \\ or even skip returning anything
+      if (route.routePath.startsWith('/jane/'))
+        return "<meta name='author' content='Jane Doe'>";
+      if (route.routePath.startsWith('/john/'))
+        return ['meta', { name: 'author', content: 'John Doe' }];
+      // 也可以不返回任何内容
       return undefined;
-    }
-  ]
+    },
+  ],
 });
 ```
 
