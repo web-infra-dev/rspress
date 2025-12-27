@@ -63,3 +63,7 @@ e2e/fixtures/plugin-typedoc/multi/doc/api/**/*.md
 # ignore generated schema.json
 meta-json-schema.json
 nav-json-schema.json
+
+
+# website og fonts
+website/og-fonts/

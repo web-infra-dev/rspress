@@ -12,6 +12,8 @@ import {
   transformerNotationFocus,
   transformerNotationHighlight,
 } from '@shikijs/transformers';
+import fs from 'fs/promises';
+import path from 'path';
 import { pluginGoogleAnalytics } from 'rsbuild-plugin-google-analytics';
 import { pluginOpenGraph } from 'rsbuild-plugin-open-graph';
 import pluginOg from 'rspress-plugin-og';
@@ -84,6 +86,36 @@ export default defineConfig({
     pluginOg({
       domain: 'https://v2.rspress.rs',
       maxTitleSizePerLine: 28,
+      async resvgOptions() {
+        // fetch font files to og-fonts
+        const fontDir = path.join(__dirname, './og-fonts');
+        const fontFile = path.join(fontDir, 'wqy-microhei.ttc');
+        const fontUrl =
+          'https://github.com/anthonyfok/fonts-wqy-microhei/raw/cd82defe33ec0e86e628329f1b63049ef562c8e5/wqy-microhei.ttc';
+
+        try {
+          await fs.access(fontFile);
+        } catch {
+          await fs.mkdir(fontDir, { recursive: true });
+
+          const res = await fetch(fontUrl, { redirect: 'follow' });
+          if (!res.ok) {
+            throw new Error(
+              `Failed to download font: ${res.status} ${res.statusText}`,
+            );
+          }
+
+          const arrayBuffer = await res.arrayBuffer();
+          await fs.writeFile(fontFile, Buffer.from(arrayBuffer));
+        }
+
+        return {
+          font: {
+            loadSystemFonts: false,
+            fontFiles: [fontFile],
+          },
+        };
+      },
     }),
   ],
   builderConfig: {
