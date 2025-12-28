@@ -20,6 +20,7 @@ import { unified } from 'unified';
 import type { Node, Parent } from 'unist';
 import { importStatementRegex } from '../constants';
 import { createMDXOptions } from '../mdx/options';
+import type { PageMeta } from '../mdx/types';
 import type { PluginDriver } from '../PluginDriver';
 import { flattenMdxContent } from '../utils';
 import { applyReplaceRules } from '../utils/applyReplaceRules';
@@ -53,11 +54,6 @@ interface ExtractPageDataOptions {
   cjkFriendlyEmphasis?: boolean;
   routeService?: RouteService;
 }
-
-type PageMeta = {
-  toc: Header[];
-  title: string;
-};
 
 /**
  * Remove MDX-specific nodes that cannot be stringified to HTML and unwrap JSX
@@ -135,7 +131,7 @@ async function compileWithCjkFriendlyHtml(options: {
     routeService,
   });
 
-  const pageMeta: PageMeta = { toc: [], title: '' };
+  const pageMeta: PageMeta = { toc: [], title: '', headingTitle: '' };
 
   const processor = unified()
     .use(remarkParse)
@@ -263,6 +259,7 @@ async function getPageIndexInfoByRoute(
         },
       },
       {
+        // Skip injected header anchors to keep heading text intact for search
         selector: 'a.rp-header-anchor',
         format: 'skip',
       },
