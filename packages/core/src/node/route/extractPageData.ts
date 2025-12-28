@@ -12,11 +12,13 @@ import {
 } from '@rspress/shared';
 import { loadFrontMatter } from '@rspress/shared/node-utils';
 import { htmlToText } from 'html-to-text';
+import type { MdxJsxFlowElement, MdxJsxTextElement } from 'mdast-util-mdx';
 import rehypeStringify from 'rehype-stringify';
 import remarkMdx from 'remark-mdx';
 import remarkParse from 'remark-parse';
 import remarkRehype from 'remark-rehype';
 import { unified } from 'unified';
+import type { Node, Parent } from 'unist';
 import { visit } from 'unist-util-visit';
 import { importStatementRegex } from '../constants';
 import { createMDXOptions } from '../mdx/options';
@@ -54,6 +56,31 @@ interface ExtractPageDataOptions {
   routeService?: RouteService;
 }
 
+function cleanupMdxNodes(tree: Node) {
+  visit(
+    tree,
+    ['mdxjsEsm', 'mdxFlowExpression', 'mdxTextExpression'],
+    (_node, index, parent) => {
+      if (parent && typeof index === 'number' && 'children' in parent) {
+        (parent as Parent).children.splice(index, 1);
+        return index;
+      }
+      return undefined;
+    },
+  );
+  visit(
+    tree,
+    ['mdxJsxTextElement', 'mdxJsxFlowElement'],
+    (node: MdxJsxTextElement | MdxJsxFlowElement, index, parent) => {
+      if (parent && typeof index === 'number' && 'children' in parent) {
+        (parent as Parent).children.splice(index, 1, ...(node.children || []));
+        return index;
+      }
+      return undefined;
+    },
+  );
+}
+
 async function compileWithCjkFriendlyHtml(options: {
   content: string;
   filepath: string;
@@ -81,55 +108,8 @@ async function compileWithCjkFriendlyHtml(options: {
   const processor = unified()
     .use(remarkParse)
     .use(remarkMdx)
-    .use(() => tree => {
-      visit(
-        tree,
-        ['mdxjsEsm', 'mdxFlowExpression', 'mdxTextExpression'],
-        (_node, index, parent) => {
-          if (parent && typeof index === 'number') {
-            parent.children.splice(index, 1);
-            return index;
-          }
-          return undefined;
-        },
-      );
-      visit(
-        tree,
-        ['mdxJsxTextElement', 'mdxJsxFlowElement'],
-        (node: any, index, parent) => {
-          if (parent && typeof index === 'number') {
-            parent.children.splice(index, 1, ...(node.children || []));
-            return index;
-          }
-          return undefined;
-        },
-      );
-    })
     .use(mdxOptions.remarkPlugins || [])
-    .use(() => tree => {
-      visit(
-        tree,
-        ['mdxjsEsm', 'mdxFlowExpression', 'mdxTextExpression'],
-        (_node, index, parent) => {
-          if (parent && typeof index === 'number') {
-            parent.children.splice(index, 1);
-            return index;
-          }
-          return undefined;
-        },
-      );
-      visit(
-        tree,
-        ['mdxJsxTextElement', 'mdxJsxFlowElement'],
-        (node: any, index, parent) => {
-          if (parent && typeof index === 'number') {
-            parent.children.splice(index, 1, ...(node.children || []));
-            return index;
-          }
-          return undefined;
-        },
-      );
-    });
+    .use(() => cleanupMdxNodes);
 
   processor.data('pageMeta' as any, { toc: [], title: '' });
 
