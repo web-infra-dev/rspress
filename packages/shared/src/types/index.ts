@@ -516,6 +516,11 @@ export interface MarkdownOptions {
   link?: RemarkLinkOptions;
   showLineNumbers?: boolean;
   /**
+   * Enable CJK friendly emphasis and strikethrough handling
+   * @default true
+   */
+  cjkFriendlyEmphasis?: boolean;
+  /**
    * Whether to wrap code by default
    * @default false
    */

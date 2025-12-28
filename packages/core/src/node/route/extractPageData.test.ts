@@ -60,9 +60,9 @@ describe('extractPageData', async () => {
           "_filepath": "<ROOT>/packages/core/src/node/route/fixtures/basic/a.mdx",
           "_flattenContent": "# Page a
       ",
-          "_html": "<h1 id="page-a">Page a<a aria-hidden="true" href="#page-a">#</a></h1>",
+          "_html": "<h1 id=\"page-a\"><a class=\"rp-header-anchor\" aria-hidden=\"true\" href=\"#page-a\">#</a>Page a</h1>",
           "_relativePath": "a.mdx",
-          "content": "#",
+          "content": "",
           "frontmatter": {
             "__content": undefined,
           },
@@ -76,9 +76,9 @@ describe('extractPageData', async () => {
           "_filepath": "<ROOT>/packages/core/src/node/route/fixtures/basic/guide/b.mdx",
           "_flattenContent": "# Page b
       ",
-          "_html": "<h1 id="page-b">Page b<a aria-hidden="true" href="#page-b">#</a></h1>",
+          "_html": "<h1 id=\"page-b\"><a class=\"rp-header-anchor\" aria-hidden=\"true\" href=\"#page-b\">#</a>Page b</h1>",
           "_relativePath": "guide/b.mdx",
-          "content": "#",
+          "content": "",
           "frontmatter": {
             "__content": undefined,
           },
@@ -105,9 +105,9 @@ describe('extractPageData', async () => {
           "_filepath": "<ROOT>/packages/core/src/node/route/fixtures/basic/index.mdx",
           "_flattenContent": "# homePage
       ",
-          "_html": "<h1 id="homepage">homePage<a aria-hidden="true" href="#homepage">#</a></h1>",
+          "_html": "<h1 id=\"homepage\"><a class=\"rp-header-anchor\" aria-hidden=\"true\" href=\"#homepage\">#</a>homePage</h1>",
           "_relativePath": "index.mdx",
-          "content": "#",
+          "content": "",
           "frontmatter": {
             "__content": undefined,
           },
@@ -161,21 +161,21 @@ describe('extractPageData', async () => {
 
 
       ",
-        "_html": "<h1 id="recursive-comp-test">Recursive comp test<a aria-hidden="true" href="#recursive-comp-test">#</a></h1>
-      <h2 id="h2-comp">h2 Comp<a aria-hidden="true" href="#h2-comp">#</a></h2>
+        "_html": "<h1 id=\"recursive-comp-test\"><a class=\"rp-header-anchor\" aria-hidden=\"true\" href=\"#recursive-comp-test\">#</a>Recursive comp test</h1>
+      <h2 id=\"h2-comp\"><a class=\"rp-header-anchor\" aria-hidden=\"true\" href=\"#h2-comp\">#</a>h2 Comp</h2>
       <p>Comp content</p>
-      <h2 id="h2-comp-in-comp">H2 comp in comp<a aria-hidden="true" href="#h2-comp-in-comp">#</a></h2>
+      <h2 id=\"h2-comp-in-comp\"><a class=\"rp-header-anchor\" aria-hidden=\"true\" href=\"#h2-comp-in-comp\">#</a>H2 comp in comp</h2>
       <p>Comp in Comp content <code>code</code></p>",
         "_relativePath": "index.mdx",
-        "content": "#
+        "content": "
 
 
-      h2 Comp#
+      h2 Comp
 
       Comp content
 
 
-      H2 comp in comp#
+      H2 comp in comp
 
       Comp in Comp content code",
         "frontmatter": {
@@ -186,13 +186,13 @@ describe('extractPageData', async () => {
         "title": "Recursive comp test",
         "toc": [
           {
-            "charIndex": 3,
+            "charIndex": 2,
             "depth": 2,
             "id": "h2-comp",
             "text": "h2 Comp",
           },
           {
-            "charIndex": 28,
+            "charIndex": 26,
             "depth": 2,
             "id": "h2-comp-in-comp",
             "text": "H2 comp in comp",

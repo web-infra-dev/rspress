@@ -1,5 +1,6 @@
 import fs from 'node:fs/promises';
 import path from 'node:path';
+import { nodeTypes } from '@mdx-js/mdx';
 import { compile } from '@rspress/mdx-rs';
 import {
   type Header,
@@ -7,10 +8,19 @@ import {
   type PageIndexInfo,
   type ReplaceRule,
   type RouteMeta,
+  type UserConfig,
 } from '@rspress/shared';
 import { loadFrontMatter } from '@rspress/shared/node-utils';
 import { htmlToText } from 'html-to-text';
+import rehypeStringify from 'rehype-stringify';
+import remarkMdx from 'remark-mdx';
+import remarkParse from 'remark-parse';
+import remarkRehype from 'remark-rehype';
+import { unified } from 'unified';
+import { visit } from 'unist-util-visit';
 import { importStatementRegex } from '../constants';
+import { createMDXOptions } from '../mdx/options';
+import type { PluginDriver } from '../PluginDriver';
 import { flattenMdxContent } from '../utils';
 import { applyReplaceRules } from '../utils/applyReplaceRules';
 import type { RouteService } from './RouteService';
@@ -38,6 +48,113 @@ interface ExtractPageDataOptions {
   searchCodeBlocks: boolean;
   replaceRules: ReplaceRule[];
   alias: Record<string, string | string[]>;
+  config?: UserConfig | null;
+  pluginDriver?: PluginDriver | null;
+  cjkFriendlyEmphasis?: boolean;
+  routeService?: RouteService;
+}
+
+async function compileWithCjkFriendlyHtml(options: {
+  content: string;
+  filepath: string;
+  docDirectory: string;
+  config?: UserConfig | null;
+  routeService: RouteService | null;
+  pluginDriver?: PluginDriver | null;
+}) {
+  const {
+    content,
+    filepath,
+    docDirectory,
+    config,
+    pluginDriver,
+    routeService,
+  } = options;
+  const mdxOptions = await createMDXOptions({
+    config,
+    docDirectory,
+    filepath,
+    pluginDriver,
+    routeService,
+  });
+
+  const processor = unified()
+    .use(remarkParse)
+    .use(remarkMdx)
+    .use(() => tree => {
+      visit(
+        tree,
+        ['mdxjsEsm', 'mdxFlowExpression', 'mdxTextExpression'],
+        (_node, index, parent) => {
+          if (parent && typeof index === 'number') {
+            parent.children.splice(index, 1);
+            return index;
+          }
+          return undefined;
+        },
+      );
+      visit(
+        tree,
+        ['mdxJsxTextElement', 'mdxJsxFlowElement'],
+        (node: any, index, parent) => {
+          if (parent && typeof index === 'number') {
+            parent.children.splice(index, 1, ...(node.children || []));
+            return index;
+          }
+          return undefined;
+        },
+      );
+    })
+    .use(mdxOptions.remarkPlugins || [])
+    .use(() => tree => {
+      visit(
+        tree,
+        ['mdxjsEsm', 'mdxFlowExpression', 'mdxTextExpression'],
+        (_node, index, parent) => {
+          if (parent && typeof index === 'number') {
+            parent.children.splice(index, 1);
+            return index;
+          }
+          return undefined;
+        },
+      );
+      visit(
+        tree,
+        ['mdxJsxTextElement', 'mdxJsxFlowElement'],
+        (node: any, index, parent) => {
+          if (parent && typeof index === 'number') {
+            parent.children.splice(index, 1, ...(node.children || []));
+            return index;
+          }
+          return undefined;
+        },
+      );
+    });
+
+  processor.data('pageMeta' as any, { toc: [], title: '' });
+
+  processor.use(remarkRehype, {
+    allowDangerousHtml: true,
+    passThrough: nodeTypes,
+  });
+  processor.use(mdxOptions.rehypePlugins || []);
+  processor.use(rehypeStringify, { allowDangerousHtml: true });
+
+  const vfile = await processor.process({
+    value: content,
+    path: filepath,
+  });
+
+  const pageMeta = processor.data('pageMeta' as any) as {
+    toc: Header[];
+    title: string;
+  };
+
+  return {
+    html: String(vfile),
+    toc: pageMeta?.toc || [],
+    title: pageMeta?.title || '',
+  };
 }
 
 async function getPageIndexInfoByRoute(
@@ -83,15 +200,33 @@ async function getPageIndexInfoByRoute(
   content = flattenContent.replace(importStatementRegex, '');
 
   const {
+    config,
+    pluginDriver,
+    cjkFriendlyEmphasis = config?.markdown?.cjkFriendlyEmphasis ?? true,
+    routeService,
+  } = options;
+
+  const shouldUseCjkFriendly = cjkFriendlyEmphasis !== false;
+
+  const {
     html: rawHtml,
     title,
     toc: rawToc,
-  } = await compile({
-    value: content,
-    filepath: route.absolutePath,
-    development: process.env.NODE_ENV !== 'production',
-    root,
-  });
+  } = shouldUseCjkFriendly
+    ? await compileWithCjkFriendlyHtml({
+        content,
+        filepath: route.absolutePath,
+        docDirectory: root,
+        config,
+        routeService: routeService ?? null,
+        pluginDriver,
+      })
+    : await compile({
+        value: content,
+        filepath: route.absolutePath,
+        development: process.env.NODE_ENV !== 'production',
+        root,
+      });
 
   /**
    * Escape JSX elements in code block to allow them to be searched
@@ -121,6 +256,10 @@ async function getPageIndexInfoByRoute(
         options: {
           ignoreHref: true,
         },
+      },
+      {
+        selector: 'a.rp-header-anchor',
+        format: 'skip',
       },
       {
         selector: 'img',
@@ -164,9 +303,18 @@ async function getPageIndexInfoByRoute(
         }
       }
     }
+    const targetWithAnchor = `\n${item.text}#\n\n`;
+    const targetWithoutAnchor = `\n${item.text}\n\n`;
+    let charIndex = content.indexOf(targetWithAnchor, position + 1);
+    if (charIndex === -1) {
+      charIndex = content.indexOf(targetWithoutAnchor, position + 1);
+    }
+    if (charIndex === -1) {
+      charIndex = content.indexOf(`#${item.text}`, position + 1);
+    }
     return {
       ...item,
-      charIndex: content.indexOf(`\n${item.text}#\n\n`, position + 1),
+      charIndex,
     };
   });
 
@@ -191,7 +339,10 @@ async function extractPageData(
 ): Promise<PageIndexInfo[]> {
   const pageData = await Promise.all(
     routeService.getRoutes().map(routeMeta => {
-      return getPageIndexInfoByRoute(routeMeta, options);
+      return getPageIndexInfoByRoute(routeMeta, {
+        ...options,
+        routeService,
+      });
     }),
   );
   return pageData;
