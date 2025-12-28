@@ -59,6 +59,10 @@ type PageMeta = {
   title: string;
 };
 
+/**
+ * Remove MDX-specific nodes that cannot be stringified to HTML and unwrap JSX
+ * elements so their textual children remain in the document flow.
+ */
 function cleanupMdxNodes(tree: Node) {
   if (!('children' in tree)) {
     return;
@@ -86,6 +90,10 @@ function cleanupMdxNodes(tree: Node) {
   });
 }
 
+/**
+ * Locate the position of a heading within the flattened text content, handling
+ * both anchor-first and anchor-after heading text formats.
+ */
 function findHeadingPosition(content: string, text: string, start: number) {
   const targetWithAnchor = `\n${text}#\n\n`;
   const targetWithoutAnchor = `\n${text}\n\n`;
@@ -99,6 +107,10 @@ function findHeadingPosition(content: string, text: string, start: number) {
   return charIndex;
 }
 
+/**
+ * Compile markdown/MDX to HTML using the JavaScript pipeline so CJK-friendly
+ * emphasis extensions can be honored even when the Rust compiler lacks them.
+ */
 async function compileWithCjkFriendlyHtml(options: {
   content: string;
   filepath: string;
@@ -201,13 +213,11 @@ async function getPageIndexInfoByRoute(
     routeService,
   } = options;
 
-  const shouldUseCjkFriendly = cjkFriendlyEmphasis;
-
   const {
     html: rawHtml,
     title,
     toc: rawToc,
-  } = shouldUseCjkFriendly
+  } = cjkFriendlyEmphasis
     ? await compileWithCjkFriendlyHtml({
         content,
         filepath: route.absolutePath,

@@ -98,12 +98,16 @@ export async function createMDXOptions(options: {
             },
       ],
       remarkImage,
-      isSsgMd && [
-        remarkSplitMdx,
-        typeof config?.llms === 'object'
-          ? config.llms.remarkSplitMdxOptions
-          : undefined,
-      ],
+      ...(isSsgMd
+        ? [
+            [
+              remarkSplitMdx,
+              typeof config?.llms === 'object'
+                ? config.llms.remarkSplitMdxOptions
+                : undefined,
+            ],
+          ]
+        : []),
       ...(globalComponents.length
         ? [
             [
