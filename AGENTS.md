@@ -36,8 +36,73 @@
 
 - `packages/core` (`@rspress/core`): CLI `rspress build/dev` (add `--watch`), config via `rspress.config.ts` using `defineConfig`; programmatic `import { defineConfig, loadConfig } from '@rspress/core'`.
 - `packages/core/theme` (`@rspress/core/theme`): Default theme with components and layouts.
+- `packages/runtime` (`@rspress/runtime`): Runtime hooks and utilities for theme development.
 - `packages/plugin-*` (`@rspress/plugin-*`): Official plugins like `plugin-algolia` (search), `plugin-llms` (LLM optimization), `plugin-typedoc` (API docs), etc.
 - `packages/create-rspress` (`create-rspress`): scaffold new projects/templates with `pnpm dlx create-rspress` (or `npx create-rspress`).
+
+## Runtime API (`@rspress/runtime`)
+
+Key hooks and utilities for theme/plugin development:
+
+- `usePage()`: Returns current page metadata (`pageType`, `lang`, `title`, `frontmatter`, etc.).
+- `useSite()`: Returns site-level configuration.
+- `useFrontmatter()`: Returns current page's frontmatter data.
+- `useLocaleSiteData()`: Returns locale-specific site data.
+- `useLocation()`, `useNavigate()`: React Router wrappers for navigation.
+- `Content`: Component to render MDX content.
+- `NoSSR`: Wrapper to skip server-side rendering for children.
+- `withBase(path)`: Prepends base path to URLs.
+
+## SSG-MD implementation patterns
+
+SSG-MD renders pages to Markdown for LLM consumption. Key patterns:
+
+- Use `process.env.__SSR_MD__` to detect SSG-MD rendering context.
+- Components should return Markdown-formatted strings in SSG-MD mode.
+- Example pattern for custom components:
+
+```tsx
+function MyComponent({ data }) {
+  if (process.env.__SSR_MD__) {
+    return <>{`**${data.title}**: ${data.description}`}</>;
+  }
+  return <div className="fancy">{data.title}</div>;
+}
+```
+
+- Built-in components (HomeLayout, Overview, PackageManagerTabs, etc.) already support SSG-MD.
+- Output files: `llms.txt` (index), `llms-full.txt` (all content), per-route `.md` files.
+
+## SSR compatibility guidelines
+
+When writing theme components, ensure SSR compatibility:
+
+- Use `useEffect` instead of `useLayoutEffect` to avoid SSR warnings.
+- Guard browser APIs with `typeof window === 'undefined'` checks.
+- Avoid global mutable state that differs between server/client (causes hydration mismatch).
+- Example safe localStorage access:
+
+```tsx
+useEffect(() => {
+  if (typeof window === 'undefined') return;
+  const value = localStorage.getItem(key);
+  // ...
+}, [key]);
+```
+
+## Theme development
+
+- CSS class naming follows BEM convention with `.rp-` prefix (e.g., `.rp-nav__title`, `.rp-nav-menu__item--active`).
+- CSS variables use `--rp-*` namespace (e.g., `--rp-c-brand`, `--rp-code-block-bg`).
+- Theme entry: `@rspress/core/theme` exports `Layout`, `HomeLayout`, `DocLayout`, `Nav`, etc.
+
+## Documentation structure
+
+- English docs: `website/docs/en/`
+- Chinese docs: `website/docs/zh/`
+- Navigation config: `_nav.json` in locale directories.
+- Sidebar config: `_meta.json` in each section directory.
+- Both `_nav.json` and `_meta.json` support HMR in dev mode.
 
 ## Security & configuration tips
 
