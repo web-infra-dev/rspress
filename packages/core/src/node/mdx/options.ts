@@ -70,10 +70,11 @@ export async function createMDXOptions(options: {
     format,
     remarkPlugins: [
       remarkGFM,
-      cjkFriendlyEmphasis && remarkCjkFriendly,
-      cjkFriendlyEmphasis && remarkGfmStrikethroughCjkFriendly,
+      ...(cjkFriendlyEmphasis
+        ? [remarkCjkFriendly, remarkGfmStrikethroughCjkFriendly]
+        : []),
       remarkToc,
-      !isSsgMd && remarkContainerSyntax,
+      ...(isSsgMd ? [] : [remarkContainerSyntax]),
       [remarkFileCodeBlock, { filepath, addDependency }],
       [
         remarkLink,
@@ -103,12 +104,16 @@ export async function createMDXOptions(options: {
           ? config.llms.remarkSplitMdxOptions
           : undefined,
       ],
-      globalComponents.length && [
-        remarkBuiltin,
-        {
-          globalComponents,
-        },
-      ],
+      ...(globalComponents.length
+        ? [
+            [
+              remarkBuiltin,
+              {
+                globalComponents,
+              },
+            ],
+          ]
+        : []),
       ...(isSsgMd
         ? []
         : [...remarkPluginsFromConfig, ...remarkPluginsFromPlugins]),

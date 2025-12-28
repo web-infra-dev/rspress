@@ -19,7 +19,6 @@ import remarkParse from 'remark-parse';
 import remarkRehype from 'remark-rehype';
 import { unified } from 'unified';
 import type { Node, Parent } from 'unist';
-import { visit } from 'unist-util-visit';
 import { importStatementRegex } from '../constants';
 import { createMDXOptions } from '../mdx/options';
 import type { PluginDriver } from '../PluginDriver';
@@ -62,31 +61,33 @@ type PageMeta = {
 };
 
 function cleanupMdxNodes(tree: Node) {
-  visit(
-    tree,
-    ['mdxjsEsm', 'mdxFlowExpression', 'mdxTextExpression'],
-    (_node, index, parent) => {
-      if (parent && typeof index === 'number' && 'children' in parent) {
-        (parent as Parent).children.splice(index, 1);
-        return index;
+  if (!('children' in tree)) {
+    return;
+  }
+  const parent = tree as Parent;
+  parent.children = parent.children.flatMap(child => {
+    cleanupMdxNodes(child);
+    if (
+      child.type === 'mdxjsEsm' ||
+      child.type === 'mdxFlowExpression' ||
+      child.type === 'mdxTextExpression'
+    ) {
+      return [];
+    }
+    if (
+      child.type === 'mdxJsxTextElement' ||
+      child.type === 'mdxJsxFlowElement'
+    ) {
+      if ('children' in child && child.children) {
+        return child.children;
       }
-      return undefined;
-    },
-  );
-  visit(
-    tree,
-    ['mdxJsxTextElement', 'mdxJsxFlowElement'],
-    (node: MdxJsxTextElement | MdxJsxFlowElement, index, parent) => {
-      if (parent && typeof index === 'number' && 'children' in parent) {
-        (parent as Parent).children.splice(index, 1, ...(node.children || []));
-        return index;
-      }
-      return undefined;
-    },
-  );
+      return [];
+    }
+    return [child];
+  });
 }
 
-function findHeaderPosition(content: string, text: string, start: number) {
+function findHeadingPosition(content: string, text: string, start: number) {
   const targetWithAnchor = `\n${text}#\n\n`;
   const targetWithoutAnchor = `\n${text}\n\n`;
   let charIndex = content.indexOf(targetWithAnchor, start + 1);
@@ -201,7 +202,7 @@ async function getPageIndexInfoByRoute(
     routeService,
   } = options;
 
-  const shouldUseCjkFriendly = cjkFriendlyEmphasis !== false;
+  const shouldUseCjkFriendly = cjkFriendlyEmphasis ?? true;
 
   const {
     html: rawHtml,
@@ -298,7 +299,7 @@ async function getPageIndexInfoByRoute(
         }
       }
     }
-    const charIndex = findHeaderPosition(content, item.text, position);
+    const charIndex = findHeadingPosition(content, item.text, position);
     return {
       ...item,
       charIndex,
