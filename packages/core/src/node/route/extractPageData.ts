@@ -12,7 +12,6 @@ import {
 } from '@rspress/shared';
 import { loadFrontMatter } from '@rspress/shared/node-utils';
 import { htmlToText } from 'html-to-text';
-import type { MdxJsxFlowElement, MdxJsxTextElement } from 'mdast-util-mdx';
 import rehypeStringify from 'rehype-stringify';
 import remarkMdx from 'remark-mdx';
 import remarkParse from 'remark-parse';
@@ -202,7 +201,7 @@ async function getPageIndexInfoByRoute(
     routeService,
   } = options;
 
-  const shouldUseCjkFriendly = cjkFriendlyEmphasis ?? true;
+  const shouldUseCjkFriendly = cjkFriendlyEmphasis;
 
   const {
     html: rawHtml,
