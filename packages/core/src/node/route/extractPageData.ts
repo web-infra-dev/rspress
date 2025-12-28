@@ -56,6 +56,11 @@ interface ExtractPageDataOptions {
   routeService?: RouteService;
 }
 
+type PageMeta = {
+  toc: Header[];
+  title: string;
+};
+
 function cleanupMdxNodes(tree: Node) {
   visit(
     tree,
@@ -79,6 +84,19 @@ function cleanupMdxNodes(tree: Node) {
       return undefined;
     },
   );
+}
+
+function findHeaderPosition(content: string, text: string, start: number) {
+  const targetWithAnchor = `\n${text}#\n\n`;
+  const targetWithoutAnchor = `\n${text}\n\n`;
+  let charIndex = content.indexOf(targetWithAnchor, start + 1);
+  if (charIndex === -1) {
+    charIndex = content.indexOf(targetWithoutAnchor, start + 1);
+  }
+  if (charIndex === -1) {
+    charIndex = content.indexOf(`#${text}`, start + 1);
+  }
+  return charIndex;
 }
 
 async function compileWithCjkFriendlyHtml(options: {
@@ -105,13 +123,15 @@ async function compileWithCjkFriendlyHtml(options: {
     routeService,
   });
 
+  const pageMeta: PageMeta = { toc: [], title: '' };
+
   const processor = unified()
     .use(remarkParse)
     .use(remarkMdx)
     .use(mdxOptions.remarkPlugins || [])
     .use(() => cleanupMdxNodes);
 
-  processor.data('pageMeta' as any, { toc: [], title: '' });
+  processor.data('pageMeta', pageMeta);
 
   processor.use(remarkRehype, {
     allowDangerousHtml: true,
@@ -125,15 +145,10 @@ async function compileWithCjkFriendlyHtml(options: {
     path: filepath,
   });
 
-  const pageMeta = processor.data('pageMeta' as any) as {
-    toc: Header[];
-    title: string;
-  };
-
   return {
     html: String(vfile),
-    toc: pageMeta?.toc || [],
-    title: pageMeta?.title || '',
+    toc: pageMeta.toc,
+    title: pageMeta.title,
   };
 }
 
@@ -283,15 +298,7 @@ async function getPageIndexInfoByRoute(
         }
       }
     }
-    const targetWithAnchor = `\n${item.text}#\n\n`;
-    const targetWithoutAnchor = `\n${item.text}\n\n`;
-    let charIndex = content.indexOf(targetWithAnchor, position + 1);
-    if (charIndex === -1) {
-      charIndex = content.indexOf(targetWithoutAnchor, position + 1);
-    }
-    if (charIndex === -1) {
-      charIndex = content.indexOf(`#${item.text}`, position + 1);
-    }
+    const charIndex = findHeaderPosition(content, item.text, position);
     return {
       ...item,
       charIndex,
