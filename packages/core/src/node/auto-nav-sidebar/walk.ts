@@ -1,10 +1,9 @@
 import fs from 'node:fs/promises';
 import path from 'node:path';
 import { isExternalUrl, type NavItem, type Sidebar } from '@rspress/shared';
-import { logger } from '@rspress/shared/logger';
 import { hintNavJsonChangeThenPanic } from '../logger/hint';
 import { addRoutePrefix } from '../route/RoutePage';
-import { pathExists } from '../utils';
+import { createError, pathExists } from '../utils';
 import { scanSideMeta } from './normalize';
 import { readJson } from './utils';
 
@@ -15,15 +14,22 @@ async function scanNav(
 ): Promise<NavItem[]> {
   let navConfig: NavItem[] | undefined;
   const rootNavJson = path.resolve(workDir, '_nav.json');
-  // Get the nav config from the `_meta.json` file
-  try {
-    navConfig = await readJson<NavItem[]>(rootNavJson);
+  const isRootNavJsonExist = await pathExists(rootNavJson);
+  if (isRootNavJsonExist) {
     metaFileSet.add(rootNavJson);
-  } catch (_e) {
-    logger.error(
-      '[auto-nav-sidebar]',
-      `Generate nav meta error: ${rootNavJson} failed`,
-    );
+    // Get the nav config from the `_meta.json` file
+    try {
+      navConfig = await readJson<NavItem[]>(rootNavJson);
+    } catch (e) {
+      if (e instanceof Error) {
+        e.message = `[auto-nav-sidebar] Generate nav meta error: ${rootNavJson} failed, original error is (${e.message})`;
+        throw createError(
+          `[auto-nav-sidebar] Generate nav meta error: ${rootNavJson} failed`,
+        );
+      }
+      throw e;
+    }
+  } else {
     navConfig = [];
   }
 

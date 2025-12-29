@@ -97,7 +97,7 @@ export function NavScreenMenuItemWithChildren({
 }: NavScreenMenuItemWithChildrenProps) {
   const [isOpen, setIsOpen] = useState(false);
 
-  return menuItem.items?.length > 0 ? (
+  return (
     <>
       <NavScreenMenuItemRaw
         left={
@@ -109,6 +109,7 @@ export function NavScreenMenuItemWithChildren({
         right={<SvgDown className="rp-nav-screen-menu-item__icon" />}
         isOpen={isOpen}
         onClick={() => setIsOpen(!isOpen)}
+        href={'link' in menuItem ? menuItem.link : undefined}
       />
 
       <div
@@ -122,16 +123,11 @@ export function NavScreenMenuItemWithChildren({
       >
         <div className="rp-nav-screen-menu-item__group-inner">
           {menuItem.items.map(item => (
-            <NavScreenMenuItemWithChildren
-              key={item.text}
-              menuItem={item as any}
-            />
+            <NavScreenMenuItem key={item.text} menuItem={item} />
           ))}
         </div>
       </div>
     </>
-  ) : (
-    <NavScreenMenuItemWithLink menuItem={menuItem as NavItemWithLink} />
   );
 }
 
@@ -139,10 +135,28 @@ interface NavScreenMenuItemProps {
   menuItem: NavItem;
 }
 
-export function NavScreenMenuItem({ menuItem: item }: NavScreenMenuItemProps) {
-  if ('items' in item && Array.isArray(item.items)) {
-    return <NavScreenMenuItemWithChildren menuItem={item} />;
+export function NavScreenMenuItem({ menuItem }: NavScreenMenuItemProps) {
+  if (
+    'items' in menuItem &&
+    Array.isArray(menuItem.items) &&
+    menuItem.items.length > 0
+  ) {
+    return <NavScreenMenuItemWithChildren menuItem={menuItem} />;
   }
 
-  return <NavScreenMenuItemWithLink menuItem={item as NavItemWithLink} />;
+  if ('link' in menuItem && typeof menuItem.link === 'string') {
+    return <NavScreenMenuItemWithLink menuItem={menuItem as NavItemWithLink} />;
+  }
+
+  return (
+    <NavScreenMenuItemRaw
+      left={
+        <>
+          {menuItem.text}
+          {menuItem.tag && <Tag tag={menuItem.tag} />}
+        </>
+      }
+      right={null}
+    />
+  );
 }

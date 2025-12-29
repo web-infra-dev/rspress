@@ -18,7 +18,7 @@ export type NavItemWithLink = {
 export interface NavItemWithChildren {
   text?: string;
   tag?: string;
-  items: NavItemWithLink[];
+  items: NavItem[];
   position?: 'left' | 'right';
 }
 
