@@ -6,9 +6,11 @@ import type {
 } from '@rspress/core';
 import {
   isEqualPath,
+  normalizeHref,
   useI18n,
   usePageData,
   useSidebar,
+  withBase,
 } from '@rspress/core/runtime';
 import {
   FallbackHeading,
@@ -25,6 +27,13 @@ import {
 import './index.scss';
 import { findItemByRoutePath } from './utils';
 
+function routePathToMdPath(routePath: string): string {
+  let url: string = routePath;
+  url = normalizeHref(url, false);
+  url = url.replace(/\.html$/, '.md');
+  return withBase(url);
+}
+
 function OverviewMarkdown({
   title,
   groups,
@@ -33,23 +42,6 @@ function OverviewMarkdown({
   groups: Group[];
 }) {
   const lines: string[] = [];
-
-  // Helper function to convert link to .md format
-  const toMdLink = (link: string | undefined) => {
-    if (!link) return '';
-    // If link already has extension or is external, don't process
-    if (link.includes('.') || link.startsWith('http')) {
-      return link;
-    }
-    // Separate hash part
-    const hashIndex = link.indexOf('#');
-    if (hashIndex > -1) {
-      const path = link.slice(0, hashIndex);
-      const hash = link.slice(hashIndex);
-      return `${path}.md${hash}`;
-    }
-    return `${link}.md`;
-  };
 
   lines.push(`# ${title}`);
   lines.push('');
@@ -62,7 +54,7 @@ function OverviewMarkdown({
 
     for (const item of group.items) {
       const itemTitle = item.link
-        ? `[${item.text}](${toMdLink(item.link)})`
+        ? `[${item.text}](${routePathToMdPath(item.link)})`
         : `**${item.text}**`;
       lines.push(`### ${itemTitle}`);
       lines.push('');
@@ -71,7 +63,7 @@ function OverviewMarkdown({
       if (item.headers && item.headers.length > 0) {
         for (const header of item.headers) {
           const headerLink = item.link
-            ? `[${header.text}](${toMdLink(`${item.link}#${header.id}`)})`
+            ? `[${header.text}](${routePathToMdPath(item.link)}#${header.id})`
             : header.text;
           lines.push(`- ${headerLink}`);
         }
@@ -82,7 +74,7 @@ function OverviewMarkdown({
       if (item.items && item.items.length > 0) {
         for (const subItem of item.items) {
           const subItemLink = subItem.link
-            ? `[${subItem.text}](${toMdLink(subItem.link)})`
+            ? `[${subItem.text}](${routePathToMdPath(subItem.link)})`
             : subItem.text;
           lines.push(`- ${subItemLink}`);
         }
