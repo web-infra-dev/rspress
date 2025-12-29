@@ -1,6 +1,6 @@
 import type { NavItemWithChildren } from '@rspress/core';
 import { matchNavbar, useLocation } from '@rspress/core/runtime';
-import { Link } from '@theme';
+import { Link, Tag } from '@theme';
 import cls from 'clsx';
 
 import './index.scss';
@@ -48,6 +48,7 @@ function HoverGroupItem({
               className="rp-hover-group__item__link"
             >
               {item.text}
+              {'tag' in item && item.tag && <Tag tag={item.tag} />}
             </Link>
           </li>
         )}
@@ -85,9 +86,13 @@ function HoverGroupItem({
             className="rp-hover-group__item__link"
           >
             {text}
+            {'tag' in item && item.tag && <Tag tag={item.tag} />}
           </Link>
         ) : (
-          <div className="rp-hover-group__item__link">{text}</div>
+          <div className="rp-hover-group__item__link">
+            {text}
+            {'tag' in item && item.tag && <Tag tag={item.tag} />}
+          </div>
         )}
       </li>
     );
@@ -100,7 +105,10 @@ function HoverGroupItem({
       style={{ paddingLeft: `${8 + depth * 12}px` }}
       data-depth={depth}
     >
-      <div className="rp-hover-group__item__link">{item.text}</div>
+      <div className="rp-hover-group__item__link">
+        {item.text}
+        {'tag' in item && item.tag && <Tag tag={item.tag} />}
+      </div>
     </li>
   );
 }

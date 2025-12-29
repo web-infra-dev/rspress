@@ -63,8 +63,10 @@
     line-height: 32px;
 
     &__link {
+      display: flex;
+      align-items: center;
+      gap: 2px;
       // For click area
-      display: block;
       height: 100%;
     }
 
