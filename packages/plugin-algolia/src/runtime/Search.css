@@ -8,11 +8,18 @@
   --docsearch-container-background: rgba(60, 60, 60, 0.4);
   --docsearch-modal-background: var(--rp-c-bg);
 
+  --docsearch-search-button-background: color-mix(
+    in srgb,
+    var(--rp-c-bg) 30%,
+    transparent
+  );
+
+  --docsearch-search-button-text-color: var(--rp-c-text-2);
   --docsearch-searchbox-background: var(--rp-c-bg-soft);
   --docsearch-searchbox-focus-background: var(--rp-c-bg);
 
   --docsearch-hit-highlight-color: var(--rp-c-brand-tint);
-  --docsearch-hit-active-color: var(--rp-c-text-1);
+  --docsearch-hit-color: var(--rp-c-text-1);
   --docsearch-hit-background: var(--rp-c-bg-soft);
   --docsearch-hit-shadow: var(--rp-shadow-2);
 
@@ -24,15 +31,28 @@
   --docsearch-highlight-color: var(--rp-c-brand);
   --docsearch-icon-color: var(--rp-c-text-1);
   --docsearch-background-color: var(--rp-c-bg-mute);
+  --docsearch-focus-color: var(--rp-c-brand);
+
+  --docsearch-dropdown-menu-background: var(--rp-c-bg-soft);
+  --docsearch-dropdown-menu-item-hover-background: var(--rp-c-bg);
+}
+
+/* Dark mode overrides - docsearch uses [data-theme=dark] but rspress uses .dark class */
+html.dark [class*='DocSearch'] {
+  --docsearch-modal-background: var(--rp-c-bg);
+  --docsearch-search-button-text-color: var(--rp-c-text-2);
+  --docsearch-searchbox-background: var(--rp-c-bg-soft);
+  --docsearch-searchbox-focus-background: var(--rp-c-bg);
+  --docsearch-hit-background: var(--rp-c-bg-soft);
+  --docsearch-footer-background: var(--rp-c-bg);
+  --docsearch-key-background: var(--rp-c-bg-mute);
+  --docsearch-background-color: var(--rp-c-bg-mute);
+  --docsearch-dropdown-menu-background: var(--rp-c-bg-soft);
+  --docsearch-dropdown-menu-item-hover-background: var(--rp-c-bg);
 }
 
 .DocSearch {
   border-radius: var(--rp-radius-small);
-  --docsearch-searchbox-background: color-mix(
-    in srgb,
-    var(--rp-c-bg) 30%,
-    transparent
-  );
 }
 
 .DocSearch-Button-Container > .DocSearch-Button-Placeholder {
