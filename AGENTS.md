@@ -48,6 +48,7 @@ PR titles must follow Conventional Commits format: `type(scope): description`
 - **description**: Clear, concise description of the change
 
 Examples:
+
 - `feat(ssg-md): support Overview and HomeLayout`
 - `fix(theme/Nav): render empty nav items correctly`
 - `docs: upgrade llms.txt and ssg-md`
