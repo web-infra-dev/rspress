@@ -1,3 +1,3 @@
-# Level 3 Item 2
+# Level 3 item 2
 
 This is a level 3 item.
