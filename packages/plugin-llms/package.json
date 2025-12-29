@@ -44,7 +44,7 @@
     "@rsbuild/core": "~1.6.15",
     "@rsbuild/plugin-react": "~1.4.2",
     "@rsbuild/plugin-sass": "~1.4.0",
-    "@rslib/core": "0.18.5",
+    "@rslib/core": "0.18.6",
     "@rspress/config": "workspace:*",
     "@types/hast": "^3.0.4",
     "@types/node": "^22.8.1",
