@@ -25,7 +25,7 @@ export interface NavItemWithChildren {
 export interface NavItemWithLinkAndChildren {
   text: string;
   link: string;
-  items: NavItemWithLink[];
+  items: NavItem[];
   tag?: string;
   activeMatch?: string;
   position?: 'left' | 'right';

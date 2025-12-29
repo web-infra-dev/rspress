@@ -43,7 +43,7 @@ function HoverGroupItem({
             data-depth={depth}
           >
             <Link
-              href={(item as any).link}
+              href={item.link}
               aria-label={item.text}
               className="rp-hover-group__item__link"
             >

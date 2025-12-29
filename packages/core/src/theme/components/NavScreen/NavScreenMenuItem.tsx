@@ -40,6 +40,7 @@ export function NavScreenMenuItemRaw({
         href={href}
         className={clsx(
           'rp-nav-screen-menu-item',
+          isOpen && 'rp-nav-screen-menu-item--open',
           isActive && 'rp-nav-screen-menu-item--active',
         )}
         onClick={onClick}
