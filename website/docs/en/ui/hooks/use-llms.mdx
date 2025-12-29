@@ -1,0 +1,47 @@
+# useLlms
+
+`useLlms` returns the markdown URL for the current page, useful for SSG-MD mode where pages are rendered as `.md` files.
+
+- **Type:** `() => { pathname: string }`
+
+This hook is particularly useful when you need to generate links to the markdown version of your documentation pages, such as for LLM consumption or direct markdown file access.
+
+```tsx
+import { useLlms } from '@rspress/core/theme';
+
+export default function ViewMarkdownLink() {
+  const { pathname } = useLlms();
+  // pathname will be like '/guide/start/introduction.md'
+  return (
+    <a href={pathname} target="_blank">
+      View as Markdown
+    </a>
+  );
+}
+```
+
+## Related Utilities
+
+### routePathToMdPath
+
+If you need to convert a specific route path to a markdown path without using the hook, you can use the `routePathToMdPath` utility function:
+
+```tsx
+import { routePathToMdPath } from '@rspress/core/theme';
+
+const mdPath = routePathToMdPath('/guide/start/introduction');
+// Returns: '/guide/start/introduction.md'
+
+const mdPathWithHash = routePathToMdPath('/api#section');
+// Returns: '/api.md#section'
+```
+
+This is especially useful when you need to generate markdown links in template strings:
+
+```tsx
+const link = '/api/config/config-basic';
+const markdownLink = `[Config Basic](${routePathToMdPath(link)})`;
+// Renders: [Config Basic](/api/config/config-basic.md)
+```
+
+> **Note:** Both `useLlms` and `routePathToMdPath` are designed to work with the [SSG-MD (llms.txt)](/guide/basic/ssg-md) feature. They convert HTML route paths to their corresponding `.md` file paths.

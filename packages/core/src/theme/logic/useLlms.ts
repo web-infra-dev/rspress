@@ -9,12 +9,19 @@ import { useMemo } from 'react';
  * @returns The markdown file path with .md extension
  *
  * @example
- * ```ts
- * routePathToMdPath('/guide/start/introduction')
- * // Returns: '/guide/start/introduction.md'
+ * ```tsx
+ * import { routePathToMdPath } from '@rspress/core/theme';
  *
- * routePathToMdPath('/api#section')
- * // Returns: '/api.md#section'
+ * function MyComponent() {
+ *   const mdPath = routePathToMdPath('/guide/start/introduction');
+ *   // mdPath: '/guide/start/introduction.md'
+ *   return <a href={mdPath}>View as Markdown</a>;
+ * }
+ *
+ * // In markdown with template literals:
+ * const link = `/api/config/config-basic`;
+ * // [Config Basic](${routePathToMdPath(link)})
+ * // Renders: [Config Basic](/api/config/config-basic.md)
  * ```
  */
 export function routePathToMdPath(routePath: string): string {
@@ -32,10 +39,19 @@ export function routePathToMdPath(routePath: string): string {
  *
  * @example
  * ```tsx
+ * import { useLlms } from '@rspress/core/theme';
+ *
  * function MyComponent() {
  *   const { pathname } = useLlms();
- *   // pathname will be like '/guide/start/introduction.md'
+ *   // pathname: '/guide/start/introduction.md'
  *   return <a href={pathname}>View as Markdown</a>;
+ * }
+ *
+ * // Use in markdown content:
+ * function MarkdownLink() {
+ *   const { pathname } = useLlms();
+ *   // [Current Page](${pathname})
+ *   return <span>Markdown link: {pathname}</span>;
  * }
  * ```
  */
