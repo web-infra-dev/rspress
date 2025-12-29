@@ -8,7 +8,7 @@ import { matchNavbar, useLocation } from '@rspress/core/runtime';
 import type { HoverGroupProps } from '@theme';
 import { IconArrowDown, Link, SvgWrapper, Tag, useHoverGroup } from '@theme';
 import cls from 'clsx';
-import { useMemo } from 'react';
+import { type ReactNode, useMemo } from 'react';
 import { useLangsMenu, useVersionsMenu } from './hooks';
 import './NavMenu.scss';
 import clsx from 'clsx';
@@ -16,6 +16,32 @@ import clsx from 'clsx';
 export const SvgDown = (props: React.SVGProps<SVGSVGElement>) => {
   return <SvgWrapper icon={IconArrowDown} {...props} />;
 };
+
+export function NavMenuItemInner({
+  menuItem,
+  children,
+}: {
+  menuItem: Partial<NavItemWithLink>;
+  children?: ReactNode;
+}) {
+  return (
+    <>
+      {'link' in menuItem && typeof menuItem.link === 'string' ? (
+        <Link href={menuItem.link} className="rp-nav-menu__item__container">
+          {menuItem.text}
+          {menuItem.tag && <Tag tag={menuItem.tag} />}
+          {children}
+        </Link>
+      ) : (
+        <div className="rp-nav-menu__item__container">
+          {menuItem.text}
+          {menuItem.tag && <Tag tag={menuItem.tag} />}
+          {children}
+        </div>
+      )}
+    </>
+  );
+}
 
 export function NavMenuItemWithChildren({
   menuItem,
@@ -29,33 +55,20 @@ export function NavMenuItemWithChildren({
     activeMatcher,
   });
 
-  const inner =
-    'link' in menuItem && typeof menuItem.link === 'string' ? (
-      <Link href={menuItem.link} className="rp-nav-menu__item__container">
-        {menuItem.text}
-        {menuItem.tag && <Tag tag={menuItem.tag} />}
-        <SvgDown className="rp-nav-menu__item__icon" />
-      </Link>
-    ) : (
-      <div className="rp-nav-menu__item__container">
-        {menuItem.text}
-        {menuItem.tag && <Tag tag={menuItem.tag} />}
-        <SvgDown className="rp-nav-menu__item__icon" />
-      </div>
-    );
+  const hasItems = menuItem.items.length > 0;
 
-  return menuItem.items.length > 0 ? (
+  return (
     <li
       className="rp-nav-menu__item"
       onMouseEnter={handleMouseEnter}
       onMouseLeave={handleMouseLeave}
       onClick={handleMouseEnter}
     >
-      {inner}
+      <NavMenuItemInner menuItem={menuItem}>
+        {hasItems && <SvgDown className="rp-nav-menu__item__icon" />}
+      </NavMenuItemInner>
       {hoverGroup}
     </li>
-  ) : (
-    <li className="rp-nav-menu__item">{inner}</li>
   );
 }
 
@@ -80,10 +93,7 @@ export function NavMenuItemWithLink({
         isActive ? 'rspress-nav-menu-item-active' : '',
       )}
     >
-      <Link href={menuItem.link} className="rp-nav-menu__item__container">
-        {menuItem.text}
-        {menuItem.tag && <Tag tag={menuItem.tag} />}
-      </Link>
+      <NavMenuItemInner menuItem={menuItem} />
     </li>
   );
 }
@@ -93,7 +103,15 @@ export function NavMenuItem({ menuItem: item }: { menuItem: NavItem }) {
     return <NavMenuItemWithChildren menuItem={item} />;
   }
 
-  return <NavMenuItemWithLink menuItem={item as NavItemWithLink} />;
+  if ('link' in item && item.link.length > 0) {
+    return <NavMenuItemWithLink menuItem={item as NavItemWithLink} />;
+  }
+
+  return (
+    <li className="rp-nav-menu__item">
+      <NavMenuItemInner menuItem={item} />
+    </li>
+  );
 }
 
 export function NavMenuDivider() {
