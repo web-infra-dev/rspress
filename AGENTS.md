@@ -32,6 +32,27 @@
 - Conventional Commits (e.g., `feat(plugin-algolia): ...`); keep commits focused; run lint + tests.
 - User-facing changes need a Changeset (`pnpm changeset`); PRs should include description, linked issues, and doc/example updates when needed.
 
+### PR title format
+
+PR titles must follow Conventional Commits format: `type(scope): description`
+
+- **type**: `feat`, `fix`, `docs`, `chore`, `refactor`, `test`, `perf`, etc.
+- **scope**: Package name or functional module for easy navigation and filtering. Examples:
+  - `ssg-md` - SSG-MD related features
+  - `theme` - General theme changes
+  - `theme/Nav`, `theme/Sidebar`, `theme/CodeBlockRuntime` - Specific theme components
+  - `core` - Core functionality
+  - `deps` - Dependency updates
+  - `e2e` - E2E tests
+  - `plugin-algolia`, `plugin-llms`, etc. - Specific plugins
+- **description**: Clear, concise description of the change
+
+Examples:
+- `feat(ssg-md): support Overview and HomeLayout`
+- `fix(theme/Nav): render empty nav items correctly`
+- `docs: upgrade llms.txt and ssg-md`
+- `chore(deps): update dependency react-router-dom to ^7.11.0`
+
 ## Architecture overview
 
 - `packages/core` (`@rspress/core`): CLI `rspress build/dev` (add `--watch`), config via `rspress.config.ts` using `defineConfig`; programmatic `import { defineConfig, loadConfig } from '@rspress/core'`.
