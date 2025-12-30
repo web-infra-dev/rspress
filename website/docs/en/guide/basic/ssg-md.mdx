@@ -4,7 +4,57 @@ tag: experimental
 
 # llms.txt (SSG-MD)
 
-Rspress provides experimental SSG-MD capability, which is a brand new feature. As its name suggests SSG-MD, the only difference from [Static Site Generation (SSG)](./ssg) is that it renders your pages as Markdown files instead of HTML files, and generates [`llms.txt`](https://llmstxt.org/) and llms-full.txt related files, making it easier for large language models to understand and use your technical documentation.
+## What is SSG-MD?
+
+Rspress provides experimental Static Site Generation to Markdown (SSG-MD) capability, which is a brand new feature. Similar to the [Static Site Generation (SSG)](./ssg) process, SSG-MD renders your pages as Markdown files instead of HTML files and generates [`llms.txt`](#llms-txt) and llms-full.txt, making it easier for large language models to understand and use your technical documentation.
+
+To help understand SSG-MD, here is an analogy between SSG and SSG-MD:
+
+| Comparison              | SSG                                        | SSG-MD                               |
+| ----------------------- | ------------------------------------------ | ------------------------------------ |
+| **Full Name**           | Static Site Generation                     | Static Site Generation to Markdown   |
+| **Optimization Target** | SEO (Search Engine Optimization)           | GEO (Generative Engine Optimization) |
+| **Object-oriented**     | Search engine crawler                      | LLM / vectorized retrieval system    |
+| **Index File**          | [`sitemap.xml`](https://www.sitemaps.org/) | [`llms.txt`](https://llmstxt.org/)   |
+| **Full Content File**   | -                                          | `llms-full.txt`                      |
+| **Core Implementation** | `renderToString`                           | `renderToMarkdownString`             |
+| **Access Method**       | `/guide/start/introduction.html`           | `/guide/start/introduction.md`       |
+
+## What is llms.txt? \{#llms-txt\}
+
+[`llms.txt`](https://llmstxt.org/) is an emerging standard file format placed in a website's root directory to help large language models better understand and use website content.
+
+Since LLMs have limited context windows and cannot process entire websites' HTML content, and converting complex HTML (with navigation, ads, JavaScript) to plain text is both difficult and imprecise, `llms.txt` uses Markdown format to provide a structured index of the website, including page URLs and their content descriptions, allowing AI to quickly locate and understand key information.
+
+In simple terms:
+
+- `sitemap.xml` → "Site map" for search engines
+- `llms.txt` → "Documentation index" for AI
+
+Output structure example:
+
+```txt
+doc_build
+├── llms.txt
+├── llms-full.txt
+├── guide
+│   └── start
+│       └── introduction.md
+└── ...
+```
+
+`llms.txt` content example:
+
+```txt
+# Rspress
+
+> Rspress is a static site generator based on Rspack.
+
+## Docs
+
+- [Introduction](/guide/start/introduction.md): Introduction to Rspress
+- [Quick Start](/guide/start/quick-start.md): Quick Start
+```
 
 ## Why SSG-MD?
 
@@ -14,43 +64,36 @@ In frontend frameworks based on React dynamic rendering, there is often a proble
 
 ## How to implement SSG-MD?
 
-1. Rspress internally implements a `renderToMarkdownString` method similar to `renderToString` in `react-dom`.
+1. Rspress internally implements a `renderToMarkdownString` method similar to `renderToString` in `react-dom`, which renders React components to Markdown strings:
 
 ```tsx
-import { expect, describe, it } from '@rstest/core';
-import { renderToMarkdownString } from './react-render-to-markdown';
-import { useState } from 'react';
+import { renderToMarkdownString } from 'react-render-to-markdown';
 
-describe('renderToMarkdownString', () => {
-  it('renders text', () => {
-    expect(
-      renderToMarkdownString(
-        <div>
-          <strong>foo</strong>
-          <span>bar</span>
-        </div>,
-      ),
-    ).toBe('**foo**bar');
-  });
-  it('renders header and paragraph', () => {
-    const Comp1 = () => {
-      const [count, setCount] = useState(1);
-      return <h1>Header {count}</h1>;
-    };
-    const Comp2 = () => {
-      return (
-        <>
-          <Comp1 />
-          <p>Paragraph</p>
-        </>
-      );
-    };
-    expect(renderToMarkdownString(<Comp2 />)).toBe('# Header 1\n\nParagraph\n');
-  });
-});
+// HTML elements are converted to corresponding Markdown syntax
+renderToMarkdownString(
+  <div>
+    <strong>foo</strong>
+    <span>bar</span>
+  </div>,
+);
+// Output: '**foo**bar'
+
+// Supports React components and Hooks
+const Article = () => {
+  return (
+    <>
+      <h1>Hello World</h1>
+      <p>This is a paragraph.</p>
+    </>
+  );
+};
+renderToMarkdownString(<Article />);
+// Output: '# Hello World\n\nThis is a paragraph.\n'
 ```
 
-2. Provides `import.meta.env.SSG_MD` environment variable, making it easy for users to distinguish between SSG-MD rendering and browser rendering in MDX components, thus achieving more flexible content customization. For example:
+In principle, this API works for any site built with React; see [react-render-to-markdown](https://www.npmjs.com/package/react-render-to-markdown) if you're interested.
+
+2. Provides `import.meta.env.SSG_MD` environment variable, making it easy for users to distinguish between SSG-MD rendering and browser rendering in React components, thus achieving more flexible content customization:
 
 ```tsx
 export function Tab({ label }: { label: string }) {
@@ -90,8 +133,6 @@ bun create rspress@latest
 deno init --npm rspress@latest
 ```
 ````
-
-We believe that with the introduction of this feature, all websites built with React in the future can use SSG-MD to achieve better GEO.
 
 ## Features
 
