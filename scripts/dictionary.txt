@@ -73,6 +73,7 @@ Lamperouge
 Lelouch
 lightningcss
 llms
+llmstxt
 longpaths
 manypkg
 mattcompiles

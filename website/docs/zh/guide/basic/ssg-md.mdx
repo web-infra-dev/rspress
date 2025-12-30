@@ -10,16 +10,15 @@ Rspress 提供实验性的 Static Site Generation to Markdown (SSG-MD) 能力，
 
 为了便于理解 SSG-MD 概念，下面是一个 SSG 与 SSG-MD 的类比表：
 
-| 类比项           | SSG                                       | SSG-MD                              |
-| ---------------- | ----------------------------------------- | ----------------------------------- |
-| **全称**         | Static Site Generation                    | Static Site Generation to Markdown  |
-| **优化目标**     | SEO（搜索引擎优化）                       | GEO（生成式引擎优化）               |
-| **索引文件**     | `sitemap.xml`                             | `llms.txt`                          |
-| **完整内容文件** | -                                         | `llms-full.txt`                     |
-| **索引文件内容** | 页面 URL 列表、更新时间、优先级           | 页面标题、描述、按导航顺序排列      |
-| **核心实现**     | `renderToString`                          | `renderToMarkdownString`            |
-| **标准规范**     | [sitemaps.org](https://www.sitemaps.org/) | [llmstxt.org](https://llmstxt.org/) |
-| **访问方式**     | `/guide/start/introduction.html`          | `/guide/start/introduction.md`      |
+| 类比项           | SSG                                        | SSG-MD                             |
+| ---------------- | ------------------------------------------ | ---------------------------------- |
+| **全称**         | Static Site Generation                     | Static Site Generation to Markdown |
+| **优化目标**     | SEO（搜索引擎优化）                        | GEO（生成式引擎优化）              |
+| **索引文件**     | [`sitemap.xml`](https://www.sitemaps.org/) | [`llms.txt`](https://llmstxt.org/) |
+| **完整内容文件** | -                                          | `llms-full.txt`                    |
+| **索引文件内容** | 页面 URL 列表、更新时间、优先级            | 页面标题、描述、按导航顺序排列     |
+| **核心实现**     | `renderToString`                           | `renderToMarkdownString`           |
+| **访问方式**     | `/guide/start/introduction.html`           | `/guide/start/introduction.md`     |
 
 ## 什么是 llms.txt？ \{#llms-txt\}
 
