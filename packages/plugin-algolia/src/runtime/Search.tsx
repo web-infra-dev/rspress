@@ -1,6 +1,6 @@
 import type { DocSearchProps } from '@docsearch/react';
 import { DocSearch } from '@docsearch/react';
-import { useLang, useNavigate } from '@rspress/core/runtime';
+import { removeBase, useLang, useNavigate } from '@rspress/core/runtime';
 // @ts-expect-error @theme is not typed
 import { Link } from '@theme';
 import '@docsearch/css';
@@ -55,7 +55,8 @@ function Search({ locales = {}, docSearchProps }: SearchProps) {
             const url = new URL(item.url);
             return {
               ...item,
-              url: item.url.replace(url.origin, ''),
+              // we already have basename, so pass the url without base to Link and navigate
+              url: removeBase(item.url.replace(url.origin, '')),
             };
           });
         }}
