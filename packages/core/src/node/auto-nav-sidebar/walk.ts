@@ -22,9 +22,8 @@ async function scanNav(
       navConfig = await readJson<NavItem[]>(rootNavJson);
     } catch (e) {
       if (e instanceof Error) {
-        e.message = `[auto-nav-sidebar] Generate nav meta error: ${rootNavJson} failed, original error is (${e.message})`;
         throw createError(
-          `[auto-nav-sidebar] Generate nav meta error: ${rootNavJson} failed`,
+          `[auto-nav-sidebar] Generate nav meta error: ${rootNavJson} failed, original error is (${e.message})`,
         );
       }
       throw e;
