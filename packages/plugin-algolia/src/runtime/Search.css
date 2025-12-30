@@ -37,20 +37,6 @@
   --docsearch-dropdown-menu-item-hover-background: var(--rp-c-bg);
 }
 
-/* Dark mode overrides - docsearch uses [data-theme=dark] but rspress uses .dark class */
-html.dark [class*='DocSearch'] {
-  --docsearch-modal-background: var(--rp-c-bg);
-  --docsearch-search-button-text-color: var(--rp-c-text-2);
-  --docsearch-searchbox-background: var(--rp-c-bg-soft);
-  --docsearch-searchbox-focus-background: var(--rp-c-bg);
-  --docsearch-hit-background: var(--rp-c-bg-soft);
-  --docsearch-footer-background: var(--rp-c-bg);
-  --docsearch-key-background: var(--rp-c-bg-mute);
-  --docsearch-background-color: var(--rp-c-bg-mute);
-  --docsearch-dropdown-menu-background: var(--rp-c-bg-soft);
-  --docsearch-dropdown-menu-item-hover-background: var(--rp-c-bg);
-}
-
 .DocSearch {
   border-radius: var(--rp-radius-small);
 }
