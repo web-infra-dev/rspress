@@ -49,7 +49,6 @@
     display: block;
     white-space: nowrap;
 
-    padding-left: 8px;
     padding-right: 8px;
 
     // style
@@ -64,8 +63,10 @@
     line-height: 32px;
 
     &__link {
+      display: flex;
+      align-items: center;
+      gap: 2px;
       // For click area
-      display: block;
       height: 100%;
     }
 

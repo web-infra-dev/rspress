@@ -98,18 +98,22 @@ export function NavMenuItemWithLink({
   );
 }
 
-export function NavMenuItem({ menuItem: item }: { menuItem: NavItem }) {
-  if ('items' in item && Array.isArray(item.items) && item.items.length > 0) {
-    return <NavMenuItemWithChildren menuItem={item} />;
+export function NavMenuItem({ menuItem }: { menuItem: NavItem }) {
+  if (
+    'items' in menuItem &&
+    Array.isArray(menuItem.items) &&
+    menuItem.items.length > 0
+  ) {
+    return <NavMenuItemWithChildren menuItem={menuItem} />;
   }
 
-  if ('link' in item && item.link.length > 0) {
-    return <NavMenuItemWithLink menuItem={item as NavItemWithLink} />;
+  if ('link' in menuItem && menuItem.link.length > 0) {
+    return <NavMenuItemWithLink menuItem={menuItem as NavItemWithLink} />;
   }
 
   return (
     <li className="rp-nav-menu__item">
-      <NavMenuItemInner menuItem={item} />
+      <NavMenuItemInner menuItem={menuItem} />
     </li>
   );
 }

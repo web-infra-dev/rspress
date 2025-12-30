@@ -1,4 +1,5 @@
 import type { NavItemWithLink, NormalizedSidebar } from '../types';
+import { normalizeHref } from './utils';
 
 /**
  * match the sidebar key in user config
@@ -61,5 +62,7 @@ export const matchNavbar = (
   item: NavItemWithLink,
   currentPathname: string,
 ): boolean => {
-  return new RegExp(item.activeMatch || item.link).test(currentPathname);
+  return new RegExp(item.activeMatch || normalizeHref(item.link, true)).test(
+    currentPathname,
+  );
 };
