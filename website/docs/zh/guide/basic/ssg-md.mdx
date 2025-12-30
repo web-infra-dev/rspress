@@ -4,7 +4,58 @@ tag: experimental
 
 # llms.txt （SSG-MD）
 
-Rspress 提供实验性的 SSG-MD 能力，这是一个全新的功能。与它的名字一样 SSG-MD，与 [静态站点生成（SSG）](./ssg) 唯一的不同在于它将你的页面渲染为 Markdown 文件，而非 HTML 文件，并生成 [`llms.txt`](https://llmstxt.org/) 及 llms-full.txt 相关文件，便于大模型理解和使用你的技术文档。
+## 什么是 SSG-MD？
+
+Rspress 提供实验性的 Static Site Generation to Markdown (SSG-MD) 能力，这是一个全新的功能。与它的名字一样 SSG-MD，与 [静态站点生成（SSG）](./ssg) 唯一的不同在于它将你的页面渲染为 Markdown 文件，而非 HTML 文件，并生成 [`llms.txt`](#llms-txt) 及 llms-full.txt 相关文件，便于大模型理解和使用你的技术文档。
+
+SSG 与 SSG-MD 的对比：
+
+| 对比项           | SSG                                       | SSG-MD                              |
+| ---------------- | ----------------------------------------- | ----------------------------------- |
+| **全称**         | Static Site Generation                    | Static Site Generation to Markdown  |
+| **优化目标**     | SEO（搜索引擎优化）                       | GEO（生成式引擎优化）               |
+| **索引文件**     | `sitemap.xml`                             | `llms.txt`                          |
+| **完整内容文件** | -                                         | `llms-full.txt`                     |
+| **索引文件内容** | 页面 URL 列表、更新时间、优先级           | 页面标题、描述、按导航顺序排列      |
+| **核心实现**     | `renderToString`                          | `renderToMarkdownString`            |
+| **标准规范**     | [sitemaps.org](https://www.sitemaps.org/) | [llmstxt.org](https://llmstxt.org/) |
+| **访问方式**     | `/guide/start/introduction.html`          | `/guide/start/introduction.md`      |
+
+## 什么是 llms.txt？ \{#llms-txt\}
+
+[`llms.txt`](https://llmstxt.org/) 是一种新兴的标准化文件格式，放置于网站根目录，帮助大语言模型更好地理解和使用网站内容。
+
+由于 LLM 的上下文窗口有限，无法处理整个网站的 HTML 内容，而将复杂的 HTML（包含导航、广告、JavaScript）转换为纯文本既困难又不精确。`llms.txt` 使用 Markdown 格式提供网站的结构化索引，包含页面 URL 及其内容描述，让 AI 能够快速定位和理解关键信息。
+
+简单来说：
+
+- `sitemap.xml` → 给搜索引擎看的"网站地图"
+- `llms.txt` → 给 AI 看的"文档目录"
+
+产物结构示例：
+
+```txt
+doc_build
+├── llms.txt
+├── llms-full.txt
+├── guide
+│   └── start
+│       └── introduction.md
+└── ...
+```
+
+`llms.txt` 内容示例：
+
+```txt
+# Rspress
+
+> Rspress is a static site generator based on Rspack.
+
+## Docs
+
+- [Introduction](/guide/start/introduction.md): Introduction to Rspress
+- [Quick Start](/guide/start/quick-start.md): Quick Start
+```
 
 ## 为什么需要 SSG-MD？
 
@@ -14,43 +65,34 @@ Rspress 提供实验性的 SSG-MD 能力，这是一个全新的功能。与它�
 
 ## 怎么实现 SSG-MD？
 
-1. Rspress 内部实现了类似 `react-dom` 中 `renderToString` 相同的 `renderToMarkdownString` 方法。
+1. Rspress 内部实现了类似 `react-dom` 中 `renderToString` 的 `renderToMarkdownString` 方法，将 React 组件渲染为 Markdown 字符串：
 
 ```tsx
-import { expect, describe, it } from '@rstest/core';
-import { renderToMarkdownString } from './react-render-to-markdown';
-import { useState } from 'react';
+import { renderToMarkdownString } from 'react-render-to-markdown';
 
-describe('renderToMarkdownString', () => {
-  it('renders text', () => {
-    expect(
-      renderToMarkdownString(
-        <div>
-          <strong>foo</strong>
-          <span>bar</span>
-        </div>,
-      ),
-    ).toBe('**foo**bar');
-  });
-  it('renders header and paragraph', () => {
-    const Comp1 = () => {
-      const [count, setCount] = useState(1);
-      return <h1>Header {count}</h1>;
-    };
-    const Comp2 = () => {
-      return (
-        <>
-          <Comp1 />
-          <p>Paragraph</p>
-        </>
-      );
-    };
-    expect(renderToMarkdownString(<Comp2 />)).toBe('# Header 1\n\nParagraph\n');
-  });
-});
+// HTML 元素会被转换为对应的 Markdown 语法
+renderToMarkdownString(
+  <div>
+    <strong>foo</strong>
+    <span>bar</span>
+  </div>,
+);
+// 输出: '**foo**bar'
+
+// 支持 React 组件和 Hooks
+const Article = () => {
+  return (
+    <>
+      <h1>Hello World</h1>
+      <p>This is a paragraph.</p>
+    </>
+  );
+};
+renderToMarkdownString(<Article />);
+// 输出: '# Hello World\n\nThis is a paragraph.\n'
 ```
 
-2. 提供 `import.meta.env.SSG_MD` 环境变量，方便用户在 React 组件中区分 SSG-MD 渲染和浏览器渲染，从而实现更灵活的内容定制。例如：
+2. 提供 `import.meta.env.SSG_MD` 环境变量，方便用户在 React 组件中区分 SSG-MD 渲染和浏览器渲染，从而实现更灵活的内容定制：
 
 ```tsx
 export function Tab({ label }: { label: string }) {
