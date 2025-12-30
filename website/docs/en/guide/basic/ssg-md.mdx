@@ -50,11 +50,11 @@ describe('renderToMarkdownString', () => {
 });
 ```
 
-2. Provides `process.env.__SSR_MD__` environment variable, making it easy for users to distinguish between SSG-MD rendering and browser rendering in MDX components, thus achieving more flexible content customization. For example:
+2. Provides `import.meta.env.SSG_MD` environment variable, making it easy for users to distinguish between SSG-MD rendering and browser rendering in MDX components, thus achieving more flexible content customization. For example:
 
 ```tsx
 export function Tab({ label }: { label: string }) {
-  if (process.env.__SSR_MD__) {
+  if (import.meta.env.SSG_MD) {
     return <>{`** Here is a Tab named ${label}**`}</>;
   }
   return <div>{label}</div>;

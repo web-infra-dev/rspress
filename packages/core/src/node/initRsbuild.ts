@@ -403,6 +403,8 @@ async function createInternalBuildConfig(
           define: {
             'process.env.__SSR__': JSON.stringify(false),
             'process.env.__SSR_MD__': JSON.stringify(false),
+            'import.meta.env.SSR': JSON.stringify(false),
+            'import.meta.env.SSG_MD': JSON.stringify(false),
           },
         },
         output: {
@@ -436,6 +438,8 @@ async function createInternalBuildConfig(
                 define: {
                   'process.env.__SSR__': JSON.stringify(true),
                   'process.env.__SSR_MD__': JSON.stringify(false),
+                  'import.meta.env.SSR': JSON.stringify(true),
+                  'import.meta.env.SSG_MD': JSON.stringify(false),
                 },
               },
               performance: {
@@ -475,6 +479,8 @@ async function createInternalBuildConfig(
                 define: {
                   'process.env.__SSR__': JSON.stringify(true),
                   'process.env.__SSR_MD__': JSON.stringify(true),
+                  'import.meta.env.SSR': JSON.stringify(true),
+                  'import.meta.env.SSG_MD': JSON.stringify(true),
                 },
               },
               performance: {
