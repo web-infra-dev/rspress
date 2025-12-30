@@ -6,9 +6,9 @@ tag: experimental
 
 ## What is SSG-MD?
 
-Rspress provides experimental Static Site Generation to Markdown (SSG-MD) capability, which is a brand new feature. As its name suggests SSG-MD, the only difference from [Static Site Generation (SSG)](./ssg) is that it renders your pages as Markdown files instead of HTML files, and generates [`llms.txt`](#llms-txt) and llms-full.txt related files, making it easier for large language models to understand and use your technical documentation.
+Rspress provides experimental Static Site Generation to Markdown (SSG-MD) capability, which is a brand new feature. Similar to the [Static Site Generation (SSG)](./ssg) process, SSG-MD renders your pages as Markdown files instead of HTML files and generates [`llms.txt`](#llms-txt) and llms-full.txt, making it easier for large language models to understand and use your technical documentation.
 
-Comparison between SSG and SSG-MD:
+To help understand SSG-MD, here is an analogy between SSG and SSG-MD:
 
 | Comparison              | SSG                                       | SSG-MD                                         |
 | ----------------------- | ----------------------------------------- | ---------------------------------------------- |
@@ -92,6 +92,8 @@ renderToMarkdownString(<Article />);
 // Output: '# Hello World\n\nThis is a paragraph.\n'
 ```
 
+In principle, this API works for any site built with React; see [react-render-to-markdown](https://www.npmjs.com/package/react-render-to-markdown) if you're interested.
+
 2. Provides `import.meta.env.SSG_MD` environment variable, making it easy for users to distinguish between SSG-MD rendering and browser rendering in React components, thus achieving more flexible content customization:
 
 ```tsx
@@ -132,8 +134,6 @@ bun create rspress@latest
 deno init --npm rspress@latest
 ```
 ````
-
-We believe that with the introduction of this feature, all websites built with React in the future can use SSG-MD to achieve better GEO.
 
 ## Features
 
