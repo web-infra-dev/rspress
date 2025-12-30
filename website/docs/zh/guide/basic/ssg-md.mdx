@@ -50,11 +50,11 @@ describe('renderToMarkdownString', () => {
 });
 ```
 
-2. 提供 `process.env.__SSR_MD__` 环境变量，方便用户在 React 组件中区分 SSG-MD 渲染和浏览器渲染，从而实现更灵活的内容定制。例如：
+2. 提供 `import.meta.env.SSG_MD` 环境变量，方便用户在 React 组件中区分 SSG-MD 渲染和浏览器渲染，从而实现更灵活的内容定制。例如：
 
 ```tsx
 export function Tab({ label }: { label: string }) {
-  if (process.env.__SSR_MD__) {
+  if (import.meta.env.SSG_MD) {
     return <>{`** Here is a Tab named ${label}**`}</>;
   }
   return <div>{label}</div>;
