@@ -2,7 +2,7 @@
 
 ## 什么是约定式路由
 
-Rspress 使用的是文件系统路由，页面的文件路径会简单的映射为路由路径，这样会让整个项目的路由非常直观。
+Rspress 使用的是文件系统路由，页面的文件路径会简单地映射为路由路径，这样会让整个项目的路由非常直观。
 
 例如，如果在 `docs` 目录中有一个名为 `foo.md` 的文件，则该文件的路由路径将是 `/foo`。
 
@@ -59,11 +59,11 @@ import { defineConfig } from '@rspress/core';
 
 export default defineConfig({
   route: {
-    // These files will be excluded from the routing (support glob pattern)
-    exclude: ['component/**/*']
-    // These files will be included in the routing (support glob pattern)
+    // 这些文件将被排除在路由之外（支持 glob 模式）
+    exclude: ['component/**/*'],
+    // 这些文件将被包含在路由中（支持 glob 模式）
     include: ['other-dir/**/*'],
-  }
+  },
 });
 ```
 

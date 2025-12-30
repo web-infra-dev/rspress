@@ -3,7 +3,7 @@ import {
   Content,
   useFrontmatter,
   useLocaleSiteData,
-  usePageData,
+  usePage,
   useSite,
 } from '@rspress/core/runtime';
 import type { HomeLayoutProps } from '@theme';
@@ -115,6 +115,7 @@ export function Layout(props: LayoutProps) {
     afterHero,
     beforeFeatures,
     afterFeatures,
+    beforeNavMenu,
     afterNavMenu,
     components,
     HomeLayout = DefaultHomeLayout,
@@ -139,7 +140,7 @@ export function Layout(props: LayoutProps) {
     beforeFeatures,
     afterFeatures,
   };
-  const { page } = usePageData();
+  const { page } = usePage();
   const { site } = useSite();
   const { frontmatter } = useFrontmatter();
   const {
@@ -149,10 +150,6 @@ export function Layout(props: LayoutProps) {
     title: articleTitle,
   } = page;
   const localesData = useLocaleSiteData();
-
-  useSetup();
-  useScrollReset();
-  useRedirect4FirstVisit();
 
   // Always show sidebar by default
   // Priority: front matter title > h1 title
@@ -197,6 +194,14 @@ export function Layout(props: LayoutProps) {
     }
   };
 
+  if (process.env.__SSR_MD__) {
+    return <>{getContentLayout()}</>;
+  }
+
+  useSetup();
+  useScrollReset();
+  useRedirect4FirstVisit();
+
   const {
     frontmatter: { navbar: showNavbar = true },
   } = useFrontmatter();
@@ -218,6 +223,7 @@ export function Layout(props: LayoutProps) {
             beforeNavTitle={beforeNavTitle}
             afterNavTitle={afterNavTitle}
             navTitle={navTitle}
+            beforeNavMenu={beforeNavMenu}
             afterNavMenu={afterNavMenu}
           />
           {afterNav}
