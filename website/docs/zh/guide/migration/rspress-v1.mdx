@@ -1,117 +1,357 @@
-# 从 Rspress V1 迁移
+# 从 Rspress 1.x 迁移
 
-> 参考来源：discussion #1891 的 V2 breaking changes（详见仓库根目录 `V2-breaking.md`）。
+本文档将帮助你从 Rspress 1.x 迁移到 Rspress V2。
 
-## 快速检查清单
+## [重要] Node.js 版本要求
 
-- Node 版本 ≥ 20；React 默认 19（兼容 18）。
-- 依赖重命名：使用 `@rspress/core` 及其子路径，移除 `rspress` 包。
-- 自定义主题：使用 `@rspress/core/theme-original`，改为命名导出。
-- SSG 默认严格、不再回退 CSR；`ssg.strict` 已移除。
-- Shiki 默认开启，Prism 移除；行高亮语法更新；`markdown.highlightLanguages` 移除。
-- `cleanUrls: true` 时链接去掉 `/index`。
-- `base` 基于 react-router `basename` 重实现；`useLocation().pathname` 不含 base。
-- `_meta.json` 顶层改名 `_nav.json` 以启用导航。
-- `markdown.link.checkDeadLinks`、`search.codeBlocks` 默认开启。
-- Sass/Less 插件需自行安装；`builderPlugins` 改为 `builderConfig.plugins`。
+Rspress V2 不再支持 Node.js 16 和 18，请升级到 **Node.js >= 20.9.0**。
 
-## 1. 包名与依赖
+推荐使用 Node.js 22 LTS 版本。
 
-```diff
-- "rspress": "^1.x"
-- "rspress/runtime"
-- "rspress/theme"
-+ "@rspress/core": "^2.0.0"
-+ import { usePageData, useDark } from '@rspress/core/runtime'
-+ import { HomeLayout } from '@rspress/core/theme-original'
+## [重要] 包名变更
+
+Rspress V2 将多个包统一整合到 `@rspress/core` 中，原有的 `rspress` 包不再使用。
+
+- before:
+
+```json title="package.json"
+{
+  "dependencies": {
+    "rspress": "^1.x"
+  }
+}
 ```
 
-- 移除 `rspress`、`@rspress/theme-default` 等独立包，统一使用 `@rspress/core` 子路径。
-- 插件/类型：`import type { RspressPlugin } from '@rspress/core'`。
+- after:
 
-## 2. 顶层导航文件
-
-将最顶层的 `_meta.json` 重命名为 `_nav.json`，否则不会生成 `themeConfig.nav`。
-
-```diff
-- docs/zh/_meta.json
-+ docs/zh/_nav.json
+```json title="package.json"
+{
+  "dependencies": {
+    "@rspress/core": "^V2.0"
+  }
+}
 ```
 
-## 3. 自定义主题改为命名导出
+**导入路径变更**
 
-```diff
-- import Theme from 'rspress/theme'
-- export default { ...Theme, Layout }
-- export * from 'rspress/theme'
-+ import { Layout as BasicLayout } from '@rspress/core/theme-original'
-+ const Layout = () => <BasicLayout beforeNavTitle={<div>content</div>} />
-+ export { Layout }
-+ export * from '@rspress/core/theme-original'
+| 旧路径 | 新路径 |
+| --- | --- |
+| `rspress` / `rspress/config` | `@rspress/core` |
+| `rspress/runtime` | `@rspress/core/runtime` |
+| `rspress/theme` | `@rspress/core/theme` |
+| `@rspress/theme-default` | `@rspress/core/theme-original` |
+
+示例：
+
+- before:
+
+```ts
+import { usePageData, useDark } from 'rspress/runtime';
+import type { RspressPlugin } from 'rspress';
 ```
 
-## 4. 配置与路由
+- after:
 
-- `base` 依赖 react-router `basename`，使用 `Link` / `useNavigate`，不要用硬编码 `window.location`。
-- `cleanUrls: true` 时生成的链接不再包含 `/index`。
-- MDX 片段/组件：下划线前缀文件自动被路由排除（`route.excludeConvention`）。
-
-## 5. 构建与运行时
-
-- SSG 默认严格：失败即退出；如需跳过 SSG，设 `ssg: false`。
-- `dev.lazyCompilation` 默认开启；若与预加载冲突，可在 `builderConfig.dev.lazyCompilation = false`。
-- `performance.buildCache` 默认开启，加速 dev/build。
-- `builderPlugins` 移除，迁移到 `builderConfig.plugins`：
-
-```diff
-- builderPlugins: [pluginFoo()]
-+ builderConfig: { plugins: [pluginFoo()] }
+```ts
+import { usePageData, useDark } from '@rspress/core/runtime';
+import type { RspressPlugin } from '@rspress/core';
 ```
 
-- Sass/Less 需手动安装：`@rsbuild/plugin-sass`、`@rsbuild/plugin-less`。
+### 移除的独立包
 
-## 6. Markdown 与代码高亮
+以下插件已内置到核心包中，无需单独安装：
 
-- 默认使用 Shiki（v3）；卸载 `@rspress/plugin-shiki`。配置改为 `markdown.shiki`。
-- 行高亮语法改为 notation：
+- `@rspress/plugin-shiki` - 代码高亮已内置
+- `@rspress/plugin-auto-nav-sidebar` - 导航侧边栏已内置
+- `@rspress/plugin-container-syntax` - 容器语法已内置
+- `@rspress/plugin-last-updated` - 最后更新时间已内置
+- `@rspress/plugin-medium-zoom` - 图片缩放已内置
+
+## [重要] 自定义主题改为命名导出
+
+自定义主题不再使用默认导出，改为命名导出。
+
+- before:
+
+```tsx title="theme/index.tsx"
+import Theme from 'rspress/theme';
+
+const Layout = () => <Theme.Layout beforeNavTitle={<div>content</div>} />;
+
+export default { ...Theme, Layout };
+
+export * from 'rspress/theme';
+```
+
+- after:
+
+```tsx title="theme/index.tsx"
+import { Layout as BasicLayout } from '@rspress/core/theme-original';
+
+const Layout = () => <BasicLayout beforeNavTitle={<div>content</div>} />;
+
+export { Layout };
+
+export * from '@rspress/core/theme-original';
+```
+
+## [重要] Shiki 代码高亮替代 Prism
+
+Rspress V2 默认使用 Shiki v3 进行代码高亮，Prism 已被移除。
+
+### 配置迁移
+
+- before:
+
+```ts title="rspress.config.ts"
+export default {
+  markdown: {
+    highlightLanguages: [['js', 'javascript']],
+  },
+};
+```
+
+- after:
+
+```ts title="rspress.config.ts"
+export default {
+  markdown: {
+    shiki: {
+      langAlias: {
+        js: 'javascript',
+      },
+    },
+  },
+};
+```
+
+### 行高亮语法变更
+
+行高亮不再使用 `{1,3-4}` 语法，改为使用注释标记：
+
+- before:
+
+````md
+```ts {1,3-4}
+const a = 1;
+const b = 2;
+const c = 3;
+const d = 4;
+```
+````
+
+- after:
+
+````md
+```ts
+const a = 1; // [!code highlight]
+const b = 2;
+// [!code highlight:2]
+const c = 3;
+const d = 4;
+```
+````
+
+如需兼容旧语法，可添加 transformer：
+
+```ts title="rspress.config.ts"
+import { transformerCompatibleMetaHighlight } from '@rspress/core/shiki-transformers';
+
+export default {
+  markdown: {
+    shiki: {
+      transformers: [transformerCompatibleMetaHighlight()],
+    },
+  },
+};
+```
+
+## [重要] 顶层导航文件重命名
+
+最顶层的 `_meta.json` 需重命名为 `_nav.json`，否则不会生成 `themeConfig.nav`。
+
+- before:
+
+```
+docs/
+├── zh/
+│   └── _meta.json
+```
+
+- after:
+
+```
+docs/
+├── zh/
+│   └── _nav.json
+```
+
+## [重要] SSG 默认严格模式
+
+SSG 现在默认为严格模式，失败时直接退出构建，不再回退到 CSR。`ssg.strict` 配置已移除。
+
+如需跳过 SSG，设置 `ssg: false`：
+
+```ts title="rspress.config.ts"
+export default {
+  ssg: false,
+};
+```
+
+## base 配置重新实现
+
+`base` 配置现在基于 react-router 的 `basename` 实现。
+
+主要变化：
+- `useLocation().pathname` 不再包含 `base` 前缀
+- 应使用 `Link` / `useNavigate` 进行导航，避免直接操作 `window.location`
+
+## cleanUrls 链接变更
+
+当 `cleanUrls: true` 时，生成的链接不再包含 `/index` 后缀。
+
+- before: `/guide/index`
+- after: `/guide`
+
+## builderPlugins 配置移除
+
+`builderPlugins` 已移除，请迁移到 `builderConfig.plugins`。
+
+- before:
+
+```ts title="rspress.config.ts"
+export default {
+  builderPlugins: [pluginFoo()],
+};
+```
+
+- after:
+
+```ts title="rspress.config.ts"
+export default {
+  builderConfig: {
+    plugins: [pluginFoo()],
+  },
+};
+```
+
+## Sass/Less 需手动安装
+
+内置的 Sass/Less 插件已移除，如需使用请手动安装：
+
+```bash
+# Sass
+npm add @rsbuild/plugin-sass -D
+
+# Less
+npm add @rsbuild/plugin-less -D
+```
+
+并在配置中注册：
+
+```ts title="rspress.config.ts"
+import { pluginSass } from '@rsbuild/plugin-sass';
+
+export default {
+  builderConfig: {
+    plugins: [pluginSass()],
+  },
+};
+```
+
+## 外部代码块语法变更
+
+外部示例代码块语法已变更：
+
+- before:
+
+```tsx
+<code src="./example.tsx" />
+```
+
+- after:
+
+````md
+```tsx file="./example.tsx"
+```
+````
+
+## 相对链接解析变更
+
+相对链接不再需要 `./` 前缀，以下两种写法现在等效：
 
 ```md
-```ts
-console.log('A') // [!code highlight]
-// [!code highlight:2]
-console.log('B')
-console.log('C')
-```
+[subfolder](subfolder)
+[subfolder](./subfolder)
 ```
 
-- 兼容旧 `{1,3-4}` 语法：添加 `transformerCompatibleMetaHighlight()`。
-- `markdown.highlightLanguages` 移除，用 `markdown.shiki.langAlias` / `langs`。
-- 外部示例代码块：
+## 默认开启的功能
 
-```diff
-- <code src="./example.tsx" />
-+ ```tsx file="./example.tsx"
-+ ```
+以下功能在 V2 中默认开启：
+
+| 功能 | 说明 |
+| --- | --- |
+| `markdown.link.checkDeadLinks` | 死链检查，日志更严格 |
+| `search.codeBlocks` | 搜索结果包含代码块 |
+| `dev.lazyCompilation` | 懒编译加速开发启动 |
+| `performance.buildCache` | 持久化缓存加速构建 |
+
+如需关闭懒编译：
+
+```ts title="rspress.config.ts"
+export default {
+  builderConfig: {
+    dev: {
+      lazyCompilation: false,
+    },
+  },
+};
 ```
 
-## 7. 链接、搜索与校验
+## MDX 文件路由排除
 
-- `markdown.link.checkDeadLinks` 默认开启，日志更严格。
-- 相对链接无需 `./` 前缀：`[subfolder](subfolder)` 等同 `[subfolder](./subfolder)`。
-- 搜索默认包含代码块：`search.codeBlocks: true`。
+以下划线 `_` 开头的文件会自动从路由中排除，适合用于 MDX 片段和 React 组件。
 
-## 8. 样式与主题
+```
+docs/
+├── guide/
+│   ├── _components.tsx  # 不会生成路由
+│   └── index.mdx
+```
 
-- 内置主题类名加入 Tailwind 前缀，避免冲突；如依赖 `dark:hidden` 等类，请在项目配置 Tailwind/UnoCSS。
-- 原生 HTML 标签默认带样式；需要隔离时加 `.rp-not-doc`。
-- 默认内置多语言文案，移除手写 `themeConfig.locales` 文本，改用 `i18nSource` 覆盖缺失项。
+## 主题样式变更
 
-## 9. 版本要求
+### Tailwind 类名前缀
 
-- Node >= 20。
-- React 默认 19（兼容 18）；`react-router-dom` 默认 7（兼容 6）。
+内置主题类名添加了 Tailwind 前缀以避免冲突。如果你依赖 `dark:hidden` 等类名，请在项目中配置 Tailwind/UnoCSS。
 
-## 10. 参考
+### 原生 HTML 标签样式
 
-- 全量 breaking list：仓库根目录 `V2-breaking.md`
-- 讨论帖：https://github.com/web-infra-dev/rspress/discussions/1891
+原生 HTML 标签默认带有文档样式。如需隔离样式，添加 `.rp-not-doc` 类名：
+
+```html
+<div class="rp-not-doc">
+  <!-- 不受文档样式影响 -->
+</div>
+```
+
+### 内置多语言文案
+
+默认主题内置了多语言翻译文案。如需覆盖，使用 `i18nSource` 而非手动编写 `themeConfig.locales`。
+
+## React 与 React Router 版本
+
+| 依赖 | 默认版本 | 兼容版本 |
+| --- | --- | --- |
+| React | 19 | 18, 19 |
+| react-router-dom | 7 | 6, 7 |
+
+React 17 不再支持。
+
+## unified 升级
+
+`unified` 升级到 v11，自定义的 remark/rehype 插件需兼容 `unified@11`。
+
+## 参考资源
+
+- [GitHub 讨论：Rspress v2 Breaking Changes](https://github.com/web-infra-dev/rspress/discussions/1891)
