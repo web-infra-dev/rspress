@@ -2,11 +2,26 @@
 
 本文档将帮助你从 Rspress 1.x 迁移到 Rspress V2。
 
-## [重要] Node.js 版本要求
+## [重要] Node.js 与上游依赖版本要求
 
-Rspress V2 不再支持 Node.js 16 和 18，请升级到 **Node.js >= 20.9.0**。
+## Node.js 版本
 
-推荐使用 Node.js 22 LTS 版本。
+Rspress V2 不再支持 Node.js 16 和 18，请升级到 **Node.js >= 20.9.0**。推荐使用 Node.js 22 LTS 版本。
+
+### 上游依赖版本
+
+| 依赖 | 允许范围 | 默认版本 | 说明 |
+| --- | --- | --- | --- |
+| `react` | `^18.0.0 \|\| ^19.0.0` | 19 | 不再支持 React 17 |
+| `react-dom` | `^18.0.0 \|\| ^19.0.0` | 19 | 与 react 版本保持一致 |
+| `react-router-dom` | `^6.0.0 \|\| ^7.0.0` | 7 | 如项目已安装则使用项目版本 |
+| `unified` | `^11.0.0` | 11 | 自定义 remark/rehype 插件需兼容 |
+
+:::tip
+
+如果你的项目中已安装 `react`、`react-dom` 或 `react-router-dom`，Rspress 会优先使用项目中安装的版本，而非内置的默认版本。
+
+:::
 
 ## [重要] 包名变更
 
@@ -17,7 +32,8 @@ Rspress V2 将多个包统一整合到 `@rspress/core` 中，原有的 `rspress`
 ```json title="package.json"
 {
   "dependencies": {
-    "rspress": "^1.x"
+    "rspress": "^1.x",
+    "@rspress/shared": "^1.x"
   }
 }
 ```
@@ -27,7 +43,7 @@ Rspress V2 将多个包统一整合到 `@rspress/core` 中，原有的 `rspress`
 ```json title="package.json"
 {
   "dependencies": {
-    "@rspress/core": "^V2.0"
+    "@rspress/core": "^2.0.0"
   }
 }
 ```
@@ -61,13 +77,13 @@ import type { RspressPlugin } from '@rspress/core';
 
 以下插件已内置到核心包中，无需单独安装：
 
-- `@rspress/plugin-shiki` - 代码高亮已内置
+- `@rspress/plugin-shiki` - 默认使用 Shiki 代码高亮
 - `@rspress/plugin-auto-nav-sidebar` - 导航侧边栏已内置
 - `@rspress/plugin-container-syntax` - 容器语法已内置
 - `@rspress/plugin-last-updated` - 最后更新时间已内置
 - `@rspress/plugin-medium-zoom` - 图片缩放已内置
 
-## [重要] 自定义主题改为命名导出
+## [重要] 自定义主题 ESM 导出方式修改
 
 自定义主题不再使用默认导出，改为命名导出。
 
@@ -95,41 +111,81 @@ export { Layout };
 export * from '@rspress/core/theme-original';
 ```
 
+### 主题导入路径说明
+
+| 使用场景 | 推荐导入路径 | 说明 |
+| --- | --- | --- |
+| `theme` 文件夹 | `@rspress/core/theme-original` | 自定义主题时使用，获取原始主题组件 |
+| `docs` 目录 | `@rspress/core/theme` 或 `@theme` | 文档中使用主题组件，支持主题覆盖 |
+
+在 `docs` 目录的 MDX 文件中使用主题组件：
+
+```tsx title="docs/guide/index.mdx"
+import { PackageManagerTabs } from '@rspress/core/theme';
+// 或使用别名
+import { PackageManagerTabs } from '@theme';
+```
+
+如果使用 `@theme` 别名，请在 `tsconfig.json` 中添加路径映射，获得类型提示：
+
+```json title="tsconfig.json"
+{
+  "compilerOptions": {
+    "paths": {
+      "@theme": ["./theme/index.tsx"]
+    }
+  }
+}
+```
+
 ## [重要] Shiki 代码高亮替代 Prism
 
 Rspress V2 默认使用 Shiki v3 进行代码高亮，Prism 已被移除。
 
+Shiki 默认支持的语言列表请参阅 [Shiki Languages](https://shiki.style/languages)。更多 Shiki 使用方式请参阅[代码块文档](/guide/use-mdx/code-blocks)。
+
 ### 配置迁移
 
+
 - before:
+
+通过 highlightLanguages 配置路径别名：
 
 ```ts title="rspress.config.ts"
 export default {
   markdown: {
-    highlightLanguages: [['js', 'javascript']],
+    highlightLanguages: [['ejs', 'javascript']],
   },
 };
 ```
 
 - after:
 
+通过 [markdown.shiki](/api/config/config-markdown.md#markdownshiki) 配置 langAlias 和其他 Shiki 选项：
+
 ```ts title="rspress.config.ts"
 export default {
   markdown: {
     shiki: {
       langAlias: {
-        js: 'javascript',
+        ejs: 'javascript',
       },
     },
   },
 };
 ```
 
-### 行高亮语法变更
+### 不再默认内置 meta 行高亮语法
 
-行高亮不再使用 `{1,3-4}` 语法，改为使用注释标记：
+行高亮不再默认 `{1,3-4}` 语法。针对代码块行高亮的不同语法，请使用对应的 transformer 进行转换。
 
-- before:
+
+#### notation 行高亮
+
+
+
+#### meta 行高亮
+
 
 ````md
 ```ts {1,3-4}
@@ -139,8 +195,6 @@ const c = 3;
 const d = 4;
 ```
 ````
-
-- after:
 
 ````md
 ```ts
@@ -338,19 +392,6 @@ docs/
 ### 内置多语言文案
 
 默认主题内置了多语言翻译文案。如需覆盖，使用 `i18nSource` 而非手动编写 `themeConfig.locales`。
-
-## React 与 React Router 版本
-
-| 依赖 | 默认版本 | 兼容版本 |
-| --- | --- | --- |
-| React | 19 | 18, 19 |
-| react-router-dom | 7 | 6, 7 |
-
-React 17 不再支持。
-
-## unified 升级
-
-`unified` 升级到 v11，自定义的 remark/rehype 插件需兼容 `unified@11`。
 
 ## 参考资源
 
