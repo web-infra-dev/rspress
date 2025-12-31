@@ -15,6 +15,10 @@
     "zh": "高级能力",
     "en": "Advanced"
   },
+  "migration": {
+    "zh": "迁移",
+    "en": "Migration"
+  },
   "apiOverview": {
     "zh": "API 概览",
     "en": "API Overview"
