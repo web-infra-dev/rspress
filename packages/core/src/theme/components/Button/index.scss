@@ -7,9 +7,11 @@
   white-space: nowrap;
   height: 48px;
   transition:
-    color 0.1s,
-    border-color 0.1s,
-    background-color 0.1s;
+    color 0.3s cubic-bezier(0.4, 0, 0.2, 1),
+    border-color 0.3s cubic-bezier(0.4, 0, 0.2, 1),
+    background-color 0.3s cubic-bezier(0.4, 0, 0.2, 1),
+    transform 0.3s cubic-bezier(0.4, 0, 0.2, 1),
+    box-shadow 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 
   &--medium {
     border-radius: var(--rp-radius);
@@ -35,11 +37,18 @@
   &--brand {
     opacity: 1;
     color: #fff;
-    transition: all 0.3s ease;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
     background: var(--rp-home-hero-title-bg);
+    box-shadow: 0 2px 8px rgba(0, 149, 255, 0.15);
 
     &:hover {
-      opacity: 0.8;
+      opacity: 0.9;
+      transform: translateY(-1px);
+      box-shadow: 0 4px 16px rgba(0, 149, 255, 0.25);
+    }
+
+    &:active {
+      transform: translateY(0);
     }
   }
 
@@ -47,17 +56,25 @@
     border: 1px solid var(--rp-c-gray-light-3);
     color: var(--rp-c-text-0);
     background-color: var(--rp-c-bg);
-    transition: all 0.3s ease;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.05);
 
     .dark & {
       background-color: var(--rp-c-bg-mute);
       border-color: #484848;
       color: var(--rp-c-text-1);
+      box-shadow: 0 1px 4px rgba(0, 0, 0, 0.2);
     }
 
     &:hover {
-      opacity: 0.8;
       background-color: var(--rp-c-bg-mute);
+      border-color: var(--rp-c-brand);
+      transform: translateY(-1px);
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    }
+
+    &:active {
+      transform: translateY(0);
     }
   }
 }
