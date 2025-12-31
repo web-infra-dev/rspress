@@ -175,38 +175,14 @@ export default {
 };
 ```
 
-### 不再默认内置 meta 行高亮语法
+### 行高亮语法变更
 
-行高亮不再默认 `{1,3-4}` 语法。针对代码块行高亮的不同语法，请使用对应的 transformer 进行转换。
+V2 不再默认内置 `{1,3-4}` meta 行高亮语法。请根据需要选择以下方案：
 
+- **[Notation 行高亮](/guide/use-mdx/code-blocks#notation-行高亮)**：使用 `// [!code highlight]` 注释语法，需配置 `transformerNotationHighlight`
+- **[Meta 行高亮](/guide/use-mdx/code-blocks#meta-行高亮)**：兼容旧版 `{1,3-4}` 语法，需配置 `transformerCompatibleMetaHighlight`
 
-#### notation 行高亮
-
-
-
-#### meta 行高亮
-
-
-````md
-```ts {1,3-4}
-const a = 1;
-const b = 2;
-const c = 3;
-const d = 4;
-```
-````
-
-````md
-```ts
-const a = 1; // [!code highlight]
-const b = 2;
-// [!code highlight:2]
-const c = 3;
-const d = 4;
-```
-````
-
-如需兼容旧语法，可添加 transformer：
+如需兼容 V1 的 meta 行高亮语法，添加以下配置：
 
 ```ts title="rspress.config.ts"
 import { transformerCompatibleMetaHighlight } from '@rspress/core/shiki-transformers';
