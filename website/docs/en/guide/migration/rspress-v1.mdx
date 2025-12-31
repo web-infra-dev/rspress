@@ -2,6 +2,19 @@
 
 This document will help you migrate from Rspress 1.x to Rspress V2. We recommend using the "Copy as Markdown" feature to pass this document to an LLM for automated migration assistance.
 
+## Quick Migration Checklist
+
+- [ ] **Node.js** >= 20.9.0
+- [ ] **Dependencies**: `rspress` → `@rspress/core`, remove `@rspress/shared`
+- [ ] **Import paths**: `rspress/runtime` → `@rspress/core/runtime`
+- [ ] **Custom themes**: Change default exports to named exports, use `@rspress/core/theme-original`
+- [ ] **Top-level navigation**: `_meta.json` → `_nav.json` (top-level only)
+- [ ] **Code highlighting**: Prism → Shiki, line highlight syntax `{1,3-4}` requires transformer config
+- [ ] **builderPlugins**: Move to `builderConfig.plugins`
+- [ ] **Sass/Less**: Manually install `@rsbuild/plugin-sass` or `@rsbuild/plugin-less`
+- [ ] **External code blocks**: `<code src="..." />` → ` ```tsx file="..." ` ` ` `
+- [ ] **themeConfig.locales**: Remove `outlineTitle` and other text configs, use `i18nSource` instead
+
 ## [Important] Node.js and Upstream Dependency Requirements
 
 ### Node.js Version
@@ -123,9 +136,9 @@ export { Layout };
 export * from '@rspress/core/theme-original';
 ```
 
-### Theme Import Path Reference
+### Theme Import Paths
 
-| Use Case         | Import Path                       | Description                                               |
+| Context          | Import Path                       | Description                                               |
 | ---------------- | --------------------------------- | --------------------------------------------------------- |
 | `theme` folder   | `@rspress/core/theme-original`    | Use when customizing theme, get original theme components |
 | `docs` directory | `@rspress/core/theme` or `@theme` | Use theme components in docs, supports theme override     |
@@ -163,11 +176,13 @@ For the list of languages supported by Shiki, see [Shiki Languages](https://shik
 Configure language aliases via highlightLanguages:
 
 ```ts title="rspress.config.ts"
-export default {
+import { defineConfig } from 'rspress/config';
+
+export default defineConfig({
   markdown: {
     highlightLanguages: [['ejs', 'javascript']],
   },
-};
+});
 ```
 
 - after:
@@ -175,7 +190,9 @@ export default {
 Configure `langAlias` and other Shiki options via [markdown.shiki](/api/config/config-build.md#markdownshiki):
 
 ```ts title="rspress.config.ts"
-export default {
+import { defineConfig } from '@rspress/core';
+
+export default defineConfig({
   markdown: {
     shiki: {
       langAlias: {
@@ -183,28 +200,29 @@ export default {
       },
     },
   },
-};
+});
 ```
 
 ### Line Highlighting Syntax Changes
 
 V2 no longer includes the `{1,3-4}` meta line highlighting syntax by default. Choose from the following options based on your needs:
 
-- **[Notation Line Highlighting](/guide/use-mdx/code-blocks#notation-line-highlighting)**: Uses `// [!code highlight]` comment syntax, requires `transformerNotationHighlight` configuration
-- **[Meta Line Highlighting](/guide/use-mdx/code-blocks#meta-line-highlighting)**: Compatible with legacy `{1,3-4}` syntax, requires `transformerCompatibleMetaHighlight` configuration
+- **[Notation Line Highlight](/guide/use-mdx/code-blocks#notation-line-highlight)**: Uses `// [!code highlight]` comment syntax, requires `transformerNotationHighlight` configuration
+- **[Meta Line Highlight](/guide/use-mdx/code-blocks#meta-line-highlight)**: Compatible with legacy `{1,3-4}` syntax, requires `transformerCompatibleMetaHighlight` configuration
 
 To maintain compatibility with V1's meta line highlighting syntax, add the following configuration:
 
 ```ts title="rspress.config.ts"
+import { defineConfig } from '@rspress/core';
 import { transformerCompatibleMetaHighlight } from '@rspress/core/shiki-transformers';
 
-export default {
+export default defineConfig({
   markdown: {
     shiki: {
       transformers: [transformerCompatibleMetaHighlight()],
     },
   },
-};
+});
 ```
 
 ## [Important] Top-level Navigation File Renamed
@@ -238,9 +256,11 @@ SSG is now in strict mode by default. On failure, the build exits immediately in
 To skip SSG, set `ssg: false`:
 
 ```ts title="rspress.config.ts"
-export default {
+import { defineConfig } from '@rspress/core';
+
+export default defineConfig({
   ssg: false,
-};
+});
 ```
 
 ## [Important] Features Enabled by Default
@@ -257,13 +277,15 @@ The following features are enabled by default in V2:
 To disable lazy compilation:
 
 ```ts title="rspress.config.ts"
-export default {
+import { defineConfig } from '@rspress/core';
+
+export default defineConfig({
   builderConfig: {
     dev: {
       lazyCompilation: false,
     },
   },
-};
+});
 ```
 
 ## base Configuration Reimplemented
@@ -289,19 +311,23 @@ When `cleanUrls: true`, generated links no longer include the `/index` suffix.
 - before:
 
 ```ts title="rspress.config.ts"
-export default {
+import { defineConfig } from 'rspress/config';
+
+export default defineConfig({
   builderPlugins: [pluginFoo()],
-};
+});
 ```
 
 - after:
 
 ```ts title="rspress.config.ts"
-export default {
+import { defineConfig } from '@rspress/core';
+
+export default defineConfig({
   builderConfig: {
     plugins: [pluginFoo()],
   },
-};
+});
 ```
 
 ## Sass/Less Requires Manual Installation
@@ -319,13 +345,14 @@ npm add @rsbuild/plugin-less -D
 Then register in configuration:
 
 ```ts title="rspress.config.ts"
+import { defineConfig } from '@rspress/core';
 import { pluginSass } from '@rsbuild/plugin-sass';
 
-export default {
+export default defineConfig({
   builderConfig: {
     plugins: [pluginSass()],
   },
-};
+});
 ```
 
 ## External Code Block Syntax Changed

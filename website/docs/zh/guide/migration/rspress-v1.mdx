@@ -2,6 +2,19 @@
 
 本文档将帮助你从 Rspress 1.x 迁移到 Rspress V2。推荐直接通过 "复制为 Markdown" 功能将本文档传给大模型进行迁移操作。
 
+## 快速检查清单
+
+- [ ] **Node.js** >= 20.9.0
+- [ ] **依赖变更**：`rspress` → `@rspress/core`，移除 `@rspress/shared`
+- [ ] **导入路径**：`rspress/runtime` → `@rspress/core/runtime`
+- [ ] **自定义主题**：默认导出改为命名导出，使用 `@rspress/core/theme-original`
+- [ ] **顶层导航**：`_meta.json` → `_nav.json`（仅顶层）
+- [ ] **代码高亮**：Prism → Shiki，行高亮语法 `{1,3-4}` 需配置 transformer
+- [ ] **builderPlugins**：移至 `builderConfig.plugins`
+- [ ] **Sass/Less**：需手动安装 `@rsbuild/plugin-sass` 或 `@rsbuild/plugin-less`
+- [ ] **外部代码块**：`<code src="..." />` → ` ```tsx file="..." ` ` ` `
+- [ ] **themeConfig.locales**：移除 `outlineTitle` 等文本配置，改用 `i18nSource`
+
 ## [重要] Node.js 与上游依赖版本要求
 
 ### Node.js 版本
@@ -163,11 +176,13 @@ Shiki 默认支持的语言列表请参阅 [Shiki Languages](https://shiki.style
 通过 highlightLanguages 配置路径别名：
 
 ```ts title="rspress.config.ts"
-export default {
+import { defineConfig } from 'rspress/config';
+
+export default defineConfig({
   markdown: {
     highlightLanguages: [['ejs', 'javascript']],
   },
-};
+});
 ```
 
 - after:
@@ -175,7 +190,9 @@ export default {
 通过 [markdown.shiki](/api/config/config-build.md#markdownshiki) 配置 `langAlias` 和其他 Shiki 选项：
 
 ```ts title="rspress.config.ts"
-export default {
+import { defineConfig } from '@rspress/core';
+
+export default defineConfig({
   markdown: {
     shiki: {
       langAlias: {
@@ -183,7 +200,7 @@ export default {
       },
     },
   },
-};
+});
 ```
 
 ### 行高亮语法变更
@@ -196,15 +213,16 @@ V2 不再默认内置 `{1,3-4}` meta 行高亮语法。请根据需要选择以�
 如需兼容 V1 的 meta 行高亮语法，添加以下配置：
 
 ```ts title="rspress.config.ts"
+import { defineConfig } from '@rspress/core';
 import { transformerCompatibleMetaHighlight } from '@rspress/core/shiki-transformers';
 
-export default {
+export default defineConfig({
   markdown: {
     shiki: {
       transformers: [transformerCompatibleMetaHighlight()],
     },
   },
-};
+});
 ```
 
 ## [重要] 顶层导航文件重命名
@@ -238,9 +256,11 @@ SSG 现在默认为严格模式，失败时直接退出构建，不再回退到 
 如需跳过 SSG，设置 `ssg: false`：
 
 ```ts title="rspress.config.ts"
-export default {
+import { defineConfig } from '@rspress/core';
+
+export default defineConfig({
   ssg: false,
-};
+});
 ```
 
 ## [重要] 默认开启的功能
@@ -257,13 +277,15 @@ export default {
 如需关闭懒编译：
 
 ```ts title="rspress.config.ts"
-export default {
+import { defineConfig } from '@rspress/core';
+
+export default defineConfig({
   builderConfig: {
     dev: {
       lazyCompilation: false,
     },
   },
-};
+});
 ```
 
 ## base 配置重新实现
@@ -289,19 +311,23 @@ export default {
 - before:
 
 ```ts title="rspress.config.ts"
-export default {
+import { defineConfig } from 'rspress/config';
+
+export default defineConfig({
   builderPlugins: [pluginFoo()],
-};
+});
 ```
 
 - after:
 
 ```ts title="rspress.config.ts"
-export default {
+import { defineConfig } from '@rspress/core';
+
+export default defineConfig({
   builderConfig: {
     plugins: [pluginFoo()],
   },
-};
+});
 ```
 
 ## Sass/Less 需手动安装
@@ -319,13 +345,14 @@ npm add @rsbuild/plugin-less -D
 并在配置中注册：
 
 ```ts title="rspress.config.ts"
+import { defineConfig } from '@rspress/core';
 import { pluginSass } from '@rsbuild/plugin-sass';
 
-export default {
+export default defineConfig({
   builderConfig: {
     plugins: [pluginSass()],
   },
-};
+});
 ```
 
 ## 外部代码块语法变更
