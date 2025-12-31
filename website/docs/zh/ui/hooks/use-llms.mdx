@@ -1,0 +1,47 @@
+# useLlms
+
+`useLlms` 返回当前页面的 Markdown URL，在 SSG-MD 模式下特别有用，此时页面会被渲染为 `.md` 文件。
+
+- **类型：** `() => { pathname: string }`
+
+当你需要生成指向文档页面 Markdown 版本的链接时，这个 Hook 特别有用，比如用于 LLM 消费或直接访问 Markdown 文件。
+
+```tsx
+import { useLlms } from '@rspress/core/theme';
+
+export default function ViewMarkdownLink() {
+  const { pathname } = useLlms();
+  // pathname 类似 '/guide/start/introduction.md'
+  return (
+    <a href={pathname} target="_blank">
+      查看 Markdown 版本
+    </a>
+  );
+}
+```
+
+## 相关工具函数
+
+### routePathToMdPath
+
+如果你需要将特定的路由路径转换为 Markdown 路径，而不使用 Hook，可以使用 `routePathToMdPath` 工具函数：
+
+```tsx
+import { routePathToMdPath } from '@rspress/core/theme';
+
+const mdPath = routePathToMdPath('/guide/start/introduction');
+// 返回: '/guide/start/introduction.md'
+
+const mdPathWithHash = routePathToMdPath('/api#section');
+// 返回: '/api.md#section'
+```
+
+这在需要在模板字符串中生成 Markdown 链接时特别有用：
+
+```tsx
+const link = '/api/config/config-basic';
+const markdownLink = `[配置基础](${routePathToMdPath(link)})`;
+// 渲染为: [配置基础](/api/config/config-basic.md)
+```
+
+> **注意：** `useLlms` 和 `routePathToMdPath` 都是为 [SSG-MD (llms.txt)](/zh/guide/basic/ssg-md) 功能设计的。它们将 HTML 路由路径转换为对应的 `.md` 文件路径。
