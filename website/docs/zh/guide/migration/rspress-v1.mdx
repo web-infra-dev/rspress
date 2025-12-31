@@ -4,18 +4,18 @@
 
 ## [重要] Node.js 与上游依赖版本要求
 
-## Node.js 版本
+### Node.js 版本
 
 Rspress V2 不再支持 Node.js 16 和 18，请升级到 **Node.js >= 20.9.0**。推荐使用 Node.js 22 LTS 版本。
 
 ### 上游依赖版本
 
-| 依赖 | 允许范围 | 默认版本 | 说明 |
-| --- | --- | --- | --- |
-| `react` | `^18.0.0 \|\| ^19.0.0` | 19 | 不再支持 React 17 |
-| `react-dom` | `^18.0.0 \|\| ^19.0.0` | 19 | 与 react 版本保持一致 |
-| `react-router-dom` | `^6.0.0 \|\| ^7.0.0` | 7 | 如项目已安装则使用项目版本 |
-| `unified` | `^11.0.0` | 11 | 自定义 remark/rehype 插件需兼容 |
+| 依赖               | 允许范围               | 默认版本 | 说明                            |
+| ------------------ | ---------------------- | -------- | ------------------------------- |
+| `react`            | `^18.0.0 \|\| ^19.0.0` | 19       | 不再支持 React 17               |
+| `react-dom`        | `^18.0.0 \|\| ^19.0.0` | 19       | 与 react 版本保持一致           |
+| `react-router-dom` | `^6.0.0 \|\| ^7.0.0`   | 7        | 如项目已安装则使用项目版本      |
+| `unified`          | `^11.0.0`              | 11       | 自定义 remark/rehype 插件需兼容 |
 
 :::tip
 
@@ -23,7 +23,7 @@ Rspress V2 不再支持 Node.js 16 和 18，请升级到 **Node.js >= 20.9.0**�
 
 :::
 
-## [重要] 包名变更
+## [重要] 包名及导入路径变更
 
 Rspress V2 将多个包统一整合到 `@rspress/core` 中，原有的 `rspress` 包不再使用。
 
@@ -48,14 +48,24 @@ Rspress V2 将多个包统一整合到 `@rspress/core` 中，原有的 `rspress`
 }
 ```
 
-**导入路径变更**
+如果你开发了 Rspress 插件，请将插件的 peerDependencies 从 `rspress` 变更为 `@rspress/core`：
 
-| 旧路径 | 新路径 |
-| --- | --- |
-| `rspress` / `rspress/config` | `@rspress/core` |
-| `rspress/runtime` | `@rspress/core/runtime` |
-| `rspress/theme` | `@rspress/core/theme` |
-| `@rspress/theme-default` | `@rspress/core/theme-original` |
+```json title="package.json"
+{
+  "peerDependencies": {
+    "@rspress/core": "^2.0.0"
+  }
+}
+```
+
+### 导入路径变更
+
+| 旧路径                       | 新路径                         |
+| ---------------------------- | ------------------------------ |
+| `rspress` / `rspress/config` | `@rspress/core`                |
+| `rspress/runtime`            | `@rspress/core/runtime`        |
+| `rspress/theme`              | `@rspress/core/theme`          |
+| `@rspress/theme-default`     | `@rspress/core/theme-original` |
 
 示例：
 
@@ -113,10 +123,10 @@ export * from '@rspress/core/theme-original';
 
 ### 主题导入路径说明
 
-| 使用场景 | 推荐导入路径 | 说明 |
-| --- | --- | --- |
-| `theme` 文件夹 | `@rspress/core/theme-original` | 自定义主题时使用，获取原始主题组件 |
-| `docs` 目录 | `@rspress/core/theme` 或 `@theme` | 文档中使用主题组件，支持主题覆盖 |
+| 使用场景       | 导入路径                          | 说明                               |
+| -------------- | --------------------------------- | ---------------------------------- |
+| `theme` 文件夹 | `@rspress/core/theme-original`    | 自定义主题时使用，获取原始主题组件 |
+| `docs` 目录    | `@rspress/core/theme` 或 `@theme` | 文档中使用主题组件，支持主题覆盖   |
 
 在 `docs` 目录的 MDX 文件中使用主题组件：
 
@@ -146,7 +156,6 @@ Shiki 默认支持的语言列表请参阅 [Shiki Languages](https://shiki.style
 
 ### 配置迁移
 
-
 - before:
 
 通过 highlightLanguages 配置路径别名：
@@ -161,7 +170,7 @@ export default {
 
 - after:
 
-通过 [markdown.shiki](/api/config/config-markdown.md#markdownshiki) 配置 langAlias 和其他 Shiki 选项：
+通过 [markdown.shiki](/api/config/config-build.md#markdownshiki) 配置 langAlias 和其他 Shiki 选项：
 
 ```ts title="rspress.config.ts"
 export default {
@@ -198,14 +207,16 @@ export default {
 
 ## [重要] 顶层导航文件重命名
 
-最顶层的 `_meta.json` 需重命名为 `_nav.json`，否则不会生成 `themeConfig.nav`。
+Rspress V2 将 nav 和 sidebar 分开配置，最顶层的 `_meta.json` 需重命名为 `_nav.json`，内层的保持不变。
 
 - before:
 
 ```
 docs/
 ├── zh/
-│   └── _meta.json
+│   ├── _meta.json        # 顶层导航
+│   └── guide/
+│       └── _meta.json    # 内层侧边栏
 ```
 
 - after:
@@ -213,7 +224,9 @@ docs/
 ```
 docs/
 ├── zh/
-│   └── _nav.json
+│   ├── _nav.json         # 顶层导航（重命名）
+│   └── guide/
+│       └── _meta.json    # 内层侧边栏（保持不变）
 ```
 
 ## [重要] SSG 默认严格模式
@@ -228,20 +241,44 @@ export default {
 };
 ```
 
+## [重要] 默认开启的功能
+
+以下功能在 V2 中默认开启：
+
+| 功能                           | 说明                 |
+| ------------------------------ | -------------------- |
+| `markdown.link.checkDeadLinks` | 死链检查，日志更严格 |
+| `search.codeBlocks`            | 搜索结果包含代码块   |
+| `dev.lazyCompilation`          | 懒编译加速开发启动   |
+| `performance.buildCache`       | 持久化缓存加速构建   |
+
+如需关闭懒编译：
+
+```ts title="rspress.config.ts"
+export default {
+  builderConfig: {
+    dev: {
+      lazyCompilation: false,
+    },
+  },
+};
+```
+
 ## base 配置重新实现
 
 `base` 配置现在基于 react-router 的 `basename` 实现。
 
 主要变化：
+
 - `useLocation().pathname` 不再包含 `base` 前缀
 - 应使用 `Link` / `useNavigate` 进行导航，避免直接操作 `window.location`
 
-## cleanUrls 链接变更
+## `cleanUrls: true` 的链接会缩短
 
 当 `cleanUrls: true` 时，生成的链接不再包含 `/index` 后缀。
 
 - before: `/guide/index`
-- after: `/guide`
+- after: `/guide/`
 
 ## builderPlugins 配置移除
 
@@ -303,6 +340,7 @@ export default {
 
 ````md
 ```tsx file="./example.tsx"
+
 ```
 ````
 
@@ -313,29 +351,6 @@ export default {
 ```md
 [subfolder](subfolder)
 [subfolder](./subfolder)
-```
-
-## 默认开启的功能
-
-以下功能在 V2 中默认开启：
-
-| 功能 | 说明 |
-| --- | --- |
-| `markdown.link.checkDeadLinks` | 死链检查，日志更严格 |
-| `search.codeBlocks` | 搜索结果包含代码块 |
-| `dev.lazyCompilation` | 懒编译加速开发启动 |
-| `performance.buildCache` | 持久化缓存加速构建 |
-
-如需关闭懒编译：
-
-```ts title="rspress.config.ts"
-export default {
-  builderConfig: {
-    dev: {
-      lazyCompilation: false,
-    },
-  },
-};
 ```
 
 ## MDX 文件路由排除
@@ -367,7 +382,77 @@ docs/
 
 ### 内置多语言文案
 
-默认主题内置了多语言翻译文案。如需覆盖，使用 `i18nSource` 而非手动编写 `themeConfig.locales`。
+默认主题现在内置了多语言翻译文案，并支持按项目配置的语言进行 tree-shaking。
+
+主要变化：
+
+- 如果文档只包含 `en` 和 `zh`，则只会打包这两种语言
+- 对于 Rspress 未支持的语言，会自动回退到 `en`
+- 大多数情况下无需手动配置 i18n 文本
+
+以下 `themeConfig.locales` 中的文本配置已被移除，请删除相关配置：
+
+- `outlineTitle`
+- `lastUpdatedText`
+- `editLink.text`
+- `prevPageText`
+- `nextPageText`
+- `sourceCodeText`
+- `searchPlaceholderText`
+- `searchNoResultsText`
+- `searchSuggestedQueryText`
+- `overview.filterNameText`
+- `overview.filterPlaceholderText`
+- `overview.filterNoResultText`
+
+- before:
+
+```ts title="rspress.config.ts"
+import { defineConfig } from 'rspress/config';
+
+export default defineConfig({
+  themeConfig: {
+    locales: [
+      {
+        lang: 'en',
+        label: 'English',
+        outlineTitle: 'ON THIS PAGE',
+      },
+      {
+        lang: 'zh',
+        label: '中文',
+        outlineTitle: '目录',
+      },
+    ],
+  },
+});
+```
+
+- after:
+
+```ts title="rspress.config.ts"
+import { defineConfig } from '@rspress/core';
+
+export default defineConfig({
+  locales: [
+    {
+      lang: 'en',
+      label: 'English',
+    },
+    {
+      lang: 'zh',
+      label: '中文',
+    },
+  ],
+  // 仅在需要修改内置文案时使用 i18nSource
+  i18nSource: {
+    outlineTitle: {
+      zh: '大纲',
+      en: 'On This Page',
+    },
+  },
+});
+```
 
 ## 参考资源
 
