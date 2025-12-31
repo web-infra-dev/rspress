@@ -132,6 +132,7 @@ rslog
 rspack
 rspress
 rstack
+rstackjs
 rstest
 Rustify
 selfsign

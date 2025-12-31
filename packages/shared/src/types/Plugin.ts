@@ -73,7 +73,7 @@ export interface RspressPlugin {
   ) => AdditionalPage[] | Promise<AdditionalPage[]>;
   /**
    * Add runtime modules
-   * @deprecated use [rsbuild-plugin-virtual-module](https://github.com/rspack-contrib/rsbuild-plugin-virtual-module) instead.
+   * @deprecated use [rsbuild-plugin-virtual-module](https://github.com/rstackjs/rsbuild-plugin-virtual-module) instead.
    */
   addRuntimeModules?: (
     config: UserConfig,
