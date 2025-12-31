@@ -46,6 +46,9 @@ export async function createPageData(context: FactoryContext): Promise<{
     alias,
     root: userDocRoot,
     searchCodeBlocks,
+    config: userConfig,
+    pluginDriver,
+    cjkFriendlyEmphasis: userConfig?.markdown?.cjkFriendlyEmphasis,
   });
   // modify page index by plugins
   await pluginDriver.modifySearchIndexData(pages);

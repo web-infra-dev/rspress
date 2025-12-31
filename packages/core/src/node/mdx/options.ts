@@ -5,6 +5,8 @@ import type { UserConfig } from '@rspress/shared';
 import rehypeShiki from '@shikijs/rehype';
 import rehypeExternalLinks from 'rehype-external-links';
 import rehypeRaw from 'rehype-raw';
+import remarkCjkFriendly from 'remark-cjk-friendly';
+import remarkGfmStrikethroughCjkFriendly from 'remark-cjk-friendly-gfm-strikethrough';
 import remarkGFM from 'remark-gfm';
 import type { PluggableList } from 'unified';
 import type { PluginDriver } from '../PluginDriver';
@@ -47,6 +49,7 @@ export async function createMDXOptions(options: {
     showLineNumbers = false,
     defaultWrapCode = false,
     shiki,
+    cjkFriendlyEmphasis = true,
   } = config?.markdown || {};
   const rspressPlugins = pluginDriver?.getPlugins() ?? [];
   const remarkPluginsFromPlugins = rspressPlugins.flatMap(
@@ -67,8 +70,11 @@ export async function createMDXOptions(options: {
     format,
     remarkPlugins: [
       remarkGFM,
+      ...(cjkFriendlyEmphasis
+        ? [remarkCjkFriendly, remarkGfmStrikethroughCjkFriendly]
+        : []),
       remarkToc,
-      !isSsgMd && remarkContainerSyntax,
+      ...(isSsgMd ? [] : [remarkContainerSyntax]),
       [remarkFileCodeBlock, { filepath, addDependency }],
       [
         remarkLink,
@@ -92,18 +98,26 @@ export async function createMDXOptions(options: {
             },
       ],
       remarkImage,
-      isSsgMd && [
-        remarkSplitMdx,
-        typeof config?.llms === 'object'
-          ? config.llms.remarkSplitMdxOptions
-          : undefined,
-      ],
-      globalComponents.length && [
-        remarkBuiltin,
-        {
-          globalComponents,
-        },
-      ],
+      ...(isSsgMd
+        ? [
+            [
+              remarkSplitMdx,
+              typeof config?.llms === 'object'
+                ? config.llms.remarkSplitMdxOptions
+                : undefined,
+            ],
+          ]
+        : []),
+      ...(globalComponents.length
+        ? [
+            [
+              remarkBuiltin,
+              {
+                globalComponents,
+              },
+            ],
+          ]
+        : []),
       ...(isSsgMd
         ? []
         : [...remarkPluginsFromConfig, ...remarkPluginsFromPlugins]),

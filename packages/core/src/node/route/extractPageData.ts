@@ -1,5 +1,6 @@
 import fs from 'node:fs/promises';
 import path from 'node:path';
+import { nodeTypes } from '@mdx-js/mdx';
 import { compile } from '@rspress/mdx-rs';
 import {
   type Header,
@@ -7,10 +8,20 @@ import {
   type PageIndexInfo,
   type ReplaceRule,
   type RouteMeta,
+  type UserConfig,
 } from '@rspress/shared';
 import { loadFrontMatter } from '@rspress/shared/node-utils';
 import { htmlToText } from 'html-to-text';
+import rehypeStringify from 'rehype-stringify';
+import remarkMdx from 'remark-mdx';
+import remarkParse from 'remark-parse';
+import remarkRehype from 'remark-rehype';
+import { unified } from 'unified';
+import type { Node, Parent } from 'unist';
 import { importStatementRegex } from '../constants';
+import { createMDXOptions } from '../mdx/options';
+import type { PageMeta } from '../mdx/types';
+import type { PluginDriver } from '../PluginDriver';
 import { flattenMdxContent } from '../utils';
 import { applyReplaceRules } from '../utils/applyReplaceRules';
 import type { RouteService } from './RouteService';
@@ -38,6 +49,115 @@ interface ExtractPageDataOptions {
   searchCodeBlocks: boolean;
   replaceRules: ReplaceRule[];
   alias: Record<string, string | string[]>;
+  config?: UserConfig | null;
+  pluginDriver?: PluginDriver | null;
+  cjkFriendlyEmphasis?: boolean;
+  routeService?: RouteService;
+}
+
+/**
+ * Remove MDX-specific nodes that cannot be stringified to HTML and unwrap JSX
+ * elements so their textual children remain in the document flow.
+ */
+function cleanupMdxNodes(tree: Node) {
+  if (!('children' in tree)) {
+    return;
+  }
+  const parent = tree as Parent;
+  parent.children = parent.children.flatMap(child => {
+    cleanupMdxNodes(child);
+    if (
+      child.type === 'mdxjsEsm' ||
+      child.type === 'mdxFlowExpression' ||
+      child.type === 'mdxTextExpression'
+    ) {
+      return [];
+    }
+    if (
+      child.type === 'mdxJsxTextElement' ||
+      child.type === 'mdxJsxFlowElement'
+    ) {
+      if ('children' in child && child.children) {
+        return child.children;
+      }
+      return [];
+    }
+    return [child];
+  });
+}
+
+/**
+ * Locate the position of a heading within the flattened text content, handling
+ * both anchor-first and anchor-after heading text formats.
+ */
+function findHeadingPosition(content: string, text: string, start: number) {
+  const targetWithAnchor = `\n${text}#\n\n`;
+  const targetWithoutAnchor = `\n${text}\n\n`;
+  let charIndex = content.indexOf(targetWithAnchor, start + 1);
+  if (charIndex === -1) {
+    charIndex = content.indexOf(targetWithoutAnchor, start + 1);
+  }
+  if (charIndex === -1) {
+    charIndex = content.indexOf(`#${text}`, start + 1);
+  }
+  return charIndex;
+}
+
+/**
+ * Compile markdown/MDX to HTML using the JavaScript pipeline so CJK-friendly
+ * emphasis extensions can be honored even when the Rust compiler lacks them.
+ */
+async function compileWithCjkFriendlyHtml(options: {
+  content: string;
+  filepath: string;
+  docDirectory: string;
+  config?: UserConfig | null;
+  routeService: RouteService | null;
+  pluginDriver?: PluginDriver | null;
+}) {
+  const {
+    content,
+    filepath,
+    docDirectory,
+    config,
+    pluginDriver,
+    routeService,
+  } = options;
+  const mdxOptions = await createMDXOptions({
+    config,
+    docDirectory,
+    filepath,
+    pluginDriver,
+    routeService,
+  });
+
+  const pageMeta: PageMeta = { toc: [], title: '', headingTitle: '' };
+
+  const processor = unified()
+    .use(remarkParse)
+    .use(remarkMdx)
+    .use(mdxOptions.remarkPlugins || [])
+    .use(() => cleanupMdxNodes);
+
+  processor.data('pageMeta', pageMeta);
+
+  processor.use(remarkRehype, {
+    allowDangerousHtml: true,
+    passThrough: nodeTypes,
+  });
+  processor.use(mdxOptions.rehypePlugins || []);
+  processor.use(rehypeStringify, { allowDangerousHtml: true });
+
+  const vfile = await processor.process({
+    value: content,
+    path: filepath,
+  });
+
+  return {
+    html: String(vfile),
+    toc: pageMeta.toc,
+    title: pageMeta.title,
+  };
 }
 
 async function getPageIndexInfoByRoute(
@@ -83,15 +203,31 @@ async function getPageIndexInfoByRoute(
   content = flattenContent.replace(importStatementRegex, '');
 
   const {
+    config,
+    pluginDriver,
+    cjkFriendlyEmphasis = config?.markdown?.cjkFriendlyEmphasis ?? true,
+    routeService,
+  } = options;
+
+  const {
     html: rawHtml,
     title,
     toc: rawToc,
-  } = await compile({
-    value: content,
-    filepath: route.absolutePath,
-    development: process.env.NODE_ENV !== 'production',
-    root,
-  });
+  } = cjkFriendlyEmphasis
+    ? await compileWithCjkFriendlyHtml({
+        content,
+        filepath: route.absolutePath,
+        docDirectory: root,
+        config,
+        routeService: routeService ?? null,
+        pluginDriver,
+      })
+    : await compile({
+        value: content,
+        filepath: route.absolutePath,
+        development: process.env.NODE_ENV !== 'production',
+        root,
+      });
 
   /**
    * Escape JSX elements in code block to allow them to be searched
@@ -121,6 +257,11 @@ async function getPageIndexInfoByRoute(
         options: {
           ignoreHref: true,
         },
+      },
+      {
+        // Skip injected header anchors to keep heading text intact for search
+        selector: 'a.rp-header-anchor',
+        format: 'skip',
       },
       {
         selector: 'img',
@@ -164,9 +305,10 @@ async function getPageIndexInfoByRoute(
         }
       }
     }
+    const charIndex = findHeadingPosition(content, item.text, position);
     return {
       ...item,
-      charIndex: content.indexOf(`\n${item.text}#\n\n`, position + 1),
+      charIndex,
     };
   });
 
@@ -191,7 +333,10 @@ async function extractPageData(
 ): Promise<PageIndexInfo[]> {
   const pageData = await Promise.all(
     routeService.getRoutes().map(routeMeta => {
-      return getPageIndexInfoByRoute(routeMeta, options);
+      return getPageIndexInfoByRoute(routeMeta, {
+        ...options,
+        routeService,
+      });
     }),
   );
   return pageData;
