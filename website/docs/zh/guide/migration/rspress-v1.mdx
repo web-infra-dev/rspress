@@ -60,12 +60,14 @@ Rspress V2 将多个包统一整合到 `@rspress/core` 中，原有的 `rspress`
 
 ### 导入路径变更
 
-| 旧路径                       | 新路径                         |
-| ---------------------------- | ------------------------------ |
-| `rspress` / `rspress/config` | `@rspress/core`                |
-| `rspress/runtime`            | `@rspress/core/runtime`        |
-| `rspress/theme`              | `@rspress/core/theme`          |
-| `@rspress/theme-default`     | `@rspress/core/theme-original` |
+| 旧路径                       | 新路径                                          |
+| ---------------------------- | ----------------------------------------------- |
+| `rspress` / `rspress/config` | `@rspress/core`                                 |
+| `rspress/runtime`            | `@rspress/core/runtime`                         |
+| `rspress/theme`              | docs 目录下使用 `@rspress/core/theme`           |
+| `@rspress/theme-default`     | theme 目录下使用 `@rspress/core/theme-original` |
+
+推荐直接使用全局的 replace 替换导入路径。
 
 示例：
 
