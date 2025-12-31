@@ -2,7 +2,7 @@
 
 This document will help you migrate from Rspress 1.x to Rspress V2. We recommend using the "Copy as Markdown" feature to pass this document to an LLM for automated migration assistance.
 
-## Quick Migration Checklist
+## Quick migration checklist
 
 - [ ] **Node.js** >= 20.9.0
 - [ ] **Dependencies**: `rspress` → `@rspress/core`, remove `@rspress/shared`
@@ -15,13 +15,13 @@ This document will help you migrate from Rspress 1.x to Rspress V2. We recommend
 - [ ] **External code blocks**: `<code src="..." />` → ` ```tsx file="..." ` ` ` `
 - [ ] **themeConfig.locales**: Remove `outlineTitle` and other text configs, use `i18nSource` instead
 
-## [Important] Node.js and Upstream Dependency Requirements
+## [Important] Node.js and upstream dependency requirements
 
 ### Node.js Version
 
 Rspress V2 no longer supports Node.js 16 and 18. Please upgrade to **Node.js >= 20.9.0**. Node.js 22 LTS is recommended.
 
-### Upstream Dependency Versions
+### Upstream dependency versions
 
 | Dependency         | Allowed Range          | Default | Notes                                           |
 | ------------------ | ---------------------- | ------- | ----------------------------------------------- |
@@ -36,7 +36,7 @@ If `react`, `react-dom`, or `react-router-dom` is already installed in your proj
 
 :::
 
-## [Important] Package Name and Import Path Changes
+## [Important] Package name and import path changes
 
 Rspress V2 consolidates multiple packages into `@rspress/core`. The original `rspress` package is no longer used.
 
@@ -71,7 +71,7 @@ If you developed an Rspress plugin, change the plugin's peerDependencies from `r
 }
 ```
 
-### Import Path Changes
+### Import path changes
 
 | Old Path                     | New Path                                              |
 | ---------------------------- | ----------------------------------------------------- |
@@ -98,7 +98,7 @@ import { usePageData, useDark } from '@rspress/core/runtime';
 import type { RspressPlugin } from '@rspress/core';
 ```
 
-### Removed Standalone Packages
+### Removed standalone packages
 
 The following plugins are now built into the core package and no longer need to be installed separately:
 
@@ -108,7 +108,7 @@ The following plugins are now built into the core package and no longer need to 
 - `@rspress/plugin-last-updated` - Last updated time is built-in
 - `@rspress/plugin-medium-zoom` - Image zoom is built-in
 
-## [Important] Custom Theme ESM Export Changes
+## [Important] Custom theme ESM export changes
 
 Custom themes no longer use default exports. Use named exports instead.
 
@@ -136,7 +136,7 @@ export { Layout };
 export * from '@rspress/core/theme-original';
 ```
 
-### Theme Import Paths
+### Theme import paths
 
 | Context          | Import Path                       | Description                                               |
 | ---------------- | --------------------------------- | --------------------------------------------------------- |
@@ -163,13 +163,13 @@ If using the `@theme` alias, add path mapping in `tsconfig.json` for type hints:
 }
 ```
 
-## [Important] Shiki Code Highlighting Replaces Prism
+## [Important] Shiki code highlighting replaces prism
 
 Rspress V2 uses Shiki v3 for code highlighting by default. Prism has been removed.
 
 For the list of languages supported by Shiki, see [Shiki Languages](https://shiki.style/languages). For more Shiki usage, see the [Code Blocks documentation](/guide/use-mdx/code-blocks).
 
-### Configuration Migration
+### Configuration migration
 
 - before:
 
@@ -203,7 +203,7 @@ export default defineConfig({
 });
 ```
 
-### Line Highlighting Syntax Changes
+### Line highlighting syntax changes
 
 V2 no longer includes the `{1,3-4}` meta line highlighting syntax by default. Choose from the following options based on your needs:
 
@@ -225,7 +225,7 @@ export default defineConfig({
 });
 ```
 
-## [Important] Top-level Navigation File Renamed
+## [Important] Top-level Navigation file renamed
 
 Rspress V2 separates nav and sidebar configuration. The top-level `_meta.json` needs to be renamed to `_nav.json`, while inner files remain unchanged.
 
@@ -249,7 +249,7 @@ docs/
 │       └── _meta.json    # Inner sidebar (unchanged)
 ```
 
-## [Important] SSG Strict Mode by Default
+## [Important] SSG strict mode by default
 
 SSG is now in strict mode by default. On failure, the build exits immediately instead of falling back to CSR. The `ssg.strict` configuration has been removed.
 
@@ -263,7 +263,7 @@ export default defineConfig({
 });
 ```
 
-## [Important] Features Enabled by Default
+## [Important] Features enabled by default
 
 The following features are enabled by default in V2:
 
@@ -288,7 +288,7 @@ export default defineConfig({
 });
 ```
 
-## base Configuration Reimplemented
+## base configuration reimplemented
 
 The `base` configuration is now implemented using react-router's `basename`.
 
@@ -297,14 +297,14 @@ Key changes:
 - `useLocation().pathname` no longer includes the `base` prefix
 - Use `Link` / `useNavigate` for navigation instead of directly manipulating `window.location`
 
-## `cleanUrls: true` Links Are Shortened
+## `cleanUrls: true` Links are shortened
 
 When `cleanUrls: true`, generated links no longer include the `/index` suffix.
 
 - before: `/guide/index`
 - after: `/guide/`
 
-## builderPlugins Configuration Removed
+## builderPlugins configuration removed
 
 `builderPlugins` has been removed. Please migrate to `builderConfig.plugins`.
 
@@ -330,7 +330,7 @@ export default defineConfig({
 });
 ```
 
-## Sass/Less Requires Manual Installation
+## Sass/Less Requires manual installation
 
 Built-in Sass/Less plugins have been removed. Install them manually if needed:
 
@@ -355,7 +355,7 @@ export default defineConfig({
 });
 ```
 
-## External Code Block Syntax Changed
+## External code block syntax changed
 
 External code block syntax has changed:
 
@@ -373,7 +373,7 @@ External code block syntax has changed:
 ```
 ````
 
-## Relative Link Resolution Changed
+## Relative link resolution changed
 
 Relative links no longer require the `./` prefix. The following two syntaxes are now equivalent:
 
@@ -382,7 +382,7 @@ Relative links no longer require the `./` prefix. The following two syntaxes are
 [subfolder](./subfolder)
 ```
 
-## MDX File Route Exclusion
+## MDX file route exclusion
 
 Files starting with underscore `_` are automatically excluded from routing, suitable for MDX fragments and React components.
 
@@ -393,13 +393,13 @@ docs/
 │   └── index.mdx
 ```
 
-## Theme Style Changes
+## Theme style changes
 
-### Tailwind Class Name Prefix
+### Tailwind class name prefix
 
 Built-in theme class names now have a Tailwind prefix to avoid conflicts. If you rely on classes like `dark:hidden`, configure Tailwind/UnoCSS in your project.
 
-### Native HTML Tag Styling
+### Native HTML tag styling
 
 Native HTML tags now have document styling by default. To isolate styling, add the `.rp-not-doc` class:
 
@@ -409,7 +409,7 @@ Native HTML tags now have document styling by default. To isolate styling, add t
 </div>
 ```
 
-### Built-in Multilingual Text
+### Built-in Multilingual text
 
 The default theme now includes built-in multilingual translation text with tree-shaking support based on your project's configured languages.
 

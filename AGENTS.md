@@ -61,6 +61,10 @@ Examples:
 - `packages/plugin-*` (`@rspress/plugin-*`): Official plugins like `plugin-algolia` (search), `plugin-llms` (LLM optimization), `plugin-typedoc` (API docs), etc.
 - `packages/create-rspress` (`create-rspress`): scaffold new projects/templates with `pnpm dlx create-rspress` (or `npx create-rspress`).
 
+## Documentation standards
+
+- Heading case: Run `npx heading-case --write` to format markdown/mdx heading case before committing documentation changes.
+
 ## Security & configuration tips
 
 - Do not commit build artifacts (`dist/`, `compiled/`).
