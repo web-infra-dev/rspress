@@ -1,8 +1,5 @@
 import { useSite } from '@rspress/core/runtime';
 import { useCallback, useEffect, useState } from 'react';
-import { useHandler } from './useHandler';
-import { useMediaQuery } from './useMediaQuery';
-import { useStorageValue } from './useStorageValue';
 
 declare global {
   interface Window {
@@ -11,90 +8,143 @@ declare global {
   }
 }
 
-const APPEARANCE_KEY = 'rspress-theme-appearance';
+// ============================================================================
+// Constants
+// ============================================================================
 
-// Value to be used in the app
+const APPEARANCE_KEY = 'rspress-theme-appearance';
+const MEDIA_QUERY = '(prefers-color-scheme: dark)';
+
+// ============================================================================
+// Types
+// ============================================================================
+
+/** Resolved theme value used in the app */
 type ThemeValue = 'light' | 'dark';
-// Value to be stored
+/** Theme config value stored in localStorage */
 type ThemeConfigValue = ThemeValue | 'auto';
 
-const sanitize = (value: string): ThemeConfigValue => {
-  return ['light', 'dark', 'auto'].includes(value)
-    ? (value as ThemeConfigValue)
-    : 'auto';
+// ============================================================================
+// Utils
+// ============================================================================
+
+const sanitize = (value: string | null): ThemeConfigValue => {
+  if (value === 'light' || value === 'dark' || value === 'auto') {
+    return value;
+  }
+  return 'auto';
 };
+
+const getStoredConfig = (): ThemeConfigValue => {
+  if (typeof window === 'undefined') return 'auto';
+  try {
+    return sanitize(localStorage.getItem(APPEARANCE_KEY));
+  } catch {
+    return 'auto';
+  }
+};
+
+const getSystemTheme = (): ThemeValue => {
+  if (typeof window === 'undefined') return 'light';
+  return window.matchMedia(MEDIA_QUERY).matches ? 'dark' : 'light';
+};
+
+const resolveTheme = (config: ThemeConfigValue): ThemeValue => {
+  return config === 'auto' ? getSystemTheme() : config;
+};
+
+const applyThemeToDOM = (theme: ThemeValue) => {
+  const root = document.documentElement;
+  root.classList.toggle('dark', theme === 'dark');
+  root.classList.toggle('rp-dark', theme === 'dark');
+  root.style.colorScheme = theme;
+};
+
+// ============================================================================
+// Hook
+// ============================================================================
 
 /**
  * State provider for theme context.
+ * @internal
  */
 export const useThemeState = () => {
-  const matchesDark = useMediaQuery('(prefers-color-scheme: dark)');
-  const [storedTheme, setStoredTheme] = useStorageValue<ThemeConfigValue>(
-    APPEARANCE_KEY,
-    'auto',
-  );
-
   const { site } = useSite();
   const disableDarkMode = site.themeConfig.darkMode === false;
 
-  const getPreferredTheme = useHandler(() => {
-    if (disableDarkMode) {
-      return 'light';
-    }
-    const sanitized = sanitize(storedTheme);
-    return sanitized === 'auto' ? (matchesDark ? 'dark' : 'light') : sanitized;
-  });
+  // Theme config stored in localStorage ('light' | 'dark' | 'auto')
+  const [storedConfig, setStoredConfig] =
+    useState<ThemeConfigValue>(getStoredConfig);
 
+  // Resolved theme value ('light' | 'dark')
   const [theme, setThemeInternal] = useState<ThemeValue>(() => {
-    if (typeof window === 'undefined') {
-      return 'light';
-    }
-    // We set the RSPRESS_THEME as a global variable to determine whether the theme is dark or light.
+    if (typeof window === 'undefined') return 'light';
+    if (disableDarkMode) return 'light';
+
+    // Prefer global variable for SSR hydration
     const defaultTheme = window.RSPRESS_THEME ?? window.MODERN_THEME;
     if (defaultTheme) {
       return defaultTheme === 'dark' ? 'dark' : 'light';
     }
-    return getPreferredTheme();
+
+    return resolveTheme(getStoredConfig());
   });
+
   const setTheme = useCallback(
     (value: ThemeValue, storeValue: ThemeConfigValue = value) => {
-      if (disableDarkMode) {
-        return;
-      }
+      if (disableDarkMode) return;
+
       setThemeInternal(value);
-      setStoredTheme(storeValue);
-      setSkipEffect(true);
+      setStoredConfig(storeValue);
+      applyThemeToDOM(value);
+
+      try {
+        localStorage.setItem(APPEARANCE_KEY, storeValue);
+      } catch {
+        // Silently fail when localStorage is not available
+      }
     },
-    [],
+    [disableDarkMode],
   );
 
+  // Apply theme to DOM on mount
   useEffect(() => {
-    document.documentElement.classList.toggle('dark', theme === 'dark');
-    document.documentElement.classList.toggle('rp-dark', theme === 'dark');
-    document.documentElement.style.colorScheme = theme;
-  }, [theme]);
+    applyThemeToDOM(disableDarkMode ? 'light' : theme);
+  }, []);
 
-  // Skip the first effect on mount, only run on updates
-  const [skipEffect, setSkipEffect] = useState(true);
+  // Listen for system theme changes (only in 'auto' mode)
   useEffect(() => {
-    setSkipEffect(false);
-  }, [skipEffect]);
+    if (storedConfig !== 'auto' || disableDarkMode) return;
 
-  // Update the theme when the localStorage changes
-  useEffect(() => {
-    if (skipEffect) {
-      return;
-    }
-    setTheme(getPreferredTheme(), sanitize(storedTheme));
-  }, [storedTheme]);
+    const mediaQuery = window.matchMedia(MEDIA_QUERY);
+    const handleChange = (e: MediaQueryListEvent) => {
+      const newTheme: ThemeValue = e.matches ? 'dark' : 'light';
+      setThemeInternal(newTheme);
+      applyThemeToDOM(newTheme);
+    };
 
-  // Update the theme when the OS theme changes
+    mediaQuery.addEventListener('change', handleChange);
+    return () => mediaQuery.removeEventListener('change', handleChange);
+  }, [storedConfig, disableDarkMode]);
+
+  // Listen for localStorage changes (cross-tab sync)
   useEffect(() => {
-    if (skipEffect) {
-      return;
-    }
-    setTheme(matchesDark ? 'dark' : 'light', 'auto');
-  }, [matchesDark]);
+    if (disableDarkMode) return;
+
+    const handleStorage = (e: StorageEvent) => {
+      if (e.key !== APPEARANCE_KEY) return;
+
+      const newConfig = sanitize(e.newValue);
+      setStoredConfig(newConfig);
+
+      const newTheme = resolveTheme(newConfig);
+      setThemeInternal(newTheme);
+      applyThemeToDOM(newTheme);
+    };
+
+    window.addEventListener('storage', handleStorage);
+    return () => window.removeEventListener('storage', handleStorage);
+  }, [disableDarkMode]);
 
   return [theme, setTheme] as const;
 };
