@@ -1,0 +1,95 @@
+# Расширение сборки
+
+## Rsbuild
+
+Rspress собирает документацию с помощью [Rsbuild](https://github.com/web-infra-dev/rsbuild).
+
+### Настройка Rsbuild
+
+Rsbuild предоставляет богатый набор параметров сборки. Настроить их можно через опцию [builderConfig](/api/config/config-build.html#builderconfig). Например, поменять папку вывода на `doc_dist`:
+
+```ts title="rspress.config.ts"
+import { defineConfig } from '@rspress/core';
+
+export default defineConfig({
+  builderConfig: {
+    output: {
+      distPath: {
+        root: 'doc_dist',
+      },
+    },
+  },
+});
+```
+
+Rspress также предоставляет конфигурацию [builderConfig.plugins](/api/config/config-build#builderconfigplugins), с помощью которой можно подключать плагины Rsbuild. Вы можете использовать обширную экосистему плагинов Rsbuild, чтобы расширить и улучшить возможности сборки.
+
+Например, добавить Google Analytics через плагин [rsbuild-plugin-google-analytics](https://github.com/rspack-contrib/rsbuild-plugin-google-analytics):
+
+```ts title="rspress.config.ts"
+import { defineConfig } from '@rspress/core';
+import { pluginGoogleAnalytics } from 'rsbuild-plugin-google-analytics';
+
+export default defineConfig({
+  builderConfig: {
+    plugins: [
+      pluginGoogleAnalytics({
+        // замените на свой Google tag ID
+        id: 'G-xxxxxxxxxx',
+      }),
+    ],
+  },
+});
+```
+
+:::tip Совет
+Подробно о всех доступных опциях конфигурации можно узнать в официальной документации [Rsbuild - Config](https://rsbuild.rs/config/).
+:::
+
+### Настройка Rspack
+
+Настроить Rspack можно через опцию [tools.rspack](https://rsbuild.rs/config/tools/rspack), которую предоставляет сам Rsbuild:
+
+```ts title="rspress.config.ts"
+import { defineConfig } from '@rspress/core';
+
+export default defineConfig({
+  builderConfig: {
+    tools: {
+      rspack(options) {
+        // изменяем конфигурацию rspack
+      },
+    },
+  },
+});
+```
+
+## Компиляция MDX
+
+Компиляция MDX в Rspress построена на базе [unified](https://github.com/unifiedjs/unified). Вы можете подключать соответствующие плагины обработки через конфигурацию `markdown`. Например:
+
+```ts title="rspress.config.ts"
+import { defineConfig } from '@rspress/core';
+
+export default defineConfig({
+  markdown: {
+    // Это нужно для использования JS-версии компилятора
+    mdxRs: false,
+    remarkPlugins: [
+      [
+        require('remark-autolink-headings'),
+        {
+          behavior: 'wrap',
+        },
+      ],
+    ],
+    rehypePlugins: [require('rehype-slug')],
+  },
+});
+```
+
+:::warning Предупреждение
+
+Поддержку плагинов компиляции имеет только JS-версия компилятора MDX.
+
+:::

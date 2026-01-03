@@ -1,0 +1,115 @@
+# @rspress/plugin-client-redirects <SourceCode href="https://github.com/web-infra-dev/rspress/tree/main/packages/plugin-client-redirects" />
+
+import { SourceCode, PackageManagerTabs } from '@rspress/core/theme';
+
+Служит для клиентских редиректов.
+
+## Важные замечания
+
+Чтобы плагин работал корректно, **обязательно** настройте на сервере резервный путь к файлу `404.html`, который генерирует Rspress при сборке.
+
+Например:
+
+```js title="nginx"
+location / {
+  error_page 404 /404.html;
+}
+```
+
+```toml title="netlify.toml"
+[[redirects]]
+from = "/*"
+to = "/404.html"
+status = 404
+```
+
+## Установка
+
+<PackageManagerTabs command="add @rspress/plugin-client-redirects -D" />
+
+## Использование
+
+Добавьте следующую конфигурацию в файл `rspress.config.ts`:
+
+```ts title="rspress.config.ts"
+import { pluginClientRedirects } from '@rspress/plugin-client-redirects';
+import { defineConfig } from '@rspress/core';
+
+export default defineConfig({
+  pluginClientRedirects({
+    redirects: [
+      {
+        from: '/docs/old1',
+        to: '/docs/new1',
+      },
+    ],
+  }),
+});
+```
+
+## Конфигурация
+
+Плагин принимает объект с настройками. Доступные свойства этого объекта:
+
+```ts
+type RedirectRule = {
+  from: string | string[];
+  to: string;
+};
+
+type RedirectsOptions = {
+  redirects?: RedirectRule[];
+};
+```
+
+`from` — это путь-шаблон для сопоставления, `to` — путь, на который будет выполнен редирект. Поддерживаются строки с регулярными выражениями.
+
+:::note Примечание
+
+Один `to` может обслуживать несколько `from`: все они будут перенаправляться на один и тот же путь.
+
+Один `from` не может соответствовать нескольким `to`: путь редиректа должен быть уникальным и однозначным.
+
+:::
+
+## Пример
+
+```ts
+import path from 'node:path';
+import { defineConfig } from '@rspress/core';
+import { pluginClientRedirects } from '@rspress/plugin-client-redirects';
+
+export default defineConfig({
+  root: path.join(__dirname, 'doc'),
+  plugins: [
+    pluginClientRedirects({
+      redirects: [
+        // /docs/old1 -> /docs/new1
+        {
+          from: '/docs/old1',
+          to: '/docs/new1',
+        },
+        // перенаправление с нескольких старых путей на новый путь
+        {
+          from: ['/docs/2022', '/docs/2023'],
+          to: '/docs/2024',
+        },
+        // перенаправление с использованием регулярных выражений
+        {
+          from: '^/docs/old2',
+          to: '/docs/new2',
+        },
+        {
+          from: '/docs/old3$',
+          to: '/docs/new3',
+        },
+        // перенаправление на внешний URL
+        {
+          from: '/docs/old4',
+          to: 'https://example.com',
+        },
+      ],
+    }),
+  ],
+});
+```

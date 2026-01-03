@@ -1,0 +1,113 @@
+# Быстрый старт \{#quick-start}
+
+import { PackageManagerTabs } from '@theme';
+
+## 1. Инициализация проекта \{#1-initialize-the-project}
+
+### Способ 1: через CLI \{#method-1-create-via-cli}
+
+Создать проект Rspress можно одной командой с помощью `create-rspress`:
+
+<PackageManagerTabs command="create rspress@latest" />
+
+Введите имя папки проекта — утилита сама создаст и настроит всё необходимое.
+
+### Способ 2: вручную \{#method-2-manual-creation}
+
+Сначала создайте пустую папку:
+
+```bash
+mkdir rspress-app && cd rspress-app
+```
+
+Выполните `npm init -y`, чтобы инициализировать проект. Установить Rspress можно через npm, pnpm, yarn или bun:
+
+<PackageManagerTabs command="install rspress -D" />
+
+Затем создайте файл `index.md` следующей командой:
+
+```bash
+mkdir docs && echo '# Привет, мир!' > docs/index.md
+```
+
+Добавьте (или обновите) секцию `scripts` в `package.json`:
+
+```json
+{
+  "scripts": {
+    "dev": "rspress dev",
+    "build": "rspress build",
+    "preview": "rspress preview"
+  }
+}
+```
+
+Затем создайте файл конфигурации `rspress.config.ts`:
+
+```ts title="rspress.config.ts"
+import { defineConfig } from '@rspress/core';
+
+export default defineConfig({
+  root: 'docs',
+});
+```
+
+Наконец, создайте `tsconfig.json`:
+
+```json
+{
+  "compilerOptions": {
+    "lib": ["DOM", "ES2020"],
+    "jsx": "react-jsx",
+    "target": "ES2020",
+    "noEmit": true,
+    "skipLibCheck": true,
+    "useDefineForClassFields": true,
+
+    /* modules */
+    "module": "ESNext",
+    "moduleDetection": "force",
+    "moduleResolution": "bundler",
+    "verbatimModuleSyntax": true,
+    "resolveJsonModule": true,
+    "allowImportingTsExtensions": true,
+    "noUncheckedSideEffectImports": true,
+    "isolatedModules": true,
+
+    /* type checking */
+    "strict": true,
+    "noUnusedLocals": true,
+    "noUnusedParameters": true
+  },
+  "include": ["docs", "theme", "rspress.config.ts"],
+  "mdx": {
+    "checkMdx": true
+  }
+}
+```
+
+## 2. Запуск dev-сервера \{#2-start-dev-server}
+
+Запустите локальный сервер разработки следующей командой:
+
+<PackageManagerTabs command="run dev" />
+
+:::tip СОВЕТ
+
+Для команды `dev` можно указать порт или хост сервера разработки с помощью параметров `--port` или `--host`, например: `rspress dev --port 8080 --host 0.0.0.0`.
+
+:::
+
+## 3. Сборка для продакшена \{#3-build-in-production}
+
+Соберите продакшен-версию сайта следующей командой:
+
+<PackageManagerTabs command="run build" />
+
+По умолчанию Rspress использует папку `doc_build` как директорию вывода.
+
+## 4. Локальный предпросмотр \{#4-preview-in-local-environment}
+
+Запустите локальный сервер предпросмотра следующей командой:
+
+<PackageManagerTabs command="run preview" />

@@ -1,0 +1,356 @@
+# @rspress/plugin-rss <SourceCode href="https://github.com/web-infra-dev/rspress/tree/main/packages/plugin-rss" />
+
+import { SourceCode, PackageManagerTabs } from '@rspress/core/theme';
+
+Генерация RSS-лент для отдельных страниц документации с помощью библиотеки [feed](https://github.com/jpmonette/feed).
+
+## Установка
+
+<PackageManagerTabs command="add @rspress/plugin-rss -D" />
+
+### Обновление конфигурации Rspress
+
+```ts title="rspress.config.ts"
+import { defineConfig } from '@rspress/core';
+import { pluginRss } from '@rspress/plugin-rss';
+
+export default defineConfig({
+  plugins: [
+    pluginRss({
+      // URL вашего сайта с документацией
+      siteUrl: 'https://example.com',
+      // ...другие настройки
+    }),
+  ],
+});
+```
+
+По умолчанию плагин генерирует файл `blog.xml` в папке `doc_build/rss/` для всех страниц, начинающихся с `/blog/`.
+
+RSS-лента будет доступна по адресу `/rss/blog.xml`.
+
+:::tip Подсказка
+Плагин работает только при выполнении `rspress build` и **не** генерирует RSS-файлы в режиме `rspress dev`.
+:::
+
+## Использование
+
+### Выбор страниц, включаемых в RSS
+
+Используйте опцию `feed.test`, чтобы указать, какие страницы должны попасть в RSS-ленту.
+
+```ts
+pluginRss({
+  // ...
+  feed: { test: '/zh/blog' },
+});
+```
+
+### Требования
+
+Все документы, которые попадают в RSS-ленту, **обязательно** должны содержать в метаданных поле `date` или `published_at`. Это необходимо для стабильного обновления ленты у пользователей.
+
+```md
+---
+published_at: 2024-01-10 08:00:00
+---
+
+Или значение мета-поля `date`.
+```
+
+### Генерация нескольких RSS-лент
+
+Иногда требуется создать несколько RSS-файлов — например, для разных языков или категорий.
+
+Для этого можно передать в опцию `feed` массив настроек. Пример:
+
+```ts
+pluginRss({
+  feed: [
+    { id: 'blog', test: '/blog/', title: 'Rspress Blog', language: 'en-US' },
+    {
+      id: 'blog-ru',
+      test: '/ru/blog/',
+      title: 'Релизы Rspress',
+      language: 'ru-RU',
+    },
+    {
+      id: 'rspack',
+      test: ({ frontmatter }) => frontmatter.categories.includes('rspack'),
+      title: 'Rspack Releases',
+      language: 'en-US',
+    },
+    {
+      id: 'rsbuild',
+      test: ({ frontmatter }) => frontmatter.categories.includes('rsbuild'),
+      title: 'Rsbuild Releases',
+      language: 'en-US',
+    },
+  ],
+});
+```
+
+Приведённые выше настройки создадут четыре RSS-файла: `blog.xml`, `blog-ru.xml`, `rspack.xml`, `rsbuild.xml`, все они будут находиться в папке `rss`.
+
+### Изменение пути вывода
+
+Вы можете настроить путь вывода с помощью параметров `output` и `feed.output`.
+
+См. подробности в разделе [FeedOutputOptions](#feedoutputoptions) ниже.
+
+### Подключение RSS к страницам документации
+
+По умолчанию плагин автоматически вставляет тег `<link rel="alternate">` на всех страницах, которые попали в RSS-ленту — он указывает на URL соответствующего RSS-файла. Благодаря этому RSS-ридеры смогут автоматически обнаружить ленту.
+
+Если вы хотите добавить такой тег на страницы, которые **не** включены в RSS (например, на главную страницу), добавьте в блок метаданных документа поле `link-rss` со значением — id нужной ленты. Пример:
+
+```markdown
+---
+link-rss: blog
+---
+
+Такое мета-поле добавит на страницу этого документа тег `<link rel="alternate">`, который будет указывать на RSS-ленту с id `blog`.
+
+При этом сама эта страница **не** будет включена в данную RSS-ленту.
+```
+
+`link-rss` также поддерживает вставку нескольких тегов `<link>` (для разных лент) на одной странице:
+
+```markdown
+---
+link-rss:
+  - blog
+  - releases
+---
+```
+
+### Настройка содержимого RSS
+
+RSS-файл состоит из двух основных частей:
+
+- базовая информация о ленте — `channel`;
+- список статей — `item`.
+
+Настроить каждую из этих частей можно так:
+
+- `channel` полностью настраивается через параметр `feed`. Подробности — в разделе [Другие опции](#other-options) ниже.
+- `item` полностью настраивается через параметр `feed.item`. Подробности — в разделе [item](#item) ниже.
+
+## Опции
+
+### PluginRssOptions
+
+Опции плагина.
+
+```ts
+export interface PluginRssOptions {
+  siteUrl: string;
+  feed?: Partial<FeedChannel> | FeedChannel[];
+  output?: Omit<FeedOutputOptions, 'filename'>;
+}
+```
+
+#### `siteUrl`
+
+- **Тип**: `string`
+- **Обязательный параметр**
+
+URL сайта, на котором размещена текущая документация. Используется при формировании RSS-файла.
+
+Если в проекте задан параметр `base`, то `siteUrl` должен включать этот `base`-путь. Пример:
+
+```ts
+// rspress.config.ts
+import path from 'path';
+import { defineConfig } from '@rspress/core';
+import { pluginRss } from '@rspress/plugin-rss';
+
+export default defineConfig({
+  base: '/base/',
+  plugins: [
+    pluginRss({
+      siteUrl: 'https://example.com/base/',
+    }),
+  ],
+});
+```
+
+#### `feed`
+
+- **Тип**: `FeedChannel | FeedChannel[]`
+- **По умолчанию**: `{ id: 'blog', test: '/blog/' }`
+
+Конфигурация RSS-ленты (или лент). При передаче массива будет создано несколько RSS-файлов.
+
+Подробности — в разделе [FeedChannel](#feedchannel).
+
+#### `output`
+
+- **Тип**: `Omit<FeedOutputOptions, "filename">`
+- **По умолчанию**: `{ dir: 'rss', type: 'atom' }`
+
+Настройки вывода файлов. См. подробнее в разделе [FeedOutputOptions](#feedoutputoptions) ниже.
+
+### FeedChannel
+
+Опции отдельной RSS-ленты.
+
+```ts
+export interface FeedChannel extends Partial<FeedOptions> {
+  id: string;
+  test:
+    | RegExp
+    | string
+    | (RegExp | string)[]
+    | ((item: PageIndexInfo, base: string) => boolean);
+  item?: (
+    item: FeedItem,
+    page: PageIndexInfo,
+    siteUrl: string,
+  ) => FeedItem | PromiseLike<FeedItem>;
+  output?: FeedOutputOptions;
+}
+```
+
+#### `id`
+
+- **Тип**: `string`
+- **Обязательный параметр**
+
+Уникальный идентификатор RSS-ленты (должен быть уникальным среди всех лент). Также используется как имя файла по умолчанию (без расширения).
+
+#### `test`
+
+- **Тип**: `RegExp | string | (RegExp | string)[] | ((item: PageIndexInfo, base: string) => boolean)`
+- **Обязательный параметр**
+
+Определяет, какие документы попадут в эту RSS-ленту. Возможные варианты:
+
+- `RegExp` — регулярное выражение для маршрута страницы. При наличии `base` будет проверяться как с `base`, так и без него.
+- `string` — префикс маршрута страницы. При наличии `base` проверяется с `base` и без него.
+- `(item: PageIndexInfo, base: string) => boolean` — произвольная функция, позволяющая фильтровать страницы по их данным и frontmatter.
+
+#### `item`
+
+- **Тип**: `(item: FeedItem, page: PageIndexInfo, siteUrl: string) => FeedItem | PromiseLike<FeedItem>`
+- **По умолчанию**: описано ниже
+
+Формирует структурированные данные каждой статьи в RSS-ленте.
+
+См. тип структурированных данных: <SourceCode href="https://github.com/jpmonette/feed/blob/8ca7f3e4e8e421e2a2632bb9524385e86f30744c/src/typings/index.ts#L1-L25" />
+
+Плагин имеет встроенный генератор, который использует метаданные документа и данные страницы.
+
+Например, поле `content` в RSS будет отдавать приоритет `summary` из блока метаданных, а затем — содержимому документа.
+
+Вы можете предоставить функцию `item`, чтобы изменить сгенерированные данные — они будут переданы в качестве первого параметра в вашу функцию.
+
+Например, следующая конфигурация укорачивает содержимое статей в RSS:
+
+```ts
+const item: FeedChannel['item'] = (item) => ({
+  ...item,
+  content: item.content.slice(0, 1000),
+});
+```
+
+Подробности о логике встроенного генератора: <SourceCode href="https://github.com/web-infra-dev/rspress/tree/main/packages/plugin-rss/src/feed.ts" />
+
+#### `output`
+
+- **Тип**: `FeedOutputOptions`
+- **По умолчанию**: использует опцию `output` плагина
+
+В дополнение к опции `output` плагина здесь есть дополнительный параметр `filename` для изменения имени выходного файла.
+
+См. подробности в [FeedOutputOptions](#feedoutputoptions) ниже.
+
+#### Другие опции \{#other-options}
+
+`FeedChannel` также наследует `FeedOptions` из пакета feed. Параметры, не перечисленные здесь, смотрите в <SourceCode href="https://github.com/jpmonette/feed/blob/8ca7f3e4e8e421e2a2632bb9524385e86f30744c/src/typings/index.ts#L48-L67" />.
+
+### FeedOutputOptions
+
+Опции вывода RSS-файлов — доступны как на верхнем уровне опций плагина, так и на уровне `feed`. Используют следующий тип:
+
+```ts
+interface FeedOutputOptions {
+  dir?: string;
+  type?: 'atom' | 'rss' | 'json';
+  filename?: string;
+  publicPath?: string;
+  sorting?: (left: FeedItem, right: FeedItem) => number;
+}
+```
+
+Пример:
+
+```ts
+pluginRss({
+  // Применяется ко всем RSS-выводам
+  output: {
+    // Изменяем папку вывода RSS-файлов на 'feeds' (относительно `doc_build`)
+    dir: 'feeds',
+    // Выводим в формате RSS 2.0, по умолчанию будет расширение `.rss`
+    type: 'rss',
+  },
+  feed: [
+    {
+      id: 'blog',
+      test: '/blog/',
+      title: 'My Blog',
+      output: {
+        type: 'atom' /* по умолчанию имя файла берётся из `id` */,
+      },
+    },
+    {
+      id: 'releases',
+      test: '/releases/',
+      title: 'Releases',
+      output: { dir: 'releases', filename: 'feed.rss' },
+    },
+  ],
+});
+```
+
+При сборке с указанными выше опциями будет создано два файла: `feeds/blog.xml` и `releases/feed.rss`.
+
+#### `dir`
+
+- **Тип**: `string`
+- **По умолчанию**: `rss`
+
+Папка для размещения RSS-файлов (относительно папки `doc_build`).
+
+#### `type`
+
+- **Тип**: `"atom" | "rss" | "json"`
+- **По умолчанию**: `atom`
+
+Формат вывода RSS-ленты. По умолчанию — `atom`. Описание форматов:
+
+| Значение | Формат                                                 | Расширение по умолчанию | MIME-тип               |
+| -------- | ------------------------------------------------------ | ----------------------- | ---------------------- |
+| `atom`   | [Atom 1.0](https://www.ietf.org/rfc/rfc4287.txt)       | `.xml`                  | `application/atom+xml` |
+| `rss`    | [RSS 2.0](https://www.rssboard.org/rss-specification)  | `.rss`                  | `application/rss+xml`  |
+| `json`   | [JSON Feed 1.1](https://www.jsonfeed.org/version/1.1/) | `.json`                 | `application/json`     |
+
+#### `filename`
+
+- **Тип**: `string`
+- **По умолчанию**: в качестве имени файла используется `id` ленты`; расширение определяется форматом вывода RSS
+
+Позволяет задать полное имя выходного RSS-файла.
+
+#### `publicPath`
+
+- **Тип**: `string`
+- **По умолчанию**: значение `siteUrl`
+
+Префикс URL для RSS-файла. Итоговый URL ленты формируется как `publicPath` + `dir` + `filename`.
+
+#### `sorting`
+
+- **Тип**: `sorting?: (left: FeedItem, right: FeedItem) => number;`
+
+Функция сортировки статей. По умолчанию — от новых к старым.

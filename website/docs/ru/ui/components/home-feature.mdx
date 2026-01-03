@@ -1,0 +1,75 @@
+---
+overviewHeaders: []
+tag: eject-only
+features:
+  - title: 'Быстрый'
+    details: 'Rspress собирает быстро'
+    icon: '⚡'
+    span: 3
+  - title: 'MDX в приоритете'
+    details: 'MDX везде'
+    icon: '🧩'
+    span: 3
+---
+
+# HomeFeature
+
+Этот компонент является частью [главной страницы](/guide/basic/home-page). `HomeFeature` отображает сетку возможностей под hero-секцией на главной странице.
+
+## Использование
+
+Вы можете настроить `features` в блоке метаданных вашего mdx-файла, и компонент автоматически прочитает эту настройку:
+
+```yaml title="index.mdx"
+---
+pageType: home
+features:
+  - title: 'Быстрый'
+    details: 'Rspress собирает быстро'
+    icon: '⚡'
+    span: 3
+  - title: 'MDX в приоритете'
+    details: 'MDX везде'
+    icon: '🧩'
+    span: 3
+---
+```
+
+Или передавайте нужные настройки через пропсы:
+
+```tsx title="index.mdx"
+import { HomeFeature } from '@rspress/core/theme';
+
+const features = [
+  { title: 'Быстрый', details: 'Rspress собирает быстро', icon: '⚡', span: 3 },
+  { title: 'MDX в приоритете', details: 'MDX везде', icon: '🧩', span: 3 },
+];
+
+<HomeFeature features={features} />;
+```
+
+## Пропсы
+
+### features
+
+- **Тип:** `Feature[]`
+- **По умолчанию:** читается из метаданных
+
+```ts
+interface Feature {
+  /** Иконка функции, поддерживает emoji или HTML-строку */
+  icon: string;
+  /** Заголовок функции */
+  title: string;
+  /** Описание функции, поддерживает HTML-строку */
+  details: string;
+  /** Занимаемая ширина в сетке колонок, поддерживает 2, 3, 4, 6, по умолчанию 4 */
+  span?: 2 | 3 | 4 | 6;
+  /** Ссылка для перехода при клике на карточку */
+  link?: string;
+}
+```
+
+- `span` управляет тем, сколько колонок сетки (из 12) занимает каждая карточка
+- `icon` и `details` поддерживают HTML-строки
+- Установите `link`, чтобы сделать карточку кликабельной

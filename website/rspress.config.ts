@@ -49,6 +49,10 @@ export default defineConfig({
       lang: 'en',
       label: 'English',
     },
+    {
+      lang: 'ru',
+      label: 'Русский',
+    },
   ],
   markdown: {
     shiki: {

@@ -1,0 +1,27 @@
+---
+overviewHeaders: []
+tag: non-ejectable
+---
+
+# CodeBlockRuntime
+
+`CodeBlockRuntime` отображает исполняемые блоки кода во время выполнения.
+
+## Использование
+
+```tsx title="index.mdx"
+import { CodeBlockRuntime } from '@theme';
+
+export default function Page() {
+  return (
+    <CodeBlockRuntime
+      lang="js"
+      title="index.js"
+      code={`console.log('Привет, мир!')`}
+      shikiOptions={{}}
+    />
+  );
+}
+```
+
+Передавайте `lang`, `title` и `code` для отображения блока; `shikiOptions` позволяет настроить подсветку синтаксиса.

@@ -1,0 +1,36 @@
+[
+  {
+    "text": "Руководство",
+    "link": "/guide/start/introduction",
+    "activeMatch": "/guide/"
+  },
+  {
+    "text": "Плагины",
+    "link": "/plugin/system/introduction",
+    "activeMatch": "/plugin/"
+  },
+  {
+    "text": "UI",
+    "link": "/ui/vars",
+    "activeMatch": "/ui/",
+    "tag": "новинка"
+  },
+  {
+    "text": "API",
+    "link": "/api/",
+    "activeMatch": "/api/"
+  },
+  {
+    "text": "Версия",
+    "items": [
+      {
+        "text": "Журнал изменений",
+        "link": "https://github.com/web-infra-dev/rspress/releases"
+      },
+      {
+        "text": "Документация Rspress 1.x",
+        "link": "http://rspress.rs/"
+      }
+    ]
+  }
+]
