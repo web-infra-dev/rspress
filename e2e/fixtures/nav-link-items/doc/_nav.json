@@ -14,5 +14,24 @@
       { "text": "Child1", "link": "/items-and-link/child-1" },
       { "text": "Child2", "link": "/items-and-link/child-2" }
     ]
+  },
+  {
+    "text": "NestedItems",
+    "items": [
+      {
+        "text": "Level1",
+        "items": [
+          { "text": "Level2Item1", "link": "/nested-items/level2-item1" },
+          {
+            "text": "Level2Nested",
+            "items": [
+              { "text": "Level3Item1", "link": "/nested-items/level3-item1" },
+              { "text": "Level3Item2", "link": "/nested-items/level3-item2" }
+            ]
+          }
+        ]
+      },
+      { "text": "Level1Item2", "link": "/nested-items/level1-item2" }
+    ]
   }
 ]

@@ -11,6 +11,7 @@ import {
   transformerNotationErrorLevel,
   transformerNotationFocus,
   transformerNotationHighlight,
+  transformerRemoveNotationEscape,
 } from '@shikijs/transformers';
 import fs from 'fs/promises';
 import path from 'path';
@@ -64,6 +65,7 @@ export default defineConfig({
         transformerNotationHighlight(),
         transformerNotationFocus(),
         transformerCompatibleMetaHighlight(),
+        transformerRemoveNotationEscape(),
       ],
     },
     link: {

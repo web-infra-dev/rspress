@@ -73,6 +73,7 @@ Lamperouge
 Lelouch
 lightningcss
 llms
+llmstxt
 longpaths
 manypkg
 mattcompiles
@@ -131,6 +132,7 @@ rslog
 rspack
 rspress
 rstack
+rstackjs
 rstest
 Rustify
 selfsign

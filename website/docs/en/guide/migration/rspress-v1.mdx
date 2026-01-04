@@ -1,0 +1,488 @@
+# Migrating from Rspress 1.x
+
+This document will help you migrate from Rspress 1.x to Rspress V2. We recommend using the "Copy as Markdown" feature to pass this document to an LLM for automated migration assistance.
+
+## Quick migration checklist
+
+- [ ] **Node.js** >= 20.9.0
+- [ ] **Dependencies**: `rspress` → `@rspress/core`, remove `@rspress/shared`
+- [ ] **Import paths**: `rspress/runtime` → `@rspress/core/runtime`
+- [ ] **Custom themes**: Change default exports to named exports, use `@rspress/core/theme-original`
+- [ ] **Top-level navigation**: `_meta.json` → `_nav.json` (top-level only)
+- [ ] **Code highlighting**: Prism → Shiki, line highlight syntax `{1,3-4}` requires transformer config
+- [ ] **builderPlugins**: Move to `builderConfig.plugins`
+- [ ] **Sass/Less**: Manually install `@rsbuild/plugin-sass` or `@rsbuild/plugin-less`
+- [ ] **External code blocks**: `<code src="..." />` → ` ```tsx file="..." `
+- [ ] **themeConfig.locales**: Remove `outlineTitle` and other text configs, use `i18nSource` instead
+
+## [Important] Node.js and upstream dependency requirements
+
+### Node.js Version
+
+Rspress V2 no longer supports Node.js 16 and 18. Please upgrade to **Node.js >= 20.9.0**. Node.js 22 LTS is recommended.
+
+### Upstream dependency versions
+
+| Dependency         | Allowed Range          | Default | Notes                                           |
+| ------------------ | ---------------------- | ------- | ----------------------------------------------- |
+| `react`            | `^18.0.0 \|\| ^19.0.0` | 19      | React 17 is no longer supported                 |
+| `react-dom`        | `^18.0.0 \|\| ^19.0.0` | 19      | Keeps in sync with react version                |
+| `react-router-dom` | `^6.0.0 \|\| ^7.0.0`   | 7       | Uses project version if already installed       |
+| `unified`          | `^11.0.0`              | 11      | Custom remark/rehype plugins must be compatible |
+
+:::tip
+
+If `react`, `react-dom`, or `react-router-dom` is already installed in your project, Rspress will use the project's version instead of the built-in default version.
+
+:::
+
+## [Important] Package name and import path changes
+
+Rspress V2 consolidates multiple packages into `@rspress/core`. The original `rspress` package is no longer used.
+
+- before:
+
+```json title="package.json"
+{
+  "dependencies": {
+    "rspress": "^1.x",
+    "@rspress/shared": "^1.x"
+  }
+}
+```
+
+- after:
+
+```json title="package.json"
+{
+  "dependencies": {
+    "@rspress/core": "^2.0.0"
+  }
+}
+```
+
+If you developed an Rspress plugin, change the plugin's peerDependencies from `rspress` to `@rspress/core`:
+
+```json title="package.json"
+{
+  "peerDependencies": {
+    "@rspress/core": "^2.0.0"
+  }
+}
+```
+
+### Import path changes
+
+| Old Path                     | New Path                                              |
+| ---------------------------- | ----------------------------------------------------- |
+| `rspress` / `rspress/config` | `@rspress/core`                                       |
+| `rspress/runtime`            | `@rspress/core/runtime`                               |
+| `rspress/theme`              | Use `@rspress/core/theme` in docs directory           |
+| `@rspress/theme-default`     | Use `@rspress/core/theme-original` in theme directory |
+
+It's recommended to use a global find-and-replace to update import paths.
+
+Example:
+
+- before:
+
+```ts
+import { usePageData, useDark } from 'rspress/runtime';
+import type { RspressPlugin } from 'rspress';
+```
+
+- after:
+
+```ts
+import { usePageData, useDark } from '@rspress/core/runtime';
+import type { RspressPlugin } from '@rspress/core';
+```
+
+### Removed standalone packages
+
+The following plugins are now built into the core package and no longer need to be installed separately:
+
+- `@rspress/plugin-shiki` - Shiki code highlighting is now default
+- `@rspress/plugin-auto-nav-sidebar` - Navigation sidebar is built-in
+- `@rspress/plugin-container-syntax` - Container syntax is built-in
+- `@rspress/plugin-last-updated` - Last updated time is built-in
+- `@rspress/plugin-medium-zoom` - Image zoom is built-in
+
+## [Important] Custom theme ESM export changes
+
+Custom themes no longer use default exports. Use named exports instead.
+
+- before:
+
+```tsx title="theme/index.tsx"
+import Theme from 'rspress/theme';
+
+const Layout = () => <Theme.Layout beforeNavTitle={<div>content</div>} />;
+
+export default { ...Theme, Layout };
+
+export * from 'rspress/theme';
+```
+
+- after:
+
+```tsx title="theme/index.tsx"
+import { Layout as BasicLayout } from '@rspress/core/theme-original';
+
+const Layout = () => <BasicLayout beforeNavTitle={<div>content</div>} />;
+
+export { Layout };
+
+export * from '@rspress/core/theme-original';
+```
+
+### Theme import paths
+
+| Context          | Import Path                       | Description                                               |
+| ---------------- | --------------------------------- | --------------------------------------------------------- |
+| `theme` folder   | `@rspress/core/theme-original`    | Use when customizing theme, get original theme components |
+| `docs` directory | `@rspress/core/theme` or `@theme` | Use theme components in docs, supports theme override     |
+
+Using theme components in MDX files within the `docs` directory:
+
+```tsx title="docs/guide/index.mdx"
+import { PackageManagerTabs } from '@rspress/core/theme';
+// Or use alias
+import { PackageManagerTabs } from '@theme';
+```
+
+If using the `@theme` alias, add path mapping in `tsconfig.json` for type hints:
+
+```json title="tsconfig.json"
+{
+  "compilerOptions": {
+    "paths": {
+      "@theme": ["./theme/index.tsx"]
+    }
+  }
+}
+```
+
+## [Important] Shiki code highlighting replaces prism
+
+Rspress V2 uses Shiki v3 for code highlighting by default. Prism has been removed.
+
+For the list of languages supported by Shiki, see [Shiki Languages](https://shiki.style/languages). For more Shiki usage, see the [Code Blocks documentation](/guide/use-mdx/code-blocks).
+
+### Configuration migration
+
+- before:
+
+Configure language aliases via highlightLanguages:
+
+```ts title="rspress.config.ts"
+import { defineConfig } from 'rspress/config';
+
+export default defineConfig({
+  markdown: {
+    highlightLanguages: [['ejs', 'javascript']],
+  },
+});
+```
+
+- after:
+
+Configure `langAlias` and other Shiki options via [markdown.shiki](/api/config/config-build.md#markdownshiki):
+
+```ts title="rspress.config.ts"
+import { defineConfig } from '@rspress/core';
+
+export default defineConfig({
+  markdown: {
+    shiki: {
+      langAlias: {
+        ejs: 'javascript',
+      },
+    },
+  },
+});
+```
+
+### Line highlighting syntax changes
+
+V2 no longer includes the `{1,3-4}` meta line highlighting syntax by default. Choose from the following options based on your needs:
+
+- **[Notation Line Highlight](/guide/use-mdx/code-blocks#notation-line-highlight)**: Uses `// [!code highlight]` comment syntax, requires `transformerNotationHighlight` configuration
+- **[Meta Line Highlight](/guide/use-mdx/code-blocks#meta-line-highlight)**: Compatible with legacy `{1,3-4}` syntax, requires `transformerCompatibleMetaHighlight` configuration
+
+To maintain compatibility with V1's meta line highlighting syntax, add the following configuration:
+
+```ts title="rspress.config.ts"
+import { defineConfig } from '@rspress/core';
+import { transformerCompatibleMetaHighlight } from '@rspress/core/shiki-transformers';
+
+export default defineConfig({
+  markdown: {
+    shiki: {
+      transformers: [transformerCompatibleMetaHighlight()],
+    },
+  },
+});
+```
+
+## [Important] Top-level Navigation file renamed
+
+Rspress V2 separates nav and sidebar configuration. The top-level `_meta.json` needs to be renamed to `_nav.json`, while inner files remain unchanged.
+
+- before:
+
+```
+docs/
+├── en/
+│   ├── _meta.json        # Top-level navigation
+│   └── guide/
+│       └── _meta.json    # Inner sidebar
+```
+
+- after:
+
+```
+docs/
+├── en/
+│   ├── _nav.json         # Top-level navigation (renamed)
+│   └── guide/
+│       └── _meta.json    # Inner sidebar (unchanged)
+```
+
+## [Important] SSG strict mode by default
+
+SSG is now in strict mode by default. On failure, the build exits immediately instead of falling back to CSR. The `ssg.strict` configuration has been removed.
+
+To skip SSG, set `ssg: false`:
+
+```ts title="rspress.config.ts"
+import { defineConfig } from '@rspress/core';
+
+export default defineConfig({
+  ssg: false,
+});
+```
+
+## [Important] Features enabled by default
+
+The following features are enabled by default in V2:
+
+| Feature                        | Description                             |
+| ------------------------------ | --------------------------------------- |
+| `markdown.link.checkDeadLinks` | Dead link checking with stricter logs   |
+| `search.codeBlocks`            | Search results include code blocks      |
+| `dev.lazyCompilation`          | Lazy compilation for faster dev startup |
+| `performance.buildCache`       | Persistent cache for faster builds      |
+
+To disable lazy compilation:
+
+```ts title="rspress.config.ts"
+import { defineConfig } from '@rspress/core';
+
+export default defineConfig({
+  builderConfig: {
+    dev: {
+      lazyCompilation: false,
+    },
+  },
+});
+```
+
+## base configuration reimplemented
+
+The `base` configuration is now implemented using react-router's `basename`.
+
+Key changes:
+
+- `useLocation().pathname` no longer includes the `base` prefix
+- Use `Link` / `useNavigate` for navigation instead of directly manipulating `window.location`
+
+## `cleanUrls: true` Links are shortened
+
+When `cleanUrls: true`, generated links no longer include the `/index` suffix.
+
+- before: `/guide/index`
+- after: `/guide/`
+
+## builderPlugins configuration removed
+
+`builderPlugins` has been removed. Please migrate to `builderConfig.plugins`.
+
+- before:
+
+```ts title="rspress.config.ts"
+import { defineConfig } from 'rspress/config';
+
+export default defineConfig({
+  builderPlugins: [pluginFoo()],
+});
+```
+
+- after:
+
+```ts title="rspress.config.ts"
+import { defineConfig } from '@rspress/core';
+
+export default defineConfig({
+  builderConfig: {
+    plugins: [pluginFoo()],
+  },
+});
+```
+
+## Sass/Less Requires manual installation
+
+Built-in Sass/Less plugins have been removed. Install them manually if needed:
+
+```bash
+# Sass
+npm add @rsbuild/plugin-sass -D
+
+# Less
+npm add @rsbuild/plugin-less -D
+```
+
+Then register in configuration:
+
+```ts title="rspress.config.ts"
+import { defineConfig } from '@rspress/core';
+import { pluginSass } from '@rsbuild/plugin-sass';
+
+export default defineConfig({
+  builderConfig: {
+    plugins: [pluginSass()],
+  },
+});
+```
+
+## External code block syntax changed
+
+External code block syntax has changed:
+
+- before:
+
+```tsx
+<code src="./example.tsx" />
+```
+
+- after:
+
+````md
+```tsx file="./example.tsx"
+
+```
+````
+
+## Relative link resolution changed
+
+Relative links no longer require the `./` prefix. The following two syntaxes are now equivalent:
+
+```md
+[subfolder](subfolder)
+[subfolder](./subfolder)
+```
+
+## MDX file route exclusion
+
+Files starting with underscore `_` are automatically excluded from routing, suitable for MDX fragments and React components.
+
+```
+docs/
+├── guide/
+│   ├── _components.tsx  # Will not generate route
+│   └── index.mdx
+```
+
+## Theme style changes
+
+### Tailwind class name prefix
+
+Built-in theme class names now have a Tailwind prefix to avoid conflicts. If you rely on classes like `dark:hidden`, configure Tailwind/UnoCSS in your project.
+
+### Native HTML tag styling
+
+Native HTML tags now have document styling by default. To isolate styling, add the `.rp-not-doc` class:
+
+```html
+<div class="rp-not-doc">
+  <!-- Not affected by document styles -->
+</div>
+```
+
+### Built-in Multilingual text
+
+The default theme now includes built-in multilingual translation text with tree-shaking support based on your project's configured languages.
+
+Key changes:
+
+- If your documentation only includes `en` and `zh`, only those languages will be bundled
+- For languages not supported by Rspress, it automatically falls back to `en`
+- In most cases, you don't need to manually configure i18n text
+
+The following `themeConfig.locales` text configurations have been removed. Please delete related configurations:
+
+- `outlineTitle`
+- `lastUpdatedText`
+- `editLink.text`
+- `prevPageText`
+- `nextPageText`
+- `sourceCodeText`
+- `searchPlaceholderText`
+- `searchNoResultsText`
+- `searchSuggestedQueryText`
+- `overview.filterNameText`
+- `overview.filterPlaceholderText`
+- `overview.filterNoResultText`
+
+- before:
+
+```ts title="rspress.config.ts"
+import { defineConfig } from 'rspress/config';
+
+export default defineConfig({
+  themeConfig: {
+    locales: [
+      {
+        lang: 'en',
+        label: 'English',
+        outlineTitle: 'ON THIS PAGE',
+      },
+      {
+        lang: 'zh',
+        label: '中文',
+        outlineTitle: '目录',
+      },
+    ],
+  },
+});
+```
+
+- after:
+
+```ts title="rspress.config.ts"
+import { defineConfig } from '@rspress/core';
+
+export default defineConfig({
+  locales: [
+    {
+      lang: 'en',
+      label: 'English',
+    },
+    {
+      lang: 'zh',
+      label: '中文',
+    },
+  ],
+  // Only use i18nSource when you want to modify built-in text
+  i18nSource: {
+    outlineTitle: {
+      zh: '大纲',
+      en: 'On This Page',
+    },
+  },
+});
+```
+
+## Resources
+
+- [GitHub Discussion: Rspress v2 Breaking Changes](https://github.com/web-infra-dev/rspress/discussions/1891)

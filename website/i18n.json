@@ -19,6 +19,10 @@
     "en": "Advanced",
     "ru": "Дополнительно"
   },
+  "migration": {
+    "zh": "迁移",
+    "en": "Migration"
+  },
   "apiOverview": {
     "zh": "API 概览",
     "en": "API Overview",

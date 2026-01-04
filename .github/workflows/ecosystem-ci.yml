@@ -45,7 +45,7 @@ jobs:
     if: github.repository == 'web-infra-dev/rspress' && github.event_name == 'workflow_dispatch'
     steps:
       - name: Trigger Ecosystem CI
-        uses: rspack-contrib/rstack-ecosystem-ci/.github/actions/ecosystem_ci_dispatch@main
+        uses: rstackjs/rstack-ecosystem-ci/.github/actions/ecosystem_ci_dispatch@main
         with:
           github-token: ${{ secrets.REPO_rspress_ECO_CI_GITHUB_TOKEN_NEXT }}
           ecosystem-owner: web-infra-dev
@@ -61,7 +61,7 @@ jobs:
     if: github.repository == 'web-infra-dev/rspress' && github.event_name != 'workflow_dispatch' && needs.changes.outputs.changed == 'true'
     steps:
       - name: Trigger Ecosystem CI
-        uses: rspack-contrib/rstack-ecosystem-ci/.github/actions/ecosystem_ci_per_commit@main
+        uses: rstackjs/rstack-ecosystem-ci/.github/actions/ecosystem_ci_per_commit@main
         with:
           github-token: ${{ secrets.REPO_RSPRESS_ECO_CI_GITHUB_TOKEN_NEXT }}
           ecosystem-owner: web-infra-dev
