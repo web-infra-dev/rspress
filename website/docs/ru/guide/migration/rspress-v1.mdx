@@ -1,0 +1,488 @@
+# Миграция с Rspress 1.x
+
+Этот документ поможет вам перейти с Rspress 1.x на Rspress V2. Рекомендуем использовать функцию «Копировать как Markdown», чтобы передать этот документ большой языковой модели для автоматизированной помощи в миграции.
+
+## Краткий чек-лист миграции
+
+- [ ] **Node.js** >= 20.9.0
+- [ ] **Зависимости**: `rspress` → `@rspress/core`, удалить `@rspress/shared`
+- [ ] **Пути импорта**: `rspress/runtime` → `@rspress/core/runtime`
+- [ ] **Пользовательские темы**: изменить default-экспорты на именованные экспорты, использовать `@rspress/core/theme-original`
+- [ ] **Навигация верхнего уровня**: `_meta.json` → `_nav.json` (только для верхнего уровня)
+- [ ] **Подсветка кода**: Prism → Shiki, подсветка строк `{1,3-4}` теперь требует настройки трансформера
+- [ ] **builderPlugins**: перенести в `builderConfig.plugins`
+- [ ] **Sass/Less**: вручную установить `@rsbuild/plugin-sass` или `@rsbuild/plugin-less`
+- [ ] **Внешние блоки кода**: `<code src="..." />` → ` ```tsx file="..." `
+- [ ] **themeConfig.locales**: удалить `outlineTitle` и другие текстовые конфиги, использовать `i18nSource` вместо них
+
+## [Важно] Требования к Node.js и зависимостям верхнего уровня
+
+### Версия Node.js
+
+Rspress V2 больше не поддерживает Node.js 16 и 18. Пожалуйста, обновитесь до **Node.js >= 20.9.0**. Рекомендуется Node.js 22 LTS.
+
+### Версии зависимостей верхнего уровня
+
+| Зависимость        | Допустимый диапазон    | По умолчанию | Примечания                                                    |
+| ------------------ | ---------------------- | ------------ | ------------------------------------------------------------- |
+| `react`            | `^18.0.0 \|\| ^19.0.0` | 19           | React 17 больше не поддерживается                             |
+| `react-dom`        | `^18.0.0 \|\| ^19.0.0` | 19           | Синхронизируется с версией react                              |
+| `react-router-dom` | `^6.0.0 \|\| ^7.0.0`   | 7            | Используется версия проекта, если уже установлена             |
+| `unified`          | `^11.0.0`              | 11           | Пользовательские плагины remark/rehype должны быть совместимы |
+
+:::tip Совет
+
+Если в вашем проекте уже установлены `react`, `react-dom` или `react-router-dom`, Rspress будет использовать версию проекта вместо встроенной версии по умолчанию.
+
+:::
+
+## [Важно] Изменения названий пакетов и путей импорта
+
+Rspress V2 объединяет несколько пакетов в `@rspress/core`. Исходный пакет `rspress` больше не используется.
+
+- до:
+
+```json title="package.json"
+{
+  "dependencies": {
+    "rspress": "^1.x",
+    "@rspress/shared": "^1.x"
+  }
+}
+```
+
+- после:
+
+```json title="package.json"
+{
+  "dependencies": {
+    "@rspress/core": "^2.0.0"
+  }
+}
+```
+
+Если вы разрабатывали плагин для Rspress, измените peerDependencies плагина с `rspress` на `@rspress/core`:
+
+```json title="package.json"
+{
+  "peerDependencies": {
+    "@rspress/core": "^2.0.0"
+  }
+}
+```
+
+### Изменения путей импорта
+
+| Старый путь                  | Новый путь                                                   |
+| ---------------------------- | ------------------------------------------------------------ |
+| `rspress` / `rspress/config` | `@rspress/core`                                              |
+| `rspress/runtime`            | `@rspress/core/runtime`                                      |
+| `rspress/theme`              | Использовать `@rspress/core/theme` в директории docs         |
+| `@rspress/theme-default`     | Использовать `@rspress/core/theme-original` в директории тем |
+
+Рекомендуется использовать глобальный поиск и замену для обновления путей импорта.
+
+Пример:
+
+- до:
+
+```ts
+import { usePageData, useDark } from 'rspress/runtime';
+import type { RspressPlugin } from 'rspress';
+```
+
+- после:
+
+```ts
+import { usePageData, useDark } from '@rspress/core/runtime';
+import type { RspressPlugin } from '@rspress/core';
+```
+
+### Удалённые отдельные пакеты
+
+Следующие плагины теперь встроены в основной пакет и больше не требуют отдельной установки:
+
+- `@rspress/plugin-shiki` — подсветка кода Shiki теперь используется по умолчанию
+- `@rspress/plugin-auto-nav-sidebar` — боковая панель навигации встроена
+- `@rspress/plugin-container-syntax` — синтаксис контейнеров встроен
+- `@rspress/plugin-last-updated` — время последнего обновления встроено
+- `@rspress/plugin-medium-zoom` — увеличение изображений встроено
+
+## [Важно] Изменения в экспортах ESM для пользовательских тем
+
+Пользовательские темы больше не используют default-экспорты. Вместо этого используйте именованные экспорты.
+
+- до:
+
+```tsx title="theme/index.tsx"
+import Theme from 'rspress/theme';
+
+const Layout = () => <Theme.Layout beforeNavTitle={<div>content</div>} />;
+
+export default { ...Theme, Layout };
+
+export * from 'rspress/theme';
+```
+
+- после:
+
+```tsx title="theme/index.tsx"
+import { Layout as BasicLayout } from '@rspress/core/theme-original';
+
+const Layout = () => <BasicLayout beforeNavTitle={<div>content</div>} />;
+
+export { Layout };
+
+export * from '@rspress/core/theme-original';
+```
+
+### Пути импорта темы
+
+| Контекст       | Путь импорта                       | Описание                                                                       |
+| -------------- | ---------------------------------- | ------------------------------------------------------------------------------ |
+| Папка `theme`  | `@rspress/core/theme-original`     | Используйте при кастомизации темы, чтобы получить оригинальные компоненты темы |
+| Каталог `docs` | `@rspress/core/theme` или `@theme` | Используйте компоненты темы в документах, поддерживает переопределение темы    |
+
+Использование компонентов темы в MDX-файлах внутри каталога `docs`:
+
+```tsx title="docs/guide/index.mdx"
+import { PackageManagerTabs } from '@rspress/core/theme';
+// Или используйте алиас
+import { PackageManagerTabs } from '@theme';
+```
+
+Если вы используете алиас `@theme`, добавьте сопоставление путей в `tsconfig.json` для подсказок типов:
+
+```json title="tsconfig.json"
+{
+  "compilerOptions": {
+    "paths": {
+      "@theme": ["./theme/index.tsx"]
+    }
+  }
+}
+```
+
+## [Важно] Подсветка кода Shiki заменяет Prism
+
+Rspress V2 по умолчанию использует Shiki v3 для подсветки кода. Prism был удалён.
+
+Список поддерживаемых языков Shiki смотрите на странице[Shiki Languages](https://shiki.style/languages). Подробнее об использовании Shiki — в документации [Блоки кода](/guide/use-mdx/code-blocks).
+
+### Миграция конфигурации
+
+- до:
+
+Конфигурация алиасов языков осуществлялась через `highlightLanguages`:
+
+```ts title="rspress.config.ts"
+import { defineConfig } from 'rspress/config';
+
+export default defineConfig({
+  markdown: {
+    highlightLanguages: [['ejs', 'javascript']],
+  },
+});
+```
+
+- после:
+
+Настройка `langAlias` и других опций Shiki осуществляется через [markdown.shiki](/api/config/config-build.md#markdownshiki):
+
+```ts title="rspress.config.ts"
+import { defineConfig } from '@rspress/core';
+
+export default defineConfig({
+  markdown: {
+    shiki: {
+      langAlias: {
+        ejs: 'javascript',
+      },
+    },
+  },
+});
+```
+
+### Изменения в синтаксисе подсветки строк
+
+В V2 синтаксис мета-подсветки строк `{1,3-4}` больше не включён по умолчанию. Выберите один из следующих вариантов в зависимости от ваших нужд:
+
+- **[Подсветка отдельных строк](/guide/use-mdx/code-blocks#notation-line-highlight)**: Использует синтаксис комментариев `// [!code highlight]`, требует настройки `transformerNotationHighlight`
+- **[Подсветка строк через meta-информацию](/guide/use-mdx/code-blocks#подсветка-строк-через-meta-информацию)**: Совместим с устаревшим синтаксисом `{1,3-4}`, требует настройки `transformerCompatibleMetaHighlight`
+
+Чтобы сохранить совместимость с синтаксисом мета-подсветки строк из V1, добавьте следующую конфигурацию:
+
+```ts title="rspress.config.ts"
+import { defineConfig } from '@rspress/core';
+import { transformerCompatibleMetaHighlight } from '@rspress/core/shiki-transformers';
+
+export default defineConfig({
+  markdown: {
+    shiki: {
+      transformers: [transformerCompatibleMetaHighlight()],
+    },
+  },
+});
+```
+
+## [Важно] Переименован файл навигации верхнего уровня
+
+В Rspress V2 конфигурация панели навигации и боковой панели разделены. Файл верхнего уровня `_meta.json` необходимо переименовать в `_nav.json`, внутренние файлы остаются без изменений.
+
+- до:
+
+```
+docs/
+├── en/
+│   ├── _meta.json        # Навигация верхнего уровня
+│   └── guide/
+│       └── _meta.json    # Внутренняя боковая панель
+```
+
+- после:
+
+```
+docs/
+├── en/
+│   ├── _nav.json         # Навигация верхнего уровня (переименована)
+│   └── guide/
+│       └── _meta.json    # Внутренняя боковая панель (без изменений)
+```
+
+## [Важно] Режим строгого SSG по умолчанию
+
+Теперь SSG включён в строгом режиме по умолчанию. При любой ошибке сборка немедленно прерывается вместо отката на CSR (рендеринг на стороне клиента). Опция `ssg.strict` удалена.
+
+Чтобы полностью отключить SSG, укажите `ssg: false`:
+
+```ts title="rspress.config.ts"
+import { defineConfig } from '@rspress/core';
+
+export default defineConfig({
+  ssg: false,
+});
+```
+
+## [Важно] Функции, включённые по умолчанию
+
+В V2 следующие функции включены по умолчанию:
+
+| Функция                        | Описание                                                   |
+| ------------------------------ | ---------------------------------------------------------- |
+| `markdown.link.checkDeadLinks` | Проверка мёртвых ссылок с более строгими логами            |
+| `search.codeBlocks`            | В результаты поиска включаются блоки кода                  |
+| `dev.lazyCompilation`          | Ленивая компиляция для более быстрого запуска в dev-режиме |
+| `performance.buildCache`       | Постоянный кэш для ускорения сборок                        |
+
+Чтобы отключить ленивую компиляцию:
+
+```ts title="rspress.config.ts"
+import { defineConfig } from '@rspress/core';
+
+export default defineConfig({
+  builderConfig: {
+    dev: {
+      lazyCompilation: false,
+    },
+  },
+});
+```
+
+## Переработка базовой конфигурации base
+
+Конфигурация `base` теперь реализована с использованием `basename` из react-router.
+
+Ключевые изменения:
+
+- `useLocation().pathname` больше не включает префикс `base`
+- Для навигации используйте `Link` / `useNavigate` вместо прямого манипулирования `window.location`
+
+## При `cleanUrls: true` ссылки укорачиваются
+
+Когда включена опция `cleanUrls: true`, генерируемые ссылки больше не содержат суффикс `/index`.
+
+- раньше: `/guide/index`
+- теперь: `/guide/`
+
+## Удалена конфигурация builderPlugins
+
+Опция `builderPlugins` удалена. Пожалуйста, мигрируйте на `builderConfig.plugins`.
+
+- до:
+
+```ts title="rspress.config.ts"
+import { defineConfig } from 'rspress/config';
+
+export default defineConfig({
+  builderPlugins: [pluginFoo()],
+});
+```
+
+- после:
+
+```ts title="rspress.config.ts"
+import { defineConfig } from '@rspress/core';
+
+export default defineConfig({
+  builderConfig: {
+    plugins: [pluginFoo()],
+  },
+});
+```
+
+## Sass/Less требует ручной установки
+
+Встроенные плагины для Sass/Less удалены. При необходимости установите их вручную:
+
+```bash
+# Sass
+npm add @rsbuild/plugin-sass -D
+
+# Less
+npm add @rsbuild/plugin-less -D
+```
+
+Затем зарегистрируйте в конфигурации:
+
+```ts title="rspress.config.ts"
+import { defineConfig } from '@rspress/core';
+import { pluginSass } from '@rsbuild/plugin-sass';
+
+export default defineConfig({
+  builderConfig: {
+    plugins: [pluginSass()],
+  },
+});
+```
+
+## Изменён синтаксис внешних блоков кода
+
+Синтаксис внешних блоков кода изменён:
+
+- до:
+
+```tsx
+<code src="./example.tsx" />
+```
+
+- после:
+
+````md
+```tsx file="./example.tsx"
+
+```
+````
+
+## Изменено разрешение относительных ссылок
+
+Относительные ссылки больше не требуют префикса `./`. Теперь следующие два синтаксиса эквивалентны:
+
+```md
+[subfolder](subfolder)
+[subfolder](./subfolder)
+```
+
+## Исключение файлов MDX из маршрутизации
+
+Файлы, начинающиеся с подчёркивания `_`, автоматически исключаются из маршрутизации. Это удобно для MDX-фрагментов и React-компонентов.
+
+```
+docs/
+├── guide/
+│   ├── _components.tsx  # Не будет генерировать маршрут
+│   └── index.mdx
+```
+
+## Изменения в стилях темы
+
+### Префикс классов Tailwind
+
+Встроенные классы темы теперь имеют префикс Tailwind, чтобы избежать конфликтов. Если вы полагаетесь на классы вроде `dark:hidden`, настройте Tailwind/UnoCSS в вашем проекте.
+
+### Стилизация нативных HTML-тегов
+
+Нативные HTML-теги теперь по умолчанию имеют стили документа. Чтобы изолировать стилизацию, добавьте класс `.rp-not-doc`:
+
+```html
+<div class="rp-not-doc">
+  <!-- Не подвержен влиянию стилей документа -->
+</div>
+```
+
+### Встроенные многоязычные тексты
+
+Тема по умолчанию теперь включает встроенные переводы интерфейса с поддержкой tree-shaking в зависимости от настроенных в проекте языков.
+
+Ключевые изменения:
+
+- Если в вашей документации используются только `en` и `zh`, то в сборку попадут только эти языки
+- Для языков, не поддерживаемых Rspress, автоматически используется fallback на `en`
+- В большинстве случаев вам не нужно вручную настраивать тексты i18n
+
+Следующие текстовые конфигурации в `themeConfig.locales` удалены. Пожалуйста, удалите связанные настройки:
+
+- `outlineTitle`
+- `lastUpdatedText`
+- `editLink.text`
+- `prevPageText`
+- `nextPageText`
+- `sourceCodeText`
+- `searchPlaceholderText`
+- `searchNoResultsText`
+- `searchSuggestedQueryText`
+- `overview.filterNameText`
+- `overview.filterPlaceholderText`
+- `overview.filterNoResultText`
+
+- до:
+
+```ts title="rspress.config.ts"
+import { defineConfig } from 'rspress/config';
+
+export default defineConfig({
+  themeConfig: {
+    locales: [
+      {
+        lang: 'en',
+        label: 'English',
+        outlineTitle: 'ON THIS PAGE',
+      },
+      {
+        lang: 'zh',
+        label: '中文',
+        outlineTitle: '目录',
+      },
+    ],
+  },
+});
+```
+
+- после:
+
+```ts title="rspress.config.ts"
+import { defineConfig } from '@rspress/core';
+
+export default defineConfig({
+  locales: [
+    {
+      lang: 'en',
+      label: 'English',
+    },
+    {
+      lang: 'zh',
+      label: '中文',
+    },
+  ],
+  // Используйте i18nSource только тогда, когда хотите изменить встроенные тексты интерфейса.
+  i18nSource: {
+    outlineTitle: {
+      zh: '大纲',
+      en: 'On This Page',
+    },
+  },
+});
+```
+
+## Ресурсы
+
+- [GitHub Discussion: Крупные изменения в Rspress v2 (Breaking Changes)](https://github.com/web-infra-dev/rspress/discussions/1891)
