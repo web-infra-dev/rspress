@@ -73,8 +73,9 @@ export const useThemeState = () => {
   const disableDarkMode = site.themeConfig.darkMode === false;
 
   // Theme config stored in localStorage ('light' | 'dark' | 'auto')
-  const [storedConfig, setStoredConfig] =
-    useState<ThemeConfigValue>(getStoredConfig);
+  const [storedConfig, setStoredConfig] = useState<ThemeConfigValue>(() =>
+    getStoredConfig(),
+  );
 
   // Resolved theme value ('light' | 'dark')
   const [theme, setThemeInternal] = useState<ThemeValue>(() => {
@@ -107,10 +108,10 @@ export const useThemeState = () => {
     [disableDarkMode],
   );
 
-  // Apply theme to DOM on mount
+  // Apply theme to DOM on mount and when theme or disableDarkMode changes
   useEffect(() => {
     applyThemeToDOM(disableDarkMode ? 'light' : theme);
-  }, []);
+  }, [theme, disableDarkMode]);
 
   // Listen for system theme changes (only in 'auto' mode)
   useEffect(() => {
