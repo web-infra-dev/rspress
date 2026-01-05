@@ -35,8 +35,8 @@
       "default": "./dist/theme/index.js"
     },
     "./runtime": {
-      "types": "./dist/runtime.d.ts",
-      "default": "./dist/runtime.js"
+      "types": "./dist/runtime/index.d.ts",
+      "default": "./dist/runtime/index.js"
     },
     "./shiki-transformers": {
       "types": "./dist/shiki-transformers.d.ts",
@@ -61,9 +61,8 @@
     "index.html"
   ],
   "scripts": {
-    "build": "rslib build",
+    "build": "node ./scripts/generateJsonSchema.mjs && rslib build",
     "dev": "rslib build -w",
-    "prepare": "node ./scripts/generateJsonSchema.mjs",
     "reset": "rimraf ./**/node_modules"
   },
   "dependencies": {
@@ -72,7 +71,6 @@
     "@rsbuild/core": "~1.7.1",
     "@rsbuild/plugin-react": "~1.4.2",
     "@rspress/mdx-rs": "0.6.6",
-    "@rspress/runtime": "workspace:*",
     "@rspress/shared": "workspace:*",
     "@shikijs/rehype": "^3.20.0",
     "@types/unist": "^3.0.3",

@@ -889,9 +889,6 @@ importers:
       '@rspress/mdx-rs':
         specifier: 0.6.6
         version: 0.6.6
-      '@rspress/runtime':
-        specifier: workspace:*
-        version: link:../runtime
       '@rspress/shared':
         specifier: workspace:*
         version: link:../shared
@@ -1597,46 +1594,6 @@ importers:
       react:
         specifier: ^19.2.3
         version: 19.2.3
-      rsbuild-plugin-publint:
-        specifier: ^0.3.3
-        version: 0.3.3(@rsbuild/core@1.7.1)
-      typescript:
-        specifier: ^5.8.2
-        version: 5.8.2
-
-  packages/runtime:
-    dependencies:
-      '@rspress/shared':
-        specifier: workspace:*
-        version: link:../shared
-      '@unhead/react':
-        specifier: ^2.1.1
-        version: 2.1.1(react@19.2.3)
-      react:
-        specifier: ^19.2.3
-        version: 19.2.3
-      react-dom:
-        specifier: ^19.2.3
-        version: 19.2.3(react@19.2.3)
-      react-router-dom:
-        specifier: ^7.11.0
-        version: 7.11.0(react-dom@19.2.3(react@19.2.3))(react@19.2.3)
-    devDependencies:
-      '@rsbuild/plugin-react':
-        specifier: ~1.4.2
-        version: 1.4.2(@rsbuild/core@1.7.1)
-      '@rslib/core':
-        specifier: 0.19.1
-        version: 0.19.1(@microsoft/api-extractor@7.55.2(@types/node@22.10.2))(typescript@5.8.2)
-      '@rspress/config':
-        specifier: workspace:*
-        version: link:../../scripts/config
-      '@types/react':
-        specifier: ^19.2.7
-        version: 19.2.7
-      '@types/react-dom':
-        specifier: ^19.2.3
-        version: 19.2.3(@types/react@19.2.7)
       rsbuild-plugin-publint:
         specifier: ^0.3.3
         version: 0.3.3(@rsbuild/core@1.7.1)

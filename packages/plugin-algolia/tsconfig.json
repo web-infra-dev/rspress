@@ -13,7 +13,7 @@
       "path": "../shared"
     },
     {
-      "path": "../runtime"
+      "path": "../core"
     }
   ]
 }
