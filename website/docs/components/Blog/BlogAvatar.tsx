@@ -27,7 +27,7 @@ export function BlogAvatar({ author }: { author: string }) {
         <div className={styles.links}>
           {github && (
             <a
-              href={`https://github.com/${github}`}
+              href={github}
               target="_blank"
               rel="noopener noreferrer"
               className={styles.link}
@@ -48,7 +48,7 @@ export function BlogAvatar({ author }: { author: string }) {
           )}
           {x && (
             <a
-              href={`https://x.com/${x}`}
+              href={x}
               target="_blank"
               rel="noopener noreferrer"
               className={styles.link}
