@@ -1,5 +1,5 @@
 import { useSite } from '@rspress/core/runtime';
-import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
+import { useCallback, useLayoutEffect, useMemo } from 'react';
 import { useMediaQuery } from './useMediaQuery';
 import { useStorageValue } from './useStorageValue';
 
@@ -30,23 +30,8 @@ type ThemeConfigValue = ThemeValue | 'auto';
 // Utils
 // ============================================================================
 
-const sanitize = (value: string | null): ThemeConfigValue => {
-  if (value === 'light' || value === 'dark' || value === 'auto') {
-    return value;
-  }
-  return 'auto';
-};
-
-const getStoredConfig = (): ThemeConfigValue => {
-  if (typeof window === 'undefined') return 'auto';
-  try {
-    return sanitize(localStorage.getItem(APPEARANCE_KEY));
-  } catch {
-    return 'auto';
-  }
-};
-
 const applyThemeToDOM = (theme: ThemeValue) => {
+  if (!document || !document.documentElement) return;
   const root = document.documentElement;
   root.classList.toggle('dark', theme === 'dark');
   root.classList.toggle('rp-dark', theme === 'dark');
@@ -61,7 +46,7 @@ const applyThemeToDOM = (theme: ThemeValue) => {
  * State provider for theme context.
  * @internal
  */
-export const useThemeState = () => {
+export function useThemeState() {
   const { site } = useSite();
   const disableDarkMode = site.themeConfig.darkMode === false;
 
@@ -93,14 +78,10 @@ export const useThemeState = () => {
       : storedConfig;
   }, [disableDarkMode, prefersDark, storedConfig]);
 
-  // Track if setTheme was called locally to avoid redundant updates
-  const isLocalUpdate = useRef(false);
-
   const setTheme = useCallback(
     (value: ThemeValue, storeValue: ThemeConfigValue = value) => {
       if (disableDarkMode) return;
 
-      isLocalUpdate.current = true;
       setStoredConfig(storeValue);
       applyThemeToDOM(value);
     },
@@ -108,17 +89,11 @@ export const useThemeState = () => {
   );
 
   // Sync theme when storedConfig or system preference changes
-  useEffect(() => {
-    // Skip if this was a local update (already handled in setTheme)
-    if (isLocalUpdate.current) {
-      isLocalUpdate.current = false;
-      return;
-    }
-
+  useLayoutEffect(() => {
     if (disableDarkMode) return;
 
     applyThemeToDOM(resolvedTheme);
   }, [disableDarkMode, resolvedTheme]);
 
   return [resolvedTheme, setTheme] as const;
-};
+}
