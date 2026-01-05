@@ -1,5 +1,6 @@
 import { useSite } from '@rspress/core/runtime';
-import { useCallback, useEffect, useState } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
+import { useStorageValue } from './useStorageValue';
 
 declare global {
   interface Window {
@@ -73,8 +74,10 @@ export const useThemeState = () => {
   const disableDarkMode = site.themeConfig.darkMode === false;
 
   // Theme config stored in localStorage ('light' | 'dark' | 'auto')
-  const [storedConfig, setStoredConfig] = useState<ThemeConfigValue>(() =>
-    getStoredConfig(),
+  // useStorageValue handles cross-tab sync automatically
+  const [storedConfig, setStoredConfig] = useStorageValue<ThemeConfigValue>(
+    APPEARANCE_KEY,
+    'auto',
   );
 
   // Resolved theme value ('light' | 'dark')
@@ -91,21 +94,19 @@ export const useThemeState = () => {
     return resolveTheme(getStoredConfig());
   });
 
+  // Track if setTheme was called locally to avoid redundant updates
+  const isLocalUpdate = useRef(false);
+
   const setTheme = useCallback(
     (value: ThemeValue, storeValue: ThemeConfigValue = value) => {
       if (disableDarkMode) return;
 
+      isLocalUpdate.current = true;
       setThemeInternal(value);
       setStoredConfig(storeValue);
       applyThemeToDOM(value);
-
-      try {
-        localStorage.setItem(APPEARANCE_KEY, storeValue);
-      } catch {
-        // Silently fail when localStorage is not available
-      }
     },
-    [disableDarkMode],
+    [disableDarkMode, setStoredConfig],
   );
 
   // Apply theme to DOM on mount and when theme or disableDarkMode changes
@@ -115,7 +116,7 @@ export const useThemeState = () => {
 
   // Listen for system theme changes (only in 'auto' mode)
   useEffect(() => {
-    if (storedConfig !== 'auto' || disableDarkMode) return;
+    if (sanitize(storedConfig) !== 'auto' || disableDarkMode) return;
 
     const mediaQuery = window.matchMedia(MEDIA_QUERY);
     const handleChange = (e: MediaQueryListEvent) => {
@@ -128,24 +129,20 @@ export const useThemeState = () => {
     return () => mediaQuery.removeEventListener('change', handleChange);
   }, [storedConfig, disableDarkMode]);
 
-  // Listen for localStorage changes (cross-tab sync)
+  // Sync theme when storedConfig changes (from other tabs or useStorageValue init)
   useEffect(() => {
+    // Skip if this was a local update (already handled in setTheme)
+    if (isLocalUpdate.current) {
+      isLocalUpdate.current = false;
+      return;
+    }
+
     if (disableDarkMode) return;
 
-    const handleStorage = (e: StorageEvent) => {
-      if (e.key !== APPEARANCE_KEY) return;
-
-      const newConfig = sanitize(e.newValue);
-      setStoredConfig(newConfig);
-
-      const newTheme = resolveTheme(newConfig);
-      setThemeInternal(newTheme);
-      applyThemeToDOM(newTheme);
-    };
-
-    window.addEventListener('storage', handleStorage);
-    return () => window.removeEventListener('storage', handleStorage);
-  }, [disableDarkMode]);
+    const newTheme = resolveTheme(sanitize(storedConfig));
+    setThemeInternal(newTheme);
+    applyThemeToDOM(newTheme);
+  }, [storedConfig, disableDarkMode]);
 
   return [theme, setTheme] as const;
 };
