@@ -76,7 +76,7 @@
     "@rspress/shared": "workspace:*",
     "@shikijs/rehype": "^3.20.0",
     "@types/unist": "^3.0.3",
-    "@unhead/react": "^2.0.19",
+    "@unhead/react": "^2.1.1",
     "body-scroll-lock": "4.0.0-beta.0",
     "cac": "^6.7.14",
     "chokidar": "^3.6.0",
