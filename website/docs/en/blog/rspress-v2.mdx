@@ -4,7 +4,7 @@ authors: ['sooniter']
 description: 'Rspress 2.0 is officially released, featuring llms.txt (SSG-MD), a brand new theme, eject command, and more.'
 ---
 
-# Rspress 2.0 Release Announcement
+# Announcing Rspress 2.0
 
 We are excited to announce the official release of Rspress 2.0!
 
@@ -22,15 +22,15 @@ When planning Rspress V2, we focused on addressing several core issues present i
 - **Code Highlighting**: Prismjs runtime syntax highlighting performed poorly in terms of bundle size and performance when dealing with multiple programming languages.
 - **Developer Experience**: Changes to `_meta.json` and adding new code block languages caused HMR to fail, forcing restarts and degrading the development experience.
 
-## V2 New Features
+## V2 New features
 
-### A Complete New Theme
+### A complete new theme
 
 The new theme represents a fresh start. Designed by team designer [@wei_zhong41532](https://x.com/wei_zhong41532), it brings significant improvements in visual effects and reading experience while providing exceptional customizability.
 
 ![Rspress V2 Theme](https://lf3-static.bytednsdoc.com/obj/eden-cn/uhbfnupenuhf/rspress/rspress-v2-theme.png)
 
-#### BEM Naming Convention
+#### BEM naming convention
 
 All built-in components now adopt the [BEM naming convention](https://getbem.com/). This is an old-school decision that enables developers to flexibly adjust styles through standard CSS selectors, avoiding conflicts with tools like Tailwind CSS and significantly lowering the barrier for style customization.
 
@@ -44,7 +44,7 @@ All built-in components now adopt the [BEM naming convention](https://getbem.com
 }
 ```
 
-#### Rich CSS Variables
+#### Rich CSS variables
 
 The new theme exposes more CSS variables, covering styles for theme colors, code blocks, homepage components, and more. You can interactively preview and adjust these variables on the [CSS Variables](/ui/vars) page, then copy the configuration directly into your project once you're satisfied.
 
@@ -63,7 +63,7 @@ The new theme exposes more CSS variables, covering styles for theme colors, code
 When CSS variables cannot meet your customization needs, you can use the new `rspress eject` command to copy the source code of built-in components to your project's theme directory for complete customization.
 
 ```bash
-# Export Nav component to theme directory
+# Export nav component to theme directory
 npx rspress eject Nav
 ```
 
@@ -102,11 +102,11 @@ export function MyComponent({ label }: { label: string }) {
 
 We believe that with the launch of this feature, all websites built with React in the future can leverage SSG-MD for better GEO. For detailed usage, please refer to the [SSG-MD documentation](/guide/basic/ssg-md).
 
-### Shiki Integration for Code Highlighting
+### Shiki integration for code highlighting
 
 Rspress V2 uses [Shiki](https://shiki.style/) by default for code highlighting. Compared to runtime highlighting solutions, Shiki performs highlighting at compile time, achieving accurate syntax highlighting consistent with VS Code based on TextMate grammar, without adding runtime overhead or bundle size, and supports various built-in themes and custom configurations. You can customize code block color schemes through CSS variables, and interactively switch and preview different Shiki themes on the [CSS Variables](/ui/vars) page. Shiki also allows extensions through custom [transformers](https://shiki.style/guide/transformers) to enrich writing, such as [twoslash](https://twoslash.netlify.app/).
 
-### Enhanced Performance: LazyCompilation and Persistent Cache Enabled by Default
+### Enhanced Performance: LazyCompilation and persistent cache enabled by default
 
 Rspress V2 enables [lazyCompilation](https://rspack.rs/zh/config/experiments#experimentslazycompilation) and [persistent cache](https://rspack.rs/zh/config/experiments#experimentscache) by default.
 
@@ -116,9 +116,9 @@ Rspress also implements a route preload strategy that preloads target route page
 
 For production builds, persistent cache is enabled by default, reusing previous compilation results during warm starts to improve build speed by 30%-60%.
 
-### Documentation Development Experience
+### Documentation development experience
 
-#### Dead Link Checking Enabled by Default
+#### Dead link checking enabled by default
 
 Rspress V2 enables dead link checking by default. During the build process, it automatically detects invalid links in documentation, helping you discover and fix issues promptly.
 
@@ -134,11 +134,11 @@ export default defineConfig({
 });
 ```
 
-#### HMR Support for Configuration Files
+#### HMR support for configuration files
 
 Based on the redesigned virtual module plugin for Rsbuild, HMR is now supported for `_nav.json` navigation configuration, `_meta.json` sidebar configuration, and iframe-related configurations in `@rspress/plugin-preview`. After modifying these configuration files, the page will automatically hot-reload without manual refresh.
 
-### More Official Rspress Plugins
+### More official Rspress plugins
 
 Rspress V2 has added several official plugins:
 
@@ -147,9 +147,9 @@ Rspress V2 has added several official plugins:
 - **[@rspress/plugin-llms](/plugin/official-plugins/llms)**: Provide llms.txt generation capability for projects that don't support SSG.
 - **[@rspress/plugin-sitemap](/plugin/official-plugins/sitemap)**: Automatically generate sitemaps.
 
-## Other Changes
+## Other changes
 
-### Rust-based MDX Parser No Longer Used in Markdown/MDX Compilation
+### Rust-based MDX parser no longer used in Markdown/MDX compilation
 
 After implementing lazyCompilation and persistent cache, performance optimization results are already quite significant. We decided to stop using the Rust-based MDX parser (`@rspress/mdx-rs`) in the Markdown/MDX compilation pipeline in exchange for better extensibility and maintainability.
 
@@ -157,11 +157,11 @@ This enables Rspress to better integrate tools from the JavaScript ecosystem lik
 
 This doesn't mean we're abandoning Rust for the Markdown ecosystem. In the future, we may continue to advance Rust-based Markdown parser integration in Rspack / Rslint, providing performance optimization at a lower level.
 
-### Node.js 20+ and React 18+ Required
+### Node.js 20+ and React 18+ required
 
 Rspress V2 requires Node.js version **20+** and React version **18+**.
 
-### Configuration Changes
+### Configuration changes
 
 The default theme has been migrated from `@rspress/theme-default` to `@rspress/core/theme`:
 
@@ -172,7 +172,7 @@ The default theme has been migrated from `@rspress/theme-default` to `@rspress/c
 
 For more migration details, please refer to the [Migration Guide](/guide/migration/rspress-1-x).
 
-## Next Steps
+## Next steps
 
 The release of Rspress 2.0 is just a new beginning. We will continue to advance ecosystem integration, deeper integration with Rslib and Rstest to provide an integrated development experience for frontend projects and component library projects; explore deeper integration possibilities between AI and documentation, such as intelligent Q&A and automatic summarization; and refine SSG-MD to make it more stable and user-friendly.
 

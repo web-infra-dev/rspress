@@ -1,5 +1,6 @@
 import styles from './BlogAvatar.module.css';
 
+// cspell:disable
 const AUTHORS = {
   sooniter: {
     name: 'Sooniter',
@@ -9,6 +10,7 @@ const AUTHORS = {
     x: 'https://x.com/Soon_Iter',
   },
 } as const;
+// cspell:enable
 
 export function BlogAvatar({ author }: { author: string }) {
   const AUTHOR = AUTHORS[author as keyof typeof AUTHORS];
