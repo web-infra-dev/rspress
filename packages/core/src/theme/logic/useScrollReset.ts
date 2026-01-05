@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { useLayoutEffect } from 'react';
 import { useLocation } from 'react-router-dom';
 
 /**
@@ -8,7 +8,7 @@ import { useLocation } from 'react-router-dom';
 export function useScrollReset() {
   const { pathname } = useLocation();
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     const decodedHash = decodeURIComponent(window.location.hash);
     if (decodedHash.length === 0) {
       window.scrollTo(0, 0);
