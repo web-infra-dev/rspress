@@ -1,5 +1,6 @@
 import { useSite } from '@rspress/core/runtime';
-import { useCallback, useEffect, useRef, useState } from 'react';
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
+import { useMediaQuery } from './useMediaQuery';
 import { useStorageValue } from './useStorageValue';
 
 declare global {
@@ -45,15 +46,6 @@ const getStoredConfig = (): ThemeConfigValue => {
   }
 };
 
-const getSystemTheme = (): ThemeValue => {
-  if (typeof window === 'undefined') return 'light';
-  return window.matchMedia(MEDIA_QUERY).matches ? 'dark' : 'light';
-};
-
-const resolveTheme = (config: ThemeConfigValue): ThemeValue => {
-  return config === 'auto' ? getSystemTheme() : config;
-};
-
 const applyThemeToDOM = (theme: ThemeValue) => {
   const root = document.documentElement;
   root.classList.toggle('dark', theme === 'dark');
@@ -73,6 +65,9 @@ export const useThemeState = () => {
   const { site } = useSite();
   const disableDarkMode = site.themeConfig.darkMode === false;
 
+  // System theme preference (auto-updates on change)
+  const prefersDark = useMediaQuery(MEDIA_QUERY);
+
   // Theme config stored in localStorage ('light' | 'dark' | 'auto')
   // useStorageValue handles cross-tab sync automatically
   const [storedConfig, setStoredConfig] = useStorageValue<ThemeConfigValue>(
@@ -80,19 +75,23 @@ export const useThemeState = () => {
     'auto',
   );
 
-  // Resolved theme value ('light' | 'dark')
-  const [theme, setThemeInternal] = useState<ThemeValue>(() => {
+  // Resolve theme based on config and system preference
+  const resolvedTheme = useMemo((): ThemeValue => {
     if (typeof window === 'undefined') return 'light';
     if (disableDarkMode) return 'light';
 
     // Prefer global variable for SSR hydration
-    const defaultTheme = window.RSPRESS_THEME ?? window.MODERN_THEME;
+    const defaultTheme = window.RSPRESS_THEME;
     if (defaultTheme) {
       return defaultTheme === 'dark' ? 'dark' : 'light';
     }
 
-    return resolveTheme(getStoredConfig());
-  });
+    return storedConfig === 'auto'
+      ? prefersDark
+        ? 'dark'
+        : 'light'
+      : storedConfig;
+  }, [disableDarkMode, prefersDark, storedConfig]);
 
   // Track if setTheme was called locally to avoid redundant updates
   const isLocalUpdate = useRef(false);
@@ -102,34 +101,13 @@ export const useThemeState = () => {
       if (disableDarkMode) return;
 
       isLocalUpdate.current = true;
-      setThemeInternal(value);
       setStoredConfig(storeValue);
       applyThemeToDOM(value);
     },
     [disableDarkMode, setStoredConfig],
   );
 
-  // Apply theme to DOM on mount and when theme or disableDarkMode changes
-  useEffect(() => {
-    applyThemeToDOM(disableDarkMode ? 'light' : theme);
-  }, [theme, disableDarkMode]);
-
-  // Listen for system theme changes (only in 'auto' mode)
-  useEffect(() => {
-    if (sanitize(storedConfig) !== 'auto' || disableDarkMode) return;
-
-    const mediaQuery = window.matchMedia(MEDIA_QUERY);
-    const handleChange = (e: MediaQueryListEvent) => {
-      const newTheme: ThemeValue = e.matches ? 'dark' : 'light';
-      setThemeInternal(newTheme);
-      applyThemeToDOM(newTheme);
-    };
-
-    mediaQuery.addEventListener('change', handleChange);
-    return () => mediaQuery.removeEventListener('change', handleChange);
-  }, [storedConfig, disableDarkMode]);
-
-  // Sync theme when storedConfig changes (from other tabs or useStorageValue init)
+  // Sync theme when storedConfig or system preference changes
   useEffect(() => {
     // Skip if this was a local update (already handled in setTheme)
     if (isLocalUpdate.current) {
@@ -139,10 +117,8 @@ export const useThemeState = () => {
 
     if (disableDarkMode) return;
 
-    const newTheme = resolveTheme(sanitize(storedConfig));
-    setThemeInternal(newTheme);
-    applyThemeToDOM(newTheme);
-  }, [storedConfig, disableDarkMode]);
+    applyThemeToDOM(resolvedTheme);
+  }, [disableDarkMode, resolvedTheme]);
 
-  return [theme, setTheme] as const;
+  return [resolvedTheme, setTheme] as const;
 };
