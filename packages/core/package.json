@@ -127,7 +127,7 @@
     "@types/react": "^19.2.7",
     "@types/react-dom": "^19.2.3",
     "@types/react-reconciler": "^0.32.3",
-    "@types/web": "^0.0.309",
+    "@types/web": "^0.0.312",
     "execa": "8.0.1",
     "mdast-util-directive": "^3.1.0",
     "mdast-util-mdx-expression": "^2.0.1",
