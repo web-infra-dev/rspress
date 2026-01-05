@@ -33,7 +33,7 @@
   },
   "dependencies": {
     "@rspress/shared": "workspace:*",
-    "@unhead/react": "^2.0.19",
+    "@unhead/react": "^2.1.1",
     "react": "^19.2.3",
     "react-dom": "^19.2.3",
     "react-router-dom": "^7.11.0"
