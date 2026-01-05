@@ -1,5 +1,5 @@
 import { useSite } from '@rspress/core/runtime';
-import { useCallback, useLayoutEffect, useMemo } from 'react';
+import { useCallback, useEffect, useMemo } from 'react';
 import { useMediaQuery } from './useMediaQuery';
 import { useStorageValue } from './useStorageValue';
 
@@ -89,7 +89,7 @@ export function useThemeState() {
   );
 
   // Sync theme when storedConfig or system preference changes
-  useLayoutEffect(() => {
+  useEffect(() => {
     if (disableDarkMode) return;
 
     applyThemeToDOM(resolvedTheme);
