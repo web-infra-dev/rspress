@@ -9,6 +9,10 @@ export interface I18nText {
   versionsText?: I18nTextValue;
   themeText?: I18nTextValue;
 
+  // accessibility
+  switchAppearanceLabel?: I18nTextValue;
+  navMenuLabel?: I18nTextValue;
+
   // outline
   menuTitle?: I18nTextValue;
   outlineTitle?: I18nTextValue;

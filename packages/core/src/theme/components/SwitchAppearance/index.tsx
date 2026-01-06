@@ -1,4 +1,4 @@
-import { ThemeContext, useSite } from '@rspress/core/runtime';
+import { ThemeContext, useI18n, useSite } from '@rspress/core/runtime';
 import { IconMoon, IconSun, SvgWrapper } from '@theme';
 import { type MouseEvent, useContext } from 'react';
 import './global.scss';
@@ -29,6 +29,7 @@ const removeClipViewTransition = () => {
 export function SwitchAppearance({ onClick }: { onClick?: () => void }) {
   const { theme, setTheme = () => {} } = useContext(ThemeContext);
   const { site } = useSite();
+  const t = useI18n();
 
   const handleClick = (event: MouseEvent) => {
     const supported = supportAppearanceTransition();
@@ -85,7 +86,12 @@ export function SwitchAppearance({ onClick }: { onClick?: () => void }) {
   };
 
   return (
-    <div onClick={handleClick} className="rp-switch-appearance">
+    <button
+      type="button"
+      onClick={handleClick}
+      className="rp-switch-appearance"
+      aria-label={t('switchAppearanceLabel')}
+    >
       <SvgWrapper
         className="rp-switch-appearance__icon rp-switch-appearance__icon--sun"
         icon={IconSun}
@@ -96,6 +102,6 @@ export function SwitchAppearance({ onClick }: { onClick?: () => void }) {
         icon={IconMoon}
         fill="currentColor"
       />
-    </div>
+    </button>
   );
 }

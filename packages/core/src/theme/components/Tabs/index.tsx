@@ -7,6 +7,7 @@ import {
   isValidElement,
   type ReactElement,
   type ReactNode,
+  useId,
   useMemo,
   useState,
 } from 'react';
@@ -146,12 +147,14 @@ export const Tabs = forwardRef(
     );
 
     const currentIndex: number = groupId ? Number(storageIndex) : activeIndex;
+    const tabsId = useId();
 
     return (
       <div className={clsx('rp-tabs', className)} ref={ref}>
         {tabValues.length ? (
           <div
             className="rp-tabs__label rp-tabs__label--no-scrollbar"
+            role="tablist"
             style={{
               justifyContent:
                 tabPosition === 'center' ? 'center' : 'flex-start',
@@ -159,9 +162,17 @@ export const Tabs = forwardRef(
           >
             {tabValues.map(({ label }, index) => {
               const isActive = index === currentIndex;
+              const tabId = `${tabsId}-tab-${index}`;
+              const panelId = `${tabsId}-panel-${index}`;
               return (
-                <div
+                <button
+                  type="button"
                   key={typeof label === 'string' ? label : index}
+                  id={tabId}
+                  role="tab"
+                  aria-selected={isActive}
+                  aria-controls={panelId}
+                  tabIndex={isActive ? 0 : -1}
                   className={clsx(
                     'rp-tabs__label__item',
                     isActive
@@ -180,7 +191,7 @@ export const Tabs = forwardRef(
                   }}
                 >
                   {label}
-                </div>
+                </button>
               );
             })}
           </div>
@@ -191,10 +202,15 @@ export const Tabs = forwardRef(
             if (!keepDOM && !isActive) {
               return null;
             }
+            const tabId = `${tabsId}-tab-${index}`;
+            const panelId = `${tabsId}-panel-${index}`;
 
             return (
               <div
                 key={typeof label === 'string' ? label : index}
+                id={panelId}
+                role="tabpanel"
+                aria-labelledby={tabId}
                 className={clsx(
                   'rp-tabs__content__item',
                   isActive

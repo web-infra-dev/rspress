@@ -11,9 +11,17 @@ interface SocialLinkProps {
   hoverGroupPosition?: 'center' | 'left' | 'right';
 }
 
+const getIconLabel = (icon: ISocialLink['icon']): string => {
+  if (typeof icon === 'string') {
+    return icon;
+  }
+  return icon?.svg ? 'social link' : '';
+};
+
 export const SocialLink = (props: SocialLinkProps) => {
   const { link, hoverGroupPosition = 'center' } = props;
   const { icon, mode = 'link', content } = link;
+  const iconLabel = getIconLabel(icon);
 
   let IconComp: React.ReactElement = <></>;
   if (icon) {
@@ -22,6 +30,7 @@ export const SocialLink = (props: SocialLinkProps) => {
       <div
         className="rp-social-links__icon"
         dangerouslySetInnerHTML={{ __html: html }}
+        aria-hidden="true"
       ></div>
     );
   }
@@ -49,6 +58,7 @@ export const SocialLink = (props: SocialLinkProps) => {
         target="_blank"
         rel="noopener noreferrer"
         className="rp-social-links__item"
+        aria-label={iconLabel}
       >
         <div className="rp-social-links__icon">{IconComp}</div>
       </a>
