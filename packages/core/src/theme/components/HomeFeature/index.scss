@@ -97,6 +97,12 @@
     background-color: var(--rp-c-bg);
     border-radius: 1rem;
     border: 3px solid var(--rp-c-divider-light);
+
+    img,
+    svg {
+      width: 1.5rem;
+      height: 1.5rem;
+    }
   }
 
   &__title {
