@@ -7,6 +7,7 @@ Rspress 是一个基于 [Rsbuild](https://rsbuild.rs/) 的静态站点生成器�
 Rspress 主要围绕以下几个核心特性进行设计：
 
 - **构建性能**。保证足够快的启动速度，带来良好的开发体验。
+- **AI 友好**。技术文档不仅服务于人类读者，也可以通过 SSG-MD 被 AI 更好地理解和使用。
 - **MDX 支持**。通过 MDX，我们可以方便地复用文档片段，以及在文档中渲染自定义的 React 组件。
 - **文档站基础能力**。包括国际化、多版本支持、全文搜索、组件库文档等。
 - **可扩展性**。内置插件系统，支持通过插件 API 来扩展功能。
@@ -21,14 +22,33 @@ Rspress 主要围绕以下几个核心特性进行设计：
 
 接着，我们在这个方向上持续地探索，最终在 Rspress 上实现了这样的效果。
 
-如果只说一种最核心的优化手段，那无疑是 `Rust 前端工具链`。 我们主要在两个性能敏感部分使用了 Rust 工具链：
+在 Rspress V2 中，我们通过多种优化手段实现了显著的性能提升：
 
-- 打包工具。传统的 bundler 包括 webpack、Rollup 等等，对于一个前端工程而言，bundler 是各个编译工具链的集成枢纽，是一个非常关键的工程能力，对项目构建性能影响巨大。而 Rspress 使用了团队内部自研的 Rspack，Rspack 是一个基于 Rust 的 Bundler，内置多种性能优化手段，比如多线程并行编译、增量编译等等，相比社区传统的打包工具，有 5 ～ 10 倍的性能提升。
-- Markdown 编译器。对于 SSG 框架中另一大编译性能瓶颈，即`Markdown 编译`，我们也将这一流程 Rust 化以进一步提速，定制出 Rspress 的 Markdown 编译器（即`@rspress/mdx-rs`）。这款编译器相比社区的 JS 版本的编译器，有近 20 倍的性能提升：
+- **LazyCompilation**。lazyCompilation 会在 dev 模式下按需编译。只有当你访问某个页面时，该页面才会被编译，大幅提升了开发启动速度，甚至实现毫秒级的冷启动。
+- **持久化缓存**。对于 build 生产构建中，默认开启了持久化缓存，在热启动中复用上次编译的结果，提升 30%-60% 的构建速度。
+- **Rspack Bundler**。Rspress 使用了团队内部自研的 Rspack，Rspack 是一个基于 Rust 的 Bundler，内置多种性能优化手段，比如多线程并行编译、增量编译等等，相比社区传统的打包工具，有 5 ～ 10 倍的性能提升。
 
-<img src="https://lf3-static.bytednsdoc.com/obj/eden-cn/uhbfnupenuhf/rspress/mdx-rs-benchmark.png" />
+与此同时，Rspress 内部也应用了其它诸多构建优化手段。这些优化手段，配合强大的 Rust 工具链，将 SSG 框架的编译性能推向了一个崭新的高度。
 
-与此同时，Rspress 内部也应用了其它诸多构建优化手段，如`主题包预打包`、`样式预生成`等。这些额外的优化手段，配合强大的 Rust 工具链，将 SSG 框架的编译性能推向了一个崭新的高度。
+### AI 友好
+
+随着大语言模型的普及，技术文档不仅服务于人类读者，也需要被 AI 更好地理解和使用。
+
+Rspress V2 引入了 **SSG-MD** 能力，它将页面渲染为 Markdown 文件而非 HTML 文件，并生成符合 [llms.txt](https://llmstxt.org/) 规范的索引文件。
+
+```ts title="rspress.config.ts"
+import { defineConfig } from '@rspress/core';
+
+export default defineConfig({
+  llms: true,
+});
+```
+
+启用后，构建产物中会包含 `llms.txt`（按导航和侧边栏顺序展示各页面标题与描述的索引文件）、`llms-full.txt`（包含所有页面 Markdown 内容的完整文件）以及各路由对应的 `.md` 文件。
+
+正如 SSG 可以生成静态 HTML 文件提高 SEO，SSG-MD 也可以相对提升 GEO（Generative Engine Optimization）和给大模型的静态信息质量。
+
+详细用法请参考 [SSG-MD 文档](/guide/basic/ssg-md)。
 
 ### MDX 支持
 
@@ -62,6 +82,37 @@ Rspress 内部设计了多种扩展机制，保证足够强的定制能力，包
 ## 功能特性
 
 接下来我们来介绍 Rspress 的主要功能特性。
+
+### 一整套全新主题
+
+Rspress V2 带来了全新设计的主题，在视觉效果和阅读体验上都有显著提升，同时提供了极高的可定制性。
+
+#### BEM 命名规范
+
+所有内置组件现已采用 [BEM 命名规范](https://getbem.com/)。这一改变使开发者能够通过标准 CSS 选择器灵活调整样式，避免与 Tailwind CSS 等工具产生冲突，大大降低了样式定制的门槛。
+
+```css
+/* 轻松覆盖组件样式 */
+.rp-nav__title {
+  height: 32px;
+}
+.rp-nav-menu__item--active {
+  color: purple;
+}
+```
+
+#### 丰富的 CSS 变量
+
+全新主题暴露了更多的 CSS 变量，覆盖主题色、代码块、首页等组件的样式。你可以在 [CSS 变量](/ui/vars) 页面交互式地预览和调整这些变量。
+
+#### `rspress eject` 命令
+
+当 CSS 变量无法满足定制需求时，你可以使用全新的 `rspress eject` 命令将内置组件的源代码复制到项目的主题目录中，实现完全自定义。
+
+```bash
+# 将 Nav 组件导出到 theme 目录
+npx rspress eject Nav
+```
 
 ### 自动生成布局
 
@@ -107,6 +158,12 @@ MDX 是一种功能强大的内容开发方式。你不仅仅可以像往常一�
 
 详情可以查看[「使用 MDX」 文档](/guide/use-mdx/components)。
 
+### 集成 Shiki 用于代码块高亮
+
+Rspress V2 默认使用 [Shiki](https://shiki.style/) 进行代码高亮。相比运行时高亮方案，Shiki 在编译时完成高亮处理，基于 TextMate 语法实现与 VS Code 一致的准确语法高亮，不增加运行时开销和包体积。
+
+可以通过 CSS 变量自定义代码块的配色方案，在 [CSS 变量](/ui/vars) 页面可以交互式地切换和预览不同的 Shiki 主题。同时 Shiki 也允许使用自定义的 [transformer](https://shiki.style/guide/transformers) 进行扩展来丰富写作，如 [twoslash](https://twoslash.netlify.app/)。
+
 ### SSG
 
 Rspress 是一个标准的 SSG 框架，在生产环境的构建中，它会自动帮你生成静态站点，即生成各个页面的 HTML 内容，在构建完成之后，HTML 会出现在默认的产物目录中。
@@ -124,7 +181,9 @@ Rspress 是一个标准的 SSG 框架，在生产环境的构建中，它会自�
 - 如何组织不同语言版本的文档目录？
 - 如何自定义组件中使用 I18n 数据源？
 
-Rspress 已经为你支持了这些需求场景，你可以根据 [I18n 教程](../basic/i18n.mdx 'I18n 教程') 来一步步为你的站点实现国际化。
+Rspress V2 主题内置了中文、英文、日文、韩文等多种语言的翻译文本，未来会支持更多语言，系统会自动根据语言配置和使用进行 "Tree Shaking"，仅打包你需要的文本。你也可以通过 [`i18nSource`](/api/config/config-basic.html#i18nsource) 配置项轻松扩展或覆盖翻译内容。
+
+你可以根据 [I18n 教程](../basic/i18n.mdx 'I18n 教程') 来一步步为你的站点实现国际化。
 
 ### 多版本文档
 
@@ -267,7 +326,7 @@ export default defineConfig({
 
 [Docusaurus](https://docusaurus.io/ 'Docusaurus') 是 Meta 开源的一款 SSG 框架，它和 Rspress 一样使用 React 作为渲染框架，且支持 MDX，但 Rspress 与 Docusaurus 的区别主要在于：
 
-1. Rspress 默认使用 [mdx-rs](https://github.com/web-infra-dev/mdx-rs) 来提供更好的构建性能，详见[构建性能](#构建性能)。
+1. Rspress 通过 lazyCompilation 和持久化缓存提供更好的构建性能，实现毫秒级的冷启动，详见[构建性能](#构建性能)。
 2. Rspress 的配置更简单，上手成本更低。Rspress 的配置更加简单，不引入过多的概念，尽可能降低心智负担，比如提供开箱即用的搜索功能、符合直觉的多版本文档管理方式等等。
 3. Rspress 架构上对 Bundler 提供了更上层的抽象。对于 webpack、Rspack 这类底层的 Bundler，其配置项繁琐且不易上手。Docusaurus 选择直接暴露底层 Bundler 的配置项，而 Rspress 则对 Bundler 进行了更上层的抽象，提供了更加简单易用的配置项，比如你可以通过 `builderConfig.html.tags` 轻松添加 `<head>` 中的标签，而不用通过 Bundler 来注册 `html-webpack-plugin` 相关插件。
 

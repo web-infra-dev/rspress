@@ -7,6 +7,7 @@ Rspress is a static site generator based on [Rsbuild](https://rsbuild.rs/), rend
 Rspress is designed around the following core features:
 
 - **Build Performance**. Ensuring a fast enough startup speed brings a good development experience.
+- **AI-friendly**. Technical documentation not only serves human readers but can also be better understood and utilized by AI through SSG-MD.
 - **MDX Support**. Through MDX, we can conveniently reuse document fragments and render custom React components in documents.
 - **Basic Capabilities of Documentation Site**. Including internationalization, multi-version support, full-text search, component library documentation, etc.
 - **Extensibility**. Provides a built-in plugin system, supports extending Rspress through plugin API.
@@ -21,14 +22,33 @@ We couldn't help but start thinking, can we break the limitations of the current
 
 Then, we continued to explore in this direction and finally achieved this effect on Rspress.
 
-If there is only one most core optimization method, it is undoubtedly the `Rust Frontend Toolchain`. We mainly use the Rust toolchain in two performance-sensitive parts:
+In Rspress V2, we have made significant performance improvements through multiple optimization methods:
 
-- Bundler. Traditional bundlers include webpack, Rollup, etc. For a front-end project, the bundler is the integration hub of various compilation tool chains. It is a very critical engineering capability and has a huge impact on project construction performance. Rspress uses Rspack developed by the team. Rspack is a Bundler based on Rust, with built-in multiple performance optimization methods, such as multi-threaded parallel compilation, incremental compilation, etc., which are 5 to 10 times more efficient than traditional packaging tools in the community.
-- Markdown compiler. For another major compilation performance bottleneck in the SSG framework, namely `Markdown Compilation`, we also Rust this process to further speed up and customize Rspress's Markdown compiler (ie `@rspress/mdx-rs`). This compiler is nearly 20 times more efficient than the JS version of the compiler in the community:
+- **LazyCompilation**. LazyCompilation compiles on-demand in dev mode. Pages are only compiled when you visit them, significantly improving development startup speed and even achieving millisecond-level cold starts.
+- **Persistent Cache**. For production builds, persistent cache is enabled by default, reusing previous compilation results during warm starts to improve build speed by 30%-60%.
+- **Rspack Bundler**. Rspress uses Rspack developed by the team. Rspack is a Bundler based on Rust, with built-in multiple performance optimization methods, such as multi-threaded parallel compilation, incremental compilation, etc., which are 5 to 10 times more efficient than traditional packaging tools in the community.
 
-<img src="https://lf3-static.bytednsdoc.com/obj/eden-cn/uhbfnupenuhf/rspress/mdx-rs-benchmark.png" />
+At the same time, Rspress internally also applies many other build optimization methods. These optimization methods, combined with the powerful Rust front-end toolchain, push the compilation performance of the SSG framework to a new height.
 
-At the same time, Rspress internally also applies many other build optimization methods, such as `pre-bundle of theme`, etc. These additional optimization methods, combined with the powerful Rust front-end toolchain, push the compilation performance of the SSG framework to a new height.
+### AI-friendly
+
+With the rise of large language models, technical documentation needs to serve not only human readers but also be better understood and utilized by AI.
+
+Rspress V2 introduces **SSG-MD** capability, which renders pages as Markdown files instead of HTML files and generates index files compliant with the [llms.txt](https://llmstxt.org/) specification.
+
+```ts title="rspress.config.ts"
+import { defineConfig } from '@rspress/core';
+
+export default defineConfig({
+  llms: true,
+});
+```
+
+Once enabled, the build output will include `llms.txt` (an index file showing page titles and descriptions in navigation and sidebar order), `llms-full.txt` (a complete file containing Markdown content from all pages), and `.md` files corresponding to each route.
+
+Just as SSG can generate static HTML files to improve SEO, SSG-MD can relatively improve GEO (Generative Engine Optimization) and the quality of static information for large models.
+
+For detailed usage, please refer to the [SSG-MD documentation](/guide/basic/ssg-md).
 
 ### MDX support
 
@@ -62,6 +82,37 @@ Rspress internally designed various extension mechanisms to ensure sufficient cu
 ## Features
 
 Next, let's introduce the main functional features of Rspress.
+
+### Brand new theme
+
+Rspress V2 introduces a completely redesigned theme, featuring significant improvements in visual effects and reading experience while providing exceptional customizability.
+
+#### BEM naming convention
+
+All built-in components now adopt the [BEM naming convention](https://getbem.com/). This enables developers to flexibly adjust styles through standard CSS selectors, avoiding conflicts with tools like Tailwind CSS and significantly lowering the barrier for style customization.
+
+```css
+/* Easily override component styles */
+.rp-nav__title {
+  height: 32px;
+}
+.rp-nav-menu__item--active {
+  color: purple;
+}
+```
+
+#### Rich CSS variables
+
+The new theme exposes more CSS variables, covering styles for theme colors, code blocks, homepage components, and more. You can interactively preview and adjust these variables on the [CSS Variables](/ui/vars) page.
+
+#### `rspress eject` Command
+
+When CSS variables cannot meet your customization needs, you can use the new `rspress eject` command to copy the source code of built-in components to your project's theme directory for complete customization.
+
+```bash
+# Export nav component to theme directory
+npx rspress eject Nav
+```
 
 ### Automatic layout generation
 
@@ -107,6 +158,12 @@ In addition, Rspress also supports some specific syntax, such as:
 
 Details can be found in the [Use MDX Document](/guide/use-mdx/components).
 
+### Code highlighting with Shiki
+
+Rspress V2 uses [Shiki](https://shiki.style/) by default for code highlighting. Compared to runtime highlighting solutions, Shiki performs highlighting at compile time, achieving accurate syntax highlighting consistent with VS Code based on TextMate grammar, without adding runtime overhead or bundle size.
+
+You can customize code block color schemes through CSS variables, and interactively switch and preview different Shiki themes on the [CSS Variables](/ui/vars) page. Shiki also allows extensions through custom [transformers](https://shiki.style/guide/transformers) to enrich writing, such as [twoslash](https://twoslash.netlify.app/).
+
 ### SSG
 
 Rspress is a SSG framework. In the build process in the production environment, it will automatically help you generate static sites, that is, generate HTML content for each page. After the build process is completed, HTML will appear in the default output directory.
@@ -124,7 +181,9 @@ Internationalization is a common requirement in a document-type site, and Rspres
 - How to organize the document directory of different language versions?
 - How to use I18n data source in custom components?
 
-Rspress has already supported these demand scenarios for you. You can follow the [I18n Tutorial](../basic/i18n.mdx 'I18n Tutorial') to step by step to implement internationalization for your site.
+Rspress V2 includes translations for Chinese, English, Japanese, Korean, and more languages built-in, with more to come. The system automatically performs "Tree Shaking" based on language configuration and usage, bundling only the text you need. You can also easily extend or override translations through the [`i18nSource`](/api/config/config-basic.html#i18nsource) configuration option.
+
+You can follow the [I18n Tutorial](../basic/i18n.mdx 'I18n Tutorial') to step by step to implement internationalization for your site.
 
 ### Multi-version Documents
 
@@ -266,7 +325,7 @@ export default defineConfig({
 
 [Docusaurus](https://docusaurus.io/ 'Docusaurus') is an open-source SSG framework by Meta. Like Rspress, it uses React as the rendering framework and supports MDX. However, the main differences between Rspress and Docusaurus are:
 
-1. Rspress uses [mdx-rs](https://github.com/web-infra-dev/mdx-rs) by default to provide better build performance. For details, see [Build Performance](#build-performance).
+1. Rspress provides better build performance through lazyCompilation and persistent cache, achieving millisecond-level cold starts. For details, see [Build Performance](#build-performance).
 
 2. Rspress has simpler config and lower learning curve. Rspress's config is simpler, does not introduce too many concepts, and reduces cognitive load as much as possible. For example, it provides out-of-the-box search functionality, intuitive multi-version document management, etc.
 
