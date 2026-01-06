@@ -1,6 +1,6 @@
 import type { FrontMatterMeta } from '@rspress/core';
 import { normalizeImagePath, useFrontmatter } from '@rspress/core/runtime';
-import { Button, renderHtmlOrText } from '@theme';
+import { Button, Link, renderHtmlOrText } from '@theme';
 
 import './index.scss';
 import clsx from 'clsx';
@@ -39,7 +39,16 @@ function HomeHero({ beforeHeroActions, afterHeroActions }: HomeHeroProps) {
       className={clsx('rp-home-hero', { 'rp-home-hero--no-image': !hasImage })}
     >
       <div className="rp-home-hero__container">
-        {hero.badge && <div className="rp-home-hero__badge">{hero.badge}</div>}
+        {hero.badge &&
+          (typeof hero.badge === 'string' ? (
+            <div className="rp-home-hero__badge">{hero.badge}</div>
+          ) : hero.badge.link ? (
+            <Link href={hero.badge.link} className="rp-home-hero__badge">
+              {hero.badge.text}
+            </Link>
+          ) : (
+            <div className="rp-home-hero__badge">{hero.badge.text}</div>
+          ))}
         <div className="rp-home-hero__content">
           <div className="rp-home-hero__title">
             <span
