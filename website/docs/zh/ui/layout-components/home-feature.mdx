@@ -39,7 +39,13 @@ export default function HomeFeature() {
 
 ```ts
 interface Feature {
-  /** 特性图标，支持 emoji 或 HTML 字符串 */
+  /**
+   * 特性图标，支持：
+   * - Emoji: '🚀'
+   * - HTML 字符串: '<span class="icon">...</span>'
+   * - SVG 字符串: '<svg>...</svg>'
+   * - 图片 URL: '/icons/feature.svg' 或 'https://example.com/icon.png'
+   */
   icon: string;
   /** 特性标题 */
   title: string;
@@ -53,5 +59,6 @@ interface Feature {
 ```
 
 - `span` 控制每个卡片占据的网格列数，总共 12 列
-- `icon` 和 `details` 支持 HTML 字符串
+- `icon` 支持 emoji、HTML 字符串、SVG 字符串、图片 URL
+- `details` 支持 HTML 字符串
 - 设置 `link` 后卡片可点击跳转
