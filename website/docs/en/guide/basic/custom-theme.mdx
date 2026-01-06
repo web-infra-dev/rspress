@@ -141,7 +141,9 @@ export * from '@rspress/core/theme-original';
 
 </Tabs>
 
-It's worth noting that the `Layout` component is designed with a series of props to support slot elements. You can use these props to extend the default theme layout:
+### Layout slots
+
+The `Layout` component is designed with a series of props to support slot elements. You can use these props to extend the default theme layout:
 
 <details>
 
@@ -176,13 +178,17 @@ const Layout = () => (
     afterDocContent={<div>afterDocContent</div>}
     /* Before nav bar */
     beforeNav={<div>beforeNav</div>}
+    /* After nav bar */
+    afterNav={<div>afterNav</div>}
     /* Before upper left nav bar title */
     beforeNavTitle={<span>😄</span>}
     /* Nav bar title */
     navTitle={<div>Custom Nav Title</div>}
     /* After upper left nav bar title */
     afterNavTitle={<div>afterNavTitle</div>}
-    /* Upper right corner of nav bar */
+    /* Before nav bar menu */
+    beforeNavMenu={<div>beforeNavMenu</div>}
+    /* After nav bar menu */
     afterNavMenu={<div>afterNavMenu</div>}
     /* Above left sidebar */
     beforeSidebar={<div>beforeSidebar</div>}

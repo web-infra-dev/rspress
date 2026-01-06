@@ -141,7 +141,9 @@ export * from '@rspress/core/theme-original';
 
 </Tabs>
 
-值得注意的是，`Layout` 组件设计了一系列的 props 支持插槽元素，你可以通过这些 props 来扩展默认主题的布局：
+### Layout 插槽
+
+`Layout` 组件设计了一系列的 props 支持插槽元素，你可以通过这些 props 来扩展默认主题的布局：
 
 <details>
 
@@ -176,13 +178,17 @@ const Layout = () => (
     afterDocContent={<div>afterDocContent</div>}
     /* 导航栏之前 */
     beforeNav={<div>beforeNav</div>}
+    /* 导航栏之后 */
+    afterNav={<div>afterNav</div>}
     /* 左上角导航栏标题之前 */
     beforeNavTitle={<span>😄</span>}
     /* 导航栏标题 */
     navTitle={<div>Custom Nav Title</div>}
     /* 左上角导航栏标题之后 */
     afterNavTitle={<div>afterNavTitle</div>}
-    /* 导航栏右上角部分 */
+    /* 导航栏菜单之前 */
+    beforeNavMenu={<div>beforeNavMenu</div>}
+    /* 导航栏菜单之后 */
     afterNavMenu={<div>afterNavMenu</div>}
     /* 左侧侧边栏上面 */
     beforeSidebar={<div>beforeSidebar</div>}
