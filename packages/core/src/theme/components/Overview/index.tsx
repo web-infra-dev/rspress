@@ -6,11 +6,10 @@ import type {
 } from '@rspress/core';
 import {
   isEqualPath,
-  normalizeHref,
+  routePathToMdPath,
   useI18n,
   usePageData,
   useSidebar,
-  withBase,
 } from '@rspress/core/runtime';
 import {
   FallbackHeading,
@@ -26,13 +25,6 @@ import {
 } from '../Sidebar/utils';
 import './index.scss';
 import { findItemByRoutePath } from './utils';
-
-function routePathToMdPath(routePath: string): string {
-  let url: string = routePath;
-  url = normalizeHref(url, false);
-  url = url.replace(/\.html$/, '.md');
-  return withBase(url);
-}
 
 function OverviewMarkdown({
   title,

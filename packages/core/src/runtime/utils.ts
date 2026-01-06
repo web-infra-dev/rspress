@@ -53,6 +53,13 @@ function normalizeImagePath(imagePath: string) {
   return withBase(imagePath);
 }
 
+function routePathToMdPath(routePath: string): string {
+  let url: string = routePath;
+  url = normalizeHref(url, false);
+  url = url.replace(/\.html(?=#|\?|$)/, '.md');
+  return withBase(url);
+}
+
 function isAbsoluteUrl(path: string) {
   return isExternalUrl(path) || isDataUrl(path) || path.startsWith('//');
 }
@@ -67,4 +74,5 @@ export {
   withBase,
   isEqualPath,
   normalizeHrefInRuntime,
+  routePathToMdPath,
 };
