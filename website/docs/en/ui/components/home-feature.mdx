@@ -43,7 +43,13 @@ const features = [
 
 ```ts
 interface Feature {
-  /** Feature icon, supports emoji or HTML string */
+  /**
+   * Feature icon, supports:
+   * - Emoji: '🚀'
+   * - HTML string: '<span class="icon">...</span>'
+   * - SVG string: '<svg>...</svg>'
+   * - Image URL: '/icons/feature.svg' or 'https://example.com/icon.png'
+   */
   icon: string;
   /** Feature title */
   title: string;
@@ -57,5 +63,6 @@ interface Feature {
 ```
 
 - `span` controls how many grid columns each card occupies, out of 12 total columns
-- `icon` and `details` support HTML strings
+- `icon` supports emoji, HTML strings, SVG strings, and image URLs
+- `details` supports HTML strings
 - Set `link` to make the card clickable
