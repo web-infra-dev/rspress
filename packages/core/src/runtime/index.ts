@@ -37,5 +37,6 @@ export {
   normalizeImagePath,
   removeBase,
   removeTrailingSlash,
+  routePathToMdPath,
   withBase,
 } from './utils';
