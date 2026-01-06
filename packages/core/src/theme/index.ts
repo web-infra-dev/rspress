@@ -96,6 +96,7 @@ export { NotFoundLayout } from './layout/NotFountLayout/index';
 // logic
 export { mergeRefs } from './logic/mergeRefs';
 export { useFullTextSearch } from './logic/useFullTextSearch';
+export { routePathToMdPath, useLlms } from './logic/useLlms';
 export { usePrevNextPage } from './logic/usePrevNextPage';
 export { useRedirect4FirstVisit } from './logic/useRedirect4FirstVisit';
 export { useScrollAfterNav } from './logic/useScrollAfterNav';

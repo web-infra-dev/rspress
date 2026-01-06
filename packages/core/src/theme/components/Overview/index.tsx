@@ -6,17 +6,16 @@ import type {
 } from '@rspress/core';
 import {
   isEqualPath,
-  normalizeHref,
   useI18n,
   usePageData,
   useSidebar,
-  withBase,
 } from '@rspress/core/runtime';
 import {
   FallbackHeading,
   type Group,
   type GroupItem,
   OverviewGroup,
+  routePathToMdPath,
 } from '@theme';
 import { useEffect, useMemo, useRef, useState } from 'react';
 import {
@@ -26,13 +25,6 @@ import {
 } from '../Sidebar/utils';
 import './index.scss';
 import { findItemByRoutePath } from './utils';
-
-function routePathToMdPath(routePath: string): string {
-  let url: string = routePath;
-  url = normalizeHref(url, false);
-  url = url.replace(/\.html$/, '.md');
-  return withBase(url);
-}
 
 function OverviewMarkdown({
   title,
