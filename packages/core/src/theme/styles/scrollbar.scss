@@ -1,9 +1,13 @@
 .rp-scrollbar {
   scrollbar-gutter: stable;
 
+  /* Modern standard properties for Firefox and Chrome 121+ */
+  scrollbar-width: thin;
+  scrollbar-color: transparent transparent;
+
   /* Scrollbar dimensions */
   &::-webkit-scrollbar {
-    width: 4px;
+    /* Only set height for horizontal scrollbars to allow vertical overlay behavior */
     height: 4px;
   }
 
@@ -14,14 +18,22 @@
 
   /* Scrollbar thumb */
   &::-webkit-scrollbar-thumb {
-    background: rgba(0, 0, 0, 0.05);
+    background: transparent;
     border-radius: 4px;
     transition: background 0.2s ease;
   }
 
-  /* Hover state */
-  &:hover::-webkit-scrollbar-thumb {
-    background: rgba(0, 0, 0, 0.1);
+  /* Show scrollbar on hover */
+  &:hover {
+    scrollbar-color: rgba(0, 0, 0, 0.1) transparent;
+
+    &::-webkit-scrollbar-thumb {
+      background: rgba(0, 0, 0, 0.05);
+    }
+
+    &::-webkit-scrollbar-thumb:hover {
+      background: rgba(0, 0, 0, 0.1);
+    }
   }
 
   /* Scrollbar corner */
@@ -31,12 +43,16 @@
 
   /* Dark mode adaptation */
   .rp-dark & {
-    &::-webkit-scrollbar-thumb {
-      background: rgba(255, 255, 255, 0.1);
-    }
+    &:hover {
+      scrollbar-color: rgba(255, 255, 255, 0.2) transparent;
 
-    &:hover::-webkit-scrollbar-thumb {
-      background: rgba(255, 255, 255, 0.2);
+      &::-webkit-scrollbar-thumb {
+        background: rgba(255, 255, 255, 0.1);
+      }
+
+      &::-webkit-scrollbar-thumb:hover {
+        background: rgba(255, 255, 255, 0.2);
+      }
     }
   }
 }
