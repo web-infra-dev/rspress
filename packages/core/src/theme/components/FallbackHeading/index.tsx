@@ -14,6 +14,16 @@ const getHeadingMap = () => {
   };
 };
 
+export function FallbackHeadingMarkdown({
+  level,
+  title,
+}: {
+  level: 1 | 2 | 3 | 4 | 5 | 6;
+  title: string;
+}) {
+  return <>{`${'#'.repeat(level)} ${title}\n\n`}</>;
+}
+
 /**
  * Escape Hatch
  * A fallback heading component in runtime that generates an anchor link based on the title prop.
@@ -29,7 +39,7 @@ export function FallbackHeading({
   title: string;
 }) {
   if (process.env.__SSR_MD__) {
-    return <>{`${'#'.repeat(level)} ${title}\n\n`}</>;
+    return <FallbackHeadingMarkdown level={level} title={title} />;
   }
 
   const titleSlug = title && slug(title.trim());

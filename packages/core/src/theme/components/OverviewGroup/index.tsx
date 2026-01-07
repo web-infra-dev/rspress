@@ -6,7 +6,7 @@ import { FallbackHeading, SvgWrapper } from '@theme';
 import { useMemo } from 'react';
 import IconPlugin from './icons/plugin.svg';
 
-function OverviewGroupMarkdown({ group }: { group: Group }) {
+export function OverviewGroupMarkdown({ group }: { group: Group }) {
   const lines: string[] = [];
 
   if (group.name) {
@@ -44,6 +44,7 @@ function OverviewGroupMarkdown({ group }: { group: Group }) {
     }
   }
 
+  console.log(lines.join('\n'));
   return <>{lines.join('\n')}</>;
 }
 
@@ -63,6 +64,7 @@ export interface Group {
 
 export const OverviewGroup = ({ group }: { group: Group }) => {
   if (process.env.__SSR_MD__) {
+    console.log(111111);
     return <OverviewGroupMarkdown group={group} />;
   }
 

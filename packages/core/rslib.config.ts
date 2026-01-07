@@ -102,6 +102,7 @@ export default defineConfig({
       plugins: [pluginReact()],
     },
     {
+      id: 'theme-ssg-md',
       format: 'esm',
       bundle: false,
       dts: true,
@@ -120,7 +121,11 @@ export default defineConfig({
           __WEBPACK_PUBLIC_PATH__: '__webpack_public_path__',
         },
         entry: {
-          index: ['./src/theme/**', '!./src/theme/tsconfig.json'],
+          index: [
+            './src/theme/**',
+            '!./src/theme/tsconfig.json',
+            '!./src/theme/**/*.test.tsx',
+          ],
         },
       },
       tools: {

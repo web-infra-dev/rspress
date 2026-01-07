@@ -20,6 +20,9 @@ importers:
       '@rspress/config':
         specifier: workspace:*
         version: link:scripts/config
+      '@rstest/adapter-rslib':
+        specifier: ^0.1.1
+        version: 0.1.1(@rslib/core@0.19.1(@microsoft/api-extractor@7.55.2(@types/node@22.10.2))(typescript@5.8.2))(typescript@5.8.2)
       '@rstest/core':
         specifier: ^0.7.8
         version: 0.7.8
@@ -3213,6 +3216,15 @@ packages:
 
   '@rstack-dev/doc-ui@1.12.2':
     resolution: {integrity: sha512-4C+tfhODxCp81ohCik9baOdbhYGNFqdwcwQMAESncF0YX3EawdNCORI1E26DqkY/F3ggfKG4qOlEAu+oOxrPxg==}
+
+  '@rstest/adapter-rslib@0.1.1':
+    resolution: {integrity: sha512-R63E/DrtG4ol9wffAxgeq9ze6/Dm9wms0S6grm8maXAQ7qLooza/CTj4AH6aXeEjbpb64hfRGZy8VmZh9+fCfg==}
+    peerDependencies:
+      '@rslib/core': '>=0.18.6'
+      typescript: ^5
+    peerDependenciesMeta:
+      typescript:
+        optional: true
 
   '@rstest/core@0.7.8':
     resolution: {integrity: sha512-A7oN5GLMYuVkTGjXTH+69nz3wR0lxHUkWax+hVq+jNQmcf81ZqJosTLqN6jwFZdmCfHbj3iTd9ku6boo8tJlnA==}
@@ -8814,6 +8826,12 @@ snapshots:
       - '@emotion/is-prop-valid'
       - react
       - react-dom
+
+  '@rstest/adapter-rslib@0.1.1(@rslib/core@0.19.1(@microsoft/api-extractor@7.55.2(@types/node@22.10.2))(typescript@5.8.2))(typescript@5.8.2)':
+    dependencies:
+      '@rslib/core': 0.19.1(@microsoft/api-extractor@7.55.2(@types/node@22.10.2))(typescript@5.8.2)
+    optionalDependencies:
+      typescript: 5.8.2
 
   '@rstest/core@0.7.8':
     dependencies:
