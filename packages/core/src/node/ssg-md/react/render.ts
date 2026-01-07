@@ -128,7 +128,7 @@ export async function renderToMarkdownString(
     (error, info) => {
       if (process.env.DEBUG) {
         console.error('Reconciler Error:', error, info);
-        const message = 'Reconciler Error:' + error.message;
+        const message = `Reconciler Error:${error.message}`;
         throw new Error(message);
       }
     }, // onUncaughtError
