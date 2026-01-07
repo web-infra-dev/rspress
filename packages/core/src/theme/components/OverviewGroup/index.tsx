@@ -7,44 +7,49 @@ import { useMemo } from 'react';
 import IconPlugin from './icons/plugin.svg';
 
 export function OverviewGroupMarkdown({ group }: { group: Group }) {
+  console.log(group, 2222)
   const lines: string[] = [];
 
   if (group.name) {
     lines.push(`## ${group.name}`);
     lines.push('');
   }
-
-  for (const item of group.items) {
-    const itemTitle = item.link
-      ? `[${item.text}](${routePathToMdPath(item.link)})`
-      : `**${item.text}**`;
-    lines.push(`### ${itemTitle}`);
-    lines.push('');
-
-    // Render headers as a list
-    if (item.headers && item.headers.length > 0) {
-      for (const header of item.headers) {
-        const headerLink = item.link
-          ? `[${header.text}](${routePathToMdPath(item.link)}#${header.id})`
-          : header.text;
-        lines.push(`- ${headerLink}`);
-      }
+  console.log(lines.join('\n'), 34334);
+  try {
+    for (const item of group.items) {
+      const itemTitle = item.link
+        ? `[${item.text}](${routePathToMdPath(item.link)})`
+        : `**${item.text}**`;
+      lines.push(`### ${itemTitle}`);
       lines.push('');
-    }
 
-    // Render custom items as a list
-    if (item.items && item.items.length > 0) {
-      for (const subItem of item.items) {
-        const subItemLink = subItem.link
-          ? `[${subItem.text}](${routePathToMdPath(subItem.link)})`
-          : subItem.text;
-        lines.push(`- ${subItemLink}`);
+      // Render headers as a list
+      if (item.headers && item.headers.length > 0) {
+        for (const header of item.headers) {
+          const headerLink = item.link
+            ? `[${header.text}](${routePathToMdPath(item.link)}#${header.id})`
+            : header.text;
+          lines.push(`- ${headerLink}`);
+        }
+        lines.push('');
       }
-      lines.push('');
+
+      // Render custom items as a list
+      if (item.items && item.items.length > 0) {
+        for (const subItem of item.items) {
+          const subItemLink = subItem.link
+            ? `[${subItem.text}](${routePathToMdPath(subItem.link)})`
+            : subItem.text;
+          lines.push(`- ${subItemLink}`);
+        }
+        lines.push('');
+      }
     }
+  } catch (e) { 
+    console.log(e, 22222222)
   }
 
-  console.log(lines.join('\n'));
+  console.log(lines.join('\n'), 4444);
   return <>{lines.join('\n')}</>;
 }
 

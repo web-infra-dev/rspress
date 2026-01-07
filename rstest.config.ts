@@ -1,6 +1,5 @@
 import { defineConfig } from '@rstest/core';
-import { withRslibConfig } from '@rstest/adapter-rslib';
-import path from 'node:path';
+import { pluginSass } from '@rsbuild/plugin-sass';
 
 // Disable color in test
 process.env.NO_COLOR = '1';
@@ -20,7 +19,7 @@ export default defineConfig({
     },
   },
   {
-    name: 'node-ssg-md',
+    name: 'web-component',
     globals: false,
     testEnvironment: 'node',
     testTimeout: 30000,
@@ -30,19 +29,20 @@ export default defineConfig({
     output: {
       module: true,
     },
-     extends: async (user) => {
-    const config = await withRslibConfig({
-      configPath: path.join(__dirname, 'rslib.config.ts'),
-      libId: 'theme-ssg-md',
-    })(user);
-    console.log('Extended config:', JSON.stringify(config, null, 2));
-    return config;
-  },
-    // extends: withRslibConfig(),
-    env: {
-      __SSR_MD__: 'true',
-      SSG_MD: 'true',
-    }
+    tools: {
+      swc: {
+        jsc: {
+          transform: {
+            react: {
+              runtime: 'automatic'
+            }
+          }
+        }
+      }
+    },
+    plugins: [
+      pluginSass(),
+    ],
   }
   ]
 }

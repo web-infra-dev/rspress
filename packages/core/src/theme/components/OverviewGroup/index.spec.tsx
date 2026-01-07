@@ -1,7 +1,9 @@
-import { describe, expect, it, rs } from '@rstest/core';
-import React from 'react';
+import { afterAll, beforeAll, describe, expect, it, rs } from '@rstest/core';
 import { renderToMarkdownString } from '../../../node/ssg-md/react/render';
-import { OverviewGroup } from './index';
+import { OverviewGroupMarkdown } from './index';
+import x from 'virtual-site-data'
+console.log(x, 333333)
+
 
 // Mock virtual-site-data for @rspress/core/runtime
 rs.mock('virtual-site-data', () => ({
@@ -18,17 +20,17 @@ rs.mock('@theme', () => ({
   SvgWrapper: () => null,
 }));
 
-// Mock scss import
-rs.mock('./index.scss', () => ({}));
-
-// Mock svg import
-rs.mock('./icons/plugin.svg', () => 'mock-svg');
-
 import type { Group } from './index';
-import { OverviewGroupMarkdown } from './index';
 
 describe('OverviewGroupMarkdown', () => {
-  it.only('renders group with name and items with headers', async () => {
+  beforeAll(() => {
+    rs.stubEnv('SSG_MD', 'true');
+    rs.stubEnv('__SSR_MD__', 'true');
+  })
+  afterAll(() => {
+    rs.unstubAllEnvs();
+  })
+  it('renders group with name and items with headers', async () => {
     const group: Group = {
       name: 'Getting Started',
       items: [
@@ -36,23 +38,23 @@ describe('OverviewGroupMarkdown', () => {
           text: 'Introduction',
           link: '/guide/introduction',
           headers: [
-            { id: 'what-is-rspress', text: 'What is Rspress', depth: 2 },
-            { id: 'features', text: 'Features', depth: 2 },
+            { id: 'what-is-rspress', text: 'What is Rspress', depth: 2, charIndex: 0 },
+            { id: 'features', text: 'Features', depth: 2, charIndex: 2 },
           ],
         },
         {
           text: 'Quick Start',
           link: '/guide/quick-start',
           headers: [
-            { id: 'installation', text: 'Installation', depth: 2 },
-            { id: 'configuration', text: 'Configuration', depth: 2 },
+            { id: 'installation', text: 'Installation', depth: 2, charIndex: 0 },
+            { id: 'configuration', text: 'Configuration', depth: 2, charIndex: 0 },
           ],
         },
       ],
     };
 
     const result = await renderToMarkdownString(
-      <OverviewGroup group={group} />,
+      <OverviewGroupMarkdown group={group} />,
     );
     expect(result).toMatchInlineSnapshot(`
       "## Getting Started

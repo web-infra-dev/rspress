@@ -17,6 +17,9 @@ importers:
       '@playwright/test':
         specifier: 1.57.0
         version: 1.57.0
+      '@rsbuild/plugin-sass':
+        specifier: ^1.4.0
+        version: 1.4.0(@rsbuild/core@1.7.1)
       '@rspress/config':
         specifier: workspace:*
         version: link:scripts/config
