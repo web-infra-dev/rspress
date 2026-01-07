@@ -78,10 +78,18 @@
     font-size: 0.875rem;
     font-weight: 500;
     color: var(--rp-c-text-0);
+    text-decoration: none;
+    transition:
+      background 0.2s,
+      border-color 0.2s;
 
     &:hover {
       background: var(--rp-c-bg-mute);
       cursor: pointer;
+    }
+
+    &:is(a):hover {
+      border-color: var(--rp-c-brand);
     }
   }
 
