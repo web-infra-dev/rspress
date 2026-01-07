@@ -23,6 +23,7 @@
     "react-dom": "^19.2.3",
     "rsbuild-plugin-google-analytics": "^1.0.4",
     "rsbuild-plugin-open-graph": "^1.1.0",
+    "rspress-plugin-file-tree": "^1.0.0",
     "rspress-plugin-font-open-sans": "^1.0.3",
     "rspress-plugin-og": "npm:@soonit/rspress-plugin-og@0.1.2",
     "tm-themes": "1.10.13",
