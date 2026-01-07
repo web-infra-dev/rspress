@@ -85,28 +85,28 @@ If you want to generate a sub-preview page under `theme`, there are two ways:
 
 ```tree
 ├── docs
-│ ├── index.md
-│ ├── api
-│ │ ├── index.md
-│ │ ├── theme.md
-│ │ ├── theme
-│ │ │ ├── component.mdx
-│ │ │ ├── utils.mdx
-//...
+│   ├── index.md
+│   ├── api
+│   │   ├── index.md
+│   │   ├── theme.md
+│   │   ├── theme
+│   │   │  ├── component.mdx
+│   │   │  ├── utils.mdx
+// ...
 ```
 
 2. Create a new `index.md` in the `theme` directory and configure the frontmatter of `overview: true`.
 
 ```tree
 ├── docs
-│ ├── index.md
-│ ├── api
-│ │ ├── index.md
-│ │ ├── theme
-│ │ │ ├── index.md
-│ │ │ ├── component.mdx
-│ │ │ ├── utils.mdx
-//...
+│   ├── index.md
+│   ├── api
+│   │   ├── index.md
+│   │   ├── theme
+│   │   │  ├── index.md
+│   │   │  ├── component.mdx
+│   │   │  ├── utils.mdx
+// ...
 ```
 
 Then configure `theme/_meta.json` as follows:
