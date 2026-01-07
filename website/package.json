@@ -23,7 +23,7 @@
     "react-dom": "^19.2.3",
     "rsbuild-plugin-google-analytics": "^1.0.4",
     "rsbuild-plugin-open-graph": "^1.1.0",
-    "rspress-plugin-file-tree": "/var/folders/wt/r13w69wd7v9bh3b_t_p24sjm0000gn/T/vibe-kanban/worktrees/40d3-rspress-plugin-f/rspress-plugins/packages/rspress-plugin-file-tree",
+    "rspress-plugin-file-tree": "^1.0.2",
     "rspress-plugin-font-open-sans": "^1.0.3",
     "rspress-plugin-og": "npm:@soonit/rspress-plugin-og@0.1.2",
     "tm-themes": "1.10.13",
