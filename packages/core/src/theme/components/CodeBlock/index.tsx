@@ -92,7 +92,7 @@ export function CodeBlock({
         )}
       >
         <div
-          className="rp-codeblock__content__scroll-container rp-scrollbar"
+          className="rp-codeblock__content__scroll-container rp-scrollbar rp-scrollbar--hover"
           ref={copyElementRef}
         >
           {children}
