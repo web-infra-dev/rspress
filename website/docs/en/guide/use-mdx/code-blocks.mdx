@@ -224,18 +224,18 @@ When `showLineNumbers` is enabled globally, all code blocks will show line numbe
 
 You can enable code wrapping for individual code blocks using the `wrapCode` meta attribute:
 
+<!-- prettier-ignore -->
 ````mdx
 ```ts wrapCode
-const longLine =
-  'This is a very long line of code that will wrap when the wrapCode meta attribute is present';
+const longLine = 'This is a very long line of code that will wrap when the wrapCode meta attribute is present';
 ```
 ````
 
 It will be rendered as:
 
+<!-- prettier-ignore -->
 ```ts wrapCode
-const longLine =
-  'This is a very long line of code that will wrap when the wrapCode meta attribute is present';
+const longLine = 'This is a very long line of code that will wrap when the wrapCode meta attribute is present';
 ```
 
 You can also enable code wrapping globally by setting the `defaultWrapCode` option in the config file:
