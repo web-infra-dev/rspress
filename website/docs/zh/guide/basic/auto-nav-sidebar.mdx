@@ -224,6 +224,32 @@ export type DirSideMeta = {
 }
 ```
 
+:::tip 提示
+
+如果想要点击侧边栏目录显示某篇文档，推荐在目录内创建 `index.mdx` 文件，比如：
+
+```tree
+docs
+└── basic
+    ├── guide
+    │   ├── index.mdx
+    │   ├── getting-started.mdx
+    │   └── _meta.json
+    └── _meta.json
+```
+
+```json title="basic/_meta.json"
+[{ "type": "dir", "name": "guide" }]
+```
+
+```json title="basic/guide/_meta.json"
+["getting-started"]
+```
+
+意为侧边栏里仅含有 `getting-started` 这一篇文档，当你点击 `Guide` 目录时，会显示 `index.mdx` 文件的内容。
+
+:::
+
 ### dir-section-header
 
 当描述**目录**时，你也可以使用 `dir-section-header`，它与 `"type": "dir"` 仅在 UI 上有所变化，常用于第一级别，目录标题会以 [分组标题](#section-header) 的形式展示，并与目录下的文件处于同一层级。
@@ -257,22 +283,6 @@ export type DividerSideMeta = {
 ```
 
 `dashed` 为 `true` 时表示该分割线是虚线，否则是实线。
-
-:::tip 提示
-
-如果想要点击侧边栏目录显示某篇文档，你可以在当前目录同级创建一个同名的 `md(x)` 文件，比如：
-
-```tree
-docs
-├── advanced.mdx
-└── advanced
-  ├── _meta.json
-  └── ...
-```
-
-这样，当你点击 `Advanced` 目录时，会显示 `advanced.mdx` 文件的内容。
-
-:::
 
 ### section-header
 

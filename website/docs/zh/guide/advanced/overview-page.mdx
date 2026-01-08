@@ -79,44 +79,24 @@ This is an Overview page of our website.
 
 如果要控制在预览页中展示的标题级别，可以通过 `_meta.json` 中的 `overviewHeaders` 配置，默认为 `[2]`，也可以在对应的文件中配置 `overviewHeaders: [2]` 的 FrontMatter。
 
-如果要在 `theme` 下同样生成一个子预览页，有以下两种方式：
-
-1. 在 `theme` 的上级目录新建一个同名文件 `theme.md`，配置 `overview: true` 的 frontmatter。
+如果要在 `theme` 下同样生成一个子预览页，可以在 `theme` 目录新建一个 `index.md`，配置 `overview: true` 的 frontmatter。
 
 ```tree
-├── docs
-│   ├── index.md
-│   ├── api
-│   │   ├── index.md
-│   │   ├── theme.md
-│   │   ├── theme
-│   │   │   ├── component.mdx
-│   │   │   ├── utils.mdx
-// ...
+docs
+├── index.md
+└── api
+    ├── index.md
+    └── theme
+        ├── index.md
+        ├── component.mdx
+        └── utils.mdx
 ```
 
-2. 在 `theme` 目录新建一个 `index.md`，配置 `overview: true` 的 frontmatter。
+```md title="theme/index.md"
+---
+title: Theme Overview
+overview: true
+---
 
-```tree
-├── docs
-│   ├── index.md
-│   ├── api
-│   │   ├── index.md
-│   │   ├── theme
-│   │   │   ├── index.md
-│   │   │   ├── component.mdx
-│   │   │   ├── utils.mdx
-// ...
-```
-
-然后配置 `theme/_meta.json` 如下：
-
-```json
-[
-  {
-    "type": "file",
-    "name": "index",
-    "label": "Overview"
-  }
-]
+这是一段关于 theme 的描述，包含 component 和 utils
 ```
