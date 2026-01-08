@@ -224,6 +224,21 @@ Here, `name` indicates the directory name, `label` indicates the display name of
 }
 ```
 
+:::tip
+
+If you want to display a document when clicking on the sidebar directory, it is recommended to create an `index.mdx` file inside the directory, for example:
+
+```tree
+basic
+├── index.mdx
+├── getting-started.mdx
+└── _meta.json
+```
+
+Where `_meta.json` contains `["getting-started"]` (no need to include `index`). This way, when you click on the `Basic` directory, the content of the `index.mdx` file will be displayed.
+
+:::
+
 ### dir-section-header
 
 When describing a **directory**, you can also use `dir-section-header`, which only differs from `"type": "dir"` in UI. It is often used at the first level, where the directory title is displayed as a [section header](#section-header) and is at the same level as files under the directory.
@@ -257,22 +272,6 @@ export type DividerSideMeta = {
 ```
 
 When `dashed` is set to `true`, it indicates that the divider line is dashed. Otherwise, it is solid.
-
-:::tip
-
-If you want to display a document when clicking on the sidebar directory, you can create an `md(x)` file with the same name at the same level as the current directory, for example:
-
-```tree
-docs
-├── advanced.mdx
-└── advanced
-  ├── _meta.json
-  └── ...
-```
-
-In this way, when you click on the `Advanced` directory, the content of the `advanced.mdx` file will be displayed.
-
-:::
 
 ### section-header
 
