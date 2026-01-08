@@ -1704,8 +1704,8 @@ importers:
         specifier: ^1.1.0
         version: 1.1.0(@rsbuild/core@1.7.1)
       rspress-plugin-file-tree:
-        specifier: ^1.0.2
-        version: 1.0.2(@rspress/core@packages+core)
+        specifier: ^1.0.3
+        version: 1.0.3(@rspress/core@packages+core)
       rspress-plugin-font-open-sans:
         specifier: ^1.0.3
         version: 1.0.3(@rspress/core@packages+core)
@@ -6322,8 +6322,8 @@ packages:
     peerDependencies:
       '@rspress/core': ^2.0.0-rc.4 || ^2.0.0
 
-  rspress-plugin-file-tree@1.0.2:
-    resolution: {integrity: sha512-OKQgb5zYklXHWKMVVKPSVMWTdJVpV+r2RrP18GxAhvvKLe7kmKgDY+I11jwDA5/mn70I2Yio/RPE88oL/dm1zg==}
+  rspress-plugin-file-tree@1.0.3:
+    resolution: {integrity: sha512-+z07cGbtxRELATSdDiM/TzsTfgxnycPgTNBjrzhljz9c4boaXCXX7X8slMBLY/QrZMRzIvV74sijoJT2V4iUhw==}
     peerDependencies:
       '@rspress/core': ^2.0.0-rc.4 || ^2.0.0
 
@@ -12890,7 +12890,7 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
-  rspress-plugin-file-tree@1.0.2(@rspress/core@packages+core):
+  rspress-plugin-file-tree@1.0.3(@rspress/core@packages+core):
     dependencies:
       '@rspress/core': link:packages/core
       rspress-plugin-devkit: 1.0.0(@rspress/core@packages+core)
