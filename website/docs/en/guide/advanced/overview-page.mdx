@@ -14,14 +14,14 @@ Generating the preview page requires the following two steps:
 
 For example, create the following directories and files
 
-```txt
+```tree
 ├── docs
 │   ├── index.md
 │   ├── api
 │   │   ├── index.md
 │   │   ├── theme
-│   │   │  ├── component.mdx
-│   │   │  ├── utils.mdx
+│   │   │   ├── component.mdx
+│   │   │   ├── utils.mdx
 // ...
 ```
 
@@ -83,30 +83,30 @@ If you want to generate a sub-preview page under `theme`, there are two ways:
 
 1. Create a new file `theme.md` with the same name in the parent directory of `theme` and configure the frontmatter of `overview: true`.
 
-```txt
+```tree
 ├── docs
-│ ├── index.md
-│ ├── api
-│ │ ├── index.md
-│ │ ├── theme.md
-│ │ ├── theme
-│ │ │ ├── component.mdx
-│ │ │ ├── utils.mdx
-//...
+│   ├── index.md
+│   ├── api
+│   │   ├── index.md
+│   │   ├── theme.md
+│   │   ├── theme
+│   │   │   ├── component.mdx
+│   │   │   ├── utils.mdx
+// ...
 ```
 
 2. Create a new `index.md` in the `theme` directory and configure the frontmatter of `overview: true`.
 
-```txt
+```tree
 ├── docs
-│ ├── index.md
-│ ├── api
-│ │ ├── index.md
-│ │ ├── theme
-│ │ │ ├── index.md
-│ │ │ ├── component.mdx
-│ │ │ ├── utils.mdx
-//...
+│   ├── index.md
+│   ├── api
+│   │   ├── index.md
+│   │   ├── theme
+│   │   │   ├── index.md
+│   │   │   ├── component.mdx
+│   │   │   ├── utils.mdx
+// ...
 ```
 
 Then configure `theme/_meta.json` as follows:

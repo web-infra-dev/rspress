@@ -17,6 +17,7 @@ import {
 } from '@shikijs/transformers';
 import { pluginGoogleAnalytics } from 'rsbuild-plugin-google-analytics';
 import { pluginOpenGraph } from 'rsbuild-plugin-open-graph';
+import pluginFileTree from 'rspress-plugin-file-tree';
 import pluginOg from 'rspress-plugin-og';
 
 // import { pluginFontOpenSans } from 'rspress-plugin-font-open-sans';
@@ -85,6 +86,7 @@ export default defineConfig({
     pluginAlgolia({
       verificationContent: '8F5BFE50E65777F1',
     }),
+    pluginFileTree(),
     pluginOg({
       domain: 'https://v2.rspress.rs',
       maxTitleSizePerLine: 28,
