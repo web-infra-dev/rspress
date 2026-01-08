@@ -229,13 +229,18 @@ Here, `name` indicates the directory name, `label` indicates the display name of
 If you want to display a document when clicking on the sidebar directory, it is recommended to create an `index.mdx` file inside the directory, for example:
 
 ```tree
-basic
-├── index.mdx
-├── getting-started.mdx
-└── _meta.json
+docs
+└── basic
+    ├── index.mdx
+    ├── getting-started.mdx
+    └── _meta.json
 ```
 
-Where `_meta.json` contains `["getting-started"]` (no need to include `index`). This way, when you click on the `Basic` directory, the content of the `index.mdx` file will be displayed.
+```json title="_meta.json"
+["getting-started"]
+```
+
+This means the sidebar only contains the `getting-started` document. When you click on the `Basic` directory, the content of the `index.mdx` file will be displayed.
 
 :::
 
