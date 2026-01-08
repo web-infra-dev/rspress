@@ -231,16 +231,22 @@ If you want to display a document when clicking on the sidebar directory, it is 
 ```tree
 docs
 └── basic
-    ├── index.mdx
-    ├── getting-started.mdx
+    ├── guide
+    │   ├── index.mdx
+    │   ├── getting-started.mdx
+    │   └── _meta.json
     └── _meta.json
 ```
 
-```json title="_meta.json"
+```json title="basic/_meta.json"
+[{ "type": "dir", "name": "guide" }]
+```
+
+```json title="guide/_meta.json"
 ["getting-started"]
 ```
 
-This means the sidebar only contains the `getting-started` document. When you click on the `Basic` directory, the content of the `index.mdx` file will be displayed.
+This means the sidebar only contains the `getting-started` document. When you click on the `Guide` directory, the content of the `index.mdx` file will be displayed.
 
 :::
 
