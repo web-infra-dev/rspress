@@ -8,6 +8,7 @@
 
   /* Scrollbar dimensions - only set height for horizontal scrollbars */
   &::-webkit-scrollbar {
+    width: 4px;
     height: 4px;
   }
 
@@ -47,41 +48,10 @@
   }
 }
 
-/* Modifier class - hover to show scrollbar (CodeBlock only) */
-.rp-scrollbar--hover {
-  /* Modern properties - transparent by default */
-  scrollbar-color: transparent transparent;
-
-  /* Hide scrollbar by default */
-  &::-webkit-scrollbar-thumb {
-    background: transparent;
-  }
-
-  /* Show scrollbar on container hover */
-  &:hover {
-    scrollbar-color: rgba(0, 0, 0, 0.05) transparent;
-
-    &::-webkit-scrollbar-thumb {
-      background: rgba(0, 0, 0, 0.05);
-    }
-
-    &::-webkit-scrollbar-thumb:hover {
-      background: rgba(0, 0, 0, 0.1);
-    }
-  }
-
-  /* Dark mode adaptation */
-  .rp-dark & {
-    &:hover {
-      scrollbar-color: rgba(255, 255, 255, 0.1) transparent;
-
-      &::-webkit-scrollbar-thumb {
-        background: rgba(255, 255, 255, 0.1);
-      }
-
-      &::-webkit-scrollbar-thumb:hover {
-        background: rgba(255, 255, 255, 0.2);
-      }
-    }
-  }
+/* Modifier class - hover to always show scrollbar (CodeBlock only) */
+.rp-scrollbar--always {
+  /* Remove modern properties to always show scrollbar (Not based on system configuration) */
+  scrollbar-gutter: stable;
+  scrollbar-width: unset;
+  scrollbar-color: unset;
 }
