@@ -64,9 +64,9 @@
     border-radius: 2rem;
     border: 1px solid var(--rp-c-divider-light);
     background: var(--rp-home-feature-bg);
-    // fill: var(--rp-home-feature-bg-fill);
     backdrop-filter: blur(10px);
-    transition: all 0.3s;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    box-shadow: 0 2px 12px rgba(0, 0, 0, 0.04);
 
     &--clickable {
       cursor: pointer;
@@ -74,7 +74,13 @@
 
     &:hover {
       border: 1px solid var(--rp-c-brand);
-      color: var(--rp-c-brand);
+      transform: translateY(-4px);
+      box-shadow: 0 8px 24px rgba(0, 149, 255, 0.12);
+
+      .rp-home-feature__icon {
+        transform: scale(1.05);
+        border-color: var(--rp-c-brand);
+      }
     }
   }
 
@@ -97,6 +103,7 @@
     background-color: var(--rp-c-bg);
     border-radius: 1rem;
     border: 3px solid var(--rp-c-divider-light);
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   }
 
   &__title {
