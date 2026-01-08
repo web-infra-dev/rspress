@@ -48,7 +48,7 @@
   }
 }
 
-/* Modifier class - hover to always show scrollbar (CodeBlock only) */
+/* Modifier class - always show scrollbar (CodeBlock only) */
 .rp-scrollbar--always {
   /* Remove modern properties to always show scrollbar (Not based on system configuration) */
   scrollbar-gutter: stable;
