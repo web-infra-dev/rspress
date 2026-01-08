@@ -79,39 +79,22 @@ In the above configuration, the final preview page will generate a group called 
 
 If you want to control the headers displayed in the overview page, you can configure it through `overviewHeaders` config in `_meta.json`, which defaults to `[2]` and you can also configure FrontMatter with `overviewHeaders: [2]` in exact file.
 
-If you want to generate a sub-preview page under `theme`, there are two ways:
-
-1. Create a new file `theme.md` with the same name in the parent directory of `theme` and configure the frontmatter of `overview: true`.
+If you want to generate a sub-preview page under `theme`, create a new `index.md` in the `theme` directory and configure the frontmatter of `overview: true`.
 
 ```tree
-├── docs
-│   ├── index.md
-│   ├── api
-│   │   ├── index.md
-│   │   ├── theme.md
-│   │   ├── theme
-│   │   │   ├── component.mdx
-│   │   │   ├── utils.mdx
-// ...
-```
-
-2. Create a new `index.md` in the `theme` directory and configure the frontmatter of `overview: true`.
-
-```tree
-├── docs
-│   ├── index.md
-│   ├── api
-│   │   ├── index.md
-│   │   ├── theme
-│   │   │   ├── index.md
-│   │   │   ├── component.mdx
-│   │   │   ├── utils.mdx
-// ...
+docs
+├── index.md
+└── api
+    ├── index.md
+    └── theme
+        ├── index.md
+        ├── component.mdx
+        └── utils.mdx
 ```
 
 Then configure `theme/_meta.json` as follows:
 
-```json
+```json title="theme/_meta.json"
 [
   {
     "type": "file",
