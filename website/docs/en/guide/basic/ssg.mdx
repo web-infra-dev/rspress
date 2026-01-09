@@ -1,4 +1,4 @@
-# Static Site Generation (SSG)
+# Static site generation (SSG)
 
 ## What is SSG
 
@@ -12,7 +12,7 @@ Rspress enables SSG by default, which means when you run `rspress build`, each p
 - **SEO Friendly**: Search engine crawlers can directly access complete HTML content
 - **Easy to Deploy**: Output consists of pure static files with no server required, can be directly hosted on any static hosting service
 
-## Differences Between Dev and Build
+## Differences between dev and build
 
 `rspress dev` uses CSR, while `rspress build` switches between SSG or CSR based on the `ssg` configuration.
 
@@ -23,7 +23,7 @@ Rspress enables SSG by default, which means when you run `rspress build`, each p
 | Pre-rendering | None                             | Pre-renders all pages when SSG enabled |
 | Use Case      | Development, debugging, HMR      | Production deployment                  |
 
-### Dev Mode
+### Dev mode
 
 ```bash
 rspress dev
@@ -35,7 +35,7 @@ Dev mode uses **pure Client-Side Rendering (CSR)** without pre-rendering. This i
 If your code works fine in Dev mode but throws errors in Build mode, it's usually because SSG renders in a Node.js environment and cannot access browser APIs (like `window` or `document`). See "Common Issues and Solutions" below.
 :::
 
-### Build Mode
+### Build mode
 
 ```bash
 rspress build
@@ -53,9 +53,9 @@ Build mode enables SSG by default. During the build, Rspress executes React comp
 
 - **Server Deployment**: Deploy the `doc_build` directory to static hosting services (GitHub Pages, Netlify, Vercel, etc.)
 
-## SSG vs CSR Output
+## SSG vs CSR output
 
-### Output Directory Structure
+### Output directory structure
 
 Whether using SSG or CSR mode, the output directory structure is the same:
 
@@ -74,7 +74,7 @@ doc_build/
     └── config.html
 ```
 
-### HTML Content Differences
+### HTML content differences
 
 The core difference between the two modes lies in the HTML file content:
 
@@ -92,7 +92,7 @@ The core difference between the two modes lies in the HTML file content:
       </article>
     </main>
   </div>
-  <script src="/static/js/main.xxx.js"></script>
+  <script src="/static/js/main.[hash].js"></script>
 </body>
 ```
 
@@ -101,11 +101,11 @@ The core difference between the two modes lies in the HTML file content:
 ```html
 <body>
   <div id="root"></div>
-  <script src="/static/js/main.xxx.js"></script>
+  <script src="/static/js/main.[hash].js"></script>
 </body>
 ```
 
-### Loading Flow Differences
+### Loading flow differences
 
 **SSG Loading Flow:**
 
@@ -119,7 +119,7 @@ The core difference between the two modes lies in the HTML file content:
 2. JavaScript finishes loading → React renders page content
 3. Subsequent navigation → SPA mode, client-side rendering
 
-## Common Issues and Solutions
+## Common issues and solutions
 
 ### `window is not defined` / `document is not defined`
 
@@ -172,7 +172,7 @@ The core difference between the two modes lies in the HTML file content:
    }
    ```
 
-### Hydration Mismatch
+### Hydration mismatch
 
 **Cause**: The server-rendered HTML content doesn't match the client's first render. React checks for consistency during hydration, and mismatches will cause warnings or errors.
 
@@ -229,7 +229,7 @@ export default defineConfig({
 Please be cautious when disabling SSG, as this will forfeit the advantages of faster first contentful paint and SEO benefits.
 :::
 
-## Custom HTML Content
+## Custom HTML content
 
 Through `builderConfig.html.tags`, you can inject custom content into HTML, such as adding analytics code, scripts, or styles:
 
