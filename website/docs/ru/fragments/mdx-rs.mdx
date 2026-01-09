@@ -1,0 +1,30 @@
+Определяет, будет ли использоваться Rust-версия компилятора MDX. Например:
+
+```ts title="rspress.config.ts"
+import { defineConfig } from '@rspress/core';
+
+export default defineConfig({
+  markdown: {
+    // Переключение на JS-версию компилятора
+    mdxRs: false,
+  },
+});
+```
+
+Вы также можете передать функцию, чтобы определить, какие файлы использовать с Rust-версией компилятора MDX. Например:
+
+```ts title="rspress.config.ts"
+import { defineConfig } from '@rspress/core';
+
+export default defineConfig({
+  markdown: {
+    mdxRs: {
+      include: (filepath: string) => filepath.includes('foo.mdx'),
+    },
+  },
+});
+```
+
+:::tip ВАЖНО
+Фундаментальная часть `mdxRs` основана на библиотеке [@rspress/mdx-rs-binding](https://github.com/web-infra-dev/mdx-rs), разработанной Rspress. Производительность в **10+ раз** выше, чем у JS-версии компилятора MDX, однако JS-версия плагина пока не поддерживается.
+:::

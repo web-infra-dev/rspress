@@ -1,0 +1,40 @@
+---
+overviewHeaders: []
+tag: eject-only
+---
+
+# LastUpdated
+
+`LastUpdated` отображает время последнего обновления текущей страницы.
+
+## Использование
+
+```tsx title="index.mdx"
+import { LastUpdated } from '@rspress/core/theme';
+
+<LastUpdated />;
+```
+
+Этот компонент не принимает никаких пропсов. Он автоматически читает время последнего обновления из метаданных страницы.
+
+## Связанная конфигурация
+
+Включите `lastUpdated` в `rspress.config.ts`:
+
+```ts title="rspress.config.ts"
+import { defineConfig } from '@rspress/core';
+
+export default defineConfig({
+  themeConfig: {
+    lastUpdated: true,
+  },
+});
+```
+
+Когда `lastUpdated` включён, компонент автоматически читает и форматирует метаданные страницы для отображения.
+
+Чтобы кастомизировать метку или форматирование, выполните `rspress eject LastUpdated` и отредактируйте файл `theme/components/LastUpdated/index.tsx`.
+
+:::tip Совет
+Если в дефолтной теме не настроено `lastUpdated: true`, установите и зарегистрируйте плагин `@rspress/plugin-last-updated`.
+:::

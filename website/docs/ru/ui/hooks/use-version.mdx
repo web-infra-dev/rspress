@@ -1,0 +1,16 @@
+# useVersion
+
+`useVersion` предоставляет текущую версию документации, когда включена поддержка нескольких версий.
+
+- **Тип:** `() => string`
+
+Используйте его, чтобы отображать активную версию в интерфейсе или для ветвления логики в зависимости от версии контента.
+
+```tsx
+import { useVersion } from '@rspress/core/runtime';
+
+export default function VersionTag() {
+  const version = useVersion();
+  return <div>Просмотр документации для версии {version}</div>;
+}
+```

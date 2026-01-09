@@ -1,0 +1,17 @@
+[
+  {
+    "type": "dir-section-header",
+    "name": "system",
+    "label": "pluginSystem"
+  },
+  {
+    "type": "dir-section-header",
+    "name": "official-plugins",
+    "label": "pluginList"
+  },
+  {
+    "type": "dir-section-header",
+    "name": "community-plugins",
+    "label": "communityPlugins"
+  }
+]

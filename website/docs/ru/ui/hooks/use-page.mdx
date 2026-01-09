@@ -1,0 +1,20 @@
+# usePage
+
+`usePage` предоставляет метаданные, извлечённые из текущей страницы Markdown или MDX.
+
+- **Тип:** `() => { page: PageDataLegacy['page'] }`
+
+Объект `page` содержит разобранные метаданные и данные, получаемые во время работы приложения, такие как `title`, `toc`, `lang`, `version`, `routePath`, `pagePath`, `description`, `headingTitle`, `pageType` и `lastUpdatedTime`, что позволяет создавать контекстный UI для активного документа.
+
+```tsx preview
+import { usePage } from '@rspress/core/runtime';
+
+export default function LastUpdated() {
+  const { page } = usePage();
+  return page.lastUpdatedTime ? (
+    <span>Обновлено: {page.lastUpdatedTime}</span>
+  ) : null;
+}
+```
+
+> Используйте `usePage` вместе с [`useSite`](./use-site) или [`usePages`](./use-pages), когда вам нужны одновременно метаданные отдельной страницы и глобальная информация о сайте.

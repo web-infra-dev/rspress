@@ -1,0 +1,103 @@
+---
+overviewHeaders: []
+tag: eject-only
+---
+
+# HomeHero
+
+Этот компонент является частью [главной страницы](/guide/basic/home-page). `HomeHero` отображает hero-секцию на главной странице.
+
+## Использование
+
+Настройте `hero` в блоке метаданных вашего mdx-файла:
+
+```yaml title="index.mdx"
+---
+pageType: home
+hero:
+  badge: 'Новинка'
+  name: 'Rspress'
+  text: 'Создавайте документацию быстро'
+  tagline: 'Фреймворк для документации на базе MDX с скоростью Vite'
+  image:
+    src: 'https://assets.rspack.rs/rspress/rspress-logo.svg'
+    alt: 'Rspress'
+  actions:
+    - text: 'Начать'
+      link: '/guide/start/introduction'
+      theme: 'brand'
+    - text: 'GitHub'
+      link: 'https://github.com/web-infra-dev/rspress'
+      theme: 'alt'
+---
+```
+
+Компонент автоматически читает конфигурацию `hero` из метаданных.
+
+### Пользовательские слоты
+
+Используйте пропсы `beforeHeroActions` и `afterHeroActions`, чтобы вставить пользовательский контент перед и после кнопок действий:
+
+```tsx title="index.mdx"
+import { HomeHero } from '@rspress/core/theme';
+
+<HomeHero
+  beforeHeroActions={<div>Контент перед кнопками</div>}
+  afterHeroActions={<div>Контент после кнопок</div>}
+/>;
+```
+
+## Пропсы
+
+### beforeHeroActions
+
+- **Тип:** `React.ReactNode`
+
+Пользовательский контент для вставки перед кнопками Hero.
+
+### afterHeroActions
+
+- **Тип:** `React.ReactNode`
+
+Пользовательский контент для вставки после кнопок Hero.
+
+## Конфигурация Hero
+
+Вот определение типа для поля `hero` в метаданных:
+
+```ts
+interface Hero {
+  /** Текст бейджа в верхней части */
+  badge?: string;
+  /** Название бренда, отображается со стилем выделения */
+  name?: string;
+  /** Основной текст заголовка, поддерживает несколько строк (разделённых \n) */
+  text?: string;
+  /** Подзаголовок/слоган */
+  tagline?: string;
+  /** Конфигурация изображения hero */
+  image?: {
+    /** Источник изображения, поддерживает отдельные изображения для тёмного/светлого режимов */
+    src?: string | { dark: string; light: string };
+    /** Альтернативный текст изображения */
+    alt?: string;
+    /** Атрибут srcset для адаптивных изображений */
+    srcset?: string | string[];
+    /** Атрибут sizes для адаптивных изображений */
+    sizes?: string | string[];
+  };
+  /** Список кнопок действий */
+  actions?: {
+    /** Текст кнопки */
+    text: string;
+    /** Ссылка кнопки */
+    link: string;
+    /** Тема кнопки: brand (основная) или alt (вторичная) */
+    theme: 'brand' | 'alt';
+  }[];
+}
+```
+
+- `image.src` поддерживает настройку разных изображений для тёмного/светлого режимов
+- `image.srcset` и `image.sizes` предназначены для адаптивных изображений, см. [документацию MDN по srcset](https://developer.mozilla.org/docs/Web/HTML/Element/img#srcset)
+- `name`, `text` и `tagline` все поддерживают HTML-строки
