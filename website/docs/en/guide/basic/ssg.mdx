@@ -1,55 +1,253 @@
 # Static site generation (SSG)
 
-## Introduction
+## What is SSG
 
-In the production build, Rspress will automatically generate a static site for you, that is, generate the HTML content of each page. After the build is completed, the HTML will appear in the default product directory, such as:
+SSG (Static Site Generation) refers to pre-rendering pages into HTML files during the **build phase**, rather than rendering them when users visit.
 
-```tree
-doc_build
-├── static
-│   ├── main.js
-│   └── ...
-├── index.html
-├── about.html
-├── posts
-│   ├── hello-world.html
-│   └── ...
+**Advantages of SSG:**
+
+- **Faster First Contentful Paint**: Users don't need to wait for JavaScript to load and execute; they see complete content as soon as the browser loads the HTML
+- **SEO Friendly**: Search engine crawlers can directly access complete HTML content
+- **Easy to Deploy**: Output consists of pure static files with no server required, can be directly hosted on any static hosting service
+
+Rspress enables SSG by default, which means when you run `rspress build`, each page will be pre-rendered into an HTML file containing complete content. The following details explain the implementation of SSG, helping you gain a deeper understanding of how it works.
+
+## Differences between dev and build
+
+Rspress employs different rendering strategies depending on the mode: it uses Client-Side Rendering (CSR) during development for a better experience, while defaulting to SSG during production builds for optimal performance.
+
+| Aspect         | Dev Mode (Development)           | Build Mode (Production)                |
+| -------------- | -------------------------------- | -------------------------------------- |
+| Command        | `rspress dev`                    | `rspress build`                        |
+| Rendering      | Pure CSR (Client-Side Rendering) | SSG (default) or CSR                   |
+| Pre-rendering  | None                             | Pre-renders all pages when SSG enabled |
+| Focus          | Debugging, HMR                   | Performance, SEO                       |
+| Preview Method | Access dev server directly       | `rspress preview`                      |
+
+### Dev mode
+
+```bash
+rspress dev
 ```
 
-You can deploy the contents of this product directory to any static site hosting service, such as GitHub Pages, Netlify, Vercel, etc.
+Dev mode uses **pure Client-Side Rendering (CSR)** without pre-rendering. This prioritizes iteration speed and Hot Module Replacement (HMR) capabilities.
 
-## Advantages of SSG
+:::tip
+If your code works fine in Dev mode but throws errors in Build mode, it's usually because SSG renders in a Node.js environment and cannot access browser APIs (like `window` or `document`). See ["Common Issues and Solutions"](#common-issues-and-solutions) below.
+:::
 
-The essence of static site generation is to pre-render components at the build stage, render the components into HTML strings, and then write them into HTML files. This has many benefits, such as:
+### Build mode
 
-- Faster FCP, because there is no need to wait for JS to load before rendering.
-- More conducive to SEO, because search engine spiders can directly crawl the complete HTML content.
+```bash
+rspress build
+```
 
-Considering the cost of static site generation, Rspress only pre-renders during production environment builds. In the development environment, it still uses the traditional SPA rendering mode without pre-rendering.
+Build mode enables SSG by default. You can control this via the [`ssg` configuration](#configuration):
 
-## Adding custom site content
+- `ssg: true` (Default): Enable SSG. During the build, Rspress executes React component rendering in a Node.js environment, converting each page into an HTML file with complete content.
+- `ssg: false`: Disable SSG. Use pure CSR. The generated HTML contains only an empty container, waiting for client-side rendering.
 
-Through `builderConfig.html.tags`, you can customize the site HTML content, such as adding statistical code, adding scripts and styles, etc.
+**After building:**
 
-```js title="rspress.config.ts"
+- **Local Preview**: Use `rspress preview` to start a local static server for previewing the output
+
+  ```bash
+  rspress preview
+  ```
+
+- **Server Deployment**: Deploy the `doc_build` directory to static hosting services (GitHub Pages, Netlify, Vercel, etc.)
+
+## SSG vs CSR output
+
+### Output directory structure
+
+Whether using SSG or CSR mode, the output directory structure is the same:
+
+```tree
+doc_build/
+├── static/
+│   ├── js/
+│   │   ├── main.[hash].js
+│   │   └── async/
+│   └── css/
+│       └── main.[hash].css
+├── index.html
+├── guide/
+│   └── getting-started.html
+└── api/
+    └── config.html
+```
+
+### HTML content differences
+
+The core difference between the two modes lies in the HTML file content:
+
+**SSG Output HTML** (Pre-rendered complete content):
+
+```html
+<body>
+  <div id="__rspress_root">
+    <!-- Pre-rendered complete page content -->
+    <nav>...</nav>
+    <main>
+      <article>
+        <h1>Getting Started</h1>
+        <p>Welcome to Rspress...</p>
+      </article>
+    </main>
+  </div>
+  <script src="/static/js/main.[hash].js"></script>
+</body>
+```
+
+**CSR Output HTML** (only empty container, waiting for JS to render):
+
+```html
+<body>
+  <div id="__rspress_root"></div>
+  <script src="/static/js/main.[hash].js"></script>
+</body>
+```
+
+### Loading flow differences
+
+**SSG Loading Flow:**
+
+1. Browser loads HTML → User **immediately sees complete content**
+2. JavaScript finishes loading → React hydrates, binds event interactions
+3. Subsequent navigation → SPA mode, client-side rendering
+
+**CSR Loading Flow:**
+
+1. Browser loads HTML → User sees **blank page**
+2. JavaScript finishes loading → React renders page content
+3. Subsequent navigation → SPA mode, client-side rendering
+
+## Common issues and solutions
+
+### `window is not defined` / `document is not defined`
+
+**Cause**: SSG renders pages in a Node.js environment, where browser-specific global objects like `window` and `document` don't exist.
+
+**Solutions**:
+
+1. **Use `useEffect` for delayed execution**: Place browser API calls inside `useEffect` to ensure they only run on the client
+
+   ```tsx
+   import { useEffect, useState } from 'react';
+
+   function MyComponent() {
+     const [width, setWidth] = useState(0);
+
+     useEffect(() => {
+       // Only runs on client
+       setWidth(window.innerWidth);
+     }, []);
+
+     return <div>Window width: {width}</div>;
+   }
+   ```
+
+2. **Conditional check**: Check the environment before accessing browser APIs
+
+   ```tsx
+   if (typeof window !== 'undefined') {
+     // Browser environment
+     console.log(window.location.href);
+   }
+   ```
+
+3. **Dynamic import**: For third-party libraries that depend on browser APIs, use dynamic imports
+
+   ```tsx
+   import { useEffect, useState } from 'react';
+
+   function MyComponent() {
+     const [Editor, setEditor] = useState(null);
+
+     useEffect(() => {
+       import('some-browser-only-library').then((mod) => {
+         setEditor(() => mod.default);
+       });
+     }, []);
+
+     if (!Editor) return <div>Loading...</div>;
+     return <Editor />;
+   }
+   ```
+
+### Hydration mismatch
+
+**Cause**: The server-rendered HTML content doesn't match the client's first render. React checks for consistency during hydration, and mismatches will cause warnings or errors.
+
+**Common scenarios**:
+
+- Using `Date.now()` or random numbers
+- Rendering different content based on `window` object properties (like `window.innerWidth`)
+- Using data that only exists on the client (like localStorage)
+
+**Solution**: Ensure the first render output is consistent between server and client. For content that needs to change dynamically on the client, use `useEffect` to update after hydration completes.
+
+```tsx
+import { useEffect, useState } from 'react';
+
+function MyComponent() {
+  // First render uses default value for server/client consistency
+  const [theme, setTheme] = useState('light');
+
+  useEffect(() => {
+    // Read localStorage after hydration completes
+    const savedTheme = localStorage.getItem('theme');
+    if (savedTheme) {
+      setTheme(savedTheme);
+    }
+  }, []);
+
+  return <div className={theme}>...</div>;
+}
+```
+
+## Configuration
+
+You can control whether SSG is enabled through the `ssg` configuration:
+
+```ts title="rspress.config.ts"
 import { defineConfig } from '@rspress/core';
 
 export default defineConfig({
-  // ...
+  ssg: true, // Default value, SSG enabled
+});
+```
+
+If your site has special requirements, you can disable SSG:
+
+```ts title="rspress.config.ts"
+import { defineConfig } from '@rspress/core';
+
+export default defineConfig({
+  ssg: false, // Disable SSG, use CSR
+});
+```
+
+:::warning
+Please be cautious when disabling SSG, as this will forfeit the advantages of faster first contentful paint and SEO benefits.
+:::
+
+## Custom HTML content
+
+Through `builderConfig.html.tags`, you can inject custom content into HTML, such as adding analytics code, scripts, or styles:
+
+```ts title="rspress.config.ts"
+import { defineConfig } from '@rspress/core';
+
+export default defineConfig({
   builderConfig: {
     html: {
       tags: [
         {
           tag: 'script',
           attrs: {
-            src: 'https://cdn.example.com/your-script.js',
-          },
-        },
-        {
-          tag: 'link',
-          attrs: {
-            rel: 'stylesheet',
-            href: 'https://cdn.example.com/your-style.css',
+            src: 'https://cdn.example.com/analytics.js',
           },
         },
       ],
@@ -58,33 +256,4 @@ export default defineConfig({
 });
 ```
 
-For more detailed config of `builderConfig.html.tags`, please refer to the [documentation](https://rsbuild.rs/config/html/tags).
-
-## Preview
-
-After the production build is complete, you can preview the output by using the `rspress preview` command. This command will start a local static site service, and you can access this service in your browser to preview the output.
-
-```shell
-> rspress preview
-
-Preview server running at http://localhost:4173/
-```
-
-## Disabling SSG
-
-If you do not want to use Static Site Generation, you can disable it through the `ssg` config.
-
-```js title="rspress.config.ts"
-import { defineConfig } from '@rspress/core';
-
-export default defineConfig({
-  // ...
-  ssg: false,
-});
-```
-
-:::warning
-
-Please be cautious when disabling SSG, as this will forfeit many of the advantages of Static Site Generation mentioned above.
-
-:::
+For more configuration details, please refer to the [Rsbuild html.tags documentation](https://rsbuild.rs/config/html/tags).
