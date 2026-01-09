@@ -163,6 +163,20 @@ import { PackageManagerTabs } from '@theme';
 }
 ```
 
+:::tip СОВЕТ
+
+Если вы сталкиваетесь с ошибками о недостающих экспортах из `@theme` или `@rspress/core/theme`, это, вероятно, происходит потому, что вы не использовали `@rspress/core/theme-original` при переопределении темы в папке `theme`, что приводит к циклической ссылке:
+
+```txt
+× ESModulesLinkingError: export 'SvgWrapper' (imported as 'SvgWrapper') was not found in '@theme' (possible exports: HomeLayout, Layout, Search, Tag, getCustomMDXComponent)
+
+× ESModulesLinkingError: export 'Banner' (imported as 'Banner') was not found in '@rspress/core/theme' (possible exports: HomeLayout, Layout, Search, Tag, getCustomMDXComponent)
+```
+
+Убедитесь, что вы используете `@rspress/core/theme-original` в папке `theme` и правильно экспортируете все компоненты.
+
+:::
+
 ## [Важно] Подсветка кода Shiki заменяет Prism
 
 Rspress V2 по умолчанию использует Shiki v3 для подсветки кода. Prism был удалён.
