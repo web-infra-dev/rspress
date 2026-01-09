@@ -165,7 +165,7 @@ If using the `@theme` alias, add path mapping in `tsconfig.json` for type hints:
 
 :::tip
 
-If you encounter errors about missing exports from `@theme` or `@rspress/core/theme`, it's likely because you didn't use `@rspress/core/theme-original` when overriding the theme in the theme folder:
+If you encounter errors about missing exports from `@theme` or `@rspress/core/theme`, it's likely because you didn't use `@rspress/core/theme-original` when overriding the theme in the theme folder, causing a circular reference:
 
 ```txt
 × ESModulesLinkingError: export 'SvgWrapper' (imported as 'SvgWrapper') was not found in '@theme' (possible exports: HomeLayout, Layout, Search, Tag, getCustomMDXComponent)
