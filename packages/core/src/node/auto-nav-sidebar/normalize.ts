@@ -132,9 +132,10 @@ async function metaItemToSidebarItem(
       mdFileSet,
       false,
     );
-    // If a directory contains no valid markdown files or files are being
-    // excluded from a directory such that there are no valid items to have in
-    // the sidebar for a directory, then don't include that directory at all.
+    // If an automatically discovered directory (i.e. one not explicitly
+    // configured in `_meta.json`) contains no valid markdown files, or files
+    // are excluded such that there are no valid items for the sidebar, then
+    // don't include that directory at all.
     if (dir.items.length === 0) {
       return [];
     }
