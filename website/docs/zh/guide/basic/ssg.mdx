@@ -10,18 +10,19 @@ Rspress 默认启用 SSG，这意味着当你执行 `rspress build` 时，每个
 
 - **首屏渲染更快**：用户无需等待 JavaScript 加载和执行，浏览器加载 HTML 后即可看到完整内容
 - **SEO 友好**：搜索引擎爬虫可以直接抓取到完整的 HTML 内容
-- **易于部署**：产物是纯静态文件，无需部署服务器，可直接托管到任何静态托管服务
+- **易于部署**：产物是纯静态文件，无需部署服务器 API，可直接上传到 CDN 或任何静态托管服务。
 
 ## dev 和 build 下的区别
 
 `rspress dev` 下使用 CSR，`rspress build` 下根据 `ssg` 配置切换为 SSG 或 CSR。
 
-| 对比项   | dev 模式             | build 模式           |
-| -------- | -------------------- | -------------------- |
-| 命令     | `rspress dev`        | `rspress build`      |
-| 渲染方式 | 纯 CSR（客户端渲染） | SSG（默认）或 CSR    |
-| 预渲染   | 无                   | SSG 时预渲染所有页面 |
-| 适用场景 | 开发调试、热更新     | 生产部署             |
+| 对比项      | dev 模式             | build 模式           |
+| ----------- | -------------------- | -------------------- |
+| 命令        | `rspress dev`        | `rspress build`      |
+| 渲染方式    | 纯 CSR（客户端渲染） | SSG（默认）或 CSR    |
+| 预渲染 HTML | 无                   | SSG 时预渲染所有页面 |
+| 适用场景    | 开发调试、热更新     | 生产部署             |
+| 预览方式    | 直接访问开发服务器   | `rspress preview`    |
 
 ### dev 模式
 
@@ -41,7 +42,10 @@ dev 模式使用**纯客户端渲染（CSR）**，不进行预渲染。这是为
 rspress build
 ```
 
-build 模式默认启用 SSG。构建时，Rspress 会在 Node.js 环境中执行 React 组件的渲染，将每个页面转换为包含完整内容的 HTML 文件。你可以通过 `ssg` 配置来控制产物类型。
+build 模式默认启用 SSG，你可以通过 `ssg` 配置项来控制：
+
+- `ssg: true` （默认）：启用 SSG，构建时，Rspress 会在 Node.js 环境中执行 React 组件的渲染，将每个页面转换为包含完整内容的 HTML 文件。
+- `ssg: false`：禁用 SSG，使用纯 CSR，生成的 HTML 仅包含空容器，等待客户端渲染。
 
 **构建完成后：**
 
@@ -82,7 +86,7 @@ doc_build/
 
 ```html
 <body>
-  <div id="root">
+  <div id="__rspress_root">
     <!-- 预渲染的完整页面内容 -->
     <nav>...</nav>
     <main>
@@ -100,7 +104,7 @@ doc_build/
 
 ```html
 <body>
-  <div id="root"></div>
+  <div id="__rspress_root"></div>
   <script src="/static/js/main.[hash].js"></script>
 </body>
 ```
@@ -110,7 +114,7 @@ doc_build/
 **SSG 加载流程：**
 
 1. 浏览器加载 HTML → 用户**立即看到完整内容**
-2. JavaScript 加载完成 → React hydrate，绑定事件交互
+2. JavaScript 加载完成 → React hydrate（水合），绑定事件交互
 3. 后续页面导航 → SPA 模式，客户端渲染
 
 **CSR 加载流程：**

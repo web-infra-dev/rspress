@@ -16,12 +16,13 @@ Rspress enables SSG by default, which means when you run `rspress build`, each p
 
 `rspress dev` uses CSR, while `rspress build` switches between SSG or CSR based on the `ssg` configuration.
 
-| Aspect        | Dev Mode                         | Build Mode                             |
-| ------------- | -------------------------------- | -------------------------------------- |
-| Command       | `rspress dev`                    | `rspress build`                        |
-| Rendering     | Pure CSR (Client-Side Rendering) | SSG (default) or CSR                   |
-| Pre-rendering | None                             | Pre-renders all pages when SSG enabled |
-| Use Case      | Development, debugging, HMR      | Production deployment                  |
+| Aspect         | Dev Mode                         | Build Mode                             |
+| -------------- | -------------------------------- | -------------------------------------- |
+| Command        | `rspress dev`                    | `rspress build`                        |
+| Rendering      | Pure CSR (Client-Side Rendering) | SSG (default) or CSR                   |
+| Pre-rendering  | None                             | Pre-renders all pages when SSG enabled |
+| Use Case       | Development, debugging, HMR      | Production deployment                  |
+| Preview Method | Access dev server directly       | `rspress preview`                      |
 
 ### Dev mode
 
@@ -41,7 +42,10 @@ If your code works fine in Dev mode but throws errors in Build mode, it's usuall
 rspress build
 ```
 
-Build mode enables SSG by default. During the build, Rspress executes React component rendering in a Node.js environment, converting each page into an HTML file with complete content. You can control the output type through the `ssg` configuration.
+Build mode enables SSG by default. You can control this via the `ssg` configuration:
+
+- `ssg: true` (Default): Enable SSG. During the build, Rspress executes React component rendering in a Node.js environment, converting each page into an HTML file with complete content.
+- `ssg: false`: Disable SSG. Use pure CSR. The generated HTML contains only an empty container, waiting for client-side rendering.
 
 **After building:**
 
@@ -82,7 +86,7 @@ The core difference between the two modes lies in the HTML file content:
 
 ```html
 <body>
-  <div id="root">
+  <div id="__rspress_root">
     <!-- Pre-rendered complete page content -->
     <nav>...</nav>
     <main>
@@ -100,7 +104,7 @@ The core difference between the two modes lies in the HTML file content:
 
 ```html
 <body>
-  <div id="root"></div>
+  <div id="__rspress_root"></div>
   <script src="/static/js/main.[hash].js"></script>
 </body>
 ```
