@@ -123,7 +123,7 @@ async function metaItemToSidebarItem(
   }
 
   if (type === 'dir') {
-    return metaDirItemToSidebarItem(
+    const dir = await metaDirItemToSidebarItem(
       metaItem,
       workDir,
       docsDir,
@@ -132,6 +132,13 @@ async function metaItemToSidebarItem(
       mdFileSet,
       false,
     );
+    // If a directory contains no valid markdown files or files are being
+    // excluded from a directory such that there are no valid items to have in
+    // the sidebar for a directory, then don't include that directory at all.
+    if (dir.items.length === 0) {
+      return [];
+    }
+    return dir;
   }
 
   if (type === 'dir-section-header') {
