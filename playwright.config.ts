@@ -3,6 +3,8 @@ import { defineConfig } from '@playwright/test';
 export default defineConfig({
   // exclude webpack / rspack self-feature test cases when run rspack / webpack test
   testDir: './e2e',
+  fullyParallel: true,
+  workers: process.env.CI ? 4 : undefined,
   // 30 min for all tests
   globalTimeout: 30 * 60 * 1000,
   // 1 min for each test
