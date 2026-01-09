@@ -21,6 +21,11 @@
     "activeMatch": "/api/"
   },
   {
+    "text": "博客",
+    "link": "/blog/",
+    "activeMatch": "/blog/"
+  },
+  {
     "text": "版本",
     "items": [
       {
