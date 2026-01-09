@@ -28,6 +28,10 @@ export function FallbackHeading({
   level: 1 | 2 | 3 | 4 | 5 | 6;
   title: string;
 }) {
+  if (process.env.__SSR_MD__) {
+    return <>{`${'#'.repeat(level)} ${title}\n\n`}</>;
+  }
+
   const titleSlug = title && slug(title.trim());
 
   const Element = useMemo(() => {

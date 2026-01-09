@@ -1,5 +1,11 @@
 import { expect, test } from '@playwright/test';
-import { getPort, killProcess, runDevCommand } from '../../utils/runCommands';
+import {
+  getPort,
+  killProcess,
+  runBuildCommand,
+  runDevCommand,
+  runPreviewCommand,
+} from '../../utils/runCommands';
 
 test.describe('basic test', async () => {
   let appPort: number;
@@ -65,5 +71,96 @@ test.describe('basic test', async () => {
     });
     const link = page.locator('.rp-doc a').first();
     await expect(link).toHaveCSS('color', 'rgb(255, 165, 0)');
+  });
+});
+
+test.describe('SSG dark mode no flash', async () => {
+  let appPort: number;
+  let app: Awaited<ReturnType<typeof runPreviewCommand>>;
+
+  test.beforeAll(async () => {
+    const appDir = __dirname;
+    appPort = await getPort();
+    await runBuildCommand(appDir);
+    app = await runPreviewCommand(appDir, appPort);
+  });
+
+  test.afterAll(async () => {
+    if (app) {
+      await killProcess(app);
+    }
+  });
+
+  test('dark mode should be applied before hydration (no flash)', async ({
+    page,
+  }) => {
+    // Step 1: Navigate to page and set dark mode preference
+    await page.goto(`http://localhost:${appPort}`, {
+      waitUntil: 'networkidle',
+    });
+
+    // Click appearance toggle to enable dark mode
+    const appearanceToggle = page.locator('.rp-switch-appearance').first();
+    await appearanceToggle.click();
+
+    // Wait for dark mode to be applied and saved to localStorage
+    await expect(page.locator('html')).toHaveClass(/rp-dark/);
+
+    // Step 2: Reload page and check if dark class is applied early
+    // Use 'domcontentloaded' to capture state after inline script runs
+    // but potentially before React hydration completes
+    await page.reload({ waitUntil: 'domcontentloaded' });
+
+    // Check dark class immediately after DOM is ready
+    // If inline script works correctly, dark class should already be present
+    const isDarkOnDOMReady = await page.evaluate(() =>
+      document.documentElement.classList.contains('rp-dark'),
+    );
+
+    expect(isDarkOnDOMReady).toBe(true);
+
+    // Step 3: Wait for full hydration and verify dark mode persists
+    await page.waitForLoadState('networkidle');
+    const isDarkAfterHydration = await page.evaluate(() =>
+      document.documentElement.classList.contains('rp-dark'),
+    );
+
+    expect(isDarkAfterHydration).toBe(true);
+  });
+
+  test('light mode should be applied before hydration (no flash)', async ({
+    page,
+  }) => {
+    // Step 1: Navigate to page and ensure light mode
+    await page.goto(`http://localhost:${appPort}`, {
+      waitUntil: 'networkidle',
+    });
+
+    // Ensure we're in light mode (click toggle if currently dark)
+    const isDark = await page.evaluate(() =>
+      document.documentElement.classList.contains('rp-dark'),
+    );
+    if (isDark) {
+      const appearanceToggle = page.locator('.rp-switch-appearance').first();
+      await appearanceToggle.click();
+      await expect(page.locator('html')).not.toHaveClass(/rp-dark/);
+    }
+
+    // Step 2: Reload and check early state
+    await page.reload({ waitUntil: 'domcontentloaded' });
+
+    const isDarkOnDOMReady = await page.evaluate(() =>
+      document.documentElement.classList.contains('rp-dark'),
+    );
+
+    expect(isDarkOnDOMReady).toBe(false);
+
+    // Step 3: Verify after hydration
+    await page.waitForLoadState('networkidle');
+    const isDarkAfterHydration = await page.evaluate(() =>
+      document.documentElement.classList.contains('rp-dark'),
+    );
+
+    expect(isDarkAfterHydration).toBe(false);
   });
 });

@@ -1,7 +1,12 @@
+/* Base scrollbar styling - respects system scrollbar settings */
 .rp-scrollbar {
   scrollbar-gutter: stable;
 
-  /* Scrollbar dimensions */
+  /* Modern standard properties for Firefox and Chrome 121+ */
+  scrollbar-width: thin;
+  scrollbar-color: rgba(0, 0, 0, 0.05) transparent;
+
+  /* Scrollbar dimensions - only set height for horizontal scrollbars */
   &::-webkit-scrollbar {
     width: 4px;
     height: 4px;
@@ -19,8 +24,8 @@
     transition: background 0.2s ease;
   }
 
-  /* Hover state */
-  &:hover::-webkit-scrollbar-thumb {
+  /* Scrollbar thumb hover state */
+  &::-webkit-scrollbar-thumb:hover {
     background: rgba(0, 0, 0, 0.1);
   }
 
@@ -31,12 +36,22 @@
 
   /* Dark mode adaptation */
   .rp-dark & {
+    scrollbar-color: rgba(255, 255, 255, 0.1) transparent;
+
     &::-webkit-scrollbar-thumb {
       background: rgba(255, 255, 255, 0.1);
     }
 
-    &:hover::-webkit-scrollbar-thumb {
+    &::-webkit-scrollbar-thumb:hover {
       background: rgba(255, 255, 255, 0.2);
     }
   }
+}
+
+/* Modifier class - always show scrollbar (CodeBlock only) */
+.rp-scrollbar--always {
+  /* Remove modern properties to always show scrollbar (Not based on system configuration) */
+  scrollbar-gutter: stable;
+  scrollbar-width: unset;
+  scrollbar-color: unset;
 }

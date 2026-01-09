@@ -269,6 +269,25 @@ export default defineConfig({
 
 是否默认启用长代码换行展示。默认为 `false`。
 
+### markdown.crossCompilerCache
+
+- **类型**: `boolean`
+- **默认值**: `true`
+
+是否在 `rspress build` 时启用跨编译器缓存。启用后，Rspress 会在多个编译器（web 和 node）之间缓存 MDX 解析结果，从而加速生产环境构建，构建时间可减少约 10%。
+
+该选项仅在生产环境构建时生效，灵感来自 [Docusaurus](https://docusaurus.io/)。
+
+```ts title="rspress.config.ts"
+import { defineConfig } from '@rspress/core';
+
+export default defineConfig({
+  markdown: {
+    crossCompilerCache: true,
+  },
+});
+```
+
 ### markdown.globalComponents
 
 - **类型**: `string[]`

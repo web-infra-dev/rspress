@@ -10,7 +10,9 @@ import { SourceCode } from '@rspress/core/theme';
 
 :::warning
 
-`@rspress/plugin-llms` 仅作为 `ssg: false` 场景下的替代方案使用，建议优先使用 [SSG-MD](/guide/basic/ssg-md) 功能。
+`@rspress/plugin-llms` 的实现原理是使用 remark 处理 MDX 源文件，因此不支持 React Hooks、自定义组件等动态内容的渲染。
+
+本插件仅作为由于代码不兼容 SSR，无法开启 SSG 和 SSG-MD 功能时的备选方案，建议优先使用 [SSG-MD](/guide/basic/ssg-md) 功能。
 
 :::
 

@@ -163,6 +163,20 @@ If using the `@theme` alias, add path mapping in `tsconfig.json` for type hints:
 }
 ```
 
+:::tip
+
+If you encounter errors about missing exports from `@theme` or `@rspress/core/theme`, it's likely because you didn't use `@rspress/core/theme-original` when overriding the theme in the theme folder, causing a circular reference:
+
+```txt
+× ESModulesLinkingError: export 'SvgWrapper' (imported as 'SvgWrapper') was not found in '@theme' (possible exports: HomeLayout, Layout, Search, Tag, getCustomMDXComponent)
+
+× ESModulesLinkingError: export 'Banner' (imported as 'Banner') was not found in '@rspress/core/theme' (possible exports: HomeLayout, Layout, Search, Tag, getCustomMDXComponent)
+```
+
+Make sure to use `@rspress/core/theme-original` in the `theme` folder and correctly export all components.
+
+:::
+
 ## [Important] Shiki code highlighting replaces prism
 
 Rspress V2 uses Shiki v3 for code highlighting by default. Prism has been removed.

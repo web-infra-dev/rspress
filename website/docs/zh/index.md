@@ -4,7 +4,7 @@ title: Rspress
 titleSuffix: '基于 Rsbuild 的静态站点生成器'
 
 hero:
-  badge: Rspress V2 正在开发中! 🚀
+  badge: Rspress V2 即将发布! 🚀
   name: Rspress
   text: |
     快如闪电的
@@ -31,9 +31,9 @@ features:
   - title: 内置全文搜索
     details: 构建时自动为你生成全文搜索索引，提供开箱即用的全文搜索能力。
     icon: 🎨
-  - title: 更简单的 I18n 方案
-    details: 通过内置的 I18n 方案，你可以轻松的为文档或者组件提供多语言支持。
-    icon: 🌍
+  - title: AI 友好
+    details: 通过 SSG-MD 生成符合 llms.txt 规范的索引文件和 Markdown 文件，便于大语言模型理解和使用你的技术文档。
+    icon: 🤖
   - title: 静态站点生成
     details: 生产环境下，会自动构建为静态 HTML 文件，你可以轻松的部署到任何地方。
     icon: 🌈

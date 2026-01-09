@@ -267,6 +267,25 @@ Whether to display the line number of the code block. Defaults to `false`.
 
 Whether to enable long code line wrapping display by default. Defaults to `false`.
 
+### markdown.crossCompilerCache
+
+- **Type**: `boolean`
+- **Default**: `true`
+
+Whether to enable cross-compiler cache for MDX compilation during `rspress build`. When enabled, Rspress will cache MDX parsing results across multiple compilers (web and node), which can speed up the production build process by approximately 10%.
+
+This option only takes effect in production builds and is inspired by [Docusaurus](https://docusaurus.io/).
+
+```ts title="rspress.config.ts"
+import { defineConfig } from '@rspress/core';
+
+export default defineConfig({
+  markdown: {
+    crossCompilerCache: true,
+  },
+});
+```
+
 ### markdown.globalComponents
 
 - **Type**: `string[]`
