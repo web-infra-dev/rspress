@@ -216,52 +216,7 @@ function MyComponent() {
 
 **原因**：当你刷新页面或直接访问某个 URL 时，请求会发送到服务器，但服务器上可能并没有对应路径的文件（尤其是在某些静态托管服务中）。
 
-**解决方案**：配置服务器将所有未匹配的请求重定向到 `404.html`。Rspress 生成的 `404.html` 包含完整的应用代码，能够在客户端正确处理路由并显示对应页面。
-
-**Nginx**
-
-```nginx
-server {
-    listen 80;
-    server_name your-domain.com;
-    root /path/to/doc_build;
-
-    location / {
-        try_files $uri $uri/ /404.html;
-    }
-}
-```
-
-**Vercel**（`vercel.json`）
-
-```json
-{
-  "rewrites": [{ "source": "/(.*)", "destination": "/404.html" }]
-}
-```
-
-**Netlify**（`_redirects` 文件或 `netlify.toml`）
-
-```
-/*    /404.html   200
-```
-
-**GitHub Pages**
-
-GitHub Pages 默认会使用 `404.html` 来处理所有未匹配的路由，无需额外配置。
-
-**Apache**（`.htaccess`）
-
-```apache
-<IfModule mod_rewrite.c>
-  RewriteEngine On
-  RewriteBase /
-  RewriteRule ^index\.html$ - [L]
-  RewriteCond %{REQUEST_FILENAME} !-f
-  RewriteCond %{REQUEST_FILENAME} !-d
-  RewriteRule . /404.html [L]
-</IfModule>
-```
+**解决方案**：大部分静态托管服务（如 GitHub Pages、Netlify、Vercel 等）默认会使用 `404.html` 来处理所有未匹配的路由，无需额外配置。如果你的服务器没有自动处理，需要手动配置将未匹配的请求重定向到 `404.html`。Rspress 生成的 `404.html` 包含完整的应用代码，能够在客户端正确处理路由并显示对应页面。
 
 ## 配置选项
 
