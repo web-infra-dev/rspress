@@ -1,55 +1,247 @@
 # 静态站点生成（SSG）
 
-## 功能介绍
+## 什么是 SSG
 
-在生产环境的构建中，Rspress 会自动帮你生成静态站点，即生成各个页面的 HTML 内容，在构建完成之后，HTML 会出现在默认的产物目录中，比如：
+SSG（Static Site Generation，静态站点生成）是指在**构建阶段**将页面预渲染为 HTML 文件，而不是在用户访问时才进行渲染。
 
-```tree
-doc_build
-├── static
-│   ├── main.js
-│   └── ...
-├── index.html
-├── about.html
-├── posts
-│   ├── hello-world.html
-│   └── ...
+Rspress 默认启用 SSG，这意味着当你执行 `rspress build` 时，每个页面都会被预渲染为包含完整内容的 HTML 文件。
+
+**SSG 的优势：**
+
+- **首屏渲染更快**：用户无需等待 JavaScript 加载和执行，浏览器加载 HTML 后即可看到完整内容
+- **SEO 友好**：搜索引擎爬虫可以直接抓取到完整的 HTML 内容
+- **易于部署**：产物是纯静态文件，可部署到任何静态托管服务
+
+## Dev 与 Build 的对比
+
+| 对比项   | Dev 模式             | Build 模式           |
+| -------- | -------------------- | -------------------- |
+| 命令     | `rspress dev`        | `rspress build`      |
+| 渲染方式 | 纯 CSR（客户端渲染） | SSG（默认）或 CSR    |
+| 预渲染   | 无                   | SSG 时预渲染所有页面 |
+| 适用场景 | 开发调试、热更新     | 生产部署             |
+
+### Dev 模式
+
+```bash
+rspress dev
 ```
 
-你可以将这个产物目录的内容部署到任何静态站点托管服务上，比如 GitHub Pages、Netlify、Vercel 等。
+Dev 模式使用**纯客户端渲染（CSR）**，不进行预渲染。这是为了获得更快的开发体验和热更新能力。
 
-## SSG 的优势
+:::tip 提示
+如果你的代码在 Dev 模式下正常运行，但在 Build 模式下报错，这通常是因为 SSG 在 Node.js 环境中渲染，无法访问浏览器 API（如 `window`、`document`）。请参考下文的「常见问题与解决方案」。
+:::
 
-静态站点生成的本质是在构建阶段进行组件的预渲染，将组件渲染成 HTML 字符串，然后写入到 HTML 文件中，这样做有诸多的好处，比如：
+### Build 模式
 
-- 首屏渲染速度更快，因为不需要等待 JS 加载完成之后再进行渲染。
-- 更利于 SEO，因为搜索引擎爬虫可以直接抓取到完整的 HTML 内容。
+```bash
+rspress build
+```
 
-而考虑到静态站点生成的成本，Rspress 只有在生产环境构建时才会进行预渲染，而在开发环境下，仍然是采用传统的 SPA 渲染模式，没有进行预渲染。
+Build 模式默认启用 SSG，会为每个页面生成预渲染的 HTML 文件。你可以通过 `ssg` 配置来控制产物类型。
 
-## 添加自定义站点内容
+**构建完成后：**
 
-通过 `builderConfig.html.tags`，你可以自定义站点 HTML 内容，比如添加统计代码、添加脚本和样式等。
+- **本地预览**：使用 `rspress preview` 启动本地静态服务器预览产物
 
-```js title="rspress.config.ts"
-import { defineConfig } from '@rspress/core';
+  ```bash
+  rspress preview
+  ```
+
+- **服务器部署**：将 `doc_build` 目录部署到静态托管服务（GitHub Pages、Netlify、Vercel 等）
+
+## SSG 与 CSR 产物的对比
+
+### 产物目录结构
+
+无论是 SSG 还是 CSR 模式，产物的目录结构是相同的：
+
+```bash
+doc_build/
+├── static/
+│   ├── js/
+│   │   ├── main.[hash].js
+│   │   └── async/
+│   └── css/
+│       └── main.[hash].css
+├── index.html
+├── guide/
+│   └── getting-started.html
+└── api/
+    └── config.html
+```
+
+### HTML 内容差异
+
+两种模式的核心区别在于 HTML 文件的内容：
+
+**SSG 产物的 HTML**（包含预渲染的完整页面内容）：
+
+```html
+<body>
+  <div id="root">
+    <!-- 预渲染的完整页面内容 -->
+    <nav>...</nav>
+    <main>
+      <article>
+        <h1>Getting Started</h1>
+        <p>Welcome to Rspress...</p>
+      </article>
+    </main>
+  </div>
+  <script src="/static/js/main.xxx.js"></script>
+</body>
+```
+
+**CSR 产物的 HTML**（只有空容器，等待 JS 渲染）：
+
+```html
+<body>
+  <div id="root"></div>
+  <script src="/static/js/main.xxx.js"></script>
+</body>
+```
+
+### 加载流程差异
+
+**SSG 加载流程：**
+
+1. 浏览器加载 HTML → 用户**立即看到完整内容**
+2. JavaScript 加载完成 → React hydrate，绑定事件交互
+3. 后续页面导航 → SPA 模式，客户端渲染
+
+**CSR 加载流程：**
+
+1. 浏览器加载 HTML → 用户看到**空白页面**
+2. JavaScript 加载完成 → React 渲染页面内容
+3. 后续页面导航 → SPA 模式，客户端渲染
+
+## 常见问题与解决方案
+
+### `window is not defined` / `document is not defined`
+
+**原因**：SSG 在 Node.js 环境中渲染页面，而 `window`、`document` 等是浏览器特有的全局对象，在 Node.js 中不存在。
+
+**解决方案**：
+
+1. **使用 `useEffect` 延迟执行**：将浏览器 API 的调用放在 `useEffect` 中，确保只在客户端执行
+
+   ```tsx
+   import { useEffect, useState } from 'react';
+
+   function MyComponent() {
+     const [width, setWidth] = useState(0);
+
+     useEffect(() => {
+       // 只在客户端执行
+       setWidth(window.innerWidth);
+     }, []);
+
+     return <div>Window width: {width}</div>;
+   }
+   ```
+
+2. **条件检查**：在访问浏览器 API 前检查环境
+
+   ```tsx
+   if (typeof window !== 'undefined') {
+     // 浏览器环境
+     console.log(window.location.href);
+   }
+   ```
+
+3. **动态导入**：对于依赖浏览器 API 的第三方库，使用动态导入
+
+   ```tsx
+   import { useEffect, useState } from 'react';
+
+   function MyComponent() {
+     const [Editor, setEditor] = useState(null);
+
+     useEffect(() => {
+       import('some-browser-only-library').then((mod) => {
+         setEditor(() => mod.default);
+       });
+     }, []);
+
+     if (!Editor) return <div>Loading...</div>;
+     return <Editor />;
+   }
+   ```
+
+### Hydration Mismatch
+
+**原因**：服务器渲染的 HTML 内容与客户端首次渲染的内容不一致。React 在 hydration 时会检测两者是否匹配，不匹配会导致警告或错误。
+
+**常见场景**：
+
+- 使用了 `Date.now()` 或随机数
+- 根据 `window` 对象的属性（如 `window.innerWidth`）渲染不同内容
+- 使用了只在客户端存在的数据（如 localStorage）
+
+**解决方案**：确保首次渲染的输出在服务器和客户端是一致的。对于需要在客户端动态变化的内容，使用 `useEffect` 在 hydration 完成后再更新。
+
+```tsx
+import { useEffect, useState } from 'react';
+
+function MyComponent() {
+  // 首次渲染使用默认值，保证服务器和客户端一致
+  const [theme, setTheme] = useState('light');
+
+  useEffect(() => {
+    // hydration 完成后再读取 localStorage
+    const savedTheme = localStorage.getItem('theme');
+    if (savedTheme) {
+      setTheme(savedTheme);
+    }
+  }, []);
+
+  return <div className={theme}>...</div>;
+}
+```
+
+## 配置选项
+
+你可以通过 `ssg` 配置来控制是否启用 SSG：
+
+```ts title="rspress.config.ts"
+import { defineConfig } from 'rspress/config';
 
 export default defineConfig({
-  // ...
+  ssg: true, // 默认值，启用 SSG
+});
+```
+
+如果你的站点有特殊需求，可以禁用 SSG：
+
+```ts title="rspress.config.ts"
+import { defineConfig } from 'rspress/config';
+
+export default defineConfig({
+  ssg: false, // 禁用 SSG，使用 CSR
+});
+```
+
+:::warning 注意
+请谨慎关闭 SSG，这会丧失首屏渲染速度和 SEO 优势。
+:::
+
+## 自定义 HTML 内容
+
+通过 `builderConfig.html.tags`，你可以向 HTML 中注入自定义内容，比如添加统计代码、脚本或样式：
+
+```ts title="rspress.config.ts"
+import { defineConfig } from 'rspress/config';
+
+export default defineConfig({
   builderConfig: {
     html: {
       tags: [
         {
           tag: 'script',
           attrs: {
-            src: 'https://cdn.example.com/your-script.js',
-          },
-        },
-        {
-          tag: 'link',
-          attrs: {
-            rel: 'stylesheet',
-            href: 'https://cdn.example.com/your-style.css',
+            src: 'https://cdn.example.com/analytics.js',
           },
         },
       ],
@@ -58,33 +250,4 @@ export default defineConfig({
 });
 ```
 
-关于 `builderConfig.html.tags` 更详细的配置，请参考[文档](https://rsbuild.rs/zh/config/html/tags)。
-
-## 预览产物
-
-在生产环境构建完成之后，你可以通过 `rspress preview` 命令来预览产物，这个命令会启动一个本地的静态站点服务，你可以在浏览器中访问这个服务来预览产物。
-
-```shell
-> rspress preview
-
-Preview server running at http://localhost:4173/
-```
-
-## 关闭 SSG
-
-如果你不想使用静态站点生成，可以通过 `ssg` 配置来关闭它。
-
-```js title="rspress.config.ts"
-import { defineConfig } from '@rspress/core';
-
-export default defineConfig({
-  // ...
-  ssg: false,
-});
-```
-
-:::warning 注意
-
-请谨慎关闭 SSG，因为这会丧失上文中提到的静态站点生成的诸多优势。
-
-:::
+更多配置详情请参考 [Rsbuild html.tags 文档](https://rsbuild.dev/zh/config/html/tags)。
