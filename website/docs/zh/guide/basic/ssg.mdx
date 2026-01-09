@@ -218,7 +218,7 @@ function MyComponent() {
 
 **解决方案**：大部分静态托管服务（如 GitHub Pages、Netlify、Vercel 等）默认会使用 `404.html` 来处理所有未匹配的路由，无需额外配置。如果你的服务器没有自动处理，需要手动配置将未匹配的请求重定向到 `404.html`。Rspress 生成的 `404.html` 包含完整的应用代码，能够在客户端正确处理路由并显示对应页面。
 
-下面是一个 `_redirects` 文件配置 404.html 重定向的示例，如果你的托管服务支持它的话，可以使用：
+如果你的托管服务支持 `_redirects` 文件，可以使用以下配置示例：
 
 ```txt title="docs/public/_redirects"
 /*    /404.html   200
