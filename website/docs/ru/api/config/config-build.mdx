@@ -267,6 +267,25 @@ export default defineConfig({
 
 Включить ли перенос длинных строк кода по умолчанию. По умолчанию `false`.
 
+### markdown.crossCompilerCache
+
+- **Тип**: `boolean`
+- **По умолчанию**: `true`
+
+Включать ли кэш кросс-компилятора для компиляции MDX при выполнении команды `rspress build`. При включении этой опции Rspress будет кэшировать результаты парсинга MDX между разными компиляторами (web и node), что позволяет ускорить процесс продакшен-сборки примерно на 10%.
+
+Опция работает только в продакшен-сборках и вдохновлена соответствующей возможностью в [Docusaurus](https://docusaurus.io/).
+
+```ts title="rspress.config.ts"
+import { defineConfig } from '@rspress/core';
+
+export default defineConfig({
+  markdown: {
+    crossCompilerCache: true,
+  },
+});
+```
+
 ### markdown.globalComponents
 
 - **Тип**: `string[]`
