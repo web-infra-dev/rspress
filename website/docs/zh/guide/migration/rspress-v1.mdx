@@ -163,6 +163,20 @@ import { PackageManagerTabs } from '@theme';
 }
 ```
 
+:::tip
+
+如果你遇到 `@theme` 或 `@rspress/core/theme` 缺少导出的报错，大概率是因为 theme 文件夹下覆盖主题时没有使用 `@rspress/core/theme-original`：
+
+```txt
+× ESModulesLinkingError: export 'SvgWrapper' (imported as 'SvgWrapper') was not found in '@theme' (possible exports: HomeLayout, Layout, Search, Tag, getCustomMDXComponent)
+
+× ESModulesLinkingError: export 'Banner' (imported as 'Banner') was not found in '@rspress/core/theme' (possible exports: HomeLayout, Layout, Search, Tag, getCustomMDXComponent)
+```
+
+请确保在 `theme` 文件夹中使用 `@rspress/core/theme-original` 并正确导出所有组件。
+
+:::
+
 ## [重要] Shiki 代码高亮替代 prism
 
 Rspress V2 默认使用 Shiki v3 进行代码高亮，Prism 已被移除。
