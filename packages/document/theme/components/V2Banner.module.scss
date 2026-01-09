@@ -1,0 +1,38 @@
+.banner {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 10px 16px;
+  background: linear-gradient(90deg, #3b82f6 0%, #8b5cf6 100%);
+  color: #fff;
+  text-decoration: none;
+  font-size: 14px;
+  font-weight: 500;
+  transition: opacity 0.2s;
+
+  &:hover {
+    opacity: 0.9;
+  }
+}
+
+.content {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.badge {
+  background: rgba(255, 255, 255, 0.2);
+  padding: 2px 8px;
+  border-radius: 4px;
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.arrow {
+  transition: transform 0.2s;
+
+  .banner:hover & {
+    transform: translateX(4px);
+  }
+}
