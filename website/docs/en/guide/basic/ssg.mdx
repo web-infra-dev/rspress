@@ -10,9 +10,11 @@ Rspress enables SSG by default, which means when you run `rspress build`, each p
 
 - **Faster First Contentful Paint**: Users don't need to wait for JavaScript to load and execute; they see complete content as soon as the browser loads the HTML
 - **SEO Friendly**: Search engine crawlers can directly access complete HTML content
-- **Easy to Deploy**: Output consists of pure static files that can be deployed to any static hosting service
+- **Easy to Deploy**: Output consists of pure static files with no server required, can be directly hosted on any static hosting service
 
-## Dev Uses CSR, Build Uses SSG or CSR
+## Differences Between Dev and Build
+
+`rspress dev` uses CSR, while `rspress build` switches between SSG or CSR based on the `ssg` configuration.
 
 | Aspect        | Dev Mode                         | Build Mode                             |
 | ------------- | -------------------------------- | -------------------------------------- |
@@ -39,7 +41,7 @@ If your code works fine in Dev mode but throws errors in Build mode, it's usuall
 rspress build
 ```
 
-Build mode enables SSG by default and generates pre-rendered HTML files for each page. You can control the output type through the `ssg` configuration.
+Build mode enables SSG by default. During the build, Rspress executes React component rendering in a Node.js environment, converting each page into an HTML file with complete content. You can control the output type through the `ssg` configuration.
 
 **After building:**
 
