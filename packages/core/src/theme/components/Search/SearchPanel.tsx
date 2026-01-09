@@ -496,6 +496,9 @@ export function SearchPanel({ focused, setFocused }: SearchPanelProps) {
           >
             <div
               className="rp-search-panel__modal"
+              role="dialog"
+              aria-modal="true"
+              aria-label={t('searchPlaceholderText')}
               onClick={e => {
                 setFocused(true);
                 e.stopPropagation();
@@ -510,7 +513,7 @@ export function SearchPanel({ focused, setFocused }: SearchPanelProps) {
                     className="rp-search-panel__input"
                     ref={searchInputRef}
                     placeholder={t('searchPlaceholderText')}
-                    aria-label="SearchPanelInput"
+                    aria-label={t('searchPlaceholderText')}
                     autoComplete="off"
                     autoFocus
                     onChange={e => handleQueryChange(e.target.value)}
@@ -533,7 +536,8 @@ export function SearchPanel({ focused, setFocused }: SearchPanelProps) {
                     />
                   </label>
                 </div>
-                <h2
+                <button
+                  type="button"
                   className="rp-search-panel__cancel"
                   onClick={e => {
                     e.stopPropagation();
@@ -541,7 +545,7 @@ export function SearchPanel({ focused, setFocused }: SearchPanelProps) {
                   }}
                 >
                   {t('searchPanelCancelText')}
-                </h2>
+                </button>
               </div>
 
               {query && initStatus === 'inited' ? (

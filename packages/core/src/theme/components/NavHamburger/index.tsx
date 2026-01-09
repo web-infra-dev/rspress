@@ -1,3 +1,4 @@
+import { useI18n } from '@rspress/core/runtime';
 import { IconSmallMenu, SocialLinks, SvgWrapper, useHoverGroup } from '@theme';
 import clsx from 'clsx';
 import { createPortal } from 'react-dom';
@@ -9,6 +10,7 @@ import './index.scss';
 import { useNavScreen } from './useNavScreen';
 
 export function NavHamburger() {
+  const t = useI18n();
   const items = (
     <div className="rp-nav-hamburger__md__hover-group">
       <NavScreenAppearance />
@@ -36,8 +38,10 @@ export function NavHamburger() {
         )}
 
       <button
+        type="button"
         onClick={toggleScreen}
-        aria-label="mobile hamburger"
+        aria-label={t('navMenuLabel')}
+        aria-expanded={isScreenOpen}
         className={clsx('rp-nav-hamburger', 'rp-nav-hamburger__sm', {
           'rp-nav-hamburger--active': isScreenOpen,
         })}
@@ -46,7 +50,8 @@ export function NavHamburger() {
       </button>
 
       <button
-        aria-label="mobile hamburger"
+        type="button"
+        aria-label={t('navMenuLabel')}
         className={clsx('rp-nav-hamburger', 'rp-nav-hamburger__md', {
           'rp-nav-hamburger--active': isScreenOpen,
         })}
