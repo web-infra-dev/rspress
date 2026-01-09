@@ -196,7 +196,7 @@ function MyComponent() {
   const [theme, setTheme] = useState('light');
 
   useEffect(() => {
-    // hydration 完成后再读取 localStorage
+    // hydration 完成后再从 localStorage 读取
     const savedTheme = localStorage.getItem('theme');
     if (savedTheme) {
       setTheme(savedTheme);
@@ -256,4 +256,4 @@ export default defineConfig({
 });
 ```
 
-更多配置详情请参考 [Rsbuild html.tags 文档](https://rsbuild.dev/zh/config/html/tags)。
+更多配置详情请参考 [Rsbuild html.tags 文档](https://rsbuild.rs/zh/config/html/tags)。
