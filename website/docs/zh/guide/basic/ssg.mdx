@@ -4,24 +4,24 @@
 
 SSG（Static Site Generation，静态站点生成）是指在**构建阶段**将页面预渲染为 HTML 文件，而不是在用户访问时才进行渲染。
 
-Rspress 默认启用 SSG，这意味着当你执行 `rspress build` 时，每个页面都会被预渲染为包含完整内容的 HTML 文件。
-
 **SSG 的优势：**
 
 - **首屏渲染更快**：用户无需等待 JavaScript 加载和执行，浏览器加载 HTML 后即可看到完整内容
 - **SEO 友好**：搜索引擎爬虫可以直接抓取到完整的 HTML 内容
 - **易于部署**：产物是纯静态文件，无需部署服务器 API，可直接上传到 CDN 或任何静态托管服务。
 
+Rspress 默认启用 SSG，这意味着当你执行 `rspress build` 时，每个页面都会被预渲染为包含完整内容的 HTML 文件。以下是关于 SSG 实现的详细说明，旨在帮助你更深入地理解其工作原理。
+
 ## dev 和 build 下的区别
 
-`rspress dev` 下使用 CSR，`rspress build` 下根据 `ssg` 配置切换为 SSG 或 CSR。
+Rspress 在不同的运行模式下采用不同的渲染策略：在开发阶段使用客户端渲染以保证开发体验，而在生产构建阶段则默认开启 SSG 以优化性能。
 
-| 对比项      | dev 模式             | build 模式           |
+| 对比项      | dev 模式 (开发)      | build 模式 (生产)    |
 | ----------- | -------------------- | -------------------- |
 | 命令        | `rspress dev`        | `rspress build`      |
 | 渲染方式    | 纯 CSR（客户端渲染） | SSG（默认）或 CSR    |
 | 预渲染 HTML | 无                   | SSG 时预渲染所有页面 |
-| 适用场景    | 开发调试、热更新     | 生产部署             |
+| 适用场景    | 开发调试、热更新     | 产物性能、SEO        |
 | 预览方式    | 直接访问开发服务器   | `rspress preview`    |
 
 ### dev 模式
@@ -30,10 +30,10 @@ Rspress 默认启用 SSG，这意味着当你执行 `rspress build` 时，每个
 rspress dev
 ```
 
-dev 模式使用**纯客户端渲染（CSR）**，不进行预渲染。这是为了获得更快的开发体验和热更新能力。
+dev 模式为了获得更快的开发体验和热更新能力，使用**纯客户端渲染（CSR）**，不进行 HTML 预渲染。
 
 :::tip 提示
-如果你的代码在 dev 模式下正常运行，但在 build 模式下报错，这通常是因为 SSG 在 Node.js 环境中渲染，无法访问浏览器 API（如 `window`、`document`）。请参考下文的「常见问题与解决方案」。
+如果你的代码在 dev 模式下正常运行，但在 build 模式下报错，这通常是因为 SSG 在 Node.js 环境中渲染，无法访问浏览器 API（如 `window`、`document`）。请参考下文的[「常见问题与解决方案」](#常见问题与解决方案)。
 :::
 
 ### build 模式
@@ -42,7 +42,7 @@ dev 模式使用**纯客户端渲染（CSR）**，不进行预渲染。这是为
 rspress build
 ```
 
-build 模式默认启用 SSG，你可以通过 `ssg` 配置项来控制：
+build 模式默认启用 SSG，你可以通过 [`ssg` 配置项](#配置选项)来控制：
 
 - `ssg: true` （默认）：启用 SSG，构建时，Rspress 会在 Node.js 环境中执行 React 组件的渲染，将每个页面转换为包含完整内容的 HTML 文件。
 - `ssg: false`：禁用 SSG，使用纯 CSR，生成的 HTML 仅包含空容器，等待客户端渲染。
@@ -63,7 +63,7 @@ build 模式默认启用 SSG，你可以通过 `ssg` 配置项来控制：
 
 无论是 SSG 还是 CSR 模式，产物的目录结构是相同的：
 
-```bash
+```tree
 doc_build/
 ├── static/
 │   ├── js/
@@ -82,7 +82,7 @@ doc_build/
 
 两种模式的核心区别在于 HTML 文件的内容：
 
-**SSG 产物的 HTML**（包含预渲染的完整页面内容）：
+**SSG 产物 HTML**（包含预渲染的完整内容）：
 
 ```html
 <body>

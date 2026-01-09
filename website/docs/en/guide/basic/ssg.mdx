@@ -4,24 +4,24 @@
 
 SSG (Static Site Generation) refers to pre-rendering pages into HTML files during the **build phase**, rather than rendering them when users visit.
 
-Rspress enables SSG by default, which means when you run `rspress build`, each page will be pre-rendered into an HTML file containing complete content.
-
 **Advantages of SSG:**
 
 - **Faster First Contentful Paint**: Users don't need to wait for JavaScript to load and execute; they see complete content as soon as the browser loads the HTML
 - **SEO Friendly**: Search engine crawlers can directly access complete HTML content
 - **Easy to Deploy**: Output consists of pure static files with no server required, can be directly hosted on any static hosting service
 
+Rspress enables SSG by default, which means when you run `rspress build`, each page will be pre-rendered into an HTML file containing complete content. The following details explain the implementation of SSG, helping you gain a deeper understanding of how it works.
+
 ## Differences between dev and build
 
-`rspress dev` uses CSR, while `rspress build` switches between SSG or CSR based on the `ssg` configuration.
+Rspress employs different rendering strategies depending on the mode: it uses Client-Side Rendering (CSR) during development for a better experience, while defaulting to SSG during production builds for optimal performance.
 
-| Aspect         | Dev Mode                         | Build Mode                             |
+| Aspect         | Dev Mode (Development)           | Build Mode (Production)                |
 | -------------- | -------------------------------- | -------------------------------------- |
 | Command        | `rspress dev`                    | `rspress build`                        |
 | Rendering      | Pure CSR (Client-Side Rendering) | SSG (default) or CSR                   |
 | Pre-rendering  | None                             | Pre-renders all pages when SSG enabled |
-| Use Case       | Development, debugging, HMR      | Production deployment                  |
+| Focus          | Debugging, HMR                   | Performance, SEO                       |
 | Preview Method | Access dev server directly       | `rspress preview`                      |
 
 ### Dev mode
@@ -30,10 +30,10 @@ Rspress enables SSG by default, which means when you run `rspress build`, each p
 rspress dev
 ```
 
-Dev mode uses **pure Client-Side Rendering (CSR)** without pre-rendering. This is to provide a faster development experience and hot module replacement capability.
+Dev mode uses **pure Client-Side Rendering (CSR)** without pre-rendering. This prioritizes iteration speed and Hot Module Replacement (HMR) capabilities.
 
 :::tip
-If your code works fine in Dev mode but throws errors in Build mode, it's usually because SSG renders in a Node.js environment and cannot access browser APIs (like `window` or `document`). See "Common Issues and Solutions" below.
+If your code works fine in Dev mode but throws errors in Build mode, it's usually because SSG renders in a Node.js environment and cannot access browser APIs (like `window` or `document`). See ["Common Issues and Solutions"](#common-issues-and-solutions) below.
 :::
 
 ### Build mode
@@ -42,7 +42,7 @@ If your code works fine in Dev mode but throws errors in Build mode, it's usuall
 rspress build
 ```
 
-Build mode enables SSG by default. You can control this via the `ssg` configuration:
+Build mode enables SSG by default. You can control this via the [`ssg` configuration](#configuration):
 
 - `ssg: true` (Default): Enable SSG. During the build, Rspress executes React component rendering in a Node.js environment, converting each page into an HTML file with complete content.
 - `ssg: false`: Disable SSG. Use pure CSR. The generated HTML contains only an empty container, waiting for client-side rendering.
@@ -63,7 +63,7 @@ Build mode enables SSG by default. You can control this via the `ssg` configurat
 
 Whether using SSG or CSR mode, the output directory structure is the same:
 
-```bash
+```tree
 doc_build/
 ├── static/
 │   ├── js/
@@ -82,7 +82,7 @@ doc_build/
 
 The core difference between the two modes lies in the HTML file content:
 
-**SSG Output HTML** (contains pre-rendered complete page content):
+**SSG Output HTML** (Pre-rendered complete content):
 
 ```html
 <body>
