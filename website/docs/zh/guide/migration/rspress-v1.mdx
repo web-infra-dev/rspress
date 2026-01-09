@@ -165,7 +165,7 @@ import { PackageManagerTabs } from '@theme';
 
 :::tip
 
-如果你遇到 `@theme` 或 `@rspress/core/theme` 缺少导出的报错，大概率是因为 theme 文件夹下覆盖主题时没有使用 `@rspress/core/theme-original`：
+如果你遇到 `@theme` 或 `@rspress/core/theme` 缺少导出的报错，大概率是因为 theme 文件夹下覆盖主题时没有使用 `@rspress/core/theme-original`，造成循环引用：
 
 ```txt
 × ESModulesLinkingError: export 'SvgWrapper' (imported as 'SvgWrapper') was not found in '@theme' (possible exports: HomeLayout, Layout, Search, Tag, getCustomMDXComponent)
