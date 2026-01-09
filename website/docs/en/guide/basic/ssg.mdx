@@ -12,7 +12,7 @@ Rspress enables SSG by default, which means when you run `rspress build`, each p
 - **SEO Friendly**: Search engine crawlers can directly access complete HTML content
 - **Easy to Deploy**: Output consists of pure static files that can be deployed to any static hosting service
 
-## Dev vs Build
+## Dev Uses CSR, Build Uses SSG or CSR
 
 | Aspect        | Dev Mode                         | Build Mode                             |
 | ------------- | -------------------------------- | -------------------------------------- |
@@ -206,7 +206,7 @@ function MyComponent() {
 You can control whether SSG is enabled through the `ssg` configuration:
 
 ```ts title="rspress.config.ts"
-import { defineConfig } from 'rspress/config';
+import { defineConfig } from '@rspress/core';
 
 export default defineConfig({
   ssg: true, // Default value, SSG enabled
@@ -216,7 +216,7 @@ export default defineConfig({
 If your site has special requirements, you can disable SSG:
 
 ```ts title="rspress.config.ts"
-import { defineConfig } from 'rspress/config';
+import { defineConfig } from '@rspress/core';
 
 export default defineConfig({
   ssg: false, // Disable SSG, use CSR
@@ -232,7 +232,7 @@ Please be cautious when disabling SSG, as this will forfeit the advantages of fa
 Through `builderConfig.html.tags`, you can inject custom content into HTML, such as adding analytics code, scripts, or styles:
 
 ```ts title="rspress.config.ts"
-import { defineConfig } from 'rspress/config';
+import { defineConfig } from '@rspress/core';
 
 export default defineConfig({
   builderConfig: {

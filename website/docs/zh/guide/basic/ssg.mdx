@@ -12,7 +12,7 @@ Rspress 默认启用 SSG，这意味着当你执行 `rspress build` 时，每个
 - **SEO 友好**：搜索引擎爬虫可以直接抓取到完整的 HTML 内容
 - **易于部署**：产物是纯静态文件，可部署到任何静态托管服务
 
-## Dev 与 Build 的对比
+## Dev 使用 CSR，Build 使用 SSG 或 CSR
 
 | 对比项   | Dev 模式             | Build 模式           |
 | -------- | -------------------- | -------------------- |
@@ -206,7 +206,7 @@ function MyComponent() {
 你可以通过 `ssg` 配置来控制是否启用 SSG：
 
 ```ts title="rspress.config.ts"
-import { defineConfig } from 'rspress/config';
+import { defineConfig } from '@rspress/core';
 
 export default defineConfig({
   ssg: true, // 默认值，启用 SSG
@@ -216,7 +216,7 @@ export default defineConfig({
 如果你的站点有特殊需求，可以禁用 SSG：
 
 ```ts title="rspress.config.ts"
-import { defineConfig } from 'rspress/config';
+import { defineConfig } from '@rspress/core';
 
 export default defineConfig({
   ssg: false, // 禁用 SSG，使用 CSR
@@ -232,7 +232,7 @@ export default defineConfig({
 通过 `builderConfig.html.tags`，你可以向 HTML 中注入自定义内容，比如添加统计代码、脚本或样式：
 
 ```ts title="rspress.config.ts"
-import { defineConfig } from 'rspress/config';
+import { defineConfig } from '@rspress/core';
 
 export default defineConfig({
   builderConfig: {
