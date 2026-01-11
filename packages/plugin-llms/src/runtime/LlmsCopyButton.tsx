@@ -51,7 +51,11 @@ function LlmsCopyButton(props: LlmsCopyButtonProps) {
   const {
     onClick,
     text,
-    textByLang = { zh: '复制 Markdown', en: 'Copy Markdown' },
+    textByLang = {
+      zh: '复制 Markdown',
+      en: 'Copy Markdown',
+      ru: 'Копировать Markdown',
+    },
     ...otherProps
   } = props;
   const lang = useLang();
