@@ -2,8 +2,6 @@
 overviewHeaders: []
 ---
 
-import { Tabs, Tab } from '@theme';
-
 # Callout
 
 Callout 组件用于显示高亮的信息块，如提示、警告和注意事项。
@@ -16,93 +14,9 @@ Callout 组件用于显示高亮的信息块，如提示、警告和注意事项
 
 大多数情况下，使用容器语法来创建 Callout：
 
-<Tabs>
+import ContainerSyntax from '../../fragments/container-syntax.mdx';
 
-<Tab label="渲染结果">
-
-:::note
-这是一个 `note` 类型的 callout
-:::
-
-:::tip
-这是一个 `tip` 类型的 callout
-:::
-
-:::info
-这是一个 `info` 类型的 callout
-:::
-
-:::warning
-这是一个 `warning` 类型的 callout
-:::
-
-:::danger
-这是一个 `danger` 类型的 callout
-:::
-
-:::details
-这是一个 `details` 类型的 callout
-:::
-
-</Tab>
-
-<Tab label="语法">
-
-```markdown
-:::note
-这是一个 `note` 类型的 callout
-:::
-
-:::tip
-这是一个 `tip` 类型的 callout
-:::
-
-:::info
-这是一个 `info` 类型的 callout
-:::
-
-:::warning
-这是一个 `warning` 类型的 callout
-:::
-
-:::danger
-这是一个 `danger` 类型的 callout
-:::
-
-:::details
-这是一个 `details` 类型的 callout
-:::
-```
-
-</Tab>
-
-</Tabs>
-
-### 自定义标题
-
-你可以自定义标题：
-
-<Tabs>
-
-<Tab label="渲染结果">
-
-:::tip 自定义标题
-这是一个带有自定义标题的 callout
-:::
-
-</Tab>
-
-<Tab label="语法">
-
-```markdown
-:::tip 自定义标题
-这是一个带有自定义标题的 callout
-:::
-```
-
-</Tab>
-
-</Tabs>
+<ContainerSyntax />
 
 更多容器语法的详情，请参阅[容器](/zh/guide/use-mdx/container)。
 

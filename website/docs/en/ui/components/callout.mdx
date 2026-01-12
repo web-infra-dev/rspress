@@ -2,8 +2,6 @@
 overviewHeaders: []
 ---
 
-import { Tabs, Tab } from '@theme';
-
 # Callout
 
 The Callout component is used to display highlighted information blocks such as tips, warnings, and notes.
@@ -16,93 +14,9 @@ We recommend using [container syntax](/guide/use-mdx/container) which works in b
 
 In most cases, use the container syntax to create callouts:
 
-<Tabs>
+import ContainerSyntax from '../../fragments/container-syntax.mdx';
 
-<Tab label="Rendered Result">
-
-:::note
-This is a `note` callout
-:::
-
-:::tip
-This is a `tip` callout
-:::
-
-:::info
-This is an `info` callout
-:::
-
-:::warning
-This is a `warning` callout
-:::
-
-:::danger
-This is a `danger` callout
-:::
-
-:::details
-This is a `details` callout
-:::
-
-</Tab>
-
-<Tab label="Syntax">
-
-```markdown
-:::note
-This is a `note` callout
-:::
-
-:::tip
-This is a `tip` callout
-:::
-
-:::info
-This is an `info` callout
-:::
-
-:::warning
-This is a `warning` callout
-:::
-
-:::danger
-This is a `danger` callout
-:::
-
-:::details
-This is a `details` callout
-:::
-```
-
-</Tab>
-
-</Tabs>
-
-### Custom Title
-
-You can customize the title:
-
-<Tabs>
-
-<Tab label="Rendered Result">
-
-:::tip Custom Title
-This is a callout with a custom title
-:::
-
-</Tab>
-
-<Tab label="Syntax">
-
-```markdown
-:::tip Custom Title
-This is a callout with a custom title
-:::
-```
-
-</Tab>
-
-</Tabs>
+<ContainerSyntax />
 
 For more container syntax details, see [Container](/guide/use-mdx/container).
 
