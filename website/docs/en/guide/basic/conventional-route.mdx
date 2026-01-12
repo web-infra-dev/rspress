@@ -15,13 +15,11 @@ docs
 ├── foo
 │   ├── bar.md
 │   └── index.md
-├── foo.md
-├── zoo
-│   └── index.md
+├── zoo.md
 └── index.md
 ```
 
-Then `bar.md` will be routed to `/foo/bar`, `foo.md` will be routed to `/foo`, and `/foo/index.md` will be routed to `/foo/`.
+Then `bar.md` will be routed to `/foo/bar` and `/foo/index.md` will be routed to `/foo/`.
 
 The specific mapping rules are as follows:
 
@@ -31,7 +29,19 @@ The specific mapping rules are as follows:
 | `/foo.md`       | `/foo`     | `/foo.html`            |
 | `/foo/index.md` | `/foo/`    | `/foo/index.html`      |
 | `/foo/bar.md`   | `/foo/bar` | `/foo/bar.html`        |
-| `/zoo/index.md` | `/zoo/`    | `/zoo/index.html`      |
+
+:::warning
+
+Do not have files and folders with the same name, which will cause routing conflicts. For example, the following file structure is not allowed:
+
+```tree
+docs
+├── foo
+│   └── index.md
+└── foo.md
+```
+
+:::
 
 ## Component routing
 
