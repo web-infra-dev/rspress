@@ -33,7 +33,7 @@
     "reset": "rimraf ./**/node_modules"
   },
   "dependencies": {
-    "typedoc": "0.28.15",
+    "typedoc": "0.28.16",
     "typedoc-plugin-markdown": "4.9.0"
   },
   "devDependencies": {
@@ -41,7 +41,7 @@
     "@rslib/core": "0.19.1",
     "@rspress/config": "workspace:*",
     "@types/node": "^22.8.1",
-    "@types/react": "^19.2.7",
+    "@types/react": "^19.2.8",
     "@types/react-dom": "^19.2.3",
     "react": "^19.2.3",
     "rsbuild-plugin-publint": "^0.3.3",
