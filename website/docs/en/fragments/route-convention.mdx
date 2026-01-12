@@ -1,0 +1,54 @@
+import { Tabs, Tab } from '@theme';
+import { Border } from '../../components/Border';
+
+In the [docs directory](/api/config/config-basic#root), MDX fragments or React components need to be excluded from routing through the [route.exclude](/api/config/config-basic#routeexclude) configuration. For convenience, files starting with "\_" are excluded by default via [route.excludeConvention](/api/config/config-basic#routeexcludeconvention).
+
+You can also place components in adjacent directories outside the docs directory, for example:
+
+```tree
+docs
+├── _button.mdx
+└── index.mdx
+components
+└── button.tsx
+```
+
+<Tabs>
+<Tab label="docs/index.mdx">
+
+```mdx
+import ButtonFragment from './_button.mdx';
+import Button from '../../components/button';
+
+<ButtonFragment />
+<Button />
+```
+
+</Tab>
+<Tab label="docs/_button.mdx">
+
+```mdx file="./_button.mdx"
+
+```
+
+</Tab>
+<Tab label="components/button.tsx">
+
+```tsx
+const Button = () => <button>This is a button from tsx</button>;
+export default Button;
+```
+
+</Tab>
+</Tabs>
+
+It will be rendered as:
+
+<Border>
+
+import Button from './_button.mdx';
+
+<Button />
+<button>This is a button from tsx</button>
+
+</Border>

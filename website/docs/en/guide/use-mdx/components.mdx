@@ -2,20 +2,20 @@
 
 Rspress supports [MDX](https://mdxjs.com/), a powerful way to develop content.
 
-## Markdown
+## MDX
 
 MDX is a superset of Markdown, which means you can write Markdown files as usual. For example:
 
-```md
+```mdx
 # Hello world
 ```
 
-## Componentization
+## Componentization \{#component}
 
 In MDX, every `.mdx` file is compiled into a React component, which means it can be imported like any component and can freely render React components. For example:
 
 import { Tabs, Tab } from '@theme';
-import { Border } from './_Border';
+import { Border } from '../../../components/Border';
 
 <Tabs>
 <Tab label="docs/index.mdx">
@@ -68,51 +68,11 @@ You can use [built-in components](/ui/components/index.mdx) provided by Rspress 
 
 ## Routing convention
 
-In the [docs directory](/api/config/config-basic#root), MDX fragments or React components need to be excluded from routing through the [route.exclude](/api/config/config-basic#routeexclude) configuration. For convenience, files starting with "\_" are excluded by default via [route.excludeConvention](/api/config/config-basic#routeexcludeconvention).
+import RouteConvention from '@en/fragments/route-convention.mdx';
 
-You can also place components in adjacent directories outside the docs directory, for example:
+<RouteConvention />
 
-<Tabs>
-<Tab label="docsite/docs/index.mdx">
-
-```mdx
-import ButtonFragment from './_button.mdx';
-import Button from '../../components/button';
-
-<ButtonFragment />
-<Button />
-```
-
-</Tab>
-<Tab label="docsite/docs/_button.mdx">
-
-```mdx file="./_button.mdx"
-
-```
-
-</Tab>
-<Tab label="docsite/components/button.tsx">
-
-```tsx
-const Button = () => <button>Button</button>;
-export default Button;
-```
-
-</Tab>
-</Tabs>
-
-It will be rendered as:
-
-<Border>
-
-import Button from './_button.mdx';
-
-<Button />
-<button>Button</button>
-
-</Border>
-
-## Escape Hatch: writing document content using tsx or html
+## Escape Hatch: writing document content in tsx
 
 ```tsx file="./_escape-hatch.tsx" title="_escape-hatch.tsx"
 
