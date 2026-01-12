@@ -1,7 +1,6 @@
 {
   "extends": "@rspress/config/tsconfig",
   "compilerOptions": {
-    "jsx": "preserve",
     "moduleResolution": "bundler",
     "paths": {
       "i18n": ["./i18n.json"],

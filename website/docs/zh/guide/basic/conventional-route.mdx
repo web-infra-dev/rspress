@@ -16,20 +16,22 @@ docs
 │   ├── bar.md
 │   └── index.md
 ├── foo.md
-└── zoo
-    └── index.md
+├── zoo
+│   └── index.md
+└── index.md
 ```
 
-那么 `bar.md` 的路由路径会是 `/foo/bar`，`foo.md` 的路由路径会是 `/foo`。
+那么 `bar.md` 的路由路径会是 `/foo/bar`，`foo.md` 的路由路径会是 `/foo`， `/foo/index.md` 的路由路径会是 `/foo/`。
 
 具体映射规则如下：
 
-| 文件路径        | 路由路径   |
-| --------------- | ---------- |
-| `index.md`      | `/`        |
-| `/foo.md`       | `/foo`     |
-| `/foo/bar.md`   | `/foo/bar` |
-| `/zoo/index.md` | `/zoo/`    |
+| 文件路径        | 路由路径   | `cleanUrl: false` 路径 |
+| --------------- | ---------- | ---------------------- |
+| `index.md`      | `/`        | `/index.html`          |
+| `/foo.md`       | `/foo`     | `/foo.html`            |
+| `/foo/index.md` | `/foo/`    | `/foo/index.html`      |
+| `/foo/bar.md`   | `/foo/bar` | `/foo/bar.html`        |
+| `/zoo/index.md` | `/zoo/`    | `/zoo/index.html`      |
 
 ## 组件路由
 
@@ -62,24 +64,63 @@ import { defineConfig } from '@rspress/core';
 
 export default defineConfig({
   route: {
-    // 这些文件将被排除在路由之外（支持 glob 模式）
-    exclude: ['component/**/*'],
-    // 这些文件将被包含在路由中（支持 glob 模式）
+    // 这些文件会被注册为路由（支持 glob 模式）
     include: ['other-dir/**/*'],
+    // 这些文件将不会被注册为路由（支持 glob 模式）
+    exclude: ['components/**/*', 'fragments/**/*'], /
   },
 });
 ```
 
 ## 最佳实践
 
-我们推荐你将文档文件放在 `docs` 目录下，这样可以让你的项目更加清晰。而对于非文档内容，比如自定义组件、工具函数等，可以放到 `docs` 目录之外进行维护。比如：
+我们推荐你将文档文件放在 `docs` 目录下，这样可以让你的项目更加清晰。而对于非文档内容，比如自定义组件、工具函数等，可以放到 `docs` 目录之外进行维护。
+
+:::tip
+
+如果要将 `.tsx` 或者 `.mdx` 文件放在 `docs` 目录，需要配合 `route.excludes` 使用，否则这些文件会被自动注册为路由，可能会导致一些意外的问题。
+
+:::
+
+以下是一种最佳实践，配合 `route.excludes` 使用，可以让你的项目结构更加清晰：
 
 ```tree
-docs
-└── foo.mdx
-src
-├── components
-│   └── CustomComponent.tsx
-└── utils
-    └── utils.ts
+├── docs
+│   ├── components  # 用于放置文档中使用到的 React 组件
+│   │   └── Example.tsx
+│   ├── fragments   # 用于放置一些文档片段
+│   │   └── example.mdx
+│   └── index.mdx
+└── theme
+    ├── components # 用于放置主题相关的 React 组件
+    |   └── DocFooter.tsx
+    └── index.tsx
+```
+
+```ts title="rspress.config.ts"
+import { defineConfig } from '@rspress/core';
+
+export default defineConfig({
+  route: {
+    exclude: ['components/**/*', 'fragments/**/*'], // 这些目录下的文件不会被注册为路由
+  },
+});
+```
+
+```json title="tsconfig.json"
+{
+  "compilerOptions": {
+    "lib": ["DOM", "ESNext"],
+    "jsx": "react-jsx",
+    "moduleResolution": "bundler",
+    "paths": {
+      "i18n": ["./i18n.json"],
+      "@theme": ["./theme/index.tsx"]
+    }
+  },
+  "include": ["docs", "theme", "rspress.config.ts"],
+  "mdx": {
+    "checkMdx": true
+  }
+}
 ```

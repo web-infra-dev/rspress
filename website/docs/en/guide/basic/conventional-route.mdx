@@ -13,20 +13,25 @@ Rspress automatically scans the root directory and all subdirectories, and maps 
 ```tree
 docs
 ├── foo
-│   └── bar.md
-└── foo.md
+│   ├── bar.md
+│   └── index.md
+├── foo.md
+├── zoo
+│   └── index.md
+└── index.md
 ```
 
-Then `bar.md` will be routed to `/foo/bar`, and `foo.md` will be routed to `/foo`.
+Then `bar.md` will be routed to `/foo/bar`, `foo.md` will be routed to `/foo`, and `/foo/index.md` will be routed to `/foo/`.
 
 The specific mapping rules are as follows:
 
-| file path       | route path |
-| --------------- | ---------- |
-| `index.md`      | `/`        |
-| `/foo.md`       | `/foo`     |
-| `/foo/bar.md`   | `/foo/bar` |
-| `/zoo/index.md` | `/zoo/`    |
+| filepath        | route path | `cleanUrl: false` path |
+| --------------- | ---------- | ---------------------- |
+| `index.md`      | `/`        | `/index.html`          |
+| `/foo.md`       | `/foo`     | `/foo.html`            |
+| `/foo/index.md` | `/foo/`    | `/foo/index.html`      |
+| `/foo/bar.md`   | `/foo/bar` | `/foo/bar.html`        |
+| `/zoo/index.md` | `/zoo/`    | `/zoo/index.html`      |
 
 ## Component routing
 
@@ -59,24 +64,63 @@ import { defineConfig } from '@rspress/core';
 
 export default defineConfig({
   route: {
-    // These files will be excluded from the routing (support glob pattern)
-    exclude: ['component/**/*'],
-    // These files will be included in the routing (support glob pattern)
+    // These files will be registered as routes (supports glob pattern)
     include: ['other-dir/**/*'],
+    // These files will not be registered as routes (supports glob pattern)
+    exclude: ['components/**/*', 'fragments/**/*'],
   },
 });
 ```
 
 ## Best practices
 
-We recommend that you place documentation files in the `docs` directory to make your project more clear. For non-documentation content, such as custom components, util functions, etc., they can be maintained outside the `docs` directory. For example:
+We recommend that you place documentation files in the `docs` directory to make your project more clear. For non-documentation content, such as custom components, util functions, etc., they can be maintained outside the `docs` directory.
+
+:::tip
+
+If you want to place `.tsx` or `.mdx` files in the `docs` directory, you need to use `route.exclude` together, otherwise these files will be automatically registered as routes, which may cause some unexpected issues.
+
+:::
+
+Here is a best practice that uses `route.exclude` to make your project structure clearer:
 
 ```tree
-docs
-└── foo.mdx
-src
-├── components
-│   └── CustomComponent.tsx
-└── utils
-    └── utils.ts
+├── docs
+│   ├── components  # For React components used in documentation
+│   │   └── Example.tsx
+│   ├── fragments   # For document fragments
+│   │   └── example.mdx
+│   └── index.mdx
+└── theme
+    ├── components # For theme-related React components
+    |   └── DocFooter.tsx
+    └── index.tsx
+```
+
+```ts title="rspress.config.ts"
+import { defineConfig } from '@rspress/core';
+
+export default defineConfig({
+  route: {
+    exclude: ['components/**/*', 'fragments/**/*'], // Files in these directories will not be registered as routes
+  },
+});
+```
+
+```json title="tsconfig.json"
+{
+  "compilerOptions": {
+    "lib": ["DOM", "ESNext"],
+    "jsx": "react-jsx",
+    "moduleResolution": "bundler",
+    "paths": {
+      "i18n": ["./i18n.json"],
+      "@theme": ["./theme/index.tsx"]
+    }
+  },
+  "include": ["docs", "theme", "rspress.config.ts"],
+  "mdx": {
+    "checkMdx": true
+  }
+}
 ```
