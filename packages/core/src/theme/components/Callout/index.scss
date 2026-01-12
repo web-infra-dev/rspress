@@ -120,7 +120,7 @@
   }
 
   // inline code
-  :not(pre, div) > code {
+  :not(pre) > code {
     color: var(--rp-container-note-text);
     background-color: var(--rp-container-note-code-bg);
   }
@@ -143,7 +143,7 @@
   }
 
   // inline code
-  :not(pre, div) > code {
+  :not(pre) > code {
     color: var(--rp-container-tip-text);
     background-color: var(--rp-container-tip-code-bg);
   }
@@ -166,7 +166,7 @@
   }
 
   // inline code
-  :not(pre, div) > code {
+  :not(pre) > code {
     color: var(--rp-container-info-text);
     background-color: var(--rp-container-info-code-bg);
   }
@@ -189,7 +189,7 @@
   }
 
   // inline code
-  :not(pre, div) > code {
+  :not(pre) > code {
     color: var(--rp-container-warning-text);
     background-color: var(--rp-container-warning-code-bg);
   }
@@ -213,7 +213,7 @@
   }
 
   // inline code
-  :not(pre, div) > code {
+  :not(pre) > code {
     color: var(--rp-container-danger-text);
     background-color: var(--rp-container-danger-code-bg);
   }
@@ -236,7 +236,7 @@
   }
 
   // inline code
-  :not(pre, div) > code {
+  :not(pre) > code {
     color: var(--rp-container-details-text);
     background-color: var(--rp-container-details-code-bg);
   }
