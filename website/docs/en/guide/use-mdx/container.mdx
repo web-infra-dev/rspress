@@ -10,85 +10,9 @@ Rspress provides two styles of syntax, [`:::` syntax](#three-colon-syntax) and [
 
 You can use the `:::` syntax to create custom containers and support custom titles. For example:
 
-import { Tabs, Tab } from '@theme';
+import ContainerSyntax from '../../fragments/container-syntax.mdx';
 
-<Tabs>
-
-<Tab label="Rendered Result">
-
-:::note
-This is a `block` of type `note`
-:::
-
-:::tip
-This is a `block` of type `tip`
-:::
-
-:::info
-This is a `block` of type `info`
-:::
-
-:::warning
-This is a `block` of type `warning`
-:::
-
-:::danger
-This is a `block` of type `danger`
-:::
-
-:::details
-This is a `block` of type `details`
-:::
-
-:::tip Custom Title
-This is a `block` of `Custom Title`
-:::
-
-:::tip\{title="Custom Title"}
-This is a `block` of `Custom Title`
-:::
-
-</Tab>
-
-<Tab label="Syntax">
-
-```markdown
-:::note
-This is a `block` of type `note`
-:::
-
-:::tip
-This is a `block` of type `tip`
-:::
-
-:::info
-This is a `block` of type `info`
-:::
-
-:::warning
-This is a `block` of type `warning`
-:::
-
-:::danger
-This is a `block` of type `danger`
-:::
-
-:::details
-This is a `block` of type `details`
-:::
-
-:::tip Custom Title
-This is a `block` of `Custom Title`
-:::
-
-:::tip{title="Custom Title"}
-This is a `block` of `Custom Title`
-:::
-```
-
-</Tab>
-
-</Tabs>
+<ContainerSyntax />
 
 :::warning Notes
 
@@ -107,6 +31,8 @@ This is a `block` of `Custom Title`
 ## GitHub Markdown alerts syntax \{#github-markdown-alerts-syntax}
 
 You can use [GitHub Markdown Alerts Syntax](https://docs.github.com/en/get-started/writing-on-github/getting-started-with-writing-and-formatting-on-github/basic-writing-and-formatting-syntax#alerts) to create custom containers.
+
+import { Tabs, Tab } from '@theme';
 
 <Tabs>
 
