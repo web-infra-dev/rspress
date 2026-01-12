@@ -1,0 +1,58 @@
+以下是一种文件结构的最佳实践，包含了 [MDX 片段和 React 组件](/guide/use-mdx/components#component)、[自定义主题](/guide/basic/custom-theme)、[约定式路由](/guide/basic/conventional-route)、[国际化](/guide/basic/i18n)：
+
+```tree
+├── docs
+│   ├── components  # 用于放置文档中使用到的 React 组件
+│   │   └── Example.tsx
+│   ├── zh
+│   │   ├── fragments   # 用于放置一些 zh 的文档片段
+│   │   │   └── example.mdx
+│   │   └── index.mdx
+│   └── en
+│       ├── fragments   # 用于放置一些 en 的文档片段
+│       │   └── example.mdx
+│       └── index.mdx
+└── theme
+    ├── components # 用于放置主题相关的 React 组件
+    │   └── DocFooter.tsx
+    └── index.tsx
+```
+
+```ts title="rspress.config.ts"
+import { defineConfig } from '@rspress/core';
+
+export default defineConfig({
+  route: {
+    exclude: ['*/components/**/*', '*/fragments/**/*'], // 这些目录下的文件不会被注册为路由
+  },
+  lang: 'en',
+  locales: [
+    {
+      lang: 'zh',
+      label: '中文',
+    },
+    {
+      lang: 'en',
+      label: 'English',
+    },
+  ],
+});
+```
+
+```json title="tsconfig.json"
+{
+  "compilerOptions": {
+    "lib": ["DOM", "ESNext"],
+    "jsx": "react-jsx",
+    "moduleResolution": "bundler",
+    "paths": {
+      "i18n": ["./i18n.json"],
+      "@theme": ["./theme/index.tsx"]
+    }
+  },
+  "include": ["docs", "theme", "rspress.config.ts"],
+  "mdx": {
+    "checkMdx": true
+  }
+}
+```
