@@ -1,0 +1,163 @@
+---
+overviewHeaders: []
+---
+
+import { Tabs, Tab } from '@theme';
+
+# Callout
+
+Callout 组件用于显示高亮的信息块，如提示、警告和注意事项。
+
+:::tip
+推荐使用[容器语法](/zh/guide/use-mdx/container)，它在 Markdown 和 MDX 文件中均可使用。
+:::
+
+## 容器语法
+
+大多数情况下，使用容器语法来创建 Callout：
+
+<Tabs>
+
+<Tab label="渲染结果">
+
+:::note
+这是一个 `note` 类型的 callout
+:::
+
+:::tip
+这是一个 `tip` 类型的 callout
+:::
+
+:::info
+这是一个 `info` 类型的 callout
+:::
+
+:::warning
+这是一个 `warning` 类型的 callout
+:::
+
+:::danger
+这是一个 `danger` 类型的 callout
+:::
+
+:::details
+这是一个 `details` 类型的 callout
+:::
+
+</Tab>
+
+<Tab label="语法">
+
+```markdown
+:::note
+这是一个 `note` 类型的 callout
+:::
+
+:::tip
+这是一个 `tip` 类型的 callout
+:::
+
+:::info
+这是一个 `info` 类型的 callout
+:::
+
+:::warning
+这是一个 `warning` 类型的 callout
+:::
+
+:::danger
+这是一个 `danger` 类型的 callout
+:::
+
+:::details
+这是一个 `details` 类型的 callout
+:::
+```
+
+</Tab>
+
+</Tabs>
+
+### 自定义标题
+
+你可以自定义标题：
+
+<Tabs>
+
+<Tab label="渲染结果">
+
+:::tip 自定义标题
+这是一个带有自定义标题的 callout
+:::
+
+</Tab>
+
+<Tab label="语法">
+
+```markdown
+:::tip 自定义标题
+这是一个带有自定义标题的 callout
+:::
+```
+
+</Tab>
+
+</Tabs>
+
+更多容器语法的详情，请参阅[容器](/zh/guide/use-mdx/container)。
+
+## 组件用法
+
+你也可以在 MDX 文件中直接使用 Callout 组件：
+
+```mdx title="index.mdx"
+import { Callout } from '@rspress/core/theme-original';
+
+<Callout type="tip">这是一个 tip callout</Callout>
+
+<Callout type="warning" title="警告">
+  这是一个带有自定义标题的警告
+</Callout>
+```
+
+import { Callout } from '@rspress/core/theme-original';
+
+<Callout type="tip">这是一个 tip callout</Callout>
+
+<Callout type="warning" title="警告">
+  这是一个带有自定义标题的警告
+</Callout>
+
+## 自定义
+
+你可以 eject Callout 组件来自定义其样式和行为：
+
+```bash
+npx rspress eject Callout
+```
+
+这会将组件复制到 `theme/components/Callout`。自定义后，在 `theme/index.tsx` 中重新导出：
+
+```tsx title="theme/index.tsx"
+export { Callout } from './components/Callout';
+export * from '@rspress/core/theme-original';
+```
+
+## Props
+
+```ts
+interface CalloutProps {
+  /**
+   * callout 的类型，决定其颜色和图标。
+   */
+  type: 'tip' | 'note' | 'warning' | 'caution' | 'danger' | 'info' | 'details';
+  /**
+   * callout 的自定义标题。如果未提供，将使用首字母大写的类型名。
+   */
+  title?: string;
+  /**
+   * callout 内显示的内容。
+   */
+  children: React.ReactNode;
+}
+```
