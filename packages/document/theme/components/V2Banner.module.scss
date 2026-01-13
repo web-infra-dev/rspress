@@ -7,12 +7,17 @@
   color: #fff;
   text-decoration: none;
   font-size: 14px;
-  font-weight: 500;
+  font-weight: 700;
   transition: opacity 0.2s;
 
   &:hover {
     opacity: 0.9;
   }
+}
+
+.message {
+  font-weight: 700;
+  color: #fff;
 }
 
 .content {
