@@ -149,6 +149,9 @@ export default defineConfig({
       },
     },
   ],
+  performance: {
+    buildCache: false,
+  },
   source: {
     tsconfigPath: 'tsconfig.build.json',
   },
