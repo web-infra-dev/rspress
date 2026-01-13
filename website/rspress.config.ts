@@ -98,40 +98,40 @@ export default defineConfig({
       verificationContent: '8F5BFE50E65777F1',
     }),
     pluginFileTree(),
-    // pluginOg({
-    //   domain: 'https://v2.rspress.rs',
-    //   maxTitleSizePerLine: 28,
-    //   async resvgOptions() {
-    //     // fetch font files to og-fonts
-    //     const fontDir = path.join(__dirname, './og-fonts');
-    //     const fontFile = path.join(fontDir, 'wqy-microhei.ttc');
-    //     const fontUrl =
-    //       'https://github.com/anthonyfok/fonts-wqy-microhei/raw/cd82defe33ec0e86e628329f1b63049ef562c8e5/wqy-microhei.ttc';
+    pluginOg({
+      domain: 'https://v2.rspress.rs',
+      maxTitleSizePerLine: 28,
+      async resvgOptions() {
+        // fetch font files to og-fonts
+        const fontDir = path.join(__dirname, './og-fonts');
+        const fontFile = path.join(fontDir, 'wqy-microhei.ttc');
+        const fontUrl =
+          'https://github.com/anthonyfok/fonts-wqy-microhei/raw/cd82defe33ec0e86e628329f1b63049ef562c8e5/wqy-microhei.ttc';
 
-    //     try {
-    //       await fs.access(fontFile);
-    //     } catch {
-    //       await fs.mkdir(fontDir, { recursive: true });
+        try {
+          await fs.access(fontFile);
+        } catch {
+          await fs.mkdir(fontDir, { recursive: true });
 
-    //       const res = await fetch(fontUrl, { redirect: 'follow' });
-    //       if (!res.ok) {
-    //         throw new Error(
-    //           `Failed to download font: ${res.status} ${res.statusText}`,
-    //         );
-    //       }
+          const res = await fetch(fontUrl, { redirect: 'follow' });
+          if (!res.ok) {
+            throw new Error(
+              `Failed to download font: ${res.status} ${res.statusText}`,
+            );
+          }
 
-    //       const arrayBuffer = await res.arrayBuffer();
-    //       await fs.writeFile(fontFile, Buffer.from(arrayBuffer));
-    //     }
+          const arrayBuffer = await res.arrayBuffer();
+          await fs.writeFile(fontFile, Buffer.from(arrayBuffer));
+        }
 
-    //     return {
-    //       font: {
-    //         loadSystemFonts: false,
-    //         fontFiles: [fontFile],
-    //       },
-    //     };
-    //   },
-    // }),
+        return {
+          font: {
+            loadSystemFonts: false,
+            fontFiles: [fontFile],
+          },
+        };
+      },
+    }),
   ],
   builderConfig: {
     plugins: [
@@ -146,22 +146,22 @@ export default defineConfig({
         },
       }),
     ],
-    // tools: {
-    //   rspack: config => {
-    //     if (process.env.RSDOCTOR) {
-    //       config.plugins?.push(
-    //         new RsdoctorRspackPlugin({
-    //           ...commonRsdoctorConfig,
-    //           output: {
-    //             ...commonRsdoctorConfig.output,
-    //             reportDir: `./doc_build/diff-rsdoctor/${config.name}`,
-    //           },
-    //         }),
-    //       );
-    //     }
-    //     return config;
-    //   },
-    // },
+    tools: {
+      rspack: config => {
+        if (process.env.RSDOCTOR) {
+          config.plugins?.push(
+            new RsdoctorRspackPlugin({
+              ...commonRsdoctorConfig,
+              output: {
+                ...commonRsdoctorConfig.output,
+                reportDir: `./doc_build/diff-rsdoctor/${config.name}`,
+              },
+            }),
+          );
+        }
+        return config;
+      },
+    },
   },
   route: {
     cleanUrls: true,
