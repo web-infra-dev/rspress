@@ -39,7 +39,7 @@
   },
   "devDependencies": {
     "@microsoft/api-extractor": "^7.55.2",
-    "@rslib/core": "0.19.1",
+    "@rslib/core": "0.19.2",
     "@rspress/config": "workspace:*",
     "@shikijs/types": "^3.21.0",
     "@types/hast": "^3.0.4",
