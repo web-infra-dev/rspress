@@ -13,20 +13,35 @@ Rspress 会自动扫描根目录和所有子目录，并将文件路径映射到
 ```tree
 docs
 ├── foo
-│   └── bar.md
-└── foo.md
+│   ├── bar.md
+│   └── index.md
+├── zoo.md
+└── index.md
 ```
 
-那么 `bar.md` 的路由路径会是 `/foo/bar`，`foo.md` 的路由路径会是 `/foo`。
+那么 `bar.md` 的路由路径会是 `/foo/bar`， `/foo/index.md` 的路由路径会是 `/foo/`。
 
 具体映射规则如下：
 
-| 文件路径        | 路由路径   |
-| --------------- | ---------- |
-| `index.md`      | `/`        |
-| `/foo.md`       | `/foo`     |
-| `/foo/bar.md`   | `/foo/bar` |
-| `/zoo/index.md` | `/zoo/`    |
+| 文件路径        | 路由路径   | `cleanUrl: false` 路径 |
+| --------------- | ---------- | ---------------------- |
+| `index.md`      | `/`        | `/index.html`          |
+| `/zoo.md`       | `/zoo`     | `/zoo.html`            |
+| `/foo/index.md` | `/foo/`    | `/foo/index.html`      |
+| `/foo/bar.md`   | `/foo/bar` | `/foo/bar.html`        |
+
+:::warning
+
+不要出现文件与文件夹同名的情况，会造成路由冲突，例如下面的文件结构是不允许的：
+
+```tree
+docs
+├── foo
+│   └── index.md
+└── foo.md
+```
+
+:::
 
 ## 组件路由
 
@@ -59,24 +74,30 @@ import { defineConfig } from '@rspress/core';
 
 export default defineConfig({
   route: {
-    // 这些文件将被排除在路由之外（支持 glob 模式）
-    exclude: ['component/**/*'],
-    // 这些文件将被包含在路由中（支持 glob 模式）
+    // 这些文件会被注册为路由（支持 glob 模式）
     include: ['other-dir/**/*'],
+    // 这些文件将不会被注册为路由（支持 glob 模式）
+    exclude: ['components/**/*', 'fragments/**/*'],
   },
 });
 ```
 
+## 默认排除 `_` 开头的文件
+
+import RouteConvention from '@zh/fragments/route-convention.mdx';
+
+<RouteConvention />
+
 ## 最佳实践
 
-我们推荐你将文档文件放在 `docs` 目录下，这样可以让你的项目更加清晰。而对于非文档内容，比如自定义组件、工具函数等，可以放到 `docs` 目录之外进行维护。比如：
+我们推荐你将文档文件放在 `docs` 目录下，这样可以让你的项目更加清晰。而对于非文档内容，比如自定义组件、工具函数等，可以放到 `docs` 目录之外进行维护，如果放到 `docs` 目录，需要配合 `route.excludes` 使用。
 
-```tree
-docs
-└── foo.mdx
-src
-├── components
-│   └── CustomComponent.tsx
-└── utils
-    └── utils.ts
-```
+:::tip
+
+如果要将自定义组件、文档片段放在 `docs` 目录，需要配合 `route.excludes` 使用，否则这些文件会被自动注册为路由，可能会导致一些意外的问题。
+
+:::
+
+import FileStructure from '../../fragments/file-structure.mdx';
+
+<FileStructure />

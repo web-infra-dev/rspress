@@ -1,10 +1,13 @@
+import { getCustomMDXComponent } from '@rspress/core/theme';
+
 export default () => {
+  const { p: P, code: Code } = getCustomMDXComponent();
   return (
-    <p className="rp-doc">
+    <P className="rp-doc">
       This is content in tsx, but the styles are the same as in the
-      documentation, such as <code>@rspress/core</code>. However, this text with
+      documentation, such as <Code>@rspress/core</Code>. However, this text with
       className="rp-not-doc"
-      <code className="rp-not-doc">@rspress/core</code> will not take effect
-    </p>
+      <Code className="rp-not-doc">@rspress/core</Code> will not take effect
+    </P>
   );
 };

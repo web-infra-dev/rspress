@@ -1,0 +1,58 @@
+Here is a best practice file structure that includes [MDX fragments and React components](/guide/use-mdx/components#component), [custom themes](/guide/basic/custom-theme), [conventional routing](/guide/basic/conventional-route), and [internationalization](/guide/basic/i18n):
+
+```tree
+├── docs
+│   ├── components  # React components used in documentation
+│   │   └── Example.tsx
+│   ├── zh
+│   │   ├── fragments   # zh document fragments
+│   │   │   └── example.mdx
+│   │   └── index.mdx
+│   └── en
+│       ├── fragments   # en document fragments
+│       │   └── example.mdx
+│       └── index.mdx
+└── theme
+    ├── components # React components for theme
+    │   └── DocFooter.tsx
+    └── index.tsx
+```
+
+```ts title="rspress.config.ts"
+import { defineConfig } from '@rspress/core';
+
+export default defineConfig({
+  route: {
+    exclude: ['*/components/**/*', '*/fragments/**/*'], // Files in these directories won't be registered as routes
+  },
+  lang: 'en',
+  locales: [
+    {
+      lang: 'zh',
+      label: '中文',
+    },
+    {
+      lang: 'en',
+      label: 'English',
+    },
+  ],
+});
+```
+
+```json title="tsconfig.json"
+{
+  "compilerOptions": {
+    "lib": ["DOM", "ESNext"],
+    "jsx": "react-jsx",
+    "moduleResolution": "bundler",
+    "paths": {
+      "i18n": ["./i18n.json"],
+      "@theme": ["./theme/index.tsx"]
+    }
+  },
+  "include": ["docs", "theme", "rspress.config.ts"],
+  "mdx": {
+    "checkMdx": true
+  }
+}
+```

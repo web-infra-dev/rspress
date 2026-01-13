@@ -2,20 +2,20 @@
 
 Rspress 支持 [MDX](https://mdxjs.com/)，这是一种功能强大的内容开发方式。
 
-## Markdown
+## MDX
 
 MDX 是 Markdown 的超集，这意味着你可以像往常一样编写 Markdown 文件。例如：
 
-```md
+```mdx
 # Hello world
 ```
 
-## 组件化
+## 组件化 \{#component}
 
 在 MDX 中，每个 `.mdx` 文件都会编译为 React 组件，这意味着它既可以被当做组件引用，也可以自由使用 React 组件。例如：
 
 import { Tabs, Tab } from '@theme';
-import { Border } from './_Border';
+import { Border } from '../../../components/Border';
 
 <Tabs>
 <Tab label="docs/index.mdx">
@@ -68,51 +68,11 @@ import TsxComponent from './_tsx-component';
 
 ## 路由约定
 
-在 [docs 目录](/api/config/config-basic#root) 中，使用 MDX 片段或 React 组件要通过 [route.exclude](/api/config/config-basic#routeexclude) 配置从路由中排除。为方便使用，我们约定以 "\_" 开头的文件会被 [route.excludeConvention](/api/config/config-basic#routeexcludeconvention) 默认排除。
+import RouteConvention from '@zh/fragments/route-convention.mdx';
 
-你也可以将组件放到 docs 目录以外的相邻目录，例如：
+<RouteConvention />
 
-<Tabs>
-<Tab label="docsite/docs/index.mdx">
-
-```mdx
-import ButtonFragment from './_button.mdx';
-import Button from '../../components/button';
-
-<ButtonFragment />
-<Button />
-```
-
-</Tab>
-<Tab label="docsite/docs/_button.mdx">
-
-```mdx file="./_button.mdx"
-
-```
-
-</Tab>
-<Tab label="docsite/components/button.tsx">
-
-```tsx
-const Button = () => <button>按钮</button>;
-export default Button;
-```
-
-</Tab>
-</Tabs>
-
-它将被渲染为：
-
-<Border>
-
-import Button from './_button.mdx';
-
-<Button />
-<button>按钮</button>
-
-</Border>
-
-## 逃生舱：使用 tsx 或 html 编写文档内容
+## 逃生舱：在 tsx 中编写文档内容
 
 ```tsx file="./_escape-hatch.tsx" title="_escape-hatch.tsx"
 
