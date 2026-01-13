@@ -83,6 +83,16 @@ export function pluginRss(pluginRssOptions: PluginRssOptions): RspressPlugin {
         _rssWorkaround = null;
         return;
       }
+
+      // RSS plugin requires SSG to be enabled
+      const enableSSG = Boolean((config.ssg || config.llms) ?? true);
+      if (!enableSSG) {
+        throw new Error(
+          '[plugin-rss] RSS plugin requires SSG to be enabled. ' +
+            'Please set `ssg: true` in your rspress.config.ts or remove the RSS plugin.',
+        );
+      }
+
       _rssWorkaround = {};
       feedsSet.set(pluginRssOptions, config);
     },
