@@ -74,6 +74,7 @@ async function getPageIndexInfoByRoute(
     return defaultIndexInfo;
   }
   let content: string = await fs.readFile(route.absolutePath, 'utf8');
+
   const { frontmatter, content: contentWithoutFrontMatter } = loadFrontMatter(
     content,
     route.absolutePath,
@@ -90,6 +91,8 @@ async function getPageIndexInfoByRoute(
   );
 
   content = flattenContent.replace(importStatementRegex, '');
+  // Normalize line endings to LF for cross-platform consistency
+  content = content.replace(/\r?\n/g, '');
 
   // Create a new processor for each file to avoid frozen processor issues
   const processor = createMdxProcessor();
