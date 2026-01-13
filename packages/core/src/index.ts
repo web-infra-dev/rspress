@@ -42,8 +42,9 @@ export {
   mergeDocConfig,
 } from '@rspress/shared/node-utils';
 export { matchPath } from 'react-router-dom';
+// config
+export { defineConfig } from './config/defineConfig';
 // cli
-export { defineConfig } from './cli/config';
 export { build, dev, remarkFileCodeBlock, remarkLink, serve } from './node';
 export type {
   CustomLinkMeta,
