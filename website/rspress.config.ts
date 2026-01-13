@@ -55,7 +55,18 @@ export default defineConfig({
     shiki: {
       // "markdown" and "mdx" can contain any language, so it does not support lazy loading for now
       // @see https://github.com/shikijs/shiki/issues/853#issuecomment-2507237577
-      langs: ['markdown', 'mdx', 'tsx', 'json', 'bash', 'yaml', 'ts', 'js'],
+      langs: [
+        'markdown',
+        'mdx',
+        'tsx',
+        'json',
+        'bash',
+        'yaml',
+        'ts',
+        'js',
+        'css',
+        'html',
+      ],
       transformers: [
         transformerNotationDiff(),
         transformerNotationErrorLevel(),

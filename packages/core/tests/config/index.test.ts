@@ -1,11 +1,35 @@
 import path from 'node:path';
 import { describe, expect, test } from '@rstest/core';
-import { loadConfigFile } from '../../src/cli/config/loadConfigFile';
+import { loadConfigFile } from '../../src/config/loadConfigFile';
 import { normalizePath } from '../../src/node/utils/normalizePath';
 
 const TEST_TITLE = 'my-title';
 
 describe('Should load config file', () => {
+  test('Load async function config in cjs project', async () => {
+    const fixtureDir = path.join(__dirname, 'cjs-async');
+    const { config } = await loadConfigFile(
+      path.join(fixtureDir, 'rspress.config.ts'),
+    );
+
+    expect(config).toMatchObject({
+      root: normalizePath(fixtureDir),
+      title: TEST_TITLE,
+    });
+  });
+
+  test('Load async function config in esm project', async () => {
+    const fixtureDir = path.join(__dirname, 'esm-async');
+    const { config } = await loadConfigFile(
+      path.join(fixtureDir, 'rspress.config.ts'),
+    );
+
+    expect(config).toMatchObject({
+      root: normalizePath(fixtureDir),
+      title: TEST_TITLE,
+    });
+  });
+
   test('Load config.cjs', async () => {
     const fixtureDir = path.join(__dirname, 'cjs');
     const { config } = await loadConfigFile(

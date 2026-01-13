@@ -5,10 +5,10 @@ import { logger } from '@rspress/shared/logger';
 import { cac } from 'cac';
 import chokidar from 'chokidar';
 import picocolors from 'picocolors';
+import { loadConfigFile, resolveDocRoot } from '../config/loadConfigFile';
 import { PUBLIC_DIR } from '../node/constants';
 import { ejectComponent, listComponents } from '../node/eject';
 import { build, dev, serve } from '../node/index';
-import { loadConfigFile, resolveDocRoot } from './config/loadConfigFile';
 
 const META_FILES = ['_meta.json', '_nav.json'];
 
