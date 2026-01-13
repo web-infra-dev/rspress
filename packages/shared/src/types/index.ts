@@ -365,8 +365,6 @@ export interface PageIndexInfo {
   toc: Header[];
   content: string;
   _flattenContent?: string;
-  /* html content is too large to be written to index file */
-  _html: string;
   frontmatter: FrontMatterMeta;
   lang: string;
   version: string;

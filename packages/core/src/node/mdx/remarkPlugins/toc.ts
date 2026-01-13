@@ -1,6 +1,7 @@
 import { extractTextAndId } from '@rspress/shared/node-utils';
 import Slugger from 'github-slugger';
-import type { Root } from 'hast';
+import type { Root as HastRoot } from 'hast';
+import type { Root as MdastRoot } from 'mdast';
 import type { Plugin } from 'unified';
 import { visitChildren } from 'unist-util-visit-children';
 import type { PageMeta } from '../types';
@@ -23,7 +24,7 @@ interface Heading {
   children?: ChildNode[];
 }
 
-export const parseToc = (tree: Root) => {
+export const parseToc = (tree: MdastRoot | HastRoot) => {
   let title = '';
   const toc: TocItem[] = [];
   const slugger = new Slugger();
@@ -76,11 +77,11 @@ export const parseToc = (tree: Root) => {
   };
 };
 
-export const remarkToc: Plugin<[], Root> = function () {
+export const remarkToc: Plugin<[], HastRoot> = function () {
   const data = this.data() as {
     pageMeta: PageMeta;
   };
-  return (tree: Root) => {
+  return (tree: HastRoot) => {
     const { toc, title } = parseToc(tree);
     data.pageMeta.toc = toc;
     if (title) {
