@@ -1,5 +1,6 @@
 import fs from 'node:fs/promises';
 import path from 'node:path';
+import { createProcessor } from '@mdx-js/mdx';
 import {
   type Header,
   MDX_OR_MD_REGEXP,
@@ -9,12 +10,8 @@ import {
 } from '@rspress/shared';
 import { loadFrontMatter } from '@rspress/shared/node-utils';
 import remarkGFM from 'remark-gfm';
-import remarkMdx from 'remark-mdx';
-import remarkParse from 'remark-parse';
-import remarkStringify from 'remark-stringify';
-import { unified } from 'unified';
 import { importStatementRegex } from '../constants';
-import { parseToc } from '../mdx/remarkPlugins/toc';
+import { remarkToc, type TocItem } from '../mdx/remarkPlugins/toc';
 import { flattenMdxContent } from '../utils';
 import { applyReplaceRules } from '../utils/applyReplaceRules';
 import type { RouteService } from './RouteService';
@@ -44,11 +41,14 @@ interface ExtractPageDataOptions {
   alias: Record<string, string | string[]>;
 }
 
-const processor = unified()
-  .use(remarkParse)
-  .use(remarkMdx)
-  .use(remarkGFM)
-  .use(remarkStringify);
+function createMdxProcessor() {
+  const processor = createProcessor({
+    format: 'mdx',
+    remarkPlugins: [remarkGFM, remarkToc],
+  });
+  processor.data('pageMeta' as any, { toc: [], title: '' });
+  return processor;
+}
 
 async function getPageIndexInfoByRoute(
   route: RouteMeta,
@@ -91,13 +91,23 @@ async function getPageIndexInfoByRoute(
 
   content = flattenContent.replace(importStatementRegex, '');
 
-  // Parse MDX and extract title/toc
-  const mdast = processor.parse(content);
-  const { title, toc: rawToc } = parseToc(mdast);
+  // Create a new processor for each file to avoid frozen processor issues
+  const processor = createMdxProcessor();
 
-  // Convert back to plain text using remark-stringify
-  const textContent = processor.stringify(mdast);
-  content = String(textContent);
+  // Process MDX content - remarkToc will extract title/toc into pageMeta
+  await processor.process({
+    value: content,
+    path: route.absolutePath,
+  });
+
+  // Get title and toc from pageMeta
+  const { title, toc: rawToc } = processor.data('pageMeta' as any) as {
+    title: string;
+    toc: TocItem[];
+  };
+
+  // Use the processed markdown content directly (with imports removed)
+  // This is the plain text for search indexing
 
   // Remove the title from the content if it appears at the start
   if (content.startsWith(`# ${title}`)) {

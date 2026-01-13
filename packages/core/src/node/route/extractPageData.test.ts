@@ -162,9 +162,13 @@ describe('extractPageData', async () => {
 
       Comp content
 
+
+
       ## H2 comp in comp
 
       Comp in Comp content \`code\`
+
+
       ",
         "frontmatter": {
           "__content": undefined,
@@ -180,7 +184,7 @@ describe('extractPageData', async () => {
             "text": "h2 Comp",
           },
           {
-            "charIndex": 26,
+            "charIndex": 28,
             "depth": 2,
             "id": "h2-comp-in-comp",
             "text": "H2 comp in comp",
