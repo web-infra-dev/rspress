@@ -8,7 +8,14 @@ import { Feed } from 'feed';
 
 import { createFeed, generateFeedItem } from './createFeed';
 import { PluginComponents, PluginName } from './exports';
-import { concatArray, type ResolvedOutput, writeFile } from './internals';
+import {
+  concatArray,
+  extractHtmlContent,
+  type ResolvedOutput,
+  readFile,
+  routePathToHtmlPath,
+  writeFile,
+} from './internals';
 import { getDefaultFeedOption, getOutputInfo, testPage } from './options';
 import type { FeedChannel, FeedItem, PluginRssOptions } from './type';
 
@@ -47,17 +54,26 @@ class FeedsSet {
   }
 }
 
-function getRssItems(
+interface PageRssInfo {
+  page: PageIndexInfo;
+  channels: string[];
+}
+
+async function getRssItems(
   feeds: TransformedFeedChannel[],
   page: PageIndexInfo,
   siteUrl: string,
+  htmlContent: string | null,
 ): Promise<FeedItemWithChannel[]> {
   return Promise.all(
     feeds
       .filter(options => testPage(options.test, page))
       .map(async options => {
         const after = options.item || ((feed: FeedItem) => feed);
-        const item = await after(generateFeedItem(page, siteUrl), page);
+        const item = await after(
+          generateFeedItem(page, siteUrl, htmlContent),
+          page,
+        );
         return { ...item, channel: options.id };
       }),
   );
@@ -67,77 +83,108 @@ export function pluginRss(pluginRssOptions: PluginRssOptions): RspressPlugin {
   const feedsSet = new FeedsSet();
 
   /**
-   * workaround for retrieving data of pages in `afterBuild`
-   * TODO: get pageData list directly in `afterBuild`
-   **/
-  let _rssWorkaround: null | Record<
-    string,
-    PromiseLike<FeedItemWithChannel[]>
-  > = null;
+   * Store page data for generating RSS items in afterBuild
+   * Key: routePath, Value: PageRssInfo
+   */
+  let _pagesForRss: null | Map<string, PageRssInfo> = null;
 
   return {
     name: PluginName,
     globalUIComponents: Object.values(PluginComponents),
     beforeBuild(config, isProd) {
       if (!isProd) {
-        _rssWorkaround = null;
+        _pagesForRss = null;
         return;
       }
-      _rssWorkaround = {};
+
+      // RSS plugin requires SSG to be enabled
+      const enableSSG = Boolean((config.ssg || config.llms) ?? true);
+      if (!enableSSG) {
+        throw new Error(
+          '[plugin-rss] RSS plugin requires SSG to be enabled. ' +
+            'Please set `ssg: true` in your rspress.config.ts or remove the RSS plugin.',
+        );
+      }
+
+      _pagesForRss = new Map();
       feedsSet.set(pluginRssOptions, config);
     },
     async extendPageData(pageData) {
-      if (!_rssWorkaround) return;
+      if (!_pagesForRss) return;
 
-      // rspress run `extendPageData` for each page
-      //   - let's cache rss items within a complete rspress build
-      _rssWorkaround[pageData.routePath] =
-        _rssWorkaround[pageData.routePath] ||
-        getRssItems(feedsSet.get(), pageData, pluginRssOptions.siteUrl);
+      // Find which feeds this page belongs to
+      const matchedChannels = feedsSet
+        .get()
+        .filter(options => testPage(options.test, pageData))
+        .map(options => options.id);
 
-      const feeds = await _rssWorkaround[pageData.routePath];
+      if (matchedChannels.length > 0) {
+        _pagesForRss.set(pageData.routePath, {
+          page: pageData,
+          channels: matchedChannels,
+        });
+      }
+
+      // Set up feed links for the page
       const showRssList = new Set(
         concatArray(pageData.frontmatter['link-rss'] as string[] | string),
       );
-      for (const feed of feeds) {
-        showRssList.add(feed.channel);
+      for (const channel of matchedChannels) {
+        showRssList.add(channel);
       }
 
       pageData.feeds = Array.from(showRssList, id => {
-        const { output, language } = feedsSet.get(id)!;
+        const feedChannel = feedsSet.get(id);
+        if (!feedChannel) return null;
+        const { output, language } = feedChannel;
         return {
           url: output.url,
           mime: output.mime,
           language: language || pageData.lang,
         };
-      });
+      }).filter(Boolean) as typeof pageData.feeds;
     },
     async afterBuild(config) {
-      if (!_rssWorkaround) return;
+      if (!_pagesForRss) return;
 
-      const items = concatArray(
-        ...(await Promise.all(Object.values(_rssWorkaround))),
-      );
+      const outDir = config.outDir || 'doc_build';
       const feeds: Record<string, Feed> = Object.create(null);
 
-      for (const { channel, ...item } of items) {
-        feeds[channel] =
-          feeds[channel] ||
-          new Feed(createFeed(feedsSet.get(channel)!, config));
-        feeds[channel].addItem(item);
+      // Process each page: read HTML from SSG output and generate feed items
+      for (const [routePath, { page, channels }] of _pagesForRss) {
+        // Read HTML content from SSG output
+        const htmlPath = NodePath.resolve(
+          outDir,
+          routePathToHtmlPath(routePath),
+        );
+        const htmlFile = await readFile(htmlPath);
+        const htmlContent = htmlFile ? extractHtmlContent(htmlFile) : null;
+
+        // Generate feed items for each channel
+        const items = await getRssItems(
+          channels.map(id => feedsSet.get(id)!),
+          page,
+          pluginRssOptions.siteUrl,
+          htmlContent,
+        );
+
+        for (const { channel, ...item } of items) {
+          feeds[channel] =
+            feeds[channel] ||
+            new Feed(createFeed(feedsSet.get(channel)!, config));
+          feeds[channel].addItem(item);
+        }
       }
 
+      // Write feed files
       for (const [channel, feed] of Object.entries(feeds)) {
         const { output } = feedsSet.get(channel)!;
         feed.items.sort(output.sorting);
-        const path = NodePath.resolve(
-          config.outDir || 'doc_build',
-          output.dir,
-          output.filename,
-        );
+        const path = NodePath.resolve(outDir, output.dir, output.filename);
         await writeFile(path, output.getContent(feed));
       }
-      _rssWorkaround = null;
+
+      _pagesForRss = null;
     },
   };
 }

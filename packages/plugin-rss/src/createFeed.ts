@@ -12,9 +12,14 @@ import type { FeedChannel, FeedItem } from './type';
 /**
  * @public
  * @param page Rspress Page Data
- * @param siteUrl
+ * @param siteUrl Site URL for generating absolute links
+ * @param htmlContent HTML content extracted from SSG output (optional)
  */
-export function generateFeedItem(page: PageIndexInfo, siteUrl: string) {
+export function generateFeedItem(
+  page: PageIndexInfo,
+  siteUrl: string,
+  htmlContent?: string | null,
+) {
   const { frontmatter: fm } = page;
   return {
     id: selectNonNullishProperty(fm.slug, fm.id, page.routePath) || '',
@@ -28,7 +33,9 @@ export function generateFeedItem(page: PageIndexInfo, siteUrl: string) {
       ) || '',
     ),
     description: selectNonNullishProperty(fm.description) || '',
-    content: selectNonNullishProperty(fm.summary, page._html) || '',
+    // Priority: frontmatter.summary > SSG HTML content > plain text content
+    content:
+      selectNonNullishProperty(fm.summary, htmlContent, page.content) || '',
     date: toDate((fm.date as string) || (fm.published_at as string))!,
     category: concatArray(fm.categories as string[], fm.category as string).map(
       cat => ({ name: cat }),
