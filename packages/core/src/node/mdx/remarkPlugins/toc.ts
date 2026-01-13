@@ -60,12 +60,13 @@ export const parseToc = (tree: MdastRoot | HastRoot) => {
           }
           return '';
         })
-        .join('');
+        .join('')
+        .trim();
 
       if (node.depth === 1) {
         if (!title) title = text;
       } else {
-        const id = customId ? customId : slugger.slug(text.trim());
+        const id = customId ? customId : slugger.slug(text);
         const { depth } = node;
         toc.push({ id, text, depth });
       }

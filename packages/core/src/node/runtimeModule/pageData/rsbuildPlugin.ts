@@ -24,27 +24,32 @@ export const rsbuildPluginDocVM = async ({
   const searchIndexRsbuildPlugin: RsbuildPlugin = {
     name: 'rsbuild-plugin-searchIndex',
     async setup(api) {
-      api.modifyBundlerChain(async bundlerChain => {
+      api.modifyBundlerChain(async (bundlerChain, { environment }) => {
         const alias = bundlerChain.resolve.alias.entries();
-        const { pageData, indexHashByGroup, searchIndex, filepaths } =
-          await createPageData({
-            config,
-            alias: alias as Record<string, string>,
-            userDocRoot,
-            routeService,
-            pluginDriver,
-          });
+        if (environment.name === 'web') {
+          const { pageData, indexHashByGroup, searchIndex, filepaths } =
+            await createPageData({
+              config,
+              alias: alias as Record<string, string>,
+              userDocRoot,
+              routeService,
+              pluginDriver,
+            });
 
-        ref.pageData = pageData;
-        ref.searchIndex = searchIndex;
-        ref.indexHashByGroup = indexHashByGroup;
-        ref.filepaths = filepaths;
+          ref.pageData = pageData;
+          ref.searchIndex = searchIndex;
+          ref.indexHashByGroup = indexHashByGroup;
+          ref.filepaths = filepaths;
+        }
 
         api.processAssets(
           { stage: 'report', environments: ['web'] },
           ({ compilation, compiler }) => {
+            if (!ref.searchIndex) {
+              return;
+            }
             for (const [filename, stringifiedIndex] of Object.entries(
-              searchIndex,
+              ref.searchIndex,
             )) {
               compilation.emitAsset(
                 `static/${filename}`,
