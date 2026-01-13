@@ -1,0 +1,78 @@
+---
+overviewHeaders: []
+tag: eject-only
+---
+
+# Callout
+
+The Callout component is used to display highlighted information blocks such as tips, warnings, and notes.
+
+:::tip
+We recommend using [container syntax](/guide/use-mdx/container) which works in both Markdown and MDX files.
+:::
+
+## Container syntax
+
+In most cases, use the container syntax to create callouts:
+
+import ContainerSyntax from '../../fragments/container-syntax.mdx';
+
+<ContainerSyntax />
+
+For more container syntax details, see [Container](/guide/use-mdx/container).
+
+## Component usage
+
+You can also use the Callout component directly in MDX files:
+
+```mdx title="index.mdx"
+import { Callout } from '@rspress/core/theme-original';
+
+<Callout type="tip">This is a tip callout</Callout>
+
+<Callout type="warning" title="Warning">
+  This is a warning with custom title
+</Callout>
+```
+
+import { Callout } from '@rspress/core/theme-original';
+
+<Callout type="tip">This is a tip callout</Callout>
+
+<Callout type="warning" title="Warning">
+  This is a warning with custom title
+</Callout>
+
+## Customization
+
+You can eject the Callout component to customize its styles and behavior:
+
+```bash
+npx rspress eject Callout
+```
+
+This will copy the component to `theme/components/Callout`. After customization, re-export it in your `theme/index.tsx`:
+
+```tsx title="theme/index.tsx"
+export { Callout } from './components/Callout';
+export * from '@rspress/core/theme-original';
+```
+
+## Props
+
+```ts
+interface CalloutProps {
+  /**
+   * The type of callout, which determines its color and icon.
+   */
+  type: 'tip' | 'note' | 'warning' | 'caution' | 'danger' | 'info' | 'details';
+  /**
+   * Custom title for the callout. If not provided, the capitalized type will be used.
+   */
+  title?: string;
+  /**
+   * The content to display inside the callout.
+   */
+  children: React.ReactNode;
+}
+```
