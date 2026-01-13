@@ -1,7 +1,7 @@
 import path from 'node:path';
 import { defineConfig } from '@rspress/core';
 import { pluginPreview } from '@rspress/plugin-preview';
-import { getPort } from '../../../e2e/utils/runCommands';
+import { getPort } from '../../utils/runCommands';
 
 export default defineConfig(async () => {
   const port = await getPort();
