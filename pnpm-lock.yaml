@@ -970,6 +970,9 @@ importers:
       remark-mdx:
         specifier: ^3.1.1
         version: 3.1.1
+      remark-parse:
+        specifier: ^11.0.0
+        version: 11.0.0
       remark-stringify:
         specifier: ^11.0.0
         version: 11.0.0
@@ -988,6 +991,9 @@ importers:
       unified:
         specifier: ^11.0.5
         version: 11.0.5
+      unist-util-remove:
+        specifier: ^4.0.0
+        version: 4.0.0
       unist-util-visit:
         specifier: ^5.0.0
         version: 5.0.0
@@ -6954,6 +6960,9 @@ packages:
 
   unist-util-position@5.0.0:
     resolution: {integrity: sha512-fucsC7HjXvkB5R3kTCO7kUjRdrS0BJt3M/FPxmHMBOm8JQi2BsHAHFsy27E0EolP8rp0NzXsJ+jNPyDWvOJZPA==}
+
+  unist-util-remove@4.0.0:
+    resolution: {integrity: sha512-b4gokeGId57UVRX/eVKej5gXqGlc9+trkORhFJpu9raqZkZhU0zm8Doi05+HaiBsMEIJowL+2WtQ5ItjsngPXg==}
 
   unist-util-stringify-position@3.0.3:
     resolution: {integrity: sha512-k5GzIBZ/QatR8N5X2y+drfpWG8IDBzdnVj6OInRNWm1oXrzydiaAT2OQiA8DPRRZyAKb9b6I2a6PxYklZD0gKg==}
@@ -13577,6 +13586,12 @@ snapshots:
   unist-util-position@5.0.0:
     dependencies:
       '@types/unist': 3.0.3
+
+  unist-util-remove@4.0.0:
+    dependencies:
+      '@types/unist': 3.0.3
+      unist-util-is: 6.0.0
+      unist-util-visit-parents: 6.0.2
 
   unist-util-stringify-position@3.0.3:
     dependencies:

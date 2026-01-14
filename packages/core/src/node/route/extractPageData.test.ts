@@ -3,6 +3,22 @@ import { describe, expect, it } from '@rstest/core';
 import { extractPageData, getPageIndexInfoByRoute } from './extractPageData';
 import type { RouteService } from './RouteService';
 
+const fixtureContentProcessingDir = join(
+  __dirname,
+  './fixtures/content-processing',
+);
+
+function createRoute(relativePath: string, fixtureDir: string) {
+  return {
+    absolutePath: join(fixtureDir, relativePath),
+    lang: '',
+    pageName: relativePath.replace(/\.(mdx?|md)$/, ''),
+    relativePath,
+    routePath: `/${relativePath.replace(/\.(mdx?|md)$/, '')}`,
+    version: '',
+  };
+}
+
 describe('extractPageData', async () => {
   it('basic', async () => {
     const fixtureBasicDir = join(__dirname, './fixtures/basic');
@@ -162,13 +178,9 @@ describe('extractPageData', async () => {
 
       Comp content
 
-
-
       ## H2 comp in comp
 
       Comp in Comp content \`code\`
-
-
       ",
         "frontmatter": {
           "__content": undefined,
@@ -184,10 +196,350 @@ describe('extractPageData', async () => {
             "text": "h2 Comp",
           },
           {
-            "charIndex": 28,
+            "charIndex": 26,
             "depth": 2,
             "id": "h2-comp-in-comp",
             "text": "H2 comp in comp",
+          },
+        ],
+        "version": "",
+      }
+    `);
+  });
+
+  it('should remove code blocks when searchCodeBlocks is false', async () => {
+    const pageIndexInfo = await getPageIndexInfoByRoute(
+      createRoute('with-code.mdx', fixtureContentProcessingDir),
+      {
+        alias: {},
+        replaceRules: [],
+        root: fixtureContentProcessingDir,
+        searchCodeBlocks: false,
+      },
+    );
+
+    expect(pageIndexInfo).toMatchInlineSnapshot(`
+      {
+        "_filepath": "<ROOT>/packages/core/src/node/route/fixtures/content-processing/with-code.mdx",
+        "_flattenContent": "# Page with Code
+
+      Some text before code.
+
+      \`\`\`javascript
+      const foo = 'bar';
+      console.log(foo);
+      \`\`\`
+
+      Some text after code.
+
+      ## Section Two
+
+      More content here.
+      ",
+        "_relativePath": "with-code.mdx",
+        "content": "Some text before code.
+
+      Some text after code.
+
+      ## Section Two
+
+      More content here.
+      ",
+        "frontmatter": {
+          "__content": undefined,
+        },
+        "lang": "",
+        "routePath": "/with-code",
+        "title": "Page with Code",
+        "toc": [
+          {
+            "charIndex": 47,
+            "depth": 2,
+            "id": "section-two",
+            "text": "Section Two",
+          },
+        ],
+        "version": "",
+      }
+    `);
+  });
+
+  it('should keep code blocks when searchCodeBlocks is true', async () => {
+    const pageIndexInfo = await getPageIndexInfoByRoute(
+      createRoute('with-code.mdx', fixtureContentProcessingDir),
+      {
+        alias: {},
+        replaceRules: [],
+        root: fixtureContentProcessingDir,
+        searchCodeBlocks: true,
+      },
+    );
+
+    expect(pageIndexInfo).toMatchInlineSnapshot(`
+      {
+        "_filepath": "<ROOT>/packages/core/src/node/route/fixtures/content-processing/with-code.mdx",
+        "_flattenContent": "# Page with Code
+
+      Some text before code.
+
+      \`\`\`javascript
+      const foo = 'bar';
+      console.log(foo);
+      \`\`\`
+
+      Some text after code.
+
+      ## Section Two
+
+      More content here.
+      ",
+        "_relativePath": "with-code.mdx",
+        "content": "Some text before code.
+
+      \`\`\`javascript
+      const foo = 'bar';
+      console.log(foo);
+      \`\`\`
+
+      Some text after code.
+
+      ## Section Two
+
+      More content here.
+      ",
+        "frontmatter": {
+          "__content": undefined,
+        },
+        "lang": "",
+        "routePath": "/with-code",
+        "title": "Page with Code",
+        "toc": [
+          {
+            "charIndex": 103,
+            "depth": 2,
+            "id": "section-two",
+            "text": "Section Two",
+          },
+        ],
+        "version": "",
+      }
+    `);
+  });
+
+  it('should remove images from content', async () => {
+    const pageIndexInfo = await getPageIndexInfoByRoute(
+      createRoute('with-images.mdx', fixtureContentProcessingDir),
+      {
+        alias: {},
+        replaceRules: [],
+        root: fixtureContentProcessingDir,
+        searchCodeBlocks: false,
+      },
+    );
+
+    expect(pageIndexInfo).toMatchInlineSnapshot(`
+      {
+        "_filepath": "<ROOT>/packages/core/src/node/route/fixtures/content-processing/with-images.mdx",
+        "_flattenContent": "# Page with Images
+
+      Here is an image:
+
+      ![Alt text](./image.png)
+
+      And some text after.
+
+      ## Another Section
+
+      ![Another image](https://example.com/image.jpg)
+
+      Final text.
+      ",
+        "_relativePath": "with-images.mdx",
+        "content": "Here is an image:
+
+      And some text after.
+
+      ## Another Section
+
+      Final text.
+      ",
+        "frontmatter": {
+          "__content": undefined,
+        },
+        "lang": "",
+        "routePath": "/with-images",
+        "title": "Page with Images",
+        "toc": [
+          {
+            "charIndex": 41,
+            "depth": 2,
+            "id": "another-section",
+            "text": "Another Section",
+          },
+        ],
+        "version": "",
+      }
+    `);
+  });
+
+  it('should strip link URLs but keep link text', async () => {
+    const pageIndexInfo = await getPageIndexInfoByRoute(
+      createRoute('with-links.mdx', fixtureContentProcessingDir),
+      {
+        alias: {},
+        replaceRules: [],
+        root: fixtureContentProcessingDir,
+        searchCodeBlocks: false,
+      },
+    );
+
+    expect(pageIndexInfo).toMatchInlineSnapshot(`
+      {
+        "_filepath": "<ROOT>/packages/core/src/node/route/fixtures/content-processing/with-links.mdx",
+        "_flattenContent": "# Page with Links
+
+      This is a [link to Google](https://google.com) in text.
+
+      ## Links Section
+
+      - [First link](https://example.com/first)
+      - [Second link](https://example.com/second)
+      - Plain text item
+
+      Visit [our docs](./docs/intro.md) for more info.
+      ",
+        "_relativePath": "with-links.mdx",
+        "content": "This is a [link to Google]() in text.
+
+      ## Links Section
+
+      - [First link]()
+      - [Second link]()
+      - Plain text item
+
+      Visit [our docs]() for more info.
+      ",
+        "frontmatter": {
+          "__content": undefined,
+        },
+        "lang": "",
+        "routePath": "/with-links",
+        "title": "Page with Links",
+        "toc": [
+          {
+            "charIndex": 39,
+            "depth": 2,
+            "id": "links-section",
+            "text": "Links Section",
+          },
+        ],
+        "version": "",
+      }
+    `);
+  });
+
+  it('should handle tables correctly', async () => {
+    const pageIndexInfo = await getPageIndexInfoByRoute(
+      createRoute('with-table.mdx', fixtureContentProcessingDir),
+      {
+        alias: {},
+        replaceRules: [],
+        root: fixtureContentProcessingDir,
+        searchCodeBlocks: false,
+      },
+    );
+
+    expect(pageIndexInfo).toMatchInlineSnapshot(`
+      {
+        "_filepath": "<ROOT>/packages/core/src/node/route/fixtures/content-processing/with-table.mdx",
+        "_flattenContent": "# Page with Table
+
+      Some intro text.
+
+      | Header 1 | Header 2 | Header 3 |
+      | -------- | -------- | -------- |
+      | Cell 1   | Cell 2   | Cell 3   |
+      | Cell 4   | Cell 5   | Cell 6   |
+
+      ## After Table
+
+      More content.
+      ",
+        "_relativePath": "with-table.mdx",
+        "content": "Some intro text.
+
+      | Header 1 | Header 2 | Header 3 |
+      | -------- | -------- | -------- |
+      | Cell 1   | Cell 2   | Cell 3   |
+      | Cell 4   | Cell 5   | Cell 6   |
+
+      ## After Table
+
+      More content.
+      ",
+        "frontmatter": {
+          "__content": undefined,
+        },
+        "lang": "",
+        "routePath": "/with-table",
+        "title": "Page with Table",
+        "toc": [
+          {
+            "charIndex": 159,
+            "depth": 2,
+            "id": "after-table",
+            "text": "After Table",
+          },
+        ],
+        "version": "",
+      }
+    `);
+  });
+
+  it('should use frontmatter title over heading title', async () => {
+    const pageIndexInfo = await getPageIndexInfoByRoute(
+      createRoute('with-frontmatter.mdx', fixtureContentProcessingDir),
+      {
+        alias: {},
+        replaceRules: [],
+        root: fixtureContentProcessingDir,
+        searchCodeBlocks: false,
+      },
+    );
+
+    expect(pageIndexInfo).toMatchInlineSnapshot(`
+      {
+        "_filepath": "<ROOT>/packages/core/src/node/route/fixtures/content-processing/with-frontmatter.mdx",
+        "_flattenContent": "
+      # Heading in Content
+
+      This page has frontmatter with a custom title.
+
+      ## Section
+
+      More content here.
+      ",
+        "_relativePath": "with-frontmatter.mdx",
+        "content": "This page has frontmatter with a custom title.
+
+      ## Section
+
+      More content here.
+      ",
+        "frontmatter": {
+          "__content": undefined,
+          "description": "A page with frontmatter",
+          "title": "Custom Title",
+        },
+        "lang": "",
+        "routePath": "/with-frontmatter",
+        "title": "Custom Title",
+        "toc": [
+          {
+            "charIndex": 48,
+            "depth": 2,
+            "id": "section",
+            "text": "Section",
           },
         ],
         "version": "",

@@ -1,6 +1,5 @@
 import fs from 'node:fs/promises';
 import path from 'node:path';
-import { createProcessor } from '@mdx-js/mdx';
 import {
   type Header,
   MDX_OR_MD_REGEXP,
@@ -9,9 +8,15 @@ import {
   type RouteMeta,
 } from '@rspress/shared';
 import { loadFrontMatter } from '@rspress/shared/node-utils';
+import type { Root } from 'mdast';
 import remarkGFM from 'remark-gfm';
+import remarkParse from 'remark-parse';
+import remarkStringify from 'remark-stringify';
+import type { Plugin } from 'unified';
+import { unified } from 'unified';
+import { remove } from 'unist-util-remove';
 import { importStatementRegex } from '../constants';
-import { remarkToc, type TocItem } from '../mdx/remarkPlugins/toc';
+import { parseToc, type TocItem } from '../mdx/remarkPlugins/toc';
 import { flattenMdxContent } from '../utils';
 import { applyReplaceRules } from '../utils/applyReplaceRules';
 import type { RouteService } from './RouteService';
@@ -41,20 +46,51 @@ interface ExtractPageDataOptions {
   alias: Record<string, string | string[]>;
 }
 
-function createMdxProcessor() {
-  const processor = createProcessor({
-    format: 'mdx',
-    remarkPlugins: [remarkGFM, remarkToc],
-  });
-  processor.data('pageMeta' as any, { toc: [], title: '' });
-  return processor;
-}
+/**
+ * Remark plugin to remove code blocks from the AST
+ * Used when searchCodeBlocks is false to exclude code from search index
+ */
+const remarkRemoveCodeBlocks: Plugin<[], Root> = () => {
+  return tree => {
+    remove(tree, 'code');
+  };
+};
+
+/**
+ * Remark plugin to remove images from the AST
+ * Images should not appear in search content
+ */
+const remarkRemoveImages: Plugin<[], Root> = () => {
+  return tree => {
+    remove(tree, 'image');
+  };
+};
+
+/**
+ * Remark plugin to strip link URLs, keeping only the link text
+ * This mimics html-to-text's ignoreHref behavior
+ */
+const remarkStripLinkUrls: Plugin<[], Root> = () => {
+  return tree => {
+    const visit = (node: any) => {
+      if (node.type === 'link') {
+        // Convert link to its children (text content only)
+        // The link node stays but URL is ignored in stringify
+        node.url = '';
+      }
+      if (node.children) {
+        node.children.forEach(visit);
+      }
+    };
+    visit(tree);
+  };
+};
 
 async function getPageIndexInfoByRoute(
   route: RouteMeta,
   options: ExtractPageDataOptions,
 ): Promise<PageIndexInfo> {
-  const { alias, replaceRules, root } = options;
+  const { alias, replaceRules, root, searchCodeBlocks } = options;
   const defaultIndexInfo: PageIndexInfo = {
     title: '',
     content: '',
@@ -94,27 +130,45 @@ async function getPageIndexInfoByRoute(
   // Normalize line endings to LF for cross-platform consistency
   content = content.replace(/\r\n/g, '\n');
 
-  // Create a new processor for each file to avoid frozen processor issues
-  const processor = createMdxProcessor();
+  // Parse markdown to AST using unified + remark-parse
+  const parseProcessor = unified().use(remarkParse).use(remarkGFM);
+  const tree = parseProcessor.parse(content);
 
-  // Process MDX content - remarkToc will extract title/toc into pageMeta
-  await processor.process({
-    value: content,
-    path: route.absolutePath,
+  // Extract title and TOC from AST
+  const { title, toc: rawToc } = parseToc(tree);
+
+  // Build plugins for content processing
+  const contentPlugins: Plugin<[], Root>[] = [
+    remarkGFM,
+    remarkRemoveImages,
+    remarkStripLinkUrls,
+  ];
+
+  // Skip code blocks if searchCodeBlocks is false
+  if (!searchCodeBlocks) {
+    contentPlugins.push(remarkRemoveCodeBlocks);
+  }
+
+  // Process AST and stringify back to markdown for search content
+  let stringifyProcessor = unified().use(remarkParse).use(remarkGFM);
+  for (const plugin of contentPlugins) {
+    stringifyProcessor = stringifyProcessor.use(plugin);
+  }
+  stringifyProcessor = stringifyProcessor.use(remarkStringify, {
+    bullet: '-',
+    listItemIndent: 'one',
   });
 
-  // Get title and toc from pageMeta
-  const { title, toc: rawToc } = processor.data('pageMeta' as any) as {
-    title: string;
-    toc: TocItem[];
-  };
-
-  // Use the processed markdown content directly (with imports removed)
-  // This is the plain text for search indexing
+  const processedTree = await stringifyProcessor.run(
+    stringifyProcessor.parse(content),
+  );
+  let processedContent = String(
+    stringifyProcessor.stringify(processedTree as Root),
+  );
 
   // Remove the title from the content if it appears at the start
-  if (content.startsWith(`# ${title}`)) {
-    content = content.slice(`# ${title}`.length).trimStart();
+  if (processedContent.startsWith(`# ${title}`)) {
+    processedContent = processedContent.slice(`# ${title}`.length).trimStart();
   }
 
   // Calculate character index positions for each toc item
@@ -124,7 +178,7 @@ async function getPageIndexInfoByRoute(
     if (match) {
       for (let i = 0; i < Number(match[1]); i++) {
         // When text is repeated, the position needs to be determined based on -number
-        position = content.indexOf(`## ${item.text}`, position + 1);
+        position = processedContent.indexOf(`## ${item.text}`, position + 1);
 
         // If the positions don't match, it means the text itself may exist -number
         if (position === -1) {
@@ -136,7 +190,10 @@ async function getPageIndexInfoByRoute(
     const headingPrefix = '#'.repeat(item.depth);
     return {
       ...item,
-      charIndex: content.indexOf(`${headingPrefix} ${item.text}`, position + 1),
+      charIndex: processedContent.indexOf(
+        `${headingPrefix} ${item.text}`,
+        position + 1,
+      ),
     };
   });
 
@@ -144,8 +201,8 @@ async function getPageIndexInfoByRoute(
     ...defaultIndexInfo,
     title: frontmatter.title || title,
     toc,
-    // raw txt, for search index
-    content,
+    // processed markdown content for search index
+    content: processedContent,
     _flattenContent: flattenContent,
     frontmatter: {
       ...frontmatter,
