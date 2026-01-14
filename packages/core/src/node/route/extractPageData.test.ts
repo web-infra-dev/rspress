@@ -80,6 +80,7 @@ describe('extractPageData', async () => {
           "content": "",
           "frontmatter": {
             "__content": undefined,
+            "description": undefined,
           },
           "lang": "",
           "routePath": "/a",
@@ -95,6 +96,7 @@ describe('extractPageData', async () => {
           "content": "",
           "frontmatter": {
             "__content": undefined,
+            "description": undefined,
           },
           "lang": "",
           "routePath": "/guide/b",
@@ -122,6 +124,7 @@ describe('extractPageData', async () => {
           "content": "",
           "frontmatter": {
             "__content": undefined,
+            "description": undefined,
           },
           "lang": "",
           "routePath": "/",
@@ -184,6 +187,7 @@ describe('extractPageData', async () => {
       ",
         "frontmatter": {
           "__content": undefined,
+          "description": undefined,
         },
         "lang": "",
         "routePath": "/",
@@ -247,6 +251,7 @@ describe('extractPageData', async () => {
       ",
         "frontmatter": {
           "__content": undefined,
+          "description": "Some text before code.",
         },
         "lang": "",
         "routePath": "/with-code",
@@ -309,6 +314,7 @@ describe('extractPageData', async () => {
       ",
         "frontmatter": {
           "__content": undefined,
+          "description": "Some text before code.",
         },
         "lang": "",
         "routePath": "/with-code",
@@ -365,6 +371,7 @@ describe('extractPageData', async () => {
       ",
         "frontmatter": {
           "__content": undefined,
+          "description": "Here is an image:",
         },
         "lang": "",
         "routePath": "/with-images",
@@ -421,6 +428,7 @@ describe('extractPageData', async () => {
       ",
         "frontmatter": {
           "__content": undefined,
+          "description": "This is a link to Google in text.",
         },
         "lang": "",
         "routePath": "/with-links",
@@ -479,6 +487,7 @@ describe('extractPageData', async () => {
       ",
         "frontmatter": {
           "__content": undefined,
+          "description": "Some intro text.",
         },
         "lang": "",
         "routePath": "/with-table",
@@ -545,5 +554,55 @@ describe('extractPageData', async () => {
         "version": "",
       }
     `);
+  });
+
+  it('should extract description from first paragraph before h2 when frontmatter.description is not set', async () => {
+    const pageIndexInfo = await getPageIndexInfoByRoute(
+      createRoute('with-description.mdx', fixtureContentProcessingDir),
+      {
+        alias: {},
+        replaceRules: [],
+        root: fixtureContentProcessingDir,
+        searchCodeBlocks: false,
+      },
+    );
+
+    expect(pageIndexInfo.frontmatter.description).toBe(
+      'This is the first paragraph that should be used as description.',
+    );
+  });
+
+  it('should use frontmatter description when provided instead of extracting from content', async () => {
+    const pageIndexInfo = await getPageIndexInfoByRoute(
+      createRoute('with-frontmatter.mdx', fixtureContentProcessingDir),
+      {
+        alias: {},
+        replaceRules: [],
+        root: fixtureContentProcessingDir,
+        searchCodeBlocks: false,
+      },
+    );
+
+    // Should use frontmatter description, not extract from content
+    expect(pageIndexInfo.frontmatter.description).toBe(
+      'A page with frontmatter',
+    );
+  });
+
+  it('should extract description from first paragraph before h2 (with code fixture)', async () => {
+    const pageIndexInfo = await getPageIndexInfoByRoute(
+      createRoute('with-code.mdx', fixtureContentProcessingDir),
+      {
+        alias: {},
+        replaceRules: [],
+        root: fixtureContentProcessingDir,
+        searchCodeBlocks: false,
+      },
+    );
+
+    // First paragraph before h2 is "Some text before code."
+    expect(pageIndexInfo.frontmatter.description).toBe(
+      'Some text before code.',
+    );
   });
 });

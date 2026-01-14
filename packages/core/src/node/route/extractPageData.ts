@@ -86,6 +86,37 @@ const remarkStripLinkUrls: Plugin<[], Root> = () => {
   };
 };
 
+/**
+ * Extract text content from a node recursively
+ */
+function extractTextFromNode(node: Node): string {
+  if ('value' in node && typeof node.value === 'string') {
+    return node.value;
+  }
+  if ('children' in node && Array.isArray(node.children)) {
+    return node.children.map(extractTextFromNode).join('');
+  }
+  return '';
+}
+
+/**
+ * Extract description from the first paragraph before h2
+ * Returns the text content of the first paragraph that appears before any h2 heading
+ */
+function extractDescription(tree: Root): string {
+  for (const node of tree.children) {
+    // If we encounter an h2, stop searching
+    if (node.type === 'heading' && node.depth === 2) {
+      break;
+    }
+    // Return the first paragraph's text content
+    if (node.type === 'paragraph') {
+      return extractTextFromNode(node);
+    }
+  }
+  return '';
+}
+
 async function getPageIndexInfoByRoute(
   route: RouteMeta,
   options: ExtractPageDataOptions,
@@ -136,6 +167,11 @@ async function getPageIndexInfoByRoute(
 
   // Extract title and TOC from AST
   const { title, toc: rawToc } = parseToc(tree);
+
+  // Extract description from first paragraph before h2 (if not in frontmatter)
+  const extractedDescription = frontmatter.description
+    ? ''
+    : extractDescription(tree);
 
   // Process AST and stringify back to markdown for search content
   // Build processor chain: parse -> plugins -> stringify
@@ -200,6 +236,7 @@ async function getPageIndexInfoByRoute(
     _flattenContent: flattenContent,
     frontmatter: {
       ...frontmatter,
+      description: frontmatter.description || extractedDescription || undefined,
       __content: undefined,
     },
   } satisfies PageIndexInfo;
