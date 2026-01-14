@@ -231,6 +231,19 @@ sidebar: false
 ---
 ```
 
+:::tip
+`sidebar: false` only hides the sidebar, but the space originally occupied by the sidebar is still reserved. If you want the main content to occupy a wider screen space, you can use [`pageType: doc-wide`](#pagetype) with `sidebar: false`:
+
+```yaml
+---
+pageType: doc-wide
+sidebar: false
+---
+```
+
+This way, the main content area will automatically expand to occupy the space originally used by the sidebar.
+:::
+
 ## outline
 
 Whether to display the outline column on the right. By default, the `doc` page displays the outline column on the right. You can hide the outline column with the following config:
@@ -240,6 +253,19 @@ Whether to display the outline column on the right. By default, the `doc` page d
 outline: false
 ---
 ```
+
+:::tip
+`outline: false` only hides the outline column, but the space originally occupied by the outline column is still reserved. If you want the main content to occupy a wider screen space, you can use [`pageType: doc-wide`](#pagetype) with `outline: false`:
+
+```yaml
+---
+pageType: doc-wide
+outline: false
+---
+```
+
+This way, the main content area will automatically expand to occupy the space originally used by the outline column.
+:::
 
 ## footer
 
