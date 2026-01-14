@@ -231,6 +231,19 @@ sidebar: false
 ---
 ```
 
+:::tip 提示
+`sidebar: false` 仅隐藏侧边栏，但原本侧边栏占据的空间仍然保留。如果你想让正文内容占据更宽的屏幕空间，可以使用 [`pageType: doc-wide`](#pagetype) 配合 `sidebar: false`：
+
+```yaml
+---
+pageType: doc-wide
+sidebar: false
+---
+```
+
+这样正文内容区域会自动扩展，占据原本侧边栏的空间。
+:::
+
 ## outline
 
 是否展示右侧的大纲栏。默认情况下，`doc` 页面会展示右侧的大纲栏。你可以通过下面的配置来隐藏大纲栏：
