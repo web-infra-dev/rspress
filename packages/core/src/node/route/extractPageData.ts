@@ -8,7 +8,7 @@ import {
   type RouteMeta,
 } from '@rspress/shared';
 import { loadFrontMatter } from '@rspress/shared/node-utils';
-import type { Root } from 'mdast';
+import type { Node, Root } from 'mdast';
 import remarkGFM from 'remark-gfm';
 import remarkParse from 'remark-parse';
 import remarkStringify from 'remark-stringify';
@@ -72,7 +72,7 @@ const remarkRemoveImages: Plugin<[], Root> = () => {
  */
 const remarkStripLinkUrls: Plugin<[], Root> = () => {
   return tree => {
-    const visit = (node: any) => {
+    const visit = (node: Node & { url?: string; children?: Node[] }) => {
       if (node.type === 'link') {
         // Convert link to its children (text content only)
         // The link node stays but URL is ignored in stringify
@@ -165,11 +165,16 @@ async function getPageIndexInfoByRoute(
   // Calculate character index positions for each toc item
   const toc: Header[] = rawToc.map(item => {
     const match = item.id.match(/-(\d+)$/);
+    // Find the heading in content (## for h2, ### for h3, etc.)
+    const headingPrefix = '#'.repeat(item.depth);
     let position = -1;
     if (match) {
       for (let i = 0; i < Number(match[1]); i++) {
         // When text is repeated, the position needs to be determined based on -number
-        position = processedContent.indexOf(`## ${item.text}`, position + 1);
+        position = processedContent.indexOf(
+          `${headingPrefix} ${item.text}`,
+          position + 1,
+        );
 
         // If the positions don't match, it means the text itself may exist -number
         if (position === -1) {
@@ -177,8 +182,6 @@ async function getPageIndexInfoByRoute(
         }
       }
     }
-    // Find the heading in content (## for h2, ### for h3, etc.)
-    const headingPrefix = '#'.repeat(item.depth);
     return {
       ...item,
       charIndex: processedContent.indexOf(
