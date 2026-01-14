@@ -247,8 +247,16 @@ async function extractPageData(
   options: ExtractPageDataOptions,
 ): Promise<PageIndexInfo[]> {
   const pageData = await Promise.all(
-    routeService.getRoutes().map(routeMeta => {
-      return getPageIndexInfoByRoute(routeMeta, options);
+    routeService.getRoutes().map(async routeMeta => {
+      const pageIndexInfo = await getPageIndexInfoByRoute(routeMeta, options);
+      // Store pageIndexInfo in RoutePage for llmsTxt to access
+      const routePage = routeService.getRoutePageByRoutePath(
+        routeMeta.routePath,
+      );
+      if (routePage) {
+        routePage.setPageIndexInfo(pageIndexInfo);
+      }
+      return pageIndexInfo;
     }),
   );
   return pageData;

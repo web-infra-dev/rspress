@@ -1,5 +1,5 @@
 import path from 'node:path';
-import type { RouteMeta } from '@rspress/shared';
+import type { PageIndexInfo, RouteMeta } from '@rspress/shared';
 import { getPageKey } from '../utils/getPageKey';
 import { normalizePath, slash } from '../utils/normalizePath';
 import { RouteService } from './RouteService';
@@ -10,8 +10,11 @@ export class RoutePage {
   // biome-ignore lint/correctness/noUnusedPrivateClassMembers: use this field in the future
   #docDir: string;
 
-  // TODO: add pageIndexInfo
-  // pageIndexInfo: PageIndexInfo;
+  pageIndexInfo?: PageIndexInfo;
+
+  setPageIndexInfo(info: PageIndexInfo): void {
+    this.pageIndexInfo = info;
+  }
 
   static create(absolutePath: string, docsDir: string): RoutePage {
     const routeMeta = absolutePathToRouteMeta(
