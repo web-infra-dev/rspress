@@ -242,17 +242,16 @@ outline: false
 ```
 
 :::tip
-`outline: false` only hides the outline column, but the space originally occupied by the outline column is still reserved. If you want the main content to occupy a wider screen space, you can use `pageType: doc-wide` with `outline: false` and `sidebar: false`:
+`outline: false` only hides the outline column, but the space originally occupied by the outline column is still reserved. If you want the main content to occupy a wider screen space, you can use [`pageType: doc-wide`](#pagetype) with `outline: false`:
 
 ```yaml
 ---
 pageType: doc-wide
 outline: false
-sidebar: false
 ---
 ```
 
-This way, the main content area will automatically expand to occupy the space originally used by the sidebar and outline column.
+This way, the main content area will automatically expand to occupy the space originally used by the outline column.
 :::
 
 ## footer
