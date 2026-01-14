@@ -24,6 +24,28 @@ interface Heading {
   children?: ChildNode[];
 }
 
+const extractChildText = (child: ChildNode): string => {
+  if (child.type === 'link') {
+    return child.children?.map(extractChildText).join('') ?? '';
+  }
+  if (child.type === 'strong') {
+    return `**${child.children?.map(extractChildText).join('') ?? ''}**`;
+  }
+  if (child.type === 'emphasis') {
+    return `*${child.children?.map(extractChildText).join('') ?? ''}*`;
+  }
+  if (child.type === 'delete') {
+    return `~~${child.children?.map(extractChildText).join('') ?? ''}~~`;
+  }
+  if (child.type === 'text') {
+    return child.value;
+  }
+  if (child.type === 'inlineCode') {
+    return `\`${child.value}\``;
+  }
+  return '';
+};
+
 export const parseToc = (tree: MdastRoot | HastRoot) => {
   let title = '';
   const toc: TocItem[] = [];
@@ -38,27 +60,12 @@ export const parseToc = (tree: MdastRoot | HastRoot) => {
       let customId = '';
       const text = node.children
         .map((child: ChildNode) => {
-          if (child.type === 'link') {
-            return child.children?.map(item => item.value).join('');
-          }
-          if (child.type === 'strong') {
-            return `**${child.children?.map(item => item.value).join('')}**`;
-          }
-          if (child.type === 'emphasis') {
-            return `*${child.children?.map(item => item.value).join('')}*`;
-          }
-          if (child.type === 'delete') {
-            return `~~${child.children?.map(item => item.value).join('')}~~`;
-          }
           if (child.type === 'text') {
             const [textPart, idPart] = extractTextAndId(child.value);
             customId = idPart;
             return textPart;
           }
-          if (child.type === 'inlineCode') {
-            return `\`${child.value}\``;
-          }
-          return '';
+          return extractChildText(child);
         })
         .join('')
         .trim();

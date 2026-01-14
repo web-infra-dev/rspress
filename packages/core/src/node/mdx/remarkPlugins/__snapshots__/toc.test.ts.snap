@@ -1,0 +1,106 @@
+// Rstest Snapshot v1
+
+exports[`toc > basic link in heading 1`] = `
+"import {Fragment as _Fragment, jsx as _jsx, jsxs as _jsxs} from "react/jsx-runtime";
+import {useMDXComponents as _provideComponents} from "@mdx-js/react";
+import {Callout as $$$callout$$$} from "@theme";
+function _createMdxContent(props) {
+  const _components = {
+    a: "a",
+    code: "code",
+    h1: "h1",
+    h2: "h2",
+    strong: "strong",
+    ..._provideComponents(),
+    ...props.components
+  };
+  return _jsxs(_Fragment, {
+    children: [_jsxs(_components.h1, {
+      id: "link",
+      children: [_jsx(_components.a, {
+        className: "rp-header-anchor",
+        "aria-hidden": "true",
+        href: "#link",
+        children: "#"
+      }), "link"]
+    }), "\\n", _jsxs(_components.h2, {
+      id: "this-is-link-rsbuild",
+      children: [_jsx(_components.a, {
+        className: "rp-header-anchor",
+        "aria-hidden": "true",
+        href: "#this-is-link-rsbuild",
+        children: "#"
+      }), "this is link ", _jsx(_components.a, {
+        href: "https://rsbuild.rs",
+        rel: "noopener noreferrer",
+        target: "_blank",
+        children: "rsbuild"
+      })]
+    }), "\\n", _jsxs(_components.h2, {
+      id: "this-is-bold-link",
+      children: [_jsx(_components.a, {
+        className: "rp-header-anchor",
+        "aria-hidden": "true",
+        href: "#this-is-bold-link",
+        children: "#"
+      }), "this is bold link ", _jsx(_components.a, {
+        href: "https://rsbuild.rs",
+        rel: "noopener noreferrer",
+        target: "_blank",
+        children: _jsx(_components.strong, {
+          children: "rsbuild"
+        })
+      })]
+    }), "\\n", _jsxs(_components.h2, {
+      id: "this-is-code-link",
+      children: [_jsx(_components.a, {
+        className: "rp-header-anchor",
+        "aria-hidden": "true",
+        href: "#this-is-code-link",
+        children: "#"
+      }), "this is code link ", _jsx(_components.a, {
+        href: "https://rsbuild.rs",
+        rel: "noopener noreferrer",
+        target: "_blank",
+        children: _jsx(_components.code, {
+          children: "rsbuild"
+        })
+      })]
+    }), "\\n", _jsxs(_components.h2, {
+      id: "this-is-bold-code-link",
+      children: [_jsx(_components.a, {
+        className: "rp-header-anchor",
+        "aria-hidden": "true",
+        href: "#this-is-bold-code-link",
+        children: "#"
+      }), "this is bold code link ", _jsx(_components.a, {
+        href: "https://rsbuild.rs",
+        rel: "noopener noreferrer",
+        target: "_blank",
+        children: _jsx(_components.strong, {
+          children: _jsx(_components.code, {
+            children: "rsbuild"
+          })
+        })
+      })]
+    })]
+  });
+}
+export default function MDXContent(props = {}) {
+  const {wrapper: MDXLayout} = {
+    ..._provideComponents(),
+    ...props.components
+  };
+  return MDXLayout ? _jsx(MDXLayout, {
+    ...props,
+    children: _jsx(_createMdxContent, {
+      ...props
+    })
+  }) : _createMdxContent(props);
+}
+
+
+MDXContent.__RSPRESS_PAGE_META = {};
+MDXContent.__RSPRESS_PAGE_META["index.mdx"] = {"toc":[{"id":"this-is-link-rsbuild","text":"this is link rsbuild","depth":2},{"id":"this-is-bold-link-rsbuild","text":"this is bold link **rsbuild**","depth":2},{"id":"this-is-code-link-rsbuild","text":"this is code link \`rsbuild\`","depth":2},{"id":"this-is-bold-code-link-rsbuild","text":"this is bold code link **\`rsbuild\`**","depth":2}],"title":"link","headingTitle":"link","frontmatter":{}};
+"
+`;
