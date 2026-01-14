@@ -1,5 +1,6 @@
 import type { RsbuildPlugin } from '@rsbuild/core';
 import type { PageData } from '@rspress/shared';
+import { logger } from '@rspress/shared/logger';
 import { pluginVirtualModule } from 'rsbuild-plugin-virtual-module';
 import { type FactoryContext, RuntimeModuleID } from '../types';
 import { createPageData } from './createPageData';
@@ -27,6 +28,7 @@ export const rsbuildPluginDocVM = async ({
       api.modifyBundlerChain(async (bundlerChain, { environment }) => {
         const alias = bundlerChain.resolve.alias.entries();
         if (environment.name === 'web') {
+          const now = performance.now();
           const { pageData, indexHashByGroup, searchIndex, filepaths } =
             await createPageData({
               config,
@@ -35,6 +37,7 @@ export const rsbuildPluginDocVM = async ({
               routeService,
               pluginDriver,
             });
+          logger.debug(`createPageData cost: ${performance.now() - now}ms`);
 
           ref.pageData = pageData;
           ref.searchIndex = searchIndex;
