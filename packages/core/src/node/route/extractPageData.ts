@@ -100,21 +100,51 @@ function extractTextFromNode(node: Node): string {
 }
 
 /**
- * Extract description from the first paragraph before h2
- * Returns the text content of the first paragraph that appears before any h2 heading
+ * Node types to skip when extracting description
+ * Similar to Docusaurus createExcerpt strategy
+ */
+const SKIP_NODE_TYPES = new Set([
+  'code', // Skip code blocks
+  'html', // Skip HTML
+  'mdxjsEsm', // Skip import/export
+  'mdxFlowExpression', // Skip JSX expressions
+  'thematicBreak', // Skip ---
+  'image', // Skip images
+  'table', // Skip tables
+]);
+
+/**
+ * Extract description from all text content between h1 and h2
+ * Collects text from paragraph and list nodes after h1 and before any h2 heading
+ * Skips code blocks, HTML, imports, tables following Docusaurus createExcerpt strategy
  */
 function extractDescription(tree: Root): string {
+  const textParts: string[] = [];
+  let foundH1 = false;
+
   for (const node of tree.children) {
-    // If we encounter an h2, stop searching
+    // Skip until we find h1
+    if (node.type === 'heading' && node.depth === 1) {
+      foundH1 = true;
+      continue;
+    }
+    // If we encounter an h2, stop collecting
     if (node.type === 'heading' && node.depth === 2) {
       break;
     }
-    // Return the first paragraph's text content
-    if (node.type === 'paragraph') {
-      return extractTextFromNode(node);
+    // Skip non-content nodes (code blocks, HTML, imports, etc.)
+    if (SKIP_NODE_TYPES.has(node.type)) {
+      continue;
+    }
+    // Collect text from content nodes after h1
+    if (foundH1) {
+      const text = extractTextFromNode(node).trim();
+      if (text) {
+        textParts.push(text);
+      }
     }
   }
-  return '';
+  return textParts.join(' ');
 }
 
 async function getPageIndexInfoByRoute(

@@ -252,7 +252,7 @@ describe('getPageIndexInfoByRoute', async () => {
 
       More content here.
       ",
-        "description": "Some text before code.",
+        "description": "Some text before code. Some text after code.",
         "frontmatter": {
           "__content": undefined,
         },
@@ -315,7 +315,7 @@ describe('getPageIndexInfoByRoute', async () => {
 
       More content here.
       ",
-        "description": "Some text before code.",
+        "description": "Some text before code. Some text after code.",
         "frontmatter": {
           "__content": undefined,
         },
@@ -372,7 +372,7 @@ describe('getPageIndexInfoByRoute', async () => {
 
       Final text.
       ",
-        "description": "Here is an image:",
+        "description": "Here is an image: And some text after.",
         "frontmatter": {
           "__content": undefined,
         },
@@ -598,7 +598,7 @@ describe('getPageIndexInfoByRoute', async () => {
     );
   });
 
-  it('should extract description from first paragraph before h2 (with code fixture)', async () => {
+  it('should skip code blocks when extracting description', async () => {
     const pageIndexInfo = await getPageIndexInfoByRoute(
       createRoute('with-code.mdx', fixtureContentProcessingDir),
       {
@@ -609,9 +609,32 @@ describe('getPageIndexInfoByRoute', async () => {
       },
     );
 
-    // First paragraph before h2 is "Some text before code."
-    expect(pageIndexInfo.description).toBe('Some text before code.');
+    // Code blocks should be skipped, only paragraph text collected
+    expect(pageIndexInfo.description).toBe(
+      'Some text before code. Some text after code.',
+    );
     // frontmatter.description should remain undefined
+    expect(pageIndexInfo.frontmatter.description).toBeUndefined();
+  });
+
+  it('should collect all text between h1 and h2 for description', async () => {
+    const pageIndexInfo = await getPageIndexInfoByRoute(
+      createRoute(
+        'multi-paragraph-description.mdx',
+        fixtureContentProcessingDir,
+      ),
+      {
+        alias: {},
+        replaceRules: [],
+        root: fixtureContentProcessingDir,
+        searchCodeBlocks: false,
+      },
+    );
+
+    // Should collect all paragraphs and list items between h1 and h2
+    expect(pageIndexInfo.description).toBe(
+      'This is the first paragraph. This is the second paragraph with bold and italic. List item oneList item two',
+    );
     expect(pageIndexInfo.frontmatter.description).toBeUndefined();
   });
 });
