@@ -62,6 +62,7 @@ describe('extractPageData', async () => {
               version: '',
             },
           }),
+        getRoutePageByRoutePath: () => undefined,
       } as RouteService,
       {
         alias: {},
@@ -135,8 +136,10 @@ describe('extractPageData', async () => {
       ]
     `);
   });
+});
 
-  it('getPageIndexInfoByRoute - recursive', async () => {
+describe('getPageIndexInfoByRoute', async () => {
+  it('recursive', async () => {
     const fixtureRecursiveDir = join(__dirname, './fixtures/recursive');
     const absolutize = (relativePath: string) => {
       return join(fixtureRecursiveDir, `.${relativePath}`);
