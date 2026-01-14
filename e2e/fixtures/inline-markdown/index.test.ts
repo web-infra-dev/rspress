@@ -156,9 +156,9 @@ test.describe('Inline markdown test', async () => {
       'delete',
       'This is a long string to test regex performance',
       'this is link rsbuild',
-      'this is bold link', // FIXME: should be 'this is bold link rsbuild'
-      'this is code link',
-      'this is bold code link',
+      'this is bold link rsbuild',
+      'this is code link rsbuild',
+      'this is bold code link rsbuild',
     ]);
 
     const overviewLinkCount = await overviewLinks.count();
@@ -178,9 +178,9 @@ test.describe('Inline markdown test', async () => {
       '<del>delete</del>',
       '<code>This is a long string to test regex performance</code>',
       'this is link rsbuild',
-      'this is bold link',
-      'this is code link',
-      'this is bold code link',
+      'this is bold link <strong>rsbuild</strong>',
+      'this is code link <code>rsbuild</code>',
+      'this is bold code link <strong><code>rsbuild</code></strong>',
     ];
     for (const [index, html] of overviewLinkInnerHtml.entries()) {
       expect(html).toContain(expectedOverviewLinkInnerHtml[index]);

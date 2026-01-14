@@ -246,6 +246,6 @@ function _missingMdxReference(id, component) {
 
 
 MDXContent.__RSPRESS_PAGE_META = {};
-MDXContent.__RSPRESS_PAGE_META["inline-code.mdx"] = {"toc":[],"title":"Hello World ","headingTitle":"Hello World ","frontmatter":{}};
+MDXContent.__RSPRESS_PAGE_META["inline-code.mdx"] = {"toc":[],"title":"Hello World","headingTitle":"Hello World","frontmatter":{}};
 "
 `;

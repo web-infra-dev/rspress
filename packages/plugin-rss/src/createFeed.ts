@@ -33,7 +33,6 @@ export function generateFeedItem(
       ) || '',
     ),
     description: selectNonNullishProperty(fm.description) || '',
-    // Priority: frontmatter.summary > SSG HTML content > plain text content
     content:
       selectNonNullishProperty(fm.summary, htmlContent, page.content) || '',
     date: toDate((fm.date as string) || (fm.published_at as string))!,

@@ -97,13 +97,7 @@ export async function createPageData(context: FactoryContext): Promise<{
   const pageData: PageData = {
     pages: pages.map(page => {
       // omit some fields for runtime size
-      const {
-        content: _content,
-        _filepath,
-        _html,
-        _flattenContent,
-        ...rest
-      } = page;
+      const { content: _content, _filepath, _flattenContent, ...rest } = page;
       filepaths.push(_filepath);
       return rest;
     }),
