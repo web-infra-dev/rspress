@@ -233,10 +233,10 @@ async function getPageIndexInfoByRoute(
     toc,
     // processed markdown content for search index
     content: processedContent,
+    description: frontmatter.description || extractedDescription || undefined,
     _flattenContent: flattenContent,
     frontmatter: {
       ...frontmatter,
-      description: frontmatter.description || extractedDescription || undefined,
       __content: undefined,
     },
   } satisfies PageIndexInfo;

@@ -78,9 +78,9 @@ describe('extractPageData', async () => {
       ",
           "_relativePath": "a.mdx",
           "content": "",
+          "description": undefined,
           "frontmatter": {
             "__content": undefined,
-            "description": undefined,
           },
           "lang": "",
           "routePath": "/a",
@@ -94,9 +94,9 @@ describe('extractPageData', async () => {
       ",
           "_relativePath": "guide/b.mdx",
           "content": "",
+          "description": undefined,
           "frontmatter": {
             "__content": undefined,
-            "description": undefined,
           },
           "lang": "",
           "routePath": "/guide/b",
@@ -122,9 +122,9 @@ describe('extractPageData', async () => {
       ",
           "_relativePath": "index.mdx",
           "content": "",
+          "description": undefined,
           "frontmatter": {
             "__content": undefined,
-            "description": undefined,
           },
           "lang": "",
           "routePath": "/",
@@ -185,9 +185,9 @@ describe('extractPageData', async () => {
 
       Comp in Comp content \`code\`
       ",
+        "description": undefined,
         "frontmatter": {
           "__content": undefined,
-          "description": undefined,
         },
         "lang": "",
         "routePath": "/",
@@ -249,9 +249,9 @@ describe('extractPageData', async () => {
 
       More content here.
       ",
+        "description": "Some text before code.",
         "frontmatter": {
           "__content": undefined,
-          "description": "Some text before code.",
         },
         "lang": "",
         "routePath": "/with-code",
@@ -312,9 +312,9 @@ describe('extractPageData', async () => {
 
       More content here.
       ",
+        "description": "Some text before code.",
         "frontmatter": {
           "__content": undefined,
-          "description": "Some text before code.",
         },
         "lang": "",
         "routePath": "/with-code",
@@ -369,9 +369,9 @@ describe('extractPageData', async () => {
 
       Final text.
       ",
+        "description": "Here is an image:",
         "frontmatter": {
           "__content": undefined,
-          "description": "Here is an image:",
         },
         "lang": "",
         "routePath": "/with-images",
@@ -426,9 +426,9 @@ describe('extractPageData', async () => {
 
       Visit [our docs]() for more info.
       ",
+        "description": "This is a link to Google in text.",
         "frontmatter": {
           "__content": undefined,
-          "description": "This is a link to Google in text.",
         },
         "lang": "",
         "routePath": "/with-links",
@@ -485,9 +485,9 @@ describe('extractPageData', async () => {
 
       More content.
       ",
+        "description": "Some intro text.",
         "frontmatter": {
           "__content": undefined,
-          "description": "Some intro text.",
         },
         "lang": "",
         "routePath": "/with-table",
@@ -535,6 +535,7 @@ describe('extractPageData', async () => {
 
       More content here.
       ",
+        "description": "A page with frontmatter",
         "frontmatter": {
           "__content": undefined,
           "description": "A page with frontmatter",
@@ -567,9 +568,12 @@ describe('extractPageData', async () => {
       },
     );
 
-    expect(pageIndexInfo.frontmatter.description).toBe(
+    // description field should have extracted value
+    expect(pageIndexInfo.description).toBe(
       'This is the first paragraph that should be used as description.',
     );
+    // frontmatter.description should remain undefined
+    expect(pageIndexInfo.frontmatter.description).toBeUndefined();
   });
 
   it('should use frontmatter description when provided instead of extracting from content', async () => {
@@ -583,7 +587,9 @@ describe('extractPageData', async () => {
       },
     );
 
-    // Should use frontmatter description, not extract from content
+    // description field should use frontmatter value
+    expect(pageIndexInfo.description).toBe('A page with frontmatter');
+    // frontmatter.description should preserve original value
     expect(pageIndexInfo.frontmatter.description).toBe(
       'A page with frontmatter',
     );
@@ -601,8 +607,8 @@ describe('extractPageData', async () => {
     );
 
     // First paragraph before h2 is "Some text before code."
-    expect(pageIndexInfo.frontmatter.description).toBe(
-      'Some text before code.',
-    );
+    expect(pageIndexInfo.description).toBe('Some text before code.');
+    // frontmatter.description should remain undefined
+    expect(pageIndexInfo.frontmatter.description).toBeUndefined();
   });
 });
