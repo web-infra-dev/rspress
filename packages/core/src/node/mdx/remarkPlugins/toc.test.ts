@@ -244,6 +244,7 @@ describe('parseToc', () => {
     };
     const result = parseToc(tree);
     expect(result.toc).toEqual([
+      // cspell:disable-next-line
       { id: 'using-usestate-hook', text: 'Using `useState` hook', depth: 2 },
     ]);
   });
