@@ -16,7 +16,7 @@ import type { Plugin } from 'unified';
 import { unified } from 'unified';
 import { remove } from 'unist-util-remove';
 import { importStatementRegex } from '../constants';
-import { parseToc, type TocItem } from '../mdx/remarkPlugins/toc';
+import { parseToc } from '../mdx/remarkPlugins/toc';
 import { flattenMdxContent } from '../utils';
 import { applyReplaceRules } from '../utils/applyReplaceRules';
 import type { RouteService } from './RouteService';
@@ -137,27 +137,18 @@ async function getPageIndexInfoByRoute(
   // Extract title and TOC from AST
   const { title, toc: rawToc } = parseToc(tree);
 
-  // Build plugins for content processing
-  const contentPlugins: Plugin<[], Root>[] = [
-    remarkGFM,
-    remarkRemoveImages,
-    remarkStripLinkUrls,
-  ];
-
-  // Skip code blocks if searchCodeBlocks is false
-  if (!searchCodeBlocks) {
-    contentPlugins.push(remarkRemoveCodeBlocks);
-  }
-
   // Process AST and stringify back to markdown for search content
-  let stringifyProcessor = unified().use(remarkParse).use(remarkGFM);
-  for (const plugin of contentPlugins) {
-    stringifyProcessor = stringifyProcessor.use(plugin);
-  }
-  stringifyProcessor = stringifyProcessor.use(remarkStringify, {
-    bullet: '-',
-    listItemIndent: 'one',
-  });
+  // Build processor chain: parse -> plugins -> stringify
+  const stringifyProcessor = unified()
+    .use(remarkParse)
+    .use(remarkGFM)
+    .use(remarkRemoveImages)
+    .use(remarkStripLinkUrls)
+    .use(searchCodeBlocks ? [] : [remarkRemoveCodeBlocks])
+    .use(remarkStringify, {
+      bullet: '-',
+      listItemIndent: 'one',
+    });
 
   const processedTree = await stringifyProcessor.run(
     stringifyProcessor.parse(content),

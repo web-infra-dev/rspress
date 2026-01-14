@@ -221,7 +221,7 @@ describe('extractPageData', async () => {
     expect(pageIndexInfo).toMatchInlineSnapshot(`
       {
         "_filepath": "<ROOT>/packages/core/src/node/route/fixtures/content-processing/with-code.mdx",
-        "_flattenContent": "# Page with Code
+        "_flattenContent": "# Page with code
 
       Some text before code.
 
@@ -232,7 +232,7 @@ describe('extractPageData', async () => {
 
       Some text after code.
 
-      ## Section Two
+      ## Section two
 
       More content here.
       ",
@@ -241,7 +241,7 @@ describe('extractPageData', async () => {
 
       Some text after code.
 
-      ## Section Two
+      ## Section two
 
       More content here.
       ",
@@ -250,13 +250,13 @@ describe('extractPageData', async () => {
         },
         "lang": "",
         "routePath": "/with-code",
-        "title": "Page with Code",
+        "title": "Page with code",
         "toc": [
           {
             "charIndex": 47,
             "depth": 2,
             "id": "section-two",
-            "text": "Section Two",
+            "text": "Section two",
           },
         ],
         "version": "",
@@ -278,7 +278,7 @@ describe('extractPageData', async () => {
     expect(pageIndexInfo).toMatchInlineSnapshot(`
       {
         "_filepath": "<ROOT>/packages/core/src/node/route/fixtures/content-processing/with-code.mdx",
-        "_flattenContent": "# Page with Code
+        "_flattenContent": "# Page with code
 
       Some text before code.
 
@@ -289,7 +289,7 @@ describe('extractPageData', async () => {
 
       Some text after code.
 
-      ## Section Two
+      ## Section two
 
       More content here.
       ",
@@ -303,7 +303,7 @@ describe('extractPageData', async () => {
 
       Some text after code.
 
-      ## Section Two
+      ## Section two
 
       More content here.
       ",
@@ -312,13 +312,13 @@ describe('extractPageData', async () => {
         },
         "lang": "",
         "routePath": "/with-code",
-        "title": "Page with Code",
+        "title": "Page with code",
         "toc": [
           {
             "charIndex": 103,
             "depth": 2,
             "id": "section-two",
-            "text": "Section Two",
+            "text": "Section two",
           },
         ],
         "version": "",
@@ -340,7 +340,7 @@ describe('extractPageData', async () => {
     expect(pageIndexInfo).toMatchInlineSnapshot(`
       {
         "_filepath": "<ROOT>/packages/core/src/node/route/fixtures/content-processing/with-images.mdx",
-        "_flattenContent": "# Page with Images
+        "_flattenContent": "# Page with images
 
       Here is an image:
 
@@ -348,7 +348,7 @@ describe('extractPageData', async () => {
 
       And some text after.
 
-      ## Another Section
+      ## Another section
 
       ![Another image](https://example.com/image.jpg)
 
@@ -359,7 +359,7 @@ describe('extractPageData', async () => {
 
       And some text after.
 
-      ## Another Section
+      ## Another section
 
       Final text.
       ",
@@ -368,13 +368,13 @@ describe('extractPageData', async () => {
         },
         "lang": "",
         "routePath": "/with-images",
-        "title": "Page with Images",
+        "title": "Page with images",
         "toc": [
           {
             "charIndex": 41,
             "depth": 2,
             "id": "another-section",
-            "text": "Another Section",
+            "text": "Another section",
           },
         ],
         "version": "",
@@ -396,11 +396,11 @@ describe('extractPageData', async () => {
     expect(pageIndexInfo).toMatchInlineSnapshot(`
       {
         "_filepath": "<ROOT>/packages/core/src/node/route/fixtures/content-processing/with-links.mdx",
-        "_flattenContent": "# Page with Links
+        "_flattenContent": "# Page with links
 
       This is a [link to Google](https://google.com) in text.
 
-      ## Links Section
+      ## Links section
 
       - [First link](https://example.com/first)
       - [Second link](https://example.com/second)
@@ -411,7 +411,7 @@ describe('extractPageData', async () => {
         "_relativePath": "with-links.mdx",
         "content": "This is a [link to Google]() in text.
 
-      ## Links Section
+      ## Links section
 
       - [First link]()
       - [Second link]()
@@ -424,13 +424,13 @@ describe('extractPageData', async () => {
         },
         "lang": "",
         "routePath": "/with-links",
-        "title": "Page with Links",
+        "title": "Page with links",
         "toc": [
           {
             "charIndex": 39,
             "depth": 2,
             "id": "links-section",
-            "text": "Links Section",
+            "text": "Links section",
           },
         ],
         "version": "",
@@ -452,7 +452,7 @@ describe('extractPageData', async () => {
     expect(pageIndexInfo).toMatchInlineSnapshot(`
       {
         "_filepath": "<ROOT>/packages/core/src/node/route/fixtures/content-processing/with-table.mdx",
-        "_flattenContent": "# Page with Table
+        "_flattenContent": "# Page with table
 
       Some intro text.
 
@@ -461,7 +461,7 @@ describe('extractPageData', async () => {
       | Cell 1   | Cell 2   | Cell 3   |
       | Cell 4   | Cell 5   | Cell 6   |
 
-      ## After Table
+      ## After table
 
       More content.
       ",
@@ -473,7 +473,7 @@ describe('extractPageData', async () => {
       | Cell 1   | Cell 2   | Cell 3   |
       | Cell 4   | Cell 5   | Cell 6   |
 
-      ## After Table
+      ## After table
 
       More content.
       ",
@@ -482,13 +482,13 @@ describe('extractPageData', async () => {
         },
         "lang": "",
         "routePath": "/with-table",
-        "title": "Page with Table",
+        "title": "Page with table",
         "toc": [
           {
             "charIndex": 159,
             "depth": 2,
             "id": "after-table",
-            "text": "After Table",
+            "text": "After table",
           },
         ],
         "version": "",
@@ -511,7 +511,7 @@ describe('extractPageData', async () => {
       {
         "_filepath": "<ROOT>/packages/core/src/node/route/fixtures/content-processing/with-frontmatter.mdx",
         "_flattenContent": "
-      # Heading in Content
+      # Heading in content
 
       This page has frontmatter with a custom title.
 
