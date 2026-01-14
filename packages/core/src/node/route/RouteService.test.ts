@@ -30,6 +30,7 @@ describe('RouteService', async () => {
     expect(routeData).toMatchInlineSnapshot(`
       Map {
         "/a" => RoutePage {
+          "pageIndexInfo": undefined,
           "routeMeta": {
             "absolutePath": "<ROOT>/packages/core/src/node/route/fixtures/basic/a.mdx",
             "lang": "",
@@ -40,6 +41,7 @@ describe('RouteService', async () => {
           },
         },
         "/guide/__e" => RoutePage {
+          "pageIndexInfo": undefined,
           "routeMeta": {
             "absolutePath": "<ROOT>/packages/core/src/node/route/fixtures/basic/guide/__e.mdx",
             "lang": "",
@@ -50,6 +52,7 @@ describe('RouteService', async () => {
           },
         },
         "/guide/b" => RoutePage {
+          "pageIndexInfo": undefined,
           "routeMeta": {
             "absolutePath": "<ROOT>/packages/core/src/node/route/fixtures/basic/guide/b.mdx",
             "lang": "",
@@ -60,6 +63,7 @@ describe('RouteService', async () => {
           },
         },
         "/guide/c" => RoutePage {
+          "pageIndexInfo": undefined,
           "routeMeta": {
             "absolutePath": "<ROOT>/packages/core/src/node/route/fixtures/basic/guide/c.tsx",
             "lang": "",
@@ -70,6 +74,7 @@ describe('RouteService', async () => {
           },
         },
         "/guide/" => RoutePage {
+          "pageIndexInfo": undefined,
           "routeMeta": {
             "absolutePath": "<ROOT>/packages/core/src/node/route/fixtures/basic/guide/index.md",
             "lang": "",
@@ -80,6 +85,7 @@ describe('RouteService', async () => {
           },
         },
         "/" => RoutePage {
+          "pageIndexInfo": undefined,
           "routeMeta": {
             "absolutePath": "<ROOT>/packages/core/src/node/route/fixtures/basic/index.mdx",
             "lang": "",
@@ -141,6 +147,7 @@ describe('RouteService', async () => {
     expect(routeData).toMatchInlineSnapshot(`
       Map {
         "/a" => RoutePage {
+          "pageIndexInfo": undefined,
           "routeMeta": {
             "absolutePath": "<ROOT>/packages/core/src/node/route/fixtures/basic/a.mdx",
             "lang": "",
@@ -151,6 +158,7 @@ describe('RouteService', async () => {
           },
         },
         "/guide/__e" => RoutePage {
+          "pageIndexInfo": undefined,
           "routeMeta": {
             "absolutePath": "<ROOT>/packages/core/src/node/route/fixtures/basic/guide/__e.mdx",
             "lang": "",
@@ -161,6 +169,7 @@ describe('RouteService', async () => {
           },
         },
         "/guide/c" => RoutePage {
+          "pageIndexInfo": undefined,
           "routeMeta": {
             "absolutePath": "<ROOT>/packages/core/src/node/route/fixtures/basic/guide/c.tsx",
             "lang": "",
@@ -171,6 +180,7 @@ describe('RouteService', async () => {
           },
         },
         "/guide/" => RoutePage {
+          "pageIndexInfo": undefined,
           "routeMeta": {
             "absolutePath": "<ROOT>/packages/core/src/node/route/fixtures/basic/guide/index.md",
             "lang": "",
@@ -181,6 +191,7 @@ describe('RouteService', async () => {
           },
         },
         "/" => RoutePage {
+          "pageIndexInfo": undefined,
           "routeMeta": {
             "absolutePath": "<ROOT>/packages/core/src/node/route/fixtures/basic/index.mdx",
             "lang": "",
@@ -236,6 +247,7 @@ describe('RouteService', async () => {
     expect(routeData).toMatchInlineSnapshot(`
       Map {
         "/a" => RoutePage {
+          "pageIndexInfo": undefined,
           "routeMeta": {
             "absolutePath": "<ROOT>/packages/core/src/node/route/fixtures/basic/a.mdx",
             "lang": "",
@@ -246,6 +258,7 @@ describe('RouteService', async () => {
           },
         },
         "/guide/__e" => RoutePage {
+          "pageIndexInfo": undefined,
           "routeMeta": {
             "absolutePath": "<ROOT>/packages/core/src/node/route/fixtures/basic/guide/__e.mdx",
             "lang": "",
@@ -256,6 +269,7 @@ describe('RouteService', async () => {
           },
         },
         "/guide/b" => RoutePage {
+          "pageIndexInfo": undefined,
           "routeMeta": {
             "absolutePath": "<ROOT>/packages/core/src/node/route/fixtures/basic/guide/b.mdx",
             "lang": "",
@@ -266,6 +280,7 @@ describe('RouteService', async () => {
           },
         },
         "/guide/" => RoutePage {
+          "pageIndexInfo": undefined,
           "routeMeta": {
             "absolutePath": "<ROOT>/packages/core/src/node/route/fixtures/basic/guide/index.md",
             "lang": "",
@@ -276,6 +291,7 @@ describe('RouteService', async () => {
           },
         },
         "/" => RoutePage {
+          "pageIndexInfo": undefined,
           "routeMeta": {
             "absolutePath": "<ROOT>/packages/core/src/node/route/fixtures/basic/index.mdx",
             "lang": "",
@@ -348,6 +364,7 @@ describe('RouteService with i18n', async () => {
     expect(routeData).toMatchInlineSnapshot(`
       Map {
         "/guide/basic/install" => RoutePage {
+          "pageIndexInfo": undefined,
           "routeMeta": {
             "absolutePath": "<ROOT>/packages/core/src/node/route/fixtures/locales/en/guide/basic/install.mdx",
             "lang": "en",
@@ -358,6 +375,7 @@ describe('RouteService with i18n', async () => {
           },
         },
         "/guide/basic/quick-start" => RoutePage {
+          "pageIndexInfo": undefined,
           "routeMeta": {
             "absolutePath": "<ROOT>/packages/core/src/node/route/fixtures/locales/en/guide/basic/quick-start.mdx",
             "lang": "en",
@@ -368,6 +386,7 @@ describe('RouteService with i18n', async () => {
           },
         },
         "/guide/" => RoutePage {
+          "pageIndexInfo": undefined,
           "routeMeta": {
             "absolutePath": "<ROOT>/packages/core/src/node/route/fixtures/locales/en/guide/index.mdx",
             "lang": "en",
@@ -378,6 +397,7 @@ describe('RouteService with i18n', async () => {
           },
         },
         "/" => RoutePage {
+          "pageIndexInfo": undefined,
           "routeMeta": {
             "absolutePath": "<ROOT>/packages/core/src/node/route/fixtures/locales/en/index.mdx",
             "lang": "en",
@@ -388,6 +408,7 @@ describe('RouteService with i18n', async () => {
           },
         },
         "/zh/guide/basic/install" => RoutePage {
+          "pageIndexInfo": undefined,
           "routeMeta": {
             "absolutePath": "<ROOT>/packages/core/src/node/route/fixtures/locales/zh/guide/basic/install.mdx",
             "lang": "zh",
@@ -398,6 +419,7 @@ describe('RouteService with i18n', async () => {
           },
         },
         "/zh/guide/basic/quick-start" => RoutePage {
+          "pageIndexInfo": undefined,
           "routeMeta": {
             "absolutePath": "<ROOT>/packages/core/src/node/route/fixtures/locales/zh/guide/basic/quick-start.mdx",
             "lang": "zh",
@@ -408,6 +430,7 @@ describe('RouteService with i18n', async () => {
           },
         },
         "/zh/guide/" => RoutePage {
+          "pageIndexInfo": undefined,
           "routeMeta": {
             "absolutePath": "<ROOT>/packages/core/src/node/route/fixtures/locales/zh/guide/index.mdx",
             "lang": "zh",
@@ -418,6 +441,7 @@ describe('RouteService with i18n', async () => {
           },
         },
         "/zh/" => RoutePage {
+          "pageIndexInfo": undefined,
           "routeMeta": {
             "absolutePath": "<ROOT>/packages/core/src/node/route/fixtures/locales/zh/index.mdx",
             "lang": "zh",
