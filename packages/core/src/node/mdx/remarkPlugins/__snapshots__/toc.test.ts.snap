@@ -4,6 +4,7 @@ exports[`toc > basic link in heading 1`] = `
 "import {Fragment as _Fragment, jsx as _jsx, jsxs as _jsxs} from "react/jsx-runtime";
 import {useMDXComponents as _provideComponents} from "@mdx-js/react";
 import {Callout as $$$callout$$$} from "@theme";
+import {Link} from '@theme';
 function _createMdxContent(props) {
   const _components = {
     a: "a",
@@ -35,6 +36,16 @@ function _createMdxContent(props) {
         rel: "noopener noreferrer",
         target: "_blank",
         children: "rsbuild"
+      })]
+    }), "\\n", _jsxs(_components.h2, {
+      id: "this-is-link",
+      children: [_jsx(_components.a, {
+        className: "rp-header-anchor",
+        "aria-hidden": "true",
+        href: "#this-is-link",
+        children: "#"
+      }), "this is link ", _jsx(Link, {
+        href: "https://rsbuild.rs"
       })]
     }), "\\n", _jsxs(_components.h2, {
       id: "this-is-bold-link",
@@ -101,6 +112,6 @@ export default function MDXContent(props = {}) {
 
 
 MDXContent.__RSPRESS_PAGE_META = {};
-MDXContent.__RSPRESS_PAGE_META["index.mdx"] = {"toc":[{"id":"this-is-link-rsbuild","text":"this is link rsbuild","depth":2},{"id":"this-is-bold-link-rsbuild","text":"this is bold link **rsbuild**","depth":2},{"id":"this-is-code-link-rsbuild","text":"this is code link \`rsbuild\`","depth":2},{"id":"this-is-bold-code-link-rsbuild","text":"this is bold code link **\`rsbuild\`**","depth":2}],"title":"link","headingTitle":"link","frontmatter":{}};
+MDXContent.__RSPRESS_PAGE_META["index.mdx"] = {"toc":[{"id":"this-is-link-rsbuild","text":"this is link rsbuild","depth":2},{"id":"this-is-link","text":"this is link","depth":2},{"id":"this-is-bold-link-rsbuild","text":"this is bold link **rsbuild**","depth":2},{"id":"this-is-code-link-rsbuild","text":"this is code link \`rsbuild\`","depth":2},{"id":"this-is-bold-code-link-rsbuild","text":"this is bold code link **\`rsbuild\`**","depth":2}],"title":"link","headingTitle":"link","frontmatter":{}};
 "
 `;

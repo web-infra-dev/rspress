@@ -17,9 +17,14 @@ describe('toc', async () => {
   };
 
   test('basic link in heading', async () => {
-    const result = await process(`# link
+    const result = await process(`
+import { Link } from '@theme';
+
+# link
 
 ## this is link [rsbuild](https://rsbuild.rs)
+
+## this is link <Link href="https://rsbuild.rs" />
 
 ## this is bold link [**rsbuild**](https://rsbuild.rs)
 
