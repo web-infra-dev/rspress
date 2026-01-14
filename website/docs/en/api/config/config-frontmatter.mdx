@@ -241,6 +241,20 @@ outline: false
 ---
 ```
 
+:::tip
+`outline: false` only hides the outline column, but the space originally occupied by the outline column is still reserved. If you want the main content to occupy a wider screen space, you can use `pageType: doc-wide` with `outline: false` and `sidebar: false`:
+
+```yaml
+---
+pageType: doc-wide
+outline: false
+sidebar: false
+---
+```
+
+This way, the main content area will automatically expand to occupy the space originally used by the sidebar and outline column.
+:::
+
 ## footer
 
 Whether to display the components at the bottom of the document (such as previous/next page). By default, the `doc` page will display the footer at the bottom. You can hide the footer with the following config:
