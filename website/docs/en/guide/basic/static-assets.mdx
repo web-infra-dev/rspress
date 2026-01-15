@@ -8,10 +8,10 @@ description: Configure site logo, favicon icons, reference images and videos in 
 
 In Rspress, you may use the following static assets:
 
+- Images, videos and other static assets used in .md(x) files
 - Logo image at the top left corner of the site
 - Site favicon icon
 - Homepage logo image
-- Images, videos and other static assets used in .md(x) files
 - Other static assets
 
 Next, we will introduce how to use these static assets one by one.
@@ -57,16 +57,22 @@ Of course, you can also directly use the img tag in `.mdx` files:
 <img src="./demo.png" />
 ```
 
-This is equivalent to using `import image from "./demo.png"` directly.
+Both usage above will be transformed into:
 
-Not only images, but you can also import videos, audios and other static assets in markdown files.
+```mdx title="index.mdx"
+import image from './demo.png';
+
+<img src={image}>
+```
+
+Not only images, but you can also import videos, audios and other static assets. Other usage methods are consistent with Rsbuild.
 
 ### public directory
 
 The public directory under the docs directory can be used to place static assets. These assets are not processed during the build and can be referenced directly via URL.
 
-- When you start the dev server, these assets will be served under the [server.base](https://rsbuild.rs/config/server/base) root path (default `/`).
-- When you run a production build, these assets will be copied to the [dist directory](https://rsbuild.rs/guide/basic/output-files).
+- When you start the dev server, these assets will be served under the [base](/config/config-basic#base) root path (default `/`).
+- When you run a production build, these assets will be copied to the [doc_build directory](/config/config-basic#outdir).
 
 For example, you can place files like `robots.txt`, `manifest.json`, or `favicon.ico` in the public directory.
 
@@ -85,7 +91,7 @@ In the above `index.mdx` file, you can use an absolute path to reference `demo.p
 ![](/demo.png)
 ```
 
-When your site is configured with a `base` path and you want to use the `img` tag to introduce an absolute path, you need to use `normalizeImagePath` provided by `@rspress/core/runtime` to manually add the `base` path to its src. Here is an example:
+When your site is configured with a `base` path and you use the `img` tag to introduce an absolute path, you need to use `normalizeImagePath` provided by `@rspress/core/runtime` to manually add the `base` path to its src. Here is an example:
 
 ```tsx title="guide.mdx"
 import { normalizeImagePath } from '@rspress/core/runtime';
@@ -157,7 +163,7 @@ pageType: home
 
 hero:
   image:
-    src: 'https://avatars.githubusercontent.com/u/56892468?s=200&v=4'
+    src: https://avatars.githubusercontent.com/u/56892468?s=200&v=4
     alt: Rspress
 ---
 ```

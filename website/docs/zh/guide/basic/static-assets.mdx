@@ -8,10 +8,10 @@ description: 配置站点 logo、favicon 图标，在 MDX 文件中引用图片�
 
 在 Rspress 中，你可能会用到以下静态资源：
 
+- .md(x) 文件中使用的图片、视频等静态资源
 - 站点左上角 logo 图片
 - 站点 favicon 图标
 - 主页 logo 图片
-- .md(x) 文件中使用的图片、视频等静态资源
 - 其它静态资源
 
 接下来我们将逐个介绍如何使用这些静态资源。
@@ -58,16 +58,22 @@ docs
 <img src="./demo.png" />
 ```
 
-相当于直接使用 `import image from "./demo.png"`。
+上面两种用法都会被转化为：
 
-不光是图片，你也可以在 markdown 文件中引入视频、音频等静态资源。
+```mdx title="index.mdx"
+import image from './demo.png';
+
+<img src={image}>
+```
+
+不光是图片，你也可以引入视频、音频等静态资源，使用方式均和 Rsbuild 一致。
 
 ### public 目录
 
 docs 目录下的 public 目录可以用于放置一些静态资源，这些资源不会被构建，可以直接通过 URL 引用。
 
-- 当你启动开发服务器时，这些资源会被托管在 [server.base](https://rsbuild.rs/zh/config/server/base) 根路径下（默认 `/`）。
-- 当你执行生产模式构建时，这些资源会被拷贝到 [dist 目录](https://rsbuild.rs/zh/guide/basic/output-files)。
+- 当你启动开发服务器时，这些资源会被托管在 [base](/config/config-basic#base) 根路径下（默认 `/`）。
+- 当你执行生产模式构建时，这些资源会被拷贝到 [doc_build 目录](/config/config-basic#outdir)。
 
 比如，你可以在 public 目录下放置 `robots.txt`、`manifest.json` 或 `favicon.ico` 等文件。
 
@@ -86,7 +92,7 @@ docs
 ![](/demo.png)
 ```
 
-当你的站点配置了 `base` 路径并且要使用 `img` 标签的方式来引入绝对路径，你需要使用 `@rspress/core/runtime` 提供的 `normalizeImagePath` 来手动为其 src 添加 `base` 路径。示例如下：
+当你的站点配置了 `base` 路径并且使用 `img` 标签的方式来引入绝对路径，你需要使用 `@rspress/core/runtime` 提供的 `normalizeImagePath` 来手动为其 src 添加 `base` 路径。示例如下：
 
 ```tsx title="guide.mdx"
 import { normalizeImagePath } from '@rspress/core/runtime';
