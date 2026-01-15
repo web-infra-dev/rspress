@@ -41,11 +41,23 @@ async function generateLlmsTxt(
             return;
           }
 
-          const { title, description } =
-            await extractInfoFromFrontmatterWithAbsolutePath(
+          // Prefer pageIndexInfo from RoutePage (set by extractPageData)
+          const pageInfo = routePage.pageIndexInfo;
+          let title: string;
+          let description: string | undefined;
+
+          if (pageInfo) {
+            title = pageInfo.title;
+            description = pageInfo.description;
+          } else {
+            // Fallback to frontmatter extraction
+            const info = await extractInfoFromFrontmatterWithAbsolutePath(
               absolutePath,
               routeService.getDocsDir(),
             );
+            title = info.title;
+            description = info.description;
+          }
 
           return `- [${title}](${routePathToMdPath(routePath, base)})${description ? `: ${description}` : ''}`;
         }),

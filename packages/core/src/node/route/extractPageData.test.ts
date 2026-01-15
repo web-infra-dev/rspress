@@ -62,6 +62,7 @@ describe('extractPageData', async () => {
               version: '',
             },
           }),
+        getRoutePageByRoutePath: () => undefined,
       } as RouteService,
       {
         alias: {},
@@ -78,6 +79,7 @@ describe('extractPageData', async () => {
       ",
           "_relativePath": "a.mdx",
           "content": "",
+          "description": undefined,
           "frontmatter": {
             "__content": undefined,
           },
@@ -93,6 +95,7 @@ describe('extractPageData', async () => {
       ",
           "_relativePath": "guide/b.mdx",
           "content": "",
+          "description": undefined,
           "frontmatter": {
             "__content": undefined,
           },
@@ -120,6 +123,7 @@ describe('extractPageData', async () => {
       ",
           "_relativePath": "index.mdx",
           "content": "",
+          "description": undefined,
           "frontmatter": {
             "__content": undefined,
           },
@@ -132,8 +136,10 @@ describe('extractPageData', async () => {
       ]
     `);
   });
+});
 
-  it('getPageIndexInfoByRoute - recursive', async () => {
+describe('getPageIndexInfoByRoute', async () => {
+  it('recursive', async () => {
     const fixtureRecursiveDir = join(__dirname, './fixtures/recursive');
     const absolutize = (relativePath: string) => {
       return join(fixtureRecursiveDir, `.${relativePath}`);
@@ -182,6 +188,7 @@ describe('extractPageData', async () => {
 
       Comp in Comp content \`code\`
       ",
+        "description": undefined,
         "frontmatter": {
           "__content": undefined,
         },
@@ -245,6 +252,7 @@ describe('extractPageData', async () => {
 
       More content here.
       ",
+        "description": "Some text before code. Some text after code.",
         "frontmatter": {
           "__content": undefined,
         },
@@ -307,6 +315,7 @@ describe('extractPageData', async () => {
 
       More content here.
       ",
+        "description": "Some text before code. Some text after code.",
         "frontmatter": {
           "__content": undefined,
         },
@@ -363,6 +372,7 @@ describe('extractPageData', async () => {
 
       Final text.
       ",
+        "description": "Here is an image: And some text after.",
         "frontmatter": {
           "__content": undefined,
         },
@@ -419,6 +429,7 @@ describe('extractPageData', async () => {
 
       Visit [our docs]() for more info.
       ",
+        "description": "This is a link to Google in text.",
         "frontmatter": {
           "__content": undefined,
         },
@@ -477,6 +488,7 @@ describe('extractPageData', async () => {
 
       More content.
       ",
+        "description": "Some intro text.",
         "frontmatter": {
           "__content": undefined,
         },
@@ -526,6 +538,7 @@ describe('extractPageData', async () => {
 
       More content here.
       ",
+        "description": "A page with frontmatter",
         "frontmatter": {
           "__content": undefined,
           "description": "A page with frontmatter",
@@ -545,5 +558,83 @@ describe('extractPageData', async () => {
         "version": "",
       }
     `);
+  });
+
+  it('should extract description from first paragraph before h2 when frontmatter.description is not set', async () => {
+    const pageIndexInfo = await getPageIndexInfoByRoute(
+      createRoute('with-description.mdx', fixtureContentProcessingDir),
+      {
+        alias: {},
+        replaceRules: [],
+        root: fixtureContentProcessingDir,
+        searchCodeBlocks: false,
+      },
+    );
+
+    // description field should have extracted value
+    expect(pageIndexInfo.description).toBe(
+      'This is the first paragraph that should be used as description.',
+    );
+    // frontmatter.description should remain undefined
+    expect(pageIndexInfo.frontmatter.description).toBeUndefined();
+  });
+
+  it('should use frontmatter description when provided instead of extracting from content', async () => {
+    const pageIndexInfo = await getPageIndexInfoByRoute(
+      createRoute('with-frontmatter.mdx', fixtureContentProcessingDir),
+      {
+        alias: {},
+        replaceRules: [],
+        root: fixtureContentProcessingDir,
+        searchCodeBlocks: false,
+      },
+    );
+
+    // description field should use frontmatter value
+    expect(pageIndexInfo.description).toBe('A page with frontmatter');
+    // frontmatter.description should preserve original value
+    expect(pageIndexInfo.frontmatter.description).toBe(
+      'A page with frontmatter',
+    );
+  });
+
+  it('should skip code blocks when extracting description', async () => {
+    const pageIndexInfo = await getPageIndexInfoByRoute(
+      createRoute('with-code.mdx', fixtureContentProcessingDir),
+      {
+        alias: {},
+        replaceRules: [],
+        root: fixtureContentProcessingDir,
+        searchCodeBlocks: false,
+      },
+    );
+
+    // Code blocks should be skipped, only paragraph text collected
+    expect(pageIndexInfo.description).toBe(
+      'Some text before code. Some text after code.',
+    );
+    // frontmatter.description should remain undefined
+    expect(pageIndexInfo.frontmatter.description).toBeUndefined();
+  });
+
+  it('should collect all text between h1 and h2 for description', async () => {
+    const pageIndexInfo = await getPageIndexInfoByRoute(
+      createRoute(
+        'multi-paragraph-description.mdx',
+        fixtureContentProcessingDir,
+      ),
+      {
+        alias: {},
+        replaceRules: [],
+        root: fixtureContentProcessingDir,
+        searchCodeBlocks: false,
+      },
+    );
+
+    // Should collect all paragraphs and list items between h1 and h2
+    expect(pageIndexInfo.description).toBe(
+      'This is the first paragraph. This is the second paragraph with bold and italic. List item oneList item two',
+    );
+    expect(pageIndexInfo.frontmatter.description).toBeUndefined();
   });
 });

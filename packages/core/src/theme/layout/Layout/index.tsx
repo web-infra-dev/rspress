@@ -171,9 +171,7 @@ export function Layout(props: LayoutProps) {
   }
 
   const description =
-    (frontmatter?.description as string) ||
-    site.description ||
-    localesData.description;
+    page.description || site.description || localesData.description;
 
   // Use doc layout by default
   const getContentLayout = () => {
