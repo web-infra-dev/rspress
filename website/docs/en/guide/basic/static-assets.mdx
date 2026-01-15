@@ -1,5 +1,5 @@
 ---
-description: Configure site logo, favicon icons, reference images and videos in MDX files, and use the public directory for custom static resources.
+description: Configure site logo, favicon icons, reference images and videos in MDX files, and use the public folder for custom static resources.
 ---
 
 # Static assets
@@ -67,16 +67,16 @@ import image from './demo.png';
 
 Not only images, but you can also import videos, audios and other static assets. Other usage methods are consistent with Rsbuild.
 
-### public directory
+### public folder
 
-The public directory under the docs directory can be used to place static assets. These assets are not processed during the build and can be referenced directly via URL.
+The public folder under the docs directory can be used to place static assets. These assets are not processed during the build and can be referenced directly via URL.
 
 - When you start the dev server, these assets will be served under the [base](/config/config-basic#base) root path (default `/`).
 - When you run a production build, these assets will be copied to the [doc_build directory](/config/config-basic#outdir).
 
-For example, you can place files like `robots.txt`, `manifest.json`, or `favicon.ico` in the public directory.
+For example, you can place files like `robots.txt`, `manifest.json`, or `favicon.ico` in the public folder.
 
-For example, if the root directory is `docs` and the directory structure is as follows:
+Here's an example of placing static assets in the `public` folder. If the root directory is `docs` and the directory structure is as follows:
 
 ```tree
 docs
@@ -116,7 +116,7 @@ The logo field supports both string and object configurations.
 When the logo is a string, there are the following config situations:
 
 - Configured as an **external link**, like the above example.
-- Configured as an **absolute path**, such as `/rspress-logo.png`. In this case, Rspress will automatically find the `rspress-logo.png` image in the `public directory` of your **document root directory** and display it.
+- Configured as an **absolute path**, such as `/rspress-logo.png`. In this case, Rspress will automatically find the `rspress-logo.png` image in the `public folder` of your **document root directory** and display it.
 - Configured as a **relative path**, such as `./docs/public/rspress-logo.png`. In this case, Rspress will find the `rspress-logo.png` image based on the project root directory and display it.
 
 If your website needs to adapt to dark mode, you can also use the object configuration of the logo, such as:
@@ -149,7 +149,7 @@ export default defineConfig({
 The icon field supports string or URL config, with the following specific ways:
 
 - Configured as an **external link**, like the above example.
-- Configured as an **absolute path**, such as `/favicon.ico`. In this case, Rspress will automatically find the `favicon.ico` icon in the `public directory` of your **document root directory** and display it.
+- Configured as an **absolute path**, such as `/favicon.ico`. In this case, Rspress will automatically find the `favicon.ico` icon in the public folder of your **document root directory** and display it.
 - Configured as a **relative path**, such as `./docs/public/favicon.ico`. In this case, Rspress will find the `favicon.ico` icon based on the project root directory and display it.
 - Configured as a `file://` protocol or `URL`, such as `file:///local_path/favicon.ico`. In this case, Rspress will use the local absolute path `/local_path/favicon.ico` icon directly and display it.
 
@@ -171,10 +171,10 @@ hero:
 Here, src is a string, supporting the following configurations:
 
 - Configured as an **external link**, like the above example.
-- Configured as an **absolute path**, such as `/rspress-logo.png`. In this case, Rspress will automatically find the `rspress-logo.png` image in the `public directory` of your **document root directory** and display it.
+- Configured as an **absolute path**, such as `/rspress-logo.png`. In this case, Rspress will automatically find the `rspress-logo.png` image in the `public folder` of your **document root directory** and display it.
 
 ## Other static assets
 
 In some scenarios, you may need to deploy certain specific static assets, such as adding the deployment configuration file `_headers` of `Netlify` to specify custom HTTP response headers.
 
-In that case, you can directly put these static assets in the `public directory` of the document root directory (such as `docs`). During the project build process, Rspress will automatically **copy all assets in the public directory to the product directory**. In this way, the assets under public can be deployed to the server.
+In that case, you can directly put these static assets in the `public folder` of the document root directory (such as `docs`). During the project build process, Rspress will automatically **copy all assets in the public folder to the product directory**. In this way, the assets under public can be deployed to the server.
