@@ -233,7 +233,7 @@ export function pluginForDoc(): RspressPlugin {
 
 ### extendPageData
 
-- Type: `(pageData: PageData) => void | Promise<void>`
+- **Type**: `(pageData: PageData) => void | Promise<void>`
 
 ```tsx title="plugin.ts"
 import type { RspressPlugin } from '@rspress/core';
@@ -264,7 +264,7 @@ export function MyComponent() {
 
 ### addPages
 
-- Type: `(config: UserConfig) => AdditionalPage[] | Promise<AdditionalPage[]>`
+- **Type**: `(config: UserConfig) => AdditionalPage[] | Promise<AdditionalPage[]>`
 
 The `config` parameter is the `doc` config of `rspress.config.ts`, and the `AdditionalPage` type is defined as follows:
 

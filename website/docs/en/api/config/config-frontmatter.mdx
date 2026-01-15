@@ -6,7 +6,7 @@ See [Frontmatter](/guide/use-mdx/frontmatter) for what front matter is and how t
 
 ## title
 
-- Type: `string`
+- **Type**: `string`
 
 The title of the page. By default, the page's h1 heading will be used as the title of the HTML document. But if you want to use a different title, you can use front matter to specify the title of the page. For example:
 
@@ -18,7 +18,7 @@ title: My Home Page
 
 ## description
 
-- Type: `string`
+- **Type**: `string`
 
 A custom description for the page. For example:
 
@@ -30,8 +30,8 @@ description: This is my custom description for this page.
 
 ## pageType
 
-- Type: `'home' | 'doc' | 'doc-wide' | 'custom' | 'blank' | '404'`
-- Default: `'doc'`
+- **Type**: `'home' | 'doc' | 'doc-wide' | 'custom' | 'blank' | '404'`
+- **Default**: `'doc'`
 
 The type of the page. By default, the page type is `doc`. But if you want to use a different page type, you can use the front matter field `pageType` to specify the page type. E.g:
 
@@ -49,7 +49,7 @@ import PageType from '@en/fragments/page-type.mdx';
 
 ## titleSuffix
 
-- Type: `string`
+- **Type**: `string`
 
 Set the suffix of the page title. When `titleSuffix` is not set, the site's [title](/api/config/config-basic#title) is used as the suffix by default.
 
@@ -69,7 +69,7 @@ titleSuffix: '| Rsbuild-based Static Site Generator'
 
 ## head
 
-- Type: `[string, Record<string, string>][]`
+- **Type**: `[string, Record<string, string>][]`
 
 Specify extra head tags to be injected for the current page. Will be appended after head tags injected by site-level config.
 
@@ -101,7 +101,7 @@ The generated head tags are as follows:
 
 ## hero
 
-- Type: `Object`
+- **Type**: `Object`
 
 The hero config for the home page. It has the following types:
 
@@ -183,8 +183,8 @@ hero:
 
 ## features
 
-- Type: `Array`
-- Default: `[]`
+- **Type**: `Array`
+- **Default**: `[]`
 
 features config of the `home` page. It has the following types:
 
@@ -289,8 +289,8 @@ navbar: false
 
 ## overviewHeaders
 
-- Type: `number[]`
-- Default: `[2]`
+- **Type**: `number[]`
+- **Default**: `[2]`
 
 The headers shown in the overview page. By default, the displayed header is h2. But if you want to display different headers, you can specify it using the `overviewHeaders` front matter field. For example:
 
@@ -310,7 +310,7 @@ overviewHeaders: [2, 3]
 
 ## context
 
-- Type: `string`
+- **Type**: `string`
 
 After configuration, the `data-context` attribute will be added to the DOM node when the sidebar is generated, and the value is the configured value.
 
