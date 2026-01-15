@@ -8,13 +8,14 @@ import {
   type RouteMeta,
 } from '@rspress/shared';
 import { loadFrontMatter } from '@rspress/shared/node-utils';
-import type { Node, Root } from 'mdast';
+import type { Link, Node, Root } from 'mdast';
 import remarkGFM from 'remark-gfm';
 import remarkParse from 'remark-parse';
 import remarkStringify from 'remark-stringify';
 import type { Plugin } from 'unified';
 import { unified } from 'unified';
 import { remove } from 'unist-util-remove';
+import { visit } from 'unist-util-visit';
 import { importStatementRegex } from '../constants';
 import { parseToc } from '../mdx/remarkPlugins/toc';
 import { flattenMdxContent } from '../utils';
@@ -72,19 +73,32 @@ const remarkRemoveImages: Plugin<[], Root> = () => {
  */
 const remarkStripLinkUrls: Plugin<[], Root> = () => {
   return tree => {
-    const visit = (node: Node & { url?: string; children?: Node[] }) => {
-      if (node.type === 'link') {
-        // Convert link to its children (text content only)
-        // The link node stays but URL is ignored in stringify
-        node.url = '';
-      }
-      if (node.children) {
-        node.children.forEach(visit);
-      }
-    };
-    visit(tree);
+    visit(tree, 'link', (node: Link) => {
+      node.url = '';
+    });
   };
 };
+
+/**
+ * Cached processor instances for performance optimization
+ * Reusing processors avoids the overhead of creating new instances for each file
+ */
+const parseProcessor = unified().use(remarkParse).use(remarkGFM);
+
+const createStringifyProcessor = (searchCodeBlocks: boolean) =>
+  unified()
+    .use(remarkParse)
+    .use(remarkGFM)
+    .use(remarkRemoveImages)
+    .use(remarkStripLinkUrls)
+    .use(searchCodeBlocks ? [] : [remarkRemoveCodeBlocks])
+    .use(remarkStringify, {
+      bullet: '-',
+      listItemIndent: 'one',
+    });
+
+const stringifyProcessorWithCode = createStringifyProcessor(true);
+const stringifyProcessorWithoutCode = createStringifyProcessor(false);
 
 /**
  * Extract text content from a node recursively
@@ -191,8 +205,7 @@ async function getPageIndexInfoByRoute(
   // Normalize line endings to LF for cross-platform consistency
   content = content.replace(/\r\n/g, '\n');
 
-  // Parse markdown to AST using unified + remark-parse
-  const parseProcessor = unified().use(remarkParse).use(remarkGFM);
+  // Parse markdown to AST once and reuse for all operations
   const tree = parseProcessor.parse(content);
 
   // Extract title and TOC from AST
@@ -203,22 +216,13 @@ async function getPageIndexInfoByRoute(
     ? ''
     : extractDescription(tree);
 
-  // Process AST and stringify back to markdown for search content
-  // Build processor chain: parse -> plugins -> stringify
-  const stringifyProcessor = unified()
-    .use(remarkParse)
-    .use(remarkGFM)
-    .use(remarkRemoveImages)
-    .use(remarkStripLinkUrls)
-    .use(searchCodeBlocks ? [] : [remarkRemoveCodeBlocks])
-    .use(remarkStringify, {
-      bullet: '-',
-      listItemIndent: 'one',
-    });
-
-  const processedTree = await stringifyProcessor.run(
-    stringifyProcessor.parse(content),
-  );
+  // Process AST for search content using cached processor
+  // Clone the tree to avoid mutating the original (plugins modify the tree in place)
+  const stringifyProcessor = searchCodeBlocks
+    ? stringifyProcessorWithCode
+    : stringifyProcessorWithoutCode;
+  const clonedTree = structuredClone(tree);
+  const processedTree = await stringifyProcessor.run(clonedTree);
   let processedContent = String(
     stringifyProcessor.stringify(processedTree as Root),
   );
