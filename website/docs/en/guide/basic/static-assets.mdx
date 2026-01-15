@@ -1,5 +1,5 @@
 ---
-description: Configure site logo, favicon icons, reference images and videos in MDX files, and use the public directory for custom static resources.
+description: Configure site logo, favicon icons, reference images and videos in MDX files, and use the public folder for custom static resources.
 ---
 
 # Static assets
@@ -8,10 +8,10 @@ description: Configure site logo, favicon icons, reference images and videos in 
 
 In Rspress, you may use the following static assets:
 
+- Images, videos and other static assets used in .md(x) files
 - Logo image at the top left corner of the site
 - Site favicon icon
 - Homepage logo image
-- Images, videos and other static assets used in .md(x) files
 - Other static assets
 
 Next, we will introduce how to use these static assets one by one.
@@ -30,6 +30,75 @@ export default defineConfig({
 
 :::
 
+## Static assets used in .md(x) files
+
+You can import static assets in `markdown` (or `mdx`) files. Rspress is built on [Rsbuild - Static Assets](https://rsbuild.rs/guide/basic/static-assets) under the hood.
+
+### Regular static assets
+
+For example, if the directory structure is as follows:
+
+```tree
+docs
+├── guide
+│   ├── index.mdx
+│   └── demo.png
+```
+
+If there is an image in the same directory as the markdown, you can reference it like this:
+
+```mdx
+![](./demo.png)
+```
+
+Of course, you can also directly use the img tag in `.mdx` files:
+
+```mdx
+<img src="./demo.png" />
+```
+
+Both usage above will be transformed into:
+
+```mdx title="index.mdx"
+import image from './demo.png';
+
+<img src={image}>
+```
+
+Not only images, but you can also import videos, audios and other static assets. Other usage methods are consistent with Rsbuild.
+
+### public folder
+
+The public folder under the docs directory can be used to place static assets. These assets are not processed during the build and can be referenced directly via URL.
+
+- When you start the dev server, these assets will be served under the [base](/api/config/config-basic#base) root path (default `/`).
+- When you run a production build, these assets will be copied to the [doc_build directory](/api/config/config-basic#outdir).
+
+For example, you can place files like `robots.txt`, `manifest.json`, or `favicon.ico` in the public folder.
+
+Here's an example of placing static assets in the `public` folder. If the root directory is `docs` and the directory structure is as follows:
+
+```tree
+docs
+├── public
+│   └── demo.png
+├── index.mdx
+```
+
+In the above `index.mdx` file, you can use an absolute path to reference `demo.png`:
+
+```mdx
+![](/demo.png)
+```
+
+When your site is configured with a `base` path and you use the `img` tag to introduce an absolute path, you need to use `normalizeImagePath` provided by `@rspress/core/runtime` to manually add the `base` path to its src. Here is an example:
+
+```tsx title="guide.mdx"
+import { normalizeImagePath } from '@rspress/core/runtime';
+
+<img src={normalizeImagePath('/demo.png')} />;
+```
+
 ## Top left corner logo
 
 In Rspress, you can specify the logo image at the top left corner through the `logo` field. For example:
@@ -47,7 +116,7 @@ The logo field supports both string and object configurations.
 When the logo is a string, there are the following config situations:
 
 - Configured as an **external link**, like the above example.
-- Configured as an **absolute path**, such as `/rspress-logo.png`. In this case, Rspress will automatically find the `rspress-logo.png` image in the `public directory` of your **document root directory** and display it.
+- Configured as an **absolute path**, such as `/rspress-logo.png`. In this case, Rspress will automatically find the `rspress-logo.png` image in the `public folder` of your **document root directory** and display it.
 - Configured as a **relative path**, such as `./docs/public/rspress-logo.png`. In this case, Rspress will find the `rspress-logo.png` image based on the project root directory and display it.
 
 If your website needs to adapt to dark mode, you can also use the object configuration of the logo, such as:
@@ -80,7 +149,7 @@ export default defineConfig({
 The icon field supports string or URL config, with the following specific ways:
 
 - Configured as an **external link**, like the above example.
-- Configured as an **absolute path**, such as `/favicon.ico`. In this case, Rspress will automatically find the `favicon.ico` icon in the `public directory` of your **document root directory** and display it.
+- Configured as an **absolute path**, such as `/favicon.ico`. In this case, Rspress will automatically find the `favicon.ico` icon in the public folder of your **document root directory** and display it.
 - Configured as a **relative path**, such as `./docs/public/favicon.ico`. In this case, Rspress will find the `favicon.ico` icon based on the project root directory and display it.
 - Configured as a `file://` protocol or `URL`, such as `file:///local_path/favicon.ico`. In this case, Rspress will use the local absolute path `/local_path/favicon.ico` icon directly and display it.
 
@@ -94,7 +163,7 @@ pageType: home
 
 hero:
   image:
-    src: 'https://avatars.githubusercontent.com/u/56892468?s=200&v=4'
+    src: https://avatars.githubusercontent.com/u/56892468?s=200&v=4
     alt: Rspress
 ---
 ```
@@ -102,59 +171,10 @@ hero:
 Here, src is a string, supporting the following configurations:
 
 - Configured as an **external link**, like the above example.
-- Configured as an **absolute path**, such as `/rspress-logo.png`. In this case, Rspress will automatically find the `rspress-logo.png` image in the `public directory` of your **document root directory** and display it.
-
-## Static assets used in .md(x) files
-
-You can import static assets in `markdown` (or `mdx`) files. Both relative paths and absolute paths are supported. For example, if there is an image in the same directory as the markdown, you can reference it like this:
-
-```mdx
-![](./demo.png)
-```
-
-Of course, you can also directly use the img tag in `.mdx` files:
-
-```mdx
-<img src="./demo.png" />
-```
-
-Rspress will automatically find the image based on the `.mdx` file path and image path, and respond to the browser.
-
-On the other hand, you can also import static assets using absolute paths. In this case, Rspress will look for assets in the `public` folder under the `document root directory`.
-
-For example, if the root directory is `docs` and the directory structure is as follows
-
-```tree
-docs
-├── public
-│   └── demo.png
-├── index.mdx
-```
-
-In the above `index.mdx` file, you can reference `demo.png` like this:
-
-```mdx
-![](./public/demo.png)
-```
-
-Or use an absolute path to reference:
-
-```mdx
-![](/demo.png)
-```
-
-**A special case to note is that**, when your site is configured with a `base` path, if you want to use the `img` tag to introduce an absolute path, you need to use `normalizeImagePath` provided by `rspress/runtime` to manually add the `base` path to its src. Here is an example:
-
-```tsx title="guide.mdx"
-import { normalizeImagePath } from '@rspress/core/runtime';
-
-<img src={normalizeImagePath('/demo.png')} />;
-```
-
-Not only images, but you can also import videos, audios and other static assets in markdown files.
+- Configured as an **absolute path**, such as `/rspress-logo.png`. In this case, Rspress will automatically find the `rspress-logo.png` image in the `public folder` of your **document root directory** and display it.
 
 ## Other static assets
 
 In some scenarios, you may need to deploy certain specific static assets, such as adding the deployment configuration file `_headers` of `Netlify` to specify custom HTTP response headers.
 
-In that case, you can directly put these static assets in the `public directory` of the document root directory (such as `docs`). During the project build process, Rspress will automatically **copy all assets in the public directory to the product directory**. In this way, the assets under public can be deployed to the server.
+In that case, you can directly put these static assets in the `public folder` of the document root directory (such as `docs`). During the project build process, Rspress will automatically **copy all assets in the public folder to the product directory**. In this way, the assets under public can be deployed to the server.
