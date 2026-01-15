@@ -33,7 +33,7 @@ export default defineConfig({
 
 ## `.md(x)` 中使用的静态资源
 
-你可以在 `markdown`（或 `mdx`）文件中导入静态资源，Rspress 底层基于 [Rsbuild 静态资源处理](https://rsbuild.rs/zh/guide/basic/static-assets) 实现。相对路径和绝对路径都是支持的。
+你可以在 `markdown`（或 `mdx`）文件中导入静态资源，Rspress 底层基于 [Rsbuild - 静态资源](https://rsbuild.rs/zh/guide/basic/static-assets) 实现。
 
 ### 普通静态资源
 
@@ -64,7 +64,7 @@ Rspress 将会根据 `.mdx` 文件路径和图片路径，自动找到图片并�
 
 ### public 目录
 
-你也可以使用绝对路径导入静态资源。这样，Rspress 将会在`文档根目录`下的 `public` 文件夹中寻找资源。
+你也可以使用绝对路径导入静态资源。这样，Rspress 将会在`文档根目录`下的 `public` 文件夹中寻找资源。这些资源不会被构建，直接通过 URL 引用。
 
 例如，如果根目录是 `docs` 并且目录结构如下：
 
@@ -81,7 +81,7 @@ docs
 ![](/demo.png)
 ```
 
-**需要注意的一种特殊情况是**，当你的站点配置了 `base` 路径，那么如果你要使用 `img` 标签的方式来引入绝对路径，你需要使用 `rspress/runtime` 提供的 `normalizeImagePath` 来手动为其 src 添加 `base` 路径。示例如下：
+**需要注意的一种特殊情况是**，当你的站点配置了 `base` 路径，那么如果你要使用 `img` 标签的方式来引入绝对路径，你需要使用 `@rspress/core/runtime` 提供的 `normalizeImagePath` 来手动为其 src 添加 `base` 路径。示例如下：
 
 ```tsx title="guide.mdx"
 import { normalizeImagePath } from '@rspress/core/runtime';
