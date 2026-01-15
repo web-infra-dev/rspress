@@ -57,7 +57,7 @@ Of course, you can also directly use the img tag in `.mdx` files:
 <img src="./demo.png" />
 ```
 
-Rspress will automatically find the image based on the `.mdx` file path and image path, and respond to the browser.
+This is equivalent to using `import image from "./demo.png"` directly.
 
 Not only images, but you can also import videos, audios and other static assets in markdown files.
 
@@ -80,7 +80,7 @@ In the above `index.mdx` file, you can use an absolute path to reference `demo.p
 ![](/demo.png)
 ```
 
-**A special case to note is that**, when your site is configured with a `base` path, if you want to use the `img` tag to introduce an absolute path, you need to use `normalizeImagePath` provided by `@rspress/core/runtime` to manually add the `base` path to its src. Here is an example:
+When your site is configured with a `base` path and you want to use the `img` tag to introduce an absolute path, you need to use `normalizeImagePath` provided by `@rspress/core/runtime` to manually add the `base` path to its src. Here is an example:
 
 ```tsx title="guide.mdx"
 import { normalizeImagePath } from '@rspress/core/runtime';
