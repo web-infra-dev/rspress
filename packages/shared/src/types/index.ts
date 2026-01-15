@@ -134,6 +134,11 @@ export interface UserConfig {
    */
   logoText?: string;
   /**
+   * Custom link for the logo.
+   * @default '/${lang}/'
+   */
+  logoHref?: string;
+  /**
    * Base path of the site.
    * @default '/'
    */
@@ -340,6 +345,7 @@ export interface SiteData {
   themeConfig: NormalizedDefaultThemeConfig;
   logo: string | { dark: string; light: string };
   logoText: string;
+  logoHref: string;
   search: SearchOptions;
   markdown: {
     showLineNumbers: boolean;
