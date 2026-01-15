@@ -83,9 +83,7 @@ const remarkStripLinkUrls: Plugin<[], Root> = () => {
  * Cached processor instances for performance optimization
  * Reusing processors avoids the overhead of creating new instances for each file
  */
-const parseProcessor = unified().use(remarkParse).use(remarkGFM);
-
-const createStringifyProcessor = (searchCodeBlocks: boolean) =>
+const createProcessor = (searchCodeBlocks: boolean) =>
   unified()
     .use(remarkParse)
     .use(remarkGFM)
@@ -97,8 +95,8 @@ const createStringifyProcessor = (searchCodeBlocks: boolean) =>
       listItemIndent: 'one',
     });
 
-const stringifyProcessorWithCode = createStringifyProcessor(true);
-const stringifyProcessorWithoutCode = createStringifyProcessor(false);
+const processorWithCode = createProcessor(true);
+const processorWithoutCode = createProcessor(false);
 
 /**
  * Extract text content from a node recursively
@@ -205,10 +203,13 @@ async function getPageIndexInfoByRoute(
   // Normalize line endings to LF for cross-platform consistency
   content = content.replace(/\r\n/g, '\n');
 
-  // Parse markdown to AST once and reuse for all operations
-  const tree = parseProcessor.parse(content);
+  // Use cached processor based on searchCodeBlocks config
+  const processor = searchCodeBlocks ? processorWithCode : processorWithoutCode;
 
-  // Extract title and TOC from AST
+  // Parse markdown to AST
+  const tree = processor.parse(content);
+
+  // Extract title and TOC from AST (read-only, before plugins modify tree)
   const { title, toc: rawToc } = parseToc(tree);
 
   // Extract description from first paragraph before h2 (if not in frontmatter)
@@ -216,14 +217,9 @@ async function getPageIndexInfoByRoute(
     ? ''
     : extractDescription(tree);
 
-  // Process AST for search content using cached processor
-  const stringifyProcessor = searchCodeBlocks
-    ? stringifyProcessorWithCode
-    : stringifyProcessorWithoutCode;
-  const processedTree = await stringifyProcessor.run(tree);
-  let processedContent = String(
-    stringifyProcessor.stringify(processedTree as Root),
-  );
+  // Run plugins and stringify to markdown for search content
+  const processedTree = await processor.run(tree);
+  let processedContent = String(processor.stringify(processedTree as Root));
 
   // Remove the title from the content if it appears at the start
   if (processedContent.startsWith(`# ${title}`)) {
