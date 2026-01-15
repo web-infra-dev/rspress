@@ -1,5 +1,5 @@
-import { useEffect, useRef, useState } from 'react';
-import { useCssModification } from './CssModificationContext';
+import { useEffect, useState } from 'react';
+import { useCssEntry } from './CssModificationContext';
 import { LiveCodeEditor } from './LiveCodeEditor';
 
 export interface Tab {
@@ -9,8 +9,8 @@ export interface Tab {
 
 export interface CssLiveCodeEditorWithTabsProps {
   tabs: Tab[];
-  styleId: string; // Required - unique ID for this editor
-  initialCode: string; // Required - the default CSS value
+  styleId: string;
+  initialCode: string;
 }
 
 export function CssLiveCodeEditorWithTabs({
@@ -18,66 +18,42 @@ export function CssLiveCodeEditorWithTabs({
   styleId,
   initialCode,
 }: CssLiveCodeEditorWithTabsProps) {
-  const { register, updateValue, getEntry } = useCssModification();
+  const [value, setValue] = useCssEntry(styleId, initialCode);
 
-  // Register or get existing entry on mount
-  const entryRef = useRef<{
-    defaultValue: string;
-    currentValue: string;
-  } | null>(null);
-  if (!entryRef.current) {
-    entryRef.current = register(styleId, initialCode);
-  }
-
-  // Determine initial tab based on current value
-  const getInitialTab = (currentValue: string): number => {
-    const matchingTabIndex = tabs.findIndex(tab => tab.code === currentValue);
-    if (matchingTabIndex !== -1) {
-      return matchingTabIndex + 1;
-    }
-    return 0; // Custom tab
+  // Determine active tab based on current value
+  const getTabIndex = (code: string): number => {
+    const idx = tabs.findIndex(tab => tab.code === code);
+    return idx !== -1 ? idx + 1 : 0; // 0 = Custom tab
   };
 
-  const [activeTab, setActiveTab] = useState(() =>
-    getInitialTab(entryRef.current!.currentValue),
-  );
-  const [customCode, setCustomCode] = useState(() =>
-    activeTab === 0 ? entryRef.current!.currentValue : initialCode,
-  );
+  const [activeTab, setActiveTab] = useState(() => getTabIndex(value));
 
-  const allTabs = [{ label: 'Custom', code: initialCode }, ...tabs];
+  // Sync activeTab when value changes externally (e.g., reset)
+  useEffect(() => {
+    const newTab = getTabIndex(value);
+    if (newTab !== activeTab) {
+      setActiveTab(newTab);
+    }
+  }, [value]);
+
+  // Show "Default" when code matches initialCode, "Custom" when modified
+  const isCustomized = activeTab === 0 && value !== initialCode;
+  const firstTabLabel = isCustomized ? 'Custom' : 'Default';
+  const allTabs = [{ label: firstTabLabel, code: initialCode }, ...tabs];
   const shouldUseDropdown = allTabs.length > 6;
 
-  const currentCode =
-    activeTab === 0 ? customCode : tabs[activeTab - 1]?.code || '';
-
-  // Update context when currentCode changes
-  useEffect(() => {
-    updateValue(styleId, currentCode);
-  }, [currentCode, styleId, updateValue]);
-
-  // Sync from context when re-entering page
-  useEffect(() => {
-    const entry = getEntry(styleId);
-    if (entry && entry.currentValue !== currentCode) {
-      const newTab = getInitialTab(entry.currentValue);
-      setActiveTab(newTab);
-      if (newTab === 0) {
-        setCustomCode(entry.currentValue);
-      }
-    }
-  }, [styleId, getEntry]);
-
   const handleTabChange = (tabIndex: number) => {
-    if (tabIndex === 0) {
-      setCustomCode(initialCode);
-    }
     setActiveTab(tabIndex);
+    if (tabIndex === 0) {
+      setValue(initialCode);
+    } else {
+      setValue(tabs[tabIndex - 1].code);
+    }
   };
 
   const handleCodeChange = (code: string) => {
     setActiveTab(0);
-    setCustomCode(code);
+    setValue(code);
   };
 
   return (
@@ -145,11 +121,7 @@ export function CssLiveCodeEditorWithTabs({
       )}
 
       {/* CSS Editor */}
-      <LiveCodeEditor
-        lang="css"
-        value={currentCode}
-        onChange={handleCodeChange}
-      />
+      <LiveCodeEditor lang="css" value={value} onChange={handleCodeChange} />
     </div>
   );
 }
