@@ -217,12 +217,10 @@ async function getPageIndexInfoByRoute(
     : extractDescription(tree);
 
   // Process AST for search content using cached processor
-  // Clone the tree to avoid mutating the original (plugins modify the tree in place)
   const stringifyProcessor = searchCodeBlocks
     ? stringifyProcessorWithCode
     : stringifyProcessorWithoutCode;
-  const clonedTree = structuredClone(tree);
-  const processedTree = await stringifyProcessor.run(clonedTree);
+  const processedTree = await stringifyProcessor.run(tree);
   let processedContent = String(
     stringifyProcessor.stringify(processedTree as Root),
   );
