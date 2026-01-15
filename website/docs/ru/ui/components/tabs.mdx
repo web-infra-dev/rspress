@@ -1,0 +1,62 @@
+---
+overviewHeaders: []
+---
+
+# Tabs/Tab
+
+Компоненты `Tabs` и `Tab` позволяют переключаться между несколькими панелями содержимого.
+
+## Использование
+
+```mdx title="index.mdx" preview
+import { Tab, Tabs } from '@theme';
+
+<Tabs>
+  <Tab label="Tab 1">Содержимое первой вкладки</Tab>
+  <Tab label="Tab 2">Содержимое второй вкладки</Tab>
+</Tabs>
+```
+
+### Блоки кода
+
+````mdx title="index.mdx" preview
+import { Tab, Tabs } from '@theme';
+
+<Tabs>
+<Tab label="Вкладка 1">
+
+```tsx title="src/index.mjs"
+import foo from 'foo';
+import bar from 'bar';
+```
+
+</Tab>
+<Tab label="Вкладка 2">
+
+```tsx title="src/index.cjs"
+const foo = require('foo');
+const bar = require('bar');
+```
+
+</Tab>
+</Tabs>
+````
+
+### Пропсы
+
+```ts
+interface TabsProps {
+  children: React.ReactNode;
+  defaultValue?: string;
+  groupId?: string;
+  tabPosition?: 'left' | 'center';
+}
+
+interface TabProps {
+  label: string;
+  value?: string;
+  children: React.ReactNode;
+}
+```
+
+Используйте `defaultValue`, чтобы предварительно выбрать вкладку (соответствует `value`); `groupId` синхронизирует выбор между несколькими `Tabs`; `tabPosition` задаёт выравнивание списка вкладок.

@@ -1,0 +1,254 @@
+# Ссылки
+
+## Формат ссылок \{#link-format}
+
+Rspress поддерживает два формата ссылок: **формат пути к файлу** и **формат URL**. По результату рендеринга они полностью идентичны, различаются только стилем написания.
+
+import { Tabs, Tab } from '@theme';
+
+<Tabs>
+<Tab label="Syntax">
+
+```mdx
+[Формат пути к файлу — ../start/getting-started.mdx](../start/getting-started.mdx)
+
+[Формат URL — /guide/start/getting-started](/guide/start/getting-started)
+```
+
+</Tab>
+
+<Tab label="Отрендеренный результат">
+
+[Формат пути к файлу — ../start/getting-started.mdx](../start/getting-started.mdx)
+
+[Формат URL — /guide/start/getting-started](/guide/start/getting-started)
+
+</Tab>
+</Tabs>
+
+:::tip Совет
+В рамках одного проекта Rspress рекомендуется использовать только один тип формата ссылок — это помогает поддерживать единообразный стиль кода.
+:::
+
+## Формат пути к файлу \{#file-path-format}
+
+Формат пути к файлу использует **абсолютные** или **относительные пути** к конкретным файлам `.md` или `.mdx`.
+
+Примеры с этого сайта:
+
+<Tabs>
+<Tab label="Синтаксис">
+
+```mdx
+[Относительный путь — ../start/getting-started.mdx](../start/getting-started.mdx)
+
+[Абсолютный путь — /guide/start/getting-started.mdx](/guide/start/getting-started.mdx)
+
+[Абсолютный путь с указанием языка — /ru/guide/start/getting-started.mdx](/ru/guide/start/getting-started.mdx)
+
+[Абсолютный путь на страницу другого языка — /en/guide/start/getting-started.mdx](/en/guide/start/getting-started.mdx)
+```
+
+</Tab>
+
+<Tab label="Отрендеренный результат">
+
+[Относительный путь — ../start/getting-started.mdx](../start/getting-started.mdx)
+
+[Абсолютный путь — /guide/start/getting-started.mdx](/guide/start/getting-started.mdx)
+
+[Абсолютный путь с указанием языка — /ru/guide/start/getting-started.mdx](/ru/guide/start/getting-started.mdx)
+
+[Абсолютный путь на страницу другого языка — /en/guide/start/getting-started.mdx](/en/guide/start/getting-started.mdx)
+
+</Tab>
+</Tabs>
+
+:::tip Подсказка
+
+При использовании абсолютных путей корневой директорией считается [`docs`](/api/config/config-basic#root). Если в проекте включена [интернационализация](/guide/basic/i18n) или [мультиверсионность](/guide/basic/multi-version), параметр [`markdown.link.autoPrefix`](/api/config/config-build#markdownlinkautoPrefix) автоматически добавляет нужные префиксы, поэтому папку с языком в ссылках можно опускать.
+
+Например:
+
+[Абсолютный путь — /guide/start/getting-started.mdx](/guide/start/getting-started.mdx)
+
+[Абсолютный путь с языком — /ru/guide/start/getting-started.mdx](/ru/guide/start/getting-started.mdx)
+
+Обе ссылки будут вести на одну и ту же страницу.
+
+:::
+
+Рекомендуем использовать относительные пути к файлам, так как они дают следующие преимущества:
+
+1. Поддержка в IDE: подсказки, переход к файлу, автоматическое обновление ссылок при перемещении файлов и т. д.
+
+2. Работают в интерфейсе GitHub и других Markdown-редакторах.
+
+3. В отличие от URL-формата, не зависят от настройки [`cleanUrls`](/api/config/config-basic#routecleanurls).
+
+## URL-формат
+
+URL-формат использует полные URL-адреса для ссылки на конкретные страницы.
+
+Примеры с этого сайта:
+
+<Tabs>
+<Tab label="Синтаксис">
+
+```mdx
+[Относительный путь — ../start/getting-started](../start/getting-started)
+
+[Абсолютный путь — /guide/start/getting-started](/guide/start/getting-started)
+
+[Абсолютный путь — /guide/start/getting-started.html](/guide/start/getting-started.html)
+
+[Абсолютный путь с языком — /ru/guide/start/getting-started.html](/ru/guide/start/getting-started.html)
+
+[Абсолютный путь на страницу другого языка — /en/guide/start/getting-started.html](/en/guide/start/getting-started.html)
+```
+
+</Tab>
+
+<Tab label="Отрендеренный результат">
+
+[Относительный путь — ../start/getting-started](../start/getting-started)
+
+[Относительный путь — ../start/getting-started.html](../start/getting-started.html)
+
+[Абсолютный путь — /guide/start/getting-started](/guide/start/getting-started)
+
+[Абсолютный путь — /guide/start/getting-started.html](/guide/start/getting-started.html)
+
+[Абсолютный путь с языком — /ru/guide/start/getting-started.html](/ru/guide/start/getting-started.html)
+
+[Абсолютный путь на страницу другого языка — /en/guide/start/getting-started.html](/en/guide/start/getting-started.html)
+
+</Tab>
+</Tabs>
+
+:::tip Подсказка
+
+При использовании абсолютных путей корневой директорией считается [`docs`](/api/config/config-basic#root). Если в проекте включена [интернационализация](/guide/basic/i18n) или [мультиверсионность](/guide/basic/multi-version), параметр [`markdown.link.autoPrefix`](/api/config/config-build#markdownlinkautoPrefix) автоматически добавляет нужные префиксы, поэтому папку с языком в ссылках можно опускать.
+
+Например:
+
+[Абсолютный путь — /guide/start/getting-started](/guide/start/getting-started)
+
+[Абсолютный путь с языком — /ru/guide/start/getting-started](/ru/guide/start/getting-started)
+
+Обе ссылки будут вести на одну и ту же страницу.
+
+:::
+
+Разница между URL-форматом и форматом пути к файлу заключается в том, что Rspress автоматически добавляет суффикс `.html` в зависимости от параметра [`cleanUrls`](/api/config/config-basic#routecleanurls). Поэтому в ссылках можно не думать о наличии или отсутствии `.html` — результат рендеринга будет одинаковым в обоих случаях.
+
+## Внешние ссылки
+
+Внешние ссылки, которые находятся за пределами текущего сайта документации, автоматически получают атрибуты `target="_blank" rel="noreferrer"`:
+
+- [Документация Rspack](https://rspack.rs/)
+- [Документация Rsbuild](https://rsbuild.rs/)
+
+## Ссылки на статические ресурсы
+
+Ссылки на статические ресурсы внутри сайта документации остаются без изменений:
+
+- Статический ресурс из папки public — [/og-image.png](/og-image.png)
+- Сгенерированный плагином @rspress/plugin-llms — [/llms-full.txt](/llms-full.txt)
+
+:::tip Совет
+
+Такие ссылки нужно исключать из [проверки битых ссылок](#dead-links-checking).
+
+```ts title="rspress.config.ts"
+import { defineConfig } from '@rspress/core';
+
+export default defineConfig({
+  markdown: {
+    link: {
+      checkDeadLinks: {
+        excludes: ['/og-image.png', '/llms-full.txt'],
+      },
+    },
+  },
+});
+```
+
+:::
+
+## Синтаксис определения ссылок
+
+Rspress также поддерживает альтернативный синтаксис Markdown для «определения ссылок» (`definition`), который упрощает написание ссылок, когда их много.
+
+<Tabs>
+<Tab label="Синтаксис">
+
+```mdx
+Rspress поддерживает [относительные пути к файлам] и [абсолютные пути к файлам].
+
+[относительные пути к файлам]: ../start/getting-started.mdx
+[абсолютные пути к файлам]: /guide/start/getting-started.mdx
+```
+
+</Tab>
+
+<Tab label="Отрендеренный результат">
+Rspress поддерживает [относительные пути к файлам] и [абсолютные пути к файлам].
+
+[относительные пути к файлам]: ../start/getting-started.mdx
+[абсолютные пути к файлам]: /guide/start/getting-started.mdx
+
+</Tab>
+
+</Tabs>
+
+## Якорные ссылки
+
+Rspress поддерживает якорную навигацию в ссылках — с помощью символа `#` можно указать переход к определённому месту на странице.
+
+<Tabs>
+<Tab label="Синтаксис">
+
+```mdx
+[Перейти к разделу «Формат пути к файлум»](#file-path-format)
+
+[Перейти к разделу «1. Инициализация проекта» в главе «Быстрый старт»](../start/getting-started.mdx#1-initialize-project)
+```
+
+</Tab>
+<Tab label="Отрендеренный результат">
+
+[Перейти к разделу «Формат пути к файлум»](#file-path-format)
+
+[Перейти к разделу «1. Инициализация проекта» в главе «Быстрый старт»](../start/getting-started.mdx#1-initialize-the-project)
+
+</Tab>
+</Tabs>
+
+### Настройка собственного идентификатора якоря
+
+По умолчанию Rspress автоматически генерирует идентификатор на основе текста заголовка. Этот идентификатор одновременно используется как якорь. Вы можете задать собственный идентификатор заголовка с помощью следующего синтаксиса:
+
+```md
+## Привет, мир {#custom-id}
+```
+
+Где `custom-id` — ваш собственный идентификатор.
+
+## Проверка битых ссылок \{#dead-links-checking}
+
+При поддержке сайтов документации часто появляются битые ссылки. Rspress предоставляет функцию проверки битых ссылок, чтобы решить эту неприятную проблему обслуживания.
+
+Настройте проверку через параметр [markdown.link.checkDeadLinks](/api/config/config-build#markdownlinkcheckdeadlinks) — неработающие ссылки будут обнаруживаться автоматически.
+
+```ts title="rspress.config.ts"
+import { defineConfig } from '@rspress/core';
+
+export default defineConfig({
+  markdown: {
+    link: {
+      checkDeadLinks: true,
+    },
+  },
+});
+```

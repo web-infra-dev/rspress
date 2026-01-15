@@ -1,0 +1,104 @@
+---
+overviewHeaders: []
+tag: eject-only
+---
+
+# Banner
+
+`Banner` отображает уведомительный баннер в верхней части страницы, поддерживая навигацию по ссылкам и функцию закрытия.
+
+## Использование
+
+Используйте компонент Banner, настроив Layout:
+
+```tsx title="theme/index.tsx"
+import { Layout as BasicLayout, Banner } from '@rspress/core/theme';
+import { useLang } from '@rspress/core/runtime';
+
+const Layout = () => {
+  const lang = useLang();
+  return (
+    <BasicLayout
+      beforeNav={
+        <Banner
+          href="/"
+          message={
+            lang === 'en'
+              ? '🚧 Rspress 2.0 document is under development'
+              : lang === 'ru'
+                ? 'Документация Rspress 2.0 в процессе доработки'
+                : '🚧 Rspress 2.0 文档还在开发中'
+          }
+        />
+      }
+    />
+  );
+};
+
+export { Layout };
+```
+
+## Пропсы
+
+```ts
+type BannerProps = {
+  /** Отображать ли Banner, по умолчанию true */
+  display?: boolean;
+  /** Пользовательское имя CSS-класса */
+  className?: string;
+} & (
+  | {
+      /** Как хранить состояние закрытия, по умолчанию 'localStorage' */
+      storage?: 'localStorage' | 'sessionStorage' | false;
+      /** Имя ключа для хранения состояния закрытия, по умолчанию 'rp-banner-closed' */
+      storageKey?: string;
+      /** Ссылка для перехода при клике */
+      href: string;
+      /** Содержимое сообщения для отображения */
+      message: string | ReactNode;
+    }
+  | {
+      /** Полностью кастомизированное содержимое */
+      customChildren: ReactNode;
+    }
+);
+```
+
+### display
+
+- **Тип:** `boolean`
+- **По умолчанию:** `true`
+
+Управляет тем, отображается ли Banner.
+
+### storage
+
+- **Тип:** `'localStorage' | 'sessionStorage' | false`
+- **По умолчанию:** `'localStorage'`
+
+Способ хранения состояния закрытия после того, как пользователь закроет Banner. Установите в `false`, чтобы не сохранять состояние.
+
+### storageKey
+
+- **Тип:** `string`
+- **По умолчанию:** `'rp-banner-closed'`
+
+Имя ключа для хранения состояния закрытия.
+
+### href
+
+- **Тип:** `string`
+
+Ссылка для перехода при клике на Banner.
+
+### message
+
+- **Тип:** `string | ReactNode`
+
+Содержимое сообщения, отображаемое в Banner.
+
+### customChildren
+
+- **Тип:** `ReactNode`
+
+Полностью кастомизированное содержимое Banner. При использовании этого свойства `href` и `message` будут игнорироваться.

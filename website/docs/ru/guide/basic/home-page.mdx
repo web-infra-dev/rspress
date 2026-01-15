@@ -1,0 +1,34 @@
+# Главная страница
+
+Содержимое главной страницы можно задать через блок метаданных. Подробные настройки смотрите в разделе [hero](/api/config/config-frontmatter.html#hero). Простой пример:
+
+```yaml
+---
+pageType: home
+title: Rspress
+titleSuffix: 'Статический генератор сайтов на базе Rsbuild'
+
+hero:
+  name: Rspress
+  text: Решение для документации
+  tagline: Современный технологический стек для разработки документации
+  actions:
+    - theme: brand
+      text: Введение
+      link: /ru/guide/introduction
+    - theme: alt
+      text: Быстрый старт
+      link: /ru/guide/getting-started
+
+features:
+  - title: 'Поддержка MDX'
+    details: MDX — мощный способ написания контента. Вы можете использовать React-компоненты прямо в Markdown.
+    icon: 📦
+  - title: 'Богатый функционал'
+    details: Поддержка i18n, полнотекстового поиска и многого другого из коробки.
+    icon: 🎨
+  - title: 'Гибкая настройка'
+    details: Можно кастомизировать внешний вид темы и процесс сборки.
+    icon: 🚀
+---
+```

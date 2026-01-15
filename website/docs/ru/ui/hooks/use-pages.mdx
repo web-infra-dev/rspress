@@ -1,0 +1,36 @@
+# usePages
+
+`usePages` возвращает метаданные всех страниц сайта и удобен для создания пользовательских [страниц обзора](/guide/advanced/overview-page), таких как индекс блога.
+
+- **Тип:** `() => { pages: PageData['pages'] }`
+
+Ниже приведён реальный пример, показывающий, как на странице `/blog/index` получить посты блога, расположенные по пути `/blog/*` на текущем языке, отсортированные в порядке убывания по полю `date` из блока метаданных:
+
+```tsx
+import { useLang, usePages } from '@rspress/core/runtime';
+
+const useBlogPages = () => {
+  const { pages } = usePages();
+  const lang = useLang();
+  const defaultDate = new Date('1970-01-01');
+
+  const getDate = (page: (typeof pages)[number]) =>
+    page.frontmatter?.date
+      ? new Date(page.frontmatter.date as string)
+      : defaultDate;
+
+  const blogPages = pages
+    .filter((page) => page.lang === lang)
+    .filter(
+      (page) =>
+        page.routePath.includes('/blog/') && !page.routePath.endsWith('/blog/'),
+    )
+    .sort((a, b) => {
+      return getDate(b).getTime() - getDate(a).getTime();
+    });
+
+  return blogPages;
+};
+```
+
+> `usePages` не поддерживает HMR; перезапустите dev-сервер после добавления или удаления документов, чтобы обновить список.

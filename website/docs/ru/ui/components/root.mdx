@@ -1,0 +1,37 @@
+---
+overviewHeaders: []
+tag: eject-only
+---
+
+# Root
+
+`Root` — это обёрточный компонент для всего приложения, который охватывает всё содержимое, включая Layout и глобальные UI-компоненты.
+
+Его исходный код выглядит следующим образом:
+
+```tsx title="Root.tsx"
+export function Root({ children }: RootProps) {
+  return <>{children}</>;
+}
+```
+
+## Использование
+
+Eject'ите этот компонент, чтобы обернуть в него пользовательские провайдеры:
+
+```tsx title="theme/components/Root/index.tsx"
+import type { RootProps } from '@rspress/core/theme';
+
+export function Root({ children }: RootProps) {
+  return <YourProvider>{children}</YourProvider>;
+}
+```
+
+## Пропсы
+
+### children
+
+- **Type:** `ReactNode`
+- **Обязательный:** Да
+
+Дочерние элементы для рендеринга, содержащие всё содержимое приложения.

@@ -1,0 +1,28 @@
+[
+  {
+    "type": "dir-section-header",
+    "name": "start",
+    "label": "gettingStarted"
+  },
+  {
+    "type": "dir-section-header",
+    "name": "basic",
+    "label": "features"
+  },
+  {
+    "type": "dir-section-header",
+    "label": "Markdown и MDX",
+    "name": "use-mdx",
+    "tag": "новинка"
+  },
+  {
+    "type": "dir-section-header",
+    "name": "advanced",
+    "label": "advanced"
+  },
+  {
+    "type": "dir-section-header",
+    "name": "migration",
+    "label": "migration"
+  }
+]

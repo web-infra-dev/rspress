@@ -1,0 +1,97 @@
+# Встроенные иконки
+
+import { SvgWrapper, SourceCode } from '@rspress/core/theme';
+
+Когда Rspress использует иконки, он применяет компонент `SvgWrapper` для их рендеринга. Этот компонент поддерживает иконку в виде URL или в виде React-компонента, полученного через svgr:
+
+```ts
+type Icon = React.FC<React.SVGProps<SVGSVGElement>> | string;
+```
+
+Код ниже является примером того, как Rspress использует компонент `IconGithub`:
+
+```mdx preview
+import { SvgWrapper, IconGithub } from '@rspress/core/theme-original';
+
+<SvgWrapper icon={IconGithub} width={24} height={24} />
+```
+
+## Использование
+
+Когда вы хотите заменить встроенные иконки Rspress, используйте [Пользовательская тема — Re-export](/guide/basic/custom-theme#themeindextsx-override-built-in-components-using-esm-re-exports) для их замены.
+
+```tsx title="theme/index.tsx"
+export { IconGithub } from './my-icons';
+export * from '@rspress/core/theme-original';
+```
+
+Вот список всех иконок, используемых в Rspress:
+
+<SourceCode href="https://github.com/web-infra-dev/rspress/blob/main/packages/core/src/theme/icons.ts" />
+
+```tsx preview
+import {
+  SvgWrapper,
+  IconArrowDown,
+  IconArrowRight,
+  IconClose,
+  IconCopy,
+  IconDeprecated,
+  IconDown,
+  IconEmpty,
+  IconExperimental,
+  IconFile,
+  IconGithub,
+  IconGitlab,
+  IconHeader,
+  IconJump,
+  IconLoading,
+  IconMenu,
+  IconMoon,
+  IconRight,
+  IconSearch,
+  IconSmallMenu,
+  IconSuccess,
+  IconSun,
+  IconTitle,
+  IconTranslator,
+  IconWrap,
+  IconWrapped,
+} from '@rspress/core/theme';
+
+export default () => {
+  return (
+    <div style={{ display: 'flex', gap: 8, flexWrap: 'wrap', fontSize: 12 }}>
+      {[
+        IconArrowDown,
+        IconArrowRight,
+        IconClose,
+        IconCopy,
+        IconDeprecated,
+        IconDown,
+        IconEmpty,
+        IconExperimental,
+        IconFile,
+        IconGithub,
+        IconGitlab,
+        IconHeader,
+        IconJump,
+        IconLoading,
+        IconMenu,
+        IconMoon,
+        IconRight,
+        IconSearch,
+        IconSmallMenu,
+        IconSuccess,
+        IconSun,
+        IconTitle,
+        IconTranslator,
+        IconWrap,
+        IconWrapped,
+      ].map((Icon, idx) => (
+        <SvgWrapper icon={Icon} key={idx} width={24} height={24} />
+      ))}
+    </div>
+  );
+};
+```

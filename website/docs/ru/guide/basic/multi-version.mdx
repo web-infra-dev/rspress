@@ -1,0 +1,75 @@
+# Мультиверсионность
+
+Стандартная тема Rspress поддерживает управление несколькими версиями документации. Далее расскажем, как подключить мультиверсионность.
+
+## Настройка `multiVersion`
+
+Список версий и версия по умолчанию задаются через параметр `multiVersion`. Пример:
+
+```ts title="rspress.config.ts"
+import { defineConfig } from '@rspress/core';
+
+export default defineConfig({
+  multiVersion: {
+    default: 'v1',
+    versions: ['v1', 'v2'],
+  },
+});
+```
+
+Здесь `default` — это версия по умолчанию, а `versions` — список всех доступных версий.
+
+## Добавление документов для разных версий
+
+В соответствии со списком версий, который вы настроили, добавьте документы разных версий в директорию `docs`. Пример:
+
+```tree
+docs
+├── v1
+│   ├── README.md
+│   └── guide
+│       └── README.md
+└── v2
+    ├── README.md
+    └── guide
+        └── README.md
+```
+
+В системе маршрутизации Rspress для версии по умолчанию префикс версии автоматически опускается. Например, файл `v1/README.md` будет доступен по маршруту `/README`, а файл `v2/README.md` — по маршруту `/v2/README`.
+
+:::tip Подсказка
+
+В ссылках внутри документов вручную добавлять префикс версии не нужно. Rspress автоматически подставит нужный префикс в зависимости от версии текущего документа. Например, ссылка `/guide/README` в файле `v2/README.md` будет преобразована в `/v2/guide/README`.
+
+:::
+
+## Получение текущей версии в компонентах
+
+В компонентах текущую версию можно получить с помощью хука `useVersion`, например:
+
+```tsx
+import { useVersion } from '@rspress/core/runtime';
+
+export default () => {
+  const version = useVersion();
+  return <div>Текущая версия: {version}</div>;
+};
+```
+
+## Ограничение поиска только текущей версией
+
+Вы можете включить параметр `search.versioned`, чтобы поиск работал **только по документам текущей версии**.
+
+```ts title="rspress.config.ts"
+import { defineConfig } from '@rspress/core';
+
+export default defineConfig({
+  multiVersion: {
+    default: 'v1',
+    versions: ['v1', 'v2'],
+  },
+  search: {
+    versioned: true,
+  },
+});
+```

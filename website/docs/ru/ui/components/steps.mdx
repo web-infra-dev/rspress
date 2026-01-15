@@ -1,0 +1,29 @@
+---
+overviewHeaders: []
+---
+
+# Steps
+
+`Steps` превращает markdown-контент в блоки пошаговых инструкций.
+
+## Использование
+
+```tsx title="index.mdx"
+import { Steps } from '@theme';
+
+export default function Page() {
+  return (
+    <Steps>
+      ### Шаг 1
+
+      Текст для шага 1.
+
+      ### Шаг 2
+
+      > Текст для шага 2.
+    </Steps>
+  );
+}
+```
+
+Внутри `<Steps>` пишите заголовки; каждый заголовок начинает новый шаг. Markdown под заголовком становится содержимым этого шага.

@@ -1,0 +1,28 @@
+---
+overviewHeaders: []
+---
+
+# SourceCode
+
+`SourceCode` отображает ссылку на исходный код в репозитории.
+
+## Использование
+
+```mdx title="index.mdx" preview
+import { SourceCode } from '@theme';
+
+<SourceCode href="https://github.com/web-infra-dev/rspress/blob/main/packages/theme-default/src/components/SourceCode/index.tsx" />
+```
+
+## Пропсы
+
+```ts
+interface SourceCodeProps {
+  /** Ссылка на исходный код */
+  href: string;
+  /** Платформа хостинга кода, определяет, какую иконку отображать */
+  platform?: 'github' | 'gitlab';
+}
+```
+
+Используйте `platform`, чтобы переключаться между иконками GitHub и GitLab. По умолчанию — `'github'`.

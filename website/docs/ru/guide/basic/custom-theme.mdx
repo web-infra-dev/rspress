@@ -1,0 +1,416 @@
+# Кастомная тема
+
+1. Для CSS Rspress предоставляет [CSS-переменные](#css-variables) и [BEM-классы](#bem-classname) для кастомизации.
+
+2. Для JS / React Rspress реализует runtime-интерфейс на основе ESM re-exports, который поддерживает модификацию или замену встроенных компонентов для реализации собственной домашней страницы, боковой панели, компонентов поиска и т. д.
+
+   На этой основе существуют два режима:
+   - [**wrap**](#wrap): **Оборачивать** и улучшать встроенные компоненты Rspress через пропсы и слоты.
+   - [**eject**](#eject): **Копировать** исходный код локально с помощью команды [`rspress eject`](../../api/commands.mdx#rspress-eject) и модифицировать его напрямую для переопределения.
+
+Далее они будут представлены по порядку в зависимости от степени кастомизации темы.
+
+## CSS-переменные \{#css-variables}
+
+Rspress предоставляет некоторые часто используемые CSS-переменные. По сравнению с переписыванием встроенных React-компонентов Rspress, переопределение CSS-переменных для кастомизации проще и легче в поддержке. Вы можете просмотреть эти CSS-переменные на странице [UI - CSS-переменные](../../ui/vars.mdx) и переопределить их через:
+
+import { Tabs, Tab } from '@theme';
+
+<Tabs>
+<Tab label="theme/index.tsx">
+
+```tsx
+import './index.css';
+export * from '@rspress/core/theme-original';
+```
+
+</Tab>
+<Tab label="theme/index.css">
+```css
+/* Скопируйте сюда код с CSS-переменными для переопределения стилей */
+```
+</Tab>
+</Tabs>
+
+## BEM-классы \{#bem-classname}
+
+Все встроенные компоненты Rspress используют соглашение об именовании BEM. Вы можете переопределять эти классы так же, как и [CSS-переменные](#css-variables).
+
+```css
+.rp-[component-name]__[element-name]--[modifier-name] {
+  /* стили */
+}
+```
+
+Например:
+
+```css
+.rp-nav {
+}
+.rp-link {
+}
+.rp-tabs {
+}
+.rp-codeblock {
+}
+.rp-codeblock__title {
+}
+.rp-codeblock__description {
+}
+.rp-nav-menu__item,
+.rp-nav-menu__item--active {
+}
+```
+
+## `theme/index.tsx`: Переопределение встроенных компонентов с помощью ESM re-exports \{#reexport}
+
+По умолчанию необходимо создать директорию `theme` в корне проекта, а затем создать в ней файл `index.ts` или `index.tsx`. Этот файл используется для экспорта содержимого темы.
+
+```tree
+├── docs
+├── theme
+│   └── index.tsx
+└── rspress.config.ts
+```
+
+Вы можете написать файл `theme/index.tsx`, используя встроенные компоненты из `@rspress/core/theme-original`:
+
+```tsx title="theme/index.tsx"
+import { Layout as BasicLayout } from '@rspress/core/theme-original';
+
+const Layout = () => <BasicLayout beforeNavTitle={<div>some content</div>} />;
+
+export { Layout }; //[!code highlight]
+export * from '@rspress/core/theme-original'; //[!code highlight]
+```
+
+При **переопределении встроенных компонентов через ESM re-export** все внутренние ссылки Rspress на встроенные компоненты будут преимущественно использовать вашу переэкспортированную версию.
+
+:::tip Примечание
+
+Используйте `@rspress/core/theme-original` только при кастомизации тем
+
+```tree
+├── docs
+│   └── index.mdx <-- "@rspress/core/theme"
+├── theme
+│   └── index.tsx <-- "@rspress/core/theme-original"
+└── rspress.config.ts
+```
+
+1. В директории `docs` используйте `@rspress/core/theme` — этот алиас указывает на ваш `theme/index.tsx`.
+
+2. В директории `theme` используйте `@rspress/core/theme-original` — этот алиас всегда указывает на встроенные компоненты темы Rspress.
+
+:::
+
+## Wrap: Добавление пропсов и слотов к переэкспортируемым компонентам \{#wrap}
+
+Wrap означает добавление пропсов к переэкспортируемым компонентам. Вот пример вставки некоторого содержимого перед заголовком навбара:
+
+<Tabs>
+<Tab label="theme/index.tsx">
+
+```tsx
+import { Layout as BasicLayout } from '@rspress/core/theme-original';
+import { useI18n } from '@rspress/core';
+
+const Layout = () => {
+  const t = useI18n();
+  return <BasicLayout beforeNavTitle={<div>{t('some content')}</div>} />;
+};
+
+export { Layout };
+export * from '@rspress/core/theme-original';
+```
+
+</Tab>
+
+<Tab label="i18n.json">
+
+```json
+{
+  "some content": {
+    "en": "some content",
+    "ru": "некий контент"
+  }
+}
+```
+
+</Tab>
+
+</Tabs>
+
+### Слоты макета
+
+Компонент `Layout` спроектирован с набором пропсов для поддержки слотовых элементов. Вы можете использовать эти пропсы, чтобы расширить макет темы по умолчанию:
+
+<details>
+
+```tsx title="theme/index.tsx"
+import {
+  Layout as BasicLayout,
+  getCustomMDXComponent as basicGetCustomMDXComponent,
+} from '@rspress/core/theme-original';
+
+// Ниже перечисляем все пропсы
+const Layout = () => (
+  <BasicLayout
+    /* Перед секцией Hero на главной странице */
+    beforeHero={<div>beforeHero</div>}
+    /* После секции Hero на главной странице */
+    afterHero={<div>afterHero</div>}
+    /* Перед секцией Features на главной странице */
+    beforeFeatures={<div>beforeFeatures</div>}
+    /* После секцией Features на главной странице */
+    afterFeatures={<div>afterFeatures</div>}
+    /* Перед футером на странице документации */
+    beforeDocFooter={<div>beforeDocFooter</div>}
+    /* После футера на странице документации */
+    afterDocFooter={<div>afterDocFooter</div>}
+    /* В начале страницы документации */
+    beforeDoc={<div>beforeDoc</div>}
+    /* В конце страницы документации */
+    afterDoc={<div>afterDoc</div>}
+    /* В начале содержимого документа */
+    beforeDocContent={<div>beforeDocContent</div>}
+    /* В конце содержимого документа */
+    afterDocContent={<div>afterDocContent</div>}
+    /* Перед панелью навигации */
+    beforeNav={<div>beforeNav</div>}
+    /* После панели навигации */
+    afterNav={<div>afterNav</div>}
+    /* Перед заголовком в левом верхнем углу панели навигации */
+    beforeNavTitle={<span>😄</span>}
+    /* Заголовок панели навигации */
+    navTitle={<div>Custom Nav Title</div>}
+    /* После заголовка в левом верхнем углу панели навигации */
+    afterNavTitle={<div>afterNavTitle</div>}
+    /* Перед меню панели навигации */
+    beforeNavMenu={<div>beforeNavMenu</div>}
+    /* После меню панели навигации */
+    afterNavMenu={<div>afterNavMenu</div>}
+    /* Над левой боковой панелью */
+    beforeSidebar={<div>beforeSidebar</div>}
+    /* Под левой боковой панелью */
+    afterSidebar={<div>afterSidebar</div>}
+    /* Над правой колонкой оглавления */
+    beforeOutline={<div>beforeOutline</div>}
+    /* Под правой колонкой оглавления */
+    afterOutline={<div>afterOutline</div>}
+    /* В самом верху всей страницы */
+    top={<div>top</div>}
+    /* В самом низу всей страницы */
+    bottom={<div>bottom</div>}
+    /* Пользовательские компоненты MDX */
+    components={{
+      h1: (props) => {
+        const { h1: OriginalH1, p: OriginalP } = basicGetCustomMDXComponent();
+        return (
+          <>
+            <OriginalH1 {...props} />
+            <OriginalP>
+              Абзац, добавляемый после каждого заголовка H1.
+            </OriginalP>
+          </>
+        );
+      },
+    }}
+  />
+);
+
+export { Layout };
+// re-export
+export * from '@rspress/core/theme-original';
+```
+
+</details>
+
+## Eject: Прямое изменение исходного кода \{#eject}
+
+Eject означает копирование исходного кода отдельного встроенного компонента Rspress локально с последующим прямым его изменением. Шаги следующие:
+
+1. Выполните CLI-команду [`rspress eject [component]`](../../api/commands.mdx#rspress-eject) — Rspress скопирует исходный код указанного компонента в локальную директорию `theme/components`, без копирования зависимостей.
+
+2. Обновите re-export в `theme/index.tsx`:
+
+```tsx title="theme/index.tsx"
+// Предположим, что вы выполнили eject компонента DocFooter
+export { DocFooter } from './components/DocFooter';
+export * from '@rspress/core/theme-original';
+```
+
+3. Измените файл `theme/components/DocFooter.tsx` по мере необходимости, чтобы удовлетворить вашим требованиям.
+
+Компоненты Rspress разделены с высокой степенью гранулярности, вы можете посмотреть, какие компоненты подходят для eject, в разделе [Встроенные компоненты](/ui/components/).
+
+:::warning Действительно ли нужен eject?
+
+Eject увеличит затраты на сопровождение, потому что при будущих обновлениях Rspress эти выброшенные компоненты не будут автоматически получать обновления, и вам придётся вручную сравнивать и сливать изменения.
+
+Пожалуйста, сначала проверьте, может ли режим wrap удовлетворить ваши потребности. Рассматривайте eject только в том случае, когда wrap не справляется с задачей.
+
+:::
+
+## Кастомная тема с нуля
+
+Если вы разрабатываете полностью собственную тему, вам нужно понимать базовую структуру темы и runtime API.
+
+### 1. Базовая структура
+
+Как и в случае расширения темы, нужно создать папку `theme` в корне проекта, а внутри неё — файл `index.ts` или `index.tsx`, который будет экспортировать содержимое вашей темы.
+
+```tree
+├── theme
+│   └── index.tsx
+```
+
+В файле `theme/index.tsx` необходимо экспортировать компонент `Layout` — это точка входа вашей темы:
+
+```tsx
+// theme/index.tsx
+import { Layout as BasicLayout } from '@rspress/core/theme-original';
+
+function Layout() {
+  return <BasicLayout />;
+}
+
+// Экспортируем компонент Layout и функцию настройки
+export { Layout };
+// Переэкспортируем всё содержимое стандартной темы, чтобы конфигурация вашей темы работала корректно
+export * from '@rspress/core/theme-original';
+```
+
+### 2. Runtime API
+
+#### usePageData
+
+Получить информацию обо всех данных сайта, например:
+
+```tsx
+import { usePageData } from '@rspress/core/runtime';
+
+function MyComponent() {
+  const pageData = usePageData();
+  return <div>{pageData.title}</div>;
+}
+```
+
+#### useLang
+
+Получить информацию о текущем языке, например:
+
+```tsx
+import { useLang } from '@rspress/core/runtime';
+
+function MyComponent() {
+  const lang = useLang();
+  return <div>{lang}</div>;
+}
+```
+
+#### Content
+
+Получить содержимое MDX-компонента, например:
+
+```tsx
+import { Content } from '@rspress/core/runtime';
+
+function Layout() {
+  return (
+    <div>
+      <Content />
+    </div>
+  );
+}
+```
+
+#### Хуки маршрутизации
+
+Rspress использует [react-router-dom](https://reactrouter.com/) для реализации маршрутизации, поэтому вы можете напрямую использовать хуки из `react-router-dom`, например:
+
+```tsx
+import { useLocation } from '@rspress/core/runtime';
+
+function Layout() {
+  const location = useLocation();
+  return <div>Текущее расположение: {location.pathname}</div>;
+}
+```
+
+### 3. Повторное использование функциональности поиска
+
+В стандартной теме уже реализован поиск, который состоит из двух частей:
+
+1. Поле ввода поиска — точка входа для запуска поиска.
+2. Выпадающая панель с результатами поиска, которая появляется после клика по полю.
+
+#### Полное повторное использование
+
+Если вы хотите полностью использовать готовую функциональность поиска, просто импортируйте компонент `Search`:
+
+```tsx
+import { Search } from '@rspress/core/theme-original';
+
+function MySearch() {
+  return <Search />;
+}
+```
+
+#### Повторное использование только панели поиска
+
+Если вы хотите использовать готовую панель с результатами поиска, но полностью кастомизировать само поле ввода, то в своём компоненте темы нужно импортировать `SearchPanel`:
+
+```tsx
+import { useState } from 'react';
+import { SearchPanel } from '@rspress/core/theme-original';
+
+function MySearch() {
+  const [focused, setFocused] = useState(false);
+  return (
+    <div>
+      <button onClick={() => setFocused(true)}>Переключить поиск</button>
+      <SearchPanel focused={focused} setFocused={setFocused} />
+    </div>
+  );
+}
+```
+
+В этом случае вам нужно самостоятельно управлять состоянием `focused` и методом `setFocused`, а затем передавать их в качестве пропсов в компонент `SearchPanel`, чтобы контролировать показ и скрытие панели поиска.
+
+#### Повторное использование логики полнотекстового поиска по умолчанию
+
+Если вы хотите использовать стандартную логику полнотекстового поиска, можно воспользоваться хуком `useFullTextSearch`, например:
+
+```tsx
+import { useFullTextSearch } from '@rspress/core/theme-original';
+
+function MySearch() {
+  const { initialized, search } = useFullTextSearch();
+
+  useEffect(() => {
+    async function searchSomeKeywords(keywords: string) {
+      if (initialized) {
+        // Поиск по ключевым словам
+        const results = await search(keywords);
+        console.log(results);
+      }
+    }
+    searchSomeKeywords('keyword');
+  }, [initialized]);
+
+  return <div>Поиск</div>;
+}
+```
+
+Здесь `initialized` указывает, инициализирован ли поиск, а метод `search` используется для поиска по ключевым словам. Он возвращает `Promise`, результат которого — это результаты стандартного полнотекстового поиска.
+
+Важно: хук `useFullTextSearch` автоматически загружает поисковый индекс при инициализации, поэтому сначала нужно проверить статус `initialized`, дождаться завершения инициализации и только после этого вызывать метод `search`.
+
+Типизация метода `search` выглядит так:
+
+```ts
+type SearchFn = (keywords: string, limit?: number) => Promise<SearchResult>;
+```
+
+Параметр `limit` указывает максимальное количество результатов поиска. По умолчанию он равен 7 — то есть без дополнительных настроек возвращается не более семи статей.

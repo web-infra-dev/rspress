@@ -1,0 +1,669 @@
+# Базовая конфигурация
+
+## root
+
+- **Тип**: `string`
+- **По умолчанию**: `docs`
+
+Указывает корневую директорию с документацией. Например:
+
+```ts title="rspress.config.ts" twoslash
+import { defineConfig } from '@rspress/core';
+
+export default defineConfig({
+  root: 'docs',
+});
+```
+
+Эта настройка поддерживает как относительные, так и абсолютные пути. Относительные пути отсчитываются от текущей рабочей директории (cwd).
+
+Конечно, помимо указания корневой директории документации через файл конфигурации, вы также можете задать её через параметры командной строки, например:
+
+```bash
+rspress dev docs
+rspress build docs
+```
+
+## base
+
+- **Тип**: `string`
+- **По умолчанию**: `/`
+
+Базовый путь для развёртывания. Например, если вы планируете разместить сайт по адресу `https://foo.github.io/bar/`, то значение `base` нужно установить в `"/bar/"`:
+
+```ts title="rspress.config.ts" twoslash
+import { defineConfig } from '@rspress/core';
+
+export default defineConfig({
+  base: '/bar/',
+});
+```
+
+## title
+
+- **Тип**: `string`
+- **По умолчанию**: `"Rspress"`
+
+Заголовок сайта. Этот параметр будет использоваться в качестве заголовка HTML-страницы. Например:
+
+```ts title="rspress.config.ts"
+import { defineConfig } from '@rspress/core';
+
+export default defineConfig({
+  title: 'My Site',
+});
+```
+
+## description
+
+- **Тип**: `string`
+- **По умолчанию**: `""`
+
+Описание сайта. Будет использовано в качестве мета-описания HTML-страницы. Например:
+
+```ts title="rspress.config.ts"
+import { defineConfig } from '@rspress/core';
+
+export default defineConfig({
+  description: 'My Site Description',
+});
+```
+
+## icon
+
+- **Тип**: `string | URL`
+- **По умолчанию**: `""`
+
+Иконка сайта. Этот путь будет использован в качестве иконки (favicon) HTML-страницы. Например:
+
+```ts title="rspress.config.ts"
+import { defineConfig } from '@rspress/core';
+
+export default defineConfig({
+  icon: '/favicon.ico',
+});
+```
+
+Для обычного пути Rspress будет искать иконку в директории `public`. Конечно, вы также можете указать ссылку на CDN или использовать протокол `file://` либо объект `URL` для указания локального абсолютного пути.
+
+## lang
+
+- **Тип**: `string`
+- **По умолчанию**: `""`
+
+Язык сайта по умолчанию. Подробности см. в разделе [Интернационализация](/guide/basic/i18n).
+
+```ts title="rspress.config.ts"
+import { defineConfig } from '@rspress/core';
+
+export default defineConfig({
+  lang: 'en',
+  locales: [
+    {
+      lang: 'en',
+      // ...
+    },
+    {
+      lang: 'ru',
+      // ...
+    },
+  ],
+});
+```
+
+## i18nSource
+
+- **Тип**: `Record<string, Record<string, string>> | ((value: Record<string, Record<string, string>>) => Record<string, Record<string, string>> | Promise<Record<string, Record<string, string>>>)`
+- **По умолчанию**: `{}`
+
+С помощью этого параметра можно переопределить встроенные тексты интернационализации Rspress или добавить собственные тексты для кастомных компонентов. При добавлении собственных текстов обычно используется вместе с хуком [useI18n](/ui/hooks/use-i18n.html).
+
+:::tip Совет
+
+Реализация и эффект полностью совпадают с файлом `i18n.json`. Можно использовать любой из этих способов. Параметр `i18nSource` имеет более высокий приоритет, чем `i18n.json`, и поддерживает функции.
+
+:::
+
+Параметр `i18nSource` — это объект со следующей структурой:
+
+```ts
+{
+  [textKey: string]: {
+    [locale: string]: string;
+  }
+}
+```
+
+Где `textKey` первого уровня — это имя ключа текста, `locale` второго уровня — код языка (например, `ru`, `en`), а значение — переведённый текст на соответствующем языке.
+
+Вот пример изменения встроенных i18n-текстов Rspress:
+
+```ts title="rspress.config.ts"
+import { defineConfig } from '@rspress/core';
+export default defineConfig({
+  i18nSource: {
+    editLinkText: {
+      en: '📝 Edit this page on Gitlab',
+      ru: '📝 Изменить эту страницу на Gitlab',
+    },
+  },
+});
+```
+
+`i18nSource` также может быть функцией, например:
+
+```ts
+import { defineConfig } from '@rspress/core';
+
+export default defineConfig({
+  i18nSource: async (source) => {
+    for (const key of Object.keys(source)) {
+      source[key]['en_US'] = source[key]['en'];
+    }
+    return source;
+  },
+});
+```
+
+Вот встроенные i18n-тексты в Rspress:
+
+<details>
+
+```ts file="../../../../../packages/core/src/node/runtimeModule/DEFAULT_I18N_TEXT.ts"
+
+```
+
+</details>
+
+## logo \{#logo-1}
+
+- **Тип**: `string | { dark: string; light: string }`
+- **По умолчанию**: `""`
+
+Логотип сайта. Этот путь будет использован для поиска и отображения логотипа в левом верхнем углу навигационной панели. Например:
+
+```ts title="rspress.config.ts"
+import { defineConfig } from '@rspress/core';
+
+export default defineConfig({
+  logo: '/logo.png',
+});
+```
+
+Rspress будет искать логотип в директории `public`, также можно указать адрес на CDN.
+
+Конечно, можно задать разные логотипы для тёмной и светлой тем:
+
+```ts title="rspress.config.ts"
+import { defineConfig } from '@rspress/core';
+
+export default defineConfig({
+  logo: {
+    dark: '/logo-dark.png',
+    light: '/logo-light.png',
+  },
+});
+```
+
+## logoText
+
+- **Тип**: `string`
+- **По умолчанию**: `""`
+
+Текст логотипа сайта. Этот текст будет отображаться рядом с логотипом в левом верхнем углу навигационной панели. Например:
+
+```ts title="rspress.config.ts"
+import { defineConfig } from '@rspress/core';
+
+export default defineConfig({
+  logoText: 'rspress',
+});
+```
+
+## outDir
+
+- **Тип**: `string`
+- **По умолчанию**: `doc_build`
+
+Пользовательская директория для вывода собранного сайта. Например:
+
+```ts title="rspress.config.ts"
+import { defineConfig } from '@rspress/core';
+
+export default defineConfig({
+  outDir: 'doc_build',
+});
+```
+
+## locales
+
+- **Тип**: `Locale[]`
+
+```ts
+export interface Locale {
+  lang: string;
+  label: string;
+  title?: string;
+  description?: string;
+}
+```
+
+Конфигурация интернационализации (i18n) сайта. Например:
+
+```ts title="rspress.config.ts"
+import { defineConfig } from '@rspress/core';
+
+export default defineConfig({
+  locales: [
+    {
+      lang: 'en-US',
+      label: 'English',
+      title: 'My Site',
+      description: 'My site description',
+    },
+    {
+      lang: 'ru-RU',
+      label: 'Русский',
+      title: 'Заголовок сайта',
+      description: 'Описание сайта',
+    },
+  ],
+});
+```
+
+## head
+
+- **Тип**: `string` | `[string, Record<string, string>]` | `(route) => string | [string, Record<string, string>] | undefined`
+- Можно дополнять на отдельной странице через [метаданные](./config-frontmatter.mdx#head)
+
+Используется для добавления дополнительных элементов, которые будут отрендерены внутри тега `<head>` HTML-страницы в продакшен-режиме.
+
+```ts title="rspress.config.ts"
+import { defineConfig } from '@rspress/core';
+
+export default defineConfig({
+  // ... другие настройки
+  head: [
+    '<meta name="author" content="John Doe">',
+    // или
+    ['meta', { name: 'author', content: 'John Doe' }],
+    // [htmlTag, { attrName: attrValue, attrName2: attrValue2 }]
+    // или
+    (route) => {
+      if (route.routePath.startsWith('/jane/'))
+        return "<meta name='author' content='Jane Doe'>";
+      if (route.routePath.startsWith('/john/'))
+        return ['meta', { name: 'author', content: 'John Doe' }];
+      // или вообще ничего не возвращаем
+      return undefined;
+    },
+  ],
+});
+```
+
+## mediumZoom
+
+- **Тип**: `boolean` | `{ selector?: string }`
+- **По умолчанию**: `true`
+
+Включить ли функцию увеличения изображений по клику. По умолчанию включена, можно отключить, установив `mediumZoom` в `false`.
+
+> На нижнем уровне используется библиотека [medium-zoom](https://github.com/francoischalifour/medium-zoom).
+
+Пример использования:
+
+```ts title="rspress.config.ts"
+import { defineConfig } from '@rspress/core';
+
+export default defineConfig({
+  // Отключить увеличение изображений
+  mediumZoom: false,
+  // Настроить CSS-селектор, чтобы указать, какие именно изображения увеличивать (по умолчанию — '.rspress-doc img')
+  mediumZoom: {
+    selector: '.rspress-doc img',
+  },
+});
+```
+
+## search
+
+- **Тип**:
+
+```ts
+type SearchOptions = {
+  searchHooks?: string;
+  versioned?: boolean;
+  codeBlocks?: boolean;
+};
+```
+
+### searchHooks
+
+- **Тип**: `string`
+- **По умолчанию**: `undefined`
+
+Через параметр `searchHooks` можно добавить пользовательскую логику хуков во время выполнения поиска, например:
+
+```ts title="rspress.config.ts"
+import { defineConfig } from '@rspress/core';
+import path from 'path';
+
+export default defineConfig({
+  search: {
+    searchHooks: path.join(__dirname, 'searchHooks.ts'),
+  },
+});
+```
+
+Подробную информацию о хуках можно найти в разделе [Настройка поиска](/guide/advanced/custom-search).
+
+### versioned
+
+- **Тип**: `boolean`
+- **По умолчанию**: `false`
+
+Если вы используете `multiVersion`, параметр `versioned` позволяет создавать отдельный поисковый индекс для каждой версии документации.
+При включении этой опции поиск будет выполняться только по индексу, соответствующему текущей выбранной версии.
+
+```ts title="rspress.config.ts"
+import { defineConfig } from '@rspress/core';
+
+export default defineConfig({
+  search: {
+    versioned: true,
+  },
+});
+```
+
+### codeBlocks
+
+- **Тип**: `boolean`
+- **По умолчанию**: `true`
+
+Включать ли содержимое блоков кода в поисковый индекс, чтобы пользователи могли искать по коду внутри блоков.
+
+```ts title="rspress.config.ts"
+import { defineConfig } from '@rspress/core';
+
+export default defineConfig({
+  search: {
+    codeBlocks: false,
+  },
+});
+```
+
+## globalUIComponents
+
+- **Тип**: `(string | [string, object])[]`
+- **По умолчанию**: `[]`
+
+Через параметр `globalUIComponents` можно зарегистрировать глобальные UI-компоненты, например:
+
+```ts title="rspress.config.ts"
+import { defineConfig } from '@rspress/core';
+import path from 'path';
+
+export default defineConfig({
+  globalUIComponents: [path.join(__dirname, 'components', 'MyComponent.tsx')],
+});
+```
+
+Элемент массива `globalUIComponents` может быть строкой (путь к файлу компонента) либо массивом, где первый элемент — путь к файлу компонента, а второй — пропсы этого компонента. Например:
+
+```ts title="rspress.config.ts"
+import { defineConfig } from '@rspress/core';
+
+export default defineConfig({
+  globalUIComponents: [
+    [
+      path.join(__dirname, 'components', 'MyComponent.tsx'),
+      {
+        foo: 'bar',
+      },
+    ],
+  ],
+});
+```
+
+import GlobalUIComponents from '../../fragments/global-ui-components.mdx';
+
+<GlobalUIComponents />
+
+## multiVersion
+
+- **Тип**: `{ default: string; versions: string[] }`
+
+Через параметр `multiVersion` можно включить поддержку нескольких версий документации, например:
+
+```ts title="rspress.config.ts"
+import { defineConfig } from '@rspress/core';
+
+export default defineConfig({
+  multiVersion: {
+    default: 'v1',
+    versions: ['v1', 'v2'],
+  },
+});
+```
+
+Параметр `default` — это версия по умолчанию, а `versions` — список всех доступных версий.
+
+## route
+
+- **Тип**: `Object`
+
+Пользовательская конфигурация маршрутов.
+
+### route.include
+
+- **Тип**: `string[]`
+- **По умолчанию**: `[]`
+
+Добавить в маршруты дополнительные файлы. По умолчанию в маршруты включаются только файлы из корневой директории документации. Если нужно добавить в маршруты какие-то дополнительные файлы, используйте эту опцию. Например:
+
+```js
+import { defineConfig } from '@rspress/core';
+
+export default defineConfig({
+  route: {
+    include: ['other-dir/**/*.{md,mdx}'],
+  },
+});
+```
+
+> Примечание: строки в массиве поддерживают glob-паттерны. Glob-выражения рассчитываются от корневой директории документации (`root`) и должны включать соответствующие расширения файлов.
+
+:::note Примечание
+
+Мы рекомендуем использовать хук [addPages](/plugin/system/plugin-api.html#addpages) в собственном плагине Rspress для добавления дополнительных файлов в маршруты — это даёт более гибкое и логичное управление путями страниц и их содержимым.
+
+:::
+
+### route.exclude
+
+- **Тип**: `string[]`
+- **По умолчанию**: `[]`
+
+Исключить некоторые файлы из маршрутов. Например:
+
+```js
+import { defineConfig } from '@rspress/core';
+
+export default defineConfig({
+  route: {
+    exclude: ['custom.tsx', 'component/**/*'],
+  },
+});
+```
+
+> Примечание: строки в массиве поддерживают glob-паттерны. Glob-выражения рассчитываются от корневой директории документации (`root`).
+
+### route.excludeConvention
+
+- **Тип**: `string[]`
+- **По умолчанию**: `['**/_[^_]*']`
+
+Набор [соглашений о маршрутах](../../guide/use-mdx/components.mdx), введённый для удобства использования компонентов в директории [docs](/api/config/config-basic#root). По умолчанию исключает все файлы, начинающиеся с `_`.
+
+Если вам действительно нужны маршруты, начинающиеся с `_`, вы можете изменить это правило, например, задать исключение только для файлов, начинающихся с `_fragment-`:
+
+```js title="rspress.config.ts"
+import { defineConfig } from '@rspress/core';
+
+export default defineConfig({
+  route: {
+    excludeConvention: ['**/_fragment-*'],
+  },
+});
+```
+
+### route.extensions
+
+- **Тип**: `string[]`
+- **По умолчанию**: `['.js', '.jsx', '.ts', '.tsx', '.md', '.mdx']`
+
+Расширения файлов, которые будут включены в маршрутизацию. По умолчанию Rspress добавляет в маршруты все файлы с расширениями `js`, `jsx`, `ts`, `tsx`, `md` и `mdx`. Если нужно изменить этот список, используйте данную опцию. Например:
+
+```js
+import { defineConfig } from '@rspress/core';
+
+export default defineConfig({
+  route: {
+    extensions: ['.md', '.mdx'],
+  },
+});
+```
+
+### route.cleanUrls
+
+- **Тип**: `Boolean`
+- **По умолчанию**: `false`
+
+Когда `cleanUrls` установлен в `true`, генерируются чистые URL без расширения (например, `/about` вместо `/about.html`), что делает ссылки короче и красивее.
+
+```js
+import { defineConfig } from '@rspress/core';
+
+export default defineConfig({
+  route: {
+    cleanUrls: true,
+  },
+});
+```
+
+## ssg
+
+- **Тип**: `boolean | { experimentalWorker?: boolean; experimentalLoose?: boolean; }`
+- **По умолчанию**: `true`
+
+Включить ли генерацию статического сайта (SSG). По умолчанию Rspress включает её, чтобы одновременно создавать клиентский рендеринг (CSR) и статические HTML-страницы (SSG).
+
+Если ваш сайт документации нужен только в режиме клиентского рендеринга (CSR), вы можете установить `ssg: false` — в этом случае Rspress будет генерировать исключительно CSR-сборку.
+
+```ts title="rspress.config.ts"
+import { defineConfig } from '@rspress/core';
+
+export default defineConfig({
+  ssg: false,
+});
+```
+
+:::tip Совет
+
+SSG требует, чтобы исходный код поддерживал серверный рендеринг (SSR). Если код несовместим с SSR, сборка завершится ошибкой. В таком случае можно:
+
+1. Исправить код, чтобы он стал совместим с SSR.
+
+2. Установить `ssg: false` — тогда функция SSG будет отключена.
+
+:::
+
+### experimentalWorker
+
+- **Тип**: `boolean`
+- **По умолчанию**: `false`
+
+После включения используется пул воркеров для ускорения процесса SSG и уменьшения потребления памяти. Особенно полезно для больших сайтов документации. Реализовано на базе библиотеки [tinypool](https://github.com/tinylibs/tinypool).
+
+### experimentalExcludeRoutePaths
+
+- **Тип**: `(string | RegExp)[]`
+- **По умолчанию**: `[]`
+
+Позволяет исключить отдельные страницы из процесса SSG — такие страницы будут работать только в режиме CSR. Полезно для обхода ошибок SSG на небольших проблемных страницах в крупных проектах. Активно включать эту опцию не рекомендуется.
+
+## replaceRules
+
+- **Тип**: `{ search: string | RegExp; replace: string; }[]`
+- **По умолчанию**: `[]`
+
+С помощью `replaceRules` можно задать глобальные правила замены текста для всего сайта. Правила применяются ко всем элементам: к файлам `_meta.json`, к метаданным, к содержимому и заголовкам документов.
+
+```ts title="rspress.config.ts"
+export default {
+  replaceRules: [
+    {
+      search: /foo/g,
+      replace: 'bar',
+    },
+  ],
+};
+```
+
+## languageParity
+
+- **Тип**: `Object`
+
+Сканирует файлы `md` и `mdx` в корневой директории документации, проверяет наличие всех языковых версий страниц и защищает паритет языков (чтобы ни одна страница не отсутствовала на каком-либо из поддерживаемых языков).
+
+### languageParity.enable
+
+- **Тип**: `boolean`
+- **По умолчанию**: `false`
+
+Включить проверку паритета языков.
+
+```ts title="rspress.config.ts"
+import { defineConfig } from '@rspress/core';
+
+export default defineConfig({
+  languageParity: {
+    enabled: true,
+  },
+});
+```
+
+### languageParity.include
+
+- **Тип**: `string[]`
+- **По умолчанию**: `[]`
+
+Указывает папки, которые нужно проверять на паритет языков. По умолчанию проверяются все файлы в корневой директории документации. Пути указываются относительно директории каждого языка. Например:
+
+```ts title="rspress.config.ts"
+import { defineConfig } from '@rspress/core';
+
+export default defineConfig({
+  languageParity: {
+    // папки `posts/foods` и `articles` внутри языковых директорий ru/en
+    include: ['posts/foods', 'articles'],
+  },
+});
+```
+
+### languageParity.exclude
+
+- **Тип**: `string[]`
+- **По умолчанию**: `[]`
+
+Исключает определённые папки и файлы из проверки на паритет языков.
+
+```ts title="rspress.config.ts"
+import { defineConfig } from '@rspress/core';
+
+export default defineConfig({
+  languageParity: {
+    exclude: ['excluded-directory', 'articles/secret.md'],
+  },
+});
+```

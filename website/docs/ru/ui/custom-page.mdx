@@ -1,0 +1,241 @@
+import { PackageManagerTabs } from '@theme';
+
+# Настройка страницы
+
+Rspress предоставляет несколько способов кастомизировать содержимое ваших страниц, включая:
+
+- Добавление пользовательских глобальных компонентов.
+- Добавление пользовательских глобальных стилей.
+- Настройку структуры макета страницы.
+
+## Пользовательские глобальные компоненты
+
+В некоторых сценариях вам может понадобиться добавить на страницу пользовательские глобальные компоненты. Rspress предоставляет параметр конфигурации `globalUIComponents` для реализации этой функции.
+
+### Как использовать
+
+Добавьте следующую конфигурацию в `rspress.config.ts`:
+
+```ts title="rspress.config.ts"
+import { defineConfig } from '@rspress/core';
+import path from 'path';
+
+export default defineConfig({
+  globalUIComponents: [path.join(__dirname, 'components', 'MyComponent.tsx')],
+});
+```
+
+Каждый элемент `globalUIComponents` может быть строкой, представляющей путь к файлу компонента; либо массивом, где первый элемент — путь к файлу компонента, а второй — объект `props` для компонента, например:
+
+```ts title="rspress.config.ts"
+import { defineConfig } from '@rspress/core';
+
+export default defineConfig({
+  globalUIComponents: [
+    [
+      path.join(__dirname, 'components', 'MyComponent.tsx'),
+      {
+        foo: 'bar',
+      },
+    ],
+  ],
+});
+```
+
+import GlobalUIComponents from '@ru/fragments/global-ui-components';
+
+<GlobalUIComponents />
+
+## Пользовательские стили \{#custom-styles}
+
+В некоторых сценариях вам может понадобиться добавить глобальные стили поверх UI темы. Rspress предоставляет параметр конфигурации `globalStyles` для реализации этой функции.
+
+### Как использовать
+
+Добавьте следующую конфигурацию в `rspress.config.ts`:
+
+```ts title="rspress.config.ts"
+import { defineConfig } from '@rspress/core';
+import path from 'path';
+
+export default defineConfig({
+  globalStyles: path.join(__dirname, 'styles/index.css'),
+});
+```
+
+Затем вы можете добавить этот код:
+
+```css title="styles/index.css"
+:root {
+  --rp-c-brand: #f00;
+}
+```
+
+Таким образом, Rspress автоматически соберёт все глобальные стили и объединит их в итоговый файл стилей.
+
+Ниже приведены некоторые распространённые глобальные стили:
+
+```css title="styles/index.css"
+:root {
+  /* Меняем цвета темы */
+  --rp-c-brand: #f00;
+  --rp-c-brand-dark: #ffa500;
+  --rp-c-brand-darker: #c26c1d;
+  --rp-c-brand-light: #f2a65a;
+  --rp-c-brand-lighter: #f2a65a;
+  /* Меняем ширину левого сайдбара */
+  --rp-sidebar-width: 280px;
+  /* Меняем ширину правой колонки с оглавлением */
+  --rp-outline-width: 256px;
+  /* Меняем фоновый цвет заголовка блоков с кодом */
+  --rp-code-title-bg: rgba(250, 192, 61, 0.15);
+  /* Меняем фоновый цвет содержимого блоков с кодом */
+  --rp-code-block-bg: rgba(214, 188, 70, 0.05);
+}
+```
+
+> Если вы хотите узнать больше о внутренних глобальных стилях, вы можете посмотреть [vars.css](https://github.com/web-infra-dev/rspress/blob/main/packages/theme-default/src/styles/vars.css)
+
+### Tailwind CSS
+
+Чтобы Tailwind CSS корректно работал с Rspress, выполните следующие шаги:
+
+1. Установите Tailwind CSS:
+
+<PackageManagerTabs command="install tailwindcss -D" />
+
+2. Создайте файл `postcss.config.js`, содержащий плагин `tailwindcss`:
+
+```js title="postcss.config.js"
+module.exports = {
+  plugins: {
+    tailwindcss: {},
+  },
+};
+```
+
+3. Создайте файл `tailwind.config.js` и убедитесь, что все файлы контента включены через параметр `content`:
+
+```js title="tailwind.config.js"
+module.exports = {
+  content: ['./src/**/*.tsx', './docs/**/*.mdx'],
+  theme: {
+    extend: {},
+  },
+  plugins: [],
+};
+```
+
+4. Подключите директивы Tailwind в ваш CSS-файл стилей из раздела [Пользовательские стили](#custom-styles):
+
+```css title=styles/index.css
+@import 'tailwindcss/base';
+@import 'tailwindcss/components';
+@import 'tailwindcss/utilities';
+```
+
+> Актуальные инструкции по настройке можно найти в официальной [документации Tailwind CSS](https://tailwindcss.com/docs/installation/using-postcss).
+
+## Пользовательская структура страниц
+
+### Использование pageType
+
+Rspress предоставляет конфигурацию `pageType`, чтобы вы могли настраивать структуру макета страницы.
+
+Маршрутизация в Rspress, основанная на соглашениях, поддерживает два типа маршрутов: первый — маршрутизация документов, то есть страницы, написанные в файлах md(x), и второй — маршрутизация компонентов, то есть страницы, написанные в файлах `.jsx/.tsx`.
+
+Для первого типа вы можете добавить поле `pageType` в блок метаданных файла, чтобы указать структуру макета страницы, например:
+
+```mdx title="foo.mdx"
+---
+pageType: custom
+---
+```
+
+Для второго типа маршрутов вы можете добавить следующий экспорт, чтобы указать `pageType`:
+
+```tsx title="foo.tsx"
+export const frontmatter = {
+  // Объявялем тип макета
+  pageType: 'custom',
+};
+```
+
+`pageType` можно настроить со следующими значениями:
+
+import PageType from '@ru/fragments/page-type.mdx';
+
+<PageType />
+
+### Использование детальной настройки
+
+Помимо настройки макета страницы через `pageType`, Rspress также предоставляет более точные переключатели. Вы можете настроить другие поля в метаданных. Эти поля и их значения следующие:
+
+- `navbar`: Показывать ли верхнюю навигационную панель. Чтобы скрыть панель, установите `false`.
+- `sidebar`: Показывать ли боковую панель. Чтобы скрыть её, установите `false`.
+- `outline`: Показывать ли колонку оглавления. Чтобы скрыть её, установите `false`.
+- `footer`: Показывать ли подвал. Чтобы скрыть его, установите `false`.
+
+Пример:
+
+```mdx title="foo.mdx"
+---
+navbar: false
+sidebar: false
+outline: false
+footer: false
+globalUIComponents: false
+---
+```
+
+### Использование параметров URL в качестве переключателей
+
+Кроме того, вы можете использовать параметры URL для управления структурой макета страницы во время выполнения, например:
+
+```bash
+# Скрываем верхнюю панель навигации и колонку оглавления справа
+http://YOUR_DOMAIN/foo?navbar=0&outline=0
+```
+
+С помощью параметров URL вы можете быстро изменять структуру макета страницы без изменения исходного кода. Эти параметры включают:
+
+- `navbar`: Показывать ли панель навигации. Чтобы скрыть верхнюю панель, установите `0`.
+- `sidebar`: Показывать ли боковую панель. Чтобы скрыть её, установите `0`.
+- `outline`: Показывать ли колонку оглавления. Чтобы скрыть её, установите `0`.
+- `footer`: Показывать ли подвал. Чтобы скрыть его, установите `0`.
+- `globalUIComponents`: Показывать ли глобальные компоненты. Чтобы скрыть их, установите `0`.
+
+## Пользовательские теги
+
+### Настройка тега head
+
+В файле `rspress.config.ts` вы можете настроить HTML-метаданные (т. е. тег `head`) для всех страниц. Подробнее об этом описано в разделе [конфигурация head](/api/config/config-basic#head) документации API.
+
+### Генерация мета-тегов
+
+В метаданных вы также можете настроить мета-теги страницы для оптимизации SEO.
+
+Например, если вы хотите добавить `<meta name="description" content="Описание">` в тег `<head>`, вы можете использовать блок метаданных следующим образом:
+
+```md title="example.mdx"
+---
+head:
+  - - meta
+    - name: title
+      content: Заголовок
+  - - meta
+    - name: description
+      content: Описание
+---
+```
+
+### Теги Open Graph
+
+[Open Graph](https://ogp.me/) — это веб-протокол метаданных, который управляет отображением страниц при их публикации в социальных сетях.
+
+Rspress автоматически добавляет следующие мета-теги Open Graph для каждой страницы:
+
+- `og:type`: фиксированное значение `website`
+- `og:title`: заголовок текущей страницы
+
+Если вам нужно настроить другие теги Open Graph (например, `og:image`, `og:title` и т. д.), обратитесь к [конфигурации метаданных](/api/config/config-frontmatter#head).
