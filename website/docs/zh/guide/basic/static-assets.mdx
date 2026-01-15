@@ -105,9 +105,22 @@ hero:
 - 配置为**外链**，如上面的例子。
 - 配置为**绝对路径**，如 `/rspress-logo.png`，这样 Rspress 在内部会自动在你的**文档根目录**的 `public 目录`中找到 `rspress-logo.png` 图片并进行展示。
 
-你可以在 `markdown`（或 `mdx`）文件中导入静态资源。相对路径和绝对路径都是支持的，例如，如果在 markdown 同级目录有一张图片，你可以像这样引用它：
-
 ## `.md(x)` 中使用的静态资源
+
+你可以在 `markdown`（或 `mdx`）文件中导入静态资源，Rspress 底层基于 [Rsbuild 静态资源处理](https://rsbuild.rs/zh/guide/basic/static-assets) 实现。相对路径和绝对路径都是支持的。
+
+### 普通静态资源
+
+例如，目录结构如下：
+
+```tree
+docs
+├── guide
+│   ├── index.mdx
+│   └── demo.png
+```
+
+如果在 markdown 同级目录有一张图片，你可以像这样引用它：
 
 ```mdx
 ![](./demo.png)
@@ -121,9 +134,13 @@ hero:
 
 Rspress 将会根据 `.mdx` 文件路径和图片路径，自动找到图片并响应给浏览器。
 
-另一方面，也可以使用绝对路径导入静态资源。这样，Rspress 将会在`文档根目录`下的 `public` 文件夹中寻找资源。
+不光是图片，你也可以在 markdown 文件中引入视频、音频等静态资源。
 
-例如，如果根目录是 `docs` 并且目录结构如下
+### public 目录
+
+你也可以使用绝对路径导入静态资源。这样，Rspress 将会在`文档根目录`下的 `public` 文件夹中寻找资源。
+
+例如，如果根目录是 `docs` 并且目录结构如下：
 
 ```tree
 docs
@@ -151,8 +168,6 @@ import { normalizeImagePath } from '@rspress/core/runtime';
 
 <img src={normalizeImagePath('/demo.png')} />;
 ```
-
-不光是图片，你也可以在 markdown 文件中引入视频、音频等静态资源。
 
 ## 其它静态资源
 

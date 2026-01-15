@@ -106,7 +106,20 @@ Here, src is a string, supporting the following configurations:
 
 ## Static assets used in .md(x) files
 
-You can import static assets in `markdown` (or `mdx`) files. Both relative paths and absolute paths are supported. For example, if there is an image in the same directory as the markdown, you can reference it like this:
+You can import static assets in `markdown` (or `mdx`) files. Rspress is built on [Rsbuild static assets handling](https://rsbuild.rs/guide/basic/static-assets) under the hood. Both relative paths and absolute paths are supported.
+
+### Regular static assets
+
+For example, if the directory structure is as follows:
+
+```tree
+docs
+├── guide
+│   ├── index.mdx
+│   └── demo.png
+```
+
+If there is an image in the same directory as the markdown, you can reference it like this:
 
 ```mdx
 ![](./demo.png)
@@ -120,9 +133,13 @@ Of course, you can also directly use the img tag in `.mdx` files:
 
 Rspress will automatically find the image based on the `.mdx` file path and image path, and respond to the browser.
 
-On the other hand, you can also import static assets using absolute paths. In this case, Rspress will look for assets in the `public` folder under the `document root directory`.
+Not only images, but you can also import videos, audios and other static assets in markdown files.
 
-For example, if the root directory is `docs` and the directory structure is as follows
+### public directory
+
+You can also import static assets using absolute paths. In this case, Rspress will look for assets in the `public` folder under the `document root directory`.
+
+For example, if the root directory is `docs` and the directory structure is as follows:
 
 ```tree
 docs
@@ -150,8 +167,6 @@ import { normalizeImagePath } from '@rspress/core/runtime';
 
 <img src={normalizeImagePath('/demo.png')} />;
 ```
-
-Not only images, but you can also import videos, audios and other static assets in markdown files.
 
 ## Other static assets
 
