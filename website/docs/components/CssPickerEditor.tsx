@@ -168,9 +168,7 @@ function genCssCode(hex: string) {
 `;
 }
 
-// Tab indices: 0 = Default/Custom, 1-4 = predefined colors, 5 = picker
-const PICKER_TAB_INDEX = PREDEFINED_COLORS.length + 1;
-
+// Tab indices: 0 = Default/Custom, 1-4 = predefined colors
 export function CssPickerEditor() {
   const [value, setValue] = useCssEntry(
     'css-picker-brand-style',
@@ -190,14 +188,8 @@ export function CssPickerEditor() {
 
   // Sync activeTab when value changes externally (e.g., reset)
   useEffect(() => {
-    // Always reset to tab 0 when value is reset to initial
-    if (value === INITIAL_CONTENT && activeTab !== 0) {
-      setActiveTab(0);
-      return;
-    }
-    // For other changes, sync tab if not in picker mode
     const newTab = getTabIndex(value);
-    if (newTab !== activeTab && activeTab !== PICKER_TAB_INDEX) {
+    if (newTab !== activeTab) {
       setActiveTab(newTab);
     }
   }, [value]);
@@ -209,10 +201,9 @@ export function CssPickerEditor() {
     setActiveTab(tabIndex);
     if (tabIndex === 0) {
       setValue(INITIAL_CONTENT);
-    } else if (tabIndex <= PREDEFINED_COLORS.length) {
+    } else {
       setValue(genCssCode(PREDEFINED_COLORS[tabIndex - 1].color));
     }
-    // picker tab doesn't change value immediately, waits for color selection
   };
 
   const handleCodeChange = (code: string) => {
@@ -221,6 +212,7 @@ export function CssPickerEditor() {
   };
 
   const debouncedSetValue = useDebounce((color: string) => {
+    setActiveTab(0);
     setValue(genCssCode(color));
   }, 50);
 
@@ -246,11 +238,12 @@ export function CssPickerEditor() {
 
   return (
     <div>
-      {/* Tabs */}
+      {/* Tabs and Color Picker */}
       <div
         style={{
           display: 'flex',
           flexWrap: 'wrap',
+          alignItems: 'center',
           gap: '8px',
           marginBottom: 16,
         }}
@@ -274,31 +267,20 @@ export function CssPickerEditor() {
           </button>
         ))}
 
-        {/* Color picker tab */}
-        <label
+        {/* Color picker - standalone, not a tab */}
+        <input
+          type="color"
+          value={pickerColor}
+          onChange={handlePickerChange}
           style={{
-            ...tabStyle(activeTab === PICKER_TAB_INDEX),
-            display: 'flex',
-            alignItems: 'center',
-            gap: '8px',
+            width: '32px',
+            height: '32px',
+            padding: 0,
+            border: '1px solid var(--rp-c-divider-light)',
+            borderRadius: '6px',
+            cursor: 'pointer',
           }}
-        >
-          <input
-            type="color"
-            value={pickerColor}
-            onChange={handlePickerChange}
-            onFocus={() => setActiveTab(PICKER_TAB_INDEX)}
-            style={{
-              width: '24px',
-              height: '24px',
-              padding: 0,
-              border: 'none',
-              borderRadius: '4px',
-              cursor: 'pointer',
-            }}
-          />
-          <span>Pick</span>
-        </label>
+        />
       </div>
 
       {/* CSS Editor */}
