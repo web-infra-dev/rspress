@@ -6,30 +6,33 @@ description: Define page metadata using YAML frontmatter including title, descri
 
 You can add front matter at the beginning of your Markdown file. It is a [YAML](https://yaml.org/) block wrapped by the three dashes `---` and is used to define metadata.
 
-For example, use [title](/api/config/config-frontmatter#title) to specify the title of the page:
+For example, use [title](/api/config/config-frontmatter#title) to specify the title of the page. By default, the page's h1 heading will be used as the title of the HTML document. If you want to use a different title, you can use front matter to specify the title of the page:
+
+```mdx
+---
+title: My Home Page
+---
+
+This is my **home page content**.
+```
+
+For example, you can use [head](/api/config/config-frontmatter#head) to specify custom meta tags for [Open Graph](https://ogp.me/).
 
 ```yaml
 ---
-title: Hello world
+head:
+  - - meta
+    - property: og:url
+      content: https://example.com/foo/
+  - - meta
+    - property: og:image
+      content: https://example.com/bar.jpg
+# - - [htmlTag]
+#   - [attributeName]: [attributeValue]
+#     [attributeName]: [attributeValue]
 ---
-```
-
-You can also access properties defined in front matter in the body, for example:
-
-```markdown
----
-title: Hello world
----
-
-# {frontmatter.title}
-```
-
-The properties defined above are passed to the component as `frontmatter`. So the final output will be:
-
-```html
-<h1>Hello world</h1>
 ```
 
 :::tip
-See [Front matter config](/api/config/config-frontmatter) for available front matter configurations.
+See [Front matter config](/api/config/config-frontmatter) for available front matter configurations, and see [useFrontmatter](/ui/hooks/use-frontmatter) for how to access front matter in code.
 :::

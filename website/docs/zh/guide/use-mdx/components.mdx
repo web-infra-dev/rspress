@@ -4,14 +4,20 @@ description: MDX 将 Markdown 文件编译为 React 组件，支持在文档中�
 
 # MDX 和 React 组件
 
-Rspress 支持 [MDX](https://mdxjs.com/)，这是一种功能强大的内容开发方式。
+Rspress 支持 [MDX](https://mdxjs.com/)，这是一种将 Markdown 与 JSX 无缝融合的内容创作格式。MDX 允许你在文档中直接使用 React 组件，结合了 Markdown 的简洁语法和 React 生态的强大能力，非常适合构建交互式、组件化的技术文档。
 
-## MDX
+## 什么是 MDX
 
-MDX 是 Markdown 的超集，这意味着你可以像往常一样编写 Markdown 文件。例如：
+MDX 是 Markdown 与 JSX 语法的结合，让你可以在 Markdown 文档中使用 React 组件。
+
+我们推荐所有文档文件均使用 `.mdx`，这样既可以像普通 Markdown 一样编写内容，又能导入和使用 Rspress 提供的[内置组件](/ui/components/index.mdx)：
 
 ```mdx
-# Hello world
+# Hello, world!
+
+import { PackageManagerTabs } from '@rspress/core/theme';
+
+<PackageManagerTabs command="create rspress@latest" />
 ```
 
 ## 组件化 \{#component}

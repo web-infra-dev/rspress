@@ -2,36 +2,48 @@
 
 This document introduces how to configure various properties of a page using front matter, including title, description, page type, navbar, etc.
 
-See [Frontmatter](/guide/use-mdx/frontmatter) for what front matter is and how to use it.
+See [Frontmatter](/guide/use-mdx/frontmatter) for what front matter is and how to use it, and see [useFrontmatter](/ui/hooks/use-frontmatter) for how to access front matter in code.
 
 ## title
 
-- Type: `string`
+- **Type**: `string`
 
 The title of the page. By default, the page's h1 heading will be used as the title of the HTML document. But if you want to use a different title, you can use front matter to specify the title of the page. For example:
 
-```yaml
+```mdx
 ---
 title: My Home Page
 ---
+
+This is my **home page content**.
+```
+
+It is equivalent to:
+
+```mdx
+# My home page
+
+This is my **home page content**.
 ```
 
 ## description
 
-- Type: `string`
+- **Type**: `string`
 
-A custom description for the page. For example:
+A custom description for the page, which generates a meta tag for SEO optimization. For example:
 
 ```yaml
 ---
-description: This is my custom description for this page.
+description: This is my home page
 ---
 ```
 
+It will generate a `<meta name="description" content="This is my home page" />` tag on the page.
+
 ## pageType
 
-- Type: `'home' | 'doc' | 'doc-wide' | 'custom' | 'blank' | '404'`
-- Default: `'doc'`
+- **Type**: `'home' | 'doc' | 'doc-wide' | 'custom' | 'blank' | '404'`
+- **Default**: `'doc'`
 
 The type of the page. By default, the page type is `doc`. But if you want to use a different page type, you can use the front matter field `pageType` to specify the page type. E.g:
 
@@ -49,7 +61,7 @@ import PageType from '@en/fragments/page-type.mdx';
 
 ## titleSuffix
 
-- Type: `string`
+- **Type**: `string`
 
 Set the suffix of the page title. When `titleSuffix` is not set, the site's [title](/api/config/config-basic#title) is used as the suffix by default.
 
@@ -67,11 +79,104 @@ titleSuffix: '| Rsbuild-based Static Site Generator'
 ---
 ```
 
+## sidebar
+
+Whether to show the sidebar on the left. By default, the `doc` page will display the sidebar on the left. If you want to hide the sidebar on the left, you can use the following front matter config:
+
+```yaml
+---
+sidebar: false
+---
+```
+
+:::tip
+`sidebar: false` only hides the sidebar, but the space originally occupied by the sidebar is still reserved. If you want the main content to occupy a wider screen space, you can use [`pageType: doc-wide`](#pagetype) with `sidebar: false`:
+
+```yaml
+---
+pageType: doc-wide
+sidebar: false
+---
+```
+
+This way, the main content area will automatically expand to occupy the space originally used by the sidebar.
+:::
+
+## outline
+
+Whether to display the outline column on the right. By default, the `doc` page displays the outline column on the right. You can hide the outline column with the following config:
+
+```yaml
+---
+outline: false
+---
+```
+
+:::tip
+`outline: false` only hides the outline column, but the space originally occupied by the outline column is still reserved. If you want the main content to occupy a wider screen space, you can use [`pageType: doc-wide`](#pagetype) with `outline: false`:
+
+```yaml
+---
+pageType: doc-wide
+outline: false
+---
+```
+
+This way, the main content area will automatically expand to occupy the space originally used by the outline column.
+:::
+
+## footer
+
+Whether to display the components at the bottom of the document (such as previous/next page). By default, the `doc` page will display the footer at the bottom. You can hide the footer with the following config:
+
+```yaml
+---
+footer: false
+---
+```
+
+## navbar
+
+Whether to show the top navigation bar. By default, all pages will display the top navigation bar. But if you want to hide the top navigation bar, you can use the following front matter config:
+
+```yaml
+---
+navbar: false
+---
+```
+
+## context
+
+- **Type**: `string`
+
+After configuration, the `data-context` attribute will be added to the DOM node when the sidebar is generated, and the value is the configured value.
+
+```yaml title="foo.mdx"
+---
+context: 'context-foo'
+---
+```
+
+```yaml title="bar.mdx"
+---
+context: 'context-bar'
+---
+```
+
+The DOM structure of the final generated sidebar is abbreviated as follows:
+
+```html
+<div class="rspress-sidebar-group">
+  <div className="rspress-sidebar-item" data-context="context-foo"></div>
+  <div className="rspress-sidebar-item" data-context="context-bar"></div>
+</div>
+```
+
 ## head
 
-- Type: `[string, Record<string, string>][]`
+- **Type**: `[string, Record<string, string>][]`
 
-Specify extra head tags to be injected for the current page. Will be appended after head tags injected by site-level config.
+Specify extra head tags to be injected for the current page. They will be appended after the head tags injected by Rspress globally.
 
 For example, you can use these headers to specify custom meta tags for [Open Graph](https://ogp.me/).
 
@@ -99,11 +204,54 @@ The generated head tags are as follows:
 </head>
 ```
 
-## hero
+## Overview page related
 
-- Type: `Object`
+The following configurations are related to the [Overview Page](/guide/advanced/overview-page) feature.
 
-The hero config for the home page. It has the following types:
+### overview
+
+- **Type**: `boolean`
+- **Default**: `false`
+
+Enable the overview page feature in the document page. If set to `true`, it means the current page is an [Overview Page](../../guide/advanced/overview-page.mdx). For example:
+
+```yaml
+---
+overview: true
+---
+```
+
+### overviewHeaders
+
+- **Type**: `number[]`
+- **Default**: `[2]`
+
+The header levels shown in the overview page. By default, the displayed header is h2. But if you want to display different header levels, you can specify it using the `overviewHeaders` front matter field. For example:
+
+```yaml
+---
+overview: true
+overviewHeaders: []
+---
+```
+
+Or
+
+```yaml
+---
+overviewHeaders: [2, 3]
+---
+```
+
+## Home page related
+
+The following configurations are related to the [Home Page](/guide/basic/home-page) feature.
+
+### hero
+
+- **Type**: `Object`
+
+The hero config for the `home` page. It has the following types:
 
 ```ts
 interface Hero {
@@ -174,28 +322,28 @@ hero:
   actions:
     - theme: brand
       text: <span class="hero-actions-text">Introduction</span>
-      link: /zh/guide/introduction
+      link: /en/guide/introduction
     - theme: alt
       text: <span class="hero-actions-text">Quick Start</span>
-      link: /zh/guide/getting-started
+      link: /en/guide/getting-started
 ---
 ```
 
-## features
+### features
 
-- Type: `Array`
-- Default: `[]`
+- **Type**: `Array`
+- **Default**: `[]`
 
-features config of the `home` page. It has the following types:
+The features config of the `home` page. It has the following types:
 
 ```ts
 interface Feature {
   title: string;
   details: string;
   icon: string;
-  // The length of the card grid, currently only support[3, 4, 6]
+  // The length of the card grid, currently only supports [3, 4, 6]
   span?: number;
-  // The link of the feature, not required.
+  // The link of the feature card, optional.
   link?: string;
 }
 
@@ -209,128 +357,14 @@ For example, you could use the following to specify the features configuration f
 pageType: home
 
 features:
-  - title: 'MDX Support'
+  - title: 'MDX: Write content with flexible syntax'
     details: MDX is a powerful way to write content. You can use React components in Markdown.
     icon: 📦
-  - title: 'Feature Rich'
-    details: Out of box support for i18n, full-text search etc.
+  - title: 'Feature Rich: One-stop solution'
+    details: Out of the box support for full-text search, i18n, and other common features.
     icon: 🎨
-  - title: 'Customizable'
-    details: You can customize the theme ui and the build process.
+  - title: 'Highly Extensible: Provides multiple customization capabilities'
+    details: Through its extension mechanism, you can easily extend the theme UI and build capabilities.
     icon: 🚀
 ---
-```
-
-## sidebar
-
-Whether to show the sidebar on the left. By default, the `doc` page will display the sidebar on the left. If you want to hide the sidebar on the left, you can use the following front matter config:
-
-```yaml
----
-sidebar: false
----
-```
-
-:::tip
-`sidebar: false` only hides the sidebar, but the space originally occupied by the sidebar is still reserved. If you want the main content to occupy a wider screen space, you can use [`pageType: doc-wide`](#pagetype) with `sidebar: false`:
-
-```yaml
----
-pageType: doc-wide
-sidebar: false
----
-```
-
-This way, the main content area will automatically expand to occupy the space originally used by the sidebar.
-:::
-
-## outline
-
-Whether to display the outline column on the right. By default, the `doc` page displays the outline column on the right. You can hide the outline column with the following config:
-
-```yaml
----
-outline: false
----
-```
-
-:::tip
-`outline: false` only hides the outline column, but the space originally occupied by the outline column is still reserved. If you want the main content to occupy a wider screen space, you can use [`pageType: doc-wide`](#pagetype) with `outline: false`:
-
-```yaml
----
-pageType: doc-wide
-outline: false
----
-```
-
-This way, the main content area will automatically expand to occupy the space originally used by the outline column.
-:::
-
-## footer
-
-Whether to display the components at the bottom of the document (such as previous/next page). By default, the `doc` page will display the footer at the bottom. You can hide the footer with the following config:
-
-```yaml
----
-footer: false
----
-```
-
-## navbar
-
-Whether to hide the top navigation bar. You can hide the top nav bar with the following config:
-
-```yaml
----
-navbar: false
----
-```
-
-## overviewHeaders
-
-- Type: `number[]`
-- Default: `[2]`
-
-The headers shown in the overview page. By default, the displayed header is h2. But if you want to display different headers, you can specify it using the `overviewHeaders` front matter field. For example:
-
-```yaml
----
-overviewHeaders: []
----
-```
-
-Or
-
-```yaml
----
-overviewHeaders: [2, 3]
----
-```
-
-## context
-
-- Type: `string`
-
-After configuration, the `data-context` attribute will be added to the DOM node when the sidebar is generated, and the value is the configured value.
-
-```yaml title="foo.mdx"
----
-context: 'context-foo'
----
-```
-
-```yaml title="bar.mdx"
----
-context: 'context-bar'
----
-```
-
-The DOM structure of the final generated sidebar is abbreviated as follows:
-
-```html
-<div class="rspress-sidebar-group">
-  <div className="rspress-sidebar-item" data-context="context-foo"></div>
-  <div className="rspress-sidebar-item" data-context="context-bar"></div>
-</div>
 ```

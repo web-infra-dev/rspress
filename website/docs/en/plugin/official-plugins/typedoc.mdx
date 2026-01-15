@@ -92,21 +92,21 @@ We do not recommend modifying the generated `.md` documents in the `api` directo
 
 ### entryPoints
 
-- Type: `string[]`
-- Default: `[]`
+- **Type**: `string[]`
+- **Default**: `[]`
 
 Specifies the absolute path of the TS modules for which documentation should be generated.
 
 ### outDir
 
-- Type: `string`
-- Default: `api`
+- **Type**: `string`
+- **Default**: `api`
 
 Customize the output directory for the documentation. You need to provide a relative path, such as `api/custom`.
 
 ### setup
 
-- Type: `(app: Application) => Promise<Application> | Promise<void> | void`
-- Default: `() => {}`
+- **Type**: `(app: Application) => Promise<Application> | Promise<void> | void`
+- **Default**: `() => {}`
 
 A function to setup the TypeDoc Application. You can use this to customize the TypeDoc configuration before it generates the documentation.

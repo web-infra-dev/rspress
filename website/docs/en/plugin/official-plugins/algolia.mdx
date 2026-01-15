@@ -62,8 +62,8 @@ interface Options {
 
 ### verificationContent
 
-- Type: `string | undefined`
-- Default: `undefined`
+- **Type**: `string | undefined`
+- **Default**: `undefined`
 
 Used for meta tag verification when creating algolia crawler. Format: `<meta name="algolia-site-verification" content="YOUR_VERIFICATION_CONTENT" />`. Refer to [Create a new crawler - algolia](https://www.algolia.com/doc/tools/crawler/getting-started/create-crawler/#dns)
 
@@ -89,14 +89,14 @@ type SearchProps = {
 
 ### docSearchProps
 
-- Type: `import('@docsearch/react').DocSearchProps`
-- Default: `undefined`
+- **Type**: `import('@docsearch/react').DocSearchProps`
+- **Default**: `undefined`
 
 `docSearchProps` will be directly passed to the `<DocSearch />` component in `@docsearch/react`. For specific types, please refer to [docsearch documentation](https://docsearch.algolia.com/docs/api).
 
 ### locales
 
-- Type:
+- **Type**:
 
 ```ts
 type Locales = Record<
@@ -105,7 +105,7 @@ type Locales = Record<
 >;
 ```
 
-- Default: `{}`
+- **Default**: `{}`
 
 For customizing translated text in different languages, Rspress provides the following translated text, which can be imported through import.
 
