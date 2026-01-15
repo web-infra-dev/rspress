@@ -7,7 +7,7 @@ function useDebounce<T extends (...args: any[]) => void>(
   fn: T,
   delay: number,
 ): T {
-  const timerRef = useRef<ReturnType<typeof setTimeout>>(null);
+  const timerRef = useRef<number | null>(null);
   const fnRef = useRef(fn);
   fnRef.current = fn;
 
@@ -189,9 +189,7 @@ export function CssPickerEditor() {
   // Sync activeTab when value changes externally (e.g., reset)
   useEffect(() => {
     const newTab = getTabIndex(value);
-    if (newTab !== activeTab) {
-      setActiveTab(newTab);
-    }
+    setActiveTab(prev => (prev !== newTab ? newTab : prev));
   }, [value]);
 
   const isCustomized = activeTab === 0 && value !== INITIAL_CONTENT;

@@ -31,10 +31,8 @@ export function CssLiveCodeEditorWithSelect({
   // Sync activeOption when value changes externally (e.g., reset)
   useEffect(() => {
     const newOption = getOptionIndex(value);
-    if (newOption !== activeOption) {
-      setActiveOption(newOption);
-    }
-  }, [value]);
+    setActiveOption(prev => (prev !== newOption ? newOption : prev));
+  }, [value, options]);
 
   // Show "Default" when code matches initialCode, "Custom" when modified
   const isCustomized = activeOption === 0 && value !== initialCode;
