@@ -170,6 +170,10 @@ export function CssPickerEditor() {
   }, []);
 
   return (
-    <CssLiveCodeEditorWithTabs tabs={cssTabs} initialCode={INITIAL_CONTENT} />
+    <CssLiveCodeEditorWithTabs
+      tabs={cssTabs}
+      styleId="css-picker-brand-style"
+      initialCode={INITIAL_CONTENT}
+    />
   );
 }

@@ -1,56 +1,64 @@
 import { useEffect, useRef, useState } from 'react';
+import { useCssModification } from './CssModificationContext';
 import { LiveCodeEditor } from './LiveCodeEditor';
 
 export interface CssLiveCodeEditorProps {
-  styleId?: string;
-  value: string;
-  onChange?: (code: string) => void; // New prop to notify parent of changes
-  disabled?: boolean; // New prop to disable editing
+  styleId: string; // Required - unique ID for this editor
+  defaultValue: string; // Required - the default CSS value
+  disabled?: boolean;
 }
 
 export function CssLiveCodeEditor({
-  value,
-  styleId = 'live-css-editor-style',
-  onChange,
-  disabled = false, // Default to false
+  styleId,
+  defaultValue,
+  disabled = false,
 }: CssLiveCodeEditorProps) {
-  const styleElement = useRef<HTMLStyleElement>(null);
+  const { register, updateValue, getEntry } = useCssModification();
 
-  function applyCssToStyleDom(content: string) {
-    let styleEl: HTMLStyleElement | null = document.getElementById(
-      styleId,
-    ) as HTMLStyleElement;
-    if (!styleEl) {
-      styleEl = document.createElement('style') as HTMLStyleElement;
-      styleEl.id = styleId;
-      document.head.appendChild(styleEl);
-      styleElement.current = styleEl;
-    }
-    styleEl.textContent = content;
+  // Register or get existing entry on mount
+  const entryRef = useRef<{
+    defaultValue: string;
+    currentValue: string;
+  } | null>(null);
+  if (!entryRef.current) {
+    entryRef.current = register(styleId, defaultValue);
   }
 
+  const [value, setValue] = useState(entryRef.current.currentValue);
+
+  // Update context when value changes
   useEffect(() => {
-    applyCssToStyleDom(value);
-  }, [value]);
+    updateValue(styleId, value);
+  }, [value, styleId, updateValue]);
+
+  // Sync from context when re-entering page (entry might have been updated)
+  useEffect(() => {
+    const entry = getEntry(styleId);
+    if (entry && entry.currentValue !== value) {
+      setValue(entry.currentValue);
+    }
+  }, [styleId, getEntry]);
+
+  const handleChange = (code: string) => {
+    setValue(code);
+  };
 
   return (
     <LiveCodeEditor
       lang="css"
       value={value}
       disabled={disabled}
-      onChange={code => {
-        onChange?.(code);
-      }}
+      onChange={handleChange}
     />
   );
 }
 
 export function CssLiveCodeEditorWithDefault({
+  styleId,
   defaultValue,
 }: {
+  styleId: string;
   defaultValue: string;
 }) {
-  const [value, setValue] = useState(defaultValue);
-
-  return <CssLiveCodeEditor value={value} onChange={code => setValue(code)} />;
+  return <CssLiveCodeEditor styleId={styleId} defaultValue={defaultValue} />;
 }

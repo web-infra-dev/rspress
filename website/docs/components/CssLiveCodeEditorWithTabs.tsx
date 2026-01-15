@@ -1,5 +1,6 @@
-import { useState } from 'react';
-import { CssLiveCodeEditor } from './CssLiveCodeEditor';
+import { useEffect, useRef, useState } from 'react';
+import { useCssModification } from './CssModificationContext';
+import { LiveCodeEditor } from './LiveCodeEditor';
 
 export interface Tab {
   label: string;
@@ -8,24 +9,64 @@ export interface Tab {
 
 export interface CssLiveCodeEditorWithTabsProps {
   tabs: Tab[];
-  styleId?: string;
-  initialCode?: string;
+  styleId: string; // Required - unique ID for this editor
+  initialCode: string; // Required - the default CSS value
 }
 
 export function CssLiveCodeEditorWithTabs({
   tabs,
-  styleId = 'live-css-editor-with-tabs-style',
-  initialCode = '',
+  styleId,
+  initialCode,
 }: CssLiveCodeEditorWithTabsProps) {
-  const [activeTab, setActiveTab] = useState(0); // 0 is custom tab
-  const [customCode, setCustomCode] = useState(initialCode);
+  const { register, updateValue, getEntry } = useCssModification();
+
+  // Register or get existing entry on mount
+  const entryRef = useRef<{
+    defaultValue: string;
+    currentValue: string;
+  } | null>(null);
+  if (!entryRef.current) {
+    entryRef.current = register(styleId, initialCode);
+  }
+
+  // Determine initial tab based on current value
+  const getInitialTab = (currentValue: string): number => {
+    const matchingTabIndex = tabs.findIndex(tab => tab.code === currentValue);
+    if (matchingTabIndex !== -1) {
+      return matchingTabIndex + 1;
+    }
+    return 0; // Custom tab
+  };
+
+  const [activeTab, setActiveTab] = useState(() =>
+    getInitialTab(entryRef.current!.currentValue),
+  );
+  const [customCode, setCustomCode] = useState(() =>
+    activeTab === 0 ? entryRef.current!.currentValue : initialCode,
+  );
 
   const allTabs = [{ label: 'Custom', code: initialCode }, ...tabs];
-  const shouldUseDropdown = allTabs.length > 6; // Use dropdown if more than 6 tabs
+  const shouldUseDropdown = allTabs.length > 6;
 
   const currentCode =
     activeTab === 0 ? customCode : tabs[activeTab - 1]?.code || '';
-  const isCustomTab = activeTab === 0;
+
+  // Update context when currentCode changes
+  useEffect(() => {
+    updateValue(styleId, currentCode);
+  }, [currentCode, styleId, updateValue]);
+
+  // Sync from context when re-entering page
+  useEffect(() => {
+    const entry = getEntry(styleId);
+    if (entry && entry.currentValue !== currentCode) {
+      const newTab = getInitialTab(entry.currentValue);
+      setActiveTab(newTab);
+      if (newTab === 0) {
+        setCustomCode(entry.currentValue);
+      }
+    }
+  }, [styleId, getEntry]);
 
   const handleTabChange = (tabIndex: number) => {
     if (tabIndex === 0) {
@@ -35,12 +76,8 @@ export function CssLiveCodeEditorWithTabs({
   };
 
   const handleCodeChange = (code: string) => {
-    if (isCustomTab) {
-      setCustomCode(code);
-    } else {
-      setActiveTab(0);
-      setCustomCode(code);
-    }
+    setActiveTab(0);
+    setCustomCode(code);
   };
 
   return (
@@ -108,9 +145,9 @@ export function CssLiveCodeEditorWithTabs({
       )}
 
       {/* CSS Editor */}
-      <CssLiveCodeEditor
+      <LiveCodeEditor
+        lang="css"
         value={currentCode}
-        styleId={styleId}
         onChange={handleCodeChange}
       />
     </div>
