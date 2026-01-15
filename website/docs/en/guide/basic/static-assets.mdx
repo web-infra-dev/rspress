@@ -63,7 +63,12 @@ Not only images, but you can also import videos, audios and other static assets 
 
 ### public directory
 
-You can also import static assets using absolute paths. In this case, Rspress will look for assets in the `public` folder under the `document root directory`. These assets are not processed during the build and are referenced directly via URL.
+The public directory under the docs directory can be used to place static assets. These assets are not processed during the build and can be referenced directly via URL.
+
+- When you start the dev server, these assets will be served under the [server.base](https://rsbuild.rs/config/server/base) root path (default `/`).
+- When you run a production build, these assets will be copied to the [dist directory](https://rsbuild.rs/guide/basic/output-files).
+
+For example, you can place files like `robots.txt`, `manifest.json`, or `favicon.ico` in the public directory.
 
 For example, if the root directory is `docs` and the directory structure is as follows:
 

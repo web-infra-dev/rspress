@@ -64,7 +64,12 @@ docs
 
 ### public 目录
 
-你也可以使用绝对路径导入静态资源。这样，Rspress 将会在`文档根目录`下的 `public` 文件夹中寻找资源。这些资源不会被构建，直接通过 URL 引用。
+docs 目录下的 public 目录可以用于放置一些静态资源，这些资源不会被构建，可以直接通过 URL 引用。
+
+- 当你启动开发服务器时，这些资源会被托管在 [server.base](https://rsbuild.rs/zh/config/server/base) 根路径下（默认 `/`）。
+- 当你执行生产模式构建时，这些资源会被拷贝到 [dist 目录](https://rsbuild.rs/zh/guide/basic/output-files)。
+
+比如，你可以在 public 目录下放置 `robots.txt`、`manifest.json` 或 `favicon.ico` 等文件。
 
 例如，如果根目录是 `docs` 并且目录结构如下：
 
