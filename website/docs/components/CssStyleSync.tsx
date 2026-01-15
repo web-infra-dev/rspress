@@ -1,12 +1,12 @@
 import { useEffect } from 'react';
-import { useCssModification } from './CssModificationContext';
+import { useAllCssModification } from './CssModificationContext';
 
 /**
  * Component that syncs CSS from context to style elements in the document head.
  * This component should be rendered once at the top level of the app.
  */
 export function CssStyleSync() {
-  const { entries } = useCssModification();
+  const { entries } = useAllCssModification();
 
   useEffect(() => {
     // Sync all entries to their corresponding style elements

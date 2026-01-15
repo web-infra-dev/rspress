@@ -1,9 +1,9 @@
 import { useLang } from '@rspress/core/runtime';
-import { useCssModification } from './CssModificationContext';
+import { useAllCssModification } from './CssModificationContext';
 
 export function CssModificationIndicator() {
   const lang = useLang();
-  const { hasModifications, resetAll } = useCssModification();
+  const { hasModifications, resetAll } = useAllCssModification();
 
   if (!hasModifications) {
     return null;

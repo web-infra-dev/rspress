@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useCssModification } from './CssModificationContext';
 import { LiveCodeEditor } from './LiveCodeEditor';
 
@@ -18,19 +18,10 @@ export function CssLiveCodeEditorWithTabs({
   styleId,
   initialCode,
 }: CssLiveCodeEditorWithTabsProps) {
-  const { register, updateValue, getEntry } = useCssModification();
+  const [value, setValue] = useCssModification(styleId, initialCode);
 
-  // Register or get existing entry on mount
-  const entryRef = useRef<{
-    defaultValue: string;
-    currentValue: string;
-  } | null>(null);
-  if (!entryRef.current) {
-    entryRef.current = register(styleId, initialCode);
-  }
-
-  // Determine initial tab based on current value
-  const getInitialTab = (currentValue: string): number => {
+  // Determine which tab matches the current value
+  const getTabForValue = (currentValue: string): number => {
     const matchingTabIndex = tabs.findIndex(tab => tab.code === currentValue);
     if (matchingTabIndex !== -1) {
       return matchingTabIndex + 1;
@@ -38,35 +29,27 @@ export function CssLiveCodeEditorWithTabs({
     return 0; // Custom tab
   };
 
-  const [activeTab, setActiveTab] = useState(() =>
-    getInitialTab(entryRef.current!.currentValue),
-  );
+  const [activeTab, setActiveTab] = useState(() => getTabForValue(value));
   const [customCode, setCustomCode] = useState(() =>
-    activeTab === 0 ? entryRef.current!.currentValue : initialCode,
+    activeTab === 0 ? value : initialCode,
   );
+
+  // Sync activeTab when value changes (e.g., from resetAll)
+  useEffect(() => {
+    const newTab = getTabForValue(value);
+    if (newTab !== activeTab) {
+      setActiveTab(newTab);
+      if (newTab === 0 && value !== customCode) {
+        setCustomCode(value);
+      }
+    }
+  }, [value]);
 
   const allTabs = [{ label: 'Custom', code: initialCode }, ...tabs];
   const shouldUseDropdown = allTabs.length > 6;
 
   const currentCode =
     activeTab === 0 ? customCode : tabs[activeTab - 1]?.code || '';
-
-  // Update context when currentCode changes
-  useEffect(() => {
-    updateValue(styleId, currentCode);
-  }, [currentCode, styleId, updateValue]);
-
-  // Sync from context when re-entering page
-  useEffect(() => {
-    const entry = getEntry(styleId);
-    if (entry && entry.currentValue !== currentCode) {
-      const newTab = getInitialTab(entry.currentValue);
-      setActiveTab(newTab);
-      if (newTab === 0) {
-        setCustomCode(entry.currentValue);
-      }
-    }
-  }, [styleId, getEntry]);
 
   const handleTabChange = (tabIndex: number) => {
     if (tabIndex === 0) {

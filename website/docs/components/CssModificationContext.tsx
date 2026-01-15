@@ -3,6 +3,7 @@ import {
   type ReactNode,
   useCallback,
   useContext,
+  useEffect,
   useState,
 } from 'react';
 
@@ -13,15 +14,11 @@ interface CssModificationEntry {
 
 interface CssModificationContextType {
   entries: Map<string, CssModificationEntry>;
-  register: (
-    id: string,
-    defaultValue: string,
-    currentValue?: string,
-  ) => CssModificationEntry;
+  register: (id: string, defaultValue: string) => CssModificationEntry;
   updateValue: (id: string, currentValue: string) => void;
+  getEntry: (id: string) => CssModificationEntry | undefined;
   resetAll: () => void;
   hasModifications: boolean;
-  getEntry: (id: string) => CssModificationEntry | undefined;
 }
 
 const CssModificationContext = createContext<CssModificationContextType | null>(
@@ -34,11 +31,7 @@ export function CssModificationProvider({ children }: { children: ReactNode }) {
   );
 
   const register = useCallback(
-    (
-      id: string,
-      defaultValue: string,
-      currentValue?: string,
-    ): CssModificationEntry => {
+    (id: string, defaultValue: string): CssModificationEntry => {
       let entry: CssModificationEntry | undefined;
 
       setEntries(prev => {
@@ -51,7 +44,7 @@ export function CssModificationProvider({ children }: { children: ReactNode }) {
         // Create new entry
         entry = {
           defaultValue,
-          currentValue: currentValue ?? defaultValue,
+          currentValue: defaultValue,
         };
         const next = new Map(prev);
         next.set(id, entry);
@@ -59,9 +52,7 @@ export function CssModificationProvider({ children }: { children: ReactNode }) {
       });
 
       // Return existing or new entry
-      return (
-        entry ?? { defaultValue, currentValue: currentValue ?? defaultValue }
-      );
+      return entry ?? { defaultValue, currentValue: defaultValue };
     },
     [],
   );
@@ -69,7 +60,7 @@ export function CssModificationProvider({ children }: { children: ReactNode }) {
   const updateValue = useCallback((id: string, currentValue: string) => {
     setEntries(prev => {
       const entry = prev.get(id);
-      if (!entry) return prev;
+      if (!entry || entry.currentValue === currentValue) return prev;
 
       const next = new Map(prev);
       next.set(id, { ...entry, currentValue });
@@ -106,9 +97,9 @@ export function CssModificationProvider({ children }: { children: ReactNode }) {
         entries,
         register,
         updateValue,
+        getEntry,
         resetAll,
         hasModifications,
-        getEntry,
       }}
     >
       {children}
@@ -116,12 +107,63 @@ export function CssModificationProvider({ children }: { children: ReactNode }) {
   );
 }
 
-export function useCssModification() {
+/**
+ * Hook to manage CSS modification state for a specific editor.
+ * Similar to useState but synced with global context.
+ * @param id - Unique identifier for this CSS editor
+ * @param initialValue - The default CSS value
+ * @returns [currentValue, setValue] - Current value and setter function
+ */
+export function useCssModification(
+  id: string,
+  initialValue: string,
+): [string, (value: string) => void] {
   const context = useContext(CssModificationContext);
   if (!context) {
     throw new Error(
       'useCssModification must be used within CssModificationProvider',
     );
   }
-  return context;
+
+  const { register, updateValue, getEntry } = context;
+
+  // Register on first render
+  const [localValue, setLocalValue] = useState(() => {
+    const entry = register(id, initialValue);
+    return entry.currentValue;
+  });
+
+  // Update context when local value changes
+  useEffect(() => {
+    updateValue(id, localValue);
+  }, [id, localValue, updateValue]);
+
+  // Sync from context (e.g., after resetAll)
+  useEffect(() => {
+    const entry = getEntry(id);
+    if (entry && entry.currentValue !== localValue) {
+      setLocalValue(entry.currentValue);
+    }
+  }, [id, getEntry, localValue]);
+
+  return [localValue, setLocalValue];
+}
+
+/**
+ * Hook to access global CSS modification state.
+ * @returns { hasModifications, resetAll }
+ */
+export function useAllCssModification() {
+  const context = useContext(CssModificationContext);
+  if (!context) {
+    throw new Error(
+      'useAllCssModification must be used within CssModificationProvider',
+    );
+  }
+
+  return {
+    hasModifications: context.hasModifications,
+    resetAll: context.resetAll,
+    entries: context.entries,
+  };
 }
