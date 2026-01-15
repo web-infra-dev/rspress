@@ -4,7 +4,7 @@ export const Border = ({ children }: { children: ReactNode }) => {
   return (
     <div
       style={{
-        border: '1px solid var(--rp-c-divider)',
+        border: '1px solid var(--rp-c-divider-light)',
         borderRadius: 'var(--rp-radius)',
         padding: '10px',
       }}

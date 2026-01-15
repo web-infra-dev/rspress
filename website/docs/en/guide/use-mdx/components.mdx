@@ -1,13 +1,19 @@
-# MDX and React components
+# MDX and React Components
 
-Rspress supports [MDX](https://mdxjs.com/), a powerful way to develop content.
+Rspress supports [MDX](https://mdxjs.com/), a content authoring format that seamlessly combines Markdown with JSX. MDX allows you to use React components directly in your documentation, combining Markdown's concise syntax with the power of the React ecosystem, making it ideal for building interactive, component-based technical documentation.
 
-## MDX
+## What is MDX
 
-MDX is a superset of Markdown, which means you can write Markdown files as usual. For example:
+MDX is a combination of Markdown and JSX syntax, allowing you to write and use React components directly in Markdown documents.
+
+We recommend using `.mdx` for all documentation files, which enables you to write content just like regular Markdown and also import and utilize the [built-in components](/ui/components/index.mdx) provided by Rspress.
 
 ```mdx
-# Hello world
+# Hello, world!
+
+import { PackageManagerTabs } from '@rspress/core/theme';
+
+<PackageManagerTabs command="create rspress@latest" />
 ```
 
 ## Componentization \{#component}
