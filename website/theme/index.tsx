@@ -1,6 +1,5 @@
 import { useFrontmatter, useI18n, useLang } from '@rspress/core/runtime';
 import {
-  Banner,
   HomeLayout as BasicHomeLayout,
   Layout as BasicLayout,
   getCustomMDXComponent as basicGetCustomMDXComponent,
@@ -18,6 +17,9 @@ import {
 } from '@rspress/plugin-llms/runtime';
 import { NavIcon } from '@rstack-dev/doc-ui/nav-icon';
 import type { PropsWithChildren } from 'react';
+import { CssModificationProvider } from '../docs/components/CssModificationContext';
+import { CssModificationIndicator } from '../docs/components/CssModificationIndicator';
+import { CssStyleSync } from '../docs/components/CssStyleSync';
 import { Tag } from './components/Tag';
 import { ToolStack } from './components/ToolStack';
 
@@ -38,21 +40,12 @@ function HomeLayout() {
 }
 
 const Layout = () => {
-  const lang = useLang();
   return (
-    <BasicLayout
-      beforeNavTitle={<NavIcon />}
-      beforeNav={
-        <Banner
-          href="/"
-          message={
-            lang === 'en'
-              ? '🚧 Rspress 2.0 document is under development'
-              : '🚧 Rspress 2.0 文档还在开发中'
-          }
-        />
-      }
-    />
+    <CssModificationProvider>
+      <CssStyleSync />
+      <CssModificationIndicator />
+      <BasicLayout beforeNavTitle={<NavIcon />} />
+    </CssModificationProvider>
   );
 };
 

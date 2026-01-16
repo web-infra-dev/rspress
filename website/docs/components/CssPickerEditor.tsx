@@ -1,25 +1,34 @@
-import { useMemo } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import INITIAL_CONTENT from '../../../packages/core/src/theme/styles/vars/brand-vars.css?raw';
-import {
-  CssLiveCodeEditorWithTabs,
-  type Tab,
-} from './CssLiveCodeEditorWithTabs';
+import { useCssEntry } from './CssModificationContext';
+import { LiveCodeEditor } from './LiveCodeEditor';
+
+function useDebounce<T extends (...args: any[]) => void>(
+  fn: T,
+  delay: number,
+): T {
+  const timerRef = useRef<number | null>(null);
+  const fnRef = useRef(fn);
+  fnRef.current = fn;
+
+  useEffect(() => {
+    return () => {
+      if (timerRef.current) clearTimeout(timerRef.current);
+    };
+  }, []);
+
+  return ((...args: Parameters<T>) => {
+    if (timerRef.current) clearTimeout(timerRef.current);
+    timerRef.current = setTimeout(() => fnRef.current(...args), delay);
+  }) as T;
+}
 
 // Predefined colors
-const PREDEFINED_COLORS = {
-  RED: '#FF0000',
-  ORANGE: '#FFA500',
-  BLUE: '#0095FF',
-  GREEN: '#00AA55',
-};
-
-// Tab definitions
-const TABS = [
-  { id: 'custom', label: 'Custom' },
-  { id: 'red', label: 'Red', color: PREDEFINED_COLORS.RED },
-  { id: 'orange', label: 'Orange', color: PREDEFINED_COLORS.ORANGE },
-  { id: 'blue', label: 'Blue', color: PREDEFINED_COLORS.BLUE },
-  { id: 'green', label: 'Green', color: PREDEFINED_COLORS.GREEN },
+const PREDEFINED_COLORS = [
+  { label: 'Red', color: '#FF0000' },
+  { label: 'Orange', color: '#FFA500' },
+  { label: 'Blue', color: '#0095FF' },
+  { label: 'Green', color: '#00AA55' },
 ];
 
 function hslString(h: number, s: number, l: number) {
@@ -76,7 +85,6 @@ function adjustLightness(hex: string, delta: number) {
 }
 
 function adjustAlpha(hex: string, alpha: number) {
-  // hex to rgb
   let r = 0,
     g = 0,
     b = 0;
@@ -160,16 +168,121 @@ function genCssCode(hex: string) {
 `;
 }
 
+// Tab indices: 0 = Default/Custom, 1-4 = predefined colors
 export function CssPickerEditor() {
-  // Generate tabs with predefined colors and their CSS
-  const cssTabs: Tab[] = useMemo(() => {
-    return TABS.slice(1).map(tab => ({
-      label: tab.label,
-      code: genCssCode(tab.color!),
-    }));
-  }, []);
+  const [value, setValue] = useCssEntry(
+    'css-picker-brand-style',
+    INITIAL_CONTENT,
+  );
+  const [pickerColor, setPickerColor] = useState('#0095FF');
+
+  // Determine active tab based on current value
+  const getTabIndex = (code: string): number => {
+    const idx = PREDEFINED_COLORS.findIndex(
+      tab => genCssCode(tab.color) === code,
+    );
+    return idx !== -1 ? idx + 1 : 0;
+  };
+
+  const [activeTab, setActiveTab] = useState(() => getTabIndex(value));
+
+  // Sync activeTab when value changes externally (e.g., reset)
+  useEffect(() => {
+    const newTab = getTabIndex(value);
+    setActiveTab(prev => (prev !== newTab ? newTab : prev));
+  }, [value]);
+
+  const isCustomized = activeTab === 0 && value !== INITIAL_CONTENT;
+  const firstTabLabel = isCustomized ? 'Custom' : 'Default';
+
+  const handleTabChange = (tabIndex: number) => {
+    setActiveTab(tabIndex);
+    if (tabIndex === 0) {
+      setValue(INITIAL_CONTENT);
+    } else {
+      setValue(genCssCode(PREDEFINED_COLORS[tabIndex - 1].color));
+    }
+  };
+
+  const handleCodeChange = (code: string) => {
+    setActiveTab(0);
+    setValue(code);
+  };
+
+  const debouncedSetValue = useDebounce((color: string) => {
+    setActiveTab(0);
+    setValue(genCssCode(color));
+  }, 50);
+
+  const handlePickerChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const color = e.target.value;
+    setPickerColor(color);
+    debouncedSetValue(color);
+  };
+
+  const tabStyle = (isActive: boolean) => ({
+    padding: '8px 16px',
+    backgroundColor: isActive ? 'var(--rp-c-brand)' : 'var(--rp-c-bg)',
+    color: isActive ? '#fff' : 'var(--rp-c-text-1)',
+    border: '1px solid var(--rp-c-divider-light)',
+    borderRadius: '6px',
+    cursor: 'pointer',
+    fontSize: '14px',
+    fontWeight: isActive ? '500' : '400',
+    transition: 'all 0.2s ease',
+    whiteSpace: 'nowrap' as const,
+    outline: 'none',
+  });
 
   return (
-    <CssLiveCodeEditorWithTabs tabs={cssTabs} initialCode={INITIAL_CONTENT} />
+    <div>
+      {/* Tabs and Color Picker */}
+      <div
+        style={{
+          display: 'flex',
+          flexWrap: 'wrap',
+          alignItems: 'center',
+          gap: '8px',
+          marginBottom: 16,
+        }}
+      >
+        {/* Default/Custom tab */}
+        <button
+          onClick={() => handleTabChange(0)}
+          style={tabStyle(activeTab === 0)}
+        >
+          {firstTabLabel}
+        </button>
+
+        {/* Predefined color tabs */}
+        {PREDEFINED_COLORS.map((tab, index) => (
+          <button
+            key={tab.label}
+            onClick={() => handleTabChange(index + 1)}
+            style={tabStyle(activeTab === index + 1)}
+          >
+            {tab.label}
+          </button>
+        ))}
+
+        {/* Color picker - standalone, not a tab */}
+        <input
+          type="color"
+          value={pickerColor}
+          onChange={handlePickerChange}
+          style={{
+            width: '32px',
+            height: '32px',
+            padding: 0,
+            border: '1px solid var(--rp-c-divider-light)',
+            borderRadius: '6px',
+            cursor: 'pointer',
+          }}
+        />
+      </div>
+
+      {/* CSS Editor */}
+      <LiveCodeEditor lang="css" value={value} onChange={handleCodeChange} />
+    </div>
   );
 }
