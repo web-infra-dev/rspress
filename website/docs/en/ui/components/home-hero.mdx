@@ -9,30 +9,7 @@ This component is part of the [Home Page](/guide/basic/home-page). `HomeHero` re
 
 ## Usage
 
-Configure `hero` in the frontmatter of your mdx file:
-
-```yaml title="index.mdx"
----
-pageType: home
-hero:
-  badge: 'New'
-  name: 'Rspress'
-  text: 'Build docs fast'
-  tagline: 'MDX-powered, Vite-speed docs framework'
-  image:
-    src: 'https://assets.rspack.rs/rspress/rspress-logo.svg'
-    alt: 'Rspress'
-  actions:
-    - text: 'Get Started'
-      link: '/guide/start/introduction'
-      theme: 'brand'
-    - text: 'GitHub'
-      link: 'https://github.com/web-infra-dev/rspress'
-      theme: 'alt'
----
-```
-
-The component will automatically read the `hero` configuration from frontmatter.
+The `HomeHero` component automatically reads the `hero` configuration from frontmatter. For detailed configuration options of `hero`, please refer to [Frontmatter Config](/api/config/config-frontmatter#hero).
 
 ### Custom slots
 
@@ -60,44 +37,3 @@ Custom content to insert before the Hero buttons.
 - **Type:** `React.ReactNode`
 
 Custom content to insert after the Hero buttons.
-
-## Hero configuration
-
-Here is the type definition for the `hero` field in frontmatter:
-
-```ts
-interface Hero {
-  /** Badge text at the top */
-  badge?: string;
-  /** Brand name, displayed with highlight style */
-  name?: string;
-  /** Main title text, supports multiple lines (separated by \n) */
-  text?: string;
-  /** Subtitle/tagline */
-  tagline?: string;
-  /** Hero image configuration */
-  image?: {
-    /** Image source, supports separate dark/light mode images */
-    src?: string | { dark: string; light: string };
-    /** Image alt text */
-    alt?: string;
-    /** Responsive image srcset attribute */
-    srcset?: string | string[];
-    /** Responsive image sizes attribute */
-    sizes?: string | string[];
-  };
-  /** Action button list */
-  actions?: {
-    /** Button text */
-    text: string;
-    /** Button link */
-    link: string;
-    /** Button theme: brand (primary) or alt (secondary) */
-    theme: 'brand' | 'alt';
-  }[];
-}
-```
-
-- `image.src` supports configuring different images for dark/light modes
-- `image.srcset` and `image.sizes` are for responsive images, see [MDN srcset documentation](https://developer.mozilla.org/docs/Web/HTML/Element/img#srcset)
-- `name`, `text`, and `tagline` all support HTML strings
