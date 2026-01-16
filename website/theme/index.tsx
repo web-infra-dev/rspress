@@ -85,6 +85,7 @@ function getCustomMDXComponent() {
         <LlmsContainer>
           <LlmsCopyButton />
           <LlmsViewOptions />
+          <LlmsCopyButton />
         </LlmsContainer>
         {isEjectOnly || isNonEjectable ? (
           <Callout type="warning">
