@@ -4,21 +4,10 @@
  * @license MIT
  */
 import { useLang } from '@rspress/core/runtime';
+import { IconCopy, IconSuccess } from '@theme';
 import { useCallback, useRef, useState } from 'react';
-import { IconCopy } from './IconCopy';
 import styles from './LlmsCopyButton.module.scss';
 import { useMdUrl } from './useMdUrl';
-
-function IconSuccess({ className }: { className?: string }) {
-  return (
-    <svg width="32" height="32" viewBox="0 0 30 30" className={className}>
-      <path
-        fill="#49cd37"
-        d="m13 24l-9-9l1.414-1.414L13 21.171L26.586 7.586L28 9L13 24z"
-      />
-    </svg>
-  );
-}
 
 export interface LlmsCopyButtonProps
   extends React.ButtonHTMLAttributes<HTMLButtonElement> {
@@ -45,7 +34,7 @@ export function LlmsCopyButton(props: LlmsCopyButtonProps) {
   const {
     onClick,
     text,
-    textByLang = { zh: '\u590d\u5236 Markdown', en: 'Copy Markdown' },
+    textByLang = { zh: '复制 Markdown', en: 'Copy Markdown' },
     ...otherProps
   } = props;
   const lang = useLang();
