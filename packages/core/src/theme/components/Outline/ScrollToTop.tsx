@@ -12,13 +12,19 @@ export function ScrollToTop() {
   const t = useI18n();
 
   return (
-    <button className="rp-outline__scroll-to-top" onClick={scrollToTop}>
+    <button
+      type="button"
+      className="rp-outline__scroll-to-top"
+      onClick={scrollToTop}
+      aria-label={t('scrollToTopText')}
+    >
       <svg
         width="16"
         height="16"
         viewBox="0 0 16 16"
         fill="none"
         xmlns="http://www.w3.org/2000/svg"
+        aria-hidden="true"
       >
         <path
           fillRule="evenodd"

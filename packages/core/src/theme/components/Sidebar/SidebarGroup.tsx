@@ -83,6 +83,7 @@ export function SidebarGroup(props: SidebarGroupProps) {
         context={item.context}
         className={clsx('rp-sidebar-group', className)}
         depth={depth}
+        aria-expanded={collapsible ? !collapsed : undefined}
         onClick={e => {
           if (!active && item.link && !collapsed) {
             navigate(item.link);

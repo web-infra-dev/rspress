@@ -16,6 +16,20 @@ export const DEFAULT_I18N_TEXT = {
     ko: '테마',
     ru: 'Тема',
   },
+  switchAppearanceLabel: {
+    zh: '切换主题',
+    en: 'Switch theme',
+    ja: 'テーマを切り替える',
+    ko: '테마 전환',
+    ru: 'Переключить тему',
+  },
+  navMenuLabel: {
+    zh: '导航菜单',
+    en: 'Navigation menu',
+    ja: 'ナビゲーションメニュー',
+    ko: '탐색 메뉴',
+    ru: 'Меню навигации',
+  },
   versionsText: {
     zh: '版本',
     en: 'Versions',

@@ -55,10 +55,11 @@ export function CopyCodeButton({
 
   return (
     <button
+      type="button"
       className="rp-code-button-group__button rp-code-copy-button"
       onClick={() => copyCode(codeBlockRef.current, copyButtonRef.current!)}
       ref={copyButtonRef}
-      title={t('codeButtonGroupCopyButtonText')}
+      aria-label={t('codeButtonGroupCopyButtonText')}
     >
       <SvgWrapper
         icon={IconCopy}
