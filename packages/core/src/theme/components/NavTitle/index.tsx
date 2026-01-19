@@ -21,7 +21,7 @@ export const NavTitle = () => {
   const title = (localeInfo?.title ?? site.title) || 'Home';
   const langRoutePrefix = lang === defaultLang ? '/' : addTrailingSlash(lang);
 
-  const { logo: rawLogo, logoText } = site;
+  const { logo: rawLogo, logoText, logoHref } = site;
   const logo = useMemo(() => {
     if (!rawLogo) {
       return null;
@@ -57,7 +57,7 @@ export const NavTitle = () => {
   return (
     <div className="rp-nav__title">
       <Link
-        href={addLeadingSlash(langRoutePrefix)}
+        href={logoHref || addLeadingSlash(langRoutePrefix)}
         className="rp-nav__title__link"
       >
         {logo && <div className="rp-nav__title__logo">{logo}</div>}

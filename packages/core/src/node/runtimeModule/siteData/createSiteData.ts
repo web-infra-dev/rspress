@@ -24,6 +24,7 @@ export async function createSiteData(userConfig: UserConfig): Promise<{
     locales: userConfig?.locales || userConfig.themeConfig?.locales || [],
     logo: userConfig?.logo || '',
     logoText: userConfig?.logoText || '',
+    logoHref: userConfig?.logoHref || '',
     multiVersion: {
       default: userConfig?.multiVersion?.default || '',
       versions: userConfig?.multiVersion?.versions || [],
