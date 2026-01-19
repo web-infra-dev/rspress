@@ -6,16 +6,7 @@
 import { useLang } from '@rspress/core/runtime';
 import type React from 'react';
 import { useEffect, useMemo, useRef, useState } from 'react';
-import {
-  active,
-  dropdownArrow,
-  dropdownButton,
-  dropdownItem,
-  dropdownMenu,
-  externalIcon,
-  leftIcon,
-  rotated,
-} from './LlmsViewOptions.module.scss';
+import styles from './LlmsViewOptions.module.scss';
 import { useMdUrl } from './useMdUrl';
 
 type Option =
@@ -33,7 +24,7 @@ type Option =
   | 'chatgpt'
   | 'claude';
 
-interface LlmsViewOptionsProps
+export interface LlmsViewOptionsProps
   extends React.ButtonHTMLAttributes<HTMLButtonElement> {
   /**
    * Default options for the dropdown.
@@ -44,7 +35,7 @@ interface LlmsViewOptionsProps
   options?: Option[];
   /**
    * Button text by language, used with `useLang`.
-   * @default en: 'Open', zh: '打开'
+   * @default en: 'Open', zh: '\u6253\u5f00'
    */
   textByLang?: Record<string, string>;
   /**
@@ -110,11 +101,11 @@ const IconExternalLink = () => {
   );
 };
 
-const LlmsViewOptions = ({
+export function LlmsViewOptions({
   options = ['markdownLink', 'chatgpt', 'claude'],
   text,
-  textByLang = { en: 'Open', zh: '打开' },
-}: LlmsViewOptionsProps) => {
+  textByLang = { en: 'Open', zh: '\u6253\u5f00' },
+}: LlmsViewOptionsProps) {
   const [isOpen, setIsOpen] = useState(false);
   const dropdownRef = useRef<HTMLButtonElement>(null);
 
@@ -152,7 +143,9 @@ const LlmsViewOptions = ({
 
     return {
       markdownLink: {
-        title: isEn ? 'Copy Markdown link' : '复制 Markdown 链接',
+        title: isEn
+          ? 'Copy Markdown link'
+          : '\u590d\u5236 Markdown \u94fe\u63a5',
         icon: (
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -177,7 +170,7 @@ const LlmsViewOptions = ({
         },
       },
       chatgpt: {
-        title: isEn ? 'Open in ChatGPT' : '在 ChatGPT 中打开',
+        title: isEn ? 'Open in ChatGPT' : '\u5728 ChatGPT \u4e2d\u6253\u5f00',
         href: `https://chatgpt.com/?${new URLSearchParams({
           hints: 'search',
           q,
@@ -195,7 +188,7 @@ const LlmsViewOptions = ({
         ),
       },
       claude: {
-        title: isEn ? 'Open in Claude' : '在 Claude 中打开',
+        title: isEn ? 'Open in Claude' : '\u5728 Claude \u4e2d\u6253\u5f00',
         href: `https://claude.ai/new?${new URLSearchParams({
           q,
         })}`,
@@ -218,16 +211,22 @@ const LlmsViewOptions = ({
     <>
       <button
         ref={dropdownRef}
-        className={['rp-not-doc', dropdownButton, isOpen ? active : '']
+        className={[
+          'rp-not-doc',
+          styles.dropdownButton,
+          isOpen ? styles.active : '',
+        ]
           .filter(Boolean)
           .join(' ')}
         type="button"
         onClick={toggleDropdown}
       >
         {text ?? textByLang[lang] ?? 'Open'}
-        <IconArrow className={`${dropdownArrow} ${isOpen ? rotated : ''}`} />
+        <IconArrow
+          className={`${styles.dropdownArrow} ${isOpen ? styles.rotated : ''}`}
+        />
         {isOpen && (
-          <div className={dropdownMenu}>
+          <div className={styles.dropdownMenu}>
             {options.map(item => {
               let displayItem = item as {
                 title: string;
@@ -246,14 +245,14 @@ const LlmsViewOptions = ({
                 return (
                   <a
                     key={displayItem.title}
-                    className={dropdownItem}
+                    className={styles.dropdownItem}
                     href={displayItem.href}
                     target="_blank"
                     rel="noopener noreferrer"
                   >
-                    <span className={leftIcon}>{displayItem.icon}</span>
+                    <span className={styles.leftIcon}>{displayItem.icon}</span>
                     <span>{displayItem.title}</span>
-                    <span className={externalIcon}>
+                    <span className={styles.externalIcon}>
                       <IconExternalLink />
                     </span>
                   </a>
@@ -262,10 +261,10 @@ const LlmsViewOptions = ({
               return (
                 <div
                   key={displayItem.title}
-                  className={dropdownItem}
+                  className={styles.dropdownItem}
                   onClick={displayItem.onClick}
                 >
-                  <span className={leftIcon}>{displayItem.icon}</span>
+                  <span className={styles.leftIcon}>{displayItem.icon}</span>
                   <span>{displayItem.title}</span>
                 </div>
               );
@@ -275,7 +274,4 @@ const LlmsViewOptions = ({
       </button>
     </>
   );
-};
-
-export { LlmsViewOptions };
-export type { LlmsViewOptionsProps };
+}

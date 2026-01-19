@@ -2,7 +2,7 @@ import { normalizeHref, usePageData, withBase } from '@rspress/core/runtime';
 import { useMemo } from 'react';
 
 /**
- * copied from '../llmsTxt.ts'
+ * Convert route path to markdown file path
  */
 function routePathToMdPath(routePath: string): string {
   let url: string = routePath;
