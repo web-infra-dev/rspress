@@ -1,18 +1,18 @@
 ---
-description: 通过 frontmatter 配置 overview 开启预览页功能，根据 _meta.json 和文章标题自动生成分组预览内容。
+description: 通过 frontmatter 配置 overview 开启 Overview 页功能，根据 _meta.json 和文章标题自动生成分组概览内容。
 ---
 
-# 预览页
+# Overview 页
 
 ## 效果
 
-Rspress 内置一套预览页，效果如下:
+Rspress 内置一套 Overview 页，效果如下:
 
 <img src="https://lf3-static.bytednsdoc.com/obj/eden-cn/uhbfnupenuhf/rspress/rspress-api-overview.png" />
 
 ## 如何开启？
 
-生成预览页需要如下两步:
+生成 Overview 页需要如下两步:
 
 ### 1. 新建目录，配置 frontmatter
 
@@ -39,7 +39,7 @@ overview: true
 
 ::: note
 
-预览页的标题可以通过 frontmatter 进行配置，默认为 `Overview`，在 frontmatter 中配置了 `title` 后，正文中不需要再写 H1 标题。
+Overview 页的标题可以通过 frontmatter 进行配置，默认为 `Overview`，在 frontmatter 中配置了 `title` 后，正文中不需要再写 H1 标题。
 
 ```md
 ---
@@ -54,7 +54,7 @@ This is an Overview page of our website.
 
 ### 2. 配置 `_meta.json`
 
-预览页面的内容结构会根据 `_meta.json` 及其对应文章的 h1、h2 标题自动生成。比如 `api/_meta.json` 的配置如下：
+Overview 页面的内容结构会根据 `_meta.json` 及其对应文章的 h1、h2 标题自动生成。比如 `api/_meta.json` 的配置如下：
 
 ```json
 [
@@ -79,11 +79,11 @@ This is an Overview page of our website.
 
 > `_meta.json` 的详细配置用法可以参考[自动化导航栏/侧边栏](/guide/basic/auto-nav-sidebar)。
 
-在如上的配置中，最后预览页会生成一个 `Theme` 的分组，这个分组里面包含 `component.md(x)` 和 `utils.md(x)` 两篇文章的 h1、h2 标题。当然，你也可以参考 `Theme` 分组的配置，添加更多的分组。
+在如上的配置中，最后 Overview 页会生成一个 `Theme` 的分组，这个分组里面包含 `component.md(x)` 和 `utils.md(x)` 两篇文章的 h1、h2 标题。当然，你也可以参考 `Theme` 分组的配置，添加更多的分组。
 
-如果要控制在预览页中展示的标题级别，可以通过 `_meta.json` 中的 `overviewHeaders` 配置，默认为 `[2]`，也可以在对应的文件中配置 `overviewHeaders: [2]` 的 FrontMatter。
+如果要控制在 Overview 页中展示的标题级别，可以通过 `_meta.json` 中的 `overviewHeaders` 配置，默认为 `[2]`，也可以在对应的文件中配置 `overviewHeaders: [2]` 的 FrontMatter。
 
-如果要在 `theme` 下同样生成一个子预览页，可以在 `theme` 目录新建一个 `index.md`，配置 `overview: true` 的 frontmatter。
+如果要在 `theme` 下同样生成一个子 Overview 页，可以在 `theme` 目录新建一个 `index.md`，配置 `overview: true` 的 frontmatter。
 
 ```tree
 docs
