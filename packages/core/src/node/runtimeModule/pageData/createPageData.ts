@@ -46,6 +46,7 @@ export async function createPageData(context: FactoryContext): Promise<{
     alias,
     root: userDocRoot,
     searchCodeBlocks,
+    extractDescription: userConfig.markdown?.extractDescription,
   });
   // modify page index by plugins
   await pluginDriver.modifySearchIndexData(pages);

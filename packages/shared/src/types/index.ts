@@ -533,6 +533,7 @@ export interface MarkdownOptions {
    * @default true
    */
   crossCompilerCache?: boolean;
+  extractDescription?: boolean;
 }
 
 export type Config =

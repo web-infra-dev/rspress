@@ -45,6 +45,7 @@ interface ExtractPageDataOptions {
   searchCodeBlocks: boolean;
   replaceRules: ReplaceRule[];
   alias: Record<string, string | string[]>;
+  extractDescription?: boolean;
 }
 
 /**
@@ -163,7 +164,13 @@ async function getPageIndexInfoByRoute(
   route: RouteMeta,
   options: ExtractPageDataOptions,
 ): Promise<PageIndexInfo> {
-  const { alias, replaceRules, root, searchCodeBlocks } = options;
+  const {
+    alias,
+    replaceRules,
+    root,
+    searchCodeBlocks,
+    extractDescription: extractDescriptionConfig = true,
+  } = options;
   const defaultIndexInfo: PageIndexInfo = {
     title: '',
     content: '',
@@ -213,9 +220,10 @@ async function getPageIndexInfoByRoute(
   const { title, toc: rawToc } = parseToc(tree);
 
   // Extract description from first paragraph before h2 (if not in frontmatter)
-  const extractedDescription = frontmatter.description
-    ? ''
-    : extractDescription(tree);
+  const extractedDescription =
+    frontmatter.description || !extractDescriptionConfig
+      ? ''
+      : extractDescription(tree);
 
   // Run plugins and stringify to markdown for search content
   const processedTree = await processor.run(tree);
