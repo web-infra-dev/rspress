@@ -1,9 +1,33 @@
+import { useSite } from '@rspress/core/runtime';
 import clsx from 'clsx';
 import type React from 'react';
+import { LlmsContainer, LlmsCopyButton, LlmsViewOptions } from '../../Llms';
 
 export const H1 = (props: React.ComponentProps<'h1'>) => {
-  const { className, ...rest } = props;
-  return <h1 className={clsx('rp-toc-include', className)} {...rest} />;
+  const { className, children, ...rest } = props;
+  const { site } = useSite();
+  const llmsUI = site?.themeConfig?.llmsUI;
+  const enableOnH1 = llmsUI?.enableOnH1;
+
+  if (enableOnH1) {
+    return (
+      <>
+        <h1 className={clsx('rp-toc-include', className)} {...rest}>
+          {children}
+        </h1>
+        <LlmsContainer>
+          <LlmsCopyButton />
+          <LlmsViewOptions options={llmsUI?.viewOptions} />
+        </LlmsContainer>
+      </>
+    );
+  }
+
+  return (
+    <h1 className={clsx('rp-toc-include', className)} {...rest}>
+      {children}
+    </h1>
+  );
 };
 
 export const H2 = (props: React.ComponentProps<'h2'>) => {

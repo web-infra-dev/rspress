@@ -519,3 +519,64 @@ title: 文档标题
 
 ## 正文内容
 ```
+
+## llmsUI
+
+- **类型**：
+
+```ts
+interface LlmsUI {
+  enableOnH1?: boolean;
+  viewOptions?: Array<
+    | 'markdownLink'
+    | 'chatgpt'
+    | 'claude'
+    | { title: string; icon?: React.ReactNode; onClick?: () => void }
+    | { title: string; href: string; icon?: React.ReactNode }
+  >;
+}
+```
+
+- **默认值**： `undefined`
+
+LLMS UI 组件配置。当 `enableOnH1` 为 `true` 时，会自动在所有 H1 标题下方添加 `LlmsCopyButton` 和 `LlmsViewOptions` 组件。
+
+这在使用 [`@rspress/plugin-llms`](/plugin/official-plugins/llms) 插件生成 llms.txt 文件时非常有用，允许用户轻松复制或在 AI 工具中打开 markdown 内容。
+
+示例：
+
+```ts title="rspress.config.ts"
+import { defineConfig } from '@rspress/core';
+import { pluginLlms } from '@rspress/plugin-llms';
+
+export default defineConfig({
+  plugins: [pluginLlms()],
+  themeConfig: {
+    llmsUI: {
+      enableOnH1: true,
+      // 可选：自定义下拉菜单选项
+      viewOptions: ['markdownLink', 'chatgpt', 'claude'],
+    },
+  },
+});
+```
+
+### enableOnH1
+
+- **类型**：`boolean`
+- **默认值**： `false`
+
+是否在 H1 标题下方显示 LLMS UI 组件（复制按钮和查看选项下拉菜单）。
+
+### viewOptions
+
+- **类型**：`Array<'markdownLink' | 'chatgpt' | 'claude' | CustomOption>`
+- **默认值**： `['markdownLink', 'chatgpt', 'claude']`
+
+LlmsViewOptions 下拉菜单的选项。内置选项包括：
+
+- `'markdownLink'`: 复制 markdown 文件链接
+- `'chatgpt'`: 在 ChatGPT 中打开
+- `'claude'`: 在 Claude 中打开
+
+你也可以提供自定义选项，包含 `title`、`href` 或 `onClick`，以及可选的 `icon`。

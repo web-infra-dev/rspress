@@ -532,3 +532,64 @@ title: Document Title
 
 ## Content
 ```
+
+## llmsUI
+
+- **Type**:
+
+```ts
+interface LlmsUI {
+  enableOnH1?: boolean;
+  viewOptions?: Array<
+    | 'markdownLink'
+    | 'chatgpt'
+    | 'claude'
+    | { title: string; icon?: React.ReactNode; onClick?: () => void }
+    | { title: string; href: string; icon?: React.ReactNode }
+  >;
+}
+```
+
+- **Default**: `undefined`
+
+Configuration for LLMS UI components. When `enableOnH1` is `true`, `LlmsCopyButton` and `LlmsViewOptions` components will be automatically added below all H1 headers.
+
+This is useful when using the [`@rspress/plugin-llms`](/plugin/official-plugins/llms) plugin to generate llms.txt files, allowing users to easily copy or open the markdown content in AI tools.
+
+For example:
+
+```ts title="rspress.config.ts"
+import { defineConfig } from '@rspress/core';
+import { pluginLlms } from '@rspress/plugin-llms';
+
+export default defineConfig({
+  plugins: [pluginLlms()],
+  themeConfig: {
+    llmsUI: {
+      enableOnH1: true,
+      // Optional: customize dropdown menu options
+      viewOptions: ['markdownLink', 'chatgpt', 'claude'],
+    },
+  },
+});
+```
+
+### enableOnH1
+
+- **Type**: `boolean`
+- **Default**: `false`
+
+Whether to show LLMS UI components (copy button and view options dropdown) below H1 headers.
+
+### viewOptions
+
+- **Type**: `Array<'markdownLink' | 'chatgpt' | 'claude' | CustomOption>`
+- **Default**: `['markdownLink', 'chatgpt', 'claude']`
+
+Options for the LlmsViewOptions dropdown menu. Built-in options include:
+
+- `'markdownLink'`: Copy markdown file link
+- `'chatgpt'`: Open in ChatGPT
+- `'claude'`: Open in Claude
+
+You can also provide custom options with `title`, `href` or `onClick`, and optional `icon`.

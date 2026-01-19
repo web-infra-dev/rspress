@@ -42,7 +42,31 @@ export default defineConfig({
 
 ### 2. UI 展示
 
-如果你希望阅读文档站的用户可以更多地调用大模型来阅读文档，可以通过 [自定义主题](/guide/basic/custom-theme) 在页面顶部增加一个复制 Markdown 按钮，效果与本网站相同。
+如果你希望阅读文档站的用户可以更多地调用大模型来阅读文档，可以在页面顶部增加一个复制 Markdown 按钮，效果与本网站相同。
+
+#### 使用 themeConfig（推荐）
+
+最简单的方式是在 `themeConfig` 中启用 `llmsUI.enableOnH1`。这将自动在所有 H1 标题下方添加 `LlmsCopyButton` 和 `LlmsViewOptions` 组件，无需自定义主题代码：
+
+```ts title="rspress.config.ts"
+import { defineConfig } from '@rspress/core';
+import { pluginLlms } from '@rspress/plugin-llms';
+
+export default defineConfig({
+  plugins: [pluginLlms()],
+  themeConfig: {
+    llmsUI: {
+      enableOnH1: true,
+      // 可选：自定义下拉菜单选项
+      // viewOptions: ['markdownLink', 'chatgpt', 'claude'],
+    },
+  },
+});
+```
+
+#### 使用自定义主题
+
+如果你需要更多控制，可以通过 [自定义主题](/guide/basic/custom-theme) 来添加复制 Markdown 按钮。
 
 为所有页面增加顶部复制按钮，示例：
 

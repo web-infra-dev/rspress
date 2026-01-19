@@ -16,6 +16,8 @@ export type { I18nText } from './theme/i18nText';
 export type {
   EditLink,
   Footer,
+  LlmsUI,
+  LlmsViewOption,
   NormalizedLocales,
   NormalizedThemeConfig,
   ThemeConfig,

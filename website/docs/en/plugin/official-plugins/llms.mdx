@@ -42,7 +42,31 @@ Then execute the `rspress build` command. While generating the output, the plugi
 
 ### 2. UI display
 
-If you want users reading your documentation site to better utilize large language models to read the documentation, you can add a copy Markdown button at the top of the page through [custom theme](/guide/basic/custom-theme), with the same effect as this website.
+If you want users reading your documentation site to better utilize large language models to read the documentation, you can add a copy Markdown button at the top of the page with the same effect as this website.
+
+#### Using themeConfig (Recommended)
+
+The simplest way is to enable `llmsUI.enableOnH1` in `themeConfig`. This will automatically add `LlmsCopyButton` and `LlmsViewOptions` components below all H1 headers without requiring custom theme code:
+
+```ts title="rspress.config.ts"
+import { defineConfig } from '@rspress/core';
+import { pluginLlms } from '@rspress/plugin-llms';
+
+export default defineConfig({
+  plugins: [pluginLlms()],
+  themeConfig: {
+    llmsUI: {
+      enableOnH1: true,
+      // Optional: customize view options
+      // viewOptions: ['markdownLink', 'chatgpt', 'claude'],
+    },
+  },
+});
+```
+
+#### Using custom theme
+
+If you need more control, you can use [custom theme](/guide/basic/custom-theme) to add a copy Markdown button.
 
 Add a copy button to all pages, example:
 
