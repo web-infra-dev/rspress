@@ -265,6 +265,9 @@ async function createInternalBuildConfig(
       include: [PACKAGE_ROOT],
       define: {
         'process.env.TEST': JSON.stringify(process.env.TEST),
+        'process.env.ENABLE_LLMS_UI': JSON.stringify(
+          Boolean(config.themeConfig?.llmsUI ?? config.llms),
+        ),
       },
     },
     performance: {

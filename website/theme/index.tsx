@@ -79,13 +79,7 @@ function getCustomMDXComponent() {
 
     return (
       <>
-        <H1 {...props}>
-          {children} <Tag tag={tag} />
-        </H1>
-        <LlmsContainer>
-          <LlmsCopyButton />
-          <LlmsViewOptions />
-        </LlmsContainer>
+        <H1 {...props}>{children}</H1>
         {isEjectOnly || isNonEjectable ? (
           <Callout type="warning">
             {isEjectOnly ? <p>{t('ejectOnlyDescription')}</p> : null}

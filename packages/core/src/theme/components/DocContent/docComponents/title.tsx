@@ -1,32 +1,28 @@
-import { useSite } from '@rspress/core/runtime';
+import { useFrontmatter, useSite } from '@rspress/core/runtime';
+import { LlmsContainer, LlmsCopyButton, LlmsViewOptions, Tag } from '@theme';
 import clsx from 'clsx';
 import type React from 'react';
-import { LlmsContainer, LlmsCopyButton, LlmsViewOptions } from '../../Llms';
 
 export const H1 = (props: React.ComponentProps<'h1'>) => {
   const { className, children, ...rest } = props;
   const { site } = useSite();
   const llmsUI = site?.themeConfig?.llmsUI;
-  const enableOnH1 = llmsUI?.enableOnH1;
+  const {
+    frontmatter: { tag },
+  } = useFrontmatter();
 
-  if (enableOnH1) {
-    return (
-      <>
-        <h1 className={clsx('rp-toc-include', className)} {...rest}>
-          {children}
-        </h1>
+  return (
+    <>
+      <h1 className={clsx('rp-toc-include', className)} {...rest}>
+        {children} <Tag tag={tag} />
+      </h1>
+      {process.env.ENABLE_LLMS_UI && (
         <LlmsContainer>
           <LlmsCopyButton />
           <LlmsViewOptions options={llmsUI?.viewOptions} />
         </LlmsContainer>
-      </>
-    );
-  }
-
-  return (
-    <h1 className={clsx('rp-toc-include', className)} {...rest}>
-      {children}
-    </h1>
+      )}
+    </>
   );
 };
 
