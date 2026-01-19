@@ -1,18 +1,27 @@
 import {
   addLeadingSlash,
+  addTrailingSlash,
   normalizeImagePath,
-  useLocaleSiteData,
+  useLang,
   useSite,
 } from '@rspress/core/runtime';
 import { Link } from '@theme';
 import { useMemo } from 'react';
-import './NavTitle.scss';
+import './index.scss';
 
 export const NavTitle = () => {
   const { site } = useSite();
-  const localeData = useLocaleSiteData();
+  const lang = useLang();
+
+  const themeConfig = site?.themeConfig ?? {};
+  const defaultLang = site.lang ?? '';
+  const locales = themeConfig?.locales;
+  const localeInfo = locales?.find(locale => locale.lang === lang);
+
+  const title = (localeInfo?.title ?? site.title) || 'Home';
+  const langRoutePrefix = lang === defaultLang ? '/' : addTrailingSlash(lang);
+
   const { logo: rawLogo, logoText } = site;
-  const title = (localeData.title ?? site.title) || 'Home';
   const logo = useMemo(() => {
     if (!rawLogo) {
       return null;
@@ -48,7 +57,7 @@ export const NavTitle = () => {
   return (
     <div className="rp-nav__title">
       <Link
-        href={addLeadingSlash((localeData as any).langRoutePrefix ?? '/')}
+        href={addLeadingSlash(langRoutePrefix)}
         className="rp-nav__title__link"
       >
         {logo && <div className="rp-nav__title__logo">{logo}</div>}

@@ -1,0 +1,110 @@
+---
+overviewHeaders: []
+tag: eject-only
+---
+
+# NavTitle
+
+This component is part of the navigation bar. `NavTitle` renders the site logo and title in the top-left corner of the navigation bar.
+
+## Usage
+
+The component automatically reads configuration from your `rspress.config.ts`:
+
+```ts title="rspress.config.ts"
+import { defineConfig } from 'rspress/config';
+
+export default defineConfig({
+  title: 'My Site',
+  logo: '/logo.png',
+  // or with dark/light mode support:
+  logo: {
+    light: '/logo-light.png',
+    dark: '/logo-dark.png',
+  },
+  logoText: 'My Site',
+});
+```
+
+### Custom NavTitle
+
+You can customize NavTitle through the Layout component's `navTitle` prop:
+
+```tsx title="theme/index.tsx"
+import Theme from '@rspress/core/theme';
+
+const Layout = () => <Theme.Layout navTitle={<MyCustomNavTitle />} />;
+
+export default {
+  ...Theme,
+  Layout,
+};
+
+export * from '@rspress/core/theme';
+```
+
+Or use the `beforeNavTitle` and `afterNavTitle` props to insert custom content:
+
+```tsx title="theme/index.tsx"
+import Theme from '@rspress/core/theme';
+
+const Layout = () => (
+  <Theme.Layout
+    beforeNavTitle={<div>Before</div>}
+    afterNavTitle={<div>After</div>}
+  />
+);
+
+export default {
+  ...Theme,
+  Layout,
+};
+
+export * from '@rspress/core/theme';
+```
+
+## Configuration
+
+### logo
+
+- **Type:** `string | { light: string; dark: string }`
+
+The site logo. Can be a single image path or separate images for light/dark modes.
+
+### logoText
+
+- **Type:** `string`
+
+Text to display next to the logo.
+
+### title
+
+- **Type:** `string`
+
+The site title. Displayed when neither `logo` nor `logoText` is configured.
+
+## i18n Support
+
+For multi-language sites, configure `title` in each locale:
+
+```ts title="rspress.config.ts"
+import { defineConfig } from 'rspress/config';
+
+export default defineConfig({
+  title: 'My Site',
+  themeConfig: {
+    locales: [
+      {
+        lang: 'en',
+        title: 'My Site',
+      },
+      {
+        lang: 'zh',
+        title: '我的网站',
+      },
+    ],
+  },
+});
+```
+
+The NavTitle component will automatically display the correct title based on the current locale.

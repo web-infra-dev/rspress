@@ -30,6 +30,7 @@ export { NoSSR } from './NoSSR';
 export { isActive, pathnameToRouteService, preloadLink } from './route';
 export {
   addLeadingSlash,
+  addTrailingSlash,
   cleanUrlByConfig,
   isEqualPath,
   isProduction,

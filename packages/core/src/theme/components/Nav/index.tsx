@@ -1,8 +1,13 @@
 import { useNav } from '@rspress/core/runtime';
-import { NavHamburger, Search, SocialLinks, SwitchAppearance } from '@theme';
+import {
+  NavHamburger,
+  NavTitle,
+  Search,
+  SocialLinks,
+  SwitchAppearance,
+} from '@theme';
 import './index.scss';
 import { NavLangs, NavMenu, NavMenuDivider, NavVersions } from './NavMenu';
-import { NavTitle } from './NavTitle';
 
 export interface NavProps {
   beforeNavTitle?: React.ReactNode;

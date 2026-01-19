@@ -1,5 +1,6 @@
 import {
   addLeadingSlash,
+  addTrailingSlash,
   isDataUrl,
   isExternalUrl,
   isProduction,
@@ -66,6 +67,7 @@ function isAbsoluteUrl(path: string) {
 
 export {
   addLeadingSlash,
+  addTrailingSlash,
   removeTrailingSlash,
   isProduction,
   normalizeImagePath,

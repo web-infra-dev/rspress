@@ -31,6 +31,7 @@ export { Link, type LinkProps } from './components/Link/index';
 export { useLinkNavigate } from './components/Link/useLinkNavigate';
 export { Nav, type NavProps } from './components/Nav/index';
 export { NavHamburger } from './components/NavHamburger/index';
+export { NavTitle } from './components/NavTitle/index';
 export { Outline } from './components/Outline/index';
 export { Overview } from './components/Overview/index';
 export {
