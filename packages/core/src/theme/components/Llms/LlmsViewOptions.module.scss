@@ -1,32 +1,11 @@
 .dropdownButton {
-  display: inline-flex;
-  padding: 8px 12px;
-  height: 40px;
-  justify-content: center;
-  align-items: center;
-  gap: 8px;
+  position: relative;
 
-  border-radius: 8px;
-  border: 1px solid var(--rp-c-divider-light);
-  background: var(--rp-c-bg);
-  color: var(--rp-c-text-1);
-
-  font-size: 14px;
-  font-style: normal;
-  font-weight: 400;
-  line-height: 22px;
-
-  transition:
-    background 0.3s ease,
-    border 0.3s ease;
-  &:hover {
-    background: var(--rp-c-bg-mute);
-  }
   &.active {
     background: var(--rp-c-bg-mute);
+    color: var(--rp-c-text-1);
+    border-color: var(--rp-c-divider);
   }
-  position: relative;
-  cursor: pointer;
 }
 
 .dropdownArrow {
@@ -37,25 +16,24 @@
 }
 
 .dropdownMenu {
-  width: 250px;
+  width: max-content;
+  min-width: 200px;
   position: absolute;
-  top: 100%;
-  left: -10%;
-  z-index: 2;
+  top: calc(100% + 4px);
+  left: 0;
+  z-index: 100;
 
-  margin-top: 4px;
-
-  display: inline-flex;
-  padding: 8px;
+  display: flex;
+  padding: 4px;
   flex-direction: column;
   align-items: flex-start;
 
   border-radius: 8px;
   border: 1px solid var(--rp-c-divider-light);
   background: var(--rp-c-bg);
-  color: var(--rp-c-text-1);
+  color: var(--rp-c-text-1); /* Ensure text color is set */
 
-  box-shadow: 0 4px 16px 0 rgba(0, 0, 0, 0.04);
+  box-shadow: 0 4px 16px 0 rgba(0, 0, 0, 0.08);
   animation: fadeIn 0.15s ease-in-out;
 }
 
@@ -82,10 +60,17 @@
   text-align: left;
   cursor: pointer;
   font-size: 14px;
-  border-radius: 8px;
+  font-weight: 500;
+  border-radius: 6px;
+  color: var(--rp-c-text-2);
+  transition:
+    background 0.2s,
+    color 0.2s;
 
   &:hover {
     background: var(--rp-c-bg-mute);
+    color: var(--rp-c-text-1);
+    text-decoration: none;
   }
 }
 

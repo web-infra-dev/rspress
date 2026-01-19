@@ -1,34 +1,13 @@
 .llmsCopyButtonContainer {
-  display: inline-flex;
-  padding: 8px 12px;
-  height: 40px;
-  justify-content: center;
-  align-items: center;
-  gap: 8px;
-
-  border-radius: 8px;
-  border: 1px solid var(--rp-c-divider-light);
-  background: var(--rp-c-bg);
-  color: var(--rp-c-text-1);
-
-  font-size: 14px;
-  font-style: normal;
-  font-weight: 400;
-
-  transition:
-    background 0.3s ease,
-    border 0.3s ease,
-    opacity 0.3s ease;
-
-  cursor: pointer;
-  &:hover {
-    background: var(--rp-c-bg-mute);
-  }
   &.loading {
     background: var(--rp-c-bg-mute);
     opacity: 0.5;
+    cursor: wait;
   }
+
   &.success {
+    color: var(--rp-c-text-1);
+
     .iconCopy {
       display: none;
     }

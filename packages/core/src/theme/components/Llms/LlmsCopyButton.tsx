@@ -6,6 +6,7 @@
 import { useLang } from '@rspress/core/runtime';
 import { IconCopy, IconSuccess } from '@theme';
 import { useCallback, useRef, useState } from 'react';
+import commonStyles from './index.module.scss';
 import styles from './LlmsCopyButton.module.scss';
 import { useMdUrl } from './useMdUrl';
 
@@ -79,6 +80,7 @@ export function LlmsCopyButton(props: LlmsCopyButtonProps) {
       disabled={isLoading}
       className={[
         'rp-not-doc',
+        commonStyles.button,
         styles.llmsCopyButtonContainer,
         isLoading ? styles.loading : '',
         isFinished ? styles.success : '',

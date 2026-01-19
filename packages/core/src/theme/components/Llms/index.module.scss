@@ -1,0 +1,31 @@
+.button {
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  height: 36px;
+  padding: 0 12px;
+  gap: 6px;
+
+  border-radius: 8px;
+  border: 1px solid var(--rp-c-divider-light);
+  background: var(--rp-c-bg-soft);
+  color: var(--rp-c-text-2);
+
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 22px;
+
+  transition:
+    background 0.2s,
+    border-color 0.2s,
+    color 0.2s,
+    opacity 0.2s;
+
+  cursor: pointer;
+
+  &:hover {
+    background: var(--rp-c-bg-mute);
+    border-color: var(--rp-c-divider);
+    color: var(--rp-c-text-1);
+  }
+}
