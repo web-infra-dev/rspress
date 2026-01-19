@@ -77,7 +77,7 @@ export async function renderPages(
         }
       }
       if (csrRoutes.length > 0) {
-        logger.warn(
+        logger.info(
           `Some routes are ignored in SSG and fallback to CSR via \`ssg.experimentalExcludeRoutePaths\`: ${picocolors.yellow(
             csrRoutes.map(r => r.routePath).join(', '),
           )}`,
