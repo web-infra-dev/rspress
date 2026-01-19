@@ -1,8 +1,7 @@
 .rp-llms-view-options__trigger {
   position: relative;
 
-  &--active,
-  .rp-llms-view-options__trigger {
+  &--active {
     background: var(--rp-c-bg-mute);
     color: var(--rp-c-text-1);
     border-color: var(--rp-c-divider);
