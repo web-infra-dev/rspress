@@ -8,7 +8,7 @@
     "preview": "rspress preview"
   },
   "devDependencies": {
-    "@rsbuild/plugin-sass": "~1.4.0",
+    "@rsbuild/plugin-sass": "~1.4.1",
     "@rsdoctor/rspack-plugin": "1.4.0",
     "@rspress/core": "workspace:*",
     "@rspress/plugin-algolia": "workspace:*",
@@ -16,17 +16,17 @@
     "@rspress/plugin-preview": "workspace:*",
     "@rspress/plugin-sitemap": "workspace:*",
     "@rspress/plugin-twoslash": "workspace:*",
-    "@rstack-dev/doc-ui": "^1.12.2",
+    "@rstack-dev/doc-ui": "^1.12.3",
     "@shikijs/transformers": "^3.21.0",
     "@types/react": "^19.2.8",
     "react": "^19.2.3",
     "react-dom": "^19.2.3",
-    "rsbuild-plugin-google-analytics": "^1.0.4",
-    "rsbuild-plugin-open-graph": "^1.1.0",
+    "rsbuild-plugin-google-analytics": "^1.0.5",
+    "rsbuild-plugin-open-graph": "^1.1.2",
     "rspress-plugin-file-tree": "^1.0.3",
     "rspress-plugin-font-open-sans": "^1.0.3",
     "rspress-plugin-og": "npm:@soonit/rspress-plugin-og@0.1.2",
-    "tm-themes": "1.10.15",
+    "tm-themes": "1.10.16",
     "twoslash": "^0.3.6",
     "typescript": "^5.8.2"
   }

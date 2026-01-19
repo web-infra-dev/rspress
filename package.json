@@ -51,7 +51,7 @@
     "path-serializer": "0.5.1",
     "playwright": "1.57.0",
     "prettier": "3.7.4",
-    "prettier-plugin-packagejson": "^2.5.20",
+    "prettier-plugin-packagejson": "^2.5.22",
     "tree-kill": "^1.2.2",
     "zx": "^8.8.5"
   },
