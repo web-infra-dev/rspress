@@ -9,30 +9,7 @@ tag: eject-only
 
 ## 用法
 
-在 mdx 文件的 frontmatter 中配置 `hero`：
-
-```yaml title="index.mdx"
----
-pageType: home
-hero:
-  badge: 'New'
-  name: 'Rspress'
-  text: '构建文档更快'
-  tagline: 'MDX 驱动、Vite 级别速度'
-  image:
-    src: 'https://assets.rspack.rs/rspress/rspress-logo.svg'
-    alt: 'Rspress'
-  actions:
-    - text: '快速开始'
-      link: '/guide/start/introduction'
-      theme: 'brand'
-    - text: 'GitHub'
-      link: 'https://github.com/web-infra-dev/rspress'
-      theme: 'alt'
----
-```
-
-组件会自动从 frontmatter 读取 `hero` 配置。
+`HomeHero` 组件会通过 [`useFrontmatter`](/ui/hooks/use-frontmatter) 读取 frontmatter 中的 `hero` 配置。关于 `hero` 的详细配置项，请参考 [Frontmatter 配置](/api/config/config-frontmatter#hero)。
 
 ### 自定义插槽
 
@@ -60,44 +37,3 @@ import { HomeHero } from '@rspress/core/theme';
 - **类型：** `React.ReactNode`
 
 在 Hero 按钮后插入的自定义内容。
-
-## Hero 配置
-
-以下是 frontmatter 中 `hero` 字段的类型定义：
-
-```ts
-interface Hero {
-  /** 顶部徽章文本 */
-  badge?: string;
-  /** 品牌名称，会以高亮样式显示 */
-  name?: string;
-  /** 主标题文本，支持多行（使用 \n 分隔） */
-  text?: string;
-  /** 副标题/标语 */
-  tagline?: string;
-  /** Hero 图片配置 */
-  image?: {
-    /** 图片地址，支持深/浅色分开配置 */
-    src?: string | { dark: string; light: string };
-    /** 图片 alt 文本 */
-    alt?: string;
-    /** 响应式图片的 srcset 属性 */
-    srcset?: string | string[];
-    /** 响应式图片的 sizes 属性 */
-    sizes?: string | string[];
-  };
-  /** 操作按钮列表 */
-  actions?: {
-    /** 按钮文本 */
-    text: string;
-    /** 按钮链接 */
-    link: string;
-    /** 按钮主题：brand（主色调）或 alt（次要） */
-    theme: 'brand' | 'alt';
-  }[];
-}
-```
-
-- `image.src` 支持为深色/浅色模式分别配置不同的图片
-- `image.srcset` 和 `image.sizes` 用于响应式图片，详见 [MDN srcset 文档](https://developer.mozilla.org/docs/Web/HTML/Element/img#srcset)
-- `name`、`text`、`tagline` 均支持 HTML 字符串
