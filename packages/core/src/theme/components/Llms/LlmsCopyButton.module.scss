@@ -1,21 +1,27 @@
 .llmsCopyButtonContainer {
+  position: relative;
+  overflow: hidden;
+
   &.loading {
     background: var(--rp-c-bg-mute);
-    opacity: 0.5;
+    opacity: 0.7;
     cursor: wait;
   }
 
   &.success {
-    color: var(--rp-c-text-1);
+    color: var(--rp-c-green-1, #10b981);
+    border-color: var(--rp-c-green-1, #10b981);
+    background: var(--rp-c-bg-soft);
 
     .iconCopy {
-      display: none;
+      opacity: 0;
+      transform: translate(-50%, -50%) scale(0.5);
     }
 
     .iconSuccess {
       opacity: 1;
-      visibility: inherit;
-      transition-delay: 0.075s;
+      visibility: visible;
+      transform: translate(-50%, -50%) scale(1);
     }
   }
 }
@@ -32,7 +38,8 @@
   position: absolute;
   top: 50%;
   left: 50%;
-  transform: translate(-50%, -50%);
+  transform: translate(-50%, -50%) scale(1);
+  transition: all 0.2s ease;
 }
 
 .iconSuccess {
@@ -41,11 +48,10 @@
   position: absolute;
   top: 50%;
   left: 50%;
+  color: var(--rp-c-green-1, #10b981);
 
-  transition:
-    opacity 0.2s ease,
-    transform 0.2s ease;
   visibility: hidden;
   opacity: 0;
-  transform: translate(-50%, -50%);
+  transform: translate(-50%, -50%) scale(0.5);
+  transition: all 0.2s cubic-bezier(0.18, 0.89, 0.32, 1.28);
 }
