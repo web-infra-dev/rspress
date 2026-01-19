@@ -1,4 +1,4 @@
-import { useFrontmatter, useSite } from '@rspress/core/runtime';
+import { useFrontmatter } from '@rspress/core/runtime';
 import { LlmsContainer, LlmsCopyButton, LlmsViewOptions, Tag } from '@theme';
 import clsx from 'clsx';
 import type React from 'react';
