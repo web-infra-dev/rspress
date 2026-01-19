@@ -19,8 +19,7 @@ export const NavTitle = () => {
   const localeInfo = locales?.find(locale => locale.lang === lang);
 
   const title = (localeInfo?.title ?? site.title) || 'Home';
-  const langRoutePrefix =
-    lang === defaultLang ? '/' : addTrailingSlash(lang);
+  const langRoutePrefix = lang === defaultLang ? '/' : addTrailingSlash(lang);
 
   const { logo: rawLogo, logoText } = site;
   const logo = useMemo(() => {
