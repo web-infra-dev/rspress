@@ -63,12 +63,14 @@ describe('extractPageData', async () => {
             },
           }),
         getRoutePageByRoutePath: () => undefined,
-      } as RouteService,
+      } as unknown as RouteService,
       {
         alias: {},
         replaceRules: [],
         root: fixtureBasicDir,
-        searchCodeBlocks: false,
+        search: {
+          codeBlocks: false,
+        },
       },
     );
     expect(pageData).toMatchInlineSnapshot(`
@@ -157,7 +159,9 @@ describe('getPageIndexInfoByRoute', async () => {
         alias: {},
         replaceRules: [],
         root: fixtureRecursiveDir,
-        searchCodeBlocks: false,
+        search: {
+          codeBlocks: false,
+        },
       },
     );
     expect(pageIndexInfo).toMatchInlineSnapshot(`
@@ -221,7 +225,9 @@ describe('getPageIndexInfoByRoute', async () => {
         alias: {},
         replaceRules: [],
         root: fixtureContentProcessingDir,
-        searchCodeBlocks: false,
+        search: {
+          codeBlocks: false,
+        },
       },
     );
 
@@ -279,7 +285,9 @@ describe('getPageIndexInfoByRoute', async () => {
         alias: {},
         replaceRules: [],
         root: fixtureContentProcessingDir,
-        searchCodeBlocks: true,
+        search: {
+          codeBlocks: true,
+        },
       },
     );
 
@@ -342,7 +350,9 @@ describe('getPageIndexInfoByRoute', async () => {
         alias: {},
         replaceRules: [],
         root: fixtureContentProcessingDir,
-        searchCodeBlocks: false,
+        search: {
+          codeBlocks: false,
+        },
       },
     );
 
@@ -399,7 +409,9 @@ describe('getPageIndexInfoByRoute', async () => {
         alias: {},
         replaceRules: [],
         root: fixtureContentProcessingDir,
-        searchCodeBlocks: false,
+        search: {
+          codeBlocks: false,
+        },
       },
     );
 
@@ -456,7 +468,9 @@ describe('getPageIndexInfoByRoute', async () => {
         alias: {},
         replaceRules: [],
         root: fixtureContentProcessingDir,
-        searchCodeBlocks: false,
+        search: {
+          codeBlocks: false,
+        },
       },
     );
 
@@ -515,7 +529,9 @@ describe('getPageIndexInfoByRoute', async () => {
         alias: {},
         replaceRules: [],
         root: fixtureContentProcessingDir,
-        searchCodeBlocks: false,
+        search: {
+          codeBlocks: false,
+        },
       },
     );
 
@@ -567,7 +583,9 @@ describe('getPageIndexInfoByRoute', async () => {
         alias: {},
         replaceRules: [],
         root: fixtureContentProcessingDir,
-        searchCodeBlocks: false,
+        search: {
+          codeBlocks: false,
+        },
       },
     );
 
@@ -586,7 +604,9 @@ describe('getPageIndexInfoByRoute', async () => {
         alias: {},
         replaceRules: [],
         root: fixtureContentProcessingDir,
-        searchCodeBlocks: false,
+        search: {
+          codeBlocks: false,
+        },
       },
     );
 
@@ -605,7 +625,9 @@ describe('getPageIndexInfoByRoute', async () => {
         alias: {},
         replaceRules: [],
         root: fixtureContentProcessingDir,
-        searchCodeBlocks: false,
+        search: {
+          codeBlocks: false,
+        },
       },
     );
 
@@ -627,7 +649,9 @@ describe('getPageIndexInfoByRoute', async () => {
         alias: {},
         replaceRules: [],
         root: fixtureContentProcessingDir,
-        searchCodeBlocks: false,
+        search: {
+          codeBlocks: false,
+        },
       },
     );
 
@@ -645,7 +669,9 @@ describe('getPageIndexInfoByRoute', async () => {
         alias: {},
         replaceRules: [],
         root: fixtureContentProcessingDir,
-        searchCodeBlocks: false,
+        search: {
+          codeBlocks: false,
+        },
         extractDescription: false,
       },
     );

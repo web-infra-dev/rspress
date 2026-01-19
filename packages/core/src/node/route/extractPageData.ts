@@ -42,10 +42,17 @@ function applyReplaceRulesToNestedObject(
 
 interface ExtractPageDataOptions {
   root: string;
-  searchCodeBlocks: boolean;
   replaceRules: ReplaceRule[];
   alias: Record<string, string | string[]>;
   extractDescription?: boolean;
+  search?: {
+    codeBlocks?: boolean;
+    /**
+     * When true, skip expensive content processing for search index.
+     * This includes flattenMdxContent, markdown parsing/stringify, and TOC charIndex calculation.
+     */
+    skip?: boolean;
+  };
 }
 
 /**
@@ -168,9 +175,11 @@ async function getPageIndexInfoByRoute(
     alias,
     replaceRules,
     root,
-    searchCodeBlocks,
     extractDescription: extractDescriptionConfig = true,
+    search = {},
   } = options;
+  const searchCodeBlocks = search.codeBlocks ?? true;
+  const skipSearch = search.skip ?? false;
   const defaultIndexInfo: PageIndexInfo = {
     title: '',
     content: '',
@@ -189,10 +198,10 @@ async function getPageIndexInfoByRoute(
   if (!MDX_OR_MD_REGEXP.test(route.absolutePath)) {
     return defaultIndexInfo;
   }
-  let content: string = await fs.readFile(route.absolutePath, 'utf8');
+  const rawContent: string = await fs.readFile(route.absolutePath, 'utf8');
 
   const { frontmatter, content: contentWithoutFrontMatter } = loadFrontMatter(
-    content,
+    rawContent,
     route.absolutePath,
     root,
   );
@@ -200,13 +209,34 @@ async function getPageIndexInfoByRoute(
   // 1. Replace rules for frontmatter & content
   applyReplaceRulesToNestedObject(frontmatter, replaceRules);
 
+  // When search is disabled, skip expensive content processing
+  if (skipSearch) {
+    // Still need to parse for title extraction using a lightweight approach
+    const contentAfterReplace = applyReplaceRules(
+      contentWithoutFrontMatter,
+      replaceRules,
+    );
+    // Extract title from first h1 heading using regex (lightweight)
+    const titleMatch = contentAfterReplace.match(/^#\s+(.+)$/m);
+    const title = frontmatter.title || (titleMatch ? titleMatch[1].trim() : '');
+
+    return {
+      ...defaultIndexInfo,
+      title,
+      frontmatter: {
+        ...frontmatter,
+        __content: undefined,
+      },
+    } satisfies PageIndexInfo;
+  }
+
   const { flattenContent } = await flattenMdxContent(
     applyReplaceRules(contentWithoutFrontMatter, replaceRules),
     route.absolutePath,
     alias,
   );
 
-  content = flattenContent.replace(importStatementRegex, '');
+  let content = flattenContent.replace(importStatementRegex, '');
   // Normalize line endings to LF for cross-platform consistency
   content = content.replace(/\r\n/g, '\n');
 

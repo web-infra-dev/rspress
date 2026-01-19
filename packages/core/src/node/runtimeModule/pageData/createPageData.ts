@@ -35,7 +35,9 @@ export async function createPageData(context: FactoryContext): Promise<{
 
   const replaceRules = userConfig?.replaceRules || [];
 
-  const searchConfig = userConfig?.search || {};
+  // Check if search is disabled
+  const searchDisabled = userConfig.search === false;
+  const searchConfig = searchDisabled ? {} : userConfig?.search || {};
 
   // If the dev server restart when config file, we will reuse the siteData instead of extracting the siteData from source files again.
   const searchCodeBlocks =
@@ -45,9 +47,38 @@ export async function createPageData(context: FactoryContext): Promise<{
     replaceRules,
     alias,
     root: userDocRoot,
-    searchCodeBlocks,
     extractDescription: userConfig.markdown?.extractDescription,
+    search: {
+      codeBlocks: searchCodeBlocks,
+      // Skip expensive content processing when search is disabled
+      skip: searchDisabled,
+    },
   });
+
+  // Skip search index related processing when search is disabled
+  if (searchDisabled) {
+    // Run extendPageData hook in plugins (still needed for pageData)
+    await Promise.all(
+      pages.map(async pageData => pluginDriver.extendPageData(pageData)),
+    );
+
+    const filepaths: string[] = [];
+    const pageData: PageData = {
+      pages: pages.map(page => {
+        const { content: _content, _filepath, _flattenContent, ...rest } = page;
+        filepaths.push(_filepath);
+        return rest;
+      }),
+    };
+
+    return {
+      filepaths,
+      pageData,
+      searchIndex: {},
+      indexHashByGroup: {},
+    };
+  }
+
   // modify page index by plugins
   await pluginDriver.modifySearchIndexData(pages);
 

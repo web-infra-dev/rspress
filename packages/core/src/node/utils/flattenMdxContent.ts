@@ -1,11 +1,8 @@
 import fs from 'node:fs';
 import path from 'node:path';
 
-import { createProcessor } from '@mdx-js/mdx';
 import { rspack } from '@rsbuild/core';
 import { MDX_OR_MD_REGEXP } from '@rspress/shared';
-import { logger } from '@rspress/shared/logger';
-import type { Root } from 'mdast';
 import { importStatementRegex } from '../constants';
 import { createError } from './error';
 
@@ -19,7 +16,14 @@ let startFlatten = false;
 
 let resolver: InstanceType<RspackResolveFactory>;
 
-const processor = createProcessor();
+/**
+ * Regex to extract default import statements
+ * Matches: import Identifier from 'path' or import Identifier from "path"
+ * Group 1: identifier name
+ * Group 2: import path
+ */
+const defaultImportRegex =
+  /^import\s+([A-Z_$][A-Za-z0-9_$]*)\s+from\s+['"]([^'"]+)['"]\s*;?\s*$/gm;
 
 export async function resolveDepPath(
   moduleSpecifier: string,
@@ -42,6 +46,27 @@ export async function resolveDepPath(
       `Empty result when resolving ${moduleSpecifier} from ${importer}`,
     );
   }
+}
+
+/**
+ * Extract default import statements from MDX content using regex
+ * This is a performance optimization over using the full MDX parser
+ * @returns Array of {id, importPath} for each default import found
+ */
+function extractDefaultImports(
+  content: string,
+): Array<{ id: string; importPath: string }> {
+  const imports: Array<{ id: string; importPath: string }> = [];
+  // Reset regex lastIndex for fresh matching
+  const regex = new RegExp(defaultImportRegex.source, 'gm');
+  let match: RegExpExecArray | null;
+
+  while ((match = regex.exec(content)) !== null) {
+    const [, id, importPath] = match;
+    imports.push({ id, importPath });
+  }
+
+  return imports;
 }
 
 export async function flattenMdxContent(
@@ -70,27 +95,12 @@ export async function flattenMdxContent(
     startFlatten = true;
   }
 
-  let ast: Root;
   let result = content;
 
-  try {
-    ast = processor.parse(content);
-  } catch (e) {
-    // Fallback: if mdx parse failed, just return the content
-    logger.debug('flattenMdxContent parse failed: \n', e);
-    return { flattenContent: content, deps };
-  }
+  // Use regex-based extraction instead of full MDX parsing for better performance
+  const importStatements = extractDefaultImports(content);
 
-  const importNodes = ast.children
-    .filter(node => node.type === 'mdxjsEsm')
-    .flatMap(node => node.data?.estree?.body || [])
-    .filter(node => node.type === 'ImportDeclaration');
-  for (const importNode of importNodes) {
-    // import Comp from './a';
-    // {id: Comp, importPath: './a'}
-    const id = importNode.specifiers[0].local.name;
-    const importPath = importNode.source.value as string;
-
+  for (const { id, importPath } of importStatements) {
     let absoluteImportPath: string;
     try {
       absoluteImportPath = await resolveDepPath(
@@ -110,7 +120,9 @@ export async function flattenMdxContent(
 
       result = result
         .replace(
-          new RegExp(`import\\s+${id}\\s+from\\s+['"](${importPath})['"];?`),
+          new RegExp(
+            `import\\s+${id}\\s+from\\s+['"]${importPath.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')}['"];?`,
+          ),
           '',
         )
         .replace(new RegExp(`<${id}\\s*/>`, 'g'), () => replacedValue);
