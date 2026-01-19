@@ -205,6 +205,22 @@ export default defineConfig({
 });
 ```
 
+## logoHref
+
+- **Type**: `string`
+- **Default**: `/${lang}/`
+
+Custom link for the logo. By default, clicking the logo will navigate to the home page of the current language. For example:
+
+```ts title="rspress.config.ts"
+import { defineConfig } from '@rspress/core';
+
+export default defineConfig({
+  logo: '/logo.png',
+  logoHref: 'https://example.com',
+});
+```
+
 ## logoText
 
 - **Type**: `string`

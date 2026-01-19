@@ -205,6 +205,22 @@ export default defineConfig({
 });
 ```
 
+## logoHref
+
+- **类型**： `string`
+- **默认值**： `/${lang}/`
+
+自定义 logo 的链接。默认情况下点击 logo 会跳转到当前语言的首页。例如：
+
+```ts title="rspress.config.ts"
+import { defineConfig } from '@rspress/core';
+
+export default defineConfig({
+  logo: '/logo.png',
+  logoHref: 'https://example.com',
+});
+```
+
 ## logoText
 
 - **类型**： `string`
