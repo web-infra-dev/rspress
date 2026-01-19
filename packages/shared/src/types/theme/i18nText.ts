@@ -9,6 +9,11 @@ export interface I18nText {
   versionsText?: I18nTextValue;
   themeText?: I18nTextValue;
 
+  // llms
+  copyMarkdownText?: I18nTextValue;
+  copyMarkdownLinkText?: I18nTextValue;
+  openInText?: I18nTextValue;
+
   // outline
   menuTitle?: I18nTextValue;
   outlineTitle?: I18nTextValue;

@@ -25,19 +25,17 @@ export type LlmsViewOption =
  * Configuration for LLMS UI components displayed on H1 headers.
  * When enabled, LlmsCopyButton and LlmsViewOptions will be automatically
  * added below H1 headers without requiring custom getCustomMDXComponent.
+ * @default false
  */
-export interface LlmsUI {
-  /**
-   * Whether to show LLMS UI components on H1 headers.
-   * @default false
-   */
-  enableOnH1?: boolean;
-  /**
-   * Options for LlmsViewOptions component dropdown menu.
-   * @default ['markdownLink', 'chatgpt', 'claude']
-   */
-  viewOptions?: LlmsViewOption[];
-}
+export type LlmsUI =
+  | {
+      /**
+       * Options for LlmsViewOptions component dropdown menu.
+       * @default ['markdownLink', 'chatgpt', 'claude']
+       */
+      viewOptions?: LlmsViewOption[];
+    }
+  | boolean;
 
 export interface EditLink {
   /**

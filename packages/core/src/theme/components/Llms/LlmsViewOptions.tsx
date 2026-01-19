@@ -3,12 +3,12 @@
  * @from https://github.com/fuma-nama/fumadocs/blob/5723bbe58ef805a5421a780abf235a10b251be2f/apps/docs/app/docs/%5B...slug%5D/page.client.tsx#L11
  * @license MIT
  */
-import { useLang } from '@rspress/core/runtime';
+import { useI18n, useSite } from '@rspress/core/runtime';
+import { IconDown } from '@theme';
 import type React from 'react';
 import { useEffect, useMemo, useRef, useState } from 'react';
 import './index.scss';
 import './LlmsViewOptions.scss';
-import { IconDown } from '@theme';
 import { useMdUrl } from './useMdUrl';
 
 type Option =
@@ -82,11 +82,16 @@ const IconExternalLink = () => {
   );
 };
 
+const DEFAULT_OPTIONS: Option[] = ['markdownLink', 'chatgpt', 'claude'];
+
 export function LlmsViewOptions({
-  options = ['markdownLink', 'chatgpt', 'claude'],
-  text,
-  textByLang = { en: 'Open', zh: '\u6253\u5f00' },
+  options: propsOptions,
 }: LlmsViewOptionsProps) {
+  const { site } = useSite();
+  const llmsUI = site?.themeConfig?.llmsUI;
+  const options =
+    (typeof llmsUI === 'object' ? llmsUI?.viewOptions : propsOptions) ??
+    DEFAULT_OPTIONS;
   const [isOpen, setIsOpen] = useState(false);
   const dropdownRef = useRef<HTMLButtonElement>(null);
 
@@ -112,8 +117,7 @@ export function LlmsViewOptions({
   };
 
   const { pathname } = useMdUrl();
-  const lang = useLang();
-  const isEn = !lang || lang === 'en';
+  const t = useI18n();
 
   const items = useMemo(() => {
     const fullMarkdownUrl =
@@ -124,9 +128,7 @@ export function LlmsViewOptions({
 
     return {
       markdownLink: {
-        title: isEn
-          ? 'Copy Markdown link'
-          : '\u590d\u5236 Markdown \u94fe\u63a5',
+        title: t('copyMarkdownLinkText'),
         icon: (
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -151,7 +153,7 @@ export function LlmsViewOptions({
         },
       },
       chatgpt: {
-        title: isEn ? 'Open in ChatGPT' : '\u5728 ChatGPT \u4e2d\u6253\u5f00',
+        title: t('openInText', { name: 'ChatGPT' }),
         href: `https://chatgpt.com/?${new URLSearchParams({
           hints: 'search',
           q,
@@ -170,7 +172,7 @@ export function LlmsViewOptions({
         ),
       },
       claude: {
-        title: isEn ? 'Open in Claude' : '\u5728 Claude \u4e2d\u6253\u5f00',
+        title: t('openInText', { name: 'Claude' }),
         href: `https://claude.ai/new?${new URLSearchParams({
           q,
         })}`,
@@ -187,7 +189,7 @@ export function LlmsViewOptions({
         ),
       },
     };
-  }, [pathname, isEn]);
+  }, [pathname, t]);
 
   return (
     <>
@@ -198,7 +200,6 @@ export function LlmsViewOptions({
           isOpen ? 'rp-llms-view-options__trigger--active' : ''
         }`}
       >
-        {text ?? textByLang[lang] ?? 'Open'}
         <IconDown
           className={`rp-llms-view-options__arrow ${isOpen ? 'rp-llms-view-options__arrow--rotated' : ''}`}
         />

@@ -3,7 +3,7 @@
  * @from https://github.com/fuma-nama/fumadocs/blob/5723bbe58ef805a5421a780abf235a10b251be2f/apps/docs/app/docs/%5B...slug%5D/page.client.tsx#L11
  * @license MIT
  */
-import { useLang } from '@rspress/core/runtime';
+import { useI18n, useLang } from '@rspress/core/runtime';
 import { IconCopy, IconSuccess } from '@theme';
 import { useCallback, useRef, useState } from 'react';
 import './index.scss';
@@ -32,13 +32,8 @@ export interface LlmsCopyButtonProps
 const cache = new Map<string, string>();
 
 export function LlmsCopyButton(props: LlmsCopyButtonProps) {
-  const {
-    onClick,
-    text,
-    textByLang = { zh: '复制 Markdown', en: 'Copy Markdown' },
-    ...otherProps
-  } = props;
-  const lang = useLang();
+  const { onClick, ...otherProps } = props;
+  const t = useI18n();
 
   const { pathname } = useMdUrl();
 
@@ -93,7 +88,7 @@ export function LlmsCopyButton(props: LlmsCopyButtonProps) {
         <IconSuccess className="rp-llms-copy-button__icon-success" />
         <IconCopy className="rp-llms-copy-button__icon-copy" />
       </div>
-      <span>{text ?? textByLang?.[lang] ?? 'Copy Markdown'}</span>
+      <span>{t('copyMarkdownText')}</span>
     </button>
   );
 }

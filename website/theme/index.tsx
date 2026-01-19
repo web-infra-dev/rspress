@@ -10,11 +10,6 @@ import {
   Search as PluginAlgoliaSearch,
   ZH_LOCALES,
 } from '@rspress/plugin-algolia/runtime';
-import {
-  LlmsContainer,
-  LlmsCopyButton,
-  LlmsViewOptions,
-} from '@rspress/plugin-llms/runtime';
 import { NavIcon } from '@rstack-dev/doc-ui/nav-icon';
 import type { PropsWithChildren } from 'react';
 import { CssModificationProvider } from '../docs/components/CssModificationContext';

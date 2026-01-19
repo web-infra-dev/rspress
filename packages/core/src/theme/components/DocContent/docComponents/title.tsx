@@ -5,8 +5,7 @@ import type React from 'react';
 
 export const H1 = (props: React.ComponentProps<'h1'>) => {
   const { className, children, ...rest } = props;
-  const { site } = useSite();
-  const llmsUI = site?.themeConfig?.llmsUI;
+
   const {
     frontmatter: { tag },
   } = useFrontmatter();
@@ -19,7 +18,7 @@ export const H1 = (props: React.ComponentProps<'h1'>) => {
       {process.env.ENABLE_LLMS_UI && (
         <LlmsContainer>
           <LlmsCopyButton />
-          <LlmsViewOptions options={llmsUI?.viewOptions} />
+          <LlmsViewOptions />
         </LlmsContainer>
       )}
     </>
