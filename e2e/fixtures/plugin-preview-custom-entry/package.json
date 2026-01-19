@@ -8,7 +8,7 @@
     "preview": "rspress preview"
   },
   "dependencies": {
-    "@rsbuild/plugin-vue": "^1.2.2",
+    "@rsbuild/plugin-vue": "^1.2.3",
     "@rspress/core": "workspace:*",
     "@rspress/plugin-preview": "workspace:*",
     "react": "^19.2.3",
