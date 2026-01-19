@@ -637,4 +637,20 @@ describe('getPageIndexInfoByRoute', async () => {
     );
     expect(pageIndexInfo.frontmatter.description).toBeUndefined();
   });
+
+  it('should not extract description when extractDescription is false', async () => {
+    const pageIndexInfo = await getPageIndexInfoByRoute(
+      createRoute('with-description.mdx', fixtureContentProcessingDir),
+      {
+        alias: {},
+        replaceRules: [],
+        root: fixtureContentProcessingDir,
+        searchCodeBlocks: false,
+        extractDescription: false,
+      },
+    );
+
+    expect(pageIndexInfo.description).toBeUndefined();
+    expect(pageIndexInfo.frontmatter.description).toBeUndefined();
+  });
 });

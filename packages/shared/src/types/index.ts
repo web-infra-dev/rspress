@@ -533,6 +533,12 @@ export interface MarkdownOptions {
    * @default true
    */
   crossCompilerCache?: boolean;
+  /**
+   * Whether to automatically extract a description from the markdown content,
+   * typically from the first paragraph, for use in page metadata or previews.
+   * @default true
+   */
+  extractDescription?: boolean;
 }
 
 export type Config =
