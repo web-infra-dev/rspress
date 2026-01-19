@@ -21,6 +21,7 @@ export function SidebarItemRaw({
   right,
   onClick,
   depth,
+  'aria-expanded': ariaExpanded,
 }: {
   className?: string;
   active: boolean;
@@ -32,6 +33,7 @@ export function SidebarItemRaw({
   left?: React.ReactNode;
   right?: React.ReactNode;
   onClick?: React.MouseEventHandler<HTMLDivElement | HTMLAnchorElement>;
+  'aria-expanded'?: boolean;
 }) {
   const ref = useRef<HTMLDivElement>(null);
 
@@ -76,6 +78,9 @@ export function SidebarItemRaw({
         }}
         {...{ 'data-depth': depth }}
         {...(context ? { 'data-context': context } : {})}
+        {...(ariaExpanded !== undefined
+          ? { 'aria-expanded': ariaExpanded }
+          : {})}
         onClick={onClick}
       >
         {innerContent}
@@ -86,6 +91,8 @@ export function SidebarItemRaw({
   return (
     <div
       ref={ref}
+      role={ariaExpanded !== undefined ? 'button' : undefined}
+      tabIndex={ariaExpanded !== undefined ? 0 : undefined}
       className={clsx(
         'rp-sidebar-item',
         {
@@ -98,7 +105,17 @@ export function SidebarItemRaw({
       }}
       {...{ 'data-depth': depth }}
       {...(context ? { 'data-context': context } : {})}
+      {...(ariaExpanded !== undefined ? { 'aria-expanded': ariaExpanded } : {})}
       onClick={onClick}
+      onKeyDown={e => {
+        if (
+          ariaExpanded !== undefined &&
+          (e.key === 'Enter' || e.key === ' ')
+        ) {
+          e.preventDefault();
+          onClick?.(e as unknown as React.MouseEvent<HTMLDivElement>);
+        }
+      }}
     >
       {innerContent}
     </div>
