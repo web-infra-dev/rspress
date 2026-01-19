@@ -1,9 +1,26 @@
 import type { Feature } from '@rspress/core';
 import { useFrontmatter } from '@rspress/core/runtime';
-import { renderHtmlOrText, useLinkNavigate } from '@theme';
+import { renderHtmlOrText, SvgWrapper, useLinkNavigate } from '@theme';
 import type { JSX } from 'react';
 import './index.scss';
 import { useCardAnimation } from './useCardAnimation';
+
+/**
+ * Check if a string should be rendered by SvgWrapper
+ * - SVG inline string (starts with `<svg`)
+ * - URL/path (starts with `/`, `./`, `../`, `http://`, `https://`)
+ */
+function shouldUseSvgWrapper(str: string): boolean {
+  const trimmed = str.trim();
+  return (
+    trimmed.startsWith('<svg') ||
+    trimmed.startsWith('/') ||
+    trimmed.startsWith('./') ||
+    trimmed.startsWith('../') ||
+    trimmed.startsWith('http://') ||
+    trimmed.startsWith('https://')
+  );
+}
 
 const getGridClass = (feature: Feature): string => {
   const { span } = feature;
@@ -48,10 +65,13 @@ function HomeFeatureItem({ feature }: { feature: Feature }): JSX.Element {
         >
           <div className="rp-home-feature__title-wrapper">
             {icon ? (
-              <div
-                className="rp-home-feature__icon"
-                {...renderHtmlOrText(icon)}
-              ></div>
+              <div className="rp-home-feature__icon">
+                {shouldUseSvgWrapper(icon) ? (
+                  <SvgWrapper icon={icon} />
+                ) : (
+                  <span {...renderHtmlOrText(icon)} />
+                )}
+              </div>
             ) : null}
 
             <h2 className="rp-home-feature__title">{title}</h2>

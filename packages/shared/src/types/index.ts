@@ -405,6 +405,13 @@ export interface Hero {
 }
 
 export interface Feature {
+  /**
+   * Feature icon, supports:
+   * - Emoji: '🚀'
+   * - HTML string: '<span class="icon">...</span>'
+   * - SVG string: '<svg>...</svg>'
+   * - Image URL: '/icons/feature.svg' or 'https://example.com/icon.png'
+   */
   icon: string;
   title: string;
   details: string;
