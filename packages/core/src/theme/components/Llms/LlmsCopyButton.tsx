@@ -4,34 +4,17 @@
  * @license MIT
  */
 import { useLang } from '@rspress/core/runtime';
+import { IconCopy, IconSuccess } from '@theme';
 import { useCallback, useRef, useState } from 'react';
-import { IconCopy } from './IconCopy';
-import {
-  iconContainer,
-  iconCopy,
-  iconSuccess,
-  llmsCopyButtonContainer,
-  loading,
-  success,
-} from './LlmsCopyButton.module.scss';
+import './index.scss';
+import './LlmsCopyButton.scss';
 import { useMdUrl } from './useMdUrl';
 
-function IconSuccess({ className }: { className?: string }) {
-  return (
-    <svg width="32" height="32" viewBox="0 0 30 30" className={className}>
-      <path
-        fill="#49cd37"
-        d="m13 24l-9-9l1.414-1.414L13 21.171L26.586 7.586L28 9L13 24z"
-      />
-    </svg>
-  );
-}
-
-interface LlmsCopyButtonProps
+export interface LlmsCopyButtonProps
   extends React.ButtonHTMLAttributes<HTMLButtonElement> {
   /**
    * Text by language, used with `useLang`.
-   * @default en: 'Copy Markdown', zh: '复制 Markdown'
+   * @default en: 'Copy Markdown', zh: '\u590d\u5236 Markdown'
    */
   textByLang?: Record<string, string>;
   /**
@@ -47,7 +30,8 @@ interface LlmsCopyButtonProps
 }
 
 const cache = new Map<string, string>();
-function LlmsCopyButton(props: LlmsCopyButtonProps) {
+
+export function LlmsCopyButton(props: LlmsCopyButtonProps) {
   const {
     onClick,
     text,
@@ -96,22 +80,20 @@ function LlmsCopyButton(props: LlmsCopyButtonProps) {
       disabled={isLoading}
       className={[
         'rp-not-doc',
-        llmsCopyButtonContainer,
-        isLoading ? loading : '',
-        isFinished ? success : '',
+        'rp-llms-button',
+        'rp-llms-copy-button',
+        isLoading ? 'rp-llms-copy-button--loading' : '',
+        isFinished ? 'rp-llms-copy-button--success' : '',
       ]
         .filter(Boolean)
         .join(' ')}
       onClick={onClick ?? handleClick}
     >
-      <div className={iconContainer}>
-        <IconSuccess className={iconSuccess} />
-        <IconCopy className={iconCopy} />
+      <div className="rp-llms-copy-button__icon-wrapper">
+        <IconSuccess className="rp-llms-copy-button__icon-success" />
+        <IconCopy className="rp-llms-copy-button__icon-copy" />
       </div>
       <span>{text ?? textByLang?.[lang] ?? 'Copy Markdown'}</span>
     </button>
   );
 }
-
-export { LlmsCopyButton };
-export type { LlmsCopyButtonProps };
