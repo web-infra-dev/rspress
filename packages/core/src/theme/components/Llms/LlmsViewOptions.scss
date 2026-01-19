@@ -1,21 +1,22 @@
-.dropdownButton {
+.rp-llms-view-options__trigger {
   position: relative;
 
-  &.active {
+  &--active,
+  .rp-llms-view-options__trigger {
     background: var(--rp-c-bg-mute);
     color: var(--rp-c-text-1);
     border-color: var(--rp-c-divider);
   }
 }
 
-.dropdownArrow {
+.rp-llms-view-options__arrow {
   transition: transform 0.2s ease;
-  &.rotated {
+  &--rotated {
     transform: rotate(180deg);
   }
 }
 
-.dropdownMenu {
+.rp-llms-view-options__menu {
   width: max-content;
   min-width: 220px;
   position: absolute;
@@ -52,7 +53,7 @@
   }
 }
 
-.dropdownItem {
+.rp-llms-view-options__menu-item {
   display: flex;
   align-items: center;
   gap: 10px;
@@ -81,7 +82,7 @@
   }
 }
 
-.leftIcon {
+.rp-llms-view-options__item-icon {
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -90,7 +91,7 @@
   font-size: 16px;
 }
 
-.externalIcon {
+.rp-llms-view-options__external-icon {
   margin-left: auto;
   width: 16px;
   height: 16px;

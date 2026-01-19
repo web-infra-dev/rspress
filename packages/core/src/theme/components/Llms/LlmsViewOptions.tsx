@@ -6,8 +6,9 @@
 import { useLang } from '@rspress/core/runtime';
 import type React from 'react';
 import { useEffect, useMemo, useRef, useState } from 'react';
-import commonStyles from './index.module.scss';
-import styles from './LlmsViewOptions.module.scss';
+import './index.scss';
+import './LlmsViewOptions.scss';
+import { IconDown } from '@theme';
 import { useMdUrl } from './useMdUrl';
 
 type Option =
@@ -46,27 +47,6 @@ export interface LlmsViewOptionsProps
    */
   text?: string;
 }
-
-const IconArrow = ({ className }: { className: string }) => {
-  return (
-    <svg
-      className={className}
-      xmlns="http://www.w3.org/2000/svg"
-      width="16"
-      height="16"
-      viewBox="0 0 15 16"
-      fill="none"
-    >
-      <path
-        d="M11.125 5.27885L7 9.72115L2.875 5.27885"
-        stroke="currentColor"
-        strokeWidth="1.125"
-        strokeLinecap="round"
-        strokeLinejoin="round"
-      />
-    </svg>
-  );
-};
 
 const IconExternalLink = () => {
   return (
@@ -214,16 +194,16 @@ export function LlmsViewOptions({
       <button
         ref={dropdownRef}
         onClick={toggleDropdown}
-        className={`${commonStyles.button} ${styles.dropdownButton} ${
-          isOpen ? styles.active : ''
+        className={`rp-llms-button rp-llms-view-options__trigger ${
+          isOpen ? 'rp-llms-view-options__trigger--active' : ''
         }`}
       >
         {text ?? textByLang[lang] ?? 'Open'}
-        <IconArrow
-          className={`${styles.dropdownArrow} ${isOpen ? styles.rotated : ''}`}
+        <IconDown
+          className={`rp-llms-view-options__arrow ${isOpen ? 'rp-llms-view-options__arrow--rotated' : ''}`}
         />
         {isOpen && (
-          <div className={styles.dropdownMenu}>
+          <div className="rp-llms-view-options__menu">
             {options.map(item => {
               let displayItem = item as {
                 title: string;
@@ -242,14 +222,16 @@ export function LlmsViewOptions({
                 return (
                   <a
                     key={displayItem.title}
-                    className={styles.dropdownItem}
+                    className="rp-llms-view-options__menu-item"
                     href={displayItem.href}
                     target="_blank"
                     rel="noopener noreferrer"
                   >
-                    <span className={styles.leftIcon}>{displayItem.icon}</span>
+                    <span className="rp-llms-view-options__item-icon">
+                      {displayItem.icon}
+                    </span>
                     <span>{displayItem.title}</span>
-                    <span className={styles.externalIcon}>
+                    <span className="rp-llms-view-options__external-icon">
                       <IconExternalLink />
                     </span>
                   </a>
@@ -258,10 +240,12 @@ export function LlmsViewOptions({
               return (
                 <div
                   key={displayItem.title}
-                  className={styles.dropdownItem}
+                  className="rp-llms-view-options__menu-item"
                   onClick={displayItem.onClick}
                 >
-                  <span className={styles.leftIcon}>{displayItem.icon}</span>
+                  <span className="rp-llms-view-options__item-icon">
+                    {displayItem.icon}
+                  </span>
                   <span>{displayItem.title}</span>
                 </div>
               );

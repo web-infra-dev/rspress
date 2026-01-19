@@ -6,8 +6,8 @@
 import { useLang } from '@rspress/core/runtime';
 import { IconCopy, IconSuccess } from '@theme';
 import { useCallback, useRef, useState } from 'react';
-import commonStyles from './index.module.scss';
-import styles from './LlmsCopyButton.module.scss';
+import './index.scss';
+import './LlmsCopyButton.scss';
 import { useMdUrl } from './useMdUrl';
 
 export interface LlmsCopyButtonProps
@@ -80,18 +80,18 @@ export function LlmsCopyButton(props: LlmsCopyButtonProps) {
       disabled={isLoading}
       className={[
         'rp-not-doc',
-        commonStyles.button,
-        styles.llmsCopyButtonContainer,
-        isLoading ? styles.loading : '',
-        isFinished ? styles.success : '',
+        'rp-llms-button',
+        'rp-llms-copy-button',
+        isLoading ? 'rp-llms-copy-button--loading' : '',
+        isFinished ? 'rp-llms-copy-button--success' : '',
       ]
         .filter(Boolean)
         .join(' ')}
       onClick={onClick ?? handleClick}
     >
-      <div className={styles.iconContainer}>
-        <IconSuccess className={styles.iconSuccess} />
-        <IconCopy className={styles.iconCopy} />
+      <div className="rp-llms-copy-button__icon-wrapper">
+        <IconSuccess className="rp-llms-copy-button__icon-success" />
+        <IconCopy className="rp-llms-copy-button__icon-copy" />
       </div>
       <span>{text ?? textByLang?.[lang] ?? 'Copy Markdown'}</span>
     </button>

@@ -1,38 +1,38 @@
-.llmsCopyButtonContainer {
+.rp-llms-copy-button {
   position: relative;
   overflow: hidden;
 
-  &.loading {
+  &--loading.rp-llms-copy-button {
     background: var(--rp-c-bg-mute);
     opacity: 0.7;
     cursor: wait;
   }
 
-  &.success {
+  &--success.rp-llms-copy-button {
     color: var(--rp-c-green-1, #10b981);
     border-color: var(--rp-c-green-1, #10b981);
     background: var(--rp-c-bg-soft);
-
-    .iconCopy {
-      opacity: 0;
-      transform: translate(-50%, -50%) scale(0.5);
-    }
-
-    .iconSuccess {
-      opacity: 1;
-      visibility: visible;
-      transform: translate(-50%, -50%) scale(1);
-    }
   }
 }
 
-.iconContainer {
+.rp-llms-copy-button--success .rp-llms-copy-button__icon-copy {
+  opacity: 0;
+  transform: translate(-50%, -50%) scale(0.5);
+}
+
+.rp-llms-copy-button--success .rp-llms-copy-button__icon-success {
+  opacity: 1;
+  visibility: visible;
+  transform: translate(-50%, -50%) scale(1);
+}
+
+.rp-llms-copy-button__icon-wrapper {
   width: 16px;
   height: 16px;
   position: relative;
 }
 
-.iconCopy {
+.rp-llms-copy-button__icon-copy {
   width: 16px;
   height: 16px;
   position: absolute;
@@ -42,7 +42,7 @@
   transition: all 0.2s ease;
 }
 
-.iconSuccess {
+.rp-llms-copy-button__icon-success {
   width: 16px;
   height: 16px;
   position: absolute;
