@@ -5,8 +5,10 @@ import { useLang } from './useLang';
 
 export function useI18n<T>() {
   const lang = useLang();
-  return useCallback<(key: keyof (T & I18nText)) => string>(
-    (key: keyof (T & I18nText)) => {
+  return useCallback<
+    (key: keyof (T & I18nText), params?: Record<string, string>) => string
+  >(
+    (key, params) => {
       const text: string = i18nTextData[key as string]?.[lang];
 
       if (typeof text !== 'string') {
@@ -15,7 +17,9 @@ export function useI18n<T>() {
         );
       }
 
-      return text;
+      return text.replace(/\{\{(\w+)\}\}/g, (_, p1) => {
+        return params?.[p1] ?? `${p1}`;
+      });
     },
     [lang],
   );

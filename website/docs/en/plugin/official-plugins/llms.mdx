@@ -42,7 +42,31 @@ Then execute the `rspress build` command. While generating the output, the plugi
 
 ### 2. UI display
 
-If you want users reading your documentation site to better utilize large language models to read the documentation, you can add a copy Markdown button at the top of the page through [custom theme](/guide/basic/custom-theme), with the same effect as this website.
+If you want users reading your documentation site to better utilize large language models to read the documentation, you can add a copy Markdown button at the top of the page with the same effect as this website.
+
+#### Using themeConfig (Recommended)
+
+The simplest way is to enable `llmsUI` in `themeConfig`. This will automatically add `LlmsCopyButton` and `LlmsViewOptions` components below all H1 headers without requiring custom theme code:
+
+```ts title="rspress.config.ts"
+import { defineConfig } from '@rspress/core';
+import { pluginLlms } from '@rspress/plugin-llms';
+
+export default defineConfig({
+  plugins: [pluginLlms()],
+  themeConfig: {
+    llmsUI: true,
+    // Or with custom options:
+    // llmsUI: {
+    //   viewOptions: ['markdownLink', 'chatgpt', 'claude'],
+    // },
+  },
+});
+```
+
+#### Using custom theme
+
+If you need more control, you can use [custom theme](/guide/basic/custom-theme) to add a copy Markdown button.
 
 Add a copy button to all pages, example:
 
@@ -338,31 +362,8 @@ pluginLlms({
 - **Type**: `LlmsCopyButtonProps`
 
 ```ts
-interface LlmsCopyButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
-  textByLang?: Record<string, string>;
-  text?: string;
-}
+interface LlmsCopyButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {}
 ```
-
-#### textByLang
-
-- **Type**: `Record<string, string>`
-- **Default**: `{ en: 'Copy Markdown', zh: '复制 Markdown' }`
-
-Replace the text on the button according to the corresponding language.
-
-- **Example**:
-
-```mdx
-<LlmsCopyButton textByLang={{ en: 'Copy MD' }} />
-```
-
-#### text
-
-- **Type**: `string`
-- **Default**: `''`
-
-Text on the copy button, has higher priority than `textByLang`.
 
 ### LlmsViewOptionsProps
 
@@ -386,8 +387,6 @@ type Option =
 
 interface LlmsViewOptionsProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
   options?: Option[];
-  textByLang?: Record<string, string>;
-  text?: string;
 }
 ```
 
@@ -415,20 +414,6 @@ type Option =
 - **Default**: `['markdownLink', 'chatgpt', 'claude']`
 
 Customize the options in the dropdown menu. By default, supports "Copy Markdown Link", [ChatGPT](https://chatgpt.com/) and [Claude](https://claude.ai).
-
-#### textByLang
-
-- **Type**: `Record<string, string>`
-- **Default**: `{ en: 'Open', zh: '打开' }`
-
-Replace the text on the button according to the corresponding language.
-
-#### text
-
-- **Type**: `string`
-- **Default**: `''`
-
-Text on the button, has higher priority than `textByLang`.
 
 ## Generate multiple groups of `llms.txt` at the same time \{#group}
 

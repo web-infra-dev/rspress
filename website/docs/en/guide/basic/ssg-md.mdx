@@ -190,6 +190,30 @@ If SSG and SSG-MD features cannot be enabled due to code incompatibility with SS
 
 :::
 
+## UI display
+
+When `llms: true` is enabled, `LlmsCopyButton` and `LlmsViewOptions` components will be automatically displayed below all H1 headers. This allows users to easily copy markdown content or open it in AI tools like ChatGPT or Claude.
+
+If you want to customize the display, you can configure it through `themeConfig.llmsUI`:
+
+```ts title="rspress.config.ts"
+import { defineConfig } from '@rspress/core';
+
+export default defineConfig({
+  llms: true,
+  themeConfig: {
+    // Disable LLMS UI
+    llmsUI: false,
+    // Or customize options:
+    // llmsUI: {
+    //   viewOptions: ['markdownLink', 'chatgpt', 'claude'],
+    // },
+  },
+});
+```
+
+For more information about LLMS UI configuration, see [themeConfig.llmsUI](/api/config/config-theme#llmsui).
+
 ## Custom MDX splitting (Optional)
 
 When documents contain custom components, you can control which components to keep or convert to plain text when converting to Markdown through `remarkSplitMdxOptions`:

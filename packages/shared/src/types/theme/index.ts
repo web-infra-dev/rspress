@@ -3,6 +3,40 @@ import type { NavItem } from './nav';
 import type { NormalizedSidebar, Sidebar } from './sidebar';
 import type { SocialLink } from './socialLink';
 
+/**
+ * Option item for LlmsViewOptions component.
+ */
+export type LlmsViewOption =
+  | 'markdownLink'
+  | 'chatgpt'
+  | 'claude'
+  | {
+      title: string;
+      icon?: React.ReactNode;
+      onClick?: () => void;
+    }
+  | {
+      title: string;
+      href: string;
+      icon?: React.ReactNode;
+    };
+
+/**
+ * Configuration for LLMS UI components displayed on H1 headers.
+ * When enabled, LlmsCopyButton and LlmsViewOptions will be automatically
+ * added below H1 headers without requiring custom getCustomMDXComponent.
+ * @default false
+ */
+export type LlmsUI =
+  | {
+      /**
+       * Options for LlmsViewOptions component dropdown menu.
+       * @default ['markdownLink', 'chatgpt', 'claude']
+       */
+      viewOptions?: LlmsViewOption[];
+    }
+  | boolean;
+
 export interface EditLink {
   /**
    * Custom repository url for edit link.
@@ -92,6 +126,12 @@ export type ThemeConfig = {
    * @default true
    */
   fallbackHeadingTitle?: boolean;
+  /**
+   * LLMS UI components configuration.
+   * When llmsUI.enableOnH1 is true, LlmsCopyButton and LlmsViewOptions
+   * will be automatically added below H1 headers.
+   */
+  llmsUI?: LlmsUI;
 };
 
 export interface NormalizedLocales extends Omit<LocaleConfig, 'sidebar'> {

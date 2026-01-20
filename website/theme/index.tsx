@@ -10,11 +10,6 @@ import {
   Search as PluginAlgoliaSearch,
   ZH_LOCALES,
 } from '@rspress/plugin-algolia/runtime';
-import {
-  LlmsContainer,
-  LlmsCopyButton,
-  LlmsViewOptions,
-} from '@rspress/plugin-llms/runtime';
 import { NavIcon } from '@rstack-dev/doc-ui/nav-icon';
 import type { PropsWithChildren } from 'react';
 import { CssModificationProvider } from '../docs/components/CssModificationContext';
@@ -79,13 +74,7 @@ function getCustomMDXComponent() {
 
     return (
       <>
-        <H1 {...props}>
-          {children} <Tag tag={tag} />
-        </H1>
-        <LlmsContainer>
-          <LlmsCopyButton />
-          <LlmsViewOptions />
-        </LlmsContainer>
+        <H1 {...props}>{children}</H1>
         {isEjectOnly || isNonEjectable ? (
           <Callout type="warning">
             {isEjectOnly ? <p>{t('ejectOnlyDescription')}</p> : null}

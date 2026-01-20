@@ -190,6 +190,30 @@ export default defineConfig({
 
 :::
 
+## UI 展示
+
+当启用 `llms: true` 时，会自动在所有 H1 标题下方显示 `LlmsCopyButton` 和 `LlmsViewOptions` 组件。这使用户可以轻松复制 markdown 内容或在 ChatGPT、Claude 等 AI 工具中打开。
+
+如果需要自定义展示，可以通过 `themeConfig.llmsUI` 进行配置：
+
+```ts title="rspress.config.ts"
+import { defineConfig } from '@rspress/core';
+
+export default defineConfig({
+  llms: true,
+  themeConfig: {
+    // 禁用 LLMS UI
+    llmsUI: false,
+    // 或者自定义选项：
+    // llmsUI: {
+    //   viewOptions: ['markdownLink', 'chatgpt', 'claude'],
+    // },
+  },
+});
+```
+
+更多关于 LLMS UI 配置的信息，请参阅 [themeConfig.llmsUI](/api/config/config-theme#llmsui)。
+
 ## 自定义 MDX 拆分（可选）
 
 当文档中包含自定义组件时，可以通过 `remarkSplitMdxOptions` 控制哪些组件在转换为 Markdown 时保留或转成纯文本：

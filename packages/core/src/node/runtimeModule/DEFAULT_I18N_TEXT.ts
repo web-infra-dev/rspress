@@ -121,6 +121,27 @@ export const DEFAULT_I18N_TEXT = {
     ko: '일치하는 API가 없습니다',
     ru: 'Не найден подходящий API',
   },
+  openInText: {
+    en: 'Open in {{name}}',
+    zh: '在 {{name}} 中打开',
+    ja: '{{name}} で開く',
+    ko: '{{name}}에서 열기',
+    ru: 'Открыть в {{name}}',
+  },
+  copyMarkdownText: {
+    en: 'Copy Markdown',
+    zh: '复制 Markdown',
+    ja: 'Markdown をコピー',
+    ko: '마크다운 복사',
+    ru: 'Скопировать Markdown',
+  },
+  copyMarkdownLinkText: {
+    en: 'Copy Markdown link',
+    zh: '复制 Markdown 链接',
+    ja: 'Markdown リンクをコピー',
+    ko: '마크다운 링크 복사',
+    ru: 'Скопировать ссылку в формате Markdown',
+  },
   editLinkText: {
     en: '📝 Edit this page',
     zh: '📝 编辑此页面',

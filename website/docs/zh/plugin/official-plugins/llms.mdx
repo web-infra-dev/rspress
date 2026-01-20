@@ -42,7 +42,31 @@ export default defineConfig({
 
 ### 2. UI 展示
 
-如果你希望阅读文档站的用户可以更多地调用大模型来阅读文档，可以通过 [自定义主题](/guide/basic/custom-theme) 在页面顶部增加一个复制 Markdown 按钮，效果与本网站相同。
+如果你希望阅读文档站的用户可以更多地调用大模型来阅读文档，可以在页面顶部增加一个复制 Markdown 按钮，效果与本网站相同。
+
+#### 使用 themeConfig（推荐）
+
+最简单的方式是在 `themeConfig` 中启用 `llmsUI`。这将自动在所有 H1 标题下方添加 `LlmsCopyButton` 和 `LlmsViewOptions` 组件，无需自定义主题代码：
+
+```ts title="rspress.config.ts"
+import { defineConfig } from '@rspress/core';
+import { pluginLlms } from '@rspress/plugin-llms';
+
+export default defineConfig({
+  plugins: [pluginLlms()],
+  themeConfig: {
+    llmsUI: true,
+    // 或者使用自定义选项：
+    // llmsUI: {
+    //   viewOptions: ['markdownLink', 'chatgpt', 'claude'],
+    // },
+  },
+});
+```
+
+#### 使用自定义主题
+
+如果你需要更多控制，可以通过 [自定义主题](/guide/basic/custom-theme) 来添加复制 Markdown 按钮。
 
 为所有页面增加顶部复制按钮，示例：
 
@@ -337,31 +361,8 @@ pluginLlms({
 - **类型**：`LlmsCopyButtonProps`
 
 ```ts
-interface LlmsCopyButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
-  textByLang?: Record<string, string>;
-  text?: string;
-}
+interface LlmsCopyButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {}
 ```
-
-#### textByLang
-
-- **类型**：`Record<string, string>`
-- **默认值**：`{ en: 'Copy Markdown', zh: '复制 Markdown' }`
-
-根据对应语言替换按钮上的文本。
-
-- **示例**：
-
-```mdx
-<LlmsCopyButton textByLang={{ en: 'Copy MD' }} />
-```
-
-#### text
-
-- **类型**：`string`
-- **默认值**：`''`
-
-复制按钮上的文本，优先级比 `textByLang` 高。
 
 ### LlmsViewOptionsProps
 
@@ -385,8 +386,6 @@ type Option =
 
 interface LlmsViewOptionsProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
   options?: Option[];
-  textByLang?: Record<string, string>;
-  text?: string;
 }
 ```
 
@@ -413,21 +412,7 @@ type Option =
 
 - **默认值**：`['markdownLink', 'chatgpt', 'claude']`
 
-自定义下拉菜单中的选项，默认支持 “复制 Markdown 链接”、[Chatgpt](https://chatgpt.com/) 和 [Claude](https://claude.ai)。
-
-#### textByLang
-
-- **类型**：`Record<string, string>`
-- **默认值**：`{ en: 'Open', zh: '打开' }`
-
-根据对应语言替换按钮上的文本。
-
-#### text
-
-- **类型**：`string`
-- **默认值**：`''`
-
-按钮上的文本，优先级比 `textByLang` 高。
+自定义下拉菜单中的选项，默认支持 "复制 Markdown 链接"、[Chatgpt](https://chatgpt.com/) 和 [Claude](https://claude.ai)。
 
 ## 同时生成多组 `llms.txt` \{#group}
 
