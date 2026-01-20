@@ -35,11 +35,16 @@ export async function createPageData(context: FactoryContext): Promise<{
 
   const replaceRules = userConfig?.replaceRules || [];
 
-  const searchConfig = userConfig?.search || {};
+  const searchConfig = userConfig?.search;
+  const searchEnabled = searchConfig !== false;
 
   // If the dev server restart when config file, we will reuse the siteData instead of extracting the siteData from source files again.
   const searchCodeBlocks =
-    'codeBlocks' in searchConfig ? Boolean(searchConfig.codeBlocks) : true;
+    searchConfig &&
+    typeof searchConfig === 'object' &&
+    'codeBlocks' in searchConfig
+      ? Boolean(searchConfig.codeBlocks)
+      : true;
 
   const pages = await extractPageData(routeService, {
     replaceRules,
@@ -47,6 +52,7 @@ export async function createPageData(context: FactoryContext): Promise<{
     root: userDocRoot,
     searchCodeBlocks,
     extractDescription: userConfig.markdown?.extractDescription,
+    searchEnabled,
   });
   // modify page index by plugins
   await pluginDriver.modifySearchIndexData(pages);
