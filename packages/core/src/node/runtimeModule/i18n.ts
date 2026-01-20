@@ -109,8 +109,9 @@ export async function getI18nData(
 
   if (logKeys.size > 0 && !logged) {
     logger.warn(
-      `${logPrefix} The following i18n keys are missing for some languages and have fallen back to 'en': 
-      ${picocolors.gray(JSON.stringify(Object.fromEntries([...logKeys.keys()].map(i => [i, '...'])), null, 2))}`,
+      `${logPrefix} The following i18n keys are missing for some languages and have fallen back to 'en':
+      ${picocolors.gray(JSON.stringify(Object.fromEntries([...logKeys.keys()].map(i => [i, '...'])), null, 2))}
+      You can provide translations via ${picocolors.cyan('i18n.json')} file or ${picocolors.cyan('i18nSource')} config in rspress.config.ts`,
     );
     logged = true;
   }
