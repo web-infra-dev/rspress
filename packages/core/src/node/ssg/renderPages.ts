@@ -77,11 +77,25 @@ export async function renderPages(
         }
       }
       if (csrRoutes.length > 0) {
-        logger.info(
-          `Some routes are ignored in SSG and fallback to CSR via \`ssg.experimentalExcludeRoutePaths\`: ${picocolors.yellow(
-            csrRoutes.map(r => r.routePath).join(', '),
-          )}`,
-        );
+        const csrRoutePaths = csrRoutes.map(r => r.routePath);
+        const MAX_DISPLAY_ROUTES = 10;
+
+        if (csrRoutePaths.length <= MAX_DISPLAY_ROUTES) {
+          logger.info(
+            `Some routes are ignored in SSG and fallback to CSR via \`ssg.experimentalExcludeRoutePaths\`: ${picocolors.yellow(
+              csrRoutePaths.join(', '),
+            )}`,
+          );
+        } else {
+          const displayedRoutes = csrRoutePaths.slice(0, MAX_DISPLAY_ROUTES);
+          const remainingCount = csrRoutePaths.length - MAX_DISPLAY_ROUTES;
+          logger.info(
+            `Some routes (${picocolors.yellow(csrRoutePaths.length)} total) are ignored in SSG and fallback to CSR via \`ssg.experimentalExcludeRoutePaths\`: ${picocolors.yellow(
+              displayedRoutes.join(', '),
+            )} ${picocolors.dim(`... and ${remainingCount} more`)}`,
+          );
+        }
+
         await Promise.all(promiseList);
         routes.length = 0;
         routes.push(...ssgRoutes);
