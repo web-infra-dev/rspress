@@ -46,6 +46,10 @@ interface ExtractPageDataOptions {
   replaceRules: ReplaceRule[];
   alias: Record<string, string | string[]>;
   extractDescription?: boolean;
+  /**
+   * Whether search is enabled. When false, skip search index content generation.
+   */
+  searchEnabled?: boolean;
 }
 
 /**
@@ -170,6 +174,7 @@ async function getPageIndexInfoByRoute(
     root,
     searchCodeBlocks,
     extractDescription: extractDescriptionConfig = true,
+    searchEnabled = true,
   } = options;
   const defaultIndexInfo: PageIndexInfo = {
     title: '',
@@ -224,6 +229,22 @@ async function getPageIndexInfoByRoute(
     frontmatter.description || !extractDescriptionConfig
       ? ''
       : extractDescription(tree);
+
+  // Skip search index content generation when search is disabled
+  if (!searchEnabled) {
+    return {
+      ...defaultIndexInfo,
+      title: frontmatter.title || title,
+      toc: rawToc.map(item => ({ ...item, charIndex: -1 })),
+      content: '',
+      description: frontmatter.description || extractedDescription || undefined,
+      _flattenContent: flattenContent,
+      frontmatter: {
+        ...frontmatter,
+        __content: undefined,
+      },
+    } satisfies PageIndexInfo;
+  }
 
   // Run plugins and stringify to markdown for search content
   const processedTree = await processor.run(tree);
