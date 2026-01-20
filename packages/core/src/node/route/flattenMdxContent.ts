@@ -4,7 +4,7 @@ import path from 'node:path';
 import { rspack } from '@rsbuild/core';
 import { MDX_OR_MD_REGEXP } from '@rspress/shared';
 import { importStatementRegex } from '../constants';
-import { createError } from './error';
+import { createError } from '../utils/error';
 
 const RspackResolveFactory = rspack.experiments.resolver.ResolverFactory;
 

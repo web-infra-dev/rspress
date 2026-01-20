@@ -18,8 +18,8 @@ import { remove } from 'unist-util-remove';
 import { visit } from 'unist-util-visit';
 import { importStatementRegex } from '../constants';
 import { parseToc } from '../mdx/remarkPlugins/toc';
-import { flattenMdxContent } from '../utils';
 import { applyReplaceRules } from '../utils/applyReplaceRules';
+import { flattenMdxContent } from './flattenMdxContent';
 import type { RouteService } from './RouteService';
 
 function applyReplaceRulesToNestedObject(
