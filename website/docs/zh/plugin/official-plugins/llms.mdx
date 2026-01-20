@@ -46,7 +46,7 @@ export default defineConfig({
 
 #### 使用 themeConfig（推荐）
 
-最简单的方式是在 `themeConfig` 中启用 `llmsUI.enableOnH1`。这将自动在所有 H1 标题下方添加 `LlmsCopyButton` 和 `LlmsViewOptions` 组件，无需自定义主题代码：
+最简单的方式是在 `themeConfig` 中启用 `llmsUI`。这将自动在所有 H1 标题下方添加 `LlmsCopyButton` 和 `LlmsViewOptions` 组件，无需自定义主题代码：
 
 ```ts title="rspress.config.ts"
 import { defineConfig } from '@rspress/core';
@@ -55,11 +55,11 @@ import { pluginLlms } from '@rspress/plugin-llms';
 export default defineConfig({
   plugins: [pluginLlms()],
   themeConfig: {
-    llmsUI: {
-      enableOnH1: true,
-      // 可选：自定义下拉菜单选项
-      // viewOptions: ['markdownLink', 'chatgpt', 'claude'],
-    },
+    llmsUI: true,
+    // 或者使用自定义选项：
+    // llmsUI: {
+    //   viewOptions: ['markdownLink', 'chatgpt', 'claude'],
+    // },
   },
 });
 ```

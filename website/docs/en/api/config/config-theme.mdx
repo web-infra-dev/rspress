@@ -538,48 +538,43 @@ title: Document Title
 - **Type**:
 
 ```ts
-interface LlmsUI {
-  enableOnH1?: boolean;
-  viewOptions?: Array<
-    | 'markdownLink'
-    | 'chatgpt'
-    | 'claude'
-    | { title: string; icon?: React.ReactNode; onClick?: () => void }
-    | { title: string; href: string; icon?: React.ReactNode }
-  >;
-}
+type LlmsUI =
+  | boolean
+  | {
+      viewOptions?: Array<
+        | 'markdownLink'
+        | 'chatgpt'
+        | 'claude'
+        | { title: string; icon?: React.ReactNode; onClick?: () => void }
+        | { title: string; href: string; icon?: React.ReactNode }
+      >;
+    };
 ```
 
-- **Default**: `undefined`
+- **Default**: `false` (automatically set to `true` when `llms: true` is configured)
 
-Configuration for LLMS UI components. When `enableOnH1` is `true`, `LlmsCopyButton` and `LlmsViewOptions` components will be automatically added below all H1 headers.
+Configuration for LLMS UI components. When enabled, `LlmsCopyButton` and `LlmsViewOptions` components will be automatically added below all H1 headers.
 
-This is useful when using the [`@rspress/plugin-llms`](/plugin/official-plugins/llms) plugin to generate llms.txt files, allowing users to easily copy or open the markdown content in AI tools.
+This is useful when using the [llms](/guide/basic/ssg-md) feature to generate llms.txt files, allowing users to easily copy or open the markdown content in AI tools.
 
 For example:
 
 ```ts title="rspress.config.ts"
 import { defineConfig } from '@rspress/core';
-import { pluginLlms } from '@rspress/plugin-llms';
 
 export default defineConfig({
-  plugins: [pluginLlms()],
+  llms: true, // This will automatically enable llmsUI
   themeConfig: {
-    llmsUI: {
-      enableOnH1: true,
-      // Optional: customize dropdown menu options
-      viewOptions: ['markdownLink', 'chatgpt', 'claude'],
-    },
+    // llmsUI is automatically set to true when llms: true
+    // You can also explicitly configure it:
+    llmsUI: true,
+    // Or with custom options:
+    // llmsUI: {
+    //   viewOptions: ['markdownLink', 'chatgpt', 'claude'],
+    // },
   },
 });
 ```
-
-### enableOnH1
-
-- **Type**: `boolean`
-- **Default**: `false`
-
-Whether to show LLMS UI components (copy button and view options dropdown) below H1 headers.
 
 ### viewOptions
 
