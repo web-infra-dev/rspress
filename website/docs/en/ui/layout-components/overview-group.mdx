@@ -9,6 +9,8 @@ overviewHeaders: []
 
 ## Usage
 
+You can modify the component's styles through [custom theme](/guide/basic/custom-theme), or use `OverviewGroup` freely for UI display without relying on Rspress's built-in Overview page, for example:
+
 ```mdx title="index.mdx"
 import { OverviewGroup } from '@rspress/core/theme';
 
@@ -20,8 +22,8 @@ import { OverviewGroup } from '@rspress/core/theme';
         text: 'Introduction',
         link: '/guide/introduction',
         headers: [
-          { id: 'what-is-rspress', text: 'What is Rspress' },
-          { id: 'features', text: 'Features' },
+          { id: 'what-is-rspress', text: 'What is Rspress', depth: 2 },
+          { id: 'features', text: 'Features', depth: 2 },
         ],
       },
       {
@@ -43,8 +45,8 @@ import { OverviewGroup } from '@rspress/core/theme';
         text: 'Introduction',
         link: '/guide/introduction',
         headers: [
-          { id: 'what-is-rspress', text: 'What is Rspress' },
-          { id: 'features', text: 'Features' },
+          { id: 'what-is-rspress', text: 'What is Rspress', depth: 2 },
+          { id: 'features', text: 'Features', depth: 2 },
         ],
       },
       {
@@ -54,12 +56,6 @@ import { OverviewGroup } from '@rspress/core/theme';
     ],
   }}
 />
-
-:::tip
-
-This component is typically used automatically by Rspress on `overview: true` pages. You only need to use it manually when customizing overview pages.
-
-:::
 
 ## Props
 

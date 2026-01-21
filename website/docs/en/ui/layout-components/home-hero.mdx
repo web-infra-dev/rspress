@@ -11,6 +11,14 @@ This component is part of the [homepage](/guide/basic/home-page). `HomeHero` ren
 
 Modify or override through [custom theme](/guide/basic/custom-theme).
 
+```tsx
+import { HomeHero as BasicHomeHero } from '@rspress/core/theme-original';
+
+export default function HomeHero() {
+  return <BasicHomeHero />;
+}
+```
+
 The `HomeHero` component reads the `hero` configuration from frontmatter through [`useFrontmatter`](/ui/hooks/use-frontmatter). For detailed `hero` configuration options, refer to [Frontmatter Configuration](/api/config/config-frontmatter#hero).
 
 ### Custom Slots

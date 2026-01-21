@@ -109,7 +109,7 @@ export interface Header {
   id: string;
   text: string;
   depth: number;
-  charIndex: number;
+  charIndex?: number;
 }
 
 // The general i18n config, which is not related to the theme.

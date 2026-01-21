@@ -11,6 +11,14 @@ overviewHeaders: []
 
 通过 [自定义主题](/guide/basic/custom-theme) 来进行修改或覆盖。
 
+```tsx
+import { HomeHero as BasicHomeHero } from '@rspress/core/theme-original';
+
+export default function HomeHero() {
+  return <BasicHomeHero />;
+}
+```
+
 `HomeHero` 组件会通过 [`useFrontmatter`](/ui/hooks/use-frontmatter) 读取 frontmatter 中的 `hero` 配置。关于 `hero` 的详细配置项，请参考 [Frontmatter 配置](/api/config/config-frontmatter#hero)。
 
 ### 自定义插槽

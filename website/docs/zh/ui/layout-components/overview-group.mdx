@@ -9,6 +9,8 @@ overviewHeaders: []
 
 ## 用法
 
+你可以通过 [自定义主题](/guide/basic/custom-theme) 修改组件的样式，或者不依赖 Rspress 自身的 Overview 页面，自由使用 `OverviewGroup` 进行 UI 展示，例如：
+
 ```mdx title="index.mdx"
 import { OverviewGroup } from '@rspress/core/theme';
 
@@ -20,8 +22,8 @@ import { OverviewGroup } from '@rspress/core/theme';
         text: '介绍',
         link: '/guide/introduction',
         headers: [
-          { id: 'what-is-rspress', text: '什么是 Rspress' },
-          { id: 'features', text: '特性' },
+          { id: 'what-is-rspress', text: '什么是 Rspress', depth: 2 },
+          { id: 'features', text: '特性', depth: 2 },
         ],
       },
       {
@@ -43,8 +45,8 @@ import { OverviewGroup } from '@rspress/core/theme';
         text: '介绍',
         link: '/guide/introduction',
         headers: [
-          { id: 'what-is-rspress', text: '什么是 Rspress' },
-          { id: 'features', text: '特性' },
+          { id: 'what-is-rspress', text: '什么是 Rspress', depth: 2 },
+          { id: 'features', text: '特性', depth: 2 },
         ],
       },
       {
@@ -54,12 +56,6 @@ import { OverviewGroup } from '@rspress/core/theme';
     ],
   }}
 />
-
-:::tip
-
-该组件通常由 Rspress 在 `overview: true` 页面中自动使用，仅当需要自定义大纲页面时，才需手动使用该组件。
-
-:::
 
 ## Props
 
