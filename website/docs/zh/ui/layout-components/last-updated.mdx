@@ -1,7 +1,6 @@
 ---
 description: LastUpdated 最后更新时间组件，用于展示页面的最后更新时间。
 overviewHeaders: []
-tag: eject-only
 ---
 
 # LastUpdated
@@ -10,10 +9,12 @@ tag: eject-only
 
 ## 用法
 
-```mdx title="index.mdx" preview
-import { LastUpdated } from '@rspress/core/theme';
+```tsx preview
+import { LastUpdated as BasicLastUpdated } from '@rspress/core/theme-original';
 
-<LastUpdated />
+export default function LastUpdated() {
+  return <BasicLastUpdated />;
+}
 ```
 
 该组件不接受任何 props，会自动从页面元数据中读取最后更新时间。

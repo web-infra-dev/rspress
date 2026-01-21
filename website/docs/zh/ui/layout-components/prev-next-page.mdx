@@ -1,7 +1,6 @@
 ---
 description: PrevNextPage 上下页导航组件，用于渲染页面底部的上一页/下一页链接。
 overviewHeaders: []
-tag: eject-only
 ---
 
 # PrevNextPage
@@ -10,10 +9,12 @@ tag: eject-only
 
 ## 用法
 
-```mdx title="index.mdx" preview
-import { PrevNextPage } from '@rspress/core/theme';
+```tsx preview
+import { PrevNextPage as BasicPrevNextPage } from '@rspress/core/theme-original';
 
-<PrevNextPage />
+export default function PrevNextPage() {
+  return <BasicPrevNextPage />;
+}
 ```
 
 该组件不接受任何 props，会自动根据侧边栏顺序计算上一页/下一页链接。

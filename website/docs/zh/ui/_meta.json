@@ -11,6 +11,11 @@
   },
   {
     "type": "dir",
+    "label": "文档组件",
+    "name": "components"
+  },
+  {
+    "type": "dir",
     "label": "运行时组件",
     "name": "runtime-components"
   },
@@ -21,10 +26,10 @@
   },
   {
     "type": "dir",
-    "label": "内置组件",
-    "name": "components"
+    "label": "布局组件",
+    "name": "layout-components",
+    "tag": "eject-only"
   },
-
   {
     "type": "section-header",
     "label": "Hooks"

@@ -12,7 +12,7 @@ MDX 是 Markdown 与 JSX 语法的结合，让你可以在 Markdown 文档中使
 
 我们推荐所有文档文件均使用 `.mdx`，这样既可以像普通 Markdown 一样编写内容，又能导入和使用 Rspress 提供的[内置组件](/ui/components/index.mdx)：
 
-```mdx
+```mdx title="docs/index.mdx"
 # Hello, world!
 
 import { PackageManagerTabs } from '@rspress/core/theme';
@@ -20,7 +20,7 @@ import { PackageManagerTabs } from '@rspress/core/theme';
 <PackageManagerTabs command="create rspress@latest" />
 ```
 
-## 组件化 \{#component}
+## MDX 片段 \{#component}
 
 在 MDX 中，每个 `.mdx` 文件都会编译为 React 组件，这意味着它既可以被当做组件引用，也可以自由使用 React 组件。例如：
 

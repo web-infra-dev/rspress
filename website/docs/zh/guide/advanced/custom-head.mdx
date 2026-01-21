@@ -1,0 +1,42 @@
+# 自定义 Head 标签
+
+为网页增加 Head 标签（如 meta 标签）对于 SEO 优化和社交媒体分享非常重要。比如 [Open Graph](https://ogp.me/) 是一种网页元数据协议，用于控制页面在社交媒体平台上分享时的显示效果。
+
+目前 Rspress 会自动注入以下 Head 标签：
+
+| 标签                                                    | 描述                                                              |
+| ------------------------------------------------------- | ----------------------------------------------------------------- |
+| `<meta name="generator" content="Rspress v${version}">` | 标识站点生成器及版本号                                            |
+| `<meta property="og:type" content="website">`           | Open Graph 类型，固定为 `website`                                 |
+| `<meta property="og:title" content="${title}">`         | Open Graph 标题，使用当前页面标题（如果存在）                     |
+| `<meta name="description" content="${description}">`    | 页面描述，使用 frontmatter 或全局配置中的 description（如果存在） |
+
+如果想增加 Head 标签可以通过以下几种方式：
+
+## 全局 Head 配置
+
+在 `rspress.config.ts` 中，你可以为所有页面设置 HTML 的 metadata（即 head 标签）。详情请查看 [基础配置 - head](/api/config/config-basic#head)。
+
+## frontmatter 配置
+
+你可以调整 frontmatter 中的 [title](/api/config/config-frontmatter#title) 和 [description](/api/config/config-frontmatter#description) 字段来修改单个页面的标题和描述。
+
+也可以使用 [frontmatter - head](/api/config/config-frontmatter#head) 自定义页面的 metadata 标签以进行 SEO 优化。
+
+例如，如果你想在 `<head>` 标签中添加 `<meta name="og:description" content="This is description">`，你可以这样使用 frontmatter：
+
+```md title="example.mdx"
+---
+head:
+  - - meta
+    - name: og:title
+      content: This is title
+  - - meta
+    - name: og:description
+      content: This is description
+---
+```
+
+## Head 组件
+
+如果你需要更复杂的 Head 定制，可以使用 Rspress 提供的 [Head 组件](/ui/runtime-components/head) 在页面或布局组件中动态设置 Head 标签。

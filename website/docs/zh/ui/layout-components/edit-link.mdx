@@ -1,7 +1,6 @@
 ---
 description: EditLink 编辑链接组件，用于渲染"编辑此页"链接，跳转到文档源文件编辑页面。
 overviewHeaders: []
-tag: eject-only
 ---
 
 # EditLink
@@ -12,10 +11,12 @@ tag: eject-only
 
 该组件通常作为 [DocFooter](/ui/components/doc-footer) 的一部分自动渲染，无需手动使用。
 
-```mdx preview
-import { EditLink } from '@theme';
+```tsx preview
+import { EditLink as BasicEditLink } from '@rspress/core/theme-original';
 
-<EditLink />
+export default function EditLink() {
+  return <BasicEditLink />;
+}
 ```
 
 ## 相关配置

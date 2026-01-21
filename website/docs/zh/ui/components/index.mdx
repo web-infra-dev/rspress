@@ -1,6 +1,14 @@
 ---
-description: Rspress 内置组件概览，包含文档编写常用的 UI 组件。
+description: Rspress 内置的文档组件，包含文档编写常用的 UI 组件。
 overviewHeaders: []
 overview: true
-title: 内置组件
+title: 文档组件
 ---
+
+Rspress 提供了一些用于文档内容编写的常用组件，可在 MDX 文件中直接通过 import 导入。例如：
+
+```mdx title="docs/index.mdx"
+import { PackageManagerTabs } from '@rspress/core/theme';
+
+<PackageManagerTabs command="create rspress@latest" />
+```
