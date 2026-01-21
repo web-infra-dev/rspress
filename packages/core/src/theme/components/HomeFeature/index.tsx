@@ -1,6 +1,6 @@
 import type { Feature } from '@rspress/core';
 import { useFrontmatter } from '@rspress/core/runtime';
-import { SvgWrapper, useLinkNavigate } from '@theme';
+import { renderHtmlOrText, SvgWrapper, useLinkNavigate } from '@theme';
 import type { JSX } from 'react';
 import './index.scss';
 import { useCardAnimation } from './useCardAnimation';
@@ -55,7 +55,10 @@ function HomeFeatureItem({ feature }: { feature: Feature }): JSX.Element {
 
             <h2 className="rp-home-feature__title">{title}</h2>
           </div>
-          <p className="rp-home-feature__detail">{details}</p>
+          <p
+            className="rp-home-feature__detail"
+            {...renderHtmlOrText(details)}
+          />
         </article>
       </div>
       {shineDom}
