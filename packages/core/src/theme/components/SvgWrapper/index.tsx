@@ -1,4 +1,4 @@
-import { renderHtmlOrText } from '../../logic/utils';
+import { renderHtmlOrText } from '@theme';
 
 /**
  * Check if a string is a URL or file path
