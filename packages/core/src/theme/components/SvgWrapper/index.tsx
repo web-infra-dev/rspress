@@ -1,3 +1,5 @@
+import { renderHtmlOrText } from '../../logic/utils';
+
 /**
  * Check if a string is a URL or file path
  */
@@ -21,6 +23,7 @@ type SvgWrapperProps = {
  * - React component: render directly
  * - SVG string (starts with `<svg`): render with dangerouslySetInnerHTML
  * - URL/path: render with `<img>`
+ * - Other strings (emoji/text/HTML): render with renderHtmlOrText
  * @internal
  */
 export function SvgWrapper({ icon: Icon, ...rest }: SvgWrapperProps) {
@@ -42,8 +45,8 @@ export function SvgWrapper({ icon: Icon, ...rest }: SvgWrapperProps) {
     if (isUrlOrPath(Icon)) {
       return <img className={className} src={Icon} alt="" />;
     }
-    // Fallback: return null for non-URL strings (emoji/text should be handled elsewhere)
-    return null;
+    // Fallback: emoji/text/HTML
+    return <span className={className} {...renderHtmlOrText(Icon)} />;
   }
 
   return <Icon {...rest} />;
