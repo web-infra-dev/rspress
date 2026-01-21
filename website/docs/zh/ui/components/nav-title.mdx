@@ -31,37 +31,31 @@ export default defineConfig({
 可以通过 Layout 组件的 `navTitle` 属性自定义 NavTitle：
 
 ```tsx title="theme/index.tsx"
-import Theme from '@rspress/core/theme';
+import { Layout as BasicLayout } from '@rspress/core/theme-original';
 
-const Layout = () => <Theme.Layout navTitle={<MyCustomNavTitle />} />;
+const Layout = () => <BasicLayout navTitle={<MyCustomNavTitle />} />;
 
-export default {
-  ...Theme,
-  Layout,
-};
-
-export * from '@rspress/core/theme';
+export { Layout };
+export * from '@rspress/core/theme-original';
 ```
 
 或使用 `beforeNavTitle` 和 `afterNavTitle` 属性插入自定义内容：
 
 ```tsx title="theme/index.tsx"
-import Theme from '@rspress/core/theme';
+import { Layout as BasicLayout } from '@rspress/core/theme-original';
 
 const Layout = () => (
-  <Theme.Layout
+  <BasicLayout
     beforeNavTitle={<div>前面</div>}
     afterNavTitle={<div>后面</div>}
   />
 );
 
-export default {
-  ...Theme,
-  Layout,
-};
-
-export * from '@rspress/core/theme';
+export { Layout };
+export * from '@rspress/core/theme-original';
 ```
+
+更多关于自定义主题的信息，请参阅[自定义主题](/guide/basic/custom-theme)文档。
 
 ## 配置
 
