@@ -9,7 +9,8 @@ function isUrlOrPath(str: string): boolean {
     str.startsWith('./') ||
     str.startsWith('../') ||
     str.startsWith('http://') ||
-    str.startsWith('https://')
+    str.startsWith('https://') ||
+    str.startsWith('data:')
   );
 }
 
