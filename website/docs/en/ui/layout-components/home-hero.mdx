@@ -5,15 +5,17 @@ overviewHeaders: []
 
 # HomeHero
 
-This component is part of the [Home Page](/guide/basic/home-page). `HomeHero` renders the hero section on the home page.
+This component is part of the [homepage](/guide/basic/home-page). `HomeHero` renders the Hero section on the homepage.
 
 ## Usage
 
-The `HomeHero` component reads the `hero` configuration from frontmatter via [`useFrontmatter`](/ui/hooks/use-frontmatter). For detailed configuration options of `hero`, please refer to [Frontmatter Config](/api/config/config-frontmatter#hero).
+Modify or override through [custom theme](/guide/basic/custom-theme).
 
-### Custom slots
+The `HomeHero` component reads the `hero` configuration from frontmatter through [`useFrontmatter`](/ui/hooks/use-frontmatter). For detailed `hero` configuration options, refer to [Frontmatter Configuration](/api/config/config-frontmatter#hero).
 
-Use `beforeHeroActions` and `afterHeroActions` props to insert custom content before and after the action buttons:
+### Custom Slots
+
+Use the `beforeHeroActions` and `afterHeroActions` props to insert custom content before and after the action buttons:
 
 ```tsx title="index.mdx"
 import { HomeHero } from '@rspress/core/theme';

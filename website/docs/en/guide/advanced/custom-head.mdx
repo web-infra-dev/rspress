@@ -1,0 +1,42 @@
+# Customizing Head Tags
+
+Adding head tags (such as meta tags) to web pages is crucial for SEO optimization and social media sharing. For example, [Open Graph](https://ogp.me/) is a web metadata protocol that controls how pages appear when shared on social media platforms.
+
+Currently, Rspress automatically injects the following head tags:
+
+| Tag                                                     | Description                                                                         |
+| ------------------------------------------------------- | ----------------------------------------------------------------------------------- |
+| `<meta name="generator" content="Rspress v${version}">` | Identifies the site generator and version                                           |
+| `<meta property="og:type" content="website">`           | Open Graph type, fixed as `website`                                                 |
+| `<meta property="og:title" content="${title}">`         | Open Graph title, uses current page title (if available)                            |
+| `<meta name="description" content="${description}">`    | Page description, uses description from frontmatter or global config (if available) |
+
+If you want to add head tags, you can use the following methods:
+
+## Global Head Configuration
+
+In `rspress.config.ts`, you can set HTML metadata (head tags) for all pages. See [Basic Config - head](/api/config/config-basic#head) for details.
+
+## Frontmatter Configuration
+
+You can modify the [title](/api/config/config-frontmatter#title) and [description](/api/config/config-frontmatter#description) fields in frontmatter to change the title and description of individual pages.
+
+You can also use [frontmatter - head](/api/config/config-frontmatter#head) to customize page metadata tags for SEO optimization.
+
+For example, if you want to add `<meta name="og:description" content="This is description">` to the `<head>` tag, you can use frontmatter like this:
+
+```md title="example.mdx"
+---
+head:
+  - - meta
+    - name: og:title
+      content: This is title
+  - - meta
+    - name: og:description
+      content: This is description
+---
+```
+
+## Head Component
+
+If you need more complex head customization, you can use the [Head component](/ui/runtime-components/head) provided by Rspress to dynamically set head tags in pages or layout components.

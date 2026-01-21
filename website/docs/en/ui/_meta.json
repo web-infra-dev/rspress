@@ -11,18 +11,24 @@
   },
   {
     "type": "dir",
-    "label": "Runtime components",
+    "label": "Doc Components",
+    "name": "components"
+  },
+  {
+    "type": "dir",
+    "label": "Runtime Components",
     "name": "runtime-components"
   },
   {
     "type": "file",
-    "label": "Built-in icons",
+    "label": "Built-in Icons",
     "name": "icons/index"
   },
   {
     "type": "dir",
-    "label": "Built-in components",
-    "name": "components"
+    "label": "Layout Components",
+    "name": "layout-components",
+    "tag": "eject-only"
   },
   {
     "type": "section-header",
@@ -30,7 +36,7 @@
   },
   {
     "type": "dir",
-    "label": "Built-in hooks",
+    "label": "Built-in Hooks",
     "name": "hooks"
   }
 ]

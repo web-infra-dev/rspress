@@ -4,11 +4,11 @@ overviewHeaders: []
 
 # NavTitle
 
-This component is part of the navigation bar. `NavTitle` renders the site logo and title in the top-left corner of the navigation bar.
+This component is part of the navbar. `NavTitle` renders the site Logo and title in the top-left corner of the navbar.
 
 ## Usage
 
-The component automatically reads configuration from your `rspress.config.ts`:
+Use through [custom theme](/guide/basic/custom-theme). The component internally reads configuration from `rspress.config.ts` through [`useSite`](/ui/hooks/use-site):
 
 ```ts title="rspress.config.ts"
 import { defineConfig } from 'rspress/config';
@@ -16,7 +16,7 @@ import { defineConfig } from 'rspress/config';
 export default defineConfig({
   title: 'My Site',
   logo: '/logo.png',
-  // or with dark/light mode support:
+  // Or support dark/light mode:
   logo: {
     light: '/logo-light.png',
     dark: '/logo-dark.png',
@@ -27,7 +27,7 @@ export default defineConfig({
 
 ### Custom NavTitle
 
-You can customize NavTitle through the Layout component's `navTitle` prop:
+You can customize NavTitle through the `navTitle` prop of the Layout component:
 
 ```tsx title="theme/index.tsx"
 import { Layout as BasicLayout } from '@rspress/core/theme-original';
@@ -38,7 +38,7 @@ export { Layout };
 export * from '@rspress/core/theme-original';
 ```
 
-Or use the `beforeNavTitle` and `afterNavTitle` props to insert custom content:
+Or use `beforeNavTitle` and `afterNavTitle` props to insert custom content:
 
 ```tsx title="theme/index.tsx"
 import { Layout as BasicLayout } from '@rspress/core/theme-original';
@@ -62,23 +62,23 @@ For more information about custom themes, see the [Custom Theme](/guide/basic/cu
 
 - **Type:** `string | { light: string; dark: string }`
 
-The site logo. Can be a single image path or separate images for light/dark modes.
+Site Logo. Can be a single image path, or separate images for light/dark mode.
 
 ### logoText
 
 - **Type:** `string`
 
-Text to display next to the logo.
+Text displayed next to the Logo.
 
 ### title
 
 - **Type:** `string`
 
-The site title. Displayed when neither `logo` nor `logoText` is configured.
+Site title. Displayed when `logo` and `logoText` are not configured.
 
 ## i18n Support
 
-For multi-language sites, configure `title` in each locale:
+For multilingual sites, you can configure `title` in each locale:
 
 ```ts title="rspress.config.ts"
 import { defineConfig } from 'rspress/config';
@@ -100,4 +100,4 @@ export default defineConfig({
 });
 ```
 
-The NavTitle component will automatically display the correct title based on the current locale.
+The NavTitle component will automatically display the corresponding title based on the current language.

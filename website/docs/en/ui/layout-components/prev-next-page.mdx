@@ -1,0 +1,36 @@
+---
+description: PrevNextPage component for rendering prev/next page navigation links at the bottom of the page.
+overviewHeaders: []
+---
+
+# PrevNextPage
+
+`PrevNextPage` renders the prev/next page navigation links at the bottom of the page.
+
+## Usage
+
+```tsx preview
+import { PrevNextPage as BasicPrevNextPage } from '@rspress/core/theme-original';
+
+export default function PrevNextPage() {
+  return <BasicPrevNextPage />;
+}
+```
+
+This component doesn't accept any props and automatically calculates prev/next page links based on sidebar order.
+
+## How it Works
+
+The component internally uses the `usePrevNextPage` hook to get prev and next page information:
+
+```ts
+import { usePrevNextPage } from '@theme';
+
+const { prevPage, nextPage } = usePrevNextPage();
+// prevPage: { text: string; link: string } | null
+// nextPage: { text: string; link: string } | null
+```
+
+- Prev/next pages are automatically calculated based on the current page's position in the sidebar
+- If the current page is the first page, `prevPage` will be `null`
+- If the current page is the last page, `nextPage` will be `null`

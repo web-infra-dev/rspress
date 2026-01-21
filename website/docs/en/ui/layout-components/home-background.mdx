@@ -1,0 +1,20 @@
+---
+description: HomeBackground component for rendering homepage background effects and automatically setting transparent navbar.
+overviewHeaders: []
+---
+
+# HomeBackground
+
+This component is part of the [homepage](/guide/basic/home-page). `HomeBackground` renders background effects on the homepage and automatically sets the navbar to transparent style.
+
+## Usage
+
+Modify or override through [custom theme](/guide/basic/custom-theme).
+
+```tsx
+import { HomeBackground as BasicHomeBackground } from '@rspress/core/theme-original';
+
+export function HomeBackground() {
+  return <BasicHomeBackground className="my-custom-bg" />;
+}
+```

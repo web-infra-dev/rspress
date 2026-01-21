@@ -1,5 +1,5 @@
 ---
-description: Banner notification component for displaying messages at the top of the page, with link navigation and close functionality.
+description: Banner notification component for displaying notification messages at the top of the page, with link navigation and close functionality.
 overviewHeaders: []
 ---
 
@@ -9,7 +9,7 @@ overviewHeaders: []
 
 ## Usage
 
-Use the Banner component by customizing the Layout:
+Use the Banner component through custom Layout:
 
 ```tsx title="theme/index.tsx"
 import { Layout as BasicLayout, Banner } from '@rspress/core/theme';
@@ -46,9 +46,9 @@ type BannerProps = {
   className?: string;
 } & (
   | {
-      /** How to store the closed state, defaults to 'localStorage' */
+      /** Storage method for closed state, defaults to 'localStorage' */
       storage?: 'localStorage' | 'sessionStorage' | false;
-      /** Key name for storing the closed state, defaults to 'rp-banner-closed' */
+      /** Storage key for closed state, defaults to 'rp-banner-closed' */
       storageKey?: string;
       /** Link to navigate when clicked */
       href: string;
@@ -74,14 +74,14 @@ Controls whether the Banner is displayed.
 - **Type:** `'localStorage' | 'sessionStorage' | false`
 - **Default:** `'localStorage'`
 
-How to store the closed state after the user closes the Banner. Set to `false` to not store.
+How to store the closed state after user closes the Banner. Set to `false` to disable storage.
 
 ### storageKey
 
 - **Type:** `string`
 - **Default:** `'rp-banner-closed'`
 
-Key name for storing the closed state.
+Storage key for the closed state.
 
 ### href
 
@@ -99,4 +99,4 @@ Message content displayed in the Banner.
 
 - **Type:** `ReactNode`
 
-Fully customized content for the Banner. When using this property, `href` and `message` will be ignored.
+Fully customized Banner content. When using this property, `href` and `message` will be ignored.

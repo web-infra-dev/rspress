@@ -317,6 +317,28 @@ export default defineConfig({
 });
 ```
 
+## globalStyles
+
+- **Type:** `string`
+- **Default:** `undefined`
+
+Used to add global styles, configured as the path to a style file. For example:
+
+```ts title="rspress.config.ts"
+import { defineConfig } from '@rspress/core';
+import path from 'path';
+
+export default defineConfig({
+  globalStyles: path.join(__dirname, 'styles/global.css'),
+});
+```
+
+```css title="styles/global.css"
+:root {
+  --rp-c-brand: #f00;
+}
+```
+
 ## mediumZoom
 
 - **Type**: `boolean` | `{ selector?: string }`

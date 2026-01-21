@@ -1,0 +1,32 @@
+---
+description: DocFooter component for the document page footer, containing edit link, last updated time, and prev/next page navigation.
+overviewHeaders: []
+---
+
+# DocFooter
+
+`DocFooter` renders the footer area at the bottom of document pages, containing edit link, last updated time, and prev/next page navigation.
+
+## Usage
+
+This component is automatically rendered at the bottom of document pages and usually doesn't need manual usage. For customization, you can modify it through eject:
+
+```tsx preview
+import { DocFooter as BasicDocFooter } from '@rspress/core/theme-original';
+
+export default function DocFooter() {
+  return <BasicDocFooter />;
+}
+```
+
+```tsx title="theme/components/DocFooter/index.tsx" file="<root>/../packages/core/src/theme/components/DocFooter/index.tsx"
+
+```
+
+## Included Components
+
+`DocFooter` consists of the following components:
+
+- [EditLink](/ui/layout-components/edit-link) - Displays "Edit this page" link
+- [LastUpdated](/ui/layout-components/last-updated) - Displays page last updated time
+- [PrevNextPage](/ui/layout-components/prev-next-page) - Displays prev/next page navigation
