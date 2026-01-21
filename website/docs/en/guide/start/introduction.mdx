@@ -1,5 +1,5 @@
 ---
-description: Rspress is a high-performance static site generator based on Rsbuild, featuring millisecond-level startup, AI-friendly SSG-MD, MDX support, full-text search, i18n and multi-version docs.
+description: Rspress is a high-performance static site generator based on Rsbuild, featuring millisecond-level startup, AI-native SSG-MD, MDX support, full-text search, i18n and multi-version docs.
 ---
 
 # Introduction
@@ -11,7 +11,7 @@ Rspress is a static site generator based on [Rsbuild](https://rsbuild.rs/), rend
 Rspress is designed around the following core features:
 
 - **Build Performance**. Ensuring a fast enough startup speed brings a good development experience.
-- **AI-friendly**. Technical documentation not only serves human readers but can also be better understood and utilized by AI through SSG-MD.
+- **AI-native**. Technical documentation not only serves human readers but can also be better understood and utilized by AI through SSG-MD.
 - **MDX Support**. Through MDX, we can conveniently reuse document fragments and render custom React components in documents.
 - **Basic Capabilities of Documentation Site**. Including internationalization, multi-version support, full-text search, component library documentation, etc.
 - **Extensibility**. Provides a built-in plugin system, supports extending Rspress through plugin API.
@@ -34,7 +34,7 @@ In Rspress V2, we have made significant performance improvements through multipl
 
 At the same time, Rspress internally also applies many other build optimization methods. These optimization methods, combined with the powerful Rust front-end toolchain, push the compilation performance of the SSG framework to a new height.
 
-### AI-friendly
+### AI-native
 
 With the rise of large language models, technical documentation needs to serve not only human readers but also be better understood and utilized by AI.
 
@@ -231,16 +231,11 @@ Rspress supports two ways to customize themes:
 
 ```tsx
 // theme/index.tsx
-import Theme from '@rspress/core/theme';
-import { NoSSR } from '@rspress/core/runtime';
+import { Layout as BasicLayout } from '@rspress/core/theme-original';
 
-const Layout = () => <Theme.Layout beforeNavTitle={<p>Custom Block</p>} />;
+const Layout = () => <BasicLayout beforeNavTitle={<p>Custom Block</p>} />;
 
-export default {
-  ...Theme,
-  Layout,
-};
-
+export { Layout };
 export * from '@rspress/core/theme-original';
 ```
 

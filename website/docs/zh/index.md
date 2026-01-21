@@ -31,7 +31,7 @@ features:
   - title: 内置全文搜索
     details: 构建时自动为你生成全文搜索索引，提供开箱即用的全文搜索能力。
     icon: 🎨
-  - title: AI 友好
+  - title: AI-native
     details: 通过 SSG-MD 生成符合 llms.txt 规范的索引文件和 Markdown 文件，便于大语言模型理解和使用你的技术文档。
     icon: 🤖
   - title: 静态站点生成

@@ -31,37 +31,31 @@ export default defineConfig({
 You can customize NavTitle through the Layout component's `navTitle` prop:
 
 ```tsx title="theme/index.tsx"
-import Theme from '@rspress/core/theme';
+import { Layout as BasicLayout } from '@rspress/core/theme-original';
 
-const Layout = () => <Theme.Layout navTitle={<MyCustomNavTitle />} />;
+const Layout = () => <BasicLayout navTitle={<MyCustomNavTitle />} />;
 
-export default {
-  ...Theme,
-  Layout,
-};
-
-export * from '@rspress/core/theme';
+export { Layout };
+export * from '@rspress/core/theme-original';
 ```
 
 Or use the `beforeNavTitle` and `afterNavTitle` props to insert custom content:
 
 ```tsx title="theme/index.tsx"
-import Theme from '@rspress/core/theme';
+import { Layout as BasicLayout } from '@rspress/core/theme-original';
 
 const Layout = () => (
-  <Theme.Layout
+  <BasicLayout
     beforeNavTitle={<div>Before</div>}
     afterNavTitle={<div>After</div>}
   />
 );
 
-export default {
-  ...Theme,
-  Layout,
-};
-
-export * from '@rspress/core/theme';
+export { Layout };
+export * from '@rspress/core/theme-original';
 ```
+
+For more information about custom themes, see the [Custom Theme](/guide/basic/custom-theme) documentation.
 
 ## Configuration
 
