@@ -231,16 +231,11 @@ Rspress supports two ways to customize themes:
 
 ```tsx
 // theme/index.tsx
-import Theme from '@rspress/core/theme';
-import { NoSSR } from '@rspress/core/runtime';
+import { Layout as BasicLayout } from '@rspress/core/theme-original';
 
-const Layout = () => <Theme.Layout beforeNavTitle={<p>Custom Block</p>} />;
+const Layout = () => <BasicLayout beforeNavTitle={<p>Custom Block</p>} />;
 
-export default {
-  ...Theme,
-  Layout,
-};
-
+export { Layout };
 export * from '@rspress/core/theme-original';
 ```
 
