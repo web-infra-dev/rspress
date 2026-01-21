@@ -28,7 +28,7 @@ features:
   - title: Built-in full-text search
     details: Automatically generates a full-text search index for you during construction, providing out-of-the-box full-text search capabilities.
     icon: 🎨
-  - title: AI-friendly
+  - title: AI-native
     details: Generate llms.txt and Markdown files compliant with the llms.txt specification through SSG-MD, making it easier for large language models to understand and use your documentation.
     icon: 🤖
   - title: Static site generation
