@@ -36,29 +36,28 @@ import { OverviewGroup } from '@rspress/core/theme';
 ```
 
 import { OverviewGroup } from '@rspress/core/theme';
-import { Border } from '../../../components/Border'
+import { Border } from '../../../components/Border';
 
-<Border className='rp-toc-exclude'>
-
-<OverviewGroup
-  group={{
-    name: 'Usage Test',
-    items: [
-      {
-        text: 'Introduction',
-        link: '/guide/introduction',
-        headers: [
-          { id: 'what-is-rspress', text: 'What is Rspress', depth: 2 },
-          { id: 'features', text: 'Features', depth: 2 },
-        ],
-      },
-      {
-        text: 'Installation',
-        link: '/guide/installation',
-      },
-    ],
-  }}
-/>
+<Border className="rp-toc-exclude">
+  <OverviewGroup
+    group={{
+      name: 'Usage Test',
+      items: [
+        {
+          text: 'Introduction',
+          link: '/guide/introduction',
+          headers: [
+            { id: 'what-is-rspress', text: 'What is Rspress', depth: 2 },
+            { id: 'features', text: 'Features', depth: 2 },
+          ],
+        },
+        {
+          text: 'Installation',
+          link: '/guide/installation',
+        },
+      ],
+    }}
+  />
 </Border>
 
 ## Props
