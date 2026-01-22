@@ -5,6 +5,8 @@ description: SSG-MD 将页面渲染为 Markdown 文件并生成 llms.txt 索引�
 
 # llms.txt （SSG-MD）
 
+> 想快速上手？跳转到[快速开始](#快速开始)。
+
 ## 什么是 SSG-MD？
 
 Rspress 提供实验性的 Static Site Generation to Markdown (SSG-MD) 能力，这是一个全新的功能。与它的名字一样 SSG-MD，与 [静态站点生成（SSG）](./ssg) 过程类似，但不同之处在于它将你的页面渲染为 Markdown 文件，而非 HTML 文件，并生成 [`llms.txt`](#llms-txt) 及 llms-full.txt 相关文件，便于大模型理解和使用你的技术文档。
@@ -59,7 +61,11 @@ doc_build
 
 ## 为什么需要 SSG-MD？
 
-在基于 React 动态渲染的前端框架中， 往往存在静态信息难以提取的问题。这在 MDX 中同样存在，`.mdx` 文件既包含 Markdown 内容，也支持嵌入 React 组件，增强文档的交互能力。对于 Rspress 而言，Rspress 允许用户使用 [MDX 片段](../use-mdx/components.mdx)、自定义组件、React Hooks、用 tsx 文件作为路由等等来增强文档内容的表现力。然而，这些动态内容很难被转化为 Markdown 格式，即使使用 SSG 阶段产生后的 html 转为 markdown，结果也往往不尽如人意。
+在基于 React 动态渲染的前端框架中，往往存在静态信息难以提取的问题，。这在 MDX 中同样存在，`.mdx` 文件既包含 Markdown 内容，也支持嵌入 React 组件，增强文档的交互能力。对于 Rspress 而言，Rspress 允许用户通过 MDX 片段、React 组件、Hooks 以及 TSX 路由等动态特性来增强文档表现力。但这些动态内容在转换为 Markdown 文本时会面临以下问题：
+
+- 直接将 MDX 输入给 AI 会包含大量代码语法噪音，并丢失 React 组件内容
+
+- 将 HTML 转为 Markdown 往往效果不佳，信息质量难以保证
 
 [静态站点生成（SSG）](./ssg) 可以生成静态的 HTML 文件供爬虫爬取，提升 [SEO](https://en.wikipedia.org/wiki/Search_engine_optimization)。SSG-MD 也是为了解决类似的问题，提升 [GEO](https://en.wikipedia.org/wiki/Generative_engine_optimization) 和面向大模型的静态信息质量。相比将 HTML 转化为 Markdown，React 在渲染期间的虚拟 DOM 拥有更好的信息源。
 
@@ -135,42 +141,9 @@ deno init --npm rspress@latest
 ```
 ````
 
-## 功能介绍
+## 快速开始
 
-- 将每个站点页面渲染为 `.md` 文件，便于向量化或提供给大模型，`/guide/start/introduction.html` 将 `.html` 后缀替换为 `.md` 即可访问。
-- 生成 [`llms.txt`](https://llmstxt.org/)，按导航、侧边栏顺序展示各页面标题与描述。
-- 生成 `llms-full.txt`，包含每个页面的 Markdown 内容，方便批量导入。
-- 支持多语言站点，会为非默认语言输出对应的 `{lang}/llms.txt` 与 `{lang}/llms-full.txt`。
-
-## 产物示例
-
-```tree
-doc_build
-├── llms.txt
-├── llms-full.txt
-├── guide
-│   └── start
-│       └── introduction.md
-└── ...
-```
-
-实际文件落在构建目录（如 `guide/start/introduction.md`），`llms-full.txt` 中的 `url` 会携带站点前缀，例如 `/guide/start/introduction.md`。
-
-`llms-full.txt` 示例片段：
-
-```md
----
-url: /guide/start/introduction.md
----
-
-# 介绍
-
-...
-```
-
-## 启用方式
-
-在 `rspress.config.ts` 中开启 `llms` 即可在构建阶段产出上述文件：
+在 `rspress.config.ts` 中开启 `llms` 即可：
 
 ```ts title="rspress.config.ts"
 import { defineConfig } from '@rspress/core';
@@ -180,21 +153,33 @@ export default defineConfig({
 });
 ```
 
-执行 `rspress build` 后，可在输出目录（默认 `doc_build`）中看到 `llms.txt`、`llms-full.txt` 以及各路由对应的 `.md` 文件。
+执行 `rspress build` 后，输出目录（默认 `doc_build`）会额外生成以下文件：
+
+```tree
+doc_build
+├── llms.txt          # 索引文件，按导航顺序展示各页面标题与描述
+├── llms-full.txt     # 包含所有页面的 Markdown 内容
+├── guide
+│   └── start
+│       └── introduction.md   # 页面对应的 .md 文件
+└── ...
+```
+
+访问时将 `.html` 后缀替换为 `.md` 即可，如 `/guide/start/introduction.md`。多语言站点会为非默认语言输出 `{lang}/llms.txt` 与 `{lang}/llms-full.txt`。
 
 :::warning
 
-`llms` 为实验能力，主要用于生成便于大模型或检索系统使用的 Markdown 数据。会在未来版本中持续优化，可能存在不稳定或兼容性问题。
-
-如果由于代码不兼容 SSR，无法开启 SSG 和 SSG-MD 功能，请使用 [@rspress/plugin-llms](/plugin/official-plugins/llms)。
+`llms` 为实验性功能，可能存在不稳定或兼容性问题。如果由于代码不兼容 SSR，无法开启此功能，请使用 [@rspress/plugin-llms](/plugin/official-plugins/llms)。
 
 :::
 
-## UI 展示
+## 配置选项
 
-当启用 `llms: true` 时，会自动在所有 H1 标题下方显示 `LlmsCopyButton` 和 `LlmsViewOptions` 组件。这使用户可以轻松复制 markdown 内容或在 ChatGPT、Claude 等 AI 工具中打开。
+### UI 展示
 
-如果需要自定义展示，可以通过 `themeConfig.llmsUI` 进行配置：
+当启用 `llms: true` 时，会自动在所有 H1 标题下方显示 `LlmsCopyButton` 和 `LlmsViewOptions` 组件，方便用户复制 Markdown 内容或在 ChatGPT、Claude 等 AI 工具中打开。
+
+可通过 `themeConfig.llmsUI` 自定义或禁用：
 
 ```ts title="rspress.config.ts"
 import { defineConfig } from '@rspress/core';
@@ -204,7 +189,7 @@ export default defineConfig({
   themeConfig: {
     // 禁用 LLMS UI
     llmsUI: false,
-    // 或者自定义选项：
+    // 或自定义选项：
     // llmsUI: {
     //   viewOptions: ['markdownLink', 'chatgpt', 'claude'],
     // },
@@ -212,11 +197,11 @@ export default defineConfig({
 });
 ```
 
-更多关于 LLMS UI 配置的信息，请参阅 [themeConfig.llmsUI](/api/config/config-theme#llmsui)。
+更多信息请参阅 [themeConfig.llmsUI](/api/config/config-theme#llmsui)。
 
-## 自定义 MDX 拆分（可选）
+### 自定义 MDX 拆分
 
-当文档中包含自定义组件时，可以通过 `remarkSplitMdxOptions` 控制哪些组件在转换为 Markdown 时保留或转成纯文本：
+当文档中包含自定义组件时，可通过 `remarkSplitMdxOptions` 控制哪些组件在转换为 Markdown 时保留或转成纯文本：
 
 ```ts title="rspress.config.ts"
 import { defineConfig } from '@rspress/core';
