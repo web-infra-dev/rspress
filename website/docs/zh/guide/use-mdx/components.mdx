@@ -10,7 +10,7 @@ Rspress 支持 [MDX](https://mdxjs.com/)，这是一种将 Markdown 与 JSX 无�
 
 MDX 是 Markdown 与 JSX 语法的结合，让你可以在 Markdown 文档中使用 React 组件。
 
-我们推荐所有文档文件均使用 `.mdx`，这样既可以像普通 Markdown 一样编写内容，又能导入和使用 Rspress 提供的[内置组件](/ui/components/index.mdx)：
+我们推荐所有文档文件均使用 `.mdx`，这样既可以像普通 Markdown 一样编写内容，又能导入和使用 Rspress 提供的 [文档组件](/ui/components/index.mdx)：
 
 ```mdx title="docs/index.mdx"
 # Hello, world!
@@ -20,11 +20,11 @@ import { PackageManagerTabs } from '@rspress/core/theme';
 <PackageManagerTabs command="create rspress@latest" />
 ```
 
-## MDX 片段 \{#component}
+## MDX 片段 \{#fragments}
 
 在 MDX 中，每个 `.mdx` 文件都会编译为 React 组件，这意味着它既可以被当做组件引用，也可以自由使用 React 组件。例如：
 
-import { Tabs, Tab } from '@theme';
+import { Tabs, Tab } from '@rspress/core/theme';
 import { Border } from '../../../components/Border';
 
 <Tabs>
@@ -66,7 +66,7 @@ import TsxComponent from './_tsx-component';
 import MdxFragment from './_mdx-fragment.mdx';
 import TsxComponent from './_tsx-component';
 
-<Border>
+<Border className='rp-toc-exclude'>
 测试 MDX 片段和 React 组件的使用。
 
 <MdxFragment />
@@ -74,7 +74,7 @@ import TsxComponent from './_tsx-component';
 <TsxComponent />
 </Border>
 
-你可以在 `.mdx` 文件中使用 Rspress 提供的 [内置组件](/ui/components/index.mdx) 或安装一些 React 组件库来丰富你的文档。
+你可以在 `.mdx` 文件中使用 Rspress 提供的 [文档组件](/ui/components/index.mdx) 或安装一些 React 组件库来丰富你的文档。
 
 ## 路由约定
 

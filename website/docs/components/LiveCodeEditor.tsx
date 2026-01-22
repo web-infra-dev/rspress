@@ -1,4 +1,7 @@
-import { CodeBlockRuntime, type CodeBlockRuntimeProps } from '@theme';
+import {
+  CodeBlockRuntime,
+  type CodeBlockRuntimeProps,
+} from '@rspress/core/theme';
 import { useRef } from 'react';
 import styles from './LiveCodeEditor.module.scss';
 

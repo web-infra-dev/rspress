@@ -6,12 +6,12 @@ tag: non-ejectable
 
 # CodeBlockRuntime
 
-`CodeBlockRuntime` 用于在运行时渲染可执行的代码块。
+`CodeBlockRuntime` 用于在运行时渲染可执行的 [代码块](/guide/use-mdx/code-blocks)。
 
 ## 用法
 
 ```tsx title="index.mdx"
-import { CodeBlockRuntime } from '@theme';
+import { CodeBlockRuntime } from '@rspress/core/theme';
 
 export default function Page() {
   return (
@@ -25,7 +25,7 @@ export default function Page() {
 }
 ```
 
-import { CodeBlockRuntime } from '@theme';
+import { CodeBlockRuntime } from '@rspress/core/theme';
 
 <CodeBlockRuntime
   lang="js"
@@ -34,10 +34,64 @@ import { CodeBlockRuntime } from '@theme';
   shikiOptions={{}}
 />
 
-传入 `lang`、`title`、`code` 渲染代码块；`shikiOptions` 可自定义高亮配置。
+传入 `lang`、`title`、`code` 渲染代码块；`shikiOptions` 可自定义高亮配置，也支持 transformers。
 
 :::warning
 
 建议仅在必要条件下使用 `CodeBlockRuntime`，因为它会增加运行时的包体积，尤其是在需要引入多门语言的时候，并且无法享受编译时高亮带来的性能优势。
+
+:::
+
+## 使用 Shiki 选项
+
+以下是一个使用 transformer 实现行高亮的示例：
+
+```mdx title="foo.mdx"
+import { CodeBlockRuntime } from '@rspress/core/theme';
+import { transformerNotationHighlight } from '@shikijs/transformers';
+
+<CodeBlockRuntime
+  lang="ts"
+  title="highlight.ts"
+  code={`console.log('Highlighted'); // [\!code highlight]
+// [\!code highlight:1]
+console.log('Highlighted');
+console.log('Not highlighted');`}
+  shikiOptions={{
+    transformers: [transformerNotationHighlight()],
+  }}
+/>
+```
+
+import { transformerNotationHighlight } from '@shikijs/transformers';
+
+<CodeBlockRuntime
+  lang="ts"
+  title="highlight.ts"
+  code={`console.log('Highlighted'); // [!code highlight]
+// [!code highlight:1]
+console.log('Highlighted');
+console.log('Not highlighted');`}
+  shikiOptions={{
+    transformers: [transformerNotationHighlight()],
+  }}
+/>
+
+## 导入文件内容
+
+可以使用 `?raw` query 将文件内容作为字符串导入，然后传递给 `code` prop。详见 [Rsbuild - 静态资源](https://rsbuild.rs/zh/guide/basic/static-assets)。
+
+```mdx title="foo.mdx"
+import { CodeBlockRuntime } from '@rspress/core/theme';
+import codeContent from './example.ts?raw';
+
+<CodeBlockRuntime lang="ts" title="example.ts" code={codeContent} />
+```
+
+这种方式适用于需要动态展示外部文件内容的场景，比如展示示例代码文件。
+
+:::warning
+
+如果只是需要引用外部文件作为代码块展示，更推荐使用静态的[文件代码块](/guide/use-mdx/code-blocks#file-code-block)语法，它在编译时处理，性能更好且包体积更小。
 
 :::

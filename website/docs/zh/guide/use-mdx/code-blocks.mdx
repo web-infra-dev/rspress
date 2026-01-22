@@ -2,7 +2,7 @@
 description: 使用 Shiki 实现编译时代码高亮，支持行高亮、行号、代码换行、Diff、外部文件引用和 Twoslash 等丰富功能。
 ---
 
-import { Tabs, Tab } from '@theme';
+import { Tabs, Tab } from '@rspress/core/theme';
 
 # 代码块
 
@@ -436,7 +436,7 @@ const str: string = 1;
 以下是一个示例：
 
 ```mdx title="foo.mdx"
-import { CodeBlockRuntime } from '@theme';
+import { CodeBlockRuntime } from '@rspress/core/theme';
 import { transformerNotationHighlight } from '@shikijs/transformers';
 
 <CodeBlockRuntime
@@ -452,7 +452,7 @@ console.log('Not highlighted');`}
 />
 ```
 
-import { CodeBlockRuntime } from '@theme';
+import { CodeBlockRuntime } from '@rspress/core/theme';
 import { transformerNotationHighlight } from '@shikijs/transformers';
 
 <CodeBlockRuntime

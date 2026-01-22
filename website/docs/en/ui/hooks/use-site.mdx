@@ -4,11 +4,11 @@ description: useSite hook for accessing the normalized site configuration from r
 
 # useSite
 
-`useSite` returns the normalized site configuration generated from your `rspress.config.ts`.
+`useSite` returns the serialized site configuration from `rspress.config.ts`.
 
 - **Type:** `() => { site: SiteData }`
 
-The `site` object mirrors the normalized config, including base path, language/locales, theme configuration, search and markdown options, and multi-version settings.
+Here is an example of getting the [title](/api/config/config-basic#title) configuration from `rspress.config.ts`:
 
 ```tsx preview
 import { useSite } from '@rspress/core/runtime';
@@ -19,4 +19,4 @@ export default function SiteTitle() {
 }
 ```
 
-> Pair with [`usePage`](./use-page) to combine global config with the current page metadata.
+> Can be used together with [`usePage`](./use-page) to get both global site configuration and current page metadata.

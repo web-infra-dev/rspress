@@ -6,12 +6,12 @@ tag: non-ejectable
 
 # CodeBlockRuntime
 
-`CodeBlockRuntime` renders runnable code blocks at runtime.
+`CodeBlockRuntime` renders runnable [code blocks](/guide/use-mdx/code-blocks) at runtime.
 
 ## Usage
 
 ```tsx title="index.mdx"
-import { CodeBlockRuntime } from '@theme';
+import { CodeBlockRuntime } from '@rspress/core/theme';
 
 export default function Page() {
   return (
@@ -25,4 +25,73 @@ export default function Page() {
 }
 ```
 
-Pass `lang`, `title`, and `code` to render the block; `shikiOptions` customizes highlighting.
+import { CodeBlockRuntime } from '@rspress/core/theme';
+
+<CodeBlockRuntime
+  lang="js"
+  title="index.js"
+  code={`console.log('Hello World!')`}
+  shikiOptions={{}}
+/>
+
+Pass `lang`, `title`, and `code` to render the block; `shikiOptions` customizes highlighting and also supports transformers.
+
+:::warning
+
+It is recommended to use `CodeBlockRuntime` only when necessary, as it increases runtime bundle size, especially when multiple languages need to be included, and cannot benefit from compile-time highlighting performance.
+
+:::
+
+## Using shiki options
+
+Here is an example using a transformer for line highlighting:
+
+```mdx title="foo.mdx"
+import { CodeBlockRuntime } from '@rspress/core/theme';
+import { transformerNotationHighlight } from '@shikijs/transformers';
+
+<CodeBlockRuntime
+  lang="ts"
+  title="highlight.ts"
+  code={`console.log('Highlighted'); // [\!code highlight]
+// [\!code highlight:1]
+console.log('Highlighted');
+console.log('Not highlighted');`}
+  shikiOptions={{
+    transformers: [transformerNotationHighlight()],
+  }}
+/>
+```
+
+import { transformerNotationHighlight } from '@shikijs/transformers';
+
+<CodeBlockRuntime
+  lang="ts"
+  title="highlight.ts"
+  code={`console.log('Highlighted'); // [!code highlight]
+// [!code highlight:1]
+console.log('Highlighted');
+console.log('Not highlighted');`}
+  shikiOptions={{
+    transformers: [transformerNotationHighlight()],
+  }}
+/>
+
+## Importing file content
+
+You can use the `?raw` query to import file content as a string and pass it to the `code` prop. See [Rsbuild - Static Assets](https://rsbuild.rs/guide/basic/static-assets) for details.
+
+```mdx title="foo.mdx"
+import { CodeBlockRuntime } from '@rspress/core/theme';
+import codeContent from './example.ts?raw';
+
+<CodeBlockRuntime lang="ts" title="example.ts" code={codeContent} />
+```
+
+This approach is suitable for scenarios where you need to dynamically display external file content, such as showing example code files.
+
+:::warning
+
+If you just need to reference external files as code blocks, it is recommended to use the static [file code block](/guide/use-mdx/code-blocks#file-code-block) syntax, which is processed at compile time with better performance and smaller bundle size.
+
+:::

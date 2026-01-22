@@ -18,7 +18,7 @@ description: 通过 CSS 变量、BEM 类名覆盖样式，或使用 ESM 重导�
 
 Rspress 暴露了一些常用的 CSS 变量，相比重写 Rspress 内置的 React 组件，覆盖 CSS 变量实现定制化更简单也更易维护。你可以在 [UI - CSS 变量](../../ui/vars.mdx) 页面查看这些 CSS 变量，并通过：
 
-import { Tabs, Tab } from '@theme';
+import { Tabs, Tab } from '@rspress/core/theme';
 
 <Tabs>
 <Tab label="theme/index.tsx">
@@ -108,7 +108,7 @@ export * from '@rspress/core/theme-original'; //[!code highlight]
 
 :::
 
-### Wrap：在重导出的基础上传 props/插槽 \{#wrap}
+### Wrap：传 props/插槽 \{#wrap}
 
 Wrap 指在重导出的组件上增加 props。下面是一个例子，在导航栏标题前面插入一些内容：
 
@@ -151,7 +151,7 @@ export * from '@rspress/core/theme-original';
 
 :::
 
-### Eject：对源码直接修改 \{#eject}
+### Eject：直接覆盖整个组件 \{#eject}
 
 Eject 指将 Rspress 单个内置组件直接进行覆盖，全部使用自己的版本。对此 Rspress 提供了 [`rspress eject [component]`](../../api/commands.mdx#rspress-eject) 命令将内置组件的源码拷贝到本地并直接改动，步骤如下：
 

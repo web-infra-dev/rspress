@@ -10,7 +10,7 @@ description: Customize theme via CSS variables, BEM classnames, component wrappi
 
    On top of this, there are two modes:
    - [**wrap**](#wrap): **Wrap** and enhance Rspress built-in components through props / slots.
-   - [**eject**](#eject): **Copy** source code locally through the [`rspress eject`](../../api/commands.mdx#rspress-eject) command and modify it directly to override.
+   - [**eject**](#eject): Directly **override** the entire component. You can use the [`rspress eject`](../../api/commands.mdx#rspress-eject) command to copy the source code locally and modify it directly.
 
 The following will introduce them in order according to the degree of theme customization.
 
@@ -18,7 +18,7 @@ The following will introduce them in order according to the degree of theme cust
 
 Rspress exposes some commonly used CSS variables. Compared to rewriting Rspress built-in React components, overriding CSS variables for customization is simpler and easier to maintain. You can view these CSS variables on the [UI - CSS Variables](../../ui/vars.mdx) page, and override them through:
 
-import { Tabs, Tab } from '@theme';
+import { Tabs, Tab } from '@rspress/core/theme';
 
 <Tabs>
 <Tab label="theme/index.tsx">
@@ -38,7 +38,7 @@ export * from '@rspress/core/theme-original';
 
 ## BEM classname \{#bem-classname}
 
-Rspress built-in components all use BEM naming convention. You can override these classnames in the same way as [CSS Variables](#css-variables).
+Rspress built-in components all use BEM naming convention. You can use these classnames to override styles, in the same way as [CSS Variables](#css-variables).
 
 ```css
 .rp-[component-name]__[element-name]--[modifier-name] {
@@ -66,9 +66,9 @@ For example:
 }
 ```
 
-## `theme/index.tsx`: Override built-in components using ESM re-exports \{#reexport}
+## Override built-in components using ESM re-exports \{#reexport}
 
-By default, you need to create a `theme` directory under the project root directory, and then create an `index.ts` or `index.tsx` file under the `theme` directory, which is used to export the theme content.
+By default, you need to create a `theme` directory under the project root directory, and then create an `index.ts` or `index.tsx` file under the `theme` directory, which is used to export the theme components.
 
 ```tree
 ├── docs
@@ -90,27 +90,27 @@ export * from '@rspress/core/theme-original'; //[!code highlight]
 
 By **ESM re-export** to override built-in components, all Rspress internal references to built-in components will preferentially use your re-exported version.
 
-:::tip Note
+:::note About @rspress/core/theme-original
 
-Only use `@rspress/core/theme-original` when customizing themes
+`@rspress/core/theme-original` is used to avoid circular references, only use it when customizing themes.
 
 ```tree
 ├── docs
-│   └── index.mdx <-- "@rspress/core/theme"
+│   └── index.mdx <-- use "@rspress/core/theme"
 ├── theme
-│   └── index.tsx <-- "@rspress/core/theme-original"
+│   └── index.tsx <-- use "@rspress/core/theme-original"
 └── rspress.config.ts
 ```
 
-1. In the `docs` directory, use `@rspress/core/theme`, `@rspress/core/theme` points to your `theme/index.tsx`.
+1. In the `docs` directory, use `@rspress/core/theme`, which points to your `theme/index.tsx`.
 
-2. In the `theme` directory, use `@rspress/core/theme-original`, `@rspress/core/theme-original` always points to Rspress built-in theme components.
+2. In the `theme` directory, use `@rspress/core/theme-original`, which always points to Rspress built-in theme components.
 
 :::
 
-## Wrap: Add props/slots on re-exported components \{#wrap}
+### Wrap: Pass props/slots \{#wrap}
 
-Wrap means adding props to re-exported components. Here's an example of inserting some content before the nav bar title:
+Wrap means adding props to re-exported components. Here's an example of inserting some content before the navbar title:
 
 <Tabs>
 <Tab label="theme/index.tsx">
@@ -145,96 +145,17 @@ export * from '@rspress/core/theme-original';
 
 </Tabs>
 
-### Layout slots
+:::tip
 
-The `Layout` component is designed with a series of props to support slot elements. You can use these props to extend the default theme layout:
+The [`Layout`](/ui/layout-components/layout) component is designed with a series of slot props specifically for wrapping. You can use these props to extend the default theme layout:
 
-<details>
+:::
 
-```tsx title="theme/index.tsx"
-import {
-  Layout as BasicLayout,
-  getCustomMDXComponent as basicGetCustomMDXComponent,
-} from '@rspress/core/theme-original';
+### Eject: Directly override the entire component \{#eject}
 
-// Show all props below
-const Layout = () => (
-  <BasicLayout
-    /* Home page Hero section before */
-    beforeHero={<div>beforeHero</div>}
-    /* Home page Hero section after */
-    afterHero={<div>afterHero</div>}
-    /* Home page Features section before */
-    beforeFeatures={<div>beforeFeatures</div>}
-    /* Home page Features section after */
-    afterFeatures={<div>afterFeatures</div>}
-    /* Doc page Footer section before */
-    beforeDocFooter={<div>beforeDocFooter</div>}
-    /* Doc page Footer section after */
-    afterDocFooter={<div>afterDocFooter</div>}
-    /* Doc page front */
-    beforeDoc={<div>beforeDoc</div>}
-    /* Doc page end */
-    afterDoc={<div>afterDoc</div>}
-    /* Doc content front */
-    beforeDocContent={<div>beforeDocContent</div>}
-    /* Doc content end */
-    afterDocContent={<div>afterDocContent</div>}
-    /* Before nav bar */
-    beforeNav={<div>beforeNav</div>}
-    /* After nav bar */
-    afterNav={<div>afterNav</div>}
-    /* Before upper left nav bar title */
-    beforeNavTitle={<span>😄</span>}
-    /* Nav bar title */
-    navTitle={<div>Custom Nav Title</div>}
-    /* After upper left nav bar title */
-    afterNavTitle={<div>afterNavTitle</div>}
-    /* Before nav bar menu */
-    beforeNavMenu={<div>beforeNavMenu</div>}
-    /* After nav bar menu */
-    afterNavMenu={<div>afterNavMenu</div>}
-    /* Above left sidebar */
-    beforeSidebar={<div>beforeSidebar</div>}
-    /* Below left sidebar */
-    afterSidebar={<div>afterSidebar</div>}
-    /* Above right outline column */
-    beforeOutline={<div>beforeOutline</div>}
-    /* Below right outline column */
-    afterOutline={<div>afterOutline</div>}
-    /* Top of entire page */
-    top={<div>top</div>}
-    /* Bottom of entire page */
-    bottom={<div>bottom</div>}
-    /* Custom MDX components */
-    components={{
-      h1: (props) => {
-        const { h1: OriginalH1, p: OriginalP } = basicGetCustomMDXComponent();
-        return (
-          <>
-            <OriginalH1 {...props} />
-            <OriginalP>
-              This is a custom paragraph added after every H1 heading.
-            </OriginalP>
-          </>
-        );
-      },
-    }}
-  />
-);
+Eject means directly overriding a single Rspress built-in component, using your own version entirely. For this, Rspress provides the [`rspress eject [component]`](../../api/commands.mdx#rspress-eject) command to copy the source code of built-in components locally and modify them directly. The steps are as follows:
 
-export { Layout };
-// re-export
-export * from '@rspress/core/theme-original';
-```
-
-</details>
-
-## Eject: Modify source code directly \{#eject}
-
-Eject means copying the source code of a single Rspress built-in component locally and then modifying it directly. The steps are as follows:
-
-1. Execute CLI [`rspress eject [component]`](../../api/commands.mdx#rspress-eject), Rspress will eject the source code of the specified component to the local `theme/components` directory, without ejecting dependencies.
+1. Execute CLI, Rspress will eject the source code of the specified component to the local `theme/components` directory, without ejecting dependencies.
 
 2. Update `theme/index.tsx` re-export:
 
@@ -246,7 +167,7 @@ export * from '@rspress/core/theme-original';
 
 3. Modify `theme/components/DocFooter.tsx` as needed to meet your requirements.
 
-Rspress components are split with fine granularity, you can see which components are suitable for eject in [Built-in Components](/ui/components/).
+To make it easier for users to eject, Rspress components are split with fine granularity. You can see which components are suitable for eject in [Layout Components](/ui/layout-components/).
 
 :::warning Do you really need eject?
 
@@ -255,166 +176,3 @@ Eject will increase maintenance costs, because when Rspress is updated in the fu
 Please check if wrap can meet your needs first. Only consider eject when wrap cannot meet your needs.
 
 :::
-
-## Redevelop a custom theme
-
-If you're developing a custom theme from scratch, you need to understand the basic structure of the theme and the runtime API.
-
-### 1. Basic structure
-
-By default, you need to create a `theme` directory under the project root directory, and then create an `index.ts` or `index.tsx` file under the `theme` directory, which is used to export the theme content.
-
-```tree
-├── theme
-│   └── index.tsx
-```
-
-In the `theme/index.tsx` file, you need to export a Layout component, which is the entry component of your theme:
-
-```tsx
-// theme/index.tsx
-import { Layout as BasicLayout } from '@rspress/core/theme-original';
-
-function Layout() {
-  return <BasicLayout />;
-}
-
-// Export Layout component and setup function
-export { Layout };
-// Export all content of the default theme to ensure that your theme configuration can work properly
-export * from '@rspress/core/theme-original';
-```
-
-### 2. Runtime API
-
-#### usePageData
-
-Get information about all data on the site, such as:
-
-```tsx
-import { usePageData } from '@rspress/core/runtime';
-
-function MyComponent() {
-  const pageData = usePageData();
-  return <div>{pageData.title}</div>;
-}
-```
-
-#### useLang
-
-Get the current language information, such as:
-
-```tsx
-import { useLang } from '@rspress/core/runtime';
-
-function MyComponent() {
-  const lang = useLang();
-  return <div>{lang}</div>;
-}
-```
-
-#### Content
-
-Get MDX component content, such as:
-
-```tsx
-import { Content } from '@rspress/core/runtime';
-
-function Layout() {
-  return (
-    <div>
-      <Content />
-    </div>
-  );
-}
-```
-
-#### Route hook
-
-[react-router-dom](https://reactrouter.com/) is used inside Rspress to implement routing, so you can directly use the Hook of `react-router-dom`, for example:
-
-```tsx
-import { useLocation } from '@rspress/core/runtime';
-
-function Layout() {
-  const location = useLocation();
-  return <div>Current location: {location.pathname}</div>;
-}
-```
-
-### 3. Reusing search functionality
-
-The default theme comes with built-in search functionality, which we can break down into two components:
-
-1. The search box, i.e., the entry point to invoke the search.
-2. The search panel that pops up after clicking on the search box.
-
-#### Full reuse
-
-If you want to fully reuse the search functionality, you can directly import the `Search` component, like so:
-
-```tsx
-import { Search } from '@rspress/core/theme-original';
-
-function MySearch() {
-  return <Search />;
-}
-```
-
-#### Reusing the search panel
-
-If you only want to reuse the search panel and customize the search box part, then you need to import the `SearchPanel` component in your theme component, like so:
-
-```tsx
-import { useState } from 'react';
-import { SearchPanel } from '@rspress/core/theme-original';
-
-function MySearch() {
-  const [focused, setFocused] = useState(false);
-  return (
-    <div>
-      <button onClick={() => setFocused(true)}>Toggle Search</button>
-      <SearchPanel focused={focused} setFocused={setFocused} />
-    </div>
-  );
-}
-```
-
-In this case, you need to maintain the `focused` state and `setFocused` method yourself, and pass them as props to the `SearchPanel` component for controlling the display and hiding of the search panel.
-
-#### Reuse default full text search logic
-
-If you want to reuse the default full text search logic, you can use the `useFullTextSearch` Hook, for example:
-
-```tsx
-import { useFullTextSearch } from '@rspress/core/theme-original';
-
-function MySearch() {
-  const { initialized, search } = useFullTextSearch();
-
-  useEffect(() => {
-    async function searchSomeKeywords(keywords: string) {
-      if (initialized) {
-        // Search for keywords
-        const results = await search(keywords);
-        console.log(results);
-      }
-    }
-    searchSomeKeywords('keyword');
-  }, [initialized]);
-
-  return <div>Search</div>;
-}
-```
-
-Here, `initialized` indicates whether the search is initialized, the `search` method is used to search for keywords, returning a Promise, the result of the Promise is the result of the default full text search.
-
-It should be noted that the `useFullTextSearch` Hook will automatically load the search index during initialization, so you need to first determine the `initialized` status, ensure that initialization is complete, and then call the `search` method.
-
-The type definition of the search method is as follows:
-
-```ts
-type SearchFn = (keywords: string, limit?: number) => Promise<SearchResult>;
-```
-
-The limit represents the maximum number of search results, default is 7, which means by default it returns a maximum of seven article results.

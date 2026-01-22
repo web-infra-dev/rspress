@@ -8,13 +8,13 @@ description: useVersion hook for getting the current documentation version in mu
 
 - **Type:** `() => string`
 
-Use it to surface the active version in UI or to branch logic for versioned content.
+Use it to display the current version in UI or to execute branch logic for different versions.
 
 ```tsx
 import { useVersion } from '@rspress/core/runtime';
 
 export default function VersionTag() {
   const version = useVersion();
-  return <div>Viewing docs for version {version}</div>;
+  return <div>Current documentation version: {version}</div>;
 }
 ```

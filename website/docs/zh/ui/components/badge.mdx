@@ -3,7 +3,7 @@ description: Badge 徽章组件，用于在文档中显示小型内联标记，�
 overviewHeaders: []
 ---
 
-import { Badge, Tag } from '@theme';
+import { Badge, Tag } from '@rspress/core/theme';
 
 # Badge
 
@@ -12,7 +12,7 @@ Badge 组件用于显示一个小型的内联徽章。
 ## 使用方法
 
 ```mdx title="index.mdx"
-import { Badge } from '@theme';
+import { Badge } from '@rspress/core/theme';
 
 <Badge text="NEW" type="info" />
 ```
@@ -24,7 +24,7 @@ import { Badge } from '@theme';
 Badge 组件支持四种类型，每种类型有不同的颜色：
 
 ```mdx preview title="index.mdx"
-import { Badge } from '@theme';
+import { Badge } from '@rspress/core/theme';
 
 <Badge text="tip" type="tip" />
 <Badge text="info" type="info" />
@@ -35,7 +35,7 @@ import { Badge } from '@theme';
 ## 轮廓样式
 
 ```mdx preview title="index.mdx"
-import { Badge } from '@theme';
+import { Badge } from '@rspress/core/theme';
 
 <Badge text="tip" type="tip" outline />
 <Badge text="info" type="info" outline />
@@ -48,7 +48,7 @@ import { Badge } from '@theme';
 你可以使用 `children` 属性在徽章内渲染自定义内容：
 
 ```mdx preview title="index.mdx"
-import { Badge, IconSearch, SvgWrapper } from '@theme';
+import { Badge, IconSearch, SvgWrapper } from '@rspress/core/theme';
 
 <Badge type="tip">
   <img
@@ -69,7 +69,7 @@ import { Badge, IconSearch, SvgWrapper } from '@theme';
 Badge 可以与文本内联使用：
 
 ```mdx preview title="index.mdx"
-import { Badge } from '@theme';
+import { Badge } from '@rspress/core/theme';
 
 与文本内联 <Badge text="New" />
 ```
