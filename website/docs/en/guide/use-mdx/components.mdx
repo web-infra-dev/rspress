@@ -12,7 +12,7 @@ MDX is a combination of Markdown and JSX syntax, allowing you to write and use R
 
 We recommend using `.mdx` for all documentation files, which enables you to write content just like regular Markdown and also import and utilize the [built-in components](/ui/components/index.mdx) provided by Rspress.
 
-```mdx
+```mdx title="docs/index.mdx"
 # Hello, world!
 
 import { PackageManagerTabs } from '@rspress/core/theme';
@@ -24,7 +24,7 @@ import { PackageManagerTabs } from '@rspress/core/theme';
 
 In MDX, every `.mdx` file is compiled into a React component, which means it can be imported like any component and can freely render React components. For example:
 
-import { Tabs, Tab } from '@theme';
+import { Tabs, Tab } from '@rspress/core/theme';
 import { Border } from '../../../components/Border';
 
 <Tabs>

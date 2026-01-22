@@ -3,7 +3,7 @@ description: PackageManagerTabs component for displaying installation commands a
 overviewHeaders: []
 ---
 
-import { PackageManagerTabs, Tag } from '@theme';
+import { PackageManagerTabs, Tag } from '@rspress/core/theme';
 
 # PackageManagerTabs
 
@@ -12,7 +12,7 @@ PackageManagerTabs displays commands for different package managers.
 ## Basic usage
 
 ```mdx title="index.mdx"
-import { PackageManagerTabs } from '@theme';
+import { PackageManagerTabs } from '@rspress/core/theme';
 
 <PackageManagerTabs command="install -D @rspress/core" />
 ```
@@ -24,7 +24,7 @@ import { PackageManagerTabs } from '@theme';
 You can pass an object to define the command for each package manager:
 
 ```mdx preview title="index.mdx"
-import { PackageManagerTabs } from '@theme';
+import { PackageManagerTabs } from '@rspress/core/theme';
 
 <PackageManagerTabs
   command={{
@@ -42,7 +42,7 @@ import { PackageManagerTabs } from '@theme';
 Use `additionalTabs` to add more package managers:
 
 ```mdx preview title="index.mdx"
-import { PackageManagerTabs } from '@theme';
+import { PackageManagerTabs } from '@rspress/core/theme';
 
 <PackageManagerTabs
   command="install -D @rspress/core"

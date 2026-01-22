@@ -3,7 +3,7 @@ description: PackageManagerTabs 包管理器标签组件，用于展示不同包
 overviewHeaders: []
 ---
 
-import { PackageManagerTabs } from '@theme';
+import { PackageManagerTabs } from '@rspress/core/theme';
 
 # PackageManagerTabs
 
@@ -12,7 +12,7 @@ PackageManagerTabs 组件用于在文档中展示不同包管理器的命令。
 ## 基础用法
 
 ```mdx title="index.mdx"
-import { PackageManagerTabs } from '@theme';
+import { PackageManagerTabs } from '@rspress/core/theme';
 
 <PackageManagerTabs command="install -D @rspress/core" />
 ```
@@ -24,7 +24,7 @@ import { PackageManagerTabs } from '@theme';
 你可以使用对象形式为每个包管理器设置不同的命令：
 
 ```mdx preview title="index.mdx"
-import { PackageManagerTabs } from '@theme';
+import { PackageManagerTabs } from '@rspress/core/theme';
 
 <PackageManagerTabs
   command={{
@@ -42,7 +42,7 @@ import { PackageManagerTabs } from '@theme';
 通过 `additionalTabs` 可以为其他包管理器添加额外的 tab：
 
 ```mdx preview title="index.mdx"
-import { PackageManagerTabs } from '@theme';
+import { PackageManagerTabs } from '@rspress/core/theme';
 
 <PackageManagerTabs
   command="install -D @rspress/core"

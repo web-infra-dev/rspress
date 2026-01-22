@@ -24,7 +24,7 @@ export default function PrevNextPage() {
 组件内部使用 `usePrevNextPage` hook 来获取上一页和下一页的信息：
 
 ```ts
-import { usePrevNextPage } from '@theme';
+import { usePrevNextPage } from '@rspress/core/theme';
 
 const { prevPage, nextPage } = usePrevNextPage();
 // prevPage: { text: string; link: string } | null

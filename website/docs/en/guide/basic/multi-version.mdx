@@ -30,26 +30,26 @@ According to the version list you configured, add multi-version documents under 
 ```tree
 docs
 ├── v1
-│   ├── README.md
+│   ├── index.mdx
 │   └── guide
-│       └── README.md
+│       └── index.mdx
 └── v2
-    ├── README.md
+    ├── index.mdx
     └── guide
-        └── README.md
+        └── index.mdx
 ```
 
-In Rspress's conventional routing, for the default version, the version path prefix will be automatically omitted. For example, `v1/README.md` will be rendered as the `/README` route, while `v2/README.md` will be rendered as the `/v2/README` route.
+In Rspress's conventional routing, for the default version, the version path prefix will be automatically omitted. For example, `v1/index.mdx` will be rendered as the `/` route, while `v2/index.mdx` will be rendered as the `/v2/` route.
 
 :::tip Tip
 
-For links in the document, you do not need to manually add the version prefix. Rspress will automatically add the corresponding version prefix according to the version of the current document. For example, the link `/guide/README` in `v2/README.md` will be rendered as `/v2/guide/README`.
+For links in the document, you do not need to manually add the version prefix. Rspress will automatically add the corresponding version prefix according to the version of the current document. For example, the link `/guide/` in `v2/index.mdx` will be rendered as `/v2/guide/`.
 
 :::
 
 ## Get the current version in components
 
-In components, you can get the current version through `useVersion`, for example:
+In components, you can get the current version through [`useVersion`](/ui/hooks/use-version), for example:
 
 ```tsx
 import { useVersion } from '@rspress/core/runtime';

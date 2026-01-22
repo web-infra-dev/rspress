@@ -30,26 +30,26 @@ export default defineConfig({
 ```tree
 docs
 ├── v1
-│   ├── README.md
+│   ├── index.mdx
 │   └── guide
-│       └── README.md
+│       └── index.mdx
 └── v2
-    ├── README.md
+    ├── index.mdx
     └── guide
-        └── README.md
+        └── index.mdx
 ```
 
-在 Rspress 的约定式路由中，对于默认版本，会自动省略掉版本的路径前缀。如 `v1/README.md` 会被渲染为 `/README` 路由，而 `v2/README.md` 会被渲染为 `/v2/README` 路由。
+在 Rspress 的约定式路由中，对于默认版本，会自动省略掉版本的路径前缀。如 `v1/index.mdx` 会被渲染为 `/` 路由，而 `v2/index.mdx` 会被渲染为 `/v2/` 路由。
 
 :::tip 提示
 
-对于文档中的链接，你不需要手动添加版本前缀，Rspress 会自动根据当前文档的版本，添加对应的版本前缀。如 `v2/README.md` 中的链接 `/guide/README` 会被渲染为 `/v2/guide/README`。
+对于文档中的链接，你不需要手动添加版本前缀，Rspress 会自动根据当前文档的版本，添加对应的版本前缀。如 `v2/index.mdx` 中的链接 `/guide/` 会被渲染为 `/v2/guide/`。
 
 :::
 
 ## 组件中获取当前版本
 
-在组件中，你可以通过 `useVersion` 获取当前版本，比如：
+在组件中，你可以通过 [`useVersion`](/ui/hooks/use-version) 获取当前版本，比如：
 
 ```tsx
 import { useVersion } from '@rspress/core/runtime';

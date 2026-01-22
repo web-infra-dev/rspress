@@ -24,7 +24,7 @@ This component doesn't accept any props and automatically calculates prev/next p
 The component internally uses the `usePrevNextPage` hook to get prev and next page information:
 
 ```ts
-import { usePrevNextPage } from '@theme';
+import { usePrevNextPage } from '@rspress/core/theme';
 
 const { prevPage, nextPage } = usePrevNextPage();
 // prevPage: { text: string; link: string } | null

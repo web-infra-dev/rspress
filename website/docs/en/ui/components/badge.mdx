@@ -3,7 +3,7 @@ description: Badge component for displaying small inline labels in documentation
 overviewHeaders: []
 ---
 
-import { Badge } from '@theme';
+import { Badge } from '@rspress/core/theme';
 
 # Badge
 
@@ -12,7 +12,7 @@ The Badge component is used to display a small inline badge.
 ## Usage
 
 ```mdx title="index.mdx"
-import { Badge } from '@theme';
+import { Badge } from '@rspress/core/theme';
 
 <Badge text="NEW" type="info" />
 ```
@@ -24,7 +24,7 @@ import { Badge } from '@theme';
 The Badge component supports four types, each with a different color:
 
 ```mdx preview title="index.mdx"
-import { Badge } from '@theme';
+import { Badge } from '@rspress/core/theme';
 
 <Badge text="tip" type="tip" />
 <Badge text="info" type="info" />
@@ -35,7 +35,7 @@ import { Badge } from '@theme';
 ## Outline style
 
 ```mdx preview title="index.mdx"
-import { Badge } from '@theme';
+import { Badge } from '@rspress/core/theme';
 
 <Badge text="tip" type="tip" outline />
 <Badge text="info" type="info" outline />
@@ -48,7 +48,7 @@ import { Badge } from '@theme';
 You can use the `children` prop to render custom content inside the badge:
 
 ```mdx preview title="index.mdx"
-import { Badge, IconSearch, SvgWrapper } from '@theme';
+import { Badge, IconSearch, SvgWrapper } from '@rspress/core/theme';
 
 <Badge type="tip">
   <img
@@ -69,7 +69,7 @@ import { Badge, IconSearch, SvgWrapper } from '@theme';
 Badge can be used inline with text:
 
 ```mdx preview title="index.mdx"
-import { Badge } from '@theme';
+import { Badge } from '@rspress/core/theme';
 
 Inlined with text <Badge text="New" />
 ```

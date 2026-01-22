@@ -2,7 +2,7 @@
 description: Use Shiki for syntax highlighting with support for line highlighting, code titles, line numbers, word highlighting, diff display, and code folding.
 ---
 
-import { Tabs, Tab } from '@theme';
+import { Tabs, Tab } from '@rspress/core/theme';
 
 # Code blocks
 
@@ -436,7 +436,7 @@ When you need to render code blocks dynamically at runtime, such as in interacti
 Here is an example:
 
 ```mdx title="foo.mdx"
-import { CodeBlockRuntime } from '@theme';
+import { CodeBlockRuntime } from '@rspress/core/theme';
 import { transformerNotationHighlight } from '@shikijs/transformers';
 
 <CodeBlockRuntime
@@ -452,7 +452,7 @@ console.log('Not highlighted');`}
 />
 ```
 
-import { CodeBlockRuntime } from '@theme';
+import { CodeBlockRuntime } from '@rspress/core/theme';
 import { transformerNotationHighlight } from '@shikijs/transformers';
 
 <CodeBlockRuntime

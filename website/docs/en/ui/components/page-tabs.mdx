@@ -4,7 +4,7 @@ tag: experimental
 overviewHeaders: []
 ---
 
-import { PageTabs, PageTab, Tag } from '@theme';
+import { PageTabs, PageTab, Tag } from '@rspress/core/theme';
 
 # PageTabs
 
@@ -23,7 +23,7 @@ The PageTabs component creates sub-tabs within a page so a single page can be sp
 ```mdx title="docs/guide/getting-started.mdx"
 # Getting started
 
-import { PageTabs, PageTab } from '@theme';
+import { PageTabs, PageTab } from '@rspress/core/theme';
 
 <PageTabs>
 <PageTab label="PageTab 1">
@@ -47,7 +47,7 @@ It's recommended to use [MDX fragments](../../guide/use-mdx/components.mdx) to s
 ```mdx title="docs/guide/getting-started.mdx"
 # Getting started
 
-import { PageTabs, PageTab } from '@theme';
+import { PageTabs, PageTab } from '@rspress/core/theme';
 import Foo from './fragments/_foo.mdx';
 import Bar from './fragments/_bar.mdx';
 
@@ -72,7 +72,7 @@ Based on extensive feedback from V1 users, we found that static TOC extraction o
 Rspress V2 introduces Dynamic TOC, which generates the TOC at runtime by monitoring DOM changes through [MutationObserver](https://developer.mozilla.org/en-US/docs/Web/API/MutationObserver). This keeps the TOC accurate while letting you fully leverage [MDX fragments](../../guide/use-mdx/components.mdx), making the `<PageTabs />` component possible.
 
 ```ts
-import { useDynamicTOC } from '@theme';
+import { useDynamicTOC } from '@rspress/core/theme';
 ```
 
 </PageTab>
