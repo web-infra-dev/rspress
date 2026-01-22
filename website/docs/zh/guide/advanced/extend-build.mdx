@@ -79,8 +79,6 @@ import { defineConfig } from '@rspress/core';
 
 export default defineConfig({
   markdown: {
-    // 需要使用 JS 版本的 MDX 编译器
-    mdxRs: false,
     remarkPlugins: [
       [
         require('remark-autolink-headings'),
@@ -93,9 +91,3 @@ export default defineConfig({
   },
 });
 ```
-
-:::warning 注意
-
-仅 JS 版本的 MDX 编译器支持编译插件。
-
-:::
