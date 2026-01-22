@@ -1,106 +1,157 @@
 ---
-description: 通过 frontmatter 配置 overview 开启 Overview 页功能，根据 _meta.json 和文章标题自动生成分组概览内容。
+description: 通过 frontmatter 配置 overview 开启 Overview 页功能，自动从侧边栏提取信息并生成概览内容。
 ---
 
 # Overview 页
 
-## 效果
+Overview 页用于展示某个目录下所有文章的概览，会自动从侧边栏提取信息并生成分组内容。
 
-Rspress 内置一套 Overview 页，效果如下:
+## 用法
 
-<img src="https://lf3-static.bytednsdoc.com/obj/eden-cn/uhbfnupenuhf/rspress/rspress-api-overview.png" />
+在目录的 `index.md` 中配置 `overview: true` 即可开启：
 
-## 如何开启？
+```md title="api/index.md"
+---
+overview: true
+title: API Overview
+---
 
-生成 Overview 页需要如下两步:
+这是 API 的概览页面。
+```
 
-### 1. 新建目录，配置 frontmatter
+Overview 页会自动读取当前目录的[侧边栏配置](/guide/basic/auto-nav-sidebar)，提取各文章的标题生成分组卡片。
 
-比如新建如下的目录和文件:
+## 示例
+
+假设有如下目录结构和 `_meta.json` 配置：
 
 ```tree
-├── docs
-│   ├── index.md
-│   ├── api
-│   │   ├── index.md
-│   │   ├── theme
-│   │   │   ├── component.mdx
-│   │   │   ├── utils.mdx
-// ...
+docs
+└── api
+    ├── _meta.json
+    ├── index.md        <-- overview: true
+    ├── config
+    │   ├── _meta.json
+    │   ├── basic.mdx
+    │   └── theme.mdx
+    └── runtime
+        ├── _meta.json
+        ├── hooks.mdx
+        └── context.mdx
 ```
 
-我们在 `api/index.md` 中添加如下内容:
-
-```md
+```mdx title="api/index.md"
 ---
 overview: true
+title: API Overview
 ---
+
+这是 API 的概览页面。
 ```
 
-::: note
-
-Overview 页的标题可以通过 frontmatter 进行配置，默认为 `Overview`，在 frontmatter 中配置了 `title` 后，正文中不需要再写 H1 标题。
-
-```md
----
-overview: true
-title: Overview
----
-
-This is an Overview page of our website.
+```json title="api/_meta.json"
+[
+  { "type": "file", "name": "index", "label": "API Overview" },
+  { "type": "dir", "name": "config", "label": "Config" },
+  { "type": "dir", "name": "runtime", "label": "Runtime" }
+]
 ```
 
-:::
+生成的 Overview 页面如下：
 
-### 2. 配置 `_meta.json`
+import { Overview } from '@rspress/core/theme';
+import { Border } from '../../../components/Border';
 
-Overview 页面的内容结构会根据 `_meta.json` 及其对应文章的 h1、h2 标题自动生成。比如 `api/_meta.json` 的配置如下：
+<Border className="rp-toc-exclude" style={{ padding: '40px' }}>
+  <Overview
+    content={<p>这是 API 的概览页面。</p>}
+    groups={[
+      {
+        name: 'Config',
+        items: [
+          {
+            text: 'basic',
+            link: '#',
+            headers: [
+              { id: 'title', text: 'title', depth: 2 },
+              { id: 'description', text: 'description', depth: 2 },
+            ],
+          },
+          {
+            text: 'theme',
+            link: '#',
+            headers: [
+              { id: 'dark-mode', text: 'darkMode', depth: 2 },
+              { id: 'footer', text: 'footer', depth: 2 },
+            ],
+          },
+        ],
+      },
+      {
+        name: 'Runtime',
+        items: [
+          {
+            text: 'hooks',
+            link: '#',
+            headers: [
+              { id: 'use-page', text: 'usePage', depth: 2 },
+              { id: 'use-site', text: 'useSite', depth: 2 },
+            ],
+          },
+          {
+            text: 'context',
+            link: '#',
+            headers: [
+              { id: 'data-context', text: 'DataContext', depth: 2 },
+              { id: 'theme-context', text: 'ThemeContext', depth: 2 },
+            ],
+          },
+        ],
+      },
+    ]}
+  />
+</Border>
 
-```json
+## 配置
+
+### overviewHeaders
+
+控制在 Overview 页中展示的标题级别，默认为 `[2]`（即只展示 h2 标题）。
+
+可以在 `_meta.json` 中配置：
+
+```json title="_meta.json"
 [
   {
     "type": "file",
-    "name": "index",
-    "label": "API Overview"
-  },
-  {
-    "type": "dir",
-    "name": "theme",
-    "label": "Theme"
+    "name": "component",
+    "overviewHeaders": [2, 3]
   }
 ]
 ```
 
-同时，`api/theme/_meta.json` 的文件，内容如下：
+也可以在文章的 frontmatter 中配置：
 
-```json
-["component", "utils"]
+```md title="component.mdx"
+---
+overviewHeaders: [2, 3]
+---
 ```
 
-> `_meta.json` 的详细配置用法可以参考[自动化导航栏/侧边栏](/guide/basic/auto-nav-sidebar)。
+### 嵌套 Overview 页
 
-在如上的配置中，最后 Overview 页会生成一个 `Theme` 的分组，这个分组里面包含 `component.md(x)` 和 `utils.md(x)` 两篇文章的 h1、h2 标题。当然，你也可以参考 `Theme` 分组的配置，添加更多的分组。
-
-如果要控制在 Overview 页中展示的标题级别，可以通过 `_meta.json` 中的 `overviewHeaders` 配置，默认为 `[2]`，也可以在对应的文件中配置 `overviewHeaders: [2]` 的 FrontMatter。
-
-如果要在 `theme` 下同样生成一个子 Overview 页，可以在 `theme` 目录新建一个 `index.md`，配置 `overview: true` 的 frontmatter。
+子目录同样可以有自己的 Overview 页，只需在子目录的 `index.md` 中配置 `overview: true`：
 
 ```tree
 docs
-├── index.md
 └── api
-    ├── index.md
+    ├── index.md         <-- overview: true
     └── theme
-        ├── index.md
+        ├── index.md     <-- overview: true (子 Overview 页)
         ├── component.mdx
         └── utils.mdx
 ```
 
-```md title="theme/index.md"
----
-title: Theme Overview
-overview: true
----
+## 自定义
 
-这是一段关于 theme 的描述，包含 component 和 utils
-```
+如果需要完全自定义 Overview 页的内容，可以使用 [OverviewGroup](/ui/layout-components/overview-group) 组件手动进行展示。

@@ -50,7 +50,7 @@ function OverviewGroupMarkdown({ group }: { group: Group }) {
 export interface GroupItem {
   text: string;
   link: string;
-  headers?: Header[];
+  headers?: Omit<Header, 'charIndex'>[];
 
   // For customization
   items?: { text: string; link: string }[];

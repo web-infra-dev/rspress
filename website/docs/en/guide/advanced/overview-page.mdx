@@ -1,106 +1,181 @@
 ---
-description: Enable overview page via frontmatter overview configuration, auto-generating grouped content based on _meta.json and article headings.
+description: Enable Overview page via frontmatter overview configuration, automatically extracting information from sidebar to generate overview content.
 ---
 
 # Overview page
 
-## Effect
+The Overview page displays an overview of all articles in a directory, automatically extracting information from the sidebar to generate grouped content.
 
-Rspress has a built-in preview page, the effect is as follows:
+## Usage
 
-<img src="https://lf3-static.bytednsdoc.com/obj/eden-cn/uhbfnupenuhf/rspress/rspress-api-overview.png" />
+Configure `overview: true` in the directory's `index.md` to enable it:
 
-## How to use
+```md title="api/index.md"
+---
+overview: true
+title: API Overview
+---
 
-Generating the preview page requires the following two steps:
+This is the API overview page.
+```
 
-### 1. Create a new directory and configure frontmatter
+The Overview page automatically reads the current directory's [sidebar configuration](/guide/basic/auto-nav-sidebar) and extracts article titles to generate grouped cards.
 
-For example, create the following directories and files
+## Example
+
+Given the following directory structure and `_meta.json` configuration:
 
 ```tree
-├── docs
-│   ├── index.md
-│   ├── api
-│   │   ├── index.md
-│   │   ├── theme
-│   │   │   ├── component.mdx
-│   │   │   ├── utils.mdx
-// ...
+docs
+└── api
+    ├── _meta.json
+    ├── index.md        <-- overview: true
+    ├── config
+    │   ├── _meta.json
+    │   ├── basic.mdx
+    │   └── theme.mdx
+    └── runtime
+        ├── _meta.json
+        ├── hooks.mdx
+        └── context.mdx
 ```
 
-We add the following to `api/index.md`:
-
-```md
+```mdx title="api/index.md"
 ---
 overview: true
+title: API Overview
 ---
+
+This is the API overview page.
 ```
 
-::: note
-
-The title of the overview page can be configured through frontmatter. The default value is `Overview`. After `title` is configured in frontmatter, there is no need to write an H1 title in the markdown content.
-
-```md
----
-overview: true
-title: Overview
----
-
-This is an Overview page of our website.
+```json title="api/_meta.json"
+[
+  { "type": "file", "name": "index", "label": "API Overview" },
+  { "type": "dir", "name": "config", "label": "Config" },
+  { "type": "dir", "name": "runtime", "label": "Runtime" }
+]
 ```
 
-:::
+The generated Overview page looks like:
 
-### 2. Configuring `_meta.json`
+import { Overview } from '@rspress/core/theme';
+import { Border } from '../../../components/Border';
 
-The content structure of the overview page will be automatically generated according to `_meta.json` and the corresponding h1, h2 titles of the article. For example, the configuration of `api/_meta.json` is as follows:
+<Border className="rp-toc-exclude" style={{ padding: '40px' }}>
+  <Overview
+    content={<p>This is the API overview page.</p>}
+    groups={[
+      {
+        name: 'Config',
+        items: [
+          {
+            text: 'basic',
+            link: '#',
+            headers: [
+              { id: 'title', text: 'title', depth: 2 },
+              { id: 'description', text: 'description', depth: 2 },
+            ],
+          },
+          {
+            text: 'theme',
+            link: '#',
+            headers: [
+              { id: 'dark-mode', text: 'darkMode', depth: 2 },
+              { id: 'footer', text: 'footer', depth: 2 },
+            ],
+          },
+        ],
+      },
+      {
+        name: 'Runtime',
+        items: [
+          {
+            text: 'hooks',
+            link: '#',
+            headers: [
+              { id: 'use-page', text: 'usePage', depth: 2 },
+              { id: 'use-site', text: 'useSite', depth: 2 },
+            ],
+          },
+          {
+            text: 'context',
+            link: '#',
+            headers: [
+              { id: 'data-context', text: 'DataContext', depth: 2 },
+              { id: 'theme-context', text: 'ThemeContext', depth: 2 },
+            ],
+          },
+        ],
+      },
+    ]}
+  />
+</Border>
 
-```json
+## Configuration
+
+### overviewHeaders
+
+Controls the heading levels displayed in the Overview page, defaults to `[2]` (only h2 headings).
+
+Can be configured in `_meta.json`:
+
+```json title="_meta.json"
 [
   {
     "type": "file",
-    "name": "index",
-    "label": "API Overview"
-  },
-  {
-    "type": "dir",
-    "name": "theme",
-    "label": "Theme"
+    "name": "component",
+    "overviewHeaders": [2, 3]
   }
 ]
 ```
 
-At the same time, the file `api/theme/_meta.json` has the following content:
+Or in the article's frontmatter:
 
-```json
-["component", "utils"]
+```md title="component.mdx"
+---
+overviewHeaders: [2, 3]
+---
 ```
 
-> The detailed configuration usage of `_meta.json` can be referred to [Auto Nav/Sidebar](/guide/basic/auto-nav-sidebar).
+### Nested overview pages
 
-In the above configuration, the final preview page will generate a group called `Theme`, which contains the h1, h2 titles of two articles: `component.md(x)` and `utils.md(x)`. Of course, you can also refer to the config of the `Theme` group to add more groups.
-
-If you want to control the headers displayed in the overview page, you can configure it through `overviewHeaders` config in `_meta.json`, which defaults to `[2]` and you can also configure FrontMatter with `overviewHeaders: [2]` in exact file.
-
-If you want to generate a sub-preview page under `theme`, create a new `index.md` in the `theme` directory and configure the frontmatter of `overview: true`.
+Subdirectories can also have their own Overview pages by configuring `overview: true` in the subdirectory's `index.md`:
 
 ```tree
 docs
-├── index.md
 └── api
-    ├── index.md
+    ├── index.md         <-- overview: true
     └── theme
-        ├── index.md
+        ├── index.md     <-- overview: true (nested Overview page)
         ├── component.mdx
         └── utils.mdx
 ```
 
-```md title="theme/index.md"
+## Customization
+
+If you need to fully customize the Overview page content, you can use the [OverviewGroup](/ui/layout-components/overview-group) component to build it manually:
+
+```mdx title="index.mdx"
 ---
-title: Theme Overview
 overview: true
 ---
 
-This is a description about theme, including component and utils.
+import { OverviewGroup } from '@rspress/core/theme';
+
+<OverviewGroup
+  group={{
+    name: 'Custom Group',
+    items: [
+      {
+        text: 'Page Title',
+        link: '/path/to/page',
+        headers: [
+          { id: 'section-1', text: 'Section 1', depth: 2 },
+          { id: 'section-2', text: 'Section 2', depth: 2 },
+        ],
+      },
+    ],
+  }}
+/>
 ```

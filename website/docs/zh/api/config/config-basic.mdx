@@ -317,6 +317,28 @@ export default defineConfig({
 });
 ```
 
+## globalStyles
+
+- **类型**： `string`
+- **默认值**： `undefined`
+
+用于添加全局样式，配置为样式文件的路径。例如：
+
+```ts title="rspress.config.ts"
+import { defineConfig } from '@rspress/core';
+import path from 'path';
+
+export default defineConfig({
+  globalStyles: path.join(__dirname, 'styles/global.css'),
+});
+```
+
+```css title="styles/global.css"
+:root {
+  --rp-c-brand: #f00;
+}
+```
+
 ## mediumZoom
 
 - **类型**： `boolean` | `{ selector?: string }`

@@ -6,6 +6,7 @@ import { useSite } from './useSite';
 // TODO: mark this as deprecated after V2 theme refactoring
 /**
  * should use `usePage` and `useSite` instead
+ * @deprecated
  */
 export function usePageData(): PageDataLegacy {
   const { page } = usePage();

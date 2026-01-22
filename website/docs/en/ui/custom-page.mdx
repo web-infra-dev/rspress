@@ -50,59 +50,9 @@ import GlobalUIComponents from '@en/fragments/global-ui-components';
 
 <GlobalUIComponents />
 
-## Custom styles
+## Tailwind CSS
 
-In some scenarios, you may need to add some global styles on top of the theme UI. Rspress provides a configuration item `globalStyles` to achieve this function.
-
-### How to use
-
-Add the following configuration in `rspress.config.ts`:
-
-```ts title="rspress.config.ts"
-import { defineConfig } from '@rspress/core';
-import path from 'path';
-
-export default defineConfig({
-  globalStyles: path.join(__dirname, 'styles/index.css'),
-});
-```
-
-Then you can add the following code:
-
-```css title="styles/index.css"
-:root {
-  --rp-c-brand: #f00;
-}
-```
-
-In this way, Rspress will automatically collect all global styles and merge them into the final style file.
-
-Here are some commonly used global styles:
-
-```css title="styles/index.css"
-:root {
-  /* Modify theme color */
-  --rp-c-brand: #f00;
-  --rp-c-brand-dark: #ffa500;
-  --rp-c-brand-darker: #c26c1d;
-  --rp-c-brand-light: #f2a65a;
-  --rp-c-brand-lighter: #f2a65a;
-  /* Modify the width of the left sidebar */
-  --rp-sidebar-width: 280px;
-  /* Modify the width of the right outline column */
-  --rp-outline-width: 256px;
-  /* Modify the background of the code block title */
-  --rp-code-title-bg: rgba(250, 192, 61, 0.15);
-  /* Modify the background of the code block content */
-  --rp-code-block-bg: rgba(214, 188, 70, 0.05);
-}
-```
-
-> If you want to know more about the internal global styles, you can check [vars.css](https://github.com/web-infra-dev/rspress/blob/main/packages/theme-default/src/styles/vars.css)
-
-### Tailwind CSS
-
-In order to get Tailwind CSS working with Rspress, you can use the following steps:
+To use Tailwind CSS in Rspress, you can follow these steps:
 
 1. Install Tailwind CSS:
 
@@ -130,7 +80,7 @@ module.exports = {
 };
 ```
 
-4. Include the Tailwind directives in your CSS styles file from [Custom Styles](#custom-styles):
+4. Include the Tailwind directives in your CSS styles file, refer to [globalStyles](/api/config/config-basic#globalstyles):
 
 ```css title=styles/index.css
 @import 'tailwindcss/base';
@@ -142,9 +92,9 @@ module.exports = {
 
 ## Custom layout structure
 
-### Using pageType
+Rspress provides a `pageType` configuration for you to customize the layout structure of the page.
 
-Rspress provides a pageType configuration for you to customize the layout structure of the page.
+### Using pageType
 
 Rspress's convention-based routing supports two types of routes, one is document routing, that is, pages written with md(x) files, and the other is component routing, that is, pages written with `.jsx/.tsx` files.
 
@@ -179,6 +129,7 @@ In addition to the `pageType` page layout level configuration, Rspress also prov
 - `sidebar`: Whether to display the sidebar. When you want to hide the sidebar, you can set it to `false`.
 - `outline`: Whether to display the outline column. When you want to hide the outline column, you can set it to `false`.
 - `footer`: Whether to display the footer. When you want to hide the footer, you can set it to `false`.
+- `globalComponents`: Whether to display global components. When you want to hide global components, you can set it to `false`.
 
 Example:
 
@@ -191,38 +142,3 @@ footer: false
 globalUIComponents: false
 ---
 ```
-
-## Custom tags
-
-### Customizing head tag
-
-In `rspress.config.ts`, you can custom HTML's metadata (aka head tag) for all pages. We explain it with more details in [basic config - head](/api/config/config-basic#head) within the api section.
-
-### Generate metadata tags
-
-Within frontmatter, you can also customize your page's metadata tag for SEO optimization.
-
-For example, if you want to add `<meta name="description" content="This is description">` in your `<head>` tag, you can use frontmatter like so:
-
-```md title="example.mdx"
----
-head:
-  - - meta
-    - name: title
-      content: This is title
-  - - meta
-    - name: description
-      content: This is description
----
-```
-
-### Open Graph tags
-
-[Open Graph](https://ogp.me/) is a web metadata protocol used to control how pages are displayed when shared on social media platforms.
-
-Rspress automatically injects the following Open Graph meta tags for each page:
-
-- `og:type`: Fixed value of `website`
-- `og:title`: Automatically uses the current page's title
-
-If you need to customize more Open Graph tags (such as `og:image`, `og:title`, etc.), please refer to [frontmatter configuration](/api/config/config-frontmatter#head).

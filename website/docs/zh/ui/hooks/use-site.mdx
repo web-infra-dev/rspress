@@ -4,11 +4,11 @@ description: useSite hook，用于获取根据配置归一化后的站点配置�
 
 # useSite
 
-`useSite` 返回根据 `rspress.config.ts` 归一化后的站点配置。
+`useSite` 返回根据 `rspress.config.ts` 序列化后的站点配置。
 
 - **类型：** `() => { site: SiteData }`
 
-`site` 包含已归一化的配置数据，包括基础路径、语言与多语言信息、主题配置、搜索与 Markdown 选项、多版本设置等。
+下面是一个获取 `rspress.config.ts` 中的 [title](/zh/api/config/config-basic#title) 配置的示例：
 
 ```tsx preview
 import { useSite } from '@rspress/core/runtime';

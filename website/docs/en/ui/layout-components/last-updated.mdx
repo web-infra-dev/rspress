@@ -1,0 +1,38 @@
+---
+description: LastUpdated component for displaying the page's last updated time.
+overviewHeaders: []
+---
+
+# LastUpdated
+
+`LastUpdated` displays the page's last updated time. Typically used with the theme's `lastUpdated` configuration.
+
+## Usage
+
+```tsx preview
+import { LastUpdated as BasicLastUpdated } from '@rspress/core/theme-original';
+
+export default function LastUpdated() {
+  return <BasicLastUpdated />;
+}
+```
+
+This component doesn't accept any props and automatically reads the last updated time from page metadata.
+
+## Related configuration
+
+Enable `lastUpdated` in `rspress.config.ts`:
+
+```ts title="rspress.config.ts"
+import { defineConfig } from '@rspress/core';
+
+export default defineConfig({
+  themeConfig: {
+    lastUpdated: true,
+  },
+});
+```
+
+When `lastUpdated` is enabled, the component automatically reads and formats the page metadata.
+
+To customize the display text or time format, you can export and modify `theme/components/LastUpdated/index.tsx` using `rspress eject LastUpdated`.

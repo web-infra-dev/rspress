@@ -1,9 +1,15 @@
-import { useFrontmatter, useI18n, useLang } from '@rspress/core/runtime';
+import {
+  useFrontmatter,
+  useI18n,
+  useLang,
+  useLocation,
+} from '@rspress/core/runtime';
 import {
   HomeLayout as BasicHomeLayout,
   Layout as BasicLayout,
   getCustomMDXComponent as basicGetCustomMDXComponent,
   Callout,
+  Link,
   PackageManagerTabs,
 } from '@rspress/core/theme-original';
 import {
@@ -68,17 +74,42 @@ function getCustomMDXComponent() {
     const {
       frontmatter: { tag },
     } = useFrontmatter();
-    const isEjectOnly = tag?.includes('eject-only');
+    const { pathname } = useLocation();
+    const isEjectOnly = pathname.includes('/ui/layout-components');
     const isNonEjectable = tag?.includes('non-ejectable');
     const t = useI18n<typeof import('i18n')>();
+    const lang = useLang();
 
     return (
       <>
         <H1 {...props}>{children}</H1>
-        {isEjectOnly || isNonEjectable ? (
+        {isEjectOnly ? (
           <Callout type="warning">
-            {isEjectOnly ? <p>{t('ejectOnlyDescription')}</p> : null}
-            {isNonEjectable ? <p>{t('nonEjectableDescription')}</p> : null}
+            {isEjectOnly ? (
+              <p>
+                {t('ejectOnlyDescription').split('<link>')[0]}{' '}
+                <Link
+                  href={`${lang === 'en' ? '' : '/zh'}/guide/basic/custom-theme`}
+                >
+                  {t('customThemeLink')}
+                </Link>{' '}
+                {t('ejectOnlyDescription').split('<link>')[1]}
+              </p>
+            ) : null}
+          </Callout>
+        ) : null}
+        {isNonEjectable ? (
+          <Callout type="warning">
+            <p>
+              {t('nonEjectableDescription').split('<link>')[0]}
+              <Link
+                href={`${lang === 'en' ? '' : '/zh'}/guide/basic/custom-theme`}
+              >
+                {' '}
+                {t('customThemeLink')}
+              </Link>
+              {t('nonEjectableDescription').split('<link>')[1]}
+            </p>
           </Callout>
         ) : null}
       </>

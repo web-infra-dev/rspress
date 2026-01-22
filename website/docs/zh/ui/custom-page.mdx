@@ -50,60 +50,7 @@ import GlobalUIComponents from '@zh/fragments/global-ui-components';
 
 <GlobalUIComponents />
 
-## 自定义样式
-
-某些场景下，你可能需要在主题 UI 的基础上添加一些全局样式，Rspress 提供了一个配置项 `globalStyles` 来实现这个功能。
-
-### 使用方法
-
-在 `rspress.config.ts` 中添加以下配置：
-
-```ts title="rspress.config.ts"
-import { defineConfig } from '@rspress/core';
-import path from 'path';
-
-export default defineConfig({
-  globalStyles: path.join(__dirname, 'styles/index.css'),
-});
-```
-
-然后可以添加以下代码：
-
-```css
-/* styles/index.css */
-:root {
-  --rp-c-brand: #f00;
-}
-```
-
-这样 Rspress 会自动搜集所有的全局样式并合并到最终的样式文件中。
-
-下面列举一些常用的全局样式：
-
-```css
-/* styles/index.css */
-
-:root {
-  /* 修改主题色 */
-  --rp-c-brand: #f00;
-  --rp-c-brand-dark: #ffa500;
-  --rp-c-brand-darker: #c26c1d;
-  --rp-c-brand-light: #f2a65a;
-  --rp-c-brand-lighter: #f2a65a;
-  /* 修改左侧侧边栏宽度 */
-  --rp-sidebar-width: 280px;
-  /* 修改右侧大纲栏宽度 */
-  --rp-outline-width: 256px;
-  /* 修改代码块标题背景 */
-  --rp-code-title-bg: rgba(250, 192, 61, 0.15);
-  /* 修改代码块内容背景 */
-  --rp-code-block-bg: rgba(214, 188, 70, 0.05);
-}
-```
-
-> 如果想了解更多内部的全局样式，可以查看 [vars.css](https://github.com/web-infra-dev/rspress/blob/main/packages/theme-default/src/styles/vars.css)
-
-### Tailwind CSS
+## Tailwind CSS
 
 要在 Rspress 中使用 Tailwind CSS，你可以按照以下步骤操作：
 
@@ -196,38 +143,3 @@ footer: false
 globalUIComponents: false
 ---
 ```
-
-## 自定义标签
-
-### 自定义 head 标签
-
-在 `rspress.config.ts` 中，你可以为所有页面设置 HTML 的 metadata（即 head 标签）。我们在 [基础配置 - head](/api/config/config-basic#head) 中详细解释了这一点。
-
-### 生成 metadata 标签
-
-在 frontmatter 中，你还可以自定义页面的 metadata 标签以进行 SEO 优化。
-
-例如，如果你想在 `<head>` 标签中添加 `<meta name="description" content="This is description">`，你可以这样使用 frontmatter：
-
-```md title="example.mdx"
----
-head:
-  - - meta
-    - name: title
-      content: This is title
-  - - meta
-    - name: description
-      content: This is description
----
-```
-
-### Open Graph 标签
-
-[Open Graph](https://ogp.me/) 是一种网页元数据协议，用于控制页面在社交媒体平台上分享时的显示效果。
-
-Rspress 会自动为每个页面注入以下 Open Graph meta 标签：
-
-- `og:type`：固定值为 `website`
-- `og:title`：自动使用当前页面的标题
-
-如果你需要自定义更多 Open Graph 标签（如 `og:image`、`og:title` 等），请参考 [frontmatter 配置](/api/config/config-frontmatter#head)。

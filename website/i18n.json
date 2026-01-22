@@ -48,11 +48,15 @@
     "en": "Community Plugins"
   },
   "ejectOnlyDescription": {
-    "zh": "该组件是 eject-only 组件，专门为 wrap/eject 设计，不建议在 MDX 文件中直接使用。",
-    "en": "This component is an eject-only component, specifically designed for wrap/eject, and it's not recommended to be used directly in MDX files."
+    "zh": "该组件主要配合 <link> 中的 wrap/eject 使用 ，与 MDX 里直接导入使用的组件不同，你可以通过传递组件 props 或直接覆盖该组件达到修改样式和功能的目的。如果通过 eject 覆盖整个组件，需注意组件对应配置项的读取会失效，需要自行控制。",
+    "en": "This component is mainly used in conjunction with wrap/eject in <link>, and is different from components that are directly imported in MDX. You can modify the styles and functions by passing component props or directly overriding the component. If you override the entire component through eject, please note that the reading of the corresponding configuration options of the component will become invalid and you need to control it yourself."
+  },
+  "customThemeLink": {
+    "zh": "自定义主题",
+    "en": "Custom Theme"
   },
   "nonEjectableDescription": {
-    "zh": "该组件是非 ejectable 组件，代码与核心代码耦合度较高，不建议通过 wrap/eject 进行定制。",
-    "en": "This component is a non-ejectable one, and the code has a high degree of coupling with the core code. It's not recommended to customize it via wrap/eject."
+    "zh": "该组件目前暂不支持 <link> 通过 eject 命令复制源码。",
+    "en": "This component currently does not support copying source code via the eject command."
   }
 }

@@ -1,6 +1,6 @@
 ---
-description: Tag component for displaying labels in the sidebar or navbar, supporting built-in tags, SVG, and images.
-tag: new, eject-only
+description: Tag component for displaying labels in sidebar or navbar, supporting built-in tags, SVG, and images.
+tag: new
 overviewHeaders: []
 ---
 
@@ -8,11 +8,11 @@ import { Badge, Tag } from '@theme';
 
 # Tag
 
-The Tag component is used to display tags in the **sidebar or navigation bar** for UI information. It supports multiple formats including common tags, SVG icons, images, and plain text.
+The Tag component is used for UI display in the **sidebar or navbar**. It supports multiple formats including common tags, SVG icons, images, and plain text.
 
 ## Usage
 
-Use via [frontmatter](../../guide/use-mdx/frontmatter.mdx), and it will be displayed in the sidebar or navigation bar:
+Use through [frontmatter](../../guide/use-mdx/frontmatter.mdx), and it will be displayed in the sidebar or navbar:
 
 ```mdx title="foo.mdx"
 ---
@@ -26,7 +26,7 @@ some text
 
 <Tag tag="new" />
 
-Multiple tags are also supported:
+Multiple tags are supported, separated by `,`:
 
 ```mdx
 ---
@@ -38,29 +38,37 @@ tag: new, experimental
   <Tag tag="new, experimental" />
 </div>
 
-You can also use it via `_meta.json`, for example:
+Can also be used in `_meta.json`, for example:
 
 ```json title="_meta.json"
-{
-  "name": "foo",
-  "type": "file",
-  "tag": "new, experimental"
-}
+[
+  {
+    "name": "foo",
+    "type": "file",
+    "tag": "new, experimental"
+  }
+]
 ```
 
 :::tip
 
-The Tag component is specifically designed for display in the sidebar or navigation bar. When using in MDX content, please use the [Badge component](./badge.mdx) instead.
+UI display in the **sidebar or navbar** mainly uses the Tag component as entry point. Additionally, the **outline bar** on the right side for displaying headings is more flexible and supports any React component.
+
+```mdx title="index.mdx"
+# Foo
+
+### Bar <MyComponent />
+```
 
 :::
 
 ## Tag types
 
-To make it easy to pass values in frontmatter, the Tag component supports multiple tag types:
+To make passing values in frontmatter convenient, the Tag component supports the following tag types:
 
-### Common tags
+### Common tags <Tag tag="new" />
 
-Some common tags are built-in and will be displayed with `<Badge />`. All common tags are as follows:
+The component has built-in common tags that display with `<Badge />`. All common tags are:
 
 | tag            | Corresponding Badge UI     |
 | -------------- | -------------------------- |
@@ -72,11 +80,11 @@ Some common tags are built-in and will be displayed with `<Badge />`. All common
 | `experimental` | <Tag tag="experimental" /> |
 | `deprecated`   | <Tag tag="deprecated" />   |
 
-:::tip
+:::tip Extending Common Tags
 
-The Tag component is ejectable. When you want to extend common tags, you can use wrap/eject to modify the Tag component.
+The Tag component is ejectable. When you want to extend common tags, you can use wrap/eject to modify the Tag component. The tag value is passed as props to the Tag component.
 
-The following is an example of how this docsite uses wrap to add `ejectable` custom tag:
+Here's an example from this site adding a custom `eject-only` tag through wrap:
 
 ```tsx title="theme/components/Tag/index.tsx"
 import {
@@ -85,8 +93,8 @@ import {
 } from '@rspress/core/theme-original';
 
 export const Tag = ({ tag }: { tag: string }) => {
-  if (tag === 'ejectable') {
-    return <BasicBadge text="ejectable" type="tip" />;
+  if (tag === 'eject-only') {
+    return <BasicBadge text="eject-only" type="warning" />;
   }
   return <BasicTag tag={tag} />;
 };
@@ -94,7 +102,7 @@ export const Tag = ({ tag }: { tag: string }) => {
 
 ```mdx title="index.mdx"
 ---
-tag: new, ejectable
+tag: new, eject-only
 ---
 ```
 
@@ -102,7 +110,7 @@ tag: new, ejectable
 
 ### SVG string
 
-You can pass an SVG string directly as the tag:
+You can pass an SVG string directly as a tag:
 
 ```mdx
 ---
@@ -112,7 +120,7 @@ tag: <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0
 
 ### Image URL
 
-You can use an external URL or data URL as the tag:
+You can use an external URL or data URL as a tag:
 
 ```mdx
 ---
@@ -147,7 +155,7 @@ import { Tag } from '@theme';
 ```ts
 interface TagProps {
   /**
-   * The tag content. Supports:
+   * Tag content. Supports:
    * - Common tags: 'tip', 'info', 'warning', 'danger', 'new', 'experimental', 'deprecated'
    * - Multiple common tags: 'new, experimental'
    * - SVG string: '<svg>...</svg>'

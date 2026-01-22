@@ -4,27 +4,40 @@ description: Rspress 内置 CSS 变量列表，用于自定义品牌色、代码
 
 # CSS 变量
 
-Rspress 暴露了一些常用的 CSS 变量，相比重写 Rspress 内置的 React 组件，覆盖 CSS 变量实现定制化更简单也更易维护。
+Rspress 暴露了一些常用的 CSS 变量，[自定义主题](/guide/basic/custom-theme) 中最简单也最易维护的方式。你可以在该页面实时编辑和预览，然后复制到你的项目中进行样式覆盖。
 
-你可以在该页面实时编辑和预览，然后复制到 `theme/index.css` 中进行样式覆盖。下面是一个样式覆盖的简单示例：
+:::tip
 
-import { Tabs, Tab } from '@theme';
+可以使用本页面的 ”复制 Markdown“ 功能，让你的 AI Agent 帮你修改 CSS 变量。
 
-<Tabs>
-<Tab label="theme/index.tsx">
+:::
 
-```tsx
+下面是一个样式覆盖的简单示例：
+
+```tree
+├── docs
+│   └── index.mdx
+├── theme
+│   ├── index.tsx
+│   └── index.css  <-- 复制 CSS 变量代码到这里来进行样式覆盖
+└── rspress.config.ts
+```
+
+```tsx title="theme/index.tsx"
 import './index.css';
 export * from '@rspress/core/theme-original';
 ```
 
-</Tab>
-<Tab label="theme/index.css">
-```css
-/* 复制 CSS 变量代码到这里来进行样式覆盖 */
+另一种方式是使用 `rspress.config.ts` 中的 [globalStyles](/api/config/config-basic#globalstyles) 配置：
+
+```ts title="rspress.config.ts"
+import { defineConfig } from '@rspress/core';
+import path from 'path';
+
+export default defineConfig({
+  globalStyles: path.join(__dirname, 'styles/index.css'), // 指向你创建的 CSS 文件
+});
 ```
-</Tab>
-</Tabs>
 
 下面是 Rspress 提供的一些 CSS 变量及其默认值：
 

@@ -8,9 +8,9 @@ description: 通过 CSS 变量、BEM 类名覆盖样式，或使用 ESM 重导�
 
 2. 对于 JS / React，Rspress 基于 ESM 重导出覆盖实现了一套运行时接口，支持对内置组件进行修改或替换，实现自己的首页、侧边栏、搜索组件等。
 
-   在此之上有两种模式：
+   在此之上有两种使用模式：
    - [**wrap**](#wrap)：通过 props / 插槽来对 Rspress 内置的组件进行 **包装** 并增强。
-   - [**eject**](#eject)：通过 [`rspress eject`](../../api/commands.mdx#rspress-eject) 命令将源码 **拷贝** 到本地直接修改并覆盖。
+   - [**eject**](#eject)：直接 **覆盖** 整个组件，可以使用 [`rspress eject`](../../api/commands.mdx#rspress-eject) 命令将源码拷贝到本地直接修改并覆盖。
 
 下面会根据主题定制化的程度会依次进行介绍。
 
@@ -66,7 +66,7 @@ Rspress 内置组件均使用 BEM 命名规范。你可以使用这些类名进�
 }
 ```
 
-## `theme/index.tsx`：利用 ESM 重导出覆盖内置组件 \{#reexport}
+## 使用 ESM 重导出覆盖内置组件 \{#reexport}
 
 默认情况下，你需要在项目根目录下创建一个 `theme` 目录，然后在 `theme` 目录下创建一个 `index.ts` 或者 `index.tsx` 文件，该文件用于导出主题组件。
 
@@ -90,15 +90,15 @@ export * from '@rspress/core/theme-original'; //[!code highlight]
 
 通过 **ESM 重导出** 覆写内置的组件，所有 Rspress 内部引用的内置组件都会优先使用你重导出的版本。
 
-:::tip 提示
+:::note 关于 @rspress/core/theme-original
 
-仅在自定义主题的时候使用 `@rspress/core/theme-original`
+`@rspress/core/theme-original` 用于避免循环引用，仅在自定义主题的时候使用。
 
 ```tree
 ├── docs
-│   └── index.mdx <-- "@rspress/core/theme"
+│   └── index.mdx <-- 使用 "@rspress/core/theme"
 ├── theme
-│   └── index.tsx <-- "@rspress/core/theme-original"
+│   └── index.tsx <-- 使用 "@rspress/core/theme-original"
 └── rspress.config.ts
 ```
 
@@ -108,7 +108,7 @@ export * from '@rspress/core/theme-original'; //[!code highlight]
 
 :::
 
-## Wrap：在重导出的基础上传 props/插槽 \{#wrap}
+### Wrap：在重导出的基础上传 props/插槽 \{#wrap}
 
 Wrap 指在重导出的组件上增加 props。下面是一个例子，在导航栏标题前面插入一些内容：
 
@@ -145,96 +145,17 @@ export * from '@rspress/core/theme-original';
 
 </Tabs>
 
-### Layout 插槽
+:::tip
 
-`Layout` 组件设计了一系列的 props 支持插槽元素，你可以通过这些 props 来扩展默认主题的布局：
+[`Layout`](/ui/layout-components/layout) 组件设计了一系列的插槽 props 专门用于 wrap，你可以通过这些 props 来扩展默认主题的布局：
 
-<details>
+:::
 
-```tsx title="theme/index.tsx"
-import {
-  Layout as BasicLayout,
-  getCustomMDXComponent as basicGetCustomMDXComponent,
-} from '@rspress/core/theme-original';
+### Eject：对源码直接修改 \{#eject}
 
-// 以下展示所有的 Props
-const Layout = () => (
-  <BasicLayout
-    /* Home 页 Hero 部分之前 */
-    beforeHero={<div>beforeHero</div>}
-    /* Home 页 Hero 部分之后 */
-    afterHero={<div>afterHero</div>}
-    /* Home 页 Features 部分之前 */
-    beforeFeatures={<div>beforeFeatures</div>}
-    /* Home 页 Features 部分之后 */
-    afterFeatures={<div>afterFeatures</div>}
-    /* 正文页 Footer 部分之前 */
-    beforeDocFooter={<div>beforeDocFooter</div>}
-    /* 正文页 Footer 部分之后 */
-    afterDocFooter={<div>afterDocFooter</div>}
-    /* 正文页最前面 */
-    beforeDoc={<div>beforeDoc</div>}
-    /* 正文页最后面 */
-    afterDoc={<div>afterDoc</div>}
-    /* 文档内容前面 */
-    beforeDocContent={<div>beforeDocContent</div>}
-    /* 文档内容后面 */
-    afterDocContent={<div>afterDocContent</div>}
-    /* 导航栏之前 */
-    beforeNav={<div>beforeNav</div>}
-    /* 导航栏之后 */
-    afterNav={<div>afterNav</div>}
-    /* 左上角导航栏标题之前 */
-    beforeNavTitle={<span>😄</span>}
-    /* 导航栏标题 */
-    navTitle={<div>Custom Nav Title</div>}
-    /* 左上角导航栏标题之后 */
-    afterNavTitle={<div>afterNavTitle</div>}
-    /* 导航栏菜单之前 */
-    beforeNavMenu={<div>beforeNavMenu</div>}
-    /* 导航栏菜单之后 */
-    afterNavMenu={<div>afterNavMenu</div>}
-    /* 左侧侧边栏上面 */
-    beforeSidebar={<div>beforeSidebar</div>}
-    /* 左侧侧边栏下面 */
-    afterSidebar={<div>afterSidebar</div>}
-    /* 右侧大纲栏上面 */
-    beforeOutline={<div>beforeOutline</div>}
-    /* 右侧大纲栏下面 */
-    afterOutline={<div>afterOutline</div>}
-    /* 整个页面最顶部 */
-    top={<div>top</div>}
-    /* 整个页面最底部 */
-    bottom={<div>bottom</div>}
-    /* 自定义 MDX 组件 */
-    components={{
-      h1: (props) => {
-        const { h1: OriginalH1, p: OriginalP } = basicGetCustomMDXComponent();
-        return (
-          <>
-            <OriginalH1 {...props} />
-            <OriginalP>
-              This is a custom paragraph added after every H1 heading.
-            </OriginalP>
-          </>
-        );
-      },
-    }}
-  />
-);
+Eject 指将 Rspress 单个内置组件直接进行覆盖，全部使用自己的版本。对此 Rspress 提供了 [`rspress eject [component]`](../../api/commands.mdx#rspress-eject) 命令将内置组件的源码拷贝到本地并直接改动，步骤如下：
 
-export { Layout };
-// 重导出
-export * from '@rspress/core/theme-original';
-```
-
-</details>
-
-## Eject：对源码直接修改 \{#eject}
-
-Eject 指将 Rspress 单个内置组件的源码拷贝到本地，然后直接改动，步骤如下：
-
-1. 执行 CLI [`rspress eject [component]`](../../api/commands.mdx#rspress-eject)，Rspress 会将指定组件的源码 eject 到本地 `theme/components` 目录，不会 eject 依赖。
+1. 执行 CLI ，Rspress 会将指定组件的源码 eject 到本地 `theme/components` 目录，不会 eject 依赖。
 
 2. 更新 `theme/index.tsx` 重导出：
 
@@ -246,7 +167,7 @@ export * from '@rspress/core/theme-original';
 
 3. 任意修改 `theme/components/DocFooter.tsx`，使它满足你的需要。
 
-Rspress 的组件经过细粒度的拆分，你可在 [内置组件](/ui/components/) 中看到哪些组件适合 eject。
+为了方便用户 eject，Rspress 的组件经过细粒度的拆分，你可在 [布局组件](/ui/layout-components/) 中看到哪些组件适合 eject。
 
 :::warning 你是否真的需要 eject？
 

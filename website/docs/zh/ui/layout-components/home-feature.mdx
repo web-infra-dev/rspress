@@ -1,7 +1,6 @@
 ---
 description: HomeFeature 首页特性组件，用于在首页 Hero 区域下方渲染特性网格卡片。
 overviewHeaders: []
-tag: eject-only
 features:
   - title: '快速'
     details: 'Rspress 构建快'
@@ -19,12 +18,16 @@ features:
 
 ## 用法
 
-你可以在 mdx 文件的 frontmatter 中配置 `features`，组件会自动从 frontmatter 读取。具体的配置项请参考 [Frontmatter 配置](/api/config/config-frontmatter#features)。
+通过 [自定义主题](/guide/basic/custom-theme) 来进行修改或覆盖。
 
-```mdx title="index.mdx" preview
-import { HomeFeature } from '@rspress/core/theme';
+你可以在 mdx 文件的 frontmatter 中配置 `features`，组件会自动通过 [`useFrontmatter`](/ui/hooks/use-frontmatter) 读取。具体的配置项请参考 [Frontmatter 配置](/api/config/config-frontmatter#features)。
 
-<HomeFeature />
+```tsx preview
+import { HomeFeature as BasicHomeFeature } from '@rspress/core/theme-original';
+
+export default function HomeFeature() {
+  return <BasicHomeFeature />;
+}
 ```
 
 ## Props

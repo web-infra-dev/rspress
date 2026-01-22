@@ -1,0 +1,90 @@
+---
+description: HomeLayout component for rendering the overall homepage layout, including Hero, Features, and Footer sections.
+overviewHeaders: []
+---
+
+# HomeLayout
+
+`HomeLayout` is the layout component for the [homepage](/guide/basic/home-page), responsible for integrating and rendering the Hero, Features, and Footer sections.
+
+## Usage
+
+Modify or override through [custom theme](/guide/basic/custom-theme):
+
+```tsx title="theme/index.tsx"
+import { HomeLayout as BasicHomeLayout } from '@rspress/core/theme-original';
+
+export default function HomeLayout() {
+  return <BasicHomeLayout />;
+}
+```
+
+The `HomeLayout` component reads the `hero` and `features` configuration from frontmatter through [`useFrontmatter`](/ui/hooks/use-frontmatter). For detailed configuration options, refer to [Frontmatter Configuration](/api/config/config-frontmatter#hero).
+
+### Custom slots
+
+Use slot props to insert custom content before and after each section:
+
+```tsx title="theme/index.tsx"
+import { HomeLayout as BasicHomeLayout } from '@rspress/core/theme-original';
+
+export default function HomeLayout() {
+  return (
+    <BasicHomeLayout
+      beforeHero={<div>Content before Hero</div>}
+      afterHero={<div>Content after Hero</div>}
+      beforeFeatures={<div>Content before Features</div>}
+      afterFeatures={<div>Content after Features</div>}
+      beforeHeroActions={<div>Content before Hero buttons</div>}
+      afterHeroActions={<div>Content after Hero buttons</div>}
+    />
+  );
+}
+```
+
+## Props
+
+### beforeHero
+
+- **Type:** `React.ReactNode`
+
+Custom content to insert before the Hero section.
+
+### afterHero
+
+- **Type:** `React.ReactNode`
+
+Custom content to insert after the Hero section.
+
+### beforeHeroActions
+
+- **Type:** `React.ReactNode`
+
+Custom content to insert before the Hero buttons, passed to the [HomeHero](/ui/layout-components/home-hero) component.
+
+### afterHeroActions
+
+- **Type:** `React.ReactNode`
+
+Custom content to insert after the Hero buttons, passed to the [HomeHero](/ui/layout-components/home-hero) component.
+
+### beforeFeatures
+
+- **Type:** `React.ReactNode`
+
+Custom content to insert before the Features section.
+
+### afterFeatures
+
+- **Type:** `React.ReactNode`
+
+Custom content to insert after the Features section.
+
+## Sub-components
+
+`HomeLayout` uses the following components internally:
+
+- [HomeBackground](/ui/layout-components/home-background) - Homepage background
+- [HomeHero](/ui/layout-components/home-hero) - Hero section
+- [HomeFeature](/ui/layout-components/home-feature) - Features section
+- [HomeFooter](/ui/layout-components/home-footer) - Footer section

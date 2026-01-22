@@ -1,0 +1,22 @@
+---
+description: HomeFooter component for rendering footer information at the bottom of the homepage.
+overviewHeaders: []
+---
+
+# HomeFooter
+
+This component is part of the [homepage](/guide/basic/home-page). `HomeFooter` renders footer information at the bottom of the homepage.
+
+## Usage
+
+Modify or override through [custom theme](/guide/basic/custom-theme).
+
+```tsx preview
+import { HomeFooter as BasicHomeFooter } from '@rspress/core/theme-original';
+
+export default function HomeFooter() {
+  return <BasicHomeFooter />;
+}
+```
+
+This component doesn't accept any props. It internally reads the [`themeConfig.footer`](/api/config/config-theme#footer) configuration through [`useSite`](/ui/hooks/use-site).

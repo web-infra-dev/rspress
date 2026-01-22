@@ -1,7 +1,6 @@
 ---
 description: HomeHero 首页主视觉组件，用于渲染首页的 Hero 区域，包含标题、描述和操作按钮。
 overviewHeaders: []
-tag: eject-only
 ---
 
 # HomeHero
@@ -9,6 +8,16 @@ tag: eject-only
 该组件是 [首页](/guide/basic/home-page) 的一部分，`HomeHero` 用于渲染首页的 Hero 区域。
 
 ## 用法
+
+通过 [自定义主题](/guide/basic/custom-theme) 来进行修改或覆盖。
+
+```tsx
+import { HomeHero as BasicHomeHero } from '@rspress/core/theme-original';
+
+export default function HomeHero() {
+  return <BasicHomeHero />;
+}
+```
 
 `HomeHero` 组件会通过 [`useFrontmatter`](/ui/hooks/use-frontmatter) 读取 frontmatter 中的 `hero` 配置。关于 `hero` 的详细配置项，请参考 [Frontmatter 配置](/api/config/config-frontmatter#hero)。
 

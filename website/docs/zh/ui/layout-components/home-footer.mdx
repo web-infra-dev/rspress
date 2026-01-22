@@ -1,0 +1,22 @@
+---
+description: HomeFooter 首页页脚组件，用于在首页底部渲染页脚信息。
+overviewHeaders: []
+---
+
+# HomeFooter
+
+该组件是 [首页](/guide/basic/home-page) 的一部分，`HomeFooter` 用于在首页底部渲染页脚信息。
+
+## 用法
+
+通过 [自定义主题](/guide/basic/custom-theme) 来进行修改或覆盖。
+
+```tsx preview
+import { HomeFooter as BasicHomeFooter } from '@rspress/core/theme-original';
+
+export default function HomeFooter() {
+  return <BasicHomeFooter />;
+}
+```
+
+该组件不接受任何 props，组件内部通过 [`useSite`](/ui/hooks/use-site) 读取 [`themeConfig.footer`](/api/config/config-theme#footer) 配置。

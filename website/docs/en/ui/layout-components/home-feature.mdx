@@ -1,0 +1,57 @@
+---
+description: HomeFeature component for rendering feature grid cards below the Hero section on the homepage.
+overviewHeaders: []
+features:
+  - title: 'Fast'
+    details: 'Rspress builds fast'
+    icon: '⚡'
+    span: 3
+  - title: 'MDX First'
+    details: 'MDX everywhere'
+    icon: '🧩'
+    span: 3
+---
+
+# HomeFeature
+
+This component is part of the [homepage](/guide/basic/home-page). `HomeFeature` renders a feature grid below the Hero section on the homepage.
+
+## Usage
+
+Modify or override through [custom theme](/guide/basic/custom-theme).
+
+You can configure `features` in the frontmatter of your mdx file, and the component will automatically read it through [`useFrontmatter`](/ui/hooks/use-frontmatter). For detailed configuration options, refer to [Frontmatter Configuration](/api/config/config-frontmatter#features).
+
+```tsx preview
+import { HomeFeature as BasicHomeFeature } from '@rspress/core/theme-original';
+
+export default function HomeFeature() {
+  return <BasicHomeFeature />;
+}
+```
+
+## Props
+
+### features
+
+- **Type:** `Feature[]`
+- **Default:** Read from frontmatter
+
+```ts
+interface Feature {
+  /** Feature icon, supports emoji or HTML string */
+  icon: string;
+  /** Feature title */
+  title: string;
+  /** Feature description, supports HTML string */
+  details: string;
+  /** Grid column span, supports 2, 3, 4, 6, defaults to 4 */
+  span?: 2 | 3 | 4 | 6;
+  /** Link to navigate when clicking the card */
+  link?: string;
+}
+```
+
+- `span` controls how many grid columns each card occupies, total 12 columns
+- `icon` and `details` support HTML strings
+- Setting `link` makes the card clickable for navigation

@@ -4,21 +4,30 @@ description: usePage hook，用于获取当前 Markdown/MDX 页面的元信息�
 
 # usePage
 
-`usePage` 提供当前 Markdown 或 MDX 页面解析得到的元信息。
+`usePage` 提供当前 Markdown 或 MDX 页面解析得到的元信息，是 Rspress 的核心 hook。
 
 - **类型：** `() => { page: PageDataLegacy['page'] }`
 
-`page` 包含解析出的 frontmatter 以及运行时信息，例如 `title`、`toc`、`lang`、`version`、`routePath`、`pagePath`、`description`、`headingTitle`、`pageType`、`lastUpdatedTime` 等，方便基于当前文档构建上下文 UI。
+`page` 包含解析出的 frontmatter 以及运行时信息，例如 `title`、`toc`、`lang`、`version`、`routePath`、`pagePath`、`description`、`pageType`、`lastUpdatedTime` 等，方便基于当前文档构建上下文 UI。
+
+下面是一个获取当前页面 title 和 description 的示例：
 
 ```tsx preview
 import { usePage } from '@rspress/core/runtime';
 
-export default function LastUpdated() {
+export default function () {
   const { page } = usePage();
-  return page.lastUpdatedTime ? (
-    <span>Updated: {page.lastUpdatedTime}</span>
-  ) : null;
+  return (
+    <div>
+      <p>
+        当前页面的 title 是：<em>{page.title}</em>
+      </p>
+      <p>
+        当前页面的 description 是：<em>{page.description}</em>
+      </p>
+    </div>
+  );
 }
 ```
 
-> 当需要同时获取页面元信息和站点全局配置时，可结合 [`useSite`](./use-site) 或 [`usePages`](./use-pages) 使用。
+> 当需要同时获取页面元信息和站点全局配置时，可结合 [`useSite`](./use-site) 使用。
