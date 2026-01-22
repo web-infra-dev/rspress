@@ -20,7 +20,7 @@ import { PackageManagerTabs } from '@rspress/core/theme';
 <PackageManagerTabs command="create rspress@latest" />
 ```
 
-## Componentization \{#component}
+## MDX fragments \{#fragments}
 
 In MDX, every `.mdx` file is compiled into a React component, which means it can be imported like any component and can freely render React components. For example:
 
@@ -66,7 +66,7 @@ It will be rendered as:
 import MdxFragment from './_mdx-fragment.mdx';
 import TsxComponent from './_tsx-component';
 
-<Border>
+<Border className='rp-toc-exclude'>
 Testing the use of MDX fragments and React components.
 
 <MdxFragment />
