@@ -22,10 +22,15 @@ function generateEntryForPerComponent(
       `;
 
       const reactEntry = `
-      import { render } from 'react-dom';
       import ${JSON.stringify(entryCssPath)};
       import Demo from ${JSON.stringify(demoPath)};
-      render(<Demo />, document.getElementById('root'));
+      if (process.env.__REACT_GTE_18__) {
+        const { createRoot } = require('react-dom/client');
+        createRoot(document.getElementById('root')).render(<Demo />);
+      } else {
+        const { render } = require('react-dom');
+        render(<Demo />, document.getElementById('root'));
+      }
       `;
       const entryContent = framework === 'react' ? reactEntry : solidEntry;
       writeFileSync(entry, entryContent);
@@ -46,7 +51,6 @@ function generateEntryForPage(
       return;
     }
     const reactContent = `
-      import { render } from 'react-dom';
       import ${JSON.stringify(entryCssPath)};
       ${routes
         .map((demo, index) => {
@@ -65,7 +69,13 @@ function generateEntryForPage(
           </div>
         )
       }
-      render(<App /> , document.getElementById('root'));
+      if (process.env.__REACT_GTE_18__) {
+        const { createRoot } = require('react-dom/client');
+        createRoot(document.getElementById('root')).render(<App />);
+      } else {
+        const { render } = require('react-dom');
+        render(<App /> , document.getElementById('root'));
+      }
     `;
     const solidContent = `
       import { render } from 'solid-js/web';
