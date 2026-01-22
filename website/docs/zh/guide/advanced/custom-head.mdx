@@ -40,3 +40,37 @@ head:
 ## Head 组件
 
 如果你需要更复杂的 Head 定制，可以使用 Rspress 提供的 [Head 组件](/ui/runtime-components/head) 在页面或布局组件中动态设置 Head 标签。
+
+## Rsbuild html.tags 配置
+
+通过 `builderConfig.html.tags`，你可以向 HTML 中注入自定义内容，比如添加统计代码、脚本或样式：
+
+```ts title="rspress.config.ts"
+import { defineConfig } from '@rspress/core';
+
+export default defineConfig({
+  builderConfig: {
+    html: {
+      tags: [
+        {
+          tag: 'script',
+          attrs: {
+            src: 'https://cdn.example.com/analytics.js',
+          },
+        },
+      ],
+    },
+  },
+});
+```
+
+更多配置详情请参考 [Rsbuild html.tags 文档](https://rsbuild.rs/zh/config/html/tags)。
+
+:::tip 与 Rspress head 配置的区别
+
+- **Rspress head 配置**：可以获取路由相关信息，支持根据不同页面动态设置 head 标签
+- **Rsbuild html.tags**：是构建时的静态配置，适用于全局统一的标签注入（如统计代码）
+
+如果需要根据页面路由动态调整 head 内容，请使用 [全局 head 配置](#全局-head-配置) 或 [Head 组件](#head-组件)。
+
+:::

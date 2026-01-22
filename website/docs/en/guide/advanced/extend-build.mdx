@@ -78,8 +78,6 @@ import { defineConfig } from '@rspress/core';
 
 export default defineConfig({
   markdown: {
-    // It's necessary to use JS version compiler
-    mdxRs: false,
     remarkPlugins: [
       [
         require('remark-autolink-headings'),
@@ -92,9 +90,3 @@ export default defineConfig({
   },
 });
 ```
-
-:::warning
-
-Only the JS version of the MDX compiler supports compilation plugins.
-
-:::

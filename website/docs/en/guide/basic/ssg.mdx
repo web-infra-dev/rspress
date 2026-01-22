@@ -256,25 +256,4 @@ Please be cautious when disabling SSG, as this will forfeit the advantages of fa
 
 ## Custom HTML content
 
-Through `builderConfig.html.tags`, you can inject custom content into HTML, such as adding analytics code, scripts, or styles:
-
-```ts title="rspress.config.ts"
-import { defineConfig } from '@rspress/core';
-
-export default defineConfig({
-  builderConfig: {
-    html: {
-      tags: [
-        {
-          tag: 'script',
-          attrs: {
-            src: 'https://cdn.example.com/analytics.js',
-          },
-        },
-      ],
-    },
-  },
-});
-```
-
-For more configuration details, please refer to the [Rsbuild html.tags documentation](https://rsbuild.rs/config/html/tags).
+If you need to inject custom tags into HTML (such as meta tags, analytics code, scripts, or styles), please refer to [Customizing Head Tags](/guide/advanced/custom-head).

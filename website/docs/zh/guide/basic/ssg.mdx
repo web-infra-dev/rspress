@@ -256,25 +256,4 @@ export default defineConfig({
 
 ## 自定义 HTML 内容
 
-通过 `builderConfig.html.tags`，你可以向 HTML 中注入自定义内容，比如添加统计代码、脚本或样式：
-
-```ts title="rspress.config.ts"
-import { defineConfig } from '@rspress/core';
-
-export default defineConfig({
-  builderConfig: {
-    html: {
-      tags: [
-        {
-          tag: 'script',
-          attrs: {
-            src: 'https://cdn.example.com/analytics.js',
-          },
-        },
-      ],
-    },
-  },
-});
-```
-
-更多配置详情请参考 [Rsbuild html.tags 文档](https://rsbuild.rs/zh/config/html/tags)。
+如果你需要向 HTML 中注入自定义标签（如 meta 标签、统计代码、脚本或样式），请参考 [自定义 Head 标签](/guide/advanced/custom-head)。

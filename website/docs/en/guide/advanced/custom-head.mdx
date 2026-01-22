@@ -40,3 +40,37 @@ head:
 ## Head component
 
 If you need more complex head customization, you can use the [Head component](/ui/runtime-components/head) provided by Rspress to dynamically set head tags in pages or layout components.
+
+## Rsbuild html.tags configuration
+
+Through `builderConfig.html.tags`, you can inject custom content into HTML, such as adding analytics code, scripts, or styles:
+
+```ts title="rspress.config.ts"
+import { defineConfig } from '@rspress/core';
+
+export default defineConfig({
+  builderConfig: {
+    html: {
+      tags: [
+        {
+          tag: 'script',
+          attrs: {
+            src: 'https://cdn.example.com/analytics.js',
+          },
+        },
+      ],
+    },
+  },
+});
+```
+
+For more configuration details, please refer to the [Rsbuild html.tags documentation](https://rsbuild.rs/config/html/tags).
+
+:::tip Difference from Rspress head configuration
+
+- **Rspress head configuration**: Can access route-related information, supports dynamically setting head tags based on different pages
+- **Rsbuild html.tags**: A static build-time configuration, suitable for global uniform tag injection (such as analytics code)
+
+If you need to dynamically adjust head content based on page routes, use [Global head configuration](#global-head-configuration) or [Head component](#head-component).
+
+:::
