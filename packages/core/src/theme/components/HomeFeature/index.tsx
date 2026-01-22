@@ -1,6 +1,6 @@
 import type { Feature } from '@rspress/core';
 import { useFrontmatter } from '@rspress/core/runtime';
-import { renderHtmlOrText, useLinkNavigate } from '@theme';
+import { renderHtmlOrText, SvgWrapper, useLinkNavigate } from '@theme';
 import type { JSX } from 'react';
 import './index.scss';
 import { useCardAnimation } from './useCardAnimation';
@@ -48,10 +48,9 @@ function HomeFeatureItem({ feature }: { feature: Feature }): JSX.Element {
         >
           <div className="rp-home-feature__title-wrapper">
             {icon ? (
-              <div
-                className="rp-home-feature__icon"
-                {...renderHtmlOrText(icon)}
-              ></div>
+              <div className="rp-home-feature__icon">
+                <SvgWrapper icon={icon} />
+              </div>
             ) : null}
 
             <h2 className="rp-home-feature__title">{title}</h2>
@@ -59,7 +58,7 @@ function HomeFeatureItem({ feature }: { feature: Feature }): JSX.Element {
           <p
             className="rp-home-feature__detail"
             {...renderHtmlOrText(details)}
-          ></p>
+          />
         </article>
       </div>
       {shineDom}
