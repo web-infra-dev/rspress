@@ -89,7 +89,7 @@ class CssModificationStore {
 const CssModificationContext = createContext<CssModificationStore | null>(null);
 
 export function CssModificationProvider({ children }: { children: ReactNode }) {
-  const storeRef = useRef<CssModificationStore>(null);
+  const storeRef = useRef<CssModificationStore | null>(null);
   if (!storeRef.current) {
     storeRef.current = new CssModificationStore();
   }
