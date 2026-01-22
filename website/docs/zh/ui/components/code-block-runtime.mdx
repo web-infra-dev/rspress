@@ -76,3 +76,22 @@ console.log('Not highlighted');`}
     transformers: [transformerNotationHighlight()],
   }}
 />
+
+## 导入文件内容
+
+可以使用 `?raw` query 将文件内容作为字符串导入，然后传递给 `code` prop。详见 [Rsbuild - 静态资源](https://rsbuild.rs/zh/guide/basic/static-assets)。
+
+```mdx title="foo.mdx"
+import { CodeBlockRuntime } from '@rspress/core/theme';
+import codeContent from './example.ts?raw';
+
+<CodeBlockRuntime lang="ts" title="example.ts" code={codeContent} />
+```
+
+这种方式适用于需要动态展示外部文件内容的场景，比如展示示例代码文件。
+
+:::warning
+
+如果只是需要引用外部文件作为代码块展示，更推荐使用静态的[文件代码块](/guide/use-mdx/code-blocks#file-code-block)语法，它在编译时处理，性能更好且包体积更小。
+
+:::

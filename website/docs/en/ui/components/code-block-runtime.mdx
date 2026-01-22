@@ -76,3 +76,22 @@ console.log('Not highlighted');`}
     transformers: [transformerNotationHighlight()],
   }}
 />
+
+## Importing file content
+
+You can use the `?raw` query to import file content as a string and pass it to the `code` prop. See [Rsbuild - Static Assets](https://rsbuild.rs/guide/basic/static-assets) for details.
+
+```mdx title="foo.mdx"
+import { CodeBlockRuntime } from '@rspress/core/theme';
+import codeContent from './example.ts?raw';
+
+<CodeBlockRuntime lang="ts" title="example.ts" code={codeContent} />
+```
+
+This approach is suitable for scenarios where you need to dynamically display external file content, such as showing example code files.
+
+:::warning
+
+If you just need to reference external files as code blocks, it is recommended to use the static [file code block](/guide/use-mdx/code-blocks#file-code-block) syntax, which is processed at compile time with better performance and smaller bundle size.
+
+:::
