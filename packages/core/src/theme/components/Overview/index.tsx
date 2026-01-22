@@ -82,7 +82,9 @@ export function Overview(props: {
 
   // Added effect to focus search input on mount
   useEffect(() => {
-    searchRef.current?.focus();
+    if (frontmatter.overview === true) {
+      searchRef.current?.focus();
+    }
   }, []);
 
   const subFilter = (link: string) =>
