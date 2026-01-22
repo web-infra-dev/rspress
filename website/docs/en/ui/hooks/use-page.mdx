@@ -4,21 +4,30 @@ description: usePage hook for accessing metadata of the current Markdown/MDX pag
 
 # usePage
 
-`usePage` exposes metadata extracted from the current Markdown or MDX page.
+`usePage` provides metadata extracted from the current Markdown or MDX page, and is a core hook of Rspress.
 
 - **Type:** `() => { page: PageDataLegacy['page'] }`
 
-The `page` object contains parsed frontmatter and runtime details such as `title`, `toc`, `lang`, `version`, `routePath`, `pagePath`, `description`, `headingTitle`, `pageType`, and `lastUpdatedTime`, allowing you to build contextual UI for the active document.
+The `page` object contains parsed frontmatter and runtime details such as `title`, `toc`, `lang`, `version`, `routePath`, `pagePath`, `description`, `pageType`, `lastUpdatedTime`, etc., making it easy to build contextual UI based on the current document.
+
+Here is an example of getting the current page's title and description:
 
 ```tsx preview
 import { usePage } from '@rspress/core/runtime';
 
-export default function LastUpdated() {
+export default function () {
   const { page } = usePage();
-  return page.lastUpdatedTime ? (
-    <span>Updated: {page.lastUpdatedTime}</span>
-  ) : null;
+  return (
+    <div>
+      <p>
+        Current page title: <em>{page.title}</em>
+      </p>
+      <p>
+        Current page description: <em>{page.description}</em>
+      </p>
+    </div>
+  );
 }
 ```
 
-> Use `usePage` together with [`useSite`](./use-site) or [`usePages`](./use-pages) when you need both per-page metadata and global site information.
+> When you need to get both page metadata and global site configuration, use together with [`useSite`](./use-site).

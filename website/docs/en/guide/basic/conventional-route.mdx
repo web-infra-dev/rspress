@@ -86,55 +86,22 @@ export default defineConfig({
 });
 ```
 
+## Exclude files starting with `_` by default
+
+import RouteConvention from '@en/fragments/route-convention.mdx';
+
+<RouteConvention />
+
 ## Best practices
 
-We recommend that you place documentation files in the `docs` directory to make your project more clear. For non-documentation content, such as custom components, util functions, etc., they can be maintained outside the `docs` directory.
+We recommend that you place documentation files in the `docs` directory to make your project more clear. For non-documentation content, such as custom components, util functions, etc., they can be maintained outside the `docs` directory. If placed in the `docs` directory, you need to use `route.exclude` together.
 
 :::tip
 
-If you want to place `.tsx` or `.mdx` files in the `docs` directory, you need to use `route.exclude` together, otherwise these files will be automatically registered as routes, which may cause some unexpected issues.
+If you want to place custom components or document fragments in the `docs` directory, you need to use `route.exclude` together, otherwise these files will be automatically registered as routes, which may cause some unexpected issues.
 
 :::
 
-Here is a best practice that uses `route.exclude` to make your project structure clearer:
+import FileStructure from '../../fragments/file-structure.mdx';
 
-```tree
-├── docs
-│   ├── components  # For React components used in documentation
-│   │   └── Example.tsx
-│   ├── fragments   # For document fragments
-│   │   └── example.mdx
-│   └── index.mdx
-└── theme
-    ├── components # For theme-related React components
-    |   └── DocFooter.tsx
-    └── index.tsx
-```
-
-```ts title="rspress.config.ts"
-import { defineConfig } from '@rspress/core';
-
-export default defineConfig({
-  route: {
-    exclude: ['components/**/*', 'fragments/**/*'], // Files in these directories will not be registered as routes
-  },
-});
-```
-
-```json title="tsconfig.json"
-{
-  "compilerOptions": {
-    "lib": ["DOM", "ESNext"],
-    "jsx": "react-jsx",
-    "moduleResolution": "bundler",
-    "paths": {
-      "i18n": ["./i18n.json"],
-      "@theme": ["./theme/index.tsx"]
-    }
-  },
-  "include": ["docs", "theme", "rspress.config.ts"],
-  "mdx": {
-    "checkMdx": true
-  }
-}
-```
+<FileStructure />
