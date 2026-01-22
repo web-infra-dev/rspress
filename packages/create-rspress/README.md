@@ -5,7 +5,7 @@ Create a new Rspress project.
 Using `npm create`:
 
 ```bash
-npm create rspress@latest
+npm create rspress@1.x
 ```
 
 Using CLI flags:
