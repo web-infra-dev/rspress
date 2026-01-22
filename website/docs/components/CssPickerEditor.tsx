@@ -19,7 +19,7 @@ function useDebounce<T extends (...args: any[]) => void>(
 
   return ((...args: Parameters<T>) => {
     if (timerRef.current) clearTimeout(timerRef.current);
-    timerRef.current = setTimeout(() => fnRef.current(...args), delay);
+    timerRef.current = window.setTimeout(() => fnRef.current(...args), delay);
   }) as T;
 }
 
