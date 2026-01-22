@@ -4,9 +4,10 @@
  * @license MIT
  */
 import { useI18n, useSite } from '@rspress/core/runtime';
-import { IconDown } from '@theme';
+import { IconDown, IconExternalLink } from '@theme';
 import type React from 'react';
 import { useEffect, useMemo, useRef, useState } from 'react';
+import { SvgWrapper } from '../SvgWrapper';
 import './index.scss';
 import './LlmsViewOptions.scss';
 import { useMdUrl } from './useMdUrl';
@@ -47,40 +48,6 @@ export interface LlmsViewOptionsProps
    */
   text?: string;
 }
-
-const IconExternalLink = () => {
-  return (
-    <svg
-      xmlns="http://www.w3.org/2000/svg"
-      width="16"
-      height="16"
-      viewBox="0 0 16 16"
-      fill="none"
-    >
-      <path
-        d="M9.33301 2H13.9997V6.66667"
-        stroke="currentColor"
-        strokeWidth="1.33333"
-        strokeLinecap="round"
-        strokeLinejoin="round"
-      />
-      <path
-        d="M14 9.82457V13C14 13.5523 13.5523 14 13 14H3C2.44772 14 2 13.5523 2 13V3C2 2.44772 2.44772 2 3 2H6"
-        stroke="currentColor"
-        strokeWidth="1.33333"
-        strokeLinecap="round"
-        strokeLinejoin="round"
-      />
-      <path
-        d="M8.59961 7.39996L13.6996 2.29996"
-        stroke="currentColor"
-        strokeWidth="1.33333"
-        strokeLinecap="round"
-        strokeLinejoin="round"
-      />
-    </svg>
-  );
-};
 
 const DEFAULT_OPTIONS: Option[] = ['markdownLink', 'chatgpt', 'claude'];
 
@@ -200,7 +167,8 @@ export function LlmsViewOptions({
           isOpen ? 'rp-llms-view-options__trigger--active' : ''
         }`}
       >
-        <IconDown
+        <SvgWrapper
+          icon={IconDown}
           className={`rp-llms-view-options__arrow ${isOpen ? 'rp-llms-view-options__arrow--rotated' : ''}`}
         />
         {isOpen && (
@@ -233,7 +201,7 @@ export function LlmsViewOptions({
                     </span>
                     <span>{displayItem.title}</span>
                     <span className="rp-llms-view-options__external-icon">
-                      <IconExternalLink />
+                      <SvgWrapper icon={IconExternalLink} />
                     </span>
                   </a>
                 );
