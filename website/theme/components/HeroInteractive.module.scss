@@ -50,6 +50,15 @@
   background-color: var(--rp-c-bg-mute);
   border-radius: var(--rp-radius);
   margin-right: 8px;
+  display: flex;
+  align-items: center;
+  padding-left: 6px;
+  color: var(--rp-c-text-2);
+
+  svg {
+    width: 14px;
+    height: 14px;
+  }
 }
 
 .navItem {
@@ -62,6 +71,22 @@
     width: 16px;
     height: 16px;
     opacity: 0.7;
+  }
+}
+
+.sun {
+  display: contents;
+
+  :global(.dark) & {
+    display: none;
+  }
+}
+
+.moon {
+  display: none;
+
+  :global(.dark) & {
+    display: contents;
   }
 }
 

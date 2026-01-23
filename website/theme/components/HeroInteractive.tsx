@@ -1,4 +1,10 @@
-import { CodeBlock, IconGithub, IconSun } from '@rspress/core/theme';
+import {
+  CodeBlock,
+  IconGithub,
+  IconMoon,
+  IconSearch,
+  IconSun,
+} from '@rspress/core/theme';
 import styles from './HeroInteractive.module.scss';
 
 export function HeroInteractive() {
@@ -19,10 +25,17 @@ export function HeroInteractive() {
             <span>Rspress</span>
           </div>
           <div className={styles.navRight}>
-            <div className={styles.fakeSearch} />
+            <div className={styles.fakeSearch}>
+              <IconSearch />
+            </div>
             <div className={styles.navItem}>English</div>
             <div className={`${styles.navItem} ${styles.icon}`}>
-              <IconSun />
+              <div className={styles.sun}>
+                <IconSun />
+              </div>
+              <div className={styles.moon}>
+                <IconMoon />
+              </div>
             </div>
             <div className={`${styles.navItem} ${styles.icon}`}>
               <IconGithub />
