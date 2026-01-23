@@ -11,6 +11,8 @@
   font-family: var(--rp-font-family-base);
   user-select: none;
   transform: rotate(2.5deg) translate(50px, -50px);
+  opacity: 0.9;
+  transition: opacity 0.3s ease-in-out;
 }
 
 .nav {
@@ -111,6 +113,7 @@
   background-color: var(--rp-c-bg-mute);
   margin-bottom: 4px;
   margin-left: 8px;
+  animation: shimmer 1.5s infinite ease-in-out;
 }
 
 .sidebarItem {
@@ -125,6 +128,8 @@
     height: 12px;
     border-radius: 4px;
     background-color: var(--rp-c-bg-mute);
+    animation: shimmer 1.5s infinite ease-in-out;
+    animation-delay: 0.2s;
   }
 
   &.active {
@@ -132,6 +137,7 @@
 
     & > div {
       background-color: var(--rp-c-brand);
+      animation: none;
     }
   }
 }
@@ -167,12 +173,15 @@
   height: 12px;
   background-color: var(--rp-c-bg-mute);
   border-radius: 4px;
+  animation: shimmer 1.5s infinite ease-in-out;
 
   &:nth-of-type(1) {
     width: 60%;
+    animation-delay: 0.1s;
   }
   &:nth-of-type(2) {
     width: 40%;
+    animation-delay: 0.3s;
   }
 }
 
@@ -224,6 +233,17 @@
   position: relative;
   width: 100%;
   height: 100%;
+  isolation: isolate;
+
+  &:hover {
+    .container {
+      opacity: 1;
+    }
+
+    .logo {
+      opacity: 0.2;
+    }
+  }
 }
 
 .logo {
@@ -234,4 +254,59 @@
   left: -20px;
   z-index: 10;
   filter: drop-shadow(0 8px 24px rgba(0, 0, 0, 0.15));
+  transition: opacity 0.3s ease-in-out;
+}
+
+@keyframes breathe {
+  0%,
+  100% {
+    opacity: 0.3;
+    transform: scale(0.8);
+  }
+  50% {
+    opacity: 0.8;
+    transform: scale(1.2);
+  }
+}
+
+@keyframes shimmer {
+  0% {
+    opacity: 0.2;
+  }
+  50% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0.2;
+  }
+}
+
+.glowLeft {
+  position: absolute;
+  top: 15%;
+  left: -10%;
+  width: 150px;
+  height: 150px;
+  background: var(--rp-c-brand);
+  border-radius: 50%;
+  filter: blur(80px);
+  z-index: -1;
+  animation: breathe 3s ease-in-out infinite;
+  pointer-events: none;
+}
+
+.glowRight {
+  position: absolute;
+  bottom: 10%;
+  right: -10%;
+  width: 200px;
+  height: 200px;
+  background: var(
+    --rp-c-brand
+  ); // Fallback if tint not strong enough, or use brand
+  border-radius: 50%;
+  filter: blur(60px);
+  z-index: -1;
+  animation: breathe 3s ease-in-out infinite reverse;
+  pointer-events: none;
 }

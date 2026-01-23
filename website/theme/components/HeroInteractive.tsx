@@ -15,6 +15,8 @@ export function HeroInteractive() {
         src="https://assets.rspack.rs/rspress/rspress-logo.svg"
         alt="Rspress Logo"
       />
+      <div className={styles.glowLeft} />
+      <div className={styles.glowRight} />
       <div className={styles.container}>
         <div className={styles.nav}>
           <div className={styles.navLeft}>
