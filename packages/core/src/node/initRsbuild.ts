@@ -456,6 +456,7 @@ async function createInternalBuildConfig(
               output: {
                 emitAssets: false,
                 target: 'node',
+                module: false,
                 minify: false,
               },
             },
