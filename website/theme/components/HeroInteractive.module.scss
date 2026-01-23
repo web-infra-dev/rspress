@@ -8,7 +8,7 @@
   display: flex;
   flex-direction: column;
   box-shadow: var(--rp-shadow-3);
-  font-family: var(--rp-font-family);
+  font-family: var(--rp-font-family-base);
   user-select: none;
 }
 
@@ -71,7 +71,7 @@
 }
 
 .sidebar {
-  width: 200px;
+  width: 140px;
   border-right: 1px solid var(--rp-c-divider-light);
   padding: 16px;
   display: flex;
@@ -113,7 +113,7 @@
   background-color: var(--rp-c-bg);
   display: flex;
   flex-direction: column;
-  gap: 20px;
+  gap: 12px;
   overflow: hidden;
   position: relative;
 }
@@ -137,7 +137,6 @@
   height: 12px;
   background-color: var(--rp-c-bg-mute);
   border-radius: 4px;
-  margin-bottom: 8px;
 
   &:nth-of-type(1) {
     width: 60%;
@@ -151,41 +150,20 @@
   display: flex;
   flex-direction: column;
   gap: 16px;
+  margin-top: 8px;
+
+  :global(.rp-codeblock__title) {
+    font-size: 12px;
+  }
 }
 
-.card {
-  border: 1px solid var(--rp-c-divider-light);
-  border-radius: var(--rp-radius);
-  background-color: var(--rp-c-bg-alt);
-  overflow: hidden;
-}
-
-.cardHeader {
-  height: 32px;
-  border-bottom: 1px solid var(--rp-c-divider-light);
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 0 12px;
-  font-size: 12px;
-  color: var(--rp-c-text-2);
-  background-color: var(--rp-c-bg-soft);
-}
-
-.badge {
-  font-size: 10px;
-  padding: 2px 6px;
-  border-radius: 4px;
-  background-color: var(--rp-c-bg-mute);
-  color: var(--rp-c-text-2);
-}
-
-.cardBody {
+.codeContent {
   padding: 16px;
   font-size: 12px;
-  font-family: monospace;
+  font-family: var(--rp-font-family-mono);
   line-height: 1.5;
   white-space: pre;
+  overflow-x: auto;
 }
 
 /* Syntax Highlighting mocks */
