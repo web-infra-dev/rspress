@@ -317,6 +317,14 @@ async function createInternalBuildConfig(
       },
     },
     tools: {
+      swc: {
+        jsc: {
+          transform: {
+            // https://github.com/web-infra-dev/rspack/pull/12668
+            verbatimModuleSyntax: false,
+          },
+        },
+      },
       bundlerChain(chain, { CHAIN_ID, environment }) {
         const isSsg = environment.name === 'node';
         const isSsgMd = environment.name === 'node_md';
@@ -456,6 +464,7 @@ async function createInternalBuildConfig(
               output: {
                 emitAssets: false,
                 target: 'node',
+                module: false,
                 minify: false,
               },
             },
@@ -497,6 +506,7 @@ async function createInternalBuildConfig(
               output: {
                 emitAssets: false,
                 target: 'node',
+                module: false,
                 minify: false,
               },
             },
