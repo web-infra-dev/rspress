@@ -3,60 +3,89 @@ import styles from './HeroInteractive.module.scss';
 
 export function HeroInteractive() {
   return (
-    <div className={styles.container}>
-      <div className={styles.nav}>
-        <div className={styles.navLeft}>
-          <img
-            src="https://assets.rspack.rs/rspress/rspress-logo.svg"
-            alt="Rspress Logo"
-          />
-          <span>Rspress</span>
-        </div>
-        <div className={styles.navRight}>
-          <div className={styles.fakeSearch} />
-          <div className={styles.navItem}>English</div>
-          <div className={`${styles.navItem} ${styles.icon}`}>
-            <IconSun />
+    <div className={styles.wrapper}>
+      <img
+        className={styles.logo}
+        src="https://assets.rspack.rs/rspress/rspress-logo.svg"
+        alt="Rspress Logo"
+      />
+      <div className={styles.container}>
+        <div className={styles.nav}>
+          <div className={styles.navLeft}>
+            <img
+              src="https://assets.rspack.rs/rspress/rspress-logo.svg"
+              alt="Rspress Logo"
+            />
+            <span>Rspress</span>
           </div>
-          <div className={`${styles.navItem} ${styles.icon}`}>
-            <IconGithub />
+          <div className={styles.navRight}>
+            <div className={styles.fakeSearch} />
+            <div className={styles.navItem}>English</div>
+            <div className={`${styles.navItem} ${styles.icon}`}>
+              <IconSun />
+            </div>
+            <div className={`${styles.navItem} ${styles.icon}`}>
+              <IconGithub />
+            </div>
           </div>
         </div>
-      </div>
-      <div className={styles.body}>
-        <div className={styles.sidebar}>
-          <div className={`${styles.sidebarItem} ${styles.active}`} />
-          <div className={styles.sidebarItem} />
-          <div className={styles.sidebarItem} />
-          <div className={styles.sidebarItem} />
-          <div className={styles.sidebarItem} />
-          <div className={styles.sidebarItem} />
-        </div>
-        <div className={styles.main}>
-          <div className={styles.title}>Hello world</div>
-          <div className={styles.skeletonText} />
-          <div className={styles.skeletonText} />
+        <div className={styles.body}>
+          <div className={styles.sidebar}>
+            <div style={{ width: '40%' }} className={styles.sidebarHeader} />
+            <div className={`${styles.sidebarItem} ${styles.active}`}>
+              <div style={{ width: '70%' }} />
+            </div>
+            <div className={styles.sidebarItem}>
+              <div style={{ width: '50%' }} />
+            </div>
+            <div
+              style={{ width: '60%', marginTop: 12 }}
+              className={styles.sidebarHeader}
+            />
+            <div className={styles.sidebarItem}>
+              <div style={{ width: '40%' }} />
+            </div>
+            <div className={styles.sidebarItem}>
+              <div style={{ width: '60%' }} />
+            </div>
+            <div className={styles.sidebarItem}>
+              <div style={{ width: '50%' }} />
+            </div>
+          </div>
+          <div className={styles.main}>
+            <div className={styles.title}>Hello Rspress</div>
+            <div className={styles.skeletonText} />
+            <div className={styles.skeletonText} />
 
-          <div className={styles.cards}>
-            <div className={styles.card}>
-              <CodeBlock title="index.mdx" lang="Markdown">
-                <div className={styles.codeContent}>
-                  <div className="line">
-                    <span className={styles.keyword}>import</span>{' '}
-                    <span>{'{ CustomComponent }'}</span>{' '}
-                    <span className={styles.keyword}>from</span>{' '}
-                    <span className={styles.string}>'./custom'</span>;
+            <div className={styles.cards}>
+              <div className={styles.card}>
+                <CodeBlock title="index.mdx" lang="Markdown">
+                  <div className={styles.codeContent}>
+                    <div className="line">
+                      <span className={styles.text0}># Hello Rspress</span>
+                    </div>
+                    <br />
+                    <div className="line">
+                      <span className={styles.punctuation}>```</span>
+                      <span className={styles.function}>ts</span>{' '}
+                      <span>title</span>
+                      <span className={styles.punctuation}>=</span>
+                      <span className={styles.string}>"index.ts"</span>
+                    </div>
+                    <div className="line">
+                      <span className={styles.constant}>console</span>
+                      <span className={styles.punctuation}>.</span>
+                      <span className={styles.function}>log</span>
+                      <span className={styles.punctuation}>(</span>
+                      <span className={styles.string}>'Hello Rspress'</span>
+                      <span className={styles.punctuation}>);</span>
+                    </div>
+                    <div className="line">
+                      <span className={styles.punctuation}>```</span>
+                    </div>
                   </div>
-                  <div className="line">
-                    <span className={styles.punctuation}># Hello world</span>
-                  </div>
-                  <div className="line">
-                    <span className={styles.punctuation}>&lt;</span>
-                    <span className={styles.component}>CustomComponent</span>{' '}
-                    <span className={styles.punctuation}>/&gt;</span>
-                  </div>
-                </div>
-              </CodeBlock>
+                </CodeBlock>
+              </div>
             </div>
           </div>
         </div>

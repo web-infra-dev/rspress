@@ -10,6 +10,7 @@
   box-shadow: var(--rp-shadow-3);
   font-family: var(--rp-font-family-base);
   user-select: none;
+  transform: rotate(2deg) translate(60px, -50px);
 }
 
 .nav {
@@ -71,45 +72,49 @@
 }
 
 .sidebar {
-  width: 140px;
+  width: 120px;
   border-right: 1px solid var(--rp-c-divider-light);
   padding: 16px;
   display: flex;
   flex-direction: column;
-  gap: 12px;
   background-color: var(--rp-c-bg);
 }
 
-.sidebarItem {
+.sidebarHeader {
   height: 12px;
-  width: 70%;
   border-radius: 4px;
   background-color: var(--rp-c-bg-mute);
+  margin-bottom: 4px;
+  margin-left: 8px;
+}
+
+.sidebarItem {
+  height: 28px;
+  width: 100%;
+  border-radius: 4px;
+  display: flex;
+  align-items: center;
+  padding-left: 8px;
+
+  & > div {
+    height: 12px;
+    border-radius: 4px;
+    background-color: var(--rp-c-bg-mute);
+  }
 
   &.active {
-    background-color: var(--rp-c-brand);
-    width: 100%;
-    height: 28px;
-    margin-bottom: 8px;
-  }
+    background-color: var(--rp-c-brand-tint);
 
-  &:nth-child(2) {
-    width: 60%;
-  }
-  &:nth-child(3) {
-    width: 80%;
-  }
-  &:nth-child(4) {
-    width: 50%;
-  }
-  &:nth-child(5) {
-    width: 70%;
+    & > div {
+      background-color: var(--rp-c-brand);
+    }
   }
 }
 
 .main {
   flex: 1;
-  padding: 24px;
+  padding: 20px;
+  width: 350px;
   background-color: var(--rp-c-bg);
   display: flex;
   flex-direction: column;
@@ -182,3 +187,26 @@
 .component {
   color: var(--shiki-token-function);
 } /* Or a separate color if desired */
+
+.constant {
+  color: var(--shiki-token-constant);
+}
+.text0 {
+  color: var(--rp-c-text-1);
+}
+
+.wrapper {
+  position: relative;
+  width: 100%;
+  height: 100%;
+}
+
+.logo {
+  position: absolute;
+  width: 240px;
+  height: 240px;
+  bottom: 40px;
+  left: -20px;
+  z-index: 10;
+  filter: drop-shadow(0 8px 24px rgba(0, 0, 0, 0.15));
+}
