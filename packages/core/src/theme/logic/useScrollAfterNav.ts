@@ -50,6 +50,9 @@ export function useScrollAfterNav() {
   const location = useLocation();
 
   useLayoutEffect(() => {
+    if (typeof window === 'undefined') {
+      return;
+    }
     const decodedHash = decodeURIComponent(window.location.hash);
     if (decodedHash.length > 0) {
       const target = document.getElementById(decodedHash.slice(1));
