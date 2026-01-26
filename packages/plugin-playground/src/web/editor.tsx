@@ -57,7 +57,7 @@ export function Editor(props: EditorProps) {
   }, [themeProp, dark]);
 
   return (
-    <div className={`rspress-playground-editor ${className}`}>
+    <div className={`rp-playground-editor ${className}`}>
       <MonacoEditor
         {...rest}
         theme={theme}

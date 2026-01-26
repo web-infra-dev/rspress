@@ -4,17 +4,21 @@ import { SourceCode, PackageManagerTabs } from '@rspress/core/theme';
 
 提供一个可实时编辑的 Playground 以预览 mdx 文件代码块中的组件。
 
+:::tip
+该插件可与 [@rspress/plugin-preview](./preview) 一起使用。与 plugin-preview 不同的是，plugin-playground 的代码编译发生在浏览器中，因此用法限制比 plugin-preview 更多（例如不支持从本地文件导入模块）。建议将 plugin-playground 作为 plugin-preview 的补充，用于需要实时编辑代码的场景。
+:::
+
 ## 安装
 
 <PackageManagerTabs command="add @rspress/plugin-playground -D" />
 
 ## 使用
 
-### 引入插件
+### 1. 注册插件
 
 首先在配置文件中写入以下的配置：
 
-```ts title="rspress.config.ts"
+```ts title="rspress.config.ts" twoslash
 import { defineConfig } from '@rspress/core';
 import { pluginPlayground } from '@rspress/plugin-playground';
 
@@ -23,143 +27,231 @@ export default defineConfig({
 });
 ```
 
-### 内部组件
+### 2. 在 mdx 文件中使用
 
-:::tip 提示
-建议使用 js 或 jsx 编写示例代码，避免编辑器中出现 ts 类型报错问题。
-:::
+在 mdx 文件中使用 ` ```tsx playground ` 的语法：
 
-内部组件的组件代码声明在 mdx 文件内。支持 jsx 或 tsx。你可以在 mdx 文件中声明如下的代码块：
-
-````mdx
-```jsx
-import React from 'react';
-
-function App() {
-  return <div>Hello World</div>;
-}
-
-export default App;
-```
-````
-
-另外，你可以通过 `direction` 参数，指定编辑器与预览区域的布局；支持 `horizontal` 或 `vertical`：
-
-````mdx
-```jsx direction=vertical
-import React from 'react';
-
-function App() {
-  return <div>Hello World</div>;
-}
-
-export default App;
-```
-````
-
-值得注意的是，你需要将组件作为 default 导出，Rspress 会自动渲染这个组件。
-
-但是如果你想保留代码块的样式，而不是将其作为组件渲染，你可以添加 `pure` 标识符来指定，使用方式如下：
-
-````mdx
-```tsx pure
-import React from 'react';
-
-function App() {
-  return <div>Hello World</div>;
-}
-
-export default App;
-```
-````
-
-如果你配置了 `defaultRenderMode` 为 `'pure'`，那么默认情况下，Rspress 将不会渲染这个组件，而是将其作为代码块来渲染。这种情况下，如果需要将某个代码块渲染为组件，可以通过添加 `playground` 标识符来指定，使用方式如下：
-
-````mdx
+````mdx title="example.mdx"
 ```tsx playground
+import { useState } from 'react';
+
 function App() {
-  return <div>Hello World</div>;
+  const [count, setCount] = useState(0);
+
+  return (
+    <div style={{ textAlign: 'center' }}>
+      <p>当前计数: {count}</p>
+      <button onClick={() => setCount(count + 1)}>+</button>
+      <button onClick={() => setCount(count - 1)}>-</button>
+    </div>
+  );
 }
+
 export default App;
 ```
 ````
 
+它的渲染结果如下：
+
+```tsx playground
+import { useState } from 'react';
+
+function App() {
+  const [count, setCount] = useState(0);
+
+  return (
+    <div style={{ textAlign: 'center' }}>
+      <p>当前计数: {count}</p>
+      <button onClick={() => setCount(count + 1)}>+</button>
+      <button onClick={() => setCount(count - 1)}>-</button>
+    </div>
+  );
+}
+
+export default App;
+```
+
 :::tip 提示
-需要保证文档为 `.mdx` 结尾的文件。
+
+1. 目前只在 `.mdx` 文件中生效。
+2. 需要将组件作为 default 导出，Rspress 会自动渲染这个组件。
+3. 如果使用 tsx 目前不会进行类型检查。
+
 :::
 
-### 外部组件
+### 3. 将组件代码写在其他文件中（可选）
 
-除了将组件代码写在 mdx 文件的代码块中，你还可以将组件代码写在外部文件中，然后在 mdx 文件中通过 `file="./filename"` 的 meta 标记引入。比如
+除了将组件代码写在 mdx 文件的代码块中，你还可以配合[文件代码块](../../guide/use-mdx/code-blocks.mdx#file-code-block)一起使用，将示例代码写在其他文件中。
 
-````md title="example.mdx"
-```jsx file="./Demo.jsx"
+````mdx title="example.mdx"
+```tsx file="./_playgroundDemo.jsx" playground
 
 ```
 ````
 
-```jsx title="Demo.jsx"
-import React from 'react';
+```tsx title="_playgroundDemo.jsx" file="./_playgroundDemo.jsx"
 
-export default function App() {
-  return <div>Hello World</div>;
+```
+
+它的渲染结果如下：
+
+```tsx file="./_playgroundDemo.jsx" playground
+
+```
+
+## 调整布局方向 \{#direction}
+
+你可以通过 `direction` 参数，指定编辑器与预览区域的布局方向，支持 `horizontal`（横向）或 `vertical`（纵向）。
+
+### `direction="horizontal"`
+
+横向布局是默认模式，编辑器和预览区域左右排列。
+
+语法：
+
+````mdx title="example.mdx"
+```tsx playground direction=horizontal
+
+```
+````
+
+### `direction="vertical"`
+
+纵向布局模式，编辑器和预览区域上下排列。
+
+语法：
+
+````mdx title="example.mdx"
+```tsx playground direction=vertical
+
+```
+````
+
+渲染结果：
+
+```tsx playground direction=vertical
+import { useState } from 'react';
+
+function App() {
+  const [text, setText] = useState('Hello');
+
+  return (
+    <div>
+      <input value={text} onChange={(e) => setText(e.target.value)} />
+      <p>你输入了: {text}</p>
+    </div>
+  );
 }
+
+export default App;
 ```
-
-同样的，外部组件也支持 `direction` 属性：
-
-````md title="example.mdx"
-```jsx file="./Demo.jsx" direction=vertical
-
-```
-````
-
-外部组件中同样需要将组件作为 default 导出。而通过 code 标签的 src 属性，你可以指定外部组件的路径，该插件同时支持相对路径以及别名路径(alias)。
-
-对于某些比较复杂的组件，这种外部组件的使用方式会更加方便。
 
 ### 定义整个页面中的布局
 
-可以在 frontmatter 中编写 playgroundDirection，来定义整个页面中编辑器与预览区域的布局。
+可以在 frontmatter 中编写 `playgroundDirection`，来定义整个页面中编辑器与预览区域的布局。
 
 ```md title="example.mdx"
 ---
 title: 标题
-playgroundDirection: horizontal
+playgroundDirection: vertical
 ---
 ```
 
-优先级：直接定义在预览区域上 > 页面定义 > 配置中定义。
+优先级：直接定义在代码块上 > 页面 frontmatter 定义 > 插件配置定义。
 
 ## 配置
 
-这个插件接受一个对象参数，类型如下:
+该插件接受一个配置对象，类型定义如下：
 
 ```ts
 interface PlaygroundOptions {
-  render: string;
-  include: Array<string | [string, string]>;
-  // 定义默认的 playground 布局（横向/纵向）
-  defaultDirection: 'horizontal' | 'vertical';
-  // 定义横向布局下，编辑器所处的位置（左侧/右侧）
-  editorPosition: 'left' | 'right';
-  // @babel/standalone 的 CDN 地址
-  babelUrl: string;
-  // 默认编辑器（monaco）部分配置
-  monacoLoader: Parameters<typeof loader.config>[0];
-  monacoOptions: MonacoEditorProps['options'];
+  defaultRenderMode?: 'pure' | 'playground';
+  defaultDirection?: 'horizontal' | 'vertical';
+  editorPosition?: 'left' | 'right';
+  babelUrl?: string;
+  monacoLoader?: Parameters<typeof loader.config>[0];
+  monacoOptions?: MonacoEditorProps['options'];
+  include?: Array<string | [string, string]>;
+  render?: string;
 }
 ```
 
-:::warning 注意
+### defaultRenderMode
 
-`monacoLoader` 及 `monacoOptions` 内部会被序列化为 JSON，因此不支持部分数据类型，如函数、循环引用的对象。
+- **类型**：`'pure' | 'playground'`
+- **默认值**：`'pure'`
 
+配置未显式声明 `pure` 或 `playground` 标识符的代码块的默认渲染行为。
+
+- ` ```tsx pure`：渲染为普通代码块
+- ` ```tsx `：根据 `defaultRenderMode` 配置渲染
+- ` ```tsx playground`：渲染为可编辑的 Playground 组件
+
+:::warning
+不建议修改默认值，否则可能影响与 `@rspress/plugin-preview` 的连用。
 :::
+
+### defaultDirection
+
+- **类型**：`'horizontal' | 'vertical'`
+- **默认值**：`'horizontal'`
+
+配置编辑器与预览区域的默认[布局方向](#direction)。
+
+### editorPosition
+
+- **类型**：`'left' | 'right'`
+- **默认值**：`'left'`
+
+配置横向布局下编辑器所处的位置（左侧/右侧）。
+
+### babelUrl
+
+- **类型**：`string`
+- **默认值**：`'https://cdnjs.cloudflare.com/ajax/libs/babel-standalone/7.22.20/babel.min.js'`
+
+Playground 使用 `@babel/standalone` 对演示代码进行编译。你可以修改为其他 CDN 提供的 URL，例如 unpkg、jsdelivr 等。
+
+### monacoLoader
+
+配置 monaco-loader 相关行为。默认从 [cdnjs.com](https://cdnjs.com/libraries/monaco-editor) 加载。
+
+你可以修改为其他 CDN 提供的 URL，例如 unpkg、jsdelivr 等。
+
+完整文档可见 [suren-atoyan/monaco-loader](https://github.com/suren-atoyan/monaco-loader#config)
+
+### monacoOptions
+
+- **类型**：[IStandaloneEditorConstructionOptions](https://microsoft.github.io/monaco-editor/typedoc/interfaces/editor.IStandaloneEditorConstructionOptions.html)
+
+配置 Monaco Editor 的选项。
+
+:::warning 注意
+`monacoLoader` 及 `monacoOptions` 内部会被序列化为 JSON，因此不支持部分数据类型，如函数、循环引用的对象。
+:::
+
+### include
+
+- **类型**：`Array<string | [string, string]>`
+
+默认情况下，该插件会自动扫描所有 demo 中的 import 语句；demo 中没有使用到的依赖，在 Playground 中也无法使用。如果希望将其他依赖加入到 Playground 中，可以使用 `include` 参数：
+
+```ts
+pluginPlayground({
+  include: [
+    // 增加 dayjs 依赖
+    'dayjs',
+    // 增加包名为 "my-package"，实际指向 "/path/to/package/index.js" 的依赖
+    ['my-package', '/path/to/package/index.js'],
+  ],
+});
+```
 
 ### render
 
-你可以自定义 render 文件，用于渲染 Playground；请注意，文件名必须为 `Playground.(jsx?|tsx?)`
+- **类型**：`string`
+
+你可以自定义 render 文件，用于渲染 Playground。请注意，文件名必须为 `Playground.(jsx?|tsx?)`。
 
 ```ts
 pluginPlayground({
@@ -174,44 +266,4 @@ import getImport from '_rspress_playground_imports';
 import { Runner, Editor } from '@rspress/plugin-playground/web';
 ```
 
-可以参考自带的 [Playground.tsx](https://github.com/web-infra-dev/rspress/tree/main/packages/plugin-playground/static/global-components/Playground.tsx) 进行自定义；
-
-### include
-
-默认情况下，该插件会自动扫描所有 demo 中的 import 语句；demo 中没有使用到的依赖，在 Playground 中也无法使用；如果希望将其他依赖加入到 Playground 中，可以使用 `include` 参数：
-
-```ts
-pluginPlayground({
-  include: [
-    // 增加 dayjs 依赖
-    'dayjs',
-    // 增加包名为“my-package”，实际指向“/path/to/package/index.js”的依赖
-    ['my-package', '/path/to/package/index.js'],
-  ],
-});
-```
-
-### babelUrl
-
-Playground 使用 `@babel/standalone` 对演示代码进行编译，默认从 [cdnjs.com](https://cdnjs.cloudflare.com/ajax/libs/babel-standalone/7.22.20/babel.min.js) 加载。
-
-你可以修改为其他 CDN 提供的 URL，例如 unpkg、jsdelivr 等。
-
-### monacoLoader
-
-配置 monaco-loader 相关行为。默认从 [cdnjs.com](https://cdnjs.com/libraries/monaco-editor) 加载。
-
-你可以修改为其他 CDN 提供的 URL，例如 unpkg、jsdelivr 等。
-
-完整文档可见 [suren-atoyan/monaco-loader](https://github.com/suren-atoyan/monaco-loader#config)
-
-### monacoOptions
-
-配置 monaco editor，对应 [IStandaloneEditorConstructionOptions](https://microsoft.github.io/monaco-editor/typedoc/interfaces/editor.IStandaloneEditorConstructionOptions.html)
-
-### defaultRenderMode
-
-支持用户配置没有主动声明 `pure` 或 `playground` 标识符的内部代码块的默认行为，默认为 `playground`。
-
-- `pure`: 渲染为普通代码块
-- `playground`: 渲染为 Playground 组件
+可以参考自带的 [Playground.tsx](https://github.com/web-infra-dev/rspress/tree/main/packages/plugin-playground/static/global-components/Playground.tsx) 进行自定义。

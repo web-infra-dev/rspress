@@ -78,7 +78,7 @@ export default App;
 
 :::
 
-### 3. Write component code in other files
+### 3. Write component code in other files (optional)
 
 In addition to writing component code in the code block of the mdx file, you can also use it with [File Code Block](../../guide/use-mdx/code-blocks.mdx#file-code-block) to write the example code in other files.
 
@@ -203,6 +203,10 @@ interface IframeOptions {
 - **Default:** `'pure'`
 
 Configures the default rendering behavior for code blocks that don't explicitly declare `pure` or `preview`.
+
+:::warning
+It is not recommended to modify the default value, as it may affect the combined usage with `@rspress/plugin-playground`.
+:::
 
 - ` ```tsx pure`: Render as a regular code block
 - ` ```tsx `: Render based on `defaultRenderMode` configuration

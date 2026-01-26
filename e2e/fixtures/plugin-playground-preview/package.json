@@ -1,0 +1,20 @@
+{
+  "name": "@rspress-fixture/plugin-playground-preview",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "build": "rspress build",
+    "dev": "rspress dev",
+    "preview": "rspress preview"
+  },
+  "dependencies": {
+    "@rspress/core": "workspace:*",
+    "@rspress/plugin-playground": "workspace:*",
+    "@rspress/plugin-preview": "workspace:*",
+    "react": "^19.2.3",
+    "react-dom": "^19.2.3"
+  },
+  "devDependencies": {
+    "@types/node": "^22.8.1"
+  }
+}

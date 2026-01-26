@@ -78,7 +78,7 @@ export default App;
 
 :::
 
-### 3. 将组件代码写在其他文件中
+### 3. 将组件代码写在其他文件中（可选）
 
 除了将组件代码写在 mdx 文件的代码块中，你还可以配合[文件代码块](../../guide/use-mdx/code-blocks.mdx#file-code-block) 一起使用，将示例代码写在其他文件中。
 
@@ -203,6 +203,10 @@ interface IframeOptions {
 - **默认值**：`'pure'`
 
 配置未显式声明 `pure` 或 `preview` 的代码块的默认渲染行为。
+
+:::warning
+不建议修改默认值，否则可能影响与 `@rspress/plugin-playground` 的连用。
+:::
 
 - ` ```tsx pure`：渲染为普通代码块
 - ` ```tsx `：根据 `defaultRenderMode` 配置渲染

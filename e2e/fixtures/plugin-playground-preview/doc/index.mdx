@@ -1,0 +1,28 @@
+# Guide
+
+Test plugin-playground and plugin-preview combined usage.
+Both plugins default to `pure` mode, users specify `playground` or `preview` via meta.
+
+## Pure code block (default)
+
+```tsx
+export default function PureComponent() {
+  return <div>Pure Code Block</div>;
+}
+```
+
+## Playground demo
+
+```tsx playground
+export default function PlaygroundComponent() {
+  return <div>Hello World Playground</div>;
+}
+```
+
+## Preview demo
+
+```tsx preview
+export default function PreviewComponent() {
+  return <div>Hello World Preview</div>;
+}
+```
