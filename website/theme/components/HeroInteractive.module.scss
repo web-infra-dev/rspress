@@ -13,6 +13,7 @@
   transform: rotate(2.5deg) translate(50px, -50px);
   opacity: 0.9;
   transition: opacity 0.3s ease-in-out;
+  animation: float 5s ease-in-out infinite;
 }
 
 .nav {
@@ -113,6 +114,7 @@
   background-color: var(--rp-c-bg-mute);
   margin-bottom: 4px;
   margin-left: 8px;
+  transform-origin: left;
   animation: shimmer 1.5s infinite ease-in-out;
 }
 
@@ -128,6 +130,7 @@
     height: 12px;
     border-radius: 4px;
     background-color: var(--rp-c-bg-mute);
+    transform-origin: left;
     animation: shimmer 1.5s infinite ease-in-out;
     animation-delay: 0.2s;
   }
@@ -173,6 +176,7 @@
   height: 12px;
   background-color: var(--rp-c-bg-mute);
   border-radius: 4px;
+  transform-origin: left;
   animation: shimmer 1.5s infinite ease-in-out;
 
   &:nth-of-type(1) {
@@ -194,12 +198,17 @@
   :global(.rp-codeblock__title) {
     font-size: 12px;
   }
+  :global(.rp-codeblock__content) code {
+    padding: 0 !important;
+  }
 }
 
 .codeContent {
   padding: 16px;
   font-size: 12px;
   font-family: var(--rp-font-family-mono);
+  background-color: var(--shiki-background);
+  color: var(--shiki-foreground);
   line-height: 1.5;
   white-space: pre;
   overflow-x: auto;
@@ -255,6 +264,7 @@
   z-index: 10;
   filter: drop-shadow(0 8px 24px rgba(0, 0, 0, 0.15));
   transition: opacity 0.3s ease-in-out;
+  animation: floatLogo 6s ease-in-out infinite;
 }
 
 @keyframes breathe {
@@ -269,15 +279,38 @@
   }
 }
 
+@keyframes float {
+  0%,
+  100% {
+    transform: rotate(2.5deg) translate(50px, -50px);
+  }
+  50% {
+    transform: rotate(2.5deg) translate(50px, -60px);
+  }
+}
+
+@keyframes floatLogo {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-10px);
+  }
+}
+
 @keyframes shimmer {
   0% {
     opacity: 0.2;
+    transform: scaleX(0.9);
   }
   50% {
     opacity: 1;
+    transform: scaleX(1);
   }
   100% {
     opacity: 0.2;
+    transform: scaleX(0.9);
   }
 }
 
@@ -309,4 +342,8 @@
   z-index: -1;
   animation: breathe 3s ease-in-out infinite reverse;
   pointer-events: none;
+}
+
+:global(.rp-home-hero__badge)::before {
+  animation: breathe 3s ease-in-out infinite reverse;
 }

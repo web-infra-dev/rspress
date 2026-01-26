@@ -75,30 +75,34 @@ export function HeroInteractive() {
             <div className={styles.cards}>
               <div className={styles.card}>
                 <CodeBlock title="index.mdx" lang="Markdown">
-                  <div className={styles.codeContent}>
-                    <div className="line">
-                      <span className={styles.text0}># Hello Rspress</span>
-                    </div>
-                    <br />
-                    <div className="line">
-                      <span className={styles.punctuation}>```</span>
-                      <span className={styles.function}>ts</span>{' '}
-                      <span>title</span>
-                      <span className={styles.punctuation}>=</span>
-                      <span className={styles.string}>"index.ts"</span>
-                    </div>
-                    <div className="line">
-                      <span className={styles.constant}>console</span>
-                      <span className={styles.punctuation}>.</span>
-                      <span className={styles.function}>log</span>
-                      <span className={styles.punctuation}>(</span>
-                      <span className={styles.string}>'Hello Rspress'</span>
-                      <span className={styles.punctuation}>);</span>
-                    </div>
-                    <div className="line">
-                      <span className={styles.punctuation}>```</span>
-                    </div>
-                  </div>
+                  <pre className={styles.codeContent}>
+                    <code>
+                      <div className="line">
+                        <span style={{ color: 'var(--shiki-foreground)' }}>
+                          # Hello Rspress
+                        </span>
+                      </div>
+                      <br />
+                      <div className="line">
+                        <span className={styles.punctuation}>```</span>
+                        <span className={styles.function}>ts</span>{' '}
+                        <span>title</span>
+                        <span className={styles.punctuation}>=</span>
+                        <span className={styles.string}>"index.ts"</span>
+                      </div>
+                      <div className="line">
+                        <span className={styles.constant}>console</span>
+                        <span className={styles.punctuation}>.</span>
+                        <span className={styles.function}>log</span>
+                        <span className={styles.punctuation}>(</span>
+                        <span className={styles.string}>'Hello Rspress'</span>
+                        <span className={styles.punctuation}>);</span>
+                      </div>
+                      <div className="line">
+                        <span className={styles.punctuation}>```</span>
+                      </div>
+                    </code>
+                  </pre>
                 </CodeBlock>
               </div>
             </div>
