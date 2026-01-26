@@ -58,7 +58,8 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
           echo "🔧 Running self-healing CLI..."
-          node ./packages/self-healing-cli/bin/cli.js fix \
+          npm install -g tsx
+          tsx ./packages/self-healing-cli/bin/cli.js fix \
             --log /tmp/lint-output.txt \
             --verify "pnpm run lint" \
             --max-attempts 3 \
