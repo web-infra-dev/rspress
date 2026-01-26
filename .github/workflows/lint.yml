@@ -48,7 +48,6 @@ jobs:
 
       - name: Lint
         id: lint
-        continue-on-error: true
         run: pnpm run lint 2>&1 | tee /tmp/lint-output.txt
 
       - name: Self-Healing
