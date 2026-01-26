@@ -6,11 +6,11 @@
     "--shiki-token-string": "#032f62",
     "--shiki-token-comment": "#6a737d",
     "--shiki-token-keyword": "#d73a49",
-    "--shiki-token-parameter": "#24292e",
+    "--shiki-token-parameter": "#e36209",
     "--shiki-token-function": "#6f42c1",
     "--shiki-token-string-expression": "#005cc5",
-    "--shiki-token-punctuation": "#032f62",
-    "--shiki-token-link": "#005cc5"
+    "--shiki-token-punctuation": "#6a737d",
+    "--shiki-token-link": "#032f62"
   },
   "github-dark": {
     "--shiki-foreground": "#e1e4e8",
@@ -19,62 +19,62 @@
     "--shiki-token-string": "#9ecbff",
     "--shiki-token-comment": "#6a737d",
     "--shiki-token-keyword": "#f97583",
-    "--shiki-token-parameter": "#e1e4e8",
+    "--shiki-token-parameter": "#ffab70",
     "--shiki-token-function": "#b392f0",
     "--shiki-token-string-expression": "#79b8ff",
-    "--shiki-token-punctuation": "#9ecbff",
-    "--shiki-token-link": "#79b8ff"
+    "--shiki-token-punctuation": "#6a737d",
+    "--shiki-token-link": "#dbedff"
   },
   "github-light-high-contrast": {
     "--shiki-foreground": "#0e1116",
     "--shiki-background": "#ffffff",
-    "--shiki-token-constant": "#a0111f",
+    "--shiki-token-constant": "#023b95",
     "--shiki-token-string": "#032563",
     "--shiki-token-comment": "#66707b",
     "--shiki-token-keyword": "#a0111f",
-    "--shiki-token-parameter": "#0e1116",
+    "--shiki-token-parameter": "#702c00",
     "--shiki-token-function": "#622cbc",
     "--shiki-token-string-expression": "#023b95",
-    "--shiki-token-punctuation": "#032563",
-    "--shiki-token-link": "#023b95"
+    "--shiki-token-punctuation": "#66707b",
+    "--shiki-token-link": "#032563"
   },
   "github-dark-high-contrast": {
     "--shiki-foreground": "#f0f3f6",
     "--shiki-background": "#0a0c10",
-    "--shiki-token-constant": "#ff9492",
+    "--shiki-token-constant": "#91cbff",
     "--shiki-token-string": "#addcff",
     "--shiki-token-comment": "#bdc4cc",
     "--shiki-token-keyword": "#ff9492",
-    "--shiki-token-parameter": "#f0f3f6",
+    "--shiki-token-parameter": "#ffb757",
     "--shiki-token-function": "#dbb7ff",
     "--shiki-token-string-expression": "#91cbff",
-    "--shiki-token-punctuation": "#addcff",
-    "--shiki-token-link": "#91cbff"
+    "--shiki-token-punctuation": "#bdc4cc",
+    "--shiki-token-link": "#addcff"
   },
   "light-plus": {
     "--shiki-foreground": "#000000",
     "--shiki-background": "#FFFFFF",
-    "--shiki-token-constant": "#0000ff",
+    "--shiki-token-constant": "#811f3f",
     "--shiki-token-string": "#a31515",
     "--shiki-token-comment": "#008000",
     "--shiki-token-keyword": "#0000ff",
-    "--shiki-token-parameter": "#795E26",
+    "--shiki-token-parameter": "#001080",
     "--shiki-token-function": "#795E26",
     "--shiki-token-string-expression": "#000000ff",
-    "--shiki-token-punctuation": "#0000ff",
-    "--shiki-token-link": "#800000"
+    "--shiki-token-punctuation": "#267f99",
+    "--shiki-token-link": "#a31515"
   },
   "dark-plus": {
     "--shiki-foreground": "#D4D4D4",
     "--shiki-background": "#1E1E1E",
-    "--shiki-token-constant": "#569cd6",
+    "--shiki-token-constant": "#646695",
     "--shiki-token-string": "#ce9178",
     "--shiki-token-comment": "#6A9955",
     "--shiki-token-keyword": "#569cd6",
-    "--shiki-token-parameter": "#DCDCAA",
+    "--shiki-token-parameter": "#9CDCFE",
     "--shiki-token-function": "#DCDCAA",
     "--shiki-token-string-expression": "#D4D4D4",
-    "--shiki-token-punctuation": "#569cd6",
+    "--shiki-token-punctuation": "#4EC9B0",
     "--shiki-token-link": "#ce9178"
   },
   "one-light": {
@@ -85,23 +85,23 @@
     "--shiki-token-comment": "#A0A1A7",
     "--shiki-token-keyword": "#A626A4",
     "--shiki-token-parameter": "#383A42",
-    "--shiki-token-function": "#0184BC",
+    "--shiki-token-function": "#4078F2",
     "--shiki-token-string-expression": "#CA1243",
-    "--shiki-token-punctuation": "#50A14F",
-    "--shiki-token-link": "#E45649"
+    "--shiki-token-punctuation": "#383A42",
+    "--shiki-token-link": "#A626A4"
   },
   "one-dark-pro": {
     "--shiki-foreground": "#abb2bf",
     "--shiki-background": "#282c34",
-    "--shiki-token-constant": "#e5c07b",
+    "--shiki-token-constant": "#d19a66",
     "--shiki-token-string": "#98c379",
     "--shiki-token-comment": "#7f848e",
-    "--shiki-token-keyword": "#abb2bf",
-    "--shiki-token-parameter": "#abb2bf",
+    "--shiki-token-keyword": "#c678dd",
+    "--shiki-token-parameter": "#e06c75",
     "--shiki-token-function": "#61afef",
     "--shiki-token-string-expression": "#abb2bf",
     "--shiki-token-punctuation": "#abb2bf",
-    "--shiki-token-link": "#61afef"
+    "--shiki-token-link": "#c678dd"
   },
   "nord": {
     "--shiki-foreground": "#d8dee9",
@@ -112,9 +112,9 @@
     "--shiki-token-keyword": "#81A1C1",
     "--shiki-token-parameter": "#D8DEE9",
     "--shiki-token-function": "#88C0D0",
-    "--shiki-token-string-expression": "#D8DEE9",
+    "--shiki-token-string-expression": "#ECEFF4",
     "--shiki-token-punctuation": "#ECEFF4",
-    "--shiki-token-link": "#8FBCBB"
+    "--shiki-token-link": "#A3BE8C"
   },
   "material-theme": {
     "--shiki-foreground": "#EEFFFF",
@@ -122,10 +122,10 @@
     "--shiki-token-constant": "#F78C6C",
     "--shiki-token-string": "#C3E88D",
     "--shiki-token-comment": "#546E7A",
-    "--shiki-token-keyword": "#F78C6C",
+    "--shiki-token-keyword": "#89DDFF",
     "--shiki-token-parameter": "#EEFFFF",
     "--shiki-token-function": "#82AAFF",
-    "--shiki-token-string-expression": "#89DDFF",
+    "--shiki-token-string-expression": "#EEFFFF",
     "--shiki-token-punctuation": "#89DDFF",
     "--shiki-token-link": "#C3E88D"
   },
@@ -135,10 +135,10 @@
     "--shiki-token-constant": "#F78C6C",
     "--shiki-token-string": "#C3E88D",
     "--shiki-token-comment": "#545454",
-    "--shiki-token-keyword": "#F78C6C",
+    "--shiki-token-keyword": "#89DDFF",
     "--shiki-token-parameter": "#EEFFFF",
     "--shiki-token-function": "#82AAFF",
-    "--shiki-token-string-expression": "#89DDFF",
+    "--shiki-token-string-expression": "#EEFFFF",
     "--shiki-token-punctuation": "#89DDFF",
     "--shiki-token-link": "#C3E88D"
   },
@@ -148,10 +148,10 @@
     "--shiki-token-constant": "#F78C6C",
     "--shiki-token-string": "#C3E88D",
     "--shiki-token-comment": "#464B5D",
-    "--shiki-token-keyword": "#F78C6C",
+    "--shiki-token-keyword": "#89DDFF",
     "--shiki-token-parameter": "#babed8",
     "--shiki-token-function": "#82AAFF",
-    "--shiki-token-string-expression": "#89DDFF",
+    "--shiki-token-string-expression": "#babed8",
     "--shiki-token-punctuation": "#89DDFF",
     "--shiki-token-link": "#C3E88D"
   },
@@ -162,11 +162,11 @@
     "--shiki-token-string": "#b56959",
     "--shiki-token-comment": "#a0ada0",
     "--shiki-token-keyword": "#1e754f",
-    "--shiki-token-parameter": "#393a34",
+    "--shiki-token-parameter": "#b07d48",
     "--shiki-token-function": "#59873a",
-    "--shiki-token-string-expression": "#1e754f",
+    "--shiki-token-string-expression": "#b56959",
     "--shiki-token-punctuation": "#999999",
-    "--shiki-token-link": "#b56959"
+    "--shiki-token-link": "#393a3490"
   },
   "vitesse-dark": {
     "--shiki-foreground": "#dbd7caee",
@@ -175,35 +175,35 @@
     "--shiki-token-string": "#c98a7d",
     "--shiki-token-comment": "#758575dd",
     "--shiki-token-keyword": "#4d9375",
-    "--shiki-token-parameter": "#dbd7caee",
+    "--shiki-token-parameter": "#bd976a",
     "--shiki-token-function": "#80a665",
-    "--shiki-token-string-expression": "#4d9375",
+    "--shiki-token-string-expression": "#c98a7d",
     "--shiki-token-punctuation": "#666666",
-    "--shiki-token-link": "#c98a7d"
+    "--shiki-token-link": "#dedcd590"
   },
   "andromeeda": {
     "--shiki-foreground": "#D5CED9",
     "--shiki-background": "#23262E",
-    "--shiki-token-constant": "#f39c12",
-    "--shiki-token-string": "#7cb7ff",
+    "--shiki-token-constant": "#ee5d43",
+    "--shiki-token-string": "#96E072",
     "--shiki-token-comment": "#A0A1A7cc",
     "--shiki-token-keyword": "#c74ded",
-    "--shiki-token-parameter": "#f39c12",
+    "--shiki-token-parameter": "#00e8c6",
     "--shiki-token-function": "#FFE66D",
-    "--shiki-token-string-expression": "#f92672",
-    "--shiki-token-punctuation": "#96E072",
-    "--shiki-token-link": "#96E072"
+    "--shiki-token-string-expression": "#D5CED9",
+    "--shiki-token-punctuation": "#A0A1A7cc",
+    "--shiki-token-link": "#ee5d43"
   },
   "ayu-dark": {
     "--shiki-foreground": "#bfbdb6",
-    "--shiki-background": "#0b0e14",
+    "--shiki-background": "#10141c",
     "--shiki-token-constant": "#95e6cb",
     "--shiki-token-string": "#aad94c",
-    "--shiki-token-comment": "#acb6bf8c",
+    "--shiki-token-comment": "#5a6673",
     "--shiki-token-keyword": "#ff8f40",
-    "--shiki-token-parameter": "#bfbdb6",
+    "--shiki-token-parameter": "#d2a6ff",
     "--shiki-token-function": "#ffb454",
-    "--shiki-token-string-expression": "#ff8f40",
+    "--shiki-token-string-expression": "#bfbdb6",
     "--shiki-token-punctuation": "#bfbdb6b3",
     "--shiki-token-link": "#39bae6"
   }
