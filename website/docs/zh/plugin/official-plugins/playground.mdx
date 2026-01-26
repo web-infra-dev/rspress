@@ -4,6 +4,10 @@ import { SourceCode, PackageManagerTabs } from '@rspress/core/theme';
 
 提供一个可实时编辑的 Playground 以预览 mdx 文件代码块中的组件。
 
+:::tip
+该插件可与 [@rspress/plugin-preview](./preview) 一起使用。与 plugin-preview 不同的是，plugin-playground 的代码编译发生在浏览器中，因此用法限制比 plugin-preview 更多（例如不支持从本地文件导入模块）。建议将 plugin-playground 作为 plugin-preview 的补充，用于需要实时编辑代码的场景。
+:::
+
 ## 安装
 
 <PackageManagerTabs command="add @rspress/plugin-playground -D" />

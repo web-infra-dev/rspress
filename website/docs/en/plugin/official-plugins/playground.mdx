@@ -4,6 +4,10 @@ import { SourceCode, PackageManagerTabs } from '@rspress/core/theme';
 
 Provide a real-time editable Playground to preview components in MDX file code blocks.
 
+:::tip
+This plugin can be used together with [@rspress/plugin-preview](./preview). Unlike plugin-preview, plugin-playground compiles code in the browser, so it has more usage limitations (e.g., it does not support importing modules from local files). It is recommended to use plugin-playground as a supplement to plugin-preview for scenarios that require real-time code editing.
+:::
+
 ## Installation
 
 <PackageManagerTabs command="add @rspress/plugin-playground -D" />
