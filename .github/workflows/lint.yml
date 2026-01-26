@@ -51,7 +51,7 @@ jobs:
         run: pnpm run lint 2>&1 | tee /tmp/lint-output.txt
 
       - name: Self-Healing
-        if: always() && steps.lint.outcome == 'failure' && github.event_name == 'pull_request' && github.event.pull_request.head.repo.full_name == github.repository
+        if: always()
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
@@ -63,7 +63,7 @@ jobs:
             --timeout 600000
 
       - name: Fail if Lint Failed and Not Fixed
-        if: always() && steps.lint.outcome == 'failure'
+        if: always()
         run: |
           echo "❌ Lint check failed. See errors above."
           exit 1
