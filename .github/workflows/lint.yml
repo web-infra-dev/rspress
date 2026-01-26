@@ -48,7 +48,9 @@ jobs:
 
       - name: Lint
         id: lint
-        run: pnpm run lint 2>&1 | tee /tmp/lint-output.txt
+        run: |
+          set -o pipefail
+          pnpm run lint 2>&1 | tee /tmp/lint-output.txt
 
       - name: Self-Healing
         if: always()
