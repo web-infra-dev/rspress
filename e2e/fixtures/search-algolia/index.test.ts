@@ -38,7 +38,7 @@ test.describe('search code blocks test', async () => {
 
     // Test lvl0 selector - active navigation menu item
     const navMenuItem = page.locator(
-      '.rspress-nav-menu-item.rspress-nav-menu-item-active',
+      '.rp-nav-menu__item.rp-nav-menu__item--active',
     );
     // lvl0 might not exist on simple pages, but the selector should be valid
     const navMenuCount = await navMenuItem.count();
