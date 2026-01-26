@@ -20,6 +20,11 @@ jobs:
     # The type of runner that the job will run on
     runs-on: ubuntu-latest
 
+    # Permissions needed for self-healing PR creation
+    permissions:
+      contents: write
+      pull-requests: write
+
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
       - name: Checkout
@@ -42,7 +47,27 @@ jobs:
         run: pnpm install --ignore-scripts
 
       - name: Lint
-        run: pnpm run lint
+        id: lint
+        continue-on-error: true
+        run: pnpm run lint 2>&1 | tee /tmp/lint-output.txt
+
+      - name: Self-Healing
+        if: steps.lint.outcome == 'failure' && github.event_name == 'pull_request' && github.event.pull_request.head.repo.full_name == github.repository
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          echo "🔧 Running self-healing CLI..."
+          npx @rspress/self-healing-cli fix \
+            --log /tmp/lint-output.txt \
+            --verify "pnpm run lint" \
+            --max-attempts 3 \
+            --timeout 600000
+
+      - name: Fail if Lint Failed and Not Fixed
+        if: steps.lint.outcome == 'failure'
+        run: |
+          echo "❌ Lint check failed. See errors above."
+          exit 1
 
       - name: Check Dependency Version
         run: pnpm run check-dependency-version
