@@ -13,6 +13,7 @@
     "@rspress/core": "workspace:*",
     "@rspress/plugin-algolia": "workspace:*",
     "@rspress/plugin-llms": "workspace:*",
+    "@rspress/plugin-playground": "workspace:*",
     "@rspress/plugin-preview": "workspace:*",
     "@rspress/plugin-sitemap": "workspace:*",
     "@rspress/plugin-twoslash": "workspace:*",
