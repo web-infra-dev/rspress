@@ -209,7 +209,14 @@ Configure monaco editor, corresponding to [IStandaloneEditorConstructionOptions]
 
 ### defaultRenderMode
 
-The default mode of rendering internal code blocks that do not have the `pure` or `playground` identifiers declared by users, defaulting to `playground`.
+- **Type:** `'pure' | 'playground'`
+- **Default:** `'pure'`
+
+The default mode of rendering internal code blocks that do not have the `pure` or `playground` identifiers declared by users.
 
 - `pure`: render as regular code block
 - `playground`: render as Playground component
+
+:::warning
+It is not recommended to modify the default value, as it may affect the combined usage with `@rspress/plugin-preview`.
+:::

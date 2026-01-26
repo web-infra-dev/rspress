@@ -522,6 +522,28 @@ importers:
         specifier: ^22.8.1
         version: 22.10.2
 
+  e2e/fixtures/plugin-playground-preview:
+    dependencies:
+      '@rspress/core':
+        specifier: workspace:*
+        version: link:../../../packages/core
+      '@rspress/plugin-playground':
+        specifier: workspace:*
+        version: link:../../../packages/plugin-playground
+      '@rspress/plugin-preview':
+        specifier: workspace:*
+        version: link:../../../packages/plugin-preview
+      react:
+        specifier: ^19.2.3
+        version: 19.2.3
+      react-dom:
+        specifier: ^19.2.3
+        version: 19.2.3(react@19.2.3)
+    devDependencies:
+      '@types/node':
+        specifier: ^22.8.1
+        version: 22.10.2
+
   e2e/fixtures/plugin-preview:
     dependencies:
       '@rspress-fixture/plugin-preview':

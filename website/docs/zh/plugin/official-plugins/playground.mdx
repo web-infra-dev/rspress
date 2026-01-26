@@ -211,7 +211,14 @@ Playground 使用 `@babel/standalone` 对演示代码进行编译，默认从 [c
 
 ### defaultRenderMode
 
-支持用户配置没有主动声明 `pure` 或 `playground` 标识符的内部代码块的默认行为，默认为 `playground`。
+- **类型**：`'pure' | 'playground'`
+- **默认值**：`'pure'`
+
+配置未显式声明 `pure` 或 `playground` 标识符的内部代码块的默认渲染行为。
 
 - `pure`: 渲染为普通代码块
 - `playground`: 渲染为 Playground 组件
+
+:::warning
+不建议修改默认值，否则可能影响与 `@rspress/plugin-preview` 的连用。
+:::

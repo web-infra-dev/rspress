@@ -204,6 +204,10 @@ interface IframeOptions {
 
 Configures the default rendering behavior for code blocks that don't explicitly declare `pure` or `preview`.
 
+:::warning
+It is not recommended to modify the default value, as it may affect the combined usage with `@rspress/plugin-playground`.
+:::
+
 - ` ```tsx pure`: Render as a regular code block
 - ` ```tsx `: Render based on `defaultRenderMode` configuration
 - ` ```tsx preview`: Render as a code block with preview component
