@@ -10,6 +10,7 @@ import {
   Layout as BasicLayout,
   getCustomMDXComponent as basicGetCustomMDXComponent,
   Callout,
+  type HomeHeroProps,
   Link,
   PackageManagerTabs,
 } from '@rspress/core/theme-original';
@@ -42,8 +43,8 @@ function HomeLayout() {
   );
 }
 
-const HomeHero = () => {
-  return <BasicHomeHero image={<HeroInteractive />} />;
+const HomeHero = ({ image: _, ...otherProps }: HomeHeroProps) => {
+  return <BasicHomeHero image={<HeroInteractive />} {...otherProps} />;
 };
 
 const Layout = () => {
