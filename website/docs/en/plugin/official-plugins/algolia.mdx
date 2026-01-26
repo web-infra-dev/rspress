@@ -163,9 +163,8 @@ new Crawler({
       pathsToMatch: ['https://rspress.rs/**'],
       recordExtractor: ({ $, helpers }) => {
         const lvl0 =
-          $('.rspress-nav-menu-item.rspress-nav-menu-item-active')
-            .first()
-            .text() || 'Documentation';
+          $('.rp-nav-menu__item.rp-nav-menu__item--active').first().text() ||
+          'Documentation';
 
         return helpers.docsearch({
           recordProps: {
