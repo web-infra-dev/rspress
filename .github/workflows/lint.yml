@@ -58,7 +58,7 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
           echo "🔧 Running self-healing CLI..."
-          npx @rspress/self-healing-cli fix \
+          node ./packages/self-healing-cli/bin/cli.js fix \
             --log /tmp/lint-output.txt \
             --verify "pnpm run lint" \
             --max-attempts 3 \
