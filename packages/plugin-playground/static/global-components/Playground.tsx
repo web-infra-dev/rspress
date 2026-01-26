@@ -79,9 +79,9 @@ export default function Playground(props: PlaygroundProps) {
     language === 'tsx' || language === 'ts' ? 'typescript' : 'javascript';
 
   const classNames = [
-    'rspress-playground',
-    `rspress-playground-${direction}`,
-    `rspress-playground-reverse-${useReverseLayout ? 'y' : 'n'}`,
+    'rp-playground',
+    `rp-playground-${direction}`,
+    `rp-playground-reverse-${useReverseLayout ? 'y' : 'n'}`,
     'rp-not-doc',
     className,
   ]

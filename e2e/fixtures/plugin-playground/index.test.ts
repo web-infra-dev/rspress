@@ -21,19 +21,19 @@ test.describe('plugin test', async () => {
       waitUntil: 'networkidle',
     });
 
-    const playgroundElements = page.locator('.rspress-playground');
+    const playgroundElements = page.locator('.rp-playground');
     await expect(playgroundElements).toHaveCount(3);
 
     const internalDemoCodePreviewDefault = page
-      .locator('.rspress-playground > .rspress-playground-runner > div')
+      .locator('.rp-playground > .rp-playground-runner > div')
       .getByText('Hello World Internal (default)');
 
     const internalDemoCodePreviewVertical = page
-      .locator('.rspress-playground > .rspress-playground-runner > div')
+      .locator('.rp-playground > .rp-playground-runner > div')
       .getByText('Hello World Internal (vertical)');
 
     const externalDemoCodePreview = page
-      .locator('.rspress-playground > .rspress-playground-runner > div')
+      .locator('.rp-playground > .rp-playground-runner > div')
       .getByText('Hello World External');
 
     await expect(internalDemoCodePreviewDefault).toHaveCount(1);

@@ -215,11 +215,9 @@ class Runner extends Component<RunnerProps, RunnerState> {
     const { error, comp } = this.state;
 
     return (
-      <div className={`rspress-playground-runner ${className}`} {...rest}>
+      <div className={`rp-playground-runner ${className}`} {...rest}>
         {comp}
-        {error && (
-          <pre className="rspress-playground-error">{error.message}</pre>
-        )}
+        {error && <pre className="rp-playground-error">{error.message}</pre>}
       </div>
     );
   }
