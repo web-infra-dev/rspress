@@ -1,0 +1,381 @@
+.container {
+  width: 100%;
+  height: 100%;
+  background-color: var(--rp-c-bg);
+  border: 1px solid var(--rp-c-divider-light);
+  border-radius: var(--rp-radius-large);
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  box-shadow: var(--rp-shadow-3);
+  font-family: var(--rp-font-family-base);
+  user-select: none;
+  transform: rotate(2.5deg) translate(50px, -50px);
+  opacity: 0.9;
+  transition: opacity 0.3s ease-in-out;
+  animation: float 5s ease-in-out infinite;
+
+  @media (max-width: 1000px) {
+    display: none;
+  }
+}
+
+.nav {
+  height: 48px;
+  border-bottom: 1px solid var(--rp-c-divider-light);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 16px;
+  background-color: var(--rp-c-bg);
+}
+
+.navLeft {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-weight: 600;
+  font-size: 14px;
+  color: var(--rp-c-text-1);
+
+  svg,
+  img {
+    width: 20px;
+    height: 20px;
+  }
+}
+
+.navRight {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.fakeSearch {
+  width: 100px;
+  height: 24px;
+  background-color: var(--rp-c-bg-mute);
+  border-radius: var(--rp-radius);
+  margin-right: 8px;
+  display: flex;
+  align-items: center;
+  padding-left: 6px;
+  color: var(--rp-c-text-2);
+
+  svg {
+    width: 14px;
+    height: 14px;
+  }
+}
+
+.navItem {
+  color: var(--rp-c-text-2);
+  font-size: 12px;
+  display: flex;
+  align-items: center;
+
+  &.icon {
+    width: 16px;
+    height: 16px;
+    opacity: 0.7;
+  }
+}
+
+.sun {
+  display: contents;
+
+  :global(.dark) & {
+    display: none;
+  }
+}
+
+.moon {
+  display: none;
+
+  :global(.dark) & {
+    display: contents;
+  }
+}
+
+.body {
+  flex: 1;
+  display: flex;
+  overflow: hidden;
+}
+
+.sidebar {
+  width: 120px;
+  border-right: 1px solid var(--rp-c-divider-light);
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  background-color: var(--rp-c-bg);
+}
+
+.sidebarHeader {
+  height: 12px;
+  border-radius: 4px;
+  background-color: var(--rp-c-bg-mute);
+  margin-bottom: 4px;
+  margin-left: 8px;
+  transform-origin: left;
+  animation: shimmer 1.5s infinite ease-in-out;
+}
+
+.sidebarItem {
+  height: 28px;
+  width: 100%;
+  border-radius: 4px;
+  display: flex;
+  align-items: center;
+  padding-left: 8px;
+
+  & > div {
+    height: 12px;
+    border-radius: 4px;
+    background-color: var(--rp-c-bg-mute);
+    transform-origin: left;
+    animation: shimmer 1.5s infinite ease-in-out;
+    animation-delay: 0.2s;
+  }
+
+  &.active {
+    background-color: var(--rp-c-brand-tint);
+
+    & > div {
+      background-color: var(--rp-c-brand);
+      animation: none;
+    }
+  }
+}
+
+.main {
+  flex: 1;
+  padding: 20px;
+  width: 350px;
+  background-color: var(--rp-c-bg);
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  overflow: hidden;
+  position: relative;
+}
+
+.title {
+  font-size: 20px;
+  font-weight: bold;
+  color: var(--rp-c-text-1);
+  margin-bottom: 8px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+
+  &::before {
+    content: '#';
+    color: var(--rp-c-brand);
+  }
+}
+
+.skeletonText {
+  height: 12px;
+  background-color: var(--rp-c-bg-mute);
+  border-radius: 4px;
+  transform-origin: left;
+  animation: shimmer 1.5s infinite ease-in-out;
+
+  &:nth-of-type(1) {
+    width: 60%;
+    animation-delay: 0.1s;
+  }
+  &:nth-of-type(2) {
+    width: 40%;
+    animation-delay: 0.3s;
+  }
+}
+
+.cards {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  margin-top: 8px;
+
+  :global(.rp-codeblock__title) {
+    font-size: 12px;
+  }
+  :global(.rp-codeblock__content) code {
+    padding: 0 !important;
+  }
+}
+
+.codeContent {
+  padding: 16px;
+  font-size: 12px;
+  font-family: var(--rp-font-family-mono);
+  background-color: var(--shiki-background);
+  color: var(--shiki-foreground);
+  line-height: 1.5;
+  white-space: pre;
+  overflow-x: auto;
+}
+
+/* Syntax Highlighting mocks */
+.keyword {
+  color: var(--shiki-token-keyword);
+}
+.string {
+  color: var(--shiki-token-string);
+}
+.function {
+  color: var(--shiki-token-function);
+}
+.punctuation {
+  color: var(--shiki-token-punctuation);
+}
+.component {
+  color: var(--shiki-token-function);
+} /* Or a separate color if desired */
+
+.constant {
+  color: var(--shiki-token-constant);
+}
+.text0 {
+  color: var(--rp-c-text-1);
+}
+
+.wrapper {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  isolation: isolate;
+
+  &:hover {
+    .container {
+      opacity: 1;
+    }
+
+    .logo {
+      opacity: 0.2;
+    }
+  }
+
+  @media (max-width: 1000px) {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    &:hover {
+      .logo {
+        opacity: 1;
+      }
+    }
+  }
+}
+
+.logo {
+  position: absolute;
+  width: 240px;
+  height: 240px;
+  bottom: 40px;
+  left: -20px;
+  z-index: 10;
+  filter: drop-shadow(0 8px 24px rgba(0, 0, 0, 0.15));
+  transition: opacity 0.3s ease-in-out;
+  animation: floatLogo 6s ease-in-out infinite;
+
+  @media (max-width: 1000px) {
+    position: static;
+    width: 200px;
+    height: 200px;
+    animation: none;
+    margin-bottom: 20px;
+  }
+}
+
+@keyframes breathe {
+  0%,
+  100% {
+    opacity: 0.3;
+    transform: scale(0.8);
+  }
+  50% {
+    opacity: 0.8;
+    transform: scale(1.2);
+  }
+}
+
+@keyframes float {
+  0%,
+  100% {
+    transform: rotate(2.5deg) translate(50px, -50px);
+  }
+  50% {
+    transform: rotate(2.5deg) translate(50px, -60px);
+  }
+}
+
+@keyframes floatLogo {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-10px);
+  }
+}
+
+@keyframes shimmer {
+  0% {
+    opacity: 0.2;
+    transform: scaleX(0.9);
+  }
+  50% {
+    opacity: 1;
+    transform: scaleX(1);
+  }
+  100% {
+    opacity: 0.2;
+    transform: scaleX(0.9);
+  }
+}
+
+.glowLeft {
+  position: absolute;
+  top: 15%;
+  left: -10%;
+  width: 150px;
+  height: 150px;
+  background: var(--rp-c-brand);
+  border-radius: 50%;
+  filter: blur(80px);
+  z-index: -1;
+  animation: breathe 3s ease-in-out infinite;
+  pointer-events: none;
+
+  @media (max-width: 1000px) {
+    display: none;
+  }
+}
+
+.glowRight {
+  position: absolute;
+  bottom: 10%;
+  right: -10%;
+  width: 200px;
+  height: 200px;
+  background: var(
+    --rp-c-brand
+  ); // Fallback if tint not strong enough, or use brand
+  border-radius: 50%;
+  filter: blur(60px);
+  z-index: -1;
+  animation: breathe 3s ease-in-out infinite reverse;
+  pointer-events: none;
+
+  @media (max-width: 1000px) {
+    display: none;
+  }
+}
+
+:global(.rp-home-hero__badge)::before {
+  animation: breathe 3s ease-in-out infinite reverse;
+}

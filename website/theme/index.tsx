@@ -5,10 +5,12 @@ import {
   useLocation,
 } from '@rspress/core/runtime';
 import {
+  HomeHero as BasicHomeHero,
   HomeLayout as BasicHomeLayout,
   Layout as BasicLayout,
   getCustomMDXComponent as basicGetCustomMDXComponent,
   Callout,
+  type HomeHeroProps,
   Link,
   PackageManagerTabs,
 } from '@rspress/core/theme-original';
@@ -21,6 +23,7 @@ import type { PropsWithChildren } from 'react';
 import { CssModificationProvider } from '../docs/components/CssModificationContext';
 import { CssModificationIndicator } from '../docs/components/CssModificationIndicator';
 import { CssStyleSync } from '../docs/components/CssStyleSync';
+import { HeroInteractive } from './components/HeroInteractive';
 import { Tag } from './components/Tag';
 import { ToolStack } from './components/ToolStack';
 
@@ -39,6 +42,10 @@ function HomeLayout() {
     />
   );
 }
+
+const HomeHero = ({ image: _, ...otherProps }: HomeHeroProps) => {
+  return <BasicHomeHero image={<HeroInteractive />} {...otherProps} />;
+};
 
 const Layout = () => {
   return (
@@ -122,4 +129,4 @@ function getCustomMDXComponent() {
 }
 
 export * from '@rspress/core/theme-original';
-export { getCustomMDXComponent, HomeLayout, Layout, Search, Tag };
+export { getCustomMDXComponent, HomeLayout, Layout, Search, Tag, HomeHero };
