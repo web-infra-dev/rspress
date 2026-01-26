@@ -1689,6 +1689,9 @@ importers:
       '@rspress/plugin-llms':
         specifier: workspace:*
         version: link:../packages/plugin-llms
+      '@rspress/plugin-playground':
+        specifier: workspace:*
+        version: link:../packages/plugin-playground
       '@rspress/plugin-preview':
         specifier: workspace:*
         version: link:../packages/plugin-preview
