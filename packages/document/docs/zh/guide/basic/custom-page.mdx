@@ -105,14 +105,14 @@ export default defineConfig({
 
 1. 安装 Tailwind CSS：
 
-<PackageManagerTabs command="install tailwindcss -D" />
+<PackageManagerTabs command="install tailwindcss @tailwindcss/postcss -D" />
 
 2. 创建一个包含 `tailwindcss` 插件的 `postcss.config.js` 文件：
 
 ```js title="postcss.config.js"
 module.exports = {
   plugins: {
-    tailwindcss: {},
+    '@tailwindcss/postcss': {},
   },
 };
 ```
@@ -132,9 +132,7 @@ module.exports = {
 4. 在你的 CSS 样式文件中添加 Tailwind 指令，参考 [自定义样式](#自定义样式)：
 
 ```css title=styles/index.css
-@import 'tailwindcss/base';
-@import 'tailwindcss/components';
-@import 'tailwindcss/utilities';
+@import 'tailwindcss';
 ```
 
 > 请参考官方 [Tailwind CSS 文档](https://tailwindcss.com/docs/installation/using-postcss) 了解最新用法。
