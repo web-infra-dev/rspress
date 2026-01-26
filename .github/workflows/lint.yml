@@ -59,7 +59,7 @@ jobs:
         run: |
           echo "🔧 Running self-healing CLI..."
           npm install -g tsx
-          tsx ./packages/self-healing-cli/bin/cli.js fix \
+          tsx ./packages/self-healing-cli/src/index.ts fix \
             --log /tmp/lint-output.txt \
             --verify "pnpm run lint" \
             --max-attempts 3 \
