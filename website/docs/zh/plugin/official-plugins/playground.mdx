@@ -29,10 +29,10 @@ export default defineConfig({
 
 ### 2. 在 mdx 文件中使用
 
-在 mdx 文件中使用 ` ```jsx playground ` 的语法：
+在 mdx 文件中使用 ` ```tsx playground ` 的语法：
 
 ````mdx title="example.mdx"
-```jsx playground
+```tsx playground
 import { useState } from 'react';
 
 function App() {
@@ -53,7 +53,7 @@ export default App;
 
 它的渲染结果如下：
 
-```jsx playground
+```tsx playground
 import { useState } from 'react';
 
 function App() {
@@ -84,18 +84,18 @@ export default App;
 除了将组件代码写在 mdx 文件的代码块中，你还可以配合[文件代码块](../../guide/use-mdx/code-blocks.mdx#file-code-block)一起使用，将示例代码写在其他文件中。
 
 ````mdx title="example.mdx"
-```jsx file="./_playgroundDemo.jsx" playground
+```tsx file="./_playgroundDemo.jsx" playground
 
 ```
 ````
 
-```jsx title="_playgroundDemo.jsx" file="./_playgroundDemo.jsx"
+```tsx title="_playgroundDemo.jsx" file="./_playgroundDemo.jsx"
 
 ```
 
 它的渲染结果如下：
 
-```jsx file="./_playgroundDemo.jsx" playground
+```tsx file="./_playgroundDemo.jsx" playground
 
 ```
 
@@ -110,7 +110,7 @@ export default App;
 语法：
 
 ````mdx title="example.mdx"
-```jsx playground direction=horizontal
+```tsx playground direction=horizontal
 
 ```
 ````
@@ -122,14 +122,14 @@ export default App;
 语法：
 
 ````mdx title="example.mdx"
-```jsx playground direction=vertical
+```tsx playground direction=vertical
 
 ```
 ````
 
 渲染结果：
 
-```jsx playground direction=vertical
+```tsx playground direction=vertical
 import { useState } from 'react';
 
 function App() {
@@ -183,9 +183,9 @@ interface PlaygroundOptions {
 
 配置未显式声明 `pure` 或 `playground` 标识符的代码块的默认渲染行为。
 
-- ` ```jsx pure`：渲染为普通代码块
-- ` ```jsx `：根据 `defaultRenderMode` 配置渲染
-- ` ```jsx playground`：渲染为可编辑的 Playground 组件
+- ` ```tsx pure`：渲染为普通代码块
+- ` ```tsx `：根据 `defaultRenderMode` 配置渲染
+- ` ```tsx playground`：渲染为可编辑的 Playground 组件
 
 :::warning
 不建议修改默认值，否则可能影响与 `@rspress/plugin-preview` 的连用。

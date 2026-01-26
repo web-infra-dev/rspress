@@ -29,10 +29,10 @@ export default defineConfig({
 
 ### 2. Use in mdx files
 
-Use the ` ```jsx playground ` syntax in mdx files:
+Use the ` ```tsx playground ` syntax in mdx files:
 
 ````mdx title="example.mdx"
-```jsx playground
+```tsx playground
 import { useState } from 'react';
 
 function App() {
@@ -53,7 +53,7 @@ export default App;
 
 The rendering result is as follows:
 
-```jsx playground
+```tsx playground
 import { useState } from 'react';
 
 function App() {
@@ -84,18 +84,18 @@ export default App;
 In addition to writing component code in the code block of the mdx file, you can also use it with [File Code Block](../../guide/use-mdx/code-blocks.mdx#file-code-block) to write the example code in other files.
 
 ````mdx title="example.mdx"
-```jsx file="./_playgroundDemo.jsx" playground
+```tsx file="./_playgroundDemo.jsx" playground
 
 ```
 ````
 
-```jsx title="_playgroundDemo.jsx" file="./_playgroundDemo.jsx"
+```tsx title="_playgroundDemo.jsx" file="./_playgroundDemo.jsx"
 
 ```
 
 The rendering result is as follows:
 
-```jsx file="./_playgroundDemo.jsx" playground
+```tsx file="./_playgroundDemo.jsx" playground
 
 ```
 
@@ -110,7 +110,7 @@ Horizontal layout is the default mode, with the editor and preview area arranged
 Syntax:
 
 ````mdx title="example.mdx"
-```jsx playground direction=horizontal
+```tsx playground direction=horizontal
 
 ```
 ````
@@ -122,14 +122,14 @@ Vertical layout mode, with the editor and preview area arranged top to bottom.
 Syntax:
 
 ````mdx title="example.mdx"
-```jsx playground direction=vertical
+```tsx playground direction=vertical
 
 ```
 ````
 
 Rendering result:
 
-```jsx playground direction=vertical
+```tsx playground direction=vertical
 import { useState } from 'react';
 
 function App() {
@@ -183,9 +183,9 @@ interface PlaygroundOptions {
 
 Configures the default rendering behavior for code blocks that don't explicitly declare `pure` or `playground`.
 
-- ` ```jsx pure`: Render as a regular code block
-- ` ```jsx `: Render based on `defaultRenderMode` configuration
-- ` ```jsx playground`: Render as an editable Playground component
+- ` ```tsx pure`: Render as a regular code block
+- ` ```tsx `: Render based on `defaultRenderMode` configuration
+- ` ```tsx playground`: Render as an editable Playground component
 
 :::warning
 It is not recommended to modify the default value, as it may affect the combined usage with `@rspress/plugin-preview`.
