@@ -32,7 +32,7 @@ test.describe('plugin-playground-preview combined test', async () => {
     await expect(playgroundElements).toHaveCount(1);
 
     const playgroundContent = page
-      .locator('.rspress-playground')
+      .locator('.rspress-playground .rspress-playground-runner')
       .getByText('Hello World Playground');
     await expect(playgroundContent).toBeVisible();
 
@@ -41,7 +41,7 @@ test.describe('plugin-playground-preview combined test', async () => {
     await expect(previewElements).toHaveCount(1);
 
     const previewContent = page
-      .locator('.rspress-preview')
+      .locator('.rp-preview .rp-preview--internal__card__content')
       .getByText('Hello World Preview');
     await expect(previewContent).toBeVisible();
   });
