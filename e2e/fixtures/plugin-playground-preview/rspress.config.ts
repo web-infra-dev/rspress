@@ -5,8 +5,5 @@ import { pluginPreview } from '@rspress/plugin-preview';
 
 export default defineConfig({
   root: path.join(__dirname, 'doc'),
-  plugins: [
-    pluginPreview(),
-    pluginPlayground({ defaultRenderMode: 'playground' }),
-  ],
+  plugins: [pluginPreview(), pluginPlayground()],
 });

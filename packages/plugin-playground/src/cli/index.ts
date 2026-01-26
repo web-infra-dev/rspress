@@ -71,10 +71,8 @@ export function pluginPlayground(
 
   return {
     name: '@rspress/plugin-playground',
-    config(config, { removePlugin }) {
+    config(config) {
       config.markdown = config.markdown || {};
-      // The preview and playground plugin are mutually conflicting.
-      removePlugin('@rspress/plugin-preview');
       return config;
     },
     async routeGenerated(routes: RouteMeta[]) {

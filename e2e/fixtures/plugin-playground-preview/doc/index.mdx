@@ -1,16 +1,28 @@
 # Guide
 
 Test plugin-playground and plugin-preview combined usage.
-When both plugins are configured, plugin-playground should take precedence.
+Both plugins default to `pure` mode, users specify `playground` or `preview` via meta.
+
+## Pure Code Block (default)
+
+```jsx
+export default function PureComponent() {
+  return <div>Pure Code Block</div>;
+}
+```
 
 ## Playground Demo
 
-```jsx
-export default function HelloWorld() {
+```jsx playground
+export default function PlaygroundComponent() {
   return <div>Hello World Playground</div>;
 }
 ```
 
-```jsx file="./component.jsx"
+## Preview Demo
 
+```jsx preview
+export default function PreviewComponent() {
+  return <div>Hello World Preview</div>;
+}
 ```

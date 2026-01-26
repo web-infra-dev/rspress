@@ -16,32 +16,33 @@ test.describe('plugin-playground-preview combined test', async () => {
     }
   });
 
-  test('Should render playground elements when both plugins are configured', async ({
-    page,
-  }) => {
+  test('Both plugins work together with explicit meta', async ({ page }) => {
     await page.goto(`http://localhost:${appPort}/`, {
       waitUntil: 'networkidle',
     });
 
-    // plugin-playground should take precedence and remove plugin-preview
-    // So we should see playground elements, not preview elements
+    // Pure code block (default) - should render as normal code block
+    const pureCodeBlock = page.locator('pre code').filter({
+      hasText: 'PureComponent',
+    });
+    await expect(pureCodeBlock).toHaveCount(1);
+
+    // Playground element - should render with playground meta
     const playgroundElements = page.locator('.rspress-playground');
-    await expect(playgroundElements).toHaveCount(2);
+    await expect(playgroundElements).toHaveCount(1);
 
-    // Verify playground renders correctly
-    const internalDemoCodePreview = page
-      .locator('.rspress-playground > .rspress-playground-runner > div')
+    const playgroundContent = page
+      .locator('.rspress-playground')
       .getByText('Hello World Playground');
+    await expect(playgroundContent).toBeVisible();
 
-    const externalDemoCodePreview = page
-      .locator('.rspress-playground > .rspress-playground-runner > div')
-      .getByText('Hello World External');
+    // Preview element - should render with preview meta
+    const previewElements = page.locator('.rspress-preview');
+    await expect(previewElements).toHaveCount(1);
 
-    await expect(internalDemoCodePreview).toHaveCount(1);
-    await expect(externalDemoCodePreview).toHaveCount(1);
-
-    // Verify preview elements are not rendered (plugin-preview was removed)
-    const previewElements = page.locator('.rp-preview--internal__card');
-    await expect(previewElements).toHaveCount(0);
+    const previewContent = page
+      .locator('.rspress-preview')
+      .getByText('Hello World Preview');
+    await expect(previewContent).toBeVisible();
   });
 });
