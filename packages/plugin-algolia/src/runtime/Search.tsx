@@ -46,7 +46,7 @@ function Search({ locales = {}, docSearchProps }: SearchProps) {
         translations={translations}
         maxResultsPerGroup={20}
         navigator={{
-          navigate({ itemUrl }) {
+          navigate({ itemUrl }: { itemUrl: string }) {
             navigate(itemUrl);
           },
         }}
