@@ -164,9 +164,11 @@ new Crawler({
       indexName: 'doc_search_rspress_pages',
       pathsToMatch: ['https://rspress.rs/**'],
       recordExtractor: ({ $, helpers }) => {
-        const lvl0 =
-          $('.rp-nav-menu__item.rp-nav-menu__item--active').first().text() ||
-          'Documentation';
+        const $activeNavItem = $('.rp-nav-menu__item.rp-nav-menu__item--active')
+          .first()
+          .clone();
+        $activeNavItem.find('.rp-badge').remove();
+        const lvl0 = $activeNavItem.text().trim() || 'Documentation';
 
         return helpers.docsearch({
           recordProps: {
