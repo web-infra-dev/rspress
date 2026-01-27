@@ -103,13 +103,14 @@ test.describe('i18n test', async () => {
     await expect(sidebarGroups).toHaveCount(1);
   });
 
-  test('Should render appearance switch button', async ({ page }) => {
+  test('Should not render appearance switch button when darkMode is false', async ({
+    page,
+  }) => {
     await page.goto(`http://localhost:${appPort}/guide/basic/quick-start`, {
       waitUntil: 'networkidle',
     });
     const button = page.locator('.rp-switch-appearance');
-    await expect(button).toHaveCount(1);
-    await expect(button).toBeVisible();
+    await expect(button).toHaveCount(0);
   });
 
   test('Should not 404 after redirecting in first visit', async ({ page }) => {

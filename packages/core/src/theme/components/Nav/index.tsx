@@ -1,4 +1,4 @@
-import { useNav } from '@rspress/core/runtime';
+import { useNav, useSite } from '@rspress/core/runtime';
 import {
   NavHamburger,
   NavTitle,
@@ -27,6 +27,8 @@ export function Nav(props: NavProps) {
     navTitle,
   } = props;
   const navList = useNav();
+  const { site } = useSite();
+  const hasAppearanceSwitch = site.themeConfig.darkMode !== false;
 
   return (
     <header className="rp-nav">
@@ -48,7 +50,7 @@ export function Nav(props: NavProps) {
           <NavMenuDivider />
           <NavLangs />
           <NavVersions />
-          <SwitchAppearance />
+          {hasAppearanceSwitch && <SwitchAppearance />}
           <SocialLinks />
         </div>
 
