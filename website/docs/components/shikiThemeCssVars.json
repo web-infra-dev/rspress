@@ -8,7 +8,7 @@
     "--shiki-token-keyword": "#d73a49",
     "--shiki-token-parameter": "#e36209",
     "--shiki-token-function": "#6f42c1",
-    "--shiki-token-string-expression": "#005cc5",
+    "--shiki-token-string-expression": "#032f62",
     "--shiki-token-punctuation": "#6a737d",
     "--shiki-token-link": "#032f62"
   },
@@ -21,7 +21,7 @@
     "--shiki-token-keyword": "#f97583",
     "--shiki-token-parameter": "#ffab70",
     "--shiki-token-function": "#b392f0",
-    "--shiki-token-string-expression": "#79b8ff",
+    "--shiki-token-string-expression": "#9ecbff",
     "--shiki-token-punctuation": "#6a737d",
     "--shiki-token-link": "#dbedff"
   },
@@ -34,7 +34,7 @@
     "--shiki-token-keyword": "#a0111f",
     "--shiki-token-parameter": "#702c00",
     "--shiki-token-function": "#622cbc",
-    "--shiki-token-string-expression": "#a0111f",
+    "--shiki-token-string-expression": "#032563",
     "--shiki-token-punctuation": "#66707b",
     "--shiki-token-link": "#032563"
   },
@@ -47,7 +47,7 @@
     "--shiki-token-keyword": "#ff9492",
     "--shiki-token-parameter": "#ffb757",
     "--shiki-token-function": "#dbb7ff",
-    "--shiki-token-string-expression": "#ff9492",
+    "--shiki-token-string-expression": "#addcff",
     "--shiki-token-punctuation": "#bdc4cc",
     "--shiki-token-link": "#addcff"
   },
@@ -60,7 +60,7 @@
     "--shiki-token-keyword": "#0000ff",
     "--shiki-token-parameter": "#001080",
     "--shiki-token-function": "#795E26",
-    "--shiki-token-string-expression": "#0000ff",
+    "--shiki-token-string-expression": "#a31515",
     "--shiki-token-punctuation": "#267f99",
     "--shiki-token-link": "#a31515"
   },
@@ -73,7 +73,7 @@
     "--shiki-token-keyword": "#569cd6",
     "--shiki-token-parameter": "#9CDCFE",
     "--shiki-token-function": "#DCDCAA",
-    "--shiki-token-string-expression": "#569cd6",
+    "--shiki-token-string-expression": "#ce9178",
     "--shiki-token-punctuation": "#4EC9B0",
     "--shiki-token-link": "#ce9178"
   },
@@ -86,7 +86,7 @@
     "--shiki-token-keyword": "#A626A4",
     "--shiki-token-parameter": "#E45649",
     "--shiki-token-function": "#4078F2",
-    "--shiki-token-string-expression": "#CA1243",
+    "--shiki-token-string-expression": "#50A14F",
     "--shiki-token-punctuation": "#383A42",
     "--shiki-token-link": "#4078F2"
   },
@@ -99,7 +99,7 @@
     "--shiki-token-keyword": "#c678dd",
     "--shiki-token-parameter": "#e06c75",
     "--shiki-token-function": "#61afef",
-    "--shiki-token-string-expression": "#c678dd",
+    "--shiki-token-string-expression": "#98c379",
     "--shiki-token-punctuation": "#abb2bf",
     "--shiki-token-link": "#61afef"
   },
@@ -112,7 +112,7 @@
     "--shiki-token-keyword": "#81A1C1",
     "--shiki-token-parameter": "#D8DEE9",
     "--shiki-token-function": "#88C0D0",
-    "--shiki-token-string-expression": "#ECEFF4",
+    "--shiki-token-string-expression": "#A3BE8C",
     "--shiki-token-punctuation": "#ECEFF4",
     "--shiki-token-link": "#A3BE8C"
   },
@@ -125,7 +125,7 @@
     "--shiki-token-keyword": "#89DDFF",
     "--shiki-token-parameter": "#EEFFFF",
     "--shiki-token-function": "#82AAFF",
-    "--shiki-token-string-expression": "#89DDFF",
+    "--shiki-token-string-expression": "#C3E88D",
     "--shiki-token-punctuation": "#89DDFF",
     "--shiki-token-link": "#C3E88D"
   },
@@ -138,7 +138,7 @@
     "--shiki-token-keyword": "#89DDFF",
     "--shiki-token-parameter": "#EEFFFF",
     "--shiki-token-function": "#82AAFF",
-    "--shiki-token-string-expression": "#89DDFF",
+    "--shiki-token-string-expression": "#C3E88D",
     "--shiki-token-punctuation": "#89DDFF",
     "--shiki-token-link": "#C3E88D"
   },
@@ -151,7 +151,7 @@
     "--shiki-token-keyword": "#89DDFF",
     "--shiki-token-parameter": "#babed8",
     "--shiki-token-function": "#82AAFF",
-    "--shiki-token-string-expression": "#89DDFF",
+    "--shiki-token-string-expression": "#C3E88D",
     "--shiki-token-punctuation": "#89DDFF",
     "--shiki-token-link": "#C3E88D"
   },
@@ -164,7 +164,7 @@
     "--shiki-token-keyword": "#1e754f",
     "--shiki-token-parameter": "#b07d48",
     "--shiki-token-function": "#59873a",
-    "--shiki-token-string-expression": "#1e754f",
+    "--shiki-token-string-expression": "#b56959",
     "--shiki-token-punctuation": "#999999",
     "--shiki-token-link": "#b56959"
   },
@@ -177,7 +177,7 @@
     "--shiki-token-keyword": "#4d9375",
     "--shiki-token-parameter": "#bd976a",
     "--shiki-token-function": "#80a665",
-    "--shiki-token-string-expression": "#4d9375",
+    "--shiki-token-string-expression": "#c98a7d",
     "--shiki-token-punctuation": "#666666",
     "--shiki-token-link": "#c98a7d"
   },
@@ -190,7 +190,7 @@
     "--shiki-token-keyword": "#c74ded",
     "--shiki-token-parameter": "#00e8c6",
     "--shiki-token-function": "#FFE66D",
-    "--shiki-token-string-expression": "#f92672",
+    "--shiki-token-string-expression": "#96E072",
     "--shiki-token-punctuation": "#f92672",
     "--shiki-token-link": "#96E072"
   },
@@ -203,7 +203,7 @@
     "--shiki-token-keyword": "#ff8f40",
     "--shiki-token-parameter": "#bfbdb6",
     "--shiki-token-function": "#ffb454",
-    "--shiki-token-string-expression": "#ff8f40",
+    "--shiki-token-string-expression": "#aad94c",
     "--shiki-token-punctuation": "#bfbdb6b3",
     "--shiki-token-link": "#39bae6"
   }

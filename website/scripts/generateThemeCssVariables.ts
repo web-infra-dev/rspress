@@ -58,20 +58,22 @@ const tokenScopes: Record<string, string[]> = {
     'meta.function-call.generic',
   ],
   '--shiki-token-string-expression': [
-    // Prioritize template expression punctuation over generic meta.embedded
+    // String-related scopes for template expressions
+    'string',
+    'string variable',
+    // Escape characters within strings
+    'constant.character.escape',
+    'string.regexp constant.character.escape',
+    // Template expression content
+    'meta.template.expression',
+    'meta.embedded',
+    // Template expression punctuation (${} markers) - lower priority
     'punctuation.definition.template-expression.begin',
     'punctuation.definition.template-expression.end',
     'punctuation.definition.template-expression',
     'punctuation.section.embedded.begin',
     'punctuation.section.embedded.end',
     'punctuation.section.embedded',
-    'string variable',
-    'constant.character.escape',
-    'string.regexp constant.character.escape',
-    // meta.embedded and meta.template.expression are often set to foreground color
-    // so they should be lower priority
-    'meta.template.expression',
-    'meta.embedded',
   ],
   '--shiki-token-punctuation': [
     // Generic punctuation scopes - many themes define these
