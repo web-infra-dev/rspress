@@ -328,7 +328,9 @@ async function createInternalBuildConfig(
       bundlerChain(chain, { CHAIN_ID, environment }) {
         const isSsg = environment.name === 'node';
         const isSsgMd = environment.name === 'node_md';
-        const jsModuleRule = chain.module.rule(CHAIN_ID.RULE.JS);
+        const jsModuleRule = chain.module
+          .rule(CHAIN_ID.RULE.JS)
+          .oneOfs.get(CHAIN_ID.ONE_OF.JS_MAIN);
 
         const swcLoaderOptions = jsModuleRule
           .use(CHAIN_ID.USE.SWC)

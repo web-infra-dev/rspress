@@ -34,7 +34,7 @@
     "@microsoft/api-extractor": "^7.55.2",
     "@rslib/core": "0.19.2",
     "@types/node": "^22.8.1",
-    "rsbuild-plugin-publint": "^0.3.3",
+    "rsbuild-plugin-publint": "^0.3.4",
     "typescript": "^5.8.2"
   },
   "engines": {

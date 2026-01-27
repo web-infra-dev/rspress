@@ -1,9 +1,9 @@
 import fs from 'node:fs/promises';
 
 export default async () => {
-  await fs.readFile(__filename, 'utf-8');
+  await fs.readFile(import.meta.filename, 'utf-8');
   return {
-    root: __dirname,
+    root: import.meta.dirname,
     title: 'my-title',
   };
 };
