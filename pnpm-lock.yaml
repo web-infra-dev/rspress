@@ -1139,7 +1139,7 @@ importers:
         specifier: ^4.5.3
         version: 4.5.3(@types/react@19.2.8)(react-dom@19.2.3(react@19.2.3))(react@19.2.3)(search-insights@2.17.3)
       '@rspress/core':
-        specifier: workspace:^2.0.0-rc.7
+        specifier: workspace:^2.0.0-rc.8
         version: link:../core
     devDependencies:
       '@microsoft/api-extractor':
@@ -1176,7 +1176,7 @@ importers:
   packages/plugin-api-docgen:
     dependencies:
       '@rspress/core':
-        specifier: workspace:^2.0.0-rc.7
+        specifier: workspace:^2.0.0-rc.8
         version: link:../core
       chokidar:
         specifier: ^3.6.0
@@ -1243,7 +1243,7 @@ importers:
   packages/plugin-client-redirects:
     dependencies:
       '@rspress/core':
-        specifier: workspace:^2.0.0-rc.7
+        specifier: workspace:^2.0.0-rc.8
         version: link:../core
     devDependencies:
       '@microsoft/api-extractor':
@@ -1277,7 +1277,7 @@ importers:
   packages/plugin-llms:
     dependencies:
       '@rspress/core':
-        specifier: workspace:^2.0.0-rc.7
+        specifier: workspace:^2.0.0-rc.8
         version: link:../core
       remark-mdx:
         specifier: ^3.1.1
@@ -1344,7 +1344,7 @@ importers:
         specifier: ^0.2.0
         version: 0.2.0
       '@rspress/core':
-        specifier: workspace:^2.0.0-rc.7
+        specifier: workspace:^2.0.0-rc.8
         version: link:../core
       remark-gfm:
         specifier: ^4.0.1
@@ -1423,7 +1423,7 @@ importers:
         specifier: ~1.4.3
         version: 1.4.3(@rsbuild/core@2.0.0-alpha.2(@module-federation/runtime-tools@0.22.0)(core-js@3.47.0))
       '@rspress/core':
-        specifier: workspace:^2.0.0-rc.7
+        specifier: workspace:^2.0.0-rc.8
         version: link:../core
       qrcode.react:
         specifier: ^4.2.0
@@ -1475,7 +1475,7 @@ importers:
   packages/plugin-rss:
     dependencies:
       '@rspress/core':
-        specifier: workspace:^2.0.0-rc.7
+        specifier: workspace:^2.0.0-rc.8
         version: link:../core
       feed:
         specifier: ^4.2.2
@@ -1503,7 +1503,7 @@ importers:
   packages/plugin-sitemap:
     dependencies:
       '@rspress/core':
-        specifier: workspace:^2.0.0-rc.7
+        specifier: workspace:^2.0.0-rc.8
         version: link:../core
     devDependencies:
       '@microsoft/api-extractor':
@@ -1525,7 +1525,7 @@ importers:
         specifier: ^1.7.4
         version: 1.7.4
       '@rspress/core':
-        specifier: workspace:^2.0.0-rc.7
+        specifier: workspace:^2.0.0-rc.8
         version: link:../core
       '@shikijs/twoslash':
         specifier: ^3.21.0
@@ -1580,7 +1580,7 @@ importers:
   packages/plugin-typedoc:
     dependencies:
       '@rspress/core':
-        specifier: workspace:^2.0.0-rc.7
+        specifier: workspace:^2.0.0-rc.8
         version: link:../core
       typedoc:
         specifier: 0.28.16
