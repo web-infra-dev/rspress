@@ -4,7 +4,6 @@ title: Rspress
 titleSuffix: '基于 Rsbuild 的静态站点生成器'
 
 hero:
-  badge: Rspress V2 即将发布! 🚀
   name: Rspress
   text: |
     快如闪电的
