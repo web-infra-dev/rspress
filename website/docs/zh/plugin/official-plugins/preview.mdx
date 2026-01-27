@@ -174,6 +174,28 @@ iframe 预览模式中的代码有单独的编译环境和运行环境。
 
 ![](https://lf3-static.bytednsdoc.com/obj/eden-cn/uhbfnupenuhf/rspress/demo-preview-mobile-fixed.png)
 
+:::tip preEntry 技巧
+
+你可以通过 `iframeOptions.builderConfig.source.preEntry` 在 iframe 预览环境中注入全局脚本或样式，以下是一些常见用法：
+
+- **移动端 touch 事件模拟**：在 PC 端模拟移动端触摸事件，可以引入 [@vant/touch-emulator](https://www.npmjs.com/package/@vant/touch-emulator)。
+
+- **处理暗黑模式**：注入 `MutationObserver` 监听 `html.dark` 变化，同步到 `body.dark` 或进行其他暗黑模式处理。
+
+```ts title="rspress.config.ts"
+pluginPreview({
+  iframeOptions: {
+    builderConfig: {
+      source: {
+        preEntry: ['@vant/touch-emulator', './src/dark-mode-observer.js'],
+      },
+    },
+  },
+});
+```
+
+:::
+
 ## 配置
 
 该插件接受一个配置对象，类型定义如下：
