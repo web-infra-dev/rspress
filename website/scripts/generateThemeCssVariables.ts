@@ -40,6 +40,8 @@ const tokenScopes: Record<string, string[]> = {
     'storage.modifier',
   ],
   '--shiki-token-parameter': [
+    // Generic variable scope first - many themes define this with a distinct color
+    'variable',
     'variable.parameter',
     'variable.parameter.function',
     'variable.parameter.function-call',
@@ -56,28 +58,41 @@ const tokenScopes: Record<string, string[]> = {
     'meta.function-call.generic',
   ],
   '--shiki-token-string-expression': [
-    'string variable',
-    'meta.embedded',
-    'meta.template.expression',
+    // Prioritize template expression punctuation over generic meta.embedded
+    'punctuation.definition.template-expression.begin',
+    'punctuation.definition.template-expression.end',
     'punctuation.definition.template-expression',
+    'punctuation.section.embedded.begin',
+    'punctuation.section.embedded.end',
     'punctuation.section.embedded',
+    'string variable',
+    'constant.character.escape',
     'string.regexp constant.character.escape',
+    // meta.embedded and meta.template.expression are often set to foreground color
+    // so they should be lower priority
+    'meta.template.expression',
+    'meta.embedded',
   ],
   '--shiki-token-punctuation': [
+    // Generic punctuation scopes - many themes define these
     'punctuation.separator.delimiter',
     'punctuation.terminator.statement',
     'punctuation.accessor',
-    'punctuation.bracket',
     'punctuation.separator',
     'punctuation.terminator',
+    'punctuation.bracket',
+    'punctuation',
     'meta.brace',
     'meta.bracket',
   ],
   '--shiki-token-link': [
-    'markup.underline',
-    'markup.underline.link',
-    'constant.other.reference.link',
+    // Prioritize link-specific scopes
+    'string.other.link.title',
+    'string.other.link.description',
     'string.other.link',
+    'markup.underline.link',
+    'markup.underline',
+    'constant.other.reference.link',
     'markup.inline.raw',
     'textLink.activeForeground',
     'textLink.foreground',
@@ -126,19 +141,29 @@ function getColorForScope(
         if (s === targetScope) {
           score = priorityBonus + 500 + s.length;
         }
-        // Target scope is more specific (e.g., target "keyword.control" matches theme "keyword")
-        // The target scope starts with the theme scope followed by a dot
-        // This is preferred because the theme defines a general rule that applies to our specific scope
-        else if (targetScope.startsWith(`${s}.`)) {
-          score = priorityBonus + 300 + s.length;
-        }
-        // Theme scope is more specific (e.g., target "keyword" matches theme "keyword.control")
-        // The theme scope starts with the target scope followed by a dot
-        // This is less preferred because the theme's rule is for a more specific case
-        // Penalize based on how many extra levels of specificity the theme scope has
+        // Theme scope is more specific (e.g., target "keyword" matches theme "keyword.control.ts")
+        // This means the theme has a specific rule that extends our target scope
+        // Give higher priority to theme scopes that are closer to the target (fewer extra levels)
         else if (s.startsWith(`${targetScope}.`)) {
-          const extraLevels = s.length - targetScope.length;
-          score = priorityBonus + 100 - extraLevels;
+          // Count extra scope levels: "keyword.control.ts" - "keyword" = 2 extra levels
+          const extraPart = s.slice(targetScope.length + 1);
+          const extraLevels = extraPart.split('.').length;
+          // Base score 400, minus heavy penalty for extra specificity levels
+          // This prevents language-specific scopes from being prioritized
+          score = priorityBonus + 400 - extraLevels * 50;
+        }
+        // Target scope is more specific (e.g., target "keyword.control" matches theme "keyword")
+        // The theme defines a general rule that applies to our specific scope
+        // This is less preferred because we want specific rules when available
+        // Only allow this if the theme scope is a direct parent (not too general)
+        else if (targetScope.startsWith(`${s}.`)) {
+          // Count how many levels more specific the target is
+          const extraPart = targetScope.slice(s.length + 1);
+          const extraLevels = extraPart.split('.').length;
+          // Only match if not too many levels apart (avoid "string" matching "string.other.link.title")
+          if (extraLevels <= 2) {
+            score = priorityBonus + 200 + s.length - extraLevels * 20;
+          }
         }
 
         if (score > bestMatchScore) {
