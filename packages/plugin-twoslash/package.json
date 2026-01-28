@@ -29,7 +29,7 @@
     "reset": "rimraf ./**/node_modules"
   },
   "dependencies": {
-    "@floating-ui/dom": "^1.7.4",
+    "@floating-ui/dom": "^1.7.5",
     "@shikijs/twoslash": "^3.21.0",
     "mdast-util-from-markdown": "^2.0.2",
     "mdast-util-gfm": "^3.1.0",
@@ -39,13 +39,13 @@
   },
   "devDependencies": {
     "@microsoft/api-extractor": "^7.55.2",
-    "@rslib/core": "0.19.2",
+    "@rslib/core": "0.19.3",
     "@rspress/config": "workspace:*",
     "@shikijs/types": "^3.21.0",
     "@types/hast": "^3.0.4",
     "@types/mdast": "^4.0.4",
-    "@types/react": "^19.2.8",
-    "react": "^19.2.3",
+    "@types/react": "^19.2.10",
+    "react": "^19.2.4",
     "rsbuild-plugin-publint": "^0.3.4",
     "typescript": "^5.8.2"
   },
