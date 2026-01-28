@@ -10,7 +10,7 @@ This document will help you migrate from Rspress 1.x to Rspress V2. We recommend
 
 - [ ] **Node.js** >= 20.9.0
 - [ ] **Dependencies**: `rspress` → `@rspress/core`, remove `@rspress/shared`
-- [ ] **Import paths**: `rspress/runtime` → `@rspress/core/runtime`
+- [ ] **Import paths**: `rspress/runtime` → `@rspress/core/runtime`, `rspress/theme` → `@rspress/core/theme`
 - [ ] **Custom themes**: Change default exports to named exports, use `@rspress/core/theme-original`
 - [ ] **Top-level navigation**: `_meta.json` → `_nav.json` (top-level only)
 - [ ] **Code highlighting**: Prism → Shiki, line highlight syntax `{1,3-4}` requires transformer config
