@@ -174,6 +174,28 @@ Rendering result:
 
 ![](https://lf3-static.bytednsdoc.com/obj/eden-cn/uhbfnupenuhf/rspress/demo-preview-mobile-fixed.png)
 
+:::tip preEntry Tips
+
+You can inject global scripts or styles into the iframe preview environment using `iframeOptions.builderConfig.source.preEntry`. Here are some common use cases:
+
+- **Mobile touch event emulation**: Emulate mobile touch events on PC by importing [@vant/touch-emulator](https://www.npmjs.com/package/@vant/touch-emulator).
+
+- **Dark mode handling**: Inject a `MutationObserver` to watch for `html.dark` class changes, then sync to `body.dark` or perform other dark mode processing.
+
+```ts title="rspress.config.ts"
+pluginPreview({
+  iframeOptions: {
+    builderConfig: {
+      source: {
+        preEntry: ['@vant/touch-emulator', './src/dark-mode-observer.js'],
+      },
+    },
+  },
+});
+```
+
+:::
+
 ## Options
 
 This plugin accepts a configuration object with the following type definition:

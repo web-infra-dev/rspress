@@ -85,7 +85,7 @@ export function pluginPreview(options?: Options): RspressPlugin {
           entry: await generateEntry(globalDemos, framework, customEntry),
           preEntry: [
             join(STATIC_DIR, 'iframe', 'entry.css'),
-            ...(builderConfig.source?.preEntry ?? []),
+            ...[builderConfig.source?.preEntry ?? []].flat(),
           ],
         },
         html: {
