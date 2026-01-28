@@ -10,9 +10,9 @@
   "dependencies": {
     "@rspress/core": "workspace:*",
     "@rspress/plugin-playground": "workspace:*",
-    "react": "^19.2.3",
-    "react-dom": "^19.2.3",
-    "solid-js": "^1.9.10"
+    "react": "^19.2.4",
+    "react-dom": "^19.2.4",
+    "solid-js": "^1.9.11"
   },
   "devDependencies": {
     "@types/node": "^22.8.1"

@@ -41,14 +41,14 @@
     "@rsbuild/core": "2.0.0-alpha.4",
     "@shikijs/rehype": "^3.21.0",
     "gray-matter": "4.0.3",
-    "lodash-es": "^4.17.22",
+    "lodash-es": "^4.17.23",
     "unified": "^11.0.5"
   },
   "devDependencies": {
-    "@rslib/core": "0.19.2",
+    "@rslib/core": "0.19.3",
     "@types/lodash-es": "^4.17.12",
     "@types/node": "^22.8.1",
-    "@types/react": "^19.2.8",
+    "@types/react": "^19.2.10",
     "mdast-util-mdx-jsx": "^3.2.0",
     "medium-zoom": "1.1.0",
     "rimraf": "^6.1.2",
