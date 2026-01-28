@@ -25,7 +25,7 @@ describe('Should load config file', () => {
     );
 
     expect(config).toMatchObject({
-      root: normalizePath(fixtureDir),
+      root: fixtureDir,
       title: TEST_TITLE,
     });
   });

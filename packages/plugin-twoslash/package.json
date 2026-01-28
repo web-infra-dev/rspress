@@ -46,7 +46,7 @@
     "@types/mdast": "^4.0.4",
     "@types/react": "^19.2.8",
     "react": "^19.2.3",
-    "rsbuild-plugin-publint": "^0.3.3",
+    "rsbuild-plugin-publint": "^0.3.4",
     "typescript": "^5.8.2"
   },
   "peerDependencies": {

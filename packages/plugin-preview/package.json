@@ -28,8 +28,8 @@
     "reset": "rimraf ./**/node_modules"
   },
   "dependencies": {
-    "@rsbuild/core": "2.0.0-alpha.2",
-    "@rsbuild/plugin-babel": "~1.0.7",
+    "@rsbuild/core": "2.0.0-alpha.4",
+    "@rsbuild/plugin-babel": "~1.1.0",
     "@rsbuild/plugin-react": "~1.4.3",
     "qrcode.react": "^4.2.0"
   },
@@ -44,7 +44,7 @@
     "react": "^19.2.3",
     "react-dom": "^19.2.3",
     "react-router-dom": "^7.12.0",
-    "rsbuild-plugin-publint": "^0.3.3",
+    "rsbuild-plugin-publint": "^0.3.4",
     "typescript": "^5.8.2",
     "unified": "^11.0.5",
     "unist-util-visit": "^5.0.0"
