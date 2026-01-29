@@ -75,6 +75,12 @@ export async function normalizeThemeConfig(
     if (!sidebar) {
       return {};
     }
+    
+    // Preserve accordion config if present
+    if ('accordion' in sidebar && typeof sidebar.accordion === 'boolean') {
+      normalizedSidebar.accordion = sidebar.accordion;
+    }
+    
     const normalizeSidebarItem = (
       item: SidebarGroup | SidebarItem | SidebarDivider | SidebarSectionHeader,
     ):
@@ -122,11 +128,17 @@ export async function normalizeThemeConfig(
 
     const normalizeSidebar = (sidebar: Sidebar) => {
       Object.keys(sidebar).forEach(key => {
+        // Skip the accordion property itself
+        if (key === 'accordion') {
+          return;
+        }
         const value = sidebar[key];
-        normalizedSidebar[key] = value.map(normalizeSidebarItem) as (
-          | NormalizedSidebarGroup
-          | SidebarItem
-        )[];
+        if (Array.isArray(value)) {
+          normalizedSidebar[key] = value.map(normalizeSidebarItem) as (
+            | NormalizedSidebarGroup
+            | SidebarItem
+          )[];
+        }
       });
     };
 

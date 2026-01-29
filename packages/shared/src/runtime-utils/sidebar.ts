@@ -1,4 +1,4 @@
-import type { NavItemWithLink, NormalizedSidebar } from '../types';
+import type { NavItemWithLink, NormalizedSidebar, SidebarData } from '../types';
 import { normalizeHref } from './utils';
 
 /**
@@ -35,7 +35,7 @@ export const matchSidebar = (
 export const getSidebarDataGroup = (
   sidebar: NormalizedSidebar,
   currentPathname: string,
-): NormalizedSidebar[string] => {
+): SidebarData => {
   /**
    * why sort?
    * {
@@ -48,11 +48,15 @@ export const getSidebarDataGroup = (
    *   ],
    * }
    */
-  const navRoutes = Object.keys(sidebar).sort((a, b) => b.length - a.length);
+  const navRoutes = Object.keys(sidebar)
+    .filter(key => key !== 'accordion')
+    .sort((a, b) => b.length - a.length);
   for (const name of navRoutes) {
     if (matchSidebar(name, currentPathname)) {
       const sidebarGroup = sidebar[name];
-      return sidebarGroup;
+      if (Array.isArray(sidebarGroup)) {
+        return sidebarGroup;
+      }
     }
   }
   return [];

@@ -7,7 +7,7 @@ import {
   type SidebarItem,
   type SidebarSectionHeader,
 } from '@rspress/shared';
-import { useLayoutEffect, useMemo, useState } from 'react';
+import React, { useLayoutEffect, useMemo, useState } from 'react';
 import { useLocation } from 'react-router-dom';
 import { useActiveMatcher } from './useActiveMatcher';
 import { useLocaleSiteData } from './useLocaleSiteData';
@@ -34,11 +34,15 @@ export const getSidebarDataGroup = (
    *   ],
    * }
    */
-  const navRoutes = Object.keys(sidebar).sort((a, b) => b.length - a.length);
+  const navRoutes = Object.keys(sidebar)
+    .filter(key => key !== 'accordion')
+    .sort((a, b) => b.length - a.length);
   for (const name of navRoutes) {
     if (matchSidebar(name, currentPathname)) {
       const sidebarGroup = sidebar[name];
-      return sidebarGroup;
+      if (Array.isArray(sidebarGroup)) {
+        return sidebarGroup;
+      }
     }
   }
   return [];
@@ -118,9 +122,11 @@ export function useSidebarDynamic(): [
   React.Dispatch<React.SetStateAction<SidebarData>>,
 ] {
   const rawSidebarData = useSidebar();
+  const { sidebar } = useLocaleSiteData();
   const activeMatcher = useActiveMatcher();
+  const isAccordionMode = sidebar?.accordion === true;
 
-  const [sidebar, setSidebar] = useState<SidebarData>(() =>
+  const [sidebarState, setSidebarState] = useState<SidebarData>(() =>
     createInitialSidebar(
       // do not modify singleton global sidebar on server - #2910
       structuredClone(rawSidebarData),
@@ -129,8 +135,49 @@ export function useSidebarDynamic(): [
   );
 
   useLayoutEffect(() => {
-    setSidebar(createInitialSidebar(rawSidebarData, activeMatcher));
+    setSidebarState(createInitialSidebar(rawSidebarData, activeMatcher));
   }, [activeMatcher, rawSidebarData]);
 
-  return [sidebar, setSidebar];
+  // Wrap setSidebarState to implement accordion behavior
+  const setSidebar = React.useCallback<React.Dispatch<React.SetStateAction<SidebarData>>>(
+    (action) => {
+      setSidebarState((prevSidebar) => {
+        const newSidebar = typeof action === 'function' ? action(prevSidebar) : action;
+        
+        // If accordion mode is enabled, ensure only one top-level section is expanded
+        if (isAccordionMode) {
+          // Find which top-level item was just toggled to expanded
+          let expandedIndex = -1;
+          for (let i = 0; i < newSidebar.length; i++) {
+            const item = newSidebar[i];
+            const prevItem = prevSidebar[i];
+            if (
+              'collapsed' in item &&
+              'collapsed' in prevItem &&
+              item.collapsed === false &&
+              prevItem.collapsed === true
+            ) {
+              expandedIndex = i;
+              break;
+            }
+          }
+          
+          // If we found a newly expanded item, collapse all others at the same level
+          if (expandedIndex !== -1) {
+            return newSidebar.map((item, index) => {
+              if (index !== expandedIndex && 'collapsed' in item) {
+                return { ...item, collapsed: true };
+              }
+              return item;
+            });
+          }
+        }
+        
+        return newSidebar;
+      });
+    },
+    [isAccordionMode]
+  );
+
+  return [sidebarState, setSidebar];
 }
