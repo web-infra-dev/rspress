@@ -103,3 +103,17 @@ tsx and html syntax can make it difficult to extract static information, such as
 It is more recommended to use `.mdx` files to write document content and use `.tsx` files to write interactive dynamic content.
 
 :::
+
+## React version requirements
+
+| Dependency         | Allowed Range          | Default Version | Notes                                     |
+| ------------------ | ---------------------- | --------------- | ----------------------------------------- |
+| `react`            | `^18.0.0 \|\| ^19.0.0` | 19              | React 17 is no longer supported           |
+| `react-dom`        | `^18.0.0 \|\| ^19.0.0` | 19              | Keep consistent with react version        |
+| `react-router-dom` | `^6.0.0 \|\| ^7.0.0`   | 7               | Uses project version if already installed |
+
+:::tip
+
+If `react`, `react-dom`, or `react-router-dom` is already installed in your project, Rspress will prioritize using the version installed in your project rather than the built-in default version.
+
+:::
