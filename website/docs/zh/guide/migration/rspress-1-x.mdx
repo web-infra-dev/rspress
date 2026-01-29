@@ -8,7 +8,7 @@ description: 从 Rspress 1.x 升级到 V2 的完整迁移指南，包括包名�
 
 ## 快速检查清单
 
-- [ ] **Node.js** ^20.19.0 || >=22.12.0
+- [ ] **Node.js** >= 20.9.0
 - [ ] **依赖变更**：`rspress` → `@rspress/core`，移除 `@rspress/shared`
 - [ ] **导入路径**：`rspress/runtime` → `@rspress/core/runtime`，`rspress/theme` → `@rspress/core/theme`
 - [ ] **自定义主题**：默认导出改为命名导出，使用 `@rspress/core/theme-original`
@@ -23,7 +23,7 @@ description: 从 Rspress 1.x 升级到 V2 的完整迁移指南，包括包名�
 
 ### Node.js 版本
 
-Rspress V2 不再支持 Node.js 16 和 18，请升级到 **Node.js ^20.19.0 || >=22.12.0**。推荐使用 Node.js 22 LTS 版本。
+Rspress V2 不再支持 Node.js 16 和 18，请升级到 **Node.js >= 20.9.0**。推荐使用 Node.js 22 LTS 版本。
 
 ### 上游依赖版本
 
@@ -166,20 +166,6 @@ import { PackageManagerTabs } from '@theme';
   }
 }
 ```
-
-:::tip
-
-如果你遇到 `@theme` 或 `@rspress/core/theme` 缺少导出的报错，大概率是因为 theme 文件夹下覆盖主题时没有使用 `@rspress/core/theme-original`，造成循环引用：
-
-```txt
-× ESModulesLinkingError: export 'SvgWrapper' (imported as 'SvgWrapper') was not found in '@theme' (possible exports: HomeLayout, Layout, Search, Tag, getCustomMDXComponent)
-
-× ESModulesLinkingError: export 'Banner' (imported as 'Banner') was not found in '@rspress/core/theme' (possible exports: HomeLayout, Layout, Search, Tag, getCustomMDXComponent)
-```
-
-请确保在 `theme` 文件夹中使用 `@rspress/core/theme-original` 并正确导出所有组件。
-
-:::
 
 ## [重要] Shiki 代码高亮替代 prism
 
