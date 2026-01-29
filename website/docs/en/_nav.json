@@ -21,6 +21,11 @@
     "activeMatch": "/api/"
   },
   {
+    "text": "Blog",
+    "link": "/blog/",
+    "activeMatch": "/blog/"
+  },
+  {
     "text": "Version",
     "items": [
       {

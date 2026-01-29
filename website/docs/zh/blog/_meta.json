@@ -1,0 +1,12 @@
+[
+  {
+    "type": "section-header",
+    "label": "总览"
+  },
+  "index",
+  {
+    "type": "section-header",
+    "label": "博客"
+  },
+  "rspress-v2"
+]
