@@ -6,6 +6,7 @@ import type {
   SidebarData,
 } from '@rspress/core';
 import { useSidebarDynamic } from '@rspress/core/runtime';
+import { useLocaleSiteData } from '@rspress/core/runtime';
 import { SidebarDivider } from './SidebarDivider';
 import { SidebarGroup } from './SidebarGroup';
 import { SidebarItem } from './SidebarItem';
@@ -18,18 +19,26 @@ import {
 
 export function Sidebar() {
   const [sidebarData, setSidebarData] = useSidebarDynamic();
+  const { sidebar } = useLocaleSiteData();
+  const isAccordionMode = sidebar?.accordion === true;
 
   return (
-    <SidebarList sidebarData={sidebarData} setSidebarData={setSidebarData} />
+    <SidebarList 
+      sidebarData={sidebarData} 
+      setSidebarData={setSidebarData} 
+      isAccordionMode={isAccordionMode}
+    />
   );
 }
 
 export function SidebarList({
   sidebarData,
   setSidebarData,
+  isAccordionMode,
 }: {
   sidebarData: SidebarData;
   setSidebarData: React.Dispatch<React.SetStateAction<SidebarData>>;
+  isAccordionMode?: boolean;
 }) {
   return (
     <>
@@ -40,6 +49,7 @@ export function SidebarList({
             item={item}
             index={index}
             setSidebarData={setSidebarData}
+            isAccordionMode={isAccordionMode}
           />
         );
       })}
@@ -55,8 +65,9 @@ function SidebarListItem(props: {
     | ISidebarSectionHeader;
   index: number;
   setSidebarData: React.Dispatch<React.SetStateAction<SidebarData>>;
+  isAccordionMode?: boolean;
 }) {
-  const { item, index, setSidebarData } = props;
+  const { item, index, setSidebarData, isAccordionMode } = props;
   if (isSidebarDivider(item)) {
     return (
       <SidebarDivider key={index} depth={0} dividerType={item.dividerType} />
@@ -81,6 +92,7 @@ function SidebarListItem(props: {
         item={item}
         depth={0}
         setSidebarData={setSidebarData}
+        isAccordionMode={isAccordionMode}
       />
     );
   }

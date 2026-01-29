@@ -1,0 +1,10 @@
+{
+  "name": "sidebar-accordion",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "dev": "rspress dev",
+    "build": "rspress build",
+    "preview": "rspress preview"
+  }
+}

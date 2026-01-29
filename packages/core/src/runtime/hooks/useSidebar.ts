@@ -122,11 +122,9 @@ export function useSidebarDynamic(): [
   React.Dispatch<React.SetStateAction<SidebarData>>,
 ] {
   const rawSidebarData = useSidebar();
-  const { sidebar } = useLocaleSiteData();
   const activeMatcher = useActiveMatcher();
-  const isAccordionMode = sidebar?.accordion === true;
 
-  const [sidebarState, setSidebarState] = useState<SidebarData>(() =>
+  const [sidebar, setSidebar] = useState<SidebarData>(() =>
     createInitialSidebar(
       // do not modify singleton global sidebar on server - #2910
       structuredClone(rawSidebarData),
@@ -135,49 +133,8 @@ export function useSidebarDynamic(): [
   );
 
   useLayoutEffect(() => {
-    setSidebarState(createInitialSidebar(rawSidebarData, activeMatcher));
+    setSidebar(createInitialSidebar(rawSidebarData, activeMatcher));
   }, [activeMatcher, rawSidebarData]);
 
-  // Wrap setSidebarState to implement accordion behavior
-  const setSidebar = React.useCallback<React.Dispatch<React.SetStateAction<SidebarData>>>(
-    (action) => {
-      setSidebarState((prevSidebar) => {
-        const newSidebar = typeof action === 'function' ? action(prevSidebar) : action;
-        
-        // If accordion mode is enabled, ensure only one top-level section is expanded
-        if (isAccordionMode) {
-          // Find which top-level item was just toggled to expanded
-          let expandedIndex = -1;
-          for (let i = 0; i < newSidebar.length; i++) {
-            const item = newSidebar[i];
-            const prevItem = prevSidebar[i];
-            if (
-              'collapsed' in item &&
-              'collapsed' in prevItem &&
-              item.collapsed === false &&
-              prevItem.collapsed === true
-            ) {
-              expandedIndex = i;
-              break;
-            }
-          }
-          
-          // If we found a newly expanded item, collapse all others at the same level
-          if (expandedIndex !== -1) {
-            return newSidebar.map((item, index) => {
-              if (index !== expandedIndex && 'collapsed' in item) {
-                return { ...item, collapsed: true };
-              }
-              return item;
-            });
-          }
-        }
-        
-        return newSidebar;
-      });
-    },
-    [isAccordionMode]
-  );
-
-  return [sidebarState, setSidebar];
+  return [sidebar, setSidebar];
 }
