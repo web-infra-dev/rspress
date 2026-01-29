@@ -115,7 +115,11 @@ import { Tag } from '@rspress/core/theme';
 ```
 
 <div style={{ display: 'flex', justifyContent: 'center' }}>
-  <img src="./imgs/tag-component.png" width="600" />
+  <img
+    src="./imgs/tag-component.png"
+    width="600"
+    alt="Tag 组件在侧边栏中的显示效果"
+  />
 </div>
 
 #### 内置多语言支持
@@ -136,13 +140,17 @@ Rspress 现在将 [llms.txt](https://llmstxt.org/) 生成能力集成到 core �
 为了解决这个问题，Rspress 2.0 引入了 [SSG-MD](/zh/guide/basic/ssg-md) 特性。这是一个全新的功能，它类似于 [静态站点生成（SSG）](/zh/guide/basic/ssg)，但不同之处在于它将你的页面渲染为 Markdown 文件，而非 HTML 文件，并生成 [llms.txt](https://llmstxt.org/) 及 llms-full.txt 相关文件。
 
 <div style={{ display: 'flex', justifyContent: 'center' }}>
-  <img src="./imgs/ssg-md-overview.jpg" width="50%" />
+  <img
+    src="./imgs/ssg-md-overview.jpg"
+    width="50%"
+    alt="SSG-MD 功能概览示意图"
+  />
 </div>
 
 相比于将 HTML 转化为 Markdown 等传统方式，SSG-MD 在渲染期间拥有更好的信息源，比如 React 虚拟 DOM，因此拥有更好的静态信息质量和灵活性。
 
 <div style={{ display: 'flex', justifyContent: 'center' }}>
-  <img src="./imgs/ssg-md-flow.jpg" width="600" />
+  <img src="./imgs/ssg-md-flow.jpg" width="600" alt="SSG-MD 渲染流程示意图" />
 </div>
 
 启用方式非常简单：
@@ -169,11 +177,11 @@ doc_build
 
 若想对自定义组件中的渲染内容进行定制增强，你也可以通过环境变量来进行控制：
 
-```javascript
+```tsx
 export function Tab({ label }: { label: string }) {
   if (import.meta.env.SSG_MD) {
     // SSG-MD 模式下输出纯文本描述
-    return <>{"**Tab: ${label}**"}</>;
+    return <>{`**Tab: ${label}**`}</>;
   }
   // 正常渲染交互式组件
   return <div className="tab">{label}</div>;
@@ -220,7 +228,11 @@ Rspress 2.0 底层由 Rsbuild 和 Rspack 2.0-alpha 驱动，同时默认开启�
 lazyCompilation 会在 dev 模式下按需编译，即只有当你访问某个页面时，该页面才会被编译，大幅提升了开发启动速度，甚至实现毫秒级的冷启动。Rspress 同时实现了路由的 preload 策略，当鼠标悬停在链接上时会预先加载目标路由页面，搭配 lazyCompilation 实现无损的开发体验。
 
 <div style={{ display: 'flex', justifyContent: 'center' }}>
-  <img src="./imgs/lazy-compilation.gif" width="600" />
+  <img
+    src="./imgs/lazy-compilation.gif"
+    width="600"
+    alt="lazyCompilation 按需编译效果演示"
+  />
 </div>
 
 #### 持久化缓存
@@ -246,7 +258,7 @@ export default defineConfig({
 ```
 
 <div style={{ display: 'flex', justifyContent: 'center' }}>
-  <img src="./imgs/dead-link-check.png" width="600" />
+  <img src="./imgs/dead-link-check.png" width="600" alt="死链检查功能示例" />
 </div>
 
 #### 文件代码块
