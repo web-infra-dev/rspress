@@ -82,6 +82,8 @@ export interface rsbuildPluginLlmsOptions {
     nav: Nav;
     lang: string;
   }[];
+  versionsRef: { current: string[] };
+  defaultVersionRef: { current: string };
   rspressPluginOptions: Options;
   index?: number;
 }

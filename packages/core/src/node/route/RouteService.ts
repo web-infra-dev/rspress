@@ -332,4 +332,12 @@ ${routeMeta
   getDefaultLang() {
     return this.#defaultLang;
   }
+
+  getVersions() {
+    return this.#versions;
+  }
+
+  getDefaultVersion() {
+    return this.#defaultVersion;
+  }
 }

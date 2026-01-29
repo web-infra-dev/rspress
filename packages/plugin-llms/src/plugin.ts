@@ -2,6 +2,7 @@ import path from 'node:path';
 import type { RsbuildPlugin } from '@rsbuild/core';
 import type {
   Nav,
+  NavItem,
   NavItemWithLink,
   PageIndexInfo,
   RouteMeta,
@@ -26,6 +27,30 @@ import type {
   rsbuildPluginLlmsOptions,
 } from './types';
 
+function resolveNavForVersion(
+  nav: { nav: Nav; lang: string }[],
+  version: string,
+  defaultVersion: string,
+): (NavItemWithLink & { lang: string })[] {
+  return nav
+    .flatMap(({ nav, lang }) => {
+      let navArray: NavItem[];
+      if (Array.isArray(nav)) {
+        navArray = nav;
+      } else {
+        // nav is { [version]: NavItem[] }
+        navArray =
+          (nav as Record<string, NavItem[]>)[version] ??
+          (nav as Record<string, NavItem[]>)[defaultVersion] ??
+          [];
+      }
+      return navArray.map(
+        item => ({ ...item, lang }) as NavItemWithLink & { lang: string },
+      );
+    })
+    .filter(i => i.activeMatch || i.link);
+}
+
 const rsbuildPluginLlms = ({
   disableSSGRef,
   baseRef,
@@ -37,6 +62,8 @@ const rsbuildPluginLlms = ({
   sidebar,
   routeServiceRef,
   nav,
+  versionsRef,
+  defaultVersionRef,
   rspressPluginOptions,
   index = 0,
 }: rsbuildPluginLlmsOptions): RsbuildPlugin => ({
@@ -59,6 +86,9 @@ const rsbuildPluginLlms = ({
 
     api.onBeforeBuild(async () => {
       const disableSSG = disableSSGRef.current;
+      const versions = versionsRef.current;
+      const defaultVersion = defaultVersionRef.current;
+      const isMultiVersion = versions.length > 0;
 
       const newPageDataList = mergeRouteMetaWithPageData(
         routes,
@@ -68,75 +98,91 @@ const rsbuildPluginLlms = ({
         exclude,
       );
 
-      // TODO: currently we do not support multi version
-      const navList: (NavItemWithLink & { lang: string })[] = Array.isArray(nav)
-        ? (
-            nav
-              .map(i => {
-                const nav = ((i.nav as any).default ||
-                  i.nav) as NavItemWithLink[];
-                const lang = i.lang;
-                return nav.map(i => {
-                  return {
-                    ...i,
-                    lang,
-                  };
-                });
-              })
-              .flat() as unknown as (NavItemWithLink & { lang: string })[]
-          ).filter(i => i.activeMatch || i.link)
-        : [];
+      const versionList = isMultiVersion ? versions : [''];
 
-      const others: PageIndexInfo[] = [];
+      for (const version of versionList) {
+        const navList = resolveNavForVersion(nav, version, defaultVersion);
 
-      const pageArray: PageIndexInfo[][] = new Array(navList.length)
-        .fill(0)
-        .map(() => []);
+        // Filter pages for this version
+        const versionPages = isMultiVersion
+          ? new Map(
+              [...newPageDataList.entries()].filter(
+                ([, pageData]) => pageData.version === version,
+              ),
+            )
+          : newPageDataList;
 
-      newPageDataList.forEach(pageData => {
-        const { routePath, lang } = pageData;
+        const others: PageIndexInfo[] = [];
+        const pageArray: PageIndexInfo[][] = new Array(navList.length)
+          .fill(0)
+          .map(() => []);
 
-        for (let i = 0; i < pageArray.length; i++) {
-          const pageArrayItem = pageArray[i];
-          const navItem = navList[i];
-          if (
-            lang === navItem.lang &&
-            new RegExp(navItem.activeMatch ?? navItem.link).test(routePath)
-          ) {
-            pageArrayItem.push(pageData);
-            return;
+        versionPages.forEach(pageData => {
+          const { routePath, lang } = pageData;
+
+          for (let i = 0; i < pageArray.length; i++) {
+            const pageArrayItem = pageArray[i];
+            const navItem = navList[i];
+            if (
+              lang === navItem.lang &&
+              new RegExp(navItem.activeMatch ?? navItem.link).test(routePath)
+            ) {
+              pageArrayItem.push(pageData);
+              return;
+            }
           }
+          others.push(pageData);
+        });
+
+        for (const array of pageArray) {
+          organizeBySidebar(sidebar, array);
         }
-        others.push(pageData);
-      });
 
-      for (const array of pageArray) {
-        organizeBySidebar(sidebar, array);
+        const versionPrefix =
+          isMultiVersion && version !== defaultVersion ? `${version}/` : '';
+
+        if (llmsTxt) {
+          const name = `${versionPrefix}${llmsTxt.name}`;
+          const llmsTxtContent = generateLlmsTxt(
+            pageArray,
+            navList,
+            others,
+            llmsTxt,
+            titleRef.current,
+            descriptionRef.current,
+            baseRef.current,
+          );
+          api.processAssets(
+            {
+              environments: disableSSG ? ['web'] : ['node'],
+              stage: 'additional',
+            },
+            async ({ compilation, sources }) => {
+              const source = new sources.RawSource(llmsTxtContent);
+              compilation.emitAsset(name, source);
+            },
+          );
+        }
+
+        if (llmsFullTxt) {
+          const name = `${versionPrefix}${llmsFullTxt.name}`;
+          const llmsFullTxtContent = generateLlmsFullTxt(
+            pageArray,
+            navList,
+            others,
+            baseRef.current,
+          );
+          api.processAssets(
+            { targets: disableSSG ? ['web'] : ['node'], stage: 'additional' },
+            async ({ compilation, sources }) => {
+              const source = new sources.RawSource(llmsFullTxtContent);
+              compilation.emitAsset(name, source);
+            },
+          );
+        }
       }
 
-      if (llmsTxt) {
-        const { name } = llmsTxt;
-        const llmsTxtContent = generateLlmsTxt(
-          pageArray,
-          navList,
-          others,
-          llmsTxt,
-          titleRef.current,
-          descriptionRef.current,
-          baseRef.current,
-        );
-        api.processAssets(
-          {
-            environments: disableSSG ? ['web'] : ['node'],
-            stage: 'additional',
-          },
-          async ({ compilation, sources }) => {
-            const source = new sources.RawSource(llmsTxtContent);
-            compilation.emitAsset(name, source);
-          },
-        );
-      }
-
+      // md files are not version-scoped (they map 1:1 with routes which already have version in path)
       const mdContents: Record<string, string> = {};
       await Promise.all(
         [...newPageDataList.values()].map(async pageData => {
@@ -159,7 +205,6 @@ const rsbuildPluginLlms = ({
                 : [],
             );
           } catch (e) {
-            // normalizeMdFile might have some edge cases, fallback to no flatten and plain mdx
             logger.debug('normalizeMdFile failed', pageData.routePath, e);
             mdContent = content;
           }
@@ -181,23 +226,6 @@ const rsbuildPluginLlms = ({
                 compilation.emitAsset(`.${outFilePath}`, source);
               });
             }
-          },
-        );
-      }
-
-      if (llmsFullTxt) {
-        const { name } = llmsFullTxt;
-        const llmsFullTxtContent = generateLlmsFullTxt(
-          pageArray,
-          navList,
-          others,
-          baseRef.current,
-        );
-        api.processAssets(
-          { targets: disableSSG ? ['web'] : ['node'], stage: 'additional' },
-          async ({ compilation, sources }) => {
-            const source = new sources.RawSource(llmsFullTxtContent);
-            compilation.emitAsset(name, source);
           },
         );
       }
@@ -321,7 +349,7 @@ function getDefaultOptions(
       llmsFullTxt: {
         name: `${l}/llms-full.txt`,
       },
-      include({ page }) {
+      include({ page }: { page: PageIndexInfo }) {
         return page.lang === l;
       },
     };
@@ -348,6 +376,8 @@ export function pluginLlms(options?: RspressPluginLlmsOptions): RspressPlugin {
   const routeServiceRef: { current: RouteService | undefined } = {
     current: undefined,
   };
+  const versionsRef: { current: string[] } = { current: [] };
+  const defaultVersionRef: { current: string } = { current: '' };
 
   return {
     name: '@rspress/plugin-llms',
@@ -398,6 +428,8 @@ export function pluginLlms(options?: RspressPluginLlmsOptions): RspressPlugin {
                 sidebar,
                 routeServiceRef,
                 nav,
+                versionsRef,
+                defaultVersionRef,
                 baseRef,
                 disableSSGRef,
                 rspressPluginOptions: item,
@@ -414,6 +446,8 @@ export function pluginLlms(options?: RspressPluginLlmsOptions): RspressPlugin {
                 sidebar,
                 routeServiceRef,
                 nav,
+                versionsRef,
+                defaultVersionRef,
                 baseRef,
                 disableSSGRef,
                 rspressPluginOptions: mergedOptions,
@@ -454,6 +488,11 @@ export function pluginLlms(options?: RspressPluginLlmsOptions): RspressPlugin {
       langRef.current = config.lang ?? '';
       baseRef.current = config.base ?? '/';
       docDirectoryRef.current = config.root ?? 'docs';
+
+      if (config.multiVersion) {
+        versionsRef.current = config.multiVersion.versions || [];
+        defaultVersionRef.current = config.multiVersion.default || '';
+      }
     },
   };
 }
