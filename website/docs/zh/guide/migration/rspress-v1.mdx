@@ -8,7 +8,7 @@ description: 从 Rspress 1.x 升级到 V2 的完整迁移指南，包括包名�
 
 ## 快速检查清单
 
-- [ ] **Node.js** >= 20.9.0
+- [ ] **Node.js** ^20.19.0 || >=22.12.0
 - [ ] **依赖变更**：`rspress` → `@rspress/core`，移除 `@rspress/shared`
 - [ ] **导入路径**：`rspress/runtime` → `@rspress/core/runtime`
 - [ ] **自定义主题**：默认导出改为命名导出，使用 `@rspress/core/theme-original`
@@ -23,7 +23,7 @@ description: 从 Rspress 1.x 升级到 V2 的完整迁移指南，包括包名�
 
 ### Node.js 版本
 
-Rspress V2 不再支持 Node.js 16 和 18，请升级到 **Node.js >= 20.9.0**。推荐使用 Node.js 22 LTS 版本。
+Rspress V2 不再支持 Node.js 16 和 18，请升级到 **Node.js ^20.19.0 || >=22.12.0**。推荐使用 Node.js 22 LTS 版本。
 
 ### 上游依赖版本
 
