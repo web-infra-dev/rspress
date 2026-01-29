@@ -24,15 +24,15 @@ Rspress 是基于 [Rsbuild](https://rsbuild.rs/) 的静态站点生成器，是�
 
 Rspress 1.x 已经解决了文档站框架编译性能的问题，但仍存在一些其他问题影响着作为一个文档开发工具的核心体验。2.0 版本将不止于对编译性能的追求，也聚焦于文档站体验的其他方面：
 
-- **主题样式**：Rspress 2.0 提供了一套**更美观的默认主题**，并按照定制化程度从低到高，依次提供了[CSS 变量](https://baidu.com)、[BEM 类名](https://bytedance.larkoffice.com/wiki/LF2ywbcebiWxWokCQl1c01Ohn1e#FMstdaZHSoTFGQxEmYvcHiGInih)、[ESM 重导出覆盖](https://bytedance.larkoffice.com/wiki/LF2ywbcebiWxWokCQl1c01Ohn1e#PUU8dkB78oduSdxZsgnclCdInQh)、[组件 eject](https://bytedance.larkoffice.com/wiki/LF2ywbcebiWxWokCQl1c01Ohn1e#NK5JdBAYwouzfvxKqMfcoDsKnhS) 四种主题定制方式。解决了 1.x 在主题定制上缺乏稳定 API 的问题。
+- **主题样式**：一套**更美观的默认主题**，并提供了多种 [自定义主题](/zh/guide/basic/custom-theme) 方式，解决了 1.x 在主题定制上缺乏稳定 API 的问题。
 
-- **AI-native**：文档不仅服务于人类读者，也需要被 Agent 更好地理解和使用。Rspress 2.0 在 core 中集成了 [llms.txt](https://llmstxt.org/) 生成和从 SSG 衍生出的 **SSG-MD** 功能，可以生成 llms.txt 和高质量的 Markdown 渲染内容被 Agent 读取。
+- **AI-native**：文档不仅服务于人类读者，也需要被 Agent 更好地理解和使用。Rspress 现在内置了 [llms.txt](https://llmstxt.org/) 生成和从 SSG 衍生出的 [**SSG-MD**](/zh/guide/basic/ssg-md) 功能，生成高质量的 Markdown 渲染内容被 Agent 读取。
 
-- **按需编译，瞬间启动**：Rspress 2.0 默认启用 [lazyCompilation](https://rspack.rs/guide/features/lazy-compilation)，配合链接 hover 时对资源的 preload 功能，仅在访问特定路由时构建所需文件，实现无论项目规模多大，dev 也可**瞬间启动**，解决了 1.x 在大型文档站点（1000+ 页面）中启动速度较慢的问题。
+- **按需编译，瞬间启动**：默认启用 [lazyCompilation](https://rspack.rs/guide/features/lazy-compilation)，配合链接 hover 时对资源的 preload 功能，仅在访问特定路由时构建所需文件，实现无论项目规模多大，dev 也可**瞬间启动**。
 
-- **Shiki 代码高亮**：默认集成 Shiki，在**构建时完成语法高亮**，不会随着编程语言的增多导致页面包体增大，且支持主题切换和 transformer 扩展，比如 [@rspress/plugin-twoslash](/plugin/official-plugins/twoslash)，带来更丰富的代码块展示效果。
+- **Shiki 代码高亮**：默认集成 Shiki，在**构建时完成语法高亮**，支持主题切换、transformer 扩展，比如 [@rspress/plugin-twoslash](/plugin/official-plugins/twoslash)，带来更丰富的代码块展示效果。
 
-- **文档开发体验**：优化 `_nav.json`、`_meta.json` 等自动化导航文件的 HMR，并新增 [json schema](/zh/guide/basic/auto-nav-sidebar#json-schema-类型提示) 用于 ide 内的代码提示；默认开启死链检查功能；新增文件代码块语法，支持引用外部文件；[@rspress/plugin-preview](/plugin/official-plugins/preview) 和 [@rspress/plugin-playground](https://rspress.rs/plugin/official-plugins/playground) 支持同时使用等。
+- **文档开发体验**：优化 `_nav.json`、`_meta.json` 等文件的 HMR 并新增 [json schema](/zh/guide/basic/auto-nav-sidebar#json-schema-类型提示) 用于 IDE 内的代码提示；默认开启死链检查功能；新增文件代码块语法，支持引用外部文件；[@rspress/plugin-preview](/plugin/official-plugins/preview) 和 [@rspress/plugin-playground](https://rspress.rs/plugin/official-plugins/playground) 支持同时使用等。
 
 这是一次对现有架构的全面升级，下面我将介绍 Rspress 2.0 和它的 **全新主题、高质量 llms.txt 生成、集成 Shiki、按需编译**等重要功能。
 
@@ -124,7 +124,7 @@ Rspress 未来会支持更多内置语言，如果你有兴趣，请参考 [这�
 
 ### llms.txt：SSG-MD 渲染高质量的 Markdown 内容
 
-Rspress 现在将 llms.txt 生成能力集成到 core 中，并实现了全新的 SSG-MD（Static Site Generation to Markdown，静态站点 Markdown 生成）能力。
+Rspress 现在将 [llms.txt](https://llmstxt.org/) 生成能力集成到 core 中，并实现了全新的 SSG-MD（Static Site Generation to Markdown，静态站点 Markdown 生成）能力。
 
 在基于 React 动态渲染的前端框架中，往往存在静态信息难以提取的问题，Rspress 也遇到了相同的问题。Rspress 允许用户通过 [MDX 片段](/zh/guide/use-mdx/components)、React 组件、Hooks 以及 TSX 路由等动态特性来增强文档表现力。但这些动态内容在转换为 Markdown 文本时会面临以下问题：
 
@@ -249,7 +249,7 @@ export default defineConfig({
 
 #### 文件代码块
 
-你可以使用 `file="./path/to/file"` 属性来引用外部文件作为代码块的内容，将示例代码放在单独的文件中维护，详细信息可参阅 [文件代码块](/zh/guide/use-mdx/code-blocks#file-code-block)。
+你可以使用 `file="./path/to/file"` 属性来引用外部文件作为代码块的内容，将示例代码放在单独的文件中维护。
 
 ````mdx
 ```ts file="./_demo.ts"
@@ -263,9 +263,11 @@ export default defineConfig({
 ```
 ````
 
+> 详见 [文件代码块](/zh/guide/use-mdx/code-blocks#file-code-block)
+
 #### preview 更灵活的 meta 用法
 
-2.0 中 `@rspress/plugin-preview` 调整了使用方式，改为了更灵活的 meta 属性使用方式，也可以搭配上文中的文件代码块使用。
+[@rspress/plugin-preview](/plugin/official-plugins/preview) 现在基于 meta 属性使用，更加灵活，也可以配合文件代码块。
 
 下面是一个使用 iframe 预览代码块的示例：
 
@@ -295,7 +297,7 @@ function App() {
 export default App;
 ```
 
-并且 [@rspress/plugin-playground](/plugin/official-plugins/playground) 现在支持和 plugin-preview 一起使用，通过 meta 属性切换即可，```tsx playground \`
+并且 [@rspress/plugin-playground](/plugin/official-plugins/playground) 现在支持和 plugin-preview 一起使用，通过 meta 属性切换即可，例如 ` ```tsx playground `
 
 #### 支持若干配置文件的 HMR
 
@@ -406,12 +408,16 @@ Rspress 将 `rspress`、`@rspress/runtime`、`@rspress/shared`、`@rspress/theme
 
 ## 下一步
 
-Rspress 2.0 的发布只是一个新的起点。我们将继续推进生态集成，与 Rslib、Rstest 更深度地结合，提供前端项目和组件库项目的一体化开发体验；探索 AI 与文档更深度集成的可能，如智能问答、自动摘要等；完善 SSG-MD 使其稳定并更加易用。
+Rspress 2.0 的发布只是一个新的起点。本次发布后，Rspress 将持续迭代：
+
+- **推进生态集成**：与 Rslib、Rstest 更深度地结合，提供前端项目和组件库项目的一体化开发体验。
+
+- **探索 AI 与文档更深度集成**：如智能问答、自动摘要等；完善 SSG-MD 使其稳定并更加易用。
 
 感谢所有为 Rspress 做出贡献的开发者和用户！如果你在使用过程中遇到问题或有任何建议，欢迎在 [GitHub Issues](https://github.com/web-infra-dev/rspress/issues) 中反馈。
 
-立即使用和升级到 Rspress 2.0，体验全新的文档开发之旅！
+立即使用或升级到 Rspress 2.0，体验全新的文档开发之旅！
 
-```bash
-npm create rspress@latest
-```
+import { PackageManagerTabs } from '@rspress/core/theme';
+
+<PackageManagerTabs command="create rspress@latest" />
