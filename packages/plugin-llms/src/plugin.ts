@@ -125,7 +125,9 @@ const rsbuildPluginLlms = ({
             const navItem = navList[i];
             if (
               lang === navItem.lang &&
-              new RegExp(navItem.activeMatch ?? navItem.link).test(routePath)
+              new RegExp(
+                (navItem.activeMatch ?? navItem.link).replace(/\.html$/, ''),
+              ).test(routePath)
             ) {
               pageArrayItem.push(pageData);
               return;

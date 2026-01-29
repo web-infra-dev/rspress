@@ -90,7 +90,9 @@ export async function emitLlmsTxt(
         const navItem = navList[i];
         if (
           lang === navItem.lang &&
-          new RegExp(navItem.activeMatch ?? navItem.link).test(routePath)
+          new RegExp(
+            (navItem.activeMatch ?? navItem.link).replace(/\.html$/, ''),
+          ).test(routePath)
         ) {
           routeGroup.push(routePath);
           return;
