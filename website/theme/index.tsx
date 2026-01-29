@@ -26,6 +26,7 @@ import { CssStyleSync } from '../docs/components/CssStyleSync';
 import { HeroInteractive } from './components/HeroInteractive';
 import { Tag } from './components/Tag';
 import { ToolStack } from './components/ToolStack';
+import './index.css';
 
 function HomeLayout() {
   return (

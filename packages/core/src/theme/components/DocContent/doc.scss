@@ -5,7 +5,7 @@
     /* why ":where"? For css priority, <<equal to className priority>>, to be easy to overrides by className */
     /* paragraph */
     /* #region */
-    &:where(p) {
+    &:where(p):not(:where(li p)) {
       margin-top: 1.25rem; /* 20px */
       margin-bottom: 1.25rem; /* 20px */
       line-height: 1.75rem; /* 28px */
