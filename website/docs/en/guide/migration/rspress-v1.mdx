@@ -8,7 +8,7 @@ This document will help you migrate from Rspress 1.x to Rspress V2. We recommend
 
 ## Quick migration checklist
 
-- [ ] **Node.js** >= 20.9.0
+- [ ] **Node.js** ^20.19.0 || >=22.12.0
 - [ ] **Dependencies**: `rspress` → `@rspress/core`, remove `@rspress/shared`
 - [ ] **Import paths**: `rspress/runtime` → `@rspress/core/runtime`, `rspress/theme` → `@rspress/core/theme`
 - [ ] **Custom themes**: Change default exports to named exports, use `@rspress/core/theme-original`
@@ -23,7 +23,7 @@ This document will help you migrate from Rspress 1.x to Rspress V2. We recommend
 
 ### Node.js Version
 
-Rspress V2 no longer supports Node.js 16 and 18. Please upgrade to **Node.js >= 20.9.0**. Node.js 22 LTS is recommended.
+Rspress V2 no longer supports Node.js 16 and 18. Please upgrade to **Node.js ^20.19.0 || >=22.12.0**. Node.js 22 LTS is recommended.
 
 ### Upstream dependency versions
 
