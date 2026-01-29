@@ -77,6 +77,13 @@ function absolutePathToRouteMeta(
 
   const { lang, routePath, version } =
     routeService.normalizeRoutePath(relativePath);
+
+  if (!routeService.isExistRoute(routePath)) {
+    throw new Error(
+      `The routePath "${routePath}" derived from the file "${absolutePath}" does not exist in the route service.`,
+    );
+  }
+
   return {
     pageName: getPageKey(relativePath),
     absolutePath,
