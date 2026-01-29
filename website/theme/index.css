@@ -2,7 +2,6 @@
 /* Avoid having the visual center too far to the right */
 @media (min-width: 1280px) {
   .rp-doc-layout__sidebar-placeholder {
-    /* biome-ignore lint/complexity/noImportantStyles: Avoid having the visual center too far to the right */
     width: 12vw !important;
   }
 }
