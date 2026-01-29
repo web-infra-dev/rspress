@@ -70,13 +70,18 @@ export function SidebarGroup(props: SidebarGroupProps) {
       if ('items' in current) {
         const wasCollapsed = current.collapsed;
         current.collapsed = !current.collapsed;
-        
+
         // If accordion mode is enabled and we're expanding a top-level item (depth 0),
         // collapse all other top-level items
         if (isAccordionMode && depth === 0 && wasCollapsed) {
-          // Collapse all other top-level items
+          // Collapse all other top-level items that are collapsible
           newSidebarData.forEach((item, idx) => {
-            if (idx !== initialIndex && 'collapsed' in item) {
+            if (
+              idx !== initialIndex &&
+              'collapsed' in item &&
+              'collapsible' in item &&
+              item.collapsible !== false
+            ) {
               item.collapsed = true;
             }
           });

@@ -75,12 +75,12 @@ export async function normalizeThemeConfig(
     if (!sidebar) {
       return {};
     }
-    
+
     // Preserve accordion config if present
     if ('accordion' in sidebar && typeof sidebar.accordion === 'boolean') {
       normalizedSidebar.accordion = sidebar.accordion;
     }
-    
+
     const normalizeSidebarItem = (
       item: SidebarGroup | SidebarItem | SidebarDivider | SidebarSectionHeader,
     ):

@@ -7,7 +7,8 @@ import {
   type SidebarItem,
   type SidebarSectionHeader,
 } from '@rspress/shared';
-import React, { useLayoutEffect, useMemo, useState } from 'react';
+import type React from 'react';
+import { useLayoutEffect, useMemo, useState } from 'react';
 import { useLocation } from 'react-router-dom';
 import { useActiveMatcher } from './useActiveMatcher';
 import { useLocaleSiteData } from './useLocaleSiteData';

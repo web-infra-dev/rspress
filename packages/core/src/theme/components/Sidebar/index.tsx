@@ -5,8 +5,7 @@ import type {
   NormalizedSidebarGroup,
   SidebarData,
 } from '@rspress/core';
-import { useSidebarDynamic } from '@rspress/core/runtime';
-import { useLocaleSiteData } from '@rspress/core/runtime';
+import { useLocaleSiteData, useSidebarDynamic } from '@rspress/core/runtime';
 import { SidebarDivider } from './SidebarDivider';
 import { SidebarGroup } from './SidebarGroup';
 import { SidebarItem } from './SidebarItem';
@@ -23,9 +22,9 @@ export function Sidebar() {
   const isAccordionMode = sidebar?.accordion === true;
 
   return (
-    <SidebarList 
-      sidebarData={sidebarData} 
-      setSidebarData={setSidebarData} 
+    <SidebarList
+      sidebarData={sidebarData}
+      setSidebarData={setSidebarData}
       isAccordionMode={isAccordionMode}
     />
   );

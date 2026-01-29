@@ -4,12 +4,10 @@ export interface Sidebar {
    * @default false
    */
   accordion?: boolean;
-  [path: string]: (
-    | SidebarGroup
-    | SidebarItem
-    | SidebarDivider
-    | SidebarSectionHeader
-  )[] | boolean | undefined;
+  [path: string]:
+    | (SidebarGroup | SidebarItem | SidebarDivider | SidebarSectionHeader)[]
+    | boolean
+    | undefined;
 }
 
 export interface SidebarGroup {
