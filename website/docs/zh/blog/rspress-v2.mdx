@@ -18,7 +18,7 @@ _2026 年 1 月 29 日_
 
 Rspress 是基于 [Rsbuild](https://rsbuild.rs/) 的静态站点生成器，是一个面向开发者的文档站开发工具。自 Rspress 2023 年正式发布已经过了三年时间。截至 1.47.0 版本，Rspress 共迭代了 **144 个版本**，也收到了社区大量的反馈和贡献，共有 **125 位贡献者** 参与了 Rspress 项目。在社区的贡献和支持下，越来越多的开发者使用 Rspress **极致的编译性能、约定式路由、组件库预览**等功能搭建美观可靠的文档站点。
 
-在此基础上，根据用户的反馈和建议，我们希望在 **主题美观度、 AI-native、文档开发体验** 等各方面更进一步。
+在此基础上，根据用户的反馈和建议，我们希望在 **主题美观度**、 **AI-native**、**文档开发体验** 等各方面更进一步。
 
 ## 为什么是 Rspress 2.0
 
@@ -93,7 +93,7 @@ export * from '@rspress/core/theme-original'; //[!code highlight]
 
 ```bash
 # 将 DocFooter 组件导出到 theme 目录
-npx rspress eject DocFooter
+rspress eject DocFooter
 ```
 
 #### 导航栏、侧边栏 tag
@@ -372,7 +372,7 @@ Rspress 2.0 要求 Node.js 版本 **20+**，React 版本 **18+**。
 
 Rspress 将 `rspress`、`@rspress/runtime`、`@rspress/shared`、`@rspress/theme-default` 都整合进了 `@rspress/core` 中，项目和插件现在均只需安装一个 `@rspress/core` 包即可。
 
-```diff
+```diff title="package.json"
 {
   "dependencies": {
 -   "rspress": "1.x"
@@ -382,12 +382,12 @@ Rspress 将 `rspress`、`@rspress/runtime`、`@rspress/shared`、`@rspress/theme
 }
 ```
 
-```diff
+```diff title="rspress.config.ts"
 - import { defineConfig } from 'rspress/config';
 + import { defineConfig } from '@rspress/core';
 ```
 
-```diff
+```diff title="docs/index.mdx"
 - import { useDark } from 'rspress/runtime'
 - import { PackageManagerTabs } from 'rspress/theme';
 + import { useDark } from '@rspress/core/runtime'
