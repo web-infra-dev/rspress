@@ -381,6 +381,19 @@ importers:
         specifier: ^22.8.1
         version: 22.10.2
 
+  e2e/fixtures/multi-version-llms:
+    dependencies:
+      '@rspress/core':
+        specifier: workspace:*
+        version: link:../../../packages/core
+      '@rspress/plugin-llms':
+        specifier: workspace:*
+        version: link:../../../packages/plugin-llms
+    devDependencies:
+      '@types/node':
+        specifier: ^22.8.1
+        version: 22.10.2
+
   e2e/fixtures/nav-link:
     dependencies:
       '@rspress/core':

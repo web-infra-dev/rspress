@@ -1,6 +1,6 @@
 import {
   getSidebarDataGroup,
-  type Nav,
+  type NavItem,
   type NavItemWithLink,
   type Sidebar,
   type SidebarDivider,
@@ -23,17 +23,22 @@ export async function emitLlmsTxt(
   const locales = config.themeConfig?.locales;
   const isMultiLang = locales && locales.length > 0;
 
-  const nav = (
-    isMultiLang
-      ? locales
-          .filter(i => Boolean(i.nav))
-          .map(i => ({ nav: i.nav, lang: i.lang }))
-      : [{ nav: config.themeConfig?.nav, lang: config.lang ?? '' }]
-  ) as {
-    nav: Nav;
-    lang: string;
-  }[];
+  const defaultLang = routeService.getDefaultLang();
+  const langs = [...new Set([defaultLang, ...routeService.getLangs()])];
+  const defaultVersion = routeService.getDefaultVersion();
+  const versions = routeService.getVersions();
+  const isMultiVersion = versions.length > 0;
 
+  // Collect raw nav configs per lang
+  const rawNavConfigs = isMultiLang
+    ? locales
+        .filter(i => Boolean(i.nav))
+        .map(i => ({ nav: i.nav!, lang: i.lang }))
+    : config.themeConfig?.nav
+      ? [{ nav: config.themeConfig.nav, lang: config.lang ?? '' }]
+      : [];
+
+  // Collect sidebars
   const sidebars = isMultiLang
     ? locales.map(i => i.sidebar)
     : [config.themeConfig?.sidebar];
@@ -43,82 +48,95 @@ export async function emitLlmsTxt(
     return prev;
   }, {} as Sidebar);
 
-  const noVersionNav: (NavItemWithLink & { lang: string })[] = Array.isArray(
-    nav,
-  )
-    ? (
-        nav
-          .map(i => {
-            const nav = ((i.nav as any).default || i.nav) as NavItemWithLink[];
-            const lang = i.lang;
-            return nav.map(i => {
-              return {
-                ...i,
-                lang,
-              };
-            });
-          })
-          .flat() as unknown as (NavItemWithLink & { lang: string })[]
-      ).filter(i => i.activeMatch || i.link)
-    : [];
+  // Resolve nav for a specific version
+  function resolveNavForVersion(
+    version: string,
+  ): (NavItemWithLink & { lang: string })[] {
+    return rawNavConfigs
+      .flatMap(({ nav, lang }) => {
+        let navArray: NavItem[];
+        if (Array.isArray(nav)) {
+          navArray = nav;
+        } else {
+          // nav is { [version]: NavItem[] } or { default: NavItem[] }
+          navArray = nav[version] ?? nav[defaultVersion] ?? nav.default ?? [];
+        }
+        return navArray.map(
+          item => ({ ...item, lang }) as NavItemWithLink & { lang: string },
+        );
+      })
+      .filter(i => i.activeMatch || i.link);
+  }
 
-  const defaultLang = routeService.getDefaultLang();
-  const langs = [...new Set([defaultLang, ...routeService.getLangs()])];
-  await Promise.all(
-    langs.map(async lang => {
-      const navList = noVersionNav.filter(i => i.lang === lang);
-      const routeGroups: string[][] = new Array(navList.length)
-        .fill(0)
-        .map(() => []);
-      const others: string[] = [];
+  // Generate llms files for a specific lang+version combination
+  async function generateForLangVersion(lang: string, version: string) {
+    const navList = resolveNavForVersion(version).filter(i => i.lang === lang);
+    const routeGroups: string[][] = new Array(navList.length)
+      .fill(0)
+      .map(() => []);
+    const others: string[] = [];
 
-      routeService.getRoutes().forEach(routeMeta => {
-        if (routeMeta.lang !== lang) {
+    routeService.getRoutes().forEach(routeMeta => {
+      if (routeMeta.lang !== lang) {
+        return;
+      }
+      if (isMultiVersion && routeMeta.version !== version) {
+        return;
+      }
+      const { routePath } = routeMeta;
+
+      for (let i = 0; i < routeGroups.length; i++) {
+        const routeGroup = routeGroups[i];
+        const navItem = navList[i];
+        if (
+          lang === navItem.lang &&
+          new RegExp(
+            (navItem.activeMatch ?? navItem.link).replace(/\.html$/, ''),
+          ).test(routePath)
+        ) {
+          routeGroup.push(routePath);
           return;
         }
-        const { routePath } = routeMeta;
-
-        for (let i = 0; i < routeGroups.length; i++) {
-          const routeGroup = routeGroups[i];
-          const navItem = navList[i];
-          if (
-            lang === navItem.lang &&
-            new RegExp(navItem.activeMatch ?? navItem.link).test(routePath)
-          ) {
-            routeGroup.push(routePath);
-            return;
-          }
-        }
-        others.push(routePath);
-      });
-
-      for (const routeGroup of routeGroups) {
-        organizeBySidebar(sidebar, routeGroup);
       }
+      others.push(routePath);
+    });
 
-      const llmsTxtContent = await generateLlmsTxt(
-        routeGroups,
-        others,
-        navList,
-        config.title,
-        config.description,
-        config.base!,
-        routeService,
-      );
+    for (const routeGroup of routeGroups) {
+      organizeBySidebar(sidebar, routeGroup);
+    }
 
-      const llmsFullTxtContent = generateLlmsFullTxt(
-        routeGroups,
-        navList,
-        others,
-        base,
-        mdContents,
-      );
+    const llmsTxtContent = await generateLlmsTxt(
+      routeGroups,
+      others,
+      navList,
+      config.title,
+      config.description,
+      config.base!,
+      routeService,
+    );
 
-      const prefix = defaultLang === lang ? '' : `${lang}/`;
+    const llmsFullTxtContent = generateLlmsFullTxt(
+      routeGroups,
+      navList,
+      others,
+      base,
+      mdContents,
+    );
 
-      emitAsset(`${prefix}llms.txt`, llmsTxtContent);
-      emitAsset(`${prefix}llms-full.txt`, llmsFullTxtContent);
-    }),
+    const langPrefix = defaultLang === lang ? '' : `${lang}/`;
+    const versionPrefix =
+      isMultiVersion && version !== defaultVersion ? `${version}/` : '';
+    const prefix = `${versionPrefix}${langPrefix}`;
+
+    emitAsset(`${prefix}llms.txt`, llmsTxtContent);
+    emitAsset(`${prefix}llms-full.txt`, llmsFullTxtContent);
+  }
+
+  const versionList = isMultiVersion ? versions : [''];
+  await Promise.all(
+    versionList.flatMap(version =>
+      langs.map(lang => generateForLangVersion(lang, version)),
+    ),
   );
 }
 
