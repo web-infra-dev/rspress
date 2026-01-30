@@ -572,8 +572,8 @@ importers:
   e2e/fixtures/plugin-preview-custom-entry:
     dependencies:
       '@rsbuild/plugin-vue':
-        specifier: ^1.2.3
-        version: 1.2.3(@rsbuild/core@2.0.0-beta.0(@module-federation/runtime-tools@0.22.0)(core-js@3.47.0))(vue@3.5.27(typescript@5.8.2))
+        specifier: ^1.2.4
+        version: 1.2.4(@rsbuild/core@2.0.0-beta.0(@module-federation/runtime-tools@0.22.0)(core-js@3.47.0))(vue@3.5.27(typescript@5.8.2))
       '@rspress/core':
         specifier: workspace:*
         version: link:../../../packages/core
@@ -906,8 +906,8 @@ importers:
         specifier: 2.0.0-beta.0
         version: 2.0.0-beta.0(@module-federation/runtime-tools@0.22.0)(core-js@3.47.0)
       '@rsbuild/plugin-react':
-        specifier: ~1.4.3
-        version: 1.4.3(@rsbuild/core@2.0.0-beta.0(@module-federation/runtime-tools@0.22.0)(core-js@3.47.0))
+        specifier: ~1.4.4
+        version: 1.4.4(@rsbuild/core@2.0.0-beta.0(@module-federation/runtime-tools@0.22.0)(core-js@3.47.0))
       '@rspress/shared':
         specifier: workspace:*
         version: link:../shared
@@ -1146,8 +1146,8 @@ importers:
         specifier: ^7.55.2
         version: 7.55.2(@types/node@22.10.2)
       '@rsbuild/plugin-react':
-        specifier: ~1.4.3
-        version: 1.4.3(@rsbuild/core@2.0.0-beta.0(@module-federation/runtime-tools@0.22.0)(core-js@3.47.0))
+        specifier: ~1.4.4
+        version: 1.4.4(@rsbuild/core@2.0.0-beta.0(@module-federation/runtime-tools@0.22.0)(core-js@3.47.0))
       '@rslib/core':
         specifier: 0.19.3
         version: 0.19.3(@microsoft/api-extractor@7.55.2(@types/node@22.10.2))(typescript@5.8.2)
@@ -1302,8 +1302,8 @@ importers:
         specifier: 2.0.0-beta.0
         version: 2.0.0-beta.0(@module-federation/runtime-tools@0.22.0)(core-js@3.47.0)
       '@rsbuild/plugin-react':
-        specifier: ~1.4.3
-        version: 1.4.3(@rsbuild/core@2.0.0-beta.0(@module-federation/runtime-tools@0.22.0)(core-js@3.47.0))
+        specifier: ~1.4.4
+        version: 1.4.4(@rsbuild/core@2.0.0-beta.0(@module-federation/runtime-tools@0.22.0)(core-js@3.47.0))
       '@rslib/core':
         specifier: 0.19.3
         version: 0.19.3(@microsoft/api-extractor@7.55.2(@types/node@22.10.2))(typescript@5.8.2)
@@ -1360,8 +1360,8 @@ importers:
         specifier: ^7.28.6
         version: 7.28.6
       '@rsbuild/plugin-react':
-        specifier: ~1.4.3
-        version: 1.4.3(@rsbuild/core@2.0.0-beta.0(@module-federation/runtime-tools@0.22.0)(core-js@3.47.0))
+        specifier: ~1.4.4
+        version: 1.4.4(@rsbuild/core@2.0.0-beta.0(@module-federation/runtime-tools@0.22.0)(core-js@3.47.0))
       '@rslib/core':
         specifier: 0.19.3
         version: 0.19.3(@microsoft/api-extractor@7.55.2(@types/node@22.10.2))(typescript@5.8.2)
@@ -1420,8 +1420,8 @@ importers:
         specifier: ~1.1.0
         version: 1.1.0(@rsbuild/core@2.0.0-beta.0(@module-federation/runtime-tools@0.22.0)(core-js@3.47.0))
       '@rsbuild/plugin-react':
-        specifier: ~1.4.3
-        version: 1.4.3(@rsbuild/core@2.0.0-beta.0(@module-federation/runtime-tools@0.22.0)(core-js@3.47.0))
+        specifier: ~1.4.4
+        version: 1.4.4(@rsbuild/core@2.0.0-beta.0(@module-federation/runtime-tools@0.22.0)(core-js@3.47.0))
       '@rspress/core':
         specifier: workspace:^2.0.0
         version: link:../core
@@ -3049,8 +3049,8 @@ packages:
       '@rsbuild/core':
         optional: true
 
-  '@rsbuild/plugin-react@1.4.3':
-    resolution: {integrity: sha512-Uf9FkKk2TqYDbsypXHgjdivPmEoYFvBTHJT5fPmjCf0Sc3lR2BHtlc0WMdZTCKUJ5jTxREygMs9LbnehX98L8g==}
+  '@rsbuild/plugin-react@1.4.4':
+    resolution: {integrity: sha512-tWOjyV4ZpUgwKT7sXHtGs24EYeyfY/THpTraLgikUUk0yLDeNHlDT5XPHOfLIbLIB3L8763AfgASFyhiqFw76g==}
     peerDependencies:
       '@rsbuild/core': ^1.0.0 || ^2.0.0-0
 
@@ -3064,8 +3064,8 @@ packages:
     peerDependencies:
       '@rsbuild/core': ^1.0.0 || ^2.0.0-0
 
-  '@rsbuild/plugin-vue@1.2.3':
-    resolution: {integrity: sha512-Y84py1vYRWh9mTmjYV9PsjL4jFjwMQ3pI11DwKGCMMSlWgJ0OGbI5Up9N/PO67WDBn8OqyyRhxNArx4xod0JVA==}
+  '@rsbuild/plugin-vue@1.2.4':
+    resolution: {integrity: sha512-Vdjpv9ueEWAXRB3d8VvQZbueH7DDUnuoq1uyPVHrdPcdM71TI+jLnfz/DSOQBHWhvyFwcOhnzjUiZFTB9ouX7g==}
     peerDependencies:
       '@rsbuild/core': ^1.0.0 || ^2.0.0-0
 
@@ -6387,12 +6387,12 @@ packages:
   rspack-plugin-virtual-module@1.0.1:
     resolution: {integrity: sha512-NQJ3fXa1v0WayvfHMWbyqLUA3JIqgCkhIcIOnZscuisinxorQyIAo+bqcU5pCusMKSyPqVIWO3caQyl0s9VDAg==}
 
-  rspack-vue-loader@17.4.4:
-    resolution: {integrity: sha512-T4rkTZWg9hC7DZapTaJcIphser4ogsTffH/rwnX0pwMpNKjv1XKLBPa5Icd/xNPOh1NiKVxoxcT+gb8NQliukA==}
+  rspack-vue-loader@17.4.5:
+    resolution: {integrity: sha512-i88hGa4mySkwiP7HqRICIAhomcMdkNCZ5tQGcxkcUWmDfC2QfeQegFBEKY4RdbuxJ3p1Ocj/Ul6Sh4yl6L7mDg==}
     peerDependencies:
       '@vue/compiler-sfc': '*'
       vue: '*'
-      webpack: ^4.1.0 || ^5.0.0-0
+      webpack: ^5.0.0
     peerDependenciesMeta:
       '@vue/compiler-sfc':
         optional: true
@@ -8700,7 +8700,7 @@ snapshots:
     optionalDependencies:
       '@rsbuild/core': 2.0.0-beta.0(@module-federation/runtime-tools@0.22.0)(core-js@3.47.0)
 
-  '@rsbuild/plugin-react@1.4.3(@rsbuild/core@2.0.0-beta.0(@module-federation/runtime-tools@0.22.0)(core-js@3.47.0))':
+  '@rsbuild/plugin-react@1.4.4(@rsbuild/core@2.0.0-beta.0(@module-federation/runtime-tools@0.22.0)(core-js@3.47.0))':
     dependencies:
       '@rsbuild/core': 2.0.0-beta.0(@module-federation/runtime-tools@0.22.0)(core-js@3.47.0)
       '@rspack/plugin-react-refresh': 1.6.0(react-refresh@0.18.0)
@@ -8720,7 +8720,7 @@ snapshots:
   '@rsbuild/plugin-svgr@1.3.0(@rsbuild/core@2.0.0-beta.0(@module-federation/runtime-tools@0.22.0)(core-js@3.47.0))(typescript@5.8.2)':
     dependencies:
       '@rsbuild/core': 2.0.0-beta.0(@module-federation/runtime-tools@0.22.0)(core-js@3.47.0)
-      '@rsbuild/plugin-react': 1.4.3(@rsbuild/core@2.0.0-beta.0(@module-federation/runtime-tools@0.22.0)(core-js@3.47.0))
+      '@rsbuild/plugin-react': 1.4.4(@rsbuild/core@2.0.0-beta.0(@module-federation/runtime-tools@0.22.0)(core-js@3.47.0))
       '@svgr/core': 8.1.0(typescript@5.8.2)
       '@svgr/plugin-jsx': 8.1.0(@svgr/core@8.1.0(typescript@5.8.2))
       '@svgr/plugin-svgo': 8.1.0(@svgr/core@8.1.0(typescript@5.8.2))(typescript@5.8.2)
@@ -8731,10 +8731,10 @@ snapshots:
       - typescript
       - webpack-hot-middleware
 
-  '@rsbuild/plugin-vue@1.2.3(@rsbuild/core@2.0.0-beta.0(@module-federation/runtime-tools@0.22.0)(core-js@3.47.0))(vue@3.5.27(typescript@5.8.2))':
+  '@rsbuild/plugin-vue@1.2.4(@rsbuild/core@2.0.0-beta.0(@module-federation/runtime-tools@0.22.0)(core-js@3.47.0))(vue@3.5.27(typescript@5.8.2))':
     dependencies:
       '@rsbuild/core': 2.0.0-beta.0(@module-federation/runtime-tools@0.22.0)(core-js@3.47.0)
-      rspack-vue-loader: 17.4.4(vue@3.5.27(typescript@5.8.2))(webpack@5.104.1)
+      rspack-vue-loader: 17.4.5(vue@3.5.27(typescript@5.8.2))(webpack@5.104.1)
       webpack: 5.104.1
     transitivePeerDependencies:
       - '@swc/core'
@@ -12926,7 +12926,7 @@ snapshots:
     dependencies:
       fs-extra: 11.3.0
 
-  rspack-vue-loader@17.4.4(vue@3.5.27(typescript@5.8.2))(webpack@5.104.1):
+  rspack-vue-loader@17.4.5(vue@3.5.27(typescript@5.8.2))(webpack@5.104.1):
     dependencies:
       chalk: 4.1.2
       watchpack: 2.4.4
