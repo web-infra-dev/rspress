@@ -18,7 +18,7 @@ _2026 年 1 月 29 日_
 
 Rspress 是基于 [Rsbuild](https://rsbuild.rs/) 的静态站点生成器，是一个面向开发者的文档站开发工具。自 Rspress 2023 年正式发布已经过了三年时间。截至 1.47.0 版本，Rspress 共迭代了 **144 个版本**，也收到了社区大量的反馈和贡献，共有 **125 位贡献者** 参与了 Rspress 项目。在社区的贡献和支持下，越来越多的开发者借助 Rspress **极致的编译性能、约定式路由、组件库预览**等功能搭建美观可靠的文档站点。
 
-在此基础上，根据用户的反馈和建议，我们希望在 [**主题美观度**](#brand-new-theme)、 [**AI-native**](#llms-txt-ssg-md)、[**文档开发体验**](#doc-dx) 等各方面更进一步。
+在此基础上，根据用户的反馈和建议，我们希望在 [**主题美观度**](#brand-new-theme)、 [**AI-native**](#llms-txt-ssg-md)、[**文档开发体验**](#doc-dx)、[**与 Rslib 连用**](#rslib-rspress) 等各方面更进一步。
 
 ## 为什么是 Rspress 2.0
 
@@ -323,25 +323,28 @@ export default App;
 
 执行 `npm create rslib@latest` 并选中 Rspress，会生成下方的文件结构：
 
-```plaintext
+```tree
 ├── docs
 │   └── index.mdx
-├── package.json
-├── tsconfig.json
 ├── src
 │   └── Button.tsx
+├── package.json
+├── tsconfig.json
 ├── rslib.config.ts
 └── rspress.config.ts
 ```
 
-使用 `npm run doc` 启动 Rspress 的开发服务器对 Rslib 组件库进行预览：
+模版中内置了 [rsbuild-plugin-workspace-dev](https://github.com/rstackjs/rsbuild-plugin-workspace-dev) 插件，实现了在 Rspress 开发服务器启动的同时启动 Rslib 的 watch 开发命令。
 
-```json
-// package.json
-"scripts": {
-  "dev": "rslib build --watch",
-  "doc": "rspress dev",  // 执行该命令
-},
+直接运行 `npm run doc` 启动 Rspress 的开发服务器对 Rslib 组件库进行预览：
+
+```json title="package.json"
+{
+  "scripts": {
+    "dev": "rslib build --watch",
+    "doc": "rspress dev" // 执行该命令
+  }
+}
 ```
 
 ### 更多 Rspress 官方插件
