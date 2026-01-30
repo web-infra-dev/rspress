@@ -38,11 +38,10 @@ function resolveNavForVersion(
       if (Array.isArray(nav)) {
         navArray = nav;
       } else {
-        // nav is { [version]: NavItem[] }
+        // nav is { [version]: NavItem[] } or { default: NavItem[] }
+        const navObj = nav as Record<string, NavItem[]>;
         navArray =
-          (nav as Record<string, NavItem[]>)[version] ??
-          (nav as Record<string, NavItem[]>)[defaultVersion] ??
-          [];
+          navObj[version] ?? navObj[defaultVersion] ?? navObj.default ?? [];
       }
       return navArray.map(
         item => ({ ...item, lang }) as NavItemWithLink & { lang: string },

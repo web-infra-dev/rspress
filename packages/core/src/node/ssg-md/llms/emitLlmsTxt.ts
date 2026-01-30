@@ -58,8 +58,8 @@ export async function emitLlmsTxt(
         if (Array.isArray(nav)) {
           navArray = nav;
         } else {
-          // nav is { [version]: NavItem[] }
-          navArray = nav[version] ?? nav[defaultVersion] ?? [];
+          // nav is { [version]: NavItem[] } or { default: NavItem[] }
+          navArray = nav[version] ?? nav[defaultVersion] ?? nav.default ?? [];
         }
         return navArray.map(
           item => ({ ...item, lang }) as NavItemWithLink & { lang: string },
