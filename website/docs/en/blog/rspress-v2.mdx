@@ -10,7 +10,7 @@ _January 30, 2026_
 
 # Announcing Rspress 2.0
 
-![Rspress 2.0 Banner](./imgs/banner.png)
+![Rspress 2.0 Banner](../../imgs/banner.png)
 
 ---
 
@@ -38,17 +38,17 @@ Rspress 1.x already solved the compilation performance problem for documentation
 
 This is a comprehensive upgrade to the existing architecture. Below we introduce Rspress 2.0 and its **brand new theme, high-quality llms.txt generation, Shiki integration, lazyCompilation**, and other important features.
 
-![Rspress 2.0 Features](./imgs/features.png)
+![Rspress 2.0 Features](../../imgs/features.png)
 
-## 2.0 New Features
+## 2.0 New features
 
-### Brand New Theme \{#brand-new-theme}
+### Brand new theme \{#brand-new-theme}
 
 The 2.0 default theme has undergone a systematic upgrade, crafted by designer [@Zovn Wei](https://x.com/wei_zhong41532), with significant improvements in visual effects and reading experience. Each component is individually replaceable, providing high customizability.
 
-![New Theme](./imgs/new-theme.png)
+![New Theme](../../imgs/new-theme.png)
 
-#### Theme Customization
+#### Theme customization
 
 From low to high levels of customization, there are four [custom theme](/guide/basic/custom-theme) approaches: CSS variables, BEM class names, ESM re-export overrides, and component eject.
 
@@ -98,7 +98,7 @@ export * from '@rspress/core/theme-original'; //[!code highlight]
 rspress eject DocFooter
 ```
 
-#### Navbar and Sidebar Tags
+#### Navbar and sidebar tags
 
 Rspress 2.0 implements a [Tag component](/ui/layout-components/tag). You can now use the tag property in frontmatter to add UI annotations in the sidebar or navbar.
 
@@ -111,12 +111,12 @@ import { Tag } from '@rspress/core/theme';
 
 # Tag
 
-## Common tags <Tag tag="new" /> {/* Displayed in the right-side outline */}
+## Common tags <Tag tag="new" /> {/* displayed in the right-side outline */}
 ```
 
 <div style={{ display: 'flex', justifyContent: 'center' }}>
   <img
-    src="./imgs/tag-component.png"
+    src="../../imgs/tag-component.png"
     width="600"
     alt="Tag component display in sidebar"
   />
@@ -128,7 +128,7 @@ In version 1.x, Rspress only had English text built-in. Using other languages li
 
 Rspress will support more built-in languages in the future. If you're interested, please refer to [this contributor's Pull Request](https://github.com/web-infra-dev/rspress/pull/2827).
 
-### llms.txt: SSG-MD for High-Quality Markdown Content \{#llms-txt-ssg-md}
+### llms.txt: SSG-MD for High-Quality Markdown content \{#llms-txt-ssg-md}
 
 Rspress now integrates [llms.txt](https://llmstxt.org/) generation into core, and implements the new SSG-MD (Static Site Generation to Markdown) capability.
 
@@ -141,7 +141,7 @@ To solve this problem, Rspress 2.0 introduces the [SSG-MD](/guide/basic/ssg-md) 
 
 <div style={{ display: 'flex', justifyContent: 'center' }}>
   <img
-    src="./imgs/ssg-md-overview.jpg"
+    src="../../imgs/ssg-md-overview.jpg"
     width="50%"
     alt="SSG-MD feature overview"
   />
@@ -150,7 +150,11 @@ To solve this problem, Rspress 2.0 introduces the [SSG-MD](/guide/basic/ssg-md) 
 Compared to traditional approaches like converting HTML to Markdown, SSG-MD has access to richer information sources during rendering, such as the React virtual DOM, resulting in higher static information quality and flexibility.
 
 <div style={{ display: 'flex', justifyContent: 'center' }}>
-  <img src="./imgs/ssg-md-flow.jpg" width="600" alt="SSG-MD rendering flow" />
+  <img
+    src="../../imgs/ssg-md-flow.jpg"
+    width="600"
+    alt="SSG-MD rendering flow"
+  />
 </div>
 
 Enabling it is simple:
@@ -192,7 +196,7 @@ This preserves the interactive documentation experience while helping AI underst
 
 > See [SSG-MD Usage Guide](/guide/basic/ssg-md) for details
 
-### Shiki Build-time Code Block Highlighting \{#shiki-code-highlighting}
+### Shiki Build-time code block highlighting \{#shiki-code-highlighting}
 
 Rspress 2.0 uses [Shiki](https://shiki.style/) by default for code highlighting. Compared to the 1.x Prism runtime highlighting approach, Shiki performs highlighting at compile time.
 
@@ -221,7 +225,7 @@ console.log('Not focused');
 
 > See [Code Blocks](/guide/use-mdx/code-blocks#shiki-transformers) for details
 
-### Build Performance: lazyCompilation and Persistent Cache \{#build-performance-lazy-compilation-cache}
+### Build Performance: lazyCompilation and persistent cache \{#build-performance-lazy-compilation-cache}
 
 Rspress 2.0 is powered by Rsbuild and Rspack 2.0 prerelease, with [lazyCompilation](https://rspack.rs/guide/features/lazy-compilation) and [persistent cache](https://rsbuild.rs/config/performance/build-cache) enabled by default.
 
@@ -231,19 +235,19 @@ Rspress 2.0 is powered by Rsbuild and Rspack 2.0 prerelease, with [lazyCompilati
 
 <div style={{ display: 'flex', justifyContent: 'center' }}>
   <img
-    src="./imgs/lazy-compilation.gif"
+    src="../../imgs/lazy-compilation.gif"
     width="600"
     alt="lazyCompilation demo"
   />
 </div>
 
-#### Persistent Cache
+#### Persistent cache
 
 2.0 also enables [persistent cache](https://rsbuild.rs/config/performance/build-cache) by default, reusing previous compilation results during warm starts to improve build speed by 30%-60%. This means that once you've run `rspress dev` or `rspress build` in your project, subsequent `rspress` startups will be noticeably faster.
 
-### Documentation Development Experience \{#doc-dx}
+### Documentation development experience \{#doc-dx}
 
-#### Dead Link Checking Enabled by Default
+#### Dead link checking enabled by default
 
 Rspress 2.0 enables dead link checking by default. During the build process, it automatically detects invalid links in documentation, helping you discover and fix issues promptly.
 
@@ -261,7 +265,7 @@ export default defineConfig({
 
 <div style={{ display: 'flex', justifyContent: 'center' }}>
   <img
-    src="./imgs/dead-link-check.png"
+    src="../../imgs/dead-link-check.png"
     width="600"
     alt="Dead link checking example"
   />
@@ -269,7 +273,7 @@ export default defineConfig({
 
 > See [Links](/guide/use-mdx/link) for details
 
-#### File Code Blocks
+#### File code blocks
 
 You can use the `file="./path/to/file"` attribute to reference external files as code block content, maintaining example code in separate files.
 
@@ -287,7 +291,7 @@ You can use the `file="./path/to/file"` attribute to reference external files as
 
 > See [File Code Blocks](/guide/use-mdx/code-blocks#file-code-block) for details
 
-#### More Flexible Meta Usage for Preview
+#### More flexible meta usage for preview
 
 [@rspress/plugin-preview](/plugin/official-plugins/preview) is now based on meta attributes, making it more flexible and compatible with file code blocks.
 
@@ -321,7 +325,7 @@ export default App;
 
 Additionally, [@rspress/plugin-playground](/plugin/official-plugins/playground) now supports being used together with plugin-preview, switching via meta attributes, e.g., ` ```tsx playground `
 
-#### HMR Support for Configuration Files
+#### HMR support for configuration files
 
 Based on the redesigned [virtual module plugin](https://github.com/rstackjs/rsbuild-plugin-virtual-module) for Rsbuild, HMR is now supported for `i18n.json`, `_nav.json`, `_meta.json`, file code blocks, and iframe-related configurations in `@rspress/plugin-preview`. After modifying these configuration files, the page will automatically hot-reload without manual refresh.
 
@@ -355,7 +359,7 @@ Simply run `npm run doc` to start the Rspress development server and preview you
 }
 ```
 
-### More Official Rspress Plugins
+### More official Rspress plugins
 
 Rspress 2.0 has added several official plugins:
 
@@ -366,7 +370,7 @@ Rspress 2.0 has added several official plugins:
 
 ---
 
-## Other Breaking Changes
+## Other breaking changes
 
 ### Migrating from Rspress 1.x
 
@@ -376,13 +380,13 @@ You can use the "Copy Markdown" feature on the page and feed it to your preferre
 
 > Please refer to the [Migration Guide](/guide/migration/rspress-1-x).
 
-### Removal of `mdxRs` Configuration
+### Removal of `mdxRs` configuration
 
 We noticed that a large portion of 1.x users were actively disabling `mdxRs` to use Shiki, component library preview features, and custom remark/rehype plugins. With lazyCompilation and persistent cache enabled, performance optimization is already quite significant even with the JS version of the MDX parser.
 
 In exchange for better extensibility and maintainability, we decided to stop using the Rust-based MDX parser (`@rspress/mdx-rs`) in the Markdown/MDX compilation pipeline. This enables Rspress to better integrate tools from the JavaScript ecosystem like Shiki.
 
-### Node.js and Upstream Dependency Version Requirements
+### Node.js and upstream dependency version requirements
 
 Rspress 2.0 requires Node.js version **20+** and React version **18+**.
 
@@ -393,7 +397,7 @@ Rspress 2.0 requires Node.js version **20+** and React version **18+**.
 | `react-router-dom` | `^6.0.0 \|\| ^7.0.0`   | 7       | Uses project version if installed                               |
 | `unified`          | `^11.0.0`              | 11      | Custom remark/rehype plugins must be compatible                 |
 
-### Package Name and Import Path Changes
+### Package name and import path changes
 
 Rspress has consolidated `rspress`, `@rspress/runtime`, `@rspress/shared`, and `@rspress/theme-default` into `@rspress/core`. Projects and plugins now only need to install a single `@rspress/core` package.
 
@@ -429,7 +433,7 @@ If you have developed an Rspress plugin, please change the plugin's peerDependen
 }
 ```
 
-## Next Steps
+## Next steps
 
 The release of Rspress 2.0 is just a new beginning. After this release, Rspress will continue to iterate:
 
